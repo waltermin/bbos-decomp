@@ -5,11 +5,12 @@ import net.rim.device.api.collection.CollectionListener;
 import net.rim.device.api.collection.FilterStatusListener;
 import net.rim.device.api.collection.util.PatriciaKeywordFilterList;
 import net.rim.device.api.util.StringUtilities;
+import net.rim.vm.WeakReference;
 
 final class AddressBookKeywordFilterList extends PatriciaKeywordFilterList implements CollectionListener {
    private AddressBookKeywordFilterList(AddressBookCollection collection, AddressBookOrderHelper helper) {
       super(collection, collection.getKeywordTree());
-      collection.addCollectionListener(new Object(this));
+      collection.addCollectionListener(new WeakReference(this));
    }
 
    static final AddressBookKeywordFilterList getInstance(AddressBookCollection collection, AddressBookOrderHelper helper, long order) {
@@ -41,7 +42,7 @@ final class AddressBookKeywordFilterList extends PatriciaKeywordFilterList imple
 
    @Override
    public final void setCriteria(Object criteria, FilterStatusListener listener) {
-      if (criteria instanceof Object) {
+      if (criteria instanceof String) {
          criteria = StringUtilities.toLowerCase((String)criteria, 1701707776);
       }
 

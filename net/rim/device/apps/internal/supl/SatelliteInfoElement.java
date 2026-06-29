@@ -13,7 +13,7 @@ final class SatelliteInfoElement {
    }
 
    final void print() {
-      System.out.println(((StringBuffer)(new Object("Sat Id: "))).append(this.satId).toString());
-      System.out.println(((StringBuffer)(new Object("IODE: "))).append(this.iODE).toString());
+      System.out.println("Sat Id: " + this.satId);
+      System.out.println("IODE: " + this.iODE);
    }
 }

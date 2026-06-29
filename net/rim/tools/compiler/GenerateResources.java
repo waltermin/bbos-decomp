@@ -2,7 +2,6 @@ package net.rim.tools.compiler;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
-import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.Vector;
 import net.rim.tools.compiler.analysis.InstructionCode;
@@ -57,7 +56,7 @@ public class GenerateResources implements Constants {
 
    public GenerateResources(Compiler compiler, String moduleName, JadSupport jad, Vector resourceBinaries) {
       this._compiler = compiler;
-      this._className = ((StringBuffer)(new Object("com.rim.resources."))).append(moduleName).append("RIMResources").toString();
+      this._className = "com.rim.resources." + moduleName + "RIMResources";
       this._jad = jad;
       this._resourceBinaries = resourceBinaries;
       this._makingMIDlet = compiler.isMakingMIDlet();
@@ -82,7 +81,7 @@ public class GenerateResources implements Constants {
    private ClassType findClassType(String className) throws CompileException {
       ClassType classType = this._compiler.findClassType(className);
       if (classType == null) {
-         throw new CompileException(this._className, ((StringBuffer)(new Object("Unable to find type: "))).append(className).toString());
+         throw new CompileException(this._className, "Unable to find type: " + className);
       }
 
       classType.setReachable(this._compiler, false);
@@ -93,9 +92,7 @@ public class GenerateResources implements Constants {
    private Method findMethod(ClassType classType, String methodName, Type type, Vector types) throws CompileException {
       Method method = classType.findMethod(this._compiler, methodName, type, types, false, false);
       if (method == null) {
-         throw new CompileException(
-            this._className, ((StringBuffer)(new Object("Class: "))).append(classType.getFullName()).append(" has no member: ").append(methodName).toString()
-         );
+         throw new CompileException(this._className, "Class: " + classType.getFullName() + " has no member: " + methodName);
       } else {
          return method;
       }
@@ -217,7 +214,7 @@ public class GenerateResources implements Constants {
    }
 
    private ClassType createPopulateClass(int ordinal) throws DuplicateException {
-      String className = ((StringBuffer)(new Object())).append(this._className).append("Populator").append(ordinal).toString();
+      String className = this._className + "Populator" + ordinal;
       ClassType popClass = this._compiler.findClassType(className);
       if (popClass.isDefined()) {
          throw new DuplicateException(null, className, popClass.getFullName());
@@ -313,7 +310,7 @@ public class GenerateResources implements Constants {
 
    private void initArray(ClassType cls, NameAndType var, byte[] values) {
       cls.addDataWeight(values.length + 4);
-      this._compiler.checkBinaryForExport(((StringBuffer)(new Object())).append(this._className).append('.').append(var.getName()).toString(), values);
+      this._compiler.checkBinaryForExport(this._className + '.' + var.getName(), values);
       int typeId = ((ArrayType)var.getType()).getMostBaseType().getTypeId();
       this._block.addInstructionBytes(this._ip++, 45, typeId, values);
       if (var.is(1024)) {
@@ -345,8 +342,8 @@ public class GenerateResources implements Constants {
          Applet applet = null;
          ByteArrayOutputStream bout = null;
          DataOutputStream dout = null;
-         bout = (ByteArrayOutputStream)(new Object());
-         dout = (DataOutputStream)(new Object(bout));
+         bout = new ByteArrayOutputStream();
+         dout = new DataOutputStream(bout);
          boolean isEmpty = true;
 
          for (int i = 0; i < num; i++) {
@@ -401,8 +398,8 @@ public class GenerateResources implements Constants {
       NameAndType var = null;
       ByteArrayOutputStream bout = null;
       DataOutputStream dout = null;
-      ByteArrayOutputStream var14 = new Object();
-      dout = (DataOutputStream)(new Object((OutputStream)var14));
+      bout = new ByteArrayOutputStream();
+      dout = new DataOutputStream(bout);
       boolean isEmpty = true;
 
       for (int i = 0; i < num; i++) {
@@ -419,7 +416,7 @@ public class GenerateResources implements Constants {
       dout.close();
       if (!isEmpty) {
          var = this.createArrayField("_appNames", this._byteArrayType);
-         this.initArray(cls, var, ((ByteArrayOutputStream)var14).toByteArray());
+         this.initArray(cls, var, bout.toByteArray());
       }
 
       dout.close();
@@ -427,8 +424,8 @@ public class GenerateResources implements Constants {
          this.initArray(cls, this._appIconField, this._appIconData);
       }
 
-      var14 = new Object();
-      dout = (DataOutputStream)(new Object((OutputStream)var14));
+      bout = new ByteArrayOutputStream();
+      dout = new DataOutputStream(bout);
       isEmpty = true;
 
       for (int i = 0; i < num; i++) {
@@ -445,7 +442,7 @@ public class GenerateResources implements Constants {
       dout.close();
       if (!isEmpty) {
          var = this.createArrayField("_appArgs", this._byteArrayType);
-         this.initArray(cls, var, ((ByteArrayOutputStream)var14).toByteArray());
+         this.initArray(cls, var, bout.toByteArray());
       }
    }
 
@@ -463,8 +460,8 @@ public class GenerateResources implements Constants {
          var = this.createArrayField(id, this._byteArrayType);
       }
 
-      ByteArrayOutputStream bout = (ByteArrayOutputStream)(new Object());
-      DataOutputStream dout = (DataOutputStream)(new Object(bout));
+      ByteArrayOutputStream bout = new ByteArrayOutputStream();
+      DataOutputStream dout = new DataOutputStream(bout);
       if (!(objData instanceof byte[])) {
          if (objData != null) {
             dout.writeUTF(objData.toString());
@@ -480,13 +477,13 @@ public class GenerateResources implements Constants {
    }
 
    private void createAppValue(ClassType cls, InstructionCode code, String id, String tagPrefix, int type) {
-      ByteArrayOutputStream bout = (ByteArrayOutputStream)(new Object());
-      DataOutputStream dout = (DataOutputStream)(new Object(bout));
+      ByteArrayOutputStream bout = new ByteArrayOutputStream();
+      DataOutputStream dout = new DataOutputStream(bout);
       int num = this._jad.getNumApplets();
       boolean isEmpty = true;
 
       for (int i = 0; i < num; i++) {
-         String tag = ((StringBuffer)(new Object())).append(tagPrefix).append(i + 1).toString();
+         String tag = tagPrefix + (i + 1);
          String value = this._jad.getProperty(tag);
          switch (type) {
             case -1:
@@ -641,7 +638,7 @@ public class GenerateResources implements Constants {
                      rf.resetData(slice);
                   }
 
-                  StringBuffer nameBuffer = (StringBuffer)(new Object());
+                  StringBuffer nameBuffer = new StringBuffer();
                   nameBuffer.append("__").append(relativeName).append('@').append(offset);
                   this._resourceBinaries.addElement(new ResourceFile(nameBuffer.toString(), slice, true));
                   offset += length;
@@ -657,7 +654,7 @@ public class GenerateResources implements Constants {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public ClassType generateResourceClass(String extensions, String languages) throws CompileException, DuplicateException {
-      this._parmVector = (Vector)(new Object());
+      this._parmVector = new Vector();
       this._intType = this._compiler.getIntType();
       this._byteType = this._compiler.getByteType();
       this._byteArrayType = this._byteType.getArrayType();
@@ -756,7 +753,7 @@ public class GenerateResources implements Constants {
          int num = this._resourceBinaries.size();
          if (num > 0) {
             this._block = null;
-            Vector popMethods = (Vector)(new Object());
+            Vector popMethods = new Vector();
             ClassType popClass = null;
             Method popMethod = null;
             InstructionCode popCode = null;
@@ -792,7 +789,7 @@ public class GenerateResources implements Constants {
                   String name = FileHelper.removePathPrefix(relativeName);
                   if (shortName && !this._makingMIDlet && !relativeName.equals(name)) {
                      if (rf.isSlice()) {
-                        name = ((StringBuffer)(new Object("__"))).append(name).toString();
+                        name = "__" + name;
                      }
 
                      this.createHashtableStore(popClass, localZero, name, var);

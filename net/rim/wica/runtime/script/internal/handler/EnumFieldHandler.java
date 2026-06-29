@@ -81,7 +81,7 @@ public final class EnumFieldHandler implements PropertyHandler {
       int enumValue = -1;
       Object esObj = Convert.toObject(value);
       if (!(esObj instanceof ESEnum)) {
-         if (esObj instanceof Object) {
+         if (esObj instanceof ESString) {
             if (_context == null) {
                FieldHandlerFactory.getHandler(5);
             }

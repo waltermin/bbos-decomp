@@ -15,7 +15,7 @@ public final class Controller implements Runnable {
 
    public static final void initialize() {
       _instance = new Controller();
-      Thread controllerThread = (Thread)(new Object(_instance));
+      Thread controllerThread = new Thread(_instance);
       controllerThread.start();
    }
 

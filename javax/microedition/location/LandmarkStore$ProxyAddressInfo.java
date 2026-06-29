@@ -3,7 +3,7 @@ package javax.microedition.location;
 import net.rim.device.api.util.Persistable;
 
 class LandmarkStore$ProxyAddressInfo implements Persistable {
-   String[] _values = new Object[17];
+   String[] _values = new String[17];
 
    LandmarkStore$ProxyAddressInfo(AddressInfo addressInfo) {
       if (addressInfo != null) {

@@ -4,6 +4,7 @@ import net.rim.device.api.system.Display;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.api.util.Factory;
 import net.rim.device.apps.api.framework.model.FieldProvider;
@@ -36,20 +37,20 @@ public final class PhoneSystemStatusRibbonField extends Manager implements Ribbo
       this.setTag(TAG);
       this.setId("activecall");
       if (ribbonFieldProvider != null) {
-         this.add((Field)(new Object()));
+         this.add(new SeparatorField());
          int ribbonTimeComponent = (flags & 2) != 0 ? 1 : 2;
-         Field field = ribbonFieldProvider.getField(new Object(ribbonTimeComponent));
+         Field field = ribbonFieldProvider.getField(new Integer(ribbonTimeComponent));
          if (field != null) {
             this.add(field);
          }
 
-         field = ribbonFieldProvider.getField(new Object(0));
+         field = ribbonFieldProvider.getField(new Integer(0));
          if (field != null) {
             this.add(field);
          }
 
          this.add(new ActiveScreenONSField());
-         field = ribbonFieldProvider.getField(new Object(3));
+         field = ribbonFieldProvider.getField(new Integer(3));
          if (field != null) {
             this.add(field);
          }

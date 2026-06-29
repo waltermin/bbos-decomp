@@ -22,7 +22,7 @@ public final class LocalizationSetupWizard extends WizardController {
    public LocalizationSetupWizard() {
       super(OptionsResources.getResourceBundle(), 1803, 100, SetupWizardOrdering.LANGUAGE_CATEGORY);
       this.buildType = LocaleRemovalUtility.getMultiLanguageBuildType(true);
-      Vector pages = (Vector)(new Object(3));
+      Vector pages = new Vector(3);
       if ((this.buildType & 1) != 0) {
          pages.addElement(new LocalizationSetupWizard$LanguageWizardPage(this));
       }
@@ -94,7 +94,7 @@ public final class LocalizationSetupWizard extends WizardController {
 
          try {
             if (messageCoding != -1) {
-               SMSParameters smsp = (SMSParameters)(new Object());
+               SMSParameters smsp = new SMSParameters();
                RadioInternal.getDefaultSMSParameters(smsp);
                if (originalSMSCoding == -1) {
                   originalSMSCoding = smsp.getMessageCoding();

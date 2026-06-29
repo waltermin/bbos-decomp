@@ -8,7 +8,7 @@ import net.rim.device.apps.internal.phone.resource.PhoneResources;
 
 final class PhoneInfoOption$CallTimerList extends SelfDrawingListField {
    private int[] _timers;
-   private StringBuffer _buf = (StringBuffer)(new Object());
+   private StringBuffer _buf = new StringBuffer();
 
    public PhoneInfoOption$CallTimerList(int[] timers) {
       super(timers.length, 0);

@@ -11,7 +11,7 @@ public class Match {
    private static int[] _cachedWords = new int[16];
 
    public static int performMatch(RIMModel m, SearchCriterion sc) {
-      if (m instanceof Object) {
+      if (m instanceof MatchProvider) {
          MatchProvider matchProvider = (MatchProvider)m;
          if (sc.getType() != 23) {
             return matchProvider.match(sc);
@@ -74,7 +74,7 @@ public class Match {
             boolean disableHint = true;
             if (hint < numSubmembers) {
                Object o = elements.getAt(hint);
-               if (!(o instanceof Object)) {
+               if (!(o instanceof RIMModel)) {
                   return -1;
                }
 
@@ -109,7 +109,7 @@ public class Match {
                for (; j < numSubmembers; j++) {
                   if (j != skip) {
                      Object o = elements.getAt(j);
-                     if (!(o instanceof Object)) {
+                     if (!(o instanceof RIMModel)) {
                         hints[i] = j + 1;
                         break;
                      }

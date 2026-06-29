@@ -23,8 +23,8 @@ public final class PNGImageWriter extends Thread {
    public PNGImageWriter(Manager mgr, String url) {
       this._width = mgr.getVirtualWidth();
       this._height = mgr.getVirtualHeight();
-      this._offscreen = (Bitmap)(new Object(this._width, Math.min(this._height, 240)));
-      this._graphics = (Graphics)(new Object(this._offscreen));
+      this._offscreen = new Bitmap(this._width, Math.min(this._height, 240));
+      this._graphics = new Graphics(this._offscreen);
       this._mgr = mgr;
       this._url = url;
    }
@@ -47,7 +47,7 @@ public final class PNGImageWriter extends Thread {
       // Bytecode:
       // 000: invokestatic net/rim/device/api/system/Application.getApplication ()Lnet/rim/device/api/system/Application;
       // 003: astore 1
-      // 004: new java/lang/Object
+      // 004: new net/rim/device/internal/ui/component/ProgressDialog
       // 007: dup
       // 008: ldc_w "Saving file"
       // 00b: invokespecial net/rim/device/internal/ui/component/ProgressDialog.<init> (Ljava/lang/String;)V
@@ -68,7 +68,7 @@ public final class PNGImageWriter extends Thread {
       // 024: aload 0
       // 025: getfield net/rim/device/apps/internal/browser/util/PNGImageWriter._url Ljava/lang/String;
       // 028: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 02b: checkcast java/lang/Object
+      // 02b: checkcast javax/microedition/io/file/FileConnection
       // 02e: astore 3
       // 02f: aload 3
       // 030: invokeinterface javax/microedition/io/file/FileConnection.exists ()Z 1
@@ -129,7 +129,7 @@ public final class PNGImageWriter extends Thread {
       // 0b5: aload 6
       // 0b7: getstatic net/rim/device/apps/internal/browser/util/PNGImageWriter.CHUNK_IDAT [B
       // 0ba: invokevirtual java/io/OutputStream.write ([B)V
-      // 0bd: new java/lang/Object
+      // 0bd: new net/rim/device/api/compress/ZLibOutputStream
       // 0c0: dup
       // 0c1: aload 4
       // 0c3: bipush 0
@@ -294,7 +294,7 @@ public final class PNGImageWriter extends Thread {
       // 202: invokevirtual java/io/DataOutputStream.close ()V
       // 205: goto 20a
       // 208: astore 13
-      // 20a: new java/lang/Object
+      // 20a: new java/io/DataOutputStream
       // 20d: dup
       // 20e: aload 3
       // 20f: bipush 33

@@ -5,7 +5,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.util.Arrays;
 
 public final class EmailServiceBookRegistry {
-   private ServiceRecord[] _array = new Object[0];
+   private ServiceRecord[] _array = new ServiceRecord[0];
    private static final long ID = -4682659685053076592L;
 
    private EmailServiceBookRegistry() {

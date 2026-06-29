@@ -17,7 +17,7 @@ public class ArrayList {
          this._array.init(capacity);
          this._increment = capacityIncrement;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -45,7 +45,7 @@ public class ArrayList {
       if (index < this._size && index >= 0) {
          this._array.get(o, index);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -53,7 +53,7 @@ public class ArrayList {
       if (index < this._size && index >= 0) {
          this._array.set(o, index);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

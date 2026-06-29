@@ -101,7 +101,7 @@ class Content implements Persistable {
             throw new PGPEncodingException("CInK");
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

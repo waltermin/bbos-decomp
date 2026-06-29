@@ -17,7 +17,7 @@ public class CertificateAttachmentModelFactory extends RIMModelFactory {
    public Verb[] getVerbs(Object context) {
       if (ContextObject.getFlag(context, 43)) {
          if (this._attachCertificatesVerbs == null) {
-            this._attachCertificatesVerbs = new Object[]{new AttachCertificatesVerb(this)};
+            this._attachCertificatesVerbs = new Verb[]{new AttachCertificatesVerb(this)};
          }
 
          if (this.getPreferredKeyStore().size() > 0) {

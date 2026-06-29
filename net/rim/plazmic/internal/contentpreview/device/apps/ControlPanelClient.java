@@ -22,30 +22,19 @@ public final class ControlPanelClient implements PlaybackInfoHandler, Service {
 
    ControlPanelClient(DatagramConnection connection, String host, int serverPort, int clientPort) {
       if (connection == null) {
-         throw new Object("connection must not be null");
+         throw new NullPointerException("connection must not be null");
       }
 
       if (host == null) {
-         throw new Object("host must not be null");
+         throw new NullPointerException("host must not be null");
       }
 
       this._lastTime = null;
-      this._otherMessages = (Vector)(new Object());
-      this._buffer = (ByteArrayOutputStream)(new Object());
+      this._otherMessages = new Vector();
+      this._buffer = new ByteArrayOutputStream();
       this._writer = new PlaybackInfoMessageWriter(this._buffer);
       this._connection = connection;
-      this._packet = this._connection
-         .newDatagram(
-            0,
-            ((StringBuffer)(new Object("//")))
-               .append(host)
-               .append(":")
-               .append(serverPort)
-               .append(";")
-               .append(clientPort)
-               .append("/rim.net.gprs|UDP")
-               .toString()
-         );
+      this._packet = this._connection.newDatagram(0, "//" + host + ":" + serverPort + ";" + clientPort + "/rim.net.gprs|UDP");
    }
 
    public final void startService() {

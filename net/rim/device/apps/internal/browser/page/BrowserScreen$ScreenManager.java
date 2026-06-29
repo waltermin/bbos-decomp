@@ -9,7 +9,7 @@ import net.rim.device.api.util.CharacterUtilities;
 import net.rim.device.apps.internal.browser.core.BrowserHotkeys;
 import net.rim.device.apps.internal.browser.options.GeneralProperty;
 import net.rim.device.apps.internal.browser.ui.BrowserTextFlowManager;
-import net.rim.device.apps.internal.browser.ui.TextFlowManager;
+import net.rim.device.apps.internal.browser.ui.VerticalIndentFieldManager;
 import net.rim.device.apps.internal.browser.verbs.ShowUrlVerb;
 import net.rim.device.internal.ui.UiInternal;
 import net.rim.device.internal.ui.component.Scrollbar;
@@ -19,7 +19,7 @@ final class BrowserScreen$ScreenManager extends Manager {
    private boolean _eatNavigationKeys;
    private PageHeaderField _header;
    private PageFooterField _footer;
-   private Manager _fields = (Manager)(new Object(3460171888704094208L));
+   private Manager _fields = new VerticalIndentFieldManager(3460171888704094208L);
    private Scrollbar _verticalScrollbar;
    private Scrollbar _horizontalScrollbar;
    private boolean _showInFullScreen;
@@ -32,8 +32,8 @@ final class BrowserScreen$ScreenManager extends Manager {
    BrowserScreen$ScreenManager() {
       super(3458764513820540928L);
       this._header = new PageHeaderField();
-      this._verticalScrollbar = (Scrollbar)(new Object());
-      this._horizontalScrollbar = (Scrollbar)(new Object(false, true));
+      this._verticalScrollbar = new Scrollbar();
+      this._horizontalScrollbar = new Scrollbar(false, true);
       this._scrollHelper = new BrowserScreen$ScreenManager$ScrollHelper(this);
       this._footer = new PageFooterField();
       this._availableHeight = Integer.MAX_VALUE;
@@ -288,7 +288,7 @@ final class BrowserScreen$ScreenManager extends Manager {
 
                      return true;
                   case 671:
-                     if (this._fields instanceof Object) {
+                     if (this._fields instanceof BrowserTextFlowManager) {
                         BrowserTextFlowManager tfm = (BrowserTextFlowManager)this._fields;
                         if (tfm.getWideViewMode()) {
                            tfm.adjustZoom(Integer.MAX_VALUE);
@@ -298,8 +298,8 @@ final class BrowserScreen$ScreenManager extends Manager {
 
                      return false;
                   case 903:
-                     if (this._fields instanceof Object) {
-                        ((TextFlowManager)this._fields).toggleViewMode();
+                     if (this._fields instanceof BrowserTextFlowManager) {
+                        ((BrowserTextFlowManager)this._fields).toggleViewMode();
                         return true;
                      }
                }

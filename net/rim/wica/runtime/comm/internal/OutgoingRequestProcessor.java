@@ -1,5 +1,6 @@
 package net.rim.wica.runtime.comm.internal;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Hashtable;
@@ -163,7 +164,7 @@ public final class OutgoingRequestProcessor implements Runnable, EventListener {
    public OutgoingRequestProcessor(CommunicationServiceImpl commService) {
       this._commService = commService;
       this._mainQueue = new BoundedLinkedQueue(Integer.MAX_VALUE);
-      this._deferredQueues = (Hashtable)(new Object());
+      this._deferredQueues = new Hashtable();
       this._dequeueingStrategy = new OutgoingRequestProcessor$DeferredQueueDequeueingStrategy(this, null);
    }
 
@@ -207,21 +208,16 @@ public final class OutgoingRequestProcessor implements Runnable, EventListener {
       if (request.isCanceled()) {
          return new ResponseImpl(602);
       } else if (!this._commService.isInCoverage()) {
-         this._commService
-            .logException(
-               ((StringBuffer)(new Object("Sending request to "))).append(request.getURL()).append(" failed due to out of coverage").toString(), error
-            );
+         this._commService.logException("Sending request to " + request.getURL() + " failed due to out of coverage", error);
          return new ResponseImpl(603);
-      } else if (error instanceof Object) {
-         this._commService
-            .logException(((StringBuffer)(new Object("Server unreachable, request to "))).append(request.getURL()).append(" failed").toString(), error);
+      } else if (error instanceof IOException) {
+         this._commService.logException("Server unreachable, request to " + request.getURL() + " failed", error);
          return new ResponseImpl(604);
-      } else if (error instanceof Object) {
-         this._commService
-            .logException(((StringBuffer)(new Object("Out of memory, request to "))).append(request.getURL()).append(" failed").toString(), error);
+      } else if (error instanceof OutOfMemoryError) {
+         this._commService.logException("Out of memory, request to " + request.getURL() + " failed", error);
          return new ResponseImpl(603);
       } else {
-         this._commService.logException(((StringBuffer)(new Object("Sending request to "))).append(request.getURL()).append(" failed").toString(), error);
+         this._commService.logException("Sending request to " + request.getURL() + " failed", error);
          return new ResponseImpl(601);
       }
    }
@@ -288,10 +284,10 @@ public final class OutgoingRequestProcessor implements Runnable, EventListener {
    }
 
    private final HttpConnection createConnection(String uri, OutgoingRequestImpl request) {
-      uri = ((StringBuffer)(new Object())).append(uri).append(";DeviceSide=false").toString();
+      uri = uri + ";DeviceSide=false";
       String uid = this._commService.getIPPPUid();
       if (uid != null && (uid.length() > 1 || uid.length() == 1 && uid.charAt(0) != '-')) {
-         uri = ((StringBuffer)(new Object())).append(uri).append(";ConnectionUID=").append(uid).toString();
+         uri = uri + ";ConnectionUID=" + uid;
       }
 
       HttpConnection connection = (HttpConnection)Connector.open(uri);
@@ -331,7 +327,7 @@ public final class OutgoingRequestProcessor implements Runnable, EventListener {
                   break label75;
                }
 
-               pm.beginTask(((StringBuffer)(new Object("Sending request to "))).append(request.getUrl()).toString(), this._totalWorkUnits);
+               pm.beginTask("Sending request to " + request.getUrl(), this._totalWorkUnits);
                this._commService.waitForNetwork();
                if (pm.isCanceled()) {
                   var12 = new ResponseImpl(602);

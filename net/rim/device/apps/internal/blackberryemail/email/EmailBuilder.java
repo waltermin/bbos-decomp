@@ -31,7 +31,7 @@ import net.rim.device.apps.internal.blackberryemail.header.HeaderTypes;
 import net.rim.device.apps.internal.blackberryemail.resources.EmailResources;
 
 public final class EmailBuilder {
-   private static String[][] _arrayOfStringPairs = new Object[1][];
+   private static String[][] _arrayOfStringPairs = new String[1][];
 
    static final void addSubjectLine(EmailMessageModel msg, Object context) {
       PersistableRIMModel subject = (PersistableRIMModel)FactoryUtil.createInstance(3928489455534245796L, context);
@@ -41,17 +41,17 @@ public final class EmailBuilder {
    static final void addOriginalMessage(EmailMessageModel msg, Object context) {
       Object originalMessage = ContextObject.get(context, 245);
       if (!(originalMessage instanceof EmailMessageModelImpl)) {
-         if (!(originalMessage instanceof Object)) {
-            throw new Object("Only RIM EmailModel implementations are currently supported");
+         if (!(originalMessage instanceof MessagePartsProvider)) {
+            throw new ClassCastException("Only RIM EmailModel implementations are currently supported");
          }
 
          MessagePartsProvider m = (MessagePartsProvider)originalMessage;
-         StringBuffer body = (StringBuffer)(new Object());
+         StringBuffer body = new StringBuffer();
          if (m.allowDescriptiveForwardHeader()) {
             String sourceName = StringUtilities.removeChars(m.getName(), "̲");
             if (sourceName.length() > 0) {
                body.append('\n');
-               addLine(body, ((StringBuffer)(new Object("------ "))).append(sourceName).append(" ------").toString(), null);
+               addLine(body, "------ " + sourceName + " ------", null);
             }
 
             String sender = m.getSender();
@@ -115,7 +115,7 @@ public final class EmailBuilder {
                   attachmentModel.setFileSize(attachmentSize);
                   Object attachmentData = attachments[i].getData();
                   if (!(attachmentData instanceof byte[])) {
-                     if (attachmentData instanceof Object) {
+                     if (attachmentData instanceof DataBuffer) {
                         label133:
                         try {
                            dataInByte = ((DataBuffer)attachmentData).readByteArray();
@@ -278,7 +278,7 @@ public final class EmailBuilder {
    }
 
    public static final boolean modelIsAGroupWithAllInvalidAddresses(Object obj, boolean isPIN) {
-      if (!(obj instanceof Object)) {
+      if (!(obj instanceof GroupAddressCardModel)) {
          return false;
       }
 
@@ -343,7 +343,7 @@ public final class EmailBuilder {
    private static final boolean populateWithReplyAddressee(Object context, EmailMessageModel newMessage) {
       ContextObject contextObject = ContextObject.castOrCreate(context);
       Object existingMessageSubmembers = contextObject.get(245);
-      if (!(existingMessageSubmembers instanceof Object)) {
+      if (!(existingMessageSubmembers instanceof ReadableList)) {
          return false;
       }
 
@@ -354,7 +354,7 @@ public final class EmailBuilder {
    private static final boolean populateWithReplyToAllAddressees(Object context, EmailMessageModel newMessage) {
       ContextObject contextObject = ContextObject.castOrCreate(context);
       Object existingMessageSubmembers = contextObject.get(245);
-      if (existingMessageSubmembers instanceof Object) {
+      if (existingMessageSubmembers instanceof ReadableList) {
          String deviceAddress = getDeviceAddress(newMessage);
          Vector replyToAllAddresses = getReplyToAllAddresses((ReadableList)existingMessageSubmembers, deviceAddress);
          return populate(contextObject, newMessage, replyToAllAddresses);
@@ -376,7 +376,7 @@ public final class EmailBuilder {
          if (o instanceof EmailHeaderModel) {
             EmailHeaderModel header = (EmailHeaderModel)o;
             RIMModel insideModel = header.getInsideModel();
-            if (insideModel instanceof Object) {
+            if (insideModel instanceof FriendlyNameAddressModel) {
                FriendlyNameAddressModel addressModel = (FriendlyNameAddressModel)insideModel;
                String addressString = addressModel.getAddress();
                if (addressExistsInMessage(newMessage, addressString)) {
@@ -425,7 +425,7 @@ public final class EmailBuilder {
             int headerType = header.getHeaderType();
             if (headerType == 0 || headerType == 1 || headerType == 2) {
                RIMModel model = header.getInsideModel();
-               if (model instanceof Object) {
+               if (model instanceof FriendlyNameAddressModel) {
                   FriendlyNameAddressModel addressModel = (FriendlyNameAddressModel)model;
                   String addressString = addressModel.getAddress();
                   if (StringUtilities.compareToIgnoreCase(addressString, addressToLookFor, 1701707776) == 0) {
@@ -458,7 +458,7 @@ public final class EmailBuilder {
    }
 
    private static final Vector getReplyToAddresses(ReadableList list) {
-      Vector replyAddresses = (Vector)(new Object());
+      Vector replyAddresses = new Vector();
       Object fromModel = null;
       Object senderModel = null;
       int size = list.size();
@@ -502,7 +502,7 @@ public final class EmailBuilder {
    }
 
    private static final Vector getReplyToAllAddresses(ReadableList list, String deviceAddress) {
-      Vector replyAddresses = (Vector)(new Object());
+      Vector replyAddresses = new Vector();
       boolean hasReplyTo = false;
       int size = list.size();
 
@@ -597,7 +597,7 @@ public final class EmailBuilder {
       Factory headerFactory = (Factory)ar.waitFor(-8034039608019345282L);
       Factory groupAddressFactory = (Factory)ar.waitFor(-1326186686655625745L);
       if (groupAddressFactory != null) {
-         ContextObject groupContext = (ContextObject)(new Object());
+         ContextObject groupContext = new ContextObject();
          groupContext.put(253, groupName);
          groupContext.putIntegerData(groupUID);
          PersistableRIMModel gacm = (PersistableRIMModel)groupAddressFactory.createInstance(groupContext);
@@ -715,7 +715,7 @@ public final class EmailBuilder {
          messageModel.add(attachmentModel);
          return true;
       } catch (Throwable var6) {
-         throw new Object(e.getMessage());
+         throw new RuntimeException(e.getMessage());
       }
    }
 
@@ -763,7 +763,7 @@ public final class EmailBuilder {
          messageModel.add(model);
          return true;
       } catch (Throwable var9) {
-         throw new Object(e.getMessage());
+         throw new RuntimeException(e.getMessage());
       }
    }
 
@@ -785,7 +785,7 @@ public final class EmailBuilder {
          messageModel.add(model);
          return true;
       } catch (Throwable var8) {
-         throw new Object(e.getMessage());
+         throw new RuntimeException(e.getMessage());
       }
    }
 }

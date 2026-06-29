@@ -7,7 +7,7 @@ import net.rim.wica.runtime.metadata.internal.def.MsgDefAccess;
 import net.rim.wica.runtime.provisioning.internal.elements.MessageElement;
 
 public class MessageCodeMapVisitor extends DefinitionVisitorAdapter {
-   ToIntHashtable _nameToOldCode = (ToIntHashtable)(new Object());
+   ToIntHashtable _nameToOldCode = new ToIntHashtable();
    IntIntHashtable _messageCodeMap;
 
    public MessageCodeMapVisitor(MsgDefAccess msgDefs) {
@@ -18,7 +18,7 @@ public class MessageCodeMapVisitor extends DefinitionVisitorAdapter {
          this._nameToOldCode.put(msgDefs.getMsgName(defId), msgDefs.getMsgCode(defId));
       }
 
-      this._messageCodeMap = (IntIntHashtable)(new Object(this._nameToOldCode.size()));
+      this._messageCodeMap = new IntIntHashtable(this._nameToOldCode.size());
    }
 
    @Override

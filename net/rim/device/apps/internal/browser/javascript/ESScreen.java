@@ -10,7 +10,7 @@ final class ESScreen {
    }
 
    public static final ESObject getScreen() {
-      ESObject instance = (ESObject)(new Object());
+      ESObject instance = new ESObject();
       instance.setGrowthIncrement(8);
       instance.addField(Names.width, 5, Value.makeIntegerValue(Display.getWidth()));
       instance.addField(Names.height, 5, Value.makeIntegerValue(Display.getHeight()));

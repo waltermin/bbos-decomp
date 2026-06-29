@@ -1,5 +1,7 @@
 package net.rim.device.cldc.io.commlink;
 
+import java.io.EOFException;
+import java.io.IOException;
 import java.util.Vector;
 import javax.microedition.io.Datagram;
 import net.rim.device.api.bluetooth.BluetoothSerialPort;
@@ -14,8 +16,8 @@ import net.rim.vm.Array;
 
 public final class Transport extends DatagramTransportBase implements Runnable {
    private boolean _started;
-   private ToIntHashtable _registry = (ToIntHashtable)(new Object());
-   private Vector _reverseRegistry = (Vector)(new Object());
+   private ToIntHashtable _registry = new ToIntHashtable();
+   private Vector _reverseRegistry = new Vector();
    private int _txMTU;
    int _rxDestination;
    byte[] _rxBuffer;
@@ -39,7 +41,7 @@ public final class Transport extends DatagramTransportBase implements Runnable {
       } else {
          this._started = true;
          this._commLink = commLink;
-         ((Thread)(new Object(this))).start();
+         new Thread(this).start();
       }
 
       return true;
@@ -49,7 +51,7 @@ public final class Transport extends DatagramTransportBase implements Runnable {
       this._commLink.die();
    }
 
-   final void registerName(String name) {
+   final void registerName(String name) throws IOException {
       if (name != null && name.length() != 0) {
          synchronized (this._registry) {
             if (!this._registry.containsKey(name)) {
@@ -59,7 +61,7 @@ public final class Transport extends DatagramTransportBase implements Runnable {
             }
          }
       } else {
-         throw new Object("Invalid transport address");
+         throw new IOException("Invalid transport address");
       }
    }
 
@@ -125,10 +127,10 @@ public final class Transport extends DatagramTransportBase implements Runnable {
    }
 
    @Override
-   public final void send(Datagram datagram) {
+   public final void send(Datagram datagram) throws EOFException {
       DatagramBase dg = (DatagramBase)datagram;
       if (!this._linkUp) {
-         throw new Object("Link down");
+         throw new EOFException("Link down");
       }
 
       dg.rewind();
@@ -139,12 +141,12 @@ public final class Transport extends DatagramTransportBase implements Runnable {
       }
    }
 
-   private final void sendDatagram(DatagramBase dg) {
+   private final void sendDatagram(DatagramBase dg) throws IOException {
       this._profile.add(68, 111);
       String name = dg.getAddress();
       int id = this.lookupName(name);
       if (id <= 0) {
-         throw new Object("Unknown sender");
+         throw new IOException("Unknown sender");
       }
 
       this._statusScreen.advanceAnimation(true);
@@ -297,7 +299,7 @@ public final class Transport extends DatagramTransportBase implements Runnable {
                         }
 
                         this._replyFlag = null;
-                        this._receivingDatagrams = (IntHashtable)(new Object());
+                        this._receivingDatagrams = new IntHashtable();
                         this._rxBuffer = new byte[1036];
                         this._statusScreen = new CommLinkStatusScreen();
                         this._linkUp = false;

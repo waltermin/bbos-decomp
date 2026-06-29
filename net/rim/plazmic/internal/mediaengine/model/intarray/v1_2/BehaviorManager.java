@@ -23,11 +23,11 @@ public class BehaviorManager implements MediaService, MediaListener {
    @Override
    public void setServices(MediaServices s) {
       if (this._services != null) {
-         throw new Object("setServices has to be called only once");
+         throw new RuntimeException("setServices has to be called only once");
       }
 
       if (s == null) {
-         throw new Object("Provided MediaServices cannot be null");
+         throw new IllegalArgumentException("Provided MediaServices cannot be null");
       }
 
       this._services = s;

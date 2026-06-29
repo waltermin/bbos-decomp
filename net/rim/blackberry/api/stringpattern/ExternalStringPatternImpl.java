@@ -27,7 +27,7 @@ class ExternalStringPatternImpl extends StringPattern implements ExternalStringP
 
       char[] searchChars = new char[str.length()];
       str.getChars(0, str.length(), searchChars, 0);
-      String searchString = (String)(new Object(searchChars));
+      String searchString = new String(searchChars);
       return this.doMatch(searchString, beginIndex, maxIndex, match);
    }
 

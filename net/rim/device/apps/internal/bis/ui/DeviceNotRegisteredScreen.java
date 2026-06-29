@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.bis.ui;
 
 import java.util.Hashtable;
-import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.apps.internal.bis.ApplicationResources;
 import net.rim.device.apps.internal.bis.api.ui.BasicScreen;
 import net.rim.device.apps.internal.bis.api.ui.Button;
@@ -12,7 +12,7 @@ public final class DeviceNotRegisteredScreen extends BasicScreen {
    @Override
    public final void refresh(Hashtable screenParams) {
       this.setTitle(ApplicationResources.getString(262));
-      this.addContentField((Field)(new Object(ApplicationResources.getString(263))));
+      this.addContentField(new LabelField(ApplicationResources.getString(263)));
       this.addContentLineBreak();
       this.addContentField(new FormattedTextField(ApplicationResources.getString(264)));
       Button okButton = new Button(ApplicationResources.getString(39));

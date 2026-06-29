@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.secureemail.sendmethods;
 
+import java.io.IOException;
 import java.util.Vector;
 import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.apps.api.framework.model.RIMModel;
@@ -147,12 +148,12 @@ public class SecureEmailAwareSendMethod implements SendMethod {
       updateSecureEmailPolicyDialog.display();
       Throwable t = updateSecureEmailPolicyDialog.getThrowable();
       if (!(t instanceof AbortSendSecureEmailException)) {
-         if (!(t instanceof Object)) {
+         if (!(t instanceof IOException)) {
             if (t != null) {
                throw new AbortSendSecureEmailException();
             }
          } else {
-            throw (Object)t;
+            throw (IOException)t;
          }
       } else {
          throw (AbortSendSecureEmailException)t;

@@ -4,6 +4,7 @@ import net.rim.device.api.math.Fixed32;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.util.MathUtilities;
 import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.ui.ScalableBitmapField;
 
@@ -85,7 +86,7 @@ public class Region extends Manager {
       if (color == -1 || color >= 0 && color <= 16777215) {
          this._backgroundColor = color;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -115,7 +116,7 @@ public class Region extends Manager {
             this._fit = fit;
             return;
          default:
-            throw new Object(((StringBuffer)(new Object("Fit: "))).append(fit).append(" is not supported").toString());
+            throw new IllegalArgumentException("Fit: " + fit + " is not supported");
       }
    }
 
@@ -203,7 +204,7 @@ public class Region extends Manager {
    }
 
    private boolean isResponsibleForScrolling(Field childField) {
-      return this._fit == 8 && !(childField instanceof Object);
+      return this._fit == 8 && !(childField instanceof RichTextField);
    }
 
    @Override

@@ -1,6 +1,5 @@
 package net.rim.device.apps.internal.addressbook.addresscard;
 
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.AutoTextEditField;
 import net.rim.device.api.ui.component.EditField;
 
@@ -50,7 +49,7 @@ class PersonalNameField extends AutoTextEditField {
    }
 
    private void handleYomiFieldTextChange(Object source) {
-      if (source instanceof Object && ((Field)source).isFocus()) {
+      if (source instanceof EditField && ((EditField)source).isFocus()) {
          if (this._removeAllOnFirstKey) {
             this._removeAllOnFirstKey = false;
          }

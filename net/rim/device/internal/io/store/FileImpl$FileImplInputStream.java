@@ -1,5 +1,6 @@
 package net.rim.device.internal.io.store;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 class FileImpl$FileImplInputStream extends InputStream {
@@ -38,9 +39,9 @@ class FileImpl$FileImplInputStream extends InputStream {
    }
 
    @Override
-   public int read() {
+   public int read() throws IOException {
       if (this._closed) {
-         throw new Object("Stream closed");
+         throw new IOException("Stream closed");
       }
 
       synchronized (this.this$0._contentLock) {
@@ -63,9 +64,9 @@ class FileImpl$FileImplInputStream extends InputStream {
    }
 
    @Override
-   public int read(byte[] b, int off, int len) {
+   public int read(byte[] b, int off, int len) throws IOException {
       if (this._closed) {
-         throw new Object("Stream closed");
+         throw new IOException("Stream closed");
       }
 
       if (off >= 0 && len >= 0 && off + len <= b.length) {
@@ -84,7 +85,7 @@ class FileImpl$FileImplInputStream extends InputStream {
             return len;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

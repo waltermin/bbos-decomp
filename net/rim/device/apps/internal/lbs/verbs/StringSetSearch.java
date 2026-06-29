@@ -5,7 +5,7 @@ import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.StringPattern$Match;
 
 public final class StringSetSearch {
-   private String[] _set = new Object[0];
+   private String[] _set = new String[0];
    private long[] _keys = new long[0];
    private short[] _skipJump;
    private int _shortestLength = 255;
@@ -13,7 +13,7 @@ public final class StringSetSearch {
 
    public final void add(String text, long key) {
       if (text.length() < 2) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._shortestLength = Math.min(this._shortestLength, text.length());

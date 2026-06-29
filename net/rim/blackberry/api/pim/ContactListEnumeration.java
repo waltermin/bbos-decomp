@@ -1,6 +1,7 @@
 package net.rim.blackberry.api.pim;
 
 import java.util.Enumeration;
+import net.rim.device.apps.api.addressbook.AddressCardModel;
 
 final class ContactListEnumeration implements Enumeration {
    Enumeration _addressCards;
@@ -21,7 +22,7 @@ final class ContactListEnumeration implements Enumeration {
 
       while (this._addressCards.hasMoreElements()) {
          this._nextAddress = this._addressCards.nextElement();
-         if (this._nextAddress instanceof Object) {
+         if (this._nextAddress instanceof AddressCardModel) {
             return true;
          }
       }
@@ -35,7 +36,7 @@ final class ContactListEnumeration implements Enumeration {
          Object na;
          do {
             na = this._addressCards.nextElement();
-         } while (!(na instanceof Object));
+         } while (!(na instanceof AddressCardModel));
 
          this._nextAddress = na;
       }

@@ -25,7 +25,7 @@ public final class ProgressManager {
    private long _lastStateStartTimestamp = 0;
    private MessageFormat _loadingLabel;
    private MessageFormat _loadingImageLabel;
-   private String[] _loadingValues = new Object[2];
+   private String[] _loadingValues = new String[2];
    private int _loadingNumToReadCache;
    private static final int MAX_INTERVAL = 30000;
    private static final int MAX_IDLE_KICK_TIME = 120000;
@@ -62,7 +62,7 @@ public final class ProgressManager {
       long interval = currentTimestamp - this._lastStateStartTimestamp;
       this._lastStateStartTimestamp = currentTimestamp;
       if (interval >= 30000 && this._lastStateStartTimestamp != 0 && oldLabel != null && newLabel != null) {
-         StringBuffer buffer = (StringBuffer)(new Object());
+         StringBuffer buffer = new StringBuffer();
          buffer.append('[');
          buffer.append(oldLabel);
          buffer.append(" -> ");
@@ -165,17 +165,14 @@ public final class ProgressManager {
             if (numToRead != this._loadingNumToReadCache) {
                this._loadingNumToReadCache = numToRead;
                if (inBytes) {
-                  this._loadingValues[1] = ((StringBuffer)(new Object()))
-                     .append(String.valueOf(numToRead > 1024 ? numToRead / 1024 : 1))
-                     .append('k')
-                     .toString();
+                  this._loadingValues[1] = String.valueOf(numToRead > 1024 ? numToRead / 1024 : 1) + 'k';
                } else {
                   this._loadingValues[1] = String.valueOf(numToRead);
                }
             }
 
             if (inBytes) {
-               this._loadingValues[0] = ((StringBuffer)(new Object())).append(String.valueOf(numRead / 1024)).append('k').toString();
+               this._loadingValues[0] = String.valueOf(numRead / 1024) + 'k';
             } else {
                this._loadingValues[0] = String.valueOf(numRead);
             }
@@ -299,7 +296,7 @@ public final class ProgressManager {
 
             this._maxValue = 10000;
             this._label = getLabel(state);
-            this._loadingLabel = (MessageFormat)(new Object(BrowserResources.getString(741)));
+            this._loadingLabel = new MessageFormat(BrowserResources.getString(741));
             this._loadingValues[0] = null;
             this._loadingValues[1] = null;
             this._loadingNumToReadCache = 0;
@@ -313,7 +310,7 @@ public final class ProgressManager {
 
             this._maxValue = 0;
             this._label = getLabel(state);
-            this._loadingImageLabel = (MessageFormat)(new Object(BrowserResources.getString(742)));
+            this._loadingImageLabel = new MessageFormat(BrowserResources.getString(742));
             this._loadingValues[0] = null;
             this._loadingValues[1] = null;
             this._loadingNumToReadCache = 0;

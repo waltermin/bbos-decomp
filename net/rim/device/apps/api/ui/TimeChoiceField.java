@@ -109,7 +109,7 @@ public class TimeChoiceField extends ObjectChoiceField {
    private static final long TEN_MONTHS = 25920000000L;
    private static final long ELEVEN_MONTHS = 28512000000L;
    private static final long ONE_YEAR = 31536000000L;
-   private static WeakReference _sbWR = (WeakReference)(new Object(null));
+   private static WeakReference _sbWR = new WeakReference(null);
 
    public TimeChoiceField(String label, long style) {
       super(label, null, 0, style | 134217728);
@@ -144,7 +144,7 @@ public class TimeChoiceField extends ObjectChoiceField {
 
    public void setTimeChoices(long[] timeChoices, long minTimeChoice, long maxTimeChoice) {
       if (timeChoices == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int numTimeChoices = timeChoices.length;
@@ -166,12 +166,12 @@ public class TimeChoiceField extends ObjectChoiceField {
       if (zeroMinIndex >= 0 && zeroMinIndex < numAvailableTimeChoices - 1) {
          String unit = this.getUnit(this._timeChoices[zeroMinIndex + 1].toString());
          if (unit != null) {
-            this._timeChoices[zeroMinIndex] = new TimeChoiceField$TimeChoice(((StringBuffer)(new Object("0"))).append(unit).toString(), 0);
+            this._timeChoices[zeroMinIndex] = new TimeChoiceField$TimeChoice("0" + unit, 0);
          }
       }
 
       if (numAvailableTimeChoices == 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       Array.resize(this._timeChoices, numAvailableTimeChoices);
@@ -180,7 +180,7 @@ public class TimeChoiceField extends ObjectChoiceField {
 
    public void setTimeChoicesIncludeMaxTimeChoice(long[] timeChoices, long minTimeChoice, long maxTimeChoice) {
       if (timeChoices == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int numTimeChoices = timeChoices.length;
@@ -402,12 +402,12 @@ public class TimeChoiceField extends ObjectChoiceField {
          }
       }
 
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    public void setSelectedTimeInMillis(long selectedTime, boolean roundUp) {
       if (this._timeChoices == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       TimeChoiceField$TimeChoice[] timeChoices = this._timeChoices;

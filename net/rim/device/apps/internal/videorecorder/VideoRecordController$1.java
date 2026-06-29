@@ -22,7 +22,7 @@ final class VideoRecordController$1 extends Thread {
       label27:
       try {
          var3 = true;
-         this.this$0._tempFile.rename(((StringBuffer)(new Object())).append(FileUtilities.getName(this.this$0._filename)).append(".lock").toString());
+         this.this$0._tempFile.rename(FileUtilities.getName(this.this$0._filename) + ".lock");
          this.this$0._tempIS = this.this$0._tempFile.openInputStream();
          this.this$0._finalFile = (FileConnection)Connector.open(this.this$0._filename);
          this.this$0._finalFile.create();
@@ -35,7 +35,7 @@ final class VideoRecordController$1 extends Thread {
          }
       }
 
-      if (this.this$0._tempIS instanceof Object && this.this$0._tempOS instanceof Object) {
+      if (this.this$0._tempIS instanceof FileHandleProvider && this.this$0._tempOS instanceof FileHandleProvider) {
          Camera.transcodeVideoFile(((FileHandleProvider)this.this$0._tempIS).getFileHandle(), ((FileHandleProvider)this.this$0._tempOS).getFileHandle());
       }
    }

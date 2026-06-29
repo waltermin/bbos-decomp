@@ -49,7 +49,7 @@ public final class WifiHRI extends HostRoutingInfo implements Persistable {
          super.setDal((DomainNameDAC)d);
          super.setDac(d);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

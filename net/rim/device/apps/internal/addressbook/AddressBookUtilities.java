@@ -20,7 +20,7 @@ public final class AddressBookUtilities {
       }
 
       String prompt;
-      if (!(itemToDelete instanceof Object)) {
+      if (!(itemToDelete instanceof VerbDescriptionProvider)) {
          prompt = itemToDelete.toString();
       } else {
          VerbDescriptionProvider descriptor = (VerbDescriptionProvider)itemToDelete;
@@ -32,7 +32,7 @@ public final class AddressBookUtilities {
       }
 
       String pattern = AddressBookResources.getString(1023);
-      String formattedString = MessageFormat.format(pattern, new Object[]{prompt});
+      String formattedString = MessageFormat.format(pattern, new String[]{prompt});
       int retVal = Dialog.ask(2, formattedString, -1);
       return retVal == 3;
    }

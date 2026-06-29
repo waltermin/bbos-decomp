@@ -16,7 +16,7 @@ import net.rim.device.apps.api.utility.framework.VerbToMenu;
 import net.rim.vm.Array;
 
 final class CategoriesScreen extends SaveableMainScreenOptionsListItem implements CollectionListener, FieldChangeListener {
-   private CheckboxField[] _checkboxes = new Object[0];
+   private CheckboxField[] _checkboxes = new CheckboxField[0];
    private int[] _selectedCategoryIds;
    private byte _mode;
    private boolean _changesSaved;
@@ -68,7 +68,7 @@ final class CategoriesScreen extends SaveableMainScreenOptionsListItem implement
    }
 
    private final CheckboxField createCategoryCheckbox(CategoryModel category) {
-      CheckboxField checkbox = (CheckboxField)(new Object(category.getName(), this.isInSelectedCategoryIds(category.getId())));
+      CheckboxField checkbox = new CheckboxField(category.getName(), this.isInSelectedCategoryIds(category.getId()));
       if (this._mode == 2) {
          checkbox.setChangeListener(this);
       }

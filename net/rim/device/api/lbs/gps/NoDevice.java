@@ -44,7 +44,7 @@ final class NoDevice extends GPSDevice {
       if (obj instanceof NoDevice) {
          return true;
       } else {
-         return obj instanceof Object ? super._deviceID.equals(obj) : super.equals(obj);
+         return obj instanceof String ? super._deviceID.equals(obj) : super.equals(obj);
       }
    }
 }

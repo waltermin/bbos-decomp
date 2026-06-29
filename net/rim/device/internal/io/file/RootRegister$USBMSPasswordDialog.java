@@ -50,7 +50,7 @@ final class RootRegister$USBMSPasswordDialog extends SimplePasswordDialog {
 
                      String password = this.getText();
                      if (password == null || password.length() < 4 || !this._security.verifyStoredPasswordOnly(password)) {
-                        this._messageDlg = (Dialog)(new Object(0, CommonResource.getString(10047), 0, Bitmap.getPredefinedBitmap(0), 33554432));
+                        this._messageDlg = new Dialog(0, CommonResource.getString(10047), 0, Bitmap.getPredefinedBitmap(0), 33554432);
                         this._messageDlg.show(49);
                         Proxy.getInstance().invokeLater(new RootRegister$USBMSPasswordDialog$1(this));
                         var5 = false;
@@ -82,7 +82,7 @@ final class RootRegister$USBMSPasswordDialog extends SimplePasswordDialog {
    }
 
    private final void setMessage() {
-      StringBuffer message = (StringBuffer)(new Object(CommonResource.getString(10118)));
+      StringBuffer message = new StringBuffer(CommonResource.getString(10118));
       int devicePasswordAttempt = this._security.getPasswordFailureCount() + 1;
       int devicePasswordMaxAttempts = this._security.getMaxPasswordAttempts();
       if (this._lookingForKnownPassword || devicePasswordAttempt != devicePasswordMaxAttempts / 2 + 1 && devicePasswordAttempt != devicePasswordMaxAttempts - 1
@@ -91,7 +91,7 @@ final class RootRegister$USBMSPasswordDialog extends SimplePasswordDialog {
          this._lookingForKnownPassword = false;
          message.append(CommonResource.getString(10048));
          if (devicePasswordAttempt == devicePasswordMaxAttempts) {
-            this._messageDlg = (Dialog)(new Object(0, CommonResource.getString(10049), 0, Bitmap.getPredefinedBitmap(0), 33554432));
+            this._messageDlg = new Dialog(0, CommonResource.getString(10049), 0, Bitmap.getPredefinedBitmap(0), 33554432);
             this._messageDlg.show(49);
          }
 

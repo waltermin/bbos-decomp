@@ -117,7 +117,7 @@ public class BrowserContentBaseImpl implements BrowserContent {
 
    public BrowserContentBaseImpl(String url, Field content, RenderingApplication renderingApplication, RenderingOptions renderingOptions, int flags) {
       if (renderingOptions == null) {
-         throw new Object("Rendering options cannot be null");
+         throw new IllegalArgumentException("Rendering options cannot be null");
       }
 
       this._flags = flags;

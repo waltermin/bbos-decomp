@@ -21,15 +21,15 @@ import net.rim.vm.Array;
 public final class VCalToEventModelBuilder implements ICalendarProvider {
    private Event _event;
    private String _version;
-   private Date _startTime = (Date)(new Object());
-   private Date _endTime = (Date)(new Object());
-   private StringBuffer _subject = (StringBuffer)(new Object());
-   private StringBuffer _notes = (StringBuffer)(new Object());
-   private StringBuffer _location = (StringBuffer)(new Object());
+   private Date _startTime = new Date();
+   private Date _endTime = new Date();
+   private StringBuffer _subject = new StringBuffer();
+   private StringBuffer _notes = new StringBuffer();
+   private StringBuffer _location = new StringBuffer();
    private int _vCalendarBeginTag;
    private int _alarmNestedBeginTag;
    private int _calendarComponent;
-   private Date _triggerTime = (Date)(new Object());
+   private Date _triggerTime = new Date();
    private int _triggerTimeRelative;
    private int _triggerSet;
    private int _alarmAction;
@@ -42,8 +42,8 @@ public final class VCalToEventModelBuilder implements ICalendarProvider {
    private int[] _recurDaysInMonth = new int[0];
    private int[] _recurMonthsInYear = new int[0];
    private int[] _recurBySetPos = new int[0];
-   private Date _recurEndTime = (Date)(new Object());
-   private Date[] _recurExceptions = new Object[0];
+   private Date _recurEndTime = new Date();
+   private Date[] _recurExceptions = new Date[0];
    private static final String VERSION_1_0 = "1.0";
    private static final String VERSION_2_0 = "2.0";
    private static final int ABSOLUTE = 0;
@@ -125,7 +125,7 @@ public final class VCalToEventModelBuilder implements ICalendarProvider {
                }
 
                if (!this.isMonthsSpecified()) {
-                  throw new Object("Invalid or unsupported recurrence rule specification");
+                  throw new IllegalArgumentException("Invalid or unsupported recurrence rule specification");
                }
 
                RecurUtil.addMonthModifier(r, this._recurMonthsInYear[0]);
@@ -182,8 +182,8 @@ public final class VCalToEventModelBuilder implements ICalendarProvider {
       this.setLocation(81434961, null, event.getLocation());
       long startDate = event.getStart(tz);
       long instanceDuration = event.getInstanceDuration();
-      this.setDateTimeStart(81434961, -1773854324, (Date)(new Object(startDate)));
-      this.setDateTimeEnd(81434961, -1773854324, (Date)(new Object(startDate + instanceDuration)));
+      this.setDateTimeStart(81434961, -1773854324, new Date(startDate));
+      this.setDateTimeEnd(81434961, -1773854324, new Date(startDate + instanceDuration));
       if (event.getRecurrenceCopy() != null) {
          this.populateRecurrencePropertiesFrom(event);
       }
@@ -200,10 +200,10 @@ public final class VCalToEventModelBuilder implements ICalendarProvider {
    protected final void populateRecurrencePropertiesFrom(Event event) {
       Recur recurInfo = event.getRecurrenceCopy();
       long[] exclusions = recurInfo.getExclusions(null);
-      this._recurExceptions = new Object[exclusions.length];
+      this._recurExceptions = new Date[exclusions.length];
 
       for (int i = 0; i < exclusions.length; i++) {
-         this._recurExceptions[i] = (Date)(new Object(exclusions[i]));
+         this._recurExceptions[i] = new Date(exclusions[i]);
       }
 
       this._recurType = recurInfo.getRecurType();
@@ -215,7 +215,7 @@ public final class VCalToEventModelBuilder implements ICalendarProvider {
          this.setCount(0);
       }
 
-      Recur$Modifier modifier = (Recur$Modifier)(new Object());
+      Recur$Modifier modifier = new Recur$Modifier();
       switch (this._recurType) {
          case 1:
             return;
@@ -538,7 +538,7 @@ public final class VCalToEventModelBuilder implements ICalendarProvider {
       if (this._triggerSet == 0) {
          return this._triggerTime;
       } else {
-         return (Date)(this._triggerSet == 1 ? new Object(this._startTime.getTime() - this._triggerTimeRelative) : null);
+         return this._triggerSet == 1 ? new Date(this._startTime.getTime() - this._triggerTimeRelative) : null;
       }
    }
 
@@ -565,17 +565,17 @@ public final class VCalToEventModelBuilder implements ICalendarProvider {
 
    @Override
    public final void setExceptionDateTime(int type, int paramType, Date[] date, int dateLength) {
-      this._recurExceptions = new Object[date.length];
+      this._recurExceptions = new Date[date.length];
 
       for (int i = 0; i < date.length; i++) {
-         this._recurExceptions[i] = (Date)(new Object(date[i].getTime()));
+         this._recurExceptions[i] = new Date(date[i].getTime());
       }
    }
 
    @Override
    public final void setExceptionDateTime(int type, int paramType, Date date) {
       Array.resize(this._recurExceptions, this._recurExceptions.length + 1);
-      this._recurExceptions[this._recurExceptions.length - 1] = (Date)(new Object(date.getTime()));
+      this._recurExceptions[this._recurExceptions.length - 1] = new Date(date.getTime());
    }
 
    @Override
@@ -711,7 +711,7 @@ public final class VCalToEventModelBuilder implements ICalendarProvider {
          Arrays.add(this._recurDaysInWeek, weekDay);
          Arrays.add(this._recurWeeksInMonth, orderWeek);
       } else {
-         throw new Object("invalid value for BYDAY");
+         throw new IllegalArgumentException("invalid value for BYDAY");
       }
    }
 
@@ -755,7 +755,7 @@ public final class VCalToEventModelBuilder implements ICalendarProvider {
 
          Arrays.add(this._recurDaysInMonth, monthDay);
       } else {
-         throw new Object("invalid value for BYMONTHDAY");
+         throw new IllegalArgumentException("invalid value for BYMONTHDAY");
       }
    }
 
@@ -784,7 +784,7 @@ public final class VCalToEventModelBuilder implements ICalendarProvider {
    @Override
    public final void setByYearDay(int yearDay) {
       if (yearDay <= 0 && (yearDay < -366 || yearDay > -1)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -819,7 +819,7 @@ public final class VCalToEventModelBuilder implements ICalendarProvider {
       if (month > 0 && month < 13) {
          Arrays.add(this._recurMonthsInYear, month);
       } else {
-         throw new Object("invalid value for BYMONTH");
+         throw new IllegalArgumentException("invalid value for BYMONTH");
       }
    }
 
@@ -854,7 +854,7 @@ public final class VCalToEventModelBuilder implements ICalendarProvider {
       if (setPos != 0 && setPos >= -366 && setPos <= 366) {
          Arrays.add(this._recurBySetPos, setPos);
       } else {
-         throw new Object("invalid value for BYSETPOS");
+         throw new IllegalArgumentException("invalid value for BYSETPOS");
       }
    }
 

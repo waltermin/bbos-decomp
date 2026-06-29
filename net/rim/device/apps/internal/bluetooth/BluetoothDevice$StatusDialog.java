@@ -3,10 +3,10 @@ package net.rim.device.apps.internal.bluetooth;
 import net.rim.device.api.i18n.MessageFormat;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.ui.Field;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.UiEngine;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.DialogFieldManager;
 import net.rim.device.api.ui.container.PopupScreen;
 import net.rim.device.internal.ui.component.ImageField;
@@ -28,16 +28,16 @@ final class BluetoothDevice$StatusDialog extends PopupScreen implements Runnable
    }
 
    BluetoothDevice$StatusDialog(BluetoothDevice _1, String prompt, boolean autoDismiss, boolean showConnectionStatus) {
-      super((Manager)(new Object()));
+      super(new DialogFieldManager());
       this.this$0 = _1;
       this._app = Application.getApplication();
       this._uiEngine = Ui.getUiEngine();
       DialogFieldManager dfm = (DialogFieldManager)this.getDelegate();
       prompt = this.setupPrompt(prompt, showConnectionStatus);
-      this._rtf = (RichTextField)(new Object(prompt, 36028797018963968L));
+      this._rtf = new RichTextField(prompt, 36028797018963968L);
       this._autoDismiss = autoDismiss;
       dfm.setMessage(this._rtf);
-      ImageField imageField = (ImageField)(new Object());
+      ImageField imageField = new ImageField();
       imageField.setImage(_1._btManager.getDialogImage());
       dfm.setIcon(imageField);
       synchronized (this._app.getAppEventLock()) {
@@ -55,7 +55,7 @@ final class BluetoothDevice$StatusDialog extends PopupScreen implements Runnable
             BluetoothProfileManager[] managers = this.this$0._btManager.getProfileManagers();
             DialogFieldManager dfm = (DialogFieldManager)this.getDelegate();
             dfm.deleteCustomFields();
-            dfm.addCustomField((Field)(new Object()));
+            dfm.addCustomField(new SeparatorField());
             int numManagers = managers.length;
 
             for (int i = 0; i < numManagers; i++) {

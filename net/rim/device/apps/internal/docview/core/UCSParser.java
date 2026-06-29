@@ -1,5 +1,7 @@
 package net.rim.device.apps.internal.docview.core;
 
+import java.io.EOFException;
+
 public final class UCSParser {
    private int _crtCommandCode;
    private int _crtCommandSize;
@@ -8,7 +10,7 @@ public final class UCSParser {
    private int _totalLength;
    private DocViewInputStream _dataStream;
    private Object _dataStreamSyncObject;
-   private final StringBuffer _stringBuffer = (StringBuffer)(new Object(128));
+   private final StringBuffer _stringBuffer = new StringBuffer(128);
 
    public UCSParser() {
       this.initialize();
@@ -22,13 +24,13 @@ public final class UCSParser {
       return this._crtCommandSize;
    }
 
-   public final synchronized boolean set(DocViewInputStream inputData) {
+   public final synchronized boolean set(DocViewInputStream inputData) throws EOFException {
       this.initialize();
       int nSignatureLength = ArznConstants._kabyUCSSignature.length;
       byte[] header = new byte[nSignatureLength + 2];
       int readCount = inputData.read(header, 0, nSignatureLength + 2);
       if (readCount != nSignatureLength + 2) {
-         throw new Object("Incomplete UCS header");
+         throw new EOFException("Incomplete UCS header");
       }
 
       for (int i = 0; i < nSignatureLength; i++) {
@@ -73,10 +75,10 @@ public final class UCSParser {
       }
    }
 
-   public final void readByteArray(byte[] array) {
+   public final void readByteArray(byte[] array) throws EOFException {
       int result = this._dataStream.read(array);
       if (result != array.length) {
-         throw new Object();
+         throw new EOFException();
       }
    }
 
@@ -135,10 +137,10 @@ public final class UCSParser {
       return this._dataStream.readInt();
    }
 
-   public final void jumpCursor(int nJumpSize) {
+   public final void jumpCursor(int nJumpSize) throws EOFException {
       if (nJumpSize > 0) {
          if (this._dataStream.skip(nJumpSize) != nJumpSize) {
-            throw new Object();
+            throw new EOFException();
          }
       }
    }

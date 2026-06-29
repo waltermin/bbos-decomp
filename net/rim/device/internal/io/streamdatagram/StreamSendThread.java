@@ -4,7 +4,7 @@ import java.util.Vector;
 import javax.microedition.io.Datagram;
 
 final class StreamSendThread extends Thread {
-   Vector _requests = (Vector)(new Object());
+   Vector _requests = new Vector();
 
    @Override
    public final void run() {
@@ -68,12 +68,12 @@ final class StreamSendThread extends Thread {
       // 62: aload 1
       // 63: getfield net/rim/device/internal/io/streamdatagram/StreamSendThread$STRequest._sendObj Ljava/lang/Object;
       // 66: dup
-      // 67: instanceof java/lang/Object
+      // 67: instanceof javax/microedition/io/DatagramConnection
       // 6a: ifne 71
       // 6d: pop
       // 6e: goto 80
-      // 71: checkcast java/lang/Object
-      // 74: checkcast java/lang/Object
+      // 71: checkcast javax/microedition/io/DatagramConnection
+      // 74: checkcast javax/microedition/io/DatagramConnection
       // 77: aload 1
       // 78: getfield net/rim/device/internal/io/streamdatagram/StreamSendThread$STRequest._datagram Ljavax/microedition/io/Datagram;
       // 7b: invokeinterface javax/microedition/io/DatagramConnection.send (Ljavax/microedition/io/Datagram;)V 2

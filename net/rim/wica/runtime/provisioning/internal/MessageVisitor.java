@@ -31,9 +31,9 @@ public class MessageVisitor extends DefinitionVisitorAdapter {
       this._msgDefs = new EncodingContext();
       this._msgDefsOffset = new EncodingContextOffset();
       this._globalDataDefId = globalDataDefId;
-      this._wicletAlerts = (Vector)(new Object());
+      this._wicletAlerts = new Vector();
       this._wicletElement = we;
-      this._mappingResolvers = (Hashtable)(new Object());
+      this._mappingResolvers = new Hashtable();
    }
 
    public ComponentDefStruct getMessageDefs() {

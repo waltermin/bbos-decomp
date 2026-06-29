@@ -129,7 +129,7 @@ public class Word implements AbstractString {
       }
 
       if (this.start + endIndex > this.end) {
-         throw new Object();
+         throw new ArrayIndexOutOfBoundsException();
       }
 
       dest.init(this.text, this.start + beginIndex, this.start + endIndex, this._locale);

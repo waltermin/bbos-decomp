@@ -7,9 +7,9 @@ import net.rim.vm.Array;
 
 class EventQueue {
    private int _numEventTypes;
-   private String[] _queuedEvents = new Object[0];
+   private String[] _queuedEvents = new String[0];
    private int[] _queuedEventsOrder = new int[0];
-   private ToIntHashtable _supportedEvents = (ToIntHashtable)(new Object(20));
+   private ToIntHashtable _supportedEvents = new ToIntHashtable(20);
 
    public void registerEventPair(String eventId1, String eventId2) {
       this._supportedEvents.put(eventId1, this._numEventTypes);

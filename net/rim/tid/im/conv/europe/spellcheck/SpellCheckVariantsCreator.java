@@ -33,7 +33,7 @@ public class SpellCheckVariantsCreator {
    private boolean _useLocaleSpecificRules;
    private LocaleConversionRules _localeRules;
    protected boolean _isAccentSensitive = true;
-   protected AccentGrouping _accentGrouping = (AccentGrouping)(new Object());
+   protected AccentGrouping _accentGrouping = new AccentGrouping();
    private ReIterator _reIterator;
    private MetaphoneRegExprIterator _metaphoneReIterator;
    private Locale _locale;
@@ -43,21 +43,21 @@ public class SpellCheckVariantsCreator {
    private char[] _accentInsensitiveBuffer = new char[50];
    private char[] _lcBuffer = new char[50];
    private char[] _tempMetaphoneBuffer;
-   private ResultContainer _wordExistRes = (ResultContainer)(new Object());
-   private SLCurrentVariant _variant1 = (SLCurrentVariant)(new Object());
-   private SLCurrentVariant _metaphoneKey1 = (SLCurrentVariant)(new Object());
+   private ResultContainer _wordExistRes = new ResultContainer();
+   private SLCurrentVariant _variant1 = new SLCurrentVariant();
+   private SLCurrentVariant _metaphoneKey1 = new SLCurrentVariant();
    private byte[] _tempAccentCount = new byte[2];
    private char[] _tempAccent = new char[10];
-   private Stack _caseSensitiveWordStack = (Stack)(new Object());
-   private Stack _caseInsensitiveWordStack = (Stack)(new Object());
-   private Stack _ambiguousWordStack = (Stack)(new Object());
-   private Stack _editDistanceMatchStack = (Stack)(new Object());
-   private Stack _editDistanceMatchStateStack = (Stack)(new Object());
-   private Stack _multiClickMatchStack = (Stack)(new Object());
-   private Stack _resultContainerStack = (Stack)(new Object());
-   private Stack _wordStateStack = (Stack)(new Object());
-   private Stack _wordStack = (Stack)(new Object());
-   private Stack _charBufferStack = (Stack)(new Object());
+   private Stack _caseSensitiveWordStack = new Stack();
+   private Stack _caseInsensitiveWordStack = new Stack();
+   private Stack _ambiguousWordStack = new Stack();
+   private Stack _editDistanceMatchStack = new Stack();
+   private Stack _editDistanceMatchStateStack = new Stack();
+   private Stack _multiClickMatchStack = new Stack();
+   private Stack _resultContainerStack = new Stack();
+   private Stack _wordStateStack = new Stack();
+   private Stack _wordStack = new Stack();
+   private Stack _charBufferStack = new Stack();
    private static final long ADDRESS_BOOK_KEY = 5765246712487104764L;
    private static final int CASE_SENSITIVE_MATCH = 1;
    private static final int CASE_INSENSITIVE_MATCH = 2;
@@ -133,7 +133,7 @@ public class SpellCheckVariantsCreator {
       if (2 != this._repository.loadLinguisticData(data)) {
          int max = this._repository.getMaxNestingLevel() + 1;
          if (this._reIterator == null) {
-            this._reIterator = (ReIterator)(new Object(max));
+            this._reIterator = new ReIterator(max);
          } else {
             this._reIterator.setMaxStackSize(max);
          }
@@ -154,7 +154,7 @@ public class SpellCheckVariantsCreator {
          InputContext context = InputContext.getInstance();
          this._addrBookRep = (IRepository)context.getRepository(1);
          if (this._addrBookRep == null) {
-            AddressBookDataRepository rep = (AddressBookDataRepository)(new Object());
+            AddressBookDataRepository rep = new AddressBookDataRepository();
             rep.init(context.getRepository(2), context.getRepository(4));
             this._addrBookRep = rep;
          }
@@ -1351,7 +1351,7 @@ public class SpellCheckVariantsCreator {
    }
 
    public CustomWordsRepository getRepository(int type) {
-      return (CustomWordsRepository)(this._addrBookRep != null && ((CustomWordsRepository)this._addrBookRep).getType() == type ? this._addrBookRep : null);
+      return this._addrBookRep != null && ((CustomWordsRepository)this._addrBookRep).getType() == type ? (CustomWordsRepository)this._addrBookRep : null;
    }
 
    public void setRepositoryData(EuropeanRepositoryData aData) {
@@ -1543,7 +1543,7 @@ public class SpellCheckVariantsCreator {
    }
 
    private ResultContainer popResultContainer() {
-      return (ResultContainer)(!this._resultContainerStack.empty() ? this._resultContainerStack.pop() : new Object());
+      return !this._resultContainerStack.empty() ? (ResultContainer)this._resultContainerStack.pop() : new ResultContainer();
    }
 
    private void pushResultContainer(ResultContainer container) {
@@ -1551,7 +1551,7 @@ public class SpellCheckVariantsCreator {
    }
 
    private Word popWord() {
-      return (Word)(!this._wordStack.empty() ? this._wordStack.pop() : new Object());
+      return !this._wordStack.empty() ? (Word)this._wordStack.pop() : new Word();
    }
 
    private void pushWord(Word word) {

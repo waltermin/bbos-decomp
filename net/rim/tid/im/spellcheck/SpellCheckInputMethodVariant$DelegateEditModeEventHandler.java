@@ -33,8 +33,8 @@ class SpellCheckInputMethodVariant$DelegateEditModeEventHandler extends SpellChe
 
       if (this.this$0._state == 5) {
          this.this$0.sendCommittedComposed(true);
-         this.this$0._inputMethodContext.dispatchInputMethodEvent(1102, null, 0, 0, 0, (TextHitInfo)(new Object(caret, true)), null);
-         KeyEvent ke = (KeyEvent)(new Object(this.this$0._currentComponent, 516, 0, 0, 0, '\u0000', -1));
+         this.this$0._inputMethodContext.dispatchInputMethodEvent(1102, null, 0, 0, 0, new TextHitInfo(caret, true), null);
+         KeyEvent ke = new KeyEvent(this.this$0._currentComponent, 516, 0, 0, 0, '\u0000', -1);
          ke.init(this.this$0._currentComponent, 516, 0, 0, 0, '\u0000', true);
          this.this$0._inputMethod.dispatchEvent(ke);
          this.this$0._state = 6;

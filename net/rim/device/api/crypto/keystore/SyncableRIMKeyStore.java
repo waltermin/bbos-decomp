@@ -13,7 +13,7 @@ public class SyncableRIMKeyStore extends PersistableRIMKeyStore {
 
    public SyncableRIMKeyStore(String syncName, String displayName, long id, CodeSigningKey key, PersistableRIMKeyStoreFactory factory, KeyStore keyStore) {
       super(displayName, id, key, factory, keyStore);
-      SyncManager.getInstance().enableSynchronization(new KeyStoreSync(((StringBuffer)(new Object())).append(syncName).append(" Key Store").toString(), this));
+      SyncManager.getInstance().enableSynchronization(new KeyStoreSync(syncName + " Key Store", this));
    }
 
    void set(

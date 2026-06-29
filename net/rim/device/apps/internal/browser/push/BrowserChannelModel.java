@@ -23,7 +23,7 @@ public final class BrowserChannelModel extends BrowserPushModel {
       this.run(29, this._channelModel.getID());
       if (PushOptions.getOptions().getAcceptMode(2, this.mapPushSourceToProtocolType(super._connectionType)) == 0 && this._channelModel.getPriority() == 3) {
          NotificationsManager.triggerImmediateEvent(4665536253483290822L, 0, null, null);
-         String notificationMsg = MessageFormat.format(BrowserResources.getString(635), new Object[]{this._channelModel.getTitle()});
+         String notificationMsg = MessageFormat.format(BrowserResources.getString(635), new String[]{this._channelModel.getTitle()});
          UiApplication.getUiApplication().invokeLater(new BrowserChannelModel$1(this, notificationMsg));
       }
    }

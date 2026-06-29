@@ -29,7 +29,7 @@ final class BluetoothGPSRegistry$BluetoothConnectThread extends Thread {
                }
             }
 
-            this.this$0._port = (BluetoothSerialPort)(new Object(portInfo[index], 1, 3, 0, 2048, 256, this.this$0));
+            this.this$0._port = new BluetoothSerialPort(portInfo[index], 1, 3, 0, 2048, 256, this.this$0);
             this.this$0._state = 2;
          }
       } catch (Throwable var9) {

@@ -21,7 +21,7 @@ class BluetoothDeviceManagerImpl$RadioOnPromptRunnable implements Runnable, Dial
 
    public void processAnswer(Dialog dialog, int choice) {
       if (choice == 4) {
-         Status.show(BluetoothMainScreen.getString(82), (Image)((Object)null), 2000, 33554432, false, false, 0);
+         Status.show(BluetoothMainScreen.getString(82), (Image)null, 2000, 33554432, false, false, 0);
          synchronized (this.this$0._radioOnLock) {
             this._result = this.this$0.requestPowerOn();
             if (this._result) {
@@ -43,7 +43,7 @@ class BluetoothDeviceManagerImpl$RadioOnPromptRunnable implements Runnable, Dial
    public void run(boolean modal) {
       Object[] args = new Object[]{this._applicationName};
       String prompt = MessageFormat.format(BluetoothMainScreen.getString(81), args);
-      Dialog dialog = (Dialog)(new Object(3, prompt, 4, null, 0));
+      Dialog dialog = new Dialog(3, prompt, 4, null, 0);
       dialog.setIcon(ThemeManager.getThemeAwareImage("dialog_question"));
       int dialogFlag = modal ? 1 : 2;
       dialog.setDialogClosedListener(this);

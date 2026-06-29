@@ -55,7 +55,7 @@ class LDAPBrowser$LDAPBrowserScreen extends AppsMainScreen {
             if (focus != null && focus == this.this$0._list) {
                if (this.this$0._list.getSize() > 0) {
                   LDAPBrowserContainer container = (LDAPBrowserContainer)this.this$0._containers.elementAt(this.this$0._list.getSelectedIndex());
-                  StringBuffer buffer = (StringBuffer)(new Object());
+                  StringBuffer buffer = new StringBuffer();
                   buffer.append(LDAPBrowser.getString(36));
                   buffer.append(' ');
                   buffer.append(container.getLabel());
@@ -90,7 +90,7 @@ class LDAPBrowser$LDAPBrowserScreen extends AppsMainScreen {
       }
 
       if (this.this$0._launchKeyStoreBrowserVerb == null) {
-         this.this$0._launchKeyStoreBrowserVerb = (LaunchKeyStoreBrowserVerb)(new Object(this.this$0._context.getKeyStoreBrowserContextString(), null));
+         this.this$0._launchKeyStoreBrowserVerb = new LaunchKeyStoreBrowserVerb(this.this$0._context.getKeyStoreBrowserContextString(), null);
       }
 
       menu.add(this.this$0._launchKeyStoreBrowserVerb);

@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.browser.wml;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Vector;
 import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.apps.internal.browser.stack.FormData;
@@ -8,8 +9,8 @@ import net.rim.device.apps.internal.browser.stack.URLEncodedFormData;
 import net.rim.device.apps.internal.browser.util.RendererControl;
 
 final class PostField {
-   private Vector _names = (Vector)(new Object());
-   private Vector _values = (Vector)(new Object());
+   private Vector _names = new Vector();
+   private Vector _values = new Vector();
 
    protected PostField() {
    }
@@ -26,10 +27,10 @@ final class PostField {
       Object buffer = null;
       if (enctype == 1) {
          formData = new MultipartFormData(characterEncoding, true);
-         buffer = new Object();
+         buffer = new ByteArrayOutputStream();
       } else {
          formData = new URLEncodedFormData(characterEncoding, true);
-         buffer = new Object();
+         buffer = new StringBuffer();
       }
 
       int numPostFields = this._names.size();

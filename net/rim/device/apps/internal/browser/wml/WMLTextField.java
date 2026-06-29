@@ -215,12 +215,12 @@ public final class WMLTextField extends BrowserTextField {
          int region = this.getRegion(this.getCursorPosition());
          String href;
          if (this.regionHasCookieInternal(region) && (href = this.getRegionURL(region)) != null) {
-            StringPatternEnumerator enumeration = (StringPatternEnumerator)(new Object(href, StringPatternRepository$Internal.getStringPatterns()));
+            StringPatternEnumerator enumeration = new StringPatternEnumerator(href, StringPatternRepository$Internal.getStringPatterns());
             if (enumeration.hasMoreMatches()) {
-               StringPattern$Match match = (StringPattern$Match)(new Object());
+               StringPattern$Match match = new StringPattern$Match();
                enumeration.nextMatch(match);
                if (match.beginIndex == 0 && match.endIndex == href.length() && match.id == 532879436795165891L) {
-                  ContextObject initialData = (ContextObject)(new Object());
+                  ContextObject initialData = new ContextObject();
                   initialData.put(253, href);
                   RIMModel phoneNumberModel = (RIMModel)FactoryUtil.createInstance(532879436795165891L, initialData);
                   ControllerUtilities.invokeApplicationKeyVerb(phoneNumberModel);
@@ -256,8 +256,8 @@ public final class WMLTextField extends BrowserTextField {
          wrq.appendFont(fonts[i], foregroundColors != null ? foregroundColors[i] : -1, backgroundColors != null ? backgroundColors[i] : -1);
       }
 
-      StringPatternEnumerator stringEnum = (StringPatternEnumerator)(new Object(text, StringPatternRepository$Internal.getStringPatterns()));
-      StringPattern$Match stringMatch = (StringPattern$Match)(new Object());
+      StringPatternEnumerator stringEnum = new StringPatternEnumerator(text, StringPatternRepository$Internal.getStringPatterns());
+      StringPattern$Match stringMatch = new StringPattern$Match();
       int anchorVerbIndex = 0;
       int anchorVerbsLength = anchorVerbs == null ? 0 : anchorVerbs.length;
       byte[] underlinedAttributes = null;

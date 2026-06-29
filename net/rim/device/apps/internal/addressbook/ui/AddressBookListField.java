@@ -9,6 +9,7 @@ import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.accessibility.AccessibleContext;
+import net.rim.device.api.ui.accessibility.AccessibleContextFactory;
 import net.rim.device.api.ui.component.CollectionListField;
 import net.rim.device.api.ui.component.KeywordFilterCollectionListField;
 import net.rim.device.api.ui.component.ListField;
@@ -68,7 +69,7 @@ public final class AddressBookListField extends KeywordFilterCollectionListField
 
    public final void setSortOrder(long sortOrder) {
       this._sortOrder = sortOrder;
-      this._paintContext.put(614335798810617774L, new Object(this._sortOrder));
+      this._paintContext.put(614335798810617774L, new Long(this._sortOrder));
       this.setKeywordFilterList(BlackBerryAddressBook.getAddressBook().getView(this._sortOrder));
    }
 
@@ -107,7 +108,7 @@ public final class AddressBookListField extends KeywordFilterCollectionListField
       this._paintContext.setFlag(17, 18, 4);
       this._paintContext.setFlag(128);
       this.updateThemeAttributes();
-      this._paintContext.put(614335798810617774L, new Object(this._sortOrder));
+      this._paintContext.put(614335798810617774L, new Long(this._sortOrder));
       this._paintContext.put(-3906294199383546540L, this);
    }
 
@@ -198,7 +199,7 @@ public final class AddressBookListField extends KeywordFilterCollectionListField
       Object element = collectionListField.getElementAt(index);
       VariableRowHeightProxy.addHeightAdjusterToContext(this._paintContext, listField);
       this.updateThemeAttributes();
-      if (element instanceof Object) {
+      if (element instanceof PaintProvider) {
          PaintProvider painter = (PaintProvider)element;
          painter.paint(graphics, 0, y, width, 100, this._paintContext);
       } else if (this.isUseOnceIndex(index)) {
@@ -213,7 +214,7 @@ public final class AddressBookListField extends KeywordFilterCollectionListField
             if (index < this._alpManager.size()) {
                try {
                   Request r = (Request)this._alpManager.getAt(index);
-                  if (!(r instanceof Object)) {
+                  if (!(r instanceof PaintProvider)) {
                      graphics.drawText(r.toString(), 0, y, 0, width);
                      return;
                   }
@@ -276,11 +277,11 @@ public final class AddressBookListField extends KeywordFilterCollectionListField
 
    @Override
    public final void elementUpdated(Collection collection, Object oldElement, Object newElement) {
-      if (collection == this._alpManager && newElement instanceof Object) {
+      if (collection == this._alpManager && newElement instanceof Request) {
          Request request = (Request)newElement;
          Result result = request.getResult();
          Object focusedElement = this.getElementWithFocus();
-         if (request.needsResolving() && request.isViewable() && focusedElement instanceof Object) {
+         if (request.needsResolving() && request.isViewable() && focusedElement instanceof RequestModel) {
             RequestModel requestModel = (RequestModel)focusedElement;
             if (requestModel.fetchRequest() == newElement && result != null && result.getIncludedMatches() > 1) {
                RIMGlobalMessagePoster.postGlobalEvent(-6376745458772725637L, 0, 0, requestModel, null);
@@ -297,7 +298,7 @@ public final class AddressBookListField extends KeywordFilterCollectionListField
          this.scheduleUpdateExtraRowCountWhileHoldingALPManagerLock();
       }
 
-      if (element instanceof Object) {
+      if (element instanceof Request) {
          Request request = (Request)element;
          Object requestModel = this._alpManager.createModelFromRequest(request);
          this.setElementWithFocus(requestModel);
@@ -332,7 +333,7 @@ public final class AddressBookListField extends KeywordFilterCollectionListField
    public final void setSize(int count) {
       if (super._list != null) {
          Object elementWithFocus = this.getElementWithFocus();
-         if (elementWithFocus instanceof Object) {
+         if (elementWithFocus instanceof RequestModel) {
             RequestModel requestModel = (RequestModel)elementWithFocus;
             Request request = requestModel.fetchRequest();
             int index = this.indexOfRequest(request);
@@ -367,8 +368,8 @@ public final class AddressBookListField extends KeywordFilterCollectionListField
       if (index == 0) {
          Object temp = this.getElementAtIncludingLookup(this.getSelectedIndex());
          if (temp != null) {
-            if (!(temp instanceof Object)) {
-               return (AccessibleContext)(new Object(temp.toString(), 0, 4));
+            if (!(temp instanceof AccessibleContext)) {
+               return new AccessibleContextFactory(temp.toString(), 0, 4);
             }
 
             return (AccessibleContext)temp;

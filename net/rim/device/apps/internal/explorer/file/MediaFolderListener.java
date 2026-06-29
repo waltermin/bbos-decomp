@@ -32,7 +32,7 @@ public final class MediaFolderListener implements FilteredFolderListener {
    private static final String VIDEO_SAMPLE_FOLDER = "/store/samples/videos/";
 
    public final synchronized void setManager(ExploreManager manager) {
-      this._managerRef = (WeakReference)(new Object(manager));
+      this._managerRef = new WeakReference(manager);
       this._initialView = manager.getCurrentView();
    }
 
@@ -185,7 +185,7 @@ public final class MediaFolderListener implements FilteredFolderListener {
       int selectionAttribs = 0;
       if (ContextObject.getFlag(this._context, 5)) {
          Object obj = ContextObject.get(this._context, -1002650280265073678L);
-         if (!(obj instanceof Object)) {
+         if (!(obj instanceof FileSelectionFilter)) {
             selectionAttribs = ContextObject.getIntegerData(this._context, ContextObject.getIntegerData(this._context, 0));
          } else {
             selectionAttribs = ((FileSelectionFilter)obj).getSelectFilter();
@@ -197,7 +197,7 @@ public final class MediaFolderListener implements FilteredFolderListener {
 
    private final boolean showSamplesFolder(String path) {
       Object obj = ContextObject.get(this._context, -1002650280265073678L);
-      if (obj instanceof Object) {
+      if (obj instanceof FileSelectionFilter) {
          FileSelectionFilter filter = (FileSelectionFilter)obj;
          if ((filter.getSelectFilter() & 8192) == 0) {
             return false;

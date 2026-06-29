@@ -7,7 +7,7 @@ import net.rim.wica.runtime.persistence.PersistenceService;
 import net.rim.wica.transport.security.SequenceProviderException;
 
 final class SequenceProviderImpl$Verifier {
-   private LongHashtable _mapping = (LongHashtable)(new Object());
+   private LongHashtable _mapping = new LongHashtable();
    private PersistableObject _wrapper;
    private long[] _persistable;
    private PersistenceService _persistence;
@@ -30,7 +30,7 @@ final class SequenceProviderImpl$Verifier {
 
          return verified;
       } else {
-         throw new SequenceProviderException(((StringBuffer)(new Object("Key "))).append(key).append(" not found.").toString());
+         throw new SequenceProviderException("Key " + key + " not found.");
       }
    }
 

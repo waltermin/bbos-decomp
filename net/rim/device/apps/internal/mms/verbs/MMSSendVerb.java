@@ -44,7 +44,7 @@ public final class MMSSendVerb extends Verb {
    }
 
    protected final ContextObject finalizeInvoke(ContextObject context) {
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          if (!ContextObject.getFlag(context, 121)) {
             MessagingUtil.showMessageAppServiceView("MMSFolder");
          }
@@ -54,7 +54,7 @@ public final class MMSSendVerb extends Verb {
          return context;
       } else {
          MessagingUtil.showMessageAppServiceView("MMSFolder");
-         return (ContextObject)(new Object(39, 40));
+         return new ContextObject(39, 40);
       }
    }
 

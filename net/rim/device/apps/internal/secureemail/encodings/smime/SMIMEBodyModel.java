@@ -72,9 +72,9 @@ public final class SMIMEBodyModel extends SecureEmailBodyModel implements Persis
    @Override
    protected final int getBestGuessEncodingAction() {
       try {
-         InputStream inputStream = (InputStream)(new Object(this.getBytes()));
+         InputStream inputStream = new ByteArrayInputStream(this.getBytes());
          if (this._isStoredAsBase64) {
-            inputStream = (InputStream)(new Object(inputStream, true));
+            inputStream = new Base64InputStream(inputStream, true);
          }
 
          CMSContext cmsContext = CMSInputStream.getCMSContext(inputStream);
@@ -150,8 +150,8 @@ public final class SMIMEBodyModel extends SecureEmailBodyModel implements Persis
          if (ticket != null) {
             try {
                byte[] data = this.getBytes();
-               ByteArrayInputStream byteStream = (ByteArrayInputStream)(new Object(data));
-               Base64InputStream base64Stream = (Base64InputStream)(new Object(byteStream, true));
+               ByteArrayInputStream byteStream = new ByteArrayInputStream(data);
+               Base64InputStream base64Stream = new Base64InputStream(byteStream, true);
                byte[] binaryData = new byte[data.length];
                int length = base64Stream.read(binaryData);
                Array.resize(binaryData, length);

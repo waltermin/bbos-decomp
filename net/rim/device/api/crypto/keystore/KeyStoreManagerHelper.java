@@ -79,7 +79,7 @@ final class KeyStoreManagerHelper implements Persistable, SyncObject {
 
    public final Hashtable getKeyStoreHashtable() {
       if (this._keyStoreHashtable == null) {
-         this._keyStoreHashtable = (Hashtable)(new Object());
+         this._keyStoreHashtable = new Hashtable();
          _persist.commit();
       }
 
@@ -88,7 +88,7 @@ final class KeyStoreManagerHelper implements Persistable, SyncObject {
 
    public final Hashtable getSyncedWithBESHashtable() {
       if (this._syncedWithBESHashtable == null) {
-         this._syncedWithBESHashtable = (Hashtable)(new Object());
+         this._syncedWithBESHashtable = new Hashtable();
          _persist.commit();
       }
 
@@ -234,7 +234,7 @@ final class KeyStoreManagerHelper implements Persistable, SyncObject {
 
    public final LongHashtable getCodeSigningHashtable() {
       if (this._codeSigningHashtable == null) {
-         this._codeSigningHashtable = (LongHashtable)(new Object());
+         this._codeSigningHashtable = new LongHashtable();
          _persist.commit();
       }
 
@@ -257,7 +257,7 @@ final class KeyStoreManagerHelper implements Persistable, SyncObject {
 
    public final boolean checkPasswordHistory(byte[] password) {
       if (password == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (this._passwordHistory == null) {
@@ -298,7 +298,7 @@ final class KeyStoreManagerHelper implements Persistable, SyncObject {
             this._passwordHistory[historyLength - 1] = passwordHash;
          } else {
             if (historyLength <= numPasswords) {
-               throw new Object();
+               throw new RuntimeException();
             }
 
             byte[][] newHistory = new byte[numPasswords][];

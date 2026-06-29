@@ -4,11 +4,11 @@ import java.util.Hashtable;
 
 public final class PropertiesConverter {
    public static final Hashtable convert(byte[] file) {
-      Hashtable props = (Hashtable)(new Object(16));
+      Hashtable props = new Hashtable(16);
       String propString = null;
 
       try {
-         propString = (String)(new Object(file, "UTF-8"));
+         propString = new String(file, "UTF-8");
       } finally {
          ;
       }

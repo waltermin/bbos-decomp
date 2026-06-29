@@ -2,12 +2,13 @@ package net.rim.device.cldc.io.ippp;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import net.rim.device.api.servicebook.ServiceBook;
 import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.api.util.IntHashtable;
 
 public final class SBApplicationData {
-   private IntHashtable _applicationDataTable = (IntHashtable)(new Object());
+   private IntHashtable _applicationDataTable = new IntHashtable();
    private int _serviceRecordID = -1;
    public static final int TYPE_IPPP_DATA_SIZE = 1;
    public static final int TYPE_IPPP_TIMEOUT = 2;
@@ -21,7 +22,7 @@ public final class SBApplicationData {
       this.readData(rec);
    }
 
-   private final synchronized void readData(ServiceRecord param1) {
+   private final synchronized void readData(ServiceRecord param1) throws IOException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -40,12 +41,12 @@ public final class SBApplicationData {
       // 10: astore 2
       // 11: aload 2
       // 12: ifnull 75
-      // 15: new java/lang/Object
+      // 15: new java/io/ByteArrayInputStream
       // 18: dup
       // 19: aload 2
       // 1a: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
       // 1d: astore 3
-      // 1e: new java/lang/Object
+      // 1e: new java/io/DataInputStream
       // 21: dup
       // 22: aload 3
       // 23: invokespecial java/io/DataInputStream.<init> (Ljava/io/InputStream;)V
@@ -81,7 +82,7 @@ public final class SBApplicationData {
       // 64: bipush 1
       // 65: istore 5
       // 67: goto 2b
-      // 6a: new java/lang/Object
+      // 6a: new java/io/IOException
       // 6d: dup
       // 6e: ldc_w "Service book error"
       // 71: invokespecial java/io/IOException.<init> (Ljava/lang/String;)V
@@ -110,8 +111,8 @@ public final class SBApplicationData {
 
    public static final byte[] createAppData(int dataSize, int timeout, int cacheSize, int queueSize, int pendingSize, int type) {
       try {
-         ByteArrayOutputStream bouts = (ByteArrayOutputStream)(new Object());
-         DataOutputStream douts = (DataOutputStream)(new Object(bouts));
+         ByteArrayOutputStream bouts = new ByteArrayOutputStream();
+         DataOutputStream douts = new DataOutputStream(bouts);
          if (dataSize >= 0) {
             byte[] data = getIntAsBytes(dataSize);
             douts.writeShort(data.length);
@@ -176,7 +177,7 @@ public final class SBApplicationData {
 
    public final String getValueAsString(int type) {
       byte[] value = this.getValue(type);
-      return (String)(value != null ? new Object(value, 0, value.length - 1) : null);
+      return value != null ? new String(value, 0, value.length - 1) : null;
    }
 
    public final int getValueAsInt(int type) {

@@ -18,7 +18,7 @@ class AddressHeaderHandler implements HeaderHandler {
          try {
             a[0] = new Address(value, "");
          } catch (AddressException e) {
-            throw new Object(e.toString());
+            throw new IllegalArgumentException(e.toString());
          }
 
          try {
@@ -44,12 +44,12 @@ class AddressHeaderHandler implements HeaderHandler {
       if (match.toLowerCase().equals(header.toLowerCase())) {
          EmailHeaderModel[] set = m.getHeader(type);
          int length = set.length;
-         String[] data = new Object[length];
+         String[] data = new String[length];
 
          for (int i = length - 1; i >= 0; i--) {
             Object o = set[i].getInsideModel();
-            if (!(o instanceof Object)) {
-               if (o instanceof Object) {
+            if (!(o instanceof EmailAddressModel)) {
+               if (o instanceof PINAddressModel) {
                   PINAddressModel pam = (PINAddressModel)o;
                   data[i] = pam.getAddress();
                }

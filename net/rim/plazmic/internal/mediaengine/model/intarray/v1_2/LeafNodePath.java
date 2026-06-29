@@ -103,7 +103,7 @@ class LeafNodePath extends LeafNode {
             minX = 0;
          }
 
-         this._baseBoundingBox = (XYRect)(new Object(minX, minY, maxX - minX, maxY - minY));
+         this._baseBoundingBox = new XYRect(minX, minY, maxX - minX, maxY - minY);
       }
 
       int mitreLengthLimit = 4;

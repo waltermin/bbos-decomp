@@ -58,7 +58,7 @@ final class WicletButtonField extends ButtonField implements FieldChangeListener
 
    private final String getImageURL(int row) {
       Object imageValue = this._model.getImageValue();
-      return (String)(!(imageValue instanceof Object) ? imageValue : ((Vector)imageValue).elementAt(row));
+      return !(imageValue instanceof Vector) ? (String)imageValue : (String)((Vector)imageValue).elementAt(row);
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
@@ -93,7 +93,7 @@ final class WicletButtonField extends ButtonField implements FieldChangeListener
    private final void setLabel() {
       Object value = this._model.getValue();
       String label = null;
-      if (!(value instanceof Object)) {
+      if (!(value instanceof Vector)) {
          label = (String)value;
       } else {
          label = (String)((Vector)value).elementAt(this._row);

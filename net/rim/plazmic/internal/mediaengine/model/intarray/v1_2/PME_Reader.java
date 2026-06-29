@@ -159,7 +159,7 @@ public class PME_Reader implements ResourceProvider {
       int offsetX,
       int offsetY,
       int maxValue
-   ) {
+   ) throws MediaException {
       this._scaleShift = bitShift;
       this._offsetX = offsetX;
       this._offsetY = offsetY;
@@ -198,7 +198,7 @@ public class PME_Reader implements ResourceProvider {
 
       this.initTempVars(false);
       if (this.readVersion() != this._model._version) {
-         throw new Object();
+         throw new MediaException();
       }
 
       int type;
@@ -328,30 +328,30 @@ public class PME_Reader implements ResourceProvider {
       this._model._version = this.readVersion();
    }
 
-   protected int readVersion() {
+   protected int readVersion() throws MediaException {
       int version = -1;
       int headerEnding = -1;
 
       try {
          if (this._in.readInt() != -749712059) {
-            throw new Object(3);
+            throw new MediaException(3);
          } else {
             version = this._in.readInt();
             if (version >>> 8 > 66048) {
-               throw new Object(1, ((StringBuffer)(new Object())).append((version & 0xFF0000) >>> 16).append(".").append(version >>> 8).toString());
+               throw new MediaException(1, ((version & 0xFF0000) >>> 16) + "." + (version >>> 8));
             } else if ((version & 0xFF0000) >>> 16 < 2) {
-               throw new Object(2, ((StringBuffer)(new Object())).append((version & 0xFF0000) >>> 16).append(".").append(version >>> 8).toString());
+               throw new MediaException(2, ((version & 0xFF0000) >>> 16) + "." + (version >>> 8));
             } else {
                headerEnding = this._in.readInt();
                if (headerEnding != 218767370) {
-                  throw new Object(3);
+                  throw new MediaException(3);
                } else {
                   return version;
                }
             }
          }
       } finally {
-         throw new Object(4);
+         throw new MediaException(4);
       }
    }
 
@@ -368,7 +368,7 @@ public class PME_Reader implements ResourceProvider {
       int num = this._in.readData(0) << 1;
       if (num > 0) {
          if (newModel) {
-            this._model._metaInfo = new Object[num];
+            this._model._metaInfo = new String[num];
 
             for (int x = 0; x < num; x++) {
                this._model._metaInfo[x] = this._in.readString(this._encoding);
@@ -429,7 +429,7 @@ public class PME_Reader implements ResourceProvider {
       }
    }
 
-   protected void readDataSizes(boolean initArrays, boolean newModel) {
+   protected void readDataSizes(boolean initArrays, boolean newModel) throws MediaException {
       this._streamNodeArraySize = this._in.readData(this._nodeDataSizeMask);
       int modelNodeArraySize = 0;
       if (newModel) {
@@ -520,7 +520,7 @@ public class PME_Reader implements ResourceProvider {
 
          if (this._model._handlesWithId == null || this._model._handlesWithId.length != numDataIds) {
             this._model._handlesWithId = new int[numDataIds];
-            this._model._ids = new Object[numDataIds];
+            this._model._ids = new String[numDataIds];
          }
 
          if (this._model._focusableList == null || this._model._focusableList.length != numFocusable) {
@@ -532,17 +532,17 @@ public class PME_Reader implements ResourceProvider {
          }
 
          if (this._model._foreignObjects == null || this._model._foreignObjects.length != numForeignObjects) {
-            this._model._foreignObjects = new Object[numForeignObjects];
+            this._model._foreignObjects = new ForeignObject[numForeignObjects];
          }
 
          if (this._model._images == null || this._model._images.length != numImages) {
             this._model._images = new Object[numImages];
-            this._model._imageURL = numImages > 0 ? new Object[numImages] : null;
+            this._model._imageURL = numImages > 0 ? new String[numImages] : null;
          }
 
          if (this._model._media == null || this._model._media.length != numMedia) {
             this._model._media = new Object[numMedia];
-            this._model._mediaObjectURL = numMedia > 0 ? new Object[numMedia] : null;
+            this._model._mediaObjectURL = numMedia > 0 ? new String[numMedia] : null;
          }
 
          if (this._model._customObjects == null || this._model._customObjects.length != this._model._numCustomObjects) {
@@ -550,12 +550,12 @@ public class PME_Reader implements ResourceProvider {
          }
 
          if (this._model._fontFamilyStrings == null || this._model._fontFamilyStrings.length != numFontFamilies) {
-            this._model._fontFamilyStrings = numFontFamilies > 0 ? new Object[numFontFamilies] : null;
-            this._model._platformFontFamilyStrings = numFontFamilies > 0 ? new Object[numFontFamilies] : null;
+            this._model._fontFamilyStrings = numFontFamilies > 0 ? new String[numFontFamilies] : null;
+            this._model._platformFontFamilyStrings = numFontFamilies > 0 ? new String[numFontFamilies] : null;
          }
 
          if (this._model._fontUrlStrings == null || this._model._fontUrlStrings.length != numFontUrls) {
-            this._model._fontUrlStrings = numFontUrls > 0 ? new Object[numFontUrls] : null;
+            this._model._fontUrlStrings = numFontUrls > 0 ? new String[numFontUrls] : null;
          }
 
          if (this._model._fontHandles == null || this._model._fontHandles.length != numFontNodes) {
@@ -563,15 +563,15 @@ public class PME_Reader implements ResourceProvider {
          }
 
          if (this._model._customMessages == null || this._model._customMessages.length != numMessages) {
-            this._model._customMessages = numMessages > 0 ? new Object[numMessages] : null;
+            this._model._customMessages = numMessages > 0 ? new String[numMessages] : null;
          }
 
          if (this._model._hyperlinks == null || this._model._hyperlinks.length != numHyperlinks) {
-            this._model._hyperlinks = numHyperlinks > 0 ? new Object[numHyperlinks] : null;
+            this._model._hyperlinks = numHyperlinks > 0 ? new String[numHyperlinks] : null;
          }
       } else if (initArrays && !newModel) {
          if (numMedia > 0 || this._model._numCustomObjects > 0) {
-            throw new Object(11);
+            throw new MediaException(11);
          }
 
          if (numImages > 0) {
@@ -582,7 +582,7 @@ public class PME_Reader implements ResourceProvider {
             }
 
             if (this._model._imageURL == null) {
-               this._model._imageURL = new Object[numImages];
+               this._model._imageURL = new String[numImages];
             } else {
                this._platform.arrayResize(this._model._imageURL, this._model._imageURL.length + numImages);
             }
@@ -610,7 +610,7 @@ public class PME_Reader implements ResourceProvider {
 
          if (numDataIds > 0) {
             if (this._model._ids == null) {
-               this._model._ids = new Object[numDataIds];
+               this._model._ids = new String[numDataIds];
                this._model._handlesWithId = new int[numDataIds];
             } else {
                this._platform.arrayResize(this._model._ids, this._model._ids.length + numDataIds);
@@ -620,8 +620,8 @@ public class PME_Reader implements ResourceProvider {
 
          if (numFontFamilies > 0) {
             if (this._model._fontFamilyStrings == null) {
-               this._model._fontFamilyStrings = new Object[numFontFamilies];
-               this._model._platformFontFamilyStrings = new Object[numFontFamilies];
+               this._model._fontFamilyStrings = new String[numFontFamilies];
+               this._model._platformFontFamilyStrings = new String[numFontFamilies];
             } else {
                this._platform.arrayResize(this._model._fontFamilyStrings, this._model._fontFamilyStrings.length + numFontFamilies);
                this._platform.arrayResize(this._model._platformFontFamilyStrings, this._model._platformFontFamilyStrings.length + numFontFamilies);
@@ -643,7 +643,7 @@ public class PME_Reader implements ResourceProvider {
       this._numInterpolators = 0;
    }
 
-   protected void readVisualNode(int nodeIdx, boolean newModel) {
+   protected void readVisualNode(int nodeIdx, boolean newModel) throws MediaException {
       this._model._nodes[nodeIdx + 9] = this._model._maxUID++;
       this.readVisualData(nodeIdx);
       int type = this._model._nodes[nodeIdx + 1];
@@ -667,7 +667,7 @@ public class PME_Reader implements ResourceProvider {
             break;
          case 44:
             if (!newModel) {
-               throw new Object(11);
+               throw new MediaException(11);
             }
 
             this.readForeignObject(nodeIdx);
@@ -933,14 +933,14 @@ public class PME_Reader implements ResourceProvider {
       return triggersOffset;
    }
 
-   protected void setUpNodesTree(int nodeIdx) {
+   protected void setUpNodesTree(int nodeIdx) throws MediaException {
       int type = this._model._nodes[nodeIdx + 1];
       if (this.isContainerNode(type)) {
          int child = this._model._nodes[nodeIdx + 6];
 
          while (child != -1) {
             if (child == nodeIdx || child == this._model._visualRoot || child == this._model._behaviorsRoot) {
-               throw new Object(((StringBuffer)(new Object("PME12: invalid child index "))).append(child).append(" for node ").append(nodeIdx).toString());
+               throw new MediaException("PME12: invalid child index " + child + " for node " + nodeIdx);
             }
 
             this._model._nodes[child + 3] = nodeIdx;
@@ -1060,7 +1060,7 @@ public class PME_Reader implements ResourceProvider {
       return type == 46 || type == 48 || type == 50;
    }
 
-   protected int readNode(boolean newModel) {
+   protected int readNode(boolean newModel) throws MediaException {
       int type = this._in.readData(0);
       if (type == 0) {
          type |= this._in.readData(0) << 8;
@@ -1071,11 +1071,11 @@ public class PME_Reader implements ResourceProvider {
       } else if (newModel) {
          return this.readUnknownNode(type);
       } else {
-         throw new Object(11);
+         throw new MediaException(11);
       }
    }
 
-   protected int readKnownNode(int type, boolean newModel) {
+   protected int readKnownNode(int type, boolean newModel) throws MediaException {
       int size = this.getSize(type);
       int nodeIdx = this._model.addNode(type, size);
       this.setReferencesToNewNode(nodeIdx, this._streamNextNodeIdx);
@@ -1090,13 +1090,13 @@ public class PME_Reader implements ResourceProvider {
          this.readAttrNode(nodeIdx);
       } else if (this.isBehaviorNode(type)) {
          if (!newModel && this._behaviorsRootIdx != -1) {
-            throw new Object(11);
+            throw new MediaException(11);
          }
 
          this.readBehaviorNode(nodeIdx);
       } else if (this.isDataNode(type)) {
          if (!newModel) {
-            throw new Object(11);
+            throw new MediaException(11);
          }
 
          this.readDataNode(nodeIdx);
@@ -1163,7 +1163,7 @@ public class PME_Reader implements ResourceProvider {
             this.read(data, ((AnimationModel)data)._rawData, 0, false, null);
             object = data;
          } else if (data instanceof byte[]) {
-            if (referrer instanceof Object) {
+            if (referrer instanceof ResourceProvider) {
                this._resourceProvider = (ResourceProvider)referrer;
             }
 
@@ -1863,11 +1863,11 @@ public class PME_Reader implements ResourceProvider {
             try {
                var9 = true;
                String type = typeIndex == -1 ? "foreignObject" : this._model._customMessages[typeIndex];
-               this._context.set("Handle", new Object(nodeIdx));
+               this._context.set("Handle", new Integer(nodeIdx));
                Object resource = this._resourceProvider.createResource(type, data, this._context, null);
-               if (!(resource instanceof Object)) {
+               if (!(resource instanceof ForeignObject)) {
                   if (this._model._contentServices == null) {
-                     this._model._contentServices = new Object[1];
+                     this._model._contentServices = new MediaService[1];
                      this._model._contentServiceNodeHandles = new int[1];
                      this._model._contentServices[0] = (MediaService)resource;
                      this._model._contentServiceNodeHandles[0] = nodeIdx;
@@ -2376,7 +2376,7 @@ public class PME_Reader implements ResourceProvider {
                int arrayId = this._nodeRefToUpdate[i + 1];
                int[] refarray = this.getArray(arrayId);
                if (refarray == null) {
-                  throw new Object("Invalid reference array");
+                  throw new NullPointerException("Invalid reference array");
                }
 
                int linkIdx = this._nodeRefToUpdate[i + 2];
@@ -2415,7 +2415,7 @@ public class PME_Reader implements ResourceProvider {
    private int setNodeReference(int arrayId, int ref, int streamIndex) {
       int[] refArray = this.getArray(arrayId);
       if (refArray == null) {
-         throw new Object("Invalid reference array");
+         throw new NullPointerException("Invalid reference array");
       }
 
       int index = this.resolveReference(streamIndex);
@@ -2530,7 +2530,7 @@ public class PME_Reader implements ResourceProvider {
          short var9;
          switch (formatWeight) {
             case 0:
-               throw new Object(((StringBuffer)(new Object("Unsupported format value for font-weight: "))).append(formatWeight).toString());
+               throw new IllegalArgumentException("Unsupported format value for font-weight: " + formatWeight);
             case 1:
                var9 = 400;
                break;
@@ -2550,7 +2550,7 @@ public class PME_Reader implements ResourceProvider {
          byte var11;
          switch (formatStyle) {
             case 0:
-               throw new Object(((StringBuffer)(new Object("Unsupported format value for font-style: "))).append(formatStyle).toString());
+               throw new IllegalArgumentException("Unsupported format value for font-style: " + formatStyle);
             case 1:
                var11 = 1;
                break;
@@ -2573,7 +2573,7 @@ public class PME_Reader implements ResourceProvider {
          byte var13;
          switch (formatDecoration) {
             case 0:
-               throw new Object(((StringBuffer)(new Object("Unsupported format text decoration value: "))).append(formatDecoration).toString());
+               throw new IllegalArgumentException("Unsupported format text decoration value: " + formatDecoration);
             case 1:
                var13 = 1;
                break;
@@ -2602,7 +2602,7 @@ public class PME_Reader implements ResourceProvider {
          byte var15;
          switch (formatUnits) {
             case -1:
-               throw new Object(((StringBuffer)(new Object("Unsupported format units value: "))).append(formatUnits).toString());
+               throw new IllegalArgumentException("Unsupported format units value: " + formatUnits);
             case 0:
                var15 = 0;
                break;
@@ -2664,7 +2664,7 @@ public class PME_Reader implements ResourceProvider {
             try {
                String platformFontFamilyName = this._model._fontFamilyStrings[fontFamilyOffset];
                String uniqueKey = Integer.toHexString(this._model.hashCode()).substring(0, 4);
-               platformFontFamilyName = ((StringBuffer)(new Object())).append(platformFontFamilyName).append("_pme").append(uniqueKey).toString();
+               platformFontFamilyName = platformFontFamilyName + "_pme" + uniqueKey;
                this._context.set("FontFamily", platformFontFamilyName);
                Integer fontHandle = (Integer)this._resourceProvider
                   .createResourceFromURI(this._model._fontUrlStrings[fontURLOffset], "font", this._context, null);
@@ -2684,14 +2684,11 @@ public class PME_Reader implements ResourceProvider {
                this._model._platformFontFamilyStrings[fontFamilyOffset] = platformFontFamilyName;
             } catch (Throwable var10) {
                this._platform.logDebug(this, 22, -1, e);
-               if (e instanceof Object && ((MediaException)e).getCode() == 5) {
+               if (e instanceof MediaException && ((MediaException)e).getCode() == 5) {
                   this.abortLoad();
                } else {
-                  this._model.missingURLs = ((StringBuffer)(new Object()))
-                     .append(this._model.missingURLs)
-                     .append(this._model._fontUrlStrings[fontURLOffset])
-                     .toString();
-                  this._model.missingURLs = ((StringBuffer)(new Object())).append(this._model.missingURLs).append("\n").toString();
+                  this._model.missingURLs = this._model.missingURLs + this._model._fontUrlStrings[fontURLOffset];
+                  this._model.missingURLs = this._model.missingURLs + "\n";
                   this._model._nodes[nodeIdx + 5] = -1;
                }
                continue;
@@ -2738,7 +2735,7 @@ public class PME_Reader implements ResourceProvider {
       // 03e: aload 0
       // 03f: getfield net/rim/plazmic/internal/mediaengine/model/intarray/v1_2/PME_Reader._context Lnet/rim/plazmic/internal/mediaengine/ResourceContext;
       // 042: ldc_w "Handle"
-      // 045: new java/lang/Object
+      // 045: new java/lang/Integer
       // 048: dup
       // 049: aload 0
       // 04a: getfield net/rim/plazmic/internal/mediaengine/model/intarray/v1_2/PME_Reader._tempImageNodeIdx [I
@@ -2766,11 +2763,11 @@ public class PME_Reader implements ResourceProvider {
       // 074: iload 6
       // 076: aaload
       // 077: dup
-      // 078: instanceof java/lang/Object
+      // 078: instanceof net/rim/plazmic/internal/mediaengine/ui/ForeignObject
       // 07b: ifne 082
       // 07e: pop
       // 07f: goto 0a8
-      // 082: checkcast java/lang/Object
+      // 082: checkcast net/rim/plazmic/internal/mediaengine/ui/ForeignObject
       // 085: astore 8
       // 087: aload 8
       // 089: aload 0
@@ -2789,7 +2786,7 @@ public class PME_Reader implements ResourceProvider {
       // 0a8: aload 2
       // 0a9: iload 6
       // 0ab: aaload
-      // 0ac: instanceof java/lang/Object
+      // 0ac: instanceof net/rim/plazmic/internal/mediaengine/MediaModel
       // 0af: ifne 0b5
       // 0b2: goto 1a8
       // 0b5: new net/rim/plazmic/internal/mediaengine/ui/ImageForeignObject
@@ -2837,7 +2834,7 @@ public class PME_Reader implements ResourceProvider {
       // 10c: ifne 112
       // 10f: goto 1a8
       // 112: ldc2_w -7509200465648525729
-      // 115: new java/lang/Object
+      // 115: new java/lang/StringBuffer
       // 118: dup
       // 119: ldc_w "PME12: Failed to load: "
       // 11c: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -2861,18 +2858,18 @@ public class PME_Reader implements ResourceProvider {
       // 142: invokeinterface net/rim/plazmic/internal/mediaengine/util/Platform.logDebug (Ljava/lang/Object;IILjava/lang/Object;)V 5
       // 147: aload 8
       // 149: dup
-      // 14a: instanceof java/lang/Object
+      // 14a: instanceof net/rim/plazmic/mediaengine/MediaException
       // 14d: ifne 154
       // 150: pop
       // 151: goto 166
-      // 154: checkcast java/lang/Object
+      // 154: checkcast net/rim/plazmic/mediaengine/MediaException
       // 157: invokevirtual net/rim/plazmic/mediaengine/MediaException.getCode ()I
       // 15a: bipush 5
       // 15c: if_icmpne 166
       // 15f: aload 0
       // 160: invokespecial net/rim/plazmic/internal/mediaengine/model/intarray/v1_2/PME_Reader.abortLoad ()V
       // 163: goto 1a8
-      // 166: new java/lang/Object
+      // 166: new java/lang/StringBuffer
       // 169: dup
       // 16a: invokespecial java/lang/StringBuffer.<init> ()V
       // 16d: aload 0
@@ -2886,7 +2883,7 @@ public class PME_Reader implements ResourceProvider {
       // 17c: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 17f: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 182: putfield net/rim/plazmic/internal/mediaengine/model/intarray/v1_2/AnimationModel.missingURLs Ljava/lang/String;
-      // 185: new java/lang/Object
+      // 185: new java/lang/StringBuffer
       // 188: dup
       // 189: invokespecial java/lang/StringBuffer.<init> ()V
       // 18c: aload 0
@@ -2918,7 +2915,7 @@ public class PME_Reader implements ResourceProvider {
       this._in = new PMEInputStream();
       this._durations = new MediaQueue();
       this._interpolators = new MediaQueue();
-      this._focusOrderHashtable = (IntIntHashtable)(new Object());
+      this._focusOrderHashtable = new IntIntHashtable();
    }
 
    private static final int toFPn(int i, int n) {

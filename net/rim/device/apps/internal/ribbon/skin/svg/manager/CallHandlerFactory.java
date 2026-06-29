@@ -18,7 +18,7 @@ class CallHandlerFactory {
    }
 
    private CallHandlerFactory() {
-      Thread thread = (Thread)(new Object(new CallHandlerFactory$1(this)));
+      Thread thread = new Thread(new CallHandlerFactory$1(this));
       thread.setPriority(1);
       thread.start();
    }

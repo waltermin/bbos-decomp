@@ -35,11 +35,11 @@ import net.rim.device.internal.system.NvStore;
 import net.rim.device.internal.system.Security;
 
 class ITAdminTransmissionService extends AbstractTransmissionService implements PacketReceiver, GlobalEventListener {
-   private IntIntHashtable _ackTable = (IntIntHashtable)(new Object());
+   private IntIntHashtable _ackTable = new IntIntHashtable();
    private ApplicationRegistry _appRegistry;
    private Security _security;
    private ServiceRecord[] _overridingServiceRecords = null;
-   private ContextObject _transmissionContext = (ContextObject)(new Object());
+   private ContextObject _transmissionContext = new ContextObject();
    private static final byte ITADMIN_VERSION = 16;
    private static final String ITADMIN_CID = "ITADMIN";
    private static final int ITADMIN_COMMAND_TIMEOUT_THRESHOLD = 900000;
@@ -115,11 +115,10 @@ class ITAdminTransmissionService extends AbstractTransmissionService implements 
       if (serviceRecord == null) {
          gcfURL = "gme:ITADMIN";
       } else {
-         gcfURL = ((StringBuffer)(new Object("gme:ITADMIN/"))).append(serviceRecord.getUid()).toString();
+         gcfURL = "gme:ITADMIN/" + serviceRecord.getUid();
       }
 
-      DatagramConnection sendingConnection = (DatagramConnection)Connector.open(gcfURL);
-      return sendingConnection;
+      return (DatagramConnection)Connector.open(gcfURL);
    }
 
    @Override
@@ -131,8 +130,8 @@ class ITAdminTransmissionService extends AbstractTransmissionService implements 
       Proxy.getInstance().addGlobalEventListener(this);
       this._appRegistry = ApplicationRegistry.getApplicationRegistry();
       this._security = Security.getInstance();
-      this._overridingServiceRecords = new Object[1];
-      this._overridingServiceRecords[0] = (ServiceRecord)(new Object(3));
+      this._overridingServiceRecords = new ServiceRecord[1];
+      this._overridingServiceRecords[0] = new ServiceRecord(3);
       this._overridingServiceRecords[0].setCid("ITADMIN");
       this._overridingServiceRecords[0].setType(0);
       this._overridingServiceRecords[0].setEncryptionMode(2);
@@ -151,7 +150,7 @@ class ITAdminTransmissionService extends AbstractTransmissionService implements 
       byte commandVersion = 0;
       byte[] buffer = null;
       boolean multipleCommands = false;
-      DataBuffer itadminData = (DataBuffer)(new Object(true));
+      DataBuffer itadminData = new DataBuffer(true);
 
       label435:
       try {
@@ -249,7 +248,7 @@ class ITAdminTransmissionService extends AbstractTransmissionService implements 
                         this.sendAcknowledge(version, timeStamp, command, commandVersion, 128, uid, (byte)65, null);
                      } else {
                         this.lockHandheld(1281979504);
-                        String password = (String)(new Object(passwordBytes));
+                        String password = new String(passwordBytes);
                         if (this._security.isPasswordValid(password) == 0 && this._security.verifyPasswordPattern(password) == 0) {
                            Object ticket = PersistentContent.getTicket();
                            if (ticket == null && (K == null || H == null || !PersistentContentInternal.setK(K, H))) {
@@ -257,7 +256,7 @@ class ITAdminTransmissionService extends AbstractTransmissionService implements 
                                  byte[] D = PersistentContentInternal.getD();
                                  byte[] BChecksum = PersistentContentInternal.getBChecksum();
                                  if (D != null && BChecksum != null && D.length != 0 && BChecksum.length != 0) {
-                                    DataBuffer errorData = (DataBuffer)(new Object());
+                                    DataBuffer errorData = new DataBuffer();
                                     errorData.write(2);
                                     errorData.writeByteArray(D);
                                     errorData.write(4);
@@ -350,7 +349,7 @@ class ITAdminTransmissionService extends AbstractTransmissionService implements 
                   case 8:
                      ITAdminEventLogger.logEvent(1397708622, 0);
                      buffer = this.getCommandDataWithVersion(data, length, commandVersion);
-                     ack = this.setOwnerInfo((DataBuffer)(new Object(buffer, 0, length, false))) ? 192 : 128;
+                     ack = this.setOwnerInfo(new DataBuffer(buffer, 0, length, false)) ? 192 : 128;
                      break;
                   case 9:
                      ITAdminEventLogger.logEvent(1397764688, 0);
@@ -436,7 +435,7 @@ class ITAdminTransmissionService extends AbstractTransmissionService implements 
             return 1262834258;
          }
 
-         DataBuffer otaPolicyBuffer = (DataBuffer)(new Object(buffer, 0, buffer.length, true));
+         DataBuffer otaPolicyBuffer = new DataBuffer(buffer, 0, buffer.length, true);
          if (ITPolicyInternal.setOTAITPolicy(otaPolicyBuffer)) {
             this.lockHandheld(1281979503);
          }
@@ -461,7 +460,7 @@ class ITAdminTransmissionService extends AbstractTransmissionService implements 
       }
 
       synchronized (Application.getApplication().getAppEventLock()) {
-         Dialog dialog = (Dialog)(new Object(0, message, 0, Bitmap.getPredefinedBitmap(0), 33554432));
+         Dialog dialog = new Dialog(0, message, 0, Bitmap.getPredefinedBitmap(0), 33554432);
          UiApplication.getUiApplication().pushGlobalScreen(dialog, -1073741825, 2);
          return result;
       }
@@ -483,7 +482,7 @@ class ITAdminTransmissionService extends AbstractTransmissionService implements 
             int length = data.readCompressedInt();
             byte[] buffer = new byte[length];
             data.readFully(buffer, 0, length);
-            String info = (String)(new Object(buffer));
+            String info = new String(buffer);
             switch (command) {
                case 0:
                   break;
@@ -512,12 +511,12 @@ class ITAdminTransmissionService extends AbstractTransmissionService implements 
    private void sendAcknowledge(byte version, int timeStamp, byte command, byte commandVersion, int ack, String uid, byte errorCode, byte[] errorData) {
       label59:
       try {
-         this.setSendingConnection((DatagramConnection)Connector.open(((StringBuffer)(new Object("gme:ITADMIN/"))).append(uid).toString()));
+         this.setSendingConnection((DatagramConnection)Connector.open("gme:ITADMIN/" + uid));
       } finally {
          break label59;
       }
 
-      DataBuffer data = (DataBuffer)(new Object());
+      DataBuffer data = new DataBuffer();
       data.writeByte(version);
       data.writeInt(timeStamp);
       data.writeByte(command);
@@ -535,7 +534,7 @@ class ITAdminTransmissionService extends AbstractTransmissionService implements 
             data.writeByte(errorCode);
          }
       } else {
-         DataBuffer singleCommandData = (DataBuffer)(new Object());
+         DataBuffer singleCommandData = new DataBuffer();
          IntEnumeration keys = this._ackTable.keys();
 
          while (keys.hasMoreElements()) {
@@ -600,7 +599,7 @@ class ITAdminTransmissionService extends AbstractTransmissionService implements 
 
    private void alert(String message) {
       if (this.debugMode()) {
-         Dialog dialog = (Dialog)(new Object(0, message, 0, Bitmap.getPredefinedBitmap(0), 33554432));
+         Dialog dialog = new Dialog(0, message, 0, Bitmap.getPredefinedBitmap(0), 33554432);
          UiApplication.getUiApplication().pushGlobalScreen(dialog, -1073741823, 2);
       }
    }

@@ -81,7 +81,7 @@ public final class FolderModelFactory extends RIMModelFactory {
             return null;
          }
       } else {
-         if (!(context instanceof Object)) {
+         if (!(context instanceof Folder)) {
             return new FolderModel();
          }
 

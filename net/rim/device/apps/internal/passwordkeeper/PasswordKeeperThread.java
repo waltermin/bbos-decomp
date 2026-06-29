@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.passwordkeeper;
 
 import net.rim.device.api.collection.util.KeywordFilterList;
+import net.rim.device.api.collection.util.PrefixKeywordFilterList;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.apps.api.ui.DialogWithBackgroundThread;
@@ -32,7 +33,7 @@ public final class PasswordKeeperThread extends Thread implements DialogWithBack
             PasswordKeeperSync collection = passwordKeeper.getCollection();
             PasswordKeeperList source = collection.getSource();
             source.sort();
-            KeywordFilterList list = (KeywordFilterList)(new Object(source, source));
+            KeywordFilterList list = new PrefixKeywordFilterList(source, source);
             activeScreen = app.getActiveScreen();
             if (!(activeScreen instanceof PasswordKeeperScreen) && !(activeScreen instanceof PasswordKeeperElementScreen)) {
                PasswordKeeperScreen screen = new PasswordKeeperScreen(PasswordKeeper.getString(2011), list, source, collection);

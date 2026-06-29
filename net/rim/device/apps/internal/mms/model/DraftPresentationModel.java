@@ -10,7 +10,7 @@ import net.rim.device.apps.internal.mms.api.MMSPresentationModel;
 import net.rim.device.apps.internal.mms.ui.MMSPresentationField;
 
 final class DraftPresentationModel implements MMSPresentationModel, FieldProvider {
-   Vector _content = (Vector)(new Object());
+   Vector _content = new Vector();
    static final int ATTACHMENT_NAME = 1;
    static final int ATTACHMENT_TYPE = 2;
    static final int IS_EDITABLE = 3;
@@ -35,8 +35,8 @@ final class DraftPresentationModel implements MMSPresentationModel, FieldProvide
 
    @Override
    public final byte[] getData() {
-      DataBuffer dataBuffer = (DataBuffer)(new Object());
-      SyncBuffer syncBuffer = (SyncBuffer)(new Object(dataBuffer, 0, 0));
+      DataBuffer dataBuffer = new DataBuffer();
+      SyncBuffer syncBuffer = new SyncBuffer(dataBuffer, 0, 0);
       int count = this._content.size();
 
       for (int idx = 0; idx < count; idx++) {
@@ -131,9 +131,9 @@ final class DraftPresentationModel implements MMSPresentationModel, FieldProvide
 
    private final void initialize(byte[] data) {
       try {
-         DataBuffer dataBuffer = (DataBuffer)(new Object());
+         DataBuffer dataBuffer = new DataBuffer();
          dataBuffer.setData(data, 0, data.length);
-         SyncBuffer syncBuffer = (SyncBuffer)(new Object(dataBuffer, 0, 0));
+         SyncBuffer syncBuffer = new SyncBuffer(dataBuffer, 0, 0);
          int type = -1;
          boolean isEditable = false;
 

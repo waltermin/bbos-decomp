@@ -24,7 +24,7 @@ final class ActivationScreen$ActivationMessageDialog implements Runnable {
    public final void run() {
       Bitmap icon = Bitmap.getPredefinedBitmap(0);
       if (icon == null) {
-         throw new Object("Activation:ICON");
+         throw new RuntimeException("Activation:ICON");
       }
 
       if (this._globalStatus) {
@@ -38,7 +38,7 @@ final class ActivationScreen$ActivationMessageDialog implements Runnable {
          this.this$0._app.setCurrentGlobalScreenDialog(dialog);
          UiApplication.getUiApplication().pushGlobalScreen(dialog, -2147483645, 2);
       } else {
-         Dialog dialog = (Dialog)(new Object(0, this._message, 0, icon, 0));
+         Dialog dialog = new Dialog(0, this._message, 0, icon, 0);
          dialog.doModal();
       }
 

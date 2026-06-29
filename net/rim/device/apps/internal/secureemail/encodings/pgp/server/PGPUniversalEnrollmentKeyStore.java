@@ -24,7 +24,7 @@ public class PGPUniversalEnrollmentKeyStore extends RIMKeyStore {
                var4 = false;
             } finally {
                if (var4) {
-                  throw new Object();
+                  throw new RuntimeException();
                }
             }
          }

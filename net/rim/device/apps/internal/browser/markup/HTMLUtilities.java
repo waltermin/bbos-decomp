@@ -1903,7 +1903,7 @@ public final class HTMLUtilities extends HTMLBinaryConstants {
          }
 
          if (attribute != null) {
-            return ((StringBuffer)(new Object())).append(attribute).append('=').append('"').append(value.substring(attribute.length())).append('"').toString();
+            return attribute + '=' + '"' + value.substring(attribute.length()) + '"';
          }
       }
 

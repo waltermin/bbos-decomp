@@ -4,7 +4,7 @@ import java.util.Vector;
 import net.rim.device.apps.api.options.OptionsProviderRegistration;
 
 public final class OptionsManager {
-   private static Vector _optionsProviders = (Vector)(new Object());
+   private static Vector _optionsProviders = new Vector();
 
    private OptionsManager() {
    }

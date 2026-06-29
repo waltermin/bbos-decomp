@@ -18,10 +18,10 @@ final class TextMessage extends MessengerMessageImpl {
       super(null);
       this._recipient = recipient;
       this._state = 7;
-      super._serialized.put(5, new Object(this._state));
+      super._serialized.put(5, new Integer(this._state));
       this._text = PersistentContent.encode(text, true, true);
       super._serialized.put(4, this._text);
-      super._serialized.put(0, new Object(0));
+      super._serialized.put(0, new Integer(0));
       this.commit();
    }
 
@@ -29,10 +29,10 @@ final class TextMessage extends MessengerMessageImpl {
       super(contact);
       this._recipient = null;
       super._isSystem = contact == null;
-      super._serialized.put(2, new Object(super._isSystem));
+      super._serialized.put(2, new Boolean(super._isSystem));
       this._text = PersistentContent.encode(text, true, true);
       super._serialized.put(4, this._text);
-      super._serialized.put(0, new Object(0));
+      super._serialized.put(0, new Integer(0));
       this.commit();
    }
 
@@ -40,14 +40,14 @@ final class TextMessage extends MessengerMessageImpl {
       super(message, contactList);
       this._text = message.get(4);
       Object state = message.get(5);
-      if (state instanceof Object) {
-         this._state = state;
+      if (state instanceof Integer) {
+         this._state = (Integer)state;
       }
    }
 
    final void setState(int state) {
       this._state = state;
-      super._serialized.put(5, new Object(this._state));
+      super._serialized.put(5, new Integer(this._state));
       this.commit();
    }
 
@@ -89,7 +89,7 @@ final class TextMessage extends MessengerMessageImpl {
       int length = text.length();
       char[] in = new char[length];
       text.getChars(0, length, in, 0);
-      StringBuffer result = (StringBuffer)(new Object(text.length()));
+      StringBuffer result = new StringBuffer(text.length());
       int i = 0;
 
       while (i < length) {
@@ -137,6 +137,6 @@ final class TextMessage extends MessengerMessageImpl {
    }
 
    static final MessengerMessageImpl deserialize(IntHashtable message, PeerContactListCollection contactList) {
-      return message instanceof Object ? new TextMessage(message, contactList) : null;
+      return message instanceof IntHashtable ? new TextMessage(message, contactList) : null;
    }
 }

@@ -11,6 +11,6 @@ class WTimer$1 implements Runnable {
 
    @Override
    public void run() {
-      this.this$0._timer = (Timer)(new Object());
+      this.this$0._timer = new Timer();
    }
 }

@@ -38,13 +38,13 @@ public final class Protocol implements ConnectionBaseInterface {
 
    @Override
    public final Connection openPrim(String name, int mode, boolean timeouts) {
-      URL url = (URL)(new Object("http", name));
+      URL url = new URL("http", name);
       boolean connectionNotifier = url.getHost() == null && url.getPath() == null;
       return connectionNotifier ? this.doConnectionNotify(url, mode, timeouts) : this.doConnection(url, mode, timeouts);
    }
 
    private final Connection doConnection(URL url, int mode, boolean timeouts) {
-      StringBuffer urlToOpen = (StringBuffer)(new Object());
+      StringBuffer urlToOpen = new StringBuffer();
       URLParameters params = url.getRIMParameters();
       String hostName = url.getHost();
       int port = url.getPort();
@@ -242,7 +242,7 @@ public final class Protocol implements ConnectionBaseInterface {
    }
 
    private final Connection doConnectionNotify(URL url, int mode, boolean timeouts) {
-      StringBuffer urlToOpen = (StringBuffer)(new Object("socket://"));
+      StringBuffer urlToOpen = new StringBuffer("socket://");
       URLParameters params = url.getRIMParameters();
       int port = url.getPort();
       String iface = null;

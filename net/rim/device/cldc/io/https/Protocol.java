@@ -1,6 +1,7 @@
 package net.rim.device.cldc.io.https;
 
 import com.sun.cldc.io.ConnectionBaseInterface;
+import java.io.IOException;
 import javax.microedition.io.Connection;
 import javax.microedition.io.Connector;
 import javax.microedition.io.HttpsConnection;
@@ -39,8 +40,8 @@ public final class Protocol implements ConnectionBaseInterface {
    private static ResourceBundle _rb = ResourceBundle.getBundle(-320500590281765934L, "net.rim.device.internal.resource.SSL");
 
    @Override
-   public final int getProperties(String name) {
-      URL url = (URL)(new Object(PROXY_HTTPS, name));
+   public final int getProperties(String name) throws IOException {
+      URL url = new URL(PROXY_HTTPS, name);
       URLParameters params = url.getRIMParameters();
       if (params == null) {
          return RadioInfo.getNetworkType() == 5 ? 2 : 1;
@@ -68,7 +69,7 @@ public final class Protocol implements ConnectionBaseInterface {
 
       String uid = SocketTransportBase.findAcceptableConnectionUid(params);
       if (uid == null) {
-         throw new Object("Invalid url parameter.");
+         throw new IOException("Invalid url parameter.");
       } else {
          return ITPolicyInternal.verifyITAdminService(uid, false) ? 1 : 2;
       }
@@ -76,7 +77,7 @@ public final class Protocol implements ConnectionBaseInterface {
 
    @Override
    public final Connection openPrim(String name, int mode, boolean timeouts) {
-      URL url = (URL)(new Object("https", name));
+      URL url = new URL("https", name);
       URLParameters urlParameters = url.getRIMParameters();
       boolean returnWithConnector = false;
       if (RadioInfo.getNetworkType() == 5) {
@@ -118,7 +119,7 @@ public final class Protocol implements ConnectionBaseInterface {
    }
 
    private final ServerSocketConnection doConnectionNotifier(URL url) {
-      StringBuffer urlToOpen = (StringBuffer)(new Object());
+      StringBuffer urlToOpen = new StringBuffer();
       urlToOpen.append("socket://").append(':').append(url.getPort()).append(';').append("ConnectionHandler").append('=');
       URLParameters urlParameters = url.getRIMParameters();
       if (urlParameters != null) {
@@ -145,14 +146,14 @@ public final class Protocol implements ConnectionBaseInterface {
       return new HttpServerSocketConnection(url, connection);
    }
 
-   private final HttpsConnection doConnection(URL url, int mode, boolean timeouts) throws TLSSecurityException {
+   private final HttpsConnection doConnection(URL url, int mode, boolean timeouts) throws IOException, TLSSecurityException {
       HttpsConnection connection = null;
       boolean followHttpsRedirections = false;
       boolean trustAll = false;
       boolean deviceSide = false;
       boolean deviceSideAvailable = SSLOptionsRegistration.doesDeviceSideExist();
       boolean useSSL = false;
-      StringBuffer urlToOpen = (StringBuffer)(new Object());
+      StringBuffer urlToOpen = new StringBuffer();
       TLSOptionStore options = TLSOptionStore.getOptions();
       URLParameters urlParameters = url.getRIMParameters();
       if (urlParameters != null) {
@@ -180,7 +181,7 @@ public final class Protocol implements ConnectionBaseInterface {
 
          deviceSide = true;
          if (urlParameters == null) {
-            urlParameters = (URLParameters)(new Object());
+            urlParameters = new URLParameters();
          }
 
          if (urlParameters.getValue("EndToEndRequired") == null) {
@@ -233,7 +234,7 @@ public final class Protocol implements ConnectionBaseInterface {
          if (urlParameters.containParameter("ConnectionHandler")) {
             String connectionHandlerValue = urlParameters.getValue("ConnectionHandler");
             if (connectionHandlerValue == null) {
-               throw new Object("Connection Handler parameter is not assigned a value");
+               throw new IOException("Connection Handler parameter is not assigned a value");
             }
 
             urlToOpen.append(';').append("ConnectionHandler").append('=').append(connectionHandlerValue);

@@ -47,15 +47,15 @@ class ContactStatus extends QMTimerTask {
          this._persistentData = contactData;
          this._customStatusMessage = contactData.get(7);
          Object status = contactData.get(4);
-         if (status instanceof Object) {
-            this._contactStatus = status;
+         if (status instanceof Integer) {
+            this._contactStatus = (Integer)status;
             this.setPresenceStatus(this._contactStatus & 32543);
          } else {
             this.setPresenceStatus(2048);
          }
       } else {
-         this._persistentData = (IntHashtable)(new Object());
-         this._persistentData.put(4, new Object(this._contactStatus));
+         this._persistentData = new IntHashtable();
+         this._persistentData.put(4, new Integer(this._contactStatus));
       }
    }
 
@@ -93,7 +93,7 @@ class ContactStatus extends QMTimerTask {
                break;
             default:
                if (!this.isPending()) {
-                  String error = ((StringBuffer)(new Object("ContactStatus:Wrong presence status detected - "))).append(status).toString();
+                  String error = "ContactStatus:Wrong presence status detected - " + status;
                   EventLogger.logEvent(-9029900896793868512L, error.getBytes(), 3);
                }
 
@@ -270,7 +270,7 @@ class ContactStatus extends QMTimerTask {
    }
 
    void contactStatusChanged() {
-      this._persistentData.put(4, new Object(this._contactStatus));
+      this._persistentData.put(4, new Integer(this._contactStatus));
       if (this._customStatusMessage != null) {
          this._persistentData.put(7, this._customStatusMessage);
       }

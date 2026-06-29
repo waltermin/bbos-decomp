@@ -29,9 +29,9 @@ final class HorAndVerVel extends Velocity {
    @Override
    final void print() {
       System.out.println("Hor and Ver Velocity: ");
-      System.out.println(((StringBuffer)(new Object("Ver Direct: "))).append(this.verDirect).toString());
-      System.out.println(((StringBuffer)(new Object("Bearing: "))).append(super.bearing).toString());
-      System.out.println(((StringBuffer)(new Object("Hor Speed: "))).append(super.horSpeed).toString());
-      System.out.println(((StringBuffer)(new Object("Ver Speed: "))).append(this.verSpeed).toString());
+      System.out.println("Ver Direct: " + this.verDirect);
+      System.out.println("Bearing: " + super.bearing);
+      System.out.println("Hor Speed: " + super.horSpeed);
+      System.out.println("Ver Speed: " + this.verSpeed);
    }
 }

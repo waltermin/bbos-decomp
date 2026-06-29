@@ -139,7 +139,7 @@ public class AddressGuesser {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private void collectSentAddressesFromFolder(EmailFolder folder) {
       Collection messages = folder.getContainedItems();
-      if (messages instanceof Object) {
+      if (messages instanceof ReadableList) {
          ReadableList list = (ReadableList)messages;
 
          for (int i = list.size() - 1; i >= 0; i--) {
@@ -265,7 +265,7 @@ public class AddressGuesser {
             int type = ehm.getHeaderType();
             if (type == 0 || type == 1 || type == 2) {
                RIMModel inside = ehm.getInsideModel();
-               if (inside instanceof Object) {
+               if (inside instanceof EmailAddressModel) {
                   EmailAddressModel addressCard = (EmailAddressModel)inside;
                   int ref = this.getReference(addressCard);
                   if (ref != 0) {
@@ -282,7 +282,7 @@ public class AddressGuesser {
 
    private int getReference(EmailAddressModel addrModel) {
       Object card = AddressBookServices.reverseLookup(addrModel);
-      if (!(card instanceof Object)) {
+      if (!(card instanceof SyncObject)) {
          return 0;
       }
 
@@ -292,6 +292,6 @@ public class AddressGuesser {
 
    private AddressCardModel getAddress(int ref) {
       Object obj = AddressBookServices.getAddressBook().getAddressCard(ref);
-      return (AddressCardModel)(!(obj instanceof Object) ? null : obj);
+      return !(obj instanceof AddressCardModel) ? null : (AddressCardModel)obj;
    }
 }

@@ -3,7 +3,7 @@ package net.rim.wica.runtime.provisioning.internal.elements;
 import java.util.Vector;
 
 public final class MenuElement extends AbstractElement {
-   private Vector _items = (Vector)(new Object());
+   private Vector _items = new Vector();
    private OnShowElement _onshow;
 
    @Override

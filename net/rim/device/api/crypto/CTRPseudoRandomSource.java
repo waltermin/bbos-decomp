@@ -12,7 +12,7 @@ public final class CTRPseudoRandomSource extends AbstractPseudoRandomSource impl
 
    public CTRPseudoRandomSource(SymmetricKeyEncryptorEngine engine, long iv) {
       if (engine == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._engine = engine;
@@ -25,7 +25,7 @@ public final class CTRPseudoRandomSource extends AbstractPseudoRandomSource impl
 
    private final byte[] longToBlock(SymmetricKeyEncryptorEngine engine, long iv) {
       if (engine == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       byte[] counter = new byte[engine.getBlockLength()];
@@ -44,7 +44,7 @@ public final class CTRPseudoRandomSource extends AbstractPseudoRandomSource impl
          this._engine = engine;
          this._blockLength = engine.getBlockLength();
          if (iv.getLength() != this._blockLength) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          this._outputFeedback = new byte[this._blockLength];
@@ -52,13 +52,13 @@ public final class CTRPseudoRandomSource extends AbstractPseudoRandomSource impl
          this._outputFeedbackOffset = 0;
          this._engine.encrypt(this._counter, 0, this._outputFeedback, 0);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object())).append(this._engine.getAlgorithm()).append("/CTR").toString();
+      return this._engine.getAlgorithm() + "/CTR";
    }
 
    @Override
@@ -79,7 +79,7 @@ public final class CTRPseudoRandomSource extends AbstractPseudoRandomSource impl
             }
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -99,17 +99,17 @@ public final class CTRPseudoRandomSource extends AbstractPseudoRandomSource impl
       int length = SelfTestData_PK1.ENCRYPTION_PLAIN_TEXT.length;
 
       try {
-         CTRPseudoRandomSource source = new CTRPseudoRandomSource((SymmetricKeyEncryptorEngine)(new Object()), (InitializationVector)(new Object(IV)));
+         CTRPseudoRandomSource source = new CTRPseudoRandomSource(new TestEngine(), new InitializationVector(IV));
          byte[] cipherText = Arrays.copy(SelfTestData_PK1.ENCRYPTION_PLAIN_TEXT, 0, length);
          source.xorBytes(cipherText, 0, length);
          if (Arrays.equals(cipherText, 0, CIPHER_TEXT, 0, length)) {
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

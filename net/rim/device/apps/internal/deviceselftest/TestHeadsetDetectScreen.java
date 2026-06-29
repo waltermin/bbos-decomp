@@ -1,48 +1,49 @@
 package net.rim.device.apps.internal.deviceselftest;
 
+import java.util.Date;
 import java.util.Vector;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.system.Audio;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
+import net.rim.device.api.ui.component.SeparatorField;
 
 final class TestHeadsetDetectScreen extends TestScreenBase {
    TestHeadsetDetectScreen$ReportListCallback _callback;
    ListField _reportList;
    LabelField _event;
-   Vector reports = (Vector)(new Object());
+   Vector reports = new Vector();
 
    TestHeadsetDetectScreen() {
-      super._title = (LabelField)(new Object(DeviceSelfTestResources.getString(68), 1152921504606846976L));
-      super._input = (LabelField)(new Object(DeviceSelfTestResources.getString(72), 1152921504606846976L));
-      super._output = (LabelField)(new Object(DeviceSelfTestResources.getString(73), 1152921504606846976L));
-      this._event = (LabelField)(new Object(DeviceSelfTestResources.getString(74), 1152921504606846976L));
+      super._title = new LabelField(DeviceSelfTestResources.getString(68), 1152921504606846976L);
+      super._input = new LabelField(DeviceSelfTestResources.getString(72), 1152921504606846976L);
+      super._output = new LabelField(DeviceSelfTestResources.getString(73), 1152921504606846976L);
+      this._event = new LabelField(DeviceSelfTestResources.getString(74), 1152921504606846976L);
       this.setTitle(super._title);
       this.add(super._input);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.add(super._output);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.add(this._event);
       this.setupMenuItems();
       this._callback = new TestHeadsetDetectScreen$ReportListCallback();
-      this._reportList = (ListField)(new Object());
+      this._reportList = new ListField();
       this._reportList.setCallback(this._callback);
       this._reportList.setSearchable(false);
       this.add(this._reportList);
    }
 
    final void insertReport(int type) {
-      String timeStamp = new Object(System.currentTimeMillis()).toString();
+      String timeStamp = new Date(System.currentTimeMillis()).toString();
       String event;
       if (type == 1) {
-         event = ((StringBuffer)(new Object())).append(DeviceSelfTestResources.getString(75)).append(timeStamp.substring(0, 20)).toString();
+         event = DeviceSelfTestResources.getString(75) + timeStamp.substring(0, 20);
       } else if (type == 2) {
-         event = ((StringBuffer)(new Object())).append(DeviceSelfTestResources.getString(76)).append(timeStamp.substring(0, 20)).toString();
+         event = DeviceSelfTestResources.getString(76) + timeStamp.substring(0, 20);
       } else if (type == 3) {
-         event = ((StringBuffer)(new Object())).append(DeviceSelfTestResources.getString(118)).append(timeStamp.substring(0, 20)).toString();
+         event = DeviceSelfTestResources.getString(118) + timeStamp.substring(0, 20);
       } else {
-         event = ((StringBuffer)(new Object())).append(DeviceSelfTestResources.getString(119)).append(timeStamp.substring(0, 20)).toString();
+         event = DeviceSelfTestResources.getString(119) + timeStamp.substring(0, 20);
       }
 
       this.reports.addElement(event);

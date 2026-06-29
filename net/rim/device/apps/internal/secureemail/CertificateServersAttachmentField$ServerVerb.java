@@ -19,7 +19,7 @@ class CertificateServersAttachmentField$ServerVerb extends Verb {
    public Object invoke(Object context) {
       switch (this._type) {
          case 0:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 1:
          default:
             CertificateServerInfo serverInfox = this.this$0._attachmentModel.getCertificateServerInfo();
@@ -44,7 +44,7 @@ class CertificateServersAttachmentField$ServerVerb extends Verb {
    public String toString() {
       switch (this._type) {
          case 0:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 1:
          default:
             return CertificateServersAttachmentField._rb.getString(107);

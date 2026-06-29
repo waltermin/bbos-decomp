@@ -333,7 +333,7 @@ public class RecurUtilities {
    private static boolean areAllOccurrencesExclusions(Event recurringEvent, Recur recur, long startingPoint, boolean startingPointIsKnownExclusion, TimeZone tz) {
       long[] exclusions = recur.getExclusions(null);
       if (exclusions != null && exclusions.length != 0) {
-         Recur$Handle handle = (Recur$Handle)(new Object());
+         Recur$Handle handle = new Recur$Handle();
          return startingPointIsKnownExclusion
             ? !recurringEvent.getHandleAfter(handle, startingPoint) && !recurringEvent.getHandleBefore(handle, startingPoint)
             : !recurringEvent.getHandleAfterTime(handle, startingPoint, tz) && !recurringEvent.getHandleBeforeTime(handle, startingPoint, tz);
@@ -496,7 +496,7 @@ public class RecurUtilities {
                scanAndDeleteRelatedEvents(calDB, newEvent);
                newRecur.removeAllExclusions();
                newEvent.setRecurrence(newRecur);
-               StringBuffer logCode = (StringBuffer)(new Object());
+               StringBuffer logCode = new StringBuffer();
                if (durationChanged) {
                   logCode.append("!RDUR:");
                   logCode.append(oldDuration);

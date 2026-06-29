@@ -17,8 +17,8 @@ import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
 import net.rim.vm.Persistable;
 
 final class DocViewAttachmentPersist$DocViewAttachmentPersistData implements Persistable, SyncObject, RestoreProvider {
-   private IntHashtable _msgMap = (IntHashtable)(new Object(128));
-   private Vector _lruQueue = (Vector)(new Object());
+   private IntHashtable _msgMap = new IntHashtable(128);
+   private Vector _lruQueue = new Vector();
    private static final long MESSAGE_EXPIRED = 86400000L;
    private static final long PENDING_EXPIRED = 3600000L;
    private static final int BACKUP_VERSIONID = 3;
@@ -51,7 +51,7 @@ final class DocViewAttachmentPersist$DocViewAttachmentPersistData implements Per
    }
 
    final SyncObject[] getSyncObjects() {
-      SyncObject[] objArray = new Object[0];
+      SyncObject[] objArray = new SyncObject[0];
       synchronized (this._msgMap) {
          IntEnumeration messages = this._msgMap.keys();
 
@@ -256,7 +256,7 @@ final class DocViewAttachmentPersist$DocViewAttachmentPersistData implements Per
                }
 
                if (!retval) {
-                  IntVector messageKeys = (IntVector)(new Object());
+                  IntVector messageKeys = new IntVector();
                   IntEnumeration messagesIds = this._msgMap.keys();
 
                   while (messagesIds.hasMoreElements()) {
@@ -292,7 +292,7 @@ final class DocViewAttachmentPersist$DocViewAttachmentPersistData implements Per
                      }
                   }
 
-                  messageKeys = null;
+                  Object var38 = null;
                }
             }
          }
@@ -382,21 +382,19 @@ final class DocViewAttachmentPersist$DocViewAttachmentPersistData implements Per
          synchronized (this._msgMap) {
             IntHashtable msgHashtable = (IntHashtable)this._msgMap.get(messageID);
             if (msgHashtable == null) {
-               msgHashtable = (IntHashtable)(new Object());
+               msgHashtable = new IntHashtable();
                this._msgMap.put(messageID, msgHashtable);
             } else if (msgHashtable.containsKey(attachmentIndex)) {
                return;
             }
 
-            Vector attachInfoVector = (Vector)(new Object());
+            Vector attachInfoVector = new Vector();
             IntEnumeration keys = archiveContents.keys();
 
             while (keys.hasMoreElements()) {
                int nextKey = keys.nextElement();
                AttachmentInfo ai = new AttachmentInfo();
-               ai.setArchiveIndicator(
-                  ((StringBuffer)(new Object())).append((String)archiveContents.get(nextKey)).append('|').append(String.valueOf(nextKey)).toString()
-               );
+               ai.setArchiveIndicator((String)archiveContents.get(nextKey) + '|' + nextKey);
                attachInfoVector.addElement(ai);
             }
 
@@ -417,14 +415,14 @@ final class DocViewAttachmentPersist$DocViewAttachmentPersistData implements Per
       synchronized (this._msgMap) {
          IntHashtable msgHashtable = (IntHashtable)this._msgMap.get(messageID);
          if (msgHashtable == null) {
-            msgHashtable = (IntHashtable)(new Object());
+            msgHashtable = new IntHashtable();
             this._msgMap.put(messageID, msgHashtable);
          }
 
          Vector attachInfoVector = (Vector)msgHashtable.get(attachmentIndex);
          AttachmentInfo attachInfo = null;
          if (attachInfoVector == null) {
-            attachInfoVector = (Vector)(new Object());
+            attachInfoVector = new Vector();
             msgHashtable.put(attachmentIndex, attachInfoVector);
          } else {
             attachInfo = this.findAttachmentInfoInVector(attachInfoVector, archiveIndicator);
@@ -510,7 +508,7 @@ final class DocViewAttachmentPersist$DocViewAttachmentPersistData implements Per
          for (int i = 0; i < bodyVector.size(); i++) {
             SimpleSortingVector atomVector = this.fillPartsInfo((AttachmentInfo)bodyVector.elementAt(i));
             if (mainVector == null) {
-               mainVector = (Vector)(new Object());
+               mainVector = new Vector();
             }
 
             mainVector.addElement(atomVector);
@@ -730,7 +728,7 @@ final class DocViewAttachmentPersist$DocViewAttachmentPersistData implements Per
                if (this._msgMap.containsKey(messageID)) {
                   msgHashtable = (IntHashtable)this._msgMap.get(messageID);
                } else {
-                  msgHashtable = (IntHashtable)(new Object());
+                  msgHashtable = new IntHashtable();
                   this._msgMap.put(messageID, msgHashtable);
                }
 
@@ -741,7 +739,7 @@ final class DocViewAttachmentPersist$DocViewAttachmentPersistData implements Per
                      if (msgHashtable.containsKey(attachMoreID)) {
                         aInfoVector = (Vector)msgHashtable.get(attachMoreID);
                      } else {
-                        aInfoVector = (Vector)(new Object());
+                        aInfoVector = new Vector();
                         msgHashtable.put(attachMoreID, aInfoVector);
                      }
 
@@ -779,7 +777,7 @@ final class DocViewAttachmentPersist$DocViewAttachmentPersistData implements Per
                }
             }
 
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } finally {
          this.dataChanged(null);
@@ -789,7 +787,7 @@ final class DocViewAttachmentPersist$DocViewAttachmentPersistData implements Per
 
    private static final boolean canDeleteFromMessage(int messageID) {
       Object obj = MessageLookups.get(-4420850319371185992L, messageID);
-      if (obj instanceof Object && ((EmailMessageModel)obj).flagsSet(16)) {
+      if (obj instanceof EmailMessageModel && ((EmailMessageModel)obj).flagsSet(16)) {
          return false;
       }
 
@@ -814,7 +812,7 @@ final class DocViewAttachmentPersist$DocViewAttachmentPersistData implements Per
          PartInfo part = (PartInfo)attachInfo._attachmentHash.get(nextElement);
          if (part._partId != 1000) {
             if (retVector == null) {
-               retVector = (SimpleSortingVector)(new Object());
+               retVector = new SimpleSortingVector();
                retVector.setSortComparator(new DocViewAttachmentPersist$ElementComparator(null));
                retVector.setSort(true);
             }
@@ -882,7 +880,7 @@ final class DocViewAttachmentPersist$DocViewAttachmentPersistData implements Per
    }
 
    private final Vector retrieveAttachmentData2(DataBuffer buffer, int messageID, int attachMoreID, int versionID) {
-      Vector retValue = (Vector)(new Object());
+      Vector retValue = new Vector();
 
       try {
          while (true) {
@@ -977,8 +975,8 @@ final class DocViewAttachmentPersist$DocViewAttachmentPersistData implements Per
                   String[] domIDVector = coreData.getParsingData().getSummaryDOMIDVector();
                   int nDOMCount = domIDVector.length;
                   if (nDOMCount > 0 && nStringSize > 0) {
-                     StringTokenizer tokenizer = (StringTokenizer)(new Object(strSummary, '\n'));
-                     String[] sectionNameArray = new Object[0];
+                     StringTokenizer tokenizer = new StringTokenizer(strSummary, '\n');
+                     String[] sectionNameArray = new String[0];
 
                      while (tokenizer.hasMoreTokens()) {
                         Arrays.add(sectionNameArray, tokenizer.nextToken());

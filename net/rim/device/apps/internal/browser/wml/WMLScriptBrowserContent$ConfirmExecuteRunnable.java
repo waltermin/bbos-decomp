@@ -17,7 +17,7 @@ final class WMLScriptBrowserContent$ConfirmExecuteRunnable implements Runnable {
    @Override
    public final void run() {
       if (this._renderingOptions.getPropertyWithBooleanValue(4550690918222697397L, 9, false)) {
-         String[] name = new Object[]{this._name == null ? "WML Script" : this._name};
+         String[] name = new String[]{this._name == null ? "WML Script" : this._name};
          String message = MessageFormat.format(BrowserResources.getString(286), name);
          String[] choices = BrowserResources.getStringArray(287);
          if (Dialog.ask(message, choices, 0) != 0) {

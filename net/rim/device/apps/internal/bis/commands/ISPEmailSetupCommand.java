@@ -44,9 +44,7 @@ public final class ISPEmailSetupCommand implements DomainCommand {
                return DomainCommand.SESSION_TIMEOUT_RESULT;
             }
 
-            BISEventLogger.logEvent(
-               ((StringBuffer)(new Object("ISP Email Setup: Unhandled REST response code: "))).append(callResult.getRESTStatusCode()).toString(), 0
-            );
+            BISEventLogger.logEvent("ISP Email Setup: Unhandled REST response code: " + callResult.getRESTStatusCode(), 0);
             commandResultErrorMsg = ApplicationResources.getString(174);
          }
       } catch (Throwable var18) {

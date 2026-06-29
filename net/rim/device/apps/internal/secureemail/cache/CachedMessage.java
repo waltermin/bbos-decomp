@@ -2,9 +2,9 @@ package net.rim.device.apps.internal.secureemail.cache;
 
 import java.util.Enumeration;
 import net.rim.device.api.crypto.certificate.Certificate;
+import net.rim.device.api.crypto.certificate.CertificateKeyStoreIndex;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
-import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
@@ -50,7 +50,7 @@ public class CachedMessage extends CachedManager {
 
    public void addDecryptionCertificate(Certificate decryptionCertificate, KeyStore preferredKeyStore) {
       if (!this._passwordRequiredForAccess && decryptionCertificate != null) {
-         preferredKeyStore.addIndex((KeyStoreIndex)(new Object()));
+         preferredKeyStore.addIndex(new CertificateKeyStoreIndex());
          Enumeration enumeration = preferredKeyStore.elements(-2038609988711824737L, decryptionCertificate);
 
          while (enumeration.hasMoreElements()) {

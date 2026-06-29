@@ -1,9 +1,11 @@
 package net.rim.device.internal.media;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import javax.microedition.io.file.FileConnection;
 import javax.microedition.media.Control;
 import javax.microedition.media.Manager;
+import javax.microedition.media.MediaException;
 import javax.microedition.media.Player;
 import javax.microedition.media.PlayerListener;
 import javax.microedition.media.TimeBase;
@@ -90,18 +92,18 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
             return;
          }
       } else if (key.equals("audiosource")) {
-         this._audioSourceId = value;
+         this._audioSourceId = (Integer)value;
       }
    }
 
    @Override
    public void realize() {
       if (this._playerState == 0) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       if (this._playerState < 200) {
-         this._ringBuffer = (RingBuffer)(new Object(40000));
+         this._ringBuffer = new RingBuffer(40000);
          this._ringBuffer.setReadEntirelySizeLimit(this._maxSize);
          this._playerState = 200;
       }
@@ -110,7 +112,7 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
    @Override
    public void prefetch() {
       if (this._playerState == 0) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       if (this._playerState < 300) {
@@ -125,7 +127,7 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
    @Override
    public void start() {
       if (this._playerState == 0) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       if (this._playerState < 400) {
@@ -143,14 +145,14 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
             this._startRecordingOnCallToStart = false;
          }
 
-         this.notifyPlayerListeners("started", new Object(this.getMediaTime()));
+         this.notifyPlayerListeners("started", new Long(this.getMediaTime()));
       }
    }
 
    @Override
    public void stop() {
       if (this._playerState == 0) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       if (this._playerState >= 400) {
@@ -167,14 +169,14 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
             this.toggleAudioRouting(false);
          }
 
-         this.notifyPlayerListeners("stopped", new Object(this.getMediaTime()));
+         this.notifyPlayerListeners("stopped", new Long(this.getMediaTime()));
       }
    }
 
    @Override
    public void deallocate() {
       if (this._playerState == 0) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       if (this._playerState >= 300) {
@@ -212,13 +214,13 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
    }
 
    @Override
-   public void setTimeBase(TimeBase master) {
+   public void setTimeBase(TimeBase master) throws MediaException {
       if (this._playerState == 100 || this._playerState == 400 || this._playerState == 0) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       if (master != this._timer) {
-         throw new Object();
+         throw new MediaException();
       }
    }
 
@@ -227,23 +229,23 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
       if (this._playerState != 0 && this._playerState != 100) {
          return this._timer;
       } else {
-         throw new Object("The Player is unrealized");
+         throw new IllegalStateException("The Player is unrealized");
       }
    }
 
    @Override
-   public long setMediaTime(long now) {
+   public long setMediaTime(long now) throws MediaException {
       if (this._playerState != 0 && this._playerState != 100) {
-         throw new Object();
+         throw new MediaException();
       } else {
-         throw new Object("The Player is unrealized");
+         throw new IllegalStateException("The Player is unrealized");
       }
    }
 
    @Override
    public long getMediaTime() {
       if (this._playerState == 0) {
-         throw new Object();
+         throw new IllegalStateException();
       } else {
          return -1;
       }
@@ -257,7 +259,7 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
    @Override
    public long getDuration() {
       if (this._playerState == 0) {
-         throw new Object();
+         throw new IllegalStateException();
       } else {
          return -1;
       }
@@ -268,27 +270,27 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
       if (this._playerState != 0 && this._playerState != 100) {
          return this._mimeType;
       } else {
-         throw new Object("The Player is unrealized");
+         throw new IllegalStateException("The Player is unrealized");
       }
    }
 
    @Override
    public void setLoopCount(int count) {
       if (this._playerState == 400 || this._playerState == 0) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       if (count != 0 && count >= -1) {
          this._loopCount = count;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
    public Control getControl(String controlType) {
       if (this._playerState == 100 || this._playerState == 0) {
-         throw new Object();
+         throw new IllegalStateException();
       } else if ("RecordControl".equals(controlType) || "javax.microedition.media.control.RecordControl".equals(controlType)) {
          return this;
       } else {
@@ -301,7 +303,7 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
    @Override
    public void addPlayerListener(PlayerListener playerListener) {
       if (this._playerState == 0) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       if (playerListener != null) {
@@ -312,7 +314,7 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
    @Override
    public void removePlayerListener(PlayerListener playerListener) {
       if (this._playerState == 0) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       if (playerListener != null) {
@@ -324,9 +326,9 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
    public Control[] getControls() {
       if (this._playerState != 100 && this._playerState != 0) {
          Control audioPathControl = AudioRouter.getInstance().getAudioPathControl(this._audioSourceId);
-         return new Object[]{this, audioPathControl};
+         return new Control[]{this, audioPathControl};
       } else {
-         throw new Object();
+         throw new IllegalStateException();
       }
    }
 
@@ -337,11 +339,11 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
       }
 
       if (this._recordState > 0) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       if (stream == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._stream = stream;
@@ -354,7 +356,7 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
    }
 
    @Override
-   public void setRecordLocation(String param1) {
+   public void setRecordLocation(String param1) throws IOException, MediaException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -374,13 +376,13 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
       // 017: aload 0
       // 018: getfield net/rim/device/internal/media/RecordPlayer._recordState I
       // 01b: ifle 026
-      // 01e: new java/lang/Object
+      // 01e: new java/lang/IllegalStateException
       // 021: dup
       // 022: invokespecial java/lang/IllegalStateException.<init> ()V
       // 025: athrow
       // 026: aload 1
       // 027: ifnonnull 032
-      // 02a: new java/lang/Object
+      // 02a: new java/lang/IllegalArgumentException
       // 02d: dup
       // 02e: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 031: athrow
@@ -391,18 +393,18 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
       // 039: iload 2
       // 03a: aload 1
       // 03b: invokestatic net/rim/device/internal/io/RIMConnector.open (ILjava/lang/String;)Ljavax/microedition/io/Connection;
-      // 03e: checkcast java/lang/Object
+      // 03e: checkcast javax/microedition/io/file/FileConnection
       // 041: putfield net/rim/device/internal/media/RecordPlayer._file Ljavax/microedition/io/file/FileConnection;
       // 044: goto 061
       // 047: astore 2
-      // 048: new java/lang/Object
+      // 048: new javax/microedition/media/MediaException
       // 04b: dup
       // 04c: aload 2
       // 04d: invokevirtual java/lang/Throwable.getMessage ()Ljava/lang/String;
       // 050: invokespecial javax/microedition/media/MediaException.<init> (Ljava/lang/String;)V
       // 053: athrow
       // 054: astore 2
-      // 055: new java/lang/Object
+      // 055: new javax/microedition/media/MediaException
       // 058: dup
       // 059: aload 2
       // 05a: invokevirtual java/lang/Throwable.getMessage ()Ljava/lang/String;
@@ -431,7 +433,7 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
       // 093: aload 0
       // 094: getfield net/rim/device/internal/media/RecordPlayer._file Ljavax/microedition/io/file/FileConnection;
       // 097: invokeinterface javax/microedition/io/Connection.close ()V 1
-      // 09c: new java/lang/Object
+      // 09c: new java/io/IOException
       // 09f: dup
       // 0a0: ldc_w "Cannot record to directory"
       // 0a3: invokespecial java/io/IOException.<init> (Ljava/lang/String;)V
@@ -454,7 +456,7 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
       // 0ce: aload 0
       // 0cf: getfield net/rim/device/internal/media/RecordPlayer._file Ljavax/microedition/io/file/FileConnection;
       // 0d2: invokeinterface javax/microedition/io/Connection.close ()V 1
-      // 0d7: new java/lang/Object
+      // 0d7: new java/io/IOException
       // 0da: dup
       // 0db: ldc_w "Cannot write to specified file"
       // 0de: invokespecial java/io/IOException.<init> (Ljava/lang/String;)V
@@ -490,7 +492,7 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
    @Override
    public void startRecord() {
       if (this._recordState == 0) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       if (this._recordState != 3) {
@@ -516,7 +518,7 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
             }
 
             this._recordState = 3;
-            this.notifyPlayerListeners("recordStarted", new Object(this._startTime));
+            this.notifyPlayerListeners("recordStarted", new Long(this._startTime));
             this._startTime = this._timer.getTime();
          }
       }
@@ -537,7 +539,7 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
                this._startTime = this._endTime;
             }
 
-            this.notifyPlayerListeners("recordStopped", new Object(this._endTime));
+            this.notifyPlayerListeners("recordStopped", new Long(this._endTime));
          }
       }
    }
@@ -559,7 +561,7 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
                this.toggleAudioRouting(false);
                if (this._recordState == 3) {
                   this._endTime = this._endTime + (this._timer.getTime() - this._startTime);
-                  this.notifyPlayerListeners("recordStopped", new Object(this._endTime));
+                  this.notifyPlayerListeners("recordStopped", new Long(this._endTime));
                }
             }
 
@@ -571,7 +573,7 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
    @Override
    public int setRecordSizeLimit(int size) {
       if (size <= 0) {
-         throw new Object("size must be a non-zero integer");
+         throw new IllegalArgumentException("size must be a non-zero integer");
       }
 
       this._maxSize = size;
@@ -580,7 +582,7 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
    }
 
    @Override
-   public void reset() {
+   public void reset() throws IOException {
       if (this._recordState == 4) {
          if (this._file != null && this._file.isOpen()) {
             this._stream.flush();
@@ -590,7 +592,7 @@ public class RecordPlayer implements Player, RecordControl, MediaStreamingCallba
             this._thread.start();
             this._recordState = 1;
          } else {
-            throw new Object("Unable to reset recording");
+            throw new IOException("Unable to reset recording");
          }
       } else {
          if (this._recordState == 3) {

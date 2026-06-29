@@ -14,7 +14,7 @@ final class InstalledModulesOptionsItem$PermissionsVerb extends Verb {
 
    @Override
    public final Object invoke(Object parameter) {
-      ApplicationControlInformation aci = (ApplicationControlInformation)(new Object(this._handle));
+      ApplicationControlInformation aci = new ApplicationControlInformation(this._handle);
       aci.open();
       return null;
    }

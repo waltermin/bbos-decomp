@@ -9,7 +9,7 @@ import net.rim.device.apps.api.utility.serialization.BaseConverter;
 public class AttachmentViewerModelConverter extends BaseConverter {
    @Override
    public boolean canConvert(Object parameters) {
-      if (parameters instanceof Object) {
+      if (parameters instanceof Parameters) {
          Parameters cmimeParameters = (Parameters)parameters;
          byte[] contentBytes = cmimeParameters.getFirst((byte)-16);
          if (contentBytes != null) {
@@ -31,7 +31,7 @@ public class AttachmentViewerModelConverter extends BaseConverter {
    @Override
    public Object convert(byte[] inputBytes, Object contextObject) {
       Parameters parameters = (Parameters)contextObject;
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       if (inputBytes != null) {
          context.put(8849067667159082262L, inputBytes);
       }

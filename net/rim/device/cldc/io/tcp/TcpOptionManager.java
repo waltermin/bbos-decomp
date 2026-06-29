@@ -115,7 +115,7 @@ public final class TcpOptionManager implements TcpConstants {
          for (int i = 0; i < numSackBlocksToSend; i++) {
             TcpDataBlock tempBlock = sackBlocksToSend[i];
             if (tempBlock == null) {
-               throw new Object();
+               throw new NullPointerException();
             }
 
             int leftEdge = tempBlock.getLeftEdge();

@@ -8,7 +8,7 @@ import net.rim.wica.runtime.persistence.PersistentContentHelper;
 public class PersistentContentHelperImpl implements PersistentContentListener, PersistentContentHelper {
    private int _state;
    private boolean _waitingForTicket;
-   private Vector _listeners = (Vector)(new Object());
+   private Vector _listeners = new Vector();
 
    public PersistentContentHelperImpl() {
       this.syncPersistentContentState();
@@ -23,7 +23,7 @@ public class PersistentContentHelperImpl implements PersistentContentListener, P
    private synchronized void scheduleWaitForTicket() {
       if (!this._waitingForTicket && (this._state == 4 || this._state == 3)) {
          this._waitingForTicket = true;
-         Thread thread = (Thread)(new Object(new PersistentContentHelperImpl$WaitForTicket(this, null)));
+         Thread thread = new Thread(new PersistentContentHelperImpl$WaitForTicket(this, null));
          thread.start();
       }
    }
@@ -31,7 +31,7 @@ public class PersistentContentHelperImpl implements PersistentContentListener, P
    @Override
    public void addListener(PersistentContentListener listener) {
       if (listener == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._listeners.addElement(listener);

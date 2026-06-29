@@ -11,17 +11,19 @@ import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Font;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.internal.i18n.CommonResource;
 import net.rim.device.internal.resource.crypto.CryptoIcons;
 import net.rim.device.internal.ui.Image;
+import net.rim.device.internal.ui.component.HorizontalSpacerField;
 import net.rim.device.internal.ui.component.ImageField;
 import net.rim.device.internal.ui.component.PopupDialog;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 
 public class CertificateStatusDialog extends PopupDialog implements FieldChangeListener {
    private CertificateStatusQuery _query;
@@ -42,13 +44,13 @@ public class CertificateStatusDialog extends PopupDialog implements FieldChangeL
    }
 
    public CertificateStatusDialog(CertificateStatusQuery query, KeyStore keyStore, boolean allowDetails, long style) {
-      super((Manager)(new Object()), style);
+      super(new VerticalFieldManager(), style);
       if (query == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       Font font = Font.getDefault();
-      this._fontFormats = new Object[]{font, font.derive(font.getStyle() | 1)};
+      this._fontFormats = new Font[]{font, font.derive(font.getStyle() | 1)};
       this._query = query;
       this._endEntityCertificate = this._query.getCertChain()[0];
       this._keyStore = keyStore;
@@ -69,10 +71,10 @@ public class CertificateStatusDialog extends PopupDialog implements FieldChangeL
       Certificate[] certificateChain = this._query.getCertChain();
       boolean checkEntireChain = this._query.checkEntireChain();
       boolean returnedStatusObsolete = this._query.returnedStatusObsolete();
-      LabelField titleField = (LabelField)(new Object(this._endEntityCertificate.getSubjectFriendlyName(), 36028797018964032L));
+      LabelField titleField = new LabelField(this._endEntityCertificate.getSubjectFriendlyName(), 36028797018964032L);
       titleField.setFont(this._fontFormats[1]);
       delegate.add(titleField);
-      delegate.add((Field)(new Object()));
+      delegate.add(new SeparatorField());
       CertificateStatusManager manager = CertificateStatusManager.getInstance();
       CertificateStatus overallStatus = manager.getStatus(this._endEntityCertificate);
       if (checkEntireChain) {
@@ -86,16 +88,16 @@ public class CertificateStatusDialog extends PopupDialog implements FieldChangeL
          }
       }
 
-      this._vfm = (VerticalFieldManager)(new Object(299067162755072L));
+      this._vfm = new VerticalFieldManager(299067162755072L);
       String prefix = checkEntireChain ? _rb.getString(19) : _rb.getString(18);
       if (returnedStatusObsolete) {
-         RichTextField obsoleteTextField = (RichTextField)(new Object(_rb.getString(24), 51539607552L));
+         RichTextField obsoleteTextField = new RichTextField(_rb.getString(24), 51539607552L);
          this._vfm.add(obsoleteTextField);
-         this._vfm.add((Field)(new Object()));
+         this._vfm.add(new SeparatorField());
       }
 
       int overallStatusInt = overallStatus != null ? overallStatus.getStatus() : -1;
-      HorizontalFieldManager imageStatusManager = (HorizontalFieldManager)(new Object());
+      HorizontalFieldManager imageStatusManager = new HorizontalFieldManager();
       Image returnedStatusImage;
       switch (overallStatusInt) {
          case -1:
@@ -111,8 +113,8 @@ public class CertificateStatusDialog extends PopupDialog implements FieldChangeL
 
       ImageField imageField = CryptoIcons.getLargeImageField(returnedStatusImage, 51539607552L);
       imageStatusManager.add(imageField);
-      imageStatusManager.add((Field)(new Object(4)));
-      RichTextField statusTextField = (RichTextField)(new Object(51539607552L));
+      imageStatusManager.add(new HorizontalSpacerField(4));
+      RichTextField statusTextField = new RichTextField(51539607552L);
       String statusText;
       switch (overallStatusInt) {
          case -1:
@@ -130,24 +132,24 @@ public class CertificateStatusDialog extends PopupDialog implements FieldChangeL
       if (producedAt > 0) {
          String date = DateFormat.getInstance(40).formatLocal(producedAt);
          String time = DateFormat.getInstance(5).formatLocal(producedAt);
-         this.setRTFText(statusTextField, MessageFormat.format(_rb.getString(23), new Object[]{prefix, statusText, date, time}));
+         this.setRTFText(statusTextField, MessageFormat.format(_rb.getString(23), new String[]{prefix, statusText, date, time}));
       } else {
-         this.setRTFText(statusTextField, MessageFormat.format(_rb.getString(66), new Object[]{prefix, statusText}));
+         this.setRTFText(statusTextField, MessageFormat.format(_rb.getString(66), new String[]{prefix, statusText}));
       }
 
       imageStatusManager.add(statusTextField);
       this._vfm.add(imageStatusManager);
-      HorizontalFieldManager buttonManager = (HorizontalFieldManager)(new Object(8589934592L));
-      this._okButton = (ButtonField)(new Object(CommonResource.getString(100)));
+      HorizontalFieldManager buttonManager = new HorizontalFieldManager(8589934592L);
+      this._okButton = new ButtonField(CommonResource.getString(100));
       this._okButton.setChangeListener(this);
       buttonManager.add(this._okButton);
       if (this._allowDetails) {
-         this._detailsButton = (ButtonField)(new Object(_rb.getString(16)));
+         this._detailsButton = new ButtonField(_rb.getString(16));
          this._detailsButton.setChangeListener(this);
          buttonManager.add(this._detailsButton);
       }
 
-      this._vfm.add((Field)(new Object(4)));
+      this._vfm.add(new VerticalSpacerField(4));
       this._vfm.add(buttonManager);
       delegate.add(this._vfm);
    }
@@ -204,7 +206,7 @@ public class CertificateStatusDialog extends PopupDialog implements FieldChangeL
          formatOffsets[formatSection + 1] = writeOffset;
       }
 
-      field.setText((String)(new Object(chars, 0, writeOffset)), formatOffsets, formatIndices, this._fontFormats);
+      field.setText(new String(chars, 0, writeOffset), formatOffsets, formatIndices, this._fontFormats);
    }
 
    @Override

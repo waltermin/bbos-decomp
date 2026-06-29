@@ -84,10 +84,7 @@ class DOMAttrImpl extends DOMNodeImpl implements Attr {
    public void setPrefix(String prefix) {
       super._ir.notReadOnly(super._node);
       DOMInternalRepresentation.isNCName(prefix);
-      super._ir
-         .setAttributeQName(
-            super._node, ((StringBuffer)(new Object())).append(prefix).append(":").append(super._ir.getAttributeLocalName(super._node)).toString()
-         );
+      super._ir.setAttributeQName(super._node, prefix + ":" + super._ir.getAttributeLocalName(super._node));
    }
 
    @Override

@@ -17,7 +17,7 @@ import net.rim.wica.runtime.util.LinkedQueue;
 public final class SystemMessageProcessor extends Processor implements MessageHandler {
    private MessagingServiceImpl _messagingService;
    private PersistenceHelper _persistenceHelper;
-   private IntHashtable _consumerTable = (IntHashtable)(new Object());
+   private IntHashtable _consumerTable = new IntHashtable();
    private LinkedQueue _messageQueue = new LinkedQueue();
    static Class class$net$rim$wica$runtime$messaging$MessagingService;
    static Class class$net$rim$wica$runtime$messaging$internal$PersistenceHelper;
@@ -56,13 +56,13 @@ public final class SystemMessageProcessor extends Processor implements MessageHa
             this._consumerTable.put(messageFilter[i], consumer);
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    public final void deregisterSystemMessageConsumer(MessageConsumer consumer) {
       if (consumer == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._consumerTable.removeValue(consumer);
@@ -158,7 +158,7 @@ public final class SystemMessageProcessor extends Processor implements MessageHa
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

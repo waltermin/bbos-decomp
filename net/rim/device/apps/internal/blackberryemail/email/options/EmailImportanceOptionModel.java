@@ -29,8 +29,8 @@ final class EmailImportanceOptionModel implements RIMModel, VerbProvider, FieldP
             initialValue = 0;
       }
 
-      String[] importanceChoices = new Object[]{EmailResources.getString(124), EmailResources.getString(122), EmailResources.getString(120)};
-      ObjectChoiceField importanceChoiceField = (ObjectChoiceField)(new Object(EmailResources.getString(620), importanceChoices, initialValue));
+      String[] importanceChoices = new String[]{EmailResources.getString(124), EmailResources.getString(122), EmailResources.getString(120)};
+      ObjectChoiceField importanceChoiceField = new ObjectChoiceField(EmailResources.getString(620), importanceChoices, initialValue);
       importanceChoiceField.setCookie(this);
       return importanceChoiceField;
    }

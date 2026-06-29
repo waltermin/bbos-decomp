@@ -37,7 +37,7 @@ public class RIMMessagingIncomingMoreRequest extends RIMMessagingMessage {
    public void read(DataBuffer packetDataBuffer) {
       byte[] data = new byte[packetDataBuffer.getLength() - 1];
       System.arraycopy(packetDataBuffer.getArray(), packetDataBuffer.getArrayStart() + 1, data, 0, data.length);
-      CMIMEParameters moreReqParams = new CMIMEParameters((DataBuffer)(new Object()), 5, 1);
+      CMIMEParameters moreReqParams = new CMIMEParameters(new DataBuffer(), 5, 1);
       moreReqParams.getDataBuffer().setData(data, 0, data.length);
       moreReqParams.read();
       this.contentPartId = CMIMEUtilities.getGMEInteger(moreReqParams.get((byte)48), 1);

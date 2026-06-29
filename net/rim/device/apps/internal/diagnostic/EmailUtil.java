@@ -29,7 +29,7 @@ public final class EmailUtil extends Thread {
    @Override
    public final void run() {
       try {
-         ContextObject contextObject = (ContextObject)(new Object());
+         ContextObject contextObject = new ContextObject();
          contextObject.setFlag(31);
          contextObject.setFlag(85);
          switch (this.type) {
@@ -43,11 +43,9 @@ public final class EmailUtil extends Thread {
                contextObject.setFlag(43);
          }
 
-         EmailMessageModelImpl msg = (EmailMessageModelImpl)(new Object(contextObject));
-         String[] names = new Object[2];
-         names[0] = this.dest;
-         names[1] = this.dest;
-         ContextObject context = (ContextObject)(new Object());
+         EmailMessageModelImpl msg = new EmailMessageModelImpl(contextObject);
+         String[] names = new String[]{this.dest, this.dest};
+         ContextObject context = new ContextObject();
          ContextObject.put(context, 251, names);
          Object recipient = FactoryUtil.createInstance(-2985347935260258684L, context);
          EmailBuilderApi.addRecipient(msg, 0, (RIMModel)recipient);
@@ -58,7 +56,7 @@ public final class EmailUtil extends Thread {
          if (service != null) {
             ServiceRecord sr = service.getOutgoingServiceRecord();
             context.reset();
-            this.msgHandler = EmailSendUtility.sendMessage(msg, sr, new Object());
+            this.msgHandler = EmailSendUtility.sendMessage(msg, sr, new ContextObject());
             EmailHierarchy.removeMessage(msg, msg.getFolderId());
 
             while (this.msgHandler.getStatus() != 16383) {

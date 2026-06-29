@@ -10,7 +10,7 @@ import net.rim.device.internal.ui.Image;
 
 final class QuickContactScreen$QuickContactListField extends ListField {
    Image _imageUpDown = QuickContactIcons.MOVE_UP_DOWN_ICONS.getImage(0);
-   XYRect _focus = (XYRect)(new Object());
+   XYRect _focus = new XYRect();
    Tag tagMove = Tag.create("list-move");
    boolean _moveItemMode;
 

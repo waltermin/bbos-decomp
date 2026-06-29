@@ -90,7 +90,7 @@ import net.rim.device.apps.internal.bis.ui.UsernameSetupScreen;
 public final class UINavigationConfig {
    public static final Vector loadStandardConfig(int uiMode) {
       ApplicationController appController = ApplicationController.getInstance();
-      Vector shutdownListeners = (Vector)(new Object());
+      Vector shutdownListeners = new Vector();
       LoginScreen loginScreen = new LoginScreen();
       appController.registerLinkView(0, loginScreen);
       shutdownListeners.addElement(loginScreen);

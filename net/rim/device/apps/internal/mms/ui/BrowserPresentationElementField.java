@@ -31,7 +31,7 @@ final class BrowserPresentationElementField extends VerticalFieldManager impleme
 
    @Override
    public final void move(boolean mode) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
@@ -90,10 +90,10 @@ final class BrowserPresentationElementField extends VerticalFieldManager impleme
    }
 
    private static final HttpConnection openConnection(MMSAttachment attachment, int drmStatus) {
-      HttpHeaders responseHeaders = (HttpHeaders)(new Object());
+      HttpHeaders responseHeaders = new HttpHeaders();
       responseHeaders.addProperty("content-type", MMSUtilities.getMIMETypeString(attachment.getType()));
       responseHeaders.addProperty("content-length", Integer.toString(attachment.getDataSize()));
-      HttpHeaders requestHeaders = (HttpHeaders)(new Object());
+      HttpHeaders requestHeaders = new HttpHeaders();
       requestHeaders.addProperty("charset", attachment.getCharset());
       requestHeaders.addProperty("drm-status", Integer.toString(drmStatus));
       requestHeaders.addProperty("smil-context", "MMS");

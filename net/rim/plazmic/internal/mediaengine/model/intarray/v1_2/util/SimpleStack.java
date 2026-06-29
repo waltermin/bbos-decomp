@@ -1,5 +1,7 @@
 package net.rim.plazmic.internal.mediaengine.model.intarray.v1_2.util;
 
+import java.util.EmptyStackException;
+
 public class SimpleStack {
    protected Object[] _elementData;
    protected int _elementCount;
@@ -8,7 +10,7 @@ public class SimpleStack {
 
    public SimpleStack(int initialCapacity, int capacityIncrement) {
       if (initialCapacity < 0) {
-         throw new Object(((StringBuffer)(new Object("Illegal Stack Capacity: "))).append(initialCapacity).toString());
+         throw new IllegalArgumentException("Illegal Stack Capacity: " + initialCapacity);
       }
 
       this._elementData = new Object[initialCapacity];
@@ -29,7 +31,7 @@ public class SimpleStack {
 
    public synchronized Object peek() {
       if (this._elementCount == 0) {
-         throw new Object();
+         throw new EmptyStackException();
       } else {
          return this._elementData[this._elementCount - 1];
       }
@@ -37,7 +39,7 @@ public class SimpleStack {
 
    public Object pop() {
       if (this._elementCount == 0) {
-         throw new Object();
+         throw new EmptyStackException();
       }
 
       Object item = this._elementData[--this._elementCount];

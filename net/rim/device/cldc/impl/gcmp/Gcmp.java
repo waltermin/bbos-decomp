@@ -55,7 +55,7 @@ public final class Gcmp implements GcmpEvents, NativeListener {
             smsConn = (DatagramConnection)Connector.open(address);
          }
       } catch (Throwable var6) {
-         throw new Object(e.getMessage());
+         throw new RuntimeException(e.getMessage());
       }
 
       Thread udpReceiveThread = new GcmpReceiveThread(this._udpConn, false);
@@ -72,7 +72,7 @@ public final class Gcmp implements GcmpEvents, NativeListener {
 
    public final int register(DatagramAddressBase addressBase, String name) {
       EventLogger.logEvent(-1673931206114386243L, 1195593330, 0);
-      if (!(addressBase instanceof Object)) {
+      if (!(addressBase instanceof UdpAddress)) {
          return -1;
       }
 

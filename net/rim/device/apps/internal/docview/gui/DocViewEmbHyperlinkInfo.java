@@ -45,15 +45,15 @@ public final class DocViewEmbHyperlinkInfo extends DocViewHyperlinkInfo implemen
    public final Object getCookieWithFocus() {
       Object cookie = null;
       if (this._linkTargetString != null) {
-         StringPatternEnumerator patternEnum = (StringPatternEnumerator)(new Object(this._linkTargetString, _patterns));
+         StringPatternEnumerator patternEnum = new StringPatternEnumerator(this._linkTargetString, _patterns);
          if (patternEnum.hasMoreMatches()) {
             if (this._match == null) {
-               this._match = (StringPattern$Match)(new Object());
+               this._match = new StringPattern$Match();
             }
 
             patternEnum.nextMatch(this._match);
             if (this._invokeContext == null) {
-               this._invokeContext = (ContextObject)(new Object());
+               this._invokeContext = new ContextObject();
             }
 
             this._invokeContext.put(253, this._linkTargetString.substring(this._match.beginIndex, this._match.endIndex));

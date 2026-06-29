@@ -3,6 +3,7 @@ package net.rim.device.api.crypto.encoder;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.util.Hashtable;
+import net.rim.device.api.crypto.NoSuchAlgorithmException;
 
 final class Utility {
    static final boolean registerAlgorithms(Hashtable registry, Object coder, String baseAlgorithm, String[] subAlgorithms) {
@@ -10,7 +11,7 @@ final class Utility {
          int numSubAlgorithms = subAlgorithms.length;
          Hashtable table = (Hashtable)registry.get(baseAlgorithm);
          if (table == null) {
-            table = (Hashtable)(new Object(numSubAlgorithms * 3 / 2));
+            table = new Hashtable(numSubAlgorithms * 3 / 2);
             registry.put(baseAlgorithm, table);
          }
 
@@ -27,11 +28,11 @@ final class Utility {
 
          return added;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
-   static final Object getCoder(Hashtable hashTable, String encodingAlgorithm, String algorithm) {
+   static final Object getCoder(Hashtable hashTable, String encodingAlgorithm, String algorithm) throws NoSuchAlgorithmException {
       if (hashTable != null && encodingAlgorithm != null && algorithm != null) {
          Hashtable find = (Hashtable)hashTable.get(encodingAlgorithm);
          if (find != null) {
@@ -41,15 +42,15 @@ final class Utility {
             }
          }
 
-         throw new Object(((StringBuffer)(new Object())).append(encodingAlgorithm).append(' ').append(algorithm).toString());
+         throw new NoSuchAlgorithmException(encodingAlgorithm + ' ' + algorithm);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    static final byte[] readData(DataInputStream input) {
       if (input == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int length = input.readInt();
@@ -60,7 +61,7 @@ final class Utility {
 
    static final void writeData(byte[] data, DataOutputStream output) {
       if (output == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (data == null) {

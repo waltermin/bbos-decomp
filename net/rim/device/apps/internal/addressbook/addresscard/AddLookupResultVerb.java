@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.addressbook.addresscard;
 
+import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.internal.addressbook.lookup.ALPConfiguration;
 import net.rim.device.apps.internal.addressbook.lookup.Request;
@@ -15,8 +16,8 @@ final class AddLookupResultVerb extends Verb {
 
    @Override
    public final Object invoke(Object newModel) {
-      if (!(newModel instanceof Object)) {
-         throw new Object();
+      if (!(newModel instanceof AddressCardModel)) {
+         throw new IllegalArgumentException();
       }
 
       Request.addLookupResultToAddressBook(newModel);

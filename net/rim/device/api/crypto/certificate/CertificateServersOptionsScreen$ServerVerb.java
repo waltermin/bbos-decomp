@@ -21,7 +21,7 @@ class CertificateServersOptionsScreen$ServerVerb extends Verb {
    public Object invoke(Object parameter) {
       switch (this._type) {
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          default:
             this.this$0.doSave();

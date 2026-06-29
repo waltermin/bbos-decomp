@@ -19,7 +19,7 @@ import net.rim.device.cldc.io.utility.URLParameters;
 import net.rim.vm.WeakReference;
 
 public class SocketTransportBase extends IPPPTransportBase implements GlobalEventListener {
-   private Hashtable _connections = (Hashtable)(new Object());
+   private Hashtable _connections = new Hashtable();
    private Cache _cache;
    private IntHashtable _notifierConnections;
    private IntHashtable _establishedConnections;
@@ -45,9 +45,9 @@ public class SocketTransportBase extends IPPPTransportBase implements GlobalEven
          }
       }
 
-      this._notifierConnections = (IntHashtable)(new Object());
+      this._notifierConnections = new IntHashtable();
       this._cache = new Cache(this.getCacheSize(null), this.getPendingSize(null));
-      this._establishedConnections = (IntHashtable)(new Object());
+      this._establishedConnections = new IntHashtable();
       this._nextConnectionId = RandomSource.getInt() & 2147483647;
       ProtocolDaemon.getInstance().addGlobalEventListener(this);
    }
@@ -123,7 +123,7 @@ public class SocketTransportBase extends IPPPTransportBase implements GlobalEven
          return false;
       }
 
-      weak = (WeakReference)(new Object(listener));
+      weak = new WeakReference(listener);
       this._notifierConnections.put(port, weak);
       return true;
    }
@@ -144,7 +144,7 @@ public class SocketTransportBase extends IPPPTransportBase implements GlobalEven
          return false;
       }
 
-      weak = (WeakReference)(new Object(listener));
+      weak = new WeakReference(listener);
       this._establishedConnections.put(connectionIdentifier, weak);
       this._cache.remove(connectionIdentifier);
       return true;
@@ -175,7 +175,7 @@ public class SocketTransportBase extends IPPPTransportBase implements GlobalEven
 
       uid = StringUtilities.toLowerCase(uid, 1701707776);
       if (this._connections.get(uid) == null) {
-         EventLogger.logEvent(6406224406390975741L, ((StringBuffer)(new Object("RXnf "))).append(uid).toString().getBytes(), 0);
+         EventLogger.logEvent(6406224406390975741L, ("RXnf " + uid).getBytes(), 0);
          return false;
       }
 

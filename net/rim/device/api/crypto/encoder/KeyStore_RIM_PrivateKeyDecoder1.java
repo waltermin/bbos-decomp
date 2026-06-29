@@ -64,7 +64,7 @@ final class KeyStore_RIM_PrivateKeyDecoder1 extends KeyStore_PrivateKeyDecoder {
             }
          }
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 

@@ -20,7 +20,7 @@ public final class RIM_UDP_Bearer extends Thread implements IBearer {
    private SessionStats _stats;
    private boolean _needSource;
    private PacketLogger _packetLoggerInstance = PacketLogger.getInstance();
-   private Vector _sendQueue = (Vector)(new Object());
+   private Vector _sendQueue = new Vector();
    private boolean _shutdown;
    private boolean _started;
    private long _lastPacketTime;
@@ -37,13 +37,7 @@ public final class RIM_UDP_Bearer extends Thread implements IBearer {
          Datagram datagramSendPacket = this._datagramConnection.newDatagram(packet.getPacketData(), packet.getDataLength());
          if (this._packetLoggerInstance._lowLoggingEnabled) {
             this._packetLoggerInstance
-               .logPacket(
-                  packet.getPacketData(),
-                  0,
-                  packet.getDataLength(),
-                  ((StringBuffer)(new Object())).append(this._gatewayDest.getDisplayableString()).append(':').append(this._gwPortDest).toString(),
-                  true
-               );
+               .logPacket(packet.getPacketData(), 0, packet.getDataLength(), this._gatewayDest.getDisplayableString() + ':' + this._gwPortDest, true);
          }
 
          this._datagramConnection.send(datagramSendPacket);
@@ -84,7 +78,7 @@ public final class RIM_UDP_Bearer extends Thread implements IBearer {
 
    @Override
    public final void setReceivingTimeout(int timeout) {
-      if (this._datagramConnection != null && this._datagramConnection instanceof Object) {
+      if (this._datagramConnection != null && this._datagramConnection instanceof DatagramConnectionBase) {
          ((DatagramConnectionBase)this._datagramConnection).setTimeout(timeout);
       }
    }
@@ -145,7 +139,7 @@ public final class RIM_UDP_Bearer extends Thread implements IBearer {
       // 046: ifnonnull 04f
       // 049: ldc_w ""
       // 04c: goto 06f
-      // 04f: new java/lang/Object
+      // 04f: new java/lang/StringBuffer
       // 052: dup
       // 053: invokespecial java/lang/StringBuffer.<init> ()V
       // 056: aload 0
@@ -165,25 +159,25 @@ public final class RIM_UDP_Bearer extends Thread implements IBearer {
       // 077: ifeq 10c
       // 07a: aload 3
       // 07b: dup
-      // 07c: instanceof java/lang/Object
+      // 07c: instanceof net/rim/device/api/io/DatagramBase
       // 07f: ifne 086
       // 082: pop
       // 083: goto 10c
-      // 086: checkcast java/lang/Object
+      // 086: checkcast net/rim/device/api/io/DatagramBase
       // 089: invokevirtual net/rim/device/api/io/DatagramBase.getAddressBase ()Lnet/rim/device/api/io/DatagramAddressBase;
       // 08c: astore 4
       // 08e: aload 4
       // 090: dup
-      // 091: instanceof java/lang/Object
+      // 091: instanceof net/rim/device/api/io/UdpAddress
       // 094: ifne 09b
       // 097: pop
       // 098: goto 10c
-      // 09b: checkcast java/lang/Object
+      // 09b: checkcast net/rim/device/api/io/UdpAddress
       // 09e: invokevirtual net/rim/device/api/io/UdpAddress.getIpAddress ()[B
       // 0a1: astore 5
       // 0a3: aload 5
       // 0a5: ifnull 10c
-      // 0a8: new java/lang/Object
+      // 0a8: new java/lang/StringBuffer
       // 0ab: dup
       // 0ac: invokespecial java/lang/StringBuffer.<init> ()V
       // 0af: astore 6
@@ -325,7 +319,7 @@ public final class RIM_UDP_Bearer extends Thread implements IBearer {
    }
 
    private final String schemaFor(int localPort) {
-      StringBuffer tempBuffer = (StringBuffer)(new Object("udp://"));
+      StringBuffer tempBuffer = new StringBuffer("udp://");
       tempBuffer.append(':').append(localPort);
       tempBuffer.append(";openTunnel=false");
 
@@ -340,7 +334,7 @@ public final class RIM_UDP_Bearer extends Thread implements IBearer {
    }
 
    private final String schemaFor(InetAddress netAdd, int port, int sourcePort, String apn) {
-      StringBuffer tempBuffer = (StringBuffer)(new Object("udp://"));
+      StringBuffer tempBuffer = new StringBuffer("udp://");
       tempBuffer.append(netAdd.toString()).append(':').append(port).append(';').append(sourcePort).append('/').append(apn);
 
       try {
@@ -356,7 +350,7 @@ public final class RIM_UDP_Bearer extends Thread implements IBearer {
    public RIM_UDP_Bearer(InetAddress gatewayDest, int gwPort, String gatewayAPN, int sourcePort) {
       this._gatewayDest = gatewayDest;
       this._gwPortDest = gwPort;
-      this._stats = (SessionStats)(new Object());
+      this._stats = new SessionStats();
       this._stats.setConnectedHost(gatewayDest.toString(), gwPort);
       this._datagramConnection = (DatagramConnection)Connector.open(this.schemaFor(gatewayDest, gwPort, sourcePort, gatewayAPN), 3, false);
    }

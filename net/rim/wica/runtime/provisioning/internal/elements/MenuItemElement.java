@@ -52,7 +52,7 @@ public final class MenuItemElement extends AbstractElement {
    @Override
    public final String toString() {
       String className = ProvisioningHelper.getClassName(this);
-      StringBuffer buf = (StringBuffer)(new Object(64));
+      StringBuffer buf = new StringBuffer(64);
       buf.append(className);
       buf.append("[name=");
       buf.append(super._name);

@@ -22,7 +22,7 @@ import net.rim.device.internal.proxy.Proxy;
 import net.rim.vm.Array;
 
 public class EmailOptionsManager implements GlobalEventListener {
-   private String[] _registeredUserIdArray = new Object[0];
+   private String[] _registeredUserIdArray = new String[0];
    private static final long GUID = -3920253466163615500L;
 
    private EmailOptionsManager() {
@@ -74,15 +74,15 @@ public class EmailOptionsManager implements GlobalEventListener {
    public void eventOccurred(long guid, int data0, int data1, Object object0, Object object1) {
       try {
          if (guid == -4220058463650496006L) {
-            if (object0 instanceof Object) {
+            if (object0 instanceof ServiceRecord) {
                this.addSB((ServiceRecord)object0);
             }
          } else if (guid == 2522898683889177438L) {
-            if (object0 instanceof Object) {
+            if (object0 instanceof ServiceRecord) {
                this.removeSB((ServiceRecord)object0);
             }
          } else if (guid == 8288627527798139133L) {
-            if (object0 instanceof Object) {
+            if (object0 instanceof ServiceRecord) {
                ServiceRecord sr = (ServiceRecord)object0;
                if (sr.getType() != 0) {
                   this.removeSB(sr);

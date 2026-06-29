@@ -367,12 +367,12 @@ final class HRTRequestThread$RequestFieldWriter implements TLEFieldController {
    private final String getDeviceName(boolean primaryWAF) {
       String name = DeviceInfo.getDeviceName();
       if (name != null) {
-         name = ((StringBuffer)(new Object("Rim"))).append(name).toString();
+         name = "Rim" + name;
       }
 
       byte[] data = Branding.getData(primaryWAF ? 12292 : 12548);
       if (data != null) {
-         name = ((StringBuffer)(new Object())).append(name).append('/').append((String)(new Object(data))).toString();
+         name = name + '/' + new String(data);
       }
 
       return name;

@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.btspp;
 
+import java.io.IOException;
 import java.io.OutputStream;
 
 class BluetoothSerialConnection$BluetoothOutputStream extends OutputStream {
@@ -24,7 +25,7 @@ class BluetoothSerialConnection$BluetoothOutputStream extends OutputStream {
             }
          }
 
-         throw new Object();
+         throw new IOException();
       }
    }
 
@@ -49,11 +50,11 @@ class BluetoothSerialConnection$BluetoothOutputStream extends OutputStream {
                   }
                }
 
-               throw new Object();
+               throw new IOException();
             }
          }
       } else {
-         throw new Object();
+         throw new IndexOutOfBoundsException();
       }
    }
 }

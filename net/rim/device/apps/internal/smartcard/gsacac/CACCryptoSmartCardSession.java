@@ -1,6 +1,8 @@
 package net.rim.device.apps.internal.smartcard.gsacac;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import net.rim.device.api.compress.ZLibInputStream;
 import net.rim.device.api.crypto.CryptoByteArrayArithmetic;
 import net.rim.device.api.crypto.CryptoSmartCardKeyStoreData;
 import net.rim.device.api.crypto.CryptoSmartCardSession;
@@ -13,7 +15,10 @@ import net.rim.device.api.smartcard.CommandAPDU;
 import net.rim.device.api.smartcard.CommandAPDUGroup;
 import net.rim.device.api.smartcard.ResponseAPDU;
 import net.rim.device.api.smartcard.SmartCard;
+import net.rim.device.api.smartcard.SmartCardAccessDeniedException;
+import net.rim.device.api.smartcard.SmartCardException;
 import net.rim.device.api.smartcard.SmartCardID;
+import net.rim.device.api.smartcard.SmartCardLockedException;
 import net.rim.device.api.smartcard.SmartCardReaderSession;
 import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.util.Arrays;
@@ -45,7 +50,7 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
    private static final byte[] CARD_MANAGER_AID = new byte[]{-96, 0, 0, 0, 3, 0, 0};
    private static final byte[] PIN_MANAGEMENT_AID = new byte[]{-96, 0, 0, 0, 121, 3, 0};
    public static final int MAX_LOGIN_ATTEMPTS = 3;
-   private static CommandAPDU _cmd = (CommandAPDU)(new Object((byte)0, (byte)0, (byte)0, (byte)0));
+   private static CommandAPDU _cmd = new CommandAPDU((byte)0, (byte)0, (byte)0, (byte)0);
    private static final long UID_INFO_ID = 2984846373662370609L;
    static CACCryptoSmartCardSession$UIDInfo _uidInfo;
 
@@ -62,7 +67,7 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
    }
 
    @Override
-   protected int getRemainingLoginAttemptsImpl() {
+   protected int getRemainingLoginAttemptsImpl() throws SmartCardException, SmartCardLockedException {
       ResponseAPDU response = this.pinVerifyHelper(null, true);
       byte sw1 = response.getSW1();
       byte sw2 = response.getSW2();
@@ -71,22 +76,22 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
       } else if (sw1 == 99) {
          return sw2;
       } else if (response.checkStatusWords((byte)105, (byte)-125)) {
-         throw new Object();
+         throw new SmartCardLockedException();
       } else {
-         throw new Object();
+         throw new SmartCardException();
       }
    }
 
    @Override
-   protected boolean loginImpl(String password) {
+   protected boolean loginImpl(String password) throws SmartCardAccessDeniedException, SmartCardLockedException {
       if (password != null && password.length() <= 8 && password.length() != 0) {
          ResponseAPDU response = this.pinVerifyHelper(password, false);
          if (response.checkStatusWords((byte)-112, (byte)0)) {
             return true;
          } else if (!response.checkStatusWords((byte)99, (byte)0) && !response.checkStatusWords((byte)105, (byte)-125)) {
-            throw new Object();
+            throw new SmartCardAccessDeniedException();
          } else {
-            throw new Object();
+            throw new SmartCardLockedException();
          }
       } else {
          return false;
@@ -94,7 +99,7 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
    }
 
    @Override
-   protected CryptoSmartCardKeyStoreData[] getKeyStoreDataArrayImpl() {
+   protected CryptoSmartCardKeyStoreData[] getKeyStoreDataArrayImpl() throws SmartCardException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -114,19 +119,19 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
       // 012: dup
       // 013: invokespecial net/rim/device/apps/internal/smartcard/gsacac/CACRSACryptoToken.<init> ()V
       // 016: astore 2
-      // 017: new java/lang/Object
+      // 017: new net/rim/device/api/crypto/RSACryptoSystem
       // 01a: dup
       // 01b: aload 2
       // 01c: sipush 1024
       // 01f: invokespecial net/rim/device/api/crypto/RSACryptoSystem.<init> (Lnet/rim/device/api/crypto/RSACryptoToken;I)V
       // 022: astore 3
       // 023: bipush 3
-      // 025: anewarray 289
+      // 025: anewarray 299
       // 028: astore 6
       // 02a: aload 0
       // 02b: bipush 1
       // 02c: invokevirtual net/rim/device/api/crypto/CryptoSmartCardSession.stepProgressDialog (I)V
-      // 02f: new java/lang/Object
+      // 02f: new net/rim/device/api/crypto/RSAPrivateKey
       // 032: dup
       // 033: aload 3
       // 034: new net/rim/device/apps/internal/smartcard/gsacac/CACCryptoTokenData
@@ -149,7 +154,7 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
       // 056: ifnull 07c
       // 059: aload 6
       // 05b: bipush 0
-      // 05c: new java/lang/Object
+      // 05c: new net/rim/device/api/crypto/CryptoSmartCardKeyStoreData
       // 05f: dup
       // 060: aconst_null
       // 061: aload 0
@@ -171,7 +176,7 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
       // 07c: aload 0
       // 07d: bipush 1
       // 07e: invokevirtual net/rim/device/api/crypto/CryptoSmartCardSession.stepProgressDialog (I)V
-      // 081: new java/lang/Object
+      // 081: new net/rim/device/api/crypto/RSAPrivateKey
       // 084: dup
       // 085: aload 3
       // 086: new net/rim/device/apps/internal/smartcard/gsacac/CACCryptoTokenData
@@ -189,7 +194,7 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
       // 09d: ifnull 0bf
       // 0a0: aload 6
       // 0a2: bipush 1
-      // 0a3: new java/lang/Object
+      // 0a3: new net/rim/device/api/crypto/CryptoSmartCardKeyStoreData
       // 0a6: dup
       // 0a7: aconst_null
       // 0a8: aload 0
@@ -209,7 +214,7 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
       // 0bf: aload 0
       // 0c0: bipush 1
       // 0c1: invokevirtual net/rim/device/api/crypto/CryptoSmartCardSession.stepProgressDialog (I)V
-      // 0c4: new java/lang/Object
+      // 0c4: new net/rim/device/api/crypto/RSAPrivateKey
       // 0c7: dup
       // 0c8: aload 3
       // 0c9: new net/rim/device/apps/internal/smartcard/gsacac/CACCryptoTokenData
@@ -227,7 +232,7 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
       // 0e2: ifnull 105
       // 0e5: aload 6
       // 0e7: bipush 2
-      // 0e9: new java/lang/Object
+      // 0e9: new net/rim/device/api/crypto/CryptoSmartCardKeyStoreData
       // 0ec: dup
       // 0ed: aconst_null
       // 0ee: aload 0
@@ -261,7 +266,7 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
       // 121: astore 1
       // 122: goto 126
       // 125: astore 1
-      // 126: new java/lang/Object
+      // 126: new net/rim/device/api/smartcard/SmartCardException
       // 129: dup
       // 12a: invokespecial net/rim/device/api/smartcard/SmartCardException.<init> ()V
       // 12d: athrow
@@ -271,27 +276,27 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
       // try (0 -> 153): 158 null
    }
 
-   public X509Certificate getCertificate(byte certType) {
+   public X509Certificate getCertificate(byte certType) throws SmartCardException {
       try {
          byte[] certificate = this.getCertificateHelper(certType);
-         InputStream inputStream = (InputStream)(new Object(certificate, 1, certificate.length - 1));
+         InputStream inputStream = new ByteArrayInputStream(certificate, 1, certificate.length - 1);
          if (certificate[0] == 1) {
-            inputStream = (InputStream)(new Object(inputStream));
+            inputStream = new ZLibInputStream(inputStream);
          } else if (certificate[0] == 0) {
          }
 
-         return (X509Certificate)(new Object(inputStream));
+         return new X509Certificate(inputStream);
       } finally {
-         throw new Object();
+         throw new SmartCardException();
       }
    }
 
-   private byte[] getCertificateHelper(byte certType) {
+   private byte[] getCertificateHelper(byte certType) throws SmartCardAccessDeniedException, SmartCardException {
       byte[] certificate = new byte[0];
       byte[] certFile = new byte[]{-96, 0, 0, 0, 121, 1, certType};
       this.selectFile(certFile);
-      ResponseAPDU response = (ResponseAPDU)(new Object());
-      CommandAPDU cmd = (CommandAPDU)(new Object((byte)-128, (byte)54, (byte)0, (byte)0, 100));
+      ResponseAPDU response = new ResponseAPDU();
+      CommandAPDU cmd = new CommandAPDU((byte)-128, (byte)54, (byte)0, (byte)0, 100);
 
       while (true) {
          this.sendAPDU(cmd, response);
@@ -299,14 +304,14 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
          byte sw2 = response.getSW2();
          if (sw1 != 99 && sw1 != -112) {
             if (sw1 == 105 && sw2 == -127) {
-               throw new Object();
+               throw new SmartCardException();
             }
 
             if (sw1 == 105 && sw2 == -126) {
-               throw new Object();
+               throw new SmartCardAccessDeniedException();
             }
 
-            throw new Object();
+            throw new SmartCardException();
          }
 
          int offset = certificate.length;
@@ -325,7 +330,7 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
    }
 
    private String getLabel(Certificate certificate, int resourceID) {
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       String friendlyName = certificate.getSubjectFriendlyName();
       if (friendlyName != null) {
          int lastIndex = friendlyName.lastIndexOf(46);
@@ -344,26 +349,22 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
       return buffer.toString();
    }
 
-   public void signDecrypt(RSACryptoSystem cryptoSystem, CACCryptoTokenData privateKeyData, byte[] input, int inputOffset, byte[] output, int outputOffset) {
+   public void signDecrypt(RSACryptoSystem cryptoSystem, CACCryptoTokenData privateKeyData, byte[] input, int inputOffset, byte[] output, int outputOffset) throws SmartCardException {
       if (cryptoSystem != null && privateKeyData != null && input != null && output != null) {
          int modulusLength = cryptoSystem.getModulusLength();
          if (input.length >= inputOffset + modulusLength && output.length >= outputOffset + modulusLength) {
             CommandAPDU selectFileAPDU = this.getSelectFileCommand(new byte[]{-96, 0, 0, 0, 121, 1, privateKeyData.getFile()});
-            ResponseAPDU response = (ResponseAPDU)(new Object());
-            CommandAPDU signAPDU = (CommandAPDU)(new Object((byte)-128, (byte)66, (byte)0, (byte)0, modulusLength));
+            ResponseAPDU response = new ResponseAPDU();
+            CommandAPDU signAPDU = new CommandAPDU((byte)-128, (byte)66, (byte)0, (byte)0, modulusLength);
             signAPDU.setLcData(input, inputOffset, input.length - inputOffset);
-            this.sendAPDUs((CommandAPDUGroup)(new Object(new Object[]{selectFileAPDU, signAPDU})), response);
+            this.sendAPDUs(new CommandAPDUGroup(new CommandAPDU[]{selectFileAPDU, signAPDU}), response);
             byte[] responseData = null;
             if (response.getSW1() == -112) {
                responseData = response.getData();
             } else {
                if (response.getSW1() != 97) {
-                  throw new Object(
-                     ((StringBuffer)(new Object("Invalid response code, sw1=")))
-                        .append(Integer.toHexString(response.getSW1() & 255))
-                        .append(" sw2=")
-                        .append(Integer.toHexString(response.getSW2() & 255))
-                        .toString()
+                  throw new SmartCardException(
+                     "Invalid response code, sw1=" + Integer.toHexString(response.getSW1() & 255) + " sw2=" + Integer.toHexString(response.getSW2() & 255)
                   );
                }
 
@@ -373,13 +374,13 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
             if (responseData != null && responseData.length > 0) {
                System.arraycopy(responseData, 0, output, outputOffset, responseData.length);
             } else {
-               throw new Object("Not enough response data received from the smart card.");
+               throw new SmartCardException("Not enough response data received from the smart card.");
             }
          } else {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -387,7 +388,7 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
    public SmartCardID getSmartCardIDImpl() {
       byte[] uniqueData = this.getUniqueCardID();
       if (uniqueData != null && uniqueData.length != 0) {
-         SHA1Digest digest = (SHA1Digest)(new Object());
+         SHA1Digest digest = new SHA1Digest();
          digest.update(uniqueData);
          byte[] bytes = digest.getDigest();
          Array.resize(bytes, 8);
@@ -409,7 +410,7 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
             }
          }
 
-         return (SmartCardID)(new Object(idLong, friendlyName, this.getSmartCard()));
+         return new SmartCardID(idLong, friendlyName, this.getSmartCard());
       } else {
          return null;
       }
@@ -417,9 +418,9 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
 
    private byte[] getUniqueCardID() {
       CommandAPDU selectFileAPDU = this.getSelectFileCommand(CARD_MANAGER_AID);
-      ResponseAPDU response = (ResponseAPDU)(new Object());
-      CommandAPDU getDataAPDU = (CommandAPDU)(new Object((byte)-128, (byte)-54, (byte)-97, (byte)127, 0));
-      this.sendAPDUs((CommandAPDUGroup)(new Object(new Object[]{selectFileAPDU, getDataAPDU})), response);
+      ResponseAPDU response = new ResponseAPDU();
+      CommandAPDU getDataAPDU = new CommandAPDU((byte)-128, (byte)-54, (byte)-97, (byte)127, 0);
+      this.sendAPDUs(new CommandAPDUGroup(new CommandAPDU[]{selectFileAPDU, getDataAPDU}), response);
       return response.getData();
    }
 
@@ -428,9 +429,9 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
       return null;
    }
 
-   private byte[] getResponse(byte dataLength, byte classByte) {
+   private byte[] getResponse(byte dataLength, byte classByte) throws SmartCardException {
       _cmd.set(classByte, (byte)-64, (byte)0, (byte)0, dataLength);
-      ResponseAPDU response = (ResponseAPDU)(new Object());
+      ResponseAPDU response = new ResponseAPDU();
       this.sendAPDU(_cmd, response);
       byte[] responseData = response.getData();
       if (responseData == null) {
@@ -439,7 +440,7 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
 
       if (response.getSW1() != -112) {
          if (response.getSW1() != 97) {
-            throw new Object();
+            throw new SmartCardException();
          }
 
          byte[] moreData = this.getResponse(response.getSW2(), classByte);
@@ -454,26 +455,26 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
    }
 
    private CommandAPDU getSelectFileCommand(byte[] file) {
-      return (CommandAPDU)(new Object((byte)0, (byte)-92, (byte)4, (byte)0, file, 0));
+      return new CommandAPDU((byte)0, (byte)-92, (byte)4, (byte)0, file, 0);
    }
 
-   private void selectFile(byte[] file) {
-      ResponseAPDU response = (ResponseAPDU)(new Object());
-      CommandAPDU cmd = (CommandAPDU)(new Object((byte)0, (byte)-92, (byte)4, (byte)0, file, 0));
+   private void selectFile(byte[] file) throws SmartCardException {
+      ResponseAPDU response = new ResponseAPDU();
+      CommandAPDU cmd = new CommandAPDU((byte)0, (byte)-92, (byte)4, (byte)0, file, 0);
       this.sendAPDU(cmd, response);
       if (response.getSW1() == 97) {
          this.getResponse(response.getSW2(), (byte)0);
       } else {
          if (response.getSW1() != -112) {
-            throw new Object();
+            throw new SmartCardException();
          }
       }
    }
 
-   private byte[] readBuffer(SmartCardReaderSession readerSession, byte bufferType, int offset, int length) {
-      ResponseAPDU response = (ResponseAPDU)(new Object());
+   private byte[] readBuffer(SmartCardReaderSession readerSession, byte bufferType, int offset, int length) throws SmartCardAccessDeniedException, SmartCardException {
+      ResponseAPDU response = new ResponseAPDU();
       byte[] data = new byte[0];
-      CommandAPDU cmd = (CommandAPDU)(new Object((byte)-128, (byte)82, (byte)0, (byte)0));
+      CommandAPDU cmd = new CommandAPDU((byte)-128, (byte)82, (byte)0, (byte)0);
 
       while (length > 0) {
          byte lengthToRead;
@@ -495,10 +496,10 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
          } else {
             if (response.getSW1() != -112) {
                if (response.getSW1() == 105 && response.getSW2() == -126) {
-                  throw new Object();
+                  throw new SmartCardAccessDeniedException();
                }
 
-               throw new Object();
+               throw new SmartCardException();
             }
 
             moreData = response.getData();
@@ -516,11 +517,11 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
 
    private ResponseAPDU pinVerifyHelper(String pin, boolean verifyOnly) {
       CommandAPDU selectFileAPDU = this.getSelectFileCommand(PIN_MANAGEMENT_AID);
-      ResponseAPDU response = (ResponseAPDU)(new Object());
-      CommandAPDU pinVerifyAPDU = (CommandAPDU)(new Object((byte)-128, (byte)32, (byte)0, (byte)0));
+      ResponseAPDU response = new ResponseAPDU();
+      CommandAPDU pinVerifyAPDU = new CommandAPDU((byte)-128, (byte)32, (byte)0, (byte)0);
       if (!verifyOnly) {
          if (pin == null) {
-            throw new Object("PIN is null");
+            throw new IllegalArgumentException("PIN is null");
          }
 
          pinVerifyAPDU.setLcData(pin.getBytes());
@@ -532,7 +533,7 @@ public class CACCryptoSmartCardSession extends CryptoSmartCardSession {
          }
       }
 
-      this.sendAPDUs((CommandAPDUGroup)(new Object(new Object[]{selectFileAPDU, pinVerifyAPDU})), response);
+      this.sendAPDUs(new CommandAPDUGroup(new CommandAPDU[]{selectFileAPDU, pinVerifyAPDU}), response);
       return response;
    }
 

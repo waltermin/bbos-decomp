@@ -128,7 +128,7 @@ public final class ESWindow extends RedirectedObject {
          }
 
          if (name == Names.status) {
-            System.out.println(((StringBuffer)(new Object("Status "))).append(Convert.toString(value)).toString());
+            System.out.println("Status " + Convert.toString(value));
             return true;
          }
       } finally {

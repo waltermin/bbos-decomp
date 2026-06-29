@@ -18,8 +18,6 @@ public class CryptoIOException extends IOException {
 
    @Override
    public String toString() {
-      return this._e == null
-         ? super.toString()
-         : ((StringBuffer)(new Object())).append(super.toString()).append(" ( ").append(this._e.toString()).append(" )").toString();
+      return this._e == null ? super.toString() : super.toString() + " ( " + this._e.toString() + " )";
    }
 }

@@ -14,7 +14,7 @@ public final class CMIMEUnknownConverter extends BaseConverter {
    @Override
    public final Object convert(byte[] inputBytes, Object contextObject) {
       Parameters parameters = (Parameters)contextObject;
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       if (inputBytes != null) {
          context.put(8849067667159082262L, inputBytes);
       }

@@ -57,10 +57,10 @@ public final class TuneManagerImpl extends TuneManager implements FileSystemList
          label31:
          try {
             var4 = true;
-            this._brandingTuneName = (String)(new Object(data, "UTF-8"));
+            this._brandingTuneName = new String(data, "UTF-8");
             byte[] p = Branding.getData(16390);
             if (p != null) {
-               this._brandingTune = new ContentAlertPlayer(p, (String)(new Object(Branding.getData(16391), "UTF-8")));
+               this._brandingTune = new ContentAlertPlayer(p, new String(Branding.getData(16391), "UTF-8"));
             }
 
             if (this._brandingTune == null) {
@@ -125,21 +125,21 @@ public final class TuneManagerImpl extends TuneManager implements FileSystemList
    @Override
    public final String resolveTune(String name) {
       if (name != null && this.isLegacy(name)) {
-         String[] locations = new Object[]{BUILTIN_RINGTONES_FOLDER, STORE_RINGTONES_FOLDER};
+         String[] locations = new String[]{BUILTIN_RINGTONES_FOLDER, STORE_RINGTONES_FOLDER};
 
          try {
             int length = locations.length;
             boolean resolved = false;
 
             for (int index = 0; index < length; index++) {
-               FileConnection fc = (FileConnection)Connector.open(((StringBuffer)(new Object("file://"))).append(locations[index]).toString());
-               Enumeration listing = fc.list(((StringBuffer)(new Object())).append(name).append("*").toString(), false);
+               FileConnection fc = (FileConnection)Connector.open("file://" + locations[index]);
+               Enumeration listing = fc.list(name + "*", false);
 
                while (listing.hasMoreElements() && !resolved) {
                   String item = (String)listing.nextElement();
                   if (this.isRecognizedType(item)) {
                      try {
-                        name = FileUtilities.encodeString(((StringBuffer)(new Object())).append(locations[index]).append(item).toString());
+                        name = FileUtilities.encodeString(locations[index] + item);
                         resolved = true;
                      } finally {
                         continue;
@@ -177,7 +177,7 @@ public final class TuneManagerImpl extends TuneManager implements FileSystemList
    private final String[] combineNameArrays(String[] namesA, String[] namesB) {
       int countA = namesA.length;
       int countB = namesB.length;
-      String[] names = new Object[countA + countB];
+      String[] names = new String[countA + countB];
 
       for (int idx = countA - 1; idx >= 0; idx--) {
          names[idx] = namesA[idx];
@@ -194,7 +194,7 @@ public final class TuneManagerImpl extends TuneManager implements FileSystemList
       String[] tuneNames = null;
       ApplicationRegistry registry = ApplicationRegistry.getApplicationRegistry();
       Object o = registry.get(6675644780973176756L);
-      if (o instanceof Object) {
+      if (o instanceof TuneProvider) {
          TuneProvider tuneProvider = (TuneProvider)o;
          tuneNames = tuneProvider.getTuneFilenames();
       }
@@ -208,7 +208,7 @@ public final class TuneManagerImpl extends TuneManager implements FileSystemList
 
       if (this._brandingTune != null && this._brandingTuneName != null) {
          if (this._tuneManagerData._builtInNames == null) {
-            this._tuneManagerData._builtInNames = new Object[0];
+            this._tuneManagerData._builtInNames = new String[0];
          }
 
          Arrays.add(this._tuneManagerData._builtInNames, this._brandingTuneName);
@@ -277,23 +277,20 @@ public final class TuneManagerImpl extends TuneManager implements FileSystemList
          this._tuneManagerData._allTuneFileNames = null;
       }
 
-      this._tuneManagerData._allTuneFileNames = new Object[0];
+      this._tuneManagerData._allTuneFileNames = new String[0];
       if (this._brandingTune != null && this._brandingTuneName != null) {
          Arrays.add(this._tuneManagerData._allTuneFileNames, this._brandingTuneName);
       }
 
       for (int i = 0; i < AUTO_LOAD_PATHS.length; i++) {
          try {
-            FileConnection fc = (FileConnection)Connector.open(((StringBuffer)(new Object("file://"))).append(AUTO_LOAD_PATHS[i]).toString());
+            FileConnection fc = (FileConnection)Connector.open("file://" + AUTO_LOAD_PATHS[i]);
             Enumeration listItems = fc.list();
 
             while (listItems.hasMoreElements()) {
                String nextItem = (String)listItems.nextElement();
                if (this.isRecognizedType(nextItem)) {
-                  Arrays.add(
-                     this._tuneManagerData._allTuneFileNames,
-                     ((StringBuffer)(new Object())).append(AUTO_LOAD_PATHS[i]).append(FileUtilities.encodeString(nextItem)).toString()
-                  );
+                  Arrays.add(this._tuneManagerData._allTuneFileNames, AUTO_LOAD_PATHS[i] + FileUtilities.encodeString(nextItem));
                }
             }
          } finally {
@@ -366,13 +363,13 @@ public final class TuneManagerImpl extends TuneManager implements FileSystemList
       if (theme != null) {
          Enumeration enumeration = theme.ringtones();
          if (enumeration != null && enumeration.hasMoreElements()) {
-            Vector v = (Vector)(new Object());
+            Vector v = new Vector();
 
             while (enumeration.hasMoreElements()) {
                v.addElement(enumeration.nextElement());
             }
 
-            String[] names = new Object[v.size()];
+            String[] names = new String[v.size()];
             v.copyInto(names);
             return names;
          }
@@ -383,7 +380,7 @@ public final class TuneManagerImpl extends TuneManager implements FileSystemList
 
    @Override
    public final void showTuneListingScreen() {
-      FileBrowser fileBrowser = (FileBrowser)(new Object(null, 2, this));
+      FileBrowser fileBrowser = new FileBrowser(null, 2, this);
       fileBrowser.show(null);
    }
 

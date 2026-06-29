@@ -59,7 +59,7 @@ final class AutoTextOptionsItem$AutoTextScreen extends KeywordFilteredScreen imp
 
          String casingString = OptionsResources.getString(caseStringResourceId);
          int widthDrawn = graphics.drawText(casingString, 0, y, 5, width);
-         StringBuffer itemStringBuffer = (StringBuffer)(new Object(AutoTextOptionsItem._autoTextEngine.getReplacedString(element)));
+         StringBuffer itemStringBuffer = new StringBuffer(AutoTextOptionsItem._autoTextEngine.getReplacedString(element));
          itemStringBuffer.append(' ');
          itemStringBuffer.append('(');
          itemStringBuffer.append(AutoTextOptionsItem._autoTextEngine.getReplacementStringPattern(element));
@@ -141,7 +141,7 @@ final class AutoTextOptionsItem$AutoTextScreen extends KeywordFilteredScreen imp
       Object entry = this.this$0._autoTextScreen.getSelectedEntry();
       if (entry != null) {
          AutoTextUnitModel model = new AutoTextUnitModel(entry);
-         verbs = new Object[0];
+         verbs = new Verb[0];
          Verb defaultVerb = model.getVerbs(AutoTextOptionsItem.access$500(this.this$0), verbs);
          menu.add(verbs);
          menu.setDefault(defaultVerb);

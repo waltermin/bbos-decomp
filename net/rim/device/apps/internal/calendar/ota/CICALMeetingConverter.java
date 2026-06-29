@@ -5,6 +5,7 @@ import net.rim.device.api.util.DataBuffer;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.api.calendar.caldb.CalendarService;
 import net.rim.device.apps.api.calendar.caldb.CalendarServiceManager;
+import net.rim.device.apps.api.calendar.modelcontrollerinterface.Event;
 import net.rim.device.apps.api.calendar.modelcontrollerinterface.EventUtilities;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.transmission.Parameters;
@@ -15,14 +16,14 @@ import net.rim.device.apps.api.utility.serialization.Converter;
 import net.rim.device.cldc.io.gme.GMEDatagram;
 
 class CICALMeetingConverter extends BaseConverter {
-   private ContextObject _converterContext = (ContextObject)(new Object());
+   private ContextObject _converterContext = new ContextObject();
    private static Converter _meetingRequestConverter = new CICALMeetingRequestConverter();
    private static Converter _meetingResponseConverter = new CICALMeetingResponseConverter();
    private static Converter _meetingCancelConverter = new CICALMeetingCancelConverter();
 
    @Override
    public boolean canConvert(Object parameters) {
-      if (parameters instanceof Object) {
+      if (parameters instanceof String) {
          String string = (String)parameters;
          if (StringUtilities.compareToIgnoreCase(string, "application/x-rimdevicecalendar") == 0
             || StringUtilities.compareToIgnoreCase(string, "calendar") == 0) {
@@ -30,7 +31,7 @@ class CICALMeetingConverter extends BaseConverter {
          }
       }
 
-      if (!(parameters instanceof Object)) {
+      if (!(parameters instanceof Parameters)) {
          return false;
       }
 
@@ -48,13 +49,13 @@ class CICALMeetingConverter extends BaseConverter {
       ServiceRecord cmimeServiceRecord = null;
       ServiceRecord cicalServiceRecord = null;
       CalendarService calendarService = null;
-      if (contextObject instanceof Object) {
+      if (contextObject instanceof ContextObject) {
          cmimeServiceRecord = (ServiceRecord)ContextObject.get(contextObject, -6095803566992128485L);
          calendarService = (CalendarService)ContextObject.get(contextObject, 6741741218837016896L);
-      } else if (contextObject instanceof Object) {
+      } else if (contextObject instanceof Parameters) {
          Parameters transmissionParameters = (Parameters)contextObject;
          DataBuffer buffer = transmissionParameters.getDataBuffer();
-         if (buffer instanceof Object) {
+         if (buffer instanceof GMEDatagram) {
             GMEDatagram gmeDatagram = (GMEDatagram)buffer;
             cmimeServiceRecord = gmeDatagram.getBoundServiceRecord();
          }
@@ -97,8 +98,8 @@ class CICALMeetingConverter extends BaseConverter {
             return null;
          }
 
-         if (convertedObject instanceof Object) {
-            events = new Object[]{convertedObject};
+         if (convertedObject instanceof Event) {
+            events = new Object[]{(Event)convertedObject};
          } else {
             events = (Object[])convertedObject;
          }

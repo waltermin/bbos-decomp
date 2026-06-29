@@ -10,7 +10,7 @@ final class AttendeeCollection$TypeHandler implements IntFieldHandler {
 
    @Override
    public final int getValue(Object item) {
-      return !(item instanceof Object) ? 0 : AttendeeTypeEnumConverter.deviceToCommon(((Attendee)item).getType());
+      return !(item instanceof Attendee) ? 0 : AttendeeTypeEnumConverter.deviceToCommon(((Attendee)item).getType());
    }
 
    AttendeeCollection$TypeHandler(AttendeeCollection$1 x0) {

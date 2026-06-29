@@ -1,5 +1,6 @@
 package net.rim.device.internal.synchronization;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -149,7 +150,7 @@ final class SerialSyncDaemon implements Runnable, GlobalEventListener, LowMemory
 
    private final void checkThread() {
       if (this._thread == null || !this._thread.isAlive()) {
-         this._thread = (Thread)(new Object(this));
+         this._thread = new Thread(this);
          Proxy.getInstance().startThread(this._thread);
       }
    }
@@ -172,21 +173,21 @@ final class SerialSyncDaemon implements Runnable, GlobalEventListener, LowMemory
       // 10: aload 0
       // 11: ldc_w "commlink:Database Access"
       // 14: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 17: checkcast java/lang/Object
+      // 17: checkcast javax/microedition/io/DatagramConnection
       // 1a: putfield net/rim/device/internal/synchronization/SerialSyncDaemon._connection Ljavax/microedition/io/DatagramConnection;
       // 1d: aload 0
       // 1e: aload 0
       // 1f: getfield net/rim/device/internal/synchronization/SerialSyncDaemon._connection Ljavax/microedition/io/DatagramConnection;
       // 22: bipush 0
       // 23: invokeinterface javax/microedition/io/DatagramConnection.newDatagram (I)Ljavax/microedition/io/Datagram; 2
-      // 28: checkcast java/lang/Object
+      // 28: checkcast net/rim/device/api/io/DatagramBase
       // 2b: putfield net/rim/device/internal/synchronization/SerialSyncDaemon._command Lnet/rim/device/api/io/DatagramBase;
       // 2e: aload 0
       // 2f: aload 0
       // 30: getfield net/rim/device/internal/synchronization/SerialSyncDaemon._connection Ljavax/microedition/io/DatagramConnection;
       // 33: bipush 0
       // 34: invokeinterface javax/microedition/io/DatagramConnection.newDatagram (I)Ljavax/microedition/io/Datagram; 2
-      // 39: checkcast java/lang/Object
+      // 39: checkcast net/rim/device/api/io/DatagramBase
       // 3c: putfield net/rim/device/internal/synchronization/SerialSyncDaemon._reply Lnet/rim/device/api/io/DatagramBase;
       // 3f: aload 0
       // 40: getfield net/rim/device/internal/synchronization/SerialSyncDaemon._reply Lnet/rim/device/api/io/DatagramBase;
@@ -197,7 +198,7 @@ final class SerialSyncDaemon implements Runnable, GlobalEventListener, LowMemory
       // 49: newarray 8
       // 4b: putfield net/rim/device/internal/synchronization/SerialSyncDaemon._dummyBytes [B
       // 4e: aload 0
-      // 4f: new java/lang/Object
+      // 4f: new net/rim/device/api/util/DataBuffer
       // 52: dup
       // 53: aload 0
       // 54: getfield net/rim/device/internal/synchronization/SerialSyncDaemon._dummyBytes [B
@@ -638,7 +639,7 @@ final class SerialSyncDaemon implements Runnable, GlobalEventListener, LowMemory
                   case 'S':
                      this.getContentProtectionTicket(scdx);
                      boolean sentSummaryParameter = false;
-                     if (this._command.available() > 0 && scdx.getSyncCollection() instanceof Object) {
+                     if (this._command.available() > 0 && scdx.getSyncCollection() instanceof SummaryParameterListener) {
                         ((SummaryParameterListener)scdx.getSyncCollection()).setSummaryParameter(this._command);
                         sentSummaryParameter = true;
                      }
@@ -913,7 +914,7 @@ final class SerialSyncDaemon implements Runnable, GlobalEventListener, LowMemory
 
          for (int i = 0; i < numSyncCollections; i++) {
             SyncCollection sc = syncCollections[i];
-            if (!(sc instanceof Object) || ((SyncCollectionStatusProvider)sc).isReadableForSerialSync()) {
+            if (!(sc instanceof SyncCollectionStatusProvider) || ((SyncCollectionStatusProvider)sc).isReadableForSerialSync()) {
                syncCollections[num++] = sc;
             }
          }
@@ -933,13 +934,13 @@ final class SerialSyncDaemon implements Runnable, GlobalEventListener, LowMemory
             Array.resize(syncCollections, num);
          }
 
-         this._syncCollections = new Object[syncCollections.length * 2];
-         this._syncAllCollections = (Hashtable)(new Object());
+         this._syncCollections = new SyncCollection[syncCollections.length * 2];
+         this._syncAllCollections = new Hashtable();
          int finalSize = 0;
 
          for (int i = 0; i < syncCollections.length; i++) {
             SyncCollection collection = syncCollections[i];
-            if (!(collection instanceof Object)) {
+            if (!(collection instanceof MultiServiceSyncCollection)) {
                this._syncCollections[finalSize] = collection;
                finalSize++;
             } else {
@@ -1101,7 +1102,7 @@ final class SerialSyncDaemon implements Runnable, GlobalEventListener, LowMemory
       reply.writeInt(count);
       SyncObject[] objects = scd.getSyncObjects();
       StateInfoListener stateInfoListener = null;
-      if (sc instanceof Object) {
+      if (sc instanceof StateInfoListener) {
          stateInfoListener = (StateInfoListener)sc;
       }
 
@@ -1211,7 +1212,7 @@ final class SerialSyncDaemon implements Runnable, GlobalEventListener, LowMemory
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private final void sendSyncRecord(SerialSyncCollectionData scd, SyncObject so, int handle, boolean extendedCommand) {
+   private final void sendSyncRecord(SerialSyncCollectionData scd, SyncObject so, int handle, boolean extendedCommand) throws IOException {
       DatagramBase reply = this.resetReply();
       SyncCollection sc = scd.getSyncCollection();
       int version = sc.getSyncVersion();
@@ -1282,7 +1283,7 @@ final class SerialSyncDaemon implements Runnable, GlobalEventListener, LowMemory
 
       if (abort) {
          EventLogger.logEvent(-7509200465648525729L, "Wide data synch aborted".getBytes(), 5);
-         throw new Object();
+         throw new IOException();
       }
 
       this.sendReply(false);
@@ -1423,7 +1424,7 @@ final class SerialSyncDaemon implements Runnable, GlobalEventListener, LowMemory
 
       int dirtyFlag = this._command.readUnsignedByte();
       int stateInfo = this._command.readInt();
-      if (sc instanceof Object) {
+      if (sc instanceof StateInfoListener) {
          ((StateInfoListener)sc).setStateInfo(so, version, stateInfo);
       }
 
@@ -1450,7 +1451,7 @@ final class SerialSyncDaemon implements Runnable, GlobalEventListener, LowMemory
       return this._reply;
    }
 
-   private final void sendReply(boolean more) {
+   private final void sendReply(boolean more) throws IOException, IOCancelledException {
       if (more) {
          this._reply.setFlag(8, true);
       }
@@ -1467,10 +1468,10 @@ final class SerialSyncDaemon implements Runnable, GlobalEventListener, LowMemory
             }
 
             if (reply == 9) {
-               throw new Object();
+               throw new IOCancelledException();
             }
 
-            throw new Object("Bad reply");
+            throw new IOException("Bad reply");
          }
       }
    }
@@ -1497,7 +1498,7 @@ final class SerialSyncDaemon implements Runnable, GlobalEventListener, LowMemory
    }
 
    protected static final boolean isWritable(SyncCollection sc) {
-      if (sc instanceof Object) {
+      if (sc instanceof SyncCollectionStatusProvider) {
          SyncCollectionStatusProvider scsp = (SyncCollectionStatusProvider)sc;
          if (!scsp.isWritableForSerialSync()) {
             return false;

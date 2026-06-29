@@ -1,7 +1,10 @@
 package net.rim.device.cldc.io.ippp;
 
+import java.io.IOException;
 import javax.microedition.io.ServerSocketConnection;
 import javax.microedition.io.StreamConnection;
+import net.rim.device.api.io.IOCancelledException;
+import net.rim.device.api.io.IOPortAlreadyBoundException;
 import net.rim.device.api.system.ControlledAccess;
 import net.rim.device.api.system.RadioInfo;
 import net.rim.device.cldc.io.daemon.TransportRegistry;
@@ -24,9 +27,9 @@ public final class StreamProtocolNotifier implements ServerSocketConnection, Dat
    }
 
    @Override
-   public final synchronized StreamConnection acceptAndOpen() {
+   public final synchronized StreamConnection acceptAndOpen() throws IOException, IOCancelledException {
       if (this._closed) {
-         throw new Object();
+         throw new IOCancelledException();
       }
 
       int connectionID = this._transport.getConnectionID((short)this._url.getPort());
@@ -48,21 +51,21 @@ public final class StreamProtocolNotifier implements ServerSocketConnection, Dat
          DatagramProtocol protocol = new DatagramProtocol(queue, this._name, this._timeouts);
          if (!ControlledAccess.verifyCodeModuleSignature(TraceBack.getCallingModule(0), 51)
             && !Firewall.getInstance().allowConnection(this._url.getScheme(), "", protocol.getProperties(this._url.toString()))) {
-            throw new Object("Permission denied");
+            throw new IOException("Permission denied");
          } else {
             return new StreamProtocol(protocol, false, true);
          }
       } else {
-         throw new Object("Invalid IPPP Queue State");
+         throw new IOException("Invalid IPPP Queue State");
       }
    }
 
    protected final void registerWithTransport(String transportName) {
       if (transportName == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
-      StringBuffer temp = (StringBuffer)(new Object());
+      StringBuffer temp = new StringBuffer();
       temp.append("net.rim.device.cldc.io.").append(transportName).append(".Transport");
       this._transport = (Transport)TransportRegistry.get(temp.toString());
    }
@@ -71,11 +74,11 @@ public final class StreamProtocolNotifier implements ServerSocketConnection, Dat
       this._transport.deregisterNotifierConnection((short)this._url.getPort());
    }
 
-   protected final void registerForNotifications() {
+   protected final void registerForNotifications() throws IOPortAlreadyBoundException {
       if (!this._transport.registerNotifierConnection((short)this._url.getPort(), this)) {
-         StringBuffer exceptionMsg = (StringBuffer)(new Object());
+         StringBuffer exceptionMsg = new StringBuffer();
          exceptionMsg.append("Port [").append(this._url.getPort()).append("] is unavailable");
-         throw new Object(exceptionMsg.toString());
+         throw new IOPortAlreadyBoundException(exceptionMsg.toString());
       }
    }
 
@@ -98,7 +101,7 @@ public final class StreamProtocolNotifier implements ServerSocketConnection, Dat
 
    @Override
    public final String getLocalAddress() {
-      return (String)(new Object(RadioInfo.getIPAddress(0)));
+      return new String(RadioInfo.getIPAddress(0));
    }
 
    @Override
@@ -107,7 +110,7 @@ public final class StreamProtocolNotifier implements ServerSocketConnection, Dat
    }
 
    public StreamProtocolNotifier(String name, boolean timeouts) {
-      this._url = (URL)(new Object("serverSocket", name));
+      this._url = new URL("serverSocket", name);
       this._name = name;
       this._timeouts = timeouts;
       this.registerWithTransport("ippp");

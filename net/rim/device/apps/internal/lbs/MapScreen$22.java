@@ -29,20 +29,9 @@ final class MapScreen$22 extends LBSMenuItem {
       Bitmap bitMap = tempImage != null
          ? EncodedImage.createEncodedImage(tempImage.getData(), 0, -1).getBitmap()
          : Bitmap.getBitmapResource("net_rim_bb_lbs.png");
-      Dialog about = (Dialog)(new Object(
-         0,
-         ((StringBuffer)(new Object()))
-            .append(
-               MessageFormat.format(
-                  ((StringBuffer)(new Object())).append(additionalTermsOfUse).append(LBSResources.getString(125)).toString(), new String[]{"", "2006"}
-               )
-            )
-            .append(googleAttribution)
-            .toString(),
-         0,
-         bitMap,
-         0
-      ));
+      Dialog about = new Dialog(
+         0, MessageFormat.format(additionalTermsOfUse + LBSResources.getString(125), new String[]{"", "2006"}) + googleAttribution, 0, bitMap, 0
+      );
       about.doModal();
    }
 }

@@ -26,10 +26,10 @@ public class TableData extends TableStyle {
       this._columns = columns == null ? new ColumnData[0] : columns;
       this._numOfCols = this._columns.length;
       this._numOfRows = this._numOfCols > 0 ? columns[0].getNumOfRows() : 0;
-      this._frozenSelectableColumns = (IntVector)(new Object());
-      this._visibleColumns = (IntVector)(new Object(this._numOfCols));
-      this._columnIndexes = (IntVector)(new Object(this._numOfCols));
-      this._isGridIndicatingNotVisibleCols = (IntVector)(new Object(this._numOfCols + 1));
+      this._frozenSelectableColumns = new IntVector();
+      this._visibleColumns = new IntVector(this._numOfCols);
+      this._columnIndexes = new IntVector(this._numOfCols);
+      this._isGridIndicatingNotVisibleCols = new IntVector(this._numOfCols + 1);
    }
 
    public ColumnData getColumn(int colIndex) {

@@ -29,7 +29,7 @@ public final class BrowserFolderCollection
    FolderEventListener,
    SyncCollectionStatistics {
    private SyncConverter _converter = new BrowserFolderConverter();
-   private CollectionListenerManager _collectionListenerManager = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _collectionListenerManager = new CollectionListenerManager();
    public static String BROWSER_FOLDERS_DB_NAME = "Browser Folders";
    private static int SYNC_VERSION = 1;
 
@@ -74,18 +74,16 @@ public final class BrowserFolderCollection
       SimpleFolder parentFolder = (SimpleFolder)FolderHierarchies.getFolder(BrowserFolders.RIM_BROWSER_BOOKMARKS_HIERARCHY_ID, parentFolderLUID);
       if (parentFolder == null) {
          SimpleFolder rootFolder = SimpleFolder.getInstance(BrowserFolders.BROWSER_FAMILY, BrowserFolders.RIM_BROWSER_BOOKMARKS_HIERARCHY_ID);
-         parentFolder = (SimpleFolder)(new Object(
-            BrowserFolders.BROWSER_FAMILY, parentFolderLUID, null, BrowserFolders.BROWSER_FOLDER_COLLECTION_CLASS, rootFolder, 1
-         ));
+         parentFolder = new SimpleFolder(BrowserFolders.BROWSER_FAMILY, parentFolderLUID, null, BrowserFolders.BROWSER_FOLDER_COLLECTION_CLASS, rootFolder, 1);
          rootFolder.putFolder(parentFolder);
       }
 
       long folderLUID = BrowserFolders.makeLUID(browserSyncObject.getUID());
       SimpleFolder folder = (SimpleFolder)FolderHierarchies.getFolder(BrowserFolders.RIM_BROWSER_BOOKMARKS_HIERARCHY_ID, folderLUID);
       if (folder == null) {
-         folder = (SimpleFolder)(new Object(
+         folder = new SimpleFolder(
             BrowserFolders.BROWSER_FAMILY, folderLUID, browserSyncObject.getFriendlyName(), BrowserFolders.BROWSER_FOLDER_COLLECTION_CLASS, parentFolder, 1
-         ));
+         );
          BrowserFolders.addSubFolder(parentFolder, folder);
          return true;
       } else {
@@ -142,23 +140,23 @@ public final class BrowserFolderCollection
       );
       this.removeSubFolders(channelsFolder, rootFolder, false);
       if (!BrowserDaemonRegistry.getInstance().isSerialSync()) {
-         SimpleFolder wapBookmarksFolder = (SimpleFolder)(new Object(
+         SimpleFolder wapBookmarksFolder = new SimpleFolder(
             BrowserFolders.BROWSER_FAMILY,
             BrowserFolders.BROWSER_WAP_BOOKMARKS_FOLDER_ID,
             BrowserResources.getString(570),
             BrowserFolders.BROWSER_FOLDER_COLLECTION_CLASS,
             bookmarksFolder,
             1
-         ));
+         );
          bookmarksFolder.putFolder(wapBookmarksFolder);
-         SimpleFolder mdsBookmarksFolder = (SimpleFolder)(new Object(
+         SimpleFolder mdsBookmarksFolder = new SimpleFolder(
             BrowserFolders.BROWSER_FAMILY,
             BrowserFolders.BROWSER_MDS_BOOKMARKS_FOLDER_ID,
             BrowserResources.getString(568),
             BrowserFolders.BROWSER_FOLDER_COLLECTION_CLASS,
             bookmarksFolder,
             1
-         ));
+         );
          bookmarksFolder.putFolder(mdsBookmarksFolder);
       }
 
@@ -168,7 +166,7 @@ public final class BrowserFolderCollection
 
    @Override
    public final SyncObject[] getSyncObjects() {
-      Vector syncObjects = (Vector)(new Object());
+      Vector syncObjects = new Vector();
       SimpleFolder messagesFolder = (SimpleFolder)FolderHierarchies.getFolder(
          BrowserFolders.RIM_BROWSER_MESSAGES_HIERARCHY_ID, BrowserFolders.BROWSER_MESSAGES_FOLDER_ID
       );
@@ -181,7 +179,7 @@ public final class BrowserFolderCollection
          BrowserFolders.RIM_BROWSER_CHANNELS_HIERARCHY_ID, BrowserFolders.BROWSER_CHANNELS_FOLDER_ID
       );
       this.addSubFolders(channelsFolder, syncObjects);
-      SyncObject[] objects = new Object[syncObjects.size()];
+      SyncObject[] objects = new SyncObject[syncObjects.size()];
 
       for (int i = 0; i < syncObjects.size(); i++) {
          objects[i] = (SyncObject)syncObjects.elementAt(i);

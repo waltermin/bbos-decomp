@@ -22,7 +22,7 @@ final class HTMLRendererContext {
    HTMLObject _currentObject;
 
    HTMLRendererContext(Pipe pipe) {
-      this._richTextStrings = new Object[0];
+      this._richTextStrings = new String[0];
       this._pipe = pipe;
    }
 }

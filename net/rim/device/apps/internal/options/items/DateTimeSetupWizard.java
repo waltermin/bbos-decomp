@@ -8,11 +8,13 @@ import net.rim.device.api.system.RadioInfo;
 import net.rim.device.api.system.RadioStatusListener;
 import net.rim.device.api.system.RealtimeClockListener;
 import net.rim.device.api.system.SIMCard;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Trackball;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.NullField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.framework.verb.Verb;
@@ -53,8 +55,8 @@ public final class DateTimeSetupWizard extends BasicWizardPage implements RadioS
 
    @Override
    protected final void populateContent(AppsMainScreen screen, Manager content) {
-      content.add((Field)(new Object(18014398509481984L)));
-      VerticalFieldManager header = (VerticalFieldManager)(new Object());
+      content.add(new NullField(18014398509481984L));
+      VerticalFieldManager header = new VerticalFieldManager();
       header.setFont(this.getHeaderFont());
       int headingResourceId;
       if (Trackball.isSupported()) {
@@ -63,11 +65,11 @@ public final class DateTimeSetupWizard extends BasicWizardPage implements RadioS
          headingResourceId = 2116;
       }
 
-      header.add((Field)(new Object(OptionsResources.getString(headingResourceId))));
-      header.add((Field)(new Object()));
+      header.add(new LabelField(OptionsResources.getString(headingResourceId)));
+      header.add(new SeparatorField());
       content.add(header);
       this._controller.populateMainScreen(screen, content);
-      this._radioStatusLabel = (RichTextField)(new Object("", 36028797019226112L));
+      this._radioStatusLabel = new RichTextField("", 36028797019226112L);
       this._radioStatusLabel.setBorder(10, 5, 0, 5);
       content.add(this._radioStatusLabel);
       this._networkUpdateState = 0;

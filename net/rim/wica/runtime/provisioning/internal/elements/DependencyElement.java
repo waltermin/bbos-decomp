@@ -48,7 +48,7 @@ public final class DependencyElement extends AbstractElement {
 
    @Override
    public final String toString() {
-      StringBuffer buf = (StringBuffer)(new Object(120));
+      StringBuffer buf = new StringBuffer(120);
       buf.append("DependencyElement[type=").append(this._type).append(",value=").append(this._value).append(",version=").append(this._version).append(']');
       return buf.toString();
    }

@@ -18,7 +18,7 @@ final class WTLS_RIM_PublicKeyDecoder extends PublicKeyDecoder {
       try {
          switch (keyAlgorithm.charAt(0)) {
             case '2':
-               DataInputStream input = (DataInputStream)(new Object(encodedKey));
+               DataInputStream input = new DataInputStream(encodedKey);
                if (input.readUnsignedByte() != 0) {
                   throw new InvalidKeyEncodingException();
                }

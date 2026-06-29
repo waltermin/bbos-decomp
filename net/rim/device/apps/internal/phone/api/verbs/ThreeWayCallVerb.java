@@ -28,7 +28,7 @@ public final class ThreeWayCallVerb extends Verb {
    private final void startThreeWayCall() {
       Object connectionParams = PhoneUtilities.getCallConnectionFromAddressBook(null, null, false, true);
       if (connectionParams != null) {
-         ContextObject context = (ContextObject)(new Object());
+         ContextObject context = new ContextObject();
          String phoneNumber = (String)ContextObject.get(connectionParams, 6486659828352467672L);
          DialVerb.startThreeWayCall(this._call, phoneNumber, context, (ContextObject)connectionParams);
       }

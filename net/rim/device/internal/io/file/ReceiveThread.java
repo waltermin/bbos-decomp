@@ -24,7 +24,7 @@ final class ReceiveThread extends Thread {
    private Object _writeLock;
    private Vector _updateRequests;
    private boolean _waitingForResponse;
-   private StringMatch _stringMatch = (StringMatch)(new Object(new String[]{"<", ">", "&"}, false, false));
+   private StringMatch _stringMatch = new StringMatch(new String[]{"<", ">", "&"}, false, false);
    private static final int ERROR_OK = 200;
    private static final int ERROR_BAD_REQUEST = 400;
    private static final int ERROR_FILE_NOT_FOUND = 404;
@@ -56,11 +56,11 @@ final class ReceiveThread extends Thread {
 
    public ReceiveThread(Connection conn) {
       this._conn = conn;
-      this._in = (DataInputStream)(new Object(new USBInputStream(this._conn)));
+      this._in = new DataInputStream(new USBInputStream(this._conn));
       this._usbOut = new USBOutputStream(this._conn);
-      this._out = (DataOutputStream)(new Object(this._usbOut));
+      this._out = new DataOutputStream(this._usbOut);
       this._running = true;
-      this._updateRequests = (Vector)(new Object());
+      this._updateRequests = new Vector();
       this._writeLock = new Object();
    }
 
@@ -107,7 +107,7 @@ final class ReceiveThread extends Thread {
 
          int oldPos = 0;
          int length = name.length();
-         StringBuffer newStr = (StringBuffer)(new Object(length));
+         StringBuffer newStr = new StringBuffer(length);
 
          while (patternIndex >= 0) {
             StringUtilities.append(newStr, name, oldPos, patternIndex - oldPos);
@@ -140,7 +140,7 @@ final class ReceiveThread extends Thread {
 
    private final void writeRequest(UpdateRequest request) {
       synchronized (this._writeLock) {
-         this._out.write(((StringBuffer)(new Object("UPDATE "))).append(request._uri).append(" DFTP/1.0\r\n").toString().getBytes());
+         this._out.write(("UPDATE " + request._uri + " DFTP/1.0\r\n").getBytes());
          request._headers.writeToStream(this._out);
          this._out.flush();
       }
@@ -153,7 +153,7 @@ final class ReceiveThread extends Thread {
       }
 
       synchronized (this._writeLock) {
-         this._out.write(((StringBuffer)(new Object())).append(DFTP_VERSION_10).append(Integer.toString(responseCode)).append(CRLF).toString().getBytes());
+         this._out.write((DFTP_VERSION_10 + Integer.toString(responseCode) + CRLF).getBytes());
          headers.writeToStream(this._out);
          this._out.flush();
       }
@@ -166,7 +166,7 @@ final class ReceiveThread extends Thread {
       }
 
       synchronized (this._writeLock) {
-         this._out.write(((StringBuffer)(new Object())).append(DFTP_VERSION_10).append(Integer.toString(responseCode)).append(CRLF).toString().getBytes());
+         this._out.write((DFTP_VERSION_10 + Integer.toString(responseCode) + CRLF).getBytes());
          headers.writeToStream(this._out);
          if (output != null) {
             this._out.write(output);
@@ -188,7 +188,7 @@ final class ReceiveThread extends Thread {
       headers.setProperty("content-length", Long.toString(length));
       headers.setProperty("content-type", "application/octet-stream");
       synchronized (this._writeLock) {
-         this._out.write(((StringBuffer)(new Object())).append(DFTP_VERSION_10).append(Integer.toString(responseCode)).append(CRLF).toString().getBytes());
+         this._out.write((DFTP_VERSION_10 + Integer.toString(responseCode) + CRLF).getBytes());
          headers.writeToStream(this._out);
          if (bytesIn != null) {
             this._usbOut.copy(bytesIn, length);
@@ -216,11 +216,11 @@ final class ReceiveThread extends Thread {
       // 00d: invokevirtual java/lang/String.equals (Ljava/lang/Object;)Z
       // 010: ifne 016
       // 013: goto 14f
-      // 016: new java/lang/Object
+      // 016: new java/io/ByteArrayOutputStream
       // 019: dup
       // 01a: invokespecial java/io/ByteArrayOutputStream.<init> ()V
       // 01d: astore 3
-      // 01e: new java/lang/Object
+      // 01e: new java/io/OutputStreamWriter
       // 021: dup
       // 022: aload 3
       // 023: ldc_w "UTF-8"
@@ -237,7 +237,7 @@ final class ReceiveThread extends Thread {
       // 042: goto 131
       // 045: aload 5
       // 047: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 04c: checkcast java/lang/Object
+      // 04c: checkcast java/lang/String
       // 04f: astore 6
       // 051: aload 4
       // 053: ldc_w "<root>"
@@ -253,7 +253,7 @@ final class ReceiveThread extends Thread {
       // 06c: aload 4
       // 06e: getstatic net/rim/device/internal/io/file/ReceiveThread.NAME_END Ljava/lang/String;
       // 071: invokevirtual java/io/Writer.write (Ljava/lang/String;)V
-      // 074: new java/lang/Object
+      // 074: new java/lang/StringBuffer
       // 077: dup
       // 078: ldc_w "file:///"
       // 07b: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -261,7 +261,7 @@ final class ReceiveThread extends Thread {
       // 080: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 083: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 086: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 089: checkcast java/lang/Object
+      // 089: checkcast javax/microedition/io/file/FileConnection
       // 08c: astore 2
       // 08d: aload 2
       // 08e: ifnull 0d6
@@ -340,7 +340,7 @@ final class ReceiveThread extends Thread {
       // 146: invokevirtual java/io/ByteArrayOutputStream.toByteArray ()[B
       // 149: invokespecial net/rim/device/internal/io/file/ReceiveThread.writeResponse (ILjava/lang/String;[B)V
       // 14c: goto 2e4
-      // 14f: new java/lang/Object
+      // 14f: new java/lang/StringBuffer
       // 152: dup
       // 153: ldc_w "file://"
       // 156: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -348,7 +348,7 @@ final class ReceiveThread extends Thread {
       // 15a: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 15d: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 160: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 163: checkcast java/lang/Object
+      // 163: checkcast javax/microedition/io/file/FileConnection
       // 166: astore 2
       // 167: aload 2
       // 168: ifnonnull 16e
@@ -361,11 +361,11 @@ final class ReceiveThread extends Thread {
       // 17b: invokeinterface javax/microedition/io/file/FileConnection.isDirectory ()Z 1
       // 180: ifne 186
       // 183: goto 2c3
-      // 186: new java/lang/Object
+      // 186: new java/io/ByteArrayOutputStream
       // 189: dup
       // 18a: invokespecial java/io/ByteArrayOutputStream.<init> ()V
       // 18d: astore 3
-      // 18e: new java/lang/Object
+      // 18e: new java/io/OutputStreamWriter
       // 191: dup
       // 192: aload 3
       // 193: ldc_w "UTF-8"
@@ -400,11 +400,11 @@ final class ReceiveThread extends Thread {
       // 1e0: istore 5
       // 1e2: aload 2
       // 1e3: dup
-      // 1e4: instanceof java/lang/Object
+      // 1e4: instanceof net/rim/device/api/io/file/ExtendedFileConnection
       // 1e7: ifne 1ee
       // 1ea: pop
       // 1eb: goto 202
-      // 1ee: checkcast java/lang/Object
+      // 1ee: checkcast net/rim/device/api/io/file/ExtendedFileConnection
       // 1f1: ldc_w "*"
       // 1f4: bipush 1
       // 1f5: invokeinterface net/rim/device/api/io/file/ExtendedFileConnection.listWithDetails (Ljava/lang/String;Z)Ljava/util/Enumeration; 3
@@ -425,7 +425,7 @@ final class ReceiveThread extends Thread {
       // 21d: ifeq 267
       // 220: aload 6
       // 222: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 227: checkcast java/lang/Object
+      // 227: checkcast net/rim/device/api/io/FileInfo
       // 22a: astore 17
       // 22c: aload 17
       // 22e: invokevirtual net/rim/device/api/io/FileInfo.getFileName ()Ljava/lang/String;
@@ -456,7 +456,7 @@ final class ReceiveThread extends Thread {
       // 264: goto 28a
       // 267: aload 6
       // 269: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 26e: checkcast java/lang/Object
+      // 26e: checkcast java/lang/String
       // 271: astore 8
       // 273: aload 8
       // 275: ldc_w "/"
@@ -622,7 +622,7 @@ final class ReceiveThread extends Thread {
       // 001: astore 2
       // 002: aconst_null
       // 003: astore 3
-      // 004: new java/lang/Object
+      // 004: new java/lang/StringBuffer
       // 007: dup
       // 008: ldc_w "file://"
       // 00b: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -630,7 +630,7 @@ final class ReceiveThread extends Thread {
       // 00f: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 012: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 015: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 018: checkcast java/lang/Object
+      // 018: checkcast javax/microedition/io/file/FileConnection
       // 01b: astore 2
       // 01c: aload 2
       // 01d: ifnonnull 023
@@ -650,11 +650,11 @@ final class ReceiveThread extends Thread {
       // 040: astore 6
       // 042: aload 2
       // 043: dup
-      // 044: instanceof java/lang/Object
+      // 044: instanceof net/rim/device/api/io/file/ExtendedFileConnection
       // 047: ifne 04e
       // 04a: pop
       // 04b: goto 079
-      // 04e: checkcast java/lang/Object
+      // 04e: checkcast net/rim/device/api/io/file/ExtendedFileConnection
       // 051: astore 7
       // 053: aload 7
       // 055: invokeinterface net/rim/device/api/io/file/ExtendedFileConnection.isContentDRMForwardLocked ()Z 1
@@ -809,7 +809,7 @@ final class ReceiveThread extends Thread {
       // Bytecode:
       // 000: aconst_null
       // 001: astore 2
-      // 002: new java/lang/Object
+      // 002: new java/lang/StringBuffer
       // 005: dup
       // 006: ldc_w "file://"
       // 009: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -817,7 +817,7 @@ final class ReceiveThread extends Thread {
       // 00d: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 010: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 013: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 016: checkcast java/lang/Object
+      // 016: checkcast javax/microedition/io/file/FileConnection
       // 019: astore 2
       // 01a: aload 2
       // 01b: ifnonnull 021
@@ -826,11 +826,11 @@ final class ReceiveThread extends Thread {
       // 022: invokeinterface javax/microedition/io/file/FileConnection.exists ()Z 1
       // 027: ifne 02d
       // 02a: goto 0cc
-      // 02d: new java/lang/Object
+      // 02d: new java/io/ByteArrayOutputStream
       // 030: dup
       // 031: invokespecial java/io/ByteArrayOutputStream.<init> ()V
       // 034: astore 3
-      // 035: new java/lang/Object
+      // 035: new java/io/OutputStreamWriter
       // 038: dup
       // 039: aload 3
       // 03a: ldc_w "UTF-8"
@@ -983,7 +983,7 @@ final class ReceiveThread extends Thread {
       // 003: astore 4
       // 005: bipush 0
       // 006: istore 5
-      // 008: new java/lang/Object
+      // 008: new java/lang/StringBuffer
       // 00b: dup
       // 00c: ldc_w "file://"
       // 00f: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -991,7 +991,7 @@ final class ReceiveThread extends Thread {
       // 013: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 016: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 019: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 01c: checkcast java/lang/Object
+      // 01c: checkcast javax/microedition/io/file/FileConnection
       // 01f: astore 3
       // 020: aload 3
       // 021: ifnonnull 027
@@ -1020,7 +1020,7 @@ final class ReceiveThread extends Thread {
       // 05c: invokestatic net/rim/device/internal/io/file/FileSystemOptions.getContentStoreMaxFileSize ()J
       // 05f: lcmp
       // 060: ifle 06e
-      // 063: new java/lang/Object
+      // 063: new net/rim/device/api/io/file/FileIOException
       // 066: dup
       // 067: sipush 1008
       // 06a: invokespecial net/rim/device/api/io/file/FileIOException.<init> (I)V
@@ -1210,7 +1210,7 @@ final class ReceiveThread extends Thread {
       // Bytecode:
       // 00: aconst_null
       // 01: astore 2
-      // 02: new java/lang/Object
+      // 02: new java/lang/StringBuffer
       // 05: dup
       // 06: ldc_w "file://"
       // 09: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -1218,7 +1218,7 @@ final class ReceiveThread extends Thread {
       // 0d: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 10: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 13: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 16: checkcast java/lang/Object
+      // 16: checkcast javax/microedition/io/file/FileConnection
       // 19: astore 2
       // 1a: aload 2
       // 1b: ifnull 45
@@ -1326,20 +1326,14 @@ final class ReceiveThread extends Thread {
 
             while (listing.hasMoreElements()) {
                String nextEntry = (String)listing.nextElement();
-               nextOldFile = (FileConnection)Connector.open(((StringBuffer)(new Object())).append(oldDirectory.getURL()).append(nextEntry).toString());
-               nextNewFile = (FileConnection)Connector.open(((StringBuffer)(new Object())).append(newDirectory.getURL()).append(nextEntry).toString());
+               nextOldFile = (FileConnection)Connector.open(oldDirectory.getURL() + nextEntry);
+               nextNewFile = (FileConnection)Connector.open(newDirectory.getURL() + nextEntry);
                if (nextOldFile.isDirectory()) {
                   this.moveCopyDirectory(nextOldFile, nextNewFile, deleteOriginal);
                } else if (deleteOriginal) {
-                  FileUtilities.moveFile(
-                     ((StringBuffer)(new Object())).append(oldDirectory.getURL()).append(nextEntry).toString(),
-                     ((StringBuffer)(new Object())).append(newDirectory.getURL()).append(nextEntry).toString()
-                  );
+                  FileUtilities.moveFile(oldDirectory.getURL() + nextEntry, newDirectory.getURL() + nextEntry);
                } else {
-                  FileUtilities.copyFile(
-                     ((StringBuffer)(new Object())).append(oldDirectory.getURL()).append(nextEntry).toString(),
-                     ((StringBuffer)(new Object())).append(newDirectory.getURL()).append(nextEntry).toString()
-                  );
+                  FileUtilities.copyFile(oldDirectory.getURL() + nextEntry, newDirectory.getURL() + nextEntry);
                }
 
                nextOldFile.close();
@@ -1405,7 +1399,7 @@ final class ReceiveThread extends Thread {
       // 001: astore 4
       // 003: aconst_null
       // 004: astore 5
-      // 006: new java/lang/Object
+      // 006: new java/lang/StringBuffer
       // 009: dup
       // 00a: ldc_w "file://"
       // 00d: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -1413,7 +1407,7 @@ final class ReceiveThread extends Thread {
       // 011: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 014: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 017: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 01a: checkcast java/lang/Object
+      // 01a: checkcast javax/microedition/io/file/FileConnection
       // 01d: astore 4
       // 01f: aload 4
       // 021: ifnonnull 027
@@ -1438,7 +1432,7 @@ final class ReceiveThread extends Thread {
       // 057: return
       // 058: astore 6
       // 05a: return
-      // 05b: new java/lang/Object
+      // 05b: new java/lang/StringBuffer
       // 05e: dup
       // 05f: ldc_w "file://"
       // 062: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -1446,7 +1440,7 @@ final class ReceiveThread extends Thread {
       // 066: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 069: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 06c: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 06f: checkcast java/lang/Object
+      // 06f: checkcast javax/microedition/io/file/FileConnection
       // 072: astore 5
       // 074: aload 5
       // 076: ifnonnull 07c
@@ -1605,7 +1599,7 @@ final class ReceiveThread extends Thread {
       // Bytecode:
       // 00: aconst_null
       // 01: astore 2
-      // 02: new java/lang/Object
+      // 02: new java/lang/StringBuffer
       // 05: dup
       // 06: ldc_w "file://"
       // 09: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -1613,7 +1607,7 @@ final class ReceiveThread extends Thread {
       // 0d: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 10: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 13: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 16: checkcast java/lang/Object
+      // 16: checkcast javax/microedition/io/file/FileConnection
       // 19: astore 2
       // 1a: aload 2
       // 1b: ifnull 48
@@ -1803,7 +1797,7 @@ final class ReceiveThread extends Thread {
                      }
                   } else {
                      if (line[2] == null || !line[2].startsWith(DFTP)) {
-                        throw new Object();
+                        throw new IllegalStateException();
                      }
 
                      if (ITPolicy.getBoolean(24, 61, false)) {
@@ -1820,7 +1814,7 @@ final class ReceiveThread extends Thread {
                   continue;
                }
 
-               throw new Object();
+               throw new IllegalStateException();
             }
 
             var9 = false;

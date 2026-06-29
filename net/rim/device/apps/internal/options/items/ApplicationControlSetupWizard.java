@@ -1,17 +1,18 @@
 package net.rim.device.apps.internal.options.items;
 
 import net.rim.device.api.system.ApplicationRegistry;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Manager;
-import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.NullField;
 import net.rim.device.api.ui.component.RadioButtonField;
 import net.rim.device.api.ui.component.RadioButtonGroup;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.setupwizard.BasicWizardPage;
 import net.rim.device.apps.api.setupwizard.SetupWizardOrdering;
+import net.rim.device.apps.api.ui.ApplicationControlScreen;
 import net.rim.device.apps.api.ui.AppsMainScreen;
 import net.rim.device.apps.internal.options.resources.OptionsResources;
 import net.rim.device.internal.applicationcontrol.ApplicationControl;
@@ -34,28 +35,29 @@ public final class ApplicationControlSetupWizard extends BasicWizardPage {
 
    @Override
    protected final void populateContent(AppsMainScreen screen, Manager content) {
-      this._settingRadios = (RadioButtonGroup)(new Object());
-      RadioButtonField[] radios = new Object[4];
-      radios[0] = (RadioButtonField)(new Object(OptionsResources.getString(2063), this._settingRadios, false));
-      radios[1] = (RadioButtonField)(new Object(OptionsResources.getString(2056), this._settingRadios, false));
-      radios[2] = (RadioButtonField)(new Object(OptionsResources.getString(2057), this._settingRadios, false));
-      radios[3] = (RadioButtonField)(new Object(OptionsResources.getString(2060), this._settingRadios, false));
-      content.add((Field)(new Object(18014398509481984L)));
+      this._settingRadios = new RadioButtonGroup();
+      RadioButtonField[] radios = new RadioButtonField[]{
+         new RadioButtonField(OptionsResources.getString(2063), this._settingRadios, false),
+         new RadioButtonField(OptionsResources.getString(2056), this._settingRadios, false),
+         new RadioButtonField(OptionsResources.getString(2057), this._settingRadios, false),
+         new RadioButtonField(OptionsResources.getString(2060), this._settingRadios, false)
+      };
+      content.add(new NullField(18014398509481984L));
       content.setFont(this.getHeaderFont());
       Font italicFont = this.getHeaderFont().derive(2);
-      content.add((Field)(new Object(OptionsResources.getString(2062))));
-      content.add((Field)(new Object()));
+      content.add(new LabelField(OptionsResources.getString(2062)));
+      content.add(new SeparatorField());
       content.add(radios[0]);
       content.add(radios[1]);
       content.add(radios[2]);
-      VerticalIndentFieldManager customLine = (VerticalIndentFieldManager)(new Object());
+      VerticalIndentFieldManager customLine = new VerticalIndentFieldManager();
       customLine.add(radios[3]);
-      LabelField note = (LabelField)(new Object(OptionsResources.getString(2064)));
+      LabelField note = new LabelField(OptionsResources.getString(2064));
       note.setFont(italicFont);
       customLine.add(note, 20);
       content.add(customLine);
-      LabelField trailer1 = (LabelField)(new Object(OptionsResources.getString(2058)));
-      LabelField trailer2 = (LabelField)(new Object(OptionsResources.getString(2059)));
+      LabelField trailer1 = new LabelField(OptionsResources.getString(2058));
+      LabelField trailer2 = new LabelField(OptionsResources.getString(2059));
       trailer2.setFont(italicFont);
       content.add(trailer1);
       content.add(trailer2);
@@ -82,14 +84,14 @@ public final class ApplicationControlSetupWizard extends BasicWizardPage {
             resetRequired = ApplicationControl.setPermissiveDefaultPermission();
             break;
          case 3:
-            UiApplication.getUiApplication().pushModalScreen((Screen)(new Object()));
+            UiApplication.getUiApplication().pushModalScreen(new ApplicationControlScreen());
       }
 
       if (resetRequired) {
          ApplicationControl.scheduleDeviceReset("USR-SW");
       }
 
-      this._ar.replace(8230353045335363579L, new Object(selection));
+      this._ar.replace(8230353045335363579L, new Integer(selection));
       return true;
    }
 }

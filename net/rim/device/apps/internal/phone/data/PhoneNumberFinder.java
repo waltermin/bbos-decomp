@@ -20,7 +20,7 @@ final class PhoneNumberFinder implements Visitor {
    public final boolean visit(Object o) {
       if (this._searchPhoneNumber == null) {
          return false;
-      } else if (o instanceof Object && ((AbstractPhoneNumberModel)o).equals(this._searchPhoneNumber, true)) {
+      } else if (o instanceof AbstractPhoneNumberModel && ((AbstractPhoneNumberModel)o).equals(this._searchPhoneNumber, true)) {
          this._matchingPhoneNumber = o;
          return false;
       } else {

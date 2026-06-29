@@ -8,7 +8,7 @@ final class SoftwareDSACryptoToken$DSAPublicKeyData implements CryptoTokenPublic
    private byte[] _data;
    private int _hashCode;
 
-   public SoftwareDSACryptoToken$DSAPublicKeyData(SoftwareDSACryptoToken$DSACryptoSystemData cryptoSystem, byte[] data) {
+   public SoftwareDSACryptoToken$DSAPublicKeyData(SoftwareDSACryptoToken$DSACryptoSystemData cryptoSystem, byte[] data) throws InvalidKeyException {
       if (cryptoSystem != null && data != null) {
          data = CryptoByteArrayArithmetic.trim(data);
          if (!CryptoByteArrayArithmetic.isZero(data) && data.length <= cryptoSystem.getPublicKeyLength()) {
@@ -16,10 +16,10 @@ final class SoftwareDSACryptoToken$DSAPublicKeyData implements CryptoTokenPublic
             this._data = CryptoUtilities.copyKey(data, cryptoSystem.getPublicKeyLength());
             this.setHashCode();
          } else {
-            throw new Object();
+            throw new InvalidKeyException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

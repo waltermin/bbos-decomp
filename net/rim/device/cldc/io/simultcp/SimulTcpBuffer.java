@@ -58,7 +58,7 @@ final class SimulTcpBuffer {
          System.arraycopy(this.data, this.start, stringy, 0, stringy.length);
       }
 
-      return (String)(new Object(stringy));
+      return new String(stringy);
    }
 
    public final synchronized int getLength() {

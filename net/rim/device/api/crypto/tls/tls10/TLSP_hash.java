@@ -17,7 +17,7 @@ public class TLSP_hash extends AbstractPseudoRandomSource implements PseudoRando
 
    public TLSP_hash(Digest digest, byte[] secret, int secretOffset, int secretLength, byte[] seed) {
       if (digest != null && secret != null && seed != null && secretOffset >= 0 && secretLength >= 0 && secret.length - secretLength >= secretOffset) {
-         this._hmac = (HMAC)(new Object((HMACKey)(new Object(secret, secretOffset, secretLength)), digest));
+         this._hmac = new HMAC(new HMACKey(secret, secretOffset, secretLength), digest);
          this._seed = Arrays.copy(seed);
          this._updatedSeed = new byte[this._hmac.getLength()];
          this._buffer = new byte[this._hmac.getLength() + seed.length];
@@ -25,7 +25,7 @@ public class TLSP_hash extends AbstractPseudoRandomSource implements PseudoRando
          this._hmac.update(this._seed);
          this._hmac.getMAC(this._updatedSeed, 0);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -53,7 +53,7 @@ public class TLSP_hash extends AbstractPseudoRandomSource implements PseudoRando
          this.xorBytes(output);
          System.arraycopy(output, 0, buffer, offset, length);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -87,7 +87,7 @@ public class TLSP_hash extends AbstractPseudoRandomSource implements PseudoRando
             }
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

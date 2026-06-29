@@ -204,7 +204,7 @@ public class TableModelImpl extends UIControlImpl implements TableModel {
 
    @Override
    protected void updateMappedValue() {
-      super._mappedValue = this._selectedRowIndex == -1 ? null : new Object(((LongVector)super._value).elementAt(this._selectedRowIndex));
+      super._mappedValue = this._selectedRowIndex == -1 ? null : new Long(((LongVector)super._value).elementAt(this._selectedRowIndex));
    }
 
    protected TableModelImpl(
@@ -265,7 +265,7 @@ public class TableModelImpl extends UIControlImpl implements TableModel {
       } else {
          if (this._selectedRowIndex < 0) {
             Object dataMappedValue = this.getDataMappedValue();
-            long mappedHandle = dataMappedValue == null ? -1 : dataMappedValue;
+            long mappedHandle = dataMappedValue == null ? -1 : (Long)dataMappedValue;
             if (mappedHandle != -1) {
                DataCollection dc = this.getScreen().getWiclet().getDataCollection((int)(mappedHandle >> 32));
                if (dc.getDef().hasKey()) {
@@ -334,7 +334,7 @@ public class TableModelImpl extends UIControlImpl implements TableModel {
          this._children = new UIComponent[childCount];
       }
 
-      this._componentMap = (Hashtable)(new Object(childCount));
+      this._componentMap = new Hashtable(childCount);
    }
 
    @Override

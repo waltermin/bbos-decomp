@@ -17,13 +17,13 @@ public final class StatusEnumDef extends EnumDefinition {
    public static final String STATUS_ENUM_NAME = "STATUS";
 
    public StatusEnumDef() {
-      super._enumNames = new Object[5];
+      super._enumNames = new String[5];
       super._enumNames[0] = "NOT_STARTED";
       super._enumNames[1] = "IN_PROGRESS";
       super._enumNames[2] = "COMPLETED";
       super._enumNames[3] = "WAITING";
       super._enumNames[4] = "DEFERRED";
-      super._enumValues = (ToIntHashtable)(new Object(7));
+      super._enumValues = new ToIntHashtable(7);
       super._enumValues.put("NOT_STARTED", 0);
       super._enumValues.put("IN_PROGRESS", 1);
       super._enumValues.put("COMPLETED", 2);

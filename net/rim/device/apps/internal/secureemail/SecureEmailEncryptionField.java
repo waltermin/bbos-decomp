@@ -128,9 +128,9 @@ public class SecureEmailEncryptionField extends StatusField implements ContextMe
       // 099: invokestatic net/rim/device/api/i18n/MessageFormat.format (Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
       // 09c: astore 6
       // 09e: aload 0
-      // 09f: new java/lang/Object
+      // 09f: new net/rim/device/apps/api/ui/VerbMenuItem
       // 0a2: dup
-      // 0a3: new java/lang/Object
+      // 0a3: new net/rim/device/apps/internal/api/crypto/verb/DisplayCertificateVerb
       // 0a6: dup
       // 0a7: aload 6
       // 0a9: aload 0
@@ -229,7 +229,7 @@ public class SecureEmailEncryptionField extends StatusField implements ContextMe
       // 181: iload 10
       // 183: ifeq 1b3
       // 186: aload 0
-      // 187: new java/lang/Object
+      // 187: new net/rim/device/apps/api/ui/VerbMenuItem
       // 18a: dup
       // 18b: new net/rim/device/apps/internal/secureemail/SecureEmailEncryptionField$DisplayWeakEncryptionReasonVerb
       // 18e: dup
@@ -289,7 +289,7 @@ public class SecureEmailEncryptionField extends StatusField implements ContextMe
          return SecureEmailResources.getString(50);
       }
 
-      String[] messageFormatParameters = new Object[]{this._secureEmailFactory.getEncodingString(), this._contentCipherAlgorithm};
+      String[] messageFormatParameters = new String[]{this._secureEmailFactory.getEncodingString(), this._contentCipherAlgorithm};
       int status = this.getStatus();
       int messageFormatResourceID;
       switch (status) {
@@ -303,7 +303,7 @@ public class SecureEmailEncryptionField extends StatusField implements ContextMe
             break;
          case 2:
             messageFormatResourceID = 107;
-            messageFormatParameters = new Object[]{this._secureEmailFactory.getEncodingString()};
+            messageFormatParameters = new String[]{this._secureEmailFactory.getEncodingString()};
             break;
          case 3:
             messageFormatResourceID = 142;

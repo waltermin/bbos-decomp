@@ -7,7 +7,7 @@ import net.rim.device.apps.internal.explorer.file.verbs.UpNavigationVerb;
 
 public final class UpAliasFileItemField extends AliasFileItemField {
    UpAliasFileItemField(ExploreManager explorer) {
-      super((AliasFileEntry)(new Object(ExplorerResources.getString(46), new UpNavigationVerb(explorer), ExplorerIcons.getFolderIcon().getImage(1))), true);
+      super(new AliasFileEntry(ExplorerResources.getString(46), new UpNavigationVerb(explorer), ExplorerIcons.getFolderIcon().getImage(1)), true);
       this.setParent();
    }
 

@@ -35,7 +35,7 @@ public class PGPSignatureSubPacketParser implements PGPSignatureSubPacketTags {
 
    public PGPSignatureSubPacketParser(Vector subPackets) {
       if (subPackets == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._subPackets = subPackets;
@@ -63,7 +63,7 @@ public class PGPSignatureSubPacketParser implements PGPSignatureSubPacketTags {
             default:
                data = packet.getEncoding();
                if (data.length != 4) {
-                  throw new PGPEncodingException(((StringBuffer)(new Object("SSLM:"))).append(tag).toString());
+                  throw new PGPEncodingException("SSLM:" + tag);
                }
 
                this._signatureCreationTime = PGPUtilities.convertTime(data, 0);
@@ -71,7 +71,7 @@ public class PGPSignatureSubPacketParser implements PGPSignatureSubPacketTags {
             case 3:
                data = packet.getEncoding();
                if (data.length != 4) {
-                  throw new PGPEncodingException(((StringBuffer)(new Object("SSLM:"))).append(tag).toString());
+                  throw new PGPEncodingException("SSLM:" + tag);
                }
 
                this._signatureExpirationTime = PGPUtilities.convertTime(data, 0);
@@ -79,7 +79,7 @@ public class PGPSignatureSubPacketParser implements PGPSignatureSubPacketTags {
             case 4:
                data = packet.getEncoding();
                if (data.length != 1) {
-                  throw new PGPEncodingException(((StringBuffer)(new Object("SSLM:"))).append(tag).toString());
+                  throw new PGPEncodingException("SSLM:" + tag);
                }
 
                this._exportableCertification = data[0] == 1;
@@ -87,7 +87,7 @@ public class PGPSignatureSubPacketParser implements PGPSignatureSubPacketTags {
             case 5:
                data = packet.getEncoding();
                if (data.length != 2) {
-                  throw new PGPEncodingException(((StringBuffer)(new Object("SSLM:"))).append(tag).toString());
+                  throw new PGPEncodingException("SSLM:" + tag);
                }
 
                this._trustLevel = data[0];
@@ -99,7 +99,7 @@ public class PGPSignatureSubPacketParser implements PGPSignatureSubPacketTags {
             case 7:
                data = packet.getEncoding();
                if (data.length != 1) {
-                  throw new PGPEncodingException(((StringBuffer)(new Object("SSLM:"))).append(tag).toString());
+                  throw new PGPEncodingException("SSLM:" + tag);
                }
 
                this._revocable = data[0] == 1;
@@ -107,7 +107,7 @@ public class PGPSignatureSubPacketParser implements PGPSignatureSubPacketTags {
             case 9:
                data = packet.getEncoding();
                if (data.length != 4) {
-                  throw new PGPEncodingException(((StringBuffer)(new Object("SSLM:"))).append(tag).toString());
+                  throw new PGPEncodingException("SSLM:" + tag);
                }
 
                this._keyExpirationTime = PGPUtilities.convertTime(data, 0);
@@ -115,7 +115,7 @@ public class PGPSignatureSubPacketParser implements PGPSignatureSubPacketTags {
             case 10:
                data = packet.getEncoding();
                if (data.length != 22) {
-                  throw new PGPEncodingException(((StringBuffer)(new Object("SSLM:"))).append(tag).toString());
+                  throw new PGPEncodingException("SSLM:" + tag);
                }
 
                int numADKs = this._adkFingerprints == null ? 0 : this._adkFingerprints.length;
@@ -134,7 +134,7 @@ public class PGPSignatureSubPacketParser implements PGPSignatureSubPacketTags {
             case 12:
                data = packet.getEncoding();
                if (data.length != 22) {
-                  throw new PGPEncodingException(((StringBuffer)(new Object("SSLM:"))).append(tag).toString());
+                  throw new PGPEncodingException("SSLM:" + tag);
                }
 
                this._revocationKeyClass = data[0];
@@ -145,7 +145,7 @@ public class PGPSignatureSubPacketParser implements PGPSignatureSubPacketTags {
             case 16:
                this._issuerKeyID = packet.getEncoding();
                if (this._issuerKeyID.length != 8) {
-                  throw new PGPEncodingException(((StringBuffer)(new Object("SSLM:"))).append(tag).toString());
+                  throw new PGPEncodingException("SSLM:" + tag);
                }
                break;
             case 20:
@@ -161,18 +161,18 @@ public class PGPSignatureSubPacketParser implements PGPSignatureSubPacketTags {
                this._keyServerPreferences = packet.getEncoding();
                break;
             case 24:
-               this._preferredKeyServer = (String)(new Object(packet.getEncoding()));
+               this._preferredKeyServer = new String(packet.getEncoding());
                break;
             case 25:
                data = packet.getEncoding();
                if (data.length != 1) {
-                  throw new PGPEncodingException(((StringBuffer)(new Object("SSLM:"))).append(tag).toString());
+                  throw new PGPEncodingException("SSLM:" + tag);
                }
 
                this._primaryUserID = data[0] == 1;
                break;
             case 26:
-               this._policyURL = (String)(new Object(packet.getEncoding()));
+               this._policyURL = new String(packet.getEncoding());
                break;
             case 27:
                this._keyFlags = packet.getEncoding();
@@ -183,7 +183,7 @@ public class PGPSignatureSubPacketParser implements PGPSignatureSubPacketTags {
             case 29:
                data = packet.getEncoding();
                if (data.length < 1) {
-                  throw new PGPEncodingException(((StringBuffer)(new Object("SSLM:"))).append(tag).toString());
+                  throw new PGPEncodingException("SSLM:" + tag);
                }
 
                this._revocationCode = data[0];

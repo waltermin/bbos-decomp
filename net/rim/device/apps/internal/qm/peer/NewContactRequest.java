@@ -38,6 +38,6 @@ final class NewContactRequest extends PeerRequest {
 
    @Override
    public final boolean equals(Object obj) {
-      return obj instanceof Object ? super._hashId == ((String)obj).toUpperCase().hashCode() : super.equals(obj);
+      return obj instanceof String ? super._hashId == ((String)obj).toUpperCase().hashCode() : super.equals(obj);
    }
 }

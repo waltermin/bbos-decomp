@@ -69,13 +69,13 @@ final class StandardRibbonBannerField extends Manager implements BannerField, Ri
             if (this._compressedBanners) {
                label49:
                try {
-                  this._separator = (SeparatorField)(new Object(1152921504615235584L));
+                  this._separator = new SeparatorField(1152921504615235584L);
                   this._separator.setFont(FontFamily.forName(FontFamily.FAMILY_SYSTEM).getFont(0, 8));
                } finally {
                   break label49;
                }
             } else {
-               this._separator = (SeparatorField)(new Object(1152921504606846976L));
+               this._separator = new SeparatorField(1152921504606846976L);
             }
 
             this._separator.setId(this._twoLine ? "twolinebanner" : "banner");
@@ -136,7 +136,7 @@ final class StandardRibbonBannerField extends Manager implements BannerField, Ri
    @Override
    public final void setTitle(String title) {
       this._title = title;
-      if (this._bannerField instanceof Object) {
+      if (this._bannerField instanceof StringProps) {
          StringProps props = (StringProps)this._bannerField;
          props.set("title".hashCode(), title);
       }

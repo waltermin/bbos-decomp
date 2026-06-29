@@ -18,8 +18,8 @@ class LeafNode {
    PME12Graphics _meGraphic;
    LeafNode _nextLeaf;
    private static final int BBOX_CHANGE_BITS = -1912602624;
-   static XYRect _dirtyRect = (XYRect)(new Object(0, 0, 0, 0));
-   static XYRect _clippedBox = (XYRect)(new Object(0, 0, 0, 0));
+   static XYRect _dirtyRect = new XYRect(0, 0, 0, 0);
+   static XYRect _clippedBox = new XYRect(0, 0, 0, 0);
    static boolean _bufferEnabled = false;
    static int[] _tempXCoords = new int[4];
    static int[] _tempYCoords = new int[4];
@@ -30,12 +30,12 @@ class LeafNode {
       this._meGraphic = meGraphic;
       this._context = context;
       this._isVisible = false;
-      this._boundingBox = (XYRect)(new Object(0, 0, 0, 0));
-      _clippedBox = (XYRect)(new Object(0, 0, 0, 0));
+      this._boundingBox = new XYRect(0, 0, 0, 0);
+      _clippedBox = new XYRect(0, 0, 0, 0);
    }
 
    public void render() {
-      XYRect clip = (XYRect)(new Object(this._context.getClip()));
+      XYRect clip = new XYRect(this._context.getClip());
       clip.set(Fixed32.toRoundedInt(clip.x), Fixed32.toRoundedInt(clip.y), Fixed32.toRoundedInt(clip.width), Fixed32.toRoundedInt(clip.height));
       clip.intersect(this._boundingBox);
       if (clip.width != 0 && clip.height != 0) {

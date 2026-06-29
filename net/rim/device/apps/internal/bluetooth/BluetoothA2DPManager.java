@@ -397,8 +397,8 @@ final class BluetoothA2DPManager extends BluetoothProfileManager implements Blue
 
    @Override
    public final synchronized Verb[] getVerbs(Object context) {
-      Verb[] verbs = new Object[0];
-      if (BluetoothME.isPowerOn() && context instanceof Object) {
+      Verb[] verbs = new Verb[0];
+      if (BluetoothME.isPowerOn() && context instanceof AudioPathControl) {
          AudioPathControl control = (AudioPathControl)context;
          if (control.canSwitchToPath(5)) {
             if (super._state == 2) {

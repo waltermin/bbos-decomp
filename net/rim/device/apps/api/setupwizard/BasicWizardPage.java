@@ -10,7 +10,11 @@ import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.CheckboxField;
+import net.rim.device.api.ui.component.ChoiceField;
 import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.component.RadioButtonField;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.framework.model.ValidationProvider;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.AppsMainScreen;
@@ -227,7 +231,7 @@ public class BasicWizardPage implements WizardPage, KeyListener, FieldChangeList
          return this.saveWizard(verb);
       }
 
-      boolean exitVerb = verb instanceof Object;
+      boolean exitVerb = verb instanceof ExitVerb;
       if (this._currentProgress < this._maxProgress && (this._currentProgress == 1 || exitVerb) && this._warnOnCloseOrHotKey && !this._closeConfirmed) {
          int result = WizardExitDialog.createExitDialog().doModal();
          if (result != 4) {
@@ -411,7 +415,7 @@ public class BasicWizardPage implements WizardPage, KeyListener, FieldChangeList
    }
 
    private boolean fieldRequiresDefaultVerb(Field field) {
-      return field instanceof Object || field instanceof Object || field instanceof Object;
+      return field instanceof RadioButtonField || field instanceof ChoiceField || field instanceof CheckboxField;
    }
 
    private void populateMenuVerbs(VerbToMenu verbToMenu, int instance) {
@@ -446,7 +450,7 @@ public class BasicWizardPage implements WizardPage, KeyListener, FieldChangeList
 
    private void populateMainScreen(AppsMainScreen screen) {
       screen.addKeyListener(this);
-      this._content = (Manager)(new Object(this._contentStyle));
+      this._content = new VerticalFieldManager(this._contentStyle);
       this._wizardLayoutManager = new WizardLayoutManager();
       if ((this._wizardFlags & 16) == 0) {
          this._wizardLayoutManager.setScrollbarEnabled(true);

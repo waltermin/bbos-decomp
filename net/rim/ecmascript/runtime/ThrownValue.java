@@ -110,14 +110,14 @@ public class ThrownValue extends Exception {
          str = Resources.getString(57);
       }
 
-      return ((StringBuffer)(new Object())).append(str).append("\n").append(this.traceBack()).toString();
+      return str + "\n" + this.traceBack();
    }
 
    private static String fourDigits(int line) {
       String str = Integer.toString(line);
 
       for (int i = str.length(); i < 4; i++) {
-         str = ((StringBuffer)(new Object(" "))).append(str).toString();
+         str = " " + str;
       }
 
       return str;
@@ -140,11 +140,7 @@ public class ThrownValue extends Exception {
 
          CompiledScript code = c.getCode();
          if (code.getLineAndOffsets(c.getIP() - 1, lineAndOffsets)) {
-            str = ((StringBuffer)(new Object()))
-               .append(str)
-               .append(Misc.replace(msg, fourDigits(lineAndOffsets.line), code.getSourceCodeFromOffset(lineAndOffsets.offset)))
-               .append("\n")
-               .toString();
+            str = str + Misc.replace(msg, fourDigits(lineAndOffsets.line), code.getSourceCodeFromOffset(lineAndOffsets.offset)) + "\n";
          }
 
          msg = Resources.getString(37);

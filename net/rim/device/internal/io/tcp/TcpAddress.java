@@ -1,5 +1,6 @@
 package net.rim.device.internal.io.tcp;
 
+import java.io.IOException;
 import net.rim.device.internal.io.streamdatagram.StreamDatagramAddressBase;
 import net.rim.device.internal.io.tunnel.TunnelCredentialsProvider;
 import net.rim.device.internal.system.TCPPacketHeader;
@@ -62,7 +63,7 @@ public final class TcpAddress extends StreamDatagramAddressBase implements TcpCo
          super._port = destPort;
       } else {
          if (destPort == -1) {
-            throw new Object();
+            throw new RuntimeException();
          }
 
          super._localPort = destPort;
@@ -124,7 +125,7 @@ public final class TcpAddress extends StreamDatagramAddressBase implements TcpCo
    }
 
    @Override
-   protected final void parseAddress(String param1) {
+   protected final void parseAddress(String param1) throws IOException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -166,7 +167,7 @@ public final class TcpAddress extends StreamDatagramAddressBase implements TcpCo
       // 03a: getstatic net/rim/device/internal/io/streamdatagram/StreamDatagramAddressBase.SLASH_SLASH Ljava/lang/String;
       // 03d: invokevirtual java/lang/String.equals (Ljava/lang/Object;)Z
       // 040: ifeq 057
-      // 043: new java/lang/Object
+      // 043: new java/lang/StringBuffer
       // 046: dup
       // 047: invokespecial java/lang/StringBuffer.<init> ()V
       // 04a: aload 1
@@ -248,12 +249,12 @@ public final class TcpAddress extends StreamDatagramAddressBase implements TcpCo
       // 0ec: astore 7
       // 0ee: aload 7
       // 0f0: ifnonnull 0fe
-      // 0f3: new java/lang/Object
+      // 0f3: new java/io/IOException
       // 0f6: dup
       // 0f7: ldc_w "DNS query returned no results"
       // 0fa: invokespecial java/io/IOException.<init> (Ljava/lang/String;)V
       // 0fd: athrow
-      // 0fe: new java/lang/Object
+      // 0fe: new java/lang/StringBuffer
       // 101: dup
       // 102: bipush 15
       // 104: invokespecial java/lang/StringBuffer.<init> (I)V
@@ -288,7 +289,7 @@ public final class TcpAddress extends StreamDatagramAddressBase implements TcpCo
       // 141: bipush 0
       // 142: invokestatic net/rim/device/api/io/DatagramAddressBase.parseIpAddressInt (Ljava/lang/String;I)I
       // 145: putfield net/rim/device/internal/io/streamdatagram/StreamDatagramAddressBase._ipAddress I
-      // 148: new java/lang/Object
+      // 148: new java/lang/StringBuffer
       // 14b: dup
       // 14c: getstatic net/rim/device/internal/io/streamdatagram/StreamDatagramAddressBase.SLASH_SLASH Ljava/lang/String;
       // 14f: invokevirtual java/lang/String.length ()I
@@ -367,7 +368,7 @@ public final class TcpAddress extends StreamDatagramAddressBase implements TcpCo
       // 1dd: iload 3
       // 1de: iload 2
       // 1df: if_icmpgt 1ed
-      // 1e2: new java/lang/Object
+      // 1e2: new java/lang/IllegalArgumentException
       // 1e5: dup
       // 1e6: ldc_w "Bad DEST_PORT"
       // 1e9: invokespecial java/lang/IllegalArgumentException.<init> (Ljava/lang/String;)V
@@ -383,7 +384,7 @@ public final class TcpAddress extends StreamDatagramAddressBase implements TcpCo
       // 1fc: iload 7
       // 1fe: ldc_w 65535
       // 201: if_icmple 20f
-      // 204: new java/lang/Object
+      // 204: new java/lang/IllegalArgumentException
       // 207: dup
       // 208: ldc_w "Invalid DEST_PORT"
       // 20b: invokespecial java/lang/IllegalArgumentException.<init> (Ljava/lang/String;)V
@@ -418,7 +419,7 @@ public final class TcpAddress extends StreamDatagramAddressBase implements TcpCo
       // 242: iload 3
       // 243: iload 2
       // 244: if_icmpgt 252
-      // 247: new java/lang/Object
+      // 247: new java/lang/IllegalArgumentException
       // 24a: dup
       // 24b: ldc_w "Bad SRC_PORT"
       // 24e: invokespecial java/lang/IllegalArgumentException.<init> (Ljava/lang/String;)V
@@ -434,7 +435,7 @@ public final class TcpAddress extends StreamDatagramAddressBase implements TcpCo
       // 261: iload 8
       // 263: ldc_w 65535
       // 266: if_icmple 274
-      // 269: new java/lang/Object
+      // 269: new java/lang/IllegalArgumentException
       // 26c: dup
       // 26d: ldc_w "Invalid SRC_PORT"
       // 270: invokespecial java/lang/IllegalArgumentException.<init> (Ljava/lang/String;)V

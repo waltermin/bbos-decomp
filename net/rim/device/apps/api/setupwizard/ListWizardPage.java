@@ -5,9 +5,11 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.FocusChangeListener;
 import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.component.NullField;
 import net.rim.device.api.ui.component.RadioButtonField;
 import net.rim.device.api.ui.component.RadioButtonGroup;
 import net.rim.device.api.ui.container.MainScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.ui.AppsMainScreen;
 
 public class ListWizardPage extends BasicWizardPage implements FieldChangeListener, FocusChangeListener {
@@ -112,11 +114,11 @@ public class ListWizardPage extends BasicWizardPage implements FieldChangeListen
       this._footerField = null;
       this._listItems = null;
       this._screen = mainScreen;
-      this._radioGroup = (RadioButtonGroup)(new Object());
+      this._radioGroup = new RadioButtonGroup();
       WizardLayoutManager wizardLayoutManager = new WizardLayoutManager();
       wizardLayoutManager.setScrollbarEnabled(true);
       this.populateFields();
-      Manager myContent = (Manager)(new Object(3459045988797251584L));
+      Manager myContent = new VerticalFieldManager(3459045988797251584L);
       wizardLayoutManager.setHeader(this._headerField);
       this.populateList(myContent);
       wizardLayoutManager.setContent(myContent);
@@ -168,12 +170,12 @@ public class ListWizardPage extends BasicWizardPage implements FieldChangeListen
       }
 
       if (this._noAutoFocus) {
-         this._listContainer.add((Field)(new Object()));
+         this._listContainer.add(new NullField());
       }
 
       for (int i = 0; i < numItems; i++) {
          String item = this._listItems[i];
-         RadioButtonField radioButton = (RadioButtonField)(new Object(item));
+         RadioButtonField radioButton = new RadioButtonField(item);
          radioButton.setFocusListener(this);
          this._radioGroup.add(radioButton);
          if (i == this._initialSelectedIndex) {
@@ -200,7 +202,7 @@ public class ListWizardPage extends BasicWizardPage implements FieldChangeListen
    public boolean keyDown(int keycode, int time) {
       if (keycode >> 16 == 10 && this.getMainScreen() != null) {
          Field focus = this.getMainScreen().getLeafFieldWithFocus();
-         if (focus instanceof Object) {
+         if (focus instanceof RadioButtonField) {
             RadioButtonField radioButton = (RadioButtonField)focus;
             if (!radioButton.isSelected()) {
                radioButton.setSelected(true);
@@ -216,11 +218,11 @@ public class ListWizardPage extends BasicWizardPage implements FieldChangeListen
 
    @Override
    public void fieldChanged(Field field, int context) {
-      if (field instanceof Object) {
+      if (field instanceof RadioButtonField) {
          int index = this._radioGroup.getSelectedIndex();
          this._screen.setDirty(this._initialSelectedIndex != index);
          if (this.loggingEnabled()) {
-            this.log(((StringBuffer)(new Object("Selected index changed: "))).append(((RadioButtonField)field).getLabel()).toString());
+            this.log("Selected index changed: " + ((RadioButtonField)field).getLabel());
          }
 
          this.selectedIndexChanged(this._radioGroup.getSelectedIndex());
@@ -235,7 +237,7 @@ public class ListWizardPage extends BasicWizardPage implements FieldChangeListen
 
    @Override
    public void focusChanged(Field field, int eventType) {
-      if (!(field instanceof Object)) {
+      if (!(field instanceof RadioButtonField)) {
          if (field == this._listContainer && eventType == 3) {
             this.onRadioFocus(null);
          }

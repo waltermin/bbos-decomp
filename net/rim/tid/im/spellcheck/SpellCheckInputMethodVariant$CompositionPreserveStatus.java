@@ -1,7 +1,6 @@
 package net.rim.tid.im.spellcheck;
 
 import net.rim.device.api.system.Application;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.component.TextInputDialog;
@@ -13,17 +12,17 @@ class SpellCheckInputMethodVariant$CompositionPreserveStatus extends PopupScreen
    private int _id = -1;
 
    private SpellCheckInputMethodVariant$CompositionPreserveStatus(String message) {
-      super((Manager)(new Object()), 0);
+      super(new DialogFieldManager(), 0);
       this.setAcceptsInput(true);
       DialogFieldManager dfm = (DialogFieldManager)this.getDelegate();
-      RichTextField label = (RichTextField)(new Object(message, 36028797018963968L));
+      RichTextField label = new RichTextField(message, 36028797018963968L);
       dfm.setMessage(label);
    }
 
    private void show0(int time) {
       this._id = Application.getApplication().invokeLater(this._popScreenRunnable, time, false);
       if (this._id == -1) {
-         throw new Object("No timer available for status popup.");
+         throw new RuntimeException("No timer available for status popup.");
       }
 
       Ui.getUiEngine().pushModalScreen(this);

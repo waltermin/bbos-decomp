@@ -18,7 +18,7 @@ public class AddressReference implements Persistable, EncryptableProvider {
    }
 
    private final int getReverseLookupCode(Object address) {
-      if (address instanceof Object) {
+      if (address instanceof KeyProvider) {
          synchronized (_reverseLookupKeys) {
             return ((KeyProvider)address).getKeys(null, _reverseLookupKeys, 0, -4145532165335996154L) >= 1 ? _reverseLookupKeys[0] : 0;
          }
@@ -71,7 +71,7 @@ public class AddressReference implements Persistable, EncryptableProvider {
          }
       }
 
-      if ((ObjectGroup.isInGroup(newModel) || newModel instanceof GroupAddressCardModel) && newModel instanceof Object) {
+      if ((ObjectGroup.isInGroup(newModel) || newModel instanceof GroupAddressCardModel) && newModel instanceof Copyable) {
          this._modelData = (PersistableRIMModel)((Copyable)newModel).copy();
       } else {
          this._modelData = newModel;
@@ -106,12 +106,12 @@ public class AddressReference implements Persistable, EncryptableProvider {
    }
 
    protected static long getAddressBookEntryLUID(RIMModel addressBookEntry) {
-      return !(addressBookEntry instanceof Object) ? 0 : ((UniqueIDProvider)addressBookEntry).getLUID(null);
+      return !(addressBookEntry instanceof UniqueIDProvider) ? 0 : ((UniqueIDProvider)addressBookEntry).getLUID(null);
    }
 
    @Override
    public boolean checkCrypt(boolean compress, boolean encrypt) {
-      if (!(this._modelData instanceof Object)) {
+      if (!(this._modelData instanceof EncryptableProvider)) {
          return false;
       }
 
@@ -121,7 +121,7 @@ public class AddressReference implements Persistable, EncryptableProvider {
 
    @Override
    public Object reCrypt(boolean compress, boolean encrypt) {
-      if (this._modelData instanceof Object) {
+      if (this._modelData instanceof EncryptableProvider) {
          EncryptableProvider encryptable = (EncryptableProvider)this._modelData;
          PersistableRIMModel newModelData = (PersistableRIMModel)encryptable.reCrypt(compress, encrypt);
          if (newModelData != null) {

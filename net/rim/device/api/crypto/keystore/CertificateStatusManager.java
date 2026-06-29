@@ -17,7 +17,7 @@ import net.rim.device.internal.proxy.Proxy;
 import net.rim.device.internal.ui.component.BackgroundDialog;
 
 public final class CertificateStatusManager implements Collection, CollectionEventSource {
-   private CollectionListenerManager _listeners = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _listeners = new CollectionListenerManager();
    private static final long CLOCK_SKEW = 1800000L;
    private static final long CLEAN_THRESHOLD = 86400000L;
    static final byte ALWAYS_PROMPT = 0;
@@ -68,7 +68,7 @@ public final class CertificateStatusManager implements Collection, CollectionEve
       KeyStoreManagerHelper helper = KeyStoreManagerHelper.getInstance();
       Hashtable statusHashtable = helper.getStatusHashtable();
       if (statusHashtable == null) {
-         statusHashtable = (Hashtable)(new Object());
+         statusHashtable = new Hashtable();
       }
 
       Object oldStatus = statusHashtable.put(container, status);
@@ -78,7 +78,7 @@ public final class CertificateStatusManager implements Collection, CollectionEve
 
    private final void doTicketWork(Certificate certificate, CertificateStatus status, CertificateStatusManagerTicket ticket) {
       if (certificate == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (ticket instanceof RIMCertificateStatusManagerTicket) {
@@ -92,12 +92,12 @@ public final class CertificateStatusManager implements Collection, CollectionEve
       String pattern;
       if (status.getStatus() == 1) {
          pattern = KeyStoreResources.getString(6067);
-         arguments = new Object[]{
+         arguments = new String[]{
             certificate.getSubjectFriendlyName(), this.getStatusString(status.getStatus()), RevocationReason.getRevocationReason(status.getRevocationReason())
          };
       } else {
          pattern = KeyStoreResources.getString(5002);
-         arguments = new Object[]{certificate.getSubjectFriendlyName(), this.getStatusString(status.getStatus())};
+         arguments = new String[]{certificate.getSubjectFriendlyName(), this.getStatusString(status.getStatus())};
       }
 
       String fullPrompt = MessageFormat.format(pattern, arguments);
@@ -120,7 +120,7 @@ public final class CertificateStatusManager implements Collection, CollectionEve
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public final synchronized void revoke(CertificateRevocationList crl) throws CertificateStatusException {
       if (crl == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       KeyStoreManagerHelper helper = KeyStoreManagerHelper.getInstance();
@@ -177,7 +177,7 @@ public final class CertificateStatusManager implements Collection, CollectionEve
       Certificate certificate, byte[] encoding, String type, CertificateStatus status, CertificateStatusManagerTicket ticket, boolean silentAccess
    ) {
       if (status == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       CertificateContainer container;
@@ -185,7 +185,7 @@ public final class CertificateStatusManager implements Collection, CollectionEve
          container = new CertificateContainer(encoding, type);
       } else {
          if (certificate == null) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          container = new CertificateContainer(certificate.getEncoding(), certificate.getType());
@@ -222,7 +222,7 @@ public final class CertificateStatusManager implements Collection, CollectionEve
       if (certificate != null && newStatus != null) {
          return this.isTicketRequired(certificate.getEncoding(), certificate.getType(), newStatus);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -231,7 +231,7 @@ public final class CertificateStatusManager implements Collection, CollectionEve
          KeyStoreManagerHelper helper = KeyStoreManagerHelper.getInstance();
          return !helper.isPassphraseSet() ? true : this.determineAction(new CertificateContainer(certificateEncoding, certificateType), newStatus) == 2;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -252,12 +252,12 @@ public final class CertificateStatusManager implements Collection, CollectionEve
       long currentStatusProducedAt = currentStatus.getProducedAtTime();
       switch (currentStatus.getStatus()) {
          case -2:
-            throw new Object();
+            throw new IllegalArgumentException();
          case -1:
          default:
             switch (newStatus.getStatus()) {
                case -2:
-                  throw new Object();
+                  throw new IllegalArgumentException();
                case -1:
                default:
                   if (newStatusProducedAt < currentStatusProducedAt) {
@@ -279,7 +279,7 @@ public final class CertificateStatusManager implements Collection, CollectionEve
          case 0:
             switch (newStatus.getStatus()) {
                case -2:
-                  throw new Object();
+                  throw new IllegalArgumentException();
                case -1:
                default:
                   throw new BackwardStatusException();
@@ -302,7 +302,7 @@ public final class CertificateStatusManager implements Collection, CollectionEve
             if (currentStatus.getRevocationReason() == 6) {
                switch (newStatus.getStatus()) {
                   case -2:
-                     throw new Object();
+                     throw new IllegalArgumentException();
                   case -1:
                   default:
                      throw new BackwardStatusException();
@@ -328,7 +328,7 @@ public final class CertificateStatusManager implements Collection, CollectionEve
             } else {
                switch (newStatus.getStatus()) {
                   case -2:
-                     throw new Object();
+                     throw new IllegalArgumentException();
                   case -1:
                   default:
                      throw new BackwardStatusException();
@@ -357,7 +357,7 @@ public final class CertificateStatusManager implements Collection, CollectionEve
 
    private final boolean acceptFutureStatus(Certificate certificate, CertificateStatus status) {
       if (certificate == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       InvalidTimeDialog dialog = new InvalidTimeDialog(certificate, status, 134217728);
@@ -369,7 +369,7 @@ public final class CertificateStatusManager implements Collection, CollectionEve
       KeyStoreManagerHelper helper = KeyStoreManagerHelper.getInstance();
       Hashtable old = helper.getStatusHashtable();
       if (old != null) {
-         Hashtable temp = (Hashtable)(new Object());
+         Hashtable temp = new Hashtable();
          KeyStoreManager keyStoreManager = KeyStoreManager.getInstance();
          Enumeration keyStores = keyStoreManager.getRegisteredKeyStores();
 

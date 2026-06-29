@@ -1,6 +1,7 @@
 package net.rim.device.cldc.io.devicehttp;
 
 import java.io.InputStream;
+import net.rim.device.api.io.IOCancelledException;
 
 public final class ChunkedInputStream extends InputStream {
    private LengthControlledInputStream _currentChunk;
@@ -15,18 +16,18 @@ public final class ChunkedInputStream extends InputStream {
    }
 
    @Override
-   public final synchronized int read() {
+   public final synchronized int read() throws IOCancelledException {
       if (this._closed) {
-         throw new Object();
+         throw new IOCancelledException();
       } else {
          return (this._currentChunk == null || this._currentChunk.getLength() <= 0) && !this.readNextChunk() ? -1 : this._currentChunk.read();
       }
    }
 
    @Override
-   public final synchronized int read(byte[] b, int offset, int length) {
+   public final synchronized int read(byte[] b, int offset, int length) throws IOCancelledException {
       if (this._closed) {
-         throw new Object();
+         throw new IOCancelledException();
       }
 
       int bytesRead = 0;

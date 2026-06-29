@@ -163,7 +163,7 @@ public class DataStreamV1_0 extends DataBuffer implements DataStreamV1 {
          return null;
       }
 
-      String[] value = new Object[arrayLength];
+      String[] value = new String[arrayLength];
 
       for (int index = 0; index < arrayLength; index++) {
          value[index] = this.readUTF();

@@ -6,7 +6,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.vm.Array;
 
 final class ContentHandlerManager {
-   private Hashtable _systemHandlers = (Hashtable)(new Object(2));
+   private Hashtable _systemHandlers = new Hashtable(2);
    private static final long GUID = 5434758971540425216L;
    private static ContentHandlerManager _instance;
 
@@ -37,7 +37,7 @@ final class ContentHandlerManager {
 
       while (e.hasMoreElements()) {
          MessageHandler handler = (MessageHandler)e.nextElement();
-         String[] contentTypes = (Object[])this._systemHandlers.get(handler);
+         String[] contentTypes = (String[])this._systemHandlers.get(handler);
          if (this.findMatch(contentType, contentTypes)) {
             Array.resize(handlers, handlers.length + 1);
             handlers[handlers.length - 1] = handler;

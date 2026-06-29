@@ -87,7 +87,7 @@ final class DefaultProvisioningService$ProvisioningTaskListener implements Event
       long wicletId = pt.getApplicationId();
       long oldWicletId = 0;
       if (action == 1) {
-         oldWicletId = pe.getEventCookie();
+         oldWicletId = (Long)pe.getEventCookie();
       }
 
       if (pt.shouldAGBeNotified()) {

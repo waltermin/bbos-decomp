@@ -21,11 +21,11 @@ public class MMSComposeVerb extends AbstractComposeVerb implements ConditionalVe
 
    protected void addMessageBody(MMSMessageModelBuilder builder, Object context) {
       MMSPresentationModel newPresentation = PresentationModelFactory.createInstance(65536);
-      String textAttachmentName = ((StringBuffer)(new Object(""))).append(System.currentTimeMillis()).append(".txt").toString();
+      String textAttachmentName = "" + System.currentTimeMillis() + ".txt";
       builder.addAttachment(textAttachmentName, 3, "");
       newPresentation.addPresentationElement(textAttachmentName, 3, true);
       Object mime = ContextObject.get(context, -4241241545455759532L);
-      if (mime != null && mime instanceof Object) {
+      if (mime != null && mime instanceof String) {
          String mimeType = (String)mime;
          int type = MMSUtilities.getMIMEType(mimeType);
          if (type != -1) {
@@ -51,9 +51,9 @@ public class MMSComposeVerb extends AbstractComposeVerb implements ConditionalVe
             builder.addAttachment(name, type, mimeData, null);
             newPresentation.addPresentationElement(name, type, true);
          }
-      } else if (mime != null && mime instanceof Object[]) {
-         String[] mimeTypes = (Object[])mime;
-         String[] filePaths = (Object[])ContextObject.get(context, 2765042845091913199L);
+      } else if (mime != null && mime instanceof String[]) {
+         String[] mimeTypes = (String[])mime;
+         String[] filePaths = (String[])ContextObject.get(context, 2765042845091913199L);
          String mimeType = null;
          String name = null;
          String fileName = null;
@@ -110,7 +110,7 @@ public class MMSComposeVerb extends AbstractComposeVerb implements ConditionalVe
       boolean addressOnly = ContextObject.getFlag(context, 51);
       boolean coalesced = ContextObject.getFlag(context, 63);
       if (coalesced && super._address != null) {
-         if (super._address instanceof Object) {
+         if (super._address instanceof VerbDescriptionProvider) {
             Object previousAddressCard = ContextObject.get(context, 252);
             if (super._addressCard != null) {
                ContextObject.put(context, 252, super._addressCard);
@@ -135,7 +135,7 @@ public class MMSComposeVerb extends AbstractComposeVerb implements ConditionalVe
          }
 
          String formatString = MMSResources.getString(11);
-         return MessageFormat.format(formatString, new Object[]{address});
+         return MessageFormat.format(formatString, new String[]{address});
       }
    }
 
@@ -211,13 +211,13 @@ public class MMSComposeVerb extends AbstractComposeVerb implements ConditionalVe
       }
 
       Object mime = ContextObject.get(context, -4241241545455759532L);
-      if (mime != null && mime instanceof Object) {
+      if (mime != null && mime instanceof String) {
          String fileName = (String)ContextObject.get(context, 2765042845091913199L);
          if (fileName != null && this.getFileSize(fileName) >= 1500000) {
             return false;
          }
-      } else if (mime != null && mime instanceof Object[]) {
-         String[] filePaths = (Object[])ContextObject.get(context, 2765042845091913199L);
+      } else if (mime != null && mime instanceof String[]) {
+         String[] filePaths = (String[])ContextObject.get(context, 2765042845091913199L);
          String fileName = null;
 
          for (int fileIndex = 0; fileIndex <= filePaths.length - 1; fileIndex++) {
@@ -250,7 +250,7 @@ public class MMSComposeVerb extends AbstractComposeVerb implements ConditionalVe
       // 01: astore 2
       // 02: aload 1
       // 03: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 06: checkcast java/lang/Object
+      // 06: checkcast javax/microedition/io/file/FileConnection
       // 09: astore 2
       // 0a: aload 2
       // 0b: invokeinterface javax/microedition/io/file/FileConnection.canRead ()Z 1

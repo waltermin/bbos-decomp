@@ -28,6 +28,7 @@ import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.XYRect;
+import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.util.CharacterUtilities;
 import net.rim.device.api.util.StringTokenizer;
@@ -36,6 +37,7 @@ import net.rim.device.apps.api.ui.AppsMainScreen;
 import net.rim.device.apps.internal.browser.options.BrowserConfigRecord;
 import net.rim.device.apps.internal.browser.options.GeneralProperty;
 import net.rim.device.apps.internal.browser.resources.BrowserResources;
+import net.rim.device.apps.internal.browser.ui.TextFlowManager;
 import net.rim.device.internal.system.InternalServices;
 import net.rim.device.internal.ui.UiInternal;
 import net.rim.device.resources.Resource;
@@ -52,11 +54,7 @@ class HelpScreen extends AppsMainScreen implements RenderingApplication {
    private byte[] _extendedLinks;
    Hashtable _configToUse;
    String _currentBrowserConfigUID;
-   private static final String BASE_MODULE_NAME = ((StringBuffer)(new Object("net_rim_bb_help_")))
-      .append(getNetworkType())
-      .append(getFormFactor())
-      .append("__")
-      .toString();
+   private static final String BASE_MODULE_NAME = "net_rim_bb_help_" + getNetworkType() + getFormFactor() + "__";
    private static final String FILE_EXTENSION = ".wmlc";
    private static final int WML_B = 36;
    private static final int WML_CARD = 39;
@@ -158,7 +156,7 @@ class HelpScreen extends AppsMainScreen implements RenderingApplication {
 
    @Override
    public void invokeRunnable(Runnable runnable) {
-      ((Thread)(new Object(runnable))).run();
+      new Thread(runnable).run();
    }
 
    @Override
@@ -260,7 +258,7 @@ class HelpScreen extends AppsMainScreen implements RenderingApplication {
 
    private static String getURL(String topic, String baseModuleName, boolean isURL) {
       if (topic == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       String url = null;
@@ -289,7 +287,7 @@ class HelpScreen extends AppsMainScreen implements RenderingApplication {
 
       if (url == null) {
          String moduleName = getModuleName(baseModuleName);
-         StringBuffer urlBuffer = (StringBuffer)(new Object());
+         StringBuffer urlBuffer = new StringBuffer();
          urlBuffer.append("cod://");
          urlBuffer.append(moduleName != null ? moduleName : baseModuleName);
          urlBuffer.append('/');
@@ -322,15 +320,15 @@ class HelpScreen extends AppsMainScreen implements RenderingApplication {
       synchronized (Application.getEventLock()) {
          if (updateHistory && this._currentURL != null) {
             if (this._history == null) {
-               this._history = (Stack)(new Object());
+               this._history = new Stack();
             }
 
             int scrollPosition = -1;
             int focusPosition = -1;
-            if (this._currentField instanceof Object && !(this._currentField instanceof Object)) {
+            if (this._currentField instanceof Manager && !(this._currentField instanceof TextFlowManager)) {
                Manager contentManager = this._currentField.getManager();
                if (contentManager != null) {
-                  XYRect rect = (XYRect)(new Object());
+                  XYRect rect = new XYRect();
                   contentManager.getFocusRect(rect);
                   scrollPosition = contentManager.getVerticalScroll();
                   focusPosition = scrollPosition + rect.y;
@@ -346,7 +344,7 @@ class HelpScreen extends AppsMainScreen implements RenderingApplication {
          if (browserField != null) {
             contentField = browserField.getDisplayableContent();
          } else if (this._errorMessage != null) {
-            contentField = (Field)(new Object(null, this._errorMessage, 1000000, 9007199254740992L));
+            contentField = new EditField(null, this._errorMessage, 1000000, 9007199254740992L);
          }
 
          if (contentField != null) {
@@ -523,11 +521,11 @@ class HelpScreen extends AppsMainScreen implements RenderingApplication {
                         privateMdsUID = defaultConfigUID;
                      }
 
-                     ByteArrayOutputStream baos = (ByteArrayOutputStream)(new Object(256));
+                     ByteArrayOutputStream baos = new ByteArrayOutputStream(256);
 
                      label125:
                      try {
-                        this._configToUse = (Hashtable)(new Object(2));
+                        this._configToUse = new Hashtable(2);
                         this.writeExtendedHelpLinks(baos, carrierHelp, carrierGroupLabel, carrierUID);
                         this.writeExtendedHelpLinks(baos, enterpriseHelp, enterpriseGroupLabel, privateMdsUID);
                         this._extendedLinks = baos.toByteArray();
@@ -559,9 +557,9 @@ class HelpScreen extends AppsMainScreen implements RenderingApplication {
 
    private void writeExtendedHelpLinks(OutputStream os, String helpLinks, String helpGroupLabel, String configUID) {
       if (helpLinks != null) {
-         ByteArrayOutputStream baos = (ByteArrayOutputStream)(new Object(128));
+         ByteArrayOutputStream baos = new ByteArrayOutputStream(128);
          int numLinks = 0;
-         StringTokenizer tokenizer = (StringTokenizer)(new Object(helpLinks, '|'));
+         StringTokenizer tokenizer = new StringTokenizer(helpLinks, '|');
          String uri = null;
 
          while (tokenizer.hasMoreTokens()) {
@@ -583,12 +581,12 @@ class HelpScreen extends AppsMainScreen implements RenderingApplication {
             baos.write(36);
             int colon = uri.indexOf(58);
             if (colon == -1) {
-               uri = ((StringBuffer)(new Object("http://"))).append(uri).toString();
+               uri = "http://" + uri;
             }
 
             writeWBXMLString(baos, uri);
             baos.write(77);
-            writeWBXMLString(baos, ((StringBuffer)(new Object("ext"))).append(configUID).append(numLinks).toString());
+            writeWBXMLString(baos, "ext" + configUID + numLinks);
             baos.write(1);
             writeWBXMLString(baos, label);
             baos.write(1);
@@ -602,7 +600,7 @@ class HelpScreen extends AppsMainScreen implements RenderingApplication {
             String dataURL = writeDataURL(os, helpGroupLabel, baos.toByteArray(), configUID);
             os.write(0);
             os.write(77);
-            writeWBXMLString(os, ((StringBuffer)(new Object("ext"))).append(configUID).toString());
+            writeWBXMLString(os, "ext" + configUID);
             os.write(1);
             writeWBXMLString(os, helpGroupLabel);
             os.write(1);
@@ -638,8 +636,8 @@ class HelpScreen extends AppsMainScreen implements RenderingApplication {
    private static String writeDataURL(OutputStream os, String helpGroupLabel, byte[] options, String selectName) {
       String schemeAndType = "data:application/vnd.wap.wmlc;base64,";
       os.write(schemeAndType.getBytes());
-      ByteArrayOutputStream baos = (ByteArrayOutputStream)(new Object(128));
-      Base64OutputStream b64os = (Base64OutputStream)(new Object(baos));
+      ByteArrayOutputStream baos = new ByteArrayOutputStream(128);
+      Base64OutputStream b64os = new Base64OutputStream(baos);
       b64os.write(2);
       b64os.write(8);
       b64os.write(106);
@@ -667,7 +665,7 @@ class HelpScreen extends AppsMainScreen implements RenderingApplication {
       b64os.close();
       byte[] b64bytes = baos.toByteArray();
       os.write(b64bytes);
-      return ((StringBuffer)(new Object())).append(schemeAndType).append((String)(new Object(b64bytes))).toString();
+      return schemeAndType + new String(b64bytes);
    }
 
    @Override
@@ -773,7 +771,7 @@ class HelpScreen extends AppsMainScreen implements RenderingApplication {
       String variant = locale.getVariant();
       int variantLength = variant == null ? 0 : variant.length();
       int baseModuleNameLength = baseModuleName.length();
-      StringBuffer moduleBuffer = (StringBuffer)(new Object(baseModuleNameLength + languageLength + countryLength + variantLength + 2));
+      StringBuffer moduleBuffer = new StringBuffer(baseModuleNameLength + languageLength + countryLength + variantLength + 2);
       moduleBuffer.append(baseModuleName);
       String moduleName = null;
       Resource resource = null;
@@ -807,9 +805,7 @@ class HelpScreen extends AppsMainScreen implements RenderingApplication {
    }
 
    static String getModuleName(String baseModuleName) {
-      String baseModuleNameWithLocaleSeparator = baseModuleName != null
-         ? ((StringBuffer)(new Object())).append(baseModuleName).append("__").toString()
-         : BASE_MODULE_NAME;
+      String baseModuleNameWithLocaleSeparator = baseModuleName != null ? baseModuleName + "__" : BASE_MODULE_NAME;
       String moduleName = getModuleName(Locale.getDefault(), baseModuleNameWithLocaleSeparator);
       if (moduleName == null) {
          Locale systemLocale = Locale.getDefaultForSystem();

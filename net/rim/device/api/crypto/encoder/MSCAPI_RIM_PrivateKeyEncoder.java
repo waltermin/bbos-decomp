@@ -17,7 +17,7 @@ final class MSCAPI_RIM_PrivateKeyEncoder extends PrivateKeyEncoder {
       try {
          if (k.getAlgorithm().equals("DSA")) {
             DSAPrivateKey key = (DSAPrivateKey)k;
-            ByteArrayOutputStream output = (ByteArrayOutputStream)(new Object());
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
             CryptoUtilities.writeBytes(output, 7, 2, 0, 0);
             CryptoUtilities.writeBytes(output, 0, 34, 0, 0);
             CryptoUtilities.writeBytes(output, 68, 83, 83, 52);
@@ -40,12 +40,12 @@ final class MSCAPI_RIM_PrivateKeyEncoder extends PrivateKeyEncoder {
             output.write(CryptoUtilities.flipArray(cryptoSystem.getG()));
             output.write(CryptoUtilities.flipArray(key.getPublicKeyData()));
             output.write(CryptoUtilities.flipArray(key.getPrivateKeyData()));
-            return (EncodedKey)(new Object(output.toByteArray(), "MSCAPI"));
+            return new EncodedKey(output.toByteArray(), "MSCAPI");
          }
 
          if (k.getAlgorithm().equals("DH")) {
             DHPrivateKey key = (DHPrivateKey)k;
-            ByteArrayOutputStream output = (ByteArrayOutputStream)(new Object());
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
             CryptoUtilities.writeBytes(output, 7, 2, 0, 0);
             CryptoUtilities.writeBytes(output, 2, 170, 0, 0);
             CryptoUtilities.writeBytes(output, 0, 68, 72, 52);
@@ -74,12 +74,12 @@ final class MSCAPI_RIM_PrivateKeyEncoder extends PrivateKeyEncoder {
             output.write(CryptoUtilities.flipArray(key.getPublicKeyData()));
             output.write(CryptoUtilities.flipArray(privateKeyData));
             byte[] var24 = null;
-            return (EncodedKey)(new Object(output.toByteArray(), "MSCAPI"));
+            return new EncodedKey(output.toByteArray(), "MSCAPI");
          }
 
          if (k.getAlgorithm().equals("RSA")) {
             RSAPrivateKey key = (RSAPrivateKey)k;
-            ByteArrayOutputStream output = (ByteArrayOutputStream)(new Object());
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
             CryptoUtilities.writeBytes(output, 7, 2, 0, 0);
             CryptoUtilities.writeBytes(output, 0, 164, 0, 0);
             CryptoUtilities.writeBytes(output, 82, 83, 65, 50);
@@ -95,16 +95,16 @@ final class MSCAPI_RIM_PrivateKeyEncoder extends PrivateKeyEncoder {
             output.write(CryptoUtilities.flipArray(key.getD()));
             byte[] data = output.toByteArray();
             if (data.length > 20 + 2 * bitlen / 8 + 5 * bitlen / 16) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
-            return (EncodedKey)(new Object(output.toByteArray(), "MSCAPI"));
+            return new EncodedKey(output.toByteArray(), "MSCAPI");
          }
       } catch (Throwable var10) {
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       }
 
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override

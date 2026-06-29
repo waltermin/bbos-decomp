@@ -22,7 +22,7 @@ public final class PushProcessor implements Pushlet, GlobalEventListener, PushEv
    private boolean _optionsRegistered;
    private Object _syncObject = new Object();
    private PushSource[] _connection;
-   private Hashtable _applications = (Hashtable)(new Object());
+   private Hashtable _applications = new Hashtable();
    private Pushlet _defaultApplication;
    private Application _dispatchApplication;
    private boolean _wapProvisioningEnabled;
@@ -170,7 +170,7 @@ public final class PushProcessor implements Pushlet, GlobalEventListener, PushEv
       // 2b: ldc_w 1701707776
       // 2e: invokestatic net/rim/device/api/util/StringUtilities.toLowerCase (Ljava/lang/String;I)Ljava/lang/String;
       // 31: invokevirtual java/util/Hashtable.get (Ljava/lang/Object;)Ljava/lang/Object;
-      // 34: checkcast java/lang/Object
+      // 34: checkcast net/rim/device/api/browser/push/Pushlet
       // 37: astore 4
       // 39: aload 4
       // 3b: ifnonnull 4b
@@ -231,7 +231,7 @@ public final class PushProcessor implements Pushlet, GlobalEventListener, PushEv
       // b7: return
       // b8: astore 3
       // b9: ldc2_w -1133226195824034738
-      // bc: new java/lang/Object
+      // bc: new java/lang/StringBuffer
       // bf: dup
       // c0: ldc_w "PPme\n"
       // c3: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -436,7 +436,7 @@ public final class PushProcessor implements Pushlet, GlobalEventListener, PushEv
             }
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -447,7 +447,7 @@ public final class PushProcessor implements Pushlet, GlobalEventListener, PushEv
             Pushlet anApp = (Pushlet)_instance._applications.get(applicationId);
             if (anApp != null) {
                if (app != anApp) {
-                  throw new Object();
+                  throw new IllegalArgumentException();
                }
 
                _instance._applications.remove(applicationId);
@@ -458,7 +458,7 @@ public final class PushProcessor implements Pushlet, GlobalEventListener, PushEv
             }
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

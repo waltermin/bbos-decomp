@@ -16,7 +16,7 @@ final class CDMACallForwardingScreen extends AppsMainScreen implements ListField
       super(0);
       this._flags = flags;
       this._provisionedTypes = provisionedTypes;
-      this._listField = (ListField)(new Object(provisionedTypes.length));
+      this._listField = new ListField(provisionedTypes.length);
       this._listField.setCallback(this);
       this.add(this._listField);
    }

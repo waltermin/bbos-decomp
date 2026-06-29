@@ -19,7 +19,7 @@ final class IMPlusRequestOptionModelFactory extends RIMModelFactory {
    @Override
    public final Object createInstance(Object context) {
       Object returnVal = null;
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          ContextObject ctx = (ContextObject)context;
          int serviceRecId = ContextObject.getIntegerData(context, -1);
          IMPlusServiceModel implusService = (IMPlusServiceModel)ApplicationRegistry.getApplicationRegistry().get(-2205884509140292945L);

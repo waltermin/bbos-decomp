@@ -10,7 +10,7 @@ class Parser implements TokenConstants, OpcodeConstants {
    Function _currFunc;
    boolean _statementAlreadyPushed;
    private StatementLabel _statementStack;
-   private Hashtable _statementLabelLookup = (Hashtable)(new Object());
+   private Hashtable _statementLabelLookup = new Hashtable();
    private byte _cmpEqOp = 11;
    private byte _cmpNeOp = 16;
 

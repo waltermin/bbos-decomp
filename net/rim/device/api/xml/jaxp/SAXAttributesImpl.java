@@ -22,7 +22,7 @@ class SAXAttributesImpl implements Attributes, RIMExtendedAttributes {
       this._numAttributes++;
       this._numElements += 6;
       if (this._attributes == null) {
-         this._attributes = new Object[24];
+         this._attributes = new String[24];
       } else if (this._numElements > this._attributes.length) {
          int len = this._attributes.length;
          this._attributes = ArrayResize.stringArrayResize(this._attributes, len + len / 2);
@@ -46,7 +46,7 @@ class SAXAttributesImpl implements Attributes, RIMExtendedAttributes {
       if (opaqueData != null) {
          int index = this._numAttributes - 1;
          if (this._opaqueData == null) {
-            this._opaqueData = (IntHashtable)(new Object());
+            this._opaqueData = new IntHashtable();
          }
 
          this._opaqueData.put(index, new SAXAttributesImpl$ByteArrayArray(opaqueData));

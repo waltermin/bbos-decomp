@@ -1,6 +1,7 @@
 package net.rim.device.cldc.io.devicehttp;
 
 import java.io.InputStream;
+import net.rim.device.api.io.IOCancelledException;
 
 public final class LengthControlledInputStream extends InputStream {
    private int _length;
@@ -17,9 +18,9 @@ public final class LengthControlledInputStream extends InputStream {
    }
 
    @Override
-   public final synchronized int read() {
+   public final synchronized int read() throws IOCancelledException {
       if (this._closed) {
-         throw new Object();
+         throw new IOCancelledException();
       }
 
       if (this._length <= 0) {
@@ -37,9 +38,9 @@ public final class LengthControlledInputStream extends InputStream {
    }
 
    @Override
-   public final int read(byte[] b, int offset, int length) {
+   public final int read(byte[] b, int offset, int length) throws IOCancelledException {
       if (this._closed) {
-         throw new Object();
+         throw new IOCancelledException();
       }
 
       if (this._length <= 0) {

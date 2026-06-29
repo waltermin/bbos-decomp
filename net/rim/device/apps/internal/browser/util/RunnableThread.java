@@ -4,7 +4,7 @@ import java.util.Vector;
 import net.rim.vm.Process;
 
 public class RunnableThread extends Thread {
-   protected Vector _queue = (Vector)(new Object());
+   protected Vector _queue = new Vector();
    private boolean _done;
    private boolean _killProcessIfThisThreadDies = true;
 

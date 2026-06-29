@@ -1,9 +1,10 @@
 package net.rim.device.apps.internal.setupwizard;
 
 import net.rim.device.api.system.Bitmap;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.apps.api.setupwizard.BasicWizardPage;
 import net.rim.device.apps.api.setupwizard.ScrollingVerticalFieldManager;
 import net.rim.device.apps.api.setupwizard.SetupWizardOrdering;
@@ -18,9 +19,9 @@ final class InitialWizardPage extends BasicWizardPage {
 
    @Override
    protected final void populateContent(AppsMainScreen screen, Manager content) {
-      WizardLayoutManager wizardLayoutManager = (WizardLayoutManager)(new Object());
+      WizardLayoutManager wizardLayoutManager = new WizardLayoutManager();
       wizardLayoutManager.setScrollbarEnabled(true);
-      ScrollingVerticalFieldManager scrollingContent = (ScrollingVerticalFieldManager)(new Object(0));
+      ScrollingVerticalFieldManager scrollingContent = new ScrollingVerticalFieldManager(0);
       content.setFont(this.getHeaderFont());
       long style = 36028797018963968L;
       content.setFont(this.getHeaderFont());
@@ -31,14 +32,14 @@ final class InitialWizardPage extends BasicWizardPage {
          introResource = 21;
       }
 
-      RichTextField label = (RichTextField)(new Object(SetupWizardResources.getString(introResource), style));
+      RichTextField label = new RichTextField(SetupWizardResources.getString(introResource), style);
       label.setBorder(0, 0, 10, 0);
       scrollingContent.add(label);
-      label = (RichTextField)(new Object(SetupWizardResources.getString(22), style));
-      Manager hfm = (Manager)(new Object());
+      label = new RichTextField(SetupWizardResources.getString(22), style);
+      Manager hfm = new HorizontalFieldManager();
       Bitmap appIcon = SetupWizard.getAppIcon();
       if (appIcon != null) {
-         hfm.add((Field)(new Object(appIcon)));
+         hfm.add(new BitmapField(appIcon));
       }
 
       hfm.add(label);

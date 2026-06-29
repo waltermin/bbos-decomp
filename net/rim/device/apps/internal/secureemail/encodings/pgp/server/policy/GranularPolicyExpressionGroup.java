@@ -94,7 +94,7 @@ class GranularPolicyExpressionGroup extends GranularPolicyElement implements Gra
 
    @Override
    public String getDebugPrintInfo() {
-      StringBuffer info = (StringBuffer)(new Object());
+      StringBuffer info = new StringBuffer();
       info.append("Expression Group");
       switch (this._groupOperator) {
          case -1:

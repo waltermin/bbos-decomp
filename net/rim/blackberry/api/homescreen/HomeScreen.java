@@ -2,6 +2,7 @@ package net.rim.blackberry.api.homescreen;
 
 import net.rim.device.api.system.ApplicationDescriptor;
 import net.rim.device.api.system.Bitmap;
+import net.rim.device.api.system.UnsupportedOperationException;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.api.ui.theme.Theme;
 import net.rim.device.api.ui.theme.ThemeAttributeSet;
@@ -20,7 +21,7 @@ public final class HomeScreen {
    private static final int getModuleHandle() {
       int moduleHandle = Process.currentProcess().getModuleHandle();
       if (moduleHandle == 0) {
-         throw new Object("Module handle for the current process is 0");
+         throw new IllegalStateException("Module handle for the current process is 0");
       } else {
          return moduleHandle;
       }
@@ -43,7 +44,7 @@ public final class HomeScreen {
    public static final void setName(String name, int index) {
       RibbonApi ra = RibbonApi.getInstance();
       if (ra == null) {
-         throw new Object();
+         throw new UnsupportedOperationException();
       }
 
       ra.setName(getModuleHandle(), index, name);
@@ -56,7 +57,7 @@ public final class HomeScreen {
    public static final void setRolloverIcon(Bitmap rollovericon, int index) {
       RibbonApi ra = RibbonApi.getInstance();
       if (ra == null) {
-         throw new Object();
+         throw new UnsupportedOperationException();
       }
 
       ra.setRolloverIcon(getModuleHandle(), index, rollovericon);
@@ -89,7 +90,7 @@ public final class HomeScreen {
    public static final void updateIcon(Bitmap newIcon, int index) {
       RibbonApi ra = RibbonApi.getInstance();
       if (ra == null) {
-         throw new Object();
+         throw new UnsupportedOperationException();
       }
 
       ra.setIcon(getModuleHandle(), index, newIcon);

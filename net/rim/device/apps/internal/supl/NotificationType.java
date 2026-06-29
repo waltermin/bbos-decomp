@@ -15,6 +15,6 @@ final class NotificationType {
    }
 
    final void print() {
-      System.out.println(((StringBuffer)(new Object("Notification Type: "))).append(this.type).toString());
+      System.out.println("Notification Type: " + this.type);
    }
 }

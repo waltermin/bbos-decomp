@@ -263,7 +263,7 @@ public final class PersistenceServiceImpl implements PersistenceService, Service
    @Override
    public final LongIntHashtable loadWicletStatus() {
       Object obj = loadGenericType(5524481063654985060L);
-      return (LongIntHashtable)(!(obj instanceof Object) ? null : obj);
+      return !(obj instanceof LongIntHashtable) ? null : (LongIntHashtable)obj;
    }
 
    @Override
@@ -274,7 +274,7 @@ public final class PersistenceServiceImpl implements PersistenceService, Service
    @Override
    public final Vector loadRestoredApplications() {
       Object result = loadGenericType(4042714553988139895L);
-      return (Vector)(!(result instanceof Object) ? null : result);
+      return !(result instanceof Vector) ? null : (Vector)result;
    }
 
    @Override
@@ -366,17 +366,17 @@ public final class PersistenceServiceImpl implements PersistenceService, Service
       this._persistedApplications = PersistentStore.getPersistentObject(-7574762932512512223L);
       Object obj = this._persistedApplications.getContents();
       if (!(obj instanceof PersistableObject)) {
-         this._applications = (Vector)(new Object());
+         this._applications = new Vector();
          this._persistedApplications.setContents(new PersistableObject(this._applications), 51);
          this._persistedApplications.commit();
       } else {
          Object contents = ((PersistableObject)obj).getObject();
-         if (contents instanceof Object) {
+         if (contents instanceof Vector) {
             this._applications = (Vector)contents;
          }
       }
 
-      this._stores = (LongHashtable)(new Object(this._applications.size()));
+      this._stores = new LongHashtable(this._applications.size());
 
       for (int i = this._applications.size() - 1; i >= 0; i--) {
          PersistedApplicationModel app = (PersistedApplicationModel)this._applications.elementAt(i);
@@ -409,7 +409,7 @@ public final class PersistenceServiceImpl implements PersistenceService, Service
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

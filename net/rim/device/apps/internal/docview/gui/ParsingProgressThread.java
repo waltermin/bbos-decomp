@@ -4,11 +4,12 @@ import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.system.KeyListener;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.Ui;
+import net.rim.device.api.ui.container.PopupScreen;
 import net.rim.device.apps.api.ui.ProgressIndicator;
 import net.rim.device.apps.api.ui.ProgressRunnable;
 
 final class ParsingProgressThread extends BaseParsingThread implements ProgressRunnable, KeyListener {
-   private ProgressIndicator _progressIndicator = (ProgressIndicator)(new Object(4));
+   private ProgressIndicator _progressIndicator = new ProgressIndicator(4);
 
    ParsingProgressThread(DocViewParser coreData, int consecutiveBlockCount, DocViewParserObj notifyObj) {
       super(coreData, consecutiveBlockCount, notifyObj);
@@ -58,11 +59,11 @@ final class ParsingProgressThread extends BaseParsingThread implements ProgressR
 
    private final boolean addKeyListenerToProgressInd() {
       Screen activeScreen = Ui.getUiEngine().getActiveScreen();
-      if (!(activeScreen instanceof Object)) {
+      if (!(activeScreen instanceof PopupScreen)) {
          return false;
       }
 
-      ((Screen)activeScreen).addKeyListener(this);
+      ((PopupScreen)activeScreen).addKeyListener(this);
       return true;
    }
 

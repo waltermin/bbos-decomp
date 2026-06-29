@@ -42,7 +42,7 @@ public final class ComponentHelper {
             child = children[i];
             view = ComponentFactory.getView(context, child, parentRow, style);
             setCookies(view, child, parentRow);
-            if (view instanceof Object) {
+            if (view instanceof Field) {
                parentLayout.add((Field)view);
             }
          }

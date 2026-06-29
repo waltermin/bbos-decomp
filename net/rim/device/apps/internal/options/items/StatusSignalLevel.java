@@ -16,8 +16,6 @@ public final class StatusSignalLevel extends StatusListItem {
       }
 
       int signalLevel = RadioInfo.getSignalLevel();
-      return signalLevel == -256
-         ? OptionsResources.getString(412)
-         : ((StringBuffer)(new Object())).append(String.valueOf(signalLevel)).append(OptionsResources.getString(410)).toString();
+      return signalLevel == -256 ? OptionsResources.getString(412) : signalLevel + OptionsResources.getString(410);
    }
 }

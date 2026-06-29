@@ -2,7 +2,7 @@ package net.rim.device.apps.internal.docview.gui;
 
 import net.rim.device.api.system.EncodedImage;
 import net.rim.device.api.ui.ContextMenu;
-import net.rim.device.api.ui.MenuItem;
+import net.rim.device.apps.api.ui.VerbMenuItem;
 
 final class DocViewSlideshowField$SlideshowImageField extends SlideshowBitmapField {
    private final DocViewSlideshowField this$0;
@@ -21,20 +21,12 @@ final class DocViewSlideshowField$SlideshowImageField extends SlideshowBitmapFie
             DocViewSlideshowField$DocViewSaveImageVerb saveImageVb = new DocViewSlideshowField$DocViewSaveImageVerb(
                this.this$0,
                this.this$0._isPresentation
-                  ? ((StringBuffer)(new Object()))
-                     .append(DocViewSlideshowField._resources.getString(90))
-                     .append(' ')
-                     .append(String.valueOf(this.this$0._currentIndex + 1))
-                     .toString()
-                  : ((StringBuffer)(new Object()))
-                     .append(DocViewSlideshowField._resources.getString(44))
-                     .append(' ')
-                     .append(String.valueOf(this.this$0._currentIndex + 1))
-                     .toString(),
+                  ? DocViewSlideshowField._resources.getString(90) + ' ' + (this.this$0._currentIndex + 1)
+                  : DocViewSlideshowField._resources.getString(44) + ' ' + (this.this$0._currentIndex + 1),
                img,
                this.isProtected()
             );
-            contextMenu.addItem((MenuItem)(new Object(saveImageVb, saveImageVb.getOrdering())));
+            contextMenu.addItem(new VerbMenuItem(saveImageVb, saveImageVb.getOrdering()));
          }
       }
    }

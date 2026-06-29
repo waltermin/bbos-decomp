@@ -9,7 +9,7 @@ public class DigestInputStream extends CryptoInputStream {
    public DigestInputStream(Digest digest, InputStream inputStream) {
       super(inputStream);
       if (digest == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._digest = digest;
@@ -34,7 +34,7 @@ public class DigestInputStream extends CryptoInputStream {
 
          return bytesRead;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

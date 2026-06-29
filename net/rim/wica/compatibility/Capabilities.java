@@ -11,7 +11,7 @@ public class Capabilities {
    public static final String PUSH_RESERVED_WICLETS_FEATURE = "push_reserved_wiclets";
    public static final String LOCALE_FEATURE = "locale";
    public static final String AUTHENTICATE_FEATURE = "authenticate";
-   static Hashtable tbl = (Hashtable)(new Object());
+   static Hashtable tbl = new Hashtable();
    static final FeatureVersionCapHandler$FeatureVersion[] LOCALE_FEATURES = new FeatureVersionCapHandler$FeatureVersion[]{
       new FeatureVersionCapHandler$FeatureVersion("Discovery", new WicletVersionRange("1.2.0"))
    };

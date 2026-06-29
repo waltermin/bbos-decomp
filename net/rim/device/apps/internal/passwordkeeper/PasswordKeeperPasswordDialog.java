@@ -2,9 +2,9 @@ package net.rim.device.apps.internal.passwordkeeper;
 
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.ButtonField;
+import net.rim.device.api.ui.component.PasswordEditField;
 import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.VerticalFieldManager;
@@ -65,32 +65,32 @@ public final class PasswordKeeperPasswordDialog extends PopupDialog implements F
 
    private final void addFields(boolean showPassword, String text, boolean showDeleteEntryButton) {
       VerticalFieldManager manager = (VerticalFieldManager)this.getDelegate();
-      RichTextField textField = (RichTextField)(new Object(text, 45035996273704960L));
+      RichTextField textField = new RichTextField(text, 45035996273704960L);
       manager.add(textField);
       if (showPassword) {
-         this._inputField = (BasicEditField)(new Object(null, null, 32, 1610612736));
+         this._inputField = new BasicEditField(null, null, 32, 1610612736);
       } else {
-         this._inputField = (BasicEditField)(new Object(null, null, 32, 2199560126464L));
+         this._inputField = new PasswordEditField(null, null, 32, 2199560126464L);
       }
 
-      FrameLayout layout = (FrameLayout)(new Object(1));
+      FrameLayout layout = new FrameLayout(1);
       layout.add(this._inputField);
       manager.add(layout);
-      this._okButton = (ButtonField)(new Object(CommonResource.getString(100)));
+      this._okButton = new ButtonField(CommonResource.getString(100));
       this._okButton.setChangeListener(this);
-      this._cancelButton = (ButtonField)(new Object(CommonResource.getString(19)));
+      this._cancelButton = new ButtonField(CommonResource.getString(19));
       this._cancelButton.setChangeListener(this);
       if (showDeleteEntryButton) {
-         this._deleteButton = (ButtonField)(new Object(PasswordKeeper.getString(3034)));
+         this._deleteButton = new ButtonField(PasswordKeeper.getString(3034));
          this._deleteButton.setChangeListener(this);
       }
 
-      HorizontalFieldManager buttonManager = (HorizontalFieldManager)(new Object(12884901888L));
+      HorizontalFieldManager buttonManager = new HorizontalFieldManager(12884901888L);
       buttonManager.add(this._okButton);
       buttonManager.add(this._cancelButton);
       manager.add(buttonManager);
       if (showDeleteEntryButton) {
-         HorizontalFieldManager deleteButtonManager = (HorizontalFieldManager)(new Object(12884901888L));
+         HorizontalFieldManager deleteButtonManager = new HorizontalFieldManager(12884901888L);
          deleteButtonManager.add(this._deleteButton);
          manager.add(deleteButtonManager);
       }
@@ -99,7 +99,7 @@ public final class PasswordKeeperPasswordDialog extends PopupDialog implements F
    }
 
    public PasswordKeeperPasswordDialog(boolean showPassword, String text, boolean showDeleteEntryButton) {
-      super((Manager)(new Object(1153220571769602048L)));
+      super(new VerticalFieldManager(1153220571769602048L));
       this.addFields(showPassword, text, showDeleteEntryButton);
    }
 }

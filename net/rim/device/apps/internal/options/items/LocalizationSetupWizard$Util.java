@@ -51,7 +51,7 @@ final class LocalizationSetupWizard$Util {
       }
 
       String display = aLocale.getDisplayName();
-      StringBuffer res = (StringBuffer)(new Object(display));
+      StringBuffer res = new StringBuffer(display);
       display = StringUtilities.toUpperCase(display, 1701707776);
       int index = display.indexOf("HONG KONG");
       if (index != -1) {

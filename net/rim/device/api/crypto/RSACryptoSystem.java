@@ -11,7 +11,7 @@ public final class RSACryptoSystem implements CryptoSystem, Persistable {
       try {
          return this._cryptoToken.createRSAKeyPair(this, e);
       } catch (UnsupportedCryptoSystemException ex) {
-         throw new Object(ex.toString());
+         throw new RuntimeException(ex.toString());
       }
    }
 
@@ -21,7 +21,7 @@ public final class RSACryptoSystem implements CryptoSystem, Persistable {
       try {
          return this.createRSAKeyPair(new byte[]{1, 0, 1});
       } catch (Throwable var3) {
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       }
    }
 
@@ -46,7 +46,7 @@ public final class RSACryptoSystem implements CryptoSystem, Persistable {
 
    @Override
    public final String getName() {
-      return ((StringBuffer)(new Object())).append(this.getAlgorithm()).append(this.getBitLength()).toString();
+      return this.getAlgorithm() + this.getBitLength();
    }
 
    @Override
@@ -96,7 +96,7 @@ public final class RSACryptoSystem implements CryptoSystem, Persistable {
          this._modulusBitLength = modulusBitLength;
          this.setHashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -116,14 +116,14 @@ public final class RSACryptoSystem implements CryptoSystem, Persistable {
       // 09: invokespecial net/rim/device/api/crypto/RSACryptoSystem.initialize (Lnet/rim/device/api/crypto/RSACryptoToken;I)V
       // 0c: return
       // 0d: astore 2
-      // 0e: new java/lang/Object
+      // 0e: new java/lang/RuntimeException
       // 11: dup
       // 12: aload 2
       // 13: invokevirtual net/rim/device/api/crypto/CryptoTokenException.toString ()Ljava/lang/String;
       // 16: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 19: athrow
       // 1a: astore 2
-      // 1b: new java/lang/Object
+      // 1b: new java/lang/RuntimeException
       // 1e: dup
       // 1f: aload 2
       // 20: invokevirtual net/rim/device/api/crypto/CryptoUnsupportedOperationException.toString ()Ljava/lang/String;
@@ -149,21 +149,21 @@ public final class RSACryptoSystem implements CryptoSystem, Persistable {
       // 0b: invokespecial net/rim/device/api/crypto/RSACryptoSystem.initialize (Lnet/rim/device/api/crypto/RSACryptoToken;I)V
       // 0e: return
       // 0f: astore 1
-      // 10: new java/lang/Object
+      // 10: new java/lang/RuntimeException
       // 13: dup
       // 14: aload 1
       // 15: invokevirtual net/rim/device/api/crypto/CryptoTokenException.toString ()Ljava/lang/String;
       // 18: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 1b: athrow
       // 1c: astore 1
-      // 1d: new java/lang/Object
+      // 1d: new java/lang/RuntimeException
       // 20: dup
       // 21: aload 1
       // 22: invokevirtual net/rim/device/api/crypto/CryptoUnsupportedOperationException.toString ()Ljava/lang/String;
       // 25: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 28: athrow
       // 29: astore 1
-      // 2a: new java/lang/Object
+      // 2a: new java/lang/RuntimeException
       // 2d: dup
       // 2e: aload 1
       // 2f: invokevirtual net/rim/device/api/crypto/UnsupportedCryptoSystemException.toString ()Ljava/lang/String;

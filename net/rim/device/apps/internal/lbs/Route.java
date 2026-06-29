@@ -11,7 +11,7 @@ import net.rim.device.apps.internal.lbs.maplet.MapRect;
 public final class Route extends Location {
    int _distance;
    int _time;
-   XYRect _bbox = (XYRect)(new Object());
+   XYRect _bbox = new XYRect();
    String _startAddress;
    String _endAddress;
    int _numPoints;
@@ -38,7 +38,7 @@ public final class Route extends Location {
       super._label = routeName;
       this._numPoints = 0;
       this._numPaths = 0;
-      this._points = new Object[0];
+      this._points = new XYPoint[0];
       this._paths = new Route$Path[0];
       this._decisions = new CurrentDecisions(mapField, this);
    }
@@ -48,7 +48,7 @@ public final class Route extends Location {
    }
 
    public final void addPoint(int x, int y) {
-      XYPoint point = (XYPoint)(new Object(x, y));
+      XYPoint point = new XYPoint(x, y);
       Arrays.add(this._points, point);
       this._numPoints++;
    }
@@ -147,8 +147,8 @@ public final class Route extends Location {
             int numPoints = path._numPoints;
             int start = -1;
             int end = numPoints - 1;
-            XYPoint position = (XYPoint)(new Object());
-            XYPoint positionLast = (XYPoint)(new Object());
+            XYPoint position = new XYPoint();
+            XYPoint positionLast = new XYPoint();
             MapRect rect = new MapRect(transform._cropView);
             rect._bottom -= padding;
             rect._top += padding;
@@ -377,14 +377,6 @@ public final class Route extends Location {
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object("Route: distance: ")))
-         .append(this._distance)
-         .append(", time: ")
-         .append(this._time)
-         .append(", startAddress: ")
-         .append(this._startAddress)
-         .append(", endAddress: ")
-         .append(this._endAddress)
-         .toString();
+      return "Route: distance: " + this._distance + ", time: " + this._time + ", startAddress: " + this._startAddress + ", endAddress: " + this._endAddress;
    }
 }

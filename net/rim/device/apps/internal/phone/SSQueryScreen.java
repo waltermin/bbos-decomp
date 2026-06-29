@@ -1,11 +1,12 @@
 package net.rim.device.apps.internal.phone;
 
 import net.rim.device.api.system.Application;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.AppsMainScreen;
@@ -14,7 +15,7 @@ import net.rim.device.apps.api.ui.ExitVerb;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
 
 final class SSQueryScreen extends AppsMainScreen implements SSQueryListener, ListFieldCallback, Confirmation {
-   private ListField _serviceStatusField = (ListField)(new Object(3, 36028797018963968L));
+   private ListField _serviceStatusField = new ListField(3, 36028797018963968L);
    private Verb _closeVerb = ExitVerb.createCloseVerb(0, this);
    private ObjectChoiceField _ssChoiceField;
    private Application _app;
@@ -81,10 +82,10 @@ final class SSQueryScreen extends AppsMainScreen implements SSQueryListener, Lis
 
    public SSQueryScreen(Application app) {
       super(196608);
-      this.setTitle((Field)(new Object("SS Interrogation")));
-      this._ssChoiceField = (ObjectChoiceField)(new Object("Choose Query", QUERY_CHOICES));
+      this.setTitle(new LabelField("SS Interrogation"));
+      this._ssChoiceField = new ObjectChoiceField("Choose Query", QUERY_CHOICES);
       this.add(this._ssChoiceField);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.add(this._serviceStatusField);
       this._serviceStatusField.setCallback(this);
       this._app = app;

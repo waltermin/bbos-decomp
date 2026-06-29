@@ -4,7 +4,9 @@ import java.util.Vector;
 import net.rim.device.api.synchronization.ConverterUtilities;
 import net.rim.device.api.ui.component.ActiveFieldContext;
 import net.rim.device.api.util.DataBuffer;
+import net.rim.device.apps.api.addressbook.EmailAddressModel;
 import net.rim.device.apps.api.addressbook.GroupAddressCardModel;
+import net.rim.device.apps.api.addressbook.PINAddressModel;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.model.SyncBuffer;
@@ -24,9 +26,9 @@ final class AddressModelFactory extends RIMModelFactory {
    public final Object createInstance(Object initialData) {
       RIMModel model = null;
       String value = null;
-      if (initialData instanceof Object) {
+      if (initialData instanceof ActiveFieldContext) {
          ActiveFieldContext afc = (ActiveFieldContext)initialData;
-         initialData = new Object();
+         initialData = new ContextObject();
          ContextObject.put(initialData, 253, afc.getData());
       }
 
@@ -111,15 +113,15 @@ final class AddressModelFactory extends RIMModelFactory {
 
    @Override
    public final boolean recognize(Object object) {
-      if (this._type == 1 && object instanceof Object) {
+      if (this._type == 1 && object instanceof EmailAddressModel) {
          return true;
       }
 
-      if (this._type == 10 && object instanceof Object) {
+      if (this._type == 10 && object instanceof PINAddressModel) {
          return true;
       }
 
-      if (!(object instanceof Object)) {
+      if (!(object instanceof GroupAddressCardModel)) {
          if (ContextObject.getFlag(object, 11) && ContextObject.getFlag(object, 19)) {
             SyncBuffer syncBuffer = (SyncBuffer)ContextObject.get(object, 255);
             return syncBuffer != null && syncBuffer.getFieldType(true) == this._type;
@@ -153,9 +155,9 @@ final class AddressModelFactory extends RIMModelFactory {
    public final Verb[] getVerbs(Object context) {
       switch (this._type) {
          case 1:
-            return new Object[]{NewAddressVerb.newEmailAddressVerb(this)};
+            return new Verb[]{NewAddressVerb.newEmailAddressVerb(this)};
          case 10:
-            return new Object[]{NewAddressVerb.newPINAddressVerb(this)};
+            return new Verb[]{NewAddressVerb.newPINAddressVerb(this)};
          default:
             return null;
       }

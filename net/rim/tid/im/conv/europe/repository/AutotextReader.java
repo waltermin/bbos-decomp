@@ -34,7 +34,7 @@ public class AutotextReader {
          return text;
       }
 
-      StringBuffer newText = (StringBuffer)(new Object(text.substring(0, macroIndex)));
+      StringBuffer newText = new StringBuffer(text.substring(0, macroIndex));
       int textLength = text.length();
 
       for (int i = macroIndex; i < textLength; i++) {
@@ -73,11 +73,7 @@ public class AutotextReader {
                   }
                   break;
                case 'V':
-                  String insertion = ((StringBuffer)(new Object()))
-                     .append(DeviceInfo.getDeviceName())
-                     .append('/')
-                     .append(ApplicationDescriptor.currentApplicationDescriptor().getVersion())
-                     .toString();
+                  String insertion = DeviceInfo.getDeviceName() + '/' + ApplicationDescriptor.currentApplicationDescriptor().getVersion();
                   newText.append(insertion);
                   i++;
                   break;
@@ -136,7 +132,7 @@ public class AutotextReader {
             if (isAllUpperCase(original)) {
                return Utils.toUpperCase(replacement);
             } else if (CharacterUtilities.isUpperCase(original.charAt(0))) {
-               StringBuffer formatBuffer = (StringBuffer)(new Object(replacement));
+               StringBuffer formatBuffer = new StringBuffer(replacement);
                formatBuffer.setCharAt(0, Utils.toUpperCase(replacement.charAt(0)));
                formattedReplacement = formatBuffer.toString();
             }

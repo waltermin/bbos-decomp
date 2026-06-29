@@ -25,7 +25,7 @@ import net.rim.device.internal.ui.UiInternal;
 import net.rim.vm.Array;
 
 public class PhoneListView extends PhoneListFieldManager implements ListFieldCallback, Runnable {
-   protected ContextObjectWR PAINTING_CONTEXT_WR = (ContextObjectWR)(new Object());
+   protected ContextObjectWR PAINTING_CONTEXT_WR = new ContextObjectWR();
    protected Application _app;
    protected PhoneListItems _items;
    protected int _flags;
@@ -57,7 +57,7 @@ public class PhoneListView extends PhoneListFieldManager implements ListFieldCal
       PhoneListItem phoneListItem = (PhoneListItem)this.getSelectedItem();
       char speedDialKey = 0;
       if (phoneListItem != null) {
-         ContextObject context = (ContextObject)(new Object(2));
+         ContextObject context = new ContextObject(2);
          if (systemLocked) {
             PhoneUtilities.setPrivateFlag(context, 15);
          }
@@ -68,7 +68,7 @@ public class PhoneListView extends PhoneListFieldManager implements ListFieldCal
          }
 
          this.getVerbContextFlags(phoneListItem, context);
-         Verb[] verbs = new Object[0];
+         Verb[] verbs = new Verb[0];
          Verb defaultVerb = phoneListItem.getVerbs(context, verbs);
          if (PhoneUtilities.getPrivateFlag(context, 7) && instance == 65536) {
             Array.resize(verbs, verbs.length + 1);

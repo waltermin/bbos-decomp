@@ -10,8 +10,8 @@ import net.rim.device.apps.api.calendar.caldb.CalendarKey;
 import net.rim.device.apps.api.calendar.caldb.CalendarOptions;
 
 final class CalendarOptionsScreen$CalendarFolderField extends Field {
-   private TextRect _label = (TextRect)(new Object(this));
-   private TextRect _text = (TextRect)(new Object(this));
+   private TextRect _label = new TextRect(this);
+   private TextRect _text = new TextRect(this);
    private int _color;
    private CalendarKey _key;
    private int _iconSpace;

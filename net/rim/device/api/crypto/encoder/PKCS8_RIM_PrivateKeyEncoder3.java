@@ -15,48 +15,48 @@ final class PKCS8_RIM_PrivateKeyEncoder3 extends PrivateKeyEncoder {
       try {
          if (key.getAlgorithm().equals("EC")) {
             ECPrivateKey k = (ECPrivateKey)key;
-            ASN1OutputStream ecPrivateKeySequence = (ASN1OutputStream)(new Object());
+            ASN1OutputStream ecPrivateKeySequence = new ASN1OutputStream();
             ecPrivateKeySequence.writeInteger(1);
             ecPrivateKeySequence.writeOctetString(k.getPrivateKeyData());
-            ASN1OutputStream algorithmIdentifier = (ASN1OutputStream)(new Object());
+            ASN1OutputStream algorithmIdentifier = new ASN1OutputStream();
             algorithmIdentifier.writeOID(OIDs.getOID(-1487624216));
             algorithmIdentifier.writeOID(OIDs.getAssociatedOID(-3607261449824502613L, k.getECCryptoSystem().getName()));
-            ASN1OutputStream privateKeyInfo = (ASN1OutputStream)(new Object());
+            ASN1OutputStream privateKeyInfo = new ASN1OutputStream();
             privateKeyInfo.writeInteger(0);
             privateKeyInfo.writeSequence(algorithmIdentifier);
-            ASN1OutputStream converter = (ASN1OutputStream)(new Object());
+            ASN1OutputStream converter = new ASN1OutputStream();
             converter.writeSequence(ecPrivateKeySequence);
             privateKeyInfo.writeOctetString(converter.toByteArray());
-            ASN1OutputStream asn1Stream = (ASN1OutputStream)(new Object());
+            ASN1OutputStream asn1Stream = new ASN1OutputStream();
             asn1Stream.writeSequence(privateKeyInfo);
-            return (EncodedKey)(new Object(asn1Stream.toByteArray(), "PKCS8"));
+            return new EncodedKey(asn1Stream.toByteArray(), "PKCS8");
          }
 
          if (key.getAlgorithm().equals("KEA")) {
             KEAPrivateKey k = (KEAPrivateKey)key;
-            ASN1OutputStream algorithmIdentifier = (ASN1OutputStream)(new Object());
+            ASN1OutputStream algorithmIdentifier = new ASN1OutputStream();
             algorithmIdentifier.writeOID(OIDs.getOID(545973096));
             KEACryptoSystem cryptoSystem = k.getKEACryptoSystem();
-            ASN1OutputStream params = (ASN1OutputStream)(new Object());
+            ASN1OutputStream params = new ASN1OutputStream();
             params.writeInteger(cryptoSystem.getP());
             params.writeInteger(cryptoSystem.getQ());
             params.writeInteger(cryptoSystem.getG());
             algorithmIdentifier.writeSequence(params);
-            ASN1OutputStream privateKeyInfo = (ASN1OutputStream)(new Object());
+            ASN1OutputStream privateKeyInfo = new ASN1OutputStream();
             privateKeyInfo.writeInteger(0);
             privateKeyInfo.writeSequence(algorithmIdentifier);
-            ASN1OutputStream converter = (ASN1OutputStream)(new Object());
+            ASN1OutputStream converter = new ASN1OutputStream();
             converter.writeInteger(k.getPrivateKeyData());
             privateKeyInfo.writeOctetString(converter.toByteArray());
-            ASN1OutputStream asn1Stream = (ASN1OutputStream)(new Object());
+            ASN1OutputStream asn1Stream = new ASN1OutputStream();
             asn1Stream.writeSequence(privateKeyInfo);
-            return (EncodedKey)(new Object(asn1Stream.toByteArray(), "PKCS8"));
+            return new EncodedKey(asn1Stream.toByteArray(), "PKCS8");
          }
       } catch (Throwable var10) {
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       }
 
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override

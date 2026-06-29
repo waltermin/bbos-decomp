@@ -1,5 +1,6 @@
 package net.rim.tools.compiler.util;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -17,9 +18,9 @@ public class CompilerProperties extends Hashtable {
       Object o = this.get(key);
       if (o == null) {
          return null;
-      } else if (!(o instanceof Object)) {
+      } else if (!(o instanceof String)) {
          Vector v = (Vector)o;
-         return (String)(!v.isEmpty() ? v.firstElement() : null);
+         return !v.isEmpty() ? (String)v.firstElement() : null;
       } else {
          return (String)o;
       }
@@ -41,23 +42,24 @@ public class CompilerProperties extends Hashtable {
    public Vector getVector(String key) {
       Object o = this.get(key);
       if (o == null) {
-         Vector v = (Vector)(new Object());
-         this.putVector(key, v);
-         return v;
-      } else if (!(o instanceof Object)) {
-         Vector v = (Vector)o;
-         return v;
-      } else {
-         Vector v = vectorize((String)o);
+         Vector v = new Vector();
          this.putVector(key, v);
          return v;
       }
+
+      if (!(o instanceof String)) {
+         return (Vector)o;
+      }
+
+      Vector v = vectorize((String)o);
+      this.putVector(key, v);
+      return v;
    }
 
    public static Vector vectorize(String value) {
-      Vector result = (Vector)(new Object());
+      Vector result = new Vector();
       if (value != null) {
-         StringBuffer buffer = (StringBuffer)(new Object(value));
+         StringBuffer buffer = new StringBuffer(value);
          int num = buffer.length();
          int index = 0;
 
@@ -94,7 +96,7 @@ public class CompilerProperties extends Hashtable {
       Vector result = this.getVector(propertyName);
       if (!result.isEmpty() && stripWhitespace) {
          int num = result.size();
-         StringBuffer newValue = (StringBuffer)(new Object());
+         StringBuffer newValue = new StringBuffer();
 
          for (int index = 0; index < num; index++) {
             String value = (String)result.elementAt(index);
@@ -157,7 +159,7 @@ public class CompilerProperties extends Hashtable {
                   if (ch == 37) {
                      if (percent != -1) {
                         if (percent != index) {
-                           String key = (String)(new Object(this._buffer, percent, index - percent));
+                           String key = new String(this._buffer, percent, index - percent);
                            index = percent - 1;
                            String value = this.getProperty(key);
                            if (value != null) {
@@ -205,7 +207,7 @@ public class CompilerProperties extends Hashtable {
       return values;
    }
 
-   public void readDefFile(String fileName, InputStream rdr) {
+   public void readDefFile(String fileName, InputStream rdr) throws IOException {
       String propertyName = null;
       Vector values = null;
       if (this._buffer == null) {
@@ -225,47 +227,29 @@ public class CompilerProperties extends Hashtable {
          if (lineLen != 0) {
             if (this._buffer[0] != '[') {
                if (propertyName == null) {
-                  throw new Object(
-                     ((StringBuffer)(new Object()))
-                        .append(fileName)
-                        .append("(")
-                        .append(lineNum)
-                        .append("): Error!: Expecting '[' but found '")
-                        .append((String)(new Object(this._buffer, 0, lineLen)))
-                        .append("'")
-                        .toString()
-                  );
+                  throw new IOException(fileName + "(" + lineNum + "): Error!: Expecting '[' but found '" + new String(this._buffer, 0, lineLen) + "'");
                }
 
-               String line = (String)(new Object(this._buffer, 0, lineLen));
+               String line = new String(this._buffer, 0, lineLen);
                if (values.isEmpty() || !values.contains(line)) {
                   values.addElement(line);
                }
             } else {
                if (this._buffer[--lineLen] != ']') {
-                  throw new Object(
-                     ((StringBuffer)(new Object()))
-                        .append(fileName)
-                        .append("(")
-                        .append(lineNum)
-                        .append("): Error!: Expecting ']' but found '")
-                        .append((String)(new Object(this._buffer, 0, ++lineLen)))
-                        .append("'")
-                        .toString()
-                  );
+                  throw new IOException(fileName + "(" + lineNum + "): Error!: Expecting ']' but found '" + new String(this._buffer, 0, ++lineLen) + "'");
                }
 
                lineLen--;
                values = this.storeProperty(propertyName, values);
-               propertyName = (String)(new Object(this._buffer, 1, lineLen));
+               propertyName = new String(this._buffer, 1, lineLen);
                Object obj = this.get(propertyName);
                if (obj == null) {
                   if (values == null) {
-                     values = (Vector)(new Object());
+                     values = new Vector();
                   }
-               } else if (obj instanceof Object) {
+               } else if (obj instanceof String) {
                   if (values == null) {
-                     values = (Vector)(new Object());
+                     values = new Vector();
                   }
 
                   values.addElement(obj);
@@ -277,12 +261,12 @@ public class CompilerProperties extends Hashtable {
       }
    }
 
-   public void load(String input) {
+   public void load(String input) throws IOException {
       int offset = 0;
       int end = input.length();
       boolean badKey = false;
       boolean badValue = false;
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       boolean done = false;
 
       while (!done) {
@@ -323,11 +307,11 @@ public class CompilerProperties extends Hashtable {
          }
 
          if (buffer.length() == 0) {
-            throw new Object("Invalid empty key name in property");
+            throw new IOException("Invalid empty key name in property");
          }
 
          if (badKey) {
-            throw new Object(((StringBuffer)(new Object("Invalid key name in property: '"))).append(buffer.toString()).append("'.").toString());
+            throw new IOException("Invalid key name in property: '" + buffer.toString() + "'.");
          }
 
          String key = buffer.toString();
@@ -399,9 +383,7 @@ public class CompilerProperties extends Hashtable {
 
                String value = buffer.toString();
                if (badValue) {
-                  throw new Object(
-                     ((StringBuffer)(new Object("Value for key: '"))).append(key).append("', is invalid: '").append(value).append("'.").toString()
-                  );
+                  throw new IOException("Value for key: '" + key + "', is invalid: '" + value + "'.");
                }
 
                this.put(key, value);

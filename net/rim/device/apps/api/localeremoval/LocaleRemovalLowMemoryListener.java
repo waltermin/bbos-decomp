@@ -90,7 +90,7 @@ class LocaleRemovalLowMemoryListener implements LowMemoryListener {
 
    private void launchWizardReminder() {
       if (this._wizardAppDescriptor != null) {
-         ApplicationDescriptor appDesc = (ApplicationDescriptor)(new Object(this._wizardAppDescriptor, new String[]{"low-memory"}));
+         ApplicationDescriptor appDesc = new ApplicationDescriptor(this._wizardAppDescriptor, new String[]{"low-memory"});
 
          try {
             ApplicationManager.getApplicationManager().runApplication(appDesc);

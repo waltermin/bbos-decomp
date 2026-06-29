@@ -32,7 +32,7 @@ class WTLSCertificate$PassThroughInputStream extends InputStream {
 
          return len;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

@@ -41,20 +41,20 @@ final class PreviewManager extends Field {
       this._preZoomX = -1;
       this._preZoomY = -1;
       if (!Graphics.isColor()) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
-      if (!(client instanceof Object)) {
-         throw new Object();
+      if (!(client instanceof PreviewViewable)) {
+         throw new IllegalArgumentException();
       }
 
       this._client = (PreviewViewable)client;
       this._app = Application.getApplication();
       this._updateScroll = new PreviewManager$UpdateScroll(this, null);
       this._client.activatePreviewMode();
-      this._backbuffer = (Bitmap)(new Object(Display.getWidth(), Display.getHeight()));
-      this._backbufferGraphics = (Graphics)(new Object(this._backbuffer));
-      this._validBufferRect = (XYRect)(new Object());
+      this._backbuffer = new Bitmap(Display.getWidth(), Display.getHeight());
+      this._backbufferGraphics = new Graphics(this._backbuffer);
+      this._validBufferRect = new XYRect();
    }
 
    final void setInitialScale(int width) {
@@ -154,7 +154,7 @@ final class PreviewManager extends Field {
       graphics.setColor(16777215);
       graphics.fillRect(clip.x, clip.y, clip.width, clip.height);
       if (!this._validBufferRect.contains(clip)) {
-         XYRect reusable = (XYRect)(new Object(this._validBufferRect));
+         XYRect reusable = new XYRect(this._validBufferRect);
          reusable.intersect(clip);
          if (reusable.width > 0 && reusable.height > 0) {
             this._backbufferGraphics

@@ -15,7 +15,7 @@ public final class EmailMessageConverter implements SyncConverter {
    private int _ribbonSuspendCount;
    private IndicatorManager _indicatorManager;
    public static final int VERSION_SUPPORTED = 3;
-   private static ContextObjectWR _convertContextWR = (ContextObjectWR)(new Object(43, 19));
+   private static ContextObjectWR _convertContextWR = new ContextObjectWR(43, 19);
 
    final void endTransaction() {
       if (this._indicatorManager != null) {
@@ -44,7 +44,7 @@ public final class EmailMessageConverter implements SyncConverter {
          this._indicatorManager.suspendIndicatorUpdates();
       }
 
-      SyncBuffer syncBuffer = (SyncBuffer)(new Object(dataBuffer, version, uid));
+      SyncBuffer syncBuffer = new SyncBuffer(dataBuffer, version, uid);
       ContextObject convertContext = _convertContextWR.getContextObject();
       boolean var9 = false /* VF: Semaphore variable */;
 
@@ -75,7 +75,7 @@ public final class EmailMessageConverter implements SyncConverter {
       }
 
       ConversionProvider converter = (ConversionProvider)object;
-      SyncBuffer syncBuffer = (SyncBuffer)(new Object(buffer, version, 0));
+      SyncBuffer syncBuffer = new SyncBuffer(buffer, version, 0);
       return converter.convert(_convertContextWR.getContextObject(), syncBuffer);
    }
 

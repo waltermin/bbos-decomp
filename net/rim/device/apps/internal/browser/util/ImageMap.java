@@ -22,7 +22,7 @@ public final class ImageMap {
 
    public ImageMap(String name) {
       this._name = name;
-      this._areas = (Vector)(new Object(0, 1));
+      this._areas = new Vector(0, 1);
    }
 
    public final String getName() {

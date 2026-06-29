@@ -7,7 +7,7 @@ import org.xml.sax.Attributes;
 
 public final class RegionElement extends CommonControlElement {
    private String _layout;
-   private Vector _nestedElements = (Vector)(new Object());
+   private Vector _nestedElements = new Vector();
 
    @Override
    public final void accept(DefinitionVisitor v) {

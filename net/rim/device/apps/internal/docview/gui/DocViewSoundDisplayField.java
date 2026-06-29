@@ -3,9 +3,9 @@ package net.rim.device.apps.internal.docview.gui;
 import net.rim.device.api.browser.field.Destroyable;
 import net.rim.device.api.io.MIMETypeAssociations;
 import net.rim.device.api.system.Audio;
-import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.util.Arrays;
+import net.rim.device.apps.api.ui.VerbMenuItem;
 import net.rim.device.apps.internal.blackberryemail.resources.EmailResources;
 import net.rim.device.apps.internal.browser.ui.SaveFileDialog;
 import net.rim.device.internal.i18n.CommonResource;
@@ -120,11 +120,11 @@ final class DocViewSoundDisplayField extends DocViewDisplayField {
       // 44: aload 4
       // 46: invokevirtual net/rim/device/api/ui/Manager.add (Lnet/rim/device/api/ui/Field;)V
       // 49: aload 4
-      // 4b: instanceof java/lang/Object
+      // 4b: instanceof net/rim/device/api/browser/field/Destroyable
       // 4e: ifeq 64
       // 51: aload 0
       // 52: aload 4
-      // 54: checkcast java/lang/Object
+      // 54: checkcast net/rim/device/api/browser/field/Destroyable
       // 57: putfield net/rim/device/apps/internal/docview/gui/DocViewSoundDisplayField._destroyInterface Lnet/rim/device/api/browser/field/Destroyable;
       // 5a: aload 0
       // 5b: getfield net/rim/device/apps/internal/docview/gui/DocViewSoundDisplayField._destroyInterface Lnet/rim/device/api/browser/field/Destroyable;
@@ -172,10 +172,10 @@ final class DocViewSoundDisplayField extends DocViewDisplayField {
    protected final void addCustomMenuVerbs(Menu menu, int instance) {
       super.addCustomMenuVerbs(menu, instance);
       if (this.isMoreAvailable()) {
-         menu.add((MenuItem)(new Object(new DocViewGuiVerb(9, 344064, EmailResources.getResourceBundle(), 80, this), 0)));
+         menu.add(new VerbMenuItem(new DocViewGuiVerb(9, 344064, EmailResources.getResourceBundle(), 80, this), 0));
       } else {
          if (this._audioConnection != null && this._contentType != null) {
-            menu.add((MenuItem)(new Object(new DocViewGuiVerb(18, 332288, CommonResource.getBundle(), 18, this), 0)));
+            menu.add(new VerbMenuItem(new DocViewGuiVerb(18, 332288, CommonResource.getBundle(), 18, this), 0));
          }
       }
    }

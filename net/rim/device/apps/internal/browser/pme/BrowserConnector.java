@@ -6,6 +6,7 @@ import net.rim.device.api.browser.field.RenderingApplication;
 import net.rim.device.api.browser.field.RequestedResource;
 import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.apps.internal.browser.common.RenderingUtilities;
+import net.rim.plazmic.mediaengine.MediaException;
 import net.rim.plazmic.mediaengine.io.ConnectionInfo;
 import net.rim.plazmic.mediaengine.io.Connector;
 
@@ -42,9 +43,9 @@ final class BrowserConnector implements Connector {
 
       try {
          int flags = this._flags & 7;
-         HttpHeaders requestHeaders = (HttpHeaders)(new Object());
+         HttpHeaders requestHeaders = new HttpHeaders();
          RenderingUtilities.setTranscodeHeader(requestHeaders, false);
-         RequestedResource resourceInfo = (RequestedResource)(new Object(url, requestHeaders, flags));
+         RequestedResource resourceInfo = new RequestedResource(url, requestHeaders, flags);
          this._httpConnection = this._renderingApplication.getResource(resourceInfo, null);
          if (this._httpConnection != null) {
             int statusCode = this._httpConnection.getResponseCode();
@@ -53,10 +54,10 @@ final class BrowserConnector implements Connector {
                info.setLength(this._httpConnection.getLength());
                return this._httpConnection.openInputStream();
             } else {
-               throw new Object();
+               throw new MediaException();
             }
          } else {
-            throw new Object(5);
+            throw new MediaException(5);
          }
       } finally {
          ;

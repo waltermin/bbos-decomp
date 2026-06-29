@@ -1,5 +1,7 @@
 package net.rim.plazmic.internal.mediaengine.model.intarray.v1_2;
 
+import net.rim.plazmic.internal.mediaengine.ui.ForeignObject;
+
 class PMEGraphicsViewport$PMEConvertedImages {
    Object[] _image;
    Object[] _imageConverted;
@@ -40,6 +42,6 @@ class PMEGraphicsViewport$PMEConvertedImages {
    }
 
    Object convertImage(Object image) {
-      return image != null && !(image instanceof Object) ? this.this$0._meGraphic.getBitmapObject(image) : null;
+      return image != null && !(image instanceof ForeignObject) ? this.this$0._meGraphic.getBitmapObject(image) : null;
    }
 }

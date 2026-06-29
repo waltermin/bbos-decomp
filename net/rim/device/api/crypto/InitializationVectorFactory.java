@@ -15,11 +15,11 @@ public class InitializationVectorFactory {
       if (algorithm != null && data != null && offset >= 0 && maxLength >= 0 && data.length - maxLength >= offset) {
          return privateGetInstance(algorithm, data, offset, maxLength);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
-   private static InitializationVector privateGetInstance(String algorithm, byte[] data, int offset, int maxLength) {
+   private static InitializationVector privateGetInstance(String algorithm, byte[] data, int offset, int maxLength) throws NoSuchAlgorithmException {
       algorithm = RIMFactoryUtilities.getLeftMostSubAlgorithm(algorithm);
       String baseAlgorithm = RIMFactoryUtilities.getBaseAlgorithm(algorithm);
       int blockBitLength = _hashtable.get(baseAlgorithm);
@@ -32,7 +32,7 @@ public class InitializationVectorFactory {
       }
 
       if (blockBitLength < 0) {
-         throw new Object(algorithm);
+         throw new NoSuchAlgorithmException(algorithm);
       }
 
       int blockByteLength = blockBitLength >>> 3;
@@ -40,11 +40,11 @@ public class InitializationVectorFactory {
          data = RandomSource.getBytes(blockByteLength);
          offset = 0;
       } else if (maxLength < blockByteLength) {
-         throw new Object(algorithm);
+         throw new IllegalArgumentException(algorithm);
       }
 
       if (offset < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return new InitializationVector(data, offset, blockByteLength);
       }
@@ -56,7 +56,7 @@ public class InitializationVectorFactory {
 
    public static InitializationVector getInstance(String algorithm) {
       if (algorithm == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return privateGetInstance(algorithm, null, 0, 0);
       }
@@ -72,7 +72,7 @@ public class InitializationVectorFactory {
             _hashtable.put(algorithm, defaultLength);
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -80,7 +80,7 @@ public class InitializationVectorFactory {
       ApplicationRegistry registry = ApplicationRegistry.getApplicationRegistry();
       _hashtable = (ToIntHashtable)registry.getOrWaitFor(-2089495853761416774L);
       if (_hashtable == null) {
-         _hashtable = (ToIntHashtable)(new Object());
+         _hashtable = new ToIntHashtable();
          registry.put(-2089495853761416774L, _hashtable);
       }
    }

@@ -55,18 +55,18 @@ public class MapView {
    }
 
    public MapView(ContextObject context) {
-      this._latitude = context.get(-200747095229876690L);
-      this._longitude = context.get(6606581876924152793L);
-      this._zoom = context.get(581052036187634982L);
-      this._rotation = context.get(8035222542232379495L);
+      this._latitude = (Integer)context.get(-200747095229876690L);
+      this._longitude = (Integer)context.get(6606581876924152793L);
+      this._zoom = (Integer)context.get(581052036187634982L);
+      this._rotation = (Integer)context.get(8035222542232379495L);
    }
 
    public ContextObject toContextObject() {
-      ContextObject context = (ContextObject)(new Object());
-      ContextObject.put(context, -200747095229876690L, new Object(this._latitude));
-      ContextObject.put(context, 6606581876924152793L, new Object(this._longitude));
-      ContextObject.put(context, 581052036187634982L, new Object(this._zoom));
-      ContextObject.put(context, 8035222542232379495L, new Object(this._rotation));
+      ContextObject context = new ContextObject();
+      ContextObject.put(context, -200747095229876690L, new Integer(this._latitude));
+      ContextObject.put(context, 6606581876924152793L, new Integer(this._longitude));
+      ContextObject.put(context, 581052036187634982L, new Integer(this._zoom));
+      ContextObject.put(context, 8035222542232379495L, new Integer(this._rotation));
       return context;
    }
 }

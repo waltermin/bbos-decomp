@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.bis.ui;
 import java.util.Hashtable;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.MenuItem;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.component.RadioButtonField;
 import net.rim.device.api.ui.component.RadioButtonGroup;
@@ -29,8 +30,8 @@ public final class FiltersSummaryScreen extends UserSettingsScreen {
    @Override
    public final void refresh(Hashtable screenParams) {
       this._mailbox = ClientSessionState.getInstance().getMailboxToModify();
-      this.setTitle(((StringBuffer)(new Object())).append(ApplicationResources.getString(276)).append(" ").append(this._mailbox.getEmail()).toString());
-      this.addContentField((Field)(new Object(ApplicationResources.getString(275))));
+      this.setTitle(ApplicationResources.getString(276) + " " + this._mailbox.getEmail());
+      this.addContentField(new LabelField(ApplicationResources.getString(275)));
       this.addContentLineBreak();
       FilterList filterList = new FilterList(this._mailbox.getFilters());
       this.addContentField(filterList);
@@ -42,10 +43,10 @@ public final class FiltersSummaryScreen extends UserSettingsScreen {
       this.attachEventToField(add, addEvent);
       this.setDefaultEvent(addEvent);
       this.addContentLineBreak();
-      this.addContentField((Field)(new Object(ApplicationResources.getString(278))));
-      RadioButtonGroup _forwardRadioGroup = (RadioButtonGroup)(new Object());
-      this._forward1Choice = (RadioButtonField)(new Object(ApplicationResources.getString(279), _forwardRadioGroup, false));
-      this._forward2Choice = (RadioButtonField)(new Object(ApplicationResources.getString(280), _forwardRadioGroup, false));
+      this.addContentField(new LabelField(ApplicationResources.getString(278)));
+      RadioButtonGroup _forwardRadioGroup = new RadioButtonGroup();
+      this._forward1Choice = new RadioButtonField(ApplicationResources.getString(279), _forwardRadioGroup, false);
+      this._forward2Choice = new RadioButtonField(ApplicationResources.getString(280), _forwardRadioGroup, false);
       this._forward1Choice.setPadding(0, 0, 0, 20);
       this._forward2Choice.setPadding(0, 0, 0, 20);
       if (this._mailbox.isForwardMessagesToDevice()) {
@@ -83,7 +84,7 @@ public final class FiltersSummaryScreen extends UserSettingsScreen {
          inputMap.put("filtername", filter.getName());
       }
 
-      Boolean defaultRule = (Boolean)(new Object(this._forward1Choice.isSelected()));
+      Boolean defaultRule = new Boolean(this._forward1Choice.isSelected());
       inputMap.put("defaultRuleSend", defaultRule.toString());
       return true;
    }

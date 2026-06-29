@@ -16,7 +16,7 @@ public class SymmetricKeyEncoder {
 
    public static EncodedKey encode(SymmetricKey key, String encodingAlgorithm) {
       if (key == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SymmetricKeyEncoder encoder = getEncoder(encodingAlgorithm, key.getAlgorithm());

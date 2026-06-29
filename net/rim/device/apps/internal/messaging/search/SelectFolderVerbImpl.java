@@ -27,9 +27,9 @@ final class SelectFolderVerbImpl extends SelectFolderVerb implements Runnable {
       this._selected = true;
       Folder f = null;
       Object o = ContextObject.get(context, 254);
-      if (!(o instanceof Object)) {
-         if (!(o instanceof Object)) {
-            if (!(context instanceof Object)) {
+      if (!(o instanceof ContextObject)) {
+         if (!(o instanceof FolderProvider)) {
+            if (!(context instanceof Folder)) {
                f = (Folder)ContextObject.get(context, -1219344331000926502L);
             } else {
                f = (Folder)context;

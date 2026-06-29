@@ -200,7 +200,7 @@ public final class BackgroundTaskThread extends Thread implements RadioStatusLis
       }
 
       BackgroundTaskThread thread = new BackgroundTaskThread();
-      ar.replace(guid, new Object(thread));
+      ar.replace(guid, new WeakReference(thread));
       return thread;
    }
 
@@ -245,7 +245,7 @@ public final class BackgroundTaskThread extends Thread implements RadioStatusLis
 
    private final synchronized void addRunnable(Runnable task) {
       if (this.isNotStarted()) {
-         this._tasklist = (Vector)(new Object());
+         this._tasklist = new Vector();
          this._tasklist.addElement(task);
          Proxy.getInstance().startThread(this);
       } else {

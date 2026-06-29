@@ -20,7 +20,7 @@ final class DocViewTextDisplayField$DocViewPlayScreen$EmbeddedScreenInfo {
          this._screen = scrInfo;
          this._imageField = imgFld;
       } else {
-         throw new Object("Null parameters for the rendered screen!");
+         throw new IllegalArgumentException("Null parameters for the rendered screen!");
       }
    }
 }

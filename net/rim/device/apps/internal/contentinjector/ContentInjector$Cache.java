@@ -12,9 +12,9 @@ final class ContentInjector$Cache implements Comparator {
    public static final ContentInjector$Cache loadCache() {
       PersistentObject po = PersistentStore.getPersistentObject(3344829125041281212L);
       synchronized (po) {
-         String[] cache = (Object[])po.getContents();
+         String[] cache = (String[])po.getContents();
          if (cache == null) {
-            cache = new Object[0];
+            cache = new String[0];
          }
 
          po.setContents(cache, 51);
@@ -54,7 +54,7 @@ final class ContentInjector$Cache implements Comparator {
 
    @Override
    public final int compare(Object o1, Object o2) {
-      if (o1 instanceof Object && o2 instanceof Object) {
+      if (o1 instanceof String && o2 instanceof String) {
          String s1 = (String)o1;
          String s2 = (String)o2;
          return s1.compareTo(s2);

@@ -7,6 +7,7 @@ import net.rim.device.api.crypto.certificate.CertificateStatus;
 import net.rim.device.api.crypto.keystore.CertificateStatusManagerTicket;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.util.Arrays;
+import net.rim.device.api.util.EmptyEnumeration;
 import net.rim.device.api.util.ObjectUtilities;
 
 public class CertificateStatusRequest {
@@ -44,7 +45,7 @@ public class CertificateStatusRequest {
       if (certChain != null && certChain.length >= 1) {
          for (int i = 0; i < certChain.length; i++) {
             if (certChain[i] == null) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
          }
 
@@ -54,7 +55,7 @@ public class CertificateStatusRequest {
          this._ticket = ticket;
          this._cookie = cookie;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -120,7 +121,7 @@ public class CertificateStatusRequest {
    }
 
    public Enumeration getProviderErrorMessages() {
-      return (Enumeration)(this._providerErrorMessages == null ? new Object() : this._providerErrorMessages.elements());
+      return this._providerErrorMessages == null ? new EmptyEnumeration() : this._providerErrorMessages.elements();
    }
 
    KeyStore getKeyStore() {

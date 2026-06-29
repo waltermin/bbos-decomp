@@ -72,7 +72,7 @@ public class EditEventVerb extends CalendarEventVerb implements DialogClosedList
          realEvent = (Event)baseCalDB.get(this._event.getLUID());
          if (realEvent == null) {
             ResourceBundle rb = ResourceBundle.getBundle(912302513268743237L, "net.rim.device.apps.internal.resource.Calendar");
-            Dialog eventDeletedDialog = (Dialog)(new Object(0, rb.getString(113), 0, Bitmap.getPredefinedBitmap(2), 33554432));
+            Dialog eventDeletedDialog = new Dialog(0, rb.getString(113), 0, Bitmap.getPredefinedBitmap(2), 33554432);
             UiApplication.getUiApplication().pushGlobalScreen(eventDeletedDialog, 500, 0);
          } else {
             EventUtilities.moveEvent(
@@ -84,9 +84,9 @@ public class EditEventVerb extends CalendarEventVerb implements DialogClosedList
       if (realEvent != null) {
          if (relatedLUID != 0 || this._event.isRecurring() && this._eventPartInstant != 0) {
             ResourceBundle rb = ResourceBundle.getBundle(912302513268743237L, "net.rim.device.apps.internal.resource.Calendar");
-            String[] choices = new Object[]{rb.getString(171), rb.getString(172), CommonResource.getString(19)};
+            String[] choices = new String[]{rb.getString(171), rb.getString(172), CommonResource.getString(19)};
             int[] values = new int[]{0, 1, -1, -805044213, 775162112, 774909491, 3420721, -805044199, 1699878656, 1918985587, 1226860643, 1867325550};
-            Dialog editRecurringDialog = (Dialog)(new Object(rb.getString(170), choices, values, 1, Bitmap.getPredefinedBitmap(1), 33554432));
+            Dialog editRecurringDialog = new Dialog(rb.getString(170), choices, values, 1, Bitmap.getPredefinedBitmap(1), 33554432);
             editRecurringDialog.setDialogClosedListener(this);
             UiApplication.getUiApplication().pushGlobalScreen(editRecurringDialog, 500, 1);
             switch (this._editRecurringDialogResult) {
@@ -138,10 +138,10 @@ public class EditEventVerb extends CalendarEventVerb implements DialogClosedList
       } else if (originalEvent.isRecurring() && this._eventPartInstant != 0) {
          Event eventToEdit = EventUtilities.createEventInstanceFromRecurrence(originalEvent, this._eventPartInstant);
          CalendarEventViewerProvider cevp = (CalendarEventViewerProvider)eventToEdit;
-         ContextObject context = (ContextObject)(new Object());
+         ContextObject context = new ContextObject();
          ContextObject.put(context, 245, originalEvent);
          CalendarEventViewer ev = cevp.getCalendarEventViewer(context);
-         Verb[] verbs = new Object[]{
+         Verb[] verbs = new Verb[]{
             new SaveViewedEventVerb(ev, originalEvent, this._eventPartInstant, eventToEdit),
             new DeleteViewedEventVerb(ev, originalEvent, this._eventPartInstant)
          };
@@ -156,7 +156,7 @@ public class EditEventVerb extends CalendarEventVerb implements DialogClosedList
    private Event editEvent(Event event, boolean allowRecurrence) {
       CalendarEventViewerProvider cevp = (CalendarEventViewerProvider)event;
       CalendarEventViewer ev = cevp.getCalendarEventViewer(null);
-      Verb[] verbs = new Object[]{new SaveViewedEventVerb(ev, event, false), new DeleteViewedEventVerb(ev, event)};
+      Verb[] verbs = new Verb[]{new SaveViewedEventVerb(ev, event, false), new DeleteViewedEventVerb(ev, event)};
       ResourceBundle rb = ResourceBundle.getBundle(912302513268743237L, "net.rim.device.apps.internal.resource.Calendar");
       ev.openViewer(rb.getString(130), verbs, 0, -1, allowRecurrence);
       return event;

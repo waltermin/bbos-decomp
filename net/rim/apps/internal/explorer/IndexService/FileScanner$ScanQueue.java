@@ -13,8 +13,8 @@ final class FileScanner$ScanQueue {
    FileScanner$ScanQueue(FileScanner _1, int initialCapacity) {
       this.this$0 = _1;
       this._events = new int[initialCapacity];
-      this._paths = new Object[initialCapacity];
-      this._names = new Object[initialCapacity];
+      this._paths = new String[initialCapacity];
+      this._names = new String[initialCapacity];
    }
 
    final boolean isEmpty() {
@@ -108,8 +108,8 @@ final class FileScanner$ScanQueue {
          } else {
             int newLength = length + 50;
             this._events = (int[])this.growFullArray(this._events, new int[newLength], length);
-            this._paths = (Object[])this.growFullArray(this._paths, new Object[newLength], length);
-            this._names = (Object[])this.growFullArray(this._names, new Object[newLength], length);
+            this._paths = (String[])this.growFullArray(this._paths, new String[newLength], length);
+            this._names = (String[])this.growFullArray(this._names, new String[newLength], length);
             this._start = 0;
             end = length;
          }

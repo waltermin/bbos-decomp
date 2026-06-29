@@ -63,7 +63,7 @@ public final class TripleDESKey implements SymmetricKey, Persistable {
 
          this.initialize(cryptoToken, cryptoToken.injectKey(data, offset));
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -79,7 +79,7 @@ public final class TripleDESKey implements SymmetricKey, Persistable {
          System.arraycopy(key3.getData(), 0, data, 16, 8);
          this.initialize(cryptoToken, cryptoToken.injectKey(data, 0));
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -89,7 +89,7 @@ public final class TripleDESKey implements SymmetricKey, Persistable {
          this._cryptoTokenData = cryptoTokenData;
          this.setHashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -110,14 +110,14 @@ public final class TripleDESKey implements SymmetricKey, Persistable {
       // 0a: invokespecial net/rim/device/api/crypto/TripleDESKey.initialize (Lnet/rim/device/api/crypto/TripleDESCryptoToken;[BI)V
       // 0d: return
       // 0e: astore 3
-      // 0f: new java/lang/Object
+      // 0f: new java/lang/RuntimeException
       // 12: dup
       // 13: aload 3
       // 14: invokevirtual net/rim/device/api/crypto/CryptoTokenException.toString ()Ljava/lang/String;
       // 17: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 1a: athrow
       // 1b: astore 3
-      // 1c: new java/lang/Object
+      // 1c: new java/lang/RuntimeException
       // 1f: dup
       // 20: aload 3
       // 21: invokevirtual net/rim/device/api/crypto/CryptoUnsupportedOperationException.toString ()Ljava/lang/String;
@@ -150,14 +150,14 @@ public final class TripleDESKey implements SymmetricKey, Persistable {
       // 0e: invokespecial net/rim/device/api/crypto/TripleDESKey.initialize (Lnet/rim/device/api/crypto/TripleDESCryptoToken;Lnet/rim/device/api/crypto/CryptoTokenSymmetricKeyData;)V
       // 11: return
       // 12: astore 1
-      // 13: new java/lang/Object
+      // 13: new java/lang/RuntimeException
       // 16: dup
       // 17: aload 1
       // 18: invokevirtual net/rim/device/api/crypto/CryptoTokenException.toString ()Ljava/lang/String;
       // 1b: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 1e: athrow
       // 1f: astore 1
-      // 20: new java/lang/Object
+      // 20: new java/lang/RuntimeException
       // 23: dup
       // 24: aload 1
       // 25: invokevirtual net/rim/device/api/crypto/CryptoUnsupportedOperationException.toString ()Ljava/lang/String;

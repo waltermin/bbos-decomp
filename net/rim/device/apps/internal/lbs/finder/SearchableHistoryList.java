@@ -4,9 +4,11 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.internal.lbs.Location;
 import net.rim.device.apps.internal.lbs.resources.LBSResources;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 
 public final class SearchableHistoryList extends VerticalFieldManager implements FieldChangeListener {
    private SearchableHistoryList$SearchHistoryEditField _historyEditField;
@@ -80,20 +82,18 @@ public final class SearchableHistoryList extends VerticalFieldManager implements
       super(562949953421312L);
       this._callback = callback;
       this._historyStore = FinderHistory.getInstance();
-      this._historyEditField = new SearchableHistoryList$SearchHistoryEditField(
-         this, ((StringBuffer)(new Object())).append(LBSResources.getString(327)).append(' ').toString(), "", Integer.MAX_VALUE, 2147483648L
-      );
+      this._historyEditField = new SearchableHistoryList$SearchHistoryEditField(this, LBSResources.getString(327) + ' ', "", Integer.MAX_VALUE, 2147483648L);
       this._historyEditField.setChangeListener(this);
       Font f = this._historyEditField.getFont();
       if (f == null) {
          f = Font.getDefault();
       }
 
-      this.add((Field)(new Object(f.getHeight() >> 2)));
+      this.add(new VerticalSpacerField(f.getHeight() >> 2));
       this.add(this._historyEditField);
-      this.add((Field)(new Object()));
-      this.add((Field)(new Object(f.getHeight() >> 2)));
-      VerticalFieldManager vfm = (VerticalFieldManager)(new Object(299067162755072L));
+      this.add(new SeparatorField());
+      this.add(new VerticalSpacerField(f.getHeight() >> 2));
+      VerticalFieldManager vfm = new VerticalFieldManager(299067162755072L);
       vfm.add(this._historyList = new SearchableHistoryList$LookupListField(this));
       this.add(vfm);
       this._historyList.matchList();

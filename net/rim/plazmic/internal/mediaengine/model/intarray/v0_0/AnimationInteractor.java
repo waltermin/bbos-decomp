@@ -15,7 +15,7 @@ public class AnimationInteractor implements MediaService, EventSubscription, Foc
    protected MediaServices _services;
 
    public AnimationInteractor() {
-      this._subscription = (EventSubscriptionHelper)(new Object());
+      this._subscription = new EventSubscriptionHelper();
    }
 
    @Override

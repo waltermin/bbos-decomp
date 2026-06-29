@@ -19,7 +19,7 @@ final class RequestedAssistData {
    static final byte NUM_OPT_ELEMENTS = 1;
 
    RequestedAssistData() {
-      GPSRequestedAssistData reqAssistData = (GPSRequestedAssistData)(new Object());
+      GPSRequestedAssistData reqAssistData = new GPSRequestedAssistData();
       if (reqAssistData == null) {
          System.out.println("Couldn't create new GPSRequestedAssistData object");
       }
@@ -72,16 +72,16 @@ final class RequestedAssistData {
 
    final void print() {
       System.out.println("Requested Assistance Data: ");
-      System.out.println(((StringBuffer)(new Object("Optionals: "))).append(this.optionals).toString());
-      System.out.println(((StringBuffer)(new Object("Almanac: "))).append(this.almanacReq).toString());
-      System.out.println(((StringBuffer)(new Object("Utc Model: "))).append(this.utcModelReq).toString());
-      System.out.println(((StringBuffer)(new Object("Ionospheric Model: "))).append(this.ionosphericModelReq).toString());
-      System.out.println(((StringBuffer)(new Object("DGPS Corrections: "))).append(this.dgpsCorrectionsReq).toString());
-      System.out.println(((StringBuffer)(new Object("Reference Location: "))).append(this.referenceLocationReq).toString());
-      System.out.println(((StringBuffer)(new Object("Reference Time: "))).append(this.referenceTimeReq).toString());
-      System.out.println(((StringBuffer)(new Object("Acquisition Assistance: "))).append(this.acquisitionAssistanceReq).toString());
-      System.out.println(((StringBuffer)(new Object("Real Time Integrity: "))).append(this.realTimeIntegrityReq).toString());
-      System.out.println(((StringBuffer)(new Object("Navigation Model: "))).append(this.navigationModelReq).toString());
+      System.out.println("Optionals: " + this.optionals);
+      System.out.println("Almanac: " + this.almanacReq);
+      System.out.println("Utc Model: " + this.utcModelReq);
+      System.out.println("Ionospheric Model: " + this.ionosphericModelReq);
+      System.out.println("DGPS Corrections: " + this.dgpsCorrectionsReq);
+      System.out.println("Reference Location: " + this.referenceLocationReq);
+      System.out.println("Reference Time: " + this.referenceTimeReq);
+      System.out.println("Acquisition Assistance: " + this.acquisitionAssistanceReq);
+      System.out.println("Real Time Integrity: " + this.realTimeIntegrityReq);
+      System.out.println("Navigation Model: " + this.navigationModelReq);
       if ((this.optionals & 1) == 1) {
          this.navigationModel.print();
       }

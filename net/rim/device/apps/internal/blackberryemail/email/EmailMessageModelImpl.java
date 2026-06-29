@@ -14,12 +14,14 @@ import net.rim.device.api.synchronization.SyncObject;
 import net.rim.device.api.system.EventLogger;
 import net.rim.device.api.system.PersistentObject;
 import net.rim.device.api.ui.accessibility.AccessibleContext;
+import net.rim.device.api.ui.accessibility.AccessibleContextFactory;
 import net.rim.device.api.ui.accessibility.AccessibleContextProxy;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.api.util.WeakReferenceUtilities;
+import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.AddressReference;
 import net.rim.device.apps.api.framework.model.ActionProvider;
 import net.rim.device.apps.api.framework.model.CloneProvider;
@@ -42,6 +44,7 @@ import net.rim.device.apps.api.framework.model.VisibilityControl;
 import net.rim.device.apps.api.framework.registration.ModelViewListenerRegistry;
 import net.rim.device.apps.api.framework.registration.RecognizerRepository;
 import net.rim.device.apps.api.framework.verb.Verb;
+import net.rim.device.apps.api.messaging.EmailBodyProvider;
 import net.rim.device.apps.api.messaging.Folder;
 import net.rim.device.apps.api.messaging.FolderHierarchies;
 import net.rim.device.apps.api.messaging.MessageIcons;
@@ -52,6 +55,7 @@ import net.rim.device.apps.api.messaging.messagelist.MessageAttachment;
 import net.rim.device.apps.api.messaging.messagelist.MessageListOptions;
 import net.rim.device.apps.api.messaging.messagelist.MessagePartsProvider;
 import net.rim.device.apps.api.messaging.resources.MessageResources;
+import net.rim.device.apps.api.messaging.util.FileMessageVerb;
 import net.rim.device.apps.api.messaging.util.MessagingUtil;
 import net.rim.device.apps.api.search.Match;
 import net.rim.device.apps.api.search.SearchCriterion;
@@ -127,10 +131,10 @@ public class EmailMessageModelImpl
    private static final int PACKEDINFO_SENSITIVITY_SHIFT = 24;
    private static final int PACKEDINFO_SENSITIVITY_MASK = -16777216;
    private static final int[] RESEND_DELAY_TIMES = new int[]{300, 300, 1200, 1800, -804651007, 51, -804651004, 63, 64, 65, 66, -804651004, 67, 68, 69, 74};
-   private static Timer _resendTimer = (Timer)(new Object());
+   private static Timer _resendTimer = new Timer();
    private static final int MESSAGE_HEADER_SIZE = 106;
-   private static WeakReference _messageHeaderWR = (WeakReference)(new Object(null));
-   private static WeakReference _folderDataBufferWR = (WeakReference)(new Object(null));
+   private static WeakReference _messageHeaderWR = new WeakReference(null);
+   private static WeakReference _folderDataBufferWR = new WeakReference(null);
    static int[] _hints = new int[0];
    private static ContextObject _purgeStaleMessagesContext;
 
@@ -153,7 +157,7 @@ public class EmailMessageModelImpl
          if (ContextObject.getFlag(context, 13) && this.canBeForwarded() && EmailMessageUtilities.allowOutboundMessages(this)) {
             Array.resize(verbs, verbs.length + 1);
             verbs[verbs.length - 1] = this.getEmailForwardVerb();
-            ForwardAsVerb forwardAsVerb = (ForwardAsVerb)(new Object(this));
+            ForwardAsVerb forwardAsVerb = new ForwardAsVerb(this);
             if (forwardAsVerb.canInvoke(null)) {
                Array.resize(verbs, verbs.length + 1);
                verbs[verbs.length - 1] = forwardAsVerb;
@@ -204,7 +208,7 @@ public class EmailMessageModelImpl
             verbs[numberOfVerbsUsed++] = this.getEmailOpenVerb(context);
             if (this.canBeForwarded()) {
                verbs[numberOfVerbsUsed++] = this.getEmailForwardVerb();
-               ForwardAsVerb forwardAsVerb = (ForwardAsVerb)(new Object(this));
+               ForwardAsVerb forwardAsVerb = new ForwardAsVerb(this);
                if (forwardAsVerb.canInvoke(null)) {
                   verbs[numberOfVerbsUsed++] = forwardAsVerb;
                }
@@ -225,7 +229,7 @@ public class EmailMessageModelImpl
             }
 
             if (folder != null && folder.isInFolderDatabase()) {
-               verbs[numberOfVerbsUsed++] = (Verb)(new Object(this));
+               verbs[numberOfVerbsUsed++] = new FileMessageVerb(this);
             }
 
             if (!this.flagsSet(16)) {
@@ -247,9 +251,9 @@ public class EmailMessageModelImpl
 
    @Override
    public int match(Object criteria) {
-      if (!(criteria instanceof Object)) {
+      if (!(criteria instanceof SearchCriterion)) {
          try {
-            SearchCriterion[] crit = (Object[])criteria;
+            SearchCriterion[] crit = (SearchCriterion[])criteria;
             return Match.match(this, this, crit, _hints);
          } finally {
             return -1;
@@ -284,7 +288,7 @@ public class EmailMessageModelImpl
                match = false;
                break;
             case 15:
-               match = crit.getValue() == this._folderId;
+               match = (Long)crit.getValue() == this._folderId;
                break;
             case 17:
                int[] values = (int[])crit.getValue();
@@ -303,7 +307,7 @@ public class EmailMessageModelImpl
                match = this.isDraft();
                break;
             case 24:
-               match = crit.getValue() == this.getCMIMEReferenceIdentifier();
+               match = (Integer)crit.getValue() == this.getCMIMEReferenceIdentifier();
                break;
             case 25:
                match = this.flagsSet(8192);
@@ -347,15 +351,15 @@ public class EmailMessageModelImpl
          for (int i = 0; i < size; i++) {
             Object payloadElement = this._payload.getAt(i);
             if (!(payloadElement instanceof ProxyModel)) {
-               if (payloadElement instanceof Object) {
+               if (payloadElement instanceof RIMModel) {
                   RIMModel m = (RIMModel)payloadElement;
-                  if (m instanceof Object) {
+                  if (m instanceof ActionProvider) {
                      ((ActionProvider)m).perform(childActionId, context);
                   }
                }
             } else {
                Object m = ((ProxyModel)payloadElement).getObject();
-               if (m instanceof Object) {
+               if (m instanceof ActionProvider) {
                   ((ActionProvider)m).perform(childActionId, context);
                }
             }
@@ -688,8 +692,8 @@ public class EmailMessageModelImpl
          case 153:
             EmailFolder folder = EmailHierarchy.getEmailFolder(this.getFolderId());
             if (folder != null && folder.isInFolderDatabase()) {
-               Verb verb = new Object(this);
-               return ((Verb)verb).invoke(context);
+               Verb verb = new FileMessageVerb(this);
+               return verb.invoke(context);
             }
       }
 
@@ -749,7 +753,7 @@ public class EmailMessageModelImpl
 
    protected Verb getEmailFileVerb() {
       EmailFolder folder = EmailHierarchy.getEmailFolder(this.getFolderId());
-      return (Verb)(folder != null && folder.isInFolderDatabase() ? new Object(this) : null);
+      return folder != null && folder.isInFolderDatabase() ? new FileMessageVerb(this) : null;
    }
 
    protected Verb getEmailSaveVerb() {
@@ -765,16 +769,15 @@ public class EmailMessageModelImpl
    }
 
    protected Verb getEmailOpenVerb(Object context) {
-      Verb[] defaultVerbs = new Object[2];
-      defaultVerbs[0] = new EmailOpenVerb(this);
+      Verb[] defaultVerbs = new Verb[]{new EmailOpenVerb(this), null};
       ContextObject contextObject = ContextObject.castOrCreate(context);
       contextObject.put(248, defaultVerbs);
       contextObject.put(424670468422402792L, this);
       contextObject.setFlag(87);
       RIMModel payloadModel = this.getPayload();
-      if (payloadModel instanceof Object) {
+      if (payloadModel instanceof VerbProvider) {
          VerbProvider verbProvider = (VerbProvider)payloadModel;
-         verbProvider.getVerbs(contextObject, new Object[0]);
+         verbProvider.getVerbs(contextObject, new Verb[0]);
       }
 
       contextObject.remove(248);
@@ -796,7 +799,7 @@ public class EmailMessageModelImpl
    }
 
    public SubjectModel getSubjectModel() {
-      if (this._payload instanceof Object) {
+      if (this._payload instanceof ReadableList) {
          ReadableList items = this._payload;
          int size = items.size();
 
@@ -1009,13 +1012,13 @@ public class EmailMessageModelImpl
 
    @Override
    public BodyModel getBodyModel() {
-      if (this._payload instanceof Object) {
+      if (this._payload instanceof ReadableList) {
          ReadableList items = this._payload;
          int size = items.size();
 
          for (int i = 0; i < size; i++) {
             Object item = items.getAt(i);
-            if (item instanceof Object && item instanceof Object) {
+            if (item instanceof BodyModel && item instanceof EmailBodyProvider) {
                return (BodyModel)item;
             }
          }
@@ -1052,7 +1055,7 @@ public class EmailMessageModelImpl
       Object context
    ) {
       if ((flagsToSet & flagsToClear) != 0) {
-         throw new Object("Trying to set and clear the same bit");
+         throw new IllegalArgumentException("Trying to set and clear the same bit");
       }
 
       if ((flagsToSet & 2) != 0 && EmailHierarchy.isInInboxOrSentItemsFolder(this)) {
@@ -1099,7 +1102,7 @@ public class EmailMessageModelImpl
 
          if (newStatus == 33554431 && NativeAttachmentRequestProcessor$Helper.messageContainsLargeAttachments(this)) {
             newStatus = 67108863;
-            if (context instanceof Object) {
+            if (context instanceof ContextObject) {
                ContextObject contextObject = (ContextObject)context;
                Boolean isInvokedFromProcessor = (Boolean)contextObject.get(4619344424211138694L);
                if (isInvokedFromProcessor != null && isInvokedFromProcessor) {
@@ -1195,7 +1198,7 @@ public class EmailMessageModelImpl
             MessageListOptions options = MessageListOptions.getOptions();
             if (options.isKeepSavedMessagesDurationDefinedByItPolicy()) {
                int durationFromItPolicy = options.getKeepSavedMessagesDuration();
-               StringBuffer sb = (StringBuffer)(new Object());
+               StringBuffer sb = new StringBuffer();
                sb.append(CommonResources.getString(9167));
                sb.append(" ");
                if (durationFromItPolicy == -1) {
@@ -1233,7 +1236,7 @@ public class EmailMessageModelImpl
 
       if (notify) {
          Collection collection = EmailHierarchy.getStorageCollection(this.getFolderId(), this.flagsSet(2));
-         if (collection instanceof Object) {
+         if (collection instanceof CollectionListener) {
             CollectionListener listener = (CollectionListener)collection;
             MessagingUtil.robustElementUpdated(listener, this);
             if (this.flagsSet(16) && !this.flagsSet(8)) {
@@ -1280,9 +1283,9 @@ public class EmailMessageModelImpl
 
          for (int i = 0; i < size; i++) {
             Object payloadElement = this._payload.getAt(i);
-            if (payloadElement instanceof Object) {
+            if (payloadElement instanceof RIMModel) {
                RIMModel m = (RIMModel)payloadElement;
-               if (m instanceof Object) {
+               if (m instanceof ColumnPaintProvider) {
                   ColumnPaintProvider columnPaintProvider = (ColumnPaintProvider)m;
                   columnPaintProvider.paint(painter, contextObject);
                }
@@ -1355,7 +1358,7 @@ public class EmailMessageModelImpl
 
       for (int i = 0; i < n; i++) {
          RIMModel m = (RIMModel)this._payload.getAt(i);
-         if (m instanceof Object) {
+         if (m instanceof KeyProvider) {
             KeyProvider keyProvider = (KeyProvider)m;
             keyCount += keyProvider.getKeys(context, keyArray, index + keyCount, keyRequested);
          }
@@ -1370,7 +1373,7 @@ public class EmailMessageModelImpl
          AddressReference sender = this.getSenderInfo();
          if (sender != null) {
             Object senderModel = sender.getInsideModel();
-            if (senderModel instanceof Object) {
+            if (senderModel instanceof KeyProvider) {
                return ((KeyProvider)senderModel).getKeys(context, keyArray, index, keyRequested);
             }
          }
@@ -1498,7 +1501,7 @@ public class EmailMessageModelImpl
    @Override
    public void purge(int purgeType) {
       if (_purgeStaleMessagesContext == null) {
-         _purgeStaleMessagesContext = (ContextObject)(new Object(23));
+         _purgeStaleMessagesContext = new ContextObject(23);
       }
 
       LowMemoryManager.markAsRecoverable(this);
@@ -1619,7 +1622,7 @@ public class EmailMessageModelImpl
 
    @Override
    public AddressReference getSenderInfo() {
-      if (this._payload instanceof Object) {
+      if (this._payload instanceof ReadableList) {
          ReadableList items = this._payload;
          int size = items.size();
 
@@ -1677,18 +1680,18 @@ public class EmailMessageModelImpl
 
       for (int i = 0; i < this._payload._submembers.length; i++) {
          Object _item = this._payload._submembers[i];
-         if (_item instanceof Object && _item instanceof EmailHeaderModel) {
+         if (_item instanceof AddressReference && _item instanceof EmailHeaderModel) {
             PersistableRIMModel _model = ((AddressReference)_item).getInsideModel();
-            if (_model instanceof Object) {
+            if (_model instanceof AccessibleContextProxy) {
                String _address = ((AccessibleContextProxy)_model).getAccessibleContext().getAccessibleName();
                if (_address != null) {
                   if (this._payload.inbound() && ((EmailHeaderModel)_item).getHeaderType() == 3) {
-                     _accessibleName = ((StringBuffer)(new Object())).append(_accessibleName).append("From: ").append(_address).append(", ").toString();
+                     _accessibleName = _accessibleName + "From: " + _address + ", ";
                      break;
                   }
 
                   if (!this._payload.inbound() && ((EmailHeaderModel)_item).getHeaderType() == 0) {
-                     _accessibleName = ((StringBuffer)(new Object())).append(_accessibleName).append("To: ").append(_address).append(", ").toString();
+                     _accessibleName = _accessibleName + "To: " + _address + ", ";
                      break;
                   }
                }
@@ -1696,8 +1699,8 @@ public class EmailMessageModelImpl
          }
       }
 
-      _accessibleName = ((StringBuffer)(new Object())).append(_accessibleName).append(this.getSubject()).toString();
-      return (AccessibleContext)(new Object(_accessibleName, 0, 4));
+      _accessibleName = _accessibleName + this.getSubject();
+      return new AccessibleContextFactory(_accessibleName, 0, 4);
    }
 
    private void writeFolderInfo(byte[] messageHeader) {
@@ -1708,8 +1711,8 @@ public class EmailMessageModelImpl
 
    private Verb[] getSubmemberVerbs(Object context) {
       RIMModel payloadModel = this.getPayload();
-      if (payloadModel instanceof Object) {
-         Verb[] submemberVerbs = new Object[0];
+      if (payloadModel instanceof VerbProvider) {
+         Verb[] submemberVerbs = new Verb[0];
          VerbProvider verbProvider = (VerbProvider)payloadModel;
          verbProvider.getVerbs(context, submemberVerbs);
          return submemberVerbs;
@@ -1873,9 +1876,9 @@ public class EmailMessageModelImpl
 
             for (int i = 0; i < size; i++) {
                Object payloadElement = this._payload.getAt(i);
-               if (payloadElement instanceof Object) {
+               if (payloadElement instanceof RIMModel) {
                   RIMModel m = (RIMModel)payloadElement;
-                  if (m instanceof Object) {
+                  if (m instanceof ActionProvider) {
                      ((ActionProvider)m).perform(-7793619941406158181L, context);
                   }
                }
@@ -2248,7 +2251,7 @@ public class EmailMessageModelImpl
 
       for (int i = this._payload.size() - 1; i >= 0; i--) {
          Object item = this._payload.getAt(i);
-         if (item instanceof ProxyModel || item instanceof Object || item instanceof AbstractEmailFileAttachment) {
+         if (item instanceof ProxyModel || item instanceof AddressCardModel || item instanceof AbstractEmailFileAttachment) {
             return true;
          }
 

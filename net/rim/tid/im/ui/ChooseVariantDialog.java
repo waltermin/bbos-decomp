@@ -84,8 +84,8 @@ public final class ChooseVariantDialog extends PopupScreen {
                   try {
                      var9 = true;
                      InputContext ic = InputContext.getInstance();
-                     SLControlObject co = ic.getInputMethodControlObject();
-                     ((SLControlObject)co).actionPerformed(42, null);
+                     SLControlObject co = (SLControlObject)ic.getInputMethodControlObject();
+                     co.actionPerformed(42, null);
                      var9 = false;
                   } finally {
                      if (var9) {

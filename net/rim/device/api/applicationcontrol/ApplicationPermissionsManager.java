@@ -28,7 +28,7 @@ public final class ApplicationPermissionsManager {
    public final int getPermission(int permission) {
       switch (permission) {
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          default:
             return this.convertValue(ApplicationControl.isAuthenticatorApiAllowed(true));
@@ -86,12 +86,12 @@ public final class ApplicationPermissionsManager {
          case 10:
             return this.convertValue(ApplicationControl.isInternalConnectionAllowed(domain, true));
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
    public final ApplicationPermissions getApplicationPermissions() {
-      ApplicationPermissions permissions = (ApplicationPermissions)(new Object());
+      ApplicationPermissions permissions = new ApplicationPermissions();
       permissions.addPermission(0, this.convertValue(ApplicationControl.isAuthenticatorApiAllowed(true)));
       permissions.addPermission(1, this.convertValue(ApplicationControl.isBluetoothSerialProfileAllowed(true)));
       permissions.addPermission(2, this.convertValue(ApplicationControl.isBrowserFilterAllowed(null, true)));
@@ -120,7 +120,7 @@ public final class ApplicationPermissionsManager {
    public final int getMaxAllowable(int permission) {
       switch (permission) {
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          default:
             return this.convertValue(ApplicationControl.getPolicyPermission(20, true));
@@ -178,13 +178,13 @@ public final class ApplicationPermissionsManager {
          case 10:
             return this.convertValue(ApplicationControl.getPolicyPermissionTernary(domain, 3, 4, true));
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
    public final synchronized boolean invokePermissionsRequest(ApplicationPermissions requestedPermissions) {
       if (requestedPermissions == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       boolean permissionsSaved = false;
@@ -228,7 +228,7 @@ public final class ApplicationPermissionsManager {
       // 04: aload 2
       // 05: ldc2_w 3353949624016666498
       // 08: invokevirtual net/rim/device/api/system/ApplicationRegistry.get (J)Ljava/lang/Object;
-      // 0b: checkcast java/lang/Object
+      // 0b: checkcast net/rim/device/api/system/ApplicationDescriptor
       // 0e: astore 3
       // 0f: aload 3
       // 10: ifnull 7a
@@ -239,7 +239,7 @@ public final class ApplicationPermissionsManager {
       // 1c: astore 4
       // 1e: aload 2
       // 1f: ldc2_w 5402085941883890214
-      // 22: new java/lang/Object
+      // 22: new net/rim/device/api/system/ControlledAccess
       // 25: dup
       // 26: aload 1
       // 27: aload 4
@@ -296,7 +296,7 @@ public final class ApplicationPermissionsManager {
    }
 
    private final ApplicationControlRequestScreen generateApplicationControlRequestScreen(String appName) {
-      ApplicationControlRequestScreen appControlScreen = (ApplicationControlRequestScreen)(new Object(appName));
+      ApplicationControlRequestScreen appControlScreen = new ApplicationControlRequestScreen(appName);
       appControlScreen.setCloseListener(new ApplicationPermissionsManager$AppControlScreenClosedListener(this, null));
       return appControlScreen;
    }
@@ -316,9 +316,9 @@ public final class ApplicationPermissionsManager {
 
       if (cmg == null) {
          int processHandle = currentProcess.getModuleHandle();
-         appControlScreen = (ApplicationControlScreen)(new Object(processHandle, requestedPermissions));
+         appControlScreen = new ApplicationControlScreen(processHandle, requestedPermissions);
       } else {
-         IntVector handles = (IntVector)(new Object());
+         IntVector handles = new IntVector();
          Enumeration modules = cmg.getModules();
 
          while (modules.hasMoreElements()) {
@@ -336,7 +336,7 @@ public final class ApplicationPermissionsManager {
             return null;
          }
 
-         appControlScreen = (ApplicationControlScreen)(new Object(handles.toArray(), cmg.getFriendlyName(), requestedPermissions));
+         appControlScreen = new ApplicationControlScreen(handles.toArray(), cmg.getFriendlyName(), requestedPermissions);
       }
 
       appControlScreen.setCloseListener(new ApplicationPermissionsManager$AppControlScreenClosedListener(this, null));
@@ -360,7 +360,7 @@ public final class ApplicationPermissionsManager {
    private final int convertValue(int itPolicyValue) {
       switch (itPolicyValue) {
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          default:
             return 999;

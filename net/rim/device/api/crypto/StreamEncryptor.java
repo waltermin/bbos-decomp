@@ -27,7 +27,7 @@ public class StreamEncryptor extends EncryptorOutputStream {
             throw new CryptoIOException(e);
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

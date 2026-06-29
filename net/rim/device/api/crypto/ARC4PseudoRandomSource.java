@@ -11,7 +11,7 @@ public final class ARC4PseudoRandomSource extends AbstractPseudoRandomSource imp
    }
 
    public ARC4PseudoRandomSource(byte[] seed, int offset, int length) {
-      this._context = (NativeARC4PRNG)(new Object(seed, offset, length));
+      this._context = new NativeARC4PRNG(seed, offset, length);
    }
 
    public ARC4PseudoRandomSource(ARC4Key key) {
@@ -51,10 +51,10 @@ public final class ARC4PseudoRandomSource extends AbstractPseudoRandomSource imp
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

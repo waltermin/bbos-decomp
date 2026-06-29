@@ -24,7 +24,7 @@ import net.rim.device.internal.i18n.CommonResource;
 import net.rim.vm.Array;
 
 public final class FolderSelectionField extends Field {
-   private TextRect _label = (TextRect)(new Object(this));
+   private TextRect _label = new TextRect(this);
    private String _folderName;
    private Folder _folder;
    private int _selectedWidth;
@@ -39,8 +39,8 @@ public final class FolderSelectionField extends Field {
    private static MenuItem _changeOptionItem = new FolderSelectionField$1(CommonResource.getBundle(), 1, 50200, 10);
 
    public static final FolderList getSelectionList(Folder folder, SelectFolderVerb selectionVerb) {
-      FolderList folderList = (FolderList)(new Object(folder));
-      folderList.setContext((ContextObject)(new Object(22)));
+      FolderList folderList = new FolderList(folder);
+      folderList.setContext(new ContextObject(22));
       folderList.setHierarchies(getSearchableHierarchies());
       folderList.setSelectVerb(selectionVerb);
       return folderList;
@@ -72,14 +72,14 @@ public final class FolderSelectionField extends Field {
    }
 
    public static final Folder[] getSearchableHierarchies() {
-      Folder[] result = new Object[16];
+      Folder[] result = new Folder[16];
       int count = 0;
       Enumeration enumeration = FolderHierarchies.getFolderHierarchies();
-      ContextObject context = (ContextObject)(new Object(22));
+      ContextObject context = new ContextObject(22);
 
       while (enumeration.hasMoreElements()) {
          Folder f = (Folder)enumeration.nextElement();
-         if (f instanceof Object && f.isVisible(context)) {
+         if (f instanceof Folder && f.isVisible(context)) {
             if (count >= result.length) {
                Array.resize(result, count + 16);
             }

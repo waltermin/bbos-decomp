@@ -21,10 +21,10 @@ public final class PlayAllMenuItem extends MenuItem {
 
    @Override
    public final void run() {
-      String[] files = new Object[0];
+      String[] files = new String[0];
       this.addDirectory(files, this._url, "");
       Arrays.sort(files, new PlayAllMenuItem$1(this));
-      M3UPlaylist playlist = (M3UPlaylist)(new Object());
+      M3UPlaylist playlist = new M3UPlaylist();
 
       for (int i = 0; i < files.length; i++) {
          playlist.addUrl(files[i], null, -1);
@@ -57,7 +57,7 @@ public final class PlayAllMenuItem extends MenuItem {
       // 01: astore 4
       // 03: aload 2
       // 04: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 07: checkcast java/lang/Object
+      // 07: checkcast javax/microedition/io/file/FileConnection
       // 0a: astore 4
       // 0c: aload 4
       // 0e: invokeinterface javax/microedition/io/file/FileConnection.list ()Ljava/util/Enumeration; 1
@@ -68,7 +68,7 @@ public final class PlayAllMenuItem extends MenuItem {
       // 1f: goto a3
       // 22: aload 5
       // 24: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 29: checkcast java/lang/Object
+      // 29: checkcast java/lang/String
       // 2c: astore 6
       // 2e: aload 6
       // 30: invokestatic net/rim/device/internal/io/file/FileUtilities.isDirectory (Ljava/lang/String;)Z
@@ -79,7 +79,7 @@ public final class PlayAllMenuItem extends MenuItem {
       // 3c: if_icmpne 15
       // 3f: aload 0
       // 40: aload 1
-      // 41: new java/lang/Object
+      // 41: new java/lang/StringBuffer
       // 44: dup
       // 45: invokespecial java/lang/StringBuffer.<init> ()V
       // 48: aload 2
@@ -87,7 +87,7 @@ public final class PlayAllMenuItem extends MenuItem {
       // 4c: aload 6
       // 4e: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 51: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
-      // 54: new java/lang/Object
+      // 54: new java/lang/StringBuffer
       // 57: dup
       // 58: invokespecial java/lang/StringBuffer.<init> ()V
       // 5b: aload 3
@@ -110,7 +110,7 @@ public final class PlayAllMenuItem extends MenuItem {
       // 84: bipush 3
       // 86: if_icmpne 15
       // 89: aload 1
-      // 8a: new java/lang/Object
+      // 8a: new java/lang/StringBuffer
       // 8d: dup
       // 8e: invokespecial java/lang/StringBuffer.<init> ()V
       // 91: aload 3

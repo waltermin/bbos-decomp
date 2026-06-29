@@ -66,6 +66,6 @@ public class MappingResolver {
    }
 
    public Vector resolveFieldMapping() {
-      return (Vector)(this.isMappedToFieldElement() ? this._we.resolvePath(this._mapping) : new Object());
+      return this.isMappedToFieldElement() ? this._we.resolvePath(this._mapping) : new Vector();
    }
 }

@@ -4,7 +4,6 @@ import java.io.ByteArrayOutputStream;
 import net.rim.device.api.crypto.AESEncryptorEngine;
 import net.rim.device.api.crypto.AESKey;
 import net.rim.device.api.crypto.BlockEncryptor;
-import net.rim.device.api.crypto.BlockEncryptorEngine;
 import net.rim.device.api.crypto.CAST128Key;
 import net.rim.device.api.crypto.CBCEncryptorEngine;
 import net.rim.device.api.crypto.CryptoTokenException;
@@ -15,6 +14,7 @@ import net.rim.device.api.crypto.RC2Key;
 import net.rim.device.api.crypto.RandomSource;
 import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.crypto.SymmetricKey;
+import net.rim.device.api.crypto.TripleDESEncryptorEngine;
 import net.rim.device.api.crypto.TripleDESKey;
 
 final class CMSKeyWrap {
@@ -32,16 +32,16 @@ final class CMSKeyWrap {
          int CEKLENGTH = 24;
          int ICVLENGTH = 8;
          byte[] CEK = contentKey.getData();
-         SHA1Digest digest = (SHA1Digest)(new Object());
+         SHA1Digest digest = new SHA1Digest();
          digest.update(CEK);
          byte[] ICV = digest.getDigest();
          byte[] CEKICV = new byte[CEKLENGTH + ICVLENGTH];
          System.arraycopy(CEK, 0, CEKICV, 0, CEKLENGTH);
          System.arraycopy(ICV, 0, CEKICV, CEKLENGTH, ICVLENGTH);
-         InitializationVector iv = (InitializationVector)(new Object(IVLENGTH));
+         InitializationVector iv = new InitializationVector(IVLENGTH);
          byte[] IV = iv.getData();
-         ByteArrayOutputStream stream1 = (ByteArrayOutputStream)(new Object());
-         BlockEncryptor encryptor = (BlockEncryptor)(new Object((BlockEncryptorEngine)(new Object((BlockEncryptorEngine)(new Object(kekKey)), iv)), stream1));
+         ByteArrayOutputStream stream1 = new ByteArrayOutputStream();
+         BlockEncryptor encryptor = new BlockEncryptor(new CBCEncryptorEngine(new TripleDESEncryptorEngine(kekKey), iv), stream1);
          encryptor.write(CEKICV);
          encryptor.close();
          byte[] TEMP1 = stream1.toByteArray();
@@ -54,14 +54,14 @@ final class CMSKeyWrap {
             TEMP3[i] = TEMP2[WRAPPEDLENGTH - 1 - i];
          }
 
-         ByteArrayOutputStream stream2 = (ByteArrayOutputStream)(new Object());
-         BlockEncryptor encryptor2 = (BlockEncryptor)(new Object(
-            (BlockEncryptorEngine)(new Object((BlockEncryptorEngine)(new Object(kekKey)), (InitializationVector)(new Object(WRAP_IV)))), stream2
-         ));
+         ByteArrayOutputStream stream2 = new ByteArrayOutputStream();
+         BlockEncryptor encryptor2 = new BlockEncryptor(
+            new CBCEncryptorEngine(new TripleDESEncryptorEngine(kekKey), new InitializationVector(WRAP_IV)), stream2
+         );
          encryptor2.write(TEMP3);
          return stream2.toByteArray();
       } finally {
-         throw new Object();
+         throw new RuntimeException();
       }
    }
 
@@ -84,7 +84,7 @@ final class CMSKeyWrap {
       // 0a: aload 2
       // 0b: athrow
       // 0c: astore 2
-      // 0d: new java/lang/Object
+      // 0d: new net/rim/device/api/crypto/CryptoUnsupportedOperationException
       // 10: dup
       // 11: aload 2
       // 12: invokevirtual net/rim/device/api/crypto/CryptoException.toString ()Ljava/lang/String;
@@ -114,7 +114,7 @@ final class CMSKeyWrap {
       // 0a: aload 2
       // 0b: athrow
       // 0c: astore 2
-      // 0d: new java/lang/Object
+      // 0d: new net/rim/device/api/crypto/CryptoUnsupportedOperationException
       // 10: dup
       // 11: aload 2
       // 12: invokevirtual net/rim/device/api/crypto/CryptoException.toString ()Ljava/lang/String;
@@ -140,18 +140,16 @@ final class CMSKeyWrap {
 
          byte[] LCEKPAD = new byte[LCEK.length + padlength];
          System.arraycopy(LCEK, 0, LCEKPAD, 0, LCEK.length);
-         SHA1Digest digest = (SHA1Digest)(new Object());
+         SHA1Digest digest = new SHA1Digest();
          digest.update(LCEKPAD);
          byte[] ICV = digest.getDigest();
          byte[] LCEKPADICV = new byte[LCEKPAD.length + ICVLENGTH];
          System.arraycopy(LCEKPAD, 0, LCEKPADICV, 0, LCEKPAD.length);
          System.arraycopy(ICV, 0, LCEKPADICV, LCEKPAD.length, ICVLENGTH);
-         InitializationVector iv = (InitializationVector)(new Object(IVLENGTH));
+         InitializationVector iv = new InitializationVector(IVLENGTH);
          byte[] IV = iv.getData();
-         ByteArrayOutputStream stream1 = (ByteArrayOutputStream)(new Object());
-         BlockEncryptor encryptor = (BlockEncryptor)(new Object(
-            (BlockEncryptorEngine)(new Object(EncryptorFactory.getBlockEncryptorEngine(kekKey), iv)), stream1
-         ));
+         ByteArrayOutputStream stream1 = new ByteArrayOutputStream();
+         BlockEncryptor encryptor = new BlockEncryptor(new CBCEncryptorEngine(EncryptorFactory.getBlockEncryptorEngine(kekKey), iv), stream1);
          encryptor.write(LCEKPADICV);
          encryptor.close();
          byte[] TEMP1 = stream1.toByteArray();
@@ -165,14 +163,14 @@ final class CMSKeyWrap {
             TEMP3[i] = TEMP2[len - 1 - i];
          }
 
-         ByteArrayOutputStream stream2 = (ByteArrayOutputStream)(new Object());
-         BlockEncryptor encryptor2 = (BlockEncryptor)(new Object(
-            (BlockEncryptorEngine)(new Object(EncryptorFactory.getBlockEncryptorEngine(kekKey), (InitializationVector)(new Object(WRAP_IV)))), stream2
-         ));
+         ByteArrayOutputStream stream2 = new ByteArrayOutputStream();
+         BlockEncryptor encryptor2 = new BlockEncryptor(
+            new CBCEncryptorEngine(EncryptorFactory.getBlockEncryptorEngine(kekKey), new InitializationVector(WRAP_IV)), stream2
+         );
          encryptor2.write(TEMP3);
          return stream2.toByteArray();
       } finally {
-         throw new Object();
+         throw new RuntimeException();
       }
    }
 
@@ -185,7 +183,7 @@ final class CMSKeyWrap {
          checkValue[i] = (byte)(~checkValue[i]);
       }
 
-      CBCEncryptorEngine engine = (CBCEncryptorEngine)(new Object(EncryptorFactory.getBlockEncryptorEngine(kekKey), iv));
+      CBCEncryptorEngine engine = new CBCEncryptorEngine(EncryptorFactory.getBlockEncryptorEngine(kekKey), iv);
       int blockLength = engine.getBlockLength();
       int paddingLength = 0;
       if (4 + cekLength < 2 * blockLength) {
@@ -218,7 +216,7 @@ final class CMSKeyWrap {
    }
 
    static final byte[] AESKeyWrap(AESKey kekKey, AESKey contentKey) {
-      AESEncryptorEngine engine = (AESEncryptorEngine)(new Object(kekKey));
+      AESEncryptorEngine engine = new AESEncryptorEngine(kekKey);
       byte[] data = contentKey.getData();
       byte[] rValues = new byte[data.length];
       System.arraycopy(data, 0, rValues, 0, data.length);

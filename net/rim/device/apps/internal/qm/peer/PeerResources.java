@@ -43,12 +43,12 @@ final class PeerResources implements PeerResource {
 
    public static final String format(int id, String arg1) {
       String format = getString(id);
-      return MessageFormat.format(format, new Object[]{arg1});
+      return MessageFormat.format(format, new String[]{arg1});
    }
 
    public static final String format(int id, String arg1, String arg2) {
       String format = getString(id);
-      return MessageFormat.format(format, new Object[]{arg1, arg2});
+      return MessageFormat.format(format, new String[]{arg1, arg2});
    }
 
    static final int getIconHeight(Font font) {

@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.bis.protocol;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.util.Hashtable;
 import java.util.Vector;
 import net.rim.device.api.i18n.MessageFormat;
@@ -77,7 +77,7 @@ public final class RestClient {
       }
 
       try {
-         BrandingInfo loadedBrandingInfo = brandingInfoHandler.loadFromXML((InputStream)(new Object(response.getResponsePayload())));
+         BrandingInfo loadedBrandingInfo = brandingInfoHandler.loadFromXML(new ByteArrayInputStream(response.getResponsePayload()));
          return new RestClient$GetBrandingInfoCallResult(restResponseCode, loadedBrandingInfo);
       } finally {
          throw new RESTException("Could not parse response XML");
@@ -161,13 +161,13 @@ public final class RestClient {
 
       try {
          if (restResponseCode == 200) {
-            UserInfo loadedUserInfo = userInfoHandler.loadFromXML((InputStream)(new Object(response.getResponsePayload())));
+            UserInfo loadedUserInfo = userInfoHandler.loadFromXML(new ByteArrayInputStream(response.getResponsePayload()));
             return new RestClient$SignupUserCallResult(restResponseCode, loadedUserInfo);
          }
 
          if (restResponseCode == 10000) {
             SuggestionsHandler suggestionsHandler = new SuggestionsHandler();
-            String[] suggestionsList = suggestionsHandler.loadFromXML((InputStream)(new Object(response.getResponsePayload())));
+            String[] suggestionsList = suggestionsHandler.loadFromXML(new ByteArrayInputStream(response.getResponsePayload()));
             suggestions[0] = suggestionsList[0];
             suggestions[1] = suggestionsList[1];
             suggestions[2] = suggestionsList[2];
@@ -189,7 +189,7 @@ public final class RestClient {
       long restResponseCode = this.getAndCheckRESTResponseCode(response);
       String currentPin = null;
       if (restResponseCode == 10006) {
-         currentPin = (String)(new Object(response.getResponsePayload()));
+         currentPin = new String(response.getResponsePayload());
       }
 
       return new RestClient$LoginCallResult(restResponseCode, currentPin);
@@ -206,7 +206,7 @@ public final class RestClient {
       }
 
       try {
-         UserInfo loadedUserInfo = userInfoHandler.loadFromXML((InputStream)(new Object(response.getResponsePayload())));
+         UserInfo loadedUserInfo = userInfoHandler.loadFromXML(new ByteArrayInputStream(response.getResponsePayload()));
          return new RestClient$GetUserInfoCallResult(restResponseCode, loadedUserInfo);
       } finally {
          throw new RESTException("Could not parse response XML");
@@ -228,7 +228,7 @@ public final class RestClient {
 
       try {
          MailboxHandler mailboxHandler = new MailboxHandler();
-         mailboxHandler.loadFromXML((InputStream)(new Object(response.getResponsePayload())));
+         mailboxHandler.loadFromXML(new ByteArrayInputStream(response.getResponsePayload()));
          Mailbox loadedMailbox = (Mailbox)mailboxHandler.getResult();
          return new RestClient$AddMailboxCallResult(restResponseCode, loadedMailbox);
       } finally {
@@ -250,7 +250,7 @@ public final class RestClient {
 
       try {
          MailboxHandler mailboxHandler = new MailboxHandler();
-         mailboxHandler.loadFromXML((InputStream)(new Object(response.getResponsePayload())));
+         mailboxHandler.loadFromXML(new ByteArrayInputStream(response.getResponsePayload()));
          Mailbox loadedMailbox = (Mailbox)mailboxHandler.getResult();
          return new RestClient$AddMailboxCallResult(restResponseCode, loadedMailbox);
       } finally {
@@ -280,14 +280,14 @@ public final class RestClient {
       try {
          if (restResponseCode == 200) {
             MailboxHandler mailboxHandler = new MailboxHandler();
-            mailboxHandler.loadFromXML((InputStream)(new Object(response.getResponsePayload())));
+            mailboxHandler.loadFromXML(new ByteArrayInputStream(response.getResponsePayload()));
             Mailbox loadedMailbox = (Mailbox)mailboxHandler.getResult();
             return new RestClient$AddMailboxCallResult(restResponseCode, loadedMailbox);
          }
 
          if (restResponseCode == 10210) {
             SuggestionsHandler suggestionsHandler = new SuggestionsHandler();
-            String[] suggestionsList = suggestionsHandler.loadFromXML((InputStream)(new Object(response.getResponsePayload())));
+            String[] suggestionsList = suggestionsHandler.loadFromXML(new ByteArrayInputStream(response.getResponsePayload()));
             suggestions[0] = suggestionsList[0];
             suggestions[1] = suggestionsList[1];
             suggestions[2] = suggestionsList[2];
@@ -313,7 +313,7 @@ public final class RestClient {
 
       try {
          MailboxHandler mailboxHandler = new MailboxHandler();
-         mailboxHandler.loadFromXML((InputStream)(new Object(response.getResponsePayload())));
+         mailboxHandler.loadFromXML(new ByteArrayInputStream(response.getResponsePayload()));
          Mailbox loadedMailbox = (Mailbox)mailboxHandler.getResult();
          return new RestClient$AddMailboxCallResult(restResponseCode, loadedMailbox);
       } finally {
@@ -362,7 +362,7 @@ public final class RestClient {
       }
 
       try {
-         Filter filter = filterHandler.loadFromXML((InputStream)(new Object(response.getResponsePayload())));
+         Filter filter = filterHandler.loadFromXML(new ByteArrayInputStream(response.getResponsePayload()));
          return new RestClient$AddFilterCallResult(restResponseCode, filter);
       } finally {
          throw new RESTException("Could not parse response XML");
@@ -409,7 +409,7 @@ public final class RestClient {
       }
 
       try {
-         Vector filters = filtersHandler.loadFromXML((InputStream)(new Object(response.getResponsePayload())));
+         Vector filters = filtersHandler.loadFromXML(new ByteArrayInputStream(response.getResponsePayload()));
          return new RestClient$GetFiltersCallResult(restResponseCode, filters);
       } finally {
          throw new RESTException("Could not parse response XML");
@@ -428,7 +428,7 @@ public final class RestClient {
          try {
             AuthInfo loadedAuthInfo = null;
             if (restResponseCode == 10302 || restResponseCode == 10303 || restResponseCode == 10304) {
-               loadedAuthInfo = authInfoHandler.loadFromXML((InputStream)(new Object(response.getResponsePayload())));
+               loadedAuthInfo = authInfoHandler.loadFromXML(new ByteArrayInputStream(response.getResponsePayload()));
             }
 
             return new RestClient$PreAuthenticationCallResult(restResponseCode, loadedAuthInfo);
@@ -453,7 +453,7 @@ public final class RestClient {
       }
 
       try {
-         int[] failedMboxes = failedHandler.loadFromXML((InputStream)(new Object(response.getResponsePayload())));
+         int[] failedMboxes = failedHandler.loadFromXML(new ByteArrayInputStream(response.getResponsePayload()));
          return new RestClient$ValidatePasswordsCallResult(restResponseCode, failedMboxes);
       } finally {
          throw new RESTException("Could not parse response XML");
@@ -481,7 +481,7 @@ public final class RestClient {
          try {
             var15 = true;
             SuggestionsHandler e = new SuggestionsHandler();
-            suggestions = e.loadFromXML((InputStream)(new Object(response.getResponsePayload())));
+            suggestions = e.loadFromXML(new ByteArrayInputStream(response.getResponsePayload()));
             var15 = false;
          } finally {
             if (var15) {
@@ -511,7 +511,7 @@ public final class RestClient {
       try {
          var12 = true;
          SecretQuestionsHandler e = new SecretQuestionsHandler();
-         questions = e.loadFromXML((InputStream)(new Object(response.getResponsePayload())));
+         questions = e.loadFromXML(new ByteArrayInputStream(response.getResponsePayload()));
          var12 = false;
       } finally {
          if (var12) {
@@ -547,12 +547,12 @@ public final class RestClient {
    private final HttpResponse doXMLCall(String url, XMLCall xmlCall, String requestMethod) {
       byte[] requestPayload = null;
       if (xmlCall != null) {
-         ByteArrayOutputStream baos = (ByteArrayOutputStream)(new Object());
+         ByteArrayOutputStream baos = new ByteArrayOutputStream();
          xmlCall.serialize(baos);
          requestPayload = baos.toByteArray();
       }
 
-      Hashtable requestProperties = (Hashtable)(new Object());
+      Hashtable requestProperties = new Hashtable();
       requestProperties.put("RESTRequestMethod", requestMethod);
       return this._httpClient.doXmlExchange(url, "POST", requestProperties, requestPayload, REQUIRED_REST_RESPONSE_PROPERTIES, true);
    }
@@ -566,7 +566,7 @@ public final class RestClient {
       try {
          return Long.parseLong(restResponseCodeString);
       } finally {
-         throw new RESTException(((StringBuffer)(new Object("REST response code invalid : "))).append(restResponseCodeString).toString());
+         throw new RESTException("REST response code invalid : " + restResponseCodeString);
       }
    }
 }

@@ -22,9 +22,9 @@ final class ApplicationOptionsScreen$PermissionsVerb extends Verb {
    public final Object invoke(Object parameter) {
       ApplicationControlInformation aci;
       if (this._handles == null) {
-         aci = (ApplicationControlInformation)(new Object(0));
+         aci = new ApplicationControlInformation(0);
       } else {
-         aci = (ApplicationControlInformation)(new Object(this._handles, this._name));
+         aci = new ApplicationControlInformation(this._handles, this._name);
       }
 
       aci.open();

@@ -5,7 +5,7 @@ import net.rim.device.api.util.Persistable;
 public final class KEAKeyPair extends KeyPair implements Persistable {
    public KEAKeyPair(KEACryptoSystem cryptoSystem) {
       if (cryptoSystem == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       KeyPair keypair = cryptoSystem.createKEAKeyPair();
@@ -45,7 +45,7 @@ public final class KEAKeyPair extends KeyPair implements Persistable {
             byte[] result = new byte[p.length];
             CryptoByteArrayArithmetic.exponent(g, x, p, result);
             if (CryptoByteArrayArithmetic.compare(result, y) != 0) {
-               throw new Object();
+               throw new InvalidKeyPairException();
             }
          } finally {
             break label26;

@@ -5,10 +5,10 @@ import net.rim.device.api.synchronization.SyncObject;
 import net.rim.device.api.util.StringUtilities;
 
 public class CustomWordsSyncManager {
-   private Vector _entries = (Vector)(new Object());
+   private Vector _entries = new Vector();
    private int _type;
    private String _localeAndType;
-   private StringBuffer _buffer = (StringBuffer)(new Object());
+   private StringBuffer _buffer = new StringBuffer();
 
    public CustomWordsSyncManager(int type) {
       this._type = type;
@@ -54,7 +54,7 @@ public class CustomWordsSyncManager {
    }
 
    public SyncObject[] getSyncObjects() {
-      SyncObject[] res = new Object[this._entries.size()];
+      SyncObject[] res = new SyncObject[this._entries.size()];
       if (this._entries.size() > 0) {
          this._entries.copyInto(res);
       }

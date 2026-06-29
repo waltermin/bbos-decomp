@@ -3,10 +3,10 @@ package net.rim.device.apps.internal.blackberryemail.email;
 import java.util.Enumeration;
 import java.util.Vector;
 import net.rim.device.api.system.ApplicationRegistry;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.container.MainScreen;
@@ -14,6 +14,7 @@ import net.rim.device.apps.api.framework.model.ActionProvider;
 import net.rim.device.apps.api.framework.model.PaintProvider;
 import net.rim.device.apps.api.messaging.implus.IMPlusServiceModel;
 import net.rim.device.apps.api.messaging.messagelist.MessageListOptions;
+import net.rim.device.apps.api.messaging.messagelist.MessageListOptionsScreen;
 import net.rim.device.apps.api.messaging.messagelist.MessageListUI;
 import net.rim.device.apps.api.messaging.messagelist.ShowMessageApp;
 import net.rim.device.apps.api.messaging.resources.MessageResources;
@@ -31,12 +32,12 @@ public class MessageListMainOptionsScreen extends MainScreen implements ListFiel
    private static final long GUID = 2830986604998026732L;
 
    public MessageListMainOptionsScreen() {
-      this.setTitle((Field)(new Object(MessageResources.getString(199), 64)));
-      this._messageOptionsList = (Vector)(new Object());
-      this._listField = (ListField)(new Object());
+      this.setTitle(new LabelField(MessageResources.getString(199), 64));
+      this._messageOptionsList = new Vector();
+      this._listField = new ListField();
       this.add(this._listField);
       this._listField.setCallback(this);
-      this._messageOptionsList.addElement(new Object());
+      this._messageOptionsList.addElement(new MessageListOptionsScreen());
       IMPlusServiceModel implusService = (IMPlusServiceModel)ApplicationRegistry.getApplicationRegistry().get(-2205884509140292945L);
       boolean displaySyncOptions = EmailOptionsManager.getInstance().displaySyncOptions();
       if (displaySyncOptions || implusService != null && implusService.getReceiptCapableServiceRecIds().length > 0) {
@@ -72,7 +73,7 @@ public class MessageListMainOptionsScreen extends MainScreen implements ListFiel
 
    private MessageListUI getTopMessageListUI() {
       for (Screen screen = this.getUiEngine().getActiveScreen(); screen != null; screen = screen.getScreenBelow()) {
-         if (screen instanceof Object) {
+         if (screen instanceof MessageListUI) {
             return (MessageListUI)screen;
          }
       }
@@ -100,7 +101,7 @@ public class MessageListMainOptionsScreen extends MainScreen implements ListFiel
 
    private void openSelectedItem() {
       Object item = this._messageOptionsList.elementAt(this._listField.getSelectedIndex());
-      if (item instanceof Object) {
+      if (item instanceof ActionProvider) {
          ActionProvider actionProvider = (ActionProvider)item;
          actionProvider.perform(6099736323056465049L, null);
       }
@@ -110,7 +111,7 @@ public class MessageListMainOptionsScreen extends MainScreen implements ListFiel
    public void drawListRow(ListField listField, Graphics graphics, int index, int y, int width) {
       int height = listField.getFont().getHeight();
       Object item = this._messageOptionsList.elementAt(index);
-      if (item instanceof Object) {
+      if (item instanceof PaintProvider) {
          PaintProvider paintProvider = (PaintProvider)item;
          paintProvider.paint(graphics, 0, y, width, height, null);
       }
@@ -192,7 +193,7 @@ public class MessageListMainOptionsScreen extends MainScreen implements ListFiel
          synchronized (registry) {
             _additionalOptionsList = (Vector)registry.get(2830986604998026732L);
             if (_additionalOptionsList == null) {
-               _additionalOptionsList = (Vector)(new Object());
+               _additionalOptionsList = new Vector();
                registry.put(2830986604998026732L, _additionalOptionsList);
             }
          }

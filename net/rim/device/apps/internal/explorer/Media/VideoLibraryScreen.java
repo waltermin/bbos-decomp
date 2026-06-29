@@ -31,9 +31,9 @@ public final class VideoLibraryScreen extends MediaLibraryScreen {
          return true;
       }
 
-      ContextInfo contextInfo = (ContextInfo)(new Object(super._context.getType() | 32));
+      ContextInfo contextInfo = new ContextInfo(super._context.getType() | 32);
       TrackListScreen screen = new TrackListScreen(contextInfo);
-      StringBuffer buffer = (StringBuffer)(new Object(1));
+      StringBuffer buffer = new StringBuffer(1);
       buffer.append(CharacterUtilities.toUpperCase(c));
       screen.setText(buffer.toString());
       UiApplication.getUiApplication().pushScreen(screen);

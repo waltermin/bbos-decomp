@@ -84,7 +84,7 @@ public final class HTTPAddressModel implements RIMModel, VerbProvider, URLProvid
             String innerOnClick = clickedElement.getAttribute("onclick");
             if (innerOnClick != null) {
                if (onClick != null) {
-                  onClick = ((StringBuffer)(new Object())).append(innerOnClick).append('\n').append(onClick).toString();
+                  onClick = innerOnClick + '\n' + onClick;
                } else {
                   onClick = innerOnClick;
                }

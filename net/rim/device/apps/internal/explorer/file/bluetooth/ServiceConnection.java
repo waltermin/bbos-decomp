@@ -1,10 +1,13 @@
 package net.rim.device.apps.internal.explorer.file.bluetooth;
 
+import java.io.EOFException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.bluetooth.DataElement;
 import javax.bluetooth.LocalDevice;
 import javax.bluetooth.ServiceRecord;
+import javax.bluetooth.UUID;
 import javax.microedition.io.Connector;
 import javax.microedition.io.file.FileConnection;
 import javax.obex.HeaderSet;
@@ -27,12 +30,12 @@ import net.rim.device.internal.i18n.CommonResource;
 import net.rim.device.internal.io.file.FileUtilities;
 
 public final class ServiceConnection extends ServerRequestHandler implements Runnable, FieldChangeListener, KeyListener {
-   private VerticalFieldManager _vfm = (VerticalFieldManager)(new Object(1152921504606846976L));
-   private PopupScreen _popupScreen = (PopupScreen)(new Object(this._vfm));
-   private GaugeField _gaugeField = (GaugeField)(new Object("", 0, 100, 0, 4));
+   private VerticalFieldManager _vfm = new VerticalFieldManager(1152921504606846976L);
+   private PopupScreen _popupScreen = new PopupScreen(this._vfm);
+   private GaugeField _gaugeField = new GaugeField("", 0, 100, 0, 4);
    private LabelField _gaugePlaceholder;
-   private LabelField _labelField = (LabelField)(new Object(ExplorerResources.getString(20), 12884901952L));
-   private ButtonField _cancelField = (ButtonField)(new Object(CommonResource.getString(10044), 12884901888L));
+   private LabelField _labelField = new LabelField(ExplorerResources.getString(20), 12884901952L);
+   private ButtonField _cancelField = new ButtonField(CommonResource.getString(10044), 12884901888L);
    private BluetoothGOEPServerConnection _notifier;
    private SetProgressRunnable _setProgressRunnable;
    private SetStatusRunnable _statusRunnable;
@@ -43,9 +46,9 @@ public final class ServiceConnection extends ServerRequestHandler implements Run
       this._cancelField.setChangeListener(this);
       this._statusRunnable = new SetStatusRunnable(this._labelField);
       this._setProgressRunnable = new SetProgressRunnable(this._gaugeField);
-      this._gaugePlaceholder = (LabelField)(new Object(""));
-      this._vfm.add((Field)(new Object(ExplorerResources.getString(31), 12884901888L)));
-      this._vfm.add((Field)(new Object("")));
+      this._gaugePlaceholder = new LabelField("");
+      this._vfm.add(new LabelField(ExplorerResources.getString(31), 12884901888L));
+      this._vfm.add(new LabelField(""));
       this._vfm.add(this._labelField);
       this._vfm.add(this._gaugePlaceholder);
       this._vfm.add(this._cancelField);
@@ -116,15 +119,15 @@ public final class ServiceConnection extends ServerRequestHandler implements Run
          this._notifier = (BluetoothGOEPServerConnection)Connector.open("btgoep://localhost:1105;name=File Transfer Agent");
          LocalDevice ex = LocalDevice.getLocalDevice();
          ServiceRecord serviceRecord = ex.getRecord(this._notifier);
-         DataElement element = new Object(48);
-         DataElement element1 = new Object(48);
-         ((DataElement)element1).addElement((DataElement)(new Object(24, new Object("1105", true))));
-         ((DataElement)element1).addElement((DataElement)(new Object(9, 256)));
-         ((DataElement)element).addElement((DataElement)element1);
-         serviceRecord.setAttributeValue(9, (DataElement)element);
-         element = new Object(48);
-         ((DataElement)element).addElement((DataElement)(new Object(8, 255)));
-         serviceRecord.setAttributeValue(771, (DataElement)element);
+         DataElement element = new DataElement(48);
+         DataElement element1 = new DataElement(48);
+         element1.addElement(new DataElement(24, new UUID("1105", true)));
+         element1.addElement(new DataElement(9, 256));
+         element.addElement(element1);
+         serviceRecord.setAttributeValue(9, element);
+         element = new DataElement(48);
+         element.addElement(new DataElement(8, 255));
+         serviceRecord.setAttributeValue(771, element);
          this._statusRunnable.setStatus(ExplorerResources.getString(27));
          if (!this._stopped) {
             this._notifier.acceptAndOpen(this);
@@ -197,9 +200,9 @@ public final class ServiceConnection extends ServerRequestHandler implements Run
                               String name = (String)ex.getHeader(1);
                               if (contentLengthx != null && name != null) {
                                  String defaultPathx = FileUtilities.getDefaultPathForMIMEType(MIMETypeAssociations.getMIMEType(name));
-                                 FileDialog fd = (FileDialog)(new Object(
+                                 FileDialog fd = new FileDialog(
                                     defaultPathx, name, MIMETypeAssociations.getMediaType(name), ExplorerResources.getString(93), 134217728
-                                 ));
+                                 );
                                  fd.setPromptForOverwrite(true);
                                  Application app = Application.getApplication();
                                  int invokeLaterId = app.invokeLater(new ServiceConnection$5(this, fd), 1000, true);
@@ -217,7 +220,7 @@ public final class ServiceConnection extends ServerRequestHandler implements Run
 
                                  app.cancelInvokeLater(invokeLaterId);
                                  if (this._stopped) {
-                                    throw new Object();
+                                    throw new IOException();
                                  }
 
                                  if (fd.getSelectedValue() == 0) {
@@ -252,12 +255,12 @@ public final class ServiceConnection extends ServerRequestHandler implements Run
 
                                        while (offsetx < fileSizex) {
                                           if (this._stopped) {
-                                             throw new Object();
+                                             throw new IOException();
                                           }
 
                                           bytesRead = btIn.read(bufferx);
                                           if (bytesRead == -1) {
-                                             throw new Object();
+                                             throw new EOFException();
                                           }
 
                                           fileOut.write(bufferx, 0, bytesRead);

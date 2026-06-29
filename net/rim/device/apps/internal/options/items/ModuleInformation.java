@@ -10,7 +10,6 @@ import net.rim.device.api.system.ControlledAccess;
 import net.rim.device.api.system.Display;
 import net.rim.device.api.system.Phone;
 import net.rim.device.api.system.RadioInfo;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.LabelField;
@@ -24,6 +23,7 @@ import net.rim.device.internal.applicationcontrol.ApplicationControl;
 import net.rim.device.internal.bluetooth.BluetoothME;
 import net.rim.device.internal.system.ITPolicyInternal;
 import net.rim.device.internal.system.InternalServices;
+import net.rim.device.internal.ui.component.PropertyField;
 import net.rim.vm.Array;
 
 class ModuleInformation {
@@ -50,9 +50,9 @@ class ModuleInformation {
    protected MainScreen createMainScreen(String title) {
       this._mainScreen = new InfoMainScreen(this._defaultFont, 0);
       this.createModuleInformationItems();
-      String[] values = new Object[]{title};
+      String[] values = new String[]{title};
       String formattedTitle = MessageFormat.format(OptionsResources.getString(1461), values);
-      this._mainScreen.setTitle((Field)(new Object(formattedTitle, 36028797018963968L)));
+      this._mainScreen.setTitle(new RichTextField(formattedTitle, 36028797018963968L));
       return this._mainScreen;
    }
 
@@ -71,9 +71,7 @@ class ModuleInformation {
       value = CodeModuleManager.getModuleDescription(this._moduleHandle);
       this.addProperty(705, value);
       this.addProperty(703, trimVersion(CodeModuleManager.getModuleVersion(this._moduleHandle)));
-      this.addProperty(
-         709, ((StringBuffer)(new Object())).append(CodeModuleManager.getModuleCodeSize(this._moduleHandle)).append(OptionsResources.getString(406)).toString()
-      );
+      this.addProperty(709, CodeModuleManager.getModuleCodeSize(this._moduleHandle) + OptionsResources.getString(406));
       long timestamp = CodeModuleManager.getModuleTimestamp(this._moduleHandle);
       if (timestamp != -1) {
          value = DateFormat.getInstance(54).formatLocal(timestamp);
@@ -108,7 +106,7 @@ class ModuleInformation {
          this.addLabelField(label);
          this.addIndentedField(text);
       } else {
-         this._mainScreen.add((Field)(new Object(label, text, 36028797018963968L)));
+         this._mainScreen.add(new PropertyField(label, text, 36028797018963968L));
       }
    }
 
@@ -117,7 +115,7 @@ class ModuleInformation {
    }
 
    protected void addLabelField(String label) {
-      LabelField lf = (LabelField)(new Object(label));
+      LabelField lf = new LabelField(label);
       this._mainScreen.add(lf);
    }
 
@@ -129,7 +127,7 @@ class ModuleInformation {
 
    private void addRestrictionField(int restricted, int resourceID) {
       if (restricted == 2) {
-         StringBuffer buffer = (StringBuffer)(new Object(_prb.getString(resourceID)));
+         StringBuffer buffer = new StringBuffer(_prb.getString(resourceID));
          buffer.append(OptionsResources.getString(1897));
          this.addIndentedField(buffer.toString());
       }
@@ -149,7 +147,7 @@ class ModuleInformation {
 
    protected void addIndentedField(String text, int indent) {
       if (text != null) {
-         RichTextField rtf = (RichTextField)(new Object(text, 36028797018963968L));
+         RichTextField rtf = new RichTextField(text, 36028797018963968L);
          rtf.setPadding(0, 0, 0, indent);
          this._mainScreen.add(rtf);
       }
@@ -251,7 +249,7 @@ class ModuleInformation {
    }
 
    private void addHashInformation(byte[] hash) {
-      StringBuffer sb = (StringBuffer)(new Object(hash.length * 3));
+      StringBuffer sb = new StringBuffer(hash.length * 3);
 
       for (int i = 0; i < hash.length; i++) {
          sb.append(NumberUtilities.intToUpperHexDigit(hash[i] >>> 4));
@@ -286,7 +284,7 @@ class ModuleInformation {
          }
 
          Arrays.sort(signerArray, 0, index);
-         StringBuffer msg = (StringBuffer)(new Object());
+         StringBuffer msg = new StringBuffer();
 
          for (int i = 0; i < index; i++) {
             msg.append(CodeSigningKey.convert(signerArray[i]));
@@ -310,7 +308,7 @@ class ModuleInformation {
             }
 
             this.addIndentedField(1870, 20);
-            StringTokenizer st = (StringTokenizer)(new Object(domains, ';'));
+            StringTokenizer st = new StringTokenizer(domains, ';');
 
             while (st.hasMoreElements()) {
                String token = st.nextToken();
@@ -319,7 +317,7 @@ class ModuleInformation {
                }
             }
          } else {
-            StringBuffer buffer = (StringBuffer)(new Object(_prb.getString(resourceId)));
+            StringBuffer buffer = new StringBuffer(_prb.getString(resourceId));
             if (setting == 2) {
                buffer.append(OptionsResources.getString(1897));
             }

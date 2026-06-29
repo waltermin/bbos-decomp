@@ -35,11 +35,11 @@ class NumberPattern {
    public String toString() {
       String result = this._unknownNumber ? "?" : this._pattern;
       if (this._prefixPattern) {
-         result = ((StringBuffer)(new Object())).append(result).append("...").toString();
+         result = result + "...";
       }
 
       if (this._rejectPattern) {
-         result = ((StringBuffer)(new Object())).append(result).append('r').toString();
+         result = result + 'r';
       }
 
       return result;

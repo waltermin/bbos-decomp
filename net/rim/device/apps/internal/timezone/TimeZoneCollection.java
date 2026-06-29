@@ -24,7 +24,7 @@ final class TimeZoneCollection
    OTASyncPriorityAndDependencyProvider,
    SyncCollectionStatusProvider {
    private TimeService _collection = TimeService.getTimeService();
-   private CollectionListenerManager _collectionListenerManager = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _collectionListenerManager = new CollectionListenerManager();
    private static final byte TZID = 1;
    private static final byte ZONE_STRING_ID = 2;
    private static final byte GMT_OFFSET = 3;
@@ -68,7 +68,7 @@ final class TimeZoneCollection
 
    @Override
    public final boolean addSyncObject(SyncObject object) {
-      if (object instanceof Object) {
+      if (object instanceof TimeZoneDataObject) {
          this._collection.addTimeZone((TimeZoneDataObject)object);
          this._collectionListenerManager.fireElementAdded(this, object);
          return true;
@@ -79,7 +79,7 @@ final class TimeZoneCollection
 
    @Override
    public final boolean updateSyncObject(SyncObject oldObject, SyncObject newObject) {
-      if (newObject instanceof Object) {
+      if (newObject instanceof TimeZoneDataObject) {
          this._collection.addTimeZone((TimeZoneDataObject)newObject);
          this._collectionListenerManager.fireElementUpdated(this, oldObject, newObject);
          return true;
@@ -90,7 +90,7 @@ final class TimeZoneCollection
 
    @Override
    public final boolean removeSyncObject(SyncObject object) {
-      if (object instanceof Object) {
+      if (object instanceof TimeZoneDataObject) {
          this._collection.deleteTimeZone(((TimeZoneDataObject)object).getTimeZoneID());
          this._collectionListenerManager.fireElementRemoved(this, object);
          return true;
@@ -114,7 +114,7 @@ final class TimeZoneCollection
    @Override
    public final SyncObject[] getSyncObjects() {
       TimeZoneDataObject[] timeZones = this._collection.getTimeZoneDataObjects();
-      SyncObject[] syncObjects = new Object[timeZones.length];
+      SyncObject[] syncObjects = new SyncObject[timeZones.length];
       System.arraycopy(timeZones, 0, syncObjects, 0, timeZones.length);
       return syncObjects;
    }
@@ -188,7 +188,7 @@ final class TimeZoneCollection
    @Override
    public final boolean convert(SyncObject object, DataBuffer buffer, int version) {
       TimeZoneDataObject timeZone = null;
-      if (!(object instanceof Object)) {
+      if (!(object instanceof TimeZoneDataObject)) {
          return false;
       }
 
@@ -328,7 +328,7 @@ final class TimeZoneCollection
          ;
       }
 
-      return (SyncObject)(new Object(
+      return new TimeZoneDataObject(
          uid,
          tzid,
          zoneStringID,
@@ -348,7 +348,7 @@ final class TimeZoneCollection
          defaultShortDescription,
          mappedTZID,
          hidden
-      ));
+      );
    }
 
    @Override

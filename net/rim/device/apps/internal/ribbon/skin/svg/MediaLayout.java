@@ -32,6 +32,7 @@ import net.rim.plazmic.internal.mediaengine.event.EventEngine;
 import net.rim.plazmic.internal.mediaengine.model.intarray.v1_2.ModelInteractorImpl;
 import net.rim.plazmic.internal.mediaengine.model.intarray.v1_2.NodeImpl;
 import net.rim.plazmic.internal.mediaengine.service.FocusInteractor;
+import net.rim.plazmic.internal.mediaengine.service.ModelInteractor;
 import net.rim.plazmic.mediaengine.MediaManager;
 import net.rim.plazmic.mediaengine.MediaPlayer;
 import net.rim.vm.Array;
@@ -60,7 +61,7 @@ public class MediaLayout extends MediaField implements StringProps, PropsChangeE
    private CustomFocusOrder _customFocusOrder;
    private SkinManager _skinManager;
    private SkinEventProvider _eventProvider;
-   IntIntHashtable _keyMap = (IntIntHashtable)(new Object());
+   IntIntHashtable _keyMap = new IntIntHashtable();
    private static final long MEDIA_LAYOUT_LOCK_KEY = 8255869323709840319L;
    public static final long PRIVATE_FLAGS_KEY = 3089937493992571440L;
    public static final int NO_PAINTLOCK_FLAG = 1;
@@ -117,7 +118,7 @@ public class MediaLayout extends MediaField implements StringProps, PropsChangeE
          this._state = 1;
          Application application = Application.getApplication();
          synchronized (this._invalidatingRunnable) {
-            this._applicationReference = (WeakReference)(new Object(application));
+            this._applicationReference = new WeakReference(application);
             this._invalidatingRunnable._invalidatePending = false;
          }
 
@@ -136,9 +137,7 @@ public class MediaLayout extends MediaField implements StringProps, PropsChangeE
          } catch (Throwable var7) {
             System.err.println(e);
             e.printStackTrace();
-            EventLogger.logEvent(
-               -7509200465648525729L, ((StringBuffer)(new Object("Exception starting MediaLayout: "))).append(e.toString()).toString().getBytes(), 2
-            );
+            EventLogger.logEvent(-7509200465648525729L, ("Exception starting MediaLayout: " + e.toString()).getBytes(), 2);
             break label64;
          }
 
@@ -325,12 +324,12 @@ public class MediaLayout extends MediaField implements StringProps, PropsChangeE
       }
 
       this._runnableResolver = (RunnableResolver)ContextObject.get(context, -3669022226332202623L);
-      this._mediaLoader = (MediaManager)(new Object());
+      this._mediaLoader = new MediaManager();
       this._foLoader = new ForeignObjectLoader();
       this._mediaLoader.setCustomResourceProvider(this._foLoader);
       this._foLoader.setChangeListener(this);
       this._foLoader._context = this;
-      this._player = (MediaPlayer)(new Object());
+      this._player = new MediaPlayer();
       this._player.setUI(this);
       this._player.addMediaListener(new MediaLayout$MyListener(this));
    }
@@ -388,7 +387,7 @@ public class MediaLayout extends MediaField implements StringProps, PropsChangeE
 
    private void setMedia(Object media) {
       this._media = media;
-      if (media instanceof Object) {
+      if (media instanceof ModelInteractor) {
          this._modelInteractor = (ModelInteractorImpl)media;
       }
 

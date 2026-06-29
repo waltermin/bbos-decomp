@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.browser.dd;
 
 import net.rim.device.api.browser.field.BrowserContent;
+import net.rim.device.api.browser.field.RenderingException;
 import net.rim.device.api.browser.field.RenderingOptions;
 import net.rim.device.api.browser.plugin.BrowserContentProvider;
 import net.rim.device.api.browser.plugin.BrowserContentProviderContext;
@@ -19,7 +20,7 @@ public final class DownloadDescriptorConverter extends BrowserContentProvider {
    }
 
    @Override
-   public final BrowserContent getBrowserContent(BrowserContentProviderContext param1) {
+   public final BrowserContent getBrowserContent(BrowserContentProviderContext param1) throws RenderingException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -37,7 +38,7 @@ public final class DownloadDescriptorConverter extends BrowserContentProvider {
       // 0b: bipush 32
       // 0d: iand
       // 0e: ifne 1f
-      // 11: new java/lang/Object
+      // 11: new net/rim/device/api/browser/field/RenderingException
       // 14: dup
       // 15: sipush 789
       // 18: invokestatic net/rim/device/apps/internal/browser/resources/BrowserResources.getString (I)Ljava/lang/String;
@@ -62,14 +63,14 @@ public final class DownloadDescriptorConverter extends BrowserContentProvider {
       // 3f: invokevirtual net/rim/device/apps/internal/browser/dd/DownloadDescriptorRenderer.processData ()Lnet/rim/device/api/browser/field/BrowserContent;
       // 42: areturn
       // 43: astore 3
-      // 44: new java/lang/Object
+      // 44: new net/rim/device/api/browser/field/RenderingException
       // 47: dup
       // 48: sipush 614
       // 4b: invokestatic net/rim/device/apps/internal/browser/resources/BrowserResources.getString (I)Ljava/lang/String;
       // 4e: invokespecial net/rim/device/api/browser/field/RenderingException.<init> (Ljava/lang/String;)V
       // 51: athrow
       // 52: astore 3
-      // 53: new java/lang/Object
+      // 53: new net/rim/device/api/browser/field/RenderingException
       // 56: dup
       // 57: sipush 235
       // 5a: invokestatic net/rim/device/apps/internal/browser/resources/BrowserResources.getString (I)Ljava/lang/String;

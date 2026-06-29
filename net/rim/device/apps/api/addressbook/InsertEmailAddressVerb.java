@@ -13,7 +13,7 @@ public final class InsertEmailAddressVerb extends Verb {
    public InsertEmailAddressVerb(int menuOrder, String label, EditField editField) {
       super(menuOrder);
       if (editField == null) {
-         throw new Object("Invalid EditField");
+         throw new IllegalArgumentException("Invalid EditField");
       }
 
       this._label = label;

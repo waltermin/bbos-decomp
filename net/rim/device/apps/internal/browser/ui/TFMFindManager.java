@@ -21,7 +21,7 @@ public final class TFMFindManager {
    }
 
    public final Verb[] getVerbs() {
-      Verb[] verbs = new Object[2];
+      Verb[] verbs = new Verb[2];
       int verbCount = 0;
       if (this._findVerb == null) {
          this._findVerb = new FindVerb(this);

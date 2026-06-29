@@ -22,10 +22,10 @@ public final class TestMainScreen extends MainScreen {
 
    TestMainScreen() {
       this.setupMenuItems();
-      this._title = (LabelField)(new Object(DeviceSelfTestResources.getString(5), 1152921504606846976L));
+      this._title = new LabelField(DeviceSelfTestResources.getString(5), 1152921504606846976L);
       this.setTitle(this._title);
       this._callback = new TestMainScreen$ReportListCallback();
-      this._reportList = (ListField)(new Object());
+      this._reportList = new ListField();
       this._reportList.setCallback(this._callback);
       this._reportList.setSearchable(false);
       this.add(this._reportList);

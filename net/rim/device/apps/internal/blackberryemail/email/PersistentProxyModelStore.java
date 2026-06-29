@@ -65,7 +65,7 @@ public class PersistentProxyModelStore extends AbstractProxyModelStore implement
                o = ObjectGroup.expandGroup(o);
             }
 
-            ramCache.put(objecthandle, new Object(o));
+            ramCache.put(objecthandle, new WeakReference(o));
          }
       }
 
@@ -76,7 +76,7 @@ public class PersistentProxyModelStore extends AbstractProxyModelStore implement
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
       IntHashtable ramCache = (IntHashtable)ar.getOrWaitFor(this._ramCacheId);
       if (ramCache == null) {
-         ramCache = (IntHashtable)(new Object());
+         ramCache = new IntHashtable();
          ar.put(this._ramCacheId, ramCache);
       }
 

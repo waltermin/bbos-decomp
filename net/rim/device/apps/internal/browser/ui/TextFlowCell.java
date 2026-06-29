@@ -349,7 +349,7 @@ final class TextFlowCell implements TableItem, Animation {
       int regionTextEnd = this._manager._textFlowData.getRegionEndOffset(region);
       char[] chars = new char[regionTextEnd - regionTextStart];
       this._manager._textFlowData.getText().getChars(regionTextStart, regionTextEnd, chars, 0);
-      return (String)(new Object(chars));
+      return new String(chars);
    }
 
    public final String getSelectionText() {
@@ -455,7 +455,7 @@ final class TextFlowCell implements TableItem, Animation {
 
       for (int i = this._textStartRegion; i < endRegion; i++) {
          Object regionObject = textFlowData.getRegionObject(i);
-         if (regionObject instanceof Object) {
+         if (regionObject instanceof Manager) {
             Manager field = (Manager)regionObject;
             if ((textFlowData.getRegion(i).getFlags() & 1024) != 0) {
                this._manager.layoutField(field, 0, 0);
@@ -715,7 +715,7 @@ final class TextFlowCell implements TableItem, Animation {
       // 1f6: iload 17
       // 1f8: bipush 100
       // 1fa: if_icmple 205
-      // 1fd: new java/lang/Object
+      // 1fd: new java/lang/IllegalArgumentException
       // 200: dup
       // 201: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 204: athrow
@@ -1253,7 +1253,7 @@ final class TextFlowCell implements TableItem, Animation {
       // 67d: getfield net/rim/device/apps/internal/browser/ui/TextFlowManager._textFlowData Lnet/rim/device/apps/internal/browser/ui/TextFlowData;
       // 680: iload 7
       // 682: invokevirtual net/rim/device/apps/internal/browser/ui/TextFlowData.getOutOfLineObject (I)Ljava/lang/Object;
-      // 685: checkcast java/lang/Object
+      // 685: checkcast net/rim/device/api/ui/Field
       // 688: astore 9
       // 68a: aload 9
       // 68c: ifnonnull 692
@@ -2543,7 +2543,7 @@ final class TextFlowCell implements TableItem, Animation {
                   for (int il = regionIndex; textFlowData.getRegionStartOffset(il) < nominalEndTextPosition; il++) {
                      Object regionObject = textFlowData.getRegionObject(il);
                      if (regionObject != null && textFlowData.isRegionDirty(il)) {
-                        if (!(regionObject instanceof Object)) {
+                        if (!(regionObject instanceof Field)) {
                            if (regionObject instanceof TextFlowCell) {
                               textFlowData.setRegionDirty(il, false);
                            }
@@ -2853,7 +2853,7 @@ final class TextFlowCell implements TableItem, Animation {
       while (index < endIndex && (regionIndex = this._manager._textFlowData.getOutOfLineObjectRegion(index)) < textEndRegion) {
          if (this._manager._textFlowData.getRegionCellOOLIndex(regionIndex) == this._cellOOLIndex) {
             Object object = this._manager._textFlowData.getOutOfLineObject(index);
-            if (!(object instanceof Object)) {
+            if (!(object instanceof Field)) {
                if (object instanceof TextFlowCell) {
                   TextFlowCell cell = (TextFlowCell)object;
                   cell._y += adjustY;
@@ -3065,7 +3065,7 @@ final class TextFlowCell implements TableItem, Animation {
                         if (textFlowData.isRegionInline(region)) {
                            int inlineWidth = 0;
                            Object obj = textFlowData.getRegionObject(region);
-                           if (obj instanceof Object) {
+                           if (obj instanceof Field) {
                               inlineWidth = Math.max(this._manager.getPreferredWidthOfChildPublic((Field)obj), inlineWidth);
                            }
 
@@ -3075,7 +3075,7 @@ final class TextFlowCell implements TableItem, Animation {
                      } else {
                         Object obj = textFlowData.getRegionObject(region);
                         int objectWidth = 0;
-                        if (obj instanceof Object) {
+                        if (obj instanceof Field) {
                            objectWidth = this._manager.getPreferredWidthOfChildPublic((Field)obj);
                         } else if (obj instanceof TextFlowCell) {
                            TextFlowCell cell = (TextFlowCell)obj;

@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.browser.xml;
 
 import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 final class XMLRenderingConverter$HelperHandler extends DefaultHandler {
@@ -11,13 +12,13 @@ final class XMLRenderingConverter$HelperHandler extends DefaultHandler {
    }
 
    @Override
-   public final void startElement(String uri, String localName, String qName, Attributes attributes) {
+   public final void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
       this._contentType = XMLConverterRegistry.getInstance().getContentType(localName);
       if (this._contentType == null && this._defaultNamespace != null) {
          this._contentType = XMLConverterRegistry.getInstance().getContentType(this._defaultNamespace);
       }
 
-      throw new Object("found it");
+      throw new SAXException("found it");
    }
 
    @Override

@@ -72,9 +72,9 @@ final class SetForwardingNumbers extends SSRequest {
       } else {
          String typeString = PhoneResources.getString(PhoneOptionsConstants.FWDING_TYPE_STRINGS[fwdingType]);
          if (PhoneUtilities.cdmaWAFActive() && fwdingNumber != null && fwdingNumber.length() == 0) {
-            errorString = MessageFormat.format(PhoneResources.getString(6281), new Object[]{typeString});
+            errorString = MessageFormat.format(PhoneResources.getString(6281), new String[]{typeString});
          } else {
-            errorString = MessageFormat.format(PhoneResources.getString(148), new Object[]{fwdingNumber, typeString});
+            errorString = MessageFormat.format(PhoneResources.getString(148), new String[]{fwdingNumber, typeString});
          }
       }
 

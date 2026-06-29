@@ -17,15 +17,15 @@ final class SoftwareRSACryptoToken$RSAPrivateKeyData implements CryptoTokenPriva
    private byte[] _qInvModP;
    private int _hashCode;
 
-   public SoftwareRSACryptoToken$RSAPrivateKeyData(RSACryptoSystem cryptoSystem, byte[] e, byte[] d, byte[] n) {
+   public SoftwareRSACryptoToken$RSAPrivateKeyData(RSACryptoSystem cryptoSystem, byte[] e, byte[] d, byte[] n) throws InvalidKeyException {
       if (cryptoSystem != null && d != null && n != null) {
          int modulusLength = cryptoSystem.getModulusLength();
          if (d.length > modulusLength || n.length != modulusLength) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          if (e.length == 1 && e[0] == 1) {
-            throw new Object();
+            throw new InvalidKeyException();
          }
 
          this._cryptoSystem = cryptoSystem;
@@ -37,19 +37,19 @@ final class SoftwareRSACryptoToken$RSAPrivateKeyData implements CryptoTokenPriva
          PersistentContent.markAsPlaintext(d);
          this.setHashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
-   public SoftwareRSACryptoToken$RSAPrivateKeyData(RSACryptoSystem cryptoSystem, byte[] e, byte[] d, byte[] p, byte[] q) {
+   public SoftwareRSACryptoToken$RSAPrivateKeyData(RSACryptoSystem cryptoSystem, byte[] e, byte[] d, byte[] p, byte[] q) throws InvalidKeyException {
       if (cryptoSystem != null && d != null && p != null && q != null) {
          int modulusLength = cryptoSystem.getModulusLength();
          if (d.length > modulusLength || p.length + q.length != modulusLength) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          if (e.length == 1 && e[0] == 1) {
-            throw new Object();
+            throw new InvalidKeyException();
          }
 
          this._cryptoSystem = cryptoSystem;
@@ -71,19 +71,19 @@ final class SoftwareRSACryptoToken$RSAPrivateKeyData implements CryptoTokenPriva
          PersistentContent.markAsPlaintext(this._n);
          this.setHashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
-   public SoftwareRSACryptoToken$RSAPrivateKeyData(RSACryptoSystem cryptoSystem, byte[] e, byte[] p, byte[] q, byte[] dModPm1, byte[] dModQm1, byte[] qInvModP) {
+   public SoftwareRSACryptoToken$RSAPrivateKeyData(RSACryptoSystem cryptoSystem, byte[] e, byte[] p, byte[] q, byte[] dModPm1, byte[] dModQm1, byte[] qInvModP) throws InvalidKeyException {
       if (cryptoSystem != null && p != null && q != null && dModPm1 != null && dModQm1 != null && qInvModP != null) {
          int modulusLength = cryptoSystem.getModulusLength();
          if (p.length + q.length != modulusLength || dModPm1.length > p.length || dModQm1.length > q.length || qInvModP.length > p.length) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          if (e.length == 1 && e[0] == 1) {
-            throw new Object();
+            throw new InvalidKeyException();
          }
 
          this._cryptoSystem = cryptoSystem;
@@ -106,13 +106,13 @@ final class SoftwareRSACryptoToken$RSAPrivateKeyData implements CryptoTokenPriva
          PersistentContent.markAsPlaintext(qInvModP);
          this.setHashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    public SoftwareRSACryptoToken$RSAPrivateKeyData(
       RSACryptoSystem cryptoSystem, byte[] e, byte[] d, byte[] n, byte[] p, byte[] q, byte[] dModPm1, byte[] dModQm1, byte[] qInvModP
-   ) {
+   ) throws InvalidKeyException {
       if (cryptoSystem != null && e != null && d != null && n != null && p != null && q != null && dModPm1 != null && dModQm1 != null && qInvModP != null) {
          int modulusLength = cryptoSystem.getModulusLength();
          if (e.length <= 0
@@ -123,11 +123,11 @@ final class SoftwareRSACryptoToken$RSAPrivateKeyData implements CryptoTokenPriva
             || dModPm1.length > p.length
             || dModQm1.length > q.length
             || qInvModP.length > p.length) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          if (e.length == 1 && e[0] == 1) {
-            throw new Object();
+            throw new InvalidKeyException();
          }
 
          this._cryptoSystem = cryptoSystem;
@@ -154,7 +154,7 @@ final class SoftwareRSACryptoToken$RSAPrivateKeyData implements CryptoTokenPriva
          PersistentContent.markAsPlaintext(qInvModP);
          this.setHashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

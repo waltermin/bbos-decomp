@@ -16,7 +16,7 @@ final class PGPDashEscapedOutputStream extends OutputStream {
 
    public PGPDashEscapedOutputStream(OutputStream output) {
       if (output == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._output = output;
@@ -88,7 +88,7 @@ final class PGPDashEscapedOutputStream extends OutputStream {
 
          this._output.write(trueOutput, 0, trueOutputOffset);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

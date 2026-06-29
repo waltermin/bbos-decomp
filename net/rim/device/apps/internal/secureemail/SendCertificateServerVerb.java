@@ -22,12 +22,12 @@ public class SendCertificateServerVerb extends Verb implements Copyable, SetPara
 
    public void sendCertificateServerAsAttachment(CertificateServerInfo info, boolean usePIN) {
       if (info == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       EmailMessageModel message = (EmailMessageModel)FactoryUtil.createInstance(-6822293833372928884L, null);
       message.setType((byte)32);
-      ContextObject addrContext = (ContextObject)(new Object());
+      ContextObject addrContext = new ContextObject();
       ContextObject.setFlag(addrContext, 5);
       if (usePIN) {
          ContextObject.setFlag(addrContext, 94);
@@ -43,18 +43,18 @@ public class SendCertificateServerVerb extends Verb implements Copyable, SetPara
             message.setFlags(8192);
          }
 
-         ContextObject serverContext = (ContextObject)(new Object());
+         ContextObject serverContext = new ContextObject();
          ContextObject.put(serverContext, -8616111138651597975L, info.clone());
          CertificateServersAttachmentModel serversModel = new CertificateServersAttachmentModel(serverContext);
          message.add(serversModel);
-         ContextObject editorContext = (ContextObject)(new Object());
+         ContextObject editorContext = new ContextObject();
          editorContext.setFlag(0);
          editorContext.setFlag(121);
          if (usePIN) {
             editorContext.setFlag(94);
          }
 
-         EmailEditorScreen editor = (EmailEditorScreen)(new Object(editorContext));
+         EmailEditorScreen editor = new EmailEditorScreen(editorContext);
          editor.setModel(message);
          editor.go();
       }
@@ -69,7 +69,7 @@ public class SendCertificateServerVerb extends Verb implements Copyable, SetPara
 
    @Override
    public void setParameter(Object parameter) {
-      if (parameter instanceof Object) {
+      if (parameter instanceof CertificateServerInfo) {
          this._serverInfo = (CertificateServerInfo)parameter;
       }
    }

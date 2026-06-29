@@ -25,9 +25,9 @@ final class OptionsSyncCollection
    CollectionEventSource,
    OptionsProviderChangeListener,
    SyncCollectionStatusProvider {
-   private CollectionListenerManager _listenerManager = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _listenerManager = new CollectionListenerManager();
    private Vector _providers = DeviceOptions.getInstance().getOptionsProviders();
-   private Vector _legacyProviders = (Vector)(new Object());
+   private Vector _legacyProviders = new Vector();
 
    final void removeLegacyOptionsProvider(OptionsProvider provider) {
       if (this._legacyProviders.size() == 1) {
@@ -88,7 +88,7 @@ final class OptionsSyncCollection
    public final boolean removeAllSyncObjects() {
       Vector providers = this._providers;
       synchronized (providers) {
-         DataBuffer emptyBuffer = (DataBuffer)(new Object());
+         DataBuffer emptyBuffer = new DataBuffer();
          int num = providers.size();
 
          while (--num >= 0) {
@@ -210,7 +210,7 @@ final class OptionsSyncCollection
       Vector providers = this._providers;
       synchronized (providers) {
          int count = providers.size();
-         SyncObject[] result = new Object[count];
+         SyncObject[] result = new SyncObject[count];
 
          for (int i = 0; i < count; i++) {
             result[i] = (SyncObject)providers.elementAt(i);

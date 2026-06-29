@@ -24,6 +24,7 @@ import net.rim.device.apps.api.framework.model.VerbProvider;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.VerbMenuItem;
 import net.rim.device.apps.internal.browser.ui.VerticalIndentFieldManager;
+import net.rim.device.apps.internal.browser.verbs.GoToVerb;
 import net.rim.device.apps.internal.resource.PMEPlugginResource;
 import net.rim.plazmic.mediaengine.MediaException;
 import net.rim.plazmic.mediaengine.MediaListener;
@@ -83,7 +84,7 @@ public final class PMEBrowserField
       // 00b: bipush 0
       // 00c: putfield net/rim/device/apps/internal/browser/pme/PMEBrowserField._destroyMethod I
       // 00f: aload 0
-      // 010: new java/lang/Object
+      // 010: new net/rim/plazmic/mediaengine/MediaPlayer
       // 013: dup
       // 014: invokespecial net/rim/plazmic/mediaengine/MediaPlayer.<init> ()V
       // 017: putfield net/rim/device/apps/internal/browser/pme/PMEBrowserField._player Lnet/rim/plazmic/mediaengine/MediaPlayer;
@@ -98,7 +99,7 @@ public final class PMEBrowserField
       // 029: getfield net/rim/device/apps/internal/browser/pme/PMEBrowserField._browserContent Lnet/rim/device/api/browser/field/BrowserContentBaseImpl;
       // 02c: invokevirtual net/rim/device/api/browser/field/BrowserContentBaseImpl.getRenderingFlags ()I
       // 02f: istore 7
-      // 031: new java/lang/Object
+      // 031: new net/rim/plazmic/mediaengine/MediaManager
       // 034: dup
       // 035: new net/rim/device/apps/internal/browser/pme/BrowserConnector
       // 038: dup
@@ -123,11 +124,11 @@ public final class PMEBrowserField
       // 05f: ifeq 095
       // 062: aload 1
       // 063: dup
-      // 064: instanceof java/lang/Object
+      // 064: instanceof javax/microedition/io/HttpConnection
       // 067: ifne 06e
       // 06a: pop
       // 06b: goto 095
-      // 06e: checkcast java/lang/Object
+      // 06e: checkcast javax/microedition/io/HttpConnection
       // 071: astore 11
       // 073: aload 11
       // 075: ldc_w "Content-Location"
@@ -216,7 +217,7 @@ public final class PMEBrowserField
       // 136: aload 13
       // 138: athrow
       // 139: astore 11
-      // 13b: new java/lang/Object
+      // 13b: new net/rim/device/api/browser/field/RenderingException
       // 13e: dup
       // 13f: aload 0
       // 140: aload 11
@@ -224,7 +225,7 @@ public final class PMEBrowserField
       // 145: invokespecial net/rim/device/api/browser/field/RenderingException.<init> (Ljava/lang/String;)V
       // 148: athrow
       // 149: astore 11
-      // 14b: new java/lang/Object
+      // 14b: new net/rim/device/api/browser/field/RenderingException
       // 14e: dup
       // 14f: aload 11
       // 151: invokevirtual java/lang/Exception.toString ()Ljava/lang/String;
@@ -284,7 +285,7 @@ public final class PMEBrowserField
       // 1d3: bipush 17
       // 1d5: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 1d8: astore 12
-      // 1da: new java/lang/Object
+      // 1da: new java/lang/StringBuffer
       // 1dd: dup
       // 1de: invokespecial java/lang/StringBuffer.<init> ()V
       // 1e1: aload 12
@@ -293,7 +294,7 @@ public final class PMEBrowserField
       // 1e9: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 1ec: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 1ef: astore 12
-      // 1f1: new java/lang/Object
+      // 1f1: new java/lang/StringBuffer
       // 1f4: dup
       // 1f5: invokespecial java/lang/StringBuffer.<init> ()V
       // 1f8: aload 12
@@ -304,7 +305,7 @@ public final class PMEBrowserField
       // 205: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 208: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 20b: astore 12
-      // 20d: new java/lang/Object
+      // 20d: new net/rim/device/apps/internal/browser/core/BrowserError
       // 210: dup
       // 211: aload 12
       // 213: bipush 1
@@ -335,7 +336,7 @@ public final class PMEBrowserField
       // 245: ifeq 285
       // 248: aload 13
       // 24a: invokevirtual net/rim/device/api/ui/component/Dialog.close ()V
-      // 24d: new java/lang/Object
+      // 24d: new net/rim/device/apps/internal/browser/core/BrowserError
       // 250: dup
       // 251: aload 11
       // 253: invokeinterface net/rim/plazmic/internal/mediaengine/MediaModel.getMissingExtURLs ()Ljava/lang/String; 1
@@ -392,7 +393,7 @@ public final class PMEBrowserField
       // 2bc: lor
       // 2bd: lstore 4
       // 2bf: aload 0
-      // 2c0: new java/lang/Object
+      // 2c0: new net/rim/device/api/ui/MediaField
       // 2c3: dup
       // 2c4: lload 4
       // 2c6: lload 12
@@ -412,7 +413,7 @@ public final class PMEBrowserField
       // 2e7: invokevirtual net/rim/device/apps/internal/browser/ui/VerticalIndentFieldManager.add (Lnet/rim/device/api/ui/Field;)V
       // 2ea: aload 0
       // 2eb: invokestatic net/rim/device/api/system/Application.getApplication ()Lnet/rim/device/api/system/Application;
-      // 2ee: checkcast java/lang/Object
+      // 2ee: checkcast net/rim/device/api/ui/UiApplication
       // 2f1: putfield net/rim/device/apps/internal/browser/pme/PMEBrowserField._app Lnet/rim/device/api/ui/UiApplication;
       // 2f4: aload 0
       // 2f5: bipush 0
@@ -494,7 +495,7 @@ public final class PMEBrowserField
       // 393: invokespecial net/rim/device/apps/internal/browser/pme/ZoomPanResetVerb.<init> (Lnet/rim/device/api/ui/Field;Ljava/lang/Object;)V
       // 396: putfield net/rim/device/apps/internal/browser/pme/PMEBrowserField._zoomPanResetVerb Lnet/rim/device/apps/internal/browser/pme/ZoomPanResetVerb;
       // 399: aload 0
-      // 39a: new java/lang/Object
+      // 39a: new net/rim/device/apps/api/ui/VerbMenuItem
       // 39d: dup
       // 39e: aload 0
       // 39f: getfield net/rim/device/apps/internal/browser/pme/PMEBrowserField._restartVerb Lnet/rim/device/apps/internal/browser/pme/RestartVerb;
@@ -502,7 +503,7 @@ public final class PMEBrowserField
       // 3a5: invokespecial net/rim/device/apps/api/ui/VerbMenuItem.<init> (Lnet/rim/device/apps/api/framework/verb/Verb;I)V
       // 3a8: putfield net/rim/device/apps/internal/browser/pme/PMEBrowserField._restartMenuItem Lnet/rim/device/apps/api/ui/VerbMenuItem;
       // 3ab: aload 0
-      // 3ac: new java/lang/Object
+      // 3ac: new net/rim/device/apps/api/ui/VerbMenuItem
       // 3af: dup
       // 3b0: aload 0
       // 3b1: getfield net/rim/device/apps/internal/browser/pme/PMEBrowserField._resumeVerb Lnet/rim/device/apps/internal/browser/pme/ResumeVerb;
@@ -510,7 +511,7 @@ public final class PMEBrowserField
       // 3b7: invokespecial net/rim/device/apps/api/ui/VerbMenuItem.<init> (Lnet/rim/device/apps/api/framework/verb/Verb;I)V
       // 3ba: putfield net/rim/device/apps/internal/browser/pme/PMEBrowserField._resumeMenuItem Lnet/rim/device/apps/api/ui/VerbMenuItem;
       // 3bd: aload 0
-      // 3be: new java/lang/Object
+      // 3be: new net/rim/device/apps/api/ui/VerbMenuItem
       // 3c1: dup
       // 3c2: aload 0
       // 3c3: getfield net/rim/device/apps/internal/browser/pme/PMEBrowserField._pauseVerb Lnet/rim/device/apps/internal/browser/pme/PauseVerb;
@@ -518,7 +519,7 @@ public final class PMEBrowserField
       // 3c9: invokespecial net/rim/device/apps/api/ui/VerbMenuItem.<init> (Lnet/rim/device/apps/api/framework/verb/Verb;I)V
       // 3cc: putfield net/rim/device/apps/internal/browser/pme/PMEBrowserField._pauseMenuItem Lnet/rim/device/apps/api/ui/VerbMenuItem;
       // 3cf: aload 0
-      // 3d0: new java/lang/Object
+      // 3d0: new net/rim/device/apps/api/ui/VerbMenuItem
       // 3d3: dup
       // 3d4: aload 0
       // 3d5: getfield net/rim/device/apps/internal/browser/pme/PMEBrowserField._infoVerb Lnet/rim/device/apps/internal/browser/pme/InfoVerb;
@@ -526,7 +527,7 @@ public final class PMEBrowserField
       // 3db: invokespecial net/rim/device/apps/api/ui/VerbMenuItem.<init> (Lnet/rim/device/apps/api/framework/verb/Verb;I)V
       // 3de: putfield net/rim/device/apps/internal/browser/pme/PMEBrowserField._infoMenuItem Lnet/rim/device/apps/api/ui/VerbMenuItem;
       // 3e1: aload 0
-      // 3e2: new java/lang/Object
+      // 3e2: new net/rim/device/apps/api/ui/VerbMenuItem
       // 3e5: dup
       // 3e6: aload 0
       // 3e7: getfield net/rim/device/apps/internal/browser/pme/PMEBrowserField._panVerb Lnet/rim/device/apps/internal/browser/pme/PanVerb;
@@ -534,7 +535,7 @@ public final class PMEBrowserField
       // 3ed: invokespecial net/rim/device/apps/api/ui/VerbMenuItem.<init> (Lnet/rim/device/apps/api/framework/verb/Verb;I)V
       // 3f0: putfield net/rim/device/apps/internal/browser/pme/PMEBrowserField._panMenuItem Lnet/rim/device/apps/api/ui/VerbMenuItem;
       // 3f3: aload 0
-      // 3f4: new java/lang/Object
+      // 3f4: new net/rim/device/apps/api/ui/VerbMenuItem
       // 3f7: dup
       // 3f8: aload 0
       // 3f9: getfield net/rim/device/apps/internal/browser/pme/PMEBrowserField._zoomVerb Lnet/rim/device/apps/internal/browser/pme/ZoomVerb;
@@ -542,7 +543,7 @@ public final class PMEBrowserField
       // 3ff: invokespecial net/rim/device/apps/api/ui/VerbMenuItem.<init> (Lnet/rim/device/apps/api/framework/verb/Verb;I)V
       // 402: putfield net/rim/device/apps/internal/browser/pme/PMEBrowserField._zoomMenuItem Lnet/rim/device/apps/api/ui/VerbMenuItem;
       // 405: aload 0
-      // 406: new java/lang/Object
+      // 406: new net/rim/device/apps/api/ui/VerbMenuItem
       // 409: dup
       // 40a: aload 0
       // 40b: getfield net/rim/device/apps/internal/browser/pme/PMEBrowserField._zoomPanResetVerb Lnet/rim/device/apps/internal/browser/pme/ZoomPanResetVerb;
@@ -651,7 +652,7 @@ public final class PMEBrowserField
          case 11:
             return _resources.getString(1);
          default:
-            return ((StringBuffer)(new Object())).append(_resources.getString(9)).append(e.toString()).toString();
+            return _resources.getString(9) + e.toString();
       }
    }
 
@@ -716,7 +717,7 @@ public final class PMEBrowserField
             if (renderingApplication == null) {
                return;
             } else {
-               UrlRequestedEvent urlRequestedEvent = (UrlRequestedEvent)(new Object(this._browserContent, (String)data, null, null, false, flags | 1));
+               UrlRequestedEvent urlRequestedEvent = new UrlRequestedEvent(this._browserContent, (String)data, null, null, false, flags | 1);
                renderingApplication.eventOccurred(urlRequestedEvent);
             }
       }
@@ -735,11 +736,11 @@ public final class PMEBrowserField
    protected final void onMenuDismissed(Menu menu) {
       super.onMenuDismissed(menu);
       MenuItem menuItem = menu.getSelectedItem();
-      if (!(menuItem instanceof Object)) {
+      if (!(menuItem instanceof VerbMenuItem)) {
          this.startPlayer();
       } else {
          Verb v = ((VerbMenuItem)menuItem).getVerb();
-         if (!(v instanceof Object)) {
+         if (!(v instanceof GoToVerb)) {
             this.startPlayer();
             return;
          }
@@ -814,7 +815,7 @@ public final class PMEBrowserField
    private static final void registerEventLogger(MediaManager m, MediaPlayer p) {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
       Object eventLogObj = ar.get(-6921419827463678505L);
-      if (eventLogObj instanceof Object) {
+      if (eventLogObj instanceof MediaListener) {
          m.addMediaListener((MediaListener)eventLogObj);
          p.setInternalMediaListener((MediaListener)eventLogObj);
       }

@@ -1,12 +1,13 @@
 package net.rim.device.apps.internal.task;
 
 import net.rim.device.api.synchronization.SyncManager;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.apps.api.options.SaveableMainScreenOptionsListItem;
 import net.rim.device.apps.api.reminders.ReminderManager;
@@ -14,6 +15,7 @@ import net.rim.device.apps.api.ui.BooleanChoiceField;
 import net.rim.device.apps.api.ui.CommonResources;
 import net.rim.device.apps.api.ui.TimeChoiceField;
 import net.rim.device.apps.internal.task.resources.TaskResources;
+import net.rim.device.internal.ui.component.PropertyField;
 
 final class TaskOptionsScreen extends SaveableMainScreenOptionsListItem {
    private ObjectChoiceField _sortOrder;
@@ -21,7 +23,7 @@ final class TaskOptionsScreen extends SaveableMainScreenOptionsListItem {
    private TimeChoiceField _snooze;
    private BooleanChoiceField _allowWirelessSync;
    private TaskOptions _taskOptions = TaskOptions.getOptions();
-   static final String[] _sortOrderChoices = new Object[]{
+   static final String[] _sortOrderChoices = new String[]{
       TaskResources.getString(34), TaskResources.getString(35), TaskResources.getString(39), TaskResources.getString(21)
    };
    private static Tag OPTIONS_SECTION_AREA_TAG = Tag.create("options-section-area");
@@ -39,7 +41,7 @@ final class TaskOptionsScreen extends SaveableMainScreenOptionsListItem {
          sortOrder = 0;
       }
 
-      this._sortOrder = (ObjectChoiceField)(new Object(TaskResources.getString(5), _sortOrderChoices, sortOrder));
+      this._sortOrder = new ObjectChoiceField(TaskResources.getString(5), _sortOrderChoices, sortOrder);
       section.add(this._sortOrder);
       section = this.createSection(CommonResources.getString(9179), mainScreen);
       ReminderManager reminderManager = ReminderManager.getInstance();
@@ -48,28 +50,28 @@ final class TaskOptionsScreen extends SaveableMainScreenOptionsListItem {
          section.add(this._snooze);
       }
 
-      this._deleteConfirm = (ObjectChoiceField)(new Object(CommonResources.getString(2008), CommonResources.getYesNoArray(0)));
+      this._deleteConfirm = new ObjectChoiceField(CommonResources.getString(2008), CommonResources.getYesNoArray(0));
       this._deleteConfirm.setSelectedIndex(this._taskOptions.getConfirmDelete() ? 0 : 1);
       section.add(this._deleteConfirm);
       if (SyncManager.getInstance().isOTASyncAvailable(TaskCollectionImpl.getInstance(), false)) {
-         this._allowWirelessSync = (BooleanChoiceField)(new Object(CommonResources.getString(9117), 0, this._taskOptions.isWirelessSyncAllowed()));
+         this._allowWirelessSync = new BooleanChoiceField(CommonResources.getString(9117), 0, this._taskOptions.isWirelessSyncAllowed());
          section.add(this._allowWirelessSync);
       }
 
       section = this.createSection(null, mainScreen);
-      section.add((Field)(new Object(CommonResources.getString(9133), Integer.toString(TaskCollectionImpl.getInstance().size()))));
+      section.add(new PropertyField(CommonResources.getString(9133), Integer.toString(TaskCollectionImpl.getInstance().size())));
    }
 
    protected final Manager createSection(String title, Manager parent) {
-      Manager section = (Manager)(new Object(1153484454560268288L));
+      Manager section = new VerticalFieldManager(1153484454560268288L);
       section.setTag(OPTIONS_SECTION_AREA_TAG);
       if (title != null) {
-         LabelField titleField = (LabelField)(new Object(title, 1152921504606846976L));
+         LabelField titleField = new LabelField(title, 1152921504606846976L);
          titleField.setTag(OPTIONS_SECTION_HEADER_TAG);
          section.add(titleField);
       }
 
-      section.add((Field)(new Object()));
+      section.add(new SeparatorField());
       parent.add(section);
       return section;
    }

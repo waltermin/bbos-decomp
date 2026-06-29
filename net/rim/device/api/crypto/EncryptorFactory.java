@@ -13,7 +13,7 @@ public class EncryptorFactory {
 
    public static EncryptorOutputStream getEncryptorOutputStream(Key key, OutputStream stream) {
       if (key == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return getEncryptorOutputStream(key, stream, key.getAlgorithm(), null);
       }
@@ -25,9 +25,9 @@ public class EncryptorFactory {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public static EncryptorOutputStream getEncryptorOutputStream(Key key, OutputStream stream, String algorithm, InitializationVector iv) {
+   public static EncryptorOutputStream getEncryptorOutputStream(Key key, OutputStream stream, String algorithm, InitializationVector iv) throws NoSuchAlgorithmException {
       if (key == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (algorithm == null) {
@@ -42,7 +42,7 @@ public class EncryptorFactory {
       String nextAlgorithm = RIMFactoryUtilities.stripRightMostSubAlgorithm(algorithm);
       EncryptorFactory factory = (EncryptorFactory)_hashtable.get(nextAlgorithm == null ? RIMFactoryUtilities.getBaseAlgorithm(subAlgorithm) : subAlgorithm);
       if (factory == null) {
-         throw new Object(algorithm);
+         throw new NoSuchAlgorithmException(algorithm);
       }
 
       boolean var10 = false /* VF: Semaphore variable */;
@@ -54,7 +54,7 @@ public class EncryptorFactory {
          var10 = false;
       } finally {
          if (var10) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       }
 
@@ -63,10 +63,10 @@ public class EncryptorFactory {
             return new BlockEncryptor((BlockEncryptorEngine)object, stream);
          } else if (object instanceof BlockFormatterEngine) {
             return new BlockEncryptor((BlockFormatterEngine)object, stream);
-         } else if (object instanceof Object) {
+         } else if (object instanceof PseudoRandomSource) {
             return new PRNGEncryptor((PseudoRandomSource)object, stream);
          } else {
-            throw new Object(algorithm);
+            throw new NoSuchAlgorithmException(algorithm);
          }
       } else {
          return (EncryptorOutputStream)object;
@@ -75,7 +75,7 @@ public class EncryptorFactory {
 
    public static BlockEncryptorEngine getBlockEncryptorEngine(Key key) {
       if (key == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return getBlockEncryptorEngine(key, key.getAlgorithm(), null);
       }
@@ -85,7 +85,7 @@ public class EncryptorFactory {
       return getBlockEncryptorEngine(key, algorithm, null);
    }
 
-   public static BlockEncryptorEngine getBlockEncryptorEngine(Key param0, String param1, InitializationVector param2) {
+   public static BlockEncryptorEngine getBlockEncryptorEngine(Key param0, String param1, InitializationVector param2) throws NoSuchAlgorithmException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -95,7 +95,7 @@ public class EncryptorFactory {
       // Bytecode:
       // 00: aload 0
       // 01: ifnonnull 0c
-      // 04: new java/lang/Object
+      // 04: new java/lang/IllegalArgumentException
       // 07: dup
       // 08: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 0b: athrow
@@ -122,7 +122,7 @@ public class EncryptorFactory {
       // 38: astore 5
       // 3a: aload 5
       // 3c: ifnonnull 48
-      // 3f: new java/lang/Object
+      // 3f: new net/rim/device/api/crypto/NoSuchAlgorithmException
       // 42: dup
       // 43: aload 1
       // 44: invokespecial net/rim/device/api/crypto/NoSuchAlgorithmException.<init> (Ljava/lang/String;)V
@@ -137,12 +137,12 @@ public class EncryptorFactory {
       // 53: checkcast net/rim/device/api/crypto/BlockEncryptorEngine
       // 56: areturn
       // 57: astore 6
-      // 59: new java/lang/Object
+      // 59: new java/lang/IllegalArgumentException
       // 5c: dup
       // 5d: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 60: athrow
       // 61: astore 6
-      // 63: new java/lang/Object
+      // 63: new java/lang/IllegalArgumentException
       // 66: dup
       // 67: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 6a: athrow
@@ -152,7 +152,7 @@ public class EncryptorFactory {
 
    public static void register(EncryptorFactory factory) {
       if (factory == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       String[] algorithms = factory.getFactoryAlgorithms();

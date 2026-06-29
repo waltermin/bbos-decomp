@@ -40,7 +40,7 @@ public final class Logger {
    }
 
    private final void logInternal(String source, String message, int type, int eventId) {
-      StringBuffer msg = (StringBuffer)(new Object(message));
+      StringBuffer msg = new StringBuffer(message);
       if (source != null) {
          msg.append(", ");
          msg.append(source);

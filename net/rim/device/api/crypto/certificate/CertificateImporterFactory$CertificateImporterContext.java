@@ -8,7 +8,7 @@ public class CertificateImporterFactory$CertificateImporterContext {
    public boolean _verifyRootsOnImport = true;
    public int _trustCertificate = 2;
    public int _importEmbeddedCertificates = 2;
-   private Hashtable _keyStoreTickets = (Hashtable)(new Object());
+   private Hashtable _keyStoreTickets = new Hashtable();
    public static final int NO = 0;
    public static final int YES = 1;
    public static final int PROMPT = 2;

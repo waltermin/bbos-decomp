@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.options.items;
 
 import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.EditField;
 import net.rim.device.apps.internal.options.resources.OptionsResources;
 import net.rim.device.internal.ui.component.SimpleInputDialog;
 
@@ -56,7 +57,7 @@ final class CustomDictUnitEditor$CustomDictEditorScreen extends SimpleInputDialo
          this.delete(editField);
       }
 
-      editField = (BasicEditField)(new Object("", null, 127, 4503601774870528L));
+      editField = new EditField("", null, 127, 4503601774870528L);
       this.setEditField(editField);
       this.add(editField);
    }

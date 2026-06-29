@@ -4,14 +4,19 @@ import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.system.EncodedImage;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Keypad;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.XYRect;
+import net.rim.device.api.ui.component.BitmapField;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.PopupScreen;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.Theme;
 import net.rim.device.api.ui.theme.ThemeManager;
 import net.rim.device.internal.ui.component.AnimatedBitmapField;
+import net.rim.device.internal.ui.component.HorizontalSpacerField;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 
 final class VADApplication$ListeningScreen extends PopupScreen {
    private VADApplication$ChoiceListField _listeningListField;
@@ -20,11 +25,11 @@ final class VADApplication$ListeningScreen extends PopupScreen {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    VADApplication$ListeningScreen(VADApplication _1, int state) {
-      super((Manager)(new Object()));
+      super(new VerticalFieldManager());
       this.this$0 = _1;
       this.setMargin(5, 5, 5, 5);
       VerticalFieldManager vfm = (VerticalFieldManager)this.getDelegate();
-      HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object());
+      HorizontalFieldManager hfm = new HorizontalFieldManager();
       boolean var9 = false /* VF: Semaphore variable */;
 
       label55:
@@ -32,23 +37,23 @@ final class VADApplication$ListeningScreen extends PopupScreen {
          var9 = true;
          Theme list = ThemeManager.getActiveTheme();
          EncodedImage i = list.getImage("net_rim_vad_listening_image");
-         AnimatedBitmapField abf = new Object(i, 1000, 0);
-         hfm.add((Field)abf);
+         AnimatedBitmapField abf = new AnimatedBitmapField(i, 1000, 0);
+         hfm.add(abf);
          var9 = false;
       } finally {
          if (var9) {
-            hfm.add((Field)(new Object(Bitmap.getPredefinedBitmap(1))));
+            hfm.add(new BitmapField(Bitmap.getPredefinedBitmap(1)));
             break label55;
          }
       }
 
-      hfm.add((Field)(new Object(10)));
-      hfm.add((Field)(new Object(_1._manager.getVSTString(36), 36028848558571520L)));
+      hfm.add(new HorizontalSpacerField(10));
+      hfm.add(new RichTextField(_1._manager.getVSTString(36), 36028848558571520L));
       vfm.add(hfm);
       String[] list;
       switch (state) {
          case 1:
-            list = new Object[3];
+            list = new String[3];
             list[0] = _1._manager.getVSTString(0);
             list[1] = _1._manager.getVSTString(15);
             if (_1._manager.getParameters()._playPrompts) {
@@ -59,13 +64,13 @@ final class VADApplication$ListeningScreen extends PopupScreen {
             break;
          case 5:
          case 23:
-            list = new Object[]{_1._manager.getVSTString(9), _1._manager.getVSTString(10), _1._manager.getVSTString(11), _1._manager.getVSTString(12)};
+            list = new String[]{_1._manager.getVSTString(9), _1._manager.getVSTString(10), _1._manager.getVSTString(11), _1._manager.getVSTString(12)};
             break;
          case 6:
             list = _1._listeningChoices;
             break;
          case 9:
-            list = new Object[]{
+            list = new String[]{
                _1._manager.getVSTString(6),
                _1._manager.getVSTString(13),
                _1._manager.getVSTString(3),
@@ -77,15 +82,15 @@ final class VADApplication$ListeningScreen extends PopupScreen {
             return;
       }
 
-      vfm.add((Field)(new Object(5)));
-      vfm.add((Field)(new Object()));
-      vfm.add((Field)(new Object(5)));
+      vfm.add(new VerticalSpacerField(5));
+      vfm.add(new SeparatorField());
+      vfm.add(new VerticalSpacerField(5));
       if (list == _1._listeningChoices) {
          this._listeningListField = new VADApplication$ChoiceListField(_1, list);
          vfm.add(this._listeningListField);
       } else {
          for (int i = 0; i < list.length; i++) {
-            vfm.add((Field)(new Object(list[i])));
+            vfm.add(new LabelField(list[i]));
          }
 
          this.setAcceptsInput(false);

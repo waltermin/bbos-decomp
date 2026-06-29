@@ -16,7 +16,7 @@ import net.rim.device.api.util.DataBuffer;
 import net.rim.vm.OTAUpgrade;
 
 public final class SRSelectorSyncCollection implements SyncCollection, SyncConverter, OTASyncCapable, CollectionEventSource {
-   private CollectionListenerManager _collectionListenerManager = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _collectionListenerManager = new CollectionListenerManager();
    private Vector _syncObjects;
    private SRSelector _srSel;
    private ServiceBook _sb;
@@ -52,7 +52,7 @@ public final class SRSelectorSyncCollection implements SyncCollection, SyncConve
       SRSelectorData data = obj.getData();
       if (data.name != null && data.cid != null) {
          if (this._syncObjects == null) {
-            this._syncObjects = (Vector)(new Object());
+            this._syncObjects = new Vector();
          }
 
          this._syncObjects.addElement(obj);
@@ -65,7 +65,7 @@ public final class SRSelectorSyncCollection implements SyncCollection, SyncConve
    @Override
    public final SyncObject[] getSyncObjects() {
       Vector datas = this._srSel.getAppData();
-      SyncObject[] objs = new Object[datas.size()];
+      SyncObject[] objs = new SyncObject[datas.size()];
 
       for (int i = datas.size() - 1; i >= 0; i--) {
          SRSelectorData d = (SRSelectorData)datas.elementAt(i);
@@ -223,7 +223,7 @@ public final class SRSelectorSyncCollection implements SyncCollection, SyncConve
    public SRSelectorSyncCollection(SRSelector srSel, ServiceBook sb) {
       this._srSel = srSel;
       this._sb = sb;
-      this._schema = (SyncCollectionSchema)(new Object());
+      this._schema = new SyncCollectionSchema();
       this._schema.setDefaultRecordType(1);
       this._schema.setKeyFieldIds(1, KEY_FIELD_IDS);
    }

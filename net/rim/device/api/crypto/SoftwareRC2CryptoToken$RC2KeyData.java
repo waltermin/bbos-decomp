@@ -18,7 +18,7 @@ final class SoftwareRC2CryptoToken$RC2KeyData implements CryptoTokenSymmetricKey
          PersistentContent.markAsPlaintext(this._data);
          this.setHashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -33,10 +33,10 @@ final class SoftwareRC2CryptoToken$RC2KeyData implements CryptoTokenSymmetricKey
             PersistentContent.markAsPlaintext(data);
             this.setHashCode();
          } else {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

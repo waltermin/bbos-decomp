@@ -31,7 +31,7 @@ import org.w3c.dom.html2.HTMLElement;
 
 final class TextUtilities {
    private StringPatternEnumerator _stringEnum;
-   private StringPattern$Match _stringMatch = (StringPattern$Match)(new Object());
+   private StringPattern$Match _stringMatch = new StringPattern$Match();
    private HTMLElement _currentFocusCookie;
    private FontCache _fontCache;
    private int _defaultLinkColor;
@@ -159,7 +159,7 @@ final class TextUtilities {
       this._linkColor = this._defaultLinkColor;
       this._defaultParagDir = RichText.getDefaultParagDirection() == 0 ? 0 : 8;
       this._currentDirection = this._defaultParagDir;
-      this._stringEnum = (StringPatternEnumerator)(new Object(null, filterStringPatterns(StringPatternRepository$Internal.getStringPatterns())));
+      this._stringEnum = new StringPatternEnumerator(null, filterStringPatterns(StringPatternRepository$Internal.getStringPatterns()));
       this._minimumFontHeight = Ui.convertSize(options.getPropertyWithIntValue(4550690918222697397L, 35, 6), 2, 0);
       this._minimumFontStyle = options.getPropertyWithIntValue(4550690918222697397L, 36, 0);
       int defaultFontHeight = Ui.convertSize(options.getPropertyWithIntValue(4550690918222697397L, 32, 8), 2, 0);
@@ -189,16 +189,16 @@ final class TextUtilities {
 
       this._fontCache = FontCache.getInstance();
       this._autoMatch = true;
-      this._alignmentStack = (IntStack)(new Object());
-      this._listIndexStack = (IntStack)(new Object());
-      this._listTypeStack = (IntStack)(new Object());
-      this._listImageStack = (Stack)(new Object());
-      this._fontVariantStack = (IntStack)(new Object());
-      this._fontWeightStack = (IntStack)(new Object());
-      this._directionStack = (IntStack)(new Object());
-      this._textDecorationStack = (IntStack)(new Object());
-      this._textTransformStack = (IntStack)(new Object());
-      this._cachedColorValues = (LongIntHashtable)(new Object());
+      this._alignmentStack = new IntStack();
+      this._listIndexStack = new IntStack();
+      this._listTypeStack = new IntStack();
+      this._listImageStack = new Stack();
+      this._fontVariantStack = new IntStack();
+      this._fontWeightStack = new IntStack();
+      this._directionStack = new IntStack();
+      this._textDecorationStack = new IntStack();
+      this._textTransformStack = new IntStack();
+      this._cachedColorValues = new LongIntHashtable();
       this._foregroundHSLCache = new int[3];
       this._backgroundHSLCache = new int[3];
       this._appEventLock = appEventLock;
@@ -206,11 +206,11 @@ final class TextUtilities {
 
    private static final StringPatternContainer filterStringPatterns(StringPatternContainer stringPatternContainer) {
       if (stringPatternContainer == null) {
-         return (StringPatternContainer)(new Object(new Object[0]));
+         return new StringPatternContainer(new StringPattern[0]);
       }
 
       int size = stringPatternContainer.size();
-      StringPattern[] stringPatterns = new Object[size];
+      StringPattern[] stringPatterns = new StringPattern[size];
       int newPatternCount = 0;
 
       for (int i = 0; i < size; i++) {
@@ -222,7 +222,7 @@ final class TextUtilities {
       }
 
       Array.resize(stringPatterns, newPatternCount);
-      return (StringPatternContainer)(new Object(stringPatterns));
+      return new StringPatternContainer(stringPatterns);
    }
 
    final void setDefaultColors(int linkColor) {
@@ -416,7 +416,7 @@ final class TextUtilities {
 
    final int getCurrentFontXHeight(HTMLGenericElement element) {
       Font f = this.deriveFont(element);
-      GlyphMetrics metrics = (GlyphMetrics)(new Object());
+      GlyphMetrics metrics = new GlyphMetrics();
       return f.getGlyphMetrics((char)120, metrics) == 0 ? metrics.iBitmapHeight : f.getHeight() / 2;
    }
 
@@ -658,7 +658,7 @@ final class TextUtilities {
    }
 
    final String getLastListImage() {
-      return (String)(!this._listImageStack.isEmpty() ? this._listImageStack.peek() : null);
+      return !this._listImageStack.isEmpty() ? (String)this._listImageStack.peek() : null;
    }
 
    private final String transformText(String text) {
@@ -672,7 +672,7 @@ final class TextUtilities {
                buffer[offsets[i]] = CharacterUtilities.toUpperCase(buffer[offsets[i]]);
             }
 
-            return (String)(new Object(buffer));
+            return new String(buffer);
          case 82:
             return text.toLowerCase();
          case 166:
@@ -718,7 +718,7 @@ final class TextUtilities {
 
          if (propertiesData != null && propertiesData.length != 0) {
             if (this._properties == null) {
-               this._properties = (DataBuffer)(new Object());
+               this._properties = new DataBuffer();
             }
 
             boolean focusRegionOpen = false;
@@ -1161,7 +1161,7 @@ final class TextUtilities {
          type = 32;
       }
 
-      StringBuffer result = (StringBuffer)(new Object());
+      StringBuffer result = new StringBuffer();
       boolean appendDot = true;
       switch (type) {
          case 24:

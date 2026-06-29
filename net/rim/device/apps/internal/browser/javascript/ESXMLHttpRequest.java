@@ -1,8 +1,8 @@
 package net.rim.device.apps.internal.browser.javascript;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
-import java.io.InputStream;
 import net.rim.device.api.browser.field.BrowserContent;
 import net.rim.device.api.browser.field.RequestedResource;
 import net.rim.device.api.io.http.HttpHeaders;
@@ -69,7 +69,7 @@ final class ESXMLHttpRequest extends RedirectedObject implements JavaScriptResou
       BrowserContent content = engine._browserContent;
       String url = content.resolveUrl(this._uriToRequest);
       this._requestHeaders.setProperty("x-rim-transcode-content", "none");
-      this._requestedResource = (RequestedResource)(new Object(url, this._requestHeaders, 0, this._method, requestData));
+      this._requestedResource = new RequestedResource(url, this._requestHeaders, 0, this._method, requestData);
       if (doc instanceof JavaScriptResourceProvider) {
          JavaScriptResourceProvider rp = (JavaScriptResourceProvider)doc;
          rp.requestResourceFromJavascript(this._requestedResource, this._aSync ? this : null);
@@ -82,10 +82,10 @@ final class ESXMLHttpRequest extends RedirectedObject implements JavaScriptResou
    final synchronized String getAllResponseHeaders() throws ThrownValue {
       if (this._state >= 3 && this._responseHeaders != null) {
          try {
-            ByteArrayOutputStream bytesOut = (ByteArrayOutputStream)(new Object());
-            this._responseHeaders.writeToStream((DataOutputStream)(new Object(bytesOut)));
+            ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
+            this._responseHeaders.writeToStream(new DataOutputStream(bytesOut));
             bytesOut.close();
-            return (String)(new Object(bytesOut.toByteArray()));
+            return new String(bytesOut.toByteArray());
          } finally {
             throw ESDOMException.createThrownValue(11);
          }
@@ -231,11 +231,11 @@ final class ESXMLHttpRequest extends RedirectedObject implements JavaScriptResou
       // 031: invokeinterface javax/microedition/io/HttpConnection.getResponseMessage ()Ljava/lang/String; 1
       // 036: putfield net/rim/device/apps/internal/browser/javascript/ESXMLHttpRequest._responseMessage Ljava/lang/String;
       // 039: aload 0
-      // 03a: new java/lang/Object
+      // 03a: new net/rim/device/api/io/http/HttpHeaders
       // 03d: dup
       // 03e: invokespecial net/rim/device/api/io/http/HttpHeaders.<init> ()V
       // 041: putfield net/rim/device/apps/internal/browser/javascript/ESXMLHttpRequest._responseHeaders Lnet/rim/device/api/io/http/HttpHeaders;
-      // 044: new java/lang/Object
+      // 044: new java/lang/StringBuffer
       // 047: dup
       // 048: invokespecial java/lang/StringBuffer.<init> ()V
       // 04b: astore 4
@@ -363,7 +363,7 @@ final class ESXMLHttpRequest extends RedirectedObject implements JavaScriptResou
             this._valueAsTextCreated = true;
 
             try {
-               this._valueAsText = (String)(new Object(this._responseData, "UTF-8"));
+               this._valueAsText = new String(this._responseData, "UTF-8");
             } finally {
                return JavaScriptEngine.makeStringValue(this._valueAsText);
             }
@@ -394,7 +394,7 @@ final class ESXMLHttpRequest extends RedirectedObject implements JavaScriptResou
                || StringUtilities.strEqualIgnoreCase("application/xml", contentType, 1701707776)
                || StringUtilities.endsWithIgnoreCase("+xml", contentType, 1701707776)) {
                try {
-                  this._xmlDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse((InputStream)(new Object(this._responseData)));
+                  this._xmlDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new ByteArrayInputStream(this._responseData));
                } finally {
                   return JavaScriptEngine.getInstance().lookupElementToESObjectLong(this._xmlDoc);
                }
@@ -409,7 +409,7 @@ final class ESXMLHttpRequest extends RedirectedObject implements JavaScriptResou
       this._method = null;
       this._uriToRequest = null;
       this._aSync = true;
-      this._requestHeaders = (HttpHeaders)(new Object());
+      this._requestHeaders = new HttpHeaders();
       this._requestedResource = null;
       this._state = 0;
       this._valueAsTextCreated = false;

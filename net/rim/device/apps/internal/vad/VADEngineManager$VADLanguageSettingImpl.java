@@ -16,7 +16,7 @@ final class VADEngineManager$VADLanguageSettingImpl extends VADLanguageSetting {
    @Override
    public final String[] getSupportedLanguages() {
       int numLanguages = this.this$0._availableLanguages.length;
-      String[] strings = new Object[numLanguages];
+      String[] strings = new String[numLanguages];
 
       for (int i = 0; i < numLanguages; i++) {
          Locale locale = Locale.get(VADEngineManager.LOCALE_IDS[this.this$0._availableLanguages[i]]);
@@ -68,18 +68,18 @@ final class VADEngineManager$VADLanguageSettingImpl extends VADLanguageSetting {
       Object[] info = VADNatives.getVersionInfo();
       String[] results = null;
       if (info != null) {
-         results = new Object[info.length];
+         results = new String[info.length];
 
          for (int i = info.length - 1; i >= 0; i--) {
             boolean var6 = false /* VF: Semaphore variable */;
 
             try {
                var6 = true;
-               results[i] = (String)(new Object((byte[])info[i], this.this$0._encoding));
+               results[i] = new String((byte[])info[i], this.this$0._encoding);
                var6 = false;
             } finally {
                if (var6) {
-                  results[i] = (String)(new Object((byte[])info[i]));
+                  results[i] = new String((byte[])info[i]);
                   continue;
                }
             }

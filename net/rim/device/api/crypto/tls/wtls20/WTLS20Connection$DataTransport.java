@@ -17,14 +17,14 @@ class WTLS20Connection$DataTransport implements WTLSDataTransport {
          Datagram datagram = this.this$0._subConnection.newDatagram(data, length);
          this.this$0._subConnection.send(datagram);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
    public byte[] read(int timeout) {
       this.this$0.confirmConnectionOpen();
-      if (this.this$0._subConnection instanceof Object) {
+      if (this.this$0._subConnection instanceof DatagramConnectionBase) {
          ((DatagramConnectionBase)this.this$0._subConnection).setTimeout(timeout);
       }
 

@@ -14,7 +14,7 @@ class ShowMessageRunnable implements Runnable {
 
    @Override
    public void run() {
-      System.out.println(((StringBuffer)(new Object("MMS Service Test: "))).append(this._message).toString());
+      System.out.println("MMS Service Test: " + this._message);
       Status.show(this._message, Bitmap.getPredefinedBitmap(this._bitmapID), 60000, 33554432, true, false, 50);
    }
 }

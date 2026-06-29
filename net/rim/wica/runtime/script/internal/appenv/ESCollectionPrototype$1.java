@@ -29,7 +29,7 @@ class ESCollectionPrototype$1 extends HostFunction {
       } else {
          KeyDataCollection keyedCollection = (KeyDataCollection)collection;
          if (numParams != 0) {
-            EcmaUtilities.throwESError(name, RuntimeResources.getString(76, ((StringBuffer)(new Object())).append(this.getName()).append("()").toString()));
+            EcmaUtilities.throwESError(name, RuntimeResources.getString(76, this.getName() + "()"));
          }
 
          dataHandlers = keyedCollection.retrieveAll(true);

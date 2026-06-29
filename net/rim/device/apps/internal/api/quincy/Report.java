@@ -27,7 +27,7 @@ public class Report {
       this.setSubject(subject);
       this.setBody(body);
       this.setMIMEType(mime);
-      this.setExtra((Vector)(new Object()));
+      this.setExtra(new Vector());
       this.setTimestamp(System.currentTimeMillis());
    }
 

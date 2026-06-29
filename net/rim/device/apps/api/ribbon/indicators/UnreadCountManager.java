@@ -5,7 +5,7 @@ import net.rim.device.api.util.IntHashtable;
 import net.rim.device.apps.api.utility.props.StringProps;
 
 public class UnreadCountManager implements TestPoint {
-   private IntHashtable _unreadCounts = (IntHashtable)(new Object());
+   private IntHashtable _unreadCounts = new IntHashtable();
    private IndicatorManager _indicatorManager;
    public static final int TEXT = 1;
    public static final int TEXT_HIDE_FILED = 2;
@@ -224,11 +224,11 @@ public class UnreadCountManager implements TestPoint {
    @Override
    public void test(Object id, Object value) {
       int unreadCountUid = 0;
-      if (id instanceof Object) {
-         unreadCountUid = id;
+      if (id instanceof Integer) {
+         unreadCountUid = (Integer)id;
          int newCount = 0;
-         if (value instanceof Object) {
-            newCount = value;
+         if (value instanceof Integer) {
+            newCount = (Integer)value;
             int oldCount = getUnreadCount(unreadCountUid);
             modifyUnreadCount(unreadCountUid, newCount - oldCount);
          }
@@ -240,7 +240,7 @@ public class UnreadCountManager implements TestPoint {
          ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
          countOptions = (UnreadCountManager$CountOptions)ar.getOrWaitFor(7056244251443120672L);
          if (countOptions == null) {
-            throw new Object("Could not retrieve messsage options");
+            throw new RuntimeException("Could not retrieve messsage options");
          }
       }
 

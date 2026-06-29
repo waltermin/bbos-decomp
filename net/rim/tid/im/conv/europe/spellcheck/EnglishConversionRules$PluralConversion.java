@@ -14,7 +14,7 @@ class EnglishConversionRules$PluralConversion extends EnglishConversionRules$Con
       this.upperCase = CharacterUtilities.isUpperCase(word[offset + len - 1]);
       switch (super._conversionType) {
          case 5:
-            throw new Object();
+            throw new IllegalStateException();
          case 6:
          default:
             return len - 1;
@@ -32,7 +32,7 @@ class EnglishConversionRules$PluralConversion extends EnglishConversionRules$Con
    public void setConversionBounds(char[] word, int offset, int len, int[] bounds) {
       switch (super._conversionType) {
          case 5:
-            throw new Object();
+            throw new IllegalStateException();
          case 6:
          default:
             bounds[0] = offset;

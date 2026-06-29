@@ -2,6 +2,7 @@ package net.rim.device.api.crypto.certificate.x509;
 
 import net.rim.device.api.crypto.Digest;
 import net.rim.device.api.crypto.HashCodeCalculator;
+import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
 import net.rim.device.api.crypto.keystore.KeyStoreDataMap;
@@ -13,12 +14,12 @@ public class X509PublicKeyHashKeyStoreIndex implements KeyStoreIndex {
    public static final long ID = 751537200683994917L;
 
    public X509PublicKeyHashKeyStoreIndex() {
-      this._digest = (Digest)(new Object());
+      this._digest = new SHA1Digest();
    }
 
    public X509PublicKeyHashKeyStoreIndex(Digest digest) {
       if (digest == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._digest = digest;
@@ -33,14 +34,14 @@ public class X509PublicKeyHashKeyStoreIndex implements KeyStoreIndex {
             dataMap.add(HashCodeCalculator.getCRC32(this._digest.getDigest()), data);
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
    public int getHash(Object target) {
       if (!(target instanceof byte[])) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return HashCodeCalculator.getCRC32((byte[])target);
       }
@@ -49,7 +50,7 @@ public class X509PublicKeyHashKeyStoreIndex implements KeyStoreIndex {
    @Override
    public synchronized boolean matches(KeyStoreData data, Object target) {
       if (data == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (target instanceof byte[]) {

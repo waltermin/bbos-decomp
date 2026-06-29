@@ -16,6 +16,7 @@ import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.Trackball;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.component.CheckboxField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.Arrays;
@@ -38,6 +39,7 @@ import net.rim.device.internal.system.InternalServices;
 import net.rim.device.internal.ui.container.VerticalIndentFieldManager;
 import net.rim.vm.Array;
 import net.rim.vm.PersistentInteger;
+import net.rim.vm.WeakReference;
 
 public final class GeneralProperty extends BrowserProperty implements FieldChangeListener {
    private CheckboxField _confirmQuitOnEscapeField;
@@ -202,7 +204,7 @@ public final class GeneralProperty extends BrowserProperty implements FieldChang
    public static final void addListener(BrowserOptionsChangeListener listener) {
       synchronized (_configData) {
          if (_configData._generalPropertyListeners == null) {
-            _configData._generalPropertyListeners = new Object[0];
+            _configData._generalPropertyListeners = new WeakReference[0];
          }
 
          for (int i = _configData._generalPropertyListeners.length - 1; i >= 0; i--) {
@@ -211,7 +213,7 @@ public final class GeneralProperty extends BrowserProperty implements FieldChang
             }
          }
 
-         Arrays.add(_configData._generalPropertyListeners, new Object(listener));
+         Arrays.add(_configData._generalPropertyListeners, new WeakReference(listener));
       }
    }
 
@@ -250,7 +252,7 @@ public final class GeneralProperty extends BrowserProperty implements FieldChang
    public static final String getDefaultFontFamily() {
       PersistentObject store = RIMPersistentStore.getPersistentObject(5135993918761058926L);
       Object contents = store.getContents();
-      return (String)(!(contents instanceof Object) ? FontCache.getInstance().getDefaultFontFamily() : contents);
+      return !(contents instanceof String) ? FontCache.getInstance().getDefaultFontFamily() : (String)contents;
    }
 
    public static final void setDefaultFontFamily(String value) {
@@ -325,7 +327,7 @@ public final class GeneralProperty extends BrowserProperty implements FieldChang
          case 50:
             return _configData._audioPathBluetootha2dpHandle;
          default:
-            throw new Object();
+            throw new RuntimeException();
       }
    }
 
@@ -356,20 +358,20 @@ public final class GeneralProperty extends BrowserProperty implements FieldChang
          case 48:
             return _configData._enableMobileCursorHandle;
          default:
-            throw new Object();
+            throw new RuntimeException();
       }
    }
 
    public static final String getPreviousSimId() {
       PersistentObject store = RIMPersistentStore.getPersistentObject(3464760717660140268L);
       Object contents = store.getContents();
-      return (String)(!(contents instanceof Object) ? null : contents);
+      return !(contents instanceof String) ? null : (String)contents;
    }
 
    public static final String getDefaultCharsetValue() {
       PersistentObject store = RIMPersistentStore.getPersistentObject(8288869949763761940L);
       Object contents = store.getContents();
-      return (String)(!(contents instanceof Object) ? Helper.getSuggestedEncoding(Locale.getDefault().getCode()) : contents);
+      return !(contents instanceof String) ? Helper.getSuggestedEncoding(Locale.getDefault().getCode()) : (String)contents;
    }
 
    public static final int getDefaultCharsetModeValue() {
@@ -387,7 +389,7 @@ public final class GeneralProperty extends BrowserProperty implements FieldChang
          synchronized (persistentObject) {
             table = (Hashtable)persistentObject.getContents();
             if (table == null) {
-               table = (Hashtable)(new Object());
+               table = new Hashtable();
                persistentObject.setContents(table, 51);
                persistentObject.commit();
             }
@@ -432,7 +434,7 @@ public final class GeneralProperty extends BrowserProperty implements FieldChang
          case 41:
             return 1793886603480711262L;
          default:
-            throw new Object();
+            throw new RuntimeException();
       }
    }
 
@@ -454,7 +456,7 @@ public final class GeneralProperty extends BrowserProperty implements FieldChang
          synchronized (persistentObject) {
             table = (ToIntHashtable)persistentObject.getContents();
             if (table == null) {
-               table = (ToIntHashtable)(new Object());
+               table = new ToIntHashtable();
                persistentObject.setContents(table, 51);
                persistentObject.commit();
             }
@@ -479,25 +481,25 @@ public final class GeneralProperty extends BrowserProperty implements FieldChang
       String string;
       switch (index) {
          case -1:
-            throw new Object();
+            throw new ArrayIndexOutOfBoundsException();
          case 0:
          default:
             string = BLACKBERRY_VERSION;
             break;
          case 1:
-            string = ((StringBuffer)(new Object())).append(BLACKBERRY_VERSION).append(" UP.Browser/5.0.3.3").toString();
+            string = BLACKBERRY_VERSION + " UP.Browser/5.0.3.3";
             break;
          case 2:
-            string = ((StringBuffer)(new Object())).append(BLACKBERRY_VERSION).append(" UP.Browser/5.0.3.3 UP.Link/5.1.2.1").toString();
+            string = BLACKBERRY_VERSION + " UP.Browser/5.0.3.3 UP.Link/5.1.2.1";
             break;
          case 3:
-            string = ((StringBuffer)(new Object("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) "))).append(BLACKBERRY_VERSION).toString();
+            string = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0) " + BLACKBERRY_VERSION;
             break;
          case 4:
-            string = ((StringBuffer)(new Object("Mozilla/2.0 (compatible; MSIE 3.02; Windows CE; PPC; 240x320) "))).append(BLACKBERRY_VERSION).toString();
+            string = "Mozilla/2.0 (compatible; MSIE 3.02; Windows CE; PPC; 240x320) " + BLACKBERRY_VERSION;
             break;
          case 5:
-            string = ((StringBuffer)(new Object("Mozilla/4.8 [en] (Windows NT 5.0; U) "))).append(BLACKBERRY_VERSION).toString();
+            string = "Mozilla/4.8 [en] (Windows NT 5.0; U) " + BLACKBERRY_VERSION;
       }
 
       _configData._emulationModeStringIndex = index;
@@ -506,7 +508,7 @@ public final class GeneralProperty extends BrowserProperty implements FieldChang
    }
 
    public static final String[] getAuthenticationCredentialsValue(String realm) {
-      return (Object[])getAuthenticationCredentials().get(realm);
+      return (String[])getAuthenticationCredentials().get(realm);
    }
 
    public static final Hashtable getAuthenticationCredentials() {
@@ -516,7 +518,7 @@ public final class GeneralProperty extends BrowserProperty implements FieldChang
          synchronized (persistentObject) {
             table = (Hashtable)persistentObject.getContents();
             if (table == null) {
-               table = (Hashtable)(new Object());
+               table = new Hashtable();
                persistentObject.setContents(table, 51);
                persistentObject.commit();
             }
@@ -544,22 +546,16 @@ public final class GeneralProperty extends BrowserProperty implements FieldChang
       }
 
       this._defaultBrowserField = new BrowserChoiceField(BrowserResources.getString(838), defaultConfigUID);
-      this._confirmQuitOnEscapeField = (CheckboxField)(new Object(BrowserResources.getString(434), getCurrentPropertyAsBoolean(0)));
-      this._confirmLeaveModifiedPageField = (CheckboxField)(new Object(BrowserResources.getString(641), getCurrentPropertyAsBoolean(24)));
-      this._confirmExecuteScriptsField = (CheckboxField)(new Object(BrowserResources.getString(285), getCurrentPropertyAsBoolean(1)));
-      this._javascriptLocationEnabledField = (CheckboxField)(new Object(BrowserResources.getString(645), getCurrentPropertyAsBoolean(23)));
-      this._imageQualityField = (ObjectChoiceField)(new Object(
-         BrowserResources.getString(860), BrowserResources.getStringArray(859), getCurrentPropertyAsInt(42)
-      ));
-      this._defaultViewField = (ObjectChoiceField)(new Object(
-         BrowserResources.getString(870), BrowserResources.getStringArray(869), getCurrentPropertyAsInt(43)
-      ));
-      this._mobileCursorField = (CheckboxField)(new Object(BrowserResources.getString(904), getCurrentPropertyAsBoolean(48)));
-      this._animationCountField = (ObjectChoiceField)(new Object(
-         BrowserResources.getString(651), BrowserResources.getStringArray(657), getCurrentPropertyAsInt(2)
-      ));
-      this._doNotCacheSecurePagesField = (CheckboxField)(new Object(BrowserResources.getString(633), getCurrentPropertyAsBoolean(10)));
-      this._clearCacheOnCloseField = (CheckboxField)(new Object(BrowserResources.getString(500), getCurrentPropertyAsBoolean(3)));
+      this._confirmQuitOnEscapeField = new CheckboxField(BrowserResources.getString(434), getCurrentPropertyAsBoolean(0));
+      this._confirmLeaveModifiedPageField = new CheckboxField(BrowserResources.getString(641), getCurrentPropertyAsBoolean(24));
+      this._confirmExecuteScriptsField = new CheckboxField(BrowserResources.getString(285), getCurrentPropertyAsBoolean(1));
+      this._javascriptLocationEnabledField = new CheckboxField(BrowserResources.getString(645), getCurrentPropertyAsBoolean(23));
+      this._imageQualityField = new ObjectChoiceField(BrowserResources.getString(860), BrowserResources.getStringArray(859), getCurrentPropertyAsInt(42));
+      this._defaultViewField = new ObjectChoiceField(BrowserResources.getString(870), BrowserResources.getStringArray(869), getCurrentPropertyAsInt(43));
+      this._mobileCursorField = new CheckboxField(BrowserResources.getString(904), getCurrentPropertyAsBoolean(48));
+      this._animationCountField = new ObjectChoiceField(BrowserResources.getString(651), BrowserResources.getStringArray(657), getCurrentPropertyAsInt(2));
+      this._doNotCacheSecurePagesField = new CheckboxField(BrowserResources.getString(633), getCurrentPropertyAsBoolean(10));
+      this._clearCacheOnCloseField = new CheckboxField(BrowserResources.getString(500), getCurrentPropertyAsBoolean(3));
       this._fontFamilies = FontFamily.getFontFamilies();
       this._ptFontSizes = null;
       String value = getDefaultFontFamily();
@@ -572,10 +568,10 @@ public final class GeneralProperty extends BrowserProperty implements FieldChang
          }
       }
 
-      this._defaultFontFamilyField = (ObjectChoiceField)(new Object(BrowserResources.getString(700), this._fontFamilies, fontIndex));
+      this._defaultFontFamilyField = new ObjectChoiceField(BrowserResources.getString(700), this._fontFamilies, fontIndex);
       this._defaultFontFamilyField.setChangeListener(this);
-      this._defaultFontSizeField = (ObjectChoiceField)(new Object(BrowserResources.getString(701), null, 0, 134217728));
-      this._minimumFontSizeField = (ObjectChoiceField)(new Object(BrowserResources.getString(737), null, 0, 134217728));
+      this._defaultFontSizeField = new ObjectChoiceField(BrowserResources.getString(701), null, 0, 134217728);
+      this._minimumFontSizeField = new ObjectChoiceField(BrowserResources.getString(737), null, 0, 134217728);
       this.populateFontSizes();
       this._defaultFontSizeField.setChangeListener(this);
       this._minimumFontSizeField.setChangeListener(this);
@@ -588,7 +584,7 @@ public final class GeneralProperty extends BrowserProperty implements FieldChang
             index = 2;
       }
 
-      this._minimumFontStyleField = (ObjectChoiceField)(new Object(BrowserResources.getString(738), BrowserResources.getStringArray(739), index));
+      this._minimumFontStyleField = new ObjectChoiceField(BrowserResources.getString(738), BrowserResources.getStringArray(739), index);
       screen.add(this._defaultBrowserField);
       screen.add(this._defaultFontFamilyField);
       screen.add(this._defaultFontSizeField);
@@ -606,15 +602,15 @@ public final class GeneralProperty extends BrowserProperty implements FieldChang
       }
 
       if (!super._restrictedAccess) {
-         screen.add((Field)(new Object("")));
+         screen.add(new LabelField(""));
          screen.add(this._doNotCacheSecurePagesField);
          screen.add(this._clearCacheOnCloseField);
       }
 
-      VerticalIndentFieldManager indentMgr = (VerticalIndentFieldManager)(new Object());
+      VerticalIndentFieldManager indentMgr = new VerticalIndentFieldManager();
       screen.add(indentMgr);
       int indentHeight = Font.getDefault().getHeight();
-      indentMgr.add((Field)(new Object(BrowserResources.getString(681))));
+      indentMgr.add(new LabelField(BrowserResources.getString(681)));
       indentMgr.add(this._confirmQuitOnEscapeField, indentHeight);
       indentMgr.add(this._confirmLeaveModifiedPageField, indentHeight);
       if (WMLScript.isWMLScriptInstalled()) {
@@ -799,7 +795,7 @@ public final class GeneralProperty extends BrowserProperty implements FieldChang
 
       int[] fontSizes = ff.getHeights();
       int numFontSizes = fontSizes.length;
-      this._ptFontSizes = new Object[numFontSizes];
+      this._ptFontSizes = new Integer[numFontSizes];
       Arrays.sort(fontSizes, 0, fontSizes.length);
       int newDefaultIndex = 0;
       int newMinimumIndex = 0;
@@ -818,7 +814,7 @@ public final class GeneralProperty extends BrowserProperty implements FieldChang
                newMinimumIndex = count;
             }
 
-            this._ptFontSizes[count++] = (Integer)(new Object(size));
+            this._ptFontSizes[count++] = new Integer(size);
          }
       }
 
@@ -999,7 +995,7 @@ public final class GeneralProperty extends BrowserProperty implements FieldChang
          ar.put(4417702636629415150L, _configData);
       }
 
-      BACKUP_RESTORE_MASK = (BitSet)(new Object());
+      BACKUP_RESTORE_MASK = new BitSet();
       BACKUP_RESTORE_MASK.set(0);
       BACKUP_RESTORE_MASK.set(1);
       BACKUP_RESTORE_MASK.set(18);
@@ -1039,7 +1035,7 @@ public final class GeneralProperty extends BrowserProperty implements FieldChang
       BACKUP_RESTORE_MASK.set(49);
       BACKUP_RESTORE_MASK.set(50);
       BACKUP_RESTORE_MASK.set(48);
-      ALL_OPTIONS_SET_MASK = (BitSet)(new Object());
+      ALL_OPTIONS_SET_MASK = new BitSet();
       ALL_OPTIONS_SET_MASK.not();
    }
 }

@@ -133,7 +133,7 @@ final class CallForwardingOption extends OptionsListItem implements PhoneOptions
    public final void onOpen() {
       if (RadioInfo.getState() != 1) {
          synchronized (Application.getEventLock()) {
-            Dialog.alert(((StringBuffer)(new Object())).append(CommonResources.getString(9153)).append(' ').append(PhoneResources.getString(143)).toString());
+            Dialog.alert(CommonResources.getString(9153) + ' ' + PhoneResources.getString(143));
          }
       } else if (this._ssTestingHackEnabled) {
          this.open();

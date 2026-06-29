@@ -63,7 +63,7 @@ public final class RecipientFieldManager extends VerticalFieldManager {
       Vector vector = null;
       int count = this.getFieldCount();
       if (count > 0) {
-         vector = (Vector)(new Object());
+         vector = new Vector();
 
          for (int idx = 0; idx < count; idx++) {
             Field field = this.getField(idx);

@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.ribbon.skin.svg.manager;
 
-import net.rim.blackberry.api.invoke.ApplicationArguments;
 import net.rim.blackberry.api.invoke.Invoke;
+import net.rim.blackberry.api.invoke.PhoneArguments;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.PersistableRIMModel;
@@ -16,7 +16,7 @@ import net.rim.device.apps.internal.phone.data.PhoneFolders;
 import net.rim.plazmic.internal.mediaengine.model.intarray.v1_2.ModelInteractorImpl;
 
 class CallHandler extends Handler {
-   PhoneCallModelImpl[] _callModel = new Object[this.MaxEntries];
+   PhoneCallModelImpl[] _callModel = new PhoneCallModelImpl[this.MaxEntries];
    private static final int NUM_ENTRIES_PER_LOG = 2;
 
    CallHandler(ModelInteractorImpl mi, UiApplication app) {
@@ -32,7 +32,7 @@ class CallHandler extends Handler {
             if (numberModel != null) {
                String number = numberModel.toString();
                if (number != null && !number.equals("")) {
-                  Invoke.invokeApplication(4, (ApplicationArguments)(new Object("call", number)));
+                  Invoke.invokeApplication(4, new PhoneArguments("call", number));
                   return true;
                }
             }
@@ -47,13 +47,13 @@ class CallHandler extends Handler {
       if (index >= 0 && index < super.MaxEntries) {
          PhoneCallModelImpl callModel = this._callModel[index];
          if (callModel != null) {
-            ContextObject context = (ContextObject)(new Object());
+            ContextObject context = new ContextObject();
             PhoneUtilities.setPrivateFlag(context, 38);
             PhoneUtilities.setPrivateFlag(context, 74);
             PhoneUtilities.setPrivateFlag(context, 72);
-            Verb[] verbs = new Object[0];
+            Verb[] verbs = new Verb[0];
             Verb defaultVerb = callModel.getVerbs(context, verbs);
-            SystemEnabledMenu menu = (SystemEnabledMenu)(new Object(context, null));
+            SystemEnabledMenu menu = new SystemEnabledMenu(context, null);
             menu.add(verbs);
             menu.setDefault(defaultVerb);
             menu.coalesce(-3072555018635390988L, null);
@@ -70,7 +70,7 @@ class CallHandler extends Handler {
                synchronized (super._modelInteractor) {
                   for (int i = 0; i < super.MaxEntries; i++) {
                      this._callModel[i] = null;
-                     this.setDisplayable(((StringBuffer)(new Object("missedcall"))).append(i + 1).append("hotspot").toString(), false);
+                     this.setDisplayable("missedcall" + (i + 1) + "hotspot", false);
                   }
 
                   if (super._nodes != null) {
@@ -107,7 +107,7 @@ class CallHandler extends Handler {
                               }
                            }
 
-                           this.setDisplayable(((StringBuffer)(new Object("missedcall"))).append(counter + 1).append("hotspot").toString(), true);
+                           this.setDisplayable("missedcall" + (counter + 1) + "hotspot", true);
                            counter++;
                            numCalls--;
                         }

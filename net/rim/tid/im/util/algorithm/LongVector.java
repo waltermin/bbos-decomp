@@ -1,5 +1,6 @@
 package net.rim.tid.im.util.algorithm;
 
+import java.util.NoSuchElementException;
 import net.rim.vm.Array;
 import net.rim.vm.Persistable;
 
@@ -10,7 +11,7 @@ public class LongVector implements Persistable {
 
    public LongVector(int initialCapacity, int capacityIncrement) {
       if (initialCapacity < 0) {
-         throw new Object(((StringBuffer)(new Object("Illegal Capacity: "))).append(initialCapacity).toString());
+         throw new IllegalArgumentException("Illegal Capacity: " + initialCapacity);
       }
 
       this.elementData = new long[initialCapacity];
@@ -105,7 +106,7 @@ public class LongVector implements Persistable {
 
    public int lastIndexOf(long elem, int index) {
       if (index >= this.elementCount) {
-         throw new Object(((StringBuffer)(new Object())).append(index).append(" >= ").append(this.elementCount).toString());
+         throw new ArrayIndexOutOfBoundsException(index + " >= " + this.elementCount);
       }
 
       for (int i = index; i >= 0; i--) {
@@ -119,19 +120,19 @@ public class LongVector implements Persistable {
 
    public long elementAt(int index) {
       if (index >= this.elementCount) {
-         throw new Object(((StringBuffer)(new Object())).append(index).append(" >= ").append(this.elementCount).toString());
+         throw new ArrayIndexOutOfBoundsException(index + " >= " + this.elementCount);
       }
 
       try {
          return this.elementData[index];
       } finally {
-         throw new Object(((StringBuffer)(new Object())).append(index).append(" < 0").toString());
+         throw new ArrayIndexOutOfBoundsException(index + " < 0");
       }
    }
 
    public long firstElement() {
       if (this.elementCount == 0) {
-         throw new Object();
+         throw new NoSuchElementException();
       } else {
          return this.elementData[0];
       }
@@ -139,7 +140,7 @@ public class LongVector implements Persistable {
 
    public long lastElement() {
       if (this.elementCount == 0) {
-         throw new Object();
+         throw new NoSuchElementException();
       } else {
          return this.elementData[this.elementCount - 1];
       }
@@ -147,7 +148,7 @@ public class LongVector implements Persistable {
 
    public void setElementAt(long obj, int index) {
       if (index >= this.elementCount) {
-         throw new Object(((StringBuffer)(new Object())).append(index).append(" >= ").append(this.elementCount).toString());
+         throw new ArrayIndexOutOfBoundsException(index + " >= " + this.elementCount);
       }
 
       this.elementData[index] = obj;
@@ -155,11 +156,11 @@ public class LongVector implements Persistable {
 
    public void removeElementAt(int index) {
       if (index >= this.elementCount) {
-         throw new Object(((StringBuffer)(new Object())).append(index).append(" >= ").append(this.elementCount).toString());
+         throw new ArrayIndexOutOfBoundsException(index + " >= " + this.elementCount);
       }
 
       if (index < 0) {
-         throw new Object(index);
+         throw new ArrayIndexOutOfBoundsException(index);
       }
 
       int j = this.elementCount - index - 1;
@@ -173,7 +174,7 @@ public class LongVector implements Persistable {
    public void insertElementAt(long obj, int index) {
       int newcount = this.elementCount + 1;
       if (index >= newcount) {
-         throw new Object(((StringBuffer)(new Object())).append(index).append(" > ").append(this.elementCount).toString());
+         throw new ArrayIndexOutOfBoundsException(index + " > " + this.elementCount);
       }
 
       if (newcount > this.elementData.length) {

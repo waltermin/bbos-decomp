@@ -127,8 +127,8 @@ public final class CallForwardRibbonIndicator implements Indicator, TestPoint {
 
    @Override
    public final void test(Object id, Object value) {
-      if (value instanceof Object) {
-         this.updateIndicators(value);
+      if (value instanceof Boolean) {
+         this.updateIndicators((Boolean)value);
       }
    }
 }

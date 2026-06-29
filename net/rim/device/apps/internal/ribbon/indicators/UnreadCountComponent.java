@@ -71,7 +71,7 @@ public final class UnreadCountComponent extends StringRibbonComponent implements
 
             return false;
          case 3:
-            if (!(this._indicator instanceof Object)) {
+            if (!(this._indicator instanceof UnreadCount)) {
                return false;
             }
 
@@ -89,7 +89,7 @@ public final class UnreadCountComponent extends StringRibbonComponent implements
          boolean displayMessageCount = UnreadCountManager.getCountOptions().getDisplayMessageCount() != 0;
          if (displayMessageCount && count > 0) {
             if (this._enclosing) {
-               return ((StringBuffer)(new Object())).append(this._openChar).append(Integer.toString(count)).append(this._closeChar).toString();
+               return this._openChar + Integer.toString(count) + this._closeChar;
             }
 
             return Integer.toString(count);

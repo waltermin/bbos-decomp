@@ -16,7 +16,7 @@ public class AbstractBigVectorSerializer extends AbstractArraySerializer {
       BigVector bigVector = null;
       Object[] array = this.deserializeArray(buffer);
       if (array != null) {
-         bigVector = (BigVector)(new Object(array.length));
+         bigVector = new BigVector(array.length);
          bigVector.addElements(array);
       }
 

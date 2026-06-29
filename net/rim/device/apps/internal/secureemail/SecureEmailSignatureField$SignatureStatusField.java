@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.secureemail;
 
+import net.rim.device.api.crypto.CryptoUnsupportedOperationException;
 import net.rim.device.api.i18n.MessageFormat;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.ui.ContextMenu;
@@ -63,18 +64,18 @@ public class SecureEmailSignatureField$SignatureStatusField extends StatusField 
       switch (status) {
          case -1:
          case 4:
-            return MessageFormat.format(SecureEmailResources.getString(67), new Object[]{encodingString});
+            return MessageFormat.format(SecureEmailResources.getString(67), new String[]{encodingString});
          case 0:
          default:
             return SecureEmailResources.getString(59);
          case 1:
             if (this._signerName == null) {
-               return MessageFormat.format(SecureEmailResources.getString(60), new Object[]{encodingString});
+               return MessageFormat.format(SecureEmailResources.getString(60), new String[]{encodingString});
             }
 
-            return MessageFormat.format(SecureEmailResources.getString(61), new Object[]{encodingString, this._signerName});
+            return MessageFormat.format(SecureEmailResources.getString(61), new String[]{encodingString, this._signerName});
          case 2:
-            return MessageFormat.format(SecureEmailResources.getString(63), new Object[]{this._details});
+            return MessageFormat.format(SecureEmailResources.getString(63), new String[]{this._details});
          case 3:
             if (this.this$0._besNoVerifyReason != null) {
                String patternString = null;
@@ -91,12 +92,12 @@ public class SecureEmailSignatureField$SignatureStatusField extends StatusField 
                      patternString = SecureEmailResources.getString(126);
                }
 
-               String text = MessageFormat.format(patternString, new Object[]{this.this$0._secureEmailFactory.getEncodingString()});
+               String text = MessageFormat.format(patternString, new String[]{this.this$0._secureEmailFactory.getEncodingString()});
                switch (this.this$0._besVerificationState) {
                   case 0:
                   case 1:
                   default:
-                     text = ((StringBuffer)(new Object())).append(text).append(this.getBESVerificationSuffix()).toString();
+                     text = text + this.getBESVerificationSuffix();
                   case -1:
                      return text;
                }
@@ -104,23 +105,20 @@ public class SecureEmailSignatureField$SignatureStatusField extends StatusField 
                switch (this.this$0._besVerificationState) {
                   case -1:
                      if (this.this$0._moreAvailable) {
-                        return MessageFormat.format(SecureEmailResources.getString(66), new Object[]{encodingString});
+                        return MessageFormat.format(SecureEmailResources.getString(66), new String[]{encodingString});
                      }
 
-                     return MessageFormat.format(SecureEmailResources.getString(124), new Object[]{encodingString});
+                     return MessageFormat.format(SecureEmailResources.getString(124), new String[]{encodingString});
                   case 0:
                   case 1:
                   default:
-                     return ((StringBuffer)(new Object()))
-                        .append(MessageFormat.format(SecureEmailResources.getString(60), new Object[]{encodingString}))
-                        .append(this.getBESVerificationSuffix())
-                        .toString();
+                     return MessageFormat.format(SecureEmailResources.getString(60), new String[]{encodingString}) + this.getBESVerificationSuffix();
                }
             }
          case 5:
             return this._signerName == null
-               ? MessageFormat.format(SecureEmailResources.getString(187), new Object[]{encodingString})
-               : MessageFormat.format(SecureEmailResources.getString(188), new Object[]{encodingString, this._signerName});
+               ? MessageFormat.format(SecureEmailResources.getString(187), new String[]{encodingString})
+               : MessageFormat.format(SecureEmailResources.getString(188), new String[]{encodingString, this._signerName});
       }
    }
 
@@ -252,7 +250,7 @@ public class SecureEmailSignatureField$SignatureStatusField extends StatusField 
    }
 
    public void handleThrowable(Throwable t, SecureEmailSignatureField$ThrowableHandlerData throwableHandlerData) {
-      if (t instanceof Object) {
+      if (t instanceof CryptoUnsupportedOperationException) {
          throwableHandlerData._status = 2;
          throwableHandlerData._details = SecureEmailResources.getString(69);
          throwableHandlerData._unrecoverableThrowable = true;

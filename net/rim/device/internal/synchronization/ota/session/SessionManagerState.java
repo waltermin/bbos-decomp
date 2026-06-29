@@ -21,7 +21,7 @@ public final class SessionManagerState implements Persistable {
    private static final int FLAGS_DEVICE_LOG_REQUEST = 16;
 
    private static final long getKeyFor(long sid) {
-      String xCompleteKey = ((StringBuffer)(new Object("net.rim.device.internal.synchronization.ota.session.SessionManagerState:"))).append(sid).toString();
+      String xCompleteKey = "net.rim.device.internal.synchronization.ota.session.SessionManagerState:" + sid;
       return Hash.bytesToLong(xCompleteKey.getBytes());
    }
 

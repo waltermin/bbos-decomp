@@ -135,7 +135,7 @@ public class PlayListCollection extends MediaInfoCollection implements FilteredF
       // 090: astore 7
       // 092: aload 1
       // 093: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 096: checkcast java/lang/Object
+      // 096: checkcast javax/microedition/io/file/FileConnection
       // 099: astore 6
       // 09b: aload 6
       // 09d: invokeinterface javax/microedition/io/file/FileConnection.openInputStream ()Ljava/io/InputStream; 1
@@ -245,7 +245,7 @@ public class PlayListCollection extends MediaInfoCollection implements FilteredF
             }
          }
       } else {
-         throw new Object();
+         throw new NullPointerException();
       }
    }
 

@@ -5,7 +5,10 @@ import net.rim.device.api.system.RIMGlobalMessagePoster;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.apps.api.calendar.caldb.CalDB;
 import net.rim.device.apps.api.calendar.caldb.CalendarFolder;
@@ -18,6 +21,7 @@ import net.rim.device.apps.api.options.SaveableMainScreenOptionsListItem;
 import net.rim.device.apps.api.ui.BooleanChoiceField;
 import net.rim.device.apps.api.ui.CommonResources;
 import net.rim.device.internal.ui.component.ColorChoiceField;
+import net.rim.device.internal.ui.component.ColorChoiceField$NamedColor;
 import net.rim.device.internal.ui.component.PropertyField;
 
 final class CalendarOptionsPropertiesScreen extends SaveableMainScreenOptionsListItem {
@@ -49,10 +53,7 @@ final class CalendarOptionsPropertiesScreen extends SaveableMainScreenOptionsLis
 
    @Override
    protected final void populateMainScreen(MainScreen screen) {
-      this._calendarName = (Field)(new Object(
-         ((StringBuffer)(new Object())).append(this._calendarService.getServiceName()).append(this._calendarFolder.getFolderNameSuffix()).toString(),
-         36028797018963968L
-      ));
+      this._calendarName = new LabelField(this._calendarService.getServiceName() + this._calendarFolder.getFolderNameSuffix(), 36028797018963968L);
       boolean isOTAEnabled = true;
       boolean isFieldReadOnly = false;
       CICALConfiguration config = this._calendarService.getCICALConfiguration();
@@ -65,16 +66,16 @@ final class CalendarOptionsPropertiesScreen extends SaveableMainScreenOptionsLis
          isOTAEnabled = this._calendarOptions.isAllowWirelessSync(this._calendarService.getUniqueServiceID());
       }
 
-      this._allowWirelessSync = (BooleanChoiceField)(new Object(CommonResources.getString(9117), 0, isOTAEnabled, isFieldReadOnly ? 9007199254740992L : 0));
-      this._calendarColour = (ColorChoiceField)(new Object());
+      this._allowWirelessSync = new BooleanChoiceField(CommonResources.getString(9117), 0, isOTAEnabled, isFieldReadOnly ? 9007199254740992L : 0);
+      this._calendarColour = new ColorChoiceField();
       this._calendarColour.setLabel(CalendarApp._rb.getString(659));
       this._calendarColour.setChoices(ColorChoiceField._defaultColors);
       int colour = this._calendarOptions.getCalendarColour(this._calendarKey);
-      this._calendarColour.setSelectedIndex(new Object(colour, -1));
+      this._calendarColour.setSelectedIndex(new ColorChoiceField$NamedColor(colour, -1));
       boolean displayReminders = this._calendarOptions.isDisplayReminders(this._calendarKey);
-      this._displayReminders = (BooleanChoiceField)(new Object(CalendarApp._rb.getString(660), 0, displayReminders));
+      this._displayReminders = new BooleanChoiceField(CalendarApp._rb.getString(660), 0, displayReminders);
       int size = this._calendarService.getCalendarDatabase().size();
-      this._numberOfEntries = (PropertyField)(new Object(CommonResources.getString(9133), Integer.toString(size), 36028797018963968L));
+      this._numberOfEntries = new PropertyField(CommonResources.getString(9133), Integer.toString(size), 36028797018963968L);
       Manager section = this.createSection(this._calendarName, screen);
       section.add(this._calendarColour);
       section.add(this._allowWirelessSync);
@@ -84,14 +85,14 @@ final class CalendarOptionsPropertiesScreen extends SaveableMainScreenOptionsLis
    }
 
    protected final Manager createSection(Field titleField, Manager parent) {
-      Manager section = (Manager)(new Object(1153484454560268288L));
+      Manager section = new VerticalFieldManager(1153484454560268288L);
       section.setTag(OPTIONS_SECTION_AREA_TAG);
       if (titleField != null) {
          titleField.setTag(OPTIONS_SECTION_HEADER_TAG);
          section.add(titleField);
       }
 
-      section.add((Field)(new Object()));
+      section.add(new SeparatorField());
       parent.add(section);
       return section;
    }

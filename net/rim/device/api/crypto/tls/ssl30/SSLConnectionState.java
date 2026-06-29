@@ -4,10 +4,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import net.rim.device.api.crypto.BlockDecryptorEngine;
 import net.rim.device.api.crypto.BlockEncryptorEngine;
-import net.rim.device.api.crypto.DecryptorInputStream;
-import net.rim.device.api.crypto.EncryptorOutputStream;
 import net.rim.device.api.crypto.InitializationVector;
-import net.rim.device.api.crypto.MAC;
+import net.rim.device.api.crypto.NullDecryptor;
+import net.rim.device.api.crypto.NullEncryptor;
+import net.rim.device.api.crypto.NullMAC;
 import net.rim.device.api.crypto.SymmetricKey;
 import net.rim.device.api.crypto.tls.ConnectionState;
 
@@ -18,17 +18,17 @@ public class SSLConnectionState extends ConnectionState implements SSLRecordProt
    protected BlockDecryptorEngine _decryptor;
 
    public SSLConnectionState() {
-      super._mac = (MAC)(new Object());
+      super._mac = new NullMAC();
    }
 
    public SSLConnectionState(InputStream inputStream) {
       this();
-      super._decryption = (DecryptorInputStream)(new Object(inputStream));
+      super._decryption = new NullDecryptor(inputStream);
    }
 
    public SSLConnectionState(OutputStream outputStream) {
       this();
-      super._encryption = (EncryptorOutputStream)(new Object(outputStream));
+      super._encryption = new NullEncryptor(outputStream);
    }
 
    public SymmetricKey getCipherKey() {

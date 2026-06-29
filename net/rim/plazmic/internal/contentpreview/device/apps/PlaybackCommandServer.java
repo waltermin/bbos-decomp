@@ -20,7 +20,7 @@ public final class PlaybackCommandServer implements Service {
 
    PlaybackCommandServer(int port) {
       this._port = port;
-      this._connection = (DatagramConnection)Connector.open(((StringBuffer)(new Object("udp://:"))).append(String.valueOf(this._port)).toString());
+      this._connection = (DatagramConnection)Connector.open("udp://:" + String.valueOf(this._port));
       this._packet = this._connection.newDatagram(this._connection.getMaximumLength());
    }
 
@@ -38,7 +38,7 @@ public final class PlaybackCommandServer implements Service {
 
    public final synchronized void startService() {
       if (this._closed) {
-         throw new Object("net.rim.device.apps.internal.browser.pme.PlaybackCommandServer may not be restarted.");
+         throw new IllegalStateException("net.rim.device.apps.internal.browser.pme.PlaybackCommandServer may not be restarted.");
       }
 
       this._threadService.startService();

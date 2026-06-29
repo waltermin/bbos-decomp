@@ -1,6 +1,6 @@
 package net.rim.device.apps.internal.camera;
 
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 import javax.microedition.io.Connector;
 import javax.microedition.io.file.FileConnection;
 import net.rim.device.api.math.Fixed32;
@@ -54,7 +54,7 @@ final class CameraScreen$SavePicture implements Runnable {
 
       boolean log = this.this$0._options.isDevOptionEnabled(4);
       if (log) {
-         System.out.println(((StringBuffer)(new Object("Encode picture "))).append(this.this$0.getTimestamp()).toString());
+         System.out.println("Encode picture " + this.this$0.getTimestamp());
       }
 
       String filepath = this.this$0.getPath(true);
@@ -88,7 +88,7 @@ final class CameraScreen$SavePicture implements Runnable {
                   }
 
                   String filenameTemp = ExplorerServices.saveInputStream(
-                     filepath, filename, (InputStream)(new Object(this.this$0._jpegData, 0, this.this$0._jpegData.length)), 1, false, false
+                     filepath, filename, new ByteArrayInputStream(this.this$0._jpegData, 0, this.this$0._jpegData.length), 1, false, false
                   );
                   if (filenameTemp != null) {
                      filepath = FileUtilities.getPath(filenameTemp);
@@ -101,7 +101,7 @@ final class CameraScreen$SavePicture implements Runnable {
                               var44 = false;
                               var52 = false;
                            } catch (Throwable var71) {
-                              String msg = ((StringBuffer)(new Object())).append(e.toString()).append(" creating thumb ").append(filename).toString();
+                              String msg = e.toString() + " creating thumb " + filename;
                               EventLogger.logEvent(-2562843282228934904L, msg.getBytes(), 3);
                               var44 = false;
                               var52 = false;
@@ -170,19 +170,19 @@ final class CameraScreen$SavePicture implements Runnable {
       }
 
       if (log) {
-         System.out.println(((StringBuffer)(new Object("Picture Saved "))).append(this.this$0.getTimestamp()).toString());
+         System.out.println("Picture Saved " + this.this$0.getTimestamp());
          this.this$0.createEventLog(this.this$0._jpegData.length);
       }
 
       if (invalidSaveLocation) {
          this.this$0._path = FileIndexService.getCurrentMediaFolder(1, -1);
          Object obj = null;
-         obj = new Object(this.this$0._jpegData, 0, this.this$0._jpegData.length);
+         obj = new ByteArrayInputStream(this.this$0._jpegData, 0, this.this$0._jpegData.length);
          String fileURL = FileUtilities.makeFileURL(this.this$0._path, filename);
          Verb renameVerb = ExplorerServices.getSaveInputStreamVerb(fileURL, 1, true, false);
          if (renameVerb != null) {
             obj = renameVerb.invoke(obj);
-            if (obj instanceof Object) {
+            if (obj instanceof String) {
                String newname = (String)obj;
                filepath = FileUtilities.getPath(newname);
                filename = FileUtilities.getName(newname);
@@ -195,7 +195,7 @@ final class CameraScreen$SavePicture implements Runnable {
          this.this$0._preview.setFileName(filepath, filename);
       } else {
          Object obj = ContextObject.get(this.this$0._context, -3185095355580406181L);
-         if (obj instanceof Object) {
+         if (obj instanceof Verb) {
             Verb terminalVerb = (Verb)obj;
             terminalVerb.invoke(FileUtilities.makeFileURL(filepath, filename));
          }

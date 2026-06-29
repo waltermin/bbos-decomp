@@ -44,7 +44,7 @@ public class WTP_PDU {
 
       short index = this._headerLength;
       if ((packetData[0] & 128) != 0) {
-         this._tpiIdentities = (IntHashtable)(new Object());
+         this._tpiIdentities = new IntHashtable();
 
          short tpiIndex;
          do {

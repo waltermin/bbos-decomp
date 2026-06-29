@@ -1,6 +1,8 @@
 package net.rim.plazmic.mediaengine;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import net.rim.device.api.system.ControlledAccess;
@@ -87,7 +89,7 @@ public class MediaManager implements ResourceProvider {
    public void addMediaListener(MediaListener listener) {
       this.assertPermission();
       if (listener == null) {
-         throw new Object("Listener can not be null");
+         throw new IllegalArgumentException("Listener can not be null");
       }
 
       if (!this._listeners.contains(listener)) {
@@ -347,7 +349,7 @@ public class MediaManager implements ResourceProvider {
          this._connectionInfo.setSource(uri);
          in = this.getInputStream(uri, this._connectionInfo);
          if (in == null) {
-            throw new Object();
+            throw new IOException();
          }
 
          var5 = false;
@@ -365,7 +367,7 @@ public class MediaManager implements ResourceProvider {
          in.close();
       }
 
-      ByteArrayOutputStream out = (ByteArrayOutputStream)(new Object(12));
+      ByteArrayOutputStream out = new ByteArrayOutputStream(12);
       this.loadData(in, out, 12, null);
       this.loadData(in, out, -1, null);
       out.close();
@@ -381,7 +383,7 @@ public class MediaManager implements ResourceProvider {
    protected Object createResourceFromURI(String uri, String suggestedType, ResourceContext context, Object referrer, boolean updateDocumentBase) {
       this.assertPermission();
       if (uri == null) {
-         throw new Object("Must have non-null URI");
+         throw new IllegalArgumentException("Must have non-null URI");
       }
 
       if (context == null) {
@@ -433,7 +435,7 @@ public class MediaManager implements ResourceProvider {
             status.setContentType(contentType);
             status.setTotalBytes(this._connectionInfo.getLength());
             if (in == null) {
-               throw new Object();
+               throw new IOException();
             }
 
             if (updateDocumentBase) {
@@ -544,7 +546,7 @@ public class MediaManager implements ResourceProvider {
    }
 
    private Object readUnregisteredType(String type, Object data, Object context, LoadingStatus status) throws MediaException {
-      if (data instanceof Object) {
+      if (data instanceof InputStream) {
          InputStream in = (InputStream)data;
          int numBytes = (int)status.getTotalBytes();
          int t = MediaTypes.getTypeCategory(type);
@@ -552,7 +554,7 @@ public class MediaManager implements ResourceProvider {
             case 2:
                return this._platform.createImage(this.loadBytes(in, numBytes), this._connectionInfo.getContentType());
             case 4:
-               return this._platform.createSound((InputStream)(new Object(this.loadBytes(in, numBytes))), type);
+               return this._platform.createSound(new ByteArrayInputStream(this.loadBytes(in, numBytes)), type);
             case 32:
                if (context instanceof ResourceContext) {
                   return this._platform.loadFont(this.loadBytes(in, numBytes), (String)((ResourceContext)context).get("FontFamily"));
@@ -565,7 +567,7 @@ public class MediaManager implements ResourceProvider {
 
    public MediaManager(Connector c, boolean enableRelative) {
       if (c == null) {
-         throw new Object("Connector can not be null");
+         throw new NullPointerException("Connector can not be null");
       }
 
       this._interruptedException = new MediaException(5);
@@ -578,8 +580,8 @@ public class MediaManager implements ResourceProvider {
 
    private Object readRegisteredType(String type, Object data, ResourceContext context, LoadingStatus status) {
       ResourceProvider provider = null;
-      if (data instanceof Object) {
-         ByteArrayOutputStream out = (ByteArrayOutputStream)(new Object(12));
+      if (data instanceof InputStream) {
+         ByteArrayOutputStream out = new ByteArrayOutputStream(12);
          this.loadData((InputStream)data, out, 12, status);
          byte[] header = out.toByteArray();
          provider = MediaFactory.createResourceProvider(type, header);
@@ -594,7 +596,7 @@ public class MediaManager implements ResourceProvider {
    }
 
    public static String resolveURL(String url, String base) {
-      StringBuffer buf = (StringBuffer)(new Object());
+      StringBuffer buf = new StringBuffer();
       if (base != null && !base.endsWith("/")) {
          base = base.concat("/");
       }
@@ -671,7 +673,7 @@ public class MediaManager implements ResourceProvider {
          in.read(bytes, 0, totalBytes);
          return bytes;
       } else {
-         ByteArrayOutputStream out = (ByteArrayOutputStream)(new Object());
+         ByteArrayOutputStream out = new ByteArrayOutputStream();
          this.loadData(in, out, -1, null);
          in.close();
          out.close();

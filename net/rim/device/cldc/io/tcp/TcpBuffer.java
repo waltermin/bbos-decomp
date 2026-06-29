@@ -20,7 +20,7 @@ final class TcpBuffer implements TcpConstants {
 
    TcpBuffer(int bufferSize) {
       if (bufferSize > 65536) {
-         throw new Object("Buffer size requested is too big");
+         throw new IllegalArgumentException("Buffer size requested is too big");
       }
 
       if (bufferSize < 536) {
@@ -77,21 +77,21 @@ final class TcpBuffer implements TcpConstants {
 
    final int readBySeqNumbers(byte[] output, int outputOff, int leftEdge, int rightEdge) {
       if (output == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       synchronized (this._startSeqNumberLock) {
          int bytesToSend = rightEdge - leftEdge;
          if (bytesToSend >= 0 && leftEdge >= this._startSeqNumber) {
             if (outputOff < 0 || outputOff + bytesToSend > output.length) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             } else if (bytesToSend > this._length) {
-               throw new Object();
+               throw new IllegalArgumentException();
             } else {
                return this.read(output, outputOff, leftEdge - this._startSeqNumber, bytesToSend);
             }
          } else {
-            throw new Object("negative value");
+            throw new IllegalArgumentException("negative value");
          }
       }
    }
@@ -148,7 +148,7 @@ final class TcpBuffer implements TcpConstants {
          bytesToRemove = bytesToRemove <= 65536 ? bytesToRemove : this._startSeqNumber - ackNumber;
          if (bytesToRemove > this._length) {
             if (bytesToRemove == this._length + 1 && !finPresent) {
-               throw new Object();
+               throw new RuntimeException();
             }
 
             bytesToRemove = this._length;

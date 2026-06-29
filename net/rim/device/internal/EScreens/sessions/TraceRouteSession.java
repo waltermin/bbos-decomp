@@ -22,7 +22,7 @@ public final class TraceRouteSession extends EScreenSession implements ICMPPacke
    private int _consecutiveTimeoutCount;
    private byte[] _payload;
    private int[] _dnsIds;
-   private EditField _maxHopsField = (EditField)(new Object("MaxHops: ", "30", Integer.MAX_VALUE, 16777216));
+   private EditField _maxHopsField = new EditField("MaxHops: ", "30", Integer.MAX_VALUE, 16777216);
    private static final int MAX_RESULTS = 30;
    private static final int SEND_NOW = -1;
    private static final int HOP_TIMEOUT = 5;
@@ -171,7 +171,7 @@ public final class TraceRouteSession extends EScreenSession implements ICMPPacke
 
    @Override
    public final synchronized void packetReceived(ICMPPacketHeader header, byte[] data) {
-      StringBuffer strBuf = (StringBuffer)(new Object());
+      StringBuffer strBuf = new StringBuffer();
       IPEditField.appendIpAddr(strBuf, header.getSourceAddress());
       this._consecutiveTimeoutCount = 0;
       switch (header.getType()) {

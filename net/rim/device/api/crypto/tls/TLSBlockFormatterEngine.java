@@ -14,7 +14,7 @@ public final class TLSBlockFormatterEngine implements BlockFormatterEngine {
 
    public TLSBlockFormatterEngine(BlockEncryptorEngine encryptorEngine) {
       if (encryptorEngine == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._encryptorEngine = encryptorEngine;
@@ -24,7 +24,7 @@ public final class TLSBlockFormatterEngine implements BlockFormatterEngine {
 
    public TLSBlockFormatterEngine(BlockEncryptorEngine encryptorEngine, boolean useRandomPadLength) {
       if (encryptorEngine == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._encryptorEngine = encryptorEngine;
@@ -57,7 +57,7 @@ public final class TLSBlockFormatterEngine implements BlockFormatterEngine {
          || output == null
          || outputOffset < 0
          || output.length - this._outputBlockLength < outputOffset) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (inputLength > this._inputBlockLength) {
@@ -125,7 +125,7 @@ public final class TLSBlockFormatterEngine implements BlockFormatterEngine {
    @Override
    public final int formatAndEncrypt(byte[] input, int inputOffset, int inputLength, byte[] output, int outputOffset) {
       if (inputLength != this._inputBlockLength) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return this.formatAndEncrypt(input, inputOffset, inputLength, output, outputOffset, false);
       }

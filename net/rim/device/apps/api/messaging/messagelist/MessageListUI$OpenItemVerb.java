@@ -48,7 +48,7 @@ public class MessageListUI$OpenItemVerb extends Verb implements Runnable {
 
       UiApplication app = UiApplication.getUiApplication();
       app.suspendPainting(false);
-      if (model instanceof Object) {
+      if (model instanceof ActionProvider) {
          Object savedSelectedItem = this._context.get(250);
          if (savedSelectedItem != model) {
             this._context.put(250, model);

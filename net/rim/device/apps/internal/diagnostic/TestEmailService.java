@@ -10,7 +10,6 @@ import net.rim.device.apps.api.transmission.TransmissionServiceListener;
 import net.rim.device.apps.api.transmission.TransmissionServiceManager;
 import net.rim.device.apps.api.transmission.rim.RIMMessagingFolderManagement;
 import net.rim.device.apps.api.transmission.rim.RIMMessagingIncomingMessage;
-import net.rim.device.apps.api.transmission.rim.RIMMessagingMessage;
 import net.rim.device.apps.api.transmission.rim.RIMMessagingService;
 import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
 import net.rim.device.apps.internal.blackberryemail.email.api.EmailSendUtility;
@@ -34,9 +33,9 @@ public final class TestEmailService extends Thread implements TransmissionServic
       this.screen = _scr;
       this.manager = this.screen._manager;
       this.flashFlag = true;
-      long tmpLong = ((Random)(new Object())).nextLong();
+      long tmpLong = new Random().nextLong();
       this.sub = "<$RemoveOnDelivery,SuppressSaveInSentItems>Self Ping Email - ";
-      this.sub = ((StringBuffer)(new Object())).append(this.sub).append(new Object(tmpLong).toString()).toString();
+      this.sub = this.sub + new Long(tmpLong).toString();
    }
 
    @Override
@@ -78,7 +77,7 @@ public final class TestEmailService extends Thread implements TransmissionServic
          } else {
             this.echoFlag = false;
             this.timeoutFlag = false;
-            this.timer = (Timer)(new Object());
+            this.timer = new Timer();
             this.emailTimeout = new TestEmailService$emailExpired(this);
             this.timer.schedule(this.emailTimeout, 45000);
 
@@ -100,7 +99,7 @@ public final class TestEmailService extends Thread implements TransmissionServic
             this.screen.report.emailService1 = 1;
          }
       } catch (Throwable var3) {
-         System.out.println(((StringBuffer)(new Object("Excpetion:"))).append(e.toString()).toString());
+         System.out.println("Excpetion:" + e.toString());
          this.transmissionService
             .removeTransmissionServiceListener("net.rim.device.apps.api.transmission.rim.RIMMessagingConstants.RIM_MESSAGING_MESSAGE", this);
          return;
@@ -116,7 +115,7 @@ public final class TestEmailService extends Thread implements TransmissionServic
          } else {
             this.echoFlag = false;
             this.timeoutFlag = false;
-            this.timer = (Timer)(new Object());
+            this.timer = new Timer();
             this.emailTimeout = new TestEmailService$emailExpired(this);
             this.timer.schedule(this.emailTimeout, 45000);
 
@@ -138,7 +137,7 @@ public final class TestEmailService extends Thread implements TransmissionServic
             this.screen.report.emailService2 = 1;
          }
       } catch (Throwable var3) {
-         System.out.println(((StringBuffer)(new Object("Excpetion:"))).append(e.toString()).toString());
+         System.out.println("Excpetion:" + e.toString());
          this.transmissionService
             .removeTransmissionServiceListener("net.rim.device.apps.api.transmission.rim.RIMMessagingConstants.RIM_MESSAGING_MESSAGE", this);
          return;
@@ -148,8 +147,8 @@ public final class TestEmailService extends Thread implements TransmissionServic
    public final boolean sendEmailPing() {
       EmailMessageModel msg = EmailSendUtility.send(this.dest, this.sub, "");
       if (msg != null) {
-         OTAMessageSync.getInstance().messageReadStatusChangeOnDevice(msg, true, new Object());
-         OTAMessageSync.getInstance().messageDeletedOnDevice(msg, EmailHierarchy.getEmailFolder(msg.getFolderId()), new Object());
+         OTAMessageSync.getInstance().messageReadStatusChangeOnDevice(msg, true, new ContextObject());
+         OTAMessageSync.getInstance().messageDeletedOnDevice(msg, EmailHierarchy.getEmailFolder(msg.getFolderId()), new ContextObject());
          ServiceRecord serviceRecord = msg.getServiceRecordForMessage();
          int refId = msg.getCMIMEReferenceIdentifier();
          OTAMessageSync.getInstance().messageReadStatusChangeOnDevice(serviceRecord, refId, true);
@@ -169,24 +168,24 @@ public final class TestEmailService extends Thread implements TransmissionServic
          ContextObject contextObject = ContextObject.castOrCreate(context);
          RIMMessagingIncomingMessage incMsg = null;
          String _sub = null;
-         if (!(transmissionObject instanceof Object)) {
+         if (!(transmissionObject instanceof RIMMessagingIncomingMessage)) {
             return false;
          }
 
-         RIMMessagingIncomingMessage var12 = transmissionObject;
-         ((RIMMessagingMessage)var12).doNotSaveMessageInSentItems();
-         Object emailbody = ((RIMMessagingMessage)var12).getText();
-         Object emailsub = ((RIMMessagingMessage)var12).getSubject();
-         if (emailbody instanceof Object) {
-            String var13 = emailsub;
-            if (((String)var13).equals(this.sub)) {
+         incMsg = (RIMMessagingIncomingMessage)transmissionObject;
+         incMsg.doNotSaveMessageInSentItems();
+         Object emailbody = incMsg.getText();
+         Object emailsub = incMsg.getSubject();
+         if (emailbody instanceof String) {
+            _sub = (String)emailsub;
+            if (_sub.equals(this.sub)) {
                emailbody = ((RIMMessagingService)aTransmissionService).getOutgoingServiceRecord();
-               emailsub = ((RIMMessagingMessage)var12).getReferenceIdentifier();
-               OTAMessageSync.getInstance().messageReadStatusChangeOnDevice((ServiceRecord)emailbody, (int)emailsub, true);
-               OTAMessageSync.getInstance().messageDeletedOnDevice((ServiceRecord)emailbody, (int)emailsub);
+               int refId = incMsg.getReferenceIdentifier();
+               OTAMessageSync.getInstance().messageReadStatusChangeOnDevice((ServiceRecord)emailbody, refId, true);
+               OTAMessageSync.getInstance().messageDeletedOnDevice((ServiceRecord)emailbody, refId);
                this.echoFlag = true;
-               RIMMessagingFolderManagement folderManager = (RIMMessagingFolderManagement)(new Object());
-               folderManager.addDeleteMessage(((RIMMessagingMessage)var12).getReferenceIdentifier(), ((RIMMessagingMessage)var12).getFolderIdentifier());
+               RIMMessagingFolderManagement folderManager = new RIMMessagingFolderManagement();
+               folderManager.addDeleteMessage(incMsg.getReferenceIdentifier(), incMsg.getFolderIdentifier());
                return true;
             } else {
                return false;

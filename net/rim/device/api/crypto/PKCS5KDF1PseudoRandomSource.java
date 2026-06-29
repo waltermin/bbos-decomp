@@ -8,11 +8,11 @@ public final class PKCS5KDF1PseudoRandomSource extends AbstractPseudoRandomSourc
    private int _outputOffset;
 
    public PKCS5KDF1PseudoRandomSource(byte[] password, byte[] salt, int iterationCount) {
-      this(password, 0, password == null ? 0 : password.length, salt, iterationCount, (Digest)(new Object()));
+      this(password, 0, password == null ? 0 : password.length, salt, iterationCount, new SHA1Digest());
    }
 
    public PKCS5KDF1PseudoRandomSource(byte[] password, int offset, int length, byte[] salt, int iterationCount) {
-      this(password, offset, length, salt, iterationCount, (Digest)(new Object()));
+      this(password, offset, length, salt, iterationCount, new SHA1Digest());
    }
 
    public PKCS5KDF1PseudoRandomSource(byte[] password, int offset, int length, byte[] salt, int iterationCount, Digest digest) {
@@ -32,7 +32,7 @@ public final class PKCS5KDF1PseudoRandomSource extends AbstractPseudoRandomSourc
 
          this._outputOffset = 0;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -44,11 +44,11 @@ public final class PKCS5KDF1PseudoRandomSource extends AbstractPseudoRandomSourc
    @Override
    public final void xorBytes(byte[] buffer, int offset, int length) {
       if (buffer == null || offset < 0 || length < 0 || buffer.length - length < offset) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (this._outputOffset + length > this._outputBuffer.length) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       while (length-- > 0) {
@@ -77,10 +77,10 @@ public final class PKCS5KDF1PseudoRandomSource extends AbstractPseudoRandomSourc
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

@@ -11,7 +11,7 @@ final class TestGPSScreen$GPSFixThread extends Thread {
 
    TestGPSScreen$GPSFixThread(TestGPSScreen _screen) {
       this.screen = _screen;
-      this.buf = (StringBuffer)(new Object());
+      this.buf = new StringBuffer();
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
@@ -22,7 +22,7 @@ final class TestGPSScreen$GPSFixThread extends Thread {
       LocationProvider locationProvider = null;
       long t1 = 0;
       long t2 = 0;
-      Criteria c1 = (Criteria)(new Object());
+      Criteria c1 = new Criteria();
       c1.setHorizontalAccuracy(10);
       c1.setVerticalAccuracy(10);
       c1.setCostAllowed(false);
@@ -47,22 +47,21 @@ final class TestGPSScreen$GPSFixThread extends Thread {
                      var19 = false;
                   } else {
                      this.updateInfo(
-                        ((StringBuffer)(new Object("GPS fixing succeeds!\r\nLatitude: ")))
-                           .append(location.getQualifiedCoordinates().getLatitude())
-                           .append("\r\nLongitude: ")
-                           .append(location.getQualifiedCoordinates().getLongitude())
-                           .append("\r\nCourse: ")
-                           .append(location.getCourse())
-                           .append("\r\nAddress Info: ")
-                           .append(location.getAddressInfo())
-                           .append("\r\nSpeed: ")
-                           .append(location.getSpeed())
-                           .append("\r\nExtra Info: ")
-                           .append(location.getExtraInfo("text/plain"))
-                           .append("\r\nTime to get auto fix : ")
-                           .append(fixingTime)
-                           .append(" ms")
-                           .toString()
+                        "GPS fixing succeeds!\r\nLatitude: "
+                           + location.getQualifiedCoordinates().getLatitude()
+                           + "\r\nLongitude: "
+                           + location.getQualifiedCoordinates().getLongitude()
+                           + "\r\nCourse: "
+                           + location.getCourse()
+                           + "\r\nAddress Info: "
+                           + location.getAddressInfo()
+                           + "\r\nSpeed: "
+                           + location.getSpeed()
+                           + "\r\nExtra Info: "
+                           + location.getExtraInfo("text/plain")
+                           + "\r\nTime to get auto fix : "
+                           + fixingTime
+                           + " ms"
                      );
                      var19 = false;
                   }

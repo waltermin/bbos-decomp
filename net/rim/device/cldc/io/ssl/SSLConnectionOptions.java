@@ -68,7 +68,7 @@ public class SSLConnectionOptions {
 
    private void assertTrueFalsePrompt(int trueFalsePrompt) {
       if (trueFalsePrompt != 0 && trueFalsePrompt != 1 && trueFalsePrompt != 2) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -107,7 +107,7 @@ public class SSLConnectionOptions {
    public void setAcceptableDomainNames(String[] domainNames) {
       if (domainNames != null) {
          int numElements = domainNames.length;
-         this._acceptableDomainNames = new Object[numElements];
+         this._acceptableDomainNames = new String[numElements];
          System.arraycopy(domainNames, 0, this._acceptableDomainNames, 0, numElements);
       } else {
          this._acceptableDomainNames = null;
@@ -117,7 +117,7 @@ public class SSLConnectionOptions {
    public String[] getAcceptableDomainNames() {
       if (this._acceptableDomainNames != null) {
          int numElements = this._acceptableDomainNames.length;
-         String[] copy = new Object[numElements];
+         String[] copy = new String[numElements];
          System.arraycopy(this._acceptableDomainNames, 0, copy, 0, numElements);
          return copy;
       } else {

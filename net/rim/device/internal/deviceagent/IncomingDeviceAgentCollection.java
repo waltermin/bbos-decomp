@@ -112,7 +112,7 @@ public class IncomingDeviceAgentCollection extends DeviceAgentCollection impleme
 
    @Override
    public synchronized DataBuffer getDeviceAgentInfo(byte group) {
-      DataBuffer buffer = (DataBuffer)(new Object(false));
+      DataBuffer buffer = new DataBuffer(false);
       Enumeration enumeration = super._database.elements();
 
       while (enumeration.hasMoreElements()) {

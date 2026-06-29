@@ -24,9 +24,9 @@ final class GroupAddressCardScreen$GroupMemberVerb extends Verb {
          default:
             int selectedIndex = this.this$0._listField.getSelectedIndex();
             VerbProvider acm = (VerbProvider)this.this$0.getAddressCardAt(selectedIndex);
-            ContextObject contextObject = (ContextObject)(new Object(18));
+            ContextObject contextObject = new ContextObject(18);
             contextObject.setFlag(45);
-            Verb[] verbArray = new Object[0];
+            Verb[] verbArray = new Verb[0];
             Verb viewACM = acm.getVerbs(contextObject, verbArray);
             viewACM.invoke(context);
             return acm;

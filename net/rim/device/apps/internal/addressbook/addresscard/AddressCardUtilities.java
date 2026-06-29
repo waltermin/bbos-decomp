@@ -7,6 +7,8 @@ import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.system.PersistentObject;
 import net.rim.device.api.system.RIMPersistentStore;
 import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.AutoTextEditField;
+import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.Arrays;
@@ -39,7 +41,7 @@ public final class AddressCardUtilities {
 
    public static final void createGroup(AddressCardModel addressCard) {
       if (!ObjectGroup.isInGroup(addressCard)) {
-         if (addressCard instanceof Object) {
+         if (addressCard instanceof EncryptableProvider) {
             EncryptableProvider encryptable = (EncryptableProvider)addressCard;
             Security security = Security.getInstance();
             boolean encrypt = !security.isAddressBookExcludedFromContentProtection();
@@ -53,11 +55,11 @@ public final class AddressCardUtilities {
    }
 
    static final AddressCardModel expandGroup(AddressCardModel addressCard) {
-      return (AddressCardModel)(ObjectGroup.isInGroup(addressCard) ? ObjectGroup.expandGroup(addressCard) : addressCard);
+      return ObjectGroup.isInGroup(addressCard) ? (AddressCardModel)ObjectGroup.expandGroup(addressCard) : addressCard;
    }
 
    static final void addToAddressBook(Object entry) {
-      if (entry instanceof Object) {
+      if (entry instanceof AddressCardModel) {
          AddressCardModel addressCard = (AddressCardModel)entry;
          createGroup(addressCard);
       }
@@ -73,7 +75,7 @@ public final class AddressCardUtilities {
    }
 
    static final void updateAddressBookEntry(Object oldEntry, Object newEntry) {
-      if (newEntry instanceof Object) {
+      if (newEntry instanceof AddressCardModel) {
          AddressCardModel newAddressCard = (AddressCardModel)newEntry;
          createGroup(newAddressCard);
       }
@@ -86,8 +88,8 @@ public final class AddressCardUtilities {
       CompanyInfoModel cim = addressCard.getCompanyInfo();
       if (ContextObject.getFlag(context, 16)) {
          Field field;
-         if (!(pnm instanceof Object)) {
-            field = (Field)(new Object("", "", 6156, 4503601774854144L));
+         if (!(pnm instanceof FieldProvider)) {
+            field = new AutoTextEditField("", "", 6156, 4503601774854144L);
          } else {
             FieldProvider pnc = (FieldProvider)pnm;
             field = pnc.getField(context);
@@ -96,9 +98,9 @@ public final class AddressCardUtilities {
          field.setCookie(null);
          return field;
       } else if (ContextObject.getFlag(context, 58)) {
-         VerticalFieldManager vfm = (VerticalFieldManager)(new Object());
+         VerticalFieldManager vfm = new VerticalFieldManager();
          boolean havePnm = false;
-         if (pnm instanceof Object) {
+         if (pnm instanceof FieldProvider) {
             FieldProvider fieldProvider = (FieldProvider)pnm;
             Field tmpField = fieldProvider.getField(context);
             if (tmpField != null) {
@@ -107,7 +109,7 @@ public final class AddressCardUtilities {
             }
          }
 
-         if ((ContextObject.getFlag(context, 118) || !havePnm) && cim instanceof Object) {
+         if ((ContextObject.getFlag(context, 118) || !havePnm) && cim instanceof FieldProvider) {
             FieldProvider fieldProvider = (FieldProvider)cim;
             Field tmpField = fieldProvider.getField(context);
             if (tmpField != null) {
@@ -126,7 +128,7 @@ public final class AddressCardUtilities {
 
          Field nameField = null;
          ContextObject contextObject = null;
-         if (context instanceof Object) {
+         if (context instanceof ContextObject) {
             contextObject = (ContextObject)context;
             if (contextObject.getFlag(0)) {
                contextObject = ContextObject.clone(context);
@@ -134,7 +136,7 @@ public final class AddressCardUtilities {
             }
          }
 
-         if (!(pnm instanceof Object)) {
+         if (!(pnm instanceof FieldProvider)) {
             if (cim == null) {
                return null;
             }
@@ -155,8 +157,8 @@ public final class AddressCardUtilities {
             return nameField;
          }
 
-         HorizontalFieldManager hField = (HorizontalFieldManager)(new Object(1152921504606846976L));
-         hField.add((Field)(new Object(Bitmap.getBitmapResource("AddressIcon.gif"))));
+         HorizontalFieldManager hField = new HorizontalFieldManager(1152921504606846976L);
+         hField.add(new BitmapField(Bitmap.getBitmapResource("AddressIcon.gif")));
          hField.add(nameField);
          hField.setCookie(addressCard);
          return hField;
@@ -183,7 +185,7 @@ public final class AddressCardUtilities {
 
    static final String findCannedSalutation(String s) {
       PersistentObject po = RIMPersistentStore.getPersistentObject(-1075470392976409872L);
-      String[] cannedItems = (Object[])po.getContents();
+      String[] cannedItems = (String[])po.getContents();
       int count = cannedItems.length;
 
       for (int i = count - 1; i >= 0; i--) {
@@ -236,7 +238,7 @@ public final class AddressCardUtilities {
          return true;
       } else {
          if (ContextObject.getFlag(context, 11) && ContextObject.getFlag(context, 43) && ContextObject.getFlag(context, 54)) {
-            if (target instanceof Object) {
+            if (target instanceof StringBuffer) {
                StringBuffer stringBuffer = (StringBuffer)target;
                if (salutation != null) {
                   stringBuffer.append("\rSalutation:");
@@ -261,13 +263,13 @@ public final class AddressCardUtilities {
                fullName = "";
             }
 
-            if (target instanceof Object[]) {
-               String[] names = (Object[])target;
+            if (target instanceof String[]) {
+               String[] names = (String[])target;
                if (names.length > 1) {
                   names[1] = fullName;
                   return true;
                }
-            } else if (target instanceof Object) {
+            } else if (target instanceof StringBuffer) {
                StringBuffer buf = (StringBuffer)target;
                buf.setLength(0);
                buf.append(fullName);
@@ -295,7 +297,7 @@ public final class AddressCardUtilities {
          return true;
       } else {
          if (ContextObject.getFlag(context, 11) && ContextObject.getFlag(context, 43) && ContextObject.getFlag(context, 54)) {
-            if (target instanceof Object) {
+            if (target instanceof StringBuffer) {
                StringBuffer stringBuffer = (StringBuffer)target;
                if (companyName != null) {
                   stringBuffer.append("\rCompany:");
@@ -305,13 +307,13 @@ public final class AddressCardUtilities {
                return true;
             }
          } else if (ContextObject.getFlag(context, 10) && companyName != null) {
-            if (target instanceof Object[]) {
-               String[] names = (Object[])target;
+            if (target instanceof String[]) {
+               String[] names = (String[])target;
                if (names.length > 1) {
                   names[1] = companyName;
                   return true;
                }
-            } else if (target instanceof Object) {
+            } else if (target instanceof StringBuffer) {
                StringBuffer buf = (StringBuffer)target;
                buf.setLength(0);
                buf.append(companyName);
@@ -381,7 +383,7 @@ public final class AddressCardUtilities {
    }
 
    static final long getObjectType(Object object) {
-      if (!(object instanceof Object)) {
+      if (!(object instanceof SyncFieldIDProvider)) {
          return Long.MIN_VALUE;
       }
 
@@ -446,7 +448,7 @@ public final class AddressCardUtilities {
    static final EventModel getEvent(AddressCardModel addressCard, int eventType) {
       for (int i = addressCard.size() - 1; i >= 0; i--) {
          Object model = addressCard.getAt(i);
-         if (model instanceof Object) {
+         if (model instanceof EventModel) {
             EventModel event = (EventModel)model;
             if (event.getEventType() == eventType) {
                return event;
@@ -489,7 +491,7 @@ public final class AddressCardUtilities {
    }
 
    static final Object buildYOMIKeywordsEncoding(String fn, String ln, String fny, String lny) {
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       if (fny != null) {
          fny = convertYomi(fny);
       }

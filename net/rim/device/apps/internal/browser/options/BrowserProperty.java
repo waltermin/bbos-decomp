@@ -5,6 +5,7 @@ import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.accessibility.AccessibleContext;
+import net.rim.device.api.ui.accessibility.AccessibleContextFactory;
 import net.rim.device.api.ui.accessibility.AccessibleContextProxy;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.container.MainScreen;
@@ -68,7 +69,7 @@ public class BrowserProperty implements IBrowserProperty, Confirmation, FieldCha
 
    @Override
    public AccessibleContext getAccessibleContext() {
-      return (AccessibleContext)(new Object(this.getLabel()));
+      return new AccessibleContextFactory(this.getLabel());
    }
 
    @Override

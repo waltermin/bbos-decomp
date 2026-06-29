@@ -2,6 +2,7 @@ package net.rim.device.cldc.io.smb;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
@@ -22,7 +23,7 @@ public final class SmbFileConnection extends DefaultHandler implements StreamCon
    private long _lastModified;
    private boolean _open;
    private SmbURL _smbURL;
-   private String[] _fileNames = new Object[0];
+   private String[] _fileNames = new String[0];
    private String _absolutePath;
    private URLParameters _urlParameters;
    private static final int ATTR_EXISTS = 1;
@@ -55,14 +56,14 @@ public final class SmbFileConnection extends DefaultHandler implements StreamCon
    @Override
    public final void setRequestProperty(String header, String value) {
       if (this._urlParameters == null) {
-         this._urlParameters = (URLParameters)(new Object());
+         this._urlParameters = new URLParameters();
       }
 
       this._urlParameters.setParameter(header, value);
    }
 
    @Override
-   public final InputStream openInputStream() {
+   public final InputStream openInputStream() throws IOException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -90,7 +91,7 @@ public final class SmbFileConnection extends DefaultHandler implements StreamCon
       // 27: iload 1
       // 28: bipush 96
       // 2a: if_icmpeq 38
-      // 2d: new java/lang/Object
+      // 2d: new java/io/IOException
       // 30: dup
       // 31: ldc_w "Unexpected data"
       // 34: invokespecial java/io/IOException.<init> (Ljava/lang/String;)V
@@ -112,7 +113,7 @@ public final class SmbFileConnection extends DefaultHandler implements StreamCon
       // 53: invokevirtual net/rim/device/api/xml/parsers/SAXParserFactory.newSAXParser ()Lnet/rim/device/api/xml/parsers/SAXParser;
       // 56: astore 5
       // 58: aload 5
-      // 5a: new java/lang/Object
+      // 5a: new java/io/ByteArrayInputStream
       // 5d: dup
       // 5e: aload 3
       // 5f: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -120,14 +121,14 @@ public final class SmbFileConnection extends DefaultHandler implements StreamCon
       // 63: invokevirtual net/rim/device/api/xml/parsers/SAXParser.parse (Ljava/io/InputStream;Lorg/xml/sax/helpers/DefaultHandler;)V
       // 66: goto 87
       // 69: astore 4
-      // 6b: new java/lang/Object
+      // 6b: new java/io/IOException
       // 6e: dup
       // 6f: aload 4
       // 71: invokevirtual java/lang/Throwable.getMessage ()Ljava/lang/String;
       // 74: invokespecial java/io/IOException.<init> (Ljava/lang/String;)V
       // 77: athrow
       // 78: astore 4
-      // 7a: new java/lang/Object
+      // 7a: new java/io/IOException
       // 7d: dup
       // 7e: aload 4
       // 80: invokevirtual org/xml/sax/SAXException.getMessage ()Ljava/lang/String;
@@ -140,7 +141,7 @@ public final class SmbFileConnection extends DefaultHandler implements StreamCon
       // try (36 -> 48): 56 null
    }
 
-   private final void ensureOpen() {
+   private final void ensureOpen() throws IOException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -155,7 +156,7 @@ public final class SmbFileConnection extends DefaultHandler implements StreamCon
       // 008: aload 0
       // 009: getfield net/rim/device/cldc/io/smb/SmbFileConnection._smbURL Lnet/rim/device/cldc/io/smb/SmbURL;
       // 00c: ifnonnull 01a
-      // 00f: new java/lang/Object
+      // 00f: new java/io/IOException
       // 012: dup
       // 013: ldc_w "URL not specified"
       // 016: invokespecial java/io/IOException.<init> (Ljava/lang/String;)V
@@ -169,7 +170,7 @@ public final class SmbFileConnection extends DefaultHandler implements StreamCon
       // 026: aload 0
       // 027: ldc_w "socket://smbhandler;ConnectionHandler=smb;deviceside=false"
       // 02a: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 02d: checkcast java/lang/Object
+      // 02d: checkcast javax/microedition/io/StreamConnection
       // 030: putfield net/rim/device/cldc/io/smb/SmbFileConnection._conn Ljavax/microedition/io/StreamConnection;
       // 033: aload 0
       // 034: aload 0
@@ -268,20 +269,20 @@ public final class SmbFileConnection extends DefaultHandler implements StreamCon
       // 106: invokevirtual java/io/DataOutputStream.write (I)V
       // 109: aload 0
       // 10a: getfield net/rim/device/cldc/io/smb/SmbFileConnection._out Ljava/io/DataOutputStream;
-      // 10d: new java/lang/Object
+      // 10d: new java/lang/StringBuffer
       // 110: dup
       // 111: invokespecial java/lang/StringBuffer.<init> ()V
       // 114: aload 1
       // 115: iload 3
       // 116: invokevirtual java/util/Vector.elementAt (I)Ljava/lang/Object;
-      // 119: checkcast java/lang/Object
+      // 119: checkcast java/lang/String
       // 11c: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 11f: ldc_w "="
       // 122: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 125: aload 2
       // 126: iload 3
       // 127: invokevirtual java/util/Vector.elementAt (I)Ljava/lang/Object;
-      // 12a: checkcast java/lang/Object
+      // 12a: checkcast java/lang/String
       // 12d: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 130: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 133: invokevirtual java/io/DataOutputStream.writeUTF (Ljava/lang/String;)V
@@ -292,7 +293,7 @@ public final class SmbFileConnection extends DefaultHandler implements StreamCon
       // 140: invokevirtual java/io/DataOutputStream.flush ()V
       // 143: return
       // 144: astore 1
-      // 145: new java/lang/Object
+      // 145: new java/io/IOException
       // 148: dup
       // 149: ldc_w "Invalid SMB URL"
       // 14c: invokespecial java/io/IOException.<init> (Ljava/lang/String;)V

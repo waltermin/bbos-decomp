@@ -26,9 +26,7 @@ public final class URLEncodedFormData extends FormData implements Persistable {
 
    @Override
    public final String getContentType() {
-      return ((StringBuffer)(new Object("application/x-www-form-urlencoded")))
-         .append(this._useWAPConventions ? ((StringBuffer)(new Object("; charset="))).append(this._charset).toString() : "")
-         .toString();
+      return "application/x-www-form-urlencoded" + (this._useWAPConventions ? "; charset=" + this._charset : "");
    }
 
    @Override
@@ -58,7 +56,7 @@ public final class URLEncodedFormData extends FormData implements Persistable {
 
    @Override
    public final void setData(Object data) {
-      if (data instanceof Object) {
+      if (data instanceof StringBuffer) {
          this._dataEncoding = PersistentContent.encode(data.toString(), true, true);
       } else {
          this._dataEncoding = PersistentContent.encode((String)data, true, true);

@@ -38,7 +38,7 @@ public class MessageClassification {
       // 1c: bipush 0
       // 1d: anewarray 59
       // 20: astore 1
-      // 21: new java/lang/Object
+      // 21: new net/rim/device/api/util/DataBuffer
       // 24: dup
       // 25: aload 0
       // 26: bipush 0
@@ -90,7 +90,7 @@ public class MessageClassification {
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:174)
       //
       // Bytecode:
-      // 00: new java/lang/Object
+      // 00: new net/rim/device/api/util/DataBuffer
       // 03: dup
       // 04: aload 0
       // 05: bipush 0
@@ -113,7 +113,7 @@ public class MessageClassification {
       // 3c: aload 1
       // 3d: invokevirtual net/rim/device/api/util/DataBuffer.readByteArray ()[B
       // 40: astore 6
-      // 42: new java/lang/Object
+      // 42: new java/lang/String
       // 45: dup
       // 46: aload 6
       // 48: invokespecial java/lang/String.<init> ([B)V
@@ -122,7 +122,7 @@ public class MessageClassification {
       // 4f: aload 1
       // 50: invokevirtual net/rim/device/api/util/DataBuffer.readByteArray ()[B
       // 53: astore 7
-      // 55: new java/lang/Object
+      // 55: new java/lang/String
       // 58: dup
       // 59: aload 7
       // 5b: invokespecial java/lang/String.<init> ([B)V
@@ -169,7 +169,7 @@ public class MessageClassification {
 
    public MessageClassification(String displayString, String subjectSuffix, int minimumEncodingActions) {
       if (displayString == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._displayString = displayString;
@@ -185,7 +185,7 @@ public class MessageClassification {
    public boolean matchesSubject(String subject) {
       if (subject != null && this._subjectSuffix != null) {
          String trimmedSubject = subject.trim();
-         StringTokenizer tokenizer = (StringTokenizer)(new Object(this._subjectSuffix, '/'));
+         StringTokenizer tokenizer = new StringTokenizer(this._subjectSuffix, '/');
 
          while (tokenizer.hasMoreTokens()) {
             if (trimmedSubject.endsWith(tokenizer.nextToken())) {
@@ -204,7 +204,7 @@ public class MessageClassification {
          return originalSubject;
       }
 
-      StringBuffer stringBuffer = (StringBuffer)(new Object());
+      StringBuffer stringBuffer = new StringBuffer();
       if (originalSubject != null) {
          stringBuffer.append(originalSubject.trim());
          stringBuffer.append(' ');
@@ -218,9 +218,9 @@ public class MessageClassification {
       if (originalSubject != null && this._subjectSuffix != null) {
          String trimmedSubject = originalSubject.trim();
          int currentSubjectLength = trimmedSubject.length();
-         StringTokenizer tokenizer = (StringTokenizer)(new Object(this._subjectSuffix, '/'));
+         StringTokenizer tokenizer = new StringTokenizer(this._subjectSuffix, '/');
          int numSubjectSuffixTokens = tokenizer.countTokens();
-         String[] subjectSuffixTokens = new Object[numSubjectSuffixTokens];
+         String[] subjectSuffixTokens = new String[numSubjectSuffixTokens];
 
          for (int i = 0; i < numSubjectSuffixTokens; i++) {
             subjectSuffixTokens[i] = tokenizer.nextToken();
@@ -254,10 +254,10 @@ public class MessageClassification {
          return false;
       }
 
-      StringTokenizer tokenizer = (StringTokenizer)(new Object(this.toString(), '/'));
+      StringTokenizer tokenizer = new StringTokenizer(this.toString(), '/');
 
       while (tokenizer.hasMoreTokens()) {
-         StringMatch stringMatch = (StringMatch)(new Object(tokenizer.nextToken()));
+         StringMatch stringMatch = new StringMatch(tokenizer.nextToken());
          if (stringMatch.indexOf(bodyPrefix) >= 0) {
             return true;
          }
@@ -272,7 +272,7 @@ public class MessageClassification {
          title = EmailResources.getString(110);
       }
 
-      StringBuffer stringBuffer = (StringBuffer)(new Object(title));
+      StringBuffer stringBuffer = new StringBuffer(title);
       stringBuffer.append(this.toString());
       stringBuffer.append('\n');
       if (originalBody != null && originalBody.length() > 0) {

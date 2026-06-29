@@ -10,7 +10,7 @@ final class ContactCollection$OrgHandler implements ObjectFieldHandler {
 
    @Override
    public final Object getValue(Object item) {
-      if (item instanceof Object) {
+      if (item instanceof AddressCardModel) {
          CompanyInfoModel compInfo = ((AddressCardModel)item).getCompanyInfo();
          if (compInfo != null) {
             return compInfo.getCompanyName();

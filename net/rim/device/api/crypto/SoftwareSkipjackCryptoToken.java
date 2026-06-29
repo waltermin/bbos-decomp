@@ -32,7 +32,7 @@ final class SoftwareSkipjackCryptoToken extends SkipjackCryptoToken implements P
    @Override
    public final CryptoTokenCipherContext initializeEncrypt(CryptoTokenSymmetricKeyData data) {
       if (!(data instanceof SoftwareSkipjackCryptoToken$SkipjackKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareSkipjackCryptoToken$SkipjackKeyData key = (SoftwareSkipjackCryptoToken$SkipjackKeyData)data;
@@ -42,7 +42,7 @@ final class SoftwareSkipjackCryptoToken extends SkipjackCryptoToken implements P
    @Override
    public final void encrypt(CryptoTokenCipherContext context, byte[] plaintext, int plaintextOffset, byte[] ciphertext, int ciphertextOffset) {
       if (!(context instanceof SoftwareSkipjackCryptoToken$SkipjackCipherContext)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       ((SoftwareSkipjackCryptoToken$SkipjackCipherContext)context).getNativeBlockCipher().crypt(plaintext, plaintextOffset, ciphertext, ciphertextOffset);
@@ -51,7 +51,7 @@ final class SoftwareSkipjackCryptoToken extends SkipjackCryptoToken implements P
    @Override
    public final CryptoTokenCipherContext initializeDecrypt(CryptoTokenSymmetricKeyData data) {
       if (!(data instanceof SoftwareSkipjackCryptoToken$SkipjackKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareSkipjackCryptoToken$SkipjackKeyData key = (SoftwareSkipjackCryptoToken$SkipjackKeyData)data;
@@ -61,7 +61,7 @@ final class SoftwareSkipjackCryptoToken extends SkipjackCryptoToken implements P
    @Override
    public final void decrypt(CryptoTokenCipherContext context, byte[] ciphertext, int ciphertextOffset, byte[] plaintext, int plaintextOffset) {
       if (!(context instanceof SoftwareSkipjackCryptoToken$SkipjackCipherContext)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       ((SoftwareSkipjackCryptoToken$SkipjackCipherContext)context).getNativeBlockCipher().crypt(ciphertext, ciphertextOffset, plaintext, plaintextOffset);
@@ -70,7 +70,7 @@ final class SoftwareSkipjackCryptoToken extends SkipjackCryptoToken implements P
    @Override
    public final byte[] extractKeyData(CryptoTokenSymmetricKeyData data) {
       if (!(data instanceof SoftwareSkipjackCryptoToken$SkipjackKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareSkipjackCryptoToken$SkipjackKeyData)data).getData();
       }
@@ -103,7 +103,7 @@ final class SoftwareSkipjackCryptoToken extends SkipjackCryptoToken implements P
       }
 
       if (!Arrays.equals(target, 0, PLAIN_TEXT, 0, length)) {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
       target = new byte[length];
@@ -118,7 +118,7 @@ final class SoftwareSkipjackCryptoToken extends SkipjackCryptoToken implements P
       }
 
       if (!Arrays.equals(target, 0, CIPHER_TEXT, 0, length)) {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
    }
 

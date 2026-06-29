@@ -2,6 +2,9 @@ package net.rim.device.apps.internal.phone.options;
 
 import net.rim.device.api.system.DirectConnect;
 import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.Arrays;
@@ -26,19 +29,19 @@ public final class PhoneInfoOption extends SaveableMainScreenOptionsListItem {
          number = PhoneResources.getString(138);
       }
 
-      HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(1152921504606846976L));
-      hfm.add((Field)(new Object(((StringBuffer)(new Object())).append(PhoneResources.getString(168)).append(": ").toString(), 36028797018963968L)));
+      HorizontalFieldManager hfm = new HorizontalFieldManager(1152921504606846976L);
+      hfm.add(new LabelField(PhoneResources.getString(168) + ": ", 36028797018963968L));
       hfm.add(new PhoneInfoOption$CopyableNumberField(number, 18014398509481984L));
       mainScreen.add(hfm);
       if (DirectConnect.isSupported()) {
          String ufmiNumber = DirectConnect.getUFMI();
-         hfm = (HorizontalFieldManager)(new Object(1152921504606846976L));
-         hfm.add((Field)(new Object(PhoneResources.getString(6044), 36028797018963968L)));
+         hfm = new HorizontalFieldManager(1152921504606846976L);
+         hfm.add(new LabelField(PhoneResources.getString(6044), 36028797018963968L));
          hfm.add(new PhoneInfoOption$CopyableNumberField(ufmiNumber, 18014398509481984L));
          mainScreen.add(hfm);
       }
 
-      mainScreen.add((Field)(new Object()));
+      mainScreen.add(new SeparatorField());
       int[] meters;
       if (PhoneUtilities.idenTypeNetwork()) {
          meters = new int[]{2, 3, 0, 1, 51, -804651007, 100, -804651004, 220, 6009, 6010, 6011, -804651004, 500, 501, 502};
@@ -82,10 +85,10 @@ public final class PhoneInfoOption extends SaveableMainScreenOptionsListItem {
    public final boolean keyChar(char key, int time, int status) {
       if (key == '?' && !this._showErrorLog) {
          this._showErrorLog = true;
-         super._mainScreen.add((Field)(new Object()));
+         super._mainScreen.add(new SeparatorField());
          String title = PhoneResources.getString(6038);
-         super._mainScreen.add((Field)(new Object(title, 36028797018963968L)));
-         super._mainScreen.add((Field)(new Object(PhoneOptions.getOptions().getPhoneErrorLog(), 18014398509481984L)));
+         super._mainScreen.add(new RichTextField(title, 36028797018963968L));
+         super._mainScreen.add(new RichTextField(PhoneOptions.getOptions().getPhoneErrorLog(), 18014398509481984L));
          super._mainScreen.invalidate();
          return true;
       } else {

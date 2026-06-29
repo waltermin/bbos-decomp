@@ -42,7 +42,7 @@ public class MultipartMessageImpl implements MultipartMessage {
    }
 
    Vector getTORecipients() {
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       int length = this._toList.size();
 
       for (int i = 0; i < length; i++) {
@@ -53,7 +53,7 @@ public class MultipartMessageImpl implements MultipartMessage {
    }
 
    Vector getCCRecipients() {
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       int length = this._ccList.size();
 
       for (int i = 0; i < length; i++) {
@@ -64,7 +64,7 @@ public class MultipartMessageImpl implements MultipartMessage {
    }
 
    Vector getBCCRecipients() {
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       int length = this._bccList.size();
 
       for (int i = 0; i < length; i++) {
@@ -80,7 +80,7 @@ public class MultipartMessageImpl implements MultipartMessage {
          return null;
       }
 
-      MessagePart[] parts = new Object[this._messageParts.size()];
+      MessagePart[] parts = new MessagePart[this._messageParts.size()];
 
       for (int i = 0; i < parts.length; i++) {
          parts[i] = (MessagePart)this._messageParts.elementAt(i);
@@ -102,12 +102,12 @@ public class MultipartMessageImpl implements MultipartMessage {
    @Override
    public boolean removeAddress(String type, String address) {
       if (type == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       type = type.toLowerCase();
       if (!type.equals(TO) && !type.equals(CC) && !type.equals(BCC)) {
-         throw new Object("Invalid address type");
+         throw new IllegalArgumentException("Invalid address type");
       }
 
       if (address != null) {
@@ -137,12 +137,12 @@ public class MultipartMessageImpl implements MultipartMessage {
    @Override
    public void removeAddresses(String type) {
       if (type == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       type = type.toLowerCase();
       if (!type.equals(TO) && !type.equals(CC) && !type.equals(BCC)) {
-         throw new Object("Invalid address type");
+         throw new IllegalArgumentException("Invalid address type");
       }
 
       if (type.equals(TO)) {
@@ -159,7 +159,7 @@ public class MultipartMessageImpl implements MultipartMessage {
    @Override
    public boolean removeMessagePart(MessagePart part) {
       if (part == null) {
-         throw new Object();
+         throw new NullPointerException();
       } else {
          return this._messageParts.removeElement(part);
       }
@@ -168,10 +168,10 @@ public class MultipartMessageImpl implements MultipartMessage {
    @Override
    public boolean removeMessagePartId(String contentID) {
       if (contentID == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
-      Vector removeVector = (Vector)(new Object());
+      Vector removeVector = new Vector();
 
       for (int i = 0; i < this._messageParts.size(); i++) {
          MessagePart mp = (MessagePart)this._messageParts.elementAt(i);
@@ -193,10 +193,10 @@ public class MultipartMessageImpl implements MultipartMessage {
    @Override
    public boolean removeMessagePartLocation(String contentLocation) {
       if (contentLocation == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
-      Vector removeVector = (Vector)(new Object());
+      Vector removeVector = new Vector();
 
       for (int i = 0; i < this._messageParts.size(); i++) {
          MessagePart mp = (MessagePart)this._messageParts.elementAt(i);
@@ -225,7 +225,7 @@ public class MultipartMessageImpl implements MultipartMessage {
    @Override
    public void setHeader(String headerField, String headerValue) {
       if (headerField == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       headerField = headerField.toLowerCase();
@@ -234,17 +234,17 @@ public class MultipartMessageImpl implements MultipartMessage {
          || headerField.equals(TO_HEADER)
          || headerField.equals(CC_HEADER)
          || headerField.equals(BCC_HEADER)) {
-         throw new Object();
+         throw new SecurityException();
       }
 
       if (!headerField.equals(DELIVERY_TIME_HEADER) && !headerField.equals(PRIORITY_HEADER)) {
-         throw new Object("Unknown header field");
+         throw new IllegalArgumentException("Unknown header field");
       }
 
       if (headerField.equals(PRIORITY_HEADER) && headerValue != null) {
          String lower = headerValue.toLowerCase();
          if (!lower.equals("high") && !lower.equals("low") && !lower.equals("normal")) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       }
 
@@ -257,7 +257,7 @@ public class MultipartMessageImpl implements MultipartMessage {
             var5 = false;
          } finally {
             if (var5) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
          }
       }
@@ -281,7 +281,7 @@ public class MultipartMessageImpl implements MultipartMessage {
          }
 
          if (!found) {
-            throw new Object("None of the added MessageParts objects matches the contentId");
+            throw new IllegalArgumentException("None of the added MessageParts objects matches the contentId");
          }
       }
 
@@ -295,13 +295,13 @@ public class MultipartMessageImpl implements MultipartMessage {
 
    @Override
    public Date getTimestamp() {
-      return (Date)(new Object(this._timeStamp));
+      return new Date(this._timeStamp);
    }
 
    @Override
    public MessagePart getMessagePart(String contentID) {
       if (contentID == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       for (int i = 0; i < this._messageParts.size(); i++) {
@@ -317,7 +317,7 @@ public class MultipartMessageImpl implements MultipartMessage {
    @Override
    public String getHeader(String headerField) {
       if (headerField == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          headerField = headerField.toLowerCase();
          if (headerField.equals(SUBJECT_HEADER)
@@ -325,9 +325,9 @@ public class MultipartMessageImpl implements MultipartMessage {
             || headerField.equals(TO_HEADER)
             || headerField.equals(CC_HEADER)
             || headerField.equals(BCC_HEADER)) {
-            throw new Object();
+            throw new SecurityException();
          } else if (!headerField.equals(DELIVERY_TIME_HEADER) && !headerField.equals(PRIORITY_HEADER)) {
-            throw new Object("Unknown header field");
+            throw new IllegalArgumentException("Unknown header field");
          } else {
             return (String)this._headers.get(headerField);
          }
@@ -345,11 +345,11 @@ public class MultipartMessageImpl implements MultipartMessage {
       } else if (type.equals(BCC)) {
          v = this._bccList;
       } else if (type.equals(FROM) && this._fromAddress != null) {
-         return new Object[]{this._fromAddress};
+         return new String[]{this._fromAddress};
       }
 
       if (v != null && v.size() != 0) {
-         String[] array = new Object[v.size()];
+         String[] array = new String[v.size()];
 
          for (int i = 0; i < v.size(); i++) {
             array[i] = (String)v.elementAt(i);
@@ -366,14 +366,14 @@ public class MultipartMessageImpl implements MultipartMessage {
       if (this._fromAddress != null) {
          return this._fromAddress;
       } else {
-         return (String)(this._toList.size() > 0 ? this._toList.elementAt(0) : null);
+         return this._toList.size() > 0 ? (String)this._toList.elementAt(0) : null;
       }
    }
 
    @Override
    public void addMessagePart(MessagePart part) {
       if (part == null) {
-         throw new Object("MessagePart is null");
+         throw new NullPointerException("MessagePart is null");
       }
 
       String contentId = part.getContentID();
@@ -381,7 +381,7 @@ public class MultipartMessageImpl implements MultipartMessage {
       for (int i = 0; i < this._messageParts.size(); i++) {
          MessagePart mp = (MessagePart)this._messageParts.elementAt(i);
          if (mp.getContentID().equals(contentId)) {
-            throw new Object("Content-ID of the MessagePart conflicts with Messagepart already contained");
+            throw new IllegalArgumentException("Content-ID of the MessagePart conflicts with Messagepart already contained");
          }
       }
 
@@ -393,7 +393,7 @@ public class MultipartMessageImpl implements MultipartMessage {
       if (type != null && (address == null || !address.trim().equals(""))) {
          type = type.toLowerCase();
          if (!type.equals(TO) && !type.equals(CC) && !type.equals(BCC)) {
-            throw new Object("Invalid address type");
+            throw new IllegalArgumentException("Invalid address type");
          }
 
          if (address == null) {
@@ -411,14 +411,14 @@ public class MultipartMessageImpl implements MultipartMessage {
          if (index != -1) {
             String applicationId = addr.substring(index + 1);
             if (this._applicationId != null && !this._applicationId.equals(applicationId)) {
-               throw new Object("Addresses do not have the same Application ID");
+               throw new IllegalArgumentException("Addresses do not have the same Application ID");
             }
 
             this._applicationId = applicationId;
          }
 
          if (!Protocol.isValid(index != -1 ? addr.substring(0, index) : addr)) {
-            throw new Object("Invalid address");
+            throw new IllegalArgumentException("Invalid address");
          }
 
          if (address == null) {
@@ -441,7 +441,7 @@ public class MultipartMessageImpl implements MultipartMessage {
 
          return true;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -470,10 +470,10 @@ public class MultipartMessageImpl implements MultipartMessage {
    }
 
    public MultipartMessageImpl() {
-      this._messageParts = (Vector)(new Object());
-      this._bccList = (Vector)(new Object());
-      this._ccList = (Vector)(new Object());
-      this._toList = (Vector)(new Object());
-      this._headers = (Hashtable)(new Object());
+      this._messageParts = new Vector();
+      this._bccList = new Vector();
+      this._ccList = new Vector();
+      this._toList = new Vector();
+      this._headers = new Hashtable();
    }
 }

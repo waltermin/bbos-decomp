@@ -8,6 +8,8 @@ import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
+import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.apps.api.framework.hotkeys.HotKeyCheck;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.DefaultProvider;
@@ -17,6 +19,7 @@ import net.rim.device.apps.api.framework.model.VerbProvider;
 import net.rim.device.apps.api.framework.registration.VerbFactory;
 import net.rim.device.apps.api.framework.registration.VerbRepository;
 import net.rim.device.apps.api.framework.verb.DefaultVerbProvider;
+import net.rim.device.apps.api.framework.verb.LastUsedDefaultVerbProvider;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.messaging.Folder;
 import net.rim.device.apps.api.messaging.messagelist.DeleteSingleItemVerb;
@@ -36,7 +39,7 @@ import net.rim.vm.Array;
 class CallLogViewerScreen extends ModelScreen implements ListFieldCallback, EditNotesVerb$CallNotesListener {
    private ListField _callInfoListField;
    private Field _notesField;
-   private Verb[] _verbCache = new Object[0];
+   private Verb[] _verbCache = new Verb[0];
    private DefaultProvider _defaultVerbProvider;
    private Object _model;
    private static final int DATE_TIME_INDEX = 0;
@@ -66,7 +69,7 @@ class CallLogViewerScreen extends ModelScreen implements ListFieldCallback, Edit
    }
 
    private void populateScreen() {
-      this._callInfoListField = (ListField)(new Object(NUM_CALL_INFO_FIELD_ENTRIES, 36028797018963968L));
+      this._callInfoListField = new ListField(NUM_CALL_INFO_FIELD_ENTRIES, 36028797018963968L);
       this._callInfoListField.setCallback(this);
       this.add(this._callInfoListField);
       PhoneCallModelImpl callLog = this.getCallLog();
@@ -75,17 +78,17 @@ class CallLogViewerScreen extends ModelScreen implements ListFieldCallback, Edit
          int labelId = errorCode == 1 ? 169 : 170;
          String label = PhoneResources.getString(labelId);
          String msg = PhoneUtilities.getCallFailureErrorString(errorCode);
-         this.add((Field)(new Object(((StringBuffer)(new Object())).append(label).append(msg).toString(), null, null, null, 36028797018963968L)));
+         this.add(new RichTextField(label + msg, null, null, null, 36028797018963968L));
       }
 
-      this.add((Field)(new Object()));
-      ContextObject context = (ContextObject)(new Object(58, 24, 118));
+      this.add(new SeparatorField());
+      ContextObject context = new ContextObject(58, 24, 118);
       Field field = callLog.getField(context);
       if (field != null) {
          this.add(field);
       }
 
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this._notesField = this.getNotesField();
       if (this._notesField != null) {
          this.add(this._notesField);
@@ -96,7 +99,7 @@ class CallLogViewerScreen extends ModelScreen implements ListFieldCallback, Edit
    }
 
    private Field getNotesField() {
-      return this.getCallLog().getField(new Object(35));
+      return this.getCallLog().getField(new ContextObject(35));
    }
 
    @Override
@@ -118,7 +121,7 @@ class CallLogViewerScreen extends ModelScreen implements ListFieldCallback, Edit
          }
       }
 
-      ContextObject sendContext = (ContextObject)(new Object(119));
+      ContextObject sendContext = new ContextObject(119);
       if (focusedField != null) {
          sendContext.put(6780852635736686874L, focusedField);
       }
@@ -145,7 +148,7 @@ class CallLogViewerScreen extends ModelScreen implements ListFieldCallback, Edit
          return hotkey != null && hotkey.invokeHotkey(k, super._context);
       }
 
-      DeleteSingleItemVerb deleteVerb = (DeleteSingleItemVerb)(new Object(611472, 1000));
+      DeleteSingleItemVerb deleteVerb = new DeleteSingleItemVerb(611472, 1000);
       deleteVerb.setParameters(this._model, super._context);
       super._returnValue = deleteVerb.invoke(null);
       if (ContextObject.getFlag(super._returnValue, 39)) {
@@ -202,7 +205,7 @@ class CallLogViewerScreen extends ModelScreen implements ListFieldCallback, Edit
       verbContext.setFlag(49);
       Array.resize(this._verbCache, 0);
       Verb newDefault = null;
-      if (model instanceof Object) {
+      if (model instanceof VerbProvider) {
          VerbProvider verbProvider = (VerbProvider)model;
          newDefault = verbProvider.getVerbs(verbContext, this._verbCache);
       }
@@ -251,7 +254,7 @@ class CallLogViewerScreen extends ModelScreen implements ListFieldCallback, Edit
 
       DefaultVerbProvider defaultProvider = null;
       if (model != null) {
-         defaultProvider = (DefaultVerbProvider)(new Object(model));
+         defaultProvider = new LastUsedDefaultVerbProvider(model);
       }
 
       menu.coalesce(-3072555018635390988L, defaultProvider);
@@ -261,7 +264,7 @@ class CallLogViewerScreen extends ModelScreen implements ListFieldCallback, Edit
    public void drawListRow(ListField listField, Graphics graphics, int index, int y, int width) {
       int height = listField.getFont().getHeight();
       RIMModel phoneCall = (RIMModel)this.getModel();
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       switch (index) {
          case -1:
             break;
@@ -282,7 +285,7 @@ class CallLogViewerScreen extends ModelScreen implements ListFieldCallback, Edit
             }
       }
 
-      if (phoneCall instanceof Object) {
+      if (phoneCall instanceof PaintProvider) {
          PaintProvider paintProvider = (PaintProvider)phoneCall;
          paintProvider.paint(graphics, 0, y, width, height, context);
       }

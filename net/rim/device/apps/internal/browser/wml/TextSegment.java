@@ -8,6 +8,7 @@ import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.ByteVector;
 import net.rim.device.api.util.IntVector;
 import net.rim.device.apps.internal.browser.ui.BrowserTextField;
@@ -17,9 +18,9 @@ import net.rim.device.apps.internal.browser.util.ShortVector;
 final class TextSegment extends TaskContainer {
    private Stack _managerStack;
    private Vector _textVariables;
-   private StringBuffer _text = (StringBuffer)(new Object());
-   private IntVector _offsets = (IntVector)(new Object());
-   private ByteVector _attributes = (ByteVector)(new Object());
+   private StringBuffer _text = new StringBuffer();
+   private IntVector _offsets = new IntVector();
+   private ByteVector _attributes = new ByteVector();
    private ShortVector _varStarts = new ShortVector();
    private FontCache _fontCache;
    private Font[] _currentFonts;
@@ -40,16 +41,16 @@ final class TextSegment extends TaskContainer {
    private String _defaultFontFace;
    private boolean _autoMatch = true;
    private boolean _minimalMenuMode;
-   private Vector _oldAnchorVerbs = (Vector)(new Object());
-   private Vector _vars = (Vector)(new Object());
-   private Vector _anchorVerbs = (Vector)(new Object());
+   private Vector _oldAnchorVerbs = new Vector();
+   private Vector _vars = new Vector();
+   private Vector _anchorVerbs = new Vector();
    private WMLBrowserContent _browserContent;
    private Font _defaultFont;
    private int _minimumFontSize;
    private int _minimumFontStyle;
    private boolean _removeLeadingSpaces;
    private static final int DEFAULT_PT_SIZE_DELTA = 2;
-   private static Stack _defaultManagerStack = (Stack)(new Object());
+   private static Stack _defaultManagerStack = new Stack();
 
    TextSegment(Font defaultFont, int minimumFontSize, int minimumFontStyle, boolean minimalMenuMode) {
       this(defaultFont, _defaultManagerStack, null, null, true, minimumFontSize, minimumFontStyle, minimalMenuMode);
@@ -71,7 +72,7 @@ final class TextSegment extends TaskContainer {
       this._fontCache = FontCache.getInstance();
       this._autoMatch = autoMatch;
       this._minimalMenuMode = minimalMenuMode;
-      this._currentFonts = new Object[0];
+      this._currentFonts = new Font[0];
       if (Graphics.isColor()) {
          this._currentColors = new int[0];
       }
@@ -381,7 +382,7 @@ final class TextSegment extends TaskContainer {
             return;
          }
 
-         HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(1154117773257867264L | style));
+         HorizontalFieldManager hfm = new HorizontalFieldManager(1154117773257867264L | style);
          hfm.add(textField);
          ((Manager)this._managerStack.peek()).add(hfm);
       }
@@ -508,7 +509,7 @@ final class TextSegment extends TaskContainer {
       this._offsets.removeAllElements();
       this._offsets.addElement(0);
       this._attributes.removeAllElements();
-      this._currentFonts = new Object[0];
+      this._currentFonts = new Font[0];
       if (Graphics.isColor()) {
          this._currentColors = new int[0];
       }
@@ -517,6 +518,6 @@ final class TextSegment extends TaskContainer {
    }
 
    static {
-      _defaultManagerStack.push(new Object());
+      _defaultManagerStack.push(new VerticalFieldManager());
    }
 }

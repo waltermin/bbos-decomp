@@ -7,7 +7,7 @@ import net.rim.device.apps.internal.qm.resource.QmResources;
 
 final class ContactTreeField$ConversationBranch extends Branch {
    int _unreadCount;
-   private StringBuffer _label = (StringBuffer)(new Object(16));
+   private StringBuffer _label = new StringBuffer(16);
 
    private ContactTreeField$ConversationBranch() {
       super._expanded = PeerData.isExpanded(ContactTreeField.access$600());

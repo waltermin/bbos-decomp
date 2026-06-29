@@ -1,5 +1,6 @@
 package net.rim.device.internal.crypto.pgp;
 
+import net.rim.device.api.crypto.CryptoUnsupportedOperationException;
 import net.rim.device.api.crypto.SymmetricKey;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.util.Persistable;
@@ -10,14 +11,14 @@ public final class PGPPublicKeyEncryptedSessionKeyPacket extends PGPPacket imple
    private int _sessionKeyAlgorithm;
    private byte[] _encodedData;
 
-   public PGPPublicKeyEncryptedSessionKeyPacket(int tag, byte[] encoding) {
+   public PGPPublicKeyEncryptedSessionKeyPacket(int tag, byte[] encoding) throws CryptoUnsupportedOperationException {
       super(tag, encoding);
       int offset = 0;
       int version = encoding[offset++];
       switch (version) {
          case 1:
          default:
-            throw new Object(((StringBuffer)(new Object("Ver:"))).append(version).toString());
+            throw new CryptoUnsupportedOperationException("Ver:" + version);
          case 2:
          case 3:
             this._keyID = new byte[8];
@@ -76,7 +77,7 @@ public final class PGPPublicKeyEncryptedSessionKeyPacket extends PGPPacket imple
       // 02b: goto 2f9
       // 02e: aload 3
       // 02f: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 034: checkcast java/lang/Object
+      // 034: checkcast net/rim/device/api/crypto/keystore/KeyStoreData
       // 037: astore 4
       // 039: aload 4
       // 03b: invokeinterface net/rim/device/api/crypto/keystore/KeyStoreData.isPrivateKeySet ()Z 1
@@ -134,13 +135,13 @@ public final class PGPPublicKeyEncryptedSessionKeyPacket extends PGPPacket imple
       // 0be: lookupswitch 171 4 1 119 2 119 16 42 20 42
       // 0e8: aload 6
       // 0ea: dup
-      // 0eb: instanceof java/lang/Object
+      // 0eb: instanceof net/rim/device/api/crypto/DHPrivateKey
       // 0ee: ifne 0f5
       // 0f1: pop
       // 0f2: goto 185
-      // 0f5: checkcast java/lang/Object
+      // 0f5: checkcast net/rim/device/api/crypto/DHPrivateKey
       // 0f8: astore 9
-      // 0fa: new java/lang/Object
+      // 0fa: new java/io/ByteArrayInputStream
       // 0fd: dup
       // 0fe: aload 0
       // 0ff: getfield net/rim/device/internal/crypto/pgp/PGPPublicKeyEncryptedSessionKeyPacket._encodedData [B
@@ -152,14 +153,14 @@ public final class PGPPublicKeyEncryptedSessionKeyPacket extends PGPPacket imple
       // 10e: aload 10
       // 110: invokestatic net/rim/device/internal/crypto/pgp/PGPUtilities.readMPI (Ljava/io/InputStream;)[B
       // 113: astore 8
-      // 115: new java/lang/Object
+      // 115: new net/rim/device/api/crypto/DHPublicKey
       // 118: dup
       // 119: aload 9
       // 11b: invokevirtual net/rim/device/api/crypto/DHPrivateKey.getDHCryptoSystem ()Lnet/rim/device/api/crypto/DHCryptoSystem;
       // 11e: aload 11
       // 120: invokespecial net/rim/device/api/crypto/DHPublicKey.<init> (Lnet/rim/device/api/crypto/DHCryptoSystem;[B)V
       // 123: astore 12
-      // 125: new java/lang/Object
+      // 125: new net/rim/device/api/crypto/ElGamalDecryptorEngine
       // 128: dup
       // 129: aload 9
       // 12b: aload 12
@@ -168,13 +169,13 @@ public final class PGPPublicKeyEncryptedSessionKeyPacket extends PGPPacket imple
       // 132: goto 185
       // 135: aload 6
       // 137: dup
-      // 138: instanceof java/lang/Object
+      // 138: instanceof net/rim/device/api/crypto/RSAPrivateKey
       // 13b: ifne 142
       // 13e: pop
       // 13f: goto 185
-      // 142: checkcast java/lang/Object
+      // 142: checkcast net/rim/device/api/crypto/RSAPrivateKey
       // 145: astore 9
-      // 147: new java/lang/Object
+      // 147: new java/io/ByteArrayInputStream
       // 14a: dup
       // 14b: aload 0
       // 14c: getfield net/rim/device/internal/crypto/pgp/PGPPublicKeyEncryptedSessionKeyPacket._encodedData [B
@@ -183,15 +184,15 @@ public final class PGPPublicKeyEncryptedSessionKeyPacket extends PGPPacket imple
       // 154: aload 10
       // 156: invokestatic net/rim/device/internal/crypto/pgp/PGPUtilities.readMPI (Ljava/io/InputStream;)[B
       // 159: astore 8
-      // 15b: new java/lang/Object
+      // 15b: new net/rim/device/api/crypto/RSADecryptorEngine
       // 15e: dup
       // 15f: aload 9
       // 161: invokespecial net/rim/device/api/crypto/RSADecryptorEngine.<init> (Lnet/rim/device/api/crypto/RSAPrivateKey;)V
       // 164: astore 7
       // 166: goto 185
-      // 169: new java/lang/Object
+      // 169: new net/rim/device/api/crypto/CryptoUnsupportedOperationException
       // 16c: dup
-      // 16d: new java/lang/Object
+      // 16d: new java/lang/StringBuffer
       // 170: dup
       // 171: ldc_w "Pub:"
       // 174: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -214,13 +215,13 @@ public final class PGPPublicKeyEncryptedSessionKeyPacket extends PGPPacket imple
       // 19e: invokeinterface net/rim/device/api/crypto/BlockDecryptorEngine.getBlockLength ()I 1
       // 1a3: invokestatic net/rim/device/api/crypto/CryptoByteArrayArithmetic.ensureLength ([BI)[B
       // 1a6: astore 8
-      // 1a8: new java/lang/Object
+      // 1a8: new net/rim/device/api/crypto/BlockDecryptor
       // 1ab: dup
-      // 1ac: new java/lang/Object
+      // 1ac: new net/rim/device/api/crypto/PKCS1UnformatterEngine
       // 1af: dup
       // 1b0: aload 7
       // 1b2: invokespecial net/rim/device/api/crypto/PKCS1UnformatterEngine.<init> (Lnet/rim/device/api/crypto/PrivateKeyDecryptorEngine;)V
-      // 1b5: new java/lang/Object
+      // 1b5: new java/io/ByteArrayInputStream
       // 1b8: dup
       // 1b9: aload 8
       // 1bb: invokespecial java/io/ByteArrayInputStream.<init> ([B)V

@@ -16,7 +16,7 @@ public class EnterpriseConfigRecordImpl implements EnterpriseConfigRecord, Encry
 
    @Override
    public DataBuffer getData() {
-      DataBuffer dataBuffer = (DataBuffer)(new Object(false));
+      DataBuffer dataBuffer = new DataBuffer(false);
 
       try {
          byte[] data = (byte[])PersistentContent.decode(this._dataEncoding, false);

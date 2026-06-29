@@ -19,7 +19,7 @@ public final class SoftTokenImpl implements SoftToken {
    public static final int MIN_PIN_LENGTH = 4;
 
    public final String getSeedPassword() {
-      return (String)(this._seedPassword == null ? "" : new Object(this._seedPassword));
+      return this._seedPassword == null ? "" : new String(this._seedPassword);
    }
 
    public final void setSeedPassword(String seedPassword) {
@@ -47,7 +47,7 @@ public final class SoftTokenImpl implements SoftToken {
    }
 
    public final String getPassphrase() {
-      return (String)(this._passphrase == null ? "" : new Object(this._passphrase));
+      return this._passphrase == null ? "" : new String(this._passphrase);
    }
 
    public final void setPIN(String pin) {
@@ -69,11 +69,11 @@ public final class SoftTokenImpl implements SoftToken {
    }
 
    public final String getPIN() {
-      return (String)(this._pin == null ? "" : new Object(this._pin));
+      return this._pin == null ? "" : new String(this._pin);
    }
 
    public final String getSeed() {
-      return (String)(this._seed == null ? "" : new Object(this._seed));
+      return this._seed == null ? "" : new String(this._seed);
    }
 
    public final void setSeed(byte[] seedBytes) {
@@ -111,7 +111,7 @@ public final class SoftTokenImpl implements SoftToken {
       // 01: istore 1
       // 02: aconst_null
       // 03: astore 2
-      // 04: new java/lang/Object
+      // 04: new net/rim/device/cldc/impl/softtoken/rimsecuridlib/RimSecurIDLib
       // 07: dup
       // 08: invokespecial net/rim/device/cldc/impl/softtoken/rimsecuridlib/RimSecurIDLib.<init> ()V
       // 0b: astore 3

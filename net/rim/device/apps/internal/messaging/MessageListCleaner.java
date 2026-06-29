@@ -17,7 +17,7 @@ final class MessageListCleaner implements RealtimeClockListener {
          long elapsedTime = currentTime - this._lastCheckTime;
          if ((elapsedTime > 86400000 || elapsedTime < 0) && Process.ensureMinimumIdleTime(30) > 0 && !this._purgingMessages) {
             this._purgingMessages = true;
-            ((Thread)(new Object(new MessageListCleaner$PurgeOldMessagesRunnable(this, currentTime)))).start();
+            new Thread(new MessageListCleaner$PurgeOldMessagesRunnable(this, currentTime)).start();
          }
       }
    }

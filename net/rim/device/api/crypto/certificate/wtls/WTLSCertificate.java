@@ -1,5 +1,6 @@
 package net.rim.device.api.crypto.certificate.wtls;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Enumeration;
 import net.rim.device.api.crypto.CryptoUtilities;
@@ -44,7 +45,7 @@ public final class WTLSCertificate implements Certificate, Persistable {
    }
 
    public WTLSCertificate(byte[] input, int offset, int length) {
-      this((InputStream)(new Object(input, offset, length)));
+      this(new ByteArrayInputStream(input, offset, length));
    }
 
    public WTLSCertificate(InputStream param1) throws CertificateParsingException {
@@ -59,15 +60,15 @@ public final class WTLSCertificate implements Certificate, Persistable {
       // 001: invokespecial java/lang/Object.<init> ()V
       // 004: aload 1
       // 005: ifnonnull 010
-      // 008: new java/lang/Object
+      // 008: new java/lang/IllegalArgumentException
       // 00b: dup
       // 00c: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 00f: athrow
-      // 010: new java/lang/Object
+      // 010: new java/io/ByteArrayOutputStream
       // 013: dup
       // 014: invokespecial java/io/ByteArrayOutputStream.<init> ()V
       // 017: astore 2
-      // 018: new java/lang/Object
+      // 018: new java/io/DataInputStream
       // 01b: dup
       // 01c: new net/rim/device/api/crypto/certificate/wtls/WTLSCertificate$PassThroughInputStream
       // 01f: dup
@@ -248,11 +249,9 @@ public final class WTLSCertificate implements Certificate, Persistable {
 
    @Override
    public final void verify(PublicKey issuerPublicKey) throws CertificateVerificationException {
-      SHA1Digest digest = (SHA1Digest)(new Object());
+      SHA1Digest digest = new SHA1Digest();
       digest.update(this._encoding, 0, this._encoding.length - this._signature.length);
-      DecodedSignature decodedSignature = SignatureDecoder.decode(
-         this._signature, 0, "WTLS", ((StringBuffer)(new Object(""))).append(this._signatureAlgorithm).toString()
-      );
+      DecodedSignature decodedSignature = SignatureDecoder.decode(this._signature, 0, "WTLS", "" + this._signatureAlgorithm);
       decodedSignature.initialize(digest);
       if (!decodedSignature.getVerifier(issuerPublicKey).verify()) {
          throw new CertificateVerificationException();
@@ -262,7 +261,7 @@ public final class WTLSCertificate implements Certificate, Persistable {
    @Override
    public final void verify(KeyStore keystore) throws NoIssuerFoundException {
       if (keystore == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SubjectKeyStoreIndex index = new SubjectKeyStoreIndex();
@@ -442,11 +441,11 @@ public final class WTLSCertificate implements Certificate, Persistable {
    @Override
    public final Object getInformation(long id, Object param, Object defaultValue) {
       if (id == -1188891808812199856L) {
-         return new Object(this.isRoot());
+         return new Boolean(this.isRoot());
       } else if (id != -7341435958452683242L) {
          return id == -5753772986264564736L ? CertificateUtilities.getX509WTLSSummaryText(this) : defaultValue;
       } else {
-         return new Object(!this.isRoot() && !this.isCA());
+         return new Boolean(!this.isRoot() && !this.isCA());
       }
    }
 }

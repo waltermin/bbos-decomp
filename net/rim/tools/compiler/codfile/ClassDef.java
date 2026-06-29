@@ -191,7 +191,7 @@ public class ClassDef extends CodfileItem {
       int packageLen = this._packageName.length();
       if (packageLen > 0) {
          String packageName = this._packageName.getString();
-         StringBuffer buffer = (StringBuffer)(new Object(packageLen + 1 + className.length()));
+         StringBuffer buffer = new StringBuffer(packageLen + 1 + className.length());
          buffer.append(packageName);
          buffer.append(".");
          buffer.append(className);

@@ -1,7 +1,7 @@
 package net.rim.ecmascript.util;
 
 public class IntVector {
-   private net.rim.device.api.util.IntVector _v = (net.rim.device.api.util.IntVector)(new Object());
+   private net.rim.device.api.util.IntVector _v = new net.rim.device.api.util.IntVector();
 
    public int size() {
       return this._v.size();

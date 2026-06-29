@@ -41,7 +41,7 @@ public class PersDataCollectionStruct implements Persistable, Recryptable {
       }
 
       int len = this._refObjects.size();
-      BigVector decoded = (BigVector)(new Object(len));
+      BigVector decoded = new BigVector(len);
 
       for (int i = 0; i < len; i++) {
          decoded.addElement(PersisProtectionHelper.decode(this._refObjects.elementAt(i)));
@@ -53,7 +53,7 @@ public class PersDataCollectionStruct implements Persistable, Recryptable {
    public void setRefObjects(BigVector objects) {
       if (objects != null && PersisProtectionHelper.needCoding()) {
          int len = objects.size();
-         this._refObjects = (BigVector)(new Object(len));
+         this._refObjects = new BigVector(len);
 
          for (int i = 0; i < len; i++) {
             this._refObjects.addElement(PersisProtectionHelper.encode(objects.elementAt(i)));

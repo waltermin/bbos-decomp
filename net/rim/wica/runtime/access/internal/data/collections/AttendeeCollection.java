@@ -16,9 +16,9 @@ public class AttendeeCollection extends AccessInnerDataCollection {
    }
 
    private void initFieldHandlers() {
-      super._objectFieldHandlers = (IntHashtable)(new Object(1));
+      super._objectFieldHandlers = new IntHashtable(1);
       super._objectFieldHandlers.put(1, new AttendeeCollection$AddressHandler(null));
-      super._intFieldHandlers = (IntHashtable)(new Object(1));
+      super._intFieldHandlers = new IntHashtable(1);
       super._intFieldHandlers.put(0, new AttendeeCollection$TypeHandler(null));
    }
 

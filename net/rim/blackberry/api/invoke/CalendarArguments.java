@@ -20,13 +20,13 @@ public final class CalendarArguments extends ApplicationArguments {
    public CalendarArguments(String arg) {
       if (arg == null || !arg.equals("2") && !arg.equals("3") && !arg.equals("1") && !arg.equals("4") && !arg.equals("-1")) {
          if (arg != null && arg.equals("newappt")) {
-            super._args = new Object[1];
+            super._args = new String[1];
             super._args[0] = "newappt";
          } else {
-            throw new Object("Invalid argument. Please use one of the CalendarArguments Class members.");
+            throw new IllegalArgumentException("Invalid argument. Please use one of the CalendarArguments Class members.");
          }
       } else {
-         super._args = new Object[2];
+         super._args = new String[2];
          super._args[0] = "newview";
          super._args[1] = arg;
       }

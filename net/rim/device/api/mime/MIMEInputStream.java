@@ -1,9 +1,11 @@
 package net.rim.device.api.mime;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
+import net.rim.device.api.io.Base64InputStream;
 import net.rim.device.api.io.ScanLine;
 import net.rim.device.api.io.SharedInputStream;
 import net.rim.device.api.util.Arrays;
@@ -53,7 +55,7 @@ public class MIMEInputStream extends InputStream {
    }
 
    private void saveHeader(byte[] headerLine) {
-      String t = (String)(new Object(headerLine));
+      String t = new String(headerLine);
       int index = t.indexOf(58);
       if (index == -1) {
          this._headers.put(t, "");
@@ -74,14 +76,14 @@ public class MIMEInputStream extends InputStream {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    MIMEInputStream(InputStream input, byte[] boundary, boolean useStream, ScanLine scanLine) {
       if (input == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       try {
          byte[] line = null;
-         this._headers = (Hashtable)(new Object());
+         this._headers = new Hashtable();
          if (useStream) {
-            if (!(input instanceof Object)) {
+            if (!(input instanceof SharedInputStream)) {
                throw new MIMEParsingException();
             }
 
@@ -91,7 +93,7 @@ public class MIMEInputStream extends InputStream {
             this._input = SharedInputStream.getSharedInputStream(input);
          }
 
-         this._parameters = (Hashtable)(new Object());
+         this._parameters = new Hashtable();
          this._boundary = null;
          this._contentEncoding = null;
          this._contentType = null;
@@ -99,7 +101,7 @@ public class MIMEInputStream extends InputStream {
          SharedInputStream stream = (SharedInputStream)this._input;
          ScanLine _scanLine = null;
          if (scanLine == null) {
-            _scanLine = (ScanLine)(new Object((SharedInputStream)this._input));
+            _scanLine = new ScanLine((SharedInputStream)this._input);
          } else {
             _scanLine = scanLine;
          }
@@ -126,7 +128,7 @@ public class MIMEInputStream extends InputStream {
                   throw new MIMEParsingException();
                }
 
-               this._headers.put(MIME_VERSION, new Object(temp));
+               this._headers.put(MIME_VERSION, new String(temp));
             } else if (this.startsWithIgnoreCase(line, CONTENT_TYPE_BYTES)) {
                this.readParameters(line, _scanLine);
             } else if (this.startsWithIgnoreCase(line, CONTENT_ENCODING_BYTES)) {
@@ -140,7 +142,7 @@ public class MIMEInputStream extends InputStream {
                }
 
                this._contentEncoding = this.toLowerCase(this.trim(this.subArray(line, index, line.length)));
-               this._headers.put(CONTENT_ENCODING, new Object(this._contentEncoding));
+               this._headers.put(CONTENT_ENCODING, new String(this._contentEncoding));
             } else if (this.startsWithIgnoreCase(line, CONTENT_ID_BYTES)) {
                int index = this.indexOf(line, 58, 0) + 1;
                if (index == 0 || index == line.length) {
@@ -151,7 +153,7 @@ public class MIMEInputStream extends InputStream {
                   index++;
                }
 
-               this._headers.put(CONTENT_ID, new Object(this.toLowerCase(this.trim(this.subArray(line, index, line.length)))));
+               this._headers.put(CONTENT_ID, new String(this.toLowerCase(this.trim(this.subArray(line, index, line.length)))));
             } else if (this.startsWithIgnoreCase(line, CONTENT_DESCRIPTION_BYTES)) {
                int index = this.indexOf(line, 58, 0) + 1;
                if (index == 0 || index == line.length) {
@@ -162,7 +164,7 @@ public class MIMEInputStream extends InputStream {
                   index++;
                }
 
-               this._headers.put(CONTENT_DESCRIPTION, new Object(this.toLowerCase(this.trim(this.subArray(line, index, line.length)))));
+               this._headers.put(CONTENT_DESCRIPTION, new String(this.toLowerCase(this.trim(this.subArray(line, index, line.length)))));
             } else if (this.startsWithIgnoreCase(line, CONTENT_BYTES)) {
                if (headerLine != null) {
                   this.saveHeader(headerLine);
@@ -249,15 +251,15 @@ public class MIMEInputStream extends InputStream {
             stream.setCurrentPosition(currentPosition);
             if (this._contentEncoding != null) {
                if (Arrays.equals(this._contentEncoding, BASE64_BYTES)) {
-                  this._input = (InputStream)(new Object(stream, true));
+                  this._input = new Base64InputStream(stream, true);
                } else if (Arrays.equals(this._contentEncoding, QUOTED_PRINTABLE_BYTES)) {
                   this._input = new QuotedPrintableInputStream(stream);
                   return;
                }
             }
          } else {
-            if (!(this._input instanceof Object)) {
-               throw new Object();
+            if (!(this._input instanceof SharedInputStream)) {
+               throw new IllegalArgumentException();
             }
 
             stream = (SharedInputStream)this._input;
@@ -296,7 +298,7 @@ public class MIMEInputStream extends InputStream {
             tempInput.setLength(this._endPosition - currentPosition);
             if (this._contentEncoding != null) {
                if (Arrays.equals(this._contentEncoding, BASE64_BYTES)) {
-                  this._input = (InputStream)(new Object(tempInput, true));
+                  this._input = new Base64InputStream(tempInput, true);
                } else if (Arrays.equals(this._contentEncoding, QUOTED_PRINTABLE_BYTES)) {
                   this._input = new QuotedPrintableInputStream(tempInput);
                } else {
@@ -312,13 +314,13 @@ public class MIMEInputStream extends InputStream {
    }
 
    public Enumeration getHeaders() {
-      Vector temp = (Vector)(new Object());
+      Vector temp = new Vector();
       Enumeration keys = this._headers.keys();
 
       while (keys.hasMoreElements()) {
          String key = (String)keys.nextElement();
          String value = (String)this._headers.get(key);
-         temp.addElement(((StringBuffer)(new Object())).append(key).append(": ").append(value).toString());
+         temp.addElement(key + ": " + value);
       }
 
       return temp.elements();
@@ -385,11 +387,11 @@ public class MIMEInputStream extends InputStream {
    }
 
    @Override
-   public int read(byte[] buffer, int offset, int length) {
+   public int read(byte[] buffer, int offset, int length) throws IOException {
       if (this._closed) {
-         throw new Object();
+         throw new IOException();
       } else if (offset < 0 || length < 0 || buffer.length - length < offset) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return this.isMultiPart() && this._parts.length > 0 ? this._parts[0].read(buffer, offset, length) : this._input.read(buffer, offset, length);
       }
@@ -410,27 +412,27 @@ public class MIMEInputStream extends InputStream {
    }
 
    @Override
-   public long skip(long n) {
+   public long skip(long n) throws IOException {
       if (this._closed) {
-         throw new Object();
+         throw new IOException();
       } else {
          return this.isMultiPart() && this._parts.length > 0 ? this._parts[0].skip(n) : this._input.skip(n);
       }
    }
 
    @Override
-   public int available() {
+   public int available() throws IOException {
       if (this._closed) {
-         throw new Object();
+         throw new IOException();
       } else {
          return this.isMultiPart() && this._parts.length > 0 ? this._parts[0].available() : this._input.available();
       }
    }
 
    @Override
-   public void close() {
+   public void close() throws IOException {
       if (this._closed) {
-         throw new Object();
+         throw new IOException();
       }
 
       this._closed = true;
@@ -561,12 +563,12 @@ public class MIMEInputStream extends InputStream {
                value = this.subArray(value, 1, value.length - 1);
             }
 
-            this._parameters.put(new Object(attribute), new Object(value));
+            this._parameters.put(new String(attribute), new String(value));
          }
 
          index = this.indexOf(completeline, 58, 0) + 1;
          if (index != 0 && index != line.length) {
-            this._headers.put(CONTENT_TYPE, new Object(this.toLowerCase(this.trim(this.subArray(completeline, index, completeline.length)))));
+            this._headers.put(CONTENT_TYPE, new String(this.toLowerCase(this.trim(this.subArray(completeline, index, completeline.length)))));
          } else {
             throw new MIMEParsingException();
          }
@@ -622,7 +624,7 @@ public class MIMEInputStream extends InputStream {
 
          return -1;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -649,7 +651,7 @@ public class MIMEInputStream extends InputStream {
       if (startIndex <= endIndex && startIndex >= 0 && endIndex <= line.length) {
          return Arrays.copy(line, startIndex, endIndex - startIndex);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

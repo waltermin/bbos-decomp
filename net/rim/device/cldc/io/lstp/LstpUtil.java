@@ -9,7 +9,7 @@ public final class LstpUtil {
    private Proxy _proxy = Proxy.getInstance();
    private boolean _linkState;
    private Object[] _listeners;
-   private String[] _appNames = new Object[1];
+   private String[] _appNames = new String[1];
    private static final long GUID = -715130445863266572L;
 
    public static final LstpUtil getInstance() {

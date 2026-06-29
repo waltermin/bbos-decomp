@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.browser.cod;
 
 import net.rim.device.api.browser.field.BrowserContent;
+import net.rim.device.api.browser.field.RenderingException;
 import net.rim.device.api.browser.field.RenderingOptions;
 import net.rim.device.api.browser.plugin.BrowserContentProvider;
 import net.rim.device.api.browser.plugin.BrowserContentProviderContext;
@@ -20,7 +21,7 @@ public final class JADConverterDescriptor extends BrowserContentProvider {
    }
 
    @Override
-   public final BrowserContent getBrowserContent(BrowserContentProviderContext param1) {
+   public final BrowserContent getBrowserContent(BrowserContentProviderContext param1) throws RenderingException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -31,7 +32,7 @@ public final class JADConverterDescriptor extends BrowserContentProvider {
       // 000: bipush 1
       // 001: invokestatic net/rim/device/api/system/ControlledAccess.verifyRRISignatures (Z)Z
       // 004: ifne 00f
-      // 007: new java/lang/Object
+      // 007: new net/rim/device/api/browser/field/RenderingException
       // 00a: dup
       // 00b: invokespecial net/rim/device/api/browser/field/RenderingException.<init> ()V
       // 00e: athrow
@@ -59,7 +60,7 @@ public final class JADConverterDescriptor extends BrowserContentProvider {
       // 03a: astore 8
       // 03c: aload 4
       // 03e: ifnonnull 049
-      // 041: new java/lang/Object
+      // 041: new net/rim/device/api/browser/field/RenderingException
       // 044: dup
       // 045: invokespecial net/rim/device/api/browser/field/RenderingException.<init> ()V
       // 048: athrow
@@ -70,7 +71,7 @@ public final class JADConverterDescriptor extends BrowserContentProvider {
       // 055: astore 7
       // 057: goto 064
       // 05a: astore 9
-      // 05c: new java/lang/Object
+      // 05c: new net/rim/device/api/browser/field/RenderingException
       // 05f: dup
       // 060: invokespecial net/rim/device/api/browser/field/RenderingException.<init> ()V
       // 063: athrow
@@ -122,10 +123,10 @@ public final class JADConverterDescriptor extends BrowserContentProvider {
       // 0d1: aload 10
       // 0d3: aload 6
       // 0d5: invokevirtual net/rim/device/apps/internal/browser/cod/JADAttributeParser.setJarURL (Ljava/lang/String;)V
-      // 0d8: new java/lang/Object
+      // 0d8: new java/lang/StringBuffer
       // 0db: dup
       // 0dc: aload 13
-      // 0de: new java/lang/Object
+      // 0de: new java/io/ByteArrayInputStream
       // 0e1: dup
       // 0e2: aload 9
       // 0e4: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -160,7 +161,7 @@ public final class JADConverterDescriptor extends BrowserContentProvider {
       // 12c: aload 14
       // 12e: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 131: astore 12
-      // 133: new java/lang/Object
+      // 133: new java/io/ByteArrayInputStream
       // 136: dup
       // 137: aload 9
       // 139: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -180,7 +181,7 @@ public final class JADConverterDescriptor extends BrowserContentProvider {
       // 158: ifnonnull 160
       // 15b: ldc_w "UTF-8"
       // 15e: astore 13
-      // 160: new java/lang/Object
+      // 160: new java/lang/String
       // 163: dup
       // 164: aload 9
       // 166: aload 13
@@ -188,7 +189,7 @@ public final class JADConverterDescriptor extends BrowserContentProvider {
       // 16b: astore 12
       // 16d: goto 190
       // 170: astore 13
-      // 172: new java/lang/Object
+      // 172: new java/lang/String
       // 175: dup
       // 176: aload 9
       // 178: ldc_w "UTF-8"
@@ -196,7 +197,7 @@ public final class JADConverterDescriptor extends BrowserContentProvider {
       // 17e: astore 12
       // 180: goto 190
       // 183: astore 14
-      // 185: new java/lang/Object
+      // 185: new java/lang/String
       // 188: dup
       // 189: aload 9
       // 18b: invokespecial java/lang/String.<init> ([B)V
@@ -213,11 +214,11 @@ public final class JADConverterDescriptor extends BrowserContentProvider {
       // 1a2: ifeq 1e7
       // 1a5: aload 4
       // 1a7: dup
-      // 1a8: instanceof java/lang/Object
+      // 1a8: instanceof javax/microedition/io/HttpConnection
       // 1ab: ifne 1b2
       // 1ae: pop
       // 1af: goto 1e7
-      // 1b2: checkcast java/lang/Object
+      // 1b2: checkcast javax/microedition/io/HttpConnection
       // 1b5: astore 14
       // 1b7: aload 14
       // 1b9: ldc_w "content-location"
@@ -254,7 +255,7 @@ public final class JADConverterDescriptor extends BrowserContentProvider {
       // 202: invokespecial net/rim/device/apps/internal/browser/cod/ApplicationDownloadManager.<init> (Lnet/rim/device/api/browser/field/RenderingApplication;Lnet/rim/device/apps/internal/browser/cod/ApplicationDownloadListener;Lnet/rim/device/apps/internal/browser/cod/JADAttributeParser;Ljava/io/InputStream;Ljava/lang/String;)V
       // 205: sipush 906
       // 208: invokevirtual net/rim/device/apps/internal/browser/cod/ApplicationDownloadManager.sendStatusReport (I)V
-      // 20b: new java/lang/Object
+      // 20b: new net/rim/device/api/browser/field/BrowserContentBaseImpl
       // 20e: dup
       // 20f: aload 6
       // 211: aconst_null

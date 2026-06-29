@@ -67,7 +67,7 @@ public final class Use extends SyncCommand {
    }
 
    public final String getDatabaseName() {
-      return (String)(new Object(this._databaseName));
+      return new String(this._databaseName);
    }
 
    public final int getTotalNumberOfOperations() {

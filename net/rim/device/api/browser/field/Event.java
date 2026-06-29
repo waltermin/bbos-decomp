@@ -43,7 +43,7 @@ public class Event {
 
    public final String getSourceURL() {
       if (!(this._src instanceof BrowserContent)) {
-         return !(this._src instanceof Object) ? null : ((HttpConnection)this._src).getURL();
+         return !(this._src instanceof HttpConnection) ? null : ((HttpConnection)this._src).getURL();
       } else {
          return ((BrowserContent)this._src).getURL();
       }
@@ -55,7 +55,7 @@ public class Event {
 
    protected String resolveUrl(String url) {
       if (!(this._src instanceof BrowserContent)) {
-         return this._src instanceof Object ? URI.getAbsoluteURL(url, ((HttpConnection)this._src).getURL()) : URI.getAbsoluteURL(url, null);
+         return this._src instanceof HttpConnection ? URI.getAbsoluteURL(url, ((HttpConnection)this._src).getURL()) : URI.getAbsoluteURL(url, null);
       } else {
          return ((BrowserContent)this._src).resolveUrl(url);
       }

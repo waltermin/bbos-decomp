@@ -352,7 +352,7 @@ final class WeekField$WeekFieldDayContents {
       }
 
       long uid = 0;
-      if (object instanceof Object) {
+      if (object instanceof UniqueIDProvider) {
          UniqueIDProvider uniqueIDProvider = (UniqueIDProvider)object;
          uid = uniqueIDProvider.getLUID(null);
       }
@@ -364,7 +364,7 @@ final class WeekField$WeekFieldDayContents {
          Object currentObject = this._events[i]._object;
          if (currentObject == object) {
             found = true;
-         } else if (uid != 0 && currentObject instanceof Object && ((UniqueIDProvider)currentObject).getLUID(null) == uid) {
+         } else if (uid != 0 && currentObject instanceof UniqueIDProvider && ((UniqueIDProvider)currentObject).getLUID(null) == uid) {
             found = true;
          }
 

@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import net.rim.device.api.util.StringUtilities;
 
 class RIMLDAPEntry implements LDAPEntry {
-   private Hashtable _hashtable = (Hashtable)(new Object());
+   private Hashtable _hashtable = new Hashtable();
 
    public RIMLDAPEntry() {
    }
@@ -13,7 +13,7 @@ class RIMLDAPEntry implements LDAPEntry {
    public void addAttribute(LDAPAttribute newAttribute) {
       String name = StringUtilities.toLowerCase(newAttribute.getName(), 1701707776);
       if (this._hashtable.get(name) != null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._hashtable.put(name, newAttribute);

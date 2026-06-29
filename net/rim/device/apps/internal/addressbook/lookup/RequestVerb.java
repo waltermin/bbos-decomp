@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.addressbook.lookup;
 
 import net.rim.device.api.collection.util.KeywordFilterList;
+import net.rim.device.api.collection.util.PrefixKeywordFilterList;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.apps.api.addressbook.AddressBookOptions;
@@ -39,8 +40,8 @@ public class RequestVerb extends Verb {
          case 1703:
             AddressBookOptions options = AddressBookServices.getAddressBookOptions();
             long sortOrder = options.getSortOrder();
-            KeywordFilterList filterList = (KeywordFilterList)(new Object(this._request, new SearchViewIndexerHelper(parameter, sortOrder), true));
-            invokeContextObject.put(614335798810617774L, new Object(sortOrder));
+            KeywordFilterList filterList = new PrefixKeywordFilterList(this._request, new SearchViewIndexerHelper(parameter, sortOrder), true);
+            invokeContextObject.put(614335798810617774L, new Long(sortOrder));
             this._request._result.resort(parameter, sortOrder);
             this._request.getResult().addCollectionListener(filterList);
             Screen screen = new SearchViewScreen(this._request, filterList, parameter, this._selectionListener);

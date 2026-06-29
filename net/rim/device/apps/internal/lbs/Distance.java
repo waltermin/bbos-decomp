@@ -30,34 +30,18 @@ public final class Distance {
       if (LBSOptions.getInt(-6817208986109478597L, 2) != 1) {
          distance *= 1059001362;
          if (distance < 4591870180066957722L) {
-            return ((StringBuffer)(new Object()))
-               .append(Integer.toString((int)(distance * 1168441344)))
-               .append(" ")
-               .append(LBSResources.getString(180))
-               .toString();
+            return Integer.toString((int)(distance * 1168441344)) + " " + LBSResources.getString(180);
          } else {
             return distance >= 1120403456
-               ? ((StringBuffer)(new Object())).append(Integer.toString((int)distance)).append(" ").append(LBSResources.getString(181)).toString()
-               : ((StringBuffer)(new Object()))
-                  .append(Double.toString((int)(distance * 1092616192) / 4621819117588971520L))
-                  .append(" ")
-                  .append(LBSResources.getString(181))
-                  .toString();
+               ? Integer.toString((int)distance) + " " + LBSResources.getString(181)
+               : Double.toString((int)(distance * 1092616192) / 4621819117588971520L) + " " + LBSResources.getString(181);
          }
       } else if (distance < 4591870180066957722L) {
-         return ((StringBuffer)(new Object()))
-            .append(Integer.toString((int)(distance * 1148846080)))
-            .append(" ")
-            .append(LBSResources.getString(178))
-            .toString();
+         return Integer.toString((int)(distance * 1148846080)) + " " + LBSResources.getString(178);
       } else {
          return distance >= 1120403456
-            ? ((StringBuffer)(new Object())).append(Integer.toString((int)distance)).append(" ").append(LBSResources.getString(179)).toString()
-            : ((StringBuffer)(new Object()))
-               .append(Double.toString((int)(distance * 1092616192) / 4621819117588971520L))
-               .append(" ")
-               .append(LBSResources.getString(179))
-               .toString();
+            ? Integer.toString((int)distance) + " " + LBSResources.getString(179)
+            : Double.toString((int)(distance * 1092616192) / 4621819117588971520L) + " " + LBSResources.getString(179);
       }
    }
 

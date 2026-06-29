@@ -5,7 +5,6 @@ import net.rim.device.api.browser.field.RenderingOptions;
 import net.rim.device.api.system.EncodedImage;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Manager;
-import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.apps.api.ui.VerbMenuItem;
 import net.rim.device.apps.api.ui.ZoomBitmapField;
@@ -54,11 +53,11 @@ final class ImageRenderer$ZoomManager extends Manager {
             }
          } else if (this._imageUrl != null) {
             if (renderingOptions.getPropertyWithBooleanValue(4550690918222697397L, 30, false)) {
-               contextMenu.add((MenuItem)(new Object(new ShowUrlVerb(null, this._imageUrl, this._browserContent, 2), Integer.MAX_VALUE)));
+               contextMenu.add(new VerbMenuItem(new ShowUrlVerb(null, this._imageUrl, this._browserContent, 2), Integer.MAX_VALUE));
             }
 
             if (this._transcoded && renderingOptions.getPropertyWithBooleanValue(4550690918222697397L, 38, false)) {
-               VerbMenuItem menuItem = (VerbMenuItem)(new Object(new FullImageVerb(this._imageUrl, this._browserContent), 15));
+               VerbMenuItem menuItem = new VerbMenuItem(new FullImageVerb(this._imageUrl, this._browserContent), 15);
                contextMenu.add(menuItem);
             }
 
@@ -66,7 +65,7 @@ final class ImageRenderer$ZoomManager extends Manager {
                && (renderingOptions.getPropertyWithBooleanValue(4550690918222697397L, 26, true) || this._field.isProtected())
                && this._img != null
                && this._img.getData() != null) {
-               contextMenu.add((MenuItem)(new Object(new SaveImageVerb(this._imageUrl, this._img, this._field.isProtected()), Integer.MAX_VALUE)));
+               contextMenu.add(new VerbMenuItem(new SaveImageVerb(this._imageUrl, this._img, this._field.isProtected()), Integer.MAX_VALUE));
             }
          }
       }

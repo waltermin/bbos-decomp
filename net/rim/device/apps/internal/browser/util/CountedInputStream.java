@@ -13,7 +13,7 @@ public final class CountedInputStream extends InputStream {
 
    public CountedInputStream(InputStream inputStream, CountedInputStream compressedInputStream) {
       if (inputStream == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._inputStream = inputStream;

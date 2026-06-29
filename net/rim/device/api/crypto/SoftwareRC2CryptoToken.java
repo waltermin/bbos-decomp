@@ -32,7 +32,7 @@ final class SoftwareRC2CryptoToken extends RC2CryptoToken implements Persistable
    @Override
    public final CryptoTokenCipherContext initializeEncrypt(CryptoTokenSymmetricKeyData data) {
       if (!(data instanceof SoftwareRC2CryptoToken$RC2KeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareRC2CryptoToken$RC2KeyData key = (SoftwareRC2CryptoToken$RC2KeyData)data;
@@ -42,7 +42,7 @@ final class SoftwareRC2CryptoToken extends RC2CryptoToken implements Persistable
    @Override
    public final void encrypt(CryptoTokenCipherContext context, byte[] plaintext, int plaintextOffset, byte[] ciphertext, int ciphertextOffset) {
       if (!(context instanceof SoftwareRC2CryptoToken$RC2CipherContext)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       ((SoftwareRC2CryptoToken$RC2CipherContext)context).getNativeBlockCipher().crypt(plaintext, plaintextOffset, ciphertext, ciphertextOffset);
@@ -51,7 +51,7 @@ final class SoftwareRC2CryptoToken extends RC2CryptoToken implements Persistable
    @Override
    public final CryptoTokenCipherContext initializeDecrypt(CryptoTokenSymmetricKeyData data) {
       if (!(data instanceof SoftwareRC2CryptoToken$RC2KeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareRC2CryptoToken$RC2KeyData key = (SoftwareRC2CryptoToken$RC2KeyData)data;
@@ -61,7 +61,7 @@ final class SoftwareRC2CryptoToken extends RC2CryptoToken implements Persistable
    @Override
    public final void decrypt(CryptoTokenCipherContext context, byte[] ciphertext, int ciphertextOffset, byte[] plaintext, int plaintextOffset) {
       if (!(context instanceof SoftwareRC2CryptoToken$RC2CipherContext)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       ((SoftwareRC2CryptoToken$RC2CipherContext)context).getNativeBlockCipher().crypt(ciphertext, ciphertextOffset, plaintext, plaintextOffset);
@@ -70,7 +70,7 @@ final class SoftwareRC2CryptoToken extends RC2CryptoToken implements Persistable
    @Override
    public final byte[] extractKeyData(CryptoTokenSymmetricKeyData data) {
       if (!(data instanceof SoftwareRC2CryptoToken$RC2KeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareRC2CryptoToken$RC2KeyData)data).getData();
       }
@@ -79,7 +79,7 @@ final class SoftwareRC2CryptoToken extends RC2CryptoToken implements Persistable
    @Override
    public final int extractKeyDataLength(CryptoTokenSymmetricKeyData data) {
       if (!(data instanceof SoftwareRC2CryptoToken$RC2KeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareRC2CryptoToken$RC2KeyData)data).getLength();
       }
@@ -88,7 +88,7 @@ final class SoftwareRC2CryptoToken extends RC2CryptoToken implements Persistable
    @Override
    public final int extractKeyEffectiveBitLength(CryptoTokenSymmetricKeyData data) {
       if (!(data instanceof SoftwareRC2CryptoToken$RC2KeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareRC2CryptoToken$RC2KeyData)data).getEffectiveBitLength();
       }
@@ -122,7 +122,7 @@ final class SoftwareRC2CryptoToken extends RC2CryptoToken implements Persistable
       }
 
       if (!Arrays.equals(target, 0, PLAIN_TEXT, 0, length)) {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
       target = new byte[length];
@@ -137,7 +137,7 @@ final class SoftwareRC2CryptoToken extends RC2CryptoToken implements Persistable
       }
 
       if (!Arrays.equals(target, 0, CIPHER_TEXT, 0, length)) {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
    }
 

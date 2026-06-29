@@ -16,7 +16,7 @@ final class TaskSearchResultField extends CollectionListField implements SearchR
    @Override
    protected final boolean keyChar(char key, int status, int time) {
       Object selectedElement = this.getSelectedElement();
-      if (selectedElement instanceof Object) {
+      if (selectedElement instanceof TaskModel) {
          if (key == '\n') {
             this.getScreen().invokeDefaultMenuItem(0);
             return true;
@@ -27,7 +27,7 @@ final class TaskSearchResultField extends CollectionListField implements SearchR
                return true;
             }
          } else if (key == 127 || Keypad.getAltedChar(key) == 127) {
-            new DeleteTaskVerb(selectedElement).invoke(null);
+            new DeleteTaskVerb((TaskModel)selectedElement).invoke(null);
             return true;
          }
       }
@@ -69,6 +69,6 @@ final class TaskSearchResultField extends CollectionListField implements SearchR
    @Override
    public final Verb getVerbs(Object context, Verb[] verbs) {
       Object selectedElement = this.getSelectedElement();
-      return !(selectedElement instanceof Object) ? null : ((VerbProvider)selectedElement).getVerbs(context, verbs);
+      return !(selectedElement instanceof VerbProvider) ? null : ((VerbProvider)selectedElement).getVerbs(context, verbs);
    }
 }

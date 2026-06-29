@@ -23,9 +23,9 @@ public final class AccountSetupScreen extends BasicScreen {
    @Override
    public final void refresh(Hashtable screenParams) {
       this.setTitle(ApplicationResources.getString(2));
-      this._userNameEdit = (BasicEditField)(new Object(null, null));
-      this._passwordEdit = (PasswordEditField)(new Object(null, null));
-      this._passwordConfirmEdit = (PasswordEditField)(new Object(null, null));
+      this._userNameEdit = new BasicEditField(null, null);
+      this._passwordEdit = new PasswordEditField(null, null);
+      this._passwordConfirmEdit = new PasswordEditField(null, null);
       this.addContentField(new BoldLabelField(ApplicationResources.getString(13)));
       this.addContentField(this._userNameEdit, true);
       this._userNameEdit.setFocus();

@@ -294,7 +294,7 @@ public class WorldPhoneInfo {
    }
 
    public static int mapCountryCode(String country) {
-      System.out.println(((StringBuffer)(new Object("Phone mapCC ("))).append(country).append(')').toString());
+      System.out.println("Phone mapCC (" + country + ')');
       if (country.length() != 2) {
          return -1;
       }
@@ -1173,7 +1173,7 @@ public class WorldPhoneInfo {
 
    public static int getCountryCodeLength(int countryCode) {
       if (countryCode < 0 || countryCode >= 1000) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else if (countryCode < 10) {
          return 1;
       } else {

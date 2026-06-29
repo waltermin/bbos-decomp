@@ -8,33 +8,34 @@ import net.rim.device.api.crypto.tls.server.TLSServer;
 import net.rim.device.api.crypto.tls.ssl30.SSL30Connection;
 import net.rim.device.api.crypto.tls.tls10.TLS10Connection;
 import net.rim.device.cldc.io.ssl.ConnectionFactory;
+import net.rim.device.cldc.io.ssl.TLSIOException;
 
 public class TLSConnectionFactory implements ConnectionFactory {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public SecureConnection createInstance(String algorithm, StreamConnection subConnection, String name, boolean startHandshake) {
+   public SecureConnection createInstance(String algorithm, StreamConnection subConnection, String name, boolean startHandshake) throws TLSIOException {
       try {
          if (algorithm.equals("TLS")) {
             return new TLS10Connection(subConnection, name, startHandshake);
          } else if (algorithm.equals("SSL")) {
             return new SSL30Connection(subConnection, name, startHandshake);
          } else {
-            throw new Object();
+            throw new ClassNotFoundException();
          }
       } catch (Throwable var7) {
-         throw new Object(e);
+         throw new TLSIOException(e);
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public SecureConnection createServerInstance(StreamConnection subConnection, String name, Object certificate, Object privateKey) {
+   public SecureConnection createServerInstance(StreamConnection subConnection, String name, Object certificate, Object privateKey) throws TLSIOException {
       try {
          return new TLSServer(subConnection, name, (Certificate)certificate, (PrivateKey)privateKey);
       } catch (Throwable var7) {
-         throw new Object(e);
+         throw new TLSIOException(e);
       }
    }
 }

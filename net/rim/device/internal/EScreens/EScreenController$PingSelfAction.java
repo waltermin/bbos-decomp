@@ -13,7 +13,7 @@ final class EScreenController$PingSelfAction implements ICMPPacketListener, Runn
    private int _state;
    private byte[] _pingBuffer;
    private int _curPacketID;
-   private Random _rand = (Random)(new Object());
+   private Random _rand = new Random();
    private long _sendTimestamp;
    private int _timerID;
    private Application _app;
@@ -54,7 +54,7 @@ final class EScreenController$PingSelfAction implements ICMPPacketListener, Runn
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private final void sendPing(int apnId, int timeout) {
-      ICMPPacketHeader head = (ICMPPacketHeader)(new Object());
+      ICMPPacketHeader head = new ICMPPacketHeader();
       head.setAccessPointNumber(apnId);
       head.setDestinationAddress(RadioInfo.getIPAddress(apnId));
       head.setType(8);
@@ -177,7 +177,7 @@ final class EScreenController$PingSelfAction implements ICMPPacketListener, Runn
 
             String msg;
             if (Arrays.equals(data, this._pingBuffer)) {
-               msg = ((StringBuffer)(new Object("Response received in "))).append(time).append("ms").toString();
+               msg = "Response received in " + time + "ms";
             } else {
                msg = "ICMP packet received, but payload bad.";
             }

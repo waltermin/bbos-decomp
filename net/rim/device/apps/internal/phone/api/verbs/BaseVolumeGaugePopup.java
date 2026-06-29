@@ -78,13 +78,13 @@ class BaseVolumeGaugePopup extends PopupDialog implements PhoneEventListener, Ru
 
    private void closeOnOwnerThread() {
       VoiceServices.removePhoneEventListener(this);
-      ((Application)this.getOwner()).invokeLater(this);
+      ((UiApplication)this.getOwner()).invokeLater(this);
    }
 
    @Override
    public void run() {
       if (Application.getApplication() != this.getOwner()) {
-         throw new Object("Trying to close volume screen on the wrong application thread!");
+         throw new RuntimeException("Trying to close volume screen on the wrong application thread!");
       }
 
       this.close(0);

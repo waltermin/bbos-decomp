@@ -31,16 +31,16 @@ public final class EmailSettingOptionsScreen extends SaveableMainScreenOptionsLi
    private int _id;
    private ObjectChoiceField _service;
    MainScreen _mainScreen;
-   private WeakReference _weakReference = (WeakReference)(new Object(this));
+   private WeakReference _weakReference = new WeakReference(this);
    private static final long ID = 656705520964886472L;
 
    final Field addIMPlusOption(int contextFlag, EmailSettingOptionsScreen$ServiceInfo serviceInfo, int indentSize) {
       Factory factory = (Factory)ApplicationRegistry.getApplicationRegistry().get(2620647646956286337L);
       if (factory != null) {
-         ContextObject context = (ContextObject)(new Object(contextFlag));
+         ContextObject context = new ContextObject(contextFlag);
          context.putIntegerData(serviceInfo.getSR().getId());
          Object model = factory.createInstance(context);
-         if (model instanceof Object) {
+         if (model instanceof FieldProvider) {
             Field field = ((FieldProvider)model).getField(null);
             if (field != null) {
                if (indentSize > 0) {
@@ -101,7 +101,7 @@ public final class EmailSettingOptionsScreen extends SaveableMainScreenOptionsLi
             if (info._vfm != null) {
                for (int j = info._vfm.getFieldCount() - 1; j >= 0; j--) {
                   Field field = info._vfm.getField(j);
-                  if (field != null && field.getCookie() instanceof Object && !((FieldProvider)field.getCookie()).grabDataFromField(field, null)) {
+                  if (field != null && field.getCookie() instanceof FieldProvider && !((FieldProvider)field.getCookie()).grabDataFromField(field, null)) {
                      return false;
                   }
                }
@@ -197,7 +197,7 @@ public final class EmailSettingOptionsScreen extends SaveableMainScreenOptionsLi
          }
 
          if (info._vfm == null) {
-            info._vfm = (VerticalFieldManager)(new Object());
+            info._vfm = new VerticalFieldManager();
             this.addIMPlusOption(75, info, indentSize);
             this.addIMPlusOption(0, info, indentSize);
             this.addIMPlusOption(73, info, indentSize);
@@ -228,7 +228,7 @@ public final class EmailSettingOptionsScreen extends SaveableMainScreenOptionsLi
    protected final void populateMainScreen(MainScreen screen) {
       screen.setTitle(EmailResources.getString(159));
       this._id = PersistentInteger.getId(656705520964886472L, 0);
-      this._service = (ObjectChoiceField)(new Object(EmailResources.getString(161), null));
+      this._service = new ObjectChoiceField(EmailResources.getString(161), null);
       this._mainScreen = screen;
       this.populateService();
       if (this._service.getSize() != 0) {

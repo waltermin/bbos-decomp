@@ -5,14 +5,14 @@ import net.rim.device.api.notification.NotificationsManager;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.system.RadioInfo;
-import net.rim.device.api.ui.Field;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.DialogFieldManager;
 import net.rim.device.api.ui.container.PopupScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.RIMModel;
@@ -31,23 +31,23 @@ public class SMSNotificationDialog extends PopupScreen {
    private DialogFieldManager _dfm;
 
    public SMSNotificationDialog(SMSModel model, long folderId, String text, ContextObject notificationContext, long notificationID) {
-      super((Manager)(new Object()));
+      super(new VerticalFieldManager());
       this._model = model;
       this._folderId = folderId;
       String title = this.makeTitle(model, notificationContext);
-      this._titleField = (RichTextField)(new Object(title, 1188950301626073088L));
+      this._titleField = new RichTextField(title, 1188950301626073088L);
       this.add(this._titleField);
-      this.add((Field)(new Object()));
-      this._dfm = (DialogFieldManager)(new Object());
-      this._rtf = (RichTextField)(new Object(text, 36028797018963968L));
+      this.add(new SeparatorField());
+      this._dfm = new DialogFieldManager();
+      this._rtf = new RichTextField(text, 36028797018963968L);
       this._dfm.setMessage(this._rtf);
       Bitmap bitmap = Bitmap.getPredefinedBitmap(0);
-      this._dfm.setIcon((BitmapField)(new Object(bitmap, 65568)));
-      this._okButton = (ButtonField)(new Object(CommonResources.getString(117), 12884901888L));
+      this._dfm.setIcon(new BitmapField(bitmap, 65568));
+      this._okButton = new ButtonField(CommonResources.getString(117), 12884901888L);
       this._dfm.addCustomField(this._okButton);
       this.add(this._dfm);
       if (model != null && (RadioInfo.getSupportedWAFs() & 3) == 1) {
-         this._saveButton = (ButtonField)(new Object(SMSResources.getString(18), 12884901888L));
+         this._saveButton = new ButtonField(SMSResources.getString(18), 12884901888L);
          this._dfm.addCustomField(this._saveButton);
       }
 
@@ -72,7 +72,7 @@ public class SMSNotificationDialog extends PopupScreen {
          if (peerAddress != null) {
             String displayString = this.getDisplayString(peerAddress, notificationContext);
             if (displayString != null && displayString.length() > 0) {
-               StringBuffer sb = (StringBuffer)(new Object(title));
+               StringBuffer sb = new StringBuffer(title);
                sb.append(' ');
                sb.append('(');
                sb.append(displayString);

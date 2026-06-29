@@ -19,9 +19,9 @@ public final class CSSTextParser implements CSSParser {
    private int _stringCount;
    private String[] _urls;
    private int _urlCount;
-   private Vector _freeList = (Vector)(new Object());
+   private Vector _freeList = new Vector();
    private int[][] _currentSelector = new int[5][];
-   private static final String[] DEFAULT_MEDIA_LIST = new Object[0];
+   private static final String[] DEFAULT_MEDIA_LIST = new String[0];
 
    protected final void parseAtRule() {
       int braces = 0;
@@ -48,7 +48,7 @@ public final class CSSTextParser implements CSSParser {
 
    @Override
    public final void parseStyleSheet(byte[] source) {
-      this.parseStyleSheet((String)(new Object(source)));
+      this.parseStyleSheet(new String(source));
    }
 
    @Override
@@ -1009,7 +1009,7 @@ public final class CSSTextParser implements CSSParser {
       this._url = url;
       this._stringStartIndicies = new int[0];
       this._stringEndIndicies = new int[0];
-      this._urls = new Object[0];
+      this._urls = new String[0];
    }
 
    private final int addString() {
@@ -1026,8 +1026,7 @@ public final class CSSTextParser implements CSSParser {
    }
 
    private final String[] parseMediaList() throws CSSParseException {
-      String[] mediaList = new Object[1];
-      mediaList[0] = this._tokenizer.getStringValue();
+      String[] mediaList = new String[]{this._tokenizer.getStringValue()};
 
       while (this.nextTokenIgnoreWhitespace() == 46) {
          if (this.nextTokenIgnoreWhitespace() != 8) {

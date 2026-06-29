@@ -7,17 +7,17 @@ final class RIMMACFactory1 extends MACFactory {
    }
 
    @Override
-   protected final MAC create(String algorithm, String parameters, SymmetricKey key) {
+   protected final MAC create(String algorithm, String parameters, SymmetricKey key) throws NoSuchAlgorithmException {
       if (algorithm.equals("HMAC")) {
          if (parameters == null) {
             parameters = "SHA1";
          }
 
-         return (MAC)(new Object((HMACKey)key, DigestFactory.getInstance(parameters)));
+         return new HMAC((HMACKey)key, DigestFactory.getInstance(parameters));
       } else if (algorithm.equals("Null")) {
          return new NullMAC();
       } else {
-         throw new Object(algorithm);
+         throw new NoSuchAlgorithmException(algorithm);
       }
    }
 }

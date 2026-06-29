@@ -1,5 +1,7 @@
 package net.rim.device.apps.internal.browser.html;
 
+import java.io.EOFException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -9,7 +11,7 @@ import javax.microedition.io.HttpConnection;
 import javax.microedition.io.InputConnection;
 import net.rim.device.api.browser.field.BrowserContent;
 import net.rim.device.api.browser.field.ContentReadEvent;
-import net.rim.device.api.browser.field.Event;
+import net.rim.device.api.browser.field.RedirectEvent;
 import net.rim.device.api.browser.field.RenderingApplication;
 import net.rim.device.api.browser.field.RenderingOptions;
 import net.rim.device.api.browser.field.RenderingSession;
@@ -20,6 +22,7 @@ import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.system.Display;
 import net.rim.device.api.system.EncodedImage;
+import net.rim.device.api.system.ProgressiveImage;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.FontFamily;
@@ -28,6 +31,7 @@ import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.RadioButtonGroup;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.IntHashtable;
 import net.rim.device.api.util.IntStack;
@@ -74,6 +78,8 @@ import net.rim.device.internal.browser.util.Pipe;
 import net.rim.device.internal.browser.util.PipePtr;
 import net.rim.device.internal.browser.util.TimeLogger;
 import net.rim.device.internal.ui.Border;
+import net.rim.device.internal.ui.Border3d;
+import net.rim.device.internal.ui.BorderSimple;
 import net.rim.vm.Array;
 import org.w3c.dom.Node;
 import org.w3c.dom.html2.HTMLAnchorElement;
@@ -185,7 +191,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
    private static final int INDENT_SIZE = 10;
    private static final boolean IS_COLOR = Display.isColor();
    private static final int MAX_EMBEDDING_DEPTH = 6;
-   private static final Border PLACEHOLDER_BORDER = (Border)(new Object(1, 1, 1, 1));
+   private static final Border PLACEHOLDER_BORDER = new BorderSimple(1, 1, 1, 1);
    private static final int CSS_CONTEXT_TEXT = 0;
    private static final int CSS_CONTEXT_BODY = 1;
    private static final int CSS_CONTEXT_TABLE = 2;
@@ -287,18 +293,18 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
             if (StringUtilities.strEqualIgnoreCase(styleSheet._str, "text/css", 1701707776)) {
                String textStyleSheet;
                if (styleSheet._encoding == null) {
-                  textStyleSheet = (String)(new Object(styleSheet._data, styleSheet._offset, styleSheet._length));
+                  textStyleSheet = new String(styleSheet._data, styleSheet._offset, styleSheet._length);
                } else {
                   boolean var8 = false /* VF: Semaphore variable */;
 
                   label52:
                   try {
                      var8 = true;
-                     textStyleSheet = (String)(new Object(styleSheet._data, styleSheet._offset, styleSheet._length, styleSheet._encoding));
+                     textStyleSheet = new String(styleSheet._data, styleSheet._offset, styleSheet._length, styleSheet._encoding);
                      var8 = false;
                   } finally {
                      if (var8) {
-                        textStyleSheet = (String)(new Object(styleSheet._data, styleSheet._offset, styleSheet._length));
+                        textStyleSheet = new String(styleSheet._data, styleSheet._offset, styleSheet._length);
                         break label52;
                      }
                   }
@@ -371,7 +377,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
                   }
                   break;
                case 10:
-                  Vector descendants = (Vector)(new Object());
+                  Vector descendants = new Vector();
                   CSSSelectorNode node = null;
                   int index = 1;
                   int length = selectors[i][selectors[i].length - 1];
@@ -456,7 +462,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
    public final void finishProcessingData() {
-      this._contentReadEvent = (ContentReadEvent)(new Object(this._browserContent));
+      this._contentReadEvent = new ContentReadEvent(this._browserContent);
       this._browserContent.setScriptEngine(this._scriptEngine);
       if (this._scriptEngine != null) {
          this._scriptEngine.documentCreated(this._document, this._browserContent, super._renderingSession, this._frame);
@@ -666,7 +672,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 15e: ifnull 164
       // 161: goto 055
       // 164: aload 0
-      // 165: new java/lang/Object
+      // 165: new java/lang/String
       // 168: dup
       // 169: aload 8
       // 16b: invokespecial java/lang/String.<init> ([B)V
@@ -733,13 +739,13 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 1fb: ifeq 201
       // 1fe: goto 055
       // 201: aload 0
-      // 202: new java/lang/Object
+      // 202: new net/rim/device/api/crypto/HMAC
       // 205: dup
-      // 206: new java/lang/Object
+      // 206: new net/rim/device/api/crypto/HMACKey
       // 209: dup
       // 20a: aload 9
       // 20c: invokespecial net/rim/device/api/crypto/HMACKey.<init> ([B)V
-      // 20f: new java/lang/Object
+      // 20f: new net/rim/device/api/crypto/SHA1Digest
       // 212: dup
       // 213: invokespecial net/rim/device/api/crypto/SHA1Digest.<init> ()V
       // 216: invokespecial net/rim/device/api/crypto/HMAC.<init> (Lnet/rim/device/api/crypto/HMACKey;Lnet/rim/device/api/crypto/Digest;)V
@@ -837,7 +843,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 2dd: invokevirtual net/rim/device/apps/internal/browser/stack/WAPInputStream.readCompressedInt ()I
       // 2e0: putfield net/rim/device/apps/internal/browser/html/HTMLRendererContext._markupMinorVersion I
       // 2e3: goto 055
-      // 2e6: new java/lang/Object
+      // 2e6: new java/lang/String
       // 2e9: dup
       // 2ea: aload 5
       // 2ec: invokevirtual net/rim/device/apps/internal/browser/stack/WAPInputStream.readByteArray ()[B
@@ -889,7 +895,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 35a: getfield net/rim/device/apps/internal/browser/html/HTMLRendererContext._allTagsProvided Z
       // 35d: ifne 36e
       // 360: aload 3
-      // 361: new java/lang/Object
+      // 361: new net/rim/device/api/util/IntHashtable
       // 364: dup
       // 365: sipush 150
       // 368: invokespecial net/rim/device/api/util/IntHashtable.<init> (I)V
@@ -1210,7 +1216,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 653: iload 2
       // 654: invokespecial net/rim/device/apps/internal/browser/html/HTMLRendererWithTextFlow.handleTag (I)V
       // 657: goto 381
-      // 65a: new java/lang/Object
+      // 65a: new java/io/IOException
       // 65d: dup
       // 65e: invokespecial java/io/IOException.<init> ()V
       // 661: athrow
@@ -1315,7 +1321,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 717: athrow
       // 718: astore 4
       // 71a: aload 4
-      // 71c: instanceof java/lang/Object
+      // 71c: instanceof java/lang/Exception
       // 71f: ifeq 75f
       // 722: ldc_w "Browser"
       // 725: invokestatic net/rim/device/apps/internal/api/quincy/QuincyManager.sendUncaughtException (Ljava/lang/String;)V
@@ -1351,11 +1357,11 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 75e: athrow
       // 75f: aload 4
       // 761: dup
-      // 762: instanceof java/lang/Object
+      // 762: instanceof java/lang/Error
       // 765: ifne 76c
       // 768: pop
       // 769: goto 770
-      // 76c: checkcast java/lang/Object
+      // 76c: checkcast java/lang/Error
       // 76f: athrow
       // 770: aload 0
       // 771: getfield net/rim/device/apps/internal/browser/html/HTMLRendererWithTextFlow._appEventLock Ljava/lang/Object;
@@ -1708,7 +1714,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       if (this._attributeValues[index] == null) {
          return Integer.toString(this._attributeValuesInts[index]);
       } else {
-         return (String)(this._attributeValues[index] == this._attributeValues ? defaultValue : this._attributeValues[index]);
+         return this._attributeValues[index] == this._attributeValues ? defaultValue : (String)this._attributeValues[index];
       }
    }
 
@@ -1884,7 +1890,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
          }
 
          if (!hrefSet && cti != null) {
-            href = ((StringBuffer)(new Object("cti:"))).append(cti).toString();
+            href = "cti:" + cti;
             hrefChanged = true;
          }
 
@@ -1913,7 +1919,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
             element._foregroundColour = this._textUtilities.getContrastColour(element, this._textUtilities.getLinkColor());
             if (this._processStyleSheets) {
                if (this._lastClass != null) {
-                  this._lastClass = ((StringBuffer)(new Object())).append(this._lastClass).append(' ').append(":link").toString();
+                  this._lastClass = this._lastClass + ' ' + ":link";
                } else {
                   this._lastClass = ":link";
                }
@@ -2012,7 +2018,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
 
             if (super._renderingApplication != null) {
                int flags = super._flags & 0xFF | 16;
-               RequestedResource resource = (RequestedResource)(new Object(absoluteURL, this.getRequestHeaders(false), flags));
+               RequestedResource resource = new RequestedResource(absoluteURL, this.getRequestHeaders(false), flags);
                HttpConnection connection = super._renderingApplication.getResource(resource, null);
                BrowserContent browserContent = null;
 
@@ -2346,7 +2352,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
 
    private final void processElementInput(boolean isButton, boolean isStartTag, int startAttribute, int endAttribute, HTMLGenericElement element) {
       if (!isStartTag) {
-         if (isButton && this._currentFormControl != null && this._currentFormControl.getPeer() instanceof Object) {
+         if (isButton && this._currentFormControl != null && this._currentFormControl.getPeer() instanceof ButtonField) {
             if (this._currentContext._currentStringRef != -1) {
                synchronized (this._appEventLock) {
                   ButtonField button = (ButtonField)this._currentFormControl.getPeer();
@@ -2549,11 +2555,11 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
                if (this._currentRadioGroups != null && name != null) {
                   group = (RadioButtonGroup)this._currentRadioGroups.get(name);
                } else {
-                  this._currentRadioGroups = (Hashtable)(new Object(1));
+                  this._currentRadioGroups = new Hashtable(1);
                }
 
                if (group == null) {
-                  group = (RadioButtonGroup)(new Object());
+                  group = new RadioButtonGroup();
                   if (name != null) {
                      this._currentRadioGroups.put(name, group);
                   }
@@ -2645,10 +2651,10 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
 
          if (httpEquiv != null && content != null && super._renderingApplication != null) {
             if (StringUtilities.strEqualIgnoreCase(httpEquiv, HeaderParser.CACHE_CONTROL, 1701707776)) {
-               SetHeaderEvent event = (SetHeaderEvent)(new Object(this._browserContent, HeaderParser.CACHE_CONTROL, content));
+               SetHeaderEvent event = new SetHeaderEvent(this._browserContent, HeaderParser.CACHE_CONTROL, content);
                super._renderingApplication.eventOccurred(event);
             } else if (StringUtilities.strEqualIgnoreCase(httpEquiv, HeaderParser.EXPIRES, 1701707776)) {
-               SetHeaderEvent event = (SetHeaderEvent)(new Object(this._browserContent, HeaderParser.EXPIRES, content));
+               SetHeaderEvent event = new SetHeaderEvent(this._browserContent, HeaderParser.EXPIRES, content);
                super._renderingApplication.eventOccurred(event);
             } else if (!StringUtilities.strEqualIgnoreCase(httpEquiv, HeaderParser.REFRESH, 1701707776)) {
                if (StringUtilities.strEqualIgnoreCase(httpEquiv, "x-rim-auto-match", 1701707776)) {
@@ -2698,7 +2704,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
 
                if (delay >= 0 && !this._browserContent.hasTimer()) {
                   this._browserContent
-                     .setOnTimer(new EventVerb((Event)(new Object(this._browserContent, url, null, 3, delay * 1000)), super._renderingApplication));
+                     .setOnTimer(new EventVerb(new RedirectEvent(this._browserContent, url, null, 3, delay * 1000), super._renderingApplication));
                   PageTimer timer = new PageTimer(delay, this._browserContent);
                   if (delay >= 60) {
                      timer.setPrompt(BrowserResources.getString(613));
@@ -2724,9 +2730,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
             synchronized (this._appEventLock) {
                String text = lastOption.getText();
                String newString = this._currentContext._richTextStrings[this._currentContext._currentStringRef];
-               lastOption.setText(
-                  text != null && text.length() != 0 ? ((StringBuffer)(new Object())).append(text).append(newString).toString() : newString.trim()
-               );
+               lastOption.setText(text != null && text.length() != 0 ? text + newString : newString.trim());
             }
          }
 
@@ -4394,7 +4398,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
          newElement.inherit(element);
          synchronized (this._appEventLock) {
             this._currentBrowserField.pushRegion(newElement);
-            this.appendField((Field)(new Object()), false, false);
+            this.appendField(new SeparatorField(), false, false);
             this._currentBrowserField.popRegion();
          }
 
@@ -4742,7 +4746,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
             String altText = this.generateAltText(src, typeLength == 0);
             int altTextLength = altText != null ? altText.length() : 0;
             if (altTextLength > 0 || typeLength > 0) {
-               StringBuffer embedText = (StringBuffer)(new Object(typeLength + 4 + altTextLength));
+               StringBuffer embedText = new StringBuffer(typeLength + 4 + altTextLength);
                embedText.append('[');
                if (typeLength > 0) {
                   embedText.append(type);
@@ -5075,18 +5079,18 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
                if (StringUtilities.strEqualIgnoreCase(styleSheet._str, "text/css", 1701707776)) {
                   String textStyleSheet;
                   if (styleSheet._encoding == null) {
-                     textStyleSheet = (String)(new Object(styleSheet._data, styleSheet._offset, styleSheet._length));
+                     textStyleSheet = new String(styleSheet._data, styleSheet._offset, styleSheet._length);
                   } else {
                      boolean var13 = false /* VF: Semaphore variable */;
 
                      label82:
                      try {
                         var13 = true;
-                        textStyleSheet = (String)(new Object(styleSheet._data, styleSheet._offset, styleSheet._length, styleSheet._encoding));
+                        textStyleSheet = new String(styleSheet._data, styleSheet._offset, styleSheet._length, styleSheet._encoding);
                         var13 = false;
                      } finally {
                         if (var13) {
-                           textStyleSheet = (String)(new Object(styleSheet._data, styleSheet._offset, styleSheet._length));
+                           textStyleSheet = new String(styleSheet._data, styleSheet._offset, styleSheet._length);
                            break label82;
                         }
                      }
@@ -5439,7 +5443,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 07d: sipush 181
       // 080: aload 3
       // 081: invokevirtual net/rim/device/apps/internal/browser/html/HTMLGenericElement.setAttributeValue (ILjava/lang/String;)V
-      // 084: new java/lang/Object
+      // 084: new net/rim/device/api/browser/field/RequestedResource
       // 087: dup
       // 088: aload 3
       // 089: aload 0
@@ -5618,7 +5622,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 20d: bipush 16
       // 20f: ior
       // 210: istore 8
-      // 212: new java/lang/Object
+      // 212: new net/rim/device/api/browser/field/RequestedResource
       // 215: dup
       // 216: aload 7
       // 218: aload 0
@@ -5683,17 +5687,17 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 2ab: aconst_null
       // 2ac: astore 15
       // 2ae: aload 12
-      // 2b0: instanceof java/lang/Object
+      // 2b0: instanceof net/rim/device/api/browser/field/Destroyable
       // 2b3: ifeq 2c9
       // 2b6: new net/rim/device/apps/internal/browser/html/DestroyableFrameLayout
       // 2b9: dup
       // 2ba: lload 5
       // 2bc: aload 12
-      // 2be: checkcast java/lang/Object
+      // 2be: checkcast net/rim/device/api/browser/field/Destroyable
       // 2c1: invokespecial net/rim/device/apps/internal/browser/html/DestroyableFrameLayout.<init> (JLnet/rim/device/api/browser/field/Destroyable;)V
       // 2c4: astore 15
       // 2c6: goto 2d4
-      // 2c9: new java/lang/Object
+      // 2c9: new net/rim/device/internal/ui/container/FrameLayout
       // 2cc: dup
       // 2cd: lload 5
       // 2cf: invokespecial net/rim/device/internal/ui/container/FrameLayout.<init> (J)V
@@ -5832,18 +5836,18 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
                   if (StringUtilities.strEqualIgnoreCase(styleSheet._str, "text/css", 1701707776)) {
                      String textStyleSheet;
                      if (styleSheet._encoding == null) {
-                        textStyleSheet = (String)(new Object(styleSheet._data, styleSheet._offset, styleSheet._length));
+                        textStyleSheet = new String(styleSheet._data, styleSheet._offset, styleSheet._length);
                      } else {
                         boolean var13 = false /* VF: Semaphore variable */;
 
                         label98:
                         try {
                            var13 = true;
-                           textStyleSheet = (String)(new Object(styleSheet._data, styleSheet._offset, styleSheet._length, styleSheet._encoding));
+                           textStyleSheet = new String(styleSheet._data, styleSheet._offset, styleSheet._length, styleSheet._encoding);
                            var13 = false;
                         } finally {
                            if (var13) {
-                              textStyleSheet = (String)(new Object(styleSheet._data, styleSheet._offset, styleSheet._length));
+                              textStyleSheet = new String(styleSheet._data, styleSheet._offset, styleSheet._length);
                               break label98;
                            }
                         }
@@ -6020,7 +6024,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
                      && !super._renderingOptions.getPropertyWithBooleanValue(4550690918222697397L, 7, true)) {
                      font = FontCache.getInstance().getFont(this._textUtilities.getDefaultFont(), fontStyle, this._textUtilities.getDefaultFont().getHeight(0));
                      if (generatedAltText) {
-                        alt = ((StringBuffer)(new Object(alt.length() + 2))).append('[').append(alt).append(']').toString();
+                        alt = new StringBuffer(alt.length() + 2).append('[').append(alt).append(']').toString();
                      }
 
                      refTag = this.appendAltField(var28, alt, font, cookieId, link != null ? link.getHref() : null);
@@ -6061,9 +6065,9 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
                }
             }
 
-            if (image instanceof Object) {
+            if (image instanceof ProgressiveImage) {
                if (this._progressiveImageMap == null) {
-                  this._progressiveImageMap = (MultiMap)(new Object());
+                  this._progressiveImageMap = new MultiMap();
                }
 
                this._progressiveImageMap.add(image, var28);
@@ -6118,7 +6122,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private final void readString() {
+   private final void readString() throws IOException {
       HTMLRendererContext context = this._currentContext;
       WAPInputStream in = context._in;
       int encodingCode = in.readCompressedInt();
@@ -6128,7 +6132,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       if (this._currentContext._compressedStrings != null && (length = in.readCompressedInt()) > 0) {
          byte[] stringBuffer = new byte[length];
          if (this._currentContext._compressedStrings.read(stringBuffer, 0, length) != length) {
-            throw new Object();
+            throw new IOException();
          }
       } else {
          PipePtr ptr = in.readByteArrayRef();
@@ -6146,11 +6150,11 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
          label55:
          try {
             var12 = true;
-            string = (String)(new Object(data, offset, length, HTMLBinaryConstants.resolveStringEncoding(encodingCode)));
+            string = new String(data, offset, length, HTMLBinaryConstants.resolveStringEncoding(encodingCode));
             var12 = false;
          } finally {
             if (var12) {
-               string = (String)(new Object(data, offset, length));
+               string = new String(data, offset, length);
                break label55;
             }
          }
@@ -6339,7 +6343,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 187: goto 18b
       // 18a: bipush 0
       // 18b: istore 7
-      // 18d: new java/lang/Object
+      // 18d: new net/rim/device/api/util/DataBuffer
       // 190: dup
       // 191: aload 6
       // 193: invokevirtual net/rim/device/internal/browser/util/PipePtr.getData ()[B
@@ -6422,11 +6426,11 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 23c: astore 16
       // 23e: aload 16
       // 240: dup
-      // 241: instanceof java/lang/Object
+      // 241: instanceof net/rim/device/api/system/ProgressiveImage
       // 244: ifne 24b
       // 247: pop
       // 248: goto 292
-      // 24b: checkcast java/lang/Object
+      // 24b: checkcast net/rim/device/api/system/ProgressiveImage
       // 24e: aload 14
       // 250: invokevirtual net/rim/device/apps/internal/browser/html/FragmentHolder.getDataLength ()I
       // 253: invokevirtual net/rim/device/api/system/ProgressiveImage.updateLength (I)I
@@ -6687,7 +6691,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 478: bipush 7
       // 47a: if_icmpeq 480
       // 47d: goto 514
-      // 480: new java/lang/Object
+      // 480: new net/rim/device/api/util/DataBuffer
       // 483: dup
       // 484: aload 11
       // 486: iload 12
@@ -6714,7 +6718,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 4b6: aload 16
       // 4b8: invokevirtual net/rim/device/api/util/DataBuffer.readCompressedInt ()I
       // 4bb: istore 18
-      // 4bd: new java/lang/Object
+      // 4bd: new net/rim/device/internal/compress/Inflater
       // 4c0: dup
       // 4c1: bipush 31
       // 4c3: invokespecial net/rim/device/internal/compress/Inflater.<init> (I)V
@@ -6767,7 +6771,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 52f: invokevirtual net/rim/device/api/crypto/HMAC.reset ()V
       // 532: goto 537
       // 535: astore 16
-      // 537: new java/lang/Object
+      // 537: new net/rim/device/api/util/DataBuffer
       // 53a: dup
       // 53b: aload 11
       // 53d: iload 12
@@ -6817,7 +6821,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 5a2: iload 20
       // 5a4: iload 19
       // 5a6: invokevirtual net/rim/device/api/crypto/HMAC.update ([BII)V
-      // 5a9: new java/lang/Object
+      // 5a9: new java/lang/String
       // 5ac: dup
       // 5ad: aload 11
       // 5af: iload 20
@@ -6852,7 +6856,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 5eb: astore 24
       // 5ed: iload 15
       // 5ef: ifeq 5fb
-      // 5f2: new java/lang/Object
+      // 5f2: new net/rim/device/api/io/http/HttpHeaders
       // 5f5: dup
       // 5f6: invokespecial net/rim/device/api/io/http/HttpHeaders.<init> ()V
       // 5f9: astore 24
@@ -6863,7 +6867,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 606: aload 16
       // 608: invokevirtual net/rim/device/api/util/DataBuffer.readCompressedInt ()I
       // 60b: istore 25
-      // 60d: new java/lang/Object
+      // 60d: new net/rim/device/api/util/DataBuffer
       // 610: dup
       // 611: aload 11
       // 613: aload 16
@@ -6883,7 +6887,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 633: aload 26
       // 635: invokevirtual net/rim/device/api/util/DataBuffer.readCompressedInt ()I
       // 638: istore 27
-      // 63a: new java/lang/Object
+      // 63a: new java/lang/String
       // 63d: dup
       // 63e: aload 11
       // 640: aload 26
@@ -6917,7 +6921,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 67f: ldc_w 1701707776
       // 682: invokestatic net/rim/device/api/util/StringUtilities.strEqualIgnoreCase (Ljava/lang/String;Ljava/lang/String;I)Z
       // 685: ifeq 6a1
-      // 688: new java/lang/Object
+      // 688: new java/lang/String
       // 68b: dup
       // 68c: aload 11
       // 68e: aload 26
@@ -6942,7 +6946,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 6be: dup
       // 6bf: invokespecial net/rim/device/apps/internal/browser/page/RendererImageContainer.<init> ()V
       // 6c2: astore 23
-      // 6c4: new java/lang/Object
+      // 6c4: new java/lang/String
       // 6c7: dup
       // 6c8: aload 11
       // 6ca: aload 26
@@ -6988,7 +6992,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 725: ldc_w 1701707776
       // 728: invokestatic net/rim/device/api/util/StringUtilities.strEqualIgnoreCase (Ljava/lang/String;Ljava/lang/String;I)Z
       // 72b: ifeq 764
-      // 72e: new java/lang/Object
+      // 72e: new java/lang/String
       // 731: dup
       // 732: aload 11
       // 734: aload 26
@@ -6999,7 +7003,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 740: aload 0
       // 741: getfield net/rim/device/apps/internal/browser/page/Renderer._renderingApplication Lnet/rim/device/api/browser/field/RenderingApplication;
       // 744: ifnull 764
-      // 747: new java/lang/Object
+      // 747: new net/rim/device/api/browser/field/SetHttpCookieEvent
       // 74a: dup
       // 74b: aload 0
       // 74c: getfield net/rim/device/apps/internal/browser/html/HTMLRendererWithTextFlow._browserContent Lnet/rim/device/apps/internal/browser/html/HTMLBrowserContent;
@@ -7016,7 +7020,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 766: ifeq 789
       // 769: aload 29
       // 76b: ifnonnull 780
-      // 76e: new java/lang/Object
+      // 76e: new java/lang/String
       // 771: dup
       // 772: aload 11
       // 774: aload 26
@@ -7033,7 +7037,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 78d: invokevirtual net/rim/device/api/util/DataBuffer.skipBytes (I)I
       // 790: pop
       // 791: goto 628
-      // 794: new java/lang/Object
+      // 794: new java/lang/String
       // 797: dup
       // 798: aload 11
       // 79a: iload 20
@@ -7385,7 +7389,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // a92: aload 9
       // a94: invokevirtual net/rim/device/internal/browser/util/PipePtr.getData ()[B
       // a97: astore 3
-      // a98: new java/lang/Object
+      // a98: new net/rim/device/api/util/DataBuffer
       // a9b: dup
       // a9c: aload 3
       // a9d: aload 9
@@ -7404,7 +7408,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // abb: aload 18
       // abd: invokevirtual net/rim/device/api/util/DataBuffer.getArrayPosition ()I
       // ac0: istore 21
-      // ac2: new java/lang/Object
+      // ac2: new java/lang/String
       // ac5: dup
       // ac6: aload 3
       // ac7: iload 21
@@ -7498,7 +7502,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // try (1066 -> 1135): 1138 null
    }
 
-   private final void handleTag(int tag) {
+   private final void handleTag(int tag) throws EOFException, IOException {
       WAPInputStream in = this._currentContext._in;
       if (tag == 4) {
          in.readCompressedInt();
@@ -7527,15 +7531,15 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
                needToCheckForValue = true;
             } else {
                if (currentByte == -1) {
-                  throw new Object();
+                  throw new EOFException();
                }
 
                if (currentByte == 0) {
-                  throw new Object();
+                  throw new IOException();
                }
 
                if (currentByte < 5) {
-                  throw new Object();
+                  throw new IOException();
                }
 
                if (currentByte < 80) {
@@ -8009,7 +8013,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 0d9: aload 3
       // 0da: invokevirtual java/lang/String.equals (Ljava/lang/Object;)Z
       // 0dd: istore 7
-      // 0df: new java/lang/Object
+      // 0df: new net/rim/device/api/browser/field/RequestedResource
       // 0e2: dup
       // 0e3: aload 4
       // 0e5: aload 5
@@ -8098,7 +8102,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 1a7: aload 13
       // 1a9: getfield net/rim/device/apps/internal/browser/html/InlineDataRefHolder._encoding Ljava/lang/String;
       // 1ac: ifnull 1d1
-      // 1af: new java/lang/Object
+      // 1af: new java/lang/String
       // 1b2: dup
       // 1b3: aload 13
       // 1b5: getfield net/rim/device/apps/internal/browser/html/InlineDataRefHolder._data [B
@@ -8114,7 +8118,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 1cf: astore 15
       // 1d1: aload 14
       // 1d3: ifnonnull 1e5
-      // 1d6: new java/lang/Object
+      // 1d6: new java/lang/String
       // 1d9: dup
       // 1da: aload 11
       // 1dc: bipush 0
@@ -8237,7 +8241,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 2f1: arraylength
       // 2f2: ifgt 2f8
       // 2f5: goto 399
-      // 2f8: new java/lang/Object
+      // 2f8: new java/io/ByteArrayInputStream
       // 2fb: dup
       // 2fc: aload 2
       // 2fd: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -8352,19 +8356,19 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
    }
 
    private final Border getBorder(int borderMask, int borderTopWidth, int borderRightWidth, int borderBottomWidth, int borderLeftWidth, boolean is3d) {
-      return (Border)(is3d
-         ? new Object(
+      return is3d
+         ? new Border3d(
             (borderMask & 4) != 0 ? borderTopWidth : 0,
             (borderMask & 2) != 0 ? borderRightWidth : 0,
             (borderMask & 8) != 0 ? borderBottomWidth : 0,
             (borderMask & 1) != 0 ? borderLeftWidth : 0
          )
-         : new Object(
+         : new BorderSimple(
             (borderMask & 4) != 0 ? borderTopWidth : 0,
             (borderMask & 2) != 0 ? borderRightWidth : 0,
             (borderMask & 8) != 0 ? borderBottomWidth : 0,
             (borderMask & 1) != 0 ? borderLeftWidth : 0
-         ));
+         );
    }
 
    private final Border getBorder(
@@ -8378,7 +8382,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       int borderBottomColor,
       int borderLeftColor
    ) {
-      return (Border)(new Object(
+      return new BorderSimple(
          (borderMask & 4) != 0 ? borderTopWidth : 0,
          (borderMask & 2) != 0 ? borderRightWidth : 0,
          (borderMask & 8) != 0 ? borderBottomWidth : 0,
@@ -8387,7 +8391,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
          borderRightColor,
          borderBottomColor,
          borderLeftColor
-      ));
+      );
    }
 
    private final void loadingStatusEventOccurred(int status) {
@@ -8420,7 +8424,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
                      TimeLogger.getInstance().startTimer(12, styleSheet.hashCode());
                   }
 
-                  if (styleSheet instanceof Object) {
+                  if (styleSheet instanceof String) {
                      this._cssParser.parseStyleSheet((String)styleSheet);
                      var8 = false;
                   } else if (styleSheet instanceof byte[]) {
@@ -8431,12 +8435,12 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
                   }
                   break label130;
                } catch (Throwable var11) {
-                  if (t instanceof Object) {
+                  if (t instanceof Exception) {
                      QuincyManager.sendJavaLogworthy("Browser:CSS");
                      var8 = false;
                   } else {
-                     if (t instanceof Object) {
-                        throw (Object)t;
+                     if (t instanceof Error) {
+                        throw (Error)t;
                      }
 
                      var8 = false;
@@ -8653,7 +8657,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
    }
 
    private final HttpHeaders getRequestHeaders(boolean addPriority) {
-      HttpHeaders requestHeaders = (HttpHeaders)(new Object());
+      HttpHeaders requestHeaders = new HttpHeaders();
       RenderingUtilities.setReferrer(requestHeaders, this._url);
       if (addPriority) {
          requestHeaders.setProperty("x-rim-request-priority", Integer.toString(this._currentPriorityCount));
@@ -10665,11 +10669,11 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
    private final void addClassStyle(int element, CSSString classString, int styleId) {
       if (element <= 100) {
          if (this._classStyles == null) {
-            this._classStyles = new Object[101];
+            this._classStyles = new ToIntHashtable[101];
          }
 
          if (this._classStyles[element] == null) {
-            this._classStyles[element] = (ToIntHashtable)(new Object());
+            this._classStyles[element] = new ToIntHashtable();
          }
 
          int currentStyle = this._classStyles[element].get(classString);
@@ -10687,11 +10691,11 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
    private final void addIdStyle(int element, CSSString id, int style) {
       if (element <= 100) {
          if (this._idStyles == null) {
-            this._idStyles = new Object[101];
+            this._idStyles = new ToIntHashtable[101];
          }
 
          if (this._idStyles[element] == null) {
-            this._idStyles[element] = (ToIntHashtable)(new Object());
+            this._idStyles[element] = new ToIntHashtable();
          }
 
          int currentStyle = this._idStyles[element].get(id);
@@ -10715,40 +10719,40 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
          ToIntHashtable styles = null;
          if (classString == null && id == null) {
             if (this._descendantElementStyles == null) {
-               this._descendantElementStyles = new Object[101];
+               this._descendantElementStyles = new ToIntHashtable[101];
             }
 
             styles = this._descendantElementStyles[element];
             if (styles == null) {
-               styles = (ToIntHashtable)(new Object());
+               styles = new ToIntHashtable();
                this._descendantElementStyles[element] = styles;
             }
          } else if (id == null) {
             if (this._descendantClassStyles == null) {
-               this._descendantClassStyles = new Object[101];
+               this._descendantClassStyles = new Hashtable[101];
             }
 
             if (this._descendantClassStyles[element] == null) {
-               this._descendantClassStyles[element] = (Hashtable)(new Object());
+               this._descendantClassStyles[element] = new Hashtable();
             }
 
             styles = (ToIntHashtable)this._descendantClassStyles[element].get(classString);
             if (styles == null) {
-               styles = (ToIntHashtable)(new Object());
+               styles = new ToIntHashtable();
                this._descendantClassStyles[element].put(classString, styles);
             }
          } else {
             if (this._descendantIdStyles == null) {
-               this._descendantIdStyles = new Object[101];
+               this._descendantIdStyles = new Hashtable[101];
             }
 
             if (this._descendantIdStyles[element] == null) {
-               this._descendantIdStyles[element] = (Hashtable)(new Object());
+               this._descendantIdStyles[element] = new Hashtable();
             }
 
             styles = (ToIntHashtable)this._descendantIdStyles[element].get(id);
             if (styles == null) {
-               styles = (ToIntHashtable)(new Object());
+               styles = new ToIntHashtable();
                this._descendantIdStyles[element].put(id, styles);
             }
          }
@@ -10798,14 +10802,14 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       if (classString != null && this._classStyles != null && element <= 100) {
          String[] classes = null;
          if (classString.indexOf(32) != -1) {
-            StringTokenizer strings = (StringTokenizer)(new Object(classString, ' '));
-            classes = new Object[strings.countTokens()];
+            StringTokenizer strings = new StringTokenizer(classString, ' ');
+            classes = new String[strings.countTokens()];
 
             for (int i = 0; strings.hasMoreTokens(); i++) {
                classes[i] = strings.nextToken();
             }
          } else {
-            classes = new Object[]{classString};
+            classes = new String[]{classString};
          }
 
          ToIntHashtable styles = this._classStyles[0];
@@ -10950,7 +10954,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
          String classString = (String)this._tagClasses.elementAt(tagIndex);
          if (classString != null) {
             if (classString.indexOf(32) != -1) {
-               StringTokenizer classes = (StringTokenizer)(new Object(classString, ' '));
+               StringTokenizer classes = new StringTokenizer(classString, ' ');
 
                while (classes.hasMoreTokens()) {
                   if (node._classString.equals(classes.nextToken())) {
@@ -11027,18 +11031,18 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
             int lastElement = node._element;
             if (lastElement <= 100) {
                if (this._descendantStyles == null) {
-                  this._descendantStyles = new Object[101];
+                  this._descendantStyles = new ToIntHashtable[101];
                }
 
                if (this._descendantStyles[lastElement] == null) {
-                  this._descendantStyles[lastElement] = (ToIntHashtable)(new Object());
+                  this._descendantStyles[lastElement] = new ToIntHashtable();
                }
 
                if (this._descendantStyles[lastElement].get(descendants) == -1) {
                   int style = styles.get(descendants);
                   this._descendantStyles[lastElement].put(descendants, style);
                   if (this._addedDescendantStyles == null) {
-                     this._addedDescendantStyles = new Object[index + 20];
+                     this._addedDescendantStyles = new Vector[index + 20];
                   }
 
                   if (index >= this._addedDescendantStyles.length) {
@@ -11046,7 +11050,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
                   }
 
                   if (this._addedDescendantStyles[index] == null) {
-                     this._addedDescendantStyles[index] = (Vector)(new Object());
+                     this._addedDescendantStyles[index] = new Vector();
                   }
 
                   this._addedDescendantStyles[index].addElement(descendants);
@@ -11073,7 +11077,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
 
    private final int addStyleObject(Object object) {
       if (this._styleObjects == null) {
-         this._styleObjects = (Vector)(new Object());
+         this._styleObjects = new Vector();
       }
 
       this._styleObjects.addElement(object);
@@ -11133,7 +11137,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       // 03a: aload 3
       // 03b: invokevirtual java/lang/String.equals (Ljava/lang/Object;)Z
       // 03e: istore 4
-      // 040: new java/lang/Object
+      // 040: new net/rim/device/api/browser/field/RequestedResource
       // 043: dup
       // 044: aload 1
       // 045: aload 0
@@ -11604,21 +11608,21 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       DeviceDataConversionEvent convEvent
    ) {
       super(connection, renderingSession, renderingApplication, referrer, flags);
-      this._tagStack = (Stack)(new Object());
-      this._skipPopCalls = (IntStack)(new Object());
-      this._styleStack = (IntStack)(new Object());
-      this._cellPushed = (IntStack)(new Object());
+      this._tagStack = new Stack();
+      this._skipPopCalls = new IntStack();
+      this._styleStack = new IntStack();
+      this._cellPushed = new IntStack();
       this._url = baseUrl;
       this._htmlContext = htmlContext;
-      this._imageMaps = (Hashtable)(new Object(0));
-      this._inlineData = (Hashtable)(new Object());
-      this._inlineFragments = (IntHashtable)(new Object());
-      this._inlineDataRefs = (IntHashtable)(new Object());
+      this._imageMaps = new Hashtable(0);
+      this._inlineData = new Hashtable();
+      this._inlineFragments = new IntHashtable();
+      this._inlineDataRefs = new IntHashtable();
       this._frame = frame;
       this._convEvent = convEvent;
       this._useApproximatedTicks = true;
       if (super._renderingOptions.getPropertyWithBooleanValue(4550690918222697397L, 17, true)) {
-         this._tableStack = (Stack)(new Object());
+         this._tableStack = new Stack();
       }
 
       if (HTMLBrowserField._singleLayoutMode) {
@@ -11631,7 +11635,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
          this._imageLayoutLimit = 25;
       }
 
-      this._scriptsToExecute = (Vector)(new Object(0));
+      this._scriptsToExecute = new Vector(0);
       this._appEventLock = Application.getEventLock();
       this._currentContext = new HTMLRendererContext(null);
       this._currentContext._in = new WAPInputStream(in);
@@ -11641,7 +11645,7 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
       String referer = null;
       String host = null;
       String origEncoding = null;
-      if (super._inputConnection instanceof Object) {
+      if (super._inputConnection instanceof HttpConnection) {
          HttpConnection httpConnection = (HttpConnection)super._inputConnection;
          host = httpConnection.getHost();
          referer = httpConnection.getRequestProperty(HeaderParser.REFERER);
@@ -11668,8 +11672,8 @@ final class HTMLRendererWithTextFlow extends Renderer implements DocumentHandler
 
       if (super._renderingOptions.getPropertyWithBooleanValue(4550690918222697397L, 18, true)) {
          this._processStyleSheets = true;
-         this._tagClasses = (Stack)(new Object());
-         this._tagIds = (Stack)(new Object());
+         this._tagClasses = new Stack();
+         this._tagIds = new Stack();
          this._styleFlagsValues = new long[0];
          this._styleTops = new short[1];
       }

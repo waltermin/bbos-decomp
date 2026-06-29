@@ -8,6 +8,7 @@ import net.rim.device.api.synchronization.SyncManager;
 import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.system.DeviceInfo;
 import net.rim.device.api.util.DataBuffer;
+import net.rim.device.cldc.io.gme.SBSerialUpdaterThread;
 import net.rim.device.internal.deviceagent.OutgoingDeviceAgentCollection;
 import net.rim.device.internal.proxy.Proxy;
 
@@ -22,21 +23,21 @@ public final class Registration {
       if (oac != null) {
          oac.addDeviceCapabilities((byte)16, new byte[]{48});
          int devicePIN = DeviceInfo.getDeviceId();
-         DataBuffer buff = (DataBuffer)(new Object(false));
+         DataBuffer buff = new DataBuffer(false);
          buff.writeInt(devicePIN);
          buff.trim();
          oac.addDeviceCapabilities((byte)7, buff.toArray());
       }
 
-      p.startThread((Thread)(new Object()));
+      p.startThread(new SBSerialUpdaterThread());
       p.startThread(new SBUpdaterThread());
-      ServiceBookSyncCollection sbSyncCollection = (ServiceBookSyncCollection)(new Object(sb));
+      ServiceBookSyncCollection sbSyncCollection = new ServiceBookSyncCollection(sb);
       SyncManager.getInstance().enableSynchronization(sbSyncCollection);
       reg.put(-7781445676016247535L, sbSyncCollection);
-      SRSelector srSel = (SRSelector)(new Object());
+      SRSelector srSel = new SRSelector();
       reg.put(2857166788728229964L, srSel);
       p.addGlobalEventListener(srSel);
-      SRSelectorSyncCollection syncCollection = (SRSelectorSyncCollection)(new Object(srSel, sb));
+      SRSelectorSyncCollection syncCollection = new SRSelectorSyncCollection(srSel, sb);
       reg.put(-1080498432380349415L, syncCollection);
       SyncManager.getInstance().enableSynchronization(syncCollection);
       reg.put(5050782853726896085L, new SBThunksImpl());

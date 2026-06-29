@@ -40,7 +40,7 @@ final class ActivationServiceImpl$ServerLongTermKeyStore extends Hashtable {
 
    private final byte[] serialize() {
       synchronized (this) {
-         DataBuffer dataBuffer = (DataBuffer)(new Object());
+         DataBuffer dataBuffer = new DataBuffer();
          Enumeration keys = this.keys();
          Enumeration values = this.elements();
 
@@ -65,12 +65,12 @@ final class ActivationServiceImpl$ServerLongTermKeyStore extends Hashtable {
 
          try {
             var9 = true;
-            Object e = new Object(inputBytes, 0, inputBytes.length, true);
+            DataBuffer e = new DataBuffer(inputBytes, 0, inputBytes.length, true);
 
-            while (!((DataBuffer)e).eof()) {
-               byte[] uidBytes = ((DataBuffer)e).readByteArray();
-               byte[] serverLongTermKey = ((DataBuffer)e).readByteArray();
-               this.put(new Object(uidBytes), serverLongTermKey);
+            while (!e.eof()) {
+               byte[] uidBytes = e.readByteArray();
+               byte[] serverLongTermKey = e.readByteArray();
+               this.put(new String(uidBytes), serverLongTermKey);
             }
 
             var9 = false;

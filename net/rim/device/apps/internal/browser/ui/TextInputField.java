@@ -2,7 +2,9 @@ package net.rim.device.apps.internal.browser.ui;
 
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.component.BasicEditField;
-import net.rim.device.api.ui.component.TextField;
+import net.rim.device.api.ui.component.EditField;
+import net.rim.device.api.ui.component.EmailAddressEditField;
+import net.rim.device.api.ui.component.PasswordEditField;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.internal.ui.container.FrameLayout;
@@ -48,17 +50,17 @@ public class TextInputField extends FrameLayout {
          if (format != null) {
             this._edit = new BrowserPasswordEditField(initValue, maxLength, style | 137438953472L, format);
          } else {
-            this._edit = (BasicEditField)(new Object(null, initValue, maxLength, style | 137438953472L));
-            ((TextField)this._edit).setAllowUnicodeInput(true);
+            this._edit = new PasswordEditField(null, initValue, maxLength, style | 137438953472L);
+            ((PasswordEditField)this._edit).setAllowUnicodeInput(true);
          }
       } else if (format != null) {
          if (StringUtilities.strEqualIgnoreCase(format, "XXX_RIM_EMAIL_INPUT", 1701707776)) {
-            this._edit = (BasicEditField)(new Object(null, initValue, maxLength, style | 137438953472L));
+            this._edit = new EmailAddressEditField(null, initValue, maxLength, style | 137438953472L);
          } else {
             this._edit = new BrowserEditField(initValue, maxLength, style | 137438953472L, format);
          }
       } else {
-         this._edit = (BasicEditField)(new Object(null, initValue, maxLength, style | 137438953472L));
+         this._edit = new EditField(null, initValue, maxLength, style | 137438953472L);
       }
 
       this._edit.setTag(BROWSER_EDIT_TAG);

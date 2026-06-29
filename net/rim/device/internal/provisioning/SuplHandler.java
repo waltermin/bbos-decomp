@@ -90,7 +90,7 @@ public class SuplHandler implements ProvisioningHandler {
          connPrefix = PersistentContent.decodeString(_connectionObj);
       }
 
-      System.out.println(((StringBuffer)(new Object("Retrieving SUPL connection prefix:"))).append(connPrefix).toString());
+      System.out.println("Retrieving SUPL connection prefix:" + connPrefix);
       return connPrefix;
    }
 
@@ -102,7 +102,7 @@ public class SuplHandler implements ProvisioningHandler {
          apn = PersistentContent.decodeString(_connectionObj);
       }
 
-      System.out.println(((StringBuffer)(new Object("Retrieving SUPL APN:"))).append(apn).toString());
+      System.out.println("Retrieving SUPL APN:" + apn);
       return apn;
    }
 
@@ -114,7 +114,7 @@ public class SuplHandler implements ProvisioningHandler {
          username = PersistentContent.decodeString(_connectionObj);
       }
 
-      System.out.println(((StringBuffer)(new Object("Retrieving SUPL username:"))).append(username).toString());
+      System.out.println("Retrieving SUPL username:" + username);
       return username;
    }
 
@@ -126,7 +126,7 @@ public class SuplHandler implements ProvisioningHandler {
          password = PersistentContent.decodeString(_connectionObj);
       }
 
-      System.out.println(((StringBuffer)(new Object("Retrieving SUPL password:"))).append(password).toString());
+      System.out.println("Retrieving SUPL password:" + password);
       return password;
    }
 }

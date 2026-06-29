@@ -5,7 +5,7 @@ import net.rim.device.api.collection.ReadableList;
 import net.rim.device.api.collection.WritableSet;
 
 class OptionsEditorScreen$DummyList implements ReadableList, WritableSet {
-   private Vector _elements = (Vector)(new Object());
+   private Vector _elements = new Vector();
 
    @Override
    public int size() {

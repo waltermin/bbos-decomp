@@ -35,11 +35,7 @@ public class CompressedFileAttachmentModel$Helper {
       CompressedFileAttachmentModel model = new CompressedFileAttachmentModel();
       model.setContentType(encodedImage.getMIMEType());
       model.setData(encodedImage.getData());
-      model.setDisplayName(
-         FileUtilities.getName(
-            file != null ? file : ((StringBuffer)(new Object())).append(EmailResources.getString(73)).append(encodedImage.getMIMEType()).toString()
-         )
-      );
+      model.setDisplayName(FileUtilities.getName(file != null ? file : EmailResources.getString(73) + encodedImage.getMIMEType()));
       model.setFile(file);
       model.setFileSize(encodedImage.getLength());
       return model;

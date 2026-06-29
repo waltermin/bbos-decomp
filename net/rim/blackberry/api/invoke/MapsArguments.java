@@ -14,11 +14,11 @@ public final class MapsArguments extends ApplicationArguments {
 
    public MapsArguments(String arg, String locationDocument) {
       if (arg != null && arg.equals("location_document") && locationDocument != null) {
-         super._args = new Object[2];
+         super._args = new String[2];
          super._args[0] = arg;
          super._args[1] = locationDocument;
       } else {
-         throw new Object("Invalid argument.");
+         throw new IllegalArgumentException("Invalid argument.");
       }
    }
 

@@ -1,5 +1,6 @@
 package net.rim.blackberry.api.mail;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -8,6 +9,7 @@ import net.rim.blackberry.api.pim.ContactImpl;
 import net.rim.blackberry.api.pim.ContactListImpl;
 import net.rim.blackberry.api.pim.PIM;
 import net.rim.blackberry.api.pim.PIMException;
+import net.rim.device.apps.api.addressbook.AddressCardModel;
 
 public class ContactAttachmentPart extends BodyPart {
    private Contact _data;
@@ -27,12 +29,12 @@ public class ContactAttachmentPart extends BodyPart {
    @Override
    public InputStream getInputStream() {
       byte[] data = this.getVCardForm();
-      return (InputStream)(new Object(data));
+      return new ByteArrayInputStream(data);
    }
 
    private byte[] getVCardForm() {
       if (this._vcardForm == null) {
-         ByteArrayOutputStream baos = (ByteArrayOutputStream)(new Object());
+         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
          try {
             String[] dataFormats = PIM.getInstance().supportedSerialFormats(1);
@@ -52,7 +54,7 @@ public class ContactAttachmentPart extends BodyPart {
 
    @Override
    public void setContent(Object content) {
-      if (content instanceof Object) {
+      if (content instanceof AddressCardModel) {
          this._data = new ContactImpl(content, _contactList);
       } else {
          if (content instanceof Contact) {
@@ -84,7 +86,7 @@ public class ContactAttachmentPart extends BodyPart {
       try {
          _contactList = (ContactListImpl)PIM.getInstance().openPIMList(1, 3);
       } catch (PIMException e) {
-         throw new Object(e.toString());
+         throw new Error(e.toString());
       }
    }
 }

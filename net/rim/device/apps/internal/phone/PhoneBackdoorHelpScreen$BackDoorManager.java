@@ -10,7 +10,7 @@ final class PhoneBackdoorHelpScreen$BackDoorManager extends VerticalFieldManager
 
    PhoneBackdoorHelpScreen$BackDoorManager() {
       super(3459063580983296000L);
-      ListField _listField = (ListField)(new Object());
+      ListField _listField = new ListField();
       _listField.setCallback(this);
       this.add(_listField);
       _listField.setSize(PhoneBackdoorHelpScreen._backdoorStrings.length);

@@ -41,14 +41,14 @@ public final class URL {
                      case 0:
                         int var10 = 5;
                         if (tmp != prev) {
-                           url._file = (String)(new Object(array, prev, tmp - prev));
+                           url._file = new String(array, prev, tmp - prev);
                         }
 
                         state = 5;
                         prev = ++tmp;
                         continue;
                      case 4:
-                        url._file = (String)(new Object(array, prev, tmp - prev));
+                        url._file = new String(array, prev, tmp - prev);
                         state = 5;
                         prev = ++tmp;
                         continue;
@@ -68,13 +68,13 @@ public final class URL {
                         tmp++;
                         continue;
                      case 2:
-                        url._host = (String)(new Object(array, prev, tmp - prev));
+                        url._host = new String(array, prev, tmp - prev);
                         url._port = 80;
                         state = 4;
                         prev = tmp++;
                         continue;
                      case 3:
-                        url._port = Integer.parseInt((String)(new Object(array, prev, tmp - prev)));
+                        url._port = Integer.parseInt(new String(array, prev, tmp - prev));
                         prev = tmp++;
                         state = 4;
                         continue;
@@ -92,7 +92,7 @@ public final class URL {
 
                         tmp++;
                         if (array[tmp] != 0 && array[tmp] == '/') {
-                           url._protocol = (String)(new Object(array, prev, tempo - prev));
+                           url._protocol = new String(array, prev, tempo - prev);
                            prev = ++tmp;
                            state = 2;
                            continue;
@@ -101,7 +101,7 @@ public final class URL {
                         tmp--;
                         continue;
                      case 2:
-                        url._host = (String)(new Object(array, prev, tmp - prev));
+                        url._host = new String(array, prev, tmp - prev);
                         prev = ++tmp;
                         state = 3;
                         continue;
@@ -119,26 +119,26 @@ public final class URL {
 
          switch (state) {
             case 1:
-               url._file = (String)(new Object(array, prev, tmp - prev));
+               url._file = new String(array, prev, tmp - prev);
                break;
             case 2:
             default:
-               url._host = (String)(new Object(array, prev, tmp - prev));
+               url._host = new String(array, prev, tmp - prev);
                url._port = 80;
                url._file = "/";
                break;
             case 3:
                url._file = "/";
-               url._port = Integer.parseInt((String)(new Object(array, prev, tmp - prev)));
+               url._port = Integer.parseInt(new String(array, prev, tmp - prev));
                break;
             case 4:
-               url._file = (String)(new Object(array, prev, tmp - prev));
+               url._file = new String(array, prev, tmp - prev);
                if (url._file == null) {
                   url._file = "/";
                }
                break;
             case 5:
-               url._anchor = (String)(new Object(array, prev, tmp - prev));
+               url._anchor = new String(array, prev, tmp - prev);
          }
 
          ensureRelativity(context, url);
@@ -159,9 +159,9 @@ public final class URL {
             } else if (rel._file.charAt(0) != '/') {
                int tmp = origin._file.lastIndexOf(47);
                if (tmp < 0) {
-                  rel._file = ((StringBuffer)(new Object())).append(origin._file).append('/').append(rel._file).toString();
+                  rel._file = origin._file + '/' + rel._file;
                } else {
-                  rel._file = ((StringBuffer)(new Object())).append(origin._file.substring(0, tmp)).append('/').append(rel._file).toString();
+                  rel._file = origin._file.substring(0, tmp) + '/' + rel._file;
                }
             }
          }
@@ -194,13 +194,6 @@ public final class URL {
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object()))
-         .append(this._protocol)
-         .append("://")
-         .append(this._host)
-         .append(':')
-         .append(this._port)
-         .append(this._file)
-         .toString();
+      return this._protocol + "://" + this._host + ':' + this._port + this._file;
    }
 }

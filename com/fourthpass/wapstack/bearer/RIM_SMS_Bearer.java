@@ -45,17 +45,17 @@ public final class RIM_SMS_Bearer implements IBearer {
       // 16: astore 3
       // 17: aload 3
       // 18: dup
-      // 19: instanceof java/lang/Object
+      // 19: instanceof net/rim/device/cldc/io/sms/MessageImpl
       // 1c: ifne 23
       // 1f: pop
       // 20: goto 97
-      // 23: checkcast java/lang/Object
+      // 23: checkcast net/rim/device/cldc/io/sms/MessageImpl
       // 26: astore 4
       // 28: aload 4
       // 2a: invokevirtual net/rim/device/cldc/io/sms/MessageImpl.getBuffer ()[B
       // 2d: astore 5
       // 2f: aload 3
-      // 30: instanceof java/lang/Object
+      // 30: instanceof javax/wireless/messaging/TextMessage
       // 33: ifeq 41
       // 36: aload 5
       // 38: bipush 0
@@ -76,7 +76,7 @@ public final class RIM_SMS_Bearer implements IBearer {
       // 58: bipush 0
       // 59: aload 5
       // 5b: arraylength
-      // 5c: new java/lang/Object
+      // 5c: new java/lang/StringBuffer
       // 5f: dup
       // 60: invokespecial java/lang/StringBuffer.<init> ()V
       // 63: aload 0
@@ -150,8 +150,7 @@ public final class RIM_SMS_Bearer implements IBearer {
          byte[] data = packet.getPacketData();
          BinaryMessage bMessage = (BinaryMessage)this._messagingConnection.newMessage("binary");
          if (this._packetLoggerInstance._lowLoggingEnabled) {
-            this._packetLoggerInstance
-               .logPacket(data, 0, len, ((StringBuffer)(new Object())).append(this._destAddress).append(':').append(this._sourcePort).toString(), true);
+            this._packetLoggerInstance.logPacket(data, 0, len, this._destAddress + ':' + this._sourcePort, true);
          }
 
          bMessage.setPayloadData(data);

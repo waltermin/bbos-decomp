@@ -18,13 +18,13 @@ import net.rim.device.api.ui.FocusChangeListener;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.Manager;
-import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.ActiveAutoTextEditField;
 import net.rim.device.api.ui.component.CheckboxField;
 import net.rim.device.api.ui.component.ChoiceField;
 import net.rim.device.api.ui.component.DateField;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.ui.component.RichTextField;
@@ -45,6 +45,7 @@ import net.rim.device.apps.api.calendar.caldb.CalendarProxy;
 import net.rim.device.apps.api.calendar.caldb.CalendarService;
 import net.rim.device.apps.api.calendar.caldb.CalendarServiceManager;
 import net.rim.device.apps.api.calendar.controller.CalendarEventViewer;
+import net.rim.device.apps.api.calendar.modelcontrollerinterface.Attendee;
 import net.rim.device.apps.api.calendar.modelcontrollerinterface.AttendeeFactory;
 import net.rim.device.apps.api.calendar.modelcontrollerinterface.Event;
 import net.rim.device.apps.api.calendar.modelcontrollerinterface.EventUtilities;
@@ -61,14 +62,18 @@ import net.rim.device.apps.api.framework.model.Recur$Handle;
 import net.rim.device.apps.api.framework.model.ResolvedStatusProvider;
 import net.rim.device.apps.api.framework.model.VerbProvider;
 import net.rim.device.apps.api.framework.verb.DefaultVerbProvider;
+import net.rim.device.apps.api.framework.verb.LastUsedDefaultVerbProvider;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.reminders.ReminderModel;
+import net.rim.device.apps.api.reminders.ReminderModelRelative;
 import net.rim.device.apps.api.service.ServiceIdentifier;
 import net.rim.device.apps.api.sync.OTASyncData;
 import net.rim.device.apps.api.ui.AppsMainScreen;
 import net.rim.device.apps.api.ui.CommonResources;
 import net.rim.device.apps.api.ui.DurationField;
+import net.rim.device.apps.api.ui.FastInsertVerticalFieldManager;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
+import net.rim.device.apps.api.ui.TimeChoiceField;
 import net.rim.device.apps.api.utility.framework.FieldUtility;
 import net.rim.device.apps.api.utility.framework.RecurUtil;
 import net.rim.device.apps.internal.addressbook.lookup.ALPConfiguration;
@@ -77,6 +82,7 @@ import net.rim.device.apps.internal.calendar.meeting.AttendeeModel;
 import net.rim.device.apps.internal.calendar.meeting.MeetingUtilities;
 import net.rim.device.apps.internal.commonmodels.pim.RecurImpl;
 import net.rim.device.apps.internal.commonmodels.pim.RecurrenceField;
+import net.rim.device.apps.internal.freebusy.FreeBusyController;
 import net.rim.device.apps.internal.messaging.MessageHotkeys;
 import net.rim.device.cldc.util.CalendarExtensions;
 import net.rim.device.cldc.util.TimeService;
@@ -164,7 +170,7 @@ public class EventViewer
    private boolean _meetingOutdated;
    private boolean _viewingAppointmentStatus;
    private boolean _eventNotFound;
-   private Recur$Handle _recurHandle = (Recur$Handle)(new Object());
+   private Recur$Handle _recurHandle = new Recur$Handle();
    private OTASyncData _syncData;
    private EventViewer$ConflictCheckingThread _conflictCheckingThread;
    private CalendarService _calendarService;
@@ -218,7 +224,7 @@ public class EventViewer
             return;
          }
 
-         if (this._eventData instanceof Object) {
+         if (this._eventData instanceof EncryptableProvider) {
             this.updateEventContents();
             EncryptableProvider ep = (EncryptableProvider)this._eventData;
             ep.reCrypt(true, true);
@@ -274,10 +280,10 @@ public class EventViewer
          tmp = this._eventData.getRecurrenceCopy();
       }
 
-      ContextObject.put(co, 4143325197084129318L, new Object(this._eventData.getStartDate(TimeZone.getTimeZone(this._eventData.getTimeZoneID()))));
+      ContextObject.put(co, 4143325197084129318L, new Long(this._eventData.getStartDate(TimeZone.getTimeZone(this._eventData.getTimeZoneID()))));
       ContextObject.put(co, 853966984731399007L, this._eventData.getTimeZoneID());
-      ContextObject.put(co, -6289930384059412695L, new Object(this._eventData.getInstanceDuration()));
-      ContextObject.put(co, -479237175265400126L, new Object(this._eventData.isAllDay()));
+      ContextObject.put(co, -6289930384059412695L, new Long(this._eventData.getInstanceDuration()));
+      ContextObject.put(co, -479237175265400126L, new Boolean(this._eventData.isAllDay()));
       if (this._saveVerb == null) {
          co.setFlag(85);
       }
@@ -407,14 +413,14 @@ public class EventViewer
    @Override
    public void reset(Collection collection) {
       this._concurrentModification = (byte)(this._concurrentModification | 4);
-      if (collection instanceof Object) {
+      if (collection instanceof CalDB) {
          this._conflictCheckingThread.startConflictingChecking();
       }
    }
 
    @Override
    public void elementAdded(Collection collection, Object element) {
-      if (collection instanceof Object) {
+      if (collection instanceof CalDB) {
          this._conflictCheckingThread.startConflictingChecking();
       }
    }
@@ -424,7 +430,7 @@ public class EventViewer
       if (collection == ALPConfiguration.getManager()) {
          this.scheduleUpdateLookupFields();
       } else {
-         if (collection instanceof Object) {
+         if (collection instanceof CalDB) {
             this.checkForConcurrentModification((Event)oldElement, (byte)1);
             this._conflictCheckingThread.startConflictingChecking();
          }
@@ -436,7 +442,7 @@ public class EventViewer
       if (collection != ALPConfiguration.getManager()) {
          this.checkForConcurrentModification((Event)element, (byte)2);
       } else {
-         if (collection instanceof Object) {
+         if (collection instanceof CalDB) {
             this._conflictCheckingThread.startConflictingChecking();
          }
       }
@@ -510,7 +516,7 @@ public class EventViewer
       ((FieldProvider)this._reminderModel).grabDataFromField(this._reminderField, null);
       if (result && this._reminderModel.hasReminder() && (type & 4) > 0 && recurInfo.getRecurType() == 0) {
          long time = 0;
-         if (this._reminderModel instanceof Object) {
+         if (this._reminderModel instanceof ReminderModelRelative) {
             if (this.isAllDayChecked()) {
                ((CalendarExtensions)this._gmtCal).setTimeLong(startInstant);
                Calendar localCal = Calendar.getInstance();
@@ -524,11 +530,11 @@ public class EventViewer
             ResourceBundle rb = ResourceBundle.getBundle(912302513268743237L, "net.rim.device.apps.internal.resource.Calendar");
             result = Dialog.ask(3, rb.getString(625), 4) == 4;
             if (result) {
-               if (this._reminderField instanceof Object) {
-                  ((ChoiceField)this._reminderField).setSelectedIndex(0);
+               if (this._reminderField instanceof ObjectChoiceField) {
+                  ((ObjectChoiceField)this._reminderField).setSelectedIndex(0);
                }
 
-               if (this._reminderField instanceof Object) {
+               if (this._reminderField instanceof DateField) {
                   ((DateField)this._reminderField).setDate(0);
                }
             }
@@ -669,7 +675,7 @@ public class EventViewer
    private void allDayFlagChanged() {
       this.updateFieldsForAllDayEvent();
       int freeBusy = this._allDayFlag.getChecked() ? 0 : 2;
-      if (!(this._freeBusyField instanceof Object) && this._freeBusyField instanceof Object) {
+      if (!(this._freeBusyField instanceof CheckboxField) && this._freeBusyField instanceof ChoiceField) {
          ChoiceField cf = (ChoiceField)this._freeBusyField;
          cf.setSelectedIndex(freeBusy);
       }
@@ -780,12 +786,12 @@ public class EventViewer
    private void allocateExternalFields() {
       int max = this._eventData.size();
       Object[] models = new Object[max];
-      RIMModel[] sortedModels = new Object[max];
+      RIMModel[] sortedModels = new RIMModel[max];
       int[] orders = new int[max];
-      this._externalFields1 = new Object[max];
-      this._externalModels1 = new Object[max];
-      this._externalFields2 = new Object[max];
-      this._externalModels2 = new Object[max];
+      this._externalFields1 = new Field[max];
+      this._externalModels1 = new RIMModel[max];
+      this._externalFields2 = new Field[max];
+      this._externalModels2 = new RIMModel[max];
       this._eventData.getElements(models);
       max = FieldUtility.orders(models, sortedModels, orders, null);
       int i = 0;
@@ -795,14 +801,14 @@ public class EventViewer
 
       while (i < max && orders[counter] < 1073741823) {
          RIMModel rm = sortedModels[i++];
-         if (rm instanceof Object) {
+         if (rm instanceof FieldProvider) {
             FieldProvider fp = (FieldProvider)rm;
             Field f = fp.getField(null);
             if (f != null) {
-               if (rm instanceof Object) {
+               if (rm instanceof ReminderModel) {
                   this._reminderModel = (ReminderModel)rm;
                   this._reminderField = f;
-               } else if (rm instanceof Object && f instanceof Object && f.getChangeListener() == null) {
+               } else if (rm instanceof MeetingInfo && f instanceof Manager && f.getChangeListener() == null) {
                   f.setChangeListener(this);
                   this._meetingInfoField = (Manager)f;
                }
@@ -826,7 +832,7 @@ public class EventViewer
 
       while (i < max) {
          RIMModel rm = sortedModels[i++];
-         if (rm instanceof Object) {
+         if (rm instanceof FieldProvider) {
             FieldProvider fp = (FieldProvider)rm;
             Field f = fp.getField(null);
             if (f != null) {
@@ -848,50 +854,50 @@ public class EventViewer
    private void allocateFields() {
       ResourceBundle rb = _rb;
       this.allocateExternalFields();
-      this._titleField = (LabelField)(new Object(null, 1152921504606847040L));
+      this._titleField = new LabelField(null, 1152921504606847040L);
       this._sendUsingField = this.getCalendarServiceChoices();
-      this._subject = (ActiveAutoTextEditField)(new Object(rb.getString(100), null));
-      this._location = (ActiveAutoTextEditField)(new Object(rb.getString(101), null, 1000000, 4503601774854144L));
-      this._sep2 = (SeparatorField)(new Object());
-      this._allDayFlag = (CheckboxField)(new Object(rb.getString(102), false));
+      this._subject = new ActiveAutoTextEditField(rb.getString(100), null);
+      this._location = new ActiveAutoTextEditField(rb.getString(101), null, 1000000, 4503601774854144L);
+      this._sep2 = new SeparatorField();
+      this._allDayFlag = new CheckboxField(rb.getString(102), false);
       this._allDayFlag.setChangeListener(this);
-      this._pencilIn = (CheckboxField)(new Object(rb.getString(7), false));
-      this._showTimeAs = (ChoiceField)(new Object(rb.getString(6), rb.getStringArray(635)));
+      this._pencilIn = new CheckboxField(rb.getString(7), false);
+      this._showTimeAs = new ObjectChoiceField(rb.getString(6), rb.getStringArray(635));
       if (this._eventNotFound) {
-         this._meetingMissingField = (RichTextField)(new Object(rb.getString(623)));
+         this._meetingMissingField = new RichTextField(rb.getString(623));
          this._meetingMissingField.setEditable(false);
          this._meetingMissingField.setTag(WARNING_AREA_TAG);
       }
 
       if (this._meetingOutdated) {
-         this._meetingOutdatedField = (RichTextField)(new Object(rb.getString(619)));
+         this._meetingOutdatedField = new RichTextField(rb.getString(619));
          this._meetingOutdatedField.setEditable(false);
          this._meetingOutdatedField.setTag(WARNING_AREA_TAG);
       }
 
-      this._conflictsBlock = (VerticalFieldManager)(new Object());
-      this._conflictsField = (RichTextField)(new Object(rb.getString(117)));
+      this._conflictsBlock = new FastInsertVerticalFieldManager();
+      this._conflictsField = new RichTextField(rb.getString(117));
       Font f = this._conflictsField.getFont();
       this._conflictsField.setFont(f.derive(1));
       this._conflictsField.setEditable(false);
       this._conflictsField.setTag(WARNING_AREA_TAG);
-      this._timeBlock = (VerticalFieldManager)(new Object());
-      this._start = (DateField)(new Object(rb.getString(103), 0, this._dateAndTimeFormat));
+      this._timeBlock = new FastInsertVerticalFieldManager();
+      this._start = new DateField(rb.getString(103), 0, this._dateAndTimeFormat);
       this._start.setMinuteIncrements(900000);
       this._start.setTimeZone(this._sharedTZ);
       this._start.setChangeListener(this);
-      this._end = (DateField)(new Object(rb.getString(104), 0, this._dateAndTimeFormat));
+      this._end = new DateField(rb.getString(104), 0, this._dateAndTimeFormat);
       this._end.setMinuteIncrements(900000);
       this._end.setTimeZone(this._sharedTZ);
       this._end.setChangeListener(this);
       this._end.setFocusListener(this);
-      this._duration = (DurationField)(new Object(rb.getString(105), 2, 1, 0));
+      this._duration = new DurationField(rb.getString(105), 2, 1, 0);
       this._duration.setChangeListener(this);
-      this._timeZone = (ChoiceField)(new Object(CommonResources.getString(2013), TimeService.getTimeService().getTimeZoneNamesShort(), 0, 134217728));
+      this._timeZone = new ObjectChoiceField(CommonResources.getString(2013), TimeService.getTimeService().getTimeZoneNamesShort(), 0, 134217728);
       this._timeZone.setChangeListener(this);
-      this._sensitivityField = (CheckboxField)(new Object(rb.getString(613), this._eventData.getSensitivity() == 2));
+      this._sensitivityField = new CheckboxField(rb.getString(613), this._eventData.getSensitivity() == 2);
       this._recurBlock.setChangeListener(this);
-      this._notes = (ActiveAutoTextEditField)(new Object(CommonResources.getString(2004), null, 4096));
+      this._notes = new ActiveAutoTextEditField(CommonResources.getString(2004), null, 4096);
       if (this._saveVerb == null) {
          this._subject.setEditable(false);
          this._location.setEditable(false);
@@ -920,98 +926,66 @@ public class EventViewer
          this._timeZone.setEditable(false);
       }
 
-      this._debugRefIDField = (LabelField)(new Object(((StringBuffer)(new Object("EVT UID: "))).append(this._eventData.getUID()).toString(), 18014398509481984L));
-      this._debugLongIDField = (LabelField)(new Object(
-         ((StringBuffer)(new Object("EVT LUID: "))).append(this._eventData.getLUID()).toString(), 18014398509481984L
-      ));
-      this._debugiCalIDField = (LabelField)(new Object(
-         ((StringBuffer)(new Object("EVT ICALID: "))).append(this._eventData.getICalID()).toString(), 18014398509481984L
-      ));
-      this._debugTimeZoneField = (LabelField)(new Object(
-         ((StringBuffer)(new Object("Timezone: "))).append(this._eventData.getTimeZoneID()).toString(), 18014398509481984L
-      ));
-      this._debugGmtStartDate = (LabelField)(new Object(
-         ((StringBuffer)(new Object("GMT Start: "))).append(this._eventData.getStartDate(null)).toString(), 18014398509481984L
-      ));
-      this._debugGMESendStatus = (LabelField)(new Object("GME Send Status: ", 18014398509481984L));
-      this._debugCalSrvBaseIDField = (LabelField)(new Object(
-         ((StringBuffer)(new Object("BASE CAL SVC ID:"))).append(this._calendarServiceManager.getBaseSystemCalendarService().getUniqueServiceID()).toString(),
-         18014398509481984L
-      ));
-      this._debugCalSrvDefaultIDField = (LabelField)(new Object(
-         ((StringBuffer)(new Object("DFLT CAL SVC ID:"))).append(this._calendarServiceManager.getDefaultCalendarService().getUniqueServiceID()).toString(),
-         18014398509481984L
-      ));
-      this._debugCalSrvDefaultFldIDField = (LabelField)(new Object(
-         ((StringBuffer)(new Object("DFLT CAL FLD ID:")))
-            .append(this._calendarServiceManager.getDefaultCalendarService().getPrimaryCalendarFolderID())
-            .toString(),
-         18014398509481984L
-      ));
-      this._debugCalDBIDField = (LabelField)(new Object(
-         ((StringBuffer)(new Object("THIS EVT SVC ID: "))).append(this._eventData.getCalendarKey().getCalendarServiceID()).toString(), 18014398509481984L
-      ));
-      this._debugCalDBFldIDField = (LabelField)(new Object(
-         ((StringBuffer)(new Object("THIS EVT FLD ID: "))).append(this._eventData.getCalendarKey().getCalendarFolderID()).toString(), 18014398509481984L
-      ));
-      this._debugCalSrvIDField = (LabelField)(new Object(
-         ((StringBuffer)(new Object("THIS CAL SVC ID: "))).append(this._calendarService.getUniqueServiceID()).toString(), 18014398509481984L
-      ));
-      this._debugCalUIDField = (LabelField)(new Object(
-         ((StringBuffer)(new Object("THIS CAL SVC UID: "))).append(this._calendarService.getCICALConfiguration().getUID()).toString(), 18014398509481984L
-      ));
-      this._debugCalUserIDField = (LabelField)(new Object(
-         ((StringBuffer)(new Object("THIS CAL SVC USERID: "))).append(this._calendarService.getCICALConfiguration().getUserID()).toString(), 18014398509481984L
-      ));
-      this._debugCalDSIDField = (LabelField)(new Object(
-         ((StringBuffer)(new Object("THIS CAL SVC DSID: "))).append(this._calendarService.getCICALConfiguration().getDatasourceID()).toString(),
-         18014398509481984L
-      ));
+      this._debugRefIDField = new LabelField("EVT UID: " + this._eventData.getUID(), 18014398509481984L);
+      this._debugLongIDField = new LabelField("EVT LUID: " + this._eventData.getLUID(), 18014398509481984L);
+      this._debugiCalIDField = new LabelField("EVT ICALID: " + this._eventData.getICalID(), 18014398509481984L);
+      this._debugTimeZoneField = new LabelField("Timezone: " + this._eventData.getTimeZoneID(), 18014398509481984L);
+      this._debugGmtStartDate = new LabelField("GMT Start: " + this._eventData.getStartDate(null), 18014398509481984L);
+      this._debugGMESendStatus = new LabelField("GME Send Status: ", 18014398509481984L);
+      this._debugCalSrvBaseIDField = new LabelField(
+         "BASE CAL SVC ID:" + this._calendarServiceManager.getBaseSystemCalendarService().getUniqueServiceID(), 18014398509481984L
+      );
+      this._debugCalSrvDefaultIDField = new LabelField(
+         "DFLT CAL SVC ID:" + this._calendarServiceManager.getDefaultCalendarService().getUniqueServiceID(), 18014398509481984L
+      );
+      this._debugCalSrvDefaultFldIDField = new LabelField(
+         "DFLT CAL FLD ID:" + this._calendarServiceManager.getDefaultCalendarService().getPrimaryCalendarFolderID(), 18014398509481984L
+      );
+      this._debugCalDBIDField = new LabelField("THIS EVT SVC ID: " + this._eventData.getCalendarKey().getCalendarServiceID(), 18014398509481984L);
+      this._debugCalDBFldIDField = new LabelField("THIS EVT FLD ID: " + this._eventData.getCalendarKey().getCalendarFolderID(), 18014398509481984L);
+      this._debugCalSrvIDField = new LabelField("THIS CAL SVC ID: " + this._calendarService.getUniqueServiceID(), 18014398509481984L);
+      this._debugCalUIDField = new LabelField("THIS CAL SVC UID: " + this._calendarService.getCICALConfiguration().getUID(), 18014398509481984L);
+      this._debugCalUserIDField = new LabelField("THIS CAL SVC USERID: " + this._calendarService.getCICALConfiguration().getUserID(), 18014398509481984L);
+      this._debugCalDSIDField = new LabelField("THIS CAL SVC DSID: " + this._calendarService.getCICALConfiguration().getDatasourceID(), 18014398509481984L);
       String syncInfo = null;
       if (this._syncData != null) {
-         syncInfo = ((StringBuffer)(new Object("D/H Seq: ")))
-            .append(this._syncData.getDeviceSequence())
-            .append(",")
-            .append(this._syncData.getHostSequence())
-            .toString();
+         syncInfo = "D/H Seq: " + this._syncData.getDeviceSequence() + "," + this._syncData.getHostSequence();
       } else {
          syncInfo = "UNAVAILABLE";
       }
 
-      this._debugSeqRevPair = (LabelField)(new Object(syncInfo, 18014398509481984L));
-      this._debugBlock = (VerticalFieldManager)(new Object());
+      this._debugSeqRevPair = new LabelField(syncInfo, 18014398509481984L);
+      this._debugBlock = new VerticalFieldManager();
       this._debugBlock.add(this._debugRefIDField);
       this._debugBlock.add(this._debugLongIDField);
       this._debugBlock.add(this._debugiCalIDField);
-      this._debugBlock.add((Field)(new Object()));
+      this._debugBlock.add(new SeparatorField());
       this._debugBlock.add(this._debugTimeZoneField);
       this._debugBlock.add(this._debugGmtStartDate);
       this._debugBlock.add(this._debugSeqRevPair);
       this._debugBlock.add(this._debugGMESendStatus);
-      this._debugBlock.add((Field)(new Object()));
+      this._debugBlock.add(new SeparatorField());
       this._debugBlock.add(this._debugCalSrvBaseIDField);
       this._debugBlock.add(this._debugCalSrvDefaultIDField);
       this._debugBlock.add(this._debugCalSrvDefaultFldIDField);
-      this._debugBlock.add((Field)(new Object()));
+      this._debugBlock.add(new SeparatorField());
       this._debugBlock.add(this._debugCalDBIDField);
       this._debugBlock.add(this._debugCalDBFldIDField);
-      this._debugBlock.add((Field)(new Object()));
+      this._debugBlock.add(new SeparatorField());
       this._debugBlock.add(this._debugCalSrvIDField);
       this._debugBlock.add(this._debugCalUIDField);
       this._debugBlock.add(this._debugCalUserIDField);
       this._debugBlock.add(this._debugCalDSIDField);
       if (this._eventData.getRelatedLUID() != 0) {
-         this._debugBlock.add((Field)(new Object()));
+         this._debugBlock.add(new SeparatorField());
          int serverID = (int)(this._eventData.getRelatedLUID() & 4294967295L);
-         this._debugParentIDField = (LabelField)(new Object(((StringBuffer)(new Object("Parent Id: "))).append(serverID).toString(), 18014398509481984L));
-         this._debugRelatedTimeField = (LabelField)(new Object(
-            ((StringBuffer)(new Object("Related Time: "))).append(this._eventData.getRelatedTime()).toString(), 18014398509481984L
-         ));
+         this._debugParentIDField = new LabelField("Parent Id: " + serverID, 18014398509481984L);
+         this._debugRelatedTimeField = new LabelField("Related Time: " + this._eventData.getRelatedTime(), 18014398509481984L);
          this._debugBlock.add(this._debugParentIDField);
          this._debugBlock.add(this._debugRelatedTimeField);
       }
 
-      this._debugBlock.add((Field)(new Object()));
+      this._debugBlock.add(new SeparatorField());
    }
 
    private void populateAndAddFields() {
@@ -1081,7 +1055,7 @@ public class EventViewer
 
    private void checkForVerbOverrides(Event event, Verb[] defaultVerbs) {
       if (defaultVerbs != null) {
-         ContextObject contextObject = (ContextObject)(new Object());
+         ContextObject contextObject = new ContextObject();
          ContextObject.put(contextObject, 248, defaultVerbs);
          ContextObject.setFlag(contextObject, 87);
          ContextObject.put(contextObject, 424670468422402792L, event);
@@ -1091,9 +1065,9 @@ public class EventViewer
 
          for (int i = 0; i < count; i++) {
             Object model = models[i];
-            if (model instanceof Object) {
+            if (model instanceof VerbProvider) {
                VerbProvider verbProvider = (VerbProvider)model;
-               verbProvider.getVerbs(contextObject, new Object[0]);
+               verbProvider.getVerbs(contextObject, new Verb[0]);
             }
          }
 
@@ -1104,7 +1078,7 @@ public class EventViewer
    }
 
    private Manager createSection() {
-      Manager section = (Manager)(new Object());
+      Manager section = new FastInsertVerticalFieldManager();
       section.setTag(SECTION_AREA_TAG);
       this.add(section);
       return section;
@@ -1159,12 +1133,12 @@ public class EventViewer
 
          for (int i = 0; i < this._externalFields1.length; i++) {
             Field f = this._externalFields1[i];
-            if (f instanceof Object) {
+            if (f instanceof VerticalFieldManager) {
                VerticalFieldManager vfm = (VerticalFieldManager)f;
 
                for (int j = 0; j < vfm.getFieldCount(); j++) {
                   Field f2 = vfm.getField(j);
-                  if (f2 instanceof Object) {
+                  if (f2 instanceof AddressReferenceViewField) {
                      AddressReferenceViewField arvf = (AddressReferenceViewField)f2;
                      arvf.reInitalizeField();
                   }
@@ -1236,7 +1210,7 @@ public class EventViewer
 
       if (!this._newEvent && this._syncData != null && !this._viewingAppointmentStatus) {
          Object o = ContextObject.get(co, 250);
-         if (o instanceof Object) {
+         if (o instanceof CMIMEReferenceIdProvider) {
             messageId = ((CMIMEReferenceIdProvider)o).getCMIMEReferenceIdentifier();
             if (event.isMeeting() && this._syncData.getOwnerId() != -1 && this._syncData.getOwnerId() != messageId) {
                this._meetingOutdated = true;
@@ -1248,8 +1222,8 @@ public class EventViewer
    }
 
    private Verb[] getMeetingVerbs() {
-      Verb[] verbs = new Object[0];
-      ContextObject context = (ContextObject)(new Object(86));
+      Verb[] verbs = new Verb[0];
+      ContextObject context = new ContextObject(86);
       RIMModel model = (RIMModel)this._eventData.getMeetingInfo();
       ContextObject.put(context, SaveEventVerb.SAVE_EVENT_KEY, this._saveVerb);
       ContextObject.put(context, 424670468422402792L, this._eventData);
@@ -1262,7 +1236,7 @@ public class EventViewer
       menu.add(this._verbs);
       CalendarProxy calProxy = CalendarProxy.getInstance();
       Object[] eventVerbs = calProxy.getRepositoryCopy(5182228461004335870L);
-      ContextObject context = (ContextObject)(new Object(86));
+      ContextObject context = new ContextObject(86);
       if (eventVerbs != null) {
          for (int i = 0; i < eventVerbs.length; i++) {
             Verb eventVerb = (Verb)eventVerbs[i];
@@ -1270,18 +1244,18 @@ public class EventViewer
          }
       }
 
-      Verb[] verbs = new Object[0];
+      Verb[] verbs = new Verb[0];
       Field focusedField = this.getLeafFieldWithFocus();
       Object cookie = focusedField.getCookie();
       RIMModel cookieModel = null;
       context.put(9045827404276417370L, focusedField);
-      if (focusedField instanceof Object) {
+      if (focusedField instanceof AddressReferenceViewField$AddressReferenceViewDataField) {
          AddressReferenceViewField toggleField = ((AddressReferenceViewField$AddressReferenceViewDataField)focusedField).getAddressReferenceViewField();
          int resId = toggleField.isFriendlyVisible() ? 1650 : 1700;
          menu.add(toggleField.getToggleVerb(CommonResources.getResourceBundle(), resId));
       }
 
-      if (cookie instanceof Object) {
+      if (cookie instanceof VerbProvider) {
          VerbProvider verbProvider = (VerbProvider)cookie;
          Array.resize(verbs, 0);
          context.setFlag(2);
@@ -1315,7 +1289,7 @@ public class EventViewer
          menu.setDefault(this._saveVerb);
       }
 
-      if ((!this.isMuddy() || this._saveVerb == null) && (!this.isDirty() || this._saveVerb == null || !(fieldWithFocus instanceof Object))) {
+      if ((!this.isMuddy() || this._saveVerb == null) && (!this.isDirty() || this._saveVerb == null || !(fieldWithFocus instanceof EditField))) {
          if (this._defaultVerb != null) {
             menu.setDefault(this._defaultVerb);
          }
@@ -1326,8 +1300,8 @@ public class EventViewer
       DefaultVerbProvider defaultVerbProvider = null;
       if (cookieModel != null) {
          Object addressCard = AddressBookServices.reverseLookup(cookieModel);
-         if (addressCard instanceof Object) {
-            defaultVerbProvider = (DefaultVerbProvider)(new Object((RIMModel)addressCard));
+         if (addressCard instanceof RIMModel) {
+            defaultVerbProvider = new LastUsedDefaultVerbProvider((RIMModel)addressCard);
          }
       }
 
@@ -1371,7 +1345,7 @@ public class EventViewer
    @Override
    protected boolean keyChar(char key, int status, int time) {
       if (Character.isDigit(key) && this._reminderField.isFocus()) {
-         ((ChoiceField)this._reminderField).setSelectedIndex(1);
+         ((ObjectChoiceField)this._reminderField).setSelectedIndex(1);
          this.updateDisplay();
          return true;
       } else {
@@ -1384,10 +1358,10 @@ public class EventViewer
       char altKey = Keypad.getAltedChar(key);
       Field fieldWithFocus = this.getLeafFieldWithFocus();
       if (Character.isDigit(key) && fieldWithFocus == this._reminderField) {
-         ((ChoiceField)this._reminderField).setSelectedIndex(1);
+         ((ObjectChoiceField)this._reminderField).setSelectedIndex(1);
          return true;
       } else {
-         return fieldWithFocus != this._duration && fieldWithFocus != this._reminderField && !(fieldWithFocus instanceof Object)
+         return fieldWithFocus != this._duration && fieldWithFocus != this._reminderField && !(fieldWithFocus instanceof TimeChoiceField)
             ? super.keyControl(key, status, time)
             : this.keyChar(altKey, status, time);
       }
@@ -1526,7 +1500,7 @@ public class EventViewer
       VerticalFieldManager fieldManager = locateMeetingInfoFields(this.getScreen());
       if (fieldManager != null) {
          int fieldCount = this.getFieldCount();
-         Field[] fields = new Object[fieldCount];
+         Field[] fields = new Field[fieldCount];
 
          for (int j = 0; j < fieldCount; j++) {
             fields[j] = this.getField(j);
@@ -1538,14 +1512,14 @@ public class EventViewer
             if (cookie instanceof AttendeeModel) {
                AttendeeModel newAttendee = (AttendeeModel)cookie;
                RIMModel address = (RIMModel)newAttendee.getAddress();
-               if (address instanceof Object) {
+               if (address instanceof ResolvedStatusProvider) {
                   ResolvedStatusProvider resolvedStatus = (ResolvedStatusProvider)address;
                   if (resolvedStatus.isResolved()) {
                      Object resolvedAddress = resolvedStatus.getResolvedSubItem();
                      newAttendee = (AttendeeModel)AttendeeFactory.createAttendee(1, resolvedAddress);
                   }
 
-                  if (address instanceof Object) {
+                  if (address instanceof FieldProvider) {
                      Field newField = MeetingUtilities.createAttendeeField(newAttendee, null);
                      if (newField != null) {
                         fieldManager.insert(newField, currField.getIndex());
@@ -1585,9 +1559,9 @@ public class EventViewer
    }
 
    private static VerticalFieldManager locateMeetingInfoFields(Field field) {
-      if (field instanceof Object) {
+      if (field instanceof VerticalFieldManager) {
          VerticalFieldManager vfm = (VerticalFieldManager)field;
-         if (field.getCookie() instanceof Object) {
+         if (field.getCookie() instanceof MeetingInfo) {
             if (vfm.getFieldCount() > 0) {
                return (VerticalFieldManager)field;
             }
@@ -1596,7 +1570,7 @@ public class EventViewer
          }
       }
 
-      if (field instanceof Object) {
+      if (field instanceof Manager) {
          Manager manager = (Manager)field;
          int fieldCount = manager.getFieldCount();
 
@@ -1617,7 +1591,7 @@ public class EventViewer
       int numFields = this._meetingInfoField.getFieldCount();
 
       for (int i = 0; i < numFields; i++) {
-         if (this._meetingInfoField.getField(i).getCookie() instanceof Object) {
+         if (this._meetingInfoField.getField(i).getCookie() instanceof Attendee) {
             attendeeCount++;
          }
       }
@@ -1653,13 +1627,7 @@ public class EventViewer
                   return true;
                }
 
-               int result = Dialog.ask(
-                  3,
-                  ((StringBuffer)(new Object("Move this appointment to the current default calendar, ")))
-                     .append(defaultCalendarService.getServiceName())
-                     .append("?")
-                     .toString()
-               );
+               int result = Dialog.ask(3, "Move this appointment to the current default calendar, " + defaultCalendarService.getServiceName() + "?");
                if (result == 4) {
                   EventUtilities.moveEvent(this._eventData, null, defaultCalendarService, true, false);
                   Dialog.alert("Appointment moved.");
@@ -1692,7 +1660,7 @@ public class EventViewer
                      status = "QUEUED";
                }
 
-               this._debugGMESendStatus.setText(((StringBuffer)(new Object("GME Send Status: "))).append(status).toString());
+               this._debugGMESendStatus.setText("GME Send Status: " + status);
                this.insert(this._debugBlock, 0);
                this._debugBlock.setFocus();
                this._debugActive = true;
@@ -1710,7 +1678,7 @@ public class EventViewer
          case 1178748482:
          default:
             if (this._uiApp != null) {
-               this._uiApp.pushScreen((Screen)(new Object(this._eventData.getMeetingInfo(), this._start.getDate(), this._end.getDate())));
+               this._uiApp.pushScreen(new FreeBusyController(this._eventData.getMeetingInfo(), this._start.getDate(), this._end.getDate()));
                return true;
             }
          case 1178748481:
@@ -1745,8 +1713,8 @@ public class EventViewer
             if (!this._newEvent || serviceRecord != null && serviceRecord.getType() == 0) {
                for (Enumeration calendarFolders = service.getCalendarFolders().elements(); calendarFolders.hasMoreElements(); currentIndex++) {
                   CalendarFolder folder = (CalendarFolder)calendarFolders.nextElement();
-                  CalendarKey calendarKey = (CalendarKey)(new Object(service.getUniqueServiceID(), folder.getFolderID()));
-                  String calendarDescription = ((StringBuffer)(new Object())).append(service.getServiceName()).append(folder.getFolderNameSuffix()).toString();
+                  CalendarKey calendarKey = new CalendarKey(service.getUniqueServiceID(), folder.getFolderID());
+                  String calendarDescription = service.getServiceName() + folder.getFolderNameSuffix();
                   int color = options.getCalendarColour(calendarKey);
                   CalendarChoice calendarChoice = new CalendarChoice(calendarKey, calendarDescription, color);
                   Arrays.add(calendarChoices, calendarChoice);

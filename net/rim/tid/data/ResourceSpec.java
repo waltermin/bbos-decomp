@@ -14,10 +14,10 @@ public class ResourceSpec implements IResourceSpec {
    private static final String protocol = "file:";
 
    protected int findID(RecordStore rs, byte[] header, String name, boolean createIfNeed) {
-      ByteArrayInputStream bais = (ByteArrayInputStream)(new Object(header));
-      DataInputStream da = (DataInputStream)(new Object(bais));
+      ByteArrayInputStream bais = new ByteArrayInputStream(header);
+      DataInputStream da = new DataInputStream(bais);
       int recordsCount = da.readChar();
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
 
       for (int i = 0; i < recordsCount; i++) {
          sb.setLength(0);
@@ -38,8 +38,8 @@ public class ResourceSpec implements IResourceSpec {
          return -1;
       }
 
-      ByteArrayOutputStream baos = (ByteArrayOutputStream)(new Object());
-      DataOutputStream dos = (DataOutputStream)(new Object(baos));
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      DataOutputStream dos = new DataOutputStream(baos);
       dos.writeShort(recordsCount + 1);
       dos.write(header, 2, header.length - 2);
       dos.writeShort(name.length());
@@ -91,7 +91,7 @@ public class ResourceSpec implements IResourceSpec {
          byte[] data = rs.getRecord(id);
          return new ContinuousInputStream(data);
       } catch (Throwable var7) {
-         System.err.println(((StringBuffer)(new Object("ContinuousInputStream getLearningInputStream::"))).append(e).toString());
+         System.err.println("ContinuousInputStream getLearningInputStream::" + e);
          return null;
       }
    }
@@ -142,7 +142,7 @@ public class ResourceSpec implements IResourceSpec {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private byte[] loadData(InputStream is) {
-      ByteArrayOutputStream bos = (ByteArrayOutputStream)(new Object());
+      ByteArrayOutputStream bos = new ByteArrayOutputStream();
       int blockSize = is.available();
       if (blockSize == 0) {
          blockSize = 5000;

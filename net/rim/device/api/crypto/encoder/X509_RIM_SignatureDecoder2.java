@@ -2,13 +2,15 @@ package net.rim.device.api.crypto.encoder;
 
 import net.rim.device.api.crypto.Digest;
 import net.rim.device.api.crypto.DigestFactory;
+import net.rim.device.api.crypto.InvalidSignatureEncodingException;
+import net.rim.device.api.crypto.NoSuchAlgorithmException;
 import net.rim.device.api.crypto.asn1.ASN1EncodingException;
 import net.rim.device.api.crypto.asn1.ASN1InputByteArray;
 import net.rim.device.api.util.Arrays;
 
 final class X509_RIM_SignatureDecoder2 extends X509_SignatureDecoder {
    @Override
-   protected final DecodedSignature decodeSignature(ASN1InputByteArray parameters, byte[] encodedSignature, String signatureAlgorithm, String digestAlgorithm) {
+   protected final DecodedSignature decodeSignature(ASN1InputByteArray parameters, byte[] encodedSignature, String signatureAlgorithm, String digestAlgorithm) throws InvalidSignatureEncodingException, NoSuchAlgorithmException {
       try {
          if (digestAlgorithm == null) {
             digestAlgorithm = "SHA1";
@@ -20,18 +22,18 @@ final class X509_RIM_SignatureDecoder2 extends X509_SignatureDecoder {
             asn1Stream.readSequence();
             byte[] _r = asn1Stream.readIntegerAsByteArray();
             byte[] _s = asn1Stream.readIntegerAsByteArray();
-            return (DecodedSignature)(new Object(_r, _s, digest));
+            return new DSADecodedSignature(_r, _s, digest);
          }
 
          if (signatureAlgorithm.startsWith("RSA")) {
             byte[] _signature = Arrays.copy(encodedSignature);
-            return (DecodedSignature)(new Object(_signature, digest));
+            return new PKCS1DecodedSignature(_signature, digest);
          }
       } catch (ASN1EncodingException e) {
-         throw new Object();
+         throw new InvalidSignatureEncodingException();
       }
 
-      throw new Object(signatureAlgorithm);
+      throw new NoSuchAlgorithmException(signatureAlgorithm);
    }
 
    @Override

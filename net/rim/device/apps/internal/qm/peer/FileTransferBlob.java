@@ -75,7 +75,7 @@ final class FileTransferBlob extends PeerDataBlob implements PersistableRIMModel
 
    @Override
    public final boolean convert(Object context, Object target) {
-      if (!(target instanceof Object)) {
+      if (!(target instanceof RIMMessagingOutgoingMessage)) {
          return false;
       }
 
@@ -97,17 +97,17 @@ final class FileTransferBlob extends PeerDataBlob implements PersistableRIMModel
 
    @Override
    public final void pickle(DataBuffer db) {
-      DataBuffer db2 = (DataBuffer)(new Object());
+      DataBuffer db2 = new DataBuffer();
       if (this._size > 15360) {
          EncodedImage image = EncodedImage.createEncodedImage(this._data, 0, this._data.length);
          image.setScaleX32(65536 * image.getWidth() / 320);
          image.setScaleY32(65536 * image.getHeight() / 240);
          Bitmap bitmap = image.getBitmap();
-         JPEGEncodedImage encodedImg = (JPEGEncodedImage)(new Object(bitmap, 45));
+         JPEGEncodedImage encodedImg = new JPEGEncodedImage(bitmap, 45);
          this._data = encodedImg.getData();
 
          for (int quality = 40; this._data.length >= 15360 && quality >= 0; quality -= 5) {
-            encodedImg = (JPEGEncodedImage)(new Object(bitmap, quality));
+            encodedImg = new JPEGEncodedImage(bitmap, quality);
             this._data = encodedImg.getData();
          }
 

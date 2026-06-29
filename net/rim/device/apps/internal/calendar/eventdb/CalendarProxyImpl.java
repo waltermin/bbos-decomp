@@ -11,7 +11,7 @@ import net.rim.vm.Array;
 
 public final class CalendarProxyImpl extends CalendarProxy {
    private long[] _factoryList = new long[0];
-   private LongHashtable _repository = (LongHashtable)(new Object());
+   private LongHashtable _repository = new LongHashtable();
 
    CalendarProxyImpl() {
    }
@@ -52,7 +52,7 @@ public final class CalendarProxyImpl extends CalendarProxy {
    public final synchronized void addToRepository(long ID, Object obj) {
       Vector objectList = (Vector)this._repository.get(ID);
       if (objectList == null) {
-         objectList = (Vector)(new Object());
+         objectList = new Vector();
          objectList.addElement(obj);
          this._repository.put(ID, objectList);
       } else {

@@ -226,11 +226,11 @@ public class SLTextDataContainer implements ISecureInputMethodBuffer {
 
    private static void sanityCheck(SLTextDataContainer toCheck) {
       if (toCheck._count != 0 && toCheck._totalLength == 0) {
-         throw new Object();
+         throw new RuntimeException();
       }
 
       if (Arrays.sum(toCheck._lengths, 0, toCheck._count, false) != toCheck._totalLength) {
-         throw new Object();
+         throw new RuntimeException();
       }
    }
 

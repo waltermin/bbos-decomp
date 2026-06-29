@@ -49,6 +49,6 @@ class Label {
    }
 
    void dump(Compiler c) {
-      c.print(((StringBuffer)(new Object("L"))).append(this._id).toString());
+      c.print("L" + this._id);
    }
 }

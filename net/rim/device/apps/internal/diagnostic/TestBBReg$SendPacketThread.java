@@ -4,7 +4,7 @@ import javax.microedition.io.Datagram;
 import net.rim.device.api.util.CyclicQueue;
 
 final class TestBBReg$SendPacketThread extends Thread {
-   private CyclicQueue _requests = (CyclicQueue)(new Object(8));
+   private CyclicQueue _requests = new CyclicQueue(8);
 
    @Override
    public final void run() {
@@ -43,12 +43,12 @@ final class TestBBReg$SendPacketThread extends Thread {
       // 2d: aload 1
       // 2e: getfield net/rim/device/apps/internal/diagnostic/TestBBReg$SendPacketThread$SPTRequest._sendObj Ljava/lang/Object;
       // 31: dup
-      // 32: instanceof java/lang/Object
+      // 32: instanceof net/rim/device/api/io/DatagramTransportBase
       // 35: ifne 3c
       // 38: pop
       // 39: goto 4c
-      // 3c: checkcast java/lang/Object
-      // 3f: checkcast java/lang/Object
+      // 3c: checkcast net/rim/device/api/io/DatagramTransportBase
+      // 3f: checkcast net/rim/device/api/io/DatagramTransportBase
       // 42: aload 1
       // 43: getfield net/rim/device/apps/internal/diagnostic/TestBBReg$SendPacketThread$SPTRequest._datagram Ljavax/microedition/io/Datagram;
       // 46: invokevirtual net/rim/device/api/io/DatagramTransportBase.send (Ljavax/microedition/io/Datagram;)V
@@ -56,12 +56,12 @@ final class TestBBReg$SendPacketThread extends Thread {
       // 4c: aload 1
       // 4d: getfield net/rim/device/apps/internal/diagnostic/TestBBReg$SendPacketThread$SPTRequest._sendObj Ljava/lang/Object;
       // 50: dup
-      // 51: instanceof java/lang/Object
+      // 51: instanceof javax/microedition/io/DatagramConnection
       // 54: ifne 5b
       // 57: pop
       // 58: goto 6a
-      // 5b: checkcast java/lang/Object
-      // 5e: checkcast java/lang/Object
+      // 5b: checkcast javax/microedition/io/DatagramConnection
+      // 5e: checkcast javax/microedition/io/DatagramConnection
       // 61: aload 1
       // 62: getfield net/rim/device/apps/internal/diagnostic/TestBBReg$SendPacketThread$SPTRequest._datagram Ljavax/microedition/io/Datagram;
       // 65: invokeinterface javax/microedition/io/DatagramConnection.send (Ljavax/microedition/io/Datagram;)V 2

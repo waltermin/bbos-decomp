@@ -15,7 +15,7 @@ final class KeyIdentity {
       System.out.println("Key Identity: ");
 
       for (int i = 0; i < 16; i++) {
-         System.out.print(((StringBuffer)(new Object())).append(Integer.toHexString(255 & this.keyIdentity[i])).append(" ").toString());
+         System.out.print(Integer.toHexString(255 & this.keyIdentity[i]) + " ");
       }
 
       System.out.print("\n");

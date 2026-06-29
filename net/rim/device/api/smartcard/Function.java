@@ -27,7 +27,7 @@ class Function implements Runnable {
 
    public void checkExceptionNoSmartCard() {
       if (this._exception != null) {
-         throw new Object(this._exception.toString());
+         throw new RuntimeException(this._exception.toString());
       }
    }
 

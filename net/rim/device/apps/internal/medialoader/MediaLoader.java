@@ -46,18 +46,18 @@ final class MediaLoader {
    private static String PATH_FIVE_ICON = "pictures/5_icons";
    private static String FIVE_ICON_FOLDER = "/store/home/user/pictures/myFaves icons/";
    private static String JSR_FOLDER_ICONS_FOLDER = "/store/samples/folder icons/";
-   static String[] _fileNames = new Object[0];
+   static String[] _fileNames = new String[0];
 
    public static final void main(String[] args) {
       String resourceModuleName = Process.currentProcess().getModuleName();
-      String nameKey = ((StringBuffer)(new Object("net.rim.device.apps.internal.medialoader.MediaLoader."))).append(resourceModuleName).toString();
+      String nameKey = "net.rim.device.apps.internal.medialoader.MediaLoader." + resourceModuleName;
       if (args != null && args.length > 0) {
          label169:
          try {
             int vendorId = Integer.valueOf(args[0]);
             int brandingId = Branding.getVendorId();
             if (vendorId != 0 && brandingId != vendorId && brandingId != 1) {
-               String logData = ((StringBuffer)(new Object("Bailing out of Medialoader (mismatched vendor id) for: "))).append(nameKey).toString();
+               String logData = "Bailing out of Medialoader (mismatched vendor id) for: " + nameKey;
                EventLogger.logEvent(-7509200465648525729L, logData.getBytes(), 0);
                return;
             }
@@ -66,7 +66,7 @@ final class MediaLoader {
          }
       }
 
-      String logData = ((StringBuffer)(new Object("Loading media for: "))).append(nameKey).toString();
+      String logData = "Loading media for: " + nameKey;
       EventLogger.logEvent(-7509200465648525729L, logData.getBytes(), 0);
       Resource resources = Resource.getResourceClass();
       Enumeration enumeration = resources.getResourceKeys();
@@ -76,7 +76,7 @@ final class MediaLoader {
          while (enumeration.hasMoreElements()) {
             String inname = (String)enumeration.nextElement();
             String name = FileUtilities.getName(inname);
-            String codResourceName = ((StringBuffer)(new Object("cod://"))).append(resourceModuleName).append('/').append(inname).toString();
+            String codResourceName = "cod://" + resourceModuleName + '/' + inname;
             if (inname.startsWith(PATH_FIVE_ICON) && isImageSuffix(inname)) {
                if (!folderAdded) {
                   FileUtilities.ensureDirectoryExists(fiveURL);
@@ -84,26 +84,20 @@ final class MediaLoader {
                   folderAdded = true;
                }
 
-               ContentStoreInjector.injectLinkToCodFile(codResourceName, ((StringBuffer)(new Object())).append(FIVE_ICON_FOLDER).append(name).toString(), true);
+               ContentStoreInjector.injectLinkToCodFile(codResourceName, FIVE_ICON_FOLDER + name, true);
             } else if (inname.startsWith(PATH_FOLDER_ICONS) && isImageSuffix(inname)) {
-               ContentStoreInjector.injectLinkToCodFile(
-                  codResourceName, ((StringBuffer)(new Object())).append(JSR_FOLDER_ICONS_FOLDER).append(name).toString(), true
-               );
+               ContentStoreInjector.injectLinkToCodFile(codResourceName, JSR_FOLDER_ICONS_FOLDER + name, true);
             } else if (inname.startsWith(PATH_CONTACTS) && isImageSuffix(inname)) {
-               ContentStoreInjector.injectLinkToCodFile(
-                  codResourceName, ((StringBuffer)(new Object())).append(JSR_CONTACTS_FOLDER).append(name).toString(), true
-               );
+               ContentStoreInjector.injectLinkToCodFile(codResourceName, JSR_CONTACTS_FOLDER + name, true);
             } else if (inname.startsWith(PATH_PICTURE) && isImageSuffix(inname)) {
-               ContentStoreInjector.injectLinkToCodFile(
-                  codResourceName, ((StringBuffer)(new Object())).append(JSR_PICTURE_FOLDER).append(name).toString(), true
-               );
-               ContentStoreInjector.removeLegacyLink(((StringBuffer)(new Object())).append(USER_PICTURE_FOLDER).append(name).toString());
+               ContentStoreInjector.injectLinkToCodFile(codResourceName, JSR_PICTURE_FOLDER + name, true);
+               ContentStoreInjector.removeLegacyLink(USER_PICTURE_FOLDER + name);
             } else if (inname.startsWith(PATH_RINGTONES) && isAudioSuffix(inname)) {
-               String dstName = ((StringBuffer)(new Object())).append(JSR_RINGTONES_FOLDER).append(name).toString();
+               String dstName = JSR_RINGTONES_FOLDER + name;
                ContentStoreInjector.injectLinkToCodFile(codResourceName, dstName, true);
                Arrays.add(_fileNames, dstName);
             } else if (inname.startsWith(PATH_MUSIC) && isAudioSuffix(inname)) {
-               ContentStoreInjector.injectLinkToCodFile(codResourceName, ((StringBuffer)(new Object())).append(JSR_MUSIC_FOLDER).append(name).toString(), true);
+               ContentStoreInjector.injectLinkToCodFile(codResourceName, JSR_MUSIC_FOLDER + name, true);
             } else if ((
                   inname.startsWith(PATH_VIDEOS)
                      || inname.startsWith(PATH_VIDEOS_83XX)
@@ -112,20 +106,14 @@ final class MediaLoader {
                      || inname.startsWith(PATH_VIDEOS_8330)
                )
                && isVideoSuffix(inname)) {
-               ContentStoreInjector.injectLinkToCodFile(codResourceName, ((StringBuffer)(new Object())).append(JSR_VIDEOS_FOLDER).append(name).toString(), true);
+               ContentStoreInjector.injectLinkToCodFile(codResourceName, JSR_VIDEOS_FOLDER + name, true);
             } else if (inname.startsWith(PATH_MMS)) {
                if (isImageSuffix(inname)) {
-                  ContentStoreInjector.injectLinkToCodFile(
-                     codResourceName, ((StringBuffer)(new Object())).append(JSR_MMS_PICTURE_FOLDER).append(name).toString(), false
-                  );
+                  ContentStoreInjector.injectLinkToCodFile(codResourceName, JSR_MMS_PICTURE_FOLDER + name, false);
                } else if (isAudioSuffix(inname)) {
-                  ContentStoreInjector.injectLinkToCodFile(
-                     codResourceName, ((StringBuffer)(new Object())).append(JSR_MMS_TUNE_FOLDER).append(name).toString(), false
-                  );
+                  ContentStoreInjector.injectLinkToCodFile(codResourceName, JSR_MMS_TUNE_FOLDER + name, false);
                } else if (isMMSTemplateSuffix(inname)) {
-                  ContentStoreInjector.injectLinkToCodFile(
-                     codResourceName, ((StringBuffer)(new Object())).append(JSR_MMS_TEMPLATE_FOLDER).append(name).toString(), false
-                  );
+                  ContentStoreInjector.injectLinkToCodFile(codResourceName, JSR_MMS_TEMPLATE_FOLDER + name, false);
                }
             }
          }

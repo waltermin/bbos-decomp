@@ -20,11 +20,11 @@ final class ViewAddressVerb extends Verb {
    public final Object invoke(Object parameter) {
       ContextObject context = PhoneContexts.GET_VERBS_CONTEXT_WR.getContextObject();
       context.reset();
-      Verb[] verbs = new Object[0];
+      Verb[] verbs = new Verb[0];
       context.setFlag(45, 18);
       context.put(-409744358660961448L, DialVerb.getRecognizer());
       PhoneUtilities.setPrivateFlag(context, 1);
-      if (this._addressToView instanceof Object) {
+      if (this._addressToView instanceof VerbProvider) {
          VerbProvider verbProvider = (VerbProvider)this._addressToView;
          verbProvider.getVerbs(context, verbs);
       }

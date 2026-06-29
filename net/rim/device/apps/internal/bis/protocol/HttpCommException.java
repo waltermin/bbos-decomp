@@ -9,6 +9,6 @@ public class HttpCommException extends Exception {
 
    @Override
    public String toString() {
-      return ((StringBuffer)(new Object())).append(super.toString()).append(":").append(this._httpStatusCode).toString();
+      return super.toString() + ":" + this._httpStatusCode;
    }
 }

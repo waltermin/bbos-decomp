@@ -22,12 +22,12 @@ final class WMLBrowserContent extends BrowserContentImpl {
    @Override
    public final void setContent(Field content) {
       if (!(content instanceof WMLBrowserField)) {
-         throw new Object("field must be WMLBrowserField");
+         throw new RuntimeException("field must be WMLBrowserField");
       }
 
       super.setContent(content);
       this._wmlBrowserField = (WMLBrowserField)content;
-      this._findVerbManager = (FindVerbManager)(new Object(this._wmlBrowserField));
+      this._findVerbManager = new FindVerbManager(this._wmlBrowserField);
    }
 
    @Override

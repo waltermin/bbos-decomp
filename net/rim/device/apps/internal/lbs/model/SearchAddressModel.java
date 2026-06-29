@@ -27,7 +27,7 @@ public final class SearchAddressModel implements MailingAddressModel, FieldProvi
    @Override
    public final void setType(int type) {
       if (type != 0 && type != 1) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._type = type;
@@ -157,7 +157,7 @@ public final class SearchAddressModel implements MailingAddressModel, FieldProvi
 
    @Override
    public final Field getField(Object context) {
-      VerticalFieldManager vfm = (VerticalFieldManager)(new Object(1152921504606846976L));
+      VerticalFieldManager vfm = new VerticalFieldManager(1152921504606846976L);
       vfm.setCookie(this);
       this.addField(vfm, 128, this.getAddressLine1(), false);
       this.addField(vfm, 702, this.getCity(), true);
@@ -168,8 +168,8 @@ public final class SearchAddressModel implements MailingAddressModel, FieldProvi
 
    @Override
    public final boolean grabDataFromField(Field field, Object context) {
-      if (!(field instanceof Object)) {
-         throw new Object();
+      if (!(field instanceof VerticalFieldManager)) {
+         throw new RuntimeException();
       }
 
       VerticalFieldManager vfm = (VerticalFieldManager)field;
@@ -215,9 +215,9 @@ public final class SearchAddressModel implements MailingAddressModel, FieldProvi
    }
 
    private final void addField(VerticalFieldManager vfm, int resourceId, String value, boolean useAddressBookResource) {
-      AutoTextEditField field = (AutoTextEditField)(new Object(
+      AutoTextEditField field = new AutoTextEditField(
          useAddressBookResource ? AddressBookResources.getString(resourceId) : LBSResources.getString(resourceId), value, 2048, 4505800798109696L
-      ));
+      );
       field.setCookie(this);
       vfm.add(field);
    }

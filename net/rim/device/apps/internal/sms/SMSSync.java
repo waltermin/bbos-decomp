@@ -32,8 +32,8 @@ final class SMSSync
    OTASyncDefaultProvider,
    OTASyncEventOptimizationProvider {
    private SyncConverter _converter = new SMSSyncConverter();
-   private CollectionListenerManager _listeners = (CollectionListenerManager)(new Object());
-   private ContextObject _syncContextObject = (ContextObject)(new Object(19));
+   private CollectionListenerManager _listeners = new CollectionListenerManager();
+   private ContextObject _syncContextObject = new ContextObject(19);
    private static String SYNC_COLLECTION_NAME = "SMS Messages";
    private static final long SMS_MESSAGES_BACKUP_MERGE_ID = 642795440399165430L;
 
@@ -137,7 +137,7 @@ final class SMSSync
       FolderMerge.registerMergedFolder(642795440399165430L, orphaned);
       ReadableList messages = (ReadableList)FolderMerge.getMergeCollection(642795440399165430L);
       int numMessages = messages.size();
-      SyncObject[] syncObjects = new Object[numMessages];
+      SyncObject[] syncObjects = new SyncObject[numMessages];
       LowMemoryManager.poll();
       synchronized (FolderHierarchies.getLockObject()) {
          numMessages = messages.size();

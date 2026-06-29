@@ -4,9 +4,9 @@ import java.util.Enumeration;
 import net.rim.device.api.collection.Collection;
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.pgp.PGPCertificate;
+import net.rim.device.api.crypto.certificate.pgp.PGPFingerprintKeyStoreIndex;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
-import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.api.synchronization.OTASyncCapableSyncItem;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.Persistable;
@@ -121,7 +121,7 @@ public final class PGPOptions extends SecureEmailOptions implements Persistable 
    private final KeyStoreData findMatchingKeyStoreData(KeyStore keyStore, byte[] fingerprint) {
       if (keyStore != null && fingerprint != null) {
          if (!keyStore.existsIndex(3692091765934112220L)) {
-            keyStore.addIndex((KeyStoreIndex)(new Object()));
+            keyStore.addIndex(new PGPFingerprintKeyStoreIndex());
          }
 
          Enumeration enumeration = keyStore.elements(3692091765934112220L, fingerprint);
@@ -145,7 +145,7 @@ public final class PGPOptions extends SecureEmailOptions implements Persistable 
       }
 
       Certificate certificate = keyStoreData.getCertificate();
-      return certificate instanceof Object
+      return certificate instanceof PGPCertificate
          && Arrays.equals(this._fingerprint, ((PGPCertificate)certificate).getFingerprint())
          && this.checkPrivateKeyAndITPolicy(keyStoreData);
    }

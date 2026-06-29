@@ -20,7 +20,7 @@ import net.rim.device.internal.ui.component.BackgroundDialog;
 import net.rim.device.internal.ui.component.PasswordDialog;
 
 public class NNEPasswordManager implements PersistentContentListener, RealtimeClockListener, GlobalEventListener {
-   private IntHashtable _cache = (IntHashtable)(new Object(2));
+   private IntHashtable _cache = new IntHashtable(2);
    private long _nextTimestamp = -1;
    private static final long INSTANCE_GUID = 7962629012429714450L;
    private static NNEPasswordManager _instance;
@@ -38,7 +38,7 @@ public class NNEPasswordManager implements PersistentContentListener, RealtimeCl
          int timeout = getPasswordTimeoutMillis();
          if (timeout == 0) {
             this._nextTimestamp = -1;
-            this._cache = (IntHashtable)(new Object(2));
+            this._cache = new IntHashtable(2);
          } else if (timeout != -1) {
             if (timeout > 0 && this._nextTimestamp + timeout < System.currentTimeMillis()) {
                this.purgeExpiredPasswords();
@@ -78,7 +78,7 @@ public class NNEPasswordManager implements PersistentContentListener, RealtimeCl
    @Override
    public void eventOccurred(long guid, int data0, int data1, Object object0, Object object1) {
       if (guid == 8877632280522743328L) {
-         this._cache = (IntHashtable)(new Object(2));
+         this._cache = new IntHashtable(2);
          this._nextTimestamp = -1;
       }
    }
@@ -122,7 +122,7 @@ public class NNEPasswordManager implements PersistentContentListener, RealtimeCl
 
    private static Object getEncodedPassword(ServiceRecord serviceRecord) {
       if (serviceRecord == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       NNEPasswordManager$NNEPassword cached = getCachedEncodedPassword(serviceRecord);
@@ -130,14 +130,14 @@ public class NNEPasswordManager implements PersistentContentListener, RealtimeCl
          return cached._encodedPassword;
       }
 
-      String prompt = MessageFormat.format(EmailResources.getString(206), new Object[]{serviceRecord.getName()});
-      PasswordDialog passwordDialog = (PasswordDialog)(new Object(prompt, false, 32, 134217728));
+      String prompt = MessageFormat.format(EmailResources.getString(206), new String[]{serviceRecord.getName()});
+      PasswordDialog passwordDialog = new PasswordDialog(prompt, false, 32, 134217728);
       BackgroundDialog.show(passwordDialog);
       if (passwordDialog.getCloseReason() == -1) {
          return null;
       }
 
-      Object password = PersistentContent.encode((String)(new Object(passwordDialog.getPassword())));
+      Object password = PersistentContent.encode(new String(passwordDialog.getPassword()));
       if (getPasswordTimeoutMillis() != 0) {
          long timestamp = System.currentTimeMillis();
          _instance._cache.put(serviceRecord.getId(), new NNEPasswordManager$NNEPassword(timestamp, password));

@@ -28,7 +28,7 @@ class VoicemailIconManager$VoicemailIconIndicator implements Indicator, TestPoin
          drawWidth = VoicemailIconManager._icons.paint(graphics, xpos, 0, this._index);
       } else {
          if (this._workBuffer == null) {
-            this._workBuffer = (StringBuffer)(new Object());
+            this._workBuffer = new StringBuffer();
          } else {
             this._workBuffer.setLength(0);
          }
@@ -73,7 +73,7 @@ class VoicemailIconManager$VoicemailIconIndicator implements Indicator, TestPoin
       switch (count) {
          case -2:
             if (this._workBuffer == null) {
-               this._workBuffer = (StringBuffer)(new Object());
+               this._workBuffer = new StringBuffer();
             } else {
                this._workBuffer.setLength(0);
             }
@@ -111,7 +111,7 @@ class VoicemailIconManager$VoicemailIconIndicator implements Indicator, TestPoin
 
    @Override
    public void test(Object id, Object testvalue) {
-      if (testvalue instanceof Object) {
+      if (testvalue instanceof Integer) {
          Integer integer = (Integer)testvalue;
          this.this$0.setIndicator(this._index, integer);
       }

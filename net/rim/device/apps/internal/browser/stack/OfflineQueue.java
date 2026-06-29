@@ -31,10 +31,10 @@ public final class OfflineQueue {
    public OfflineQueue() {
       PersistentObject store = RIMPersistentStore.getPersistentObject(6623930195017231157L);
       Object contents = store.getContents();
-      if (contents instanceof Object) {
+      if (contents instanceof Hashtable) {
          this._queues = (Hashtable)contents;
       } else {
-         this._queues = (Hashtable)(new Object());
+         this._queues = new Hashtable();
          this.commit();
       }
    }
@@ -66,11 +66,9 @@ public final class OfflineQueue {
       synchronized (FolderHierarchies.getLockObject()) {
          if (queueId == null) {
             folderId = BrowserFolders.makeUniqueLUID(this._queuesFolder);
-            queueFolder = (SimpleFolder)(new Object(
-               BrowserFolders.BROWSER_FAMILY, folderId, name, BrowserFolders.BROWSER_FOLDER_COLLECTION_CLASS, this._queuesFolder
-            ));
+            queueFolder = new SimpleFolder(BrowserFolders.BROWSER_FAMILY, folderId, name, BrowserFolders.BROWSER_FOLDER_COLLECTION_CLASS, this._queuesFolder);
             this._queuesFolder.putFolder(queueFolder);
-            this._queues.put(name, new Object(folderId));
+            this._queues.put(name, new Long(folderId));
             this.commit();
          } else {
             folderId = queueId;
@@ -120,10 +118,10 @@ public final class OfflineQueue {
    public final synchronized String[] getNames() {
       String[] names = null;
       if (this._queues.isEmpty()) {
-         return new Object[0];
+         return new String[0];
       }
 
-      names = new Object[this._queues.size()];
+      names = new String[this._queues.size()];
       Enumeration enumeration = this._queues.keys();
       int index = 0;
 
@@ -149,18 +147,18 @@ public final class OfflineQueue {
    }
 
    public static final String generateRequestId() {
-      StringBuffer deviceId = (StringBuffer)(new Object());
+      StringBuffer deviceId = new StringBuffer();
       deviceId.append('B');
       deviceId.append(DeviceInfo.getDeviceId());
       deviceId.append('B');
-      StringBuffer requestId = (StringBuffer)(new Object());
+      StringBuffer requestId = new StringBuffer();
       requestId.append(Math.abs(deviceId.toString().hashCode()));
       requestId.append(Math.abs(RandomSource.getInt()));
       return requestId.toString();
    }
 
    public static final String generateRequestDate() {
-      SimpleDateFormat dateFormat = (SimpleDateFormat)(new Object("EEE, dd MMM yyyy HH:mm:ss zzz"));
+      SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
       return dateFormat.format(Calendar.getInstance());
    }
 }

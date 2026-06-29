@@ -28,8 +28,8 @@ import net.rim.vm.DebugSupport;
 final class SystemStatusField extends StringRibbonComponent implements RibbonComponent$RibbonComponentChangeListener, PropsChangeListener {
    protected int _textHandle = -1;
    protected ModelInteractorImpl _model;
-   private TextGraphics _textGraphics = (TextGraphics)(new Object("BBMillbank", 10));
-   private DrawTextParam _textParams = (DrawTextParam)(new Object());
+   private TextGraphics _textGraphics = new TextGraphics("BBMillbank", 10);
+   private DrawTextParam _textParams = new DrawTextParam();
    private ResourceBundleFamily _rbf = ResourceBundle.getBundle(1137270090621229274L, "net.rim.device.apps.internal.resource.Ribbon");
    private ReadableLongMap _networkProps;
    private RibbonComponent$RibbonComponentChangeListener _listener;
@@ -82,7 +82,7 @@ final class SystemStatusField extends StringRibbonComponent implements RibbonCom
       String e911Lock = (String)networkProps.get(1812321293200299507L);
       Object activationRequired = networkProps.get(3170113883629495887L);
       int state = RadioInfo.getState();
-      if (!(activationRequired instanceof Object) || !activationRequired) {
+      if (!(activationRequired instanceof Boolean) || !(Boolean)activationRequired) {
          String simStatus = (String)networkProps.get(-8960794396193289546L);
          String networkState = (String)networkProps.get(4822241500382547294L);
          String modemModeEnabled = (String)networkProps.get(2594167647522947521L);
@@ -114,9 +114,9 @@ final class SystemStatusField extends StringRibbonComponent implements RibbonCom
             } else if (!this._hideNetworkInfo) {
                String operatorName = null;
                Object operatorNameData = networkProps.get(-7219683504990287771L);
-               if (!(operatorNameData instanceof Object)) {
-                  if (operatorNameData instanceof Object[]) {
-                     multiONSData = (Object[])operatorNameData;
+               if (!(operatorNameData instanceof String)) {
+                  if (operatorNameData instanceof String[]) {
+                     multiONSData = (String[])operatorNameData;
                      multiONSSuffix = "";
                   }
                } else {
@@ -128,13 +128,13 @@ final class SystemStatusField extends StringRibbonComponent implements RibbonCom
                if (idleText != null && idleText.length() > 0) {
                   idleModeTextUsed = true;
                   if (defaultTitle != null && defaultTitle.length() > 0) {
-                     defaultTitle = ((StringBuffer)(new Object())).append(defaultTitle).append(" - ").append(idleText).toString();
+                     defaultTitle = defaultTitle + " - " + idleText;
                   } else {
                      defaultTitle = idleText;
                   }
 
                   if (multiONSSuffix != null) {
-                     multiONSSuffix = ((StringBuffer)(new Object())).append(multiONSSuffix).append(idleText).toString();
+                     multiONSSuffix = multiONSSuffix + idleText;
                   }
                }
 
@@ -142,17 +142,17 @@ final class SystemStatusField extends StringRibbonComponent implements RibbonCom
                if (immediateDisplay != null && immediateDisplay.length() > 0) {
                   cellbroadcastImmediateTextUsed = true;
                   if (defaultTitle != null && defaultTitle.length() > 0) {
-                     defaultTitle = ((StringBuffer)(new Object())).append(defaultTitle).append(" - ").append(immediateDisplay).toString();
+                     defaultTitle = defaultTitle + " - " + immediateDisplay;
                   } else {
                      defaultTitle = immediateDisplay;
                   }
 
                   if (multiONSSuffix != null) {
                      if (multiONSSuffix.length() > 0) {
-                        multiONSSuffix = ((StringBuffer)(new Object())).append(multiONSSuffix).append(" - ").toString();
+                        multiONSSuffix = multiONSSuffix + " - ";
                      }
 
-                     multiONSSuffix = ((StringBuffer)(new Object())).append(multiONSSuffix).append(immediateDisplay).toString();
+                     multiONSSuffix = multiONSSuffix + immediateDisplay;
                   }
                }
             }
@@ -170,13 +170,13 @@ final class SystemStatusField extends StringRibbonComponent implements RibbonCom
       String wifiText = (String)networkProps.get(-1839664706744174700L);
       if (wifiText != null && wifiText.length() > 0) {
          if (defaultTitle != null && defaultTitle.length() > 0) {
-            defaultTitle = ((StringBuffer)(new Object())).append(defaultTitle).append(" - ").append(wifiText).toString();
+            defaultTitle = defaultTitle + " - " + wifiText;
          } else {
             defaultTitle = wifiText;
          }
 
          if (multiONSSuffix != null) {
-            multiONSSuffix = ((StringBuffer)(new Object())).append(multiONSSuffix).append(wifiText).toString();
+            multiONSSuffix = multiONSSuffix + wifiText;
          }
       }
 
@@ -221,7 +221,7 @@ final class SystemStatusField extends StringRibbonComponent implements RibbonCom
             }
 
             if (multiONSSuffix != null && multiONSSuffix.length() > 0) {
-               defaultTitle = ((StringBuffer)(new Object())).append(defaultTitle).append(" - ").append(multiONSSuffix).toString();
+               defaultTitle = defaultTitle + " - " + multiONSSuffix;
             }
          }
 
@@ -253,9 +253,9 @@ final class SystemStatusField extends StringRibbonComponent implements RibbonCom
 
    @Override
    public final void initialize(Hashtable params, Object context) {
-      if (context instanceof Object) {
+      if (context instanceof StringProps) {
          this._context = (StringProps)context;
-         if (context instanceof Object) {
+         if (context instanceof PropsChangeEventSubscription) {
             PropsChangeEventSubscription subscription = (PropsChangeEventSubscription)context;
             subscription.addPropsChangeListener(this);
          }

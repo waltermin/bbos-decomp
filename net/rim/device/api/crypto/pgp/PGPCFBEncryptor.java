@@ -1,6 +1,7 @@
 package net.rim.device.api.crypto.pgp;
 
 import java.io.OutputStream;
+import net.rim.device.api.crypto.CryptoTokenException;
 import net.rim.device.api.crypto.RandomSource;
 import net.rim.device.api.crypto.StreamEncryptor;
 import net.rim.device.api.crypto.SymmetricKeyEncryptorEngine;
@@ -33,19 +34,19 @@ public final class PGPCFBEncryptor extends StreamEncryptor {
          this._firstEncryption = true;
          this._dontPerformResync = dontPerformResync;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object())).append(this._engine.getAlgorithm()).append("/PGP/CFB").toString();
+      return this._engine.getAlgorithm() + "/PGP/CFB";
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   protected final void encrypt(byte[] plaintext, int plaintextOffset, int plaintextLength, byte[] ciphertext) {
+   protected final void encrypt(byte[] plaintext, int plaintextOffset, int plaintextLength, byte[] ciphertext) throws CryptoTokenException {
       if (plaintext != null
          && plaintextOffset >= 0
          && plaintextLength <= plaintext.length
@@ -84,7 +85,7 @@ public final class PGPCFBEncryptor extends StreamEncryptor {
                var10 = false;
             } finally {
                if (var10) {
-                  throw new Object();
+                  throw new CryptoTokenException();
                }
             }
 
@@ -112,7 +113,7 @@ public final class PGPCFBEncryptor extends StreamEncryptor {
             System.arraycopy(ciphertext, cipherOffset - length, this._CFBRegister, this._encryptedCFBRegisterOffset - length, length);
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

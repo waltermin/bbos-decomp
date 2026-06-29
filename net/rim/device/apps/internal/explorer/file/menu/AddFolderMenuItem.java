@@ -39,7 +39,7 @@ public final class AddFolderMenuItem extends MenuItem {
       // 01a: invokestatic net/rim/device/apps/internal/explorer/file/resource/ExplorerResources.getString (I)Ljava/lang/String;
       // 01d: invokestatic net/rim/device/api/ui/component/Dialog.alert (Ljava/lang/String;)V
       // 020: return
-      // 021: new java/lang/Object
+      // 021: new net/rim/device/apps/api/framework/file/FileDialog
       // 024: dup
       // 025: aload 0
       // 026: getfield net/rim/device/apps/internal/explorer/file/menu/AddFolderMenuItem._currentFolder Lnet/rim/device/apps/internal/explorer/file/FileItemField;
@@ -75,7 +75,7 @@ public final class AddFolderMenuItem extends MenuItem {
       // 065: aload 4
       // 067: invokestatic net/rim/device/internal/io/file/FileUtilities.isDirectory (Ljava/lang/String;)Z
       // 06a: ifne 083
-      // 06d: new java/lang/Object
+      // 06d: new java/lang/StringBuffer
       // 070: dup
       // 071: invokespecial java/lang/StringBuffer.<init> ()V
       // 074: aload 4
@@ -86,7 +86,7 @@ public final class AddFolderMenuItem extends MenuItem {
       // 081: astore 4
       // 083: aload 4
       // 085: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 088: checkcast java/lang/Object
+      // 088: checkcast javax/microedition/io/file/FileConnection
       // 08b: astore 1
       // 08c: aload 1
       // 08d: ifnonnull 09a
@@ -110,11 +110,11 @@ public final class AddFolderMenuItem extends MenuItem {
       // 0ba: astore 6
       // 0bc: aload 6
       // 0be: dup
-      // 0bf: instanceof java/lang/Object
+      // 0bf: instanceof net/rim/device/api/io/file/FileIOException
       // 0c2: ifne 0c9
       // 0c5: pop
       // 0c6: goto 0d4
-      // 0c9: checkcast java/lang/Object
+      // 0c9: checkcast net/rim/device/api/io/file/FileIOException
       // 0cc: invokevirtual net/rim/device/api/io/file/FileIOException.getMessage ()Ljava/lang/String;
       // 0cf: astore 5
       // 0d1: goto 0db

@@ -1,6 +1,7 @@
 package net.rim.device.cldc.io.mdp;
 
 import net.rim.device.api.io.DatagramAddressBase;
+import net.rim.device.api.io.UdpAddress;
 import net.rim.device.api.system.RadioInfo;
 import net.rim.device.cldc.io.udp.UdpInternalAddress;
 
@@ -60,7 +61,7 @@ public final class MdpAddress extends DatagramAddressBase {
          } else {
             int ret = DatagramAddressBase.parseInt(address, delim, scan, 10);
             if (ret < 0 || ret > 65535) {
-               throw new Object("Invalid SRC_PORT");
+               throw new IllegalArgumentException("Invalid SRC_PORT");
             }
 
             srcPort = ret;
@@ -75,7 +76,7 @@ public final class MdpAddress extends DatagramAddressBase {
             } else {
                int ret = DatagramAddressBase.parseInt(address, delim, scan, 10);
                if (ret < 0 || ret > 65535) {
-                  throw new Object("Invalid DEST_PORT");
+                  throw new IllegalArgumentException("Invalid DEST_PORT");
                }
 
                destPort = ret;
@@ -84,7 +85,7 @@ public final class MdpAddress extends DatagramAddressBase {
             scan = delim - 1;
             delim = scan;
             if (delim < 0) {
-               throw new Object("Bad NATIVE_ADDRESS");
+               throw new IllegalArgumentException("Bad NATIVE_ADDRESS");
             }
 
             DatagramAddressBase nativeAddr;
@@ -97,10 +98,10 @@ public final class MdpAddress extends DatagramAddressBase {
             super._address = address;
             this.init(nativeAddr, destPort, srcPort);
          } else {
-            throw new Object("Bad DEST_PORT");
+            throw new IllegalArgumentException("Bad DEST_PORT");
          }
       } else {
-         throw new Object("Bad SRC_PORT");
+         throw new IllegalArgumentException("Bad SRC_PORT");
       }
    }
 
@@ -169,7 +170,7 @@ public final class MdpAddress extends DatagramAddressBase {
    }
 
    public static final String makeAddress(boolean open, String nativeAddress, int destPort, int srcPort) {
-      StringBuffer buf = (StringBuffer)(new Object(128));
+      StringBuffer buf = new StringBuffer(128);
       appendAddress(buf, open, nativeAddress, destPort, srcPort);
       return buf.toString();
    }
@@ -206,14 +207,14 @@ public final class MdpAddress extends DatagramAddressBase {
       if (address != null && address.length() != 0) {
          switch (RadioInfo.getNetworkType()) {
             case 2:
-               return (DatagramAddressBase)(new Object(address));
+               return new DatagramAddressBase(address);
             case 3:
             case 4:
             case 5:
             case 6:
             case 7:
             default:
-               UdpInternalAddress addr = (UdpInternalAddress)(new Object(address));
+               UdpInternalAddress addr = new UdpInternalAddress(address);
                addr.setGpakHostAddress(wtAddress);
                return addr;
          }
@@ -224,15 +225,15 @@ public final class MdpAddress extends DatagramAddressBase {
 
    private final DatagramAddressBase makeNativeAddressBase(DatagramAddressBase addressBase) {
       if (addressBase != null) {
-         if (addressBase instanceof Object) {
-            return (DatagramAddressBase)(new Object(addressBase));
+         if (addressBase instanceof UdpInternalAddress) {
+            return new UdpInternalAddress(addressBase);
          }
 
-         if (addressBase instanceof Object) {
-            return (DatagramAddressBase)(new Object(addressBase));
+         if (addressBase instanceof UdpAddress) {
+            return new UdpAddress(addressBase);
          }
 
-         addressBase = (DatagramAddressBase)(new Object(addressBase));
+         addressBase = new DatagramAddressBase(addressBase);
       }
 
       return addressBase;

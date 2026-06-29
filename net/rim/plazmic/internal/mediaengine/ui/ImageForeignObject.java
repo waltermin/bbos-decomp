@@ -69,7 +69,7 @@ public class ImageForeignObject extends AbstractForeignObject implements MediaLi
    public ImageForeignObject(AnimationModel model) {
       this._model = model;
       this._ready = false;
-      this._player = (MediaPlayer)(new Object());
+      this._player = new MediaPlayer();
       this._player.setMedia(model);
       this._viewport = new AnimationViewport();
       this._viewport.setServices((MediaServices)this._player.getServices());

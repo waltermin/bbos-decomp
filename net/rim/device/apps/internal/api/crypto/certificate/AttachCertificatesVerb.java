@@ -20,19 +20,19 @@ public class AttachCertificatesVerb extends Verb {
 
    @Override
    public String toString() {
-      String[] containerStringUpperPluralArray = new Object[]{this._certificateAttachmentModelFactory.getPublicKeyContainerString(true, true)};
+      String[] containerStringUpperPluralArray = new String[]{this._certificateAttachmentModelFactory.getPublicKeyContainerString(true, true)};
       return MessageFormat.format(CryptoCommonResources.getString(17), containerStringUpperPluralArray);
    }
 
    @Override
    public Object invoke(Object context) {
-      ContextObject displayContext = (ContextObject)(new Object());
+      ContextObject displayContext = new ContextObject();
       displayContext.setFlag(5);
       LaunchKeyStoreBrowserVerb keyStoreBrowser = new LaunchKeyStoreBrowserVerb(
          this._certificateAttachmentModelFactory.getKeyStoreBrowserContextName(), displayContext
       );
       keyStoreBrowser.invoke(null);
-      KeyStoreData[] selectedKeyStoreDatas = (Object[])ContextObject.get(displayContext, -5328662892314083964L);
+      KeyStoreData[] selectedKeyStoreDatas = (KeyStoreData[])ContextObject.get(displayContext, -5328662892314083964L);
       if (selectedKeyStoreDatas == null) {
          return null;
       }
@@ -43,10 +43,10 @@ public class AttachCertificatesVerb extends Verb {
       for (int i = 0; i < numSelectedKeyStoreDatas; i++) {
          Certificate cert = selectedKeyStoreDatas[i].getCertificate();
          byte[] encoding = cert.getEncoding();
-         CMIMEParameters parameters = (CMIMEParameters)(new Object((DataBuffer)(new Object()), 2, 1));
+         CMIMEParameters parameters = new CMIMEParameters(new DataBuffer(), 2, 1);
          parameters.addCMIMEInteger((byte)-13, encoding.length);
          parameters.addCMIMEInteger((byte)-16, encoding.length);
-         ContextObject modelContext = (ContextObject)(new Object());
+         ContextObject modelContext = new ContextObject();
          modelContext.put(-4886909117188079897L, selectedKeyStoreDatas[i].getLabel());
          modelContext.put(316628257119802273L, cert);
          modelContext.put(8849067667159082262L, encoding);

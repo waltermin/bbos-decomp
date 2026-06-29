@@ -9,6 +9,7 @@ import javax.microedition.io.StreamConnection;
 import net.rim.device.api.io.DatagramAddressBase;
 import net.rim.device.api.io.DatagramBase;
 import net.rim.device.api.io.DatagramConnectionBase;
+import net.rim.device.api.io.IOPortAlreadyBoundException;
 import net.rim.device.api.io.TransportBase;
 import net.rim.device.api.system.EventLogger;
 import net.rim.device.api.system.RadioStatusListener;
@@ -22,8 +23,8 @@ public class StreamDatagramTransportBase extends TransportBase implements Stream
    private StreamReceiveThread _receiveThread;
    protected StreamSendThread _sendThread;
    protected StreamDatagramConnectionBaseFactory _connectionBaseFactory;
-   protected WeakReference[] _superConnections = new Object[0];
-   protected Vector _superServerConnections = (Vector)(new Object());
+   protected WeakReference[] _superConnections = new WeakReference[0];
+   protected Vector _superServerConnections = new Vector();
    public Object _connectionTableWaitObj = new Object();
    protected WeakReference _wCache;
    protected WeakReference _wPendingCache;
@@ -47,8 +48,8 @@ public class StreamDatagramTransportBase extends TransportBase implements Stream
 
    public void init(DatagramConnection subConnection) {
       if (subConnection != null) {
-         if (!(subConnection instanceof Object)) {
-            throw new Object();
+         if (!(subConnection instanceof DatagramConnectionBase)) {
+            throw new RuntimeException();
          }
 
          this._subConnection = (DatagramConnectionBase)subConnection;
@@ -70,7 +71,7 @@ public class StreamDatagramTransportBase extends TransportBase implements Stream
    }
 
    public void addConnection(StreamConnection connection) {
-      this.addConnection((WeakReference)(new Object(connection)));
+      this.addConnection(new WeakReference(connection));
    }
 
    public void addConnection(WeakReference w) {
@@ -97,14 +98,14 @@ public class StreamDatagramTransportBase extends TransportBase implements Stream
             ServerSocketConnection tcpServerSocketConnPtr;
             if (w != null && (tcpServerSocketConnPtr = (ServerSocketConnection)w.get()) != null) {
                if (tcpServerSocketConnPtr.getLocalPort() == port) {
-                  throw new Object();
+                  throw new IOPortAlreadyBoundException();
                }
             } else {
                this._superServerConnections.removeElementAt(i);
             }
          }
 
-         this._superServerConnections.addElement(new Object(serverConnection));
+         this._superServerConnections.addElement(new WeakReference(serverConnection));
       }
    }
 
@@ -136,7 +137,7 @@ public class StreamDatagramTransportBase extends TransportBase implements Stream
                }
             }
          }
-      } else if (connectionToClose instanceof Object) {
+      } else if (connectionToClose instanceof ServerSocketConnection) {
          synchronized (this._superServerConnections) {
             int superServerConnectionSize = this._superServerConnections.size();
 
@@ -170,7 +171,7 @@ public class StreamDatagramTransportBase extends TransportBase implements Stream
       StreamDatagramConnectionBase connection = null;
       WeakReference w = null;
       DatagramAddressBase addressBase = null;
-      if (!(datagram instanceof Object)) {
+      if (!(datagram instanceof DatagramBase)) {
          return false;
       }
 
@@ -213,7 +214,7 @@ public class StreamDatagramTransportBase extends TransportBase implements Stream
                boolean ret = connection.isAddressed(addressBase);
                if (ret) {
                   connection.processReceivedDatagram(datagram);
-                  this._wCache = (WeakReference)(new Object(connection));
+                  this._wCache = new WeakReference(connection);
                   return true;
                }
             } else {
@@ -250,7 +251,7 @@ public class StreamDatagramTransportBase extends TransportBase implements Stream
             for (int i = this._superConnections.length - 1; i >= 0; i--) {
                temp = this._superConnections[i].get();
                if (temp == null) {
-                  System.out.println(((StringBuffer)(new Object("Connections #"))).append(i + 1).append(" purged").toString());
+                  System.out.println("Connections #" + (i + 1) + " purged");
                   Arrays.removeAt(this._superConnections, i);
                }
             }
@@ -268,7 +269,7 @@ public class StreamDatagramTransportBase extends TransportBase implements Stream
 
    public void logConnections() {
       if (EventLogger.getMinimumLevel() == 5) {
-         StringBuffer strbuf = (StringBuffer)(new Object());
+         StringBuffer strbuf = new StringBuffer();
          strbuf.append("TCP Connections:\n");
          synchronized (this._superConnections) {
             for (int i = this._superConnections.length - 1; i >= 0; i--) {
@@ -296,7 +297,7 @@ public class StreamDatagramTransportBase extends TransportBase implements Stream
          WeakReference w = this._superConnections[i];
          if (w != null) {
             StreamDatagramConnectionBase connection = (StreamDatagramConnectionBase)w.get();
-            if (connection instanceof Object) {
+            if (connection instanceof RadioStatusListener) {
                connection.pdpStateChange(apn, state, cause);
             }
          }

@@ -6,13 +6,13 @@ import net.rim.device.api.system.DeviceInfo;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Graphics;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.PopupScreen;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.Arrays;
@@ -32,19 +32,19 @@ public final class GPSDeviceSelectionDialog extends PopupScreen implements Field
    private boolean _bluetoothInformed;
 
    public GPSDeviceSelectionDialog() {
-      super((Manager)(new Object()));
+      super(new VerticalFieldManager());
       this.createDialog();
    }
 
    private final void createDialog() {
-      LabelField dialogTitle = (LabelField)(new Object(LBSResources.getString(57)));
-      LabelField deviceSelectionTitle = (LabelField)(new Object(LBSResources.getString(58)));
-      this._list = (ListField)(new Object());
+      LabelField dialogTitle = new LabelField(LBSResources.getString(57));
+      LabelField deviceSelectionTitle = new LabelField(LBSResources.getString(58));
+      this._list = new ListField();
       this._list.setCallback(this);
-      this._cancelButton = (ButtonField)(new Object(CommonResource.getString(10005), 12884901888L));
+      this._cancelButton = new ButtonField(CommonResource.getString(10005), 12884901888L);
       this._cancelButton.setChangeListener(this);
-      this._bluetoothConfigButton = (ButtonField)(new Object(LBSResources.getString(101), 12884901888L));
-      this._buttonManager = (VerticalFieldManager)(new Object(12884901888L));
+      this._bluetoothConfigButton = new ButtonField(LBSResources.getString(101), 12884901888L);
+      this._buttonManager = new VerticalFieldManager(12884901888L);
       if (BluetoothME.isSupported()) {
          this._buttonManager.add(this._bluetoothConfigButton);
          this._bluetoothConfigButton.setChangeListener(this);
@@ -52,10 +52,10 @@ public final class GPSDeviceSelectionDialog extends PopupScreen implements Field
 
       this._buttonManager.add(this._cancelButton);
       this.add(dialogTitle);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.add(deviceSelectionTitle);
       this.add(this._list);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.add(this._buttonManager);
    }
 

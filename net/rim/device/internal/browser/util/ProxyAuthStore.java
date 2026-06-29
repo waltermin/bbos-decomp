@@ -20,34 +20,31 @@ public final class ProxyAuthStore {
          data.put(uid, fields);
          writeTable(data);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    public static final String[] getConnection(String uid) {
       if (uid == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       Hashtable data = readTable();
-      return (Object[])data.get(uid);
+      return (String[])data.get(uid);
    }
 
    private static final Hashtable readTable() {
-      Hashtable nvStore = (Hashtable)(new Object());
+      Hashtable nvStore = new Hashtable();
       byte[] nvStoreData = NvStore.readData(35);
       if (nvStoreData != null && nvStoreData.length > 0) {
-         DataBuffer buffer = (DataBuffer)(new Object(nvStoreData, 0, nvStoreData.length, true));
+         DataBuffer buffer = new DataBuffer(nvStoreData, 0, nvStoreData.length, true);
 
          try {
             byte version = buffer.readByte();
 
             while (buffer.available() > 0) {
                String id = buffer.readUTF();
-               String[] data = new Object[3];
-               data[0] = buffer.readUTF();
-               data[1] = buffer.readUTF();
-               data[2] = buffer.readUTF();
+               String[] data = new String[]{buffer.readUTF(), buffer.readUTF(), buffer.readUTF()};
                nvStore.put(id, data);
             }
          } finally {
@@ -59,7 +56,7 @@ public final class ProxyAuthStore {
    }
 
    private static final void writeTable(Hashtable htData) {
-      DataBuffer buffer = (DataBuffer)(new Object());
+      DataBuffer buffer = new DataBuffer();
       if (htData != null) {
          try {
             buffer.writeByte(1);
@@ -67,7 +64,7 @@ public final class ProxyAuthStore {
 
             while (elements.hasMoreElements()) {
                String key = (String)elements.nextElement();
-               String[] data = (Object[])htData.get(key);
+               String[] data = (String[])htData.get(key);
                buffer.writeUTF(key);
                buffer.writeUTF(data[0]);
                buffer.writeUTF(data[1]);

@@ -1,6 +1,12 @@
 package net.rim.device.api.crypto.cms;
 
+import net.rim.device.api.crypto.CryptoUnsupportedOperationException;
 import net.rim.device.api.crypto.Digest;
+import net.rim.device.api.crypto.MD5Digest;
+import net.rim.device.api.crypto.SHA1Digest;
+import net.rim.device.api.crypto.SHA256Digest;
+import net.rim.device.api.crypto.SHA384Digest;
+import net.rim.device.api.crypto.SHA512Digest;
 import net.rim.device.api.crypto.asn1.ASN1InputByteArray;
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.oid.OID;
@@ -39,23 +45,23 @@ final class CMSUtilities {
       // try (0 -> 6): 10 null
    }
 
-   public static final Digest getSignatureDigest(byte[] digestAlgorithmIdentifier) {
-      ASN1InputByteArray digestAlgorithm = (ASN1InputByteArray)(new Object(digestAlgorithmIdentifier));
+   public static final Digest getSignatureDigest(byte[] digestAlgorithmIdentifier) throws CryptoUnsupportedOperationException {
+      ASN1InputByteArray digestAlgorithm = new ASN1InputByteArray(digestAlgorithmIdentifier);
       digestAlgorithm.readSequence();
       OID digestOID = digestAlgorithm.readOID();
       Digest digest = null;
       if (digestOID.equals(OIDs.getOID(774767465))) {
-         return (Digest)(new Object());
+         return new SHA1Digest();
       } else if (digestOID.equals(OIDs.getOID(-472309042))) {
-         return (Digest)(new Object());
+         return new MD5Digest();
       } else if (digestOID.equals(OIDs.getOID(540600180))) {
-         return (Digest)(new Object());
+         return new SHA256Digest();
       } else if (digestOID.equals(OIDs.getOID(540862324))) {
-         return (Digest)(new Object());
+         return new SHA384Digest();
       } else if (digestOID.equals(OIDs.getOID(541124468))) {
-         return (Digest)(new Object());
+         return new SHA512Digest();
       } else {
-         throw new Object();
+         throw new CryptoUnsupportedOperationException();
       }
    }
 }

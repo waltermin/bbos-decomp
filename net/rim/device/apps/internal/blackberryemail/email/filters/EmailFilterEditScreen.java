@@ -4,6 +4,7 @@ import net.rim.device.api.collection.Collection;
 import net.rim.device.api.collection.CollectionListener;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
 import net.rim.device.apps.api.utility.editor.EditorUsingRIMModelFactory;
@@ -18,10 +19,10 @@ final class EmailFilterEditScreen extends EditorUsingRIMModelFactory implements 
    private WeakReference _weakReference;
 
    EmailFilterEditScreen(Verb storeAction, String userId) {
-      super(new Object(0, 33), null, EmailFilter.getCollectionId(), 10000);
+      super(new ContextObject(0, 33), null, EmailFilter.getCollectionId(), 10000);
       this._storeAction = storeAction;
       this._saveVerb = new EmailFilterEditScreen$EmailFilterSaveVerb(this);
-      this._weakReference = (WeakReference)(new Object(this));
+      this._weakReference = new WeakReference(this);
       this._userId = userId;
       this._emailFilterCollection = EmailFilterCollectionImpl.getInstance(this._userId);
       this._emailFilterCollection.addCollectionListener(this._weakReference);

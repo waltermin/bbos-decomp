@@ -241,7 +241,7 @@ final class LowMemoryManagerImpl extends LowMemoryManager implements ExactLowMem
    public final synchronized void eventOccurred(long guid, int data0, int data1, Object object0, Object object1) {
       if (guid == 945659952435832745L && !this._started) {
          this._started = true;
-         ((Thread)(new Object(this))).start();
+         new Thread(this).start();
       }
    }
 }

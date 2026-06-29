@@ -26,7 +26,7 @@ import net.rim.device.apps.internal.browser.store.FolderEventListener;
 public final class ChannelModelCollection implements SyncCollection, OTASyncCapable, CollectionEventSource, FolderEventListener, SyncCollectionStatistics {
    private SyncConverter _converter;
    private Folder _folder;
-   private CollectionListenerManager _collectionListenerManager = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _collectionListenerManager = new CollectionListenerManager();
    private static final String DATABASE_NAME = "Browser Channels";
    private static final int SYNC_VERSION = 1;
 
@@ -72,9 +72,9 @@ public final class ChannelModelCollection implements SyncCollection, OTASyncCapa
             SimpleFolder rootFolder = (SimpleFolder)FolderHierarchies.getFolder(
                BrowserFolders.RIM_BROWSER_CHANNELS_HIERARCHY_ID, BrowserFolders.RIM_BROWSER_CHANNELS_HIERARCHY_ID
             );
-            parentFolder = (SimpleFolder)(new Object(
+            parentFolder = new SimpleFolder(
                BrowserFolders.BROWSER_FAMILY, parentFolderLUID, null, BrowserFolders.BROWSER_FOLDER_COLLECTION_CLASS, rootFolder, 1
-            ));
+            );
          }
 
          ReadableList collection = (ReadableList)parentFolder.getContainedItems();
@@ -124,9 +124,9 @@ public final class ChannelModelCollection implements SyncCollection, OTASyncCapa
             SimpleFolder rootFolder = (SimpleFolder)FolderHierarchies.getFolder(
                BrowserFolders.RIM_BROWSER_CHANNELS_HIERARCHY_ID, BrowserFolders.RIM_BROWSER_CHANNELS_HIERARCHY_ID
             );
-            parentFolder = (SimpleFolder)(new Object(
+            parentFolder = new SimpleFolder(
                BrowserFolders.BROWSER_FAMILY, newParentFolderLUID, null, BrowserFolders.BROWSER_FOLDER_COLLECTION_CLASS, rootFolder, 1
-            ));
+            );
          }
 
          ((WritableSet)parentFolder.getContainedItems()).add(newChannelModel);
@@ -191,9 +191,9 @@ public final class ChannelModelCollection implements SyncCollection, OTASyncCapa
 
    @Override
    public final SyncObject[] getSyncObjects() {
-      Vector syncObjects = (Vector)(new Object());
+      Vector syncObjects = new Vector();
       this.addSubItems(this._folder, syncObjects);
-      SyncObject[] objects = new Object[syncObjects.size()];
+      SyncObject[] objects = new SyncObject[syncObjects.size()];
       syncObjects.copyInto(objects);
       return objects;
    }

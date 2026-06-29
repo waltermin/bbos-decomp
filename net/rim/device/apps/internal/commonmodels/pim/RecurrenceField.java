@@ -10,6 +10,7 @@ import net.rim.device.api.ui.component.CheckboxField;
 import net.rim.device.api.ui.component.ChoiceField;
 import net.rim.device.api.ui.component.DateField;
 import net.rim.device.api.ui.component.NumericChoiceField;
+import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.component.Status;
@@ -181,7 +182,7 @@ public class RecurrenceField extends VerticalFieldManager implements FieldChange
    }
 
    private void populateAndAddDailyRecurrence() {
-      this._recurPeriod = (NumericChoiceField)(new Object(CommonResources.getString(9083), 1, 999, 1));
+      this._recurPeriod = new NumericChoiceField(CommonResources.getString(9083), 1, 999, 1);
       this._recurCopy.setRecurPeriod(Math.min(this._recurCopy.getRecurPeriod(), 999));
       this._recurPeriod.setSelectedIndex(this._recurCopy.getRecurPeriod() - 1);
       this._recurBlock.add(this._recurPeriod);
@@ -189,7 +190,7 @@ public class RecurrenceField extends VerticalFieldManager implements FieldChange
    }
 
    private void populateAndAddWeeklyRecurrence() {
-      this._recurPeriod = (NumericChoiceField)(new Object(CommonResources.getString(9083), 1, 99, 1));
+      this._recurPeriod = new NumericChoiceField(CommonResources.getString(9083), 1, 99, 1);
       this._recurCopy.setRecurPeriod(Math.min(this._recurCopy.getRecurPeriod(), 99));
       this._recurPeriod.setSelectedIndex(this._recurCopy.getRecurPeriod() - 1);
       this._recurBlock.add(this._recurPeriod);
@@ -213,7 +214,7 @@ public class RecurrenceField extends VerticalFieldManager implements FieldChange
    }
 
    private void populateAndAddMonthlyRecurrence() {
-      this._recurPeriod = (NumericChoiceField)(new Object(CommonResources.getString(9083), 1, 99, 1));
+      this._recurPeriod = new NumericChoiceField(CommonResources.getString(9083), 1, 99, 1);
       this._recurCopy.setRecurPeriod(Math.min(this._recurCopy.getRecurPeriod(), 99));
       this._recurPeriod.setSelectedIndex(this._recurCopy.getRecurPeriod() - 1);
       this._recurBlock.add(this._recurPeriod);
@@ -252,9 +253,9 @@ public class RecurrenceField extends VerticalFieldManager implements FieldChange
 
    RecurrenceField(Recur recurCopy, ContextObject context) {
       this._gmtcal = Calendar.getInstance(_gmtTimeZone);
-      this._recurDescString = (StringBuffer)(new Object());
-      this._sharedModifier = (Recur$Modifier)(new Object());
-      this._sharedDOWS = (BitSet)(new Object(7));
+      this._recurDescString = new StringBuffer();
+      this._sharedModifier = new Recur$Modifier();
+      this._sharedDOWS = new BitSet(7);
       this._recurCopy = recurCopy;
       this.setCookie(this._recurCopy);
       this.init(context);
@@ -364,7 +365,7 @@ public class RecurrenceField extends VerticalFieldManager implements FieldChange
    }
 
    private void establishRequiredDOW(Calendar cal) {
-      BitSet dows = (BitSet)(new Object(7));
+      BitSet dows = new BitSet(7);
       switch (cal.get(7)) {
          case 0:
             break;
@@ -451,24 +452,24 @@ public class RecurrenceField extends VerticalFieldManager implements FieldChange
       String newTimeZone = null;
       if (context != null) {
          Object obj = ContextObject.get(context, 4143325197084129318L);
-         if (obj instanceof Object) {
+         if (obj instanceof Long) {
             Long temp = (Long)obj;
             this._startDate = temp;
          }
 
          obj = ContextObject.get(context, 853966984731399007L);
-         if (obj instanceof Object) {
+         if (obj instanceof String) {
             newTimeZone = (String)obj;
          }
 
          obj = ContextObject.get(context, -6289930384059412695L);
-         if (obj instanceof Object) {
+         if (obj instanceof Long) {
             Long temp = (Long)obj;
             this._duration = temp;
          }
 
          obj = ContextObject.get(context, -479237175265400126L);
-         if (obj instanceof Object) {
+         if (obj instanceof Boolean) {
             Boolean temp = (Boolean)obj;
             this._allDayEvent = temp;
          }
@@ -491,17 +492,17 @@ public class RecurrenceField extends VerticalFieldManager implements FieldChange
       }
 
       this._previousStartDate = this._startDate;
-      this._recurPattern = (ChoiceField)(new Object(CommonResources.getString(9075), RecurUtil.makeChoiceArray()));
+      this._recurPattern = new ObjectChoiceField(CommonResources.getString(9075), RecurUtil.makeChoiceArray());
       this._recurPattern.setChangeListener(this);
-      this._recurBlock = (VerticalFieldManager)(new Object(1152921504606846976L));
-      this._recurDesc = (RichTextField)(new Object(null, 36028797018963968L));
-      this._recurPeriod = (NumericChoiceField)(new Object(CommonResources.getString(9083), 1, 999, 1));
+      this._recurBlock = new VerticalFieldManager(1152921504606846976L);
+      this._recurDesc = new RichTextField(null, 36028797018963968L);
+      this._recurPeriod = new NumericChoiceField(CommonResources.getString(9083), 1, 999, 1);
       this._recurPeriod.setSelectedIndex(this._recurCopy.getRecurPeriod() - 1);
       this._recurPeriod.setChangeListener(this);
-      this._recurEnd = (VerticalFieldManager)(new Object(1152921504606846976L));
-      this._recurRepeatModifier = (ChoiceField)(new Object(
+      this._recurEnd = new VerticalFieldManager(1152921504606846976L);
+      this._recurRepeatModifier = new ObjectChoiceField(
          CommonResources.getString(9087), RecurUtil.makeEndChoiceArray(!this._capabilities.finiteRecurrencesOnly)
-      ));
+      );
       if (!this._capabilities.finiteRecurrencesOnly) {
          this._recurRepeatModifier.setSelectedIndex(RecurUtil.getEndChoice(this._recurCopy.isFinite()));
       } else {
@@ -509,12 +510,12 @@ public class RecurrenceField extends VerticalFieldManager implements FieldChange
       }
 
       this._recurRepeatModifier.setChangeListener(this);
-      this._recurDOW = (DOWField)(new Object(CommonResources.getString(9093), null));
+      this._recurDOW = new DOWField(CommonResources.getString(9093), null);
       this._recurDOW.setFirstDayOfWeek(this._recurCopy.getFirstDayOfWeek());
       this._recurDOW.setChangeListener(this);
-      this._recurModifier = (CheckboxField)(new Object(CommonResources.getString(9077), false));
+      this._recurModifier = new CheckboxField(CommonResources.getString(9077), false);
       this._recurModifier.setChangeListener(this);
-      this._recurEndDate = (DateField)(new Object(null, this._recurCopy.isFinite() ? this._recurCopy.getEndDate() : this._startDate, _dateFormat));
+      this._recurEndDate = new DateField(null, this._recurCopy.isFinite() ? this._recurCopy.getEndDate() : this._startDate, _dateFormat);
       if (newTimeZone != null) {
          this._recurEndDate.setTimeZone(TimeZone.getTimeZone(newTimeZone));
       }
@@ -522,8 +523,8 @@ public class RecurrenceField extends VerticalFieldManager implements FieldChange
       this._recurEndDate.setChangeListener(this);
       this._recurEndDate.setFocusListener(this);
       byte recurrenceType = this._recurCopy.getRecurType();
-      this._sep1 = (SeparatorField)(new Object());
-      this._sep2 = (SeparatorField)(new Object());
+      this._sep1 = new SeparatorField();
+      this._sep2 = new SeparatorField();
       this._recurPattern.setSelectedIndex(RecurUtil.getRecurOffset(recurrenceType));
       this.add(this._sep1);
       this.add(this._recurPattern);
@@ -618,9 +619,9 @@ public class RecurrenceField extends VerticalFieldManager implements FieldChange
 
    RecurrenceField() {
       this._gmtcal = Calendar.getInstance(_gmtTimeZone);
-      this._recurDescString = (StringBuffer)(new Object());
-      this._sharedModifier = (Recur$Modifier)(new Object());
-      this._sharedDOWS = (BitSet)(new Object(7));
+      this._recurDescString = new StringBuffer();
+      this._sharedModifier = new Recur$Modifier();
+      this._sharedDOWS = new BitSet(7);
       this._recurCopy = new RecurImpl();
       this.setCookie(this._recurCopy);
       this.init(null);
@@ -629,9 +630,9 @@ public class RecurrenceField extends VerticalFieldManager implements FieldChange
    RecurrenceField(long style, Recur recurCopy, ContextObject context) {
       super(style);
       this._gmtcal = Calendar.getInstance(_gmtTimeZone);
-      this._recurDescString = (StringBuffer)(new Object());
-      this._sharedModifier = (Recur$Modifier)(new Object());
-      this._sharedDOWS = (BitSet)(new Object(7));
+      this._recurDescString = new StringBuffer();
+      this._sharedModifier = new Recur$Modifier();
+      this._sharedDOWS = new BitSet(7);
       this._recurCopy = recurCopy;
       this.setCookie(this._recurCopy);
       this.init(context);

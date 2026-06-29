@@ -14,7 +14,7 @@ public class CMSInputStream extends InputStream {
 
    protected CMSInputStream(InputStream input) {
       if (input == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._input = input;
@@ -36,7 +36,7 @@ public class CMSInputStream extends InputStream {
       } else if (this._contentType.equals(OIDs.getOID(-477712249))) {
          return 15;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

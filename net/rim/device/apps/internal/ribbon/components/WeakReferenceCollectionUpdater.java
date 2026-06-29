@@ -4,11 +4,11 @@ import net.rim.vm.Array;
 import net.rim.vm.WeakReference;
 
 public class WeakReferenceCollectionUpdater {
-   WeakReference[] _components = new Object[0];
+   WeakReference[] _components = new WeakReference[0];
 
    public void addComponentForUpdate(Object component) {
       if (component != null) {
-         WeakReference wr = (WeakReference)(new Object(component));
+         WeakReference wr = new WeakReference(component);
          WeakReference[] components = this._components;
          synchronized (components) {
             int count = components.length;

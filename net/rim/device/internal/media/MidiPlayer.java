@@ -110,20 +110,20 @@ class MidiPlayer extends PlayerImpl implements AlertListener2, RIMTuneControl, V
    @Override
    public void setKeyValue(String key, Object value) {
       if ("interrupt_on_user_input".equals(key)) {
-         if (value instanceof Object) {
-            this._interruptable = value;
+         if (value instanceof Integer) {
+            this._interruptable = (Integer)value;
             return;
          }
       } else {
          if ("datasource".equals(key)) {
             this._dataSource = (DataSource)value;
             SourceStream[] sources = this._dataSource.getStreams();
-            this.read((InputStream)(new Object(sources[0])));
+            this.read(new DataSourceInputStream(sources[0]));
             return;
          }
 
          if ("audiosource".equals(key)) {
-            super._audioSourceId = value;
+            super._audioSourceId = (Integer)value;
             return;
          }
 
@@ -158,7 +158,7 @@ class MidiPlayer extends PlayerImpl implements AlertListener2, RIMTuneControl, V
 
    public MidiPlayer() {
       if (!Alert.isMIDISupported()) {
-         throw new Object("MIDI not supported");
+         throw new IllegalStateException("MIDI not supported");
       }
 
       this._interruptable = this._interruptable;
@@ -191,7 +191,7 @@ class MidiPlayer extends PlayerImpl implements AlertListener2, RIMTuneControl, V
       if (reason != 3 && this._alertStarted && reason != 1) {
          if (reason == 2 && super._state == 400) {
             super._mediaTime = this.getDuration();
-            this.notifyListeners("endOfMedia", new Object(super._mediaTime));
+            this.notifyListeners("endOfMedia", new Long(super._mediaTime));
             boolean playAgain = false;
             if (super._state == 400) {
                playAgain = super._loopCount == -1;
@@ -204,7 +204,7 @@ class MidiPlayer extends PlayerImpl implements AlertListener2, RIMTuneControl, V
             if (playAgain) {
                this.doStart();
                super._mediaTime = 0;
-               this.notifyListeners("started", new Object(super._mediaTime));
+               this.notifyListeners("started", new Long(super._mediaTime));
                return;
             }
 
@@ -215,7 +215,7 @@ class MidiPlayer extends PlayerImpl implements AlertListener2, RIMTuneControl, V
          super._currentLoopIteration = 0;
          this._alertPaused = false;
          super._state = 300;
-         this.notifyListeners("stopped", new Object(super._mediaTime));
+         this.notifyListeners("stopped", new Long(super._mediaTime));
          this._alertStopped = true;
          this.notifyAll();
       }
@@ -240,7 +240,7 @@ class MidiPlayer extends PlayerImpl implements AlertListener2, RIMTuneControl, V
          this._updateTimeEventId = this.getApplication().invokeLater(new MidiPlayer$MediaTimeEvent(this), 1000, true);
       }
 
-      this.notifyListeners("started", new Object(this.getMediaTime()));
+      this.notifyListeners("started", new Long(this.getMediaTime()));
    }
 
    @Override
@@ -256,7 +256,7 @@ class MidiPlayer extends PlayerImpl implements AlertListener2, RIMTuneControl, V
    private void resumeTune() {
       if (Alert.resumeMIDI() == 0) {
          this._updateTimeEventId = this.getApplication().invokeLater(new MidiPlayer$MediaTimeEvent(this), 1000, true);
-         this.notifyListeners("started", new Object(this.getMediaTime()));
+         this.notifyListeners("started", new Long(this.getMediaTime()));
       } else {
          this.doStop(false);
       }
@@ -402,7 +402,7 @@ class MidiPlayer extends PlayerImpl implements AlertListener2, RIMTuneControl, V
       this.chkClosed(true);
       Control[] controls = super.getControls();
       if (controls == null) {
-         return new Object[]{this, this._model};
+         return new Control[]{this, this._model};
       }
 
       int tail = controls.length;

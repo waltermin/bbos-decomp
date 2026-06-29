@@ -23,7 +23,7 @@ public final class MessageLookups {
       synchronized (persistentObject) {
          hashtable = (IntHashtable)persistentObject.getContents();
          if (hashtable == null && create) {
-            hashtable = (IntHashtable)(new Object());
+            hashtable = new IntHashtable();
             persistentObject.setContents(hashtable, 51);
             persistentObject.commit();
          }

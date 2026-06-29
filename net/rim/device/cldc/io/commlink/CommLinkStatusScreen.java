@@ -22,7 +22,7 @@ final class CommLinkStatusScreen extends FullScreen implements Runnable, GlobalE
    private int _right;
    private int _width = Display.getWidth();
    private int _textY;
-   private Bitmap _backgroundWithText = (Bitmap)(new Object(Display.getWidth(), Display.getHeight()));
+   private Bitmap _backgroundWithText = new Bitmap(Display.getWidth(), Display.getHeight());
    private Bitmap _background;
    private Bitmap _leftArrow;
    private Bitmap _rightArrow;
@@ -107,7 +107,7 @@ final class CommLinkStatusScreen extends FullScreen implements Runnable, GlobalE
 
    @Override
    public final void eventOccurred(long guid, int data0, int data1, Object object0, Object object1) {
-      if (guid == -6549094840388549801L && object0 instanceof Object) {
+      if (guid == -6549094840388549801L && object0 instanceof String) {
          this._statusMessage = (String)object0;
          synchronized (Application.getEventLock()) {
             this.invalidate();
@@ -158,23 +158,23 @@ final class CommLinkStatusScreen extends FullScreen implements Runnable, GlobalE
       this._rightArrow = image.getBitmap();
       image = theme.getImage("net_rim_comm_text_kludge");
       int height = Display.getHeight();
-      XYRect clamp = (XYRect)(new Object(0, 0, this._width, height));
-      this._pagerPos = (XYRect)(new Object(
+      XYRect clamp = new XYRect(0, 0, this._width, height);
+      this._pagerPos = new XYRect(
          this._width - this._background.getWidth() >> 1, height - this._background.getHeight() >> 1, this._background.getWidth(), this._background.getHeight()
-      ));
+      );
       this._pagerPos.intersect(clamp);
-      this._leftPos = (XYRect)(new Object(this._pagerPos.x, this._pagerPos.y, this._leftArrow.getWidth(), this._leftArrow.getHeight()));
+      this._leftPos = new XYRect(this._pagerPos.x, this._pagerPos.y, this._leftArrow.getWidth(), this._leftArrow.getHeight());
       this._leftPos.intersect(clamp);
-      this._rightPos = (XYRect)(new Object(this._pagerPos.x, this._pagerPos.y, this._rightArrow.getWidth(), this._rightArrow.getHeight()));
+      this._rightPos = new XYRect(this._pagerPos.x, this._pagerPos.y, this._rightArrow.getWidth(), this._rightArrow.getHeight());
       this._rightPos.intersect(clamp);
-      this._arrowPos = (XYRect)(new Object(this._leftPos));
+      this._arrowPos = new XYRect(this._leftPos);
       this._arrowPos.union(this._rightPos);
       this._textY = this._pagerPos.y + (image.getHeight() > 1 ? image.getHeight() : -image.getWidth());
       ResourceBundle rb = ResourceBundle.getBundle(-7779803456443759697L, "net.rim.device.internal.resource.CommLink");
       this._connectingMessage = rb.getString(0);
       this._connectedMessage = rb.getString(1);
       this.push();
-      ((Thread)(new Object(this))).start();
+      new Thread(this).start();
    }
 
    @Override
@@ -193,7 +193,7 @@ final class CommLinkStatusScreen extends FullScreen implements Runnable, GlobalE
 
          if (!StringUtilities.strEqual(message, this._displayMessage)) {
             this._displayMessage = message;
-            Graphics bufferGraphics = (Graphics)(new Object(this._backgroundWithText));
+            Graphics bufferGraphics = new Graphics(this._backgroundWithText);
             bufferGraphics.drawBitmap(this._pagerPos, this._background, 0, 0);
             if (message != null) {
                Font defaultFont = bufferGraphics.getFont();
@@ -202,8 +202,8 @@ final class CommLinkStatusScreen extends FullScreen implements Runnable, GlobalE
                int ypos = this._textY;
                int stringWidth = 0;
                int spaceWidth = defaultFont.getAdvance(' ');
-               StringTokenizer st = (StringTokenizer)(new Object(message));
-               StringBuffer buffer = (StringBuffer)(new Object());
+               StringTokenizer st = new StringTokenizer(message);
+               StringBuffer buffer = new StringBuffer();
 
                String nextWord;
                do {

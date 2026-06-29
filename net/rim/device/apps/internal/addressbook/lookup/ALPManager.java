@@ -21,6 +21,7 @@ import net.rim.device.apps.api.transmission.TransmissionStatusListener;
 import net.rim.device.internal.proxy.Proxy;
 import net.rim.vm.Array;
 import net.rim.vm.Memory;
+import net.rim.vm.WeakReference;
 
 public class ALPManager
    extends Thread
@@ -31,11 +32,11 @@ public class ALPManager
    CollectionEventSource,
    ReadableList,
    PersistentContentListener {
-   private CollectionListenerManager _collectionListeners = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _collectionListeners = new CollectionListenerManager();
    private int _transactionId;
    private int _retryTransactionId;
    private int _purgeTransactionId;
-   private Vector _pendingItems = (Vector)(new Object());
+   private Vector _pendingItems = new Vector();
    private int _purgeClockCount;
    private Object _retryLock = new Object();
    private long _managerId = System.currentTimeMillis();
@@ -129,7 +130,7 @@ public class ALPManager
 
    public synchronized Vector getPendingRequests() {
       int n = this._pendingItems.size();
-      Vector ret = (Vector)(new Object(this._pendingItems.size()));
+      Vector ret = new Vector(this._pendingItems.size());
 
       for (int i = 0; i < n; i++) {
          Request r = this.fetchRequest(i);
@@ -219,7 +220,7 @@ public class ALPManager
 
    @Override
    public void addCollectionListener(Object listener) {
-      this._collectionListeners.addCollectionListener(new Object(listener));
+      this._collectionListeners.addCollectionListener(new WeakReference(listener));
    }
 
    @Override
@@ -376,7 +377,7 @@ public class ALPManager
 
    private Object[] reverseLookup(Object address, Recognizer recognizer, boolean findFirstMatch) {
       Object[] results = null;
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
 
       label49:
       for (int i = 0; i < this._pendingItems.size(); i++) {

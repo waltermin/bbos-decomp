@@ -68,7 +68,7 @@ public final class BluetoothStreamConnection implements SocketConnection {
 
    @Override
    public final DataOutputStream openDataOutputStream() {
-      return (DataOutputStream)(new Object(this._output));
+      return new DataOutputStream(this._output);
    }
 
    @Override
@@ -78,7 +78,7 @@ public final class BluetoothStreamConnection implements SocketConnection {
 
    @Override
    public final DataInputStream openDataInputStream() {
-      return (DataInputStream)(new Object(this._input));
+      return new DataInputStream(this._input);
    }
 
    @Override

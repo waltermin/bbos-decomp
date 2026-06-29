@@ -59,7 +59,7 @@ final class BluetoothMainScreen extends MainScreenOptionsListItem implements Lis
    }
 
    BluetoothMainScreen() {
-      super(getString(0), new Object());
+      super(getString(0), new ContextObject());
       ContextObject.put(super._context, 244, "bluetooth");
    }
 
@@ -74,7 +74,7 @@ final class BluetoothMainScreen extends MainScreenOptionsListItem implements Lis
    }
 
    private final String getTitle(boolean colon) {
-      StringBuffer title = (StringBuffer)(new Object(getString(0)));
+      StringBuffer title = new StringBuffer(getString(0));
       if (colon) {
          title.append(':');
       }
@@ -88,7 +88,7 @@ final class BluetoothMainScreen extends MainScreenOptionsListItem implements Lis
       super._mainScreen.deleteRange(0, super._mainScreen.getFieldCount());
       this._titleField.setText(this.getTitle(true));
       if (this._isPowerOn) {
-         super._mainScreen.add((Field)(new Object(getString(2))));
+         super._mainScreen.add(new LabelField(getString(2)));
          super._mainScreen.add(this._pairedDevicesListField);
          this.updatePairedDevices();
       }
@@ -104,7 +104,7 @@ final class BluetoothMainScreen extends MainScreenOptionsListItem implements Lis
    @Override
    protected final void populateMainScreen(MainScreen mainScreen) {
       super._mainScreen = mainScreen;
-      this._pairedDevicesListField = (ListField)(new Object());
+      this._pairedDevicesListField = new ListField();
       this._pairedDevicesListField.setCallback(this);
       this._isPowerOn = BluetoothME.isPowerOn();
       this.updateScreenContents();
@@ -121,7 +121,7 @@ final class BluetoothMainScreen extends MainScreenOptionsListItem implements Lis
 
    @Override
    protected final Field getTitleField() {
-      this._titleField = (LabelField)(new Object(this.getTitle(true), 64));
+      this._titleField = new LabelField(this.getTitle(true), 64);
       return this._titleField;
    }
 
@@ -295,7 +295,7 @@ final class BluetoothMainScreen extends MainScreenOptionsListItem implements Lis
             return super.openDevelopmentBackdoor(backdoorCode);
          case 1346455890:
          default:
-            SimpleInputDialog d = (SimpleInputDialog)(new Object(4, "Enter MAC address of device:", 12, 12, 0));
+            SimpleInputDialog d = new SimpleInputDialog(4, "Enter MAC address of device:", 12, 12, 0);
             d.setText(this._backdoorPairingAddress);
             d.show();
             this._backdoorPairingAddress = d.getText();

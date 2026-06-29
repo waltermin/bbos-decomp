@@ -8,7 +8,7 @@ public final class QMTimer implements Runnable {
 
    public final void schedule(QMTimerTask timer, long delay) {
       if (timer.isScheduled()) {
-         throw new Object("Already scheduled");
+         throw new IllegalArgumentException("Already scheduled");
       }
 
       long expiry = System.currentTimeMillis() + delay;

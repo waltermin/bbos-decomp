@@ -3,7 +3,7 @@ package com.fourthpass.wmls;
 import java.util.Random;
 
 final class L0 extends Lib {
-   private static Random _randomizer = (Random)(new Object());
+   private static Random _randomizer = new Random();
    public static final short ABS = 0;
    public static final short MIN = 1;
    public static final short MAX = 2;
@@ -21,10 +21,10 @@ final class L0 extends Lib {
    public static final short CHARACTERSET = 14;
 
    @Override
-   public final Value invoke(int func, Interpreter$Engine engine) {
+   public final Value invoke(int func, Interpreter$Engine engine) throws Exception {
       switch (func) {
          case -1:
-            throw new Object("Invalid Function Id");
+            throw new Exception("Invalid Function Id");
          case 0:
          default:
             return abs(engine.popStack());

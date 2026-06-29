@@ -24,7 +24,7 @@ final class CommUtilities {
             if (location.startsWith("uplink:///goto?url=")) {
                location = location.substring(19);
                if (!location.startsWith("http://") && !location.startsWith("https://")) {
-                  location = ((StringBuffer)(new Object("http://"))).append(location).toString();
+                  location = "http://" + location;
                }
             }
 

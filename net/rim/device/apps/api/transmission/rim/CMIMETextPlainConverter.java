@@ -7,7 +7,7 @@ import net.rim.device.apps.api.utility.serialization.BaseConverter;
 public final class CMIMETextPlainConverter extends BaseConverter {
    @Override
    public final boolean canConvert(Object parameters) {
-      if (parameters instanceof Object) {
+      if (parameters instanceof String) {
          String s = (String)parameters;
          if (StringUtilities.startsWithIgnoreCase(s, "text/plain", 1701707776)) {
             return true;

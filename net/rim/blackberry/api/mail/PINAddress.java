@@ -4,17 +4,17 @@ import net.rim.device.api.ui.text.HexadecimalTextFilter;
 import net.rim.device.api.util.AbstractStringWrapper;
 
 public class PINAddress extends Address {
-   private static HexadecimalTextFilter _filter = (HexadecimalTextFilter)(new Object());
+   private static HexadecimalTextFilter _filter = new HexadecimalTextFilter();
 
    public PINAddress(String addr, String name) throws AddressException {
       addr = addr.trim().toUpperCase();
       if (addr.length() > 8) {
-         throw new AddressException(((StringBuffer)(new Object())).append(addr).append(" is an invalid PIN address").toString());
+         throw new AddressException(addr + " is an invalid PIN address");
       }
 
       AbstractStringWrapper asw = AbstractStringWrapper.createInstance(addr);
       if (!_filter.validate(asw)) {
-         throw new AddressException(((StringBuffer)(new Object())).append(addr).append(" is an invalid PIN address").toString());
+         throw new AddressException(addr + " is an invalid PIN address");
       }
 
       super._type = Address.EMAIL_ADDR;

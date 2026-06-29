@@ -134,7 +134,7 @@ class PlayerImpl$MyPhoneListener implements PhoneCallListener, AudioRouterListen
    }
 
    public PlayerImpl$MyPhoneListener(PlayerImpl player) {
-      this._wr = (WeakReference)(new Object(player));
+      this._wr = new WeakReference(player);
       this._playerApp = player.getApplication();
       this._playerApp.addRadioListener(this);
       this._audioRouter = AudioRouter.getInstance();

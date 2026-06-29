@@ -11,6 +11,7 @@ import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.internal.phone.api.PhoneUtilities;
 import net.rim.device.apps.internal.phone.api.WeakRealtimeClockListener;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
+import net.rim.vm.WeakReference;
 
 final class CallLogView extends PhoneListView implements CallLogCollection$Listener, MemoryCleanerListener, RealtimeClockListener {
    private CallLogView$CachedCallLogStrings[] _cachedStrings = new CallLogView$CachedCallLogStrings[this._items.getCapacity()];
@@ -79,7 +80,7 @@ final class CallLogView extends PhoneListView implements CallLogCollection$Liste
    @Override
    protected final void loadItems() {
       CallLogCollection collection = CallLogCollection.getInstance();
-      collection.addListener(new Object(this));
+      collection.addListener(new WeakReference(this));
       super._items = collection;
    }
 

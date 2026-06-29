@@ -8,7 +8,7 @@ final class WorkerThread extends RunnableThread {
 
    @Override
    public final void runItem(Object obj) {
-      if (obj instanceof Object) {
+      if (obj instanceof Runnable) {
          ((Runnable)obj).run();
       }
    }

@@ -24,11 +24,11 @@ final class FrequencyInfoFDD extends FrequencyInfo {
    @Override
    final void print() {
       System.out.println("Frequency Info FDD: ");
-      System.out.println(((StringBuffer)(new Object("Optionals: "))).append(this.optionals).toString());
+      System.out.println("Optionals: " + this.optionals);
       if ((this.optionals & 1) == 1) {
-         System.out.println(((StringBuffer)(new Object("UARFCN UL: "))).append(this.uarfcnUl).toString());
+         System.out.println("UARFCN UL: " + this.uarfcnUl);
       }
 
-      System.out.println(((StringBuffer)(new Object("UARFCN DL: "))).append(this.uarfcnDl).toString());
+      System.out.println("UARFCN DL: " + this.uarfcnDl);
    }
 }

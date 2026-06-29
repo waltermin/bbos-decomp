@@ -10,7 +10,7 @@ import net.rim.wica.runtime.messaging.internal.util.InternalLogger;
 import net.rim.wica.runtime.messaging.internal.util.Provider;
 
 public final class ServiceMessageProcessor implements MessageHandler {
-   Hashtable _consumerTable = (Hashtable)(new Object(8));
+   Hashtable _consumerTable = new Hashtable(8);
    static Class class$net$rim$wica$runtime$messaging$MessagingService;
 
    public final void initialize(Provider provider) {
@@ -35,13 +35,13 @@ public final class ServiceMessageProcessor implements MessageHandler {
       if (serviceID != null && serviceID != "") {
          this._consumerTable.put(serviceID, consumer);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    public final void deregisterServiceMessageConsumer(MessageConsumer consumer) {
       if (consumer == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._consumerTable.remove(consumer);
@@ -61,7 +61,7 @@ public final class ServiceMessageProcessor implements MessageHandler {
             return null;
          }
       } else {
-         throw new MessagingException(((StringBuffer)(new Object("Invalid destination service "))).append(serviceID).toString());
+         throw new MessagingException("Invalid destination service " + serviceID);
       }
    }
 
@@ -76,7 +76,7 @@ public final class ServiceMessageProcessor implements MessageHandler {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

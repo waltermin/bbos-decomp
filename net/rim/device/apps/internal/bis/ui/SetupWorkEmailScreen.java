@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.bis.ui;
 
 import java.util.Hashtable;
-import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.RadioButtonField;
 import net.rim.device.api.ui.component.RadioButtonGroup;
 import net.rim.device.apps.internal.bis.ApplicationResources;
@@ -26,20 +26,20 @@ public final class SetupWorkEmailScreen extends UserSettingsScreen {
    @Override
    public final void refresh(Hashtable screenParams) {
       this.setTitle(ApplicationResources.getString(165));
-      this.addContentField((Field)(new Object(ApplicationResources.getString(157))));
+      this.addContentField(new LabelField(ApplicationResources.getString(157)));
       this.addContentField(new BoldLabelField(ApplicationResources.getString(24)));
-      RadioButtonGroup radioGroup = (RadioButtonGroup)(new Object());
-      this._ispOutlook = (RadioButtonField)(new Object(ApplicationResources.getString(158), radioGroup, false));
-      this._ispProvideSettings = (RadioButtonField)(new Object(ApplicationResources.getString(67), radioGroup, true));
+      RadioButtonGroup radioGroup = new RadioButtonGroup();
+      this._ispOutlook = new RadioButtonField(ApplicationResources.getString(158), radioGroup, false);
+      this._ispProvideSettings = new RadioButtonField(ApplicationResources.getString(67), radioGroup, true);
       this.addContentField(this._ispProvideSettings);
       this.addContentField(this._ispOutlook);
       this.addContentField(new BoldLabelField(ApplicationResources.getString(23)));
-      this._owa = (RadioButtonField)(new Object(ApplicationResources.getString(166), radioGroup, false));
-      this._outlook = (RadioButtonField)(new Object(ApplicationResources.getString(167), radioGroup, false));
+      this._owa = new RadioButtonField(ApplicationResources.getString(166), radioGroup, false);
+      this._outlook = new RadioButtonField(ApplicationResources.getString(167), radioGroup, false);
       this.addContentField(this._owa);
       this.addContentField(this._outlook);
       this.addContentField(new BoldLabelField(ApplicationResources.getString(25)));
-      this._notes = (RadioButtonField)(new Object(ApplicationResources.getString(168), radioGroup, false));
+      this._notes = new RadioButtonField(ApplicationResources.getString(168), radioGroup, false);
       this.addContentField(this._notes);
       this._emailSetupLinkEvent = new LinkEvent(17, 24);
       Button closeButton = new Button(ApplicationResources.getString(15));

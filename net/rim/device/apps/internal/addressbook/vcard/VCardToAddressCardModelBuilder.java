@@ -11,7 +11,7 @@ import net.rim.device.apps.internal.api.serialformats.VCardProvider;
 final class VCardToAddressCardModelBuilder implements VCardProvider {
    private AddressCardModel _addressCard;
    private String[] _names;
-   private ContextObject _context = (ContextObject)(new Object());
+   private ContextObject _context = new ContextObject();
    private boolean _workPhoneAdded;
    private boolean _homePhoneAdded;
 
@@ -85,7 +85,7 @@ final class VCardToAddressCardModelBuilder implements VCardProvider {
    @Override
    public final void setFamilyName(String familyName) {
       if (this._names == null) {
-         this._names = new Object[2];
+         this._names = new String[2];
       }
 
       this._names[1] = familyName;
@@ -99,7 +99,7 @@ final class VCardToAddressCardModelBuilder implements VCardProvider {
    @Override
    public final void setGivenName(String givenName) {
       if (this._names == null) {
-         this._names = new Object[2];
+         this._names = new String[2];
       }
 
       this._names[0] = givenName;
@@ -315,7 +315,7 @@ final class VCardToAddressCardModelBuilder implements VCardProvider {
          }
 
          this._context.setFlag(34);
-         this._context.put(-4054673099568009991L, new Object(itype));
+         this._context.put(-4054673099568009991L, new Integer(itype));
       }
 
       this.add(3797587162219887872L, this._context);
@@ -344,7 +344,7 @@ final class VCardToAddressCardModelBuilder implements VCardProvider {
    @Override
    public final void addEmail(int type, String address) {
       if ((type & 64) != 0) {
-         String[] names = new Object[]{address, null};
+         String[] names = new String[]{address, null};
          this._context.reset();
          this._context.put(251, names);
          this.add(-2985347935260258684L, this._context);

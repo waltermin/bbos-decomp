@@ -1,10 +1,10 @@
 package net.rim.device.apps.internal.activation;
 
 import net.rim.device.api.system.Display;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.IntIntHashtable;
 import net.rim.device.internal.synchronization.ota.api.SyncAgent;
@@ -14,14 +14,14 @@ import net.rim.device.internal.synchronization.ota.api.SyncAgentStatisticsCollec
 import net.rim.device.internal.system.InternalServices;
 
 final class OTASyncProgressScreen extends ActivationScreen implements SyncAgentListener, ListFieldCallback, ActivationEventQueueCallback {
-   private IntIntHashtable _currentCollections = (IntIntHashtable)(new Object());
-   private SyncAgentStatistics[] _saStats = new Object[0];
+   private IntIntHashtable _currentCollections = new IntIntHashtable();
+   private SyncAgentStatistics[] _saStats = new SyncAgentStatistics[0];
    private OTASyncProgressScreen$SyncAgentStatisticsComparator _saStatsComparator = new OTASyncProgressScreen$SyncAgentStatisticsComparator();
    private ListField _listField;
    private ActivationApp _app;
    private long _lastUpdated = 0;
    private static final long UPDATE_STATISTICS = 1L;
-   private static StringBuffer _sb = (StringBuffer)(new Object());
+   private static StringBuffer _sb = new StringBuffer();
 
    OTASyncProgressScreen(ActivationApp app, String statusInfo, long serviceId) {
       super(app, statusInfo, null, null);
@@ -29,10 +29,10 @@ final class OTASyncProgressScreen extends ActivationScreen implements SyncAgentL
       this._app = app;
       SyncAgentStatisticsCollector.fillInAllSyncAgentStatistics(this._saStats);
       Arrays.sort(this._saStats, this._saStatsComparator);
-      this._listField = (ListField)(new Object(this._saStats.length));
+      this._listField = new ListField(this._saStats.length);
       this._listField.setCallback(this);
       if (statusInfo != null && statusInfo.length() > 0) {
-         this.add((Field)(new Object()));
+         this.add(new SeparatorField());
       }
 
       this.add(this._listField);
@@ -115,7 +115,7 @@ final class OTASyncProgressScreen extends ActivationScreen implements SyncAgentL
          case 18:
          default:
             SyncAgentStatistics saStats = null;
-            if (object instanceof Object) {
+            if (object instanceof SyncAgentStatistics) {
                saStats = (SyncAgentStatistics)object;
             }
 

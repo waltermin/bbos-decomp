@@ -9,14 +9,15 @@ import net.rim.device.api.system.Application;
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.system.DeviceInfo;
 import net.rim.device.api.system.WLAN;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.EmailAddressEditField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.ui.component.PasswordEditField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.api.framework.verb.Verb;
@@ -53,13 +54,13 @@ class ActivationScreen extends AppsMainScreen {
    public ActivationScreen(ActivationApp app, String statusInfo, String email, String password) {
       super(0);
       if (statusInfo != null) {
-         this._statusInformation = (StringBuffer)(new Object(statusInfo));
+         this._statusInformation = new StringBuffer(statusInfo);
       } else {
-         this._statusInformation = (StringBuffer)(new Object(0));
+         this._statusInformation = new StringBuffer(0);
       }
 
       this._app = app;
-      this.setTitle((Field)(new Object(ActivationApp.getApplicationTitle(true))));
+      this.setTitle(new LabelField(ActivationApp.getApplicationTitle(true)));
       this._activationService = ActivationService.getInstance();
       OTAKeyGenEvent lastEvent = ((ActivationServiceImpl)this._activationService).getLastOTAKeyGenEvent();
       if (lastEvent != null) {
@@ -70,11 +71,11 @@ class ActivationScreen extends AppsMainScreen {
          }
       }
 
-      this._mainManager = (VerticalFieldManager)(new Object(64424509440L));
-      this._statusField = (RichTextField)(new Object());
-      this._statusFieldManager = (VerticalFieldManager)(new Object(64424509440L));
+      this._mainManager = new VerticalFieldManager(64424509440L);
+      this._statusField = new RichTextField();
+      this._statusFieldManager = new VerticalFieldManager(64424509440L);
       this.updateStatus();
-      this._pinField = (ObjectChoiceField)(new Object(ActivationApp._resources.getString(147), new Object[]{this.getPin()}, 0, 36028797018963968L));
+      this._pinField = new ObjectChoiceField(ActivationApp._resources.getString(147), new String[]{this.getPin()}, 0, 36028797018963968L);
       this._pinField.setEditable(false);
       OTASyncProgressHandler progressHandler = OTASyncProgressHandler.getInstance();
       if (progressHandler.isSyncInProgress()) {
@@ -86,11 +87,11 @@ class ActivationScreen extends AppsMainScreen {
       }
 
       if (this._app.getCurrentState() == 0) {
-         this._activationInputFields = (VerticalFieldManager)(new Object(12884901888L));
-         this._emailEditField = (EmailAddressEditField)(new Object(ActivationApp._resources.getString(102), email));
-         this._passwordEditField = (PasswordEditField)(new Object(ActivationApp._resources.getString(103), password, 31, 12884901888L));
+         this._activationInputFields = new VerticalFieldManager(12884901888L);
+         this._emailEditField = new EmailAddressEditField(ActivationApp._resources.getString(102), email);
+         this._passwordEditField = new PasswordEditField(ActivationApp._resources.getString(103), password, 31, 12884901888L);
          if (WLAN.isSupported()) {
-            this._activationServerField = (IPEditField)(new Object(ActivationApp._resources.getString(175), ""));
+            this._activationServerField = new IPEditField(ActivationApp._resources.getString(175), "");
          }
 
          if (email == null) {
@@ -104,9 +105,9 @@ class ActivationScreen extends AppsMainScreen {
             this._activationServerField.setText(((ActivationServiceImpl)this._activationService)._lastActivationServerAddress);
          }
 
-         this._activationInputFields.add((Field)(new Object()));
+         this._activationInputFields.add(new SeparatorField());
          this._activationInputFields.add(this._pinField);
-         this._activationInputFields.add((Field)(new Object()));
+         this._activationInputFields.add(new SeparatorField());
          this._mainManager.add(this._activationInputFields);
       }
 
@@ -155,7 +156,7 @@ class ActivationScreen extends AppsMainScreen {
          }
 
          date = DateFormat.getInstance(48).formatLocal(ActivationService.getLastSuccessfulActivationDate(completedActivations[i]));
-         buffer.append(MessageFormat.format(ActivationApp._resources.getString(176), new Object[]{date}));
+         buffer.append(MessageFormat.format(ActivationApp._resources.getString(176), new String[]{date}));
       }
    }
 
@@ -191,14 +192,14 @@ class ActivationScreen extends AppsMainScreen {
                this._emailAddress = ((ActivationServiceImpl)this._activationService)._lastEmailAddress;
             }
 
-            msg = MessageFormat.format(ActivationApp._resources.getString(110), new Object[]{this._emailAddress});
+            msg = MessageFormat.format(ActivationApp._resources.getString(110), new String[]{this._emailAddress});
             break;
          case 1094931521:
          case 1380272961:
             msg = ActivationApp._resources.getString(116);
             break;
          case 1094931539:
-            msg = MessageFormat.format(ActivationApp._resources.getString(114), new Object[]{this._emailAddress});
+            msg = MessageFormat.format(ActivationApp._resources.getString(114), new String[]{this._emailAddress});
             break;
          case 1145853003:
             msg = "DLTK: ";
@@ -246,9 +247,9 @@ class ActivationScreen extends AppsMainScreen {
                value -= -256;
             }
 
-            msg = ((StringBuffer)(new Object())).append(msg).append(this.hex(value / 16)).toString();
-            msg = ((StringBuffer)(new Object())).append(msg).append(this.hex(value % 16)).toString();
-            msg = ((StringBuffer)(new Object())).append(msg).append(' ').toString();
+            msg = msg + this.hex(value / 16);
+            msg = msg + this.hex(value % 16);
+            msg = msg + ' ';
          }
       }
 
@@ -299,8 +300,8 @@ class ActivationScreen extends AppsMainScreen {
          case 3841:
             dialog = true;
             exitApp = true;
-            String castString = (String)(!(param1 instanceof Object) ? "" : param1);
-            msg = MessageFormat.format(ActivationApp._resources.getString(109), new Object[]{castString});
+            String castString = !(param1 instanceof String) ? "" : (String)param1;
+            msg = MessageFormat.format(ActivationApp._resources.getString(109), new String[]{castString});
             break;
          case 3842:
          case 3851:
@@ -315,14 +316,14 @@ class ActivationScreen extends AppsMainScreen {
                msg = ActivationApp._resources.getString(156);
                System.out.println("Activation Complete with Errors ID: 0x6e15f667a0048abaL");
                long sid = -1;
-               if (param1 instanceof Object) {
-                  sid = param1;
+               if (param1 instanceof Long) {
+                  sid = (Long)param1;
                }
 
                String[] failedDatabases = OTASyncProgressHandler.getInstance().getIncompleteDatabases(sid);
                if (failedDatabases != null) {
                   for (int i = 0; i < failedDatabases.length; i++) {
-                     msg = ((StringBuffer)(new Object())).append(msg).append("\r\n").append(failedDatabases[i]).toString();
+                     msg = msg + "\r\n" + failedDatabases[i];
                   }
                }
             }
@@ -367,7 +368,7 @@ class ActivationScreen extends AppsMainScreen {
       }
 
       if (msg == null) {
-         throw new Object(((StringBuffer)(new Object("Activation:MSG:"))).append(reason).toString());
+         throw new RuntimeException("Activation:MSG:" + reason);
       }
 
       if (this._statusInformation.length() > 0) {
@@ -468,7 +469,7 @@ class ActivationScreen extends AppsMainScreen {
 
    private boolean validate(String email, String password) {
       if (email == null || email.length() == 0 || !EmailMessageUtilities.isEmailAddressFullyQualified(email)) {
-         Dialog dialog = (Dialog)(new Object(0, ActivationApp._resources.getString(129), 0, Bitmap.getPredefinedBitmap(0), 33554432));
+         Dialog dialog = new Dialog(0, ActivationApp._resources.getString(129), 0, Bitmap.getPredefinedBitmap(0), 33554432);
          dialog.doModal();
          return false;
       }
@@ -477,7 +478,7 @@ class ActivationScreen extends AppsMainScreen {
          return true;
       }
 
-      Dialog dialog = (Dialog)(new Object(0, ActivationApp._resources.getString(130), 0, Bitmap.getPredefinedBitmap(0), 33554432));
+      Dialog dialog = new Dialog(0, ActivationApp._resources.getString(130), 0, Bitmap.getPredefinedBitmap(0), 33554432);
       dialog.doModal();
       return false;
    }
@@ -536,7 +537,7 @@ class ActivationScreen extends AppsMainScreen {
 
    private void wipeHandheld(String email, String password) {
       ResourceBundle srb = ResourceBundle.getBundle(-1488627819050031640L, "net.rim.device.apps.internal.resource.Security");
-      Dialog dialog = (Dialog)(new Object(srb.getString(704), null, null, 0, Bitmap.getPredefinedBitmap(2)));
+      Dialog dialog = new Dialog(srb.getString(704), null, null, 0, Bitmap.getPredefinedBitmap(2));
       UiApplication.getUiApplication().pushGlobalScreen(dialog, -1073741823, 2);
       ActivationServiceImpl activationService = (ActivationServiceImpl)ActivationService.getInstance();
       activationService.storeDataBeforeDeviceWipe(email, password);

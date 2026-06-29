@@ -7,11 +7,11 @@ final class RIMDigestFactory2 extends DigestFactory {
    }
 
    @Override
-   protected final Digest create(String algorithm) {
+   protected final Digest create(String algorithm) throws NoSuchAlgorithmException {
       if (algorithm.equals("MD2")) {
          return new MD2Digest();
       } else {
-         throw new Object(algorithm);
+         throw new NoSuchAlgorithmException(algorithm);
       }
    }
 }

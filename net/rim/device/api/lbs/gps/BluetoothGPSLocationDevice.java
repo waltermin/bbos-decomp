@@ -26,7 +26,7 @@ final class BluetoothGPSLocationDevice extends GPSDevice {
          super._name = this.getString(14);
       }
 
-      super._deviceID = new Object(this._deviceAddress);
+      super._deviceID = new String(this._deviceAddress);
    }
 
    @Override
@@ -98,28 +98,14 @@ final class BluetoothGPSLocationDevice extends GPSDevice {
 
       BluetoothME.addListener(Application.getApplication(), this._bluetoothDataThread);
       Application.getApplication().invokeLater(this._bluetoothDataThread);
-      System.out
-         .println(
-            ((StringBuffer)(new Object("start reporting, status=")))
-               .append(super._status)
-               .append(" reconnectAttempt=")
-               .append(this._reconnectAttempt)
-               .toString()
-         );
+      System.out.println("start reporting, status=" + super._status + " reconnectAttempt=" + this._reconnectAttempt);
       return true;
    }
 
    @Override
    protected final boolean stopReporting() {
-      System.out
-         .println(
-            ((StringBuffer)(new Object("stopReporting, status="))).append(super._status).append(" reconnectAttempt=").append(this._reconnectAttempt).toString()
-         );
-      EventLogger.logEvent(
-         4560142210062134028L,
-         ((StringBuffer)(new Object())).append(super._name).append(" reporting stopped. Status: ").append(super._status).toString().getBytes(),
-         5
-      );
+      System.out.println("stopReporting, status=" + super._status + " reconnectAttempt=" + this._reconnectAttempt);
+      EventLogger.logEvent(4560142210062134028L, (super._name + " reporting stopped. Status: " + super._status).getBytes(), 5);
       this.stopReconnect();
       this._reconnectAttempt = 0;
       boolean active = false;
@@ -141,11 +127,11 @@ final class BluetoothGPSLocationDevice extends GPSDevice {
 
    @Override
    public final boolean equals(Object obj) {
-      EventLogger.logEvent(4560142210062134028L, ((StringBuffer)(new Object("equals obj: "))).append(obj).toString().getBytes(), 0);
+      EventLogger.logEvent(4560142210062134028L, ("equals obj: " + obj).getBytes(), 0);
       if (obj instanceof BluetoothGPSLocationDevice) {
          return this.compareByteArrays(this._deviceAddress, ((BluetoothGPSLocationDevice)obj)._deviceAddress);
       } else {
-         return obj instanceof Object ? obj.equals(this.getDeviceID()) : super.equals(obj);
+         return obj instanceof String ? obj.equals(this.getDeviceID()) : super.equals(obj);
       }
    }
 
@@ -165,16 +151,7 @@ final class BluetoothGPSLocationDevice extends GPSDevice {
 
    private final void forceStopReporting() {
       EventLogger.logEvent(
-         4560142210062134028L,
-         ((StringBuffer)(new Object()))
-            .append(super._name)
-            .append(" Bluetooth never connected for ")
-            .append(this._reconnectAttempt)
-            .append(" attempts. Status: ")
-            .append(super._status)
-            .toString()
-            .getBytes(),
-         5
+         4560142210062134028L, (super._name + " Bluetooth never connected for " + this._reconnectAttempt + " attempts. Status: " + super._status).getBytes(), 5
       );
       super._status = 4;
       GPSProvider.getInstance().fireLocationDeviceEvent(this, this.getString(7));
@@ -194,16 +171,7 @@ final class BluetoothGPSLocationDevice extends GPSDevice {
             this._bluetoothDataThread.stopBluetooth();
          }
 
-         System.out
-            .println(
-               ((StringBuffer)(new Object("attemptReconnect(")))
-                  .append(retryNow)
-                  .append("), status=")
-                  .append(super._status)
-                  .append(" reconnectAttempt=")
-                  .append(this._reconnectAttempt)
-                  .toString()
-            );
+         System.out.println("attemptReconnect(" + retryNow + "), status=" + super._status + " reconnectAttempt=" + this._reconnectAttempt);
          super._status = 8;
          if (retryNow) {
             this.startReporting();

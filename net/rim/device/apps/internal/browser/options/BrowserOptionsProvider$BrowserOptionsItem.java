@@ -18,16 +18,16 @@ import net.rim.device.internal.EScreens.EScreenAccess;
 import net.rim.device.internal.browser.wap.WAPServiceRecord;
 
 public final class BrowserOptionsProvider$BrowserOptionsItem extends SaveableMainScreenOptionsListItem {
-   private Vector _mdsHotkeyConfigs = (Vector)(new Object());
-   private Vector _wapHotkeyConfigs = (Vector)(new Object());
-   private Vector _browserConfigs = (Vector)(new Object());
+   private Vector _mdsHotkeyConfigs = new Vector();
+   private Vector _wapHotkeyConfigs = new Vector();
+   private Vector _browserConfigs = new Vector();
    private ObjectChoiceField _mdsHotkeyConfigChoiceField;
    private ObjectChoiceField _wapHotkeyConfigChoiceField;
    private ObjectChoiceField _browserConfigChoiceField;
 
    public BrowserOptionsProvider$BrowserOptionsItem() {
       super(BrowserResources.getString(232), -1514481539159318190L);
-      ContextObject.put(super._context, 244, new Object(27786));
+      ContextObject.put(super._context, 244, new Integer(27786));
    }
 
    @Override
@@ -87,37 +87,37 @@ public final class BrowserOptionsProvider$BrowserOptionsItem extends SaveableMai
 
       int browserConfigsNum = this._browserConfigs.size();
       if (browserConfigsNum >= 0) {
-         String[] browserConfigNames = new Object[browserConfigsNum];
+         String[] browserConfigNames = new String[browserConfigsNum];
 
          for (int i = 0; i < browserConfigsNum; i++) {
             browserConfigNames[i] = this.getBrowserName((BrowserConfigRecord)this._browserConfigs.elementAt(i));
          }
 
-         this._browserConfigChoiceField = (ObjectChoiceField)(new Object(BrowserResources.getString(200), browserConfigNames, browserConfigIndex));
+         this._browserConfigChoiceField = new ObjectChoiceField(BrowserResources.getString(200), browserConfigNames, browserConfigIndex);
          mainScreen.add(this._browserConfigChoiceField);
       }
 
       int mdsConfigsNum = this._mdsHotkeyConfigs.size();
       if (mdsConfigsNum >= 1) {
-         String[] mdsHotkeyConfigNames = new Object[mdsConfigsNum];
+         String[] mdsHotkeyConfigNames = new String[mdsConfigsNum];
 
          for (int i = 0; i < mdsConfigsNum; i++) {
             mdsHotkeyConfigNames[i] = this.getBrowserName((BrowserConfigRecord)this._mdsHotkeyConfigs.elementAt(i));
          }
 
-         this._mdsHotkeyConfigChoiceField = (ObjectChoiceField)(new Object(BrowserResources.getString(717), mdsHotkeyConfigNames, mdsHotkeyConfigIndex));
+         this._mdsHotkeyConfigChoiceField = new ObjectChoiceField(BrowserResources.getString(717), mdsHotkeyConfigNames, mdsHotkeyConfigIndex);
          mainScreen.add(this._mdsHotkeyConfigChoiceField);
       }
 
       int wapConfigsNum = this._wapHotkeyConfigs.size();
       if (wapConfigsNum >= 1) {
-         String[] wapHotkeyConfigNames = new Object[wapConfigsNum];
+         String[] wapHotkeyConfigNames = new String[wapConfigsNum];
 
          for (int i = 0; i < wapConfigsNum; i++) {
             wapHotkeyConfigNames[i] = this.getBrowserName((BrowserConfigRecord)this._wapHotkeyConfigs.elementAt(i));
          }
 
-         this._wapHotkeyConfigChoiceField = (ObjectChoiceField)(new Object(BrowserResources.getString(718), wapHotkeyConfigNames, wapHotkeyConfigIndex));
+         this._wapHotkeyConfigChoiceField = new ObjectChoiceField(BrowserResources.getString(718), wapHotkeyConfigNames, wapHotkeyConfigIndex);
          mainScreen.add(this._wapHotkeyConfigChoiceField);
       }
    }
@@ -231,7 +231,7 @@ public final class BrowserOptionsProvider$BrowserOptionsItem extends SaveableMai
    private final void clearScreen() {
       synchronized (Application.getEventLock()) {
          Screen mainScreen = UiApplication.getUiApplication().getActiveScreen();
-         if (mainScreen instanceof Object) {
+         if (mainScreen instanceof MainScreen) {
             mainScreen.deleteRange(0, mainScreen.getFieldCount());
             this.populateMainScreen((MainScreen)mainScreen);
          }

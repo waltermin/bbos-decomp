@@ -63,7 +63,7 @@ class SSRequest implements PhoneEventListener, Runnable {
          Ui.getUiEngine().pushGlobalScreen(this._statusDialog, 10, 2);
       }
 
-      ((Thread)(new Object(this))).start();
+      new Thread(this).start();
    }
 
    protected synchronized void waitForNetworkResponse() {
@@ -165,7 +165,7 @@ class SSRequest implements PhoneEventListener, Runnable {
    private void queueError(String error) {
       if (error != null && error.length() != 0) {
          if (this._errors == null) {
-            this._errors = new Object[]{error};
+            this._errors = new String[]{error};
          } else {
             if (!this.isDuplicateError(error)) {
                Array.resize(this._errors, this._errors.length + 1);

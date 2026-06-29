@@ -14,7 +14,7 @@ final class CMSBlockFormatterEngine implements BlockFormatterEngine {
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object())).append(this._encryptorEngine.getAlgorithm()).append("_CMS").toString();
+      return this._encryptorEngine.getAlgorithm() + "_CMS";
    }
 
    @Override

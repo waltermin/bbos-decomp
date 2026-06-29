@@ -91,7 +91,7 @@ final class AtomRenderer$HandlerHelper extends DefaultHandler {
             this.this$0._buffer.append(attributes.getLocalName(i));
             this.this$0._buffer.append('=');
             this.this$0._buffer.append('"');
-            StringBuffer buffer = (StringBuffer)(new Object(attributes.getValue(i)));
+            StringBuffer buffer = new StringBuffer(attributes.getValue(i));
 
             for (int j = 0; j < buffer.length(); j++) {
                if (buffer.charAt(j) == '"') {
@@ -158,7 +158,7 @@ final class AtomRenderer$HandlerHelper extends DefaultHandler {
                   String title = this.this$0.getCurrentString();
                   this.this$0._browserContent.setTitle(title);
                   if (AtomRenderer.access$1400(this.this$0) != null) {
-                     BrowserContentChangedEvent event = (BrowserContentChangedEvent)(new Object(this.this$0._browserContent));
+                     BrowserContentChangedEvent event = new BrowserContentChangedEvent(this.this$0._browserContent);
                      AtomRenderer.access$1500(this.this$0).eventOccurred(event);
                   }
 

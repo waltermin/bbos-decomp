@@ -9,8 +9,8 @@ import net.rim.vm.WeakReference;
 
 final class BrowserFolderConverter implements SyncConverter {
    public static final int VERSION_SUPPORTED = 1;
-   private static WeakReference _tmpWriteDataBufferWR = (WeakReference)(new Object(null));
-   private static WeakReference _tmpReadDataBufferWR = (WeakReference)(new Object(null));
+   private static WeakReference _tmpWriteDataBufferWR = new WeakReference(null);
+   private static WeakReference _tmpReadDataBufferWR = new WeakReference(null);
    private static int FOLDER_FIELD_ID = 0;
    private static BrowserFolderSyncObject _returnSyncObject = new BrowserFolderSyncObject();
 
@@ -21,7 +21,7 @@ final class BrowserFolderConverter implements SyncConverter {
       }
 
       BrowserFolderSyncObject browserSyncObject = (BrowserFolderSyncObject)object;
-      SyncBuffer syncBuffer = (SyncBuffer)(new Object(buffer, version, browserSyncObject.getUID()));
+      SyncBuffer syncBuffer = new SyncBuffer(buffer, version, browserSyncObject.getUID());
       DataBuffer _tmpWriteDataBuffer = WeakReferenceUtilities.getDataBuffer(_tmpWriteDataBufferWR, false);
       _tmpWriteDataBuffer.setLength(0);
 
@@ -42,7 +42,7 @@ final class BrowserFolderConverter implements SyncConverter {
          return null;
       }
 
-      SyncBuffer syncBuffer = (SyncBuffer)(new Object(dataBuffer, version, uid));
+      SyncBuffer syncBuffer = new SyncBuffer(dataBuffer, version, uid);
       if (syncBuffer.getFieldType() != FOLDER_FIELD_ID) {
          return null;
       }

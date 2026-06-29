@@ -46,11 +46,11 @@ final class RootRegister$MasterKeyPasswordDialog extends SimplePasswordDialog {
                this._attempt++;
                String password = this.getText();
                if (password == null || !this._masterKeyFile.checkPassword(password.getBytes())) {
-                  this._messageDlg = (Dialog)(new Object(0, CommonResource.getString(10047), 0, Bitmap.getPredefinedBitmap(0), 33554432));
+                  this._messageDlg = new Dialog(0, CommonResource.getString(10047), 0, Bitmap.getPredefinedBitmap(0), 33554432);
                   this._messageDlg.show(49);
                   Proxy.getInstance().invokeLater(new RootRegister$MasterKeyPasswordDialog$1(this));
                   if (this._attempt > this._maxAttempts) {
-                     this._messageDlg = (Dialog)(new Object(0, CommonResource.getString(10124), 0, Bitmap.getPredefinedBitmap(0), 33554432));
+                     this._messageDlg = new Dialog(0, CommonResource.getString(10124), 0, Bitmap.getPredefinedBitmap(0), 33554432);
                      this._messageDlg.show(49);
                      super.close(-1);
                      var5 = false;
@@ -80,7 +80,7 @@ final class RootRegister$MasterKeyPasswordDialog extends SimplePasswordDialog {
    }
 
    private final void setMessage() {
-      StringBuffer message = (StringBuffer)(new Object(CommonResource.getString(10121)));
+      StringBuffer message = new StringBuffer(CommonResource.getString(10121));
       if (this._attempt > 1) {
          message.append(' ');
          message.append('(');

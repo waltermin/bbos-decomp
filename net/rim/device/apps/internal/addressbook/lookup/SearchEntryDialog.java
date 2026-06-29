@@ -1,23 +1,24 @@
 package net.rim.device.apps.internal.addressbook.lookup;
 
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.BasicEditField;
+import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.internal.addressbook.resources.AddressBookResources;
 import net.rim.device.internal.ui.component.PopupDialog;
 
 public final class SearchEntryDialog extends PopupDialog {
    private BasicEditField _editField;
    private String _initialText = "";
-   private RichTextField _promptField = (RichTextField)(new Object("", 36028797018963968L));
+   private RichTextField _promptField = new RichTextField("", 36028797018963968L);
    private int _minLength = 1;
    private int _maxLength = 256;
 
    private SearchEntryDialog(String initialPattern) {
-      super((Manager)(new Object(1153202979583557632L)), 0);
+      super(new VerticalFieldManager(1153202979583557632L), 0);
       this._promptField.setText(AddressBookResources.getString(1717));
       this.add(this._promptField);
-      this._editField = (BasicEditField)(new Object(null, initialPattern, this._maxLength, 4503601774854144L));
+      this._editField = new EditField(null, initialPattern, this._maxLength, 4503601774854144L);
       this.add(this._editField);
    }
 

@@ -49,11 +49,11 @@ final class PosPayload {
    final void print() {
       int length = this.payload.length;
       System.out.println("Pos Payload: ");
-      System.out.println(((StringBuffer)(new Object("Length: "))).append(length).toString());
+      System.out.println("Length: " + length);
       System.out.println("Payload: ");
 
       for (int i = 0; i < length; i++) {
-         System.out.print(((StringBuffer)(new Object())).append(Integer.toHexString(255 & this.payload[i])).append(" ").toString());
+         System.out.print(Integer.toHexString(255 & this.payload[i]) + " ");
       }
 
       System.out.print("\n");

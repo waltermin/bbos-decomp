@@ -20,7 +20,9 @@ import net.rim.device.apps.api.addressbook.AddressMatch;
 import net.rim.device.apps.api.addressbook.AddressReference;
 import net.rim.device.apps.api.addressbook.AddressReferenceViewField;
 import net.rim.device.apps.api.addressbook.AddressReferenceViewField$AddressReferenceViewDataField;
+import net.rim.device.apps.api.addressbook.EmailAddressModel;
 import net.rim.device.apps.api.addressbook.FriendlyNameAddressModel;
+import net.rim.device.apps.api.addressbook.GroupAddressCardModel;
 import net.rim.device.apps.api.framework.model.CloneProvider;
 import net.rim.device.apps.api.framework.model.ColumnPaintProvider;
 import net.rim.device.apps.api.framework.model.ColumnPainter;
@@ -34,6 +36,7 @@ import net.rim.device.apps.api.framework.model.ResolvedStatusProvider;
 import net.rim.device.apps.api.framework.model.SyncBuffer;
 import net.rim.device.apps.api.framework.model.VerbProvider;
 import net.rim.device.apps.api.framework.verb.Verb;
+import net.rim.device.apps.api.framework.verb.WrapperVerb;
 import net.rim.device.apps.api.messaging.implus.IMPlusComposeModel;
 import net.rim.device.apps.api.messaging.implus.IMPlusServiceModel;
 import net.rim.device.apps.api.messaging.messagelist.MessageListOptions;
@@ -42,6 +45,7 @@ import net.rim.device.apps.api.transmission.rim.CMIMEUtilities;
 import net.rim.device.apps.api.transmission.rim.RIMMessagingOutgoingMessage;
 import net.rim.device.apps.api.ui.CommonResources;
 import net.rim.device.apps.api.ui.LeftRightFieldManager;
+import net.rim.device.apps.internal.addressbook.lookup.RequestModel;
 import net.rim.device.apps.internal.blackberryemail.email.EmailEditorScreen;
 import net.rim.device.apps.internal.blackberryemail.email.RemoveWhenSendingModel;
 import net.rim.device.apps.internal.blackberryemail.resources.EmailResources;
@@ -71,7 +75,7 @@ public class EmailHeaderModel
    private static Object[] _resultContainer = new Object[2];
 
    public boolean isBlank() {
-      if (super._modelData instanceof Object && !(super._modelData instanceof Object)) {
+      if (super._modelData instanceof FriendlyNameAddressModel && !(super._modelData instanceof RequestModel)) {
          FriendlyNameAddressModel fnam = (FriendlyNameAddressModel)super._modelData;
          String address = fnam.getAddress();
          if (address != null && address.length() > 0) {
@@ -86,7 +90,7 @@ public class EmailHeaderModel
    }
 
    public boolean hasFreeFormAddress() {
-      if (!(super._modelData instanceof Object)) {
+      if (!(super._modelData instanceof FriendlyNameAddressModel)) {
          return false;
       }
 
@@ -96,7 +100,7 @@ public class EmailHeaderModel
 
    public boolean isValidToSend() {
       RIMModel insideModel = this.getInsideModel();
-      if (!(insideModel instanceof Object)) {
+      if (!(insideModel instanceof ResolvedStatusProvider)) {
          return !this.isBlank();
       }
 
@@ -106,7 +110,7 @@ public class EmailHeaderModel
 
    public boolean isUnresolved() {
       RIMModel insideModel = this.getInsideModel();
-      if (!(insideModel instanceof Object)) {
+      if (!(insideModel instanceof ResolvedStatusProvider)) {
          return false;
       }
 
@@ -140,9 +144,9 @@ public class EmailHeaderModel
 
    public void extractNames(String[] results) {
       RIMModel model = this.getInsideModel();
-      if (model instanceof Object) {
+      if (model instanceof ConversionProvider) {
          ConversionProvider converter = (ConversionProvider)model;
-         converter.convert(new Object(10), results);
+         converter.convert(new ContextObject(10), results);
       }
 
       if (results[0] == null) {
@@ -192,10 +196,10 @@ public class EmailHeaderModel
 
    @Override
    public boolean convert(Object context, Object target) {
-      if (target instanceof Object) {
+      if (target instanceof RIMMessagingOutgoingMessage) {
          RIMMessagingOutgoingMessage outgoingTransmission = (RIMMessagingOutgoingMessage)target;
          RIMModel addressModel = this.getInsideModel();
-         String[] nameStrings = new Object[2];
+         String[] nameStrings = new String[2];
          this.extractNames(nameStrings);
          String addressString = nameStrings[0];
          String friendlyNameString = nameStrings[1];
@@ -249,7 +253,7 @@ public class EmailHeaderModel
          }
       } else if (ContextObject.getFlag(context, 43) && ContextObject.getFlag(context, 19)) {
          RIMModel addressModel = this.getInsideModel();
-         if (super._modelData instanceof Object && addressModel instanceof Object) {
+         if (super._modelData instanceof AddressCardModel && addressModel instanceof FriendlyNameAddressModel) {
             FriendlyNameAddressModel friendlyModel = (FriendlyNameAddressModel)addressModel;
             FriendlyNameAddressModel serializeAddressModel = null;
             if (ContextObject.getFlag(context, 94)) {
@@ -314,13 +318,13 @@ public class EmailHeaderModel
                }
 
                serializeAddressModel.setFriendlyName(friendlyName);
-               if (serializeAddressModel instanceof Object) {
+               if (serializeAddressModel instanceof RIMModel) {
                   addressModel = serializeAddressModel;
                }
             }
          }
 
-         if (!(addressModel instanceof Object)) {
+         if (!(addressModel instanceof ConversionProvider)) {
             return true;
          }
 
@@ -342,21 +346,21 @@ public class EmailHeaderModel
                      break;
                   case 0:
                   default:
-                     if (addressModel instanceof Object) {
+                     if (addressModel instanceof GroupAddressCardModel) {
                         fieldType = 8;
                      } else {
                         fieldType = 1;
                      }
                      break;
                   case 1:
-                     if (addressModel instanceof Object) {
+                     if (addressModel instanceof GroupAddressCardModel) {
                         fieldType = 9;
                      } else {
                         fieldType = 2;
                      }
                      break;
                   case 2:
-                     if (addressModel instanceof Object) {
+                     if (addressModel instanceof GroupAddressCardModel) {
                         fieldType = 10;
                      } else {
                         fieldType = 3;
@@ -379,19 +383,19 @@ public class EmailHeaderModel
             return true;
          }
       } else {
-         if (target instanceof Object[]) {
-            String[] result = (Object[])target;
+         if (target instanceof String[]) {
+            String[] result = (String[])target;
             this.extractNames(result);
             return true;
          }
 
-         if (target instanceof Object && ContextObject.getFlag(context, 70)) {
+         if (target instanceof StringBuffer && ContextObject.getFlag(context, 70)) {
             if (this.getHeaderType() == 2) {
                return true;
             }
 
             StringBuffer stringBuffer = (StringBuffer)target;
-            String[] nameStrings = new Object[2];
+            String[] nameStrings = new String[2];
             this.extractNames(nameStrings);
             stringBuffer.append(HeaderTypes.getStringForHeaderType(this.getHeaderType()));
             if (nameStrings[1] != null) {
@@ -486,9 +490,9 @@ public class EmailHeaderModel
          }
 
          EmailComposeComboField eccf = new EmailComposeComboField(headerType, messageType, this, context);
-         HorizontalFieldManager labelField = (HorizontalFieldManager)(new Object());
-         labelField.add((Field)(new Object(eccf.getEditable().getLabel())));
-         LeftRightFieldManager lrField = (LeftRightFieldManager)(new Object(labelField, eccf));
+         HorizontalFieldManager labelField = new HorizontalFieldManager();
+         labelField.add(new LabelField(eccf.getEditable().getLabel()));
+         LeftRightFieldManager lrField = new LeftRightFieldManager(labelField, eccf);
          lrField.setTag(tag);
          lrField.setCookie(this);
          return lrField;
@@ -496,7 +500,7 @@ public class EmailHeaderModel
          IMPlusServiceModel implusService = (IMPlusServiceModel)ApplicationRegistry.getApplicationRegistry().get(-2205884509140292945L);
          boolean isMultiSendMethodCapable = implusService != null && implusService.isIMPlusCompose(context);
          if (ContextObject.getFlag(context, 37) && !this.flagsSet(7) && !isMultiSendMethodCapable) {
-            Field field = (Field)(new Object(this, HeaderTypes.getStringForHeaderType(this.getHeaderType()), 4294967296L, context));
+            Field field = new AddressReferenceViewField(this, HeaderTypes.getStringForHeaderType(this.getHeaderType()), 4294967296L, context);
             field.setTag(tag);
             field.setCookie(this);
             Font gFont = (Font)ContextObject.get(context, 77);
@@ -514,7 +518,7 @@ public class EmailHeaderModel
             field.setTag(tag);
             field.setCookie(this);
             String headerName = HeaderTypes.getStringForHeaderType(this.getHeaderType());
-            LabelField labelField = (LabelField)(new Object(headerName));
+            LabelField labelField = new LabelField(headerName);
             labelField.setCookie(this);
             boolean useLabelAlignment = ContextObject.getFlag(context, 0);
             if (!useLabelAlignment) {
@@ -531,12 +535,12 @@ public class EmailHeaderModel
 
             Field addressField = null;
             RIMModel address = this.getInsideModel();
-            if (address instanceof Object) {
+            if (address instanceof FieldProvider) {
                FieldProvider provider = (FieldProvider)address;
                addressField = provider.getField(contextObject);
                if (addressField != null) {
                   if (this.flagsSet(7)) {
-                     StringBuffer postfixBuffer = (StringBuffer)(new Object());
+                     StringBuffer postfixBuffer = new StringBuffer();
                      postfixBuffer.append(' ');
                      postfixBuffer.append('[');
                      if (this.flagsSet(2)) {
@@ -548,13 +552,13 @@ public class EmailHeaderModel
                      }
 
                      postfixBuffer.append(']');
-                     FlowFieldManager ffm = (FlowFieldManager)(new Object(addressField.getStyle()));
-                     LabelField postfixLabel = (LabelField)(new Object(postfixBuffer.toString(), 36028797018963968L));
-                     if (addressField instanceof Object) {
+                     FlowFieldManager ffm = new FlowFieldManager(addressField.getStyle());
+                     LabelField postfixLabel = new LabelField(postfixBuffer.toString(), 36028797018963968L);
+                     if (addressField instanceof RichTextField) {
                         RichTextField rtf = (RichTextField)addressField;
                         rtf.setAdjustAlignments(true);
                         if ((rtf.getFieldStyle() & 1152921504606846976L) == 0) {
-                           addressField = (Field)(new Object(rtf.getText(), rtf.getFieldStyle() | 67108864));
+                           addressField = new RichTextField(rtf.getText(), rtf.getFieldStyle() | 67108864);
                            rtf = (RichTextField)addressField;
                            rtf.setAdjustAlignments(true);
                         }
@@ -570,7 +574,7 @@ public class EmailHeaderModel
                   if (field instanceof EmailHeaderEditField) {
                      EmailHeaderEditField ehef = (EmailHeaderEditField)field;
                      ehef._insideField = addressField;
-                     if (address instanceof Object || address instanceof Object) {
+                     if (address instanceof EmailAddressModel || address instanceof GroupAddressCardModel) {
                         ehef._addressModel = address;
                      }
 
@@ -594,7 +598,7 @@ public class EmailHeaderModel
             }
 
             if (useLabelAlignment && !ContextObject.getFlag(context, 1)) {
-               LeftRightFieldManager lrField = (LeftRightFieldManager)(new Object(labelField, field));
+               LeftRightFieldManager lrField = new LeftRightFieldManager(labelField, field);
                lrField.setTag(field.getTag());
                lrField.setCookie(field.getCookie());
                field = lrField;
@@ -618,7 +622,7 @@ public class EmailHeaderModel
       Field newField = uiField;
 
       do {
-         if (!(newField instanceof Object)) {
+         if (!(newField instanceof Manager)) {
             break;
          }
 
@@ -636,12 +640,12 @@ public class EmailHeaderModel
 
          try {
             var11 = true;
-            if (super._modelData instanceof Object) {
+            if (super._modelData instanceof AddressCardModel) {
                tempContext = ContextObject.castOrCreate(tempContext);
                ContextObject.put(tempContext, -570873356703084835L, super._modelData);
             }
 
-            if (!(modelWithVerbs instanceof Object)) {
+            if (!(modelWithVerbs instanceof VerbProvider)) {
                var11 = false;
             } else {
                defaultVerb = ((VerbProvider)modelWithVerbs).getVerbs(tempContext, verbs);
@@ -659,7 +663,7 @@ public class EmailHeaderModel
             ContextObject.remove(tempContext, -570873356703084835L);
          }
 
-         if (!ContextObject.getFlag(context, 44) && uiField instanceof Object) {
+         if (!ContextObject.getFlag(context, 44) && uiField instanceof AddressReferenceViewField$AddressReferenceViewDataField) {
             AddressReferenceViewField toggleField = ((AddressReferenceViewField$AddressReferenceViewDataField)uiField).getAddressReferenceViewField();
             int resId = toggleField.isFriendlyVisible() ? 1650 : 1700;
             Arrays.add(verbs, toggleField.getToggleVerb(CommonResources.getResourceBundle(), resId));
@@ -671,7 +675,7 @@ public class EmailHeaderModel
                EmailComposeComboField eccf = (EmailComposeComboField)uiField;
                defaultVerb = eccf.getVerbs(context, verbs);
                if (!this.isBlank() && this.hasFreeFormAddress()) {
-                  Arrays.add(verbs, new Object(AddressBookServices.getAddToAddressBookVerb(), super._modelData, 16867328));
+                  Arrays.add(verbs, new WrapperVerb(AddressBookServices.getAddToAddressBookVerb(), super._modelData, 16867328));
                }
             }
          } else {
@@ -679,7 +683,7 @@ public class EmailHeaderModel
             Array.resize(verbs, 1);
             verbs[0] = new EditAddressInUIVerb(this, new EditAddressVerb(this), ehf._insideField);
             defaultVerb = verbs[0];
-            if (ehf._isResolvedAddressBookLookup && super._modelData instanceof Object) {
+            if (ehf._isResolvedAddressBookLookup && super._modelData instanceof AddressCardModel) {
                Arrays.add(verbs, new EmailHeaderModel$AddLookupResultToAddressBookVerb((AddressCardModel)super._modelData));
             }
          }
@@ -697,9 +701,9 @@ public class EmailHeaderModel
 
    @Override
    public Object clone(Object context) {
-      ContextObject initialData = (ContextObject)(new Object());
+      ContextObject initialData = new ContextObject();
       RIMModel oldInsideModel = this.getInsideModel();
-      if (!(oldInsideModel instanceof Object)) {
+      if (!(oldInsideModel instanceof CloneProvider)) {
          initialData.put(254, oldInsideModel);
       } else {
          RIMModel newInsideModel = (RIMModel)((CloneProvider)oldInsideModel).clone(context);
@@ -746,7 +750,7 @@ public class EmailHeaderModel
    protected EmailHeaderModel(String[] stringPair, ContextObject contextObject) {
       String address = CMIMEUtilities.getAddressPart(stringPair);
       Object addressCard = AddressBookServices.reverseLookup(address);
-      if (addressCard instanceof Object) {
+      if (addressCard instanceof AddressCardModel) {
          super._modelData = (PersistableRIMModel)addressCard;
          super._hash = AddressBookServices.getReverseLookupCode(address, true);
       } else {
@@ -774,7 +778,7 @@ public class EmailHeaderModel
 
    static PersistableRIMModel createFreeFormAddress(String address, long type) {
       PersistableRIMModel model = (PersistableRIMModel)FactoryUtil.createInstance(type, address);
-      if (model instanceof Object) {
+      if (model instanceof FriendlyNameAddressModel) {
          ((FriendlyNameAddressModel)model).setFreeForm(true);
       }
 
@@ -848,12 +852,12 @@ public class EmailHeaderModel
          if (persistableRIMModel != null) {
             this.setInsideModel(persistableRIMModel, contextObject.get(-4055106280780392421L));
          } else {
-            String[] stringPair = (Object[])contextObject.get(251);
+            String[] stringPair = (String[])contextObject.get(251);
             if (stringPair != null) {
                long guid = this.getObjectType(initialData, stringPair);
                String address = CMIMEUtilities.getAddressPart(stringPair);
                Object addressCard = AddressBookServices.reverseLookup(address);
-               if (addressCard instanceof Object) {
+               if (addressCard instanceof AddressCardModel) {
                   super._modelData = (PersistableRIMModel)addressCard;
                   super._hash = AddressBookServices.getReverseLookupCode(address, true);
                } else {

@@ -7,15 +7,13 @@ public class AbstractInputByteStreamAdapter implements IInputByteStreamAdapter {
    private DataInputStream _dataInputStream;
 
    protected void init(InputStream inStream) {
-      this._dataInputStream = (DataInputStream)(new Object(inStream));
+      this._dataInputStream = new DataInputStream(inStream);
    }
 
    @Override
    public final int readBuffer(int numBytes, byte[] buffer) {
       if (numBytes > buffer.length) {
-         throw new Object(
-            ((StringBuffer)(new Object("Trying to read "))).append(numBytes).append(" bytes into buffer of size ").append(buffer.length).toString()
-         );
+         throw new ArrayIndexOutOfBoundsException("Trying to read " + numBytes + " bytes into buffer of size " + buffer.length);
       }
 
       int readSoFar = 0;

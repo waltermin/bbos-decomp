@@ -28,15 +28,15 @@ final class BluetoothMainScreen$AddDeviceVerb extends Verb {
          Status.show(prompt, this.this$0._btManager.getDialogImage(), 3000, 0, true, false, 0);
          return null;
       } else {
-         Dialog dialog = (Dialog)(new Object(4, BluetoothMainScreen.getString(4), 0, null, 0));
+         Dialog dialog = new Dialog(4, BluetoothMainScreen.getString(4), 0, null, 0);
          DialogFieldManager dfm = (DialogFieldManager)dialog.getDelegate();
-         ImageField imageField = (ImageField)(new Object());
+         ImageField imageField = new ImageField();
          imageField.setImage(this.this$0._btManager.getDialogImage());
          dfm.setIcon(imageField);
          Manager mm = dfm.getMiddleManager();
-         RadioButtonGroup rbg = (RadioButtonGroup)(new Object());
-         RadioButtonField rbf1 = (RadioButtonField)(new Object(BluetoothMainScreen.getString(98)));
-         RadioButtonField rbf2 = (RadioButtonField)(new Object(BluetoothMainScreen.getString(99)));
+         RadioButtonGroup rbg = new RadioButtonGroup();
+         RadioButtonField rbf1 = new RadioButtonField(BluetoothMainScreen.getString(98));
+         RadioButtonField rbf2 = new RadioButtonField(BluetoothMainScreen.getString(99));
          rbg.add(rbf1);
          rbg.add(rbf2);
          rbg.setSelectedIndex(0);

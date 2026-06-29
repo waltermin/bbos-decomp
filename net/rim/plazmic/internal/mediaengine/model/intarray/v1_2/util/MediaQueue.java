@@ -38,7 +38,7 @@ public final class MediaQueue {
          this._dataPtr = this._dataArray[dataIndex];
          return this._dataPtr;
       } else {
-         throw new Object("Cannot peek element from empty list");
+         throw new IllegalArgumentException("Cannot peek element from empty list");
       }
    }
 
@@ -75,7 +75,7 @@ public final class MediaQueue {
          this._dataPtr = this._dataArray[dataIndex];
          return this._dataPtr;
       } else {
-         throw new Object("Cannot peek element from empty list");
+         throw new IllegalArgumentException("Cannot peek element from empty list");
       }
    }
 

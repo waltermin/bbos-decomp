@@ -35,11 +35,11 @@ public final class ExplorerResources implements ExplorerResource {
    }
 
    private static final String[] parseTokenizedString(String s) {
-      String[] result = new Object[0];
-      StringTokenizer tokenizer = (StringTokenizer)(new Object(s, '%'));
+      String[] result = new String[0];
+      StringTokenizer tokenizer = new StringTokenizer(s, '%');
 
       while (tokenizer.hasMoreElements()) {
-         Arrays.add(result, tokenizer.nextElement());
+         Arrays.add(result, (String)tokenizer.nextElement());
       }
 
       return result;
@@ -57,7 +57,7 @@ public final class ExplorerResources implements ExplorerResource {
             var2 = false;
          } finally {
             if (var2) {
-               throw new Object("No file explorer resources");
+               throw new RuntimeException("No file explorer resources");
             }
          }
       }

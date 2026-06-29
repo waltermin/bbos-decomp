@@ -15,12 +15,12 @@ public final class ValidateCommand implements DomainCommand {
       UserInfo userInfo = ClientSessionState.getInstance().getUserInfo();
       Mailbox mailboxToValidate = userInfo.getMailbox(description);
       if (mailboxToValidate == null) {
-         throw new Object(((StringBuffer)(new Object("Unknown mailbox specified: "))).append(description).toString());
+         throw new IllegalArgumentException("Unknown mailbox specified: " + description);
       }
 
-      Vector mailboxes = (Vector)(new Object());
+      Vector mailboxes = new Vector();
       mailboxes.addElement(mailboxToValidate);
-      Hashtable forwardParams = (Hashtable)(new Object());
+      Hashtable forwardParams = new Hashtable();
       forwardParams.put("mailboxesToValidate", mailboxes);
       return new DomainCommandResult("success", null, null, forwardParams);
    }

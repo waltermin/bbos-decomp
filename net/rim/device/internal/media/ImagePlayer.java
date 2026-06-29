@@ -5,6 +5,7 @@ import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.ImageItem;
 import javax.microedition.media.Control;
 import javax.microedition.media.Manager;
+import javax.microedition.media.MediaException;
 import javax.microedition.media.Player;
 import javax.microedition.media.PlayerListener;
 import javax.microedition.media.TimeBase;
@@ -18,19 +19,19 @@ class ImagePlayer implements Player {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public void read(InputStream stream) {
+   public void read(InputStream stream) throws MediaException {
       try {
          byte[] data = IOUtilities.streamToBytes(stream);
          this._data = data;
       } catch (Throwable var5) {
-         throw new Object(e.toString());
+         throw new MediaException(e.toString());
       }
 
       this._image = Image.createImage(this._data, 0, this._data.length);
       String label = null;
       String altText = "";
-      this._item = (ImageItem)(new Object(label, this._image, 3, altText));
-      this._guiControl = (Control)(new Object(this._item));
+      this._item = new ImageItem(label, this._image, 3, altText);
+      this._guiControl = new GUIControlImpl(this._item);
    }
 
    @Override
@@ -53,9 +54,7 @@ class ImagePlayer implements Player {
 
    @Override
    public Control[] getControls() {
-      Control[] controls = new Object[1];
-      controls[0] = this._guiControl;
-      return controls;
+      return new Control[]{this._guiControl};
    }
 
    @Override

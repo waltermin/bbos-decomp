@@ -571,8 +571,8 @@ public class ByteCode implements OpcodeConstants {
       c.print(Integer.toString(code.getNumTemps()));
       c.print(" lastRealLocal=");
       c.print(Integer.toString(code.getLastRealLocal()));
-      c.print(((StringBuffer)(new Object(" needsScope="))).append(code.getNeedsScope()).toString());
-      c.println(((StringBuffer)(new Object(" sensible="))).append(code.getIsSensible()).toString(), indent + 4);
+      c.print(" needsScope=" + code.getNeedsScope());
+      c.println(" sensible=" + code.getIsSensible(), indent + 4);
       indent += 4;
       if (code.getNumLocals() != 0) {
          c.println("Locals: ", indent + 4);
@@ -630,8 +630,8 @@ public class ByteCode implements OpcodeConstants {
       }
 
       c.println("", indent + 4);
-      c.println(((StringBuffer)(new Object("Token Start: "))).append(Integer.toString(code.getTokenStart())).toString(), indent + 4);
-      c.println(((StringBuffer)(new Object("Token End: "))).append(Integer.toString(code.getTokenEnd())).toString(), indent + 4);
+      c.println("Token Start: " + Integer.toString(code.getTokenStart()), indent + 4);
+      c.println("Token End: " + Integer.toString(code.getTokenEnd()), indent + 4);
       c.println("", indent + 4);
       if (code.hasLineNumbers()) {
          c.println("Line Number Table: ", indent + 4);

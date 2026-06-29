@@ -4,37 +4,39 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.FlowFieldManager;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.FieldProvider;
 import net.rim.device.apps.api.ui.CommonResources;
 
 final class VCardField extends MessageField implements FieldChangeListener {
    private VCardMessage _message;
    private AddressCardModel _address;
-   private FlowFieldManager _ffm = (FlowFieldManager)(new Object(12884901888L));
+   private FlowFieldManager _ffm = new FlowFieldManager(12884901888L);
    private ButtonField _addButton;
    private ButtonField _cancelButton;
-   VerticalFieldManager _manager = (VerticalFieldManager)(new Object());
+   VerticalFieldManager _manager = new VerticalFieldManager();
 
    VCardField(VCardMessage message) {
       this._message = message;
       this._address = message.getAddressCard();
-      Field field = ((FieldProvider)this._address).getField(new Object(45, 54, 11));
+      Field field = ((FieldProvider)this._address).getField(new ContextObject(45, 54, 11));
       if (field != null) {
          int state = message.getState();
-         this._manager.add((Field)(new Object()));
+         this._manager.add(new SeparatorField());
          switch (state) {
             case -1:
                break;
             case 0:
             default:
                this._manager.add(this.getTextField(state));
-               this._addButton = (ButtonField)(new Object(PeerResources.getString(2047)));
+               this._addButton = new ButtonField(PeerResources.getString(2047));
                this._addButton.setChangeListener(this);
-               this._cancelButton = (ButtonField)(new Object(CommonResources.getString(9042)));
+               this._cancelButton = new ButtonField(CommonResources.getString(9042));
                this._cancelButton.setChangeListener(this);
                this._ffm.add(this._addButton);
                this._ffm.add(this._cancelButton);
@@ -48,7 +50,7 @@ final class VCardField extends MessageField implements FieldChangeListener {
 
          this._manager.add(field);
          this._manager.add(this._ffm);
-         this._manager.add((Field)(new Object()));
+         this._manager.add(new SeparatorField());
          this.add(this._manager);
       }
    }
@@ -58,15 +60,15 @@ final class VCardField extends MessageField implements FieldChangeListener {
       switch (state) {
          case 0:
          default:
-            rtf = (RichTextField)(new Object(PeerResources.getString(2046)));
+            rtf = new RichTextField(PeerResources.getString(2046));
             rtf.setAttributes(new int[]{32768, -804651007, 40960, -804651005}, new int[]{16777215, 1866989824, 727916, 1987005697});
             return rtf;
          case 1:
-            rtf = (RichTextField)(new Object(PeerResources.getString(2048)));
+            rtf = new RichTextField(PeerResources.getString(2048));
             rtf.setAttributes(new int[]{32768, -804651007, 40960, -804651005}, new int[]{16777215, 1866989824, 727916, 1987005697});
             return rtf;
          case 2:
-            rtf = (RichTextField)(new Object(PeerResources.getString(891)));
+            rtf = new RichTextField(PeerResources.getString(891));
             rtf.setAttributes(new int[]{16711680, -804651007, 32768, -804651007}, new int[]{16777215, 1866989824, 727916, 1987005697});
          case -1:
             return rtf;

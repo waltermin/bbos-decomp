@@ -19,7 +19,7 @@ class ESMDSArrayPrototype$5 extends HostFunction {
    @Override
    public long run() {
       ESMDSArray thiz = (ESMDSArray)this.getThis();
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       Object value = thiz.getValue();
       switch (thiz.getType()) {
          case 32767:

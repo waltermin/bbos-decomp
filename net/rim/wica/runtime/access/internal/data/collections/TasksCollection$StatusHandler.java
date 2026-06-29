@@ -1,6 +1,6 @@
 package net.rim.wica.runtime.access.internal.data.collections;
 
-import javax.microedition.pim.PIMItem;
+import javax.microedition.pim.ToDo;
 import net.rim.wica.runtime.access.internal.data.enumeration.StatusEnumConverter;
 import net.rim.wica.runtime.access.internal.data.handlers.IntFieldHandler;
 
@@ -13,9 +13,9 @@ final class TasksCollection$StatusHandler implements IntFieldHandler {
 
    @Override
    public final int getValue(Object item) {
-      if (item instanceof Object && this._statusSupported) {
+      if (item instanceof ToDo && this._statusSupported) {
          try {
-            return StatusEnumConverter.deviceToCommon(((PIMItem)item).getInt(16777225, 0));
+            return StatusEnumConverter.deviceToCommon(((ToDo)item).getInt(16777225, 0));
          } finally {
             return -1;
          }

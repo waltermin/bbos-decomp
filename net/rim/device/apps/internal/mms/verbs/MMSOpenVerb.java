@@ -34,7 +34,7 @@ public final class MMSOpenVerb extends Verb {
    protected final ContextObject finalizeInvoke(ContextObject contextObject) {
       if (contextObject.getFlag(64)) {
          MessagingUtil.showMessageAppServiceView("MMSFolder");
-         return (ContextObject)(new Object(39));
+         return new ContextObject(39);
       } else {
          return null;
       }

@@ -37,7 +37,7 @@ final class InternalLBSOptionsScreen$1 extends MenuItem {
          edit = this.this$0._poiServerField;
       }
 
-      if (edit != null && Dialog.ask(3, ((StringBuffer)(new Object("Set default URL for "))).append(whichServer).toString()) == 4) {
+      if (edit != null && Dialog.ask(3, "Set default URL for " + whichServer) == 4) {
          boolean useCustomURLs = LBSOptions.getBoolean(-6271428560607580713L, false);
          LBSOptions.setBoolean(-6271428560607580713L, false);
          boolean customURLsInUse = this.this$0._useCustomULRs.getChecked();

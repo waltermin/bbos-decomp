@@ -38,7 +38,7 @@ public final class SMBStackAdapter implements NetworkPageFetcher {
       // 00f: astore 6
       // 011: bipush 0
       // 012: istore 7
-      // 014: new java/lang/Object
+      // 014: new java/lang/StringBuffer
       // 017: dup
       // 018: aload 4
       // 01a: invokevirtual net/rim/device/apps/internal/browser/stack/CacheResult.getURLWithoutFragment ()Ljava/lang/String;
@@ -49,16 +49,16 @@ public final class SMBStackAdapter implements NetworkPageFetcher {
       // 027: bipush 3
       // 029: bipush 1
       // 02a: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;IZ)Ljavax/microedition/io/Connection;
-      // 02d: checkcast java/lang/Object
+      // 02d: checkcast javax/microedition/io/file/FileConnection
       // 030: astore 5
       // 032: aload 5
       // 034: ifnonnull 03f
-      // 037: new java/lang/Object
+      // 037: new java/io/IOException
       // 03a: dup
       // 03b: invokespecial java/io/IOException.<init> ()V
       // 03e: athrow
       // 03f: aload 5
-      // 041: checkcast java/lang/Object
+      // 041: checkcast net/rim/device/internal/io/file/NetworkFileConnection
       // 044: astore 9
       // 046: aload 3
       // 047: invokevirtual net/rim/device/apps/internal/browser/stack/ModelResult.getRequestHeaders ()Lnet/rim/device/api/io/http/HttpHeaders;
@@ -86,7 +86,7 @@ public final class SMBStackAdapter implements NetworkPageFetcher {
       // 07d: aload 5
       // 07f: invokeinterface javax/microedition/io/file/FileConnection.openDataInputStream ()Ljava/io/DataInputStream; 1
       // 084: astore 6
-      // 086: new java/lang/Object
+      // 086: new net/rim/device/api/io/http/HttpHeaders
       // 089: dup
       // 08a: invokespecial net/rim/device/api/io/http/HttpHeaders.<init> ()V
       // 08d: astore 11
@@ -102,7 +102,7 @@ public final class SMBStackAdapter implements NetworkPageFetcher {
       // 0a4: aload 4
       // 0a6: sipush 200
       // 0a9: invokevirtual net/rim/device/apps/internal/browser/stack/CacheResult.setStatus (I)V
-      // 0ac: new java/lang/Object
+      // 0ac: new net/rim/device/apps/internal/browser/stack/AccumulatorInputStream
       // 0af: dup
       // 0b0: aload 5
       // 0b2: aload 6
@@ -151,7 +151,7 @@ public final class SMBStackAdapter implements NetworkPageFetcher {
       // 113: aload 4
       // 115: sipush 400
       // 118: invokevirtual net/rim/device/apps/internal/browser/stack/CacheResult.setStatus (I)V
-      // 11b: new java/lang/Object
+      // 11b: new net/rim/device/cldc/io/utility/MalformedURLException
       // 11e: dup
       // 11f: invokespecial net/rim/device/cldc/io/utility/MalformedURLException.<init> ()V
       // 122: athrow

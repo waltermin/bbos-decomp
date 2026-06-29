@@ -78,22 +78,22 @@ final class GsmCellInfo extends CellInformation {
    @Override
    final void print() {
       System.out.println("GSM Cell Information:");
-      System.out.println(((StringBuffer)(new Object("Optionals: "))).append(this.optionals).toString());
-      System.out.println(((StringBuffer)(new Object("MCC: "))).append(this.mcc).toString());
-      System.out.println(((StringBuffer)(new Object("MNC: "))).append(this.mnc).toString());
-      System.out.println(((StringBuffer)(new Object("LAC: "))).append(this.lac).toString());
-      System.out.println(((StringBuffer)(new Object("CellId: "))).append(this.ci).toString());
+      System.out.println("Optionals: " + this.optionals);
+      System.out.println("MCC: " + this.mcc);
+      System.out.println("MNC: " + this.mnc);
+      System.out.println("LAC: " + this.lac);
+      System.out.println("CellId: " + this.ci);
       if ((this.optionals & 2) == 2) {
-         System.out.println(((StringBuffer)(new Object("Nmr Elements: "))).append(this.numNmrElements).toString());
+         System.out.println("Nmr Elements: " + this.numNmrElements);
 
          for (int i = 0; i < this.numNmrElements; i++) {
-            System.out.println(((StringBuffer)(new Object("Element "))).append(i).toString());
+            System.out.println("Element " + i);
             this.nmr[i].print();
          }
       }
 
       if ((this.optionals & 1) == 1) {
-         System.out.println(((StringBuffer)(new Object("TA: "))).append(this.ta).toString());
+         System.out.println("TA: " + this.ta);
       }
    }
 }

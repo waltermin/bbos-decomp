@@ -93,7 +93,7 @@ public final class SubjectModel
          label = EmailResources.getString(58);
       }
 
-      ActiveAutoTextEditField field = (ActiveAutoTextEditField)(new Object(label, subject, SUBJECT_MAX_LENGTH, attributes));
+      ActiveAutoTextEditField field = new ActiveAutoTextEditField(label, subject, SUBJECT_MAX_LENGTH, attributes);
       field.setAdjustAlignments(true);
       field.setTag(ThemeUtilities.EMAIL_COMPOSE_SUBJECT_TAG);
       field.setCookie(this);
@@ -112,11 +112,11 @@ public final class SubjectModel
    @Override
    public final boolean convert(Object context, Object target) {
       String subject = this.getSubject();
-      if (!(target instanceof Object)) {
+      if (!(target instanceof RIMMessagingOutgoingMessage)) {
          if (ContextObject.getFlag(context, 43) && ContextObject.getFlag(context, 19)) {
             ((SyncBuffer)target).addField(11, subject);
             return true;
-         } else if (target instanceof Object && ContextObject.getFlag(context, 70)) {
+         } else if (target instanceof StringBuffer && ContextObject.getFlag(context, 70)) {
             StringBuffer stringBuffer = (StringBuffer)target;
             stringBuffer.append(EmailResources.getString(58));
             stringBuffer.append(subject);
@@ -146,7 +146,7 @@ public final class SubjectModel
 
    @Override
    public final boolean grabDataFromField(Field field, Object context) {
-      if (!(field instanceof Object)) {
+      if (!(field instanceof AutoTextEditField)) {
          return false;
       }
 
@@ -158,10 +158,10 @@ public final class SubjectModel
          this.setSubject(subject);
       }
 
-      if (editField.isEditable() && context instanceof Object) {
+      if (editField.isEditable() && context instanceof ContextObject) {
          int hanStyle = editField.getFont().getStyle() & 7168;
          if (hanStyle != 0) {
-            ContextObject.put(context, 77, editField.getFont());
+            ContextObject.put((ContextObject)context, 77, editField.getFont());
          }
       }
 
@@ -199,7 +199,7 @@ public final class SubjectModel
             subject = (String)contextObject.get(253);
          }
       } else {
-         if (originalObject instanceof Object) {
+         if (originalObject instanceof ReadableList) {
             ReadableList submembers = (ReadableList)originalObject;
 
             for (int i = submembers.size() - 1; i >= 0; i--) {
@@ -213,7 +213,7 @@ public final class SubjectModel
          }
 
          boolean addSubjectFWPrefix = contextObject.getFlag(13);
-         if (subject == null && originalObject instanceof Object) {
+         if (subject == null && originalObject instanceof MessagePartsProvider) {
             MessagePartsProvider mpp = (MessagePartsProvider)originalObject;
             subject = mpp.getSubject();
             addSubjectFWPrefix = mpp.allowDescriptiveForwardHeader();
@@ -233,9 +233,9 @@ public final class SubjectModel
          }
 
          if (addSubjectFWPrefix) {
-            subject = ((StringBuffer)(new Object())).append(fwPrefix).append(' ').append(subject.substring(offset).trim()).toString();
+            subject = fwPrefix + ' ' + subject.substring(offset).trim();
          } else if (contextObject.getFlag(12) || contextObject.getFlag(53) || contextObject.getFlag(29) || contextObject.getFlag(30)) {
-            subject = ((StringBuffer)(new Object())).append(rePrefix).append(' ').append(subject.substring(offset).trim()).toString();
+            subject = rePrefix + ' ' + subject.substring(offset).trim();
          }
       }
 
@@ -269,9 +269,9 @@ public final class SubjectModel
       char lastChar = prefix.charAt(prefixLength - 1);
       switch (lastChar) {
          case ':':
-            return ((StringBuffer)(new Object())).append(prefix.substring(0, prefixLength - 1)).append('：').toString();
+            return prefix.substring(0, prefixLength - 1) + '：';
          case '：':
-            return ((StringBuffer)(new Object())).append(prefix.substring(0, prefixLength - 1)).append(':').toString();
+            return prefix.substring(0, prefixLength - 1) + ':';
          default:
             return null;
       }

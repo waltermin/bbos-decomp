@@ -4,7 +4,7 @@ import net.rim.device.apps.api.ribbon.RibbonLauncher;
 
 public final class HomeScreenUtilities {
    public static final String createEntryIdentifier(String initialString) {
-      return ((StringBuffer)(new Object("net.rim.mds.runtime."))).append(initialString).toString();
+      return "net.rim.mds.runtime." + initialString;
    }
 
    public static final void registerEntry(HomeScreenEntry entry) {

@@ -23,7 +23,7 @@ final class EmailDeleteOriginalTextVerb extends Verb {
       }
 
       message.remove(originalText);
-      ContextObject c = (ContextObject)(new Object());
+      ContextObject c = new ContextObject();
       c.put(245, originalText);
       EmailBuilder.addOriginalMessageReferenceIdentifierStub(message, c);
       this._screen.deleteModel(originalText);

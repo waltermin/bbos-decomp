@@ -52,16 +52,16 @@ public final class DayList$Transition implements EncryptableProvider {
             && this._transitionType != 2) {
             Calendar endDate = Calendar.getInstance();
             Calendar startDate = Calendar.getInstance();
-            endDate.setTime((Date)(new Object(this._endTimeInMillis)));
-            startDate.setTime((Date)(new Object(this._timeInMillis)));
+            endDate.setTime(new Date(this._endTimeInMillis));
+            startDate.setTime(new Date(this._timeInMillis));
             String dateString = TimeStringCache.getString(endDate);
             ((CalendarExtensions)startDate).add(5, 1);
             if (startDate.getTime().getTime() < endDate.getTime().getTime()) {
                DateFormat df = DateFormat.getInstance(48);
-               dateString = ((StringBuffer)(new Object())).append(dateString).append('(').append(df.format(endDate)).append(')').toString();
+               dateString = dateString + '(' + df.format(endDate) + ')';
             }
 
-            summaryText = ((StringBuffer)(new Object("- "))).append(dateString).append(' ').append(summaryText).toString();
+            summaryText = "- " + dateString + ' ' + summaryText;
          }
 
          this._formattedSummaryText = summaryText;
@@ -119,7 +119,7 @@ public final class DayList$Transition implements EncryptableProvider {
       this._attributes = 0;
       this._endTimeInMillis = endTimeInMillis;
       this._colour = -1;
-      if (calElement != null && summaryText != null && calElement instanceof Object) {
+      if (calElement != null && summaryText != null && calElement instanceof MultiServiceEvent) {
          this._colour = ((MultiServiceEvent)calElement).getColour();
       }
    }

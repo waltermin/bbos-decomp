@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.phone;
 
 import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
@@ -28,7 +29,7 @@ final class NewCallScreen extends PhoneAppScreen {
 
    @Override
    protected final Field getTitleField() {
-      return (Field)(new Object(PhoneResources.getString(420)));
+      return new LabelField(PhoneResources.getString(420));
    }
 
    @Override
@@ -70,7 +71,7 @@ final class NewCallScreen extends PhoneAppScreen {
 
    @Override
    protected final ContextObject getMenuContextObject() {
-      ContextObject context = (ContextObject)(new Object(20));
+      ContextObject context = new ContextObject(20);
       PhoneUtilities.setPrivateFlag(context, 51);
       PhoneUtilities.setPrivateFlag(context, 76);
       PhoneUtilities.setPrivateFlag(context, 55);

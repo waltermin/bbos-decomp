@@ -8,7 +8,7 @@ public class GenericPoolableObjectFactory {
 
    public GenericPoolableObjectFactory(int maxSize) {
       this._maxSize = maxSize;
-      this._pool = (Vector)(new Object(maxSize));
+      this._pool = new Vector(maxSize);
    }
 
    public Object getInstance() {

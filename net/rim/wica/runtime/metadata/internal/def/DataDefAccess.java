@@ -69,7 +69,7 @@ public class DataDefAccess implements ComponentDefAccess {
    public String[] getEnum(int defId) {
       int enumIndex = this._idToDefIndex.get(defId);
       int fieldsIndex = this._dataDefs._defs[enumIndex + 2];
-      return (Object[])this._dataDefs._objectData[fieldsIndex];
+      return (String[])this._dataDefs._objectData[fieldsIndex];
    }
 
    @Override
@@ -195,17 +195,17 @@ public class DataDefAccess implements ComponentDefAccess {
    DataDefAccess(Definitions definitions, ComponentDefStruct dataDefs) {
       this._definitions = definitions;
       this._dataDefs = dataDefs;
-      this._fieldHandles = (LongIntHashtable)(new Object());
+      this._fieldHandles = new LongIntHashtable();
       int size = this._dataDefs._defs.length;
       int dataCount = size / 5;
-      this._idToDefIndex = (IntIntHashtable)(new Object(dataCount + (dataCount >> 1)));
+      this._idToDefIndex = new IntIntHashtable(dataCount + (dataCount >> 1));
       int i = 0;
 
       while (i < size) {
          this._idToDefIndex.put(this._dataDefs._defs[i + 1], i);
          switch (this._dataDefs._defs[i + 0]) {
             case 4:
-               throw new Object("Illegal definition in data defs");
+               throw new RuntimeException("Illegal definition in data defs");
             case 5:
                i += 3;
                break;

@@ -28,7 +28,7 @@ public class SerialSyncAllCollectionData extends SerialSyncCollectionData {
             SyncConverter c = mssc.getSyncConverter();
             if (c != null) {
                SyncObject so = sacSyncObject.getContainedSyncObject();
-               DataBuffer recordData = (DataBuffer)(new Object());
+               DataBuffer recordData = new DataBuffer();
                recordData.setBigEndian(false);
                result = c.convert(so, recordData, version);
                if (!result) {
@@ -96,7 +96,7 @@ public class SerialSyncAllCollectionData extends SerialSyncCollectionData {
                case 10:
                   byte[] recordData = new byte[length];
                   buffer.readFully(recordData);
-                  recordDataBuffer = (DataBuffer)(new Object(recordData, 0, length, false));
+                  recordDataBuffer = new DataBuffer(recordData, 0, length, false);
                   break;
                default:
                   buffer.skipBytes(length);

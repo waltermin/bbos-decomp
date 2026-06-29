@@ -50,7 +50,7 @@ public class TitleModelFactory extends RIMModelFactory {
             }
          }
       } else {
-         if (initialData instanceof Object) {
+         if (initialData instanceof ContextObject) {
             return new TitleModelImpl(null);
          }
 
@@ -61,7 +61,7 @@ public class TitleModelFactory extends RIMModelFactory {
    }
 
    static final int getSyncFieldId(Object context) {
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          ContextObject contextObject = (ContextObject)context;
          if (contextObject.getFlag(28)) {
             return 2;

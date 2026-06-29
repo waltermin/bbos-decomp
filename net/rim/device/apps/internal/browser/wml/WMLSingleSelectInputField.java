@@ -12,7 +12,7 @@ final class WMLSingleSelectInputField implements FieldChangeListener, WMLInputFi
    private WMLVariable _value;
    private String _iname;
    private WMLVariable _ivalue;
-   private Vector _options = (Vector)(new Object());
+   private Vector _options = new Vector();
    private Vector _variables;
    private RadioButtonGroup _group;
    private boolean _initialSelect;
@@ -40,7 +40,7 @@ final class WMLSingleSelectInputField implements FieldChangeListener, WMLInputFi
          }
       }
 
-      this._group = (RadioButtonGroup)(new Object());
+      this._group = new RadioButtonGroup();
       this._group.setNotifyReselected(true);
       int optionsSize = this._options.size();
 
@@ -51,7 +51,7 @@ final class WMLSingleSelectInputField implements FieldChangeListener, WMLInputFi
 
    final void addVariable(WMLSingleSelectOption variable) {
       if (this._variables == null) {
-         this._variables = (Vector)(new Object());
+         this._variables = new Vector();
       }
 
       this._variables.addElement(variable);

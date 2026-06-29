@@ -5,6 +5,7 @@ import net.rim.device.api.io.IOUtilities;
 import net.rim.device.api.system.EventLogger;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.apps.api.addressbook.MailingAddressModel;
+import net.rim.device.apps.internal.addressbook.mailingaddress.MailingAddressModelImpl;
 import net.rim.device.apps.internal.lbs.LBSApplication;
 import net.rim.device.apps.internal.lbs.LBSOptions;
 import net.rim.device.apps.internal.lbs.model.SearchAddressModel;
@@ -43,12 +44,12 @@ public final class POIRequest extends Request {
 
    public POIRequest(Request$Listener listener, int BLy, int BLx, int TRy, int TRx, byte zoom, String keywords, MailingAddressModel model) {
       System.out.println("POIRequest() constructor");
-      System.out.println(((StringBuffer)(new Object("BLy="))).append(BLy).toString());
-      System.out.println(((StringBuffer)(new Object("BLx="))).append(BLx).toString());
-      System.out.println(((StringBuffer)(new Object("TRy="))).append(TRy).toString());
-      System.out.println(((StringBuffer)(new Object("TRx="))).append(TRx).toString());
-      System.out.println(((StringBuffer)(new Object("zoom="))).append(zoom).toString());
-      System.out.println(((StringBuffer)(new Object("keywords="))).append(keywords).toString());
+      System.out.println("BLy=" + BLy);
+      System.out.println("BLx=" + BLx);
+      System.out.println("TRy=" + TRy);
+      System.out.println("TRx=" + TRx);
+      System.out.println("zoom=" + zoom);
+      System.out.println("keywords=" + keywords);
       super._listener = listener;
       this._bly = BLy;
       this._blx = BLx;
@@ -56,7 +57,7 @@ public final class POIRequest extends Request {
       this._trx = TRx;
       this._zoom = zoom;
       this._keywords = keywords;
-      this._model = (MailingAddressModel)model;
+      this._model = (MailingAddressModelImpl)model;
    }
 
    public final byte[] getRawData() {
@@ -76,14 +77,10 @@ public final class POIRequest extends Request {
          db.writeLong((this._blx + this._trx) / 2);
       } else {
          String address = this._model.getAddressLine1() != null ? this._model.getAddressLine1() : "";
-         String and = ((StringBuffer)(new Object(" "))).append(LBSResources.getString(226)).append(" ").toString();
+         String and = " " + LBSResources.getString(226) + " ";
          int ix = address.indexOf(and);
          if (ix > 0) {
-            address = ((StringBuffer)(new Object()))
-               .append(address.substring(0, ix))
-               .append(" & ")
-               .append(address.substring(ix + and.length(), address.length()))
-               .toString();
+            address = address.substring(0, ix) + " & " + address.substring(ix + and.length(), address.length());
          }
 
          this.writeAttribute(address, db);
@@ -137,7 +134,7 @@ public final class POIRequest extends Request {
 
       try {
          byte[] data = IOUtilities.streamToBytes(dis);
-         this._poiXmlString = (String)(new Object(data, "UTF-8"));
+         this._poiXmlString = new String(data, "UTF-8");
          LBSOptions._dataCount += data.length;
          LBSOptions.setInt(8640332184073563572L, LBSOptions._dataCount);
          String encoding = "UTF-8";
@@ -156,13 +153,13 @@ public final class POIRequest extends Request {
             var10 = false;
          } finally {
             if (var10) {
-               EventLogger.logEvent(LBSApplication.UID, ((StringBuffer)(new Object("UnsupportedEncoding: "))).append(encoding).toString().getBytes(), 2);
+               EventLogger.logEvent(LBSApplication.UID, ("UnsupportedEncoding: " + encoding).getBytes(), 2);
                this._rawXMLData = this._poiXmlString.getBytes();
                break label44;
             }
          }
 
-         this._poiXmlString = (String)(new Object(data, "UTF-8"));
+         this._poiXmlString = new String(data, "UTF-8");
       } catch (Throwable var12) {
          System.out.println("*** error while converting input stream to byte array ***");
          System.out.println(ioe);

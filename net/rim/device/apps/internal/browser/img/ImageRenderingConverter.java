@@ -6,6 +6,7 @@ import javax.microedition.io.InputConnection;
 import net.rim.device.api.browser.field.BrowserContent;
 import net.rim.device.api.browser.field.Event;
 import net.rim.device.api.browser.field.RenderingApplication;
+import net.rim.device.api.browser.field.RenderingException;
 import net.rim.device.api.browser.field.RenderingOptions;
 import net.rim.device.api.browser.field.RenderingSession;
 import net.rim.device.api.browser.plugin.BrowserContentProvider;
@@ -16,7 +17,7 @@ import net.rim.device.apps.internal.browser.util.RendererControl;
 import net.rim.vm.Array;
 
 public final class ImageRenderingConverter extends BrowserContentProvider {
-   private static String[] _accept = new Object[0];
+   private static String[] _accept = new String[0];
    private static String _acceptString;
    private static boolean _storedAnimationValue = false;
 
@@ -25,11 +26,11 @@ public final class ImageRenderingConverter extends BrowserContentProvider {
          boolean newValue = renderingOptions.getPropertyWithIntValue(4550690918222697397L, 12, 10) == 0;
          if (newValue != _storedAnimationValue) {
             _acceptString = null;
-            String oppositeValue = ((StringBuffer)(new Object("image/gif;anim="))).append((char)(_storedAnimationValue ? '0' : '1')).toString();
+            String oppositeValue = "image/gif;anim=" + (_storedAnimationValue ? 48 : 49);
 
             for (int i = 0; i < _accept.length; i++) {
                if (StringUtilities.strEqualIgnoreCase(_accept[i], oppositeValue, 1701707776)) {
-                  _accept[i] = ((StringBuffer)(new Object("image/gif;anim="))).append((char)(newValue ? '0' : '1')).toString();
+                  _accept[i] = "image/gif;anim=" + (newValue ? 48 : 49);
                }
             }
 
@@ -52,7 +53,7 @@ public final class ImageRenderingConverter extends BrowserContentProvider {
    public static final String getAcceptString() {
       if (_acceptString == null) {
          if (_accept.length > 0) {
-            StringBuffer buff = (StringBuffer)(new Object(_accept[0]));
+            StringBuffer buff = new StringBuffer(_accept[0]);
 
             for (int i = 1; i < _accept.length; i++) {
                buff.append(',');
@@ -69,7 +70,7 @@ public final class ImageRenderingConverter extends BrowserContentProvider {
    }
 
    @Override
-   public final BrowserContent getBrowserContent(BrowserContentProviderContext browserContentProviderContext) {
+   public final BrowserContent getBrowserContent(BrowserContentProviderContext browserContentProviderContext) throws RenderingException {
       RenderingApplication renderingApplication = browserContentProviderContext.getRenderingApplication();
       RenderingSession renderingSession = browserContentProviderContext.getRenderingSession();
       InputConnection inputConnection = browserContentProviderContext.getInputConnection();
@@ -79,7 +80,7 @@ public final class ImageRenderingConverter extends BrowserContentProvider {
       Event event = browserContentProviderContext.getEvent();
       String referrer = event != null ? event.getSourceURL() : null;
       if (inputConnection == null) {
-         throw new Object();
+         throw new RenderingException();
       }
 
       try {
@@ -90,7 +91,7 @@ public final class ImageRenderingConverter extends BrowserContentProvider {
          ImageRenderer renderer = new ImageRenderer(inputConnection, inputStream, url, renderingSession, renderingApplication, referrer, flags);
          return renderer.processData();
       } finally {
-         throw new Object();
+         throw new RenderingException();
       }
    }
 
@@ -101,7 +102,7 @@ public final class ImageRenderingConverter extends BrowserContentProvider {
          Array.resize(_accept, i + 1);
          _accept[i] = (String)mimeTypes.nextElement();
          if (StringUtilities.strEqualIgnoreCase(_accept[i], "image/gif", 1701707776)) {
-            _accept[i] = ((StringBuffer)(new Object())).append(_accept[i]).append(";anim=1").toString();
+            _accept[i] = _accept[i] + ";anim=1";
          }
       }
    }

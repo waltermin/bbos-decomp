@@ -281,9 +281,7 @@ final class GcmpSession extends Thread implements GcmpEvents, RadioStatusListene
          break label27;
       }
 
-      this._dgram = (DatagramBase)(new Object(
-         null, 0, 0, (DatagramAddressBase)(new Object(address.getIpAddressInt(), address.getDestPort(), address.getSrcPort(), address.getApn(), 4))
-      ));
+      this._dgram = new DatagramBase(null, 0, 0, new UdpAddress(address.getIpAddressInt(), address.getDestPort(), address.getSrcPort(), address.getApn(), 4));
       this._currentBackoff = 120000;
       this._inactivityTmo = PersistentInteger.get(PER_INACTIVITY_TMO);
       this._conditionalPinging = PersistentInteger.get(PER_CONDITIONAL_PINGING) != 0;
@@ -502,7 +500,7 @@ final class GcmpSession extends Thread implements GcmpEvents, RadioStatusListene
 
    static final void processReceivedPacket(DatagramAddressBase addressBase, DataBuffer buf) {
       GcmpPacket packet = new GcmpPacket();
-      if (addressBase instanceof Object) {
+      if (addressBase instanceof UdpAddress) {
          UdpAddress addr = (UdpAddress)addressBase;
          packet.ipAddress = addr.getIpAddress();
          packet.destinationPort = addr.getDestPort();
@@ -511,7 +509,7 @@ final class GcmpSession extends Thread implements GcmpEvents, RadioStatusListene
       }
 
       packet.decode(buf);
-      UdpAddress addr = (UdpAddress)(new Object(packet.ipAddress, packet.sourcePort, packet.destinationPort, packet.apn, 4));
+      UdpAddress addr = new UdpAddress(packet.ipAddress, packet.sourcePort, packet.destinationPort, packet.apn, 4);
       GcmpSession session = Gcmp.getInstance().makeSession(addr);
       if (session == null) {
          EventLogger.logEvent(-1673931206114386243L, 1195594292, 3);

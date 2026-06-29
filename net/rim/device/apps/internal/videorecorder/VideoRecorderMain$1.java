@@ -12,7 +12,7 @@ final class VideoRecorderMain$1 implements Runnable {
 
    @Override
    public final void run() {
-      Dialog d = (Dialog)(new Object(0, VideoRecorderResources.getString(3), 0, null, 0));
+      Dialog d = new Dialog(0, VideoRecorderResources.getString(3), 0, null, 0);
       d.setIcon(ThemeManager.getThemeAwareImage("dialog_exclamation"));
       this.this$0.pushGlobalScreen(d, 50, 1);
       System.exit(0);

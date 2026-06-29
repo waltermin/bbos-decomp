@@ -20,7 +20,7 @@ class JavaClassInstance extends JavaObject implements ESThunkInterface {
    void setOverrides(ESObject overrides) {
       this._thunk = new JavaThunkHandler(overrides, this._javaClass.getName());
       setForeign(super._obj, this);
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       overrides.enumerate(v, false);
 
       for (int i = v.size() - 1; i >= 0; i--) {
@@ -86,7 +86,7 @@ class JavaClassInstance extends JavaObject implements ESThunkInterface {
 
    @Override
    void enumerate(Vector v) {
-      if (!(super._obj instanceof Object)) {
+      if (!(super._obj instanceof Enumeration)) {
          super.enumerate(v);
       } else {
          Enumeration e = (Enumeration)super._obj;

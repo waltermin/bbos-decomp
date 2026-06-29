@@ -164,7 +164,7 @@ final class SystemOnOffManager
       synchronized (reg) {
          _cachedManager = (SystemOnOffManager)reg.get(-2419897739206856258L);
          if (_cachedManager == null) {
-            throw new Object("SystemOnOffManager not initialized");
+            throw new RuntimeException("SystemOnOffManager not initialized");
          }
       }
 
@@ -173,9 +173,9 @@ final class SystemOnOffManager
 
    private final void instanceInit() {
       ApplicationDescriptor original = ApplicationDescriptor.currentApplicationDescriptor();
-      this._onDescriptor = (ApplicationDescriptor)(new Object(original, new Object[]{AUTO_ON}));
+      this._onDescriptor = new ApplicationDescriptor(original, new String[]{AUTO_ON});
       this._onDescriptor.setPowerOnBehavior(2);
-      this._offDescriptor = (ApplicationDescriptor)(new Object(original, new Object[]{AUTO_OFF}));
+      this._offDescriptor = new ApplicationDescriptor(original, new String[]{AUTO_OFF});
       this._offDescriptor.setPowerOnBehavior(0);
       this._appManager = ApplicationManager.getApplicationManager();
       this._app = UiApplication.getUiApplication();
@@ -271,11 +271,11 @@ final class SystemOnOffManager
             try {
                var6 = true;
                ApplicationManager.getApplicationManager()
-                  .runApplication((ApplicationDescriptor)(new Object(ApplicationDescriptor.currentApplicationDescriptor(), new Object[]{AUTO_OFF})));
+                  .runApplication(new ApplicationDescriptor(ApplicationDescriptor.currentApplicationDescriptor(), new String[]{AUTO_OFF}));
                var6 = false;
                break label38;
             } catch (Throwable var9) {
-               String err = ((StringBuffer)(new Object("SILF: "))).append(e.getMessage()).toString();
+               String err = "SILF: " + e.getMessage();
                EventLogger.logEvent(-7509200465648525729L, err.getBytes(), 3);
                var6 = false;
                break label36;
@@ -318,11 +318,11 @@ final class SystemOnOffManager
       }
 
       Object deferAutoOff = ApplicationRegistry.getApplicationRegistry().get(2108775066620843828L);
-      return deferAutoOff instanceof Object && deferAutoOff;
+      return deferAutoOff instanceof Boolean && (Boolean)deferAutoOff;
    }
 
    private final void saveRadioState() {
-      System.out.println(((StringBuffer)(new Object("*** saveRadioState("))).append(this._radioIsOn).append(")").toString());
+      System.out.println("*** saveRadioState(" + this._radioIsOn + ")");
       if (this._radioIsOn != 0) {
          PersistentInteger.set(this._radioStateId, this._radioIsOn);
       } else {
@@ -614,7 +614,7 @@ final class SystemOnOffManager
                if (_usbLowChargingDialog == null) {
                   ResourceBundle resources = ResourceBundle.getBundle(1137270090621229274L, "net.rim.device.apps.internal.resource.Ribbon");
                   String message = resources.getString(70);
-                  _usbLowChargingDialog = (Dialog)(new Object(message, null, null, 0, Bitmap.getPredefinedBitmap(2), 33554432));
+                  _usbLowChargingDialog = new Dialog(message, null, null, 0, Bitmap.getPredefinedBitmap(2), 33554432);
                   _usbLowChargingDialog.setDialogClosedListener(new SystemOnOffManager$USBLowChargingDialogClosedListener());
                   _usbLowChargingDialog.show(-2147483647);
                }
@@ -663,7 +663,7 @@ final class SystemOnOffManager
          if (this._cradleMismatchDialog == null) {
             ResourceBundle resources = ResourceBundle.getBundle(1137270090621229274L, "net.rim.device.apps.internal.resource.Ribbon");
             String message = resources.getString(91);
-            this._cradleMismatchDialog = (Dialog)(new Object(message, null, null, 0, Bitmap.getPredefinedBitmap(2), 33554432));
+            this._cradleMismatchDialog = new Dialog(message, null, null, 0, Bitmap.getPredefinedBitmap(2), 33554432);
             this._cradleMismatchDialog.setDialogClosedListener(new SystemOnOffManager$CradleMismatchDialogClosedListener(this));
             this._cradleMismatchDialog.show(-2147483647);
             return;

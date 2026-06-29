@@ -2,7 +2,7 @@ package net.rim.device.apps.internal.mms.ui;
 
 import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.system.Bitmap;
-import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.util.Factory;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -26,9 +26,9 @@ final class PIMPresentationElementField extends HorizontalFieldManager implement
       if (data != null && factoryID != 0) {
          ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
          Object item = ar.get(factoryID);
-         if (item instanceof Object) {
+         if (item instanceof Factory) {
             Factory factory = (Factory)item;
-            ContextObject contextObject = (ContextObject)(new Object());
+            ContextObject contextObject = new ContextObject();
             contextObject.put(8849067667159082262L, data);
             String encoding = attachment.getCharset();
             if (encoding == null) {
@@ -46,7 +46,7 @@ final class PIMPresentationElementField extends HorizontalFieldManager implement
       }
 
       Verb deleteVerb = this._isEditable ? new DeleteFieldVerb(this) : null;
-      this.add((Field)(new Object(bitmap)));
+      this.add(new BitmapField(bitmap));
       this.add(new PIMPresentationElementField$PIMField(this, pimObject, attachment.getName(), deleteVerb));
    }
 

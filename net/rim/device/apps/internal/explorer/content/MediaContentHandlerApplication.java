@@ -30,10 +30,10 @@ public final class MediaContentHandlerApplication extends UiApplication {
          RenderingSession session = RenderingSession.getNewInstance();
          if (session != null) {
             Vector typesVector = session.getSupportedMimeType();
-            String[] types = new Object[typesVector.size()];
+            String[] types = new String[typesVector.size()];
             typesVector.copyInto(types);
-            String[] suffixes = new Object[0];
-            String[] normalizedTypes = new Object[0];
+            String[] suffixes = new String[0];
+            String[] normalizedTypes = new String[0];
 
             for (int i = 0; i < types.length; i++) {
                String suffix = MIMETypeAssociations.getExtensionFromMIMEType(types[i]);

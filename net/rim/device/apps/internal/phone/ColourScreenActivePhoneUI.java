@@ -16,6 +16,7 @@ import net.rim.device.apps.internal.phone.api.ui.ActivePhoneScreenHeader;
 import net.rim.device.apps.internal.phone.api.ui.ActiveScreenMyNumberField;
 import net.rim.device.apps.internal.phone.api.ui.DTMFEchoField;
 import net.rim.device.apps.internal.phone.api.ui.EnhanceCallAudioIconField;
+import net.rim.device.apps.internal.phone.api.ui.PhoneSystemStatusRibbonField;
 import net.rim.device.apps.internal.phone.api.ui.ThemedBannerCache;
 import net.rim.device.apps.internal.phone.api.ui.VolumeIndicator;
 
@@ -92,15 +93,14 @@ final class ColourScreenActivePhoneUI extends ActivePhoneUI {
          }
       }
 
-      if (!(field instanceof Object)) {
+      if (!(field instanceof DTMFEchoField)) {
          this.insert(this.createDTMFEchoField(), 3);
          this.delete(field);
       }
    }
 
    private final DTMFEchoField createDTMFEchoField() {
-      DTMFEchoField dtmfEchoField = (DTMFEchoField)(new Object());
-      return dtmfEchoField;
+      return new DTMFEchoField();
    }
 
    @Override
@@ -117,15 +117,15 @@ final class ColourScreenActivePhoneUI extends ActivePhoneUI {
    @Override
    final void addFields(Vector currentCalls, LiveCall newlyAnsweredCall, Object context) {
       CallManager callMgr = CallManager.getInstance();
-      LiveCall currentCall = (LiveCall)(newlyAnsweredCall != null ? newlyAnsweredCall : callMgr.getCurrentCall());
-      this._header = (ActivePhoneScreenHeader)(new Object(currentCall, this.getOwnerScreen()));
+      LiveCall currentCall = newlyAnsweredCall != null ? newlyAnsweredCall : (LiveCall)callMgr.getCurrentCall();
+      this._header = new ActivePhoneScreenHeader(currentCall, this.getOwnerScreen());
       this.add(this._header);
-      this._myNumberField = (ActiveScreenMyNumberField)(new Object());
+      this._myNumberField = new ActiveScreenMyNumberField();
       this._app.addGlobalEventListener(this._myNumberField);
       this.add(this._myNumberField);
       Field banner = getCachedActiveBanner();
       if (banner == null) {
-         banner = (Field)(new Object(this.getRibbonComponentFieldProvider(), 2));
+         banner = new PhoneSystemStatusRibbonField(this.getRibbonComponentFieldProvider(), 2);
       }
 
       this.add(banner);
@@ -133,9 +133,9 @@ final class ColourScreenActivePhoneUI extends ActivePhoneUI {
       this.add(this.createDTMFEchoField());
       this._callContainer = new CallContainer(calls);
       this.add(this._callContainer);
-      this._volumeIndicator = (VolumeIndicator)(new Object(false, this.getOwnerScreen()));
+      this._volumeIndicator = new VolumeIndicator(false, this.getOwnerScreen());
       this.add(this._volumeIndicator);
-      this._ecaIconField = (EnhanceCallAudioIconField)(new Object());
+      this._ecaIconField = new EnhanceCallAudioIconField();
       this.add(this._ecaIconField);
    }
 
@@ -146,7 +146,7 @@ final class ColourScreenActivePhoneUI extends ActivePhoneUI {
    @Override
    final DTMFEchoField getDTMFEchoField() {
       Field field = this.getField(3);
-      return (DTMFEchoField)(!(field instanceof Object) ? null : field);
+      return !(field instanceof DTMFEchoField) ? null : (DTMFEchoField)field;
    }
 
    @Override

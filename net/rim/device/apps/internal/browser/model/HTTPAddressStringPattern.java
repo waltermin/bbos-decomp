@@ -11,7 +11,7 @@ import net.rim.device.internal.system.InternalServices;
 import net.rim.vm.WeakReference;
 
 public final class HTTPAddressStringPattern extends StringPattern implements BrowserConfigChangeListener {
-   private WeakReference _scanbufferWR = (WeakReference)(new Object(null));
+   private WeakReference _scanbufferWR = new WeakReference(null);
    private boolean _validConfig;
    private boolean _constrainedNavigation;
    private boolean _enabled;

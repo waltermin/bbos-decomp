@@ -22,14 +22,14 @@ public final class CertificateStatus implements Persistable {
    public CertificateStatus(int status, long producedAt, long thisUpdate, long nextUpdate, long revocationDate, int revocationReason) {
       if (status == 1) {
          if (revocationDate <= 0) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          if (revocationReason == -1) {
             revocationReason = 0;
          }
       } else if (revocationDate > 0 || revocationReason != -1) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._status = status;

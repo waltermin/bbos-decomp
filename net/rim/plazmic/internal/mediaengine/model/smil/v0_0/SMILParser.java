@@ -9,6 +9,7 @@ import net.rim.plazmic.internal.mediaengine.dataformat.Colors;
 import net.rim.plazmic.internal.mediaengine.dataformat.Units;
 import net.rim.plazmic.internal.mediaengine.event.Event;
 import net.rim.plazmic.internal.mediaengine.event.EventLogic;
+import net.rim.plazmic.internal.mediaengine.event.EventLogicImpl;
 import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.timing.MediaObject;
 import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.timing.Par;
 import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.timing.Seq;
@@ -40,8 +41,8 @@ public class SMILParser {
    private static final String TEXT = "Text";
 
    public SMILParser() {
-      this._triggerEvent = (Event)(new Object());
-      this._resultingEvent = (Event)(new Object());
+      this._triggerEvent = new Event();
+      this._resultingEvent = new Event();
       this._horizontalScaleFactor = 65536;
       this._verticalScaleFactor = 65536;
    }
@@ -56,7 +57,7 @@ public class SMILParser {
    public void setConfiguration(int configuration) {
       switch (configuration) {
          case -1:
-            throw new Object("Unsupported Parser Configuration");
+            throw new IllegalArgumentException("Unsupported Parser Configuration");
          case 0:
          case 1:
          default:
@@ -108,7 +109,7 @@ public class SMILParser {
          this.parseRootLayout(layout, model);
          this.parseRegions(layout, model);
       } else {
-         throw new Object("No layout found");
+         throw new NullPointerException("No layout found");
       }
    }
 
@@ -271,11 +272,11 @@ public class SMILParser {
    protected void parseBody(Element smil, SMILModel model) {
       Element body = this.findChildElement(smil, "body");
       if (body != null) {
-         EventLogic logic = (EventLogic)(new Object());
+         EventLogic logic = new EventLogicImpl();
          int id = this.getIntId(body);
          Seq seq = new Seq(id, null);
          model.addTimingObject(id, seq);
-         Event seqEvent = (Event)(new Object());
+         Event seqEvent = new Event();
          seqEvent._event = 1;
          seqEvent._eventParam = id;
          model.setStartEvent(seqEvent);
@@ -284,7 +285,7 @@ public class SMILParser {
          seq.setEndLogic(logic);
          model.setEventLogic(logic);
       } else {
-         throw new Object("No body element");
+         throw new NullPointerException("No body element");
       }
    }
 
@@ -382,10 +383,10 @@ public class SMILParser {
       }
 
       if (mediaObject.isImplicitDuration()) {
-         Event result = (Event)(new Object());
+         Event result = new Event();
          result._event = 2;
          result._eventParam = mediaObject.getId();
-         Event trigger = (Event)(new Object());
+         Event trigger = new Event();
          trigger._eventParam = mediaObject.getId();
          if (mediaObject.isDiscreteMedia()) {
             trigger._event = 1;
@@ -402,7 +403,7 @@ public class SMILParser {
 
       for (int i = 0; i < children.getLength(); i++) {
          Node child = children.item(i);
-         if (child instanceof Object) {
+         if (child instanceof Element) {
             this.parseTimeContainerMediaObject((Element)child, parent, logic, model);
          }
       }
@@ -413,7 +414,7 @@ public class SMILParser {
 
       for (int i = 0; i < childNodes.getLength(); i++) {
          Node node = childNodes.item(i);
-         if (node instanceof Object && node.getNodeName().equals(tagName)) {
+         if (node instanceof Element && node.getNodeName().equals(tagName)) {
             return (Element)node;
          }
       }

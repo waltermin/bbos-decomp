@@ -24,7 +24,7 @@ class AbstractItemList$SimpleObjectIndexerHelper implements KeywordIndexerHelper
 
    @Override
    public boolean checkForMatch(Object element, String[] words) {
-      String[] keywords = new Object[1];
+      String[] keywords = new String[1];
       this.getKeywords(element, keywords);
 
       for (int i = 0; i < words.length; i++) {

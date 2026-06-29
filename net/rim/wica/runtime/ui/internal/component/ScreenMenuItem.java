@@ -18,7 +18,7 @@ final class ScreenMenuItem extends MenuItem implements View {
       if (text == null || text.length() == 0) {
          return " ";
       } else {
-         return "-".equals(text) ? ((StringBuffer)(new Object())).append(text).append(' ').toString() : text;
+         return "-".equals(text) ? text + ' ' : text;
       }
    }
 

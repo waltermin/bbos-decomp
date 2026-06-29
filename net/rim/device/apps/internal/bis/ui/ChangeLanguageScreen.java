@@ -2,7 +2,8 @@ package net.rim.device.apps.internal.bis.ui;
 
 import java.util.Hashtable;
 import net.rim.device.api.i18n.Locale;
-import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.RadioButtonField;
 import net.rim.device.api.ui.component.RadioButtonGroup;
 import net.rim.device.apps.internal.bis.ApplicationResources;
 import net.rim.device.apps.internal.bis.api.ui.Button;
@@ -22,15 +23,15 @@ public final class ChangeLanguageScreen extends UserSettingsScreen {
    @Override
    public final void refresh(Hashtable screenParams) {
       this.setTitle(ApplicationResources.getString(160));
-      this.addContentField((Field)(new Object(ApplicationResources.getString(161))));
-      this._languageGroup = (RadioButtonGroup)(new Object());
+      this.addContentField(new LabelField(ApplicationResources.getString(161)));
+      this._languageGroup = new RadioButtonGroup();
       String brandLocales = ClientSessionState.getInstance().getBrandingInfo().getAvailableLanguages();
       this._availableLocales = ApplicationResources.getSupportedLocales(brandLocales);
       int numLocales = this._availableLocales.length;
 
       for (int i = 0; i < numLocales; i++) {
          boolean selected = this._availableLocales[i].equals(ClientSessionState.getInstance().getUserInfo().getLocale());
-         this.addContentField((Field)(new Object(this._availableLocales[i].getDisplayName(), this._languageGroup, selected)));
+         this.addContentField(new RadioButtonField(this._availableLocales[i].getDisplayName(), this._languageGroup, selected));
       }
 
       Button cancel = new Button(ApplicationResources.getString(28));

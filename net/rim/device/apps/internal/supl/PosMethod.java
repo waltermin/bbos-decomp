@@ -20,6 +20,6 @@ final class PosMethod {
    }
 
    final void print() {
-      System.out.println(((StringBuffer)(new Object("PosMethod: "))).append(this.method).toString());
+      System.out.println("PosMethod: " + this.method);
    }
 }

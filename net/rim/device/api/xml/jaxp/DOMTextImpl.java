@@ -1,5 +1,6 @@
 package net.rim.device.api.xml.jaxp;
 
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Text;
 
 class DOMTextImpl extends DOMCharacterDataImpl implements Text {
@@ -17,7 +18,7 @@ class DOMTextImpl extends DOMCharacterDataImpl implements Text {
       super._ir.notReadOnly(super._node);
       Text newNode = (Text)super._ir.getNode(super._ir.splitText(super._node, offset));
       if (newNode == null) {
-         throw new Object((short)1, "");
+         throw new DOMException((short)1, "");
       } else {
          return newNode;
       }

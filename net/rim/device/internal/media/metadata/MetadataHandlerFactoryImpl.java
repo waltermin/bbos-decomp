@@ -3,6 +3,9 @@ package net.rim.device.internal.media.metadata;
 import javax.microedition.media.control.MetaDataControl;
 import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.system.EncodedImage;
+import net.rim.device.api.system.GIFEncodedImage;
+import net.rim.device.api.system.JPEGEncodedImage;
+import net.rim.device.api.system.PNGEncodedImage;
 
 public class MetadataHandlerFactoryImpl extends MetadataHandlerFactory {
    MetadataHandlerFactoryImpl() {
@@ -10,12 +13,12 @@ public class MetadataHandlerFactoryImpl extends MetadataHandlerFactory {
 
    @Override
    protected MetaDataControl extractMetadata(EncodedImage image) {
-      if (image instanceof Object) {
+      if (image instanceof JPEGEncodedImage) {
          return new JPEGMetadataExtractor(image);
-      } else if (image instanceof Object) {
+      } else if (image instanceof PNGEncodedImage) {
          return new PNGMetadataExtractor(image);
       } else {
-         return (MetaDataControl)(image instanceof Object ? new GIFMetadataExtractor(image) : new Object());
+         return image instanceof GIFEncodedImage ? new GIFMetadataExtractor(image) : new MetaDataControlImpl();
       }
    }
 

@@ -70,7 +70,7 @@ final class WicletStoreImpl implements WicletStore {
       int resourcesSize = this.getCacheFlashSize();
       int dataSize = this.getDataFlashSize();
       int totalSize = collisionTblSize + dataDefSize + messageDefSize + uiDefSize + scriptSize + resourcesSize + dataSize;
-      StringBuffer stats = (StringBuffer)(new Object());
+      StringBuffer stats = new StringBuffer();
       stats.append("Collision table size: ");
       stats.append(collisionTblSize);
       stats.append(" bytes\nData definitions size: ");
@@ -218,7 +218,7 @@ final class WicletStoreImpl implements WicletStore {
 
    @Override
    public final Persistable loadData(int definitionId) {
-      return (Persistable)(this._persistedModel._dataSubstore != null ? this._persistedModel._dataSubstore.get(definitionId) : null);
+      return this._persistedModel._dataSubstore != null ? (Persistable)this._persistedModel._dataSubstore.get(definitionId) : null;
    }
 
    @Override

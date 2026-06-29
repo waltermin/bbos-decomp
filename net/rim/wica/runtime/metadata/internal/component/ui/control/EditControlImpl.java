@@ -1,5 +1,6 @@
 package net.rim.wica.runtime.metadata.internal.component.ui.control;
 
+import java.util.Date;
 import net.rim.device.api.i18n.SimpleDateFormat;
 import net.rim.wica.runtime.metadata.component.ui.UIContainer;
 import net.rim.wica.runtime.metadata.component.ui.control.EditControl;
@@ -68,7 +69,7 @@ public class EditControlImpl extends UIControlImpl implements EditControl {
       this._format = format;
       if (this._editType != 3 && this._editType != 4) {
          if (this._format != null) {
-            this._dateFormatter = (SimpleDateFormat)(new Object(this._format));
+            this._dateFormatter = new SimpleDateFormat(this._format);
          } else {
             this._dateFormatter = Util.DEFAULT_DATE_FORMATTER;
          }
@@ -114,13 +115,13 @@ public class EditControlImpl extends UIControlImpl implements EditControl {
 
    @Override
    public String getFormattedDate(long longValue) {
-      return this._dateFormatter != null ? this._dateFormatter.format(new Object(longValue)) : null;
+      return this._dateFormatter != null ? this._dateFormatter.format(new Date(longValue)) : null;
    }
 
    @Override
    public boolean isMandatorySatisfied() {
       if (this.isMandatory()) {
-         return super._value instanceof Object ? this.validateText((String)super._value) : super._value != null;
+         return super._value instanceof String ? this.validateText((String)super._value) : super._value != null;
       } else {
          return true;
       }

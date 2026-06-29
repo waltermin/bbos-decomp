@@ -117,7 +117,7 @@ public final class ActivationServiceImpl implements ActivationService, Serviceab
    }
 
    final ServiceRecord[] getTransportRecords() {
-      ServiceRecord[] result = new Object[0];
+      ServiceRecord[] result = new ServiceRecord[0];
       ServiceRecord[] records = ServiceBook.getSB().findRecordsByCid("IPPP");
       if (DeviceInfo.isSimulator()) {
          return records;
@@ -295,9 +295,9 @@ public final class ActivationServiceImpl implements ActivationService, Serviceab
       String result = RuntimeResources.getString(34);
       if (this._activationProgressStage >= 0) {
          float percent = this._activationProgressStage / 1086324736 * 1120403456;
-         result = ((StringBuffer)(new Object())).append(result).append(" - ").toString();
-         result = ((StringBuffer)(new Object())).append(result).append((int)percent).toString();
-         result = ((StringBuffer)(new Object())).append(result).append("%").toString();
+         result = result + " - ";
+         result = result + (int)percent;
+         result = result + "%";
       }
 
       return result;
@@ -316,7 +316,7 @@ public final class ActivationServiceImpl implements ActivationService, Serviceab
          ApplicationManager manager = ApplicationManager.getApplicationManager();
          manager.runApplication(this._descriptor);
       } catch (Throwable var3) {
-         new Object(e.getMessage());
+         new RuntimeException(e.getMessage());
          return;
       }
    }
@@ -359,9 +359,9 @@ public final class ActivationServiceImpl implements ActivationService, Serviceab
    }
 
    public ActivationServiceImpl() {
-      this._cachedEntrypointPosition = (Integer)(new Object(60));
+      this._cachedEntrypointPosition = new Integer(60);
       this._entrypointIcon = RuntimeResources.getBitmapResource("activation_icon.png");
-      this._descriptor = (ApplicationDescriptor)(new Object(
+      this._descriptor = new ApplicationDescriptor(
          ApplicationDescriptor.currentApplicationDescriptor(),
          null,
          new String[]{"activation"},
@@ -369,7 +369,7 @@ public final class ActivationServiceImpl implements ActivationService, Serviceab
          60,
          "net.rim.wica.runtime.resources.Runtime",
          34
-      ));
+      );
    }
 
    private final void setState(int state) {
@@ -427,9 +427,9 @@ public final class ActivationServiceImpl implements ActivationService, Serviceab
       boolean alreadyActivatedWithSB = this._managementService.getRuntimeInfo().isRegistered()
          && Util.isNonEmptyString(this._managementService.getRuntimeInfo().getDefaultAGInfo().getMDSUID());
       if (!alreadyActivatedWithSB && !this.disallowUserInitiatedActivation()) {
-         String partText = (String)(new Object((byte[])part.getContent()));
-         Vector lines = (Vector)(new Object());
-         StringTokenizer st = (StringTokenizer)(new Object(partText, "\n"));
+         String partText = new String((byte[])part.getContent());
+         Vector lines = new Vector();
+         StringTokenizer st = new StringTokenizer(partText, "\n");
 
          while (st.hasMoreTokens()) {
             lines.addElement(st.nextToken());
@@ -458,13 +458,7 @@ public final class ActivationServiceImpl implements ActivationService, Serviceab
                serverInfo.setAGCompactMsgURL(AGInfo.createAGCompactMsgURL(serverUrl));
                serverInfo.setAGRegURL(serverUrl);
                serverInfo.setIPPP_UID(transportUid);
-               Logger.log(
-                  ((StringBuffer)(new Object("Email-Initiated Activation: URL=")))
-                     .append(serverInfo.getAgRegURL())
-                     .append(", Transport=")
-                     .append(serverInfo.getIPPP_UID())
-                     .toString()
-               );
+               Logger.log("Email-Initiated Activation: URL=" + serverInfo.getAgRegURL() + ", Transport=" + serverInfo.getIPPP_UID());
                this.activate(serverInfo);
                return;
             }
@@ -492,7 +486,7 @@ public final class ActivationServiceImpl implements ActivationService, Serviceab
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

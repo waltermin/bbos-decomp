@@ -10,7 +10,7 @@ final class RibbonLauncherImpl$ActionUpdater implements Runnable {
 
    RibbonLauncherImpl$ActionUpdater(RibbonLauncherImpl ribbon) {
       this._ribbon = ribbon;
-      this._actionNames = new Object[1];
+      this._actionNames = new String[1];
    }
 
    public final synchronized void invokeLater(String actionName) {

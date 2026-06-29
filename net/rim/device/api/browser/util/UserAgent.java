@@ -12,17 +12,16 @@ public final class UserAgent {
    }
 
    public static final String getDefaultUserAgent() {
-      return ((StringBuffer)(new Object("BlackBerry")))
-         .append(DeviceInfo.getDeviceName())
-         .append('/')
-         .append(getBrowserVersion(false))
-         .append(" Profile/")
-         .append(System.getProperty("microedition.profiles"))
-         .append(" Configuration/")
-         .append(System.getProperty("microedition.configuration"))
-         .append(" VendorID/")
-         .append(Branding.getVendorId())
-         .toString();
+      return "BlackBerry"
+         + DeviceInfo.getDeviceName()
+         + '/'
+         + getBrowserVersion(false)
+         + " Profile/"
+         + System.getProperty("microedition.profiles")
+         + " Configuration/"
+         + System.getProperty("microedition.configuration")
+         + " VendorID/"
+         + Branding.getVendorId();
    }
 
    public static final String getBrowserVersion() {
@@ -95,7 +94,7 @@ public final class UserAgent {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

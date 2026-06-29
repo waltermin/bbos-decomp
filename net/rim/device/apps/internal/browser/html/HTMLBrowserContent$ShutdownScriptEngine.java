@@ -13,7 +13,7 @@ final class HTMLBrowserContent$ShutdownScriptEngine implements Runnable {
       if (HTMLBrowserContent.access$000(this.this$0) != null) {
          HTMLBrowserContent.access$100(this.this$0).invokeRunnable(this);
       } else {
-         ((Thread)(new Object(this))).start();
+         new Thread(this).start();
       }
    }
 

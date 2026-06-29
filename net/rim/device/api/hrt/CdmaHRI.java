@@ -1,6 +1,7 @@
 package net.rim.device.api.hrt;
 
 import net.rim.device.api.io.DatagramAddressBase;
+import net.rim.device.api.io.UdpAddress;
 import net.rim.device.api.system.Branding;
 import net.rim.device.api.util.Persistable;
 
@@ -38,7 +39,7 @@ public final class CdmaHRI extends HostRoutingInfo implements Persistable {
       if (HRUtils.isWorldPhone() && HRUtils.isPretendCDMA() && "".equals(super._apn)) {
          byte[] data = Branding.getData(13824);
          if (data != null) {
-            return (String)(new Object(data));
+            return new String(data);
          }
       }
 
@@ -55,7 +56,7 @@ public final class CdmaHRI extends HostRoutingInfo implements Persistable {
       if (d instanceof IPv4UdpDAC) {
          super.setDac(d);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -72,7 +73,7 @@ public final class CdmaHRI extends HostRoutingInfo implements Persistable {
       }
 
       long addr = addrs[index];
-      return (DatagramAddressBase)(new Object(IPv4UdpDAC.addr2IpAddress(addr), IPv4UdpDAC.addr2DstPort(addr), IPv4UdpDAC.addr2SrcPort(addr), this.getApn(), 2));
+      return new UdpAddress(IPv4UdpDAC.addr2IpAddress(addr), IPv4UdpDAC.addr2DstPort(addr), IPv4UdpDAC.addr2SrcPort(addr), this.getApn(), 2);
    }
 
    @Override

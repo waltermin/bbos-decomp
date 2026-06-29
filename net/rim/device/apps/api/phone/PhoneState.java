@@ -107,17 +107,16 @@ final class PhoneState {
    public final void print() {
       System.out
          .println(
-            ((StringBuffer)(new Object("PHONESTATE:\n\tstate=")))
-               .append(this._state)
-               .append("\n\tactive=")
-               .append(this._activeId)
-               .append("\n\theld=")
-               .append(this._heldId)
-               .append("\n\tincoming=")
-               .append(this._incomingId)
-               .append("\n\tconnecting=")
-               .append(this._connectingId)
-               .toString()
+            "PHONESTATE:\n\tstate="
+               + this._state
+               + "\n\tactive="
+               + this._activeId
+               + "\n\theld="
+               + this._heldId
+               + "\n\tincoming="
+               + this._incomingId
+               + "\n\tconnecting="
+               + this._connectingId
          );
    }
 }

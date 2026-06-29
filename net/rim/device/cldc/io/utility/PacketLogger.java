@@ -13,7 +13,7 @@ import net.rim.vm.Memory;
 public final class PacketLogger {
    private Object[] _packets = new Object[20];
    private long[] _times = new long[20];
-   private String[] _dests = new Object[20];
+   private String[] _dests = new String[20];
    private boolean[] _sents = new boolean[20];
    private int _numEntries;
    private int _circularSize;
@@ -21,7 +21,7 @@ public final class PacketLogger {
    private long _previousTime;
    public boolean _lowLoggingEnabled;
    public boolean _highLoggingEnabled;
-   private StringBuffer _tempSB = (StringBuffer)(new Object());
+   private StringBuffer _tempSB = new StringBuffer();
    private static final long SINGLETON_REGISTRATION_KEY = 900432232726625421L;
    private static final long PACKET_LOG = 1638247208346682407L;
    private static final int ARRAY_SIZE_INCREMENT = 10;
@@ -54,7 +54,7 @@ public final class PacketLogger {
    }
 
    public final synchronized void startLogging(boolean lowLogging) {
-      SimpleChoiceDialog dialog = (SimpleChoiceDialog)(new Object("Choose Logging Mode", new String[]{"All", "Circular 10", "Circular 25"}, 0, null, 134217728));
+      SimpleChoiceDialog dialog = new SimpleChoiceDialog("Choose Logging Mode", new String[]{"All", "Circular 10", "Circular 25"}, 0, null, 134217728);
       BackgroundDialog.show(dialog);
       switch (dialog.getSelectedIndex()) {
          case -1:
@@ -187,7 +187,7 @@ public final class PacketLogger {
          this._tempSB.append("Received: ");
       }
 
-      this._tempSB.append(((StringBuffer)(new Object())).append(((byte[])this._packets[packet]).length).append(" bytes\n").toString());
+      this._tempSB.append(((byte[])this._packets[packet]).length + " bytes\n");
       if (detailLevel >= 1) {
          this._tempSB.append(this._dests[packet]);
          this._tempSB.append("\n");

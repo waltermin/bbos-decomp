@@ -15,9 +15,9 @@ public final class PeerContactList implements ContactList {
    static final int CONTACTS_ID = 5;
 
    public PeerContactList(String displayName) {
-      this._persistentData = (IntHashtable)(new Object());
+      this._persistentData = new IntHashtable();
       this.setDisplayName(displayName);
-      this._persistentData.put(5, new Object());
+      this._persistentData.put(5, new Vector());
       this.commit();
    }
 
@@ -28,12 +28,12 @@ public final class PeerContactList implements ContactList {
    }
 
    private final void initIdHash(Object obj) {
-      if (obj instanceof Object) {
-         this._idHash = obj;
+      if (obj instanceof Integer) {
+         this._idHash = (Integer)obj;
       } else {
          if (!PeerEntry.getInstance().isDeviceLocked()) {
             this._idHash = this.getDisplayName().hashCode();
-            this._persistentData.put(3, new Object(this._idHash));
+            this._persistentData.put(3, new Integer(this._idHash));
             this.commit();
          }
       }
@@ -51,7 +51,7 @@ public final class PeerContactList implements ContactList {
 
       for (int index = 0; index < size; index++) {
          IntHashtable current = (IntHashtable)contacts.elementAt(index);
-         if (hash == current.get(17)) {
+         if (hash == (Integer)current.get(17)) {
             contacts.removeElementAt(index);
             this.commit();
             return;
@@ -75,7 +75,7 @@ public final class PeerContactList implements ContactList {
       this._displayName = PersistentContent.reEncode(displayName, true, true);
       this._persistentData.put(1, this._displayName);
       this._idHash = displayName.hashCode();
-      this._persistentData.put(3, new Object(this._idHash));
+      this._persistentData.put(3, new Integer(this._idHash));
       this.commit();
    }
 

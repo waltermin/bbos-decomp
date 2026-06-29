@@ -53,6 +53,7 @@ import net.rim.device.internal.proxy.Proxy;
 import net.rim.device.internal.system.InternalServices;
 import net.rim.device.internal.ui.UiInternal;
 import net.rim.vm.Array;
+import net.rim.vm.WeakReference;
 
 public final class MessageListUI
    extends AppsMainScreen
@@ -87,7 +88,7 @@ public final class MessageListUI
    private MessageListUI$PickVerb _pickVerb = new MessageListUI$PickVerb(this);
    private MessageListUI$UpdateRunnable _updateRunnable = new MessageListUI$UpdateRunnable(this);
    private MessageListUI$MessageListUIInvokeLaterRunnable _invokeLaterRunnable = new MessageListUI$MessageListUIInvokeLaterRunnable(null);
-   private Verb[] _verbs = new Object[0];
+   private Verb[] _verbs = new Verb[0];
    private MessageListColumnPainter _columnPainter;
    private Verb _leaveScreenVerb = new MessageListUI$LeaveScreenVerb(this);
    private Field _statusBanner;
@@ -155,7 +156,7 @@ public final class MessageListUI
    protected final void updateRibbonTitle() {
       if (this._title != null) {
          ReadableList sublist = this._sortedSeparatedItems;
-         if (sublist instanceof Object) {
+         if (sublist instanceof FilterProgress) {
             FilterProgress fp = (FilterProgress)sublist;
             if (fp.getProgress() == 100) {
                if (this._statusBanner != null) {
@@ -197,9 +198,9 @@ public final class MessageListUI
 
          this._items = collection;
          this._sortedSeparatedItems = new DateSortedSeparatedMessageArray(102, _longKeyProviderAdaptor);
-         this._sortedSeparatedItems.addCollectionListener(new Object(this));
-         ((CollectionEventSource)this._items).addCollectionListener(new Object(this._sortedSeparatedItems));
-         this._sortedSeparatedItems.loadFrom(this._items);
+         this._sortedSeparatedItems.addCollectionListener(new WeakReference(this));
+         ((CollectionEventSource)this._items).addCollectionListener(new WeakReference(this._sortedSeparatedItems));
+         this._sortedSeparatedItems.loadFrom((ReadableList)this._items);
          if (this._listField != null) {
             this.delete(this._listField);
          }
@@ -329,14 +330,14 @@ public final class MessageListUI
 
    @Override
    public final void suspendNotification(Object context) {
-      if (this._sortedSeparatedItems instanceof Object) {
+      if (this._sortedSeparatedItems instanceof NotificationSuspension) {
          this._sortedSeparatedItems.suspendNotification(context);
       }
    }
 
    @Override
    public final void resumeNotification(Object context) {
-      if (this._sortedSeparatedItems instanceof Object) {
+      if (this._sortedSeparatedItems instanceof NotificationSuspension) {
          this._sortedSeparatedItems.resumeNotification(context);
       }
    }
@@ -410,12 +411,12 @@ public final class MessageListUI
          this._verbs[numberOfVerbsNeeded++] = this._nextUnreadItemVerb;
       }
 
-      RIMModel var10 = this.getSelectedItem();
+      model = (RIMModel)this.getSelectedItem();
       if (modelCurrentlyOperatedOn != null) {
-         var10 = modelCurrentlyOperatedOn;
+         model = modelCurrentlyOperatedOn;
       }
 
-      this._deleteSingleItemVerb.setParameters(var10, this._context);
+      this._deleteSingleItemVerb.setParameters(model, this._context);
       this._verbs[numberOfVerbsNeeded++] = this._deleteSingleItemVerb;
       Array.resize(this._verbs, numberOfVerbsNeeded);
       return this._verbs;
@@ -477,14 +478,14 @@ public final class MessageListUI
                Object contextParameter = object1;
                this._creationApp.invokeLater(new MessageListUI$2(this, verbToInvoke, contextParameter));
             }
-         } else if (object0 instanceof Object) {
+         } else if (object0 instanceof RIMModel) {
             RIMModel modelToOpen = (RIMModel)object0;
             if (ModelViewListenerRegistry.isViewerUp(0, modelToOpen, this._context)) {
                return;
             }
 
             ContextObject contextObject = ContextObject.clone(this._context);
-            if (object1 instanceof Object) {
+            if (object1 instanceof ContextObject) {
                ContextObject co = (ContextObject)object1;
                Object selectedItem = ContextObject.get(co, 250);
                if (selectedItem != null) {
@@ -497,7 +498,7 @@ public final class MessageListUI
                contextObject.setFlag(64);
             }
 
-            if (modelToOpen instanceof Object) {
+            if (modelToOpen instanceof ActionProvider) {
                ActionProvider actionProvider = (ActionProvider)modelToOpen;
                this._creationApp.invokeLater(new MessageListUI$1(this, modelToOpen));
                actionProvider.perform(6099736323056465049L, contextObject);
@@ -639,11 +640,11 @@ public final class MessageListUI
             }
 
             RIMModel model = (RIMModel)this._sortedSeparatedItems.getAt(itemToCheck);
-            if (model instanceof Object) {
+            if (model instanceof ActionProvider) {
                ActionProvider actionProvider = (ActionProvider)model;
                ContextObject context = null;
                if (action == -2415955221176628574L && modelToStartFrom != null) {
-                  context = (ContextObject)(new Object());
+                  context = new ContextObject();
                   ContextObject.put(context, -321822713458159100L, modelToStartFrom);
                }
 
@@ -916,8 +917,8 @@ public final class MessageListUI
                                                                                     var20 = false;
                                                                                  } else {
                                                                                     selectedObject = this.getSelectedItem();
-                                                                                    if (selectedObject instanceof Object) {
-                                                                                       selectedModel = selectedObject;
+                                                                                    if (selectedObject instanceof RIMModel) {
+                                                                                       selectedModel = (RIMModel)selectedObject;
                                                                                        this._context.put(250, selectedModel);
                                                                                     }
 
@@ -1022,15 +1023,13 @@ public final class MessageListUI
                                                                                           var20 = false;
                                                                                           break label350;
                                                                                        case 185:
-                                                                                          this.checkItemIndex(
-                                                                                             -2415955221176628574L, true, false, (RIMModel)selectedModel
-                                                                                          );
+                                                                                          this.checkItemIndex(-2415955221176628574L, true, false, selectedModel);
                                                                                           hotk = 1;
                                                                                           var20 = false;
                                                                                           break label348;
                                                                                        case 186:
                                                                                           this.checkItemIndex(
-                                                                                             -2415955221176628574L, false, false, (RIMModel)selectedModel
+                                                                                             -2415955221176628574L, false, false, selectedModel
                                                                                           );
                                                                                           hotk = 1;
                                                                                           var20 = false;
@@ -1061,7 +1060,7 @@ public final class MessageListUI
                                                                                        } else if (hotk == 65535) {
                                                                                           var20 = false;
                                                                                        } else {
-                                                                                          if (selectedModel instanceof Object) {
+                                                                                          if (selectedModel instanceof HotKeyProvider) {
                                                                                              HotKeyProvider h = (HotKeyProvider)selectedModel;
                                                                                              this._result = h.invokeHotkey(this._context, hotk);
                                                                                              var17 = this._result != null;
@@ -1197,7 +1196,7 @@ public final class MessageListUI
             selectedElement = this.getSelectedItem();
             if (selectedElement instanceof DateSeparator) {
                this._context.put(250, selectedElement);
-               Verb[] verbs = new Object[0];
+               Verb[] verbs = new Verb[0];
                ((DateSeparator)selectedElement)
                   .getContextMenuVerbs(verbs, this._selectedIndexManager.getSelectedIndex(), this._sortedSeparatedItems, this._context);
                menu.add(verbs);
@@ -1210,10 +1209,10 @@ public final class MessageListUI
             defaultVerb = this.makeMultiSelectContextMenu(menu, selectedIndices);
          } else {
             selectedElement = this.getSelectedItem();
-            if (selectedElement instanceof Object) {
+            if (selectedElement instanceof RIMModel) {
                selectedModel = (RIMModel)selectedElement;
                this._context.put(250, selectedElement);
-               if (selectedModel instanceof Object) {
+               if (selectedModel instanceof VerbProvider) {
                   Array.resize(this._verbs, 0);
                   VerbProvider provider = (VerbProvider)selectedModel;
                   defaultVerb = provider.getVerbs(this._context, this._verbs);
@@ -1234,7 +1233,7 @@ public final class MessageListUI
                }
 
                if (dateSelected) {
-                  Verb[] verbs = new Object[0];
+                  Verb[] verbs = new Verb[0];
                   ((DateSeparator)selectedModel)
                      .getDefaultMenuVerbs(verbs, this._selectedIndexManager.getSelectedIndex(), this._sortedSeparatedItems, this._context);
                   menu.add(verbs);
@@ -1308,7 +1307,7 @@ public final class MessageListUI
             this._selectedIndexManager.addAccessibleState(1);
          }
 
-         this.accessibleEventOccurred(6, new Object(1), new Object(2), this._selectedIndexManager);
+         this.accessibleEventOccurred(6, new Integer(1), new Integer(2), this._selectedIndexManager);
       }
    }
 
@@ -1423,7 +1422,7 @@ public final class MessageListUI
    }
 
    private final void unregisterStatusBanner() {
-      if (this._statusBanner != null && this._items instanceof Object) {
+      if (this._statusBanner != null && this._items instanceof BackgroundFilteringCollection) {
          RibbonBanner ribbonBar = RibbonBanner.getInstance();
          ribbonBar.unregisterBanner(this._statusBanner);
          this._statusBanner = null;
@@ -1436,7 +1435,7 @@ public final class MessageListUI
          this.setExitAction(this._exitAction == 3 ? 1 : 2);
          cleanup = false;
          ReadableList sublist = this._sortedSeparatedItems;
-         if (sublist instanceof Object) {
+         if (sublist instanceof FilterProgress) {
             FilterProgress fp = (FilterProgress)sublist;
             if (fp.getProgress() < 100) {
                RibbonBanner ribbonBar = RibbonBanner.getInstance();
@@ -1445,7 +1444,7 @@ public final class MessageListUI
          }
       }
 
-      if (this._items instanceof Object) {
+      if (this._items instanceof BackgroundFilteringCollection) {
          ((BackgroundFilteringCollection)this._items).haltFiltering(cleanup);
       }
    }
@@ -1463,7 +1462,7 @@ public final class MessageListUI
 
    private final void logBadState(String message) {
       try {
-         throw new Object(((StringBuffer)(new Object("MessageListUI Forced Stack Trace: "))).append(message).toString());
+         throw new Throwable("MessageListUI Forced Stack Trace: " + message);
       } finally {
          QuincyManager.sendUncaughtException("MessageListUI");
          return;

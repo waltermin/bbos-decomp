@@ -3,6 +3,8 @@ package net.rim.device.apps.api.utility.viewer;
 import net.rim.device.api.collection.ReadableList;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.component.SeparatorField;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -41,7 +43,7 @@ public class ViewReadableListRIMModel extends ModelScreen {
          return field;
       }
 
-      if (field instanceof Object) {
+      if (field instanceof Manager) {
          Manager manager = (Manager)field;
          int count = manager.getFieldCount();
 
@@ -58,8 +60,8 @@ public class ViewReadableListRIMModel extends ModelScreen {
 
    @Override
    public void setModel(Object model) {
-      if (!(model instanceof Object)) {
-         throw new Object();
+      if (!(model instanceof ReadableList)) {
+         throw new IllegalArgumentException();
       }
 
       super.setModel(model);
@@ -70,7 +72,7 @@ public class ViewReadableListRIMModel extends ModelScreen {
          || !this.performIncrementalUpdate(this._uiFields)) {
          int size = readableListModel.size();
          int[] orders = new int[size];
-         Field[] fields = new Object[size];
+         Field[] fields = new Field[size];
          int count = 0;
 
          for (int i = 0; i < size; i++) {
@@ -93,12 +95,12 @@ public class ViewReadableListRIMModel extends ModelScreen {
          Array.resize(fields, count);
          Array.resize(orders, count);
          Arrays.sort(orders, 0, count, fields);
-         this._uiFields = new Object[fields.length];
+         this._uiFields = new Field[fields.length];
          System.arraycopy(fields, 0, this._uiFields, 0, fields.length);
 
          for (int index = this.getFieldCount() - 1; index >= 0; index--) {
             Field field = this.getField(index);
-            if (field instanceof Object) {
+            if (field instanceof Manager) {
                ((Manager)field).deleteAll();
             }
          }
@@ -124,7 +126,7 @@ public class ViewReadableListRIMModel extends ModelScreen {
                } else {
                   drawSeparator = false;
                   separatorRequired = false;
-                  super.add((Field)(new Object()));
+                  super.add(new SeparatorField());
                }
 
                lastGroup = thisGroup;
@@ -147,7 +149,7 @@ public class ViewReadableListRIMModel extends ModelScreen {
          }
 
          if (drawSeparator) {
-            super.add((Field)(new Object()));
+            super.add(new SeparatorField());
          }
 
          if (this._fieldToGetFocus != null) {
@@ -210,7 +212,7 @@ public class ViewReadableListRIMModel extends ModelScreen {
    }
 
    private Manager getManager(int group) {
-      Manager manager = (Manager)(new Object());
+      Manager manager = new VerticalFieldManager();
       switch (group) {
          case 2:
             manager.setTag(Tag.create("message-section-header"));

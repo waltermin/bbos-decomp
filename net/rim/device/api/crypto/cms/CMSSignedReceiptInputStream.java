@@ -19,7 +19,7 @@ public final class CMSSignedReceiptInputStream extends CMSInputStream {
       // 00: aload 0
       // 01: aload 1
       // 02: invokespecial net/rim/device/api/crypto/cms/CMSInputStream.<init> (Ljava/io/InputStream;)V
-      // 05: new java/lang/Object
+      // 05: new net/rim/device/api/crypto/asn1/ASN1InputStream
       // 08: dup
       // 09: aload 0
       // 0a: getfield net/rim/device/api/crypto/cms/CMSInputStream._input Ljava/io/InputStream;

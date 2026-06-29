@@ -15,7 +15,7 @@ final class VADAudioFile extends VADFile {
             this._file.close();
          }
 
-         this._file = (FileConnection)Connector.open(((StringBuffer)(new Object("file:///store/home/user/vad/"))).append(name).toString());
+         this._file = (FileConnection)Connector.open("file:///store/home/user/vad/" + name);
          if (this._file.exists()) {
             this._file.delete();
          }
@@ -52,22 +52,22 @@ final class VADAudioFile extends VADFile {
 
    @Override
    final void read(int location, int offset, int count) {
-      throw new Object("write-only file");
+      throw new RuntimeException("write-only file");
    }
 
    @Override
    final void copy(VADFile file) {
-      throw new Object("write-only file");
+      throw new RuntimeException("write-only file");
    }
 
    @Override
    final void delete() {
-      throw new Object("write-only file");
+      throw new RuntimeException("write-only file");
    }
 
    @Override
    final int size() {
-      throw new Object("write-only file");
+      throw new RuntimeException("write-only file");
    }
 
    @Override

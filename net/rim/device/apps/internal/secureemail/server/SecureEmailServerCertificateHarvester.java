@@ -76,7 +76,7 @@ public class SecureEmailServerCertificateHarvester extends CertificateHarvester 
          super._completionDialog.stepGauge();
       }
 
-      Certificate[] serverCertificates = new Object[0];
+      Certificate[] serverCertificates = new Certificate[0];
       String[] recipientAddresses = recipientData.getAddresses();
       int numRecipientAddresses = recipientAddresses != null ? recipientAddresses.length : 0;
       int numCertificateServers = this._secureEmailCertificateServers.length;

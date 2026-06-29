@@ -51,7 +51,7 @@ class BrowserPresentationElementField$MMSRenderingApplication extends BrowserRen
       if (attachment != null && attachment.getType() == 72) {
          attachment = DRMConverter.unwrap(attachment);
          if (attachment == null) {
-            System.out.println(((StringBuffer)(new Object("MMS - DRM parse failure: "))).append(url).toString());
+            System.out.println("MMS - DRM parse failure: " + url);
             return null;
          }
 
@@ -61,7 +61,7 @@ class BrowserPresentationElementField$MMSRenderingApplication extends BrowserRen
       if (attachment != null) {
          return BrowserPresentationElementField.openConnection(attachment, drmStatus);
       } else {
-         System.out.println(((StringBuffer)(new Object("MMS missing resource: "))).append(url).toString());
+         System.out.println("MMS missing resource: " + url);
          if (RadioInfo.getState() != 1) {
             System.out.println("MMS - Can't fetch resource (radio not on)");
             return null;

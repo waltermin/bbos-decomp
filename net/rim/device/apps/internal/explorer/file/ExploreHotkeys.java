@@ -10,7 +10,7 @@ import net.rim.device.internal.ui.UiInternal;
 
 public final class ExploreHotkeys {
    private static ResourceBundle _rb = ResourceBundle.getBundle(349501092522026426L, "net.rim.device.apps.internal.resource.Explorer");
-   private static IntIntHashtable _map = (IntIntHashtable)(new Object());
+   private static IntIntHashtable _map = new IntIntHashtable();
    private static Locale _locale;
 
    private static final void add(int id) {

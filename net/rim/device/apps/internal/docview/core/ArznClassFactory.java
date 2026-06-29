@@ -3,7 +3,7 @@ package net.rim.device.apps.internal.docview.core;
 import net.rim.device.api.util.IntHashtable;
 
 final class ArznClassFactory {
-   private IntHashtable _objectMap = (IntHashtable)(new Object(16));
+   private IntHashtable _objectMap = new IntHashtable(16);
    private ArznVectorPoolManager _nullPool;
 
    ArznClassFactory() {

@@ -33,7 +33,7 @@ public class Transport extends Service {
       }
 
       ServiceRecord sr = sc.getServiceRecord();
-      EmailSendUtility.sendMessage(msg.getEmailMessageModel(), sr, new Object());
+      EmailSendUtility.sendMessage(msg.getEmailMessageModel(), sr, new ContextObject());
    }
 
    public static void more(BodyPart bp, boolean reqAll) throws MessagingException {
@@ -43,13 +43,13 @@ public class Transport extends Service {
       }
 
       EmailMessageModel em = msg.getEmailMessageModel();
-      EmailMoreVerb emv = (EmailMoreVerb)(new Object(em, (byte)(reqAll ? 2 : 1)));
+      EmailMoreVerb emv = new EmailMoreVerb(em, (byte)(reqAll ? 2 : 1));
       MorePartModel mpm = bp.getMorePartModel();
       if (mpm == null) {
          throw new MessagingException("Transport.more():  the provided bodypart does not support the more operation");
       }
 
-      ContextObject c = (ContextObject)(new Object());
+      ContextObject c = new ContextObject();
       c.put(254, mpm);
       emv.invoke(c);
    }

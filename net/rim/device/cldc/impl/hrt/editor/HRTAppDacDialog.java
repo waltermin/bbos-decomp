@@ -1,6 +1,7 @@
 package net.rim.device.cldc.impl.hrt.editor;
 
 import net.rim.device.api.hrt.DAC;
+import net.rim.device.api.hrt.DomainNameDAC;
 import net.rim.device.api.hrt.IPv4UdpDAC;
 import net.rim.device.api.hrt.IntDAC;
 import net.rim.device.api.system.Bitmap;
@@ -8,8 +9,9 @@ import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.Menu;
-import net.rim.device.api.ui.text.TextFilter;
+import net.rim.device.api.ui.text.IPTextFilter;
 import net.rim.device.internal.i18n.CommonResource;
+import net.rim.device.internal.ui.component.IPEditField;
 
 final class HRTAppDacDialog extends Dialog {
    private int _netType;
@@ -25,8 +27,8 @@ final class HRTAppDacDialog extends Dialog {
       this._dac = dac;
       this._netType = netType;
       this.getLabel().setText(this.getAppStringFromArray(initString == null ? 201 : 202));
-      this._dacField = (EditField)(new Object(this.getAppStringFromArray(41), initString));
-      this._dacField.setFilter((TextFilter)(dac instanceof Object ? new Object() : new Object(2)));
+      this._dacField = new IPEditField(this.getAppStringFromArray(41), initString);
+      this._dacField.setFilter(dac instanceof DomainNameDAC ? new IPTextFilter() : new IPTextFilter(2));
       this.add(this._dacField);
    }
 
@@ -53,8 +55,8 @@ final class HRTAppDacDialog extends Dialog {
       String text = this._dacField.getText();
 
       try {
-         if (!(this._dac instanceof Object)) {
-            if (this._dac instanceof Object) {
+         if (!(this._dac instanceof IntDAC)) {
+            if (this._dac instanceof IPv4UdpDAC) {
                IPv4UdpDAC.string2Addr(text);
             }
          } else {

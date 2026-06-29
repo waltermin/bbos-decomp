@@ -18,10 +18,10 @@ public final class X931SignatureSigner implements SignatureSigner {
          this._digestByte = getDigestByte(digest);
          int paddingLength = this._length - this._digest.getDigestLength() - 3;
          if (paddingLength <= 0) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -52,7 +52,7 @@ public final class X931SignatureSigner implements SignatureSigner {
             System.arraycopy(interInt, 0, signature, signatureOffset, this._length);
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -87,16 +87,16 @@ public final class X931SignatureSigner implements SignatureSigner {
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object("RSA_X931/"))).append(this._digest.getAlgorithm()).toString();
+      return "RSA_X931/" + this._digest.getAlgorithm();
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public X931SignatureSigner(RSAPrivateKey key) {
       try {
-         this.initialize(key, (Digest)(new Object()));
+         this.initialize(key, new SHA1Digest());
       } catch (Throwable var4) {
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       }
    }
 
@@ -104,26 +104,26 @@ public final class X931SignatureSigner implements SignatureSigner {
       this.initialize(key, digest);
    }
 
-   static final byte getDigestByte(Digest digest) {
-      if (digest instanceof Object) {
+   static final byte getDigestByte(Digest digest) throws CryptoUnsupportedOperationException {
+      if (digest instanceof SHA1Digest) {
          return 51;
-      } else if (digest instanceof Object) {
+      } else if (digest instanceof SHA256Digest) {
          return 52;
-      } else if (digest instanceof Object) {
+      } else if (digest instanceof SHA384Digest) {
          return 54;
-      } else if (digest instanceof Object) {
+      } else if (digest instanceof SHA512Digest) {
          return 53;
       } else if (digest instanceof RIPEMD160Digest) {
          return 49;
       } else {
-         throw new Object();
+         throw new CryptoUnsupportedOperationException();
       }
    }
 
    static final void selfTest() {
       try {
-         RSACryptoSystem cryptoSystem = (RSACryptoSystem)(new Object(1024));
-         RSAPrivateKey privKey = (RSAPrivateKey)(new Object(
+         RSACryptoSystem cryptoSystem = new RSACryptoSystem(1024);
+         RSAPrivateKey privKey = new RSAPrivateKey(
             cryptoSystem,
             SelfTestData_PK1.RSA_E,
             Arrays.copy(SelfTestData_PK1.RSA_D),
@@ -133,8 +133,8 @@ public final class X931SignatureSigner implements SignatureSigner {
             Arrays.copy(SelfTestData_PK1.RSA_DMODPM1),
             Arrays.copy(SelfTestData_PK1.RSA_DMODQM1),
             Arrays.copy(SelfTestData_PK1.RSA_QINVMODP)
-         ));
-         RSAPublicKey pubKey = (RSAPublicKey)(new Object(cryptoSystem, SelfTestData_PK1.RSA_E, SelfTestData_PK1.RSA_N));
+         );
+         RSAPublicKey pubKey = new RSAPublicKey(cryptoSystem, SelfTestData_PK1.RSA_E, SelfTestData_PK1.RSA_N);
          X931SignatureSigner signer = new X931SignatureSigner(privKey);
          byte[] messageToVerify = new byte[signer.getLength()];
          signer.update(SelfTestData_PK1.PLAIN_TEXT_PKCS1_RSA);
@@ -142,10 +142,10 @@ public final class X931SignatureSigner implements SignatureSigner {
          X931SignatureVerifier verifier = new X931SignatureVerifier(pubKey, messageToVerify, 0);
          verifier.update(SelfTestData_PK1.PLAIN_TEXT_PKCS1_RSA);
          if (!verifier.verify()) {
-            throw new Object();
+            throw new CryptoSelfTestError();
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
    }
 

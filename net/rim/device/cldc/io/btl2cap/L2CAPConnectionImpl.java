@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.btl2cap;
 
+import java.io.IOException;
 import javax.bluetooth.L2CAPConnection;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.system.ApplicationProcess;
@@ -66,7 +67,7 @@ public class L2CAPConnectionImpl implements L2CAPConnection, BluetoothMEListener
                   }
                default:
                   this.cleanup(true);
-                  throw new Object(((StringBuffer)(new Object("connectDevice failed: "))).append(rc).toString());
+                  throw new IOException("connectDevice failed: " + rc);
             }
 
             if (this._aclHandle != -1) {
@@ -92,7 +93,7 @@ public class L2CAPConnectionImpl implements L2CAPConnection, BluetoothMEListener
 
                if (this._channelID == -1) {
                   this.cleanup(true);
-                  throw new Object("Unable to connect");
+                  throw new IOException("Unable to connect");
                }
 
                return;
@@ -100,7 +101,7 @@ public class L2CAPConnectionImpl implements L2CAPConnection, BluetoothMEListener
 
             if (this._aclResult != 4 || retries <= 0) {
                this.cleanup(true);
-               throw new Object("Unable to connect");
+               throw new IOException("Unable to connect");
             }
 
             retries--;
@@ -152,18 +153,18 @@ public class L2CAPConnectionImpl implements L2CAPConnection, BluetoothMEListener
    }
 
    @Override
-   public int getReceiveMTU() {
+   public int getReceiveMTU() throws IOException {
       if (this._channelID == -1) {
-         throw new Object("Connection closed");
+         throw new IOException("Connection closed");
       } else {
          return this._receiveMTU;
       }
    }
 
    @Override
-   public int getTransmitMTU() {
+   public int getTransmitMTU() throws IOException {
       if (this._channelID == -1) {
-         throw new Object("Connection closed");
+         throw new IOException("Connection closed");
       }
 
       if (this._transmitMTU == -1) {
@@ -181,7 +182,7 @@ public class L2CAPConnectionImpl implements L2CAPConnection, BluetoothMEListener
    public boolean ready() {
       synchronized (this._readSemaphore) {
          if (this._channelID == -1) {
-            throw new Object("Connection closed");
+            throw new IOException("Connection closed");
          } else {
             return this._receivedPackets.length != 0;
          }
@@ -191,12 +192,12 @@ public class L2CAPConnectionImpl implements L2CAPConnection, BluetoothMEListener
    @Override
    public int receive(byte[] buf) {
       if (buf == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       synchronized (this._readSemaphore) {
          if (this._channelID == -1) {
-            throw new Object("Connection closed");
+            throw new IOException("Connection closed");
          }
 
          if (this._receivedPackets.length == 0) {
@@ -209,7 +210,7 @@ public class L2CAPConnectionImpl implements L2CAPConnection, BluetoothMEListener
          }
 
          if (this._receivedPackets.length == 0) {
-            throw new Object("Connection closed");
+            throw new IOException("Connection closed");
          }
 
          byte[] packet = this._receivedPackets[0];
@@ -228,7 +229,7 @@ public class L2CAPConnectionImpl implements L2CAPConnection, BluetoothMEListener
    public void send(byte[] data) {
       synchronized (this._writeSemaphore) {
          if (this._channelID == -1) {
-            throw new Object("Connection closed");
+            throw new IOException("Connection closed");
          }
 
          BluetoothL2CAP.sendData(this._psmHandle, this._channelID, data);

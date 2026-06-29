@@ -10,7 +10,7 @@ final class ContactCollection$FamilyNameHandler implements ObjectFieldHandler {
 
    @Override
    public final Object getValue(Object item) {
-      if (item instanceof Object) {
+      if (item instanceof AddressCardModel) {
          PersonNameModel name = ((AddressCardModel)item).getName();
          if (name != null) {
             return name.getLastName();

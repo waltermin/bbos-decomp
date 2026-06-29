@@ -32,7 +32,7 @@ final class SoftwareTripleDESCryptoToken extends TripleDESCryptoToken implements
    @Override
    public final CryptoTokenCipherContext initializeEncrypt(CryptoTokenSymmetricKeyData data) {
       if (!(data instanceof SoftwareTripleDESCryptoToken$TripleDESKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareTripleDESCryptoToken$TripleDESKeyData key = (SoftwareTripleDESCryptoToken$TripleDESKeyData)data;
@@ -42,7 +42,7 @@ final class SoftwareTripleDESCryptoToken extends TripleDESCryptoToken implements
    @Override
    public final void encrypt(CryptoTokenCipherContext context, byte[] plaintext, int plaintextOffset, byte[] ciphertext, int ciphertextOffset) {
       if (!(context instanceof SoftwareTripleDESCryptoToken$TripleDESCipherContext)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       ((SoftwareTripleDESCryptoToken$TripleDESCipherContext)context).getNativeBlockCipher().crypt(plaintext, plaintextOffset, ciphertext, ciphertextOffset);
@@ -51,7 +51,7 @@ final class SoftwareTripleDESCryptoToken extends TripleDESCryptoToken implements
    @Override
    public final CryptoTokenCipherContext initializeDecrypt(CryptoTokenSymmetricKeyData data) {
       if (!(data instanceof SoftwareTripleDESCryptoToken$TripleDESKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareTripleDESCryptoToken$TripleDESKeyData key = (SoftwareTripleDESCryptoToken$TripleDESKeyData)data;
@@ -61,7 +61,7 @@ final class SoftwareTripleDESCryptoToken extends TripleDESCryptoToken implements
    @Override
    public final void decrypt(CryptoTokenCipherContext context, byte[] ciphertext, int ciphertextOffset, byte[] plaintext, int plaintextOffset) {
       if (!(context instanceof SoftwareTripleDESCryptoToken$TripleDESCipherContext)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       ((SoftwareTripleDESCryptoToken$TripleDESCipherContext)context).getNativeBlockCipher().crypt(ciphertext, ciphertextOffset, plaintext, plaintextOffset);
@@ -70,7 +70,7 @@ final class SoftwareTripleDESCryptoToken extends TripleDESCryptoToken implements
    @Override
    public final byte[] extractKeyData(CryptoTokenSymmetricKeyData data) {
       if (!(data instanceof SoftwareTripleDESCryptoToken$TripleDESKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareTripleDESCryptoToken$TripleDESKeyData)data).getData();
       }
@@ -102,7 +102,7 @@ final class SoftwareTripleDESCryptoToken extends TripleDESCryptoToken implements
       }
 
       if (!Arrays.equals(target, 0, SelfTestData_PK1.ENCRYPTION_PLAIN_TEXT, 0, length)) {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
       target = new byte[length];
@@ -117,7 +117,7 @@ final class SoftwareTripleDESCryptoToken extends TripleDESCryptoToken implements
       }
 
       if (!Arrays.equals(target, 0, CIPHER_TEXT, 0, length)) {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
    }
 

@@ -47,9 +47,7 @@ public final class OWAEmailSetupCommand implements DomainCommand {
                return DomainCommand.SESSION_TIMEOUT_RESULT;
             }
 
-            BISEventLogger.logEvent(
-               ((StringBuffer)(new Object("OWA Email Setup: Unhandled REST response code: "))).append(callResult.getRESTStatusCode()).toString(), 0
-            );
+            BISEventLogger.logEvent("OWA Email Setup: Unhandled REST response code: " + callResult.getRESTStatusCode(), 0);
             commandResultID = "failed";
             commandResultErrorMsg = ApplicationResources.getString(174);
          }

@@ -13,16 +13,19 @@ import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.apps.api.framework.registration.VerbRepository;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.BooleanChoiceField;
+import net.rim.device.apps.internal.keystore.browser.LaunchKeyStoreBrowserVerb;
 import net.rim.device.apps.internal.secureemail.ContentCipherField;
 import net.rim.device.apps.internal.secureemail.SecureEmailFactory;
 import net.rim.device.apps.internal.secureemail.SecureEmailOptions;
 import net.rim.device.apps.internal.secureemail.SecureEmailOptionsModel;
 import net.rim.device.apps.internal.secureemail.SecureEmailResources;
 import net.rim.vm.Array;
+import net.rim.vm.WeakReference;
 
 final class SMIMEOptionsModel extends SecureEmailOptionsModel implements FieldChangeListener {
    private SMIMEOptions _smimeOptions;
@@ -37,9 +40,9 @@ final class SMIMEOptionsModel extends SecureEmailOptionsModel implements FieldCh
 
    SMIMEOptionsModel(SecureEmailFactory factory, Object context) {
       super(factory, context);
-      this._deviceKeyStore.addCollectionListener(new Object(this));
+      this._deviceKeyStore.addCollectionListener(new WeakReference(this));
       this._trustedKeyStore = TrustedKeyStore.getInstance();
-      this._trustedKeyStore.addCollectionListener(new Object(this));
+      this._trustedKeyStore.addCollectionListener(new WeakReference(this));
    }
 
    @Override
@@ -53,7 +56,7 @@ final class SMIMEOptionsModel extends SecureEmailOptionsModel implements FieldCh
          Array.resize(verbs, numExistingVerbs + numImportVerbs);
          System.arraycopy(importVerbs, 0, verbs, numExistingVerbs, numImportVerbs);
          Field fieldWithFocus = super._vfm.getLeafFieldWithFocus();
-         if (fieldWithFocus instanceof Object) {
+         if (fieldWithFocus instanceof CertificateChoiceField) {
             CertificateChoiceField certificateChoiceField = (CertificateChoiceField)fieldWithFocus;
             if (certificateChoiceField.getSize() == 0) {
                defaultVerb = importVerbs[0];
@@ -61,7 +64,7 @@ final class SMIMEOptionsModel extends SecureEmailOptionsModel implements FieldCh
          }
       }
 
-      Arrays.add(verbs, new Object("Certificate", null));
+      Arrays.add(verbs, new LaunchKeyStoreBrowserVerb("Certificate", null));
       return defaultVerb;
    }
 
@@ -74,37 +77,37 @@ final class SMIMEOptionsModel extends SecureEmailOptionsModel implements FieldCh
    @Override
    protected final void addGlobalAndPerMessageOptionsFields(SecureEmailOptions secureEmailOptions) {
       this._smimeOptions = (SMIMEOptions)secureEmailOptions;
-      LabelField signingOptionsLabel = (LabelField)(new Object(SMIMEResources.getString(2013)));
+      LabelField signingOptionsLabel = new LabelField(SMIMEResources.getString(2013));
       Font boldFont = Font.getDefault();
       boldFont = boldFont.derive(boldFont.getStyle() | 1);
       signingOptionsLabel.setFont(boldFont);
       super._vfm.add(signingOptionsLabel);
-      this._signingKeyStoreDataArray = new Object[0];
-      this._signingCertField = (CertificateChoiceField)(new Object(
+      this._signingKeyStoreDataArray = new KeyStoreData[0];
+      this._signingCertField = new CertificateChoiceField(
          SMIMEResources.getString(2016), this._deviceKeyStore, this._trustedKeyStore, super._factory.getCryptoSystemProperties()
-      ));
+      );
       this._signingCertField.setEmptyString(SecureEmailResources.getBundle(), 12);
       super._vfm.add(this._signingCertField, 6);
       if (super._message != null) {
-         this._includeCertificatesField = (BooleanChoiceField)(new Object(SMIMEResources.getString(2005), 0, this._smimeOptions.getIncludeCertificatesFlag()));
+         this._includeCertificatesField = new BooleanChoiceField(SMIMEResources.getString(2005), 0, this._smimeOptions.getIncludeCertificatesFlag());
          super._vfm.add(this._includeCertificatesField, 6);
       }
 
-      this._requestSignedReceiptsField = (BooleanChoiceField)(new Object(SMIMEResources.getString(2029), 0, this._smimeOptions.getRequestSignedReceipts()));
+      this._requestSignedReceiptsField = new BooleanChoiceField(SMIMEResources.getString(2029), 0, this._smimeOptions.getRequestSignedReceipts());
       super._vfm.add(this._requestSignedReceiptsField, 6);
-      super._vfm.add((Field)(new Object()));
-      LabelField encryptionOptionsLabel = (LabelField)(new Object(SMIMEResources.getString(2014)));
+      super._vfm.add(new SeparatorField());
+      LabelField encryptionOptionsLabel = new LabelField(SMIMEResources.getString(2014));
       encryptionOptionsLabel.setFont(boldFont);
       super._vfm.add(encryptionOptionsLabel);
-      this._encryptionKeyStoreDataArray = new Object[0];
-      this._encryptionCertField = (CertificateChoiceField)(new Object(
+      this._encryptionKeyStoreDataArray = new KeyStoreData[0];
+      this._encryptionCertField = new CertificateChoiceField(
          SMIMEResources.getString(2016), this._deviceKeyStore, this._trustedKeyStore, super._factory.getCryptoSystemProperties()
-      ));
+      );
       this._encryptionCertField.setEmptyString(SecureEmailResources.getBundle(), 12);
       this._encryptionCertField.setChangeListener(this);
       super._vfm.add(this._encryptionCertField, 6);
-      super._contentCipherField = (ContentCipherField)(new Object(super._utilities.getITPolicyContentCiphers(), this.getCiphersToCheck()));
-      super._vfm.add((Field)(new Object(SecureEmailResources.getString(39))), 6);
+      super._contentCipherField = new ContentCipherField(super._utilities.getITPolicyContentCiphers(), this.getCiphersToCheck());
+      super._vfm.add(new LabelField(SecureEmailResources.getString(39)), 6);
       super._vfm.add(super._contentCipherField, 12);
       this.populateCertField(this._signingCertField, 0, this._signingKeyStoreDataArray, this._smimeOptions.getSigningKeyStoreData(), this._deviceKeyStore, true);
       this.populateCertField(
@@ -120,12 +123,12 @@ final class SMIMEOptionsModel extends SecureEmailOptionsModel implements FieldCh
          String cmimeServiceName = this.getCMIMEServiceName();
          String emsEmailLabel;
          if (cmimeServiceName != null) {
-            emsEmailLabel = MessageFormat.format(SMIMEResources.getString(2107), new Object[]{cmimeServiceName});
+            emsEmailLabel = MessageFormat.format(SMIMEResources.getString(2107), new String[]{cmimeServiceName});
          } else {
             emsEmailLabel = SMIMEResources.getString(2102);
          }
 
-         ObjectChoiceField emsEmailAddressField = (ObjectChoiceField)(new Object(emsEmailLabel, new Object[]{emsEmailAddress}));
+         ObjectChoiceField emsEmailAddressField = new ObjectChoiceField(emsEmailLabel, new String[]{emsEmailAddress});
          emsEmailAddressField.setEditable(false);
          super._vfm.add(emsEmailAddressField);
       }

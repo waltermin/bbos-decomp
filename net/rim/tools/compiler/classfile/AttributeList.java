@@ -1,5 +1,6 @@
 package net.rim.tools.compiler.classfile;
 
+import java.io.IOException;
 import java.util.Hashtable;
 import net.rim.tools.compiler.exec.CharacterHelper;
 import net.rim.tools.compiler.io.StructuredInputStream;
@@ -20,15 +21,15 @@ public final class AttributeList {
    public static String NAME_STACKMAP = CharacterHelper.intern("StackMap");
    public static String NAME_SYNTHETIC = CharacterHelper.intern("Synthetic");
 
-   public AttributeList(StructuredInputStream in, ConstantPool constantPool, int list, boolean shallow) {
+   public AttributeList(StructuredInputStream in, ConstantPool constantPool, int list, boolean shallow) throws IOException {
       int numAtts = in.readUnsignedShort();
       if (numAtts > 0) {
-         this._table = (Hashtable)(new Object(numAtts * 2));
+         this._table = new Hashtable(numAtts * 2);
 
          for (int i = 0; i < numAtts; i++) {
             Attribute attr = Attribute.read(in, constantPool, list, shallow);
             if (this._table.put(attr.getName(), attr) != null) {
-               throw new Object(((StringBuffer)(new Object("duplicate "))).append(attr.getName()).append(" attribute").toString());
+               throw new IOException("duplicate " + attr.getName() + " attribute");
             }
          }
       }

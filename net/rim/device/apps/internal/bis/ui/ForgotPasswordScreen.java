@@ -1,8 +1,8 @@
 package net.rim.device.apps.internal.bis.ui;
 
 import java.util.Hashtable;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.BasicEditField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.apps.internal.bis.ApplicationResources;
 import net.rim.device.apps.internal.bis.api.ui.BasicScreen;
 import net.rim.device.apps.internal.bis.api.ui.BoldLabelField;
@@ -18,10 +18,10 @@ public final class ForgotPasswordScreen extends BasicScreen {
    @Override
    public final void refresh(Hashtable screenParams) {
       this.setTitle(ApplicationResources.getString(8));
-      this.addContentField((Field)(new Object(ApplicationResources.getString(76))));
+      this.addContentField(new LabelField(ApplicationResources.getString(76)));
       this.addContentLineBreak();
       this.addContentField(new BoldLabelField(ApplicationResources.getString(13)));
-      this._userNameEdit = (BasicEditField)(new Object(null, null));
+      this._userNameEdit = new BasicEditField(null, null);
       this.addContentField(this._userNameEdit, true);
       Button cancelButton = new Button(ApplicationResources.getString(28));
       Button okButton = new Button(ApplicationResources.getString(39));

@@ -9,16 +9,16 @@ class ModelIntarray_v0_0 {
    public static void libMain(String[] args) {
       Registry registry = MediaFactory.getRegistry();
       String modelClassName = "net.rim.plazmic.internal.mediaengine.model.intarray.v0_0.AnimationModel";
-      registry.setValue(new Object[]{"MEDIA", modelClassName}, "1");
-      registry.setValue(new Object[]{"MEDIA", modelClassName, "Viewport"}, "net.rim.plazmic.internal.mediaengine.model.intarray.v0_0.AnimationViewport");
+      registry.setValue(new String[]{"MEDIA", modelClassName}, "1");
+      registry.setValue(new String[]{"MEDIA", modelClassName, "Viewport"}, "net.rim.plazmic.internal.mediaengine.model.intarray.v0_0.AnimationViewport");
       registry.setValue(
-         new Object[]{"MEDIA", modelClassName, "EventSubscription"}, "net.rim.plazmic.internal.mediaengine.model.intarray.v0_0.AnimationInteractor"
+         new String[]{"MEDIA", modelClassName, "EventSubscription"}, "net.rim.plazmic.internal.mediaengine.model.intarray.v0_0.AnimationInteractor"
       );
       registry.setValue(
-         new Object[]{"MEDIA", modelClassName, "FocusInteractor"}, "net.rim.plazmic.internal.mediaengine.model.intarray.v0_0.AnimationInteractor"
+         new String[]{"MEDIA", modelClassName, "FocusInteractor"}, "net.rim.plazmic.internal.mediaengine.model.intarray.v0_0.AnimationInteractor"
       );
       registry.setValue(
-         new Object[]{"MEDIA", modelClassName, "Sampler"},
+         new String[]{"MEDIA", modelClassName, "Sampler"},
          (class$net$rim$plazmic$internal$mediaengine$model$intarray$v0_0$AnimationSampler == null
                ? (
                   class$net$rim$plazmic$internal$mediaengine$model$intarray$v0_0$AnimationSampler = class$(
@@ -39,7 +39,7 @@ class ModelIntarray_v0_0 {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

@@ -16,7 +16,7 @@ class PersistedSortedCollectionEncryptor$RecryptHelper implements RecryptableCol
       if (cookie instanceof Object[]) {
          return ((Object[])cookie).length;
       } else {
-         return !(cookie instanceof Object) ? 0 : ((BigVector)cookie).size();
+         return !(cookie instanceof BigVector) ? 0 : ((BigVector)cookie).size();
       }
    }
 
@@ -25,7 +25,7 @@ class PersistedSortedCollectionEncryptor$RecryptHelper implements RecryptableCol
       if (cookie instanceof Object[]) {
          return ((Object[])cookie)[index];
       } else {
-         return !(cookie instanceof Object) ? null : ((BigVector)cookie).elementAt(index);
+         return !(cookie instanceof BigVector) ? null : ((BigVector)cookie).elementAt(index);
       }
    }
 
@@ -34,7 +34,7 @@ class PersistedSortedCollectionEncryptor$RecryptHelper implements RecryptableCol
       if (cookie instanceof Object[]) {
          ((Object[])cookie)[index] = newElement;
       } else {
-         if (cookie instanceof Object) {
+         if (cookie instanceof BigVector) {
             ((BigVector)cookie).setElementAt(newElement, index);
          }
       }

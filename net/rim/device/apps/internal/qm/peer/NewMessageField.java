@@ -29,13 +29,13 @@ final class NewMessageField extends Manager {
    NewMessageField() {
       super(0);
       this.setTag(TAG);
-      this._separator = (SeparatorField)(new Object());
+      this._separator = new SeparatorField();
       this.add(this._separator);
       this.onLocaleChanged();
-      StringPattern[] smileys = new Object[]{Smileys.getSmileyFacility()};
-      StringPatternContainer patterns = (StringPatternContainer)(new Object(smileys));
-      this._editField = (ActiveAutoTextEditField)(new Object(null, null, 1000000, 4503599627370496L | (PeerData.isAutoCap() ? 0 : 524288), patterns));
-      this._vfm = (VerticalFieldManager)(new Object(1153220571769602048L));
+      StringPattern[] smileys = new StringPattern[]{Smileys.getSmileyFacility()};
+      StringPatternContainer patterns = new StringPatternContainer(smileys);
+      this._editField = new ActiveAutoTextEditField(null, null, 1000000, 4503599627370496L | (PeerData.isAutoCap() ? 0 : 524288), patterns);
+      this._vfm = new VerticalFieldManager(1153220571769602048L);
       this._vfm.add(this._editField);
       int height = Font.getDefault().getHeight();
       this._maxHeight = Display.getHeight();

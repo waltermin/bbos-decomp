@@ -41,7 +41,7 @@ public final class Track implements MediaInfo, PaintProvider, KeyProvider, VerbP
             } else if (this._trackNumber >= 10) {
                trackStr = String.valueOf(this._trackNumber);
             } else {
-               trackStr = ((StringBuffer)(new Object())).append('0').append(String.valueOf(this._trackNumber)).toString();
+               trackStr = '0' + String.valueOf(this._trackNumber);
             }
          }
       }
@@ -58,11 +58,7 @@ public final class Track implements MediaInfo, PaintProvider, KeyProvider, VerbP
 
       if (this._length >= 0) {
          int dur = (int)(this.getLength() / 1000000);
-         lengthString = ((StringBuffer)(new Object()))
-            .append(Integer.toString(dur / 60))
-            .append(':')
-            .append(NumberUtilities.toString(dur % 60, 10, 2))
-            .toString();
+         lengthString = Integer.toString(dur / 60) + ':' + NumberUtilities.toString(dur % 60, 10, 2);
       }
 
       drawParam.iTruncateWithEllipsis = 2;
@@ -185,7 +181,7 @@ public final class Track implements MediaInfo, PaintProvider, KeyProvider, VerbP
 
    final void generateKeywords() {
       if (this._keywords == null) {
-         this._keywords = new Object[0];
+         this._keywords = new String[0];
       }
 
       if (this._artist != null) {
@@ -216,7 +212,7 @@ public final class Track implements MediaInfo, PaintProvider, KeyProvider, VerbP
    @Override
    public final void setPreloaded(boolean preloaded) {
       if (this._keywords == null) {
-         this._keywords = new Object[0];
+         this._keywords = new String[0];
       }
 
       if (preloaded) {

@@ -43,7 +43,7 @@ public final class RIMMessagingMoreRequest extends RIMMessagingTransmission {
    @Override
    public final DataBuffer write() {
       if (this._buffer == null) {
-         this._buffer = (DataBuffer)(new Object());
+         this._buffer = new DataBuffer();
          this._buffer.writeByte(4);
          CMIMEParameters parameters = new CMIMEParameters(this._buffer, 4, 1);
          parameters.addCMIMEInteger((byte)48, this._reference);
@@ -56,7 +56,7 @@ public final class RIMMessagingMoreRequest extends RIMMessagingTransmission {
 
          if (this._contentTypeRequested != null || this._objectDescriptor != null) {
             this._buffer.writeByte(112);
-            DataBuffer nestedBuffer = (DataBuffer)(new Object());
+            DataBuffer nestedBuffer = new DataBuffer();
             CMIMEParameters nestedParameters = new CMIMEParameters(nestedBuffer, 4, 1);
             if (this._contentTypeRequested != null) {
                nestedParameters.add((byte)1, this._contentTypeRequested);

@@ -89,15 +89,13 @@ public final class ComponentFactory {
       } else {
          Object value = model.getValue();
          String uri = null;
-         Object var8;
-         if (!(value instanceof Object)) {
-            var8 = value;
+         if (!(value instanceof Vector)) {
+            uri = (String)value;
          } else {
-            var8 = ((Vector)value).elementAt(row);
+            uri = (String)((Vector)value).elementAt(row);
          }
 
-         if (var8 != null
-            && (((String)var8).endsWith(".pme") || ((String)var8).endsWith(".pmb") || ((String)var8).endsWith(".PME") || ((String)var8).endsWith(".PMB"))) {
+         if (uri != null && (uri.endsWith(".pme") || uri.endsWith(".pmb") || uri.endsWith(".PME") || uri.endsWith(".PMB"))) {
             return new WicletMediaField(context, model, row, style);
          }
       }

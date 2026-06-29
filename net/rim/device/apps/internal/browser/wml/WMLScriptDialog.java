@@ -9,7 +9,7 @@ import net.rim.device.apps.internal.browser.ui.DialogEnterString;
 final class WMLScriptDialog implements IDialog {
    @Override
    public final String alert(String message) {
-      RunnableDialog dialog = (RunnableDialog)(new Object(message, 0));
+      RunnableDialog dialog = new RunnableDialog(message, 0);
       Application.getApplication().invokeAndWait(dialog);
       return "";
    }
@@ -25,7 +25,7 @@ final class WMLScriptDialog implements IDialog {
       }
 
       Object[] choices = new Object[]{ok, cancel};
-      RunnableDialog dialog = (RunnableDialog)(new Object(0, message, choices, null, 0));
+      RunnableDialog dialog = new RunnableDialog(0, message, choices, null, 0);
       Application.getApplication().invokeAndWait(dialog);
       return dialog.getResult() == 0 ? "true" : "false";
    }
@@ -33,7 +33,7 @@ final class WMLScriptDialog implements IDialog {
    @Override
    public final String prompt(String defaultInput, String message) {
       DialogEnterString des = new DialogEnterString(message, defaultInput, CommonResources.getString(117));
-      RunnableDialog dialog = (RunnableDialog)(new Object(des));
+      RunnableDialog dialog = new RunnableDialog(des);
       Application.getApplication().invokeAndWait(dialog);
       return des.getResult();
    }

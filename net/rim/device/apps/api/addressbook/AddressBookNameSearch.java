@@ -14,7 +14,7 @@ public class AddressBookNameSearch implements VerbProvider, SearchCriterion, Per
    public Object establishValue(String value) {
       Object result = null;
       String name_value = value;
-      if (name_value != null && (!(name_value instanceof Object) || name_value.length() != 0)) {
+      if (name_value != null && (!(name_value instanceof String) || name_value.length() != 0)) {
          Object[] cards = AddressBookServices.lookup(name_value, 5);
          if (cards != null && cards.length == 0) {
             cards = null;
@@ -26,7 +26,7 @@ public class AddressBookNameSearch implements VerbProvider, SearchCriterion, Per
 
             for (int i = cards.length - 1; i >= 0; i--) {
                Object card = cards[i];
-               if (card instanceof Object) {
+               if (card instanceof UniqueIDProvider) {
                   UniqueIDProvider uidProvider = (UniqueIDProvider)card;
                   luids[i] = uidProvider.getLUID(null);
                }
@@ -47,7 +47,7 @@ public class AddressBookNameSearch implements VerbProvider, SearchCriterion, Per
          return null;
       } else {
          Object whichField = ContextObject.get(context, 9045827404276417370L);
-         if (!(whichField instanceof Object)) {
+         if (!(whichField instanceof EditField)) {
             Array.resize(verbs, 0);
             return null;
          } else {

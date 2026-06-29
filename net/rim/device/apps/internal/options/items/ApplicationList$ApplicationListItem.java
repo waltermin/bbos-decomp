@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.options.items;
 
 import net.rim.device.api.system.CodeModuleGroup;
 import net.rim.device.api.ui.accessibility.AccessibleContext;
+import net.rim.device.api.ui.accessibility.AccessibleContextFactory;
 import net.rim.device.api.ui.accessibility.AccessibleContextProxy;
 
 final class ApplicationList$ApplicationListItem implements AccessibleContextProxy {
@@ -15,6 +16,6 @@ final class ApplicationList$ApplicationListItem implements AccessibleContextProx
 
    @Override
    public final AccessibleContext getAccessibleContext() {
-      return (AccessibleContext)(new Object(this._group.getFriendlyName()));
+      return new AccessibleContextFactory(this._group.getFriendlyName());
    }
 }

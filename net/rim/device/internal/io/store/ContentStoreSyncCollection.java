@@ -21,7 +21,7 @@ final class ContentStoreSyncCollection implements SyncCollection, CollectionEven
    private boolean _inTransaction;
    ContentStoreImpl _store = ContentStoreImpl.getInstance();
    ContentStoreDatabase _database = this._store.getDatabase();
-   CollectionListenerManager _collectionListenerManager = (CollectionListenerManager)(new Object());
+   CollectionListenerManager _collectionListenerManager = new CollectionListenerManager();
    private static String SAMPLE_PICTURES = "/samples/pictures/";
    private static String USER_PICTURES = "/home/user/pictures/";
    private static String USER_RINGTONES = "/home/user/ringtones/";
@@ -85,7 +85,7 @@ final class ContentStoreSyncCollection implements SyncCollection, CollectionEven
             try {
                FolderImpl realFolder = parent != null ? parent.getFolder(name) : this._store.getFolder("/");
                if (realFolder == null) {
-                  throw new Object();
+                  throw new IllegalStateException();
                }
 
                int folderid = realFolder.getId();
@@ -114,7 +114,7 @@ final class ContentStoreSyncCollection implements SyncCollection, CollectionEven
             }
 
             if (folder == null) {
-               throw new Object();
+               throw new IllegalStateException();
             }
          }
 
@@ -216,7 +216,7 @@ final class ContentStoreSyncCollection implements SyncCollection, CollectionEven
    public final SyncObject[] getSyncObjects() {
       ContentStoreImpl store = ContentStoreImpl.getInstance();
       synchronized (store.getMonitor()) {
-         SyncObject[] objects = new Object[this.getSyncObjectCount()];
+         SyncObject[] objects = new SyncObject[this.getSyncObjectCount()];
          int dest = 0;
          FolderImpl[] folders = store.getDatabase().getFolderTable().getArrayInternal();
 

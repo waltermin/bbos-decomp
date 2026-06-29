@@ -16,11 +16,11 @@ public final class PKCS5KDF2PseudoRandomSource extends AbstractPseudoRandomSourc
    private int _outputOffset;
 
    public PKCS5KDF2PseudoRandomSource(byte[] password, byte[] salt, int iterationCount) {
-      this(password, 0, password == null ? 0 : password.length, salt, iterationCount, (Digest)(new Object()));
+      this(password, 0, password == null ? 0 : password.length, salt, iterationCount, new SHA1Digest());
    }
 
    public PKCS5KDF2PseudoRandomSource(byte[] password, int offset, int length, byte[] salt, int iterationCount) {
-      this(password, offset, length, salt, iterationCount, (Digest)(new Object()));
+      this(password, offset, length, salt, iterationCount, new SHA1Digest());
    }
 
    public PKCS5KDF2PseudoRandomSource(byte[] param1, int param2, int param3, byte[] param4, int param5, Digest param6) {
@@ -49,12 +49,12 @@ public final class PKCS5KDF2PseudoRandomSource extends AbstractPseudoRandomSourc
       // 1b: isub
       // 1c: iload 2
       // 1d: if_icmpge 28
-      // 20: new java/lang/Object
+      // 20: new java/lang/IllegalArgumentException
       // 23: dup
       // 24: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 27: athrow
       // 28: aload 0
-      // 29: new java/lang/Object
+      // 29: new net/rim/device/api/crypto/HMACKey
       // 2c: dup
       // 2d: aload 1
       // 2e: iload 2
@@ -66,14 +66,14 @@ public final class PKCS5KDF2PseudoRandomSource extends AbstractPseudoRandomSourc
       // 39: invokespecial net/rim/device/api/crypto/PKCS5KDF2PseudoRandomSource.initialize (Lnet/rim/device/api/crypto/HMACKey;[BILnet/rim/device/api/crypto/Digest;)V
       // 3c: return
       // 3d: astore 7
-      // 3f: new java/lang/Object
+      // 3f: new java/lang/RuntimeException
       // 42: dup
       // 43: aload 7
       // 45: invokevirtual net/rim/device/api/crypto/CryptoTokenException.toString ()Ljava/lang/String;
       // 48: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 4b: athrow
       // 4c: astore 7
-      // 4e: new java/lang/Object
+      // 4e: new java/lang/RuntimeException
       // 51: dup
       // 52: aload 7
       // 54: invokevirtual net/rim/device/api/crypto/CryptoUnsupportedOperationException.toString ()Ljava/lang/String;
@@ -89,7 +89,7 @@ public final class PKCS5KDF2PseudoRandomSource extends AbstractPseudoRandomSourc
 
    private final void initialize(HMACKey key, byte[] salt, int iterationCount, Digest digest) {
       if (key != null && salt != null && iterationCount >= 1 && digest != null) {
-         this._hmac = (HMAC)(new Object(key, digest));
+         this._hmac = new HMAC(key, digest);
          this._digestLength = this._hmac.getLength();
          this._salt = Arrays.copy(salt);
          this._iterationCount = iterationCount;
@@ -99,7 +99,7 @@ public final class PKCS5KDF2PseudoRandomSource extends AbstractPseudoRandomSourc
          this._outputBuffer = new byte[this._digestLength];
          this._previousOutputBuffer = new byte[this._digestLength];
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -146,10 +146,10 @@ public final class PKCS5KDF2PseudoRandomSource extends AbstractPseudoRandomSourc
                }
             }
          } catch (Throwable var7) {
-            throw new Object(e.toString());
+            throw new RuntimeException(e.toString());
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -184,10 +184,10 @@ public final class PKCS5KDF2PseudoRandomSource extends AbstractPseudoRandomSourc
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

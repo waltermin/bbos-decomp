@@ -83,7 +83,7 @@ final class RadioToggleAction extends Action {
             manager.runApplication(this._radioOffApplicationDescriptor);
          }
       } catch (Throwable var3) {
-         throw new Object(e.getMessage());
+         throw new RuntimeException(e.getMessage());
       }
    }
 }

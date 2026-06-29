@@ -88,11 +88,11 @@ public final class LastUsedHintManager {
    public static final void update(Object oldObject, Object newObject) {
       int oldUid = -1;
       int newUid = -1;
-      if (oldObject instanceof Object) {
+      if (oldObject instanceof SyncObject) {
          oldUid = ((SyncObject)oldObject).getUID();
       }
 
-      if (newObject instanceof Object) {
+      if (newObject instanceof SyncObject) {
          newUid = ((SyncObject)newObject).getUID();
       }
 
@@ -125,7 +125,7 @@ public final class LastUsedHintManager {
    }
 
    public static final void remove(Object object) {
-      if (object instanceof Object) {
+      if (object instanceof SyncObject) {
          remove(((SyncObject)object).getUID());
       }
    }
@@ -144,7 +144,7 @@ public final class LastUsedHintManager {
          synchronized (persistentObject) {
             _hints = (BigLongVector)persistentObject.getContents();
             if (_hints == null) {
-               _hints = (BigLongVector)(new Object());
+               _hints = new BigLongVector();
                persistentObject.setContents(_hints, 51);
                persistentObject.commit();
             }
@@ -157,7 +157,7 @@ public final class LastUsedHintManager {
          synchronized (persistentObject) {
             _lastHintType = (IntIntHashtable)persistentObject.getContents();
             if (_lastHintType == null) {
-               _lastHintType = (IntIntHashtable)(new Object());
+               _lastHintType = new IntIntHashtable();
                persistentObject.setContents(_lastHintType, 51);
                persistentObject.commit();
             }

@@ -14,6 +14,7 @@ import net.rim.device.apps.api.framework.model.ConversionProvider;
 import net.rim.device.apps.api.framework.model.FieldProvider;
 import net.rim.device.apps.api.framework.model.KeyProvider;
 import net.rim.device.apps.api.framework.model.PersistableRIMModel;
+import net.rim.device.apps.api.framework.model.SyncBuffer;
 import net.rim.device.apps.api.transmission.rim.RIMMessagingOutgoingMessage;
 import net.rim.device.apps.api.ui.CommonResources;
 
@@ -42,7 +43,7 @@ public final class TimeStampModel implements PersistableRIMModel, FieldProvider,
          label = CommonResources.getString(2000);
       }
 
-      DateField dateField = (DateField)(new Object(label, timeStamp, 1161928703861588022L));
+      DateField dateField = new DateField(label, timeStamp, 1161928703861588022L);
       dateField.setTag(Tag.create("message-time"));
       dateField.setEditable(false);
       dateField.setCookie(this);
@@ -70,7 +71,7 @@ public final class TimeStampModel implements PersistableRIMModel, FieldProvider,
 
    @Override
    public final boolean convert(Object context, Object target) {
-      if (target instanceof Object) {
+      if (target instanceof RIMMessagingOutgoingMessage) {
          RIMMessagingOutgoingMessage outgoingTransmission = (RIMMessagingOutgoingMessage)target;
          this._timeStamp = System.currentTimeMillis();
          outgoingTransmission.setDate(this._timeStamp);
@@ -83,10 +84,10 @@ public final class TimeStampModel implements PersistableRIMModel, FieldProvider,
             return true;
          }
 
-         if (target instanceof Object) {
+         if (target instanceof SyncBuffer) {
             return true;
          }
-      } else if (target instanceof Object && ContextObject.getFlag(context, 70)) {
+      } else if (target instanceof StringBuffer && ContextObject.getFlag(context, 70)) {
          StringBuffer stringBuffer = (StringBuffer)target;
          if (ContextObject.getFlag(context, 24)) {
             stringBuffer.append(CommonResources.getString(2000));
@@ -129,7 +130,7 @@ public final class TimeStampModel implements PersistableRIMModel, FieldProvider,
 
    @Override
    public final String toString() {
-      Date date = (Date)(new Object(this._timeStamp));
+      Date date = new Date(this._timeStamp);
       return date.toString();
    }
 

@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.bluetooth;
 
+import java.io.IOException;
 import javax.bluetooth.DataElement;
 import javax.bluetooth.RemoteDevice;
 import net.rim.device.api.util.Arrays;
@@ -21,13 +22,13 @@ public final class RemoteServiceRecord extends ServiceRecordImpl implements Pers
       return this._handle;
    }
 
-   public final synchronized void updateAttributes(byte[] attributeListData) {
+   public final synchronized void updateAttributes(byte[] attributeListData) throws IOException {
       if (attributeListData != null) {
-         DataBuffer buf = (DataBuffer)(new Object(attributeListData, 0, attributeListData.length, true));
+         DataBuffer buf = new DataBuffer(attributeListData, 0, attributeListData.length, true);
 
          while (!buf.eof()) {
             if (buf.readUnsignedByte() != 9) {
-               throw new Object();
+               throw new IOException();
             }
 
             int id = buf.readUnsignedShort();
@@ -56,17 +57,17 @@ public final class RemoteServiceRecord extends ServiceRecordImpl implements Pers
    }
 
    @Override
-   public final synchronized boolean populateRecord(int[] attrIDs) {
+   public final synchronized boolean populateRecord(int[] attrIDs) throws IOException {
       if (attrIDs.length != 0 && attrIDs.length <= 10) {
          int[] attributes = new int[0];
 
          for (int i = 0; i < attrIDs.length; i++) {
             if (attrIDs[i] < 0 || attrIDs[i] > 65535) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             if (Arrays.getIndex(attributes, attrIDs[i]) != -1) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             Arrays.add(attributes, attrIDs[i]);
@@ -89,20 +90,20 @@ public final class RemoteServiceRecord extends ServiceRecordImpl implements Pers
             }
          }
 
-         throw new Object("Could not contact remote device");
+         throw new IOException("Could not contact remote device");
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
    public final void setDeviceServiceClasses(int classes) {
-      throw new Object("Remote ServiceRecord");
+      throw new RuntimeException("Remote ServiceRecord");
    }
 
    @Override
    public final boolean setAttributeValue(int attrID, DataElement attrValue) {
-      throw new Object("Remote ServiceRecord");
+      throw new RuntimeException("Remote ServiceRecord");
    }
 
    @Override

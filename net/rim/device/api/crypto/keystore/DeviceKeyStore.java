@@ -27,7 +27,7 @@ public final class DeviceKeyStore extends SyncableRIMKeyStore {
                _deviceKeyStore = new DeviceKeyStore();
                ar.put(-6191874725138003853L, _deviceKeyStore);
             } catch (KeyStoreRegisterException e) {
-               throw new Object();
+               throw new RuntimeException();
             }
          }
       }

@@ -65,7 +65,7 @@ public class SecureEmailOptionsItem extends SaveableMainScreenOptionsListItem {
 
    @Override
    protected Verb addCurrentItemVerbs(VerbToMenu verbToMenu, int instance) {
-      Verb[] verbs = new Object[0];
+      Verb[] verbs = new Verb[0];
       Verb defaultVerb = this._optionsModel.getVerbs(null, verbs);
       verbToMenu.addVerbs(verbs);
       return defaultVerb;
@@ -78,12 +78,13 @@ public class SecureEmailOptionsItem extends SaveableMainScreenOptionsListItem {
             return super.openDevelopmentBackdoor(backdoorCode);
          case 1297303363:
          default:
-            MessageClassification[] classifications = new Object[5];
-            classifications[0] = (MessageClassification)(new Object("Unclassified/Non classé", "(U)/(N)", 0));
-            classifications[1] = (MessageClassification)(new Object("Identified", "(I)", 1));
-            classifications[2] = (MessageClassification)(new Object("Protected/Protégé", "(P)", 2));
-            classifications[3] = (MessageClassification)(new Object("Secret/Secret", "(S)", 3));
-            classifications[4] = (MessageClassification)(new Object("Confidential/Confidentiel", "(C)", 3));
+            MessageClassification[] classifications = new MessageClassification[]{
+               new MessageClassification("Unclassified/Non classé", "(U)/(N)", 0),
+               new MessageClassification("Identified", "(I)", 1),
+               new MessageClassification("Protected/Protégé", "(P)", 2),
+               new MessageClassification("Secret/Secret", "(S)", 3),
+               new MessageClassification("Confidential/Confidentiel", "(C)", 3)
+            };
             ApplicationRegistry.getApplicationRegistry().replace(-4543606409829069159L, classifications);
             Status.show("Default set of message classifications injected.");
             return true;
@@ -92,7 +93,7 @@ public class SecureEmailOptionsItem extends SaveableMainScreenOptionsListItem {
 
    public void doBlocking(Object context) {
       if (Application.getApplication().isEventThread()) {
-         PleaseWaitDialog pwd = (PleaseWaitDialog)(new Object(new SecureEmailOptionsItem$BackgroundOptionsWorkerThread(this)));
+         PleaseWaitDialog pwd = new PleaseWaitDialog(new SecureEmailOptionsItem$BackgroundOptionsWorkerThread(this));
          pwd.display();
       } else {
          this.perform(6099736323056465049L, context);

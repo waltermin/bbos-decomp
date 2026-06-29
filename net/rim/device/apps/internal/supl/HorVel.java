@@ -20,7 +20,7 @@ final class HorVel extends Velocity {
    @Override
    final void print() {
       System.out.println("Hor Velocity: ");
-      System.out.println(((StringBuffer)(new Object("Bearing: "))).append(super.bearing).toString());
-      System.out.println(((StringBuffer)(new Object("Hor Speed: "))).append(super.horSpeed).toString());
+      System.out.println("Bearing: " + super.bearing);
+      System.out.println("Hor Speed: " + super.horSpeed);
    }
 }

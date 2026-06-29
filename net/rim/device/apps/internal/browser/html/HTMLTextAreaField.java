@@ -4,6 +4,7 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FocusChangeListener;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Graphics;
+import net.rim.device.api.ui.component.AutoTextEditField;
 import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.theme.Theme$Writer;
 import net.rim.device.api.ui.theme.ThemeAttributeSet$Writer;
@@ -127,7 +128,7 @@ public final class HTMLTextAreaField extends FrameLayout implements FocusChangeL
       if (format != null && !format.equals("*M")) {
          this._textArea = new BrowserEditField(size, fieldStyle | 8388608 | 137438953472L, format);
       } else {
-         this._textArea = (EditField)(new Object("", "", size, fieldStyle | 8388608 | 137438953472L));
+         this._textArea = new AutoTextEditField("", "", size, fieldStyle | 8388608 | 137438953472L);
       }
 
       this._textArea.setFocusListener(this);

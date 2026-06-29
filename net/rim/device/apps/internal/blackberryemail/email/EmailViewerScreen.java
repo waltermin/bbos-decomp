@@ -17,23 +17,28 @@ import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
-import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.CookieProvider;
 import net.rim.device.api.ui.component.EditField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
+import net.rim.device.api.ui.menu.MenuScreen;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.AddressReference;
 import net.rim.device.apps.api.addressbook.DisplayPictureModel;
+import net.rim.device.apps.api.addressbook.EmailAddressModel;
+import net.rim.device.apps.api.calendar.ota.CICALEmailAttachment;
 import net.rim.device.apps.api.framework.hotkeys.HotKeyCheck;
 import net.rim.device.apps.api.framework.hotkeys.HotKeys;
 import net.rim.device.apps.api.framework.model.AddressVerifier;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.FieldProvider;
+import net.rim.device.apps.api.framework.model.HotKeyProvider;
 import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.model.URLProvider;
 import net.rim.device.apps.api.framework.registration.ModelViewListenerRegistry;
@@ -42,6 +47,7 @@ import net.rim.device.apps.api.framework.registration.VerbFactory;
 import net.rim.device.apps.api.framework.registration.VerbFactoryRepository;
 import net.rim.device.apps.api.framework.registration.VerbRepository;
 import net.rim.device.apps.api.framework.verb.DefaultVerbProvider;
+import net.rim.device.apps.api.framework.verb.LastUsedDefaultVerbProvider;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.messaging.EmailBodyProvider;
 import net.rim.device.apps.api.messaging.Folder;
@@ -58,6 +64,7 @@ import net.rim.device.apps.api.ui.InvokeLaterRunnable;
 import net.rim.device.apps.api.ui.PopupStatus;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
 import net.rim.device.apps.api.utility.framework.FindVerbManager;
+import net.rim.device.apps.api.utility.framework.ModelScreen$NotificationRunnable;
 import net.rim.device.apps.api.utility.viewer.ViewReadableListRIMModel;
 import net.rim.device.apps.internal.blackberryemail.email.api.EmailMessageUtilities;
 import net.rim.device.apps.internal.blackberryemail.email.api.EmailMoreVerb;
@@ -92,11 +99,11 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
    private EmailMoreVerb _autoMoreVerb;
    private EmailViewerScreen$EmailViewerScreenTransitoryEmailMessageModel _transitoryEmailMessageModel = new EmailViewerScreen$EmailViewerScreenTransitoryEmailMessageModel();
    private boolean _messageInfoVisible;
-   private InvokeLaterRunnable _invokeLaterRunnable = (InvokeLaterRunnable)(new Object());
+   private InvokeLaterRunnable _invokeLaterRunnable = new InvokeLaterRunnable();
    private String _currentSecondLevelDomain;
    private boolean _trustedAddressCheckingEnabled = false;
    private boolean _automoreUnavailableIsLogged;
-   FindVerbManager _findVerbManager = (FindVerbManager)(new Object(this.getDelegate()));
+   FindVerbManager _findVerbManager = new FindVerbManager(this.getDelegate());
    static final long EMAIL_PRIVATE_FLAGS = -4104667787783617270L;
    static final int MORE_UPDATE_BODY_FLAG = 0;
 
@@ -203,7 +210,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
 
          for (int i = 0; i < fields.length; i++) {
             if (fields[i].getCookie() instanceof EmailFieldUpdater) {
-               bodyField = (Field)fields[i];
+               bodyField = (RichTextField)fields[i];
                bodyAppender = (EmailFieldUpdater)fields[i].getCookie();
                break;
             }
@@ -222,7 +229,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
       boolean validated = super.validateFieldProvider(field, fieldProvider);
       if (!validated && fieldProvider instanceof ProxyModel) {
          Object innerFieldProvider = ((ProxyModel)fieldProvider).getObject();
-         if (innerFieldProvider instanceof Object) {
+         if (innerFieldProvider instanceof FieldProvider) {
             validated = super.validateFieldProvider(field, (FieldProvider)innerFieldProvider);
          }
       }
@@ -339,7 +346,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
       }
 
       if (this._fileVerb == null) {
-         this._fileVerb = (FileMessageVerb)(new Object(602464));
+         this._fileVerb = new FileMessageVerb(602464);
       }
 
       if (this._viewFolderVerb == null) {
@@ -397,10 +404,10 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
          cookie = focusedField.getCookie();
       }
 
-      Verb[] factoryVerbs = new Object[0];
+      Verb[] factoryVerbs = new Verb[0];
       VerbFactory[] verbFactories = VerbFactoryRepository.getVerbFactories(6003662854924499794L);
       if (verbFactories != null && verbFactories.length > 0) {
-         ContextObject verbFactoryContext = (ContextObject)(new Object(43));
+         ContextObject verbFactoryContext = new ContextObject(43);
          verbFactoryContext.put(-7450314121582082994L, this._message);
          if (cookie != null) {
             verbFactoryContext.put(250, cookie);
@@ -444,7 +451,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
          ReadableList payload = this._message.getPayload();
 
          for (int i = 0; i < payload.size(); i++) {
-            if (payload.getAt(i) instanceof Object) {
+            if (payload.getAt(i) instanceof CICALEmailAttachment) {
                calendarAttachmentPresent = true;
             }
          }
@@ -457,7 +464,10 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
          if (instance == 65537) {
             menu.setAlignment(12884901888L, 34359738368L);
          } else {
-            if (super._defaultVerb != null && cookie instanceof Object && cookie instanceof Object && ((FieldProvider)cookie).getOrder(super._context) < 6500) {
+            if (super._defaultVerb != null
+               && cookie instanceof RIMModel
+               && cookie instanceof FieldProvider
+               && ((FieldProvider)cookie).getOrder(super._context) < 6500) {
                super._defaultVerb = null;
             }
 
@@ -499,7 +509,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
                menu.add(this._fileVerb);
                if (this._viewFolderVerb != null) {
                   menu.add(this._viewFolderVerb);
-                  if (cookie instanceof Object) {
+                  if (cookie instanceof FieldProvider) {
                      FieldProvider fp = (FieldProvider)cookie;
                      if (fp.getOrder(super._context) == 2040) {
                         super._defaultVerb = this._viewFolderVerb;
@@ -516,7 +526,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
 
                this._forwardVerb.setParameter(this._message);
                menu.add(this._forwardVerb);
-               ForwardAsVerb forwardAsVerb = (ForwardAsVerb)(new Object(this._message));
+               ForwardAsVerb forwardAsVerb = new ForwardAsVerb(this._message);
                if (forwardAsVerb.canInvoke(null)) {
                   menu.add(forwardAsVerb);
                }
@@ -586,7 +596,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
                EmailHeaderModel headerModel = (EmailHeaderModel)cookie;
                RIMModel addressBookEntry = headerModel.getAddressBookEntry();
                if (addressBookEntry != null) {
-                  defaultVerbProvider = (DefaultVerbProvider)(new Object(addressBookEntry));
+                  defaultVerbProvider = new LastUsedDefaultVerbProvider(addressBookEntry);
                }
             }
 
@@ -597,7 +607,10 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
             menu.add(this._fileVerb);
          }
 
-         if (super._defaultVerb != null && cookie instanceof Object && cookie instanceof Object && ((FieldProvider)cookie).getOrder(super._context) < 6500) {
+         if (super._defaultVerb != null
+            && cookie instanceof RIMModel
+            && cookie instanceof FieldProvider
+            && ((FieldProvider)cookie).getOrder(super._context) < 6500) {
             super._defaultVerb = null;
          }
 
@@ -629,7 +642,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
             }
          }
 
-         DeleteSingleItemVerb deleteSingleItemVerb = (DeleteSingleItemVerb)(new Object(611472, 1000));
+         DeleteSingleItemVerb deleteSingleItemVerb = new DeleteSingleItemVerb(611472, 1000);
          deleteSingleItemVerb.setParameters(this._message, ContextObject.castOrCreate(super._context));
          menu.add(deleteSingleItemVerb);
          if (factoryVerbs != null) {
@@ -672,33 +685,33 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
 
    private final boolean isOnHyperlink(boolean browserURLOnly) {
       Field focusedField = this.getFieldWithFocus();
-      if (focusedField instanceof Object) {
+      if (focusedField instanceof CookieProvider) {
          Object cookie = CookieProviderUtilities.getDefaultCookie(((CookieProvider)focusedField).getCookieWithFocus());
          if (browserURLOnly) {
-            if (cookie instanceof Object) {
+            if (cookie instanceof URLProvider) {
                if (((URLProvider)cookie).getURLType() == 1) {
                   return true;
                }
 
                return false;
             }
-         } else if (cookie instanceof Object) {
+         } else if (cookie instanceof RIMModel) {
             return true;
          }
       }
 
       focusedField = this.getLeafFieldWithFocus();
-      if (focusedField instanceof Object) {
+      if (focusedField instanceof CookieProvider) {
          Object cookie = CookieProviderUtilities.getDefaultCookie(((CookieProvider)focusedField).getCookieWithFocus());
          if (browserURLOnly) {
-            if (cookie instanceof Object) {
+            if (cookie instanceof URLProvider) {
                if (((URLProvider)cookie).getURLType() == 1) {
                   return true;
                }
 
                return false;
             }
-         } else if (cookie instanceof Object) {
+         } else if (cookie instanceof RIMModel) {
             return true;
          }
       }
@@ -714,7 +727,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
          ContextObject.setFlag(super._context, 100);
       }
 
-      if (verb instanceof Object) {
+      if (verb instanceof DeleteSingleItemVerb) {
          this.deleteViewedMessage();
          return result;
       }
@@ -728,7 +741,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
             selectedModel = leafFieldWithFocus.getCookie();
          }
 
-         if (selectedModel instanceof Object) {
+         if (selectedModel instanceof RIMModel) {
             contextObject.put(254, selectedModel);
          }
       }
@@ -738,7 +751,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
 
    private final void deleteViewedMessage() {
       if (this._deleteSingleItemVerb == null) {
-         this._deleteSingleItemVerb = (DeleteSingleItemVerb)(new Object(611472, 1000));
+         this._deleteSingleItemVerb = new DeleteSingleItemVerb(611472, 1000);
       }
 
       this._deleteSingleItemVerb.setParameters(this._message, super._context);
@@ -782,7 +795,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
             }
 
             MorePartModel morePartModel = EmailMoreVerb.findBodyMorePartModel(this._message);
-            if (morePartModel instanceof Object && morePartModel.isMoreAvailable() && morePartModel.isAutoMoreAvailable()) {
+            if (morePartModel instanceof EmailBodyProvider && morePartModel.isMoreAvailable() && morePartModel.isAutoMoreAvailable()) {
                EmailBodyProvider cursorProvider = (EmailBodyProvider)morePartModel;
                Field morePartField = this.findFieldByCookie(morePartModel);
                int pos = cursorProvider.getCurrentCursorPosition(morePartField, null);
@@ -831,19 +844,19 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
    }
 
    private final void insertMessageInfo() {
-      VerticalFieldManager vfm = (VerticalFieldManager)(new Object());
+      VerticalFieldManager vfm = new VerticalFieldManager();
       EmailFolder folder = (EmailFolder)FolderHierarchies.getFolder(this._message.getFolderId());
       EmailHierarchy hierarchy = EmailHierarchy.getEmailHierarchyForFolder(this._message.getFolderId());
-      vfm.add((Field)(new Object(((StringBuffer)(new Object("RefId: "))).append(this._message.getCMIMEReferenceIdentifier()).toString(), 18014398509481984L)));
+      vfm.add(new LabelField("RefId: " + this._message.getCMIMEReferenceIdentifier(), 18014398509481984L));
       if (folder != null) {
-         vfm.add((Field)(new Object(((StringBuffer)(new Object("FolderId: "))).append(folder.getFolderId()).toString(), 18014398509481984L)));
+         vfm.add(new LabelField("FolderId: " + folder.getFolderId(), 18014398509481984L));
       }
 
       if (hierarchy != null) {
-         vfm.add((Field)(new Object(((StringBuffer)(new Object("ServiceUserId: "))).append(hierarchy.getServiceUserId()).toString(), 18014398509481984L)));
+         vfm.add(new LabelField("ServiceUserId: " + hierarchy.getServiceUserId(), 18014398509481984L));
       }
 
-      vfm.add((Field)(new Object()));
+      vfm.add(new SeparatorField());
       this.insert(vfm, 0);
       vfm.setFocus();
       this._messageInfoVisible = true;
@@ -928,7 +941,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
             this.saveCurrentCursorPosition();
             f = this.getField(0);
 
-            while (f instanceof Object) {
+            while (f instanceof Manager) {
                Manager m = (Manager)f;
                f = m.getField(0);
             }
@@ -947,7 +960,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
             int fieldCount = this.getFieldCount() - 1;
             Manager m = this.getMainManager();
 
-            for (f = this.getField(fieldCount); f instanceof Object; f = m.getField(fieldCount)) {
+            for (f = this.getField(fieldCount); f instanceof Manager; f = m.getField(fieldCount)) {
                m = (Manager)f;
                fieldCount = m.getFieldCount() - 1;
             }
@@ -956,7 +969,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
                f = m.getField(fieldCount - 1);
             }
 
-            if (f instanceof Object && f == this.getModelFieldWithFocus()) {
+            if (f instanceof RichTextField && f == this.getModelFieldWithFocus()) {
                RichTextField rtf = (RichTextField)f;
                if (rtf.getCursorPosition() == rtf.getTextLength()) {
                   atBottomOfScreen = true;
@@ -967,7 +980,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
                this.setFocusToBody(false);
             } else {
                this.scroll(2);
-               if (f instanceof Object) {
+               if (f instanceof RichTextField) {
                   RichTextField rtf = (RichTextField)f;
                   rtf.setCursorPosition(rtf.getTextLength());
                }
@@ -997,7 +1010,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
                return true;
             } else {
                int hotk = MessageHotkeys.map(keycode);
-               if (hotk != 0 && this._message instanceof Object) {
+               if (hotk != 0 && this._message instanceof HotKeyProvider) {
                   if (hotk == 153) {
                      ContextObject.put(super._context, -321822713458159100L, this._message);
                      ContextObject.setFlag(super._context, 100);
@@ -1088,7 +1101,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
    }
 
    private final void doInvokeLaterForNotifyOfOpenedModelChange(RIMModel oldModel, RIMModel newModel, Object moreContext) {
-      Runnable runnable = (Runnable)(new Object(this, oldModel, newModel, moreContext));
+      Runnable runnable = new ModelScreen$NotificationRunnable(this, oldModel, newModel, moreContext);
       if (oldModel == newModel && moreContext == null) {
          synchronized (this._invokeLaterRunnable) {
             this._invokeLaterRunnable.setRunnable(runnable);
@@ -1154,13 +1167,13 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
          }
 
          int oldOffset = 0;
-         if (!(cookie instanceof Object)) {
-            if (!(fieldWithFocus instanceof Object)) {
-               if (fieldWithFocus instanceof Object) {
+         if (!(cookie instanceof EmailBodyProvider)) {
+            if (!(fieldWithFocus instanceof EditField)) {
+               if (fieldWithFocus instanceof RichTextField) {
                   oldOffset = ((RichTextField)fieldWithFocus).getCursorPosition();
                }
             } else {
-               oldOffset = ((BasicEditField)fieldWithFocus).getCursorPosition();
+               oldOffset = ((EditField)fieldWithFocus).getCursorPosition();
             }
          } else {
             EmailBodyProvider cursorProvider = (EmailBodyProvider)cookie;
@@ -1197,7 +1210,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
          }
 
          Field fieldToHaveFocus = this.findFieldForOrdinal(this.getOrdinalForField(fieldWithFocus, oldPayload), this._message);
-         if (fieldToHaveFocus == null && cookie instanceof Object) {
+         if (fieldToHaveFocus == null && cookie instanceof EmailBodyProvider) {
             fieldToHaveFocus = this.findFieldByCookie(this._ebp);
          }
 
@@ -1206,9 +1219,9 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
          }
 
          cookie = fieldToHaveFocus.getCookie();
-         if (!(cookie instanceof Object)) {
-            if (!(fieldToHaveFocus instanceof Object)) {
-               if (fieldToHaveFocus instanceof Object) {
+         if (!(cookie instanceof EmailBodyProvider)) {
+            if (!(fieldToHaveFocus instanceof EditField)) {
+               if (fieldToHaveFocus instanceof RichTextField) {
                   RichTextField rtf = (RichTextField)fieldToHaveFocus;
                   int maxOffset = rtf.getTextLength();
                   if (oldOffset > maxOffset) {
@@ -1243,7 +1256,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
             ebp.setCursorPosition(fieldToHaveFocus, oldOffset, moreContext);
          }
 
-         if (!(cookie instanceof Object)) {
+         if (!(cookie instanceof EmailBodyProvider)) {
             fieldToHaveFocus.setFocus();
          } else {
             EmailBodyProvider emailBodyProvider = (EmailBodyProvider)cookie;
@@ -1296,9 +1309,9 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
          }
       }
 
-      VerticalFieldManager statusHeaders = (VerticalFieldManager)(new Object());
+      VerticalFieldManager statusHeaders = new VerticalFieldManager();
       EmailViewerScreen$RightJustifiedHorizontalFieldManager subjectHeaders = new EmailViewerScreen$RightJustifiedHorizontalFieldManager();
-      VerticalFieldManager body = (VerticalFieldManager)(new Object());
+      VerticalFieldManager body = new VerticalFieldManager();
       Field initialRecipient = null;
       statusHeaders.setTag(ThemeUtilities.EMAIL_HEADER_AREA_TAG);
       subjectHeaders.setTag(ThemeUtilities.EMAIL_SUBJECT_AREA_TAG);
@@ -1326,7 +1339,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
                   fields[i].setTag(ThemeUtilities.EMAIL_HEADER_TAG);
                   if (subjectHeaders.getRightJustifiedField() == null) {
                      Object cookie = fields[i].getCookie();
-                     if (cookie instanceof Object) {
+                     if (cookie instanceof AddressReference) {
                         DisplayPictureModel pictureModel = getDisplayPictureModelFromAddress((AddressReference)cookie);
                         if (pictureModel != null) {
                            Field pictureField = createFieldForDisplayPictureModel(pictureModel);
@@ -1381,7 +1394,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
       }
 
       if (attachmentIndex >= 0) {
-         VerticalFieldManager attachments = (VerticalFieldManager)(new Object());
+         VerticalFieldManager attachments = new VerticalFieldManager();
          attachments.setTag(ThemeUtilities.EMAIL_ATTACHMENT_AREA_TAG);
 
          for (int ix = attachmentIndex; ix < fields.length; ix++) {
@@ -1441,21 +1454,13 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
          int trueLength = morePartModel.getTrueLength();
          int amountRemainingOnServer = availableLength - lengthOnDevice;
          if (amountRemainingOnServer > 0) {
-            String status = ((StringBuffer)(new Object()))
-               .append(EmailResources.getString(82))
-               .append(Integer.toString(amountRemainingOnServer))
-               .append(EmailResources.getString(92))
-               .toString();
+            String status = EmailResources.getString(82) + Integer.toString(amountRemainingOnServer) + EmailResources.getString(92);
             this._moreLabel.setText(status);
             deleteMoreLabel = false;
          } else {
             int amountTruncated = trueLength - availableLength;
             if (amountTruncated > 0) {
-               String status = ((StringBuffer)(new Object()))
-                  .append(EmailResources.getString(148))
-                  .append(Integer.toString(amountTruncated))
-                  .append(EmailResources.getString(92))
-                  .toString();
+               String status = EmailResources.getString(148) + Integer.toString(amountTruncated) + EmailResources.getString(92);
                this._moreLabel.setText(status);
                deleteMoreLabel = false;
             }
@@ -1477,7 +1482,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
       for (int i = parentManager.getFieldCount() - 1; i >= 0; i--) {
          Field f = parentManager.getField(i);
          Object o = f.getCookie();
-         if (o instanceof Object) {
+         if (o instanceof EmailBodyProvider) {
             this._ebp = (EmailBodyProvider)o;
             int cp = this._message.getCursorPosition();
             int bodyLen = this._ebp.getCursorCount(f, null);
@@ -1487,7 +1492,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
             break;
          }
 
-         if (o == null && f instanceof Object && this.locateEmailBodyProvider((Manager)f)) {
+         if (o == null && f instanceof Manager && this.locateEmailBodyProvider((Manager)f)) {
             break;
          }
       }
@@ -1505,7 +1510,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
 
       for (int i = 0; i < manager.getFieldCount(); i++) {
          Field f = manager.getField(i);
-         if (f instanceof Object) {
+         if (f instanceof Manager) {
             f = this.getEmailHeaderFieldForCommunicationVerbs((Manager)f);
             if (f == null) {
                continue;
@@ -1549,7 +1554,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
 
    private final synchronized void closeMessage() {
       Screen activeScreen = UiApplication.getUiApplication().getActiveScreen();
-      if (activeScreen instanceof Object) {
+      if (activeScreen instanceof MenuScreen) {
          UiApplication.getUiApplication().popScreen(activeScreen);
          activeScreen = UiApplication.getUiApplication().getActiveScreen();
       }
@@ -1620,9 +1625,9 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
    private static final DisplayPictureModel getDisplayPictureModelFromAddress(AddressReference address) {
       if (address != null) {
          RIMModel addressModel = address.getInsideModel();
-         if (addressModel instanceof Object) {
+         if (addressModel instanceof EmailAddressModel) {
             Object addressCard = AddressBookServices.reverseLookup(addressModel);
-            if (addressCard instanceof Object) {
+            if (addressCard instanceof AddressCardModel) {
                return ((AddressCardModel)addressCard).getContactPicture(null);
             }
          }
@@ -1643,7 +1648,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
 
          byte[] imageData = pictureModel.getDisplayPicture();
          if (imageData != null) {
-            field = (BitmapField)(new Object(null, 36028797018963968L));
+            field = new BitmapField(null, 36028797018963968L);
             field.setSpace(1, 1);
             EncodedImage image = EncodedImage.createEncodedImage(imageData, 0, imageData.length);
             image = image.scaleImage32(scale, scale);
@@ -1656,7 +1661,7 @@ final class EmailViewerScreen extends ViewReadableListRIMModel implements System
 
    private final Field findEmailBodyField(Object cookie) {
       Field ebpField = this.findFieldByCookie(cookie);
-      if (ebpField instanceof Object) {
+      if (ebpField instanceof Manager) {
          Manager bodyFieldManager = (Manager)ebpField;
          int numFields = bodyFieldManager.getFieldCount();
 

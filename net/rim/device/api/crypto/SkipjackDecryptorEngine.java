@@ -7,7 +7,7 @@ public final class SkipjackDecryptorEngine implements SymmetricKeyDecryptorEngin
 
    public SkipjackDecryptorEngine(SkipjackKey key) {
       if (key == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._cryptoToken = key.getSkipjackCryptoToken();

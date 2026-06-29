@@ -11,8 +11,11 @@ import net.rim.device.api.browser.field.ContentReadEvent;
 import net.rim.device.api.browser.field.Event;
 import net.rim.device.api.browser.field.RedirectEvent;
 import net.rim.device.api.browser.field.RenderingApplication;
+import net.rim.device.api.browser.field.RenderingException;
 import net.rim.device.api.browser.field.RenderingSession;
 import net.rim.device.api.browser.plugin.BrowserContentProviderContext;
+import net.rim.device.api.compress.GZIPInputStream;
+import net.rim.device.api.compress.ZLibInputStream;
 import net.rim.device.api.io.MIMETypeAssociations;
 import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.api.math.Fixed32;
@@ -136,7 +139,7 @@ public final class RendererControl {
          return null;
       }
 
-      StringBuffer error = (StringBuffer)(new Object(BrowserResources.getString(264)));
+      StringBuffer error = new StringBuffer(BrowserResources.getString(264));
       error.append(statusCode);
       error.append(':');
       error.append(' ');
@@ -166,7 +169,7 @@ public final class RendererControl {
             if (location.startsWith("uplink:///goto?url=")) {
                location = location.substring(19);
                if (!location.startsWith("http://") && !location.startsWith("https://")) {
-                  location = ((StringBuffer)(new Object("http://"))).append(location).toString();
+                  location = "http://" + location;
                }
             }
 
@@ -193,14 +196,14 @@ public final class RendererControl {
       Event event,
       Object context,
       Frame target
-   ) throws ResourcedRenderingException {
+   ) throws RenderingException, ResourcedRenderingException {
       if (connection == null) {
          return null;
       }
 
       String errorString = null;
       String contentType = null;
-      if (connection instanceof Object) {
+      if (connection instanceof HttpConnection) {
          HttpConnection httpConnection = (HttpConnection)connection;
          int statusCode = 0;
          boolean var43 = false /* VF: Semaphore variable */;
@@ -211,7 +214,7 @@ public final class RendererControl {
             var43 = false;
          } finally {
             if (var43) {
-               throw new Object("IOException in connection");
+               throw new RenderingException("IOException in connection");
             }
          }
 
@@ -225,22 +228,22 @@ public final class RendererControl {
                var37 = false;
             } finally {
                if (var37) {
-                  throw new Object("IOException in connection");
+                  throw new RenderingException("IOException in connection");
                }
             }
 
             if (location != null && renderingApplication != null) {
                Event originalEvent = event;
 
-               for (int numRedirects = 0; originalEvent instanceof Object; numRedirects++) {
+               for (int numRedirects = 0; originalEvent instanceof RedirectEvent; numRedirects++) {
                   if (numRedirects >= 10) {
-                     throw new Object(((StringBuffer)(new Object())).append(BrowserResources.getString(215)).append(location).toString());
+                     throw new RenderingException(BrowserResources.getString(215) + location);
                   }
 
                   originalEvent = ((RedirectEvent)originalEvent).getOriginalEvent();
                }
 
-               RedirectEvent redirectEvent = (RedirectEvent)(new Object(httpConnection, location, event, 0));
+               RedirectEvent redirectEvent = new RedirectEvent(httpConnection, location, event, 0);
                renderingApplication.eventOccurred(redirectEvent);
                return null;
             }
@@ -275,7 +278,7 @@ public final class RendererControl {
             var31 = false;
          } finally {
             if (var31) {
-               throw new Object(BrowserResources.getString(234));
+               throw new RenderingException(BrowserResources.getString(234));
             }
          }
       }
@@ -309,9 +312,9 @@ public final class RendererControl {
          BrowserContent browserContent = null;
 
          try {
-            browserContent = (BrowserContent)converter.convert((DataInput)((Object)null), convert);
+            browserContent = (BrowserContent)converter.convert((DataInput)null, convert);
          } catch (Throwable var44) {
-            throw new Object(se.getMessage());
+            throw new RenderingException(se.getMessage());
          }
 
          if (browserContent != null && errorString != null) {
@@ -325,51 +328,42 @@ public final class RendererControl {
          }
 
          if (errorString != null) {
-            throw new Object(errorString);
+            throw new RenderingException(errorString);
          }
 
-         if (connection instanceof Object) {
+         if (connection instanceof HttpConnection) {
             HttpConnection httpConnection = (HttpConnection)connection;
 
             try {
-               EventLogger.logEvent(
-                  1907089860548946979L, ((StringBuffer)(new Object("No Content-Type on "))).append(httpConnection.getResponseCode()).toString().getBytes(), 3
-               );
+               EventLogger.logEvent(1907089860548946979L, ("No Content-Type on " + httpConnection.getResponseCode()).getBytes(), 3);
                EventLogger.logEvent(
                   1907089860548946979L,
-                  ((StringBuffer)(new Object("type=")))
-                     .append(httpConnection.getType())
-                     .append(", length=")
-                     .append(httpConnection.getLength())
-                     .append(", date=")
-                     .append(httpConnection.getDate())
-                     .toString()
-                     .getBytes()
+                  ("type=" + httpConnection.getType() + ", length=" + httpConnection.getLength() + ", date=" + httpConnection.getDate()).getBytes()
                );
             } finally {
-               throw new Object(BrowserResources.getString(216));
+               throw new RenderingException(BrowserResources.getString(216));
             }
          }
 
-         throw new Object(BrowserResources.getString(216));
+         throw new RenderingException(BrowserResources.getString(216));
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public static final BrowserContent renderBrowserContent(String mimeType, BrowserContentProviderContext convert) {
+   public static final BrowserContent renderBrowserContent(String mimeType, BrowserContentProviderContext convert) throws RenderingException {
       Converter converter = SerializationManager.getConverter(mimeType, "net.rim.device.apps.internal.rendering");
       if (converter == null) {
-         EventLogger.logEvent(1907089860548946979L, ((StringBuffer)(new Object("No converter for "))).append(mimeType).toString().getBytes(), 3);
-         throw new Object(BrowserResources.getString(216));
+         EventLogger.logEvent(1907089860548946979L, ("No converter for " + mimeType).getBytes(), 3);
+         throw new RenderingException(BrowserResources.getString(216));
       }
 
       BrowserContent browserContent = null;
 
       try {
-         return (BrowserContent)converter.convert((DataInput)((Object)null), convert);
+         return (BrowserContent)converter.convert((DataInput)null, convert);
       } catch (Throwable var6) {
-         throw new Object(se.getMessage());
+         throw new RenderingException(se.getMessage());
       }
    }
 
@@ -434,7 +428,7 @@ public final class RendererControl {
 
    public static final String getCharacterEncoding(InputConnection conn) {
       try {
-         if (conn instanceof Object) {
+         if (conn instanceof HttpConnection) {
             return getCharacterEncoding(((HttpConnection)conn).getHeaderField("content-type"));
          }
       } finally {
@@ -449,7 +443,7 @@ public final class RendererControl {
       if (contentType != null) {
          int semicolon = contentType.indexOf(59);
          if (semicolon >= 0) {
-            StringTokenizer tokenizer = (StringTokenizer)(new Object(contentType.substring(semicolon + 1), ';'));
+            StringTokenizer tokenizer = new StringTokenizer(contentType.substring(semicolon + 1), ';');
             String charsetPrefix = "charset=";
 
             while (tokenizer.hasMoreTokens()) {
@@ -470,8 +464,8 @@ public final class RendererControl {
 
    public static final String getContentType(InputConnection conn) {
       String contentType = null;
-      if (!(conn instanceof Object)) {
-         if (conn instanceof Object) {
+      if (!(conn instanceof ContentConnection)) {
+         if (conn instanceof FileConnection) {
             FileConnection fileConn = (FileConnection)conn;
             String url = fileConn.getURL();
             if (url != null) {
@@ -498,8 +492,8 @@ public final class RendererControl {
    }
 
    public static final long getContentLength(InputConnection conn) {
-      if (!(conn instanceof Object)) {
-         if (!(conn instanceof Object)) {
+      if (!(conn instanceof ContentConnection)) {
+         if (!(conn instanceof FileConnection)) {
             return 0;
          }
 
@@ -512,11 +506,11 @@ public final class RendererControl {
    }
 
    public static final String getUrl(InputConnection inputConnection) {
-      if (!(inputConnection instanceof Object)) {
-         if (!(inputConnection instanceof Object)) {
-            if (!(inputConnection instanceof Object)) {
+      if (!(inputConnection instanceof HttpProtocolBase)) {
+         if (!(inputConnection instanceof HttpConnection)) {
+            if (!(inputConnection instanceof FileConnection)) {
                if (!(inputConnection instanceof RTSPConnection)) {
-                  return !(inputConnection instanceof Object) ? null : ((URLProvider)inputConnection).getURL();
+                  return !(inputConnection instanceof URLProvider) ? null : ((URLProvider)inputConnection).getURL();
                } else {
                   return ((RTSPConnection)inputConnection).getURL();
                }
@@ -556,7 +550,7 @@ public final class RendererControl {
 
    public static final HttpHeaders getOfflineQueueHeaders(InputConnection connection) {
       HttpHeaders offlineParameters = null;
-      if (connection instanceof Object) {
+      if (connection instanceof HttpConnection) {
          HttpConnection httpConnection = (HttpConnection)connection;
 
          try {
@@ -564,7 +558,7 @@ public final class RendererControl {
                String newValue = httpConnection.getHeaderField(OFFLINE_QUEUE_VALUES[i]);
                if (newValue != null) {
                   if (offlineParameters == null) {
-                     offlineParameters = (HttpHeaders)(new Object());
+                     offlineParameters = new HttpHeaders();
                   }
 
                   offlineParameters.setProperty(OFFLINE_QUEUE_VALUES[i], newValue);
@@ -657,7 +651,7 @@ public final class RendererControl {
    }
 
    public static final InputStream getInputStreamFromContentEncoding(InputConnection conn, InputStream in, boolean compressedByteCountNeeded) {
-      if (!(conn instanceof Object)) {
+      if (!(conn instanceof HttpConnection)) {
          return in;
       }
 
@@ -672,20 +666,20 @@ public final class RendererControl {
    public static final InputStream getInputStreamFromContentEncoding(String contentEncoding, InputStream in, boolean compressedByteCountNeeded) {
       if (contentEncoding != null) {
          if (StringUtilities.strEqualIgnoreCase(contentEncoding, "gzip", 1701707776)) {
-            if (in instanceof Object) {
+            if (in instanceof GZIPInputStream) {
                return in;
             }
 
             if (compressedByteCountNeeded) {
                CountedInputStream compressedInputStream = new CountedInputStream(in);
-               return new CountedInputStream((InputStream)(new Object(compressedInputStream)), compressedInputStream);
+               return new CountedInputStream(new GZIPInputStream(compressedInputStream), compressedInputStream);
             }
 
-            return (InputStream)(new Object(in));
+            return new GZIPInputStream(in);
          }
 
          if (StringUtilities.startsWithIgnoreCase(contentEncoding, "deflate", 1701707776)) {
-            if (in instanceof Object) {
+            if (in instanceof ZLibInputStream) {
                return in;
             }
 
@@ -711,10 +705,10 @@ public final class RendererControl {
 
             if (compressedByteCountNeeded) {
                CountedInputStream compressedInputStream = new CountedInputStream(in);
-               return new CountedInputStream((InputStream)(new Object(compressedInputStream, rawDeflate)), compressedInputStream);
+               return new CountedInputStream(new ZLibInputStream(compressedInputStream, rawDeflate), compressedInputStream);
             }
 
-            return (InputStream)(new Object(in, rawDeflate));
+            return new ZLibInputStream(in, rawDeflate);
          }
       }
 

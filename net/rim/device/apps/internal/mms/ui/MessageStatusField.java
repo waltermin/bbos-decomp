@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.mms.ui;
 
 import net.rim.device.api.i18n.MessageFormat;
-import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.AutoTextEditField;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.framework.verb.Verb;
@@ -54,13 +54,13 @@ final class MessageStatusField extends VerticalFieldManager {
 
       this.deleteAll();
       if (status != null) {
-         this.add((Field)(new Object("", status, 1000000, 9007199254740992L)));
+         this.add(new AutoTextEditField("", status, 1000000, 9007199254740992L));
          if (this._details == null) {
             int errorCode = this._message.getHttpErrorCode();
             if (errorCode != 0) {
                String errorLabel = MessageFormat.format(MMSResources.getString(50), new Object[]{Integer.toString(errorCode)});
                String errorMsg = RendererControl.getStatusMessage(errorCode);
-               this._details = ((StringBuffer)(new Object())).append(errorLabel).append(errorMsg).toString();
+               this._details = errorLabel + errorMsg;
             }
          }
 
@@ -75,7 +75,7 @@ final class MessageStatusField extends VerticalFieldManager {
    @Override
    protected final void makeMenu(Menu menu, int instance) {
       super.makeMenu(menu, instance);
-      if (this._details != null && menu instanceof Object) {
+      if (this._details != null && menu instanceof SystemEnabledMenu) {
          SystemEnabledMenu systemMenu = (SystemEnabledMenu)menu;
          Verb showDetailsVerb = new MessageStatusField$1(this, 16978432, MMSResources.getResourceBundle(), 70);
          systemMenu.add(showDetailsVerb);
@@ -87,9 +87,9 @@ final class MessageStatusField extends VerticalFieldManager {
       switch (error) {
          case 1000:
             if (error != 0) {
-               String str = ((StringBuffer)(new Object("E="))).append(error).toString();
+               String str = "E=" + error;
                if (additionalData != 0) {
-                  str = ((StringBuffer)(new Object())).append(str).append(":").append(additionalData).toString();
+                  str = str + ":" + additionalData;
                }
 
                return str;
@@ -150,7 +150,7 @@ final class MessageStatusField extends VerticalFieldManager {
                case 54:
                   return BrowserResources.getString(481);
                default:
-                  Object[] items = new Object[]{"", new Object(additionalData & 0xFF)};
+                  Object[] items = new Object[]{"", new Integer(additionalData & 0xFF)};
                   return MessageFormat.format(BrowserResources.getString(480), items);
             }
          case 1008:

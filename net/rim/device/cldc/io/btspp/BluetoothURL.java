@@ -2,6 +2,7 @@ package net.rim.device.cldc.io.btspp;
 
 import javax.bluetooth.BluetoothConnectionException;
 import javax.bluetooth.UUID;
+import net.rim.device.cldc.io.utility.MalformedURLException;
 import net.rim.device.internal.bluetooth.BluetoothME;
 
 public class BluetoothURL {
@@ -27,7 +28,7 @@ public class BluetoothURL {
 
    @Override
    public String toString() {
-      return ((StringBuffer)(new Object())).append(this._scheme).append(':').append(this._schemeSpecificPart).toString();
+      return this._scheme + ':' + this._schemeSpecificPart;
    }
 
    public String getScheme() {
@@ -76,7 +77,7 @@ public class BluetoothURL {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private void parseSchemeSpecificPart() throws BluetoothConnectionException {
+   private void parseSchemeSpecificPart() throws BluetoothConnectionException, MalformedURLException {
       int start = 2;
       int end = this._schemeSpecificPart.indexOf(58, start);
       int length = this._schemeSpecificPart.length();
@@ -89,7 +90,7 @@ public class BluetoothURL {
       boolean master = false;
       boolean masterSet = false;
       if (end == -1) {
-         throw new Object("Invalid host");
+         throw new MalformedURLException("Invalid host");
       }
 
       this._host = this._schemeSpecificPart.substring(start, end).toLowerCase();
@@ -109,18 +110,18 @@ public class BluetoothURL {
             var36 = false;
          } finally {
             if (var36) {
-               throw new Object("Invalid UUID");
+               throw new MalformedURLException("Invalid UUID");
             }
          }
       } else {
          if (this._host.length() != 12) {
-            throw new Object("Invalid device address");
+            throw new MalformedURLException("Invalid device address");
          }
 
          this._address = BluetoothME.stringToDeviceAddress(this._host);
          if (this._scheme.equals("btl2cap")) {
             if (s.length() != 4) {
-               throw new Object("Invalid PSM");
+               throw new IllegalArgumentException("Invalid PSM");
             }
 
             boolean var31 = false /* VF: Semaphore variable */;
@@ -129,13 +130,13 @@ public class BluetoothURL {
                var31 = true;
                this._psm = Integer.parseInt(s, 16);
                if (this._psm < 4097 || this._psm > 65535) {
-                  throw new Object("Invalid PSM");
+                  throw new IllegalArgumentException("Invalid PSM");
                }
 
                var31 = false;
             } finally {
                if (var31) {
-                  throw new Object("Invalid PSM");
+                  throw new IllegalArgumentException("Invalid PSM");
                }
             }
          } else {
@@ -145,13 +146,13 @@ public class BluetoothURL {
                var26 = true;
                this._channel = Integer.parseInt(s);
                if (this._channel <= 0 || this._channel > 30) {
-                  throw new Object("Invalid channel");
+                  throw new MalformedURLException("Invalid channel");
                }
 
                var26 = false;
             } finally {
                if (var26) {
-                  throw new Object("Invalid channel");
+                  throw new MalformedURLException("Invalid channel");
                }
             }
          }
@@ -162,7 +163,7 @@ public class BluetoothURL {
       while (start < length) {
          int equals = this._schemeSpecificPart.indexOf(61, start);
          if (equals == -1) {
-            throw new Object("Invalid parameter");
+            throw new MalformedURLException("Invalid parameter");
          }
 
          end = this._schemeSpecificPart.indexOf(59, equals);
@@ -173,60 +174,60 @@ public class BluetoothURL {
          String name = this._schemeSpecificPart.substring(start, equals).toLowerCase();
          String value = this._schemeSpecificPart.substring(equals + 1, end);
          if (value.length() == 0) {
-            throw new Object("Invalid parameter");
+            throw new MalformedURLException("Invalid parameter");
          }
 
          if (name.equals("name")) {
             if (value.length() == 0 || value.charAt(0) == '$') {
-               throw new Object("Invalid parameter");
+               throw new MalformedURLException("Invalid parameter");
             }
 
             this._name = value;
          } else if (name.equals("receivemtu")) {
             this._receiveMTU = Integer.parseInt(value);
             if (this._receiveMTU < 48 || this._receiveMTU > 1024) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this._requestedReceiveMTU = true;
          } else if (name.equals("transmitmtu")) {
             this._transmitMTU = Integer.parseInt(value);
             if (this._transmitMTU < 1 || this._transmitMTU > 1024) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this._requestedTransmitMTU = true;
          } else if (name.equals("master")) {
             if (masterSet) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             masterSet = true;
             master = this.getBoolean(value);
          } else if (name.equals("encrypt")) {
             if (encryptSet) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             encryptSet = true;
             encrypt = this.getBoolean(value);
          } else if (name.equals("authorize")) {
             if (authorizeSet) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             authorizeSet = true;
             authorize = this.getBoolean(value);
          } else if (name.equals("authenticate")) {
             if (authenticateSet) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             authenticateSet = true;
             authenticate = this.getBoolean(value);
          } else {
             if (!name.equals("psm")) {
-               throw new Object("Invalid parameter");
+               throw new IllegalArgumentException("Invalid parameter");
             }
 
             boolean var21 = false /* VF: Semaphore variable */;
@@ -237,7 +238,7 @@ public class BluetoothURL {
                var21 = false;
             } finally {
                if (var21) {
-                  throw new Object("Invalid PSM");
+                  throw new IllegalArgumentException("Invalid PSM");
                }
             }
          }
@@ -258,7 +259,7 @@ public class BluetoothURL {
       } else if (value.equalsIgnoreCase("false")) {
          return false;
       } else {
-         throw new Object("Invalid parameter");
+         throw new IllegalArgumentException("Invalid parameter");
       }
    }
 }

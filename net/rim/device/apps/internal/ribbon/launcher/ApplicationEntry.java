@@ -29,12 +29,12 @@ public class ApplicationEntry extends AbstractEntryPointDescriptor {
    private ApplicationEntry$MyMemoryCleanerListener _memoryCleanerListener;
    private static final int DEFAULT_PRIORITY = 200;
    private static final int UNDEFINED_PRIORITY = -1;
-   private static StringBuffer _stringBuffer = (StringBuffer)(new Object());
+   private static StringBuffer _stringBuffer = new StringBuffer();
 
    public ApplicationEntry(EntryPointDescriptor descriptor, boolean hotKeysDisabled) {
       super(null, 0);
       this._descriptor = descriptor;
-      if (descriptor instanceof Object) {
+      if (descriptor instanceof StringProps) {
          StringProps stringProps = (StringProps)descriptor;
          this._uniqueName = stringProps.get(1, "");
          this._uniqueName = removeControlCharacters(this._uniqueName);
@@ -45,11 +45,11 @@ public class ApplicationEntry extends AbstractEntryPointDescriptor {
       this.loadDescriptionAndHotKey(hotKeysDisabled);
       RibbonOptions ribbonOptions = RibbonOptions.getOptions();
       int defaultPriority;
-      if (!(descriptor instanceof Object)) {
+      if (!(descriptor instanceof IntegerProps)) {
          defaultPriority = 200;
       } else {
          IntegerProps intProps = (IntegerProps)descriptor;
-         Integer i = intProps.get(6, (Integer)((Object)null));
+         Integer i = intProps.get(6, (Integer)null);
          if (i == null) {
             defaultPriority = 200;
          } else {
@@ -63,7 +63,7 @@ public class ApplicationEntry extends AbstractEntryPointDescriptor {
 
    static String removeControlCharacters(String string) {
       if (string.indexOf(32) != -1 || string.indexOf(818) != -1) {
-         StringBuffer buffer = (StringBuffer)(new Object());
+         StringBuffer buffer = new StringBuffer();
          int length = string.length();
 
          for (int i = 0; i < length; i++) {
@@ -131,7 +131,7 @@ public class ApplicationEntry extends AbstractEntryPointDescriptor {
 
    public boolean isDisabledByDefault() {
       boolean returnValue = false;
-      if (this._descriptor instanceof Object) {
+      if (this._descriptor instanceof BooleanProps) {
          BooleanProps boolProps = (BooleanProps)this._descriptor;
          Boolean ret = boolProps.get(11, Boolean.FALSE);
          returnValue = ret == null ? false : ret;
@@ -150,8 +150,8 @@ public class ApplicationEntry extends AbstractEntryPointDescriptor {
 
    public boolean canHide() {
       boolean canHide = true;
-      if (this._descriptor instanceof Object) {
-         Boolean ret = ((BooleanProps)this._descriptor).get(7, (Boolean)(new Object(canHide)));
+      if (this._descriptor instanceof BooleanProps) {
+         Boolean ret = ((BooleanProps)this._descriptor).get(7, new Boolean(canHide));
          if (ret != null) {
             canHide = ret;
             if (canHide && this._applicationProperties != null) {
@@ -181,7 +181,7 @@ public class ApplicationEntry extends AbstractEntryPointDescriptor {
    }
 
    public String getState() {
-      if (!(this._descriptor instanceof Object)) {
+      if (!(this._descriptor instanceof StringProps)) {
          return null;
       }
 
@@ -199,7 +199,7 @@ public class ApplicationEntry extends AbstractEntryPointDescriptor {
 
    private Object getBitmap(long propertyId) {
       Object bitmap = null;
-      if (this._descriptor instanceof Object) {
+      if (this._descriptor instanceof ObjectProps) {
          ObjectProps oprops = (ObjectProps)this._descriptor;
          bitmap = oprops.get(propertyId, bitmap);
       }
@@ -216,21 +216,21 @@ public class ApplicationEntry extends AbstractEntryPointDescriptor {
    }
 
    public String getExtraInfo() {
-      if (this._descriptor instanceof Object) {
+      if (this._descriptor instanceof ObjectProps) {
          ObjectProps oprops = (ObjectProps)this._descriptor;
          Object info = oprops.get(12, null);
          if (info != null) {
-            if (info instanceof Object) {
+            if (info instanceof UnreadCount) {
                UnreadCount uc = (UnreadCount)info;
                return String.valueOf(uc.getUnreadCount());
             }
 
-            if (info instanceof Object) {
+            if (info instanceof VoiceUnopenedCount) {
                VoiceUnopenedCount vuc = (VoiceUnopenedCount)info;
                return String.valueOf(vuc.getNewCount());
             }
 
-            if (info instanceof Object) {
+            if (info instanceof String) {
                return (String)info;
             }
          }
@@ -253,7 +253,7 @@ public class ApplicationEntry extends AbstractEntryPointDescriptor {
    }
 
    public void invoke() {
-      if (this._descriptor instanceof Object) {
+      if (this._descriptor instanceof Runnable) {
          Runnable runnable = (Runnable)this._descriptor;
          runnable.run();
       }
@@ -261,7 +261,7 @@ public class ApplicationEntry extends AbstractEntryPointDescriptor {
 
    private char findHotKey(String description) {
       char hotkey = this.determineHotKey(description);
-      if (hotkey == 0 && this._descriptor instanceof Object) {
+      if (hotkey == 0 && this._descriptor instanceof CharProps) {
          CharProps props = (CharProps)this._descriptor;
          hotkey = props.get(8, '\u0000');
       }
@@ -271,7 +271,7 @@ public class ApplicationEntry extends AbstractEntryPointDescriptor {
 
    private String determineDescription(boolean disableHotKeys) {
       String description = this.getDescription();
-      if (description == null && this._descriptor instanceof Object) {
+      if (description == null && this._descriptor instanceof StringProps) {
          StringProps stringProps = (StringProps)this._descriptor;
          description = stringProps.get(3, "");
          if (Memory.isPlaintext(description) && this._memoryCleanerListener == null) {

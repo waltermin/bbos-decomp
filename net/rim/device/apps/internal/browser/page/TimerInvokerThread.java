@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.browser.page;
 
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.vm.Process;
 
@@ -13,6 +14,6 @@ final class TimerInvokerThread extends Thread {
    @Override
    public final void run() {
       Process.killProcessIfThisThreadDies(true);
-      this._onTimer.invoke(new Object(64));
+      this._onTimer.invoke(new ContextObject(64));
    }
 }

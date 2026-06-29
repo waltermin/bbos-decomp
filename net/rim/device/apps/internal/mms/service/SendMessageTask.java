@@ -33,7 +33,7 @@ final class SendMessageTask implements MMSTask {
       if (pduAttachment != null) {
          this._pdu = pduAttachment.getData();
       } else {
-         ContextObject context = (ContextObject)(new Object());
+         ContextObject context = new ContextObject();
          this._pdu = MMSServiceUtil.buildSendRequestPdu(message.getPayload(), attachmentProvider, context);
       }
 
@@ -64,7 +64,7 @@ final class SendMessageTask implements MMSTask {
       } else {
          label94:
          try {
-            String url = ((StringBuffer)(new Object())).append(this._url).append(MMSTransportServiceBook.getMMSCConnectionParameters()).toString();
+            String url = this._url + MMSTransportServiceBook.getMMSCConnectionParameters();
             MMSServiceUtil.updateMessageStatus(this._message, 67108863);
             String transactionID = this._message.getPayload().getAttribute("x-mms-transaction-id");
             HttpSender sender = new HttpSender(url, this._pdu, this._headers);
@@ -89,13 +89,13 @@ final class SendMessageTask implements MMSTask {
                      MMSServiceUtil.updateMessageStatus(this._message, 8191, 0, status, 0, 0);
                   }
                } else {
-                  System.out.println(((StringBuffer)(new Object("MMS Send Failed (no pdu): "))).append(responseType).toString());
+                  System.out.println("MMS Send Failed (no pdu): " + responseType);
                   MMSServiceUtil.updateMessageStatus(this._message, 8191);
                }
             }
          } catch (Throwable var11) {
             int status = MMSUtilities.hasDataCoverage() ? 16383 : 131071;
-            if (!(e instanceof Object)) {
+            if (!(e instanceof WAPIOException)) {
                MMSServiceUtil.updateMessageStatus(this._message, status);
             } else {
                WAPIOException ioe = (WAPIOException)e;
@@ -113,7 +113,7 @@ final class SendMessageTask implements MMSTask {
             if (this._attempts < 10) {
                MMSServiceUtil.updateMessageStatus(this._message, 134217727);
                int delay = this.getRetryDelay();
-               System.out.println(((StringBuffer)(new Object("MMS SendTask failed. Retry in "))).append(delay).toString());
+               System.out.println("MMS SendTask failed. Retry in " + delay);
                BackgroundTaskThread.addTask(this, delay);
             } else {
                System.out.println("MMS SendTask failed. Exceeded retry maximum.");

@@ -32,7 +32,7 @@ class ESCollectionPrototype$4 extends HostFunction {
       } else {
          KeyDataCollection keyedCollection = (KeyDataCollection)collection;
          if (numParams != 1) {
-            EcmaUtilities.throwESError(name, RuntimeResources.getString(82, ((StringBuffer)(new Object())).append(this.getName()).append("()").toString()));
+            EcmaUtilities.throwESError(name, RuntimeResources.getString(82, this.getName() + "()"));
          }
 
          long param = this.getParm(0);

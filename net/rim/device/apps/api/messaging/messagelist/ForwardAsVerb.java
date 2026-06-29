@@ -33,7 +33,7 @@ public class ForwardAsVerb extends Verb implements ConditionalVerb {
    @Override
    public String toString() {
       if (this._verbs != null && this._verbs.length == 1) {
-         StringBuffer str = (StringBuffer)(new Object(super.toString()));
+         StringBuffer str = new StringBuffer(super.toString());
          str.append(' ');
          str.append(StringUtilities.removeChars(this._verbs[0].toString(), "̲"));
          return str.toString();
@@ -45,7 +45,7 @@ public class ForwardAsVerb extends Verb implements ConditionalVerb {
    @Override
    public boolean canInvoke(Object parameter) {
       boolean isBrowser = false;
-      if (parameter instanceof Object) {
+      if (parameter instanceof ContextObject) {
          isBrowser = ((ContextObject)parameter).getFlag(61);
       }
 
@@ -79,7 +79,7 @@ public class ForwardAsVerb extends Verb implements ConditionalVerb {
 
       for (int i = 0; i < this._verbs.length; i++) {
          Verb var10000 = this._verbs[i];
-         if (this._verbs[i] instanceof Object) {
+         if (this._verbs[i] instanceof SetParameter) {
             ((SetParameter)var10000).setParameter(this._originalMessage);
             if (this._verbs[i].toString().equals(this._messageTypeName)) {
                defaultVerb = this._verbs[i];

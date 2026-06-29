@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.diagnostic;
 
+import java.util.Date;
 import net.rim.device.api.i18n.SimpleDateFormat;
 import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.util.Persistable;
@@ -204,16 +205,16 @@ public final class Report implements Persistable {
 
    @Override
    public final String toString() {
-      StringBuffer str = (StringBuffer)(new Object());
-      SimpleDateFormat formatter = (SimpleDateFormat)(new Object("MMMMM dd, yyyy hh:mm aaa"));
+      StringBuffer str = new StringBuffer();
+      SimpleDateFormat formatter = new SimpleDateFormat("MMMMM dd, yyyy hh:mm aaa");
       str.append("Starting Time Stamp: ");
-      str.append(formatter.format(new Object(this.startTimeStamp)));
+      str.append(formatter.format(new Date(this.startTimeStamp)));
       str.append("\n");
       str.append("Ending Time Stamp: ");
       if (this.endTimeStamp == -1) {
          str.append("Incomplete");
       } else {
-         str.append(formatter.format(new Object(this.endTimeStamp)));
+         str.append(formatter.format(new Date(this.endTimeStamp)));
       }
 
       str.append("\n");
@@ -284,7 +285,7 @@ public final class Report implements Persistable {
          str.append("Email Address: ");
          str.append(this.getEmailAddress1());
          str.append("\n");
-         str.append(((StringBuffer)(new Object("Connection to "))).append(this.getEmailAddress1()).append(" : ").toString());
+         str.append("Connection to " + this.getEmailAddress1() + " : ");
          str.append(this.emailService1 == 0 ? "No" : "Yes");
          str.append("\n");
       }
@@ -296,7 +297,7 @@ public final class Report implements Persistable {
          str.append("Email Address: ");
          str.append(this.getEmailAddress2());
          str.append("\n");
-         str.append(((StringBuffer)(new Object("Connection to "))).append(this.getEmailAddress2()).append(" : ").toString());
+         str.append("Connection to " + this.getEmailAddress2() + " : ");
          str.append(this.emailService2 == 0 ? "No" : "Yes");
          str.append("\n");
       }

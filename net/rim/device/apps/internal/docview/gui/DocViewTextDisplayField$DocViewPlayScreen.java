@@ -60,17 +60,17 @@ public final class DocViewTextDisplayField$DocViewPlayScreen extends AppsMainScr
       );
       this._currentIndex = -1;
       this._lastRequestedSlideIndex = -1;
-      this._usedDisplayScreens = (IntHashtable)(new Object(1));
-      this._fullScaleImages = (IntHashtable)(new Object(16));
-      this._pageAccessedImgs = (IntHashtable)(new Object(16));
+      this._usedDisplayScreens = new IntHashtable(1);
+      this._fullScaleImages = new IntHashtable(16);
+      this._pageAccessedImgs = new IntHashtable(16);
       this.setHelp("messages_index");
       this._imgFld = new SlideshowBitmapField(useRotatedBitmaps);
       this._isInitialRotated = useRotatedBitmaps;
       if (_1._strRenderDomIDs != null && _1._strRenderDomIDs.length() > 0) {
-         StringTokenizer tokens = (StringTokenizer)(new Object(_1._strRenderDomIDs, ','));
+         StringTokenizer tokens = new StringTokenizer(_1._strRenderDomIDs, ',');
          int tokensCount = tokens.countTokens();
          if (tokensCount > 0) {
-            this._renderedDomIDs = new Object[tokensCount];
+            this._renderedDomIDs = new String[tokensCount];
             int idx = 0;
 
             while (tokens.hasMoreTokens()) {
@@ -189,7 +189,7 @@ public final class DocViewTextDisplayField$DocViewPlayScreen extends AppsMainScr
          for (int i = size - 1; i >= 0; i--) {
             MenuItem item = menu.getItem(i);
             if (item != null) {
-               if (item instanceof Object && ((VerbMenuItem)item).getVerb() instanceof DocViewGuiVerb) {
+               if (item instanceof VerbMenuItem && ((VerbMenuItem)item).getVerb() instanceof DocViewGuiVerb) {
                   int behaviour = ((DocViewGuiVerb)((VerbMenuItem)item).getVerb()).getBehaviour();
                   menu.deleteItem(i);
                   if (behaviour == 20 || behaviour == 19) {
@@ -334,7 +334,7 @@ public final class DocViewTextDisplayField$DocViewPlayScreen extends AppsMainScr
          esi._screen.insert(esi._imageField, 0);
          if (esi._imageField instanceof DocViewDisplayField) {
             this.showMainSlide(true, index);
-            if (((DocViewDisplayField)esi._imageField).getFieldCount() > 0 && ((DocViewDisplayField)esi._imageField).getField(0) instanceof Object) {
+            if (((DocViewDisplayField)esi._imageField).getFieldCount() > 0 && ((DocViewDisplayField)esi._imageField).getField(0) instanceof ZoomBitmapField) {
                ZoomBitmapField zbf = (ZoomBitmapField)((DocViewDisplayField)esi._imageField).getField(0);
                zbf.setScale(esi._origScale, esi._origTopX, esi._origTopY, esi._origRotationValue);
             }
@@ -372,13 +372,7 @@ public final class DocViewTextDisplayField$DocViewPlayScreen extends AppsMainScr
    private final void goToImpl() {
       if (this._currentIndex >= 0 && this._renderedDomIDs != null && this._currentIndex < this._renderedDomIDs.length && this._renderedDomIDs.length > 1) {
          String prompt = this.this$0._isPresentation ? DocViewDisplayField._resources.getString(76) : DocViewDisplayField._resources.getString(119);
-         prompt = ((StringBuffer)(new Object()))
-            .append(prompt)
-            .append(" (1 - ")
-            .append(String.valueOf(this._renderedDomIDs.length))
-            .append(")")
-            .append(':')
-            .toString();
+         prompt = prompt + " (1 - " + this._renderedDomIDs.length + ")" + ':';
          DocViewTextDisplayField$GoToDlg dlg = new DocViewTextDisplayField$GoToDlg(prompt, this._renderedDomIDs.length);
          dlg.show();
          if (dlg.getCloseReason() == 0) {
@@ -421,7 +415,7 @@ public final class DocViewTextDisplayField$DocViewPlayScreen extends AppsMainScr
                Field imgFld = ((DocViewTextDisplayField$DocViewPlayScreen$EmbeddedScreenInfo)obj)._imageField;
                if (imgFld instanceof DocViewDisplayField
                   && ((DocViewDisplayField)imgFld).getFieldCount() > 0
-                  && ((DocViewDisplayField)imgFld).getField(0) instanceof Object) {
+                  && ((DocViewDisplayField)imgFld).getField(0) instanceof ZoomBitmapField) {
                   zbf = (ZoomBitmapField)((DocViewDisplayField)imgFld).getField(0);
                }
             }
@@ -486,7 +480,7 @@ public final class DocViewTextDisplayField$DocViewPlayScreen extends AppsMainScr
             Field imgFld = scrInfo._imageField;
             if (imgFld instanceof DocViewDisplayField
                && ((DocViewDisplayField)imgFld).getFieldCount() > 0
-               && ((DocViewDisplayField)imgFld).getField(0) instanceof Object) {
+               && ((DocViewDisplayField)imgFld).getField(0) instanceof ZoomBitmapField) {
                this.showMainSlide(true, this._currentIndex);
                ZoomBitmapField zbf = (ZoomBitmapField)((DocViewDisplayField)imgFld).getField(0);
                if (!scrInfo._hasBeenInit) {
@@ -555,7 +549,7 @@ public final class DocViewTextDisplayField$DocViewPlayScreen extends AppsMainScr
 
          if (img == null) {
             obj = this._pageAccessedImgs.get(index);
-            if (obj instanceof Object) {
+            if (obj instanceof EncodedImage) {
                img = (EncodedImage)obj;
             }
          }
@@ -750,7 +744,7 @@ public final class DocViewTextDisplayField$DocViewPlayScreen extends AppsMainScr
          );
          if (imgFld instanceof DocViewDisplayField
             && ((DocViewDisplayField)imgFld).getFieldCount() > 0
-            && ((DocViewDisplayField)imgFld).getField(0) instanceof Object) {
+            && ((DocViewDisplayField)imgFld).getField(0) instanceof ZoomBitmapField) {
             ZoomBitmapField zbf = (ZoomBitmapField)((DocViewDisplayField)imgFld).getField(0);
             this.initEmbeddedScreenInfo(newInfo, zbf);
             if (existingImage != null) {

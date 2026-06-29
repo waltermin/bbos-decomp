@@ -1,5 +1,6 @@
 package net.rim.wica.runtime.metadata.internal.util;
 
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Vector;
 import net.rim.device.api.io.http.HttpDateParser;
@@ -68,8 +69,8 @@ public final class ArrayInValueResolver {
       _defID = 0;
       _type = -1;
       _field = -1;
-      _preResultObjects = (Vector)(new Object(5));
-      _postResultObjects = (Vector)(new Object(5));
+      _preResultObjects = new Vector(5);
+      _postResultObjects = new Vector(5);
       _mappingNeeded = false;
       _mappingType = 0;
       _mappingDef = 0;
@@ -578,7 +579,7 @@ public final class ArrayInValueResolver {
                      }
 
                      Object obj = ((ScreenModelImpl)uiControl.getScreen()).getObjectData(findStringIndex);
-                     if (obj instanceof Object) {
+                     if (obj instanceof String) {
                         LongVector results = new LongVector();
                         DataCollection dc = _wiclet.getDataCollection((int)(_handles[0] >> 32));
                         _wiclet.findWhere(results, dc, _handles, (String)obj, new ValueResolverImpl(_wiclet, uiControl.getScreen()));
@@ -630,7 +631,7 @@ public final class ArrayInValueResolver {
    }
 
    private static final void handleEnumerationInValue(Object resultVector, Object mappingVector) {
-      if ((int)_uiControl.getValueType() == 32771 && resultVector instanceof Object) {
+      if ((int)_uiControl.getValueType() == 32771 && resultVector instanceof Vector) {
          EnumCollection enumCol = _wiclet.getEnums();
          if (enumCol != null) {
             String[] enumStrings = enumCol.getEnum(_inArray[2]);
@@ -645,7 +646,7 @@ public final class ArrayInValueResolver {
          }
 
          if (_mappingNeeded) {
-            if (_mappingType == 3 && mappingVector instanceof Object) {
+            if (_mappingType == 3 && mappingVector instanceof Vector) {
                Vector results = (Vector)resultVector;
                Vector mappings = (Vector)mappingVector;
                int size = results.size();
@@ -653,7 +654,7 @@ public final class ArrayInValueResolver {
                for (int i = 0; i < size; i++) {
                   mappings.addElement(results.elementAt(i));
                }
-            } else if ((_mappingType == 1 || _mappingType == 5) && mappingVector instanceof Object) {
+            } else if ((_mappingType == 1 || _mappingType == 5) && mappingVector instanceof IntVector) {
                Vector results = (Vector)resultVector;
                IntVector mappings = (IntVector)mappingVector;
                int size = results.size();
@@ -776,7 +777,7 @@ public final class ArrayInValueResolver {
       // 0ac: iload 2
       // 0ad: ifeq 0c4
       // 0b0: aload 1
-      // 0b1: checkcast java/lang/Object
+      // 0b1: checkcast java/util/Vector
       // 0b4: aload 0
       // 0b5: getstatic net/rim/wica/runtime/metadata/internal/util/ArrayInValueResolver._field I
       // 0b8: invokeinterface net/rim/wica/runtime/metadata/component/Component.getIntFieldValue (I)I 2
@@ -784,7 +785,7 @@ public final class ArrayInValueResolver {
       // 0c0: invokevirtual java/util/Vector.addElement (Ljava/lang/Object;)V
       // 0c3: return
       // 0c4: aload 1
-      // 0c5: checkcast java/lang/Object
+      // 0c5: checkcast net/rim/device/api/util/IntVector
       // 0c8: aload 0
       // 0c9: getstatic net/rim/wica/runtime/metadata/internal/util/ArrayInValueResolver._field I
       // 0cc: invokeinterface net/rim/wica/runtime/metadata/component/Component.getIntFieldValue (I)I 2
@@ -793,7 +794,7 @@ public final class ArrayInValueResolver {
       // 0d5: iload 2
       // 0d6: ifeq 0ed
       // 0d9: aload 1
-      // 0da: checkcast java/lang/Object
+      // 0da: checkcast java/util/Vector
       // 0dd: aload 0
       // 0de: getstatic net/rim/wica/runtime/metadata/internal/util/ArrayInValueResolver._field I
       // 0e1: invokeinterface net/rim/wica/runtime/metadata/component/Component.getDoubleFieldValue (I)D 2
@@ -810,7 +811,7 @@ public final class ArrayInValueResolver {
       // 0fe: iload 2
       // 0ff: ifeq 116
       // 102: aload 1
-      // 103: checkcast java/lang/Object
+      // 103: checkcast java/util/Vector
       // 106: aload 0
       // 107: getstatic net/rim/wica/runtime/metadata/internal/util/ArrayInValueResolver._field I
       // 10a: invokeinterface net/rim/wica/runtime/metadata/component/Component.getIntFieldValue (I)I 2
@@ -818,7 +819,7 @@ public final class ArrayInValueResolver {
       // 112: invokevirtual java/util/Vector.addElement (Ljava/lang/Object;)V
       // 115: return
       // 116: aload 1
-      // 117: checkcast java/lang/Object
+      // 117: checkcast net/rim/device/api/util/IntVector
       // 11a: aload 0
       // 11b: getstatic net/rim/wica/runtime/metadata/internal/util/ArrayInValueResolver._field I
       // 11e: invokeinterface net/rim/wica/runtime/metadata/component/Component.getIntFieldValue (I)I 2
@@ -827,7 +828,7 @@ public final class ArrayInValueResolver {
       // 127: iload 2
       // 128: ifeq 13f
       // 12b: aload 1
-      // 12c: checkcast java/lang/Object
+      // 12c: checkcast java/util/Vector
       // 12f: aload 0
       // 130: getstatic net/rim/wica/runtime/metadata/internal/util/ArrayInValueResolver._field I
       // 133: invokeinterface net/rim/wica/runtime/metadata/component/Component.getLongFieldValue (I)J 2
@@ -842,7 +843,7 @@ public final class ArrayInValueResolver {
       // 14c: invokevirtual net/rim/wica/runtime/util/LongVector.addElement (J)V
       // 14f: return
       // 150: aload 1
-      // 151: checkcast java/lang/Object
+      // 151: checkcast java/util/Vector
       // 154: aload 0
       // 155: getstatic net/rim/wica/runtime/metadata/internal/util/ArrayInValueResolver._field I
       // 158: invokeinterface net/rim/wica/runtime/metadata/component/Component.getObjectFieldValue (I)Ljava/lang/Object; 2
@@ -854,11 +855,11 @@ public final class ArrayInValueResolver {
       // 16a: astore 3
       // 16b: aload 3
       // 16c: dup
-      // 16d: instanceof java/lang/Object
+      // 16d: instanceof net/rim/device/api/util/IntVector
       // 170: ifne 177
       // 173: pop
       // 174: goto 2f6
-      // 177: checkcast java/lang/Object
+      // 177: checkcast net/rim/device/api/util/IntVector
       // 17a: astore 4
       // 17c: bipush 0
       // 17d: istore 5
@@ -870,7 +871,7 @@ public final class ArrayInValueResolver {
       // 18c: iload 2
       // 18d: ifeq 1a4
       // 190: aload 1
-      // 191: checkcast java/lang/Object
+      // 191: checkcast java/util/Vector
       // 194: aload 4
       // 196: iload 5
       // 198: invokevirtual net/rim/device/api/util/IntVector.elementAt (I)I
@@ -878,7 +879,7 @@ public final class ArrayInValueResolver {
       // 19e: invokevirtual java/util/Vector.addElement (Ljava/lang/Object;)V
       // 1a1: goto 1b2
       // 1a4: aload 1
-      // 1a5: checkcast java/lang/Object
+      // 1a5: checkcast net/rim/device/api/util/IntVector
       // 1a8: aload 4
       // 1aa: iload 5
       // 1ac: invokevirtual net/rim/device/api/util/IntVector.elementAt (I)I
@@ -891,11 +892,11 @@ public final class ArrayInValueResolver {
       // 1c1: astore 3
       // 1c2: aload 3
       // 1c3: dup
-      // 1c4: instanceof java/lang/Object
+      // 1c4: instanceof net/rim/device/api/util/IntVector
       // 1c7: ifne 1ce
       // 1ca: pop
       // 1cb: goto 2f6
-      // 1ce: checkcast java/lang/Object
+      // 1ce: checkcast net/rim/device/api/util/IntVector
       // 1d1: astore 4
       // 1d3: bipush 0
       // 1d4: istore 5
@@ -907,7 +908,7 @@ public final class ArrayInValueResolver {
       // 1e3: iload 2
       // 1e4: ifeq 1fb
       // 1e7: aload 1
-      // 1e8: checkcast java/lang/Object
+      // 1e8: checkcast java/util/Vector
       // 1eb: aload 4
       // 1ed: iload 5
       // 1ef: invokevirtual net/rim/device/api/util/IntVector.elementAt (I)I
@@ -915,7 +916,7 @@ public final class ArrayInValueResolver {
       // 1f5: invokevirtual java/util/Vector.addElement (Ljava/lang/Object;)V
       // 1f8: goto 209
       // 1fb: aload 1
-      // 1fc: checkcast java/lang/Object
+      // 1fc: checkcast net/rim/device/api/util/IntVector
       // 1ff: aload 4
       // 201: iload 5
       // 203: invokevirtual net/rim/device/api/util/IntVector.elementAt (I)I
@@ -928,11 +929,11 @@ public final class ArrayInValueResolver {
       // 218: astore 3
       // 219: aload 3
       // 21a: dup
-      // 21b: instanceof java/lang/Object
+      // 21b: instanceof java/util/Vector
       // 21e: ifne 225
       // 221: pop
       // 222: goto 2f6
-      // 225: checkcast java/lang/Object
+      // 225: checkcast java/util/Vector
       // 228: astore 4
       // 22a: bipush 0
       // 22b: istore 5
@@ -942,7 +943,7 @@ public final class ArrayInValueResolver {
       // 234: if_icmplt 23a
       // 237: goto 2f6
       // 23a: aload 1
-      // 23b: checkcast java/lang/Object
+      // 23b: checkcast java/util/Vector
       // 23e: aload 4
       // 240: iload 5
       // 242: invokevirtual java/util/Vector.elementAt (I)Ljava/lang/Object;
@@ -970,7 +971,7 @@ public final class ArrayInValueResolver {
       // 276: iload 2
       // 277: ifeq 28e
       // 27a: aload 1
-      // 27b: checkcast java/lang/Object
+      // 27b: checkcast java/util/Vector
       // 27e: aload 4
       // 280: iload 5
       // 282: invokevirtual net/rim/wica/runtime/util/LongVector.elementAt (I)J
@@ -1006,7 +1007,7 @@ public final class ArrayInValueResolver {
       // 2ca: iload 2
       // 2cb: ifeq 2e2
       // 2ce: aload 1
-      // 2cf: checkcast java/lang/Object
+      // 2cf: checkcast java/util/Vector
       // 2d2: aload 4
       // 2d4: iload 5
       // 2d6: invokevirtual net/rim/wica/runtime/util/DoubleVector.elementAt (I)D
@@ -1056,7 +1057,7 @@ public final class ArrayInValueResolver {
    }
 
    private static final void constructStringVectorFromGlobal(Component cmp, Object resultVector) {
-      if (resultVector instanceof Object) {
+      if (resultVector instanceof Vector) {
          Vector result = (Vector)resultVector;
          switch (_type) {
             case 0:
@@ -1091,7 +1092,7 @@ public final class ArrayInValueResolver {
                return;
             case 32768:
                Object oxx = cmp.getObjectFieldValue(_field);
-               if (oxx instanceof Object) {
+               if (oxx instanceof IntVector) {
                   IntVector vec = (IntVector)oxx;
 
                   for (int j = 0; j < vec.size(); j++) {
@@ -1101,7 +1102,7 @@ public final class ArrayInValueResolver {
                break;
             case 32769:
                Object oxxxx = cmp.getObjectFieldValue(_field);
-               if (oxxxx instanceof Object) {
+               if (oxxxx instanceof IntVector) {
                   IntVector vec = (IntVector)oxxxx;
 
                   for (int j = 0; j < vec.size(); j++) {
@@ -1148,7 +1149,7 @@ public final class ArrayInValueResolver {
                break;
             case 32773:
                Object oxxx = cmp.getObjectFieldValue(_field);
-               if (oxxx instanceof Object) {
+               if (oxxx instanceof IntVector) {
                   IntVector vec = (IntVector)oxxx;
                   EnumCollection enumCol = _wiclet.getEnums();
                   String[] enumStrings = enumCol.getEnum(_inArray[1]);
@@ -1172,7 +1173,7 @@ public final class ArrayInValueResolver {
       }
 
       if (result == null) {
-         result = Util.DEFAULT_DATE_FORMATTER.format(new Object(l));
+         result = Util.DEFAULT_DATE_FORMATTER.format(new Date(l));
       }
 
       return result;
@@ -1180,12 +1181,12 @@ public final class ArrayInValueResolver {
 
    private static final void processPrePostStrings() {
       if (_preResultObjects != null) {
-         _preString = (StringBuffer)(new Object());
+         _preString = new StringBuffer();
          processPrePostHelper(_preResultObjects, _preString);
       }
 
       if (_postResultObjects != null) {
-         _postString = (StringBuffer)(new Object());
+         _postString = new StringBuffer();
          processPrePostHelper(_postResultObjects, _postString);
       }
    }
@@ -1196,14 +1197,14 @@ public final class ArrayInValueResolver {
 
       while (e.hasMoreElements()) {
          obj = e.nextElement();
-         if (obj instanceof Object) {
+         if (obj instanceof String) {
             result.append((String)obj);
          }
       }
    }
 
    private static final void appendResultString(Vector result, String resultString) {
-      StringBuffer finalString = (StringBuffer)(new Object());
+      StringBuffer finalString = new StringBuffer();
       if (_preString != null && _preString.length() > 0) {
          finalString.append(_preString);
       }
@@ -1311,7 +1312,7 @@ public final class ArrayInValueResolver {
                case 32769:
                case 32773:
                   Object oxx = _dc.getObjectFieldValue(_handles[i], _field);
-                  if (oxx instanceof Object) {
+                  if (oxx instanceof IntVector) {
                      int size = ((IntVector)oxx).size();
                      ((IntVector)vector).setSize(size);
                      System.arraycopy(((IntVector)oxx).getArray(), 0, ((IntVector)vector).getArray(), 0, size);
@@ -1339,7 +1340,7 @@ public final class ArrayInValueResolver {
    }
 
    private static final Object constructStringVectorFromHandles(Object vector) {
-      if (!(vector instanceof Object)) {
+      if (!(vector instanceof Vector)) {
          return vector;
       }
 
@@ -1380,7 +1381,7 @@ public final class ArrayInValueResolver {
                   break;
                case 32768:
                   Object oxxxx = _dc.getObjectFieldValue(_handles[i], _field);
-                  if (oxxxx instanceof Object) {
+                  if (oxxxx instanceof IntVector) {
                      IntVector vec = (IntVector)oxxxx;
 
                      for (int j = 0; j < vec.size(); j++) {
@@ -1390,7 +1391,7 @@ public final class ArrayInValueResolver {
                   break;
                case 32769:
                   Object oxxx = _dc.getObjectFieldValue(_handles[i], _field);
-                  if (oxxx instanceof Object) {
+                  if (oxxx instanceof IntVector) {
                      IntVector vec = (IntVector)oxxx;
 
                      for (int j = 0; j < vec.size(); j++) {
@@ -1439,7 +1440,7 @@ public final class ArrayInValueResolver {
                   break;
                case 32773:
                   Object o = _dc.getObjectFieldValue(_handles[i], _field);
-                  if (o instanceof Object) {
+                  if (o instanceof IntVector) {
                      IntVector vec = (IntVector)o;
                      EnumCollection enumCol = _wiclet.getEnums();
                      String[] enumStrings = enumCol.getEnum(_inArray[1]);
@@ -1482,10 +1483,10 @@ public final class ArrayInValueResolver {
                for (int i = 0; i < numHandles; i++) {
                   if (_handles[i] == -1) {
                      if (_childOfContainer) {
-                        result.addElement(new Object(false));
+                        result.addElement(new Boolean(false));
                      }
                   } else {
-                     result.addElement(new Object(_dc.getBooleanFieldValue(_handles[i], _field)));
+                     result.addElement(new Boolean(_dc.getBooleanFieldValue(_handles[i], _field)));
                   }
                }
                break;

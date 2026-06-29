@@ -35,7 +35,7 @@ public final class ApplicationDownloadManager implements Runnable {
       String transportUID = BISClientConfigRecord.getBISClientConfigRecord().getTransportUID();
       long downloadTimeout = BISClientConfigRecord.getBISClientConfigRecord().getServiceTimeout();
       HttpClient client = new HttpClient(transportUID, downloadTimeout, this._httpListener, 1, false);
-      Hashtable requestProperties = (Hashtable)(new Object());
+      Hashtable requestProperties = new Hashtable();
       requestProperties.put("Accept", "application/vnd.rim.cod");
       int numCods = this._codUrls.length;
       int lastCodIndex = numCods - 1;

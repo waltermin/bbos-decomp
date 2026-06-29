@@ -70,7 +70,7 @@ public final class DeciFloat implements Persistable {
    }
 
    DeciFloat(StringBuffer buffer, int offset, int len) {
-      this.stringToFP((String)(new Object(buffer)), offset, len);
+      this.stringToFP(new String(buffer), offset, len);
    }
 
    final void copy(DeciFloat dec) {
@@ -313,7 +313,7 @@ public final class DeciFloat implements Persistable {
       int exponent = this._exp + 9;
       int mantissa = this._man;
       if (exponent - 1 <= 99 && exponent - 1 >= -99 && !this.isOverflow() && !this.isInvalid()) {
-         StringBuffer buffer = (StringBuffer)(new Object());
+         StringBuffer buffer = new StringBuffer();
          if (exponent > 8 || exponent <= -7) {
             mantissa = round(mantissa, 8);
             if (mantissa > 999999999) {

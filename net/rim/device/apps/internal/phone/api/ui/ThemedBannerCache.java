@@ -57,7 +57,7 @@ public class ThemedBannerCache {
    private void setCachedTheme(Object theme) {
       if (theme != this.getCachedTheme()) {
          if (theme != null) {
-            this._themeRef = (WeakReference)(new Object(theme));
+            this._themeRef = new WeakReference(theme);
             return;
          }
 
@@ -68,7 +68,7 @@ public class ThemedBannerCache {
    private void setCachedBanner(Field banner) {
       this.setCachedTheme(ThemeManager.getActiveTheme());
       if (banner != null) {
-         this._bannerRef = (WeakReference)(new Object(banner));
+         this._bannerRef = new WeakReference(banner);
       } else {
          this._bannerRef = null;
       }

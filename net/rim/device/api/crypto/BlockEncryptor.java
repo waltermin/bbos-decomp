@@ -1,5 +1,6 @@
 package net.rim.device.api.crypto;
 
+import java.io.IOException;
 import java.io.OutputStream;
 
 public class BlockEncryptor extends EncryptorOutputStream {
@@ -14,7 +15,7 @@ public class BlockEncryptor extends EncryptorOutputStream {
    public BlockEncryptor(BlockFormatterEngine formatterEngine, OutputStream out) {
       super(out);
       if (formatterEngine == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._formatterEngine = formatterEngine;
@@ -45,13 +46,13 @@ public class BlockEncryptor extends EncryptorOutputStream {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public void write(byte[] data, int offset, int length) throws CryptoIOException {
+   public void write(byte[] data, int offset, int length) throws IOException, CryptoIOException {
       if (data == null || offset < 0 || length < 0 || data.length - length < offset) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (this._closed) {
-         throw new Object();
+         throw new IOException();
       }
 
       try {
@@ -85,18 +86,18 @@ public class BlockEncryptor extends EncryptorOutputStream {
    }
 
    @Override
-   public void flush() {
+   public void flush() throws IOException {
       if (this._closed) {
-         throw new Object();
+         throw new IOException();
       }
 
       super._out.flush();
    }
 
    @Override
-   public void flush(boolean pad) {
+   public void flush(boolean pad) throws IOException {
       if (this._closed) {
-         throw new Object();
+         throw new IOException();
       }
 
       if (pad) {

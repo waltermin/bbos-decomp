@@ -4,7 +4,7 @@ import net.rim.ecmascript.runtime.ESObject;
 import net.rim.ecmascript.runtime.HostFunction;
 
 final class ESWindowPrototype extends ESObject {
-   private HostFunction[] _hostFunctions = new Object[35];
+   private HostFunction[] _hostFunctions = new HostFunction[35];
 
    public ESWindowPrototype() {
       this.setGrowthIncrement(35);

@@ -34,21 +34,21 @@ final class MeasuredResults {
 
    final void print() {
       System.out.println("Measured Results: ");
-      System.out.println(((StringBuffer)(new Object("Optionals: "))).append(this.optionals).toString());
+      System.out.println("Optionals: " + this.optionals);
       if ((this.optionals & 4) == 4) {
          this.frequencyInfo.print();
       }
 
       if ((this.optionals & 2) == 2) {
-         System.out.println(((StringBuffer)(new Object("Utra Carrier Rssi: "))).append(this.utraCarrierRssi).toString());
+         System.out.println("Utra Carrier Rssi: " + this.utraCarrierRssi);
       }
 
       if ((this.optionals & 1) == 1) {
          System.out.println("Cell Measured Results List: ");
-         System.out.println(((StringBuffer)(new Object("Num Items: "))).append(this.numCellMeasuredResultListItems).toString());
+         System.out.println("Num Items: " + this.numCellMeasuredResultListItems);
 
          for (int i = 0; i < this.numCellMeasuredResultListItems; i++) {
-            System.out.println(((StringBuffer)(new Object("Cell Meas Result Item "))).append(i).toString());
+            System.out.println("Cell Meas Result Item " + i);
             this.cellMeasuredResults[i].print();
          }
       }

@@ -22,7 +22,7 @@ class ESArrayPrototype$ToString extends ESArrayPrototype$Join {
       ESArray a = (ESArray)this.getThis();
       long length = Convert.toUint32(this.getThis().getField("length"));
       String separator = ", ";
-      StringBuffer b = (StringBuffer)(new Object(Misc.separatedArraySize(length, separator.length())));
+      StringBuffer b = new StringBuffer(Misc.separatedArraySize(length, separator.length()));
       b.append('[');
       boolean missingFinalElement = false;
 

@@ -6,7 +6,6 @@ import net.rim.device.api.system.ApplicationProcess;
 import net.rim.device.api.system.Backlight;
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.system.DeviceInfo;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.GaugeField;
@@ -16,6 +15,7 @@ import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.apps.internal.phone.api.PhoneUtilities;
 import net.rim.device.internal.system.InternalServices;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 import net.rim.device.internal.vad.VADLanguageSetting;
 import net.rim.device.internal.vad.VADUserEvents;
 import net.rim.vm.Process;
@@ -87,12 +87,12 @@ public final class VADApplication extends UiApplication {
       }
 
       this._mainScreen = new VADApplication$VADMainScreen(this);
-      this._rtf1 = (RichTextField)(new Object(36028797018963968L));
+      this._rtf1 = new RichTextField(36028797018963968L);
       this._mainScreen.add(this._rtf1);
-      this._mainScreen.add((Field)(new Object(this._mainScreen.getFont().getHeight())));
-      this._rtf2 = (RichTextField)(new Object(36028848558833664L));
+      this._mainScreen.add(new VerticalSpacerField(this._mainScreen.getFont().getHeight()));
+      this._rtf2 = new RichTextField(36028848558833664L);
       this._mainScreen.add(this._rtf2);
-      this._gaugeField = (GaugeField)(new Object(null, 0, 10, 1, 8));
+      this._gaugeField = new GaugeField(null, 0, 10, 1, 8);
       this.pushScreen(this._mainScreen);
    }
 
@@ -248,7 +248,7 @@ public final class VADApplication extends UiApplication {
                   this.clearFields();
                   this._rtf1.setText(this._manager.getResourceString(29));
                   this._rtf2.setText(this._manager.getResourceString(30));
-                  this._mainScreen.setStatus((Field)(new Object(this._context, 1152921504606846980L)));
+                  this._mainScreen.setStatus(new LabelField(this._context, 1152921504606846980L));
                   break;
                case 13:
                case 14:
@@ -286,17 +286,17 @@ public final class VADApplication extends UiApplication {
                      number = this._manager.getResourceString(28);
                   }
 
-                  this._rtf1.setText(((StringBuffer)(new Object())).append(this._manager.getVSTString(14)).append(": ").append(number).toString());
+                  this._rtf1.setText(this._manager.getVSTString(14) + ": " + number);
                   break;
                case 29:
                   if (this._uiState == 0) {
                      this.requestForeground();
                   }
 
-                  this._mainScreen.setTitle((Field)(new Object(this._manager.getResourceString(0))));
+                  this._mainScreen.setTitle(new LabelField(this._manager.getResourceString(0)));
                   this.clearFields();
                   this._rtf1.setText(this._manager.getResourceString(35));
-                  this._progressField = (GaugeField)(new Object(null, 0, 100, 0, 4));
+                  this._progressField = new GaugeField(null, 0, 100, 0, 4);
                   this._mainScreen.add(this._progressField);
                   break;
                case 30:
@@ -316,11 +316,11 @@ public final class VADApplication extends UiApplication {
                      this.requestForeground();
                   }
 
-                  this._mainScreen.setTitle((Field)(new Object(this._manager.getResourceString(0))));
+                  this._mainScreen.setTitle(new LabelField(this._manager.getResourceString(0)));
                   this.clearFields();
                   this._rtf1.setText(this._manager.getResourceString(32));
                   this._rtf2.setText("");
-                  LabelField lf = (LabelField)(new Object(this._manager.getResourceString(40), 12884901888L));
+                  LabelField lf = new LabelField(this._manager.getResourceString(40), 12884901888L);
                   Font f = lf.getFont().derive(0, 15);
                   lf.setFont(f);
                   this._mainScreen.setStatus(lf);
@@ -388,7 +388,7 @@ public final class VADApplication extends UiApplication {
          case 7:
             String[] info = VADLanguageSetting.getInstance().getVersionInfo();
             if (info != null && info.length > 2) {
-               prompt = ((StringBuffer)(new Object("VSuite version mismatch; expected 0238 got "))).append(info[2]).toString();
+               prompt = "VSuite version mismatch; expected 0238 got " + info[2];
             } else {
                prompt = "VSuite version mismatch; no version number available";
             }
@@ -505,7 +505,7 @@ public final class VADApplication extends UiApplication {
       // 0a5: bipush 2
       // 0a7: if_icmpgt 0ad
       // 0aa: goto 142
-      // 0ad: new java/lang/Object
+      // 0ad: new java/lang/String
       // 0b0: dup
       // 0b1: aload 2
       // 0b2: bipush 0
@@ -528,7 +528,7 @@ public final class VADApplication extends UiApplication {
       // 0cf: goto 41c
       // 0d2: bipush 11
       // 0d4: istore 3
-      // 0d5: new java/lang/Object
+      // 0d5: new java/lang/StringBuffer
       // 0d8: dup
       // 0d9: invokespecial java/lang/StringBuffer.<init> ()V
       // 0dc: astore 5
@@ -539,7 +539,7 @@ public final class VADApplication extends UiApplication {
       // 0e4: arraylength
       // 0e5: if_icmpge 136
       // 0e8: aload 5
-      // 0ea: new java/lang/Object
+      // 0ea: new java/lang/String
       // 0ed: dup
       // 0ee: aload 2
       // 0ef: iload 6
@@ -559,7 +559,7 @@ public final class VADApplication extends UiApplication {
       // 10a: pop
       // 10b: iinc 6 1
       // 10e: aload 5
-      // 110: new java/lang/Object
+      // 110: new java/lang/String
       // 113: dup
       // 114: aload 2
       // 115: iload 6
@@ -586,12 +586,12 @@ public final class VADApplication extends UiApplication {
       // 13f: goto 41c
       // 142: bipush 11
       // 144: istore 3
-      // 145: new java/lang/Object
+      // 145: new java/lang/StringBuffer
       // 148: dup
       // 149: invokespecial java/lang/StringBuffer.<init> ()V
       // 14c: astore 4
       // 14e: aload 4
-      // 150: new java/lang/Object
+      // 150: new java/lang/String
       // 153: dup
       // 154: aload 2
       // 155: bipush 0
@@ -610,7 +610,7 @@ public final class VADApplication extends UiApplication {
       // 16b: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 16e: pop
       // 16f: aload 4
-      // 171: new java/lang/Object
+      // 171: new java/lang/String
       // 174: dup
       // 175: aload 2
       // 176: bipush 1
@@ -636,7 +636,7 @@ public final class VADApplication extends UiApplication {
       // 19a: ifeq 20d
       // 19d: bipush 11
       // 19f: istore 3
-      // 1a0: new java/lang/Object
+      // 1a0: new java/lang/StringBuffer
       // 1a3: dup
       // 1a4: invokespecial java/lang/StringBuffer.<init> ()V
       // 1a7: astore 4
@@ -647,7 +647,7 @@ public final class VADApplication extends UiApplication {
       // 1af: arraylength
       // 1b0: if_icmpge 201
       // 1b3: aload 4
-      // 1b5: new java/lang/Object
+      // 1b5: new java/lang/String
       // 1b8: dup
       // 1b9: aload 2
       // 1ba: iload 5
@@ -667,7 +667,7 @@ public final class VADApplication extends UiApplication {
       // 1d5: pop
       // 1d6: iinc 5 1
       // 1d9: aload 4
-      // 1db: new java/lang/Object
+      // 1db: new java/lang/String
       // 1de: dup
       // 1df: aload 2
       // 1e0: iload 5
@@ -710,7 +710,7 @@ public final class VADApplication extends UiApplication {
       // 229: bipush 1
       // 22a: if_icmpne 246
       // 22d: aload 0
-      // 22e: new java/lang/Object
+      // 22e: new java/lang/String
       // 231: dup
       // 232: aload 2
       // 233: bipush 0
@@ -769,7 +769,7 @@ public final class VADApplication extends UiApplication {
       // 298: arraylength
       // 299: ifgt 29f
       // 29c: goto 41c
-      // 29f: new java/lang/Object
+      // 29f: new java/lang/String
       // 2a2: dup
       // 2a3: aload 2
       // 2a4: aload 2
@@ -803,7 +803,7 @@ public final class VADApplication extends UiApplication {
       // 2d1: bipush 2
       // 2d3: if_icmpge 2d9
       // 2d6: goto 41c
-      // 2d9: new java/lang/Object
+      // 2d9: new java/lang/String
       // 2dc: dup
       // 2dd: aload 2
       // 2de: bipush 0
@@ -982,7 +982,7 @@ public final class VADApplication extends UiApplication {
       // 438: istore 6
       // 43a: iload 6
       // 43c: iflt 46b
-      // 43f: new java/lang/Object
+      // 43f: new java/lang/String
       // 442: dup
       // 443: aload 2
       // 444: iload 6
@@ -1012,7 +1012,7 @@ public final class VADApplication extends UiApplication {
       // 473: astore 3
       // 474: return
       // 475: astore 3
-      // 476: new java/lang/Object
+      // 476: new java/lang/StringBuffer
       // 479: dup
       // 47a: ldc_w "UI NPE on: "
       // 47d: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -1027,11 +1027,11 @@ public final class VADApplication extends UiApplication {
 
    private final String[] extractChoices(byte[][] list, int numStart, int numEnd, boolean skip) {
       int numChoices = list.length - numStart - numEnd;
-      String[] choices = new Object[0];
+      String[] choices = new String[0];
 
       for (int i = 0; i < numChoices; i++) {
          byte[] data = list[numStart + i];
-         Arrays.add(choices, new Object(data, 0, data.length, "UnicodeLittleUnmarked"));
+         Arrays.add(choices, new String(data, 0, data.length, "UnicodeLittleUnmarked"));
          if (skip) {
             i++;
          }

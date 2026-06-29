@@ -27,7 +27,7 @@ class ESRegExpPrototype$3 extends HostFunction {
          }
       }
 
-      StringBuffer b = (StringBuffer)(new Object());
+      StringBuffer b = new StringBuffer();
       b.append('/');
       String pattern = thiz.getPattern();
       int length = pattern.length();

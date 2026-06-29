@@ -12,9 +12,9 @@ final class X509_RIM_PublicKeyEncoder3 extends PublicKeyEncoder {
    @Override
    public final EncodedKey encodeKey(PublicKey key, long flags) {
       try {
-         ASN1OutputStream asn1Stream = (ASN1OutputStream)(new Object());
-         ASN1OutputStream subjectPublicKeyInfo = (ASN1OutputStream)(new Object());
-         ASN1OutputStream algorithmIdentifier = (ASN1OutputStream)(new Object());
+         ASN1OutputStream asn1Stream = new ASN1OutputStream();
+         ASN1OutputStream subjectPublicKeyInfo = new ASN1OutputStream();
+         ASN1OutputStream algorithmIdentifier = new ASN1OutputStream();
          if (key.getAlgorithm().equals("EC")) {
             ECPublicKey _key = (ECPublicKey)key;
             OID algorithm = OIDs.getOID(-1487624216);
@@ -38,19 +38,19 @@ final class X509_RIM_PublicKeyEncoder3 extends PublicKeyEncoder {
 
             subjectPublicKeyInfo.writeBitString(publicKeyData);
             asn1Stream.writeSequence(subjectPublicKeyInfo);
-            return (EncodedKey)(new Object(asn1Stream.toByteArray(), "X509"));
+            return new EncodedKey(asn1Stream.toByteArray(), "X509");
          }
 
          if (key.getAlgorithm().equals("KEA")) {
             KEAPublicKey _key = (KEAPublicKey)key;
             OID algorithm = OIDs.getOID(545973096);
             algorithmIdentifier.writeOID(algorithm);
-            ASN1OutputStream params = (ASN1OutputStream)(new Object());
+            ASN1OutputStream params = new ASN1OutputStream();
             params.writeInteger(_key.getKEACryptoSystem().getP());
             params.writeInteger(_key.getKEACryptoSystem().getG());
             params.writeInteger(_key.getKEACryptoSystem().getQ());
             byte[] sequence = params.toByteArray();
-            SHA1Digest digest = (SHA1Digest)(new Object());
+            SHA1Digest digest = new SHA1Digest();
             digest.update(sequence);
             byte[] result = digest.getDigest();
             int half = digest.getDigestLength() >> 1;
@@ -64,13 +64,13 @@ final class X509_RIM_PublicKeyEncoder3 extends PublicKeyEncoder {
             subjectPublicKeyInfo.writeSequence(algorithmIdentifier);
             subjectPublicKeyInfo.writeBitString(_key.getPublicKeyData());
             asn1Stream.writeSequence(subjectPublicKeyInfo);
-            return (EncodedKey)(new Object(asn1Stream.toByteArray(), "X509"));
+            return new EncodedKey(asn1Stream.toByteArray(), "X509");
          }
       } finally {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override

@@ -31,9 +31,9 @@ public final class RingtoneLibraryScreen extends MediaLibraryScreen {
          return true;
       }
 
-      ContextInfo contextInfo = (ContextInfo)(new Object(super._context.getType() | 65));
+      ContextInfo contextInfo = new ContextInfo(super._context.getType() | 65);
       TrackListScreen screen = new TrackListScreen(contextInfo);
-      StringBuffer buffer = (StringBuffer)(new Object(1));
+      StringBuffer buffer = new StringBuffer(1);
       buffer.append(CharacterUtilities.toUpperCase(c));
       screen.setText(buffer.toString());
       UiApplication.getUiApplication().pushScreen(screen);

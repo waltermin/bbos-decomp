@@ -10,9 +10,9 @@ import net.rim.tid.awt.im.InputContext;
 import net.rim.tid.awt.im.repository.CustomDictionary;
 
 final class SpellCheckOptionsItem$TransactedCustomDictionary implements ReadableSet, WritableSet, CollectionEventSource {
-   private CollectionListenerManager _listeners = (CollectionListenerManager)(new Object());
-   private Hashtable _deleted = (Hashtable)(new Object());
-   private Hashtable _added = (Hashtable)(new Object());
+   private CollectionListenerManager _listeners = new CollectionListenerManager();
+   private Hashtable _deleted = new Hashtable();
+   private Hashtable _added = new Hashtable();
    private boolean _dirty;
    private boolean _cleared;
    private CustomDictionary _customDic;

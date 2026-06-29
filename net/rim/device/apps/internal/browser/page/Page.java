@@ -8,11 +8,13 @@ import javax.microedition.io.SecurityInfo;
 import net.rim.device.api.browser.field.BrowserContent;
 import net.rim.device.api.browser.field.BrowserContentChangedEvent;
 import net.rim.device.api.browser.field.CancelRequestResource;
+import net.rim.device.api.browser.field.CloseEvent;
 import net.rim.device.api.browser.field.ContentReadEvent;
 import net.rim.device.api.browser.field.Destroyable;
 import net.rim.device.api.browser.field.ErrorEvent;
 import net.rim.device.api.browser.field.Event;
 import net.rim.device.api.browser.field.ExecutingScriptEvent;
+import net.rim.device.api.browser.field.FullWindowEvent;
 import net.rim.device.api.browser.field.HistoryEvent;
 import net.rim.device.api.browser.field.RedirectEvent;
 import net.rim.device.api.browser.field.RenderingApplication;
@@ -20,6 +22,7 @@ import net.rim.device.api.browser.field.RequestedResource;
 import net.rim.device.api.browser.field.ResourceProvider;
 import net.rim.device.api.browser.field.SetHeaderEvent;
 import net.rim.device.api.browser.field.SetHttpCookieEvent;
+import net.rim.device.api.browser.field.StopEvent;
 import net.rim.device.api.browser.field.UrlRequestedEvent;
 import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.api.system.Application;
@@ -32,7 +35,6 @@ import net.rim.device.api.system.EventLogger;
 import net.rim.device.api.system.RadioInfo;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
-import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.Menu;
@@ -41,15 +43,18 @@ import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.CharacterUtilities;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.api.framework.verb.Verb;
+import net.rim.device.apps.api.ui.VerbMenuItem;
 import net.rim.device.apps.api.utility.general.URI;
 import net.rim.device.apps.internal.browser.api.CacheSubDataEvent;
 import net.rim.device.apps.internal.browser.api.DataModificationEvent;
 import net.rim.device.apps.internal.browser.api.DeviceDataConversionEvent;
+import net.rim.device.apps.internal.browser.api.DeviceDataConversionRequestEvent;
 import net.rim.device.apps.internal.browser.api.DeviceDataWrongContentTypeEvent;
 import net.rim.device.apps.internal.browser.api.InlineImageLoadingEvent;
 import net.rim.device.apps.internal.browser.api.LoadingImagesEvent;
 import net.rim.device.apps.internal.browser.api.LoadingStatusEvent;
 import net.rim.device.apps.internal.browser.api.OptionsEvent;
+import net.rim.device.apps.internal.browser.api.ReloadEvent;
 import net.rim.device.apps.internal.browser.api.UIDirectionChangeEvent;
 import net.rim.device.apps.internal.browser.api.UrlRequestedInternalEvent;
 import net.rim.device.apps.internal.browser.bookmark.Bookmarks;
@@ -79,12 +84,14 @@ import net.rim.device.apps.internal.browser.ui.FrameManager;
 import net.rim.device.apps.internal.browser.ui.TextFlowManager;
 import net.rim.device.apps.internal.browser.util.Frame;
 import net.rim.device.apps.internal.browser.util.RendererControl;
+import net.rim.device.apps.internal.browser.verbs.ShowUrlVerb;
 import net.rim.device.cldc.io.utility.URIDecoder;
 import net.rim.device.internal.browser.util.Pipe;
 import net.rim.device.internal.i18n.CommonResource;
 import net.rim.device.internal.ui.component.SimpleChoiceDialog;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.html2.HTMLDocument;
 import org.w3c.dom.html2.HTMLLinkElement;
 
 public class Page implements BackdoorKeyListener, RenderingApplication, ResourceProvider {
@@ -102,7 +109,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
    private Frame _frameset;
    private ContentReadEvent _contentReadEvent;
    private ImageFetchJob[] _imageJobs = new ImageFetchJob[0];
-   private Hashtable _activeFetchRequests = (Hashtable)(new Object());
+   private Hashtable _activeFetchRequests = new Hashtable();
    private long _lastClickID = -1;
    private UrlRequestedInternalEvent[] _pendingFrameEvents;
    private static final int MAX_APN_ID = 7;
@@ -124,9 +131,9 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
       verbRepository.addVerbsToMenu(menu, verbMask);
       if (verbMask != 66056 && this._browserContent != null) {
          Document doc = this._browserContent.getDOMDocument();
-         if (doc instanceof Object && this._rssLinks == null) {
-            this._rssLinks = new Object[0];
-            NodeList list = ((Document)doc).getElementsByTagName("LINK");
+         if (doc instanceof HTMLDocument && this._rssLinks == null) {
+            this._rssLinks = new HTMLLinkElement[0];
+            NodeList list = ((HTMLDocument)doc).getElementsByTagName("LINK");
             int size = list.getLength();
 
             for (int i = 0; i < size; i++) {
@@ -149,7 +156,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
          if ((verbMask & 16384) != 0) {
             String url = this._browserContent.getURL();
             if (url != null) {
-               menu.add((MenuItem)(new Object((Verb)(new Object(this.getFriendlyTitle(), url, this._browserContent, 0)), Integer.MAX_VALUE)));
+               menu.add(new VerbMenuItem(new ShowUrlVerb(this.getFriendlyTitle(), url, this._browserContent, 0), Integer.MAX_VALUE));
             }
          }
       }
@@ -212,7 +219,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
    public void destroy() {
       if (this._browserContent != null) {
          Field f = this._browserContent.getDisplayableContent();
-         if (f instanceof Object) {
+         if (f instanceof Destroyable) {
             ((Destroyable)f).destroy();
          }
       }
@@ -221,7 +228,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
    public void setDestroyOnUndisplay(boolean value) {
       if (this._browserContent != null) {
          Field f = this._browserContent.getDisplayableContent();
-         if (f instanceof Object) {
+         if (f instanceof Destroyable) {
             ((Destroyable)f).setDestroyMethod(value ? 0 : 1);
          }
       }
@@ -236,12 +243,12 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
       if (contentManager != null) {
          for (int i = contentManager.getFieldCount() - 1; i >= 0; i--) {
             Field field = contentManager.getField(i);
-            if (field instanceof Object) {
+            if (field instanceof FrameManager) {
                FrameManager frameManager = (FrameManager)field;
                frameManager = FrameManager.find(frameName, frameManager.getTopFrameManager().getManager());
                if (frameManager != null && frameManager.getFieldCount() > 0) {
                   field = frameManager.getField(0);
-                  if (field instanceof Object) {
+                  if (field instanceof HTMLBrowserField) {
                      return ((HTMLBrowserField)field).getBrowserContent();
                   }
                }
@@ -266,7 +273,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
 
          for (int i = 0; i < fieldCount; i++) {
             Field field = contentManager.getField(i);
-            if (field instanceof Object) {
+            if (field instanceof RichTextField) {
                title = ((RichTextField)field).getText();
                int length = title.length();
                if (length > 40) {
@@ -286,7 +293,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
 
                if (displayable) {
                   if (length > 40) {
-                     title = ((StringBuffer)(new Object())).append(title).append("...").toString();
+                     title = title + "...";
                   }
                   break;
                }
@@ -411,13 +418,13 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
                HistoryNode node = session.getHistory().getNode(url);
                if (node != null) {
                   Manager contentManager = this.getContentManager();
-                  if (contentManager instanceof Object) {
+                  if (contentManager instanceof TextFlowManager) {
                      node.setLastScrollPosition(((TextFlowManager)contentManager).getCurrentAnchor());
                      return;
                   }
 
                   if (contentManager != null) {
-                     XYRect rect = (XYRect)(new Object());
+                     XYRect rect = new XYRect();
                      contentManager.getFocusRect(rect);
                      node.setLastScrollPosition(contentManager.getVerticalScroll() + rect.y);
                   }
@@ -605,7 +612,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
                LoadingImagesEvent e = null;
 
                try {
-                  var289 = event;
+                  e = (LoadingImagesEvent)event;
                } finally {
                   ;
                }
@@ -615,7 +622,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
                   return null;
                }
 
-               switch (((LoadingImagesEvent)var289).getState()) {
+               switch (e.getState()) {
                   case 0:
                      if (this._contentReadEvent != null) {
                         this._contentReadEvent.setItemsRead(0);
@@ -627,7 +634,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
                      return null;
                }
             case 2:
-               if (!(event instanceof Object)) {
+               if (!(event instanceof DeviceDataConversionRequestEvent)) {
                   return null;
                }
 
@@ -649,7 +656,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
                LoadingStatusEvent e = null;
 
                try {
-                  var286 = event;
+                  e = (LoadingStatusEvent)event;
                } finally {
                   ;
                }
@@ -659,14 +666,14 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
                   return null;
                }
 
-               browserx.getProgressManager().setLabel(((LoadingStatusEvent)var286).getMessage());
-               if (((LoadingStatusEvent)var286).getStatus() != 0) {
+               browserx.getProgressManager().setLabel(e.getMessage());
+               if (e.getStatus() != 0) {
                   browserx.getProgressManager().update(3);
                   return null;
                }
                break;
             case 4:
-               if (!(event instanceof Object)) {
+               if (!(event instanceof CacheSubDataEvent)) {
                   return null;
                }
 
@@ -696,7 +703,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
                InlineImageLoadingEvent e = null;
 
                try {
-                  var283 = event;
+                  e = (InlineImageLoadingEvent)event;
                } finally {
                   ;
                }
@@ -707,18 +714,18 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
                }
 
                ProgressManager pg = browserx.getProgressManager();
-               pg.changeState(((InlineImageLoadingEvent)var283).isFragments() ? 8 : 3);
+               pg.changeState(e.isFragments() ? 8 : 3);
                return null;
             case 6:
                OptionsEvent e = null;
 
                try {
-                  var281 = event;
+                  e = (OptionsEvent)event;
                } finally {
                   ;
                }
 
-               switch (((OptionsEvent)var281).getType()) {
+               switch (e.getType()) {
                   case 0:
                      return null;
                   case 1:
@@ -751,7 +758,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
                      return null;
                }
             case 7:
-               if (!(event instanceof Object)) {
+               if (!(event instanceof ReloadEvent)) {
                   return null;
                }
 
@@ -761,7 +768,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
                DataModificationEvent e = null;
 
                try {
-                  var279 = event;
+                  e = (DataModificationEvent)event;
                } finally {
                   ;
                }
@@ -780,13 +787,13 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
                }
 
                browser = BrowserDaemonRegistry.getInstance();
-               browser.getRawDataCache().cacheItemChanged(((DataModificationEvent)var279).getURL(), ((DataModificationEvent)var279).getSize());
+               browser.getRawDataCache().cacheItemChanged(e.getURL(), e.getSize());
                break;
             case 9:
                DeviceDataWrongContentTypeEvent e = null;
 
                try {
-                  var277 = event;
+                  e = (DeviceDataWrongContentTypeEvent)event;
                } finally {
                   ;
                }
@@ -806,13 +813,13 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
 
                cacheResult.setTranscodedData(null, null);
                HttpHeaders responseHeaders = cacheResult.getResponseHeaders();
-               responseHeaders.setProperty("Content-Type", ((DeviceDataWrongContentTypeEvent)var277).getNewMIMEType());
+               responseHeaders.setProperty("Content-Type", e.getNewMIMEType());
                return null;
             case 10001:
                BrowserContentChangedEvent e = null;
 
                try {
-                  var275 = event;
+                  e = (BrowserContentChangedEvent)event;
                } finally {
                   ;
                }
@@ -833,14 +840,14 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
                }
 
                if (this._browserContent != null
-                  && this._browserContent.isBrowserContentEqual(((Event)var275).getSource())
+                  && this._browserContent.isBrowserContentEqual(e.getSource())
                   && (this._browserContent.getSharedFlags() & 16) == 0) {
                   headerField.setTitle(this._browserContent.getTitle(), this._browserContent.getIcon());
                   return null;
                }
                break;
             case 10002:
-               if (!(event instanceof Object)) {
+               if (!(event instanceof CloseEvent)) {
                   return null;
                }
 
@@ -850,7 +857,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
                ExecutingScriptEvent e = null;
 
                try {
-                  var273 = event;
+                  e = (ExecutingScriptEvent)event;
                } finally {
                   ;
                }
@@ -860,13 +867,13 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
                   return null;
                }
 
-               if (((Event)var273).getSource() instanceof Object) {
-                  browserx.setExecutingScriptState((BrowserContent)((Event)var273).getSource());
+               if (e.getSource() instanceof BrowserContent) {
+                  browserx.setExecutingScriptState((BrowserContent)e.getSource());
                   return null;
                }
                break;
             case 10004:
-               if (!(event instanceof Object)) {
+               if (!(event instanceof FullWindowEvent)) {
                   return null;
                }
 
@@ -990,7 +997,9 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
 
                String referrer = e.getSourceURL();
                Event originalEvent = BrowserImpl.getOriginalEvent(e);
-               requestFlags = !(originalEvent instanceof Object) ? this._modelResult.getRenderingFlags() : ((UrlRequestedEvent)originalEvent).getFlags() | 8192;
+               requestFlags = !(originalEvent instanceof UrlRequestedEvent)
+                  ? this._modelResult.getRenderingFlags()
+                  : ((UrlRequestedEvent)originalEvent).getFlags() | 8192;
                navigation = 1;
                boolean useOriginalRequestMethod = false;
                absoluteUrl = URI.getAbsoluteURL(e.getLocation(), e.getSourceURL());
@@ -999,7 +1008,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
                      break;
                   case 0:
                      Object eventSource = e.getSource();
-                     if (eventSource instanceof Object) {
+                     if (eventSource instanceof HttpConnection) {
                         HttpConnection httpConnection = (HttpConnection)eventSource;
                         referrer = httpConnection.getRequestProperty(HeaderParser.REFERER);
 
@@ -1035,7 +1044,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
                   navigation = 3;
                }
 
-               requestHeaders = (HttpHeaders)(new Object());
+               requestHeaders = new HttpHeaders();
                RenderingUtilities.setReferrer(requestHeaders, referrer);
                postData = null;
                if (!useOriginalRequestMethod) {
@@ -1043,7 +1052,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
                }
 
                Event previousEvent = e.getOriginalEvent();
-               if (!(previousEvent instanceof Object)) {
+               if (!(previousEvent instanceof UrlRequestedEvent)) {
                   break label4160;
                }
 
@@ -1105,18 +1114,18 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
                SetHttpCookieEvent e = null;
 
                try {
-                  var264 = event;
+                  e = (SetHttpCookieEvent)event;
                } finally {
                   ;
                }
 
                if (this._browserContent != null) {
-                  CookieCache.getInstance().addCookies(((SetHttpCookieEvent)var264).getURL(), ((SetHttpCookieEvent)var264).getCookie());
+                  CookieCache.getInstance().addCookies(e.getURL(), e.getCookie());
                   return null;
                }
                break;
             case 10009:
-               if (!(event instanceof Object)) {
+               if (!(event instanceof StopEvent)) {
                   return null;
                }
 
@@ -1130,7 +1139,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
                   ;
                }
             case 10011:
-               if (!(event instanceof Object)) {
+               if (!(event instanceof ContentReadEvent)) {
                   return null;
                }
 
@@ -1153,7 +1162,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
                }
                break;
             case 10012:
-               if (!(event instanceof Object)) {
+               if (!(event instanceof UIDirectionChangeEvent)) {
                   return null;
                }
 
@@ -1182,7 +1191,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
                }
                break;
             case 10013:
-               if (!(event instanceof Object)) {
+               if (!(event instanceof ErrorEvent)) {
                   return null;
                }
 
@@ -1195,7 +1204,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
                browserx.invokeLater(new BrowserError(e.getErrorString(), false, false));
                return null;
             case 10014:
-               if (!(event instanceof Object)) {
+               if (!(event instanceof CancelRequestResource)) {
                   return null;
                }
 
@@ -1241,7 +1250,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
    @Override
    public HttpConnection getResource(RequestedResource resource, BrowserContent referrer) {
       InputConnection conn = this.getInputConnection(resource, referrer);
-      return (HttpConnection)(!(conn instanceof Object) ? null : conn);
+      return !(conn instanceof HttpConnection) ? null : (HttpConnection)conn;
    }
 
    @Override
@@ -1436,11 +1445,11 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
       // 172: astore 15
       // 174: aload 15
       // 176: dup
-      // 177: instanceof java/lang/Object
+      // 177: instanceof javax/microedition/io/HttpConnection
       // 17a: ifne 181
       // 17d: pop
       // 17e: goto 219
-      // 181: checkcast java/lang/Object
+      // 181: checkcast javax/microedition/io/HttpConnection
       // 184: astore 16
       // 186: aload 16
       // 188: invokeinterface javax/microedition/io/HttpConnection.getResponseCode ()I 1
@@ -1516,7 +1525,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
       // 231: getfield net/rim/device/apps/internal/browser/page/Page._contentReadEvent Lnet/rim/device/api/browser/field/ContentReadEvent;
       // 234: ifnonnull 24b
       // 237: aload 0
-      // 238: new java/lang/Object
+      // 238: new net/rim/device/api/browser/field/ContentReadEvent
       // 23b: dup
       // 23c: aload 0
       // 23d: invokespecial net/rim/device/api/browser/field/ContentReadEvent.<init> (Ljava/lang/Object;)V
@@ -1587,7 +1596,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
       }
 
       History history = session.getHistory();
-      if (browserContent instanceof Object) {
+      if (browserContent instanceof BrowserContentImpl) {
          int navigation = ((BrowserContentImpl)browserContent).getNavigation();
          if (navigation == 1 && (this._modelResult.getRenderingFlags() & 8192) != 0) {
             return history.lookupCurrentNodeId() + 1;
@@ -1621,31 +1630,31 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
 
       if (backdoorCode == 1380076879) {
          _richTextMarkup = !_richTextMarkup;
-         Dialog.alert(((StringBuffer)(new Object("Markup version changed to :"))).append(_richTextMarkup ? "16.2" : "16.10").toString());
+         Dialog.alert("Markup version changed to :" + (_richTextMarkup ? "16.2" : "16.10"));
          return true;
       }
 
       if (backdoorCode == 1380074561) {
          Bookmarks._debugAutoUpdate = !Bookmarks._debugAutoUpdate;
-         Dialog.alert(((StringBuffer)(new Object("Debug auto update set value as "))).append(Bookmarks._debugAutoUpdate ? "minutes" : "hours").toString());
+         Dialog.alert("Debug auto update set value as " + (Bookmarks._debugAutoUpdate ? "minutes" : "hours"));
          return true;
       }
 
       if (backdoorCode == 1212826443) {
          JavaScriptRegistry._ajaxed = !JavaScriptRegistry._ajaxed;
-         Dialog.alert(((StringBuffer)(new Object("Javascript in mode: "))).append(JavaScriptRegistry._ajaxed ? "hajaxed" : "normal").toString());
+         Dialog.alert("Javascript in mode: " + (JavaScriptRegistry._ajaxed ? "hajaxed" : "normal"));
          return true;
       }
 
       if (backdoorCode == 1329876557) {
          TextFlowManager._oneDNavigationMode = !TextFlowManager._oneDNavigationMode;
-         Dialog.alert(((StringBuffer)(new Object("OneD Navigation Mode: "))).append(TextFlowManager._oneDNavigationMode ? "enabled" : "disabled").toString());
+         Dialog.alert("OneD Navigation Mode: " + (TextFlowManager._oneDNavigationMode ? "enabled" : "disabled"));
          return false;
       }
 
       if (backdoorCode == 1397509455) {
          HTMLBrowserField._singleLayoutMode = !HTMLBrowserField._singleLayoutMode;
-         Dialog.alert(((StringBuffer)(new Object("Single Layout Mode: "))).append(HTMLBrowserField._singleLayoutMode ? "enabled" : "disabled").toString());
+         Dialog.alert("Single Layout Mode: " + (HTMLBrowserField._singleLayoutMode ? "enabled" : "disabled"));
          return false;
       }
 
@@ -1691,7 +1700,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
       // 1b: getfield net/rim/device/apps/internal/browser/page/Page._browserContent Lnet/rim/device/apps/internal/browser/page/BrowserContentImpl;
       // 1e: invokevirtual net/rim/device/apps/internal/browser/page/BrowserContentImpl.getDecompilerName ()Ljava/lang/String;
       // 21: astore 4
-      // 23: new java/lang/Object
+      // 23: new java/lang/StringBuffer
       // 26: dup
       // 27: ldc_w "net.rim.device.apps.internal.browser.debug."
       // 2a: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -1763,8 +1772,8 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
    }
 
    public static void showPageInfoDialog(String info) {
-      String[] choices = new Object[]{CommonResource.getString(100), CommonResource.getString(3)};
-      SimpleChoiceDialog dialog = (SimpleChoiceDialog)(new Object((RichTextField)(new Object(info, 67108864)), choices, -1, null, 0));
+      String[] choices = new String[]{CommonResource.getString(100), CommonResource.getString(3)};
+      SimpleChoiceDialog dialog = new SimpleChoiceDialog(new RichTextField(info, 67108864), choices, -1, null, 0);
       dialog.setModal(true);
       dialog.show();
       if (dialog.getSelectedIndex() == 1) {
@@ -1773,7 +1782,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
    }
 
    private synchronized void processUrlRequestedEvent(UrlRequestedEvent urlRequestedEvent, boolean eventCameFromFrameQueue) {
-      if (urlRequestedEvent instanceof Object) {
+      if (urlRequestedEvent instanceof UrlRequestedInternalEvent) {
          UrlRequestedInternalEvent urie = (UrlRequestedInternalEvent)urlRequestedEvent;
          if (this.doOfflineFormSubmission(urie)) {
             return;
@@ -1782,7 +1791,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
          if (!eventCameFromFrameQueue) {
             if (this._lastClickID > 0 && urie.getClickID() == this._lastClickID) {
                if (this._pendingFrameEvents == null) {
-                  this._pendingFrameEvents = new Object[1];
+                  this._pendingFrameEvents = new UrlRequestedInternalEvent[1];
                   this._pendingFrameEvents[0] = urie;
                   return;
                }
@@ -1800,7 +1809,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
       HttpHeaders headers = urlRequestedEvent.getHeaders();
       ModelResult modelResult = new ModelResult(absoluteUrl, urlRequestedEvent.getFlags() | 8192, headers);
       modelResult.setPostData(urlRequestedEvent.getPostData());
-      if (urlRequestedEvent instanceof Object) {
+      if (urlRequestedEvent instanceof UrlRequestedInternalEvent) {
          modelResult.setLabel(((UrlRequestedInternalEvent)urlRequestedEvent).getLabel());
       }
 
@@ -1814,7 +1823,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
       this._browserContent = browserContent;
       this._fetchRequest = fetchRequest;
       this._modelResult = fetchRequest != null ? fetchRequest.getModelResult() : null;
-      this._backdoor = (BackdoorKeyProcessor)(new Object(true, this));
+      this._backdoor = new BackdoorKeyProcessor(true, this);
       this._style = style;
       BrowserSession session = BrowserSession.getCurrentSession();
       if (session != null && session.getConfig().getPropertyAsInt(7) == 2) {
@@ -1823,7 +1832,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
    }
 
    private void showPageInfo() {
-      StringBuffer text = (StringBuffer)(new Object());
+      StringBuffer text = new StringBuffer();
       if (this._modelResult == null) {
          text.append("modelResult is null!");
       } else {
@@ -1902,9 +1911,9 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
          HttpHeaders headers = event.getHeaders();
          HttpHeaders queueHeaders = null;
          if (headers != null) {
-            queueHeaders = (HttpHeaders)(new Object(headers.toHashtable()));
+            queueHeaders = new HttpHeaders(headers.toHashtable());
          } else {
-            queueHeaders = (HttpHeaders)(new Object());
+            queueHeaders = new HttpHeaders();
          }
 
          BrowserDaemonRegistry.getInstance().addStandardRequestHeaders(queueHeaders);
@@ -1938,7 +1947,7 @@ public class Page implements BackdoorKeyListener, RenderingApplication, Resource
             nextTarget = this._browserContent.getUrlCache().getAbsoluteURL(nextTarget, true);
             modelResult = new ModelResult(nextTarget, 8193, headers);
          } else {
-            modelResult = new ModelResult(((StringBuffer)(new Object("queue:"))).append(queue).toString(), 8193, headers);
+            modelResult = new ModelResult("queue:" + queue, 8193, headers);
          }
 
          FetchRequest fetchRequest = new FetchRequest(modelResult);

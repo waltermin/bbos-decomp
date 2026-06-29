@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.simultcp;
 
+import java.io.IOException;
 import net.rim.device.internal.io.streamdatagram.StreamDatagramAddressBase;
 import net.rim.device.internal.io.tcp.TcpConnectionIdentifier;
 import net.rim.device.internal.io.tunnel.TunnelCredentialsProvider;
@@ -80,7 +81,7 @@ public final class SimulTcpAddress extends StreamDatagramAddressBase implements 
 
       super._port = destPort;
       if (super._isListenAddress) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (srcPort != -1 && destPort != -1) {
@@ -88,7 +89,7 @@ public final class SimulTcpAddress extends StreamDatagramAddressBase implements 
          super._port = destPort;
       } else {
          if (destPort == -1) {
-            throw new Object("A destPort should always be included if the Listen state is not used!");
+            throw new RuntimeException("A destPort should always be included if the Listen state is not used!");
          }
 
          srcPort = -1;
@@ -127,7 +128,7 @@ public final class SimulTcpAddress extends StreamDatagramAddressBase implements 
    }
 
    @Override
-   protected final void parseAddress(String param1) {
+   protected final void parseAddress(String param1) throws IOException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -169,7 +170,7 @@ public final class SimulTcpAddress extends StreamDatagramAddressBase implements 
       // 03a: getstatic net/rim/device/internal/io/streamdatagram/StreamDatagramAddressBase.SLASH_SLASH Ljava/lang/String;
       // 03d: invokevirtual java/lang/String.equals (Ljava/lang/Object;)Z
       // 040: ifeq 057
-      // 043: new java/lang/Object
+      // 043: new java/lang/StringBuffer
       // 046: dup
       // 047: invokespecial java/lang/StringBuffer.<init> ()V
       // 04a: aload 1
@@ -235,7 +236,7 @@ public final class SimulTcpAddress extends StreamDatagramAddressBase implements 
       // 0c7: iload 7
       // 0c9: bipush 8
       // 0cb: if_icmpne 0d9
-      // 0ce: new java/lang/Object
+      // 0ce: new java/io/IOException
       // 0d1: dup
       // 0d2: ldc_w "No active pdp context found"
       // 0d5: invokespecial java/io/IOException.<init> (Ljava/lang/String;)V
@@ -266,12 +267,12 @@ public final class SimulTcpAddress extends StreamDatagramAddressBase implements 
       // 110: astore 8
       // 112: aload 8
       // 114: ifnonnull 122
-      // 117: new java/lang/Object
+      // 117: new java/io/IOException
       // 11a: dup
       // 11b: ldc_w "DNS query returned no results"
       // 11e: invokespecial java/io/IOException.<init> (Ljava/lang/String;)V
       // 121: athrow
-      // 122: new java/lang/Object
+      // 122: new java/lang/StringBuffer
       // 125: dup
       // 126: bipush 15
       // 128: invokespecial java/lang/StringBuffer.<init> (I)V
@@ -306,7 +307,7 @@ public final class SimulTcpAddress extends StreamDatagramAddressBase implements 
       // 165: bipush 0
       // 166: invokestatic net/rim/device/api/io/DatagramAddressBase.parseIpAddressInt (Ljava/lang/String;I)I
       // 169: putfield net/rim/device/internal/io/streamdatagram/StreamDatagramAddressBase._ipAddress I
-      // 16c: new java/lang/Object
+      // 16c: new java/lang/StringBuffer
       // 16f: dup
       // 170: getstatic net/rim/device/internal/io/streamdatagram/StreamDatagramAddressBase.SLASH_SLASH Ljava/lang/String;
       // 173: invokevirtual java/lang/String.length ()I
@@ -385,7 +386,7 @@ public final class SimulTcpAddress extends StreamDatagramAddressBase implements 
       // 201: iload 3
       // 202: iload 2
       // 203: if_icmpgt 211
-      // 206: new java/lang/Object
+      // 206: new java/lang/IllegalArgumentException
       // 209: dup
       // 20a: ldc_w "Bad DEST_PORT"
       // 20d: invokespecial java/lang/IllegalArgumentException.<init> (Ljava/lang/String;)V
@@ -401,7 +402,7 @@ public final class SimulTcpAddress extends StreamDatagramAddressBase implements 
       // 220: iload 7
       // 222: ldc_w 65535
       // 225: if_icmple 233
-      // 228: new java/lang/Object
+      // 228: new java/lang/IllegalArgumentException
       // 22b: dup
       // 22c: ldc_w "Invalid DEST_PORT"
       // 22f: invokespecial java/lang/IllegalArgumentException.<init> (Ljava/lang/String;)V
@@ -436,7 +437,7 @@ public final class SimulTcpAddress extends StreamDatagramAddressBase implements 
       // 266: iload 3
       // 267: iload 2
       // 268: if_icmpgt 276
-      // 26b: new java/lang/Object
+      // 26b: new java/lang/IllegalArgumentException
       // 26e: dup
       // 26f: ldc_w "Bad SRC_PORT"
       // 272: invokespecial java/lang/IllegalArgumentException.<init> (Ljava/lang/String;)V
@@ -452,7 +453,7 @@ public final class SimulTcpAddress extends StreamDatagramAddressBase implements 
       // 285: iload 8
       // 287: ldc_w 65535
       // 28a: if_icmple 298
-      // 28d: new java/lang/Object
+      // 28d: new java/lang/IllegalArgumentException
       // 290: dup
       // 291: ldc_w "Invalid SRC_PORT"
       // 294: invokespecial java/lang/IllegalArgumentException.<init> (Ljava/lang/String;)V

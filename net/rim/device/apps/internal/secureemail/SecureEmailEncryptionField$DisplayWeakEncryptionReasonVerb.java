@@ -23,13 +23,13 @@ class SecureEmailEncryptionField$DisplayWeakEncryptionReasonVerb extends Verb {
    @Override
    public Object invoke(Object context) {
       if (this._cipherAlgorithm != null) {
-         Dialog.inform(MessageFormat.format(SecureEmailResources.getString(55), new Object[]{this._cipherAlgorithm}));
+         Dialog.inform(MessageFormat.format(SecureEmailResources.getString(55), new String[]{this._cipherAlgorithm}));
          return null;
       }
 
       if (this._publicKeyAlgorithm != null) {
          Dialog.inform(
-            MessageFormat.format(SecureEmailResources.getString(56), new Object[]{this._publicKeyAlgorithm, Integer.toString(this._publicKeyAlgorithmLength)})
+            MessageFormat.format(SecureEmailResources.getString(56), new String[]{this._publicKeyAlgorithm, Integer.toString(this._publicKeyAlgorithmLength)})
          );
          return null;
       }

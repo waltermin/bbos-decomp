@@ -3,7 +3,7 @@ package net.rim.ecmascript.runtime;
 import java.util.Vector;
 
 class ObjectEnumerator extends ESObject {
-   private Vector _v = (Vector)(new Object());
+   private Vector _v = new Vector();
    private int _index;
    private int _size;
 

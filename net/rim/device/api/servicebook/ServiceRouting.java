@@ -16,7 +16,7 @@ import net.rim.vm.TraceBack;
 
 public final class ServiceRouting {
    private ServiceRoutingProperties[] _ifaces = new ServiceRoutingProperties[0];
-   private String[] _services = new Object[0];
+   private String[] _services = new String[0];
    private int[][] _servicesCapabilities = new int[0][];
    private int[][] _routes = new int[0][];
    private byte[] _routesState = new byte[0];

@@ -11,7 +11,7 @@ class GlobalProperties$6 extends HostFunction {
    public long run() {
       String str = Convert.toString(this.getParm(0));
       int len = str.length();
-      StringBuffer b = (StringBuffer)(new Object());
+      StringBuffer b = new StringBuffer();
 
       for (int i = 0; i < len; i++) {
          char c = str.charAt(i);

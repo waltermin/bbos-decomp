@@ -28,7 +28,7 @@ public final class SearchSaveScreen extends EditorUsingRIMModelFactory {
    private boolean _searchSaved;
 
    protected SearchSaveScreen(MessageSearchImpl search, boolean fromRibbon, Object objectToReplace) {
-      super(new Object(0, 56), SearchResources.getString(9), 7820085525428081380L, 10000);
+      super(new ContextObject(0, 56), SearchResources.getString(9), 7820085525428081380L, 10000);
       this._search = search;
       this._objectToReplace = objectToReplace;
       this._fromRibbon = fromRibbon;

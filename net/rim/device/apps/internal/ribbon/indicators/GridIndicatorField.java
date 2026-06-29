@@ -154,7 +154,7 @@ final class GridIndicatorField extends TextRibbonComponent implements RibbonComp
          int numPerCol = 0;
          int xOffset = 0;
          int var19 = 0;
-         XYRect pnt = (XYRect)(new Object());
+         XYRect pnt = new XYRect();
 
          while (var19 < numIndicators) {
             while (var19 < numIndicators) {

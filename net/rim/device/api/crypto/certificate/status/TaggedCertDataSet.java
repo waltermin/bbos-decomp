@@ -11,7 +11,7 @@ final class TaggedCertDataSet extends TaggedDataSet {
    public TaggedCertDataSet(ProviderCompressionTable compressionTable, int certId) {
       super(compressionTable);
       this._certId = certId;
-      this._status = (CertificateStatus)(new Object());
+      this._status = new CertificateStatus();
    }
 
    public TaggedCertDataSet(ProviderCompressionTable compressionTable) {
@@ -39,7 +39,7 @@ final class TaggedCertDataSet extends TaggedDataSet {
    @Override
    public final void serialize(DataOutputStream out) {
       if (out == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       out.writeByte((byte)this._certId);
@@ -49,7 +49,7 @@ final class TaggedCertDataSet extends TaggedDataSet {
    @Override
    public final void unSerialize(DataInputStream in) {
       if (in == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._certId = in.readByte() & 255;

@@ -9,15 +9,15 @@ import net.rim.ecmascript.runtime.RedirectedObject;
 import net.rim.ecmascript.runtime.Value;
 
 public class ESGhostObject extends RedirectedObject {
-   private Hashtable _fieldsByName = (Hashtable)(new Object());
-   private IntHashtable _fieldsByIndex = (IntHashtable)(new Object());
+   private Hashtable _fieldsByName = new Hashtable();
+   private IntHashtable _fieldsByIndex = new IntHashtable();
    private int _type;
    private Frame _frame;
    static final int WINDOW = 0;
    static final int DOCUMENT = 1;
    static final int LOCATION = 2;
    static final int FRAMES = 3;
-   static final Long UNDEFINED = (Long)(new Object(Value.UNDEFINED));
+   static final Long UNDEFINED = new Long(Value.UNDEFINED);
 
    public ESGhostObject(Frame f, int type) {
       this._frame = f;

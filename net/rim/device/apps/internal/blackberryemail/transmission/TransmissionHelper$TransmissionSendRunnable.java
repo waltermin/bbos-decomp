@@ -224,11 +224,11 @@ final class TransmissionHelper$TransmissionSendRunnable implements TransmissionS
    }
 
    TransmissionHelper$TransmissionSendRunnable(TransmissionService service) {
-      this._wrappers = (SimpleSortingVector)(new Object());
+      this._wrappers = new SimpleSortingVector();
       this._wrappers.setSortComparator(new TransmissionHelper$TransmissionWrapperComparator(null));
       this._wrappers.setSort(true);
       this._service = service;
-      this._sentWrappers = (IntHashtable)(new Object());
+      this._sentWrappers = new IntHashtable();
       this._persistedWrappers = this.getWrappersFromPersistence();
    }
 
@@ -300,7 +300,7 @@ final class TransmissionHelper$TransmissionSendRunnable implements TransmissionS
       if (persistentObject != null) {
          wrapperTable = (IntHashtable)persistentObject.getContents();
          if (wrapperTable == null) {
-            wrapperTable = (IntHashtable)(new Object());
+            wrapperTable = new IntHashtable();
             persistentObject.setContents(wrapperTable, 51);
             return wrapperTable;
          }

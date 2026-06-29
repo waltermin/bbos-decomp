@@ -86,7 +86,7 @@ final class PhoneNumberKeywordList extends KeywordFilterCollectionListField impl
 
    private final void expandAddressInfo(int index) {
       Object element = this.getElementAt(index);
-      if (element instanceof Object) {
+      if (element instanceof AddressCardModel) {
          AddressCardModel acm = (AddressCardModel)element;
          if (this._expandedAddressInfo == null || this._expandedAddressInfo.getAddressCard() != acm) {
             this._expandedAddressInfo = new PhoneNumberKeywordList$ExpandedAddressInfo(acm, index);
@@ -111,8 +111,8 @@ final class PhoneNumberKeywordList extends KeywordFilterCollectionListField impl
             return true;
          }
 
-         if (obj instanceof Object) {
-            DialVerb dialVerb = (DialVerb)(new Object(obj, this.getSelectedAddress()));
+         if (obj instanceof PhoneNumberModel) {
+            DialVerb dialVerb = new DialVerb(obj, this.getSelectedAddress());
             dialVerb.invoke(null);
             return true;
          }
@@ -153,7 +153,7 @@ final class PhoneNumberKeywordList extends KeywordFilterCollectionListField impl
       } else if (this._expandedAddressInfo != null) {
          return this._expandedAddressInfo.getAddressCard();
       } else {
-         return (AddressCardModel)(this.getElementAt(this.getSelectedIndex()) instanceof Object ? this.getElementAt(this.getSelectedIndex()) : null);
+         return this.getElementAt(this.getSelectedIndex()) instanceof AddressCardModel ? (AddressCardModel)this.getElementAt(this.getSelectedIndex()) : null;
       }
    }
 
@@ -195,7 +195,7 @@ final class PhoneNumberKeywordList extends KeywordFilterCollectionListField impl
       }
 
       Object obj = this.getSelectedElement();
-      if (obj instanceof Object) {
+      if (obj instanceof PhoneNumberModel) {
          PhoneNumberModel pnm = (PhoneNumberModel)obj;
          QuickContactList qcl = QuickContactList.getInstance();
          if (pnm.canSpeedDial() && qcl.getQuickContactKey(pnm) == 0 && qcl.getQuickContactItem(keycode) == null) {
@@ -279,11 +279,11 @@ final class PhoneNumberKeywordList extends KeywordFilterCollectionListField impl
                if (addressCard != null) {
                   Object[] objects = addressCard.getPhoneNumberModels();
                   if (objects != null && objects.length > 0) {
-                     Verb[] dialVerbs = new Object[objects.length];
+                     Verb[] dialVerbs = new DialVerb[objects.length];
 
                      for (int i = 0; i < objects.length; i++) {
-                        if (objects[i] instanceof Object) {
-                           dialVerbs[i] = (Verb)(new Object(objects[i], addressCard));
+                        if (objects[i] instanceof PhoneNumberModel) {
+                           dialVerbs[i] = new DialVerb(objects[i], addressCard);
                         }
                      }
 
@@ -308,13 +308,13 @@ final class PhoneNumberKeywordList extends KeywordFilterCollectionListField impl
       CollectionListField collectionListField = (CollectionListField)listField;
       synchronized (AddressBookServices.getAddressBookCollection()) {
          Object element = collectionListField.getElementAt(index);
-         if (!(element instanceof Object)) {
+         if (!(element instanceof PaintProvider)) {
             if (index == 0 && element == null) {
                graphics.drawText(this.getEmptyString(), 0, y, 4, width);
             }
          } else {
             PaintProvider painter = (PaintProvider)element;
-            painter.paint(graphics, 0, y, width, 100, new Object(4, 18));
+            painter.paint(graphics, 0, y, width, 100, new ContextObject(4, 18));
          }
       }
    }
@@ -322,31 +322,31 @@ final class PhoneNumberKeywordList extends KeywordFilterCollectionListField impl
    final void addToMenu(SystemEnabledMenu menu, int instance, boolean systemLocked, boolean outgoingCallAllowed) {
       Object obj = this.getSelectedElement();
       if (obj != null) {
-         Verb[] verbs = new Object[0];
+         Verb[] verbs = new Verb[0];
          Verb defaultVerb = null;
-         ContextObject context = (ContextObject)(new Object(11, 114));
+         ContextObject context = new ContextObject(11, 114);
          if (systemLocked) {
             context.setFlag(36);
             PhoneUtilities.setPrivateFlag(context, 15);
          }
 
-         if (obj instanceof Object) {
+         if (obj instanceof PhoneNumberModel) {
             context.setFlag(34);
             PhoneUtilities.setPrivateFlag(context, 59);
             PhoneNumberModel pnm = (PhoneNumberModel)obj;
             if (!systemLocked && outgoingCallAllowed && pnm.canSpeedDial()) {
                char key = QuickContactList.getInstance().getQuickContactKey(pnm);
                if (key == 0) {
-                  menu.add((Verb)(new Object(pnm, 6072, 1332244, '\u0000')));
+                  menu.add(new SpeedDialVerb(pnm, 6072, 1332244, '\u0000'));
                } else {
-                  menu.add((Verb)(new Object(pnm, 6073, 1332244, key)));
+                  menu.add(new SpeedDialVerb(pnm, 6073, 1332244, key));
                }
             }
          } else if (!systemLocked && instance == 0) {
             AbstractPhoneNumberModel.addViewContactVerb(verbs, obj);
          }
 
-         if (obj instanceof Object) {
+         if (obj instanceof VerbProvider) {
             VerbProvider vp = (VerbProvider)obj;
             defaultVerb = vp.getVerbs(context, verbs);
          }
@@ -361,7 +361,7 @@ final class PhoneNumberKeywordList extends KeywordFilterCollectionListField impl
          }
 
          if (!systemLocked && outgoingCallAllowed && instance == 0) {
-            menu.add((Verb)(new Object(null, 6094, 1397760, '\u0000')));
+            menu.add(new SpeedDialVerb(null, 6094, 1397760, '\u0000'));
          }
 
          if (systemLocked) {

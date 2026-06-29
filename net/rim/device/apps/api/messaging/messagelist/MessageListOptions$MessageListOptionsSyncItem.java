@@ -175,7 +175,7 @@ final class MessageListOptions$MessageListOptionsSyncItem extends OTASyncCapable
                }
             default:
                if (updateServiceView) {
-                  ShowMessageApp.postEvent(-8639396151207124460L, 0, 0, new Object(-4696470826620059293L), null);
+                  ShowMessageApp.postEvent(-8639396151207124460L, 0, 0, new Long(-4696470826620059293L), null);
                }
 
                options.commit();
@@ -189,7 +189,7 @@ final class MessageListOptions$MessageListOptionsSyncItem extends OTASyncCapable
    @Override
    public final boolean getSyncData(DataBuffer buffer, int version) {
       MessageListOptions options = MessageListOptions.getOptions();
-      DataBuffer tmpBuffer = (DataBuffer)(new Object());
+      DataBuffer tmpBuffer = new DataBuffer();
       tmpBuffer.setBigEndian(false);
       tmpBuffer.writeBoolean(options.getFlag(1));
       tmpBuffer.writeBoolean(options.getFlag(2));

@@ -7,7 +7,7 @@ import net.rim.device.api.util.CharacterUtilities;
 import net.rim.device.internal.system.InternalServices;
 
 public final class QmUtil {
-   private static TextMetrics _metrics = (TextMetrics)(new Object());
+   private static TextMetrics _metrics = new TextMetrics();
    public static final int HW_LAYOUT_REDUCED = 1364346180;
    public static final int HW_LAYOUT_REDUCED_24 = 1364341300;
 
@@ -64,7 +64,7 @@ public final class QmUtil {
       if (text != null && !isASCII(text)) {
          Font font = Font.getDefault();
          int baseline = font.getBaseline();
-         TextMetrics metrics = (TextMetrics)(new Object());
+         TextMetrics metrics = new TextMetrics();
          String name = text;
          font.measureText(name, 0, name.length(), null, metrics);
          int above = Math.max(-metrics.iBoundsTlY, baseline);

@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.commlink;
 
+import java.io.IOException;
 import net.rim.device.api.bluetooth.BluetoothSerialPort;
 import net.rim.device.api.bluetooth.BluetoothSerialPortListener;
 import net.rim.device.api.itpolicy.ITPolicy;
@@ -29,7 +30,7 @@ final class BluetoothTransport extends SerialTransport implements BluetoothSeria
             this._port = null;
          }
       } else if (this._port == null) {
-         StringBuffer sb = (StringBuffer)(new Object("BlackBerry Desktop Service"));
+         StringBuffer sb = new StringBuffer("BlackBerry Desktop Service");
          int pin = DeviceInfo.getDeviceId();
          sb.append(" P:0x");
          sb.append(Integer.toHexString(pin).toUpperCase());
@@ -37,7 +38,7 @@ final class BluetoothTransport extends SerialTransport implements BluetoothSeria
          sb.append(Integer.toHexString(RadioInfo.getNetworkType()).toUpperCase());
          sb.append(" V:0x");
          sb.append(Integer.toHexString(131076).toUpperCase());
-         this._port = (BluetoothSerialPort)(new Object(UUID, sb.toString(), 7, 3, 0, 1024, 1024, this));
+         this._port = new BluetoothSerialPort(UUID, sb.toString(), 7, 3, 0, 1024, 1024, this);
          return;
       }
    }
@@ -55,9 +56,9 @@ final class BluetoothTransport extends SerialTransport implements BluetoothSeria
    }
 
    @Override
-   protected final int lowLevelRead(byte[] b) {
+   protected final int lowLevelRead(byte[] b) throws IOException {
       if (this._port == null) {
-         throw new Object();
+         throw new IOException();
       } else {
          return this._port.read(b);
       }
@@ -77,9 +78,9 @@ final class BluetoothTransport extends SerialTransport implements BluetoothSeria
    }
 
    @Override
-   protected final int lowLevelWrite(byte[] b, int off, int len) {
+   protected final int lowLevelWrite(byte[] b, int off, int len) throws IOException {
       if (this._port == null) {
-         throw new Object();
+         throw new IOException();
       } else {
          return this._port.write(b, off, len);
       }

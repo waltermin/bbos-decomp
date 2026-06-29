@@ -1,5 +1,8 @@
 package net.rim.device.internal.io.streamdatagram;
 
+import java.io.IOException;
+import javax.microedition.io.ConnectionNotFoundException;
+
 public class StreamDatagramConnectionBaseFactory {
    private String _className;
    private static final int STREAM_DEBUG_LEVEL = 1000000;
@@ -7,23 +10,23 @@ public class StreamDatagramConnectionBaseFactory {
    public StreamDatagramConnectionBaseFactory() {
    }
 
-   public StreamDatagramConnectionBaseFactory(StreamDatagramTransportBase streamDatagramTransport) {
+   public StreamDatagramConnectionBaseFactory(StreamDatagramTransportBase streamDatagramTransport) throws IOException {
       String protocolName = streamDatagramTransport.getClass().getName();
       int index = protocolName.lastIndexOf(46);
       if (index == -1) {
-         throw new Object("Unable to find underlying Protocol class");
+         throw new IOException("Unable to find underlying Protocol class");
       }
 
       String packageName = protocolName.substring(0, index + 1);
       index = packageName.indexOf("net.rim.device.cldc.io");
       if (index == -1) {
-         throw new Object("Unable to find underlying Protocol class");
+         throw new IOException("Unable to find underlying Protocol class");
       }
 
-      this._className = ((StringBuffer)(new Object())).append(packageName).append("Protocol").toString();
+      this._className = packageName + "Protocol";
    }
 
-   public StreamDatagramConnectionBase createInstance() {
+   public StreamDatagramConnectionBase createInstance() throws IOException, ConnectionNotFoundException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -42,28 +45,28 @@ public class StreamDatagramConnectionBaseFactory {
       // 10: aload 2
       // 11: areturn
       // 12: astore 1
-      // 13: new java/lang/Object
+      // 13: new java/io/IOException
       // 16: dup
       // 17: aload 1
       // 18: invokevirtual java/lang/InstantiationException.toString ()Ljava/lang/String;
       // 1b: invokespecial java/io/IOException.<init> (Ljava/lang/String;)V
       // 1e: athrow
       // 1f: astore 1
-      // 20: new java/lang/Object
+      // 20: new java/io/IOException
       // 23: dup
       // 24: aload 1
       // 25: invokevirtual java/lang/IllegalAccessException.toString ()Ljava/lang/String;
       // 28: invokespecial java/io/IOException.<init> (Ljava/lang/String;)V
       // 2b: athrow
       // 2c: astore 1
-      // 2d: new java/lang/Object
+      // 2d: new java/io/IOException
       // 30: dup
       // 31: aload 1
       // 32: invokevirtual java/lang/ClassCastException.toString ()Ljava/lang/String;
       // 35: invokespecial java/io/IOException.<init> (Ljava/lang/String;)V
       // 38: athrow
       // 39: astore 1
-      // 3a: new java/lang/Object
+      // 3a: new javax/microedition/io/ConnectionNotFoundException
       // 3d: dup
       // 3e: ldc_w "Requested protocol does not exist: x.toString()"
       // 41: invokespecial javax/microedition/io/ConnectionNotFoundException.<init> (Ljava/lang/String;)V

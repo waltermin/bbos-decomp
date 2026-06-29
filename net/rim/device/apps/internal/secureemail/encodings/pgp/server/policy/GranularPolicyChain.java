@@ -54,6 +54,6 @@ class GranularPolicyChain extends GranularPolicyElement implements GranularPolic
 
    @Override
    public String getDebugPrintInfo() {
-      return ((StringBuffer)(new Object("Chain \""))).append(this._name).append("\"").toString();
+      return "Chain \"" + this._name + "\"";
    }
 }

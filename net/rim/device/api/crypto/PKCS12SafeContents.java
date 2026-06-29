@@ -14,7 +14,7 @@ public class PKCS12SafeContents extends PKCS12ContentInfo {
    protected void parse() throws PKCS12ParsingException {
       if (!super._parsed) {
          try {
-            ASN1InputByteArray bagsArray = (ASN1InputByteArray)(new Object(super._buffer));
+            ASN1InputByteArray bagsArray = new ASN1InputByteArray(super._buffer);
             bagsArray.readSequence();
             int next = bagsArray.peekNextTag();
             SafeBag bag = null;

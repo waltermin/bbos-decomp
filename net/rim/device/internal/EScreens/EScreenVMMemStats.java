@@ -22,8 +22,8 @@ class EScreenVMMemStats extends MainScreen {
    public EScreenVMMemStats(String title, EScreenMemStatsRefresher refresher, Font font) {
       this.setFont(font);
       this._refresher = refresher;
-      this._stats = (MemoryStats)(new Object());
-      this._list = (ObjectListField)(new Object());
+      this._stats = new MemoryStats();
+      this._list = new ObjectListField();
       this.add(this._list);
       this.setTitle(title);
    }
@@ -49,7 +49,7 @@ class EScreenVMMemStats extends MainScreen {
    }
 
    String fmt(String prefix, int i) {
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
       sb.append(prefix);
       if (i <= 0) {
          sb.append(Integer.toString(i));
@@ -65,11 +65,12 @@ class EScreenVMMemStats extends MainScreen {
 
    public void refresh() {
       this._refresher.refresh(this._stats);
-      String[] data = new Object[4];
-      data[0] = this.fmt("Allocated: ", this._stats.getAllocated());
-      data[1] = this.fmt("Free: ", this._stats.getFree());
-      data[2] = this.fmt("Objects: ", this._stats.getObjectCount());
-      data[3] = this.fmt("Object Size: ", this._stats.getObjectSize());
+      String[] data = new String[]{
+         this.fmt("Allocated: ", this._stats.getAllocated()),
+         this.fmt("Free: ", this._stats.getFree()),
+         this.fmt("Objects: ", this._stats.getObjectCount()),
+         this.fmt("Object Size: ", this._stats.getObjectSize())
+      };
       this._list.set(data);
       this._list.invalidate();
    }

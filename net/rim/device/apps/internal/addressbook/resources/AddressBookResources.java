@@ -23,7 +23,7 @@ public class AddressBookResources implements AddressBookResource {
             var2 = false;
          } finally {
             if (var2) {
-               throw new Object("No addressbook resources");
+               throw new RuntimeException("No addressbook resources");
             }
          }
       }

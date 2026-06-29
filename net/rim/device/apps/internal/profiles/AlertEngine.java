@@ -253,12 +253,8 @@ public final class AlertEngine extends Thread implements AlertListener, AlertSta
             this._playerError = true;
          }
 
-         if (eventData instanceof Object) {
-            EventLogger.logEvent(
-               6982943375119825480L,
-               ((StringBuffer)(new Object("AlertEngine: playerUpdate - "))).append(event).append(" : ").append(eventData).toString().getBytes(),
-               2
-            );
+         if (eventData instanceof String) {
+            EventLogger.logEvent(6982943375119825480L, ("AlertEngine: playerUpdate - " + event + " : " + eventData).getBytes(), 2);
          }
 
          reason = 1414546776;
@@ -600,11 +596,9 @@ public final class AlertEngine extends Thread implements AlertListener, AlertSta
 
                               this._tune.startAlert(volume, this._interruptible);
                            } catch (Throwable var28) {
-                              String error = e.getMessage() == null
-                                 ? ((StringBuffer)(new Object("AlertEngine: run - "))).append(e.toString()).toString()
-                                 : e.getMessage();
+                              String error = e.getMessage() == null ? "AlertEngine: run - " + e.toString() : e.getMessage();
                               if (this._tune == null) {
-                                 error = ((StringBuffer)(new Object())).append(error).append(".  The tune is null.").toString();
+                                 error = error + ".  The tune is null.";
                               }
 
                               EventLogger.logEvent(6982943375119825480L, error.getBytes(), 2);

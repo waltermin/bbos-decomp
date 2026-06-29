@@ -12,12 +12,12 @@ final class PersisProtectionHelper {
          return value;
       }
 
-      if (value instanceof Object) {
+      if (value instanceof String) {
          return PersistentContent.encode((String)value, false, true);
       }
 
-      if (value instanceof Object[]) {
-         String[] valueStrings = (Object[])value;
+      if (value instanceof String[]) {
+         String[] valueStrings = (String[])value;
          int len = valueStrings.length;
          Object[] tempEncoded = new Object[len];
 

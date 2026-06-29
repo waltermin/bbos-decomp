@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.mdp;
 
+import java.io.IOException;
 import java.util.Random;
 import javax.microedition.io.Datagram;
 import net.rim.device.api.io.ConnEvent;
@@ -7,6 +8,8 @@ import net.rim.device.api.io.DatagramAddressBase;
 import net.rim.device.api.io.DatagramBase;
 import net.rim.device.api.io.DatagramStatusListener;
 import net.rim.device.api.io.DatagramTransportBase;
+import net.rim.device.api.io.IOCancelledException;
+import net.rim.device.api.io.IOFormatException;
 import net.rim.device.api.io.IOProperties;
 import net.rim.device.api.io.UdpAddress;
 import net.rim.device.api.system.ApplicationRegistry;
@@ -151,9 +154,9 @@ public final class Transport
 
                if (d != null && (d._optimizedAckFlag || !d.packetReceived(0) && useOptAcks)) {
                   this.sendReceipt(
-                     (DatagramAddressBase)(!(d._subAddress instanceof Object)
+                     !(d._subAddress instanceof DatagramAddressBase)
                         ? new MdpAddress((String)d._subAddress, d._destPort, d._srcPort, d._wtAddress).getSubAddressBase()
-                        : d._subAddress),
+                        : (DatagramAddressBase)d._subAddress,
                      d._reference,
                      d.makeStatusArray()
                   );
@@ -398,10 +401,10 @@ public final class Transport
       EventLogger.register(super.GUID, super.STR, 2);
       this._txPacket = (DatagramBase)super._subConnection.newDatagram();
       this._maxNativeLength = MdpUtil.getNominalLength();
-      this._nextDgramId = Math.abs(((Random)(new Object())).nextInt() % 126 + 1);
+      this._nextDgramId = Math.abs(new Random().nextInt() % 126 + 1);
       this._sendStatusIds = new int[16];
       this._sendStatusCodes = new int[16];
-      this._sendReceipts = (IntHashtable)(new Object(16));
+      this._sendReceipts = new IntHashtable(16);
       this._sendStatusReturn = new int[2];
       this._fastDormancy = FastDormancyManager.getInstance();
       this._fastDormancy.setFastDormancy(true);
@@ -433,7 +436,7 @@ public final class Transport
    private final void invokeFastDormancy(IOProperties properties, DatagramAddressBase nativeAddress) {
       if (this._fastDormancy.getFastDormancy()) {
          if (properties == null || !properties.isFlagSet(2048)) {
-            if (nativeAddress instanceof Object) {
+            if (nativeAddress instanceof UdpAddress) {
                String apn = ((UdpAddress)nativeAddress).getApn();
 
                try {
@@ -447,12 +450,12 @@ public final class Transport
       }
    }
 
-   private final void failDatagram(int reference) {
+   private final void failDatagram(int reference) throws IOException {
       EventLogger.logEvent(super.GUID, 1413836129, 2);
       this.xmitDgslEvent(this._txListener, this._txDgramId, 8321, null);
       this._dataRecovery.fileReport(1);
       this.cancelPacketTimers(reference);
-      throw new Object();
+      throw new IOException();
    }
 
    @Override
@@ -604,7 +607,7 @@ public final class Transport
 
          profile._key = key;
          profile._reverseKey = reverseKey;
-         profile._wtAddress = !(key instanceof Object) ? 0 : ((UdpInternalAddress)key).getGpakHostAddress();
+         profile._wtAddress = !(key instanceof UdpInternalAddress) ? 0 : ((UdpInternalAddress)key).getGpakHostAddress();
          this._wtProfiles[0] = profile;
          this._wtProfilesCount++;
       }
@@ -612,7 +615,7 @@ public final class Transport
 
    private final WirelessTransportProfile getWirelessTransportProfile(DatagramAddressBase key, boolean directKey) {
       if (key != null) {
-         boolean byWtAddress = directKey && key instanceof Object;
+         boolean byWtAddress = directKey && key instanceof UdpInternalAddress;
          int wtAddress = byWtAddress ? ((UdpInternalAddress)key).getGpakHostAddress() : 0;
 
          for (int i = this._wtProfilesCount - 1; i >= 0; i--) {
@@ -633,7 +636,7 @@ public final class Transport
 
    private final void removeWirelessTransportProfile(DatagramAddressBase key, boolean removeAll) {
       if (key != null || removeAll) {
-         boolean byWtAddress = key instanceof Object;
+         boolean byWtAddress = key instanceof UdpInternalAddress;
          int wtAddress = byWtAddress ? ((UdpInternalAddress)key).getGpakHostAddress() : 0;
          WirelessTransportProfile temp = null;
 
@@ -680,7 +683,7 @@ public final class Transport
    protected final void processReceivedDatagram(Datagram datagram) {
       EventLogger.logEvent(super.GUID, 1381528436, 4);
       DatagramAddressBase nativeAddress = null;
-      if (datagram instanceof Object) {
+      if (datagram instanceof DatagramBase) {
          nativeAddress = ((DatagramBase)datagram).getAddressBase();
       }
 
@@ -756,7 +759,7 @@ public final class Transport
       EventLogger.logEvent(super.GUID, 1381000289, 4);
       this.queueSendStatus(info.reference, 1, null);
       this.queueWaitingDatagramStatus(info.reference, 1, null);
-      if (!info.moreFlag && this._fastDormancy.getFastDormancy() && addressBase instanceof Object) {
+      if (!info.moreFlag && this._fastDormancy.getFastDormancy() && addressBase instanceof UdpAddress) {
          String apn = ((UdpAddress)addressBase).getApn();
 
          try {
@@ -771,7 +774,7 @@ public final class Transport
    private final void processPacketAck(DatagramAddressBase addressBase, MdpUtil$DatagramInfo info) {
       EventLogger.logEvent(super.GUID, 1381003361, 4);
       this.queueSendStatus(info.reference | info.sequence << 8, 2, null);
-      if (!info.moreFlag && this._fastDormancy.getFastDormancy() && addressBase instanceof Object) {
+      if (!info.moreFlag && this._fastDormancy.getFastDormancy() && addressBase instanceof UdpAddress) {
          String apn = ((UdpAddress)addressBase).getApn();
 
          try {
@@ -844,7 +847,7 @@ public final class Transport
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private final void processParam(DatagramAddressBase nativeAddress, MdpUtil$DatagramInfo info) {
       EventLogger.logEvent(super.GUID, 1381003378, 0);
-      DataBuffer buf = (DataBuffer)(new Object(info.data, info.offset, info.length, true));
+      DataBuffer buf = new DataBuffer(info.data, info.offset, info.length, true);
       int maxAckDelayTimeOut = -1;
       int maxWindowSize = -1;
       int datagramAckTimeout = -1;
@@ -1273,7 +1276,7 @@ public final class Transport
                      try {
                         var35 = true;
                         upDatagram = new MdpRxDatagram(subAddress, reference, datagramKey, info.maxSequence);
-                        upDatagram._buffer = (DataBuffer)(new Object(MdpUtil.getLengthFromMaxSequence(info.maxSequence, this._maxNativeLength), true));
+                        upDatagram._buffer = new DataBuffer(MdpUtil.getLengthFromMaxSequence(info.maxSequence, this._maxNativeLength), true);
                         var35 = false;
                      } finally {
                         if (var35) {
@@ -1313,7 +1316,7 @@ public final class Transport
                   try {
                      var29 = true;
                      upDatagram = new MdpRxDatagram(subAddress, reference, datagramKey, info.maxSequence);
-                     upDatagram._buffer = (DataBuffer)(new Object(MdpUtil.getLengthFromMaxSequence(info.maxSequence, this._maxNativeLength), true));
+                     upDatagram._buffer = new DataBuffer(MdpUtil.getLengthFromMaxSequence(info.maxSequence, this._maxNativeLength), true);
                      var29 = false;
                   } finally {
                      if (var29) {
@@ -1401,7 +1404,7 @@ public final class Transport
                this._rxTable.removeAssemblyDatagram(datagramKey);
             }
 
-            dgram = (DatagramBase)(new Object(data, offset, length, upAddress));
+            dgram = new DatagramBase(data, offset, length, upAddress);
             dgram.setDatagramId(datagramKey);
             this._rxTable.addConfirmationDatagram(datagramKey, upDatagram);
             if (!legacyMode && upDatagram._optimizedAckFlag) {
@@ -1436,7 +1439,7 @@ public final class Transport
          MdpRxDatagram dgram = this._rxTable.findConfirmationDatagram(datagramId);
          if (dgram != null) {
             DatagramAddressBase subAddress;
-            if (!(dgram._subAddress instanceof Object)) {
+            if (!(dgram._subAddress instanceof DatagramAddressBase)) {
                subAddress = new MdpAddress((String)dgram._subAddress, dgram._destPort, dgram._srcPort, dgram._wtAddress).getSubAddressBase();
             } else {
                subAddress = (DatagramAddressBase)dgram._subAddress;
@@ -1605,7 +1608,7 @@ public final class Transport
       }
    }
 
-   private final MdpAddress sendVerify(DatagramAddressBase addressBase, Datagram datagram) {
+   private final MdpAddress sendVerify(DatagramAddressBase addressBase, Datagram datagram) throws IOFormatException {
       MdpAddress addr = null;
       if (addressBase instanceof MdpAddress) {
          addr = (MdpAddress)addressBase;
@@ -1621,7 +1624,7 @@ public final class Transport
 
       EventLogger.logEvent(super.GUID, 1413834351, 2);
       this.xmitDgslEvent(this._txListener, this._txDgramId, 12674, null);
-      throw new Object();
+      throw new IOFormatException();
    }
 
    private final void allowRetries() {
@@ -1909,7 +1912,7 @@ public final class Transport
       this._txPacket.reset();
    }
 
-   private final int sendWaitAugmented(boolean flag, int id, int count, int[] sendWaitArray) {
+   private final int sendWaitAugmented(boolean flag, int id, int count, int[] sendWaitArray) throws IOException {
       long nextTime = System.currentTimeMillis();
       long maxTime = nextTime + (count == -1 ? this._ackTimeout : (count == -2 ? this._datagramPingTimeout : this.getBackoffTmo(count)));
 
@@ -1924,7 +1927,7 @@ public final class Transport
             if (this._txDatagram == null) {
                EventLogger.logEvent(super.GUID, 1415078753, 3);
                this.xmitDgslEvent(this._txListener, this._txDgramId, 129, null);
-               throw new Object();
+               throw new IOCancelledException();
             }
          }
 
@@ -1982,7 +1985,7 @@ public final class Transport
                break;
             case 256:
                EventLogger.logEvent(super.GUID, 1413838437, 2);
-               throw new Object();
+               throw new IOException();
             case 1024:
                if ((!flag && result[0] == id || flag && id == (result[0] & 0xFF))
                   && this.processMFHpAck(result[0] & 0xFF, result[0] >> 8 & 0xFF, sendWaitArray, true)) {
@@ -2008,7 +2011,7 @@ public final class Transport
                return 8;
             default:
                EventLogger.logEvent(super.GUID, 1413837414, 2);
-               throw new Object();
+               throw new IOException();
          }
       }
    }
@@ -2243,7 +2246,7 @@ public final class Transport
          return null;
       }
 
-      DataBuffer buf = (DataBuffer)(new Object(12 + 4 * this._maxAttempts, true));
+      DataBuffer buf = new DataBuffer(12 + 4 * this._maxAttempts, true);
       buf.writeInt(this._maxAttempts);
       buf.writeInt(this._ackTimeout);
       buf.writeInt(this._backoffMax);
@@ -2259,7 +2262,7 @@ public final class Transport
       if (!(obj instanceof MdpInfo)) {
          if (obj instanceof byte[] && ((byte[])obj).length >= 16) {
             try {
-               DataBuffer buf = (DataBuffer)(new Object((byte[])obj, 0, ((byte[])obj).length, true));
+               DataBuffer buf = new DataBuffer((byte[])obj, 0, ((byte[])obj).length, true);
                this._maxAttempts = buf.readInt();
                this._ackTimeout = buf.readInt();
                this._backoffStart = buf.readInt();

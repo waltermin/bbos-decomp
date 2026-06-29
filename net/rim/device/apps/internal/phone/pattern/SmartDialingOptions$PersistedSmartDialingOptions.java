@@ -15,8 +15,8 @@ final class SmartDialingOptions$PersistedSmartDialingOptions implements Persista
    String _areaCode;
    boolean _allowPromptForAreaCode;
    String _corporatePhoneNumber;
-   IntHashtable _standardExtensionsAdditionalTones = (IntHashtable)(new Object());
-   IntHashtable _corporateExtensionsAdditionalTones = (IntHashtable)(new Object());
+   IntHashtable _standardExtensionsAdditionalTones = new IntHashtable();
+   IntHashtable _corporateExtensionsAdditionalTones = new IntHashtable();
    int _corporateExtensionLength;
    int[] _corporateExtensionLengthExclusions;
    String _formattingString;
@@ -41,7 +41,7 @@ final class SmartDialingOptions$PersistedSmartDialingOptions implements Persista
    }
 
    public final int[] getAdditionalTonesNetworks() {
-      IntVector vector = (IntVector)(new Object());
+      IntVector vector = new IntVector();
       vector.addElement(RadioInfo.getNetworkType());
       IntEnumeration networks = this._corporateExtensionsAdditionalTones.keys();
 

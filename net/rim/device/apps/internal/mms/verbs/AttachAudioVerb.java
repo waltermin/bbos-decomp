@@ -28,7 +28,7 @@ public final class AttachAudioVerb extends Verb {
       MMSAttachment attachment = this.promptForAudio(ctx);
       if (attachment != null) {
          this._presentation.addPresentationElement(attachment, true);
-         if (this._presentation instanceof Object) {
+         if (this._presentation instanceof Manager) {
             Manager mgr = (Manager)this._presentation;
             mgr.setDirty(true);
          }
@@ -52,7 +52,7 @@ public final class AttachAudioVerb extends Verb {
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:185)
       //
       // Bytecode:
-      // 00: new java/lang/Object
+      // 00: new net/rim/device/apps/api/framework/file/FileSelector
       // 03: dup
       // 04: ldc_w "file:///store/samples/mms/tunes/"
       // 07: bipush 2
@@ -77,12 +77,12 @@ public final class AttachAudioVerb extends Verb {
       // 2e: astore 3
       // 2f: aload 3
       // 30: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 33: checkcast java/lang/Object
+      // 33: checkcast javax/microedition/io/file/FileConnection
       // 36: astore 4
       // 38: aload 4
       // 3a: invokeinterface javax/microedition/io/file/FileConnection.canRead ()Z 1
       // 3f: ifeq 92
-      // 42: new java/lang/Object
+      // 42: new java/lang/String
       // 45: dup
       // 46: aload 3
       // 47: invokevirtual java/lang/String.getBytes ()[B

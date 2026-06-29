@@ -18,7 +18,7 @@ final class EmailUtilities$BrowserMessagePartsProvider implements MessagePartsPr
       this._url = url;
       this._title = title;
       if (attachment != null) {
-         this._attachments = new Object[]{attachment};
+         this._attachments = new MessageAttachment[]{attachment};
       }
    }
 

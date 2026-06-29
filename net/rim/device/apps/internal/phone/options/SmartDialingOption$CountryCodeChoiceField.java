@@ -111,9 +111,9 @@ class SmartDialingOption$CountryCodeChoiceField extends ObjectChoiceField {
    }
 
    private static String[] getChoices() {
-      StringBuffer buf = (StringBuffer)(new Object());
+      StringBuffer buf = new StringBuffer();
       int count = COUNTRY_CODES.length + 1;
-      String[] choices = new Object[count];
+      String[] choices = new String[count];
       choices[0] = PhoneResources.getString(6046);
 
       for (int index = 1; index < count; index++) {

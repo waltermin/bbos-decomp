@@ -50,7 +50,7 @@ public final class AESKey implements SymmetricKey, Persistable {
             var5 = 192;
          } else {
             if (bitLength < 128) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             var5 = 128;
@@ -58,7 +58,7 @@ public final class AESKey implements SymmetricKey, Persistable {
 
          this.initialize(cryptoToken, cryptoToken.injectKey(data, offset, var5));
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -70,7 +70,7 @@ public final class AESKey implements SymmetricKey, Persistable {
          && offset + bitLength >>> 3 <= data.length) {
          this.initialize(cryptoToken, cryptoToken.injectKey(data, offset, bitLength));
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -78,7 +78,7 @@ public final class AESKey implements SymmetricKey, Persistable {
       if (cryptoToken != null && (bitLength == 128 || bitLength == 192 || bitLength == 256)) {
          this.initialize(cryptoToken, cryptoToken.createKey(bitLength));
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -88,7 +88,7 @@ public final class AESKey implements SymmetricKey, Persistable {
          this._cryptoTokenData = cryptoTokenData;
          this.setHashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -102,7 +102,7 @@ public final class AESKey implements SymmetricKey, Persistable {
       try {
          this.initialize(SoftwareAESCryptoToken.getInstance(), bitLength);
       } catch (Throwable var4) {
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       }
    }
 
@@ -116,7 +116,7 @@ public final class AESKey implements SymmetricKey, Persistable {
       try {
          this.initialize(SoftwareAESCryptoToken.getInstance(), data, offset);
       } catch (Throwable var5) {
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       }
    }
 
@@ -126,7 +126,7 @@ public final class AESKey implements SymmetricKey, Persistable {
       try {
          this.initialize(SoftwareAESCryptoToken.getInstance(), data, offset, bitLength);
       } catch (Throwable var6) {
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       }
    }
 

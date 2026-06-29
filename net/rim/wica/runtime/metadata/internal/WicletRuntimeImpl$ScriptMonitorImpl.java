@@ -28,7 +28,7 @@ class WicletRuntimeImpl$ScriptMonitorImpl implements ScriptMonitor {
 
    @Override
    public void scriptUnhandledError(String function, Exception e) {
-      this.this$0._eventService.dispatchEvent(this, 605, 103, ((StringBuffer)(new Object())).append(function).append(": ").append(e.toString()).toString());
+      this.this$0._eventService.dispatchEvent(this, 605, 103, function + ": " + e.toString());
    }
 
    @Override

@@ -14,7 +14,7 @@ final class SIMCardOptionsItem$1 implements SIMPhoneNumberReader$PhoneNumberList
 
    @Override
    public final void addPhoneNumber(int recordID, String name, String phoneNumber, byte extRecID, byte tonAndNPI) {
-      StringBuffer sbuf = (StringBuffer)(new Object(phoneNumber));
+      StringBuffer sbuf = new StringBuffer(phoneNumber);
       this.val$phoneNumberList.addElement(sbuf.toString());
    }
 }

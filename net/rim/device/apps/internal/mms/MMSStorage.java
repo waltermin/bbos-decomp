@@ -64,7 +64,7 @@ public final class MMSStorage {
          orphanedSavedFolder.initializeOnSystemStart();
          PersistentContent.addListener(new MMSStorage$MyPersistentContentListener(null));
       } else {
-         throw new Object("Unable to create MMS folder hierarchy.");
+         throw new RuntimeException("Unable to create MMS folder hierarchy.");
       }
    }
 
@@ -90,7 +90,7 @@ public final class MMSStorage {
    private static final SimpleFolder getFolderFromHierarchy(SimpleFolder hierarchy, long folderId, int folderName, int flags) {
       SimpleFolder folder = (SimpleFolder)hierarchy.getFolder(folderId);
       if (folder == null) {
-         folder = (SimpleFolder)(new Object(
+         folder = new SimpleFolder(
             3704547669295631919L,
             folderId,
             MMSResources.getResourceBundle(),
@@ -98,7 +98,7 @@ public final class MMSStorage {
             "net.rim.device.apps.api.messaging.util.PersistedSortedCollection",
             hierarchy,
             flags
-         ));
+         );
          hierarchy.putFolder(folder);
       }
 
@@ -137,7 +137,7 @@ public final class MMSStorage {
 
    public static final void fileMessage(MMSMessageModel message, long folderId) {
       synchronized (FolderHierarchies.getLockObject()) {
-         message.perform(6760675856762529805L, new Object(folderId));
+         message.perform(6760675856762529805L, new Long(folderId));
          Folder messageFolder = getMMSFolder(folderId);
          WritableSet folder = (WritableSet)messageFolder.getContainedItems();
          folder.add(message);

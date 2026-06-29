@@ -43,10 +43,10 @@ final class ManageConnectionsApp extends UiApplication {
 
    protected static final void informUser(int resourceID) {
       ResourceBundleFamily rbf = ResourceBundle.getBundle(-348546850453906601L, "net.rim.device.apps.internal.manageconnections.ManageConnections");
-      Dialog d = (Dialog)(new Object(0, rbf.getString(resourceID), 0, null, 0));
+      Dialog d = new Dialog(0, rbf.getString(resourceID), 0, null, 0);
       d.setIcon(ThemeManager.getThemeAwareImage("dialog_information"));
       Application app = Application.getApplication();
-      if (app instanceof Object) {
+      if (app instanceof UiApplication) {
          UiApplication uiApp = (UiApplication)app;
          uiApp.pushGlobalScreen(d, 100, 5);
       }

@@ -5,6 +5,7 @@ import net.rim.device.api.ui.AccessibleEventDispatcher;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.accessibility.AccessibleContext;
+import net.rim.device.api.ui.accessibility.AccessibleContextFactory;
 import net.rim.device.api.ui.accessibility.AccessibleContextProxy;
 import net.rim.device.api.ui.accessibility.AccessibleText;
 import net.rim.device.api.ui.accessibility.AccessibleValue;
@@ -71,7 +72,7 @@ final class SelectedIndexManager implements AccessibleContext {
 
       if (Ui.isTTSEnabled()) {
          this.addAccessibleState(4);
-         this.accessibleEventOccurred(6, new Object(1), new Object(2), this);
+         this.accessibleEventOccurred(6, new Integer(1), new Integer(2), this);
       }
    }
 
@@ -214,12 +215,12 @@ final class SelectedIndexManager implements AccessibleContext {
    public final AccessibleContext getAccessibleSelectionAt(int index) {
       if (index != 0 || this._selectedObject == null) {
          return null;
-      } else if (this._selectedObject instanceof Object) {
+      } else if (this._selectedObject instanceof AccessibleContext) {
          return (AccessibleContext)this._selectedObject;
       } else {
-         return (AccessibleContext)(!(this._selectedObject instanceof Object)
-            ? new Object(this._readableList.getAt(this._selectedIndex).toString(), 0, 4)
-            : ((AccessibleContextProxy)this._selectedObject).getAccessibleContext());
+         return !(this._selectedObject instanceof AccessibleContextProxy)
+            ? new AccessibleContextFactory(this._readableList.getAt(this._selectedIndex).toString(), 0, 4)
+            : ((AccessibleContextProxy)this._selectedObject).getAccessibleContext();
       }
    }
 

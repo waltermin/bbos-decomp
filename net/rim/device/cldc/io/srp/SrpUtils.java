@@ -1,12 +1,13 @@
 package net.rim.device.cldc.io.srp;
 
 import java.util.Vector;
-import net.rim.device.api.crypto.Digest;
 import net.rim.device.api.crypto.HMAC;
 import net.rim.device.api.crypto.HMACKey;
 import net.rim.device.api.crypto.RandomSource;
+import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.io.DatagramAddressBase;
 import net.rim.device.api.io.DatagramBase;
+import net.rim.device.api.io.IOFormatException;
 import net.rim.device.api.synchronization.UIDGenerator;
 import net.rim.device.api.system.ApplicationDescriptor;
 import net.rim.device.api.system.ApplicationRegistry;
@@ -88,7 +89,7 @@ public final class SrpUtils implements SrpConstants {
          if (serviceState) {
             EventLogger.logEvent(5159979649545707334L, 1400008788, 0);
             if (this._services == null) {
-               this._services = new Object[1];
+               this._services = new String[1];
                this._services[0] = service;
                this._servicesCapabilities = new int[1];
                this._servicesCapabilities[0] = capabilities;
@@ -161,7 +162,7 @@ public final class SrpUtils implements SrpConstants {
       try {
          return this._routes[linkType][connectionType];
       } finally {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -357,7 +358,7 @@ public final class SrpUtils implements SrpConstants {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public static final SrpUtils$DatagramInfo decode(byte[] header, byte[] data, int dataOffset, int dataLength, SrpConfiguration srpConfig) {
+   public static final SrpUtils$DatagramInfo decode(byte[] header, byte[] data, int dataOffset, int dataLength, SrpConfiguration srpConfig) throws IOFormatException {
       byte version = 0;
       byte command = 0;
       if (header != null) {
@@ -372,7 +373,7 @@ public final class SrpUtils implements SrpConstants {
       }
 
       if (dataLength < 0) {
-         throw new Object();
+         throw new IOFormatException();
       }
 
       int offset = dataOffset;
@@ -387,7 +388,7 @@ public final class SrpUtils implements SrpConstants {
                length = DatagramAddressBase.readInt(data, ++offset);
                offset += 4;
                if (length < 0) {
-                  throw new Object();
+                  throw new IOFormatException();
                }
 
                length += offset;
@@ -401,7 +402,7 @@ public final class SrpUtils implements SrpConstants {
                   int fieldLength = DatagramAddressBase.readInt(data, offset);
                   offset += 4;
                   if (fieldLength < 0) {
-                     throw new Object();
+                     throw new IOFormatException();
                   }
 
                   switch (subTag) {
@@ -445,7 +446,7 @@ public final class SrpUtils implements SrpConstants {
                               break;
                            case 2:
                            case 3:
-                              services = (Vector)(new Object(7));
+                              services = new Vector(7);
                               break;
                            case 4:
                            default:
@@ -454,33 +455,33 @@ public final class SrpUtils implements SrpConstants {
                               label788:
                               try {
                                  var23 = true;
-                                 DataBuffer currentServices = new Object(data, offset, offset + fieldLength, true);
+                                 DataBuffer currentServices = new DataBuffer(data, offset, offset + fieldLength, true);
                                  int duplicate = 0;
                                  int l = 0;
                                  int k = 0;
 
-                                 while (!((DataBuffer)currentServices).eof()) {
+                                 while (!currentServices.eof()) {
                                     k = (boolean)0;
-                                    l = ((DataBuffer)currentServices).readByte();
-                                    duplicate = ((DataBuffer)currentServices).readCompressedInt();
+                                    l = currentServices.readByte();
+                                    duplicate = currentServices.readCompressedInt();
                                     boolean var26 = false /* VF: Semaphore variable */;
 
                                     try {
                                        var26 = true;
                                        switch (l) {
                                           case 0:
-                                             ((DataBuffer)currentServices).skipBytes(duplicate);
+                                             currentServices.skipBytes(duplicate);
                                              var26 = false;
                                              continue;
                                           case 1:
                                           case 2:
                                        }
 
-                                       k = TLEUtilities.readIntegerFieldWithLength((DataBuffer)currentServices, duplicate);
+                                       k = TLEUtilities.readIntegerFieldWithLength(currentServices, duplicate);
                                        var26 = false;
                                     } finally {
                                        if (var26) {
-                                          ((DataBuffer)currentServices).skipBytes(duplicate);
+                                          currentServices.skipBytes(duplicate);
                                           continue;
                                        }
                                     }
@@ -517,7 +518,7 @@ public final class SrpUtils implements SrpConstants {
                            for (i = j - 1; i >= offset; i--) {
                               if (data[i] == 59) {
                                  if (j - (i + 1) > 0) {
-                                    services.addElement(new Object(data, i + 1, j - (i + 1)));
+                                    services.addElement(new String(data, i + 1, j - (i + 1)));
                                  }
 
                                  j = i;
@@ -525,7 +526,7 @@ public final class SrpUtils implements SrpConstants {
                            }
 
                            if (j - ++i > 0) {
-                              services.addElement(new Object(data, i, j - i));
+                              services.addElement(new String(data, i, j - i));
                            }
 
                            if (services.size() > 0) {
@@ -563,7 +564,7 @@ public final class SrpUtils implements SrpConstants {
                                     if (duplicate) {
                                        services.removeElementAt(l);
                                     } else {
-                                       currentServices.addElement(services.elementAt(l));
+                                       currentServices.addElement((String)services.elementAt(l));
                                     }
                                  }
                               }
@@ -609,7 +610,7 @@ public final class SrpUtils implements SrpConstants {
                info.reference = length = DatagramAddressBase.readInt(data, ++offset);
                offset += 4;
                if (length < 0) {
-                  throw new Object();
+                  throw new IOFormatException();
                }
                break;
             case 2:
@@ -617,7 +618,7 @@ public final class SrpUtils implements SrpConstants {
                length = DatagramAddressBase.readInt(data, ++offset);
                offset += 4;
                if (length < 0) {
-                  throw new Object();
+                  throw new IOFormatException();
                }
 
                switch (srpConfig._setUpProgress) {
@@ -695,7 +696,7 @@ public final class SrpUtils implements SrpConstants {
                      case 2:
                         if (command != 4) {
                            if (length < 0) {
-                              throw new Object();
+                              throw new IOFormatException();
                            }
 
                            info.data = data;
@@ -724,9 +725,7 @@ public final class SrpUtils implements SrpConstants {
             case 9:
             case 25:
                if (length == 0
-                  || srpConfig._version < 3
-                     && length > 0
-                     && StringUtilities.strEqualIgnoreCase(getDeviceId(), (String)(new Object(data, offset, length)), 1701707776)) {
+                  || srpConfig._version < 3 && length > 0 && StringUtilities.strEqualIgnoreCase(getDeviceId(), new String(data, offset, length), 1701707776)) {
                   if (command == 9) {
                      srpConfig._setUpProgress = (byte)(srpConfig._setUpProgress | 1);
                   } else {
@@ -740,19 +739,19 @@ public final class SrpUtils implements SrpConstants {
                version = srpConfig._version;
                if (version >= 3) {
                   if (length <= 0) {
-                     throw new Object();
+                     throw new IOFormatException();
                   }
 
-                  if (StringUtilities.strEqualIgnoreCase(getDeviceId(), (String)(new Object(data, offset, length)), 1701707776)) {
+                  if (StringUtilities.strEqualIgnoreCase(getDeviceId(), new String(data, offset, length), 1701707776)) {
                      offset += length;
                      if (offset < dataLength) {
-                        throw new Object();
+                        throw new IOFormatException();
                      }
 
                      length = DatagramAddressBase.readInt(data, ++offset);
                      offset += 4;
                      if (length < 0) {
-                        throw new Object();
+                        throw new IOFormatException();
                      }
 
                      if (srpConfig.isAuthenticated()) {
@@ -772,7 +771,7 @@ public final class SrpUtils implements SrpConstants {
          info.type = command;
          return info;
       } else {
-         throw new Object();
+         throw new IOFormatException();
       }
    }
 
@@ -919,12 +918,12 @@ public final class SrpUtils implements SrpConstants {
    private static final String getDeviceName() {
       String name = DeviceInfo.getDeviceName();
       if (name != null) {
-         name = ((StringBuffer)(new Object("Rim"))).append(name).toString();
+         name = "Rim" + name;
       }
 
       byte[] data = Branding.getData(12292);
       if (data != null) {
-         name = ((StringBuffer)(new Object())).append(name).append('/').append((String)(new Object(data))).toString();
+         name = name + '/' + new String(data);
       }
 
       return name;
@@ -962,7 +961,7 @@ public final class SrpUtils implements SrpConstants {
       byte[] hash = null;
 
       try {
-         HMAC confirmationHMAC = (HMAC)(new Object((HMACKey)(new Object(Arrays.copy(authenticationKey))), (Digest)(new Object())));
+         HMAC confirmationHMAC = new HMAC(new HMACKey(Arrays.copy(authenticationKey)), new SHA1Digest());
          confirmationHMAC.update(challenge, offset, length);
          hash = new byte[confirmationHMAC.getLength()];
          confirmationHMAC.getMAC(hash, 0, true);
@@ -975,7 +974,7 @@ public final class SrpUtils implements SrpConstants {
 
    static final String generateServicesList(Vector services, char delimiter) {
       if (services != null && services.size() > 0) {
-         StringBuffer temp = (StringBuffer)(new Object());
+         StringBuffer temp = new StringBuffer();
          int size = services.size();
 
          for (int i = 0; i < size; i++) {
@@ -1014,7 +1013,7 @@ public final class SrpUtils implements SrpConstants {
          length += 1 + params.length();
       }
 
-      StringBuffer sb = (StringBuffer)(new Object(length));
+      StringBuffer sb = new StringBuffer(length);
       if (scheme != null) {
          sb.append(scheme);
          sb.append(':');
@@ -1040,7 +1039,7 @@ public final class SrpUtils implements SrpConstants {
 
    static final String createSrpAddress(boolean addSchemeSlashes, String connAddress, String scheme, String params) {
       if (connAddress == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int length = connAddress.length() + 2;
@@ -1056,7 +1055,7 @@ public final class SrpUtils implements SrpConstants {
          length += 1 + params.length();
       }
 
-      StringBuffer sb = (StringBuffer)(new Object(length));
+      StringBuffer sb = new StringBuffer(length);
       if (scheme != null) {
          sb.append(scheme);
          sb.append(':');

@@ -16,11 +16,11 @@ public final class CMSSigner {
    private Vector _attributes;
 
    public CMSSigner(SignatureSigner signer, Certificate certificate) {
-      this(signer, new Object[]{certificate}, false);
+      this(signer, new Certificate[]{certificate}, false);
    }
 
    public CMSSigner(SignatureSigner signer, Certificate certificate, boolean writeShortForm) {
-      this(signer, new Object[]{certificate}, writeShortForm);
+      this(signer, new Certificate[]{certificate}, writeShortForm);
    }
 
    public CMSSigner(SignatureSigner signer, Certificate[] certificateChain) {
@@ -31,10 +31,10 @@ public final class CMSSigner {
       if (signer != null && certificateChain != null && certificateChain.length >= 1 && CMSUtilities.isCertificateAllowed(certificateChain[0], 1, 2)) {
          this._signer = signer;
          this._certificate = certificateChain;
-         this._attributes = (Vector)(new Object());
+         this._attributes = new Vector();
          this._writeShortForm = writeShortForm;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -88,7 +88,7 @@ public final class CMSSigner {
 
    public final Enumeration getSignedAttributes() {
       int size = this._attributes.size();
-      Vector signedAttributes = (Vector)(new Object());
+      Vector signedAttributes = new Vector();
 
       for (int i = 0; i < size; i++) {
          CMSAttribute attribute = (CMSAttribute)this._attributes.elementAt(i);
@@ -102,7 +102,7 @@ public final class CMSSigner {
 
    public final Enumeration getUnsignedAttributes() {
       int size = this._attributes.size();
-      Vector unsignedAttributes = (Vector)(new Object());
+      Vector unsignedAttributes = new Vector();
 
       for (int i = 0; i < size; i++) {
          CMSAttribute attribute = (CMSAttribute)this._attributes.elementAt(i);

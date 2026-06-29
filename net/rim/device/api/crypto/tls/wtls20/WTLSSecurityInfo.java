@@ -36,7 +36,7 @@ class WTLSSecurityInfo implements SecurityInfo {
 
    @Override
    public String getCipherSuite() {
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       boolean includedSize = false;
       switch (this._keyAgreement) {
          case 1:

@@ -17,14 +17,14 @@ class DialVerbTypeComparator implements Comparator {
    }
 
    private int getDialVerbType(Object obj) {
-      while (obj instanceof Object) {
+      while (obj instanceof WrapperVerb) {
          obj = ((WrapperVerb)obj).getInnerVerb();
       }
 
       if (obj instanceof DialVerb) {
          DialVerb dialVerb = (DialVerb)obj;
          obj = dialVerb.getPhoneNumber();
-         if (obj instanceof Object) {
+         if (obj instanceof AbstractPhoneNumberModel) {
             AbstractPhoneNumberModel pnm = (AbstractPhoneNumberModel)obj;
             return pnm.getType();
          }

@@ -27,17 +27,17 @@ import net.rim.device.internal.media.M3UPlaylist;
 
 public final class SmartlistScreen extends AppsMainScreen implements ActionProvider, FieldChangeListener {
    private SmartlistItem _smartlist;
-   private VerticalFieldManager _artistsVfm = (VerticalFieldManager)(new Object());
-   private VerticalFieldManager _albumsVfm = (VerticalFieldManager)(new Object());
-   private VerticalFieldManager _genresVfm = (VerticalFieldManager)(new Object());
+   private VerticalFieldManager _artistsVfm = new VerticalFieldManager();
+   private VerticalFieldManager _albumsVfm = new VerticalFieldManager();
+   private VerticalFieldManager _genresVfm = new VerticalFieldManager();
    private boolean _dirty;
    private static final String UTF8 = "UTF-8";
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    protected final void invoke() {
-      PopupScreen dialog = (PopupScreen)(new Object((Manager)(new Object())));
-      dialog.add((Field)(new Object("Generating playlist...", 36028797086072832L)));
+      PopupScreen dialog = new PopupScreen(new VerticalFieldManager());
+      dialog.add(new RichTextField("Generating playlist...", 36028797086072832L));
       UiApplication.getUiApplication().pushScreen(dialog);
       MediaInfoCollection tracks = this._smartlist.getTracks();
       if (tracks.size() == 0) {
@@ -48,18 +48,18 @@ public final class SmartlistScreen extends AppsMainScreen implements ActionProvi
 
          try {
             var12 = true;
-            M3UPlaylist e = new Object();
+            M3UPlaylist e = new M3UPlaylist();
             MediaInfo var15 = null;
             int size = tracks.size();
 
             for (int connection = 0; connection < size; connection++) {
-               var15 = tracks.getAt(connection);
-               ((M3UPlaylist)e).addUrl(((MediaInfo)var15).getLocation(), ((MediaInfo)var15).getName(), -1);
+               var15 = (MediaInfo)tracks.getAt(connection);
+               e.addUrl(var15.getLocation(), var15.getName(), -1);
             }
 
-            InputConnection connection = ((M3UPlaylist)e).openConnection("/");
+            InputConnection connection = e.openConnection("/");
             UiApplication.getUiApplication().popScreen(dialog);
-            ContextObject context = (ContextObject)(new Object());
+            ContextObject context = new ContextObject();
             ContextObject.put(context, -1477447097671931650L, this);
             MediaLauncher.launch(connection, context);
             synchronized (this) {
@@ -88,7 +88,7 @@ public final class SmartlistScreen extends AppsMainScreen implements ActionProvi
 
    @Override
    public final void fieldChanged(Field field, int context) {
-      if (field instanceof Object) {
+      if (field instanceof ButtonField) {
          Object cookie = field.getCookie();
          if (cookie instanceof SmartlistScreen$ButtonInfo) {
             SmartlistScreen$ButtonInfo info = (SmartlistScreen$ButtonInfo)cookie;
@@ -132,7 +132,7 @@ public final class SmartlistScreen extends AppsMainScreen implements ActionProvi
                   if (this._smartlist.addItem(info.getType(), selections[i].toString())) {
                      if (manager.getFieldCount() == 1) {
                         Field field0 = manager.getField(0);
-                        if (field0 instanceof Object) {
+                        if (field0 instanceof RichTextField) {
                            manager.deleteAll();
                         }
                      }
@@ -181,7 +181,7 @@ public final class SmartlistScreen extends AppsMainScreen implements ActionProvi
          return false;
       } else {
          Field field = this.getLeafFieldWithFocus();
-         if (!(field instanceof Object)) {
+         if (!(field instanceof ButtonField)) {
             this.invoke();
             return true;
          } else {
@@ -203,17 +203,17 @@ public final class SmartlistScreen extends AppsMainScreen implements ActionProvi
    }
 
    private final void initialize() {
-      Field banner = ThemeUtilities.getTitleField(((StringBuffer)(new Object("Smartlist: "))).append(this._smartlist.getName()).toString());
+      Field banner = ThemeUtilities.getTitleField("Smartlist: " + this._smartlist.getName());
       this.add(banner);
-      VerticalFieldManager manager = (VerticalFieldManager)(new Object(281474976710656L));
+      VerticalFieldManager manager = new VerticalFieldManager(281474976710656L);
       ListScrollbarManager scrollingManager = new ListScrollbarManager(manager);
       VerticalFieldManager verticalTempManager = null;
       Manager tempManager = null;
-      VerticalFieldManager var8 = new Object(281474976710656L);
-      tempManager = this.createButtonField(2, "Tracks by the following artists", false, (Manager)var8, this._artistsVfm);
-      ((Manager)var8).add(tempManager);
-      ((Manager)var8).add(this._artistsVfm);
-      manager.add((Field)var8);
+      verticalTempManager = new VerticalFieldManager(281474976710656L);
+      tempManager = this.createButtonField(2, "Tracks by the following artists", false, verticalTempManager, this._artistsVfm);
+      verticalTempManager.add(tempManager);
+      verticalTempManager.add(this._artistsVfm);
+      manager.add(verticalTempManager);
       String[] items = this._smartlist.getItems(2);
       if (items.length > 0) {
          for (int i = 0; i < items.length; i++) {
@@ -225,11 +225,11 @@ public final class SmartlistScreen extends AppsMainScreen implements ActionProvi
       }
 
       manager.add(new VerticalSpacerField());
-      var8 = new Object(281474976710656L);
-      tempManager = this.createButtonField(4, "That are in the following albums", false, (Manager)var8, this._albumsVfm);
-      ((Manager)var8).add(tempManager);
-      ((Manager)var8).add(this._albumsVfm);
-      manager.add((Field)var8);
+      verticalTempManager = new VerticalFieldManager(281474976710656L);
+      tempManager = this.createButtonField(4, "That are in the following albums", false, verticalTempManager, this._albumsVfm);
+      verticalTempManager.add(tempManager);
+      verticalTempManager.add(this._albumsVfm);
+      manager.add(verticalTempManager);
       items = this._smartlist.getItems(4);
       if (items.length > 0) {
          for (int i = 0; i < items.length; i++) {
@@ -241,11 +241,11 @@ public final class SmartlistScreen extends AppsMainScreen implements ActionProvi
       }
 
       manager.add(new VerticalSpacerField());
-      var8 = new Object(281474976710656L);
-      tempManager = this.createButtonField(8, "And are of the following genres", false, (Manager)var8, this._genresVfm);
-      ((Manager)var8).add(tempManager);
-      ((Manager)var8).add(this._genresVfm);
-      manager.add((Field)var8);
+      verticalTempManager = new VerticalFieldManager(281474976710656L);
+      tempManager = this.createButtonField(8, "And are of the following genres", false, verticalTempManager, this._genresVfm);
+      verticalTempManager.add(tempManager);
+      verticalTempManager.add(this._genresVfm);
+      manager.add(verticalTempManager);
       items = this._smartlist.getItems(8);
       if (items.length > 0) {
          for (int i = 0; i < items.length; i++) {
@@ -281,13 +281,13 @@ public final class SmartlistScreen extends AppsMainScreen implements ActionProvi
          text = "Add";
       }
 
-      ButtonField button = (ButtonField)(new Object(text, 65536));
+      ButtonField button = new ButtonField(text, 65536);
       SmartlistScreen$ButtonInfo info = new SmartlistScreen$ButtonInfo(type, string, isRemove);
       button.setCookie(info);
       button.setChangeListener(this);
       RichTextField rtf = null;
-      RichTextField var13 = new Object(string, 36028799166447616L);
-      ((Field)var13).setTag(ThemeUtilities.SELECTABLE_TEXT_TAG);
+      rtf = new RichTextField(string, 36028799166447616L);
+      rtf.setTag(ThemeUtilities.SELECTABLE_TEXT_TAG);
       RightAlightButtonManager rbm = new RightAlightButtonManager(!isRemove);
       if (isRemove) {
          rbm.add(new HorizontalSpacerField());
@@ -295,10 +295,10 @@ public final class SmartlistScreen extends AppsMainScreen implements ActionProvi
          rbm.add(new CollapseToggleField(manager, field));
       }
 
-      rbm.add((Field)var13);
+      rbm.add(rtf);
       rbm.add(button);
       if (isRemove) {
-         VerticalFieldManager vfm = (VerticalFieldManager)(new Object());
+         VerticalFieldManager vfm = new VerticalFieldManager();
          vfm.add(rbm);
          vfm.add(new MySeparatorField());
          return vfm;
@@ -308,7 +308,7 @@ public final class SmartlistScreen extends AppsMainScreen implements ActionProvi
    }
 
    private final RichTextField createAnyField() {
-      RichTextField rtf = (RichTextField)(new Object("(Any)", 36028797019226112L));
+      RichTextField rtf = new RichTextField("(Any)", 36028797019226112L);
       rtf.setTag(ThemeUtilities.SELECTABLE_TEXT_TAG);
       return rtf;
    }

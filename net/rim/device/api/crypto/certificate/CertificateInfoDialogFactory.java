@@ -17,12 +17,12 @@ public class CertificateInfoDialogFactory {
 
    public static boolean register(CertificateInfoDialogFactory factory) {
       if (factory == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       String type = factory.getType();
       if (type == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (_hashtable.containsKey(type)) {
@@ -43,7 +43,7 @@ public class CertificateInfoDialogFactory {
       long style
    ) {
       if (certificate == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       String certificateType = certificate.getType();

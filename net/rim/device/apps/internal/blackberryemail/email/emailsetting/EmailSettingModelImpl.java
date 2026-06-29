@@ -15,6 +15,7 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.DateField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.DateTimeUtilities;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -48,7 +49,7 @@ public final class EmailSettingModelImpl
    int _dueDate = Integer.MIN_VALUE;
    private Object _signatureTextEncoded = null;
    private Object _outOfOfficeTextEncoded = null;
-   Vector _fields = (Vector)(new Object());
+   Vector _fields = new Vector();
    private Object _additionalData;
    private static final int MAX_SIZE = 2048;
    public static final int AUTO_SIGNATURE_AND_REDIRECT = 1;
@@ -59,7 +60,7 @@ public final class EmailSettingModelImpl
    public static final int OUT_OF_OFFICE_MESSAGE_AND_SIGNATURE_TEXT = 6;
    public static final int OUT_OF_OFFICE_DATE_AND_OUTOFOFFICE_TEXT = 7;
    public static final int KEY = 8;
-   private static ContextObject _filterSyncContext = (ContextObject)(new Object(50, 19));
+   private static ContextObject _filterSyncContext = new ContextObject(50, 19);
 
    public final String getAutoSignature() {
       try {
@@ -75,12 +76,12 @@ public final class EmailSettingModelImpl
          return null;
       }
 
-      Verb[] newVerbs = new Object[0];
+      Verb[] newVerbs = new Verb[0];
       Array.resize(verbs, 0);
 
       for (int i = 0; i < this.size(); i++) {
          Object itemField = this.getAt(i);
-         if (itemField instanceof Object) {
+         if (itemField instanceof VerbProvider) {
             VerbProvider verbProvider = (VerbProvider)itemField;
             verbProvider.getVerbs(context, newVerbs);
             int newCount = newVerbs.length;
@@ -144,15 +145,15 @@ public final class EmailSettingModelImpl
 
    public final boolean grabDataFromField(Field field) {
       boolean changesMade = false;
-      if (field instanceof Object) {
+      if (field instanceof VerticalFieldManager) {
          VerticalFieldManager vfm = (VerticalFieldManager)field;
          int count = vfm.getFieldCount();
 
          for (int i = 0; i < count; i++) {
             Field child = vfm.getField(i);
             if (!(child instanceof EmailSettingModelImpl$ObjectChoiceFieldWithId)) {
-               if (!(child instanceof Object)) {
-                  if (child instanceof Object) {
+               if (!(child instanceof AutoTextInputFieldWithId)) {
+                  if (child instanceof DateField) {
                      DateField df = (DateField)child;
                      this._dueDate = (int)(df.getDate() / 1000);
                      changesMade = true;
@@ -221,8 +222,8 @@ public final class EmailSettingModelImpl
    }
 
    public final Field getEditableField() {
-      String[] noYesOptions = new Object[]{EmailResources.getString(190), EmailResources.getString(191)};
-      VerticalFieldManager vfm = (VerticalFieldManager)(new Object());
+      String[] noYesOptions = new String[]{EmailResources.getString(190), EmailResources.getString(191)};
+      VerticalFieldManager vfm = new VerticalFieldManager();
       EmailSettingModelImpl$ObjectChoiceFieldWithId redirect = new EmailSettingModelImpl$ObjectChoiceFieldWithId(
          1, EmailResources.getString(193), noYesOptions, this._emailRedirection
       );
@@ -245,7 +246,7 @@ public final class EmailSettingModelImpl
       vfm.add(saveSentItem);
       vfm.add(signatureChoice);
       if (this._autoSignature == 1) {
-         AutoTextInputFieldWithId signature = (AutoTextInputFieldWithId)(new Object(6, null, null, this.getAutoSignature(), 2048, 2048, (byte)2, 0));
+         AutoTextInputFieldWithId signature = new AutoTextInputFieldWithId(6, null, null, this.getAutoSignature(), 2048, 2048, (byte)2, 0);
          vfm.add(signature);
       }
 
@@ -256,11 +257,11 @@ public final class EmailSettingModelImpl
             vfm.add(df);
          }
 
-         AutoTextInputFieldWithId autoReply = (AutoTextInputFieldWithId)(new Object(7, null, null, this.getOutOfOfficeText(), 2048, 2048, (byte)2, 0));
+         AutoTextInputFieldWithId autoReply = new AutoTextInputFieldWithId(7, null, null, this.getOutOfOfficeText(), 2048, 2048, (byte)2, 0);
          vfm.add(autoReply);
       }
 
-      vfm.add((Field)(new Object()));
+      vfm.add(new SeparatorField());
       return vfm;
    }
 
@@ -328,7 +329,7 @@ public final class EmailSettingModelImpl
 
          for (int i = 0; i < numSubmembers; i++) {
             Object object = this._fields.elementAt(i);
-            if (object instanceof Object) {
+            if (object instanceof EncryptableProvider) {
                EncryptableProvider encryptable = (EncryptableProvider)object;
                if (!encryptable.checkCrypt(compress, encrypt)) {
                   return false;
@@ -351,7 +352,7 @@ public final class EmailSettingModelImpl
 
       for (int i = 0; i < numSubmembers; i++) {
          Object object = newModel._fields.elementAt(i);
-         if (object instanceof Object) {
+         if (object instanceof EncryptableProvider) {
             EncryptableProvider encryptable = (EncryptableProvider)object;
             Object newObject = encryptable.reCrypt(compress, encrypt);
             if (newObject != null) {
@@ -416,7 +417,7 @@ public final class EmailSettingModelImpl
                   }
             }
 
-            AutoTextInputFieldWithId input = (AutoTextInputFieldWithId)(new Object(id, null, null, text, 2048, 2048, (byte)2, 0));
+            AutoTextInputFieldWithId input = new AutoTextInputFieldWithId(id, null, null, text, 2048, 2048, (byte)2, 0);
             manager.insert(input, index);
             Field lastField = manager.getField(manager.getFieldCount() - 1);
             lastField.getScreen().ensureRegionVisible(lastField, 0, 0, 0, 0);
@@ -433,7 +434,7 @@ public final class EmailSettingModelImpl
 
    EmailSettingModelImpl(Object initialData) {
       this();
-      if (initialData instanceof Object) {
+      if (initialData instanceof String) {
          this._id = (String)initialData;
       }
    }
@@ -458,11 +459,11 @@ public final class EmailSettingModelImpl
    private final Field getDateField() {
       DateField df = null;
       if (this.isOutOfOfficeEndDateSupported()) {
-         df = (DateField)(new Object(
+         df = new DateField(
             EmailResources.getString(197),
-            this.hasDate() ? (long)this._dueDate * 1000 : ((Date)(new Object(System.currentTimeMillis()))).getTime(),
+            this.hasDate() ? (long)this._dueDate * 1000 : new Date(System.currentTimeMillis()).getTime(),
             DateFormat.getInstance(40)
-         ));
+         );
          df.setTimeZone(Calendar.getInstance(TimeZone.getTimeZone(DateTimeUtilities.GMT)).getTimeZone());
       }
 

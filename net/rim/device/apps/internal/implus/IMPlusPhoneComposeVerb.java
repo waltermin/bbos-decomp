@@ -29,7 +29,7 @@ final class IMPlusPhoneComposeVerb extends Verb implements SetParameter, Copyabl
 
    @Override
    public final void setParameter(Object context) {
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          this._context = (ContextObject)context;
          if (ContextObject.getFlag(context, 7)) {
             super._ordering = this._isFax ? 328016 : 327973;
@@ -38,7 +38,7 @@ final class IMPlusPhoneComposeVerb extends Verb implements SetParameter, Copyabl
          this._phoneNumber = (PersistableRIMModel)this._context.get(247);
          this._addressCard = (PersistableRIMModel)this._context.get(252);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -51,11 +51,11 @@ final class IMPlusPhoneComposeVerb extends Verb implements SetParameter, Copyabl
    public final String toString(Object context) {
       if (this._phoneNumber != null) {
          String address;
-         if (!(this._phoneNumber instanceof Object)) {
+         if (!(this._phoneNumber instanceof VerbDescriptionProvider)) {
             address = this._phoneNumber.toString();
          } else {
             VerbDescriptionProvider verbDescriptionProvider = (VerbDescriptionProvider)this._phoneNumber;
-            if (context instanceof Object && this._addressCard != null) {
+            if (context instanceof ContextObject && this._addressCard != null) {
                ContextObject.put(context, 252, this._addressCard);
             }
 
@@ -67,7 +67,7 @@ final class IMPlusPhoneComposeVerb extends Verb implements SetParameter, Copyabl
             return address;
          }
 
-         StringBuffer buf = (StringBuffer)(new Object());
+         StringBuffer buf = new StringBuffer();
          String prefix = IMPlusResources.getString(17);
          buf.append(prefix);
          buf.append(' ');

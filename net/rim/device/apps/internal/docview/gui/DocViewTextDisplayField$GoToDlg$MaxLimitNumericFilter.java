@@ -22,7 +22,7 @@ final class DocViewTextDisplayField$GoToDlg$MaxLimitNumericFilter extends Numeri
 
    private final boolean maxLimitValidate(char character) {
       try {
-         int val = Integer.valueOf(((StringBuffer)(new Object())).append(this.this$0.getText()).append(character).toString());
+         int val = Integer.valueOf(this.this$0.getText() + character);
          if (val > 0 && val <= this.this$0._maxLimit) {
             return true;
          }

@@ -34,18 +34,18 @@ final class Fdd extends ModeSpecificInfo {
    @Override
    final void print() {
       System.out.println("Fdd: ");
-      System.out.println(((StringBuffer)(new Object("Optionals: "))).append(this.optionals).toString());
-      System.out.println(((StringBuffer)(new Object("Primary CPICH Info: "))).append(this.primaryCPICHInfo).toString());
+      System.out.println("Optionals: " + this.optionals);
+      System.out.println("Primary CPICH Info: " + this.primaryCPICHInfo);
       if ((this.optionals & 4) == 4) {
-         System.out.println(((StringBuffer)(new Object("CpichEcN0: "))).append(this.cpichEcN0).toString());
+         System.out.println("CpichEcN0: " + this.cpichEcN0);
       }
 
       if ((this.optionals & 2) == 2) {
-         System.out.println(((StringBuffer)(new Object("CpichRscp: "))).append(this.cpichRscp).toString());
+         System.out.println("CpichRscp: " + this.cpichRscp);
       }
 
       if ((this.optionals & 1) == 1) {
-         System.out.println(((StringBuffer)(new Object("Path Loss: "))).append(this.pathLoss).toString());
+         System.out.println("Path Loss: " + this.pathLoss);
       }
    }
 }

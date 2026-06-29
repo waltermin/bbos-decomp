@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.messaging;
 import java.util.Enumeration;
 import net.rim.device.api.collection.Collection;
 import net.rim.device.api.collection.ReadableList;
+import net.rim.device.api.util.ObjectEnumerator;
 import net.rim.device.apps.api.messaging.Folder;
 import net.rim.device.apps.api.messaging.FolderHierarchies;
 import net.rim.device.apps.api.messaging.FolderMerge;
@@ -62,7 +63,7 @@ final class AnonymousMessagesImpl$AnonymousMessageHierarchy implements Folder {
    public final Enumeration getSubFolders() {
       synchronized (FolderHierarchies.getLockObject()) {
          Object[] objects = new Object[]{this._mainFolder, this._savedThenOrphanedFolder};
-         return (Enumeration)(new Object(objects));
+         return new ObjectEnumerator(objects);
       }
    }
 

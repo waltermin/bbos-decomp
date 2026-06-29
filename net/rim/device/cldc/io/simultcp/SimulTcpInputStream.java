@@ -1,6 +1,7 @@
 package net.rim.device.cldc.io.simultcp;
 
 import java.io.InputStream;
+import net.rim.device.api.io.ConnectionClosedException;
 import net.rim.device.internal.io.streamdatagram.StreamDatagramConnectionBase;
 
 final class SimulTcpInputStream extends InputStream {
@@ -18,7 +19,7 @@ final class SimulTcpInputStream extends InputStream {
    public final int read() {
       synchronized (this.ReceiveBlock) {
          if (this._isClosed) {
-            throw new Object();
+            throw new ConnectionClosedException();
          }
 
          int ret = this._connection.readFromInputBuffer(this._oneByteArray, 0, 1);
@@ -31,11 +32,11 @@ final class SimulTcpInputStream extends InputStream {
    public final int read(byte[] b, int offset, int length) {
       synchronized (this.ReceiveBlock) {
          if (this._isClosed) {
-            throw new Object();
+            throw new ConnectionClosedException();
          }
 
          if (offset < 0 || length < 0 || offset + length > b.length) {
-            throw new Object();
+            throw new IndexOutOfBoundsException();
          }
 
          if (length == 0) {
@@ -43,7 +44,7 @@ final class SimulTcpInputStream extends InputStream {
          }
 
          if (this._isClosed) {
-            throw new Object();
+            throw new ConnectionClosedException();
          }
 
          int ret = this._connection.readFromInputBuffer(b, offset, length);
@@ -61,9 +62,9 @@ final class SimulTcpInputStream extends InputStream {
    }
 
    @Override
-   public final int available() {
+   public final int available() throws ConnectionClosedException {
       if (this._isClosed) {
-         throw new Object();
+         throw new ConnectionClosedException();
       } else {
          return this._connection.available();
       }

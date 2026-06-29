@@ -15,11 +15,13 @@ import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.CookieProvider;
 import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.URLProvider;
 import net.rim.device.apps.api.framework.model.VerbProvider;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.CookieProviderUtilities;
+import net.rim.device.apps.api.ui.VerbMenuItem;
 import net.rim.device.apps.api.utility.general.URI;
 import net.rim.device.apps.internal.browser.api.LoadingImagesEvent;
 import net.rim.device.apps.internal.browser.common.BrowserPhoneConfirmation;
@@ -56,7 +58,7 @@ public class BrowserContentImpl extends BrowserContentBaseImpl {
    public BrowserContentImpl(
       Renderer renderer, String url, Manager contentManager, RenderingApplication renderingApplication, RenderingOptions renderingOptions, int flags
    ) {
-      super(url, (Field)(contentManager == null ? new Object(3460171888704094208L) : contentManager), renderingApplication, renderingOptions, flags);
+      super(url, contentManager == null ? new VerticalFieldManager(3460171888704094208L) : contentManager, renderingApplication, renderingOptions, flags);
       this._renderer = renderer;
       this._secondaryURLManager = new SecondaryURLManager(super._renderingOptions);
       super._url = url;
@@ -70,7 +72,7 @@ public class BrowserContentImpl extends BrowserContentBaseImpl {
          this._urlCache = new URLCache(super._url, super._renderingOptions);
          if (super._renderingOptions != null && super._renderingOptions.getPropertyWithBooleanValue(4550690918222697397L, 49, false) && renderer != null) {
             InputConnection inputConnection = renderer._inputConnection;
-            if (inputConnection instanceof Object) {
+            if (inputConnection instanceof HttpConnection) {
                HttpConnection httpConnection = (HttpConnection)inputConnection;
 
                try {
@@ -203,7 +205,7 @@ public class BrowserContentImpl extends BrowserContentBaseImpl {
          Object model = null;
          Field fieldWithFocus = this.getDisplayableContent().getLeafFieldWithFocus();
          Manager fieldsMgr = this.getContentManager();
-         if (!(fieldWithFocus instanceof Object)) {
+         if (!(fieldWithFocus instanceof CookieProvider)) {
             if (fieldsMgr instanceof BrowserTextFlowManager) {
                model = CookieProviderUtilities.getDefaultCookie(((BrowserTextFlowManager)fieldsMgr).getCookieWithFocus());
             }
@@ -213,7 +215,7 @@ public class BrowserContentImpl extends BrowserContentBaseImpl {
 
          String url = null;
          if (model != null && !(model instanceof HTTPAddressModel)) {
-            if (!(model instanceof Object)) {
+            if (!(model instanceof URLProvider)) {
                url = BrowserResources.getString(390);
             } else {
                URLProvider urlProvider = (URLProvider)model;
@@ -226,7 +228,7 @@ public class BrowserContentImpl extends BrowserContentBaseImpl {
 
          if (url != null) {
             ShowUrlVerb verb = new ShowUrlVerb(null, url, this, 1);
-            menu.add((MenuItem)(new Object(verb, Integer.MAX_VALUE)));
+            menu.add(new VerbMenuItem(verb, Integer.MAX_VALUE));
          }
       }
    }
@@ -235,9 +237,9 @@ public class BrowserContentImpl extends BrowserContentBaseImpl {
       this.addLinkAddressVerb(menu);
       if (this.hasUnrequestedImages()) {
          MoreImagesVerb verb = new MoreImagesVerb(this, true);
-         menu.add((MenuItem)(new Object(verb, 30)));
+         menu.add(new VerbMenuItem(verb, 30));
          verb = new MoreImagesVerb(this, false);
-         MenuItem item = (MenuItem)(new Object(verb, 30));
+         MenuItem item = new VerbMenuItem(verb, 30);
          menu.add(item);
          if (menu.getDefault() == null) {
             menu.setDefault(item);
@@ -249,7 +251,7 @@ public class BrowserContentImpl extends BrowserContentBaseImpl {
          int size = findVerbs.length;
 
          for (int i = 0; i < size; i++) {
-            menu.add((MenuItem)(new Object(findVerbs[i], Integer.MAX_VALUE)));
+            menu.add(new VerbMenuItem(findVerbs[i], Integer.MAX_VALUE));
          }
       }
 
@@ -257,7 +259,7 @@ public class BrowserContentImpl extends BrowserContentBaseImpl {
          int size = this._fieldVerbs.size();
 
          for (int i = 0; i < size; i++) {
-            MenuItem item = (MenuItem)(new Object((Verb)this._fieldVerbs.elementAt(i), 20));
+            MenuItem item = new VerbMenuItem((Verb)this._fieldVerbs.elementAt(i), 20);
             menu.add(item);
             if (i == 0 && menu.getDefault() == null) {
                menu.setDefault(item);
@@ -275,7 +277,7 @@ public class BrowserContentImpl extends BrowserContentBaseImpl {
    public void requestImage(String urlToLoad) {
       this._imagesToLoad = 0;
       this._imagesLoaded = 0;
-      this.requestMoreImages(new Object[]{urlToLoad});
+      this.requestMoreImages(new String[]{urlToLoad});
    }
 
    private void requestMoreImagesInternal(boolean doMoreAll) {
@@ -324,15 +326,15 @@ public class BrowserContentImpl extends BrowserContentBaseImpl {
             this._imagesToLoad++;
          }
 
-         HttpHeaders requestHeaders = (HttpHeaders)(new Object());
+         HttpHeaders requestHeaders = new HttpHeaders();
          RenderingUtilities.setReferrer(requestHeaders, super._url);
          if (isImageRequest) {
             requestHeaders.addProperty("Accept", ImageRenderingConverter.getAcceptString());
          }
 
-         RequestedResource resource = (RequestedResource)(new Object(url, requestHeaders, super._flags & 0xFF | (returnExpired ? 32768 : 0)));
+         RequestedResource resource = new RequestedResource(url, requestHeaders, super._flags & 0xFF | (returnExpired ? 32768 : 0));
          InputConnection conn = null;
-         if (!(super._renderingApplication instanceof Object)) {
+         if (!(super._renderingApplication instanceof ResourceProvider)) {
             conn = super._renderingApplication.getResource(resource, this);
          } else {
             conn = ((ResourceProvider)super._renderingApplication).getInputConnection(resource, this);
@@ -380,11 +382,11 @@ public class BrowserContentImpl extends BrowserContentBaseImpl {
       }
 
       Object model = null;
-      if (!(fieldWithFocus instanceof Object)) {
+      if (!(fieldWithFocus instanceof CookieProvider)) {
          if (fieldWithFocus != null) {
             Manager manager = fieldWithFocus.getManager();
             if (!(manager instanceof BrowserTextFlowManager)) {
-               while (manager != null && !(manager instanceof Object)) {
+               while (manager != null && !(manager instanceof VerbProvider)) {
                   manager = manager.getManager();
                }
 
@@ -398,18 +400,18 @@ public class BrowserContentImpl extends BrowserContentBaseImpl {
          model = CookieProviderUtilities.getDefaultCookie(((CookieProvider)fieldWithFocus).getCookieWithFocus());
       }
 
-      boolean isModelVerbProvider = model instanceof Object;
+      boolean isModelVerbProvider = model instanceof VerbProvider;
       Field field = this.getDisplayableContent();
-      if (!isModelVerbProvider && field instanceof Object) {
+      if (!isModelVerbProvider && field instanceof VerbProvider) {
          fieldWithFocus = field;
          model = field;
          isModelVerbProvider = true;
       }
 
       if (isModelVerbProvider) {
-         Verb[] verbs = new Object[0];
+         Verb[] verbs = new Verb[0];
          VerbProvider verbProvider = (VerbProvider)model;
-         ContextObject context = (ContextObject)(new Object(2, 73, 96));
+         ContextObject context = new ContextObject(2, 73, 96);
          context.setFlag(83);
          context.setFlag(61);
          context.put(8128293842573788963L, _browserPhoneConfirmation);
@@ -448,7 +450,7 @@ public class BrowserContentImpl extends BrowserContentBaseImpl {
    @Override
    public void finishLoading() {
       if (Application.isEventDispatchThread()) {
-         throw new Object("finishLoading is called on the event dispatch thread");
+         throw new RuntimeException("finishLoading is called on the event dispatch thread");
       }
 
       boolean var4 = false /* VF: Semaphore variable */;

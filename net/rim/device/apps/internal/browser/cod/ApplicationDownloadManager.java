@@ -56,7 +56,7 @@ final class ApplicationDownloadManager extends DownloadManager {
       this._listener = listener;
       this._jad = jad;
       this._jarStream = jarStream;
-      this._upgradeAndDeleteGroups = (Hashtable)(new Object());
+      this._upgradeAndDeleteGroups = new Hashtable();
       if (configUid != null) {
          this._browserConfigRecord = BrowserConfigRecord.getDecodedConfig(configUid, -1, null);
       }
@@ -89,17 +89,17 @@ final class ApplicationDownloadManager extends DownloadManager {
                   try {
                      try {
                         var209 = true;
-                        this._loadedModules = (IntVector)(new Object());
-                        String t = this._jad.get("MIDlet-Name");
-                        String midletVendor = this._jad.get("MIDlet-Vendor");
-                        String moduleGroupName = this.getModuleGroupName((String)t, (String)midletVendor);
-                        String midletVersion = this._jad.get("MIDlet-Version");
+                        this._loadedModules = new IntVector();
+                        String t = (String)this._jad.get("MIDlet-Name");
+                        String midletVendor = (String)this._jad.get("MIDlet-Vendor");
+                        String moduleGroupName = this.getModuleGroupName(t, midletVendor);
+                        String midletVersion = (String)this._jad.get("MIDlet-Version");
                         CodeModuleGroup existingModuleGroup = CodeModuleGroupManager.load(moduleGroupName);
                         if (existingModuleGroup == null && t != null && midletVendor != null) {
                            CodeModuleGroup[] moduleGroups = CodeModuleGroupManager.loadAll();
                            if (moduleGroups != null) {
                               for (int i = moduleGroups.length - 1; i >= 0; i--) {
-                                 if (((String)t).equals(moduleGroups[i].getFriendlyName()) && ((String)midletVendor).equals(moduleGroups[i].getVendor())) {
+                                 if (t.equals(moduleGroups[i].getFriendlyName()) && midletVendor.equals(moduleGroups[i].getVendor())) {
                                     existingModuleGroup = moduleGroups[i];
                                     moduleGroupName = existingModuleGroup.getName();
                                     break;
@@ -108,10 +108,10 @@ final class ApplicationDownloadManager extends DownloadManager {
                            }
                         }
 
-                        this._moduleGroup = (CodeModuleGroup)(new Object(moduleGroupName));
-                        this._moduleGroup.setFriendlyName((String)t);
-                        this._moduleGroup.setVendor((String)midletVendor);
-                        this._moduleGroup.setVersion((String)midletVersion);
+                        this._moduleGroup = new CodeModuleGroup(moduleGroupName);
+                        this._moduleGroup.setFriendlyName(t);
+                        this._moduleGroup.setVendor(midletVendor);
+                        this._moduleGroup.setVersion(midletVersion);
                         String description = (String)this._jad.get("MIDlet-Description");
                         this._moduleGroup.setDescription(description);
                         boolean upgrade = false;
@@ -140,7 +140,7 @@ final class ApplicationDownloadManager extends DownloadManager {
                            }
 
                            String existingVersion = existingModuleGroup.getVersion();
-                           upgrade = this._listener.performUpgrade(existingVersion, (String)midletVersion);
+                           upgrade = this._listener.performUpgrade(existingVersion, midletVersion);
                            if (!upgrade) {
                               this._otaStatus = 902;
                               this._otaError = null;
@@ -192,9 +192,8 @@ final class ApplicationDownloadManager extends DownloadManager {
                            }
 
                            if (upgrade && !this.allowMIDletRecordStoreUpgrade(existingModuleGroup) && this._listener.removeRecordStores()) {
-                              ((RecordStoreManagerProxy)ApplicationRegistry.getApplicationRegistry()
-                                 .waitFor(6635119920104263588L))
-                                 .deleteRecordStores((String)t, (String)midletVendor);
+                              ((RecordStoreManagerProxy)ApplicationRegistry.getApplicationRegistry().waitFor(6635119920104263588L))
+                                 .deleteRecordStores(t, midletVendor);
                            }
 
                            Enumeration groups = this._upgradeAndDeleteGroups.keys();
@@ -213,7 +212,7 @@ final class ApplicationDownloadManager extends DownloadManager {
                                  }
                               }
 
-                              if (this._upgradeAndDeleteGroups.get(currGroup).equals("delete")) {
+                              if (((String)this._upgradeAndDeleteGroups.get(currGroup)).equals("delete")) {
                                  currGroup.delete();
                               }
                            }
@@ -439,7 +438,7 @@ final class ApplicationDownloadManager extends DownloadManager {
 
    @Override
    protected final void setError(Throwable t) {
-      if (t instanceof Object) {
+      if (t instanceof OutOfMemoryError) {
          this._otaStatus = 901;
          this._otaError = BrowserResources.getString(588);
       } else {
@@ -448,7 +447,7 @@ final class ApplicationDownloadManager extends DownloadManager {
    }
 
    private final HttpHeaders getRequestHeaders(String acceptHeader, int codSelectionIndex) {
-      HttpHeaders requestHeaders = (HttpHeaders)(new Object());
+      HttpHeaders requestHeaders = new HttpHeaders();
       BrowserImpl browser = BrowserDaemonRegistry.getInstance();
       if (this._browserConfigRecord != null) {
          RenderingSession renderingSession = RenderingSessionImpl.getNewInstance();
@@ -687,7 +686,7 @@ final class ApplicationDownloadManager extends DownloadManager {
 
       try {
          var6 = true;
-         var8 = new Object(certEncoding);
+         cert = new X509Certificate(certEncoding);
          digest = DigestFactory.getInstance("SHA256");
          var6 = false;
       } finally {
@@ -696,7 +695,7 @@ final class ApplicationDownloadManager extends DownloadManager {
          }
       }
 
-      this._moduleGroup.setMIDletSigner(((X509Certificate)var8).getSubjectFriendlyName());
+      this._moduleGroup.setMIDletSigner(cert.getSubjectFriendlyName());
       digest.update(certEncoding);
       this._moduleGroup.setMIDletSignerHash(digest.getDigest());
    }
@@ -922,13 +921,13 @@ final class ApplicationDownloadManager extends DownloadManager {
       int codCount = this._jad.getCodUrlCount();
       if (codCount > 0) {
          for (int i = 0; i < codCount; i++) {
-            String codURLKey = i == 0 ? "RIM-COD-URL" : ((StringBuffer)(new Object("RIM-COD-URL-"))).append(i).toString();
+            String codURLKey = i == 0 ? "RIM-COD-URL" : "RIM-COD-URL-" + i;
             if (!this.urlSchemeHostAndPathMatch(this._jad.getURLbyNumber(i), existingModuleGroup.getProperty(codURLKey))) {
                jarURLsMatch = false;
             }
          }
 
-         if (existingModuleGroup.getProperty(((StringBuffer)(new Object("RIM-COD-URL-"))).append(codCount).toString()) != null) {
+         if (existingModuleGroup.getProperty("RIM-COD-URL-" + codCount) != null) {
             jarURLsMatch = false;
          }
       } else {
@@ -944,15 +943,15 @@ final class ApplicationDownloadManager extends DownloadManager {
          URL parsedURL2 = null;
 
          try {
-            var8 = new Object(url1);
-            var9 = new Object(url2);
+            parsedURL1 = new URL(url1);
+            parsedURL2 = new URL(url2);
          } finally {
             ;
          }
 
-         return this.partsMatch(((URL)var8).getScheme(), ((URL)var9).getScheme())
-            && this.partsMatch(((URL)var8).getHost(), ((URL)var9).getHost())
-            && this.partsMatch(((URL)var8).getPath(), ((URL)var9).getPath());
+         return this.partsMatch(parsedURL1.getScheme(), parsedURL2.getScheme())
+            && this.partsMatch(parsedURL1.getHost(), parsedURL2.getHost())
+            && this.partsMatch(parsedURL1.getPath(), parsedURL2.getPath());
       } else {
          return false;
       }
@@ -995,7 +994,7 @@ final class ApplicationDownloadManager extends DownloadManager {
    }
 
    private final String getModuleGroupName(String midletName, String midletVendor) {
-      return ((StringBuffer)(new Object())).append(midletName).append(':').append(midletVendor).toString();
+      return midletName + ':' + midletVendor;
    }
 
    private final String getModuleNameFromBytes(byte[] bytes) {
@@ -1003,7 +1002,7 @@ final class ApplicationDownloadManager extends DownloadManager {
          int dataOffset = 44 + (bytes[38] & 255) + ((bytes[39] & 255) << 8);
          int classOffset = 52 + (bytes[dataOffset + 5] & 255) * 2;
          int nameOffset = (bytes[dataOffset + classOffset] & 255) + ((bytes[dataOffset + classOffset + 1] & 255) << 8);
-         StringBuffer moduleName = (StringBuffer)(new Object());
+         StringBuffer moduleName = new StringBuffer();
 
          for (int i = dataOffset + nameOffset; bytes[i] != 0; i++) {
             moduleName.append((char)bytes[i]);
@@ -1016,7 +1015,7 @@ final class ApplicationDownloadManager extends DownloadManager {
    }
 
    private final byte[] getHashFromBytes(byte[] bytes) {
-      SHA1Digest digest = (SHA1Digest)(new Object());
+      SHA1Digest digest = new SHA1Digest();
 
       try {
          int codeSize = (bytes[38] & 255) + ((bytes[39] & 255) << 8);

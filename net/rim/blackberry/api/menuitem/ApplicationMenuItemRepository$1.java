@@ -1,6 +1,8 @@
 package net.rim.blackberry.api.menuitem;
 
+import net.rim.blackberry.api.maps.MapView;
 import net.rim.device.apps.api.framework.model.ContextObject;
+import net.rim.device.apps.internal.sms.SMSModel;
 
 class ApplicationMenuItemRepository$1 implements ApplicationSpecificProcessing {
    private final ApplicationMenuItemRepository this$0;
@@ -17,13 +19,13 @@ class ApplicationMenuItemRepository$1 implements ApplicationSpecificProcessing {
             return o;
          }
       } else if (menuitemid == 4804476335504286437L) {
-         if (c instanceof Object) {
-            return new Object((ContextObject)c);
+         if (c instanceof ContextObject) {
+            return new MapView((ContextObject)c);
          }
       } else {
          if (menuitemid == 9096799525298506811L || menuitemid == 4101976187669332923L) {
             Object obj = ContextObject.get(c, 250);
-            if (!(obj instanceof Object)) {
+            if (!(obj instanceof SMSModel)) {
                obj = ContextObject.get(c, 245);
             }
 

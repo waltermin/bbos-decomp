@@ -35,7 +35,7 @@ public class SpellCheckOnSendAgent implements FieldChangeListener, UIConstants, 
    private static final int SPELL_CHECK_FIELD_SPAWNED = 1;
    private static final int SPELL_CHECK_FIELD_ERROR = 2;
    private static final int IDLE_TIME_OUT = 300;
-   private static final Integer ABORT_REASON_IDLE = (Integer)(new Object(16));
+   private static final Integer ABORT_REASON_IDLE = new Integer(16);
 
    SpellCheckOnSendAgent(EmailSendVerb invokee) {
       this._invokee = invokee;

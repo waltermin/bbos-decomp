@@ -2,8 +2,8 @@ package net.rim.device.apps.internal.bis.ui;
 
 import java.util.Hashtable;
 import net.rim.device.api.i18n.MessageFormat;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.BasicEditField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.apps.internal.bis.ApplicationResources;
 import net.rim.device.apps.internal.bis.api.ui.BoldLabelField;
@@ -48,22 +48,22 @@ public final class HostedSecretQuestionScreen extends UserSettingsScreen {
 
       String titleText = null;
       if (create) {
-         titleText = MessageFormat.format(ApplicationResources.getString(265), new Object[]{mailboxToEdit.getDescription()});
+         titleText = MessageFormat.format(ApplicationResources.getString(265), new String[]{mailboxToEdit.getDescription()});
       } else {
-         titleText = MessageFormat.format(ApplicationResources.getString(257), new Object[]{mailboxToEdit.getDescription()});
+         titleText = MessageFormat.format(ApplicationResources.getString(257), new String[]{mailboxToEdit.getDescription()});
       }
 
       this.setTitle(titleText);
       this.addContentField(new BoldLabelField(ApplicationResources.getString(250)));
-      this._secretQuestions = (ObjectChoiceField)(new Object(null, ClientSessionState.getInstance().getSecretQuestions()));
+      this._secretQuestions = new ObjectChoiceField(null, ClientSessionState.getInstance().getSecretQuestions());
       this.addContentField(this._secretQuestions, true);
       this._secretQuestions.setChangeListener(new HostedSecretQuestionScreen$CustomSecretQuestionFieldListener(this, null));
-      this.addContentField((Field)(new Object(ApplicationResources.getString(253))));
+      this.addContentField(new LabelField(ApplicationResources.getString(253)));
       this.addContentLineBreak();
       this._customLabel = new BoldLabelField(ApplicationResources.getString(251));
       this.addContentField(this._customLabel);
-      this._customQuestion = (BasicEditField)(new Object(null, null));
-      this._customQuestionFrame = (FrameLayout)(new Object());
+      this._customQuestion = new BasicEditField(null, null);
+      this._customQuestionFrame = new FrameLayout();
       this._customQuestionFrame.add(this._customQuestion);
       this._customQuestionFrame.setBorder(0, 4, 0, 4);
       this._customQuestionFrame.setMargin(0, 0, 10, 0);
@@ -74,7 +74,7 @@ public final class HostedSecretQuestionScreen extends UserSettingsScreen {
       }
 
       this.addContentField(new BoldLabelField(ApplicationResources.getString(252)));
-      this._secretAnswer = (BasicEditField)(new Object(null, null));
+      this._secretAnswer = new BasicEditField(null, null);
       this.addContentField(this._secretAnswer, true);
       String[] nextParams = null;
       if (!create) {
@@ -129,11 +129,11 @@ public final class HostedSecretQuestionScreen extends UserSettingsScreen {
 
             inputMap.put("question", customQuestion);
          } else {
-            inputMap.put("questionId", new Object(question.getId()));
+            inputMap.put("questionId", new Integer(question.getId()));
          }
 
          if (!mailboxToEdit.hasSecretQuestion()) {
-            inputMap.put("secretQuestionNoCancel", new Object(true));
+            inputMap.put("secretQuestionNoCancel", new Boolean(true));
          }
 
          return true;

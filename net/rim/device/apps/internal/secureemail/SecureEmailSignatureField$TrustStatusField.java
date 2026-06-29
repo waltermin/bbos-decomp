@@ -1,5 +1,12 @@
 package net.rim.device.apps.internal.secureemail;
 
+import net.rim.device.api.crypto.CryptoUnsupportedOperationException;
+import net.rim.device.api.crypto.DecodeException;
+import net.rim.device.api.crypto.InvalidSignatureEncodingException;
+import net.rim.device.api.crypto.NoSuchAlgorithmException;
+import net.rim.device.api.crypto.certificate.CertificateInvalidException;
+import net.rim.device.api.crypto.certificate.CertificateRevokedException;
+import net.rim.device.api.crypto.certificate.CertificateVerificationException;
 import net.rim.device.api.i18n.MessageFormat;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.ui.ContextMenu;
@@ -70,34 +77,34 @@ public class SecureEmailSignatureField$TrustStatusField extends StatusField {
       switch (status) {
          case -1:
          case 5:
-            return MessageFormat.format(SecureEmailResources.getString(79), new Object[]{this._details});
+            return MessageFormat.format(SecureEmailResources.getString(79), new String[]{this._details});
          case 0:
          default:
             return SecureEmailResources.getString(71);
          case 1:
-            return MessageFormat.format(SecureEmailResources.getString(72), new Object[]{containerChainStringLower});
+            return MessageFormat.format(SecureEmailResources.getString(72), new String[]{containerChainStringLower});
          case 2:
-            return MessageFormat.format(SecureEmailResources.getString(73), new Object[]{containerChainStringLower});
+            return MessageFormat.format(SecureEmailResources.getString(73), new String[]{containerChainStringLower});
          case 3:
-            return MessageFormat.format(SecureEmailResources.getString(74), new Object[]{containerChainStringLower});
+            return MessageFormat.format(SecureEmailResources.getString(74), new String[]{containerChainStringLower});
          case 4:
-            return MessageFormat.format(SecureEmailResources.getString(76), new Object[]{containerChainStringLower});
+            return MessageFormat.format(SecureEmailResources.getString(76), new String[]{containerChainStringLower});
          case 6:
-            return MessageFormat.format(SecureEmailResources.getString(77), new Object[]{containerStringLowerSingular});
+            return MessageFormat.format(SecureEmailResources.getString(77), new String[]{containerStringLowerSingular});
          case 7:
-            return MessageFormat.format(SecureEmailResources.getString(156), new Object[]{containerStringLowerSingular});
+            return MessageFormat.format(SecureEmailResources.getString(156), new String[]{containerStringLowerSingular});
          case 8:
-            return MessageFormat.format(SecureEmailResources.getString(75), new Object[]{containerStringLowerSingular});
+            return MessageFormat.format(SecureEmailResources.getString(75), new String[]{containerStringLowerSingular});
          case 9:
             return SecureEmailResources.getString(78);
          case 10:
-            return MessageFormat.format(SecureEmailResources.getString(131), new Object[]{containerStringLowerSingular});
+            return MessageFormat.format(SecureEmailResources.getString(131), new String[]{containerStringLowerSingular});
          case 11:
-            return MessageFormat.format(SecureEmailResources.getString(133), new Object[]{containerStringLowerSingular});
+            return MessageFormat.format(SecureEmailResources.getString(133), new String[]{containerStringLowerSingular});
          case 12:
-            return MessageFormat.format(SecureEmailResources.getString(144), new Object[]{containerStringLowerSingular});
+            return MessageFormat.format(SecureEmailResources.getString(144), new String[]{containerStringLowerSingular});
          case 13:
-            return MessageFormat.format(SecureEmailResources.getString(154), new Object[]{containerChainStringLower});
+            return MessageFormat.format(SecureEmailResources.getString(154), new String[]{containerChainStringLower});
          case 14:
             return SecureEmailResources.getString(177);
       }
@@ -203,24 +210,24 @@ public class SecureEmailSignatureField$TrustStatusField extends StatusField {
    }
 
    public void handleThrowable(Throwable t, SecureEmailSignatureField$ThrowableHandlerData throwableHandlerData) {
-      if (t instanceof Object) {
+      if (t instanceof CertificateVerificationException) {
          throwableHandlerData._status = 2;
          throwableHandlerData._unrecoverableThrowable = true;
-      } else if (t instanceof Object) {
+      } else if (t instanceof CertificateRevokedException) {
          throwableHandlerData._status = 4;
          throwableHandlerData._unrecoverableThrowable = true;
-      } else if (t instanceof Object) {
+      } else if (t instanceof CertificateInvalidException) {
          throwableHandlerData._status = 3;
          throwableHandlerData._unrecoverableThrowable = true;
-      } else if (t instanceof Object || t instanceof Object) {
+      } else if (t instanceof DecodeException || t instanceof InvalidSignatureEncodingException) {
          throwableHandlerData._status = 5;
          throwableHandlerData._details = SecureEmailResources.getString(87);
          throwableHandlerData._unrecoverableThrowable = true;
-      } else if (t instanceof Object) {
+      } else if (t instanceof NoSuchAlgorithmException) {
          throwableHandlerData._status = 5;
          throwableHandlerData._details = SecureEmailResources.getString(88);
          throwableHandlerData._unrecoverableThrowable = true;
-      } else if (t instanceof Object) {
+      } else if (t instanceof CryptoUnsupportedOperationException) {
          throwableHandlerData._status = 5;
          throwableHandlerData._details = SecureEmailResources.getString(69);
          throwableHandlerData._unrecoverableThrowable = true;

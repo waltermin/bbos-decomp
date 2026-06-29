@@ -1,16 +1,17 @@
 package net.rim.device.apps.internal.deviceselftest;
 
+import java.util.Date;
 import java.util.Vector;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.system.Phone;
 import net.rim.device.api.system.RadioInfo;
 import net.rim.device.api.system.SIMCard;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.internal.system.RadioInternal;
 
 final class TestRFAntennaScreen extends TestScreenBase {
@@ -32,25 +33,25 @@ final class TestRFAntennaScreen extends TestScreenBase {
 
    TestRFAntennaScreen(TestRFAntenna _handler) {
       this.handler = _handler;
-      this.reports = (Vector)(new Object());
-      super._title = (LabelField)(new Object(DeviceSelfTestResources.getString(61), 1152921504606846976L));
-      super._input = (LabelField)(new Object(DeviceSelfTestResources.getString(62), 1152921504606846976L));
-      super._output = (LabelField)(new Object(DeviceSelfTestResources.getString(63), 1152921504606846976L));
-      this._reportLabel = (LabelField)(new Object(DeviceSelfTestResources.getString(64), 1152921504606846976L));
-      this._phoneInput = (EditField)(new Object(DeviceSelfTestResources.getString(65), null, 16, 100663296));
+      this.reports = new Vector();
+      super._title = new LabelField(DeviceSelfTestResources.getString(61), 1152921504606846976L);
+      super._input = new LabelField(DeviceSelfTestResources.getString(62), 1152921504606846976L);
+      super._output = new LabelField(DeviceSelfTestResources.getString(63), 1152921504606846976L);
+      this._reportLabel = new LabelField(DeviceSelfTestResources.getString(64), 1152921504606846976L);
+      this._phoneInput = new EditField(DeviceSelfTestResources.getString(65), null, 16, 100663296);
       this._phoneInput.setEditable(true);
       this._phoneInput.setText("15198887465");
       this.setTitle(super._title);
       this.add(super._input);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.add(super._output);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.add(this._phoneInput);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.add(this._reportLabel);
       this.setupMenuItems();
       this._callback = new TestRFAntennaScreen$ReportListCallback();
-      this._reportList = (ListField)(new Object());
+      this._reportList = new ListField();
       this._reportList.setCallback(this._callback);
       this._reportList.setSearchable(false);
       this.add(this._reportList);
@@ -106,14 +107,14 @@ final class TestRFAntennaScreen extends TestScreenBase {
 
    final void insertReport() {
       int measurement = RadioInfo.getSignalLevel();
-      String timeStamp = new Object(System.currentTimeMillis()).toString();
-      this.reports.addElement(((StringBuffer)(new Object())).append(measurement).append(" -dBm @ ").append(timeStamp.substring(0, 20)).toString());
+      String timeStamp = new Date(System.currentTimeMillis()).toString();
+      this.reports.addElement(measurement + " -dBm @ " + timeStamp.substring(0, 20));
       this.populate();
    }
 
    final void insertReport(String msg) {
-      String timeStamp = new Object(System.currentTimeMillis()).toString();
-      this.reports.addElement(((StringBuffer)(new Object())).append(msg).append(timeStamp.substring(0, 20)).toString());
+      String timeStamp = new Date(System.currentTimeMillis()).toString();
+      this.reports.addElement(msg + timeStamp.substring(0, 20));
       this.populate();
    }
 

@@ -3,7 +3,6 @@ package net.rim.device.apps.internal.browser.push;
 import net.rim.device.api.notification.NotificationsManager;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.ButtonField;
@@ -52,29 +51,29 @@ public final class PushDisplayDialog extends PopupDialog implements FieldChangeL
    }
 
    private PushDisplayDialog(String message, String url, boolean yesNo) {
-      super((Manager)(new Object()), 0);
+      super(new DialogFieldManager(), 0);
       NotificationsManager.cancelImmediateEvent(4665536253483290822L, 0, null, null);
       NotificationsManager.triggerImmediateEvent(4665536253483290822L, 0, null, null);
       this._dfm = (DialogFieldManager)this.getDelegate();
       this._url = url;
-      String displayMessage = ((StringBuffer)(new Object())).append(message).append('\n').toString();
+      String displayMessage = message + '\n';
       if (url != null) {
-         displayMessage = ((StringBuffer)(new Object())).append(displayMessage).append(url).toString();
+         displayMessage = displayMessage + url;
       }
 
       this._urlField = new PushActiveRichTextField(displayMessage, this);
       this._dfm.setMessage(this._urlField);
       String[] yesNoArray = CommonResources.getYesNoArray(0);
-      this._loadButton = (ButtonField)(new Object(yesNo ? yesNoArray[0] : BrowserPushResources.getString(18), 12884901888L));
+      this._loadButton = new ButtonField(yesNo ? yesNoArray[0] : BrowserPushResources.getString(18), 12884901888L);
       this._loadButton.setChangeListener(this);
       this._dfm.addCustomField(this._loadButton);
-      this._postponeButton = (ButtonField)(new Object(BrowserPushResources.getString(16), 12884901888L));
+      this._postponeButton = new ButtonField(BrowserPushResources.getString(16), 12884901888L);
       this._postponeButton.setChangeListener(this);
       if (!yesNo) {
          this._dfm.addCustomField(this._postponeButton);
       }
 
-      this._dismissButton = (ButtonField)(new Object(yesNo ? yesNoArray[1] : BrowserPushResources.getString(17), 12884901888L));
+      this._dismissButton = new ButtonField(yesNo ? yesNoArray[1] : BrowserPushResources.getString(17), 12884901888L);
       this._dismissButton.setChangeListener(this);
       this._dfm.addCustomField(this._dismissButton);
    }

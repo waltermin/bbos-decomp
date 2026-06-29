@@ -21,7 +21,7 @@ public class AutoTextInputFieldWithId extends Manager implements FocusChangeList
    public static final byte FLAG_READ_ONLY = 1;
    public static final byte FLAG_ALLOW_CR = 2;
    private static final int DEFAULT_INPUT_SIZE = 20;
-   private static String INPUT_TEXT_LABEL = ((StringBuffer)(new Object())).append(String.valueOf('▶')).append(' ').toString();
+   private static String INPUT_TEXT_LABEL = String.valueOf('▶') + ' ';
 
    public int getFieldId() {
       return this._id;
@@ -36,7 +36,7 @@ public class AutoTextInputFieldWithId extends Manager implements FocusChangeList
    }
 
    protected AutoTextEditField createEditField(String inputTextLabel, String resetValue, int maxSize, long editFlags) {
-      return (AutoTextEditField)(new Object(inputTextLabel, resetValue, maxSize, editFlags));
+      return new AutoTextEditField(inputTextLabel, resetValue, maxSize, editFlags);
    }
 
    @Override

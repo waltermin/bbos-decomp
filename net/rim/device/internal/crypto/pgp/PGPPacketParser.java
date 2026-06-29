@@ -17,7 +17,7 @@ public class PGPPacketParser {
 
    public PGPPacketParser(InputStream input) {
       SharedInputStream sharedInput = null;
-      if (!(input instanceof Object)) {
+      if (!(input instanceof SharedInputStream)) {
          sharedInput = SharedInputStream.getSharedInputStream(input);
       } else {
          sharedInput = (SharedInputStream)input;
@@ -51,11 +51,11 @@ public class PGPPacketParser {
    private void parse(SharedInputStream input) {
       this._encodings = new byte[1][];
       this._privateKey = new boolean[1];
-      this._packets = new Object[1];
+      this._packets = new Vector[1];
       boolean keyPacketFound = false;
       int currentKeyStartPosition = input.getCurrentPosition();
       int currentKeyIndex = 0;
-      Vector currentKeyPackets = (Vector)(new Object());
+      Vector currentKeyPackets = new Vector();
       this._packets[0] = currentKeyPackets;
 
       while (true) {
@@ -108,7 +108,7 @@ public class PGPPacketParser {
                   Array.resize(this._encodings, ++currentKeyIndex + 1);
                   Array.resize(this._privateKey, currentKeyIndex + 1);
                   Array.resize(this._packets, currentKeyIndex + 1);
-                  currentKeyPackets = (Vector)(new Object());
+                  currentKeyPackets = new Vector();
                   this._packets[currentKeyIndex] = currentKeyPackets;
                   currentKeyStartPosition = currentPacketStartPosition;
                }

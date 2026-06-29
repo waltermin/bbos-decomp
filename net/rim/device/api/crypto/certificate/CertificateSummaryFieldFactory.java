@@ -16,7 +16,7 @@ public class CertificateSummaryFieldFactory {
 
    public static CertificateSummaryFieldFactory getCertificateSummaryFieldFactory(Certificate certificate) {
       if (certificate == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       String certificateType = certificate.getType();
@@ -31,12 +31,12 @@ public class CertificateSummaryFieldFactory {
    public static boolean register(CertificateSummaryFieldFactory factory) {
       boolean _status = true;
       if (factory == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       String type = factory.getType();
       if (type == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (_hashtable.containsKey(type)) {

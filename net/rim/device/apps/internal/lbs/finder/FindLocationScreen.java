@@ -12,6 +12,7 @@ import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.AddressSelectionContext;
 import net.rim.device.apps.api.addressbook.MailingAddressModel;
@@ -28,6 +29,7 @@ import net.rim.device.apps.internal.lbs.Location;
 import net.rim.device.apps.internal.lbs.locator.GPSFixProgressDialog;
 import net.rim.device.apps.internal.lbs.model.SearchAddressModel;
 import net.rim.device.apps.internal.lbs.resources.LBSResources;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 import net.rim.vm.Array;
 
 public final class FindLocationScreen extends ModelScreen implements ListFieldCallback, SearchableHistoryList$Callback {
@@ -55,10 +57,10 @@ public final class FindLocationScreen extends ModelScreen implements ListFieldCa
          numActions++;
       }
 
-      this.add((Field)(new Object(10)));
-      this.add(this._listActions = (ListField)(new Object(numActions)));
+      this.add(new VerticalSpacerField(10));
+      this.add(this._listActions = new ListField(numActions));
       this._listActions.setCallback(this);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.add(this._searchHistoryList = new SearchableHistoryList(this));
       this._model = new SearchAddressModel(null);
       this._gpsLocationData = gpsLocationData;
@@ -275,19 +277,19 @@ public final class FindLocationScreen extends ModelScreen implements ListFieldCa
    public static final Location getFromAddressBook() {
       VerbRepository repo = VerbRepository.getVerbRepository(-1789952090272871921L);
       Verb[] items = repo.getVerbs(-1789952090272871921L);
-      Recognizer[] recognizers = new Object[]{RecognizerRepository.getRecognizers(-3124646573404667739L)};
-      AddressSelectionContext asc = (AddressSelectionContext)(new Object(
+      Recognizer[] recognizers = new Recognizer[]{RecognizerRepository.getRecognizers(-3124646573404667739L)};
+      AddressSelectionContext asc = new AddressSelectionContext(
          LBSResources.getString(21), LBSResources.getString(22), LBSResources.getString(23), recognizers, null
-      ));
+      );
       Object addressModel = items[0].invoke(asc);
       MailingAddressModelImpl[] mailingAddressModel = null;
-      if (addressModel instanceof Object) {
-         mailingAddressModel = new Object[0];
+      if (addressModel instanceof ReadableList) {
+         mailingAddressModel = new MailingAddressModelImpl[0];
          ReadableList list = (ReadableList)addressModel;
 
          for (int i = 0; i < list.size(); i++) {
             Object o = list.getAt(i);
-            if (o instanceof Object) {
+            if (o instanceof MailingAddressModel) {
                Array.resize(mailingAddressModel, mailingAddressModel.length + 1);
                mailingAddressModel[mailingAddressModel.length - 1] = (MailingAddressModelImpl)o;
             }
@@ -310,22 +312,12 @@ public final class FindLocationScreen extends ModelScreen implements ListFieldCa
       } else {
          String address1 = getFromAddressLine(mailingAddressModel[0]);
          String city = mailingAddressModel[0].getCity();
-         String work = ((StringBuffer)(new Object()))
-            .append(LBSResources.getString(34))
-            .append(": ")
-            .append(address1 != null && !address1.equals("") ? ((StringBuffer)(new Object())).append(address1).append(", ").toString() : "")
-            .append(city != null ? city : "")
-            .toString();
+         String work = LBSResources.getString(34) + ": " + (address1 != null && !address1.equals("") ? address1 + ", " : "") + (city != null ? city : "");
          address1 = mailingAddressModel[1].getAddressLine1();
          city = mailingAddressModel[1].getCity();
-         String home = ((StringBuffer)(new Object()))
-            .append(LBSResources.getString(33))
-            .append(": ")
-            .append(address1 != null && !address1.equals("") ? ((StringBuffer)(new Object())).append(address1).append(", ").toString() : "")
-            .append(city != null ? city : "")
-            .toString();
-         String[] choices = mailingAddressModel[0].getType() == 1 ? new Object[]{home, work} : new Object[]{work, home};
-         String title = MessageFormat.format(LBSResources.getString(278), new Object[]{((AddressCardModel)addressModel).getName().toString()});
+         String home = LBSResources.getString(33) + ": " + (address1 != null && !address1.equals("") ? address1 + ", " : "") + (city != null ? city : "");
+         String[] choices = mailingAddressModel[0].getType() == 1 ? new String[]{home, work} : new String[]{work, home};
+         String title = MessageFormat.format(LBSResources.getString(278), new String[]{((AddressCardModel)addressModel).getName().toString()});
          FindLocationScreen$AddressChoiceDialog d = new FindLocationScreen$AddressChoiceDialog(
             title, choices, new int[]{0, 1, -804651004, 0, 6, -6, 0, -804651000}, 0
          );
@@ -335,10 +327,7 @@ public final class FindLocationScreen extends ModelScreen implements ListFieldCa
          }
 
          address = mailingAddressModel[choice];
-         addressLoc = ((StringBuffer)(new Object(" (")))
-            .append(address.getType() == 1 ? LBSResources.getString(33) : LBSResources.getString(34))
-            .append(")")
-            .toString();
+         addressLoc = " (" + (address.getType() == 1 ? LBSResources.getString(33) : LBSResources.getString(34)) + ")";
       }
 
       FindAddress finder = new FindAddress(null, false);

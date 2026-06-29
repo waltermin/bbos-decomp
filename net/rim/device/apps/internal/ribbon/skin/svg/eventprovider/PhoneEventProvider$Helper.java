@@ -15,7 +15,7 @@ class PhoneEventProvider$Helper extends WeakReferenceCollectionUpdater implement
    public PhoneEventProvider$Helper() {
       FactoryRepository repos = GlobalFactoryRepository.getFactoryRepository(-4018062520840731194L);
       Factory ucFactory = repos.getFactory("UnreadCount");
-      Hashtable params = (Hashtable)(new Object());
+      Hashtable params = new Hashtable();
       params.put("type", "missedphonecalls");
       this._missedCalls = (UnreadCountComponent)ucFactory.createInstance(null);
       this._missedCalls.initialize(params, null);

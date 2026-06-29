@@ -1,7 +1,7 @@
 package javax.microedition.location;
 
 public class AddressInfo {
-   private String[] _values = new Object[17];
+   private String[] _values = new String[17];
    public static final int EXTENSION = 1;
    public static final int STREET = 2;
    public static final int POSTAL_CODE = 3;
@@ -30,7 +30,7 @@ public class AddressInfo {
       if (field >= 1 && field <= 17) {
          return this._values[field - 1];
       } else {
-         throw new Object("Invalid field ID");
+         throw new IllegalArgumentException("Invalid field ID");
       }
    }
 
@@ -38,7 +38,7 @@ public class AddressInfo {
       if (field >= 1 && field <= 17) {
          this._values[field - 1] = value;
       } else {
-         throw new Object("Invalid field ID");
+         throw new IllegalArgumentException("Invalid field ID");
       }
    }
 }

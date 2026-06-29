@@ -1,5 +1,6 @@
 package net.rim.device.internal.provisioning;
 
+import java.io.IOException;
 import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.system.CBPacketHeader;
@@ -127,19 +128,12 @@ final class BBXpHandler
                try {
                   var12 = true;
                   int t = RadioInternal.getBlackBerryExperienceMode();
-                  ProvisioningService.log(((StringBuffer)(new Object("mode="))).append(Integer.toHexString(t)).toString(), 5);
+                  ProvisioningService.log("mode=" + Integer.toHexString(t), 5);
                   if ((t & 17) == this._newBBXp) {
                      this._state = 7;
                      var12 = false;
                   } else {
-                     ProvisioningService.log(
-                        ((StringBuffer)(new Object("BBXp_state: Wanted=0x")))
-                           .append(Integer.toHexString(this._newBBXp))
-                           .append(" got=0x")
-                           .append(Integer.toHexString(t))
-                           .toString(),
-                        3
-                     );
+                     ProvisioningService.log("BBXp_state: Wanted=0x" + Integer.toHexString(this._newBBXp) + " got=0x" + Integer.toHexString(t), 3);
                      this.failedAttempt(8);
                      var12 = false;
                   }
@@ -171,7 +165,7 @@ final class BBXpHandler
                ProvisioningService.log("BBXp_state: done", 0);
          }
 
-         ProvisioningService.log(((StringBuffer)(new Object("newState: "))).append(this._state).toString(), 5);
+         ProvisioningService.log("newState: " + this._state, 5);
       } finally {
          this.handleReallyBadError();
          return;
@@ -243,11 +237,11 @@ final class BBXpHandler
 
             if (!chunks.containsKey(2)) {
                ProvisioningService.log("BBXp mode not specified.", 5);
-               ProvisioningService.log(((StringBuffer)(new Object("BBXp: cur mode="))).append(Integer.toHexString(curBBXp)).toString(), 5);
+               ProvisioningService.log("BBXp: cur mode=" + Integer.toHexString(curBBXp), 5);
             } else {
                db.setPosition(chunks.get(2));
                if (db.readCompressedInt() != 4) {
-                  throw new Object();
+                  throw new IOException();
                }
 
                int newValue = db.readInt();
@@ -271,10 +265,7 @@ final class BBXpHandler
                      try {
                         var11 = true;
                         RadioInternal.setBlackBerryExperienceMode(this._newBBXp);
-                        ProvisioningService.log(
-                           ((StringBuffer)(new Object("BBXp: new mode="))).append(Integer.toHexString(RadioInternal.getBlackBerryExperienceMode())).toString(),
-                           0
-                        );
+                        ProvisioningService.log("BBXp: new mode=" + Integer.toHexString(RadioInternal.getBlackBerryExperienceMode()), 0);
                         var11 = false;
                      } finally {
                         if (var11) {
@@ -286,7 +277,7 @@ final class BBXpHandler
                      this._app.invokeLater(this);
                   }
                } else {
-                  ProvisioningService.log(((StringBuffer)(new Object("BBXp: cur mode="))).append(Integer.toHexString(curBBXp)).toString(), 5);
+                  ProvisioningService.log("BBXp: cur mode=" + Integer.toHexString(curBBXp), 5);
                }
             }
          }
@@ -346,7 +337,7 @@ final class BBXpHandler
             return;
          }
       } catch (Throwable var4) {
-         ProvisioningService.log(((StringBuffer)(new Object("BBXp fast reset exception: "))).append(e).toString(), 2);
+         ProvisioningService.log("BBXp fast reset exception: " + e, 2);
          return;
       }
    }

@@ -12,7 +12,7 @@ public final class BISClientInvoke {
 
    static {
       ApplicationDescriptor baseDescriptor = CodeModuleManager.getApplicationDescriptors(CodeModuleManager.getModuleHandle("net_rim_bis_launch"))[0];
-      _wizardDescriptor = (ApplicationDescriptor)(new Object(baseDescriptor, "net_rim_bis_launch", new String[]{"WIZARD"}));
-      _ribbonDescriptor = (ApplicationDescriptor)(new Object(baseDescriptor, "net_rim_bis_launch", new String[]{"RIBBON"}));
+      _wizardDescriptor = new ApplicationDescriptor(baseDescriptor, "net_rim_bis_launch", new String[]{"WIZARD"});
+      _ribbonDescriptor = new ApplicationDescriptor(baseDescriptor, "net_rim_bis_launch", new String[]{"RIBBON"});
    }
 }

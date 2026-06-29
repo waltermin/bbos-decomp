@@ -1,5 +1,7 @@
 package net.rim.device.apps.internal.blackberryemail.email;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import javax.microedition.io.Connector;
 import javax.microedition.io.file.FileConnection;
@@ -53,7 +55,7 @@ class NativeAttachmentRequestProcessor$Worker implements Runnable, TransmissionS
    @Override
    public void run() {
       this._running = true;
-      RIMMessagingLargeAttachmentChunkOutgoingTransmission transmission = (RIMMessagingLargeAttachmentChunkOutgoingTransmission)(new Object());
+      RIMMessagingLargeAttachmentChunkOutgoingTransmission transmission = new RIMMessagingLargeAttachmentChunkOutgoingTransmission();
       this.this$0._currentRequest = null;
 
       while (!this.this$0._requests.isEmpty() || !this.this$0._processedRequests.isEmpty()) {
@@ -119,19 +121,13 @@ class NativeAttachmentRequestProcessor$Worker implements Runnable, TransmissionS
                var18 = true;
                int e = this.getAttachmentSizeForRequest(request);
                if (e == -1) {
-                  throw new Object(
-                     ((StringBuffer)(new Object("Could not determine the total attachment size for ")))
-                        .append(request.getCmimeRefId())
-                        .append(":")
-                        .append(request.getContentPartId())
-                        .toString()
-                  );
+                  throw new Exception("Could not determine the total attachment size for " + request.getCmimeRefId() + ":" + request.getContentPartId());
                }
 
                EventLogger.logEvent(-1237457833540244999L, 11, 5);
                inputStream = this.getInputStream(request);
                if (inputStream == null) {
-                  throw new Object("Could not obtain the input stream.");
+                  throw new IOException("Could not obtain the input stream.");
                }
 
                IntHashtable chunks = request.getChunks();
@@ -146,13 +142,13 @@ class NativeAttachmentRequestProcessor$Worker implements Runnable, TransmissionS
                      inputStream.reset();
                      long skipped = inputStream.skip(offset);
                      if (skipped != offset) {
-                        throw new Object("Could not skip to the given offset.");
+                        throw new IOException("Could not skip to the given offset.");
                      }
 
                      int bytesRead = inputStream.read(chunkData);
                      if (bytesRead < 0) {
                         byte[] var23 = null;
-                        throw new Object("Could not obtain the input stream.");
+                        throw new IOException("Could not obtain the input stream.");
                      }
 
                      this.this$0._transmissionService.cancelTransmitObject(chunk.getID(), null);
@@ -212,7 +208,7 @@ class NativeAttachmentRequestProcessor$Worker implements Runnable, TransmissionS
          inputStream = fc.openInputStream();
       } else {
          LargeAttachmentModel$LargeCachedAttachmentModel model = (LargeAttachmentModel$LargeCachedAttachmentModel)attachmentModel;
-         inputStream = (InputStream)(new Object(model.getData()));
+         inputStream = new ByteArrayInputStream(model.getData());
       }
 
       return inputStream;
@@ -302,13 +298,7 @@ class NativeAttachmentRequestProcessor$Worker implements Runnable, TransmissionS
                   var15 = true;
                   int e = this.getAttachmentSizeForRequest(request);
                   if (e == -1) {
-                     throw new Object(
-                        ((StringBuffer)(new Object("Could not determine the total attachment size for ")))
-                           .append(request.getCmimeRefId())
-                           .append(":")
-                           .append(request.getContentPartId())
-                           .toString()
-                     );
+                     throw new Exception("Could not determine the total attachment size for " + request.getCmimeRefId() + ":" + request.getContentPartId());
                   }
 
                   int numberOfBytesToRead = request.getLength();
@@ -323,7 +313,7 @@ class NativeAttachmentRequestProcessor$Worker implements Runnable, TransmissionS
                   request.updateTimestamp();
                   inputStream = this.getInputStream(request);
                   if (inputStream == null) {
-                     throw new Object("Could not obtain the input stream.");
+                     throw new IOException("Could not obtain the input stream.");
                   }
 
                   int chunkSize = this.getChunkSize(request.getServiceRecord());

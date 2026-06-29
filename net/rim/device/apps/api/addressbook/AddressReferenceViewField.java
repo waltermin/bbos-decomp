@@ -68,9 +68,9 @@ public class AddressReferenceViewField extends HorizontalFieldManager implements
       } else {
          RIMModel insideModel = this._address.getInsideModel();
          if (!(insideModel instanceof FriendlyNameAddressModel)) {
-            if (insideModel instanceof Object) {
-               String[] addressAndFriendlyName = new Object[2];
-               if (((ConversionProvider)insideModel).convert(new Object(10), addressAndFriendlyName)) {
+            if (insideModel instanceof ConversionProvider) {
+               String[] addressAndFriendlyName = new String[2];
+               if (((ConversionProvider)insideModel).convert(new ContextObject(10), addressAndFriendlyName)) {
                   this._qualifiedAddress = addressAndFriendlyName[0];
                   if (addressAndFriendlyName[1] != null && addressAndFriendlyName[1].length() != 0) {
                      this._friendlyName = addressAndFriendlyName[1];
@@ -242,7 +242,7 @@ public class AddressReferenceViewField extends HorizontalFieldManager implements
          int scale = Fixed32.toFP(2);
          byte[] imageData = pictureModel.getDisplayPicture();
          if (imageData != null) {
-            field = (BitmapField)(new Object(null, 36028797018963968L));
+            field = new BitmapField(null, 36028797018963968L);
             EncodedImage image = EncodedImage.createEncodedImage(imageData, 0, imageData.length);
             image = image.scaleImage32(scale, scale);
             field.setImage(image);

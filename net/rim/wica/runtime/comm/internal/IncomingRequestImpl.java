@@ -9,7 +9,7 @@ public final class IncomingRequestImpl extends AbstractRequestResponse implement
 
    @Override
    public final String toString() {
-      StringBuffer buf = (StringBuffer)(new Object(64));
+      StringBuffer buf = new StringBuffer(64);
       buf.append("IncomingRequest[");
       if (this.hasData()) {
          buf.append("dataSize=").append(this.getData().length);

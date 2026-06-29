@@ -28,7 +28,7 @@ public final class BrowserChoiceField extends ChoiceField {
          }
       }
 
-      this._browserNames = new Object[this._browserConfigs.length];
+      this._browserNames = new String[this._browserConfigs.length];
       this.setSize(this._browserConfigs.length);
       if (initialIndex != -1) {
          this.setSelectedIndex(initialIndex);
@@ -61,7 +61,7 @@ public final class BrowserChoiceField extends ChoiceField {
 
          return this._browserNames[index];
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

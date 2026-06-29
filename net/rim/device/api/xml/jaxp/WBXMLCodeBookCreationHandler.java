@@ -2,12 +2,13 @@ package net.rim.device.api.xml.jaxp;
 
 import net.rim.device.api.util.IntHashtable;
 import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class WBXMLCodeBookCreationHandler extends DefaultHandler implements RIMWBXMLHandler {
-   private IntHashtable _tagTable = (IntHashtable)(new Object(3));
-   private IntHashtable _attrStartTable = (IntHashtable)(new Object(3));
-   private IntHashtable _attrValueTable = (IntHashtable)(new Object(3));
+   private IntHashtable _tagTable = new IntHashtable(3);
+   private IntHashtable _attrStartTable = new IntHashtable(3);
+   private IntHashtable _attrValueTable = new IntHashtable(3);
    private String _codeBookID;
    private long _codeBookHash;
    private int _currentPage = -1;
@@ -39,7 +40,7 @@ public class WBXMLCodeBookCreationHandler extends DefaultHandler implements RIMW
    }
 
    @Override
-   public void startElement(int ElementCode, String uri, String localName, String qName, Attributes attributes) {
+   public void startElement(int ElementCode, String uri, String localName, String qName, Attributes attributes) throws SAXException {
       if (localName.equals("mdscodebook")) {
          String nameAttr = attributes.getValue("name");
          this._codeBookID = nameAttr;
@@ -80,7 +81,7 @@ public class WBXMLCodeBookCreationHandler extends DefaultHandler implements RIMW
             table = this._attrStartTable;
          } else {
             if (!localName.equals("attrValue")) {
-               throw new Object("Error parsing codebook");
+               throw new SAXException("Error parsing codebook");
             }
 
             table = this._attrValueTable;
@@ -88,7 +89,7 @@ public class WBXMLCodeBookCreationHandler extends DefaultHandler implements RIMW
 
          IntHashtable page = null;
          if ((page = (IntHashtable)table.get(this._currentPage)) == null) {
-            page = (IntHashtable)(new Object(31));
+            page = new IntHashtable(31);
             table.put(this._currentPage, page);
          }
 

@@ -8,7 +8,9 @@ import net.rim.device.api.ui.FontFamily;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.util.CharacterUtilities;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.FieldProvider;
 import net.rim.device.apps.api.quickcontact.QuickContactUtil;
 import net.rim.device.apps.api.ui.ButtonContainer;
@@ -27,8 +29,8 @@ final class AddSpeedDialConfirmationDialog extends Dialog {
       super(message, null, null, 0, Bitmap.getPredefinedBitmap(1));
       Field callerIDField = null;
       Field keyField = null;
-      if (sdData instanceof Object && sdData instanceof Object) {
-         callerIDField = ((FieldProvider)sdData).getField(new Object(58, 34, 26));
+      if (sdData instanceof FieldProvider && sdData instanceof FieldProvider) {
+         callerIDField = ((FieldProvider)sdData).getField(new ContextObject(58, 34, 26));
          if (callerIDField != null) {
             this.add(callerIDField);
          }
@@ -38,17 +40,17 @@ final class AddSpeedDialConfirmationDialog extends Dialog {
          char key = QuickContactUtil.convertKeyForCurrentKeyboard(keycode);
          key = CharacterUtilities.toUpperCase(key, 1701707776);
          String keyString = PhoneResources.getString(6080);
-         String keyMsg = MessageFormat.format(keyString, new Object[]{((StringBuffer)(new Object(""))).append(key).toString()});
-         keyField = (Field)(new Object(keyMsg));
+         String keyMsg = MessageFormat.format(keyString, new String[]{"" + key});
+         keyField = new LabelField(keyMsg);
          this.add(keyField);
       }
 
-      this._buttons = (ButtonContainer)(new Object(0, null));
+      this._buttons = new ButtonContainer(0, null);
       this._dialogStrings = CommonResource.getStringArray(10041);
       String okString = this._dialogStrings[0];
       String cancelString = this._dialogStrings[1];
-      this._okButton = (ButtonField)(new Object(okString));
-      this._cancelButton = (ButtonField)(new Object(cancelString));
+      this._okButton = new ButtonField(okString);
+      this._cancelButton = new ButtonField(cancelString);
       this._buttons.addButton(this._okButton);
       this._buttons.addButton(this._cancelButton);
       this.add(this._buttons);

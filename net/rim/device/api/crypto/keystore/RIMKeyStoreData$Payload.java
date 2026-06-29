@@ -30,9 +30,9 @@ final class RIMKeyStoreData$Payload implements Persistable {
    public final void setLabel(String label) {
       if (Memory.isObjectInGroup(label)) {
          try {
-            this._label = (String)(new Object(label.getBytes("UTF8"), "UTF8"));
+            this._label = new String(label.getBytes("UTF8"), "UTF8");
          } finally {
-            throw new Object();
+            throw new RuntimeException();
          }
       } else {
          this._label = label;

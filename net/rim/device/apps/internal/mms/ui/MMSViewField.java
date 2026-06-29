@@ -3,7 +3,11 @@ package net.rim.device.apps.internal.mms.ui;
 import java.util.Vector;
 import net.rim.device.api.i18n.MessageFormat;
 import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.ActiveAutoTextEditField;
 import net.rim.device.api.ui.component.DateField;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -24,7 +28,7 @@ public final class MMSViewField extends VerticalFieldManager {
    public MMSViewField(MMSMessageModel message, ContextObject context) {
       super(17592186044416L);
       this.addHeaderFields(message, context);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.addPresentationField(message, context);
    }
 
@@ -34,7 +38,7 @@ public final class MMSViewField extends VerticalFieldManager {
       if (priority != 129) {
          String priorityLabel = MMSResources.getString(59);
          String priorityText = MMSResources.getString(priority == 130 ? 60 : 61);
-         this.add((Field)(new Object(priorityLabel, priorityText, 1000000, 9007199254740992L)));
+         this.add(new ActiveAutoTextEditField(priorityLabel, priorityText, 1000000, 9007199254740992L));
       }
 
       Vector toList = payload.getRecipients();
@@ -59,13 +63,13 @@ public final class MMSViewField extends VerticalFieldManager {
       if (classText != null) {
          String classLabel = MMSResources.getString(45);
          long classFieldFlags = 9007199254740992L;
-         Field classField = (Field)(new Object(classLabel, classText, 1000000, classFieldFlags));
+         Field classField = new ActiveAutoTextEditField(classLabel, classText, 1000000, classFieldFlags);
          this.add(classField);
       }
 
       if (message.isForwardLocked()) {
          String drmLabel = MMSResources.getString(49);
-         Field drmField = (Field)(new Object(drmLabel, 9007199254740992L));
+         Field drmField = new LabelField(drmLabel, 9007199254740992L);
          this.add(drmField);
       }
 
@@ -78,7 +82,7 @@ public final class MMSViewField extends VerticalFieldManager {
          date = payload.getCreationDate();
       }
 
-      DateField dateField = (DateField)(new Object(dateLabel, date, dateFlags));
+      DateField dateField = new DateField(dateLabel, date, dateFlags);
       dateField.setEditable(false);
       this.add(dateField);
       int readReportCount = message.getReadReportCount();
@@ -94,14 +98,14 @@ public final class MMSViewField extends VerticalFieldManager {
       if (!message.isInbound() && message.isSuccessfullySent()) {
          if (message.getDeliveryDate() > 0) {
             dateLabel = MMSResources.getString(53);
-            dateField = (DateField)(new Object(dateLabel, message.getDeliveryDate(), dateFlags));
+            dateField = new DateField(dateLabel, message.getDeliveryDate(), dateFlags);
             dateField.setEditable(false);
             this.add(dateField);
          }
 
          if (message.getReadDate() > 0) {
             dateLabel = MMSResources.getString(54);
-            dateField = (DateField)(new Object(dateLabel, message.getReadDate(), dateFlags));
+            dateField = new DateField(dateLabel, message.getReadDate(), dateFlags);
             dateField.setEditable(false);
             this.add(dateField);
          }
@@ -112,8 +116,8 @@ public final class MMSViewField extends VerticalFieldManager {
       if (sender != null) {
          boolean labelFlag = !ContextObject.getFlag(context, 1);
          ContextObject.setFlag(context, 1);
-         HorizontalFieldManager addressField = (HorizontalFieldManager)(new Object());
-         addressField.add((Field)(new Object(MMSResources.getString(15))));
+         HorizontalFieldManager addressField = new HorizontalFieldManager();
+         addressField.add(new LabelField(MMSResources.getString(15)));
          addressField.add(((FieldProvider)sender).getField(context));
          if (labelFlag) {
             ContextObject.clearFlag(context, 1);
@@ -126,7 +130,7 @@ public final class MMSViewField extends VerticalFieldManager {
       String subjectLabel = MMSResources.getString(18);
       String subjectText = payload.getAttribute("subject");
       long subjectFieldFlags = 9007199254740992L;
-      this._subjectField = (Field)(new Object(subjectLabel, subjectText, 1000000, subjectFieldFlags));
+      this._subjectField = new ActiveAutoTextEditField(subjectLabel, subjectText, 1000000, subjectFieldFlags);
       this.add(this._subjectField);
    }
 
@@ -149,12 +153,12 @@ public final class MMSViewField extends VerticalFieldManager {
             sizeString = MMSResources.getString(44);
          } else {
             int sizeKilobytes = Math.max(1, size + 512 >> 10);
-            sizeString = ((StringBuffer)(new Object())).append(Integer.toString(sizeKilobytes)).append('K').toString();
+            sizeString = Integer.toString(sizeKilobytes) + 'K';
          }
 
-         String estimatedSizeMessage = MessageFormat.format(MMSResources.getString(42), new Object[]{sizeString});
-         this.add((Field)(new Object(emptyContentMessage, 36028797018963968L)));
-         this.add((Field)(new Object(estimatedSizeMessage, 36028797018963968L)));
+         String estimatedSizeMessage = MessageFormat.format(MMSResources.getString(42), new String[]{sizeString});
+         this.add(new RichTextField(emptyContentMessage, 36028797018963968L));
+         this.add(new RichTextField(estimatedSizeMessage, 36028797018963968L));
          long date = MMSUtilities.parseLong(payload.getAttribute("x-mms-expiry"), 0) * 1000;
          if (date > 0) {
             if (payload.getAttribute("x-mms-expiry-absolute") == null) {
@@ -168,7 +172,7 @@ public final class MMSViewField extends VerticalFieldManager {
 
             String expiryLabel = MMSResources.getString(55);
             long dateFlags = 9007199254741046L;
-            DateField dateField = (DateField)(new Object(expiryLabel, date, dateFlags));
+            DateField dateField = new DateField(expiryLabel, date, dateFlags);
             dateField.setEditable(false);
             this.add(dateField);
          }

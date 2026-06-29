@@ -22,11 +22,11 @@ final class RetrieveThread extends Thread {
    public final void run() {
       boolean var4 = false /* VF: Semaphore variable */;
 
-      Object conn;
+      HttpConnection conn;
       try {
          var4 = true;
          String e = this._helpScreen.customLoadResource(this._resource.getUrl());
-         conn = Connector.open(e);
+         conn = (HttpConnection)Connector.open(e);
          var4 = false;
       } finally {
          if (var4) {
@@ -34,7 +34,7 @@ final class RetrieveThread extends Thread {
          }
       }
 
-      this._resource.setHttpConnection((HttpConnection)conn);
+      this._resource.setHttpConnection(conn);
       this._browserField.resourceReady(this._resource);
    }
 }

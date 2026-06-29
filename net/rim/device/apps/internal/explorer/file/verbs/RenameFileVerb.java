@@ -33,11 +33,11 @@ public final class RenameFileVerb extends Verb {
       }
 
       if (!(obj instanceof FileItemField)) {
-         if (obj instanceof Object) {
+         if (obj instanceof String) {
             file = new FileItemField((String)obj);
-         } else if (obj instanceof Object) {
+         } else if (obj instanceof ContextObject) {
             Object stringObject = ContextObject.get(obj, 2765042845091913199L);
-            if (stringObject instanceof Object) {
+            if (stringObject instanceof String) {
                file = new FileItemField((String)stringObject);
             }
          }
@@ -63,13 +63,11 @@ public final class RenameFileVerb extends Verb {
                                  e |= 32768;
                               }
 
-                              FileDialog renameDialog = (FileDialog)(new Object(
-                                 file.getPath(), file.getName(), file.getMediaType(), ExplorerResources.getString(45), e
-                              ));
+                              FileDialog renameDialog = new FileDialog(file.getPath(), file.getName(), file.getMediaType(), ExplorerResources.getString(45), e);
                               int retVal = renameDialog.doModal();
                               String newFileURL = renameDialog.getURL();
                               if (file.isDirectory() && !FileUtilities.isDirectory(newFileURL)) {
-                                 newFileURL = ((StringBuffer)(new Object())).append(newFileURL).append('/').toString();
+                                 newFileURL = newFileURL + '/';
                               }
 
                               String newFilename = FileUtilities.getName(newFileURL);
@@ -119,7 +117,7 @@ public final class RenameFileVerb extends Verb {
                               var87 = false;
                            } catch (Throwable var104) {
                               String errorString = null;
-                              if (!(e instanceof Object)) {
+                              if (!(e instanceof FileIOException)) {
                                  errorString = ExplorerResources.getString(50);
                               } else {
                                  errorString = ((FileIOException)e).getMessage();

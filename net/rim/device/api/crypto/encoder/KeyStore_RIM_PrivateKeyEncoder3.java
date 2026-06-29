@@ -14,8 +14,8 @@ final class KeyStore_RIM_PrivateKeyEncoder3 extends PrivateKeyEncoder {
    @Override
    protected final EncodedKey encodeKey(PrivateKey key) {
       try {
-         ByteArrayOutputStream output = (ByteArrayOutputStream)(new Object());
-         DataOutputStream dataOut = (DataOutputStream)(new Object(output));
+         ByteArrayOutputStream output = new ByteArrayOutputStream();
+         DataOutputStream dataOut = new DataOutputStream(output);
          dataOut.writeInt(0);
          if (key.getAlgorithm().equals("EC")) {
             ECPrivateKey k = (ECPrivateKey)key;
@@ -26,7 +26,7 @@ final class KeyStore_RIM_PrivateKeyEncoder3 extends PrivateKeyEncoder {
             Utility.writeData(k.getPrivateKeyData(), dataOut);
          } else {
             if (!key.getAlgorithm().equals("KEA")) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             KEAPrivateKey k = (KEAPrivateKey)key;
@@ -39,9 +39,9 @@ final class KeyStore_RIM_PrivateKeyEncoder3 extends PrivateKeyEncoder {
          }
 
          dataOut.close();
-         return (EncodedKey)(new Object(output.toByteArray(), "KeyStore"));
+         return new EncodedKey(output.toByteArray(), "KeyStore");
       } catch (Throwable var8) {
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       }
    }
 

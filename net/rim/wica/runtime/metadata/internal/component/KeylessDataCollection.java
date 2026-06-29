@@ -303,10 +303,10 @@ public class KeylessDataCollection implements DataCollection {
       this._persistentCollection = new KeylessDataCollection$PersRefDataCollectionImpl(wiclet, defs, true);
       this._transientCollection = new DataCollectionImpl(wiclet, defs, false);
       this._transientCollection._idSource = this._persistentCollection._idSource;
-      this._transientRefCounts = (LongIntHashtable)(new Object());
+      this._transientRefCounts = new LongIntHashtable();
       this._persistentRefCounts = this._persistentCollection.getPersistentRefCounts();
       if (this._persistentRefCounts == null) {
-         this._persistentRefCounts = (LongIntHashtable)(new Object());
+         this._persistentRefCounts = new LongIntHashtable();
       }
 
       this._persistenceListener = (PersistenceListener)this._wiclet
@@ -377,7 +377,7 @@ public class KeylessDataCollection implements DataCollection {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

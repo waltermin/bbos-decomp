@@ -1,12 +1,16 @@
 package net.rim.device.internal.io.store;
 
+import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import net.rim.device.api.io.DRMIOException;
 import net.rim.device.api.io.IOUtilities;
+import net.rim.device.api.io.file.FileIOException;
 import net.rim.device.api.synchronization.SyncObject;
 import net.rim.device.api.synchronization.UIDGenerator;
 import net.rim.device.api.system.CodeSigningKey;
@@ -102,18 +106,18 @@ class FileImpl implements FSDescriptor, Persistable, SyncObject {
          while (enumeration.hasMoreElements()) {
             String key = (String)enumeration.nextElement();
             Object value = this._eattributes.get(key);
-            if (value instanceof Object) {
+            if (value instanceof String) {
                this.writeHeader(key, (String)value, out);
             } else if (value instanceof byte[]) {
                this.writeHeader(key, (byte[])value, out);
-            } else if (value instanceof Object) {
-               this.writeHeader(key, value, out);
+            } else if (value instanceof Integer) {
+               this.writeHeader(key, (Integer)value, out);
             } else {
-               if (!(value instanceof Object)) {
-                  throw new Object();
+               if (!(value instanceof Long)) {
+                  throw new IllegalStateException();
                }
 
-               this.writeHeader(key, value, out);
+               this.writeHeader(key, (Long)value, out);
             }
          }
       }
@@ -129,7 +133,7 @@ class FileImpl implements FSDescriptor, Persistable, SyncObject {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   void readHeader(DataInputStream in) {
+   void readHeader(DataInputStream in) throws IOException {
       int version = in.read();
       if (version == 1) {
          while (true) {
@@ -160,17 +164,17 @@ class FileImpl implements FSDescriptor, Persistable, SyncObject {
                   break;
                case 1:
                   if (length != 4) {
-                     throw new Object("Invalid length");
+                     throw new IOException("Invalid length");
                   }
 
-                  value = new Object(in.readInt());
+                  value = new Integer(in.readInt());
                   break;
                case 2:
                   if (length != 8) {
-                     throw new Object("Invalid length");
+                     throw new IOException("Invalid length");
                   }
 
-                  value = new Object(in.readLong());
+                  value = new Long(in.readLong());
                   break;
                case 3:
                   value = in.readUTF();
@@ -208,18 +212,14 @@ class FileImpl implements FSDescriptor, Persistable, SyncObject {
    }
 
    public InputStream openInputStream() {
-      return (InputStream)(this.hasContent() ? new FileImpl$FileImplInputStream(this) : new Object(new byte[0]));
+      return this.hasContent() ? new FileImpl$FileImplInputStream(this) : new ByteArrayInputStream(new byte[0]);
    }
 
    public InputStream openRawInputStream() {
       if (!this.hasContent()) {
-         InputStream data = (InputStream)(new Object(new byte[0]));
-         return data;
-      } else if ((this.getDrmAttributes() & 1) != 0) {
-         InputStream data = (InputStream)(new Object(ContentStoreEncryption.encrypt(this.openInputStream())));
-         return data;
+         return new ByteArrayInputStream(new byte[0]);
       } else {
-         return this.openInputStream();
+         return (this.getDrmAttributes() & 1) != 0 ? new ByteArrayInputStream(ContentStoreEncryption.encrypt(this.openInputStream())) : this.openInputStream();
       }
    }
 
@@ -233,7 +233,7 @@ class FileImpl implements FSDescriptor, Persistable, SyncObject {
 
    public OutputStream openOutputStream(long offset) {
       if (offset < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (offset > this._contentLength) {
@@ -251,7 +251,7 @@ class FileImpl implements FSDescriptor, Persistable, SyncObject {
       synchronized (ContentStoreImpl.getInstance().getMonitor()) {
          int error = validateName(name);
          if (error != 0) {
-            throw new Object(error);
+            throw new FileIOException(error);
          }
 
          String oldPath = this.getJSRPath();
@@ -292,13 +292,13 @@ class FileImpl implements FSDescriptor, Persistable, SyncObject {
       }
    }
 
-   public void setDrmAttributes(int on, int off) {
+   public void setDrmAttributes(int on, int off) throws DRMIOException {
       if ((on & off) != 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if ((off & 1) != 0 && (this._drm & 1) != 0 && this.hasContent()) {
-         throw new Object("Access denied to remove DRM.");
+         throw new DRMIOException("Access denied to remove DRM.");
       }
 
       int drm = (this._drm | on) & ~off;
@@ -310,11 +310,11 @@ class FileImpl implements FSDescriptor, Persistable, SyncObject {
       synchronized (ContentStoreImpl.getInstance().getMonitor()) {
          if (bytes < this._contentLength) {
             if (bytes > Integer.MAX_VALUE) {
-               throw new Object("offset too large");
+               throw new IOException("offset too large");
             }
 
             if (this._content == null) {
-               throw new Object();
+               throw new IOException();
             }
 
             this.setContentInternal(Arrays.copy(this._content, 0, (int)bytes));
@@ -341,10 +341,10 @@ class FileImpl implements FSDescriptor, Persistable, SyncObject {
    void setContent(Object object, boolean notify) {
       byte[] bytes;
       if (!(object instanceof byte[])) {
-         if (!(object instanceof Object)) {
-            if (!(object instanceof Object)) {
+         if (!(object instanceof InputStream)) {
+            if (!(object instanceof String)) {
                if (object != null) {
-                  throw new Object("Unrecognized content.");
+                  throw new IllegalArgumentException("Unrecognized content.");
                }
 
                bytes = null;
@@ -368,9 +368,9 @@ class FileImpl implements FSDescriptor, Persistable, SyncObject {
       return DRMServices.getSubscriberKey();
    }
 
-   void setDrmAttributes(int drm) {
+   void setDrmAttributes(int drm) throws DRMIOException {
       if ((drm & 1) == 0 && (this._drm & 1) != 0 && this.hasContent()) {
-         throw new Object("Access denied to remove DRM.");
+         throw new DRMIOException("Access denied to remove DRM.");
       }
 
       this._drm = drm;
@@ -380,7 +380,7 @@ class FileImpl implements FSDescriptor, Persistable, SyncObject {
    @Override
    public void setAttributes(int on, int off) {
       if ((on & off) != 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._attributes = (this._attributes | on) & ~off | 268435456;
@@ -391,7 +391,7 @@ class FileImpl implements FSDescriptor, Persistable, SyncObject {
    public void resurrect() {
       synchronized (ContentStoreImpl.getInstance().getMonitor()) {
          if (this.isAlive()) {
-            throw new Object();
+            throw new IllegalStateException();
          }
 
          FolderImpl folder = this.getFolder();
@@ -412,7 +412,7 @@ class FileImpl implements FSDescriptor, Persistable, SyncObject {
       FolderImpl folder = this.getFolder();
       if (folder != null) {
          try {
-            return FileUtilities.encodeString(((StringBuffer)(new Object("/store"))).append(folder.getPath()).append(this.getName()).toString());
+            return FileUtilities.encodeString("/store" + folder.getPath() + this.getName());
          } finally {
             return "";
          }
@@ -430,7 +430,7 @@ class FileImpl implements FSDescriptor, Persistable, SyncObject {
    public void remove() {
       synchronized (ContentStoreImpl.getInstance().getMonitor()) {
          if (!this.isAlive()) {
-            throw new Object();
+            throw new IllegalStateException();
          }
 
          this._attributes &= -33;
@@ -455,7 +455,7 @@ class FileImpl implements FSDescriptor, Persistable, SyncObject {
       if (name.equals("name")) {
          return this.getName();
       } else {
-         return (String)(this._eattributes != null ? this._eattributes.get(name) : null);
+         return this._eattributes != null ? (String)this._eattributes.get(name) : null;
       }
    }
 
@@ -522,7 +522,7 @@ class FileImpl implements FSDescriptor, Persistable, SyncObject {
       if (value == null) {
          return def;
       } else {
-         return !(value instanceof Object) ? Long.parseLong((String)value) : value;
+         return !(value instanceof Long) ? Long.parseLong((String)value) : (Long)value;
       }
    }
 
@@ -530,8 +530,8 @@ class FileImpl implements FSDescriptor, Persistable, SyncObject {
       if (key.equals(ATTRIB_NAME)) {
          this.setName((String)value);
       } else if (key.equals(ATTRIB_FOLDER)) {
-         if (value instanceof Object) {
-            this._folder = value;
+         if (value instanceof Integer) {
+            this._folder = (Integer)value;
          } else {
             this._folder = ContentStoreImpl.getInstance().getFolder(key).getId();
          }
@@ -549,7 +549,7 @@ class FileImpl implements FSDescriptor, Persistable, SyncObject {
          this._timeExpiry = this.setAttributeInternal_GetDate(value, Long.MAX_VALUE);
       } else if (value != null || this._eattributes != null) {
          if (this._eattributes == null) {
-            this._eattributes = (Hashtable)(new Object());
+            this._eattributes = new Hashtable();
          }
 
          if (value != null) {
@@ -590,7 +590,7 @@ class FileImpl implements FSDescriptor, Persistable, SyncObject {
       }
    }
 
-   private void setContentInternal(byte[] bytes, int length, boolean allowGroup) {
+   private void setContentInternal(byte[] bytes, int length, boolean allowGroup) throws FileIOException {
       try {
          synchronized (this._contentLock) {
             int oldContentLength = this._contentLength;
@@ -609,7 +609,7 @@ class FileImpl implements FSDescriptor, Persistable, SyncObject {
 
             if (bytes != null && !_onSync && length >= oldContentLength && !ContentStoreImpl.getInstance().isQuotaAvailable(this, length - oldContentLength)) {
                this._contentLength = oldContentLength;
-               throw new Object(9);
+               throw new FileIOException(9);
             }
 
             if (this._content == null) {
@@ -625,7 +625,7 @@ class FileImpl implements FSDescriptor, Persistable, SyncObject {
 
          ContentStoreDatabase.getInstance().commit(this._content, true);
       } finally {
-         throw new Object(9);
+         throw new FileIOException(9);
       }
    }
 
@@ -633,7 +633,7 @@ class FileImpl implements FSDescriptor, Persistable, SyncObject {
       if (value == null) {
          return def;
       } else {
-         return !(value instanceof Object) ? Integer.parseInt((String)value) : value;
+         return !(value instanceof Integer) ? Integer.parseInt((String)value) : (Integer)value;
       }
    }
 
@@ -677,9 +677,9 @@ class FileImpl implements FSDescriptor, Persistable, SyncObject {
       return this.getLength() > 0;
    }
 
-   static int verifyLength(long length) {
+   static int verifyLength(long length) throws FileIOException {
       if (length > FileSystemOptions.getContentStoreMaxFileSize()) {
-         throw new Object(1008);
+         throw new FileIOException(1008);
       } else {
          return (int)length;
       }

@@ -29,11 +29,11 @@ public final class ContactGroupImpl extends PIMItemImpl implements BlackBerryCon
    }
 
    ContactGroupImpl(Object input, ContactListImpl contactList) {
-      if (input instanceof Object) {
+      if (input instanceof GroupAddressCardModel) {
          this._groupAddressCard = (GroupAddressCardModel)input;
          this._contactList = contactList;
       } else {
-         throw new Object();
+         throw new IllegalStateException();
       }
    }
 
@@ -53,7 +53,7 @@ public final class ContactGroupImpl extends PIMItemImpl implements BlackBerryCon
 
    @Override
    public final void removeValue(int field, int index) {
-      throw new Object(READ_ONLY_MESSAGE);
+      throw new IllegalArgumentException(READ_ONLY_MESSAGE);
    }
 
    @Override
@@ -96,7 +96,7 @@ public final class ContactGroupImpl extends PIMItemImpl implements BlackBerryCon
 
    @Override
    public final void addString(int field, int attributes, String value) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
@@ -104,7 +104,7 @@ public final class ContactGroupImpl extends PIMItemImpl implements BlackBerryCon
       this.checkIndex(field, index);
       switch (field) {
          case 99:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 100:
          default:
             return this._groupAddressCard.getName();
@@ -115,37 +115,37 @@ public final class ContactGroupImpl extends PIMItemImpl implements BlackBerryCon
 
    @Override
    public final void setString(int field, int index, int attributes, String value) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public final void addInt(int field, int attributes, int value) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public final int getInt(int field, int index) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public final void setInt(int field, int index, int attributes, int value) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public final void addDate(int field, int attributes, long value) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public final long getDate(int field, int index) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public final void setDate(int field, int index, int attributes, long value) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
@@ -165,7 +165,7 @@ public final class ContactGroupImpl extends PIMItemImpl implements BlackBerryCon
    public final Contact getContact(int index) {
       Object addressCard = this._groupAddressCard.getAddressCardModelAt(index);
       if (addressCard == null) {
-         throw new Object();
+         throw new IndexOutOfBoundsException();
       } else {
          return new ContactImpl(addressCard, this._contactList);
       }
@@ -179,32 +179,32 @@ public final class ContactGroupImpl extends PIMItemImpl implements BlackBerryCon
             break;
          case 0:
          default:
-            if (addressModel instanceof Object) {
+            if (addressModel instanceof EmailAddressModel) {
                EmailAddressModel eam = (EmailAddressModel)addressModel;
                return eam.getAddress();
             }
             break;
          case 1:
-            if (addressModel instanceof Object) {
+            if (addressModel instanceof PINAddressModel) {
                PINAddressModel pam = (PINAddressModel)addressModel;
                return pam.toString();
             }
             break;
          case 2:
-            if (addressModel instanceof Object) {
+            if (addressModel instanceof AbstractPhoneNumberModel) {
                AbstractPhoneNumberModel apm = (AbstractPhoneNumberModel)addressModel;
                return apm.getDisplayablePhoneNumber();
             }
       }
 
-      throw new Object();
+      throw new IndexOutOfBoundsException();
    }
 
    @Override
    public final int getAddressType(int index) {
       switch (this._groupAddressCard.getAddressModelTypeAt(index)) {
          case -1:
-            throw new Object();
+            throw new IndexOutOfBoundsException();
          case 0:
          default:
             return 0;

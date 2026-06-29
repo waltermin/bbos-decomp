@@ -47,7 +47,7 @@ final class ActiveScreenONSField extends LabelField implements SystemListener, G
          RibbonNetworkInfo ni = RibbonNetworkInfo.getInstance();
          if (ni != null) {
             String newONS = ni.getOperatorName();
-            Out.p(((StringBuffer)(new Object("PHONE-ons="))).append(newONS).toString());
+            Out.p("PHONE-ons=" + newONS);
             return newONS;
          }
       }

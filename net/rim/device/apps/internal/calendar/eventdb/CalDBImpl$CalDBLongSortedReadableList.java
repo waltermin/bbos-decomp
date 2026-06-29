@@ -28,7 +28,7 @@ final class CalDBImpl$CalDBLongSortedReadableList implements CollectionListener,
 
    private final boolean elementBelongs(Object element) {
       Object rm = element;
-      if (rm instanceof Object && ((DurationParts)rm).hasParts()) {
+      if (rm instanceof DurationParts && ((DurationParts)rm).hasParts()) {
          if (this._acceptRecurring) {
             return true;
          }
@@ -192,7 +192,7 @@ final class CalDBImpl$CalDBLongSortedReadableList implements CollectionListener,
    @Override
    public final synchronized Object getAt(int offset) {
       if (offset >= this._numElements) {
-         throw new Object();
+         throw new ArrayIndexOutOfBoundsException();
       } else {
          return this._dataArray[offset];
       }

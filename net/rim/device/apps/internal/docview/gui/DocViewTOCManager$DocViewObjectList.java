@@ -57,11 +57,11 @@ final class DocViewTOCManager$DocViewObjectList extends ObjectListField {
 
    @Override
    protected final void drawFocus(Graphics graphics, boolean on) {
-      XYRect focusRect = (XYRect)(new Object());
+      XYRect focusRect = new XYRect();
       this.getFocusRect(focusRect);
       focusRect.height--;
       graphics.invert(focusRect);
-      focusRect = null;
+      XYRect var4 = null;
    }
 
    @Override

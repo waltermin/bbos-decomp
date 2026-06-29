@@ -14,7 +14,7 @@ public class DataComponentDefinition implements DataComponentDef, DefaultValueDe
    protected void initMappings() {
       String[] fieldNames = this.getFieldNames();
       if (fieldNames.length > 0) {
-         this._fieldMapping = (ToIntHashtable)(new Object(fieldNames.length + (fieldNames.length >> 1)));
+         this._fieldMapping = new ToIntHashtable(fieldNames.length + (fieldNames.length >> 1));
 
          for (int i = fieldNames.length - 1; i >= 0; i--) {
             this._fieldMapping.put(fieldNames[i], i);

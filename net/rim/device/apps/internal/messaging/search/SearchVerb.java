@@ -26,12 +26,12 @@ final class SearchVerb extends Verb implements EncryptableProvider {
 
    @Override
    public final boolean checkCrypt(boolean compress, boolean encrypt) {
-      return !(this._model instanceof Object) ? true : ((EncryptableProvider)this._model).checkCrypt(compress, encrypt);
+      return !(this._model instanceof EncryptableProvider) ? true : ((EncryptableProvider)this._model).checkCrypt(compress, encrypt);
    }
 
    @Override
    public final Object reCrypt(boolean compress, boolean encrypt) {
-      if (this._model instanceof Object) {
+      if (this._model instanceof EncryptableProvider) {
          Object newModel = ((EncryptableProvider)this._model).reCrypt(compress, encrypt);
          if (newModel != null) {
             this._model = (RIMModel)newModel;

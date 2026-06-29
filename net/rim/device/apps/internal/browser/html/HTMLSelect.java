@@ -248,7 +248,7 @@ final class HTMLSelect extends HTMLInput implements HTMLSelectElement {
          HTMLSelectField select = (HTMLSelectField)super._uiPeer;
          int size = select.getLength();
          if (size > 0 && context != null) {
-            StringBuffer buffer = (StringBuffer)(new Object(size));
+            StringBuffer buffer = new StringBuffer(size);
 
             for (int index = 0; index < size; index++) {
                buffer.append(select.isOptionSet(index) ? 1 : 0);

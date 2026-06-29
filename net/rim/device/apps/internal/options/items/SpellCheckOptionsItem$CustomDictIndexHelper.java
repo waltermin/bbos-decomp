@@ -10,7 +10,7 @@ final class SpellCheckOptionsItem$CustomDictIndexHelper implements KeywordIndexe
 
    @Override
    public final int getKeywords(Object element, String[] keywords) {
-      if (element instanceof Object) {
+      if (element instanceof String) {
          keywords[0] = (String)element;
          Array.resize(keywords, 1);
          return 1;
@@ -24,7 +24,7 @@ final class SpellCheckOptionsItem$CustomDictIndexHelper implements KeywordIndexe
       if (words.length != 1) {
          return false;
       } else {
-         return !(element instanceof Object) ? false : StringUtilities.startsWithIgnoreCaseAndAccents((String)element, words[0]);
+         return !(element instanceof String) ? false : StringUtilities.startsWithIgnoreCaseAndAccents((String)element, words[0]);
       }
    }
 }

@@ -1,22 +1,23 @@
 package net.rim.device.apps.internal.docview.gui;
 
 import net.rim.device.api.i18n.ResourceBundle;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.CheckboxField;
+import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.ui.CommonResources;
 import net.rim.device.internal.ui.component.PopupDialog;
 
 public final class FindStringDlg extends PopupDialog {
-   private BasicEditField _editField = (BasicEditField)(new Object(4503601774854144L));
-   private CheckboxField _checkBoxField = (CheckboxField)(new Object(
+   private BasicEditField _editField = new EditField(4503601774854144L);
+   private CheckboxField _checkBoxField = new CheckboxField(
       ResourceBundle.getBundle(-4603212010799374808L, "net.rim.device.apps.internal.resource.DocView").getString(19), false
-   ));
-   private RichTextField _promptField = (RichTextField)(new Object(CommonResources.getString(9025), 36028797018963968L));
+   );
+   private RichTextField _promptField = new RichTextField(CommonResources.getString(9025), 36028797018963968L);
 
    public FindStringDlg() {
-      super((Manager)(new Object(1153202979583557632L)));
+      super(new VerticalFieldManager(1153202979583557632L));
       this.add(this._promptField);
       this.add(this._editField);
       this.add(this._checkBoxField);

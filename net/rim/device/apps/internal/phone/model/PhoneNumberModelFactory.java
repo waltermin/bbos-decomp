@@ -84,9 +84,9 @@ public class PhoneNumberModelFactory extends RIMModelFactory {
    @Override
    public Object createInstance(Object initialData) {
       PhoneNumberModel model = null;
-      if (initialData instanceof Object) {
+      if (initialData instanceof ActiveFieldContext) {
          ActiveFieldContext afc = (ActiveFieldContext)initialData;
-         initialData = new Object();
+         initialData = new ContextObject();
          ContextObject.put(initialData, 253, afc.getData());
       }
 
@@ -167,7 +167,7 @@ public class PhoneNumberModelFactory extends RIMModelFactory {
                   }
                }
 
-               model.setValue((String)(new Object(data, offset, len - 1)));
+               model.setValue(new String(data, offset, len - 1));
                return model;
             } finally {
                tmpBuf.setPosition(pos);
@@ -267,7 +267,7 @@ public class PhoneNumberModelFactory extends RIMModelFactory {
    @Override
    public boolean recognize(Object object) {
       if (!(object instanceof PhoneNumberModel)) {
-         if (!(object instanceof Object)) {
+         if (!(object instanceof GroupAddressCardModel)) {
             if (ContextObject.getFlag(object, 11) && ContextObject.getFlag(object, 19)) {
                SyncBuffer syncBuffer = (SyncBuffer)ContextObject.get(object, 255);
                if (syncBuffer != null) {
@@ -325,6 +325,6 @@ public class PhoneNumberModelFactory extends RIMModelFactory {
 
    @Override
    public Verb[] getVerbs(Object context) {
-      return new Object[]{new AddPhoneNumberVerb(this, this._ordering, this._typeIndex)};
+      return new Verb[]{new AddPhoneNumberVerb(this, this._ordering, this._typeIndex)};
    }
 }

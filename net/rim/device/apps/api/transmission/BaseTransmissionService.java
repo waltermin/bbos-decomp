@@ -122,7 +122,7 @@ public class BaseTransmissionService implements TransmissionService, EventLogger
    protected BaseTransmissionService(long factoryIdentifier, long eventLoggerGUID) {
       this._factoryIdentifier = factoryIdentifier;
       this._eventLoggerGUID = eventLoggerGUID;
-      this._listenerManagers = (Hashtable)(new Object());
+      this._listenerManagers = new Hashtable();
       this.initializeService();
    }
 }

@@ -9,8 +9,8 @@ final class SeekablePositionField$ResizableVisualNode {
    private final ViewportNode _viewNode;
 
    private SeekablePositionField$ResizableVisualNode(VisualNode visualNode) {
-      if (!(visualNode instanceof Object)) {
-         if (!(visualNode instanceof Object)) {
+      if (!(visualNode instanceof RectNode)) {
+         if (!(visualNode instanceof ViewportNode)) {
             this._viewNode = null;
             this._rectNode = null;
          } else {

@@ -28,7 +28,7 @@ public class SaveEventVerb extends CalendarEventVerb {
    private Event _series;
    private long _originalOccurrenceInstant;
    private boolean _newEvent;
-   private Vector _listeners = (Vector)(new Object());
+   private Vector _listeners = new Vector();
    public static long SAVE_EVENT_KEY = 2692357427663009499L;
    private static OTACalendarSyncDataManager _otaSyncDataManager = OTACalendarSyncDataManager.getInstance();
 
@@ -210,7 +210,7 @@ public class SaveEventVerb extends CalendarEventVerb {
 
       while (enumeration.hasMoreElements()) {
          Object o = enumeration.nextElement();
-         if (o != null && o instanceof Object) {
+         if (o != null && o instanceof Event) {
             Event e = (Event)o;
             if (e.getRelatedLUID() == uid) {
                MeetingUtilities.dontNotifyAttendees(calendarService, e.getLUID());

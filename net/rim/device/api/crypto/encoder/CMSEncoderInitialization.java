@@ -9,7 +9,7 @@ public final class CMSEncoderInitialization implements Initialization {
          SignatureDecoder.register(new CMS_RIM_SignatureDecoder(), new CMS_SignatureDecoder());
          SignatureEncoder.register(new CMS_RIM_SignatureEncoder());
       } finally {
-         throw new Object();
+         throw new RuntimeException();
       }
    }
 }

@@ -152,7 +152,7 @@ public final class SessionManager extends Thread implements SyncConnectionListen
             this._syncDatagramsPool.checkIn(aSyncDatagram);
          }
 
-         throw new Object();
+         throw new IOException();
       }
    }
 
@@ -1563,8 +1563,8 @@ public final class SessionManager extends Thread implements SyncConnectionListen
       this._discardDeviceSessionLock = new Object();
       this._syncModeRequests = new SyncModeRequests();
       this._syncDatagramsPool = ReusableObjectPool.getSingletonInstance(7926551755126522851L);
-      this._disabledDatabases = (Vector)(new Object());
-      this._syncAgentConnectionsList = (Vector)(new Object());
+      this._disabledDatabases = new Vector();
+      this._syncAgentConnectionsList = new Vector();
       this._syncConnection = aSyncConnection;
       this._serviceUid = serviceUid;
       this._sid = aSyncConnection.getSid();
@@ -1572,7 +1572,7 @@ public final class SessionManager extends Thread implements SyncConnectionListen
       this._userId = String.valueOf(this._serviceIdentifier.getServiceRecord().getUserId());
       this._syncConnection.setListener(this);
       this._sessionManagerState = SessionManagerState.get(this._sid);
-      this._ignoredSessions = (IntHashtable)(new Object());
+      this._ignoredSessions = new IntHashtable();
       this._syncAgent = SyncAgent.getSingletonInstance();
       this._configuration = ServicesConfigurationManager.getSingletonInstance().getConfiguration(this._sid);
       this._contentProtectionSupported = PersistentContent.isContentProtectionSupported();

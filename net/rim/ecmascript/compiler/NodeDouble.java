@@ -8,7 +8,7 @@ class NodeDouble extends Node {
 
    NodeDouble(Function f, double value) {
       this._dvalue = value;
-      this._value = f.addDouble((Double)(new Object(value)));
+      this._value = f.addDouble(new Double(value));
    }
 
    @Override

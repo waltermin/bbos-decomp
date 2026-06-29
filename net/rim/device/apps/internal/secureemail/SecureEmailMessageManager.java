@@ -8,6 +8,7 @@ import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.apps.api.ui.VerbMenuItem;
 import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
+import net.rim.device.internal.ui.component.HorizontalSpacerField;
 import net.rim.device.internal.ui.component.ImageField;
 
 class SecureEmailMessageManager extends SecureEmailMessageBlockManager {
@@ -26,16 +27,16 @@ class SecureEmailMessageManager extends SecureEmailMessageBlockManager {
    SecureEmailMessageManager(long style, EmailMessageModel messageModel) {
       super(style);
       this._shortFormStatusManager = new CursorProviderHorizontalFieldManager(style);
-      this._shortFormSeparator = (SeparatorField)(new Object());
-      this._shortTextField = (LabelField)(new Object(null, 51539607552L));
+      this._shortFormSeparator = new SeparatorField();
+      this._shortTextField = new LabelField(null, 51539607552L);
       this._statusFieldTypes = new long[0];
       this._statusFieldsByType = new StatusField[0][];
-      this._showShortFormVerb = (VerbMenuItem)(new Object(
+      this._showShortFormVerb = new VerbMenuItem(
          new SecureEmailMessageManager$ShowShortFormVerb(this, SecureEmailResources.getBundle(), 23, true), Integer.MAX_VALUE
-      ));
-      this._showLongFormVerb = (VerbMenuItem)(new Object(
+      );
+      this._showLongFormVerb = new VerbMenuItem(
          new SecureEmailMessageManager$ShowShortFormVerb(this, SecureEmailResources.getBundle(), 22, false), Integer.MAX_VALUE
-      ));
+      );
       this._messageModel = messageModel;
    }
 
@@ -134,7 +135,7 @@ class SecureEmailMessageManager extends SecureEmailMessageBlockManager {
             }
          }
 
-         this._shortFormStatusManager.add((Field)(new Object(3)));
+         this._shortFormStatusManager.add(new HorizontalSpacerField(3));
          this._shortTextField.setText(this._highestPriorityStatusField.getShortText());
          this._shortFormStatusManager.add(this._shortTextField);
          if (newFieldWithFocus != null) {

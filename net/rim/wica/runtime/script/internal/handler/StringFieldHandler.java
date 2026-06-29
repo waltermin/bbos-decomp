@@ -1,5 +1,6 @@
 package net.rim.wica.runtime.script.internal.handler;
 
+import java.util.Date;
 import net.rim.ecmascript.runtime.ESDate;
 import net.rim.ecmascript.runtime.ESString;
 import net.rim.ecmascript.runtime.ThrownValue;
@@ -21,7 +22,7 @@ public final class StringFieldHandler implements PropertyHandler {
          case 268435456:
          case 536870912:
             Object obj = component.getObjectFieldValue(id);
-            if (!(obj instanceof Object)) {
+            if (!(obj instanceof String)) {
                return Value.NULL;
             }
 
@@ -100,10 +101,10 @@ public final class StringFieldHandler implements PropertyHandler {
             return Value.getStringValue(esObject);
          case 6:
             Object o = Value.getObjectValue(esObject);
-            if (!(o instanceof Object)) {
+            if (!(o instanceof ESString)) {
                if (!(o instanceof ESEnum)) {
-                  if (o instanceof Object) {
-                     return Util.DEFAULT_DATE_FORMATTER.format(new Object((long)((ESDate)o).getValue()));
+                  if (o instanceof ESDate) {
+                     return Util.DEFAULT_DATE_FORMATTER.format(new Date((long)((ESDate)o).getValue()));
                   }
 
                   throw ThrownValue.typeError(RuntimeResources.getString(144));

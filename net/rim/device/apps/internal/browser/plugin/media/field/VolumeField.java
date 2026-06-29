@@ -131,7 +131,7 @@ public final class VolumeField {
    public final void invalidate() {
       if (this._modelBar != null) {
          String number = Integer.toString(this._volumeLevel * 10);
-         this._modelBar.trigger(107, this._modelBar.getHandle(((StringBuffer)(new Object("volume"))).append(number).toString()), null);
+         this._modelBar.trigger(107, this._modelBar.getHandle("volume" + number), null);
       }
    }
 

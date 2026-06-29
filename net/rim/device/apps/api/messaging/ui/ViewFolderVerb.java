@@ -27,7 +27,7 @@ public final class ViewFolderVerb extends Verb {
    @Override
    public final Object invoke(Object context) {
       FolderList fl = new FolderList(this._defaultFolder);
-      fl.setContext((ContextObject)(new Object(22)));
+      fl.setContext(new ContextObject(22));
       if (this._hierarchy != null) {
          fl.setHierarchies(new Folder[]{this._hierarchy});
       }

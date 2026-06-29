@@ -5,6 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javax.microedition.io.InputConnection;
 import net.rim.device.api.browser.field.BrowserContentBaseImpl;
+import net.rim.device.api.browser.field.RenderingException;
 import net.rim.device.api.system.DeviceInfo;
 import net.rim.device.apps.internal.browser.pme.PMEBrowserField;
 import net.rim.plazmic.internal.contentpreview.MishandleException;
@@ -30,10 +31,10 @@ final class ContentPreviewPMEBrowserField extends PMEBrowserField implements Pla
    private static ControlPanelClient _controlPanelClient;
    private static String _sessionName;
 
-   ContentPreviewPMEBrowserField(InputConnection inputConnection, InputStream in, BrowserContentBaseImpl browserContent, long fieldStyle) {
+   ContentPreviewPMEBrowserField(InputConnection inputConnection, InputStream in, BrowserContentBaseImpl browserContent, long fieldStyle) throws RenderingException {
       super(inputConnection, in, browserContent, fieldStyle);
       if (!initServices()) {
-         throw new Object("Could not start services");
+         throw new RenderingException("Could not start services");
       }
 
       try {
@@ -80,7 +81,7 @@ final class ContentPreviewPMEBrowserField extends PMEBrowserField implements Pla
    }
 
    private static final void handleMediaException(MediaException e) {
-      logError("device_media_exception", new Object[]{e.toString()});
+      logError("device_media_exception", new String[]{e.toString()});
    }
 
    private static final void logMessage(String message, String[] data) {
@@ -88,7 +89,7 @@ final class ContentPreviewPMEBrowserField extends PMEBrowserField implements Pla
    }
 
    private static final void logMessage(String message) {
-      logMessage(message, new Object[0]);
+      logMessage(message, new String[0]);
    }
 
    private static final void logError(String message, String[] data) {
@@ -96,7 +97,7 @@ final class ContentPreviewPMEBrowserField extends PMEBrowserField implements Pla
    }
 
    private static final void logError(String message) {
-      logError(message, new Object[0]);
+      logError(message, new String[0]);
    }
 
    private static final void log(int type, String message, String[] data) {
@@ -151,7 +152,7 @@ final class ContentPreviewPMEBrowserField extends PMEBrowserField implements Pla
 
    private final void startTimer() {
       this.stopTimer();
-      this._timer = (Timer)(new Object());
+      this._timer = new Timer();
       TimerTask updateTime = new ContentPreviewPMEBrowserField$1(this);
       this._timer.scheduleAtFixedRate(updateTime, 0, 100);
    }
@@ -217,7 +218,7 @@ final class ContentPreviewPMEBrowserField extends PMEBrowserField implements Pla
 
    @Override
    public final void onDisplay() {
-      logMessage(((StringBuffer)(new Object("onDisplay("))).append(_playbackCommandServer.getPort()).append(")").toString());
+      logMessage("onDisplay(" + _playbackCommandServer.getPort() + ")");
       super.onDisplay();
       this.setMediaTime(0, false);
       ((MediaServices)this.getMediaPlayer().getServices()).getEngine().setTimeSource(_timeSource);
@@ -228,7 +229,7 @@ final class ContentPreviewPMEBrowserField extends PMEBrowserField implements Pla
 
    @Override
    public final void onUndisplay() {
-      logMessage(((StringBuffer)(new Object("onUndisplay("))).append(_playbackCommandServer.getPort()).append(")").toString());
+      logMessage("onUndisplay(" + _playbackCommandServer.getPort() + ")");
       super.onUndisplay();
    }
 

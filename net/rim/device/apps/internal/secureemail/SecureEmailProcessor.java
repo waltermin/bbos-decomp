@@ -16,6 +16,7 @@ import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.apps.api.framework.model.ContextObject;
+import net.rim.device.apps.api.framework.model.FieldProvider;
 import net.rim.device.apps.api.transmission.Parameters;
 import net.rim.device.apps.api.transmission.rim.CMIMEContentType;
 import net.rim.device.apps.api.transmission.rim.CMIMEConverterRegistry;
@@ -43,7 +44,7 @@ public class SecureEmailProcessor extends Thread {
    protected CachedMessage _cachedMessage;
    protected Throwable _processingThrowable;
    protected SecureEmailProcessor _equalSecureEmailProcessor;
-   private static Vector _processorQueue = (Vector)(new Object());
+   private static Vector _processorQueue = new Vector();
    private static SecureEmailProcessor$WorkerThread _workerThread;
    private static final boolean DEBUG = true;
 
@@ -64,7 +65,7 @@ public class SecureEmailProcessor extends Thread {
 
    public void run(boolean waitForResult) {
       if (waitForResult && Application.getApplication().isEventThread()) {
-         PleaseWaitDialog pleaseWaitDialog = (PleaseWaitDialog)(new Object(new SecureEmailProcessor$1(this)));
+         PleaseWaitDialog pleaseWaitDialog = new PleaseWaitDialog(new SecureEmailProcessor$1(this));
          pleaseWaitDialog.display();
       } else {
          this.runProcessor(waitForResult);
@@ -96,8 +97,7 @@ public class SecureEmailProcessor extends Thread {
       synchronized (_processorQueue) {
          int existingProcessorIndex = _processorQueue.indexOf(this);
          if (existingProcessorIndex >= 0) {
-            System.out
-               .println(((StringBuffer)(new Object("SecureEmail: Linking new processor with processor at index "))).append(existingProcessorIndex).toString());
+            System.out.println("SecureEmail: Linking new processor with processor at index " + existingProcessorIndex);
             this._equalSecureEmailProcessor = (SecureEmailProcessor)_processorQueue.elementAt(existingProcessorIndex);
          }
 
@@ -184,7 +184,7 @@ public class SecureEmailProcessor extends Thread {
       // 06c: astore 2
       // 06d: aload 2
       // 06e: invokevirtual net/rim/device/api/crypto/CryptoIOException.getCryptoException ()Lnet/rim/device/api/crypto/CryptoException;
-      // 071: instanceof java/lang/Object
+      // 071: instanceof net/rim/device/api/crypto/CryptoTokenCancelException
       // 074: ifeq 07d
       // 077: bipush 43
       // 079: istore 1
@@ -318,7 +318,7 @@ public class SecureEmailProcessor extends Thread {
 
    protected void fillTarget(CachedMessage cachedMessage) {
       if (!(this._target instanceof SecureEmailMessageManager)) {
-         if (this._target instanceof Object) {
+         if (this._target instanceof StringBuffer) {
             StringBuffer sb = (StringBuffer)this._target;
             cachedMessage.fillStringBuffer(sb, this._context);
          }
@@ -329,7 +329,7 @@ public class SecureEmailProcessor extends Thread {
             Manager mainManager = null;
             int oldVerticalScroll = -1;
             Screen screen = secureEmailMessageManager.getScreen();
-            if (screen instanceof Object) {
+            if (screen instanceof MainScreen) {
                mainManager = ((MainScreen)screen).getMainManager();
                oldVerticalScroll = mainManager.getVerticalScroll();
             }
@@ -395,7 +395,7 @@ public class SecureEmailProcessor extends Thread {
    }
 
    protected boolean getFieldsFromInputStream(InputStream inputStream, CachedManager cachedManager) {
-      if (!(inputStream instanceof Object)) {
+      if (!(inputStream instanceof MIMEInputStream)) {
          return this.getFieldsFromInputStream_Text(inputStream, cachedManager);
       }
 
@@ -466,7 +466,7 @@ public class SecureEmailProcessor extends Thread {
             cachedManager.getCachedMessage().setBodyTruncated(false);
          }
 
-         Parameters parameters = (Parameters)(new Object((DataBuffer)(new Object()), 1, 1));
+         Parameters parameters = new Parameters(new DataBuffer(), 1, 1);
          parameters.add((byte)1, contentType.getBytes());
          return this.getFieldsFromInputStream_Text(mimeStream, parameters, cachedManager);
       } else {
@@ -481,7 +481,7 @@ public class SecureEmailProcessor extends Thread {
    protected boolean getFieldsFromInputStream_Text(InputStream inputStream, Parameters conversionParameters, CachedManager cachedManager) {
       byte[] textBytes = SecureEmailUtilities.readStreamCompletely(inputStream);
       if (conversionParameters == null) {
-         conversionParameters = (Parameters)(new Object((DataBuffer)(new Object()), 1, 1));
+         conversionParameters = new Parameters(new DataBuffer(), 1, 1);
          conversionParameters.add((byte)1, this._secureEmailBodyModel.getTextMIMEType().getBytes());
       }
 
@@ -505,10 +505,10 @@ public class SecureEmailProcessor extends Thread {
       }
 
       byte[] data = SecureEmailUtilities.readStreamCompletely(mimeStream);
-      CMIMEParameters parameters = (CMIMEParameters)(new Object((DataBuffer)(new Object()), 4, 1));
+      CMIMEParameters parameters = new CMIMEParameters(new DataBuffer(), 4, 1);
       String contentType = mimeStream.getContentType();
       if (contentType != null) {
-         DataBuffer cmimeContentTypeBuffer = (DataBuffer)(new Object());
+         DataBuffer cmimeContentTypeBuffer = new DataBuffer();
          CMIMEContentType.encodeType(contentType, cmimeContentTypeBuffer);
          cmimeContentTypeBuffer.rewind();
          parameters.add((byte)1, cmimeContentTypeBuffer.readByteArray());
@@ -526,12 +526,12 @@ public class SecureEmailProcessor extends Thread {
       try {
          Converter converter = CMIMEConverterRegistry.getDefaultConverter(parameters);
          Object attachment = converter.convert(data, parameters);
-         if (!(attachment instanceof Object)) {
+         if (!(attachment instanceof FieldProvider)) {
             converter = CMIMEConverterRegistry.getDefaultConverter();
             attachment = converter.convert(data, parameters);
          }
 
-         if (attachment instanceof Object) {
+         if (attachment instanceof FieldProvider) {
             cachedManager.getCachedMessage().addAttachment(attachment);
             return true;
          }

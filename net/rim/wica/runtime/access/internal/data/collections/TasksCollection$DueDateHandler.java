@@ -1,6 +1,6 @@
 package net.rim.wica.runtime.access.internal.data.collections;
 
-import javax.microedition.pim.PIMItem;
+import javax.microedition.pim.ToDo;
 import net.rim.wica.runtime.access.internal.data.handlers.LongFieldHandler;
 
 final class TasksCollection$DueDateHandler implements LongFieldHandler {
@@ -9,9 +9,9 @@ final class TasksCollection$DueDateHandler implements LongFieldHandler {
 
    @Override
    public final long getValue(Object item) {
-      if (item instanceof Object) {
+      if (item instanceof ToDo) {
          try {
-            return ((PIMItem)item).getDate(103, 0);
+            return ((ToDo)item).getDate(103, 0);
          } finally {
             return -1;
          }

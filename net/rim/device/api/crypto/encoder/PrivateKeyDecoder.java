@@ -1,9 +1,11 @@
 package net.rim.device.api.crypto.encoder;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Hashtable;
 import net.rim.device.api.crypto.CryptoSystem;
 import net.rim.device.api.crypto.InvalidKeyEncodingException;
+import net.rim.device.api.crypto.NoSuchAlgorithmException;
 import net.rim.device.api.crypto.PrivateKey;
 import net.rim.device.api.system.ApplicationRegistry;
 
@@ -19,12 +21,12 @@ public class PrivateKeyDecoder {
          if (encodedKey != null && encodingAlgorithm != null) {
             PrivateKeyDecoder decoder = (PrivateKeyDecoder)_decoderHashtable.get(encodingAlgorithm);
             if (decoder == null) {
-               throw new Object(encodingAlgorithm);
+               throw new NoSuchAlgorithmException(encodingAlgorithm);
             } else {
                return decoder.decodeKey(encodedKey, cryptoSystem, keyAlgorithm);
             }
          } else {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } finally {
          throw new InvalidKeyEncodingException();
@@ -33,9 +35,9 @@ public class PrivateKeyDecoder {
 
    public static PrivateKey decode(byte[] encodedKey, String encodingAlgorithm, CryptoSystem cryptoSystem, String keyAlgorithm) {
       if (encodedKey == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
-         return decode((InputStream)(new Object(encodedKey)), encodingAlgorithm, cryptoSystem, keyAlgorithm);
+         return decode(new ByteArrayInputStream(encodedKey), encodingAlgorithm, cryptoSystem, keyAlgorithm);
       }
    }
 
@@ -49,9 +51,9 @@ public class PrivateKeyDecoder {
 
    public static PrivateKey decode(byte[] encodedKey, String encodingAlgorithm) {
       if (encodedKey == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
-         return decode((InputStream)(new Object(encodedKey)), encodingAlgorithm, null, null);
+         return decode(new ByteArrayInputStream(encodedKey), encodingAlgorithm, null, null);
       }
    }
 

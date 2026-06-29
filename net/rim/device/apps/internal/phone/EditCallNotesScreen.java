@@ -88,8 +88,8 @@ final class EditCallNotesScreen extends PhoneAwareScreen implements Confirmation
       this.setTag(Tag.create("client"));
       this.setId("activecallnotes");
       this.removeAllMenuItems();
-      if (!(liveCall instanceof Object)) {
-         throw new Object();
+      if (!(liveCall instanceof NotesContainer)) {
+         throw new IllegalArgumentException();
       }
 
       this._liveCall = liveCall;
@@ -101,17 +101,17 @@ final class EditCallNotesScreen extends PhoneAwareScreen implements Confirmation
    private final void populateScreen() {
       this._mgr = new EditCallNotesScreen$EditCallNotesManager();
       this.add(this._mgr);
-      ActivePhoneScreenHeader header = (ActivePhoneScreenHeader)(new Object(this._liveCall, this));
+      ActivePhoneScreenHeader header = new ActivePhoneScreenHeader(this._liveCall, this);
       this._mgr.add(header);
-      ContextObject context = (ContextObject)(new Object(35, 0, 20));
+      ContextObject context = new ContextObject(35, 0, 20);
       if (ApplicationManager.getApplicationManager().isSystemLocked()) {
          context.setFlag(120);
       }
 
       this._notesField = (EditField)this._liveCall.getField(context);
-      VerticalFieldManager notesVFM = (VerticalFieldManager)(new Object());
-      NotesFieldEditor notesFieldEditor = (NotesFieldEditor)(new Object(this._notesField, false));
-      SeparatorField separator = (SeparatorField)(new Object());
+      VerticalFieldManager notesVFM = new VerticalFieldManager();
+      NotesFieldEditor notesFieldEditor = new NotesFieldEditor(this._notesField, false);
+      SeparatorField separator = new SeparatorField();
       notesVFM.add(separator);
       notesFieldEditor.setPrefHeight((Display.getHeight() >> 1) - separator.getPreferredHeight());
       notesVFM.add(notesFieldEditor);

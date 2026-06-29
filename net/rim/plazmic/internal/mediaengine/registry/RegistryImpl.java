@@ -3,8 +3,8 @@ package net.rim.plazmic.internal.mediaengine.registry;
 import java.util.Hashtable;
 
 public class RegistryImpl implements Registry {
-   private Hashtable registry = (Hashtable)(new Object());
-   private String[] supportedVersions = new Object[4];
+   private Hashtable registry = new Hashtable();
+   private String[] supportedVersions = new String[4];
    private int numSupportedVersion = 0;
    private static final String APPLICATION_RIM_PME = "application/x-vnd.rim.pme";
    private static final int MAX_NUM_SUPPORT_VERSION = 4;
@@ -59,7 +59,7 @@ public class RegistryImpl implements Registry {
    }
 
    public static final String getKey(String[] keys) {
-      StringBuffer key = (StringBuffer)(new Object());
+      StringBuffer key = new StringBuffer();
 
       for (int i = 0; i < keys.length; i++) {
          key.append(keys[i]);

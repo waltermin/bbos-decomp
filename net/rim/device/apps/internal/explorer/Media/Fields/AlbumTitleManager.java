@@ -12,7 +12,7 @@ public final class AlbumTitleManager extends VerticalFieldManager {
    public AlbumTitleManager(String albumTitle, int height) {
       super(281526516318208L);
       this._managerHeight = height;
-      VerticalFieldManager vfm = (VerticalFieldManager)(new Object());
+      VerticalFieldManager vfm = new VerticalFieldManager();
       this._titleField = new AlbumTitleField(albumTitle, 36028797018963968L, height);
       this._titleField.setTag(ThemeUtilities.TITLE_TAG);
       vfm.add(this._titleField);

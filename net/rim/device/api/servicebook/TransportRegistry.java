@@ -5,7 +5,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.util.StringUtilities;
 
 public final class TransportRegistry {
-   private Hashtable _table = (Hashtable)(new Object());
+   private Hashtable _table = new Hashtable();
    private static final long ID = -1022418719669777680L;
 
    private TransportRegistry() {

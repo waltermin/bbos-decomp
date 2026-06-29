@@ -1,7 +1,6 @@
 package net.rim.device.apps.internal.options.items.network;
 
 import net.rim.device.api.ui.Field;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.DialogFieldManager;
@@ -17,15 +16,15 @@ final class PrefNetworkSelectOption$RATSelectionPopup extends PopupDialog {
    private NetworkInfo _info;
 
    PrefNetworkSelectOption$RATSelectionPopup(NetworkInfo info) {
-      super((Manager)(new Object()));
+      super(new DialogFieldManager());
       DialogFieldManager manager = (DialogFieldManager)this.getDelegate();
       this._info = info;
-      this._labelField = (RichTextField)(new Object(OptionsResources.getString(1971), 36028797018963968L));
+      this._labelField = new RichTextField(OptionsResources.getString(1971), 36028797018963968L);
       manager.setMessage(this._labelField);
       String[] buttonText = OptionsResources.getStringArray(1970);
-      this._button2G = (ButtonField)(new Object(buttonText[1]));
-      this._button3G = (ButtonField)(new Object(buttonText[0]));
-      HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object());
+      this._button2G = new ButtonField(buttonText[1]);
+      this._button3G = new ButtonField(buttonText[0]);
+      HorizontalFieldManager hfm = new HorizontalFieldManager();
       hfm.add(this._button2G);
       hfm.add(this._button3G);
       manager.addCustomField(hfm);

@@ -24,7 +24,7 @@ public final class ImportCertificatesVerb extends Verb {
          this._privateKeys = privateKeys;
          this._keyStore = keyStore;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

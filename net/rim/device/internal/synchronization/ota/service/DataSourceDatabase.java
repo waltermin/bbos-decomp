@@ -26,7 +26,7 @@ public final class DataSourceDatabase implements Persistable, TLESerializableObj
    private int _recordTypeTag;
    private int _defaultTableId;
    private int _maxFieldTag;
-   private IntHashtable _tables = (IntHashtable)(new Object(1));
+   private IntHashtable _tables = new IntHashtable(1);
    private int _flags;
    private static final byte DEVICE_ENABLED_FLAG = 1;
    private static final byte SERVER_ENABLED_FLAG = 2;
@@ -68,7 +68,7 @@ public final class DataSourceDatabase implements Persistable, TLESerializableObj
    private static final byte COPY_CONFLICT_RESOLUTION = 2;
 
    public static final DataSourceDatabase create(byte[] bytes) {
-      DataBuffer xDataBuffer = (DataBuffer)(new Object(bytes, 0, bytes.length, true));
+      DataBuffer xDataBuffer = new DataBuffer(bytes, 0, bytes.length, true);
       return create(xDataBuffer);
    }
 
@@ -436,7 +436,7 @@ public final class DataSourceDatabase implements Persistable, TLESerializableObj
                   break;
                case 6:
                   byte[] xTableBytes = TypeLengthEncoding.readBytes(din);
-                  DataBuffer xDataBuffer = (DataBuffer)(new Object(xTableBytes, 0, xTableBytes.length, true));
+                  DataBuffer xDataBuffer = new DataBuffer(xTableBytes, 0, xTableBytes.length, true);
                   DataSourceDatabaseTable xNewTable = DataSourceDatabaseTable.create(xDataBuffer);
                   int xTableId = xNewTable.getId();
                   DataSourceDatabaseTable xTable = (DataSourceDatabaseTable)this._tables.get(xTableId);
@@ -502,7 +502,7 @@ public final class DataSourceDatabase implements Persistable, TLESerializableObj
 
    @Override
    public final String toString() {
-      StringBuffer xSb = (StringBuffer)(new Object());
+      StringBuffer xSb = new StringBuffer();
       xSb.append('[').append(this._name).append(']').append('\n');
       xSb.append("Ver= ").append(this._version).append('\n');
       xSb.append("ID= ").append(this._id).append('\n');

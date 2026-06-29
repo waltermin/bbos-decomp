@@ -6,6 +6,8 @@ import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.model.SyncBuffer;
 import net.rim.device.apps.api.framework.registration.RIMModelFactory;
 import net.rim.device.apps.api.framework.verb.Verb;
+import net.rim.device.apps.api.messaging.implus.InteractiveHHAddressModel;
+import net.rim.device.apps.api.messaging.implus.OneWayPagerAddressModel;
 
 final class IMPlusAddressModelFactory extends RIMModelFactory {
    private int _type;
@@ -58,7 +60,7 @@ final class IMPlusAddressModelFactory extends RIMModelFactory {
 
    @Override
    public final boolean recognize(Object object) {
-      if ((this._type != 5 || !(object instanceof Object)) && (this._type != 4 || !(object instanceof Object))) {
+      if ((this._type != 5 || !(object instanceof InteractiveHHAddressModel)) && (this._type != 4 || !(object instanceof OneWayPagerAddressModel))) {
          if (ContextObject.getFlag(object, 11) && ContextObject.getFlag(object, 19)) {
             SyncBuffer syncBuffer = (SyncBuffer)ContextObject.get(object, 255);
             return syncBuffer != null && syncBuffer.getFieldType() == this._type;

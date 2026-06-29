@@ -150,7 +150,7 @@ class StandardCall extends LiveCall implements NotesContainer {
             this._notesModel = (BodyModel)FactoryUtil.createInstance(2096811533660483L, null);
          }
 
-         if (this._notesModel instanceof Object) {
+         if (this._notesModel instanceof FieldProvider) {
             FieldProvider fp = (FieldProvider)this._notesModel;
             return fp.getField(context);
          }

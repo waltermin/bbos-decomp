@@ -115,7 +115,7 @@ public class GranularPolicyAction extends GranularPolicyElement {
 
    @Override
    public String getDebugPrintInfo() {
-      StringBuffer info = (StringBuffer)(new Object("Action \""));
+      StringBuffer info = new StringBuffer("Action \"");
       switch (this._operation) {
          case -1:
             info.append("Unknown");

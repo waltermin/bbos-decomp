@@ -1,7 +1,7 @@
 package net.rim.device.api.crypto;
 
+import net.rim.device.api.crypto.certificate.CertificateKeyStoreIndex;
 import net.rim.device.api.crypto.keystore.KeyStore;
-import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.internal.ui.component.PleaseWaitWorkerThread;
 
 class CryptoSmartCardUtilities$DoImportWork extends PleaseWaitWorkerThread {
@@ -11,7 +11,7 @@ class CryptoSmartCardUtilities$DoImportWork extends PleaseWaitWorkerThread {
 
    private CryptoSmartCardUtilities$DoImportWork(KeyStore importKeyStore, KeyStore trustedKeyStore) {
       this._importKeyStore = importKeyStore;
-      this._importKeyStore.addIndex((KeyStoreIndex)(new Object()));
+      this._importKeyStore.addIndex(new CertificateKeyStoreIndex());
       this._trustedKeyStore = trustedKeyStore;
    }
 
@@ -167,7 +167,7 @@ class CryptoSmartCardUtilities$DoImportWork extends PleaseWaitWorkerThread {
       // 120: ifeq 15f
       // 123: bipush 0
       // 124: istore 18
-      // 126: new java/lang/Object
+      // 126: new java/util/Vector
       // 129: dup
       // 12a: invokespecial java/util/Vector.<init> ()V
       // 12d: astore 19
@@ -176,7 +176,7 @@ class CryptoSmartCardUtilities$DoImportWork extends PleaseWaitWorkerThread {
       // 136: ifeq 15f
       // 139: aload 17
       // 13b: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 140: checkcast java/lang/Object
+      // 140: checkcast net/rim/device/api/crypto/keystore/KeyStoreData
       // 143: astore 20
       // 145: aload 20
       // 147: invokeinterface net/rim/device/api/crypto/keystore/KeyStoreData.isPrivateKeySet ()Z 1
@@ -245,7 +245,7 @@ class CryptoSmartCardUtilities$DoImportWork extends PleaseWaitWorkerThread {
       // 1d1: aload 10
       // 1d3: iload 13
       // 1d5: invokestatic net/rim/vm/Array.resize (Ljava/lang/Object;I)V
-      // 1d8: new java/lang/Object
+      // 1d8: new net/rim/device/api/ui/component/RichTextField
       // 1db: dup
       // 1dc: getstatic net/rim/device/api/crypto/CryptoSmartCardUtilities._rb Lnet/rim/device/api/i18n/ResourceBundle;
       // 1df: bipush 10
@@ -317,7 +317,7 @@ class CryptoSmartCardUtilities$DoImportWork extends PleaseWaitWorkerThread {
       // 267: aload 20
       // 269: iload 21
       // 26b: invokevirtual java/util/Vector.elementAt (I)Ljava/lang/Object;
-      // 26e: checkcast java/lang/Object
+      // 26e: checkcast net/rim/device/api/crypto/keystore/KeyStoreData
       // 271: aload 16
       // 273: invokeinterface net/rim/device/api/crypto/keystore/KeyStore.removeKey (Lnet/rim/device/api/crypto/keystore/KeyStoreData;Lnet/rim/device/api/crypto/keystore/KeyStoreTicket;)V 3
       // 278: iinc 21 -1
@@ -343,14 +343,14 @@ class CryptoSmartCardUtilities$DoImportWork extends PleaseWaitWorkerThread {
       // 2a3: pop
       // 2a4: aload 19
       // 2a6: ldc2_w -1188891808812199856
-      // 2a9: new java/lang/Object
+      // 2a9: new java/lang/Boolean
       // 2ac: dup
       // 2ad: aload 18
       // 2af: invokevirtual net/rim/device/api/crypto/CryptoSmartCardKeyStoreData.isPrivateKeySet ()Z
       // 2b2: invokespecial java/lang/Boolean.<init> (Z)V
       // 2b5: getstatic java/lang/Boolean.FALSE Ljava/lang/Boolean;
       // 2b8: invokeinterface net/rim/device/api/crypto/certificate/Certificate.getInformation (JLjava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object; 5
-      // 2bd: checkcast java/lang/Object
+      // 2bd: checkcast java/lang/Boolean
       // 2c0: astore 21
       // 2c2: aload 21
       // 2c4: invokevirtual java/lang/Boolean.booleanValue ()Z
@@ -363,11 +363,11 @@ class CryptoSmartCardUtilities$DoImportWork extends PleaseWaitWorkerThread {
       // 2d8: aload 0
       // 2d9: getfield net/rim/device/api/crypto/CryptoSmartCardUtilities$DoImportWork._trustedKeyStore Lnet/rim/device/api/crypto/keystore/KeyStore;
       // 2dc: dup
-      // 2dd: instanceof java/lang/Object
+      // 2dd: instanceof net/rim/device/api/crypto/keystore/TrustedKeyStore
       // 2e0: ifne 2e7
       // 2e3: pop
       // 2e4: goto 2f2
-      // 2e7: checkcast java/lang/Object
+      // 2e7: checkcast net/rim/device/api/crypto/keystore/TrustedKeyStore
       // 2ea: aload 19
       // 2ec: invokevirtual net/rim/device/api/crypto/keystore/TrustedKeyStore.isAllowed (Lnet/rim/device/api/crypto/certificate/Certificate;)Z
       // 2ef: ifeq 337

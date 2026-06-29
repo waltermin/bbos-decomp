@@ -1,12 +1,13 @@
 package com.fourthpass.wmls;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 public final class WMLInputStream extends InputStream {
    private InputStream _in;
 
    public WMLInputStream(byte[] buf) {
-      this((InputStream)(new Object(buf)));
+      this(new ByteArrayInputStream(buf));
    }
 
    public WMLInputStream(InputStream in) {

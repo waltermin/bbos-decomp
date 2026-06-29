@@ -1,10 +1,10 @@
 package net.rim.device.api.browser.push;
 
 import java.io.InputStream;
-import javax.microedition.io.Connection;
+import javax.microedition.io.StreamConnectionNotifier;
 import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.api.io.http.HttpServerConnection;
-import net.rim.device.api.io.http.PushInputStream;
+import net.rim.device.api.io.http.MDSPushInputStream;
 import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.system.EventLogger;
 
@@ -31,10 +31,10 @@ final class MDSPushSource extends PushSource implements PushEventLogger {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
       synchronized (ar) {
          Object notifier = ar.get(-713047639350268568L);
-         if (notifier instanceof Object) {
+         if (notifier instanceof StreamConnectionNotifier) {
             label50:
             try {
-               ((Connection)notifier).close();
+               ((StreamConnectionNotifier)notifier).close();
             } finally {
                break label50;
             }
@@ -69,7 +69,7 @@ final class MDSPushSource extends PushSource implements PushEventLogger {
             return;
          }
       } catch (Throwable var7) {
-         EventLogger.logEvent(-1133226195824034738L, ((StringBuffer)(new Object("PPex\n"))).append(ioe.toString()).toString().getBytes(), 0);
+         EventLogger.logEvent(-1133226195824034738L, ("PPex\n" + ioe.toString()).getBytes(), 0);
          return;
       }
    }
@@ -87,18 +87,18 @@ final class MDSPushSource extends PushSource implements PushEventLogger {
             try {
                var28 = true;
                in = connection.openInputStream();
-               HttpHeaders e = new Object();
+               HttpHeaders e = new HttpHeaders();
                String key = null;
 
                for (int i = 0; (key = connection.getHeaderFieldKey(i)) != null; i++) {
-                  ((HttpHeaders)e).setProperty(key, connection.getHeaderField(i));
+                  e.setProperty(key, connection.getHeaderField(i));
                }
 
-               this._listener.messageReceived((HttpHeaders)e, (PushInputStream)(new Object(connection, in)));
+               this._listener.messageReceived(e, new MDSPushInputStream(connection, in));
                var28 = false;
                break label213;
             } catch (Throwable var37) {
-               EventLogger.logEvent(-1133226195824034738L, ((StringBuffer)(new Object("PPpp\n"))).append(e.toString()).toString().getBytes(), 0);
+               EventLogger.logEvent(-1133226195824034738L, ("PPpp\n" + e.toString()).getBytes(), 0);
                var28 = false;
                break label201;
             }

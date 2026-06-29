@@ -1,6 +1,7 @@
 package net.rim.plazmic.internal.mediaengine.format;
 
 import net.rim.plazmic.internal.mediaengine.io.FormatVersionReader;
+import net.rim.plazmic.mediaengine.MediaException;
 
 public class BundleVersionReader implements FormatVersionReader {
    private byte[] bundleData;
@@ -11,11 +12,11 @@ public class BundleVersionReader implements FormatVersionReader {
    static final int BUNDLE_START_HEADER = -548385470;
 
    @Override
-   public synchronized String getVersion(byte[] header, int offset) {
+   public synchronized String getVersion(byte[] header, int offset) throws MediaException {
       this.bundleData = header;
       this.bundleOffset = offset;
       if (this.readInt() != -548385470) {
-         throw new Object(3);
+         throw new MediaException(3);
       } else {
          int major1Version = this.readUnsignedByte();
          int major2Version = this.readUnsignedByte();
@@ -23,19 +24,11 @@ public class BundleVersionReader implements FormatVersionReader {
          int minor2Version = this.readUnsignedByte();
          minor2Version = minor2Version;
          if (major1Version > 0 || major2Version > 1 || minor1Version > 6) {
-            throw new Object(1);
+            throw new MediaException(1);
          } else if (major1Version >= 0 && major2Version >= 1) {
-            return ((StringBuffer)(new Object()))
-               .append(major1Version)
-               .append('.')
-               .append(major2Version)
-               .append('.')
-               .append(minor2Version)
-               .append('.')
-               .append(minor1Version)
-               .toString();
+            return "" + major1Version + '.' + major2Version + '.' + minor2Version + '.' + minor1Version;
          } else {
-            throw new Object(2);
+            throw new MediaException(2);
          }
       }
    }
@@ -48,9 +41,9 @@ public class BundleVersionReader implements FormatVersionReader {
       return (ch1 << 24) + (ch2 << 16) + (ch3 << 8) + (ch4 << 0);
    }
 
-   private int readUnsignedByte() {
+   private int readUnsignedByte() throws MediaException {
       if (this.bundleData.length - this.bundleOffset < 1) {
-         throw new Object(4);
+         throw new MediaException(4);
       } else {
          return this.bundleData[this.bundleOffset++] & 0xFF;
       }

@@ -8,7 +8,7 @@ import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.util.StringUtilities;
 
 public class CustomListField extends ListField implements ListFieldCallback {
-   protected XYRect _focusRectangle = (XYRect)(new Object(0, 0, 0, 0));
+   protected XYRect _focusRectangle = new XYRect(0, 0, 0, 0);
    protected byte _nBuffer = 3;
    protected int _startVisibleCol;
    protected int _endVisibleCol = -1;
@@ -24,7 +24,7 @@ public class CustomListField extends ListField implements ListFieldCallback {
    protected int[] _columnFitVector;
    protected int _hiddenRowsCount;
    private int _hiddenColsCount;
-   private StringBuffer _stringBuffer = (StringBuffer)(new Object());
+   private StringBuffer _stringBuffer = new StringBuffer();
    protected boolean _showHiddenRowsCols = true;
    private FontFactory _fontFactory;
    private int _maxVisibleRowIndex = -1;
@@ -234,7 +234,7 @@ public class CustomListField extends ListField implements ListFieldCallback {
       }
    }
 
-   public void setFocusedCell(int row, int col) {
+   public void setFocusedCell(int row, int col) throws Exception {
       if (row >= -1 && row < this._sheetData.getNumberOfRows() && col >= -1 && col < this._sheetData.getNumberOfCols()) {
          if (this._showHiddenRowsCols || !this._sheetData.isRowHidden(row) && !this._sheetData.isColumnHidden(col)) {
             int nActualRow = this.transformToRowIndex(row, false);
@@ -255,10 +255,10 @@ public class CustomListField extends ListField implements ListFieldCallback {
             this.focusAdd(false);
             this.invalidate();
          } else {
-            throw new Object();
+            throw new Exception();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -793,7 +793,7 @@ public class CustomListField extends ListField implements ListFieldCallback {
       if (!this._showHiddenRowsCols && this._hiddenColsCount > 0) {
          int columnIndex = bDisplayHeader ? index - 1 : index;
          if (this._sheetData.isColumnHidden(columnIndex)) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          int columnStart = 0;

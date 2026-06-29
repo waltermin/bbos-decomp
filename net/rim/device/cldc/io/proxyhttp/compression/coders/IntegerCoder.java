@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.proxyhttp.compression.coders;
 
+import java.io.EOFException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import net.rim.device.api.system.ApplicationRegistry;
@@ -44,10 +45,10 @@ public final class IntegerCoder implements Coder {
    }
 
    @Override
-   public final String decode(InputStream ins) {
+   public final String decode(InputStream ins) throws EOFException {
       int currentByte = ins.read();
       if (currentByte == -1) {
-         throw new Object();
+         throw new EOFException();
       }
 
       if (currentByte >= 128) {
@@ -62,7 +63,7 @@ public final class IntegerCoder implements Coder {
             value <<= 8;
             nextByte = ins.read();
             if (nextByte == -1) {
-               throw new Object();
+               throw new EOFException();
             }
 
             value += (byte)nextByte & 255;

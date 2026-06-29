@@ -7,6 +7,7 @@ import net.rim.device.api.system.Display;
 import net.rim.device.api.system.Phone;
 import net.rim.device.api.system.RadioInfo;
 import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.RIMModel;
@@ -28,7 +29,7 @@ public final class ConferenceCall extends StandardCall implements iConferenceCal
    private boolean _held;
    public static final int MIN_MEMBER_COUNT = 2;
    public static final int MAX_MEMBER_COUNT = 5;
-   private static ContextObject _callerIDContext = (ContextObject)(new Object());
+   private static ContextObject _callerIDContext = new ContextObject();
 
    final void disconnect() {
       this.onCallDisconnected(null);
@@ -38,7 +39,7 @@ public final class ConferenceCall extends StandardCall implements iConferenceCal
       String callNotes = ((StandardCall)newMemberCall).getNotes();
       String existingNotes = this.getNotes();
       if (callNotes != null && callNotes.length() > 0) {
-         StringBuffer buf = (StringBuffer)(new Object());
+         StringBuffer buf = new StringBuffer();
          if (existingNotes != null && existingNotes.length() > 0) {
             buf.append(existingNotes);
             buf.append('\n');
@@ -70,7 +71,7 @@ public final class ConferenceCall extends StandardCall implements iConferenceCal
    }
 
    public final LiveCall getMember(int index) {
-      return (LiveCall)(index >= 0 && index < this.memberCount() ? this._members.elementAt(index) : null);
+      return index >= 0 && index < this.memberCount() ? (LiveCall)this._members.elementAt(index) : null;
    }
 
    public final boolean isMemberId(int callId) {
@@ -134,7 +135,7 @@ public final class ConferenceCall extends StandardCall implements iConferenceCal
 
    @Override
    protected final void onConstruction(PhoneCallInitialData data, Object context) {
-      if (context instanceof Object) {
+      if (context instanceof Vector) {
          this._initialMembers = (Vector)context;
       }
    }
@@ -150,15 +151,14 @@ public final class ConferenceCall extends StandardCall implements iConferenceCal
       ContextObject context = null;
       String notes = this.getNotes();
       if (notes != null && notes.length() > 0) {
-         Object var4;
-         if (!(data._context instanceof Object)) {
-            var4 = new Object();
-            data._context = var4;
+         if (!(data._context instanceof ContextObject)) {
+            context = new ContextObject();
+            data._context = context;
          } else {
-            var4 = data._context;
+            context = (ContextObject)data._context;
          }
 
-         ContextObject.put(var4, -3212039960712815826L, notes);
+         ContextObject.put(context, -3212039960712815826L, notes);
       }
 
       return (PhoneCallModel)PhoneUtilities.createPhoneCallModel(data);
@@ -211,7 +211,7 @@ public final class ConferenceCall extends StandardCall implements iConferenceCal
          String notesB = notesModelB == null ? null : notesModelB.getText();
          if (notesA != null && notesA.length() > 0) {
             if (notesB != null && notesB.length() > 0) {
-               callA.setNotes(((StringBuffer)(new Object())).append(notesA).append("\n\n").append(notesB).toString());
+               callA.setNotes(notesA + "\n\n" + notesB);
                callB.setNotesModel(notesModelA);
                super._notesModel = notesModelA;
             } else {
@@ -267,13 +267,13 @@ public final class ConferenceCall extends StandardCall implements iConferenceCal
    }
 
    public ConferenceCall(Vector members) {
-      super((PhoneCallInitialData)(new Object(0, (byte)4, 0, null, null)), members);
+      super(new PhoneCallInitialData(0, (byte)4, 0, null, null), members);
       int size = members.size();
       if (size != 2) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
-      this._members = (Vector)(new Object(2));
+      this._members = new Vector(2);
       StandardCall callA = (StandardCall)members.elementAt(0);
       StandardCall callB = (StandardCall)members.elementAt(1);
       this.internalAddMember(callA);
@@ -307,17 +307,17 @@ public final class ConferenceCall extends StandardCall implements iConferenceCal
       boolean smallScreen = Display.getHeight() < Display.getWidth();
       boolean dualMode = PhoneUtilities.getPrivateFlag(context, 21);
       if (smallScreen && dualMode) {
-         return (Field)(new Object("..."));
+         return new LabelField("...");
       }
 
-      VerticalFieldManager vfm = (VerticalFieldManager)(new Object());
+      VerticalFieldManager vfm = new VerticalFieldManager();
       ContextObject contextObject = ContextObject.castOrCreate(context);
       contextObject.setFlag(59);
       contextObject.setFlag(106);
 
       for (int i = 0; i < count; i++) {
          if (dualMode && i == 1) {
-            vfm.add((Field)(new Object("...")));
+            vfm.add(new LabelField("..."));
             break;
          }
 

@@ -1,5 +1,6 @@
 package net.rim.device.api.crypto.certificate.x509;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.Enumeration;
@@ -8,17 +9,20 @@ import java.util.Vector;
 import net.rim.device.api.crypto.asn1.ASN1EncodingException;
 import net.rim.device.api.crypto.asn1.ASN1InputByteArray;
 import net.rim.device.api.crypto.asn1.ASN1InputStream;
+import net.rim.device.api.crypto.certificate.CRLEncodingException;
+import net.rim.device.api.crypto.certificate.CRLVerificationException;
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.CertificateExtension;
 import net.rim.device.api.crypto.certificate.CertificateRevocationList;
 import net.rim.device.api.crypto.certificate.CertificateStatus;
 import net.rim.device.api.crypto.certificate.DistinguishedName;
+import net.rim.device.api.crypto.certificate.SubjectKeyStoreIndex;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
-import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.api.crypto.oid.OID;
 import net.rim.device.api.crypto.oid.OIDs;
 import net.rim.device.api.util.Arrays;
+import net.rim.device.internal.util.ByteArray;
 import net.rim.vm.Array;
 
 public class X509CertificateRevocationList implements CertificateRevocationList {
@@ -34,7 +38,7 @@ public class X509CertificateRevocationList implements CertificateRevocationList 
       this(new ASN1InputStream(in), keyStore);
    }
 
-   public X509CertificateRevocationList(ASN1InputStream param1, KeyStore param2) {
+   public X509CertificateRevocationList(ASN1InputStream param1, KeyStore param2) throws CRLEncodingException, CRLVerificationException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -48,12 +52,12 @@ public class X509CertificateRevocationList implements CertificateRevocationList 
       // 05: ifnull 0c
       // 08: aload 2
       // 09: ifnonnull 14
-      // 0c: new java/lang/Object
+      // 0c: new java/lang/IllegalArgumentException
       // 0f: dup
       // 10: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 13: athrow
       // 14: aload 0
-      // 15: new java/lang/Object
+      // 15: new java/util/Hashtable
       // 18: dup
       // 19: invokespecial java/util/Hashtable.<init> ()V
       // 1c: putfield net/rim/device/api/crypto/certificate/x509/X509CertificateRevocationList._revocationList Ljava/util/Hashtable;
@@ -109,11 +113,11 @@ public class X509CertificateRevocationList implements CertificateRevocationList 
       // 78: invokestatic java/lang/System.arraycopy (Ljava/lang/Object;ILjava/lang/Object;II)V
       // 7b: goto 88
       // 7e: astore 4
-      // 80: new java/lang/Object
+      // 80: new net/rim/device/api/crypto/certificate/CRLEncodingException
       // 83: dup
       // 84: invokespecial net/rim/device/api/crypto/certificate/CRLEncodingException.<init> ()V
       // 87: athrow
-      // 88: new java/lang/Object
+      // 88: new java/io/ByteArrayInputStream
       // 8b: dup
       // 8c: aload 0
       // 8d: getfield net/rim/device/api/crypto/certificate/x509/X509CertificateRevocationList._signature [B
@@ -130,7 +134,7 @@ public class X509CertificateRevocationList implements CertificateRevocationList 
       // a7: astore 5
       // a9: aload 5
       // ab: ifnonnull b6
-      // ae: new java/lang/Object
+      // ae: new net/rim/device/api/crypto/certificate/CRLVerificationException
       // b1: dup
       // b2: invokespecial net/rim/device/api/crypto/certificate/CRLVerificationException.<init> ()V
       // b5: athrow
@@ -145,22 +149,22 @@ public class X509CertificateRevocationList implements CertificateRevocationList 
       // ca: aload 6
       // cc: invokeinterface net/rim/device/api/crypto/SignatureVerifier.verify ()Z 1
       // d1: ifne fa
-      // d4: new java/lang/Object
+      // d4: new net/rim/device/api/crypto/certificate/CRLVerificationException
       // d7: dup
       // d8: invokespecial net/rim/device/api/crypto/certificate/CRLVerificationException.<init> ()V
       // db: athrow
       // dc: astore 4
-      // de: new java/lang/Object
+      // de: new net/rim/device/api/crypto/certificate/CRLVerificationException
       // e1: dup
       // e2: invokespecial net/rim/device/api/crypto/certificate/CRLVerificationException.<init> ()V
       // e5: athrow
       // e6: astore 4
-      // e8: new java/lang/Object
+      // e8: new net/rim/device/api/crypto/certificate/CRLEncodingException
       // eb: dup
       // ec: invokespecial net/rim/device/api/crypto/certificate/CRLEncodingException.<init> ()V
       // ef: athrow
       // f0: astore 4
-      // f2: new java/lang/Object
+      // f2: new net/rim/device/api/crypto/certificate/CRLVerificationException
       // f5: dup
       // f6: invokespecial net/rim/device/api/crypto/certificate/CRLVerificationException.<init> ()V
       // f9: athrow
@@ -172,7 +176,7 @@ public class X509CertificateRevocationList implements CertificateRevocationList 
    }
 
    private X509Certificate getCertByName(KeyStore keyStore, DistinguishedName name) {
-      keyStore.addIndex((KeyStoreIndex)(new Object()));
+      keyStore.addIndex(new SubjectKeyStoreIndex());
       Enumeration elements = keyStore.elements(-1581141357654337861L, name);
 
       while (elements.hasMoreElements()) {
@@ -194,13 +198,13 @@ public class X509CertificateRevocationList implements CertificateRevocationList 
             X509CertificateRevocationList$RevokedInfo revokedInfo = new X509CertificateRevocationList$RevokedInfo();
             byte[] certificateSerial = revokedCert.readIntegerAsByteArray();
             if (revokedCert.peekNextTag() == 24) {
-               revokedInfo.revocationDate = (Date)(new Object(revokedCert.readGeneralizedTime()));
+               revokedInfo.revocationDate = new Date(revokedCert.readGeneralizedTime());
             } else {
                if (revokedCert.peekNextTag() != 23) {
                   throw new ASN1EncodingException();
                }
 
-               revokedInfo.revocationDate = (Date)(new Object(revokedCert.readUTCTime()));
+               revokedInfo.revocationDate = new Date(revokedCert.readUTCTime());
             }
 
             if (!revokedCert.endOfStream()) {
@@ -209,14 +213,14 @@ public class X509CertificateRevocationList implements CertificateRevocationList 
                   for (int i = 0; i < revokedInfo.extensions.length; i++) {
                      CertificateExtension extension = revokedInfo.extensions[i];
                      if (extension.getOID().equals(OIDs.getOID(-1251870805))) {
-                        ASN1InputStream reason = new ASN1InputStream((InputStream)(new Object(extension.getValue())));
+                        ASN1InputStream reason = new ASN1InputStream(new ByteArrayInputStream(extension.getValue()));
                         revokedInfo.revocationReason = reason.readEnumerated();
                      }
                   }
                }
             }
 
-            this._revocationList.put(new Object(certificateSerial), revokedInfo);
+            this._revocationList.put(new ByteArray(certificateSerial), revokedInfo);
          }
 
          if (revokedCertificates.peekNextTag() == 0) {
@@ -225,12 +229,12 @@ public class X509CertificateRevocationList implements CertificateRevocationList 
       }
    }
 
-   private void parseCertificateList(byte[] tbsCertList) throws ASN1EncodingException {
-      ASN1InputStream certificateList = new ASN1InputStream((InputStream)(new Object(tbsCertList))).readSequence();
+   private void parseCertificateList(byte[] tbsCertList) throws ASN1EncodingException, CRLEncodingException {
+      ASN1InputStream certificateList = new ASN1InputStream(new ByteArrayInputStream(tbsCertList)).readSequence();
       if (certificateList.peekNextTag() == 2) {
          int version = certificateList.readInteger();
          if (version != 0 && version != 1) {
-            throw new Object();
+            throw new CRLEncodingException();
          }
       }
 
@@ -262,10 +266,10 @@ public class X509CertificateRevocationList implements CertificateRevocationList 
 
    private X509CertificateRevocationList$RevokedInfo getRevokedInfo(Certificate certificate) {
       if (certificate == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return certificate.getIssuer().equals(this._issuer)
-            ? (X509CertificateRevocationList$RevokedInfo)this._revocationList.get(new Object(certificate.getSerialNumber()))
+            ? (X509CertificateRevocationList$RevokedInfo)this._revocationList.get(new ByteArray(certificate.getSerialNumber()))
             : null;
       }
    }
@@ -273,24 +277,19 @@ public class X509CertificateRevocationList implements CertificateRevocationList 
    @Override
    public CertificateStatus getCertificateStatus(Certificate certificate, long time) {
       if (!(certificate instanceof X509Certificate)) {
-         throw new Object();
-      }
-
-      if (time >= this._thisUpdate && time <= this._nextUpdate) {
+         throw new IllegalArgumentException();
+      } else if (time >= this._thisUpdate && time <= this._nextUpdate) {
          X509CertificateRevocationList$RevokedInfo revokedInfo = this.getRevokedInfo(certificate);
-         if (revokedInfo != null) {
-            CertificateStatus status = (CertificateStatus)(new Object(
+         return revokedInfo != null
+            ? new CertificateStatus(
                1,
                this._thisUpdate,
                this._thisUpdate,
                this._nextUpdate,
                revokedInfo.revocationDate == null ? 0 : revokedInfo.revocationDate.getTime(),
                revokedInfo.revocationReason
-            ));
-            return status;
-         } else {
-            return null;
-         }
+            )
+            : null;
       } else {
          return null;
       }
@@ -327,18 +326,18 @@ public class X509CertificateRevocationList implements CertificateRevocationList 
 
          return null;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
    public CertificateExtension[] getCRLEntryExtensions(Certificate certificate) {
       if (certificate == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          X509CertificateRevocationList$RevokedInfo revokedInfo = this.getRevokedInfo(certificate);
          if (revokedInfo != null && revokedInfo.extensions != null) {
-            CertificateExtension[] extensions = new Object[revokedInfo.extensions.length];
+            CertificateExtension[] extensions = new CertificateExtension[revokedInfo.extensions.length];
             System.arraycopy(revokedInfo.extensions, 0, extensions, 0, extensions.length);
             return extensions;
          } else {
@@ -350,12 +349,12 @@ public class X509CertificateRevocationList implements CertificateRevocationList 
    @Override
    public CertificateExtension[] getCRLEntryExtensions(Certificate certificate, boolean criticalBit) {
       if (certificate == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       X509CertificateRevocationList$RevokedInfo revokedInfo = this.getRevokedInfo(certificate);
       if (revokedInfo != null && revokedInfo.extensions != null) {
-         CertificateExtension[] extensions = new Object[this._extensions.length];
+         CertificateExtension[] extensions = new CertificateExtension[this._extensions.length];
          int count = 0;
 
          for (int i = 0; i < revokedInfo.extensions.length; i++) {
@@ -376,7 +375,7 @@ public class X509CertificateRevocationList implements CertificateRevocationList 
    @Override
    public CertificateExtension getExtension(OID oid) {
       if (oid == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (this._extensions == null) {
@@ -398,7 +397,7 @@ public class X509CertificateRevocationList implements CertificateRevocationList 
          return null;
       }
 
-      CertificateExtension[] extensions = new Object[this._extensions.length];
+      CertificateExtension[] extensions = new CertificateExtension[this._extensions.length];
       System.arraycopy(this._extensions, 0, extensions, 0, this._extensions.length);
       return extensions;
    }
@@ -409,7 +408,7 @@ public class X509CertificateRevocationList implements CertificateRevocationList 
          return null;
       }
 
-      CertificateExtension[] extensions = new Object[this._extensions.length];
+      CertificateExtension[] extensions = new CertificateExtension[this._extensions.length];
       int count = 0;
 
       for (int i = this._extensions.length - 1; i >= 0; i--) {
@@ -451,7 +450,7 @@ public class X509CertificateRevocationList implements CertificateRevocationList 
          inputStream.readSequence();
       }
 
-      Vector extensionsVector = (Vector)(new Object());
+      Vector extensionsVector = new Vector();
       int endOffset = inputStream.getEndPosition();
 
       while (inputStream.getStartPosition() < endOffset) {
@@ -463,10 +462,10 @@ public class X509CertificateRevocationList implements CertificateRevocationList 
          }
 
          byte[] extnValue = inputStream.readOctetString();
-         extensionsVector.addElement(new Object(extnID, critical, extnValue));
+         extensionsVector.addElement(new CertificateExtension(extnID, critical, extnValue));
       }
 
-      CertificateExtension[] extensions = new Object[extensionsVector.size()];
+      CertificateExtension[] extensions = new CertificateExtension[extensionsVector.size()];
 
       for (int i = 0; i < extensions.length; i++) {
          extensions[i] = (CertificateExtension)extensionsVector.elementAt(i);

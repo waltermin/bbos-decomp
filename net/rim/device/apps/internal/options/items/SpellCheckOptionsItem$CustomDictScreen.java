@@ -8,6 +8,7 @@ import net.rim.device.api.ui.component.CollectionListField;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.KeywordFilteredScreen;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
@@ -56,7 +57,7 @@ final class SpellCheckOptionsItem$CustomDictScreen extends KeywordFilteredScreen
       CollectionListField collectionListField = (CollectionListField)listField;
       Object element = collectionListField.getElementAt(index);
       if (element != null) {
-         if (element instanceof Object) {
+         if (element instanceof String) {
             graphics.drawText((String)element, 0, ((String)element).length(), 0, y, 70, width - 2);
             return;
          }
@@ -157,7 +158,7 @@ final class SpellCheckOptionsItem$CustomDictScreen extends KeywordFilteredScreen
       Object entry = this.getSelectedEntry();
       if (entry != null) {
          CustomDictUnitModel model = new CustomDictUnitModel(entry, this._transactedCustomDict);
-         Verb[] verbs = new Object[0];
+         Verb[] verbs = new Verb[0];
          Verb defaultVerb = model.getVerbs(this._context, verbs);
          menu.add(verbs);
          menu.setDefault(defaultVerb);
@@ -191,7 +192,7 @@ final class SpellCheckOptionsItem$CustomDictScreen extends KeywordFilteredScreen
       this.setList(keywordFilterList);
       this.setDisplayUpperCaseCharsInSearchText(false);
       this.setAllowSpacesInSearchText(false);
-      this._context = new Object(3, 5, 2);
+      this._context = new ContextObject(3, 5, 2);
    }
 
    @Override

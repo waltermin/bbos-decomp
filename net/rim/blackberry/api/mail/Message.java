@@ -47,7 +47,7 @@ public class Message implements Part {
    private String _contentType = CMIMEUtilities.getTextContentType();
    public static int PIN_MESSAGE = 94;
    public static int EMAIL_MESSAGE = 43;
-   static Hashtable _headerHandlers = (Hashtable)(new Object());
+   static Hashtable _headerHandlers = new Hashtable();
 
    public Folder getFolder() {
       return this._folder;
@@ -56,13 +56,13 @@ public class Message implements Part {
    public void setFrom(Address address) {
       String[] fromAddr;
       if (address instanceof PINAddress) {
-         fromAddr = new Object[]{EmailSendUtility.getDevicePINString(), address.getName()};
+         fromAddr = new String[]{EmailSendUtility.getDevicePINString(), address.getName()};
       } else {
-         fromAddr = new Object[]{address.getAddr(), address.getName()};
+         fromAddr = new String[]{address.getAddr(), address.getName()};
       }
 
       this.removeHeader(Header.FROM);
-      ContextObject creationContext = (ContextObject)(new Object());
+      ContextObject creationContext = new ContextObject();
       creationContext.put(251, fromAddr);
       creationContext.put(-4054673099568009991L, HeaderTypes._typesAsInteger[3]);
       PersistableRIMModel model = (PersistableRIMModel)FactoryUtil.createInstance(-8034039608019345282L, creationContext);
@@ -77,11 +77,11 @@ public class Message implements Part {
    EmailHeaderModel[] getHeader(int headerType) {
       ReadableList l = this._msg;
       int size = l.size();
-      Vector v = (Vector)(new Object(size));
+      Vector v = new Vector(size);
 
       for (int i = 0; i < size; i++) {
          Object element = l.getAt(i);
-         if (element instanceof Object) {
+         if (element instanceof EmailHeaderModel) {
             EmailHeaderModel model = (EmailHeaderModel)element;
             if (model.getHeaderType() == headerType) {
                v.addElement(model);
@@ -89,7 +89,7 @@ public class Message implements Part {
          }
       }
 
-      EmailHeaderModel[] array = new Object[v.size()];
+      EmailHeaderModel[] array = new EmailHeaderModel[v.size()];
       v.copyInto(array);
       return array;
    }
@@ -101,11 +101,11 @@ public class Message implements Part {
 
       ReadableList l = this._msg;
       int size = l.size();
-      Vector toRemove = (Vector)(new Object());
+      Vector toRemove = new Vector();
 
       for (int i = 0; i < size; i++) {
          Object element = l.getAt(i);
-         if (element instanceof Object) {
+         if (element instanceof EmailHeaderModel) {
             EmailHeaderModel headerModel = (EmailHeaderModel)element;
             if (headerModel.getHeaderType() == type) {
                toRemove.addElement(headerModel);
@@ -124,7 +124,7 @@ public class Message implements Part {
 
    public boolean removeRecipients(int type, Address[] list) throws MessagingException {
       if (list == null) {
-         throw new Object("Address array is null");
+         throw new NullPointerException("Address array is null");
       }
 
       if (type != 2 && type != 1 && type != 0) {
@@ -132,15 +132,15 @@ public class Message implements Part {
       }
 
       ReadableList l = this._msg;
-      Vector toRemove = (Vector)(new Object());
+      Vector toRemove = new Vector();
       int size = l.size();
 
       for (int i = 0; i < size; i++) {
          Object element = l.getAt(i);
-         if (element instanceof Object) {
+         if (element instanceof EmailHeaderModel) {
             EmailHeaderModel headerModel = (EmailHeaderModel)element;
             if (headerModel.getHeaderType() == type) {
-               String[] names = new Object[2];
+               String[] names = new String[2];
                boolean found = false;
                headerModel.extractNames(names);
 
@@ -176,11 +176,11 @@ public class Message implements Part {
 
    public void addRecipient(int type, Address address) {
       if (type != 2 && type != 1 && type != 0) {
-         throw new Object("Invalid type; type should be TO, CC or BCC");
+         throw new IllegalArgumentException("Invalid type; type should be TO, CC or BCC");
       }
 
       if (address == null) {
-         throw new Object("address==null");
+         throw new IllegalArgumentException("address==null");
       }
 
       this.addRecipients(type, new Address[]{address});
@@ -210,8 +210,8 @@ public class Message implements Part {
       if (this._messageType == PIN_MESSAGE) {
          this.addPINRecipients(type, addresses);
       } else {
-         String[] names = new Object[2];
-         ContextObject contextObject = (ContextObject)(new Object());
+         String[] names = new String[2];
+         ContextObject contextObject = new ContextObject();
          ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
          Factory factory = (Factory)ar.waitFor(-2985347935260258684L);
          Object[] payloadandflag = this.beginChanges();
@@ -234,13 +234,13 @@ public class Message implements Part {
    }
 
    public Address[] getRecipients(int type) {
-      Vector retV = (Vector)(new Object());
+      Vector retV = new Vector();
       ReadableList l = this._msg;
       int size = l.size();
 
       for (int i = 0; i < size; i++) {
          Object element = l.getAt(i);
-         if (element instanceof Object) {
+         if (element instanceof EmailHeaderModel) {
             EmailHeaderModel model = (EmailHeaderModel)element;
             if (model.getHeaderType() == type) {
                Address address = this.createAddressFromEmailHeaderModel(model);
@@ -262,10 +262,10 @@ public class Message implements Part {
 
       for (int i = 0; i < size; i++) {
          Object element = l.getAt(i);
-         if (element instanceof Object) {
+         if (element instanceof EmailHeaderModel) {
             EmailHeaderModel model = (EmailHeaderModel)element;
             PersistableRIMModel prm = model.getInsideModel();
-            if (prm instanceof Object) {
+            if (prm instanceof FriendlyNameAddressModel) {
                FriendlyNameAddressModel addressModel = (FriendlyNameAddressModel)prm;
                addressModel.setFreeForm(isFreeForm);
             }
@@ -274,14 +274,14 @@ public class Message implements Part {
    }
 
    public void setReplyTo(Address[] addresses) {
-      String[] addr = new Object[2];
-      ContextObject creationContext = (ContextObject)(new Object());
+      String[] addr = new String[2];
+      ContextObject creationContext = new ContextObject();
       Object[] payloadandflag = this.beginChanges();
       ReadableList l = this._msg;
 
       for (int i = l.size() - 1; i >= 0; i--) {
          Object element = l.getAt(i);
-         if (element instanceof Object) {
+         if (element instanceof EmailHeaderModel) {
             EmailHeaderModel model = (EmailHeaderModel)element;
             if (model.getHeaderType() == 5) {
                this._msg.remove(model);
@@ -306,13 +306,13 @@ public class Message implements Part {
    }
 
    public Address[] getReplyTo() {
-      Vector retV = (Vector)(new Object());
+      Vector retV = new Vector();
       ReadableList l = this._msg;
       int size = l.size();
 
       for (int i = 0; i < size; i++) {
          Object element = l.getAt(i);
-         if (element instanceof Object) {
+         if (element instanceof EmailHeaderModel) {
             EmailHeaderModel model = (EmailHeaderModel)element;
             if (model.getHeaderType() == 5) {
                retV.addElement(this.createAddressFromEmailHeaderModel(model));
@@ -333,7 +333,7 @@ public class Message implements Part {
 
       for (int i = 0; i < size; i++) {
          Object element = l.getAt(i);
-         if (element instanceof Object) {
+         if (element instanceof SubjectModel) {
             foundExistingSubject = true;
             SubjectModel subjectModel = (SubjectModel)element;
             if (subject == null) {
@@ -358,7 +358,7 @@ public class Message implements Part {
 
       for (int i = 0; i < size; i++) {
          Object element = l.getAt(i);
-         if (element instanceof Object) {
+         if (element instanceof SubjectModel) {
             SubjectModel subjectModel = (SubjectModel)element;
             String s = subjectModel.toString();
             if (s != null && s.length() != 0) {
@@ -377,12 +377,12 @@ public class Message implements Part {
    }
 
    public Date getSentDate() {
-      return (Date)(new Object(this._msg.getTimestamp()));
+      return new Date(this._msg.getTimestamp());
    }
 
    public Date getReceivedDate() {
       EmailPayloadModel epm = this._msg.getPayload();
-      return (Date)(new Object(epm.getCreationDate()));
+      return new Date(epm.getCreationDate());
    }
 
    public void setFlags(int mask) {
@@ -468,8 +468,8 @@ public class Message implements Part {
       }
 
       newemmi.setFolderId(fid);
-      ContextObject c = (ContextObject)(new Object());
-      EmailMessageModelImpl emmiClone = (EmailMessageModelImpl)(new Object(c, true));
+      ContextObject c = new ContextObject();
+      EmailMessageModelImpl emmiClone = new EmailMessageModelImpl(c, true);
       emmiClone.setPayload((EmailPayloadModel)((CloneProvider)emmi.getPayload()).clone(c));
       emmiClone.setSensitivity(emmi.getSensitivity());
       emmiClone.setPriority(emmi.getPriority());
@@ -498,7 +498,7 @@ public class Message implements Part {
       EmailMessageModelImpl emmi = (EmailMessageModelImpl)m.getEmailMessageModel();
       emmi.setFolderId(ef.getLUID());
       EmailPayloadModelImpl epmi = (EmailPayloadModelImpl)original.getPayload();
-      if (epmi instanceof Object) {
+      if (epmi instanceof CloneProvider) {
          CloneProvider cp = epmi;
          epmi = (EmailPayloadModelImpl)cp.clone(null);
       }
@@ -511,7 +511,7 @@ public class Message implements Part {
          m.setSubject(EmailResources.getString(59));
          return m;
       } else {
-         m.setSubject(((StringBuffer)(new Object())).append(EmailResources.getString(59)).append(' ').append(subject).toString());
+         m.setSubject(EmailResources.getString(59) + ' ' + subject);
          return m;
       }
    }
@@ -531,7 +531,7 @@ public class Message implements Part {
    }
 
    public void updateUi() {
-      ContextObject c = (ContextObject)(new Object());
+      ContextObject c = new ContextObject();
       c.put(7801730636987331473L, this._msg);
       ModelViewListenerRegistry.notifyOfOpenedModelChange(this._msg, this._msg, c);
    }
@@ -541,7 +541,7 @@ public class Message implements Part {
          return null;
       }
 
-      String[] addrs = new Object[2];
+      String[] addrs = new String[2];
       model.convert(model, addrs);
       return new Address(addrs[0], addrs[1]);
    }
@@ -656,8 +656,7 @@ public class Message implements Part {
 
       TextBodyPart bp = (TextBodyPart)o;
       String s = (String)bp.getContent();
-      ByteArrayInputStream bais = (ByteArrayInputStream)(new Object(s.getBytes()));
-      return bais;
+      return new ByteArrayInputStream(s.getBytes());
    }
 
    @Override
@@ -687,12 +686,12 @@ public class Message implements Part {
       MailConverterManager mcm = MailConverterManager.getInstance();
       Object[] payloadandflag = this.beginChanges();
       ReadableList l = this._msg;
-      Vector elementsToRemove = (Vector)(new Object());
+      Vector elementsToRemove = new Vector();
       int size = l.size();
 
       for (int i = 0; i < size; i++) {
          Object element = l.getAt(i);
-         if (!(element instanceof Object)) {
+         if (!(element instanceof BodyModel)) {
             MailConverter mc = mcm.getConverter(element);
             if (mc != null) {
                elementsToRemove.addElement(element);
@@ -703,7 +702,7 @@ public class Message implements Part {
          }
       }
 
-      if (content instanceof Object) {
+      if (content instanceof String) {
          body.setText((String)content);
          if (!foundBodyModel) {
             this.add(body);
@@ -731,7 +730,7 @@ public class Message implements Part {
                }
             } else {
                TextBodyPart tbp = (TextBodyPart)p;
-               body.setText(((StringBuffer)(new Object())).append(body.getText()).append((String)tbp.getContent()).toString());
+               body.setText(body.getText() + (String)tbp.getContent());
                if (!foundBodyModel) {
                   this.add(body);
                   foundBodyModel = true;
@@ -750,7 +749,7 @@ public class Message implements Part {
 
    @Override
    public Enumeration getAllHeaders() {
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       Enumeration e = _headerHandlers.keys();
 
       while (e.hasMoreElements()) {
@@ -797,7 +796,7 @@ public class Message implements Part {
 
       for (int i = 0; i < size; i++) {
          Object element = l.getAt(i);
-         if (element instanceof Object) {
+         if (element instanceof BodyModel) {
             return (BodyModel)element;
          }
       }
@@ -831,7 +830,7 @@ public class Message implements Part {
 
       for (int i = 0; i < size; i++) {
          RIMModel model = (RIMModel)msg._msg.getAt(i);
-         if (model instanceof Object) {
+         if (model instanceof EmailPayloadModel) {
             Message message = new Message();
             message._msg.setPayload((EmailPayloadModel)model);
             os.write(EmailResources.getString(50).getBytes());
@@ -866,8 +865,7 @@ public class Message implements Part {
       }
 
       fid = eh.getSentFolder();
-      EmailFolder ef = (EmailFolder)eh.getFolder(fid);
-      return ef;
+      return (EmailFolder)eh.getFolder(fid);
    }
 
    static EmailMessageModel createEmailMessageModel() {
@@ -909,14 +907,14 @@ public class Message implements Part {
    }
 
    private void endChanges(Object[] payloadandflag) {
-      if (payloadandflag[1]) {
+      if ((Boolean)payloadandflag[1]) {
          EmailModifier.endChanges(this._msg, (EmailPayloadModel)payloadandflag[0], null);
       }
    }
 
    private void addPINRecipients(int type, Address[] addresses) {
-      String[] names = new Object[2];
-      ContextObject contextObject = (ContextObject)(new Object());
+      String[] names = new String[2];
+      ContextObject contextObject = new ContextObject();
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
       Factory factory = (Factory)ar.waitFor(4246852237058296601L);
       Object[] payloadandflag = this.beginChanges();
@@ -940,7 +938,7 @@ public class Message implements Part {
    }
 
    static BodyModel createBodyModel(String text) {
-      ContextObject contextObject = (ContextObject)(new Object());
+      ContextObject contextObject = new ContextObject();
       contextObject.put(-8478555129720928586L, text);
       return (BodyModel)FactoryUtil.createInstance(5987399499453925075L, contextObject);
    }

@@ -33,12 +33,12 @@ final class VideoRecorderScreen$2 implements Runnable {
       // 0d: astore 2
       // 0e: aload 2
       // 0f: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 12: checkcast java/lang/Object
+      // 12: checkcast javax/microedition/io/file/FileConnection
       // 15: astore 1
       // 16: aload 1
       // 17: invokeinterface javax/microedition/io/file/FileConnection.exists ()Z 1
       // 1c: ifeq 32
-      // 1f: new java/lang/Object
+      // 1f: new net/rim/device/apps/internal/mediarecorder/RenderScreen
       // 22: dup
       // 23: bipush 0
       // 24: i2l

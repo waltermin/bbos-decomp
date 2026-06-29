@@ -7,6 +7,7 @@ import net.rim.device.apps.api.framework.model.ConversionProvider;
 import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.model.SyncBuffer;
 import net.rim.device.apps.api.framework.registration.RIMModelFactory;
+import net.rim.device.apps.api.framework.verb.RIMModelFactoryCreateVerb;
 import net.rim.device.apps.api.framework.verb.Verb;
 
 final class PersonNameModelFactory extends RIMModelFactory {
@@ -14,7 +15,7 @@ final class PersonNameModelFactory extends RIMModelFactory {
 
    @Override
    public final boolean recognize(Object object) {
-      if (object instanceof Object) {
+      if (object instanceof PersonNameModel) {
          return true;
       } else if (ContextObject.getFlag(object, 11) && ContextObject.getFlag(object, 19)) {
          SyncBuffer syncBuffer = (SyncBuffer)ContextObject.get(object, 255);
@@ -99,10 +100,10 @@ final class PersonNameModelFactory extends RIMModelFactory {
             String name = (String)ContextObject.get(initialData, -4886909117188079897L);
             if (name == null) {
                RIMModel modelData = (RIMModel)ContextObject.get(initialData, 254);
-               if (modelData instanceof Object) {
+               if (modelData instanceof ConversionProvider) {
                   ConversionProvider converter = (ConversionProvider)modelData;
-                  String[] names = new Object[2];
-                  if (converter.convert(new Object(10), names)) {
+                  String[] names = new String[2];
+                  if (converter.convert(new ContextObject(10), names)) {
                      name = names[1];
                   }
                }
@@ -124,13 +125,10 @@ final class PersonNameModelFactory extends RIMModelFactory {
                   if (index != -1) {
                      if (index != firstName.length() - 1) {
                         lastName = firstName.substring(index + 1).trim();
-                        lastName = ((StringBuffer)(new Object())).append(Character.toUpperCase(lastName.charAt(0))).append(lastName.substring(1)).toString();
+                        lastName = Character.toUpperCase(lastName.charAt(0)) + lastName.substring(1);
                      }
 
-                     firstName = ((StringBuffer)(new Object()))
-                        .append(Character.toUpperCase(firstName.charAt(0)))
-                        .append(firstName.substring(1, index))
-                        .toString();
+                     firstName = Character.toUpperCase(firstName.charAt(0)) + firstName.substring(1, index);
                      if (flip) {
                         String temp = firstName;
                         firstName = lastName;
@@ -160,7 +158,9 @@ final class PersonNameModelFactory extends RIMModelFactory {
    @Override
    public final Verb[] getVerbs(Object context) {
       if (this._verbs == null) {
-         this._verbs = new Object[]{new Object(this, 16864512, 5390928610432442684L, "net.rim.device.apps.internal.resource.AddressBook", 501)};
+         this._verbs = new Verb[]{
+            new RIMModelFactoryCreateVerb(this, 16864512, 5390928610432442684L, "net.rim.device.apps.internal.resource.AddressBook", 501)
+         };
       }
 
       return this._verbs;

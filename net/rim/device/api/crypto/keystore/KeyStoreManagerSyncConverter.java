@@ -89,7 +89,7 @@ final class KeyStoreManagerSyncConverter implements SyncConverter, SyncObject, S
                   return null;
                }
 
-               SHA256Digest digest = (SHA256Digest)(new Object());
+               SHA256Digest digest = new SHA256Digest();
                digest.update(this._lastChallenge);
                digest.update(keyStoreHelper.getHash());
                byte[] hash = digest.getDigest();
@@ -131,7 +131,7 @@ final class KeyStoreManagerSyncConverter implements SyncConverter, SyncObject, S
 
          buffer.rewind();
          if (ConverterUtilities.findType(buffer, 9) && keyStoreHelper.getAccess()) {
-            keyStoreHelper.setSyncedWithBESHashtable((Hashtable)(new Object()));
+            keyStoreHelper.setSyncedWithBESHashtable(new Hashtable());
          }
       } finally {
          ;

@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.keystore.browser;
 
 import net.rim.device.api.crypto.CryptoSystemProperties;
-import net.rim.device.api.crypto.Digest;
+import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.CertificateChainProperties;
 import net.rim.device.api.crypto.certificate.CertificateIconProvider;
@@ -46,7 +46,7 @@ public final class KeyStoreBrowserData implements MatchProvider {
 
    @Override
    public final int match(Object searchCriteria) {
-      if (searchCriteria instanceof Object) {
+      if (searchCriteria instanceof String) {
          String label = this.getKeyStoreData().getLabel();
          if (label != null && label.length() > 0) {
             String searchString = (String)searchCriteria;
@@ -70,10 +70,10 @@ public final class KeyStoreBrowserData implements MatchProvider {
       }
 
       int numAddresses = emailAddresses.length;
-      String[] addresses = new Object[numAddresses];
+      String[] addresses = new String[numAddresses];
 
       for (int i = 0; i < numAddresses; i++) {
-         addresses[i] = (String)(new Object(emailAddresses[i]));
+         addresses[i] = new String(emailAddresses[i]);
       }
 
       return addresses;
@@ -162,7 +162,7 @@ public final class KeyStoreBrowserData implements MatchProvider {
          if (!cert.isRoot()) {
             String friendlyName = CertificateUtilities.getFriendlyName(cert.getIssuer());
             if (friendlyName != null) {
-               this._label = ((StringBuffer)(new Object())).append(this._label).append(", ").append(friendlyName).toString();
+               this._label = this._label + ", " + friendlyName;
             }
          }
       }
@@ -209,7 +209,7 @@ public final class KeyStoreBrowserData implements MatchProvider {
       this._isRoot = this._certificate.isRoot();
       this._isCA = this._certificate.isCA();
       if (this._certificate.hashCode() == 2107895108
-         && CertificateUtilities.calculateThumbprint(this._certificate, (Digest)(new Object())).equals("967C 1CC9 A2A0 2974 740F 7500 1FEA C6D6 C86D 9795")) {
+         && CertificateUtilities.calculateThumbprint(this._certificate, new SHA1Digest()).equals("967C 1CC9 A2A0 2974 740F 7500 1FEA C6D6 C86D 9795")) {
          this._isCA = true;
       }
 

@@ -26,7 +26,7 @@ final class HTMLFileInputField extends FlowFieldManager implements FieldChangeLi
    @Override
    public final void fieldChanged(Field field, int context) {
       if (field == this._buttonField) {
-         FileSelector selector = (FileSelector)(new Object(null));
+         FileSelector selector = new FileSelector(null);
          String fileName = selector.selectFile(FileUtilities.getPath(this._textField.getText()));
          if (fileName != null) {
             this._textField.setTextWithTruncation(fileName);
@@ -63,7 +63,7 @@ final class HTMLFileInputField extends FlowFieldManager implements FieldChangeLi
    ) {
       super(281474976710656L);
       this._controller = controller;
-      this._buttonField = (ButtonField)(new Object(BrowserResources.getString(747), style | 65536));
+      this._buttonField = new ButtonField(BrowserResources.getString(747), style | 65536);
       this._buttonField.setChangeListener(this);
       if ((style & 9007199254740992L) != 0) {
          style |= 1024;

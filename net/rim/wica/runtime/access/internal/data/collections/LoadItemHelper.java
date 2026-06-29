@@ -13,7 +13,7 @@ class LoadItemHelper {
 
    public LoadItemHelper(BuiltinCollection builtin) {
       if (builtin == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._builtin = builtin;

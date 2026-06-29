@@ -15,7 +15,7 @@ import net.rim.device.internal.system.AudioTTYListener;
 public final class HACRibbonIndicator implements Indicator, AudioTTYListener, TestPoint {
    private IndicatorManager _indicatorManager;
    private boolean _indicatorOn;
-   private StringBuffer _strBuffer = (StringBuffer)(new Object(PhoneResources.getString(6297)));
+   private StringBuffer _strBuffer = new StringBuffer(PhoneResources.getString(6297));
    static HACRibbonIndicator _instance;
    public static final long HAC_RIBBON_INDICATOR = 8209130174428269783L;
 
@@ -120,8 +120,8 @@ public final class HACRibbonIndicator implements Indicator, AudioTTYListener, Te
 
    @Override
    public final void test(Object id, Object value) {
-      if (value instanceof Object) {
-         this.updateIndicator(value);
+      if (value instanceof Boolean) {
+         this.updateIndicator((Boolean)value);
       }
    }
 }

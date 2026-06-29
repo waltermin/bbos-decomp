@@ -9,7 +9,7 @@ final class AddressCollection$RegionHandler implements ObjectFieldHandler {
 
    @Override
    public final Object getValue(Object item) {
-      return !(item instanceof Object) ? null : ((MailingAddressModel)item).getArea();
+      return !(item instanceof MailingAddressModel) ? null : ((MailingAddressModel)item).getArea();
    }
 
    AddressCollection$RegionHandler(AddressCollection$1 x0) {

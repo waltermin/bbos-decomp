@@ -41,9 +41,7 @@ public final class ChangePasswordCommand implements DomainCommand {
                return DomainCommand.SESSION_TIMEOUT_RESULT;
             }
 
-            BISEventLogger.logEvent(
-               ((StringBuffer)(new Object("Change Password: Unhandled REST response code: "))).append(callResult.getRESTStatusCode()).toString(), 0
-            );
+            BISEventLogger.logEvent("Change Password: Unhandled REST response code: " + callResult.getRESTStatusCode(), 0);
             commandResultErrorMsg = ApplicationResources.getString(192);
             commandResultID = "failed";
          }

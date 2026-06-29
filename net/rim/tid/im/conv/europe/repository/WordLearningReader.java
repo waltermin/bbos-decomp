@@ -16,9 +16,9 @@ import net.rim.vm.Array;
 
 public class WordLearningReader extends LearningReader {
    protected byte _internalEvent;
-   private SLCurrentVariant _tempVariant = (SLCurrentVariant)(new Object());
-   protected ExtendedCurrentVariant _extTempVariant = (ExtendedCurrentVariant)(new Object());
-   private ResultContainer _resultContainer = (ResultContainer)(new Object());
+   private SLCurrentVariant _tempVariant = new SLCurrentVariant();
+   protected ExtendedCurrentVariant _extTempVariant = new ExtendedCurrentVariant();
+   private ResultContainer _resultContainer = new ResultContainer();
    protected CustomWordsSyncCollection _listener;
    private boolean _enableOTAlistener;
    private WordLearningReader$TimeStampTrimController _trimControllerForTrim;
@@ -50,7 +50,7 @@ public class WordLearningReader extends LearningReader {
             if (this._listener.isQuickDeleteSupported()) {
                this._listener.clear(super._currentLearnName);
             } else {
-               CustomWordsSyncManager sm = (CustomWordsSyncManager)(new Object(2));
+               CustomWordsSyncManager sm = new CustomWordsSyncManager(2);
 
                try {
                   super._complexPrefixTables[0].getEntries(sm, super._wordBuffer, super._header.getLocaleStr());
@@ -79,7 +79,7 @@ public class WordLearningReader extends LearningReader {
    public int addWord(String aWord, char aFreq, boolean aConvertToLowerCase, boolean programmatically) {
       int len = aWord.length();
       if (len >= 50) {
-         System.out.println(((StringBuffer)(new Object("Word( "))).append(aWord).append(") is too long!").toString());
+         System.out.println("Word( " + aWord + ") is too long!");
          return 1;
       } else {
          aWord.getChars(0, len, super._tempBuffer, 0);
@@ -106,13 +106,7 @@ public class WordLearningReader extends LearningReader {
    public int addWord(SLCurrentVariant aWord, char aFreq, boolean aConvertToLowerCase, boolean aUpdateTimeStampOnly, boolean programmatically, byte aPriority) {
       this._internalEvent = 0;
       if (aWord._length > getMaxAllowedWordLength()) {
-         System.out
-            .println(
-               ((StringBuffer)(new Object("Word( ")))
-                  .append((String)(new Object(aWord._variants, aWord._offset, aWord._length)))
-                  .append(") is too long!")
-                  .toString()
-            );
+         System.out.println("Word( " + new String(aWord._variants, aWord._offset, aWord._length) + ") is too long!");
          return 1;
       }
 
@@ -134,7 +128,7 @@ public class WordLearningReader extends LearningReader {
             int offset = 0;
             super._encoded[offset++] = super._header.getTimeStamp(aPriority);
             if (LearningReader._debugOutputEnabled && aPriority == 1) {
-               System.out.println(((StringBuffer)(new Object("\tAssigned time stamp: "))).append(super._encoded[offset - 1] & 255).toString());
+               System.out.println("\tAssigned time stamp: " + (super._encoded[offset - 1] & 0xFF));
             }
 
             int encodedLen = -1;
@@ -172,7 +166,7 @@ public class WordLearningReader extends LearningReader {
             if (this._enableOTAlistener && !aUpdateTimeStampOnly) {
                this._listener
                   .update(
-                     (CustomWordSyncObject)(new Object(
+                     new CustomWordSyncObject(
                         aWord._variants,
                         aWord._offset,
                         aWord._length,
@@ -181,15 +175,14 @@ public class WordLearningReader extends LearningReader {
                         aFreq,
                         super._type == 3 ? 3 : 1,
                         !programmatically
-                     ))
+                     )
                   );
             }
 
             return 0;
          }
       } catch (Throwable var20) {
-         System.out
-            .println(((StringBuffer)(new Object("Failed on word:"))).append((String)(new Object(aWord._variants, aWord._offset, aWord._length))).toString());
+         System.out.println("Failed on word:" + new String(aWord._variants, aWord._offset, aWord._length));
          e.printStackTrace();
          return 1;
       }
@@ -224,9 +217,9 @@ public class WordLearningReader extends LearningReader {
                if (this._enableOTAlistener) {
                   this._listener
                      .update(
-                        (CustomWordSyncObject)(new Object(
+                        new CustomWordSyncObject(
                            aWord._variants, aWord._offset, aWord._length, super._header.getLocaleStr(), super._type, 0, 2, !programmatically
-                        ))
+                        )
                      );
                }
 
@@ -236,8 +229,7 @@ public class WordLearningReader extends LearningReader {
             }
          }
       } catch (Throwable var10) {
-         System.out
-            .println(((StringBuffer)(new Object("Failed on word:"))).append((String)(new Object(aWord._variants, aWord._offset, aWord._length))).toString());
+         System.out.println("Failed on word:" + new String(aWord._variants, aWord._offset, aWord._length));
          e.printStackTrace();
          return 1;
       }
@@ -296,7 +288,7 @@ public class WordLearningReader extends LearningReader {
    @Override
    public int trim(int desiredSize) {
       this._internalEvent = (byte)(this._internalEvent | 2);
-      CustomWordsSyncManager sm = (CustomWordsSyncManager)(new Object(2));
+      CustomWordsSyncManager sm = new CustomWordsSyncManager(2);
       int trimmed = 0;
 
       for (int i = 0; i < 3 && trimmed < desiredSize; i++) {
@@ -332,7 +324,7 @@ public class WordLearningReader extends LearningReader {
             removeInterval = 10;
          }
 
-         CustomWordsSyncManager sm = (CustomWordsSyncManager)(new Object(2));
+         CustomWordsSyncManager sm = new CustomWordsSyncManager(2);
          this.trim(this.getTrimControllerForSetSize(removeInterval, toTrimSize, sm));
          if (this._enableOTAlistener && sm.size() > 0) {
             this._listener.remove(sm);
@@ -352,7 +344,7 @@ public class WordLearningReader extends LearningReader {
       int trimmed = 0;
       if (LearningReader._debugOutputEnabled) {
          aTrimController.printTrimMessage();
-         System.out.println(((StringBuffer)(new Object("\tBefore trim: "))).append(this.size()).append(" words").toString());
+         System.out.println("\tBefore trim: " + this.size() + " words");
       }
 
       super._complexPrefixTables[0].trim(aTrimController, super._wordBuffer);
@@ -360,12 +352,12 @@ public class WordLearningReader extends LearningReader {
       if (LearningReader._debugOutputEnabled) {
          ((WordLearningHeader)super._header).setLeastTimeStamp(aTrimController.getNewLeastTimeStamp());
          this.modifyLearningData(false);
-         System.out.println(((StringBuffer)(new Object("\tAfter trim: "))).append(this.size()).append(" words").toString());
+         System.out.println("\tAfter trim: " + this.size() + " words");
       }
 
       if (!aTrimController.isTrimmingFinished() && aTrimController.allowSecondPass()) {
          if (LearningReader._debugOutputEnabled) {
-            System.out.println(((StringBuffer)(new Object("\tBefore cycled trim: "))).append(this.size()).append(" words").toString());
+            System.out.println("\tBefore cycled trim: " + this.size() + " words");
          }
 
          super._complexPrefixTables[0].trim(aTrimController, super._wordBuffer);
@@ -373,7 +365,7 @@ public class WordLearningReader extends LearningReader {
          if (LearningReader._debugOutputEnabled) {
             ((WordLearningHeader)super._header).setLeastTimeStamp(aTrimController.getNewLeastTimeStamp());
             this.modifyLearningData(false);
-            System.out.println(((StringBuffer)(new Object("\tAfter cycled trim: "))).append(this.size()).append(" words").toString());
+            System.out.println("\tAfter cycled trim: " + this.size() + " words");
          }
       }
 
@@ -464,7 +456,7 @@ public class WordLearningReader extends LearningReader {
    }
 
    public Enumeration getElements() {
-      Vector entries = (Vector)(new Object());
+      Vector entries = new Vector();
       synchronized (LearningDataManager.getLock()) {
          this.getEntries(entries);
       }
@@ -473,7 +465,7 @@ public class WordLearningReader extends LearningReader {
    }
 
    public int getElements(Object[] elements) {
-      Vector entries = (Vector)(new Object());
+      Vector entries = new Vector();
       synchronized (LearningDataManager.getLock()) {
          this.getEntries(entries);
       }

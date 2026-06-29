@@ -10,7 +10,7 @@ final class ContactCollection$DCIDHandler implements ObjectFieldHandler {
 
    @Override
    public final Object getValue(Object item) {
-      if (item instanceof Object) {
+      if (item instanceof AddressCardModel) {
          AddressCardModel model = (AddressCardModel)item;
          int size = model.size();
 

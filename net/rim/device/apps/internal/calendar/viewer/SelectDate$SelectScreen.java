@@ -1,15 +1,15 @@
 package net.rim.device.apps.internal.calendar.viewer;
 
 import net.rim.device.api.system.KeyListener;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.container.PopupScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.internal.system.Events;
 
 final class SelectDate$SelectScreen extends PopupScreen {
    KeyListener _kl;
 
    SelectDate$SelectScreen(KeyListener kl) {
-      super((Manager)(new Object(1152921504606846976L)));
+      super(new VerticalFieldManager(1152921504606846976L));
       this._kl = kl;
    }
 

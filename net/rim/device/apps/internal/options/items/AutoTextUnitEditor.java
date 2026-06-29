@@ -13,17 +13,17 @@ public final class AutoTextUnitEditor {
    private Object _editedAutoTextItem;
    private MainScreen _mainScreen;
    private static AutoText _autoTextEngine = AutoText.getAutoText();
-   private static final String[] CASING_FIELD_CHOICES = new Object[]{OptionsResources.getString(300), OptionsResources.getString(301)};
+   private static final String[] CASING_FIELD_CHOICES = new String[]{OptionsResources.getString(300), OptionsResources.getString(301)};
 
    public final Object open(String initialReplacedString) {
       this._model = null;
-      this._context = (ContextObject)(new Object(0, 2, 6));
+      this._context = new ContextObject(0, 2, 6);
       return this.open(CommonResource.getString(13), initialReplacedString, null, 0, 0);
    }
 
    public final Object open(AutoTextUnitModel model) {
       this._model = model;
-      this._context = (ContextObject)(new Object(0, 2));
+      this._context = new ContextObject(0, 2);
       Object entry = model.getEntry();
       return this.open(
          CommonResource.getString(16),
@@ -37,7 +37,7 @@ public final class AutoTextUnitEditor {
    private final Object open(
       String appendToTitle, String initialReplacedString, String initialReplacementStringPattern, int initialCasing, int initialLocaleCode
    ) {
-      StringBuffer titleBuffer = (StringBuffer)(new Object(OptionsResources.getString(302)));
+      StringBuffer titleBuffer = new StringBuffer(OptionsResources.getString(302));
       titleBuffer.append(':');
       titleBuffer.append(' ');
       titleBuffer.append(appendToTitle);

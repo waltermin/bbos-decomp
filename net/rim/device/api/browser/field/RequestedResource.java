@@ -14,7 +14,7 @@ public final class RequestedResource {
    private byte[] _requestData;
 
    public RequestedResource(String url) {
-      this(url, (HttpHeaders)(new Object()), 0);
+      this(url, new HttpHeaders(), 0);
    }
 
    public RequestedResource(String url, HttpHeaders requestHeaders, int flags) {
@@ -56,7 +56,7 @@ public final class RequestedResource {
    }
 
    public final HttpConnection getHttpConnection() {
-      return (HttpConnection)(!(this._inputConnection instanceof Object) ? null : this._inputConnection);
+      return !(this._inputConnection instanceof HttpConnection) ? null : (HttpConnection)this._inputConnection;
    }
 
    public final String getUrl() {

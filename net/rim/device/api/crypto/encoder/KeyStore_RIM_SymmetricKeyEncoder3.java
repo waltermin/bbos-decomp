@@ -9,8 +9,8 @@ final class KeyStore_RIM_SymmetricKeyEncoder3 extends SymmetricKeyEncoder {
    @Override
    protected final EncodedKey encodeKey(SymmetricKey key) {
       try {
-         ByteArrayOutputStream output = (ByteArrayOutputStream)(new Object());
-         DataOutputStream dataOut = (DataOutputStream)(new Object(output));
+         ByteArrayOutputStream output = new ByteArrayOutputStream();
+         DataOutputStream dataOut = new DataOutputStream(output);
          dataOut.writeInt(0);
          if (key.getAlgorithm().equals("RC2")) {
             RC2Key k = (RC2Key)key;
@@ -20,7 +20,7 @@ final class KeyStore_RIM_SymmetricKeyEncoder3 extends SymmetricKeyEncoder {
             dataOut.writeInt(8);
          } else {
             if (!key.getAlgorithm().equals("CAST128")) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             dataOut.writeInt(3);
@@ -28,9 +28,9 @@ final class KeyStore_RIM_SymmetricKeyEncoder3 extends SymmetricKeyEncoder {
 
          Utility.writeData(key.getData(), dataOut);
          dataOut.close();
-         return (EncodedKey)(new Object(output.toByteArray(), "KeyStore"));
+         return new EncodedKey(output.toByteArray(), "KeyStore");
       } finally {
-         throw new Object();
+         throw new RuntimeException();
       }
    }
 

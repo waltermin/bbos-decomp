@@ -10,7 +10,7 @@ import net.rim.device.api.system.EventLogger;
 import net.rim.device.api.util.Arrays;
 
 final class MdpWaitingQueueThread extends Thread implements MdpConstants, ConnEvent {
-   private Vector _datagrams = (Vector)(new Object(4, 5));
+   private Vector _datagrams = new Vector(4, 5);
    private boolean _shutdown;
    private long _timer;
    private long _minDatagramAckTimeout = Long.MAX_VALUE;
@@ -237,8 +237,8 @@ final class MdpWaitingQueueThread extends Thread implements MdpConstants, ConnEv
 
                t.reference = reference;
                t.retries = retriesCount;
-               DatagramBase dg = (DatagramBase)(new Object());
-               if (!(datagram instanceof Object)) {
+               DatagramBase dg = new DatagramBase();
+               if (!(datagram instanceof DatagramBase)) {
                   dg.setData(datagram.getData(), datagram.getOffset(), datagram.getLength());
                   dg.setAddress(datagram.getAddress());
                } else {

@@ -9,8 +9,8 @@ import net.rim.device.apps.internal.browser.markup.HTMLUtilities;
 import net.rim.device.apps.internal.browser.stack.WAPInputStream;
 
 public final class HTMLD implements Decompiler {
-   private ByteArrayOutputStream _outBuf = (ByteArrayOutputStream)(new Object());
-   private PrintStream _out = (PrintStream)(new Object(this._outBuf));
+   private ByteArrayOutputStream _outBuf = new ByteArrayOutputStream();
+   private PrintStream _out = new PrintStream(this._outBuf);
    private int _depth;
    private int _currentStringRef;
    private boolean _allTagsProvided;
@@ -48,29 +48,29 @@ public final class HTMLD implements Decompiler {
       // 020: astore 3
       // 021: aconst_null
       // 022: astore 4
-      // 024: new java/lang/Object
+      // 024: new net/rim/device/apps/internal/browser/stack/WAPInputStream
       // 027: dup
-      // 028: new java/lang/Object
+      // 028: new java/io/ByteArrayInputStream
       // 02b: dup
       // 02c: aload 1
       // 02d: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
       // 030: invokespecial net/rim/device/apps/internal/browser/stack/WAPInputStream.<init> (Ljava/io/InputStream;)V
       // 033: astore 9
-      // 035: new java/lang/Object
+      // 035: new java/util/Vector
       // 038: dup
       // 039: invokespecial java/util/Vector.<init> ()V
       // 03c: astore 10
-      // 03e: new java/lang/Object
+      // 03e: new java/util/Vector
       // 041: dup
       // 042: invokespecial java/util/Vector.<init> ()V
       // 045: astore 11
       // 047: aload 0
-      // 048: new java/lang/Object
+      // 048: new net/rim/device/api/util/IntStack
       // 04b: dup
       // 04c: invokespecial net/rim/device/api/util/IntStack.<init> ()V
       // 04f: putfield net/rim/device/apps/internal/browser/debug/HTMLD._tagStack Lnet/rim/device/api/util/IntStack;
       // 052: aload 0
-      // 053: new java/lang/Object
+      // 053: new net/rim/device/api/util/IntStack
       // 056: dup
       // 057: invokespecial net/rim/device/api/util/IntStack.<init> ()V
       // 05a: putfield net/rim/device/apps/internal/browser/debug/HTMLD._skipPopCalls Lnet/rim/device/api/util/IntStack;
@@ -83,12 +83,12 @@ public final class HTMLD implements Decompiler {
       // 06a: goto 089
       // 06d: astore 12
       // 06f: aload 0
-      // 070: new java/lang/Object
+      // 070: new java/io/ByteArrayOutputStream
       // 073: dup
       // 074: invokespecial java/io/ByteArrayOutputStream.<init> ()V
       // 077: putfield net/rim/device/apps/internal/browser/debug/HTMLD._outBuf Ljava/io/ByteArrayOutputStream;
       // 07a: aload 0
-      // 07b: new java/lang/Object
+      // 07b: new java/io/PrintStream
       // 07e: dup
       // 07f: aload 0
       // 080: getfield net/rim/device/apps/internal/browser/debug/HTMLD._outBuf Ljava/io/ByteArrayOutputStream;
@@ -102,7 +102,7 @@ public final class HTMLD implements Decompiler {
       // 094: if_icmpeq 0d4
       // 097: aload 0
       // 098: getfield net/rim/device/apps/internal/browser/debug/HTMLD._out Ljava/io/PrintStream;
-      // 09b: new java/lang/Object
+      // 09b: new java/lang/StringBuffer
       // 09e: dup
       // 09f: ldc_w "ERROR: Wrong version numbers (got "
       // 0a2: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -200,7 +200,7 @@ public final class HTMLD implements Decompiler {
       // 16f: iload 6
       // 171: invokestatic net/rim/device/apps/internal/browser/markup/HTMLBinaryConstants.resolveStringEncoding (I)Ljava/lang/String;
       // 174: astore 3
-      // 175: new java/lang/Object
+      // 175: new java/lang/String
       // 178: dup
       // 179: aload 7
       // 17b: aload 3
@@ -208,7 +208,7 @@ public final class HTMLD implements Decompiler {
       // 17f: astore 4
       // 181: goto 1a4
       // 184: astore 13
-      // 186: new java/lang/Object
+      // 186: new java/lang/String
       // 189: dup
       // 18a: aload 7
       // 18c: invokespecial java/lang/String.<init> ([B)V
@@ -328,7 +328,7 @@ public final class HTMLD implements Decompiler {
       // 28e: aload 11
       // 290: invokespecial net/rim/device/apps/internal/browser/debug/HTMLD.processTag (IZLnet/rim/device/apps/internal/browser/stack/WAPInputStream;Ljava/util/Vector;Ljava/util/Vector;)V
       // 293: goto 137
-      // 296: new java/lang/Object
+      // 296: new java/lang/Exception
       // 299: dup
       // 29a: ldc_w "Bad token"
       // 29d: invokespecial java/lang/Exception.<init> (Ljava/lang/String;)V
@@ -356,12 +356,12 @@ public final class HTMLD implements Decompiler {
       // 2ca: areturn
       // 2cb: astore 10
       // 2cd: aload 0
-      // 2ce: new java/lang/Object
+      // 2ce: new java/io/ByteArrayOutputStream
       // 2d1: dup
       // 2d2: invokespecial java/io/ByteArrayOutputStream.<init> ()V
       // 2d5: putfield net/rim/device/apps/internal/browser/debug/HTMLD._outBuf Ljava/io/ByteArrayOutputStream;
       // 2d8: aload 0
-      // 2d9: new java/lang/Object
+      // 2d9: new java/io/PrintStream
       // 2dc: dup
       // 2dd: aload 0
       // 2de: getfield net/rim/device/apps/internal/browser/debug/HTMLD._outBuf Ljava/io/ByteArrayOutputStream;
@@ -404,7 +404,7 @@ public final class HTMLD implements Decompiler {
          byte[] propertiesData = (byte[])richTextProperties.elementAt(this._currentStringRef);
          if (propertiesData != null) {
             int regionCount = 0;
-            DataBuffer properties = (DataBuffer)(new Object(propertiesData, 0, propertiesData.length, true));
+            DataBuffer properties = new DataBuffer(propertiesData, 0, propertiesData.length, true);
             short var22;
             if (properties.readByte() == 1 && (var22 = properties.readShort()) > 0) {
                properties.readShort();
@@ -507,9 +507,7 @@ public final class HTMLD implements Decompiler {
                   }
 
                   if ((nextAttribute & 8) != 0 && (attributes[i] & 8) != 0) {
-                     this.writeBeginTag(
-                        ((StringBuffer)(new Object("<a href=\""))).append((String)richTextStrings.elementAt(anchors[i])).append("\">").toString()
-                     );
+                     this.writeBeginTag("<a href=\"" + (String)richTextStrings.elementAt(anchors[i]) + "\">");
                   }
 
                   if ((nextAttribute & 32) != 0 && (attributes[i] & 32) != 0) {
@@ -530,7 +528,7 @@ public final class HTMLD implements Decompiler {
 
                   if ((nextAttribute & 16) != 0) {
                      if ((attributes[i] & 16) != 0) {
-                        this.writeBeginTag(((StringBuffer)(new Object("<font size="))).append(sizes[i]).append('>').toString());
+                        this.writeBeginTag("<font size=" + sizes[i] + '>');
                      } else {
                         this.writeEndTag("</font>");
                      }
@@ -561,7 +559,7 @@ public final class HTMLD implements Decompiler {
       this._out.println();
 
       try {
-         this._out.println(((StringBuffer)(new Object("FATAL: Decompile halted at byte "))).append(inSize - in.available()).toString());
+         this._out.println("FATAL: Decompile halted at byte " + (inSize - in.available()));
          in.close();
       } catch (Throwable var5) {
          this._out.println(e);
@@ -612,7 +610,7 @@ public final class HTMLD implements Decompiler {
             this.flushCurrentText(richTextStrings, richTextProperties);
          }
 
-         this.writeEndTag(((StringBuffer)(new Object("</"))).append(currentTag).append('>').toString());
+         this.writeEndTag("</" + currentTag + '>');
       } else {
          if (tag == 4) {
             int nameId = in.readMBInt();
@@ -659,28 +657,21 @@ public final class HTMLD implements Decompiler {
                }
 
                if (name != null) {
-                  attributes = ((StringBuffer)(new Object()))
-                     .append(attributes)
-                     .append(' ')
-                     .append(name)
-                     .append("=\"")
-                     .append(this.readAttributeValue(in, richTextStrings))
-                     .append('"')
-                     .toString();
+                  attributes = attributes + ' ' + name + "=\"" + this.readAttributeValue(in, richTextStrings) + '"';
                } else {
                   name = HTMLUtilities.resolveAttributeValue(currentByte);
-                  attributes = ((StringBuffer)(new Object())).append(attributes).append(' ').append(name).toString();
+                  attributes = attributes + ' ' + name;
                }
             }
          }
 
-         currentTag = ((StringBuffer)(new Object())).append('<').append(currentTag).append(attributes).toString();
+         currentTag = '<' + currentTag + attributes;
          if (hasContent) {
-            currentTag = ((StringBuffer)(new Object())).append(currentTag).append('>').toString();
+            currentTag = currentTag + '>';
             this._tagStack.push(tag);
             this.writeBeginTag(currentTag);
          } else {
-            currentTag = ((StringBuffer)(new Object())).append(currentTag).append("/>").toString();
+            currentTag = currentTag + "/>";
             this.writeTag(currentTag);
          }
 

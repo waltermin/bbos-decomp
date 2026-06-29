@@ -18,16 +18,17 @@ import net.rim.device.api.io.Base64OutputStream;
 import net.rim.device.api.mime.MIMEOutputStream;
 import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.api.util.StringUtilities;
+import net.rim.device.apps.api.addressbook.EmailAddressModel;
 import net.rim.device.apps.api.addressbook.GroupAddressCardModel;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.RIMModel;
-import net.rim.device.apps.api.framework.model.Recognizer;
 import net.rim.device.apps.api.transmission.rim.CMIMEStringConverter;
 import net.rim.device.apps.api.utility.framework.SubmemberUtilities;
 import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
 import net.rim.device.apps.internal.blackberryemail.header.EmailHeaderModel;
 import net.rim.device.apps.internal.blackberryemail.header.EmailHeaderModelFactory;
 import net.rim.device.apps.internal.blackberryemail.header.HeaderTypes;
+import net.rim.device.apps.internal.secureemail.AbortSendSecureEmailException;
 import net.rim.device.apps.internal.secureemail.RecipientData;
 import net.rim.device.apps.internal.secureemail.RecipientData$CertificateDetails;
 import net.rim.device.apps.internal.secureemail.SecureEmailOptions;
@@ -39,6 +40,7 @@ import net.rim.device.apps.internal.secureemail.encodings.smime.SMIMEResources;
 import net.rim.device.apps.internal.secureemail.encodings.smime.SMIMEUtilities;
 import net.rim.device.apps.internal.secureemail.encodings.smime.SignedReceiptHelper;
 import net.rim.device.apps.internal.secureemail.sendmethods.SecureEmailMessageEncoder;
+import net.rim.device.apps.internal.secureemail.sendmethods.SecureEmailMessageEncoder$HeaderModelRecognizer;
 
 public class SMIMEMessageEncoder extends SecureEmailMessageEncoder {
    private static final int EMS_TO_RECIPIENT_NAMES_TAG = 0;
@@ -66,7 +68,7 @@ public class SMIMEMessageEncoder extends SecureEmailMessageEncoder {
    @Override
    protected OutputStream createOutputStream(OutputStream innermostOutputStream, SecureEmailOptions secureEmailOptions) {
       SMIMEOptions smimeOptions = (SMIMEOptions)secureEmailOptions;
-      Base64OutputStream base64OutputStream = (Base64OutputStream)(new Object(innermostOutputStream));
+      Base64OutputStream base64OutputStream = new Base64OutputStream(innermostOutputStream);
       OutputStream currentInnermostOutputStream = base64OutputStream;
       CMSEnvelopedDataOutputStream encryptedCMSStream = null;
       CMSSignedDataOutputStream signedCMSStream = null;
@@ -102,22 +104,22 @@ public class SMIMEMessageEncoder extends SecureEmailMessageEncoder {
                emsRequestSigner = this.createCMSSigner(mySigningData, mySigningPrivateKey, true);
                emsRequest = this.createEMSRequestAttribute();
                emsRequestSigner.addAttribute(emsRequest);
-               CMSSignedDataOutputStream emsRequestStream = (CMSSignedDataOutputStream)(new Object(currentInnermostOutputStream, 10, true, true, true));
+               CMSSignedDataOutputStream emsRequestStream = new CMSSignedDataOutputStream(currentInnermostOutputStream, 10, true, true, true);
                emsRequestStream.addSigner(emsRequestSigner);
-               MIMEOutputStream xPKCS7MIMEOutputStream = (MIMEOutputStream)(new Object(emsRequestStream, false, "binary"));
+               MIMEOutputStream xPKCS7MIMEOutputStream = new MIMEOutputStream(emsRequestStream, false, "binary");
                xPKCS7MIMEOutputStream.setContentType("application/x-pkcs7-mime");
                currentInnermostOutputStream = xPKCS7MIMEOutputStream;
                var31 = false;
             } finally {
                if (var31) {
-                  throw new Object();
+                  throw new AbortSendSecureEmailException();
                }
             }
          }
 
          int contentCipher = this.selectContentCipher(smimeOptions);
          int cmsContentCipher = super._secureEmailUtilities.getConstantForContentCipher(contentCipher);
-         encryptedCMSStream = (CMSEnvelopedDataOutputStream)(new Object(currentInnermostOutputStream, 10, true, cmsContentCipher));
+         encryptedCMSStream = new CMSEnvelopedDataOutputStream(currentInnermostOutputStream, 10, true, cmsContentCipher);
          if (emsRequestSigner != null && emsRequest != null) {
             SymmetricKey sessionKey = encryptedCMSStream.getSessionKey();
             emsRequestSigner.addAttribute(this.createEMSProofOfIntention(sessionKey, emsRequest));
@@ -157,12 +159,12 @@ public class SMIMEMessageEncoder extends SecureEmailMessageEncoder {
             CMSSigner cmsSigner = this.createCMSSigner(mySigningData, mySigningPrivateKey, !super._isPINMessage && !encryptMessage);
             boolean includeCerts = smimeOptions.getIncludeCertificatesFlag();
             if (encryptMessage) {
-               MIMEOutputStream xPKCS7MIMEOutputStream = (MIMEOutputStream)(new Object(currentInnermostOutputStream, false, "base64"));
+               MIMEOutputStream xPKCS7MIMEOutputStream = new MIMEOutputStream(currentInnermostOutputStream, false, "base64");
                xPKCS7MIMEOutputStream.setContentType("application/x-pkcs7-mime");
-               Base64OutputStream innerBase64OutputStream = (Base64OutputStream)(new Object(xPKCS7MIMEOutputStream));
-               signedCMSStream = (CMSSignedDataOutputStream)(new Object(innerBase64OutputStream, 10, true, true, includeCerts));
+               Base64OutputStream innerBase64OutputStream = new Base64OutputStream(xPKCS7MIMEOutputStream);
+               signedCMSStream = new CMSSignedDataOutputStream(innerBase64OutputStream, 10, true, true, includeCerts);
             } else {
-               signedCMSStream = (CMSSignedDataOutputStream)(new Object(currentInnermostOutputStream, 10, true, true, includeCerts));
+               signedCMSStream = new CMSSignedDataOutputStream(currentInnermostOutputStream, 10, true, true, includeCerts);
             }
 
             if (includeCerts && myEncryptionData != null && !myEncryptionData.equals(mySigningData)) {
@@ -170,7 +172,7 @@ public class SMIMEMessageEncoder extends SecureEmailMessageEncoder {
                boolean useCertificateShortForm = !super._isPINMessage
                   && !encryptMessage
                   && KeyStoreManager.getInstance().isSyncedWithBES(encryptionCertificate);
-               signedCMSStream.addCertificates(new Object[]{encryptionCertificate}, useCertificateShortForm);
+               signedCMSStream.addCertificates(new Certificate[]{encryptionCertificate}, useCertificateShortForm);
             }
 
             signedCMSStream.addSigner(cmsSigner);
@@ -182,7 +184,7 @@ public class SMIMEMessageEncoder extends SecureEmailMessageEncoder {
             var28 = false;
          } finally {
             if (var28) {
-               throw new Object();
+               throw new AbortSendSecureEmailException();
             }
          }
       }
@@ -200,7 +202,7 @@ public class SMIMEMessageEncoder extends SecureEmailMessageEncoder {
       SignatureSigner signer = SignatureSignerFactory.getInstance(mySigningPrivateKey, null);
       Certificate signingCert = mySigningData.getCertificate();
       boolean isSigningKeySynchedWithBES = KeyStoreManager.getInstance().isSyncedWithBES(signingCert);
-      CMSSigner cmsSigner = (CMSSigner)(new Object(signer, signingCert, besCanReplaceCertificateShortForm && isSigningKeySynchedWithBES));
+      CMSSigner cmsSigner = new CMSSigner(signer, signingCert, besCanReplaceCertificateShortForm && isSigningKeySynchedWithBES);
       SMIMEUtilities.addSignedDateAttribute(cmsSigner);
       return cmsSigner;
    }
@@ -223,11 +225,11 @@ public class SMIMEMessageEncoder extends SecureEmailMessageEncoder {
       // 001: ifnull 008
       // 004: aload 2
       // 005: ifnonnull 010
-      // 008: new java/lang/Object
+      // 008: new java/lang/IllegalArgumentException
       // 00b: dup
       // 00c: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 00f: athrow
-      // 010: new java/lang/Object
+      // 010: new net/rim/device/api/crypto/SPKMKDFPseudoRandomSource
       // 013: dup
       // 014: aload 1
       // 015: invokeinterface net/rim/device/api/crypto/SymmetricKey.getData ()[B 1
@@ -237,7 +239,7 @@ public class SMIMEMessageEncoder extends SecureEmailMessageEncoder {
       // 01f: bipush 24
       // 021: invokevirtual net/rim/device/api/crypto/AbstractPseudoRandomSource.getBytes (I)[B
       // 024: astore 4
-      // 026: new java/lang/Object
+      // 026: new net/rim/device/api/crypto/asn1/ASN1InputByteArray
       // 029: dup
       // 02a: aload 2
       // 02b: invokevirtual net/rim/device/api/crypto/cms/CMSAttribute.getValue ()[B
@@ -273,9 +275,9 @@ public class SMIMEMessageEncoder extends SecureEmailMessageEncoder {
       // 064: aload 6
       // 066: arraylength
       // 067: invokestatic java/lang/System.arraycopy (Ljava/lang/Object;ILjava/lang/Object;II)V
-      // 06a: new java/lang/Object
+      // 06a: new net/rim/device/api/crypto/CBCMAC
       // 06d: dup
-      // 06e: new java/lang/Object
+      // 06e: new net/rim/device/api/crypto/TripleDESKey
       // 071: dup
       // 072: aload 4
       // 074: invokespecial net/rim/device/api/crypto/TripleDESKey.<init> ([B)V
@@ -287,19 +289,19 @@ public class SMIMEMessageEncoder extends SecureEmailMessageEncoder {
       // 083: aload 9
       // 085: invokevirtual net/rim/device/api/crypto/AbstractMAC.getMAC ()[B
       // 088: astore 10
-      // 08a: new java/lang/Object
+      // 08a: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 08d: dup
       // 08e: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 091: astore 11
-      // 093: new java/lang/Object
+      // 093: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 096: dup
       // 097: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 09a: astore 12
-      // 09c: new java/lang/Object
+      // 09c: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 09f: dup
       // 0a0: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 0a3: astore 13
-      // 0a5: new java/lang/Object
+      // 0a5: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 0a8: dup
       // 0a9: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 0ac: astore 14
@@ -310,7 +312,7 @@ public class SMIMEMessageEncoder extends SecureEmailMessageEncoder {
       // 0b9: aload 13
       // 0bb: aload 14
       // 0bd: invokevirtual net/rim/device/api/crypto/asn1/ASN1OutputStream.writeSequence (Lnet/rim/device/api/crypto/asn1/ASN1OutputStream;)V
-      // 0c0: new java/lang/Object
+      // 0c0: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 0c3: dup
       // 0c4: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 0c7: astore 15
@@ -342,7 +344,7 @@ public class SMIMEMessageEncoder extends SecureEmailMessageEncoder {
       // 0f9: aload 11
       // 0fb: aload 12
       // 0fd: invokevirtual net/rim/device/api/crypto/asn1/ASN1OutputStream.writeSet (Lnet/rim/device/api/crypto/asn1/ASN1OutputStream;)V
-      // 100: new java/lang/Object
+      // 100: new net/rim/device/api/crypto/cms/CMSAttribute
       // 103: dup
       // 104: ldc_w -477712246
       // 107: invokestatic net/rim/device/api/crypto/oid/OIDs.getOID (I)Lnet/rim/device/api/crypto/oid/OID;
@@ -384,7 +386,7 @@ public class SMIMEMessageEncoder extends SecureEmailMessageEncoder {
       // 00e: astore 3
       // 00f: aload 0
       // 010: getfield net/rim/device/apps/internal/secureemail/sendmethods/SecureEmailMessageEncoder._message Lnet/rim/device/apps/internal/blackberryemail/email/EmailMessageModel;
-      // 013: new java/lang/Object
+      // 013: new net/rim/device/apps/internal/secureemail/sendmethods/SecureEmailMessageEncoder$HeaderModelRecognizer
       // 016: dup
       // 017: invokespecial net/rim/device/apps/internal/secureemail/sendmethods/SecureEmailMessageEncoder$HeaderModelRecognizer.<init> ()V
       // 01a: invokestatic net/rim/device/apps/api/utility/framework/SubmemberUtilities.getSubmembers (Lnet/rim/device/api/collection/ReadableList;Lnet/rim/device/apps/api/framework/model/Recognizer;)[Ljava/lang/Object;
@@ -404,7 +406,7 @@ public class SMIMEMessageEncoder extends SecureEmailMessageEncoder {
       // 036: aload 4
       // 038: iload 6
       // 03a: aaload
-      // 03b: checkcast java/lang/Object
+      // 03b: checkcast net/rim/device/apps/internal/blackberryemail/header/EmailHeaderModel
       // 03e: bipush 0
       // 03f: invokestatic net/rim/device/apps/internal/secureemail/SecureEmailUtilities.getRecipientData (Lnet/rim/device/apps/internal/blackberryemail/header/EmailHeaderModel;Z)[Lnet/rim/device/apps/internal/secureemail/RecipientData;
       // 042: astore 7
@@ -482,19 +484,19 @@ public class SMIMEMessageEncoder extends SecureEmailMessageEncoder {
       // 0f5: aload 3
       // 0f6: arraylength
       // 0f7: ifne 102
-      // 0fa: new java/lang/Object
+      // 0fa: new java/lang/IllegalStateException
       // 0fd: dup
       // 0fe: invokespecial java/lang/IllegalStateException.<init> ()V
       // 101: athrow
-      // 102: new java/lang/Object
+      // 102: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 105: dup
       // 106: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 109: astore 6
-      // 10b: new java/lang/Object
+      // 10b: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 10e: dup
       // 10f: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 112: astore 7
-      // 114: new java/lang/Object
+      // 114: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 117: dup
       // 118: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 11b: astore 8
@@ -528,7 +530,7 @@ public class SMIMEMessageEncoder extends SecureEmailMessageEncoder {
       // 14c: aload 6
       // 14e: aload 7
       // 150: invokevirtual net/rim/device/api/crypto/asn1/ASN1OutputStream.writeSet (Lnet/rim/device/api/crypto/asn1/ASN1OutputStream;)V
-      // 153: new java/lang/Object
+      // 153: new net/rim/device/api/crypto/cms/CMSAttribute
       // 156: dup
       // 157: ldc_w -477712250
       // 15a: invokestatic net/rim/device/api/crypto/oid/OIDs.getOID (I)Lnet/rim/device/api/crypto/oid/OID;
@@ -548,12 +550,12 @@ public class SMIMEMessageEncoder extends SecureEmailMessageEncoder {
    }
 
    private void writeEMSRecipientNames(String[] data, ASN1OutputStream emsRequest, int tag) {
-      ASN1OutputStream recipientNames = (ASN1OutputStream)(new Object());
+      ASN1OutputStream recipientNames = new ASN1OutputStream();
 
       for (int i = data.length - 1; i >= 0; i--) {
-         ASN1OutputStream generalNames = (ASN1OutputStream)(new Object());
+         ASN1OutputStream generalNames = new ASN1OutputStream();
          generalNames.writeIA5String(data[i], 2, 1);
-         ASN1OutputStream recipientName = (ASN1OutputStream)(new Object());
+         ASN1OutputStream recipientName = new ASN1OutputStream();
          recipientName.writeSequence(generalNames, 2, 0);
          recipientNames.writeSequence(recipientName);
       }
@@ -565,18 +567,18 @@ public class SMIMEMessageEncoder extends SecureEmailMessageEncoder {
    protected void modifyRecipientList() {
       String emsAddress = this.getEMSEmailAddress();
       if (emsAddress != null && emsAddress.length() != 0) {
-         String[] emsArray = new Object[]{emsAddress, emsAddress};
-         ContextObject co = (ContextObject)(new Object());
+         String[] emsArray = new String[]{emsAddress, emsAddress};
+         ContextObject co = new ContextObject();
          co.put(-4054673099568009991L, HeaderTypes._typesAsInteger[0]);
          co.put(251, emsArray);
          EMSEmailHeaderModel emsEmailHeaderModel = new EMSEmailHeaderModel(co);
-         Object[] messageHeaderModels = SubmemberUtilities.getSubmembers(super._message, (Recognizer)(new Object()));
+         Object[] messageHeaderModels = SubmemberUtilities.getSubmembers(super._message, new SecureEmailMessageEncoder$HeaderModelRecognizer());
          int numMessageHeaderModels = messageHeaderModels.length;
 
          for (int i = 0; i < numMessageHeaderModels; i++) {
             EmailHeaderModel currentHeaderModel = (EmailHeaderModel)messageHeaderModels[i];
             RIMModel currentInsideModel = currentHeaderModel.getInsideModel();
-            if (!(currentInsideModel instanceof Object)) {
+            if (!(currentInsideModel instanceof GroupAddressCardModel)) {
                emsEmailHeaderModel.addDisplayModel(currentHeaderModel);
             } else {
                GroupAddressCardModel groupModel = (GroupAddressCardModel)currentInsideModel;
@@ -585,8 +587,8 @@ public class SMIMEMessageEncoder extends SecureEmailMessageEncoder {
                for (int j = 0; j < groupModelSize; j++) {
                   if (groupModel.getAddressModelTypeAt(j) == 0) {
                      RIMModel memberAddress = groupModel.getAddressModelAt(j);
-                     if (memberAddress != null && memberAddress instanceof Object) {
-                        ContextObject memberContext = (ContextObject)(new Object());
+                     if (memberAddress != null && memberAddress instanceof EmailAddressModel) {
+                        ContextObject memberContext = new ContextObject();
                         ContextObject.put(memberContext, 254, memberAddress);
                         EmailHeaderModel memberHeader = EmailHeaderModelFactory.createInstance(currentHeaderModel.getHeaderType(), memberContext);
                         emsEmailHeaderModel.addDisplayModel(memberHeader);
@@ -606,7 +608,7 @@ public class SMIMEMessageEncoder extends SecureEmailMessageEncoder {
 
    @Override
    protected void writeDataToOutputStream(OutputStream outermostOutputStream, StringBuffer dataToEncode, Object[] attachments) {
-      MIMEOutputStream mimeOutput = (MIMEOutputStream)(new Object(outermostOutputStream, attachments.length > 0, "7bit"));
+      MIMEOutputStream mimeOutput = new MIMEOutputStream(outermostOutputStream, attachments.length > 0, "7bit");
       MIMEOutputStream textPlainOutput = attachments.length == 0 ? mimeOutput : mimeOutput.getPartOutputStream(false, "7bit");
       String stringToEncode = dataToEncode.toString();
       int characterWidth = StringUtilities.getCharacterSize(stringToEncode);
@@ -620,7 +622,7 @@ public class SMIMEMessageEncoder extends SecureEmailMessageEncoder {
          mimeOutput.close();
       }
 
-      if (outermostOutputStream instanceof Object) {
+      if (outermostOutputStream instanceof CMSSignedDataOutputStream) {
          CMSSignedDataOutputStream signedOutputStream = (CMSSignedDataOutputStream)outermostOutputStream;
          SignedReceiptHelper.processSignedReceiptForSend(signedOutputStream, super._message);
       }

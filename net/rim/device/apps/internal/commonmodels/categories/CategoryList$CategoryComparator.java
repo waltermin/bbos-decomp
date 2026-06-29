@@ -8,14 +8,14 @@ final class CategoryList$CategoryComparator implements Comparator {
    @Override
    public final int compare(Object o1, Object o2) {
       String category1;
-      if (!(o1 instanceof Object)) {
+      if (!(o1 instanceof String)) {
          category1 = ((CategoryModel)o1).getName();
       } else {
          category1 = (String)o1;
       }
 
       String category2;
-      if (!(o2 instanceof Object)) {
+      if (!(o2 instanceof String)) {
          category2 = ((CategoryModel)o2).getName();
       } else {
          category2 = (String)o2;

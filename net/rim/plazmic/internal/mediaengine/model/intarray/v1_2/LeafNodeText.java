@@ -10,7 +10,7 @@ class LeafNodeText extends LeafNode {
    LeafNodeText(AnimationModel model, int nodeIdx, PME12Graphics meGraphic, MEGraphics2dContext context) {
       super(model, nodeIdx, meGraphic, context);
       if (context._textBuffer == null) {
-         context._textBuffer = (StringBuffer)(new Object());
+         context._textBuffer = new StringBuffer();
       }
 
       this._endBaselnPrev = new int[2];

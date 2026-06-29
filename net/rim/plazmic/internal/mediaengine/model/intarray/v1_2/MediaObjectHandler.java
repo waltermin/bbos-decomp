@@ -66,7 +66,7 @@ class MediaObjectHandler extends BehaviorHandler implements MediaListener {
    @Override
    public void mediaEvent(Object sender, int event, int eventParam, Object data) {
       long time;
-      if (!(data instanceof Object)) {
+      if (!(data instanceof Event)) {
          time = super._engine.getTime();
       } else {
          time = ((Event)data)._time;

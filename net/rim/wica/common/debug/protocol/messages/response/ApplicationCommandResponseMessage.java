@@ -27,6 +27,6 @@ class ApplicationCommandResponseMessage implements IApplicationCommandResponseMe
 
    @Override
    public String toString() {
-      return ((StringBuffer)(new Object("Application command response: appid = "))).append(this.getApplicationId()).toString();
+      return "Application command response: appid = " + this.getApplicationId();
    }
 }

@@ -179,7 +179,7 @@ public final class CharArrayHelper {
 
    @Override
    public final String toString() {
-      return (String)(new Object(this._contents, 0, this._length));
+      return new String(this._contents, 0, this._length);
    }
 
    public final void trim() {

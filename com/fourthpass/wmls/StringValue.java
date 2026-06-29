@@ -15,10 +15,10 @@ public final class StringValue extends Value {
       if (stringVal.isString()) {
          String otherValue = ((StringValue)stringVal).getValue();
          if (this._value.length() + otherValue.length() > 32768) {
-            throw new Object("WMLScript string too large");
+            throw new RuntimeException("WMLScript string too large");
          }
 
-         this._value = ((StringBuffer)(new Object())).append(this._value).append(otherValue).toString();
+         this._value = this._value + otherValue;
          return this;
       } else {
          return Value.INVALID;
@@ -125,8 +125,8 @@ public final class StringValue extends Value {
          }
       }
 
-      StringBuffer _valuebuffer = (StringBuffer)(new Object(s.length()));
-      new Object(0);
+      StringBuffer _valuebuffer = new StringBuffer(s.length());
+      new Integer(0);
 
       for (int j = 0; j < s.length(); j++) {
          char c = s.charAt(j);

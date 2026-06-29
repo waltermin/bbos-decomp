@@ -70,7 +70,7 @@ final class CDMAServiceFilter extends PhoneNumberFilter implements EngineeringDa
                   return this.getNextFilter().startCall(phoneNumber, flags);
                }
 
-               SimpleInputDialog dlg = (SimpleInputDialog)(new Object(3, "Enter the MSL: ", 0, 6, 0));
+               SimpleInputDialog dlg = new SimpleInputDialog(3, "Enter the MSL: ", 0, 6, 0);
                dlg.show();
                password = dlg.getText();
                if (password == null) {
@@ -138,14 +138,14 @@ final class CDMAServiceFilter extends PhoneNumberFilter implements EngineeringDa
          case 6:
             if (this._rtnRequested) {
                ResourceBundle srb = ResourceBundle.getBundle(-1488627819050031640L, "net.rim.device.apps.internal.resource.Security");
-               Dialog dlg = (Dialog)(new Object(
+               Dialog dlg = new Dialog(
                   "Restoring the device to factory defaults will erase all the personal information.",
                   srb.getStringArray(702),
                   new int[]{0, 1, -805044213, 775162112, 774909491, 3420721, -805044199, 1699878656},
                   1,
                   Bitmap.getPredefinedBitmap(2),
                   33554432
-               ));
+               );
                dlg.setEscapeEnabled(true);
                int result = dlg.doModal();
                if (result == 0) {
@@ -165,7 +165,7 @@ final class CDMAServiceFilter extends PhoneNumberFilter implements EngineeringDa
             }
          case 5:
             Application.getApplication().removeRadioListener(this);
-            EScreenModel model = (EScreenModel)(new Object(0));
+            EScreenModel model = new EScreenModel(0);
             model.setScreen(65534, 0);
             UiApplication.getUiApplication().pushModalScreen(new ServiceProgramUI(model));
             return;

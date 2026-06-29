@@ -22,7 +22,7 @@ final class ViewfinderField$ViewfinderStartRunnable implements Runnable {
       }
 
       if (isOnTop && this.this$0._vfState == 3) {
-         XYRect xtnt = (XYRect)(new Object(this.this$0.getExtent()));
+         XYRect xtnt = new XYRect(this.this$0.getExtent());
          this.this$0.getManager().transformToScreen(xtnt);
 
          try {

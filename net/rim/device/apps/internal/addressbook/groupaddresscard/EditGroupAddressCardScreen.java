@@ -35,16 +35,14 @@ final class EditGroupAddressCardScreen extends GroupAddressCardScreen implements
    private static final char SAVE_GROUP_VERB = '\u0003';
 
    protected final byte pickAddressFromList(Object acm, Object[] members) {
-      String[] values = new Object[members.length];
-      AddressSelectionContext selectionContext = (AddressSelectionContext)(new Object(
-         null, null, null, RecognizerRepository.getRecognizers(-3124646573404667739L), null
-      ));
+      String[] values = new String[members.length];
+      AddressSelectionContext selectionContext = new AddressSelectionContext(null, null, null, RecognizerRepository.getRecognizers(-3124646573404667739L), null);
       String dialogTitle = AddressBookResources.getString(301);
-      ContextObject contextObject = (ContextObject)(new Object(63, 42, 34));
+      ContextObject contextObject = new ContextObject(63, 42, 34);
 
       for (byte i = 0; i < members.length; i++) {
          if (values[i] == null) {
-            if (members[i] instanceof Object) {
+            if (members[i] instanceof VerbDescriptionProvider) {
                values[i] = ((VerbDescriptionProvider)members[i]).getVerbDescription(contextObject);
             } else {
                values[i] = members[i].toString();
@@ -54,7 +52,7 @@ final class EditGroupAddressCardScreen extends GroupAddressCardScreen implements
 
       int defaultIndex = 0;
       DefaultProvider defaultProvider = null;
-      if (acm instanceof Object) {
+      if (acm instanceof DefaultProvider) {
          defaultProvider = (DefaultProvider)acm;
          Object defaultEntry = defaultProvider.getDefault(null, selectionContext);
 
@@ -98,7 +96,7 @@ final class EditGroupAddressCardScreen extends GroupAddressCardScreen implements
          if (rm != null && rm.equals(element)) {
             this.setFocus(super._listField, 0, 0, 0, 0);
             super._listField.setSelectedIndex(i);
-            Dialog.alert(((StringBuffer)(new Object())).append(AddressBookResources.getString(811)).append(rm.toString()).toString());
+            Dialog.alert(AddressBookResources.getString(811) + rm.toString());
             return false;
          }
       }
@@ -123,9 +121,7 @@ final class EditGroupAddressCardScreen extends GroupAddressCardScreen implements
       super(gacm);
       this.setDefaultClose(false);
       String label = isNew ? AddressBookResources.getString(706) : AddressBookResources.getString(1005);
-      this._nameField = (AutoTextEditField)(new Object(
-         ((StringBuffer)(new Object())).append(label).append(": ").toString(), gacm.getName(), 100, 4503601774854144L
-      ));
+      this._nameField = new AutoTextEditField(label + ": ", gacm.getName(), 100, 4503601774854144L);
       this._nameField.setCursorPosition(this._nameField.getTextLength());
       this.setTitle(this._nameField);
       ((GroupAddressCardModelImpl)super._gacm).getMembers(this._originalMembers);

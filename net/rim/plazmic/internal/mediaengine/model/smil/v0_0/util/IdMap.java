@@ -3,7 +3,7 @@ package net.rim.plazmic.internal.mediaengine.model.smil.v0_0.util;
 import java.util.Hashtable;
 
 public class IdMap {
-   private Hashtable _map = (Hashtable)(new Object());
+   private Hashtable _map = new Hashtable();
    private int _nextId;
    private String _elementIdPrefix;
    public static final int DEFAULT_STARTING_VALUE = 0;
@@ -19,8 +19,8 @@ public class IdMap {
    }
 
    public String createNewId() {
-      String id = ((StringBuffer)(new Object())).append(this._elementIdPrefix).append(this._nextId).toString();
-      this._map.put(id, new Object(this._nextId++));
+      String id = this._elementIdPrefix + this._nextId;
+      this._map.put(id, new Integer(this._nextId++));
       return id;
    }
 
@@ -33,7 +33,7 @@ public class IdMap {
          }
 
          result = this._nextId;
-         this._map.put(id, new Object(this._nextId++));
+         this._map.put(id, new Integer(this._nextId++));
       }
 
       return result;

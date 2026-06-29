@@ -15,12 +15,12 @@ public final class FreeBusyEnumDef extends EnumDefinition {
    public static final String FREEBUSY_ENUM_NAME = "FREEBUSY";
 
    public FreeBusyEnumDef() {
-      super._enumNames = new Object[4];
+      super._enumNames = new String[4];
       super._enumNames[0] = "FREE";
       super._enumNames[1] = "TENTATIVE";
       super._enumNames[2] = "BUSY";
       super._enumNames[3] = "OUT_OF_OFFICE";
-      super._enumValues = (ToIntHashtable)(new Object(6));
+      super._enumValues = new ToIntHashtable(6);
       super._enumValues.put("FREE", 0);
       super._enumValues.put("TENTATIVE", 1);
       super._enumValues.put("BUSY", 2);

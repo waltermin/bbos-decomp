@@ -7,7 +7,7 @@ import net.rim.device.api.util.WeakReferenceUtilities;
 import net.rim.vm.WeakReference;
 
 public final class DTMFStringPattern extends StringPattern {
-   private WeakReference _scanbufferWR = (WeakReference)(new Object(null));
+   private WeakReference _scanbufferWR = new WeakReference(null);
    private boolean _enabled;
    private static final int SCAN_BUFFER_SIZE = 64;
    private static final int STATE_INIT = 0;

@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.blackberryemail.header;
 
 import net.rim.device.api.ui.Field;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.FieldProvider;
 import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.verb.Verb;
@@ -26,10 +27,10 @@ final class EditAddressInUIVerb extends Verb {
    public final Object invoke(Object context) {
       Object result = this._verb.invoke(context);
       if (result != null) {
-         Object newContext = new Object(1, 9);
+         Object newContext = new ContextObject(1, 9);
          Field addressField = null;
          RIMModel address = this._model.getInsideModel();
-         if (address instanceof Object) {
+         if (address instanceof FieldProvider) {
             FieldProvider provider = (FieldProvider)address;
             addressField = provider.getField(newContext);
          }

@@ -16,7 +16,7 @@ final class PhoneListManager$1 implements Runnable {
       this.this$0._view = 3;
       ContextObject context = null;
       if (PhoneOptions.getOptions().getPhoneListViewType() == 3) {
-         context = (ContextObject)(new Object());
+         context = new ContextObject();
          PhoneUtilities.setPrivateFlag(context, 72);
       }
 

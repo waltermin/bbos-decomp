@@ -1,5 +1,6 @@
 package net.rim.device.internal.synchronization.ota.adapters;
 
+import java.io.IOException;
 import net.rim.device.api.collection.Collection;
 import net.rim.device.api.collection.CollectionEventSource;
 import net.rim.device.api.collection.CollectionListener;
@@ -54,23 +55,25 @@ public final class OTASyncCollectionAdapter implements CollectionListener, SyncA
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public final void bind(SyncAgentUrl aSyncAgentUrl) {
+   public final void bind(SyncAgentUrl aSyncAgentUrl) throws IOException {
       try {
          if (this.isBound()) {
-            throw new Object();
+            throw new IOException();
          }
 
-         this._listOfIgnoredUidToOperation = (IntVector)(new Object());
+         this._listOfIgnoredUidToOperation = new IntVector();
          this._syncAgentUrl = aSyncAgentUrl;
          this._syncAgentUrl.setVersion(this._syncCollection.getSyncVersion());
-         int xSyncCollectionPriority = !(this._syncCollection instanceof Object) ? 5 : ((OTASyncPriorityProvider)this._syncCollection).getSyncPriority();
-         int xSyncCollectionDependencyLevel = !(this._syncCollection instanceof Object)
+         int xSyncCollectionPriority = !(this._syncCollection instanceof OTASyncPriorityProvider)
+            ? 5
+            : ((OTASyncPriorityProvider)this._syncCollection).getSyncPriority();
+         int xSyncCollectionDependencyLevel = !(this._syncCollection instanceof OTASyncPriorityAndDependencyProvider)
             ? 255
             : ((OTASyncPriorityAndDependencyProvider)this._syncCollection).getDependencyLevel();
          boolean xResetTheConnection = false;
          if (!SyncAgentConnections.isConnectionRegistered(aSyncAgentUrl)) {
             SyncCollectionSchema xSyncCollectionSchema = null;
-            if (this._syncCollection instanceof Object) {
+            if (this._syncCollection instanceof SyncCollectionSchemaProvider) {
                xSyncCollectionSchema = ((SyncCollectionSchemaProvider)this._syncCollection).getSchema();
             }
 
@@ -114,7 +117,7 @@ public final class OTASyncCollectionAdapter implements CollectionListener, SyncA
          }
       } catch (Throwable var7) {
          this.degisterCollectionEventListerner();
-         throw new Object(t.getMessage());
+         throw new IOException(t.getMessage());
       }
    }
 
@@ -403,7 +406,7 @@ public final class OTASyncCollectionAdapter implements CollectionListener, SyncA
    }
 
    private final void degisterCollectionEventListerner() {
-      if (this._syncCollection instanceof Object) {
+      if (this._syncCollection instanceof CollectionEventSource) {
          ((CollectionEventSource)this._syncCollection).removeCollectionListener(this);
       }
    }
@@ -418,7 +421,7 @@ public final class OTASyncCollectionAdapter implements CollectionListener, SyncA
    }
 
    private final void registerCollectionEventListener() {
-      if (this._syncCollection instanceof Object) {
+      if (this._syncCollection instanceof CollectionEventSource) {
          ((CollectionEventSource)this._syncCollection).addCollectionListener(this);
       }
    }
@@ -473,7 +476,7 @@ public final class OTASyncCollectionAdapter implements CollectionListener, SyncA
    private final int onStartSyncTransaction(boolean byServerSession) {
       if (byServerSession) {
          this._transactionTime = System.currentTimeMillis();
-         if (this._syncCollection instanceof Object) {
+         if (this._syncCollection instanceof OTASyncListener) {
             ((OTASyncListener)this._syncCollection).otaSyncOperationStarted(this._syncCollection, 1);
          }
 
@@ -486,7 +489,7 @@ public final class OTASyncCollectionAdapter implements CollectionListener, SyncA
 
    private final int onEndSyncTransaction(boolean byServerSession) {
       if (byServerSession) {
-         if (this._syncCollection instanceof Object) {
+         if (this._syncCollection instanceof OTASyncListener) {
             ((OTASyncListener)this._syncCollection).otaSyncOperationStopped(this._syncCollection, 1);
          }
 
@@ -502,7 +505,7 @@ public final class OTASyncCollectionAdapter implements CollectionListener, SyncA
    }
 
    private final int onStartSlowSyncTransaction() {
-      if (this._syncCollection instanceof Object) {
+      if (this._syncCollection instanceof OTASyncListener) {
          ((OTASyncListener)this._syncCollection).otaSyncOperationStarted(this._syncCollection, 0);
       }
 
@@ -510,7 +513,7 @@ public final class OTASyncCollectionAdapter implements CollectionListener, SyncA
    }
 
    private final int onEndSlowSyncTransaction() {
-      if (this._syncCollection instanceof Object) {
+      if (this._syncCollection instanceof OTASyncListener) {
          ((OTASyncListener)this._syncCollection).otaSyncOperationStopped(this._syncCollection, 0);
       }
 
@@ -1115,7 +1118,7 @@ public final class OTASyncCollectionAdapter implements CollectionListener, SyncA
    }
 
    private final boolean IsOptimizeChanges(Collection collection) {
-      if (collection instanceof Object) {
+      if (collection instanceof OTASyncEventOptimizationProvider) {
          OTASyncEventOptimizationProvider optimizationProvider = (OTASyncEventOptimizationProvider)collection;
          if (optimizationProvider.getEventOptimizationDisabled()) {
             return false;

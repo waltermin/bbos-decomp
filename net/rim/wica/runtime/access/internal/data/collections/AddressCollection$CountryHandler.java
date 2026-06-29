@@ -9,7 +9,7 @@ final class AddressCollection$CountryHandler implements ObjectFieldHandler {
 
    @Override
    public final Object getValue(Object item) {
-      return !(item instanceof Object) ? null : ((MailingAddressModel)item).getCountry();
+      return !(item instanceof MailingAddressModel) ? null : ((MailingAddressModel)item).getCountry();
    }
 
    AddressCollection$CountryHandler(AddressCollection$1 x0) {

@@ -16,10 +16,10 @@ final class RibbonOptions$PersistedRibbonOptions implements Persistable {
    }
 
    final void resetToDefaults() {
-      this._applicationPriorities = (ToIntHashtable)(new Object());
-      this._applicationVisibilities = (ToIntHashtable)(new Object());
+      this._applicationPriorities = new ToIntHashtable();
+      this._applicationVisibilities = new ToIntHashtable();
       this._showHiddenApps = false;
       this._debugMode = false;
-      this._backgroundImages = (Hashtable)(new Object());
+      this._backgroundImages = new Hashtable();
    }
 }

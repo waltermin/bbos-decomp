@@ -71,7 +71,7 @@ final class SelectServiceDialog extends OkCancelDialog implements ListFieldCallb
          Arrays.sort(this._services, new SelectServiceDialog$1(this));
       }
 
-      this._listField = (ListField)(new Object(count));
+      this._listField = new ListField(count);
       this._listField.setCallback(this);
       this._listField.setSelectedIndex(0);
       FixedHeightManager fhm = new FixedHeightManager(this._listField, 4);

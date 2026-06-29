@@ -33,24 +33,24 @@ public class EventCollection extends StdCmpCollectionImpl implements InnerDataAr
 
    @Override
    public void initFieldHandlers() {
-      super._objectFieldHandlers = (IntHashtable)(new Object(6));
+      super._objectFieldHandlers = new IntHashtable(6);
       super._objectFieldHandlers.put(3, new EventCollection$NoteHandler(null));
       super._objectFieldHandlers.put(1, new EventCollection$SummaryHandler(null));
       super._objectFieldHandlers.put(2, new EventCollection$LocationHandler(null));
-      super._intFieldHandlers = (IntHashtable)(new Object(3));
+      super._intFieldHandlers = new IntHashtable(3);
       super._intFieldHandlers.put(0, new EventCollection$UIDHandler(null));
       super._intFieldHandlers.put(9, new EventCollection$FreeBusyHandler(null));
-      super._longFieldHandlers = (IntHashtable)(new Object(4));
+      super._longFieldHandlers = new IntHashtable(4);
       super._longFieldHandlers.put(4, new EventCollection$StartHandler(null));
       super._longFieldHandlers.put(5, new EventCollection$EndHandler(null));
       super._longFieldHandlers.put(6, new EventCollection$AlarmHandler(null));
-      super._booleanFieldHandlers = (IntHashtable)(new Object(1));
+      super._booleanFieldHandlers = new IntHashtable(1);
       super._booleanFieldHandlers.put(10, new EventCollection$AllDayHandler(null));
    }
 
    @Override
    public void loadItem(long dataHandle, Object item) {
-      if (item instanceof Object) {
+      if (item instanceof Event) {
          this.setIntFieldValue(dataHandle, 0, ((IntFieldHandler)super._intFieldHandlers.get(0)).getValue(item));
          this.setIntFieldValue(dataHandle, 9, ((IntFieldHandler)super._intFieldHandlers.get(9)).getValue(item));
          this.setObjectFieldValue(dataHandle, 3, ((ObjectFieldHandler)super._objectFieldHandlers.get(3)).getValue(item));
@@ -70,7 +70,7 @@ public class EventCollection extends StdCmpCollectionImpl implements InnerDataAr
          return null;
       }
 
-      IntVector uidsInDB = (IntVector)(new Object(numItems));
+      IntVector uidsInDB = new IntVector(numItems);
       Enumeration e = this._calendar.getElements();
 
       while (e.hasMoreElements()) {
@@ -205,7 +205,7 @@ public class EventCollection extends StdCmpCollectionImpl implements InnerDataAr
    public void initializeVector(InnerDataVector vector) {
       if (vector.getField() == 8) {
          Object o = this.getDBItemFromHandle(vector.getHandle());
-         if (o instanceof Object) {
+         if (o instanceof Event) {
             Event event = (Event)o;
             if (event.isMeeting()) {
                DataCollection dc = (DataCollection)vector.getTypeHandler();

@@ -2,7 +2,8 @@ package net.rim.device.apps.internal.browser.javascript;
 
 import net.rim.device.api.browser.field.BrowserContent;
 import net.rim.device.api.browser.field.BrowserContentBaseImpl;
-import net.rim.device.api.browser.field.Event;
+import net.rim.device.api.browser.field.HistoryEvent;
+import net.rim.device.api.browser.field.RedirectEvent;
 import net.rim.device.api.browser.field.RenderingApplication;
 import net.rim.device.api.browser.field.UrlRequestedEvent;
 import net.rim.device.apps.api.utility.general.URI;
@@ -28,7 +29,7 @@ final class ESLocation extends RedirectedObject {
 
       label34:
       try {
-         URI uri = (URI)(new Object(url));
+         URI uri = new URI(url);
          this.addField(Names.hash, 4, this.makeField(uri.getFragment(), '#'));
          String authority = uri.getAuthority();
          int colonIndex = authority.indexOf(58);
@@ -49,7 +50,7 @@ final class ESLocation extends RedirectedObject {
          this.addField(Names.port, 28, JavaScriptEngine.makeStringValue(port));
          String protocol = uri.getScheme();
          if (protocol.charAt(protocol.length() - 1) != ':') {
-            protocol = ((StringBuffer)(new Object())).append(protocol).append(':').toString();
+            protocol = protocol + ':';
          }
 
          this.addField(Names.protocol, 28, JavaScriptEngine.makeStringValue(protocol));
@@ -70,7 +71,7 @@ final class ESLocation extends RedirectedObject {
 
    private final long makeField(String value, char startChar) {
       if (value != null && value.length() > 0) {
-         value = ((StringBuffer)(new Object())).append(startChar).append(value).toString();
+         value = startChar + value;
       }
 
       return JavaScriptEngine.makeStringValue(value);
@@ -90,7 +91,7 @@ final class ESLocation extends RedirectedObject {
       RenderingApplication renderingApplication = content.getRenderingApplication();
       if (url != null && renderingApplication != null) {
          int flags = 1;
-         if (content instanceof Object) {
+         if (content instanceof BrowserContentBaseImpl) {
             flags |= ((BrowserContentBaseImpl)content).getSharedFlags();
          }
 
@@ -107,8 +108,8 @@ final class ESLocation extends RedirectedObject {
       BrowserContent content = JavaScriptEngine.getInstance()._browserContent;
       RenderingApplication renderingApplication = content.getRenderingApplication();
       if (url != null && renderingApplication != null) {
-         renderingApplication.eventOccurred((Event)(new Object(content, this._domDoc.getURL(), 2)));
-         renderingApplication.eventOccurred((Event)(new Object(content, url, null, 2)));
+         renderingApplication.eventOccurred(new HistoryEvent(content, this._domDoc.getURL(), 2));
+         renderingApplication.eventOccurred(new RedirectEvent(content, url, null, 2));
       }
    }
 

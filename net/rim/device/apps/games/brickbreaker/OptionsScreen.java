@@ -1,8 +1,8 @@
 package net.rim.device.apps.games.brickbreaker;
 
+import java.io.IOException;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.system.Alert;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.Trackball;
@@ -10,8 +10,10 @@ import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.CheckboxField;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.EditField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.ui.component.PasswordEditField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 
 public final class OptionsScreen extends MainScreen implements BrickBreakerResResource {
@@ -30,31 +32,29 @@ public final class OptionsScreen extends MainScreen implements BrickBreakerResRe
    private static ResourceBundle _resources = ResourceBundle.getBundle(4228639183813622747L, "net.rim.device.apps.games.brickbreaker.BrickBreakerRes");
 
    public OptionsScreen() {
-      this.paddleSpeedOptions = new Object[]{_resources.getString(37), _resources.getString(38), _resources.getString(39)};
+      this.paddleSpeedOptions = new String[]{_resources.getString(37), _resources.getString(38), _resources.getString(39)};
       this.volumeOptions = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
-      this.setTitle((Field)(new Object(_resources.getString(65))));
-      this.volumeField = (ObjectChoiceField)(new Object(_resources.getString(42), this.volumeOptions));
+      this.setTitle(new LabelField(_resources.getString(65)));
+      this.volumeField = new ObjectChoiceField(_resources.getString(42), this.volumeOptions);
       this.add(this.volumeField);
-      this.muteField = (CheckboxField)(new Object(_resources.getString(71), false));
+      this.muteField = new CheckboxField(_resources.getString(71), false);
       this.add(this.muteField);
-      this.paddleSpeed = (ObjectChoiceField)(new Object(_resources.getString(16), this.paddleSpeedOptions));
+      this.paddleSpeed = new ObjectChoiceField(_resources.getString(16), this.paddleSpeedOptions);
       this.add(this.paddleSpeed);
-      this.paddleAccel = (CheckboxField)(new Object(_resources.getString(17), false));
+      this.paddleAccel = new CheckboxField(_resources.getString(17), false);
       this.add(this.paddleAccel);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this._originalName = Options.userName;
-      this.userNameField = (EditField)(new Object(
-         ((StringBuffer)(new Object())).append(_resources.getString(46)).append(" : ").toString(), "", 24, 4503601774854144L
-      ));
+      this.userNameField = new EditField(_resources.getString(46) + " : ", "", 24, 4503601774854144L);
       this.userNameField.setFilter(new HighScoreTextFilter());
       this.userNameField.setAllowUnicodeInput(false);
       this.add(this.userNameField);
-      this.passwordField = (PasswordEditField)(new Object(_resources.getString(47), "", 24, 4503601774854144L));
+      this.passwordField = new PasswordEditField(_resources.getString(47), "", 24, 4503601774854144L);
       this.passwordField.setFilter(new HighScoreTextFilter());
       this.passwordField.setAllowUnicodeInput(false);
       this.add(this.passwordField);
       Options.loadUsernamePassword(this.userNameField, this.passwordField);
-      this._buttonClearLocalHighScores = (ButtonField)(new Object(_resources.getString(60)));
+      this._buttonClearLocalHighScores = new ButtonField(_resources.getString(60));
       this.add(this._buttonClearLocalHighScores);
       MenuItem save = MenuItem.getPrefab(15);
       this.addMenuItem(save);
@@ -99,7 +99,7 @@ public final class OptionsScreen extends MainScreen implements BrickBreakerResRe
    }
 
    @Override
-   public final void save() {
+   public final void save() throws IOException {
       if (this._originalName.equals(this.userNameField.getText())
          || this.userNameField.getText().trim().length() != 0 && HighScoreTextFilter.validate(this.userNameField.getText())) {
          this._options.paddleSpeed = 2 + 2 * this.paddleSpeed.getSelectedIndex();
@@ -121,7 +121,7 @@ public final class OptionsScreen extends MainScreen implements BrickBreakerResRe
          this._cancel = false;
       } else {
          Dialog.inform(_resources.getString(55));
-         throw new Object(_resources.getString(55));
+         throw new IOException(_resources.getString(55));
       }
    }
 

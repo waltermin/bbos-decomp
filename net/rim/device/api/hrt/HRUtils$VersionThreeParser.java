@@ -79,7 +79,7 @@ class HRUtils$VersionThreeParser implements TLEFieldController {
                      }
                   }
 
-                  throw new Object();
+                  throw new IllegalArgumentException();
                }
 
                int startPos = db.getPosition();
@@ -112,7 +112,7 @@ class HRUtils$VersionThreeParser implements TLEFieldController {
                      this._art = 32;
                   } else {
                      if (npcBase != 96) {
-                        throw new Object();
+                        throw new IllegalArgumentException();
                      }
 
                      this._art = 8;
@@ -137,7 +137,7 @@ class HRUtils$VersionThreeParser implements TLEFieldController {
                case 1:
                default:
                   if (this._cloneInfo.baseNpc != -1) {
-                     throw new Object();
+                     throw new IllegalArgumentException();
                   } else {
                      this._cloneInfo.baseNpc = db.readLong();
                      if (this._art == 0) {
@@ -150,7 +150,7 @@ class HRUtils$VersionThreeParser implements TLEFieldController {
                            this._art = 32;
                         } else {
                            if (npcBase != 96) {
-                              throw new Object();
+                              throw new IllegalArgumentException();
                            }
 
                            this._art = 8;
@@ -162,7 +162,7 @@ class HRUtils$VersionThreeParser implements TLEFieldController {
                      return true;
                   }
                case 2:
-                  this._cloneInfo.clonedNpcs.addElement(new Object(db.readLong()));
+                  this._cloneInfo.clonedNpcs.addElement(new Long(db.readLong()));
                   return true;
                case 3:
                   if (length <= 16) {
@@ -174,7 +174,7 @@ class HRUtils$VersionThreeParser implements TLEFieldController {
                      }
                   }
 
-                  throw new Object();
+                  throw new IllegalArgumentException();
             }
       }
    }

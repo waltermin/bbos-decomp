@@ -54,7 +54,7 @@ final class FirewallImpl$FirewallSyncItem extends OTASyncCapableSyncItem {
    @Override
    public final synchronized boolean getSyncData(DataBuffer buffer, int version) {
       this._failed = false;
-      this._buffer = (DataBuffer)(new Object(buffer.isBigEndian()));
+      this._buffer = new DataBuffer(buffer.isBigEndian());
       synchronized (this.this$0._settings) {
          int length = this.this$0._settings.size();
 
@@ -118,18 +118,18 @@ final class FirewallImpl$FirewallSyncItem extends OTASyncCapableSyncItem {
                         this._failed = true;
                      }
 
-                     String moduleName = (String)(new Object(buffer.readByteArray()));
+                     String moduleName = new String(buffer.readByteArray());
                      int appIndex = buffer.readByte();
                      c = buffer.readByte();
                      if (c != 1) {
                         this._failed = true;
                      }
 
-                     String protocol = (String)(new Object(buffer.readByteArray()));
+                     String protocol = new String(buffer.readByteArray());
                      c = buffer.readByte();
                      String target;
                      if (c == 1) {
-                        target = (String)(new Object(buffer.readByteArray()));
+                        target = new String(buffer.readByteArray());
                      } else {
                         target = null;
                      }

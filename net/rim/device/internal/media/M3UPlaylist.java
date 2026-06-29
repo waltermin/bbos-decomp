@@ -1,6 +1,7 @@
 package net.rim.device.internal.media;
 
 import java.io.ByteArrayOutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import javax.microedition.io.InputConnection;
@@ -10,8 +11,8 @@ import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.NumberUtilities;
 
 public final class M3UPlaylist extends Playlist {
-   private String[] _urls = new Object[0];
-   private String[] _titles = new Object[0];
+   private String[] _urls = new String[0];
+   private String[] _titles = new String[0];
    private int[] _lengths = new int[0];
    private static final String UTF8 = "UTF-8";
    private static final String CHARSET_UTF8 = ";charset=UTF-8";
@@ -115,8 +116,8 @@ public final class M3UPlaylist extends Playlist {
    }
 
    private final byte[] getBytes() {
-      ByteArrayOutputStream baos = (ByteArrayOutputStream)(new Object());
-      Writer writer = (Writer)(new Object(baos, "UTF-8"));
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      Writer writer = new OutputStreamWriter(baos, "UTF-8");
       writer.write("#EXTM3U");
       writer.write(10);
       String temp = null;

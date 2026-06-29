@@ -15,7 +15,7 @@ public final class CompositeKey {
 
    public final void setPart(int index, Object value) {
       if (index >= this._keys.length) {
-         throw new Object(index);
+         throw new ArrayIndexOutOfBoundsException(index);
       }
 
       this._hashComputed = false;
@@ -24,7 +24,7 @@ public final class CompositeKey {
 
    public final Object getPart(int index) {
       if (index >= this._keys.length) {
-         throw new Object(index);
+         throw new ArrayIndexOutOfBoundsException(index);
       } else {
          return this._keys[index];
       }

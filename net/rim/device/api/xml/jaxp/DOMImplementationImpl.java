@@ -1,5 +1,6 @@
 package net.rim.device.api.xml.jaxp;
 
+import org.w3c.dom.DOMException;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
@@ -27,8 +28,7 @@ class DOMImplementationImpl implements DOMImplementation {
    public DocumentType createDocumentType(String qualifiedName, String publicId, String systemId) {
       DOMInternalRepresentation.isQName(qualifiedName);
       DOMInternalRepresentation ir = new DOMInternalRepresentation();
-      DocumentType rc = (DocumentType)ir.getNode(ir.addDocumentType(qualifiedName, publicId, systemId, ""));
-      return rc;
+      return (DocumentType)ir.getNode(ir.addDocumentType(qualifiedName, publicId, systemId, ""));
    }
 
    @Override
@@ -37,20 +37,19 @@ class DOMImplementationImpl implements DOMImplementation {
       DOMInternalRepresentation ir;
       if (doctype != null) {
          if (!(doctype instanceof DOMDocumentTypeImpl)) {
-            throw new Object((short)4, "");
+            throw new DOMException((short)4, "");
          }
 
          DOMNodeImpl node = (DOMNodeImpl)doctype;
          ir = node._ir;
          if (ir.getDocument() != 0) {
-            throw new Object((short)4, "");
+            throw new DOMException((short)4, "");
          }
       } else {
          ir = new DOMInternalRepresentation();
       }
 
       ir.addDocument();
-      Document rc = (Document)ir.getNode(ir.getDocument());
-      return rc;
+      return (Document)ir.getNode(ir.getDocument());
    }
 }

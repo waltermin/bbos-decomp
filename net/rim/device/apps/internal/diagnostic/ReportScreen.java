@@ -1,13 +1,14 @@
 package net.rim.device.apps.internal.diagnostic;
 
+import java.util.Date;
 import net.rim.device.api.i18n.SimpleDateFormat;
 import net.rim.device.api.itpolicy.ITPolicy;
 import net.rim.device.api.system.Application;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 
 public class ReportScreen extends MainScreen {
@@ -119,126 +120,112 @@ public class ReportScreen extends MainScreen {
    }
 
    void initScreen() {
-      this._title = (LabelField)(new Object(DiagnosticResources.getString(28), 1152921504606846976L));
+      this._title = new LabelField(DiagnosticResources.getString(28), 1152921504606846976L);
       this.setTitle(this._title);
-      this._radioActivation = (EditField)(new Object(DiagnosticResources.getString(29), null));
+      this._radioActivation = new EditField(DiagnosticResources.getString(29), null);
       this._radioActivation.setEditable(false);
       this.add(this._radioActivation);
-      this._signalLevel = (EditField)(new Object(DiagnosticResources.getString(30), null));
+      this._signalLevel = new EditField(DiagnosticResources.getString(30), null);
       this._signalLevel.setEditable(false);
       this.add(this._signalLevel);
-      this._networkType = (EditField)(new Object(DiagnosticResources.getString(31), null));
+      this._networkType = new EditField(DiagnosticResources.getString(31), null);
       this._networkType.setEditable(false);
       this.add(this._networkType);
-      this._network = (EditField)(new Object(DiagnosticResources.getString(32), null));
+      this._network = new EditField(DiagnosticResources.getString(32), null);
       this._network.setEditable(false);
       this.add(this._network);
-      this._ip = (EditField)(new Object(DiagnosticResources.getString(33), null));
+      this._ip = new EditField(DiagnosticResources.getString(33), null);
       this._ip.setEditable(false);
       this.add(this._ip);
-      this._icmpPing = (EditField)(new Object(DiagnosticResources.getString(34), null));
+      this._icmpPing = new EditField(DiagnosticResources.getString(34), null);
       this._icmpPing.setEditable(false);
       this.add(this._icmpPing);
-      this.add((Field)(new Object()));
-      this._bbReg = (EditField)(new Object(DiagnosticResources.getString(35), null));
+      this.add(new SeparatorField());
+      this._bbReg = new EditField(DiagnosticResources.getString(35), null);
       this._bbReg.setEditable(false);
       this.add(this._bbReg);
-      this._mdpPing = (EditField)(new Object(DiagnosticResources.getString(36), null));
+      this._mdpPing = new EditField(DiagnosticResources.getString(36), null);
       this._mdpPing.setEditable(false);
       this.add(this._mdpPing);
-      this._pin2pinPing = (EditField)(new Object(DiagnosticResources.getString(37), null));
+      this._pin2pinPing = new EditField(DiagnosticResources.getString(37), null);
       this._pin2pinPing.setEditable(false);
       this.add(this._pin2pinPing);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       if (this.hasEmail1) {
-         this._serverName1 = (EditField)(new Object(DiagnosticResources.getString(38), this.serverName1));
+         this._serverName1 = new EditField(DiagnosticResources.getString(38), this.serverName1);
          this._serverName1.setEditable(false);
          this.add(this._serverName1);
-         this._emailAddress1 = (EditField)(new Object(DiagnosticResources.getString(39), this.emailAddress1));
+         this._emailAddress1 = new EditField(DiagnosticResources.getString(39), this.emailAddress1);
          this._emailAddress1.setEditable(false);
          this.add(this._emailAddress1);
-         this._emailService1 = (EditField)(new Object(
-            ((StringBuffer)(new Object())).append(DiagnosticResources.getString(40)).append(this.emailAddress1).append(" : ").toString(), null
-         ));
+         this._emailService1 = new EditField(DiagnosticResources.getString(40) + this.emailAddress1 + " : ", null);
          this._emailService1.setEditable(false);
          this.add(this._emailService1);
       }
 
       if (this.hasEmail2) {
-         this._serverName2 = (EditField)(new Object(DiagnosticResources.getString(38), this.serverName2));
+         this._serverName2 = new EditField(DiagnosticResources.getString(38), this.serverName2);
          this._serverName2.setEditable(false);
          this.add(this._serverName2);
-         this._emailAddress2 = (EditField)(new Object(DiagnosticResources.getString(39), this.emailAddress2));
+         this._emailAddress2 = new EditField(DiagnosticResources.getString(39), this.emailAddress2);
          this._emailAddress2.setEditable(false);
          this.add(this._emailAddress2);
-         this._emailService2 = (EditField)(new Object(
-            ((StringBuffer)(new Object())).append(DiagnosticResources.getString(40)).append(this.emailAddress2).append(" : ").toString(), null
-         ));
+         this._emailService2 = new EditField(DiagnosticResources.getString(40) + this.emailAddress2 + " : ", null);
          this._emailService2.setEditable(false);
          this.add(this._emailService2);
       }
 
       if (this.hasEmail1 || this.hasEmail2) {
-         this.add((Field)(new Object()));
+         this.add(new SeparatorField());
       }
 
-      this._pin = (EditField)(new Object("PIN: ", null));
+      this._pin = new EditField("PIN: ", null);
       this._pin.setEditable(false);
       this.add(this._pin);
-      this._msisdn = (EditField)(new Object("MSISDN: ", null));
+      this._msisdn = new EditField("MSISDN: ", null);
       this._msisdn.setEditable(false);
       this.add(this._msisdn);
-      this._deviceType = (EditField)(new Object(DiagnosticResources.getString(43), null));
+      this._deviceType = new EditField(DiagnosticResources.getString(43), null);
       this._deviceType.setEditable(false);
       this.add(this._deviceType);
-      this._appVersion = (EditField)(new Object(DiagnosticResources.getString(44), null));
+      this._appVersion = new EditField(DiagnosticResources.getString(44), null);
       this._appVersion.setEditable(false);
       this.add(this._appVersion);
-      this._platform = (EditField)(new Object(DiagnosticResources.getString(45), null));
+      this._platform = new EditField(DiagnosticResources.getString(45), null);
       this._platform.setEditable(false);
       this.add(this._platform);
-      this._serviceBook = (EditField)(new Object(DiagnosticResources.getString(46), null));
+      this._serviceBook = new EditField(DiagnosticResources.getString(46), null);
       this._serviceBook.setEditable(false);
       this.add(this._serviceBook);
-      this._freeSpace = (EditField)(new Object(DiagnosticResources.getString(47), null));
+      this._freeSpace = new EditField(DiagnosticResources.getString(47), null);
       this._freeSpace.setEditable(false);
       this.add(this._freeSpace);
-      this.add((Field)(new Object()));
-      this._startTime = (EditField)(new Object(DiagnosticResources.getString(48), null));
+      this.add(new SeparatorField());
+      this._startTime = new EditField(DiagnosticResources.getString(48), null);
       this._startTime.setEditable(false);
       this.add(this._startTime);
-      this._endTime = (EditField)(new Object(DiagnosticResources.getString(49), null));
+      this._endTime = new EditField(DiagnosticResources.getString(49), null);
       this._endTime.setEditable(false);
       this.add(this._endTime);
    }
 
    void displayReport() {
-      SimpleDateFormat formatter = (SimpleDateFormat)(new Object("MMMMM dd, yyyy hh:mm aaa"));
-      this._startTime.setText(formatter.format(new Object(this.report.startTimeStamp)));
+      SimpleDateFormat formatter = new SimpleDateFormat("MMMMM dd, yyyy hh:mm aaa");
+      this._startTime.setText(formatter.format(new Date(this.report.startTimeStamp)));
       if (this.report.endTimeStamp == -1) {
          this._endTime.setText(DiagnosticResources.getString(50));
       } else {
-         this._endTime.setText(formatter.format(new Object(this.report.endTimeStamp)));
+         this._endTime.setText(formatter.format(new Date(this.report.endTimeStamp)));
       }
 
       this._pin.setText(this.report.getPin());
       this._msisdn.setText(this.report.getMsisdn());
-      this._deviceType.setText(((StringBuffer)(new Object("BlackBerry "))).append(this.report.getDeviceType()).toString());
+      this._deviceType.setText("BlackBerry " + this.report.getDeviceType());
       this._appVersion.setText(this.report.getAppVersion());
       this._platform.setText(this.report.getPlatform());
       this._serviceBook.setText(this.report.getServiceBook());
-      this._freeSpace
-         .setText(
-            this.report.freeSpace < 0
-               ? DiagnosticResources.getString(52)
-               : ((StringBuffer)(new Object())).append(this.report.freeSpace).append(DiagnosticResources.getString(53)).toString()
-         );
-      this._signalLevel
-         .setText(
-            this.report.signalLevel == -99999
-               ? DiagnosticResources.getString(52)
-               : ((StringBuffer)(new Object())).append(this.report.signalLevel).append(" dBm").toString()
-         );
+      this._freeSpace.setText(this.report.freeSpace < 0 ? DiagnosticResources.getString(52) : this.report.freeSpace + DiagnosticResources.getString(53));
+      this._signalLevel.setText(this.report.signalLevel == -99999 ? DiagnosticResources.getString(52) : this.report.signalLevel + " dBm");
       this._networkType.setText(this.report.getNetworkType());
       this._network.setText(this.report.getNetwork());
       this._ip.setText(this.report.getIp());

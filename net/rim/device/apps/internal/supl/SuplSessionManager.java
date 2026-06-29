@@ -10,8 +10,8 @@ public final class SuplSessionManager {
    private static final int SET = 0;
    private static final int NETWORK = 1;
    private static final int[] MAX_SUPL_CONN = new int[]{4, 1, -805044223, 35, -804913088, 3014701, 3211312, 3342386};
-   private static CyclicQueue _queue = (CyclicQueue)(new Object());
-   private static Vector _active = (Vector)(new Object());
+   private static CyclicQueue _queue = new CyclicQueue();
+   private static Vector _active = new Vector();
 
    public SuplSessionManager(byte[] pdu) {
       try {

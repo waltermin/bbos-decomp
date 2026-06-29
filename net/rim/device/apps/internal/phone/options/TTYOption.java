@@ -40,7 +40,7 @@ public final class TTYOption extends VoiceOptionsListItem {
    protected final void populateMainScreen(MainScreen screen) {
       int initialChoiceIndex = TTY.getMode() == 3 ? 0 : 1;
       TTYRibbonIndicator.getInstance().updateIndicator();
-      this._ttyChoiceField = (ObjectChoiceField)(new Object(PhoneResources.getString(6024), CommonResources.getYesNoArray(1), initialChoiceIndex, 134217728));
+      this._ttyChoiceField = new ObjectChoiceField(PhoneResources.getString(6024), CommonResources.getYesNoArray(1), initialChoiceIndex, 134217728);
       screen.add(this._ttyChoiceField);
    }
 
@@ -59,7 +59,7 @@ public final class TTYOption extends VoiceOptionsListItem {
                Profiles profile = Profiles.getInstance();
                if (profile.getEnabled().getIdentifier() != 1) {
                   String message = PhoneResources.getString(6335);
-                  Dialog dlg = (Dialog)(new Object(3, message, 0, Bitmap.getPredefinedBitmap(1), 0));
+                  Dialog dlg = new Dialog(3, message, 0, Bitmap.getPredefinedBitmap(1), 0);
                   if (dlg.doModal() == 4) {
                      profile.enable(profile.getByIdentifier((byte)1));
                   }

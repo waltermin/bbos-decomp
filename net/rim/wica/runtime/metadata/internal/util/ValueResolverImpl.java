@@ -25,7 +25,7 @@ public final class ValueResolverImpl implements ValueResolver {
    public final Object getVariableValue(String name) {
       if (this.isValid() && name != null && name != "") {
          Object result = null;
-         StringTokenizer strTok = (StringTokenizer)(new Object(name, '.'));
+         StringTokenizer strTok = new StringTokenizer(name, '.');
          if (!strTok.hasMoreElements()) {
             return null;
          }
@@ -44,7 +44,7 @@ public final class ValueResolverImpl implements ValueResolver {
             switch (fieldType) {
                case -1:
                case 7:
-                  throw new Object("Invalid field type in value string");
+                  throw new IllegalArgumentException("Invalid field type in value string");
                case 0:
                case 1:
                case 2:
@@ -79,7 +79,7 @@ public final class ValueResolverImpl implements ValueResolver {
             switch (fieldType) {
                case -1:
                case 7:
-                  throw new Object("Invalid field type in value string");
+                  throw new IllegalArgumentException("Invalid field type in value string");
                case 0:
                case 1:
                case 2:
@@ -101,7 +101,7 @@ public final class ValueResolverImpl implements ValueResolver {
             def = collection.getDef();
          }
 
-         return strTok.hasMoreTokens() ? null : new Object(resultHandle);
+         return strTok.hasMoreTokens() ? null : new Long(resultHandle);
       } else {
          return null;
       }

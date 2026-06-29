@@ -22,7 +22,7 @@ public class ScriptDefAccess implements ScriptCollection {
       this._scriptDefs = scriptDefs;
       int size = this._scriptDefs._defs.length;
       int scriptCount = size / 3;
-      this._idToDefIndex = (IntIntHashtable)(new Object(scriptCount + (scriptCount >> 1)));
+      this._idToDefIndex = new IntIntHashtable(scriptCount + (scriptCount >> 1));
 
       for (int i = 0; i < size; i += 3) {
          this._idToDefIndex.put(this._scriptDefs._defs[i + 1], i);

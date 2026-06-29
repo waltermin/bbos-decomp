@@ -127,12 +127,12 @@ public final class EmailComposeVerb extends ShowMessageAppVerb {
             description = EmailResources.getString(44);
          }
 
-         if (!(model instanceof Object)) {
-            return ((StringBuffer)(new Object())).append(description).append(' ').append(model.toString()).toString();
+         if (!(model instanceof VerbDescriptionProvider)) {
+            return description + ' ' + model.toString();
          }
 
          VerbDescriptionProvider descriptor = (VerbDescriptionProvider)model;
-         return ((StringBuffer)(new Object())).append(description).append(' ').append(descriptor.getVerbDescription(context)).toString();
+         return description + ' ' + descriptor.getVerbDescription(context);
       } else {
          return model.toString();
       }

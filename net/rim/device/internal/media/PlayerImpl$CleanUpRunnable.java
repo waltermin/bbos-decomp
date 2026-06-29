@@ -6,7 +6,7 @@ class PlayerImpl$CleanUpRunnable implements Runnable {
    WeakReference _wr;
 
    public PlayerImpl$CleanUpRunnable(PlayerImpl player) {
-      this._wr = (WeakReference)(new Object(player));
+      this._wr = new WeakReference(player);
    }
 
    @Override

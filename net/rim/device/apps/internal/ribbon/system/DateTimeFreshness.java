@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.ribbon.system;
 
 import net.rim.device.api.system.Application;
 import net.rim.device.api.system.ApplicationManager;
+import net.rim.device.api.system.ApplicationProcess;
 import net.rim.device.api.system.DeviceInternal;
 import net.rim.device.api.system.GlobalEventListener;
 import net.rim.device.api.system.RIMGlobalMessagePoster;
@@ -87,7 +88,7 @@ public final class DateTimeFreshness implements Runnable, RealtimeClockListener,
             DeviceInternal.setDateTime(1141171200000L);
          }
 
-         RIMGlobalMessagePoster.postGlobalEvent(((Process)Process.currentProcess()).getProcessId(), 6486915521057235885L, 0, 0, null, null);
+         RIMGlobalMessagePoster.postGlobalEvent(((ApplicationProcess)Process.currentProcess()).getProcessId(), 6486915521057235885L, 0, 0, null, null);
       }
 
       if (dateTimeValid && System.currentTimeMillis() < 1141257600000L) {

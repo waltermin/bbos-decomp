@@ -245,9 +245,7 @@ public final class InstructionCode implements Constants {
                var19.printStackTrace();
             }
 
-            throw new CompileException(
-               classType.getFullName(), ((StringBuffer)(new Object())).append(var19.getMessage()).append(" in ").append(this._method.getName()).toString()
-            );
+            throw new CompileException(classType.getFullName(), var19.getMessage() + " in " + this._method.getName());
          }
 
          throw ce;
@@ -302,10 +300,7 @@ public final class InstructionCode implements Constants {
       DataSection dataSection = typeModule.getDataSection();
       num = this._blocks.getNumStackEntries();
       if (num > 255) {
-         throw new CompileException(
-            classType.getFullName(),
-            ((StringBuffer)(new Object("Error!: control flow verification information too large: "))).append(this._method.getName()).toString()
-         );
+         throw new CompileException(classType.getFullName(), "Error!: control flow verification information too large: " + this._method.getName());
       }
 
       routine.allocateStackMaps(num);

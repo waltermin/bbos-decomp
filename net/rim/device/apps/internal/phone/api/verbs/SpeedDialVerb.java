@@ -2,7 +2,6 @@ package net.rim.device.apps.internal.phone.api.verbs;
 
 import net.rim.device.api.util.CharacterUtilities;
 import net.rim.device.apps.api.framework.model.ContextObject;
-import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.quickcontact.QuickContactItem;
 import net.rim.device.apps.api.quickcontact.QuickContactList;
@@ -10,6 +9,7 @@ import net.rim.device.apps.api.quickcontact.QuickContactScreen;
 import net.rim.device.apps.internal.phone.api.PhoneUtilities;
 import net.rim.device.apps.internal.phone.data.CallerIDInfo;
 import net.rim.device.apps.internal.phone.data.PhoneListItem;
+import net.rim.device.apps.internal.phone.model.PhoneNumberModel;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
 
 public final class SpeedDialVerb extends Verb {
@@ -83,8 +83,8 @@ public final class SpeedDialVerb extends Verb {
       boolean createdCidi = false;
       if (!(data instanceof PhoneListItem)) {
          if (!(data instanceof CallerIDInfo)) {
-            if (data instanceof Object) {
-               cidi = PhoneUtilities.createCallerIDInfo((RIMModel)data, 24, 0, null);
+            if (data instanceof PhoneNumberModel) {
+               cidi = PhoneUtilities.createCallerIDInfo((PhoneNumberModel)data, 24, 0, null);
                createdCidi = true;
             }
          } else {
@@ -112,7 +112,7 @@ public final class SpeedDialVerb extends Verb {
          }
 
          Object item = QuickContactList.getInstance().createNewQuickContactItem(key, 4046126975918546978L, cidiCopy);
-         if (item instanceof Object) {
+         if (item instanceof QuickContactItem) {
             QuickContactItem qcItem = (QuickContactItem)item;
             if (keycode == 0 || menuInvoked) {
                QuickContactScreen.show(qcItem, 1);

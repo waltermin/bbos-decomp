@@ -14,6 +14,7 @@ import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.BooleanChoiceField;
+import net.rim.device.apps.internal.keystore.browser.LaunchKeyStoreBrowserVerb;
 import net.rim.device.apps.internal.secureemail.ContentCipherField;
 import net.rim.device.apps.internal.secureemail.SecureEmailFactory;
 import net.rim.device.apps.internal.secureemail.SecureEmailOptions;
@@ -21,6 +22,7 @@ import net.rim.device.apps.internal.secureemail.SecureEmailOptionsModel;
 import net.rim.device.apps.internal.secureemail.SecureEmailResources;
 import net.rim.device.apps.internal.secureemail.encodings.pgp.server.PGPUniversalServer;
 import net.rim.vm.Array;
+import net.rim.vm.WeakReference;
 
 final class PGPOptionsModel extends SecureEmailOptionsModel {
    private PGPOptions _pgpOptions;
@@ -32,9 +34,9 @@ final class PGPOptionsModel extends SecureEmailOptionsModel {
 
    PGPOptionsModel(SecureEmailFactory factory, Object context) {
       super(factory, context);
-      this._pgpKeyStore.addCollectionListener(new Object(this));
+      this._pgpKeyStore.addCollectionListener(new WeakReference(this));
       this._trustedKeyStore = TrustedKeyStore.getInstance();
-      this._trustedKeyStore.addCollectionListener(new Object(this));
+      this._trustedKeyStore.addCollectionListener(new WeakReference(this));
    }
 
    @Override
@@ -44,7 +46,7 @@ final class PGPOptionsModel extends SecureEmailOptionsModel {
       if (universalServerAddress != null && universalServerAddress.length() > 0) {
          PGPUniversalServer universalServer = PGPUniversalServer.getRegisteredServer(universalServerAddress);
          if (universalServer != null) {
-            Verb[] universalServerVerbs = new Object[0];
+            Verb[] universalServerVerbs = new Verb[0];
             Verb universalServerDefaultVerb = universalServer.getVerbs(context, universalServerVerbs);
             int numExistingVerbs = verbs.length;
             int numUniversalServerVerbs = universalServerVerbs.length;
@@ -56,7 +58,7 @@ final class PGPOptionsModel extends SecureEmailOptionsModel {
          }
       }
 
-      Arrays.add(verbs, new Object("PGP", null));
+      Arrays.add(verbs, new LaunchKeyStoreBrowserVerb("PGP", null));
       return defaultVerb;
    }
 
@@ -67,26 +69,24 @@ final class PGPOptionsModel extends SecureEmailOptionsModel {
    @Override
    protected final void addGlobalAndPerMessageOptionsFields(SecureEmailOptions secureEmailOptions) {
       this._pgpOptions = (PGPOptions)secureEmailOptions;
-      LabelField sendingOptionsLabel = (LabelField)(new Object(PGPResources.getString(13)));
+      LabelField sendingOptionsLabel = new LabelField(PGPResources.getString(13));
       Font boldFont = Font.getDefault();
       boldFont = boldFont.derive(boldFont.getStyle() | 1);
       sendingOptionsLabel.setFont(boldFont);
       super._vfm.add(sendingOptionsLabel);
-      this._defaultKeyStoreDataArray = new Object[0];
-      this._defaultKeyPairField = (CertificateChoiceField)(new Object(
+      this._defaultKeyStoreDataArray = new KeyStoreData[0];
+      this._defaultKeyPairField = new CertificateChoiceField(
          PGPResources.getString(21), this._pgpKeyStore, this._trustedKeyStore, super._factory.getCryptoSystemProperties()
-      ));
+      );
       this._defaultKeyPairField.setEmptyString(SecureEmailResources.getBundle(), 12);
       super._vfm.add(this._defaultKeyPairField, 6);
       if (super._message != null) {
-         this._conventionalEncryptionField = (BooleanChoiceField)(new Object(PGPResources.getString(27), 0, this._pgpOptions.getUseConventionalEncryption()));
+         this._conventionalEncryptionField = new BooleanChoiceField(PGPResources.getString(27), 0, this._pgpOptions.getUseConventionalEncryption());
          super._vfm.add(this._conventionalEncryptionField, 6);
       }
 
-      super._contentCipherField = (ContentCipherField)(new Object(
-         super._utilities.getITPolicyContentCiphers(), super._secureEmailOptions.getContentCipherBitfield()
-      ));
-      super._vfm.add((Field)(new Object(SecureEmailResources.getString(39))), 6);
+      super._contentCipherField = new ContentCipherField(super._utilities.getITPolicyContentCiphers(), super._secureEmailOptions.getContentCipherBitfield());
+      super._vfm.add(new LabelField(SecureEmailResources.getString(39)), 6);
       super._vfm.add(super._contentCipherField, 12);
       this.populateCertField(this._defaultKeyPairField, 2, this._defaultKeyStoreDataArray, this._pgpOptions.getSigningKeyStoreData(), this._pgpKeyStore, true);
    }
@@ -99,12 +99,12 @@ final class PGPOptionsModel extends SecureEmailOptionsModel {
          String cmimeServiceName = this.getCMIMEServiceName();
          String universalServerLabel;
          if (cmimeServiceName != null) {
-            universalServerLabel = MessageFormat.format(PGPResources.getString(8066), new Object[]{cmimeServiceName});
+            universalServerLabel = MessageFormat.format(PGPResources.getString(8066), new String[]{cmimeServiceName});
          } else {
             universalServerLabel = PGPResources.getString(8067);
          }
 
-         ObjectChoiceField universalServerAddressField = (ObjectChoiceField)(new Object(universalServerLabel, new Object[]{universalServerAddress}));
+         ObjectChoiceField universalServerAddressField = new ObjectChoiceField(universalServerLabel, new String[]{universalServerAddress});
          universalServerAddressField.setEditable(false);
          super._vfm.add(universalServerAddressField);
       }

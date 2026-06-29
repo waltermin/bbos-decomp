@@ -5,7 +5,7 @@ import java.util.Vector;
 import net.rim.device.api.util.Arrays;
 
 public final class ControlMappingResolver {
-   private Hashtable _registeredListeners = (Hashtable)(new Object());
+   private Hashtable _registeredListeners = new Hashtable();
    private UIControlImpl[] _roots = new UIControlImpl[0];
    private boolean _isRootsSorted;
 
@@ -14,7 +14,7 @@ public final class ControlMappingResolver {
 
       for (String key = keyGenerator.getKey(2); key != null; key = keyGenerator.nextKey()) {
          if (!this._registeredListeners.containsKey(key)) {
-            this._registeredListeners.put(key, new Object());
+            this._registeredListeners.put(key, new Vector());
          }
 
          ((Vector)this._registeredListeners.get(key)).addElement(uiCtrl);

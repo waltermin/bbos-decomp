@@ -7,7 +7,6 @@ import net.rim.device.api.system.ApplicationDescriptor;
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.system.Display;
 import net.rim.device.api.system.GlobalEventListener;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Ui;
@@ -15,6 +14,7 @@ import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.ThemeManager;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -42,7 +42,7 @@ final class ThemeOptionsScreen extends AppsMainScreen implements ListFieldCallba
       super(2814749767106560L);
       this.setTitle(OptionsResources.getString(1439));
       this.setHelp("display");
-      this._thumbnailCache = (Hashtable)(new Object());
+      this._thumbnailCache = new Hashtable();
       Bitmap defaultBitmap = null;
       int formFactor = InternalServices.getFormFactor();
       if (formFactor != 9 && formFactor != 13) {
@@ -55,13 +55,13 @@ final class ThemeOptionsScreen extends AppsMainScreen implements ListFieldCallba
       this._previewField.displayBitmap(null);
       this._listField = new ThemeOptionsScreen$1(this);
       this._listField.setCallback(this);
-      VerticalFieldManager content = (VerticalFieldManager)(new Object(299067162755072L));
+      VerticalFieldManager content = new VerticalFieldManager(299067162755072L);
       content.setVerticalQuantization(-1);
       content.add(this._listField);
-      WizardLayoutManager multiPaneLayout = (WizardLayoutManager)(new Object());
+      WizardLayoutManager multiPaneLayout = new WizardLayoutManager();
       multiPaneLayout.setContent(content);
-      VerticalFieldManager footer = (VerticalFieldManager)(new Object(562949953421312L));
-      footer.add((Field)(new Object()));
+      VerticalFieldManager footer = new VerticalFieldManager(562949953421312L);
+      footer.add(new SeparatorField());
       footer.add(this._previewField);
       multiPaneLayout.setFooter(footer);
       this.add(multiPaneLayout);
@@ -146,7 +146,7 @@ final class ThemeOptionsScreen extends AppsMainScreen implements ListFieldCallba
    @Override
    public final void drawListRow(ListField listField, Graphics graphics, int index, int y, int width) {
       Font oldFont = null;
-      StringBuffer buffer = (StringBuffer)(new Object(this.getLocalizedName(index)));
+      StringBuffer buffer = new StringBuffer(this.getLocalizedName(index));
       if (this.isActive(index)) {
          oldFont = graphics.getFont();
          graphics.setFont(oldFont.derive(1));

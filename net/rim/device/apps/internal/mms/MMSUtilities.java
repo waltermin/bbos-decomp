@@ -1,6 +1,6 @@
 package net.rim.device.apps.internal.mms;
 
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 import java.util.Enumeration;
 import java.util.Vector;
 import net.rim.device.api.io.MIMETypeAssociations;
@@ -137,22 +137,19 @@ public final class MMSUtilities {
             case 504:
                return false;
             default:
-               System.out.println(((StringBuffer)(new Object("MMS Http Error = "))).append(httpErrorCode).toString());
+               System.out.println("MMS Http Error = " + httpErrorCode);
                return true;
          }
       } else {
          if (wapIOExceptionError != 0) {
-            System.out
-               .println(
-                  ((StringBuffer)(new Object("MMS WapIOException = "))).append(wapIOExceptionError).append(' ').append(wapIOExceptionAdditionalData).toString()
-               );
+            System.out.println("MMS WapIOException = " + wapIOExceptionError + ' ' + wapIOExceptionAdditionalData);
             return true;
          }
 
          if (mmsResponseCode != 0 && mmsResponseCode != 128) {
             switch (mmsResponseCode) {
                case 191:
-                  System.out.println(((StringBuffer)(new Object("MMS error response code = "))).append(mmsResponseCode).toString());
+                  System.out.println("MMS error response code = " + mmsResponseCode);
                   return true;
                case 192:
                case 193:
@@ -169,7 +166,7 @@ public final class MMSUtilities {
    }
 
    public static final boolean isPhoneNumber(RIMModel address) {
-      if (address instanceof Object) {
+      if (address instanceof PhoneNumberModel) {
          PhoneNumberModel pnm = (PhoneNumberModel)address;
          if (pnm.getValue().length() > 0) {
             return true;
@@ -204,9 +201,9 @@ public final class MMSUtilities {
          return big;
       }
 
-      System.out.println(((StringBuffer)(new Object("MMS reduce "))).append(big.getName()).toString());
-      System.out.println(((StringBuffer)(new Object(" original length="))).append(big.getDataSize()).toString());
-      System.out.println(((StringBuffer)(new Object(" scale factor="))).append(scaleFactor).toString());
+      System.out.println("MMS reduce " + big.getName());
+      System.out.println(" original length=" + big.getDataSize());
+      System.out.println(" scale factor=" + scaleFactor);
       byte[] smallData = reduceImage(image, scaleFactor, targetSize);
       String name = big.getName();
       int idx = name.lastIndexOf(46);
@@ -214,9 +211,9 @@ public final class MMSUtilities {
          name = name.substring(0, idx);
       }
 
-      name = ((StringBuffer)(new Object())).append(name).append(".jpg").toString();
+      name = name + ".jpg";
       MMSAttachment small = new MMSAttachmentImpl(name, 30, smallData, null);
-      System.out.println(((StringBuffer)(new Object(" final length="))).append(small.getDataSize()).toString());
+      System.out.println(" final length=" + small.getDataSize());
       return small;
    }
 
@@ -256,7 +253,7 @@ public final class MMSUtilities {
          }
       }
 
-      System.out.println(((StringBuffer)(new Object("MMS unmapped MIME type: "))).append(mimeType).toString());
+      System.out.println("MMS unmapped MIME type: " + mimeType);
       return -1;
    }
 
@@ -266,7 +263,7 @@ public final class MMSUtilities {
 
    private static final IntHashtable getMIMETypeTable() {
       if (_mimeTypes == null) {
-         _mimeTypes = (IntHashtable)(new Object());
+         _mimeTypes = new IntHashtable();
          _mimeTypes.put(1, "text/*");
          _mimeTypes.put(2, "text/html");
          _mimeTypes.put(3, "text/plain");
@@ -648,17 +645,12 @@ public final class MMSUtilities {
    }
 
    public static final String addressToString(Object address, Object context) {
-      if (!(address instanceof Object)) {
-         if (address instanceof Object) {
+      if (!(address instanceof PhoneNumberModel)) {
+         if (address instanceof FriendlyNameAddressModel) {
             FriendlyNameAddressModel fnam = (FriendlyNameAddressModel)address;
             String str = fnam.getFriendlyName();
             if (str != null) {
-               return ((StringBuffer)(new Object()))
-                  .append(StringUtilities.removeChars(str, "()<>[]:;@,.\\\"").trim())
-                  .append(" <")
-                  .append(fnam.getAddress())
-                  .append('>')
-                  .toString();
+               return StringUtilities.removeChars(str, "()<>[]:;@,.\\\"").trim() + " <" + fnam.getAddress() + '>';
             }
          }
 
@@ -673,7 +665,7 @@ public final class MMSUtilities {
    public static final String byteArrayToString(byte[] data, String encoding) {
       if (encoding != null) {
          try {
-            return (String)(new Object(data, encoding));
+            return new String(data, encoding);
          } finally {
             return StringUtilities.decodeBOM(data, 0, data.length);
          }
@@ -686,7 +678,7 @@ public final class MMSUtilities {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public static final String convertForTransmission(char[] number, boolean prependNDD) {
       StringBuffer buffer = StringUtilitiesInternal.getScratchBuffer();
-      StringBuffer dtmf = (StringBuffer)(new Object());
+      StringBuffer dtmf = new StringBuffer();
       synchronized (buffer) {
          boolean var10 = false /* VF: Semaphore variable */;
 
@@ -710,7 +702,7 @@ public final class MMSUtilities {
    }
 
    public static final byte[] encrypt(byte[] data) {
-      return ContentStoreEncryption.encrypt((InputStream)(new Object(data)));
+      return ContentStoreEncryption.encrypt(new ByteArrayInputStream(data));
    }
 
    public static final byte[] decrypt(byte[] param0) {
@@ -780,7 +772,7 @@ public final class MMSUtilities {
    }
 
    public static final boolean modelIsAGroupWithAllInvalidAddresses(Object obj) {
-      if (!(obj instanceof Object)) {
+      if (!(obj instanceof GroupAddressCardModel)) {
          return false;
       }
 

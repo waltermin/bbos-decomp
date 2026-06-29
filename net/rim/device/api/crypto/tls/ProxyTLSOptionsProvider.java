@@ -6,6 +6,7 @@ import net.rim.device.api.system.Display;
 import net.rim.device.api.system.KeyListener;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.container.VerticalFieldManager;
@@ -26,12 +27,12 @@ final class ProxyTLSOptionsProvider implements FieldProvider, VerbProvider, List
 
    @Override
    public final Field getField(Object context) {
-      this._vfm = (VerticalFieldManager)(new Object());
-      this._redirectionsOnProxyField = (BooleanChoiceField)(new Object(_rb.getString(33), 0, this._optionStore.getDoRedirection()));
+      this._vfm = new VerticalFieldManager();
+      this._redirectionsOnProxyField = new BooleanChoiceField(_rb.getString(33), 0, this._optionStore.getDoRedirection());
       this._vfm.add(this._redirectionsOnProxyField);
-      this._vfm.add((Field)(new Object(_rb.getString(37))));
+      this._vfm.add(new LabelField(_rb.getString(37)));
       this._trustedHosts = this._optionStore.getTrustedHosts();
-      this._trustedHostsField = (ListField)(new Object(this._trustedHosts.size()));
+      this._trustedHostsField = new ListField(this._trustedHosts.size());
       this._trustedHostsField.setCallback(this);
       this._vfm.add(this._trustedHostsField);
       return this._vfm;
@@ -74,7 +75,7 @@ final class ProxyTLSOptionsProvider implements FieldProvider, VerbProvider, List
    public final void drawListRow(ListField listField, Graphics graphics, int index, int y, int width) {
       String trustedHost = (String)this.get(listField, index);
       if (trustedHost != null) {
-         graphics.drawText(((StringBuffer)(new Object("  "))).append(trustedHost).toString(), 0, y, 0, width);
+         graphics.drawText("  " + trustedHost, 0, y, 0, width);
       }
    }
 

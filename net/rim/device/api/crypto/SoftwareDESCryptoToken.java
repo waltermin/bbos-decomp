@@ -33,7 +33,7 @@ final class SoftwareDESCryptoToken extends DESCryptoToken implements Persistable
    @Override
    public final CryptoTokenCipherContext initializeEncrypt(CryptoTokenSymmetricKeyData data) {
       if (!(data instanceof SoftwareDESCryptoToken$DESKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareDESCryptoToken$DESKeyData key = (SoftwareDESCryptoToken$DESKeyData)data;
@@ -43,7 +43,7 @@ final class SoftwareDESCryptoToken extends DESCryptoToken implements Persistable
    @Override
    public final void encrypt(CryptoTokenCipherContext context, byte[] plaintext, int plaintextOffset, byte[] ciphertext, int ciphertextOffset) {
       if (!(context instanceof SoftwareDESCryptoToken$DESCipherContext)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       ((SoftwareDESCryptoToken$DESCipherContext)context).getNativeBlockCipher().crypt(plaintext, plaintextOffset, ciphertext, ciphertextOffset);
@@ -52,7 +52,7 @@ final class SoftwareDESCryptoToken extends DESCryptoToken implements Persistable
    @Override
    public final CryptoTokenCipherContext initializeDecrypt(CryptoTokenSymmetricKeyData data) {
       if (!(data instanceof SoftwareDESCryptoToken$DESKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareDESCryptoToken$DESKeyData key = (SoftwareDESCryptoToken$DESKeyData)data;
@@ -62,7 +62,7 @@ final class SoftwareDESCryptoToken extends DESCryptoToken implements Persistable
    @Override
    public final void decrypt(CryptoTokenCipherContext context, byte[] ciphertext, int ciphertextOffset, byte[] plaintext, int plaintextOffset) {
       if (!(context instanceof SoftwareDESCryptoToken$DESCipherContext)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       ((SoftwareDESCryptoToken$DESCipherContext)context).getNativeBlockCipher().crypt(ciphertext, ciphertextOffset, plaintext, plaintextOffset);
@@ -71,7 +71,7 @@ final class SoftwareDESCryptoToken extends DESCryptoToken implements Persistable
    @Override
    public final byte[] extractKeyData(CryptoTokenSymmetricKeyData data) {
       if (!(data instanceof SoftwareDESCryptoToken$DESKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareDESCryptoToken$DESKeyData)data).getData();
       }
@@ -103,7 +103,7 @@ final class SoftwareDESCryptoToken extends DESCryptoToken implements Persistable
       }
 
       if (!Arrays.equals(target, 0, SelfTestData_PK1.ENCRYPTION_PLAIN_TEXT, 0, length)) {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
       target = new byte[length];
@@ -118,7 +118,7 @@ final class SoftwareDESCryptoToken extends DESCryptoToken implements Persistable
       }
 
       if (!Arrays.equals(target, 0, CIPHER_TEXT, 0, length)) {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
    }
 
@@ -138,7 +138,7 @@ final class SoftwareDESCryptoToken extends DESCryptoToken implements Persistable
             }
          } while (weak);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -156,7 +156,7 @@ final class SoftwareDESCryptoToken extends DESCryptoToken implements Persistable
             offset++;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

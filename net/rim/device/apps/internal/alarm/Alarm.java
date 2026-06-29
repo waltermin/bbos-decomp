@@ -17,6 +17,7 @@ import net.rim.device.api.ui.component.ChoiceField;
 import net.rim.device.api.ui.component.DateField;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.util.DateTimeUtilities;
 import net.rim.device.apps.api.framework.profiles.TuneChoiceField;
 import net.rim.device.apps.api.framework.profiles.TuneManager;
@@ -144,7 +145,7 @@ final class Alarm extends UiApplication implements FieldChangeListener {
       Field statusBanner = ribbonBar.getStatusBanner(null, 1);
       this._mainScreen.setTitle(statusBanner);
       statusBanner.getManager().setTag(null);
-      String[] onOffChoices = new Object[]{CommonResources.getString(107), CommonResources.getString(106), _rb.getString(40)};
+      String[] onOffChoices = new String[]{CommonResources.getString(107), CommonResources.getString(106), _rb.getString(40)};
       int alarmSelection = 0;
       if (options.getAlarmEnabled()) {
          if (!options.getActiveWeekends()) {
@@ -154,20 +155,20 @@ final class Alarm extends UiApplication implements FieldChangeListener {
          }
       }
 
-      this._enabledField = (ObjectChoiceField)(new Object(_rb.getString(35), onOffChoices, alarmSelection, 134217728));
+      this._enabledField = new ObjectChoiceField(_rb.getString(35), onOffChoices, alarmSelection, 134217728);
       this._enabledField.setChangeListener(this._mainScreen);
       this._mainScreen.add(this._enabledField);
-      this._alarmTime = (DateField)(new Object(_rb.getString(34), 0, 32));
+      this._alarmTime = new DateField(_rb.getString(34), 0, 32);
       this._alarmTime.setTimeZone(TimeZone.getTimeZone(DateTimeUtilities.GMT));
       this._alarmTime.setDate(options.getAlarmTime());
       this._alarmTime.setChangeListener(this._mainScreen);
       this._mainScreen.add(this._alarmTime);
-      String[] snoozeChoices = new Object[]{CommonResources.getString(107), _rb.getString(7), _rb.getString(8), _rb.getString(9)};
-      this._snoozeField = (ObjectChoiceField)(new Object(_rb.getString(10), snoozeChoices, options.getSnooze(), 134217728));
+      String[] snoozeChoices = new String[]{CommonResources.getString(107), _rb.getString(7), _rb.getString(8), _rb.getString(9)};
+      this._snoozeField = new ObjectChoiceField(_rb.getString(10), snoozeChoices, options.getSnooze(), 134217728);
       this._snoozeField.setChangeListener(this._mainScreen);
       this._mainScreen.add(this._snoozeField);
-      this._mainScreen.add((Field)(new Object()));
-      this._alertTypeField = (ObjectChoiceField)(new Object(_rb.getString(37), _rb.getStringArray(33), options.getAlertType()));
+      this._mainScreen.add(new SeparatorField());
+      this._alertTypeField = new ObjectChoiceField(_rb.getString(37), _rb.getStringArray(33), options.getAlertType());
       this._alertTypeField.setChangeListener(this);
       this._alertTypeField.setChangeListener(new Alarm$CascadeFieldChangeListener(this._alertTypeField, this._mainScreen));
       this._mainScreen.add(this._alertTypeField);
@@ -177,13 +178,11 @@ final class Alarm extends UiApplication implements FieldChangeListener {
       this._tuneField.setVolumeIndex(options.getVolume() + 1);
       this._tuneField.setChangeListener(new Alarm$CascadeFieldChangeListener(this._tuneField, this._mainScreen));
       this._mainScreen.add(this._tuneField);
-      this._volumeField = (ObjectChoiceField)(new Object(_rbProfiles.getString(320), _rb.getStringArray(36), options.getVolume(), 134217728));
+      this._volumeField = new ObjectChoiceField(_rbProfiles.getString(320), _rb.getStringArray(36), options.getVolume(), 134217728);
       this._volumeField.setChangeListener(this);
       this._volumeField.setChangeListener(new Alarm$CascadeFieldChangeListener(this._volumeField, this._mainScreen));
       this._mainScreen.add(this._volumeField);
-      this._numberOfVibratesField = (ObjectChoiceField)(new Object(
-         _rbProfiles.getString(350), _rbProfiles.getStringArray(351), options.getNumberOfVibrates(), 134217728
-      ));
+      this._numberOfVibratesField = new ObjectChoiceField(_rbProfiles.getString(350), _rbProfiles.getStringArray(351), options.getNumberOfVibrates(), 134217728);
       this._numberOfVibratesField.setChangeListener(this._mainScreen);
       int alertType = _alertValues[options.getAlertType()];
       if (alertType == 2 || alertType == 4) {
@@ -217,7 +216,7 @@ final class Alarm extends UiApplication implements FieldChangeListener {
             volumeIndex = fieldWithChanges.getSelectedIndex();
             this._tuneField.setVolumeIndex(volumeIndex + 1);
          } else {
-            volumeIndex = ((ChoiceField)manager.getField(6)).getSelectedIndex();
+            volumeIndex = ((ObjectChoiceField)manager.getField(6)).getSelectedIndex();
          }
 
          int endVolume;
@@ -230,7 +229,7 @@ final class Alarm extends UiApplication implements FieldChangeListener {
          }
 
          if (this._numberOfVibratesField.isVisible()) {
-            vibratesIndex = _vibratesValues[((ChoiceField)manager.getField(7)).getSelectedIndex()];
+            vibratesIndex = _vibratesValues[((ObjectChoiceField)manager.getField(7)).getSelectedIndex()];
          } else {
             vibratesIndex = _vibratesValues[AlarmOptions.getOptions().getNumberOfVibrates()];
          }
@@ -269,7 +268,7 @@ final class Alarm extends UiApplication implements FieldChangeListener {
             if (diff > 86340000 && diff < 86430000) {
                ResourceBundle rb = ResourceBundle.getBundle(7243473093845420851L, "net.rim.device.apps.internal.resource.Alarm");
                DateFormat dateFormatter = DateFormat.getInstance(63);
-               String[] data = new Object[]{dateFormatter.format(_calendar, (StringBuffer)(new Object()), null).toString()};
+               String[] data = new String[]{dateFormatter.format(_calendar, new StringBuffer(), null).toString()};
                String fireNextAt = MessageFormat.format(rb.getString(39), data);
 
                try {
@@ -316,7 +315,7 @@ final class Alarm extends UiApplication implements FieldChangeListener {
 
    private static final ApplicationDescriptor getDescriptor() {
       ApplicationDescriptor alarmApp = (ApplicationDescriptor)ApplicationRegistry.getApplicationRegistry().get(27450565375971827L);
-      alarmApp = (ApplicationDescriptor)(new Object(alarmApp, _alarmFiringArgs));
+      alarmApp = new ApplicationDescriptor(alarmApp, _alarmFiringArgs);
       alarmApp.setPowerOnBehavior(3);
       return alarmApp;
    }

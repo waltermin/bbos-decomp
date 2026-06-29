@@ -18,7 +18,7 @@ final class SpeedDialKeyField extends Field {
       int height = g.getFont().getHeight();
       int width = height;
       int x = Display.getWidth() - width;
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       context.put(9045827404276417370L, this);
       QuickContactUtil.paintHotkey(this._key, g, x, 0, width, height, 5, context);
    }

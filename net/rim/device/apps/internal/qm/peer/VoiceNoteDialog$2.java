@@ -14,8 +14,7 @@ final class VoiceNoteDialog$2 implements Runnable {
       this.this$0.stop();
       VoiceNoteDialog.access$000(this.this$0).setText(QmResources.getString(103));
       int size = VoiceNoteDialog.access$500(this.this$0).size();
-      VoiceNoteDialog.access$100(this.this$0)
-         .setText(((StringBuffer)(new Object())).append(Integer.toString(size)).append(" ").append(QmResources.getString(104)).toString());
+      VoiceNoteDialog.access$100(this.this$0).setText(Integer.toString(size) + " " + QmResources.getString(104));
       VoiceNoteDialog.access$200(this.this$0).deleteAll();
       VoiceNoteDialog.access$200(this.this$0).add(VoiceNoteDialog.access$600(this.this$0));
       VoiceNoteDialog.access$200(this.this$0).add(VoiceNoteDialog.access$700(this.this$0));

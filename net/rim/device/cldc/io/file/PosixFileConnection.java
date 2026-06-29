@@ -2,12 +2,15 @@ package net.rim.device.cldc.io.file;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.Vector;
-import net.rim.device.api.io.ConnectionClosedException;
+import javax.microedition.io.file.ConnectionClosedException;
+import javax.microedition.io.file.IllegalModeException;
 import net.rim.device.api.io.FileInfo;
+import net.rim.device.api.io.file.FileIOException;
 import net.rim.device.api.system.CodeSigningKey;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.cldc.io.utility.URIDecoder;
@@ -50,7 +53,7 @@ public final class PosixFileConnection implements BaseFileConnection {
    }
 
    final String getJSRPath() {
-      return FileUtilities.encodeString(((StringBuffer)(new Object())).append(this.getPath()).append(this.getName()).toString());
+      return FileUtilities.encodeString(this.getPath() + this.getName());
    }
 
    final void inputClosed() {
@@ -75,7 +78,7 @@ public final class PosixFileConnection implements BaseFileConnection {
    @Override
    public final DataInputStream openDataInputStream() {
       int caller = TraceBack.getCallingModule(0);
-      return (DataInputStream)(new Object(this.openInputStreamInternal(caller, true, true)));
+      return new DataInputStream(this.openInputStreamInternal(caller, true, true));
    }
 
    @Override
@@ -87,7 +90,7 @@ public final class PosixFileConnection implements BaseFileConnection {
    @Override
    public final DataOutputStream openDataOutputStream() {
       int caller = TraceBack.getCallingModule(0);
-      return (DataOutputStream)(new Object(this.openOutputStreamInternal(0, caller)));
+      return new DataOutputStream(this.openOutputStreamInternal(0, caller));
    }
 
    @Override
@@ -99,7 +102,7 @@ public final class PosixFileConnection implements BaseFileConnection {
    @Override
    public final long totalSize() {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertReadPermission();
@@ -115,7 +118,7 @@ public final class PosixFileConnection implements BaseFileConnection {
    @Override
    public final long availableSize() {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertReadPermission();
@@ -131,7 +134,7 @@ public final class PosixFileConnection implements BaseFileConnection {
    @Override
    public final long usedSize() {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertReadPermission();
@@ -145,9 +148,9 @@ public final class PosixFileConnection implements BaseFileConnection {
    }
 
    @Override
-   public final long directorySize(boolean includeSubDirs) {
+   public final long directorySize(boolean includeSubDirs) throws FileIOException {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertReadPermission();
@@ -157,11 +160,11 @@ public final class PosixFileConnection implements BaseFileConnection {
       }
 
       if ((attributes & 16) == 0) {
-         throw new Object(1002);
+         throw new FileIOException(1002);
       }
 
       if (!this._path.endsWith(SLASH)) {
-         this._path = ((StringBuffer)(new Object())).append(this._path).append('/').toString();
+         this._path = this._path + '/';
       }
 
       return this.directorySizeInternal(this._path, includeSubDirs);
@@ -170,7 +173,35 @@ public final class PosixFileConnection implements BaseFileConnection {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final long rawFileSize() throws ConnectionClosedException {
+   public final long rawFileSize() throws net.rim.device.api.io.ConnectionClosedException, FileIOException {
+      this.assertReadPermission();
+      if (!this.isOpen()) {
+         throw new net.rim.device.api.io.ConnectionClosedException();
+      }
+
+      boolean var3 = false /* VF: Semaphore variable */;
+
+      try {
+         var3 = true;
+         this.getFileAttrib();
+         var3 = false;
+      } finally {
+         if (var3) {
+            return -1;
+         }
+      }
+
+      if ((this._fileInfo.getAttributes() & 16) != 0) {
+         throw new FileIOException(1001);
+      } else {
+         return this._fileInfo.getFileSize();
+      }
+   }
+
+   // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
+   // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
+   @Override
+   public final long fileSize() throws FileIOException {
       this.assertReadPermission();
       if (!this.isOpen()) {
          throw new ConnectionClosedException();
@@ -189,35 +220,7 @@ public final class PosixFileConnection implements BaseFileConnection {
       }
 
       if ((this._fileInfo.getAttributes() & 16) != 0) {
-         throw new Object(1001);
-      } else {
-         return this._fileInfo.getFileSize();
-      }
-   }
-
-   // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
-   // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   @Override
-   public final long fileSize() {
-      this.assertReadPermission();
-      if (!this.isOpen()) {
-         throw new Object();
-      }
-
-      boolean var3 = false /* VF: Semaphore variable */;
-
-      try {
-         var3 = true;
-         this.getFileAttrib();
-         var3 = false;
-      } finally {
-         if (var3) {
-            return -1;
-         }
-      }
-
-      if ((this._fileInfo.getAttributes() & 16) != 0) {
-         throw new Object(1001);
+         throw new FileIOException(1001);
       } else {
          return this.fileSizeInternal(this.isFileEncrypted());
       }
@@ -226,7 +229,7 @@ public final class PosixFileConnection implements BaseFileConnection {
    @Override
    public final boolean canRead() {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertReadPermission();
@@ -237,7 +240,7 @@ public final class PosixFileConnection implements BaseFileConnection {
    @Override
    public final boolean canWrite() {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertReadPermission();
@@ -248,7 +251,7 @@ public final class PosixFileConnection implements BaseFileConnection {
    @Override
    public final boolean isHidden() {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertReadPermission();
@@ -259,7 +262,7 @@ public final class PosixFileConnection implements BaseFileConnection {
    @Override
    public final void setReadable(boolean readable) {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertWritePermission();
@@ -269,7 +272,7 @@ public final class PosixFileConnection implements BaseFileConnection {
    @Override
    public final void setWritable(boolean writable) {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertWritePermission();
@@ -283,7 +286,7 @@ public final class PosixFileConnection implements BaseFileConnection {
    @Override
    public final void setHidden(boolean hidden) {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertWritePermission();
@@ -311,19 +314,19 @@ public final class PosixFileConnection implements BaseFileConnection {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void create() {
+   public final void create() throws FileIOException {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertWritePermission();
       int attributes = this.getFileAttribNoThrow();
       if (attributes != -1) {
-         throw new Object(7);
+         throw new FileIOException(7);
       }
 
       if (this._path.endsWith(SLASH)) {
-         throw new Object(1006);
+         throw new FileIOException(1006);
       }
 
       boolean encryptFile;
@@ -353,7 +356,7 @@ public final class PosixFileConnection implements BaseFileConnection {
 
       boolean endsWith = StringUtilities.endsWithIgnoreCase(this._path, ENCRYPTED_MEDIA_EXTENSION, 1701707776);
       if (encryptFile && !endsWith) {
-         this._path = ((StringBuffer)(new Object())).append(this._path).append(ENCRYPTED_MEDIA_EXTENSION).toString();
+         this._path = this._path + ENCRYPTED_MEDIA_EXTENSION;
       } else if (!encryptFile && endsWith) {
          this._path = this._path.substring(0, this._path.length() - ENCRYPTED_MEDIA_EXTENSION.length());
       }
@@ -367,11 +370,7 @@ public final class PosixFileConnection implements BaseFileConnection {
          fileOut = new PosixFileOutputStream(-1, this._rootId, this._path, this, 0, false, true);
          if (encryptFile) {
             EncryptedFile.createFile(
-               fileOut._handle,
-               (DataOutputStream)(new Object(fileOut)),
-               this._drmLockedOnCreate,
-               FileSystemEncryption.getMasterKey(true),
-               this._controlledAccessOnCreate
+               fileOut._handle, new DataOutputStream(fileOut), this._drmLockedOnCreate, FileSystemEncryption.getMasterKey(true), this._controlledAccessOnCreate
             );
          }
 
@@ -411,19 +410,19 @@ public final class PosixFileConnection implements BaseFileConnection {
    }
 
    @Override
-   public final void mkdir() {
+   public final void mkdir() throws FileIOException {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertWritePermission();
       int attributes = this.getFileAttribNoThrow();
       if (attributes != -1) {
-         throw new Object(15);
+         throw new FileIOException(15);
       }
 
       if (!this._path.endsWith(SLASH)) {
-         throw new Object(1002);
+         throw new FileIOException(1002);
       }
 
       checkStatus(FileSystem.mkdir(this._rootId, this._path));
@@ -433,7 +432,7 @@ public final class PosixFileConnection implements BaseFileConnection {
    @Override
    public final boolean exists() {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertReadPermission();
@@ -444,7 +443,7 @@ public final class PosixFileConnection implements BaseFileConnection {
    @Override
    public final boolean isDirectory() {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       try {
@@ -459,14 +458,14 @@ public final class PosixFileConnection implements BaseFileConnection {
    @Override
    public final void delete() {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertWritePermission();
       int attributes = this.getFileAttrib();
       if ((attributes & 16) != 0) {
          if (!this._path.endsWith(SLASH)) {
-            this._path = ((StringBuffer)(new Object())).append(this._path).append('/').toString();
+            this._path = this._path + '/';
          }
 
          checkStatus(FileSystem.rmdir(this._rootId, this._path));
@@ -498,11 +497,11 @@ public final class PosixFileConnection implements BaseFileConnection {
    @Override
    public final void truncate(long byteOffset) {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       if (byteOffset < 0) {
-         throw new Object("offset is negative");
+         throw new IllegalArgumentException("offset is negative");
       }
 
       this.assertWritePermission();
@@ -530,7 +529,7 @@ public final class PosixFileConnection implements BaseFileConnection {
          try {
             var13 = true;
             if (encrypted) {
-               DataInputStream in = (DataInputStream)(new Object(new PosixFileInputStream(this._rootId, handle)));
+               DataInputStream in = new DataInputStream(new PosixFileInputStream(this._rootId, handle));
                EncryptedFile encryptedFile = EncryptedFile.readHeader(handle, in, FileSystemEncryption.getMasterKey(true));
                result = encryptedFile.truncate(byteOffset);
                in.close();
@@ -552,28 +551,28 @@ public final class PosixFileConnection implements BaseFileConnection {
    }
 
    @Override
-   public final void setFileConnection(String fileName) {
+   public final void setFileConnection(String fileName) throws IOException, FileIOException {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       int attributes = this.getFileAttrib();
       if ((attributes & 16) == 0) {
-         throw new Object("setFileConnection called on a file");
+         throw new IOException("setFileConnection called on a file");
       }
 
       if (!this._path.endsWith(SLASH)) {
-         this._path = ((StringBuffer)(new Object())).append(this._path).append('/').toString();
+         this._path = this._path + '/';
       }
 
       if (fileName == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       if (!fileName.equals(".")) {
          fileName = URIDecoder.decode(fileName, "UTF-8", false);
          if (!FilenameValidator.validateFilenameAndPath(fileName)) {
-            throw new Object(1004);
+            throw new FileIOException(1004);
          }
 
          if (fileName.equals("..")) {
@@ -581,16 +580,16 @@ public final class PosixFileConnection implements BaseFileConnection {
          } else {
             int indexOfSlash = fileName.indexOf(47);
             if (indexOfSlash != -1 && indexOfSlash != fileName.length() - 1) {
-               throw new Object("path strucutre contained in fileName");
+               throw new IllegalArgumentException("path strucutre contained in fileName");
             }
 
             boolean isDir = indexOfSlash != -1;
-            String newPath = ((StringBuffer)(new Object())).append(this._path).append(fileName).toString();
+            String newPath = this._path + fileName;
             int newPathAttribs = -1;
             if (!isDir) {
                boolean encrypted = StringUtilities.endsWithIgnoreCase(newPath, ENCRYPTED_MEDIA_EXTENSION, 1701707776);
                if (this._autoResolveEncryptedFiles && !encrypted) {
-                  String tempPath = ((StringBuffer)(new Object())).append(newPath).append(ENCRYPTED_MEDIA_EXTENSION).toString();
+                  String tempPath = newPath + ENCRYPTED_MEDIA_EXTENSION;
                   newPathAttribs = this.getFileAttrib(tempPath, false);
                   if (newPathAttribs != -1) {
                      newPath = tempPath;
@@ -601,12 +600,12 @@ public final class PosixFileConnection implements BaseFileConnection {
             if (newPathAttribs == -1) {
                newPathAttribs = this.getFileAttrib(newPath, false);
                if (newPathAttribs == -1) {
-                  throw new Object("file not found");
+                  throw new IllegalArgumentException("file not found");
                }
             }
 
             if (isDir && (newPathAttribs & 16) == 0) {
-               throw new Object("new path is not a directory");
+               throw new IllegalArgumentException("new path is not a directory");
             }
 
             this._path = newPath;
@@ -654,7 +653,7 @@ public final class PosixFileConnection implements BaseFileConnection {
       }
 
       if (isDir && !path.endsWith(SLASH)) {
-         path = ((StringBuffer)(new Object())).append(path).append('/').toString();
+         path = path + '/';
       }
 
       return path;
@@ -662,7 +661,7 @@ public final class PosixFileConnection implements BaseFileConnection {
 
    @Override
    public final String getPath() {
-      StringBuffer str = (StringBuffer)(new Object("/"));
+      StringBuffer str = new StringBuffer("/");
       if (this._rootId == 1) {
          str.append(FILE_SYSTEM_NAME_SDCARD);
       }
@@ -673,11 +672,11 @@ public final class PosixFileConnection implements BaseFileConnection {
 
    @Override
    public final String getURL() {
-      return ((StringBuffer)(new Object("file://"))).append(this._host).append(this.getJSRPath()).toString();
+      return "file://" + this._host + this.getJSRPath();
    }
 
    @Override
-   public final void init(String name, int mode, boolean timeouts) {
+   public final void init(String name, int mode, boolean timeouts) throws FileIOException {
       int fileSystemId = -1;
       int rootPos = 0;
       if (name.startsWith(SLASH_SLASH_SLASH)) {
@@ -685,7 +684,7 @@ public final class PosixFileConnection implements BaseFileConnection {
          this._host = "";
       } else {
          if (!StringUtilities.startsWithIgnoreCase(name, SLASH_SLASH_LOCALHOST_SLASH, 1701707776)) {
-            throw new Object(1003);
+            throw new FileIOException(1003);
          }
 
          rootPos = SLASH_SLASH_LOCALHOST_SLASH.length();
@@ -702,19 +701,19 @@ public final class PosixFileConnection implements BaseFileConnection {
       }
 
       if (fileSystemId == -1 || !FileSystem.isFileSystemSupported(fileSystemId)) {
-         throw new Object(4);
+         throw new FileIOException(4);
       }
 
       if (!FilenameValidator.validateFilenameAndPath(name)) {
-         throw new Object("invalid character in name");
+         throw new IllegalArgumentException("invalid character in name");
       }
 
       this._rootId = fileSystemId;
       this._path = name;
       this._opened = true;
       this._accessMode = mode;
-      this._fileSystemInfo = (FileSystemInfo)(new Object());
-      this._fileInfo = (FileInfo)(new Object());
+      this._fileSystemInfo = new FileSystemInfo();
+      this._fileInfo = new FileInfo();
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
@@ -722,7 +721,7 @@ public final class PosixFileConnection implements BaseFileConnection {
    @Override
    public final long lastModified() {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertReadPermission();
@@ -742,14 +741,14 @@ public final class PosixFileConnection implements BaseFileConnection {
    }
 
    @Override
-   public final boolean setControlledAccess(CodeSigningKey csk) throws ConnectionClosedException {
+   public final boolean setControlledAccess(CodeSigningKey csk) throws net.rim.device.api.io.ConnectionClosedException, FileIOException {
       this.assertWritePermission();
       if (!this.isOpen()) {
-         throw new ConnectionClosedException();
+         throw new net.rim.device.api.io.ConnectionClosedException();
       } else if (this.getFileAttribNoThrow() != -1) {
-         throw new Object(7);
+         throw new FileIOException(7);
       } else if (this._path.endsWith(SLASH)) {
-         throw new Object(1006);
+         throw new FileIOException(1006);
       } else if (csk != null && this._controlledAccessOnCreate == null) {
          this._controlledAccessOnCreate = csk;
          return true;
@@ -761,19 +760,19 @@ public final class PosixFileConnection implements BaseFileConnection {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final CodeSigningKey getControlledAccess() throws ConnectionClosedException {
+   public final CodeSigningKey getControlledAccess() throws net.rim.device.api.io.ConnectionClosedException, FileIOException {
       this.assertReadPermission();
       if (!this.isOpen()) {
-         throw new ConnectionClosedException();
+         throw new net.rim.device.api.io.ConnectionClosedException();
       }
 
       int attributes = this.getFileAttribNoThrow();
       if (attributes != -1 && (attributes & 16) != 0) {
-         throw new Object(1001);
+         throw new FileIOException(1001);
       }
 
       if (attributes == -1 && this._path.endsWith(SLASH)) {
-         throw new Object(1006);
+         throw new FileIOException(1006);
       }
 
       try {
@@ -841,14 +840,14 @@ public final class PosixFileConnection implements BaseFileConnection {
    }
 
    @Override
-   public final void enableDRMForwardLock() throws ConnectionClosedException {
+   public final void enableDRMForwardLock() throws net.rim.device.api.io.ConnectionClosedException, FileIOException {
       this.assertWritePermission();
       if (!this.isOpen()) {
-         throw new ConnectionClosedException();
+         throw new net.rim.device.api.io.ConnectionClosedException();
       }
 
       if (this.getFileAttribNoThrow() != -1) {
-         throw new Object(7);
+         throw new FileIOException(7);
       }
 
       this._drmLockedOnCreate = true;
@@ -857,10 +856,10 @@ public final class PosixFileConnection implements BaseFileConnection {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final boolean isContentDRMForwardLocked() throws ConnectionClosedException {
+   public final boolean isContentDRMForwardLocked() throws net.rim.device.api.io.ConnectionClosedException {
       this.assertReadPermission();
       if (!this.isOpen()) {
-         throw new ConnectionClosedException();
+         throw new net.rim.device.api.io.ConnectionClosedException();
       }
 
       int caller = TraceBack.getCallingModule(0);
@@ -953,16 +952,16 @@ public final class PosixFileConnection implements BaseFileConnection {
    }
 
    @Override
-   public final boolean isFileEncrypted() throws ConnectionClosedException {
+   public final boolean isFileEncrypted() throws net.rim.device.api.io.ConnectionClosedException, FileIOException {
       this.assertReadPermission();
       if (!this.isOpen()) {
-         throw new ConnectionClosedException();
+         throw new net.rim.device.api.io.ConnectionClosedException();
       } else {
          int attributes = this.getFileAttrib();
          if ((attributes & 16) == 0 && !this._path.endsWith(SLASH)) {
             return this.isFileEncryptedInternal();
          } else {
-            throw new Object(1001);
+            throw new FileIOException(1001);
          }
       }
    }
@@ -974,14 +973,14 @@ public final class PosixFileConnection implements BaseFileConnection {
    }
 
    @Override
-   public final boolean isContentBuiltIn() throws ConnectionClosedException {
+   public final boolean isContentBuiltIn() throws net.rim.device.api.io.ConnectionClosedException, FileIOException {
       this.assertReadPermission();
       if (!this.isOpen()) {
-         throw new ConnectionClosedException();
+         throw new net.rim.device.api.io.ConnectionClosedException();
       } else {
          int attributes = this.getFileAttrib();
          if ((attributes & 16) != 0) {
-            throw new Object(1001);
+            throw new FileIOException(1001);
          } else {
             return false;
          }
@@ -989,9 +988,9 @@ public final class PosixFileConnection implements BaseFileConnection {
    }
 
    @Override
-   public final void setAutoEncryptionResolveMode(boolean mode) throws ConnectionClosedException {
+   public final void setAutoEncryptionResolveMode(boolean mode) throws net.rim.device.api.io.ConnectionClosedException {
       if (!this.isOpen()) {
-         throw new ConnectionClosedException();
+         throw new net.rim.device.api.io.ConnectionClosedException();
       }
 
       this._autoResolveEncryptedFiles = mode;
@@ -1060,23 +1059,23 @@ public final class PosixFileConnection implements BaseFileConnection {
       }
    }
 
-   static final void checkStatus(int status) {
+   static final void checkStatus(int status) throws FileIOException {
       if (status != 0) {
-         throw new Object(status);
+         throw new FileIOException(status);
       }
    }
 
    private final void assertReadPermission() {
       ApplicationControl.assertFileApiAllowed(true);
       if ((this._accessMode & 1) == 0) {
-         throw new Object("Access mode read required");
+         throw new IllegalModeException("Access mode read required");
       }
    }
 
    private final void assertWritePermission() {
       ApplicationControl.assertFileApiAllowed(true);
       if ((this._accessMode & 2) == 0) {
-         throw new Object("Access mode write required");
+         throw new IllegalModeException("Access mode write required");
       }
    }
 
@@ -1110,7 +1109,7 @@ public final class PosixFileConnection implements BaseFileConnection {
             return result;
          }
 
-         String tempPath = ((StringBuffer)(new Object())).append(this._path).append(ENCRYPTED_MEDIA_EXTENSION).toString();
+         String tempPath = this._path + ENCRYPTED_MEDIA_EXTENSION;
          int result = this.getFileAttrib(tempPath, false);
          if (result != -1) {
             this._path = tempPath;
@@ -1136,33 +1135,33 @@ public final class PosixFileConnection implements BaseFileConnection {
       return this._fileInfo.getAttributes();
    }
 
-   private final void renameInternal(String newName, boolean isPath) {
+   private final void renameInternal(String newName, boolean isPath) throws FileIOException {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       if (newName == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       this.assertWritePermission();
       this.getFileAttrib();
       newName = URIDecoder.decode(newName, "UTF-8", false);
       if (!isPath && newName.indexOf(47) != -1) {
-         throw new Object("new name contains path");
+         throw new IllegalArgumentException("new name contains path");
       }
 
       if (!FilenameValidator.validateFilenameAndPath(newName)) {
-         throw new Object(1004);
+         throw new FileIOException(1004);
       }
 
       if (!isPath) {
-         newName = ((StringBuffer)(new Object())).append(this.getPlatformPath()).append(newName).toString();
+         newName = this.getPlatformPath() + newName;
       }
 
       if (StringUtilities.endsWithIgnoreCase(this._path, ENCRYPTED_MEDIA_EXTENSION, 1701707776)
          && !StringUtilities.endsWithIgnoreCase(newName, ENCRYPTED_MEDIA_EXTENSION, 1701707776)) {
-         newName = ((StringBuffer)(new Object())).append(newName).append(ENCRYPTED_MEDIA_EXTENSION).toString();
+         newName = newName + ENCRYPTED_MEDIA_EXTENSION;
       }
 
       this.closeStreams();
@@ -1180,7 +1179,7 @@ public final class PosixFileConnection implements BaseFileConnection {
          while (entries.hasMoreElements()) {
             String subPath = (String)entries.nextElement();
             if (subPath.endsWith(SLASH)) {
-               totalSize += this.directorySizeInternal(((StringBuffer)(new Object())).append(path).append(subPath).toString(), includeDirs);
+               totalSize += this.directorySizeInternal(path + subPath, includeDirs);
             }
          }
       }
@@ -1188,19 +1187,19 @@ public final class PosixFileConnection implements BaseFileConnection {
       return totalSize;
    }
 
-   private final PosixFileInputStream openInputStreamInternal(int callerModule, boolean unwrapData, boolean setInputStream) throws ConnectionClosedException {
+   private final PosixFileInputStream openInputStreamInternal(int callerModule, boolean unwrapData, boolean setInputStream) throws net.rim.device.api.io.ConnectionClosedException, FileIOException {
       this.assertReadPermission();
       if (!this.isOpen()) {
-         throw new ConnectionClosedException();
+         throw new net.rim.device.api.io.ConnectionClosedException();
       }
 
       if (setInputStream && this._inputStream != null) {
-         throw new Object(1005);
+         throw new FileIOException(1005);
       }
 
       int attributes = this.getFileAttrib();
       if ((attributes & 16) != 0) {
-         throw new Object(1001);
+         throw new FileIOException(1001);
       }
 
       PosixFileInputStream inputStream = new PosixFileInputStream(callerModule, this._rootId, this._path, this, this._autoResolveEncryptedFiles, unwrapData);
@@ -1229,23 +1228,23 @@ public final class PosixFileConnection implements BaseFileConnection {
       return StringUtilities.endsWithIgnoreCase(this._path, ENCRYPTED_MEDIA_EXTENSION, 1701707776);
    }
 
-   private final OutputStream openOutputStreamInternal(long offset, int callerModule) throws ConnectionClosedException {
+   private final OutputStream openOutputStreamInternal(long offset, int callerModule) throws net.rim.device.api.io.ConnectionClosedException, FileIOException {
       this.assertWritePermission();
       if (offset < 0) {
-         throw new Object("negative offset");
+         throw new IllegalArgumentException("negative offset");
       }
 
       if (!this.isOpen()) {
-         throw new ConnectionClosedException();
+         throw new net.rim.device.api.io.ConnectionClosedException();
       }
 
       if (this._outputStream != null) {
-         throw new Object(1005);
+         throw new FileIOException(1005);
       }
 
       this.getFileAttrib();
       if ((this._fileInfo.getAttributes() & 16) != 0) {
-         throw new Object(1001);
+         throw new FileIOException(1001);
       }
 
       offset = Math.min(offset, this.fileSizeInternal(this.isFileEncryptedInternal()));
@@ -1253,23 +1252,23 @@ public final class PosixFileConnection implements BaseFileConnection {
       return this._outputStream;
    }
 
-   private final Enumeration listWithFilter(String filter, boolean includeHidden, boolean returnFileInfo) throws ConnectionClosedException {
+   private final Enumeration listWithFilter(String filter, boolean includeHidden, boolean returnFileInfo) throws net.rim.device.api.io.ConnectionClosedException {
       if (!this.isOpen()) {
          if (returnFileInfo) {
-            throw new ConnectionClosedException();
+            throw new net.rim.device.api.io.ConnectionClosedException();
          } else {
-            throw new Object();
+            throw new ConnectionClosedException();
          }
       } else {
          this.assertReadPermission();
          if (filter == null) {
-            throw new Object();
+            throw new NullPointerException();
          } else {
             filter = URIDecoder.decode(filter, "UTF-8", false);
             if (filter.indexOf(47) != -1) {
-               throw new Object("filter contains path");
+               throw new IllegalArgumentException("filter contains path");
             } else if (!FilenameValidator.validateFilenameAndPath(filter.replace('*', 'a'))) {
-               throw new Object("invalid character in filter");
+               throw new IllegalArgumentException("invalid character in filter");
             } else {
                return this.listInternal(this._path, filter, includeHidden, returnFileInfo);
             }
@@ -1279,23 +1278,23 @@ public final class PosixFileConnection implements BaseFileConnection {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private final Enumeration listInternal(String path, String filter, boolean includeHidden, boolean returnFileInfo) {
+   private final Enumeration listInternal(String path, String filter, boolean includeHidden, boolean returnFileInfo) throws FileIOException {
       int attributes = this.getFileAttrib();
       if ((attributes & 16) == 0) {
-         throw new Object(1002);
+         throw new FileIOException(1002);
       }
 
       if (!path.endsWith(SLASH)) {
-         path = ((StringBuffer)(new Object())).append(path).append('/').toString();
+         path = path + '/';
       }
 
       if (filter != null && filter.length() > 0) {
-         filter = ((StringBuffer)(new Object())).append(path).append(filter).toString();
+         filter = path + filter;
       } else {
-         filter = ((StringBuffer)(new Object())).append(path).append('*').toString();
+         filter = path + '*';
       }
 
-      Vector elements = (Vector)(new Object());
+      Vector elements = new Vector();
       boolean first = true;
       int handle = -1;
 
@@ -1306,7 +1305,7 @@ public final class PosixFileConnection implements BaseFileConnection {
             var14 = true;
             FileInfo fileInfo;
             if (returnFileInfo) {
-               fileInfo = (FileInfo)(new Object());
+               fileInfo = new FileInfo();
             } else {
                fileInfo = this._fileInfo;
             }
@@ -1332,7 +1331,7 @@ public final class PosixFileConnection implements BaseFileConnection {
                   if (returnFileInfo) {
                      elements.addElement(fileInfo);
                   } else if ((fileAttrib & 16) != 0) {
-                     elements.addElement(((StringBuffer)(new Object())).append(fileInfo.getFileName()).append('/').toString());
+                     elements.addElement(fileInfo.getFileName() + '/');
                   } else {
                      elements.addElement(fileInfo.getFileName());
                   }

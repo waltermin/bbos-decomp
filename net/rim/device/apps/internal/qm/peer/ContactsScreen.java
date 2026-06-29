@@ -246,7 +246,7 @@ final class ContactsScreen extends QmMainScreen {
          if (contact != null) {
             Object item = Utils.getAddressCard(contact.getOriginalContactInfo());
             if (item != null) {
-               ContextObject resultContext = (ContextObject)(new Object(73));
+               ContextObject resultContext = new ContextObject(73);
                resultContext.put(252, item);
                ret = ControllerUtilities.invokeSendKeyVerb(item, resultContext);
             }

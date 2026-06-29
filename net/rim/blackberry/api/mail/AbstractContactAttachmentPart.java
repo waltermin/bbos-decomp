@@ -1,5 +1,6 @@
 package net.rim.blackberry.api.mail;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -14,7 +15,7 @@ class AbstractContactAttachmentPart extends BodyPart {
    @Override
    public InputStream getInputStream() {
       byte[] data = this.getVCardForm();
-      return (InputStream)(new Object(data));
+      return new ByteArrayInputStream(data);
    }
 
    protected byte[] getVCardForm() {

@@ -20,7 +20,7 @@ import net.rim.vm.Array;
 public class OptionsListItem implements RIMModel, PaintProvider, ActionProvider, KeyProvider, MatchProvider, VerbProvider, ValidationProvider {
    private String _displayName;
    private boolean _initialized;
-   private CollatorImpl _collator = (CollatorImpl)(new Object());
+   private CollatorImpl _collator = new CollatorImpl();
    private long _rbId;
    private String _rbName;
    private int _rbKey;
@@ -45,7 +45,7 @@ public class OptionsListItem implements RIMModel, PaintProvider, ActionProvider,
 
    @Override
    public int match(Object searchCriteria) {
-      if (!(searchCriteria instanceof Object)) {
+      if (!(searchCriteria instanceof String)) {
          return 0;
       }
 

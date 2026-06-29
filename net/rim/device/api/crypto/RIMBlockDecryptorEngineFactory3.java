@@ -1,5 +1,6 @@
 package net.rim.device.api.crypto;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 final class RIMBlockDecryptorEngineFactory3 extends DecryptorFactory {
@@ -9,7 +10,7 @@ final class RIMBlockDecryptorEngineFactory3 extends DecryptorFactory {
    }
 
    @Override
-   protected final Object create(String algorithm, String nextAlgorithm, Key key, InputStream stream, InitializationVector iv) {
+   protected final Object create(String algorithm, String nextAlgorithm, Key key, InputStream stream, InitializationVector iv) throws IOException {
       String baseAlgorithm = RIMFactoryUtilities.getBaseAlgorithm(algorithm);
       if (baseAlgorithm.equals("CAST128")) {
          return new CAST128DecryptorEngine((RC2CryptoToken)key);
@@ -29,25 +30,25 @@ final class RIMBlockDecryptorEngineFactory3 extends DecryptorFactory {
 
       if (algorithm.equals("ElGamal")) {
          if (stream == null) {
-            throw new Object();
+            throw new IllegalArgumentException();
          } else {
             DHPrivateKey privateKey = (DHPrivateKey)key;
             int bitLength = stream.read() << 8;
             bitLength |= stream.read();
             if (bitLength < 0) {
-               throw new Object();
+               throw new IOException();
             } else {
                int byteLength = bitLength + 7 >> 3;
                byte[] keyData = new byte[byteLength];
                if (byteLength != stream.read(keyData)) {
-                  throw new Object();
+                  throw new IOException();
                } else {
-                  return new ElGamalDecryptorEngine(privateKey, (DHPublicKey)(new Object(privateKey.getDHCryptoSystem(), keyData)));
+                  return new ElGamalDecryptorEngine(privateKey, new DHPublicKey(privateKey.getDHCryptoSystem(), keyData));
                }
             }
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

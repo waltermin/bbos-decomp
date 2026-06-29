@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.qm.peer.common;
 
 import net.rim.device.api.crypto.Digest;
+import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.system.ApplicationDescriptor;
 import net.rim.device.api.system.ApplicationManager;
@@ -185,7 +186,7 @@ public class Entry implements EntryPointDescriptor, IntegerProps, StringProps, O
             m.runApplication(this._applicationDescriptor);
          }
       } catch (Throwable var4) {
-         throw new Object(e.getMessage());
+         throw new RuntimeException(e.getMessage());
       }
    }
 
@@ -220,11 +221,11 @@ public class Entry implements EntryPointDescriptor, IntegerProps, StringProps, O
    }
 
    public Entry(Bitmap icon, Bitmap focusIcon, int position, String themeCustomIconName) {
-      this._applicationDescriptor = (ApplicationDescriptor)(new Object(ApplicationDescriptor.currentApplicationDescriptor(), new String[]{"go"}));
+      this._applicationDescriptor = new ApplicationDescriptor(ApplicationDescriptor.currentApplicationDescriptor(), new String[]{"go"});
       this._defaultIcon = icon;
       this._defaultFocusIcon = focusIcon;
       this._themeCustomIconName = themeCustomIconName;
-      this._position = (Integer)(new Object(position));
+      this._position = new Integer(position);
       this.onThemeChanged();
       RibbonLauncher.getInstance().registerAction(this.getUid(), this);
       this._registered = true;
@@ -239,7 +240,7 @@ public class Entry implements EntryPointDescriptor, IntegerProps, StringProps, O
    static String stripOffHotKey(String description) {
       int index = -1;
       if ((index = description.indexOf(818)) != -1 && index > 1 && description.charAt(index - 2) == '(' && description.charAt(index + 1) == ')') {
-         StringBuffer desc = (StringBuffer)(new Object());
+         StringBuffer desc = new StringBuffer();
          if (description.charAt(index - 3) == ' ') {
             StringUtilities.append(desc, description, 0, index - 3);
          } else {
@@ -254,7 +255,7 @@ public class Entry implements EntryPointDescriptor, IntegerProps, StringProps, O
    }
 
    public static long stringHashToLong(String key) {
-      Digest digest = (Digest)(new Object());
+      Digest digest = new SHA1Digest();
       digest.update(key.getBytes());
       byte[] hashValBytes = digest.getDigest();
       long hashValLong = 0;

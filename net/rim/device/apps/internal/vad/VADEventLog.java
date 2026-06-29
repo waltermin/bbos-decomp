@@ -24,38 +24,26 @@ public final class VADEventLog {
 
    static final void log(int id) {
       EventLogger.logEvent(19574030040793832L, id, 0);
-      System.out
-         .println(
-            ((StringBuffer)(new Object()))
-               .append(EVENT_LOGGER_TITLE)
-               .append(": ")
-               .append((char)(id >> 24 & 0xFF))
-               .append((char)(id >> 16 & 0xFF))
-               .append((char)(id >> 8 & 0xFF))
-               .append((char)(id & 0xFF))
-               .toString()
-         );
+      System.out.println(EVENT_LOGGER_TITLE + ": " + (char)(id >> 24 & 0xFF) + (char)(id >> 16 & 0xFF) + (char)(id >> 8 & 0xFF) + (char)(id & 0xFF));
    }
 
    static final void log(int id, int value) {
       EventLogger.logEvent(19574030040793832L, id, value, 16, 0);
       System.out
          .println(
-            ((StringBuffer)(new Object()))
-               .append(EVENT_LOGGER_TITLE)
-               .append(": ")
-               .append((char)(id >> 24 & 0xFF))
-               .append((char)(id >> 16 & 0xFF))
-               .append((char)(id >> 8 & 0xFF))
-               .append((char)(id & 0xFF))
-               .append(": ")
-               .append(Integer.toHexString(value))
-               .toString()
+            EVENT_LOGGER_TITLE
+               + ": "
+               + (char)(id >> 24 & 0xFF)
+               + (char)(id >> 16 & 0xFF)
+               + (char)(id >> 8 & 0xFF)
+               + (char)(id & 0xFF)
+               + ": "
+               + Integer.toHexString(value)
          );
    }
 
    static final void log(String msg) {
       EventLogger.logEvent(19574030040793832L, msg.getBytes());
-      System.out.println(((StringBuffer)(new Object())).append(EVENT_LOGGER_TITLE).append(": ").append(msg).toString());
+      System.out.println(EVENT_LOGGER_TITLE + ": " + msg);
    }
 }

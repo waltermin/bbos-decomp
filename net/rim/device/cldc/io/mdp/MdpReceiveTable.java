@@ -20,12 +20,12 @@ final class MdpReceiveTable implements RealtimeClockListener {
    private Object[] _duplicateCrcss = new Object[32];
    private int[] _duplicateRefs = new int[32];
    private byte[] _duplicateFlags = new byte[32];
-   private Vector _assemblyTimes = (Vector)(new Object());
+   private Vector _assemblyTimes = new Vector();
    private IntHashtable _assemblyDatagrams;
    private PersistentObject _assemblyPersist;
-   private IntHashtable _urAssemblyDatagrams = (IntHashtable)(new Object());
-   private Vector _confirmationTimes = (Vector)(new Object());
-   private IntHashtable _confirmationDatagrams = (IntHashtable)(new Object());
+   private IntHashtable _urAssemblyDatagrams = new IntHashtable();
+   private Vector _confirmationTimes = new Vector();
+   private IntHashtable _confirmationDatagrams = new IntHashtable();
    private Transport _mdpTransport;
    private static final int MAXIMUM_DUPLICATES = 32;
    private static final int DUPLICATE_TMO = 30;
@@ -38,7 +38,7 @@ final class MdpReceiveTable implements RealtimeClockListener {
       this._assemblyPersist = RIMPersistentStore.getPersistentObject(15827351342928456L);
       this._assemblyDatagrams = (IntHashtable)this._assemblyPersist.getContents();
       if (this._assemblyDatagrams == null) {
-         this._assemblyDatagrams = (IntHashtable)(new Object());
+         this._assemblyDatagrams = new IntHashtable();
          this._assemblyPersist.setContents(this._assemblyDatagrams, 51);
          this._assemblyPersist.commit();
       } else {

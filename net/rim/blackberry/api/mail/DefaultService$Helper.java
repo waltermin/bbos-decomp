@@ -32,7 +32,7 @@ final class DefaultService$Helper implements TransmissionServiceListener {
                   var7 = false;
                }
             } catch (Throwable var12) {
-               throw new Object(e.toString());
+               throw new IllegalStateException(e.toString());
             }
          } finally {
             if (var7) {

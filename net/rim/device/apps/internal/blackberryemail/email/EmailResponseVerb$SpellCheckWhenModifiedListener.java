@@ -15,7 +15,7 @@ class EmailResponseVerb$SpellCheckWhenModifiedListener implements FieldChangeLis
    @Override
    public void fieldChanged(Field field, int context) {
       Object cookie = field.getCookie();
-      if (field instanceof Object && cookie instanceof SubjectModel) {
+      if (field instanceof TextField && cookie instanceof SubjectModel) {
          String newText = ((TextField)field).getText();
          String oldText = ((SubjectModel)cookie).getSubject();
          if (!newText.equals(oldText)) {

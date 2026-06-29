@@ -18,16 +18,16 @@ public class GenericComparator implements Comparator {
          return 1;
       }
 
-      if (!(ob1 instanceof Object)) {
-         if (!(ob1 instanceof Object)) {
-            if (!(ob1 instanceof Object)) {
-               if (!(ob1 instanceof Object)) {
-                  if (!(ob1 instanceof Object)) {
-                     if (!(ob1 instanceof Object)) {
+      if (!(ob1 instanceof Integer)) {
+         if (!(ob1 instanceof String)) {
+            if (!(ob1 instanceof Long)) {
+               if (!(ob1 instanceof Boolean)) {
+                  if (!(ob1 instanceof Double)) {
+                     if (!(ob1 instanceof Float)) {
                         return ob1.equals(ob2) ? 0 : Integer.MAX_VALUE;
                      } else {
-                        float float1 = ob1;
-                        float float2 = ob2;
+                        float float1 = (Float)ob1;
+                        float float2 = (Float)ob2;
                         if (float1 == float2) {
                            return 0;
                         } else {
@@ -35,8 +35,8 @@ public class GenericComparator implements Comparator {
                         }
                      }
                   } else {
-                     double double1 = ob1;
-                     double double2 = ob2;
+                     double double1 = (Double)ob1;
+                     double double2 = (Double)ob2;
                      if (Double.doubleToLongBits(double1) == Double.doubleToLongBits(double2)) {
                         return 0;
                      } else {
@@ -44,8 +44,8 @@ public class GenericComparator implements Comparator {
                      }
                   }
                } else {
-                  boolean b1 = ob1;
-                  boolean b2 = ob2;
+                  boolean b1 = (Boolean)ob1;
+                  boolean b2 = (Boolean)ob2;
                   if (b1 == b2) {
                      return 0;
                   } else {
@@ -53,8 +53,8 @@ public class GenericComparator implements Comparator {
                   }
                }
             } else {
-               long long1 = ob1;
-               long long2 = ob2;
+               long long1 = (Long)ob1;
+               long long2 = (Long)ob2;
                if (long1 == long2) {
                   return 0;
                } else {

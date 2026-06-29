@@ -9,6 +9,7 @@ import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.FieldProvider;
 import net.rim.device.apps.internal.browser.resources.BrowserResources;
 import net.rim.device.apps.internal.browser.ui.ButtonBorder;
@@ -22,20 +23,20 @@ final class VCardField extends VerticalFieldManager implements FieldChangeListen
    VCardField(long fieldStyle, AddressCardModel addressCard) {
       super(fieldStyle);
       this._address = addressCard;
-      Field f = ((FieldProvider)this._address).getField(new Object(45, 54, 11));
+      Field f = ((FieldProvider)this._address).getField(new ContextObject(45, 54, 11));
       if (f != null) {
          this.add(f);
          boolean color = Graphics.isColor();
-         this._buttonField = (ButtonField)(new Object(BrowserResources.getString(720), 98304));
+         this._buttonField = new ButtonField(BrowserResources.getString(720), 98304);
          if (color) {
             this._buttonField.setTag(BUTTON_TAG);
-            ButtonBorder border = (ButtonBorder)(new Object(0, 14079694, null));
+            ButtonBorder border = new ButtonBorder(0, 14079694, null);
             this._buttonField.setBorder(0, border);
             this._buttonField.setBorder(7, border);
-            border = (ButtonBorder)(new Object(1, 14079694, null));
+            border = new ButtonBorder(1, 14079694, null);
             this._buttonField.setBorder(6, border);
             this._buttonField.setBorder(8, border);
-            border = (ButtonBorder)(new Object(2, 14079694, null));
+            border = new ButtonBorder(2, 14079694, null);
             this._buttonField.setBorder(4, border);
          }
 

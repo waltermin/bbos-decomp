@@ -17,7 +17,7 @@ public class DocViewHyperlinkInfo {
    }
 
    DocViewHyperlinkInfo cloneObject() {
-      throw new Object("Base class cannot be cloned");
+      throw new IllegalArgumentException("Base class cannot be cloned");
    }
 
    public boolean identicalAndSuccesive(DocViewHyperlinkInfo otherLink, int tolerance) {

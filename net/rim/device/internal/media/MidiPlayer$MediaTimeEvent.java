@@ -16,7 +16,7 @@ class MidiPlayer$MediaTimeEvent implements Runnable {
             long duration = this.this$0.getDuration();
             this.this$0._mediaTime += 1000000;
             if (this.this$0._mediaTime > 0 && this.this$0._mediaTime <= duration) {
-               this.this$0.notifyListeners("com.rim.timeUpdate", new Object(this.this$0._mediaTime));
+               this.this$0.notifyListeners("com.rim.timeUpdate", new Long(this.this$0._mediaTime));
             } else {
                cancel = true;
             }

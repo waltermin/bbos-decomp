@@ -336,7 +336,7 @@ public final class OTAMessageSync
       if (ReliableTransmissionHelper.canTransmit(serviceRecord)) {
          RIMMessagingFolderManagement request = this._configManager.getTransmitBuffer(serviceRecord);
          if (request == null && userAction) {
-            request = (RIMMessagingFolderManagement)(new Object());
+            request = new RIMMessagingFolderManagement();
          }
 
          if (request != null) {
@@ -377,23 +377,13 @@ public final class OTAMessageSync
    @Override
    public final void failedTransmission(ServiceRecord serviceRecord, Object payload, int code) {
       if (code == 4229) {
-         OTAFMEvents.logEvent(
-            1414681389,
-            serviceRecord,
-            ((StringBuffer)(new Object("Code="))).append(String.valueOf(code)).append(", ").append(payload.getClass().getName()).toString(),
-            2
-         );
+         OTAFMEvents.logEvent(1414681389, serviceRecord, "Code=" + String.valueOf(code) + ", " + payload.getClass().getName(), 2);
          this.serviceRecordRemoved(serviceRecord);
       } else if (payload instanceof ConfigurationQueryCommand) {
-         OTAFMEvents.logEvent(1414677293, serviceRecord, ((StringBuffer)(new Object("Code="))).append(String.valueOf(code)).toString(), 2);
+         OTAFMEvents.logEvent(1414677293, serviceRecord, "Code=" + String.valueOf(code), 2);
          this.serviceRecordRemoved(serviceRecord);
       } else {
-         OTAFMEvents.logEvent(
-            1414680365,
-            serviceRecord,
-            ((StringBuffer)(new Object("Code="))).append(String.valueOf(code)).append(", ").append(payload.getClass().getName()).toString(),
-            2
-         );
+         OTAFMEvents.logEvent(1414680365, serviceRecord, "Code=" + String.valueOf(code) + ", " + payload.getClass().getName(), 2);
          this._workerThread.sendConfigurationQuery(serviceRecord);
       }
    }
@@ -454,7 +444,7 @@ public final class OTAMessageSync
             PersistentInteger.set(id, 1 - value);
             this.itpolicyChanged();
          }
-      } else if (object0 instanceof Object) {
+      } else if (object0 instanceof ServiceRecord) {
          ServiceRecord targetSR = (ServiceRecord)object0;
          if (targetSR == null || !StringUtilities.strEqualIgnoreCase(targetSR.getCid(), "CMIME", 1701707776)) {
             return;
@@ -887,7 +877,7 @@ public final class OTAMessageSync
       if (ContextObject.get(context, -4249701573962589967L) == null) {
          Thread thread = Thread.currentThread();
          int priority = thread.getPriority();
-         ContextObject.put(context, -4249701573962589967L, new Object(priority));
+         ContextObject.put(context, -4249701573962589967L, new Integer(priority));
          priority -= 2;
          if (priority < 1) {
             priority = 1;
@@ -1028,7 +1018,7 @@ public final class OTAMessageSync
          if (element instanceof EmailMessageModel) {
             EmailMessageModel message = (EmailMessageModel)element;
             EmailFolder messageFolder = EmailHierarchy.getEmailFolder(message.getFolderId());
-            if (messageFolder != null && messageFolder.getFolderId() == folderId && message instanceof Object) {
+            if (messageFolder != null && messageFolder.getFolderId() == folderId && message instanceof ActionProvider) {
                ActionProvider actionProvider = (ActionProvider)message;
                OTAFMEvents.logEvent(1044661580, message.getCMIMEReferenceIdentifier(), 5);
                actionProvider.perform(-3967872215949752466L, null);
@@ -1097,7 +1087,7 @@ public final class OTAMessageSync
          int messageCount = 0;
          int maxMessageCount = (62000 - 20 * hierarchy.getActiveFolderCount()) / 5 - 500;
          Object[] items = new Object[0];
-         if (unfiledItems instanceof Object) {
+         if (unfiledItems instanceof ReadableList) {
             ReadableList list = (ReadableList)unfiledItems;
             Array.resize(items, list.size());
             int nextInboxIndex = 0;
@@ -1152,7 +1142,7 @@ public final class OTAMessageSync
 
          EmailFolder filedFolder = (EmailFolder)hierarchy.getFiledFolder();
          Collection filedItems = filedFolder.getContainedItems();
-         if (filedItems instanceof Object) {
+         if (filedItems instanceof ReadableList) {
             ReadableList list = (ReadableList)filedItems;
             int nextIndex = items.length;
             Array.resize(items, nextIndex + list.size());
@@ -1243,7 +1233,7 @@ public final class OTAMessageSync
       data[1] = (byte)((folderId & 0xFF00) >> 8);
       data[2] = (byte)(parentFolderId & 0xFF);
       data[3] = (byte)((parentFolderId & 0xFF00) >> 8);
-      SHA1Digest digest = (SHA1Digest)(new Object());
+      SHA1Digest digest = new SHA1Digest();
       digest.update(data, 0, data.length);
       byte[] digestData = new byte[digest.getDigestLength()];
       digest.getDigest(digestData, 0, false);

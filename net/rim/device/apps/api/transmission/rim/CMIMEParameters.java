@@ -47,7 +47,7 @@ public final class CMIMEParameters extends Parameters implements CMIMEConstants 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public final void addCMIMEEmailAddress(byte nameByte, String addressString, String friendlyString, boolean isUnicodeEnabled, byte encodingCode) {
-      StringBuffer wholeAddress = (StringBuffer)(new Object());
+      StringBuffer wholeAddress = new StringBuffer();
       byte[] wholeAddressBytes = null;
       int wholeAddressLength = 0;
       if (addressString != null && addressString.length() > 0) {

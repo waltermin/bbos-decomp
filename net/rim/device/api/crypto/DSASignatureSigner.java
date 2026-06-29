@@ -56,7 +56,7 @@ public final class DSASignatureSigner implements SignatureSigner {
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object("DSA/"))).append(this._digest.getAlgorithm()).toString();
+      return "DSA/" + this._digest.getAlgorithm();
    }
 
    public DSASignatureSigner(DSAPrivateKey key, Digest digest) {
@@ -64,19 +64,19 @@ public final class DSASignatureSigner implements SignatureSigner {
          this._key = key;
          this._digest = digest;
          if (this._digest.getDigestLength() != 20) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          this._privateKeyLength = key.getDSACryptoSystem().getPrivateKeyLength();
          if (digest.getDigestLength() > this._privateKeyLength) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    public DSASignatureSigner(DSAPrivateKey key) {
-      this(key, (Digest)(new Object()));
+      this(key, new SHA1Digest());
    }
 }

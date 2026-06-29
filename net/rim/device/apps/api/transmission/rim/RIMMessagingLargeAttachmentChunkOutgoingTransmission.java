@@ -27,7 +27,7 @@ public class RIMMessagingLargeAttachmentChunkOutgoingTransmission extends RIMMes
 
    @Override
    public DataBuffer write() {
-      DataBuffer result = (DataBuffer)(new Object(true));
+      DataBuffer result = new DataBuffer(true);
       result.writeByte(5);
       CMIMEParameters parameters = new CMIMEParameters(result, 5, 1);
       parameters.addCMIMEInteger((byte)48, this._refId);

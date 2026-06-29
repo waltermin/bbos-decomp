@@ -1,11 +1,11 @@
 package net.rim.device.apps.internal.phone.data;
 
-import net.rim.device.api.collection.Collection;
 import net.rim.device.api.collection.ReadableList;
 import net.rim.device.api.collection.WritableSet;
 import net.rim.device.api.system.ObjectGroup;
 import net.rim.device.api.system.PersistentContent;
 import net.rim.device.apps.api.framework.model.EncryptableProvider;
+import net.rim.device.apps.api.framework.model.PersistableRIMModel;
 import net.rim.device.apps.api.messaging.Folder;
 import net.rim.device.apps.api.messaging.FolderHierarchies;
 import net.rim.device.apps.api.messaging.FolderMerge;
@@ -39,7 +39,7 @@ public final class PhoneFolders {
    public static final void initializePhoneFolderHierarchy() {
       SimpleFolder hierarchy = getPhoneFolderHierarchy();
       if (hierarchy != null) {
-         SimpleFolder[] folders = new Object[FOLDER_COUNT];
+         SimpleFolder[] folders = new SimpleFolder[FOLDER_COUNT];
          folders[1] = (SimpleFolder)hierarchy.getFolder(5390902206192375236L);
          folders[0] = (SimpleFolder)hierarchy.getFolder(7042951934619290849L);
          if (PhoneUtilities.idenTypeNetwork()) {
@@ -62,7 +62,7 @@ public final class PhoneFolders {
          }
 
          for (int idx = 0; idx < FOLDER_COUNT; idx++) {
-            PurgeManager.getInstance().addCollection((Collection)folders[idx].getContainedItems());
+            PurgeManager.getInstance().addCollection((ReadableList)folders[idx].getContainedItems());
          }
       }
 
@@ -97,7 +97,7 @@ public final class PhoneFolders {
       synchronized (hierarchy) {
          if (hierarchy.getFolder(7042951934619290849L) == null) {
             hierarchy.putFolder(
-               (Folder)(new Object(
+               new SimpleFolder(
                   1212521839578244703L,
                   7042951934619290849L,
                   PhoneResources.getResourceBundle(),
@@ -105,13 +105,13 @@ public final class PhoneFolders {
                   "net.rim.device.apps.api.messaging.util.PersistedSortedCollection",
                   hierarchy,
                   1
-               ))
+               )
             );
          }
 
          if (hierarchy.getFolder(5390902206192375236L) == null) {
             hierarchy.putFolder(
-               (Folder)(new Object(
+               new SimpleFolder(
                   1212521839578244703L,
                   5390902206192375236L,
                   PhoneResources.getResourceBundle(),
@@ -119,14 +119,14 @@ public final class PhoneFolders {
                   "net.rim.device.apps.api.messaging.util.PersistedSortedCollection",
                   hierarchy,
                   1
-               ))
+               )
             );
          }
 
          if (PhoneUtilities.idenTypeNetwork()) {
             if (hierarchy.getFolder(-1859209320265783789L) == null) {
                hierarchy.putFolder(
-                  (Folder)(new Object(
+                  new SimpleFolder(
                      1212521839578244703L,
                      -1859209320265783789L,
                      PhoneResources.getResourceBundle(),
@@ -134,13 +134,13 @@ public final class PhoneFolders {
                      "net.rim.device.apps.api.messaging.util.PersistedSortedCollection",
                      hierarchy,
                      1
-                  ))
+                  )
                );
             }
 
             if (hierarchy.getFolder(-2025972805868361049L) == null) {
                hierarchy.putFolder(
-                  (Folder)(new Object(
+                  new SimpleFolder(
                      1212521839578244703L,
                      -2025972805868361049L,
                      PhoneResources.getResourceBundle(),
@@ -148,7 +148,7 @@ public final class PhoneFolders {
                      "net.rim.device.apps.api.messaging.util.PersistedSortedCollection",
                      hierarchy,
                      1
-                  ))
+                  )
                );
             }
          }
@@ -159,26 +159,26 @@ public final class PhoneFolders {
 
    public static final SimpleFolder getDefaultFolder() {
       SimpleFolder hierarchy = getPhoneFolderHierarchy();
-      return (SimpleFolder)(hierarchy != null ? hierarchy.getFolder(5390902206192375236L) : null);
+      return hierarchy != null ? (SimpleFolder)hierarchy.getFolder(5390902206192375236L) : null;
    }
 
    public static final SimpleFolder getMissedCallFolder() {
       SimpleFolder hierarchy = getPhoneFolderHierarchy();
-      return (SimpleFolder)(hierarchy != null ? hierarchy.getFolder(7042951934619290849L) : null);
+      return hierarchy != null ? (SimpleFolder)hierarchy.getFolder(7042951934619290849L) : null;
    }
 
    private static final SimpleFolder getDirectConnectCallFolder() {
       SimpleFolder hierarchy = getPhoneFolderHierarchy();
-      return (SimpleFolder)(hierarchy != null ? hierarchy.getFolder(-1859209320265783789L) : null);
+      return hierarchy != null ? (SimpleFolder)hierarchy.getFolder(-1859209320265783789L) : null;
    }
 
    private static final SimpleFolder getDirectConnectAlertFolder() {
       SimpleFolder hierarchy = getPhoneFolderHierarchy();
-      return (SimpleFolder)(hierarchy != null ? hierarchy.getFolder(-2025972805868361049L) : null);
+      return hierarchy != null ? (SimpleFolder)hierarchy.getFolder(-2025972805868361049L) : null;
    }
 
    static final SimpleFolder[] getPhoneFolders() {
-      SimpleFolder[] folders = new Object[FOLDER_COUNT];
+      SimpleFolder[] folders = new SimpleFolder[FOLDER_COUNT];
       folders[1] = getDefaultFolder();
       folders[0] = getMissedCallFolder();
       if (PhoneUtilities.idenTypeNetwork()) {
@@ -407,7 +407,7 @@ public final class PhoneFolders {
 
    public static final void logPhoneCall(PhoneCallModel callLog) {
       if (callLog != null) {
-         if (callLog instanceof Object) {
+         if (callLog instanceof EncryptableProvider) {
             EncryptableProvider encryptable = (EncryptableProvider)callLog;
             if (!encryptable.checkCrypt(true, true)) {
                encryptable.reCrypt(true, true);
@@ -468,7 +468,7 @@ public final class PhoneFolders {
    }
 
    private static final void addCallLog(Object item) {
-      if (item instanceof Object) {
+      if (item instanceof PersistableRIMModel) {
          Folder phoneFolder = getPhoneFolder(item);
          if (phoneFolder != null) {
             if (item instanceof PhoneCallModelImpl) {
@@ -517,7 +517,7 @@ public final class PhoneFolders {
 
    public static final PersistedSortedCollection getContainedItems(long folderId) {
       Folder phoneFolder = getPhoneFolder(folderId);
-      return (PersistedSortedCollection)(phoneFolder != null ? phoneFolder.getContainedItems() : null);
+      return phoneFolder != null ? (PersistedSortedCollection)phoneFolder.getContainedItems() : null;
    }
 
    public static final void crypt(int contentProtectionGeneration) {

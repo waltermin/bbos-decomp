@@ -10,7 +10,7 @@ public final class VCardReader implements VCardDefine {
    private int _version = 1;
    private TokenParser _tokenParser;
    private PropertyParser _propertyParser;
-   private IntVector _usedTags = (IntVector)(new Object());
+   private IntVector _usedTags = new IntVector();
    private boolean _nonConformanceMode;
 
    public VCardReader(VCardProvider vCardProvider, InputStream in, String encoding) {
@@ -139,7 +139,7 @@ public final class VCardReader implements VCardDefine {
 
    public final VCardProvider parseIt() {
       int currentProperty = 0;
-      Stack vCardStack = (Stack)(new Object());
+      Stack vCardStack = new Stack();
       boolean beginTagFound = false;
 
       while (true) {
@@ -399,7 +399,7 @@ public final class VCardReader implements VCardDefine {
    private final String buildTextProperty() {
       PARAMETER para = new PARAMETER();
       this.getPropertyBasicTextParameter(para);
-      return (String)(new Object(this.getContent(para._encoding, 0)));
+      return new String(this.getContent(para._encoding, 0));
    }
 
    private final void buildN() {
@@ -597,7 +597,7 @@ public final class VCardReader implements VCardDefine {
       String country = null;
 
       do {
-         String str = (String)(new Object(this.getContent(para._encoding, 59)));
+         String str = new String(this.getContent(para._encoding, 59));
          switch (count) {
             case -1:
                break;
@@ -657,7 +657,7 @@ public final class VCardReader implements VCardDefine {
          this._tokenParser.clearEndOfTokenCharacters(";:,=");
       }
 
-      this._vCardCurrent.setLabel((String)(new Object(this.getContent(para._encoding, 0))));
+      this._vCardCurrent.setLabel(new String(this.getContent(para._encoding, 0)));
    }
 
    private final void buildURL() {
@@ -809,7 +809,7 @@ public final class VCardReader implements VCardDefine {
       int count = 0;
 
       do {
-         String str = (String)(new Object(this.getContent(para._encoding, 59)));
+         String str = new String(this.getContent(para._encoding, 59));
          switch (count) {
             case -1:
                break;

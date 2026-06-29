@@ -11,6 +11,7 @@ import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.XYRect;
+import net.rim.device.api.ui.component.DateField;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.internal.ui.component.SimpleChoiceDialog;
 
@@ -22,7 +23,7 @@ public final class ConfirmationDialog extends SimpleChoiceDialog {
    private static boolean _dialogShownFlag;
 
    public ConfirmationDialog() {
-      super(_resources.getString(13), new Object[]{_resources.getString(55), _resources.getString(56)}, 1, Bitmap.getPredefinedBitmap(1), 33554432);
+      super(_resources.getString(13), new String[]{_resources.getString(55), _resources.getString(56)}, 1, Bitmap.getPredefinedBitmap(1), 33554432);
    }
 
    @Override
@@ -73,7 +74,7 @@ public final class ConfirmationDialog extends SimpleChoiceDialog {
 
                for (int idx = 0; idx < count; idx++) {
                   Field field = screen.getField(idx);
-                  if (field instanceof Object) {
+                  if (field instanceof DateField) {
                      field.setFocus();
                      break;
                   }

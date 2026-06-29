@@ -21,6 +21,6 @@ final class ESStringBundle extends ESObject {
    }
 
    final String getString(String key) {
-      return (String)(this._strings != null ? this._strings.get(key) : null);
+      return this._strings != null ? (String)this._strings.get(key) : null;
    }
 }

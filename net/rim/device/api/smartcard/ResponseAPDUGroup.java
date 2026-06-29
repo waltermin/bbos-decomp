@@ -35,7 +35,7 @@ public class ResponseAPDUGroup {
          this._responseAPDUs = responseAPDUs;
          this._numAPDUs = numAPDUs;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -47,7 +47,7 @@ public class ResponseAPDUGroup {
       if (index >= 0 && index <= this._numAPDUs) {
          return this._responseAPDUs[index];
       } else {
-         throw new Object();
+         throw new ArrayIndexOutOfBoundsException();
       }
    }
 }

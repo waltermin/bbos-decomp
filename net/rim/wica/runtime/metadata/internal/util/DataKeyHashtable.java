@@ -26,7 +26,7 @@ public final class DataKeyHashtable {
 
    public DataKeyHashtable(Wiclet wiclet, KeyDataCollection c, int initialCapacity) {
       if (initialCapacity < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (initialCapacity < 1) {
@@ -38,14 +38,14 @@ public final class DataKeyHashtable {
       int[] keyFields = c.getDef().getKeyFields();
       this._isSingleDataKey = keyFields.length == 1 && c.getDef().getFieldType(keyFields[0]) == 6;
       if (this._isSingleDataKey) {
-         this._handleToKeyValue = (IntHashtable)(new Object(initialCapacity));
+         this._handleToKeyValue = new IntHashtable(initialCapacity);
       }
 
       this._key = new int[initialCapacity];
       this._hash = new int[initialCapacity];
       this._occupied = new byte[initialCapacity];
       this._threshold = initialCapacity * 75 / 100;
-      this._keyToIndex = (IntIntHashtable)(new Object(initialCapacity));
+      this._keyToIndex = new IntIntHashtable(initialCapacity);
    }
 
    public final int size() {
@@ -95,7 +95,7 @@ public final class DataKeyHashtable {
          if (defs.getFieldType(keyField) == 6) {
             dataHandle = this._collection.getReferenceField(dataHandle, keyField);
             if (dataHandle == -1) {
-               throw new Object("Invalid data key");
+               throw new RuntimeException("Invalid data key");
             }
 
             KeyDataCollection dc = (KeyDataCollection)this._wiclet.getDataCollection(defs.getFieldReferenceType(keyField));

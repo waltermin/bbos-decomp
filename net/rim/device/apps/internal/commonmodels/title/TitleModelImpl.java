@@ -3,7 +3,10 @@ package net.rim.device.apps.internal.commonmodels.title;
 import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
+import net.rim.device.api.ui.component.ActiveAutoTextEditField;
+import net.rim.device.api.ui.component.ActiveRichTextField;
 import net.rim.device.api.ui.component.AutoTextEditField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.util.StringMatch;
 import net.rim.device.apps.api.framework.model.CloneProvider;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -72,7 +75,7 @@ public final class TitleModelImpl
       boolean activeField = false;
       long spellcheckable = 1099511627776L;
       int length = 1000000;
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          ContextObject contextObject = (ContextObject)context;
          int rc = -1;
          if (contextObject.getFlag(28)) {
@@ -107,11 +110,11 @@ public final class TitleModelImpl
       Field field;
       if (editable) {
          s = s.substring(0, Math.min(s.length(), length));
-         field = (Field)(new Object(label, s, length, 4503601774854144L | spellcheckable));
+         field = new ActiveAutoTextEditField(label, s, length, 4503601774854144L | spellcheckable);
       } else if (activeField) {
-         field = (Field)(new Object(s, 18014398509481984L));
+         field = new ActiveRichTextField(s, 18014398509481984L);
       } else {
-         field = (Field)(new Object(s, 18014398509482048L));
+         field = new LabelField(s, 18014398509482048L);
       }
 
       field.setEditable(editable);
@@ -121,7 +124,7 @@ public final class TitleModelImpl
 
    @Override
    public final boolean grabDataFromField(Field field, Object context) {
-      if (field instanceof Object && field.isEditable()) {
+      if (field instanceof AutoTextEditField && field.isEditable()) {
          AutoTextEditField editField = (AutoTextEditField)field;
          this.setTitle(editField.getText());
          String title = this.getTitle();
@@ -133,7 +136,7 @@ public final class TitleModelImpl
 
    @Override
    public final boolean convert(Object context, Object target) {
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          ContextObject contextObject = (ContextObject)context;
          if (contextObject.getFlag(19)) {
             SyncBuffer syncBuffer = (SyncBuffer)target;
@@ -142,7 +145,7 @@ public final class TitleModelImpl
                syncBuffer.addField(field, this.getTitle());
                return true;
             }
-         } else if (contextObject.getFlag(11) && contextObject.getFlag(43) && contextObject.getFlag(54) && target instanceof Object) {
+         } else if (contextObject.getFlag(11) && contextObject.getFlag(43) && contextObject.getFlag(54) && target instanceof StringBuffer) {
             StringBuffer stringBuffer = (StringBuffer)target;
             String title = this.getTitle();
             if (title != null) {
@@ -164,7 +167,7 @@ public final class TitleModelImpl
 
    @Override
    public final boolean validate(Field field, Object context) {
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          ContextObject contextObject = (ContextObject)context;
          if (contextObject.getFlag(56) || contextObject.getFlag(28) || contextObject.getFlag(8) || contextObject.getFlag(33)) {
             AutoTextEditField editField = (AutoTextEditField)field;
@@ -195,7 +198,7 @@ public final class TitleModelImpl
 
    @Override
    public final int getKeys(Object context, Object[] keyArray, int index, long keyRequested) {
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          ContextObject contextObject = (ContextObject)context;
          if (contextObject.getFlag(28) || contextObject.getFlag(35) || contextObject.getFlag(56)) {
             if (index + 1 > keyArray.length) {

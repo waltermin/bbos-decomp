@@ -38,7 +38,7 @@ final class X509_RIM_PublicKeyEncoder2 extends PublicKeyEncoder {
             subjectPublicKey.writeInteger(_key.getPublicKeyData());
             subjectPublicKeyInfo.writeBitString(subjectPublicKey.toByteArray());
             asn1Stream.writeSequence(subjectPublicKeyInfo);
-            return (EncodedKey)(new Object(asn1Stream.toByteArray(), "X509"));
+            return new EncodedKey(asn1Stream.toByteArray(), "X509");
          }
 
          if (key.getAlgorithm().equals("DSA")) {
@@ -58,7 +58,7 @@ final class X509_RIM_PublicKeyEncoder2 extends PublicKeyEncoder {
             subjectPublicKey.writeInteger(_key.getPublicKeyData());
             subjectPublicKeyInfo.writeBitString(subjectPublicKey.toByteArray());
             asn1Stream.writeSequence(subjectPublicKeyInfo);
-            return (EncodedKey)(new Object(asn1Stream.toByteArray(), "X509"));
+            return new EncodedKey(asn1Stream.toByteArray(), "X509");
          }
 
          if (key.getAlgorithm().equals("RSA")) {
@@ -73,13 +73,13 @@ final class X509_RIM_PublicKeyEncoder2 extends PublicKeyEncoder {
             tempSequence.writeSequence(subjectPublicKey);
             subjectPublicKeyInfo.writeBitString(tempSequence.toByteArray());
             asn1Stream.writeSequence(subjectPublicKeyInfo);
-            return (EncodedKey)(new Object(asn1Stream.toByteArray(), "X509"));
+            return new EncodedKey(asn1Stream.toByteArray(), "X509");
          }
       } finally {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override

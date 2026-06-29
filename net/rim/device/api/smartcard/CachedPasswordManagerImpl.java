@@ -12,7 +12,7 @@ final class CachedPasswordManagerImpl extends CachedPasswordManager implements M
    private boolean _memoryCleanerListenerAdded = false;
 
    public CachedPasswordManagerImpl() {
-      this._cachedPasswordsHashtable = (Hashtable)(new Object());
+      this._cachedPasswordsHashtable = new Hashtable();
    }
 
    @Override

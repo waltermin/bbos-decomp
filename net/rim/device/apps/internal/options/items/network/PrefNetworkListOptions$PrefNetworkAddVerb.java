@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.options.items.network;
 import net.rim.device.api.system.RadioInfo;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.internal.options.resources.OptionsResources;
@@ -30,13 +31,15 @@ final class PrefNetworkListOptions$PrefNetworkAddVerb extends Verb {
       Object[] choices;
       if (canUseAvailList) {
          choices = new Object[]{
-            new Object(OptionsResources.getString(1880)), new Object(OptionsResources.getString(1879)), new Object(OptionsResources.getString(1919))
+            new RichTextField(OptionsResources.getString(1880)),
+            new RichTextField(OptionsResources.getString(1879)),
+            new RichTextField(OptionsResources.getString(1919))
          };
       } else {
-         choices = new Object[]{new Object(OptionsResources.getString(1880)), new Object(OptionsResources.getString(1919))};
+         choices = new Object[]{new RichTextField(OptionsResources.getString(1880)), new RichTextField(OptionsResources.getString(1919))};
       }
 
-      Dialog dlg = (Dialog)(new Object(OptionsResources.getString(1873), choices, null, 0, null));
+      Dialog dlg = new Dialog(OptionsResources.getString(1873), choices, null, 0, null);
       switch (dlg.doModal()) {
          case 0:
          default:

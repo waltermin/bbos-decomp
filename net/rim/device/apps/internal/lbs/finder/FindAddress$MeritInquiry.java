@@ -19,7 +19,7 @@ final class FindAddress$MeritInquiry implements Runnable {
    @Override
    public final void run() {
       synchronized (Application.getEventLock()) {
-         if (Dialog.ask(3, MessageFormat.format(LBSResources.getString(144), new Object[]{this._label}), 4) == 4) {
+         if (Dialog.ask(3, MessageFormat.format(LBSResources.getString(144), new String[]{this._label}), 4) == 4) {
             this._resultIndex = 0;
          }
       }

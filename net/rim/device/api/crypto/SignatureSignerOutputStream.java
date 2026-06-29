@@ -9,7 +9,7 @@ public class SignatureSignerOutputStream extends CryptoOutputStream {
    public SignatureSignerOutputStream(SignatureSigner signer, OutputStream out) {
       super(out == null ? new CryptoDummyOutputStream() : out);
       if (signer == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._signer = signer;
@@ -33,7 +33,7 @@ public class SignatureSignerOutputStream extends CryptoOutputStream {
 
          super._out.write(buffer, offset, length);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

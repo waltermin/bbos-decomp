@@ -34,15 +34,15 @@ public final class SyncAgent {
 
    private SyncAgent() {
       SyncAgentTransactionManager.getInstance();
-      this._listeners = (Vector)(new Object());
-      this._dbsUsedByOtherSyncSources = (LongHashtable)(new Object());
+      this._listeners = new Vector();
+      this._dbsUsedByOtherSyncSources = new LongHashtable();
       this._servicesConfigurationManager = ServicesConfigurationManager.getSingletonInstance();
       this._eventHandler = new EventHandler();
       Proxy.getInstance().startThread(this._eventHandler);
    }
 
    public final void registerListener(SyncAgentListener aSyncAgentListener) {
-      this._listeners.addElement(new Object(aSyncAgentListener));
+      this._listeners.addElement(new WeakReference(aSyncAgentListener));
    }
 
    public final void notifyListenersWith(int eventId, Object anObject) {
@@ -70,7 +70,7 @@ public final class SyncAgent {
          IntVector databases = (IntVector)this._dbsUsedByOtherSyncSources.get(sid);
          int xHash = CRC32.update(-1, aDatabaseName.getBytes());
          if (databases == null) {
-            databases = (IntVector)(new Object());
+            databases = new IntVector();
          }
 
          databases.addElement(xHash);
@@ -118,7 +118,7 @@ public final class SyncAgent {
    }
 
    public final Vector getDefaultSyncDataBasesFor(long sid) {
-      Vector result = (Vector)(new Object(3));
+      Vector result = new Vector(3);
       Configuration xConfiguration = this._servicesConfigurationManager.getConfiguration(sid);
       DataSource xDataSource = xConfiguration.getDefaultSyncDataSource();
       if (xDataSource != null) {

@@ -1,8 +1,8 @@
 package net.rim.device.apps.api.vcal;
 
+import java.io.ByteArrayInputStream;
 import java.io.DataInput;
 import java.io.DataOutput;
-import java.io.InputStream;
 import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.util.Factory;
 import net.rim.device.api.util.StringUtilities;
@@ -13,6 +13,7 @@ import net.rim.device.apps.api.transmission.TransmissionServiceListener;
 import net.rim.device.apps.api.transmission.rim.CMIMEContentType;
 import net.rim.device.apps.api.transmission.rim.RIMMessagingIncomingMessage;
 import net.rim.device.apps.api.utility.serialization.Converter;
+import net.rim.device.apps.api.utility.serialization.SerializationException;
 import net.rim.device.apps.internal.api.serialformats.ICalendarReader;
 
 final class VCalToEventConverter implements Factory, TransmissionServiceListener, Converter {
@@ -30,7 +31,7 @@ final class VCalToEventConverter implements Factory, TransmissionServiceListener
 
          synchronized (this._builder) {
             this._builder.reset();
-            ((ICalendarReader)(new Object(this._builder, (InputStream)(new Object(data)), encoding))).parseIt();
+            new ICalendarReader(this._builder, new ByteArrayInputStream(data), encoding).parseIt();
             return this._builder.getEventModel();
          }
       } finally {
@@ -40,7 +41,7 @@ final class VCalToEventConverter implements Factory, TransmissionServiceListener
 
    @Override
    public final boolean canConvert(Object parameters) {
-      if (parameters instanceof Object) {
+      if (parameters instanceof String) {
          String string = (String)parameters;
          if (StringUtilities.compareToIgnoreCase(string, "text/x-vcalendar") == 0
             || StringUtilities.compareToIgnoreCase(string, "text/calendar") == 0
@@ -60,23 +61,23 @@ final class VCalToEventConverter implements Factory, TransmissionServiceListener
    }
 
    @Override
-   public final Object convert(byte[] inputBytes, Object contextObject) {
-      throw new Object(_notImplemented);
+   public final Object convert(byte[] inputBytes, Object contextObject) throws SerializationException {
+      throw new SerializationException(_notImplemented);
    }
 
    @Override
-   public final Object convert(DataInput aDataInput, Object contextObject) {
-      throw new Object(_notImplemented);
+   public final Object convert(DataInput aDataInput, Object contextObject) throws SerializationException {
+      throw new SerializationException(_notImplemented);
    }
 
    @Override
-   public final void convert(Object inputObject, DataOutput aDataOutput, Object contextObject) {
-      throw new Object(_notImplemented);
+   public final void convert(Object inputObject, DataOutput aDataOutput, Object contextObject) throws SerializationException {
+      throw new SerializationException(_notImplemented);
    }
 
    @Override
-   public final byte[] convert(Object inputObject, Object contextObject) {
-      throw new Object(_notImplemented);
+   public final byte[] convert(Object inputObject, Object contextObject) throws SerializationException {
+      throw new SerializationException(_notImplemented);
    }
 
    @Override

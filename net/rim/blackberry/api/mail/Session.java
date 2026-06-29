@@ -65,7 +65,7 @@ public final class Session {
 
    public static final void addViewListener(ViewListener vl) {
       if (vl == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       assertPermission();
@@ -79,7 +79,7 @@ public final class Session {
    public static final void addDefaultSessionListener(DefaultSessionListener dl) {
       assertPermission();
       if (dl == null) {
-         throw new Object("DefaultSessionListener is null");
+         throw new NullPointerException("DefaultSessionListener is null");
       }
 
       ListenerManager.getInstance().addDefaultSessionListener(dl);

@@ -32,7 +32,7 @@ public final class BrowserResources implements BrowserResource {
       if (resource != null) {
          int indexOfSlash = id.indexOf(47, 7);
          if (indexOfSlash >= 0 && indexOfSlash + 1 < id.length()) {
-            byte[] data = resource.getResource(((StringBuffer)(new Object("pictogram/"))).append(id.substring(indexOfSlash + 1)).append(".png").toString());
+            byte[] data = resource.getResource("pictogram/" + id.substring(indexOfSlash + 1) + ".png");
             if (data != null) {
                return EncodedImage.createEncodedImage(data, 0, -1);
             }

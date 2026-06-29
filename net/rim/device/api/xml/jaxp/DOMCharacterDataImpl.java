@@ -1,6 +1,7 @@
 package net.rim.device.api.xml.jaxp;
 
 import org.w3c.dom.CharacterData;
+import org.w3c.dom.DOMException;
 
 class DOMCharacterDataImpl extends DOMNodeImpl implements CharacterData {
    DOMCharacterDataImpl(DOMInternalRepresentation ir, int node) {
@@ -38,7 +39,7 @@ class DOMCharacterDataImpl extends DOMNodeImpl implements CharacterData {
       try {
          return super._ir.getTextSubstring(super._node, offset, count);
       } finally {
-         throw new Object((short)1, "");
+         throw new DOMException((short)1, "");
       }
    }
 
@@ -52,7 +53,7 @@ class DOMCharacterDataImpl extends DOMNodeImpl implements CharacterData {
    public void insertData(int offset, String arg) {
       super._ir.notReadOnly(super._node);
       if (!super._ir.insertTextData(super._node, offset, arg)) {
-         throw new Object((short)1, "");
+         throw new DOMException((short)1, "");
       }
    }
 
@@ -60,7 +61,7 @@ class DOMCharacterDataImpl extends DOMNodeImpl implements CharacterData {
    public void deleteData(int offset, int count) {
       super._ir.notReadOnly(super._node);
       if (!super._ir.deleteTextData(super._node, offset, count)) {
-         throw new Object((short)1, "");
+         throw new DOMException((short)1, "");
       }
    }
 
@@ -68,7 +69,7 @@ class DOMCharacterDataImpl extends DOMNodeImpl implements CharacterData {
    public void replaceData(int offset, int count, String arg) {
       super._ir.notReadOnly(super._node);
       if (!super._ir.replaceTextData(super._node, offset, count, arg)) {
-         throw new Object((short)1, "");
+         throw new DOMException((short)1, "");
       }
    }
 }

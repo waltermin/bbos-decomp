@@ -29,7 +29,7 @@ public class DiscoveryAgent {
          devices = this._btManager.getPairedDevices();
       } else {
          if (option != 0) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          devices = this._btManager.getInRangeDevices(false);
@@ -48,7 +48,7 @@ public class DiscoveryAgent {
 
    public synchronized boolean startInquiry(int accessCode, DiscoveryListener listener) throws BluetoothStateException {
       if (listener == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       switch (accessCode) {
@@ -65,14 +65,14 @@ public class DiscoveryAgent {
             if (accessCode >= 10390272 && accessCode <= 953151) {
                return false;
             } else {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
       }
    }
 
    public synchronized boolean cancelInquiry(DiscoveryListener listener) {
       if (listener == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       Object[] listeners = this._btManager.getListeners();
@@ -105,18 +105,18 @@ public class DiscoveryAgent {
             attributes = DEFAULT_ATTRIBUTE_IDS;
          } else {
             if (attrSet.length == 0) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             attributes = new int[0];
 
             for (int i = 0; i < attrSet.length; i++) {
                if (attrSet[i] < 0 || attrSet[i] > 65535) {
-                  throw new Object();
+                  throw new IllegalArgumentException();
                }
 
                if (Arrays.getIndex(attributes, attrSet[i]) != -1) {
-                  throw new Object();
+                  throw new IllegalArgumentException();
                }
 
                if (Arrays.getIndex(DEFAULT_ATTRIBUTE_IDS, attrSet[i]) == -1) {
@@ -132,12 +132,12 @@ public class DiscoveryAgent {
          if (numUUIDs != 0 && numUUIDs <= 12) {
             for (int i = 0; i < numUUIDs; i++) {
                if (uuidSet[i] == null) {
-                  throw new Object();
+                  throw new NullPointerException();
                }
 
                for (int j = 0; j < numUUIDs; j++) {
                   if (i != j && uuidSet[i].equals(uuidSet[j])) {
-                     throw new Object();
+                     throw new IllegalArgumentException();
                   }
                }
             }
@@ -153,10 +153,10 @@ public class DiscoveryAgent {
             handler.destroy();
             throw new BluetoothStateException();
          } else {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } else {
-         throw new Object();
+         throw new NullPointerException();
       }
    }
 
@@ -166,13 +166,13 @@ public class DiscoveryAgent {
 
    public String selectService(UUID uuid, int security, boolean master) {
       if (uuid == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       switch (security) {
          case -1:
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          case 1:
          case 2:

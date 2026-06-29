@@ -193,6 +193,6 @@ public class AppsMainScreen extends MainScreen {
          this._context = new ContextObject();
       }
 
-      this._context.put(244, new Object(helpTopicID));
+      this._context.put(244, new Integer(helpTopicID));
    }
 }

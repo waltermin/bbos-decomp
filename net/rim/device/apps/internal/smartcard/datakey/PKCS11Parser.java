@@ -6,9 +6,9 @@ import net.rim.device.api.util.IntHashtable;
 class PKCS11Parser implements DatakeyPKCS11Constants {
    public static IntHashtable getAttributes(byte[] data) {
       if (data != null && data.length != 0) {
-         DataBuffer buffer = (DataBuffer)(new Object(false));
+         DataBuffer buffer = new DataBuffer(false);
          buffer.setData(data, 0, data.length);
-         IntHashtable attributes = (IntHashtable)(new Object());
+         IntHashtable attributes = new IntHashtable();
 
          try {
             while (!buffer.eof()) {

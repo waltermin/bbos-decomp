@@ -9,7 +9,7 @@ import net.rim.device.cldc.io.daemon.ProtocolDaemon;
 final class MdpWaitingQueueNotificationThread extends Thread implements MdpConstants, ConnEvent {
    private int[] _statusIds = new int[16];
    private int[] _statusCodes = new int[16];
-   private IntHashtable _receipts = (IntHashtable)(new Object(16));
+   private IntHashtable _receipts = new IntHashtable(16);
    private int _statusHead;
    private int _statusTail;
    private boolean _shutdown;

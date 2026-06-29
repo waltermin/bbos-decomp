@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.qm.peer;
 
+import net.rim.device.api.ui.component.ActiveAutoTextEditField;
 import net.rim.device.api.ui.component.AutoTextEditField;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.RichTextField;
@@ -19,13 +20,13 @@ final class DisplayNameDialog extends OkCancelDialog {
    DisplayNameDialog(String title, String message, String oldDisplayName) {
       this.addTitle(title);
       if (!this.isEmpty(message)) {
-         this._promptField = (RichTextField)(new Object(message));
+         this._promptField = new RichTextField(message);
          this.add(this._promptField);
       }
 
-      StringPattern[] smileys = new Object[]{Smileys.getSmileyFacility()};
-      StringPatternContainer patterns = (StringPatternContainer)(new Object(smileys));
-      this._nameField = (AutoTextEditField)(new Object(null, oldDisplayName, 200, 10747904000L, patterns));
+      StringPattern[] smileys = new StringPattern[]{Smileys.getSmileyFacility()};
+      StringPatternContainer patterns = new StringPatternContainer(smileys);
+      this._nameField = new ActiveAutoTextEditField(null, oldDisplayName, 200, 10747904000L, patterns);
       this._customVfm.add(this._nameField);
       this.add(this._customVfm);
       this.addOkCancelButtons();

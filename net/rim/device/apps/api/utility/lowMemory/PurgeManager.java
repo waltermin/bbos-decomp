@@ -13,7 +13,7 @@ import net.rim.vm.Process;
 
 public final class PurgeManager implements LowMemoryListener {
    private long[] _purgeCollectionKeys = new long[1];
-   private Vector _collections = (Vector)(new Object());
+   private Vector _collections = new Vector();
    private long[] _sort = new long[1];
    private static final long KEY = 8720984902929879083L;
    public static final long MIN_PURGE_IDLE_TIME = 30L;
@@ -29,7 +29,7 @@ public final class PurgeManager implements LowMemoryListener {
    }
 
    public final void addCollection(Collection collection) {
-      if (collection instanceof Object) {
+      if (collection instanceof ReadableList) {
          synchronized (CollectionLock.getGlobalLock()) {
             if (this._collections.size() == 0) {
                LowMemoryManager.addLowMemoryListener(this);
@@ -43,7 +43,7 @@ public final class PurgeManager implements LowMemoryListener {
    }
 
    public final void removeCollection(Collection collection) {
-      if (collection instanceof Object) {
+      if (collection instanceof ReadableList) {
          synchronized (CollectionLock.getGlobalLock()) {
             this._collections.removeElement(collection);
             if (this._collections.size() == 0) {

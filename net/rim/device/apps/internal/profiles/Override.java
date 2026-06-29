@@ -86,9 +86,9 @@ class Override implements PersistableRIMModel, SyncObject, EncryptableProvider {
          int numContacts = this._fromContacts.length;
 
          for (int count = 0; count < numContacts; count++) {
-            revisedName = ((StringBuffer)(new Object())).append(revisedName).append(this._fromContacts[count].getName()).toString();
+            revisedName = revisedName + this._fromContacts[count].getName();
             if (numContacts > 1 && count < numContacts - 1) {
-               revisedName = ((StringBuffer)(new Object())).append(revisedName).append(", ").toString();
+               revisedName = revisedName + ", ";
             }
          }
 
@@ -157,7 +157,7 @@ class Override implements PersistableRIMModel, SyncObject, EncryptableProvider {
       this._nameEncoding = PersistentContent.reEncode(this._nameEncoding, compress, encrypt);
       if (this._fromContacts != null) {
          for (int i = 0; i < this._fromContacts.length; i++) {
-            if (this._fromContacts[i] instanceof Object) {
+            if (this._fromContacts[i] instanceof EncryptableProvider) {
                EncryptableProvider ep = this._fromContacts[i];
                this._fromContacts[i] = (FromContact)ep.reCrypt(compress, encrypt);
             }
@@ -175,7 +175,7 @@ class Override implements PersistableRIMModel, SyncObject, EncryptableProvider {
 
       if (this._fromContacts != null) {
          for (int i = 0; i < this._fromContacts.length; i++) {
-            if (this._fromContacts[i] instanceof Object) {
+            if (this._fromContacts[i] instanceof EncryptableProvider) {
                EncryptableProvider ep = this._fromContacts[i];
                if (!ep.checkCrypt(compress, encrypt)) {
                   return false;

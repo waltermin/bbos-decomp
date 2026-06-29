@@ -13,8 +13,10 @@ import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.CheckboxField;
 import net.rim.device.api.ui.component.ChoiceField;
 import net.rim.device.api.ui.component.DateField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.DateTimeUtilities;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -81,11 +83,11 @@ public final class DateTimeOptionsItem extends SaveableMainScreenOptionsListItem
       }
 
       long currentTime = System.currentTimeMillis();
-      this._dateField = (DateField)(new Object(OptionsResources.getString(501), currentTime, DateFormat.getInstance(40)));
-      this._timeField = (DateField)(new Object(CommonResources.getString(2000), currentTime, DateFormat.getInstance(6)));
-      this._timeZoneField = (ChoiceField)(new Object(CommonResources.getString(2013), this._shortTimeZoneNames, 0, 134217728));
-      this._timeFormatField = (ObjectChoiceField)(new Object(OptionsResources.getString(502), null, 0, 134217728));
-      this._timeZoneDescriptionField = (RichTextField)(new Object(null, 36028797019226112L));
+      this._dateField = new DateField(OptionsResources.getString(501), currentTime, DateFormat.getInstance(40));
+      this._timeField = new DateField(CommonResources.getString(2000), currentTime, DateFormat.getInstance(6));
+      this._timeZoneField = new ObjectChoiceField(CommonResources.getString(2013), this._shortTimeZoneNames, 0, 134217728);
+      this._timeFormatField = new ObjectChoiceField(OptionsResources.getString(502), null, 0, 134217728);
+      this._timeZoneDescriptionField = new RichTextField(null, 36028797019226112L);
       int index;
       switch (this._timeSync.getSource()) {
          case 1:
@@ -101,7 +103,7 @@ public final class DateTimeOptionsItem extends SaveableMainScreenOptionsListItem
 
       String[] sourceOptions = OptionsResources.getStringArray(1943);
       if ((!this._networkTimeSupport || !InternalServices.isNetworkTimeValid()) && sourceOptions.length > 2) {
-         String[] tempArray = new Object[sourceOptions.length - 1];
+         String[] tempArray = new String[sourceOptions.length - 1];
          System.arraycopy(sourceOptions, 0, tempArray, 0, sourceOptions.length - 1);
          sourceOptions = tempArray;
       }
@@ -111,7 +113,7 @@ public final class DateTimeOptionsItem extends SaveableMainScreenOptionsListItem
          this.setTimeSyncSource(index);
       }
 
-      this._timeSyncSourceField = (ObjectChoiceField)(new Object(OptionsResources.getString(1448), sourceOptions, index, 134217728));
+      this._timeSyncSourceField = new ObjectChoiceField(OptionsResources.getString(1448), sourceOptions, index, 134217728);
       this.populateTimeFormats();
       int initialTZIndex = this._timeService.getTimeZoneIndex(this._timeService.getDefaultTimeZoneID());
       this._timeZoneField.setSelectedIndex(initialTZIndex);
@@ -125,9 +127,9 @@ public final class DateTimeOptionsItem extends SaveableMainScreenOptionsListItem
       this._networkDateField = null;
       this._networkTimeField = null;
       if (this._networkTimeSupport) {
-         this._mainScreen.add((Field)(new Object()));
+         this._mainScreen.add(new SeparatorField());
          if (!this._networkTimeValid) {
-            this._mainScreen.add((Field)(new Object(OptionsResources.getString(1807), 64)));
+            this._mainScreen.add(new LabelField(OptionsResources.getString(1807), 64));
          } else {
             long networkTime = TimeSync.GetNetworkTime(currentTime);
             if (this._networkTimeZoneSupport) {
@@ -186,8 +188,8 @@ public final class DateTimeOptionsItem extends SaveableMainScreenOptionsListItem
    }
 
    private final void addAutomaticClockAdjustmentForDSTField() {
-      this._autoAdjustForDSTField = (CheckboxField)(new Object(OptionsResources.getString(2004), TimeService.getTimeService().automaticClockAdjustmentForDST()));
-      this._mainScreen.add((Field)(new Object()));
+      this._autoAdjustForDSTField = new CheckboxField(OptionsResources.getString(2004), TimeService.getTimeService().automaticClockAdjustmentForDST());
+      this._mainScreen.add(new SeparatorField());
       this._mainScreen.add(this._autoAdjustForDSTField);
    }
 
@@ -197,27 +199,11 @@ public final class DateTimeOptionsItem extends SaveableMainScreenOptionsListItem
             "Network UTC", TimeSync.GetNetworkTime(System.currentTimeMillis()), DateFormat.getInstance(6)
          );
          this._rawNetworkTimeField.setTimeZone(TimeZone.getTimeZone(DateTimeUtilities.GMT));
-         this._mainScreen.add((Field)(new Object()));
+         this._mainScreen.add(new SeparatorField());
          this._mainScreen.add(this._rawNetworkTimeField);
          if (this._networkTimeZoneSupport) {
-            this._mainScreen
-               .add(
-                  (Field)(new Object(
-                     ((StringBuffer)(new Object("Network TZ Offset:  ")))
-                        .append(this.millisToHourString(InternalServices.getNetworkTimeZoneOffset()))
-                        .append(" hours")
-                        .toString()
-                  ))
-               );
-            this._mainScreen
-               .add(
-                  (Field)(new Object(
-                     ((StringBuffer)(new Object("Network DST Offset: ")))
-                        .append(this.millisToMinuteString(InternalServices.getNetworkDSTOffset()))
-                        .append(" minutes")
-                        .toString()
-                  ))
-               );
+            this._mainScreen.add(new RichTextField("Network TZ Offset:  " + this.millisToHourString(InternalServices.getNetworkTimeZoneOffset()) + " hours"));
+            this._mainScreen.add(new RichTextField("Network DST Offset: " + this.millisToMinuteString(InternalServices.getNetworkDSTOffset()) + " minutes"));
          }
       }
    }

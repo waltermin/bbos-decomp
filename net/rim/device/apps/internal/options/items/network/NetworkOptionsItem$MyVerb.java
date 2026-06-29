@@ -33,7 +33,7 @@ final class NetworkOptionsItem$MyVerb extends Verb {
 
             int index = RadioInfo.getCurrentNetworkIndex();
             if (index != -1) {
-               NetworkInfo netInfo = (NetworkInfo)(new Object());
+               NetworkInfo netInfo = new NetworkInfo();
                netInfo.setName(NetworkOptionsUtils.getAvailableNetworkName(index));
                netInfo.setNetworkId(RadioInfo.getNetworkId(index));
                netInfo.setCategory(RadioInternal.getNetworkCategory(index));

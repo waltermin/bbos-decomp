@@ -14,22 +14,22 @@ public final class BasicAuthScheme extends AuthScheme {
       String username = (String)super._parms.get("username");
       String password = (String)super._parms.get("password");
       if (username != null && password != null) {
-         StringBuffer response = (StringBuffer)(new Object());
+         StringBuffer response = new StringBuffer();
          response.append(username);
          response.append(':');
          response.append(password);
 
          try {
-            ByteArrayOutputStream baos = (ByteArrayOutputStream)(new Object());
-            Base64OutputStream b64os = (Base64OutputStream)(new Object(baos));
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            Base64OutputStream b64os = new Base64OutputStream(baos);
             b64os.write(response.toString().getBytes());
             b64os.close();
-            return ((StringBuffer)(new Object("Basic "))).append(baos.toString()).toString();
+            return "Basic " + baos.toString();
          } finally {
             ;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

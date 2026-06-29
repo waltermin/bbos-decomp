@@ -1,10 +1,10 @@
 package net.rim.device.apps.internal.phone.api.verbs;
 
 import net.rim.device.api.system.Phone;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.ButtonField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ribbon.indicators.VoicemailIconManager;
@@ -18,6 +18,7 @@ import net.rim.device.apps.internal.phone.api.ui.SimplePhoneNumberFilter;
 import net.rim.device.apps.internal.phone.model.PhoneNumberServices;
 import net.rim.device.apps.internal.phone.options.PhoneOptions;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 import net.rim.vm.Array;
 
 public final class VoiceMailVerb extends Verb implements PhoneVerb, Copyable, SetParameter {
@@ -55,7 +56,7 @@ public final class VoiceMailVerb extends Verb implements PhoneVerb, Copyable, Se
    @Override
    public final Object invoke(Object context) {
       Object o = ContextObject.get(context, -1540107978048774676L);
-      if (o instanceof Object) {
+      if (o instanceof Confirmation) {
          ((Confirmation)o).confirm(this, context);
       }
 
@@ -94,14 +95,14 @@ public final class VoiceMailVerb extends Verb implements PhoneVerb, Copyable, Se
                preferredLineId = voicemailLineIds[0];
                voicemailNumber = PhoneUtilities.getVoiceMailNumber(preferredLineId);
             } else {
-               String[] allVoicemailNumbers = new Object[voicemailLineIds.length];
+               String[] allVoicemailNumbers = new String[voicemailLineIds.length];
                int defaultIndex = 0;
                VoicemailChooser voiceMailChooser = new VoicemailChooser();
-               voiceMailChooser.add((Field)(new Object(PhoneResources.getString(6317))));
-               voiceMailChooser.add((Field)(new Object(4)));
+               voiceMailChooser.add(new LabelField(PhoneResources.getString(6317)));
+               voiceMailChooser.add(new VerticalSpacerField(4));
 
                for (int i = 0; i < allVoicemailNumbers.length; i++) {
-                  ButtonField button = (ButtonField)(new Object(PhoneUtilities.getLineDescription(voicemailLineIds[i]), 12884901888L));
+                  ButtonField button = new ButtonField(PhoneUtilities.getLineDescription(voicemailLineIds[i]), 12884901888L);
                   if (VoicemailIconManager.getInstance().isIndicatorOn(voicemailLineIds[i])) {
                      button.setImage(VoicemailIconManager.getIconCollection().getImage(0));
                   }
@@ -136,7 +137,7 @@ public final class VoiceMailVerb extends Verb implements PhoneVerb, Copyable, Se
       }
 
       if (additionalDTMFTones != null && additionalDTMFTones.length() > 0) {
-         StringBuffer buffer = (StringBuffer)(new Object(voicemailNumber));
+         StringBuffer buffer = new StringBuffer(voicemailNumber);
          char lastCharInNumber = voicemailNumber.charAt(voicemailNumber.length() - 1);
          char firstCharInExtra = additionalDTMFTones.charAt(0);
          if (PhoneNumberServices.isDTMFKey(lastCharInNumber) && PhoneNumberServices.isDTMFKey(firstCharInExtra)) {

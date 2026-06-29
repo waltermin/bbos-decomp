@@ -1,5 +1,6 @@
 package net.rim.device.api.xml.jaxp;
 
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -105,7 +106,7 @@ public class DOMNodeImpl implements Node {
       DOMNodeImpl refChild = (DOMNodeImpl)nRefChild;
       int iNewChild = newChild._node;
       if (this._ir != newChild._ir) {
-         throw new Object((short)4, "");
+         throw new DOMException((short)4, "");
       }
 
       this._ir.notReadOnly(this._node);
@@ -121,15 +122,15 @@ public class DOMNodeImpl implements Node {
       }
 
       if (this._ir.isLeaf(this._node) || this._ir.isParentOfOrSelf(iNewChild, this._node)) {
-         throw new Object((short)3, "");
+         throw new DOMException((short)3, "");
       }
 
       if (!this._ir.isParentOf(this._node, iRefChild)) {
-         throw new Object((short)8, "");
+         throw new DOMException((short)8, "");
       }
 
       if (!this._ir.allowsChild(this._node, iNewChild)) {
-         throw new Object((short)3, "");
+         throw new DOMException((short)3, "");
       }
 
       if (this._ir.getNodeType(iNewChild) != 11) {
@@ -157,7 +158,7 @@ public class DOMNodeImpl implements Node {
       int iOldChild = oldChild._node;
       int iNewChild = newChild._node;
       if (this._ir != newChild._ir) {
-         throw new Object((short)4, "");
+         throw new DOMException((short)4, "");
       }
 
       this._ir.notReadOnly(this._node);
@@ -167,15 +168,15 @@ public class DOMNodeImpl implements Node {
       }
 
       if (!this._ir.isParentOf(this._node, iOldChild)) {
-         throw new Object((short)8, "");
+         throw new DOMException((short)8, "");
       }
 
       if (this._ir.isLeaf(this._node) || this._ir.isParentOfOrSelf(iNewChild, this._node)) {
-         throw new Object((short)3, "");
+         throw new DOMException((short)3, "");
       }
 
       if (!this._ir.allowsChild(this._node, iNewChild)) {
-         throw new Object((short)3, "");
+         throw new DOMException((short)3, "");
       }
 
       if (this._ir.getNodeType(iNewChild) != 11) {
@@ -210,7 +211,7 @@ public class DOMNodeImpl implements Node {
       this._ir.notReadOnly(this._node);
       DOMNodeImpl oldChild = (DOMNodeImpl)nOldChild;
       if (!this._ir.isParentOf(this._node, oldChild._node)) {
-         throw new Object((short)8, "");
+         throw new DOMException((short)8, "");
       }
 
       this._ir.removeChild(this._node, oldChild._node);
@@ -222,17 +223,17 @@ public class DOMNodeImpl implements Node {
       DOMNodeImpl newChild = (DOMNodeImpl)nNewChild;
       int iNewChild = newChild._node;
       if (this._ir != newChild._ir) {
-         throw new Object((short)4, "");
+         throw new DOMException((short)4, "");
       }
 
       this._ir.notReadOnly(this._node);
       this._ir.notReadOnly(this._ir.getParent(iNewChild));
       if (!this._ir.allowsChild(this._node, iNewChild)) {
-         throw new Object((short)3, "");
+         throw new DOMException((short)3, "");
       }
 
       if (this._ir.isParentOfOrSelf(iNewChild, this._node)) {
-         throw new Object((short)3, "");
+         throw new DOMException((short)3, "");
       }
 
       if (this._ir.getNodeType(iNewChild) != 11) {

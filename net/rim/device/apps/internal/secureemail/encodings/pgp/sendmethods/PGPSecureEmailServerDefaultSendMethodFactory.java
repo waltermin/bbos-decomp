@@ -20,7 +20,7 @@ public class PGPSecureEmailServerDefaultSendMethodFactory implements SendMethodF
 
    @Override
    public SendMethod[] create(RIMModel model, ServiceRecord serviceRecord, Object context) {
-      if (model instanceof Object) {
+      if (model instanceof EmailMessageModel) {
          EmailMessageModel emailMessageModel = (EmailMessageModel)model;
          boolean isPIN = emailMessageModel.flagsSet(8192);
          if (isPIN && serviceRecord != null) {
@@ -33,7 +33,7 @@ public class PGPSecureEmailServerDefaultSendMethodFactory implements SendMethodF
       }
 
       return serviceRecord != null && SecureEmailUtilities.checkITAdminBoundUID(serviceRecord.getUid())
-         ? new Object[]{new PGPSecureEmailServerDefaultSendMethod(serviceRecord, context)}
+         ? new SendMethod[]{new PGPSecureEmailServerDefaultSendMethod(serviceRecord, context)}
          : null;
    }
 

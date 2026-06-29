@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.blackberryemail.email;
 
+import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
@@ -28,12 +29,12 @@ public class NativeAttachmentConnection implements ContentConnection, URLProvide
 
    @Override
    public InputStream openInputStream() {
-      return (InputStream)(new Object(this._data));
+      return new ByteArrayInputStream(this._data);
    }
 
    @Override
    public DataInputStream openDataInputStream() {
-      return (DataInputStream)(new Object(this.openInputStream()));
+      return new DataInputStream(this.openInputStream());
    }
 
    @Override

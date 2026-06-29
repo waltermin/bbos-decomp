@@ -29,7 +29,7 @@ final class DocViewUtilities {
 
    public static final String readString(byte[] arr, int index, boolean bigEndian) {
       int len = readUnsignedShort(arr, index, bigEndian);
-      StringBuffer tmp = (StringBuffer)(new Object(len));
+      StringBuffer tmp = new StringBuffer(len);
 
       for (int i = 0; i < len * 2; i += 2) {
          tmp.append((char)readShort(arr, i + index + 2, bigEndian));

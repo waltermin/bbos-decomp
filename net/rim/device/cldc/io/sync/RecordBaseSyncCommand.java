@@ -112,7 +112,7 @@ public class RecordBaseSyncCommand extends SyncCommand {
    private void parseFieldsAttrbutes(DataBuffer dins) {
       try {
          byte[] xValue = TypeLengthEncoding.readBytes(dins);
-         DataBuffer xFieldAttributes = (DataBuffer)(new Object(xValue, 0, xValue.length, true));
+         DataBuffer xFieldAttributes = new DataBuffer(xValue, 0, xValue.length, true);
 
          while (xFieldAttributes.available() > 0) {
             int xFieldTag = xFieldAttributes.readUnsignedByte();

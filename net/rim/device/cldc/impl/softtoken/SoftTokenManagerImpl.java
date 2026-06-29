@@ -38,7 +38,7 @@ public final class SoftTokenManagerImpl extends SoftTokenManager implements Pers
    private static final byte ENTERPRISE_CONFIG_ID_TAG = 8;
 
    public final boolean saveSecrets() {
-      DataBuffer buffer = (DataBuffer)(new Object());
+      DataBuffer buffer = new DataBuffer();
       buffer.writeByte(0);
 
       for (int i = 0; i < this._softTokens.size(); i++) {
@@ -161,11 +161,11 @@ public final class SoftTokenManagerImpl extends SoftTokenManager implements Pers
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:174)
       //
       // Bytecode:
-      // 000: new java/lang/Object
+      // 000: new java/util/Vector
       // 003: dup
       // 004: invokespecial java/util/Vector.<init> ()V
       // 007: astore 1
-      // 008: new java/lang/Object
+      // 008: new net/rim/device/cldc/impl/softtoken/rimsecuridlib/RimSecurIDLib
       // 00b: dup
       // 00c: invokespecial net/rim/device/cldc/impl/softtoken/rimsecuridlib/RimSecurIDLib.<init> ()V
       // 00f: astore 2
@@ -247,7 +247,7 @@ public final class SoftTokenManagerImpl extends SoftTokenManager implements Pers
       // 0b0: bipush 0
       // 0b1: newarray 8
       // 0b3: astore 4
-      // 0b5: new java/lang/Object
+      // 0b5: new net/rim/device/api/util/DataBuffer
       // 0b8: dup
       // 0b9: aload 4
       // 0bb: bipush 0
@@ -332,21 +332,21 @@ public final class SoftTokenManagerImpl extends SoftTokenManager implements Pers
       // 15e: iload 8
       // 160: tableswitch 48 1 8 -123 48 65 82 99 153 275 295
       // 190: aload 7
-      // 192: new java/lang/Object
+      // 192: new java/lang/String
       // 195: dup
       // 196: aload 10
       // 198: invokespecial java/lang/String.<init> ([B)V
       // 19b: putfield net/rim/device/cldc/impl/softtoken/SoftTokenImpl._serialNum Ljava/lang/String;
       // 19e: goto 0e5
       // 1a1: aload 7
-      // 1a3: new java/lang/Object
+      // 1a3: new java/lang/String
       // 1a6: dup
       // 1a7: aload 10
       // 1a9: invokespecial java/lang/String.<init> ([B)V
       // 1ac: invokevirtual net/rim/device/cldc/impl/softtoken/SoftTokenImpl.setPassphrase (Ljava/lang/String;)V
       // 1af: goto 0e5
       // 1b2: aload 7
-      // 1b4: new java/lang/Object
+      // 1b4: new java/lang/String
       // 1b7: dup
       // 1b8: aload 10
       // 1ba: invokespecial java/lang/String.<init> ([B)V
@@ -475,7 +475,7 @@ public final class SoftTokenManagerImpl extends SoftTokenManager implements Pers
       // 281: putfield net/rim/device/cldc/impl/softtoken/SoftTokenImpl._readOnly Z
       // 284: goto 0e5
       // 287: aload 7
-      // 289: new java/lang/Object
+      // 289: new java/lang/String
       // 28c: dup
       // 28d: aload 10
       // 28f: invokespecial java/lang/String.<init> ([B)V
@@ -665,7 +665,7 @@ public final class SoftTokenManagerImpl extends SoftTokenManager implements Pers
          return null;
       }
 
-      String[] tokenSerialNums = new Object[this._softTokens.size()];
+      String[] tokenSerialNums = new String[this._softTokens.size()];
 
       for (int i = 0; i < this._softTokens.size(); i++) {
          tokenSerialNums[i] = ((SoftTokenImpl)this._softTokens.elementAt(i))._serialNum;
@@ -700,7 +700,7 @@ public final class SoftTokenManagerImpl extends SoftTokenManager implements Pers
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:174)
       //
       // Bytecode:
-      // 00: new java/lang/Object
+      // 00: new net/rim/device/cldc/impl/softtoken/rimsecuridlib/RimSecurIDLib
       // 03: dup
       // 04: invokespecial net/rim/device/cldc/impl/softtoken/rimsecuridlib/RimSecurIDLib.<init> ()V
       // 07: astore 3
@@ -969,7 +969,7 @@ public final class SoftTokenManagerImpl extends SoftTokenManager implements Pers
       // 0c: invokestatic net/rim/device/api/system/EventLogger.register (JLjava/lang/String;I)Z
       // 0f: pop
       // 10: aload 0
-      // 11: new java/lang/Object
+      // 11: new java/util/Vector
       // 14: dup
       // 15: invokespecial java/util/Vector.<init> ()V
       // 18: putfield net/rim/device/cldc/impl/softtoken/SoftTokenManagerImpl._softTokens Ljava/util/Vector;
@@ -979,7 +979,7 @@ public final class SoftTokenManagerImpl extends SoftTokenManager implements Pers
       // 20: aload 1
       // 21: ldc2_w 5083252457608156518
       // 24: invokevirtual net/rim/device/api/system/ApplicationRegistry.waitFor (J)Ljava/lang/Object;
-      // 27: checkcast java/lang/Object
+      // 27: checkcast net/rim/device/api/enterpriseconfig/EnterpriseConfig
       // 2a: putfield net/rim/device/cldc/impl/softtoken/SoftTokenManagerImpl._enterpriseConfig Lnet/rim/device/api/enterpriseconfig/EnterpriseConfig;
       // 2d: aload 0
       // 2e: getfield net/rim/device/cldc/impl/softtoken/SoftTokenManagerImpl._enterpriseConfig Lnet/rim/device/api/enterpriseconfig/EnterpriseConfig;
@@ -1025,7 +1025,7 @@ public final class SoftTokenManagerImpl extends SoftTokenManager implements Pers
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:174)
       //
       // Bytecode:
-      // 000: new java/lang/Object
+      // 000: new net/rim/device/cldc/impl/softtoken/rimsecuridlib/RimSecurIDLib
       // 003: dup
       // 004: invokespecial net/rim/device/cldc/impl/softtoken/rimsecuridlib/RimSecurIDLib.<init> ()V
       // 007: astore 6
@@ -1113,7 +1113,7 @@ public final class SoftTokenManagerImpl extends SoftTokenManager implements Pers
       // 0bd: goto 180
       // 0c0: aload 6
       // 0c2: iload 7
-      // 0c4: new java/lang/Object
+      // 0c4: new java/lang/StringBuffer
       // 0c7: dup
       // 0c8: invokespecial java/lang/StringBuffer.<init> ()V
       // 0cb: getstatic net/rim/device/cldc/impl/softtoken/SoftTokenManagerImpl._rb Lnet/rim/device/api/i18n/ResourceBundle;
@@ -1185,7 +1185,7 @@ public final class SoftTokenManagerImpl extends SoftTokenManager implements Pers
       // 158: athrow
       // 159: astore 9
       // 15b: aload 9
-      // 15d: instanceof java/lang/Object
+      // 15d: instanceof net/rim/device/cldc/impl/softtoken/rimsecuridlib/RimDecryptFailException
       // 160: ifeq 16a
       // 163: bipush -6
       // 165: istore 8

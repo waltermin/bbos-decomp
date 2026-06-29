@@ -55,7 +55,7 @@ class EScreenVMProcesses$EScreenProcess {
                name = "Utilization";
                break;
             case 5:
-               name = ((StringBuffer)(new Object("Total (Non-idle "))).append((int)(this.this$0._totalUtilizedTime / 1000)).append("s)").toString();
+               name = "Total (Non-idle " + (int)(this.this$0._totalUtilizedTime / 1000) + "s)";
          }
       } else {
          name = this._process.toString();
@@ -66,23 +66,14 @@ class EScreenVMProcesses$EScreenProcess {
             return name;
          case 4:
          default:
-            return ((StringBuffer)(new Object()))
-               .append(Integer.toString(this.percent(this._time, this.this$0._recentTimeWindow)))
-               .append("% ")
-               .append(name)
-               .toString();
+            return Integer.toString(this.percent(this._time, this.this$0._recentTimeWindow)) + "% " + name;
          case 5:
-            String s = ((StringBuffer)(new Object())).append(Integer.toString((int)(this._time / 1000))).append("s ").toString();
+            String s = Integer.toString((int)(this._time / 1000)) + "s ";
             if (this._process != null) {
-               s = ((StringBuffer)(new Object()))
-                  .append(s)
-                  .append("(")
-                  .append(this.percent(this._time, this.this$0._totalUtilizedTime))
-                  .append("%) ")
-                  .toString();
+               s = s + "(" + this.percent(this._time, this.this$0._totalUtilizedTime) + "%) ";
             }
 
-            return ((StringBuffer)(new Object())).append(s).append(name).toString();
+            return s + name;
       }
    }
 

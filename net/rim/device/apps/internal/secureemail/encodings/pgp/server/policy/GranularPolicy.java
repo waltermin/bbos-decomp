@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.secureemail.encodings.pgp.server.policy;
 
+import java.io.IOException;
 import java.util.Vector;
 import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.api.system.EventLogger;
@@ -9,7 +10,7 @@ import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
 import org.xml.sax.Attributes;
 
 public final class GranularPolicy extends GranularPolicyElement {
-   public GranularPolicy(XMLHashtable param1) {
+   public GranularPolicy(XMLHashtable param1) throws IOException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -26,14 +27,14 @@ public final class GranularPolicy extends GranularPolicyElement {
       // 0e: astore 2
       // 0f: goto 2c
       // 12: astore 3
-      // 13: new java/lang/Object
+      // 13: new java/lang/RuntimeException
       // 16: dup
       // 17: aload 3
       // 18: invokevirtual net/rim/device/api/xml/parsers/ParserConfigurationException.toString ()Ljava/lang/String;
       // 1b: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 1e: athrow
       // 1f: astore 3
-      // 20: new java/lang/Object
+      // 20: new java/lang/RuntimeException
       // 23: dup
       // 24: aload 3
       // 25: invokevirtual org/xml/sax/SAXException.toString ()Ljava/lang/String;
@@ -45,14 +46,14 @@ public final class GranularPolicy extends GranularPolicyElement {
       // 33: astore 3
       // 34: aload 3
       // 35: ifnonnull 43
-      // 38: new java/lang/Object
+      // 38: new java/lang/IllegalArgumentException
       // 3b: dup
       // 3c: ldc_w "no policy data"
       // 3f: invokespecial java/lang/IllegalArgumentException.<init> (Ljava/lang/String;)V
       // 42: athrow
-      // 43: new java/lang/Object
+      // 43: new net/rim/device/api/io/Base64InputStream
       // 46: dup
-      // 47: new java/lang/Object
+      // 47: new java/io/ByteArrayInputStream
       // 4a: dup
       // 4b: aload 3
       // 4c: invokevirtual java/lang/String.getBytes ()[B
@@ -71,7 +72,7 @@ public final class GranularPolicy extends GranularPolicyElement {
       // 67: invokevirtual net/rim/device/api/xml/parsers/SAXParser.parse (Ljava/io/InputStream;Lorg/xml/sax/helpers/DefaultHandler;)V
       // 6a: goto 7c
       // 6d: astore 4
-      // 6f: new java/lang/Object
+      // 6f: new java/io/IOException
       // 72: dup
       // 73: aload 4
       // 75: invokevirtual org/xml/sax/SAXException.toString ()Ljava/lang/String;
@@ -117,14 +118,14 @@ public final class GranularPolicy extends GranularPolicyElement {
    public final GranularPolicyAction determineAction(
       GranularPolicyChainGroup chainGroup, String recipientAddress, ServiceRecord serviceRecord, EmailMessageModel emailMessageModel
    ) {
-      StringBuffer eventLogString = (StringBuffer)(new Object("UGPP: "));
+      StringBuffer eventLogString = new StringBuffer("UGPP: ");
       eventLogString.append(recipientAddress);
       eventLogString.append(':').append(' ');
       GranularPolicyChain currentChain = chainGroup.locateChain(null);
 
       label52:
       while (currentChain != null) {
-         System.out.println(((StringBuffer)(new Object())).append(currentChain.getDebugPrintInfo()).append(": Processing").toString());
+         System.out.println(currentChain.getDebugPrintInfo() + ": Processing");
          eventLogString.append('C').append(currentChain.getOrder()).append(',');
          Vector currentChainChildElements = currentChain.getChildElements();
          int numCurrentChainChildElements = currentChainChildElements.size();
@@ -134,14 +135,14 @@ public final class GranularPolicy extends GranularPolicyElement {
             if (currentChainChildElement instanceof GranularPolicyRule) {
                GranularPolicyRule currentRule = (GranularPolicyRule)currentChainChildElement;
                if (!currentRule.evaluate(recipientAddress, serviceRecord, emailMessageModel)) {
-                  System.out.println(((StringBuffer)(new Object("  "))).append(currentRule.getDebugPrintInfo()).append(": FALSE").toString());
+                  System.out.println("  " + currentRule.getDebugPrintInfo() + ": FALSE");
                   eventLogString.append('R').append(currentRule.getOrder()).append('F').append(',');
                } else {
-                  System.out.println(((StringBuffer)(new Object("  "))).append(currentRule.getDebugPrintInfo()).append(": TRUE").toString());
+                  System.out.println("  " + currentRule.getDebugPrintInfo() + ": TRUE");
                   eventLogString.append('R').append(currentRule.getOrder()).append('T').append(',');
                   GranularPolicyActionGroup currentActionGroup = currentRule.getActionGroup();
                   if (currentActionGroup == null) {
-                     System.out.println(((StringBuffer)(new Object("  "))).append(currentRule.getDebugPrintInfo()).append(": no actions").toString());
+                     System.out.println("  " + currentRule.getDebugPrintInfo() + ": no actions");
                   } else {
                      Vector currentActionGroupChildElements = currentActionGroup.getChildElements();
                      int numCurrentActionGroupChildElements = currentActionGroupChildElements.size();
@@ -150,7 +151,7 @@ public final class GranularPolicy extends GranularPolicyElement {
                         Object currentActionGroupChildElement = currentActionGroupChildElements.elementAt(j);
                         if (currentActionGroupChildElement instanceof GranularPolicyAction) {
                            GranularPolicyAction currentAction = (GranularPolicyAction)currentActionGroupChildElement;
-                           System.out.println(((StringBuffer)(new Object("    "))).append(currentAction.getDebugPrintInfo()).toString());
+                           System.out.println("    " + currentAction.getDebugPrintInfo());
                            switch (currentAction.getOperation()) {
                               case 4:
                               case 9:

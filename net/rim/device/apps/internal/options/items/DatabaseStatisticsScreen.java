@@ -4,11 +4,12 @@ import net.rim.device.api.synchronization.SyncCollectionStatistics;
 import net.rim.device.api.synchronization.SyncManager;
 import net.rim.device.api.synchronization.SyncManagerStatistics;
 import net.rim.device.api.system.Display;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.component.ObjectListField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.apps.api.ui.AppsMainScreen;
 import net.rim.device.apps.api.ui.LeftRightFieldManager;
@@ -16,7 +17,7 @@ import net.rim.device.apps.api.ui.SystemEnabledMenu;
 import net.rim.device.apps.internal.options.resources.OptionsResources;
 
 final class DatabaseStatisticsScreen extends AppsMainScreen implements ListFieldCallback {
-   private StringBuffer _sb = (StringBuffer)(new Object());
+   private StringBuffer _sb = new StringBuffer();
    private DatabaseStatisticsScreen$StatisticsListItem[] _statsListItems;
    private int _totalSize;
 
@@ -50,12 +51,12 @@ final class DatabaseStatisticsScreen extends AppsMainScreen implements ListField
    private final void addStatistics() {
       this._sb.setLength(0);
       appendSizeInKB(this._totalSize, this._sb);
-      LeftRightFieldManager totalSizeRow = (LeftRightFieldManager)(new Object(
-         (Field)(new Object(OptionsResources.getString(1950), 64)), (Field)(new Object(this._sb.toString(), 8589934656L))
-      ));
+      LeftRightFieldManager totalSizeRow = new LeftRightFieldManager(
+         new LabelField(OptionsResources.getString(1950), 64), new LabelField(this._sb.toString(), 8589934656L)
+      );
       this.add(totalSizeRow);
-      this.add((Field)(new Object()));
-      ObjectListField statsList = (ObjectListField)(new Object());
+      this.add(new SeparatorField());
+      ObjectListField statsList = new ObjectListField();
       statsList.set(this._statsListItems);
       statsList.setCallback(this);
       this.add(statsList);

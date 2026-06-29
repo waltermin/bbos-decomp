@@ -230,9 +230,9 @@ public final class PasswordKeeperElement implements Persistable, SyncObject {
          }
 
          this._creationTime = System.currentTimeMillis();
-         this._uid = ((Random)(new Object())).nextInt();
+         this._uid = new Random().nextInt();
       } catch (PasswordKeeperLockedException e) {
-         throw new Object();
+         throw new RuntimeException();
       }
    }
 }

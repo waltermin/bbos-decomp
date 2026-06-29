@@ -13,7 +13,7 @@ class SecureEmailKeyStoreData {
 
    SecureEmailKeyStoreData(KeyStoreData keyStoreData, String emailAddress) {
       if (keyStoreData == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._keyStoreData = keyStoreData;

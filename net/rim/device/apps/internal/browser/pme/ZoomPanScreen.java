@@ -10,8 +10,10 @@ import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.XYEdges;
 import net.rim.device.api.ui.XYRect;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.MathUtilities;
 import net.rim.plazmic.internal.mediaengine.MediaServices;
+import net.rim.plazmic.internal.mediaengine.model.intarray.v1_2.AnimationModel;
 import net.rim.plazmic.internal.mediaengine.model.intarray.v1_2.ModelInteractorImpl;
 import net.rim.plazmic.internal.mediaengine.model.intarray.v1_2.TextNodeImpl;
 import net.rim.plazmic.internal.mediaengine.model.intarray.v1_2.VisualNodeImpl;
@@ -55,34 +57,34 @@ public final class ZoomPanScreen extends Screen {
    private static int _startingState;
 
    public ZoomPanScreen(long style, Field field, Object model, Object contentPMEPlayer) {
-      super((Manager)(new Object(3458764513820540928L)), style | 68719476736L | 1152921504606846976L | 2305843009213693952L);
-      this._mediaField = (MediaField)(new Object(style | 1152921504606846976L | 2305843009213693952L | 524288));
+      super(new VerticalFieldManager(3458764513820540928L), style | 68719476736L | 1152921504606846976L | 2305843009213693952L);
+      this._mediaField = new MediaField(style | 1152921504606846976L | 2305843009213693952L | 524288);
       this._delegate = this.getDelegate();
       this.add(this._mediaField);
-      this._model = model;
-      if (field instanceof Object) {
+      this._model = (AnimationModel)model;
+      if (field instanceof Zoomable) {
          this._zoomable = (Zoomable)field;
       } else {
          this._zoomable = null;
       }
 
-      if (field instanceof Object) {
+      if (field instanceof Pannable) {
          this._pannable = (Pannable)field;
       } else {
          this._pannable = null;
       }
 
-      this._panBounds = (XYEdges)(new Object(0, 0, 0, 0));
+      this._panBounds = new XYEdges(0, 0, 0, 0);
    }
 
    public final void setField(Field field, Object contentPMEPlayer) {
-      if (field instanceof Object) {
+      if (field instanceof Zoomable) {
          this._zoomable = (Zoomable)field;
       } else {
          this._zoomable = null;
       }
 
-      if (field instanceof Object) {
+      if (field instanceof Pannable) {
          this._pannable = (Pannable)field;
       } else {
          this._pannable = null;
@@ -126,7 +128,7 @@ public final class ZoomPanScreen extends Screen {
 
    @Override
    protected final void sublayout(int width, int height) {
-      XYEdges border = (XYEdges)(new Object());
+      XYEdges border = new XYEdges();
       this.getBorder(border);
       this.setPositionDelegate(this.getBorderLeft(), this.getBorderTop());
       int delegateWidth = width - this.getBorderLeft() - this.getBorderRight() - this.getMarginRight() - this.getMarginLeft();
@@ -284,18 +286,15 @@ public final class ZoomPanScreen extends Screen {
             }
 
             this.temp = "";
-            this.temp = ((StringBuffer)(new Object())).append(this.temp).append(panX).append(",").append(panY).toString();
+            this.temp = this.temp + panX + "," + panY;
             TextNodeImpl.setString(this.temp.toCharArray(), this._modelInteractor.getHandle("panText"), this._modelInteractor);
          }
       } else {
          VisualNodeImpl.setVisible(true, this._modelInteractor.getHandle("zoomGroup"), this._modelInteractor);
          VisualNodeImpl.setVisible(false, this._modelInteractor.getHandle("panGroup"), this._modelInteractor);
          this.temp = "";
-         this.temp = ((StringBuffer)(new Object()))
-            .append(this.temp)
-            .append(Fixed32.toRoundedInt(Fixed32.div(Fixed32.mul(this._zoomAmount, 6553600), 65536)))
-            .toString();
-         this.temp = ((StringBuffer)(new Object())).append(this.temp).append("%").toString();
+         this.temp = this.temp + Fixed32.toRoundedInt(Fixed32.div(Fixed32.mul(this._zoomAmount, 6553600), 65536));
+         this.temp = this.temp + "%";
          TextNodeImpl.setString(this.temp.toCharArray(), this._modelInteractor.getHandle("zoomText"), this._modelInteractor);
       }
 
@@ -309,11 +308,7 @@ public final class ZoomPanScreen extends Screen {
    private final void updateFO() {
       if (this._currentState == 1) {
          this.temp = "";
-         this.temp = ((StringBuffer)(new Object()))
-            .append(this.temp)
-            .append(Fixed32.toRoundedInt(Fixed32.div(Fixed32.mul(this._zoomable.getZoomAmount(), 6553600), 65536)))
-            .append("%")
-            .toString();
+         this.temp = this.temp + Fixed32.toRoundedInt(Fixed32.div(Fixed32.mul(this._zoomable.getZoomAmount(), 6553600), 65536)) + "%";
          TextNodeImpl.setString(this.temp.toCharArray(), this._modelInteractor.getHandle("zoomText"), this._modelInteractor);
       } else {
          if (this._currentState == 0) {
@@ -328,7 +323,7 @@ public final class ZoomPanScreen extends Screen {
             }
 
             this.temp = "";
-            this.temp = ((StringBuffer)(new Object())).append(this.temp).append(panX).append(",").append(panY).toString();
+            this.temp = this.temp + panX + "," + panY;
             TextNodeImpl.setString(this.temp.toCharArray(), this._modelInteractor.getHandle("panText"), this._modelInteractor);
          }
       }
@@ -465,7 +460,7 @@ public final class ZoomPanScreen extends Screen {
 
    static {
       if (_player == null) {
-         _player = (MediaPlayer)(new Object());
+         _player = new MediaPlayer();
       }
    }
 }

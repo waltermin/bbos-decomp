@@ -22,8 +22,8 @@ public final class MediaLogger {
    private static final String MEDIA_ERROR = "MDE";
    private static final String ACTIVE_MEDIA_PLAY_ERROR = "AVM";
    private static final int MAX_BUFFERS = 2;
-   private static final StringBuffer[] BUFFERS = new Object[2];
-   private static final Hashtable KNOWN_APPS = (Hashtable)(new Object());
+   private static final StringBuffer[] BUFFERS = new StringBuffer[2];
+   private static final Hashtable KNOWN_APPS = new Hashtable();
    static Class class$net$rim$device$internal$media$MediaLogger;
 
    private MediaLogger() {
@@ -59,7 +59,7 @@ public final class MediaLogger {
          logDebugMessage("MUN", codec);
       } else if (!(session instanceof MediaStreamingManagerImpl$StreamingSessionImpl)) {
          if (isWarningEnabled()) {
-            logWarning(((StringBuffer)(new Object("Unknown StreamingSession implementation: "))).append(session.getClass().getName()).toString());
+            logWarning("Unknown StreamingSession implementation: " + session.getClass().getName());
          }
       } else {
          MediaStreamingManagerImpl$StreamingSessionImpl sImpl = (MediaStreamingManagerImpl$StreamingSessionImpl)session;
@@ -74,7 +74,7 @@ public final class MediaLogger {
          logDebugMessage(operation, (MediaStreamingManagerImpl$StreamingSessionImpl)session);
       } else {
          if (isWarningEnabled()) {
-            logWarning(((StringBuffer)(new Object("Unknown StreamingSession implementation: "))).append(session.getClass().getName()).toString());
+            logWarning("Unknown StreamingSession implementation: " + session.getClass().getName());
          }
       }
    }
@@ -305,7 +305,7 @@ public final class MediaLogger {
    private static final void log(String message, int level) {
       EventLogger.logEvent(-6484753878348010781L, message.getBytes(), level);
       if (DeviceInfo.isSimulator()) {
-         System.err.println(((StringBuffer)(new Object("ML: "))).append(message).toString());
+         System.err.println("ML: " + message);
       }
    }
 
@@ -333,7 +333,7 @@ public final class MediaLogger {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 
@@ -346,7 +346,7 @@ public final class MediaLogger {
       KNOWN_APPS.put("net.rim.device.apps.internal.voicenotesrecorder.VoiceNotesRecorderMain", "VNR");
 
       for (int i = BUFFERS.length - 1; i >= 0; i--) {
-         BUFFERS[i] = (StringBuffer)(new Object());
+         BUFFERS[i] = new StringBuffer();
       }
 
       EventLogger.register(-6484753878348010781L, "ML", 2);

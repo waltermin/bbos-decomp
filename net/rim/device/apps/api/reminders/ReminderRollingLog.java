@@ -8,9 +8,9 @@ import net.rim.vm.Persistable;
 class ReminderRollingLog implements Persistable {
    private ReminderRollingLog$ReminderLogEvent[] _eventLog;
    private int _position;
-   private static SimpleDateFormat _currentTimeFormat = (SimpleDateFormat)(new Object("dd/MM hh:mm "));
-   private static SimpleDateFormat _eventTimeFormat = (SimpleDateFormat)(new Object("hh:mm dd/MM/yy"));
-   private static StringBuffer _scratchBuffer = (StringBuffer)(new Object());
+   private static SimpleDateFormat _currentTimeFormat = new SimpleDateFormat("dd/MM hh:mm ");
+   private static SimpleDateFormat _eventTimeFormat = new SimpleDateFormat("hh:mm dd/MM/yy");
+   private static StringBuffer _scratchBuffer = new StringBuffer();
    private static Calendar _cal = Calendar.getInstance();
 
    ReminderRollingLog(int size) {
@@ -37,7 +37,7 @@ class ReminderRollingLog implements Persistable {
       synchronized (this._eventLog) {
          if (this._eventLog.length > 0) {
             int num = this._eventLog.length;
-            result = new Object[num];
+            result = new String[num];
             int count = 0;
             int index = this._position - 1;
 

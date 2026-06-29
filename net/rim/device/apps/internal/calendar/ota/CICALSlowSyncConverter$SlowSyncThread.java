@@ -17,6 +17,7 @@ import net.rim.device.apps.api.service.ServiceIdentifier;
 import net.rim.device.apps.api.sync.OTASyncData;
 import net.rim.device.apps.api.sync.OTASyncIDProvider;
 import net.rim.device.apps.api.transmission.TransmissionServiceManager;
+import net.rim.device.apps.api.utility.serialization.SerializationException;
 import net.rim.device.apps.internal.api.quincy.QuincyManager;
 import net.rim.vm.PersistentInteger;
 
@@ -111,7 +112,7 @@ class CICALSlowSyncConverter$SlowSyncThread extends Thread {
                               this.this$0.setLastSlowSyncActivity();
                               int id = PersistentInteger.getId(-2725183197236608288L, -1);
                               PersistentInteger.set(id, newSessionId);
-                              System.out.println(((StringBuffer)(new Object("Starting slow sync with sessionID = "))).append(newSessionId).toString());
+                              System.out.println("Starting slow sync with sessionID = " + newSessionId);
                               this.this$0._outgoingEventCount = -1;
                               this.this$0._incomingEventCount = -1;
                               this.this$0._slowSyncDoneForced = false;
@@ -121,7 +122,7 @@ class CICALSlowSyncConverter$SlowSyncThread extends Thread {
                                     }
 
                                     this.this$0._slowSyncContext.clear();
-                                    ContextObject.put(this.this$0._slowSyncContext, -2725183197236608288L, new Object(newSessionId));
+                                    ContextObject.put(this.this$0._slowSyncContext, -2725183197236608288L, new Integer(newSessionId));
                                     if (this.this$0._syncStartDate < 0) {
                                        this.this$0._syncStartDate = System.currentTimeMillis() - 2592000000L;
                                        this.this$0._syncEndDate = Long.MAX_VALUE;
@@ -152,7 +153,7 @@ class CICALSlowSyncConverter$SlowSyncThread extends Thread {
                                     label480:
                                     try {
                                        CICALEventLogger.logEvent(1398361667, 0);
-                                       CICALEventLogger.logEvent(((StringBuffer)(new Object("ECNT"))).append(size).toString(), 0);
+                                       CICALEventLogger.logEvent("ECNT" + size, 0);
                                        boolean commitRequired = false;
 
                                        while (index < size) {
@@ -163,7 +164,7 @@ class CICALSlowSyncConverter$SlowSyncThread extends Thread {
                                           Event event = (Event)events[index];
                                           OTASyncData syncData = e.get(event);
                                           if (syncData == null) {
-                                             syncData = (OTASyncData)(new Object(0, 0));
+                                             syncData = new OTASyncData(0, 0);
                                           }
 
                                           slowSyncEvent.addEvent(event, syncData, this._debug);
@@ -193,7 +194,7 @@ class CICALSlowSyncConverter$SlowSyncThread extends Thread {
                                        ticket = null;
                                     } catch (Throwable var43) {
                                        this.this$0.abortSlowSync(this._calendarService, newSessionId, (byte)1, false);
-                                       if (e instanceof Object) {
+                                       if (e instanceof SerializationException) {
                                           CICALEventLogger.logEvent(1398358829, 2);
                                        } else {
                                           CICALEventLogger.logEvent(1398363437, 2);
@@ -308,7 +309,7 @@ class CICALSlowSyncConverter$SlowSyncThread extends Thread {
       for (int i = 0; i < elements.length; i++) {
          OTASyncData syncData = otaSyncDataManager.get((OTASyncIDProvider)elements[i]);
          if (syncData == null) {
-            syncData = (OTASyncData)(new Object(0, 0));
+            syncData = new OTASyncData(0, 0);
             otaSyncDataManager.addWithoutCommit((OTASyncIDProvider)elements[i], syncData);
             commitRequired = true;
          }

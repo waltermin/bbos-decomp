@@ -2,6 +2,7 @@ package net.rim.device.cldc.io.lstp;
 
 import net.rim.device.api.bluetooth.BluetoothSerialPort;
 import net.rim.device.api.bluetooth.BluetoothSerialPortListener;
+import net.rim.device.api.io.IONotRoutableException;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.system.DeviceInfo;
 import net.rim.device.api.system.GlobalEventListener;
@@ -29,7 +30,7 @@ final class BluetoothLayer extends SerialLayer implements BluetoothSerialPortLis
             return;
          }
       } else if (this._port == null) {
-         StringBuffer sb = (StringBuffer)(new Object("BlackBerry Bypass Service"));
+         StringBuffer sb = new StringBuffer("BlackBerry Bypass Service");
          int pin = DeviceInfo.getDeviceId();
          sb.append(" P:0x");
          sb.append(Integer.toHexString(pin).toUpperCase());
@@ -37,7 +38,7 @@ final class BluetoothLayer extends SerialLayer implements BluetoothSerialPortLis
          sb.append(Integer.toHexString(RadioInfo.getNetworkType()).toUpperCase());
          sb.append(" V:0x");
          sb.append(Integer.toHexString(131075).toUpperCase());
-         this._port = (BluetoothSerialPort)(new Object(UUID, sb.toString(), 7, 3, 0, 2048, 2048, this));
+         this._port = new BluetoothSerialPort(UUID, sb.toString(), 7, 3, 0, 2048, 2048, this);
          return;
       }
    }
@@ -64,9 +65,9 @@ final class BluetoothLayer extends SerialLayer implements BluetoothSerialPortLis
    }
 
    @Override
-   protected final int nativeRead(byte[] b, int offset, int length) {
+   protected final int nativeRead(byte[] b, int offset, int length) throws IONotRoutableException {
       if (this._port == null) {
-         throw new Object();
+         throw new IONotRoutableException();
       } else {
          return this._port.read(b, offset, length);
       }
@@ -86,9 +87,9 @@ final class BluetoothLayer extends SerialLayer implements BluetoothSerialPortLis
    }
 
    @Override
-   protected final int nativeWrite(byte[] b, int offset, int length) {
+   protected final int nativeWrite(byte[] b, int offset, int length) throws IONotRoutableException {
       if (this._port == null) {
-         throw new Object();
+         throw new IONotRoutableException();
       } else {
          return this._port.write(b, offset, length);
       }
@@ -105,7 +106,7 @@ final class BluetoothLayer extends SerialLayer implements BluetoothSerialPortLis
 
    @Override
    public final void deviceConnected(boolean success) {
-      System.out.println(((StringBuffer)(new Object("lstp: deviceConnected "))).append(success).toString());
+      System.out.println("lstp: deviceConnected " + success);
       if (success && !super._lstpUtil.getLinkState()) {
          this.startNativeLayer();
       }
@@ -119,7 +120,7 @@ final class BluetoothLayer extends SerialLayer implements BluetoothSerialPortLis
 
    @Override
    public final void dtrStateChange(boolean high) {
-      System.out.println(((StringBuffer)(new Object("lstp: dtrStateChange "))).append(high).toString());
+      System.out.println("lstp: dtrStateChange " + high);
    }
 
    @Override

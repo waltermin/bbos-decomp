@@ -1,5 +1,6 @@
 package net.rim.device.internal.crypto.pgp;
 
+import net.rim.device.api.crypto.CryptoUnsupportedOperationException;
 import net.rim.device.api.crypto.Digest;
 import net.rim.device.api.crypto.DigestFactory;
 import net.rim.device.api.crypto.SymmetricKey;
@@ -14,7 +15,7 @@ public final class PGPSymmetricKeyEncryptedSessionKeyPacket extends PGPPacket {
    private int _sessionKeyAlgorithm;
    private byte[] _encryptedSessionKeyData;
 
-   public PGPSymmetricKeyEncryptedSessionKeyPacket(int tag, byte[] encoding) {
+   public PGPSymmetricKeyEncryptedSessionKeyPacket(int tag, byte[] encoding) throws CryptoUnsupportedOperationException {
       super(tag, encoding);
       int offset = 0;
       int version = encoding[offset++];
@@ -39,7 +40,7 @@ public final class PGPSymmetricKeyEncryptedSessionKeyPacket extends PGPPacket {
                   this._codedValue = encoding[offset++];
                   break;
                default:
-                  throw new Object(((StringBuffer)(new Object("S2K:"))).append(this._s2kType).toString());
+                  throw new CryptoUnsupportedOperationException("S2K:" + this._s2kType);
             }
 
             label28:
@@ -55,7 +56,7 @@ public final class PGPSymmetricKeyEncryptedSessionKeyPacket extends PGPPacket {
             System.arraycopy(encoding, offset, this._encryptedSessionKeyData, 0, encryptedDataLength);
             return;
          default:
-            throw new Object(((StringBuffer)(new Object("Ver:"))).append(version).toString());
+            throw new CryptoUnsupportedOperationException("Ver:" + version);
       }
    }
 
@@ -98,14 +99,14 @@ public final class PGPSymmetricKeyEncryptedSessionKeyPacket extends PGPPacket {
       // 35: aload 4
       // 37: invokestatic net/rim/device/internal/crypto/pgp/PGPUtilities.getSessionKey (ILnet/rim/device/api/crypto/pgp/PGPPseudoRandomSource;)Lnet/rim/device/api/crypto/SymmetricKey;
       // 3a: astore 5
-      // 3c: new java/lang/Object
+      // 3c: new net/rim/device/api/crypto/InitializationVector
       // 3f: dup
       // 40: aload 0
       // 41: invokespecial net/rim/device/internal/crypto/pgp/PGPSymmetricKeyEncryptedSessionKeyPacket.getBlockLength ()I
       // 44: newarray 8
       // 46: invokespecial net/rim/device/api/crypto/InitializationVector.<init> ([B)V
       // 49: astore 6
-      // 4b: new java/lang/Object
+      // 4b: new java/lang/StringBuffer
       // 4e: dup
       // 4f: invokespecial java/lang/StringBuffer.<init> ()V
       // 52: aload 5
@@ -116,7 +117,7 @@ public final class PGPSymmetricKeyEncryptedSessionKeyPacket extends PGPPacket {
       // 62: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 65: astore 7
       // 67: aload 5
-      // 69: new java/lang/Object
+      // 69: new java/io/ByteArrayInputStream
       // 6c: dup
       // 6d: aload 0
       // 6e: getfield net/rim/device/internal/crypto/pgp/PGPSymmetricKeyEncryptedSessionKeyPacket._encryptedSessionKeyData [B
@@ -193,13 +194,13 @@ public final class PGPSymmetricKeyEncryptedSessionKeyPacket extends PGPPacket {
       // try (105 -> 113): 114 null
    }
 
-   private final int getBlockLength() {
+   private final int getBlockLength() throws CryptoUnsupportedOperationException {
       switch (this._encryptionAlgorithm) {
          case 1:
          case 4:
          case 5:
          case 6:
-            throw new Object(((StringBuffer)(new Object("Sym:"))).append(this._encryptionAlgorithm).toString());
+            throw new CryptoUnsupportedOperationException("Sym:" + this._encryptionAlgorithm);
          case 2:
          case 3:
          default:

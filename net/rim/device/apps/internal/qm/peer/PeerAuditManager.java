@@ -35,11 +35,11 @@ public final class PeerAuditManager implements Runnable, GlobalEventListener {
    long _reportInterval;
    long _reportMaxInterval;
    IntHashtable _persistentData;
-   private Vector _messages = (Vector)(new Object());
-   private Hashtable _lookup = (Hashtable)(new Object());
-   private Hashtable _reverseLookup = (Hashtable)(new Object());
+   private Vector _messages = new Vector();
+   private Hashtable _lookup = new Hashtable();
+   private Hashtable _reverseLookup = new Hashtable();
    private int _invokeLaterId = -1;
-   private StringBuffer _reportSubject = (StringBuffer)(new Object("BlackBerry Messenger Usage Report "));
+   private StringBuffer _reportSubject = new StringBuffer("BlackBerry Messenger Usage Report ");
    private Vector _reports;
    private StringBuffer _reportBody;
    private Vector _attachments;
@@ -67,10 +67,10 @@ public final class PeerAuditManager implements Runnable, GlobalEventListener {
    private static final int TYPE_BODY = 2;
    private static final int REPORT_MAX_SIZE = 30000;
    private static int _currentReportSize;
-   private static StringBuffer _timeAsStringBuffer = (StringBuffer)(new Object());
+   private static StringBuffer _timeAsStringBuffer = new StringBuffer();
    private static final String USAGE_REPORT_SUBJECT = "BlackBerry Messenger Usage Report ";
-   private static SimpleDateFormat _dateFormat = (SimpleDateFormat)(new Object(48));
-   private static SimpleDateFormat _timeFormat = (SimpleDateFormat)(new Object(6));
+   private static SimpleDateFormat _dateFormat = new SimpleDateFormat(48);
+   private static SimpleDateFormat _timeFormat = new SimpleDateFormat(6);
    private static Calendar _cal = Calendar.getInstance();
    private static CalendarExtensions _calEx = (CalendarExtensions)_cal;
    private static final int TYPE_LOG_MSG = 1;
@@ -99,7 +99,7 @@ public final class PeerAuditManager implements Runnable, GlobalEventListener {
       // Bytecode:
       // 00: bipush 0
       // 01: istore 3
-      // 02: new java/lang/Object
+      // 02: new net/rim/device/api/util/DataBuffer
       // 05: dup
       // 06: aload 1
       // 07: bipush 0
@@ -384,7 +384,7 @@ public final class PeerAuditManager implements Runnable, GlobalEventListener {
 
    final byte[] serialize(boolean bigEndian) {
       this.compileNewReport();
-      DataBuffer buffer = (DataBuffer)(new Object(bigEndian));
+      DataBuffer buffer = new DataBuffer(bigEndian);
       int count = this._reports.size();
 
       for (int index = 0; index < count; index++) {
@@ -412,7 +412,7 @@ public final class PeerAuditManager implements Runnable, GlobalEventListener {
    public final void deviceUnlocked() {
       if (this._reportBodyEncoding != null) {
          String decrypt = PersistentContent.decodeString(this._reportBodyEncoding);
-         this._reportBody = (StringBuffer)(new Object(decrypt));
+         this._reportBody = new StringBuffer(decrypt);
          String var5 = null;
          int size = this._lockQueue != null ? this._lockQueue.length : 0;
 
@@ -448,7 +448,7 @@ public final class PeerAuditManager implements Runnable, GlobalEventListener {
       this._lockQueue = new PeerAuditManager$LogQueueObject[0];
       if (this._reportBody != null) {
          this._reportBodyEncoding = PersistentContent.encode(this._reportBody.toString(), true, true);
-         this._reportBody = (StringBuffer)(new Object());
+         this._reportBody = new StringBuffer();
       }
    }
 
@@ -539,14 +539,14 @@ public final class PeerAuditManager implements Runnable, GlobalEventListener {
          }
 
          this._lastTimeSent = currentTime;
-         IntHashtable recentReport = (IntHashtable)(new Object());
+         IntHashtable recentReport = new IntHashtable();
          recentReport.put(1, this._reportSubject.toString());
          recentReport.put(2, this._reportBody.toString());
          recentReport.put(4, this._attachments);
          this._reports.addElement(recentReport);
          this._reportSubject.setLength(34);
          this._reportBody.setLength(0);
-         this._attachments = (Vector)(new Object());
+         this._attachments = new Vector();
          this._persistentData.put(1, "");
          this.commit();
          _currentReportSize = 0;
@@ -565,7 +565,7 @@ public final class PeerAuditManager implements Runnable, GlobalEventListener {
                if (service != null) {
                   ServiceRecord sr = service.getOutgoingServiceRecord();
                   if (sr != null) {
-                     EmailSendUtility.sendMessage(msg, sr, new Object());
+                     EmailSendUtility.sendMessage(msg, sr, new ContextObject());
                      EmailHierarchy.removeMessage(msg, msg.getFolderId());
                      this._messages.addElement(msg);
                      this._lookup.put(report, msg);
@@ -650,7 +650,7 @@ public final class PeerAuditManager implements Runnable, GlobalEventListener {
       LongHashtable auditorTestData = (LongHashtable)ar.get(-1207069945313303284L);
       if (auditorTestData != null) {
          Object address = auditorTestData.get(253);
-         if (address instanceof Object) {
+         if (address instanceof String) {
             this._reportRecipient = this.getReportRecipient((String)address);
             this._reportInterval = 86400000;
             this._reportMaxInterval = 604800000;
@@ -673,10 +673,8 @@ public final class PeerAuditManager implements Runnable, GlobalEventListener {
    private final RIMModel getReportRecipient(String address) {
       RIMModel recipient = null;
       if (address != null && address.length() > 0) {
-         String[] names = new Object[2];
-         names[0] = address;
-         names[1] = address;
-         ContextObject context = (ContextObject)(new Object());
+         String[] names = new String[]{address, address};
+         ContextObject context = new ContextObject();
          ContextObject.put(context, 251, names);
          recipient = (RIMModel)FactoryUtil.createInstance(-2985347935260258684L, context);
       }
@@ -697,7 +695,7 @@ public final class PeerAuditManager implements Runnable, GlobalEventListener {
    }
 
    private final byte[] serializeReport(IntHashtable report, boolean bigEndian) {
-      DataBuffer buffer = (DataBuffer)(new Object(bigEndian));
+      DataBuffer buffer = new DataBuffer(bigEndian);
       if (report != null) {
          ConverterUtilities.writeString(buffer, 1, (String)report.get(1));
          ConverterUtilities.writeString(buffer, 2, PersistentContent.decodeString(report.get(2)));
@@ -714,16 +712,16 @@ public final class PeerAuditManager implements Runnable, GlobalEventListener {
       if (this._persistentData != null && this._reportRecipient != null) {
          this._reports = (Vector)this._persistentData.get(0);
          Object records = this._persistentData.get(1);
-         if (records instanceof Object) {
-            this._reportBody = (StringBuffer)(new Object((String)records));
+         if (records instanceof String) {
+            this._reportBody = new StringBuffer((String)records);
          } else {
-            this._reportBody = (StringBuffer)(new Object());
+            this._reportBody = new StringBuffer();
             this._reportBody.append(records);
          }
 
          this._attachments = (Vector)this._persistentData.get(4);
-         this._lastTimeSent = this._persistentData.get(2);
-         this._lastRecordLoggingDate = this._persistentData.get(3);
+         this._lastTimeSent = (Long)this._persistentData.get(2);
+         this._lastRecordLoggingDate = (Long)this._persistentData.get(3);
          _currentReportSize = this._reportBody.length() * 2;
 
          for (int index = 0; index < this._attachments.size(); index++) {
@@ -735,17 +733,17 @@ public final class PeerAuditManager implements Runnable, GlobalEventListener {
             }
          }
       } else {
-         this._persistentData = (IntHashtable)(new Object());
-         this._reports = (Vector)(new Object());
-         this._reportBody = (StringBuffer)(new Object());
-         this._attachments = (Vector)(new Object());
+         this._persistentData = new IntHashtable();
+         this._reports = new Vector();
+         this._reportBody = new StringBuffer();
+         this._attachments = new Vector();
          this._lastTimeSent = System.currentTimeMillis();
          this._lastRecordLoggingDate = -1;
          this._persistentData.put(0, this._reports);
          this._persistentData.put(4, this._attachments);
          this._persistentData.put(1, "");
-         this._persistentData.put(2, new Object(this._lastTimeSent));
-         this._persistentData.put(3, new Object(this._lastRecordLoggingDate));
+         this._persistentData.put(2, new Long(this._lastTimeSent));
+         this._persistentData.put(3, new Long(this._lastRecordLoggingDate));
          PeerData.setAuditData(this._persistentData);
          this.commit();
          _currentReportSize = 0;
@@ -753,8 +751,8 @@ public final class PeerAuditManager implements Runnable, GlobalEventListener {
    }
 
    private final IntHashtable deserializeReport(byte[] buf, boolean bigEndian) {
-      IntHashtable report = (IntHashtable)(new Object());
-      DataBuffer buffer = (DataBuffer)(new Object(buf, 0, buf.length, bigEndian));
+      IntHashtable report = new IntHashtable();
+      DataBuffer buffer = new DataBuffer(buf, 0, buf.length, bigEndian);
 
       try {
          while (true) {

@@ -22,13 +22,7 @@ class DocViewTextDisplayScreen$2 implements Runnable {
          if (this.val$errorCode == 248) {
             String errorString = DocViewDisplayScreen._resources.getString(70);
             if (this.val$pattern != null) {
-               errorString = ((StringBuffer)(new Object()))
-                  .append(errorString)
-                  .append(' ')
-                  .append(DocViewDisplayScreen._resources.getString(91))
-                  .append(' ')
-                  .append(this.val$pattern)
-                  .toString();
+               errorString = errorString + ' ' + DocViewDisplayScreen._resources.getString(91) + ' ' + this.val$pattern;
             }
 
             Dialog.alert(errorString);

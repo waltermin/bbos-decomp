@@ -33,6 +33,6 @@ public class TransportMessageException extends Exception {
 
    @Override
    public String getMessage() {
-      return ((StringBuffer)(new Object())).append(super.getMessage()).append(", Error Code: ").append(String.valueOf(this._errorCode)).toString();
+      return super.getMessage() + ", Error Code: " + this._errorCode;
    }
 }

@@ -3,14 +3,16 @@ package net.rim.device.internal.eventLogViewer;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.system.EventLogger;
 import net.rim.device.api.system.PersistentObject;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.LongEnumeration;
@@ -38,17 +40,17 @@ public final class EventLoggerOptions extends MainScreen implements ListFieldCal
       this._persist = persist;
       LongIntHashtable filterFlags = (LongIntHashtable)persist.getContents();
       ResourceBundle rb = this._evlContents._rb;
-      this.setTitle((Field)(new Object(rb.getString(52))));
-      String[] strs = new Object[3];
+      this.setTitle(new LabelField(rb.getString(52)));
+      String[] strs = new String[3];
       String[] levelStrs = rb.getStringArray(70);
       strs[0] = levelStrs[EventLoggerContents.errorLevel2StringIndex(3)];
       strs[1] = levelStrs[EventLoggerContents.errorLevel2StringIndex(4)];
       strs[2] = levelStrs[EventLoggerContents.errorLevel2StringIndex(5)];
-      this._levelField = (ObjectChoiceField)(new Object(rb.getString(15), strs, this.level2ChoiceIndex(EventLogger.getMinimumLevel())));
+      this._levelField = new ObjectChoiceField(rb.getString(15), strs, this.level2ChoiceIndex(EventLogger.getMinimumLevel()));
       this.add(this._levelField);
-      this.add((Field)(new Object()));
-      this.add((Field)(new Object(rb.getString(2), 36028797019226112L)));
-      this._list = (ListField)(new Object());
+      this.add(new SeparatorField());
+      this.add(new RichTextField(rb.getString(2), 36028797019226112L));
+      this._list = new ListField();
       this._list.setCallback(this);
       this.add(this._list);
       this._guids = new long[filterFlags.size()];
@@ -61,7 +63,7 @@ public final class EventLoggerOptions extends MainScreen implements ListFieldCal
       }
 
       this._list.setSize(this._guids.length);
-      String[] temp = new Object[this._guids.length];
+      String[] temp = new String[this._guids.length];
 
       for (int i = this._guids.length - 1; i >= 0; i--) {
          temp[i] = EventLog.getRegisteredAppName(this._guids[i]);

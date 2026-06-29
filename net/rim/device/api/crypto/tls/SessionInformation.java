@@ -30,7 +30,7 @@ class SessionInformation implements Persistable {
 
       if (certificatePool != null) {
          int certificatePoolLength = certificatePool.length;
-         this._certificatePoolTypes = new Object[certificatePoolLength];
+         this._certificatePoolTypes = new String[certificatePoolLength];
          this._certificatePoolEncodings = new byte[certificatePoolLength][];
 
          for (int i = 0; i < certificatePoolLength; i++) {
@@ -72,10 +72,10 @@ class SessionInformation implements Persistable {
             e = var4;
          }
       } catch (Throwable var5) {
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       }
 
-      throw new Object(e.toString());
+      throw new RuntimeException(e.toString());
    }
 
    // $VF: Could not inline inconsistent finally blocks
@@ -97,10 +97,10 @@ class SessionInformation implements Persistable {
                e = var6;
             }
          } catch (Throwable var7) {
-            throw new Object(e.toString());
+            throw new RuntimeException(e.toString());
          }
 
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       } else {
          return null;
       }

@@ -9,7 +9,6 @@ import net.rim.device.api.system.AudioHeadsetListener;
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.system.EncodedImage;
 import net.rim.device.api.ui.Keypad;
-import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
@@ -19,9 +18,11 @@ import net.rim.device.api.util.NumberUtilities;
 import net.rim.device.apps.api.framework.file.ExplorerServices;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.registration.MIMEContentVerbRepository;
+import net.rim.device.apps.api.framework.verb.PopupVerbWrapperSelectionDialog;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.phone.PhoneEventListener;
 import net.rim.device.apps.api.phone.VoiceServices;
+import net.rim.device.apps.api.ui.VerbMenuItem;
 import net.rim.device.apps.internal.mediarecorder.MediaRecorderScreen;
 import net.rim.device.apps.internal.mediarecorder.RenderScreen;
 import net.rim.device.apps.internal.voicenotesrecorder.resource.RecordVoiceNotesResources;
@@ -60,11 +61,11 @@ public final class RecordVoiceNoteScreen extends MediaRecorderScreen implements 
       int time = (int)accumTime / 1000;
       int minutes = time / 60;
       int seconds = time % 60;
-      String text = ((StringBuffer)(new Object())).append(minutes).append(":").toString();
+      String text = minutes + ":";
       if (seconds < 10) {
-         text = ((StringBuffer)(new Object())).append(text).append('0').append(seconds).toString();
+         text = text + '0' + seconds;
       } else {
-         text = ((StringBuffer)(new Object())).append(text).append(seconds).toString();
+         text = text + seconds;
       }
 
       return text.toCharArray();
@@ -77,7 +78,7 @@ public final class RecordVoiceNoteScreen extends MediaRecorderScreen implements 
 
       if (ContextObject.getFlag(ctx, 39)) {
          Object obj = ContextObject.get(ctx, -3185095355580406181L);
-         if (obj instanceof Object) {
+         if (obj instanceof Verb) {
             this._terminalVerb = (Verb)obj;
             return;
          }
@@ -91,7 +92,7 @@ public final class RecordVoiceNoteScreen extends MediaRecorderScreen implements 
       if (browse) {
          ContextObject context = ShowVoiceNotesRecorderApp.getVoiceNoteRecorderContext();
          Object o = ContextObject.get(context, 4086083307293257364L);
-         if (o instanceof Object) {
+         if (o instanceof Boolean) {
             this.close();
          } else {
             String path = FileUtilities.getDefaultPathForMIMEType("audio/amr");
@@ -180,7 +181,7 @@ public final class RecordVoiceNoteScreen extends MediaRecorderScreen implements 
       Menu menu = super.getMenu(instance);
       String path = FileUtilities.getDefaultPathForMIMEType("audio/amr");
       Verb browseVerb = ExplorerServices.getBrowseVerb(path, 132, null);
-      menu.add((MenuItem)(new Object(RecordVoiceNotesResources.getString(8), 591106, 0, browseVerb, null)));
+      menu.add(new VerbMenuItem(RecordVoiceNotesResources.getString(8), 591106, 0, browseVerb, null));
       return menu;
    }
 
@@ -230,7 +231,7 @@ public final class RecordVoiceNoteScreen extends MediaRecorderScreen implements 
       try {
          this._recordController.stopRecording();
       } catch (Throwable var11) {
-         System.out.println(((StringBuffer)(new Object("stopRecording() error: "))).append(e.toString()).toString());
+         System.out.println("stopRecording() error: " + e.toString());
          break label65;
       }
 
@@ -261,7 +262,7 @@ public final class RecordVoiceNoteScreen extends MediaRecorderScreen implements 
             out.close();
             this.setDirty(false);
          } catch (Throwable var10) {
-            System.out.println(((StringBuffer)(new Object("Error writing voice note: "))).append(e.toString()).toString());
+            System.out.println("Error writing voice note: " + e.toString());
             break label59;
          }
       }
@@ -281,7 +282,7 @@ public final class RecordVoiceNoteScreen extends MediaRecorderScreen implements 
          this._recordController.startRecording();
       } catch (Throwable var3) {
          Dialog.alert(RecordVoiceNotesResources.getString(18));
-         System.out.println(((StringBuffer)(new Object("startRecording() error: "))).append(e.toString()).toString());
+         System.out.println("startRecording() error: " + e.toString());
          return false;
       }
 
@@ -307,7 +308,7 @@ public final class RecordVoiceNoteScreen extends MediaRecorderScreen implements 
             this._recordController.pauseRecording();
             bytes = this._recordController.getSize();
          } catch (Throwable var5) {
-            System.out.println(((StringBuffer)(new Object("pauseRecording() error: "))).append(e.toString()).toString());
+            System.out.println("pauseRecording() error: " + e.toString());
             bytes = 0;
             break label41;
          }
@@ -322,13 +323,13 @@ public final class RecordVoiceNoteScreen extends MediaRecorderScreen implements 
          }
 
          this.updateFileDuration(this.formatTime(this._accumulatedTime));
-         String size = ((StringBuffer)(new Object())).append(bytes).append("B").toString();
+         String size = bytes + "B";
          if (bytes > 1024) {
-            size = ((StringBuffer)(new Object())).append((bytes + 512) / 1024).append("K").toString();
+            size = (bytes + 512) / 1024 + "K";
          }
 
          if (bytes > 1048576) {
-            size = ((StringBuffer)(new Object())).append((bytes + 524288) / 1024 / 1024).append("M").toString();
+            size = (bytes + 524288) / 1024 / 1024 + "M";
          }
 
          this.updateFileSize(size.toCharArray());
@@ -343,7 +344,7 @@ public final class RecordVoiceNoteScreen extends MediaRecorderScreen implements 
          try {
             this._recordController.resumeRecording();
          } catch (Throwable var3) {
-            System.out.println(((StringBuffer)(new Object("resumeRecording() error: "))).append(e.toString()).toString());
+            System.out.println("resumeRecording() error: " + e.toString());
             return;
          }
 
@@ -362,7 +363,7 @@ public final class RecordVoiceNoteScreen extends MediaRecorderScreen implements 
       try {
          return this._recordController.isRecording();
       } catch (Throwable var3) {
-         System.out.println(((StringBuffer)(new Object("isRecording() error: "))).append(e.toString()).toString());
+         System.out.println("isRecording() error: " + e.toString());
          return false;
       }
    }
@@ -382,7 +383,7 @@ public final class RecordVoiceNoteScreen extends MediaRecorderScreen implements 
 
       for (boolean fileExists = true; fileExists; this._nextFileNum++) {
          String num = NumberUtilities.toString(this._nextFileNum, 10, 5);
-         filename = ((StringBuffer)(new Object())).append(location).append(prefix).append(" ").append(num).append(".amr").toString();
+         filename = location + prefix + " " + num + ".amr";
          fileExists = this.fileExists(filename);
       }
 
@@ -519,7 +520,7 @@ public final class RecordVoiceNoteScreen extends MediaRecorderScreen implements 
             FileConnection file = (FileConnection)Connector.open(this._filename);
             file.create();
             Object obj = renameVerb.invoke(this._filename);
-            if (obj instanceof Object) {
+            if (obj instanceof String) {
                this._filename = (String)obj;
                this.updateFileName(FileUtilities.getDisplayBaseName(this._filename).toCharArray());
             }
@@ -549,7 +550,7 @@ public final class RecordVoiceNoteScreen extends MediaRecorderScreen implements 
       label20:
       try {
          FileConnection connection = (FileConnection)Connector.open(filename);
-         RenderScreen renderScreen = (RenderScreen)(new Object(0));
+         RenderScreen renderScreen = new RenderScreen(0);
          renderScreen.init(connection);
          renderScreen.doModal();
       } finally {
@@ -566,14 +567,14 @@ public final class RecordVoiceNoteScreen extends MediaRecorderScreen implements 
       if (this._sendVerbs != null && this._sendVerbs.length > 0) {
          int idx = 0;
          if (this._sendVerbs.length > 1) {
-            String[] verbStrings = new Object[this._sendVerbs.length];
+            String[] verbStrings = new String[this._sendVerbs.length];
             int i = this._sendVerbs.length;
 
             while (--i >= 0) {
                verbStrings[i] = this._sendVerbs[i].toString();
             }
 
-            Dialog pickVerb = (Dialog)(new Object(RecordVoiceNotesResources.getString(20), verbStrings, 0, true));
+            Dialog pickVerb = new PopupVerbWrapperSelectionDialog(RecordVoiceNotesResources.getString(20), verbStrings, 0, true);
             pickVerb.setEscapeEnabled(true);
             pickVerb.setIcon(ThemeManager.getThemeAwareImage("dialog_question"));
             idx = pickVerb.doModal();
@@ -585,7 +586,7 @@ public final class RecordVoiceNoteScreen extends MediaRecorderScreen implements 
          if (this._sendVerbs[idx] != null) {
             String filename = this.stopRecording(true);
             this._labelField.setText(this._record);
-            ContextObject contextObj = (ContextObject)(new Object());
+            ContextObject contextObj = new ContextObject();
             contextObj.put(2765042845091913199L, filename);
             contextObj.put(-4241241545455759532L, "audio/amr");
             String fileDisplayName = FileUtilities.getDisplayBaseName(filename);
@@ -636,11 +637,11 @@ public final class RecordVoiceNoteScreen extends MediaRecorderScreen implements 
       this.setTag(Tag.create("media-list"));
       this._staticBitmap = RecordVoiceNotesResources.getVoiceNoteRecorderImage();
       this._animatedImage = RecordVoiceNotesResources.getAnimatedRecorderImage();
-      this._imageField = (AnimatedBitmapField)(new Object(this._staticBitmap, 12884901888L));
+      this._imageField = new AnimatedBitmapField(this._staticBitmap, 12884901888L);
       this._paused = RecordVoiceNotesResources.getString(11);
       this._recording = RecordVoiceNotesResources.getString(10);
       this._record = RecordVoiceNotesResources.getString(9);
-      this._labelField = (LabelField)(new Object(this._record, 12884901952L));
+      this._labelField = new LabelField(this._record, 12884901952L);
       this._vnManager.add(this._imageField);
       this._vnManager.add(this._labelField);
       this.add(this._vnManager);

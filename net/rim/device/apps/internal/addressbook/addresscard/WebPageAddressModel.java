@@ -57,7 +57,7 @@ public final class WebPageAddressModel implements PersistableRIMModel, FieldProv
 
    @Override
    public final boolean grabDataFromField(Field field, Object context) {
-      if (field instanceof Object && field.isEditable()) {
+      if (field instanceof BasicEditField && field.isEditable()) {
          BasicEditField editField = (BasicEditField)field;
          this.setAddress(editField.getText().trim());
          return this.getAddress().length() > 0;
@@ -80,7 +80,10 @@ public final class WebPageAddressModel implements PersistableRIMModel, FieldProv
          }
 
          return true;
-      } else if (ContextObject.getFlag(context, 11) && ContextObject.getFlag(context, 43) && ContextObject.getFlag(context, 54) && target instanceof Object) {
+      } else if (ContextObject.getFlag(context, 11)
+         && ContextObject.getFlag(context, 43)
+         && ContextObject.getFlag(context, 54)
+         && target instanceof StringBuffer) {
          String address = this.getAddress();
          if (address != null && address.length() > 0) {
             ((StringBuffer)target).append("\rURL:").append(address);
@@ -110,14 +113,14 @@ public final class WebPageAddressModel implements PersistableRIMModel, FieldProv
    public final Field getField(Object context) {
       String address = this.getAddress();
       AbstractStringWrapper addressWrapper = AbstractStringWrapper.createInstance(address);
-      URLTextFilter filter = (URLTextFilter)(new Object());
+      URLTextFilter filter = new URLTextFilter();
       long flags = ContextObject.getFlag(context, 0) ? 4503599627370496L : 9007199254740992L;
       flags |= 2199023255552L;
       if (filter.validate(addressWrapper)) {
          flags |= 117440512;
       }
 
-      Field field = (Field)(new Object(AddressBookResources.getString(1723), address, 2048, flags));
+      Field field = new BasicEditField(AddressBookResources.getString(1723), address, 2048, flags);
       field.setCookie(this);
       return field;
    }
@@ -129,8 +132,8 @@ public final class WebPageAddressModel implements PersistableRIMModel, FieldProv
 
    public WebPageAddressModel(Object initialData) {
       String address = null;
-      if (!(initialData instanceof Object)) {
-         if (initialData instanceof Object) {
+      if (!(initialData instanceof String)) {
+         if (initialData instanceof ContextObject) {
             address = (String)ContextObject.get(initialData, 253);
          }
       } else {

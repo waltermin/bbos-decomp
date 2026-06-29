@@ -36,7 +36,7 @@ public class SecureMessageFactory {
          this._securityProvider = securityProvider;
          this._sequenceProvider = sequenceProvider;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -54,7 +54,7 @@ public class SecureMessageFactory {
 
          switch (securityVersion) {
             case 0:
-               throw new SecureMessageException(((StringBuffer)(new Object("Internal error, invalid security version "))).append(securityVersion).toString());
+               throw new SecureMessageException("Internal error, invalid security version " + securityVersion);
             case 1:
             default:
                handler.handleMessage(new SecureMessageV1_0(buffer, this._versionProvider, this._keyProvider, this._securityProvider));
@@ -63,7 +63,7 @@ public class SecureMessageFactory {
                handler.handleMessage(new SecureMessageV1_1(buffer, this._keyProvider, this._securityProvider, this._sequenceProvider, this._versionProvider));
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -76,7 +76,7 @@ public class SecureMessageFactory {
 
          switch (securityVersion) {
             case 0:
-               throw new SecureMessageException(((StringBuffer)(new Object("Internal error, invalid security version "))).append(securityVersion).toString());
+               throw new SecureMessageException("Internal error, invalid security version " + securityVersion);
             case 1:
             default:
                handler.handleMessage(new SecureMessageV1_0(receiverId, buffer, this._keyProvider, this._securityProvider));
@@ -85,7 +85,7 @@ public class SecureMessageFactory {
                handler.handleMessage(new SecureMessageV1_1(buffer, senderId, receiverId, this._keyProvider, this._securityProvider, this._sequenceProvider));
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -93,7 +93,7 @@ public class SecureMessageFactory {
       if (tm != null && handler != null) {
          handler.handleMessage(new SecureMessageV1_0(tm, receiverId, this._keyProvider, this._securityProvider));
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

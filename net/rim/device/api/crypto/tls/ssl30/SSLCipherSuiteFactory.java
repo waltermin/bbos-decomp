@@ -5,6 +5,8 @@ import java.io.OutputStream;
 import net.rim.device.api.crypto.HMACKey;
 import net.rim.device.api.crypto.NullMAC;
 import net.rim.device.api.crypto.tls.KeyMaterial;
+import net.rim.device.api.crypto.tls.TLSAlertException;
+import net.rim.device.cldc.io.ssl.TLSException;
 
 public class SSLCipherSuiteFactory implements SSLRecordProtocolConstants {
    protected SSLRecordProtocol _recordProtocol;
@@ -13,7 +15,7 @@ public class SSLCipherSuiteFactory implements SSLRecordProtocolConstants {
       this._recordProtocol = recordProtocol;
    }
 
-   public SSLConnectionState getConnectionState(int cipherSuite) {
+   public SSLConnectionState getConnectionState(int cipherSuite) throws TLSAlertException {
       SSLConnectionState state = new SSLConnectionState();
       switch (cipherSuite) {
          case -1:
@@ -23,7 +25,7 @@ public class SSLCipherSuiteFactory implements SSLRecordProtocolConstants {
          case 14:
             SSLAlertProtocol alertProtocol = (SSLAlertProtocol)this._recordProtocol.getAlertProtocol();
             alertProtocol.sendAlertMessage((byte)3, (byte)47);
-            throw new Object((byte)3, (byte)47);
+            throw new TLSAlertException((byte)3, (byte)47);
          case 0:
          default:
             state.setKeyExchangeAlgorithm((byte)0);
@@ -80,7 +82,7 @@ public class SSLCipherSuiteFactory implements SSLRecordProtocolConstants {
          case 14:
             SSLAlertProtocol alertProtocol = (SSLAlertProtocol)this._recordProtocol.getAlertProtocol();
             alertProtocol.sendAlertMessage((byte)3, (byte)47);
-            throw new Object((byte)3, (byte)47);
+            throw new TLSAlertException((byte)3, (byte)47);
          case 0:
          case 1:
          case 2:
@@ -157,7 +159,7 @@ public class SSLCipherSuiteFactory implements SSLRecordProtocolConstants {
          case 14:
             SSLAlertProtocol alertProtocol = (SSLAlertProtocol)this._recordProtocol.getAlertProtocol();
             alertProtocol.sendAlertMessage((byte)3, (byte)47);
-            throw new Object((byte)3, (byte)47);
+            throw new TLSAlertException((byte)3, (byte)47);
          case 0:
          default:
             state.setHashSize(0);
@@ -195,7 +197,7 @@ public class SSLCipherSuiteFactory implements SSLRecordProtocolConstants {
       }
    }
 
-   public void updateReadConnectionState(SSLConnectionState param1, KeyMaterial param2, InputStream param3) {
+   public void updateReadConnectionState(SSLConnectionState param1, KeyMaterial param2, InputStream param3) throws TLSException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -214,7 +216,7 @@ public class SSLCipherSuiteFactory implements SSLRecordProtocolConstants {
       // 00d: aload 4
       // 00f: ifnonnull 021
       // 012: aload 1
-      // 013: new java/lang/Object
+      // 013: new net/rim/device/api/crypto/NullDecryptor
       // 016: dup
       // 017: aload 3
       // 018: invokespecial net/rim/device/api/crypto/NullDecryptor.<init> (Ljava/io/InputStream;)V
@@ -230,7 +232,7 @@ public class SSLCipherSuiteFactory implements SSLRecordProtocolConstants {
       // 031: ifeq 059
       // 034: aload 2
       // 035: invokevirtual net/rim/device/api/crypto/tls/KeyMaterial.getServerCipher ()Lnet/rim/device/api/crypto/SymmetricKey;
-      // 038: new java/lang/Object
+      // 038: new java/lang/StringBuffer
       // 03b: dup
       // 03c: invokespecial java/lang/StringBuffer.<init> ()V
       // 03f: aload 4
@@ -245,7 +247,7 @@ public class SSLCipherSuiteFactory implements SSLRecordProtocolConstants {
       // 056: goto 07b
       // 059: aload 2
       // 05a: invokevirtual net/rim/device/api/crypto/tls/KeyMaterial.getClientCipher ()Lnet/rim/device/api/crypto/SymmetricKey;
-      // 05d: new java/lang/Object
+      // 05d: new java/lang/StringBuffer
       // 060: dup
       // 061: invokespecial java/lang/StringBuffer.<init> ()V
       // 064: aload 4
@@ -261,9 +263,9 @@ public class SSLCipherSuiteFactory implements SSLRecordProtocolConstants {
       // 07c: aload 5
       // 07e: invokevirtual net/rim/device/api/crypto/tls/ssl30/SSLConnectionState.setDecryptorEngine (Lnet/rim/device/api/crypto/BlockDecryptorEngine;)V
       // 081: aload 1
-      // 082: new java/lang/Object
+      // 082: new net/rim/device/api/crypto/BlockDecryptor
       // 085: dup
-      // 086: new java/lang/Object
+      // 086: new net/rim/device/api/crypto/tls/TLSBlockUnformatterEngine
       // 089: dup
       // 08a: aload 5
       // 08c: bipush 0
@@ -306,7 +308,7 @@ public class SSLCipherSuiteFactory implements SSLRecordProtocolConstants {
       // 0da: bipush 3
       // 0dc: bipush 51
       // 0de: invokeinterface net/rim/device/api/crypto/tls/AlertProtocolMethods.sendAlertMessage (BB)V 3
-      // 0e3: new java/lang/Object
+      // 0e3: new net/rim/device/cldc/io/ssl/TLSException
       // 0e6: dup
       // 0e7: aload 4
       // 0e9: invokespecial net/rim/device/cldc/io/ssl/TLSException.<init> (Ljava/lang/Exception;)V
@@ -318,7 +320,7 @@ public class SSLCipherSuiteFactory implements SSLRecordProtocolConstants {
       // 0f6: bipush 3
       // 0f8: bipush 51
       // 0fa: invokeinterface net/rim/device/api/crypto/tls/AlertProtocolMethods.sendAlertMessage (BB)V 3
-      // 0ff: new java/lang/Object
+      // 0ff: new net/rim/device/cldc/io/ssl/TLSException
       // 102: dup
       // 103: aload 4
       // 105: invokespecial net/rim/device/cldc/io/ssl/TLSException.<init> (Ljava/lang/Exception;)V
@@ -340,7 +342,7 @@ public class SSLCipherSuiteFactory implements SSLRecordProtocolConstants {
 
       String macAlgorithm = state.getMacAlgorithm();
       if (macAlgorithm == null) {
-         NullMAC mac = (NullMAC)(new Object());
+         NullMAC mac = new NullMAC();
          state.setMAC(mac);
       } else if ((!read || !clientMode) && (read || clientMode)) {
          state.setMAC(new SSL_HMAC((HMACKey)keyMaterial.getClientMAC(), macAlgorithm));
@@ -349,7 +351,7 @@ public class SSLCipherSuiteFactory implements SSLRecordProtocolConstants {
       }
    }
 
-   public void updateWriteConnectionState(SSLConnectionState param1, KeyMaterial param2, OutputStream param3) {
+   public void updateWriteConnectionState(SSLConnectionState param1, KeyMaterial param2, OutputStream param3) throws TLSException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -370,7 +372,7 @@ public class SSLCipherSuiteFactory implements SSLRecordProtocolConstants {
       // 010: aload 5
       // 012: ifnonnull 024
       // 015: aload 1
-      // 016: new java/lang/Object
+      // 016: new net/rim/device/api/crypto/NullEncryptor
       // 019: dup
       // 01a: aload 3
       // 01b: invokespecial net/rim/device/api/crypto/NullEncryptor.<init> (Ljava/io/OutputStream;)V
@@ -386,7 +388,7 @@ public class SSLCipherSuiteFactory implements SSLRecordProtocolConstants {
       // 034: ifeq 05c
       // 037: aload 2
       // 038: invokevirtual net/rim/device/api/crypto/tls/KeyMaterial.getClientCipher ()Lnet/rim/device/api/crypto/SymmetricKey;
-      // 03b: new java/lang/Object
+      // 03b: new java/lang/StringBuffer
       // 03e: dup
       // 03f: invokespecial java/lang/StringBuffer.<init> ()V
       // 042: aload 5
@@ -401,7 +403,7 @@ public class SSLCipherSuiteFactory implements SSLRecordProtocolConstants {
       // 059: goto 07e
       // 05c: aload 2
       // 05d: invokevirtual net/rim/device/api/crypto/tls/KeyMaterial.getServerCipher ()Lnet/rim/device/api/crypto/SymmetricKey;
-      // 060: new java/lang/Object
+      // 060: new java/lang/StringBuffer
       // 063: dup
       // 064: invokespecial java/lang/StringBuffer.<init> ()V
       // 067: aload 5
@@ -417,9 +419,9 @@ public class SSLCipherSuiteFactory implements SSLRecordProtocolConstants {
       // 07f: aload 6
       // 081: invokevirtual net/rim/device/api/crypto/tls/ssl30/SSLConnectionState.setEncryptorEngine (Lnet/rim/device/api/crypto/BlockEncryptorEngine;)V
       // 084: aload 1
-      // 085: new java/lang/Object
+      // 085: new net/rim/device/api/crypto/BlockEncryptor
       // 088: dup
-      // 089: new java/lang/Object
+      // 089: new net/rim/device/api/crypto/tls/TLSBlockFormatterEngine
       // 08c: dup
       // 08d: aload 6
       // 08f: invokespecial net/rim/device/api/crypto/tls/TLSBlockFormatterEngine.<init> (Lnet/rim/device/api/crypto/BlockEncryptorEngine;)V
@@ -461,7 +463,7 @@ public class SSLCipherSuiteFactory implements SSLRecordProtocolConstants {
       // 0dc: bipush 3
       // 0de: bipush 51
       // 0e0: invokeinterface net/rim/device/api/crypto/tls/AlertProtocolMethods.sendAlertMessage (BB)V 3
-      // 0e5: new java/lang/Object
+      // 0e5: new net/rim/device/cldc/io/ssl/TLSException
       // 0e8: dup
       // 0e9: aload 4
       // 0eb: invokespecial net/rim/device/cldc/io/ssl/TLSException.<init> (Ljava/lang/Exception;)V
@@ -473,7 +475,7 @@ public class SSLCipherSuiteFactory implements SSLRecordProtocolConstants {
       // 0f8: bipush 3
       // 0fa: bipush 51
       // 0fc: invokeinterface net/rim/device/api/crypto/tls/AlertProtocolMethods.sendAlertMessage (BB)V 3
-      // 101: new java/lang/Object
+      // 101: new net/rim/device/cldc/io/ssl/TLSException
       // 104: dup
       // 105: aload 4
       // 107: invokespecial net/rim/device/cldc/io/ssl/TLSException.<init> (Ljava/lang/Exception;)V

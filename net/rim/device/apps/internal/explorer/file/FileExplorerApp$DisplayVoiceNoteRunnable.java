@@ -22,7 +22,7 @@ final class FileExplorerApp$DisplayVoiceNoteRunnable implements Runnable {
       }
 
       if (voiceNoteScreen == null || !isVoicenote) {
-         ContextInfo contextInfo = (ContextInfo)(new Object(256));
+         ContextInfo contextInfo = new ContextInfo(256);
          this.this$0.closeAllScreens(new TrackListScreen(contextInfo));
       }
 

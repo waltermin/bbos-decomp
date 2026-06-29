@@ -11,7 +11,7 @@ public class AbstractSessionManager {
 
    protected final void checkInitHasBeenCalled() {
       if (!this._initHasBeenCalled) {
-         throw new Object("Can't start debugging before calling init");
+         throw new IllegalStateException("Can't start debugging before calling init");
       }
    }
 }

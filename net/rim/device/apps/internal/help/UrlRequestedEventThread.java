@@ -52,7 +52,7 @@ final class UrlRequestedEventThread extends Thread {
       // 032: ldc_w 1701707776
       // 035: invokestatic net/rim/device/api/util/StringUtilities.startsWithIgnoreCase (Ljava/lang/String;Ljava/lang/String;I)Z
       // 038: ifne 0ab
-      // 03b: new java/lang/Object
+      // 03b: new net/rim/device/apps/api/ui/RunnableDialog
       // 03e: dup
       // 03f: bipush 3
       // 041: ldc2_w -6124962742482799009
@@ -91,7 +91,7 @@ final class UrlRequestedEventThread extends Thread {
       // 086: getfield net/rim/device/apps/internal/help/HelpScreen._configToUse Ljava/util/Hashtable;
       // 089: aload 2
       // 08a: invokevirtual java/util/Hashtable.get (Ljava/lang/Object;)Ljava/lang/Object;
-      // 08d: checkcast java/lang/Object
+      // 08d: checkcast java/lang/String
       // 090: astore 4
       // 092: aload 2
       // 093: aload 4
@@ -110,7 +110,7 @@ final class UrlRequestedEventThread extends Thread {
       // 0ae: astore 4
       // 0b0: aload 2
       // 0b1: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 0b4: checkcast java/lang/Object
+      // 0b4: checkcast javax/microedition/io/HttpConnection
       // 0b7: astore 3
       // 0b8: aload 1
       // 0b9: invokevirtual net/rim/device/api/browser/field/UrlRequestedEvent.getHeaders ()Lnet/rim/device/api/io/http/HttpHeaders;

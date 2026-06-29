@@ -21,7 +21,7 @@ public class AnimationSampler implements MediaService, MediaListener {
          int time = -1;
          int diffQueueSizeTimerCount = model.tasks.queueSize() - model.timerCount;
          if (diffQueueSizeTimerCount < 0) {
-            throw new Object("Timer Count Assertion Failed");
+            throw new RuntimeException("Timer Count Assertion Failed");
          }
 
          if (model.tasks.heapHasElements() && diffQueueSizeTimerCount == 0) {
@@ -133,7 +133,7 @@ public class AnimationSampler implements MediaService, MediaListener {
          if (media != null) {
             ((AnimationModel)media)._engine = this._engine;
             if (this._engine.isRunning()) {
-               throw new Object();
+               throw new RuntimeException();
             }
          }
 

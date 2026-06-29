@@ -29,7 +29,7 @@ public final class FilterConstants {
          numExtraChars = 4;
       }
 
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
       sb.append(filterPrefix);
       int prefixCode = numExtraChars << 3 | (id & 224) >>> 5;
       sb.append(KeywordPrefixManager.getPrefixChar(prefixCode));

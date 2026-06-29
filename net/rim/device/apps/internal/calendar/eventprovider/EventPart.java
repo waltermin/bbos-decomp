@@ -70,7 +70,7 @@ class EventPart
       Event e = this._event;
       e = (Event)ObjectGroup.expandGroup(e);
       long handle = this._handle;
-      Verb[] defaultVerbs = new Object[2];
+      Verb[] defaultVerbs = new Verb[2];
       DeleteEventVerb deleteVerb = new DeleteEventVerb(e, handle);
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
       DeleteEventVerb$DeleteEventVerbListener listener = (DeleteEventVerb$DeleteEventVerbListener)ar.waitFor(8503322669810003080L);

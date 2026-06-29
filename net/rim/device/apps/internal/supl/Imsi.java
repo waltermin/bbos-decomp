@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.supl;
 
+import java.io.IOException;
 import net.rim.device.api.util.Arrays;
 
 final class Imsi implements SetId {
@@ -10,9 +11,9 @@ final class Imsi implements SetId {
    Imsi() {
    }
 
-   Imsi(char[] imsi) {
+   Imsi(char[] imsi) throws IOException {
       if (imsi.length > 8) {
-         throw new Object();
+         throw new IOException();
       }
 
       for (int i = 0; i < 8; i++) {
@@ -50,7 +51,7 @@ final class Imsi implements SetId {
       System.out.println("Imsi: ");
 
       for (int i = 0; i < 8; i++) {
-         System.out.print(((StringBuffer)(new Object())).append(Integer.toHexString(255 & this.imsi[i])).append(" ").toString());
+         System.out.print(Integer.toHexString(255 & this.imsi[i]) + " ");
       }
 
       System.out.print("\n");

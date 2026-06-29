@@ -17,7 +17,7 @@ public final class PlaybackInfoMessageWriter extends AbstractMessageWriter imple
    }
 
    public final void sceneInfo(int version, String mime, String[] custom, String[] font, String[] image, String[] media, String[] sound) {
-      this.writeMessage((byte)66, new Object(version), mime, custom, font, image, media, sound);
+      this.writeMessage((byte)66, new Integer(version), mime, custom, font, image, media, sound);
    }
 
    public final void started() {
@@ -33,7 +33,7 @@ public final class PlaybackInfoMessageWriter extends AbstractMessageWriter imple
    }
 
    public final void clientInfo(int version, int reserved) {
-      this.writeMessage((byte)70, new Object(version), new Object(reserved));
+      this.writeMessage((byte)70, new Integer(version), new Integer(reserved));
    }
 
    @Override

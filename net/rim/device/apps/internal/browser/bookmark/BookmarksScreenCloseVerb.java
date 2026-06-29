@@ -16,8 +16,8 @@ public final class BookmarksScreenCloseVerb extends Verb {
    public final Object invoke(Object context) {
       if (this._bookmarksScreen.getIsInitialScreen()) {
          boolean confirm = false;
-         if (context instanceof Object) {
-            confirm = context;
+         if (context instanceof Boolean) {
+            confirm = (Boolean)context;
          }
 
          BrowserDaemonRegistry.getInstance().closeBrowser(confirm);

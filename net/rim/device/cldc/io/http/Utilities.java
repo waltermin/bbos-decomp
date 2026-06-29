@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.http;
 
+import java.io.EOFException;
 import java.io.InputStream;
 import net.rim.device.api.io.http.HttpProtocolConstants;
 import net.rim.device.api.util.StringTokenizer;
@@ -13,16 +14,16 @@ public final class Utilities implements HttpProtocolConstants {
       return receiveLine(dins, false);
    }
 
-   public static final String receiveLine(InputStream dins, boolean throwEOFExceptionIfNoInput) {
+   public static final String receiveLine(InputStream dins, boolean throwEOFExceptionIfNoInput) throws EOFException {
       boolean shouldContinue = true;
-      StringBuffer result = (StringBuffer)(new Object());
+      StringBuffer result = new StringBuffer();
 
       while (shouldContinue) {
          int value = dins.read();
          switch (value) {
             case -1:
                if (throwEOFExceptionIfNoInput) {
-                  throw new Object();
+                  throw new EOFException();
                }
             case 10:
                shouldContinue = false;
@@ -39,9 +40,9 @@ public final class Utilities implements HttpProtocolConstants {
    }
 
    public static final String[] processTransmissionLine(String lineString) {
-      String[] line = new Object[3];
+      String[] line = new String[3];
       if (lineString != null && lineString.length() != 0) {
-         StringTokenizer tokenizer = (StringTokenizer)(new Object(lineString));
+         StringTokenizer tokenizer = new StringTokenizer(lineString);
          int index = 0;
 
          while (tokenizer.hasMoreTokens()) {

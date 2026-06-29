@@ -11,6 +11,7 @@ import javax.microedition.io.HttpsConnection;
 import javax.microedition.io.SecurityInfo;
 import javax.microedition.io.SocketConnection;
 import javax.microedition.pki.Certificate;
+import net.rim.device.api.io.IOCancelledException;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.cldc.io.ippp.SocketBaseIOException;
 import net.rim.device.cldc.io.proxyhttp.ClientProtocol;
@@ -61,13 +62,13 @@ public final class ProxyHttpsConnection implements HttpsConnection {
 
    @Override
    public final DataOutputStream openDataOutputStream() {
-      return (DataOutputStream)(new Object(this.openOutputStream()));
+      return new DataOutputStream(this.openOutputStream());
    }
 
    @Override
-   public final InputStream openInputStream() {
+   public final InputStream openInputStream() throws IOCancelledException {
       if (this._isClosed) {
-         throw new Object();
+         throw new IOCancelledException();
       }
 
       InputStream inputStream = null;
@@ -85,7 +86,7 @@ public final class ProxyHttpsConnection implements HttpsConnection {
 
    @Override
    public final DataInputStream openDataInputStream() {
-      return (DataInputStream)(new Object(this.openInputStream()));
+      return new DataInputStream(this.openInputStream());
    }
 
    @Override
@@ -244,9 +245,9 @@ public final class ProxyHttpsConnection implements HttpsConnection {
    }
 
    @Override
-   public final OutputStream openOutputStream() {
+   public final OutputStream openOutputStream() throws IOCancelledException {
       if (this._isClosed) {
-         throw new Object();
+         throw new IOCancelledException();
       }
 
       OutputStream outputStream = null;
@@ -279,7 +280,7 @@ public final class ProxyHttpsConnection implements HttpsConnection {
       try {
          this._clientProtocol.setRequestProperty(key, value);
          if (this._hashtable == null) {
-            this._hashtable = (Hashtable)(new Object());
+            this._hashtable = new Hashtable();
          }
 
          this._hashtable.put(key, value);

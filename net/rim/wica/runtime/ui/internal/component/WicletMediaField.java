@@ -38,8 +38,8 @@ final class WicletMediaField extends MediaField implements View, Focusable, Reso
       this._model = model;
       this._visibility = (byte)(model.isVisible() ? 0 : 1);
       this._row = row;
-      this._player = (MediaPlayer)(new Object());
-      this._manager = (MediaManager)(new Object());
+      this._player = new MediaPlayer();
+      this._manager = new MediaManager();
       this._app = UiApplication.getUiApplication();
    }
 
@@ -205,7 +205,7 @@ final class WicletMediaField extends MediaField implements View, Focusable, Reso
    private final void setMedia() {
       Object value = this._model.getValue();
       String uri = null;
-      if (!(value instanceof Object)) {
+      if (!(value instanceof Vector)) {
          uri = (String)value;
       } else {
          uri = (String)((Vector)value).elementAt(this._row);

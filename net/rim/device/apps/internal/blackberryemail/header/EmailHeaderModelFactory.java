@@ -112,7 +112,7 @@ public final class EmailHeaderModelFactory extends RIMModelFactory {
       }
 
       int index = -1;
-      Verb[] verbs = new Object[3];
+      Verb[] verbs = new Verb[3];
       if (ignoreType != 0) {
          verbs[++index] = new EmailHeaderAddVerb(0);
       }

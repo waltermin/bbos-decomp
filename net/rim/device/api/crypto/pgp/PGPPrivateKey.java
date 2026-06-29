@@ -3,8 +3,11 @@ package net.rim.device.api.crypto.pgp;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import net.rim.device.api.crypto.CryptoSystem;
+import net.rim.device.api.crypto.CryptoTokenException;
+import net.rim.device.api.crypto.CryptoUnsupportedOperationException;
 import net.rim.device.api.crypto.DHPrivateKey;
 import net.rim.device.api.crypto.DSAPrivateKey;
+import net.rim.device.api.crypto.InvalidKeyException;
 import net.rim.device.api.crypto.PrivateKey;
 import net.rim.device.api.crypto.RSAPrivateKey;
 import net.rim.device.api.util.Arrays;
@@ -33,7 +36,7 @@ public class PGPPrivateKey implements PrivateKey, UnGroupable {
       }
 
       int numPackets = this._packets.length;
-      PrivateKey[] subKeys = new Object[numPackets - 1];
+      PrivateKey[] subKeys = new PrivateKey[numPackets - 1];
 
       for (int i = 1; i < numPackets; i++) {
          subKeys[i - 1] = this._packets[i].getPrivateKey(this._ticket);
@@ -42,7 +45,7 @@ public class PGPPrivateKey implements PrivateKey, UnGroupable {
       return subKeys;
    }
 
-   public byte[] encode() {
+   public byte[] encode() throws CryptoTokenException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -61,11 +64,11 @@ public class PGPPrivateKey implements PrivateKey, UnGroupable {
       // 0e: getfield net/rim/device/api/crypto/pgp/PGPPrivateKey._ticketPromptParameters [Ljava/lang/String;
       // 11: invokespecial net/rim/device/api/crypto/pgp/PGPPasswordTicket.<init> (I[Ljava/lang/String;)V
       // 14: putfield net/rim/device/api/crypto/pgp/PGPPrivateKey._ticket Lnet/rim/device/api/crypto/pgp/PGPPasswordTicket;
-      // 17: new java/lang/Object
+      // 17: new java/io/ByteArrayOutputStream
       // 1a: dup
       // 1b: invokespecial java/io/ByteArrayOutputStream.<init> ()V
       // 1e: astore 1
-      // 1f: new java/lang/Object
+      // 1f: new java/io/DataOutputStream
       // 22: dup
       // 23: aload 1
       // 24: invokespecial java/io/DataOutputStream.<init> (Ljava/io/OutputStream;)V
@@ -89,7 +92,7 @@ public class PGPPrivateKey implements PrivateKey, UnGroupable {
       // 45: aaload
       // 46: invokevirtual net/rim/device/internal/crypto/pgp/PGPPrivateKeyPacket.getSymmetricKeyAlgorithm ()I
       // 49: ifeq 99
-      // 4c: new java/lang/Object
+      // 4c: new java/io/ByteArrayOutputStream
       // 4f: dup
       // 50: invokespecial java/io/ByteArrayOutputStream.<init> ()V
       // 53: astore 7
@@ -153,21 +156,21 @@ public class PGPPrivateKey implements PrivateKey, UnGroupable {
       // c7: invokevirtual java/io/ByteArrayOutputStream.toByteArray ()[B
       // ca: areturn
       // cb: astore 1
-      // cc: new java/lang/Object
+      // cc: new net/rim/device/api/crypto/CryptoTokenException
       // cf: dup
       // d0: aload 1
       // d1: invokevirtual java/io/IOException.toString ()Ljava/lang/String;
       // d4: invokespecial net/rim/device/api/crypto/CryptoTokenException.<init> (Ljava/lang/String;)V
       // d7: athrow
       // d8: astore 1
-      // d9: new java/lang/Object
+      // d9: new net/rim/device/api/crypto/CryptoTokenException
       // dc: dup
       // dd: aload 1
       // de: invokevirtual net/rim/device/api/crypto/pgp/PGPEncodingException.toString ()Ljava/lang/String;
       // e1: invokespecial net/rim/device/api/crypto/CryptoTokenException.<init> (Ljava/lang/String;)V
       // e4: athrow
       // e5: astore 1
-      // e6: new java/lang/Object
+      // e6: new net/rim/device/api/crypto/CryptoTokenException
       // e9: dup
       // ea: aload 1
       // eb: invokevirtual net/rim/device/api/crypto/keystore/KeyStoreCancelException.toString ()Ljava/lang/String;
@@ -191,7 +194,7 @@ public class PGPPrivateKey implements PrivateKey, UnGroupable {
          PrivateKey[] subKeys = this.getSubKeys();
          return subKeys[index];
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -211,7 +214,7 @@ public class PGPPrivateKey implements PrivateKey, UnGroupable {
 
          return null;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -254,11 +257,11 @@ public class PGPPrivateKey implements PrivateKey, UnGroupable {
                var12 = false;
             } finally {
                if (var12) {
-                  throw new Object();
+                  throw new CryptoTokenException();
                }
             }
 
-            throw new Object();
+            throw new InvalidKeyException();
          }
       } finally {
          if (var8) {
@@ -313,10 +316,10 @@ public class PGPPrivateKey implements PrivateKey, UnGroupable {
          }
 
          if (pgpKeyDisplayName != null) {
-            this._ticketPromptParameters = new Object[]{pgpKeyDisplayName};
+            this._ticketPromptParameters = new String[]{pgpKeyDisplayName};
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -324,13 +327,13 @@ public class PGPPrivateKey implements PrivateKey, UnGroupable {
       this(packets, null);
    }
 
-   private void writePrivateKeyDataAndChecksum(PGPPrivateKeyPacket packet, OutputStream output) {
+   private void writePrivateKeyDataAndChecksum(PGPPrivateKeyPacket packet, OutputStream output) throws CryptoTokenException, CryptoUnsupportedOperationException {
       PrivateKey privateKey = packet.getPrivateKey(this._ticket);
-      ByteArrayOutputStream checksumStream = (ByteArrayOutputStream)(new Object());
-      if (!(privateKey instanceof Object)) {
-         if (!(privateKey instanceof Object)) {
-            if (!(privateKey instanceof Object)) {
-               throw new Object();
+      ByteArrayOutputStream checksumStream = new ByteArrayOutputStream();
+      if (!(privateKey instanceof RSAPrivateKey)) {
+         if (!(privateKey instanceof DSAPrivateKey)) {
+            if (!(privateKey instanceof DHPrivateKey)) {
+               throw new CryptoUnsupportedOperationException();
             }
 
             DHPrivateKey dhKey = (DHPrivateKey)privateKey;
@@ -345,7 +348,7 @@ public class PGPPrivateKey implements PrivateKey, UnGroupable {
          byte[] P = rsaKey.getP();
          byte[] Q = rsaKey.getQ();
          if (D == null || P == null || Q == null) {
-            throw new Object();
+            throw new CryptoTokenException();
          }
 
          PGPUtilities.writeMPI(checksumStream, D);

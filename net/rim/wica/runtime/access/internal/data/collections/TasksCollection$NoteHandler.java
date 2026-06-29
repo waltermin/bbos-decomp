@@ -1,6 +1,6 @@
 package net.rim.wica.runtime.access.internal.data.collections;
 
-import javax.microedition.pim.PIMItem;
+import javax.microedition.pim.ToDo;
 import net.rim.wica.runtime.access.internal.data.handlers.ObjectFieldHandler;
 
 final class TasksCollection$NoteHandler implements ObjectFieldHandler {
@@ -9,9 +9,9 @@ final class TasksCollection$NoteHandler implements ObjectFieldHandler {
 
    @Override
    public final Object getValue(Object item) {
-      if (item instanceof Object) {
+      if (item instanceof ToDo) {
          try {
-            return ((PIMItem)item).getString(104, 0);
+            return ((ToDo)item).getString(104, 0);
          } finally {
             return null;
          }

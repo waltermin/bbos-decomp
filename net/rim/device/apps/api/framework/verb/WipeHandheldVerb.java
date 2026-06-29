@@ -57,10 +57,10 @@ public class WipeHandheldVerb extends Verb implements DialogClosedListener, Popu
    public Object invoke(Object parameter) {
       ResourceBundleFamily srb = ResourceBundle.getBundle(-1488627819050031640L, "net.rim.device.apps.internal.resource.Security");
       this._open = true;
-      Dialog promptDialog = (Dialog)(new Object(
+      Dialog promptDialog = new Dialog(
          srb.getString(701), srb.getStringArray(702), new int[]{0, 1, -804650998, 0, 1, 2, 3, 4}, 1, Bitmap.getPredefinedBitmap(2), this._dialogStyle
-      ));
-      CheckboxField wipeThirdPartyAppsCheckbox = (CheckboxField)(new Object(srb.getString(755), false, 1073741824));
+      );
+      CheckboxField wipeThirdPartyAppsCheckbox = new CheckboxField(srb.getString(755), false, 1073741824);
       promptDialog.add(wipeThirdPartyAppsCheckbox);
       promptDialog.setEscapeEnabled(true);
       if (this._statusDialog) {
@@ -80,7 +80,7 @@ public class WipeHandheldVerb extends Verb implements DialogClosedListener, Popu
 
       if (this._result == 0) {
          String prompt = MessageFormat.format(srb.getString(703), new Object[]{_handheldWipeConfirmString});
-         SimpleInputDialog inputDialog = (SimpleInputDialog)(new Object(10, prompt, 0, 1000000, this._dialogStyle));
+         SimpleInputDialog inputDialog = new SimpleInputDialog(10, prompt, 0, 1000000, this._dialogStyle);
          inputDialog.setAllowUnicodeInput(false);
          if (this._statusDialog) {
             inputDialog.setModal(false);
@@ -101,7 +101,7 @@ public class WipeHandheldVerb extends Verb implements DialogClosedListener, Popu
 
          if (this._result == 0) {
             if (StringUtilities.compareToIgnoreCase(_handheldWipeConfirmString, inputDialog.getText()) == 0) {
-               Dialog dialog = (Dialog)(new Object(srb.getString(704), null, null, 0, Bitmap.getPredefinedBitmap(2)));
+               Dialog dialog = new Dialog(srb.getString(704), null, null, 0, Bitmap.getPredefinedBitmap(2));
                if (this._statusDialog) {
                   UiApplication.getUiApplication().pushGlobalScreen(dialog, -1073741823, 2);
                } else {
@@ -111,7 +111,7 @@ public class WipeHandheldVerb extends Verb implements DialogClosedListener, Popu
                Application app = Application.getApplication();
                app.invokeLater(new WipeHandheldVerb$WipeHandheldRunnable(wipeThirdPartyAppsCheckbox.getChecked()));
             } else if (this._statusDialog) {
-               Dialog d = (Dialog)(new Object(srb.getString(705), CommonResource.getStringArray(10004), null, 0, null, 0));
+               Dialog d = new Dialog(srb.getString(705), CommonResource.getStringArray(10004), null, 0, null, 0);
                d.setIcon(ThemeManager.getThemeAwareImage("dialog_information"));
                UiApplication.getUiApplication().pushGlobalScreen(d, -1073741823, 2);
                d.setDialogClosedListener(this);

@@ -12,7 +12,7 @@ final class EmailCollection$FolderHandler implements IntFieldHandler {
 
    @Override
    public final int getValue(Object item) {
-      if (item instanceof Object) {
+      if (item instanceof EmailMessageModel) {
          EmailMessageModel model = (EmailMessageModel)item;
          EmailFolder folder = EmailHierarchy.getEmailFolder(model.getFolderId());
          if (folder != null) {

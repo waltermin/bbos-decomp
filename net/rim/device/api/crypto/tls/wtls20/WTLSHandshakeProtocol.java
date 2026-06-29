@@ -31,17 +31,18 @@ import net.rim.device.api.system.Phone;
 import net.rim.device.api.system.RadioInfo;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.DataBuffer;
+import net.rim.device.cldc.io.ssl.TLSException;
 import net.rim.vm.Array;
 
 final class WTLSHandshakeProtocol extends HandshakeProtocol {
    private byte[] _premasterSecret;
    private byte[] _masterSecret;
-   protected SHA1Digest _clientVerifySHAHash = (SHA1Digest)(new Object());
-   protected MD5Digest _clientVerifyMD5Hash = (MD5Digest)(new Object());
-   protected SHA1Digest _clientSHAHash = (SHA1Digest)(new Object());
-   protected MD5Digest _clientMD5Hash = (MD5Digest)(new Object());
-   protected SHA1Digest _serverSHAHash = (SHA1Digest)(new Object());
-   protected MD5Digest _serverMD5Hash = (MD5Digest)(new Object());
+   protected SHA1Digest _clientVerifySHAHash = new SHA1Digest();
+   protected MD5Digest _clientVerifyMD5Hash = new MD5Digest();
+   protected SHA1Digest _clientSHAHash = new SHA1Digest();
+   protected MD5Digest _clientMD5Hash = new MD5Digest();
+   protected SHA1Digest _serverSHAHash = new SHA1Digest();
+   protected MD5Digest _serverMD5Hash = new MD5Digest();
    private boolean _resumption;
    private byte[] _sessionID;
    private byte[][] _clientKeyIds;
@@ -53,7 +54,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
    private int _clientIdType;
    private String _clientIdValue;
    protected PublicKey _publicKey;
-   protected DataBuffer _dataBuffer = (DataBuffer)(new Object());
+   protected DataBuffer _dataBuffer = new DataBuffer();
    protected KeyPair _keyPair;
    protected Certificate[] _certificates;
    protected KeyStoreData _keyStoreData;
@@ -77,7 +78,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
    }
 
    @Override
-   public final void helloRequest(DataBuffer param1) {
+   public final void helloRequest(DataBuffer param1) throws TLSException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -114,13 +115,13 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 37: invokevirtual net/rim/device/api/crypto/tls/wtls20/WTLSHandshakeProtocol.connect ()V
       // 3a: return
       // 3b: astore 2
-      // 3c: new java/lang/Object
+      // 3c: new net/rim/device/cldc/io/ssl/TLSException
       // 3f: dup
       // 40: aload 2
       // 41: invokespecial net/rim/device/cldc/io/ssl/TLSException.<init> (Ljava/lang/Exception;)V
       // 44: athrow
       // 45: astore 2
-      // 46: new java/lang/Object
+      // 46: new net/rim/device/cldc/io/ssl/TLSException
       // 49: dup
       // 4a: aload 2
       // 4b: invokespecial net/rim/device/cldc/io/ssl/TLSException.<init> (Ljava/lang/Exception;)V
@@ -142,7 +143,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 001: getfield net/rim/device/api/crypto/tls/wtls20/WTLSHandshakeProtocol._recordProtocol Lnet/rim/device/api/crypto/tls/wtls20/WTLSRecordProtocol;
       // 004: bipush 1
       // 005: invokevirtual net/rim/device/api/crypto/tls/wtls20/WTLSRecordProtocol.updateStatus (I)V
-      // 008: new java/lang/Object
+      // 008: new net/rim/device/api/util/DataBuffer
       // 00b: dup
       // 00c: invokespecial net/rim/device/api/util/DataBuffer.<init> ()V
       // 00f: astore 1
@@ -281,7 +282,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 135: putfield net/rim/device/api/crypto/tls/wtls20/WTLSHandshakeProtocol._cipherSuite I
       // 138: goto 147
       // 13b: astore 7
-      // 13d: new java/lang/Object
+      // 13d: new net/rim/device/cldc/io/ssl/TLSException
       // 140: dup
       // 141: aload 7
       // 143: invokespecial net/rim/device/cldc/io/ssl/TLSException.<init> (Ljava/lang/Exception;)V
@@ -675,7 +676,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 001: getfield net/rim/device/api/crypto/tls/wtls20/WTLSHandshakeProtocol._recordProtocol Lnet/rim/device/api/crypto/tls/wtls20/WTLSRecordProtocol;
       // 004: bipush 3
       // 006: invokevirtual net/rim/device/api/crypto/tls/wtls20/WTLSRecordProtocol.updateStatus (I)V
-      // 009: new java/lang/Object
+      // 009: new java/io/ByteArrayInputStream
       // 00c: dup
       // 00d: aload 1
       // 00e: invokevirtual net/rim/device/api/util/DataBuffer.getArray ()[B
@@ -695,7 +696,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 027: aconst_null
       // 028: astore 4
       // 02a: bipush 0
-      // 02b: anewarray 1534
+      // 02b: anewarray 1537
       // 02e: astore 5
       // 030: aload 2
       // 031: invokevirtual java/io/ByteArrayInputStream.available ()I
@@ -788,7 +789,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 0f9: bipush 3
       // 0fb: bipush 46
       // 0fd: invokevirtual net/rim/device/api/crypto/tls/wtls20/WTLSAlertProtocol.sendAlertMessage (BB)V
-      // 100: new java/lang/Object
+      // 100: new net/rim/device/cldc/io/ssl/TLSCancelException
       // 103: dup
       // 104: new net/rim/device/api/crypto/tls/TLSAlertException
       // 107: dup
@@ -826,7 +827,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 14f: bipush 3
       // 151: bipush 46
       // 153: invokevirtual net/rim/device/api/crypto/tls/wtls20/WTLSAlertProtocol.sendAlertMessage (BB)V
-      // 156: new java/lang/Object
+      // 156: new net/rim/device/cldc/io/ssl/TLSCancelException
       // 159: dup
       // 15a: new net/rim/device/api/crypto/tls/TLSAlertException
       // 15d: dup
@@ -889,7 +890,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 1e8: bipush 3
       // 1ea: bipush 46
       // 1ec: invokevirtual net/rim/device/api/crypto/tls/wtls20/WTLSAlertProtocol.sendAlertMessage (BB)V
-      // 1ef: new java/lang/Object
+      // 1ef: new net/rim/device/cldc/io/ssl/TLSCancelException
       // 1f2: dup
       // 1f3: new net/rim/device/api/crypto/tls/TLSAlertException
       // 1f6: dup
@@ -911,7 +912,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 218: bipush 3
       // 21a: bipush 46
       // 21c: invokevirtual net/rim/device/api/crypto/tls/wtls20/WTLSAlertProtocol.sendAlertMessage (BB)V
-      // 21f: new java/lang/Object
+      // 21f: new net/rim/device/cldc/io/ssl/TLSCancelException
       // 222: dup
       // 223: new net/rim/device/api/crypto/tls/TLSAlertException
       // 226: dup
@@ -951,7 +952,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 274: bipush 3
       // 276: bipush 44
       // 278: invokevirtual net/rim/device/api/crypto/tls/wtls20/WTLSAlertProtocol.sendAlertMessage (BB)V
-      // 27b: new java/lang/Object
+      // 27b: new net/rim/device/cldc/io/ssl/TLSCancelException
       // 27e: dup
       // 27f: new net/rim/device/api/crypto/tls/TLSAlertException
       // 282: dup
@@ -973,7 +974,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 2a4: bipush 3
       // 2a6: bipush 45
       // 2a8: invokevirtual net/rim/device/api/crypto/tls/wtls20/WTLSAlertProtocol.sendAlertMessage (BB)V
-      // 2ab: new java/lang/Object
+      // 2ab: new net/rim/device/cldc/io/ssl/TLSCancelException
       // 2ae: dup
       // 2af: new net/rim/device/api/crypto/tls/TLSAlertException
       // 2b2: dup
@@ -1011,7 +1012,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 2fa: bipush 3
       // 2fc: bipush 45
       // 2fe: invokevirtual net/rim/device/api/crypto/tls/wtls20/WTLSAlertProtocol.sendAlertMessage (BB)V
-      // 301: new java/lang/Object
+      // 301: new net/rim/device/cldc/io/ssl/TLSCancelException
       // 304: dup
       // 305: new net/rim/device/api/crypto/tls/TLSAlertException
       // 308: dup
@@ -1202,7 +1203,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
                default:
                   try {
                      int original = buffer.getArrayLength() - buffer.getArrayPosition();
-                     ByteArrayInputStream in = (ByteArrayInputStream)(new Object(buffer.getArray(), buffer.getArrayPosition() - 1, buffer.getArrayLength()));
+                     ByteArrayInputStream in = new ByteArrayInputStream(buffer.getArray(), buffer.getArrayPosition() - 1, buffer.getArrayLength());
                      dns[dns.length - 1] = new WTLSDistinguishedName(in);
                      buffer.skipBytes(original - in.available());
                   } catch (CertificateParsingException var16) {
@@ -1254,7 +1255,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
    @Override
    public final void clientCertificate() {
       try {
-         DataBuffer buffer = (DataBuffer)(new Object());
+         DataBuffer buffer = new DataBuffer();
          buffer.write(11);
          TLSUtilities.writeIntegerTwoBytes(buffer, 0);
          TLSUtilities.writeIntegerTwoBytes(buffer, 0);
@@ -1293,7 +1294,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 001: getfield net/rim/device/api/crypto/tls/wtls20/WTLSHandshakeProtocol._recordProtocol Lnet/rim/device/api/crypto/tls/wtls20/WTLSRecordProtocol;
       // 004: bipush 4
       // 006: invokevirtual net/rim/device/api/crypto/tls/wtls20/WTLSRecordProtocol.updateStatus (I)V
-      // 009: new java/lang/Object
+      // 009: new net/rim/device/api/util/DataBuffer
       // 00c: dup
       // 00d: invokespecial net/rim/device/api/util/DataBuffer.<init> ()V
       // 010: astore 1
@@ -1412,7 +1413,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 0b: getfield net/rim/device/api/crypto/tls/wtls20/WTLSHandshakeProtocol._recordProtocol Lnet/rim/device/api/crypto/tls/wtls20/WTLSRecordProtocol;
       // 0e: bipush 5
       // 10: invokevirtual net/rim/device/api/crypto/tls/wtls20/WTLSRecordProtocol.updateStatus (I)V
-      // 13: new java/lang/Object
+      // 13: new net/rim/device/api/util/DataBuffer
       // 16: dup
       // 17: invokespecial net/rim/device/api/util/DataBuffer.<init> ()V
       // 1a: astore 1
@@ -1535,7 +1536,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 008: getfield net/rim/device/api/crypto/tls/wtls20/WTLSHandshakeProtocol._recordProtocol Lnet/rim/device/api/crypto/tls/wtls20/WTLSRecordProtocol;
       // 00b: bipush 6
       // 00d: invokevirtual net/rim/device/api/crypto/tls/wtls20/WTLSRecordProtocol.updateStatus (I)V
-      // 010: new java/lang/Object
+      // 010: new net/rim/device/api/util/DataBuffer
       // 013: dup
       // 014: invokespecial net/rim/device/api/util/DataBuffer.<init> ()V
       // 017: astore 1
@@ -1700,7 +1701,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       while (true) {
          int type;
          while (true) {
-            buffer = new Object[1];
+            buffer = new DataBuffer[1];
             type = 0;
             boolean var13 = false /* VF: Semaphore variable */;
 
@@ -1766,7 +1767,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
             }
 
             this._recordProtocol.setAutoflush(true);
-            buffer = new Object[1];
+            buffer = new DataBuffer[1];
             type = 0;
             retryCount = 0;
 
@@ -1879,10 +1880,10 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
                continue;
             }
 
-            throw new Object();
+            throw new NumberFormatException();
          }
 
-         throw new Object();
+         throw new NumberFormatException();
       }
 
       int i = Integer.parseInt(str.substring(index), 10);
@@ -2031,7 +2032,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:174)
       //
       // Bytecode:
-      // 00: new java/lang/Object
+      // 00: new java/io/ByteArrayOutputStream
       // 03: dup
       // 04: invokespecial java/io/ByteArrayOutputStream.<init> ()V
       // 07: astore 1
@@ -2075,7 +2076,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 62: aload 9
       // 64: ifnonnull 6a
       // 67: goto 16
-      // 6a: new java/lang/Object
+      // 6a: new net/rim/device/api/crypto/SHA1Digest
       // 6d: dup
       // 6e: invokespecial net/rim/device/api/crypto/SHA1Digest.<init> ()V
       // 71: astore 10
@@ -2161,7 +2162,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
 
       int type = this._dataBuffer.readUnsignedByte();
       int length = this._dataBuffer.readUnsignedShort();
-      buffer[0] = (DataBuffer)(new Object(this._dataBuffer, length));
+      buffer[0] = new DataBuffer(this._dataBuffer, length);
       return type;
    }
 
@@ -2176,7 +2177,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 000: aload 0
       // 001: getfield net/rim/device/api/crypto/tls/wtls20/WTLSHandshakeProtocol._publicKey Lnet/rim/device/api/crypto/PublicKey;
       // 004: ifnonnull 00f
-      // 007: new java/lang/Object
+      // 007: new java/lang/IllegalArgumentException
       // 00a: dup
       // 00b: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 00e: athrow
@@ -2199,7 +2200,7 @@ final class WTLSHandshakeProtocol extends HandshakeProtocol {
       // 02f: aload 2
       // 030: invokespecial net/rim/device/api/crypto/PKCS1FormatterEngine.<init> (Lnet/rim/device/api/crypto/PublicKeyEncryptorEngine;)V
       // 033: astore 3
-      // 034: new java/lang/Object
+      // 034: new java/io/ByteArrayOutputStream
       // 037: dup
       // 038: invokespecial java/io/ByteArrayOutputStream.<init> ()V
       // 03b: astore 4

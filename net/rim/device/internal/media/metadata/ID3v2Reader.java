@@ -189,7 +189,7 @@ public final class ID3v2Reader {
       if (tag.length >= 10 && tag[0] == 73 && tag[1] == 68 && tag[2] == 51) {
          return readSynchsafeInteger(tag, 6) + 10;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -220,7 +220,7 @@ public final class ID3v2Reader {
       // 01a: baload
       // 01b: bipush 51
       // 01d: if_icmpeq 028
-      // 020: new java/lang/Object
+      // 020: new java/lang/IllegalArgumentException
       // 023: dup
       // 024: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 027: athrow
@@ -240,7 +240,7 @@ public final class ID3v2Reader {
       // 03d: baload
       // 03e: bipush -1
       // 040: if_icmpne 04b
-      // 043: new java/lang/Object
+      // 043: new java/lang/IllegalArgumentException
       // 046: dup
       // 047: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 04a: athrow
@@ -355,7 +355,7 @@ public final class ID3v2Reader {
       // 10e: iload 5
       // 110: bipush 6
       // 112: if_icmpge 120
-      // 115: new java/lang/Object
+      // 115: new java/lang/IllegalArgumentException
       // 118: dup
       // 119: ldc_w "ID3v2.4 extended header size less than minimum 6 bytes"
       // 11c: invokespecial java/lang/IllegalArgumentException.<init> (Ljava/lang/String;)V
@@ -368,7 +368,7 @@ public final class ID3v2Reader {
       // 128: astore 5
       // 12a: aconst_null
       // 12b: areturn
-      // 12c: new java/lang/Object
+      // 12c: new net/rim/device/internal/media/metadata/MetaDataControlImpl
       // 12f: dup
       // 130: invokespecial net/rim/device/internal/media/metadata/MetaDataControlImpl.<init> ()V
       // 133: astore 5
@@ -492,7 +492,7 @@ public final class ID3v2Reader {
       // 20e: istore 7
       // 210: iload 7
       // 212: ifge 21d
-      // 215: new java/lang/Object
+      // 215: new java/lang/IllegalArgumentException
       // 218: dup
       // 219: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 21c: athrow
@@ -682,9 +682,9 @@ public final class ID3v2Reader {
       // 37a: iload 10
       // 37c: newarray 8
       // 37e: astore 17
-      // 380: new java/lang/Object
+      // 380: new net/rim/device/api/compress/ZLibInputStream
       // 383: dup
-      // 384: new java/lang/Object
+      // 384: new java/io/ByteArrayInputStream
       // 387: dup
       // 388: aload 14
       // 38a: iload 15
@@ -795,7 +795,7 @@ public final class ID3v2Reader {
          case 1195724544:
          case 1195724610:
          case 1346978560:
-            binaryObject = (MetaDataObject)(new Object());
+            binaryObject = new MetaDataObject();
             break;
          case 1129270528:
          case 1129270605:
@@ -961,7 +961,7 @@ public final class ID3v2Reader {
          String str;
          if (byteLength > 0) {
             try {
-               str = (String)(new Object(tag, startIndex, byteLength, encodingStr));
+               str = new String(tag, startIndex, byteLength, encodingStr);
             } finally {
                ;
             }
@@ -1032,7 +1032,7 @@ public final class ID3v2Reader {
             if (data != null) {
                System.arraycopy(tag, offset, data, 0, data.length);
                if ((frameID == 1095780675 || frameID == 1346978560) && "-->".equals(binaryObject.getMIMEType())) {
-                  binaryObject.setURL((String)(new Object(data)));
+                  binaryObject.setURL(new String(data));
                   binaryObject.setMIMEType(null);
                   return null;
                }
@@ -1057,7 +1057,7 @@ public final class ID3v2Reader {
 
                int strLength = str.length();
                if (strLength > 1 && str.charAt(0) == '(') {
-                  StringBuffer buffer = (StringBuffer)(new Object());
+                  StringBuffer buffer = new StringBuffer();
 
                   for (int i = 0; i < strLength; i++) {
                      if (str.charAt(i) != '(') {
@@ -1107,12 +1107,12 @@ public final class ID3v2Reader {
          case 1413697360:
          case 1413698048:
             if (str != null && str.length() > 0 && str.indexOf(169) == -1 && !StringUtilities.startsWithIgnoreCase(str, "Copyright", 1701707776)) {
-               return ((StringBuffer)(new Object("Copyright © "))).append(str).toString();
+               return "Copyright © " + str;
             }
             break;
          case 1414550095:
             if (str != null && str.length() > 0 && str.indexOf(8471) == -1 && !StringUtilities.startsWithIgnoreCase(str, "Produced", 1701707776)) {
-               return ((StringBuffer)(new Object("Produced ℗ "))).append(str).toString();
+               return "Produced ℗ " + str;
             }
       }
 
@@ -1172,7 +1172,7 @@ public final class ID3v2Reader {
       if ((tag[offset] & 128) == 0 && (tag[offset + 1] & 128) == 0 && (tag[offset + 2] & 128) == 0 && (tag[offset + 3] & 128) == 0) {
          return tag[offset] << 21 | tag[offset + 1] << 14 | tag[offset + 2] << 7 | tag[offset + 3];
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

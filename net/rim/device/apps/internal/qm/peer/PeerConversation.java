@@ -11,10 +11,10 @@ import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.system.PersistentObject;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.util.IntHashtable;
-import net.rim.device.api.util.LongHashtable;
 import net.rim.device.apps.api.framework.model.ActionProvider;
 import net.rim.device.apps.api.framework.model.ColumnPaintProvider;
 import net.rim.device.apps.api.framework.model.ColumnPainter;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.HotKeyProvider;
 import net.rim.device.apps.api.framework.model.KeyProvider;
 import net.rim.device.apps.api.framework.model.VerbProvider;
@@ -43,13 +43,13 @@ final class PeerConversation
    private Object _uniqueId;
    private int _idHashCode;
    private Vector _participants;
-   private CollectionListenerManager _clm = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _clm = new CollectionListenerManager();
    private Object _threadState;
-   private Vector _messages = (Vector)(new Object());
-   private Vector _persistedMessages = (Vector)(new Object());
+   private Vector _messages = new Vector();
+   private Vector _persistedMessages = new Vector();
    private long _timeStarted;
    private PeerConversationsFolder _folder;
-   private final StringBuffer _history = (StringBuffer)(new Object());
+   private final StringBuffer _history = new StringBuffer();
    private PeerConversation$PeerIconCollection _iconCollection = new PeerConversation$PeerIconCollection(this, null);
    private MessageListColumnPainter _painter;
    private boolean _existsInMessageList;
@@ -163,16 +163,16 @@ final class PeerConversation
    final void populatePersistedContacts(PeerContactListCollection contactList) {
       IntHashtable participants = (IntHashtable)this._persistentData.get(3);
       Object obj = this._persistentData.get(8);
-      int first = !(obj instanceof Object) ? 0 : obj;
+      int first = !(obj instanceof Integer) ? 0 : (Integer)obj;
       Enumeration elements = participants.elements();
 
       while (elements.hasMoreElements()) {
          IntHashtable data = (IntHashtable)elements.nextElement();
-         int hashId = data.get(1);
+         int hashId = (Integer)data.get(1);
          PeerContact current = contactList.findContactByHashId(hashId);
          if (current == null) {
             current = new PeerContact();
-            current.setIdInternal(data.get(1), data.get(3));
+            current.setIdInternal((Integer)data.get(1), data.get(3));
             current.setDisplayNameInternal(data.get(2));
             current.setAuthorized(false);
             contactList.addContact(current);
@@ -204,7 +204,7 @@ final class PeerConversation
       if (contact != null && this._participants.indexOf(contact) != -1) {
          int hashId = contact.getIdHash();
          IntHashtable participant = (IntHashtable)((IntHashtable)this._persistentData.get(3)).get(hashId);
-         participant.put(1, new Object(hashId));
+         participant.put(1, new Integer(hashId));
          participant.put(3, PersistentContent.encode(contact.getId(), true, true));
          participant.put(2, PersistentContent.encode(contact.getDisplayName(), true, true));
          this.commit();
@@ -255,7 +255,7 @@ final class PeerConversation
          this._idHashCode = newId.hashCode();
          this._uniqueId = PersistentContent.encode(newId, true, true);
          this._persistentData.put(1, this._uniqueId);
-         this._persistentData.put(2, new Object(this._idHashCode));
+         this._persistentData.put(2, new Integer(this._idHashCode));
       }
    }
 
@@ -281,7 +281,7 @@ final class PeerConversation
             PeerApplication.getSession().conversationRead(this);
          }
 
-         this._persistentData.put(4, new Object(this._unread));
+         this._persistentData.put(4, new Boolean(this._unread));
          this.commit();
          this.fireElementUpdated(this);
          if (this._existsInMessageList) {
@@ -426,7 +426,7 @@ final class PeerConversation
          }
 
          this._timeStarted = System.currentTimeMillis();
-         this._persistentData.put(7, new Object(this._timeStarted));
+         this._persistentData.put(7, new Long(this._timeStarted));
          this._messages.removeAllElements();
          this._persistedMessages.removeAllElements();
          this.commit();
@@ -517,7 +517,7 @@ final class PeerConversation
    @Override
    public final void paint(ColumnPainter painter, Object context) {
       MessengerMessage message = this.getDisplayMessageModel();
-      if (painter instanceof Object) {
+      if (painter instanceof MessageListColumnPainter) {
          this._painter = (MessageListColumnPainter)painter;
       }
 
@@ -554,9 +554,9 @@ final class PeerConversation
    private final void addParticipant(PeerContact participant) {
       if (this._participants.indexOf(participant) == -1) {
          this._participants.addElement(participant);
-         IntHashtable data = (IntHashtable)(new Object());
+         IntHashtable data = new IntHashtable();
          int hashId = participant.getIdHash();
-         Integer hash = (Integer)(new Object(hashId));
+         Integer hash = new Integer(hashId);
          data.put(1, hash);
          Object id = PersistentContent.encode(participant.getId(), true, true);
          Object name = PersistentContent.encode(participant.getDisplayName(), true, true);
@@ -571,7 +571,7 @@ final class PeerConversation
          }
 
          this._conference = true;
-         this._persistentData.put(5, new Object(this._conference));
+         this._persistentData.put(5, new Boolean(this._conference));
       }
    }
 
@@ -584,8 +584,8 @@ final class PeerConversation
          this._persistentData.remove(8);
       } else {
          Object obj = this._persistentData.get(8);
-         if (obj instanceof Object && participant.getIdHash() == obj) {
-            this._persistentData.put(8, new Object(this.getFirstParticipant().getIdHash()));
+         if (obj instanceof Integer && participant.getIdHash() == (Integer)obj) {
+            this._persistentData.put(8, new Integer(this.getFirstParticipant().getIdHash()));
          }
       }
    }
@@ -627,23 +627,23 @@ final class PeerConversation
    }
 
    PeerConversation(PeerContact participant, String uniqueId, PeerConversationsFolder folder) {
-      this._persistentData = (IntHashtable)(new Object());
+      this._persistentData = new IntHashtable();
       this._timeStarted = System.currentTimeMillis();
-      this._persistentData.put(7, new Object(this._timeStarted));
+      this._persistentData.put(7, new Long(this._timeStarted));
       this._folder = folder;
       if (uniqueId == null && participant != null) {
          uniqueId = participant.getId();
       }
 
       this.setId(uniqueId);
-      this._participants = (Vector)(new Object(2));
-      this._persistentData.put(3, new Object());
+      this._participants = new Vector(2);
+      this._persistentData.put(3, new IntHashtable());
       if (participant != null) {
          this.modifyParticipant(participant, true);
       }
 
       this._persistentData.put(6, this._persistedMessages);
-      this._persistentData.put(4, new Object(this._unread));
+      this._persistentData.put(4, new Boolean(this._unread));
       this.commit();
    }
 
@@ -664,21 +664,21 @@ final class PeerConversation
    PeerConversation(IntHashtable data, PeerContactListCollection contactList, PeerConversationsFolder folder) {
       this._persistentData = data;
       this._uniqueId = data.get(1);
-      this._idHashCode = data.get(2);
-      this._participants = (Vector)(new Object(2));
+      this._idHashCode = (Integer)data.get(2);
+      this._participants = new Vector(2);
       this.populatePersistedContacts(contactList);
       this._persistedMessages = (Vector)data.get(6);
       this._folder = folder;
       this.deserializePersistedMessages(contactList);
-      this._timeStarted = data.get(7);
-      boolean unread = data.get(4);
+      this._timeStarted = (Long)data.get(7);
+      boolean unread = (Boolean)data.get(4);
       if (unread) {
          this.markUnread(unread, false);
       }
 
       Object conference = data.get(5);
-      if (conference instanceof Object) {
-         this._conference = conference;
+      if (conference instanceof Boolean) {
+         this._conference = (Boolean)conference;
       }
    }
 
@@ -689,7 +689,7 @@ final class PeerConversation
 
          for (int i = 0; i < size; i++) {
             Object obj = this._persistedMessages.elementAt(i);
-            MessengerMessage current = !(obj instanceof Object) ? null : MessengerMessageImpl.deserialize((IntHashtable)obj, contactList);
+            MessengerMessage current = !(obj instanceof IntHashtable) ? null : MessengerMessageImpl.deserialize((IntHashtable)obj, contactList);
             if (current != null) {
                this._messages.addElement(current);
                this.fireElementAdded(current);
@@ -724,7 +724,7 @@ final class PeerConversation
    }
 
    private final void onNotificationMessageFieldSwitch(Object context) {
-      Object cookie = context != null ? ((LongHashtable)context).get(254) : null;
+      Object cookie = context != null ? ((ContextObject)context).get(254) : null;
       Contact contact = null;
       Conversation conversation = null;
       if (cookie instanceof NotificationMessage) {

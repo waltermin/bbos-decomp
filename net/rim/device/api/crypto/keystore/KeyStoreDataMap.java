@@ -7,7 +7,7 @@ public class KeyStoreDataMap {
 
    public KeyStoreDataMap(IntMultiMap map) {
       if (map == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._map = map;

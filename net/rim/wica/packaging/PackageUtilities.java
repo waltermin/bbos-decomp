@@ -3,10 +3,10 @@ package net.rim.wica.packaging;
 public final class PackageUtilities {
    public static final String constructResourcePath(String filename, char pathSeparator, String language) {
       if (filename == null) {
-         throw new Object("filename");
+         throw new NullPointerException("filename");
       }
 
-      StringBuffer sb = (StringBuffer)(new Object("resources"));
+      StringBuffer sb = new StringBuffer("resources");
       sb.append(pathSeparator);
       if (language != null) {
          sb.append(language);
@@ -19,7 +19,7 @@ public final class PackageUtilities {
 
    public static final String extractPathFromURI(String uri) {
       if (uri == null) {
-         throw new Object("uri");
+         throw new NullPointerException("uri");
       }
 
       String path = null;
@@ -36,7 +36,7 @@ public final class PackageUtilities {
    }
 
    public static final String constructWicletPackageURL(String baseUrl, String encodedPackageName) {
-      StringBuffer sb = (StringBuffer)(new Object(baseUrl));
+      StringBuffer sb = new StringBuffer(baseUrl);
       sb.append('/');
       sb.append("provisioning");
       sb.append('/');
@@ -50,7 +50,7 @@ public final class PackageUtilities {
       path = stringReplace(path, "\\", '/');
       path = stringReplace(path, "//", '/');
       path = stringReplace(path, "///", '/');
-      StringBuffer sb = (StringBuffer)(new Object(path));
+      StringBuffer sb = new StringBuffer(path);
       sb.append('-');
       sb.append(version);
       sb.append('-');
@@ -60,7 +60,7 @@ public final class PackageUtilities {
 
    public static final String getFullPackageName(String uri, String version, String locale) {
       String name = getPackageName(uri, version, locale);
-      return ((StringBuffer)(new Object())).append(name).append(".").append("jar").toString();
+      return name + "." + "jar";
    }
 
    private static final String stringReplace(String text, String pattern, char replacement) {
@@ -69,7 +69,7 @@ public final class PackageUtilities {
          return text;
       }
 
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
 
       while (pos != -1) {
          sb.append(text.substring(0, pos)).append(replacement);

@@ -18,7 +18,7 @@ final class SearchableHistoryList$LookupListField extends ListField implements L
 
    SearchableHistoryList$LookupListField(SearchableHistoryList this$0) {
       this.this$0 = this$0;
-      this.EMPTY_STRING = new Object[]{LBSResources.getString(415), CommonResource.getString(1012)};
+      this.EMPTY_STRING = new String[]{LBSResources.getString(415), CommonResource.getString(1012)};
    }
 
    public final void reinit() {

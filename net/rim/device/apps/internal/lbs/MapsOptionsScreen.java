@@ -26,7 +26,7 @@ final class MapsOptionsScreen extends MainScreenOptionsListItem {
 
    @Override
    protected final void populateMainScreen(MainScreen mainScreen) {
-      this._defaultService = (ObjectChoiceField)(new Object(_resources.getString(484), null));
+      this._defaultService = new ObjectChoiceField(_resources.getString(484), null);
       this._defaultService.setEmptyString(CommonResources.getResourceBundle(), 9061);
       mainScreen.add(this._defaultService);
       this.getMapsServiceRecords();

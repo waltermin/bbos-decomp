@@ -1,9 +1,11 @@
 package net.rim.device.apps.internal.docview.gui;
 
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.ActiveRichTextField;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.theme.Theme;
 import net.rim.device.api.ui.theme.Theme$Writer;
@@ -40,10 +42,10 @@ public final class ModalDisplayDlg extends PopupDialog {
       HorizontalFieldManager title = null;
       if (icon != null) {
          if (title == null) {
-            title = (HorizontalFieldManager)(new Object());
+            title = new HorizontalFieldManager();
          }
 
-         ImageField iconField = (ImageField)(new Object(65536));
+         ImageField iconField = new ImageField(65536);
          iconField.setImage(icon);
          title.add(iconField);
          title.add(new DocViewHorizontalSpacerField(this.getFont().getHeight() >> 2));
@@ -54,13 +56,13 @@ public final class ModalDisplayDlg extends PopupDialog {
 
       if (label != null && label.length() > 0) {
          if (title == null) {
-            title = (HorizontalFieldManager)(new Object());
+            title = new HorizontalFieldManager();
          }
 
          if ((style & 1) != 0) {
-            title.add((Field)(new Object(label, 45035996273704960L)));
+            title.add(new RichTextField(label, 45035996273704960L));
          } else {
-            title.add((Field)(new Object(label, 64)));
+            title.add(new LabelField(label, 64));
          }
 
          if (title.getIndex() == -1) {
@@ -68,12 +70,12 @@ public final class ModalDisplayDlg extends PopupDialog {
          }
 
          if ((style & 16) != 0) {
-            manager.add((Field)(new Object()));
+            manager.add(new SeparatorField());
          }
       }
 
       if (text != null && text.length() > 0) {
-         this._textField = (ActiveRichTextField)(new Object(""));
+         this._textField = new ActiveRichTextField("");
          this._textField.setText(text, offsets, attributes, fonts, foreColors, bgColors);
          manager.add(this._textField);
       }

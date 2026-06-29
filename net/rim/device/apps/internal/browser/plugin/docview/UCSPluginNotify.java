@@ -12,7 +12,7 @@ final class UCSPluginNotify implements DocViewNotify {
 
    UCSPluginNotify(HttpConnection connection, RenderingApplication renderApplication) {
       this._renderApp = renderApplication;
-      this._contentReadEvent = (ContentReadEvent)(new Object(connection));
+      this._contentReadEvent = new ContentReadEvent(connection);
       if (connection != null) {
          try {
             int available = connection.openInputStream().available();

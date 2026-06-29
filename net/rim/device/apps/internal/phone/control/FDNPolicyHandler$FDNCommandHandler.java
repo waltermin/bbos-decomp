@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.phone.control;
 
 import net.rim.device.api.i18n.MessageFormat;
+import net.rim.device.api.system.RadioException;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
 import net.rim.device.internal.callcontrol.CallCommandHandler;
@@ -14,11 +15,11 @@ class FDNPolicyHandler$FDNCommandHandler extends CallCommandHandler {
    }
 
    @Override
-   public int startCall(String number, int clir) {
+   public int startCall(String number, int clir) throws RadioException {
       if (this.this$0._outgoingTable != null && this.this$0.isMyLine() && this.this$0._outgoingTable.isRejected(number)) {
          String emsg = "FDNPolicy rejected startCall.";
          System.out.println(emsg);
-         throw new Object(emsg);
+         throw new RadioException(emsg);
       } else {
          return super.startCall(number, clir);
       }
@@ -42,7 +43,7 @@ class FDNPolicyHandler$FDNCommandHandler extends CallCommandHandler {
    }
 
    private void notifyFailed(String number) {
-      String errorString = MessageFormat.format(PhoneResources.getString(146), new Object[]{number});
+      String errorString = MessageFormat.format(PhoneResources.getString(146), new String[]{number});
       Dialog.alert(errorString);
    }
 }

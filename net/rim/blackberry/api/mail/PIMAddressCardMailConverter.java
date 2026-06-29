@@ -16,12 +16,12 @@ public class PIMAddressCardMailConverter implements MailConverter {
 
    @Override
    public boolean canConvert(Object o) {
-      return o instanceof Object || o instanceof ContactAttachmentPart;
+      return o instanceof AddressCardModel || o instanceof ContactAttachmentPart;
    }
 
    @Override
    public Object convert(Object o, Object context) {
-      if (o instanceof Object && context instanceof Object) {
+      if (o instanceof AddressCardModel && context instanceof Multipart) {
          AddressCardModel acm = (AddressCardModel)o;
          Multipart parent = (Multipart)context;
          ContactAttachmentPart cap = new ContactAttachmentPart(parent);

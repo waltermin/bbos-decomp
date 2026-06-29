@@ -17,7 +17,7 @@ final class MediaHubScreen$BrowseMediaVerb extends Verb {
 
    @Override
    public final Object invoke(Object parameter) {
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       if (this._entryIndex >= 0) {
          ResourceBundle rb = ResourceBundle.getBundle(349501092522026426L, "net.rim.device.apps.internal.resource.Explorer");
          String[] localizedNames = rb.getFamily().getBundle(Locale.get(0)).getStringArray(12);
@@ -31,9 +31,9 @@ final class MediaHubScreen$BrowseMediaVerb extends Verb {
             }
          }
 
-         ContextObject.put(context, 3941043584844673548L, new Object(this._entryIndex));
+         ContextObject.put(context, 3941043584844673548L, new Integer(this._entryIndex));
       } else {
-         ContextObject.put(context, 3941043584844673548L, new Object(-1));
+         ContextObject.put(context, 3941043584844673548L, new Integer(-1));
       }
 
       UiApplication.getUiApplication().pushScreen(new ExploreScreen(context));

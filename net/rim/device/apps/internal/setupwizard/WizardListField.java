@@ -36,7 +36,7 @@ final class WizardListField extends ListField implements ListFieldCallback {
          if (category == null) {
             for (int i = 0; i < numPages; i++) {
                WizardPage page = this._pages.getPage(i);
-               if (page.getCategory() == null || page instanceof Object) {
+               if (page.getCategory() == null || page instanceof WizardCategory) {
                   this._filteredPages.addElement(page);
                }
             }
@@ -66,7 +66,7 @@ final class WizardListField extends ListField implements ListFieldCallback {
 
    public final void setSelectedPage(WizardPage page) {
       if (page != null && !page.isHidden()) {
-         if (page instanceof Object) {
+         if (page instanceof WizardCategory) {
             this.selectCategory((WizardCategory)page);
          } else {
             int numPages = this._filteredPages.size();
@@ -74,7 +74,7 @@ final class WizardListField extends ListField implements ListFieldCallback {
 
             for (int i = 0; i < numPages; i++) {
                WizardPage itrPage = (WizardPage)this._filteredPages.elementAt(i);
-               if (firstPageIndex == -1 && !(itrPage instanceof Object)) {
+               if (firstPageIndex == -1 && !(itrPage instanceof WizardCategory)) {
                   firstPageIndex = i;
                }
 
@@ -118,12 +118,12 @@ final class WizardListField extends ListField implements ListFieldCallback {
    @Override
    public final void drawListRow(ListField listField, Graphics graphics, int index, int y, int width) {
       WizardPage page = this.getPage(index);
-      if ((this._categoryMode != 1 || !(page instanceof Object))
+      if ((this._categoryMode != 1 || !(page instanceof WizardCategory))
          && (this._categoryMode != 2 || this._currentCategory == null || !this._currentCategory.equals(page))) {
          String title = page.getTitle();
          graphics.drawText(title, 0, y, 64, width);
-         if (page instanceof Object) {
-            GlyphMetrics metrics = (GlyphMetrics)(new Object());
+         if (page instanceof WizardCategory) {
+            GlyphMetrics metrics = new GlyphMetrics();
             graphics.getFont().getGlyphMetrics('►', metrics);
             graphics.drawText("►", width - metrics.iBitmapWidth - 4, y);
          }
@@ -158,12 +158,12 @@ final class WizardListField extends ListField implements ListFieldCallback {
 
       int currentIndex = this.getSelectedIndex();
       int numPages = this.getSize();
-      if (currentIndex >= 0 && this._filteredPages.elementAt(currentIndex) instanceof Object) {
+      if (currentIndex >= 0 && this._filteredPages.elementAt(currentIndex) instanceof WizardCategory) {
          int newIndex = currentIndex;
          if (amount < 0) {
             do {
                newIndex--;
-            } while (newIndex >= 0 && this._filteredPages.elementAt(newIndex) instanceof Object);
+            } while (newIndex >= 0 && this._filteredPages.elementAt(newIndex) instanceof WizardCategory);
          }
 
          if (newIndex < 0 || amount > 0) {
@@ -171,7 +171,7 @@ final class WizardListField extends ListField implements ListFieldCallback {
 
             do {
                newIndex++;
-            } while (newIndex < numPages && this._filteredPages.elementAt(newIndex) instanceof Object);
+            } while (newIndex < numPages && this._filteredPages.elementAt(newIndex) instanceof WizardCategory);
          }
 
          if (newIndex >= 0 && newIndex < numPages) {
@@ -193,7 +193,7 @@ final class WizardListField extends ListField implements ListFieldCallback {
 
       for (int i = 0; i < numPages; i++) {
          WizardPage page = (WizardPage)this._filteredPages.elementAt(i);
-         if (page instanceof Object && page == category) {
+         if (page instanceof WizardCategory && page == category) {
             this.setSelectedIndex(i);
             return;
          }
@@ -206,7 +206,7 @@ final class WizardListField extends ListField implements ListFieldCallback {
       this._categoryMode = categoryMode;
       this.setCallback(this);
       this._pages = pages;
-      this._filteredPages = (Vector)(new Object());
+      this._filteredPages = new Vector();
       if (this._categoryMode == 2) {
          this.setCategoryFilter(null);
       } else {

@@ -3,6 +3,7 @@ package net.rim.device.api.xml.jaxp;
 import net.rim.device.api.xml.parsers.ParserConfigurationException;
 import net.rim.device.api.xml.parsers.SAXParser;
 import net.rim.device.api.xml.parsers.SAXParserFactory;
+import org.xml.sax.SAXNotSupportedException;
 
 public class SAXParserFactoryImpl extends SAXParserFactory {
    private static final String FEATURE_PREFIX = "http://xml.org/sax/features/";
@@ -23,11 +24,11 @@ public class SAXParserFactoryImpl extends SAXParserFactory {
       return sax;
    }
 
-   public void setFeature(String name, boolean value) {
-      throw new Object("not supported");
+   public void setFeature(String name, boolean value) throws SAXNotSupportedException {
+      throw new SAXNotSupportedException("not supported");
    }
 
-   public boolean getFeature(String name) {
+   public boolean getFeature(String name) throws SAXNotSupportedException {
       if (name.startsWith("http://xml.org/sax/features/")) {
          String feature = name.substring(28);
          if (feature.equals("namespaces")) {
@@ -39,6 +40,6 @@ public class SAXParserFactoryImpl extends SAXParserFactory {
          }
       }
 
-      throw new Object("not supported");
+      throw new SAXNotSupportedException("not supported");
    }
 }

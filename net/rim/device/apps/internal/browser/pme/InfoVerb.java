@@ -39,7 +39,7 @@ final class InfoVerb extends Verb implements PMEPlugginResource, FieldChangeList
             return null;
          }
 
-         Dialog d = (Dialog)(new Object(_resources.getString(7), null, null, 1, null, 281474976710656L));
+         Dialog d = new Dialog(_resources.getString(7), null, null, 1, null, 281474976710656L);
          String cr = "\n\n";
          String message = nullStr;
          int numMeta = model.getNumMetaInfo();
@@ -52,12 +52,12 @@ final class InfoVerb extends Verb implements PMEPlugginResource, FieldChangeList
                key = _resources.getString(10);
             }
 
-            message = ((StringBuffer)(new Object())).append(message).append(key).append(": ").append(model.getMetaValue(x)).append(cr).toString();
+            message = message + key + ": " + model.getMetaValue(x) + cr;
          }
 
-         RichTextField label = (RichTextField)(new Object(message, 18014398576590848L));
+         RichTextField label = new RichTextField(message, 18014398576590848L);
          d.add(label);
-         ButtonField button = (ButtonField)(new Object(CommonResources.getString(117), 12884901888L));
+         ButtonField button = new ButtonField(CommonResources.getString(117), 12884901888L);
          button.setChangeListener(this);
          d.add(button);
          d.setIcon(ThemeManager.getActiveTheme().getImage("dialog_information"));
@@ -75,7 +75,7 @@ final class InfoVerb extends Verb implements PMEPlugginResource, FieldChangeList
 
    @Override
    public final void fieldChanged(Field field, int context) {
-      if (field instanceof Object) {
+      if (field instanceof ButtonField) {
          field.getScreen().close();
       }
    }

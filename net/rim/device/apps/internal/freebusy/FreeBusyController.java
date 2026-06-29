@@ -12,13 +12,13 @@ public class FreeBusyController extends AppsMainScreen {
    Date _startDate;
    Date _endDate;
    Enumeration _attendees;
-   VerticalFieldManager _vfm = (VerticalFieldManager)(new Object(562949953421312L));
+   VerticalFieldManager _vfm = new VerticalFieldManager(562949953421312L);
 
    public FreeBusyController(MeetingInfo meeting, long startDate, long endDate) {
       super(562949953617920L);
       this._freeBusyDisplayField = new FreeBusyField(meeting.getAttendees(), startDate, endDate, this);
-      this._startDate = (Date)(new Object(startDate));
-      this._endDate = (Date)(new Object(endDate));
+      this._startDate = new Date(startDate);
+      this._endDate = new Date(endDate);
       this._headerField = new FreeBusyHeader(startDate, this);
       this.initializeFields();
    }

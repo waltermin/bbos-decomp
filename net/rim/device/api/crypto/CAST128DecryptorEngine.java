@@ -7,7 +7,7 @@ public final class CAST128DecryptorEngine implements SymmetricKeyDecryptorEngine
 
    public CAST128DecryptorEngine(CAST128Key key) {
       if (key == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._cryptoToken = key.getCAST128CryptoToken();

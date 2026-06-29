@@ -67,7 +67,7 @@ public final class ActivationApp
 
    public final int displayRadioToggleDialog() {
       synchronized (this.getAppEventLock()) {
-         String[] choices = new Object[]{CommonResources.getString(9154), CommonResources.getString(9042)};
+         String[] choices = new String[]{CommonResources.getString(9154), CommonResources.getString(9042)};
          int answer = Dialog.ask(CommonResources.getString(9153), choices, 0);
          if (answer == 0) {
             Radio.requestPowerOn();
@@ -113,13 +113,10 @@ public final class ActivationApp
             }
 
             if (statusInfo.length() > 0) {
-               statusInfo = ((StringBuffer)(new Object())).append(statusInfo).append('\n').toString();
+               statusInfo = statusInfo + '\n';
             }
 
-            statusInfo = ((StringBuffer)(new Object()))
-               .append(statusInfo)
-               .append(MessageFormat.format(_resources.getString(153), new Object[]{value}))
-               .toString();
+            statusInfo = statusInfo + MessageFormat.format(_resources.getString(153), new String[]{value});
             newScreen = new OTASyncProgressScreen(this, statusInfo, sid);
             RIMGlobalMessagePoster.postGlobalEvent(-4731267519193158412L, 3852, 0, null, null);
          }
@@ -153,8 +150,8 @@ public final class ActivationApp
       if (guid != -4731267519193158412L) {
          if (guid == ACTIVATION_APP_SYNC_STATUS_CHANGED) {
             long sid = -1;
-            if (object0 instanceof Object) {
-               sid = object0;
+            if (object0 instanceof Long) {
+               sid = (Long)object0;
             }
 
             this.refreshMainScreen(null, null, sid);
@@ -190,15 +187,15 @@ public final class ActivationApp
                   String newTitle = "";
                   if (values.length > 0) {
                      Object var10000 = values[0];
-                     if (values[0] instanceof Object) {
+                     if (values[0] instanceof String) {
                         newTitle = (String)var10000;
                      }
                   }
 
                   if (values.length >= 1) {
                      Object var14 = values[1];
-                     if (values[1] instanceof Object) {
-                        sid = var14;
+                     if (values[1] instanceof Long) {
+                        sid = (Long)var14;
                      }
                   }
 
@@ -283,7 +280,7 @@ public final class ActivationApp
          if (descriptor != null) {
             try {
                if (args != null) {
-                  descriptor = (ApplicationDescriptor)(new Object(descriptor, args));
+                  descriptor = new ApplicationDescriptor(descriptor, args);
                }
 
                appManager.runApplication(descriptor);
@@ -326,7 +323,7 @@ public final class ActivationApp
             OutgoingDeviceAgentCollection oac = (OutgoingDeviceAgentCollection)OutgoingDeviceAgentCollection.getInstance();
             if (oac != null) {
                String OSVersion = DeviceInfo.getPlatformVersion();
-               String AppsVersion = ((StringBuffer)(new Object("v"))).append(DeviceInfo.getSoftwareVersion()).toString();
+               String AppsVersion = "v" + DeviceInfo.getSoftwareVersion();
                String modelName = DeviceInfo.getDeviceName();
                String manufacturerName = DeviceInfo.getManufacturerName();
                int hardwareID = InternalServices.getHardwareID();
@@ -338,7 +335,7 @@ public final class ActivationApp
                oac.addDeviceCapabilities((byte)21, modelName.getBytes());
                oac.addDeviceCapabilities((byte)20, manufacturerName.getBytes());
                byte[] intBuffer = new byte[4];
-               DataBuffer buffer = (DataBuffer)(new Object(intBuffer, 0, intBuffer.length, true));
+               DataBuffer buffer = new DataBuffer(intBuffer, 0, intBuffer.length, true);
                buffer.reset();
                buffer.writeInt(hardwareID);
                buffer.trim();

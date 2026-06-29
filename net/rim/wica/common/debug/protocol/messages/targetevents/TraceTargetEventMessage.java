@@ -29,6 +29,6 @@ final class TraceTargetEventMessage extends ApplicationTargetEventMessage implem
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object("Trace Event: message="))).append(this.getMessage()).toString();
+      return "Trace Event: message=" + this.getMessage();
    }
 }

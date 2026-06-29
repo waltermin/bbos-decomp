@@ -2,12 +2,14 @@ package net.rim.device.internal.services.platform;
 
 import javax.microedition.content.Registry;
 import net.rim.device.api.crypto.Crypto10Initialization;
+import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.ui.theme.ThemeManager;
 import net.rim.device.cldc.io.daemon.ProtocolDaemon;
 import net.rim.device.internal.deviceoptions.DeviceOptions;
 import net.rim.device.internal.i18n.Initialization;
 import net.rim.device.internal.i18n.ResourceBundleFetcher;
+import net.rim.device.internal.io.file.FileSystemPropertyProvider;
 import net.rim.device.internal.lowMemory.Registration;
 import net.rim.device.internal.proxy.Proxy;
 import net.rim.device.internal.system.CodeModuleDeletionListener;
@@ -18,7 +20,6 @@ import net.rim.device.internal.system.ForcedResetManager;
 import net.rim.device.internal.system.ITPolicyInternal;
 import net.rim.device.internal.system.RIMProcessLauncherMain;
 import net.rim.device.internal.system.SystemPropertyManager;
-import net.rim.device.internal.system.SystemPropertyProvider;
 import net.rim.device.internal.system.USBPasswordRedirectManager;
 import net.rim.device.internal.ui.IMSwitcherOption;
 import net.rim.vm.Process;
@@ -48,7 +49,7 @@ final class ServiceStartup {
       RIMProcessLauncherMain.initialize();
       ResourceBundleFetcher.initialize();
       CodeStore.generateDependencyList();
-      new Object();
+      new SHA1Digest();
 
       label85:
       try {
@@ -95,7 +96,7 @@ final class ServiceStartup {
       IMSwitcherOption.getInstance();
       SystemPropertyManager sysPropManager = SystemPropertyManager.getInstance();
       if (sysPropManager != null) {
-         sysPropManager.addProvider((SystemPropertyProvider)(new Object()));
+         sysPropManager.addProvider(new FileSystemPropertyProvider());
       }
    }
 }

@@ -1,7 +1,11 @@
 package net.rim.device.internal.media;
 
+import java.io.ByteArrayInputStream;
+import java.io.EOFException;
+import java.io.IOException;
 import java.io.InputStream;
 import javax.microedition.media.Control;
+import javax.microedition.media.MediaException;
 import javax.microedition.media.control.MetaDataControl;
 import javax.microedition.media.control.VolumeControl;
 import javax.microedition.media.protocol.DataSource;
@@ -41,7 +45,7 @@ class StreamingPlayer extends PlayerImpl implements MediaStreamingCallback, Volu
 
    public StreamingPlayer() {
       this._dataChunkSize = this.getStreamingChunkSize(-1);
-      this._tuneBuffer = (RingBuffer)(new Object(this._dataChunkSize));
+      this._tuneBuffer = new RingBuffer(this._dataChunkSize);
       super._audioSourceId = 10;
    }
 
@@ -97,13 +101,13 @@ class StreamingPlayer extends PlayerImpl implements MediaStreamingCallback, Volu
             .playStream(this, this._tuneBuffer, this._codec, size, this._interruptable, this.isMuted() ? 0 : this._volume);
          this._alreadyPlayed = true;
          super._state = 400;
-         this.notifyListeners("started", new Object(this.getMediaTime()));
+         this.notifyListeners("started", new Long(this.getMediaTime()));
       }
    }
 
    @Override
-   protected void read(InputStream stream) {
-      throw new Object();
+   protected void read(InputStream stream) throws MediaException {
+      throw new MediaException();
    }
 
    protected boolean read(SourceStream stream) {
@@ -111,7 +115,7 @@ class StreamingPlayer extends PlayerImpl implements MediaStreamingCallback, Volu
 
       label47:
       try {
-         bytesRead = this._tuneBuffer.write((InputStream)(new Object(stream)));
+         bytesRead = this._tuneBuffer.write(new DataSourceInputStream(stream));
       } finally {
          break label47;
       }
@@ -211,7 +215,7 @@ class StreamingPlayer extends PlayerImpl implements MediaStreamingCallback, Volu
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   protected void doRealize() {
+   protected void doRealize() throws MediaException {
       super.doRealize();
       if (this._tuneSourceStream != null) {
          long contentLengthExcludingID3v2Tag = this._tuneSourceStream.getContentLength();
@@ -222,7 +226,7 @@ class StreamingPlayer extends PlayerImpl implements MediaStreamingCallback, Volu
                if (this._codec == 10 && this._tuneSourceStream.getSeekType() == 2 && "audio/mp4".equals(super._type)) {
                   try {
                      long startPosition = this._tuneSourceStream.tell();
-                     MP4Info mp4Info = new MP4Info((InputStream)(new Object(this._tuneSourceStream)));
+                     MP4Info mp4Info = new MP4Info(new DataSourceInputStream(this._tuneSourceStream));
                      this._metaDataControl = mp4Info.getMetaData();
                      if (this._duration == -1) {
                         this._duration = mp4Info.getDuration();
@@ -230,7 +234,7 @@ class StreamingPlayer extends PlayerImpl implements MediaStreamingCallback, Volu
 
                      this._tuneSourceStream.seek(startPosition);
                   } catch (Throwable var51) {
-                     throw new Object(ioe.getMessage());
+                     throw new MediaException(ioe.getMessage());
                   }
                }
             } else {
@@ -248,7 +252,7 @@ class StreamingPlayer extends PlayerImpl implements MediaStreamingCallback, Volu
                         tagSize = ID3v2Reader.getTagSize(buffer);
                         if (tagSize > 2097152) {
                            tagSize = -1;
-                           throw new Object();
+                           throw new IllegalArgumentException();
                         }
 
                         var43 = false;
@@ -277,7 +281,7 @@ class StreamingPlayer extends PlayerImpl implements MediaStreamingCallback, Volu
                      offset += bytesRead;
                   }
                } catch (Throwable var55) {
-                  throw new Object(ioe.getMessage());
+                  throw new MediaException(ioe.getMessage());
                }
             }
          }
@@ -305,7 +309,7 @@ class StreamingPlayer extends PlayerImpl implements MediaStreamingCallback, Volu
                   Array.resize(buffer, offset + bytesRead);
                }
             } catch (Throwable var52) {
-               throw new Object(ioe.getMessage());
+               throw new MediaException(ioe.getMessage());
             }
 
             this.setDuration(buffer, contentLengthExcludingID3v2Tag);
@@ -331,7 +335,7 @@ class StreamingPlayer extends PlayerImpl implements MediaStreamingCallback, Volu
                   this._tuneSourceStream.seek(startPosition);
                   return;
                } catch (Throwable var50) {
-                  throw new Object(ioe.getMessage());
+                  throw new MediaException(ioe.getMessage());
                }
             }
          }
@@ -345,7 +349,7 @@ class StreamingPlayer extends PlayerImpl implements MediaStreamingCallback, Volu
    private void onDone(int reason) {
       if (super._state > 100) {
          if (reason == 2) {
-            Long mediaTime = (Long)(new Object(this.getMediaTime()));
+            Long mediaTime = new Long(this.getMediaTime());
             this.notifyListeners("endOfMedia", mediaTime);
             boolean playAgain = super._loopCount == -1;
             if (!playAgain && super._currentLoopIteration < super._loopCount - 1) {
@@ -373,8 +377,8 @@ class StreamingPlayer extends PlayerImpl implements MediaStreamingCallback, Volu
    @Override
    public void setKeyValue(String key, Object value) {
       if ("interrupt_on_user_input".equals(key)) {
-         if (value instanceof Object) {
-            this.setInterruptable(value);
+         if (value instanceof Integer) {
+            this.setInterruptable((Integer)value);
             return;
          }
       } else if ("datasource".equals(key)) {
@@ -382,12 +386,12 @@ class StreamingPlayer extends PlayerImpl implements MediaStreamingCallback, Volu
          SourceStream[] streams = this._dataSource.getStreams();
          this._tuneSourceStream = streams[0];
          if (this._tuneSourceStream.getSeekType() != 2) {
-            this._tuneSourceStream = (SourceStream)(new Object(this._tuneSourceStream));
+            this._tuneSourceStream = new CacheEnabledSourceStream(this._tuneSourceStream);
             return;
          }
       } else {
          if ("audiosource".equals(key)) {
-            super._audioSourceId = value;
+            super._audioSourceId = (Integer)value;
             return;
          }
 
@@ -421,7 +425,7 @@ class StreamingPlayer extends PlayerImpl implements MediaStreamingCallback, Volu
    public Control[] getControls() {
       Control[] controls = super.getControls();
       if (controls == null) {
-         controls = new Object[this._metaDataControl != null ? 2 : 1];
+         controls = new Control[this._metaDataControl != null ? 2 : 1];
          controls[0] = this;
          if (controls.length > 1) {
             controls[1] = this._metaDataControl;
@@ -451,7 +455,7 @@ class StreamingPlayer extends PlayerImpl implements MediaStreamingCallback, Volu
          try {
             switch (this._codec) {
                case 0:
-                  this._duration = getWavDuration((InputStream)(new Object(data)));
+                  this._duration = getWavDuration(new ByteArrayInputStream(data));
                   return;
                case 3:
                case 10:
@@ -533,33 +537,33 @@ class StreamingPlayer extends PlayerImpl implements MediaStreamingCallback, Volu
       return -1;
    }
 
-   private static int readIntLittleEndian(InputStream is) {
+   private static int readIntLittleEndian(InputStream is) throws EOFException {
       int b1 = is.read();
       int b2 = is.read();
       int b3 = is.read();
       int b4 = is.read();
       if ((b1 | b2 | b3 | b4) < 0) {
-         throw new Object();
+         throw new EOFException();
       } else {
          return b4 << 24 | b3 << 16 | b2 << 8 | b1;
       }
    }
 
-   private static int readUnsignedShortLittleEndian(InputStream is) {
+   private static int readUnsignedShortLittleEndian(InputStream is) throws EOFException {
       int b1 = is.read();
       int b2 = is.read();
       if ((b1 | b2) < 0) {
-         throw new Object();
+         throw new EOFException();
       } else {
          return b2 << 8 | b1;
       }
    }
 
-   private static void skipFully(InputStream is, int numBytes) {
+   private static void skipFully(InputStream is, int numBytes) throws IOException {
       while (numBytes > 0) {
          int skipped = (int)is.skip(numBytes);
          if (skipped <= 0) {
-            throw new Object();
+            throw new IOException();
          }
 
          numBytes -= skipped;

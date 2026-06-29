@@ -29,7 +29,7 @@ public class AbstractFilterScreen extends UserSettingsScreen {
    private RadioButtonField _forward2Choice;
    private CheckboxField _headersOnly;
    private CheckboxField _levelOne;
-   private Vector _filterValues = (Vector)(new Object());
+   private Vector _filterValues = new Vector();
    private BoldLabelObjectChoiceField _filterOptions;
    private int _containsIndex;
 
@@ -56,7 +56,7 @@ public class AbstractFilterScreen extends UserSettingsScreen {
          filterOperator = "To";
       }
 
-      StringBuffer filterValue = (StringBuffer)(new Object());
+      StringBuffer filterValue = new StringBuffer();
       if (null != filterName && filterName.trim().length() != 0) {
          for (int i = 0; i < this._filterValues.size(); i++) {
             String value = (String)this._filterValues.elementAt(i);
@@ -66,9 +66,9 @@ public class AbstractFilterScreen extends UserSettingsScreen {
             }
          }
 
-         Boolean headersOnly = (Boolean)(new Object(this._headersOnly.getChecked()));
-         Boolean levelOne = (Boolean)(new Object(this._levelOne.getChecked()));
-         Boolean sendAlert = (Boolean)(new Object(this._forward1Choice.isSelected()));
+         Boolean headersOnly = new Boolean(this._headersOnly.getChecked());
+         Boolean levelOne = new Boolean(this._levelOne.getChecked());
+         Boolean sendAlert = new Boolean(this._forward1Choice.isSelected());
          if (!filterOperator.equals("priorityMail") && !filterOperator.equals("newMail") && filterValue != null && filterValue.toString().trim().equals("")) {
             this.setError(ApplicationResources.getString(311));
             return false;
@@ -105,17 +105,17 @@ public class AbstractFilterScreen extends UserSettingsScreen {
       this._forward2Choice = null;
       this._headersOnly = null;
       this._levelOne = null;
-      this._filterValues = (Vector)(new Object());
+      this._filterValues = new Vector();
       this._filterOptions = null;
       this._containsIndex = -1;
    }
 
    protected void addHeaderInfo(String filterName, String emailAccount) {
-      this._filterNameEdit = (BasicEditField)(new Object(null, filterName, 40, 2147483648L));
-      this.addContentField((Field)(new Object(ApplicationResources.getString(308))));
+      this._filterNameEdit = new BasicEditField(null, filterName, 40, 2147483648L);
+      this.addContentField(new LabelField(ApplicationResources.getString(308)));
       this.addContentLineBreak();
       this.addContentField(new BoldLabelField(ApplicationResources.getString(309)));
-      this.addContentField((Field)(new Object(emailAccount)));
+      this.addContentField(new LabelField(emailAccount));
       this.addContentLineBreak();
       this.addContentField(new BoldLabelField(ApplicationResources.getString(285)));
       this.addContentField(this._filterNameEdit, true);
@@ -124,12 +124,12 @@ public class AbstractFilterScreen extends UserSettingsScreen {
 
    protected void addAction(boolean sendAlert, boolean headersOnly, boolean levelOne) {
       this.addContentField(new BoldLabelField(ApplicationResources.getString(281)));
-      RadioButtonGroup _forwardRadioGroup = (RadioButtonGroup)(new Object());
-      this._forward1Choice = (RadioButtonField)(new Object(ApplicationResources.getString(279), _forwardRadioGroup, false));
-      this._forward2Choice = (RadioButtonField)(new Object(ApplicationResources.getString(280), _forwardRadioGroup, true));
+      RadioButtonGroup _forwardRadioGroup = new RadioButtonGroup();
+      this._forward1Choice = new RadioButtonField(ApplicationResources.getString(279), _forwardRadioGroup, false);
+      this._forward2Choice = new RadioButtonField(ApplicationResources.getString(280), _forwardRadioGroup, true);
       this.addContentField(this._forward1Choice);
-      this._headersOnly = (CheckboxField)(new Object(ApplicationResources.getString(289), false, 4294967296L));
-      this._levelOne = (CheckboxField)(new Object(ApplicationResources.getString(290), false, 4294967296L));
+      this._headersOnly = new CheckboxField(ApplicationResources.getString(289), false, 4294967296L);
+      this._levelOne = new CheckboxField(ApplicationResources.getString(290), false, 4294967296L);
       if (sendAlert) {
          this._forward1Choice.setSelected(true);
       } else {
@@ -153,7 +153,7 @@ public class AbstractFilterScreen extends UserSettingsScreen {
    }
 
    protected void addFilterOperator(Mailbox mailbox, String filterOperator) {
-      String[] filterOnChoices = new Object[]{
+      String[] filterOnChoices = new String[]{
          ApplicationResources.getString(297),
          ApplicationResources.getString(298),
          ApplicationResources.getString(62),
@@ -170,19 +170,19 @@ public class AbstractFilterScreen extends UserSettingsScreen {
 
       this.addContentLineBreak();
       if (mailbox != null && mailbox.getMailboxType() == 5) {
-         this.addContentField((Field)(new Object(ApplicationResources.getString(291))));
+         this.addContentField(new LabelField(ApplicationResources.getString(291)));
          this.addContentLineBreak();
       }
    }
 
    protected void addContainsArea(String filterValues) {
-      this._containsArea = (VerticalFieldManager)(new Object());
+      this._containsArea = new VerticalFieldManager();
       this._containsArea.add(new BoldLabelField(ApplicationResources.getString(287)));
       this._containsArea.add(new FormattedTextField(ApplicationResources.getString(288)));
-      this._containsEdit = (BasicEditField)(new Object(2147483648L));
+      this._containsEdit = new BasicEditField(2147483648L);
       Button addButton = new Button(ApplicationResources.getString(302));
       addButton.setChangeListener(new AbstractFilterScreen$AddButtonFieldListener(this, null));
-      FrameLayout frame = (FrameLayout)(new Object());
+      FrameLayout frame = new FrameLayout();
       frame.add(this._containsEdit);
       frame.setBorder(0, 4, 0, 4);
       this._containsArea.add(frame);
@@ -208,15 +208,13 @@ public class AbstractFilterScreen extends UserSettingsScreen {
    }
 
    private Field buildContainsContent(Vector filterValues) {
-      FrameLayout containsListFrame = (FrameLayout)(new Object());
-      FlowFieldManager hm = (FlowFieldManager)(new Object(1153202979583557632L));
+      FrameLayout containsListFrame = new FrameLayout();
+      FlowFieldManager hm = new FlowFieldManager(1153202979583557632L);
       if (filterValues != null && !filterValues.isEmpty()) {
          for (int i = 0; i < filterValues.size(); i++) {
             FilterLabelField filterValue = new FilterLabelField(this._filterValues.elementAt(i));
             if (i >= 1) {
-               LabelField separatorField = (LabelField)(new Object(
-                  ((StringBuffer)(new Object(" "))).append(ApplicationResources.getString(315)).append(" ").toString()
-               ));
+               LabelField separatorField = new LabelField(" " + ApplicationResources.getString(315) + " ");
                hm.add(separatorField);
                filterValue.setMenuListener(new AbstractFilterScreen$DeleteNotificationMenuItemListener(this, filterValue, separatorField));
             } else {
@@ -226,7 +224,7 @@ public class AbstractFilterScreen extends UserSettingsScreen {
             hm.add(filterValue);
          }
       } else {
-         hm.add((Field)(new Object(" ")));
+         hm.add(new LabelField(" "));
       }
 
       containsListFrame.add(hm);
@@ -247,9 +245,9 @@ public class AbstractFilterScreen extends UserSettingsScreen {
    }
 
    private Vector getFilterValueAsList(String filterValue) {
-      Vector values = (Vector)(new Object());
+      Vector values = new Vector();
       int fromIndex = 0;
-      String token = (String)(new Object(";"));
+      String token = new String(";");
 
       while (fromIndex < filterValue.length()) {
          int index = filterValue.indexOf(token, fromIndex);

@@ -18,11 +18,11 @@ public class IntArraySortParallelByte {
 
    private int rangeCheck(int arrayLen, int from, int to) {
       if (from > to) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else if (from < 0) {
-         throw new Object(from);
+         throw new ArrayIndexOutOfBoundsException(from);
       } else if (to > arrayLen) {
-         throw new Object(to);
+         throw new ArrayIndexOutOfBoundsException(to);
       } else {
          return to - from;
       }

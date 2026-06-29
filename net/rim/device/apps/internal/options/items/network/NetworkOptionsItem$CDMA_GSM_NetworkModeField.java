@@ -19,7 +19,7 @@ final class NetworkOptionsItem$CDMA_GSM_NetworkModeField implements NetworkOptio
       int enabledRadios = RadioInternal.getEnabledRadios();
       _1._savedNetMode = enabledRadios;
       String[] strs = _1._rb.getStringArray(2040);
-      String[] args = new Object[0];
+      String[] args = new String[0];
       args = this.createRadioChoices(strs, NetworkOptionsItem.SUPPORTED_RADIOS);
       int i = 0;
       int[] map = _1._indexToNetMode;
@@ -33,9 +33,9 @@ final class NetworkOptionsItem$CDMA_GSM_NetworkModeField implements NetworkOptio
          i = 0;
       }
 
-      this._modeField = (ObjectChoiceField)(new Object(OptionsResources.getString(1969), args, i));
+      this._modeField = new ObjectChoiceField(OptionsResources.getString(1969), args, i);
       this._modeField.setChangeListener(this);
-      this._dialog = (WorldPhoneDisclaimerDialog)(new Object(OptionsResources.getString(2051), enabledRadios));
+      this._dialog = new WorldPhoneDisclaimerDialog(OptionsResources.getString(2051), enabledRadios);
    }
 
    @Override
@@ -54,7 +54,7 @@ final class NetworkOptionsItem$CDMA_GSM_NetworkModeField implements NetworkOptio
       }
 
       int[] radioCombinations = new int[0];
-      String[] availableRadioLabels = new Object[0];
+      String[] availableRadioLabels = new String[0];
 
       for (int i = 0; i < radioValues.length; i++) {
          int radioId = radioValues[i];

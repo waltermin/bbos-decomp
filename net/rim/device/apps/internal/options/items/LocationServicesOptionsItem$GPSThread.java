@@ -26,10 +26,10 @@ final class LocationServicesOptionsItem$GPSThread extends Thread {
             String gpsSource = null;
             String savedSource = null;
             if (this.this$0._gpsDataSourceField != null) {
-               String var22 = this.this$0._gpsDataSourceField.getChoice(this.this$0._gpsDataSourceField.getSelectedIndex());
+               gpsSource = (String)this.this$0._gpsDataSourceField.getChoice(this.this$0._gpsDataSourceField.getSelectedIndex());
                synchronized (LocationServicesOptionsItem._gpsDataSourceStore) {
                   savedSource = (String)LocationServicesOptionsItem._gpsDataSourceStore.getContents();
-                  LocationServicesOptionsItem._gpsDataSourceStore.setContents(var22, 51);
+                  LocationServicesOptionsItem._gpsDataSourceStore.setContents(gpsSource, 51);
                   LocationServicesOptionsItem._gpsDataSourceStore.commit();
                }
             }
@@ -66,12 +66,11 @@ final class LocationServicesOptionsItem$GPSThread extends Thread {
                lat = lat != null ? lat : " ";
                String lon = GPSLocationStandard.getLongitudeString(location.getQualifiedCoordinates().getLongitude());
                lon = lon != null ? lon : "";
-               DateField fxDt = (DateField)(new Object(OptionsResources.getString(1909), location.getTimestamp(), 48));
+               DateField fxDt = new DateField(OptionsResources.getString(1909), location.getTimestamp(), 48);
                String uncert = String.valueOf(location.getQualifiedCoordinates().getHorizontalAccuracy());
-               StringBuffer uns = (StringBuffer)(new Object(uncert != null ? uncert : "N/A"));
+               StringBuffer uns = new StringBuffer(uncert != null ? uncert : "N/A");
                uns.append(' ').append('m');
-               LocationServicesOptionsItem._locInfo
-                  .setValues(lon, lat, ((StringBuffer)(new Object(""))).append(location.getExtraInfo("satellites")).toString(), uns.toString(), fxDt.toString());
+               LocationServicesOptionsItem._locInfo.setValues(lon, lat, "" + location.getExtraInfo("satellites"), uns.toString(), fxDt.toString());
                LocationServicesOptionsItem._persist.commit();
             }
 

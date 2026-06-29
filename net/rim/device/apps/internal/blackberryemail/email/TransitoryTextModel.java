@@ -14,7 +14,7 @@ public class TransitoryTextModel implements RIMModel, FieldProvider {
 
    public void setParameters(String label, String textToShow, int fieldOrder, Tag tag) {
       this._fieldOrder = fieldOrder;
-      this._editField = (EditField)(new Object(label, textToShow, 1000000, 9007199254740992L));
+      this._editField = new EditField(label, textToShow, 1000000, 9007199254740992L);
       this._editField.setAdjustAlignments(true);
       this._editField.setTag(tag);
    }

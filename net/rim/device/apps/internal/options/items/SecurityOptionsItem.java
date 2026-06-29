@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.options.items;
 import java.util.Calendar;
 import java.util.TimeZone;
 import net.rim.device.api.crypto.Digest;
+import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.itpolicy.ITPolicy;
 import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.system.Branding;
@@ -23,6 +24,7 @@ import net.rim.device.api.ui.component.NumericChoiceField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.ui.component.ObjectListField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.DateTimeUtilities;
 import net.rim.device.api.util.MathUtilities;
@@ -31,6 +33,7 @@ import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.FieldProvider;
 import net.rim.device.apps.api.framework.registration.VerbRepository;
 import net.rim.device.apps.api.framework.verb.Verb;
+import net.rim.device.apps.api.framework.verb.WipeHandheldVerb;
 import net.rim.device.apps.api.options.SaveableMainScreenOptionsListItem;
 import net.rim.device.apps.api.ribbon.RibbonLauncher;
 import net.rim.device.apps.api.ui.BooleanChoiceField;
@@ -107,16 +110,16 @@ public final class SecurityOptionsItem extends SaveableMainScreenOptionsListItem
    protected final void populateMainScreen(MainScreen mainScreen) {
       ApplicationRegistry appRegistry = ApplicationRegistry.getApplicationRegistry();
       Object radioResetObject = appRegistry.get(MASTER_RADIO_RESET_VERB);
-      if (radioResetObject instanceof Object) {
+      if (radioResetObject instanceof Verb) {
          this._masterRadioResetVerb = (Verb)radioResetObject;
       }
 
-      VerticalIndentFieldManager vifm = (VerticalIndentFieldManager)(new Object());
+      VerticalIndentFieldManager vifm = new VerticalIndentFieldManager();
       mainScreen.add(vifm);
-      this._passwordEnabledDisabledField = (BooleanChoiceField)(new Object(OptionsResources.getString(1403), 2, this._security.isPasswordEnabled(), 268435456));
+      this._passwordEnabledDisabledField = new BooleanChoiceField(OptionsResources.getString(1403), 2, this._security.isPasswordEnabled(), 268435456);
       this._passwordEnabledDisabledField.setChangeListener(this);
       vifm.add(this._passwordEnabledDisabledField);
-      this._maximumPasswordAttemptsField = (NumericChoiceField)(new Object(OptionsResources.getString(1993), 3, ITPolicy.getInteger(22, 2, 10), 1));
+      this._maximumPasswordAttemptsField = new NumericChoiceField(OptionsResources.getString(1993), 3, ITPolicy.getInteger(22, 2, 10), 1);
       this._maximumPasswordAttemptsField.setSelectedValue(this._security.getMaxPasswordAttempts());
       vifm.add(this._maximumPasswordAttemptsField, 12);
       UserAuthenticator[] registeredAuthenticators = this._security.getRegisteredUserAuthenticators();
@@ -134,44 +137,42 @@ public final class SecurityOptionsItem extends SaveableMainScreenOptionsListItem
          }
       }
 
-      this._securityTimeoutField = (TimeChoiceField)(new Object(OptionsResources.getString(1412), 268435456));
+      this._securityTimeoutField = new TimeChoiceField(OptionsResources.getString(1412), 268435456);
       vifm.add(this._securityTimeoutField, 12);
-      this._passwordPromptOnInstallField = (BooleanChoiceField)(new Object(
+      this._passwordPromptOnInstallField = new BooleanChoiceField(
          OptionsResources.getString(2047), 0, this._security.getPasswordRequiredForAppInstall(), 268435456
-      ));
+      );
       vifm.add(this._passwordPromptOnInstallField, 12);
-      vifm.add((Field)(new Object()));
+      vifm.add(new SeparatorField());
       if (userAuthenticator != null) {
-         this._userAuthenticatorField = (BooleanChoiceField)(new Object(OptionsResources.getString(1810), 2, userAuthenticator.isInitialized(), 268435456));
+         this._userAuthenticatorField = new BooleanChoiceField(OptionsResources.getString(1810), 2, userAuthenticator.isInitialized(), 268435456);
          this._userAuthenticatorField.setChangeListener(this);
          vifm.add(this._userAuthenticatorField);
-         this._numericPasswordEntryField = (BooleanChoiceField)(new Object(OptionsResources.getString(1990), 2, this._security.getSmartPasswordEntry()));
+         this._numericPasswordEntryField = new BooleanChoiceField(OptionsResources.getString(1990), 2, this._security.getSmartPasswordEntry());
          vifm.add(this._numericPasswordEntryField, 12);
-         if (userAuthenticator instanceof Object) {
+         if (userAuthenticator instanceof FieldProvider) {
             this._userAuthenticatorCustomFieldProvider = (FieldProvider)userAuthenticator;
             this._userAuthenticatorCustomField = this._userAuthenticatorCustomFieldProvider.getField(null);
             vifm.add(this._userAuthenticatorCustomField, 12);
          }
 
-         vifm.add((Field)(new Object()));
+         vifm.add(new SeparatorField());
       }
 
-      this._lockWhenHolsteredField = (BooleanChoiceField)(new Object(OptionsResources.getString(1419), 0, this._security.getLockWhenHolstered(), 268435456));
+      this._lockWhenHolsteredField = new BooleanChoiceField(OptionsResources.getString(1419), 0, this._security.getLockWhenHolstered(), 268435456);
       if (InternalServices.isHolsterSupported()) {
          vifm.add(this._lockWhenHolsteredField);
       }
 
-      this._allowOutgoingCallWhileLockedField = (BooleanChoiceField)(new Object(
+      this._allowOutgoingCallWhileLockedField = new BooleanChoiceField(
          OptionsResources.getString(1420), 0, this._security.getAllowOutgoingCallWhileLocked(), 268435456
-      ));
+      );
       vifm.add(this._allowOutgoingCallWhileLockedField);
-      vifm.add((Field)(new Object()));
-      this._enableContentCompressionField = (BooleanChoiceField)(new Object(OptionsResources.getString(1488), 2, PersistentContent.isCompressionEnabled()));
+      vifm.add(new SeparatorField());
+      this._enableContentCompressionField = new BooleanChoiceField(OptionsResources.getString(1488), 2, PersistentContent.isCompressionEnabled());
       this._enableContentCompressionField.setChangeListener(this);
       vifm.add(this._enableContentCompressionField);
-      this._enableContentEncryptionField = (BooleanChoiceField)(new Object(
-         OptionsResources.getString(1437), 2, PersistentContent.isEncryptionEnabled(), 268435456
-      ));
+      this._enableContentEncryptionField = new BooleanChoiceField(OptionsResources.getString(1437), 2, PersistentContent.isEncryptionEnabled(), 268435456);
       this._enableContentEncryptionField.setChangeListener(this);
       vifm.add(this._enableContentEncryptionField);
       this._contentEncryptionStrengthChoices = OptionsResources.getStringArray(2005);
@@ -182,20 +183,20 @@ public final class SecurityOptionsItem extends SaveableMainScreenOptionsListItem
          encryptionStrength = this._security.getEncryptionStrength();
       }
 
-      this._contentEncryptionStrengthField = (ObjectChoiceField)(new Object(
+      this._contentEncryptionStrengthField = new ObjectChoiceField(
          OptionsResources.getString(2006), this._contentEncryptionStrengthChoices, encryptionStrength, 402653184
-      ));
+      );
       this._contentEncryptionStrengthField.setChangeListener(this);
       vifm.add(this._contentEncryptionStrengthField, 12);
       this._minContentEncryptionStrength = 0;
-      this._includeAddressBookInCPField = (BooleanChoiceField)(new Object(
+      this._includeAddressBookInCPField = new BooleanChoiceField(
          OptionsResources.getString(2016), 0, !this._security.getExcludeAddressBookFromContentProtection(), 268435456
-      ));
+      );
       this._includeAddressBookInCPField.setChangeListener(this);
       vifm.add(this._includeAddressBookInCPField, 12);
       if (ITPolicyInternal.isITPolicyEnabled() || !InternalServices.isDeviceSecure()) {
-         vifm.add((Field)(new Object()));
-         vifm.add((Field)(new Object(OptionsResources.getString(1980))));
+         vifm.add(new SeparatorField());
+         vifm.add(new LabelField(OptionsResources.getString(1980)));
          this._securityITPolicyServiceColourField = new SecurityOptionsItem$SecurityServiceColourChoiceField(OptionsResources.getString(2008));
          this._securityITPolicyServiceColourField.setChangeListener(this);
          vifm.add(this._securityITPolicyServiceColourField, 12);
@@ -211,7 +212,7 @@ public final class SecurityOptionsItem extends SaveableMainScreenOptionsListItem
       fieldsAdded |= this.addSecurityIndicatorFields(mainScreen);
       fieldsAdded |= this.addUserAuthenticatorFields(mainScreen);
       if (fieldsAdded) {
-         mainScreen.add((Field)(new Object()));
+         mainScreen.add(new SeparatorField());
       }
 
       this.updateFields(true);
@@ -221,18 +222,16 @@ public final class SecurityOptionsItem extends SaveableMainScreenOptionsListItem
    private final boolean addITPolicyFields(MainScreen mainScreen) {
       String policyName = ITPolicy.getString(5);
       if (ITPolicyInternal.isITPolicyEnabled() && policyName != null) {
-         mainScreen.add((Field)(new Object()));
-         this._policyNameField = (EditField)(new Object(OptionsResources.getString(1421), policyName, 128, 9007203549708288L));
+         mainScreen.add(new SeparatorField());
+         this._policyNameField = new EditField(OptionsResources.getString(1421), policyName, 128, 9007203549708288L);
          mainScreen.add(this._policyNameField);
-         this._policyDateTimeField = (DateField)(new Object(OptionsResources.getString(1422), ITPolicyInternal.getProcessedTimeStamp(), 9007199254741046L));
+         this._policyDateTimeField = new DateField(OptionsResources.getString(1422), ITPolicyInternal.getProcessedTimeStamp(), 9007199254741046L);
          mainScreen.add(this._policyDateTimeField);
          long itAdminTimeStamp = ITPolicyInternal.getITAdminTimeStamp();
          if (itAdminTimeStamp != 0) {
             itAdminTimeStamp = this.GMT_TIME + (long)ITPolicyInternal.getITAdminTimeStamp() * 1000;
             ((CalendarExtensions)this._calendar).setTimeLong(itAdminTimeStamp);
-            this._policyTimestampField = (DateField)(new Object(
-               OptionsResources.getString(1896), ((CalendarExtensions)this._calendar).getTimeLong(), 9007199254741046L
-            ));
+            this._policyTimestampField = new DateField(OptionsResources.getString(1896), ((CalendarExtensions)this._calendar).getTimeLong(), 9007199254741046L);
             mainScreen.add(this._policyTimestampField);
          }
 
@@ -248,9 +247,9 @@ public final class SecurityOptionsItem extends SaveableMainScreenOptionsListItem
          return false;
       }
 
-      this._authenticatorVFM = (VerticalIndentFieldManager)(new Object());
-      this._authenticatorVFM.add((Field)(new Object()));
-      this._authenticatorVFM.add((Field)(new Object(OptionsResources.getString(1810))));
+      this._authenticatorVFM = new VerticalIndentFieldManager();
+      this._authenticatorVFM.add(new SeparatorField());
+      this._authenticatorVFM.add(new LabelField(OptionsResources.getString(1810)));
       this.addLabelAndValue(this._authenticatorVFM, OptionsResources.getString(1811), userAuthenticator.getName());
       boolean initialized = userAuthenticator.isInitialized();
       String[] yesNoArray = CommonResources.getYesNoArray(0);
@@ -261,7 +260,7 @@ public final class SecurityOptionsItem extends SaveableMainScreenOptionsListItem
       int moduleHandle = CodeModuleManager.getModuleHandleForClass(authenticatorClass);
       this.addLabelAndValue(this._authenticatorVFM, OptionsResources.getString(1813), CodeModuleManager.getModuleName(moduleHandle));
       byte[] moduleHash = CodeModuleManager.getModuleHash(moduleHandle);
-      StringBuffer sb = (StringBuffer)(new Object(moduleHash.length * 3));
+      StringBuffer sb = new StringBuffer(moduleHash.length * 3);
 
       for (int i = 0; i < moduleHash.length; i++) {
          sb.append(NumberUtilities.intToUpperHexDigit(moduleHash[i] >>> 4));
@@ -287,8 +286,8 @@ public final class SecurityOptionsItem extends SaveableMainScreenOptionsListItem
 
    private final RichTextField addLabelAndValue(VerticalIndentFieldManager manager, String label, String value) {
       if (label != null && value != null) {
-         LabelField labelField = (LabelField)(new Object(label, 64));
-         RichTextField valueField = (RichTextField)(new Object(value, 9007199254740992L));
+         LabelField labelField = new LabelField(label, 64);
+         RichTextField valueField = new RichTextField(value, 9007199254740992L);
          manager.add(labelField, 12);
          manager.add(valueField, 24);
          return valueField;
@@ -305,8 +304,8 @@ public final class SecurityOptionsItem extends SaveableMainScreenOptionsListItem
          return false;
       }
 
-      mainScreen.add((Field)(new Object()));
-      ObjectListField list = (ObjectListField)(new Object(6));
+      mainScreen.add(new SeparatorField());
+      ObjectListField list = new ObjectListField(6);
       if (secureGC) {
          list.insert(0, OptionsResources.getString(1457));
       }
@@ -334,22 +333,22 @@ public final class SecurityOptionsItem extends SaveableMainScreenOptionsListItem
          return false;
       }
 
-      mainScreen.add((Field)(new Object()));
-      mainScreen.add((Field)(new Object(OptionsResources.getString(1443))));
+      mainScreen.add(new SeparatorField());
+      mainScreen.add(new LabelField(OptionsResources.getString(1443)));
       String id = ADCKey.getSignerId();
-      EditField idField = (EditField)(new Object(OptionsResources.getString(1444), id, 4, 9007203549708288L));
+      EditField idField = new EditField(OptionsResources.getString(1444), id, 4, 9007203549708288L);
       mainScreen.add(idField);
       String description = ADCKey.getDescription();
       if (description.length() == 0) {
          description = OptionsResources.getString(1423);
       }
 
-      EditField descriptionField = (EditField)(new Object(OptionsResources.getString(1445), description, 256, 9007203549708288L));
+      EditField descriptionField = new EditField(OptionsResources.getString(1445), description, 256, 9007203549708288L);
       mainScreen.add(descriptionField);
-      Digest digest = (Digest)(new Object());
+      Digest digest = new SHA1Digest();
       digest.update(ADCKey.getPublicKey());
       byte[] hash = digest.getDigest();
-      StringBuffer hashBuffer = (StringBuffer)(new Object());
+      StringBuffer hashBuffer = new StringBuffer();
       int offset = 0;
 
       while (offset + 1 < hash.length) {
@@ -359,7 +358,7 @@ public final class SecurityOptionsItem extends SaveableMainScreenOptionsListItem
          hashBuffer.append(' ');
       }
 
-      EditField hashField = (EditField)(new Object(OptionsResources.getString(1446), hashBuffer.toString(), 256, 9007203549708288L));
+      EditField hashField = new EditField(OptionsResources.getString(1446), hashBuffer.toString(), 256, 9007203549708288L);
       mainScreen.add(hashField);
       return true;
    }
@@ -375,12 +374,12 @@ public final class SecurityOptionsItem extends SaveableMainScreenOptionsListItem
          return false;
       }
 
-      this._servicesList = (ObjectListField)(new Object(70));
+      this._servicesList = new ObjectListField(70);
       this._servicesList.setEmptyString(OptionsResources.getString(1815), 68);
-      String[] s = new Object[this._regenerationUIDs[0].length];
+      String[] s = new String[this._regenerationUIDs[0].length];
 
       for (int i = this._regenerationUIDs[0].length - 1; i >= 0; i--) {
-         StringBuffer buffer = (StringBuffer)(new Object(this._regenerationUIDs[1][i]));
+         StringBuffer buffer = new StringBuffer(this._regenerationUIDs[1][i]);
          buffer.append(" [");
          buffer.append(this._regenerationUIDs[0][i]);
          buffer.append(']');
@@ -395,8 +394,8 @@ public final class SecurityOptionsItem extends SaveableMainScreenOptionsListItem
       }
 
       this._servicesList.set(s);
-      mainScreen.add((Field)(new Object()));
-      mainScreen.add((Field)(new Object(OptionsResources.getString(1814), 64)));
+      mainScreen.add(new SeparatorField());
+      mainScreen.add(new LabelField(OptionsResources.getString(1814), 64));
       mainScreen.add(this._servicesList);
       return true;
    }
@@ -404,7 +403,7 @@ public final class SecurityOptionsItem extends SaveableMainScreenOptionsListItem
    private final void updateFields(boolean resetSelectedTimeout) {
       this._passwordEnabledDisabledField.setEditable(!FIPSPolicy.isDevicePasswordRequired() && !FileSystemOptions.isDevicePasswordRequired());
       NumericChoiceField oldField = this._maximumPasswordAttemptsField;
-      this._maximumPasswordAttemptsField = (NumericChoiceField)(new Object(OptionsResources.getString(1993), 3, ITPolicy.getInteger(22, 2, 10), 1));
+      this._maximumPasswordAttemptsField = new NumericChoiceField(OptionsResources.getString(1993), 3, ITPolicy.getInteger(22, 2, 10), 1);
       this._maximumPasswordAttemptsField.setSelectedValue(oldField.getSelectedValue());
       boolean hadFocus = oldField.isFocus();
       VerticalIndentFieldManager manager = (VerticalIndentFieldManager)oldField.getManager();
@@ -439,7 +438,7 @@ public final class SecurityOptionsItem extends SaveableMainScreenOptionsListItem
       int minStrength = MathUtilities.clamp(0, ITPolicy.getInteger(24, 18, 0), numStrengthChoices - 1);
       numStrengthChoices -= minStrength;
       if (this._contentEncryptionStrengthField.getSize() != numStrengthChoices) {
-         String[] choices = new Object[numStrengthChoices];
+         String[] choices = new String[numStrengthChoices];
          System.arraycopy(this._contentEncryptionStrengthChoices, minStrength, choices, 0, numStrengthChoices);
          this._contentEncryptionStrengthField.setChoices(choices);
          this._contentEncryptionStrengthField.setSelectedIndex(Math.max(currentContentEncryptionStrength - minStrength, 0));
@@ -654,7 +653,7 @@ public final class SecurityOptionsItem extends SaveableMainScreenOptionsListItem
 
       verbToMenu.addVerb(this._runSecurityTestsVerb);
       if (this._wipeHandheldVerb == null) {
-         this._wipeHandheldVerb = (Verb)(new Object(0));
+         this._wipeHandheldVerb = new WipeHandheldVerb(0);
       }
 
       verbToMenu.addVerb(this._wipeHandheldVerb);
@@ -754,7 +753,7 @@ public final class SecurityOptionsItem extends SaveableMainScreenOptionsListItem
 
                            if (this._userAuthenticatorCustomField != null && this._userAuthenticatorCustomField.isDirty()) {
                               UserAuthenticator userAuthenticator = this._security.getUserAuthenticator();
-                              if (userAuthenticator instanceof Object) {
+                              if (userAuthenticator instanceof FieldProvider) {
                                  this._userAuthenticatorCustomFieldProvider = (FieldProvider)userAuthenticator;
                               }
 

@@ -75,12 +75,12 @@ public final class CategoryModel implements PersistableRIMModel, SyncObject, Con
 
    private final void establishNameAndUid(String name) {
       if (name == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       name = name.trim();
       if (name.length() <= 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._nameEncoding = PersistentContent.encode(name, false, true);
@@ -107,7 +107,7 @@ public final class CategoryModel implements PersistableRIMModel, SyncObject, Con
          numExtraChars = 4;
       }
 
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
       sb.append('\u0001');
       int prefixCode = numExtraChars << 3 | (id & 224) >>> 5;
       sb.append(KeywordPrefixManager.getPrefixChar(prefixCode));

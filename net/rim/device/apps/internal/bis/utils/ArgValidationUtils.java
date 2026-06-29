@@ -3,7 +3,7 @@ package net.rim.device.apps.internal.bis.utils;
 public final class ArgValidationUtils {
    public static final void notNull(Object obj) {
       if (obj == null) {
-         throw new Object("null argument");
+         throw new IllegalArgumentException("null argument");
       }
    }
 
@@ -13,7 +13,7 @@ public final class ArgValidationUtils {
 
    public static final boolean hasBooleanValueChanged(Boolean original, String newer) {
       if (newer != null) {
-         Boolean newerBool = (Boolean)(new Object("true".equals(newer)));
+         Boolean newerBool = new Boolean("true".equals(newer));
          return !newerBool.equals(original);
       } else {
          return false;

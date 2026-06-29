@@ -50,7 +50,7 @@ final class NotificationsEngineImpl extends Thread implements NotificationsEngin
          context.setFlag(67);
       }
 
-      context.put(-2832590917644170714L, new Object(levelIndexInt));
+      context.put(-2832590917644170714L, new Integer(levelIndexInt));
       Object configuration = null;
       long consequenceId = -1;
       Consequence consequence = null;
@@ -60,8 +60,8 @@ final class NotificationsEngineImpl extends Thread implements NotificationsEngin
          profile = this._profiles.getEnabled();
          if (actionInt == 0 && !this._profiles.isOffEnabled()) {
             Object obj = context.get(-7004855975111283545L);
-            if (obj instanceof Object) {
-               int addresscardUID = obj;
+            if (obj instanceof Integer) {
+               int addresscardUID = (Integer)obj;
                Override override = Overrides.getInstance().getFirstOverrideContaining(addresscardUID);
                if (override != null) {
                   if ((sourceIdLong == 2868625504212929964L + VoiceServices.getCurrentLineId() || sourceIdLong == 3975384895524745189L)
@@ -217,11 +217,11 @@ final class NotificationsEngineImpl extends Thread implements NotificationsEngin
       this._lastEventDate = System.currentTimeMillis();
       ContextObject context = ContextObject.castOrCreate(contextObject);
       if (levelIndexInt >= 4) {
-         throw new Object("LI");
+         throw new IllegalArgumentException("LI");
       }
 
       if (triggerIndexInt > 2) {
-         throw new Object("TI");
+         throw new IllegalArgumentException("TI");
       }
 
       if (triggerIndexInt == 0 && !DeviceInfo.isInHolster()) {

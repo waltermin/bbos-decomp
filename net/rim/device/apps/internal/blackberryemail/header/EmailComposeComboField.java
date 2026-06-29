@@ -18,6 +18,7 @@ import net.rim.device.apps.api.framework.model.AddressVerifierAwareField;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.PersistableRIMModel;
 import net.rim.device.apps.api.framework.verb.DefaultVerbProvider;
+import net.rim.device.apps.api.framework.verb.LastUsedDefaultVerbProvider;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.framework.verb.VerbCombiner;
 import net.rim.device.apps.internal.addressbook.lookup.ALPConfiguration;
@@ -44,7 +45,7 @@ public class EmailComposeComboField extends AddressBookComboField implements Add
    public static final int EMAIL_MESSAGE = 0;
    public static final int PIN_MESSAGE = 1;
    private static final Bitmap UNTRUSTED_ADDRESS_BITMAP = Bitmap.getBitmapResource("net_rim_bb_framework_api", "untrustedaddress.png");
-   private static final XYEdges DROP_MARGIN = (XYEdges)(new Object(0, 5, 0, 0));
+   private static final XYEdges DROP_MARGIN = new XYEdges(0, 5, 0, 0);
    private static final int VISIBLE_ROWS = 2;
    private static final int SCROLL_PADDING = 3;
 
@@ -70,13 +71,13 @@ public class EmailComposeComboField extends AddressBookComboField implements Add
    public void verifyAddress(Object context) {
       if (!this._model.hasFreeFormAddress()) {
          Field f = this.getField(0);
-         if (f instanceof Object) {
+         if (f instanceof AddressVerifierAwareField) {
             ((AddressVerifierAwareField)f).verifyAddress(null);
          }
       } else {
          if (!this.isAddressTrusted()) {
             if (this._addressTrustIndicatorField == null) {
-               BitmapField iconField = (BitmapField)(new Object(UNTRUSTED_ADDRESS_BITMAP));
+               BitmapField iconField = new BitmapField(UNTRUSTED_ADDRESS_BITMAP);
                iconField.setSpace(1, 0);
                this._addressTrustIndicatorField = iconField;
                this.insert(this._addressTrustIndicatorField, 0);
@@ -126,7 +127,7 @@ public class EmailComposeComboField extends AddressBookComboField implements Add
    private boolean setAddressFromString(String address, boolean submit, boolean maintainFocus) {
       if (!submit && this._model.hasFreeFormAddress()) {
          PersistableRIMModel insideModel = this._model.getInsideModel();
-         if (insideModel instanceof Object && !ObjectGroup.isInGroup(insideModel)) {
+         if (insideModel instanceof FriendlyNameAddressModel && !ObjectGroup.isInGroup(insideModel)) {
             FriendlyNameAddressModel fnam = (FriendlyNameAddressModel)insideModel;
             fnam.setAddress(address);
             return true;
@@ -146,7 +147,7 @@ public class EmailComposeComboField extends AddressBookComboField implements Add
    }
 
    private boolean setAddressWithChoice(AddressCardModel card) {
-      Verb[] verbs = new Object[0];
+      Verb[] verbs = new Verb[0];
 
       for (int i = 0; i < card.size(); i++) {
          Verb innerVerb = null;
@@ -174,7 +175,7 @@ public class EmailComposeComboField extends AddressBookComboField implements Add
          return false;
       }
 
-      DefaultVerbProvider defaultVerbProvider = (DefaultVerbProvider)(new Object(card));
+      DefaultVerbProvider defaultVerbProvider = new LastUsedDefaultVerbProvider(card);
       Verb defaultVerb = defaultVerbProvider.getDefaultVerb(verbs);
       Verb wrapperVerb = combiner.createWrapperVerb(verbs, defaultVerb);
       return wrapperVerb.invoke(null) != null;
@@ -275,7 +276,7 @@ public class EmailComposeComboField extends AddressBookComboField implements Add
    }
 
    private String convertToKeywordString(String text) {
-      StringBuffer buffer = (StringBuffer)(new Object(text));
+      StringBuffer buffer = new StringBuffer(text);
 
       for (int i = text.length() - 1; i >= 0; i--) {
          switch (text.charAt(i)) {
@@ -311,7 +312,7 @@ public class EmailComposeComboField extends AddressBookComboField implements Add
       this._addressVerifier = (AddressVerifier)ContextObject.get(context, 9120441889802231811L);
       if (model != null) {
          PersistableRIMModel insideModel = model.getInsideModel();
-         if (insideModel instanceof Object) {
+         if (insideModel instanceof FriendlyNameAddressModel) {
             String incomingAddress = ((FriendlyNameAddressModel)insideModel).getAddress();
             this.setText(incomingAddress);
             this.setDirty(false);
@@ -352,12 +353,12 @@ public class EmailComposeComboField extends AddressBookComboField implements Add
       this.hideDropList();
       if (selected != null) {
          this._suspendUpdates = true;
-         if (!(selected instanceof Object)) {
-            if (selected instanceof Object) {
+         if (!(selected instanceof Verb)) {
+            if (selected instanceof AddressCardModel) {
                this.setAddressWithChoice((AddressCardModel)selected);
             } else {
-               if (!(selected instanceof Object)) {
-                  throw new Object("Unknown type in drop list");
+               if (!(selected instanceof PersistableRIMModel)) {
+                  throw new IllegalStateException("Unknown type in drop list");
                }
 
                this.setAddressFromCard(null, (PersistableRIMModel)selected, false);

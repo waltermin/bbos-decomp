@@ -6,7 +6,7 @@ import net.rim.device.apps.api.setupwizard.WizardPageProvider;
 final class Help$1 implements WizardPageProvider {
    @Override
    public final Vector getWizardPages() {
-      Vector pages = (Vector)(new Object());
+      Vector pages = new Vector();
       pages.addElement(new IntroductionWizardProvider());
       pages.addElement(new SureTypeWizardProvider());
       pages.addElement(new TipsAndTricksWizardProvider());

@@ -438,7 +438,7 @@ public class ScreenModelImpl extends UIContainerImpl implements ScreenModel {
    public void setVarValue(int varIndex, long value) {
       int varType = this.getVarType(varIndex);
       if (value != -1 && varType != (int)(value >> 32)) {
-         throw new Object("Variable or parameter type mismatching.");
+         throw new RuntimeException("Variable or parameter type mismatching.");
       }
 
       DataCollection dc = this._wiclet.getDataCollection(varType);
@@ -775,7 +775,7 @@ public class ScreenModelImpl extends UIContainerImpl implements ScreenModel {
 
       int totalControls = this._defs.getTotalControlCount(id);
       this._mappingResolver = new ControlMappingResolver();
-      this._componentMap = (IntHashtable)(new Object(totalControls));
+      this._componentMap = new IntHashtable(totalControls);
       this.buildScreen();
    }
 
@@ -785,7 +785,7 @@ public class ScreenModelImpl extends UIContainerImpl implements ScreenModel {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

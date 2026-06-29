@@ -18,6 +18,7 @@ import net.rim.device.api.ui.XYEdges;
 import net.rim.device.api.ui.XYPoint;
 import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.ui.accessibility.AccessibleContext;
+import net.rim.device.api.ui.accessibility.AccessibleContextFactory;
 import net.rim.device.api.ui.accessibility.AccessibleText;
 import net.rim.device.api.ui.accessibility.AccessibleValue;
 import net.rim.device.api.ui.component.DateField;
@@ -39,8 +40,8 @@ import net.rim.vm.Array;
 
 class DayList implements CalendarViewListField$CalendarViewListFieldCallback {
    protected CalendarViewListField _field;
-   private StringBuffer _buf = (StringBuffer)(new Object());
-   private XYRect _focus = (XYRect)(new Object());
+   private StringBuffer _buf = new StringBuffer();
+   private XYRect _focus = new XYRect();
    private int _summaryLines = -1;
    private boolean _displayLines = true;
    private boolean _displayEndTimes = true;
@@ -55,7 +56,7 @@ class DayList implements CalendarViewListField$CalendarViewListFieldCallback {
    private int _widthOfDesc;
    private int[] _sharedOffsets = new int[]{0, 0, -805044214, 1631782912, 1684956524, 29281, -805044213, 775162112};
    private final byte[] _sharedBytes = new byte[]{0};
-   private Font[] _sharedFonts = new Object[1];
+   private Font[] _sharedFonts = new Font[1];
    private int _firstNonEmptyTransition = -1;
    private int _firstAllDayTransition = -1;
    private DayList$TransitionSortComparator _tsc = new DayList$TransitionSortComparator(this);
@@ -71,7 +72,7 @@ class DayList implements CalendarViewListField$CalendarViewListFieldCallback {
    private int _markedOffset = -1;
    private int _maxSimultaneousBars;
    private long _preferredTimeSelection;
-   protected IconCollection[] _icons = new Object[0];
+   protected IconCollection[] _icons = new IconCollection[0];
    protected int[][] _indices = new int[0][0];
    private ThemeAttributeSet _themeAttributesHeader;
    private ThemeAttributeSet _themeAttributesAppointments;
@@ -87,7 +88,7 @@ class DayList implements CalendarViewListField$CalendarViewListFieldCallback {
    private int MARK_COLOUR = 14423100;
    private int HILIGHT_BACKGROUND_COLOUR = 6970061;
    private int HILIGHT_FOREGROUND_COLOUR = 16777215;
-   private FontMetrics _fontMetrics = (FontMetrics)(new Object());
+   private FontMetrics _fontMetrics = new FontMetrics();
    private ResourceBundle _rb = ResourceBundle.getBundle(912302513268743237L, "net.rim.device.apps.internal.resource.Calendar");
    private int _borderMode;
    private XYEdges _padding;
@@ -119,10 +120,10 @@ class DayList implements CalendarViewListField$CalendarViewListFieldCallback {
    private static final Tag FOCUS_HILIGHT_TAG = Tag.create("day-focus-hilight");
    private static final boolean CAPITALIZE_HEADERS = false;
    private static final int VECTOR_PADDING = 1;
-   private static final XYEdges THICK_PADDING = (XYEdges)(new Object(2, 3, 2, 3));
-   private static final XYEdges LEFT_PADDING = (XYEdges)(new Object(0, 0, 0, 6));
-   private static final XYEdges RIGHT_PADDING = (XYEdges)(new Object(0, 6, 0, 1));
-   private static final XYEdges NO_PADDING = (XYEdges)(new Object(0, 0, 0, 1));
+   private static final XYEdges THICK_PADDING = new XYEdges(2, 3, 2, 3);
+   private static final XYEdges LEFT_PADDING = new XYEdges(0, 0, 0, 6);
+   private static final XYEdges RIGHT_PADDING = new XYEdges(0, 6, 0, 1);
+   private static final XYEdges NO_PADDING = new XYEdges(0, 0, 0, 1);
    private static final int ROUND_BORDER_PADDING = 1;
    private static final int ROUND_BORDER_DIAMETER = 8;
    private static final int MODE_NONE = 0;
@@ -179,15 +180,15 @@ class DayList implements CalendarViewListField$CalendarViewListFieldCallback {
 
       if (returnString == null) {
          Calendar startDate = Calendar.getInstance();
-         startDate.setTime((Date)(new Object(entryToDisplay._timeInMillis)));
+         startDate.setTime(new Date(entryToDisplay._timeInMillis));
          returnString = TimeStringCache.getString(startDate);
       }
 
       if (CalendarOptions.getOptions().showEndTime()) {
          Calendar endDate = Calendar.getInstance();
-         endDate.setTime((Date)(new Object(entryToDisplay._endTimeInMillis)));
-         String endTimeString = ((StringBuffer)(new Object(" - "))).append(TimeStringCache.getString(endDate)).toString();
-         returnString = ((StringBuffer)(new Object())).append(returnString).append(endTimeString).toString();
+         endDate.setTime(new Date(entryToDisplay._endTimeInMillis));
+         String endTimeString = " - " + TimeStringCache.getString(endDate);
+         returnString = returnString + endTimeString;
       }
 
       return returnString;
@@ -238,7 +239,7 @@ class DayList implements CalendarViewListField$CalendarViewListFieldCallback {
    }
 
    protected void getIconsForTransition(DayList$Transition curTransition) {
-      if (curTransition._calElement instanceof Object) {
+      if (curTransition._calElement instanceof DescriptionProvider) {
          DescriptionProvider dp = (DescriptionProvider)curTransition._calElement;
          dp.getIconsForField(7380487202915104824L, this._icons, this._indices);
       }
@@ -304,7 +305,7 @@ class DayList implements CalendarViewListField$CalendarViewListFieldCallback {
                long curTransitionStart = start;
                String curTransitionDescription = null;
                Duration curTransitionElement = null;
-               if (calEvent instanceof Object) {
+               if (calEvent instanceof DescriptionProvider) {
                   DescriptionProvider dp = (DescriptionProvider)calEvent;
                   curTransitionDescription = dp.getStringForField(-4581712257088750184L);
                }
@@ -453,7 +454,7 @@ class DayList implements CalendarViewListField$CalendarViewListFieldCallback {
    protected void setSelectedObject(Object object, long time) {
       if (object != null) {
          long uid = 0;
-         if (object instanceof Object) {
+         if (object instanceof UniqueIDProvider) {
             UniqueIDProvider uniqueIDProvider = (UniqueIDProvider)object;
             uid = uniqueIDProvider.getLUID(null);
          }
@@ -467,7 +468,7 @@ class DayList implements CalendarViewListField$CalendarViewListFieldCallback {
                Object currentObject = curTrans._calElement;
                if (currentObject == object) {
                   found = true;
-               } else if (uid != 0 && currentObject instanceof Object && ((UniqueIDProvider)currentObject).getLUID(null) == uid) {
+               } else if (uid != 0 && currentObject instanceof UniqueIDProvider && ((UniqueIDProvider)currentObject).getLUID(null) == uid) {
                   found = true;
                }
 
@@ -662,18 +663,18 @@ class DayList implements CalendarViewListField$CalendarViewListFieldCallback {
          if (entry._transitionType == 3) {
             long startTime = entry._timeInMillis;
             long endTime = entry._endTimeInMillis;
-            time = ((StringBuffer)(new Object())).append(time).append(EventUtilities.getFreeTimeDescription(startTime, endTime)).toString();
+            time = time + EventUtilities.getFreeTimeDescription(startTime, endTime);
          } else {
-            time = ((StringBuffer)(new Object())).append(time).append(entry._displayTime).toString();
+            time = time + entry._displayTime;
          }
 
          long start = this.getStartOfList();
          if (start > 0) {
-            DateField dateField = (DateField)(new Object("Date: ", start, 16));
-            date = ((StringBuffer)(new Object())).append(date).append(dateField.toString()).toString();
+            DateField dateField = new DateField("Date: ", start, 16);
+            date = date + dateField.toString();
          }
 
-         return (AccessibleContext)(new Object(date, time, 28, 4, null, null));
+         return new AccessibleContextFactory(date, time, 28, 4, null, null);
       } else {
          return null;
       }
@@ -764,7 +765,7 @@ class DayList implements CalendarViewListField$CalendarViewListFieldCallback {
       }
 
       String str = entry.getSummaryText(this.supportAdvancedThemeing());
-      if (str != null && entry._calElement instanceof Object) {
+      if (str != null && entry._calElement instanceof DescriptionProvider) {
          this.getIconsForTransition(entry);
          int iconWidth = this.getIconWidth(this._icons, this._indices);
          Array.resize(this._icons, 0);
@@ -937,7 +938,7 @@ class DayList implements CalendarViewListField$CalendarViewListFieldCallback {
                graphics.clear();
             }
 
-            XYRect textRect = (XYRect)(new Object(this._widthToDesc, y, this._widthOfDesc, height));
+            XYRect textRect = new XYRect(this._widthToDesc, y, this._widthOfDesc, height);
             if (summaryText != null && entryToDisplay._colour != -1) {
                int oldColor = graphics.getColor();
                graphics.setColor(entryToDisplay._colour);
@@ -1038,14 +1039,14 @@ class DayList implements CalendarViewListField$CalendarViewListFieldCallback {
             }
 
             int borderAdjustment = this._markedOffset == index ? 1 : 0;
-            XYRect hilightRect = (XYRect)(new Object());
-            XYRect descFillRect = (XYRect)(new Object(this._widthToDesc, y, this._widthOfDesc, height));
-            XYRect timeFillRect = (XYRect)(new Object(
+            XYRect hilightRect = new XYRect();
+            XYRect descFillRect = new XYRect(this._widthToDesc, y, this._widthOfDesc, height);
+            XYRect timeFillRect = new XYRect(
                timeXLeft + borderAdjustment,
                y + borderAdjustment,
                this._maxTimeWidth - (borderAdjustment << 1),
                currentDayLineHeight - (borderAdjustment << 1) + padding.top + padding.bottom
-            ));
+            );
             this._field.getHilightRect(hilightRect, false);
             if (!this.supportAdvancedThemeing()) {
                if (this._markedOffset == index) {
@@ -1104,7 +1105,7 @@ class DayList implements CalendarViewListField$CalendarViewListFieldCallback {
             }
 
             if (!startOfAppointment && !allDay) {
-               XYRect caretFillRect = (XYRect)(new Object(this._widthToDesc, y, this._field.getFont().getBounds(' '), height));
+               XYRect caretFillRect = new XYRect(this._widthToDesc, y, this._field.getFont().getBounds(' '), height);
                if (rowHasFocus && isDrawingFocus) {
                   this.drawHilightRect(graphics, caretFillRect);
                } else {
@@ -1271,7 +1272,7 @@ class DayList implements CalendarViewListField$CalendarViewListFieldCallback {
    }
 
    private boolean rowHasFocus(Object field, int y, int width, int height) {
-      XYRect focusRect = (XYRect)(new Object());
+      XYRect focusRect = new XYRect();
       ((Field)field).getFocusRect(focusRect);
       return focusRect.contains(0, y, width, height);
    }
@@ -1304,17 +1305,11 @@ class DayList implements CalendarViewListField$CalendarViewListFieldCallback {
       String displayString = "";
       if (CalendarOptions.getOptions().showEndTime()) {
          this._calEx.setTimeLong(entryToDisplay._endTimeInMillis);
-         displayString = ((StringBuffer)(new Object()))
-            .append(displayString)
-            .append("- ")
-            .append(TimeStringCache.getString(this._cal))
-            .append(" ")
-            .append(this._rb.getString(647))
-            .toString();
+         displayString = displayString + "- " + TimeStringCache.getString(this._cal) + " " + this._rb.getString(647);
       } else {
          long startTime = entryToDisplay._timeInMillis;
          long endTime = entryToDisplay._endTimeInMillis;
-         displayString = ((StringBuffer)(new Object())).append(displayString).append(EventUtilities.getFreeTimeDescription(startTime, endTime)).toString();
+         displayString = displayString + EventUtilities.getFreeTimeDescription(startTime, endTime);
       }
 
       graphics.drawText(displayString, 0, displayString.length(), this._widthToDesc + this._padding.left, 0, 0, width - this._widthToDesc - this._padding.right);

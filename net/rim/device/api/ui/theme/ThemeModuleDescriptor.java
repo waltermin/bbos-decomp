@@ -13,7 +13,7 @@ class ThemeModuleDescriptor {
 
    public ThemeModuleDescriptor(InputStream description, String moduleName, Resource resource, String manifestVersion, String createdBy, String osVersion) {
       if (moduleName == null) {
-         throw new Object("theme module name cannot be null");
+         throw new IllegalArgumentException("theme module name cannot be null");
       }
 
       this._description = description;
@@ -74,15 +74,6 @@ class ThemeModuleDescriptor {
 
    @Override
    public String toString() {
-      return ((StringBuffer)(new Object()))
-         .append(this._moduleName)
-         .append('(')
-         .append(this.getManifestVersion())
-         .append(',')
-         .append(this.getCreatedBy())
-         .append(',')
-         .append(this.getOsVersion())
-         .append(')')
-         .toString();
+      return this._moduleName + '(' + this.getManifestVersion() + ',' + this.getCreatedBy() + ',' + this.getOsVersion() + ')';
    }
 }

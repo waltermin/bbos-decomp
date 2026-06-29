@@ -27,7 +27,7 @@ final class CacheResult$EncryptedPipe implements Persistable {
          int dataLength = this._data.length;
          if (dataLength == 1) {
             byte[] data = PersistentContent.decodeByteArray(this._data[0]);
-            return (Pipe)(new Object(data, data.length, false));
+            return new Pipe(data, data.length, false);
          }
 
          byte[][] data = new byte[dataLength][];
@@ -36,9 +36,9 @@ final class CacheResult$EncryptedPipe implements Persistable {
             data[i] = PersistentContent.decodeByteArray(this._data[i]);
          }
 
-         return (Pipe)(new Object(data, false));
+         return new Pipe(data, false);
       } else {
-         return (Pipe)(new Object());
+         return new Pipe();
       }
    }
 

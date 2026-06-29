@@ -1,6 +1,6 @@
 package net.rim.device.apps.internal.browser.webfeed;
 
-import net.rim.device.api.browser.field.Event;
+import net.rim.device.api.browser.field.UrlRequestedEvent;
 import net.rim.device.api.ui.MenuItem;
 
 final class WebFeedItemManager$8 extends MenuItem {
@@ -17,6 +17,6 @@ final class WebFeedItemManager$8 extends MenuItem {
          ._parent
          .getBrowserContent()
          .getRenderingApplication()
-         .eventOccurred((Event)(new Object(this, this.this$0._item.getLink(), null, null, false, 0)));
+         .eventOccurred(new UrlRequestedEvent(this, this.this$0._item.getLink(), null, null, false, 0));
    }
 }

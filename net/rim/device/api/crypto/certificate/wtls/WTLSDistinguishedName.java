@@ -1,5 +1,6 @@
 package net.rim.device.api.crypto.certificate.wtls;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -92,7 +93,7 @@ public final class WTLSDistinguishedName implements DistinguishedName, Persistab
    @Override
    public final String getString(OID oid) {
       if (oid == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return (String)this._attributes.get(oid);
       }
@@ -108,7 +109,7 @@ public final class WTLSDistinguishedName implements DistinguishedName, Persistab
       this._hashCode = this._hashCode ^ attributeValue.hashCode();
       String temp = (String)this._attributes.get(attributeType);
       if (temp != null) {
-         attributeValue = ((StringBuffer)(new Object())).append(attributeValue).append(',').append(temp).toString();
+         attributeValue = attributeValue + ',' + temp;
       }
 
       this._attributes.put(attributeType, attributeValue);
@@ -161,10 +162,10 @@ public final class WTLSDistinguishedName implements DistinguishedName, Persistab
 
    public WTLSDistinguishedName(InputStream in) throws CertificateParsingException {
       if (in == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
-      this._attributes = (Hashtable)(new Object(5));
+      this._attributes = new Hashtable(5);
       this._serialNumber = null;
       this._hashCode = 0;
       this._isCertificateAuthority = false;
@@ -195,22 +196,22 @@ public final class WTLSDistinguishedName implements DistinguishedName, Persistab
          this._identifierEnd = offset + length;
          this.readNextSection();
          if (this._sectionLength > 0) {
-            this.addAttributeValue(OIDs.getOID(-1252532565), (String)(new Object(this._buffer, 0, this._sectionLength)));
+            this.addAttributeValue(OIDs.getOID(-1252532565), new String(this._buffer, 0, this._sectionLength));
          }
 
          this.readNextSection();
          if (this._sectionLength > 0) {
-            this.addAttributeValue(OIDs.getOID(-1252598101), (String)(new Object(this._buffer, 0, this._sectionLength)));
+            this.addAttributeValue(OIDs.getOID(-1252598101), new String(this._buffer, 0, this._sectionLength));
          }
 
          this.readNextSection();
          if (this._sectionLength > 0) {
-            this.addAttributeValue(OIDs.getOID(-1252860245), (String)(new Object(this._buffer, 0, this._sectionLength)));
+            this.addAttributeValue(OIDs.getOID(-1252860245), new String(this._buffer, 0, this._sectionLength));
          }
 
          this.readNextSection();
          if (this._sectionLength > 0) {
-            this.addAttributeValue(OIDs.getOID(-1253056853), (String)(new Object(this._buffer, 0, this._sectionLength)));
+            this.addAttributeValue(OIDs.getOID(-1253056853), new String(this._buffer, 0, this._sectionLength));
          }
 
          this.readNextSection();
@@ -220,10 +221,10 @@ public final class WTLSDistinguishedName implements DistinguishedName, Persistab
             String value = null;
             if (this._valueOffset == -1) {
                oid = OIDs.getOID(-1252532565);
-               value = (String)(new Object(this._buffer, 0, this._sectionLength));
+               value = new String(this._buffer, 0, this._sectionLength);
             } else {
-               String attribute = (String)(new Object(this._buffer, 0, this._valueOffset - 1));
-               value = (String)(new Object(this._buffer, this._valueOffset, this._sectionLength - this._valueOffset));
+               String attribute = new String(this._buffer, 0, this._valueOffset - 1);
+               value = new String(this._buffer, this._valueOffset, this._sectionLength - this._valueOffset);
                if (StringUtilities.strEqualIgnoreCase(attribute, "T", 1701707776) && StringUtilities.strEqualIgnoreCase(value, "ca", 1701707776)) {
                   this._isCertificateAuthority = true;
                   continue;
@@ -242,13 +243,13 @@ public final class WTLSDistinguishedName implements DistinguishedName, Persistab
 
          this._buffer = null;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
    public final String toString() {
-      StringBuffer distinguishedName = (StringBuffer)(new Object());
+      StringBuffer distinguishedName = new StringBuffer();
       this.writeData(distinguishedName, OIDs.getOID(-1253056853));
       this.writeData(distinguishedName, OIDs.getOID(-1252532565));
       this.writeData(distinguishedName, OIDs.getOID(-1252598101));
@@ -272,7 +273,7 @@ public final class WTLSDistinguishedName implements DistinguishedName, Persistab
    }
 
    public WTLSDistinguishedName(byte[] distinguishedName, int offset, int length) {
-      this((InputStream)(new Object(distinguishedName, offset, length)));
+      this(new ByteArrayInputStream(distinguishedName, offset, length));
    }
 
    public WTLSDistinguishedName(byte[] distinguishedName) {

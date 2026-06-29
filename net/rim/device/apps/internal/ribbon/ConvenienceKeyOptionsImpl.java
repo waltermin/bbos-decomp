@@ -9,11 +9,11 @@ import net.rim.device.api.system.ApplicationManager;
 import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.system.CodeModuleManager;
 import net.rim.device.api.system.DirectConnect;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.ui.theme.Theme;
 import net.rim.device.api.ui.theme.ThemeManager;
@@ -369,7 +369,7 @@ public final class ConvenienceKeyOptionsImpl extends ConvenienceKeyOptionsProvid
 
       try {
          if (!(application instanceof ApplicationEntry)) {
-            if (application instanceof Object) {
+            if (application instanceof ApplicationDescriptor) {
                this.runApplication((ApplicationDescriptor)application, appArg);
             } else {
                if (!(application instanceof ConvenienceKeyOptionsImpl$InvokeTaskSwitcherRunnable)) {
@@ -401,7 +401,7 @@ public final class ConvenienceKeyOptionsImpl extends ConvenienceKeyOptionsProvid
    private final void runApplication(ApplicationDescriptor appDescriptor, String appArg) {
       ApplicationDescriptor desc = appDescriptor;
       if (appArg != null && appArg.length() > 0) {
-         desc = (ApplicationDescriptor)(new Object(appDescriptor, new Object[]{appArg}));
+         desc = new ApplicationDescriptor(appDescriptor, new String[]{appArg});
       }
 
       ApplicationManager.getApplicationManager().runApplication(desc);
@@ -461,8 +461,8 @@ public final class ConvenienceKeyOptionsImpl extends ConvenienceKeyOptionsProvid
             this.sort();
             String nothing = _resources.getString(96);
             Arrays.insertAt(this._appList, new ConvenienceKeyOptionsImpl$ApplicationEntryWrapper(nothing, "null"), 0);
-            content.add((Field)(new Object()));
-            this._choiceFields = new Object[length];
+            content.add(new SeparatorField());
+            this._choiceFields = new ObjectChoiceField[length];
 
             for (int i = 0; i < length; i++) {
                int resourceId;
@@ -486,10 +486,10 @@ public final class ConvenienceKeyOptionsImpl extends ConvenienceKeyOptionsProvid
       String defaultLbl = null;
       ApplicationEntry app = this.getSelectedObjectGivenId(this.getConvenienceKeyDefault(type));
       if (app != null) {
-         appLbl = ((StringBuffer)(new Object(" ("))).append(app.getDescriptionNoHotkey()).append(")").toString();
+         appLbl = " (" + app.getDescriptionNoHotkey() + ")";
       }
 
-      defaultLbl = ((StringBuffer)(new Object())).append(_resources.getString(147)).append(appLbl).toString();
+      defaultLbl = _resources.getString(147) + appLbl;
       if (removeDefault) {
          Arrays.removeAt(this._appList, 1);
       }
@@ -502,7 +502,7 @@ public final class ConvenienceKeyOptionsImpl extends ConvenienceKeyOptionsProvid
          index = 0;
       }
 
-      return (ObjectChoiceField)(new Object(_resources.getString(resourceKey), this._appList, index));
+      return new ObjectChoiceField(_resources.getString(resourceKey), this._appList, index);
    }
 
    @Override

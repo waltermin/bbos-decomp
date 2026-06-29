@@ -49,7 +49,7 @@ public class UIControlImpl extends UIComponentImpl implements UIControl {
       }
 
       if (!(inValue instanceof int[]) && !(inValue instanceof Object[])) {
-         throw new Object("Specified inValue is not supported");
+         throw new RuntimeException("Specified inValue is not supported");
       }
 
       int[] array;
@@ -62,7 +62,7 @@ public class UIControlImpl extends UIComponentImpl implements UIControl {
          }
 
          if (i < 0) {
-            throw new Object("Specified inValue is not supported");
+            throw new RuntimeException("Specified inValue is not supported");
          }
 
          array = (int[])objectInValue[i];
@@ -87,7 +87,7 @@ public class UIControlImpl extends UIComponentImpl implements UIControl {
             case 32771:
             default:
                if (value == null) {
-                  value = new Object();
+                  value = new Vector();
                } else {
                   ((Vector)value).removeAllElements();
                }
@@ -137,7 +137,7 @@ public class UIControlImpl extends UIComponentImpl implements UIControl {
          }
 
          if (this._mapping.length == 2) {
-            return new Object(((ScreenModelImpl)this.getScreen()).getVarValue(this._mapping[1]));
+            return new Long(((ScreenModelImpl)this.getScreen()).getVarValue(this._mapping[1]));
          }
 
          long var = ((ScreenModelImpl)this.getScreen()).getVarValue(this._mapping[1], true);
@@ -184,7 +184,7 @@ public class UIControlImpl extends UIComponentImpl implements UIControl {
                }
             }
          } else if (this._mapping.length == 2) {
-            long handle = !(this._mappedValue instanceof Object) ? -1 : this._mappedValue;
+            long handle = !(this._mappedValue instanceof Long) ? -1 : (Long)this._mappedValue;
             ((ScreenModelImpl)this.getScreen()).setVarValue(this._mapping[1], handle);
             this._isMappingApplied = true;
             if (handle != -1) {
@@ -232,7 +232,7 @@ public class UIControlImpl extends UIComponentImpl implements UIControl {
             this._events[eventType] = eventId;
          }
       } else {
-         throw new Object(((StringBuffer)(new Object("Invalid event type: "))).append(eventType).toString());
+         throw new IllegalArgumentException("Invalid event type: " + eventType);
       }
    }
 
@@ -359,7 +359,7 @@ public class UIControlImpl extends UIComponentImpl implements UIControl {
 
    @Override
    public synchronized void setValue(Object value, boolean fromUI) {
-      if (!fromUI || this._value != null || !(value instanceof Object) || ((String)value).length() != 0) {
+      if (!fromUI || this._value != null || !(value instanceof String) || ((String)value).length() != 0) {
          if (this._value != null || value != null) {
             if (this._value == null || value == null || !this._value.equals(value) || (this._valueType & 32768) != 0 || this.isEmptyKey(value)) {
                this._value = value;
@@ -397,7 +397,7 @@ public class UIControlImpl extends UIComponentImpl implements UIControl {
    @Override
    public boolean isMandatorySatisfied() {
       if (this.isMandatory()) {
-         return !(this._value instanceof Object) ? false : ((String)this._value).trim().length() > 0;
+         return !(this._value instanceof String) ? false : ((String)this._value).trim().length() > 0;
       } else {
          return true;
       }

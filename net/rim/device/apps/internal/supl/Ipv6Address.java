@@ -38,7 +38,7 @@ final class Ipv6Address extends IpAddress {
       System.out.println("Ipv6address: ");
 
       for (int i = 0; i < 16; i++) {
-         System.out.print(((StringBuffer)(new Object())).append(Integer.toHexString(255 & this.addr[i])).append(" ").toString());
+         System.out.print(Integer.toHexString(255 & this.addr[i]) + " ");
       }
 
       System.out.print("\n");

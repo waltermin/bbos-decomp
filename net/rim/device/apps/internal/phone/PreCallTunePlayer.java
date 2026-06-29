@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.phone;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import javax.microedition.media.Manager;
 import javax.microedition.media.Player;
@@ -35,13 +36,13 @@ final class PreCallTunePlayer implements PlayerListener {
          buffer = Resource.getResourceClass().getResource(this._tuneName);
       }
 
-      InputStream is = (InputStream)(new Object(buffer));
+      InputStream is = new ByteArrayInputStream(buffer);
       String audioType = MIMETypeAssociations.getMIMEType(this._tuneName);
       AudioRouter.getInstance().addSource(6);
 
       try {
          this._player = Manager.createPlayer(is, audioType);
-         if (this._player instanceof Object) {
+         if (this._player instanceof StreamDataControl) {
             ((StreamDataControl)this._player).setKeyValue("flag_not_unloadable", Boolean.TRUE);
          }
 

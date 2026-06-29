@@ -26,7 +26,7 @@ public final class ComponentManager {
       new SystemStatusComponentFactory().init();
       new TextFieldFactory().init();
       new TitleFieldFactory().init();
-      ((ImageFactory)(new Object())).init();
+      new ImageFactory().init();
       new EntryIconComponentFactory().init();
       new EntryBitmapComponentFactory().init();
       new AnalogClockComponentFactory().init();

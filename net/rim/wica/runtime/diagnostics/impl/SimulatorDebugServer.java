@@ -32,9 +32,9 @@ final class SimulatorDebugServer implements Runnable {
             }
          }
 
-         Thread serverThread = (Thread)(new Object(this, "MDSDebugServer"));
+         Thread serverThread = new Thread(this, "MDSDebugServer");
          serverThread.start();
-         Thread startupThread = (Thread)(new Object(new SimulatorDebugServer$StartupRunnable(), "MDSDebugBootstrap"));
+         Thread startupThread = new Thread(new SimulatorDebugServer$StartupRunnable(), "MDSDebugBootstrap");
          startupThread.start();
          result = true;
       }
@@ -60,7 +60,7 @@ final class SimulatorDebugServer implements Runnable {
       // Bytecode:
       // 00: aconst_null
       // 01: astore 1
-      // 02: new java/lang/Object
+      // 02: new java/lang/StringBuffer
       // 05: dup
       // 06: ldc_w "socket://:"
       // 09: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -71,11 +71,11 @@ final class SimulatorDebugServer implements Runnable {
       // 16: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 19: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 1c: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 1f: checkcast java/lang/Object
+      // 1f: checkcast javax/microedition/io/ServerSocketConnection
       // 22: astore 1
       // 23: aload 1
       // 24: invokeinterface javax/microedition/io/StreamConnectionNotifier.acceptAndOpen ()Ljavax/microedition/io/StreamConnection; 1
-      // 29: checkcast java/lang/Object
+      // 29: checkcast javax/microedition/io/SocketConnection
       // 2c: astore 2
       // 2d: aload 2
       // 2e: bipush 0

@@ -6,6 +6,8 @@ import net.rim.device.api.system.KeyListener;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.component.ChoiceField;
+import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.FieldProvider;
@@ -28,7 +30,7 @@ final class TLSOptionsItem extends SaveableMainScreenOptionsListItem implements 
 
    public TLSOptionsItem() {
       super(_rb.getFamily(), 32, 5294015899860238835L);
-      ContextObject.put(super._context, 244, new Object(32785));
+      ContextObject.put(super._context, 244, new Integer(32785));
       this._tlsOptions = TLSOptionStore.getOptions();
       this._deviceSideTLSExists = SSLOptionsRegistration.doesDeviceSideExist();
    }
@@ -54,14 +56,14 @@ final class TLSOptionsItem extends SaveableMainScreenOptionsListItem implements 
    protected final void populateMainScreen(MainScreen mainScreen) {
       mainScreen.deleteAll();
       int numProviders = this._deviceSideTLSExists ? 2 : 1;
-      this._fieldProviders = new Object[numProviders];
+      this._fieldProviders = new FieldProvider[numProviders];
       this._fieldProviders[0] = new ProxyTLSOptionsProvider();
       if (this._deviceSideTLSExists) {
          this._fieldProviders[1] = new DeviceTLSOptionsProvider();
       }
 
-      this._fields = new Object[numProviders];
-      String[] tlsChoices = new Object[this._fieldProviders.length];
+      this._fields = new Field[numProviders];
+      String[] tlsChoices = new String[this._fieldProviders.length];
 
       for (int i = 0; i < numProviders; i++) {
          Field f = this._fieldProviders[i].getField(null);
@@ -74,11 +76,11 @@ final class TLSOptionsItem extends SaveableMainScreenOptionsListItem implements 
       boolean deviceSideOnly = ITPolicy.getBoolean(28, 9, false);
       int defaultImplementation = deviceSideOnly ? 2 : this._tlsOptions.getDefaultImplementation();
       int defaultImplIndex = defaultImplementation == 1 ? 0 : 1;
-      this._defaultImplField = (ChoiceField)(new Object(_rb.getString(36), tlsChoices, defaultImplIndex, 268435456));
+      this._defaultImplField = new ObjectChoiceField(_rb.getString(36), tlsChoices, defaultImplIndex, 268435456);
       this._defaultImplField.setEditable(!deviceSideOnly);
       this._defaultImplField.setChangeListener(this);
       mainScreen.add(this._defaultImplField);
-      mainScreen.add((Field)(new Object()));
+      mainScreen.add(new SeparatorField());
       mainScreen.add(this._fields[defaultImplIndex]);
    }
 
@@ -99,12 +101,12 @@ final class TLSOptionsItem extends SaveableMainScreenOptionsListItem implements 
    protected final Verb addCurrentItemVerbs(VerbToMenu verbToMenu, int instance) {
       int defaultIndex = this._defaultImplField.getSelectedIndex();
       FieldProvider var10000 = this._fieldProviders[defaultIndex];
-      if (!(this._fieldProviders[defaultIndex] instanceof Object)) {
+      if (!(this._fieldProviders[defaultIndex] instanceof VerbProvider)) {
          return null;
       }
 
       VerbProvider verbProvider = (VerbProvider)var10000;
-      Verb[] verbs = new Object[0];
+      Verb[] verbs = new Verb[0];
       Verb defaultVerb = verbProvider.getVerbs(null, verbs);
       verbToMenu.addVerbs(verbs);
       return defaultVerb;
@@ -135,7 +137,7 @@ final class TLSOptionsItem extends SaveableMainScreenOptionsListItem implements 
       if (!super.keyChar(key, time, status)) {
          int defaultIndex = this._defaultImplField.getSelectedIndex();
          FieldProvider var10000 = this._fieldProviders[defaultIndex];
-         if (this._fieldProviders[defaultIndex] instanceof Object) {
+         if (this._fieldProviders[defaultIndex] instanceof KeyListener) {
             KeyListener keyListener = (KeyListener)var10000;
             return keyListener.keyChar(key, time, status);
          }

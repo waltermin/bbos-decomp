@@ -22,13 +22,7 @@ public final class RC5DecryptorEngine implements SymmetricKeyDecryptorEngine {
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object("RC5_")))
-         .append(this.getKeyLength() << 3)
-         .append('_')
-         .append(this.getBlockLength() << 3)
-         .append('_')
-         .append(this._numberOfRounds)
-         .toString();
+      return "RC5_" + (this.getKeyLength() << 3) + '_' + (this.getBlockLength() << 3) + '_' + this._numberOfRounds;
    }
 
    @Override
@@ -52,7 +46,7 @@ public final class RC5DecryptorEngine implements SymmetricKeyDecryptorEngine {
          this._keyLength = key.getLength();
          this._numberOfRounds = numberOfRounds;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

@@ -9,7 +9,7 @@ final class StringComparator implements Comparator {
       String name1 = null;
       String name2 = null;
       if (!(o1 instanceof PeerContact)) {
-         if (o1 instanceof Object) {
+         if (o1 instanceof String) {
             name1 = (String)o1;
          }
       } else {
@@ -17,7 +17,7 @@ final class StringComparator implements Comparator {
       }
 
       if (!(o2 instanceof PeerContact)) {
-         if (o2 instanceof Object) {
+         if (o2 instanceof String) {
             name2 = (String)o2;
          }
       } else {

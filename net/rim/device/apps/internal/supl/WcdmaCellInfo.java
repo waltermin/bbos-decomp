@@ -48,24 +48,24 @@ final class WcdmaCellInfo extends CellInformation {
    @Override
    final void print() {
       System.out.println("Wcdma CellInfo");
-      System.out.println(((StringBuffer)(new Object("Optionals: "))).append(this.optionals).toString());
-      System.out.println(((StringBuffer)(new Object("MCC: "))).append(this.mcc).toString());
-      System.out.println(((StringBuffer)(new Object("MNC: "))).append(this.mnc).toString());
-      System.out.println(((StringBuffer)(new Object("UC: "))).append(this.uc).toString());
+      System.out.println("Optionals: " + this.optionals);
+      System.out.println("MCC: " + this.mcc);
+      System.out.println("MNC: " + this.mnc);
+      System.out.println("UC: " + this.uc);
       if ((this.optionals & 4) == 4) {
          this.freqInfo.print();
       }
 
       if ((this.optionals & 2) == 2) {
-         System.out.println(((StringBuffer)(new Object("Primary Scrambling Code: "))).append(this.primaryScrCode).toString());
+         System.out.println("Primary Scrambling Code: " + this.primaryScrCode);
       }
 
       if ((this.optionals & 1) == 1) {
          System.out.println("Measure Results List: ");
-         System.out.println(((StringBuffer)(new Object("Num Items: "))).append(this.numMeasuredResultItems).toString());
+         System.out.println("Num Items: " + this.numMeasuredResultItems);
 
          for (int i = 0; i < this.numMeasuredResultItems; i++) {
-            System.out.println(((StringBuffer)(new Object("Meas Res Item "))).append(i).toString());
+            System.out.println("Meas Res Item " + i);
             this.results[i].print();
          }
       }

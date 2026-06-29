@@ -24,6 +24,6 @@ final class Status {
    }
 
    final void print() {
-      System.out.println(((StringBuffer)(new Object("Status: "))).append(this.status).toString());
+      System.out.println("Status: " + this.status);
    }
 }

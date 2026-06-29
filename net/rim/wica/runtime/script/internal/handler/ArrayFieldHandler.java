@@ -1,5 +1,6 @@
 package net.rim.wica.runtime.script.internal.handler;
 
+import java.util.Date;
 import java.util.Vector;
 import net.rim.device.api.io.http.HttpDateParser;
 import net.rim.device.api.util.IntVector;
@@ -59,7 +60,7 @@ public final class ArrayFieldHandler implements PropertyHandler {
 
       Object arrayVal = null;
       ESObject eso = Convert.toObject(esObject);
-      if (!(eso instanceof Object)) {
+      if (!(eso instanceof ESArray)) {
          if (eso instanceof ESMDSArray) {
             arrayVal = this.validateAssignment(arrayType, cDef, fieldID, (ESMDSArray)eso);
             if (arrayVal == null) {
@@ -159,7 +160,7 @@ public final class ArrayFieldHandler implements PropertyHandler {
                case 32771:
                   Vector source = (Vector)arrayVal;
                   int len = source.size();
-                  IntVector destination = (IntVector)(new Object(len));
+                  IntVector destination = new IntVector(len);
 
                   for (int i = 0; i < len; i++) {
                      destination.addElement(BooleanFieldHandler.string2Boolean((String)source.elementAt(i)) ? 1 : 0);
@@ -178,7 +179,7 @@ public final class ArrayFieldHandler implements PropertyHandler {
                case 32771:
                   Vector source = (Vector)arrayVal;
                   int len = source.size();
-                  IntVector destination = (IntVector)(new Object(len));
+                  IntVector destination = new IntVector(len);
 
                   for (int i = 0; i < len; i++) {
                      destination.addElement(IntegerFieldHandler.string2Int((String)source.elementAt(i)));
@@ -223,7 +224,7 @@ public final class ArrayFieldHandler implements PropertyHandler {
                case 32768:
                   IntVector source = (IntVector)arrayVal;
                   int len = source.size();
-                  Vector destination = (Vector)(new Object(len));
+                  Vector destination = new Vector(len);
 
                   for (int i = 0; i < len; i++) {
                      destination.addElement(source.elementAt(i) == 0 ? "false" : "true");
@@ -233,7 +234,7 @@ public final class ArrayFieldHandler implements PropertyHandler {
                case 32769:
                   IntVector source = (IntVector)arrayVal;
                   int len = source.size();
-                  Vector destination = (Vector)(new Object(len));
+                  Vector destination = new Vector(len);
 
                   for (int i = 0; i < len; i++) {
                      destination.addElement(String.valueOf(source.elementAt(i)));
@@ -243,7 +244,7 @@ public final class ArrayFieldHandler implements PropertyHandler {
                case 32770:
                   DoubleVector source = (DoubleVector)arrayVal;
                   int len = source.size();
-                  Vector destination = (Vector)(new Object(len));
+                  Vector destination = new Vector(len);
 
                   for (int i = 0; i < len; i++) {
                      destination.addElement(String.valueOf(source.elementAt(i)));
@@ -256,17 +257,17 @@ public final class ArrayFieldHandler implements PropertyHandler {
                case 32772:
                   LongVector source = (LongVector)arrayVal;
                   int len = source.size();
-                  Vector destination = (Vector)(new Object(len));
+                  Vector destination = new Vector(len);
 
                   for (int i = 0; i < len; i++) {
-                     destination.addElement(Util.DEFAULT_DATE_FORMATTER.format(new Object(source.elementAt(i))));
+                     destination.addElement(Util.DEFAULT_DATE_FORMATTER.format(new Date(source.elementAt(i))));
                   }
 
                   return destination;
                case 32773:
                   IntVector source = (IntVector)arrayVal;
                   int len = source.size();
-                  Vector destination = (Vector)(new Object(len));
+                  Vector destination = new Vector(len);
                   EnumCollection enumC = this._context.getWiclet().getEnums();
                   int enumDefID = eso.getEnumId();
 
@@ -278,7 +279,7 @@ public final class ArrayFieldHandler implements PropertyHandler {
                case 32776:
                   LongVector source = (LongVector)arrayVal;
                   int len = source.size();
-                  Vector destination = (Vector)(new Object(len));
+                  Vector destination = new Vector(len);
 
                   for (int i = 0; i < len; i++) {
                      destination.addElement(String.valueOf(source.elementAt(i)));
@@ -391,11 +392,11 @@ public final class ArrayFieldHandler implements PropertyHandler {
          case 32769:
          case 32773:
          default:
-            return new Object(size);
+            return new IntVector(size);
          case 32770:
             return new DoubleVector(size);
          case 32771:
-            array = new Object(size);
+            array = new Vector(size);
          case 32767:
          case 32775:
             return array;

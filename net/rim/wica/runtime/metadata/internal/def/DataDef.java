@@ -10,7 +10,7 @@ public class DataDef extends ComponentDefImpl implements DataComponentDef {
       super(defId, defs);
       if (defs.hasKey(defId)) {
          int size = defs.getNumFields(defId);
-         IntVector keys = (IntVector)(new Object());
+         IntVector keys = new IntVector();
 
          for (int i = 0; i < size; i++) {
             if (defs.isKeyField(defId, i)) {

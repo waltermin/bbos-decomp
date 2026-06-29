@@ -9,6 +9,7 @@ import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.UserInputEventListener;
 import net.rim.device.api.ui.XYRect;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.theme.Tag;
 
@@ -37,7 +38,7 @@ public final class HintPopup extends Screen implements Runnable, UserInputEventL
       UiApplication app = UiApplication.getUiApplication();
       this._popScreenRunnable.init();
       if (app.invokeLater(this._popScreenRunnable, this._duration, false) == -1) {
-         throw new Object();
+         throw new RuntimeException();
       }
 
       this._screen = app.getActiveScreen();
@@ -57,14 +58,14 @@ public final class HintPopup extends Screen implements Runnable, UserInputEventL
    }
 
    private HintPopup(HintPollingThread$HintProvider hintProvider, Object hint, int duration) {
-      super((Manager)(new Object()));
+      super(new HorizontalFieldManager());
       this.setTag(TAG);
       this.setAcceptsInput(false);
       HorizontalFieldManager hfm = (HorizontalFieldManager)this.getDelegate();
-      if (hint instanceof Object) {
+      if (hint instanceof Field) {
          hfm.add((Field)hint);
       } else {
-         hfm.add((Field)(new Object(hint.toString(), 51539607616L)));
+         hfm.add(new LabelField(hint.toString(), 51539607616L));
       }
 
       this._hintProvider = hintProvider;
@@ -103,7 +104,7 @@ public final class HintPopup extends Screen implements Runnable, UserInputEventL
       while (field != null) {
          XYRect extent = field.getExtent();
          rect.translate(extent.x, extent.y);
-         if (field instanceof Object) {
+         if (field instanceof Manager) {
             Manager manager = (Manager)field;
             int dx = manager.getHorizontalScroll();
             int dy = manager.getVerticalScroll();

@@ -150,7 +150,7 @@ public class MediaObject extends TimingObject implements PlayerListener {
    private void setThemeBackground(int color) {
       ThemeAttributeSet themeAttributeSet = this._uiComponent.getThemeAttributeSet();
       if (themeAttributeSet == null) {
-         themeAttributeSet = (ThemeAttributeSet)(new Object());
+         themeAttributeSet = new ThemeAttributeSet();
       }
 
       ThemeAttributeSet$Writer themeWriter = themeAttributeSet.getWriterInternal();

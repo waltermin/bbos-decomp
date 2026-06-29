@@ -25,38 +25,16 @@ final class SendDeleteListener implements PendingRequestListener, Persistable {
       CacheResult cacheResult = pageModel.getModelResult().getCacheResult();
       if (cacheResult != null && cacheResult.getStatus() == 200) {
          EventLogger.logEvent(
-            1907089860548946979L,
-            ((StringBuffer)(new Object("CMdc - ")))
-               .append(this._channel.getID())
-               .append('\n')
-               .append(this._channel.getDeleteURL())
-               .append('\n')
-               .append(cacheResult.getStatus())
-               .toString()
-               .getBytes(),
-            0
+            1907089860548946979L, ("CMdc - " + this._channel.getID() + '\n' + this._channel.getDeleteURL() + '\n' + cacheResult.getStatus()).getBytes(), 0
          );
       } else {
-         String logString = cacheResult == null
-            ? "Null cache result"
-            : ((StringBuffer)(new Object())).append(cacheResult.getStatus()).append(": ").append(cacheResult.getExceptionString()).toString();
-         EventLogger.logEvent(
-            1907089860548946979L,
-            ((StringBuffer)(new Object("CMdc - ")))
-               .append(this._channel.getID())
-               .append('\n')
-               .append(this._channel.getDeleteURL())
-               .append('\n')
-               .append(logString)
-               .toString()
-               .getBytes(),
-            0
-         );
+         String logString = cacheResult == null ? "Null cache result" : cacheResult.getStatus() + ": " + cacheResult.getExceptionString();
+         EventLogger.logEvent(1907089860548946979L, ("CMdc - " + this._channel.getID() + '\n' + this._channel.getDeleteURL() + '\n' + logString).getBytes(), 0);
          if (this._retries > 0) {
             Channels.sendDeleteNotification(this._channel, this._retries - 1);
          } else {
-            String message = MessageFormat.format(BrowserResources.getString(818), new Object[]{this._channel.getTitle()});
-            Dialog dialog = (Dialog)(new Object(0, message, 0, null, 33554432));
+            String message = MessageFormat.format(BrowserResources.getString(818), new String[]{this._channel.getTitle()});
+            Dialog dialog = new Dialog(0, message, 0, null, 33554432);
             dialog.setIcon(ThemeManager.getThemeAwareImage("dialog_exclamation"));
             BrowserDaemonRegistry.getInstance().invokeLater(new SendDeleteListener$1(this, dialog));
          }

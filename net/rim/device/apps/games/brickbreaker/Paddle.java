@@ -15,7 +15,7 @@ final class Paddle {
    private final Bitmap PADDLE = Bitmap.getBitmapResource(Game.currentModule, "paddles.png");
    private final Bitmap BMP_LONG = Bitmap.getBitmapResource(Game.currentModule, "paddlelong.png");
    private int position;
-   private XYRect bounds = (XYRect)(new Object());
+   private XYRect bounds = new XYRect();
    private final int DEFAULT_WIDTH = this.PADDLE.getWidth();
    private final int HEIGHT = this.PADDLE.getHeight() / 3;
    public int HALF_HEIGHT;

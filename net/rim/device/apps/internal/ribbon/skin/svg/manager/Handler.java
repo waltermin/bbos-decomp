@@ -21,7 +21,7 @@ class Handler {
    private Handler$HandlerUpdater _handlerUpdater;
    protected UnreadCountComponentInteractor _unreadCount;
    protected SimpleRibbonComponentContentInteractor _applicationName;
-   protected TextNode[] _nodes = new Object[this.MaxEntries * 3];
+   protected TextNode[] _nodes = new TextNode[this.MaxEntries * 3];
    protected TextNode _nodeAlternateName;
    protected int _alternateNameId;
    protected char[] BLANK = new char[0];
@@ -50,7 +50,7 @@ class Handler {
 
    public void setDisplayable(String nodeId, boolean value) {
       Node node = this._modelInteractor.getNode(nodeId);
-      if (node instanceof Object) {
+      if (node instanceof VisualNode) {
          ((VisualNode)node).setDisplayable(value);
       }
    }
@@ -77,18 +77,18 @@ class Handler {
       }
 
       if (timeFormat != null) {
-         this._sameDateFormat = (SimpleDateFormat)(new Object(timeFormat));
+         this._sameDateFormat = new SimpleDateFormat(timeFormat);
       } else {
-         this._sameDateFormat = (SimpleDateFormat)(new Object(7));
+         this._sameDateFormat = new SimpleDateFormat(7);
       }
    }
 
    void setDateFormat(String df) {
-      this._laterDateFormat = (SimpleDateFormat)(new Object(df));
+      this._laterDateFormat = new SimpleDateFormat(df);
    }
 
    public void setRibbonComponentUnreadCountInteractor(TextNode node, String type, boolean roundBrackets) {
-      Hashtable params = (Hashtable)(new Object());
+      Hashtable params = new Hashtable();
       params.put("type", type);
       if ("missedphonecalls".equals(type)) {
          params.put("onlyNew", "");
@@ -108,7 +108,7 @@ class Handler {
    }
 
    public void setRibbonComponentApplicationNameInteractor(TextNode node, String id) {
-      Hashtable params = (Hashtable)(new Object());
+      Hashtable params = new Hashtable();
       params.put("id", id);
       params.put("showname", "");
       this._applicationName = new SimpleRibbonComponentContentInteractor(node, "EntryDescription", params);
@@ -120,7 +120,7 @@ class Handler {
       try {
          if (this._alternateNameId < 0) {
             String idName = this._nodeAlternateName.getId();
-            String resourceTextId = current.getOption(((StringBuffer)(new Object())).append(idName).append("_resourceID").toString());
+            String resourceTextId = current.getOption(idName + "_resourceID");
             this._alternateNameId = Integer.parseInt(resourceTextId);
          }
 
@@ -171,7 +171,7 @@ class Handler {
    }
 
    private StringBuffer attachNames(String salutation, String firstName, String lastName) {
-      StringBuffer result = (StringBuffer)(new Object());
+      StringBuffer result = new StringBuffer();
       switch (Locale.getSystemNameOrder()) {
          case 1:
             if (lastName != null && lastName.length() > 0) {

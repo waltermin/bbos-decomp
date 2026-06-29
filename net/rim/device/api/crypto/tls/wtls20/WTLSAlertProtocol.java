@@ -5,6 +5,7 @@ import net.rim.device.api.crypto.tls.SessionResumption;
 import net.rim.device.api.crypto.tls.TLSAlertException;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.DataBuffer;
+import net.rim.device.cldc.io.ssl.TLSException;
 
 final class WTLSAlertProtocol implements AlertProtocolMethods {
    private WTLSRecordProtocol _recordProtocol;
@@ -16,7 +17,7 @@ final class WTLSAlertProtocol implements AlertProtocolMethods {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void processAlertMessage(DataBuffer buffer) {
+   public final void processAlertMessage(DataBuffer buffer) throws TLSException {
       try {
          byte level = buffer.readByte();
          byte description = buffer.readByte();
@@ -29,21 +30,21 @@ final class WTLSAlertProtocol implements AlertProtocolMethods {
             throw new TLSAlertException(level, description);
          }
       } catch (Throwable var8) {
-         throw new Object(e);
+         throw new TLSException(e);
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void sendAlertMessage(byte alertLevel, byte alertDescription) {
+   public final void sendAlertMessage(byte alertLevel, byte alertDescription) throws TLSException {
       try {
          byte[] checksum = this.computeChecksum(this._recordProtocol.getLastReadCipherTextMessage());
          alertDescription = this.convertAlertDescription(alertDescription);
          byte[] finalMessage = new byte[]{alertLevel, alertDescription, checksum[0], checksum[1], checksum[2], checksum[3]};
          this._recordProtocol.write(2, finalMessage);
       } catch (Throwable var6) {
-         throw new Object(e);
+         throw new TLSException(e);
       }
    }
 
@@ -58,7 +59,7 @@ final class WTLSAlertProtocol implements AlertProtocolMethods {
 
    private final byte[] computeChecksum(DataBuffer buffer) {
       if (buffer == null) {
-         buffer = (DataBuffer)(new Object(0, true));
+         buffer = new DataBuffer(0, true);
       }
 
       int length = buffer.getLength();

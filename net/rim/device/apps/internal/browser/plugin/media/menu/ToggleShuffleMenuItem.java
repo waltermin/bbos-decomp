@@ -8,7 +8,7 @@ public final class ToggleShuffleMenuItem extends MenuItem {
    private MediaBrowserField _field;
 
    public ToggleShuffleMenuItem(MediaBrowserField field) {
-      super(((StringBuffer)(new Object())).append(field.isShuffled() ? "✓ " : "").append(BrowserResources.getString(841)).toString(), 590854, Integer.MAX_VALUE);
+      super((field.isShuffled() ? "✓ " : "") + BrowserResources.getString(841), 590854, Integer.MAX_VALUE);
       this._field = field;
    }
 

@@ -28,7 +28,7 @@ final class WicletMessageProcessor$MiscellaneousEventListener implements EventLi
                return;
             }
          case 203:
-            long wicletIdx = data;
+            long wicletIdx = (Long)data;
             WicletQueueManager wmx = (WicletQueueManager)this.this$0._wicletTable.get(wicletIdx);
             if (wmx != null) {
                wmx.handleMetadataStartup();
@@ -36,7 +36,7 @@ final class WicletMessageProcessor$MiscellaneousEventListener implements EventLi
             }
             break;
          case 204:
-            long wicletId = data;
+            long wicletId = (Long)data;
             WicletQueueManager wm = (WicletQueueManager)this.this$0._wicletTable.get(wicletId);
             if (wm != null) {
                wm.handleMetadataShutdown();
@@ -62,7 +62,7 @@ final class WicletMessageProcessor$MiscellaneousEventListener implements EventLi
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object())).append(this.this$0.toString()).append("#EventListener").toString();
+      return this.this$0.toString() + "#EventListener";
    }
 
    WicletMessageProcessor$MiscellaneousEventListener(WicletMessageProcessor x0, WicletMessageProcessor$1 x1) {

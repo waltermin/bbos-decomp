@@ -5,26 +5,26 @@ import net.rim.device.api.util.IntHashtable;
 import net.rim.device.api.util.LongHashtable;
 
 final class RibbonApiProxy$EntryPointDescriptionStore {
-   IntHashtable _moduleLookup = (IntHashtable)(new Object());
+   IntHashtable _moduleLookup = new IntHashtable();
 
    private RibbonApiProxy$EntryPointDescriptionStore() {
    }
 
    public final Bitmap getBitmap(int moduleHandle, int index, long property) {
-      LongHashtable[] array = (Object[])this._moduleLookup.get(moduleHandle);
+      LongHashtable[] array = (LongHashtable[])this._moduleLookup.get(moduleHandle);
       if (array != null && index < array.length) {
          LongHashtable lht = array[index];
-         return (Bitmap)(lht == null ? null : lht.get(property));
+         return lht == null ? null : (Bitmap)lht.get(property);
       } else {
          return null;
       }
    }
 
    public final String getString(int moduleHandle, int index, long property) {
-      LongHashtable[] array = (Object[])this._moduleLookup.get(moduleHandle);
+      LongHashtable[] array = (LongHashtable[])this._moduleLookup.get(moduleHandle);
       if (array != null && index < array.length) {
          LongHashtable lht = array[index];
-         return (String)(lht == null ? null : lht.get(property));
+         return lht == null ? null : (String)lht.get(property);
       } else {
          return null;
       }
@@ -34,9 +34,9 @@ final class RibbonApiProxy$EntryPointDescriptionStore {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private final void put(int moduleHandle, int index, long property, Object object) {
       LongHashtable lht = null;
-      LongHashtable[] array = (Object[])this._moduleLookup.get(moduleHandle);
+      LongHashtable[] array = (LongHashtable[])this._moduleLookup.get(moduleHandle);
       if (array == null) {
-         array = new Object[index + 1];
+         array = new LongHashtable[index + 1];
       } else {
          boolean var10 = false /* VF: Semaphore variable */;
 
@@ -47,14 +47,14 @@ final class RibbonApiProxy$EntryPointDescriptionStore {
             var10 = false;
          } finally {
             if (var10) {
-               array = new Object[index + 1];
+               array = new LongHashtable[index + 1];
                break label34;
             }
          }
       }
 
       if (lht == null) {
-         lht = (LongHashtable)(new Object());
+         lht = new LongHashtable();
       }
 
       if (object != null) {

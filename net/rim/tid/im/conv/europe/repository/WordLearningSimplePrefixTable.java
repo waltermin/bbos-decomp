@@ -691,7 +691,7 @@ public class WordLearningSimplePrefixTable extends LearningSimplePrefixTable {
       }
 
       if (offset != complexTableSize + 2) {
-         throw new Object("");
+         throw new IllegalStateException("");
       }
 
       int startOffset = super._wordsDataOffset - 3;
@@ -927,7 +927,7 @@ public class WordLearningSimplePrefixTable extends LearningSimplePrefixTable {
          this._info.set(aBuffer, super._prefixLength, offset);
          this.readWord(this._info);
          offset = this._info._offset;
-         aEntries.addElement(new Object(this._info._buffer, 0, this._info._index));
+         aEntries.addElement(new String(this._info._buffer, 0, this._info._index));
       }
    }
 }

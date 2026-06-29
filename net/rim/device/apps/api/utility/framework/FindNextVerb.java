@@ -1,7 +1,7 @@
 package net.rim.device.apps.api.utility.framework;
 
 import net.rim.device.api.ui.Field;
-import net.rim.device.api.ui.component.BasicEditField;
+import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.CommonResources;
@@ -22,12 +22,12 @@ class FindNextVerb extends Verb {
       if (result != null) {
          Field field = result.getField();
          field.setFocus();
-         if (field instanceof Object) {
-            ((BasicEditField)field).setCursorPosition(result.getOffset());
+         if (field instanceof EditField) {
+            ((EditField)field).setCursorPosition(result.getOffset());
             return null;
          }
 
-         if (field instanceof Object) {
+         if (field instanceof RichTextField) {
             ((RichTextField)field).setCursorPosition(result.getOffset());
          }
       }

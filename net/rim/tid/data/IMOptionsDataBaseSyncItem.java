@@ -63,7 +63,7 @@ public class IMOptionsDataBaseSyncItem extends OTASyncCapableSyncItem {
 
    @Override
    public synchronized boolean getSyncData(DataBuffer buffer, int version) {
-      DataBuffer temp = (DataBuffer)(new Object(buffer.isBigEndian()));
+      DataBuffer temp = new DataBuffer(buffer.isBigEndian());
       synchronized (InputContext.getInstance()) {
          LearningData lData = LearningDataManager.getLearningData(this.getKey());
          if (lData == null) {

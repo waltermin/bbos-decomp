@@ -62,13 +62,7 @@ public final class ActiveScreenMyNumberField extends Field implements GlobalEven
       this.setExtent(this.getPreferredWidth(), this.getPreferredHeight());
       if (this._directConnectCall) {
          this._dcLabel = PhoneResources.getString(6044);
-         this._dcPhoneNumber = ((StringBuffer)(new Object()))
-            .append(DirectConnect.getId(1))
-            .append("*")
-            .append(DirectConnect.getId(2))
-            .append('*')
-            .append(DirectConnect.getId(0))
-            .toString();
+         this._dcPhoneNumber = DirectConnect.getId(1) + "*" + DirectConnect.getId(2) + '*' + DirectConnect.getId(0);
          this._dcWidth = Math.max(_defaultFont.getBounds(this._dcPhoneNumber), _defaultFont.getBounds(this._dcLabel));
       }
 

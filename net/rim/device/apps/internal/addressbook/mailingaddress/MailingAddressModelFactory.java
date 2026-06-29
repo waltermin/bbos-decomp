@@ -4,6 +4,7 @@ import java.util.Vector;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.SyncBuffer;
 import net.rim.device.apps.api.framework.registration.RIMModelFactory;
+import net.rim.device.apps.api.framework.verb.RIMModelFactoryCreateVerb;
 import net.rim.device.apps.api.framework.verb.Verb;
 
 class MailingAddressModelFactory extends RIMModelFactory {
@@ -197,6 +198,6 @@ class MailingAddressModelFactory extends RIMModelFactory {
 
    @Override
    public Verb[] getVerbs(Object context) {
-      return new Object[]{new Object(this, 16864848, 5390928610432442684L, "net.rim.device.apps.internal.resource.AddressBook", 503)};
+      return new Verb[]{new RIMModelFactoryCreateVerb(this, 16864848, 5390928610432442684L, "net.rim.device.apps.internal.resource.AddressBook", 503)};
    }
 }

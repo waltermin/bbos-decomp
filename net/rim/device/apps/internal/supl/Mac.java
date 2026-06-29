@@ -15,7 +15,7 @@ final class Mac {
       System.out.println("Mac: ");
 
       for (int i = 0; i < 8; i++) {
-         System.out.print(((StringBuffer)(new Object())).append(Integer.toHexString(255 & this.mac[i])).append(" ").toString());
+         System.out.print(Integer.toHexString(255 & this.mac[i]) + " ");
       }
 
       System.out.print("\n");

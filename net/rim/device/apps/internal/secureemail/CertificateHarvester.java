@@ -10,8 +10,8 @@ import net.rim.device.apps.internal.blackberryemail.properties.TransitoryMessage
 public class CertificateHarvester implements MessagePropertiesListener {
    private TransitoryMessagePropertiesModel _messagePropertiesModel;
    private CertificateHarvester$CertificateHarvesterWorkerThread _workerThread;
-   private Vector _queuedRecipientData = (Vector)(new Object());
-   private Vector _processedRecipientData = (Vector)(new Object());
+   private Vector _queuedRecipientData = new Vector();
+   private Vector _processedRecipientData = new Vector();
    private boolean _harvesterActive;
    private boolean _threadIsRunning;
    private boolean _selectedSendMethodRequiresCertificates;
@@ -106,7 +106,7 @@ public class CertificateHarvester implements MessagePropertiesListener {
    protected void queueRecipient(RecipientData recipientData) {
       synchronized (this._workerThreadLock) {
          if (!this._harvesterActive) {
-            throw new Object("Cannot queue a recipient to an inactive harvester");
+            throw new IllegalStateException("Cannot queue a recipient to an inactive harvester");
          }
 
          int recipientDataVectorSize = this._queuedRecipientData.size();
@@ -142,7 +142,7 @@ public class CertificateHarvester implements MessagePropertiesListener {
    public void reactivate() {
       synchronized (this._workerThreadLock) {
          if (this._harvesterActive) {
-            throw new Object("Cannot reactivate an active harvester");
+            throw new IllegalStateException("Cannot reactivate an active harvester");
          }
 
          while (!this._processedRecipientData.isEmpty()) {

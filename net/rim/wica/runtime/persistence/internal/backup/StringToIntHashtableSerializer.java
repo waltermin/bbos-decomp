@@ -47,7 +47,7 @@ final class StringToIntHashtableSerializer extends AbstractSerializer {
 
    @Override
    protected final Object createObject() {
-      return new Object();
+      return new ToIntHashtable();
    }
 
    private StringToIntHashtableSerializer() {

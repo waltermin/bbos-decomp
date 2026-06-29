@@ -22,7 +22,6 @@ final class Version {
    }
 
    final void print() {
-      System.out
-         .println(((StringBuffer)(new Object("Version: "))).append(this.major).append(".").append(this.minor).append(".").append(this.servind).toString());
+      System.out.println("Version: " + this.major + "." + this.minor + "." + this.servind);
    }
 }

@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.browser.download;
 
+import net.rim.device.api.io.file.FileIOException;
 import net.rim.device.api.system.Application;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.GaugeField;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
@@ -25,9 +25,9 @@ class DownloadPage$DownloadItem extends VerticalFieldManager implements SavingDo
       this._progressUpdater = new DownloadPage$DownloadItem$UpdateRunner(this);
       dm.setListener(this);
       this.setBorder(new FocusBorder(this, 2, 2, 2, 2));
-      this.add((Field)(new Object(dm.getFilename(), 18014398509481984L)));
-      this._gauge = (GaugeField)(new Object());
-      this._speed = (LabelField)(new Object(""));
+      this.add(new LabelField(dm.getFilename(), 18014398509481984L));
+      this._gauge = new GaugeField();
+      this._speed = new LabelField("");
       this.add(this._gauge);
       this.add(this._speed);
    }
@@ -58,7 +58,7 @@ class DownloadPage$DownloadItem extends VerticalFieldManager implements SavingDo
 
    @Override
    public void error(Throwable t) {
-      if (t instanceof Object) {
+      if (t instanceof FileIOException) {
          this.handleError(t.getMessage());
       } else {
          this.handleError(BrowserResources.getString(685));
@@ -110,7 +110,7 @@ class DownloadPage$DownloadItem extends VerticalFieldManager implements SavingDo
             floatStr = floatStr.substring(0, dotIndex + 2);
          }
 
-         return ((StringBuffer)(new Object())).append(floatStr).append((char)(isKB ? 'K' : ' ')).append("B/s").toString();
+         return floatStr + (isKB ? 75 : 32) + "B/s";
       } else {
          return "";
       }

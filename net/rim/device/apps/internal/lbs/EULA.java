@@ -31,6 +31,6 @@ public final class EULA {
    }
 
    public static final String getTaggedVersion(String version) {
-      return ((StringBuffer)(new Object("\u0001"))).append(version).toString();
+      return "\u0001" + version;
    }
 }

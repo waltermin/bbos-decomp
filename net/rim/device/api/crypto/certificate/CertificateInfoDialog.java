@@ -28,6 +28,7 @@ import net.rim.device.internal.resource.crypto.CryptoIndicatorImages;
 import net.rim.device.internal.ui.component.BackgroundDialog;
 import net.rim.device.internal.ui.component.ImageField;
 import net.rim.device.internal.ui.component.TitledScrollingDialog;
+import net.rim.vm.WeakReference;
 
 public class CertificateInfoDialog extends TitledScrollingDialog implements CollectionListener {
    private ButtonField _fetchStatus;
@@ -47,7 +48,7 @@ public class CertificateInfoDialog extends TitledScrollingDialog implements Coll
    private static final int MAX_NUM_WARNINGS = 2;
 
    protected String[] getWarnings(long propertiesSummary) {
-      String[] warnings = new Object[0];
+      String[] warnings = new String[0];
       if ((propertiesSummary & 1024) != 0) {
          Arrays.add(warnings, CertificateResources.getString(23));
       }
@@ -159,7 +160,7 @@ public class CertificateInfoDialog extends TitledScrollingDialog implements Coll
 
       if (!this._certificate.isRoot()) {
          int numCertificateChains = this._certificateChains.length;
-         Hashtable buttonsAdded = (Hashtable)(new Object(numCertificateChains));
+         Hashtable buttonsAdded = new Hashtable(numCertificateChains);
 
          for (int i = 0; i < numCertificateChains; i++) {
             Certificate[] currentCertificateChain = this._certificateChains[i];
@@ -167,7 +168,7 @@ public class CertificateInfoDialog extends TitledScrollingDialog implements Coll
                Certificate currentIssuerCertificate = currentCertificateChain[1];
                if (!buttonsAdded.containsKey(currentIssuerCertificate) && !this._alreadyViewedCertificates.containsKey(currentIssuerCertificate)) {
                   buttonsAdded.put(currentIssuerCertificate, currentIssuerCertificate);
-                  ButtonField viewCertField = (ButtonField)(new Object(CertificateResources.getString(17), 12884901888L));
+                  ButtonField viewCertField = new ButtonField(CertificateResources.getString(17), 12884901888L);
                   viewCertField.setChangeListener(this);
                   viewCertField.setCookie(currentIssuerCertificate);
                   this.addScrollingField(viewCertField);
@@ -182,7 +183,7 @@ public class CertificateInfoDialog extends TitledScrollingDialog implements Coll
       if (this._allowFetchStatus
          && (this._bestCertificateChainProperties & 1024) == 0
          && CertificateStatusProviderFacade.queryStatusAvailability(this._bestCertificateChain, true)) {
-         this._fetchStatus = (ButtonField)(new Object(CertificateResources.getString(31), 12884901888L));
+         this._fetchStatus = new ButtonField(CertificateResources.getString(31), 12884901888L);
          this._fetchStatus.setChangeListener(this);
          this.addScrollingField(this._fetchStatus);
       }
@@ -228,7 +229,7 @@ public class CertificateInfoDialog extends TitledScrollingDialog implements Coll
    }
 
    protected String getKeyUsageString() {
-      StringBuffer keyUsageStringBuffer = (StringBuffer)(new Object());
+      StringBuffer keyUsageStringBuffer = new StringBuffer();
 
       for (int i = 0; i < 15; i++) {
          long currentUsage = (long)1 << i;
@@ -298,7 +299,7 @@ public class CertificateInfoDialog extends TitledScrollingDialog implements Coll
       // 0e: aload 1
       // 0f: invokeinterface net/rim/device/api/crypto/CryptoSystem.getBitLength ()I 1
       // 14: istore 3
-      // 15: new java/lang/Object
+      // 15: new java/lang/StringBuffer
       // 18: dup
       // 19: aload 2
       // 1a: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -343,7 +344,7 @@ public class CertificateInfoDialog extends TitledScrollingDialog implements Coll
    ) {
       super(style);
       if (certificate == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._certificate = certificate;
@@ -352,10 +353,10 @@ public class CertificateInfoDialog extends TitledScrollingDialog implements Coll
       this._cryptoSystemProperties = cryptoSystemProperties;
       this._allowFetchStatus = allowFetchStatus && CertificateStatusProviderFacade.available();
       this._ticket = ticket;
-      this._alreadyViewedCertificates = (Hashtable)(alreadyViewedCertificates != null ? alreadyViewedCertificates : new Object());
+      this._alreadyViewedCertificates = alreadyViewedCertificates != null ? alreadyViewedCertificates : new Hashtable();
       this._certStatusField = null;
       this._fetchStatus = null;
-      HorizontalFieldManager titleManager = (HorizontalFieldManager)(new Object(1152921504606846976L));
+      HorizontalFieldManager titleManager = new HorizontalFieldManager(1152921504606846976L);
       this._certificateIconField = CryptoIndicatorImages.getImageField(0);
       titleManager.add(this._certificateIconField);
       String title = null;
@@ -372,7 +373,7 @@ public class CertificateInfoDialog extends TitledScrollingDialog implements Coll
          title = this._certificate.getSubjectFriendlyName();
       }
 
-      LabelField friendlyNameField = (LabelField)(new Object(title, 64));
+      LabelField friendlyNameField = new LabelField(title, 64);
       friendlyNameField.setFont(super._boldFont);
       titleManager.add(friendlyNameField);
       this.setTitle(titleManager);
@@ -425,7 +426,7 @@ public class CertificateInfoDialog extends TitledScrollingDialog implements Coll
    protected void onUiEngineAttached(boolean attached) {
       if (attached) {
          this._certificateStatusManager = CertificateStatusManager.getInstance();
-         this._certificateStatusManager.addCollectionListener(new Object(this));
+         this._certificateStatusManager.addCollectionListener(new WeakReference(this));
          super.onUiEngineAttached(attached);
       } else {
          super.onUiEngineAttached(attached);
@@ -461,11 +462,11 @@ public class CertificateInfoDialog extends TitledScrollingDialog implements Coll
       }
 
       if (certStatusDate > 0) {
-         certStatusString = MessageFormat.format(CertificateResources.getString(19), new Object[]{certStatusString, getTimeString(certStatusDate)});
+         certStatusString = MessageFormat.format(CertificateResources.getString(19), new String[]{certStatusString, getTimeString(certStatusDate)});
       }
 
       if (revocationReason != null) {
-         certStatusString = ((StringBuffer)(new Object())).append(certStatusString).append('\n').append(revocationReason).toString();
+         certStatusString = certStatusString + '\n' + revocationReason;
       }
 
       return certStatusString;

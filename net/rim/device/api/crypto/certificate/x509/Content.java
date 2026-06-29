@@ -1,10 +1,11 @@
 package net.rim.device.api.crypto.certificate.x509;
 
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 import java.util.Enumeration;
 import java.util.Vector;
 import net.rim.device.api.crypto.CryptoSystem;
 import net.rim.device.api.crypto.CryptoUtilities;
+import net.rim.device.api.crypto.InvalidCryptoSystemException;
 import net.rim.device.api.crypto.PublicKey;
 import net.rim.device.api.crypto.SignatureVerifier;
 import net.rim.device.api.crypto.asn1.ASN1BitSet;
@@ -14,14 +15,17 @@ import net.rim.device.api.crypto.asn1.ASN1InputStream;
 import net.rim.device.api.crypto.asn1.ASN1SignedByteArray;
 import net.rim.device.api.crypto.certificate.CertificateDisplayField;
 import net.rim.device.api.crypto.certificate.CertificateExtension;
+import net.rim.device.api.crypto.certificate.CertificateParsingException;
 import net.rim.device.api.crypto.certificate.CertificateUtilities;
+import net.rim.device.api.crypto.certificate.CertificateVerificationException;
 import net.rim.device.api.crypto.certificate.DistinguishedName;
+import net.rim.device.api.crypto.certificate.NoIssuerFoundException;
+import net.rim.device.api.crypto.certificate.SubjectKeyStoreIndex;
 import net.rim.device.api.crypto.encoder.DecodedSignature;
 import net.rim.device.api.crypto.encoder.PublicKeyDecoder;
 import net.rim.device.api.crypto.encoder.SignatureDecoder;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
-import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.api.crypto.oid.OID;
 import net.rim.device.api.crypto.oid.OIDs;
 import net.rim.device.api.util.Arrays;
@@ -52,7 +56,7 @@ final class Content implements Persistable {
    protected PublicKey _publicKey;
    protected byte[] _encoding;
 
-   public Content(byte[] param1) {
+   public Content(byte[] param1) throws CertificateParsingException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -115,7 +119,7 @@ final class Content implements Persistable {
       // 062: iadd
       // 063: iload 3
       // 064: if_icmple 06f
-      // 067: new java/lang/Object
+      // 067: new net/rim/device/api/crypto/certificate/CertificateParsingException
       // 06a: dup
       // 06b: invokespecial net/rim/device/api/crypto/certificate/CertificateParsingException.<init> ()V
       // 06e: athrow
@@ -237,7 +241,7 @@ final class Content implements Persistable {
       // 156: isub
       // 157: putfield net/rim/device/api/crypto/certificate/x509/Content._encodedKeyLength I
       // 15a: aload 0
-      // 15b: new java/lang/Object
+      // 15b: new java/io/ByteArrayInputStream
       // 15e: dup
       // 15f: aload 0
       // 160: getfield net/rim/device/api/crypto/certificate/x509/Content._encoding [B
@@ -308,7 +312,7 @@ final class Content implements Persistable {
       // 1eb: putfield net/rim/device/api/crypto/certificate/x509/Content._encodedFormHashCode I
       // 1ee: return
       // 1ef: astore 2
-      // 1f0: new java/lang/Object
+      // 1f0: new net/rim/device/api/crypto/certificate/CertificateParsingException
       // 1f3: dup
       // 1f4: invokespecial net/rim/device/api/crypto/certificate/CertificateParsingException.<init> ()V
       // 1f7: athrow
@@ -325,7 +329,7 @@ final class Content implements Persistable {
       try {
          switch (field) {
             case 1:
-               ASN1InputStream keyStream = new ASN1InputStream((InputStream)(new Object(this._encoding, this._encodedKeyOffset, this._encodedKeyLength)));
+               ASN1InputStream keyStream = new ASN1InputStream(new ByteArrayInputStream(this._encoding, this._encodedKeyOffset, this._encodedKeyLength));
                ASN1InputStream keySequence = keyStream.readSequence();
                keySequence.readSequence();
                return keySequence.readBitString().toByteArray();
@@ -345,22 +349,22 @@ final class Content implements Persistable {
 
    public final void verify(KeyStore keystore) {
       if (keystore == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       try {
          if (!keystore.existsIndex(-1581141357654337861L)) {
-            keystore.addIndex((KeyStoreIndex)(new Object()));
+            keystore.addIndex(new SubjectKeyStoreIndex());
          }
 
          Enumeration enumeration = keystore.elements(-1581141357654337861L, this._issuer);
          if (!enumeration.hasMoreElements()) {
-            throw new Object();
+            throw new NoIssuerFoundException();
          }
 
          PublicKey issuerKey = ((KeyStoreData)enumeration.nextElement()).getPublicKey();
          if (issuerKey == null) {
-            throw new Object();
+            throw new CertificateVerificationException();
          }
 
          this.verify(issuerKey);
@@ -369,22 +373,22 @@ final class Content implements Persistable {
       }
    }
 
-   public final void verify(PublicKey issuerPublicKey) {
+   public final void verify(PublicKey issuerPublicKey) throws CertificateVerificationException {
       if (issuerPublicKey == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (this._issuerPublicKey != null) {
          if (!this._issuerPublicKey.equals(issuerPublicKey)) {
-            throw new Object();
+            throw new CertificateVerificationException();
          }
       } else {
          try {
-            DecodedSignature decoder = SignatureDecoder.decode((InputStream)(new Object(this._encoding, this._signatureOffset, this._signatureLength)), "X509");
+            DecodedSignature decoder = SignatureDecoder.decode(new ByteArrayInputStream(this._encoding, this._signatureOffset, this._signatureLength), "X509");
             SignatureVerifier verifier = decoder.getVerifier(issuerPublicKey);
             verifier.update(this._encoding, this._tbsCertificateOffset, this._tbsCertificateLength);
             if (!verifier.verify()) {
-               throw new Object();
+               throw new CertificateVerificationException();
             }
 
             if (this._publicKey == null && this._issuerPublicKeyCryptoSystem == null) {
@@ -395,20 +399,20 @@ final class Content implements Persistable {
                this._issuerPublicKey = issuerPublicKey;
             }
          } finally {
-            throw new Object();
+            throw new CertificateVerificationException();
          }
       }
    }
 
-   public final void verify() {
+   public final void verify() throws CertificateVerificationException, NoIssuerFoundException {
       if (this.isRoot()) {
          try {
             this.verify(this.getPublicKey());
          } finally {
-            throw new Object();
+            throw new CertificateVerificationException();
          }
       } else {
-         throw new Object();
+         throw new NoIssuerFoundException();
       }
    }
 
@@ -451,7 +455,7 @@ final class Content implements Persistable {
          }
 
          asn1Stream.readSequence(2, 1);
-         String[] array = new Object[0];
+         String[] array = new String[0];
          int endOffset = asn1Stream.getEndPosition();
 
          while (asn1Stream.getStartPosition() < endOffset) {
@@ -518,7 +522,7 @@ final class Content implements Persistable {
             tagToSearchFor = 6;
       }
 
-      String[] array = new Object[0];
+      String[] array = new String[0];
 
       try {
          ASN1InputByteArray asn1Stream = new ASN1InputByteArray(encoding);
@@ -541,18 +545,18 @@ final class Content implements Persistable {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public final PublicKey getPublicKey() {
+   public final PublicKey getPublicKey() throws InvalidCryptoSystemException {
       if (this._publicKey != null) {
          return this._publicKey;
       }
 
       try {
          this._publicKey = PublicKeyDecoder.decode(
-            (InputStream)(new Object(this._encoding, this._encodedKeyOffset, this._encodedKeyLength)), "X509", this._issuerPublicKeyCryptoSystem, null
+            new ByteArrayInputStream(this._encoding, this._encodedKeyOffset, this._encodedKeyLength), "X509", this._issuerPublicKeyCryptoSystem, null
          );
          return this._publicKey;
       } catch (Throwable var3) {
-         throw new Object(e.toString());
+         throw new InvalidCryptoSystemException(e.toString());
       }
    }
 
@@ -575,7 +579,7 @@ final class Content implements Persistable {
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:174)
       //
       // Bytecode:
-      // 00: new java/lang/Object
+      // 00: new java/io/ByteArrayInputStream
       // 03: dup
       // 04: aload 0
       // 05: getfield net/rim/device/api/crypto/certificate/x509/Content._encoding [B
@@ -663,7 +667,7 @@ final class Content implements Persistable {
          return null;
       }
 
-      CertificateExtension[] extensions = new Object[this._extensions.length];
+      CertificateExtension[] extensions = new CertificateExtension[this._extensions.length];
       System.arraycopy(this._extensions, 0, extensions, 0, extensions.length);
       return extensions;
    }
@@ -673,7 +677,7 @@ final class Content implements Persistable {
          return null;
       }
 
-      CertificateExtension[] extensions = new Object[0];
+      CertificateExtension[] extensions = new CertificateExtension[0];
       int numExtensions = this._extensions.length;
 
       for (int i = 0; i < numExtensions; i++) {
@@ -737,7 +741,7 @@ final class Content implements Persistable {
             String additionalEmail = cert.getSubject().getEmailAddress();
             if (additionalEmail != null) {
                if (email == null) {
-                  email = new Object[]{additionalEmail};
+                  email = new String[]{additionalEmail};
                } else {
                   Array.resize(email, email.length + 1);
                   email[email.length - 1] = additionalEmail;
@@ -832,7 +836,7 @@ final class Content implements Persistable {
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object("X.509 Certificate for: '"))).append(this.getSubject().toString()).append('\'').toString();
+      return "X.509 Certificate for: '" + this.getSubject().toString() + '\'';
    }
 
    private final CertificateExtension[] readExtensions(ASN1InputByteArray inputStream) {
@@ -841,7 +845,7 @@ final class Content implements Persistable {
       }
 
       inputStream.readSequence(1, 3);
-      Vector extensionsVector = (Vector)(new Object());
+      Vector extensionsVector = new Vector();
       int endOffset = inputStream.getEndPosition();
 
       while (inputStream.getStartPosition() < endOffset) {
@@ -853,10 +857,10 @@ final class Content implements Persistable {
          }
 
          byte[] extnValue = inputStream.readOctetString();
-         extensionsVector.addElement(new Object(extnID, critical, extnValue));
+         extensionsVector.addElement(new CertificateExtension(extnID, critical, extnValue));
       }
 
-      CertificateExtension[] extensions = new Object[extensionsVector.size()];
+      CertificateExtension[] extensions = new CertificateExtension[extensionsVector.size()];
 
       for (int i = 0; i < extensions.length; i++) {
          extensions[i] = (CertificateExtension)extensionsVector.elementAt(i);
@@ -921,12 +925,12 @@ final class Content implements Persistable {
       return 0;
    }
 
-   private final void setKeyUsage() {
+   private final void setKeyUsage() throws CertificateParsingException {
       CertificateExtension extension = this.getExtension(OIDs.getOID(-1252264021));
       if (extension != null) {
          byte[] keyUsageExtensionValue = extension.getValue();
          if (keyUsageExtensionValue == null) {
-            throw new Object();
+            throw new CertificateParsingException();
          }
 
          this._keyUsageBitSet = new ASN1InputByteArray(keyUsageExtensionValue).readBitString();
@@ -936,7 +940,7 @@ final class Content implements Persistable {
       if (extension != null) {
          byte[] keyUsageExtensionValue = extension.getValue();
          if (keyUsageExtensionValue == null) {
-            throw new Object();
+            throw new CertificateParsingException();
          }
 
          ASN1InputByteArray keyUsageOids = new ASN1InputByteArray(keyUsageExtensionValue);

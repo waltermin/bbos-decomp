@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import net.rim.device.api.crypto.CryptoSystem;
 import net.rim.device.api.crypto.ECCryptoSystem;
 import net.rim.device.api.crypto.ECPrivateKey;
+import net.rim.device.api.crypto.InvalidCryptoSystemException;
 import net.rim.device.api.crypto.KEACryptoSystem;
 import net.rim.device.api.crypto.KEAPrivateKey;
 import net.rim.device.api.crypto.PrivateKey;
@@ -16,13 +17,13 @@ final class KeyStore_RIM_PrivateKeyDecoder3 extends KeyStore_PrivateKeyDecoder {
       try {
          switch (algorithm.charAt(0)) {
             case '2':
-               throw new Object();
+               throw new IllegalArgumentException();
             case '3':
             default: {
                byte[] cryptoSys = Utility.readData(input);
-               String curveName = (String)(new Object(cryptoSys));
+               String curveName = new String(cryptoSys);
                if (curveName == null) {
-                  throw new Object();
+                  throw new InvalidCryptoSystemException();
                }
 
                ECCryptoSystem eccCryptoSystem = new ECCryptoSystem(curveName);
@@ -39,7 +40,7 @@ final class KeyStore_RIM_PrivateKeyDecoder3 extends KeyStore_PrivateKeyDecoder {
             }
          }
       } catch (Throwable var10) {
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       }
    }
 

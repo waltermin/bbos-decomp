@@ -4,7 +4,6 @@ import net.rim.device.api.system.Application;
 import net.rim.device.api.system.Backlight;
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.ui.Keypad;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.DialogFieldManager;
@@ -17,11 +16,11 @@ final class SecurityApp$SendForEmergencyCallDialog extends PopupDialog implement
    private static final long DIALOG_TIMEOUT = 20000L;
 
    SecurityApp$SendForEmergencyCallDialog(SecurityApp _1) {
-      super((Manager)(new Object()), 33554432);
+      super(new DialogFieldManager(), 33554432);
       this.this$0 = _1;
       DialogFieldManager dfm = (DialogFieldManager)this.getDelegate();
-      dfm.setIcon((BitmapField)(new Object(Bitmap.getPredefinedBitmap(2), 51539607552L)));
-      dfm.setMessage((RichTextField)(new Object(_1._rb.getString(748), 36028797018963968L)));
+      dfm.setIcon(new BitmapField(Bitmap.getPredefinedBitmap(2), 51539607552L));
+      dfm.setMessage(new RichTextField(_1._rb.getString(748), 36028797018963968L));
       this.setStatusPriority(-2147483647);
       this._securityApp = (SecurityApp)Application.getApplication();
       this._securityApp.invokeLater(this, 20000, false);

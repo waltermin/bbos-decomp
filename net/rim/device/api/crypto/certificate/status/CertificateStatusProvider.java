@@ -31,7 +31,7 @@ public class CertificateStatusProvider {
 
    public static final boolean register(CertificateStatusProvider provider) {
       if (provider == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (_providers.get(provider.getProviderId()) != null) {
@@ -56,7 +56,7 @@ public class CertificateStatusProvider {
 
    public static final boolean queryStatusAvailability(Certificate[] certChain, boolean extendedChecking) {
       if (certChain == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       String certificateServiceUID = KeyStoreOptions.getCertificateServiceUID();
@@ -80,7 +80,7 @@ public class CertificateStatusProvider {
       CertificateStatusRequest request, CertificateStatusListener listener, boolean allowDismiss, boolean allowDetails
    ) {
       if (request == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       CertificateStatusQuery query = new CertificateStatusQuery(request, KeyStoreOptions.getCertificateServiceUID(), listener);
@@ -89,7 +89,7 @@ public class CertificateStatusProvider {
       int closeReason = queryDialog.getCloseReason();
       switch (closeReason) {
          case 0:
-            throw new Object();
+            throw new RuntimeException();
          case 1:
             CertificateStatusDialog statusDialog = new CertificateStatusDialog(query, request.getKeyStore(), allowDetails, 134217728);
             BackgroundDialog.show(statusDialog);
@@ -107,7 +107,7 @@ public class CertificateStatusProvider {
 
    public static final boolean requestCertificateStatusInternal(CertificateStatusRequest request, CertificateStatusListener listener) {
       if (request == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       CertificateStatusQuery query = new CertificateStatusQuery(request, KeyStoreOptions.getCertificateServiceUID(), listener);
@@ -133,7 +133,7 @@ public class CertificateStatusProvider {
 
    public static final int fetchCertificateStatus(CertificateStatusRequest request, CertificateStatusListener listener) {
       if (request == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       CertificateStatusQuery query = new CertificateStatusQuery(request, KeyStoreOptions.getCertificateServiceUID(), listener);
@@ -168,7 +168,7 @@ public class CertificateStatusProvider {
       _providers = applicationRegistry.getLongHashtable(-2347883093695494417L);
       _queriesInProgress = (MultiMap)applicationRegistry.getOrWaitFor(5422056262400636262L);
       if (_queriesInProgress == null) {
-         _queriesInProgress = (MultiMap)(new Object());
+         _queriesInProgress = new MultiMap();
          applicationRegistry.put(5422056262400636262L, _queriesInProgress);
       }
    }

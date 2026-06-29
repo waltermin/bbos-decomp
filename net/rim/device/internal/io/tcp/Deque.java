@@ -1,5 +1,7 @@
 package net.rim.device.internal.io.tcp;
 
+import java.io.IOException;
+
 public final class Deque {
    private Deque$Element _head;
    private Deque$Element _tail;
@@ -13,9 +15,9 @@ public final class Deque {
       return this.dequeueHeadElement()._data;
    }
 
-   private final Deque$Element dequeueHeadElement() {
+   private final Deque$Element dequeueHeadElement() throws IOException {
       if (this._size == 0) {
-         throw new Object();
+         throw new IOException();
       } else {
          Deque$Element out = this._head;
          if (this._size == 1) {
@@ -32,17 +34,17 @@ public final class Deque {
       }
    }
 
-   public final Object dequeueTail() {
+   public final Object dequeueTail() throws IOException {
       if (this._size == 0) {
-         throw new Object();
+         throw new IOException();
       } else {
          return this._size == 1 ? this.dequeueHead() : this.dequeueTailElement()._data;
       }
    }
 
-   private final Deque$Element dequeueTailElement() {
+   private final Deque$Element dequeueTailElement() throws IOException {
       if (this._size == 0) {
-         throw new Object();
+         throw new IOException();
       }
 
       if (this._size == 1) {
@@ -95,9 +97,9 @@ public final class Deque {
       return this.getElement(index)._data;
    }
 
-   private final Deque$Element getElement(int index) {
+   private final Deque$Element getElement(int index) throws IOException {
       if (this._size == 0) {
-         throw new Object();
+         throw new IOException();
       }
 
       if (index <= this._size - 1 && index >= 0) {
@@ -118,7 +120,7 @@ public final class Deque {
 
          return temp;
       } else {
-         throw new Object();
+         throw new IndexOutOfBoundsException();
       }
    }
 
@@ -140,7 +142,7 @@ public final class Deque {
 
    private final void insertElementAt(Deque$Element newElement, int index) {
       if (index > this._size || index < 0) {
-         throw new Object();
+         throw new IndexOutOfBoundsException();
       }
 
       if (this._size == index) {

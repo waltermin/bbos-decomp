@@ -24,9 +24,6 @@ public final class OpenSession extends Model {
 
    @Override
    final String getProperties() {
-      return ((StringBuffer)(new Object()))
-         .append(this.toPropertyString("device", this._device))
-         .append(this.toPropertyString("hidden", String.valueOf(this._hidden)))
-         .toString();
+      return this.toPropertyString("device", this._device) + this.toPropertyString("hidden", String.valueOf(this._hidden));
    }
 }

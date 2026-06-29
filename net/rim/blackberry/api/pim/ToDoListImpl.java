@@ -4,6 +4,7 @@ import java.util.Enumeration;
 import net.rim.blackberry.api.pim.resource.PIMResResource;
 import net.rim.device.api.collection.CollectionEventSource;
 import net.rim.device.api.i18n.ResourceBundle;
+import net.rim.device.api.util.ObjectEnumerator;
 import net.rim.device.apps.api.task.TaskCollection;
 import net.rim.device.apps.api.task.TaskCollectionHolder;
 import net.rim.device.apps.api.task.TaskModel;
@@ -37,7 +38,7 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
          case 101:
          case 102:
          case 106:
-            throw new Object(fieldID);
+            throw new UnsupportedFieldException(fieldID);
          case 103:
             return _resources.getString(27);
          case 104:
@@ -51,7 +52,7 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
          case 16777225:
             return _resources.getString(29);
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -62,7 +63,7 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
          case 101:
          case 102:
          case 106:
-            throw new Object(fieldID);
+            throw new UnsupportedFieldException(fieldID);
          case 103:
             return 2;
          case 104:
@@ -73,7 +74,7 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
          case 16777225:
             return 3;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -93,7 +94,7 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
          case 16777225:
             return true;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -103,22 +104,22 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
    }
 
    @Override
-   public final void close() {
+   public final void close() throws PIMException {
       if (!super._closed) {
          super._closed = true;
       } else {
-         throw new Object(LIST_CLOSED_MESSAGE, 2);
+         throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
    }
 
    @Override
-   public final Enumeration items() {
+   public final Enumeration items() throws PIMException {
       if (super._closed) {
-         throw new Object(LIST_CLOSED_MESSAGE, 2);
+         throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
 
       if (super._mode == 2) {
-         throw new Object(WRITEONLY_MESSAGE);
+         throw new SecurityException(WRITEONLY_MESSAGE);
       }
 
       int size = this._collection.size();
@@ -128,21 +129,21 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
          matchingElements[i] = new ToDoImpl(super._mode, (TaskModel)this._collection.getAt(i), this);
       }
 
-      return (Enumeration)(new Object(matchingElements));
+      return new ObjectEnumerator(matchingElements);
    }
 
    @Override
-   public final Enumeration items(PIMItem matching) {
+   public final Enumeration items(PIMItem matching) throws PIMException {
       if (super._closed) {
-         throw new Object(LIST_CLOSED_MESSAGE, 2);
+         throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
 
       if (super._mode == 2) {
-         throw new Object(WRITEONLY_MESSAGE);
+         throw new SecurityException(WRITEONLY_MESSAGE);
       }
 
-      if (!(matching instanceof Object)) {
-         throw new Object();
+      if (!(matching instanceof ToDo)) {
+         throw new IllegalArgumentException();
       }
 
       ToDo matchingToDo = (ToDo)matching;
@@ -173,17 +174,17 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
          }
       }
 
-      return (Enumeration)(new Object(matchingElements));
+      return new ObjectEnumerator(matchingElements);
    }
 
    @Override
-   public final Enumeration items(String matching) {
+   public final Enumeration items(String matching) throws PIMException {
       if (super._closed) {
-         throw new Object(LIST_CLOSED_MESSAGE, 2);
+         throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
 
       if (super._mode == 2) {
-         throw new Object(WRITEONLY_MESSAGE);
+         throw new SecurityException(WRITEONLY_MESSAGE);
       }
 
       int size = this._collection.size();
@@ -197,21 +198,21 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
          }
       }
 
-      return (Enumeration)(new Object(matchingElements));
+      return new ObjectEnumerator(matchingElements);
    }
 
    @Override
-   public final Enumeration items(long startDate, long endDate) {
+   public final Enumeration items(long startDate, long endDate) throws PIMException {
       if (super._closed) {
-         throw new Object(LIST_CLOSED_MESSAGE, 2);
+         throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
 
       if (startDate > endDate) {
-         throw new Object("End date specified occurs prior to specified start date.");
+         throw new PIMException("End date specified occurs prior to specified start date.");
       }
 
       if (super._mode == 2) {
-         throw new Object(WRITEONLY_MESSAGE);
+         throw new SecurityException(WRITEONLY_MESSAGE);
       }
 
       int size = this._collection.size();
@@ -227,7 +228,7 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
          }
       }
 
-      return (Enumeration)(new Object(matchingElements));
+      return new ObjectEnumerator(matchingElements);
    }
 
    @Override
@@ -283,7 +284,7 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
    @Override
    public final ToDo importToDo(ToDo element) {
       if (element == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       ToDo newToDo = this.createToDo();
@@ -315,27 +316,27 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
    }
 
    @Override
-   public final void removeToDo(ToDo element) {
+   public final void removeToDo(ToDo element) throws PIMException {
       if (super._closed) {
-         throw new Object(LIST_CLOSED_MESSAGE, 2);
+         throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
 
       if (super._mode == 1) {
-         throw new Object(READONLY_MESSAGE);
+         throw new SecurityException(READONLY_MESSAGE);
       }
 
       if (element == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (element instanceof ToDoImpl) {
          if (element.getPIMList().equals(this)) {
             this._collection.remove(((ToDoImpl)element).getRimTodo());
          } else {
-            throw new Object(PIMListImpl.NOT_FOUND_MESSAGE, 6);
+            throw new PIMException(PIMListImpl.NOT_FOUND_MESSAGE, 6);
          }
       } else {
-         throw new Object(PIMListImpl.NOT_FOUND_MESSAGE, 6);
+         throw new PIMException(PIMListImpl.NOT_FOUND_MESSAGE, 6);
       }
    }
 

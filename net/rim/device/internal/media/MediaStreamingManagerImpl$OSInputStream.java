@@ -1,6 +1,7 @@
 package net.rim.device.internal.media;
 
 import java.io.InputStream;
+import net.rim.device.api.system.UnsupportedOperationException;
 
 class MediaStreamingManagerImpl$OSInputStream extends InputStream {
    private int _session;
@@ -13,7 +14,7 @@ class MediaStreamingManagerImpl$OSInputStream extends InputStream {
 
    @Override
    public int read() {
-      throw new Object();
+      throw new UnsupportedOperationException();
    }
 
    @Override

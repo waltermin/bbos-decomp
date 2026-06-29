@@ -3,7 +3,6 @@ package net.rim.wica.runtime.script.internal.handler;
 import net.rim.device.api.io.http.HttpDateParser;
 import net.rim.ecmascript.runtime.Convert;
 import net.rim.ecmascript.runtime.ESDate;
-import net.rim.ecmascript.runtime.ESObject;
 import net.rim.ecmascript.runtime.ESString;
 import net.rim.ecmascript.runtime.ThrownValue;
 import net.rim.ecmascript.runtime.Value;
@@ -21,7 +20,7 @@ public final class DateFieldHandler implements PropertyHandler {
       switch (component.getDef().getAccessType(id)) {
          case 268435456:
          case 536870912:
-            return Value.makeObjectValue((ESObject)(new Object(component.getLongFieldValue(id))));
+            return Value.makeObjectValue(new ESDate(component.getLongFieldValue(id)));
          case 1073741824:
             throw ThrownValue.typeError(RuntimeResources.getString(85, name));
          default:
@@ -35,7 +34,7 @@ public final class DateFieldHandler implements PropertyHandler {
       switch (collection.getDef().getAccessType(id)) {
          case 268435456:
          case 536870912:
-            return Value.makeObjectValue((ESObject)(new Object(collection.getLongFieldValue(handle, id))));
+            return Value.makeObjectValue(new ESDate(collection.getLongFieldValue(handle, id)));
          case 1073741824:
             throw ThrownValue.typeError(RuntimeResources.getString(85, name));
          default:
@@ -74,8 +73,8 @@ public final class DateFieldHandler implements PropertyHandler {
    public static final long getValue(long esObject) throws ThrownValue {
       long fieldVal = 0;
       Object obj = Convert.toObject(esObject);
-      if (!(obj instanceof Object)) {
-         if (!(obj instanceof Object)) {
+      if (!(obj instanceof ESDate)) {
+         if (!(obj instanceof ESString)) {
             throw ThrownValue.typeError(RuntimeResources.getString(122));
          } else {
             return HttpDateParser.parse(((ESString)obj).getValue());

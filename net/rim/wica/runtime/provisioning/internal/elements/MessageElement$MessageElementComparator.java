@@ -13,7 +13,7 @@ class MessageElement$MessageElementComparator implements Comparator {
          MessageElement m2 = (MessageElement)o2;
          return m1.getName().compareTo(m2.getName());
       } else {
-         throw new Object();
+         throw new ClassCastException();
       }
    }
 

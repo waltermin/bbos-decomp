@@ -11,6 +11,7 @@ import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
 import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.verb.DefaultVerbProvider;
+import net.rim.device.apps.api.framework.verb.LastUsedDefaultVerbProvider;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.quickcontact.QuickContactItem;
 import net.rim.device.apps.api.quickcontact.QuickContactList$Listener;
@@ -23,10 +24,10 @@ final class PhoneListManager extends VerticalFieldManager implements GlobalEvent
    private int _view = -1;
    private UiApplication _app;
    protected PhoneNumberKeywordList _addressBookSearchList;
-   private VerticalFieldManager _phoneNumberKeywordListManager = (VerticalFieldManager)(new Object(299067162755072L));
+   private VerticalFieldManager _phoneNumberKeywordListManager = new VerticalFieldManager(299067162755072L);
    private PhoneListView _phoneListView;
-   private LabelField _hintField = (LabelField)(new Object(PhoneResources.getString(6300), 1152921504606846980L));
-   private LabelField _emptyAddressField = (LabelField)(new Object(PhoneResources.getString(6306), 1152921504606846980L));
+   private LabelField _hintField = new LabelField(PhoneResources.getString(6300), 1152921504606846980L);
+   private LabelField _emptyAddressField = new LabelField(PhoneResources.getString(6306), 1152921504606846980L);
    private Field _currentList;
    static final int NO_VIEW = 0;
    static final int PHONE_LIST_VIEW = 1;
@@ -149,11 +150,11 @@ final class PhoneListManager extends VerticalFieldManager implements GlobalEvent
 
       Verb defaultVerb = menu.getDefaultVerb();
       DefaultVerbProvider defaultVerbProvider = null;
-      if (defaultVerb instanceof Object) {
+      if (defaultVerb instanceof DialVerb) {
          DialVerb dv = (DialVerb)defaultVerb;
          Object o = dv.getIdentity();
-         if (o instanceof Object) {
-            defaultVerbProvider = (DefaultVerbProvider)(new Object((RIMModel)o));
+         if (o instanceof RIMModel) {
+            defaultVerbProvider = new LastUsedDefaultVerbProvider((RIMModel)o);
          }
       }
 
@@ -170,14 +171,14 @@ final class PhoneListManager extends VerticalFieldManager implements GlobalEvent
       if (this._currentList instanceof PhoneNumberKeywordList) {
          this._addressBookSearchList.onRollOffPhoneNumberInput();
       } else {
-         if (this._currentList instanceof Object) {
+         if (this._currentList instanceof PhoneListView) {
             this._phoneListView.setFirstIndex();
          }
       }
    }
 
    final Object getSelectedItem() {
-      return this._currentList instanceof Object ? this._phoneListView.getSelectedItem() : null;
+      return this._currentList instanceof PhoneListView ? this._phoneListView.getSelectedItem() : null;
    }
 
    @Override

@@ -1,6 +1,7 @@
 package net.rim.device.internal.io.store;
 
 import java.io.InputStream;
+import net.rim.device.api.io.file.FileIOException;
 
 final class ContentStoreInputStream extends InputStream {
    private ContentStoreConnection _connection;
@@ -13,36 +14,36 @@ final class ContentStoreInputStream extends InputStream {
    }
 
    @Override
-   public final int read() {
+   public final int read() throws FileIOException {
       if (this._closed) {
-         throw new Object(1000);
+         throw new FileIOException(1000);
       } else {
          return this._in.read();
       }
    }
 
    @Override
-   public final int read(byte[] b, int off, int len) {
+   public final int read(byte[] b, int off, int len) throws FileIOException {
       if (this._closed) {
-         throw new Object(1000);
+         throw new FileIOException(1000);
       } else {
          return this._in.read(b, off, len);
       }
    }
 
    @Override
-   public final long skip(long n) {
+   public final long skip(long n) throws FileIOException {
       if (this._closed) {
-         throw new Object(1000);
+         throw new FileIOException(1000);
       } else {
          return this._in.skip(n);
       }
    }
 
    @Override
-   public final int available() {
+   public final int available() throws FileIOException {
       if (this._closed) {
-         throw new Object(1000);
+         throw new FileIOException(1000);
       } else {
          return this._in.available();
       }
@@ -54,9 +55,9 @@ final class ContentStoreInputStream extends InputStream {
    }
 
    @Override
-   public final synchronized void reset() {
+   public final synchronized void reset() throws FileIOException {
       if (this._closed) {
-         throw new Object(1000);
+         throw new FileIOException(1000);
       }
 
       this._in.reset();

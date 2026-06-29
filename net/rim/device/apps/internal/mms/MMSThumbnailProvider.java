@@ -117,13 +117,13 @@ final class MMSThumbnailProvider extends MetaDataProvider {
       // 0bc: aload 11
       // 0be: iload 14
       // 0c0: invokevirtual net/rim/device/api/system/EncodedImage.setScaleY32 (I)V
-      // 0c3: new java/lang/Object
+      // 0c3: new net/rim/device/api/system/Bitmap
       // 0c6: dup
       // 0c7: iload 4
       // 0c9: iload 5
       // 0cb: invokespecial net/rim/device/api/system/Bitmap.<init> (II)V
       // 0ce: astore 15
-      // 0d0: new java/lang/Object
+      // 0d0: new net/rim/device/api/ui/Graphics
       // 0d3: dup
       // 0d4: aload 15
       // 0d6: invokespecial net/rim/device/api/ui/Graphics.<init> (Lnet/rim/device/api/system/Bitmap;)V

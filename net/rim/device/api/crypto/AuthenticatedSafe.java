@@ -14,7 +14,7 @@ public class AuthenticatedSafe extends PKCS12ContentInfo {
    public void parse() throws PKCS12ParsingException {
       if (!super._parsed) {
          try {
-            ASN1InputByteArray infoByteArrays = (ASN1InputByteArray)(new Object(super._buffer));
+            ASN1InputByteArray infoByteArrays = new ASN1InputByteArray(super._buffer);
             infoByteArrays.readSequence();
 
             for (int next = infoByteArrays.peekNextTag(); next != -1 && next == 16; next = infoByteArrays.peekNextTag()) {

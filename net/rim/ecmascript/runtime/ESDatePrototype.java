@@ -507,7 +507,7 @@ class ESDatePrototype extends ESDate {
    }
 
    private static String toString(long t, int format) {
-      StringBuffer b = (StringBuffer)(new Object());
+      StringBuffer b = new StringBuffer();
       long localTime = localTime(t);
       if (format != 1) {
          b.append(dayStr[weekDay(localTime)]);
@@ -574,7 +574,7 @@ class ESDatePrototype extends ESDate {
    }
 
    private static String toUTCString(long t) {
-      StringBuffer b = (StringBuffer)(new Object());
+      StringBuffer b = new StringBuffer();
       b.append(dayStr[weekDay(t)]);
       b.append(", ");
       twoDigits(b, dateFromTime(t));
@@ -600,7 +600,7 @@ class ESDatePrototype extends ESDate {
 
    private static ESDatePrototype$DateKeyword[] buildKeywords() {
       if (_keywords == null) {
-         Vector timezones = (Vector)(new Object());
+         Vector timezones = new Vector();
 
          for (int i = 0; i < _parseableTimeZones.length; i++) {
             timezones.addElement(_parseableTimeZones[i]);
@@ -626,7 +626,7 @@ class ESDatePrototype extends ESDate {
    }
 
    static String getId(ESDatePrototype$ParseStringIndex s) {
-      StringBuffer b = (StringBuffer)(new Object());
+      StringBuffer b = new StringBuffer();
       int start = s._functionType;
 
       while (!(s._functionType >= s._propertyNames)) {

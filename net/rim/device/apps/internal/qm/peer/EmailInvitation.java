@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.qm.peer;
 import java.io.EOFException;
 import net.rim.device.api.crypto.Digest;
 import net.rim.device.api.crypto.RandomSource;
+import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.i18n.MessageFormat;
 import net.rim.device.api.synchronization.ConverterUtilities;
 import net.rim.device.api.system.PersistentContent;
@@ -108,18 +109,18 @@ final class EmailInvitation implements PersistableRIMModel, FieldProvider {
    }
 
    public final IntHashtable getPersistentData() {
-      IntHashtable data = (IntHashtable)(new Object(9));
-      data.put(1, new Object(this._stage));
-      data.put(2, new Object(this._cookie));
-      data.put(3, new Object(this._passcodeFlag ? 1 : 0));
+      IntHashtable data = new IntHashtable(9);
+      data.put(1, new Integer(this._stage));
+      data.put(2, new Integer(this._cookie));
+      data.put(3, new Integer(this._passcodeFlag ? 1 : 0));
       data.put(4, this._cryptokey);
       data.put(5, this._pin);
       data.put(6, this._confirm);
       data.put(7, this._password);
-      data.put(39, new Object(this._passcodeFlag ? 1 : 0));
+      data.put(39, new Integer(this._passcodeFlag ? 1 : 0));
       data.put(40, this._replyTo);
       data.put(8, this._question);
-      data.put(41, new Object(this._isPin ? 1 : 0));
+      data.put(41, new Integer(this._isPin ? 1 : 0));
       return data;
    }
 
@@ -130,13 +131,13 @@ final class EmailInvitation implements PersistableRIMModel, FieldProvider {
          int type = keys.nextElement();
          switch (type) {
             case 1:
-               this._stage = data.get(1);
+               this._stage = (Integer)data.get(1);
                break;
             case 2:
-               this._cookie = data.get(2);
+               this._cookie = (Integer)data.get(2);
                break;
             case 3:
-               this._passcodeFlag = data.get(3) != 0;
+               this._passcodeFlag = (Integer)data.get(3) != 0;
                break;
             case 4:
                this._cryptokey = (byte[])data.get(4);
@@ -154,19 +155,19 @@ final class EmailInvitation implements PersistableRIMModel, FieldProvider {
                this._question = data.get(8);
                break;
             case 39:
-               this._inbound = data.get(39) != 0;
+               this._inbound = (Integer)data.get(39) != 0;
                break;
             case 40:
                this._replyTo = data.get(40);
                break;
             case 41:
-               this._isPin = data.get(41) != 0;
+               this._isPin = (Integer)data.get(41) != 0;
          }
       }
    }
 
    final byte[] pickle(String body) {
-      DataBuffer db = (DataBuffer)(new Object(false));
+      DataBuffer db = new DataBuffer(false);
       db.writeByte(1);
       db.writeByte(1);
       ConverterUtilities.convertInt(db, 1, this._stage, 1);
@@ -183,7 +184,7 @@ final class EmailInvitation implements PersistableRIMModel, FieldProvider {
    }
 
    final boolean unPickle(byte[] data) throws EOFException {
-      DataBuffer db = (DataBuffer)(new Object(data, 0, data.length, false));
+      DataBuffer db = new DataBuffer(data, 0, data.length, false);
       if (db.readByte() != 1) {
          return false;
       }
@@ -353,7 +354,7 @@ final class EmailInvitation implements PersistableRIMModel, FieldProvider {
          }
 
          String name = Utils.resolveName(replyTo);
-         WrongPasscodeNotification request = new WrongPasscodeNotification(replyTo, MessageFormat.format(PeerResources.getString(2006), new Object[]{name}));
+         WrongPasscodeNotification request = new WrongPasscodeNotification(replyTo, MessageFormat.format(PeerResources.getString(2006), new String[]{name}));
          contactList.addNewRequest(request);
       }
    }
@@ -417,7 +418,7 @@ final class EmailInvitation implements PersistableRIMModel, FieldProvider {
          length = EncryptionUtilities.getCiphertextLength(PeerData.getPasswordKey().length());
          byte[] encryptedPassword = new byte[length];
          EncryptionUtilities.encrypt(key, PeerData.getPasswordKey().getBytes(), 0, PeerData.getPasswordKey().length(), encryptedPassword, 0);
-         Digest sha1Digest = (Digest)(new Object());
+         Digest sha1Digest = new SHA1Digest();
          sha1Digest.update(key1);
          byte[] k_kconf = new byte[sha1Digest.getDigestLength()];
          sha1Digest.getDigest(k_kconf, 0);
@@ -488,10 +489,10 @@ final class EmailInvitation implements PersistableRIMModel, FieldProvider {
                   System.arraycopy(key1, key1.length - 16, key, 0, 16);
                   byte[] sha1Digest = new byte[8];
                   EncryptionUtilities.decrypt(key, this._pin, 0, this._pin.length, sha1Digest, 0);
-                  _tempPin = (String)(new Object(sha1Digest));
+                  _tempPin = new String(sha1Digest);
                   sha1Digest = new byte[this._password.length];
                   EncryptionUtilities.decrypt(key, this._password, 0, this._password.length, sha1Digest, 0);
-                  _tempPassword = (String)(new Object(sha1Digest));
+                  _tempPassword = new String(sha1Digest);
                   _tempPassword.trim();
                   var15 = false;
                } finally {
@@ -499,14 +500,14 @@ final class EmailInvitation implements PersistableRIMModel, FieldProvider {
                      EmailInvitationUtilities.sendEmailMessage(sender, "", PeerResources.getString(895), this, false, false);
                      contactList.removeContact(pending);
                      WrongPasscodeNotification request = new WrongPasscodeNotification(
-                        sender, MessageFormat.format(PeerResources.getString(2003), new Object[]{name})
+                        sender, MessageFormat.format(PeerResources.getString(2003), new String[]{name})
                      );
                      contactList.addNewRequest(request);
                      return;
                   }
                }
 
-               Digest sha1Digest = (Digest)(new Object());
+               Digest sha1Digest = new SHA1Digest();
                sha1Digest.update(key1);
                byte[] k_kconf = new byte[sha1Digest.getDigestLength()];
                sha1Digest.getDigest(k_kconf, 0);
@@ -514,7 +515,7 @@ final class EmailInvitation implements PersistableRIMModel, FieldProvider {
                   EmailInvitationUtilities.sendEmailMessage(sender, "", PeerResources.getString(895), this, false, false);
                   contactList.removeContact(pending);
                   WrongPasscodeNotification request = new WrongPasscodeNotification(
-                     sender, MessageFormat.format(PeerResources.getString(2003), new Object[]{name})
+                     sender, MessageFormat.format(PeerResources.getString(2003), new String[]{name})
                   );
                   contactList.addNewRequest(request);
                   return;

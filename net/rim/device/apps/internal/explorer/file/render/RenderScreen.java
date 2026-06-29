@@ -1,6 +1,6 @@
 package net.rim.device.apps.internal.explorer.file.render;
 
-import javax.microedition.io.ContentConnection;
+import javax.microedition.io.HttpConnection;
 import javax.microedition.io.InputConnection;
 import net.rim.device.api.browser.field.BrowserContent;
 import net.rim.device.api.browser.field.RenderingApplication;
@@ -12,6 +12,7 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.apps.api.ribbon.RibbonBanner;
 import net.rim.device.apps.api.ui.AppsMainScreen;
@@ -110,8 +111,8 @@ public final class RenderScreen extends AppsMainScreen {
       int mediaType = 0;
       if (this._item != null) {
          mediaType = this._item.getMediaType();
-      } else if (input instanceof Object) {
-         mediaType = MIMETypeAssociations.getMediaTypeFromMIMEType(((ContentConnection)input).getType());
+      } else if (input instanceof HttpConnection) {
+         mediaType = MIMETypeAssociations.getMediaTypeFromMIMEType(((HttpConnection)input).getType());
       }
 
       boolean isErrorField = false;
@@ -181,7 +182,7 @@ public final class RenderScreen extends AppsMainScreen {
       // 29: getfield net/rim/device/apps/internal/explorer/file/render/RenderScreen._item Lnet/rim/device/apps/internal/explorer/file/FileItemField;
       // 2c: ifnull 57
       // 2f: aload 1
-      // 30: instanceof java/lang/Object
+      // 30: instanceof javax/microedition/io/file/FileConnection
       // 33: ifeq 57
       // 36: aload 0
       // 37: getfield net/rim/device/apps/internal/explorer/file/render/RenderScreen._item Lnet/rim/device/apps/internal/explorer/file/FileItemField;
@@ -189,7 +190,7 @@ public final class RenderScreen extends AppsMainScreen {
       // 3d: bipush 1
       // 3e: if_icmpne 57
       // 41: aload 1
-      // 42: checkcast java/lang/Object
+      // 42: checkcast javax/microedition/io/file/FileConnection
       // 45: invokeinterface javax/microedition/io/file/FileConnection.fileSize ()J 1
       // 4a: ldc_w 51200
       // 4d: i2l
@@ -352,14 +353,9 @@ public final class RenderScreen extends AppsMainScreen {
    }
 
    private final Field createRenderErrorField() {
-      return (Field)(new Object(
-         ((StringBuffer)(new Object()))
-            .append(ExplorerResources.getString(86))
-            .append('\n')
-            .append(this._item != null ? FileUtilities.getDisplayName(this._item.getFullPath()) : "")
-            .toString(),
-         36028797018963968L
-      ));
+      return new RichTextField(
+         ExplorerResources.getString(86) + '\n' + (this._item != null ? FileUtilities.getDisplayName(this._item.getFullPath()) : ""), 36028797018963968L
+      );
    }
 
    public final int getContentWindowWidth() {

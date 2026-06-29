@@ -3,6 +3,7 @@ package net.rim.device.api.crypto.pgp;
 import net.rim.device.api.crypto.AbstractPseudoRandomSource;
 import net.rim.device.api.crypto.Digest;
 import net.rim.device.api.crypto.RandomSource;
+import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.util.Arrays;
 
 public final class PGPSaltedKDFPseudoRandomSource extends AbstractPseudoRandomSource implements PGPPseudoRandomSource {
@@ -36,7 +37,7 @@ public final class PGPSaltedKDFPseudoRandomSource extends AbstractPseudoRandomSo
    }
 
    public PGPSaltedKDFPseudoRandomSource(byte[] passPhrase, byte[] salt) {
-      this(passPhrase, salt == null ? RandomSource.getBytes(8) : salt, (Digest)(new Object()));
+      this(passPhrase, salt == null ? RandomSource.getBytes(8) : salt, new SHA1Digest());
    }
 
    public PGPSaltedKDFPseudoRandomSource(byte[] passPhrase, byte[] salt, Digest digest) {
@@ -64,7 +65,7 @@ public final class PGPSaltedKDFPseudoRandomSource extends AbstractPseudoRandomSo
          this._kdf = new PGPSimpleKDFPseudoRandomSource(hashPhrase, digest);
          this._salt = salt;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -77,7 +78,7 @@ public final class PGPSaltedKDFPseudoRandomSource extends AbstractPseudoRandomSo
       if (buffer != null && offset >= 0 && length >= 0 && buffer.length - length >= offset) {
          this._kdf.xorBytes(buffer, offset, length);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

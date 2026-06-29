@@ -16,7 +16,7 @@ import net.rim.device.apps.internal.secureemail.RecipientData$CertificateDetails
 import net.rim.device.apps.internal.secureemail.SecureEmailFactory;
 
 public class PGPKeyStoreLDAPCertificateHarvester extends KeyStoreLDAPCertificateHarvester {
-   private Hashtable _fetchedADKs = (Hashtable)(new Object());
+   private Hashtable _fetchedADKs = new Hashtable();
    private static final boolean DEBUG = false;
 
    public PGPKeyStoreLDAPCertificateHarvester(SecureEmailFactory secureEmailFactory, boolean isPINMessage) {
@@ -38,7 +38,7 @@ public class PGPKeyStoreLDAPCertificateHarvester extends KeyStoreLDAPCertificate
    private void harvestADKS(RecipientData$CertificateDetails[] certificateDetails) {
       for (int i = 0; i < certificateDetails.length; i++) {
          Certificate certificate = certificateDetails[i].getCertificate();
-         if (certificate instanceof Object) {
+         if (certificate instanceof PGPCertificate) {
             byte[][] adkFingerprints = ((PGPCertificate)certificate).getADKFingerprints();
             if (adkFingerprints == null) {
                return;
@@ -52,7 +52,7 @@ public class PGPKeyStoreLDAPCertificateHarvester extends KeyStoreLDAPCertificate
                if (this._fetchedADKs.containsKey(currentADKFingerprint)) {
                   currADKData = (RecipientData)this._fetchedADKs.get(currentADKFingerprint);
                } else {
-                  currADKData = (RecipientData)(new Object(null, 3, currentKeyID, null));
+                  currADKData = new RecipientData(null, 3, currentKeyID, null);
                   this.harvestCertificates(currADKData, false);
                   this._fetchedADKs.put(currentADKFingerprint, currADKData);
                }
@@ -93,6 +93,6 @@ public class PGPKeyStoreLDAPCertificateHarvester extends KeyStoreLDAPCertificate
          }
       }
 
-      return (RecipientData$CertificateDetails)(new Object(certificate, label, certificateChainProperties, certificateChain, null, emailAddress));
+      return new RecipientData$CertificateDetails(certificate, label, certificateChainProperties, certificateChain, null, emailAddress);
    }
 }

@@ -7,10 +7,10 @@ public final class ECDSASignatureVerifier implements SignatureVerifier {
    private byte[] _s;
 
    public ECDSASignatureVerifier(ECPublicKey key, byte[] r, int rOffset, byte[] s, int sOffset) {
-      this(key, (Digest)(new Object()), r, rOffset, s, sOffset);
+      this(key, new SHA1Digest(), r, rOffset, s, sOffset);
    }
 
-   public ECDSASignatureVerifier(ECPublicKey key, Digest digest, byte[] r, int rOffset, byte[] s, int sOffset) {
+   public ECDSASignatureVerifier(ECPublicKey key, Digest digest, byte[] r, int rOffset, byte[] s, int sOffset) throws InvalidSignatureEncodingException {
       if (key != null && digest != null && r != null && s != null) {
          this._key = key;
          this._digest = digest;
@@ -34,19 +34,19 @@ public final class ECDSASignatureVerifier implements SignatureVerifier {
 
                this._s = CryptoByteArrayArithmetic.ensureLength(this._s, privateKeyLength);
             } finally {
-               throw new Object();
+               throw new InvalidSignatureEncodingException();
             }
          } else {
-            throw new Object();
+            throw new InvalidSignatureEncodingException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object("ECDSA/"))).append(this._digest.getAlgorithm()).toString();
+      return "ECDSA/" + this._digest.getAlgorithm();
    }
 
    @Override

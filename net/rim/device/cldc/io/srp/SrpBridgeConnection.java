@@ -193,7 +193,7 @@ final class SrpBridgeConnection implements DatagramConnection, ConnectionBaseInt
    }
 
    final synchronized void setSrpConnectionStatusListener(SrpConnectionStatusListener listener) {
-      this._connListener = (WeakReference)(new Object(listener));
+      this._connListener = new WeakReference(listener);
    }
 
    public final void setDatagramStatusListener(DatagramStatusListener listener) {
@@ -222,11 +222,11 @@ final class SrpBridgeConnection implements DatagramConnection, ConnectionBaseInt
       return addressBase != null && this._receiveFilter != null ? this._receiveFilter.equals(addressBase) : false;
    }
 
-   final Datagram newDatagram(int length, boolean send) {
+   final Datagram newDatagram(int length, boolean send) throws IOException {
       if (this.getConnectionState() == 2) {
          return new SrpDatagramInternal(null, 0, length, send ? this._addressBase : this._receiveFilter);
       } else {
-         throw new Object();
+         throw new IOException();
       }
    }
 
@@ -246,7 +246,7 @@ final class SrpBridgeConnection implements DatagramConnection, ConnectionBaseInt
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   final Connection reopen(String name, int mode, boolean timeouts, String[] params) {
+   final Connection reopen(String name, int mode, boolean timeouts, String[] params) throws IOException {
       URL url = null;
       int linkType = -1;
       int connectionType = -1;
@@ -254,10 +254,10 @@ final class SrpBridgeConnection implements DatagramConnection, ConnectionBaseInt
       String connectionScheme = "socket";
 
       try {
-         url = (URL)(new Object("socket", name));
+         url = new URL("socket", name);
          URLParameters urlParams = url.getRIMParameters();
          if (urlParams == null) {
-            urlParams = (URLParameters)(new Object());
+            urlParams = new URLParameters();
          }
 
          urlParams.remove("deviceside");
@@ -322,7 +322,7 @@ final class SrpBridgeConnection implements DatagramConnection, ConnectionBaseInt
          url.setScheme(connectionScheme);
       } catch (Throwable var18) {
          EventLogger.logEvent(5159979649545707334L, 1380541810, 2);
-         throw new Object(e.getMessage());
+         throw new IOException(e.getMessage());
       }
 
       if (linkType != -1 && connectionType != -1) {
@@ -337,7 +337,7 @@ final class SrpBridgeConnection implements DatagramConnection, ConnectionBaseInt
          this.initializeConnection(params);
          return this;
       } else {
-         throw new Object("Unspecified connection params");
+         throw new IOException("Unspecified connection params");
       }
    }
 
@@ -365,7 +365,7 @@ final class SrpBridgeConnection implements DatagramConnection, ConnectionBaseInt
                var7 = true;
                if (this.getConnectionState() == 2) {
                   if (dgram == null) {
-                     throw new Object();
+                     throw new IOException();
                   }
 
                   this._out.write(dgram.getData());
@@ -390,7 +390,7 @@ final class SrpBridgeConnection implements DatagramConnection, ConnectionBaseInt
             } catch (Throwable var10) {
                label124: {
                   EventLogger.logEvent(5159979649545707334L, 1415082850, 2);
-                  if (e instanceof Object) {
+                  if (e instanceof IOException) {
                      event = 13185;
                   }
 
@@ -405,13 +405,13 @@ final class SrpBridgeConnection implements DatagramConnection, ConnectionBaseInt
             }
          } finally {
             if (var7) {
-               if (dgram instanceof Object) {
+               if (dgram instanceof DatagramBase) {
                   this.handleDatagramStatus(((DatagramBase)dgram).getDatagramId(), event, null);
                }
             }
          }
 
-         if (dgram instanceof Object) {
+         if (dgram instanceof DatagramBase) {
             this.handleDatagramStatus(((DatagramBase)dgram).getDatagramId(), event, null);
             return;
          }
@@ -419,7 +419,7 @@ final class SrpBridgeConnection implements DatagramConnection, ConnectionBaseInt
          return;
       }
 
-      if (dgram instanceof Object) {
+      if (dgram instanceof DatagramBase) {
          this.handleDatagramStatus(((DatagramBase)dgram).getDatagramId(), event, null);
       }
    }
@@ -454,7 +454,7 @@ final class SrpBridgeConnection implements DatagramConnection, ConnectionBaseInt
 
                      if (this.getConnectionState() == 0) {
                         EventLogger.logEvent(5159979649545707334L, 1381528183, 2);
-                        ioe = (IOException)(new Object());
+                        ioe = new IOException();
                         throw ioe;
                      }
                   }
@@ -476,7 +476,7 @@ final class SrpBridgeConnection implements DatagramConnection, ConnectionBaseInt
                         case 2:
                            this.subClose(3);
                            closeInvoked = true;
-                           ioe = (IOException)(new Object());
+                           ioe = new IOException();
                            throw ioe;
                         default:
                            break label357;
@@ -521,7 +521,7 @@ final class SrpBridgeConnection implements DatagramConnection, ConnectionBaseInt
                                  case 2:
                                     this.subClose(3);
                                     closeInvoked = true;
-                                    ioe = (IOException)(new Object());
+                                    ioe = new IOException();
                                     throw ioe;
                               }
                            }
@@ -533,7 +533,7 @@ final class SrpBridgeConnection implements DatagramConnection, ConnectionBaseInt
                               }
 
                               dgram.setData(data, 0, data.length);
-                              if (!(dgram instanceof Object)) {
+                              if (!(dgram instanceof DatagramBase)) {
                                  dgram.setAddress(this._receiveFilter.getAddress());
                               } else {
                                  ((DatagramBase)dgram).setAddressBase(this._receiveFilter);
@@ -563,7 +563,7 @@ final class SrpBridgeConnection implements DatagramConnection, ConnectionBaseInt
                } else {
                   if (e instanceof TLSIOException) {
                      eventCode = 1397967973;
-                  } else if (!(e instanceof Object)) {
+                  } else if (!(e instanceof IOException)) {
                      eventCode = 1431201138;
                   } else {
                      eventCode = 1381524850;
@@ -575,7 +575,7 @@ final class SrpBridgeConnection implements DatagramConnection, ConnectionBaseInt
                }
 
                EventLogger.logEvent(5159979649545707334L, eventCode, logEvent);
-               ioe = (IOException)(new Object());
+               ioe = new IOException();
                var16 = false;
                break label396;
             }
@@ -629,7 +629,7 @@ final class SrpBridgeConnection implements DatagramConnection, ConnectionBaseInt
    private final synchronized void setConnectionState(int state) {
       switch (state) {
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          case 1:
          case 2:

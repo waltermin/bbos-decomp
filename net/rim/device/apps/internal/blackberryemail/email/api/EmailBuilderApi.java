@@ -8,7 +8,7 @@ import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
 import net.rim.device.apps.internal.blackberryemail.header.HeaderTypes;
 
 public final class EmailBuilderApi {
-   private static ContextObjectWR _contextObjectWR = (ContextObjectWR)(new Object());
+   private static ContextObjectWR _contextObjectWR = new ContextObjectWR();
 
    private EmailBuilderApi() {
    }

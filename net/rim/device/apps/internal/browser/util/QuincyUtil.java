@@ -9,6 +9,7 @@ import net.rim.device.apps.internal.browser.stack.RawDataCache;
 import net.rim.vm.DebugSupport;
 import net.rim.vm.Memory;
 import net.rim.vm.Process;
+import net.rim.vm.TooManyThreadsError;
 
 public final class QuincyUtil {
    private static int _lastUrlHash;
@@ -16,7 +17,7 @@ public final class QuincyUtil {
 
    public static final void sendQuincy(Throwable e, boolean gc) {
       BrowserImpl browser = BrowserDaemonRegistry.getInstance();
-      if (!(e instanceof Object)) {
+      if (!(e instanceof OutOfMemoryError)) {
          if (gc) {
             Memory.thoroughGC();
          }
@@ -42,7 +43,7 @@ public final class QuincyUtil {
          int rdns = rawDataCache.getShortTermCacheSize();
          rawDataCache.clearShortTermCache();
          Memory.thoroughGC();
-         StringBuffer internalBuff = (StringBuffer)(new Object("BOOM rdc="));
+         StringBuffer internalBuff = new StringBuffer("BOOM rdc=");
          internalBuff.append(rdc);
          internalBuff.append(", rds=");
          internalBuff.append(rds);
@@ -53,7 +54,7 @@ public final class QuincyUtil {
          internalBuff.append(", url=");
          internalBuff.append(browser.getLastUrl());
          EventLogger.logEvent(1907089860548946979L, internalBuff.toString().getBytes(), 0);
-         if (e instanceof Object) {
+         if (e instanceof TooManyThreadsError) {
             DebugSupport.logStackTraces();
          }
 

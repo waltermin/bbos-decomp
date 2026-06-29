@@ -22,7 +22,7 @@ public class Compiler {
    private String _source;
    private int _version;
    private int _labelId;
-   private Vector _labels = (Vector)(new Object());
+   private Vector _labels = new Vector();
    private CompiledScript _globalCompiledCode;
    private static int _versionMajor = 0;
    private static final int VERSION_MINOR = 8;
@@ -142,7 +142,7 @@ public class Compiler {
    }
 
    private String[] hashToArray(IndexHash ht) {
-      String[] sa = new Object[ht.size()];
+      String[] sa = new String[ht.size()];
       Enumeration e = ht.elements();
       int i = 0;
 
@@ -159,7 +159,7 @@ public class Compiler {
       int i = 0;
 
       while (e.hasMoreElements()) {
-         sa[i++] = e.nextElement();
+         sa[i++] = (Double)e.nextElement();
       }
 
       return sa;

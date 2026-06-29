@@ -21,8 +21,8 @@ final class SyncAgentTransactionManager$TransactionScheduler extends Thread {
 
    private final Vector createTransactionsVector() {
       Object xObject = this._persistedTransactions.getContents();
-      Vector xTransactionVector = (Vector)(new Object(0));
-      if (xObject instanceof Object) {
+      Vector xTransactionVector = new Vector(0);
+      if (xObject instanceof Vector) {
          xTransactionVector = (Vector)xObject;
          Enumeration xTransactionsList = xTransactionVector.elements();
 

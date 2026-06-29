@@ -19,7 +19,7 @@ class DocViewDisplayField$2 implements Runnable {
       // 00: aload 0
       // 01: getfield net/rim/device/apps/internal/docview/gui/DocViewDisplayField$2.this$0 Lnet/rim/device/apps/internal/docview/gui/DocViewDisplayField;
       // 04: invokevirtual net/rim/device/api/ui/Field.getScreen ()Lnet/rim/device/api/ui/Screen;
-      // 07: checkcast java/lang/Object
+      // 07: checkcast net/rim/device/apps/api/utility/framework/ModelScreen
       // 0a: invokevirtual net/rim/device/apps/api/utility/framework/ModelScreen.leaveScreen ()V
       // 0d: goto 15
       // 10: astore 1

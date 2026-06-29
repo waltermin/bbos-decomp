@@ -5,6 +5,7 @@ import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.Tag;
@@ -84,10 +85,10 @@ public final class MessageListOptionsScreen extends SaveableMainScreenOptionsLis
    }
 
    protected final Manager createSection(String title) {
-      Manager section = (Manager)(new Object(1153484454560268288L));
-      LabelField titleField = (LabelField)(new Object(title, 1152921504606846976L));
+      Manager section = new VerticalFieldManager(1153484454560268288L);
+      LabelField titleField = new LabelField(title, 1152921504606846976L);
       section.add(titleField);
-      section.add((Field)(new Object()));
+      section.add(new SeparatorField());
       section.setTag(OPTIONS_SECTION_AREA_TAG);
       titleField.setTag(OPTIONS_SECTION_HEADER_TAG);
       this._screen.add(section);
@@ -97,10 +98,10 @@ public final class MessageListOptionsScreen extends SaveableMainScreenOptionsLis
    private final void addKeepMessagesDurationField(Manager manager) {
       short[] durationValues = this._messageListOptions.getKeepMessagesDurationChoices();
       int numDurations = durationValues.length;
-      String[] durations = new Object[numDurations];
+      String[] durations = new String[numDurations];
       short currentDuration = this._messageListOptions.getKeepMessagesDuration();
       int initialIndex = 0;
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
 
       for (int i = 0; i < numDurations; i++) {
          short duration = durationValues[i];
@@ -126,25 +127,25 @@ public final class MessageListOptionsScreen extends SaveableMainScreenOptionsLis
          }
       }
 
-      this._keepMessagesDuration = (ObjectChoiceField)(new Object(MessageResources.getString(193), durations, initialIndex));
+      this._keepMessagesDuration = new ObjectChoiceField(MessageResources.getString(193), durations, initialIndex);
       this._keepMessagesDuration.setCookie(durationValues);
       manager.add(this._keepMessagesDuration);
    }
 
    private final void addSMSEmailInboxField(Manager manager) {
       int initialIndex = this._messageListOptions.getSMSEmailInbox();
-      this._SMSEmailInbox = (ObjectChoiceField)(new Object(MessageResources.getString(222), MessageResources.getStringArray(223), initialIndex));
+      this._SMSEmailInbox = new ObjectChoiceField(MessageResources.getString(222), MessageResources.getStringArray(223), initialIndex);
       manager.add(this._SMSEmailInbox);
    }
 
    private final void addListSeparatorAppearanceField(Manager manager) {
       int initialIndex = this._messageListOptions.getListSeparatorAppearance();
-      this._listSeparatorAppearance = (ObjectChoiceField)(new Object(MessageResources.getString(238), MessageResources.getStringArray(239), initialIndex));
+      this._listSeparatorAppearance = new ObjectChoiceField(MessageResources.getString(238), MessageResources.getStringArray(239), initialIndex);
       manager.add(this._listSeparatorAppearance);
    }
 
    private final BooleanChoiceField createField(String name, int flag, Manager manager) {
-      BooleanChoiceField field = (BooleanChoiceField)(new Object(name, 0, this._messageListOptions.getFlag(flag)));
+      BooleanChoiceField field = new BooleanChoiceField(name, 0, this._messageListOptions.getFlag(flag));
       if (manager != null) {
          manager.add(field);
       }
@@ -179,7 +180,7 @@ public final class MessageListOptionsScreen extends SaveableMainScreenOptionsLis
          short SMSEmailInboxSetting = (short)this._SMSEmailInbox.getSelectedIndex();
          if (SMSEmailInboxSetting != this._messageListOptions.getSMSEmailInbox()) {
             this._messageListOptions.setSMSEmailInbox(SMSEmailInboxSetting);
-            ShowMessageApp.postEvent(-8639396151207124460L, 0, 0, new Object(-4696470826620059293L), null);
+            ShowMessageApp.postEvent(-8639396151207124460L, 0, 0, new Long(-4696470826620059293L), null);
             dirtyField = true;
          }
       }
@@ -243,16 +244,16 @@ public final class MessageListOptionsScreen extends SaveableMainScreenOptionsLis
    private final void addMessageListLineModeField(Manager manager) {
       String label = MessageResources.getString(220);
       int initIndex = this._messageListOptions.getMessageListLineMode();
-      this._messageListLineMode = (ObjectChoiceField)(new Object(label, MessageResources.getStringArray(221), initIndex));
+      this._messageListLineMode = new ObjectChoiceField(label, MessageResources.getStringArray(221), initIndex);
       manager.add(this._messageListLineMode);
    }
 
    private final void initDisplayMessageCountAndDisplayNewMessageIndicatorFields(Manager manager) {
-      this._displayMessageOptions = (VerticalFieldManager)(new Object());
+      this._displayMessageOptions = new VerticalFieldManager();
       manager.add(this._displayMessageOptions);
       String label = MessageResources.getString(215);
       short initIndex = this._messageListOptions.getDisplayMessageCount();
-      this._displayMessageCount = (ObjectChoiceField)(new Object(label, MessageResources.getStringArray(216), initIndex));
+      this._displayMessageCount = new ObjectChoiceField(label, MessageResources.getStringArray(216), initIndex);
       this._displayMessageOptions.add(this._displayMessageCount);
       this._displayNewMessagIndicatorField = this.showDisplayNewMessageIndicator();
       this._displayNewMessagIndicator = this.createField(MessageResources.getString(217), 1024, null);
@@ -304,10 +305,10 @@ public final class MessageListOptionsScreen extends SaveableMainScreenOptionsLis
    }
 
    private final void initAutoAttachmentDownloadFields(Manager manager) {
-      this._autoAttachmentDownloadOptionsMgr = (VerticalFieldManager)(new Object());
+      this._autoAttachmentDownloadOptionsMgr = new VerticalFieldManager();
       manager.add(this._autoAttachmentDownloadOptionsMgr);
       short initValue = this._messageListOptions.getAutoDownloadAttachments();
-      this._autoAttachmentDownload = (ObjectChoiceField)(new Object(MessageResources.getString(231), MessageResources.getStringArray(233), initValue));
+      this._autoAttachmentDownload = new ObjectChoiceField(MessageResources.getString(231), MessageResources.getStringArray(233), initValue);
       this._autoAttachmentDownload.setChangeListener(this);
       this._autoAttachmentDownloadOptionsMgr.add(this._autoAttachmentDownload);
       this._displayHighSpeedNetworkField = this.displayHighSpeedNetworkField();

@@ -4,6 +4,7 @@ import net.rim.device.api.collection.Collection;
 import net.rim.device.api.collection.CollectionEventSource;
 import net.rim.device.api.collection.CollectionListenerWithHint;
 import net.rim.device.api.collection.LongKeyProviderAdaptor;
+import net.rim.device.api.collection.LongKeyProviderAdaptorComparator;
 import net.rim.device.api.collection.NotificationSuspension;
 import net.rim.device.api.collection.OrderedList;
 import net.rim.device.api.collection.ReadableList;
@@ -21,11 +22,11 @@ public class MessageFilter implements ReadableList, CollectionListenerWithHint, 
    protected BigVector _subset = null;
    private byte _flags;
    protected Comparator _comparator;
-   protected CollectionListenerManager _collectionListenerManager = (CollectionListenerManager)(new Object());
+   protected CollectionListenerManager _collectionListenerManager = new CollectionListenerManager();
    protected static LongKeyProviderAdaptor _longKeyProviderAdaptor = new DateSortKeyProviderIndirection();
 
    protected boolean passes(Object message) {
-      if (!(message instanceof Object)) {
+      if (!(message instanceof VisibilityControl)) {
          return true;
       }
 
@@ -35,8 +36,8 @@ public class MessageFilter implements ReadableList, CollectionListenerWithHint, 
 
    @Override
    public boolean isAscending() {
-      if (!(this._messages instanceof Object)) {
-         throw new Object("_messages does not implement OrderedList");
+      if (!(this._messages instanceof OrderedList)) {
+         throw new IllegalStateException("_messages does not implement OrderedList");
       } else {
          return ((OrderedList)this._messages).isAscending();
       }
@@ -137,14 +138,14 @@ public class MessageFilter implements ReadableList, CollectionListenerWithHint, 
 
    @Override
    public void suspendNotification(Object context) {
-      if (this._messages instanceof Object) {
+      if (this._messages instanceof NotificationSuspension) {
          ((NotificationSuspension)this._messages).suspendNotification(context);
       }
    }
 
    @Override
    public void resumeNotification(Object context) {
-      if (this._messages instanceof Object) {
+      if (this._messages instanceof NotificationSuspension) {
          ((NotificationSuspension)this._messages).resumeNotification(context);
       }
    }
@@ -177,7 +178,7 @@ public class MessageFilter implements ReadableList, CollectionListenerWithHint, 
          try {
             var6 = true;
             int e = this._messages.size();
-            this._subset = (BigVector)(new Object());
+            this._subset = new BigVector();
 
             for (int i = 0; i < e; i++) {
                Object element = this._messages.getAt(i);
@@ -209,7 +210,7 @@ public class MessageFilter implements ReadableList, CollectionListenerWithHint, 
          EventLogger.logEvent(-7509200465648525729L, msg.getBytes(), 1);
 
          try {
-            throw new Object(msg);
+            throw new Throwable(msg);
          } finally {
             ;
          }
@@ -224,7 +225,7 @@ public class MessageFilter implements ReadableList, CollectionListenerWithHint, 
 
    public MessageFilter(ReadableList messages, byte flags) {
       this._messages = messages;
-      this._comparator = (Comparator)(new Object(_longKeyProviderAdaptor));
+      this._comparator = new LongKeyProviderAdaptorComparator(_longKeyProviderAdaptor);
       this._flags = flags;
    }
 

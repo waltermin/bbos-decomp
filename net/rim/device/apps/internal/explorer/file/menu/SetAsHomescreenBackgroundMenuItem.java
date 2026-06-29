@@ -21,21 +21,21 @@ public final class SetAsHomescreenBackgroundMenuItem extends MenuItem {
    @Override
    public final void run() {
       String[] params = null;
-      if (this._field instanceof Object) {
+      if (this._field instanceof Manager) {
          Manager mgr = (Manager)this._field;
          if (mgr.getFieldCount() == 1) {
             ZoomBitmapField zoomField = null;
-            if (mgr.getField(0) instanceof Object) {
+            if (mgr.getField(0) instanceof ZoomBitmapField) {
                zoomField = (ZoomBitmapField)mgr.getField(0);
-            } else if (mgr.getField(0) instanceof Object) {
+            } else if (mgr.getField(0) instanceof Manager) {
                mgr = (Manager)mgr.getField(0);
-               if (mgr.getFieldCount() == 1 && mgr.getField(0) instanceof Object) {
+               if (mgr.getFieldCount() == 1 && mgr.getField(0) instanceof ZoomBitmapField) {
                   zoomField = (ZoomBitmapField)mgr.getField(0);
                }
             }
 
             if (zoomField != null) {
-               params = new Object[]{
+               params = new String[]{
                   Integer.toString(zoomField.getScale()),
                   Integer.toString(zoomField.getRotationValue()),
                   Integer.toString(zoomField.getImageX()),

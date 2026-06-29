@@ -35,9 +35,9 @@ public class CertificateSummaryDataSyncCollection
    SyncCollectionStatusProvider {
    private Vector _certificateSummaryDataSyncModels;
    private boolean _startupComplete;
-   private ContextObjectWR _convertContextWR = (ContextObjectWR)(new Object(19));
+   private ContextObjectWR _convertContextWR = new ContextObjectWR(19);
    private KeyStore[] _keyStoresToSync;
-   protected CollectionListenerManager _listenerManager = (CollectionListenerManager)(new Object());
+   protected CollectionListenerManager _listenerManager = new CollectionListenerManager();
    private static final int COLLECTION_VERSION = 0;
    private static final long INSTANCE_ID = -5204122086742082501L;
    private static CertificateSummaryDataSyncCollection _instance;
@@ -57,13 +57,13 @@ public class CertificateSummaryDataSyncCollection
 
    private CertificateSummaryDataSyncCollection() {
       this._keyStoresToSync = new KeyStore[0];
-      this._certificateSummaryDataSyncModels = (Vector)(new Object());
+      this._certificateSummaryDataSyncModels = new Vector();
       Proxy.getInstance().addSystemListener(this);
    }
 
    public void registerKeyStore(KeyStore keyStore) {
       if (this._startupComplete) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       synchronized (keyStore) {
@@ -251,7 +251,7 @@ public class CertificateSummaryDataSyncCollection
    @Override
    public boolean convert(SyncObject object, DataBuffer buffer, int version) {
       if (object instanceof CertificateSummaryDataSyncModel) {
-         SyncBuffer syncBuffer = (SyncBuffer)(new Object(buffer, version, object.getUID()));
+         SyncBuffer syncBuffer = new SyncBuffer(buffer, version, object.getUID());
          return syncBuffer.addModel((CertificateSummaryDataSyncModel)object, this._convertContextWR.getContextObject());
       } else {
          return false;

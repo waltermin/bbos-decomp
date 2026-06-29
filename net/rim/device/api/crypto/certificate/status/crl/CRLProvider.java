@@ -11,17 +11,18 @@ import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.CertificateServerInfo;
 import net.rim.device.api.crypto.certificate.CertificateServers;
 import net.rim.device.api.crypto.certificate.CertificateStatus;
+import net.rim.device.api.crypto.certificate.SubjectKeyStoreIndex;
 import net.rim.device.api.crypto.certificate.status.CertificateStatusProvider;
 import net.rim.device.api.crypto.certificate.status.ProviderRequestData;
 import net.rim.device.api.crypto.certificate.status.ProviderResponseData;
 import net.rim.device.api.crypto.certificate.status.ProviderUiContext;
 import net.rim.device.api.crypto.certificate.status.StatusProviderException;
+import net.rim.device.api.crypto.certificate.x509.X509Certificate;
 import net.rim.device.api.crypto.certificate.x509.X509DistinguishedName;
 import net.rim.device.api.crypto.keystore.CertificateStatusManager;
 import net.rim.device.api.crypto.keystore.DeviceKeyStore;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
-import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.vm.Array;
 
 public class CRLProvider extends CertificateStatusProvider {
@@ -44,7 +45,7 @@ public class CRLProvider extends CertificateStatusProvider {
       int length = checkEntireChain ? certChain.length : Math.min(certChain.length, 2);
 
       for (int i = 0; i < length; i++) {
-         if (!(certChain[i] instanceof Object)) {
+         if (!(certChain[i] instanceof X509Certificate)) {
             return false;
          }
       }
@@ -98,7 +99,7 @@ public class CRLProvider extends CertificateStatusProvider {
       // 040: aload 1
       // 041: iload 7
       // 043: aaload
-      // 044: instanceof java/lang/Object
+      // 044: instanceof net/rim/device/api/crypto/certificate/x509/X509Certificate
       // 047: ifne 052
       // 04a: new net/rim/device/api/crypto/certificate/status/StatusProviderException
       // 04d: dup
@@ -118,7 +119,7 @@ public class CRLProvider extends CertificateStatusProvider {
       // 068: iload 7
       // 06a: aaload
       // 06b: invokeinterface net/rim/device/api/crypto/certificate/Certificate.getIssuer ()Lnet/rim/device/api/crypto/certificate/DistinguishedName; 1
-      // 070: checkcast java/lang/Object
+      // 070: checkcast net/rim/device/api/crypto/certificate/x509/X509DistinguishedName
       // 073: astore 8
       // 075: aload 3
       // 076: aload 1
@@ -142,11 +143,11 @@ public class CRLProvider extends CertificateStatusProvider {
       // 09a: iload 10
       // 09c: ifgt 0a2
       // 09f: goto 115
-      // 0a2: new java/lang/Object
+      // 0a2: new java/io/ByteArrayOutputStream
       // 0a5: dup
       // 0a6: invokespecial java/io/ByteArrayOutputStream.<init> ()V
       // 0a9: astore 11
-      // 0ab: new java/lang/Object
+      // 0ab: new java/io/DataOutputStream
       // 0ae: dup
       // 0af: aload 11
       // 0b1: invokespecial java/io/DataOutputStream.<init> (Ljava/io/OutputStream;)V
@@ -218,17 +219,17 @@ public class CRLProvider extends CertificateStatusProvider {
    private CertificateStatus getStatus(byte[] statusEncoding) throws StatusProviderException {
       if (statusEncoding != null && statusEncoding.length > 0) {
          try {
-            ByteArrayInputStream input = (ByteArrayInputStream)(new Object(statusEncoding));
-            DataInputStream dataIn = (DataInputStream)(new Object(input));
+            ByteArrayInputStream input = new ByteArrayInputStream(statusEncoding);
+            DataInputStream dataIn = new DataInputStream(input);
             int status = dataIn.readInt();
             long thisUpdate = dataIn.readLong();
             long nextUpdate = dataIn.readLong();
             if (status == 1) {
                long revocationDate = dataIn.readLong();
                int revocationReason = dataIn.readInt();
-               return (CertificateStatus)(new Object(status, System.currentTimeMillis(), thisUpdate, nextUpdate, revocationDate, revocationReason));
+               return new CertificateStatus(status, System.currentTimeMillis(), thisUpdate, nextUpdate, revocationDate, revocationReason);
             } else {
-               return (CertificateStatus)(new Object(status, System.currentTimeMillis(), thisUpdate, nextUpdate, -1));
+               return new CertificateStatus(status, System.currentTimeMillis(), thisUpdate, nextUpdate, -1);
             }
          } finally {
             throw new StatusProviderException();
@@ -240,11 +241,11 @@ public class CRLProvider extends CertificateStatusProvider {
 
    private byte[] getResponderURLs(Certificate[] certChain, boolean checkEntireChain) {
       try {
-         Hashtable hashtable = (Hashtable)(new Object());
+         Hashtable hashtable = new Hashtable();
          this.addDistributionPoints(certChain, checkEntireChain, hashtable);
          this.addServers(hashtable);
-         ByteArrayOutputStream output = (ByteArrayOutputStream)(new Object());
-         DataOutputStream dataOut = (DataOutputStream)(new Object(output));
+         ByteArrayOutputStream output = new ByteArrayOutputStream();
+         DataOutputStream dataOut = new DataOutputStream(output);
          dataOut.writeInt(hashtable.size());
          Enumeration enumeration = hashtable.elements();
 
@@ -256,7 +257,7 @@ public class CRLProvider extends CertificateStatusProvider {
          output.close();
          return output.toByteArray();
       } finally {
-         throw new Object();
+         throw new RuntimeException();
       }
    }
 
@@ -326,14 +327,14 @@ public class CRLProvider extends CertificateStatusProvider {
 
          while (ldapServers.hasMoreElements()) {
             CertificateServerInfo serverInfo = (CertificateServerInfo)ldapServers.nextElement();
-            StringBuffer buffer = (StringBuffer)(new Object());
+            StringBuffer buffer = new StringBuffer();
             buffer.append("ldap://");
             buffer.append(serverInfo.getServer()).append(':');
             buffer.append(serverInfo.getPort()).append('/');
             String serverAndPort = buffer.toString();
 
             for (int i = 0; i < numDirectories; i++) {
-               String fullServer = ((StringBuffer)(new Object())).append(serverAndPort).append(relativeDirectories[i]).append('?').toString();
+               String fullServer = serverAndPort + relativeDirectories[i] + '?';
                hashtable.put(fullServer, fullServer);
             }
          }
@@ -356,7 +357,7 @@ public class CRLProvider extends CertificateStatusProvider {
 
       while (ldapServers.hasMoreElements()) {
          CertificateServerInfo serverInfo = (CertificateServerInfo)ldapServers.nextElement();
-         StringBuffer buffer = (StringBuffer)(new Object());
+         StringBuffer buffer = new StringBuffer();
          buffer.append("ldap://");
          buffer.append(serverInfo.getServer()).append(':');
          buffer.append(serverInfo.getPort()).append('/');
@@ -375,7 +376,7 @@ public class CRLProvider extends CertificateStatusProvider {
    }
 
    private PublicKey[] getIssuerPublicKeys(Certificate certificate, KeyStore keyStore) {
-      PublicKey[] publicKeys = new Object[0];
+      PublicKey[] publicKeys = new PublicKey[0];
       if (certificate.isRoot()) {
          return publicKeys;
       }
@@ -385,7 +386,7 @@ public class CRLProvider extends CertificateStatusProvider {
       }
 
       CertificateStatusManager manager = CertificateStatusManager.getInstance();
-      keyStore.addIndex((KeyStoreIndex)(new Object()));
+      keyStore.addIndex(new SubjectKeyStoreIndex());
       Enumeration enumeration = keyStore.elements(-1581141357654337861L, certificate.getIssuer(), true);
 
       while (enumeration.hasMoreElements()) {

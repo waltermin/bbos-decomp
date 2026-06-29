@@ -42,14 +42,14 @@ class UiOptionsProvider implements OptionsProvider, CollectionListener {
 
    @Override
    public void elementRemoved(Collection collection, Object object) {
-      if (object instanceof Object && ((SyncObject)object).getUID() == -1860137122 && UiOptionsRegistry.getInstance().getLegacyUiOptionsState() == 3) {
+      if (object instanceof SyncObject && ((SyncObject)object).getUID() == -1860137122 && UiOptionsRegistry.getInstance().getLegacyUiOptionsState() == 3) {
          this.cleanUpAndDie();
       }
    }
 
    @Override
    public void elementAdded(Collection collection, Object object) {
-      if (object instanceof Object && ((SyncObject)object).getUID() == -1860137122 && UiOptionsRegistry.getInstance().getLegacyUiOptionsState() == 3) {
+      if (object instanceof SyncObject && ((SyncObject)object).getUID() == -1860137122 && UiOptionsRegistry.getInstance().getLegacyUiOptionsState() == 3) {
          this.callForSyncObjectRemoval(1000);
       }
    }

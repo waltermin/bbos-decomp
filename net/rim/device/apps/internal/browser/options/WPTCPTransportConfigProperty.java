@@ -1,8 +1,8 @@
 package net.rim.device.apps.internal.browser.options;
 
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.CheckboxField;
 import net.rim.device.api.ui.component.EditField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.NumericChoiceField;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.ui.container.VerticalFieldManager;
@@ -41,36 +41,26 @@ public final class WPTCPTransportConfigProperty extends TransportConfigProperty 
       }
 
       if (!super._restrictedAccess) {
-         screen.add((Field)(new Object("")));
-         screen.add((Field)(new Object(BrowserResources.getString(689))));
+         screen.add(new LabelField(""));
+         screen.add(new LabelField(BrowserResources.getString(689)));
       }
 
-      this._http11ModeField = (CheckboxField)(new Object(BrowserResources.getString(690), record.getPropertyAsBoolean(3)));
-      this._persistentConnectionsField = (CheckboxField)(new Object(BrowserResources.getString(691), record.getPropertyAsBoolean(2)));
-      this._authConfigurateAddressField = (EditField)(new Object(
-         ((StringBuffer)(new Object())).append(BrowserResources.getString(692)).append(' ').toString(), record.getPropertyAsString(4)
-      ));
-      this._proxyAddressField = (EditField)(new Object(
-         ((StringBuffer)(new Object())).append(BrowserResources.getString(693)).append(' ').toString(), record.getPropertyAsString(1)
-      ));
-      this._connectProxyAddressField = (EditField)(new Object(
-         ((StringBuffer)(new Object())).append(BrowserResources.getString(719)).append(' ').toString(), record.getPropertyAsString(8)
-      ));
-      this._loadBalancingDNSField = (CheckboxField)(new Object(BrowserResources.getString(702), record.getPropertyAsBoolean(5)));
-      this._primaryDNSField = (EditField)(new Object(
-         ((StringBuffer)(new Object())).append(BrowserResources.getString(703)).append(' ').toString(), record.getPropertyAsString(6)
-      ));
-      this._secondaryDNSField = (EditField)(new Object(
-         ((StringBuffer)(new Object())).append(BrowserResources.getString(704)).append(' ').toString(), record.getPropertyAsString(7)
-      ));
-      this._proxyUsernameTypeField = (NumericChoiceField)(new Object("Username type:", 0, 24, 1, record.getPropertyAsInt(9)));
-      this._proxyPasswordTypeField = (NumericChoiceField)(new Object("Password type:", 0, 24, 1, record.getPropertyAsInt(10)));
-      this._proxyUsernameField = (EditField)(new Object("Username value: ", record.getPropertyAsString(11)));
-      this._proxyPasswordField = (EditField)(new Object("Password value: ", record.getPropertyAsString(12)));
-      this._defaultTCPConfigModeField = (NumericChoiceField)(new Object("Default TCP config mode:", 0, 1, 1, record.getPropertyAsInt(18)));
-      this._alwaysSendBasicProxyAuth = (CheckboxField)(new Object("Always send basic HTTP auth: ", record.getPropertyAsBoolean(21)));
+      this._http11ModeField = new CheckboxField(BrowserResources.getString(690), record.getPropertyAsBoolean(3));
+      this._persistentConnectionsField = new CheckboxField(BrowserResources.getString(691), record.getPropertyAsBoolean(2));
+      this._authConfigurateAddressField = new EditField(BrowserResources.getString(692) + ' ', record.getPropertyAsString(4));
+      this._proxyAddressField = new EditField(BrowserResources.getString(693) + ' ', record.getPropertyAsString(1));
+      this._connectProxyAddressField = new EditField(BrowserResources.getString(719) + ' ', record.getPropertyAsString(8));
+      this._loadBalancingDNSField = new CheckboxField(BrowserResources.getString(702), record.getPropertyAsBoolean(5));
+      this._primaryDNSField = new EditField(BrowserResources.getString(703) + ' ', record.getPropertyAsString(6));
+      this._secondaryDNSField = new EditField(BrowserResources.getString(704) + ' ', record.getPropertyAsString(7));
+      this._proxyUsernameTypeField = new NumericChoiceField("Username type:", 0, 24, 1, record.getPropertyAsInt(9));
+      this._proxyPasswordTypeField = new NumericChoiceField("Password type:", 0, 24, 1, record.getPropertyAsInt(10));
+      this._proxyUsernameField = new EditField("Username value: ", record.getPropertyAsString(11));
+      this._proxyPasswordField = new EditField("Password value: ", record.getPropertyAsString(12));
+      this._defaultTCPConfigModeField = new NumericChoiceField("Default TCP config mode:", 0, 1, 1, record.getPropertyAsInt(18));
+      this._alwaysSendBasicProxyAuth = new CheckboxField("Always send basic HTTP auth: ", record.getPropertyAsBoolean(21));
       int sessionTimeout = record.getPropertyAsInt(20);
-      this._sessionTimeoutField = (EditField)(new Object(BrowserResources.getString(202), sessionTimeout >= 0 ? String.valueOf(sessionTimeout) : null));
+      this._sessionTimeoutField = new EditField(BrowserResources.getString(202), sessionTimeout >= 0 ? String.valueOf(sessionTimeout) : null);
       this._sessionTimeoutField.setFilter(TextFilter.get(1));
       if (!editable) {
          this._http11ModeField.setEditable(false);

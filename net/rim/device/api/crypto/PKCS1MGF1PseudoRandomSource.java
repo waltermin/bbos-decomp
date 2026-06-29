@@ -28,7 +28,7 @@ public final class PKCS1MGF1PseudoRandomSource extends AbstractPseudoRandomSourc
          System.arraycopy(seed, offset, this._digestInput, 0, length);
          this._digest.reset();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -37,15 +37,15 @@ public final class PKCS1MGF1PseudoRandomSource extends AbstractPseudoRandomSourc
    }
 
    public PKCS1MGF1PseudoRandomSource(byte[] seed, int offset, int length) {
-      this(seed, offset, length, (Digest)(new Object()));
+      this(seed, offset, length, new SHA1Digest());
    }
 
    public PKCS1MGF1PseudoRandomSource(byte[] seed) {
-      this(seed, (Digest)(new Object()));
+      this(seed, new SHA1Digest());
    }
 
    public PKCS1MGF1PseudoRandomSource(SymmetricKey seed) {
-      this(seed != null ? seed.getData() : null, (Digest)(new Object()));
+      this(seed != null ? seed.getData() : null, new SHA1Digest());
    }
 
    @Override
@@ -82,7 +82,7 @@ public final class PKCS1MGF1PseudoRandomSource extends AbstractPseudoRandomSourc
             }
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -108,10 +108,10 @@ public final class PKCS1MGF1PseudoRandomSource extends AbstractPseudoRandomSourc
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

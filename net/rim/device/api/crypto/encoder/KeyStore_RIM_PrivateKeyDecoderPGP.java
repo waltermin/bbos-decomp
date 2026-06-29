@@ -2,6 +2,7 @@ package net.rim.device.api.crypto.encoder;
 
 import java.io.DataInputStream;
 import net.rim.device.api.crypto.CryptoSystem;
+import net.rim.device.api.crypto.InvalidKeyEncodingException;
 import net.rim.device.api.crypto.PrivateKey;
 import net.rim.device.api.crypto.pgp.PGPEncodingException;
 import net.rim.device.api.crypto.pgp.PGPPrivateKey;
@@ -12,7 +13,7 @@ import net.rim.vm.Array;
 
 final class KeyStore_RIM_PrivateKeyDecoderPGP extends KeyStore_PrivateKeyDecoder {
    @Override
-   public final PrivateKey decodeKey(DataInputStream encodedKey, CryptoSystem cryptoSystem, String keyAlgorithm) {
+   public final PrivateKey decodeKey(DataInputStream encodedKey, CryptoSystem cryptoSystem, String keyAlgorithm) throws InvalidKeyEncodingException {
       SharedInputStream input = SharedInputStream.getSharedInputStream(encodedKey);
       int numPackets = 0;
       PGPPrivateKeyPacket[] packets = new PGPPrivateKeyPacket[0];
@@ -24,13 +25,13 @@ final class KeyStore_RIM_PrivateKeyDecoderPGP extends KeyStore_PrivateKeyDecoder
             while (true) {
                PGPUtilities.readTagAndLength(input, values);
                if (values[0] != 5 && values[0] != 7) {
-                  throw new Object();
+                  throw new InvalidKeyEncodingException();
                }
 
                byte[] encoding = new byte[values[1]];
                int bytesRead = input.read(encoding);
                if (bytesRead != values[1]) {
-                  throw new Object();
+                  throw new InvalidKeyEncodingException();
                }
 
                PGPPrivateKeyPacket packet = new PGPPrivateKeyPacket(values[0], encoding);
@@ -42,7 +43,7 @@ final class KeyStore_RIM_PrivateKeyDecoderPGP extends KeyStore_PrivateKeyDecoder
             return new PGPPrivateKey(packets);
          }
       } catch (PGPEncodingException e) {
-         throw new Object();
+         throw new InvalidKeyEncodingException();
       }
    }
 

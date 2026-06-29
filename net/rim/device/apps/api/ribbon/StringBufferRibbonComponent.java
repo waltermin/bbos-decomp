@@ -48,7 +48,7 @@ public class StringBufferRibbonComponent extends TextRibbonComponent implements 
       }
 
       StringBuffer text;
-      if (!(context instanceof Object)) {
+      if (!(context instanceof StringBuffer)) {
          text = this.getText();
       } else {
          text = (StringBuffer)context;

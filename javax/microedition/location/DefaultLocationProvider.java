@@ -33,7 +33,7 @@ class DefaultLocationProvider extends LocationProvider implements GlobalEventLis
    }
 
    @Override
-   public Location getLocation(int timeout) throws LocationException {
+   public Location getLocation(int timeout) throws InterruptedException, LocationException {
       if (Application.isEventDispatchThread()) {
          throw new LocationException("getLocation() method cannot be called from event thread");
       }
@@ -41,7 +41,7 @@ class DefaultLocationProvider extends LocationProvider implements GlobalEventLis
       LocationProvider.checkSecurity(TraceBack.getCallingModule(0), "lapi_location");
       synchronized (this) {
          if (timeout == 0 || timeout < -1) {
-            throw new Object("Invalid value of timeout parameter");
+            throw new IllegalArgumentException("Invalid value of timeout parameter");
          }
 
          if (timeout == -1) {
@@ -61,7 +61,7 @@ class DefaultLocationProvider extends LocationProvider implements GlobalEventLis
 
          if (super._reset) {
             super._reset = false;
-            throw new Object();
+            throw new InterruptedException();
          }
 
          createLocation(gpsRegistry.getLocation(super._mode), super._mode);
@@ -128,7 +128,7 @@ class DefaultLocationProvider extends LocationProvider implements GlobalEventLis
             case 0:
          }
       } else {
-         throw new Object("Illegal value of interval, timeout or maxAge passed in");
+         throw new IllegalArgumentException("Illegal value of interval, timeout or maxAge passed in");
       }
    }
 
@@ -148,8 +148,8 @@ class DefaultLocationProvider extends LocationProvider implements GlobalEventLis
 
    static Location createLocation(GPSLocation gpsLocation, int mode) {
       try {
-         if (!(gpsLocation instanceof Object)) {
-            if (gpsLocation instanceof Object) {
+         if (!(gpsLocation instanceof GPSLocationExtended)) {
+            if (gpsLocation instanceof GPSLocationStandard) {
                GPSLocationStandard standardLocation = (GPSLocationStandard)gpsLocation;
                LocationProvider._lastCoordinates.setLatitude(standardLocation.getLatitude());
                LocationProvider._lastCoordinates.setLongitude(standardLocation.getLongitude());
@@ -232,7 +232,7 @@ class DefaultLocationProvider extends LocationProvider implements GlobalEventLis
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

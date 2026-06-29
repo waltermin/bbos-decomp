@@ -13,14 +13,14 @@ final class VCardMessage extends FileMessage {
    public VCardMessage(MessengerContact contact, String contentType, byte[] data, String filename, int size, AddressCardModel address) {
       super(contact, contentType, data, filename, size);
       this._address = address;
-      super._serialized.put(0, new Object(2));
+      super._serialized.put(0, new Integer(2));
       this.commit();
    }
 
    private VCardMessage(IntHashtable message, PeerContactListCollection contactList) {
       super(message, contactList);
       if (super._data != null) {
-         ContextObject contextobject = (ContextObject)(new Object());
+         ContextObject contextobject = new ContextObject();
          ContextObject.put(contextobject, 8849067667159082262L, super._data);
          this._address = (AddressCardModel)FactoryUtil.createInstance(9048770516632928843L, contextobject);
       }
@@ -37,7 +37,7 @@ final class VCardMessage extends FileMessage {
 
    static final MessengerMessageImpl deserialize(IntHashtable message, PeerContactListCollection contactList) {
       VCardMessage result = null;
-      if (message instanceof Object) {
+      if (message instanceof IntHashtable) {
          result = new VCardMessage(message, contactList);
       }
 

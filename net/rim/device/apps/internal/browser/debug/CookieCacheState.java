@@ -33,7 +33,7 @@ final class CookieCacheState extends CacheState {
 
    @Override
    final void refreshOptions() {
-      Vector tempOptions = (Vector)(new Object());
+      Vector tempOptions = new Vector();
       LongEnumeration e = null;
       synchronized (this._cache) {
          LongHashtable ht = this._cache.getCookies();

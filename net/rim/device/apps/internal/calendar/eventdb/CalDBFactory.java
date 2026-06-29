@@ -10,7 +10,7 @@ import net.rim.device.apps.internal.calendar.sync.CalendarSyncCollection;
 public class CalDBFactory implements Factory {
    @Override
    public Object createInstance(Object initialData) {
-      if (!(initialData instanceof Object)) {
+      if (!(initialData instanceof CalendarService)) {
          return null;
       }
 
@@ -19,12 +19,12 @@ public class CalDBFactory implements Factory {
       CalDBImpl calDB = new CalDBImpl();
       ApplicationRegistry.getApplicationRegistry().put(calendarServiceID, calDB);
       if (!calDB.init(calendarServiceID)) {
-         throw new Object("Failed to initialize the calendar database");
+         throw new RuntimeException("Failed to initialize the calendar database");
       }
 
       ReminderManager rm = ReminderManager.getInstance();
       if (rm == null) {
-         throw new Object("Calendar init error. Couldn't obtain the ReminderManager.");
+         throw new RuntimeException("Calendar init error. Couldn't obtain the ReminderManager.");
       }
 
       calDB.addLowPriorityListener(new CalendarReminderProvider(rm, calDB));

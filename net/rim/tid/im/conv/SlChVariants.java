@@ -24,8 +24,8 @@ public class SlChVariants extends SLVariants {
    public SlChVariants$BigramPair _wordlistPair = new SlChVariants$BigramPair();
    public SlChVariants$BigramPair _userPair = new SlChVariants$BigramPair();
    private boolean _isLocked;
-   private StringBuffer _reading = (StringBuffer)(new Object());
-   private static StringBuffer _candBuffer = (StringBuffer)(new Object());
+   private StringBuffer _reading = new StringBuffer();
+   private static StringBuffer _candBuffer = new StringBuffer();
 
    public SlChVariants(int aSize) {
       super(aSize);

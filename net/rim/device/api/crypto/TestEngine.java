@@ -20,7 +20,7 @@ final class TestEngine implements SymmetricKeyEncryptorEngine, SymmetricKeyDecry
             cipherText[cipherTextOffset + i] = (byte)(plainText[plainTextOffset + i] + 3);
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -38,7 +38,7 @@ final class TestEngine implements SymmetricKeyEncryptorEngine, SymmetricKeyDecry
             plainText[plainTextOffset + i] = (byte)(cipherText[cipherTextOffset + i] - 3);
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

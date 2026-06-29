@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.contentinjector;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.microedition.io.Connector;
@@ -20,6 +21,7 @@ import net.rim.device.api.system.RadioStatusListener;
 import net.rim.device.api.system.SIMCard;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.api.util.TLEUtilities;
+import net.rim.device.apps.api.utility.general.AsciiStringInputStream;
 import net.rim.device.apps.internal.api.quincy.QuincyManager;
 import net.rim.device.apps.internal.browser.options.GeneralProperty;
 import net.rim.device.apps.internal.browser.util.ReregistrationListener;
@@ -27,7 +29,7 @@ import net.rim.device.apps.internal.browser.util.ReregistrationManager;
 import net.rim.device.internal.proxy.Proxy;
 
 public final class ContentInjector implements SRSelectorCallback, RadioStatusListener, Runnable, ReregistrationListener {
-   private StringBuffer _utilityBuffer = (StringBuffer)(new Object());
+   private StringBuffer _utilityBuffer = new StringBuffer();
    private ContentInjector$ContentData _contentData = new ContentInjector$ContentData();
    private ContentInjector$Cache _cache;
    private Object _lock = new Object();
@@ -160,9 +162,9 @@ public final class ContentInjector implements SRSelectorCallback, RadioStatusLis
                return;
             }
 
-            Base64InputStream sigValue = (Base64InputStream)(new Object((InputStream)(new Object(contentHeader))));
-            NoCopyByteArrayOutputStream sigByteArrayStream = (NoCopyByteArrayOutputStream)(new Object());
-            NoCopyByteArrayOutputStream dataByteArrayStream = (NoCopyByteArrayOutputStream)(new Object());
+            Base64InputStream sigValue = new Base64InputStream(new AsciiStringInputStream(contentHeader));
+            NoCopyByteArrayOutputStream sigByteArrayStream = new NoCopyByteArrayOutputStream();
+            NoCopyByteArrayOutputStream dataByteArrayStream = new NoCopyByteArrayOutputStream();
             copyStreams(sigValue, sigByteArrayStream);
             copyStreams(http.openInputStream(), dataByteArrayStream);
             byte[] sig = sigByteArrayStream.getByteArray();
@@ -176,7 +178,7 @@ public final class ContentInjector implements SRSelectorCallback, RadioStatusLis
          }
 
          if (verified) {
-            content._data = (InputStream)(new Object(data, 0, dataLength));
+            content._data = new ByteArrayInputStream(data, 0, dataLength);
             content._timestamp = returnVal;
          }
       }
@@ -194,7 +196,7 @@ public final class ContentInjector implements SRSelectorCallback, RadioStatusLis
          try {
             try {
                var68 = true;
-               fc = (FileConnection)Connector.open(((StringBuffer)(new Object("file:///store"))).append(location).toString());
+               fc = (FileConnection)Connector.open("file:///store" + location);
                if (fc.exists() && fc.lastModified() > timestamp) {
                   EventLogger.logEvent(-1639924839295312060L, "Signature time on new content older than existing content, rejecting".getBytes(), 3);
                   var68 = false;
@@ -211,7 +213,7 @@ public final class ContentInjector implements SRSelectorCallback, RadioStatusLis
                out.write(data);
                var68 = false;
             } catch (Throwable var83) {
-               String msg = ((StringBuffer)(new Object())).append(EXCEPTION_CONTENT_STORE).append(e.toString()).toString();
+               String msg = EXCEPTION_CONTENT_STORE + e.toString();
                EventLogger.logEvent(-1639924839295312060L, msg.getBytes(), 2);
                throw e;
             }
@@ -284,7 +286,7 @@ public final class ContentInjector implements SRSelectorCallback, RadioStatusLis
          } else {
             this._checkServiceBooks = true;
             if (this._workThread == null) {
-               this._workThread = (Thread)(new Object(this));
+               this._workThread = new Thread(this);
                Proxy p = Proxy.getInstance();
                p.startThread(this._workThread);
             }
@@ -377,7 +379,7 @@ public final class ContentInjector implements SRSelectorCallback, RadioStatusLis
             this._cache.add(t);
             var9 = false;
          } else {
-            String msg = ((StringBuffer)(new Object())).append(CONTENT_FETCH_FAILURE).append(fullurl).toString();
+            String msg = CONTENT_FETCH_FAILURE + fullurl;
             EventLogger.logEvent(-1639924839295312060L, msg.getBytes(), 3);
             var9 = false;
          }
@@ -398,7 +400,7 @@ public final class ContentInjector implements SRSelectorCallback, RadioStatusLis
    private final void parseServiceRecord(ServiceRecord sr, ContentInjector$ContentEntry ce) {
       byte[] rawdata = sr.getApplicationData();
       if (rawdata != null) {
-         DataBuffer data = (DataBuffer)(new Object());
+         DataBuffer data = new DataBuffer();
          data.write(rawdata);
          data.rewind();
 
@@ -414,7 +416,7 @@ public final class ContentInjector implements SRSelectorCallback, RadioStatusLis
                   default:
                      String url = TLEUtilities.readStringField(data, type, true);
                      if (url.indexOf("http://") == -1) {
-                        url = ((StringBuffer)(new Object("http://"))).append(url).toString();
+                        url = "http://" + url;
                      }
 
                      ce._url = url;
@@ -427,7 +429,7 @@ public final class ContentInjector implements SRSelectorCallback, RadioStatusLis
                }
             }
          } catch (Throwable var8) {
-            throw new Object(e.toString());
+            throw new IllegalStateException(e.toString());
          }
       }
    }

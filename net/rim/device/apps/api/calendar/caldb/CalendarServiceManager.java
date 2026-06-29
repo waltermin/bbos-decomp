@@ -170,7 +170,7 @@ public class CalendarServiceManager implements GlobalEventListener, CalendarServ
    }
 
    public ReadableList getEventsSortedByStartDate() {
-      ReadableListCombiner allEvents = (ReadableListCombiner)(new Object());
+      ReadableListCombiner allEvents = new ReadableListCombiner();
       CalDB[] calDBs = this.getCalendarDatabases(true);
 
       for (int i = 0; i < calDBs.length; i++) {

@@ -1,5 +1,6 @@
 package net.rim.device.api.crypto;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.util.Arrays;
@@ -26,7 +27,7 @@ public final class ECIESDecryptor extends StreamDecryptor {
    ) {
       super(input);
       if (recipientPrivateKey == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int fieldLength = recipientPrivateKey.getECCryptoSystem().getFieldLength();
@@ -42,7 +43,7 @@ public final class ECIESDecryptor extends StreamDecryptor {
       ECPublicKey ephemeral = new ECPublicKey(recipientPrivateKey.getECCryptoSystem(), ephemeralKey);
       byte[] sharedSecret = ECDHKeyAgreement.generateSharedSecret(recipientPrivateKey, ephemeral, useCofactor);
       if (kdfDigest == null) {
-         kdfDigest = (Digest)(new Object());
+         kdfDigest = new SHA1Digest();
       }
 
       X963KDFPseudoRandomSource source = new X963KDFPseudoRandomSource(sharedSecret, additionalKDFInfo, kdfDigest);
@@ -91,7 +92,7 @@ public final class ECIESDecryptor extends StreamDecryptor {
          data[i + offset] = (byte)(data[i + offset] ^ keyData[i]);
       }
 
-      super._inputStream = (InputStream)(new Object(data, offset, encryptedDataLength));
+      super._inputStream = new ByteArrayInputStream(data, offset, encryptedDataLength);
       this._verified = Arrays.equals(this._mac.getMAC(), 0, data, offset + encryptedDataLength, macLength);
    }
 
@@ -119,7 +120,7 @@ public final class ECIESDecryptor extends StreamDecryptor {
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object("ECIES/"))).append(this._mac.getAlgorithm()).toString();
+      return "ECIES/" + this._mac.getAlgorithm();
    }
 
    @Override
@@ -526,7 +527,7 @@ public final class ECIESDecryptor extends StreamDecryptor {
       // 234: bipush -22
       // 236: bastore
       // 237: astore 5
-      // 239: new java/lang/Object
+      // 239: new java/io/ByteArrayInputStream
       // 23c: dup
       // 23d: aload 5
       // 23f: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -573,7 +574,7 @@ public final class ECIESDecryptor extends StreamDecryptor {
       // 291: astore 1
       // 292: goto 296
       // 295: astore 1
-      // 296: new java/lang/Object
+      // 296: new net/rim/device/api/crypto/CryptoSelfTestError
       // 299: dup
       // 29a: invokespecial net/rim/device/api/crypto/CryptoSelfTestError.<init> ()V
       // 29d: athrow

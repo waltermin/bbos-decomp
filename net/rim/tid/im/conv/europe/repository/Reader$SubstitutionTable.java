@@ -7,10 +7,10 @@ public final class Reader$SubstitutionTable {
    Vector substitutions;
 
    public final void read(DataInputStream aDis) {
-      this.substitutions = (Vector)(new Object());
+      this.substitutions = new Vector();
       byte size = 0;
       int nLength = 2;
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
 
       do {
          size = aDis.readByte();

@@ -39,7 +39,7 @@ public class REErrorDetails {
 
    @Override
    public String toString() {
-      StringBuffer message = (StringBuffer)(new Object("Category: "));
+      StringBuffer message = new StringBuffer("Category: ");
       message.append(this._category);
       message.append("\nName: ");
       message.append(this._name);

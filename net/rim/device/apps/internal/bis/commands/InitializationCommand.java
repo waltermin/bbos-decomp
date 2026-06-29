@@ -44,9 +44,7 @@ public final class InitializationCommand implements DomainCommand {
                   ClientSessionState.getInstance().setAutoAuth(true);
                   return LoginCommand.login(configRecord.getBrandName(), authCallResult.getAuthInfo().getUsername(), "FAKEPASSWORD", false, true);
                } else if (authCallResult.getRESTStatusCode() == 10301) {
-                  BISEventLogger.logEvent(
-                     ((StringBuffer)(new Object("Failed pre-auth call, got status code "))).append(authCallResult.getRESTStatusCode()).toString(), 0
-                  );
+                  BISEventLogger.logEvent("Failed pre-auth call, got status code " + authCallResult.getRESTStatusCode(), 0);
                   return new DomainCommandResult("autoAuthFailed", null, null);
                } else {
                   return brandCallResult.getBrandingInfo().isAutoLoginEnabled()

@@ -29,13 +29,13 @@ public final class AddFilterCommand implements DomainCommand {
    @Override
    public final DomainCommandResult run(Hashtable params) {
       Filter filter = ClientSessionState.getInstance().getFilterToModify();
-      if (filter == null || filter.getId() != null && params.get("filterconfirm") == null) {
+      if (filter == null || filter.getId() != null && (String)params.get("filterconfirm") == null) {
          filter = new Filter();
          filter.setId((String)params.get("filterid"));
          filter.setName((String)params.get("filtername"));
-         filter.setSendAlert("true".equals(params.get("sendalert")));
-         filter.setHeadersOnly("true".equals(params.get("headersonly")));
-         filter.setLevelOne("true".equals(params.get("levelone")));
+         filter.setSendAlert("true".equals((String)params.get("sendalert")));
+         filter.setHeadersOnly("true".equals((String)params.get("headersonly")));
+         filter.setLevelOne("true".equals((String)params.get("levelone")));
          filter.setOperator((String)params.get("filteroperator"));
          filter.setValue((String)params.get("filtervalue"));
          ClientSessionState.getInstance().setFilterToModify(filter);
@@ -44,7 +44,7 @@ public final class AddFilterCommand implements DomainCommand {
       Mailbox mailbox = ClientSessionState.getInstance().getMailboxToModify();
       BISClientConfigRecord configRecord = (BISClientConfigRecord)ObjectRegistry.getInstance().find("configRecord");
       RestClient restClient = (RestClient)ObjectRegistry.getInstance().find("restClient");
-      if (params.get("filterconfirm") != null
+      if ((String)params.get("filterconfirm") != null
          || !mailbox.getHosted()
          || filter.getSendAlert() && (!filter.getSendAlert() || !filter.getHeadersOnly()) && mailbox.getForwardMessages()) {
          boolean var12 = false /* VF: Semaphore variable */;
@@ -66,9 +66,9 @@ public final class AddFilterCommand implements DomainCommand {
                               e,
                               mailbox.getSrcMboxID(),
                               filter.getName(),
-                              (Boolean)(new Object(filter.getSendAlert())),
-                              (Boolean)(new Object(filter.getLevelOne())),
-                              (Boolean)(new Object(filter.getHeadersOnly())),
+                              new Boolean(filter.getSendAlert()),
+                              new Boolean(filter.getLevelOne()),
+                              new Boolean(filter.getHeadersOnly()),
                               filter.getOperator(),
                               filter.getValue()
                            );
@@ -79,9 +79,9 @@ public final class AddFilterCommand implements DomainCommand {
                               mailbox.getSrcMboxID(),
                               filter.getId(),
                               filter.getName(),
-                              (Boolean)(new Object(filter.getSendAlert())),
-                              (Boolean)(new Object(filter.getLevelOne())),
-                              (Boolean)(new Object(filter.getHeadersOnly())),
+                              new Boolean(filter.getSendAlert()),
+                              new Boolean(filter.getLevelOne()),
+                              new Boolean(filter.getHeadersOnly()),
                               filter.getOperator(),
                               filter.getValue()
                            );
@@ -94,9 +94,7 @@ public final class AddFilterCommand implements DomainCommand {
                               break label159;
                            }
 
-                           BISEventLogger.logEvent(
-                              ((StringBuffer)(new Object("Delete: Unhandled REST response code: "))).append(var17.getRESTStatusCode()).toString(), 0
-                           );
+                           BISEventLogger.logEvent("Delete: Unhandled REST response code: " + var17.getRESTStatusCode(), 0);
                            var21 = new DomainCommandResult("failed", ApplicationResources.getString(192), null);
                            var12 = false;
                            break label158;

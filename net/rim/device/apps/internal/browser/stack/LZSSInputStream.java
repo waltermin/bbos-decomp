@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.browser.stack;
 
+import java.io.EOFException;
 import java.io.InputStream;
 
 public final class LZSSInputStream extends InputStream {
@@ -62,12 +63,12 @@ public final class LZSSInputStream extends InputStream {
       return offset;
    }
 
-   private final byte inputBit() {
+   private final byte inputBit() throws EOFException {
       if (this._numAccumulatedBits < 8) {
          this._numAccumulatedBits += 8;
          int read = this._in.read();
          if (read == -1) {
-            throw new Object();
+            throw new EOFException();
          }
 
          this._accumulatedBits = this._accumulatedBits | read << 32 - this._numAccumulatedBits;
@@ -79,12 +80,12 @@ public final class LZSSInputStream extends InputStream {
       return (byte)return_bit;
    }
 
-   private final int inputBits(int num_bits) {
+   private final int inputBits(int num_bits) throws EOFException {
       while (this._numAccumulatedBits < num_bits) {
          this._numAccumulatedBits += 8;
          int read = this._in.read();
          if (read == -1) {
-            throw new Object();
+            throw new EOFException();
          }
 
          this._accumulatedBits = this._accumulatedBits | read << 32 - this._numAccumulatedBits;

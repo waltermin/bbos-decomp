@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.secureemail.encodings.smime.sendmethods;
 
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.pgp.PGPCertificate;
+import net.rim.device.api.crypto.certificate.x509.X509Certificate;
 import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
 import net.rim.device.apps.internal.secureemail.CertificateHarvester;
@@ -41,11 +42,11 @@ public final class SMIMESendMethod extends SecureEmailMessageEncoderProvider {
 
    @Override
    public final Certificate obtainSuitableRecipientCertificate(Certificate certificate) {
-      if (certificate instanceof Object) {
+      if (certificate instanceof X509Certificate) {
          return certificate;
       }
 
-      if (certificate instanceof Object) {
+      if (certificate instanceof PGPCertificate) {
          PGPCertificate pgpCertificate = (PGPCertificate)certificate;
          if (pgpCertificate.containsEmbeddedX509Certificates()) {
             Certificate[] x509Certs = pgpCertificate.getEmbeddedX509Certificates();

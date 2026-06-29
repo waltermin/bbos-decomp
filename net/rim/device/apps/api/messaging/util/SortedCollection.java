@@ -5,6 +5,7 @@ import net.rim.device.api.collection.CollectionEventSource;
 import net.rim.device.api.collection.CollectionListener;
 import net.rim.device.api.collection.IntRangedActionTarget;
 import net.rim.device.api.collection.LongKeyProviderAdaptor;
+import net.rim.device.api.collection.LongKeyProviderAdaptorComparator;
 import net.rim.device.api.collection.NotificationSuspension;
 import net.rim.device.api.collection.ReadableList;
 import net.rim.device.api.collection.WritableSet;
@@ -26,7 +27,7 @@ public class SortedCollection
    IntRangedActionTarget,
    NotificationSuspension,
    CollectionListener {
-   protected CollectionListenerManager _collectionListenerManager = (CollectionListenerManager)(new Object());
+   protected CollectionListenerManager _collectionListenerManager = new CollectionListenerManager();
    protected boolean _suspendNotification;
    protected long _folderId = 0;
    protected Comparator _comparator;
@@ -39,7 +40,7 @@ public class SortedCollection
 
    @Override
    public boolean initialize(long applicationFamily, long folderId, LongKeyProviderAdaptor longKeyProviderAdaptor, Object context) {
-      return this.initialize(applicationFamily, folderId, (Comparator)(new Object(longKeyProviderAdaptor)), context);
+      return this.initialize(applicationFamily, folderId, new LongKeyProviderAdaptorComparator(longKeyProviderAdaptor), context);
    }
 
    @Override
@@ -69,7 +70,7 @@ public class SortedCollection
             if (this._useBigVector) {
                for (; highValue >= lowValue; highValue--) {
                   RIMModel model = (RIMModel)this._messagesAsBigVector.elementAt(highValue);
-                  if (model instanceof Object) {
+                  if (model instanceof ActionProvider) {
                      ActionProvider actionProvider = (ActionProvider)model;
                      actionProvider.perform(action, context);
                   }
@@ -77,7 +78,7 @@ public class SortedCollection
             } else {
                for (; highValue >= lowValue; highValue--) {
                   RIMModel model = (RIMModel)this._messagesAsArray[highValue];
-                  if (model instanceof Object) {
+                  if (model instanceof ActionProvider) {
                      ActionProvider actionProvider = (ActionProvider)model;
                      actionProvider.perform(action, context);
                   }
@@ -96,7 +97,7 @@ public class SortedCollection
          this._folderId = folderId;
          this._comparator = comparator;
          if (this._useBigVector) {
-            this._messagesAsBigVector = (BigVector)(new Object());
+            this._messagesAsBigVector = new BigVector();
          } else {
             this._messagesAsArray = new Object[0];
          }
@@ -114,7 +115,7 @@ public class SortedCollection
 
             for (int i = 0; i < size; i++) {
                RIMModel model = (RIMModel)this._messagesAsBigVector.elementAt(i);
-               if (model instanceof Object) {
+               if (model instanceof ActionProvider) {
                   ActionProvider actionProvider = (ActionProvider)model;
                   actionProvider.perform(4951292880494466830L, context);
                }
@@ -135,7 +136,7 @@ public class SortedCollection
 
             for (int i = 0; i < size; i++) {
                RIMModel model = (RIMModel)this._messagesAsArray[i];
-               if (model instanceof Object) {
+               if (model instanceof ActionProvider) {
                   ActionProvider actionProvider = (ActionProvider)model;
                   actionProvider.perform(4951292880494466830L, context);
                }
@@ -207,7 +208,7 @@ public class SortedCollection
    }
 
    protected void promote() {
-      this._messagesAsBigVector = (BigVector)(new Object());
+      this._messagesAsBigVector = new BigVector();
       this._messagesAsBigVector.addElements(this._messagesAsArray);
       this._messagesAsArray = null;
       this._useBigVector = true;
@@ -394,7 +395,7 @@ public class SortedCollection
 
    private static void logSortError() {
       try {
-         throw new Object("SortedCollection out of order");
+         throw new RuntimeException("SortedCollection out of order");
       } finally {
          return;
       }

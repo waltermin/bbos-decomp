@@ -29,9 +29,7 @@ final class UseOnceSMSButtonVerb extends WrapperVerb implements SetParameter, Co
 
    @Override
    public final String toString() {
-      return this._phoneNumber != null
-         ? ((StringBuffer)(new Object())).append(SMSResources.getString(379)).append(' ').append(this._phoneNumber.toString()).toString()
-         : SMSResources.getString(379);
+      return this._phoneNumber != null ? SMSResources.getString(379) + ' ' + this._phoneNumber.toString() : SMSResources.getString(379);
    }
 
    @Override
@@ -41,7 +39,7 @@ final class UseOnceSMSButtonVerb extends WrapperVerb implements SetParameter, Co
 
    @Override
    public final void setParameter(Object parameter) {
-      if (parameter instanceof Object) {
+      if (parameter instanceof ContextObject) {
          ContextObject contextObject = (ContextObject)parameter;
          Object phoneNumber = contextObject.get(247);
          if (phoneNumber != null) {

@@ -9,23 +9,18 @@ public class PhoneNumberModelEditField extends PhoneNumberEditField {
    public static final int MAX_CHARS = 80;
 
    public PhoneNumberModelEditField(PhoneNumberModel model) {
-      super(((StringBuffer)(new Object())).append((String)((Object[])_resources.getObject(601))[model._type]).append(": ").toString(), model.getValue(), 80, 6);
-      this._phoneNumberTypes = (Object[])_resources.getObject(601);
+      super(((String[])_resources.getObject(601))[model._type] + ": ", model.getValue(), 80, 6);
+      this._phoneNumberTypes = (String[])_resources.getObject(601);
    }
 
    public PhoneNumberModelEditField(PhoneNumberModel model, int maxNumChars) {
-      super(
-         ((StringBuffer)(new Object())).append((String)((Object[])_resources.getObject(601))[model._type]).append(": ").toString(),
-         model.getValue(),
-         maxNumChars,
-         6
-      );
-      this._phoneNumberTypes = (Object[])_resources.getObject(601);
+      super(((String[])_resources.getObject(601))[model._type] + ": ", model.getValue(), maxNumChars, 6);
+      this._phoneNumberTypes = (String[])_resources.getObject(601);
    }
 
    public int getPhoneNumberType() {
       String label = this.getLabel();
-      String[] phoneNumberTypes = (Object[])_resources.getObject(601);
+      String[] phoneNumberTypes = (String[])_resources.getObject(601);
       int index = 0;
       label = label.substring(0, label.length() - 2);
 
@@ -62,7 +57,7 @@ public class PhoneNumberModelEditField extends PhoneNumberEditField {
          index += length;
       }
 
-      this.setLabel(((StringBuffer)(new Object())).append(this._phoneNumberTypes[index]).append(": ").toString());
+      this.setLabel(this._phoneNumberTypes[index] + ": ");
       return 0;
    }
 }

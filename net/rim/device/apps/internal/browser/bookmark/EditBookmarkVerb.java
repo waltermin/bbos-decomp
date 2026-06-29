@@ -22,7 +22,7 @@ final class EditBookmarkVerb extends Verb {
       switch (super._rbKey) {
          case 145:
             String title = this._bookmarkNode.getTitle();
-            String[] name = new Object[]{title != null && title.length() != 0 ? title : this._bookmarkNode.getUrl()};
+            String[] name = new String[]{title != null && title.length() != 0 ? title : this._bookmarkNode.getUrl()};
             String message = MessageFormat.format(BrowserResources.getString(282), name);
             if (Dialog.ask(2, message) == 3) {
                Bookmarks.deleteBookmark(this._bookmarkNode, this._currentFolder);

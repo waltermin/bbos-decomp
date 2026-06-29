@@ -18,7 +18,7 @@ final class WMLMultiSelectInputField implements FieldChangeListener, WMLInputFie
    protected final void updateVariablesFromSelections() {
       if (this._iname != null) {
          if (this._options != null && this._options.size() != 0) {
-            StringBuffer sb = (StringBuffer)(new Object());
+            StringBuffer sb = new StringBuffer();
             boolean firstOne = true;
 
             for (int i = 0; i < this._options.size(); i++) {
@@ -49,7 +49,7 @@ final class WMLMultiSelectInputField implements FieldChangeListener, WMLInputFie
             return;
          }
 
-         StringBuffer sb = (StringBuffer)(new Object());
+         StringBuffer sb = new StringBuffer();
          boolean firstOne = true;
 
          for (int i = 0; i < this._options.size(); i++) {
@@ -158,7 +158,7 @@ final class WMLMultiSelectInputField implements FieldChangeListener, WMLInputFie
 
    final void addVariable(WMLMultiSelectOption variable) {
       if (this._variables == null) {
-         this._variables = (Vector)(new Object());
+         this._variables = new Vector();
       }
 
       this._variables.addElement(variable);
@@ -166,7 +166,7 @@ final class WMLMultiSelectInputField implements FieldChangeListener, WMLInputFie
 
    final void addOption(WMLMultiSelectOption option) {
       if (this._options == null) {
-         this._options = (Vector)(new Object());
+         this._options = new Vector();
       }
 
       this._options.addElement(option);

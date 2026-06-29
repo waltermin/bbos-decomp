@@ -37,7 +37,7 @@ class TableField$LeftRightArrows implements GlobalEventListener {
             bitmap.getARGB(argb, i * height, 1, i, 0, 1, height);
          }
 
-         rotatedBitmap = (Bitmap)(new Object(height, width));
+         rotatedBitmap = new Bitmap(height, width);
          rotatedBitmap.setARGB(argb, 0, height, 0, 0, height, width);
       }
 

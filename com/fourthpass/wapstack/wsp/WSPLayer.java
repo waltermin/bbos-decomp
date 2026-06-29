@@ -60,7 +60,7 @@ public final class WSPLayer implements IWapStackLayer {
 
    public WSPLayer(WTPLayer wtpLayer, WSPAddress destAddress) {
       this._wtpLayer = wtpLayer;
-      this._registeredSessions = (LongHashtable)(new Object());
+      this._registeredSessions = new LongHashtable();
       this._sessionTimeout = 60;
       this._wtpLayer.setUserLayer(this);
    }

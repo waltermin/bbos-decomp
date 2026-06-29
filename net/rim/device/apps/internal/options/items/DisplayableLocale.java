@@ -25,7 +25,7 @@ final class DisplayableLocale {
          return this._displayString;
       }
 
-      StringBuffer sb = (StringBuffer)(new Object(this._locale.getDisplayName()));
+      StringBuffer sb = new StringBuffer(this._locale.getDisplayName());
       if (sb.length() > 0) {
          char c = sb.charAt(0);
          sb.setCharAt(0, Character.toUpperCase(c));

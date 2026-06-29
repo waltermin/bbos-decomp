@@ -17,6 +17,6 @@ public final class Prominence {
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object("Prominence("))).append(this._name).append(")").toString();
+      return "Prominence(" + this._name + ")";
    }
 }

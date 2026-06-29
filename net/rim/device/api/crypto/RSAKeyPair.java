@@ -9,7 +9,7 @@ public final class RSAKeyPair extends KeyPair implements Persistable {
       try {
          this.initialize(cryptoSystem, new byte[]{1, 0, 1});
       } catch (Throwable var4) {
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       }
    }
 
@@ -17,17 +17,17 @@ public final class RSAKeyPair extends KeyPair implements Persistable {
       this.initialize(cryptoSystem, e);
    }
 
-   private final void initialize(RSACryptoSystem cryptoSystem, byte[] e) {
+   private final void initialize(RSACryptoSystem cryptoSystem, byte[] e) throws InvalidKeyException {
       if (cryptoSystem != null && e != null) {
          int modulusLength = cryptoSystem.getModulusLength();
          if (e.length != 0 && e.length <= modulusLength) {
             RSAKeyPair keyPair = cryptoSystem.createRSAKeyPair(e);
             this.setKeyPair(keyPair.getRSAPublicKey(), keyPair.getRSAPrivateKey());
          } else {
-            throw new Object();
+            throw new InvalidKeyException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

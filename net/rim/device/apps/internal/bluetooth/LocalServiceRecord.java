@@ -68,7 +68,7 @@ public final class LocalServiceRecord extends ServiceRecordImpl {
 
    public final void validate() {
       if (this.getAttributeValue(1) == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       DataElement pdl = this.getAttributeValue(4);
@@ -83,7 +83,7 @@ public final class LocalServiceRecord extends ServiceRecordImpl {
          while (e.hasMoreElements()) {
             DataElement de = (DataElement)e.nextElement();
             if (de.getDataType() != 48) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             Enumeration e1 = (Enumeration)de.getValue();
@@ -123,20 +123,20 @@ public final class LocalServiceRecord extends ServiceRecordImpl {
                   return;
                }
 
-               throw new Object();
+               throw new IllegalArgumentException();
             case 1:
                if (gotL2CAP && gotRFCOMM && channel == this._conn.getRFCOMMChannel()) {
                   return;
                }
 
-               throw new Object();
+               throw new IllegalArgumentException();
             case 2:
                if (!gotL2CAP || !gotRFCOMM || !gotOBEX || channel != this._conn.getRFCOMMChannel()) {
-                  throw new Object();
+                  throw new IllegalArgumentException();
                }
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -154,13 +154,13 @@ public final class LocalServiceRecord extends ServiceRecordImpl {
 
    @Override
    public final boolean populateRecord(int[] attrIDs) {
-      throw new Object("Local ServiceRecord");
+      throw new RuntimeException("Local ServiceRecord");
    }
 
    @Override
    public final void setDeviceServiceClasses(int classes) {
       if ((classes & 0xFF0000) != classes) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._classes = classes;
@@ -199,7 +199,7 @@ public final class LocalServiceRecord extends ServiceRecordImpl {
          Arrays.insertAt(super._attributeValues, attrValue, i);
          return true;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

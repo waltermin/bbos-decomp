@@ -17,7 +17,7 @@ class KeyStoreBrowserOptionsItem$KeyStoreReloader implements Runnable {
       if (this._myEpoch == this.this$0._epoch) {
          Screen activeScreen = this.this$0._app.getActiveScreen();
          if (activeScreen == KeyStoreBrowserOptionsItem.access$200(this.this$0)) {
-            ProgressIndicator indicator = (ProgressIndicator)(new Object(4));
+            ProgressIndicator indicator = new ProgressIndicator(4);
             indicator.setProgressRunnable(new KeyStoreBrowserOptionsItem$LoadCertificatesThread(this.this$0, 1, this._myEpoch));
             indicator.run();
          } else {

@@ -47,7 +47,7 @@ final class OwnerInfoFactory$OwnerField extends StringRibbonComponent implements
 
    @Override
    public final void initialize(Hashtable params, Object context) {
-      this._drawParam = (DrawTextParam)(new Object());
+      this._drawParam = new DrawTextParam();
       String id = (String)params.get("id");
       if (id != null) {
          this._type = id.equals("name") ? 0 : 1;
@@ -111,7 +111,7 @@ final class OwnerInfoFactory$OwnerField extends StringRibbonComponent implements
       if (this._type == 0) {
          super.drawText(g, text, x, y, flags, width);
       } else {
-         StringTokenizer st = (StringTokenizer)(new Object(text, " \n\t\r\f", true));
+         StringTokenizer st = new StringTokenizer(text, " \n\t\r\f", true);
          Font font = g.getFont();
          int maxColumn = x + width;
          int currentLine = y;

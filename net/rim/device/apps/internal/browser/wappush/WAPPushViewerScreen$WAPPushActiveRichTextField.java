@@ -32,7 +32,7 @@ class WAPPushViewerScreen$WAPPushActiveRichTextField extends ActiveRichTextField
 
    private Object getCookieInternal(int id) {
       WAPPushModel message = (WAPPushModel)WAPPushViewerScreen.access$000(this.this$0);
-      Object context = new Object();
+      Object context = new ContextObject();
       ContextObject.put(context, 253, this.getText().substring(this.getRunStart(), this.getRunEnd()));
       String configUID = null;
       String preferredConfigUID = message.getPreferredConfigUID();

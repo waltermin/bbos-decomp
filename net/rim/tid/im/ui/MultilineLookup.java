@@ -8,6 +8,7 @@ import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.UiEngine;
 import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.ui.component.TextInputDialog;
+import net.rim.device.api.ui.component.TextInputObscuringScreen;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.tid.awt.im.InputContext;
 import net.rim.tid.im.SLInputMethod;
@@ -81,7 +82,7 @@ public class MultilineLookup extends Lookup implements TextInputDialog {
 
    @Override
    protected void onObscured() {
-      if (Ui.getUiEngine().getActiveScreen() instanceof Object) {
+      if (Ui.getUiEngine().getActiveScreen() instanceof TextInputObscuringScreen) {
          this.setVisible(false);
          this.setVisible(true);
       }

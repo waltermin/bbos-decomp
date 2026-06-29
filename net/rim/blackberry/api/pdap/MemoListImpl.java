@@ -7,6 +7,8 @@ import javax.microedition.pim.PIMItem;
 import net.rim.device.api.collection.CollectionEventSource;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.system.ApplicationRegistry;
+import net.rim.device.api.util.EmptyEnumeration;
+import net.rim.device.api.util.ObjectEnumerator;
 import net.rim.device.apps.api.memo.MemoCollection;
 import net.rim.device.apps.api.memo.MemoCollectionHolder;
 import net.rim.device.apps.api.memo.MemoModel;
@@ -87,7 +89,7 @@ public final class MemoListImpl extends PIMListImpl implements InternalBlackBerr
    @Override
    public final BlackBerryMemo importMemo(BlackBerryMemo element) {
       if (element == null) {
-         throw new Object();
+         throw new NullPointerException();
       } else {
          return new MemoImpl(element, this);
       }
@@ -100,11 +102,11 @@ public final class MemoListImpl extends PIMListImpl implements InternalBlackBerr
       }
 
       if (super._mode == 1) {
-         throw new Object();
+         throw new SecurityException();
       }
 
       if (element == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       if (!(element instanceof MemoImpl)) {
@@ -138,7 +140,7 @@ public final class MemoListImpl extends PIMListImpl implements InternalBlackBerr
       if (category != null) {
          categoryId = CategoryList.getInstance().getCategoryId(category);
          if (categoryId == -1) {
-            return (Enumeration)(new Object());
+            return new EmptyEnumeration();
          }
       }
 
@@ -175,13 +177,13 @@ public final class MemoListImpl extends PIMListImpl implements InternalBlackBerr
          }
       }
 
-      return (Enumeration)(new Object(matchingItems));
+      return new ObjectEnumerator(matchingItems);
    }
 
    @Override
    protected final PIMItem getPIMItemFor(Object element) {
-      if (!(element instanceof Object)) {
-         throw new Object();
+      if (!(element instanceof MemoModel)) {
+         throw new IllegalArgumentException();
       }
 
       MemoModel memoModel = (MemoModel)element;
@@ -205,7 +207,7 @@ public final class MemoListImpl extends PIMListImpl implements InternalBlackBerr
    protected final boolean verifyField(int field) {
       switch (field) {
          case 99:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 100:
          case 101:
          case 102:
@@ -227,7 +229,7 @@ public final class MemoListImpl extends PIMListImpl implements InternalBlackBerr
    public final int getFieldDataType(int field) {
       switch (field) {
          case 99:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 100:
          case 101:
          case 102:
@@ -240,7 +242,7 @@ public final class MemoListImpl extends PIMListImpl implements InternalBlackBerr
    public final String getFieldLabel(int field) {
       switch (field) {
          case 99:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 100:
          default:
             return _resources.getString(50);
@@ -277,17 +279,17 @@ public final class MemoListImpl extends PIMListImpl implements InternalBlackBerr
       }
 
       if (super._mode == 2) {
-         throw new Object(WRITE_ONLY_MESSAGE);
+         throw new SecurityException(WRITE_ONLY_MESSAGE);
       }
 
       int listSize = _memoCollection.size();
       Object[] items = new Object[listSize];
 
       for (int i = listSize - 1; i >= 0; i--) {
-         items[i] = this.createMemo(_memoCollection.getAt(i));
+         items[i] = this.createMemo((MemoModel)_memoCollection.getAt(i));
       }
 
-      return (Enumeration)(new Object(items));
+      return new ObjectEnumerator(items);
    }
 
    @Override
@@ -297,14 +299,14 @@ public final class MemoListImpl extends PIMListImpl implements InternalBlackBerr
       }
 
       if (super._mode == 2) {
-         throw new Object(WRITE_ONLY_MESSAGE);
+         throw new SecurityException(WRITE_ONLY_MESSAGE);
       }
 
       if (!(matching instanceof BlackBerryMemo)) {
          if (matching == null) {
-            throw new Object();
+            throw new NullPointerException();
          } else {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } else {
          int listSize = _memoCollection.size();
@@ -338,7 +340,7 @@ public final class MemoListImpl extends PIMListImpl implements InternalBlackBerr
             matchingItems[i] = this.createMemo(memoModel);
          }
 
-         return (Enumeration)(new Object(matchingItems));
+         return new ObjectEnumerator(matchingItems);
       }
    }
 
@@ -349,11 +351,11 @@ public final class MemoListImpl extends PIMListImpl implements InternalBlackBerr
       }
 
       if (super._mode == 2) {
-         throw new Object(WRITE_ONLY_MESSAGE);
+         throw new SecurityException(WRITE_ONLY_MESSAGE);
       }
 
       if (matching == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       int listSize = _memoCollection.size();
@@ -371,7 +373,7 @@ public final class MemoListImpl extends PIMListImpl implements InternalBlackBerr
          }
       }
 
-      return (Enumeration)(new Object(matchingItems));
+      return new ObjectEnumerator(matchingItems);
    }
 
    @Override
@@ -386,14 +388,14 @@ public final class MemoListImpl extends PIMListImpl implements InternalBlackBerr
 
    @Override
    public final boolean isInternalMemoModel(Object input) {
-      return input instanceof Object;
+      return input instanceof MemoModel;
    }
 
    static {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
       _actualListeners = (Hashtable)ar.getOrWaitFor(5549232429708694218L);
       if (_actualListeners == null) {
-         _actualListeners = (Hashtable)(new Object());
+         _actualListeners = new Hashtable();
          ar.put(5549232429708694218L, _actualListeners);
       }
 

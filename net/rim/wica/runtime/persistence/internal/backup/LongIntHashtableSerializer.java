@@ -46,7 +46,7 @@ final class LongIntHashtableSerializer extends AbstractSerializer {
 
    @Override
    protected final Object createObject() {
-      return new Object();
+      return new LongIntHashtable();
    }
 
    private LongIntHashtableSerializer() {

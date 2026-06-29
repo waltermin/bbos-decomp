@@ -1,6 +1,6 @@
 package net.rim.device.api.crypto.certificate.status.ocsp;
 
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 import java.util.Enumeration;
 import java.util.Vector;
 import net.rim.device.api.crypto.asn1.ASN1InputStream;
@@ -30,8 +30,8 @@ final class OCSPResponse {
 
    public OCSPResponse(byte[] tbsResponseBytes) throws ResponseParsingException {
       this._responseBytes = tbsResponseBytes;
-      this._certInfo = (Vector)(new Object());
-      ASN1InputStream tbsResponse = (ASN1InputStream)(new Object((InputStream)(new Object(tbsResponseBytes))));
+      this._certInfo = new Vector();
+      ASN1InputStream tbsResponse = new ASN1InputStream(new ByteArrayInputStream(tbsResponseBytes));
       tbsResponse = tbsResponse.readSequence();
       if (tbsResponse.peekNextTag() == 0 && tbsResponse.readInteger(1, 0) != 0) {
          throw new ResponseParsingException();
@@ -39,7 +39,7 @@ final class OCSPResponse {
 
       this._responderIDType = tbsResponse.peekNextTag();
       if (this._responderIDType == 1) {
-         ASN1InputStream in = (ASN1InputStream)(new Object(tbsResponse.readStreamWithTag(1)));
+         ASN1InputStream in = new ASN1InputStream(tbsResponse.readStreamWithTag(1));
          this._responderID = in.readFieldAsByteArray();
       } else {
          this._responderID = new byte[20];
@@ -111,7 +111,7 @@ final class OCSPResponse {
          nextUpdate = singleResponse.readGeneralizedTime(1, 0);
       }
 
-      CertificateStatus certStatus = (CertificateStatus)(new Object(status, this._producedAt, thisUpdate, nextUpdate, revocationDate, revocationReason));
+      CertificateStatus certStatus = new CertificateStatus(status, this._producedAt, thisUpdate, nextUpdate, revocationDate, revocationReason);
       this._certInfo.addElement(new OCSPResponse$OCSPCertificateInfo(issuerNameHash, issuerKeyHash, serialNumber, certStatus));
    }
 

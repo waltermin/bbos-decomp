@@ -1,9 +1,12 @@
 package net.rim.device.cldc.impl.hrt;
 
+import net.rim.device.api.hrt.CdmaHRI;
+import net.rim.device.api.hrt.GprsHRI;
 import net.rim.device.api.hrt.HRUtils;
 import net.rim.device.api.hrt.HostRoutingInfo;
 import net.rim.device.api.hrt.HostRoutingTable;
 import net.rim.device.api.hrt.IPv4UdpDAC;
+import net.rim.device.api.hrt.IdenHRI;
 import net.rim.device.api.io.DatagramAddressBase;
 import net.rim.device.api.io.UdpAddress;
 import net.rim.device.api.system.ApplicationRegistry;
@@ -28,7 +31,7 @@ public final class Registration {
    public static final void HRTMain(String[] args) {
       ApplicationRegistry reg = ApplicationRegistry.getApplicationRegistry();
       Proxy p = Proxy.getInstance();
-      HRUtils hru = (HRUtils)(new Object());
+      HRUtils hru = new HRUtils();
       reg.put(1308825735943519978L, hru);
       p.addRadioListener(hru);
       SIMCard.addListener(p, hru);
@@ -55,7 +58,7 @@ public final class Registration {
       PersistentObject persist = RIMPersistentStore.getPersistentObject(-7561592186311481055L);
       HostRoutingTable hrt;
       if ((hrt = (HostRoutingTable)persist.getContents()) == null) {
-         hrt = (HostRoutingTable)(new Object());
+         hrt = new HostRoutingTable();
          persist.setContents(hrt, 51);
          commit = true;
       }
@@ -77,7 +80,7 @@ public final class Registration {
       PersistentObject persist = RIMPersistentStore.getPersistentObject(278988342877723949L);
       HostRoutingTable hrt;
       if ((hrt = (HostRoutingTable)persist.getContents()) == null) {
-         hrt = (HostRoutingTable)(new Object());
+         hrt = new HostRoutingTable();
          persist.setContents(hrt, 51);
       }
 
@@ -123,7 +126,7 @@ public final class Registration {
          if (data != null) {
             label287:
             try {
-               ipAddress = UdpAddress.parseIpAddress((String)(new Object(data)), 0);
+               ipAddress = UdpAddress.parseIpAddress(new String(data), 0);
             } finally {
                break label287;
             }
@@ -141,24 +144,24 @@ public final class Registration {
 
          data = Branding.getData(12547);
          if (data != null) {
-            apn = (String)(new Object(data));
+            apn = new String(data);
          }
 
          data = Branding.getData(12549);
          if (data != null) {
-            username = (String)(new Object(data));
+            username = new String(data);
          }
 
          data = Branding.getData(12550);
          if (data != null) {
-            password = (String)(new Object(data));
+            password = new String(data);
          }
       } else {
          byte[] data = Branding.getData(12288);
          if (data != null) {
             label282:
             try {
-               ipAddress = UdpAddress.parseIpAddress((String)(new Object(data)), 0);
+               ipAddress = UdpAddress.parseIpAddress(new String(data), 0);
             } finally {
                break label282;
             }
@@ -176,17 +179,17 @@ public final class Registration {
 
          data = Branding.getData(12291);
          if (data != null) {
-            apn = (String)(new Object(data));
+            apn = new String(data);
          }
 
          data = Branding.getData(12293);
          if (data != null) {
-            username = (String)(new Object(data));
+            username = new String(data);
          }
 
          data = Branding.getData(12294);
          if (data != null) {
-            password = (String)(new Object(data));
+            password = new String(data);
          }
       }
 
@@ -287,15 +290,15 @@ public final class Registration {
       HostRoutingInfo hri = null;
       switch (waf) {
          case 2:
-            hri = (HostRoutingInfo)(new Object());
+            hri = new CdmaHRI();
             hri.setNpc((long)64);
             break;
          case 8:
-            hri = (HostRoutingInfo)(new Object());
+            hri = new IdenHRI();
             hri.setNpc((long)80);
             break;
          default:
-            hri = (HostRoutingInfo)(new Object());
+            hri = new GprsHRI();
             hri.setNpc((long)48);
             hri.setApn(apn);
             hri.setApnUsername(username);

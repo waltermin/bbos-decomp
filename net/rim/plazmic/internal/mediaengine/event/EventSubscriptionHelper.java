@@ -9,7 +9,7 @@ import net.rim.plazmic.mediaengine.MediaListener;
 
 public class EventSubscriptionHelper implements EventSubscription {
    final long ALL_EVENTS = Long.MIN_VALUE;
-   LongHashtable _listenerTable = (LongHashtable)(new Object());
+   LongHashtable _listenerTable = new LongHashtable();
 
    public void dispatchEvent(Event ev) {
       this.dispatchEvent(Long.MIN_VALUE, ev);
@@ -40,7 +40,7 @@ public class EventSubscriptionHelper implements EventSubscription {
    @Override
    public void removeListener(MediaListener listener) {
       if (listener == null) {
-         throw new Object("Listener can not be null");
+         throw new IllegalArgumentException("Listener can not be null");
       }
 
       Enumeration enumeration = this._listenerTable.elements();
@@ -66,7 +66,7 @@ public class EventSubscriptionHelper implements EventSubscription {
 
    private void addListener(long key, MediaListener listener) {
       if (listener == null) {
-         throw new Object("Listener can not be null");
+         throw new IllegalArgumentException("Listener can not be null");
       }
 
       SafeArray listeners = (SafeArray)this._listenerTable.get(key);

@@ -66,16 +66,16 @@ final class WMLScriptBrowserContent implements Runnable {
 
          if (!this._aborted) {
             if (this._postScriptAction == 1 && this._renderingApplication != null && this._browserContent != null) {
-               HistoryEvent event = (HistoryEvent)(new Object(this._browserContent, -1, true, 0));
+               HistoryEvent event = new HistoryEvent(this._browserContent, -1, true, 0);
                this._renderingApplication.eventOccurred(event);
                return;
             }
 
             if (this._postScriptAction == 2 && this._renderingApplication != null && this._browserContent != null) {
-               HttpHeaders requestHeaders = (HttpHeaders)(new Object());
+               HttpHeaders requestHeaders = new HttpHeaders();
                RenderingUtilities.setReferrer(requestHeaders, this._browserContent.getURL());
                int flags = this._browserContent.getSharedFlags() | 1;
-               UrlRequestedEvent event = (UrlRequestedEvent)(new Object(this._browserContent, this._postScriptUrl, null, requestHeaders, true, flags));
+               UrlRequestedEvent event = new UrlRequestedEvent(this._browserContent, this._postScriptUrl, null, requestHeaders, true, flags);
                this._renderingApplication.eventOccurred(event);
             }
          }
@@ -99,7 +99,7 @@ final class WMLScriptBrowserContent implements Runnable {
       this._interpreter = interpreter;
       this._label = label;
       this._browserContent = browserContent;
-      Vector argVector = (Vector)(new Object());
+      Vector argVector = new Vector();
       String argString = null;
       int index = url._anchor != null ? url._anchor.indexOf(40) : -1;
       if (index != -1) {
@@ -125,10 +125,10 @@ final class WMLScriptBrowserContent implements Runnable {
       }
 
       if (argVector.size() > 0) {
-         this._argString = new Object[argVector.size()];
+         this._argString = new String[argVector.size()];
          argVector.copyInto(this._argString);
       } else {
-         this._argString = new Object[0];
+         this._argString = new String[0];
       }
    }
 }

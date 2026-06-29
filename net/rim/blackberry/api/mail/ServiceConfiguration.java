@@ -73,6 +73,6 @@ public class ServiceConfiguration {
 
    @Override
    public String toString() {
-      return ((StringBuffer)(new Object())).append(this.getName()).append(':').append(this.getUID()).append(':').append(this.getCID()).toString();
+      return this.getName() + ':' + this.getUID() + ':' + this.getCID();
    }
 }

@@ -6,6 +6,7 @@ import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.ui.accessibility.AccessibleContext;
+import net.rim.device.api.ui.accessibility.AccessibleContextFactory;
 import net.rim.vm.Array;
 
 class CalendarViewListField extends Field {
@@ -132,9 +133,9 @@ class CalendarViewListField extends Field {
    @Override
    public AccessibleContext getAccessibleSelectionAt(int index) {
       if (this._callback != null) {
-         return (AccessibleContext)(this._callback.getAccessibleChildAt(this._selectedIndex) != null
+         return this._callback.getAccessibleChildAt(this._selectedIndex) != null
             ? this._callback.getAccessibleChildAt(this._selectedIndex)
-            : new Object("", 0, 4));
+            : new AccessibleContextFactory("", 0, 4);
       } else {
          return null;
       }
@@ -225,7 +226,7 @@ class CalendarViewListField extends Field {
    protected boolean keyChar(char key, int status, int time) {
       if (key == 27 && this._anchorIndex >= 0) {
          this.focusRemove();
-         XYRect hilightRect = (XYRect)(new Object());
+         XYRect hilightRect = new XYRect();
          this.getHilightRect(hilightRect, false);
          this.invalidate(hilightRect.x, hilightRect.y, hilightRect.width, hilightRect.height);
          this._anchorIndex = -1;
@@ -266,7 +267,7 @@ class CalendarViewListField extends Field {
 
    void paintFocus(Graphics graphics, boolean on) {
       if (this._cumulativeHeights.length > 0) {
-         XYRect hilightRect = (XYRect)(new Object());
+         XYRect hilightRect = new XYRect();
          this.getHilightRect(hilightRect, true);
          int firstLine = 0;
 
@@ -391,7 +392,7 @@ class CalendarViewListField extends Field {
       }
 
       if (Ui.isTTSEnabled()) {
-         super.accessibleEventOccurred(6, new Object(1), new Object(2), this);
+         super.accessibleEventOccurred(6, new Integer(1), new Integer(2), this);
       }
 
       Ui.returnTmpXYRect(hilightRect);
@@ -417,7 +418,7 @@ class CalendarViewListField extends Field {
       }
 
       if (Ui.isTTSEnabled()) {
-         super.accessibleEventOccurred(6, new Object(1), new Object(2), this);
+         super.accessibleEventOccurred(6, new Integer(1), new Integer(2), this);
       }
    }
 

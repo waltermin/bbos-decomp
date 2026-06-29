@@ -36,7 +36,6 @@ import net.rim.device.apps.internal.browser.options.GeneralProperty;
 import net.rim.device.apps.internal.browser.resources.BrowserResources;
 import net.rim.device.apps.internal.browser.stack.StackManager;
 import net.rim.device.apps.internal.browser.ui.BrowserTextFlowManager;
-import net.rim.device.apps.internal.browser.ui.TextFlowManager;
 import net.rim.device.apps.internal.browser.util.PNGImageWriter;
 import net.rim.device.apps.internal.browser.verbs.MoreImagesVerb;
 import net.rim.device.cldc.io.utility.SessionStats;
@@ -50,12 +49,12 @@ public final class BrowserScreen extends Screen {
    private Page[] _displayedPages;
    private int _currentPageIndex;
    private BrowserScreen$ScreenManager _screenManager = (BrowserScreen$ScreenManager)this.getDelegate();
-   private ContextObject _menuContext = (ContextObject)(new Object(61));
+   private ContextObject _menuContext = new ContextObject(61);
    private boolean _dispatchKeyEventHandled;
    private boolean _navigationClicked;
    private int _layoutDepth;
    private static final boolean _isReducedKeyboard = InternalServices.isReducedFormFactor();
-   private static IntIntHashtable _subMenuMapping = (IntIntHashtable)(new Object());
+   private static IntIntHashtable _subMenuMapping = new IntIntHashtable();
    private static final int MENU_MAIN = 0;
    private static final int MENU_TOOLS = 1;
    private static final int MENU_VIEW = 2;
@@ -100,7 +99,7 @@ public final class BrowserScreen extends Screen {
 
    @Override
    public final Menu getMenu(int instance) {
-      SystemEnabledMenu menu = (SystemEnabledMenu)(new Object(this._menuContext, null, instance));
+      SystemEnabledMenu menu = new SystemEnabledMenu(this._menuContext, null, instance);
       Menu.setTargetScreen(this);
       menu.setInstance(instance);
       if (instance != 65536) {
@@ -145,7 +144,7 @@ public final class BrowserScreen extends Screen {
             Verb[] verbs = vr.getVerbs(null);
             if (verbs != null) {
                for (int i = 0; i < verbs.length; i++) {
-                  VerbMenuItem vbm = (VerbMenuItem)(new Object(verbs[i], verbs[i].getOrdering()));
+                  VerbMenuItem vbm = new VerbMenuItem(verbs[i], verbs[i].getOrdering());
                   ContextObject co = ContextObject.castOrCreate(null);
                   String url = currentPage.getURL();
                   if (url != null) {
@@ -163,7 +162,7 @@ public final class BrowserScreen extends Screen {
             BrowserDaemonRegistry.getInstance().addWLANActivationMenuItems(menu);
          }
 
-         if (menu instanceof Object) {
+         if (menu instanceof SystemEnabledMenu) {
             ((SystemEnabledMenu)menu).promoteVerbs();
          }
       }
@@ -252,7 +251,7 @@ public final class BrowserScreen extends Screen {
 
    final void print() {
       if (this._screenManager._fields != null) {
-         FileDialog fd = (FileDialog)(new Object("/SDCard/", "page.png", 1, "Pick location to save"));
+         FileDialog fd = new FileDialog("/SDCard/", "page.png", 1, "Pick location to save");
          if (fd.doModal() != -1) {
             PNGImageWriter writer = new PNGImageWriter(this._screenManager._fields, fd.getURL());
             writer.start();
@@ -352,8 +351,8 @@ public final class BrowserScreen extends Screen {
          Field fieldWithFocus = currentPage.getBrowserContent().getDisplayableContent().getLeafFieldWithFocus();
          Manager fieldsMgr = currentPage.getContentManager();
          Object focusedModel = null;
-         if (!(fieldWithFocus instanceof Object)) {
-            if (fieldsMgr instanceof Object) {
+         if (!(fieldWithFocus instanceof CookieProvider)) {
+            if (fieldsMgr instanceof BrowserTextFlowManager) {
                focusedModel = CookieProviderUtilities.getDefaultCookie(((BrowserTextFlowManager)fieldsMgr).getCookieWithFocus());
             }
          } else {
@@ -361,7 +360,7 @@ public final class BrowserScreen extends Screen {
          }
 
          if (focusedModel != null) {
-            ContextObject context = (ContextObject)(new Object(2, 73, 96));
+            ContextObject context = new ContextObject(2, 73, 96);
             context.setFlag(83);
             context.setFlag(61);
             context.put(8128293842573788963L, currentPage.getBrowserContent().getBrowserPhoneConfirmation());
@@ -434,8 +433,8 @@ public final class BrowserScreen extends Screen {
          Object model = null;
          Field fieldWithFocus = currentPage.getBrowserContent().getDisplayableContent().getLeafFieldWithFocus();
          Manager fieldsMgr = currentPage.getContentManager();
-         if (!(fieldWithFocus instanceof Object)) {
-            if (fieldsMgr instanceof Object) {
+         if (!(fieldWithFocus instanceof CookieProvider)) {
+            if (fieldsMgr instanceof BrowserTextFlowManager) {
                model = CookieProviderUtilities.getDefaultCookie(((BrowserTextFlowManager)fieldsMgr).getCookieWithFocus());
             }
          } else {
@@ -444,7 +443,7 @@ public final class BrowserScreen extends Screen {
 
          String url = null;
          if (model != null) {
-            if (!(model instanceof Object)) {
+            if (!(model instanceof URLProvider)) {
                url = BrowserResources.getString(390);
             } else {
                URLProvider urlProvider = (URLProvider)model;
@@ -506,8 +505,8 @@ public final class BrowserScreen extends Screen {
    }
 
    public final void setMobileViewCursor(boolean value) {
-      if (this._screenManager._fields instanceof Object) {
-         ((TextFlowManager)this._screenManager._fields).setMobileViewCursor(value);
+      if (this._screenManager._fields instanceof BrowserTextFlowManager) {
+         ((BrowserTextFlowManager)this._screenManager._fields).setMobileViewCursor(value);
       }
    }
 
@@ -558,7 +557,7 @@ public final class BrowserScreen extends Screen {
    }
 
    private final void showConnectionInfo() {
-      StringBuffer buffer = (StringBuffer)(new Object(BrowserResources.getString(539)));
+      StringBuffer buffer = new StringBuffer(BrowserResources.getString(539));
       buffer.append('\n');
       SessionStats stats = StackManager.getInstance().getSessionStats();
       if (stats == null) {
@@ -580,7 +579,7 @@ public final class BrowserScreen extends Screen {
          buffer.append('\n');
          buffer.append(CommonResources.getString(2003));
          Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-         SimpleDateFormat durationFormat = (SimpleDateFormat)(new Object("HH:mm:ss"));
+         SimpleDateFormat durationFormat = new SimpleDateFormat("HH:mm:ss");
          ((CalendarExtensions)calendar).setTimeLong(stats.getDuration());
          durationFormat.format(calendar, buffer, null);
          buffer.append('\n');

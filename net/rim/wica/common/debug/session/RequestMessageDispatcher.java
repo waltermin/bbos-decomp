@@ -17,7 +17,7 @@ public final class RequestMessageDispatcher extends AbstractMessageDispatcher {
    public final boolean processNextMessage() {
       IMessageEnvelope msgEnvelope = this.getNextMessage(this._msgReceiver);
       if (msgEnvelope == null) {
-         throw new Object();
+         throw new RuntimeException();
       }
 
       IBodyMessage bodyMessage = this.getBodyMessage(msgEnvelope);
@@ -28,7 +28,7 @@ public final class RequestMessageDispatcher extends AbstractMessageDispatcher {
                this._msgHandler.handleRequestMessage(msgEnvelope.getMessageType(), msgEnvelope.getMessageId(), request);
                return true;
             default:
-               throw new Object(((StringBuffer)(new Object("Unsupported message set: "))).append(msgEnvelope.getMessageSet()).toString());
+               throw new RuntimeException("Unsupported message set: " + msgEnvelope.getMessageSet());
          }
       } else {
          return false;

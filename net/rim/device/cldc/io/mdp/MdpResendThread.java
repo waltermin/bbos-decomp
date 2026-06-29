@@ -6,7 +6,7 @@ import net.rim.device.api.io.DatagramBase;
 import net.rim.device.api.system.EventLogger;
 
 final class MdpResendThread extends Thread {
-   private Vector _datagrams = (Vector)(new Object(3, 2));
+   private Vector _datagrams = new Vector(3, 2);
    private Datagram _currentDatagram;
    private boolean _shutdown;
 
@@ -21,7 +21,7 @@ final class MdpResendThread extends Thread {
 
             for (int e = this._datagrams.size() - 1; e >= 0; e--) {
                Object d = this._datagrams.elementAt(e);
-               if (d instanceof Object && ((DatagramBase)d).getDatagramId() == datagramId) {
+               if (d instanceof DatagramBase && ((DatagramBase)d).getDatagramId() == datagramId) {
                   this._datagrams.removeElementAt(e);
                   var9 = false;
                   return;
@@ -29,7 +29,7 @@ final class MdpResendThread extends Thread {
             }
 
             if (cancelCurrentDatagram) {
-               if (!(this._currentDatagram instanceof Object)) {
+               if (!(this._currentDatagram instanceof DatagramBase)) {
                   var9 = false;
                } else if (((DatagramBase)this._currentDatagram).getDatagramId() == datagramId) {
                   MdpMFHUtil.getTransport().superCancel(this._currentDatagram);

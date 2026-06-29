@@ -110,7 +110,7 @@ final class RSSXMLRenderer$HandlerHelper extends DefaultHandler {
             String title = this.this$0.getCurrentString();
             this.this$0._browserContent.setTitle(title);
             if (RSSXMLRenderer.access$1400(this.this$0) != null) {
-               BrowserContentChangedEvent event = (BrowserContentChangedEvent)(new Object(this.this$0._browserContent));
+               BrowserContentChangedEvent event = new BrowserContentChangedEvent(this.this$0._browserContent);
                RSSXMLRenderer.access$1500(this.this$0).eventOccurred(event);
             }
 

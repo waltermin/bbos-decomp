@@ -17,8 +17,8 @@ public class MediaServices {
 
    public MediaServices(String mediaType) {
       this._mediaType = mediaType;
-      this._servicesTable = (Hashtable)(new Object());
-      this._random = (Random)(new Object());
+      this._servicesTable = new Hashtable();
+      this._random = new Random();
    }
 
    public String getUniqueId() {

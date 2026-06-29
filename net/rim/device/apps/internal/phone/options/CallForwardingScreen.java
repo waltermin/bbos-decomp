@@ -3,19 +3,22 @@ package net.rim.device.apps.internal.phone.options;
 import net.rim.device.api.system.Branding;
 import net.rim.device.api.system.GlobalEventListener;
 import net.rim.device.api.ui.Field;
-import net.rim.device.api.ui.MenuItem;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.ui.component.RadioButtonField;
 import net.rim.device.api.ui.component.RadioButtonGroup;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.phone.VoiceServices;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
+import net.rim.device.apps.api.ui.VerbMenuItem;
 import net.rim.device.apps.api.utility.framework.VerbToMenu;
 import net.rim.device.apps.internal.phone.api.PhoneUtilities;
 import net.rim.device.apps.internal.phone.model.PhoneNumberServices;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 import net.rim.vm.Array;
 
 final class CallForwardingScreen extends PhoneOptionsListItemScreen implements EditForwardingNumbersScreen$Callback, GlobalEventListener {
@@ -24,7 +27,7 @@ final class CallForwardingScreen extends PhoneOptionsListItemScreen implements E
    private ObjectChoiceField _noAnswerNumberField;
    private ObjectChoiceField _unreachableNumberField;
    private RadioButtonGroup _radioButtons;
-   private ObjectChoiceField[] _choiceFields = new Object[4];
+   private ObjectChoiceField[] _choiceFields = new ObjectChoiceField[4];
    private String[] _currentForwardingNumbers = null;
    private int[] _forwardingStatusFlags;
    private RadioButtonField _allCallsRadioButton;
@@ -46,17 +49,8 @@ final class CallForwardingScreen extends PhoneOptionsListItemScreen implements E
 
    final void populate() {
       if (PhoneUtilities.getAllLineIds().length > 1) {
-         this.add(
-            (Field)(new Object(
-               ((StringBuffer)(new Object()))
-                  .append(PhoneUtilities.getLineDescription())
-                  .append(" (")
-                  .append(PhoneUtilities.getLineNumber(PhoneUtilities.getCurrentLineId(), true))
-                  .append(")")
-                  .toString()
-            ))
-         );
-         this.add((Field)(new Object()));
+         this.add(new LabelField(PhoneUtilities.getLineDescription() + " (" + PhoneUtilities.getLineNumber(PhoneUtilities.getCurrentLineId(), true) + ")"));
+         this.add(new SeparatorField());
       }
 
       String changeNumberMenuText = PhoneResources.getString(6237);
@@ -73,21 +67,21 @@ final class CallForwardingScreen extends PhoneOptionsListItemScreen implements E
       int selIndex = 0;
       if (!this._nonCFUAvailable) {
          selIndex = this.getForwardingNumberChoiceIndex(allForwardingNumberChoices, this._currentForwardingNumbers, 0);
-         this._allCallsNumberField = (ObjectChoiceField)(new Object(PhoneResources.getString(6132), allForwardingNumberChoices, allCallsEnabled ? selIndex : 0));
+         this._allCallsNumberField = new ObjectChoiceField(PhoneResources.getString(6132), allForwardingNumberChoices, allCallsEnabled ? selIndex : 0);
          this.add(this._allCallsNumberField);
       } else {
          if (this._cfuAvailable) {
-            this._radioButtons = (RadioButtonGroup)(new Object());
-            this._allCallsRadioButton = (RadioButtonField)(new Object(PhoneResources.getString(6132), this._radioButtons, allCallsEnabled));
+            this._radioButtons = new RadioButtonGroup();
+            this._allCallsRadioButton = new RadioButtonField(PhoneResources.getString(6132), this._radioButtons, allCallsEnabled);
             this.add(this._allCallsRadioButton);
             selIndex = this.getForwardingNumberChoiceIndex(allForwardingNumberChoices, this._currentForwardingNumbers, 0);
-            this._allCallsNumberField = (ObjectChoiceField)(new Object(null, allForwardingNumberChoices, allCallsEnabled ? selIndex : 0));
+            this._allCallsNumberField = new ObjectChoiceField(null, allForwardingNumberChoices, allCallsEnabled ? selIndex : 0);
             this._allCallsNumberField.setOptionsMenuText(changeNumberMenuText);
             this.add(this._allCallsNumberField);
-            this.add((Field)(new Object(6)));
-            this._unansweredCallsRadioButton = (RadioButtonField)(new Object(PhoneResources.getString(6133), this._radioButtons, !allCallsEnabled));
+            this.add(new VerticalSpacerField(6));
+            this._unansweredCallsRadioButton = new RadioButtonField(PhoneResources.getString(6133), this._radioButtons, !allCallsEnabled);
             this.add(this._unansweredCallsRadioButton);
-            this.add((Field)(new Object(4)));
+            this.add(new VerticalSpacerField(4));
          }
 
          boolean busyEnabled = !allCallsEnabled && this.isOptionEnabled(this._forwardingStatusFlags[1]);
@@ -95,25 +89,21 @@ final class CallForwardingScreen extends PhoneOptionsListItemScreen implements E
          boolean notReachableEnabled = !allCallsEnabled && this.isOptionEnabled(this._forwardingStatusFlags[3]);
          if (cfbAvailable) {
             selIndex = this.getForwardingNumberChoiceIndex(allForwardingNumberChoices, this._currentForwardingNumbers, 1);
-            this._busyNumberField = (ObjectChoiceField)(new Object(PhoneResources.getString(6009), allForwardingNumberChoices, busyEnabled ? selIndex : 0));
+            this._busyNumberField = new ObjectChoiceField(PhoneResources.getString(6009), allForwardingNumberChoices, busyEnabled ? selIndex : 0);
             this._busyNumberField.setOptionsMenuText(changeNumberMenuText);
             this.add(this._busyNumberField);
          }
 
          if (cfnryAvailable) {
             selIndex = this.getForwardingNumberChoiceIndex(allForwardingNumberChoices, this._currentForwardingNumbers, 2);
-            this._noAnswerNumberField = (ObjectChoiceField)(new Object(
-               PhoneResources.getString(6010), allForwardingNumberChoices, noAnswerEnabled ? selIndex : 0
-            ));
+            this._noAnswerNumberField = new ObjectChoiceField(PhoneResources.getString(6010), allForwardingNumberChoices, noAnswerEnabled ? selIndex : 0);
             this._noAnswerNumberField.setOptionsMenuText(changeNumberMenuText);
             this.add(this._noAnswerNumberField);
          }
 
          if (cfnrcAvailable) {
             selIndex = this.getForwardingNumberChoiceIndex(allForwardingNumberChoices, this._currentForwardingNumbers, 3);
-            this._unreachableNumberField = (ObjectChoiceField)(new Object(
-               PhoneResources.getString(6011), allForwardingNumberChoices, notReachableEnabled ? selIndex : 0
-            ));
+            this._unreachableNumberField = new ObjectChoiceField(PhoneResources.getString(6011), allForwardingNumberChoices, notReachableEnabled ? selIndex : 0);
             this._unreachableNumberField.setOptionsMenuText(changeNumberMenuText);
             this.add(this._unreachableNumberField);
          }
@@ -133,12 +123,12 @@ final class CallForwardingScreen extends PhoneOptionsListItemScreen implements E
       boolean disableFirst = true;
       if (!this._nonCFUAvailable) {
          disableFirst = !PhoneUtilities.cdmaWAFActive();
-         this.setForwardingNumbersFromFields(new Object[]{this._allCallsNumberField}, new int[]{0, -804651006, 0, 0}, disableFirst);
+         this.setForwardingNumbersFromFields(new ObjectChoiceField[]{this._allCallsNumberField}, new int[]{0, -804651006, 0, 0}, disableFirst);
       } else if (!this._cfuAvailable) {
          ObjectChoiceField[] fields;
          int[] types;
          if (PhoneUtilities.cdmaWAFActive()) {
-            fields = new Object[0];
+            fields = new ObjectChoiceField[0];
             types = new int[0];
             disableFirst = false;
 
@@ -152,7 +142,7 @@ final class CallForwardingScreen extends PhoneOptionsListItemScreen implements E
                }
             }
          } else {
-            fields = new Object[]{this._busyNumberField, this._noAnswerNumberField, this._unreachableNumberField};
+            fields = new ObjectChoiceField[]{this._busyNumberField, this._noAnswerNumberField, this._unreachableNumberField};
             types = new int[]{1, 2, 3, -804651005, 2, 3, 4, -804651007, 3, -804651006, 3, 20};
          }
 
@@ -168,7 +158,7 @@ final class CallForwardingScreen extends PhoneOptionsListItemScreen implements E
             ObjectChoiceField[] fields;
             int[] types;
             if (PhoneUtilities.cdmaWAFActive()) {
-               fields = new Object[0];
+               fields = new ObjectChoiceField[0];
                types = new int[0];
                disableFirst = false;
 
@@ -182,7 +172,7 @@ final class CallForwardingScreen extends PhoneOptionsListItemScreen implements E
                   }
                }
             } else {
-               fields = new Object[]{this._busyNumberField, this._noAnswerNumberField, this._unreachableNumberField};
+               fields = new ObjectChoiceField[]{this._busyNumberField, this._noAnswerNumberField, this._unreachableNumberField};
                types = new int[]{1, 2, 3, -804651005, 2, 3, 4, -804651007, 3, -804651006, 3, 20};
             }
 
@@ -197,7 +187,7 @@ final class CallForwardingScreen extends PhoneOptionsListItemScreen implements E
             ObjectChoiceField[] fields;
             int[] types;
             if (PhoneUtilities.cdmaWAFActive()) {
-               fields = new Object[0];
+               fields = new ObjectChoiceField[0];
                types = new int[0];
                disableFirst = false;
 
@@ -211,7 +201,7 @@ final class CallForwardingScreen extends PhoneOptionsListItemScreen implements E
                   }
                }
             } else {
-               fields = new Object[]{this._allCallsNumberField};
+               fields = new ObjectChoiceField[]{this._allCallsNumberField};
                types = new int[]{0, -804651006, 0, 0};
             }
 
@@ -241,7 +231,7 @@ final class CallForwardingScreen extends PhoneOptionsListItemScreen implements E
    }
 
    private final String[] getAllForwardingNumberChoices(String[] setForwardingNumbers, String[] savedOptionsForwardingNumbers) {
-      String[] numbers = new Object[1 + setForwardingNumbers.length + savedOptionsForwardingNumbers.length];
+      String[] numbers = new String[1 + setForwardingNumbers.length + savedOptionsForwardingNumbers.length];
       numbers[0] = PhoneResources.getString(6136);
       int count = 1;
 
@@ -312,7 +302,7 @@ final class CallForwardingScreen extends PhoneOptionsListItemScreen implements E
    }
 
    private final void setForwardingNumbersFromFields(ObjectChoiceField[] fields, int[] types, boolean disableFirst) {
-      String[] numbers = new Object[fields.length];
+      String[] numbers = new String[fields.length];
 
       for (int i = 0; i < fields.length; i++) {
          ObjectChoiceField field = fields[i];
@@ -347,7 +337,7 @@ final class CallForwardingScreen extends PhoneOptionsListItemScreen implements E
 
    private final String[] getCurrentForwardingNumbers(int[] fwdingFlags) {
       int[] types = ForwardingTypes.ALL_TYPES;
-      String[] numbers = new Object[4];
+      String[] numbers = new String[4];
       int lineBearer = PhoneUtilities.getCurrentLineId();
       byte var6;
       if (lineBearer == 1) {
@@ -361,7 +351,7 @@ final class CallForwardingScreen extends PhoneOptionsListItemScreen implements E
       for (int i = 0; i < types.length; i++) {
          if (this.isOptionAvailable(fwdingFlags[i])) {
             numbers[i] = VoiceServices.getCallForwardingNumber(CallForwardingOption.mapForwardingType(types[i]), var6);
-            System.out.println(((StringBuffer)(new Object("PH-NWFN("))).append(types[i]).append(")=").append(numbers[i]).toString());
+            System.out.println("PH-NWFN(" + types[i] + ")=" + numbers[i]);
             if (!this.isOptionEnabled(fwdingFlags[i]) || numbers[i] == null) {
                numbers[i] = "";
             }
@@ -404,12 +394,12 @@ final class CallForwardingScreen extends PhoneOptionsListItemScreen implements E
    protected final void makeMenu(Menu menu, int instance) {
       super.makeMenu(menu, instance);
       if (this.isDirty() || PhoneUtilities.cdmaWAFActive()) {
-         menu.add((MenuItem)(new Object(this._saveVerb, 100)));
+         menu.add(new VerbMenuItem(this._saveVerb, 100));
       }
 
-      menu.add((MenuItem)(new Object(new CallForwardingScreen$CancelVerb(this), 500)));
-      menu.add((MenuItem)(new Object(new CallForwardingScreen$EditNumbersVerb(this), 500)));
-      menu.add((MenuItem)(new Object(new AddNumberVerb(this), 500)));
+      menu.add(new VerbMenuItem(new CallForwardingScreen$CancelVerb(this), 500));
+      menu.add(new VerbMenuItem(new CallForwardingScreen$EditNumbersVerb(this), 500));
+      menu.add(new VerbMenuItem(new AddNumberVerb(this), 500));
    }
 
    private final boolean isOptionEnabled(int flags) {

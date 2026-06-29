@@ -5,6 +5,7 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.container.MainScreen;
@@ -17,8 +18,8 @@ public final class BrowserDebugScreen extends MainScreen implements ListFieldCal
    private ListField _fields;
 
    public BrowserDebugScreen() {
-      this.setTitle((Field)(new Object(BrowserResources.getString(370))));
-      this._fields = (ListField)(new Object(this._options.length));
+      this.setTitle(new LabelField(BrowserResources.getString(370)));
+      this._fields = new ListField(this._options.length);
       this._fields.setCallback(this);
       this.add(this._fields);
    }
@@ -79,7 +80,7 @@ public final class BrowserDebugScreen extends MainScreen implements ListFieldCal
       UiApplication app = UiApplication.getUiApplication();
       Screen s = app.getActiveScreen();
       Field fieldWithFocus = s.getLeafFieldWithFocus();
-      if (fieldWithFocus instanceof Object) {
+      if (fieldWithFocus instanceof ListField) {
          int index = ((ListField)fieldWithFocus).getSelectedIndex();
          Screen screen = this.get(index).getScreen();
          synchronized (Application.getEventLock()) {

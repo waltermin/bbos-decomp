@@ -12,8 +12,8 @@ import net.rim.device.apps.api.utility.general.URI;
 import net.rim.device.apps.internal.browser.util.DomainUtilities;
 
 public final class DomainOverrides {
-   private IntHashtable _domains = (IntHashtable)(new Object());
-   private Hashtable _overrides = (Hashtable)(new Object());
+   private IntHashtable _domains = new IntHashtable();
+   private Hashtable _overrides = new Hashtable();
    private static final long APP_REGISTRY_KEY = -1546612066057717803L;
 
    private DomainOverrides() {
@@ -53,7 +53,7 @@ public final class DomainOverrides {
          domains = new DomainOverrides$Domains(configUID, configType, domainsString);
          this._domains.put(id, domains);
          if (domainsString != null && domainsString.length() != 0) {
-            StringTokenizer strings = (StringTokenizer)(new Object(domainsString, ','));
+            StringTokenizer strings = new StringTokenizer(domainsString, ',');
 
             while (strings.hasMoreTokens()) {
                String token = strings.nextToken();
@@ -61,17 +61,15 @@ public final class DomainOverrides {
 
                try {
                   var17 = true;
-                  URI e = new Object(token);
-                  String authority = DomainUtilities.parseAuthority((URI)e);
-                  String path = DomainUtilities.parsePath((URI)e);
+                  URI e = new URI(token);
+                  String authority = DomainUtilities.parseAuthority(e);
+                  String path = DomainUtilities.parsePath(e);
                   DomainOverrides$DomainOverride override = new DomainOverrides$DomainOverride(configUID, configType, authority, path);
                   this.addOverride(override);
                   var17 = false;
                } finally {
                   if (var17) {
-                     EventLogger.logEvent(
-                        1907089860548946979L, ((StringBuffer)(new Object("Invalid domain override: "))).append(token).toString().getBytes(), 0
-                     );
+                     EventLogger.logEvent(1907089860548946979L, ("Invalid domain override: " + token).getBytes(), 0);
                      continue;
                   }
                }
@@ -140,7 +138,7 @@ public final class DomainOverrides {
       URI uri = null;
 
       try {
-         uri = (URI)(new Object(url));
+         uri = new URI(url);
       } finally {
          ;
       }

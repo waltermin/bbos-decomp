@@ -24,7 +24,7 @@ public final class MMSRequestContentVerb extends Verb {
    @Override
    public final Object invoke(Object context) {
       Bitmap bmp = Bitmap.getPredefinedBitmap(0);
-      PopupStatus status = (PopupStatus)(new Object(MMSResources.getString(7), bmp));
+      PopupStatus status = new PopupStatus(MMSResources.getString(7), bmp);
       UiApplication uiApp = UiApplication.getUiApplication();
       uiApp.pushScreen(status);
       MMSServiceUtil.requestMessageContent(this._message, false, new ScreenClosingRunnable(uiApp, status), false);

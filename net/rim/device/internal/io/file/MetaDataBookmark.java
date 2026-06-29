@@ -27,8 +27,8 @@ public class MetaDataBookmark {
       MetaDataFile dataFile = MetaDataFile.getOrCreate(this._folderURL);
       if (dataFile != null) {
          Object[] metadata = dataFile.loadMetaData(this._filename);
-         if (metadata != null && metadata[7] instanceof Object) {
-            this._position = metadata[7];
+         if (metadata != null && metadata[7] instanceof Long) {
+            this._position = (Long)metadata[7];
             return true;
          }
       }

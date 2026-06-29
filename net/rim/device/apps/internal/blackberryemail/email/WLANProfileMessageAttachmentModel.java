@@ -64,7 +64,7 @@ public class WLANProfileMessageAttachmentModel
 
    @Override
    public boolean convert(Object context, Object target) {
-      if (!(target instanceof Object)) {
+      if (!(target instanceof RIMMessagingOutgoingMessage)) {
          return false;
       }
 
@@ -80,7 +80,7 @@ public class WLANProfileMessageAttachmentModel
       ContextObject contextObject = (ContextObject)context;
       ContentPartIDGenerator contentPartIDGenerator = (ContentPartIDGenerator)contextObject.get(-1943436819741481055L);
       int contentPartID = contentPartIDGenerator.generateContentPartID();
-      CMIMEParameters parameters = (CMIMEParameters)(new Object(db, 2, 2));
+      CMIMEParameters parameters = new CMIMEParameters(db, 2, 2);
       parameters.addCMIMEInteger((byte)-15, contentPartID);
       byte[] data = this.getData();
       parameters.addCMIMEInteger((byte)-13, this.getData().length);
@@ -90,7 +90,7 @@ public class WLANProfileMessageAttachmentModel
 
    @Override
    public Field getField(Object context) {
-      AutoTextEditField field = (AutoTextEditField)(new Object(null, this.getFilename()));
+      AutoTextEditField field = new AutoTextEditField(null, this.getFilename());
       field.setEditable(false);
       return field;
    }
@@ -123,7 +123,7 @@ public class WLANProfileMessageAttachmentModel
       if (fileName == null) {
          return null;
       } else {
-         return isProfileFileName(fileName) ? fileName : ((StringBuffer)(new Object())).append(fileName).append(".prf").toString();
+         return isProfileFileName(fileName) ? fileName : fileName + ".prf";
       }
    }
 }

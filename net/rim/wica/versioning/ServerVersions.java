@@ -4,7 +4,7 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 public class ServerVersions {
-   private Vector _srvVers = (Vector)(new Object(4));
+   private Vector _srvVers = new Vector(4);
 
    private ServerVersions() {
    }
@@ -18,7 +18,7 @@ public class ServerVersions {
          return null;
       }
 
-      StringBuffer strBuf = (StringBuffer)(new Object());
+      StringBuffer strBuf = new StringBuffer();
       Enumeration enumeration = this._srvVers.elements();
 
       while (enumeration.hasMoreElements()) {

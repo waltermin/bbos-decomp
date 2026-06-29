@@ -1,5 +1,7 @@
 package net.rim.device.cldc.io.proxyhttp.compression;
 
+import java.io.EOFException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Hashtable;
@@ -23,8 +25,8 @@ public final class GenericMessageEncoder implements MessageEncoder, CodebookCons
    private int _strBufferSectionSize;
    private int _strBufferLen;
 
-   protected final void initialize(InputStream in) {
-      Hashtable props = (Hashtable)(new Object(15));
+   protected final void initialize(InputStream in) throws IOException {
+      Hashtable props = new Hashtable(15);
       String key = null;
       Vector values = null;
       this.readLine(in);
@@ -36,7 +38,7 @@ public final class GenericMessageEncoder implements MessageEncoder, CodebookCons
 
          while (endIndex < this._strBufferLen) {
             if (this._strBuffer[endIndex] == '=') {
-               key = (String)(new Object(this._strBuffer, startIndex, endIndex - startIndex));
+               key = new String(this._strBuffer, startIndex, endIndex - startIndex);
                startIndex = endIndex + 1;
                endIndex++;
                break;
@@ -46,30 +48,30 @@ public final class GenericMessageEncoder implements MessageEncoder, CodebookCons
          }
 
          if (key == null) {
-            throw new Object("Invalid codebook format");
+            throw new IOException("Invalid codebook format");
          }
 
          if (StringUtilities.strEqual(key, "headers") || StringUtilities.strEqual(key, "valueTypes")) {
-            values = (Vector)(new Object(128));
+            values = new Vector(128);
          } else if (key.endsWith("values")) {
-            values = (Vector)(new Object(32));
+            values = new Vector(32);
          } else {
-            values = (Vector)(new Object(1));
+            values = new Vector(1);
          }
 
          for (; endIndex < this._strBufferLen; endIndex++) {
             if (this._strBuffer[endIndex] == ',') {
-               values.addElement(new Object(this._strBuffer, startIndex, endIndex - startIndex));
+               values.addElement(new String(this._strBuffer, startIndex, endIndex - startIndex));
                startIndex = endIndex + 1;
             }
          }
 
-         values.addElement(new Object(this._strBuffer, startIndex, endIndex - startIndex));
+         values.addElement(new String(this._strBuffer, startIndex, endIndex - startIndex));
          props.put(key, values);
          this.readLine(in);
       }
 
-      Hashtable coders = (Hashtable)(new Object(15));
+      Hashtable coders = new Hashtable(15);
       coders.put("Integer", IntegerCoder.getInstance());
       coders.put("Date", DateCoder.getInstance());
       coders.put("Text-value", TextCoder.getInstance());
@@ -102,7 +104,7 @@ public final class GenericMessageEncoder implements MessageEncoder, CodebookCons
          this.append_STRING("messageLine");
          this.append_CHAR('.');
          this.append_STRING("valueType");
-         String messageLineCoderName = getStringProperty(props, (String)(new Object(this._strBuffer, 0, this._strBufferLen)));
+         String messageLineCoderName = getStringProperty(props, new String(this._strBuffer, 0, this._strBufferLen));
          this._messageLineCoder = (Coder)coders.get(messageLineCoderName);
          if (this._messageLineCoder == null) {
             this._messageLineCoder = this.initializeCoder(props, messageLineCoderName);
@@ -110,18 +112,18 @@ public final class GenericMessageEncoder implements MessageEncoder, CodebookCons
 
          this._strBufferLen = 0;
          props.clear();
-         props = null;
+         Hashtable var13 = null;
          coders.clear();
-         coders = null;
+         Hashtable var17 = null;
          if (values != null) {
             values.removeAllElements();
-            values = null;
+            Vector var15 = null;
          }
 
          headerValues.removeAllElements();
-         headerValues = null;
+         Vector var19 = null;
       } else {
-         throw new Object("Invalid codebook format");
+         throw new IOException("Invalid codebook format");
       }
    }
 
@@ -150,10 +152,10 @@ public final class GenericMessageEncoder implements MessageEncoder, CodebookCons
    }
 
    @Override
-   public final void decodeHeader(InputStream ins, String[] nameValuePair) {
+   public final void decodeHeader(InputStream ins, String[] nameValuePair) throws EOFException {
       int headerToken = ins.read();
       if (headerToken == -1) {
-         throw new Object();
+         throw new EOFException();
       }
 
       if (headerToken >= 128) {
@@ -225,25 +227,24 @@ public final class GenericMessageEncoder implements MessageEncoder, CodebookCons
       return propValue;
    }
 
-   private static final String[] getStringArrayProperty(Hashtable props, String name) {
+   private static final String[] getStringArrayProperty(Hashtable props, String name) throws IOException {
       Vector values = (Vector)props.get(name);
       if (values == null) {
-         throw new Object("Invalid codebook format");
+         throw new IOException("Invalid codebook format");
       }
 
-      String[] propValue = new Object[values.size()];
+      String[] propValue = new String[values.size()];
       values.copyInto(propValue);
       return propValue;
    }
 
-   private static final String getStringProperty(Hashtable props, String name) {
+   private static final String getStringProperty(Hashtable props, String name) throws IOException {
       Vector values = (Vector)props.get(name);
       if (values == null) {
-         throw new Object("Invalid codebook format");
+         throw new IOException("Invalid codebook format");
+      } else {
+         return (String)values.firstElement();
       }
-
-      String propValue = (String)values.firstElement();
-      return propValue;
    }
 
    private final Coder initializeCoder(Hashtable props, String coderName) {
@@ -253,10 +254,10 @@ public final class GenericMessageEncoder implements MessageEncoder, CodebookCons
       this.append_STRING(coderName);
       this.append_CHAR('.');
       this.append_STRING("values");
-      String[] escapeTokens = getStringArrayProperty(props, (String)(new Object(this._strBuffer, 0, this._strBufferLen)));
+      String[] escapeTokens = getStringArrayProperty(props, new String(this._strBuffer, 0, this._strBufferLen));
       this._strBufferLen -= 6;
       this.append_STRING("caseSensitive");
-      boolean caseSensitive = getBooleanProperty(props, (String)(new Object(this._strBuffer, 0, this._strBufferLen)));
+      boolean caseSensitive = getBooleanProperty(props, new String(this._strBuffer, 0, this._strBufferLen));
       return new EscapedTextCoder(escapeTokens, caseSensitive);
    }
 

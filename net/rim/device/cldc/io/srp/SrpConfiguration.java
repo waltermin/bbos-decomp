@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.srp;
 
+import java.io.IOException;
 import java.util.Vector;
 import net.rim.device.api.crypto.RandomSource;
 import net.rim.device.api.system.ApplicationRegistry;
@@ -70,10 +71,10 @@ final class SrpConfiguration {
                break;
             case 0:
             default:
-               this._connectionParameters = ((StringBuffer)(new Object())).append(this._connectionParameters).append(";interface=wifi").toString();
+               this._connectionParameters = this._connectionParameters + ";interface=wifi";
                break;
             case 1:
-               this._connectionParameters = ((StringBuffer)(new Object())).append(this._connectionParameters).append(";interface=cellular").toString();
+               this._connectionParameters = this._connectionParameters + ";interface=cellular";
          }
 
          switch (this._connectionType) {
@@ -81,11 +82,11 @@ final class SrpConfiguration {
                break;
             case 0:
             default:
-               this._connectionParameters = ((StringBuffer)(new Object())).append(this._connectionParameters).append(";connectiontype=router").toString();
+               this._connectionParameters = this._connectionParameters + ";connectiontype=router";
                this.setupBearer(this._bearerConfig);
                break;
             case 1:
-               this._connectionParameters = ((StringBuffer)(new Object())).append(this._connectionParameters).append(";connectiontype=relay").toString();
+               this._connectionParameters = this._connectionParameters + ";connectiontype=relay";
                this.setupBearer(this._bearerConfig);
          }
 
@@ -111,7 +112,7 @@ final class SrpConfiguration {
 
          this.initializeDiagnostics();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -125,13 +126,11 @@ final class SrpConfiguration {
                   nextIndex = this._connectionParameters.length();
                }
 
-               this._connectionParameters = ((StringBuffer)(new Object()))
-                  .append(this._connectionParameters.substring(0, var4))
-                  .append(";connectionhandler=ssl")
-                  .append(this._connectionParameters.substring(var4 + 25, nextIndex))
-                  .toString();
+               this._connectionParameters = this._connectionParameters.substring(0, var4)
+                  + ";connectionhandler=ssl"
+                  + this._connectionParameters.substring(var4 + 25, nextIndex);
             } else {
-               this._connectionParameters = ((StringBuffer)(new Object())).append(this._connectionParameters).append(";connectionhandler=ssl").toString();
+               this._connectionParameters = this._connectionParameters + ";connectionhandler=ssl";
             }
             break;
          case 5:
@@ -143,13 +142,11 @@ final class SrpConfiguration {
                   nextIndex = this._connectionParameters.length();
                }
 
-               this._connectionParameters = ((StringBuffer)(new Object()))
-                  .append(this._connectionParameters.substring(0, index))
-                  .append(";connectionhandler=socket")
-                  .append(this._connectionParameters.substring(index + 22, nextIndex))
-                  .toString();
+               this._connectionParameters = this._connectionParameters.substring(0, index)
+                  + ";connectionhandler=socket"
+                  + this._connectionParameters.substring(index + 22, nextIndex);
             } else {
-               this._connectionParameters = ((StringBuffer)(new Object())).append(this._connectionParameters).append(";connectionhandler=socket").toString();
+               this._connectionParameters = this._connectionParameters + ";connectionhandler=socket";
             }
             break;
          default:
@@ -172,7 +169,7 @@ final class SrpConfiguration {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   final void openConnection(SrpConnectionManager manager, SrpConnectionStatusListener listener, int mode, boolean timeouts) {
+   final void openConnection(SrpConnectionManager manager, SrpConnectionStatusListener listener, int mode, boolean timeouts) throws IOException {
       SrpBridgeConnection conn = null;
       String addressToUse = null;
       String[] paramsAux = null;
@@ -188,7 +185,7 @@ final class SrpConfiguration {
          this.reportConnecting();
          String params = this._connectionParameters;
          if (this._bearerConfig == 2 && this._srcPort != -1) {
-            params = ((StringBuffer)(new Object())).append(params).append(";localport=").append(String.valueOf(this._srcPort)).toString();
+            params = params + ";localport=" + this._srcPort;
          }
 
          addressToUse = SrpUtils.createSrpAddress(false, this._address, null, params);
@@ -206,7 +203,7 @@ final class SrpConfiguration {
             this.fileReport(1);
          }
 
-         throw new Object(e.getMessage());
+         throw new IOException(e.getMessage());
       }
 
       EventLogger.logEvent(5159979649545707334L, 1129213808, 0);
@@ -399,7 +396,7 @@ final class SrpConfiguration {
    final void resetAuxParameters() {
       synchronized (this) {
          if (this._hosts != null && this._hosts.length > 0) {
-            this._params = new Object[this._hosts.length];
+            this._params = new String[this._hosts.length];
             System.arraycopy(this._hosts, 0, this._params, 0, this._params.length);
          } else {
             this._params = null;

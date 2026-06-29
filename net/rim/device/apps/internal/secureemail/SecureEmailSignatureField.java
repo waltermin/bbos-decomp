@@ -17,9 +17,10 @@ import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.MatchProvider;
-import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.VerbMenuItem;
+import net.rim.device.apps.internal.api.crypto.verb.DisplayCertificateVerb;
 import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
+import net.rim.device.apps.internal.ldap.LDAPFetchCertificatesVerb;
 import net.rim.device.apps.internal.secureemail.cache.CachedMessageStatusData;
 import net.rim.device.apps.internal.secureemail.server.DisplayServerCertificateVerb;
 import net.rim.device.apps.internal.secureemail.server.SecureEmailCertificateServer;
@@ -128,7 +129,7 @@ public class SecureEmailSignatureField implements CollectionListener, ContextMen
       if (this._signerCertificate == null) {
          this._signerCertificateChain = null;
       } else {
-         String[] containerStringUpperSingularArray = new Object[]{this._secureEmailFactory.getPublicKeyContainerString(true, false)};
+         String[] containerStringUpperSingularArray = new String[]{this._secureEmailFactory.getPublicKeyContainerString(true, false)};
          String displayCertificateVerbDescription = MessageFormat.format(SecureEmailResources.getString(57), containerStringUpperSingularArray);
          int numSecureEmailCertificateServers = this._secureEmailCertificateServers.length;
          if (numSecureEmailCertificateServers == 0) {
@@ -145,30 +146,30 @@ public class SecureEmailSignatureField implements CollectionListener, ContextMen
             int bestCertificateChainIndex = CertificateChainProperties.selectBestCertificateChain(certificateChainProperties);
             this._signerCertificateChain = certificateChains[bestCertificateChainIndex];
             this._signerCertificateChainProperties = certificateChainProperties[bestCertificateChainIndex];
-            this._displaySignerCertificateMenuItem = (VerbMenuItem)(new Object(
-               (Verb)(new Object(
+            this._displaySignerCertificateMenuItem = new VerbMenuItem(
+               new DisplayCertificateVerb(
                   displayCertificateVerbDescription,
                   this._signerCertificate,
                   this.getIncludedCertificates(),
                   this._secureEmailFactory.getPreferredKeyStore(),
                   this._secureEmailFactory.getCryptoSystemProperties(),
                   null
-               )),
+               ),
                10
-            ));
+            );
          } else {
             for (int i = 0; i < numSecureEmailCertificateServers; i++) {
                try {
                   Long certificateProperties = this._secureEmailCertificateServers[i].getCertificateProperties(this._signerCertificate, this._creationDate);
                   if (certificateProperties != null) {
-                     this._signerCertificateChain = new Object[]{this._signerCertificate};
+                     this._signerCertificateChain = new Certificate[]{this._signerCertificate};
                      this._signerCertificateChainProperties = certificateProperties;
-                     this._displaySignerCertificateMenuItem = (VerbMenuItem)(new Object(
+                     this._displaySignerCertificateMenuItem = new VerbMenuItem(
                         new DisplayServerCertificateVerb(
                            displayCertificateVerbDescription, this._signerCertificate, this._signerCertificateChainProperties, this._secureEmailFactory
                         ),
                         10
-                     ));
+                     );
                      return;
                   }
                } catch (SecureEmailServerEnrollmentException var9) {
@@ -179,14 +180,14 @@ public class SecureEmailSignatureField implements CollectionListener, ContextMen
          }
 
          if (this._signerCertificateChain == null) {
-            this._signerCertificateChain = new Object[]{this._signerCertificate};
+            this._signerCertificateChain = new Certificate[]{this._signerCertificate};
             this._signerCertificateChainProperties = 8;
-            this._displaySignerCertificateMenuItem = (VerbMenuItem)(new Object(
+            this._displaySignerCertificateMenuItem = new VerbMenuItem(
                new DisplayServerCertificateVerb(
                   displayCertificateVerbDescription, this._signerCertificate, this._signerCertificateChainProperties, this._secureEmailFactory
                ),
                10
-            ));
+            );
          }
       }
    }
@@ -242,7 +243,7 @@ public class SecureEmailSignatureField implements CollectionListener, ContextMen
 
    protected boolean fireBackgroundStatusRequest(Certificate[] certChain) {
       if (certChain != null && certChain.length != 0 && SecureEmailCache.getInstance().shouldAttemptAutoFetchStatus(certChain[0])) {
-         CertificateStatusRequest request = (CertificateStatusRequest)(new Object(certChain, true, this._secureEmailFactory.getPreferredKeyStore(), null, null));
+         CertificateStatusRequest request = new CertificateStatusRequest(certChain, true, this._secureEmailFactory.getPreferredKeyStore(), null, null);
          int returnValue = CertificateStatusProvider.fetchCertificateStatus(request, this);
          this._requestedStatus = true;
          return returnValue != 4;
@@ -315,7 +316,7 @@ public class SecureEmailSignatureField implements CollectionListener, ContextMen
 
    @Override
    public void makeDelegateContextMenu(ContextMenu contextMenu) {
-      String[] containerStringUpperSingularArray = new Object[]{this._secureEmailFactory.getPublicKeyContainerString(true, false)};
+      String[] containerStringUpperSingularArray = new String[]{this._secureEmailFactory.getPublicKeyContainerString(true, false)};
       if (this._signerCertificate != null) {
          contextMenu.addItem(this._displaySignerCertificateMenuItem);
       } else {
@@ -325,7 +326,7 @@ public class SecureEmailSignatureField implements CollectionListener, ContextMen
             if (this._isPINMessage && this._senderEmailAddress != null) {
                String[] emailAddresses = SecureEmailUtilities.convertPINToEmailAddress(this._senderEmailAddress);
                int numEmailAddresses = emailAddresses != null ? emailAddresses.length : 0;
-               StringBuffer senderToEmailAddresses = (StringBuffer)(new Object());
+               StringBuffer senderToEmailAddresses = new StringBuffer();
 
                for (int i = 0; i < numEmailAddresses; i++) {
                   if (i > 0) {
@@ -340,16 +341,16 @@ public class SecureEmailSignatureField implements CollectionListener, ContextMen
                senderEmailAddress = this._senderEmailAddress;
             }
 
-            this._fetchSignerCertificateMenuItem = (VerbMenuItem)(new Object(
-               (Verb)(new Object(
+            this._fetchSignerCertificateMenuItem = new VerbMenuItem(
+               new LDAPFetchCertificatesVerb(
                   fetchCertificateVerbDescription,
                   this._secureEmailFactory.getLDAPBrowserContextString(),
                   senderEmailAddress,
                   this.createSignerCertificateMatchProvider(),
                   true
-               )),
+               ),
                10
-            ));
+            );
          }
 
          contextMenu.addItem(this._fetchSignerCertificateMenuItem);

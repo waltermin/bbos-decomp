@@ -1,12 +1,15 @@
 package net.rim.device.cldc.io.tcp;
 
 import java.io.IOException;
+import java.io.InterruptedIOException;
 import javax.microedition.io.Connection;
 import javax.microedition.io.Datagram;
 import javax.microedition.io.SocketConnection;
 import net.rim.device.api.io.ConnectionCloseListener;
 import net.rim.device.api.io.ConnectionCloseProvider;
+import net.rim.device.api.io.ConnectionClosedException;
 import net.rim.device.api.io.DatagramAddressBase;
+import net.rim.device.api.io.IOCancelledException;
 import net.rim.device.api.io.SocketConnectionEnhanced;
 import net.rim.device.api.system.ControlledAccess;
 import net.rim.device.api.system.EventLogger;
@@ -80,7 +83,7 @@ public final class Protocol
             var35 = false;
          } finally {
             if (var35) {
-               throw new Object("Malformed Address.  Returning null connection");
+               throw new IOException("Malformed Address.  Returning null connection");
             }
          }
 
@@ -96,7 +99,7 @@ public final class Protocol
                      var28 = false;
                   } finally {
                      if (var28) {
-                        throw new Object();
+                        throw new IOException();
                      }
                   }
                }
@@ -117,7 +120,7 @@ public final class Protocol
                if (var21) {
                   EventLogger.logEvent(447071754022829032L, 1413696867, 0);
                   TcpUtils.logConnectionDatabase();
-                  throw new Object("Max connections opened.");
+                  throw new IOException("Max connections opened.");
                }
             }
 
@@ -134,7 +137,7 @@ public final class Protocol
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public final Connection spawnNewConnectionForServerSocket(TcpDatagramBase tcpDatagram, int mode, boolean timeouts) {
+   public final Connection spawnNewConnectionForServerSocket(TcpDatagramBase tcpDatagram, int mode, boolean timeouts) throws IOException {
       super._isListenConnection = false;
       super._myAddress = new TcpAddress((TcpAddress)tcpDatagram.getAddressBase());
       boolean var8 = false /* VF: Semaphore variable */;
@@ -145,7 +148,7 @@ public final class Protocol
          var8 = false;
       } finally {
          if (var8) {
-            throw new Object("Malformed Address.");
+            throw new IOException("Malformed Address.");
          }
       }
 
@@ -408,7 +411,7 @@ public final class Protocol
                try {
                   this._sendBuffer.readBySeqNumbers(tcpDatagramBuffer, optionBytesLength, leftEdge, rightEdge);
                } catch (Throwable var30) {
-                  throw new Object(e.getMessage());
+                  throw new RuntimeException(e.getMessage());
                }
 
                if (this._sendHotlist._sendRequestsList.isEmpty()) {
@@ -550,7 +553,7 @@ public final class Protocol
       }
    }
 
-   protected final void tcpConnect() {
+   protected final void tcpConnect() throws IOException {
       this._tcpQueueManager.init();
       int apnId = this.retrieveApn(false);
       this._tcpWindowManager
@@ -570,20 +573,20 @@ public final class Protocol
       }
 
       if (super._currentTcpState != 4) {
-         throw new Object("Unable to open connection.");
+         throw new IOException("Unable to open connection.");
       }
    }
 
-   final void addToOutputBuffer(byte[] output, int offset, int length) {
+   final void addToOutputBuffer(byte[] output, int offset, int length) throws IOException, IOCancelledException {
       int origLength = length;
 
       while (length > 0) {
          if (super._abortWasCalled) {
-            throw new Object();
+            throw new IOCancelledException();
          }
 
          if (this._sendBuffer == null) {
-            throw new Object();
+            throw new IOException();
          }
 
          synchronized (this._sendBuffer) {
@@ -595,7 +598,7 @@ public final class Protocol
                case 8:
                case 9:
                case 10:
-                  throw new Object("Output stream closed");
+                  throw new IOCancelledException("Output stream closed");
             }
 
             if (sendBufferAvailableSpace <= 0) {
@@ -603,7 +606,7 @@ public final class Protocol
                try {
                   this._sendBuffer.wait();
                   if (this._connectionTimedOut) {
-                     throw new Object("Connection timed out");
+                     throw new InterruptedIOException("Connection timed out");
                   }
                   continue;
                } finally {
@@ -635,12 +638,12 @@ public final class Protocol
       }
    }
 
-   final TcpReassembleDataNode readNextBlock() {
+   final TcpReassembleDataNode readNextBlock() throws IOException, ConnectionClosedException {
       boolean holeDetected = false;
 
       while (!super._abortWasCalled) {
          if (this._tcpReassemblyQueue == null) {
-            throw new Object("ReceiveBuffer nulled out");
+            throw new IOException("ReceiveBuffer nulled out");
          }
 
          synchronized (this._tcpReassemblyQueue) {
@@ -664,10 +667,10 @@ public final class Protocol
                         continue;
                      }
 
-                     throw new Object("Connection closed");
+                     throw new IOCancelledException("Connection closed");
                   }
 
-                  throw new Object("Connection timed out");
+                  throw new InterruptedIOException("Connection timed out");
                } finally {
                   break label104;
                }
@@ -687,7 +690,7 @@ public final class Protocol
          }
       }
 
-      throw new Object();
+      throw new ConnectionClosedException();
    }
 
    final void inputStreamClosed() {
@@ -1049,7 +1052,7 @@ public final class Protocol
    @Override
    public final void timerExpired(int timer) {
       if (this._timers == null) {
-         throw new Object();
+         throw new RuntimeException();
       }
 
       switch (timer) {
@@ -1075,14 +1078,14 @@ public final class Protocol
             return;
          case 4:
             if (super._currentTcpState != 9) {
-               throw new Object();
+               throw new RuntimeException();
             }
 
             this.finWait2Expired();
             return;
          case 5:
             if (super._currentTcpState != 10) {
-               throw new Object();
+               throw new RuntimeException();
             }
 
             this.setState(0);
@@ -1115,7 +1118,7 @@ public final class Protocol
       this.checkIfConnectionIsClosedClosingOrAborted();
       switch (option) {
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
             return -1;
          case 1:
@@ -1138,16 +1141,16 @@ public final class Protocol
    public final void setSocketOption(byte option, int value) {
       this.checkIfConnectionIsClosedClosingOrAborted();
       if (value < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       switch (option) {
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 1:
          default:
             if (value < 0) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this._tcpOptionManager._lingerTimeout = value;
@@ -1175,7 +1178,7 @@ public final class Protocol
             }
          case 4:
             if (value < this._sendBuffer.getLength()) {
-               throw new Object();
+               throw new IllegalArgumentException();
             } else {
                synchronized (this._sendBuffer) {
                   this._sendBuffer.resizeBuffer(value);
@@ -1413,9 +1416,9 @@ public final class Protocol
    }
 
    @Override
-   protected final void checkIfConnectionIsClosedClosingOrAborted() {
+   protected final void checkIfConnectionIsClosedClosingOrAborted() throws ConnectionClosedException {
       if (super._currentTcpState == 0 || super._closeRequested || super._abortWasCalled || this._shutdownInProgress) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
    }
 
@@ -1487,7 +1490,7 @@ public final class Protocol
 
    @Override
    public final int getProperties(String name) {
-      URL url = (URL)(new Object("tcp", name));
+      URL url = new URL("tcp", name);
       URLParameters params = url.getRIMParameters();
       if (params != null && params.containParameter(INTERFACE)) {
          String value = params.getValue(INTERFACE);
@@ -1571,26 +1574,26 @@ public final class Protocol
    @Override
    public final Connection openPrim(String name, int mode, boolean timeouts) throws IOException {
       if ((mode & 3) != mode) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int loc = name.indexOf(":");
       if (loc != -1 && loc != 2) {
          if (!TunnelCredentialsProvider.getInstance().isOutgoingSocketsAllowed()) {
-            throw new Object("Tcp SocketConnections not allowed");
+            throw new IOException("Tcp SocketConnections not allowed");
          } else {
             return TcpConnectionFactory.getInstance().getConnection(name, mode, timeouts);
          }
       } else {
          if (!TunnelCredentialsProvider.getInstance().isIncomingSocketsAllowed()) {
-            throw new Object("Tcp ServerSocketsConnections not allowed");
+            throw new IOException("Tcp ServerSocketsConnections not allowed");
          }
 
          super._isListenConnection = true;
 
          try {
             super._transport = (Transport)TransportRegistry.get("net.rim.device.cldc.io.tcp.Transport");
-            String[] args = new Object[3];
+            String[] args = new String[3];
             this._connectTimeOut = StreamDatagramAddressBase.retrieveSettings(name, args);
             int sessionTimeout = StreamDatagramAddressBase.retrieveSessionTimeout(name);
             if (StringUtilities.toLowerCase(name, 1701707776).indexOf(INTERFACE_WIFI) >= 0) {
@@ -1685,7 +1688,7 @@ public final class Protocol
       this._readTimeout = 0;
       this._startIdleTime = System.currentTimeMillis();
       EventLogger.logEvent(447071754022829032L, 1413695843, 4);
-      String[] args = new Object[3];
+      String[] args = new String[3];
       this._connectTimeOut = StreamDatagramAddressBase.retrieveSettings(name, args);
       int sessionTimeout = StreamDatagramAddressBase.retrieveSessionTimeout(name);
       String n = StringUtilities.toLowerCase(name, 1701707776);

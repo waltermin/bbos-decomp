@@ -2,6 +2,7 @@ package net.rim.plazmic.internal.mediaengine.model.intarray.v1_2;
 
 import net.rim.device.api.math.Fixed32;
 import net.rim.device.api.ui.XYRect;
+import net.rim.plazmic.internal.mediaengine.ui.ForeignObject;
 import net.rim.plazmic.internal.mediaengine.ui.ImageForeignObject;
 import net.rim.plazmic.internal.mediaengine.ui.MEGraphics2dContext;
 import net.rim.plazmic.internal.mediaengine.ui.PME12Graphics;
@@ -35,7 +36,7 @@ class LeafNodeImage extends LeafNode {
    public void update() {
       int imageIdx = super._model._nodes[super._visualNodeIdx + 29];
       Object image = super._model._images[imageIdx];
-      super._isForeignObject = image instanceof Object;
+      super._isForeignObject = image instanceof ForeignObject;
       if (!super._isForeignObject) {
          super._context._image = super._meGraphic.getBitmapObject(image);
          if (super._context._image == null) {
@@ -43,7 +44,7 @@ class LeafNodeImage extends LeafNode {
             return;
          }
       } else if (this.isBufferEnabled()) {
-         XYRect rectBounds = (XYRect)(new Object());
+         XYRect rectBounds = new XYRect();
          super._meGraphic.fillImageBounds(image, rectBounds);
          if (super._bufferId == -1) {
             super._bufferId = super._meGraphic.createNewBuffer(rectBounds.width, rectBounds.height, rectBounds.width < 300);

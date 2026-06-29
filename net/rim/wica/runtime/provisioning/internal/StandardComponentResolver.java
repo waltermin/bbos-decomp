@@ -72,7 +72,7 @@ public class StandardComponentResolver {
       // 2b: ldc_w "standardcomponents.xml"
       // 2e: invokevirtual net/rim/device/resources/Resource.getResource (Ljava/lang/String;)[B
       // 31: astore 4
-      // 33: new java/lang/Object
+      // 33: new java/io/ByteArrayInputStream
       // 36: dup
       // 37: aload 4
       // 39: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -99,7 +99,7 @@ public class StandardComponentResolver {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

@@ -12,7 +12,7 @@ class DatakeyFileHeader {
       if (header != null && header.length == 11) {
          this._header = header;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

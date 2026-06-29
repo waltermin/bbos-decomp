@@ -31,8 +31,8 @@ final class CompressedRibbonBannerField extends Field implements BannerField, Ri
    private SimpleRibbonComponent[] _components;
    private RibbonComponent$RibbonComponentChangeListener _listener;
    private int[] _lastBidiData;
-   private static Hashtable[] _componentParameters = new Object[4];
-   private static final String[] _componentIDs = new Object[]{
+   private static Hashtable[] _componentParameters = new Hashtable[4];
+   private static final String[] _componentIDs = new String[]{
       RibbonComponentIDs.SIGNAL_NAME, RibbonComponentIDs.BATTERY_NAME, RibbonComponentIDs.DATE_TIME_NAME, RibbonComponentIDs.HORIZ_INDICATOR_NAME
    };
    private static final int COMPONENT_GAP = 2;
@@ -42,7 +42,7 @@ final class CompressedRibbonBannerField extends Field implements BannerField, Ri
    CompressedRibbonBannerField(RibbonComponent$RibbonComponentChangeListener listener, String title) {
       super(0);
       FactoryRepository repos = GlobalFactoryRepository.getFactoryRepository(-4018062520840731194L);
-      this._components = new Object[_componentIDs.length];
+      this._components = new SimpleRibbonComponent[_componentIDs.length];
       int i = this._components.length;
 
       while (--i >= 0) {
@@ -74,7 +74,7 @@ final class CompressedRibbonBannerField extends Field implements BannerField, Ri
 
       for (int i = this._components.length; --i >= 0; this._components[i].applyTheme()) {
          SimpleRibbonComponent var10000 = this._components[i];
-         if (this._components[i] instanceof Object) {
+         if (this._components[i] instanceof RibbonComponentInitializer) {
             ((RibbonComponentInitializer)var10000).initialize(_componentParameters[i], attributes);
          }
       }
@@ -228,23 +228,23 @@ final class CompressedRibbonBannerField extends Field implements BannerField, Ri
    }
 
    static {
-      Hashtable parameters = (Hashtable)(new Object());
+      Hashtable parameters = new Hashtable();
       parameters.put("xOfs", "10");
       parameters.put("yOfs", "2");
       parameters.put("align", "left");
       parameters.put("icon", "net_rim_Browser_SignalLevel");
       _componentParameters[0] = parameters;
-      parameters = (Hashtable)(new Object());
+      parameters = new Hashtable();
       parameters.put("xOfs", "2");
       parameters.put("yOfs", "1");
       parameters.put("align", "right");
       parameters.put("icon", "net_rim_Compressed_BatteryLevel");
       _componentParameters[1] = parameters;
-      parameters = (Hashtable)(new Object());
+      parameters = new Hashtable();
       parameters.put("type", "time");
       parameters.put("align", "center");
       _componentParameters[2] = parameters;
-      parameters = (Hashtable)(new Object());
+      parameters = new Hashtable();
       parameters.put("align", "right");
       parameters.put("reportUsed", "reportUsed");
       _componentParameters[3] = parameters;

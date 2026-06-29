@@ -41,7 +41,7 @@ public class AbstractItemList implements ListFieldCallback, ReadableList {
 
    protected KeywordFilterList getKeywords() {
       if (this._keywordList == null) {
-         this._keywordList = (PrefixKeywordFilterList)(new Object(this, this.getKeywordIndexer()));
+         this._keywordList = new PrefixKeywordFilterList(this, this.getKeywordIndexer());
       }
 
       return this._keywordList;

@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.messaging.search.criteria;
 
 import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.AutoTextEditField;
 import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
@@ -19,7 +20,7 @@ import net.rim.vm.WeakReference;
 public final class NameSearchModel extends AddressBookNameSearch implements PersistableRIMModel, FieldProvider, ConversionProvider, EncryptableProvider {
    private int _headerType = 5;
    private Object _nameValueEncoding;
-   private static WeakReference _valueWR = (WeakReference)(new Object(null));
+   private static WeakReference _valueWR = new WeakReference(null);
    private static NameSearchModel _valueModel;
    private static final int[] _headerTypeMap = new int[]{5, 4, 6, 7, 8, -804651006, 33, 34, -804651006, 35, 36, -804650998, 46, 47, 48, 49, 57, 59, 62, 63};
 
@@ -76,7 +77,7 @@ public final class NameSearchModel extends AddressBookNameSearch implements Pers
    @Override
    public final boolean grabDataFromField(Field field, Object context) {
       this.setValue(null, 0);
-      if (!(field instanceof Object)) {
+      if (!(field instanceof VerticalFieldManager)) {
          return false;
       }
 
@@ -92,8 +93,8 @@ public final class NameSearchModel extends AddressBookNameSearch implements Pers
          return null;
       }
 
-      Field field = (Field)(new Object(SearchResources.getString(18), PersistentContent.decodeString(this._nameValueEncoding), 1000000, 4505800798109696L));
-      VerticalIndentFieldManager vifm = (VerticalIndentFieldManager)(new Object(1152921504606846976L));
+      Field field = new AutoTextEditField(SearchResources.getString(18), PersistentContent.decodeString(this._nameValueEncoding), 1000000, 4505800798109696L);
+      VerticalIndentFieldManager vifm = new VerticalIndentFieldManager(1152921504606846976L);
       field.setCookie(this);
       vifm.add(field);
       vifm.setCookie(this);
@@ -113,7 +114,7 @@ public final class NameSearchModel extends AddressBookNameSearch implements Pers
          }
       }
 
-      vifm.add((Field)(new Object(SearchResources.getString(24), choices, choices[headerType])), 16);
+      vifm.add(new ObjectChoiceField(SearchResources.getString(24), choices, choices[headerType]), 16);
       return vifm;
    }
 

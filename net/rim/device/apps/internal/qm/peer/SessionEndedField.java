@@ -7,6 +7,6 @@ final class SessionEndedField extends SessionInfoField {
 
    @Override
    protected final void setText() {
-      super._text = ((StringBuffer)(new Object("Your session for the application \""))).append(super._application).append("\" has ended.").toString();
+      super._text = "Your session for the application \"" + super._application + "\" has ended.";
    }
 }

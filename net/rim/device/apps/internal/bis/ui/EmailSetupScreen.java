@@ -1,9 +1,10 @@
 package net.rim.device.apps.internal.bis.ui;
 
 import java.util.Hashtable;
-import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.RadioButtonField;
 import net.rim.device.api.ui.component.RadioButtonGroup;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.apps.internal.bis.ApplicationResources;
 import net.rim.device.apps.internal.bis.api.ui.Button;
 import net.rim.device.apps.internal.bis.event.CloseEvent;
@@ -21,12 +22,12 @@ public final class EmailSetupScreen extends UserSettingsScreen {
    @Override
    public final void refresh(Hashtable screenParams) {
       this.setTitle(ApplicationResources.getString(6));
-      this.addContentField((Field)(new Object(ApplicationResources.getString(33))));
-      this.addContentField((Field)(new Object()));
-      RadioButtonGroup emailSetupMethodGroup = (RadioButtonGroup)(new Object());
-      this._setupExistingEmailChoice = (RadioButtonField)(new Object(ApplicationResources.getString(34), emailSetupMethodGroup, true));
+      this.addContentField(new LabelField(ApplicationResources.getString(33)));
+      this.addContentField(new SeparatorField());
+      RadioButtonGroup emailSetupMethodGroup = new RadioButtonGroup();
+      this._setupExistingEmailChoice = new RadioButtonField(ApplicationResources.getString(34), emailSetupMethodGroup, true);
       this.addContentField(this._setupExistingEmailChoice);
-      this._setupBBMailChoice = (RadioButtonField)(new Object(ApplicationResources.getString(35), emailSetupMethodGroup, false));
+      this._setupBBMailChoice = new RadioButtonField(ApplicationResources.getString(35), emailSetupMethodGroup, false);
       this.addContentField(this._setupBBMailChoice);
       this._emailSetupLinkEvent = new LinkEvent(17, 4);
       Button closeButton = new Button(ApplicationResources.getString(15));

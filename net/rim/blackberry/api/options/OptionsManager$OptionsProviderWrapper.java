@@ -12,7 +12,7 @@ final class OptionsManager$OptionsProviderWrapper implements OptionsProviderRegi
 
    @Override
    public final Vector getOptionsItems() {
-      Vector v = (Vector)(new Object(1));
+      Vector v = new Vector(1);
       v.addElement(new OptionsManager$OptionsItemWrapper(this._optionsProvider));
       return v;
    }

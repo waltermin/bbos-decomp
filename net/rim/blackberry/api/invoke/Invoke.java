@@ -36,6 +36,8 @@ import net.rim.device.apps.api.task.TaskCollectionHolder;
 import net.rim.device.apps.api.task.TaskVerbs;
 import net.rim.device.apps.api.utility.general.Copyable;
 import net.rim.device.apps.api.utility.general.SetParameter;
+import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
+import net.rim.device.apps.internal.phone.api.verbs.VoiceMailVerb;
 import net.rim.device.apps.internal.phone.model.PhoneNumberModel;
 import net.rim.device.apps.internal.sms.SMSModel;
 import net.rim.device.apps.internal.sms.SMSModelFactory;
@@ -64,7 +66,7 @@ public final class Invoke {
       switch (appType) {
          case -1:
             int handle = -1;
-            throw new Object("Invalid application type");
+            throw new IllegalArgumentException("Invalid application type");
          case 0:
          default:
             if (args == null) {
@@ -72,7 +74,7 @@ public final class Invoke {
             }
 
             if (!(args instanceof AddressBookArguments)) {
-               throw new Object("ApplicationArguments object type does not match specified application type");
+               throw new IllegalArgumentException("ApplicationArguments object type does not match specified application type");
             }
 
             String[] stringArgs = args.getArgs();
@@ -91,7 +93,7 @@ public final class Invoke {
 
             int handle = CodeModuleManager.getModuleHandle("net_rim_bb_addressbook_app");
             if (!startApp(handle, stringArgs)) {
-               throw new Object("Could not start internal application");
+               throw new RuntimeException("Could not start internal application");
             }
             break;
          case 1:
@@ -100,13 +102,13 @@ public final class Invoke {
             }
 
             if (!(args instanceof CalendarArguments)) {
-               throw new Object("ApplicationArguments object type does not match specified application type");
+               throw new IllegalArgumentException("ApplicationArguments object type does not match specified application type");
             }
 
             String[] stringArgs = args.getArgs();
             ContextObject co = null;
             if (stringArgs != null) {
-               co = (ContextObject)(new Object());
+               co = new ContextObject();
                if (stringArgs[0].equals("newview")) {
                   if (!stringArgs[1].equals("-1")) {
                      boolean var20 = false /* VF: Semaphore variable */;
@@ -117,7 +119,7 @@ public final class Invoke {
                         var20 = false;
                      } finally {
                         if (var20) {
-                           throw new Object("Invalid ApplicationArguments");
+                           throw new IllegalArgumentException("Invalid ApplicationArguments");
                         }
                      }
                   }
@@ -146,7 +148,7 @@ public final class Invoke {
             }
 
             if (!(args instanceof MessageArguments)) {
-               throw new Object("ApplicationArguments object type does not match specified application type");
+               throw new IllegalArgumentException("ApplicationArguments object type does not match specified application type");
             }
 
             String[] stringArgs = args.getArgs();
@@ -158,9 +160,9 @@ public final class Invoke {
                ContextObject context = null;
                Message m = ((MessageArguments)args).getMessageArg();
                if (m != null) {
-                  context = (ContextObject)(new Object());
+                  context = new ContextObject();
                   m.setAddressesToFreeForm(true);
-                  ContextObject.put(context, -8485899342890396495L, m.getInternalModel());
+                  ContextObject.put(context, -8485899342890396495L, (EmailMessageModel)m.getInternalModel());
                }
 
                TextMessage tm = ((MessageArguments)args).getTextMessageArg();
@@ -175,13 +177,13 @@ public final class Invoke {
                      number = number.substring(6);
                   }
 
-                  ContextObject numberContext = (ContextObject)(new Object());
+                  ContextObject numberContext = new ContextObject();
                   ContextObject.put(numberContext, 253, number);
                   PhoneNumberModel pnm = (PhoneNumberModel)FactoryUtil.createInstance(3797587162219887872L, numberContext);
                   String payloadText = tm.getPayloadText();
                   sms.setBody(payloadText == null ? "" : payloadText);
                   sms.setFlags(320);
-                  context = (ContextObject)(new Object(117));
+                  context = new ContextObject(117);
                   ContextObject.put(context, 247, pnm);
                   ContextObject.put(context, -8485899342890396495L, sms);
                }
@@ -192,7 +194,7 @@ public final class Invoke {
                         Verb[] composeVerbs = verbRepository.getVerbs(3797587162219887872L);
                         if (composeVerbs != null && composeVerbs.length > 0) {
                            composeVerb = composeVerbs[0];
-                           if (context != null && composeVerb instanceof Object && composeVerb instanceof Object) {
+                           if (context != null && composeVerb instanceof Copyable && composeVerb instanceof SetParameter) {
                               composeVerb = (Verb)((Copyable)composeVerb).copy();
                               ((SetParameter)composeVerb).setParameter(context);
                            }
@@ -208,7 +210,7 @@ public final class Invoke {
                         ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
                         Factory factory = (Factory)ar.waitFor(4246852237058296601L);
                         PINAddressModel address = (PINAddressModel)factory.createInstance(stringArgs[1]);
-                        context = (ContextObject)(new Object());
+                        context = new ContextObject();
                         ContextObject.put(context, 254, address);
                         if (stringArgs[2] != null) {
                            ContextObject.put(context, -1188330299125235844L, stringArgs[2]);
@@ -229,7 +231,7 @@ public final class Invoke {
                      ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
                      Factory factory = (Factory)ar.waitFor(-2985347935260258684L);
                      EmailAddressModel address = (EmailAddressModel)factory.createInstance(stringArgs[1]);
-                     context = (ContextObject)(new Object());
+                     context = new ContextObject();
                      ContextObject.put(context, 254, address);
                      if (stringArgs[2] != null) {
                         ContextObject.put(context, -1188330299125235844L, stringArgs[2]);
@@ -258,7 +260,7 @@ public final class Invoke {
 
             int handle = CodeModuleManager.getModuleHandle("net_rim_bb_messaging_app");
             if (!startApp(handle, args.getArgs())) {
-               throw new Object("Could not start internal application");
+               throw new RuntimeException("Could not start internal application");
             }
             break;
          case 3:
@@ -267,12 +269,12 @@ public final class Invoke {
             }
 
             if (!(args instanceof MemoArguments)) {
-               throw new Object("ApplicationArguments object type does not match specified application type");
+               throw new IllegalArgumentException("ApplicationArguments object type does not match specified application type");
             }
 
             MemoCollection collection = MemoCollectionHolder.getMemoCollection();
             if (collection == null) {
-               throw new Object("Could not start internal application");
+               throw new RuntimeException("Could not start internal application");
             }
 
             String[] stringArgs = args.getArgs();
@@ -283,20 +285,20 @@ public final class Invoke {
                if (stringArgs[0].equals("new")) {
                   ApplicationControl.assertPIMAllowed(true);
                   if (memoExists) {
-                     throw new Object("Memo already exists");
+                     throw new IllegalArgumentException("Memo already exists");
                   }
 
                   v = MemoVerbs.getMemoVerb(0);
                } else if (stringArgs[0].equals("edit") || stringArgs[0].equals("view")) {
                   ApplicationControl.assertPIMAllowed(true);
                   if (!memoExists) {
-                     throw new Object("Memo does not exist");
+                     throw new IllegalArgumentException("Memo does not exist");
                   }
 
                   v = MemoVerbs.getMemoVerb(1);
                }
 
-               if (memo != null && v instanceof Object) {
+               if (memo != null && v instanceof SetParameter) {
                   ((SetParameter)v).setParameter(memo.getMemoModel());
                }
 
@@ -306,7 +308,7 @@ public final class Invoke {
 
             int handle = CodeModuleManager.getModuleHandle("net_rim_bb_memo_app");
             if (!startApp(handle, args.getArgs())) {
-               throw new Object("Could not start internal application");
+               throw new RuntimeException("Could not start internal application");
             }
             break;
          case 4:
@@ -315,7 +317,7 @@ public final class Invoke {
             }
 
             if (!(args instanceof PhoneArguments)) {
-               throw new Object("ApplicationArguments object type does not match specified application type");
+               throw new IllegalArgumentException("ApplicationArguments object type does not match specified application type");
             }
 
             String[] stringArgs = args.getArgs();
@@ -328,12 +330,12 @@ public final class Invoke {
             }
 
             if (stringArgs != null && stringArgs.length > 0 && stringArgs[1].equals("voicemail")) {
-               Verb vmVerb = (Verb)(new Object());
+               Verb vmVerb = new VoiceMailVerb();
                if (vmVerb.invoke(null) == null) {
-                  throw new Object("Could not start internal application");
+                  throw new RuntimeException("Could not start internal application");
                }
             } else if (!startApp(handle, stringArgs)) {
-               throw new Object("Could not start internal application");
+               throw new RuntimeException("Could not start internal application");
             }
             break;
          case 5:
@@ -342,12 +344,12 @@ public final class Invoke {
             }
 
             if (!(args instanceof TaskArguments)) {
-               throw new Object("ApplicationArguments object type does not match specified application type");
+               throw new IllegalArgumentException("ApplicationArguments object type does not match specified application type");
             }
 
             TaskCollection collection = TaskCollectionHolder.getTaskCollection();
             if (collection == null) {
-               throw new Object("Could not start internal application");
+               throw new RuntimeException("Could not start internal application");
             }
 
             String[] stringArgs = args.getArgs();
@@ -358,19 +360,19 @@ public final class Invoke {
                if (stringArgs[0].equals("new")) {
                   ApplicationControl.assertPIMAllowed(true);
                   if (todoExists) {
-                     throw new Object("Cannot create ToDo: ToDo already exists");
+                     throw new IllegalArgumentException("Cannot create ToDo: ToDo already exists");
                   }
 
                   v = TaskVerbs.getTaskVerb(2);
                } else if (stringArgs[0].equals("view")) {
                   if (!todoExists) {
-                     throw new Object("Cannot view ToDo: ToDo does not exist");
+                     throw new IllegalArgumentException("Cannot view ToDo: ToDo does not exist");
                   }
 
                   v = TaskVerbs.getTaskVerb(1);
                }
 
-               if (todo != null && v instanceof Object) {
+               if (todo != null && v instanceof SetParameter) {
                   ((SetParameter)v).setParameter(todo.getInternalModel());
                }
 
@@ -380,7 +382,7 @@ public final class Invoke {
 
             int handle = CodeModuleManager.getModuleHandle("net_rim_bb_task_app");
             if (!startApp(handle, args.getArgs())) {
-               throw new Object("Could not start internal application");
+               throw new RuntimeException("Could not start internal application");
             }
             break;
          case 6:
@@ -389,12 +391,12 @@ public final class Invoke {
             }
 
             if (!(args instanceof CameraArguments)) {
-               throw new Object("ApplicationArguments object type does not match specified application type");
+               throw new IllegalArgumentException("ApplicationArguments object type does not match specified application type");
             }
 
             int handle = CodeModuleManager.getModuleHandle("net_rim_bb_camera");
             if (!startApp(handle, args.getArgs())) {
-               throw new Object("Could not start internal application");
+               throw new RuntimeException("Could not start internal application");
             }
             break;
          case 7:
@@ -403,7 +405,7 @@ public final class Invoke {
             }
 
             if (!(args instanceof MapsArguments)) {
-               throw new Object("ApplicationArguments object type does not match specified application type");
+               throw new IllegalArgumentException("ApplicationArguments object type does not match specified application type");
             }
 
             int handle = CodeModuleManager.getModuleHandle("net_rim_bb_lbs");
@@ -413,16 +415,16 @@ public final class Invoke {
             int addressIndex = ((MapsArguments)args).getAddressIndexArg();
             if (stringArgs == null && contact == null && mapView == null) {
                if (!startApp(handle, null)) {
-                  throw new Object("Could not start internal application");
+                  throw new RuntimeException("Could not start internal application");
                }
             } else {
                if (handle == -1) {
-                  throw new Object("Could not start internal application");
+                  throw new RuntimeException("Could not start internal application");
                }
 
                ApplicationDescriptor[] descriptors = CodeModuleManager.getApplicationDescriptors(handle);
                if (descriptors == null || descriptors.length <= 0) {
-                  throw new Object("Could not start internal application");
+                  throw new RuntimeException("Could not start internal application");
                }
 
                ApplicationDescriptor mapsDescriptor = null;
@@ -436,7 +438,7 @@ public final class Invoke {
                }
 
                if (mapsDescriptor == null) {
-                  throw new Object("Could not start internal application");
+                  throw new RuntimeException("Could not start internal application");
                }
 
                boolean var17 = false /* VF: Semaphore variable */;
@@ -471,14 +473,14 @@ public final class Invoke {
                   }
                } finally {
                   if (var17) {
-                     throw new Object("Could not start internal application");
+                     throw new RuntimeException("Could not start internal application");
                   }
                }
             }
             break;
          case 8:
             if (args != null) {
-               throw new Object("ApplicationArguments object type does not match specified application type");
+               throw new IllegalArgumentException("ApplicationArguments object type does not match specified application type");
             }
 
             new Invoke$1().start();
@@ -489,12 +491,12 @@ public final class Invoke {
             }
 
             if (!(args instanceof CalculatorArguments)) {
-               throw new Object("ApplicationArguments object type does not match specified application type");
+               throw new IllegalArgumentException("ApplicationArguments object type does not match specified application type");
             }
 
             int handle = CodeModuleManager.getModuleHandle("net_rim_bb_standardcalculator_app");
             if (!startApp(handle, args.getArgs())) {
-               throw new Object("Could not start internal application");
+               throw new RuntimeException("Could not start internal application");
             }
             break;
          case 10:
@@ -503,12 +505,12 @@ public final class Invoke {
             }
 
             if (!(args instanceof SearchArguments)) {
-               throw new Object("ApplicationArguments object type does not match specified application type");
+               throw new IllegalArgumentException("ApplicationArguments object type does not match specified application type");
             }
 
             int handle = CodeModuleManager.getModuleHandle("net_rim_bb_globalsearch_app");
             if (!startApp(handle, args.getArgs())) {
-               throw new Object("Could not start internal application");
+               throw new RuntimeException("Could not start internal application");
             }
       }
    }
@@ -520,7 +522,7 @@ public final class Invoke {
 
       ApplicationDescriptor[] descriptors = CodeModuleManager.getApplicationDescriptors(handle);
       if (descriptors != null && descriptors.length > 0) {
-         ApplicationDescriptor descriptor = (ApplicationDescriptor)(new Object(descriptors[0], args));
+         ApplicationDescriptor descriptor = new ApplicationDescriptor(descriptors[0], args);
 
          try {
             ApplicationManager.getApplicationManager().runApplication(descriptor);
@@ -545,11 +547,11 @@ public final class Invoke {
                verb.invoke(parameter);
             }
          } else {
-            RunnableVerbWrapper rvw = (RunnableVerbWrapper)(new Object(myApp, verb, parameter, false));
+            RunnableVerbWrapper rvw = new RunnableVerbWrapper(myApp, verb, parameter, false);
             myApp.invokeLater(rvw);
          }
       } else {
-         throw new Object("Could not start internal application");
+         throw new RuntimeException("Could not start internal application");
       }
    }
 }

@@ -70,7 +70,7 @@ final class RuntimeFramework implements Runtime, PersistentContentListener, Glob
                   var9 = false;
                   break label111;
                } catch (Throwable var14) {
-                  Logger.log(((StringBuffer)(new Object("Error shutting down runtime framework: "))).append(e.toString()).toString(), 2);
+                  Logger.log("Error shutting down runtime framework: " + e.toString(), 2);
                   var9 = false;
                   break label86;
                }
@@ -152,7 +152,7 @@ final class RuntimeFramework implements Runtime, PersistentContentListener, Glob
                   var10 = false;
                   break label181;
                } catch (Throwable var15) {
-                  Logger.log(((StringBuffer)(new Object("Unable to start runtime framework\nError: "))).append(e.toString()).toString(), 2);
+                  Logger.log("Unable to start runtime framework\nError: " + e.toString(), 2);
                   var10 = false;
                   break label145;
                }
@@ -178,7 +178,7 @@ final class RuntimeFramework implements Runtime, PersistentContentListener, Glob
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    final boolean loadApplication(String applicationUri) {
       if (applicationUri == null) {
-         throw new Object("applicationUri");
+         throw new NullPointerException("applicationUri");
       }
 
       if (this._available) {
@@ -192,9 +192,7 @@ final class RuntimeFramework implements Runtime, PersistentContentListener, Glob
             service.loadWiclet(applicationUri);
             return true;
          } catch (Throwable var4) {
-            Logger.log(
-               ((StringBuffer)(new Object("Unable to loading application: "))).append(applicationUri).append("\nError: ").append(e.toString()).toString(), 2
-            );
+            Logger.log("Unable to loading application: " + applicationUri + "\nError: " + e.toString(), 2);
             return false;
          }
       } else {
@@ -219,7 +217,7 @@ final class RuntimeFramework implements Runtime, PersistentContentListener, Glob
    @Override
    public final boolean startApplication(String uri) {
       if (uri == null) {
-         throw new Object("uri");
+         throw new NullPointerException("uri");
       }
 
       if (this._available) {
@@ -233,7 +231,7 @@ final class RuntimeFramework implements Runtime, PersistentContentListener, Glob
             service.startWiclet(uri);
             return true;
          } catch (Throwable var4) {
-            Logger.log(((StringBuffer)(new Object("Unable to start application: "))).append(uri).append("\nError: ").append(e.toString()).toString(), 2);
+            Logger.log("Unable to start application: " + uri + "\nError: " + e.toString(), 2);
             return false;
          }
       } else {
@@ -317,7 +315,7 @@ final class RuntimeFramework implements Runtime, PersistentContentListener, Glob
                   : class$net$rim$wica$runtime$persistence$internal$PersistenceServiceImpl
             );
       } catch (Throwable var3) {
-         Logger.log(((StringBuffer)(new Object("Unable to start runtime framework base services\nError: "))).append(e.toString()).toString(), 2);
+         Logger.log("Unable to start runtime framework base services\nError: " + e.toString(), 2);
          return;
       }
    }
@@ -436,7 +434,7 @@ final class RuntimeFramework implements Runtime, PersistentContentListener, Glob
                   : class$net$rim$wica$runtime$authentication$internal$AuthenticationService
             );
       } catch (Throwable var3) {
-         throw new Object(e.getMessage());
+         throw new RuntimeException(e.getMessage());
       }
    }
 
@@ -464,7 +462,7 @@ final class RuntimeFramework implements Runtime, PersistentContentListener, Glob
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

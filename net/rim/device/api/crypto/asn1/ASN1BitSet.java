@@ -15,7 +15,7 @@ public class ASN1BitSet implements Persistable {
             this._data[this._data.length - 1] = (byte)(this._data[this._data.length - 1] & (byte)(255 << 8 - (this._length & 7)));
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -55,7 +55,7 @@ public class ASN1BitSet implements Persistable {
       if (index >= 0 && index < this._length) {
          return (this._data[index >> 3] & 1 << 7 - (index & 7)) != 0;
       } else {
-         throw new Object();
+         throw new ArrayIndexOutOfBoundsException();
       }
    }
 
@@ -105,7 +105,7 @@ public class ASN1BitSet implements Persistable {
 
          return index >= this._length ? -1 : index;
       } else {
-         throw new Object();
+         throw new ArrayIndexOutOfBoundsException();
       }
    }
 
@@ -129,7 +129,7 @@ public class ASN1BitSet implements Persistable {
 
          return index;
       } else {
-         throw new Object();
+         throw new ArrayIndexOutOfBoundsException();
       }
    }
 

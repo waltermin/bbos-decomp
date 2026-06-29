@@ -261,7 +261,7 @@ final class AlertConfigurations {
          _kpttMessageDefaults[4] = KPTT_MESSAGE_DEFAULT_0;
          _kpttMessageDefaults[5] = KPTT_MESSAGE_PHONE_ONLY_0;
          _kpttMessageDefaults[6] = KPTT_MESSAGE_OFF_0;
-         _appSpecificDefaultsForSystemProfiles = (LongHashtable)(new Object());
+         _appSpecificDefaultsForSystemProfiles = new LongHashtable();
          _appSpecificDefaultsForSystemProfiles.put(2666833733215697856L, _calendarAppDefaults);
          _appSpecificDefaultsForSystemProfiles.put(204325571560529255L, _taskAppDefaults);
          _appSpecificDefaultsForSystemProfiles.put(-1845850106795451018L, _messagesAppDefaults);
@@ -275,7 +275,7 @@ final class AlertConfigurations {
          _appSpecificDefaultsForSystemProfiles.put(6432934947797527350L, _pagingDefaults);
          _appSpecificDefaultsForSystemProfiles.put(9045753910170648468L, _kpttAlertDefaults);
          _appSpecificDefaultsForSystemProfiles.put(1868613464211541088L, _kpttMessageDefaults);
-         _appSpecificDefaultsForUserProfiles = (LongHashtable)(new Object());
+         _appSpecificDefaultsForUserProfiles = new LongHashtable();
          _appSpecificDefaultsForUserProfiles.put(2666833733215697856L, CALENDAR_USER_0);
          _appSpecificDefaultsForUserProfiles.put(204325571560529255L, TASK_USER_0);
          _appSpecificDefaultsForUserProfiles.put(-1845850106795451018L, MESSAGES_USER_0);

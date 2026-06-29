@@ -7,7 +7,7 @@ import net.rim.device.api.system.ApplicationDescriptor;
 import net.rim.device.api.system.ApplicationManager;
 import net.rim.device.api.system.Backlight;
 import net.rim.device.api.system.CodeModuleManager;
-import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.apps.api.location.LocationServicesOptionsProvider;
 import net.rim.device.apps.api.ui.BooleanChoiceField;
@@ -21,8 +21,8 @@ final class LocationServicesOptionsProviderImpl extends LocationServicesOptionsP
    public final void populateMainScreen(MainScreen mainScreen) {
       ETManager manager = ETApplication.getETManager();
       if (manager.isEnabledByITPolicy()) {
-         mainScreen.add((Field)(new Object()));
-         mainScreen.add(this._locationTrackingState = (BooleanChoiceField)(new Object(_lbsBundle.getString(0), 0, false)));
+         mainScreen.add(new SeparatorField());
+         mainScreen.add(this._locationTrackingState = new BooleanChoiceField(_lbsBundle.getString(0), 0, false));
          this._locationTrackingState.setAffirmative(manager.isEnabledByUser());
       }
    }
@@ -57,7 +57,7 @@ final class LocationServicesOptionsProviderImpl extends LocationServicesOptionsP
                   ApplicationManager.getApplicationManager().runApplication(descriptors[0]);
                   return;
                } catch (Throwable var6) {
-                  Logger.logError(this, ((StringBuffer)(new Object("ApplicationManagerException: "))).append(e).toString());
+                  Logger.logError(this, "ApplicationManagerException: " + e);
                   return;
                }
             }
@@ -73,7 +73,7 @@ final class LocationServicesOptionsProviderImpl extends LocationServicesOptionsP
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

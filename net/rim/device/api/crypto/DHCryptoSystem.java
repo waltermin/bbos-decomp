@@ -937,7 +937,7 @@ public final class DHCryptoSystem implements CryptoSystem {
          this._cryptoTokenData = cryptoTokenData;
          this.setHashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -1156,7 +1156,7 @@ public final class DHCryptoSystem implements CryptoSystem {
 
          this.initialize(cryptoToken, cryptoToken.getDHCryptoSystemData(p, q, g, privateKeyMinRandomBits, name));
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -1165,7 +1165,7 @@ public final class DHCryptoSystem implements CryptoSystem {
       byte[] q = null;
       byte[] g = null;
       if (name == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (name.equals("WTLS1")) {
@@ -1193,7 +1193,7 @@ public final class DHCryptoSystem implements CryptoSystem {
       try {
          this.initialize(cryptoToken, p, q, g, privateKeyMinRandomBits, name);
       } catch (InvalidCryptoSystemException e) {
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       }
    }
 
@@ -1225,14 +1225,14 @@ public final class DHCryptoSystem implements CryptoSystem {
       // 0f: invokespecial net/rim/device/api/crypto/DHCryptoSystem.initialize (Lnet/rim/device/api/crypto/DHCryptoToken;[B[B[BILjava/lang/String;)V
       // 12: return
       // 13: astore 6
-      // 15: new java/lang/Object
+      // 15: new java/lang/RuntimeException
       // 18: dup
       // 19: aload 6
       // 1b: invokevirtual net/rim/device/api/crypto/CryptoUnsupportedOperationException.toString ()Ljava/lang/String;
       // 1e: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 21: athrow
       // 22: astore 6
-      // 24: new java/lang/Object
+      // 24: new java/lang/RuntimeException
       // 27: dup
       // 28: aload 6
       // 2a: invokevirtual net/rim/device/api/crypto/CryptoTokenException.toString ()Ljava/lang/String;
@@ -1268,7 +1268,7 @@ public final class DHCryptoSystem implements CryptoSystem {
       try {
          this.initialize(SoftwareDHCryptoToken.getInstance(), name, privateKeyMinRandomBits);
       } catch (Throwable var5) {
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       }
    }
 

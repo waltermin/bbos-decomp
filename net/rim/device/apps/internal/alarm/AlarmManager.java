@@ -10,7 +10,7 @@ import net.rim.vm.WeakReference;
 
 final class AlarmManager implements Factory, TestPoint {
    private int _alarmState;
-   private WeakReference[] _alarmStateListeners = new Object[0];
+   private WeakReference[] _alarmStateListeners = new WeakReference[0];
    private long _savedAlarmTime = 0;
    static final int STATE_NONE = 0;
    static final int STATE_ALARM = 1;
@@ -38,8 +38,8 @@ final class AlarmManager implements Factory, TestPoint {
 
    @Override
    public final void test(Object id, Object value) {
-      if (value instanceof Object) {
-         setAlarmState(value);
+      if (value instanceof Integer) {
+         setAlarmState((Integer)value);
       }
    }
 
@@ -67,7 +67,7 @@ final class AlarmManager implements Factory, TestPoint {
    private final void registerAlarmStateListener(AlarmStateField alarmStateListener) {
       synchronized (this._alarmStateListeners) {
          Array.resize(this._alarmStateListeners, this._alarmStateListeners.length + 1);
-         this._alarmStateListeners[this._alarmStateListeners.length - 1] = (WeakReference)(new Object(alarmStateListener));
+         this._alarmStateListeners[this._alarmStateListeners.length - 1] = new WeakReference(alarmStateListener);
       }
 
       this.cleanupListeners();

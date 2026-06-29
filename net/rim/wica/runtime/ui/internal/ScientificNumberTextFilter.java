@@ -25,11 +25,11 @@ public class ScientificNumberTextFilter extends TextFilter {
    public boolean validate(char character) {
       if (this.isValidChar(character)) {
          if (this._text.length() > this._curPos) {
-            StringBuffer s = (StringBuffer)(new Object(this._text));
-            s.insert(this._curPos, ((StringBuffer)(new Object())).append(character).append("0").toString());
+            StringBuffer s = new StringBuffer(this._text);
+            s.insert(this._curPos, character + "0");
             return Util.isValidNumber(s.toString());
          } else {
-            return Util.isValidNumber(((StringBuffer)(new Object())).append(this._text).append(character).append("0").toString());
+            return Util.isValidNumber(this._text + character + "0");
          }
       } else {
          return false;

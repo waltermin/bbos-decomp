@@ -16,7 +16,7 @@ class CICALBaseUpdateConverter extends CICALBaseConverter {
    private static final byte[] COMPONENT_HEADER = new byte[]{1, 1, 1};
 
    protected byte[] convert(byte[] header, Event event, Object context) {
-      DataBuffer dataBuffer = (DataBuffer)(new Object(true));
+      DataBuffer dataBuffer = new DataBuffer(true);
       ContextObject contextObject = ContextObject.castOrCreate(context);
       CalendarService calendarService = CalendarServiceManager.getInstance().findCalendarService(event);
       long[] exclusionDates = RecurUtilities.getDeleteDates(event);
@@ -53,7 +53,7 @@ class CICALBaseUpdateConverter extends CICALBaseConverter {
             for (Event relatedEvent : relatedEvents) {
                OTASyncData syncData = super._otaSyncDataManager.get(relatedEvent);
                if (syncData == null) {
-                  syncData = (OTASyncData)(new Object(0, 1));
+                  syncData = new OTASyncData(0, 1);
                   super._otaSyncDataManager.add(relatedEvent, syncData);
                }
 

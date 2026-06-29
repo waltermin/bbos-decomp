@@ -11,8 +11,10 @@ import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.timing.MediaObject;
 import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.timing.Par;
 import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.timing.TimeContainer;
 import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.ui.ActiveRichTextFieldWrapper;
+import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.ui.ScalableBitmapField;
 import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.ui.Slide;
 import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.ui.SlideManager;
+import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.ui.VideoField;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -106,17 +108,17 @@ public class MMSParser extends SMILParser {
       }
 
       Field uiComponent = mediaObject.getUIComponent();
-      if (uiComponent instanceof Object || uiComponent instanceof Object) {
+      if (uiComponent instanceof ScalableBitmapField || uiComponent instanceof VideoField) {
          this._currentSlide.setImageComponent(uiComponent);
          mediaObject.setRegion(this._currentSlide.getImageRegion());
-         if (uiComponent instanceof Object) {
+         if (uiComponent instanceof AnimatedBitmapField) {
             AnimatedBitmapField animatedBitmapField = (AnimatedBitmapField)uiComponent;
             if (animatedBitmapField.isAnimated()) {
                model.setHasAnimation(true);
                return;
             }
          }
-      } else if (uiComponent instanceof Object) {
+      } else if (uiComponent instanceof ActiveRichTextFieldWrapper) {
          this._currentSlide.setTextComponent((ActiveRichTextFieldWrapper)uiComponent);
          mediaObject.setRegion(this._currentSlide.getTextRegion());
       }

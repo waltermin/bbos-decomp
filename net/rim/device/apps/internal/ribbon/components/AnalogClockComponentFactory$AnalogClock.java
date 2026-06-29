@@ -76,22 +76,22 @@ final class AnalogClockComponentFactory$AnalogClock
       super.initialize(params, context);
       this._hourFont = this.parseHandFont((String)params.get("hour-font"));
       if (this._hourFont == null) {
-         throw new Object("Cannot find hour font");
+         throw new NullPointerException("Cannot find hour font");
       }
 
       this._minuteFont = this.parseHandFont((String)params.get("minute-font"));
       if (this._minuteFont == null) {
-         throw new Object("Cannot find minute font");
+         throw new NullPointerException("Cannot find minute font");
       }
 
       this._secondFont = this.parseHandFont((String)params.get("second-font"));
       if (this._secondFont == null) {
-         throw new Object("Cannot find second font");
+         throw new NullPointerException("Cannot find second font");
       }
 
       this._face = ThemeManager.getActiveTheme().getImage((String)params.get("face"));
       if (this._face == null) {
-         throw new Object("Cannot find face image");
+         throw new NullPointerException("Cannot find face image");
       }
 
       this._hourXOfs = (this._face.getHeight() - this._hourFont.getAdvance('0')) / 2;

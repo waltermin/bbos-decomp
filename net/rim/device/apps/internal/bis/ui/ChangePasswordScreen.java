@@ -35,17 +35,17 @@ public class ChangePasswordScreen extends UserSettingsScreen {
    @Override
    public void refresh(Hashtable screenParams) {
       this.setTitle(this.getTitle());
-      this._passwordEdit = (PasswordEditField)(new Object(null, null));
-      this._passwordConfirmEdit = (PasswordEditField)(new Object(null, null));
-      this._oldPasswordEdit = (PasswordEditField)(new Object(null, null));
+      this._passwordEdit = new PasswordEditField(null, null);
+      this._passwordConfirmEdit = new PasswordEditField(null, null);
+      this._oldPasswordEdit = new PasswordEditField(null, null);
       Field oldPasswordLabel = new BoldLabelField(ApplicationResources.getString(179));
       if (this._forgotCommandId == -1) {
          this.addContentField(oldPasswordLabel);
       } else {
          LinkField forgotPasswordLinkField = new LinkField(ApplicationResources.getString(79));
          forgotPasswordLinkField.setMargin(0, 0, 0, 10);
-         this.addContentFieldRow(new Object[]{oldPasswordLabel, forgotPasswordLinkField});
-         this.attachEventToField(forgotPasswordLinkField, new CommandEvent(247, this._forgotCommandId, new Object[0]));
+         this.addContentFieldRow(new Field[]{oldPasswordLabel, forgotPasswordLinkField});
+         this.attachEventToField(forgotPasswordLinkField, new CommandEvent(247, this._forgotCommandId, new String[0]));
       }
 
       this.addContentField(this._oldPasswordEdit, true);

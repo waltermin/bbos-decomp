@@ -17,7 +17,7 @@ class OTAUpgradeControl$SCSafe {
       try {
          return sc.getSyncObjects();
       } finally {
-         return new Object[0];
+         return new SyncObject[0];
       }
    }
 
@@ -41,7 +41,7 @@ class OTAUpgradeControl$SCSafe {
       try {
          return sc.getSyncName();
       } finally {
-         return ((StringBuffer)(new Object())).append(sc.toString()).append(System.identityHashCode(sc)).toString();
+         return sc.toString() + System.identityHashCode(sc);
       }
    }
 
@@ -54,7 +54,7 @@ class OTAUpgradeControl$SCSafe {
 
          return name;
       } finally {
-         return ((StringBuffer)(new Object())).append(sc.toString()).append(System.identityHashCode(sc)).toString();
+         return sc.toString() + System.identityHashCode(sc);
       }
    }
 

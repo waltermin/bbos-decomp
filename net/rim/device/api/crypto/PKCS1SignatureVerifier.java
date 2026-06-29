@@ -18,7 +18,7 @@ public final class PKCS1SignatureVerifier implements SignatureVerifier {
    private static final long ID_TEST_VERIFIER_PKCS1 = 4084400956603387565L;
 
    public PKCS1SignatureVerifier(RSAPublicKey key, byte[] signature, int signatureOffset) {
-      this(key, (Digest)(new Object()), signature, signatureOffset);
+      this(key, new SHA1Digest(), signature, signatureOffset);
    }
 
    public PKCS1SignatureVerifier(RSAPublicKey key, Digest digest, byte[] signature, int signatureOffset) throws InvalidSignatureEncodingException {
@@ -57,13 +57,13 @@ public final class PKCS1SignatureVerifier implements SignatureVerifier {
             throw new InvalidSignatureEncodingException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object("RSA_PKCS1_V"))).append(this._version15 ? "15/" : "20/").append(this._digest.getAlgorithm()).toString();
+      return "RSA_PKCS1_V" + (this._version15 ? "15/" : "20/") + this._digest.getAlgorithm();
    }
 
    @Override
@@ -82,7 +82,7 @@ public final class PKCS1SignatureVerifier implements SignatureVerifier {
    }
 
    @Override
-   public final boolean verify() {
+   public final boolean verify() throws CryptoUnsupportedOperationException {
       if (this._encodingFailure) {
          return false;
       } else {
@@ -93,7 +93,7 @@ public final class PKCS1SignatureVerifier implements SignatureVerifier {
          } else if (PKCS1v2SignaturesFacade.available()) {
             return PKCS1v2SignaturesFacade.verify(this._encodedMessage, this._encodedMessageOffset, message, this._digestOid);
          } else {
-            throw new Object();
+            throw new CryptoUnsupportedOperationException();
          }
       }
    }
@@ -108,10 +108,10 @@ public final class PKCS1SignatureVerifier implements SignatureVerifier {
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

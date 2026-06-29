@@ -2,7 +2,6 @@ package net.rim.device.api.crypto.encoder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
-import java.io.OutputStream;
 import net.rim.device.api.crypto.PublicKey;
 import net.rim.device.api.crypto.RSAPublicKey;
 
@@ -15,29 +14,29 @@ final class WTLS_RIM_PublicKeyEncoder extends PublicKeyEncoder {
 
       try {
          var10 = true;
-         ByteArrayOutputStream e = new Object();
-         DataOutputStream output = new Object((OutputStream)e);
+         ByteArrayOutputStream e = new ByteArrayOutputStream();
+         DataOutputStream output = new DataOutputStream(e);
          if (key.getAlgorithm().equals("RSA")) {
             RSAPublicKey k = (RSAPublicKey)key;
-            ((DataOutputStream)output).writeByte(2);
-            ((DataOutputStream)output).writeByte(0);
+            output.writeByte(2);
+            output.writeByte(0);
             byte[] ex = k.getE();
-            ((DataOutputStream)output).writeShort(ex.length);
-            ((OutputStream)output).write(ex);
+            output.writeShort(ex.length);
+            output.write(ex);
             byte[] n = k.getN();
-            ((DataOutputStream)output).writeShort(n.length);
-            ((OutputStream)output).write(n);
-            return new EncodedKey(((ByteArrayOutputStream)e).toByteArray(), "WTLS");
+            output.writeShort(n.length);
+            output.write(n);
+            return new EncodedKey(e.toByteArray(), "WTLS");
          }
 
          var10 = false;
       } finally {
          if (var10) {
-            throw new Object();
+            throw new RuntimeException();
          }
       }
 
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override

@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.mms.service;
 
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
+import net.rim.device.api.io.Base64InputStream;
 import net.rim.device.api.io.IOUtilities;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.internal.mms.MMSUtilities;
@@ -128,7 +129,7 @@ public final class DRMConverter {
       System.arraycopy(this._data, startOffset, actualContent, 0, endOffset - startOffset);
       if (this._contentTransferEncoding != null && StringUtilities.strEqualIgnoreCase(this._contentTransferEncoding, "base64", 1701707776)) {
          try {
-            actualContent = IOUtilities.streamToBytes((InputStream)(new Object((InputStream)(new Object(actualContent)))));
+            actualContent = IOUtilities.streamToBytes(new Base64InputStream(new ByteArrayInputStream(actualContent)));
          } finally {
             return new MMSAttachmentImpl(this._originalAttachment.getName(), MMSUtilities.getMIMEType(this._contentType), actualContent, this._charset);
          }
@@ -160,6 +161,6 @@ public final class DRMConverter {
          }
       }
 
-      return (String)(new Object(this._data, startOffset, length));
+      return new String(this._data, startOffset, length);
    }
 }

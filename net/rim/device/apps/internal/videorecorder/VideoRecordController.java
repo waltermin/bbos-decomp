@@ -116,7 +116,7 @@ public final class VideoRecordController implements MediaStreamingCallback {
             }
 
             this._tempOS = this._tempFile.openOutputStream(Integer.MAX_VALUE);
-            if (!(this._tempOS instanceof Object)) {
+            if (!(this._tempOS instanceof FileHandleProvider)) {
                return false;
             }
 
@@ -294,7 +294,7 @@ public final class VideoRecordController implements MediaStreamingCallback {
 
       for (boolean fileExists = true; fileExists; nextFileNum = (nextFileNum + 1) % 100000) {
          String num = NumberUtilities.toString(nextFileNum, 10, 5);
-         filename = FileUtilities.makeFileURL(location, ((StringBuffer)(new Object("VID "))).append(num).append(".3GP").toString());
+         filename = FileUtilities.makeFileURL(location, "VID " + num + ".3GP");
          fileExists = FileUtilities.checkFileExists(filename);
       }
 

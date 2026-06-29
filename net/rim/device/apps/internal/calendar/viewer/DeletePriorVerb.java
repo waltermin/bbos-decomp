@@ -29,7 +29,7 @@ public final class DeletePriorVerb extends Verb {
    @Override
    public final Object invoke(Object parameter) {
       CalendarOptions calendarOptions = CalendarOptions.getOptions();
-      CalDB[] calDBs = new Object[0];
+      CalDB[] calDBs = new CalDB[0];
       CalendarServiceManager calendarServiceManager = CalendarServiceManager.getInstance();
       ServiceIdentifier[] services = calendarServiceManager.getCalendarServices();
 
@@ -51,7 +51,7 @@ public final class DeletePriorVerb extends Verb {
 
       UiApplication app = UiApplication.getUiApplication();
       boolean wasBackground = !app.isForeground();
-      String[] choices = new Object[]{CommonResources.getString(1000), CommonResource.getString(19)};
+      String[] choices = new String[]{CommonResources.getString(1000), CommonResource.getString(19)};
       int[] values = new int[]{0, -1, 51, 527827200, 16810638, 16788086, 1701539702, 1870004480};
       if (wasBackground) {
          app.requestForeground();
@@ -59,7 +59,7 @@ public final class DeletePriorVerb extends Verb {
 
       switch (Dialog.ask(CommonResources.getString(3002), choices, values, -1)) {
          case 0:
-            ((Thread)(new Object(new DeletePriorVerb$DeletePriorThread(calDBs, this._time, app)))).start();
+            new Thread(new DeletePriorVerb$DeletePriorThread(calDBs, this._time, app)).start();
          default:
             if (wasBackground) {
                app.requestBackground();

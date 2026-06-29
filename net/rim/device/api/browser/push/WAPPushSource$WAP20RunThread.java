@@ -28,15 +28,15 @@ final class WAPPushSource$WAP20RunThread extends Thread {
    public WAPPushSource$WAP20RunThread(WAPPushSource _1, boolean ppgConnect) {
       this.this$0 = _1;
       this._ppgConnect = ppgConnect;
-      this._dateFormat = (SimpleDateFormat)(new Object("EEE, dd MMM yyyy HH:mm:ss zzz"));
+      this._dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz");
    }
 
    private final void removeOldNotifier(boolean tryClose) {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
       synchronized (ar) {
          Object obj = ar.get(-477495422972569712L);
-         if (!(obj instanceof Object)) {
-            ar.put(-477495422972569712L, new Object(1));
+         if (!(obj instanceof IntHashtable)) {
+            ar.put(-477495422972569712L, new IntHashtable(1));
          } else {
             IntHashtable table = (IntHashtable)obj;
             StreamConnectionNotifier source = (StreamConnectionNotifier)table.remove(this.this$0._port);
@@ -76,7 +76,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
       // 013: bipush 5
       // 015: invokestatic net/rim/device/api/system/EventLogger.logEvent (JII)Z
       // 018: pop
-      // 019: new java/lang/Object
+      // 019: new java/lang/StringBuffer
       // 01c: dup
       // 01d: invokespecial java/lang/StringBuffer.<init> ()V
       // 020: aload 0
@@ -101,7 +101,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
       // 051: getfield net/rim/device/api/browser/push/WAPPushSource$WAP20RunThread.this$0 Lnet/rim/device/api/browser/push/WAPPushSource;
       // 054: getfield net/rim/device/api/browser/push/PushSource._apn Ljava/lang/String;
       // 057: ifnull 079
-      // 05a: new java/lang/Object
+      // 05a: new java/lang/StringBuffer
       // 05d: dup
       // 05e: invokespecial java/lang/StringBuffer.<init> ()V
       // 061: aload 1
@@ -118,7 +118,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
       // 07a: getfield net/rim/device/api/browser/push/WAPPushSource$WAP20RunThread.this$0 Lnet/rim/device/api/browser/push/WAPPushSource;
       // 07d: getfield net/rim/device/api/browser/push/PushSource._apnUsername Ljava/lang/String;
       // 080: ifnull 0a2
-      // 083: new java/lang/Object
+      // 083: new java/lang/StringBuffer
       // 086: dup
       // 087: invokespecial java/lang/StringBuffer.<init> ()V
       // 08a: aload 1
@@ -135,7 +135,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
       // 0a3: getfield net/rim/device/api/browser/push/WAPPushSource$WAP20RunThread.this$0 Lnet/rim/device/api/browser/push/WAPPushSource;
       // 0a6: getfield net/rim/device/api/browser/push/PushSource._apnPassword Ljava/lang/String;
       // 0a9: ifnull 0cb
-      // 0ac: new java/lang/Object
+      // 0ac: new java/lang/StringBuffer
       // 0af: dup
       // 0b0: invokespecial java/lang/StringBuffer.<init> ()V
       // 0b3: aload 1
@@ -148,7 +148,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
       // 0c4: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 0c7: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 0ca: astore 1
-      // 0cb: new java/lang/Object
+      // 0cb: new net/rim/device/cldc/io/utility/URL
       // 0ce: dup
       // 0cf: aload 1
       // 0d0: invokespecial net/rim/device/cldc/io/utility/URL.<init> (Ljava/lang/String;)V
@@ -156,7 +156,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
       // 0d4: goto 0f8
       // 0d7: astore 3
       // 0d8: ldc2_w -1133226195824034738
-      // 0db: new java/lang/Object
+      // 0db: new java/lang/StringBuffer
       // 0de: dup
       // 0df: ldc_w "PPce\n"
       // 0e2: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -174,7 +174,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
       // 0fa: aconst_null
       // 0fb: astore 4
       // 0fd: ldc2_w -1133226195824034738
-      // 100: new java/lang/Object
+      // 100: new java/lang/StringBuffer
       // 103: dup
       // 104: ldc_w "PGou "
       // 107: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -189,7 +189,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
       // 11b: getfield net/rim/device/api/browser/push/WAPPushSource$WAP20RunThread.this$0 Lnet/rim/device/api/browser/push/WAPPushSource;
       // 11e: aload 1
       // 11f: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 122: checkcast java/lang/Object
+      // 122: checkcast javax/microedition/io/SocketConnection
       // 125: putfield net/rim/device/api/browser/push/WAPPushSource._ppgConnection Ljavax/microedition/io/SocketConnection;
       // 128: aload 0
       // 129: getfield net/rim/device/api/browser/push/WAPPushSource$WAP20RunThread.this$0 Lnet/rim/device/api/browser/push/WAPPushSource;
@@ -213,7 +213,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
       // 15a: goto 162
       // 15d: astore 5
       // 15f: goto 1b6
-      // 162: new java/lang/Object
+      // 162: new net/rim/device/cldc/io/http/HttpServerProtocolBase
       // 165: dup
       // 166: aload 2
       // 167: aconst_null
@@ -232,7 +232,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
       // 182: goto 14d
       // 185: astore 6
       // 187: ldc2_w -1133226195824034738
-      // 18a: new java/lang/Object
+      // 18a: new java/lang/StringBuffer
       // 18d: dup
       // 18e: ldc_w "PPce\n"
       // 191: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -279,7 +279,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
       // 1f5: return
       // 1f6: astore 5
       // 1f8: ldc2_w -1133226195824034738
-      // 1fb: new java/lang/Object
+      // 1fb: new java/lang/StringBuffer
       // 1fe: dup
       // 1ff: ldc_w "PPce\n"
       // 202: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -498,7 +498,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
       // 106: astore 4
       // 108: monitorenter
       // 109: ldc2_w -1133226195824034738
-      // 10c: new java/lang/Object
+      // 10c: new java/lang/StringBuffer
       // 10f: dup
       // 110: ldc_w "BO "
       // 113: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -627,7 +627,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
       // 217: bipush 1
       // 218: iadd
       // 219: putfield net/rim/device/api/browser/push/WAPPushSource$WAP20RunThread._numRetries I
-      // 21c: new java/lang/Object
+      // 21c: new java/lang/StringBuffer
       // 21f: dup
       // 220: invokespecial java/lang/StringBuffer.<init> ()V
       // 223: aload 2
@@ -646,7 +646,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
       // 242: getfield net/rim/device/api/browser/push/WAPPushSource$WAP20RunThread.this$0 Lnet/rim/device/api/browser/push/WAPPushSource;
       // 245: getfield net/rim/device/api/browser/push/PushSource._apn Ljava/lang/String;
       // 248: ifnull 26a
-      // 24b: new java/lang/Object
+      // 24b: new java/lang/StringBuffer
       // 24e: dup
       // 24f: invokespecial java/lang/StringBuffer.<init> ()V
       // 252: aload 3
@@ -663,7 +663,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
       // 26b: getfield net/rim/device/api/browser/push/WAPPushSource$WAP20RunThread.this$0 Lnet/rim/device/api/browser/push/WAPPushSource;
       // 26e: getfield net/rim/device/api/browser/push/PushSource._apnUsername Ljava/lang/String;
       // 271: ifnull 293
-      // 274: new java/lang/Object
+      // 274: new java/lang/StringBuffer
       // 277: dup
       // 278: invokespecial java/lang/StringBuffer.<init> ()V
       // 27b: aload 3
@@ -680,7 +680,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
       // 294: getfield net/rim/device/api/browser/push/WAPPushSource$WAP20RunThread.this$0 Lnet/rim/device/api/browser/push/WAPPushSource;
       // 297: getfield net/rim/device/api/browser/push/PushSource._apnPassword Ljava/lang/String;
       // 29a: ifnull 2bc
-      // 29d: new java/lang/Object
+      // 29d: new java/lang/StringBuffer
       // 2a0: dup
       // 2a1: invokespecial java/lang/StringBuffer.<init> ()V
       // 2a4: aload 3
@@ -697,7 +697,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
       // 2bd: getfield net/rim/device/api/browser/push/WAPPushSource$WAP20RunThread.this$0 Lnet/rim/device/api/browser/push/WAPPushSource;
       // 2c0: aload 3
       // 2c1: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 2c4: checkcast java/lang/Object
+      // 2c4: checkcast javax/microedition/io/ServerSocketConnection
       // 2c7: putfield net/rim/device/api/browser/push/WAPPushSource._notifier Ljavax/microedition/io/ServerSocketConnection;
       // 2ca: aload 0
       // 2cb: bipush 0
@@ -754,11 +754,11 @@ final class WAPPushSource$WAP20RunThread extends Thread {
       // 334: getfield net/rim/device/api/browser/push/WAPPushSource$WAP20RunThread.this$0 Lnet/rim/device/api/browser/push/WAPPushSource;
       // 337: getfield net/rim/device/api/browser/push/WAPPushSource._notifier Ljavax/microedition/io/ServerSocketConnection;
       // 33a: dup
-      // 33b: instanceof java/lang/Object
+      // 33b: instanceof net/rim/device/cldc/io/devicehttps/HttpsServerSocket
       // 33e: ifne 345
       // 341: pop
       // 342: goto 359
-      // 345: checkcast java/lang/Object
+      // 345: checkcast net/rim/device/cldc/io/devicehttps/HttpsServerSocket
       // 348: aload 0
       // 349: getfield net/rim/device/api/browser/push/WAPPushSource$WAP20RunThread.this$0 Lnet/rim/device/api/browser/push/WAPPushSource;
       // 34c: getfield net/rim/device/api/browser/push/WAPPushSource._certificate Ljava/lang/Object;
@@ -778,11 +778,11 @@ final class WAPPushSource$WAP20RunThread extends Thread {
       // 36c: astore 6
       // 36e: aload 6
       // 370: dup
-      // 371: instanceof java/lang/Object
+      // 371: instanceof net/rim/device/api/util/IntHashtable
       // 374: ifne 37b
       // 377: pop
       // 378: goto 394
-      // 37b: checkcast java/lang/Object
+      // 37b: checkcast net/rim/device/api/util/IntHashtable
       // 37e: astore 7
       // 380: aload 7
       // 382: aload 0
@@ -885,7 +885,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
       // 44d: return
       // 44e: astore 2
       // 44f: ldc2_w -1133226195824034738
-      // 452: new java/lang/Object
+      // 452: new java/lang/StringBuffer
       // 455: dup
       // 456: ldc_w "PPex\n"
       // 459: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -949,7 +949,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
       // 4dd: putfield net/rim/device/api/browser/push/WAPPushSource._wap2Thread Lnet/rim/device/api/browser/push/WAPPushSource$WAP20RunThread;
       // 4e0: return
       // 4e1: ldc2_w -1133226195824034738
-      // 4e4: new java/lang/Object
+      // 4e4: new java/lang/StringBuffer
       // 4e7: dup
       // 4e8: ldc_w "PPex\n"
       // 4eb: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -1085,9 +1085,9 @@ final class WAPPushSource$WAP20RunThread extends Thread {
 
          try {
             connection.close();
-            connection = null;
+            HttpServerConnection var5 = null;
          } catch (Throwable var4) {
-            EventLogger.logEvent(-1133226195824034738L, ((StringBuffer)(new Object("PPce\n"))).append(e.toString()).toString().getBytes(), 0);
+            EventLogger.logEvent(-1133226195824034738L, ("PPce\n" + e.toString()).getBytes(), 0);
             continue;
          }
       }
@@ -1113,8 +1113,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
                String url = connection.getRequestURI();
                if (EventLogger.getMinimumLevel() >= 5) {
                   System.out.println("Received push");
-                  System.out
-                     .println(((StringBuffer)(new Object())).append(method).append(' ').append(url).append(' ').append(connection.getVersion()).toString());
+                  System.out.println(method + ' ' + url + ' ' + connection.getVersion());
 
                   for (int i = 0; i < Integer.MAX_VALUE; i++) {
                      String key = connection.getHeaderFieldKey(i);
@@ -1122,7 +1121,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
                         break;
                      }
 
-                     System.out.println(((StringBuffer)(new Object())).append(key).append(": ").append(connection.getHeaderField(i)).toString());
+                     System.out.println(key + ": " + connection.getHeaderField(i));
                   }
                }
 
@@ -1187,9 +1186,9 @@ final class WAPPushSource$WAP20RunThread extends Thread {
                   } else {
                      String contentType = connection.getHeaderField("content-type");
                      in = connection.openDataInputStream();
-                     HttpHeaders headers = (HttpHeaders)(new Object());
+                     HttpHeaders headers = new HttpHeaders();
                      if (StringUtilities.strEqualIgnoreCase(contentType, "application/http", 1701707776)) {
-                        StatusLine sl = (StatusLine)(new Object());
+                        StatusLine sl = new StatusLine();
                         sl.readFromStream(in);
                         headers.readFromStream(in);
                      } else {
@@ -1200,7 +1199,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
                         }
                      }
 
-                     TCPPushInputStream pushIn = (TCPPushInputStream)(new Object(connection, in));
+                     TCPPushInputStream pushIn = new TCPPushInputStream(connection, in);
                      pushIn.setDoWAPResponse(true);
                      this.this$0._listener.messageReceived(headers, pushIn);
                      var75 = false;
@@ -1208,13 +1207,13 @@ final class WAPPushSource$WAP20RunThread extends Thread {
                }
                break label1129;
             } catch (Throwable var90) {
-               EventLogger.logEvent(-1133226195824034738L, ((StringBuffer)(new Object("PPpp\n"))).append(e.toString()).toString().getBytes(), 0);
+               EventLogger.logEvent(-1133226195824034738L, ("PPpp\n" + e.toString()).getBytes(), 0);
                var75 = false;
                break label1094;
             }
          } finally {
             if (var75) {
-               if (connection instanceof Object && EventLogger.getMinimumLevel() >= 5) {
+               if (connection instanceof HttpServerProtocolBase && EventLogger.getMinimumLevel() >= 5) {
                   label1022:
                   try {
                      HttpServerProtocolBase baseConnection = (HttpServerProtocolBase)connection;
@@ -1226,7 +1225,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
                            break;
                         }
 
-                        System.out.println(((StringBuffer)(new Object())).append(key).append(": ").append(baseConnection.getResponseProperty(i)).toString());
+                        System.out.println(key + ": " + baseConnection.getResponseProperty(i));
                      }
                   } finally {
                      break label1022;
@@ -1244,7 +1243,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
             }
          }
 
-         if (connection instanceof Object && EventLogger.getMinimumLevel() >= 5) {
+         if (connection instanceof HttpServerProtocolBase && EventLogger.getMinimumLevel() >= 5) {
             label1048:
             try {
                HttpServerProtocolBase baseConnection = (HttpServerProtocolBase)connection;
@@ -1256,7 +1255,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
                      break;
                   }
 
-                  System.out.println(((StringBuffer)(new Object())).append(key).append(": ").append(baseConnection.getResponseProperty(i)).toString());
+                  System.out.println(key + ": " + baseConnection.getResponseProperty(i));
                }
             } finally {
                break label1048;
@@ -1275,7 +1274,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
          return;
       }
 
-      if (connection instanceof Object && EventLogger.getMinimumLevel() >= 5) {
+      if (connection instanceof HttpServerProtocolBase && EventLogger.getMinimumLevel() >= 5) {
          label1035:
          try {
             HttpServerProtocolBase baseConnection = (HttpServerProtocolBase)connection;
@@ -1287,7 +1286,7 @@ final class WAPPushSource$WAP20RunThread extends Thread {
                   break;
                }
 
-               System.out.println(((StringBuffer)(new Object())).append(key).append(": ").append(baseConnection.getResponseProperty(i)).toString());
+               System.out.println(key + ": " + baseConnection.getResponseProperty(i));
             }
          } finally {
             break label1035;

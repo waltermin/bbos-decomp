@@ -20,7 +20,7 @@ public class CombinedKeyStore implements KeyStore {
       if (index >= 0 && index < this._keyStores.length) {
          return this._keyStores[index];
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -32,7 +32,7 @@ public class CombinedKeyStore implements KeyStore {
       if (newPreferredKeyStore >= 0 && newPreferredKeyStore <= this._numKeyStores) {
          this._preferredKeyStore = newPreferredKeyStore;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -44,13 +44,13 @@ public class CombinedKeyStore implements KeyStore {
          this._keyStores = newKeyStoreArray;
          this._numKeyStores--;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    public void addKeyStores(KeyStore[] keyStores) {
       if (keyStores == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int oldLength = this._numKeyStores;
@@ -79,7 +79,7 @@ public class CombinedKeyStore implements KeyStore {
 
    @Override
    public Enumeration elements(long index, Object associatedData, boolean backingKeyStore) {
-      Enumeration[] enumeration = new Object[this._numKeyStores];
+      Enumeration[] enumeration = new Enumeration[this._numKeyStores];
 
       for (int i = 0; i < this._numKeyStores; i++) {
          enumeration[i] = this._keyStores[i].elements(index, associatedData, backingKeyStore);
@@ -100,7 +100,7 @@ public class CombinedKeyStore implements KeyStore {
 
    @Override
    public Enumeration elements(boolean backingKeyStore) {
-      Enumeration[] enumeration = new Object[this._numKeyStores];
+      Enumeration[] enumeration = new Enumeration[this._numKeyStores];
 
       for (int i = 0; i < this._numKeyStores; i++) {
          enumeration[i] = this._keyStores[i].elements(backingKeyStore);
@@ -116,7 +116,7 @@ public class CombinedKeyStore implements KeyStore {
 
    @Override
    public Enumeration elements(long index, boolean backingKeyStore) {
-      Enumeration[] enumeration = new Object[this._numKeyStores];
+      Enumeration[] enumeration = new Enumeration[this._numKeyStores];
 
       for (int i = 0; i < this._numKeyStores; i++) {
          enumeration[i] = this._keyStores[i].elements(index, backingKeyStore);
@@ -325,7 +325,7 @@ public class CombinedKeyStore implements KeyStore {
 
    private Enumeration getMultipleKeyStoreEnumeration(Enumeration[] enumeration) {
       MultipleKeyStoreEnumeration mkse = new MultipleKeyStoreEnumeration(enumeration);
-      Hashtable hashtable = (Hashtable)(new Object());
+      Hashtable hashtable = new Hashtable();
 
       while (mkse.hasMoreElements()) {
          Object obj = mkse.nextElement();
@@ -337,7 +337,7 @@ public class CombinedKeyStore implements KeyStore {
 
    public CombinedKeyStore(KeyStore[] keyStores, int preferredKeyStore) {
       if (keyStores == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._keyStores = keyStores;
@@ -345,13 +345,13 @@ public class CombinedKeyStore implements KeyStore {
       if (preferredKeyStore >= 0 && preferredKeyStore < this._keyStores.length) {
          this._preferredKeyStore = preferredKeyStore;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    public CombinedKeyStore(KeyStore[] keyStores) {
       if (keyStores == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._keyStores = keyStores;

@@ -23,11 +23,11 @@ class ESWindowPrototype$4 extends JavaScriptHostFunction {
       // 05: iload 1
       // 06: bipush 1
       // 07: if_icmpne 42
-      // 0a: new java/lang/Object
+      // 0a: new java/io/ByteArrayOutputStream
       // 0d: dup
       // 0e: invokespecial java/io/ByteArrayOutputStream.<init> ()V
       // 11: astore 2
-      // 12: new java/lang/Object
+      // 12: new net/rim/device/api/io/Base64OutputStream
       // 15: dup
       // 16: aload 2
       // 17: invokespecial net/rim/device/api/io/Base64OutputStream.<init> (Ljava/io/OutputStream;)V
@@ -41,7 +41,7 @@ class ESWindowPrototype$4 extends JavaScriptHostFunction {
       // 27: invokevirtual net/rim/device/api/io/Base64OutputStream.write ([B)V
       // 2a: aload 3
       // 2b: invokevirtual net/rim/device/api/io/Base64OutputStream.close ()V
-      // 2e: new java/lang/Object
+      // 2e: new java/lang/String
       // 31: dup
       // 32: aload 2
       // 33: invokevirtual java/io/ByteArrayOutputStream.toByteArray ()[B

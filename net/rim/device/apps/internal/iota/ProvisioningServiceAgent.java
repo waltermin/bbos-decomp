@@ -33,7 +33,7 @@ public final class ProvisioningServiceAgent extends UiApplication {
       this._persist = PersistentStore.getPersistentObject(-7688435971308426807L);
       this._storage = (Hashtable)this._persist.getContents();
       if (this._storage == null) {
-         this._storage = (Hashtable)(new Object());
+         this._storage = new Hashtable();
          this._storage.put("phone:boot.url", "http://hcmci.iota.spcsdns.net:8080/ciip");
          this._storage.put("phone:boot.naiurl", "http://hcmci.iota.spcsdns.net:8080/cisp");
          this._storage.put("browser:domain.trusted", "https:.iota.spcsdns.net");
@@ -67,8 +67,8 @@ public final class ProvisioningServiceAgent extends UiApplication {
          case 0:
          case 1:
          default:
-            String var3 = mode == 0 ? "phone:boot.url" : "phone:boot.naiurl";
-            url = (String)this._storage.get(var3);
+            url = mode == 0 ? "phone:boot.url" : "phone:boot.naiurl";
+            url = (String)this._storage.get(url);
             break;
          case 2:
             if (!this.trustURL(url)) {
@@ -92,7 +92,7 @@ public final class ProvisioningServiceAgent extends UiApplication {
    final boolean trustURL(String urlStr) {
       if (urlStr != null) {
          try {
-            URL url = (URL)(new Object(urlStr));
+            URL url = new URL(urlStr);
             String domainTrusted = (String)this._storage.get("browser:domain.trusted");
             if (domainTrusted == null) {
                return true;
@@ -235,7 +235,7 @@ public final class ProvisioningServiceAgent extends UiApplication {
 
    public final synchronized void createTempStorage() {
       if (this._tempStorage == null) {
-         this._tempStorage = (Hashtable)(new Object());
+         this._tempStorage = new Hashtable();
       }
 
       if (this._storage != null) {

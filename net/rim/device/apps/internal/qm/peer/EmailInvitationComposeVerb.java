@@ -5,6 +5,7 @@ import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
 import net.rim.device.apps.api.addressbook.AddressSelectionContext;
 import net.rim.device.apps.api.addressbook.FriendlyNameAddressModel;
+import net.rim.device.apps.api.addressbook.PINAddressModel;
 import net.rim.device.apps.api.framework.model.Recognizer;
 import net.rim.device.apps.api.framework.registration.RecognizerRepository;
 import net.rim.device.apps.api.framework.verb.Verb;
@@ -41,7 +42,7 @@ final class EmailInvitationComposeVerb {
 
             generateEncryptionKeys(answer);
             int cookie = (int)System.currentTimeMillis();
-            if (sendEmailInvitation(address, cookie, question, passcodeFlag, addressModel instanceof Object)) {
+            if (sendEmailInvitation(address, cookie, question, passcodeFlag, addressModel instanceof PINAddressModel)) {
                addContact(contact, address, answer, cookie, list);
                return;
             }
@@ -84,18 +85,18 @@ final class EmailInvitationComposeVerb {
       String emailPrefix = PeerResources.getString(2009);
       String pinPrefix = PeerResources.getString(2011);
       if (EmailInvitationUtilities.canSendEmail()) {
-         recognizers = new Object[]{RecognizerRepository.getRecognizers(-2985347935260258684L), RecognizerRepository.getRecognizers(4246852237058296601L)};
-         prefixes = new Object[]{emailPrefix, pinPrefix};
-         useOnceVerbs = new Object[]{new UseOnceEmailVerb(), new UseOncePINVerb()};
+         recognizers = new Recognizer[]{RecognizerRepository.getRecognizers(-2985347935260258684L), RecognizerRepository.getRecognizers(4246852237058296601L)};
+         prefixes = new String[]{emailPrefix, pinPrefix};
+         useOnceVerbs = new Verb[]{new UseOnceEmailVerb(), new UseOncePINVerb()};
       } else {
-         recognizers = new Object[]{RecognizerRepository.getRecognizers(4246852237058296601L)};
-         prefixes = new Object[]{pinPrefix};
-         useOnceVerbs = new Object[]{new UseOncePINVerb()};
+         recognizers = new Recognizer[]{RecognizerRepository.getRecognizers(4246852237058296601L)};
+         prefixes = new String[]{pinPrefix};
+         useOnceVerbs = new Verb[]{new UseOncePINVerb()};
       }
 
-      AddressSelectionContext asc = (AddressSelectionContext)(new Object(
+      AddressSelectionContext asc = new AddressSelectionContext(
          PeerResources.getString(2012), PeerResources.getString(2013), PeerResources.getString(2014), recognizers, useOnceVerbs
-      ));
+      );
       asc.setUseEntryPrefixes(prefixes);
       Verb addressSelectionVerb = AddressBookServices.getAddressSelectionVerb(-1789952090272871921L);
       return addressSelectionVerb != null ? addressSelectionVerb.invoke(asc) : null;
@@ -107,7 +108,7 @@ final class EmailInvitationComposeVerb {
       ContactAddMessageDialog camd = new ContactAddMessageDialog();
       if (camd.doModal()) {
          String body = camd.getMessage();
-         body = ((StringBuffer)(new Object())).append(body).append(PeerResources.getString(68)).toString();
+         body = body + PeerResources.getString(68);
          EmailInvitation invite = EmailInvitation.makeOutbound(1, cookie, question, passcodeFlag, _publicKey, ".".getBytes(), ".".getBytes(), ".".getBytes());
          invite.setIsPin(isPin);
          EmailInvitationUtilities.sendEmailMessage(address, subject, body, invite, false, true);

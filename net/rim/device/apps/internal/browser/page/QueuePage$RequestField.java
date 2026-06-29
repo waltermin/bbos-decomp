@@ -85,9 +85,9 @@ final class QueuePage$RequestField extends Field {
    protected final void makeContextMenu(ContextMenu contextMenu, int instance) {
       super.makeContextMenu(contextMenu, instance);
       if (this._pageModel.isCompleted()) {
-         VerbMenuItem menuItem = (VerbMenuItem)(new Object(new QueuePage$ViewRequestVerb(this._pageModel), 1));
+         VerbMenuItem menuItem = new VerbMenuItem(new QueuePage$ViewRequestVerb(this._pageModel), 1);
          contextMenu.addItem(menuItem);
-         menuItem = (VerbMenuItem)(new Object(new QueuePage$DeleteRequestVerb(this._queue, this._pageModel), 1));
+         menuItem = new VerbMenuItem(new QueuePage$DeleteRequestVerb(this._queue, this._pageModel), 1);
          contextMenu.addItem(menuItem);
       }
    }

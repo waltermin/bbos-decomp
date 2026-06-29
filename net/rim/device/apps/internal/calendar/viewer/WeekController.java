@@ -15,16 +15,16 @@ import net.rim.device.internal.ui.RichText;
 final class WeekController extends CalendarViewController implements GlobalEventListener {
    private int[] _sharedOffsets = new int[]{0, 0, -804651006, 0, -1, 51, 527827200, 16810638};
    private final byte[] _sharedBytes = new byte[]{0};
-   private Font[] _sharedFonts = new Object[1];
+   private Font[] _sharedFonts = new Font[1];
    private int _subjectHeight;
    private int _locationHeight;
    private int _timeHeight;
-   private StringBuffer _stringBuffer = (StringBuffer)(new Object());
+   private StringBuffer _stringBuffer = new StringBuffer();
    private WeekField _weekField = new WeekField();
    private WeekController$LayoutLabelField _subjectField = new WeekController$LayoutLabelField(null, 1152921504606847040L);
    private WeekController$LayoutLabelField _locationField = new WeekController$LayoutLabelField(null, 1152921504606847040L);
    private WeekController$LayoutLabelField _timeField = new WeekController$LayoutLabelField(null, 1152921504606847040L);
-   private Vector _eventVector = (Vector)(new Object());
+   private Vector _eventVector = new Vector();
    private static final int MIN_FONT_HEIGHT_PT = 6;
 
    public WeekController(CalendarApp calendarUIApplication, CalendarActions calActions) {

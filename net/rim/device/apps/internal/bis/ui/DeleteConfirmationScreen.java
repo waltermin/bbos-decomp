@@ -2,7 +2,7 @@ package net.rim.device.apps.internal.bis.ui;
 
 import java.util.Hashtable;
 import net.rim.device.api.i18n.MessageFormat;
-import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.apps.internal.bis.ApplicationResources;
 import net.rim.device.apps.internal.bis.api.ui.Button;
 import net.rim.device.apps.internal.bis.data.Mailbox;
@@ -20,8 +20,8 @@ public final class DeleteConfirmationScreen extends UserSettingsScreen {
       Mailbox mailboxToDelete = ClientSessionState.getInstance().getMailboxToModify();
       this.setTitle(ApplicationResources.getString(5));
       String email = mailboxToDelete.getEmail();
-      String deleteConfirmText = MessageFormat.format(ApplicationResources.getString(30), new Object[]{email});
-      this.addContentField((Field)(new Object(deleteConfirmText)));
+      String deleteConfirmText = MessageFormat.format(ApplicationResources.getString(30), new String[]{email});
+      this.addContentField(new LabelField(deleteConfirmText));
       Button noButton = new Button(ApplicationResources.getString(31));
       Button yesButton = new Button(ApplicationResources.getString(32));
       this.addButtonBarButtons(new Button[]{noButton, yesButton}, false, 1);

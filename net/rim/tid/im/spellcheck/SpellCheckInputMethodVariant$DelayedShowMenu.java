@@ -25,7 +25,7 @@ class SpellCheckInputMethodVariant$DelayedShowMenu implements Runnable {
    }
 
    private void init() {
-      this._menu = (Menu)(new Object(0));
+      this._menu = new Menu(0);
       this._menu.setAlignment(this._halign, this._valign);
       this.this$0.addMenuItems(this._mode, this._menu);
    }

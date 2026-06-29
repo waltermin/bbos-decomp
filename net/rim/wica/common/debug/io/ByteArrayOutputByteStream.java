@@ -3,7 +3,7 @@ package net.rim.wica.common.debug.io;
 import java.io.ByteArrayOutputStream;
 
 public final class ByteArrayOutputByteStream extends AbstractOutputByteStreamAdapter {
-   ByteArrayOutputStream _byteArrayStream = (ByteArrayOutputStream)(new Object());
+   ByteArrayOutputStream _byteArrayStream = new ByteArrayOutputStream();
 
    public ByteArrayOutputByteStream() {
       this.init(this._byteArrayStream);

@@ -13,7 +13,6 @@ import net.rim.device.api.system.PersistentStore;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Keypad;
-import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.TreeField;
 import net.rim.device.api.util.Persistable;
@@ -21,12 +20,14 @@ import net.rim.device.api.util.StringUtilities;
 import net.rim.device.api.util.ToIntHashtable;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.RIMModel;
+import net.rim.device.apps.api.framework.verb.RunnableVerbWrapper;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.messaging.Folder;
 import net.rim.device.apps.api.messaging.FolderHierarchies;
 import net.rim.device.apps.api.messaging.ui.FolderList;
 import net.rim.device.apps.api.messaging.util.SortedCollection;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
+import net.rim.device.apps.api.ui.VerbMenuItem;
 import net.rim.device.apps.api.utility.general.URI;
 import net.rim.device.apps.internal.browser.channel.ChannelModel;
 import net.rim.device.apps.internal.browser.channel.Channels;
@@ -79,7 +80,7 @@ public final class BookmarksScreen extends FolderList implements BrowserConfigCh
    private int _positionBeforeMove = -1;
    private BookmarksScreen$BookmarksTreeField _bookmarksTreeField;
    private BookmarksScreen$MyIconCollection _customIcons = new BookmarksScreen$MyIconCollection();
-   private ToIntHashtable _urlsToIcons = (ToIntHashtable)(new Object());
+   private ToIntHashtable _urlsToIcons = new ToIntHashtable();
    private int _state = 100;
    private int _selectedNode;
    private Object _persistentObject;
@@ -128,7 +129,7 @@ public final class BookmarksScreen extends FolderList implements BrowserConfigCh
       if (bookmarkOrChannel != null) {
          Verb linkVerb = this.getFollowLinkVerb(bookmarkOrChannel);
          if (linkVerb != null) {
-            BrowserDaemonRegistry.getInstance().invokeLater((Runnable)(new Object(null, linkVerb, null, false)));
+            BrowserDaemonRegistry.getInstance().invokeLater(new RunnableVerbWrapper(null, linkVerb, null, false));
          }
       }
    }
@@ -275,7 +276,7 @@ public final class BookmarksScreen extends FolderList implements BrowserConfigCh
 
    private final RIMModel getFocusedBookmarkOrChannel() {
       Object cookie = this.getFocusedItem();
-      return (RIMModel)(!(cookie instanceof Object) ? null : cookie);
+      return !(cookie instanceof RIMModel) ? null : (RIMModel)cookie;
    }
 
    private final synchronized void enableMoveMode(boolean enabled) {
@@ -451,15 +452,15 @@ public final class BookmarksScreen extends FolderList implements BrowserConfigCh
       if (!(currentFolder instanceof ProvisionedBookmarksFolder) && currentFolder.getLUID() != BrowserFolders.BROWSER_CHANNELS_FOLDER_ID) {
          BrowserVerb verb = BrowserDaemonRegistry.getInstance().getBrowserVerbRepository().getVerbNoCheck(0);
          if (verb != null) {
-            ContextObject context = (ContextObject)(new Object());
+            ContextObject context = new ContextObject();
             context.put(-1219344331000926502L, this.getCurrentFolder());
-            menu.add((MenuItem)(new Object(null, verb.getOrdering(), 10033, verb, context)));
+            menu.add(new VerbMenuItem(null, verb.getOrdering(), 10033, verb, context));
          }
       }
 
       Object focusedItem = this.getFocusedItem();
       if (!(focusedItem instanceof PageModel)) {
-         if (!(focusedItem instanceof Object)) {
+         if (!(focusedItem instanceof Folder)) {
             if (focusedItem instanceof ChannelModel) {
                ChannelModel focusedChannel = (ChannelModel)focusedItem;
                Verb followLink = this.getFollowLinkVerb(focusedChannel);
@@ -651,7 +652,7 @@ public final class BookmarksScreen extends FolderList implements BrowserConfigCh
                label141:
                try {
                   String url = bookmark.getUrl();
-                  String host = DomainUtilities.parseAuthority((URI)(new Object(url)));
+                  String host = DomainUtilities.parseAuthority(new URI(url));
                   if (DomainUtilities.isHostInDomain(host, "mobile.blackberry.com")) {
                      String overrideUid = DomainOverrides.getInstance()
                         .getOverride(url, bookmarkConfig != null ? bookmarkConfig.getPropertyAsInt(12) : BrowserConfigRecord.INVALID_VALUE);
@@ -737,10 +738,10 @@ public final class BookmarksScreen extends FolderList implements BrowserConfigCh
       }
 
       if (provisionedBookmarksHierarchy != null) {
-         hierarchies = new Object[++numHierarchies];
+         hierarchies = new Folder[++numHierarchies];
          hierarchies[hierarchyIndex++] = provisionedBookmarksHierarchy;
       } else {
-         hierarchies = new Object[numHierarchies];
+         hierarchies = new Folder[numHierarchies];
       }
 
       hierarchies[hierarchyIndex++] = FolderHierarchies.getFolder(BrowserFolders.RIM_BROWSER_BOOKMARKS_HIERARCHY_ID, BrowserFolders.BROWSER_BOOKMARKS_FOLDER_ID);
@@ -837,13 +838,13 @@ public final class BookmarksScreen extends FolderList implements BrowserConfigCh
       } else {
          if (key == '\n') {
             Object focusedItem = this.getFocusedItem();
-            if (focusedItem instanceof Object) {
+            if (focusedItem instanceof RIMModel) {
                Verb linkVerb = this.getFollowLinkVerb((RIMModel)focusedItem);
                if (linkVerb != null) {
                   linkVerb.invoke(null);
                   return true;
                }
-            } else if (focusedItem instanceof Object) {
+            } else if (focusedItem instanceof Folder) {
                return this._bookmarksTreeField.keyChar(' ', status, time);
             }
          } else if (key == 127 || key == '\b' && this.getQuery().length() == 0) {
@@ -864,7 +865,7 @@ public final class BookmarksScreen extends FolderList implements BrowserConfigCh
                return true;
             }
 
-            if (focusedItem instanceof Object) {
+            if (focusedItem instanceof Folder) {
                Folder focusedFolder = (Folder)focusedItem;
                long folderId = focusedFolder.getLUID();
                if (folderId != BrowserFolders.RIM_BROWSER_BOOKMARKS_HIERARCHY_ID
@@ -1089,7 +1090,7 @@ public final class BookmarksScreen extends FolderList implements BrowserConfigCh
       }
 
       Object o = tree.getCookie(node);
-      if (!(o instanceof Object)) {
+      if (!(o instanceof Persistable)) {
          if (!(o instanceof ProvisionedBookmarksFolder)) {
             return null;
          }
@@ -1112,7 +1113,7 @@ public final class BookmarksScreen extends FolderList implements BrowserConfigCh
          }
 
          Object nodeCookie = tree.getCookie(current);
-         if (nodeCookie instanceof Object && !tree.getExpanded(current)) {
+         if (nodeCookie instanceof Folder && !tree.getExpanded(current)) {
             Folder f = (Folder)nodeCookie;
             collapsedFolders[i] = f.getLUID();
          }
@@ -1144,7 +1145,7 @@ public final class BookmarksScreen extends FolderList implements BrowserConfigCh
 
       if (this._selectedNode > 0) {
          TreeField tree = this._bookmarksTreeField;
-         if (tree.getCookie(this._selectedNode) instanceof Object) {
+         if (tree.getCookie(this._selectedNode) instanceof Folder) {
             if (!tree.getExpanded(this._selectedNode)) {
                tree.setCurrentNode(this._selectedNode);
                this._state = 101;
@@ -1159,7 +1160,7 @@ public final class BookmarksScreen extends FolderList implements BrowserConfigCh
             }
 
             do {
-               if (!(tree.getCookie(nextNode) instanceof Object)) {
+               if (!(tree.getCookie(nextNode) instanceof Folder)) {
                   tree.setCurrentNode(nextNode);
                   this._state = 101;
                   return;

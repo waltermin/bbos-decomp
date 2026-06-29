@@ -99,7 +99,7 @@ public final class SetupWizard extends UiApplication implements DialogClosedList
       } else if (canShowDialog()) {
          if (checkIdle) {
             WizardIdleHelper.startApplicationWhenIdle(
-               (ApplicationDescriptor)(new Object(ApplicationDescriptor.currentApplicationDescriptor(), new String[]{"offer-wizard"}))
+               new ApplicationDescriptor(ApplicationDescriptor.currentApplicationDescriptor(), new String[]{"offer-wizard"})
             );
          } else {
             _mode = 2;
@@ -114,9 +114,7 @@ public final class SetupWizard extends UiApplication implements DialogClosedList
    }
 
    private static final void offerLanguageRemovalDialogWhenIdle() {
-      ApplicationDescriptor descriptor = (ApplicationDescriptor)(new Object(
-         ApplicationDescriptor.currentApplicationDescriptor(), new String[]{"show-restart-dialog"}
-      ));
+      ApplicationDescriptor descriptor = new ApplicationDescriptor(ApplicationDescriptor.currentApplicationDescriptor(), new String[]{"show-restart-dialog"});
       WizardIdleHelper.startApplicationWhenIdle(descriptor);
    }
 
@@ -137,7 +135,7 @@ public final class SetupWizard extends UiApplication implements DialogClosedList
    }
 
    private static final void offerLowMemoryDialogWhenIdle() {
-      ApplicationDescriptor desc = (ApplicationDescriptor)(new Object(ApplicationDescriptor.currentApplicationDescriptor(), new String[]{"offer-low-memory"}));
+      ApplicationDescriptor desc = new ApplicationDescriptor(ApplicationDescriptor.currentApplicationDescriptor(), new String[]{"offer-low-memory"});
       WizardIdleHelper.startApplication(desc);
    }
 
@@ -206,7 +204,7 @@ public final class SetupWizard extends UiApplication implements DialogClosedList
    }
 
    private final Dialog createLowMemoryDialog() {
-      Dialog dialog = (Dialog)(new Object(null, null, null, 0, null, 1152921504606846976L));
+      Dialog dialog = new Dialog(null, null, null, 0, null, 1152921504606846976L);
       dialog.setEscapeEnabled(false);
       dialog.setGateInput(true);
       RichTextField textField = dialog.getLabel();
@@ -282,7 +280,7 @@ public final class SetupWizard extends UiApplication implements DialogClosedList
    }
 
    protected static final Dialog createWelcomeDialog() {
-      Dialog dialog = (Dialog)(new Object("", null, null, 0, null, 1152921504606846976L));
+      Dialog dialog = new Dialog("", null, null, 0, null, 1152921504606846976L);
       int fontSize = Ui.convertSize(7, 3, 0);
       Font normalFont = Font.getDefault().derive(0, fontSize);
       Font boldFont = normalFont.derive(1, fontSize);
@@ -332,7 +330,7 @@ public final class SetupWizard extends UiApplication implements DialogClosedList
    }
 
    static final Dialog createExitDialog() {
-      Dialog dialog = (Dialog)(new Object("", null, null, 0, null, 1152921504606846976L));
+      Dialog dialog = new Dialog("", null, null, 0, null, 1152921504606846976L);
       DialogFieldManager manager = (DialogFieldManager)dialog.getDelegate();
       manager.setMessage(WizardDialog.createDialogRichTextField(SetupWizardResources.getString(10), true, 36028797018963968L));
       ButtonField button = WizardDialog.createDialogButtonField(CommonResources.getString(117));
@@ -344,11 +342,11 @@ public final class SetupWizard extends UiApplication implements DialogClosedList
    static final void scheduleReminder(boolean useCdmaRadioListener) {
       ScheduledAppLauncher scheduledAppLauncher = null;
       ApplicationDescriptor currentApp = ApplicationDescriptor.currentApplicationDescriptor();
-      ScheduledAppLauncher.register((ApplicationDescriptor)(new Object(currentApp, currentApp.getName(), new String[]{"offer-wizard"})), useCdmaRadioListener);
+      ScheduledAppLauncher.register(new ApplicationDescriptor(currentApp, currentApp.getName(), new String[]{"offer-wizard"}), useCdmaRadioListener);
       if (!useCdmaRadioListener) {
          ApplicationManager.getApplicationManager()
             .scheduleApplication(
-               (ApplicationDescriptor)(new Object(currentApp, currentApp.getName(), new String[]{"offer-wizard", "check-idle"})),
+               new ApplicationDescriptor(currentApp, currentApp.getName(), new String[]{"offer-wizard", "check-idle"}),
                System.currentTimeMillis() + 86400000,
                true
             );
@@ -404,7 +402,7 @@ public final class SetupWizard extends UiApplication implements DialogClosedList
    static final void launchApplication(String[] params) {
       try {
          ApplicationDescriptor currentApp = ApplicationDescriptor.currentApplicationDescriptor();
-         ApplicationDescriptor wizardApp = (ApplicationDescriptor)(new Object(currentApp, currentApp.getName(), params));
+         ApplicationDescriptor wizardApp = new ApplicationDescriptor(currentApp, currentApp.getName(), params);
          ApplicationManager.getApplicationManager().runApplication(wizardApp, true);
       } finally {
          return;
@@ -414,9 +412,9 @@ public final class SetupWizard extends UiApplication implements DialogClosedList
    public static final RichTextField createFormattedRichTextField(String message, String boldText, Font normalFont, Font boldFont) {
       int boldStart = message.indexOf("{0}");
       int boldEnd = boldStart + boldText.length();
-      String fullText = MessageFormat.format(message, new Object[]{boldText});
+      String fullText = MessageFormat.format(message, new String[]{boldText});
       int fullTextLength = fullText.length();
-      Font[] fonts = new Object[]{normalFont, boldFont};
+      Font[] fonts = new Font[]{normalFont, boldFont};
       int[] offsets;
       byte[] attributes;
       if (boldStart == 0 && boldEnd == fullTextLength) {
@@ -438,15 +436,14 @@ public final class SetupWizard extends UiApplication implements DialogClosedList
          attributes = new byte[]{0};
       }
 
-      return (RichTextField)(new Object(fullText, offsets, attributes, fonts, 36028797018963968L));
+      return new RichTextField(fullText, offsets, attributes, fonts, 36028797018963968L);
    }
 
    static final Bitmap getAppIcon() {
       ApplicationDescriptor app = ApplicationDescriptor.currentApplicationDescriptor();
       String moduleName = app.getModuleName();
       Bitmap appIcon = null;
-      EncodedImage image = ThemeManager.getActiveTheme()
-         .getImage(((StringBuffer)(new Object())).append(moduleName).append(".").append(app.getName()).toString(), true);
+      EncodedImage image = ThemeManager.getActiveTheme().getImage(moduleName + "." + app.getName(), true);
       if (image != null) {
          appIcon = image.getBitmap();
       }

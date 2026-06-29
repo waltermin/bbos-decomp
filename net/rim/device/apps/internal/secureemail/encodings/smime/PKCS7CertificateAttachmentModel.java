@@ -30,7 +30,7 @@ public class PKCS7CertificateAttachmentModel extends CertificateAttachmentModel 
    public void parseCertificatesAndPrivateKeys() {
       Certificate[] certificates = null;
       if (!this.isMoreAvailable()) {
-         String fileName = (String)(new Object(this.getNameBytes()));
+         String fileName = new String(this.getNameBytes());
          if (isCertificateFileName(fileName)) {
             certificates = this.getPKCS7Certificates();
          }
@@ -50,7 +50,7 @@ public class PKCS7CertificateAttachmentModel extends CertificateAttachmentModel 
       // 00: aload 0
       // 01: invokevirtual net/rim/device/apps/internal/api/crypto/certificate/CertificateAttachmentModel.getData ()[B
       // 04: astore 1
-      // 05: new java/lang/Object
+      // 05: new java/io/ByteArrayInputStream
       // 08: dup
       // 09: aload 1
       // 0a: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -61,11 +61,11 @@ public class PKCS7CertificateAttachmentModel extends CertificateAttachmentModel 
       // 13: astore 3
       // 14: aload 3
       // 15: dup
-      // 16: instanceof java/lang/Object
+      // 16: instanceof net/rim/device/api/crypto/cms/CMSSignedDataInputStream
       // 19: ifne 20
       // 1c: pop
       // 1d: goto 2b
-      // 20: checkcast java/lang/Object
+      // 20: checkcast net/rim/device/api/crypto/cms/CMSSignedDataInputStream
       // 23: invokevirtual net/rim/device/api/crypto/cms/CMSSignedDataInputStream.getCertificates ()[Lnet/rim/device/api/crypto/certificate/Certificate;
       // 26: areturn
       // 27: astore 2
@@ -91,7 +91,7 @@ public class PKCS7CertificateAttachmentModel extends CertificateAttachmentModel 
    @Override
    protected boolean writeToOutputStream(OutputStream outputStream) {
       try {
-         Base64OutputStream base64 = (Base64OutputStream)(new Object(outputStream, true, true));
+         Base64OutputStream base64 = new Base64OutputStream(outputStream, true, true);
          base64.write(this.getData());
          base64.close();
          return true;

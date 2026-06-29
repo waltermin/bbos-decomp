@@ -6,8 +6,8 @@ import net.rim.device.api.collection.util.CollectionListenerManager;
 import net.rim.device.api.collection.util.LongHashtableCollection;
 
 public final class AggregatedNetworkProps implements ReadableLongMap, CollectionEventSource {
-   private LongHashtableCollection _props = (LongHashtableCollection)(new Object());
-   private CollectionListenerManager _manager = (CollectionListenerManager)(new Object());
+   private LongHashtableCollection _props = new LongHashtableCollection();
+   private CollectionListenerManager _manager = new CollectionListenerManager();
 
    public final void internalSet(long key, Object o) {
       synchronized (this._props) {

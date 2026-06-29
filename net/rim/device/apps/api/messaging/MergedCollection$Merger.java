@@ -13,7 +13,7 @@ class MergedCollection$Merger {
 
    MergedCollection$Merger(MergedCollection _1) {
       this.this$0 = _1;
-      this.sources = new Object[0];
+      this.sources = new ReadableList[0];
       this.sourceSize = new int[0];
       this.sourceIndex = new int[0];
       this.itemAtSourceIndex = new Object[0];
@@ -86,7 +86,7 @@ class MergedCollection$Merger {
       }
 
       start += System.currentTimeMillis();
-      System.out.println(((StringBuffer)(new Object("MC:mergeSources "))).append(start).append("ms").toString());
+      System.out.println("MC:mergeSources " + start + "ms");
    }
 
    protected boolean checkIfSourceExhausted(int whichSource) {

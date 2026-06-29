@@ -66,7 +66,7 @@ final class LBSHyperlinkFactory implements Factory {
 
    @Override
    public final Object createInstance(Object initialData) {
-      if (initialData instanceof Object) {
+      if (initialData instanceof ActiveFieldContext) {
          ActiveFieldContext afc = (ActiveFieldContext)initialData;
          String text = afc.getData();
          int end = text.length();

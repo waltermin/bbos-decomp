@@ -30,7 +30,7 @@ public class FilenameEditField extends VerticalFieldManager implements FieldChan
          return null;
       }
 
-      String result = ((StringBuffer)(new Object())).append(this._editField.getText().trim()).append(this._fileExtension).toString();
+      String result = this._editField.getText().trim() + this._fileExtension;
       int endPos = result.length() - 1;
 
       while (endPos >= 0 && result.charAt(endPos) == '.') {
@@ -119,8 +119,8 @@ public class FilenameEditField extends VerticalFieldManager implements FieldChan
       this._fileSelector = fileSelector;
       HorizontalFieldManager hfm = null;
       if (allowPathChange) {
-         hfm = (HorizontalFieldManager)(new Object(1152921504606846976L));
-         this._dirButton = (ButtonField)(new Object(98304));
+         hfm = new HorizontalFieldManager(1152921504606846976L);
+         this._dirButton = new ButtonField(98304);
          this._dirButton.setImage(FolderIcons.ICONS.getImage(2));
          if (allowPathChange) {
             this._dirButton.setChangeListener(this);
@@ -132,7 +132,7 @@ public class FilenameEditField extends VerticalFieldManager implements FieldChan
 
       if (path != null) {
          this._currentPath = path;
-         this._dirLabel = (LabelField)(new Object(FileUtilities.getDisplayName(path), 192));
+         this._dirLabel = new LabelField(FileUtilities.getDisplayName(path), 192);
          if (hfm != null) {
             hfm.add(this._dirLabel);
          } else {
@@ -155,7 +155,7 @@ public class FilenameEditField extends VerticalFieldManager implements FieldChan
 
       filename = filterFilename(filename);
       int pathLength = path == null ? 0 : path.length();
-      this._editField = (BasicEditField)(new Object(CommonResource.getString(10074), "", 256 - this._fileExtension.length() - pathLength, 4503602043289601L));
+      this._editField = new BasicEditField(CommonResource.getString(10074), "", 256 - this._fileExtension.length() - pathLength, 4503602043289601L);
       this.add(this._editField);
       this.setFilename(filename);
    }
@@ -194,7 +194,7 @@ public class FilenameEditField extends VerticalFieldManager implements FieldChan
       }
 
       if (nameChars != null) {
-         name = (String)(new Object(nameChars));
+         name = new String(nameChars);
       }
 
       return name;

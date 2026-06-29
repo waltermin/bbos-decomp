@@ -11,7 +11,7 @@ public final class PGPConverter extends BaseConverter {
 
    @Override
    public final boolean canConvert(Object parameters) {
-      if (parameters instanceof Object) {
+      if (parameters instanceof Parameters) {
          Parameters cmimeParameters = (Parameters)parameters;
          byte[] securityEncoding = cmimeParameters.getFirst((byte)-11);
          if (securityEncoding == null) {
@@ -49,7 +49,7 @@ public final class PGPConverter extends BaseConverter {
       }
 
       if (inputBytes != null) {
-         ContextObject context = (ContextObject)(new Object());
+         ContextObject context = new ContextObject();
          context.put(-7353832199068708928L, parameters);
          model = new PGPBodyModel(inputBytes, context);
          SecureEmailProcessor processor = PGPFactory.getInstance().createProcessor(model, null, false, context);

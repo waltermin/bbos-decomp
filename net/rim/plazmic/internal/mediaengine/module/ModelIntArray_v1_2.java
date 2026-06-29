@@ -56,9 +56,9 @@ class ModelIntArray_v1_2 {
             )
             : class$net$rim$plazmic$internal$mediaengine$model$intarray$v1_2$ModelInteractorImpl)
          .getName();
-      registry.setValue(new Object[]{"MEDIA", modelClassName}, "1");
+      registry.setValue(new String[]{"MEDIA", modelClassName}, "1");
       registry.setValue(
-         new Object[]{"MEDIA", modelClassName, "Viewport"},
+         new String[]{"MEDIA", modelClassName, "Viewport"},
          (class$net$rim$plazmic$internal$mediaengine$model$intarray$v1_2$AnimationViewport == null
                ? (
                   class$net$rim$plazmic$internal$mediaengine$model$intarray$v1_2$AnimationViewport = class$(
@@ -69,7 +69,7 @@ class ModelIntArray_v1_2 {
             .getName()
       );
       registry.setValue(
-         new Object[]{"MEDIA", modelClassName, "PMEViewport"},
+         new String[]{"MEDIA", modelClassName, "PMEViewport"},
          (class$net$rim$plazmic$internal$mediaengine$model$intarray$v1_2$PMEGraphicsViewport == null
                ? (
                   class$net$rim$plazmic$internal$mediaengine$model$intarray$v1_2$PMEGraphicsViewport = class$(
@@ -80,7 +80,7 @@ class ModelIntArray_v1_2 {
             .getName()
       );
       registry.setValue(
-         new Object[]{"MEDIA", modelClassName, "EventSubscription"},
+         new String[]{"MEDIA", modelClassName, "EventSubscription"},
          (class$net$rim$plazmic$internal$mediaengine$model$intarray$v1_2$ModelInteractorImpl == null
                ? (
                   class$net$rim$plazmic$internal$mediaengine$model$intarray$v1_2$ModelInteractorImpl = class$(
@@ -91,7 +91,7 @@ class ModelIntArray_v1_2 {
             .getName()
       );
       registry.setValue(
-         new Object[]{"MEDIA", modelClassName, "ModelInteractor"},
+         new String[]{"MEDIA", modelClassName, "ModelInteractor"},
          (class$net$rim$plazmic$internal$mediaengine$model$intarray$v1_2$ModelInteractorImpl == null
                ? (
                   class$net$rim$plazmic$internal$mediaengine$model$intarray$v1_2$ModelInteractorImpl = class$(
@@ -102,7 +102,7 @@ class ModelIntArray_v1_2 {
             .getName()
       );
       registry.setValue(
-         new Object[]{"MEDIA", modelClassName, "FocusInteractor"},
+         new String[]{"MEDIA", modelClassName, "FocusInteractor"},
          (class$net$rim$plazmic$internal$mediaengine$model$intarray$v1_2$FocusHandler == null
                ? (
                   class$net$rim$plazmic$internal$mediaengine$model$intarray$v1_2$FocusHandler = class$(
@@ -113,14 +113,14 @@ class ModelIntArray_v1_2 {
             .getName()
       );
       registry.setValue(
-         new Object[]{"MEDIA", modelClassName, "EventResolver"},
+         new String[]{"MEDIA", modelClassName, "EventResolver"},
          (class$net$rim$plazmic$internal$mediaengine$event$EventResolverImpl == null
                ? (class$net$rim$plazmic$internal$mediaengine$event$EventResolverImpl = class$("net.rim.plazmic.internal.mediaengine.event.EventResolverImpl"))
                : class$net$rim$plazmic$internal$mediaengine$event$EventResolverImpl)
             .getName()
       );
       registry.setValue(
-         new Object[]{"MEDIA", modelClassName, "MAIN_SERVICE"},
+         new String[]{"MEDIA", modelClassName, "MAIN_SERVICE"},
          (class$net$rim$plazmic$internal$mediaengine$model$intarray$v1_2$BehaviorManager == null
                ? (
                   class$net$rim$plazmic$internal$mediaengine$model$intarray$v1_2$BehaviorManager = class$(
@@ -145,7 +145,7 @@ class ModelIntArray_v1_2 {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

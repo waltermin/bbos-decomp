@@ -48,7 +48,7 @@ public class RIMProcessLauncherMain {
       if (handle > -1) {
          ApplicationDescriptor[] appDescriptors = CodeModuleManager.getApplicationDescriptors(handle);
          if (appDescriptors != null && appDescriptors.length > 0) {
-            RIMProcessLauncher$Data data = (RIMProcessLauncher$Data)(new Object());
+            RIMProcessLauncher$Data data = new RIMProcessLauncher$Data();
             data.setDescriptor(appDescriptors[0]);
             ApplicationRegistry.getApplicationRegistry().put(-7293675776592666707L, data);
          }

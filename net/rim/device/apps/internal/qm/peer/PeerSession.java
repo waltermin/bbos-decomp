@@ -90,8 +90,8 @@ final class PeerSession {
 
    public final synchronized void send(PeerConversation conversation, String message, int cookie) {
       if (!PeerApplication.isDeviceLocked()) {
-         Vector contacts = (Vector)(new Object());
-         Vector contactNames = (Vector)(new Object());
+         Vector contacts = new Vector();
+         Vector contactNames = new Vector();
          Vector participants = conversation.getParticipants();
          int size = participants.size();
 
@@ -102,7 +102,7 @@ final class PeerSession {
 
          if (contacts != null && contacts.size() != 0) {
             SimpleMsgDataBlob msgBlob = new SimpleMsgDataBlob(cookie, message, conversation.getId(), contacts, contactNames, false);
-            String[] array = new Object[contacts.size()];
+            String[] array = new String[contacts.size()];
             contacts.copyInto(array);
             this.sendBlob(array, msgBlob);
             this._messageReceipts.onSend(conversation, cookie);
@@ -127,8 +127,8 @@ final class PeerSession {
 
    public final void inviteUser(PeerConversation conversation, Contact contact) {
       if (!PeerApplication.isDeviceLocked()) {
-         Vector contacts = (Vector)(new Object());
-         Vector contactNames = (Vector)(new Object());
+         Vector contacts = new Vector();
+         Vector contactNames = new Vector();
          Vector participants = conversation.getParticipants();
          int size = participants.size();
 
@@ -139,9 +139,9 @@ final class PeerSession {
 
          this.sendBlob(contact, new ConvInviteBlob(conversation.getId(), contacts, contactNames));
          String confInvite = PeerResources.getString(1201);
-         String message = MessageFormat.format(confInvite, new Object[]{contact.getDisplayName(), this.getDisplayName()}).toString();
+         String message = MessageFormat.format(confInvite, new String[]{contact.getDisplayName(), this.getDisplayName()}).toString();
          this.sendBlob(contacts, new SimpleMsgDataBlob(message.hashCode(), message, conversation.getId(), contacts, contactNames, true));
-         message = MessageFormat.format(confInvite, new Object[]{contact.getDisplayName()}).toString();
+         message = MessageFormat.format(confInvite, new String[]{contact.getDisplayName()}).toString();
          PeerApplication.getInstance().newMessage(conversation.getId(), null, message);
       }
    }

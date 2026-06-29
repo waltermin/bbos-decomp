@@ -8,8 +8,8 @@ import java.io.PrintStream;
 public final class WMLD implements Decompiler {
    private PushbackInputStream _in;
    private int _inSize;
-   private ByteArrayOutputStream _outBuf = (ByteArrayOutputStream)(new Object());
-   private PrintStream _out = (PrintStream)(new Object(this._outBuf));
+   private ByteArrayOutputStream _outBuf = new ByteArrayOutputStream();
+   private PrintStream _out = new PrintStream(this._outBuf);
    private int _depth;
    private byte[] _stringTable;
    private int _stringTableLength;
@@ -40,7 +40,7 @@ public final class WMLD implements Decompiler {
 
       String wmlVersionString;
       try {
-         ByteArrayInputStream inFile = (ByteArrayInputStream)(new Object(data));
+         ByteArrayInputStream inFile = new ByteArrayInputStream(data);
          this._inSize = inFile.available();
          this._in = new PushbackInputStream(inFile);
          boolean var17 = false /* VF: Semaphore variable */;
@@ -52,8 +52,8 @@ public final class WMLD implements Decompiler {
             var17 = false;
          } finally {
             if (var17) {
-               this._outBuf = (ByteArrayOutputStream)(new Object());
-               this._out = (PrintStream)(new Object(this._outBuf));
+               this._outBuf = new ByteArrayOutputStream();
+               this._out = new PrintStream(this._outBuf);
                break label154;
             }
          }
@@ -74,13 +74,7 @@ public final class WMLD implements Decompiler {
          switch (wbxmlVersion) {
             case 0:
             default:
-               this._out
-                  .println(
-                     ((StringBuffer)(new Object("ERROR: Wrong WBXML version number (got 0x")))
-                        .append(Integer.toHexString(wbxmlVersion))
-                        .append("; expected 0x01, 0x02, or 0x03)")
-                        .toString()
-                  );
+               this._out.println("ERROR: Wrong WBXML version number (got 0x" + Integer.toHexString(wbxmlVersion) + "; expected 0x01, 0x02, or 0x03)");
                this.crashBurn();
                return this._outBuf.toString();
             case 1:
@@ -107,12 +101,7 @@ public final class WMLD implements Decompiler {
                      break;
                   default:
                      this._out
-                        .println(
-                           ((StringBuffer)(new Object("ERROR: Wrong WML version number (got 0x")))
-                              .append(Integer.toHexString(wmlVersion))
-                              .append("; expected 0x02, 0x04, 0x09, 0x0A, or 0x1108)")
-                              .toString()
-                        );
+                        .println("ERROR: Wrong WML version number (got 0x" + Integer.toHexString(wmlVersion) + "; expected 0x02, 0x04, 0x09, 0x0A, or 0x1108)");
                      this.crashBurn();
                      return this._outBuf.toString();
                }
@@ -139,12 +128,7 @@ public final class WMLD implements Decompiler {
       this._out.println("<?xml version=\"1.0\"?>");
       this._out
          .println(
-            ((StringBuffer)(new Object("<!DOCTYPE wml PUBLIC \"-//WAPFORUM//DTD WML ")))
-               .append(wmlVersionString)
-               .append("//EN\" \"http://www.wapforum.org/DTD/wml_")
-               .append(wmlVersionString)
-               .append(".xml\">")
-               .toString()
+            "<!DOCTYPE wml PUBLIC \"-//WAPFORUM//DTD WML " + wmlVersionString + "//EN\" \"http://www.wapforum.org/DTD/wml_" + wmlVersionString + ".xml\">"
          );
       this.parseTags();
       this._stringTable = null;
@@ -160,7 +144,7 @@ public final class WMLD implements Decompiler {
       this._out.println();
 
       try {
-         this._out.println(((StringBuffer)(new Object("FATAL: Decompile halted at byte "))).append(this._inSize - this._in.available()).toString());
+         this._out.println("FATAL: Decompile halted at byte " + (this._inSize - this._in.available()));
          this._in.close();
       } catch (Throwable var3) {
          this._out.println(e);
@@ -184,7 +168,7 @@ public final class WMLD implements Decompiler {
                if ((st = this.stringTableRef(ref)) != null) {
                   this._out.print(st);
                } else {
-                  this._out.println(((StringBuffer)(new Object("Parse error: string table entry "))).append(ref).append(" referenced but invalid.").toString());
+                  this._out.println("Parse error: string table entry " + ref + " referenced but invalid.");
                }
             } else if (input == 130 || input == 129 || input == 128) {
                int ref = this._in.readMBInt();
@@ -202,7 +186,7 @@ public final class WMLD implements Decompiler {
 
                   this._out.println(')');
                } else {
-                  this._out.println(((StringBuffer)(new Object("Parse error: string table entry "))).append(ref).append(" referenced but invalid.").toString());
+                  this._out.println("Parse error: string table entry " + ref + " referenced but invalid.");
                }
             } else if (input == 66 || input == 65 || input == 64) {
                this._out.print("$(");
@@ -221,7 +205,7 @@ public final class WMLD implements Decompiler {
                this._out.println(')');
             } else if (input == 2) {
                int c = this._in.readMBInt();
-               this._out.print(((StringBuffer)(new Object("&#"))).append(String.valueOf(c)).append(';').toString());
+               this._out.print("&#" + String.valueOf(c) + ';');
             } else {
                int tag = input & -193;
                int content = input & 64;
@@ -231,15 +215,7 @@ public final class WMLD implements Decompiler {
                }
 
                if (WML_TAG_DESC(tag) == null) {
-                  this._out
-                     .println(
-                        ((StringBuffer)(new Object("Parse error: expected tag, got 0x")))
-                           .append(Integer.toHexString(input))
-                           .append(" (0x")
-                           .append(Integer.toHexString(tag))
-                           .append(").")
-                           .toString()
-                     );
+                  this._out.println("Parse error: expected tag, got 0x" + Integer.toHexString(input) + " (0x" + Integer.toHexString(tag) + ").");
                   this.crashBurn();
                   return false;
                }
@@ -295,7 +271,7 @@ public final class WMLD implements Decompiler {
 
       for (int i = idx; i < this._stringTableLength; i++) {
          if (this._stringTable[i] == 0) {
-            return (String)(new Object(this._stringTable, idx, i - idx, this._encoding));
+            return new String(this._stringTable, idx, i - idx, this._encoding);
          }
       }
 
@@ -306,7 +282,7 @@ public final class WMLD implements Decompiler {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private final boolean parseString() {
       try {
-         ByteArrayOutputStream out = (ByteArrayOutputStream)(new Object());
+         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
          int input;
          while ((input = this._in.read()) != 0) {
@@ -314,7 +290,7 @@ public final class WMLD implements Decompiler {
          }
 
          out.close();
-         this._out.print((String)(new Object(out.toByteArray(), this._encoding)));
+         this._out.print(new String(out.toByteArray(), this._encoding));
          return true;
       } catch (Throwable var4) {
          this._out.println(e);
@@ -332,7 +308,7 @@ public final class WMLD implements Decompiler {
                int ref = this._in.readMBInt();
                String st;
                if ((st = this.stringTableRef(ref)) == null) {
-                  this._out.println(((StringBuffer)(new Object("Parse error: string table entry "))).append(ref).append(" referenced but invalid.").toString());
+                  this._out.println("Parse error: string table entry " + ref + " referenced but invalid.");
                   this.crashBurn();
                   return false;
                }
@@ -341,13 +317,13 @@ public final class WMLD implements Decompiler {
             } else {
                String attr;
                if ((attr = WML_SATTR_DESC(input)) == null) {
-                  this._out.println(((StringBuffer)(new Object("Parse error: expected attribute, got 0x"))).append(Integer.toHexString(input)).toString());
+                  this._out.println("Parse error: expected attribute, got 0x" + Integer.toHexString(input));
                   this.crashBurn();
                   return false;
                }
 
                if (attr.indexOf(34) == -1) {
-                  this._out.print(((StringBuffer)(new Object())).append(' ').append(attr).append("=\"").toString());
+                  this._out.print(' ' + attr + "=\"");
                   if (!this.parseValueAttributes()) {
                      return false;
                   }
@@ -384,7 +360,7 @@ public final class WMLD implements Decompiler {
                int ref = this._in.readMBInt();
                String st;
                if ((st = this.stringTableRef(ref)) == null) {
-                  this._out.println(((StringBuffer)(new Object("Parse error: string table entry "))).append(ref).append(" referenced but invalid.").toString());
+                  this._out.println("Parse error: string table entry " + ref + " referenced but invalid.");
                   this.crashBurn();
                   return false;
                }
@@ -425,7 +401,7 @@ public final class WMLD implements Decompiler {
                int ref = this._in.readMBInt();
                String st;
                if ((st = this.stringTableRef(ref)) == null) {
-                  this._out.println(((StringBuffer)(new Object("Parse error: string table entry "))).append(ref).append(" referenced but invalid.").toString());
+                  this._out.println("Parse error: string table entry " + ref + " referenced but invalid.");
                   this.crashBurn();
                   return false;
                }

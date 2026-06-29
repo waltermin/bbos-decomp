@@ -2,6 +2,9 @@ package net.rim.device.apps.internal.blackberryemail.header;
 
 import net.rim.device.api.ui.text.TextFilter;
 import net.rim.device.api.util.CharacterUtilities;
+import net.rim.device.apps.api.addressbook.EmailAddressModel;
+import net.rim.device.apps.api.addressbook.GroupAddressCardModel;
+import net.rim.device.apps.api.addressbook.PINAddressModel;
 import net.rim.device.apps.api.framework.model.PersistableRIMModel;
 import net.rim.device.apps.api.framework.registration.VerbCombinerRepository;
 import net.rim.device.apps.api.framework.verb.VerbCombiner;
@@ -15,7 +18,7 @@ class EmailComposeComboField$MessageType {
 
    EmailComposeComboField$MessageType(EmailComposeComboField _1, int tag) {
       this.this$0 = _1;
-      this._tempStringBuffer = (StringBuffer)(new Object());
+      this._tempStringBuffer = new StringBuffer();
       this._pinAddressFilter = TextFilter.get(9);
       this._tag = tag;
       this.checkValidity();
@@ -24,7 +27,7 @@ class EmailComposeComboField$MessageType {
    private void checkValidity() {
       switch (this._tag) {
          case -1:
-            throw new Object("EmailComposeComboField: Illegal message type");
+            throw new IllegalStateException("EmailComposeComboField: Illegal message type");
          case 0:
          case 1:
       }
@@ -73,13 +76,13 @@ class EmailComposeComboField$MessageType {
             return false;
          case 0:
          default:
-            if (!(obj instanceof Object) && !(obj instanceof Object)) {
+            if (!(obj instanceof EmailAddressModel) && !(obj instanceof GroupAddressCardModel)) {
                return false;
             }
 
             return true;
          case 1:
-            return obj instanceof Object || obj instanceof Object;
+            return obj instanceof PINAddressModel || obj instanceof GroupAddressCardModel;
       }
    }
 

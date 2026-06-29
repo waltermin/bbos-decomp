@@ -7,6 +7,7 @@ import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.ChoiceField;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.EditField;
+import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.VerbProvider;
 import net.rim.device.apps.api.framework.registration.VerbRepository;
@@ -36,12 +37,12 @@ final class AutoTextUnitEditor$AutoTextEditorScreen extends AppsMainScreen {
          style |= 1073741824;
       }
 
-      this._replacedStringField = (EditField)(new Object(OptionsResources.getString(303), initialReplacedString, Integer.MAX_VALUE, style));
+      this._replacedStringField = new EditField(OptionsResources.getString(303), initialReplacedString, Integer.MAX_VALUE, style);
       this._replacedStringField.setCookie(this._replacedStringField);
       this._replacedStringField.setFilter(new AutoTextUnitEditor$ReplacedStringFilter());
       this._replacementStringPatternField = new AutoTextUnitEditor$ReplacementStringPatternField(initialReplacementStringPattern);
       this._casingField = new AutoTextUnitEditor$CasingField(initialCasing);
-      this._localeField = (ChoiceField)(new Object(OptionsResources.getString(1801), this._displayableLocales, 0));
+      this._localeField = new ObjectChoiceField(OptionsResources.getString(1801), this._displayableLocales, 0);
       Locale locale = Locale.get(initialLocaleCode);
       int numLocales = this._displayableLocales.length;
 
@@ -91,8 +92,8 @@ final class AutoTextUnitEditor$AutoTextEditorScreen extends AppsMainScreen {
          return null;
       } else {
          Object cookie = field.getCookie();
-         if (cookie instanceof Object) {
-            Verb[] fieldVerbs = new Object[0];
+         if (cookie instanceof VerbProvider) {
+            Verb[] fieldVerbs = new Verb[0];
             Verb defaultVerb = ((VerbProvider)cookie).getVerbs(this.this$0._context, fieldVerbs);
             menu.add(fieldVerbs);
             return defaultVerb;

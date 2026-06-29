@@ -43,7 +43,7 @@ public class ViewByLUID extends Verb {
 
    @Override
    public Object invoke(Object parameter) {
-      Event[] events = CalendarServiceManager.getInstance().getEvents();
+      Event[] events = (Event[])CalendarServiceManager.getInstance().getEvents();
       ViewByLUID$UidComparator uidComparator = new ViewByLUID$UidComparator();
       Arrays.sort(events, uidComparator);
       ViewByLUID$CalendarEventListScreen listScreen = new ViewByLUID$CalendarEventListScreen(events);

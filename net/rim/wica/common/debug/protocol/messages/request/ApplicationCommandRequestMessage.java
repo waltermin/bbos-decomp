@@ -23,6 +23,6 @@ final class ApplicationCommandRequestMessage implements IApplicationCommandReque
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object("Application command request: app id = "))).append(this.getApplicationId()).toString();
+      return "Application command request: app id = " + this.getApplicationId();
    }
 }

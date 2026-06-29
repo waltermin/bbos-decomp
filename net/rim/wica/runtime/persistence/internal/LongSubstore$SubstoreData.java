@@ -5,8 +5,8 @@ import net.rim.device.api.util.LongIntHashtable;
 import net.rim.device.api.util.Persistable;
 
 final class LongSubstore$SubstoreData implements Persistable {
-   public BigVector _objects = (BigVector)(new Object());
-   public LongIntHashtable _index = (LongIntHashtable)(new Object());
+   public BigVector _objects = new BigVector();
+   public LongIntHashtable _index = new LongIntHashtable();
 
    private LongSubstore$SubstoreData() {
    }

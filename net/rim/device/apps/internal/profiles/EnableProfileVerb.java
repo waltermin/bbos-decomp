@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.profiles;
 
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.verb.Verb;
 
 final class EnableProfileVerb extends Verb {
@@ -14,6 +15,6 @@ final class EnableProfileVerb extends Verb {
    public final Object invoke(Object anObject) {
       Profiles profiles = Profiles.getInstance();
       profiles.enable(this._profile);
-      return new Object(39);
+      return new ContextObject(39);
    }
 }

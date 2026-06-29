@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.bis.ui;
 
 import java.util.Hashtable;
-import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.RadioButtonField;
 import net.rim.device.api.ui.component.RadioButtonGroup;
 import net.rim.device.apps.internal.bis.ApplicationResources;
@@ -25,13 +25,13 @@ public final class SetupPersonalEmailScreen extends UserSettingsScreen {
    @Override
    public final void refresh(Hashtable screenParams) {
       this.setTitle(ApplicationResources.getString(156));
-      this.addContentField((Field)(new Object(ApplicationResources.getString(157))));
-      RadioButtonGroup personalAccountTypeGroup = (RadioButtonGroup)(new Object());
+      this.addContentField(new LabelField(ApplicationResources.getString(157)));
+      RadioButtonGroup personalAccountTypeGroup = new RadioButtonGroup();
       boolean importControlEnabled = ClientSessionState.getInstance().getBrandingInfo().isImportControlEnabled();
-      this._provideSettingsRadioButton = (RadioButtonField)(new Object(ApplicationResources.getString(159), personalAccountTypeGroup, true));
+      this._provideSettingsRadioButton = new RadioButtonField(ApplicationResources.getString(159), personalAccountTypeGroup, true);
       this.addContentField(this._provideSettingsRadioButton);
       if (importControlEnabled) {
-         this._outlookRadioButton = (RadioButtonField)(new Object(ApplicationResources.getString(158), personalAccountTypeGroup, false));
+         this._outlookRadioButton = new RadioButtonField(ApplicationResources.getString(158), personalAccountTypeGroup, false);
          this.addContentField(this._outlookRadioButton);
       }
 

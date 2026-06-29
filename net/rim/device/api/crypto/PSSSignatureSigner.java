@@ -33,7 +33,7 @@ public final class PSSSignatureSigner implements SignatureSigner {
          System.arraycopy(this._salt, 0, encodedMessage, encodedMessageOffset, this._salt.length);
          encodedMessageOffset += this._salt.length;
          this._digest2.getDigest(encodedMessage, encodedMessageOffset);
-         PseudoRandomSource mgf = (PseudoRandomSource)(new Object(encodedMessage, encodedMessageOffset, digestLength, this._digest2));
+         PseudoRandomSource mgf = new PKCS1MGF1PseudoRandomSource(encodedMessage, encodedMessageOffset, digestLength, this._digest2);
          mgf.xorBytes(encodedMessage, 0, encodedMessageOffset);
          this._digest2.reset();
          byte[] n = this._key.getN();
@@ -48,7 +48,7 @@ public final class PSSSignatureSigner implements SignatureSigner {
          encodedMessage[encodedMessageOffset] = -68;
          this._key.getRSACryptoToken().signRSA(this._key.getRSACryptoSystem(), this._key.getCryptoTokenData(), encodedMessage, 0, signature, signatureOffset);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -83,7 +83,7 @@ public final class PSSSignatureSigner implements SignatureSigner {
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object("RSA_PSS/"))).append(this._digest.getAlgorithm()).toString();
+      return "RSA_PSS/" + this._digest.getAlgorithm();
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
@@ -101,14 +101,14 @@ public final class PSSSignatureSigner implements SignatureSigner {
             var7 = false;
          } finally {
             if (var7) {
-               throw new Object();
+               throw new RuntimeException();
             }
          }
 
          int digestLength = this._digest.getDigestLength();
          int maxSaltLength = this._length - 2 - digestLength;
          if (maxSaltLength < 0) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          if (salt == null) {
@@ -116,12 +116,12 @@ public final class PSSSignatureSigner implements SignatureSigner {
          }
 
          if (salt.length > maxSaltLength) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          this._salt = salt;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -130,15 +130,15 @@ public final class PSSSignatureSigner implements SignatureSigner {
    }
 
    public PSSSignatureSigner(RSAPrivateKey key) {
-      this(key, (Digest)(new Object()), null);
+      this(key, new SHA1Digest(), null);
    }
 
    public static final void selfTest() {
       byte[] signature = new byte[128];
 
       try {
-         RSACryptoSystem cryptoSystemRSA = (RSACryptoSystem)(new Object(1024));
-         RSAPrivateKey privKey = (RSAPrivateKey)(new Object(
+         RSACryptoSystem cryptoSystemRSA = new RSACryptoSystem(1024);
+         RSAPrivateKey privKey = new RSAPrivateKey(
             cryptoSystemRSA,
             SelfTestData_PK1.RSA_E,
             Arrays.copy(SelfTestData_PK1.RSA_D),
@@ -148,18 +148,18 @@ public final class PSSSignatureSigner implements SignatureSigner {
             Arrays.copy(SelfTestData_PK1.RSA_DMODPM1),
             Arrays.copy(SelfTestData_PK1.RSA_DMODQM1),
             Arrays.copy(SelfTestData_PK1.RSA_QINVMODP)
-         ));
-         PSSSignatureSigner signer = new PSSSignatureSigner(privKey, (Digest)(new Object()), SelfTestData_PK2.PSS_SALT);
+         );
+         PSSSignatureSigner signer = new PSSSignatureSigner(privKey, new SHA1Digest(), SelfTestData_PK2.PSS_SALT);
          signer.update(SelfTestData_PK1.PLAIN_TEXT_PKCS1_RSA);
          signer.sign(signature, 0);
          if (Arrays.equals(signature, 0, SelfTestData_PK2.SIGNATURE_PSS_RSA, 0, signature.length)) {
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

@@ -5,7 +5,7 @@ import net.rim.device.api.util.Arrays;
 public final class UpdateInfo {
    private boolean _upToDate;
    private String _version;
-   private String[] _downloadUrls = new Object[0];
+   private String[] _downloadUrls = new String[0];
    private byte[][] _digests = new byte[0][];
    private int _downloadSize;
    private boolean _mandatory;

@@ -103,7 +103,7 @@ public final class Video implements MediaInfo, PaintProvider, KeyProvider, VerbP
    @Override
    public final void setPreloaded(boolean preloaded) {
       if (this._keywords == null) {
-         this._keywords = new Object[0];
+         this._keywords = new String[0];
       }
 
       if (preloaded) {

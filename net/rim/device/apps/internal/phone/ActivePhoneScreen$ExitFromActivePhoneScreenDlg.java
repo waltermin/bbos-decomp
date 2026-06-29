@@ -11,7 +11,7 @@ final class ActivePhoneScreen$ExitFromActivePhoneScreenDlg extends Dialog implem
    private final ActivePhoneScreen this$0;
 
    private ActivePhoneScreen$ExitFromActivePhoneScreenDlg(ActivePhoneScreen _1, String prompt) {
-      super(prompt, new Object[]{CommonResources.getString(117), CommonResources.getString(9042)}, null, 0, Bitmap.getPredefinedBitmap(1));
+      super(prompt, new String[]{CommonResources.getString(117), CommonResources.getString(9042)}, null, 0, Bitmap.getPredefinedBitmap(1));
       this.this$0 = _1;
    }
 

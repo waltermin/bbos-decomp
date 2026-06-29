@@ -11,9 +11,11 @@ import net.rim.device.api.ui.FontRegistry;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.Ui;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.component.VariableHeightListField;
 import net.rim.device.api.ui.component.VariableHeightListFieldCallback;
 import net.rim.device.api.ui.container.MainScreen;
@@ -101,11 +103,7 @@ public final class DirectionsListScreen extends MainScreen implements ListFieldC
             font = font.derive(1, font.getHeight(), 0, 1, 2560, 65536, 0, 0, 65536, 0, 0, 0, 16777215);
             String name = "";
             if (this._route._decisions.getAt(index)._name.length() > 0 && this._route._decisions.getAt(index)._connector.length() > 0) {
-               name = ((StringBuffer)(new Object()))
-                  .append(this._route._decisions.getAt(index)._name)
-                  .append(" - ")
-                  .append(this._route._decisions.getAt(index)._connector)
-                  .toString();
+               name = this._route._decisions.getAt(index)._name + " - " + this._route._decisions.getAt(index)._connector;
             } else if (this._route._decisions.getAt(index)._name.length() > 0) {
                name = this._route._decisions.getAt(index)._name;
             } else {
@@ -352,42 +350,42 @@ public final class DirectionsListScreen extends MainScreen implements ListFieldC
       int numDays = this._route._time / 86400;
       int numHours = (this._route._time - numDays * 86400) / 3600;
       int numMinutes = (this._route._time - numDays * 86400 - numHours * 3600) / 60;
-      String title = ((StringBuffer)(new Object())).append(Distance.formatDistance(numKilometres)).append(" (").toString();
+      String title = Distance.formatDistance(numKilometres) + " (";
       if (numDays > 1) {
-         title = ((StringBuffer)(new Object())).append(title).append(numDays).append(" ").append(LBSResources.getString(183)).append(" ").toString();
+         title = title + numDays + " " + LBSResources.getString(183) + " ";
       } else if (numDays == 1) {
-         title = ((StringBuffer)(new Object())).append(title).append(numDays).append(" ").append(LBSResources.getString(204)).append(" ").toString();
+         title = title + numDays + " " + LBSResources.getString(204) + " ";
       }
 
       if (numHours > 1) {
-         title = ((StringBuffer)(new Object())).append(title).append(numHours).append(" ").append(LBSResources.getString(184)).append(" ").toString();
+         title = title + numHours + " " + LBSResources.getString(184) + " ";
       } else if (numHours == 1) {
-         title = ((StringBuffer)(new Object())).append(title).append(numHours).append(" ").append(LBSResources.getString(205)).append(" ").toString();
+         title = title + numHours + " " + LBSResources.getString(205) + " ";
       }
 
       if (numMinutes > 0 && numDays == 0) {
-         title = ((StringBuffer)(new Object())).append(title).append(numMinutes).append(" ").append(LBSResources.getString(185)).toString();
+         title = title + numMinutes + " " + LBSResources.getString(185);
       }
 
-      title = ((StringBuffer)(new Object())).append(title).append(")").toString();
-      this.setTitle((Field)(new Object(((StringBuffer)(new Object())).append(LBSResources.getString(104)).append(": ").append(title).toString())));
+      title = title + ")";
+      this.setTitle(new LabelField(LBSResources.getString(104) + ": " + title));
       if (this._route != null) {
          String startAddress = this._route._decisions._decisions[0]._address;
          String endAddress = this._route._decisions._decisions[this._route._decisions._count - 1]._address;
          this._labelFrom = new DirectionsListScreen$CustomLabelField(
-            MessageFormat.format(LBSResources.getString(291), new Object[]{startAddress}), 1152921504606846976L
+            MessageFormat.format(LBSResources.getString(291), new String[]{startAddress}), 1152921504606846976L
          );
          this._labelFrom.setFont(Font.getDefault().derive(1));
          this._labelTo = new DirectionsListScreen$CustomLabelField(
-            MessageFormat.format(LBSResources.getString(292), new Object[]{endAddress}), 1152921504606846976L
+            MessageFormat.format(LBSResources.getString(292), new String[]{endAddress}), 1152921504606846976L
          );
          this._labelTo.setFont(Font.getDefault().derive(1));
-         this._listActions = (ListField)(new Object(2));
+         this._listActions = new ListField(2);
          this._listActions.setCallback(this);
          this._listActions.setFocusListener(this);
          this._listActions.setFont(Font.getDefault());
          int count = this._route._decisions._count;
-         this._list = (VariableHeightListField)(new Object(count));
+         this._list = new VariableHeightListField(count);
          this._rowHeight = new int[count];
          Font font = this._list.getFont();
 
@@ -404,10 +402,10 @@ public final class DirectionsListScreen extends MainScreen implements ListFieldC
          }
 
          this.add(this._listActions);
-         this.add((Field)(new Object(65536)));
+         this.add(new SeparatorField(65536));
          this.add(this._labelFrom);
          this.add(this._labelTo);
-         this.add((Field)(new Object(65536)));
+         this.add(new SeparatorField(65536));
          this.add(this._list);
       }
    }

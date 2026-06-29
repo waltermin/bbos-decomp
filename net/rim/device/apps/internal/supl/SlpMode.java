@@ -10,6 +10,6 @@ final class SlpMode {
    }
 
    final void print() {
-      System.out.println(((StringBuffer)(new Object("SlpMode: "))).append(this.mode ? "Non-Proxy" : "Proxy").toString());
+      System.out.println("SlpMode: " + (this.mode ? "Non-Proxy" : "Proxy"));
    }
 }

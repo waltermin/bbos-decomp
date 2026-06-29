@@ -86,16 +86,16 @@ class EMSAcceptRequestField$SendAcceptResponseWorker extends PleaseWaitWorkerThr
       // 087: bipush 0
       // 088: putfield net/rim/device/apps/internal/secureemail/encodings/smime/EMSAcceptRequestField$SendAcceptResponseWorker._result Z
       // 08b: return
-      // 08c: new java/lang/Object
+      // 08c: new java/io/ByteArrayOutputStream
       // 08f: dup
       // 090: invokespecial java/io/ByteArrayOutputStream.<init> ()V
       // 093: astore 7
-      // 095: new java/lang/Object
+      // 095: new net/rim/device/api/io/Base64OutputStream
       // 098: dup
       // 099: aload 7
       // 09b: invokespecial net/rim/device/api/io/Base64OutputStream.<init> (Ljava/io/OutputStream;)V
       // 09e: astore 8
-      // 0a0: new java/lang/Object
+      // 0a0: new net/rim/device/api/crypto/cms/CMSSignedDataOutputStream
       // 0a3: dup
       // 0a4: aload 8
       // 0a6: bipush 15
@@ -104,7 +104,7 @@ class EMSAcceptRequestField$SendAcceptResponseWorker extends PleaseWaitWorkerThr
       // 0aa: bipush 1
       // 0ab: invokespecial net/rim/device/api/crypto/cms/CMSSignedDataOutputStream.<init> (Ljava/io/OutputStream;IZZZ)V
       // 0ae: astore 9
-      // 0b0: new java/lang/Object
+      // 0b0: new net/rim/device/api/crypto/cms/CMSSigner
       // 0b3: dup
       // 0b4: aload 6
       // 0b6: aload 4
@@ -128,7 +128,7 @@ class EMSAcceptRequestField$SendAcceptResponseWorker extends PleaseWaitWorkerThr
       // 0db: goto 0df
       // 0de: aconst_null
       // 0df: astore 11
-      // 0e1: new java/lang/Object
+      // 0e1: new net/rim/device/api/crypto/cms/EMSAcceptResponseOutputStream
       // 0e4: dup
       // 0e5: aload 9
       // 0e7: aload 0
@@ -170,7 +170,7 @@ class EMSAcceptRequestField$SendAcceptResponseWorker extends PleaseWaitWorkerThr
       // 13a: ldc2_w -6822293833372928884
       // 13d: aconst_null
       // 13e: invokestatic net/rim/device/api/util/FactoryUtil.createInstance (JLjava/lang/Object;)Ljava/lang/Object;
-      // 141: checkcast java/lang/Object
+      // 141: checkcast net/rim/device/apps/internal/blackberryemail/email/EmailMessageModel
       // 144: astore 14
       // 146: bipush 2
       // 148: anewarray 382
@@ -193,11 +193,11 @@ class EMSAcceptRequestField$SendAcceptResponseWorker extends PleaseWaitWorkerThr
       // 173: astore 18
       // 175: aload 18
       // 177: dup
-      // 178: instanceof java/lang/Object
+      // 178: instanceof net/rim/device/apps/internal/blackberryemail/header/EmailHeaderModel
       // 17b: ifne 182
       // 17e: pop
       // 17f: goto 1a7
-      // 182: checkcast java/lang/Object
+      // 182: checkcast net/rim/device/apps/internal/blackberryemail/header/EmailHeaderModel
       // 185: astore 19
       // 187: aload 19
       // 189: invokevirtual net/rim/device/apps/internal/blackberryemail/header/EmailHeaderModel.getHeaderType ()I
@@ -215,7 +215,7 @@ class EMSAcceptRequestField$SendAcceptResponseWorker extends PleaseWaitWorkerThr
       // 1a4: goto 1ad
       // 1a7: iinc 17 1
       // 1aa: goto 15e
-      // 1ad: new java/lang/Object
+      // 1ad: new net/rim/device/apps/api/framework/model/ContextObject
       // 1b0: dup
       // 1b1: invokespecial net/rim/device/apps/api/framework/model/ContextObject.<init> ()V
       // 1b4: astore 17
@@ -228,7 +228,7 @@ class EMSAcceptRequestField$SendAcceptResponseWorker extends PleaseWaitWorkerThr
       // 1c2: ldc2_w -2985347935260258684
       // 1c5: aload 17
       // 1c7: invokestatic net/rim/device/api/util/FactoryUtil.createInstance (JLjava/lang/Object;)Ljava/lang/Object;
-      // 1ca: checkcast java/lang/Object
+      // 1ca: checkcast net/rim/device/apps/api/framework/model/RIMModel
       // 1cd: astore 18
       // 1cf: aload 14
       // 1d1: bipush 0

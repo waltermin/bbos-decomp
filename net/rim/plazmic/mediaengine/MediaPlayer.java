@@ -181,7 +181,7 @@ public class MediaPlayer {
    public void addMediaListener(MediaListener l) {
       this.assertPermission();
       if (l == null) {
-         throw new Object("Listener can not be null");
+         throw new IllegalArgumentException("Listener can not be null");
       }
 
       this._listeners.add(l);
@@ -190,7 +190,7 @@ public class MediaPlayer {
    public void removeMediaListener(MediaListener l) {
       this.assertPermission();
       if (l == null) {
-         throw new Object("Listener can not be null");
+         throw new IllegalArgumentException("Listener can not be null");
       }
 
       this._listeners.remove(l);

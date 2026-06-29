@@ -66,7 +66,7 @@ final class JPEGMetadataExtractor extends MetaDataControlImpl {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public JPEGMetadataExtractor(EncodedImage encImage, int modifyDataFlags) {
-      if (encImage instanceof Object) {
+      if (encImage instanceof JPEGEncodedImage) {
          JPEGEncodedImage jpegEncImg = (JPEGEncodedImage)encImage;
          this._imageBytes = jpegEncImg.getData();
          boolean var6 = false /* VF: Semaphore variable */;
@@ -125,7 +125,7 @@ final class JPEGMetadataExtractor extends MetaDataControlImpl {
             this._blockIndex += 2;
 
             for (int i = 0; i < entryLength - 2; i++) {
-               this._comment = ((StringBuffer)(new Object())).append(this._comment).append((char)this._imageBytes[this._blockIndex + i]).toString();
+               this._comment = this._comment + (char)this._imageBytes[this._blockIndex + i];
             }
             break;
          }
@@ -170,7 +170,7 @@ final class JPEGMetadataExtractor extends MetaDataControlImpl {
          this._imgReader = new JPEGMetadataExtractor$littleEndianReader(this, null);
       } else {
          if (memoryMode != 19789) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          this._imgReader = new JPEGMetadataExtractor$bigEndianReader(this, null);
@@ -236,7 +236,7 @@ final class JPEGMetadataExtractor extends MetaDataControlImpl {
 
       if (!supportedMake && jeidaTagsExists) {
          this._make = "";
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -334,11 +334,11 @@ final class JPEGMetadataExtractor extends MetaDataControlImpl {
          try {
             String stringValue;
             if (exifType == 1) {
-               stringValue = (String)(new Object(byteValue, "UTF-16BE"));
+               stringValue = new String(byteValue, "UTF-16BE");
             } else if (exifType == 2) {
-               stringValue = (String)(new Object(byteValue, "US-ASCII"));
+               stringValue = new String(byteValue, "US-ASCII");
             } else {
-               stringValue = (String)(new Object(byteValue));
+               stringValue = new String(byteValue);
             }
 
             return stringValue.trim();
@@ -356,7 +356,7 @@ final class JPEGMetadataExtractor extends MetaDataControlImpl {
          }
 
          for (int i = 0; i < entryLength; i++) {
-            var15 = ((StringBuffer)(new Object())).append(var15).append(String.valueOf(this._imgReader.getNextByteAsInt())).toString();
+            var15 = var15 + String.valueOf(this._imgReader.getNextByteAsInt());
             this._blockIndex++;
          }
 
@@ -372,7 +372,7 @@ final class JPEGMetadataExtractor extends MetaDataControlImpl {
          }
 
          for (int i = 0; i < entryLength; i++) {
-            stringValue = ((StringBuffer)(new Object())).append(stringValue).append(String.valueOf(this._imgReader.getNext2BytesAsInt())).toString();
+            stringValue = stringValue + String.valueOf(this._imgReader.getNext2BytesAsInt());
             this._blockIndex += 2;
          }
 
@@ -388,7 +388,7 @@ final class JPEGMetadataExtractor extends MetaDataControlImpl {
          }
 
          for (int i = 0; i < entryLength; i++) {
-            stringValue = ((StringBuffer)(new Object())).append(stringValue).append(String.valueOf(this._imgReader.getNext4BytesAsInt())).toString();
+            stringValue = stringValue + String.valueOf(this._imgReader.getNext4BytesAsInt());
             this._blockIndex += 4;
          }
 
@@ -404,7 +404,7 @@ final class JPEGMetadataExtractor extends MetaDataControlImpl {
          this._blockIndex += 4;
          int denominator = this._imgReader.getNext4BytesAsInt();
          this._blockIndex = tempBlockIndex;
-         return ((StringBuffer)(new Object())).append(String.valueOf(numerator)).append("/").append(String.valueOf(denominator)).toString();
+         return numerator + "/" + denominator;
       } else {
          return "";
       }

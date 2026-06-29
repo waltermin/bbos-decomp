@@ -39,7 +39,7 @@ public class AbstractRequestResponse {
 
    public void setHeader(String key, String value) {
       if (this._headers == null) {
-         this._headers = (HttpHeaders)(new Object());
+         this._headers = new HttpHeaders();
       }
 
       this._headers.addProperty(key, value);

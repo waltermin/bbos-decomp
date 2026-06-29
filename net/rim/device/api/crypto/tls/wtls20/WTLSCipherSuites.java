@@ -84,7 +84,7 @@ public final class WTLSCipherSuites {
       WTLSCipherSuiteStorage storage = WTLSCipherSuiteStorage.getInstance();
       byte[] vector = storage.getEncryptionElements();
       if (notSupportedEncryptionAlgorithm(algorithm)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       addAlgorithm(vector, algorithm, priority);
@@ -103,7 +103,7 @@ public final class WTLSCipherSuites {
       WTLSCipherSuiteStorage storage = WTLSCipherSuiteStorage.getInstance();
       byte[] vector = storage.getMACElements();
       if (notSupportedMACAlgorithm(algorithm)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       addAlgorithm(vector, algorithm, priority);
@@ -122,7 +122,7 @@ public final class WTLSCipherSuites {
       WTLSCipherSuiteStorage storage = WTLSCipherSuiteStorage.getInstance();
       byte[][] vector = storage.getKeyExchangeElements();
       if (notSupportedKeyExchangeAlgorithm(algorithm)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (priority >= 0 && priority <= vector.length) {

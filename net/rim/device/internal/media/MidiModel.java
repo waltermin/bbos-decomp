@@ -71,13 +71,13 @@ class MidiModel implements MetaDataControl {
             if (this._title == null) {
                byte[] data = metaEvent.getData();
                if (data != null && data.length > 2 && data[0] == 64 && data[1] == 84) {
-                  this._title = (String)(new Object(data, 2, data.length - 2));
+                  this._title = new String(data, 2, data.length - 2);
                   return;
                }
             }
             break;
          case 2:
-            this._copyright = (String)(new Object(metaEvent.getData()));
+            this._copyright = new String(metaEvent.getData());
       }
    }
 
@@ -123,7 +123,7 @@ class MidiModel implements MetaDataControl {
       }
 
       if (value == null) {
-         throw new Object(((StringBuffer)(new Object("key "))).append(key).append(" is not a valid argument.").toString());
+         throw new IllegalArgumentException("key " + key + " is not a valid argument.");
       } else {
          return value;
       }
@@ -142,7 +142,7 @@ class MidiModel implements MetaDataControl {
          numKeys++;
       }
 
-      String[] keys = new Object[numKeys];
+      String[] keys = new String[numKeys];
       keys[0] = "polyphonic";
       if (copyright != null) {
          keys[1] = "copyright";

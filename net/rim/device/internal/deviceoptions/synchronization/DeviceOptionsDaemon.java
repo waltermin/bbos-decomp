@@ -1,5 +1,6 @@
 package net.rim.device.internal.deviceoptions.synchronization;
 
+import java.io.IOException;
 import javax.microedition.io.Connector;
 import javax.microedition.io.DatagramConnection;
 import net.rim.device.api.io.DatagramBase;
@@ -68,7 +69,7 @@ public final class DeviceOptionsDaemon extends Thread implements TLEFieldControl
             this._reply = (DatagramBase)this._connection.newDatagram(0);
             this._reply.setBigEndian(false);
          } catch (Throwable var7) {
-            throw new Object(((StringBuffer)(new Object())).append(connectionName).append(":").append(ex.getMessage()).toString());
+            throw new RuntimeException(connectionName + ":" + ex.getMessage());
          }
 
          while (true) {
@@ -166,7 +167,7 @@ public final class DeviceOptionsDaemon extends Thread implements TLEFieldControl
                enableBCCRecipients = ITPolicy.getBoolean(16, true);
             }
 
-            DataBuffer tleData = (DataBuffer)(new Object());
+            DataBuffer tleData = new DataBuffer();
             tleData.write(1);
             TLEUtilities.writeIntegerField(tleData, 6, changePasswordNow ? 1 : 0, false);
             TLEUtilities.writeIntegerField(tleData, 7, allowPeerToPeer ? 1 : 0, false);
@@ -257,7 +258,7 @@ public final class DeviceOptionsDaemon extends Thread implements TLEFieldControl
       if (ITPolicyInternal.isOTAITAdminEnabled()) {
          SyncEventLogger.logEvent(1397051986, 0);
       } else {
-         DataBuffer itadminBuffer = (DataBuffer)(new Object(true));
+         DataBuffer itadminBuffer = new DataBuffer(true);
          itadminBuffer.writeByte(this._command.readByte());
          int curTimeStamp = this._command.readInt();
          itadminBuffer.writeInt(curTimeStamp);
@@ -295,7 +296,7 @@ public final class DeviceOptionsDaemon extends Thread implements TLEFieldControl
                   SyncEventLogger.logEvent(1397772108, 0);
 
                   try {
-                     if (ITPolicyInternal.setOTAITPolicy((DataBuffer)(new Object(buffer, 0, buffer.length, true)))) {
+                     if (ITPolicyInternal.setOTAITPolicy(new DataBuffer(buffer, 0, buffer.length, true))) {
                         LockEventLogger.logLockEvent(1282630761);
                         ApplicationManager.getApplicationManager().lockSystem(true);
                      }
@@ -336,11 +337,11 @@ public final class DeviceOptionsDaemon extends Thread implements TLEFieldControl
       return this._reply;
    }
 
-   private final void sendReply() {
+   private final void sendReply() throws IOException {
       this._connection.send(this._reply);
       this._connection.receive(this._reply);
       if (!this._reply.isFlagSet(1) || this._reply.readShort() != 0) {
-         throw new Object("Bad reply");
+         throw new IOException("Bad reply");
       }
    }
 

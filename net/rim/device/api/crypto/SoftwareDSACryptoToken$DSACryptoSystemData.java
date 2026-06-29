@@ -23,7 +23,7 @@ final class SoftwareDSACryptoToken$DSACryptoSystemData implements CryptoTokenCry
             throw new InvalidCryptoSystemException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

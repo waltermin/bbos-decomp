@@ -210,7 +210,7 @@ final class ESMDSError extends RedirectedObject {
    private final long getData(Object data) {
       if (data == null) {
          return Value.NULL;
-      } else if (!(data instanceof Object)) {
+      } else if (!(data instanceof Throwable)) {
          return !(data instanceof REErrorDetails)
             ? Value.makeStringValue(data.toString())
             : EcmaUtilities.makeStringValue(((REErrorDetails)data).getData().toString());

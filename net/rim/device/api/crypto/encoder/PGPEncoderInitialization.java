@@ -7,9 +7,9 @@ public final class PGPEncoderInitialization implements Initialization {
    public final void initialize() {
       try {
          PrivateKeyEncoder.register(new KeyStore_RIM_PrivateKeyEncoderPGP());
-         PrivateKeyDecoder.register(new KeyStore_RIM_PrivateKeyDecoderPGP(), (PrivateKeyDecoder)(new Object()));
+         PrivateKeyDecoder.register(new KeyStore_RIM_PrivateKeyDecoderPGP(), new KeyStore_PrivateKeyDecoder());
       } finally {
-         throw new Object();
+         throw new RuntimeException();
       }
    }
 }

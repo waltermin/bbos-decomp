@@ -9,7 +9,7 @@ class DialogWithBackgroundThread$1 implements Runnable {
 
    @Override
    public void run() {
-      Thread thread = (Thread)(new Object(this.this$0._dialogWithBackgroundThreadRunnable));
+      Thread thread = new Thread(this.this$0._dialogWithBackgroundThreadRunnable);
       thread.start();
    }
 }

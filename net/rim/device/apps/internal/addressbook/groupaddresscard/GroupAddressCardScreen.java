@@ -9,7 +9,7 @@ import net.rim.device.api.ui.component.CollectionListField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
-import net.rim.device.apps.api.addressbook.AddressCardElement;
+import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.GroupAddressCardModel;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.ContextObjectWR;
@@ -21,6 +21,7 @@ import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
 import net.rim.device.apps.api.utility.framework.ModelScreen;
 import net.rim.device.apps.internal.addressbook.resources.AddressBookResources;
+import net.rim.vm.WeakReference;
 
 class GroupAddressCardScreen extends ModelScreen implements ListFieldCallback, CollectionListener {
    protected Verb _viewMemberVerb;
@@ -31,13 +32,13 @@ class GroupAddressCardScreen extends ModelScreen implements ListFieldCallback, C
    protected ContextObject _paintContext;
    protected GroupAddressCardModel _gacm;
    protected static final int MAX_NAME_LENGTH = 100;
-   private static ContextObjectWR _contextWR = (ContextObjectWR)(new Object(108));
+   private static ContextObjectWR _contextWR = new ContextObjectWR(108);
    private static final int VIEW_MEMBER_VERB = 0;
    private static final int SHOW_NAMES_OR_ADDRESSES_VERB = 1;
 
    GroupAddressCardScreen(GroupAddressCardModel gacm) {
       super(0, gacm.getName(), _contextWR.getContextObject());
-      if (gacm instanceof Object) {
+      if (gacm instanceof EditableProvider) {
          this._gacm = (GroupAddressCardModel)((EditableProvider)gacm).makeReadWrite();
       } else {
          this._gacm = gacm;
@@ -45,17 +46,17 @@ class GroupAddressCardScreen extends ModelScreen implements ListFieldCallback, C
 
       super.setModel(this._gacm);
       this.validateGroupAddressCard(this._gacm);
-      this._listField = (CollectionListField)(new Object(this._gacm, this));
+      this._listField = new CollectionListField(this._gacm, this);
       super.getMainManager().add(this._listField);
       this._showNames = true;
       this._viewMemberVerb = new GroupAddressCardScreen$GroupMemberVerb(this, 0, 607744, 806);
       this._editGroupVerb = new GroupAddressCardVerb(1, this._gacm, this);
       this._showNamesOrAddressesVerb = new GroupAddressCardScreen$GroupMemberVerb(this, 1, 16859712, 1008);
-      this._paintContext = (ContextObject)(new Object());
+      this._paintContext = new ContextObject();
       this._paintContext.setFlag(3, 1, 17);
       this._paintContext.setFlag(17, 18);
       this._paintContext.setFlag(4);
-      AddressBookServices.getAddressBook().addCollectionListener(new Object(this));
+      AddressBookServices.getAddressBook().addCollectionListener(new WeakReference(this));
    }
 
    protected Object getAddressCardAt(int index) {
@@ -99,7 +100,7 @@ class GroupAddressCardScreen extends ModelScreen implements ListFieldCallback, C
 
    @Override
    protected void onUiEngineAttached(boolean attached) {
-      if (!attached && this._gacm instanceof Object) {
+      if (!attached && this._gacm instanceof EditableProvider) {
          ((EditableProvider)this._gacm).makeReadOnly();
       }
 
@@ -137,10 +138,8 @@ class GroupAddressCardScreen extends ModelScreen implements ListFieldCallback, C
                   xoffset = painter.paint(graphics, 0, y, width, 100, this._paintContext);
                }
 
-               if (rm instanceof Object) {
-                  graphics.drawText(
-                     ((StringBuffer)(new Object(" ("))).append(((FieldLabelProvider)rm).getLabel()).append(')').toString(), xoffset, y, 64, width
-                  );
+               if (rm instanceof FieldLabelProvider) {
+                  graphics.drawText(" (" + ((FieldLabelProvider)rm).getLabel() + ')', xoffset, y, 64, width);
                   return;
                }
             } else {
@@ -152,9 +151,7 @@ class GroupAddressCardScreen extends ModelScreen implements ListFieldCallback, C
                PaintProvider painter = (PaintProvider)member.getAddressCardModel();
                if (painter != null) {
                   int xoffset = painter.paint(graphics, 0, y, width, 100, this._paintContext);
-                  graphics.drawText(
-                     ((StringBuffer)(new Object(" ("))).append(AddressBookResources.getString(1736)).append(')').toString(), xoffset, y, 64, width
-                  );
+                  graphics.drawText(" (" + AddressBookResources.getString(1736) + ')', xoffset, y, 64, width);
                   return;
                }
             }
@@ -191,20 +188,20 @@ class GroupAddressCardScreen extends ModelScreen implements ListFieldCallback, C
 
    @Override
    public void elementRemoved(Collection collection, Object element) {
-      if (element instanceof Object) {
-         int uid = ((AddressCardElement)element).getUID();
+      if (element instanceof AddressCardModel) {
+         int uid = ((AddressCardModel)element).getUID();
 
          for (int idx = 0; idx < this._gacm.size(); idx++) {
             GroupAddressCardMember member = (GroupAddressCardMember)this._gacm.getAt(idx);
             if (member.getUID() == uid) {
                boolean wasReadOnly = false;
-               if (this._gacm instanceof Object && ((EditableProvider)this._gacm).isReadOnly()) {
+               if (this._gacm instanceof EditableProvider && ((EditableProvider)this._gacm).isReadOnly()) {
                   this._gacm = (GroupAddressCardModel)((EditableProvider)this._gacm).makeReadWrite();
                   wasReadOnly = true;
                }
 
                this._gacm.removeAt(idx);
-               if (this._gacm instanceof Object && wasReadOnly) {
+               if (this._gacm instanceof EditableProvider && wasReadOnly) {
                   this._gacm = (GroupAddressCardModel)((EditableProvider)this._gacm).makeReadOnly();
                }
 

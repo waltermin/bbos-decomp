@@ -1,9 +1,14 @@
 package net.rim.device.apps.internal.secureemail.cache;
 
 import net.rim.device.api.system.Bitmap;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.component.BitmapField;
+import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
+import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.VerticalFieldManager;
+import net.rim.device.internal.ui.component.HorizontalSpacerField;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 
 public class CachedErrorField extends CachedField {
    private String _errorString;
@@ -22,17 +27,17 @@ public class CachedErrorField extends CachedField {
 
    @Override
    public void fillManager(Manager manager, Object context) {
-      Manager subManager = (Manager)(new Object(1152921504606846976L));
-      subManager.add((Field)(new Object(Bitmap.getPredefinedBitmap(2), 36028797019029504L)));
-      subManager.add((Field)(new Object(6)));
-      subManager.add((Field)(new Object(this._errorString)));
+      Manager subManager = new HorizontalFieldManager(1152921504606846976L);
+      subManager.add(new BitmapField(Bitmap.getPredefinedBitmap(2), 36028797019029504L));
+      subManager.add(new HorizontalSpacerField(6));
+      subManager.add(new RichTextField(this._errorString));
       if (this._inlineField) {
-         VerticalFieldManager vfm = (VerticalFieldManager)(new Object(1152921504606846976L));
-         vfm.add((Field)(new Object(4)));
-         vfm.add((Field)(new Object()));
+         VerticalFieldManager vfm = new VerticalFieldManager(1152921504606846976L);
+         vfm.add(new VerticalSpacerField(4));
+         vfm.add(new SeparatorField());
          vfm.add(subManager);
-         vfm.add((Field)(new Object()));
-         vfm.add((Field)(new Object(4)));
+         vfm.add(new SeparatorField());
+         vfm.add(new VerticalSpacerField(4));
          subManager = vfm;
       }
 

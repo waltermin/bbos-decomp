@@ -1,8 +1,10 @@
 package net.rim.device.api.crypto.encoder;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Hashtable;
 import net.rim.device.api.crypto.InvalidKeyEncodingException;
+import net.rim.device.api.crypto.NoSuchAlgorithmException;
 import net.rim.device.api.crypto.SymmetricKey;
 import net.rim.device.api.system.ApplicationRegistry;
 
@@ -19,9 +21,9 @@ public class SymmetricKeyDecoder {
 
    public static SymmetricKey decode(byte[] encodedKey, String encodingAlgorithm) {
       if (encodedKey == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
-         return decode((InputStream)(new Object(encodedKey)), encodingAlgorithm, null);
+         return decode(new ByteArrayInputStream(encodedKey), encodingAlgorithm, null);
       }
    }
 
@@ -30,12 +32,12 @@ public class SymmetricKeyDecoder {
          if (encodedKey != null && encodingAlgorithm != null) {
             SymmetricKeyDecoder decoder = (SymmetricKeyDecoder)_decoderHashtable.get(encodingAlgorithm);
             if (decoder == null) {
-               throw new Object(encodingAlgorithm);
+               throw new NoSuchAlgorithmException(encodingAlgorithm);
             } else {
                return decoder.decodeKey(encodedKey, keyAlgorithm);
             }
          } else {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } finally {
          throw new InvalidKeyEncodingException();
@@ -44,9 +46,9 @@ public class SymmetricKeyDecoder {
 
    public static SymmetricKey decode(byte[] encodedKey, String encodingAlgorithm, String keyAlgorithm) {
       if (encodedKey == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
-         return decode((InputStream)(new Object(encodedKey)), encodingAlgorithm, keyAlgorithm);
+         return decode(new ByteArrayInputStream(encodedKey), encodingAlgorithm, keyAlgorithm);
       }
    }
 

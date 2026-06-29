@@ -35,7 +35,7 @@ final class EntryBitmapComponentFactory$EntryBitmapComponent
          ApplicationEntry entry = this.getCurrentApplicationEntry();
          if (entry != null) {
             Object object = this._focus ? entry.getBitmapFocus() : entry.getBitmap();
-            if (object instanceof Object) {
+            if (object instanceof Bitmap) {
                Bitmap bitmap = (Bitmap)object;
                int bmWidth = bitmap.getWidth();
                int bmHeight = bitmap.getHeight();
@@ -161,7 +161,7 @@ final class EntryBitmapComponentFactory$EntryBitmapComponent
       if (this._position != -1) {
          this._id = getApplicationEntry(this._folder, this._position);
          if (this._id == null) {
-            throw new Object("Application ID not found");
+            throw new NullPointerException("Application ID not found");
          }
       }
 

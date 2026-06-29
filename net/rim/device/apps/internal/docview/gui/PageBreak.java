@@ -12,6 +12,6 @@ final class PageBreak extends BreakObj {
 
    @Override
    final BreakObj cloneObject() {
-      throw new Object("Base class cannot be cloned");
+      throw new IllegalArgumentException("Base class cannot be cloned");
    }
 }

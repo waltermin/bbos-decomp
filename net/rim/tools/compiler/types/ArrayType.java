@@ -9,7 +9,7 @@ public final class ArrayType extends ReferenceType {
    private Type _baseType;
 
    public ArrayType(Type baseType, int nesting) throws CompileException {
-      super(((StringBuffer)(new Object(baseType._typeName))).append("[]").toString());
+      super(baseType._typeName + "[]");
       this._nesting = nesting;
       this._baseType = baseType;
       if (this._nesting > 255) {
@@ -33,7 +33,7 @@ public final class ArrayType extends ReferenceType {
          return super._typeName;
       }
 
-      StringBuffer name = (StringBuffer)(new Object(type.getFullName()));
+      StringBuffer name = new StringBuffer(type.getFullName());
 
       for (int i = 0; i < this._nesting; i++) {
          name.append("[]");

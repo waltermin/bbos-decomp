@@ -128,7 +128,7 @@ public class OutgoingCallConnector extends CallConnector implements RadioStatusL
          && (RadioInfo.getNetworkService() & 256) != 0
          && !PhoneUtilities.isEmergencyNumber(phoneNumber)) {
          String prompt = PhoneResources.getString(6274);
-         String[] choices = new Object[]{PhoneResources.getString(6276), CommonResources.getString(9042)};
+         String[] choices = new String[]{PhoneResources.getString(6276), CommonResources.getString(9042)};
          if (BackgroundDialog.getChoice(prompt, choices, 0) != 0) {
             return false;
          }
@@ -195,9 +195,9 @@ public class OutgoingCallConnector extends CallConnector implements RadioStatusL
             Object o = applicationRegistry.get(1185883946270450222L);
             String[] choices;
             if (o == null) {
-               choices = new Object[]{CommonResources.getString(9154), CommonResources.getString(9042)};
+               choices = new String[]{CommonResources.getString(9154), CommonResources.getString(9042)};
             } else {
-               choices = new Object[]{CommonResources.getString(9175), CommonResources.getString(9042)};
+               choices = new String[]{CommonResources.getString(9175), CommonResources.getString(9042)};
             }
 
             Application app = Application.getApplication();
@@ -296,7 +296,7 @@ public class OutgoingCallConnector extends CallConnector implements RadioStatusL
    private void doStartConnection() {
       if (this._communicationsState == 2 || this._communicationsState == 4 || this._gainingService) {
          Runnable runnable = new OutgoingCallConnector$2(this);
-         VoiceServices.getVoiceApplication().requestForeground(runnable, new Object(96));
+         VoiceServices.getVoiceApplication().requestForeground(runnable, new ContextObject(96));
       }
 
       if (this._communicationsState == 1 && this._communicationsState != 4 && !this._gainingService) {
@@ -335,7 +335,7 @@ public class OutgoingCallConnector extends CallConnector implements RadioStatusL
          }
       } else {
          String[] buttons = CommonResource.getStringArray(10004);
-         Dialog dlg = (Dialog)(new Object(PhoneResources.getString(3021), buttons, null, 0, null, 33554432));
+         Dialog dlg = new Dialog(PhoneResources.getString(3021), buttons, null, 0, null, 33554432);
          dlg.setIcon(ThemeManager.getThemeAwareImage("dialog_exclamation"));
          dlg.show(-2147483645);
       }
@@ -349,7 +349,7 @@ public class OutgoingCallConnector extends CallConnector implements RadioStatusL
          SSRequestStatusDialog status = new OutgoingCallConnector$4(this, false, true);
          status.show();
          if (!PersistentContent.isEncryptionEnabled()) {
-            PhoneLogger.log(((StringBuffer)(new Object("OCC SS_CALL "))).append(phoneNumber).toString());
+            PhoneLogger.log("OCC SS_CALL " + phoneNumber);
             return;
          }
       } else if (id != 0) {
@@ -359,7 +359,7 @@ public class OutgoingCallConnector extends CallConnector implements RadioStatusL
 
          VoiceServices.broadcastEvent(1100, id, this._connectionContext);
          if (!PersistentContent.isEncryptionEnabled()) {
-            PhoneLogger.log(((StringBuffer)(new Object("OCC calling "))).append(phoneNumber).toString());
+            PhoneLogger.log("OCC calling " + phoneNumber);
          }
       }
    }

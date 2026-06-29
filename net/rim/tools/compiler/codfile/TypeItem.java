@@ -1,5 +1,6 @@
 package net.rim.tools.compiler.codfile;
 
+import java.io.IOException;
 import net.rim.tools.compiler.io.StructuredOutputStream;
 import net.rim.tools.compiler.vm.Constants;
 
@@ -58,13 +59,13 @@ public final class TypeItem implements Constants {
       }
    }
 
-   public final void write(StructuredOutputStream out, int nibble) {
+   public final void write(StructuredOutputStream out, int nibble) throws IOException {
       int bits = this._bits;
       int id = bits >> 24 & 0xFF;
       out.writeByte((nibble & 15) << 4 | id);
       switch (id) {
          case 0:
-            throw new Object(((StringBuffer)(new Object("unexpected type id: 0x"))).append(Integer.toHexString(id)).toString());
+            throw new IOException("unexpected type id: 0x" + Integer.toHexString(id));
          case 1:
          case 2:
          case 3:

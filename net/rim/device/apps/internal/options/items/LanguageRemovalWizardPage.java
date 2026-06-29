@@ -15,6 +15,7 @@ import net.rim.device.apps.api.setupwizard.CheckListWizardPage;
 import net.rim.device.apps.api.setupwizard.SavableWizardPage;
 import net.rim.device.apps.api.setupwizard.WizardDialog;
 import net.rim.device.apps.api.setupwizard.resources.SetupWizardAPIResources;
+import net.rim.device.apps.api.ui.ExitVerb;
 import net.rim.device.apps.internal.options.resources.OptionsResources;
 import net.rim.device.internal.i18n.CommonResource;
 import net.rim.device.internal.ui.component.ProgressDialog;
@@ -101,7 +102,7 @@ class LanguageRemovalWizardPage extends CheckListWizardPage implements SavableWi
 
    @Override
    protected void populateFields() {
-      this._headerLabel = (RichTextField)(new Object(36028797018963968L));
+      this._headerLabel = new RichTextField(36028797018963968L);
       this._headerLabel.setFont(this.getHeaderFont());
       this._headerLabel.setText(OptionsResources.getString(2048));
       this.setHeaderField(this._headerLabel);
@@ -113,7 +114,7 @@ class LanguageRemovalWizardPage extends CheckListWizardPage implements SavableWi
          localeSelectionIndex = this.findNewSelectedLocale(displayableLocales, currentLocale);
       }
 
-      IntHashtable tmpSelectedHashes = (IntHashtable)(new Object(this._localeHashes.length));
+      IntHashtable tmpSelectedHashes = new IntHashtable(this._localeHashes.length);
       Object dummyObject = new Object();
       if (this._localeHashes.length > 0) {
          for (int i = this._localeHashes.length - 1; i >= 0; i--) {
@@ -121,7 +122,7 @@ class LanguageRemovalWizardPage extends CheckListWizardPage implements SavableWi
          }
       }
 
-      CheckboxField[] items = new Object[numLocales];
+      CheckboxField[] items = new CheckboxField[numLocales];
       Locale locale = null;
       int localeCode = 0;
 
@@ -129,7 +130,7 @@ class LanguageRemovalWizardPage extends CheckListWizardPage implements SavableWi
          locale = displayableLocales[i].getLocale();
          localeCode = locale.getCode();
          if (localeCode != 1701726018 && localeCode != 1701729619) {
-            items[i] = (CheckboxField)(new Object(((StringBuffer)(new Object("\u200e"))).append(locale.getDisplayName()).toString(), false));
+            items[i] = new CheckboxField("\u200e" + locale.getDisplayName(), false);
             items[i].setCookie(locale);
             if (localeCode == 1701707776 || i == localeSelectionIndex) {
                items[i].setEditable(false);
@@ -153,8 +154,8 @@ class LanguageRemovalWizardPage extends CheckListWizardPage implements SavableWi
    protected boolean saveWizard(Verb sender) {
       boolean allowedToProgress = true;
       boolean isBackVerb = false;
-      if (sender instanceof Object) {
-         isBackVerb = !((BasicWizardPage$WizardVerb)sender).canAutoSave() && !(sender instanceof Object);
+      if (sender instanceof BasicWizardPage$WizardVerb) {
+         isBackVerb = !((BasicWizardPage$WizardVerb)sender).canAutoSave() && !(sender instanceof ExitVerb);
       }
 
       if (!isBackVerb && !this._localeRemovalFinished && !this.getAllItemsSelected()) {
@@ -162,11 +163,11 @@ class LanguageRemovalWizardPage extends CheckListWizardPage implements SavableWi
             CheckboxField[] items = this.getCheckboxFields();
             Locale locale = null;
             int uncheckedLocales = -1;
-            String[] localesToRemove = new Object[items.length];
-            String[] helpLocalesToKeep = new Object[0];
+            String[] localesToRemove = new String[items.length];
+            String[] helpLocalesToKeep = new String[0];
 
             for (int i = 0; i <= items.length - 1; i++) {
-               if (items[i] != null && items[i].getCookie() instanceof Object) {
+               if (items[i] != null && items[i].getCookie() instanceof Locale) {
                   locale = (Locale)items[i].getCookie();
                   if (!items[i].getChecked()) {
                      localesToRemove[++uncheckedLocales] = locale.toString();
@@ -178,7 +179,7 @@ class LanguageRemovalWizardPage extends CheckListWizardPage implements SavableWi
             }
 
             Array.resize(localesToRemove, uncheckedLocales + 1);
-            this._progressDialog = (ProgressDialog)(new Object(SetupWizardAPIResources.getString(25)));
+            this._progressDialog = new ProgressDialog(SetupWizardAPIResources.getString(25));
             this._progressDialog.show();
             LocaleRemovalUtility.removeLocales(localesToRemove, helpLocalesToKeep, this);
             return false;
@@ -193,9 +194,9 @@ class LanguageRemovalWizardPage extends CheckListWizardPage implements SavableWi
    @Override
    public boolean confirm(Verb verb, Object context) {
       boolean saveRequired = false;
-      boolean isExitVerb = verb instanceof Object;
-      boolean isBackVerb = verb instanceof Object && !((BasicWizardPage$WizardVerb)verb).canAutoSave() && !isExitVerb;
-      if ((!(verb instanceof Object) || !((BasicWizardPage$WizardVerb)verb).canAutoSave()) && !isExitVerb) {
+      boolean isExitVerb = verb instanceof ExitVerb;
+      boolean isBackVerb = verb instanceof BasicWizardPage$WizardVerb && !((BasicWizardPage$WizardVerb)verb).canAutoSave() && !isExitVerb;
+      if ((!(verb instanceof BasicWizardPage$WizardVerb) || !((BasicWizardPage$WizardVerb)verb).canAutoSave()) && !isExitVerb) {
          int result = -1;
          if (isBackVerb) {
             boolean changesMade = false;
@@ -239,7 +240,7 @@ class LanguageRemovalWizardPage extends CheckListWizardPage implements SavableWi
             this._localeHashes = new int[items.length];
 
             for (int i = 0; i <= items.length - 1; i++) {
-               if (items[i] != null && items[i].getChecked() && items[i].getCookie() instanceof Object) {
+               if (items[i] != null && items[i].getChecked() && items[i].getCookie() instanceof Locale) {
                   locale = (Locale)items[i].getCookie();
                   this._localeHashes[++checkedLocales] = locale.hashCode();
                }

@@ -5,9 +5,9 @@ import net.rim.device.api.util.IntVector;
 import net.rim.wica.runtime.metadata.internal.def.ComponentDefStruct;
 
 public class EncodingContext {
-   IntVector _defs = (IntVector)(new Object(10, 1));
-   IntVector _varData = (IntVector)(new Object(10, 1));
-   Vector _objectData = (Vector)(new Object());
+   IntVector _defs = new IntVector(10, 1);
+   IntVector _varData = new IntVector(10, 1);
+   Vector _objectData = new Vector();
 
    public ComponentDefStruct toComponentDefStruct() {
       ComponentDefStruct cds = new ComponentDefStruct();

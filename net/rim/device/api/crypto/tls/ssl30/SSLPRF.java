@@ -2,12 +2,14 @@ package net.rim.device.api.crypto.tls.ssl30;
 
 import net.rim.device.api.crypto.AbstractPseudoRandomSource;
 import net.rim.device.api.crypto.Digest;
+import net.rim.device.api.crypto.MD5Digest;
 import net.rim.device.api.crypto.PseudoRandomSource;
+import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.util.Arrays;
 
 final class SSLPRF extends AbstractPseudoRandomSource implements PseudoRandomSource {
    private Digest _SHA1;
-   private Digest _MD5 = (Digest)(new Object());
+   private Digest _MD5 = new MD5Digest();
    private byte[] _buffer;
    private byte[] _SHAOutput;
    private byte[] _charPrefix;
@@ -19,7 +21,7 @@ final class SSLPRF extends AbstractPseudoRandomSource implements PseudoRandomSou
    int _count;
 
    public SSLPRF(byte[] secret, byte[] serverRandom, byte[] clientRandom) {
-      this._SHA1 = (Digest)(new Object());
+      this._SHA1 = new SHA1Digest();
       this._buffer = new byte[16];
       this._SHAOutput = new byte[20];
       this._charPrefix = new byte[1];
@@ -65,7 +67,7 @@ final class SSLPRF extends AbstractPseudoRandomSource implements PseudoRandomSou
             }
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

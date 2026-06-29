@@ -2,7 +2,6 @@ package net.rim.device.apps.internal.bis.ui;
 
 import java.util.Hashtable;
 import net.rim.device.api.i18n.MessageFormat;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
@@ -55,48 +54,48 @@ public final class NewBBEmailAddressScreen extends UserSettingsScreen {
       this.setTitle(ApplicationResources.getString(11));
       String mailDomain = ClientSessionState.getInstance().getBrandingInfo().getHostedMailDomain();
       if (screenParams != null && screenParams.containsKey("suggestions")) {
-         this._userNameEdit = (BasicEditField)(new Object(null, null));
+         this._userNameEdit = new BasicEditField(null, null);
          this._userNameEdit.setChangeListener(new NewBBEmailAddressScreen$CustomUsernameEditFieldListener(this, null));
-         this._userNameTakenLabel = (LabelField)(new Object());
+         this._userNameTakenLabel = new LabelField();
          this.addContentField(this._userNameTakenLabel);
          String userName = (String)screenParams.get("userName");
-         String userNameTakenText = MessageFormat.format(ApplicationResources.getString(36), new Object[]{userName});
+         String userNameTakenText = MessageFormat.format(ApplicationResources.getString(36), new String[]{userName});
          this._userNameTakenLabel.setText(userNameTakenText);
-         this._suggestionRadioGroup = (RadioButtonGroup)(new Object());
-         this._suggestionChoices = new Object[3];
-         this._suggestionChoices[0] = (RadioButtonField)(new Object(null, this._suggestionRadioGroup, true));
-         this._suggestionChoices[1] = (RadioButtonField)(new Object(null, this._suggestionRadioGroup, false));
-         this._suggestionChoices[2] = (RadioButtonField)(new Object(null, this._suggestionRadioGroup, false));
-         this._customUserNameChoice = (RadioButtonField)(new Object(ApplicationResources.getString(65), this._suggestionRadioGroup, false));
+         this._suggestionRadioGroup = new RadioButtonGroup();
+         this._suggestionChoices = new RadioButtonField[3];
+         this._suggestionChoices[0] = new RadioButtonField(null, this._suggestionRadioGroup, true);
+         this._suggestionChoices[1] = new RadioButtonField(null, this._suggestionRadioGroup, false);
+         this._suggestionChoices[2] = new RadioButtonField(null, this._suggestionRadioGroup, false);
+         this._customUserNameChoice = new RadioButtonField(ApplicationResources.getString(65), this._suggestionRadioGroup, false);
          this.addContentField(this._suggestionChoices[0]);
          this.addContentField(this._suggestionChoices[1]);
          this.addContentField(this._suggestionChoices[2]);
          this.addContentField(this._customUserNameChoice);
          this.addContentField(this._userNameEdit, true);
-         this.addContentField(new BoldLabelField(((StringBuffer)(new Object("@"))).append(mailDomain).toString()));
-         String[] suggestions = (Object[])screenParams.get("suggestions");
+         this.addContentField(new BoldLabelField("@" + mailDomain));
+         String[] suggestions = (String[])screenParams.get("suggestions");
          this._suggestionChoices[0].setLabel(suggestions[0]);
          this._suggestionChoices[1].setLabel(suggestions[1]);
          this._suggestionChoices[2].setLabel(suggestions[2]);
       } else {
-         this.addContentField((Field)(new Object(ApplicationResources.getString(86))));
+         this.addContentField(new LabelField(ApplicationResources.getString(86)));
          this.addContentLineBreak();
          this.addContentField(new BoldLabelField(ApplicationResources.getString(13)));
          if (ClientSessionState.getInstance().getBrandingInfo().isForceUserIDEqualHostedAddress()) {
             String hostedAddress = ClientSessionState.getInstance().getUserInfo().getUsername();
-            this.addContentField((Field)(new Object(hostedAddress)));
+            this.addContentField(new LabelField(hostedAddress));
          } else {
-            this._userNameEdit = (BasicEditField)(new Object(null, null));
+            this._userNameEdit = new BasicEditField(null, null);
             this.addContentField(this._userNameEdit, true);
          }
 
-         this.addContentField(new BoldLabelField(((StringBuffer)(new Object("@"))).append(mailDomain).toString()));
+         this.addContentField(new BoldLabelField("@" + mailDomain));
       }
 
       if (ClientSessionState.getInstance().isAutoAuth()) {
          this.addContentLineBreak();
-         this._passwordEdit = (PasswordEditField)(new Object(null, null));
-         this._passwordConfirmEdit = (PasswordEditField)(new Object(null, null));
+         this._passwordEdit = new PasswordEditField(null, null);
+         this._passwordConfirmEdit = new PasswordEditField(null, null);
          this.addContentField(new BoldLabelField(ApplicationResources.getString(14)));
          this.addContentField(this._passwordEdit, true);
          this.addContentField(new InputHintLabelField(ApplicationResources.getString(21)));
@@ -105,15 +104,15 @@ public final class NewBBEmailAddressScreen extends UserSettingsScreen {
          this.addContentField(this._passwordConfirmEdit, true);
          this.addContentLineBreak();
          this.addContentField(new BoldLabelField(ApplicationResources.getString(250)));
-         this._secretQuestions = (ObjectChoiceField)(new Object(null, ClientSessionState.getInstance().getSecretQuestions()));
+         this._secretQuestions = new ObjectChoiceField(null, ClientSessionState.getInstance().getSecretQuestions());
          this.addContentField(this._secretQuestions, true);
          this._secretQuestions.setChangeListener(new NewBBEmailAddressScreen$CustomSecretQuestionFieldListener(this, null));
-         this.addContentField((Field)(new Object(ApplicationResources.getString(253))));
+         this.addContentField(new LabelField(ApplicationResources.getString(253)));
          this.addContentLineBreak();
          this._customLabel = new BoldLabelField(ApplicationResources.getString(251));
          this.addContentField(this._customLabel);
-         this._customQuestion = (BasicEditField)(new Object(null, null));
-         this._customQuestionFrame = (FrameLayout)(new Object());
+         this._customQuestion = new BasicEditField(null, null);
+         this._customQuestionFrame = new FrameLayout();
          this._customQuestionFrame.add(this._customQuestion);
          this._customQuestionFrame.setBorder(0, 4, 0, 4);
          this._customQuestionFrame.setMargin(0, 0, 10, 0);
@@ -124,7 +123,7 @@ public final class NewBBEmailAddressScreen extends UserSettingsScreen {
          }
 
          this.addContentField(new BoldLabelField(ApplicationResources.getString(252)));
-         this._secretAnswer = (BasicEditField)(new Object(null, null));
+         this._secretAnswer = new BasicEditField(null, null);
          this.addContentField(this._secretAnswer, true);
       }
 
@@ -188,11 +187,7 @@ public final class NewBBEmailAddressScreen extends UserSettingsScreen {
             return false;
          }
 
-         hostedAddress = ((StringBuffer)(new Object()))
-            .append(hostedAddress)
-            .append("@")
-            .append(ClientSessionState.getInstance().getBrandingInfo().getHostedMailDomain())
-            .toString();
+         hostedAddress = hostedAddress + "@" + ClientSessionState.getInstance().getBrandingInfo().getHostedMailDomain();
       }
 
       inputMap.put("userName", hostedAddress);
@@ -228,7 +223,7 @@ public final class NewBBEmailAddressScreen extends UserSettingsScreen {
             return false;
          }
 
-         inputMap.put("questionId", new Object(question.getId()));
+         inputMap.put("questionId", new Integer(question.getId()));
       }
 
       return true;

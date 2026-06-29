@@ -13,8 +13,8 @@ public final class AddressBookDataRepository extends IRepository implements Cust
    private AddressBookReader _reader;
    private CustomWordsRepository _repository;
    private CustomWordsRepository _freqRepository;
-   private ExtendedCurrentVariant _tempVariant = (ExtendedCurrentVariant)(new Object(15));
-   private ResultContainer _resContainer = (ResultContainer)(new Object());
+   private ExtendedCurrentVariant _tempVariant = new ExtendedCurrentVariant(15);
+   private ResultContainer _resContainer = new ResultContainer();
    private static final int MAX_SPLIT_NESTING_LEVEL = 3;
    private static final int DEFAULT_FRQ = 25000;
    private static final int MAX_FRQ = 64000;
@@ -229,8 +229,8 @@ public final class AddressBookDataRepository extends IRepository implements Cust
             this._reader = null;
             this._repository = null;
             this._freqRepository = null;
-            this._tempVariant = (ExtendedCurrentVariant)(new Object(15));
-            this._resContainer = (ResultContainer)(new Object());
+            this._tempVariant = new ExtendedCurrentVariant(15);
+            this._resContainer = new ResultContainer();
       }
    }
 

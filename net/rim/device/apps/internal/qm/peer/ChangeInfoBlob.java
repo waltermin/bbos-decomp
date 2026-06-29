@@ -35,7 +35,7 @@ final class ChangeInfoBlob extends PeerDataBlob {
 
    @Override
    public final void pickle(DataBuffer db) {
-      DataBuffer db2 = (DataBuffer)(new Object());
+      DataBuffer db2 = new DataBuffer();
       this.addStringToDataBuffer(db2, 1, this._contactId);
       this.addStringToDataBuffer(db2, 2, this._contactName);
       this.addStringToDataBuffer(db2, 3, this._oldPin);

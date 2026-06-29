@@ -4,7 +4,6 @@ import net.rim.device.api.system.EncodedImage;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Font;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.CheckboxField;
@@ -46,7 +45,7 @@ public final class AuthenticationDialog extends PopupDialog implements FieldChan
    public AuthenticationDialog(
       String username, String domain, String password, String serviceName, String serviceDetails, boolean isProxy, int mode, long style
    ) {
-      super((Manager)(new Object()), style);
+      super(new DialogFieldManager(), style);
       this._username = username;
       this._domain = domain;
       this._password = password;
@@ -54,7 +53,7 @@ public final class AuthenticationDialog extends PopupDialog implements FieldChan
    }
 
    private final void populateDialog(String serviceName, String serviceDetails, boolean isProxy, int mode) {
-      RichTextField promptField = (RichTextField)(new Object(RuntimeResources.getString(86), 45035996273704960L));
+      RichTextField promptField = new RichTextField(RuntimeResources.getString(86), 45035996273704960L);
       this._dfm.setMessage(promptField);
       this._serviceMessage = !isProxy ? serviceName : RuntimeResources.getString(88, serviceName);
       if (serviceDetails != null) {
@@ -64,41 +63,41 @@ public final class AuthenticationDialog extends PopupDialog implements FieldChan
       } else {
          EncodedImage image = ThemeManager.getActiveTheme().getImage("lock_screen_icon");
          if (image != null) {
-            BitmapField imageField = (BitmapField)(new Object());
+            BitmapField imageField = new BitmapField();
             imageField.setImage(image);
             this._dfm.setIcon(imageField);
          }
       }
 
-      this._serviceField = (RichTextField)(new Object(this._serviceMessage, 45036047880421376L));
+      this._serviceField = new RichTextField(this._serviceMessage, 45036047880421376L);
       this._dfm.addCustomField(this._serviceField);
       if (serviceDetails != null) {
-         this._detailedServiceMessage = ((StringBuffer)(new Object())).append(this._serviceMessage).append('\n').append(serviceDetails).toString();
+         this._detailedServiceMessage = this._serviceMessage + '\n' + serviceDetails;
          this._offsets = new int[]{0, this._serviceMessage.length(), this._detailedServiceMessage.length()};
          Font currentFont = this._serviceField.getFont();
-         this._fonts = new Object[]{currentFont, currentFont.derive(currentFont.getStyle(), (int)(currentFont.getHeight() * 4604480259023595110L))};
+         this._fonts = new Font[]{currentFont, currentFont.derive(currentFont.getStyle(), (int)(currentFont.getHeight() * 4604480259023595110L))};
          this._attributes = new byte[]{0, 1};
       }
 
       int verticalIndent = this.getFont().getHeight() / 3;
-      this._usernameField = (EditField)(new Object(CommonResource.getString(10026), this._username == null ? "" : this._username));
+      this._usernameField = new EditField(CommonResource.getString(10026), this._username == null ? "" : this._username);
       this._usernameField.setMargin(verticalIndent, 0, 0, 0);
       this._dfm.addCustomField(this._usernameField);
       if (mode == 2 || this._domain != null) {
-         this._domainField = (EditField)(new Object(CommonResource.getString(10032), this._domain));
+         this._domainField = new EditField(CommonResource.getString(10032), this._domain);
          this._dfm.addCustomField(this._domainField);
       }
 
-      this._passwordField = (PasswordEditField)(new Object(CommonResource.getString(10027), this._password == null ? "" : this._password));
+      this._passwordField = new PasswordEditField(CommonResource.getString(10027), this._password == null ? "" : this._password);
       this._dfm.addCustomField(this._passwordField);
-      this._checkBoxField = (CheckboxField)(new Object(RuntimeResources.getString(87), false, 1073741824));
+      this._checkBoxField = new CheckboxField(RuntimeResources.getString(87), false, 1073741824);
       this._checkBoxField.setMargin(verticalIndent, 0, 0, 0);
       this._dfm.addCustomField(this._checkBoxField);
-      this._okButton = (ButtonField)(new Object(CommonResource.getString(100)));
+      this._okButton = new ButtonField(CommonResource.getString(100));
       this._okButton.setChangeListener(this);
-      this._cancelButton = (ButtonField)(new Object(CommonResource.getString(19)));
+      this._cancelButton = new ButtonField(CommonResource.getString(19));
       this._cancelButton.setChangeListener(this);
-      HorizontalFieldManager manager = (HorizontalFieldManager)(new Object(12884901888L));
+      HorizontalFieldManager manager = new HorizontalFieldManager(12884901888L);
       manager.add(this._okButton);
       manager.add(this._cancelButton);
       this._dfm.addCustomField(manager);

@@ -6,7 +6,7 @@ import net.rim.device.api.system.EventLogger;
 import net.rim.device.cldc.io.daemon.ProtocolDaemon;
 
 final class DefaultSendThread$SendThreadCollector extends Thread {
-   private Vector _packetQueue = (Vector)(new Object());
+   private Vector _packetQueue = new Vector();
    private static DefaultSendThread$SendThreadCollector _collector;
    private static final long REGISTRY_NAME = -32340375862732252L;
    private static final long GUID = -5359313744971625388L;
@@ -188,7 +188,7 @@ final class DefaultSendThread$SendThreadCollector extends Thread {
       // 12f: getfield net/rim/device/apps/api/transmission/BaseConnectionThread._connection Ljavax/microedition/io/DatagramConnection;
       // 132: bipush 0
       // 133: invokeinterface javax/microedition/io/DatagramConnection.newDatagram (I)Ljavax/microedition/io/Datagram; 2
-      // 138: checkcast java/lang/Object
+      // 138: checkcast net/rim/device/api/io/DatagramBase
       // 13b: astore 3
       // 13c: aload 3
       // 13d: aload 5
@@ -240,20 +240,20 @@ final class DefaultSendThread$SendThreadCollector extends Thread {
       // 194: invokevirtual net/rim/device/apps/api/transmission/Packet.getContextObject ()Ljava/lang/Object;
       // 197: astore 2
       // 198: aload 2
-      // 199: instanceof java/lang/Object
+      // 199: instanceof net/rim/device/apps/api/framework/model/ContextObject
       // 19c: ifne 1a2
       // 19f: goto 20e
       // 1a2: aload 2
       // 1a3: ldc2_w -7981905408958106750
       // 1a6: invokestatic net/rim/device/apps/api/framework/model/ContextObject.get (Ljava/lang/Object;J)Ljava/lang/Object;
-      // 1a9: checkcast java/lang/Object
+      // 1a9: checkcast net/rim/device/api/io/DatagramAddressBase
       // 1ac: astore 10
       // 1ae: aload 10
       // 1b0: ifnonnull 1cd
       // 1b3: aload 2
       // 1b4: ldc2_w -5971550291443523639
       // 1b7: invokestatic net/rim/device/apps/api/framework/model/ContextObject.get (Ljava/lang/Object;J)Ljava/lang/Object;
-      // 1ba: checkcast java/lang/Object
+      // 1ba: checkcast java/lang/String
       // 1bd: astore 11
       // 1bf: aload 11
       // 1c1: ifnull 1d3
@@ -266,16 +266,16 @@ final class DefaultSendThread$SendThreadCollector extends Thread {
       // 1d0: invokevirtual net/rim/device/api/io/DatagramBase.setAddressBase (Lnet/rim/device/api/io/DatagramAddressBase;)V
       // 1d3: aload 3
       // 1d4: dup
-      // 1d5: instanceof java/lang/Object
+      // 1d5: instanceof net/rim/device/cldc/io/gme/GMEDatagram
       // 1d8: ifne 1df
       // 1db: pop
       // 1dc: goto 1f2
-      // 1df: checkcast java/lang/Object
+      // 1df: checkcast net/rim/device/cldc/io/gme/GMEDatagram
       // 1e2: aload 2
       // 1e3: ldc2_w -7050660451800027507
       // 1e6: invokestatic net/rim/device/apps/api/framework/model/ContextObject.get (Ljava/lang/Object;J)Ljava/lang/Object;
-      // 1e9: checkcast [Ljava/lang/Object;
-      // 1ec: checkcast [Ljava/lang/Object;
+      // 1e9: checkcast [Lnet/rim/device/api/servicebook/ServiceRecord;
+      // 1ec: checkcast [Lnet/rim/device/api/servicebook/ServiceRecord;
       // 1ef: invokevirtual net/rim/device/cldc/io/gme/GMEDatagram.setServiceRecordOverride ([Lnet/rim/device/api/servicebook/ServiceRecord;)V
       // 1f2: aload 2
       // 1f3: bipush 75
@@ -288,17 +288,17 @@ final class DefaultSendThread$SendThreadCollector extends Thread {
       // 202: aload 2
       // 203: ldc2_w -6151522474633543992
       // 206: invokestatic net/rim/device/apps/api/framework/model/ContextObject.get (Ljava/lang/Object;J)Ljava/lang/Object;
-      // 209: checkcast java/lang/Object
+      // 209: checkcast java/lang/String
       // 20c: astore 7
       // 20e: aload 8
       // 210: getfield net/rim/device/apps/api/transmission/BaseConnectionThread._connection Ljavax/microedition/io/DatagramConnection;
       // 213: dup
-      // 214: instanceof java/lang/Object
+      // 214: instanceof net/rim/device/api/io/DatagramConnectionBase
       // 217: ifne 21e
       // 21a: pop
       // 21b: goto 23d
-      // 21e: checkcast java/lang/Object
-      // 221: checkcast java/lang/Object
+      // 21e: checkcast net/rim/device/api/io/DatagramConnectionBase
+      // 221: checkcast net/rim/device/api/io/DatagramConnectionBase
       // 224: aload 3
       // 225: invokevirtual net/rim/device/api/io/DatagramConnectionBase.allocateDatagramId (Ljavax/microedition/io/Datagram;)I
       // 228: istore 6

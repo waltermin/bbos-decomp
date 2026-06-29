@@ -9,6 +9,7 @@ import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.internal.browser.resources.BrowserResources;
+import net.rim.device.internal.ui.component.HorizontalSpacerField;
 
 public class DescriptorField extends VerticalFieldManager {
    private Font _labelFont;
@@ -19,9 +20,9 @@ public class DescriptorField extends VerticalFieldManager {
    }
 
    protected void addNameValueField(ResourceBundleFamily nameResourceBundle, int nameResourceKey, String value) {
-      HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(1152921504606846976L));
-      LabelField nameField = (LabelField)(new Object(nameResourceBundle, nameResourceKey));
-      RichTextField valueField = (RichTextField)(new Object(value, 524288));
+      HorizontalFieldManager hfm = new HorizontalFieldManager(1152921504606846976L);
+      LabelField nameField = new LabelField(nameResourceBundle, nameResourceKey);
+      RichTextField valueField = new RichTextField(value, 524288);
       if (this._labelFont == null) {
          this.setLabelFont(nameField, valueField);
       }
@@ -37,17 +38,17 @@ public class DescriptorField extends VerticalFieldManager {
    }
 
    protected void addLongNameValueField(ResourceBundleFamily nameResourceBundle, int nameResourceKey, String value) {
-      EditField valueField = (EditField)(new Object(9007199254740992L));
+      EditField valueField = new EditField(9007199254740992L);
       valueField.setText(value);
-      LabelField labelField = (LabelField)(new Object(nameResourceBundle, nameResourceKey));
+      LabelField labelField = new LabelField(nameResourceBundle, nameResourceKey);
       if (this._labelFont == null) {
          this.setLabelFont(labelField, valueField);
       }
 
       labelField.setFont(this._labelFont);
       this.add(labelField);
-      HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(1152921504606846976L));
-      hfm.add((Field)(new Object(40)));
+      HorizontalFieldManager hfm = new HorizontalFieldManager(1152921504606846976L);
+      hfm.add(new HorizontalSpacerField(40));
       hfm.add(valueField);
       this.add(hfm);
    }

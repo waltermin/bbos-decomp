@@ -8,7 +8,7 @@ import net.rim.device.api.util.StringUtilities;
 import net.rim.device.cldc.io.daemon.ProtocolDaemon;
 
 public final class ServiceAuthentication {
-   private String[] _services = new Object[0];
+   private String[] _services = new String[0];
    private AuthThread[] _threads = new AuthThread[0];
    private static final long MAX_SESSION_TIME = 600000L;
    private static final int NO_KEY_FOR_SERVICE = 1313564025;

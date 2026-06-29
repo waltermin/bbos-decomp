@@ -8,6 +8,7 @@ import net.rim.device.api.itpolicy.ITPolicy;
 import net.rim.device.api.servicebook.ServiceIdentifier;
 import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.api.synchronization.MultiServiceSyncCollection;
+import net.rim.device.api.synchronization.OTASyncCapable;
 import net.rim.device.api.synchronization.OTASyncDefaultProvider;
 import net.rim.device.api.synchronization.OTASyncParametersProvider;
 import net.rim.device.api.synchronization.SerialSyncListener;
@@ -33,17 +34,17 @@ import net.rim.vm.Array;
 
 public final class SyncManagerImpl extends SyncManager implements SyncAgentListener, GlobalEventListener, SyncManagerStatistics {
    private SyncAgent _syncAgent;
-   private Vector _otaEnabledServiceIdentifiers = (Vector)(new Object(10));
-   private SyncCollection[] _serialCollections = new Object[0];
-   private LongHashtable _multiServiceSerialCollections = (LongHashtable)(new Object());
-   private Hashtable _otaAdapters = (Hashtable)(new Object());
-   private LongHashtable _multiServiceOtaAdapters = (LongHashtable)(new Object());
-   private Hashtable _multiServiceSyncCollections = (Hashtable)(new Object());
-   private SyncCollection[] _disallowedOTASync = new Object[0];
+   private Vector _otaEnabledServiceIdentifiers = new Vector(10);
+   private SyncCollection[] _serialCollections = new SyncCollection[0];
+   private LongHashtable _multiServiceSerialCollections = new LongHashtable();
+   private Hashtable _otaAdapters = new Hashtable();
+   private LongHashtable _multiServiceOtaAdapters = new LongHashtable();
+   private Hashtable _multiServiceSyncCollections = new Hashtable();
+   private SyncCollection[] _disallowedOTASync = new SyncCollection[0];
    private Object[] _syncEventListeners;
    private Object[] _serialSyncListeners;
    private boolean _serialSyncInProgress;
-   private ToIntHashtable _itPolicyTagMap = (ToIntHashtable)(new Object(4));
+   private ToIntHashtable _itPolicyTagMap = new ToIntHashtable(4);
    private static final byte USER_PREFERENCE = 0;
    private static final byte IT_POLICY = 1;
    private static final byte SYNC_AGENT = 2;
@@ -62,24 +63,24 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
    @Override
    public final synchronized void enableSynchronization(SyncCollection collection, boolean allowOTASync, int itPolicyTagForDisablingOTASync) {
       if (itPolicyTagForDisablingOTASync != 1 && !this._itPolicyTagMap.contains(itPolicyTagForDisablingOTASync)) {
-         if (collection instanceof Object) {
+         if (collection instanceof OTASyncCapable) {
             this._itPolicyTagMap.put(collection, itPolicyTagForDisablingOTASync);
          }
 
          this.enableSynchronization(collection, allowOTASync);
       } else {
-         throw new Object("IIPT");
+         throw new IllegalArgumentException("IIPT");
       }
    }
 
    @Override
    public final synchronized void enableSynchronization(SyncCollection collection, boolean allowOTASync) {
       if (!this.checkCollection(collection)) {
-         throw new Object("ISC");
+         throw new IllegalArgumentException("ISC");
       }
 
       if (!this.isSerialSynchronizationEnabled(collection) && !this.isOTASynchronizationEnabled(collection)) {
-         if (collection instanceof Object) {
+         if (collection instanceof OTASyncCapable) {
             if (!allowOTASync) {
                Arrays.add(this._disallowedOTASync, collection);
             } else if (this.enableOTASynchronization(collection)) {
@@ -88,12 +89,12 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
          }
 
          this.enableSerialSynchronization(collection);
-         if (collection instanceof Object) {
+         if (collection instanceof MultiServiceSyncCollection) {
             String databaseName = collection.getSyncName();
             this._multiServiceSyncCollections.put(databaseName, collection);
          }
       } else {
-         throw new Object("DSC");
+         throw new IllegalArgumentException("DSC");
       }
    }
 
@@ -126,14 +127,14 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
    }
 
    private final synchronized void allowOTASync(SyncCollection collection, boolean allow, byte requestType) {
-      if (!(collection instanceof Object)) {
+      if (!(collection instanceof OTASyncCapable)) {
          if (requestType == 0) {
-            throw new Object("NOSC");
+            throw new IllegalArgumentException("NOSC");
          }
       } else {
          boolean otaSyncEnabled = this.isOTASynchronizationEnabled(collection);
          if (!this.isSerialSynchronizationEnabled(collection) && !otaSyncEnabled) {
-            throw new Object("SNE");
+            throw new IllegalArgumentException("SNE");
          }
 
          if (allow) {
@@ -160,11 +161,11 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
 
    @Override
    public final synchronized boolean isOTASyncAvailable(SyncCollection collection, boolean checkUserPreference) {
-      return !(collection instanceof Object) ? false : this.isOTASyncAvailable(collection, checkUserPreference, null);
+      return !(collection instanceof OTASyncCapable) ? false : this.isOTASyncAvailable(collection, checkUserPreference, null);
    }
 
    private final boolean isOTASyncDisabledByDefault(SyncCollection collection) {
-      return !(collection instanceof Object) ? false : ((OTASyncDefaultProvider)collection).isDisabledByDefault();
+      return !(collection instanceof OTASyncDefaultProvider) ? false : ((OTASyncDefaultProvider)collection).isDisabledByDefault();
    }
 
    private final boolean isOTASyncAvailable(SyncCollection collection, boolean checkAllow, String[] otaSyncParameters) {
@@ -191,7 +192,7 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
       }
 
       if (otaSyncParameters == null) {
-         otaSyncParameters = new Object[3];
+         otaSyncParameters = new String[3];
       }
 
       if (!this.getOTASyncParameters(collection, otaSyncParameters)) {
@@ -266,7 +267,7 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
    }
 
    private final boolean isMatchingOTASyncCollection(SyncCollection syncCollection, String databaseName) {
-      if (syncCollection instanceof Object) {
+      if (syncCollection instanceof OTASyncCapable) {
          String syncName = null;
          if (syncCollection instanceof OTASyncParametersProvider) {
             syncName = ((OTASyncParametersProvider)syncCollection).getDatabaseName();
@@ -286,7 +287,7 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
       long sid = -1;
       String dataSourceName = null;
       String databaseName = null;
-      if (collection instanceof Object) {
+      if (collection instanceof MultiServiceSyncCollection) {
          sid = ((MultiServiceSyncCollection)collection).getSid();
       }
 
@@ -383,17 +384,17 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
       // 39: invokespecial net/rim/device/internal/synchronization/ota/api/SyncAgentUrl.<init> (JLjava/lang/String;Ljava/lang/String;)V
       // 3c: invokevirtual net/rim/device/internal/synchronization/ota/adapters/OTASyncCollectionAdapter.bind (Lnet/rim/device/internal/synchronization/ota/api/SyncAgentUrl;)V
       // 3f: aload 1
-      // 40: instanceof java/lang/Object
+      // 40: instanceof net/rim/device/api/synchronization/MultiServiceSyncCollection
       // 43: ifeq 7d
       // 46: aload 0
       // 47: getfield net/rim/device/internal/synchronization/SyncManagerImpl._multiServiceOtaAdapters Lnet/rim/device/api/util/LongHashtable;
       // 4a: lload 3
       // 4b: invokevirtual net/rim/device/api/util/LongHashtable.get (J)Ljava/lang/Object;
-      // 4e: checkcast java/lang/Object
+      // 4e: checkcast java/util/Hashtable
       // 51: astore 8
       // 53: aload 8
       // 55: ifnonnull 61
-      // 58: new java/lang/Object
+      // 58: new java/util/Hashtable
       // 5b: dup
       // 5c: invokespecial java/util/Hashtable.<init> ()V
       // 5f: astore 8
@@ -420,7 +421,7 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
       // 8d: bipush 1
       // 8e: ireturn
       // 8f: astore 7
-      // 91: new java/lang/Object
+      // 91: new java/lang/StringBuffer
       // 94: dup
       // 95: ldc_w "Cannot enable OTA sync for SID "
       // 98: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -447,13 +448,13 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
    }
 
    private final void enableSerialSynchronization(SyncCollection collection) {
-      if (!(collection instanceof Object)) {
+      if (!(collection instanceof MultiServiceSyncCollection)) {
          Arrays.add(this._serialCollections, collection);
       } else {
          long sid = ((MultiServiceSyncCollection)collection).getSid();
          Hashtable ht = (Hashtable)this._multiServiceSerialCollections.get(sid);
          if (ht == null) {
-            ht = (Hashtable)(new Object(1));
+            ht = new Hashtable(1);
          }
 
          ht.put(collection.getSyncName(), collection);
@@ -463,7 +464,7 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
 
    @Override
    public final synchronized void disableSynchronization(SyncCollection collection) {
-      if (collection instanceof Object) {
+      if (collection instanceof OTASyncCapable) {
          label19:
          try {
             this.disableOTASynchronization(collection);
@@ -479,7 +480,7 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
    private final void disableOTASynchronization(SyncCollection collection) {
       String syncName = collection.getSyncName();
       OTASyncCollectionAdapter adapter = null;
-      if (!(collection instanceof Object)) {
+      if (!(collection instanceof MultiServiceSyncCollection)) {
          adapter = (OTASyncCollectionAdapter)this._otaAdapters.get(syncName);
          if (adapter != null) {
             this._otaAdapters.remove(syncName);
@@ -496,7 +497,7 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
       }
 
       if (adapter == null) {
-         throw new Object("CNR");
+         throw new IllegalArgumentException("CNR");
       }
 
       this.disableOTASynchronization(adapter, false);
@@ -508,10 +509,10 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
 
    private final void disableSerialSynchronization(SyncCollection collection) {
       if (!this.doesSerialSyncCollectionExist(collection, true)) {
-         throw new Object("CNR");
+         throw new IllegalArgumentException("CNR");
       }
 
-      if (!(collection instanceof Object)) {
+      if (!(collection instanceof MultiServiceSyncCollection)) {
          Arrays.remove(this._serialCollections, collection);
       } else {
          long sid = ((MultiServiceSyncCollection)collection).getSid();
@@ -525,20 +526,19 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
 
    final boolean isOTASynchronizationEnabled(SyncCollection collection) {
       Hashtable otaAdapters = null;
-      Object var5;
-      if (!(collection instanceof Object)) {
-         var5 = this._otaAdapters;
+      if (!(collection instanceof MultiServiceSyncCollection)) {
+         otaAdapters = this._otaAdapters;
       } else {
          long sid = ((MultiServiceSyncCollection)collection).getSid();
-         var5 = this._multiServiceOtaAdapters.get(sid);
+         otaAdapters = (Hashtable)this._multiServiceOtaAdapters.get(sid);
       }
 
-      if (var5 == null) {
+      if (otaAdapters == null) {
          return false;
       }
 
       String syncCollectionName = collection.getSyncName();
-      return ((Hashtable)var5).get(syncCollectionName) != null;
+      return otaAdapters.get(syncCollectionName) != null;
    }
 
    private final boolean isSerialSynchronizationEnabled(SyncCollection collection) {
@@ -547,7 +547,7 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
 
    private final boolean doesSerialSyncCollectionExist(SyncCollection collection, boolean exactMatchOnly) {
       boolean result = false;
-      if (!(collection instanceof Object)) {
+      if (!(collection instanceof MultiServiceSyncCollection)) {
          String var8 = collection.getSyncName();
          int var9 = this._serialCollections.length;
 
@@ -585,7 +585,7 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
          if (!this.isPrimaryService(serviceIdentifier)) {
             Hashtable ht = (Hashtable)this._multiServiceSerialCollections.get(sid);
             if (ht == null) {
-               ht = (Hashtable)(new Object(0));
+               ht = new Hashtable(0);
             }
 
             Vector databaseNames = this._syncAgent.getDefaultSyncDataBasesFor(sid);
@@ -595,7 +595,7 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
                String databaseName = (String)e.nextElement();
                MultiServiceSyncCollection collection = (MultiServiceSyncCollection)ht.get(databaseName);
                if (collection != null) {
-                  if (collection instanceof Object && this.enableOTASynchronization(collection)) {
+                  if (collection instanceof OTASyncCapable && this.enableOTASynchronization(collection)) {
                      ht.remove(databaseName);
                   }
                } else {
@@ -609,19 +609,19 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
 
             for (int i = numSerialCollections - 1; i >= 0; i--) {
                SyncCollection syncCollection = serialCollections[i];
-               if (syncCollection instanceof Object && this.enableOTASynchronization(syncCollection)) {
+               if (syncCollection instanceof OTASyncCapable && this.enableOTASynchronization(syncCollection)) {
                   Arrays.remove(this._serialCollections, syncCollection);
                }
             }
 
             Hashtable associatedHt = (Hashtable)this._multiServiceSerialCollections.get(sid);
             if (associatedHt != null) {
-               Vector collectionNamesToRemove = (Vector)(new Object(associatedHt.size()));
+               Vector collectionNamesToRemove = new Vector(associatedHt.size());
                Enumeration e = associatedHt.elements();
 
                while (e.hasMoreElements()) {
                   MultiServiceSyncCollection msCollection = (MultiServiceSyncCollection)e.nextElement();
-                  if (msCollection instanceof Object && this.enableOTASynchronization(msCollection)) {
+                  if (msCollection instanceof OTASyncCapable && this.enableOTASynchronization(msCollection)) {
                      collectionNamesToRemove.addElement(msCollection.getSyncName());
                   }
                }
@@ -633,13 +633,13 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
 
             Hashtable noServiceHt = (Hashtable)this._multiServiceSerialCollections.get(-1);
             if (noServiceHt != null) {
-               Vector collectionNamesToRemove = (Vector)(new Object(noServiceHt.size()));
+               Vector collectionNamesToRemove = new Vector(noServiceHt.size());
                Enumeration e = noServiceHt.elements();
 
                while (e.hasMoreElements()) {
                   MultiServiceSyncCollection msCollection = (MultiServiceSyncCollection)e.nextElement();
                   msCollection.setSid(sid);
-                  if (msCollection instanceof Object && this.enableOTASynchronization(msCollection)) {
+                  if (msCollection instanceof OTASyncCapable && this.enableOTASynchronization(msCollection)) {
                      collectionNamesToRemove.addElement(msCollection.getSyncName());
                   }
                }
@@ -711,7 +711,7 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
    final synchronized SyncCollection[] getSyncCollections() {
       int numSyncCollections = this._serialCollections.length;
       int arraySize = numSyncCollections + this._otaAdapters.size();
-      SyncCollection[] syncCollections = new Object[arraySize];
+      SyncCollection[] syncCollections = new SyncCollection[arraySize];
       System.arraycopy(this._serialCollections, 0, syncCollections, 0, numSyncCollections);
       Enumeration adapters = this._otaAdapters.elements();
 
@@ -785,7 +785,7 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
    }
 
    final void collectionUpdatedSerially(SyncCollection syncCollection) {
-      if (syncCollection instanceof Object) {
+      if (syncCollection instanceof OTASyncCapable) {
          String databaseName = null;
          if (syncCollection instanceof OTASyncParametersProvider) {
             databaseName = ((OTASyncParametersProvider)syncCollection).getDatabaseName();
@@ -796,7 +796,7 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
          }
 
          long sid = -1;
-         if (syncCollection instanceof Object) {
+         if (syncCollection instanceof MultiServiceSyncCollection) {
             sid = ((MultiServiceSyncCollection)syncCollection).getSid();
          }
 
@@ -946,11 +946,11 @@ public final class SyncManagerImpl extends SyncManager implements SyncAgentListe
    public final SyncCollectionStatistics[] getSyncCollectionStatistics() {
       SyncCollection[] syncCollections = this.getSyncCollections();
       int syncCount = syncCollections.length;
-      SyncCollectionStatistics[] statsCollections = new Object[syncCount];
+      SyncCollectionStatistics[] statsCollections = new SyncCollectionStatistics[syncCount];
       int statsCount = 0;
 
       for (int i = 0; i < syncCount; i++) {
-         if (syncCollections[i] instanceof Object) {
+         if (syncCollections[i] instanceof SyncCollectionStatistics) {
             statsCollections[statsCount++] = (SyncCollectionStatistics)syncCollections[i];
          }
       }

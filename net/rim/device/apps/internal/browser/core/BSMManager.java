@@ -22,7 +22,7 @@ final class BSMManager implements RawDataCacheListener, BrowserConfigChangeListe
    private InputStream _connectInputStream;
    private boolean _bsmEnabled;
    private boolean _activated;
-   private DataBuffer[] _preparedConnectData = new Object[2];
+   private DataBuffer[] _preparedConnectData = new DataBuffer[2];
    private boolean _bsmSupported = true;
    private BrowserSession _browserSession;
    private int _failedConnectAttemptsCount;
@@ -133,7 +133,7 @@ final class BSMManager implements RawDataCacheListener, BrowserConfigChangeListe
       // 06b: istore 6
       // 06d: aload 2
       // 06e: invokeinterface javax/microedition/io/OutputConnection.openOutputStream ()Ljava/io/OutputStream; 1
-      // 073: checkcast java/lang/Object
+      // 073: checkcast net/rim/device/cldc/io/ippp/SocketOutputStream
       // 076: astore 7
       // 078: aload 7
       // 07a: bipush 0
@@ -278,11 +278,11 @@ final class BSMManager implements RawDataCacheListener, BrowserConfigChangeListe
       // 195: astore 10
       // 197: monitorenter
       // 198: aload 2
-      // 199: instanceof java/lang/Object
+      // 199: instanceof net/rim/device/cldc/io/ippp/StreamProtocol
       // 19c: ifeq 1aa
       // 19f: aload 0
       // 1a0: aload 2
-      // 1a1: checkcast java/lang/Object
+      // 1a1: checkcast net/rim/device/cldc/io/ippp/StreamProtocol
       // 1a4: invokevirtual net/rim/device/cldc/io/ippp/StreamProtocol.getSpecificUID ()Ljava/lang/String;
       // 1a7: putfield net/rim/device/apps/internal/browser/core/BSMManager._specificUID Ljava/lang/String;
       // 1aa: aload 0
@@ -337,11 +337,11 @@ final class BSMManager implements RawDataCacheListener, BrowserConfigChangeListe
       // 206: astore 9
       // 208: aload 9
       // 20a: dup
-      // 20b: instanceof java/lang/Object
+      // 20b: instanceof net/rim/device/cldc/io/ippp/SocketBaseIOException
       // 20e: ifne 215
       // 211: pop
       // 212: goto 225
-      // 215: checkcast java/lang/Object
+      // 215: checkcast net/rim/device/cldc/io/ippp/SocketBaseIOException
       // 218: invokevirtual net/rim/device/cldc/io/ippp/SocketBaseIOException.getExceptionCode ()I
       // 21b: bipush 127
       // 21d: if_icmpne 225
@@ -410,7 +410,7 @@ final class BSMManager implements RawDataCacheListener, BrowserConfigChangeListe
       // 297: invokevirtual net/rim/device/apps/internal/browser/core/BSMManager.isConnected ()Z
       // 29a: ifne 2a0
       // 29d: goto 483
-      // 2a0: new java/lang/Object
+      // 2a0: new java/lang/StringBuffer
       // 2a3: dup
       // 2a4: ldc_w "BSM: "
       // 2a7: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -509,7 +509,7 @@ final class BSMManager implements RawDataCacheListener, BrowserConfigChangeListe
       // 35f: invokevirtual net/rim/device/apps/internal/browser/core/BSMManager.isConnected ()Z
       // 362: ifne 368
       // 365: goto 483
-      // 368: new java/lang/Object
+      // 368: new java/lang/StringBuffer
       // 36b: dup
       // 36c: ldc_w "BSM: "
       // 36f: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -607,7 +607,7 @@ final class BSMManager implements RawDataCacheListener, BrowserConfigChangeListe
       // 426: aload 0
       // 427: invokevirtual net/rim/device/apps/internal/browser/core/BSMManager.isConnected ()Z
       // 42a: ifeq 480
-      // 42d: new java/lang/Object
+      // 42d: new java/lang/StringBuffer
       // 430: dup
       // 431: ldc_w "BSM: "
       // 434: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -718,7 +718,7 @@ final class BSMManager implements RawDataCacheListener, BrowserConfigChangeListe
       // 1e: return
       // 1f: aload 1
       // 20: invokeinterface javax/microedition/io/OutputConnection.openOutputStream ()Ljava/io/OutputStream; 1
-      // 25: checkcast java/lang/Object
+      // 25: checkcast net/rim/device/cldc/io/ippp/SocketOutputStream
       // 28: astore 3
       // 29: aload 3
       // 2a: bipush 0
@@ -823,7 +823,7 @@ final class BSMManager implements RawDataCacheListener, BrowserConfigChangeListe
       // 27: istore 4
       // 29: aload 3
       // 2a: invokeinterface javax/microedition/io/OutputConnection.openOutputStream ()Ljava/io/OutputStream; 1
-      // 2f: checkcast java/lang/Object
+      // 2f: checkcast net/rim/device/cldc/io/ippp/SocketOutputStream
       // 32: astore 5
       // 34: aload 5
       // 36: bipush 0
@@ -959,7 +959,7 @@ final class BSMManager implements RawDataCacheListener, BrowserConfigChangeListe
          case 1:
             if (!this.isConnected()) {
                return;
-            } else if (!(item instanceof Object)) {
+            } else if (!(item instanceof Vector)) {
                return;
             } else {
                synchronized (this) {
@@ -1018,11 +1018,11 @@ final class BSMManager implements RawDataCacheListener, BrowserConfigChangeListe
       BrowserConfigRecord configRecord = this._browserSession.getConfig();
       String uid = configRecord.getPropertyAsString(4);
       if (uid != null && (uid.length() > 1 || uid.length() == 1 && uid.charAt(0) != '-')) {
-         url = ((StringBuffer)(new Object())).append(url).append(";ConnectionUID=").append(uid).toString();
+         url = url + ";ConnectionUID=" + uid;
       }
 
       if (this._specificUID != null) {
-         url = ((StringBuffer)(new Object())).append(url).append(";SpecificUID=").append(this._specificUID).toString();
+         url = url + ";SpecificUID=" + this._specificUID;
       }
 
       try {
@@ -1036,7 +1036,7 @@ final class BSMManager implements RawDataCacheListener, BrowserConfigChangeListe
       Asserts.productionArgumentAssert(browserSession != null);
       this._browserSession = browserSession;
       this._bsmEnabled = this.isConfigBSMEnabled();
-      this._ackEntries = (Vector)(new Object());
+      this._ackEntries = new Vector();
    }
 
    private final void activate() {

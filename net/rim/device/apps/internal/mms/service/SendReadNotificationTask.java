@@ -51,8 +51,8 @@ final class SendReadNotificationTask implements MMSTask {
       } else if (this._message.getPayload().getSender() == null) {
          System.out.println("Can't send read report without sender info.");
       } else {
-         url = ((StringBuffer)(new Object())).append(url).append(MMSTransportServiceBook.getMMSCConnectionParameters()).toString();
-         System.out.println(((StringBuffer)(new Object("MMS ReadNotify sending to "))).append(url).toString());
+         url = url + MMSTransportServiceBook.getMMSCConnectionParameters();
+         System.out.println("MMS ReadNotify sending to " + url);
          int status = 0;
          int rc = 0;
          int wapIOExceptionError = 0;
@@ -69,7 +69,7 @@ final class SendReadNotificationTask implements MMSTask {
             }
          } catch (Throwable var9) {
             status = MMSUtilities.hasDataCoverage() ? 8191 : 131071;
-            if (e instanceof Object) {
+            if (e instanceof WAPIOException) {
                WAPIOException ioe = (WAPIOException)e;
                wapIOExceptionError = ioe.getError();
                wapIOExceptionAdditionalData = ioe.getAdditionalData();
@@ -85,7 +85,7 @@ final class SendReadNotificationTask implements MMSTask {
             this._attempts++;
             if (this._attempts < 5) {
                int delay = this.getRetryDelay();
-               System.out.println(((StringBuffer)(new Object("MMS ReadNotify failed. Retry in "))).append(delay).toString());
+               System.out.println("MMS ReadNotify failed. Retry in " + delay);
                BackgroundTaskThread.addTask(this, delay);
             } else {
                System.out.println("MMS ReadNotify failed. Exceeded retry maximum.");
@@ -99,7 +99,7 @@ final class SendReadNotificationTask implements MMSTask {
    }
 
    private final byte[] buildResponse() {
-      ContextObject context = (ContextObject)(new Object(74));
+      ContextObject context = new ContextObject(74);
       if (this._message.isSmartDialed()) {
          context.setFlag(117);
       }
@@ -110,7 +110,7 @@ final class SendReadNotificationTask implements MMSTask {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private final byte[] buildResponse_1_1(Object context) {
-      DataBuffer dataBuffer = (DataBuffer)(new Object());
+      DataBuffer dataBuffer = new DataBuffer();
 
       try {
          MMSProtocolDataUnitWriter writer = new MMSProtocolDataUnitWriter(dataBuffer, 135);
@@ -120,7 +120,7 @@ final class SendReadNotificationTask implements MMSTask {
          writer.writeTo(MMSUtilities.addressToString(this._message.getPayload().getSender(), context));
          writer.writeReadStatus(this._status);
       } catch (Throwable var5) {
-         System.out.println(((StringBuffer)(new Object("ReadNotify.buildResponse "))).append(e.toString()).toString());
+         System.out.println("ReadNotify.buildResponse " + e.toString());
          return dataBuffer.toArray();
       }
 
@@ -131,7 +131,7 @@ final class SendReadNotificationTask implements MMSTask {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private final byte[] buildResponse_1_0(Object context) {
       MMSPayloadModel payload = this._message.getPayload();
-      DataBuffer dataBuffer = (DataBuffer)(new Object());
+      DataBuffer dataBuffer = new DataBuffer();
 
       try {
          MMSProtocolDataUnitWriter writer = new MMSProtocolDataUnitWriter(dataBuffer, 128);
@@ -142,7 +142,7 @@ final class SendReadNotificationTask implements MMSTask {
             subject = "";
          }
 
-         subject = ((StringBuffer)(new Object())).append(MMSResources.getString(89)).append(subject).toString();
+         subject = MMSResources.getString(89) + subject;
          writer.writeSubject(subject);
          writer.writeFrom(context);
          writer.writeTo(MMSUtilities.addressToString(this._message.getPayload().getSender(), context));
@@ -151,7 +151,7 @@ final class SendReadNotificationTask implements MMSTask {
          writer.addAttachment(this.buildNotificationBody());
          writer.endContent();
       } catch (Throwable var7) {
-         System.out.println(((StringBuffer)(new Object("buildPDU "))).append(e.toString()).toString());
+         System.out.println("buildPDU " + e.toString());
          return dataBuffer.toArray();
       }
 
@@ -163,15 +163,15 @@ final class SendReadNotificationTask implements MMSTask {
    private final MMSAttachment buildNotificationBody() {
       String attachmentName = "read.txt";
       int attachmentType = 3;
-      SimpleDateFormat timeFormat = (SimpleDateFormat)(new Object(7));
-      SimpleDateFormat dateFormat = (SimpleDateFormat)(new Object(56));
+      SimpleDateFormat timeFormat = new SimpleDateFormat(7);
+      SimpleDateFormat dateFormat = new SimpleDateFormat(56);
       long readTime = System.currentTimeMillis();
       long sendTime = this._message.getPayload().getCreationDate();
-      String readDate = ((StringBuffer)(new Object())).append(dateFormat.formatLocal(readTime)).append(' ').append(timeFormat.formatLocal(readTime)).toString();
-      String sendDate = ((StringBuffer)(new Object())).append(dateFormat.formatLocal(sendTime)).append(' ').append(timeFormat.formatLocal(sendTime)).toString();
+      String readDate = dateFormat.formatLocal(readTime) + ' ' + timeFormat.formatLocal(readTime);
+      String sendDate = dateFormat.formatLocal(sendTime) + ' ' + timeFormat.formatLocal(sendTime);
       String statusString = MMSResources.getString(this._status == 128 ? 91 : 92);
       String template = MMSResources.getString(90);
-      String body = MessageFormat.format(template, new Object[]{sendDate, statusString, readDate});
+      String body = MessageFormat.format(template, new String[]{sendDate, statusString, readDate});
       boolean var18 = false /* VF: Semaphore variable */;
 
       String charset;

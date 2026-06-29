@@ -5,19 +5,19 @@ import net.rim.device.apps.internal.browser.common.UserAbortException;
 public final class Asserts {
    public static final void productionAssert(boolean value) {
       if (!value) {
-         throw new Object();
+         throw new RuntimeException();
       }
    }
 
    public static final void productionStateAssert(boolean value) {
       if (!value) {
-         throw new Object();
+         throw new IllegalStateException();
       }
    }
 
    public static final void productionArgumentAssert(boolean value) {
       if (!value) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

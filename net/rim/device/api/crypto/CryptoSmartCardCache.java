@@ -6,7 +6,7 @@ import net.rim.device.api.smartcard.SmartCardReader;
 import net.rim.device.api.system.ApplicationRegistry;
 
 final class CryptoSmartCardCache implements ReaderStatusListener {
-   private Hashtable _hashtable = (Hashtable)(new Object());
+   private Hashtable _hashtable = new Hashtable();
    private static final long ID = 2914118616967182961L;
    private static CryptoSmartCardCache _instance;
 
@@ -23,7 +23,7 @@ final class CryptoSmartCardCache implements ReaderStatusListener {
 
    final void setKeyStoreDataArray(SmartCardReader reader, CryptoSmartCardKeyStoreData[] data) {
       if (reader == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (!this._hashtable.containsKey(reader)) {

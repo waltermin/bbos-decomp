@@ -10,7 +10,7 @@ public class EMSKeyStoreLDAPCertificateHarvester extends KeyStoreLDAPCertificate
 
    public EMSKeyStoreLDAPCertificateHarvester(String emsEmailAddress, SecureEmailFactory secureEmailFactory, boolean isPINMessage) {
       super(secureEmailFactory, isPINMessage);
-      RecipientData emsRecipientData = (RecipientData)(new Object(null, 2, new Object[]{emsEmailAddress}, null));
+      RecipientData emsRecipientData = new RecipientData(null, 2, new String[]{emsEmailAddress}, null);
       this.queueRecipient(emsRecipientData);
    }
 

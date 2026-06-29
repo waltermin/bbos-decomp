@@ -16,8 +16,8 @@ final class NmrElement {
    }
 
    final void print() {
-      System.out.println(((StringBuffer)(new Object("Arfcn: "))).append(this.arfcn).toString());
-      System.out.println(((StringBuffer)(new Object("Bsic: "))).append(this.bsic).toString());
-      System.out.println(((StringBuffer)(new Object("RxLev: "))).append(this.rxLev).toString());
+      System.out.println("Arfcn: " + this.arfcn);
+      System.out.println("Bsic: " + this.bsic);
+      System.out.println("RxLev: " + this.rxLev);
    }
 }

@@ -16,7 +16,7 @@ final class MemoryCleanerApp extends UiApplication {
          OptionsProviderRegistration.registerOptionsProvider(provider);
          MemoryCleanerManager manager = MemoryCleanerManager.getInstance();
          manager.registerWithSyncManager();
-         _applicationDescriptor = (ApplicationDescriptor)(new Object(ApplicationDescriptor.currentApplicationDescriptor(), new Object[0]));
+         _applicationDescriptor = new ApplicationDescriptor(ApplicationDescriptor.currentApplicationDescriptor(), new String[0]);
          Proxy.getInstance().addGlobalEventListener(new MemoryCleanerApp$MemoryCleanerEventListener());
       } else {
          MemoryCleanerApp app = new MemoryCleanerApp();

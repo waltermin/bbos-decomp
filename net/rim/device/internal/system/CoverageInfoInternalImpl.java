@@ -147,7 +147,7 @@ public final class CoverageInfoInternalImpl extends CoverageInfoInternal impleme
       switch (coverageType) {
          case -1:
          case 3:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          case 1:
          case 2:
@@ -340,7 +340,7 @@ public final class CoverageInfoInternalImpl extends CoverageInfoInternal impleme
       int newTotalCoverage = this.getCoverage(RadioInfo.getSupportedWAFs(), true);
       if (newTotalCoverage != this._totalCoverage) {
          this._totalCoverage = newTotalCoverage;
-         Message msg = (Message)(new Object(9, 0, newTotalCoverage));
+         Message msg = new Message(9, 0, newTotalCoverage);
          ApplicationManagerInternal appManager = (ApplicationManagerInternal)ApplicationManager.getApplicationManager();
          appManager.postMessage(msg);
       }
@@ -408,7 +408,7 @@ public final class CoverageInfoInternalImpl extends CoverageInfoInternal impleme
    static {
       byte[] data = Branding.getData(13824);
       if (data != null) {
-         IIF_APN = (String)(new Object(data));
+         IIF_APN = new String(data);
       }
    }
 }

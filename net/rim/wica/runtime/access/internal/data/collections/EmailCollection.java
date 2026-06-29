@@ -68,7 +68,7 @@ public class EmailCollection extends StdCmpCollectionImpl {
          return null;
       }
 
-      Vector messages = (Vector)(new Object());
+      Vector messages = new Vector();
       this.getMessagesInFolder(_emailHierarchy.getInboxFolder(), messages);
       this.getMessagesInFolder(_emailHierarchy.getSentFolder(), messages);
       return messages;
@@ -100,7 +100,7 @@ public class EmailCollection extends StdCmpCollectionImpl {
 
    @Override
    public void loadItem(long dataHandle, Object item) {
-      if (item instanceof Object) {
+      if (item instanceof EmailMessageModel) {
          this.setObjectFieldValue(dataHandle, 0, ((ObjectFieldHandler)super._objectFieldHandlers.get(0)).getValue(item));
          this.setObjectFieldValue(dataHandle, 1, ((ObjectFieldHandler)super._objectFieldHandlers.get(1)).getValue(item));
          this.setObjectFieldValue(dataHandle, 2, ((ObjectFieldHandler)super._objectFieldHandlers.get(2)).getValue(item));
@@ -118,7 +118,7 @@ public class EmailCollection extends StdCmpCollectionImpl {
    public IntVector uidsInExternalDB() {
       Vector messages = this.getMessagesFromDB();
       if (messages != null && messages.size() > 0) {
-         IntVector uids = (IntVector)(new Object(messages.size()));
+         IntVector uids = new IntVector(messages.size());
 
          for (int i = messages.size() - 1; i >= 0; i--) {
             uids.addElement(((EmailMessageModel)messages.elementAt(i)).getCMIMEReferenceIdentifier());
@@ -167,9 +167,9 @@ public class EmailCollection extends StdCmpCollectionImpl {
 
    @Override
    public void resetCache() {
-      super._modifiedItems = (IntVector)(new Object(10, 5));
-      super._deletedItems = (IntVector)(new Object(10, 5));
-      super._loadedItems = (IntVector)(new Object(10, 5));
+      super._modifiedItems = new IntVector(10, 5);
+      super._deletedItems = new IntVector(10, 5);
+      super._loadedItems = new IntVector(10, 5);
    }
 
    private void setDataInModel(EmailMessageModel messageModel, int handle) {
@@ -199,7 +199,7 @@ public class EmailCollection extends StdCmpCollectionImpl {
 
       for (int i = l.size() - 1; i >= 0; i--) {
          Object element = l.getAt(i);
-         if (element instanceof Object) {
+         if (element instanceof EmailHeaderModel) {
             EmailHeaderModel model = (EmailHeaderModel)element;
             if (model.getHeaderType() == headerType) {
                messageModel.remove(model);
@@ -207,11 +207,10 @@ public class EmailCollection extends StdCmpCollectionImpl {
          }
       }
 
-      StringTokenizer st = (StringTokenizer)(new Object(fieldString, ";,"));
+      StringTokenizer st = new StringTokenizer(fieldString, ";,");
       if (st.hasMoreTokens()) {
-         String[] addr = new Object[2];
-         addr[1] = "";
-         ContextObject creationContext = (ContextObject)(new Object());
+         String[] addr = new String[]{null, ""};
+         ContextObject creationContext = new ContextObject();
 
          while (st.hasMoreTokens()) {
             addr[0] = st.nextToken();
@@ -231,35 +230,35 @@ public class EmailCollection extends StdCmpCollectionImpl {
 
    private void setBCCRecipientsInModel(long dataHandle, EmailMessageModel messageModel) {
       Object o = this.getObjectFieldValue(dataHandle, 6);
-      if (o instanceof Object) {
+      if (o instanceof String) {
          this.setHeaderFieldFromStringList(messageModel, (String)o, 2);
       }
    }
 
    private void setCCRecipientsInModel(long dataHandle, EmailMessageModel messageModel) {
       Object o = this.getObjectFieldValue(dataHandle, 5);
-      if (o instanceof Object) {
+      if (o instanceof String) {
          this.setHeaderFieldFromStringList(messageModel, (String)o, 1);
       }
    }
 
    private void setToRecipientsInModel(long dataHandle, EmailMessageModel messageModel) {
       Object o = this.getObjectFieldValue(dataHandle, 4);
-      if (o instanceof Object) {
+      if (o instanceof String) {
          this.setHeaderFieldFromStringList(messageModel, (String)o, 0);
       }
    }
 
    private void setReplyToInModel(long dataHandle, EmailMessageModel messageModel) {
       Object o = this.getObjectFieldValue(dataHandle, 3);
-      if (o instanceof Object) {
+      if (o instanceof String) {
          this.setHeaderFieldFromStringList(messageModel, (String)o, 5);
       }
    }
 
    private void setFromInModel(long dataHandle, EmailMessageModel messageModel) {
       Object o = this.getObjectFieldValue(dataHandle, 2);
-      if (o instanceof Object) {
+      if (o instanceof String) {
          this.setHeaderFieldFromStringList(messageModel, (String)o, 3);
       }
    }
@@ -290,7 +289,7 @@ public class EmailCollection extends StdCmpCollectionImpl {
 
       for (int i = 0; i < size; i++) {
          Object element = l.getAt(i);
-         if (element instanceof Object) {
+         if (element instanceof SubjectModel) {
             foundExistingSubject = true;
             SubjectModel subjectModel = (SubjectModel)element;
             if (subject == null) {
@@ -310,12 +309,12 @@ public class EmailCollection extends StdCmpCollectionImpl {
    @Override
    public Object getDBItemFromHandle(long dataHandle) {
       Object o = MessageLookups.get(-4420850319371185992L, this.getHandle(dataHandle));
-      return !(o instanceof Object) ? null : o;
+      return !(o instanceof EmailMessageModel) ? null : (EmailMessageModel)o;
    }
 
    @Override
    public void initFieldHandlers() {
-      super._objectFieldHandlers = (IntHashtable)(new Object(8));
+      super._objectFieldHandlers = new IntHashtable(8);
       super._objectFieldHandlers.put(0, new EmailCollection$SubjectHandler(null));
       super._objectFieldHandlers.put(1, new EmailCollection$ContentHandler(null));
       super._objectFieldHandlers.put(2, new EmailCollection$FromHandler(null));
@@ -323,7 +322,7 @@ public class EmailCollection extends StdCmpCollectionImpl {
       super._objectFieldHandlers.put(4, new EmailCollection$ToRecipientsHandler(null));
       super._objectFieldHandlers.put(5, new EmailCollection$CCRecipientsHandler(null));
       super._objectFieldHandlers.put(6, new EmailCollection$BCCRecipientsHandler(null));
-      super._intFieldHandlers = (IntHashtable)(new Object(4));
+      super._intFieldHandlers = new IntHashtable(4);
       super._intFieldHandlers.put(9, new EmailCollection$UIDHandler(null));
       super._intFieldHandlers.put(7, new EmailCollection$FolderHandler(null));
       super._intFieldHandlers.put(8, new EmailCollection$PriorityHandler(null));
@@ -366,21 +365,21 @@ public class EmailCollection extends StdCmpCollectionImpl {
       String result = "";
       if (emm != null) {
          boolean added = false;
-         String[] addrs = new Object[2];
+         String[] addrs = new String[2];
 
          for (int i = emm.size() - 1; i >= 0; i--) {
             Object element = emm.getAt(i);
-            if (element instanceof Object) {
+            if (element instanceof EmailHeaderModel) {
                EmailHeaderModel model = (EmailHeaderModel)element;
                if (model.getHeaderType() == fieldType) {
                   model.convert(model, addrs);
                   if (added) {
-                     result = ((StringBuffer)(new Object())).append(result).append(";").toString();
+                     result = result + ";";
                   } else {
                      added = true;
                   }
 
-                  result = ((StringBuffer)(new Object())).append(result).append(addrs[0]).toString();
+                  result = result + addrs[0];
                   if (getFirstOnly) {
                      return result;
                   }
@@ -403,7 +402,7 @@ public class EmailCollection extends StdCmpCollectionImpl {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 

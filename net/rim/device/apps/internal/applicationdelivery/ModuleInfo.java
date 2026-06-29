@@ -41,7 +41,7 @@ class ModuleInfo implements Persistable {
          ApplicationDeliveryEventLogger.logEvent(1229800824, 0);
       } else {
          if (this._cachedSequences == null) {
-            this._cachedSequences = (IntHashtable)(new Object());
+            this._cachedSequences = new IntHashtable();
          }
 
          this._cachedSequences
@@ -77,10 +77,10 @@ class ModuleInfo implements Persistable {
       if (this.haveEntireModule() && this._cachedSequences != null) {
          int flashNeeded = this._moduleSize + 131072;
          if (ApplicationDeliveryTransmissionService._debugMode) {
-            System.out.println(((StringBuffer)(new Object("APPD - Saving module with size: "))).append(this._moduleSize).toString());
-            System.out.println(((StringBuffer)(new Object("APPD - Flash needed: "))).append(flashNeeded).toString());
+            System.out.println("APPD - Saving module with size: " + this._moduleSize);
+            System.out.println("APPD - Flash needed: " + flashNeeded);
             int flashFree = Memory.getFlashFree();
-            System.out.println(((StringBuffer)(new Object("APPD - Available Flash: "))).append(flashFree).toString());
+            System.out.println("APPD - Available Flash: " + flashFree);
          }
 
          if (!this.ensureAvailableFlash(flashNeeded)) {
@@ -105,7 +105,7 @@ class ModuleInfo implements Persistable {
             int moduleHandle = CodeModuleManager.createNewModule(this._moduleSize, previousSequenceData, previousSequenceData.length);
             if (ApplicationDeliveryTransmissionService._debugMode) {
                int flashFree = Memory.getFlashFree();
-               System.out.println(((StringBuffer)(new Object("APPD - Flash free after creating module: "))).append(flashFree).toString());
+               System.out.println("APPD - Flash free after creating module: " + flashFree);
             }
 
             if (moduleHandle == 0) {

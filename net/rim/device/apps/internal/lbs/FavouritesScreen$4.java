@@ -1,5 +1,7 @@
 package net.rim.device.apps.internal.lbs;
 
+import net.rim.device.apps.api.messaging.util.SimpleFolder;
+
 final class FavouritesScreen$4 extends LBSMenuItem {
    private final FavouritesScreen this$0;
 
@@ -11,7 +13,7 @@ final class FavouritesScreen$4 extends LBSMenuItem {
    @Override
    public final boolean isVisible() {
       Object folder = this.this$0.getFocusedItem();
-      return folder instanceof Object && folder != this.this$0._root || this.this$0.getFocusedItem() instanceof LocationSyncable;
+      return folder instanceof SimpleFolder && folder != this.this$0._root || this.this$0.getFocusedItem() instanceof LocationSyncable;
    }
 
    @Override

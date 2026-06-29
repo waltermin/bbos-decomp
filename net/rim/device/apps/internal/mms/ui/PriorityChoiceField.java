@@ -26,7 +26,7 @@ final class PriorityChoiceField extends ObjectChoiceField {
    }
 
    private static final Object[] getPriorityLabels() {
-      return new Object[]{MMSResources.getString(61), MMSResources.getString(58), MMSResources.getString(60)};
+      return new String[]{MMSResources.getString(61), MMSResources.getString(58), MMSResources.getString(60)};
    }
 
    private static final int getInitialIndex(String str) {

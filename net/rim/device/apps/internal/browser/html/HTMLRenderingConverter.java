@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.browser.html;
 
 import net.rim.device.api.browser.field.BrowserContent;
+import net.rim.device.api.browser.field.RenderingException;
 import net.rim.device.api.browser.field.RenderingOptions;
 import net.rim.device.api.browser.plugin.BrowserContentProvider;
 import net.rim.device.api.browser.plugin.BrowserContentProviderContext;
@@ -32,7 +33,7 @@ public final class HTMLRenderingConverter extends BrowserContentProvider impleme
    }
 
    @Override
-   public final BrowserContent getBrowserContent(BrowserContentProviderContext param1) {
+   public final BrowserContent getBrowserContent(BrowserContentProviderContext param1) throws RenderingException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -110,7 +111,7 @@ public final class HTMLRenderingConverter extends BrowserContentProvider impleme
       // 08f: ifnull 096
       // 092: aload 3
       // 093: ifnonnull 0a1
-      // 096: new java/lang/Object
+      // 096: new net/rim/device/api/browser/field/RenderingException
       // 099: dup
       // 09a: ldc_w "InputConnection or RenderingOptions is not set"
       // 09d: invokespecial net/rim/device/api/browser/field/RenderingException.<init> (Ljava/lang/String;)V
@@ -126,7 +127,7 @@ public final class HTMLRenderingConverter extends BrowserContentProvider impleme
       // 0b2: i2l
       // 0b3: lcmp
       // 0b4: iflt 0bf
-      // 0b7: new java/lang/Object
+      // 0b7: new net/rim/device/api/browser/field/RenderingException
       // 0ba: dup
       // 0bb: invokespecial net/rim/device/api/browser/field/RenderingException.<init> ()V
       // 0be: athrow
@@ -171,11 +172,11 @@ public final class HTMLRenderingConverter extends BrowserContentProvider impleme
       // 119: bipush 1
       // 11a: aaload
       // 11b: dup
-      // 11c: instanceof java/lang/Object
+      // 11c: instanceof java/io/InputStream
       // 11f: ifne 126
       // 122: pop
       // 123: goto 12e
-      // 126: checkcast java/lang/Object
+      // 126: checkcast java/io/InputStream
       // 129: astore 5
       // 12b: bipush 1
       // 12c: istore 16
@@ -195,11 +196,11 @@ public final class HTMLRenderingConverter extends BrowserContentProvider impleme
       // 14e: ifnonnull 16b
       // 151: aload 4
       // 153: dup
-      // 154: instanceof java/lang/Object
+      // 154: instanceof javax/microedition/io/HttpConnection
       // 157: ifne 15e
       // 15a: pop
       // 15b: goto 16b
-      // 15e: checkcast java/lang/Object
+      // 15e: checkcast javax/microedition/io/HttpConnection
       // 161: ldc_w "Accept-Charset"
       // 164: invokeinterface javax/microedition/io/HttpConnection.getHeaderField (Ljava/lang/String;)Ljava/lang/String; 2
       // 169: astore 18
@@ -281,7 +282,7 @@ public final class HTMLRenderingConverter extends BrowserContentProvider impleme
       // 213: astore 5
       // 215: goto 227
       // 218: astore 15
-      // 21a: new java/lang/Object
+      // 21a: new net/rim/device/api/browser/field/RenderingException
       // 21d: dup
       // 21e: aload 15
       // 220: invokevirtual java/lang/Throwable.getMessage ()Ljava/lang/String;
@@ -305,21 +306,21 @@ public final class HTMLRenderingConverter extends BrowserContentProvider impleme
       // 244: invokevirtual net/rim/device/apps/internal/browser/page/Renderer.processData ()Lnet/rim/device/api/browser/field/BrowserContent;
       // 247: areturn
       // 248: astore 15
-      // 24a: new java/lang/Object
+      // 24a: new net/rim/device/api/browser/field/RenderingException
       // 24d: dup
       // 24e: aload 15
       // 250: invokevirtual java/io/IOException.toString ()Ljava/lang/String;
       // 253: invokespecial net/rim/device/api/browser/field/RenderingException.<init> (Ljava/lang/String;)V
       // 256: athrow
       // 257: astore 15
-      // 259: new java/lang/Object
+      // 259: new net/rim/device/api/browser/field/RenderingException
       // 25c: dup
       // 25d: aload 15
       // 25f: invokevirtual java/lang/IllegalArgumentException.toString ()Ljava/lang/String;
       // 262: invokespecial net/rim/device/api/browser/field/RenderingException.<init> (Ljava/lang/String;)V
       // 265: athrow
       // 266: astore 15
-      // 268: new java/lang/Object
+      // 268: new net/rim/device/api/browser/field/RenderingException
       // 26b: dup
       // 26c: aload 15
       // 26e: invokevirtual net/rim/device/apps/api/utility/serialization/SerializationException.toString ()Ljava/lang/String;

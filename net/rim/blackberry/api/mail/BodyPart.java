@@ -75,7 +75,7 @@ public class BodyPart implements Part {
 
    @Override
    public String[] getHeader(String header) {
-      return header.equals(CONTENT_TYPE) ? new Object[]{this.getContentType()} : new Object[0];
+      return header.equals(CONTENT_TYPE) ? new String[]{this.getContentType()} : new String[0];
    }
 
    @Override
@@ -85,7 +85,7 @@ public class BodyPart implements Part {
 
    @Override
    public Enumeration getAllHeaders() {
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       v.addElement(this.getContentType());
       return v.elements();
    }

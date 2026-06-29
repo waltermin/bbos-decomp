@@ -3,7 +3,6 @@ package net.rim.device.apps.internal.docview.gui;
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
-import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.XYRect;
@@ -133,11 +132,11 @@ final class DocViewTextDisplayField extends DocViewDisplayField {
    protected final DocViewTextDisplayField$CacheTextOffsetInfo getCurrentTextOffset() {
       Field fieldWithFocus = this.getFieldWithFocus();
       RichTextField textField = null;
-      if (!(fieldWithFocus instanceof Object)) {
+      if (!(fieldWithFocus instanceof RichTextField)) {
          if (fieldWithFocus != null && fieldWithFocus.getIndex() > 0) {
             for (int i = fieldWithFocus.getIndex() - 1; i >= 0; i--) {
                Field fld = this.getField(i);
-               if (fld instanceof Object && ((RichTextField)fld).getTextLength() > 0) {
+               if (fld instanceof RichTextField && ((RichTextField)fld).getTextLength() > 0) {
                   textField = (RichTextField)fld;
                   break;
                }
@@ -166,7 +165,7 @@ final class DocViewTextDisplayField extends DocViewDisplayField {
 
    private final void createSkippedContentVector() {
       if (this._skippedDataFields == null) {
-         this._skippedDataFields = (SimpleSortingVector)(new Object());
+         this._skippedDataFields = new SimpleSortingVector();
          this._skippedDataFields.setSortComparator(new DocViewTextDisplayField$2(this));
          this._skippedDataFields.setSort(true);
       }
@@ -174,7 +173,7 @@ final class DocViewTextDisplayField extends DocViewDisplayField {
 
    private final void createEmbeddedContentVector() {
       if (this._embeddedStatusFields == null) {
-         this._embeddedStatusFields = (SimpleSortingVector)(new Object());
+         this._embeddedStatusFields = new SimpleSortingVector();
          this._embeddedStatusFields.setSortComparator(new DocViewTextDisplayField$3(this));
          this._embeddedStatusFields.setSort(true);
       }
@@ -191,7 +190,7 @@ final class DocViewTextDisplayField extends DocViewDisplayField {
    }
 
    private final void processNewDataImpl(int currentBlockIndex) {
-      Runnable[] updates = new Object[0];
+      Runnable[] updates = new Runnable[0];
       this.doProcessNewData(currentBlockIndex, updates);
       int size = updates.length;
       if (size > 0) {
@@ -281,7 +280,7 @@ final class DocViewTextDisplayField extends DocViewDisplayField {
             DocViewTextDisplayField$EmbeddedStatusField fld = (DocViewTextDisplayField$EmbeddedStatusField)this._embeddedStatusFields.elementAt(i);
             if (domID.compareTo(fld._domID) == 0) {
                fld._isDummy = true;
-               if (fld._previewField instanceof Object) {
+               if (fld._previewField instanceof BitmapField) {
                   ((BitmapField)fld._previewField).setBitmap(Bitmap.getPredefinedBitmap(1));
                   return;
                }
@@ -311,7 +310,7 @@ final class DocViewTextDisplayField extends DocViewDisplayField {
                : (DocViewTrackChange)crtRegion;
             if (!trackChange.identical(this._crtTrackChange)) {
                if (this._currentTrackChangeDescription == null) {
-                  this._currentTrackChangeDescription = (StringBuffer)(new Object(32));
+                  this._currentTrackChangeDescription = new StringBuffer(32);
                }
 
                this._currentTrackChangeDescription.setLength(0);
@@ -356,7 +355,7 @@ final class DocViewTextDisplayField extends DocViewDisplayField {
          return "";
       }
 
-      StringBuffer retValue = (StringBuffer)(new Object(" "));
+      StringBuffer retValue = new StringBuffer(" ");
       retValue.append(EmailResources.getString(82));
       int bVal = this.getMoreAvailableBytes();
       if (bVal > 0) {
@@ -520,7 +519,7 @@ final class DocViewTextDisplayField extends DocViewDisplayField {
                      pgBrk._imageDomID
                   );
                   if (renderedScreen != null) {
-                     if (renderedScreen instanceof Object) {
+                     if (renderedScreen instanceof ModelScreen) {
                         ((ModelScreen)renderedScreen).go(true);
                         return;
                      }
@@ -624,7 +623,7 @@ final class DocViewTextDisplayField extends DocViewDisplayField {
             return true;
          }
 
-         if (lastSelectedCtrl instanceof Object && ((Field)lastSelectedCtrl).getManager() != null) {
+         if (lastSelectedCtrl instanceof Field && ((Field)lastSelectedCtrl).getManager() != null) {
             ((Field)lastSelectedCtrl).setFocus();
          }
 
@@ -936,7 +935,7 @@ final class DocViewTextDisplayField extends DocViewDisplayField {
          }
 
          if (!skippedFieldSelected && this.isMoreAvailable()) {
-            moreVerb = (VerbMenuItem)(new Object(new DocViewGuiVerb(9, 344064, EmailResources.getResourceBundle(), 80, this), 0));
+            moreVerb = new VerbMenuItem(new DocViewGuiVerb(9, 344064, EmailResources.getResourceBundle(), 80, this), 0);
             menu.add(moreVerb);
          }
 
@@ -953,33 +952,32 @@ final class DocViewTextDisplayField extends DocViewDisplayField {
                      break;
                   case 0:
                   default:
-                     menu.add((MenuItem)(new Object(new DocViewGuiVerb(29, 65552, DocViewDisplayField._resources, 26, this), 0)));
+                     menu.add(new VerbMenuItem(new DocViewGuiVerb(29, 65552, DocViewDisplayField._resources, 26, this), 0));
                      break;
                   case 1:
-                     menu.add((MenuItem)(new Object(new DocViewGuiVerb(30, 65552, DocViewDisplayField._resources, 50, this), 0)));
+                     menu.add(new VerbMenuItem(new DocViewGuiVerb(30, 65552, DocViewDisplayField._resources, 50, this), 0));
                }
 
                if (pgNext != null && ObjectUtilities.objEqual(pgNext._pageDisplay, field)) {
                   VerbMenuItem addon = null;
-                  Object var20;
                   if (pgNext._isDummy) {
                      DocViewGuiVerb guiVerb = new DocViewGuiVerb(22, 131088, DocViewDisplayField._resources, 8, this);
                      guiVerb.setCookie(pgNext);
-                     var20 = new Object(guiVerb, 0);
+                     addon = new VerbMenuItem(guiVerb, 0);
                   } else {
-                     var20 = new Object(new DocViewGuiVerb(10, 131088, DocViewDisplayField._resources, 9, this), 0);
+                     addon = new VerbMenuItem(new DocViewGuiVerb(10, 131088, DocViewDisplayField._resources, 9, this), 0);
                   }
 
-                  if (var20 != null) {
-                     menu.add((MenuItem)var20);
-                     menu.setDefault((MenuItem)var20);
+                  if (addon != null) {
+                     menu.add(addon);
+                     menu.setDefault(addon);
                   }
                }
             }
          }
 
          if (this.allowMultipleItems() && this.hasRenderedSlides()) {
-            menu.add((MenuItem)(new Object(new DocViewGuiVerb(31, 65552, DocViewDisplayField._resources, this._isPresentation ? 23 : 113, this), 0)));
+            menu.add(new VerbMenuItem(new DocViewGuiVerb(31, 65552, DocViewDisplayField._resources, this._isPresentation ? 23 : 113, this), 0));
          }
       }
 
@@ -994,16 +992,16 @@ final class DocViewTextDisplayField extends DocViewDisplayField {
             switch (this._latestLinkType) {
                case 0:
                   if (this._bookmarkInfoMap.containsKey(this._latestTextLinkBookmarkTarget)) {
-                     jumpVerb = (VerbMenuItem)(new Object(new DocViewGuiVerb(10, 131088, DocViewDisplayField._resources, 34, this), 0));
+                     jumpVerb = new VerbMenuItem(new DocViewGuiVerb(10, 131088, DocViewDisplayField._resources, 34, this), 0);
                   } else {
                      byte status = this.getTargetBlockStatus(this._latestTextLinkChunkHint);
                      if (status != 3) {
                         if (status != 2) {
-                           jumpVerb = (VerbMenuItem)(new Object(new DocViewGuiVerb(10, 131088, DocViewDisplayField._resources, 34, this), 0));
+                           jumpVerb = new VerbMenuItem(new DocViewGuiVerb(10, 131088, DocViewDisplayField._resources, 34, this), 0);
                         } else if (this.isMoreSupported()) {
                            DocViewGuiVerb guiVerb = new DocViewGuiVerb(23, 131088, DocViewDisplayField._resources, 8, this);
                            guiVerb.setCookie(new DocViewDisplayField$JumpDescriptor(this._latestTextLinkChunkHint, this._latestTextLinkBookmarkTarget));
-                           jumpVerb = (VerbMenuItem)(new Object(guiVerb, 0));
+                           jumpVerb = new VerbMenuItem(guiVerb, 0);
                         }
                      }
                   }
@@ -1012,7 +1010,7 @@ final class DocViewTextDisplayField extends DocViewDisplayField {
                default:
                   DocViewGuiVerb vb = (DocViewGuiVerb)this.getVerbForEmbeddedObject(this._latestEmbLinkInfo, this._latestLinkType);
                   if (vb != null) {
-                     jumpVerb = (VerbMenuItem)(new Object(vb, 0));
+                     jumpVerb = new VerbMenuItem(vb, 0);
                   }
             }
 
@@ -1025,8 +1023,8 @@ final class DocViewTextDisplayField extends DocViewDisplayField {
 
       if (nextSkippedBlockToRetrieve != -1 && this.isMoreSupported()) {
          DocViewGuiVerb guiVerb = new DocViewGuiVerb(23, 344064, EmailResources.getResourceBundle(), 80, this);
-         guiVerb.setCookie(new Object(nextSkippedBlockToRetrieve + 1));
-         VerbMenuItem skippedMoreVerb = (VerbMenuItem)(new Object(guiVerb, 0));
+         guiVerb.setCookie(new Integer(nextSkippedBlockToRetrieve + 1));
+         VerbMenuItem skippedMoreVerb = new VerbMenuItem(guiVerb, 0);
          menu.add(skippedMoreVerb);
          menu.setDefault(skippedMoreVerb);
       }
@@ -1036,13 +1034,13 @@ final class DocViewTextDisplayField extends DocViewDisplayField {
          if (field instanceof CustomBitmapField) {
             DocViewGuiVerb vb = (DocViewGuiVerb)this.getVerbForEmbeddedObject(((CustomBitmapField)field)._domID, 6);
             if (vb != null) {
-               jumpVerb = (VerbMenuItem)(new Object(vb, 0));
+               jumpVerb = new VerbMenuItem(vb, 0);
             }
          } else {
             DocViewTextDisplayField$EmbeddedStatusField embField = (DocViewTextDisplayField$EmbeddedStatusField)field;
             DocViewGuiVerb vb = (DocViewGuiVerb)this.getVerbForEmbeddedObject(embField._domID, embField._type);
             if (vb != null) {
-               jumpVerb = (VerbMenuItem)(new Object(vb, 0));
+               jumpVerb = new VerbMenuItem(vb, 0);
             }
          }
 
@@ -1222,7 +1220,7 @@ final class DocViewTextDisplayField extends DocViewDisplayField {
    private final String getServerChunkList(boolean fromCrtOffset) {
       if (super._fullDocState && this.getMoreAvailableBytes() > 0) {
          try {
-            StringBuffer retValue = (StringBuffer)(new Object());
+            StringBuffer retValue = new StringBuffer();
             int startIndex = fromCrtOffset ? this.getFieldWithFocus().getIndex() : 0;
             if (this._skippedDataFields != null) {
                int size = this._skippedDataFields.size();
@@ -1275,7 +1273,7 @@ final class DocViewTextDisplayField extends DocViewDisplayField {
 
             label87:
             for (int iIndex = field.getIndex() + 1; iIndex < fieldsCount; iIndex++) {
-               if (this.getField(iIndex) instanceof Object) {
+               if (this.getField(iIndex) instanceof RichTextField) {
                   for (int i = this._FullDocFieldVector.length - 1; i >= 0; i--) {
                      DocViewTextDisplayField$TextControlInfo cInfo = this._FullDocFieldVector[i];
                      if (cInfo._richTextField != null && cInfo._richTextField.getIndex() == iIndex) {
@@ -1313,11 +1311,9 @@ final class DocViewTextDisplayField extends DocViewDisplayField {
 
          if (findAction != -1) {
             if (SimpleChoiceDialog.askYesNoQuestion(
-               ((StringBuffer)(new Object()))
-                  .append(DocViewDisplayField._resources.getString(46))
-                  .append(' ')
-                  .append(findAction == 1 ? DocViewDisplayField._resources.getString(69) : DocViewDisplayField._resources.getString(72))
-                  .toString()
+               DocViewDisplayField._resources.getString(46)
+                  + ' '
+                  + (findAction == 1 ? DocViewDisplayField._resources.getString(69) : DocViewDisplayField._resources.getString(72))
             )) {
                super._descriptor.reset();
                super._descriptor._commandCode = "FIND";
@@ -1412,7 +1408,7 @@ final class DocViewTextDisplayField extends DocViewDisplayField {
    }
 
    private final String getPageBreakDescription(int pageIndex, int totalPages, boolean addExtraOne) {
-      StringBuffer retValue = (StringBuffer)(new Object());
+      StringBuffer retValue = new StringBuffer();
       retValue.append(' ');
       retValue.append(DocViewDisplayField._resources.getString(this._isPresentation ? 90 : 44));
       retValue.append(' ');
@@ -1436,7 +1432,7 @@ final class DocViewTextDisplayField extends DocViewDisplayField {
       if (arbitraryDomID != null) {
          String[] actualDomIDs = arbitraryDomIDs;
          if (actualDomIDs == null) {
-            actualDomIDs = new Object[]{arbitraryDomID};
+            actualDomIDs = new String[]{arbitraryDomID};
          }
 
          if (this._playScreen != null) {
@@ -1727,7 +1723,7 @@ final class DocViewTextDisplayField extends DocViewDisplayField {
          targetControl._richTextField.setFocus();
          targetControl._richTextField.setCursorPosition(offsetToSet);
          if (moveToTopOfScreen) {
-            XYRect focusRect = (XYRect)(new Object());
+            XYRect focusRect = new XYRect();
             targetControl._richTextField.getFocusRect(focusRect);
             int top = 0;
             Manager mgr = this.getActiveManager(super._fullDocState);
@@ -1746,7 +1742,7 @@ final class DocViewTextDisplayField extends DocViewDisplayField {
                      targetControl._richTextField.getManager().getHeight() - targetControl._richTextField.getTop() - focusRect.y
                   )
                );
-            focusRect = null;
+            Object var12 = null;
          }
       } finally {
          break label42;
@@ -1768,7 +1764,7 @@ final class DocViewTextDisplayField extends DocViewDisplayField {
    private final int getCurrentActiveTextControlIndex(boolean fullDocMode) {
       Manager activeManager = (Manager)(fullDocMode ? this : super._docViewTocManager);
       Field fieldWithFocus = activeManager.getFieldWithFocus();
-      if (fieldWithFocus instanceof Object) {
+      if (fieldWithFocus instanceof RichTextField) {
          DocViewTextDisplayField$TextControlInfo[] activeVector = fullDocMode ? this._FullDocFieldVector : this._TOCFieldVector;
          int iFields = activeVector.length;
          if (iFields > 0) {

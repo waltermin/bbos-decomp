@@ -21,7 +21,7 @@ public final class ListColumnPainter {
    private static Tag TAG_LINE1_LEVEL1 = Tag.create("messagelist-line1-level1");
 
    public ListColumnPainter(int numberOfColumns) {
-      this._columnInformation = (ColumnInformation)(new Object(numberOfColumns));
+      this._columnInformation = new ColumnInformation(numberOfColumns);
       this._numberOfColumns = numberOfColumns;
       this.updateColumnInformation();
    }

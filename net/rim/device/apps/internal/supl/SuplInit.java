@@ -59,7 +59,7 @@ final class SuplInit extends UlpMessage {
    @Override
    final void print() {
       System.out.println("SUPL INIT: ");
-      System.out.println(((StringBuffer)(new Object("Optionals: "))).append(this.optionals).toString());
+      System.out.println("Optionals: " + this.optionals);
       this.posMethod.print();
       if ((this.optionals & 16) == 16) {
          this.notification.print();

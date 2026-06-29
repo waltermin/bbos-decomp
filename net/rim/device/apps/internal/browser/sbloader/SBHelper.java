@@ -1,6 +1,6 @@
 package net.rim.device.apps.internal.browser.sbloader;
 
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 import net.rim.device.api.browser.util.UserAgent;
 import net.rim.device.api.compress.GZIPInputStream;
 import net.rim.device.api.hrt.HRUtils;
@@ -22,6 +22,8 @@ import net.rim.vm.EventLog;
 import org.apache.oro.text.regexp.Pattern;
 import org.apache.oro.text.regexp.PatternCompiler;
 import org.apache.oro.text.regexp.PatternMatcher;
+import org.apache.oro.text.regexp.Perl5Compiler;
+import org.apache.oro.text.regexp.Perl5Matcher;
 
 public class SBHelper {
    public static int BUFFER_SIZE = 1024;
@@ -40,12 +42,12 @@ public class SBHelper {
 
       String name = DeviceInfo.getDeviceName();
       if (name != null && InternalServices.getFormFactor() != 10) {
-         name = ((StringBuffer)(new Object("Rim"))).append(name).toString();
+         name = "Rim" + name;
       }
 
       byte[] data = Branding.getData(12292);
       if (data != null) {
-         name = ((StringBuffer)(new Object())).append(name).append('/').append((String)(new Object(data))).toString();
+         name = name + '/' + new String(data);
       }
 
       _deviceName = name;
@@ -92,8 +94,8 @@ public class SBHelper {
    }
 
    static String[] split(String s, char delim) {
-      String[] elements = new Object[0];
-      StringBuffer sb = (StringBuffer)(new Object(""));
+      String[] elements = new String[0];
+      StringBuffer sb = new StringBuffer("");
       int tokencount = 0;
       int len = s.length();
 
@@ -107,7 +109,7 @@ public class SBHelper {
             }
 
             elements[tokencount] = sb.toString();
-            sb = (StringBuffer)(new Object(""));
+            sb = new StringBuffer("");
             tokencount++;
          }
       }
@@ -116,7 +118,7 @@ public class SBHelper {
    }
 
    static String[] split(String s, String delim) {
-      String[] elements = new Object[0];
+      String[] elements = new String[0];
       int tokencount = 0;
       int curPos = 0;
       boolean done = false;
@@ -176,10 +178,10 @@ public class SBHelper {
                int mnc = SIMCard.getMNCFromIMSI(imsi);
 
                for (int i = 0; i < 10; i++) {
-                  StringBuffer hnpcStr = (StringBuffer)(new Object(""));
+                  StringBuffer hnpcStr = new StringBuffer("");
                   hnpcStr.append(mcc);
                   if (mnc < 10) {
-                     hnpcStr.append(((StringBuffer)(new Object("0"))).append(mnc % 100).toString());
+                     hnpcStr.append("0" + mnc % 100);
                   } else {
                      hnpcStr.append(mnc % 100);
                   }
@@ -194,7 +196,7 @@ public class SBHelper {
                   }
 
                   homenpc = Long.parseLong(hnpcStr.toString(), 16);
-                  sbRecordBuff = this.getCompressedResourceAsDataBuffer(((StringBuffer)(new Object())).append(homenpc).append(".sbr.gz").toString());
+                  sbRecordBuff = this.getCompressedResourceAsDataBuffer(homenpc + ".sbr.gz");
                   if (sbRecordBuff != null) {
                      return sbRecordBuff;
                   }
@@ -206,7 +208,7 @@ public class SBHelper {
       }
 
       if (sbRecordBuff == null) {
-         sbRecordBuff = this.getCompressedResourceAsDataBuffer(((StringBuffer)(new Object())).append(homenpc).append(".sbr.gz").toString());
+         sbRecordBuff = this.getCompressedResourceAsDataBuffer(homenpc + ".sbr.gz");
       }
 
       return sbRecordBuff;
@@ -230,7 +232,7 @@ public class SBHelper {
                   var22 = true;
                   efgid = readEFAsString(9);
                   efspn = readEFAsString(11);
-                  efgid = ((StringBuffer)(new Object())).append(efgid).append(efspn).toString();
+                  efgid = efgid + efspn;
                   var22 = false;
                } finally {
                   if (var22) {
@@ -238,11 +240,7 @@ public class SBHelper {
                         1907089860548946979L,
                         System.currentTimeMillis(),
                         (byte)2,
-                        ((StringBuffer)(new Object("SBHelper___ERROR:injectServiceBooks()")))
-                           .append(homeNpc)
-                           .append(".sbr.gz EFGID could not be read")
-                           .toString()
-                           .getBytes()
+                        ("SBHelper___ERROR:injectServiceBooks()" + homeNpc + ".sbr.gz EFGID could not be read").getBytes()
                      );
                      break label175;
                   }
@@ -253,32 +251,25 @@ public class SBHelper {
             try {
                DataBuffer sbRecordBuff = this.readHomeNpcData(homeNpc);
                EventLog.logEvent(
-                  1907089860548946979L,
-                  System.currentTimeMillis(),
-                  (byte)4,
-                  ((StringBuffer)(new Object("SBHelper___INFO:injectServiceBooks()HOMENPC="))).append(homeNpc).toString().getBytes()
+                  1907089860548946979L, System.currentTimeMillis(), (byte)4, ("SBHelper___INFO:injectServiceBooks()HOMENPC=" + homeNpc).getBytes()
                );
                if (sbRecordBuff == null) {
                   EventLog.logEvent(
                      1907089860548946979L,
                      System.currentTimeMillis(),
                      (byte)2,
-                     ((StringBuffer)(new Object("SBHelper___ERROR:injectServiceBooks()"))).append(homeNpc).append(".sbr.gz not found").toString().getBytes()
+                     ("SBHelper___ERROR:injectServiceBooks()" + homeNpc + ".sbr.gz not found").getBytes()
                   );
                   return;
                }
 
-               String sbRecord = (String)(new Object(sbRecordBuff.getArray()));
+               String sbRecord = new String(sbRecordBuff.getArray());
                if (sbRecord == null) {
                   EventLog.logEvent(
                      1907089860548946979L,
                      System.currentTimeMillis(),
                      (byte)2,
-                     ((StringBuffer)(new Object("SBHelper___ERROR:injectServiceBooks()")))
-                        .append(homeNpc)
-                        .append(".sbr.gz does not have any data.")
-                        .toString()
-                        .getBytes()
+                     ("SBHelper___ERROR:injectServiceBooks()" + homeNpc + ".sbr.gz does not have any data.").getBytes()
                   );
                   return;
                }
@@ -311,10 +302,7 @@ public class SBHelper {
                }
             } catch (Throwable var23) {
                EventLog.logEvent(
-                  1907089860548946979L,
-                  System.currentTimeMillis(),
-                  (byte)2,
-                  ((StringBuffer)(new Object("SBHelper:ERROR__injectServiceBooks()"))).append(e.getMessage()).toString().getBytes()
+                  1907089860548946979L, System.currentTimeMillis(), (byte)2, ("SBHelper:ERROR__injectServiceBooks()" + e.getMessage()).getBytes()
                );
                e.printStackTrace();
                break label172;
@@ -325,19 +313,10 @@ public class SBHelper {
                1907089860548946979L,
                System.currentTimeMillis(),
                (byte)4,
-               ((StringBuffer)(new Object("SBHelper:INFO__Took ")))
-                  .append((end - start) / 1000)
-                  .append("seconds to inject service books.")
-                  .toString()
-                  .getBytes()
+               ("SBHelper:INFO__Took " + (end - start) / 1000 + "seconds to inject service books.").getBytes()
             );
          } catch (Throwable var25) {
-            EventLog.logEvent(
-               1907089860548946979L,
-               System.currentTimeMillis(),
-               (byte)2,
-               ((StringBuffer)(new Object("SBHelper___ERROR:injectServiceBooks()"))).append(ex.getMessage()).toString().getBytes()
-            );
+            EventLog.logEvent(1907089860548946979L, System.currentTimeMillis(), (byte)2, ("SBHelper___ERROR:injectServiceBooks()" + ex.getMessage()).getBytes());
             return;
          }
       }
@@ -358,11 +337,11 @@ public class SBHelper {
             String osRegex = regexTokens[i];
             String appRegex = regexTokens[i + 1];
             String devRegex = regexTokens[i + 2];
-            PatternCompiler compiler = (PatternCompiler)(new Object());
+            PatternCompiler compiler = new Perl5Compiler();
             Pattern os_pattern = compiler.compile(osRegex);
             Pattern app_pattern = compiler.compile(appRegex);
             Pattern dev_pattern = compiler.compile(devRegex);
-            PatternMatcher matcher = (PatternMatcher)(new Object());
+            PatternMatcher matcher = new Perl5Matcher();
             if (matcher.matches(getDeviceName(), dev_pattern)) {
                dev_matches = true;
             }
@@ -384,14 +363,7 @@ public class SBHelper {
             1907089860548946979L,
             System.currentTimeMillis(),
             (byte)2,
-            ((StringBuffer)(new Object("SBHelper:ERROR__isServiceBookAllowed() book =")))
-               .append(book)
-               .append(" ; regex = ")
-               .append(regex)
-               .append(":")
-               .append(ex.getMessage())
-               .toString()
-               .getBytes()
+            ("SBHelper:ERROR__isServiceBookAllowed() book =" + book + " ; regex = " + regex + ":" + ex.getMessage()).getBytes()
          );
          ex.printStackTrace();
          return false;
@@ -406,7 +378,7 @@ public class SBHelper {
       if (!this.isOptedOut(info.getSapSoldTo())) {
          String[] regexes = split(info.getRegex(), ';');
          String[] books = split(info.getBooks(), ';');
-         StringBuffer sbinfoSB = (StringBuffer)(new Object(((StringBuffer)(new Object("SBHelper___INFO: SAP_SOLD_TO="))).append(info.getSapSoldTo()).toString()));
+         StringBuffer sbinfoSB = new StringBuffer("SBHelper___INFO: SAP_SOLD_TO=" + info.getSapSoldTo());
          ServiceBook sb = ServiceBook.getSB();
          int size = books.length;
 
@@ -414,8 +386,8 @@ public class SBHelper {
             String servicebook = books[i];
             String regex = regexes[i];
             if (this.isServiceBookAllowed(servicebook, regex)) {
-               DataBuffer databuf = (DataBuffer)(new Object());
-               StringBuffer filePath = (StringBuffer)(new Object("out/sbooks"));
+               DataBuffer databuf = new DataBuffer();
+               StringBuffer filePath = new StringBuffer("out/sbooks");
                if (info.getRegion().equalsIgnoreCase("NA")) {
                   filePath.append("/naprv");
                } else if (info.getRegion().equalsIgnoreCase("EU")) {
@@ -424,7 +396,7 @@ public class SBHelper {
                   filePath.append("/apprv");
                }
 
-               filePath.append(((StringBuffer)(new Object("/"))).append(servicebook).append(SB_EXTENSION).toString());
+               filePath.append("/" + servicebook + SB_EXTENSION);
                byte[] bytes = this.getResourceAsBytes(filePath.toString());
                if (bytes != null) {
                   databuf.setData(bytes, 0, bytes.length);
@@ -441,7 +413,7 @@ public class SBHelper {
                         recs[j].setType(0);
                         if (sb.addRecord(recs[j]) != null) {
                            sb.commit();
-                           sbinfoSB.append(((StringBuffer)(new Object(" ;book="))).append(servicebook).toString());
+                           sbinfoSB.append(" ;book=" + servicebook);
                         }
                      }
                   } catch (Throwable var17) {
@@ -449,12 +421,7 @@ public class SBHelper {
                         1907089860548946979L,
                         System.currentTimeMillis(),
                         (byte)2,
-                        ((StringBuffer)(new Object("SBHelper:ERROR__injectServiceBooks(sbinfo)")))
-                           .append(e.getMessage())
-                           .append(" for ")
-                           .append(servicebook)
-                           .toString()
-                           .getBytes()
+                        ("SBHelper:ERROR__injectServiceBooks(sbinfo)" + e.getMessage() + " for " + servicebook).getBytes()
                      );
                      e.printStackTrace();
                      continue;
@@ -464,10 +431,7 @@ public class SBHelper {
          }
 
          EventLog.logEvent(
-            1907089860548946979L,
-            System.currentTimeMillis(),
-            (byte)4,
-            ((StringBuffer)(new Object("SBHelper:INFO__injectServiceBooks(sbinfo)"))).append(sbinfoSB.toString()).toString().getBytes()
+            1907089860548946979L, System.currentTimeMillis(), (byte)4, ("SBHelper:INFO__injectServiceBooks(sbinfo)" + sbinfoSB.toString()).getBytes()
          );
       }
    }
@@ -476,7 +440,7 @@ public class SBHelper {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private boolean isOptedOut(String sapSoldTo) {
       try {
-         String contents = (String)(new Object(this.getCompressedResourceAsDataBuffer("optout.txt.gz").toArray()));
+         String contents = new String(this.getCompressedResourceAsDataBuffer("optout.txt.gz").toArray());
          if (contents != null) {
             String[] optoutCarriers = split(contents, ';');
             int len = optoutCarriers.length;
@@ -519,9 +483,9 @@ public class SBHelper {
             label168:
             try {
                var28 = true;
-               gin = (GZIPInputStream)(new Object((InputStream)(new Object(resource))));
+               gin = new GZIPInputStream(new ByteArrayInputStream(resource));
                byte[] e = IOUtilities.streamToBytes(gin);
-               db = (DataBuffer)(new Object());
+               db = new DataBuffer();
                db.setData(e, 0, e.length);
                var28 = false;
                break label170;
@@ -579,7 +543,7 @@ public class SBHelper {
    }
 
    private static String readEFAsString(int id) {
-      StringBuffer sb = (StringBuffer)(new Object(""));
+      StringBuffer sb = new StringBuffer("");
       byte[] bytes = readEF(id);
       if (bytes == null) {
          return sb.toString();

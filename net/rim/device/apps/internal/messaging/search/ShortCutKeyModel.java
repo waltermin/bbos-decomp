@@ -52,7 +52,7 @@ final class ShortCutKeyModel implements PersistableRIMModel, FieldProvider, Pain
       MessageSearchImpl search = (MessageSearchImpl)MessageSearch.getInstance();
       String shortcutPrompt = MessageFormat.format(SearchResources.getString(7), new Object[]{UiInternal.BUNDLE.getString(7)});
       return this._value > 0
-         ? new KeyChoiceField(shortcutPrompt, search.getUnusedHotKeys(), (Character)(new Object(this._value)))
+         ? new KeyChoiceField(shortcutPrompt, search.getUnusedHotKeys(), new Character(this._value))
          : new KeyChoiceField(shortcutPrompt, search.getUnusedHotKeys(), 0);
    }
 
@@ -81,7 +81,7 @@ final class ShortCutKeyModel implements PersistableRIMModel, FieldProvider, Pain
    }
 
    ShortCutKeyModel(Object initialData) {
-      if (initialData instanceof Object) {
+      if (initialData instanceof Character) {
          Character c = (Character)initialData;
          this._value = c;
       }

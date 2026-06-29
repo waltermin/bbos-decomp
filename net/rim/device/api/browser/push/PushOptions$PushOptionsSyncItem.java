@@ -86,7 +86,7 @@ final class PushOptions$PushOptionsSyncItem extends OTASyncCapableSyncItem {
    @Override
    public final boolean getSyncData(DataBuffer buffer, int version) {
       PushOptions options = PushOptions.getOptions();
-      DataBuffer tmpBuffer = (DataBuffer)(new Object(buffer.isBigEndian()));
+      DataBuffer tmpBuffer = new DataBuffer(buffer.isBigEndian());
 
       try {
          tmpBuffer.writeCompressedInt(3);

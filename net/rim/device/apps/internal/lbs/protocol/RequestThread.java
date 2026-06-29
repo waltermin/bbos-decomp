@@ -67,12 +67,12 @@ final class RequestThread extends Thread implements GlobalEventListener {
       // 06: ifnonnull 0b
       // 09: bipush 0
       // 0a: ireturn
-      // 0b: new java/lang/Object
+      // 0b: new java/io/ByteArrayInputStream
       // 0e: dup
       // 0f: aload 2
       // 10: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
       // 13: astore 3
-      // 14: new java/lang/Object
+      // 14: new java/io/DataInputStream
       // 17: dup
       // 18: aload 3
       // 19: invokespecial java/io/DataInputStream.<init> (Ljava/io/InputStream;)V
@@ -181,17 +181,17 @@ final class RequestThread extends Thread implements GlobalEventListener {
       }
 
       String uid = publicUid != null ? publicUid : corporateUid;
-      EventLogger.logEvent(LBSApplication.UID, ((StringBuffer)(new Object("LBS UID = "))).append(uid).toString().getBytes(), 5);
+      EventLogger.logEvent(LBSApplication.UID, ("LBS UID = " + uid).getBytes(), 5);
       return uid;
    }
 
    final String appendURLOptions(String url) {
       if (DeviceInfo.isSimulator()) {
-         return ((StringBuffer)(new Object())).append(url).append(";deviceside=true").toString();
+         return url + ";deviceside=true";
       }
 
       if (this._uid != null) {
-         url = ((StringBuffer)(new Object())).append(url).append(";deviceside=false;ConnectionUID=").append(this._uid).toString();
+         url = url + ";deviceside=false;ConnectionUID=" + this._uid;
       }
 
       return url;
@@ -205,7 +205,7 @@ final class RequestThread extends Thread implements GlobalEventListener {
          ServiceRecord record = _ipppServiceRecords[i];
 
          try {
-            int ipppType = ((SBApplicationData)(new Object(record))).getValueAsInt(6);
+            int ipppType = new SBApplicationData(record).getValueAsInt(6);
             if (ipppType == 0) {
                return true;
             }
@@ -225,7 +225,7 @@ final class RequestThread extends Thread implements GlobalEventListener {
          ServiceRecord record = _ipppServiceRecords[i];
 
          try {
-            int ipppType = ((SBApplicationData)(new Object(record))).getValueAsInt(6);
+            int ipppType = new SBApplicationData(record).getValueAsInt(6);
             if (ipppType == 1) {
                return true;
             }
@@ -405,7 +405,7 @@ final class RequestThread extends Thread implements GlobalEventListener {
       // 14c: getfield net/rim/device/apps/internal/lbs/protocol/Request._listener Lnet/rim/device/apps/internal/lbs/protocol/Request$Listener;
       // 14f: bipush 2
       // 151: invokeinterface net/rim/device/apps/internal/lbs/protocol/Request$Listener.setState (I)V 2
-      // 156: new java/lang/Object
+      // 156: new net/rim/device/api/util/DataBuffer
       // 159: dup
       // 15a: bipush 1
       // 15b: invokespecial net/rim/device/api/util/DataBuffer.<init> (Z)V
@@ -441,7 +441,7 @@ final class RequestThread extends Thread implements GlobalEventListener {
       // 19d: aload 10
       // 19f: invokevirtual net/rim/device/apps/internal/lbs/protocol/RequestThread.appendURLOptions (Ljava/lang/String;)Ljava/lang/String;
       // 1a2: astore 10
-      // 1a4: new java/lang/Object
+      // 1a4: new java/lang/StringBuffer
       // 1a7: dup
       // 1a8: ldc_w "Sending to "
       // 1ab: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -452,7 +452,7 @@ final class RequestThread extends Thread implements GlobalEventListener {
       // 1b8: invokestatic net/rim/device/api/lbs/Logger.logEvent (Ljava/lang/String;I)V
       // 1bb: aload 10
       // 1bd: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 1c0: checkcast java/lang/Object
+      // 1c0: checkcast javax/microedition/io/HttpConnection
       // 1c3: astore 2
       // 1c4: goto 1cf
       // 1c7: astore 11
@@ -512,7 +512,7 @@ final class RequestThread extends Thread implements GlobalEventListener {
       // 23e: goto 268
       // 241: astore 13
       // 243: getstatic java/lang/System.err Ljava/io/PrintStream;
-      // 246: new java/lang/Object
+      // 246: new java/lang/StringBuffer
       // 249: dup
       // 24a: ldc_w "Connection error: "
       // 24d: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -547,7 +547,7 @@ final class RequestThread extends Thread implements GlobalEventListener {
       // 295: iload 13
       // 297: sipush 300
       // 29a: if_icmpge 2f7
-      // 29d: new java/lang/Object
+      // 29d: new java/io/DataInputStream
       // 2a0: dup
       // 2a1: aload 4
       // 2a3: invokespecial java/io/DataInputStream.<init> (Ljava/io/InputStream;)V
@@ -592,7 +592,7 @@ final class RequestThread extends Thread implements GlobalEventListener {
       // 2fa: iload 13
       // 2fc: sipush 400
       // 2ff: if_icmpne 327
-      // 302: new java/lang/Object
+      // 302: new java/io/DataInputStream
       // 305: dup
       // 306: aload 4
       // 308: invokespecial java/io/DataInputStream.<init> (Ljava/io/InputStream;)V
@@ -667,7 +667,7 @@ final class RequestThread extends Thread implements GlobalEventListener {
       // 3a4: invokevirtual net/rim/device/apps/internal/lbs/protocol/Request.isConnectionForcedClosed ()Z
       // 3a7: ifne 3c9
       // 3aa: getstatic java/lang/System.out Ljava/io/PrintStream;
-      // 3ad: new java/lang/Object
+      // 3ad: new java/lang/StringBuffer
       // 3b0: dup
       // 3b1: ldc_w "EOFException: "
       // 3b4: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -730,7 +730,7 @@ final class RequestThread extends Thread implements GlobalEventListener {
       // 438: invokevirtual net/rim/device/apps/internal/lbs/protocol/Request.isConnectionForcedClosed ()Z
       // 43b: ifne 45d
       // 43e: getstatic java/lang/System.out Ljava/io/PrintStream;
-      // 441: new java/lang/Object
+      // 441: new java/lang/StringBuffer
       // 444: dup
       // 445: ldc_w "Exception in request: "
       // 448: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -790,7 +790,7 @@ final class RequestThread extends Thread implements GlobalEventListener {
       // 4c5: aload 8
       // 4c7: ifnull 513
       // 4ca: getstatic net/rim/device/apps/internal/lbs/LBSApplication.UID J
-      // 4cd: new java/lang/Object
+      // 4cd: new java/lang/StringBuffer
       // 4d0: dup
       // 4d1: ldc_w "Request thread command: "
       // 4d4: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V

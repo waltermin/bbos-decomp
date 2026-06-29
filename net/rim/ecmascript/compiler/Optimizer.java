@@ -82,7 +82,7 @@ class Optimizer {
    }
 
    private void markReachable(Block b) {
-      Vector toMark = (Vector)(new Object());
+      Vector toMark = new Vector();
       this.markReachableHelper(b, 0, toMark);
 
       while (true) {

@@ -1,5 +1,6 @@
 package net.rim.wica.runtime.metadata.internal.util;
 
+import java.util.NoSuchElementException;
 import net.rim.device.api.util.IntEnumeration;
 
 class IntIntHashtableEnumerator implements IntEnumeration {
@@ -37,7 +38,7 @@ class IntIntHashtableEnumerator implements IntEnumeration {
       if (this.getNextElement()) {
          return this._table[this._index++];
       } else {
-         throw new Object();
+         throw new NoSuchElementException();
       }
    }
 }

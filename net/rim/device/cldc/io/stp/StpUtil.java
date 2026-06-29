@@ -98,7 +98,7 @@ public final class StpUtil {
 
          if (serviceState) {
             if (this._services == null) {
-               this._services = new Object[1];
+               this._services = new String[1];
                this._services[0] = service;
                this._servicesCapabilities = new int[1];
                this._servicesCapabilities[0] = capabilities;
@@ -142,7 +142,7 @@ public final class StpUtil {
          }
 
          length = this._services.length;
-         services = new Object[length];
+         services = new String[length];
          System.arraycopy(this._services, 0, services, 0, length);
       }
 
@@ -181,7 +181,7 @@ public final class StpUtil {
             if (service == null) {
                service = new StpUtil$ServiceInfo();
                service._uid = uid;
-               service._hosts = new Object[0];
+               service._hosts = new String[0];
                service._ports = new int[0];
                Arrays.add(services, service);
             }
@@ -218,7 +218,7 @@ public final class StpUtil {
 
       String sPort = String.valueOf(port);
       int length = host.length() + sPort.length() + 3;
-      StringBuffer sb = (StringBuffer)(new Object(length));
+      StringBuffer sb = new StringBuffer(length);
       sb.append('/');
       sb.append('/');
       sb.append(host);
@@ -378,7 +378,7 @@ public final class StpUtil {
                            int paramLength;
                            if (dest.readByte() == 83 && (paramLength = dest.readInt()) > 0) {
                               try {
-                                 DataBuffer buf = (DataBuffer)(new Object(dest, paramLength));
+                                 DataBuffer buf = new DataBuffer(dest, paramLength);
                                  int cLength = 0;
                                  int cTag = 0;
                                  int value = 0;

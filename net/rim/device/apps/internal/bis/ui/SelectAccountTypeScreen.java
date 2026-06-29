@@ -2,7 +2,7 @@ package net.rim.device.apps.internal.bis.ui;
 
 import java.util.Hashtable;
 import net.rim.device.api.i18n.MessageFormat;
-import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.RadioButtonField;
 import net.rim.device.api.ui.component.RadioButtonGroup;
 import net.rim.device.apps.internal.bis.ApplicationResources;
@@ -26,11 +26,11 @@ public final class SelectAccountTypeScreen extends UserSettingsScreen {
    public final void refresh(Hashtable screenParams) {
       this.setTitle(ApplicationResources.getString(48));
       String sessionSimpleEmail = ClientSessionState.getInstance().getIntegrationEmail();
-      this._defaultGroup = (RadioButtonGroup)(new Object());
-      this._personalEmailField = (RadioButtonField)(new Object(ApplicationResources.getString(87), this._defaultGroup, true));
-      this._workEmailField = (RadioButtonField)(new Object(ApplicationResources.getString(88), this._defaultGroup, false));
-      String unableToSetupText = MessageFormat.format(ApplicationResources.getString(68), new Object[]{sessionSimpleEmail});
-      this.addContentField((Field)(new Object(unableToSetupText)));
+      this._defaultGroup = new RadioButtonGroup();
+      this._personalEmailField = new RadioButtonField(ApplicationResources.getString(87), this._defaultGroup, true);
+      this._workEmailField = new RadioButtonField(ApplicationResources.getString(88), this._defaultGroup, false);
+      String unableToSetupText = MessageFormat.format(ApplicationResources.getString(68), new String[]{sessionSimpleEmail});
+      this.addContentField(new LabelField(unableToSetupText));
       this.addContentLineBreak();
       this.addContentField(this._personalEmailField);
       this.addContentLineBreak();

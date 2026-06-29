@@ -3,6 +3,7 @@ package net.rim.device.apps.api.framework.profiles;
 import net.rim.device.api.i18n.MessageFormat;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.FieldProvider;
 import net.rim.device.apps.api.framework.model.KeyProvider;
@@ -26,7 +27,7 @@ public class SourceObjectWrapper implements RIMModel, PaintProvider, FieldProvid
 
    @Override
    public int match(Object searchCriteriaObject) {
-      if (!(searchCriteriaObject instanceof Object)) {
+      if (!(searchCriteriaObject instanceof String)) {
          return 0;
       }
 
@@ -90,17 +91,15 @@ public class SourceObjectWrapper implements RIMModel, PaintProvider, FieldProvid
       Field field = null;
       String name = this._nameObject.toString();
       if (ContextObject.getFlag(contextObject, 69)) {
-         String[] pair = (Object[])ContextObject.get(contextObject, 251);
+         String[] pair = (String[])ContextObject.get(contextObject, 251);
          if (pair != null && pair.length == 2 && pair[0] != null && pair[1] != null && pair[1].length() > 0) {
-            String[] names = new Object[2];
-            names[0] = name;
-            names[1] = pair[1];
-            return (Field)(new Object(MessageFormat.format(pair[0], names), 64));
+            String[] names = new String[]{name, pair[1]};
+            return new LabelField(MessageFormat.format(pair[0], names), 64);
          } else {
-            return (Field)(new Object(name, 0));
+            return new LabelField(name, 0);
          }
       } else {
-         return (Field)(new Object(name, 1170935903116328960L));
+         return new LabelField(name, 1170935903116328960L);
       }
    }
 

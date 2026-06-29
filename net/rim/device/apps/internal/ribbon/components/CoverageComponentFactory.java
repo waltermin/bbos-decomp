@@ -771,13 +771,12 @@ final class CoverageComponentFactory implements Factory, RadioStatusListener, Gl
       int newCoverageTextId = this._coverageStringIndexes[newCoverage];
       if (newCoverageTextId != this._lastCoverageTextId) {
          System.out.println("** Determining Coverage **");
-         System.out.println(((StringBuffer)(new Object("Last Coverage = "))).append(this._lastCoverage).toString());
+         System.out.println("Last Coverage = " + this._lastCoverage);
          this._lastCoverage = newCoverage;
-         System.out.println(((StringBuffer)(new Object("New Coverage = "))).append(this._lastCoverage).toString());
+         System.out.println("New Coverage = " + this._lastCoverage);
          this._lastCoverageTextId = newCoverageTextId;
          this._lastCoverageText = this._rbf.getString(newCoverageTextId);
-         System.out
-            .println(((StringBuffer)(new Object("New Coverage Text = "))).append(this._lastCoverageText == null ? "NULL" : this._lastCoverageText).toString());
+         System.out.println("New Coverage Text = " + (this._lastCoverageText == null ? "NULL" : this._lastCoverageText));
       }
 
       LEDEngine ledEngine = LEDEngine.getInstance();
@@ -989,7 +988,7 @@ final class CoverageComponentFactory implements Factory, RadioStatusListener, Gl
    static {
       byte[] data = Branding.getData(13824);
       if (data != null) {
-         IIF_APN = (String)(new Object(data));
+         IIF_APN = new String(data);
       }
    }
 }

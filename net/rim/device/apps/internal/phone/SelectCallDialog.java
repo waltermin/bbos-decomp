@@ -1,8 +1,9 @@
 package net.rim.device.apps.internal.phone;
 
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.apps.internal.phone.api.livecall.LiveCall;
 import net.rim.device.apps.internal.phone.api.ui.BaseVoiceAppPopupDialog;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
@@ -17,8 +18,8 @@ final class SelectCallDialog extends BaseVoiceAppPopupDialog {
       super('\u0000', 2, true, null, null);
       this._conferenceCall = conferenceCall;
       this._owner = owner;
-      this.add((Field)(new Object(PhoneResources.getString(114))));
-      this.add((Field)(new Object()));
+      this.add(new LabelField(PhoneResources.getString(114)));
+      this.add(new SeparatorField());
       this._memberCallsListField = new MemberCallsListField(this._conferenceCall.getMembers());
       this.add(this._memberCallsListField);
    }

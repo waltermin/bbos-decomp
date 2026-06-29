@@ -24,7 +24,7 @@ class ESStringPrototype$18 extends HostFunction {
       try {
          var20 = true;
          String s = ESStringPrototype.toString(this.getThis());
-         Vector matches = new Object();
+         Vector matches = new Vector();
          long searchValue = this.getParm(0);
          ESObject obj = Value.checkIfObjectValue(searchValue);
          int capLength = 0;
@@ -42,7 +42,7 @@ class ESStringPrototype$18 extends HostFunction {
                   }
 
                   capLength = m.captures.length;
-                  ((Vector)matches).addElement(m);
+                  matches.addElement(m);
                   long newLastIndex = regExp.getLastIndex();
                   if (Expr.eq(lastIndex, newLastIndex)) {
                      lastIndex = Expr.inc(lastIndex, 1);
@@ -55,7 +55,7 @@ class ESStringPrototype$18 extends HostFunction {
             } else {
                RegExp$MatchResult m = ESRegExpPrototype.doMatch(regExp, s);
                if (m != null) {
-                  ((Vector)matches).addElement(m);
+                  matches.addElement(m);
                   capLength = m.captures.length;
                }
             }
@@ -64,27 +64,27 @@ class ESStringPrototype$18 extends HostFunction {
             int searchLen = searchStr.length();
             int startIndex = s.indexOf(searchStr);
             if (startIndex != -1) {
-               RegExp$MatchResult m = (RegExp$MatchResult)(new Object(s, startIndex, startIndex + searchLen, new Object[]{searchStr}));
-               ((Vector)matches).addElement(m);
+               RegExp$MatchResult m = new RegExp$MatchResult(s, startIndex, startIndex + searchLen, new String[]{searchStr});
+               matches.addElement(m);
                capLength = m.captures.length;
             }
          }
 
          long replaceValue = this.getParm(1);
-         Vector replacements = (Vector)(new Object());
+         Vector replacements = new Vector();
          ESFunction replaceFn = Value.checkIfFunctionValue(replaceValue);
          if (replaceFn == null) {
             String replaceString = Convert.toString(replaceValue);
 
-            for (int i = 0; i < ((Vector)matches).size(); i++) {
-               replacements.addElement(ESStringPrototype.replaceDollar(replaceString, (RegExp$MatchResult)((Vector)matches).elementAt(i)));
+            for (int i = 0; i < matches.size(); i++) {
+               replacements.addElement(ESStringPrototype.replaceDollar(replaceString, (RegExp$MatchResult)matches.elementAt(i)));
             }
          } else {
             GlobalObject global = this.getGlobalInstance();
             long[] args = Misc.newMixedArray(capLength + 2);
 
-            for (int i = 0; i < ((Vector)matches).size(); i++) {
-               RegExp$MatchResult m = (RegExp$MatchResult)((Vector)matches).elementAt(i);
+            for (int i = 0; i < matches.size(); i++) {
+               RegExp$MatchResult m = (RegExp$MatchResult)matches.elementAt(i);
 
                int j;
                for (j = 0; j < m.captures.length; j++) {
@@ -104,11 +104,11 @@ class ESStringPrototype$18 extends HostFunction {
             Misc.freeMixedArray(args);
          }
 
-         StringBuffer sb = (StringBuffer)(new Object());
+         StringBuffer sb = new StringBuffer();
          int lastIndex = 0;
 
-         for (int i = 0; i < ((Vector)matches).size(); i++) {
-            RegExp$MatchResult m = (RegExp$MatchResult)((Vector)matches).elementAt(i);
+         for (int i = 0; i < matches.size(); i++) {
+            RegExp$MatchResult m = (RegExp$MatchResult)matches.elementAt(i);
             sb = StringUtilities.append(sb, s, lastIndex, m.startIndex - lastIndex);
             sb.append((String)replacements.elementAt(i));
             lastIndex = m.endIndex;

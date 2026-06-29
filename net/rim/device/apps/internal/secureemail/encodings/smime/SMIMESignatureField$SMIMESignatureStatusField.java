@@ -1,5 +1,9 @@
 package net.rim.device.apps.internal.secureemail.encodings.smime;
 
+import net.rim.device.api.crypto.cms.CMSNoCertificateFoundException;
+import net.rim.device.api.crypto.cms.CMSNoReceiptDataFoundException;
+import net.rim.device.api.crypto.cms.CMSNoSuchAlgorithmException;
+import net.rim.device.api.crypto.cms.CMSVerificationException;
 import net.rim.device.api.system.Application;
 import net.rim.device.apps.internal.secureemail.SecureEmailSignatureField$SignatureStatusField;
 import net.rim.device.apps.internal.secureemail.SecureEmailSignatureField$ThrowableHandlerData;
@@ -14,17 +18,17 @@ public class SMIMESignatureField$SMIMESignatureStatusField extends SecureEmailSi
 
    @Override
    public void handleThrowable(Throwable t, SecureEmailSignatureField$ThrowableHandlerData throwableHandlerData) {
-      if (t instanceof Object) {
+      if (t instanceof CMSNoReceiptDataFoundException) {
          throwableHandlerData._status = 2;
          throwableHandlerData._details = SMIMEResources.getString(2108);
          throwableHandlerData._unrecoverableThrowable = true;
-      } else if (t instanceof Object) {
+      } else if (t instanceof CMSNoCertificateFoundException) {
          throwableHandlerData._status = 3;
-      } else if (t instanceof Object) {
+      } else if (t instanceof CMSNoSuchAlgorithmException) {
          throwableHandlerData._status = 2;
          throwableHandlerData._details = SMIMEResources.getString(10002);
          throwableHandlerData._unrecoverableThrowable = true;
-      } else if (t instanceof Object) {
+      } else if (t instanceof CMSVerificationException) {
          throwableHandlerData._status = 2;
          throwableHandlerData._details = SMIMEResources.getString(2106);
          throwableHandlerData._unrecoverableThrowable = true;

@@ -21,7 +21,7 @@ final class PurgeDeletedMessagesVerb extends Verb {
 
    @Override
    public final Object invoke(Object parameter) {
-      Vector choices = (Vector)(new Object());
+      Vector choices = new Vector();
       ServiceRecord[] serviceRecords = ServiceBook.getSB().findRecordsByCid("CMIME");
 
       for (int i = serviceRecords.length - 1; i >= 0; i--) {
@@ -34,8 +34,8 @@ final class PurgeDeletedMessagesVerb extends Verb {
       ServiceRecord serviceRecord = null;
       int count = choices.size();
       if (count > 1) {
-         ServiceRecord[] services = new Object[count];
-         String[] names = new Object[count];
+         ServiceRecord[] services = new ServiceRecord[count];
+         String[] names = new String[count];
 
          for (int i = count - 1; i >= 0; i--) {
             services[i] = (ServiceRecord)choices.elementAt(i);
@@ -43,7 +43,7 @@ final class PurgeDeletedMessagesVerb extends Verb {
          }
 
          Arrays.sort(names, 0, names.length, services, new PurgeDeletedMessagesVerb$StringComparator());
-         Dialog dialog = (Dialog)(new Object(MessageResources.getString(168), names, null, 0, Bitmap.getPredefinedBitmap(1)));
+         Dialog dialog = new Dialog(MessageResources.getString(168), names, null, 0, Bitmap.getPredefinedBitmap(1));
          dialog.doModal();
          if (dialog.getSelectedValue() != -1) {
             serviceRecord = services[dialog.getSelectedValue()];
@@ -53,9 +53,9 @@ final class PurgeDeletedMessagesVerb extends Verb {
       }
 
       if (serviceRecord != null) {
-         String[] arguments = new Object[]{serviceRecord.getName()};
+         String[] arguments = new String[]{serviceRecord.getName()};
          String prompt = MessageFormat.format(MessageResources.getString(169), arguments);
-         Dialog dialog = (Dialog)(new Object(prompt, CommonResources.getYesNoArray(1), null, 0, Bitmap.getPredefinedBitmap(2)));
+         Dialog dialog = new Dialog(prompt, CommonResources.getYesNoArray(1), null, 0, Bitmap.getPredefinedBitmap(2));
          dialog.doModal();
          if (dialog.getSelectedValue() == 1) {
             OTAMessageSync.getInstance().purgeDeletedMessages(serviceRecord);

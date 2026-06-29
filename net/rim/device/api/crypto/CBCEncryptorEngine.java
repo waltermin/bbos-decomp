@@ -17,7 +17,7 @@ public final class CBCEncryptorEngine implements BlockEncryptorEngine {
       if (iv == null) {
          iv = new InitializationVector(this._blockLength);
       } else if (iv.getLength() != this._blockLength) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._iv = iv;
@@ -31,7 +31,7 @@ public final class CBCEncryptorEngine implements BlockEncryptorEngine {
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object())).append(this._engine.getAlgorithm()).append("/CBC").toString();
+      return this._engine.getAlgorithm() + "/CBC";
    }
 
    @Override
@@ -49,7 +49,7 @@ public final class CBCEncryptorEngine implements BlockEncryptorEngine {
          this._engine.encrypt(this._ciphertextBuffer, 0, ciphertext, ciphertextOffset);
          System.arraycopy(ciphertext, ciphertextOffset, this._ciphertextBuffer, 0, this._blockLength);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -59,7 +59,7 @@ public final class CBCEncryptorEngine implements BlockEncryptorEngine {
 
    public CBCEncryptorEngine(BlockEncryptorEngine engine, InitializationVector iv) {
       if (engine == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._engine = engine;
@@ -81,10 +81,10 @@ public final class CBCEncryptorEngine implements BlockEncryptorEngine {
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

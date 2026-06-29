@@ -147,7 +147,7 @@ public final class SerializerUtil {
       int[] array = ConverterUtilities.readIntArray(buffer);
       BigIntVector vector = null;
       if (array != null) {
-         vector = (BigIntVector)(new Object(array.length));
+         vector = new BigIntVector(array.length);
          vector.addElements(array);
       }
 
@@ -158,7 +158,7 @@ public final class SerializerUtil {
       long[] array = readLongArray(buffer);
       BigLongVector vector = null;
       if (array != null) {
-         vector = (BigLongVector)(new Object(array.length));
+         vector = new BigLongVector(array.length);
          vector.addElements(array);
       }
 

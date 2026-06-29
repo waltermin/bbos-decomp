@@ -3,7 +3,7 @@ package net.rim.device.apps.internal.bis.utils;
 import java.util.Hashtable;
 
 public final class ObjectRegistry {
-   private Hashtable _objectMap = (Hashtable)(new Object());
+   private Hashtable _objectMap = new Hashtable();
    private static ObjectRegistry _instance = new ObjectRegistry();
 
    private ObjectRegistry() {

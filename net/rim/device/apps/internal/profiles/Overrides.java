@@ -19,15 +19,17 @@ import net.rim.device.api.util.Factory;
 import net.rim.device.api.util.FactoryUtil;
 import net.rim.device.api.util.IntHashtable;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
-import net.rim.device.apps.api.addressbook.AddressCardElement;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
+import net.rim.device.apps.api.addressbook.EmailAddressModel;
+import net.rim.device.apps.api.addressbook.PINAddressModel;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.PersistableRIMModel;
+import net.rim.device.apps.internal.phone.model.PhoneNumberModel;
 import net.rim.vm.Array;
 
 public final class Overrides implements ReadableList, CollectionEventSource, CollectionListener, PersistentContentListener {
    private Vector _overrides;
-   private IntHashtable _uidHashtable = (IntHashtable)(new Object());
+   private IntHashtable _uidHashtable = new IntHashtable();
    private IntHashtable _overridesToValidate;
    private CollectionListenerManager _collectionListenerManager;
    private static final long OVERRIDES_ID = -6786592476105735731L;
@@ -191,7 +193,7 @@ public final class Overrides implements ReadableList, CollectionEventSource, Col
          if (!tuneSet) {
             FromContact fromContact = getFromContact(ac);
             ResourceBundle resources = ResourceBundle.getBundle(2384708948246157241L, "net.rim.device.apps.internal.resource.Profiles");
-            override = this.createNewOverride(((StringBuffer)(new Object())).append(resources.getString(247)).append(fromContact.getName()).toString());
+            override = this.createNewOverride(resources.getString(247) + fromContact.getName());
             override.setFromContacts(new FromContact[]{fromContact});
             override.setUseTune(true);
             override.setProfileUID(-1);
@@ -238,7 +240,7 @@ public final class Overrides implements ReadableList, CollectionEventSource, Col
 
    final void addToOverridesToValidate(Override override) {
       if (this._overridesToValidate == null) {
-         this._overridesToValidate = (IntHashtable)(new Object());
+         this._overridesToValidate = new IntHashtable();
       }
 
       this._overridesToValidate.put(override.getUID(), override);
@@ -323,8 +325,8 @@ public final class Overrides implements ReadableList, CollectionEventSource, Col
 
    @Override
    public final void elementUpdated(Collection collection, Object oldElement, Object newElement) {
-      if (oldElement instanceof Object && newElement instanceof Object) {
-         int oldUID = ((AddressCardElement)oldElement).getUID();
+      if (oldElement instanceof AddressCardModel && newElement instanceof AddressCardModel) {
+         int oldUID = ((AddressCardModel)oldElement).getUID();
          AddressCardModel newAddressCard = (AddressCardModel)newElement;
          synchronized (this._overrides) {
             int numOverrides = this._overrides.size();
@@ -366,7 +368,7 @@ public final class Overrides implements ReadableList, CollectionEventSource, Col
 
    @Override
    public final void elementRemoved(Collection collection, Object element) {
-      if (element instanceof Object) {
+      if (element instanceof AddressCardModel) {
          AddressCardModel ac = (AddressCardModel)element;
          int addresscardUID = ac.getUID();
          this.removeAddressCardUIDFromOverrides(addresscardUID, 0, false);
@@ -429,12 +431,12 @@ public final class Overrides implements ReadableList, CollectionEventSource, Col
       }
 
       if (name != null) {
-         if (obj instanceof Object && obj.toString().equals(name)) {
+         if (obj instanceof AddressCardModel && obj.toString().equals(name)) {
             return uid;
          }
 
          if (contactInfo != null) {
-            ContextObject context = (ContextObject)(new Object());
+            ContextObject context = new ContextObject();
             context.put(253, contactInfo);
             PersistableRIMModel contactInfoModel = null;
             if (contactInfoType == 48) {
@@ -450,7 +452,7 @@ public final class Overrides implements ReadableList, CollectionEventSource, Col
                return ac.getUID();
             }
          } else {
-            ContextObject context = (ContextObject)(new Object());
+            ContextObject context = new ContextObject();
             context.put(253, name);
             PersistableRIMModel friendlyNameModel = (PersistableRIMModel)FactoryUtil.createInstance(5149066071290992769L, context);
             AddressCardModel ac = doLookup(friendlyNameModel, name);
@@ -466,7 +468,7 @@ public final class Overrides implements ReadableList, CollectionEventSource, Col
          }
       }
 
-      return uid != 0 && !(obj instanceof Object) && !deleteIfNotFound ? uid : 0;
+      return uid != 0 && !(obj instanceof AddressCardModel) && !deleteIfNotFound ? uid : 0;
    }
 
    private static final AddressCardModel doLookup(PersistableRIMModel lookupModel, String name) {
@@ -474,7 +476,7 @@ public final class Overrides implements ReadableList, CollectionEventSource, Col
       if (name != null && entries != null && entries.length > 0) {
          for (int i = 0; i < entries.length; i++) {
             Object entry = entries[i];
-            if (entry instanceof Object) {
+            if (entry instanceof AddressCardModel) {
                AddressCardModel ac = (AddressCardModel)entry;
                if (name.equals(ac.toString())) {
                   return ac;
@@ -495,19 +497,19 @@ public final class Overrides implements ReadableList, CollectionEventSource, Col
 
       for (int i = 0; i < acSize; i++) {
          Object element = ac.getAt(i);
-         if (element instanceof Object) {
-            contactInfo = element.toString();
+         if (element instanceof PINAddressModel) {
+            contactInfo = ((PINAddressModel)element).toString();
             contactInfoType = 48;
             break;
          }
 
-         if (element instanceof Object) {
+         if (element instanceof EmailAddressModel) {
             if (contactInfoType < 32) {
-               contactInfo = element.toString();
+               contactInfo = ((EmailAddressModel)element).toString();
                contactInfoType = 32;
             }
-         } else if (element instanceof Object && contactInfoType < 16) {
-            contactInfo = element.toString();
+         } else if (element instanceof PhoneNumberModel && contactInfoType < 16) {
+            contactInfo = ((PhoneNumberModel)element).toString();
             contactInfoType = 16;
          }
       }
@@ -582,7 +584,7 @@ public final class Overrides implements ReadableList, CollectionEventSource, Col
             }
          }
       } catch (Throwable var10) {
-         System.out.println(((StringBuffer)(new Object("Overrides: validateFromNamesInternal "))).append(e.toString()).toString());
+         System.out.println("Overrides: validateFromNamesInternal " + e.toString());
          return overrideRemoved;
       }
 
@@ -730,7 +732,7 @@ public final class Overrides implements ReadableList, CollectionEventSource, Col
       PersistentObject persistentObject = RIMPersistentStore.getPersistentObject(-1745202328598837165L);
       synchronized (persistentObject) {
          if ((this._overrides = (Vector)persistentObject.getContents()) == null) {
-            this._overrides = (Vector)(new Object());
+            this._overrides = new Vector();
             ResourceBundle resources = ResourceBundle.getBundle(2384708948246157241L, "net.rim.device.apps.internal.resource.Profiles");
             this.add(this.createNewOverride(resources.getString(246), 7), false);
             persistentObject.setContents(this._overrides, 51);
@@ -740,6 +742,6 @@ public final class Overrides implements ReadableList, CollectionEventSource, Col
          }
       }
 
-      this._collectionListenerManager = (CollectionListenerManager)(new Object());
+      this._collectionListenerManager = new CollectionListenerManager();
    }
 }

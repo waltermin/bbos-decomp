@@ -4,7 +4,7 @@ import java.util.Hashtable;
 import net.rim.device.resources.Resource;
 
 public final class net_rim_bb_messaging_appRIMResources extends Resource {
-   public static Hashtable _resources = (Hashtable)(new Object(11));
+   public static Hashtable _resources = new Hashtable(11);
    public static Hashtable _properties;
    public static byte[] _appIcons = new byte[]{
       0,

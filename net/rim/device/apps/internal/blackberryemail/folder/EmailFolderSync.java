@@ -112,7 +112,7 @@ public final class EmailFolderSync
 
    @Override
    public final SyncObject[] getSyncObjects() {
-      SyncObject[] objects = new Object[0];
+      SyncObject[] objects = new SyncObject[0];
       int sofar = 0;
 
       for (int i = EmailHierarchy.getEmailHierarchyCount() - 1; i >= 0; i--) {

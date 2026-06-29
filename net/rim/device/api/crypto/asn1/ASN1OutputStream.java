@@ -13,19 +13,19 @@ public class ASN1OutputStream {
    private static final int MAX_LENGTH_ENCODING_BYTES = 4;
 
    public ASN1OutputStream() {
-      this._outputStream = (OutputStream)(new Object());
+      this._outputStream = new ByteArrayOutputStream();
    }
 
    public ASN1OutputStream(OutputStream outputStream) {
       if (outputStream == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._outputStream = outputStream;
    }
 
    public byte[] toByteArray() {
-      if (!(this._outputStream instanceof Object)) {
+      if (!(this._outputStream instanceof ByteArrayOutputStream)) {
          return null;
       }
 
@@ -124,7 +124,7 @@ public class ASN1OutputStream {
 
    public void writeInteger(byte[] value, int tagging, int tag, int clsFlags) {
       if (value == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int encodedLength = this.predictEncodedIntegerLength(value);
@@ -147,7 +147,7 @@ public class ASN1OutputStream {
 
    public void writeInteger(ASN1SignedByteArray signedByteArray, int tagging, int tag, int clsFlags) {
       if (signedByteArray == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       byte[] value = signedByteArray.getValue();
@@ -174,12 +174,12 @@ public class ASN1OutputStream {
 
    public void writeSequence(ASN1OutputStream sequence, int tagging, int tag, int clsFlags) {
       if (sequence == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       byte[] value = sequence.toByteArray();
       if (value == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this.writeTagAndLengthAndByteArray(tagging, clsFlags, tag, 16, true, value);
@@ -195,12 +195,12 @@ public class ASN1OutputStream {
 
    public void writeSet(ASN1OutputStream set, int tagging, int tag, int clsFlags) {
       if (set == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       byte[] value = set.toByteArray();
       if (value == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this.writeTagAndLengthAndByteArray(tagging, clsFlags, tag, 17, true, value);
@@ -220,7 +220,7 @@ public class ASN1OutputStream {
 
    private void writeString(String value, int tagging, int clsFlags, int tag, int baseTag) {
       if (value == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this.writeTagAndLengthAndByteArray(tagging, clsFlags, tag, baseTag, false, value.getBytes());
@@ -260,7 +260,7 @@ public class ASN1OutputStream {
 
    public void writeUTF8String(String value, int tagging, int tag, int clsFlags) {
       if (value == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this.writeTagAndLengthAndByteArray(tagging, clsFlags, tag, 12, false, value.getBytes("UTF8"));
@@ -276,7 +276,7 @@ public class ASN1OutputStream {
 
    public void writeBMPString(String value, int tagging, int tag, int clsFlags) {
       if (value == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       char[] characters = new char[value.length()];
@@ -313,7 +313,7 @@ public class ASN1OutputStream {
 
    public void writeOctetString(byte[] value, int tagging, int tag, int clsFlags) {
       if (value == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this.writeTagAndLengthAndByteArray(tagging, clsFlags, tag, 4, false, value);
@@ -355,7 +355,7 @@ public class ASN1OutputStream {
       byte[] time = null;
       int i = 0;
       Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(DateTimeUtilities.GMT));
-      calendar.setTime((Date)(new Object(date)));
+      calendar.setTime(new Date(date));
       int length = useUTC ? 13 : 15;
       time = new byte[length];
       time[length - 1] = 90;
@@ -398,7 +398,7 @@ public class ASN1OutputStream {
 
    public void writeOID(OID value, int tagging, int tag, int clsFlags) {
       if (value == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this.writeTagAndLengthAndByteArray(tagging, clsFlags, tag, 6, false, value.toByteArray());
@@ -414,7 +414,7 @@ public class ASN1OutputStream {
 
    public void writeBitString(ASN1BitSet value, int tagging, int tag, int clsFlags) {
       if (value == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       byte[] data = value.toByteArray();
@@ -436,7 +436,7 @@ public class ASN1OutputStream {
 
    public void writeBitString(byte[] value, int tagging, int tag, int clsFlags) {
       if (value == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int actualLength = value.length + 1;
@@ -601,12 +601,12 @@ public class ASN1OutputStream {
 
    public void writeStreamWithTag(ASN1OutputStream stream, int tagging, int tag) {
       if (stream == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       byte[] value = stream.toByteArray();
       if (value == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       tag &= 31;

@@ -32,7 +32,7 @@ class CertificateStatusQuery$StatusQueryThread extends Thread implements StreamP
       // 003: aload 0
       // 004: bipush 1
       // 005: invokespecial net/rim/device/api/crypto/certificate/status/CertificateStatusQuery$StatusQueryThread.progressUpdate (I)V
-      // 008: new java/lang/Object
+      // 008: new java/io/ByteArrayOutputStream
       // 00b: dup
       // 00c: invokespecial java/io/ByteArrayOutputStream.<init> ()V
       // 00f: astore 2
@@ -40,7 +40,7 @@ class CertificateStatusQuery$StatusQueryThread extends Thread implements StreamP
       // 011: getfield net/rim/device/api/crypto/certificate/status/CertificateStatusQuery$StatusQueryThread.this$0 Lnet/rim/device/api/crypto/certificate/status/CertificateStatusQuery;
       // 014: aload 0
       // 015: getfield net/rim/device/api/crypto/certificate/status/CertificateStatusQuery$StatusQueryThread._compatibleProviders [Lnet/rim/device/api/crypto/certificate/status/CertificateStatusProvider;
-      // 018: new java/lang/Object
+      // 018: new java/io/DataOutputStream
       // 01b: dup
       // 01c: aload 2
       // 01d: invokespecial java/io/DataOutputStream.<init> (Ljava/io/OutputStream;)V
@@ -60,7 +60,7 @@ class CertificateStatusQuery$StatusQueryThread extends Thread implements StreamP
       // 039: astore 4
       // 03b: aconst_null
       // 03c: astore 5
-      // 03e: new java/lang/Object
+      // 03e: new java/lang/StringBuffer
       // 041: dup
       // 042: ldc_w "ocsp:"
       // 045: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -84,15 +84,15 @@ class CertificateStatusQuery$StatusQueryThread extends Thread implements StreamP
       // 06f: bipush 0
       // 070: bipush 1
       // 071: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;IZ)Ljavax/microedition/io/Connection;
-      // 074: checkcast java/lang/Object
+      // 074: checkcast javax/microedition/io/StreamConnection
       // 077: astore 7
       // 079: aload 7
       // 07b: dup
-      // 07c: instanceof java/lang/Object
+      // 07c: instanceof net/rim/device/cldc/io/ippp/StreamProtocol
       // 07f: ifne 086
       // 082: pop
       // 083: goto 08d
-      // 086: checkcast java/lang/Object
+      // 086: checkcast net/rim/device/cldc/io/ippp/StreamProtocol
       // 089: aload 0
       // 08a: invokevirtual net/rim/device/cldc/io/ippp/StreamProtocol.setStreamProtocolListener (Lnet/rim/device/cldc/io/ippp/StreamProtocolListener;)V
       // 08d: aload 0
@@ -120,14 +120,14 @@ class CertificateStatusQuery$StatusQueryThread extends Thread implements StreamP
       // 0b9: monitorexit
       // 0ba: aload 9
       // 0bc: athrow
-      // 0bd: new java/lang/Object
+      // 0bd: new java/io/DataOutputStream
       // 0c0: dup
       // 0c1: aload 0
       // 0c2: getfield net/rim/device/api/crypto/certificate/status/CertificateStatusQuery$StatusQueryThread._connection Ljavax/microedition/io/StreamConnection;
       // 0c5: invokeinterface javax/microedition/io/OutputConnection.openOutputStream ()Ljava/io/OutputStream; 1
       // 0ca: invokespecial java/io/DataOutputStream.<init> (Ljava/io/OutputStream;)V
       // 0cd: astore 5
-      // 0cf: new java/lang/Object
+      // 0cf: new java/io/DataInputStream
       // 0d2: dup
       // 0d3: aload 0
       // 0d4: getfield net/rim/device/api/crypto/certificate/status/CertificateStatusQuery$StatusQueryThread._connection Ljavax/microedition/io/StreamConnection;
@@ -224,9 +224,9 @@ class CertificateStatusQuery$StatusQueryThread extends Thread implements StreamP
       // 1ab: athrow
       // 1ac: aload 0
       // 1ad: getfield net/rim/device/api/crypto/certificate/status/CertificateStatusQuery$StatusQueryThread.this$0 Lnet/rim/device/api/crypto/certificate/status/CertificateStatusQuery;
-      // 1b0: new java/lang/Object
+      // 1b0: new java/io/DataInputStream
       // 1b3: dup
-      // 1b4: new java/lang/Object
+      // 1b4: new java/io/ByteArrayInputStream
       // 1b7: dup
       // 1b8: aload 9
       // 1ba: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -256,7 +256,7 @@ class CertificateStatusQuery$StatusQueryThread extends Thread implements StreamP
       // 1e9: return
       // 1ea: astore 2
       // 1eb: getstatic java/lang/System.out Ljava/io/PrintStream;
-      // 1ee: new java/lang/Object
+      // 1ee: new java/lang/StringBuffer
       // 1f1: dup
       // 1f2: ldc_w "Fatal exception caught: "
       // 1f5: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V

@@ -58,7 +58,7 @@ public class CookieProviderUtilities {
          VerbMenuItem wrapped;
          if (verbs[i] == defaultVerb) {
             if (defaultVerb == null) {
-               throw new Object();
+               throw new NullPointerException();
             }
 
             wrapped = new VerbMenuItem(null, defaultVerb.getOrdering(), 10, defaultVerb, co);

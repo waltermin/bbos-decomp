@@ -18,7 +18,7 @@ class PagingController$PagingNavigation extends HorizontalFieldManager {
       this._previousButton.setChangeListener(new PagingController$1(this));
       this._nextButton = new PagingController$NavigagionButtonField(">>");
       this._nextButton.setChangeListener(new PagingController$2(this));
-      this._pageNumberLabelField = (LabelField)(new Object(this$0.getPageNumberLabelText(), 51539607552L));
+      this._pageNumberLabelField = new LabelField(this$0.getPageNumberLabelText(), 51539607552L);
       this.add(this._pageNumberLabelField);
    }
 

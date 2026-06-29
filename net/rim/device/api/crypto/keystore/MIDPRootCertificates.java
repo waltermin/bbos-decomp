@@ -184,12 +184,12 @@ final class MIDPRootCertificates {
       policy = newPolicy(policy);
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
       CodeSigningKey rri = CodeSigningKey.getBuiltInKey(51);
-      ControlledAccess ca = (ControlledAccess)(new Object(policy, rri));
+      ControlledAccess ca = new ControlledAccess(policy, rri);
       ar.put(-8029111670665436014L, ca);
    }
 
    private static final void installRootDomain(byte[] root, byte[] policy) {
-      SHA1Digest digest = (SHA1Digest)(new Object());
+      SHA1Digest digest = new SHA1Digest();
       digest.update(root);
       MIDletSecurity.installRootDomain(digest.getDigest(), policy);
    }
@@ -199,7 +199,7 @@ final class MIDPRootCertificates {
    }
 
    private static final void inject_VodafoneCertificates() {
-      CertificateStatus status = (CertificateStatus)(new Object(0, 1158007107581L, 1158007107581L, 0, 0, -1));
+      CertificateStatus status = new CertificateStatus(0, 1158007107581L, 1158007107581L, 0, 0, -1);
       String x509 = "X509";
       TrustedKeyStore trusted = (TrustedKeyStore)TrustedKeyStore.getInstance();
       DeviceKeyStore device = (DeviceKeyStore)DeviceKeyStore.getInstance();
@@ -215,7 +215,7 @@ final class MIDPRootCertificates {
    }
 
    private static final void inject_RelianceCertificates() {
-      CertificateStatus status = (CertificateStatus)(new Object(0, 1158007107581L, 1158007107581L, 0, 0, -1));
+      CertificateStatus status = new CertificateStatus(0, 1158007107581L, 1158007107581L, 0, 0, -1);
       String x509 = "X509";
       TrustedKeyStore trusted = (TrustedKeyStore)TrustedKeyStore.getInstance();
       DeviceKeyStore device = (DeviceKeyStore)DeviceKeyStore.getInstance();
@@ -227,7 +227,7 @@ final class MIDPRootCertificates {
    }
 
    private static final void inject_TelefonicaCertificates() {
-      CertificateStatus status = (CertificateStatus)(new Object(0, 1158007107581L, 1158007107581L, 0, 0, -1));
+      CertificateStatus status = new CertificateStatus(0, 1158007107581L, 1158007107581L, 0, 0, -1);
       String x509 = "X509";
       TrustedKeyStore trusted = (TrustedKeyStore)TrustedKeyStore.getInstance();
       DeviceKeyStore device = (DeviceKeyStore)DeviceKeyStore.getInstance();
@@ -239,7 +239,7 @@ final class MIDPRootCertificates {
    }
 
    private static final void injectUS_CingularWirelessCertificates() {
-      CertificateStatus status = (CertificateStatus)(new Object(0, 1158007107581L, 1158007107581L, 0, 0, -1));
+      CertificateStatus status = new CertificateStatus(0, 1158007107581L, 1158007107581L, 0, 0, -1);
       String x509 = "X509";
       TrustedKeyStore trusted = (TrustedKeyStore)TrustedKeyStore.getInstance();
       DeviceKeyStore device = (DeviceKeyStore)DeviceKeyStore.getInstance();
@@ -280,7 +280,7 @@ final class MIDPRootCertificates {
    }
 
    private static final void injectUS_TMobileCertificatesPositron() {
-      CertificateStatus status = (CertificateStatus)(new Object(0, 1158007107581L, 1158007107581L, 0, 0, -1));
+      CertificateStatus status = new CertificateStatus(0, 1158007107581L, 1158007107581L, 0, 0, -1);
       String x509 = "X509";
       TrustedKeyStore trusted = (TrustedKeyStore)TrustedKeyStore.getInstance();
       DeviceKeyStore device = (DeviceKeyStore)DeviceKeyStore.getInstance();
@@ -297,7 +297,7 @@ final class MIDPRootCertificates {
    }
 
    private static final void injectUS_TMobileCertificatesGammarayAndDeltaray() {
-      CertificateStatus status = (CertificateStatus)(new Object(0, 1158007107581L, 1158007107581L, 0, 0, -1));
+      CertificateStatus status = new CertificateStatus(0, 1158007107581L, 1158007107581L, 0, 0, -1);
       String x509 = "X509";
       TrustedKeyStore trusted = (TrustedKeyStore)TrustedKeyStore.getInstance();
       DeviceKeyStore device = (DeviceKeyStore)DeviceKeyStore.getInstance();
@@ -314,7 +314,7 @@ final class MIDPRootCertificates {
    }
 
    private static final void injectUS_TMobileCertificatesMamaBear() {
-      CertificateStatus status = (CertificateStatus)(new Object(0, 1158007107581L, 1158007107581L, 0, 0, -1));
+      CertificateStatus status = new CertificateStatus(0, 1158007107581L, 1158007107581L, 0, 0, -1);
       String x509 = "X509";
       TrustedKeyStore trusted = (TrustedKeyStore)TrustedKeyStore.getInstance();
       DeviceKeyStore device = (DeviceKeyStore)DeviceKeyStore.getInstance();
@@ -331,7 +331,7 @@ final class MIDPRootCertificates {
    }
 
    private static final void injectUS_TMobileCertificatesComet() {
-      CertificateStatus status = (CertificateStatus)(new Object(0, 1158007107581L, 1158007107581L, 0, 0, -1));
+      CertificateStatus status = new CertificateStatus(0, 1158007107581L, 1158007107581L, 0, 0, -1);
       String x509 = "X509";
       TrustedKeyStore trusted = (TrustedKeyStore)TrustedKeyStore.getInstance();
       DeviceKeyStore device = (DeviceKeyStore)DeviceKeyStore.getInstance();
@@ -348,7 +348,7 @@ final class MIDPRootCertificates {
    }
 
    private static final void injectUS_TMobileCertificatesDefault() {
-      CertificateStatus status = (CertificateStatus)(new Object(0, 1158007107581L, 1158007107581L, 0, 0, -1));
+      CertificateStatus status = new CertificateStatus(0, 1158007107581L, 1158007107581L, 0, 0, -1);
       String x509 = "X509";
       TrustedKeyStore trusted = (TrustedKeyStore)TrustedKeyStore.getInstance();
       DeviceKeyStore device = (DeviceKeyStore)DeviceKeyStore.getInstance();
@@ -365,7 +365,7 @@ final class MIDPRootCertificates {
    }
 
    private static final void injectEU_TMobileCertificates() {
-      CertificateStatus status = (CertificateStatus)(new Object(0, 1158007107581L, 1158007107581L, 0, 0, -1));
+      CertificateStatus status = new CertificateStatus(0, 1158007107581L, 1158007107581L, 0, 0, -1);
       String x509 = "X509";
       TrustedKeyStore trusted = (TrustedKeyStore)TrustedKeyStore.getInstance();
       DeviceKeyStore device = (DeviceKeyStore)DeviceKeyStore.getInstance();
@@ -385,7 +385,7 @@ final class MIDPRootCertificates {
    }
 
    private static final void inject_RogersCertificates() {
-      CertificateStatus status = (CertificateStatus)(new Object(0, 1158007107581L, 1158007107581L, 0, 0, -1));
+      CertificateStatus status = new CertificateStatus(0, 1158007107581L, 1158007107581L, 0, 0, -1);
       String x509 = "X509";
       TrustedKeyStore trusted = (TrustedKeyStore)TrustedKeyStore.getInstance();
       DeviceKeyStore device = (DeviceKeyStore)DeviceKeyStore.getInstance();

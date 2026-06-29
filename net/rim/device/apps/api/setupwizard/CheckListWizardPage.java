@@ -4,10 +4,11 @@ import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.CheckboxField;
+import net.rim.device.api.ui.component.NullField;
 
 public class CheckListWizardPage extends ListWizardPage {
-   private CheckboxField[] _checkboxFields = new Object[0];
-   private String[] _listItemStrings = new Object[0];
+   private CheckboxField[] _checkboxFields = new CheckboxField[0];
+   private String[] _listItemStrings = new String[0];
    private Manager _listContainer = null;
    private boolean _useSmallListFont;
    private boolean _noAutoFocus;
@@ -39,9 +40,9 @@ public class CheckListWizardPage extends ListWizardPage {
 
       for (int i = 0; i <= this._listContainer.getFieldCount() - 1; i++) {
          Field listField = this._listContainer.getField(i);
-         if (listField instanceof Object) {
-            CheckboxField var4 = this._listContainer.getField(i);
-            if (!((CheckboxField)var4).getChecked()) {
+         if (listField instanceof CheckboxField) {
+            checkBox = (CheckboxField)this._listContainer.getField(i);
+            if (!checkBox.getChecked()) {
                return false;
             }
          }
@@ -55,7 +56,7 @@ public class CheckListWizardPage extends ListWizardPage {
 
       for (int i = 0; i <= this._listContainer.getFieldCount() - 1; i++) {
          Field listField = this._listContainer.getField(i);
-         if (listField instanceof Object) {
+         if (listField instanceof CheckboxField) {
             CheckboxField checkBox = (CheckboxField)this._listContainer.getField(i);
             fieldValues[i] = checkBox.getChecked();
          }
@@ -96,13 +97,13 @@ public class CheckListWizardPage extends ListWizardPage {
       }
 
       if (this._noAutoFocus) {
-         this._listContainer.add((Field)(new Object()));
+         this._listContainer.add(new NullField());
       }
 
       if (this._listItemStrings != null && this._listItemStrings.length > 0) {
          for (int i = 0; i < this._listItemStrings.length; i++) {
             if (this._listItemStrings[i] != null) {
-               CheckboxField checkBox = (CheckboxField)(new Object(this._listItemStrings[i], false));
+               CheckboxField checkBox = new CheckboxField(this._listItemStrings[i], false);
                this._listContainer.add(checkBox);
             }
          }

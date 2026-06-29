@@ -24,6 +24,7 @@ import net.rim.device.api.crypto.SymmetricKey;
 import net.rim.device.api.crypto.tls.TLSAlertException;
 import net.rim.device.api.crypto.tls.TLSBlockFormatterEngine;
 import net.rim.device.api.crypto.tls.TLSBlockUnformatterEngine;
+import net.rim.device.cldc.io.ssl.TLSException;
 
 final class WTLSCipherSuiteFactory {
    public static final WTLSConnectionState getConnectionState(int cipherSuite) throws TLSAlertException {
@@ -147,7 +148,7 @@ final class WTLSCipherSuiteFactory {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public static final void updateReadConnectionState(
       WTLSConnectionState state, SymmetricKey cipherKey, SymmetricKey hmacKey, InitializationVector iv, InputStream input
-   ) {
+   ) throws TLSException {
       try {
          String bulkAlgorithm = state.getBulkCipherAlgorithm();
          if (bulkAlgorithm == null) {
@@ -158,9 +159,7 @@ final class WTLSCipherSuiteFactory {
             if (state.getIsExportable() && cipherKey instanceof RC5Key) {
                blockDecrypt = new CBCDecryptorEngine(new RC5DecryptorEngine((RC5Key)cipherKey, 8, 12), iv);
             } else {
-               blockDecrypt = DecryptorFactory.getBlockDecryptorEngine(
-                  cipherKey, ((StringBuffer)(new Object())).append(bulkAlgorithm).append("/CBC").toString(), iv
-               );
+               blockDecrypt = DecryptorFactory.getBlockDecryptorEngine(cipherKey, bulkAlgorithm + "/CBC", iv);
             }
 
             state.setBlockDecryptor(blockDecrypt);
@@ -173,11 +172,11 @@ final class WTLSCipherSuiteFactory {
             NullMAC mac = new NullMAC();
             state.setServerMAC(mac);
          } else {
-            HMAC hmac = (HMAC)(new Object((HMACKey)hmacKey, DigestFactory.getInstance(macAlgorithm)));
+            HMAC hmac = new HMAC((HMACKey)hmacKey, DigestFactory.getInstance(macAlgorithm));
             state.setServerMAC(hmac);
          }
       } catch (Throwable var9) {
-         throw new Object(e);
+         throw new TLSException(e);
       }
    }
 
@@ -185,7 +184,7 @@ final class WTLSCipherSuiteFactory {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public static final void updateWriteConnectionState(
       WTLSConnectionState state, SymmetricKey cipherKey, SymmetricKey hmacKey, InitializationVector iv, OutputStream output
-   ) {
+   ) throws TLSException {
       try {
          String bulkAlgorithm = state.getBulkCipherAlgorithm();
          if (bulkAlgorithm == null) {
@@ -196,9 +195,7 @@ final class WTLSCipherSuiteFactory {
             if (state.getIsExportable() && cipherKey instanceof RC5Key) {
                blockEncrypt = new CBCEncryptorEngine(new RC5EncryptorEngine((RC5Key)cipherKey, 8, 12), iv);
             } else {
-               blockEncrypt = EncryptorFactory.getBlockEncryptorEngine(
-                  cipherKey, ((StringBuffer)(new Object())).append(bulkAlgorithm).append("/CBC").toString(), iv
-               );
+               blockEncrypt = EncryptorFactory.getBlockEncryptorEngine(cipherKey, bulkAlgorithm + "/CBC", iv);
             }
 
             state.setBlockEncryptor(blockEncrypt);
@@ -211,11 +208,11 @@ final class WTLSCipherSuiteFactory {
             NullMAC mac = new NullMAC();
             state.setClientMAC(mac);
          } else {
-            HMAC hmac = (HMAC)(new Object((HMACKey)hmacKey, DigestFactory.getInstance(macAlgorithm)));
+            HMAC hmac = new HMAC((HMACKey)hmacKey, DigestFactory.getInstance(macAlgorithm));
             state.setClientMAC(hmac);
          }
       } catch (Throwable var9) {
-         throw new Object(e);
+         throw new TLSException(e);
       }
    }
 

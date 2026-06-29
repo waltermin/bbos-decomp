@@ -9,6 +9,8 @@ import net.rim.device.apps.api.calendar.caldb.CalendarOptions;
 import net.rim.device.apps.api.calendar.modelcontrollerinterface.Event;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.verb.Verb;
+import net.rim.device.apps.internal.calendar.eventprovider.EditEventVerb;
+import net.rim.device.apps.internal.calendar.eventprovider.NewEventVerb;
 import net.rim.device.cldc.util.CalendarExtensions;
 import net.rim.vm.PersistentInteger;
 
@@ -177,13 +179,13 @@ final class CalendarAppController implements CalendarActions, GlobalEventListene
             long requestedDate = 0;
             boolean requestedNew = false;
             Event requestedEvent = null;
-            if (object0 instanceof Object) {
+            if (object0 instanceof ContextObject) {
                ContextObject context = (ContextObject)object0;
                Object data = context.get(4143325197084129318L);
-               if (data instanceof Object) {
+               if (data instanceof Calendar) {
                   CalendarOptions.getOptions().resetCalendarServiceFilter();
                   requestedDate = ((CalendarExtensions)data).getTimeLong();
-               } else if (data instanceof Object) {
+               } else if (data instanceof Event) {
                   requestedEvent = (Event)data;
                }
 
@@ -200,7 +202,7 @@ final class CalendarAppController implements CalendarActions, GlobalEventListene
             }
 
             if (requestedNew) {
-               Verb newEvtVerb = (Verb)(new Object());
+               Verb newEvtVerb = new NewEventVerb();
                if (requestedEvent != null) {
                   this._verbQueueThread.addVerbToQueue(newEvtVerb, requestedEvent);
                   return;
@@ -217,7 +219,7 @@ final class CalendarAppController implements CalendarActions, GlobalEventListene
 
             if (requestedEvent != null) {
                CalOptionCache.setTimeWithFocus(requestedEvent.getStart(this._currentTimeZone));
-               Verb editEventVerb = (Verb)(new Object(requestedEvent));
+               Verb editEventVerb = new EditEventVerb(requestedEvent);
                this._verbQueueThread.addVerbToQueue(editEventVerb, null);
             }
          }

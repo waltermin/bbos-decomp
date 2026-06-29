@@ -9,7 +9,7 @@ final class EventCollection$EndHandler implements LongFieldHandler {
 
    @Override
    public final long getValue(Object item) {
-      if (!(item instanceof Object)) {
+      if (!(item instanceof Event)) {
          return -1;
       }
 

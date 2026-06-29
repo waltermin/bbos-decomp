@@ -45,8 +45,8 @@ public final class ServiceBookIndicator implements Indicator, TestPoint {
 
    @Override
    public final void test(Object id, Object value) {
-      if (value instanceof Object) {
-         if (value) {
+      if (value instanceof Boolean) {
+         if ((Boolean)value) {
             this._indicatorManager.addIndicator(this);
             this._indicatorOn = true;
             return;

@@ -23,7 +23,7 @@ public final class MediaFactory {
       try {
          return (MediaServices)createService(mediaType, "MEDIA_SERVICES");
       } finally {
-         String[] keys = new Object[]{"MEDIA", mediaType};
+         String[] keys = new String[]{"MEDIA", mediaType};
          if (null != getRegistry().getValue(keys)) {
             MediaServices services = new MediaServices(mediaType);
             services.getService("MAIN_SERVICE");
@@ -35,23 +35,23 @@ public final class MediaFactory {
    }
 
    public static final boolean isSupported(String contentType) {
-      return null != getRegistry().getValue(new Object[]{"CONTENT", contentType});
+      return null != getRegistry().getValue(new String[]{"CONTENT", contentType});
    }
 
    public static final void verifyContentType(String contentType) throws MediaException {
-      String[] keys = new Object[]{"CONTENT", contentType};
+      String[] keys = new String[]{"CONTENT", contentType};
       if (null == getRegistry().getValue(keys)) {
          throw new MediaException(8, RegistryImpl.getKey(keys));
       }
    }
 
    public static final Object createService(String mediaType, String serviceId) {
-      return createObjectFromRegistry(new Object[]{"MEDIA", mediaType, serviceId});
+      return createObjectFromRegistry(new String[]{"MEDIA", mediaType, serviceId});
    }
 
    public static final ResourceProvider createResourceProvider(String contentType, String version) throws MediaException {
       try {
-         return (ResourceProvider)createObjectFromRegistry(new Object[]{"CONTENT", contentType, version});
+         return (ResourceProvider)createObjectFromRegistry(new String[]{"CONTENT", contentType, version});
       } catch (MediaException ex) {
          if (version.compareTo(((RegistryImpl)getRegistry()).getMinSupportedVersion()) < 0) {
             throw new MediaException(2, ex.getMessage(), version);
@@ -64,12 +64,12 @@ public final class MediaFactory {
    }
 
    public static final FormatVersionReader createVersionReader(String contentType) {
-      return (FormatVersionReader)createObjectFromRegistry(new Object[]{"CONTENT", contentType, "VERSION_READER"});
+      return (FormatVersionReader)createObjectFromRegistry(new String[]{"CONTENT", contentType, "VERSION_READER"});
    }
 
    public static final ResourceProvider createResourceProvider(String contentType, byte[] header) {
       try {
-         return (ResourceProvider)createObjectFromRegistry(new Object[]{"CONTENT", contentType, "RESOURCE_PROVIDER"});
+         return (ResourceProvider)createObjectFromRegistry(new String[]{"CONTENT", contentType, "RESOURCE_PROVIDER"});
       } catch (MediaException e) {
          FormatVersionReader versionReader = createVersionReader(contentType);
          String version = versionReader.getVersion(header, 0);
@@ -116,7 +116,7 @@ public final class MediaFactory {
          }
 
          if (_platform == null) {
-            throw new Object("PLATFORM must be non-null");
+            throw new NullPointerException("PLATFORM must be non-null");
          }
       }
 
@@ -129,7 +129,7 @@ public final class MediaFactory {
             ? _registryProvider
             : (RegistryProvider)createObject("net.rim.plazmic.internal.mediaengine.util.RIMRegistryProvider");
          if (registryProvider == null) {
-            throw new Object("Defines.REGISTRY_PROVIDER_CLASS is not found");
+            throw new NullPointerException("Defines.REGISTRY_PROVIDER_CLASS is not found");
          }
 
          _registry = registryProvider.getRegistry();
@@ -161,21 +161,21 @@ public final class MediaFactory {
       // 0e: aload 1
       // 0f: areturn
       // 10: astore 2
-      // 11: new java/lang/Object
+      // 11: new java/lang/RuntimeException
       // 14: dup
       // 15: aload 2
       // 16: invokevirtual java/lang/InstantiationException.toString ()Ljava/lang/String;
       // 19: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 1c: athrow
       // 1d: astore 2
-      // 1e: new java/lang/Object
+      // 1e: new java/lang/RuntimeException
       // 21: dup
       // 22: aload 2
       // 23: invokevirtual java/lang/IllegalAccessException.toString ()Ljava/lang/String;
       // 26: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 29: athrow
       // 2a: astore 2
-      // 2b: new java/lang/Object
+      // 2b: new java/lang/RuntimeException
       // 2e: dup
       // 2f: aload 2
       // 30: invokevirtual java/lang/ClassNotFoundException.toString ()Ljava/lang/String;

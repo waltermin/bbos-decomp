@@ -7,8 +7,8 @@ import net.rim.vm.Array;
 
 public class ConversionEvent extends Event {
    private KeyEvent _initialEvent;
-   private StringBuffer _keyChars = (StringBuffer)(new Object());
-   private StringBuffer _optionalKeyChars = (StringBuffer)(new Object());
+   private StringBuffer _keyChars = new StringBuffer();
+   private StringBuffer _optionalKeyChars = new StringBuffer();
    private int _keyCode;
    private int _modifiers;
    private byte _lookupOpenStyle;

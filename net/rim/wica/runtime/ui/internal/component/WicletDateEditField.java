@@ -3,6 +3,7 @@ package net.rim.wica.runtime.ui.internal.component;
 import java.util.Date;
 import java.util.Vector;
 import net.rim.device.api.i18n.DateFormat;
+import net.rim.device.api.i18n.SimpleDateFormat;
 import net.rim.device.api.io.http.HttpDateParser;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
@@ -29,7 +30,7 @@ final class WicletDateEditField extends DateField implements View, FieldChangeLi
       this.setEditable(!model.isReadOnly());
       String format = model.getFormat();
       if (format != null) {
-         DateFormat df = (DateFormat)(new Object(format));
+         DateFormat df = new SimpleDateFormat(format);
          int[] fields = df.getFields();
          if (fields != null && fields.length > 0) {
             this.setFormat(df);
@@ -46,21 +47,21 @@ final class WicletDateEditField extends DateField implements View, FieldChangeLi
       Object value = this._model.getValue();
       long date = 0;
       if (value == null) {
-         date = ((Date)(new Object())).getTime();
-         this._model.initializeToEmpty(new Object(date));
-      } else if (!(value instanceof Object)) {
+         date = new Date().getTime();
+         this._model.initializeToEmpty(new Long(date));
+      } else if (!(value instanceof Vector)) {
          if (!(value instanceof LongVector)) {
-            if (value instanceof Object) {
+            if (value instanceof String) {
                date = this.parseDate((String)value);
             } else {
-               date = value;
+               date = (Long)value;
             }
          } else {
             LongVector values = (LongVector)value;
             if (values.size() > 0) {
                date = values.elementAt(row);
             } else {
-               date = ((Date)(new Object())).getTime();
+               date = new Date().getTime();
             }
          }
       } else {
@@ -68,7 +69,7 @@ final class WicletDateEditField extends DateField implements View, FieldChangeLi
          if (values.size() > 0) {
             date = this.parseDate((String)values.elementAt(row));
          } else {
-            date = ((Date)(new Object())).getTime();
+            date = new Date().getTime();
          }
       }
 
@@ -154,7 +155,7 @@ final class WicletDateEditField extends DateField implements View, FieldChangeLi
 
    @Override
    public final void fieldChanged(Field field, int context) {
-      this._model.setValue(new Object(this.getDate()), true);
+      this._model.setValue(new Long(this.getDate()), true);
    }
 
    @Override
@@ -167,7 +168,7 @@ final class WicletDateEditField extends DateField implements View, FieldChangeLi
       if (this.isEditable()) {
          super.drawFocus(graphics, on);
       } else {
-         XYRect rect = (XYRect)(new Object());
+         XYRect rect = new XYRect();
          this.getFocusRect(rect);
          this.drawHighlightRegion(graphics, 1, on, rect.x, rect.y, rect.width, rect.height);
       }

@@ -2,7 +2,9 @@ package net.rim.device.api.crypto.tls.ssl30;
 
 import net.rim.device.api.crypto.DHKeyPair;
 import net.rim.device.api.crypto.DHPublicKey;
+import net.rim.device.api.crypto.DSAPublicKey;
 import net.rim.device.api.crypto.PublicKey;
+import net.rim.device.api.crypto.RSAPublicKey;
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.CertificateUtilities;
 import net.rim.device.api.crypto.certificate.DistinguishedName;
@@ -71,7 +73,7 @@ public final class SSLHandshakeUtilities implements SSLRecordProtocolConstants {
       // 099: goto 09e
       // 09c: astore 6
       // 09e: aload 5
-      // 0a0: instanceof java/lang/Object
+      // 0a0: instanceof net/rim/device/api/crypto/RSAPublicKey
       // 0a3: ifeq 0b3
       // 0a6: aload 0
       // 0a7: bipush 4
@@ -106,7 +108,7 @@ public final class SSLHandshakeUtilities implements SSLRecordProtocolConstants {
       // 0f0: goto 0f5
       // 0f3: astore 6
       // 0f5: aload 5
-      // 0f7: instanceof java/lang/Object
+      // 0f7: instanceof net/rim/device/api/crypto/DSAPublicKey
       // 0fa: ifeq 100
       // 0fd: goto 1b6
       // 100: aload 2
@@ -122,7 +124,7 @@ public final class SSLHandshakeUtilities implements SSLRecordProtocolConstants {
       // 117: goto 11c
       // 11a: astore 6
       // 11c: aload 5
-      // 11e: instanceof java/lang/Object
+      // 11e: instanceof net/rim/device/api/crypto/DHPublicKey
       // 121: ifeq 127
       // 124: goto 1b6
       // 127: aload 2
@@ -214,11 +216,11 @@ public final class SSLHandshakeUtilities implements SSLRecordProtocolConstants {
          switch (types[i]) {
             case 1:
             default:
-               if (publicKey instanceof Object) {
+               if (publicKey instanceof RSAPublicKey) {
                   return true;
                }
             case 2:
-               if (publicKey instanceof Object) {
+               if (publicKey instanceof DSAPublicKey) {
                   return true;
                }
             case 0:
@@ -264,22 +266,22 @@ public final class SSLHandshakeUtilities implements SSLRecordProtocolConstants {
       //
       // Bytecode:
       // 00: aload 0
-      // 01: instanceof java/lang/Object
+      // 01: instanceof net/rim/device/api/crypto/DHPublicKey
       // 04: ifne 09
       // 07: bipush 0
       // 08: ireturn
       // 09: aload 0
       // 0a: invokeinterface net/rim/device/api/crypto/PublicKey.getCryptoSystem ()Lnet/rim/device/api/crypto/CryptoSystem; 1
-      // 0f: checkcast java/lang/Object
+      // 0f: checkcast net/rim/device/api/crypto/DHCryptoSystem
       // 12: astore 2
       // 13: aload 1
-      // 14: instanceof java/lang/Object
+      // 14: instanceof net/rim/device/api/crypto/DHPublicKey
       // 17: ifne 1c
       // 1a: bipush 0
       // 1b: ireturn
       // 1c: aload 1
       // 1d: invokeinterface net/rim/device/api/crypto/PublicKey.getCryptoSystem ()Lnet/rim/device/api/crypto/CryptoSystem; 1
-      // 22: checkcast java/lang/Object
+      // 22: checkcast net/rim/device/api/crypto/DHCryptoSystem
       // 25: astore 3
       // 26: aload 2
       // 27: invokevirtual net/rim/device/api/crypto/DHCryptoSystem.getP ()[B
@@ -338,7 +340,7 @@ public final class SSLHandshakeUtilities implements SSLRecordProtocolConstants {
       // 00: invokestatic net/rim/device/api/crypto/keystore/DeviceKeyStore.getInstance ()Lnet/rim/device/api/crypto/keystore/KeyStore;
       // 03: astore 1
       // 04: aload 1
-      // 05: new java/lang/Object
+      // 05: new net/rim/device/api/crypto/keystore/PrivateKeysKeyStoreIndex
       // 08: dup
       // 09: invokespecial net/rim/device/api/crypto/keystore/PrivateKeysKeyStoreIndex.<init> ()V
       // 0c: invokeinterface net/rim/device/api/crypto/keystore/KeyStore.addIndex (Lnet/rim/device/api/crypto/keystore/KeyStoreIndex;)Z 2
@@ -360,7 +362,7 @@ public final class SSLHandshakeUtilities implements SSLRecordProtocolConstants {
       // 31: ifeq ab
       // 34: aload 5
       // 36: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 3b: checkcast java/lang/Object
+      // 3b: checkcast net/rim/device/api/crypto/keystore/KeyStoreData
       // 3e: astore 6
       // 40: aload 6
       // 42: invokeinterface net/rim/device/api/crypto/keystore/KeyStoreData.isPrivateKeySet ()Z 1
@@ -369,7 +371,7 @@ public final class SSLHandshakeUtilities implements SSLRecordProtocolConstants {
       // 4c: invokeinterface net/rim/device/api/crypto/keystore/KeyStoreData.getPublicKey ()Lnet/rim/device/api/crypto/PublicKey; 1
       // 51: astore 7
       // 53: aload 7
-      // 55: instanceof java/lang/Object
+      // 55: instanceof net/rim/device/api/crypto/DHPublicKey
       // 58: ifeq 2a
       // 5b: aload 7
       // 5d: aload 0
@@ -390,14 +392,14 @@ public final class SSLHandshakeUtilities implements SSLRecordProtocolConstants {
       // 75: invokestatic net/rim/vm/Array.resize (Ljava/lang/Object;I)V
       // 78: aload 2
       // 79: iload 4
-      // 7b: new java/lang/Object
+      // 7b: new net/rim/device/api/crypto/DHKeyPair
       // 7e: dup
       // 7f: aload 7
-      // 81: checkcast java/lang/Object
+      // 81: checkcast net/rim/device/api/crypto/DHPublicKey
       // 84: aload 6
       // 86: aconst_null
       // 87: invokeinterface net/rim/device/api/crypto/keystore/KeyStoreData.getPrivateKey (Lnet/rim/device/api/crypto/keystore/KeyStoreDataTicket;)Lnet/rim/device/api/crypto/PrivateKey; 2
-      // 8c: checkcast java/lang/Object
+      // 8c: checkcast net/rim/device/api/crypto/DHPrivateKey
       // 8f: invokespecial net/rim/device/api/crypto/DHKeyPair.<init> (Lnet/rim/device/api/crypto/DHPublicKey;Lnet/rim/device/api/crypto/DHPrivateKey;)V
       // 92: aastore
       // 93: aload 3

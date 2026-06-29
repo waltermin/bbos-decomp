@@ -11,7 +11,7 @@ public class SmartCard implements Persistable {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public final synchronized SmartCardSession openSession(SmartCardReaderSession readerSession) throws SmartCardException {
       if (readerSession == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       readerSession.openSmartCardSession();
@@ -66,7 +66,7 @@ public class SmartCard implements Persistable {
 
    public final boolean checkAnswerToReset(AnswerToReset atr) {
       if (atr == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       try {
@@ -130,7 +130,7 @@ public class SmartCard implements Persistable {
 
    @Override
    public int hashCode() {
-      StringBuffer buffer = (StringBuffer)(new Object(this.getClass().getName()));
+      StringBuffer buffer = new StringBuffer(this.getClass().getName());
       String label = this.getLabel();
       if (label != null) {
          buffer.append(label);

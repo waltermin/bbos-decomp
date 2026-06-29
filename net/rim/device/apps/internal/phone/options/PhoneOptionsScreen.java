@@ -2,16 +2,16 @@ package net.rim.device.apps.internal.phone.options;
 
 import java.util.Vector;
 import net.rim.device.api.system.ApplicationRegistry;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.Arrays;
-import net.rim.device.api.util.Comparator;
 import net.rim.device.apps.api.framework.model.ActionProvider;
 import net.rim.device.apps.api.framework.model.PaintProvider;
+import net.rim.device.apps.api.options.OptionsOrderingComparator;
 import net.rim.device.apps.api.options.OptionsProviderRegistration$OptionsProvider;
 import net.rim.device.apps.api.options.SaveableMainScreenOptionsListItem;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
@@ -27,7 +27,7 @@ public class PhoneOptionsScreen extends MainScreen implements ListFieldCallback 
 
    public PhoneOptionsScreen(Object context) {
       ApplicationRegistry appReg = ApplicationRegistry.getApplicationRegistry();
-      this.setTitle((Field)(new Object(PhoneResources.getString(151))));
+      this.setTitle(new LabelField(PhoneResources.getString(151)));
       _instance = this;
       int index = 0;
       this._phoneOptionsList = new Object[13];
@@ -106,8 +106,8 @@ public class PhoneOptionsScreen extends MainScreen implements ListFieldCallback 
          index += registeredCount;
       }
 
-      Arrays.sort(this._phoneOptionsList, (Comparator)(new Object()));
-      this._listField = (ListField)(new Object(index));
+      Arrays.sort(this._phoneOptionsList, new OptionsOrderingComparator());
+      this._listField = new ListField(index);
       this.add(this._listField);
       this._listField.setCallback(this);
       SSManager.resetSuppressMessageDialogs();
@@ -155,7 +155,7 @@ public class PhoneOptionsScreen extends MainScreen implements ListFieldCallback 
    private void openSelectedItem() {
       Object item = this._phoneOptionsList[this._listField.getSelectedIndex()];
       if (!(item instanceof PhoneOptionsItem)) {
-         if (item instanceof Object) {
+         if (item instanceof ActionProvider) {
             ((ActionProvider)item).perform(6099736323056465049L, null);
          }
       } else {
@@ -167,7 +167,7 @@ public class PhoneOptionsScreen extends MainScreen implements ListFieldCallback 
    public void drawListRow(ListField listField, Graphics graphics, int index, int y, int width) {
       int height = listField.getFont().getHeight();
       Object item = this._phoneOptionsList[index];
-      if (item instanceof Object) {
+      if (item instanceof PaintProvider) {
          PaintProvider paintProvider = (PaintProvider)item;
          paintProvider.paint(graphics, 0, y, width, height, null);
       }

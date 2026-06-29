@@ -20,14 +20,13 @@ public class CredentialStoreImpl implements CredentialStore {
 
    @Override
    public Persistable[] loadCredentials(long id) {
-      return (Object[])this._credentialsSubstore.get(id);
+      return (Persistable[])this._credentialsSubstore.get(id);
    }
 
    @Override
    public Persistable[] loadCredentialsForWrite(long id) {
       Object o = this._credentialsSubstore.get(id);
-      Persistable[] credentials = o != null && ObjectGroup.isInGroup(o) ? (Object[])ObjectGroup.expandGroup(o) : (Object[])o;
-      return credentials;
+      return o != null && ObjectGroup.isInGroup(o) ? (Persistable[])ObjectGroup.expandGroup(o) : (Persistable[])o;
    }
 
    @Override

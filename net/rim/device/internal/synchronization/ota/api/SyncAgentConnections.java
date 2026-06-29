@@ -11,8 +11,8 @@ import net.rim.device.api.util.SimpleSortingIntVector;
 import net.rim.device.internal.proxy.Proxy;
 
 public final class SyncAgentConnections implements LowMemoryFailedListener, GlobalEventListener {
-   private IntHashtable _syncAgentConnections = (IntHashtable)(new Object());
-   private SimpleSortingIntVector _syncAgentConnectionsPriority = (SimpleSortingIntVector)(new Object());
+   private IntHashtable _syncAgentConnections = new IntHashtable();
+   private SimpleSortingIntVector _syncAgentConnectionsPriority = new SimpleSortingIntVector();
    private byte _lowMemoryPollCounter;
    private boolean _lowInMemory;
    private static final long APPLICATION_REG_GUID = 2945150083663420434L;
@@ -87,7 +87,7 @@ public final class SyncAgentConnections implements LowMemoryFailedListener, Glob
    public static final void registerConnection(SyncAgentConnection aSyncAgentConnection) {
       synchronized (getInstance()) {
          if (isConnectionRegistered(aSyncAgentConnection.getUrl())) {
-            throw new Object();
+            throw new IllegalStateException();
          }
 
          getInstance()._syncAgentConnections.put(aSyncAgentConnection.hashCode(), aSyncAgentConnection);
@@ -212,7 +212,7 @@ public final class SyncAgentConnections implements LowMemoryFailedListener, Glob
          }
 
          if (aList == null) {
-            aList = (Vector)(new Object(0));
+            aList = new Vector(0);
          } else {
             aList.setSize(0);
          }

@@ -16,7 +16,7 @@ final class ModuleInformation$ApplicationControlMenuItem extends MenuItem {
 
    @Override
    public final void run() {
-      ApplicationControlInformation aci = (ApplicationControlInformation)(new Object(this._moduleHandle));
+      ApplicationControlInformation aci = new ApplicationControlInformation(this._moduleHandle);
       aci.open();
       this.this$0._mainScreen.deleteAll();
       this.this$0._mainScreen.removeAllMenuItems();

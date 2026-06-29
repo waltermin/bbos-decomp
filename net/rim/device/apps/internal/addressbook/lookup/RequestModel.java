@@ -18,6 +18,7 @@ import net.rim.device.apps.api.framework.model.VerbDescriptionProvider;
 import net.rim.device.apps.api.framework.model.VerbProvider;
 import net.rim.device.apps.api.framework.registration.VerbRepository;
 import net.rim.device.apps.api.framework.verb.Verb;
+import net.rim.device.apps.api.utility.editor.EditorUsingRIMModelFactory;
 import net.rim.device.apps.internal.addressbook.resources.AddressBookResources;
 import net.rim.vm.Array;
 
@@ -43,7 +44,7 @@ public class RequestModel
          Request req = this.fetchRequest();
          if (req != null) {
             RIMModel addressBookEntry = req.getSelectedAddress();
-            if (addressBookEntry instanceof Object) {
+            if (addressBookEntry instanceof PaintProvider) {
                return ((PaintProvider)addressBookEntry).paint(g, x, y, width, height, context);
             }
          }
@@ -67,7 +68,7 @@ public class RequestModel
       Request r = this.fetchRequest();
       if (r != null) {
          Object modelUser = ContextObject.get(r.getContext(), -6581931217101110672L);
-         boolean fromEmailCompose = modelUser instanceof Object;
+         boolean fromEmailCompose = modelUser instanceof EditorUsingRIMModelFactory;
          if (r.isViewable()) {
             SelectionListener selectionListener = (SelectionListener)ContextObject.get(contextObject, -7302237785847991426L);
             int numMatches = r._result.getIncludedMatches();
@@ -85,8 +86,8 @@ public class RequestModel
                   }
                } else {
                   RIMModel resolvedModel = r.getSelectedAddress();
-                  if (resolvedModel instanceof Object) {
-                     Verb[] addressVerbs = new Object[0];
+                  if (resolvedModel instanceof VerbProvider) {
+                     Verb[] addressVerbs = new Verb[0];
                      context.put(113, r);
                      context.setFlag(114);
                      Verb tempDefault = ((VerbProvider)resolvedModel).getVerbs(context, addressVerbs);
@@ -153,7 +154,7 @@ public class RequestModel
       if (request != null) {
          String search = this.getSearch();
          if (search == null || !search.equals(request._search)) {
-            this.setSearch(new Object(request._search).toString());
+            this.setSearch(request._search);
          }
       }
 
@@ -173,17 +174,17 @@ public class RequestModel
    @Override
    public boolean convert(Object contextObject, Object target) {
       boolean addressAndFriendlyConversion = ContextObject.getFlag(contextObject, 10);
-      if (addressAndFriendlyConversion && target instanceof Object[]) {
-         String[] strings = (Object[])target;
+      if (addressAndFriendlyConversion && target instanceof String[]) {
+         String[] strings = (String[])target;
          Request r = this.fetchRequest();
          if (r != null && !r.needsResolving()) {
             RIMModel sm = r.getSelectedAddressSubItem();
-            if (sm instanceof Object && ((ConversionProvider)sm).convert(contextObject, strings)) {
+            if (sm instanceof ConversionProvider && ((ConversionProvider)sm).convert(contextObject, strings)) {
                String emailAddr = strings[0];
                strings[0] = null;
                strings[1] = null;
                RIMModel m = r.getSelectedAddress();
-               if (m instanceof Object && ((ConversionProvider)m).convert(contextObject, strings)) {
+               if (m instanceof ConversionProvider && ((ConversionProvider)m).convert(contextObject, strings)) {
                   strings[0] = emailAddr;
                   return true;
                }
@@ -217,7 +218,7 @@ public class RequestModel
 
    @Override
    public void setFreeForm(boolean isFreeForm) {
-      throw new Object("Called setFreeForm on a RequestModel");
+      throw new IllegalStateException("Called setFreeForm on a RequestModel");
    }
 
    @Override
@@ -231,7 +232,7 @@ public class RequestModel
 
    @Override
    public Field getField(Object context) {
-      LabelField label = (LabelField)(new Object(this.toString(), 18014398509481984L));
+      LabelField label = new LabelField(this.toString(), 18014398509481984L);
       label.setCookie(this);
       return label;
    }

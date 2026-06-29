@@ -17,7 +17,7 @@ public class RecurCalc {
    private long[] _exclusions = new long[0];
    private long[] _inclusions = new long[0];
    private Recur$Modifier _sharedModifier = new Recur$Modifier();
-   private BitSet _sharedDOWOfEvent = (BitSet)(new Object(7));
+   private BitSet _sharedDOWOfEvent = new BitSet(7);
    private int[] _sharedDaysBetweenEvents = new int[7];
    private static final int NUM_WEEKEND_MODIFIERS = 2;
    private static final int NUM_WEEKDAY_MODIFIERS = 5;

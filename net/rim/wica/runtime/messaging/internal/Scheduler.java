@@ -14,7 +14,7 @@ public class Scheduler implements Runnable {
    }
 
    void start(String name) {
-      this._thread = (Thread)(new Object(this, name));
+      this._thread = new Thread(this, name);
       this._running = true;
       this._thread.start();
    }

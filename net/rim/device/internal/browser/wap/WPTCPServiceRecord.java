@@ -94,7 +94,7 @@ public final class WPTCPServiceRecord {
          return newRecord;
       }
 
-      DataBuffer tmpDataBuffer = (DataBuffer)(new Object(data, 0, data.length, true));
+      DataBuffer tmpDataBuffer = new DataBuffer(data, 0, data.length, true);
 
       try {
          tmpDataBuffer.readByte();
@@ -159,7 +159,7 @@ public final class WPTCPServiceRecord {
    }
 
    public final byte[] getEncodedData() {
-      DataBuffer tmpDataBuffer = (DataBuffer)(new Object());
+      DataBuffer tmpDataBuffer = new DataBuffer();
       tmpDataBuffer.writeByte(1);
       if (this._httpProxyAddress != null) {
          TLEUtilities.writeStringField(tmpDataBuffer, 1, this._httpProxyAddress);
@@ -260,7 +260,7 @@ public final class WPTCPServiceRecord {
          case 14:
          case 17:
          case 18:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 1:
          default:
             return this._httpProxyAddress;
@@ -298,7 +298,7 @@ public final class WPTCPServiceRecord {
          case 21:
             return this._alwaysSendBasicProxyAuth;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -317,7 +317,7 @@ public final class WPTCPServiceRecord {
          case 20:
             return this._sessionTimeout;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -332,7 +332,7 @@ public final class WPTCPServiceRecord {
          case 14:
          case 17:
          case 18:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 1:
          default:
             this._httpProxyAddress = value;
@@ -384,7 +384,7 @@ public final class WPTCPServiceRecord {
             this._alwaysSendBasicProxyAuth = value;
             return;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -409,7 +409,7 @@ public final class WPTCPServiceRecord {
             this._sessionTimeout = value;
             return;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 }

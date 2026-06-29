@@ -349,7 +349,7 @@ final class PeerController {
       if (blob.isRequest()) {
          if (contact != null) {
             String message = blob.getMessage();
-            String toHash = ((StringBuffer)(new Object())).append(message).append(contact.getKey()).toString();
+            String toHash = message + contact.getKey();
             String hash = Utils.byteArrayToHex(Utils.getMD5Hash(toHash));
             VerifyHashBlob newBlob = new VerifyHashBlob(false, message, hash, contact.getCookie());
             this._session.sendBlob(contact, newBlob);
@@ -359,7 +359,7 @@ final class PeerController {
          String hash = blob.getHash();
          String key = PeerData.getPasswordKey();
          String msg = blob.getMessage();
-         String myHash = Utils.byteArrayToHex(Utils.getMD5Hash(((StringBuffer)(new Object())).append(msg).append(key).toString()));
+         String myHash = Utils.byteArrayToHex(Utils.getMD5Hash(msg + key));
          if (myHash.equals(hash)) {
             contact = this._application._contactListCollection.findContactByCookie(blob.getCookie());
             if (contact != null) {
@@ -380,9 +380,9 @@ final class PeerController {
          MessageHandler[] handlers = null;
          String type = blob.getContentType();
          if (application != null && !application.equals("BlackBerryMessenger")) {
-            Message message = (Message)(new Object(
+            Message message = new Message(
                blob.getContentType(), blob.getData(), FileUtilities.getDisplayName(blob.getFilename()), blob.getInteger(), blob.getUrl()
-            ));
+            );
             SessionManager.getInstance().messageReceived(blob.getSessionId(), message);
          } else {
             handlers = ContentHandlerManager.getInstance().getSystemHandlers(type);

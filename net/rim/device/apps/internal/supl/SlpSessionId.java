@@ -56,7 +56,7 @@ final class SlpSessionId {
 
    final void print() {
       System.out.println("SLP Session ID: ");
-      System.out.println(((StringBuffer)(new Object("SessionId: "))).append(this.sessionId).toString());
+      System.out.println("SessionId: " + this.sessionId);
       if (!(this.slpAddress instanceof Fqdn)) {
          if (!(this.slpAddress instanceof Ipv4Address)) {
             if (!(this.slpAddress instanceof Ipv6Address)) {

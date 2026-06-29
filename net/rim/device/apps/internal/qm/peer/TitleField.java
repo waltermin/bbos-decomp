@@ -40,8 +40,8 @@ class TitleField extends Field implements RibbonComponent$RibbonComponentChangeL
    private String _smileysTitle;
    private int[] _smileyOffsets = new int[0];
    private long[] _smileyIds = new long[0];
-   private static Hashtable _indicatorParameters = (Hashtable)(new Object());
-   private static Hashtable _signalParameters = (Hashtable)(new Object());
+   private static Hashtable _indicatorParameters = new Hashtable();
+   private static Hashtable _signalParameters = new Hashtable();
    private static ThemeAttributeSet _signalAttributes;
    private static final int COMPONENT_GAP = 2;
    static EmoticonStringPattern _smileyFacility = Smileys.getSmileyFacility();
@@ -257,7 +257,7 @@ class TitleField extends Field implements RibbonComponent$RibbonComponentChangeL
          String text = this.getTitle();
          if (text != null) {
             char[] text2 = new char[text.length()];
-            StringPattern$Match match = (StringPattern$Match)(new Object());
+            StringPattern$Match match = new StringPattern$Match();
             match.endIndex = 0;
             int pos = 0;
             int length = text.length();
@@ -284,7 +284,7 @@ class TitleField extends Field implements RibbonComponent$RibbonComponentChangeL
             }
 
             Array.resize(text2, dstIndex);
-            this._smileysTitle = (String)(new Object(text2));
+            this._smileysTitle = new String(text2);
          }
       }
    }

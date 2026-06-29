@@ -11,7 +11,7 @@ final class SoftwareDHCryptoToken$DHPrivateKeyData implements CryptoTokenPrivate
    private int _hashCode;
    private byte[] _publicData;
 
-   SoftwareDHCryptoToken$DHPrivateKeyData(SoftwareDHCryptoToken$DHCryptoSystemData cryptoSystem, byte[] data) {
+   SoftwareDHCryptoToken$DHPrivateKeyData(SoftwareDHCryptoToken$DHCryptoSystemData cryptoSystem, byte[] data) throws InvalidKeyException {
       if (cryptoSystem != null && data != null) {
          data = CryptoByteArrayArithmetic.trim(data);
          if (!CryptoByteArrayArithmetic.isZero(data) && data.length <= cryptoSystem.getPrivateKeyLength()) {
@@ -23,10 +23,10 @@ final class SoftwareDHCryptoToken$DHPrivateKeyData implements CryptoTokenPrivate
             PersistentContent.markAsPlaintext(data);
             this.setHashCode();
          } else {
-            throw new Object();
+            throw new InvalidKeyException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

@@ -20,12 +20,12 @@ public final class ChannelApplicationEntryPoint implements EntryPointDescriptor,
       this._applicationDescriptor = ad;
       String moduleName = ad.getModuleName();
       String name = ad.getName();
-      StringBuffer buff = (StringBuffer)(new Object(moduleName.length() + name.length() + 1));
+      StringBuffer buff = new StringBuffer(moduleName.length() + name.length() + 1);
       buff.append(moduleName).append('.').append(name);
       this._uniqueName = buff.toString();
       int order = ad.getPosition();
       if (order != 0) {
-         this._order = (Integer)(new Object(order));
+         this._order = new Integer(order);
       }
    }
 
@@ -91,7 +91,7 @@ public final class ChannelApplicationEntryPoint implements EntryPointDescriptor,
       try {
          ApplicationManager.getApplicationManager().runApplication(this._applicationDescriptor);
       } catch (Throwable var3) {
-         throw new Object(e.getMessage());
+         throw new RuntimeException(e.getMessage());
       }
    }
 }

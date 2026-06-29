@@ -30,7 +30,7 @@ public class SmartCardTicketDialog extends TicketDialog implements GlobalEventLi
       if (dialog.getCloseReason() == -1) {
          throw new SmartCardCancelException();
       } else {
-         return (String)(new Object(dialog.getPassword()));
+         return new String(dialog.getPassword());
       }
    }
 

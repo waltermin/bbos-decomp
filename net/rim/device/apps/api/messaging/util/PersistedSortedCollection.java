@@ -1,6 +1,7 @@
 package net.rim.device.apps.api.messaging.util;
 
 import net.rim.device.api.collection.LongKeyProviderAdaptor;
+import net.rim.device.api.collection.LongKeyProviderAdaptorComparator;
 import net.rim.device.api.collection.util.BigVector;
 import net.rim.device.api.system.PersistentObject;
 import net.rim.device.api.system.RIMPersistentStore;
@@ -14,7 +15,7 @@ public class PersistedSortedCollection extends SortedCollection {
 
    @Override
    public boolean initialize(long applicationFamily, long folderId, LongKeyProviderAdaptor longKeyProviderAdaptor, Object context) {
-      return this.initialize(applicationFamily, folderId, (Comparator)(new Object(longKeyProviderAdaptor)), context);
+      return this.initialize(applicationFamily, folderId, new LongKeyProviderAdaptorComparator(longKeyProviderAdaptor), context);
    }
 
    @Override
@@ -34,7 +35,7 @@ public class PersistedSortedCollection extends SortedCollection {
             this._collectionsPersistentObject = RIMPersistentStore.getPersistentObject(applicationFamily);
             collections = (LongHashtable)this._collectionsPersistentObject.getContents();
             if (collections == null) {
-               collections = (LongHashtable)(new Object());
+               collections = new LongHashtable();
                this._collectionsPersistentObject.setContents(collections, 51);
                this._collectionsPersistentObject.commit();
                created = true;

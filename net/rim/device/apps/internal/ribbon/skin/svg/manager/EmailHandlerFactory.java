@@ -26,7 +26,7 @@ class EmailHandlerFactory {
       this._globalEventHelper = new GlobalListenerFactoryHelper();
       Application.getApplication().addGlobalEventListener(this._globalEventHelper);
       this._collectionEventHelper = new CollectionListenerFactoryHelper();
-      Thread thread = (Thread)(new Object(new EmailHandlerFactory$1(this)));
+      Thread thread = new Thread(new EmailHandlerFactory$1(this));
       thread.setPriority(1);
       thread.start();
    }

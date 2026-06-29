@@ -49,12 +49,12 @@ public final class FontCache {
    private static String BB_ALPHA_SERIF = "BBAlpha Serif";
 
    private FontCache() {
-      this._cache = (LongHashtable)(new Object());
-      this._families = (Hashtable)(new Object());
-      this._familyHeights = (Hashtable)(new Object());
+      this._cache = new LongHashtable();
+      this._families = new Hashtable();
+      this._familyHeights = new Hashtable();
       this._mappingCacheHash = new int[5];
-      this._mappingCacheKey = new Object[5];
-      this._mappingCacheValue = new Object[5];
+      this._mappingCacheKey = new String[5];
+      this._mappingCacheValue = new String[5];
       if (isTrueTypeFontAvailable()) {
          this._defaultScalableFont = DEFAULT_SCALABLE_TURE_TYPE_FONT;
       } else {
@@ -317,7 +317,7 @@ public final class FontCache {
       // 05d: aload 5
       // 05f: ifnull 068
       // 062: aload 5
-      // 064: checkcast java/lang/Object
+      // 064: checkcast net/rim/device/api/ui/FontFamily
       // 067: areturn
       // 068: aload 0
       // 069: getfield net/rim/device/apps/internal/browser/util/FontCache._families Ljava/util/Hashtable;
@@ -329,7 +329,7 @@ public final class FontCache {
       // 078: aload 5
       // 07a: ifnull 0a0
       // 07d: aload 5
-      // 07f: checkcast java/lang/Object
+      // 07f: checkcast net/rim/device/api/ui/FontFamily
       // 082: areturn
       // 083: aload 0
       // 084: aload 3
@@ -343,9 +343,9 @@ public final class FontCache {
       // 095: aload 6
       // 097: ifnull 0a0
       // 09a: aload 6
-      // 09c: checkcast java/lang/Object
+      // 09c: checkcast net/rim/device/api/ui/FontFamily
       // 09f: areturn
-      // 0a0: new java/lang/Object
+      // 0a0: new net/rim/device/api/util/StringTokenizer
       // 0a3: dup
       // 0a4: aload 3
       // 0a5: bipush 44
@@ -368,7 +368,7 @@ public final class FontCache {
       // 0ce: aload 7
       // 0d0: ifnull 0d9
       // 0d3: aload 7
-      // 0d5: checkcast java/lang/Object
+      // 0d5: checkcast net/rim/device/api/ui/FontFamily
       // 0d8: areturn
       // 0d9: aload 6
       // 0db: ldc_w 1701707776
@@ -382,7 +382,7 @@ public final class FontCache {
       // 0ee: aload 7
       // 0f0: ifnull 0f9
       // 0f3: aload 7
-      // 0f5: checkcast java/lang/Object
+      // 0f5: checkcast net/rim/device/api/ui/FontFamily
       // 0f8: areturn
       // 0f9: aload 0
       // 0fa: aload 6
@@ -406,7 +406,7 @@ public final class FontCache {
       // 123: invokevirtual java/util/Hashtable.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
       // 126: pop
       // 127: aload 7
-      // 129: checkcast java/lang/Object
+      // 129: checkcast net/rim/device/api/ui/FontFamily
       // 12c: areturn
       // 12d: aconst_null
       // 12e: astore 11

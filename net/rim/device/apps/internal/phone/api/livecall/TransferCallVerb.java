@@ -77,8 +77,8 @@ public final class TransferCallVerb extends Verb {
             String phoneNumber = (String)ContextObject.get(connectionParams, 6486659828352467672L);
             boolean smartDialing = address != null;
             boolean canDirectDialExtensions = Phone.getInstance().supportsCorporateExtensions(this._callId);
-            StringBuffer output = (StringBuffer)(new Object());
-            StringBuffer dtmf = (StringBuffer)(new Object());
+            StringBuffer output = new StringBuffer();
+            StringBuffer dtmf = new StringBuffer();
             PhoneNumberConverter.convertForTransmission(
                output, dtmf, phoneNumber.toCharArray(), smartDialing, false, false, false, false, canDirectDialExtensions
             );

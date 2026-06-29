@@ -11,8 +11,8 @@ final class ESWindow$SameOriginPolicy {
       String urlstr2 = f2.getUrl();
 
       try {
-         URL url1 = (URL)(new Object(urlstr1));
-         URL url2 = (URL)(new Object(urlstr2));
+         URL url1 = new URL(urlstr1);
+         URL url2 = new URL(urlstr2);
          return url1.getScheme().equalsIgnoreCase(url2.getScheme()) && url1.getHost().equalsIgnoreCase(url2.getHost()) && url1.getPort() == url2.getPort();
       } catch (Throwable var7) {
          e.printStackTrace();

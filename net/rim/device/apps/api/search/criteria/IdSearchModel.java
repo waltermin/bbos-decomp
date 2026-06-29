@@ -6,7 +6,7 @@ public class IdSearchModel implements SearchCriterion {
    private Integer _id;
 
    public void setValue(int id) {
-      this._id = (Integer)(new Object(id));
+      this._id = new Integer(id);
    }
 
    @Override

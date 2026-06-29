@@ -4,7 +4,7 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
-import net.rim.device.api.ui.text.TextFilter;
+import net.rim.device.api.ui.text.NumericTextFilter;
 import net.rim.device.apps.api.ui.CommonResources;
 
 public final class PagingController$WicletPopupDialog extends Dialog {
@@ -18,13 +18,13 @@ public final class PagingController$WicletPopupDialog extends Dialog {
       this.this$0 = this$0;
       this.setEscapeEnabled(false);
       this._editString = new PagingController$CustomBasicEditField();
-      this._editString.setFilter((TextFilter)(new Object()));
+      this._editString.setFilter(new NumericTextFilter());
       this.add(this._editString);
-      this._buttonOk = (ButtonField)(new Object(buttonLabel));
+      this._buttonOk = new ButtonField(buttonLabel);
       this._buttonOk.setChangeListener(this);
-      this._buttonCancel = (ButtonField)(new Object(CommonResources.getString(9042)));
+      this._buttonCancel = new ButtonField(CommonResources.getString(9042));
       this._buttonCancel.setChangeListener(this);
-      HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(12884901888L));
+      HorizontalFieldManager hfm = new HorizontalFieldManager(12884901888L);
       hfm.add(this._buttonOk);
       hfm.add(this._buttonCancel);
       this.add(hfm);

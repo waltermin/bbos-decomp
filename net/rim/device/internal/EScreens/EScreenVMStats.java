@@ -1,8 +1,8 @@
 package net.rim.device.internal.EScreens;
 
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Ui;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectListField;
 import net.rim.device.api.ui.container.MainScreen;
 
@@ -23,10 +23,10 @@ public final class EScreenVMStats extends MainScreen {
 
    public EScreenVMStats(Font font) {
       this.setFont(font);
-      this._list = (ObjectListField)(new Object());
+      this._list = new ObjectListField();
       this._list.set(_titles);
       this._list.setSelectedIndex(0);
-      this.add((Field)(new Object("Bundle: 199")));
+      this.add(new LabelField("Bundle: 199"));
       this.add(this._list);
       this.setTitle("Java VM Engineering Screens");
       this._refreshers = new EScreenMemStatsRefresher[7];

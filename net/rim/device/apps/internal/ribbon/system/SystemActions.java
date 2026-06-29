@@ -33,18 +33,18 @@ public final class SystemActions implements RadioStatusListener {
       RibbonLauncher rl = RibbonLauncher.getInstance();
       sysActions._app = Application.getApplication();
       ApplicationDescriptor original = ApplicationDescriptor.currentApplicationDescriptor();
-      ApplicationDescriptor radioOn = (ApplicationDescriptor)(new Object(original, new Object[]{RADIO_ON_PARAM_STRING}));
-      ApplicationDescriptor radioOff = (ApplicationDescriptor)(new Object(original, new Object[]{RADIO_OFF_PARAM_STRING}));
+      ApplicationDescriptor radioOn = new ApplicationDescriptor(original, new String[]{RADIO_ON_PARAM_STRING});
+      ApplicationDescriptor radioOff = new ApplicationDescriptor(original, new String[]{RADIO_OFF_PARAM_STRING});
       sysActions._radioToggle = new RadioToggleAction(radioOn, radioOff, userCanTurnRadioOn());
       RadioToggleAction radioToggle = sysActions._radioToggle;
-      PowerOffAction powerOff = new PowerOffAction((ApplicationDescriptor)(new Object(original, new Object[]{POWER_OFF_PARAM_STRING})));
-      LockAction lock = new LockAction((ApplicationDescriptor)(new Object(original, new Object[]{LOCK_PARAM_STRING})));
+      PowerOffAction powerOff = new PowerOffAction(new ApplicationDescriptor(original, new String[]{POWER_OFF_PARAM_STRING}));
+      LockAction lock = new LockAction(new ApplicationDescriptor(original, new String[]{LOCK_PARAM_STRING}));
       if (CodeModuleManager.getModuleHandle("net_rim_bb_manage_connections") == 0) {
-         rl.registerAction(radioToggle.get(1, (String)((Object)null)), radioToggle);
+         rl.registerAction(radioToggle.get(1, (String)null), radioToggle);
       }
 
-      rl.registerAction(powerOff.get(1, (String)((Object)null)), powerOff);
-      rl.registerAction(lock.get(1, (String)((Object)null)), lock);
+      rl.registerAction(powerOff.get(1, (String)null), powerOff);
+      rl.registerAction(lock.get(1, (String)null), lock);
       ApplicationRegistry appReg = ApplicationRegistry.getApplicationRegistry();
       synchronized (appReg) {
          appReg.put(GUID, sysActions);
@@ -102,7 +102,7 @@ public final class SystemActions implements RadioStatusListener {
       RadioToggleAction radioToggle = getRadioToggle();
       if (radioToggle != null && radioToggle.updateActions(userCanTurnRadioOn)) {
          RibbonLauncher rl = RibbonLauncher.getInstance();
-         rl.updateRegisteredAction(radioToggle.get(1, (String)((Object)null)));
+         rl.updateRegisteredAction(radioToggle.get(1, (String)null));
       }
    }
 
@@ -157,7 +157,7 @@ public final class SystemActions implements RadioStatusListener {
          RadioOffWarningManagerImpl.requestRadioOff();
          showUserCanTurnRadioOn(true);
       } else {
-         System.out.println(((StringBuffer)(new Object("*** radioThread: state="))).append(state).toString());
+         System.out.println("*** radioThread: state=" + state);
          reportState(state);
       }
 

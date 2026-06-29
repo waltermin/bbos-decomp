@@ -1,5 +1,6 @@
 package net.rim.device.apps.games.brickbreaker;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.system.Alert;
@@ -51,8 +52,8 @@ final class Game extends AppsMainScreen implements BrickBreakerResResource, Runn
    private int renderTime = 0;
    private int renderInterval = 35;
    private Application _currentApplication;
-   private MediaPlayer _mediaplayer = (MediaPlayer)(new Object());
-   private MediaField mediaField = (MediaField)(new Object());
+   private MediaPlayer _mediaplayer = new MediaPlayer();
+   private MediaField mediaField = new MediaField();
    private final Bitmap BMP_WIN = Bitmap.getBitmapResource("icon.gif");
    private final Bitmap BMP_DEATH;
    private long renderEnd;
@@ -148,9 +149,9 @@ final class Game extends AppsMainScreen implements BrickBreakerResResource, Runn
       Bitmap face = null;
       if (level > 0) {
          face = this.BMP_WIN;
-         msg = ((StringBuffer)(new Object())).append(_resources.getString(4)).append(" ").append(level).append("/").append(Bricks.getNumLevels()).toString();
+         msg = _resources.getString(4) + " " + level + "/" + Bricks.getNumLevels();
          if (this._superLevel > 1) {
-            msg = ((StringBuffer)(new Object())).append(this._superLevel).append("x(").append(msg).append(')').toString();
+            msg = this._superLevel + "x(" + msg + ')';
          }
       } else {
          switch (level) {
@@ -171,7 +172,7 @@ final class Game extends AppsMainScreen implements BrickBreakerResResource, Runn
          }
       }
 
-      Dialog d = (Dialog)(new Object(msg, CommonResource.getStringArray(10004), null, 0, null, 0));
+      Dialog d = new Dialog(msg, CommonResource.getStringArray(10004), null, 0, null, 0);
       d.setIcon(ImageBitmap.create(face));
       d.doModal();
    }
@@ -302,7 +303,7 @@ final class Game extends AppsMainScreen implements BrickBreakerResResource, Runn
       }
 
       if (uri.startsWith("x-object:/board")) {
-         StringTokenizer st = (StringTokenizer)(new Object(uri.substring(uri.indexOf(32))));
+         StringTokenizer st = new StringTokenizer(uri.substring(uri.indexOf(32)));
          this._board.position(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
          this._board.layout(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
          int bgColor = Integer.parseInt(st.nextToken());
@@ -329,7 +330,7 @@ final class Game extends AppsMainScreen implements BrickBreakerResResource, Runn
       }
 
       try {
-         StringTokenizer st = (StringTokenizer)(new Object(uri.substring(uri.indexOf(32))));
+         StringTokenizer st = new StringTokenizer(uri.substring(uri.indexOf(32)));
          f.setPosition(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
          f.layout(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()));
          f.setColors(Integer.parseInt(st.nextToken(), 16), Integer.parseInt(st.nextToken(), 16));
@@ -498,7 +499,7 @@ final class Game extends AppsMainScreen implements BrickBreakerResResource, Runn
 
    @Override
    public final boolean onClose() {
-      Dialog diag = (Dialog)(new Object(3, _resources.getString(69), 0, null, 0));
+      Dialog diag = new Dialog(3, _resources.getString(69), 0, null, 0);
       int r = diag.doModal();
       if (r == 4) {
          this.quit();
@@ -597,18 +598,18 @@ final class Game extends AppsMainScreen implements BrickBreakerResResource, Runn
          Resource resource = null;
          resource = Resource$Internal.getResourceClass(currentModule);
          if (resource == null) {
-            Dialog.alert(((StringBuffer)(new Object())).append(currentModule).append(" not found.").toString());
+            Dialog.alert(currentModule + " not found.");
             System.exit(1);
             return null;
          }
 
          byte[] data = resource.getResource(track);
          if (data == null) {
-            throw new Object("Data es NULL");
+            throw new Exception("Data es NULL");
          }
 
-         inputstream = (InputStream)(new Object(data));
-         MediaManager _manager = (MediaManager)(new Object());
+         inputstream = new ByteArrayInputStream(data);
+         MediaManager _manager = new MediaManager();
          _manager.setCustomResourceProvider(fop);
          model = _manager.createResource(type, inputstream, null, null);
       } catch (Throwable var13) {

@@ -5,7 +5,7 @@ import net.rim.device.api.system.EventLogger;
 
 public final class IOTARequestBuffer {
    private int _manyItems;
-   private Vector _buffer = (Vector)(new Object());
+   private Vector _buffer = new Vector();
 
    public final synchronized void addRequest(IOTARequest req) {
       this._buffer.addElement(req);

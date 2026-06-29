@@ -16,33 +16,33 @@ final class X509_RIM_SignatureEncoder3 extends SignatureEncoder {
 
       try {
          var12 = true;
-         ASN1OutputStream e = new Object();
+         ASN1OutputStream e = new ASN1OutputStream();
          if (!(signer instanceof ECDSASignatureSigner)) {
             if (signer instanceof PSSSignatureSigner) {
                PSSSignatureSigner rsaSigner = (PSSSignatureSigner)signer;
                byte[] data = new byte[rsaSigner.getLength()];
                rsaSigner.sign(data, 0);
-               ((ASN1OutputStream)e).writeOID(OIDs.getOID(544212540));
-               ASN1OutputStream parameters = (ASN1OutputStream)(new Object());
-               ASN1OutputStream hashID = (ASN1OutputStream)(new Object());
+               e.writeOID(OIDs.getOID(544212540));
+               ASN1OutputStream parameters = new ASN1OutputStream();
+               ASN1OutputStream hashID = new ASN1OutputStream();
                OID oid = OIDs.getAssociatedOID(3134008036018563479L, rsaSigner.getDigestAlgorithm());
                hashID.writeOID(oid);
                hashID.writeNull();
                parameters.writeSequence(hashID);
-               ASN1OutputStream mgf = (ASN1OutputStream)(new Object());
+               ASN1OutputStream mgf = new ASN1OutputStream();
                mgf.writeOID(OIDs.getOID(544212539));
-               ASN1OutputStream mgfHash = (ASN1OutputStream)(new Object());
+               ASN1OutputStream mgfHash = new ASN1OutputStream();
                mgfHash.writeOID(oid);
                mgfHash.writeNull();
                mgf.writeSequence(mgfHash);
                parameters.writeSequence(mgf);
                parameters.writeInteger(20);
                parameters.writeInteger(1);
-               ((ASN1OutputStream)e).writeSequence(parameters);
-               ASN1OutputStream asn1Stream = (ASN1OutputStream)(new Object());
-               asn1Stream.writeSequence((ASN1OutputStream)e);
+               e.writeSequence(parameters);
+               ASN1OutputStream asn1Stream = new ASN1OutputStream();
+               asn1Stream.writeSequence(e);
                asn1Stream.writeBitString(data);
-               return (EncodedSignature)(new Object(asn1Stream.toByteArray(), "X509"));
+               return new EncodedSignature(asn1Stream.toByteArray(), "X509");
             }
 
             var12 = false;
@@ -52,27 +52,27 @@ final class X509_RIM_SignatureEncoder3 extends SignatureEncoder {
                byte[] r = new byte[ecdsa_signer.getRLength()];
                byte[] s = new byte[ecdsa_signer.getSLength()];
                ecdsa_signer.sign(r, 0, s, 0);
-               ((ASN1OutputStream)e).writeOID(OIDs.getOID(-1487362072));
-               ASN1OutputStream asn1Stream = (ASN1OutputStream)(new Object());
-               asn1Stream.writeSequence((ASN1OutputStream)e);
-               ASN1OutputStream ECDSASigSequence = (ASN1OutputStream)(new Object());
+               e.writeOID(OIDs.getOID(-1487362072));
+               ASN1OutputStream asn1Stream = new ASN1OutputStream();
+               asn1Stream.writeSequence(e);
+               ASN1OutputStream ECDSASigSequence = new ASN1OutputStream();
                ECDSASigSequence.writeInteger(r);
                ECDSASigSequence.writeInteger(s);
-               ASN1OutputStream tempStream = (ASN1OutputStream)(new Object());
+               ASN1OutputStream tempStream = new ASN1OutputStream();
                tempStream.writeSequence(ECDSASigSequence);
                asn1Stream.writeBitString(tempStream.toByteArray());
-               return (EncodedSignature)(new Object(asn1Stream.toByteArray(), "X509"));
+               return new EncodedSignature(asn1Stream.toByteArray(), "X509");
             }
 
             var12 = false;
          }
       } finally {
          if (var12) {
-            throw new Object();
+            throw new RuntimeException();
          }
       }
 
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override

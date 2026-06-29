@@ -49,7 +49,7 @@ final class NamespaceSupport$Context {
 
    final void declarePrefix(String prefix, String uri) {
       if (!this.declsOK) {
-         throw new Object("can't declare any more prefixes in this context");
+         throw new IllegalStateException("can't declare any more prefixes in this context");
       }
 
       if (!this.declSeen) {
@@ -57,7 +57,7 @@ final class NamespaceSupport$Context {
       }
 
       if (this.declarations == null) {
-         this.declarations = (Vector)(new Object());
+         this.declarations = new Vector();
       }
 
       prefix = prefix.intern();
@@ -85,12 +85,12 @@ final class NamespaceSupport$Context {
          table = this.elementNameTable;
       }
 
-      String[] name = (Object[])table.get(qName);
+      String[] name = (String[])table.get(qName);
       if (name != null) {
          return name;
       }
 
-      name = new Object[]{null, null, qName.intern()};
+      name = new String[]{null, null, qName.intern()};
       int index = qName.indexOf(58);
       if (index == -1) {
          if (isAttribute) {
@@ -132,12 +132,12 @@ final class NamespaceSupport$Context {
       if ("".equals(prefix)) {
          return this.defaultNS;
       } else {
-         return (String)(this.prefixTable == null ? null : this.prefixTable.get(prefix));
+         return this.prefixTable == null ? null : (String)this.prefixTable.get(prefix);
       }
    }
 
    final String getPrefix(String uri) {
-      return (String)(this.uriTable == null ? null : this.uriTable.get(uri));
+      return this.uriTable == null ? null : (String)this.uriTable.get(uri);
    }
 
    final Enumeration getDeclaredPrefixes() {
@@ -149,7 +149,7 @@ final class NamespaceSupport$Context {
    }
 
    private final Hashtable cloneHashtable(Hashtable t) {
-      Hashtable newT = (Hashtable)(new Object());
+      Hashtable newT = new Hashtable();
       Enumeration e = t.keys();
 
       while (e.hasMoreElements()) {
@@ -164,17 +164,17 @@ final class NamespaceSupport$Context {
       if (this.prefixTable != null) {
          this.prefixTable = this.cloneHashtable(this.prefixTable);
       } else {
-         this.prefixTable = (Hashtable)(new Object());
+         this.prefixTable = new Hashtable();
       }
 
       if (this.uriTable != null) {
          this.uriTable = this.cloneHashtable(this.uriTable);
       } else {
-         this.uriTable = (Hashtable)(new Object());
+         this.uriTable = new Hashtable();
       }
 
-      this.elementNameTable = (Hashtable)(new Object());
-      this.attributeNameTable = (Hashtable)(new Object());
+      this.elementNameTable = new Hashtable();
+      this.attributeNameTable = new Hashtable();
       this.declSeen = true;
    }
 }

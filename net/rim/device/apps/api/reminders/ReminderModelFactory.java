@@ -8,8 +8,8 @@ public class ReminderModelFactory extends RIMModelFactory {
    @Override
    public Object createInstance(Object initialData) {
       boolean absolute = false;
-      if (initialData instanceof Object) {
-         absolute = initialData == 2;
+      if (initialData instanceof Byte) {
+         absolute = (Byte)initialData == 2;
       }
 
       return this.createInstance(absolute);

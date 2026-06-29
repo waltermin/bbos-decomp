@@ -14,7 +14,7 @@ import net.rim.plazmic.internal.mediaengine.model.intarray.v1_2.ModelInteractorI
 import net.rim.plazmic.internal.mediaengine.service.node.TextNode;
 
 class CalendarHandler extends Handler implements RealtimeClockListener {
-   Duration[] _calEvents = new Object[this.MaxEntries];
+   Duration[] _calEvents = new Duration[this.MaxEntries];
    private long _nextUpdateTime = Long.MAX_VALUE;
 
    CalendarHandler(ModelInteractorImpl mi, UiApplication app) {
@@ -33,7 +33,7 @@ class CalendarHandler extends Handler implements RealtimeClockListener {
    public void invoke(int index) {
       if (index >= 0 && index < super.MaxEntries) {
          Duration event = this._calEvents[index];
-         if (event instanceof Object) {
+         if (event instanceof ActionProvider) {
             ContextObject context = ContextObject.castOrCreate(null);
             context.setFlag(64);
             ((ActionProvider)event).perform(6099736323056465049L, context);
@@ -58,13 +58,13 @@ class CalendarHandler extends Handler implements RealtimeClockListener {
             }
 
             for (int i = 1; i <= super.MaxEntries; i++) {
-               this.setDisplayable(((StringBuffer)(new Object("calendar"))).append(i).append("hotspot").toString(), false);
+               this.setDisplayable("calendar" + i + "hotspot", false);
             }
 
             TimeZone tz = TimeZone.getDefault();
             long curTime = System.currentTimeMillis();
             TimeBasedObjectProvider calProvider = CalendarProxy.getInstance().getCalendarDatabase();
-            Vector calEvents = (Vector)(new Object());
+            Vector calEvents = new Vector();
             int numToGetBefore = 16;
             int numToGetAfter = 16;
             int numAllDays = 0;
@@ -131,7 +131,7 @@ class CalendarHandler extends Handler implements RealtimeClockListener {
                         super._nodes[counter * 3].setString(time);
                      }
 
-                     if (event instanceof Object) {
+                     if (event instanceof DescriptionProvider) {
                         DescriptionProvider eventDescription = (DescriptionProvider)event;
                         String subject = eventDescription.getStringForField(5649235763655597796L);
                         if (super._nodes[counter * 3 + 1] != null && subject != null) {
@@ -147,7 +147,7 @@ class CalendarHandler extends Handler implements RealtimeClockListener {
                      }
                   }
 
-                  this.setDisplayable(((StringBuffer)(new Object("calendar"))).append(counter + 1).append("hotspot").toString(), true);
+                  this.setDisplayable("calendar" + (counter + 1) + "hotspot", true);
                }
             }
          }

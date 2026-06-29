@@ -22,7 +22,7 @@ final class ShortTermCache extends Hashtable implements Persistable {
    public ShortTermCache(int size) {
       this.resetBuckets();
       this._maxSize = size;
-      this._streamingItems = (Vector)(new Object());
+      this._streamingItems = new Vector();
    }
 
    public final void setMaxSize(int size) {
@@ -59,7 +59,7 @@ final class ShortTermCache extends Hashtable implements Persistable {
    }
 
    public final void createPersistence() {
-      this._pendingPersistence = (Vector)(new Object());
+      this._pendingPersistence = new Vector();
    }
 
    public final void destroyPersistence() {
@@ -227,7 +227,7 @@ final class ShortTermCache extends Hashtable implements Persistable {
          return null;
       }
 
-      Vector entries = (Vector)(new Object());
+      Vector entries = new Vector();
       synchronized (PersistentStore.getSynchObject()) {
          for (int i = 0; i < 21; i++) {
             for (CacheNode head = this._candidateSet[i].removeHead(); head != null; head = this._candidateSet[i].removeHead()) {

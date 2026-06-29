@@ -6,7 +6,7 @@ import net.rim.device.api.util.Persistable;
 public final class SyncAgentUrl implements Persistable {
    private boolean _dirty;
    private int _hashCode;
-   private String[] _urlItems = new Object[3];
+   private String[] _urlItems = new String[3];
    private byte _version;
    private boolean _externalToSync;
    private static final byte SID = 0;

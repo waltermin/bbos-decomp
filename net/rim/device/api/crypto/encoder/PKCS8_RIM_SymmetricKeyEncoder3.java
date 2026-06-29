@@ -16,16 +16,16 @@ final class PKCS8_RIM_SymmetricKeyEncoder3 extends SymmetricKeyEncoder {
          var7 = true;
          if (key.getAlgorithm().equals("RC2")) {
             RC2Key k = (RC2Key)key;
-            ASN1OutputStream algorithmIdentifier = (ASN1OutputStream)(new Object());
+            ASN1OutputStream algorithmIdentifier = new ASN1OutputStream();
             algorithmIdentifier.writeOID(OIDs.getOID(1536208895));
             algorithmIdentifier.writeInteger(k.getEffectiveBitLength());
-            ASN1OutputStream symmetricKeyInfo = (ASN1OutputStream)(new Object());
+            ASN1OutputStream symmetricKeyInfo = new ASN1OutputStream();
             symmetricKeyInfo.writeInteger(0);
             symmetricKeyInfo.writeSequence(algorithmIdentifier);
             symmetricKeyInfo.writeOctetString(k.getData());
-            ASN1OutputStream asn1Stream = (ASN1OutputStream)(new Object());
+            ASN1OutputStream asn1Stream = new ASN1OutputStream();
             asn1Stream.writeSequence(symmetricKeyInfo);
-            return (EncodedKey)(new Object(asn1Stream.toByteArray(), "PKCS8"));
+            return new EncodedKey(asn1Stream.toByteArray(), "PKCS8");
          }
 
          if (key.getAlgorithm().equals("Skipjack")) {
@@ -39,11 +39,11 @@ final class PKCS8_RIM_SymmetricKeyEncoder3 extends SymmetricKeyEncoder {
          var7 = false;
       } finally {
          if (var7) {
-            throw new Object();
+            throw new RuntimeException();
          }
       }
 
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override

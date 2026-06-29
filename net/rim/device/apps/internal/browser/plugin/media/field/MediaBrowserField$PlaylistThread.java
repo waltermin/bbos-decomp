@@ -64,8 +64,8 @@ final class MediaBrowserField$PlaylistThread extends Thread {
                }
 
                boolean fileBased = false;
-               if (!(inputConnection instanceof Object)) {
-                  if (inputConnection instanceof Object) {
+               if (!(inputConnection instanceof HttpConnection)) {
+                  if (inputConnection instanceof FileConnection) {
                      fileBased = true;
                      if (!((FileConnection)inputConnection).exists()) {
                         if (!this.this$0._trackForward && this.this$0._playlistCurrentIndex != 1) {
@@ -108,8 +108,8 @@ final class MediaBrowserField$PlaylistThread extends Thread {
                   } else {
                      in = RendererControl.getInputStreamFromContentEncoding(inputConnection, inputConnection.openInputStream());
                      HTTPBufferingManager bufferManager = null;
-                     if (inputConnection instanceof Object) {
-                        bufferManager = (HTTPBufferingManager)(new Object((HttpConnection)inputConnection, in, this.this$0));
+                     if (inputConnection instanceof HttpConnection) {
+                        bufferManager = new HTTPBufferingManager((HttpConnection)inputConnection, in, this.this$0);
                      }
 
                      this.this$0

@@ -6,6 +6,7 @@ import net.rim.device.apps.api.transmission.rim.sendmethods.SendMethod;
 import net.rim.device.apps.api.transmission.rim.sendmethods.SendMethodFactory;
 import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
 import net.rim.device.apps.internal.blackberryemail.resources.EmailResources;
+import net.rim.device.apps.internal.blackberryemail.sendmethods.DefaultPINSendMethod;
 
 public class SecureEmailPlainTextSendMethodFactory implements SendMethodFactory {
    public String getEncodingString() {
@@ -19,7 +20,7 @@ public class SecureEmailPlainTextSendMethodFactory implements SendMethodFactory 
 
    @Override
    public SendMethod[] create(RIMModel model, ServiceRecord serviceRecord, Object context) {
-      if (model instanceof Object) {
+      if (model instanceof EmailMessageModel) {
          EmailMessageModel emailMessageModel = (EmailMessageModel)model;
          boolean isPIN = emailMessageModel.flagsSet(8192);
          if (isPIN && serviceRecord != null) {
@@ -31,7 +32,9 @@ public class SecureEmailPlainTextSendMethodFactory implements SendMethodFactory 
          }
       }
 
-      return serviceRecord == null ? new Object[]{new Object()} : new Object[]{new SecureEmailPlainTextSendMethod(serviceRecord, context)};
+      return serviceRecord == null
+         ? new SendMethod[]{new DefaultPINSendMethod()}
+         : new SendMethod[]{new SecureEmailPlainTextSendMethod(serviceRecord, context)};
    }
 
    @Override

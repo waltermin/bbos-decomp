@@ -1,6 +1,7 @@
 package net.rim.device.cldc.io.socket;
 
 import com.sun.cldc.io.ConnectionBaseInterface;
+import java.io.IOException;
 import javax.microedition.io.Connection;
 import javax.microedition.io.Connector;
 import net.rim.device.api.servicebook.ServiceBook;
@@ -23,8 +24,8 @@ public final class Protocol implements ConnectionBaseInterface {
    private static String SLASH_SLASH = "//";
 
    @Override
-   public final int getProperties(String name) {
-      URLParameters params = ((URL)(new Object("socket", name))).getRIMParameters();
+   public final int getProperties(String name) throws IOException {
+      URLParameters params = new URL("socket", name).getRIMParameters();
       if (params == null) {
          return RadioInfo.getNetworkType() == 5 ? 2 : 1;
       }
@@ -47,7 +48,7 @@ public final class Protocol implements ConnectionBaseInterface {
 
       String uid = SocketTransportBase.findAcceptableConnectionUid(params);
       if (uid == null) {
-         throw new Object("Invalid url parameter.");
+         throw new IOException("Invalid url parameter.");
       } else {
          return ITPolicyInternal.verifyITAdminService(uid, false) ? 1 : 2;
       }
@@ -62,13 +63,13 @@ public final class Protocol implements ConnectionBaseInterface {
       int sessionTimeout = -1;
       boolean sessionTimeoutInURL = lname.indexOf(SESSION_TIMEOUT_PARAM) >= 0;
       if (name.equals(SLASH_SLASH)) {
-         name = ((StringBuffer)(new Object())).append(name).append(":").toString();
+         name = name + ":";
       }
 
       if (lname.indexOf(CONNECTION_UID) >= 0) {
          label266:
          try {
-            URL url = (URL)(new Object("http", lname));
+            URL url = new URL("http", lname);
             URLParameters params = url.getRIMParameters();
             if (params != null && params.containParameter(CONNECTION_UID)) {
                String uid = params.getValue(CONNECTION_UID);
@@ -80,9 +81,7 @@ public final class Protocol implements ConnectionBaseInterface {
                      if (record != null) {
                         String proxy = record.getPropertyAsString(8);
                         if (proxy != null && proxy.length() > 0) {
-                           return Connector.open(
-                              ((StringBuffer)(new Object("httpsocket:"))).append(name).append(";connectionhandler=connect").toString(), mode, timeouts
-                           );
+                           return Connector.open("httpsocket:" + name + ";connectionhandler=connect", mode, timeouts);
                         }
 
                         if (!sessionTimeoutInURL) {
@@ -117,7 +116,7 @@ public final class Protocol implements ConnectionBaseInterface {
 
          int nextIndex = name.indexOf(59, index + 1);
          if (nextIndex >= index) {
-            name = ((StringBuffer)(new Object())).append(name.substring(0, index)).append(name.substring(nextIndex)).toString();
+            name = name.substring(0, index) + name.substring(nextIndex);
          } else {
             name = name.substring(0, index);
          }
@@ -167,7 +166,7 @@ public final class Protocol implements ConnectionBaseInterface {
       }
 
       if (!directTcp) {
-         return Connector.open(((StringBuffer)(new Object("ippp:"))).append(name).append(extraParams).toString(), mode, timeouts);
+         return Connector.open("ippp:" + name + extraParams, mode, timeouts);
       }
 
       if (lname.indexOf(";connectionhandler=none") == -1 && !StringUtilities.strEqualIgnoreCase(iface, "wifi", 1701707776)) {
@@ -185,20 +184,12 @@ public final class Protocol implements ConnectionBaseInterface {
                   if (!sessionTimeoutInURL) {
                      sessionTimeout = record.getPropertyAsInt(20);
                      if (sessionTimeout >= 0) {
-                        extraParams = ((StringBuffer)(new Object())).append(extraParams).append(SESSION_TIMEOUT_PARAM).append(sessionTimeout).toString();
+                        extraParams = extraParams + SESSION_TIMEOUT_PARAM + sessionTimeout;
                      }
                   }
 
                   return Connector.open(
-                     ((StringBuffer)(new Object("httpsocket:")))
-                        .append(name)
-                        .append(";interface=")
-                        .append(iface)
-                        .append(";connectionhandler=connect;deviceside=true")
-                        .append(extraParams)
-                        .toString(),
-                     mode,
-                     timeouts
+                     "httpsocket:" + name + ";interface=" + iface + ";connectionhandler=connect;deviceside=true" + extraParams, mode, timeouts
                   );
                }
             }
@@ -206,21 +197,15 @@ public final class Protocol implements ConnectionBaseInterface {
       }
 
       if (!sessionTimeoutInURL && sessionTimeout >= 0) {
-         extraParams = ((StringBuffer)(new Object())).append(extraParams).append(SESSION_TIMEOUT_PARAM).append(sessionTimeout).toString();
+         extraParams = extraParams + SESSION_TIMEOUT_PARAM + sessionTimeout;
       }
 
       if (DeviceInfo.isSimulator() && !StringUtilities.strEqualIgnoreCase(DebugSupport.getenv("raw-tcp"), "true", 1701707776)) {
-         return Connector.open(
-            ((StringBuffer)(new Object("simultcp:"))).append(name).append(extraParams).append(";interface=").append(iface).toString(), mode, timeouts
-         );
+         return Connector.open("simultcp:" + name + extraParams + ";interface=" + iface, mode, timeouts);
       } else {
          return NativeSocket.isMultiRATSupported()
-            ? Connector.open(
-               ((StringBuffer)(new Object("tcpsocket:"))).append(name).append(extraParams).append(";interface=").append(iface).toString(), mode, timeouts
-            )
-            : Connector.open(
-               ((StringBuffer)(new Object("tcp:"))).append(name).append(extraParams).append(";interface=").append(iface).toString(), mode, timeouts
-            );
+            ? Connector.open("tcpsocket:" + name + extraParams + ";interface=" + iface, mode, timeouts)
+            : Connector.open("tcp:" + name + extraParams + ";interface=" + iface, mode, timeouts);
       }
    }
 

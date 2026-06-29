@@ -9,7 +9,7 @@ final class SerialReplyThread extends Thread {
 
    public SerialReplyThread(NativeLayer nativeLayer) {
       this._nativeLayer = nativeLayer;
-      this._packets = (CyclicQueue)(new Object());
+      this._packets = new CyclicQueue();
       ProtocolDaemon.getInstance().startThread(this);
    }
 

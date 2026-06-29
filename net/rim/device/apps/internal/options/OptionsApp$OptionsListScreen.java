@@ -22,7 +22,7 @@ final class OptionsApp$OptionsListScreen extends MainScreen {
       }
 
       if (this._titleId != -1) {
-         StringBuffer fullTitle = (StringBuffer)(new Object(title));
+         StringBuffer fullTitle = new StringBuffer(title);
          fullTitle.append(" - ");
          fullTitle.append(net.rim.device.apps.internal.options.resources.OptionsResources.getString(this._titleId));
          title = fullTitle.toString();

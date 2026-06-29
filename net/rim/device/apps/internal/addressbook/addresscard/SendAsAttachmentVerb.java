@@ -5,6 +5,7 @@ import net.rim.device.apps.api.framework.registration.VerbRepository;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.internal.addressbook.resources.AddressBookResources;
 import net.rim.device.apps.internal.blackberryemail.email.EmailBuilder;
+import net.rim.device.apps.internal.blackberryemail.email.EmailComposeVerb;
 import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
 
 final class SendAsAttachmentVerb extends Verb {
@@ -23,7 +24,7 @@ final class SendAsAttachmentVerb extends Verb {
    @Override
    public final Object invoke(Object originalContext) {
       for (Verb verb : VerbRepository.getVerbRepository(-7881764549058890736L).getVerbs(-2985347935260258684L)) {
-         if (verb instanceof Object) {
+         if (verb instanceof EmailComposeVerb) {
             ContextObject contextObject = ContextObject.clone(originalContext);
             contextObject.setFlag(31, 0);
             EmailMessageModel message = EmailBuilder.buildMessage(contextObject);

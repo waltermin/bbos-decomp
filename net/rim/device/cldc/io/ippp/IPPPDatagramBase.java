@@ -2,6 +2,7 @@ package net.rim.device.cldc.io.ippp;
 
 import java.io.DataInput;
 import java.io.DataOutput;
+import java.io.IOException;
 import net.rim.device.api.io.DatagramBase;
 import net.rim.device.api.util.DataBuffer;
 
@@ -236,7 +237,7 @@ public class IPPPDatagramBase extends DatagramBase {
 
    @Override
    public String toString() {
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       buffer.append("VER=").append(this._version).append('\n');
       buffer.append("CID=").append(this.getConnectionID()).append('\n');
       buffer.append("SEQ=").append(this.getSequence()).append('\n');
@@ -267,7 +268,7 @@ public class IPPPDatagramBase extends DatagramBase {
       return buffer.toString();
    }
 
-   public void writeTo(DataBuffer out) {
+   public void writeTo(DataBuffer out) throws IOException {
       out.writeByte(16);
       out.writeInt(this.getConnectionID());
       out.writeByte(this.getSequence());
@@ -290,14 +291,14 @@ public class IPPPDatagramBase extends DatagramBase {
             out.write(this.getErrorMessage().getBytes());
             return;
          default:
-            throw new Object("Invalid IPPP flags written");
+            throw new IOException("Invalid IPPP flags written");
       }
    }
 
-   public void readFrom(DataBuffer in) {
+   public void readFrom(DataBuffer in) throws IOException {
       this._version = in.readByte();
       if (this._version != 16) {
-         throw new Object("Incompatible version in the received IPPP datagram");
+         throw new IOException("Incompatible version in the received IPPP datagram");
       }
 
       this.setConnectionID(in.readInt());
@@ -323,11 +324,11 @@ public class IPPPDatagramBase extends DatagramBase {
             int errorMsgLength = in.available();
             byte[] errorMsgBytes = new byte[errorMsgLength];
             in.read(errorMsgBytes);
-            this.setErrorMessage((String)(new Object(errorMsgBytes)));
+            this.setErrorMessage(new String(errorMsgBytes));
             Object var6 = null;
             return;
          default:
-            throw new Object("Invalid IPPP flags read");
+            throw new IOException("Invalid IPPP flags read");
       }
    }
 }

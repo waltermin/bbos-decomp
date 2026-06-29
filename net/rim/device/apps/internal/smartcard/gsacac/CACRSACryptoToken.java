@@ -32,11 +32,11 @@ final class CACRSACryptoToken extends RSACryptoToken implements Persistable {
    @Override
    public final void decryptRSA(
       RSACryptoSystem cryptoSystem, CryptoTokenPrivateKeyData privateKeyData, byte[] input, int inputOffset, byte[] output, int outputOffset
-   ) {
+   ) throws CryptoTokenException {
       try {
          this.signDecryptHelper(cryptoSystem, privateKeyData, input, inputOffset, output, outputOffset, _rb.getString(17), 2, null);
       } catch (Throwable var9) {
-         throw new Object(e.toString());
+         throw new CryptoTokenException(e.toString());
       }
    }
 
@@ -102,7 +102,7 @@ final class CACRSACryptoToken extends RSACryptoToken implements Persistable {
       // 039: invokevirtual net/rim/device/api/smartcard/SmartCardSession.getSmartCardID ()Lnet/rim/device/api/smartcard/SmartCardID;
       // 03c: invokevirtual net/rim/device/api/smartcard/SmartCardID.equals (Ljava/lang/Object;)Z
       // 03f: ifne 04d
-      // 042: new java/lang/Object
+      // 042: new net/rim/device/api/crypto/CryptoTokenCancelException
       // 045: dup
       // 046: ldc_w "Wrong card inserted"
       // 049: invokespecial net/rim/device/api/crypto/CryptoTokenCancelException.<init> (Ljava/lang/String;)V
@@ -145,7 +145,7 @@ final class CACRSACryptoToken extends RSACryptoToken implements Persistable {
       // 09d: aload 11
       // 09f: athrow
       // 0a0: return
-      // 0a1: new java/lang/Object
+      // 0a1: new java/lang/RuntimeException
       // 0a4: dup
       // 0a5: invokespecial java/lang/RuntimeException.<init> ()V
       // 0a8: athrow
@@ -158,7 +158,7 @@ final class CACRSACryptoToken extends RSACryptoToken implements Persistable {
       // 0b8: bipush 14
       // 0ba: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 0bd: astore 10
-      // 0bf: new java/lang/Object
+      // 0bf: new net/rim/device/api/crypto/CryptoTokenCancelException
       // 0c2: dup
       // 0c3: aload 13
       // 0c5: invokevirtual net/rim/device/api/smartcard/SmartCardLockedException.toString ()Ljava/lang/String;
@@ -179,21 +179,21 @@ final class CACRSACryptoToken extends RSACryptoToken implements Persistable {
       // 0ec: aload 11
       // 0ee: athrow
       // 0ef: astore 13
-      // 0f1: new java/lang/Object
+      // 0f1: new net/rim/device/api/crypto/CryptoTokenCancelException
       // 0f4: dup
       // 0f5: aload 13
       // 0f7: invokevirtual net/rim/device/api/smartcard/SmartCardSessionClosedException.toString ()Ljava/lang/String;
       // 0fa: invokespecial net/rim/device/api/crypto/CryptoTokenCancelException.<init> (Ljava/lang/String;)V
       // 0fd: athrow
       // 0fe: astore 13
-      // 100: new java/lang/Object
+      // 100: new net/rim/device/api/crypto/CryptoTokenCancelException
       // 103: dup
       // 104: aload 13
       // 106: invokevirtual net/rim/device/api/smartcard/SmartCardCancelException.toString ()Ljava/lang/String;
       // 109: invokespecial net/rim/device/api/crypto/CryptoTokenCancelException.<init> (Ljava/lang/String;)V
       // 10c: athrow
       // 10d: astore 13
-      // 10f: new java/lang/Object
+      // 10f: new net/rim/device/api/crypto/CryptoTokenCancelException
       // 112: dup
       // 113: aload 13
       // 115: invokevirtual net/rim/device/api/smartcard/SmartCardRemovedException.toString ()Ljava/lang/String;
@@ -208,7 +208,7 @@ final class CACRSACryptoToken extends RSACryptoToken implements Persistable {
       // 12b: bipush 21
       // 12d: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 130: astore 10
-      // 132: new java/lang/Object
+      // 132: new net/rim/device/api/crypto/CryptoTokenCancelException
       // 135: dup
       // 136: aload 13
       // 138: invokevirtual net/rim/device/api/smartcard/SmartCardException.toString ()Ljava/lang/String;

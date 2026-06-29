@@ -9,7 +9,7 @@ public final class SmartCardID implements Persistable {
 
    public SmartCardID(long id, String label, SmartCard smartCard) {
       if (smartCard == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._id = id;

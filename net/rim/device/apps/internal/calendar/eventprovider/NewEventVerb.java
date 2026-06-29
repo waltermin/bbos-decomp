@@ -19,7 +19,7 @@ public class NewEventVerb extends CalendarEventVerb {
    @Override
    public Object invoke(Object parameter) {
       Event newEvent;
-      if (!(parameter instanceof Object)) {
+      if (!(parameter instanceof Event)) {
          newEvent = (Event)FactoryUtil.createInstance(-1986287563994289176L, null);
          newEvent.setStartDate(CalOptionCache.getTimeWithFocus(), TimeZone.getDefault());
          newEvent.setInstanceDuration(CalOptionCache.getSuggestedUserDuration());
@@ -28,9 +28,9 @@ public class NewEventVerb extends CalendarEventVerb {
       }
 
       CalendarEventViewerProvider cevp = (CalendarEventViewerProvider)newEvent;
-      ContextObject context = (ContextObject)(new Object(31));
+      ContextObject context = new ContextObject(31);
       CalendarEventViewer ev = cevp.getCalendarEventViewer(context);
-      Verb[] verbs = new Object[]{new SaveViewedEventVerb(ev, newEvent, true), null};
+      Verb[] verbs = new Verb[]{new SaveViewedEventVerb(ev, newEvent, true), null};
       ev.openViewer(ResourceBundle.getBundle(912302513268743237L, "net.rim.device.apps.internal.resource.Calendar").getString(131), verbs, 0, -1, true);
       return newEvent;
    }

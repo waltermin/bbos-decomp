@@ -66,7 +66,7 @@ public final class DataEncoder {
                this.writeDataArray(out, (LongVector)cmp.getObjectFieldValue(i));
                break;
             default:
-               throw new Object("Not recognized type");
+               throw new RuntimeException("Not recognized type");
          }
       }
    }
@@ -122,7 +122,7 @@ public final class DataEncoder {
                   this.writeDataArray(out, (LongVector)dc.getObjectFieldValue(handle, i));
                   break;
                default:
-                  throw new Object("Unrecognized field type");
+                  throw new RuntimeException("Unrecognized field type");
             }
          }
       }
@@ -203,7 +203,7 @@ public final class DataEncoder {
    }
 
    private final void writeStringArray(WritableDataStream out, Vector strings) {
-      String[] objects = new Object[strings.size()];
+      String[] objects = new String[strings.size()];
       strings.copyInto(objects);
       out.writeStringArray(objects);
    }

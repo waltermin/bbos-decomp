@@ -43,9 +43,7 @@ public final class FolderEntryPointDescriptor
          ApplicationProperties ap = HierarchyManager.getInstance().getActiveHierarchy().getApplicationProperties(propertiesName);
          this._originalCustomBitmap = null;
          if (ap != null) {
-            this._originalCustomBitmap = getScaledImage(
-               ((StringBuffer)(new Object("file:///store/samples/folder icons/"))).append(ap.getCustomImageName()).toString()
-            );
+            this._originalCustomBitmap = getScaledImage("file:///store/samples/folder icons/" + ap.getCustomImageName());
          }
       }
 
@@ -90,7 +88,7 @@ public final class FolderEntryPointDescriptor
          }
       }
 
-      return (Boolean)(new Object(result));
+      return new Boolean(result);
    }
 
    @Override
@@ -178,7 +176,7 @@ public final class FolderEntryPointDescriptor
    }
 
    public static final String createLaunchURL(InternalApplicationFolder folder) {
-      return ((StringBuffer)(new Object())).append(ApplicationLauncher.FOLDER_URL_PREFIX).append(folder.getName()).toString();
+      return ApplicationLauncher.FOLDER_URL_PREFIX + folder.getName();
    }
 
    public static final Bitmap getScaledImage(String url) {

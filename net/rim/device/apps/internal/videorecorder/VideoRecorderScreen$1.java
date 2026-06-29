@@ -17,7 +17,7 @@ final class VideoRecorderScreen$1 implements Runnable {
       Verb renameVerb = ExplorerServices.getRenameVerb(FileUtilities.getDisplayName(filename), null);
       if (renameVerb != null) {
          Object obj = renameVerb.invoke(filename);
-         if (obj instanceof Object) {
+         if (obj instanceof String) {
             String newname = (String)obj;
             this.this$0._vrc.setVideoFileName(newname);
             this.this$0.updateFileName(FileUtilities.getDisplayBaseName(newname).toCharArray());

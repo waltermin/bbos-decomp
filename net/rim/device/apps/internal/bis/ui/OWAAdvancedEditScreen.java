@@ -2,9 +2,11 @@ package net.rim.device.apps.internal.bis.ui;
 
 import java.util.Hashtable;
 import net.rim.device.api.i18n.MessageFormat;
+import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.EmailAddressEditField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.apps.internal.bis.ApplicationResources;
 import net.rim.device.apps.internal.bis.api.ui.BoldLabelField;
@@ -37,24 +39,24 @@ public final class OWAAdvancedEditScreen extends UserSettingsScreen {
          server = fullURL.substring(0, fullURL.lastIndexOf(47));
          account = fullURL.substring(fullURL.lastIndexOf(47) + 1, fullURL.length());
          if (mailboxToEdit.getUseSSL() != null && mailboxToEdit.getUseSSL()) {
-            server = ((StringBuffer)(new Object("https://"))).append(server).toString();
+            server = "https://" + server;
          } else {
-            server = ((StringBuffer)(new Object("http://"))).append(server).toString();
+            server = "http://" + server;
          }
       }
 
-      String title = MessageFormat.format(ApplicationResources.getString(150), new Object[]{mailboxToEdit.getDescription()});
+      String title = MessageFormat.format(ApplicationResources.getString(150), new String[]{mailboxToEdit.getDescription()});
       this.setTitle(title);
       this.addContentField(new HeadingField(ApplicationResources.getString(129)));
       this.addContentLineBreak();
       this.addContentField(new BoldLabelField(ApplicationResources.getString(140)));
-      this._owaURLEdit = (BasicEditField)(new Object(117440512));
+      this._owaURLEdit = new BasicEditField(117440512);
       this._owaURLEdit.setText(server);
       this.addContentField(this._owaURLEdit, true);
       this.addContentField(new InputHintLabelField(ApplicationResources.getString(53)));
       this.addContentLineBreak();
       this.addContentField(new BoldLabelField(ApplicationResources.getString(134)));
-      this._emailAccountEdit = (EmailAddressEditField)(new Object(null, account));
+      this._emailAccountEdit = new EmailAddressEditField(null, account);
       this.addContentField(this._emailAccountEdit, true);
       this.addContentLineBreak();
       String seconds = "";
@@ -64,10 +66,10 @@ public final class OWAAdvancedEditScreen extends UserSettingsScreen {
             timeoutValue /= 1000;
          }
 
-         seconds = MessageFormat.format(ApplicationResources.getString(141), new Object[]{((StringBuffer)(new Object(" "))).append(timeoutValue).toString()});
+         seconds = MessageFormat.format(ApplicationResources.getString(141), new String[]{" " + timeoutValue});
       }
 
-      this.addContentFieldRow(new Object[]{new BoldLabelField(ApplicationResources.getString(144)), new Object(seconds)});
+      this.addContentFieldRow(new Field[]{new BoldLabelField(ApplicationResources.getString(144)), new LabelField(seconds)});
       Button cancel = new Button(ApplicationResources.getString(28));
       Button save = new Button(ApplicationResources.getString(29));
       this.addButtonBarButtons(new Button[]{cancel, save}, false, 1);
@@ -91,10 +93,10 @@ public final class OWAAdvancedEditScreen extends UserSettingsScreen {
 
             String server = owaURL.substring(owaURL.indexOf("://") + 3, owaURL.length());
             if (!server.endsWith("/")) {
-               server = ((StringBuffer)(new Object())).append(server).append("/").toString();
+               server = server + "/";
             }
 
-            server = ((StringBuffer)(new Object())).append(server).append(emailAccount).toString();
+            server = server + emailAccount;
             inputMap.put("server", server);
             inputMap.put("ssl", ssl);
             return true;

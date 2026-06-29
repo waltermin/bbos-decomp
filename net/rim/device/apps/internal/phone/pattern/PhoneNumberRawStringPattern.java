@@ -35,8 +35,8 @@ public final class PhoneNumberRawStringPattern extends StringPattern implements 
    private static final String EXTENSION_KEY = "ext";
 
    public PhoneNumberRawStringPattern() {
-      this._scanbufferWR = (WeakReference)(new Object(null));
-      this._stringWR = (WeakReference)(new Object(null));
+      this._scanbufferWR = new WeakReference(null);
+      this._stringWR = new WeakReference(null);
       this._analyzer = new PhoneNumberPatternAnalyzer(this);
    }
 

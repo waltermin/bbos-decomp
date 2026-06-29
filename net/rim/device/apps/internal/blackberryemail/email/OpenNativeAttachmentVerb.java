@@ -16,7 +16,7 @@ public class OpenNativeAttachmentVerb extends Verb {
 
    @Override
    public Object invoke(Object parameter) {
-      AppsMainScreen viewScreen = (AppsMainScreen)(new Object(281474976710656L));
+      AppsMainScreen viewScreen = new AppsMainScreen(281474976710656L);
       NativeAttachmentViewer attachmentViewerApp = new NativeAttachmentViewer(viewScreen, this._attachment);
       attachmentViewerApp.init();
       UiApplication.getUiApplication().pushScreen(viewScreen);

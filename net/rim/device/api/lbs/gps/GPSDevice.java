@@ -67,7 +67,7 @@ public class GPSDevice {
       while (i < bytes.length) {
          switch (bytes[i]) {
             case 42:
-               return ((StringBuffer)(new Object())).append(checksum > 15 ? "" : "0").append(Integer.toHexString(checksum)).toString();
+               return (checksum > 15 ? "" : "0") + Integer.toHexString(checksum);
             default:
                if (checksum == 0) {
                   checksum = bytes[i];

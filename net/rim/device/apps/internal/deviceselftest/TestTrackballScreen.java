@@ -2,30 +2,30 @@ package net.rim.device.apps.internal.deviceselftest;
 
 import java.util.Vector;
 import net.rim.device.api.system.Application;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.component.SeparatorField;
 
 final class TestTrackballScreen extends TestScreenBase {
    TestTrackballScreen$ReportListCallback _callback;
    ListField _reportList;
    LabelField _event;
-   Vector reports = (Vector)(new Object());
+   Vector reports = new Vector();
 
    TestTrackballScreen() {
-      super._title = (LabelField)(new Object(DeviceSelfTestResources.getString(101), 1152921504606846976L));
-      super._input = (LabelField)(new Object(DeviceSelfTestResources.getString(102), 1152921504606846976L));
-      super._output = (LabelField)(new Object(DeviceSelfTestResources.getString(103), 1152921504606846976L));
-      this._event = (LabelField)(new Object(DeviceSelfTestResources.getString(104), 1152921504606846976L));
+      super._title = new LabelField(DeviceSelfTestResources.getString(101), 1152921504606846976L);
+      super._input = new LabelField(DeviceSelfTestResources.getString(102), 1152921504606846976L);
+      super._output = new LabelField(DeviceSelfTestResources.getString(103), 1152921504606846976L);
+      this._event = new LabelField(DeviceSelfTestResources.getString(104), 1152921504606846976L);
       this.setTitle(super._title);
       this.add(super._input);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.add(super._output);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.add(this._event);
       this._callback = new TestTrackballScreen$ReportListCallback();
-      this._reportList = (ListField)(new Object());
+      this._reportList = new ListField();
       this._reportList.setCallback(this._callback);
       this._reportList.setSearchable(false);
       this.add(this._reportList);
@@ -83,19 +83,19 @@ final class TestTrackballScreen extends TestScreenBase {
    public final boolean navigationMovement(int dx, int dy, int status, int time) {
       String msg = "Trackball Roll : ";
       if (dx < 0) {
-         msg = ((StringBuffer)(new Object())).append(msg).append("left ").append(-dx).toString();
+         msg = msg + "left " + -dx;
       } else if (dx > 0) {
-         msg = ((StringBuffer)(new Object())).append(msg).append("rigt ").append(dx).toString();
+         msg = msg + "rigt " + dx;
       }
 
       if (dx != 0 && dy != 0) {
-         msg = ((StringBuffer)(new Object())).append(msg).append(" , ").toString();
+         msg = msg + " , ";
       }
 
       if (dy < 0) {
-         msg = ((StringBuffer)(new Object())).append(msg).append("up ").append(-dy).toString();
+         msg = msg + "up " + -dy;
       } else if (dy > 0) {
-         msg = ((StringBuffer)(new Object())).append(msg).append("down ").append(dy).toString();
+         msg = msg + "down " + dy;
       }
 
       this.insertReport(msg);

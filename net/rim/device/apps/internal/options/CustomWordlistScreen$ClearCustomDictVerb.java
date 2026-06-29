@@ -21,7 +21,7 @@ final class CustomWordlistScreen$ClearCustomDictVerb extends Verb {
                return this;
             }
 
-            co.actionPerformed(103, new Object(CustomWordlistScreen.getDataType()));
+            co.actionPerformed(103, new Integer(CustomWordlistScreen.getDataType()));
             return this;
          }
       }

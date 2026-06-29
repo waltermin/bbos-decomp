@@ -11,7 +11,7 @@ public class ToLongHashtable {
 
    public ToLongHashtable(int initialCapacity) {
       if (initialCapacity < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (initialCapacity < 1) {

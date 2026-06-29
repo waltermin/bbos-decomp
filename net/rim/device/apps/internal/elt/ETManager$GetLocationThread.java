@@ -10,36 +10,16 @@ final class ETManager$GetLocationThread implements Runnable {
    private final ETManager this$0;
 
    public final void start() {
-      Logger.logEvent(
-         this,
-         ((StringBuffer)(new Object("start(), stopped:")))
-            .append(this._stop)
-            .append(", started:")
-            .append(this._started)
-            .append(" userStarted=")
-            .append(this.this$0._data.isEnabledByUser())
-            .toString(),
-         false
-      );
+      Logger.logEvent(this, "start(), stopped:" + this._stop + ", started:" + this._started + " userStarted=" + this.this$0._data.isEnabledByUser(), false);
       if (!this._started) {
          this._stop = false;
          this._started = true;
-         ((Thread)(new Object(this))).start();
+         new Thread(this).start();
       }
    }
 
    public final void stop() {
-      Logger.logEvent(
-         this,
-         ((StringBuffer)(new Object("stop(), stopped:")))
-            .append(this._stop)
-            .append(", started:")
-            .append(this._started)
-            .append(" userStarted=")
-            .append(this.this$0._data.isEnabledByUser())
-            .toString(),
-         false
-      );
+      Logger.logEvent(this, "stop(), stopped:" + this._stop + ", started:" + this._started + " userStarted=" + this.this$0._data.isEnabledByUser(), false);
       if (!this._stop) {
          this._stop = true;
          this._started = false;
@@ -52,17 +32,7 @@ final class ETManager$GetLocationThread implements Runnable {
    }
 
    public final void notifyLock() {
-      Logger.logEvent(
-         this,
-         ((StringBuffer)(new Object("notifyLock(), stopped:")))
-            .append(this._stop)
-            .append(", started:")
-            .append(this._started)
-            .append(" userStarted=")
-            .append(this.this$0._data.isEnabledByUser())
-            .toString(),
-         false
-      );
+      Logger.logEvent(this, "notifyLock(), stopped:" + this._stop + ", started:" + this._started + " userStarted=" + this.this$0._data.isEnabledByUser(), false);
       if (this._started) {
          synchronized (this._lock) {
             this._lock.notify();
@@ -76,7 +46,7 @@ final class ETManager$GetLocationThread implements Runnable {
       Application app = this.this$0._app;
       if (app != null) {
          Process p = Process.getProcess(app.getProcessId());
-         Logger.logEvent(this, ((StringBuffer)(new Object("killApp process="))).append(p).toString(), false);
+         Logger.logEvent(this, "killApp process=" + p, false);
          if (p != null) {
             p.destroy();
          }
@@ -86,7 +56,7 @@ final class ETManager$GetLocationThread implements Runnable {
    @Override
    public final void run() {
       if (this.this$0._data.isEnabledByUser()) {
-         Logger.logEvent(this, ((StringBuffer)(new Object("run() gpsFixThread="))).append(this.this$0._gpsFixThread).toString(), false);
+         Logger.logEvent(this, "run() gpsFixThread=" + this.this$0._gpsFixThread, false);
          if (!this.this$0._gpsFixThread.isWaitingForGPS() || this.this$0._gpsFixThread.isFinished()) {
             this.this$0._gpsFixThread.stopAttempt();
             this.this$0._gpsFixThread = null;
@@ -109,17 +79,16 @@ final class ETManager$GetLocationThread implements Runnable {
 
             Logger.logEvent(
                this,
-               ((StringBuffer)(new Object("wait=")))
-                  .append(waitTime)
-                  .append(", interval=")
-                  .append(currentInterval)
-                  .append("sec, gpsFixTime=")
-                  .append(this.this$0._gpsFixTime)
-                  .append(", enabledByUser=")
-                  .append(this.this$0._data.isEnabledByUser())
-                  .append(", enabledByITPolicy=")
-                  .append(this.this$0._data.isEnabledByITPolicy())
-                  .toString(),
+               "wait="
+                  + waitTime
+                  + ", interval="
+                  + currentInterval
+                  + "sec, gpsFixTime="
+                  + this.this$0._gpsFixTime
+                  + ", enabledByUser="
+                  + this.this$0._data.isEnabledByUser()
+                  + ", enabledByITPolicy="
+                  + this.this$0._data.isEnabledByITPolicy(),
                false
             );
 
@@ -134,7 +103,7 @@ final class ETManager$GetLocationThread implements Runnable {
                      break;
                   }
 
-                  Logger.logEvent(this, ((StringBuffer)(new Object("gpsFixThread="))).append(this.this$0._gpsFixThread).toString(), false);
+                  Logger.logEvent(this, "gpsFixThread=" + this.this$0._gpsFixThread, false);
                   if (this.this$0._gpsFixThread == null) {
                      this.this$0._gpsFixThread = new ETManager$GPSFixThread(this.this$0);
                   }
@@ -142,9 +111,7 @@ final class ETManager$GetLocationThread implements Runnable {
                   if (!this.this$0._gpsFixThread.isWaitingForGPS()) {
                      boolean gotLocation = this.this$0.updateLocation(false, currentInterval - 2);
                      if (!gotLocation) {
-                        Logger.logEvent(
-                           this, ((StringBuffer)(new Object("gotLocation false, current gpsFixThread="))).append(this.this$0._gpsFixThread).toString(), false
-                        );
+                        Logger.logEvent(this, "gotLocation false, current gpsFixThread=" + this.this$0._gpsFixThread, false);
                         if (!this.this$0._gpsFixThread.isWaitingForGPS()) {
                            if (this.this$0._gpsFixThread.isFinished()) {
                               this.this$0._gpsFixThread.stopAttempt();

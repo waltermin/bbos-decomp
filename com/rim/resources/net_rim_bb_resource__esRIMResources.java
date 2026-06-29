@@ -4,7 +4,7 @@ import java.util.Hashtable;
 import net.rim.device.resources.Resource;
 
 public final class net_rim_bb_resource__esRIMResources extends Resource {
-   public static Hashtable _resources = (Hashtable)(new Object(107));
+   public static Hashtable _resources = new Hashtable(107);
    public static Hashtable _properties;
    public static byte[] _appCount = new byte[]{1};
    public static byte[] _resourceExtensions = new byte[]{46, 99, 114, 98, 10};

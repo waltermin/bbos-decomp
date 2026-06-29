@@ -5,11 +5,11 @@ import net.rim.device.api.util.Persistable;
 import net.rim.device.api.util.ToIntHashtable;
 
 final class WebFeedStatusStore$WebFeedStore implements Persistable {
-   private ToIntHashtable _readStatus = (ToIntHashtable)(new Object());
-   private Hashtable _guids = (Hashtable)(new Object());
+   private ToIntHashtable _readStatus = new ToIntHashtable();
+   private Hashtable _guids = new Hashtable();
 
    public final String[] getGuids(String url) {
-      return (Object[])this._guids.get(url);
+      return (String[])this._guids.get(url);
    }
 
    public final void setGuids(String url, String[] guids) {

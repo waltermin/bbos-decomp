@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.secureemail.encodings.smime;
 
+import net.rim.device.api.crypto.cms.CMSNoCertificateFoundException;
 import net.rim.device.api.system.Application;
 import net.rim.device.apps.internal.secureemail.SecureEmailSignatureField$ThrowableHandlerData;
 import net.rim.device.apps.internal.secureemail.SecureEmailSignatureField$TrustStatusField;
@@ -14,7 +15,7 @@ public class SMIMESignatureField$SMIMETrustStatusField extends SecureEmailSignat
 
    @Override
    public void handleThrowable(Throwable t, SecureEmailSignatureField$ThrowableHandlerData throwableHandlerData) {
-      if (t instanceof Object) {
+      if (t instanceof CMSNoCertificateFoundException) {
          throwableHandlerData._status = 6;
       } else {
          super.handleThrowable(t, throwableHandlerData);

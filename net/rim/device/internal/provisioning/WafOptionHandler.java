@@ -44,7 +44,7 @@ final class WafOptionHandler implements ProvisioningHandler, SystemListener2 {
          try {
             RadioInternal.enableDTM(dtmEnabled == 1);
          } catch (Throwable var13) {
-            ProvisioningService.log(((StringBuffer)(new Object("DTM "))).append(e.toString()).toString(), 2);
+            ProvisioningService.log("DTM " + e.toString(), 2);
             break label111;
          }
       }
@@ -60,7 +60,7 @@ final class WafOptionHandler implements ProvisioningHandler, SystemListener2 {
       try {
          RadioInternal.setAGPSOptions(rrlpEnabled, suplEnabled);
       } catch (Throwable var12) {
-         ProvisioningService.log(((StringBuffer)(new Object("A-GPS "))).append(e.toString()).toString(), 2);
+         ProvisioningService.log("A-GPS " + e.toString(), 2);
          return;
       }
    }

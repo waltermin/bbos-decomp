@@ -26,6 +26,6 @@ public final class DetachRequestMessage extends AbstractRequestMessage implement
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object("Detach Request: sessionId="))).append(this._sessionId).toString();
+      return "Detach Request: sessionId=" + this._sessionId;
    }
 }

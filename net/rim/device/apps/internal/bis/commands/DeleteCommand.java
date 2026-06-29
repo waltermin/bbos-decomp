@@ -14,7 +14,7 @@ public final class DeleteCommand implements DomainCommand {
       UserInfo userInfo = ClientSessionState.getInstance().getUserInfo();
       Mailbox mailboxToDelete = userInfo.getMailbox(description);
       if (mailboxToDelete == null) {
-         throw new Object(((StringBuffer)(new Object("Unknown mailbox specified: "))).append(description).toString());
+         throw new IllegalArgumentException("Unknown mailbox specified: " + description);
       }
 
       ClientSessionState.getInstance().setMailboxToModify(mailboxToDelete);

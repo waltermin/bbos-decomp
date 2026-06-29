@@ -22,7 +22,7 @@ class CalendarHandlerFactory {
    private CalendarHandlerFactory() {
       this._helper = new CollectionListenerFactoryHelper();
       this._rtClockHelper = new RealtimeClockListenerFactoryHelper();
-      Thread thread = (Thread)(new Object(new CalendarHandlerFactory$1(this)));
+      Thread thread = new Thread(new CalendarHandlerFactory$1(this));
       thread.setPriority(1);
       thread.start();
    }

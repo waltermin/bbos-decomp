@@ -562,7 +562,7 @@ public final class RC2Key implements SymmetricKey, Persistable {
 
    public RC2Key(RC2CryptoToken cryptoToken, byte[] data, int offset, int bitLength, int effectiveBitLength) {
       if (cryptoToken == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this.initialize(cryptoToken, cryptoToken.injectKey(data, offset, bitLength, effectiveBitLength));
@@ -574,7 +574,7 @@ public final class RC2Key implements SymmetricKey, Persistable {
 
    private final void initialize(RC2CryptoToken cryptoToken, int bitLength, int effectiveBitLength) {
       if (cryptoToken == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this.initialize(cryptoToken, cryptoToken.createKey(bitLength, effectiveBitLength));
@@ -597,14 +597,14 @@ public final class RC2Key implements SymmetricKey, Persistable {
       // 09: invokespecial net/rim/device/api/crypto/RC2Key.initialize (Lnet/rim/device/api/crypto/RC2CryptoToken;[BIII)V
       // 0c: return
       // 0d: astore 5
-      // 0f: new java/lang/Object
+      // 0f: new java/lang/RuntimeException
       // 12: dup
       // 13: aload 5
       // 15: invokevirtual net/rim/device/api/crypto/CryptoTokenException.toString ()Ljava/lang/String;
       // 18: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 1b: athrow
       // 1c: astore 5
-      // 1e: new java/lang/Object
+      // 1e: new java/lang/RuntimeException
       // 21: dup
       // 22: aload 5
       // 24: invokevirtual net/rim/device/api/crypto/CryptoUnsupportedOperationException.toString ()Ljava/lang/String;
@@ -624,7 +624,7 @@ public final class RC2Key implements SymmetricKey, Persistable {
          this._cryptoTokenData = cryptoTokenData;
          this.setHashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -653,14 +653,14 @@ public final class RC2Key implements SymmetricKey, Persistable {
       // 0a: invokespecial net/rim/device/api/crypto/RC2Key.initialize (Lnet/rim/device/api/crypto/RC2CryptoToken;II)V
       // 0d: return
       // 0e: astore 3
-      // 0f: new java/lang/Object
+      // 0f: new java/lang/RuntimeException
       // 12: dup
       // 13: aload 3
       // 14: invokevirtual net/rim/device/api/crypto/CryptoTokenException.toString ()Ljava/lang/String;
       // 17: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 1a: athrow
       // 1b: astore 3
-      // 1c: new java/lang/Object
+      // 1c: new java/lang/RuntimeException
       // 1f: dup
       // 20: aload 3
       // 21: invokevirtual net/rim/device/api/crypto/CryptoUnsupportedOperationException.toString ()Ljava/lang/String;
@@ -676,7 +676,7 @@ public final class RC2Key implements SymmetricKey, Persistable {
 
    public RC2Key(byte[] data) {
       if (data == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int bitLength = data.length << 3;
@@ -685,7 +685,7 @@ public final class RC2Key implements SymmetricKey, Persistable {
 
    public RC2Key(byte[] data, int effectiveBitLength) {
       if (data == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this.initialize(data, 0, data.length << 3, effectiveBitLength);
@@ -733,7 +733,7 @@ public final class RC2Key implements SymmetricKey, Persistable {
 
    public static final int decodeEffectiveBitLength(int encodedEffectiveBitLength) {
       if (encodedEffectiveBitLength < 0 || encodedEffectiveBitLength == 189 || encodedEffectiveBitLength > 1024) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return encodedEffectiveBitLength < 256 ? VERSION_TO_EBL[encodedEffectiveBitLength] & 0xFF : encodedEffectiveBitLength;
       }
@@ -741,7 +741,7 @@ public final class RC2Key implements SymmetricKey, Persistable {
 
    public static final int encodeEffectiveBitLength(int effectiveBitLength) {
       if (effectiveBitLength < 1 || effectiveBitLength > 1024) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return effectiveBitLength < 256 ? EBL_TO_VERSION[effectiveBitLength] & 0xFF : effectiveBitLength;
       }

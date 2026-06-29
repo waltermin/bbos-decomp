@@ -18,11 +18,11 @@ import net.rim.device.api.ui.theme.ThemeManager;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.api.util.StringUtilities;
+import net.rim.device.apps.api.ribbon.ApplicationEntryPoint;
 import net.rim.device.apps.api.ribbon.ApplicationFolder;
 import net.rim.device.apps.api.ribbon.ApplicationHierarchy;
 import net.rim.device.apps.api.ribbon.ApplicationHierarchyProvider;
 import net.rim.device.apps.api.ribbon.ApplicationProperties;
-import net.rim.device.apps.api.ribbon.EntryPointDescriptor;
 import net.rim.device.apps.api.ribbon.ModuleApplication;
 import net.rim.device.apps.api.ribbon.RibbonApi;
 import net.rim.device.apps.api.utility.props.BooleanProps;
@@ -315,7 +315,7 @@ public final class HierarchyManager implements GlobalEventListener {
                   ApplicationEntry entry = entries[i];
                   if (entry.getUniqueName().equals(uniqueName)) {
                      Object descriptor = entry.getDescriptor();
-                     if (descriptor instanceof Object && property instanceof Object) {
+                     if (descriptor instanceof BooleanProps && property instanceof Boolean) {
                         ((BooleanProps)descriptor).set(propertyId, (Boolean)property);
                      }
 
@@ -429,7 +429,7 @@ public final class HierarchyManager implements GlobalEventListener {
          while (keys.hasMoreElements()) {
             String name = (String)keys.nextElement();
             HierarchyData data = (HierarchyData)this._hierarchyCollection.get(name);
-            DataBuffer tmpBuffer = (DataBuffer)(new Object());
+            DataBuffer tmpBuffer = new DataBuffer();
             tmpBuffer.setBigEndian(buffer.isBigEndian());
             ConverterUtilities.writeStringSmart(buffer, 1, name);
             data.writeHierarchyData(tmpBuffer);
@@ -566,7 +566,7 @@ public final class HierarchyManager implements GlobalEventListener {
 
    public final void addEntryChangeListener(HierarchyManager$EntryChangeListener changeListener) {
       if (changeListener == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       HierarchyManager$EntryChangeListener[] changeListeners = this._entryChangeListeners;
@@ -739,7 +739,7 @@ public final class HierarchyManager implements GlobalEventListener {
 
             moduleName = CodeModuleManager.getModuleName(handle);
             if (moduleName == null) {
-               System.out.println(((StringBuffer)(new Object("Module "))).append(handle).append(" does not have a module name").toString());
+               System.out.println("Module " + handle + " does not have a module name");
                continue;
             }
          } finally {
@@ -815,7 +815,7 @@ public final class HierarchyManager implements GlobalEventListener {
          for (int i = descriptors.length - 1; i >= 0; i--) {
             ApplicationDescriptor descriptor = descriptors[i];
             if ((descriptor.getFlags() & 2) == 0) {
-               ApplicationEntry application = new ApplicationEntry((EntryPointDescriptor)(new Object(descriptor)), hotKeysDisabled);
+               ApplicationEntry application = new ApplicationEntry(new ApplicationEntryPoint(descriptor), hotKeysDisabled);
                RibbonApiProxy rap = (RibbonApiProxy)RibbonApi.getInstance();
                if (rap != null) {
                   rap.applyTo(handle, application);
@@ -939,7 +939,7 @@ public final class HierarchyManager implements GlobalEventListener {
    }
 
    private final synchronized void locateApplications() {
-      this._activeFolders = (Hashtable)(new Object());
+      this._activeFolders = new Hashtable();
       if (this._modulesDeletedCounter >= 10) {
          this.clearDefaultProperties();
       }
@@ -998,7 +998,7 @@ public final class HierarchyManager implements GlobalEventListener {
       }
 
       for (Theme$Factory factory = ThemeManager.getThemeFactory(name); factory != null; factory = ThemeManager.getThemeFactory(factory.getParent())) {
-         if (factory instanceof Object) {
+         if (factory instanceof ApplicationHierarchyProvider) {
             ApplicationHierarchyProvider provider = (ApplicationHierarchyProvider)factory;
             hierarchy = provider.getApplicationHierarchyInfo();
             break;
@@ -1044,16 +1044,16 @@ public final class HierarchyManager implements GlobalEventListener {
       PersistentObject persistentObject = RIMPersistentStore.getPersistentObject(-1404412532621532483L);
       this._hierarchyCollection = (Hashtable)persistentObject.getContents();
       if (this._hierarchyCollection == null) {
-         this._hierarchyCollection = (Hashtable)(new Object());
+         this._hierarchyCollection = new Hashtable();
          persistentObject.setContents(this._hierarchyCollection, 51);
          persistentObject.commit();
       }
 
       this._flagsID = PersistentInteger.getId(-7870816478501154318L, 0);
       this._launcherField = new GridApplicationLauncherField(this);
-      this._temporaryApplications = (Hashtable)(new Object());
-      this._baseHierarchies = (Hashtable)(new Object());
-      this._moduleInfo = (Hashtable)(new Object(CodeModuleManager.getModuleHandles().length * 4 / 3 + 1));
+      this._temporaryApplications = new Hashtable();
+      this._baseHierarchies = new Hashtable();
+      this._moduleInfo = new Hashtable(CodeModuleManager.getModuleHandles().length * 4 / 3 + 1);
       Application.getApplication().addGlobalEventListener(this);
    }
 

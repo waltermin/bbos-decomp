@@ -37,7 +37,7 @@ final class Mdn implements SetId {
       System.out.println("Mdn: ");
 
       for (int i = 0; i < 8; i++) {
-         System.out.print(((StringBuffer)(new Object())).append(Integer.toHexString(255 & this.mdn[i])).append(" ").toString());
+         System.out.print(Integer.toHexString(255 & this.mdn[i]) + " ");
       }
 
       System.out.print("\n");

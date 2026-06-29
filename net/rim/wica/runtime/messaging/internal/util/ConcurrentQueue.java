@@ -15,7 +15,7 @@ public class ConcurrentQueue {
 
    public ConcurrentQueue(int initialcapacity) {
       if (initialcapacity < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._capacity = initialcapacity;
@@ -81,7 +81,7 @@ public class ConcurrentQueue {
 
    public void put(Object x) {
       if (x == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._putGuard.acquire();
@@ -153,7 +153,7 @@ public class ConcurrentQueue {
 
    public void prepend(ConcurrentQueue queue) {
       if (queue == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this.lock();

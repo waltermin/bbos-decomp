@@ -7,8 +7,8 @@ import net.rim.device.apps.internal.browser.options.BrowserConfigRecord;
 import net.rim.device.apps.internal.browser.stack.RawDataCache;
 
 public final class COCModel extends WAPPushModel implements Persistable {
-   private Vector _serviceUris = (Vector)(new Object());
-   private Vector _objectUris = (Vector)(new Object());
+   private Vector _serviceUris = new Vector();
+   private Vector _objectUris = new Vector();
 
    public COCModel() {
       super(System.currentTimeMillis(), null, null, BrowserConfigRecord.INVALID_VALUE, null);

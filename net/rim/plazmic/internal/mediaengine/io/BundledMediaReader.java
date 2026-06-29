@@ -6,6 +6,7 @@ import net.rim.plazmic.internal.mediaengine.MediaFactory;
 import net.rim.plazmic.internal.mediaengine.MediaTypes;
 import net.rim.plazmic.internal.mediaengine.ResourceContext;
 import net.rim.plazmic.internal.mediaengine.ResourceProvider;
+import net.rim.plazmic.mediaengine.MediaException;
 
 public class BundledMediaReader implements ResourceProvider {
    protected byte[] _bundleData;
@@ -22,14 +23,14 @@ public class BundledMediaReader implements ResourceProvider {
    private int _currentResource;
    protected byte[] _mediaData;
    protected int _checksum;
-   Hashtable _resourceHashTable = (Hashtable)(new Object());
+   Hashtable _resourceHashTable = new Hashtable();
    protected ResourceProvider _resourceProvider;
    private static final String UNKNOWN_RESOURCE = "content/unknown";
    static final int SUPPORTED_MAJOR1_VERSION = 0;
    static final int SUPPORTED_MAJOR2_VERSION = 1;
    static final int SUPPORTED_MINOR1_VERSION = 6;
    static final int BUNDLE_START_HEADER = -548385470;
-   protected static Hashtable _mediaReaders = (Hashtable)(new Object());
+   protected static Hashtable _mediaReaders = new Hashtable();
 
    private Object read(Object m, byte[] data, int offset, ResourceContext context) {
       this._bundleData = data;
@@ -52,7 +53,7 @@ public class BundledMediaReader implements ResourceProvider {
       this._numberOfResources = this.readUnsignedByte();
       this._resourceLengths = new int[this._numberOfResources];
       this._resourceOffsets = new int[this._numberOfResources];
-      this._resourceContentType = new Object[this._numberOfResources];
+      this._resourceContentType = new String[this._numberOfResources];
       boolean hasContentTypes = true;
       if (this._major1Version == 0 && this._major2Version == 1 && this._minor1Version == 5) {
          hasContentTypes = false;
@@ -76,39 +77,21 @@ public class BundledMediaReader implements ResourceProvider {
       this.readHeaderTerminator();
    }
 
-   private void readHeaderTag() {
+   private void readHeaderTag() throws MediaException {
       if (this.readInt() != -548385470) {
-         throw new Object(3);
+         throw new MediaException(3);
       }
    }
 
-   private void readVersionInfo() {
+   private void readVersionInfo() throws MediaException {
       this._major1Version = this.readUnsignedByte();
       this._major2Version = this.readUnsignedByte();
       this._minor1Version = this.readUnsignedByte();
       this.readUnsignedByte();
       if (this._major1Version > 0 || this._major2Version > 1 || this._minor1Version > 6) {
-         throw new Object(
-            1,
-            ((StringBuffer)(new Object()))
-               .append(this._major1Version)
-               .append(".")
-               .append(this._major2Version)
-               .append(".")
-               .append(this._minor1Version)
-               .toString()
-         );
+         throw new MediaException(1, this._major1Version + "." + this._major2Version + "." + this._minor1Version);
       } else if (this._major1Version < 0 || this._major2Version < 1) {
-         throw new Object(
-            2,
-            ((StringBuffer)(new Object()))
-               .append(this._major1Version)
-               .append(".")
-               .append(this._major2Version)
-               .append(".")
-               .append(this._minor1Version)
-               .toString()
-         );
+         throw new MediaException(2, this._major1Version + "." + this._major2Version + "." + this._minor1Version);
       }
    }
 
@@ -119,9 +102,9 @@ public class BundledMediaReader implements ResourceProvider {
       return this.readString(mimeStringLength);
    }
 
-   private void readHeaderTerminator() {
+   private void readHeaderTerminator() throws MediaException {
       if (this.readUnsignedByte() != 13 || this.readUnsignedByte() != 10 || this.readUnsignedByte() != 32 || this.readUnsignedByte() != 10) {
-         throw new Object();
+         throw new MediaException();
       }
    }
 
@@ -129,7 +112,7 @@ public class BundledMediaReader implements ResourceProvider {
       this.readByteArray(this._mediaData);
    }
 
-   private Object getResource(String url, String mediaType, ResourceContext context) {
+   private Object getResource(String url, String mediaType, ResourceContext context) throws MediaException {
       boolean hasContentType = true;
       if (this._major1Version == 0 && this._major2Version == 1 && this._minor1Version == 5) {
          hasContentType = false;
@@ -142,10 +125,10 @@ public class BundledMediaReader implements ResourceProvider {
          }
 
          if (hasContentType && MediaTypes.getTypeCategory(mediaType) != MediaTypes.getTypeCategory(this._resourceContentType[this._currentResource])) {
-            throw new Object(8);
+            throw new MediaException(8);
          }
 
-         this._resourceHashTable.put(url, new Object(this._currentResource));
+         this._resourceHashTable.put(url, new Integer(this._currentResource));
          this._resourceOffsets[this._currentResource] = this._bundleOffset;
          resource = this.readResource(this._resourceLengths[this._currentResource], this._resourceContentType[this._currentResource], context);
          this._currentResource++;
@@ -162,7 +145,7 @@ public class BundledMediaReader implements ResourceProvider {
          }
 
          if (hasContentType && MediaTypes.getTypeCategory(mediaType) != MediaTypes.getTypeCategory(this._resourceContentType[this._currentResource])) {
-            throw new Object(8);
+            throw new MediaException(8);
          }
 
          resource = this.readResource(this._resourceLengths[this._currentResource], mediaType, context);
@@ -174,9 +157,9 @@ public class BundledMediaReader implements ResourceProvider {
       return resource;
    }
 
-   private Object readResource(int length, String mimeType, ResourceContext context) {
+   private Object readResource(int length, String mimeType, ResourceContext context) throws MediaException {
       if (this._currentResource > this._numberOfResources) {
-         throw new Object(4);
+         throw new MediaException(4);
       }
 
       if (this._resourceLengths[this._currentResource] == 0) {
@@ -189,7 +172,7 @@ public class BundledMediaReader implements ResourceProvider {
       Object resource = null;
 
       try {
-         ByteArrayInputStream bais = (ByteArrayInputStream)(new Object(resourceArray));
+         ByteArrayInputStream bais = new ByteArrayInputStream(resourceArray);
          resource = this._resourceProvider.createResource(mimeType, bais, context, null);
       } finally {
          return resource;
@@ -198,14 +181,14 @@ public class BundledMediaReader implements ResourceProvider {
       return resource;
    }
 
-   private void validateChecksum() {
+   private void validateChecksum() throws MediaException {
       int readerChecksum = this._checksum;
       int b1 = this.readUnsignedByte();
       int b2 = this.readUnsignedByte();
       int fileChecksum = (b1 << 8) + b2;
       readerChecksum &= 65535;
       if (readerChecksum != fileChecksum) {
-         throw new Object(10);
+         throw new MediaException(10);
       }
    }
 
@@ -227,7 +210,7 @@ public class BundledMediaReader implements ResourceProvider {
          this._checksum = this._checksum + this._bundleData[i];
       }
 
-      return (String)(new Object(this._bundleData, oldOffset, length));
+      return new String(this._bundleData, oldOffset, length);
    }
 
    private int readInt() {
@@ -249,9 +232,9 @@ public class BundledMediaReader implements ResourceProvider {
       return this.readByte() & 0xFF;
    }
 
-   private byte readByte() {
+   private byte readByte() throws MediaException {
       if (this._bundleOffset >= this._bundleData.length) {
-         throw new Object(4);
+         throw new MediaException(4);
       }
 
       byte value = this._bundleData[this._bundleOffset++];
@@ -259,14 +242,14 @@ public class BundledMediaReader implements ResourceProvider {
       return value;
    }
 
-   protected Object readMedia(byte[] mediaData, String contentType, ResourceContext context) {
+   protected Object readMedia(byte[] mediaData, String contentType, ResourceContext context) throws MediaException {
       if (contentType == null) {
          contentType = "application/x-vnd.rim.pme";
       }
 
       ResourceProvider reader = MediaFactory.createResourceProvider(contentType, mediaData);
       if (reader == null) {
-         throw new Object(3);
+         throw new MediaException(3);
       } else {
          return reader.createResource(contentType, mediaData, context, this);
       }
@@ -274,7 +257,7 @@ public class BundledMediaReader implements ResourceProvider {
 
    @Override
    public synchronized Object createResource(String type, Object data, ResourceContext context, Object referrer) {
-      if (referrer instanceof Object) {
+      if (referrer instanceof ResourceProvider) {
          this._resourceProvider = (ResourceProvider)referrer;
       }
 

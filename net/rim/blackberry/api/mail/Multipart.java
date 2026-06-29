@@ -19,7 +19,7 @@ public class Multipart {
 
    public Multipart(String type) {
       this._contentType = type;
-      this._parts = (Vector)(new Object());
+      this._parts = new Vector();
    }
 
    protected Multipart(String type, Part parent) {

@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.bluetooth;
 
+import java.io.IOException;
 import java.util.Enumeration;
 import javax.bluetooth.DataElement;
 import javax.bluetooth.RemoteDevice;
@@ -46,11 +47,11 @@ class ServiceRecordImpl implements ServiceRecord, Persistable {
       try {
          DataElement element = this.getAttributeValue(1);
          if (element == null) {
-            throw new Object();
+            throw new IOException();
          }
 
          if (element.getDataType() != 48) {
-            throw new Object();
+            throw new IOException();
          }
 
          Enumeration e = (Enumeration)element.getValue();
@@ -59,7 +60,7 @@ class ServiceRecordImpl implements ServiceRecord, Persistable {
          while (e.hasMoreElements()) {
             element = (DataElement)e.nextElement();
             if (element.getDataType() != 24) {
-               throw new Object();
+               throw new IOException();
             }
 
             if (classes[index].equals(element.getValue())) {
@@ -98,11 +99,11 @@ class ServiceRecordImpl implements ServiceRecord, Persistable {
       try {
          DataElement element = this.getAttributeValue(aid);
          if (element == null) {
-            throw new Object();
+            throw new IOException();
          }
 
          if (element.getDataType() != 48) {
-            throw new Object();
+            throw new IOException();
          }
 
          Enumeration e = (Enumeration)element.getValue();
@@ -110,17 +111,17 @@ class ServiceRecordImpl implements ServiceRecord, Persistable {
          while (e.hasMoreElements()) {
             element = (DataElement)e.nextElement();
             if (element.getDataType() != 48) {
-               throw new Object();
+               throw new IOException();
             }
 
             Enumeration e1 = (Enumeration)element.getValue();
             if (!e1.hasMoreElements()) {
-               throw new Object();
+               throw new IOException();
             }
 
             element = (DataElement)e1.nextElement();
             if (element.getDataType() != 24) {
-               throw new Object();
+               throw new IOException();
             }
 
             if (uuid.equals(element.getValue())) {
@@ -139,7 +140,7 @@ class ServiceRecordImpl implements ServiceRecord, Persistable {
    }
 
    public synchronized byte[] serialize() {
-      DataBuffer buf = (DataBuffer)(new Object());
+      DataBuffer buf = new DataBuffer();
       int length = this._attributeIDs.length;
 
       for (int i = 0; i < length; i++) {
@@ -152,7 +153,7 @@ class ServiceRecordImpl implements ServiceRecord, Persistable {
    }
 
    public synchronized byte[][] getAttributeValues() {
-      DataBuffer buf = (DataBuffer)(new Object());
+      DataBuffer buf = new DataBuffer();
       int length = this._attributeIDs.length;
       byte[][] values = new byte[length][];
 
@@ -176,7 +177,7 @@ class ServiceRecordImpl implements ServiceRecord, Persistable {
 
          return null;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -198,7 +199,7 @@ class ServiceRecordImpl implements ServiceRecord, Persistable {
       // 001: istore 3
       // 002: bipush 0
       // 003: istore 4
-      // 005: new java/lang/Object
+      // 005: new java/lang/StringBuffer
       // 008: dup
       // 009: invokespecial java/lang/StringBuffer.<init> ()V
       // 00c: astore 5
@@ -209,7 +210,7 @@ class ServiceRecordImpl implements ServiceRecord, Persistable {
       // 02f: bipush 1
       // 030: istore 3
       // 031: goto 03c
-      // 034: new java/lang/Object
+      // 034: new java/lang/IllegalArgumentException
       // 037: dup
       // 038: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 03b: athrow
@@ -223,7 +224,7 @@ class ServiceRecordImpl implements ServiceRecord, Persistable {
       // 04a: areturn
       // 04b: aload 6
       // 04d: invokevirtual javax/bluetooth/DataElement.getValue ()Ljava/lang/Object;
-      // 050: checkcast java/lang/Object
+      // 050: checkcast java/util/Enumeration
       // 053: astore 7
       // 055: aconst_null
       // 056: astore 8
@@ -242,7 +243,7 @@ class ServiceRecordImpl implements ServiceRecord, Persistable {
       // 075: astore 9
       // 077: aload 9
       // 079: invokevirtual javax/bluetooth/DataElement.getValue ()Ljava/lang/Object;
-      // 07c: checkcast java/lang/Object
+      // 07c: checkcast java/util/Enumeration
       // 07f: astore 11
       // 081: aload 11
       // 083: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
@@ -271,7 +272,7 @@ class ServiceRecordImpl implements ServiceRecord, Persistable {
       // 0c0: astore 9
       // 0c2: aload 9
       // 0c4: invokevirtual javax/bluetooth/DataElement.getValue ()Ljava/lang/Object;
-      // 0c7: checkcast java/lang/Object
+      // 0c7: checkcast java/util/Enumeration
       // 0ca: astore 11
       // 0cc: aload 11
       // 0ce: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
@@ -334,7 +335,7 @@ class ServiceRecordImpl implements ServiceRecord, Persistable {
       // 15d: astore 9
       // 15f: aload 9
       // 161: invokevirtual javax/bluetooth/DataElement.getValue ()Ljava/lang/Object;
-      // 164: checkcast java/lang/Object
+      // 164: checkcast java/util/Enumeration
       // 167: astore 11
       // 169: aload 11
       // 16b: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1

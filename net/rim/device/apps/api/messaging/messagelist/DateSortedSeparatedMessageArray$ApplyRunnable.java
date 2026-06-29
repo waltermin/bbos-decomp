@@ -97,7 +97,7 @@ class DateSortedSeparatedMessageArray$ApplyRunnable implements DialogWithBackgro
 
                for (int i = unseparatedEndIndex; i >= unseparatedStartIndex; i--) {
                   Object object = this.this$0._dateSortedItems.getAt(i);
-                  if (object instanceof Object) {
+                  if (object instanceof ActionProvider) {
                      ActionProvider actionProvider = (ActionProvider)object;
                      actionProvider.perform(this._action, contextObject);
                   }

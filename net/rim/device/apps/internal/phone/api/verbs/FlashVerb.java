@@ -27,7 +27,7 @@ public final class FlashVerb extends Verb {
    public final String toString() {
       String label = PhoneResources.getString(6002);
       if (this._data != null) {
-         label = ((StringBuffer)(new Object())).append(label).append(' ').append(this._data).toString();
+         label = label + ' ' + this._data;
       }
 
       return label;

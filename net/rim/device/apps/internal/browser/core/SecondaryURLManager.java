@@ -39,7 +39,7 @@ public final class SecondaryURLManager {
 
    public SecondaryURLManager(RenderingOptions renderingOptions) {
       this._renderingOptions = renderingOptions;
-      this._stateLookup = (Hashtable)(new Object());
+      this._stateLookup = new Hashtable();
       this._stateNodes = new SecondaryURLManager$StateInfo[0];
    }
 
@@ -98,7 +98,7 @@ public final class SecondaryURLManager {
       }
 
       if (amount > 0 && this._stateNodes.length != 0) {
-         String[] array = new Object[amount];
+         String[] array = new String[amount];
          int arrayIndex = 0;
          int numNodes = this._stateNodes.length;
 
@@ -162,7 +162,7 @@ public final class SecondaryURLManager {
          if (connection != null && url != null) {
             String contentType = RendererControl.getContentType(connection);
             String size = null;
-            if (connection instanceof Object) {
+            if (connection instanceof HttpConnection) {
                label198:
                try {
                   size = ((HttpConnection)connection).getHeaderField("x-rim-image-original-size");
@@ -174,7 +174,7 @@ public final class SecondaryURLManager {
             RendererImageContainer container = new RendererImageContainer();
             container._url = url;
             if (size != null) {
-               StringTokenizer tokenizer = (StringTokenizer)(new Object(size, ','));
+               StringTokenizer tokenizer = new StringTokenizer(size, ',');
                container._width = Integer.parseInt(tokenizer.nextToken());
                container._height = Integer.parseInt(tokenizer.nextToken());
             }

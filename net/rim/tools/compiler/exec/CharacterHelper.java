@@ -1,5 +1,6 @@
 package net.rim.tools.compiler.exec;
 
+import java.io.IOException;
 import net.rim.vm.Memory;
 
 public class CharacterHelper {
@@ -40,7 +41,7 @@ public class CharacterHelper {
       return utf8ToString(bytes, 0, bytes.length);
    }
 
-   public static String utf8ToString(byte[] bytes, int offset, int length) {
+   public static String utf8ToString(byte[] bytes, int offset, int length) throws IOException {
       String string = null;
       int suffixChars = 0;
       int end = offset + length;
@@ -48,32 +49,32 @@ public class CharacterHelper {
       for (int i = offset; i < end; i++) {
          char ch1 = (char)bytes[i];
          if (ch1 == 0) {
-            throw new Object("invalid UTF-8 encoding");
+            throw new IOException("invalid UTF-8 encoding");
          }
 
          if ((ch1 & 128) != 0) {
             suffixChars++;
             char ch2 = (char)bytes[++i];
             if ((ch2 & 192) != 128) {
-               throw new Object("invalid UTF-8 encoding");
+               throw new IOException("invalid UTF-8 encoding");
             }
 
             if ((ch1 & 224) != 192) {
                if ((ch1 & 240) != 224) {
-                  throw new Object("invalid UTF-8 encoding");
+                  throw new IOException("invalid UTF-8 encoding");
                }
 
                suffixChars++;
                char ch3 = (char)bytes[++i];
                if ((ch3 & 192) != 128) {
-                  throw new Object("invalid UTF-8 encoding");
+                  throw new IOException("invalid UTF-8 encoding");
                }
             }
          }
       }
 
       if (suffixChars == 0) {
-         string = (String)(new Object(bytes, offset, length));
+         string = new String(bytes, offset, length);
       } else {
          synchronized (_charLock) {
             char[] chars = _chars;
@@ -98,7 +99,7 @@ public class CharacterHelper {
                }
             }
 
-            string = (String)(new Object(chars, 0, strIndex));
+            string = new String(chars, 0, strIndex);
          }
       }
 

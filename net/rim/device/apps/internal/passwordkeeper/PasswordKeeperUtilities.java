@@ -27,7 +27,7 @@ public final class PasswordKeeperUtilities {
    public static final void convertElementsToCurrentPassword(byte[] currentPassword) {
       PasswordKeeper passwordKeeper = PasswordKeeper.getInstance();
       PasswordKeeperList source = passwordKeeper.getCollection().getSource();
-      Vector passwordContainer = (Vector)(new Object());
+      Vector passwordContainer = new Vector();
       passwordContainer.addElement(currentPassword);
       int size = source.size();
 
@@ -55,9 +55,9 @@ public final class PasswordKeeperUtilities {
             source.insertAt(i, conversionElement);
             source.remove(element);
          } catch (DecryptionException e) {
-            throw new Object();
+            throw new RuntimeException();
          } catch (PasswordKeeperLockedException e) {
-            throw new Object();
+            throw new RuntimeException();
          }
       }
    }
@@ -89,7 +89,7 @@ public final class PasswordKeeperUtilities {
                date = dateFormat.formatLocal(element.getCreationTime());
             }
 
-            String message = MessageFormat.format(PasswordKeeper.getString(3035), new Object[]{date});
+            String message = MessageFormat.format(PasswordKeeper.getString(3035), new String[]{date});
             dialog = new PasswordKeeperPasswordDialog(false, message, true);
          } else {
             dialog = new PasswordKeeperPasswordDialog(false, PasswordKeeper.getString(3036), true);

@@ -46,7 +46,7 @@ final class CallWaitingOption extends VoiceOptionsListItem implements PhoneOptio
    @Override
    public final void onOpen() {
       if (RadioInfo.getState() != 1) {
-         Dialog.alert(((StringBuffer)(new Object())).append(CommonResources.getString(9153)).append(' ').append(PhoneResources.getString(255)).toString());
+         Dialog.alert(CommonResources.getString(9153) + ' ' + PhoneResources.getString(255));
       } else if (this._ssTestingHackEnabled) {
          this.open();
       } else {
@@ -59,7 +59,7 @@ final class CallWaitingOption extends VoiceOptionsListItem implements PhoneOptio
    protected final void populateMainScreen(MainScreen screen) {
       super.populateMainScreen(screen);
       boolean enabled = (this._callWaitingStatusFlags & 2) != 0;
-      this._callWaitingEnabledChoiceField = (ObjectChoiceField)(new Object(PhoneResources.getString(257), CommonResources.getYesNoArray(1), enabled ? 1 : 0));
+      this._callWaitingEnabledChoiceField = new ObjectChoiceField(PhoneResources.getString(257), CommonResources.getYesNoArray(1), enabled ? 1 : 0);
       this._originalSelectedIndex = this._callWaitingEnabledChoiceField.getSelectedIndex();
       screen.add(this._callWaitingEnabledChoiceField);
    }

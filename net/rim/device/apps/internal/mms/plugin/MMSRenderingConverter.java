@@ -29,9 +29,9 @@ final class MMSRenderingConverter extends BrowserContentProvider {
       RenderingOptions renderingOptions = providerContext.getRenderingSession().getRenderingOptions();
       InputConnection inputConnection = providerContext.getInputConnection();
       int flags = providerContext.getFlags();
-      BrowserContentBaseImpl browserContent = (BrowserContentBaseImpl)(new Object(
+      BrowserContentBaseImpl browserContent = new BrowserContentBaseImpl(
          RendererControl.getUrl(inputConnection), null, renderingApplication, renderingOptions, flags
-      ));
+      );
       Field field = new MMSBrowserField(browserContent, inputConnection);
       browserContent.setContent(field);
       return browserContent;

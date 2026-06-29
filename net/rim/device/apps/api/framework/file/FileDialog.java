@@ -4,6 +4,8 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.SeparatorField;
+import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.theme.ThemeManager;
 import net.rim.device.internal.i18n.CommonResource;
 import net.rim.device.internal.io.file.FileUtilities;
@@ -42,15 +44,15 @@ public class FileDialog extends Dialog {
 
       this._filenameEditField = new FilenameEditField(path, filename, mediaType, editStyle, allowPathChange);
       this.setEscapeEnabled(false);
-      Manager fm = (Manager)(new Object());
+      Manager fm = new HorizontalFieldManager();
       this.add(fm);
       this.add(this._filenameEditField);
-      this.add((Field)(new Object(65536)));
-      this._buttonOk = (ButtonField)(new Object(okButtonLabel));
+      this.add(new SeparatorField(65536));
+      this._buttonOk = new ButtonField(okButtonLabel);
       this._buttonOk.setChangeListener(this);
-      this._buttonCancel = (ButtonField)(new Object(CommonResource.getString(10044)));
+      this._buttonCancel = new ButtonField(CommonResource.getString(10044));
       this._buttonCancel.setChangeListener(this);
-      fm = (Manager)(new Object(12884901888L));
+      fm = new HorizontalFieldManager(12884901888L);
       this.add(fm);
       fm.add(this._buttonOk);
       fm.add(this._buttonCancel);
@@ -106,7 +108,7 @@ public class FileDialog extends Dialog {
       // 02: aload 0
       // 03: invokevirtual net/rim/device/apps/api/framework/file/FileDialog.getURL ()Ljava/lang/String;
       // 06: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 09: checkcast java/lang/Object
+      // 09: checkcast javax/microedition/io/file/FileConnection
       // 0c: astore 1
       // 0d: aload 1
       // 0e: invokeinterface javax/microedition/io/file/FileConnection.exists ()Z 1
@@ -146,7 +148,7 @@ public class FileDialog extends Dialog {
       // 59: astore 5
       // 5b: aload 4
       // 5d: athrow
-      // 5e: new java/lang/Object
+      // 5e: new net/rim/device/api/ui/component/Dialog
       // 61: dup
       // 62: bipush 3
       // 64: sipush 10082
@@ -183,7 +185,7 @@ public class FileDialog extends Dialog {
 
    public String getURL() {
       String path = this._filenameEditField.getPath();
-      StringBuffer sbuf = (StringBuffer)(new Object());
+      StringBuffer sbuf = new StringBuffer();
       if (!path.startsWith("file://")) {
          sbuf.append("file://");
       }

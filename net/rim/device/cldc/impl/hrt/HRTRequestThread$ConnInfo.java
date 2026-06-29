@@ -19,7 +19,7 @@ final class HRTRequestThread$ConnInfo implements TunnelListener {
    public final int open(String apn, QOSInfo qos, String apnUsername, String apnPassword) {
       if (this.tunnel == null) {
          this._apnIdValid = false;
-         this.tunnel = TunnelFactory.openTunnel((TunnelConfig)(new Object(apn, "net.rim.hrtRT", qos, apnUsername, apnPassword, this)));
+         this.tunnel = TunnelFactory.openTunnel(new TunnelConfig(apn, "net.rim.hrtRT", qos, apnUsername, apnPassword, this));
          synchronized (this) {
             if (!this._apnIdValid) {
                try {

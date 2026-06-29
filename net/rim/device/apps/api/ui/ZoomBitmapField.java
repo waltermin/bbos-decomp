@@ -246,7 +246,7 @@ public class ZoomBitmapField extends MIMEContentAnimatedBitmapField implements I
 
             return;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -409,7 +409,7 @@ public class ZoomBitmapField extends MIMEContentAnimatedBitmapField implements I
          this._preferredWidth = preferredWidth;
          this._preferredHeight = preferredHeight;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -801,14 +801,14 @@ public class ZoomBitmapField extends MIMEContentAnimatedBitmapField implements I
       if (this._focusManager.getFocusStyle() != 3) {
          if (!this.isAnimated()) {
             if (on) {
-               XYRect focusRect = (XYRect)(new Object());
+               XYRect focusRect = new XYRect();
                this.getFocusRect(focusRect);
                focusRect.x = Math.max(this.getXPos(), 0) + focusRect.x;
                focusRect.y = Math.max(this.getYPos(), 0) + focusRect.y;
                focusRect.width = Math.min(focusRect.width, this.getTransformedWidth());
                focusRect.height = Math.min(focusRect.height, this.getTransformedHeight());
                this._focusManager.drawFocus(graphics, focusRect, ThemeAttributeSet.getColor(this, 2));
-               focusRect = null;
+               Object var4 = null;
             } else {
                super.drawFocus(graphics, on);
             }
@@ -865,9 +865,9 @@ public class ZoomBitmapField extends MIMEContentAnimatedBitmapField implements I
       this.MIN_ZOOM_LOG = MIN_ZOOM_LOG_STD;
       this._preferredWidth = -1;
       this._preferredHeight = -1;
-      this._cropBitmapImage = (Bitmap)(new Object(getCropBitmapWidth(), getCropBitmapHeight()));
-      this._graphicsCropImage = (Graphics)(new Object(this._cropBitmapImage));
-      this._rectImage = (XYRect)(new Object());
+      this._cropBitmapImage = new Bitmap(getCropBitmapWidth(), getCropBitmapHeight());
+      this._graphicsCropImage = new Graphics(this._cropBitmapImage);
+      this._rectImage = new XYRect();
       this._focusManager = new FocusPaintManager();
       this._scale = 65536;
       this._scrollStepX = 4;
@@ -891,9 +891,9 @@ public class ZoomBitmapField extends MIMEContentAnimatedBitmapField implements I
       this.MIN_ZOOM_LOG = MIN_ZOOM_LOG_STD;
       this._preferredWidth = -1;
       this._preferredHeight = -1;
-      this._cropBitmapImage = (Bitmap)(new Object(getCropBitmapWidth(), getCropBitmapHeight()));
-      this._graphicsCropImage = (Graphics)(new Object(this._cropBitmapImage));
-      this._rectImage = (XYRect)(new Object());
+      this._cropBitmapImage = new Bitmap(getCropBitmapWidth(), getCropBitmapHeight());
+      this._graphicsCropImage = new Graphics(this._cropBitmapImage);
+      this._rectImage = new XYRect();
       this._focusManager = new FocusPaintManager();
       this._scale = 65536;
       this._scrollStepX = 4;
@@ -1317,8 +1317,8 @@ public class ZoomBitmapField extends MIMEContentAnimatedBitmapField implements I
 
    private String toStringFixed32TenThou(int fp) {
       int tenThou = Fixed32.toIntTenThou(fp);
-      String decimal = ((StringBuffer)(new Object("0000"))).append(Math.abs(tenThou % 10000)).toString();
-      return ((StringBuffer)(new Object())).append(String.valueOf(tenThou / 10000)).append('.').append(decimal.substring(decimal.length() - 4)).toString();
+      String decimal = "0000" + Math.abs(tenThou % 10000);
+      return String.valueOf(tenThou / 10000) + '.' + decimal.substring(decimal.length() - 4);
    }
 
    @Override
@@ -1546,7 +1546,7 @@ public class ZoomBitmapField extends MIMEContentAnimatedBitmapField implements I
 
             this._rectImage.x = Fixed32.toRoundedInt(Fixed32.mul(Fixed32.toFP(this.scaleToSource(this._rectImage.x)), crtZoomValue));
             this._rectImage.y = Fixed32.toRoundedInt(Fixed32.mul(Fixed32.toFP(this.scaleToSource(this._rectImage.y)), crtZoomValue));
-            System.out.println(((StringBuffer)(new Object("zoom "))).append(this.toStringFixed32TenThou(crtZoomValue)).toString());
+            System.out.println("zoom " + this.toStringFixed32TenThou(crtZoomValue));
             this._scale = crtZoomValue;
             image.setScaleX32(crtZoomValueInverse);
             image.setScaleY32(crtZoomValueInverse);

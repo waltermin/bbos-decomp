@@ -24,7 +24,7 @@ final class MMSUseOnceVerb extends Verb {
    @Override
    public final Object invoke(Object param) {
       String phoneNumber = (String)ContextObject.get(param, 247);
-      ContextObject context = (ContextObject)(new Object(74));
+      ContextObject context = new ContextObject(74);
       Object result;
       if (phoneNumber != null) {
          ContextObject contextObject = ContextObject.clone(param);
@@ -33,7 +33,7 @@ final class MMSUseOnceVerb extends Verb {
          result = factory.createInstance(contextObject);
       } else {
          String initialValue = (String)ContextObject.get(param, 253);
-         String[] choices = new Object[]{MMSResources.getString(69), MMSResources.getString(68)};
+         String[] choices = new String[]{MMSResources.getString(69), MMSResources.getString(68)};
          int choice = Dialog.ask(AddressBookResources.getString(301), choices, 0);
          if (choice == 0) {
             result = UseOnceEditorScreen.showUseOnceScreen(MMSResources.getString(13), 3797587162219887872L, initialValue, null);

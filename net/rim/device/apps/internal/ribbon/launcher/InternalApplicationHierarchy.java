@@ -107,7 +107,7 @@ final class InternalApplicationHierarchy {
          }
 
          this._hierarchyData.addFolder(name);
-         ApplicationFolder newFolder = (ApplicationFolder)(new Object(name, "not used", 0));
+         ApplicationFolder newFolder = new ApplicationFolder(name, "not used", 0);
          this._hierarchy.addFolder(newFolder);
          return newFolder;
       } else {

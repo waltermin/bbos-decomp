@@ -4,7 +4,10 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import net.rim.device.api.crypto.CFBDecryptor;
+import net.rim.device.api.crypto.CryptoUnsupportedOperationException;
+import net.rim.device.api.crypto.DHPrivateKey;
 import net.rim.device.api.crypto.DHPublicKey;
+import net.rim.device.api.crypto.DSAPrivateKey;
 import net.rim.device.api.crypto.DSAPublicKey;
 import net.rim.device.api.crypto.Digest;
 import net.rim.device.api.crypto.DigestFactory;
@@ -12,6 +15,7 @@ import net.rim.device.api.crypto.EncryptorFactory;
 import net.rim.device.api.crypto.InitializationVector;
 import net.rim.device.api.crypto.PrivateKey;
 import net.rim.device.api.crypto.PublicKey;
+import net.rim.device.api.crypto.RSAPrivateKey;
 import net.rim.device.api.crypto.RSAPublicKey;
 import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.crypto.SymmetricKey;
@@ -32,7 +36,7 @@ public final class PGPPrivateKeyPacket extends PGPPublicKeyPacket implements Per
    private byte _count;
    private byte[] _encryptedSecretKeyData;
 
-   public PGPPrivateKeyPacket(int tag, byte[] encoding) {
+   public PGPPrivateKeyPacket(int tag, byte[] encoding) throws CryptoUnsupportedOperationException {
       super(tag, encoding);
       int offset = this.getPublicKeyLength();
       byte algorithmOrS2K = encoding[offset++];
@@ -50,7 +54,7 @@ public final class PGPPrivateKeyPacket extends PGPPublicKeyPacket implements Per
             switch (this._s2kType) {
                case -1:
                case 2:
-                  throw new Object(((StringBuffer)(new Object("S2K:"))).append(this._s2kType).toString());
+                  throw new CryptoUnsupportedOperationException("S2K:" + this._s2kType);
                case 0:
                default:
                   this._hashAlgorithm = encoding[offset++];
@@ -86,7 +90,7 @@ public final class PGPPrivateKeyPacket extends PGPPublicKeyPacket implements Per
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public final PrivateKey getPrivateKey(PGPPasswordTicket ticket) throws PGPEncodingException {
       if (ticket == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int publicKeyAlgorithm = this.getPublicKeyAlgorithm();
@@ -119,11 +123,11 @@ public final class PGPPrivateKeyPacket extends PGPPublicKeyPacket implements Per
                int version = this.getVersion();
                if (version != 3) {
                   if (version != 4) {
-                     throw new Object(((StringBuffer)(new Object("Ver:"))).append(version).toString());
+                     throw new CryptoUnsupportedOperationException("Ver:" + version);
                   }
 
-                  InitializationVector iv = (InitializationVector)(new Object(this._iv));
-                  CFBDecryptor decryptor = (CFBDecryptor)(new Object(engine, iv, (InputStream)(new Object(this._encryptedSecretKeyData)), false));
+                  InitializationVector iv = new InitializationVector(this._iv);
+                  CFBDecryptor decryptor = new CFBDecryptor(engine, iv, new ByteArrayInputStream(this._encryptedSecretKeyData), false);
 
                   label404:
                   try {
@@ -134,7 +138,7 @@ public final class PGPPrivateKeyPacket extends PGPPublicKeyPacket implements Per
                         throw new PGPEncodingException("PrLM");
                      }
 
-                     ByteArrayInputStream decryptedSecretKeyDataStream = (ByteArrayInputStream)(new Object(decryptedSecretKeyData));
+                     ByteArrayInputStream decryptedSecretKeyDataStream = new ByteArrayInputStream(decryptedSecretKeyData);
                      switch (publicKeyAlgorithm) {
                         case 1:
                         case 2:
@@ -150,7 +154,7 @@ public final class PGPPrivateKeyPacket extends PGPPublicKeyPacket implements Per
                            x = PGPUtilities.readMPI(decryptedSecretKeyDataStream);
                            break;
                         default:
-                           throw new Object(((StringBuffer)(new Object("Pub:"))).append(publicKeyAlgorithm).toString());
+                           throw new CryptoUnsupportedOperationException("Pub:" + publicKeyAlgorithm);
                      }
 
                      if (this.checkRedundancy(decryptedSecretKeyData)) {
@@ -162,14 +166,14 @@ public final class PGPPrivateKeyPacket extends PGPPublicKeyPacket implements Per
 
                   retry = true;
                } else {
-                  ByteArrayInputStream inputStream = (ByteArrayInputStream)(new Object(this._encryptedSecretKeyData));
-                  ByteArrayOutputStream checksumStream = (ByteArrayOutputStream)(new Object());
+                  ByteArrayInputStream inputStream = new ByteArrayInputStream(this._encryptedSecretKeyData);
+                  ByteArrayOutputStream checksumStream = new ByteArrayOutputStream();
 
                   label410:
                   try {
                      switch (publicKeyAlgorithm) {
                         case 0:
-                           throw new Object(((StringBuffer)(new Object("Pub:"))).append(publicKeyAlgorithm).toString());
+                           throw new CryptoUnsupportedOperationException("Pub:" + publicKeyAlgorithm);
                         case 1:
                         case 2:
                         case 3:
@@ -199,7 +203,7 @@ public final class PGPPrivateKeyPacket extends PGPPublicKeyPacket implements Per
       } else {
          label393:
          try {
-            ByteArrayInputStream input = (ByteArrayInputStream)(new Object(this._encryptedSecretKeyData));
+            ByteArrayInputStream input = new ByteArrayInputStream(this._encryptedSecretKeyData);
             switch (publicKeyAlgorithm) {
                case 1:
                case 2:
@@ -215,7 +219,7 @@ public final class PGPPrivateKeyPacket extends PGPPublicKeyPacket implements Per
                   x = PGPUtilities.readMPI(input);
                   break;
                default:
-                  throw new Object(((StringBuffer)(new Object("Pub:"))).append(publicKeyAlgorithm).toString());
+                  throw new CryptoUnsupportedOperationException("Pub:" + publicKeyAlgorithm);
             }
 
             if (!this.checkRedundancy(this._encryptedSecretKeyData)) {
@@ -232,19 +236,19 @@ public final class PGPPrivateKeyPacket extends PGPPublicKeyPacket implements Per
             case 1:
             case 2:
                RSAPublicKey rsaPublicKey = (RSAPublicKey)publicKey;
-               privateKey = (PrivateKey)(new Object(rsaPublicKey.getRSACryptoSystem(), rsaPublicKey.getE(), d, p, q));
+               privateKey = new RSAPrivateKey(rsaPublicKey.getRSACryptoSystem(), rsaPublicKey.getE(), d, p, q);
                break;
             case 16:
             case 20:
                DHPublicKey dhPublicKey = (DHPublicKey)publicKey;
-               privateKey = (PrivateKey)(new Object(dhPublicKey.getDHCryptoSystem(), x));
+               privateKey = new DHPrivateKey(dhPublicKey.getDHCryptoSystem(), x);
                break;
             case 17:
                DSAPublicKey dsaPublicKey = (DSAPublicKey)publicKey;
-               privateKey = (PrivateKey)(new Object(dsaPublicKey.getDSACryptoSystem(), x));
+               privateKey = new DSAPrivateKey(dsaPublicKey.getDSACryptoSystem(), x);
                break;
             default:
-               throw new Object(((StringBuffer)(new Object("Pub:"))).append(publicKeyAlgorithm).toString());
+               throw new CryptoUnsupportedOperationException("Pub:" + publicKeyAlgorithm);
          }
 
          return privateKey;
@@ -261,7 +265,7 @@ public final class PGPPrivateKeyPacket extends PGPPublicKeyPacket implements Per
             throw new PGPEncodingException("PrLM");
          }
 
-         SHA1Digest digest = (SHA1Digest)(new Object());
+         SHA1Digest digest = new SHA1Digest();
          digest.update(data, 0, dataLength);
          byte[] computedDigest = digest.getDigest();
          byte[] expectedDigest = new byte[20];
@@ -285,13 +289,13 @@ public final class PGPPrivateKeyPacket extends PGPPublicKeyPacket implements Per
       }
    }
 
-   private final int getBlockSize(int algorithm) {
+   private final int getBlockSize(int algorithm) throws CryptoUnsupportedOperationException {
       switch (algorithm) {
          case 1:
          case 4:
          case 5:
          case 6:
-            throw new Object(((StringBuffer)(new Object("Sym:"))).append(algorithm).toString());
+            throw new CryptoUnsupportedOperationException("Sym:" + algorithm);
          case 2:
          case 3:
          default:
@@ -307,7 +311,7 @@ public final class PGPPrivateKeyPacket extends PGPPublicKeyPacket implements Per
       return this._symmetricEncryptionAlgorithm;
    }
 
-   public final PGPPublicKeyPacket getPublicKeyPacket() {
+   public final PGPPublicKeyPacket getPublicKeyPacket() throws CryptoUnsupportedOperationException {
       int privateKeyTag = this.getTag();
       int publicKeyTag;
       switch (privateKeyTag) {
@@ -318,7 +322,7 @@ public final class PGPPrivateKeyPacket extends PGPPublicKeyPacket implements Per
             publicKeyTag = 14;
             break;
          default:
-            throw new Object(((StringBuffer)(new Object("Tag:"))).append(privateKeyTag).toString());
+            throw new CryptoUnsupportedOperationException("Tag:" + privateKeyTag);
       }
 
       return new PGPPublicKeyPacket(publicKeyTag, this.getEncoding());
@@ -327,8 +331,8 @@ public final class PGPPrivateKeyPacket extends PGPPublicKeyPacket implements Per
    private final byte[] readV3EncryptedMPI(InputStream inputStream, SymmetricKeyEncryptorEngine engine, byte[] ivData, ByteArrayOutputStream checksumStream) {
       byte[] encodedLength = new byte[2];
       byte[] encryptedMPIData = PGPUtilities.readMPI(inputStream, encodedLength);
-      InitializationVector iv = (InitializationVector)(new Object(ivData));
-      CFBDecryptor mpiDecryptor = (CFBDecryptor)(new Object(engine, iv, (InputStream)(new Object(encryptedMPIData)), false));
+      InitializationVector iv = new InitializationVector(ivData);
+      CFBDecryptor mpiDecryptor = new CFBDecryptor(engine, iv, new ByteArrayInputStream(encryptedMPIData), false);
       byte[] decryptedMPIData = new byte[encryptedMPIData.length];
       mpiDecryptor.read(decryptedMPIData);
       checksumStream.write(encodedLength);

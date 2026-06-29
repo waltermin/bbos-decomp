@@ -14,85 +14,85 @@ public class DHCryptoToken implements AsymmetricCryptoToken {
       return false;
    }
 
-   public int getDHCryptoSystemBitLength(CryptoTokenCryptoSystemData cryptoTokenData) {
-      throw new Object();
+   public int getDHCryptoSystemBitLength(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public String getDHCryptoSystemName(CryptoTokenCryptoSystemData cryptoTokenData) {
-      throw new Object();
+   public String getDHCryptoSystemName(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public byte[] getDHCryptoSystemP(CryptoTokenCryptoSystemData cryptoTokenData) {
-      throw new Object();
+   public byte[] getDHCryptoSystemP(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public byte[] getDHCryptoSystemQ(CryptoTokenCryptoSystemData cryptoTokenData) {
-      throw new Object();
+   public byte[] getDHCryptoSystemQ(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public byte[] getDHCryptoSystemG(CryptoTokenCryptoSystemData cryptoTokenData) {
-      throw new Object();
+   public byte[] getDHCryptoSystemG(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public int getDHPublicKeyLength(CryptoTokenCryptoSystemData cryptoTokenData) {
-      throw new Object();
+   public int getDHPublicKeyLength(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public int getDHPrivateKeyLength(CryptoTokenCryptoSystemData cryptoTokenData) {
-      throw new Object();
+   public int getDHPrivateKeyLength(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public int getDHPrivateKeyMinRandomBits(CryptoTokenCryptoSystemData cryptoTokenData) {
-      throw new Object();
+   public int getDHPrivateKeyMinRandomBits(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public byte[] extractDHPublicKeyData(CryptoTokenPublicKeyData cryptoTokenData) {
-      throw new Object();
+   public byte[] extractDHPublicKeyData(CryptoTokenPublicKeyData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public byte[] extractDHPublicKeyData(CryptoTokenPrivateKeyData cryptoTokenData) {
-      throw new Object();
+   public byte[] extractDHPublicKeyData(CryptoTokenPrivateKeyData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public byte[] extractDHPrivateKeyData(CryptoTokenPrivateKeyData cryptoTokenData) {
-      throw new Object();
+   public byte[] extractDHPrivateKeyData(CryptoTokenPrivateKeyData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public CryptoTokenCryptoSystemData getDHCryptoSystemData(byte[] p, byte[] q, byte[] g, int privateKeyMinRandomBits, String name) {
-      throw new Object();
+   public CryptoTokenCryptoSystemData getDHCryptoSystemData(byte[] p, byte[] q, byte[] g, int privateKeyMinRandomBits, String name) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
    public void verifyDHCryptoSystemData(CryptoTokenCryptoSystemData cryptoSystemData) {
    }
 
-   public DHCryptoSystem[] getSuggestedDHCryptoSystems() {
-      throw new Object();
+   public DHCryptoSystem[] getSuggestedDHCryptoSystems() throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public DHKeyPair createDHKeyPair(CryptoTokenCryptoSystemData cryptoTokenData) {
-      throw new Object();
+   public DHKeyPair createDHKeyPair(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public CryptoTokenPublicKeyData injectDHPublicKey(CryptoTokenCryptoSystemData cryptoSystemData, byte[] data) {
-      throw new Object();
+   public CryptoTokenPublicKeyData injectDHPublicKey(CryptoTokenCryptoSystemData cryptoSystemData, byte[] data) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public CryptoTokenPrivateKeyData injectDHPrivateKey(CryptoTokenCryptoSystemData cryptoSystemData, byte[] data) {
-      throw new Object();
+   public CryptoTokenPrivateKeyData injectDHPrivateKey(CryptoTokenCryptoSystemData cryptoSystemData, byte[] data) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public void deleteDHPublicKey(CryptoTokenPublicKeyData data) {
-      throw new Object();
+   public void deleteDHPublicKey(CryptoTokenPublicKeyData data) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public void deleteDHPrivateKey(CryptoTokenPrivateKeyData data) {
-      throw new Object();
+   public void deleteDHPrivateKey(CryptoTokenPrivateKeyData data) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
    public byte[] generateDHSharedSecret(
       CryptoTokenCryptoSystemData cryptoSystemData, CryptoTokenPrivateKeyData localPrivateKeyData, byte[] remotePublicKeyData, boolean useCofactor
-   ) {
-      throw new Object();
+   ) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
    @Override

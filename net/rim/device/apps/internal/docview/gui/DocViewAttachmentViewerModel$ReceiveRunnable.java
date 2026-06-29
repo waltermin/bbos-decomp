@@ -15,7 +15,7 @@ final class DocViewAttachmentViewerModel$ReceiveRunnable implements Runnable {
       this._context = context;
       byte[] objectDescriptor = moreObject.getObjectDescriptor();
       if (objectDescriptor != null) {
-         this._descriptor = (String)(new Object(objectDescriptor));
+         this._descriptor = new String(objectDescriptor);
       }
 
       this._data = moreObject.getRawBytes();

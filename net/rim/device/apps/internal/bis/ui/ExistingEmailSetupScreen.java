@@ -1,8 +1,8 @@
 package net.rim.device.apps.internal.bis.ui;
 
 import java.util.Hashtable;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.EmailAddressEditField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.PasswordEditField;
 import net.rim.device.apps.internal.bis.ApplicationResources;
 import net.rim.device.apps.internal.bis.api.ui.BoldLabelField;
@@ -38,11 +38,11 @@ public final class ExistingEmailSetupScreen extends UserSettingsScreen {
       this._servicesMainLinkEvent = new LinkEvent(17, 7);
       this._nextEvent = new EventWrapper(17, this._servicesMainLinkEvent);
       ExistingEmailSetupScreen$EmailInfoFieldListener emailInfoFieldListener = new ExistingEmailSetupScreen$EmailInfoFieldListener(this, null);
-      this._emailAddressEdit = (EmailAddressEditField)(new Object(null, null));
+      this._emailAddressEdit = new EmailAddressEditField(null, null);
       this._emailAddressEdit.setChangeListener(emailInfoFieldListener);
-      this._passwordEdit = (PasswordEditField)(new Object(null, null));
+      this._passwordEdit = new PasswordEditField(null, null);
       this._passwordEdit.setChangeListener(emailInfoFieldListener);
-      this.addContentField((Field)(new Object(ApplicationResources.getString(75))));
+      this.addContentField(new LabelField(ApplicationResources.getString(75)));
       this.addContentLineBreak();
       this.addContentField(new BoldLabelField(ApplicationResources.getString(136)));
       this.addContentField(this._emailAddressEdit, true);

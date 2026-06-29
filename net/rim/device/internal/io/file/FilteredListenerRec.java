@@ -7,7 +7,7 @@ class FilteredListenerRec {
    private int _mediaTypeMask;
 
    FilteredListenerRec(Object listener) {
-      this._listener = (WeakReference)(new Object(listener));
+      this._listener = new WeakReference(listener);
    }
 
    public Object getListener() {

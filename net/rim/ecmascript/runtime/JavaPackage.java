@@ -47,7 +47,7 @@ class JavaPackage extends RedirectedObject {
       if (this._name == null) {
          fullName = name;
       } else {
-         fullName = ((StringBuffer)(new Object())).append(this._name).append(".").append(name).toString();
+         fullName = this._name + "." + name;
       }
 
       try {
@@ -92,6 +92,6 @@ class JavaPackage extends RedirectedObject {
 
    @Override
    public long defaultStringValue() {
-      return Value.makeStringValue(((StringBuffer)(new Object("[JavaPackage "))).append(this._name == null ? "" : this._name).append("]").toString());
+      return Value.makeStringValue("[JavaPackage " + (this._name == null ? "" : this._name) + "]");
    }
 }

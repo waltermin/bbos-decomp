@@ -31,7 +31,7 @@ public final class EmailSettingCollectionImpl
    SyncConverter {
    private SimplePersistentSyncCollection$SimpleData _data = (SimplePersistentSyncCollection$SimpleData)this._persistentObject.getContents();
    private String _id;
-   private static ContextObject _encodeContext = (ContextObject)(new Object(50, 50, 19));
+   private static ContextObject _encodeContext = new ContextObject(50, 50, 19);
    private static ContextObject _decodeContext = _encodeContext.clone();
    private static final int EMAIL_SETTING_INITIAL_SIZE = 16;
    private static final String EMAIL_SETTING_DATA_NAME_STR = "net.rim.device.apps.internal.blackberryemail.emailsetting.EMAIL_SETTING_DATA_NAME.";
@@ -48,7 +48,7 @@ public final class EmailSettingCollectionImpl
 
    private final synchronized void initialize() {
       if (this._data == null) {
-         this._data = (SimplePersistentSyncCollection$SimpleData)(new Object(16));
+         this._data = new SimplePersistentSyncCollection$SimpleData(16);
          super._persistentObject.setContents(this._data, 51);
          this.commit();
       }
@@ -59,26 +59,13 @@ public final class EmailSettingCollectionImpl
    public static final EmailSettingCollectionImpl getInstance(String userId) {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
       EmailSettingCollectionImpl collection = (EmailSettingCollectionImpl)ar.getOrWaitFor(
-         Hash.bytesToLong(
-            ((StringBuffer)(new Object("net.rim.device.apps.internal.blackberryemail.emailsetting.EMAIL_SETTING_COLLECTION_ID.")))
-               .append(userId)
-               .toString()
-               .getBytes()
-         )
+         Hash.bytesToLong(("net.rim.device.apps.internal.blackberryemail.emailsetting.EMAIL_SETTING_COLLECTION_ID." + userId).getBytes())
       );
       if (collection == null) {
          EMAIL_SETTING_COLLECTION_ID = Hash.bytesToLong(
-            ((StringBuffer)(new Object("net.rim.device.apps.internal.blackberryemail.emailsetting.EMAIL_SETTING_COLLECTION_ID.")))
-               .append(userId)
-               .toString()
-               .getBytes()
+            ("net.rim.device.apps.internal.blackberryemail.emailsetting.EMAIL_SETTING_COLLECTION_ID." + userId).getBytes()
          );
-         EMAIL_SETTING_DATA_NAME = Hash.bytesToLong(
-            ((StringBuffer)(new Object("net.rim.device.apps.internal.blackberryemail.emailsetting.EMAIL_SETTING_DATA_NAME.")))
-               .append(userId)
-               .toString()
-               .getBytes()
-         );
+         EMAIL_SETTING_DATA_NAME = Hash.bytesToLong(("net.rim.device.apps.internal.blackberryemail.emailsetting.EMAIL_SETTING_DATA_NAME." + userId).getBytes());
          collection = new EmailSettingCollectionImpl(userId);
          if (collection.size() == 0) {
             collection.add(new EmailSettingModelImpl(userId));
@@ -109,7 +96,7 @@ public final class EmailSettingCollectionImpl
 
    @Override
    public final String getSyncName() {
-      return ((StringBuffer)(new Object("Email Settings - "))).append(this._id).toString();
+      return "Email Settings - " + this._id;
    }
 
    @Override
@@ -150,8 +137,8 @@ public final class EmailSettingCollectionImpl
 
    @Override
    public final boolean convert(SyncObject object, DataBuffer buffer, int version) {
-      if (object instanceof Object) {
-         SyncBuffer syncBuffer = (SyncBuffer)(new Object(buffer, version, 0));
+      if (object instanceof RIMModel) {
+         SyncBuffer syncBuffer = new SyncBuffer(buffer, version, 0);
          RIMModel model = (RIMModel)object;
          return syncBuffer.addModel(model, _encodeContext);
       } else {
@@ -161,7 +148,7 @@ public final class EmailSettingCollectionImpl
 
    @Override
    public final SyncObject convert(DataBuffer dataBuffer, int version, int uid) {
-      SyncBuffer syncBuffer = (SyncBuffer)(new Object(dataBuffer, version, uid));
+      SyncBuffer syncBuffer = new SyncBuffer(dataBuffer, version, uid);
       synchronized (_decodeContext) {
          _decodeContext.put(255, syncBuffer);
          SyncObject result = (SyncObject)FactoryUtil.createInstance(1683565110580900081L, _decodeContext);

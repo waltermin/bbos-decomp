@@ -1,6 +1,6 @@
 package net.rim.plazmic.internal.contentpreview.device.apps;
 
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 import net.rim.plazmic.internal.contentpreview.playback.io.PlaybackCommandMessageReader;
 
 final class PlaybackCommandServer$PlaybackCommandServerTask implements Runnable {
@@ -22,7 +22,7 @@ final class PlaybackCommandServer$PlaybackCommandServerTask implements Runnable 
          byte[] e = this.this$0._packet.getData();
          synchronized (this) {
             if (this.this$0._handler != null) {
-               PlaybackCommandMessageReader.parse((InputStream)(new Object(e)), this.this$0._handler);
+               PlaybackCommandMessageReader.parse(new ByteArrayInputStream(e), this.this$0._handler);
             }
 
             var6 = false;

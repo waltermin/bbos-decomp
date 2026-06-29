@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.browser.stack;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
@@ -38,22 +39,22 @@ public final class CachedFileConnection implements FileConnection {
 
    @Override
    public final DataInputStream openDataInputStream() {
-      return (DataInputStream)(new Object(this._inputStream));
+      return new DataInputStream(this._inputStream);
    }
 
    @Override
-   public final OutputStream openOutputStream() {
-      throw new Object();
+   public final OutputStream openOutputStream() throws IOException {
+      throw new IOException();
    }
 
    @Override
-   public final DataOutputStream openDataOutputStream() {
-      throw new Object();
+   public final DataOutputStream openDataOutputStream() throws IOException {
+      throw new IOException();
    }
 
    @Override
-   public final OutputStream openOutputStream(long byteOffset) {
-      throw new Object();
+   public final OutputStream openOutputStream(long byteOffset) throws IOException {
+      throw new IOException();
    }
 
    @Override

@@ -58,7 +58,7 @@ public final class HttpAddressLinkVerb extends Verb {
       }
 
       if (renderingApplication != null) {
-         HttpHeaders requestHeaders = (HttpHeaders)(new Object());
+         HttpHeaders requestHeaders = new HttpHeaders();
          RenderingUtilities.setReferrer(requestHeaders, this._browserContent.getURL());
          byte[] postDataBytes = null;
          if (this._postData != null) {

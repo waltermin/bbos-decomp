@@ -39,7 +39,7 @@ public final class SelectMediaVerb extends Verb implements SelectionListener {
    }
 
    public final Object[] invokeSelect(Object parameter) {
-      ContextInfo context = (ContextInfo)(new Object());
+      ContextInfo context = new ContextInfo();
       context.setExternal(this._external);
       context.setSelectAll(this._selectAll);
       context.setItem(this);

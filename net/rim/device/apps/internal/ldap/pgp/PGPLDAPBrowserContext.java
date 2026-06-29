@@ -5,11 +5,11 @@ import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.CertificateImporterFactory;
 import net.rim.device.api.crypto.certificate.CertificateServerInfo;
 import net.rim.device.api.crypto.certificate.pgp.PGPCertificate;
+import net.rim.device.api.crypto.certificate.pgp.PGPKeyIDKeyStoreIndex;
 import net.rim.device.api.crypto.certificate.status.CertificateStatusProvider;
 import net.rim.device.api.crypto.certificate.status.CertificateStatusRequest;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
-import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.api.crypto.keystore.KeyStoreTicket;
 import net.rim.device.api.crypto.keystore.PGPKeyStore;
 import net.rim.device.api.ldap.LDAPAttribute;
@@ -24,6 +24,7 @@ import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.apps.internal.ldap.LDAPBrowser;
 import net.rim.device.apps.internal.ldap.LDAPBrowserContext;
+import net.rim.device.apps.internal.ldap.LDAPBrowserException;
 import net.rim.device.apps.internal.ldap.LDAPBrowserOptionStore;
 import net.rim.device.internal.crypto.pgp.PGPUtilities;
 import net.rim.device.internal.i18n.CommonResource;
@@ -38,11 +39,11 @@ public final class PGPLDAPBrowserContext implements LDAPBrowserContext, MemoryCl
    private static final String CONTEXT = "PGP";
 
    public PGPLDAPBrowserContext() {
-      this._keyStore.addIndex((KeyStoreIndex)(new Object()));
+      this._keyStore.addIndex(new PGPKeyIDKeyStoreIndex());
       this._optionStore = LDAPBrowserOptionStore.getInstance();
-      this._ribbonApplicationDescriptor = (ApplicationDescriptor)(new Object(
-         ApplicationDescriptor.currentApplicationDescriptor(), LDAPBrowser.getString(89), new Object[0]
-      ));
+      this._ribbonApplicationDescriptor = new ApplicationDescriptor(
+         ApplicationDescriptor.currentApplicationDescriptor(), LDAPBrowser.getString(89), new String[0]
+      );
       MemoryCleanerDaemon.addWeakListener(this, false);
    }
 
@@ -74,11 +75,11 @@ public final class PGPLDAPBrowserContext implements LDAPBrowserContext, MemoryCl
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final String getFriendlyName(LDAPEntry entry, Certificate certificate) {
+   public final String getFriendlyName(LDAPEntry entry, Certificate certificate) throws LDAPBrowserException {
       try {
          return (String)entry.getAttribute(PGPCertificate.PGP_USER_ID).getValue(0);
       } catch (Throwable var5) {
-         throw new Object(e);
+         throw new LDAPBrowserException(e);
       }
    }
 
@@ -93,7 +94,7 @@ public final class PGPLDAPBrowserContext implements LDAPBrowserContext, MemoryCl
    }
 
    @Override
-   public final void addToKeyStore(LDAPEntry[] entries, Certificate[] certificates) {
+   public final void addToKeyStore(LDAPEntry[] entries, Certificate[] certificates) throws LDAPBrowserException {
       if (certificates != null && certificates.length != 0) {
          try {
             boolean fetchStatus = this.shouldFetchStatus();
@@ -112,13 +113,13 @@ public final class PGPLDAPBrowserContext implements LDAPBrowserContext, MemoryCl
             return;
          }
       } else {
-         throw new Object();
+         throw new LDAPBrowserException();
       }
    }
 
    @Override
-   public final void addCrossCertificatesToKeyStore(LDAPEntry[] entries) {
-      throw new Object();
+   public final void addCrossCertificatesToKeyStore(LDAPEntry[] entries) throws LDAPBrowserException {
+      throw new LDAPBrowserException();
    }
 
    @Override
@@ -129,25 +130,25 @@ public final class PGPLDAPBrowserContext implements LDAPBrowserContext, MemoryCl
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void addSecondStageFilter(LDAPEntry entry, LDAPQuery query) {
+   public final void addSecondStageFilter(LDAPEntry entry, LDAPQuery query) throws LDAPBrowserException {
       try {
-         StringBuffer buffer = (StringBuffer)(new Object());
+         StringBuffer buffer = new StringBuffer();
          buffer.append(PGPCertificate.PGP_USER_ID).append('=');
          buffer.append(entry.getAttribute(PGPCertificate.PGP_USER_ID).getValue(0));
          query.addFilter(buffer.toString());
       } catch (Throwable var5) {
-         throw new Object(e);
+         throw new LDAPBrowserException(e);
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void addSecondStageFilter(LDAPEntry[] entries, LDAPQuery query) {
+   public final void addSecondStageFilter(LDAPEntry[] entries, LDAPQuery query) throws LDAPBrowserException {
       try {
-         StringBuffer filterBuffer = (StringBuffer)(new Object());
+         StringBuffer filterBuffer = new StringBuffer();
          filterBuffer.append('(').append('|');
-         StringBuffer entryBuffer = (StringBuffer)(new Object());
+         StringBuffer entryBuffer = new StringBuffer();
          int entriesLength = entries.length;
 
          for (int i = 0; i < entriesLength; i++) {
@@ -164,23 +165,23 @@ public final class PGPLDAPBrowserContext implements LDAPBrowserContext, MemoryCl
          filterBuffer.append(')');
          query.addFilter(filterBuffer.toString());
       } catch (Throwable var13) {
-         throw new Object(e);
+         throw new LDAPBrowserException(e);
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void addSecondStageAttributes(LDAPQuery query) {
+   public final void addSecondStageAttributes(LDAPQuery query) throws LDAPBrowserException {
       try {
          query.addAttribute(PGPCertificate.PGP_KEY);
       } catch (Throwable var4) {
-         throw new Object(e);
+         throw new LDAPBrowserException(e);
       }
    }
 
    @Override
-   public final void getCertificates(LDAPEntry param1, Certificate[] param2, byte[][] param3) {
+   public final void getCertificates(LDAPEntry param1, Certificate[] param2, byte[][] param3) throws LDAPBrowserException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -204,15 +205,15 @@ public final class PGPLDAPBrowserContext implements LDAPBrowserContext, MemoryCl
       // 21: aload 4
       // 23: iload 6
       // 25: invokeinterface net/rim/device/api/ldap/LDAPAttribute.getValue (I)Ljava/lang/Object; 2
-      // 2a: checkcast java/lang/Object
+      // 2a: checkcast java/lang/String
       // 2d: invokevirtual java/lang/String.getBytes ()[B
       // 30: astore 7
-      // 32: new java/lang/Object
+      // 32: new java/io/ByteArrayInputStream
       // 35: dup
       // 36: aload 7
       // 38: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
       // 3b: astore 8
-      // 3d: new java/lang/Object
+      // 3d: new net/rim/device/api/crypto/pgp/PGPArmorDecoder
       // 40: dup
       // 41: aload 8
       // 43: aload 0
@@ -243,25 +244,25 @@ public final class PGPLDAPBrowserContext implements LDAPBrowserContext, MemoryCl
       // 7b: iinc 6 1
       // 7e: goto 17
       // 81: astore 4
-      // 83: new java/lang/Object
+      // 83: new net/rim/device/apps/internal/ldap/LDAPBrowserException
       // 86: dup
       // 87: aload 4
       // 89: invokespecial net/rim/device/apps/internal/ldap/LDAPBrowserException.<init> (Ljava/lang/Exception;)V
       // 8c: athrow
       // 8d: astore 4
-      // 8f: new java/lang/Object
+      // 8f: new net/rim/device/apps/internal/ldap/LDAPBrowserException
       // 92: dup
       // 93: aload 4
       // 95: invokespecial net/rim/device/apps/internal/ldap/LDAPBrowserException.<init> (Ljava/lang/Exception;)V
       // 98: athrow
       // 99: astore 4
-      // 9b: new java/lang/Object
+      // 9b: new net/rim/device/apps/internal/ldap/LDAPBrowserException
       // 9e: dup
       // 9f: aload 4
       // a1: invokespecial net/rim/device/apps/internal/ldap/LDAPBrowserException.<init> (Ljava/lang/Exception;)V
       // a4: athrow
       // a5: astore 4
-      // a7: new java/lang/Object
+      // a7: new net/rim/device/apps/internal/ldap/LDAPBrowserException
       // aa: dup
       // ab: aload 4
       // ad: invokespecial net/rim/device/apps/internal/ldap/LDAPBrowserException.<init> (Ljava/lang/Exception;)V
@@ -291,9 +292,9 @@ public final class PGPLDAPBrowserContext implements LDAPBrowserContext, MemoryCl
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void addFirstStageFilter(String[] firstNames, String[] lastNames, String[] emailAddresses, LDAPQuery query) {
+   public final void addFirstStageFilter(String[] firstNames, String[] lastNames, String[] emailAddresses, LDAPQuery query) throws LDAPBrowserException {
       try {
-         StringBuffer buffer = (StringBuffer)(new Object());
+         StringBuffer buffer = new StringBuffer();
          int numFirstNames = firstNames != null ? firstNames.length : 0;
          if (numFirstNames > 0) {
             buffer.append('(').append('|');
@@ -330,30 +331,30 @@ public final class PGPLDAPBrowserContext implements LDAPBrowserContext, MemoryCl
             query.addFilter(buffer.toString());
          }
       } catch (Throwable var11) {
-         throw new Object(e);
+         throw new LDAPBrowserException(e);
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void addFirstStageAttributes(LDAPQuery query) {
+   public final void addFirstStageAttributes(LDAPQuery query) throws LDAPBrowserException {
       try {
          query.addAttribute(PGPCertificate.PGP_CERT_ID);
          query.addAttribute(PGPCertificate.PGP_USER_ID);
       } catch (Throwable var4) {
-         throw new Object(e);
+         throw new LDAPBrowserException(e);
       }
    }
 
    @Override
-   public final void addRootCertFilter(LDAPQuery query) {
-      throw new Object();
+   public final void addRootCertFilter(LDAPQuery query) throws LDAPBrowserException {
+      throw new LDAPBrowserException();
    }
 
    @Override
-   public final void addRootCertAttributes(LDAPQuery query) {
-      throw new Object();
+   public final void addRootCertAttributes(LDAPQuery query) throws LDAPBrowserException {
+      throw new LDAPBrowserException();
    }
 
    @Override
@@ -393,7 +394,7 @@ public final class PGPLDAPBrowserContext implements LDAPBrowserContext, MemoryCl
 
    @Override
    public final String getMenuFetchRootString() {
-      throw new Object();
+      throw new RuntimeException();
    }
 
    @Override
@@ -441,20 +442,20 @@ public final class PGPLDAPBrowserContext implements LDAPBrowserContext, MemoryCl
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private final void addSingleCertificateToKeyStore(PGPCertificate certificate, String label, boolean fetchStatus) {
+   private final void addSingleCertificateToKeyStore(PGPCertificate certificate, String label, boolean fetchStatus) throws LDAPBrowserException {
       if (certificate == null) {
-         throw new Object();
+         throw new LDAPBrowserException();
       }
 
       try {
          if (fetchStatus) {
-            CertificateStatusRequest request = (CertificateStatusRequest)(new Object(new Object[]{certificate}, false, this._keyStore, null, certificate));
+            CertificateStatusRequest request = new CertificateStatusRequest(new Certificate[]{certificate}, false, this._keyStore, null, certificate);
             CertificateStatusProvider.requestCertificateStatus(request, null, false, false);
          }
 
          CertificateImporterFactory.importCertificate(certificate, null, label, this._keyStore, this.getKeyStoreTicket());
       } catch (Throwable var6) {
-         throw new Object(e);
+         throw new LDAPBrowserException(e);
       }
    }
 
@@ -484,7 +485,7 @@ public final class PGPLDAPBrowserContext implements LDAPBrowserContext, MemoryCl
    private final boolean askYesNoQuestion(String message) {
       String[] yesNo = CommonResource.getStringArray(10012);
       Bitmap bitmap = Bitmap.getPredefinedBitmap(1);
-      SimpleChoiceDialog dialog = (SimpleChoiceDialog)(new Object(message, yesNo, 0, bitmap, 0));
+      SimpleChoiceDialog dialog = new SimpleChoiceDialog(message, yesNo, 0, bitmap, 0);
       synchronized (Application.getEventLock()) {
          dialog.show();
       }

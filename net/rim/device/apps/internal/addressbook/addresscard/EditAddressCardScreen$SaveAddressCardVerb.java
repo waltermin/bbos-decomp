@@ -5,7 +5,6 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.Status;
-import net.rim.device.api.util.Factory;
 import net.rim.device.api.util.FactoryUtil;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
@@ -13,6 +12,7 @@ import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.FieldProvider;
 import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.model.Recognizer;
+import net.rim.device.apps.api.framework.registration.RIMModelFactory;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.internal.addressbook.resources.AddressBookResources;
 import net.rim.device.apps.internal.profiles.Overrides;
@@ -42,7 +42,7 @@ final class EditAddressCardScreen$SaveAddressCardVerb extends Verb {
          Field firstRequiredFieldFailure = null;
          Field personNameModelField = null;
          Field companyInfoModelField = null;
-         ContextObject emptyCheckContext = (ContextObject)(new Object(95, 11));
+         ContextObject emptyCheckContext = new ContextObject(95, 11);
          Enumeration fieldEnum = this.this$0.getFieldsFromEdit();
 
          while (fieldEnum.hasMoreElements()) {
@@ -72,13 +72,13 @@ final class EditAddressCardScreen$SaveAddressCardVerb extends Verb {
          if (validAddressCard && firstFieldFailure == null) {
             if (!AddressBookServices.getAddressBookOptions().getDuplicateNamesAllowed() && personNameModelField != null) {
                AddressCardModel duplicateCardModel = (AddressCardModel)FactoryUtil.createInstance(-3124646573404667739L, null);
-               RIMModel model = (RIMModel)((Factory)personNameModelRecognizer).createInstance(null);
+               RIMModel model = (RIMModel)((RIMModelFactory)personNameModelRecognizer).createInstance(null);
                if (((FieldProvider)model).grabDataFromField(personNameModelField, null)) {
                   duplicateCardModel.add(model);
                }
 
                if (companyInfoModelField != null) {
-                  model = (RIMModel)((Factory)companyInfoModelRecognizer).createInstance(null);
+                  model = (RIMModel)((RIMModelFactory)companyInfoModelRecognizer).createInstance(null);
                   if (((FieldProvider)model).grabDataFromField(companyInfoModelField, null)) {
                      duplicateCardModel.add(model);
                   }
@@ -108,7 +108,7 @@ final class EditAddressCardScreen$SaveAddressCardVerb extends Verb {
                UiApplication.getUiApplication().popScreen(this.this$0);
                return null;
             } finally {
-               throw new Object();
+               throw new RuntimeException();
             }
          }
 

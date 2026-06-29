@@ -11,7 +11,7 @@ class UserAuthenticatorPasswordDialog$BitmapChar implements AttributedString$Pic
 
    UserAuthenticatorPasswordDialog$BitmapChar(Bitmap bitmap) {
       this._bitmap = bitmap;
-      this._info = (AttributedString$PictureInfo)(new Object(this));
+      this._info = new AttributedString$PictureInfo(this);
       this._info._x = 0;
       this._info._width = this._bitmap.getWidth();
       this._info._height = this._bitmap.getHeight();

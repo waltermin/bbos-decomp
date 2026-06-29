@@ -11,7 +11,7 @@ import net.rim.vm.Array;
 
 public class TimeBasedCollection {
    private SimpleSortingVector _providers;
-   private LongIntHashtable _activeProviders = (LongIntHashtable)(new Object(2));
+   private LongIntHashtable _activeProviders = new LongIntHashtable(2);
    private SimpleSortingVector[] _cachedEntries;
    private TimeBasedObjectProviderComparator _providerComparator = new TimeBasedObjectProviderComparator();
    private int[] _cacheIndexPointer;
@@ -21,9 +21,9 @@ public class TimeBasedCollection {
    private static TimeBasedCollection _timeBasedCollection;
 
    TimeBasedCollection() {
-      this._providers = (SimpleSortingVector)(new Object());
+      this._providers = new SimpleSortingVector();
       this._cacheIndexPointer = new int[0];
-      this._cachedEntries = new Object[0];
+      this._cachedEntries = new SimpleSortingVector[0];
    }
 
    public static void register() {
@@ -58,7 +58,7 @@ public class TimeBasedCollection {
       int size = this._cachedEntries.length;
       Array.resize(this._cachedEntries, size + 1);
       Array.resize(this._cacheIndexPointer, size + 1);
-      this._cachedEntries[size] = (SimpleSortingVector)(new Object());
+      this._cachedEntries[size] = new SimpleSortingVector();
    }
 
    public synchronized void unregisterProvider(long providerID) {

@@ -7,7 +7,7 @@ public class Util {
    public static void fillParameters(String query, Hashtable params) {
       params.clear();
       if (query != null) {
-         StringTokenizer tokenizer = (StringTokenizer)(new Object(query, '&'));
+         StringTokenizer tokenizer = new StringTokenizer(query, '&');
 
          while (tokenizer.hasMoreTokens()) {
             String nameValuePair = tokenizer.nextToken();

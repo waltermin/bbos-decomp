@@ -4,9 +4,11 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Hashtable;
 import net.rim.device.api.crypto.certificate.Certificate;
+import net.rim.device.api.crypto.keystore.CombinedKeyStore;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.PGPKeyStore;
 import net.rim.device.api.crypto.pgp.PGPArmorDecoder;
+import net.rim.device.api.crypto.pgp.PGPCompressedInputStream;
 import net.rim.device.api.crypto.pgp.PGPEncryptedInputStream;
 import net.rim.device.api.crypto.pgp.PGPInputStream;
 import net.rim.device.api.crypto.pgp.PGPSignedInputStream;
@@ -30,7 +32,7 @@ final class PGPProcessor extends SecureEmailProcessor {
       if (pgpUniversalServerEnrollmentData.isEmpty()) {
          super._preferredKeyStore = PGPKeyStore.getInstance();
       } else {
-         super._preferredKeyStore = (KeyStore)(new Object(new Object[]{PGPKeyStore.getInstance(), PGPUniversalEnrollmentKeyStore.getInstance()}, 0));
+         super._preferredKeyStore = new CombinedKeyStore(new KeyStore[]{PGPKeyStore.getInstance(), PGPUniversalEnrollmentKeyStore.getInstance()}, 0);
       }
    }
 
@@ -43,9 +45,8 @@ final class PGPProcessor extends SecureEmailProcessor {
    protected final InputStream getInputStream(byte[] modelData, CachedMessage cachedMessage) {
       byte[] formatted = PGPSignedInputStream.convertLineEndings(modelData, 0, modelData.length);
       formatted = PGPSignedInputStream.stripSpaces(formatted, 0, formatted.length);
-      ByteArrayInputStream byteStream = (ByteArrayInputStream)(new Object(formatted));
-      PGPArmorDecoder armorDecoder = (PGPArmorDecoder)(new Object(byteStream, super._preferredKeyStore, super._allowUI));
-      return armorDecoder;
+      ByteArrayInputStream byteStream = new ByteArrayInputStream(formatted);
+      return new PGPArmorDecoder(byteStream, super._preferredKeyStore, super._allowUI);
    }
 
    @Override
@@ -54,10 +55,10 @@ final class PGPProcessor extends SecureEmailProcessor {
    }
 
    protected final boolean getFieldsFromInputStream(InputStream inputStream, boolean opaqueData, CachedManager cachedManager) {
-      if (inputStream instanceof Object) {
+      if (inputStream instanceof PGPArmorDecoder) {
          return this.getFieldsFromInputStream_PGP_ArmorDecoder((PGPArmorDecoder)inputStream, opaqueData, cachedManager);
       } else {
-         return inputStream instanceof Object
+         return inputStream instanceof PGPInputStream
             ? this.getFieldsFromInputStream_PGP((PGPInputStream)inputStream, opaqueData, cachedManager)
             : super.getFieldsFromInputStream(inputStream, cachedManager);
       }
@@ -86,7 +87,7 @@ final class PGPProcessor extends SecureEmailProcessor {
       // 019: bipush 0
       // 01a: putfield net/rim/device/apps/internal/secureemail/encodings/pgp/PGPProcessor._firstInputStream Z
       // 01d: aload 5
-      // 01f: instanceof java/lang/Object
+      // 01f: instanceof net/rim/device/api/crypto/pgp/PGPInputStream
       // 022: ifne 02a
       // 025: aload 0
       // 026: bipush 1
@@ -114,7 +115,7 @@ final class PGPProcessor extends SecureEmailProcessor {
       // 055: invokevirtual java/lang/String.length ()I
       // 058: ifgt 05e
       // 05b: goto 0e3
-      // 05e: new java/lang/Object
+      // 05e: new java/lang/StringBuffer
       // 061: dup
       // 062: invokespecial java/lang/StringBuffer.<init> ()V
       // 065: aload 6
@@ -133,7 +134,7 @@ final class PGPProcessor extends SecureEmailProcessor {
       // 084: iload 9
       // 086: bipush -1
       // 088: if_icmpeq 0c2
-      // 08b: new java/lang/Object
+      // 08b: new java/lang/StringBuffer
       // 08e: dup
       // 08f: invokespecial java/lang/StringBuffer.<init> ()V
       // 092: aload 6
@@ -157,7 +158,7 @@ final class PGPProcessor extends SecureEmailProcessor {
       // 0ba: invokevirtual java/lang/String.indexOf (II)I
       // 0bd: istore 9
       // 0bf: goto 084
-      // 0c2: new java/lang/Object
+      // 0c2: new java/lang/StringBuffer
       // 0c5: dup
       // 0c6: invokespecial java/lang/StringBuffer.<init> ()V
       // 0c9: aload 6
@@ -175,7 +176,7 @@ final class PGPProcessor extends SecureEmailProcessor {
       // 0e7: invokespecial net/rim/device/apps/internal/secureemail/encodings/pgp/cache/CachedPGPMissingPrivateKeyField.<init> ()V
       // 0ea: astore 8
       // 0ec: aload 8
-      // 0ee: new java/lang/Object
+      // 0ee: new net/rim/device/apps/internal/secureemail/cache/CachedBodyField
       // 0f1: dup
       // 0f2: aload 6
       // 0f4: invokespecial net/rim/device/apps/internal/secureemail/cache/CachedBodyField.<init> (Ljava/lang/String;)V
@@ -213,7 +214,7 @@ final class PGPProcessor extends SecureEmailProcessor {
       // 13a: invokestatic net/rim/device/api/i18n/MessageFormat.format (Ljava/lang/String;[Ljava/lang/Object;)Ljava/lang/String;
       // 13d: astore 7
       // 13f: aload 3
-      // 140: new java/lang/Object
+      // 140: new net/rim/device/apps/internal/secureemail/cache/CachedErrorField
       // 143: dup
       // 144: aload 7
       // 146: bipush 1
@@ -230,7 +231,7 @@ final class PGPProcessor extends SecureEmailProcessor {
       // 15e: istore 5
       // 160: iload 5
       // 162: ifle 19c
-      // 165: new java/lang/Object
+      // 165: new net/rim/device/apps/internal/secureemail/cache/CachedIncludedCertificatesField
       // 168: dup
       // 169: aload 0
       // 16a: getfield net/rim/device/apps/internal/secureemail/SecureEmailProcessor._secureEmailFactory Lnet/rim/device/apps/internal/secureemail/SecureEmailFactory;
@@ -267,7 +268,7 @@ final class PGPProcessor extends SecureEmailProcessor {
    protected final boolean getFieldsFromInputStream_PGP(PGPInputStream pgpInputStream, boolean opaqueData, CachedManager cachedManager) {
       boolean gotFields = false;
       CachedManager innerManager = cachedManager;
-      if (pgpInputStream instanceof Object) {
+      if (pgpInputStream instanceof PGPSignedInputStream) {
          cachedManager.getCachedMessage().setSigned(true);
          int besVerificationState = this.mapParameterValueStringToInt("v", SecureEmailConstants.BES_VERIFICATION_STATES);
          String cannotVerifyOnDeviceReasonValue = (String)super._securityEncodingOptionalParameterTable.get("nv");
@@ -281,8 +282,8 @@ final class PGPProcessor extends SecureEmailProcessor {
          );
          cachedManager.addField(innerManager);
          gotFields = true;
-      } else if (!(pgpInputStream instanceof Object)) {
-         if (pgpInputStream instanceof Object) {
+      } else if (!(pgpInputStream instanceof PGPEncryptedInputStream)) {
+         if (pgpInputStream instanceof PGPCompressedInputStream) {
             opaqueData = true;
          }
       } else {
@@ -315,7 +316,7 @@ final class PGPProcessor extends SecureEmailProcessor {
       if (nextStream == null) {
          int containsMIMEState = this.mapParameterValueStringToInt("m", SecureEmailConstants.CONTAINS_MIME_STATES);
          if (containsMIMEState == 0) {
-            MIMEInputStream mimeInputStream = (MIMEInputStream)(new Object(pgpInputStream));
+            MIMEInputStream mimeInputStream = new MIMEInputStream(pgpInputStream);
             gotFields |= this.getFieldsFromInputStream(mimeInputStream, innerManager);
          } else {
             gotFields |= this.getFieldsFromInputStream_Text(pgpInputStream, innerManager);
@@ -355,12 +356,12 @@ final class PGPProcessor extends SecureEmailProcessor {
       // 1e: invokevirtual net/rim/device/api/crypto/pgp/PGPEncryptedInputStream.getKeyID ()[B
       // 21: astore 3
       // 22: aload 2
-      // 23: new java/lang/Object
+      // 23: new net/rim/device/internal/util/ByteArray
       // 26: dup
       // 27: aload 3
       // 28: invokespecial net/rim/device/internal/util/ByteArray.<init> ([B)V
       // 2b: invokevirtual java/util/Hashtable.get (Ljava/lang/Object;)Ljava/lang/Object;
-      // 2e: checkcast java/lang/Object
+      // 2e: checkcast java/lang/String
       // 31: astore 4
       // 33: aload 4
       // 35: ifnonnull 44
@@ -380,7 +381,7 @@ final class PGPProcessor extends SecureEmailProcessor {
       // 54: invokestatic net/rim/device/api/xml/parsers/SAXParserFactory.newInstance ()Lnet/rim/device/api/xml/parsers/SAXParserFactory;
       // 57: invokevirtual net/rim/device/api/xml/parsers/SAXParserFactory.newSAXParser ()Lnet/rim/device/api/xml/parsers/SAXParser;
       // 5a: astore 6
-      // 5c: new java/lang/Object
+      // 5c: new net/rim/device/api/xml/XMLHashtable
       // 5f: dup
       // 60: aload 6
       // 62: aload 1

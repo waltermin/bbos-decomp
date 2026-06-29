@@ -1,7 +1,6 @@
 package net.rim.blackberry.api.browser;
 
 import java.io.ByteArrayOutputStream;
-import net.rim.device.apps.internal.browser.stack.FormData;
 import net.rim.device.apps.internal.browser.stack.MultipartFormData;
 
 public final class MultipartPostData extends PostData {
@@ -9,12 +8,12 @@ public final class MultipartPostData extends PostData {
    public static final String DEFAULT_CHARSET = "iso-8859-1";
 
    public MultipartPostData(String charset, boolean useWAPConventions) {
-      super._formData = (FormData)(new Object(charset, useWAPConventions));
-      this._baos = (ByteArrayOutputStream)(new Object());
+      super._formData = new MultipartFormData(charset, useWAPConventions);
+      this._baos = new ByteArrayOutputStream();
    }
 
    public MultipartPostData(byte[] multipartData) {
-      super._formData = (FormData)(new Object(multipartData));
+      super._formData = new MultipartFormData(multipartData);
    }
 
    @Override
@@ -31,8 +30,8 @@ public final class MultipartPostData extends PostData {
 
    @Override
    public final void setData(Object data) {
-      MultipartFormData formData = (MultipartFormData)(new Object(!(data instanceof Object) ? (byte[])data : ((ByteArrayOutputStream)data).toByteArray()));
-      if (data instanceof Object) {
+      MultipartFormData formData = new MultipartFormData(!(data instanceof ByteArrayOutputStream) ? (byte[])data : ((ByteArrayOutputStream)data).toByteArray());
+      if (data instanceof ByteArrayOutputStream) {
          formData.setData(data);
       }
 

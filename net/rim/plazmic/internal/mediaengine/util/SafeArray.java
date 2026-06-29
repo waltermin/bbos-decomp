@@ -104,7 +104,7 @@ public class SafeArray {
 
    public synchronized void releaseSafeArray() {
       if (this._safeArrayReferenceCount == 0) {
-         throw new Object();
+         throw new RuntimeException();
       }
 
       this._safeArrayReferenceCount--;
@@ -116,7 +116,7 @@ public class SafeArray {
 
    public synchronized void acquireSafeArray() {
       if (this._useSingleArray) {
-         throw new Object();
+         throw new RuntimeException();
       }
 
       if (this._updateSafeArray) {

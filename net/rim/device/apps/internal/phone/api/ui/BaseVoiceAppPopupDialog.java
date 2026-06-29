@@ -3,12 +3,13 @@ package net.rim.device.apps.internal.phone.api.ui;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Keypad;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.ButtonField;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.Comparator;
 import net.rim.device.apps.api.framework.model.ContextObject;
+import net.rim.device.apps.api.framework.verb.ApplicationKeyInvocableVerb;
 import net.rim.device.apps.api.framework.verb.ConditionalVerb;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.phone.PhoneEventListener;
@@ -31,7 +32,7 @@ public class BaseVoiceAppPopupDialog extends PopupDialog implements PhoneEventLi
    static final int BUTTON_STYLE = 0;
 
    protected BaseVoiceAppPopupDialog(char initialInputChar, int flags, boolean globalStatus, Verb[] actions, Object context) {
-      super((Manager)(new Object()), globalStatus ? 33554432 : 0);
+      super(new VerticalFieldManager(), globalStatus ? 33554432 : 0);
       this._initialInputChar = initialInputChar;
       this._flags = flags;
       this._actions = actions;
@@ -39,10 +40,10 @@ public class BaseVoiceAppPopupDialog extends PopupDialog implements PhoneEventLi
          this.startListening();
       }
 
-      if (this._context instanceof Object) {
+      if (this._context instanceof ContextObject) {
          this._context = ContextObject.clone(context);
       } else {
-         this._context = new Object();
+         this._context = new ContextObject();
       }
 
       this.addFields();
@@ -69,13 +70,13 @@ public class BaseVoiceAppPopupDialog extends PopupDialog implements PhoneEventLi
    protected void addButtons() {
       if (this._actions != null && this._actions.length > 0) {
          Arrays.sort(this._actions, this);
-         this._buttons = new Object[this._actions.length];
-         this._buttonContainer = (ButtonContainer)(new Object(0, this.getButtonFont()));
+         this._buttons = new ButtonField[this._actions.length];
+         this._buttonContainer = new ButtonContainer(0, this.getButtonFont());
          String number = String.valueOf(this._initialInputChar);
 
          for (int i = 0; i < this._actions.length; i++) {
             Verb verb = this._actions[i];
-            if (!(verb instanceof Object) && (!(verb instanceof Object) || ((ConditionalVerb)verb).canInvoke(number))) {
+            if (!(verb instanceof ApplicationKeyInvocableVerb) && (!(verb instanceof ConditionalVerb) || ((ConditionalVerb)verb).canInvoke(number))) {
                this._buttons[i] = this.createButton(verb);
                this._buttonContainer.addButton(this._buttons[i]);
             }
@@ -89,8 +90,8 @@ public class BaseVoiceAppPopupDialog extends PopupDialog implements PhoneEventLi
 
    private ButtonField createButton(Verb verb) {
       String label = verb.toString().trim();
-      ButtonField button = (ButtonField)(new Object(label, 0));
-      if (verb instanceof Object) {
+      ButtonField button = new ButtonField(label, 0);
+      if (verb instanceof Copyable) {
          button.setCookie(((Copyable)verb).copy());
          return button;
       } else {
@@ -104,7 +105,7 @@ public class BaseVoiceAppPopupDialog extends PopupDialog implements PhoneEventLi
       if (this._buttonContainer != null) {
          for (int i = 0; i < this._actions.length; i++) {
             Verb verb = this._actions[i];
-            if (!(verb instanceof Object) && verb instanceof Object) {
+            if (!(verb instanceof ApplicationKeyInvocableVerb) && verb instanceof ConditionalVerb) {
                if (((ConditionalVerb)verb).canInvoke(context)) {
                   if (this._buttons[i] == null) {
                      this._buttons[i] = this.createButton(verb);
@@ -150,7 +151,7 @@ public class BaseVoiceAppPopupDialog extends PopupDialog implements PhoneEventLi
          this.close(-1);
       } else {
          Object cookie = button.getCookie();
-         if (cookie instanceof Object) {
+         if (cookie instanceof Verb) {
             this.invokeVerbAndClose((Verb)cookie, this._context);
          } else {
             this.invokeVerbAndClose(null, this._context);
@@ -160,7 +161,7 @@ public class BaseVoiceAppPopupDialog extends PopupDialog implements PhoneEventLi
 
    protected void onContinuationAction() {
       Field focus = this.getLeafFieldWithFocus();
-      if (focus instanceof Object) {
+      if (focus instanceof ButtonField) {
          this.onButtonClicked((ButtonField)focus);
       }
    }
@@ -201,7 +202,7 @@ public class BaseVoiceAppPopupDialog extends PopupDialog implements PhoneEventLi
          int count = this._actions.length;
 
          for (int idx = 0; idx < count; idx++) {
-            if (this._actions[idx] instanceof Object) {
+            if (this._actions[idx] instanceof ApplicationKeyInvocableVerb) {
                ContextObject.setFlag(this._context, 102);
                this.invokeVerbAndClose(this._actions[idx], this._context);
                return true;

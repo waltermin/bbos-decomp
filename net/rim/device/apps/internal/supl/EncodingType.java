@@ -13,6 +13,6 @@ final class EncodingType {
    }
 
    final void print() {
-      System.out.println(((StringBuffer)(new Object("Encoding Type: "))).append(this.type).toString());
+      System.out.println("Encoding Type: " + this.type);
    }
 }

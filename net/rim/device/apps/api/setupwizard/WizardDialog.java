@@ -30,7 +30,7 @@ public class WizardDialog extends Dialog {
       DialogFieldManager dialogManager = (DialogFieldManager)this.getDelegate();
       dialogManager.setMessage(createDialogRichTextField(message, true, 36028797019226112L));
       if (choices != null && choices.length > 0) {
-         ButtonField[] buttons = new Object[choices.length];
+         ButtonField[] buttons = new ButtonField[choices.length];
 
          for (int i = 0; i < buttons.length; i++) {
             if (choices[i] != null) {
@@ -93,14 +93,14 @@ public class WizardDialog extends Dialog {
    }
 
    public static ButtonField createDialogButtonField(String buttonText) {
-      ButtonField field = (ButtonField)(new Object(buttonText, 12884901888L));
+      ButtonField field = new ButtonField(buttonText, 12884901888L);
       field.setFont(defineFont());
       return field;
    }
 
    public static RichTextField createDialogRichTextField(String text, boolean boldFont, long style) {
       Font fieldFont = Font.getDefault().derive(boldFont ? 1 : 0, Ui.convertSize(7, 3, 0));
-      RichTextField field = (RichTextField)(new Object(text, style));
+      RichTextField field = new RichTextField(text, style);
       field.setFont(fieldFont);
       return field;
    }

@@ -12,6 +12,6 @@ final class SearchData implements Persistable {
    }
 
    final void clear() {
-      this._filters = (BigVector)(new Object(16));
+      this._filters = new BigVector(16);
    }
 }

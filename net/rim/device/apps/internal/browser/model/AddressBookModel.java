@@ -30,11 +30,11 @@ public final class AddressBookModel implements RIMModel, VerbProvider, ActiveFie
          return null;
       }
 
-      ContextObject initialData = (ContextObject)(new Object());
+      ContextObject initialData = new ContextObject();
       initialData.put(253, PersistentContent.decode(this._phoneNumberEncoding));
       RIMModel phoneNumberModel = (RIMModel)FactoryUtil.createInstance(3797587162219887872L, initialData);
       ContextObject contextObject = null;
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          contextObject = ((ContextObject)context).clone();
          contextObject.put(-4886909117188079897L, PersistentContent.decode(this._friendlyNameEncoding));
          contextObject.setFlag(112);

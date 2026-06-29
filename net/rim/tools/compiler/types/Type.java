@@ -29,7 +29,7 @@ public class Type implements Constants {
    public static final char DESC_VOID = 'V';
    public static final char DESC_OPEN_PAREN = '(';
    public static final char DESC_CLOSE_PAREN = ')';
-   private static Vector _items = (Vector)(new Object());
+   private static Vector _items = new Vector();
 
    public Type(String typeName) {
       this._typeName = typeName;
@@ -236,9 +236,7 @@ public class Type implements Constants {
             type = compiler.getBooleanType();
             break;
          default:
-            throw new CompileException(
-               ((StringBuffer)(new Object("bad TypeDescriptor parse: '"))).append(ch).append("' in ").append(descriptor.getString()).toString()
-            );
+            throw new CompileException("bad TypeDescriptor parse: '" + ch + "' in " + descriptor.getString());
       }
 
       if (type != null) {
@@ -261,13 +259,13 @@ public class Type implements Constants {
 
    public final String encodeType() throws CompileException {
       Type type = this;
-      StringBuffer buf = (StringBuffer)(new Object());
+      StringBuffer buf = new StringBuffer();
 
       while (true) {
          int typeId = type.getTypeId();
          switch (typeId) {
             case 0:
-               throw new CompileException(((StringBuffer)(new Object("unexpected type id: 0x"))).append(Integer.toHexString(typeId)).toString());
+               throw new CompileException("unexpected type id: 0x" + Integer.toHexString(typeId));
             case 1:
             default:
                buf.append('Z');

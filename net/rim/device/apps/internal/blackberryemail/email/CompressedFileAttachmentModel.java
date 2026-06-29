@@ -24,7 +24,7 @@ public class CompressedFileAttachmentModel extends AbstractEmailFileAttachment i
 
    @Override
    public boolean convert(Object context, Object target) {
-      if (!(target instanceof Object)) {
+      if (!(target instanceof RIMMessagingOutgoingMessage)) {
          return false;
       }
 
@@ -44,7 +44,7 @@ public class CompressedFileAttachmentModel extends AbstractEmailFileAttachment i
       ContextObject contextObject = (ContextObject)context;
       ContentPartIDGenerator contentPartIDGenerator = (ContentPartIDGenerator)contextObject.get(-1943436819741481055L);
       int contentPartID = contentPartIDGenerator.generateContentPartID();
-      CMIMEParameters parameters = (CMIMEParameters)(new Object(db, 2, 2));
+      CMIMEParameters parameters = new CMIMEParameters(db, 2, 2);
       parameters.addCMIMEInteger((byte)-15, contentPartID);
       this.setContentPartId((short)contentPartID);
       parameters.addCMIMEInteger((byte)-13, (int)this.getFileSize());

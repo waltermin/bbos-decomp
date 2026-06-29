@@ -35,6 +35,7 @@ import net.rim.device.apps.internal.phone.api.PhoneUtilities;
 import net.rim.device.apps.internal.phone.api.livecall.LiveCall;
 import net.rim.device.apps.internal.phone.api.livecall.LiveCallFactoryRegistry;
 import net.rim.device.apps.internal.phone.api.ui.CallDisplayListener;
+import net.rim.device.apps.internal.phone.api.verbs.AnswerCallVerb;
 import net.rim.device.apps.internal.phone.data.CallerIDInfo;
 import net.rim.device.apps.internal.phone.data.PhoneCallModelImpl;
 import net.rim.device.apps.internal.phone.options.PhoneOptions;
@@ -108,7 +109,7 @@ public final class RIMPhone
          boolean isPhoneActive = phoneState != 0 && phoneState != 11;
          boolean backgroundOnCompletion = isPhoneActive;
          ContextObject contextObj = ContextObject.castOrCreate(context);
-         new Object();
+         new ContextObject();
          if (backgroundOnCompletion) {
             contextObj.setFlag(96);
          }
@@ -312,7 +313,7 @@ public final class RIMPhone
    @Override
    public final void eventOccurred(long guid, int data0, int data1, Object object0, Object object1) {
       if (guid == -5324686711008477091L) {
-         if (object0 instanceof Object) {
+         if (object0 instanceof String) {
             Application voiceApp = (Application)VoiceServices.getVoiceApplication();
             voiceApp.invokeLater(new RIMPhone$StartCallRunnable((String)object0, data0));
          }
@@ -325,13 +326,13 @@ public final class RIMPhone
          PhoneUtilities.playInCallTune(2, 50);
       } else {
          if (this._notificationTimerId != -1) {
-            ContextObject context = (ContextObject)(new Object());
+            ContextObject context = new ContextObject();
             if (this._incomingCallContext != null) {
                Object obj = this._incomingCallContext.get(5898398779440734986L);
-               if (obj instanceof Object) {
+               if (obj instanceof CallerIDInfo) {
                   CallerIDInfo callerIDInfo = (CallerIDInfo)obj;
                   int addresscardUID = (int)callerIDInfo.getUid();
-                  ContextObject.put(context, -7004855975111283545L, new Object(addresscardUID));
+                  ContextObject.put(context, -7004855975111283545L, new Integer(addresscardUID));
                }
             }
 
@@ -399,14 +400,14 @@ public final class RIMPhone
             }
 
             RIMPhone$PhoneSource source = new RIMPhone$PhoneSource();
-            source.setLineNumber(((StringBuffer)(new Object("["))).append(profileDescriptions[i]).append("]").toString());
+            source.setLineNumber("[" + profileDescriptions[i] + "]");
             NotificationsManager.registerSource(lineIds[i] + 2868625504212929964L, source, 0, 2868625504212929964L);
          }
       }
    }
 
    private final void handleCallerIDUpdated(int callId) {
-      System.out.println(((StringBuffer)(new Object("EV_CALLER_ID_UPDATED ("))).append(callId).append(")").toString());
+      System.out.println("EV_CALLER_ID_UPDATED (" + callId + ")");
       CallerIDInfo callerIDInfo = PhoneUtilities.getCallDisplayInfo(callId, 22, this._incomingCallContext);
       if (callerIDInfo != null) {
          if (this._rejectCallWhenCallerIDInfoArrives) {
@@ -419,7 +420,7 @@ public final class RIMPhone
          }
 
          if (this._incomingCallContext != null) {
-            System.out.println(((StringBuffer)(new Object("callid number="))).append(this._incomingCallContext.get(-6346895525857192403L)).toString());
+            System.out.println("callid number=" + this._incomingCallContext.get(-6346895525857192403L));
             this._incomingCallContext.put(5898398779440734986L, callerIDInfo);
          }
 
@@ -440,11 +441,11 @@ public final class RIMPhone
 
       if (!PhoneUtilities.gsmTypeNetwork() || this._incomingCallContext == null || this.getIncomingCallId() != callId) {
          if (PhoneUtilities.getDebugFlag(-2489431779144400366L)) {
-            Verb answerVerb = (Verb)(new Object(callId, null, 0, 0, null));
+            Verb answerVerb = new AnswerCallVerb(callId, null, 0, 0, null);
             this._app.invokeLater(new VerbRunner(answerVerb), 7000, false);
          }
 
-         this._incomingCallContext = (ContextObject)(new Object());
+         this._incomingCallContext = new ContextObject();
          int callTypeFlag = waiting ? 23 : 22;
          PhoneUtilities.setPrivateFlag(this._incomingCallContext, callTypeFlag);
          ContextObject.setFlag(this._incomingCallContext, 117);
@@ -453,17 +454,17 @@ public final class RIMPhone
             this._incomingCallContext.put(5898398779440734986L, callerIDInfo);
          }
 
-         this._incomingCallContext.put(2321140177253895719L, new Object(callId));
+         this._incomingCallContext.put(2321140177253895719L, new Integer(callId));
          if (CallManager.getInstance().getConferenceCall() != null) {
             this._incomingCallContext.setFlag(80);
          }
 
-         PhoneCallInitialData data = (PhoneCallInitialData)(new Object(callId, (byte)0, 8, callerIDInfo, this._incomingCallContext));
+         PhoneCallInitialData data = new PhoneCallInitialData(callId, (byte)0, 8, callerIDInfo, this._incomingCallContext);
          this._incomingCall = LiveCallFactoryRegistry.getRegistry().createLiveCall(data, this._incomingCallContext);
          if (PhoneUtilities.getPrivateFlag(this._incomingCallContext, 85)) {
             Integer autoAnswerDelay = (Integer)this._incomingCallContext.get(1390781651728252971L);
-            if (autoAnswerDelay instanceof Object) {
-               Verb autoAnswer = (Verb)(new Object(callId, null, 0, 0, null));
+            if (autoAnswerDelay instanceof Integer) {
+               Verb autoAnswer = new AnswerCallVerb(callId, null, 0, 0, null);
                this._app.invokeLater(new VerbRunner(autoAnswer), autoAnswerDelay.intValue(), false);
                return;
             }
@@ -486,10 +487,10 @@ public final class RIMPhone
 
             NotificationsManager.negotiateDeferredEvent(this.getPhoneLineSource(), 0, this._incomingCallContext, 0, 1, negotiationContext);
             Object result = negotiationContext.get(4086083307293257364L);
-            if (result instanceof Object) {
+            if (result instanceof Boolean) {
                Boolean success = (Boolean)result;
                if (!success) {
-                  System.out.println(((StringBuffer)(new Object("PHONE: DND callId "))).append(callId).toString());
+                  System.out.println("PHONE: DND callId " + callId);
                   if (PhoneUtilities.canReject()) {
                      if (this._networkType != 3 && this._networkType != 7) {
                         VoiceServices.rejectCall(callId);
@@ -506,7 +507,7 @@ public final class RIMPhone
    }
 
    private static final void logIncomingCallInfo(int callId, boolean waiting, ContextObject context) {
-      StringBuffer logString = (StringBuffer)(new Object());
+      StringBuffer logString = new StringBuffer();
       logString.append(waiting ? "cwtg" : "cinc");
       logString.append(callId);
       if (!PersistentContent.isEncryptionEnabled()) {
@@ -527,8 +528,8 @@ public final class RIMPhone
    }
 
    private final void showVoiceAppForPhoneNumberInput(char key) {
-      ContextObject context = (ContextObject)(new Object());
-      context.put(-2621706732407506661L, new Object(key));
+      ContextObject context = new ContextObject();
+      context.put(-2621706732407506661L, new Character(key));
       ((VoiceApp)this._app).requestForeground(null, context);
       Backlight.enable(true);
    }
@@ -576,7 +577,7 @@ public final class RIMPhone
 
    private final void handleCallConnected(int callId) {
       if (this._incomingCallContext != null && this.getIncomingCallId() == callId) {
-         this._incomingCallContext.put(-1189301621374034083L, new Object(callId));
+         this._incomingCallContext.put(-1189301621374034083L, new Integer(callId));
          this.clearIncomingCall();
          this.clearCallDisplay();
          this.clearIncomingCallContext();
@@ -605,15 +606,15 @@ public final class RIMPhone
    }
 
    private final void recordIncomingCallDisconnection(int callId) {
-      PhoneLogger.log(((StringBuffer)(new Object("inc-call-disc "))).append(callId).toString());
+      PhoneLogger.log("inc-call-disc " + callId);
       PhoneUtilities.setPrivateFlag(this._incomingCallContext, 61);
    }
 
    private final void handleCallFailed(int callId, Object reason) {
       if (this._incomingCallContext != null && this.getIncomingCallId() == callId) {
          this.recordIncomingCallDisconnection(callId);
-         if (reason instanceof Object) {
-            int error = reason;
+         if (reason instanceof Integer) {
+            int error = (Integer)reason;
             String msg = PhoneUtilities.getCallFailureErrorString(error);
             PhoneOptions.getOptions().logPhoneError("PH", error, msg);
          }
@@ -646,16 +647,16 @@ public final class RIMPhone
          var9 = 7500;
       } else {
          var9 = 3000;
-         ContextObject context = (ContextObject)(new Object());
-         ContextObject.put(context, -2000078441617626078L, new Object(10));
-         ContextObject.put(context, 3423823800652933171L, new Object(var9));
-         ContextObject.put(context, -8706641515457485416L, new Object(2));
+         ContextObject context = new ContextObject();
+         ContextObject.put(context, -2000078441617626078L, new Integer(10));
+         ContextObject.put(context, 3423823800652933171L, new Integer(var9));
+         ContextObject.put(context, -8706641515457485416L, new Integer(2));
          if (this._incomingCallContext != null) {
             Object obj = this._incomingCallContext.get(5898398779440734986L);
-            if (obj instanceof Object) {
+            if (obj instanceof CallerIDInfo) {
                CallerIDInfo callerIDInfo = (CallerIDInfo)obj;
                int addresscardUID = (int)callerIDInfo.getUid();
-               ContextObject.put(context, -7004855975111283545L, new Object(addresscardUID));
+               ContextObject.put(context, -7004855975111283545L, new Integer(addresscardUID));
             }
          }
 
@@ -682,7 +683,7 @@ public final class RIMPhone
    }
 
    private final void stopRepeatingNotification() {
-      ContextObject contextObject = (ContextObject)(new Object());
+      ContextObject contextObject = new ContextObject();
       contextObject.setFlag(39);
       NotificationsManager.cancelImmediateEvent(this._cachedId, 0, null, contextObject);
 
@@ -735,7 +736,7 @@ public final class RIMPhone
    private final RIMModel getIncomingCallerIDInfo() {
       if (this._incomingCallContext != null) {
          Object o = this._incomingCallContext.get(5898398779440734986L);
-         if (o instanceof Object) {
+         if (o instanceof RIMModel) {
             return (RIMModel)o;
          }
       }
@@ -746,8 +747,8 @@ public final class RIMPhone
    private final int getIncomingCallId() {
       if (this._incomingCallContext != null) {
          Object o = this._incomingCallContext.get(2321140177253895719L);
-         if (o instanceof Object) {
-            return o;
+         if (o instanceof Integer) {
+            return (Integer)o;
          }
       }
 
@@ -757,8 +758,8 @@ public final class RIMPhone
    private final int getConnectedCallId() {
       if (this._incomingCallContext != null) {
          Object o = this._incomingCallContext.get(-1189301621374034083L);
-         if (o instanceof Object) {
-            return o;
+         if (o instanceof Integer) {
+            return (Integer)o;
          }
       }
 
@@ -836,7 +837,7 @@ public final class RIMPhone
             ((ContextObject)context).reset();
          }
 
-         ContextObject.put(context, -2949044237254437889L, new Object(eventId));
+         ContextObject.put(context, -2949044237254437889L, new Integer(eventId));
          PhoneUtilities.setPrivateFlag(context, 31);
          verbs = factory.getVerbs(context);
          if (verbs != null && verbs.length > 0 && verbs[0] != null) {

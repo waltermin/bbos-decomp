@@ -7,7 +7,7 @@ public final class DSASignatureVerifier implements SignatureVerifier {
    private byte[] _s;
 
    public DSASignatureVerifier(DSAPublicKey key, byte[] r, int rOffset, byte[] s, int sOffset) {
-      this(key, (Digest)(new Object()), r, rOffset, s, sOffset);
+      this(key, new SHA1Digest(), r, rOffset, s, sOffset);
    }
 
    public DSASignatureVerifier(DSAPublicKey key, Digest digest, byte[] r, int rOffset, byte[] s, int sOffset) throws InvalidSignatureEncodingException {
@@ -15,7 +15,7 @@ public final class DSASignatureVerifier implements SignatureVerifier {
          this._key = key;
          this._digest = digest;
          if (this._digest.getDigestLength() != 20) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          int privateKeyLength = key.getDSACryptoSystem().getPrivateKeyLength();
@@ -45,13 +45,13 @@ public final class DSASignatureVerifier implements SignatureVerifier {
             throw new InvalidSignatureEncodingException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object("DSA/"))).append(this._digest.getAlgorithm()).toString();
+      return "DSA/" + this._digest.getAlgorithm();
    }
 
    @Override

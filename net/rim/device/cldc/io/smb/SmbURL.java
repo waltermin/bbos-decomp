@@ -1,5 +1,7 @@
 package net.rim.device.cldc.io.smb;
 
+import net.rim.device.cldc.io.utility.MalformedURLException;
+
 final class SmbURL {
    private String _filepath;
    private String _domain;
@@ -17,9 +19,9 @@ final class SmbURL {
       this.parseSmbURL(url);
    }
 
-   SmbURL(SmbURL url) {
+   SmbURL(SmbURL url) throws MalformedURLException {
       if (url == null) {
-         throw new Object();
+         throw new MalformedURLException();
       }
 
       this._filepath = url.getFilepath();
@@ -29,7 +31,7 @@ final class SmbURL {
       this._server = url.getServer();
    }
 
-   private final void parseSmbURL(String url) {
+   private final void parseSmbURL(String url) throws MalformedURLException {
       url = url.replace('\\', '/');
       if (url.startsWith("//")) {
          url = url.substring(2);
@@ -38,11 +40,11 @@ final class SmbURL {
       int amp = url.indexOf(64);
       int sl = url.indexOf(47);
       if (sl == -1) {
-         throw new Object("Invalid SMB URL, / not found");
+         throw new MalformedURLException("Invalid SMB URL, / not found");
       }
 
       if (amp == -1) {
-         this._server = ((StringBuffer)(new Object("//"))).append(url.substring(0, sl)).toString();
+         this._server = "//" + url.substring(0, sl);
          this._filepath = url.substring(sl);
       } else {
          int start = url.indexOf(59, 0);
@@ -56,15 +58,15 @@ final class SmbURL {
          }
 
          if (this._domain == null || this._user == null || this._password == null) {
-            throw new Object("Credentials not specified");
+            throw new MalformedURLException("Credentials not specified");
          }
 
-         this._server = ((StringBuffer)(new Object("//"))).append(url.substring(amp + 1, sl)).toString();
+         this._server = "//" + url.substring(amp + 1, sl);
          this._filepath = url.substring(sl);
       }
 
       if (this._filepath == null) {
-         throw new Object("File PATH not specified");
+         throw new MalformedURLException("File PATH not specified");
       }
    }
 
@@ -90,7 +92,7 @@ final class SmbURL {
 
    @Override
    public final String toString() {
-      StringBuffer buff = (StringBuffer)(new Object(1024));
+      StringBuffer buff = new StringBuffer(1024);
       if (this._domain != null && this._user != null && this._password != null) {
          buff.append(this._domain).append(';').append(this._user).append(':').append(this._password).append('&');
       }

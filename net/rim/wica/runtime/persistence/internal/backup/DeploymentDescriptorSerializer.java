@@ -95,7 +95,7 @@ final class DeploymentDescriptorSerializer extends AbstractSerializer {
             deployment.setDependencies((DeploymentDescriptor$Dependency[])DependencySerializer.getInstance().deserializeArray(buffer));
             return;
          case 10:
-            deployment.setLanguages(StringSerializer.getInstance().deserializeArray(buffer));
+            deployment.setLanguages((String[])StringSerializer.getInstance().deserializeArray(buffer));
             return;
          case 11:
             deployment.setTargetFolder(ConverterUtilities.readString(buffer));

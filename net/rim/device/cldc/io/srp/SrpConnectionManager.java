@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.srp;
 
+import java.io.IOException;
 import java.util.Vector;
 import net.rim.device.api.hrt.HostRoutingInfo;
 import net.rim.device.api.io.DatagramAddressBase;
@@ -223,11 +224,11 @@ final class SrpConnectionManager implements GlobalEventListener, RadioStatusList
       return this._transport != null ? this._transport.getNextDatagramId(null) : 0;
    }
 
-   final void sendControl(SrpConfiguration config, SrpUtils$DatagramInfo info, boolean blocking) {
+   final void sendControl(SrpConfiguration config, SrpUtils$DatagramInfo info, boolean blocking) throws IOException {
       if (this._transport != null) {
          this._transport.sendControl(config, info, blocking);
       } else {
-         throw new Object();
+         throw new IOException();
       }
    }
 
@@ -658,7 +659,7 @@ final class SrpConnectionManager implements GlobalEventListener, RadioStatusList
    private final Vector getCopy(Vector v) {
       if (v != null && v.size() > 0) {
          int size = v.size();
-         Vector retV = (Vector)(new Object(size, 1));
+         Vector retV = new Vector(size, 1);
 
          for (int i = 0; i < size; i++) {
             retV.addElement(v.elementAt(i));
@@ -733,11 +734,11 @@ final class SrpConnectionManager implements GlobalEventListener, RadioStatusList
 
    SrpConnectionManager(Transport transport) {
       this._transport = transport;
-      this._configurationsTable = new Object[2][2];
-      this._configurationsTable[0][0] = (Vector)(new Object(2));
-      this._configurationsTable[0][1] = (Vector)(new Object(2));
-      this._configurationsTable[1][0] = (Vector)(new Object(2));
-      this._configurationsTable[1][1] = (Vector)(new Object(2));
+      this._configurationsTable = new Vector[2][2];
+      this._configurationsTable[0][0] = new Vector(2);
+      this._configurationsTable[0][1] = new Vector(2);
+      this._configurationsTable[1][0] = new Vector(2);
+      this._configurationsTable[1][1] = new Vector(2);
       this._ipAddresses = new byte[2][2][];
       this._ipAddresses[0][0] = null;
       this._ipAddresses[0][1] = null;
@@ -1084,7 +1085,7 @@ final class SrpConnectionManager implements GlobalEventListener, RadioStatusList
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private final void getRoutingInfoLocalRelay(int linkType, int connectionType, Object info, Object info1, byte eventCode, int setupCode) {
-      if (info instanceof Object) {
+      if (info instanceof String) {
          this.getRoutingInfoLocalRelayDevelopment(linkType, connectionType, info, info1, eventCode, setupCode);
       }
 
@@ -1277,7 +1278,7 @@ final class SrpConnectionManager implements GlobalEventListener, RadioStatusList
                                  }
 
                                  synchronized (srp) {
-                                    srp._hosts = new Object[e.length];
+                                    srp._hosts = new String[e.length];
                                     System.arraycopy(e, 0, srp._hosts, 0, e.length);
                                     srp._ports = Arrays.copy(ports);
                                     if (srcPorts != null) {
@@ -1345,7 +1346,7 @@ final class SrpConnectionManager implements GlobalEventListener, RadioStatusList
                boolean e = true;
                switch (eventCode) {
                   case 3:
-                     if (!(info instanceof Object)) {
+                     if (!(info instanceof String)) {
                         var26 = false;
                         break;
                      } else if (((String)info).length() <= 0) {
@@ -1363,13 +1364,13 @@ final class SrpConnectionManager implements GlobalEventListener, RadioStatusList
                         e = false;
                      }
                   case 1:
-                     if (!(info instanceof Object)) {
+                     if (!(info instanceof String)) {
                         var26 = false;
                      } else {
                         String address = (String)info;
                         int index = address.indexOf(58, 0);
                         int nextIndex = address.indexOf(58, index + 1);
-                        String[] hosts = new Object[0];
+                        String[] hosts = new String[0];
                         int[] ports = new int[0];
                         int[] srcPorts = null;
                         if (index > 0) {
@@ -1443,7 +1444,7 @@ final class SrpConnectionManager implements GlobalEventListener, RadioStatusList
                            }
 
                            synchronized (srp) {
-                              srp._hosts = new Object[hosts.length];
+                              srp._hosts = new String[hosts.length];
                               System.arraycopy(hosts, 0, srp._hosts, 0, hosts.length);
                               srp._ports = Arrays.copy(ports);
                               if (srcPorts != null) {
@@ -1573,7 +1574,7 @@ final class SrpConnectionManager implements GlobalEventListener, RadioStatusList
                                  }
                               } else {
                                  synchronized (srp) {
-                                    srp._hosts = new Object[hosts.length];
+                                    srp._hosts = new String[hosts.length];
                                     System.arraycopy(hosts, 0, srp._hosts, 0, hosts.length);
                                     srp._ports = Arrays.copy(ports);
                                     srp._srcPorts = new int[hosts.length];
@@ -1586,7 +1587,7 @@ final class SrpConnectionManager implements GlobalEventListener, RadioStatusList
                               }
 
                               if (srp._srs == null) {
-                                 srp._srs = (Vector)(new Object(1));
+                                 srp._srs = new Vector(1);
                               }
 
                               boolean uidNotPresent = srp._srs.indexOf(e) < 0;

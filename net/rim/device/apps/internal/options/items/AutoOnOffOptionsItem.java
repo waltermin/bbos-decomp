@@ -2,8 +2,8 @@ package net.rim.device.apps.internal.options.items;
 
 import java.util.Calendar;
 import java.util.TimeZone;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.DateField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.DateTimeUtilities;
 import net.rim.device.apps.api.framework.registration.VerbRepository;
@@ -30,20 +30,20 @@ public final class AutoOnOffOptionsItem extends SaveableMainScreenOptionsListIte
 
    @Override
    protected final void populateMainScreen(MainScreen mainScreen) {
-      this._weekdayOnField = (DateField)(new Object(OptionsResources.getString(1301), AutoOnOff.getWeekdayOnTime(), 32));
+      this._weekdayOnField = new DateField(OptionsResources.getString(1301), AutoOnOff.getWeekdayOnTime(), 32);
       this._weekdayOnField.setTimeZone(GMT);
-      this._weekdayOffField = (DateField)(new Object(OptionsResources.getString(1302), AutoOnOff.getWeekdayOffTime(), 32));
+      this._weekdayOffField = new DateField(OptionsResources.getString(1302), AutoOnOff.getWeekdayOffTime(), 32);
       this._weekdayOffField.setTimeZone(GMT);
-      this._weekdayAutoOnOffField = (BooleanChoiceField)(new Object(OptionsResources.getString(1303), 2, AutoOnOff.isWeekdayAutoOnOffEnabled()));
-      this._weekendOnField = (DateField)(new Object(OptionsResources.getString(1301), AutoOnOff.getWeekendOnTime(), 32));
+      this._weekdayAutoOnOffField = new BooleanChoiceField(OptionsResources.getString(1303), 2, AutoOnOff.isWeekdayAutoOnOffEnabled());
+      this._weekendOnField = new DateField(OptionsResources.getString(1301), AutoOnOff.getWeekendOnTime(), 32);
       this._weekendOnField.setTimeZone(GMT);
-      this._weekendOffField = (DateField)(new Object(OptionsResources.getString(1302), AutoOnOff.getWeekendOffTime(), 32));
+      this._weekendOffField = new DateField(OptionsResources.getString(1302), AutoOnOff.getWeekendOffTime(), 32);
       this._weekendOffField.setTimeZone(GMT);
-      this._weekendAutoOnOffField = (BooleanChoiceField)(new Object(OptionsResources.getString(1304), 2, AutoOnOff.isWeekendAutoOnOffEnabled()));
+      this._weekendAutoOnOffField = new BooleanChoiceField(OptionsResources.getString(1304), 2, AutoOnOff.isWeekendAutoOnOffEnabled());
       mainScreen.add(this._weekdayAutoOnOffField);
       mainScreen.add(this._weekdayOnField);
       mainScreen.add(this._weekdayOffField);
-      mainScreen.add((Field)(new Object()));
+      mainScreen.add(new SeparatorField());
       mainScreen.add(this._weekendAutoOnOffField);
       mainScreen.add(this._weekendOnField);
       mainScreen.add(this._weekendOffField);

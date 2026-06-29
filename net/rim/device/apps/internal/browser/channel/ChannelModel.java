@@ -64,7 +64,7 @@ public final class ChannelModel implements PersistableRIMModel, SyncObject, Verb
    public static final int STATUS_READ = 0;
    public static final int STATUS_UNREAD = 1;
    private static final int VERSION = 7;
-   private static WeakReference _dataBufferWR = (WeakReference)(new Object(null));
+   private static WeakReference _dataBufferWR = new WeakReference(null);
 
    public final String getID() {
       return this._id;
@@ -101,7 +101,7 @@ public final class ChannelModel implements PersistableRIMModel, SyncObject, Verb
 
    @Override
    public final boolean convert(Object context, Object target) {
-      if (!(target instanceof Object)) {
+      if (!(target instanceof SyncBuffer)) {
          return false;
       }
 
@@ -257,30 +257,20 @@ public final class ChannelModel implements PersistableRIMModel, SyncObject, Verb
             try {
                return Bitmap.createBitmapFromBytes(data, 0, data.length, 1);
             } catch (Throwable var6) {
-               EventLogger.logEvent(
-                  1907089860548946979L, ((StringBuffer)(new Object("CMgi - "))).append(this._id).append('\n').append(x.toString()).toString().getBytes(), 0
-               );
+               EventLogger.logEvent(1907089860548946979L, ("CMgi - " + this._id + '\n' + x.toString()).getBytes(), 0);
                return icon;
             }
          } else {
-            EventLogger.logEvent(1907089860548946979L, ((StringBuffer)(new Object("CMgi - "))).append(this._id).append("\nnd").toString().getBytes(), 0);
+            EventLogger.logEvent(1907089860548946979L, ("CMgi - " + this._id + "\nnd").getBytes(), 0);
             return icon;
          }
       } else if (cacheResult == null) {
-         EventLogger.logEvent(1907089860548946979L, ((StringBuffer)(new Object("CMgi - "))).append(this._id).append("\nncr").toString().getBytes(), 0);
+         EventLogger.logEvent(1907089860548946979L, ("CMgi - " + this._id + "\nncr").getBytes(), 0);
          return icon;
       } else {
          EventLogger.logEvent(
             1907089860548946979L,
-            ((StringBuffer)(new Object("CMgi - ")))
-               .append(this._id)
-               .append('\n')
-               .append(cacheResult.getStatus())
-               .append(' ')
-               .append(cacheResult.getExceptionString())
-               .append(' ')
-               .append(cacheResult.getExceptionDetail())
-               .toString()
+            ("CMgi - " + this._id + '\n' + cacheResult.getStatus() + ' ' + cacheResult.getExceptionString() + ' ' + cacheResult.getExceptionDetail())
                .getBytes(),
             0
          );
@@ -367,12 +357,12 @@ public final class ChannelModel implements PersistableRIMModel, SyncObject, Verb
       CacheResult cacheResult = null;
       if (url != null) {
          BrowserImpl browserImpl = BrowserDaemonRegistry.getInstance();
-         HttpHeaders requestHeaders = (HttpHeaders)(new Object());
+         HttpHeaders requestHeaders = new HttpHeaders();
          RenderingUtilities.setTranscodeHeader(requestHeaders, false);
          RawDataCache rawDataCache = browserImpl.getRawDataCache();
          return rawDataCache.get(url, 1, null, null, requestHeaders, false);
       } else {
-         EventLogger.logEvent(1907089860548946979L, ((StringBuffer)(new Object("CMgu - "))).append(this._id).append("\nnu").toString().getBytes(), 0);
+         EventLogger.logEvent(1907089860548946979L, ("CMgu - " + this._id + "\nnu").getBytes(), 0);
          return cacheResult;
       }
    }
@@ -391,7 +381,7 @@ public final class ChannelModel implements PersistableRIMModel, SyncObject, Verb
       }
 
       BrowserImpl browserImpl = BrowserDaemonRegistry.getInstance();
-      HttpHeaders requestHeaders = (HttpHeaders)(new Object());
+      HttpHeaders requestHeaders = new HttpHeaders();
       requestHeaders.setProperty("Accept", ImageRenderingConverter.getAcceptString());
       RenderingUtilities.setTranscodeHeader(requestHeaders, false);
       RenderingSession renderingSession = RenderingSessionImpl.getNewInstance();
@@ -410,7 +400,7 @@ public final class ChannelModel implements PersistableRIMModel, SyncObject, Verb
          return RendererControl.readBytesFromInputStream(inputStream);
       }
 
-      EventLogger.logEvent(1907089860548946979L, ((StringBuffer)(new Object("CMrd - "))).append(this._id).append("\nnis").toString().getBytes(), 0);
+      EventLogger.logEvent(1907089860548946979L, ("CMrd - " + this._id + "\nnis").getBytes(), 0);
       return null;
    }
 

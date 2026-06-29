@@ -205,7 +205,7 @@ public class Tokenizer implements TokenConstants {
    }
 
    private int addDouble() {
-      return this.addDouble((Double)(new Object(this._tokenDouble)));
+      return this.addDouble(new Double(this._tokenDouble));
    }
 
    private int addDouble(Double d) {
@@ -243,9 +243,7 @@ public class Tokenizer implements TokenConstants {
    }
 
    public String tokenString() {
-      return (String)(this._tokenIsByteString
-         ? new Object(this._tokenBuffBytes, 0, this._tokenBuffIndex)
-         : new Object(this._tokenBuff, 0, this._tokenBuffIndex));
+      return this._tokenIsByteString ? new String(this._tokenBuffBytes, 0, this._tokenBuffIndex) : new String(this._tokenBuff, 0, this._tokenBuffIndex);
    }
 
    String tokenToString(int token) {
@@ -258,7 +256,7 @@ public class Tokenizer implements TokenConstants {
 
    private static String escape(String str, char quoteChar) {
       int length = str.length();
-      StringBuffer b = (StringBuffer)(new Object(length));
+      StringBuffer b = new StringBuffer(length);
 
       for (int i = 0; i < length; i++) {
          char ch = str.charAt(i);
@@ -395,7 +393,7 @@ public class Tokenizer implements TokenConstants {
          case 199:
             return "";
          case 200:
-            return ((StringBuffer)(new Object("\""))).append(escape(this._compiler.getString(index), '"')).append("\"").toString();
+            return "\"" + escape(this._compiler.getString(index), '"') + "\"";
          case 201:
             return this._compiler.getDouble(index).toString();
          case 202:
@@ -404,7 +402,7 @@ public class Tokenizer implements TokenConstants {
             return this._compiler.getId(index);
          case 204:
          default:
-            return ((StringBuffer)(new Object("/"))).append(this._compiler.getString(index)).append("/").toString();
+            return "/" + this._compiler.getString(index) + "/";
       }
    }
 
@@ -412,27 +410,27 @@ public class Tokenizer implements TokenConstants {
       switch (token) {
          case 199:
             if (token >= 1 && token <= 29) {
-               return ((StringBuffer)(new Object("KEYWORD \""))).append(_keywordTable[token - 1]).append("\"").toString();
+               return "KEYWORD \"" + _keywordTable[token - 1] + "\"";
             } else if (token >= 30 && token <= 59) {
-               return ((StringBuffer)(new Object("RESERVD \""))).append(_keywordTable[token - 1]).append("\"").toString();
+               return "RESERVD \"" + _keywordTable[token - 1] + "\"";
             } else {
                if (token >= 100 && token <= 150) {
-                  return ((StringBuffer)(new Object("PUNCT   \""))).append(_punctToStringTable[token - 100]).append("\"").toString();
+                  return "PUNCT   \"" + _punctToStringTable[token - 100] + "\"";
                }
 
                return null;
             }
          case 200:
-            return ((StringBuffer)(new Object("STRING   \""))).append(this.tokenString()).append("\"").toString();
+            return "STRING   \"" + this.tokenString() + "\"";
          case 201:
-            return ((StringBuffer)(new Object("DOUBLE  \""))).append(this.tokenString()).append("\"").toString();
+            return "DOUBLE  \"" + this.tokenString() + "\"";
          case 202:
          default:
-            return ((StringBuffer)(new Object("INTEGER  \""))).append(this.tokenString()).append("\"").toString();
+            return "INTEGER  \"" + this.tokenString() + "\"";
          case 203:
-            return ((StringBuffer)(new Object("ID      \""))).append(this.tokenString()).append("\"").toString();
+            return "ID      \"" + this.tokenString() + "\"";
          case 204:
-            return ((StringBuffer)(new Object("REGEXP   /"))).append(this.tokenString()).append("/").toString();
+            return "REGEXP   /" + this.tokenString() + "/";
       }
    }
 
@@ -1504,7 +1502,7 @@ public class Tokenizer implements TokenConstants {
          }
 
          if (ch == '/') {
-            StringBuffer flags = (StringBuffer)(new Object());
+            StringBuffer flags = new StringBuffer();
 
             while (true) {
                boolean var12 = false /* VF: Semaphore variable */;
@@ -2276,7 +2274,7 @@ public class Tokenizer implements TokenConstants {
 
       int indent = 0;
       int pendingPrintln = 0;
-      StringBuffer b = (StringBuffer)(new Object());
+      StringBuffer b = new StringBuffer();
       if (lineType == 3) {
          nl(b);
       }
@@ -2319,7 +2317,7 @@ public class Tokenizer implements TokenConstants {
                   case 199:
                      continue;
                   case 200:
-                     toPrint = ((StringBuffer)(new Object("\""))).append(escape(code.getString(getTokenStreamInt(code, i, bump)), '"')).append("\"").toString();
+                     toPrint = "\"" + escape(code.getString(getTokenStreamInt(code, i, bump)), '"') + "\"";
                      i += bump[0];
                      break;
                   case 201:
@@ -2336,9 +2334,9 @@ public class Tokenizer implements TokenConstants {
                      break;
                   case 204:
                   default:
-                     toPrint = ((StringBuffer)(new Object("/"))).append(code.getString(getTokenStreamInt(code, i, bump))).append("/").toString();
+                     toPrint = "/" + code.getString(getTokenStreamInt(code, i, bump)) + "/";
                      i += bump[0];
-                     toPrint = ((StringBuffer)(new Object())).append(toPrint).append(code.getString(getTokenStreamInt(code, i, bump))).toString();
+                     toPrint = toPrint + code.getString(getTokenStreamInt(code, i, bump));
                      i += bump[0];
                }
             }

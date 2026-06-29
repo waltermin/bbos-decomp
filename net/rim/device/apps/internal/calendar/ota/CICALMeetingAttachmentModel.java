@@ -5,7 +5,7 @@ import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.api.system.ObjectGroup;
 import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.util.StringUtilities;
-import net.rim.device.apps.api.addressbook.FriendlyNameAddressModel;
+import net.rim.device.apps.api.addressbook.EmailAddressModel;
 import net.rim.device.apps.api.calendar.caldb.CalDB;
 import net.rim.device.apps.api.calendar.caldb.CalendarKey;
 import net.rim.device.apps.api.calendar.caldb.CalendarService;
@@ -29,7 +29,6 @@ import net.rim.device.apps.api.framework.model.VerbProvider;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.sync.OTASyncData;
 import net.rim.device.apps.api.sync.OTASyncDataManager;
-import net.rim.device.apps.api.sync.OTASyncIDProvider;
 import net.rim.device.apps.internal.blackberryemail.email.CMIMEReferenceIdInterested;
 import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
 
@@ -52,7 +51,7 @@ public class CICALMeetingAttachmentModel
    @Override
    public int getCMIMEReferenceIdentifier() {
       OTACalendarSyncDataManager syncManager = OTACalendarSyncDataManager.getInstance();
-      OTASyncData syncData = syncManager.get((OTASyncIDProvider)this._meetings[0]);
+      OTASyncData syncData = syncManager.get((Event)this._meetings[0]);
       return syncData != null ? syncData.getOwnerId() : -1;
    }
 
@@ -63,7 +62,7 @@ public class CICALMeetingAttachmentModel
       }
 
       RIMModel message = (RIMModel)ContextObject.get(context, 424670468422402792L);
-      Verb[] defaultVerbs = (Object[])ContextObject.get(context, 248);
+      Verb[] defaultVerbs = (Verb[])ContextObject.get(context, 248);
       if (defaultVerbs != null && defaultVerbs[0] != null) {
          OTASyncDataManager syncManager = OTACalendarSyncDataManager.getInstance();
          Event event = this.getEvent(0);
@@ -76,8 +75,8 @@ public class CICALMeetingAttachmentModel
          }
 
          boolean openSupported = true;
-         if (message instanceof Object) {
-            EmailMessageModel email = (EmailMessageModel)message;
+         if (message instanceof EmailMessageModel) {
+            var email = (EmailMessageModel & EmailMessageModel)message;
             if (email.getStatus() == Integer.MAX_VALUE || email.getStatus() == 33554431) {
                openSupported = false;
             }
@@ -104,8 +103,8 @@ public class CICALMeetingAttachmentModel
       boolean result = true;
       boolean editableFlag = true;
       Object obj = ContextObject.get(context, 2164559162753216116L);
-      if (obj instanceof Object) {
-         editableFlag = !obj;
+      if (obj instanceof Boolean) {
+         editableFlag = !(Boolean)obj;
       }
 
       ContextObject co = ContextObject.castOrCreate(context);
@@ -138,8 +137,8 @@ public class CICALMeetingAttachmentModel
                      }
 
                      Attendee organizer = meetingInfo.getOrganizer();
-                     String organizerAddress = ((FriendlyNameAddressModel)organizer.getAddress()).getAddress();
-                     String myAddress = ((FriendlyNameAddressModel)myEntry.getAddress()).getAddress();
+                     String organizerAddress = ((EmailAddressModel)organizer.getAddress()).getAddress();
+                     String myAddress = ((EmailAddressModel)myEntry.getAddress()).getAddress();
                      int status = myEntry.getType();
                      if (status == 1 && StringUtilities.compareToIgnoreCase(organizerAddress, myAddress) != 0) {
                         calDB.remove(actualEvent);
@@ -188,12 +187,12 @@ public class CICALMeetingAttachmentModel
    }
 
    OTASyncData getSyncData() {
-      return (OTASyncData)(this._deviceSequence == 0 && this._hostSequence == 0 ? null : new Object(this._hostSequence, this._deviceSequence));
+      return this._deviceSequence == 0 && this._hostSequence == 0 ? null : new OTASyncData(this._hostSequence, this._deviceSequence);
    }
 
    Object[] getResolvedEvents(RIMModel cmimeMessage) {
       Object[] events = this._meetings;
-      if (events.length == 0 && !(cmimeMessage instanceof Object)) {
+      if (events.length == 0 && !(cmimeMessage instanceof EmailMessageModel)) {
          return events;
       }
 
@@ -220,7 +219,7 @@ public class CICALMeetingAttachmentModel
                   events[i] = ObjectGroup.expandGroup(events[i]);
                }
 
-               calendarKey = (CalendarKey)(new Object(calendarService.getUniqueServiceID(), calendarService.getPrimaryCalendarFolderID()));
+               calendarKey = new CalendarKey(calendarService.getUniqueServiceID(), calendarService.getPrimaryCalendarFolderID());
                ((Event)events[i]).setCalendarKey(calendarKey);
             }
          }
@@ -256,7 +255,7 @@ public class CICALMeetingAttachmentModel
    @Override
    public void setCMIMEReferenceIdentifier(int id, int folderid) {
       OTACalendarSyncDataManager syncManager = OTACalendarSyncDataManager.getInstance();
-      OTASyncData syncData = syncManager.get((OTASyncIDProvider)this._meetings[0]);
+      OTASyncData syncData = syncManager.get((Event)this._meetings[0]);
       if (syncData != null) {
          syncData.setOwnerId(id);
       }
@@ -319,7 +318,7 @@ public class CICALMeetingAttachmentModel
       }
 
       try {
-         if (event instanceof Object) {
+         if (event instanceof EncryptableProvider) {
             EncryptableProvider ep = (EncryptableProvider)event;
             if (!ep.checkCrypt(true, true)) {
                ep.reCrypt(true, true);

@@ -1,7 +1,9 @@
 package net.rim.device.cldc.io.simultcp;
 
+import java.io.IOException;
 import javax.microedition.io.Connection;
 import javax.microedition.io.StreamConnection;
+import net.rim.device.api.io.IOPortAlreadyBoundException;
 import net.rim.device.api.system.ControlledAccess;
 import net.rim.device.api.system.EventLogger;
 import net.rim.device.api.system.RadioInfo;
@@ -45,22 +47,22 @@ final class SimulTcpServerSocketConnection extends StreamDatagramServerSocketCon
             if (this.isConnectionWaiting(myPort)) {
                int moduleHandle = TraceBack.getCallingModule(0);
                if (!ControlledAccess.verifyCodeModuleSignature(moduleHandle, 51) && !Firewall.getInstance().allowConnection("simultcp", "", false)) {
-                  throw new Object("Permission denied");
+                  throw new IOException("Permission denied");
                }
 
-               Object var10000;
+               StreamConnection var10000;
                try {
                   Object temp;
                   if ((temp = this.getNextBackloggedConnection(myPort)) == null) {
                      continue;
                   }
 
-                  var10000 = temp;
+                  var10000 = (StreamConnection)temp;
                } finally {
                   continue;
                }
 
-               return (StreamConnection)var10000;
+               return var10000;
             } else {
                try {
                   super._backlogWaitObj.wait();
@@ -72,13 +74,13 @@ final class SimulTcpServerSocketConnection extends StreamDatagramServerSocketCon
          }
       }
 
-      throw new Object();
+      throw new RuntimeException();
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   protected final void openPrimChores() {
+   protected final void openPrimChores() throws IOException {
       try {
          boolean var6 = false /* VF: Semaphore variable */;
 
@@ -95,7 +97,7 @@ final class SimulTcpServerSocketConnection extends StreamDatagramServerSocketCon
             if (var6) {
                EventLogger.logEvent(447071754022829032L, 1413696867, 0);
                TcpUtils.logConnectionDatabase();
-               throw new Object("Max connections opened.");
+               throw new IOException("Max connections opened.");
             }
          }
 
@@ -105,14 +107,14 @@ final class SimulTcpServerSocketConnection extends StreamDatagramServerSocketCon
                )
             )
             == -1) {
-            throw new Object();
+            throw new IOException();
          }
 
          if (this._listenSocketID == 11) {
-            throw new Object();
+            throw new IOPortAlreadyBoundException();
          }
       } finally {
-         throw new Object();
+         throw new IOException();
       }
    }
 
@@ -123,7 +125,7 @@ final class SimulTcpServerSocketConnection extends StreamDatagramServerSocketCon
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   protected final StreamConnection getNextBackloggedConnection(int portToLookFor) {
+   protected final StreamConnection getNextBackloggedConnection(int portToLookFor) throws IOException {
       Protocol tcpConnection = null;
       int sizeOfBacklog = super._tcpConnectionBacklog.size();
 
@@ -153,18 +155,18 @@ final class SimulTcpServerSocketConnection extends StreamDatagramServerSocketCon
             12, this._listenSocketID, 0, super._myAddress.getLocalPort(), RadioInfo.getAccessPointNumber(super._myAddress.getApnName())
          );
          if (newConnSocketID == -1) {
-            throw new Object();
+            throw new IOException();
          }
 
          var9 = false;
       } finally {
          if (var9) {
-            throw new Object();
+            throw new IOException();
          }
       }
 
       tcpConnection.postAccept(super._mode, super._timeouts, newConnSocketID);
-      super._transport.addConnection((WeakReference)(new Object(tcpConnection)));
+      super._transport.addConnection(new WeakReference(tcpConnection));
       return tcpConnection;
    }
 
@@ -191,7 +193,7 @@ final class SimulTcpServerSocketConnection extends StreamDatagramServerSocketCon
    }
 
    @Override
-   public final void close() {
+   public final void close() throws IOException {
       if (!super._isClosed) {
          super._isClosed = true;
          if (super._myAddress != null) {
@@ -209,7 +211,7 @@ final class SimulTcpServerSocketConnection extends StreamDatagramServerSocketCon
          }
 
          if (this._listenSocketID != -1 && RadioInternal.simulTCPCommand(1, this._listenSocketID, 0, 0, 0) < 0) {
-            throw new Object();
+            throw new IOException();
          }
       }
    }

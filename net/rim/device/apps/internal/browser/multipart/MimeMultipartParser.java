@@ -1,7 +1,9 @@
 package net.rim.device.apps.internal.browser.multipart;
 
 import java.io.DataInputStream;
+import java.io.EOFException;
 import java.io.InputStream;
+import net.rim.device.api.io.Base64InputStream;
 import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.api.util.ByteVector;
 import net.rim.device.api.util.StringTokenizer;
@@ -31,7 +33,7 @@ public final class MimeMultipartParser {
 
    public MimeMultipartParser(InputStream inputStream, String contentType) {
       if (contentType != null) {
-         StringTokenizer tokenizer = (StringTokenizer)(new Object(contentType, ';'));
+         StringTokenizer tokenizer = new StringTokenizer(contentType, ';');
          if (tokenizer.hasMoreTokens()) {
             tokenizer.nextToken();
             String boundaryParameterName = "boundary";
@@ -54,8 +56,8 @@ public final class MimeMultipartParser {
 
    public final HttpHeaders getPartHeaders() {
       if (this._currentPartHeaders == null) {
-         HttpHeaders headers = (HttpHeaders)(new Object());
-         headers.readFromStream((DataInputStream)(new Object(new MimeMultipartParser$PartInputStream(this))));
+         HttpHeaders headers = new HttpHeaders();
+         headers.readFromStream(new DataInputStream(new MimeMultipartParser$PartInputStream(this)));
          if (headers.getPropertyValue("Content-Type") == null) {
             headers.addProperty("Content-Type", "text/plain");
          }
@@ -72,14 +74,14 @@ public final class MimeMultipartParser {
       return this._currentPartHeaders;
    }
 
-   public final InputStream getPartContent() {
+   public final InputStream getPartContent() throws EOFException {
       if (this._closeDelimiterSeen) {
-         throw new Object();
+         throw new EOFException();
       }
 
       this.getPartHeaders();
       InputStream partInputStream = new MimeMultipartParser$PartInputStream(this);
-      return (InputStream)(this._base64decode ? new Object(partInputStream, false) : partInputStream);
+      return this._base64decode ? new Base64InputStream(partInputStream, false) : partInputStream;
    }
 
    public final boolean nextPart() {
@@ -99,7 +101,7 @@ public final class MimeMultipartParser {
       return true;
    }
 
-   final int read() {
+   final int read() throws EOFException {
       if (!this._endOfPart && (this._bodyPartBuffer == null || this._bodyPartBuffer.size() == 0)) {
          int boundaryIndex = 0;
          boolean readNewByte = true;
@@ -110,14 +112,14 @@ public final class MimeMultipartParser {
             if (readNewByte) {
                currentByte = this._in.read();
                if (currentByte == -1) {
-                  throw new Object();
+                  throw new EOFException();
                }
             }
 
             readNewByte = true;
             switch (this._boundaryState) {
                case -1:
-                  throw new Object();
+                  throw new IllegalStateException();
                case 0:
                default:
                   if (currentByte == 13) {
@@ -205,7 +207,7 @@ public final class MimeMultipartParser {
                      }
                      break;
                   } else {
-                     StringBuffer boundaryBuffer = (StringBuffer)(new Object());
+                     StringBuffer boundaryBuffer = new StringBuffer();
 
                      while (currentByte != 13) {
                         if (currentByte == 10) {
@@ -216,7 +218,7 @@ public final class MimeMultipartParser {
                         boundaryBuffer.append((char)currentByte);
                         currentByte = this._in.read();
                         if (currentByte == -1) {
-                           throw new Object();
+                           throw new EOFException();
                         }
                      }
 
@@ -263,7 +265,7 @@ public final class MimeMultipartParser {
                         break label176;
                      }
 
-                     this._bodyPartBuffer = (ByteVector)(new Object());
+                     this._bodyPartBuffer = new ByteVector();
                   }
             }
          }

@@ -44,7 +44,7 @@ public final class InsertInternetServiceBook {
             _portValue = valueParam;
          }
 
-         _ippp_relayip = ((StringBuffer)(new Object())).append(_mdsIP).append(":").append(PORT).append(":").append(_portValue).toString();
+         _ippp_relayip = _mdsIP + ":" + PORT + ":" + _portValue;
          System.out.println("Setting up simulation SB entries...");
          new InsertInternetServiceBook();
          String apn = null;
@@ -70,7 +70,7 @@ public final class InsertInternetServiceBook {
          ipppData[8] = 0;
          ipppData[9] = 0;
          ipppData[10] = 0;
-         StringBuffer sb = (StringBuffer)(new Object(((StringBuffer)(new Object("udp://"))).append(_mdsIP).append(":").append(PORT).append(";").toString()));
+         StringBuffer sb = new StringBuffer("udp://" + _mdsIP + ":" + PORT + ";");
          sb.append(_portValue);
          sb.append('/');
          sb.append(apn);
@@ -114,9 +114,9 @@ public final class InsertInternetServiceBook {
                }
             }
          } else {
-            String appNotFoundMsg = ((StringBuffer)(new Object("app not found:"))).append(appToLaunch).toString();
-            EventLogger.logEvent(-3363160933426248541L, ((StringBuffer)(new Object("runStartupItems(): "))).append(appNotFoundMsg).toString().getBytes());
-            System.err.println(((StringBuffer)(new Object())).append(appNotFoundMsg).append(" Check if the file exists.").toString());
+            String appNotFoundMsg = "app not found:" + appToLaunch;
+            EventLogger.logEvent(-3363160933426248541L, ("runStartupItems(): " + appNotFoundMsg).getBytes());
+            System.err.println(appNotFoundMsg + " Check if the file exists.");
          }
       }
    }
@@ -168,7 +168,7 @@ public final class InsertInternetServiceBook {
    }
 
    private static final HostRoutingTable getHrtForIPPP() {
-      HostRoutingTable hrt = (HostRoutingTable)(new Object());
+      HostRoutingTable hrt = new HostRoutingTable();
       switch (RadioInfo.getNetworkType()) {
          case 2:
          case 6:
@@ -176,7 +176,7 @@ public final class InsertInternetServiceBook {
          case 3:
          case 7:
          default:
-            GprsHRI ghri = (GprsHRI)(new Object());
+            GprsHRI ghri = new GprsHRI();
             long[] dacs = new long[]{IPv4UdpDAC.string2Addr(_ippp_relayip)};
             ((IPv4UdpDAC)ghri.getDac()).setAddresses(dacs);
             ghri.setApn(APN);
@@ -198,7 +198,7 @@ public final class InsertInternetServiceBook {
             System.out.println("FAILED! Sim: (IPPP) GPRS HRT Entry");
             return hrt;
          case 4:
-            CdmaHRI hri = (CdmaHRI)(new Object());
+            CdmaHRI hri = new CdmaHRI();
             long[] dacs = new long[]{IPv4UdpDAC.string2Addr(_ippp_relayip)};
             ((IPv4UdpDAC)hri.getDac()).setAddresses(dacs);
             hri.setName(IPPP_HRTNAME);
@@ -219,7 +219,7 @@ public final class InsertInternetServiceBook {
             System.out.println("FAILED! Sim: (IPPP) Cdma HRT Entry");
             return hrt;
          case 5:
-            IdenHRI hri = (IdenHRI)(new Object());
+            IdenHRI hri = new IdenHRI();
             long[] dacs = new long[]{IPv4UdpDAC.string2Addr(_ippp_relayip)};
             ((IPv4UdpDAC)hri.getDac()).setAddresses(dacs);
             hri.setName(IPPP_HRTNAME);
@@ -243,7 +243,7 @@ public final class InsertInternetServiceBook {
    }
 
    private static final HostRoutingTable getHrtForMail() {
-      HostRoutingTable hrt = (HostRoutingTable)(new Object());
+      HostRoutingTable hrt = new HostRoutingTable();
       switch (RadioInfo.getNetworkType()) {
          case 2:
          case 6:
@@ -251,7 +251,7 @@ public final class InsertInternetServiceBook {
          case 3:
          case 7:
          default:
-            GprsHRI ghri = (GprsHRI)(new Object());
+            GprsHRI ghri = new GprsHRI();
             long[] dacs = new long[]{IPv4UdpDAC.string2Addr(_ippp_relayip)};
             ((IPv4UdpDAC)ghri.getDac()).setAddresses(dacs);
             ghri.setApn(APN);
@@ -273,7 +273,7 @@ public final class InsertInternetServiceBook {
             System.out.println("FAILED! Sim: (Mail) GPRS HRT Entry");
             return hrt;
          case 4:
-            CdmaHRI hri = (CdmaHRI)(new Object());
+            CdmaHRI hri = new CdmaHRI();
             long[] dacs = new long[]{IPv4UdpDAC.string2Addr(_ippp_relayip)};
             ((IPv4UdpDAC)hri.getDac()).setAddresses(dacs);
             hri.setName(MAIL_HRTNAME);
@@ -294,7 +294,7 @@ public final class InsertInternetServiceBook {
             System.out.println("FAILED! Sim: (Mail) Cdma HRT Entry");
             return hrt;
          case 5:
-            IdenHRI hri = (IdenHRI)(new Object());
+            IdenHRI hri = new IdenHRI();
             long[] dacs = new long[]{IPv4UdpDAC.string2Addr(_ippp_relayip)};
             ((IPv4UdpDAC)hri.getDac()).setAddresses(dacs);
             hri.setName(MAIL_HRTNAME);

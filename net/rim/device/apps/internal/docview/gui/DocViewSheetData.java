@@ -12,7 +12,7 @@ public final class DocViewSheetData implements ArznSheetData {
    private final IntHashtable _cellValues;
    private final IntHashtable _cellFormattedValues;
    private DocViewSheetData$ArznColumnInfo[] _colLength = new DocViewSheetData$ArznColumnInfo[0];
-   private StringBuffer _strBuffer = (StringBuffer)(new Object(192));
+   private StringBuffer _strBuffer = new StringBuffer(192);
    private int _nRows;
    private int _nCols;
    private String _strSheetName;
@@ -25,7 +25,7 @@ public final class DocViewSheetData implements ArznSheetData {
    private int _maxRowIndexWithInfo;
    private int _chunkIndexWhenMarkedComplete = -1;
    private int _crtChunkIndex = -1;
-   private IntIntHashtable _chunkIndeces = (IntIntHashtable)(new Object());
+   private IntIntHashtable _chunkIndeces = new IntIntHashtable();
    private int _lastChunkFirstRowIndexAdded = -1;
    private boolean _isCurrentCellComplete = true;
    private int _crtCellRow = -1;
@@ -41,7 +41,7 @@ public final class DocViewSheetData implements ArznSheetData {
 
    public final void setID(int chunkIndex) {
       if (chunkIndex < 0) {
-         throw new Object("Chunk indeces should be positive numbers!");
+         throw new IllegalArgumentException("Chunk indeces should be positive numbers!");
       }
 
       this._crtChunkIndex = chunkIndex;
@@ -462,7 +462,7 @@ public final class DocViewSheetData implements ArznSheetData {
    public final void setColumnHidden(int colIndex) {
       if (this.isColumnValid(colIndex)) {
          if (this._hiddenCols == null) {
-            this._hiddenCols = (IntIntHashtable)(new Object(1));
+            this._hiddenCols = new IntIntHashtable(1);
          }
 
          this._hiddenCols.put(colIndex, 1);
@@ -473,7 +473,7 @@ public final class DocViewSheetData implements ArznSheetData {
    public final void setRowHidden(int rowIndex) {
       if (this.isRowValid(rowIndex)) {
          if (this._hiddenRows == null) {
-            this._hiddenRows = (IntIntHashtable)(new Object(1));
+            this._hiddenRows = new IntIntHashtable(1);
          }
 
          this._hiddenRows.put(rowIndex, 1);
@@ -484,7 +484,7 @@ public final class DocViewSheetData implements ArznSheetData {
    public final void setTableColBgColor(int col, int color) {
       if (this.isColumnValid(col)) {
          if (this._sheetColColorHash == null) {
-            this._sheetColColorHash = (IntIntHashtable)(new Object(1));
+            this._sheetColColorHash = new IntIntHashtable(1);
          }
 
          this._sheetColColorHash.put(col, AttachmentViewerFactory.convertFromParsedBgColor(color));
@@ -495,7 +495,7 @@ public final class DocViewSheetData implements ArznSheetData {
    public final void setTableRowBgColor(int row, int color) {
       if (this.isRowValid(row)) {
          if (this._sheetRowColorHash == null) {
-            this._sheetRowColorHash = (IntIntHashtable)(new Object(1));
+            this._sheetRowColorHash = new IntIntHashtable(1);
          }
 
          this._sheetRowColorHash.put(row, AttachmentViewerFactory.convertFromParsedBgColor(color));
@@ -564,9 +564,9 @@ public final class DocViewSheetData implements ArznSheetData {
       IntHashtable rowData = (IntHashtable)this._cellValues.get(row);
       if (rowData == null) {
          if (this._nCols > 0) {
-            rowData = (IntHashtable)(new Object(this._nCols >> 1));
+            rowData = new IntHashtable(this._nCols >> 1);
          } else {
-            rowData = (IntHashtable)(new Object());
+            rowData = new IntHashtable();
          }
 
          this._cellValues.put(row, rowData);
@@ -610,9 +610,9 @@ public final class DocViewSheetData implements ArznSheetData {
             IntHashtable rowData = (IntHashtable)this._cellFormattedValues.get(row);
             if (rowData == null) {
                if (this._nCols > 0) {
-                  rowData = (IntHashtable)(new Object(this._nCols >> 1));
+                  rowData = new IntHashtable(this._nCols >> 1);
                } else {
-                  rowData = (IntHashtable)(new Object());
+                  rowData = new IntHashtable();
                }
 
                this._cellFormattedValues.put(row, rowData);
@@ -711,16 +711,16 @@ public final class DocViewSheetData implements ArznSheetData {
       this._parsingDataCaller = parsingCaller;
       this._notifyCaller = notifyCaller;
       if (nRows > 0) {
-         this._cellValues = (IntHashtable)(new Object(nRows >> 1));
+         this._cellValues = new IntHashtable(nRows >> 1);
       } else {
-         this._cellValues = (IntHashtable)(new Object());
+         this._cellValues = new IntHashtable();
       }
 
       if (createTextContentHandler) {
          if (nRows > 0) {
-            this._cellFormattedValues = (IntHashtable)(new Object(nRows >> 1));
+            this._cellFormattedValues = new IntHashtable(nRows >> 1);
          } else {
-            this._cellFormattedValues = (IntHashtable)(new Object());
+            this._cellFormattedValues = new IntHashtable();
          }
       } else {
          this._cellFormattedValues = null;

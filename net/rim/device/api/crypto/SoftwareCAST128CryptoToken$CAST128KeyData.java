@@ -24,7 +24,7 @@ final class SoftwareCAST128CryptoToken$CAST128KeyData implements CryptoTokenSymm
          PersistentContent.markAsPlaintext(data);
          this.setHashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

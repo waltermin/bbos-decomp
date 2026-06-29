@@ -15,11 +15,11 @@ public final class X963KDFPseudoRandomSource extends AbstractPseudoRandomSource 
    private int _outputLength;
 
    public X963KDFPseudoRandomSource(byte[] sharedSecret, byte[] sharedInfo) {
-      this(sharedSecret, 0, sharedSecret == null ? 0 : sharedSecret.length, sharedInfo, (Digest)(new Object()));
+      this(sharedSecret, 0, sharedSecret == null ? 0 : sharedSecret.length, sharedInfo, new SHA1Digest());
    }
 
    public X963KDFPseudoRandomSource(byte[] sharedSecret, int offset, int length, byte[] sharedInfo) {
-      this(sharedSecret, offset, length, sharedInfo, (Digest)(new Object()));
+      this(sharedSecret, offset, length, sharedInfo, new SHA1Digest());
    }
 
    public X963KDFPseudoRandomSource(byte[] sharedSecret, byte[] sharedInfo, Digest digest) {
@@ -40,7 +40,7 @@ public final class X963KDFPseudoRandomSource extends AbstractPseudoRandomSource 
          this._previousOutputBuffer = new byte[this._outputLength];
          this._counterBuffer = new byte[4];
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -78,7 +78,7 @@ public final class X963KDFPseudoRandomSource extends AbstractPseudoRandomSource 
             }
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -129,16 +129,16 @@ public final class X963KDFPseudoRandomSource extends AbstractPseudoRandomSource 
       };
 
       try {
-         X963KDFPseudoRandomSource source = new X963KDFPseudoRandomSource(SelfTestData.RANDOM_DATA, null, (Digest)(new Object()));
+         X963KDFPseudoRandomSource source = new X963KDFPseudoRandomSource(SelfTestData.RANDOM_DATA, null, new SHA1Digest());
          byte[] data = source.getBytes(32);
          if (Arrays.equals(data, result)) {
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

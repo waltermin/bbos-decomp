@@ -6,7 +6,7 @@ import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
 final class MessageIdHeaderHandler implements HeaderHandler {
    @Override
    public final void addHeader(String header, String value, Message m) {
-      throw new Object("unsupported operation");
+      throw new IllegalArgumentException("unsupported operation");
    }
 
    @Override
@@ -21,7 +21,7 @@ final class MessageIdHeaderHandler implements HeaderHandler {
    @Override
    public final String[] getHeader(String header, Message m) {
       EmailMessageModel emm = m.getEmailMessageModel();
-      return new Object[]{Integer.toString(emm.getCMIMEReferenceIdentifier())};
+      return new String[]{Integer.toString(emm.getCMIMEReferenceIdentifier())};
    }
 
    @Override

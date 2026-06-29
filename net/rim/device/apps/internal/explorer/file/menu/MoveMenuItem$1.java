@@ -12,7 +12,7 @@ final class MoveMenuItem$1 implements Runnable {
 
    @Override
    public final void run() {
-      this.this$0._progressDialog = (ProgressDialog)(new Object(ExplorerResources.getString(this.this$0._copy ? 120 : 121)));
+      this.this$0._progressDialog = new ProgressDialog(ExplorerResources.getString(this.this$0._copy ? 120 : 121));
       this.this$0._progressDialog.show();
    }
 }

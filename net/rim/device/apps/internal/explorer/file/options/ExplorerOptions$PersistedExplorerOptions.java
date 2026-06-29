@@ -8,7 +8,7 @@ final class ExplorerOptions$PersistedExplorerOptions implements Persistable {
    int _numberOfColumns = ExplorerOptions.DEFAULT_NUMBER_OF_COLUMNS;
    int _filelistSortProperty = 0;
    int _filelistSortDirection = 1;
-   IntIntHashtable _viewMode = (IntIntHashtable)(new Object());
+   IntIntHashtable _viewMode = new IntIntHashtable();
 
    ExplorerOptions$PersistedExplorerOptions() {
       this._viewMode.put(0, 1);

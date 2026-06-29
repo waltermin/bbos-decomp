@@ -12,7 +12,7 @@ import org.w3c.dom.Node;
 public class XMLHashtable extends Hashtable implements Persistable {
    private boolean _includesNamespaces;
    private boolean _includesExplicitPaths;
-   private static String[] _emptyStrings = new Object[0];
+   private static String[] _emptyStrings = new String[0];
    private static String _emptyString = "";
    private static String _true = "true";
    private static final boolean DEBUG = false;
@@ -27,23 +27,23 @@ public class XMLHashtable extends Hashtable implements Persistable {
 
    public int getNumKeys(String key) {
       Object object = this.get(key);
-      if (!(object instanceof Object)) {
-         if (object instanceof Object) {
+      if (!(object instanceof Integer)) {
+         if (object instanceof String) {
             return 1;
          } else {
-            return object instanceof Object[] ? 1 : 0;
+            return object instanceof String[] ? 1 : 0;
          }
       } else {
-         return object;
+         return (Integer)object;
       }
    }
 
    public int getNumValues(String key) {
       Object object = this.get(key);
-      if (object instanceof Object) {
+      if (object instanceof String) {
          return 1;
       } else {
-         return object instanceof Object[] ? ((Object[])object).length : 0;
+         return object instanceof String[] ? ((String[])object).length : 0;
       }
    }
 
@@ -53,8 +53,8 @@ public class XMLHashtable extends Hashtable implements Persistable {
 
    public String getStringAt(String key, int index, String defaultValue) {
       Object object = this.get(key);
-      if (!(object instanceof Object)) {
-         return (String)(object instanceof Object[] ? ((Object[])object)[index] : defaultValue);
+      if (!(object instanceof String)) {
+         return object instanceof String[] ? ((String[])object)[index] : defaultValue;
       } else {
          return (String)object;
       }
@@ -92,12 +92,12 @@ public class XMLHashtable extends Hashtable implements Persistable {
    public int getIntegerAt(String key, int index, int defaultValue, int radix) {
       Object object = this.get(key);
       String value;
-      if (!(object instanceof Object)) {
-         if (!(object instanceof Object[])) {
+      if (!(object instanceof String)) {
+         if (!(object instanceof String[])) {
             return defaultValue;
          }
 
-         value = (String)((Object[])object)[index];
+         value = ((String[])object)[index];
       } else {
          value = (String)object;
       }
@@ -144,7 +144,7 @@ public class XMLHashtable extends Hashtable implements Persistable {
 
    public XMLHashtable(Node node) {
       if (node != null) {
-         recurseDOM(node, this, _emptyString, (StringBuffer)(new Object()));
+         recurseDOM(node, this, _emptyString, new StringBuffer());
       }
    }
 
@@ -157,8 +157,8 @@ public class XMLHashtable extends Hashtable implements Persistable {
                name = name.substring(index + 1);
             }
 
-            key = ((StringBuffer)(new Object())).append(key).append('/').append(name).toString();
-            value = (StringBuffer)(new Object());
+            key = key + '/' + name;
+            value = new StringBuffer();
             break;
          case 3:
             value.append(node.getNodeValue());

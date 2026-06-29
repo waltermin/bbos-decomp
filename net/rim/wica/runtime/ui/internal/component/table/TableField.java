@@ -37,8 +37,8 @@ public class TableField extends Field {
    private int _lastSelectableColIndex;
    private int _headerRowY_SC;
    private boolean _isLayoutWidthMin;
-   private IntVector _gridX = (IntVector)(new Object());
-   private IntVector _gridY = (IntVector)(new Object());
+   private IntVector _gridX = new IntVector();
+   private IntVector _gridY = new IntVector();
    public static final int ROW_SELECTOR_WIDTH = 5;
    private static final TableField$LeftRightArrows _ARROWS = new TableField$LeftRightArrows(null);
    private static final TableField$ViewCellDialog _VIEW_CELL_DIALOG = new TableField$ViewCellDialog();
@@ -55,7 +55,7 @@ public class TableField extends Field {
    public TableField(TableData table) {
       super(18014398509481984L);
       this._table = table == null ? new TableData(null) : table;
-      this._visibleCols = (IntVector)(new Object(this._table.getNumOfCols()));
+      this._visibleCols = new IntVector(this._table.getNumOfCols());
       this.init();
       this._selectedCol = this._firstColIndex;
       this._selectedRow = this._firstRowIndex;
@@ -365,7 +365,7 @@ public class TableField extends Field {
 
    protected Manager getScrollingManager() {
       Screen screen = this.getScreen();
-      return !(screen instanceof Object) ? null : ((MainScreen)screen).getMainManager();
+      return !(screen instanceof MainScreen) ? null : ((MainScreen)screen).getMainManager();
    }
 
    private int moveFocusHorizontally(int amount) {
@@ -604,13 +604,13 @@ public class TableField extends Field {
 
    private int getTopVisibleRowIndex(int tableY_SC, int viewHeight) {
       if (tableY_SC >= viewHeight) {
-         throw new Object("Table is not visible");
+         throw new RuntimeException("Table is not visible");
       } else if (tableY_SC > 0) {
          return this._firstRowIndex;
       } else {
          int tableY2_SC = tableY_SC + this.getContentHeight() - 1;
          if (tableY2_SC < 0) {
-            throw new Object("Table is not visible");
+            throw new RuntimeException("Table is not visible");
          } else if (tableY2_SC == 0) {
             return this._lastRowIndex;
          } else {
@@ -640,7 +640,7 @@ public class TableField extends Field {
    private int getRowIndex(int y) {
       int contentY2 = this.getContentHeight() - 1;
       if (y < 0 || y > contentY2) {
-         throw new Object("y must be between 0 and height - 1");
+         throw new RuntimeException("y must be between 0 and height - 1");
       }
 
       if (y == contentY2) {
@@ -659,7 +659,7 @@ public class TableField extends Field {
       if (rowIndex >= this._firstRowIndex && rowIndex <= this._lastRowIndex) {
          return (this._isHeaderVisible ? rowIndex + 1 : rowIndex) * this._rowHeight;
       } else {
-         throw new Object("Row index must be between -1 (if header is visible) or 0 and (number of rows - 1)");
+         throw new RuntimeException("Row index must be between -1 (if header is visible) or 0 and (number of rows - 1)");
       }
    }
 
@@ -668,12 +668,12 @@ public class TableField extends Field {
          if (this._isRowSelectorVisible) {
             return 0;
          } else {
-            throw new Object("colIndex can not be -1 when row selector is not visible");
+            throw new RuntimeException("colIndex can not be -1 when row selector is not visible");
          }
       } else {
          int visibleColsIndex = Arrays.binarySearch(this._visibleCols.getArray(), colIndex, 0, this._visibleCols.size());
          if (visibleColsIndex < 0) {
-            throw new Object("colIndex corresponds to non visible column");
+            throw new RuntimeException("colIndex corresponds to non visible column");
          } else {
             return this._table.getWidthOfColumns(this._visibleCols, 0, visibleColsIndex) + this._tableX;
          }

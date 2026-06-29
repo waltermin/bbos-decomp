@@ -25,7 +25,7 @@ class AddNumberVerb$1 extends SimpleInputDialog {
          }
       } else if (actualLen < minLen) {
          String fmtString = PhoneResources.getString(6135);
-         String msg = MessageFormat.format(fmtString, new Object[]{((StringBuffer)(new Object(""))).append(minLen).toString()});
+         String msg = MessageFormat.format(fmtString, new String[]{"" + minLen});
          synchronized (Application.getEventLock()) {
             Dialog.alert(msg);
             return false;

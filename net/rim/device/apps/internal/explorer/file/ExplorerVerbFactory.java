@@ -10,14 +10,14 @@ final class ExplorerVerbFactory implements VerbFactory {
    @Override
    public final Verb[] getVerbs(Object context) {
       if (ContextObject.getFlag(context, 5)) {
-         return new Object[]{new FileSelectionVerb(context)};
+         return new Verb[]{new FileSelectionVerb(context)};
       }
 
       if (ContextObject.getFlag(context, 45)) {
-         return new Object[]{new FileExplorerVerb(context)};
+         return new Verb[]{new FileExplorerVerb(context)};
       }
 
       Object obj = ContextObject.get(context, 2765042845091913199L);
-      return obj instanceof Object ? new Object[]{new RenameFileVerb(context, null)} : null;
+      return obj instanceof String ? new Verb[]{new RenameFileVerb(context, null)} : null;
    }
 }

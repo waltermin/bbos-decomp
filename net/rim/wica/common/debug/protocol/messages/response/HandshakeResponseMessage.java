@@ -23,6 +23,6 @@ public final class HandshakeResponseMessage extends AbstractResponseMessage impl
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object("Handshake response: handshakePattern="))).append(this._handshakePattern).toString();
+      return "Handshake response: handshakePattern=" + this._handshakePattern;
    }
 }

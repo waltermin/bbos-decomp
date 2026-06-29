@@ -14,7 +14,7 @@ final class DocViewTextDisplayField$SkippedStatusField extends LabelField {
       super(null, 1170935903116329028L);
       this.this$0 = _1;
       if (skippedRegions <= 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this.setFont(font);
@@ -25,7 +25,7 @@ final class DocViewTextDisplayField$SkippedStatusField extends LabelField {
 
    @Override
    protected final void drawFocus(Graphics graphics, boolean on) {
-      XYRect tmp = (XYRect)(new Object());
+      XYRect tmp = new XYRect();
       this.getFocusRect(tmp);
       if (Graphics.isColor()) {
          graphics.invert(tmp.x, tmp.y, tmp.width, tmp.height);
@@ -53,7 +53,7 @@ final class DocViewTextDisplayField$SkippedStatusField extends LabelField {
    final void calculateDisplayText() {
       int bVal = this.this$0.getMoreAvailableBytes(this._skippedRegions);
       if (bVal > 0) {
-         StringBuffer displayText = (StringBuffer)(new Object(DocViewDisplayField._resources.getString(62)));
+         StringBuffer displayText = new StringBuffer(DocViewDisplayField._resources.getString(62));
          displayText.append(": ");
          int val = Math.max(bVal * 10 / 1024, 1);
          displayText.append(String.valueOf(val / 10));

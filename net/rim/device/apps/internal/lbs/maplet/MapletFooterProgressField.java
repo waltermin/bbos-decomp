@@ -77,9 +77,7 @@ public final class MapletFooterProgressField {
                this._repaintRunnableId = -1;
             }
          } catch (Throwable var10) {
-            EventLogger.logEvent(
-               LBSApplication.UID, ((StringBuffer)(new Object("MapletFooterProgressField.reset"))).append(e.getMessage()).toString().getBytes(), 2
-            );
+            EventLogger.logEvent(LBSApplication.UID, ("MapletFooterProgressField.reset" + e.getMessage()).getBytes(), 2);
             break label54;
          }
 

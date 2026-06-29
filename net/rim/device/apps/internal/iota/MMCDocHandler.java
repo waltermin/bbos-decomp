@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.iota;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import net.rim.device.api.crypto.RandomSource;
 import net.rim.device.api.system.ApplicationDescriptor;
 import net.rim.device.api.system.DeviceInfo;
@@ -8,6 +9,7 @@ import net.rim.device.api.system.EventLogger;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.internal.system.RadioInternal;
 import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public final class MMCDocHandler extends DefaultHandler {
@@ -94,7 +96,7 @@ public final class MMCDocHandler extends DefaultHandler {
       this._mmcID = -1;
       this._cidCount = 0;
       this._isCriticalError = false;
-      this._byteStream = (ByteArrayOutputStream)(new Object());
+      this._byteStream = new ByteArrayOutputStream();
       this._processor = mproc;
    }
 
@@ -105,11 +107,11 @@ public final class MMCDocHandler extends DefaultHandler {
 
    @Override
    public final void startDocument() {
-      this._reportHeader = ((StringBuffer)(new Object("<?xml version=\"1.0\"?>"))).append(CR_LF);
+      this._reportHeader = new StringBuffer("<?xml version=\"1.0\"?>").append(CR_LF);
       this._reportHeader.append("<!DOCTYPE mmc PUBLIC \"-//PHONE.COM//DTD MMC 2.0//EN\" ");
       this._reportHeader.append("\"http://www.phone.com/dtd/mmc20.dtd\">").append(CR_LF);
-      this._reportFooter = ((StringBuffer)(new Object("</status>\n</mmc>"))).append(CR_LF);
-      this._reportBody = ((StringBuffer)(new Object())).append(CR_LF);
+      this._reportFooter = new StringBuffer("</status>\n</mmc>").append(CR_LF);
+      this._reportBody = new StringBuffer().append(CR_LF);
    }
 
    @Override
@@ -150,7 +152,7 @@ public final class MMCDocHandler extends DefaultHandler {
       int len = attributes.getLength();
       int size = -1;
       int offset = -1;
-      StringBuffer status = (StringBuffer)(new Object("<detail "));
+      StringBuffer status = new StringBuffer("<detail ");
 
       for (int i = 0; i < len; i++) {
          String attName = attributes.getLocalName(i);
@@ -216,9 +218,9 @@ public final class MMCDocHandler extends DefaultHandler {
          }
       } else if (valueref == null) {
          if (this._currentObj.equals("phone:cdma.nam.mdn")) {
-            status.append(this.handleWrite(this._currentObj, ((StringBuffer)(new Object())).append('1').append(this._currentVal).toString()));
+            status.append(this.handleWrite(this._currentObj, '1' + this._currentVal));
          } else if (this._currentObj.equals("phone:cdma.nam.msid")) {
-            status.append(this.handleWrite(this._currentObj, ((StringBuffer)(new Object())).append('2').append(this._currentVal).toString()));
+            status.append(this.handleWrite(this._currentObj, '2' + this._currentVal));
          } else {
             status.append(this.handleWrite(this._currentObj, this._currentVal));
          }
@@ -308,7 +310,7 @@ public final class MMCDocHandler extends DefaultHandler {
          return this.abortStatus();
       }
 
-      StringBuffer result = (StringBuffer)(new Object());
+      StringBuffer result = new StringBuffer();
       String res = null;
       if (!curObj.equals("phone:cdma.is683.result")) {
          if (curObj.equals("phone:cdma.prl")) {
@@ -319,17 +321,17 @@ public final class MMCDocHandler extends DefaultHandler {
             if (curObj.equals("phone:psa.version")) {
                this._currentResult = ApplicationDescriptor.currentApplicationDescriptor().getVersion();
                res = "ok";
-               System.out.println(((StringBuffer)(new Object("PHONE PSA VERSION: "))).append(this._currentResult).toString());
+               System.out.println("PHONE PSA VERSION: " + this._currentResult);
             } else if (curObj.equals("phone:version.software")) {
                this._currentResult = DeviceInfo.getPlatformVersion();
                res = "ok";
-               ProvisioningServiceAgent.logEvents(((StringBuffer)(new Object("PHONE SOFTWARE VERSION: "))).append(this._currentResult).toString());
+               ProvisioningServiceAgent.logEvents("PHONE SOFTWARE VERSION: " + this._currentResult);
             } else if (curObj.equals("phone:oem")) {
                this._currentResult = "Research In Motion Ltd.";
                res = "ok";
             } else if (curObj.equals("phone:model")) {
                this._currentResult = DeviceInfo.getDeviceName();
-               ProvisioningServiceAgent.logEvents(((StringBuffer)(new Object("PHONE MODEL: "))).append(this._currentResult).toString());
+               ProvisioningServiceAgent.logEvents("PHONE MODEL: " + this._currentResult);
                res = "ok";
             } else if (curObj.equals("phone:prl.storage.available")) {
                this._currentResult = String.valueOf(8192);
@@ -372,7 +374,7 @@ public final class MMCDocHandler extends DefaultHandler {
             result.append('"').append("cid:").append(++this._cidCount);
             result.append("@cdma.blackberry.com").append('"');
             res = "ok";
-            StringBuffer stbuf = (StringBuffer)(new Object());
+            StringBuffer stbuf = new StringBuffer();
             stbuf.append('-').append('-');
             stbuf.append("cDmAbLaCkBeRrYiOtA").append(CR_LF).append("Content-ID: <").append(this._cidCount);
             stbuf.append("@cdma.blackberry.com").append('>').append(CR_LF).append("Content-Type: ");
@@ -432,7 +434,7 @@ public final class MMCDocHandler extends DefaultHandler {
    }
 
    private final String abortStatus() {
-      StringBuffer result = (StringBuffer)(new Object());
+      StringBuffer result = new StringBuffer();
       result.append(" result=").append('"').append("Abort");
       result.append('"');
       return result.toString();
@@ -485,7 +487,7 @@ public final class MMCDocHandler extends DefaultHandler {
          this._currentResult = "UnknownObject";
       }
 
-      return ((StringBuffer)(new Object("result=\""))).append(this._currentResult).append("\"").toString();
+      return "result=\"" + this._currentResult + "\"";
    }
 
    private final String handleWrite(String curObj, String val) {
@@ -509,7 +511,7 @@ public final class MMCDocHandler extends DefaultHandler {
             this._currentResult = "ok";
          }
 
-         return ((StringBuffer)(new Object("result=\""))).append(this._currentResult).append("\"").toString();
+         return "result=\"" + this._currentResult + "\"";
       } else {
          return this.handleWrite(curObj, val.getBytes());
       }
@@ -540,10 +542,10 @@ public final class MMCDocHandler extends DefaultHandler {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public final byte[] sendReport() {
+   public final byte[] sendReport() throws IOException {
       if (this._reportStatus > 0) {
-         ByteArrayOutputStream reportStream = (ByteArrayOutputStream)(new Object());
-         StringBuffer report = (StringBuffer)(new Object());
+         ByteArrayOutputStream reportStream = new ByteArrayOutputStream();
+         StringBuffer report = new StringBuffer();
          String msg = this._errorCount > 0 ? "warning" : "ok";
          msg = this._isCriticalError ? "error" : msg;
          this._reportHeader.append(msg).append('"');
@@ -571,12 +573,12 @@ public final class MMCDocHandler extends DefaultHandler {
             reportStream.write(this._reportBody.toString().getBytes());
             reportStream.write(this._reportFooter.toString().getBytes());
             if (this._cidCount > 0) {
-               StringBuffer stBuf = (StringBuffer)(new Object());
+               StringBuffer stBuf = new StringBuffer();
                stBuf.append('-').append('-');
                stBuf.append("cDmAbLaCkBeRrYiOtA").append('-');
                stBuf.append('-').append(CR_LF);
                this._byteStream.write(stBuf.toString().getBytes());
-               stBuf = null;
+               StringBuffer var15 = null;
                reportStream.write(this._byteStream.toByteArray());
                this._byteStream.flush();
                this._byteStream.close();
@@ -586,7 +588,7 @@ public final class MMCDocHandler extends DefaultHandler {
             }
          } finally {
             if (var11) {
-               throw new Object("Error while writing to byte Stream");
+               throw new IOException("Error while writing to byte Stream");
             }
          }
 
@@ -596,7 +598,7 @@ public final class MMCDocHandler extends DefaultHandler {
             var8 = true;
             String ctype;
             if (this._cidCount > 0) {
-               StringBuffer buf = (StringBuffer)(new Object());
+               StringBuffer buf = new StringBuffer();
                buf.append("multipart/related");
                buf.append("; boundary=").append("cDmAbLaCkBeRrYiOtA").append("; type=\"");
                buf.append("application/vnd.phonecom.mmc-xml").append('"');
@@ -616,7 +618,7 @@ public final class MMCDocHandler extends DefaultHandler {
             var8 = false;
          } finally {
             if (var8) {
-               throw new Object("Error in sending Status Report");
+               throw new IOException("Error in sending Status Report");
             }
          }
       }
@@ -625,7 +627,7 @@ public final class MMCDocHandler extends DefaultHandler {
       return null;
    }
 
-   public final void cancelParsing() {
-      throw new Object("Parsing Cancelled");
+   public final void cancelParsing() throws SAXException {
+      throw new SAXException("Parsing Cancelled");
    }
 }

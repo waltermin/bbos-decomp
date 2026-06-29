@@ -3,6 +3,7 @@ package net.rim.blackberry.api.pdap;
 import com.sun.cldc.i18n.Helper;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import javax.microedition.pim.Contact;
 import javax.microedition.pim.Event;
 import javax.microedition.pim.PIM;
@@ -19,9 +20,9 @@ public class PIMImpl extends BlackBerryPIM {
    static String VCARD_VERSION_2_1 = "VCARD/2.1";
    static String VCARD_VERSION_3_0 = "VCARD/3.0";
    static String DEFAULT_VCARD_VERSION = VCARD_VERSION_3_0;
-   static String[] VCARD_VERSIONS = new Object[]{VCARD_VERSION_2_1, VCARD_VERSION_3_0};
+   static String[] VCARD_VERSIONS = new String[]{VCARD_VERSION_2_1, VCARD_VERSION_3_0};
    static String DEFAULT_VCAL_VERSION = "VCALENDAR/1.0";
-   static String[] VCAL_VERSIONS = new Object[]{DEFAULT_VCAL_VERSION, "VCALENDAR/2.0"};
+   static String[] VCAL_VERSIONS = new String[]{DEFAULT_VCAL_VERSION, "VCALENDAR/2.0"};
    private static PIM _pim;
 
    private PIMImpl() {
@@ -44,7 +45,7 @@ public class PIMImpl extends BlackBerryPIM {
    public PIMList openPIMList(int pimListType, int mode) {
       assertPermission();
       if (!isValidMode(mode)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       switch (mode) {
@@ -64,7 +65,7 @@ public class PIMImpl extends BlackBerryPIM {
       switch (pimListType) {
          case 0:
          case 4:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 1:
          default:
             return new ContactListImpl(mode);
@@ -81,17 +82,17 @@ public class PIMImpl extends BlackBerryPIM {
    public PIMList openPIMList(int pimListType, int mode, String name) throws PIMException {
       assertPermission();
       if (!isValidMode(mode)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (name == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       switch (pimListType) {
          case 0:
          case 4:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 1:
          default:
             if (ContactListImpl.LIST_NAME.equals(name)) {
@@ -114,7 +115,7 @@ public class PIMImpl extends BlackBerryPIM {
             }
       }
 
-      throw new PIMException(((StringBuffer)(new Object("List "))).append(name).append(" is not a valid PIMList.").toString(), 3);
+      throw new PIMException("List " + name + " is not a valid PIMList.", 3);
    }
 
    @Override
@@ -123,25 +124,25 @@ public class PIMImpl extends BlackBerryPIM {
       switch (pimListType) {
          case 0:
          case 4:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 1:
          default:
-            return new Object[]{ContactListImpl.LIST_NAME};
+            return new String[]{ContactListImpl.LIST_NAME};
          case 2:
-            return new Object[]{EventListImpl.LIST_NAME};
+            return new String[]{EventListImpl.LIST_NAME};
          case 3:
             try {
                ToDoListFactory.createToDoList(1);
                return new String[]{"ToDo List"};
             } catch (PIMException pe) {
-               return new Object[0];
+               return new String[0];
             }
          case 5:
             try {
                MemoListFactory.createMemoList(1);
                return new String[]{"Memo List"};
             } catch (PIMException pe) {
-               return new Object[0];
+               return new String[0];
             }
       }
    }
@@ -158,7 +159,7 @@ public class PIMImpl extends BlackBerryPIM {
       // 000: invokestatic net/rim/blackberry/api/pdap/PIMImpl.assertPermission ()V
       // 003: aload 1
       // 004: ifnonnull 00f
-      // 007: new java/lang/Object
+      // 007: new java/lang/NullPointerException
       // 00a: dup
       // 00b: invokespecial java/lang/NullPointerException.<init> ()V
       // 00e: athrow
@@ -166,7 +167,7 @@ public class PIMImpl extends BlackBerryPIM {
       // 010: ifnonnull 017
       // 013: ldc_w "UTF-8"
       // 016: astore 2
-      // 017: new java/lang/Object
+      // 017: new java/io/InputStreamReader
       // 01a: dup
       // 01b: aload 1
       // 01c: aload 2
@@ -184,7 +185,7 @@ public class PIMImpl extends BlackBerryPIM {
       // 033: aload 5
       // 035: invokevirtual java/io/Reader.read ([C)I
       // 038: pop
-      // 039: new java/lang/Object
+      // 039: new java/lang/String
       // 03c: dup
       // 03d: aload 5
       // 03f: invokespecial java/lang/String.<init> ([C)V
@@ -205,7 +206,7 @@ public class PIMImpl extends BlackBerryPIM {
       // 062: aload 7
       // 064: invokespecial net/rim/blackberry/api/pdap/ContactVCardProvider.<init> (Lnet/rim/blackberry/api/pdap/ContactImpl;)V
       // 067: astore 8
-      // 069: new java/lang/Object
+      // 069: new net/rim/device/apps/internal/api/serialformats/VCardReader
       // 06c: dup
       // 06d: aload 8
       // 06f: aload 1
@@ -250,7 +251,7 @@ public class PIMImpl extends BlackBerryPIM {
       // 0be: aload 7
       // 0c0: invokevirtual java/io/Reader.read ([C)I
       // 0c3: pop
-      // 0c4: new java/lang/Object
+      // 0c4: new java/lang/String
       // 0c7: dup
       // 0c8: aload 7
       // 0ca: invokespecial java/lang/String.<init> ([C)V
@@ -272,7 +273,7 @@ public class PIMImpl extends BlackBerryPIM {
       // 0ee: aload 10
       // 0f0: invokespecial net/rim/blackberry/api/pdap/EventICalendarProvider.<init> (Lnet/rim/blackberry/api/pdap/EventImpl;)V
       // 0f3: astore 11
-      // 0f5: new java/lang/Object
+      // 0f5: new net/rim/device/apps/internal/api/serialformats/ICalendarReader
       // 0f8: dup
       // 0f9: aload 11
       // 0fb: aload 1
@@ -318,7 +319,7 @@ public class PIMImpl extends BlackBerryPIM {
       // 14a: aload 10
       // 14c: invokespecial net/rim/blackberry/api/pdap/ToDoICalendarProvider.<init> (Ljavax/microedition/pim/ToDo;)V
       // 14f: astore 11
-      // 151: new java/lang/Object
+      // 151: new net/rim/device/apps/internal/api/serialformats/ICalendarReader
       // 154: dup
       // 155: aload 11
       // 157: aload 1
@@ -377,7 +378,7 @@ public class PIMImpl extends BlackBerryPIM {
    }
 
    @Override
-   public void toSerialFormat(PIMItem item, OutputStream os, String enc, String dataFormat) throws PIMException {
+   public void toSerialFormat(PIMItem item, OutputStream os, String enc, String dataFormat) throws UnsupportedEncodingException, PIMException {
       assertPermission();
       if (item != null && os != null && dataFormat != null) {
          String encoding = enc;
@@ -386,7 +387,7 @@ public class PIMImpl extends BlackBerryPIM {
          }
 
          if (!Helper.isSupportedEncoding(encoding)) {
-            throw new Object();
+            throw new UnsupportedEncodingException();
          }
 
          if (item instanceof Contact) {
@@ -394,12 +395,12 @@ public class PIMImpl extends BlackBerryPIM {
             if (dataFormat.equals(VCARD_VERSION_2_1)) {
                vcardversion = 1;
             } else if (!dataFormat.equals(VCARD_VERSION_3_0)) {
-               throw new Object(((StringBuffer)(new Object("VCard version "))).append(dataFormat).append(" not supported.").toString());
+               throw new IllegalArgumentException("VCard version " + dataFormat + " not supported.");
             }
 
             ContactVCardProvider vcard = new ContactVCardProvider((ContactImpl)item);
             vcard.setVersion(vcardversion);
-            VCardWriter vcardWriter = (VCardWriter)(new Object(vcard, os, encoding));
+            VCardWriter vcardWriter = new VCardWriter(vcard, os, encoding);
 
             try {
                vcardWriter.encodeVCard();
@@ -408,7 +409,7 @@ public class PIMImpl extends BlackBerryPIM {
             }
          } else if (item instanceof Event) {
             if (!isValidSerialVersion(dataFormat)) {
-               throw new Object(((StringBuffer)(new Object("VCal version "))).append(dataFormat).append(" not supported.").toString());
+               throw new IllegalArgumentException("VCal version " + dataFormat + " not supported.");
             }
 
             try {
@@ -418,27 +419,27 @@ public class PIMImpl extends BlackBerryPIM {
                   vCal.setAlarmNestedBeginTag(-1770502245);
                }
 
-               ICalendarWriter icalWriter = (ICalendarWriter)(new Object(vCal, os, encoding));
+               ICalendarWriter icalWriter = new ICalendarWriter(vCal, os, encoding);
                icalWriter.encodeICalendar();
             } finally {
                throw new PIMException("Unable to write VCal.", 1);
             }
          } else if (item instanceof ToDo) {
             if (!isValidSerialVersion(dataFormat)) {
-               throw new Object(((StringBuffer)(new Object("VCal version "))).append(dataFormat).append(" not supported.").toString());
+               throw new IllegalArgumentException("VCal version " + dataFormat + " not supported.");
             }
 
             try {
                ToDoICalendarProvider vCal = new ToDoICalendarProvider((ToDo)item);
                vCal.setVersion(dataFormat);
-               ICalendarWriter icalWriter = (ICalendarWriter)(new Object(vCal, os, encoding));
+               ICalendarWriter icalWriter = new ICalendarWriter(vCal, os, encoding);
                icalWriter.encodeICalendar();
             } finally {
                throw new PIMException("Unable to write VCal.", 1);
             }
          }
       } else {
-         throw new Object();
+         throw new NullPointerException();
       }
    }
 
@@ -456,7 +457,7 @@ public class PIMImpl extends BlackBerryPIM {
    public String[] supportedSerialFormats(int pimListType) {
       switch (pimListType) {
          case 0:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 1:
          default:
             return VCARD_VERSIONS;

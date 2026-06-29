@@ -335,8 +335,8 @@ class SerialTransport extends CommLinkTransport {
          return false;
       }
 
-      this._in = (DataInputStream)(new Object(this._is));
-      this._out = (DataOutputStream)(new Object(this._os));
+      this._in = new DataInputStream(this._is);
+      this._out = new DataOutputStream(this._os);
       this._ackFlag = null;
       this.flushReadBuffer();
       this.sendHelloAck();
@@ -354,7 +354,7 @@ class SerialTransport extends CommLinkTransport {
 
    @Override
    int sendChallenge(int challengeType) {
-      DataBuffer txBuffer = (DataBuffer)(new Object(15, true));
+      DataBuffer txBuffer = new DataBuffer(15, true);
       txBuffer.writeByte(0);
       txBuffer.writeByte(2);
       txBuffer.writeByte(0);
@@ -389,7 +389,7 @@ class SerialTransport extends CommLinkTransport {
 
    @Override
    boolean checkResponse(byte[] rxBuffer, int off, int len) {
-      DataBuffer db = (DataBuffer)(new Object(rxBuffer, off, len, true));
+      DataBuffer db = new DataBuffer(rxBuffer, off, len, true);
 
       int newbaud;
       int newmtu;
@@ -650,7 +650,7 @@ class SerialTransport extends CommLinkTransport {
    protected void setIOException(String message) {
       synchronized (this._readSemaphore) {
          if (this._exception == null) {
-            this._exception = (IOException)(new Object(message));
+            this._exception = new IOException(message);
             this._readSemaphore.notify();
          }
       }

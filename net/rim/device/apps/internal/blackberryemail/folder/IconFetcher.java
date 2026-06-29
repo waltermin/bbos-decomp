@@ -40,7 +40,7 @@ final class IconFetcher {
    }
 
    private static final String getIconFilename(int version, int width, int height, String fileType) {
-      StringBuffer iconFilename = (StringBuffer)(new Object());
+      StringBuffer iconFilename = new StringBuffer();
       iconFilename.append(version);
       iconFilename.append('-').append(width);
       iconFilename.append('-').append(height);
@@ -58,14 +58,14 @@ final class IconFetcher {
 
    private static final void getIconParameters(String fileName, IconFetcher$IconParameters params) {
       fileName = fileName.substring(0, fileName.indexOf(46));
-      StringTokenizer tokenizer = (StringTokenizer)(new Object(fileName, '-'));
+      StringTokenizer tokenizer = new StringTokenizer(fileName, '-');
       params._version = Integer.parseInt(tokenizer.nextToken());
       params._width = Integer.parseInt(tokenizer.nextToken());
       params._height = Integer.parseInt(tokenizer.nextToken());
    }
 
    private static final String getIconFolder(String serviceUid) {
-      StringBuffer iconFileName = (StringBuffer)(new Object("/store/appdata/rim/bda/icons/"));
+      StringBuffer iconFileName = new StringBuffer("/store/appdata/rim/bda/icons/");
       iconFileName.append(serviceUid);
       iconFileName.append('/');
       return iconFileName.toString();
@@ -88,7 +88,7 @@ final class IconFetcher {
       // 00c: astore 7
       // 00e: aconst_null
       // 00f: astore 8
-      // 011: new java/lang/Object
+      // 011: new java/lang/StringBuffer
       // 014: dup
       // 015: ldc_w "file://"
       // 018: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -96,7 +96,7 @@ final class IconFetcher {
       // 01d: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 020: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 023: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 026: checkcast java/lang/Object
+      // 026: checkcast javax/microedition/io/file/FileConnection
       // 029: astore 8
       // 02b: aload 8
       // 02d: invokeinterface javax/microedition/io/file/FileConnection.exists ()Z 1
@@ -119,7 +119,7 @@ final class IconFetcher {
       // 05e: goto 11f
       // 061: aload 12
       // 063: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 068: checkcast java/lang/Object
+      // 068: checkcast java/lang/String
       // 06b: astore 13
       // 06d: aload 13
       // 06f: aload 7
@@ -148,7 +148,7 @@ final class IconFetcher {
       // 0a6: aload 14
       // 0a8: getfield net/rim/device/apps/internal/blackberryemail/folder/IconFetcher$IconParameters._height I
       // 0ab: if_icmpne 054
-      // 0ae: new java/lang/Object
+      // 0ae: new java/lang/StringBuffer
       // 0b1: dup
       // 0b2: ldc_w "file://"
       // 0b5: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -237,7 +237,7 @@ final class IconFetcher {
       // 177: ifeq 17e
       // 17a: aload 1
       // 17b: invokestatic net/rim/device/apps/internal/blackberryemail/folder/IconFetcher.deleteIcons (Ljava/lang/String;)V
-      // 17e: new java/lang/Object
+      // 17e: new java/lang/StringBuffer
       // 181: dup
       // 182: aload 3
       // 183: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -254,7 +254,7 @@ final class IconFetcher {
       // 198: astore 10
       // 19a: getstatic net/rim/device/apps/internal/blackberryemail/folder/IconFetcher._requests Ljava/util/Vector;
       // 19d: ifnonnull 1aa
-      // 1a0: new java/lang/Object
+      // 1a0: new java/util/Vector
       // 1a3: dup
       // 1a4: invokespecial java/util/Vector.<init> ()V
       // 1a7: putstatic net/rim/device/apps/internal/blackberryemail/folder/IconFetcher._requests Ljava/util/Vector;
@@ -302,10 +302,10 @@ final class IconFetcher {
 
    public final Bitmap[] extractIconBitmaps(EncodedImage imageSet, int width, int height) {
       int numIcons = imageSet.getWidth() / width;
-      Bitmap[] iconBitmaps = new Object[numIcons];
+      Bitmap[] iconBitmaps = new Bitmap[numIcons];
 
       for (int i = 0; i < numIcons; i++) {
-         Bitmap target = (Bitmap)(new Object(width, height));
+         Bitmap target = new Bitmap(width, height);
          int[] argb = new int[width * height];
          imageSet.getBitmap().getARGB(argb, 0, width, i * width, 0, width, height);
          target.setARGB(argb, 0, width, 0, 0, width, height);
@@ -319,7 +319,7 @@ final class IconFetcher {
       RibbonLauncher ribbon = RibbonLauncher.getInstance();
       if (ribbon != null) {
          EntryPointDescriptor entryPointDesc = ribbon.getRegisteredAction(appName);
-         if (entryPointDesc instanceof Object) {
+         if (entryPointDesc instanceof ApplicationEntryPoint) {
             ApplicationEntryPoint appEntryPoint = (ApplicationEntryPoint)entryPointDesc;
             appEntryPoint.set(10, iconInFocus);
             appEntryPoint.set(4, iconOutOfFocus);
@@ -348,7 +348,7 @@ final class IconFetcher {
       // 01: astore 0
       // 02: ldc_w "/store/appdata/rim/bda/icons/"
       // 05: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 08: checkcast java/lang/Object
+      // 08: checkcast javax/microedition/io/file/FileConnection
       // 0b: astore 0
       // 0c: aload 0
       // 0d: invokeinterface javax/microedition/io/file/FileConnection.list ()Ljava/util/Enumeration; 1
@@ -360,7 +360,7 @@ final class IconFetcher {
       // 1d: ifeq 5c
       // 20: aload 1
       // 21: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 26: checkcast java/lang/Object
+      // 26: checkcast java/lang/String
       // 29: astore 4
       // 2b: aload 4
       // 2d: invokestatic net/rim/device/internal/io/file/FileUtilities.isDirectory (Ljava/lang/String;)Z

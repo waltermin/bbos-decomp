@@ -36,7 +36,7 @@ public class RIMResourceSpec extends ResourceSpec {
       }
 
       String libName = path.replace('\\', '_').replace('/', '_');
-      byte[] data = this.loadRimRes(libName, ((StringBuffer)(new Object())).append(fileName).append('.').append(extention).toString());
+      byte[] data = this.loadRimRes(libName, fileName + '.' + extention);
       return data != null ? new ContinuousInputStream(data) : this.multipleSearch(libName, fileName, extention);
    }
 
@@ -51,18 +51,15 @@ public class RIMResourceSpec extends ResourceSpec {
    }
 
    public ContinuousInputStream multipleSearch(String libName, String fileName, String ext) {
-      Vector result = (Vector)(new Object());
+      Vector result = new Vector();
       int counter = 1;
       byte[] data = null;
 
       do {
-         data = this.loadRimRes(
-            ((StringBuffer)(new Object())).append(libName).append("_").append(fileName).append("_00").append(counter).toString(),
-            ((StringBuffer)(new Object())).append(fileName).append(".00").append(counter).append(".").append(ext).toString()
-         );
+         data = this.loadRimRes(libName + "_" + fileName + "_00" + counter, fileName + ".00" + counter + "." + ext);
          if (data != null) {
             result.addElement(data);
-            System.err.println(((StringBuffer)(new Object("result="))).append(counter).toString());
+            System.err.println("result=" + counter);
          }
 
          counter++;

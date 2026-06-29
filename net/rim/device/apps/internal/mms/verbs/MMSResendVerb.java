@@ -57,7 +57,7 @@ public final class MMSResendVerb extends Verb {
 
    protected final ContextObject finalizeInvoke() {
       MessagingUtil.showMessageAppServiceView("MMSFolder");
-      return (ContextObject)(new Object(39));
+      return new ContextObject(39);
    }
 
    @Override

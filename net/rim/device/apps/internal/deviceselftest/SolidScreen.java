@@ -11,8 +11,8 @@ final class SolidScreen extends MainScreen {
       16711680, 65280, 255, 16777215, 51, -805041250, 100692579, 11408, -1960902400, 8, 0, 1887132109, -1088858788, -1707288265, -766696410, 957803812
    };
    int cnt = 0;
-   Bitmap surface = (Bitmap)(new Object(Graphics.getScreenWidth(), Graphics.getScreenHeight()));
-   BitmapField surfaceField = (BitmapField)(new Object(this.surface));
+   Bitmap surface = new Bitmap(Graphics.getScreenWidth(), Graphics.getScreenHeight());
+   BitmapField surfaceField = new BitmapField(this.surface);
    Graphics graphics;
 
    @Override
@@ -27,7 +27,7 @@ final class SolidScreen extends MainScreen {
 
    SolidScreen() {
       this.add(this.surfaceField);
-      this.graphics = (Graphics)(new Object(this.surface));
+      this.graphics = new Graphics(this.surface);
    }
 
    @Override

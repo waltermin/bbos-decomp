@@ -50,9 +50,9 @@ public class ALPTransmissionService extends AbstractTransmissionService implemen
    @Override
    protected DatagramConnection createConnection(ServiceRecord serviceRecord) {
       if (serviceRecord == null) {
-         throw new Object("Null Service Record");
+         throw new IllegalArgumentException("Null Service Record");
       } else {
-         return (DatagramConnection)Connector.open(((StringBuffer)(new Object("gme:ALP/"))).append(serviceRecord.getUid()).toString());
+         return (DatagramConnection)Connector.open("gme:ALP/" + serviceRecord.getUid());
       }
    }
 
@@ -63,7 +63,7 @@ public class ALPTransmissionService extends AbstractTransmissionService implemen
 
    void cancel(Datagram dg) {
       DatagramConnection dc = this.getConnection();
-      if (dc instanceof Object) {
+      if (dc instanceof DatagramConnectionBase) {
          DatagramConnectionBase dcb = (DatagramConnectionBase)dc;
          dcb.cancel(dg);
       }

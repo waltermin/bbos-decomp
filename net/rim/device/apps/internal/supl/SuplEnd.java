@@ -75,7 +75,7 @@ final class SuplEnd extends UlpMessage {
    @Override
    final void print() {
       System.out.println("SUPL END: ");
-      System.out.println(((StringBuffer)(new Object("Optionals: "))).append(this.optionals).toString());
+      System.out.println("Optionals: " + this.optionals);
       if ((this.optionals & 4) == 4) {
          this.position.print();
       }
@@ -88,7 +88,7 @@ final class SuplEnd extends UlpMessage {
          System.out.println("Ver: ");
 
          for (int i = 0; i < 8; i++) {
-            System.out.print(((StringBuffer)(new Object())).append(Integer.toHexString(255 & this.ver[i])).append(" ").toString());
+            System.out.print(Integer.toHexString(255 & this.ver[i]) + " ");
          }
 
          System.out.print("\n");

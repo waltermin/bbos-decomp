@@ -523,7 +523,7 @@ final class GridApplicationLauncherField extends FlowFieldManager implements App
    GridApplicationLauncherField(HierarchyManager hierarchyManager) {
       super(3459063580983296000L);
       this._helper = new ApplicationLauncherFieldHelper(this, hierarchyManager);
-      this._rect = (XYRect)(new Object());
+      this._rect = new XYRect();
       this.setTag(Tag.create("client"));
       this.setId("homescreen");
    }

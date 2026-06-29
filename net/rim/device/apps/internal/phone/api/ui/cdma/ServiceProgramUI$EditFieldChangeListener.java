@@ -27,7 +27,7 @@ final class ServiceProgramUI$EditFieldChangeListener implements FieldChangeListe
             int delimPos = text.indexOf((char)this._info._delimitter[i]);
             if (delimPos >= 0) {
                String rest = text.substring(delimPos, text.length());
-               fieldOnScreen.setText(((StringBuffer)(new Object())).append(value).append(rest).toString());
+               fieldOnScreen.setText(value + rest);
             } else {
                fieldOnScreen.setText(value);
             }

@@ -17,6 +17,7 @@ import net.rim.device.api.util.DateTimeUtilities;
 import net.rim.device.api.util.FactoryUtil;
 import net.rim.device.api.util.SimpleSortingVector;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
+import net.rim.device.apps.api.addressbook.CompanyInfoModel;
 import net.rim.device.apps.api.addressbook.EventModel;
 import net.rim.device.apps.api.addressbook.PersonNameModel;
 import net.rim.device.apps.api.calendar.caldb.CalDB;
@@ -36,6 +37,7 @@ import net.rim.device.apps.api.reminders.ReminderModel;
 import net.rim.device.apps.api.ui.CommonResources;
 import net.rim.device.apps.api.utility.framework.RecurUtil;
 import net.rim.device.apps.internal.addressbook.resources.AddressBookResources;
+import net.rim.device.apps.internal.commonmodels.pim.RecurImpl;
 import net.rim.device.cldc.util.CalendarExtensions;
 
 public class EventModelImpl implements EventModel, FieldProvider, ConversionProvider, FieldChangeListener {
@@ -66,7 +68,7 @@ public class EventModelImpl implements EventModel, FieldProvider, ConversionProv
    public Field getField(Object context) {
       if (!ContextObject.getFlag(context, 0)) {
          if (this._eventDate != -1) {
-            DateField date = (DateField)(new Object(this.getDescription(), this._eventDate, DateFormat.getInstance(48), 9007199254740992L));
+            DateField date = new DateField(this.getDescription(), this._eventDate, DateFormat.getInstance(48), 9007199254740992L);
             date.setTimeZone(TimeZone.getTimeZone(DateTimeUtilities.GMT));
             return date;
          } else {
@@ -75,12 +77,12 @@ public class EventModelImpl implements EventModel, FieldProvider, ConversionProv
       } else {
          ResourceBundle calendarResources = ResourceBundle.getBundle(912302513268743237L, "net.rim.device.apps.internal.resource.Calendar");
          Object[] choices = new Object[]{CommonResources.getString(9061), calendarResources.getString(106)};
-         ObjectChoiceField ocf = (ObjectChoiceField)(new Object(this.getDescription(), choices, this._eventDate != -1 ? 1 : 0));
+         ObjectChoiceField ocf = new ObjectChoiceField(this.getDescription(), choices, this._eventDate != -1 ? 1 : 0);
          ocf.setChangeListener(this);
-         VerticalFieldManager dateVFM = (VerticalFieldManager)(new Object(1152921504606846976L));
+         VerticalFieldManager dateVFM = new VerticalFieldManager(1152921504606846976L);
          dateVFM.add(ocf);
          if (this._eventDate != -1) {
-            DateField date = (DateField)(new Object("", this._eventDate, DateFormat.getInstance(48)));
+            DateField date = new DateField("", this._eventDate, DateFormat.getInstance(48));
             date.setTimeZone(TimeZone.getTimeZone(DateTimeUtilities.GMT));
             dateVFM.add(date);
          }
@@ -103,7 +105,7 @@ public class EventModelImpl implements EventModel, FieldProvider, ConversionProv
 
    @Override
    public boolean grabDataFromField(Field field, Object context) {
-      if (!(field instanceof Object)) {
+      if (!(field instanceof VerticalFieldManager)) {
          return false;
       }
 
@@ -115,8 +117,8 @@ public class EventModelImpl implements EventModel, FieldProvider, ConversionProv
          DateField dateField = (DateField)dateVFM.getField(1);
          newDate = dateField.getDate();
          Object selectedItem = ContextObject.get(context, 3696141428889703675L);
-         if (selectedItem instanceof Object) {
-            subject = this.getSubject((RIMModel)selectedItem);
+         if (selectedItem instanceof AddressCardModel) {
+            subject = this.getSubject((AddressCardModel)selectedItem);
          }
       } else {
          newDate = -1;
@@ -147,7 +149,7 @@ public class EventModelImpl implements EventModel, FieldProvider, ConversionProv
 
    @Override
    public void fieldChanged(Field f, int context) {
-      if (f instanceof Object) {
+      if (f instanceof ObjectChoiceField) {
          ObjectChoiceField cf = (ObjectChoiceField)f;
          VerticalFieldManager dateVFM = (VerticalFieldManager)cf.getManager();
          int index = cf.getSelectedIndex();
@@ -156,7 +158,7 @@ public class EventModelImpl implements EventModel, FieldProvider, ConversionProv
             Calendar cal = Calendar.getInstance();
             cal.setTimeZone(TimeZone.getTimeZone(DateTimeUtilities.GMT));
             DateTimeUtilities.zeroCalendarTime(cal);
-            DateField df = (DateField)(new Object("", ((CalendarExtensions)cal).getTimeLong(), DateFormat.getInstance(48)));
+            DateField df = new DateField("", ((CalendarExtensions)cal).getTimeLong(), DateFormat.getInstance(48));
             df.setTimeZone(TimeZone.getTimeZone(DateTimeUtilities.GMT));
             dateVFM.add(df);
             return;
@@ -170,7 +172,7 @@ public class EventModelImpl implements EventModel, FieldProvider, ConversionProv
 
    @Override
    public void updateEventDate(long newDate, Object context) {
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          RIMModel model = (RIMModel)ContextObject.get(context, 254);
          if (model != null) {
             String subject = this.getSubject(model);
@@ -184,13 +186,13 @@ public class EventModelImpl implements EventModel, FieldProvider, ConversionProv
    }
 
    public EventModelImpl(Object initialData) {
-      if (initialData instanceof Object) {
+      if (initialData instanceof ContextObject) {
          RIMModel model = (RIMModel)ContextObject.get(initialData, 254);
          if (model != null) {
             long[] values = (long[])ContextObject.get(initialData, 27786846527369561L);
             Object type = ContextObject.get(initialData, -4054673099568009991L);
-            if (type instanceof Object) {
-               this._eventType = type;
+            if (type instanceof Integer) {
+               this._eventType = (Integer)type;
             }
 
             if (values != null && values.length == 2) {
@@ -212,7 +214,7 @@ public class EventModelImpl implements EventModel, FieldProvider, ConversionProv
       boolean subjectChanged = false;
       boolean dateChanged = false;
       boolean deleteEvent = false;
-      if (originalAddress instanceof Object) {
+      if (originalAddress instanceof AddressCardModel) {
          AddressCardModel originalACM = (AddressCardModel)originalAddress;
          EventModel originalEvent = originalACM.getEvent(this._eventType);
          if (originalEvent != null) {
@@ -279,9 +281,9 @@ public class EventModelImpl implements EventModel, FieldProvider, ConversionProv
          event.setSubject(subject);
          event.setFreeBusy((byte)0);
          event.setSensitivity((byte)0);
-         CalendarKey key = (CalendarKey)(new Object(calendarService.getUniqueServiceID(), calendarService.getUniqueServiceID()));
+         CalendarKey key = new CalendarKey(calendarService.getUniqueServiceID(), calendarService.getUniqueServiceID());
          event.setCalendarKey(key);
-         Recur recur = (Recur)(new Object());
+         Recur recur = new RecurImpl();
          recur.setRecurType((byte)4);
          if (RecurUtil.getRecurrenceCapabilities().finiteRecurrencesOnly) {
             Calendar cal = Calendar.getInstance();
@@ -310,13 +312,13 @@ public class EventModelImpl implements EventModel, FieldProvider, ConversionProv
 
    private static Event findCalendarEvent(CalDB calDB, long date, String subject) {
       Event event = null;
-      SimpleSortingVector events = (SimpleSortingVector)(new Object());
+      SimpleSortingVector events = new SimpleSortingVector();
       TimeZone currentTZ = TimeZone.getDefault();
       calDB.getElementsVisibleDuring(date, 86400000, currentTZ, events);
 
       for (int i = 0; i < events.size(); i++) {
          Object object = events.elementAt(i);
-         if (object instanceof Object) {
+         if (object instanceof UniqueIDProvider) {
             event = (Event)calDB.get(((UniqueIDProvider)object).getLUID(null));
             if (subject.equalsIgnoreCase(event.getSubject())) {
                return event;
@@ -328,8 +330,8 @@ public class EventModelImpl implements EventModel, FieldProvider, ConversionProv
    }
 
    private String getSubject(RIMModel model) {
-      StringBuffer buffer = (StringBuffer)(new Object());
-      if (model instanceof Object) {
+      StringBuffer buffer = new StringBuffer();
+      if (model instanceof AddressCardModel) {
          AddressCardModel addressCard = (AddressCardModel)model;
          model = addressCard.getName();
          if (model == null) {
@@ -337,9 +339,9 @@ public class EventModelImpl implements EventModel, FieldProvider, ConversionProv
          }
       }
 
-      if (!(model instanceof Object)) {
-         if (model instanceof Object) {
-            buffer.append(model.toString());
+      if (!(model instanceof PersonNameModel)) {
+         if (model instanceof CompanyInfoModel) {
+            buffer.append(((CompanyInfoModel)model).toString());
          }
       } else {
          PersonNameModel pnm = (PersonNameModel)model;

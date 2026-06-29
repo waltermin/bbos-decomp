@@ -14,7 +14,7 @@ final class DataReader extends Thread {
    public final void run() {
       while (true) {
          synchronized (Application.getEventLock()) {
-            this.taskScreen._reading.setText(((StringBuffer)(new Object(" "))).append(InternalServices.getLightSensorADCReading()).toString());
+            this.taskScreen._reading.setText(" " + InternalServices.getLightSensorADCReading());
          }
 
          try {

@@ -14,7 +14,7 @@ import net.rim.device.apps.internal.phone.resource.PhoneResources;
 
 final class VoicemailEntry extends Action implements GlobalEventListener, PersistentContentListener {
    private Bitmap _icon = Bitmap.getBitmapResource("Phone28.gif");
-   private VoiceMailVerb _verb = (VoiceMailVerb)(new Object(131585));
+   private VoiceMailVerb _verb = new VoiceMailVerb(131585);
    private VoicemailIconManager _voicemailIconManager = VoicemailIconManager.getInstance();
    String _state;
    boolean _disabled;
@@ -22,9 +22,7 @@ final class VoicemailEntry extends Action implements GlobalEventListener, Persis
    private static final boolean _debugState = false;
 
    VoicemailEntry() {
-      super(
-         (ApplicationDescriptor)(new Object(ApplicationDescriptor.currentApplicationDescriptor(), new String[]{"show"})), "net_rim_bb_phone_app.Voicemail", 19
-      );
+      super(new ApplicationDescriptor(ApplicationDescriptor.currentApplicationDescriptor(), new String[]{"show"}), "net_rim_bb_phone_app.Voicemail", 19);
       this.setDisabledState();
       VoiceServices.getUiApplication().addGlobalEventListener(this);
    }

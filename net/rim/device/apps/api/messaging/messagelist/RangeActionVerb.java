@@ -72,10 +72,10 @@ public final class RangeActionVerb extends Verb {
       }
 
       RIMModel[] selectedItems = null;
-      if (target instanceof Object) {
+      if (target instanceof ReadableList) {
          ReadableList list = (ReadableList)target;
          int numberOfIndices = selectedIndices.length;
-         selectedItems = new Object[numberOfIndices];
+         selectedItems = new RIMModel[numberOfIndices];
 
          for (int i = numberOfIndices - 1; i >= 0; i--) {
             try {
@@ -115,7 +115,7 @@ public final class RangeActionVerb extends Verb {
       for (int i = numberOfItems - 1; i >= 0; i--) {
          try {
             RIMModel model = items[i];
-            if (model instanceof Object) {
+            if (model instanceof ActionProvider) {
                ActionProvider actionProvider = (ActionProvider)model;
                boolean success = actionProvider.perform(action, context);
                result = result || success;
@@ -163,7 +163,7 @@ public final class RangeActionVerb extends Verb {
                return;
             }
 
-            if (this._target instanceof Object) {
+            if (this._target instanceof IntRangedActionTarget) {
                ((IntRangedActionTarget)this._target).apply(this._startIndex, this._endIndex, this._action, this._context);
             }
 

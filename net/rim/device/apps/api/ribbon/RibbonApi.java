@@ -31,6 +31,6 @@ public class RibbonApi {
 
    public static void toggleLogONS() {
       _logONSState = !_logONSState;
-      System.out.println(((StringBuffer)(new Object("Log ONS "))).append(_logONSState ? "on" : "off").toString());
+      System.out.println("Log ONS " + (_logONSState ? "on" : "off"));
    }
 }

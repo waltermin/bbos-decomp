@@ -29,7 +29,7 @@ public final class SessionResumption implements SIMCardSecurityListener {
    public SessionResumption() {
       synchronized (this._persist) {
          if (this._persist.getContents() == null) {
-            this._persist.setContents(new Object(), 4801362);
+            this._persist.setContents(new Hashtable(), 4801362);
             this._persist.commit();
          }
       }
@@ -281,7 +281,7 @@ public final class SessionResumption implements SIMCardSecurityListener {
       System.arraycopy(tempSessionID, 0, sessionID, 0, tempSessionID.length);
       byte[] tempMasterSecret = info.getMasterSecret();
       if (masterSecret.length != tempMasterSecret.length) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       System.arraycopy(tempMasterSecret, 0, masterSecret, 0, tempMasterSecret.length);
@@ -300,7 +300,7 @@ public final class SessionResumption implements SIMCardSecurityListener {
             System.arraycopy(tempSessionID, 0, sessionID, 0, tempSessionID.length);
             byte[] tempMasterSecret = info.getMasterSecret();
             if (masterSecret.length != tempMasterSecret.length) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             System.arraycopy(tempMasterSecret, 0, masterSecret, 0, tempMasterSecret.length);
@@ -375,9 +375,9 @@ public final class SessionResumption implements SIMCardSecurityListener {
          nvStore = new byte[0];
       }
 
-      this._nvStore = (Hashtable)(new Object());
+      this._nvStore = new Hashtable();
       if (nvStore.length > 0) {
-         DataBuffer buffer = (DataBuffer)(new Object(nvStore, 0, nvStore.length, true));
+         DataBuffer buffer = new DataBuffer(nvStore, 0, nvStore.length, true);
 
          try {
             byte version = buffer.readByte();
@@ -404,7 +404,7 @@ public final class SessionResumption implements SIMCardSecurityListener {
    }
 
    private final void writeNvStore() {
-      DataBuffer buffer = (DataBuffer)(new Object());
+      DataBuffer buffer = new DataBuffer();
       if (this._nvStore != null) {
          try {
             buffer.writeByte(2);

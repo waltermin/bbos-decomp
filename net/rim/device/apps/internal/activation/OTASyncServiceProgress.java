@@ -11,8 +11,8 @@ import net.rim.device.internal.synchronization.ota.api.SyncAgentStatisticsCollec
 import net.rim.vm.Array;
 
 final class OTASyncServiceProgress {
-   private SyncAgentStatistics[] _saStats = new Object[0];
-   private String[] _otherFailedDatabases = new Object[0];
+   private SyncAgentStatistics[] _saStats = new SyncAgentStatistics[0];
+   private String[] _otherFailedDatabases = new String[0];
    private OTASyncServiceProgress$OTASyncServiceState _state;
    private boolean _pimConfigRequestPending = true;
    private int _percentComplete = 100;
@@ -34,7 +34,7 @@ final class OTASyncServiceProgress {
          PersistentObject persistentObject = PersistentStore.getPersistentObject(GUID_PERSISTED_STATES);
          states = (LongHashtable)persistentObject.getContents();
          if (states == null) {
-            states = (LongHashtable)(new Object());
+            states = new LongHashtable();
             persistentObject.setContents(states, 51);
             persistentObject.commit();
          }
@@ -42,7 +42,7 @@ final class OTASyncServiceProgress {
          appRegistry.put(GUID_PERSISTED_STATES, states);
       }
 
-      LongHashtable serviceProgressObjects = (LongHashtable)(new Object());
+      LongHashtable serviceProgressObjects = new LongHashtable();
       LongEnumeration stateEnum = states.keys();
 
       while (stateEnum.hasMoreElements()) {

@@ -38,14 +38,14 @@ public final class FollowLinkVerb extends BrowserVerb {
       if (this._queryTitle != null && url != null) {
          int stringSubstitutionIndex = url.indexOf("%s");
          if (stringSubstitutionIndex >= 0) {
-            DialogEnterString queryDialog = (DialogEnterString)(new Object(
+            DialogEnterString queryDialog = new DialogEnterString(
                MessageFormat.format(BrowserResources.getString(658), new Object[]{this._queryTitle}), null, CommonResources.getString(117)
-            ));
+            );
             if (queryDialog.doModal() == -1) {
                return null;
             }
 
-            StringBuffer urlBuffer = (StringBuffer)(new Object(url));
+            StringBuffer urlBuffer = new StringBuffer(url);
             urlBuffer.setLength(stringSubstitutionIndex);
             String query = queryDialog.getResult();
             boolean useLatin1 = true;
@@ -64,8 +64,8 @@ public final class FollowLinkVerb extends BrowserVerb {
       }
 
       boolean programmatic = false;
-      if (context instanceof Object) {
-         programmatic = context;
+      if (context instanceof Boolean) {
+         programmatic = (Boolean)context;
       }
 
       ModelResult modelResult = new ModelResult(url, 8449, null);

@@ -7,22 +7,23 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.FontRegistry;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.FlowFieldManager;
 import net.rim.device.api.ui.container.PopupScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.internal.qm.resource.QmResources;
 
 public final class VoiceNoteDialog extends PopupScreen implements FieldChangeListener, PlayerListener {
-   private LabelField _stateField = (LabelField)(new Object("", 12884901888L));
-   private LabelField _progressField = (LabelField)(new Object("", 12884901888L));
-   private ButtonField _playField = (ButtonField)(new Object(QmResources.getString(59), 65536));
-   private ButtonField _stopField = (ButtonField)(new Object(QmResources.getString(98), 65536));
-   private ButtonField _sendField = (ButtonField)(new Object(QmResources.getString(101), 65536));
-   private ButtonField _cancelField = (ButtonField)(new Object(PeerResources.getString(6), 65536));
-   private FlowFieldManager _hfm = (FlowFieldManager)(new Object(12884901888L));
+   private LabelField _stateField = new LabelField("", 12884901888L);
+   private LabelField _progressField = new LabelField("", 12884901888L);
+   private ButtonField _playField = new ButtonField(QmResources.getString(59), 65536);
+   private ButtonField _stopField = new ButtonField(QmResources.getString(98), 65536);
+   private ButtonField _sendField = new ButtonField(QmResources.getString(101), 65536);
+   private ButtonField _cancelField = new ButtonField(PeerResources.getString(6), 65536);
+   private FlowFieldManager _hfm = new FlowFieldManager(12884901888L);
    boolean _result;
    boolean _sendOnKeyUp;
    private VoiceRecordController _recordController = new VoiceRecordController(15360, 15);
@@ -34,7 +35,7 @@ public final class VoiceNoteDialog extends PopupScreen implements FieldChangeLis
    static VoiceNoteDialog _instance = new VoiceNoteDialog();
 
    VoiceNoteDialog() {
-      super((Manager)(new Object()));
+      super(new VerticalFieldManager());
       this.applyTheme();
       this.addTitle(QmResources.getString(0));
       this.add(this._stateField);
@@ -50,8 +51,8 @@ public final class VoiceNoteDialog extends PopupScreen implements FieldChangeLis
 
    public final void addTitle(String title) {
       if (title != null && title.length() > 0) {
-         this.add((Field)(new Object(title)));
-         this.add((Field)(new Object()));
+         this.add(new LabelField(title));
+         this.add(new SeparatorField());
       }
    }
 
@@ -170,7 +171,7 @@ public final class VoiceNoteDialog extends PopupScreen implements FieldChangeLis
       // 04: invokevirtual net/rim/device/apps/internal/qm/peer/VoiceRecordController.getVoiceClip ()[B
       // 07: astore 1
       // 08: aload 0
-      // 09: new java/lang/Object
+      // 09: new java/io/ByteArrayInputStream
       // 0c: dup
       // 0d: aload 1
       // 0e: invokespecial java/io/ByteArrayInputStream.<init> ([B)V

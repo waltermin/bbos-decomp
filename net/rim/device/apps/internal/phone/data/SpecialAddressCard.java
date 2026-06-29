@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.phone.data;
 
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.FieldProvider;
 import net.rim.device.apps.api.framework.model.PaintProvider;
@@ -46,7 +47,7 @@ public final class SpecialAddressCard implements PersistableRIMModel, PaintProvi
 
    @Override
    public final Field getField(Object context) {
-      return (Field)(new Object(this.toString()));
+      return new LabelField(this.toString());
    }
 
    @Override

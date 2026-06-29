@@ -2,8 +2,8 @@ package net.rim.device.apps.api.utility.framework;
 
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
-import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.CheckboxField;
+import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.RadioButtonField;
 import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.component.Status;
@@ -27,59 +27,58 @@ public class FieldsSearch {
          }
       }
 
-      this._stringMatch = (StringMatch)(new Object(this._searchText, false, false));
+      this._stringMatch = new StringMatch(this._searchText, false, false);
    }
 
    public FieldsSearchResult searchFields(FieldsSearchResult previous) {
       Field currentField = null;
       int currentOffset = 0;
-      Object var12;
       if (null == previous) {
          previous = new FieldsSearchResult(null, this._startOffset);
          if (this._startField != null) {
-            var12 = this._startField;
+            currentField = this._startField;
             currentOffset = this._startOffset;
          } else {
             try {
-               var12 = this._fieldEnumeration.nextElement();
+               currentField = (Field)this._fieldEnumeration.nextElement();
             } finally {
                ;
             }
          }
       } else {
-         var12 = previous._resultField;
+         currentField = previous._resultField;
          currentOffset = previous.getOffset() + 1;
       }
 
-      while (var12 != null) {
+      while (currentField != null) {
          String fieldText = null;
-         if (!(var12 instanceof Object)) {
-            if (!(var12 instanceof Object)) {
-               if (!(var12 instanceof Object)) {
-                  if (var12 instanceof Object) {
-                     fieldText = ((CheckboxField)var12).getLabel();
+         if (!(currentField instanceof RichTextField)) {
+            if (!(currentField instanceof EditField)) {
+               if (!(currentField instanceof RadioButtonField)) {
+                  if (currentField instanceof CheckboxField) {
+                     fieldText = ((CheckboxField)currentField).getLabel();
                   }
                } else {
-                  fieldText = ((RadioButtonField)var12).getLabel();
+                  fieldText = ((RadioButtonField)currentField).getLabel();
                }
             } else {
-               fieldText = ((BasicEditField)var12).getText();
+               fieldText = ((EditField)currentField).getText();
             }
          } else {
-            fieldText = ((RichTextField)var12).getText();
+            fieldText = ((RichTextField)currentField).getText();
          }
 
          if (fieldText != null && currentOffset < fieldText.length()) {
             int foundOffset = this._stringMatch.indexOf(fieldText, currentOffset);
             if (foundOffset >= 0) {
-               previous._resultField = (Field)var12;
+               previous._resultField = currentField;
                previous._resultOffset = foundOffset;
                return previous;
             }
          }
 
          try {
-            var12 = this._fieldEnumeration.nextElement();
+            currentField = (Field)this._fieldEnumeration.nextElement();
             currentOffset = 0;
          } finally {
             ;

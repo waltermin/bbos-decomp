@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.browser.verbs;
 import net.rim.device.api.browser.field.BrowserContent;
 import net.rim.device.api.system.Clipboard;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.messaging.messagelist.ForwardAsVerb;
 import net.rim.device.apps.api.ui.CommonResources;
@@ -52,8 +53,8 @@ public final class ShowUrlVerb extends Verb {
 
    public static final void showUrl(String title, String url) {
       if (url != null) {
-         String[] choices = new Object[]{CommonResources.getString(117), BrowserResources.getString(356), BrowserResources.getString(676)};
-         StringBuffer buffer = (StringBuffer)(new Object());
+         String[] choices = new String[]{CommonResources.getString(117), BrowserResources.getString(356), BrowserResources.getString(676)};
+         StringBuffer buffer = new StringBuffer();
          if (title != null) {
             buffer.append(BrowserResources.getString(706));
             buffer.append(title);
@@ -62,7 +63,7 @@ public final class ShowUrlVerb extends Verb {
 
          buffer.append(BrowserResources.getString(277));
          buffer.append(url);
-         Dialog showUrl = (Dialog)(new Object(buffer.toString(), choices, null, 0, null));
+         Dialog showUrl = new Dialog(buffer.toString(), choices, null, 0, null);
          int returnVal = showUrl.doModal();
          if (returnVal == 1) {
             Clipboard.getClipboard().put(url);
@@ -76,8 +77,8 @@ public final class ShowUrlVerb extends Verb {
 
    public static final void sendAddress(String url, String subject, int rbId) {
       ShowUrlVerb$BrowserMessagePartsProvider bmpr = new ShowUrlVerb$BrowserMessagePartsProvider(url, subject);
-      ForwardAsVerb faVerb = (ForwardAsVerb)(new Object(bmpr, 0, BrowserResources.getResourceBundle(), rbId));
-      if (faVerb.canInvoke(new Object(61))) {
+      ForwardAsVerb faVerb = new ForwardAsVerb(bmpr, 0, BrowserResources.getResourceBundle(), rbId);
+      if (faVerb.canInvoke(new ContextObject(61))) {
          faVerb.invoke(null);
       }
    }

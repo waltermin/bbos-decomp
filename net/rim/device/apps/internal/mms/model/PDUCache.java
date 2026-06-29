@@ -56,10 +56,10 @@ final class PDUCache {
 
    private final void put(long key, MMSProtocolDataUnit pdu) {
       if (this._hashtable == null) {
-         this._hashtable = (LongHashtable)(new Object());
+         this._hashtable = new LongHashtable();
       }
 
-      WeakReference ref = (WeakReference)(new Object(pdu));
+      WeakReference ref = new WeakReference(pdu);
       this._hashtable.put(key, ref);
    }
 }

@@ -35,7 +35,7 @@ final class TaskList extends KeywordFilteredScreen implements ListFieldCallback,
    private FilteredByCategoriesTitleField _titleField;
    private long _lastBackspaceTime;
    private static final long PERSISTED_TASK_FILTER = -4985420032647039156L;
-   static Verb[] _verbHolder = new Object[0];
+   static Verb[] _verbHolder = new Verb[0];
    private static final long BACKSPACE_DELETE_GUARD = 300L;
 
    private TaskList(ReadableList taskCollection, KeywordFilterList keyList) {
@@ -51,7 +51,7 @@ final class TaskList extends KeywordFilteredScreen implements ListFieldCallback,
       listField.setSize(this._taskCollection.size());
       Field oldTitleField = this.getTitleField();
       this.setTitleField(null);
-      this._titleField = (FilteredByCategoriesTitleField)(new Object(oldTitleField));
+      this._titleField = new FilteredByCategoriesTitleField(oldTitleField);
       this.setTitleField(this._titleField);
       this.$initFilterCategoryIds();
       FilterByCategoriesVerb.filterByCategories(this, this._titleField, this._filterCategoryIds);
@@ -84,7 +84,7 @@ final class TaskList extends KeywordFilteredScreen implements ListFieldCallback,
    @Override
    protected final Object invokeVerb(Verb verb, Object parameter) {
       try {
-         ContextObject c = (ContextObject)(new Object());
+         ContextObject c = new ContextObject();
          Object o = this.getSelectedElement();
          if (o != null) {
             c.put(3696141428889703675L, o);
@@ -127,7 +127,7 @@ final class TaskList extends KeywordFilteredScreen implements ListFieldCallback,
    public final void drawListRow(ListField listField, Graphics graphics, int index, int y, int width) {
       CollectionListField clf = (CollectionListField)listField;
       Object element = clf.getElementAt(index);
-      if (!(element instanceof Object)) {
+      if (!(element instanceof PaintProvider)) {
          if (index == clf.getExtraRowCount()) {
             graphics.drawText(TaskResources.getString(37), 0, y, 4, width);
          }
@@ -244,7 +244,7 @@ final class TaskList extends KeywordFilteredScreen implements ListFieldCallback,
       }
 
       Object element = this.getSelectedElement();
-      if (element instanceof Object) {
+      if (element instanceof VerbProvider) {
          VerbProvider verbProvider = (VerbProvider)element;
          menu.add(verbProvider);
          menu.add(new TaskList$DeleteCompletedTasksVerb());
@@ -259,7 +259,7 @@ final class TaskList extends KeywordFilteredScreen implements ListFieldCallback,
          }
 
          if (!foundDefault) {
-            Verb providedDefault = verbProvider.getVerbs(null, new Object[0]);
+            Verb providedDefault = verbProvider.getVerbs(null, new Verb[0]);
             if (providedDefault != null) {
                defaultVerb = providedDefault;
             }
@@ -270,7 +270,7 @@ final class TaskList extends KeywordFilteredScreen implements ListFieldCallback,
          menu.add(ShowAllNamesVerb.getInstance(this));
       }
 
-      menu.add((Verb)(new Object(this, this._titleField, this._filterCategoryIds)));
+      menu.add(new FilterByCategoriesVerb(this, this._titleField, this._filterCategoryIds));
       menu.setDefault(defaultVerb);
    }
 

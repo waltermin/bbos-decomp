@@ -31,9 +31,7 @@ public final class ForgotPasswordCommand implements DomainCommand {
             return new DomainCommandResult("failed", ApplicationResources.getString(98), null);
          }
 
-         BISEventLogger.logEvent(
-            ((StringBuffer)(new Object("Forgot Password: Unhandled REST response code: "))).append(callResult.getRESTStatusCode()).toString(), 0
-         );
+         BISEventLogger.logEvent("Forgot Password: Unhandled REST response code: " + callResult.getRESTStatusCode(), 0);
          return new DomainCommandResult("error", null, null);
       } catch (Throwable var9) {
          BISEventLogger.logEvent(e.toString(), 0);

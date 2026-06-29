@@ -6,10 +6,10 @@ import net.rim.device.api.util.IntHashtable;
 import net.rim.vm.WeakReference;
 
 final class MessageFieldLookup {
-   private IntHashtable _lookup = (IntHashtable)(new Object());
+   private IntHashtable _lookup = new IntHashtable();
 
    final void add(int cookie, Field field) {
-      this._lookup.put(cookie, new Object(field));
+      this._lookup.put(cookie, new WeakReference(field));
    }
 
    final void remove(int cookie) {

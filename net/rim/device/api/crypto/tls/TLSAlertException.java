@@ -8,7 +8,7 @@ public class TLSAlertException extends TLSException {
    private static final boolean DEBUG = false;
 
    public TLSAlertException(byte alertLevel, byte alertDescription) {
-      super((String)((Object)null));
+      super((String)null);
       this._alertLevel = alertLevel;
       this._alertDescription = alertDescription;
    }

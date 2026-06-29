@@ -6,6 +6,7 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.RIMModel;
@@ -34,7 +35,7 @@ public class ModelScreen extends AppsMainScreen implements ModelUser, GlobalEven
    public Field getModelFieldWithFocus() {
       Field field = this.getFieldWithFocus();
 
-      while (field instanceof Object && field.getCookie() == null) {
+      while (field instanceof Manager && field.getCookie() == null) {
          field = ((Manager)field).getFieldWithFocus();
       }
 
@@ -111,7 +112,7 @@ public class ModelScreen extends AppsMainScreen implements ModelUser, GlobalEven
          do {
             fieldCookie = fieldWithFocus.getCookie();
             if (fieldCookie == null) {
-               if (!(fieldWithFocus instanceof Object)) {
+               if (!(fieldWithFocus instanceof Manager)) {
                   break;
                }
 
@@ -250,7 +251,7 @@ public class ModelScreen extends AppsMainScreen implements ModelUser, GlobalEven
          return field;
       }
 
-      if (field instanceof Object) {
+      if (field instanceof Manager) {
          Manager manager = (Manager)field;
          int size = manager.getFieldCount();
          Field fieldFound = null;
@@ -277,7 +278,7 @@ public class ModelScreen extends AppsMainScreen implements ModelUser, GlobalEven
             return fieldIndex;
          }
 
-         if (f instanceof Object) {
+         if (f instanceof Manager) {
             int fieldIndexWithinManager = this.getFieldIndex((Manager)f, field);
             if (fieldIndexWithinManager >= 0) {
                return fieldIndex + fieldIndexWithinManager + 1;
@@ -363,7 +364,7 @@ public class ModelScreen extends AppsMainScreen implements ModelUser, GlobalEven
       this._application = Application.getApplication();
       this._context = context;
       if (title != null) {
-         this.setTitle((Field)(new Object(title)));
+         this.setTitle(new LabelField(title));
       }
    }
 
@@ -381,7 +382,7 @@ public class ModelScreen extends AppsMainScreen implements ModelUser, GlobalEven
             return field;
          }
 
-         if (field instanceof Object) {
+         if (field instanceof Manager) {
             field = this.findField((Manager)field, recognizer);
             if (field != null) {
                return field;

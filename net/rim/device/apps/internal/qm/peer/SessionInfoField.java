@@ -15,7 +15,7 @@ class SessionInfoField extends VerticalFieldManager implements MessengerMessage 
    }
 
    protected void addFields() {
-      RichTextField rtf = (RichTextField)(new Object(36028797018963968L));
+      RichTextField rtf = new RichTextField(36028797018963968L);
       rtf.setText(this._text);
       this.add(rtf);
    }

@@ -6,8 +6,8 @@ import net.rim.device.api.crypto.certificate.CertificateInfoDialog;
 final class SMIMECertificatePropertiesDialog extends CertificateInfoDialog {
    SMIMECertificatePropertiesDialog(Certificate certificate, long certificateProperties) {
       super(certificate, null, null, null, false, null, null, 0);
-      super._certificateChains = new Object[1][];
-      super._certificateChains[0] = new Object[]{certificate};
+      super._certificateChains = new Certificate[1][];
+      super._certificateChains[0] = new Certificate[]{certificate};
       super._bestCertificateChain = super._certificateChains[0];
       super._bestCertificateChainProperties = certificateProperties;
    }

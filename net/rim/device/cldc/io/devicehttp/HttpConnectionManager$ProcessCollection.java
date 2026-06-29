@@ -7,9 +7,9 @@ import net.rim.device.api.util.MultiMap;
 class HttpConnectionManager$ProcessCollection {
    public int _maxNumberConnections = 4;
    public boolean _alive = true;
-   public Vector _inUseConnections = (Vector)(new Object());
-   public MultiMap _connections = (MultiMap)(new Object(2, 2));
-   public Hashtable _authSchemes = (Hashtable)(new Object());
+   public Vector _inUseConnections = new Vector();
+   public MultiMap _connections = new MultiMap(2, 2);
+   public Hashtable _authSchemes = new Hashtable();
    public long _authTime;
 
    private HttpConnectionManager$ProcessCollection() {

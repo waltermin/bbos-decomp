@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.btgoep;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 class OBEXSession$OperationImpl$OperationInputStream extends InputStream {
@@ -17,12 +18,12 @@ class OBEXSession$OperationImpl$OperationInputStream extends InputStream {
       synchronized (this.this$1.this$0) {
          if (this.this$1._receiveBuffer.available() == 0) {
             if (this._closed) {
-               throw new Object("Stream closed");
+               throw new IOException("Stream closed");
             }
 
             this.this$1.doSendReceive(true, false);
             if (this._closed) {
-               throw new Object("Stream closed");
+               throw new IOException("Stream closed");
             }
          }
 
@@ -47,11 +48,11 @@ class OBEXSession$OperationImpl$OperationInputStream extends InputStream {
    public int read(byte[] b, int off, int len) {
       synchronized (this.this$1.this$0) {
          if (b == null) {
-            throw new Object();
+            throw new NullPointerException();
          }
 
          if (off < 0 || off > b.length || len < 0 || off + len > b.length || off + len < 0) {
-            throw new Object();
+            throw new IndexOutOfBoundsException();
          }
 
          if (len == 0) {
@@ -60,12 +61,12 @@ class OBEXSession$OperationImpl$OperationInputStream extends InputStream {
 
          if (this.this$1._receiveBuffer.available() == 0) {
             if (this._closed) {
-               throw new Object("Stream closed");
+               throw new IOException("Stream closed");
             }
 
             this.this$1.doSendReceive(true, false);
             if (this._closed) {
-               throw new Object("Stream closed");
+               throw new IOException("Stream closed");
             }
          }
 

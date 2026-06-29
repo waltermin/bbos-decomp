@@ -140,7 +140,7 @@ public class SecureEmailFactory implements SendMethodFactory, OptionsProviderReg
       KeyStore keyStore = this.getPreferredKeyStore();
       if ((encodingAction & 1) != 0) {
          keyStore.addIndex(new KeyUsagePrivateKeysKeyStoreIndex());
-         Enumeration enumeration = keyStore.elements(-2733667523168089402L, new Object(0));
+         Enumeration enumeration = keyStore.elements(-2733667523168089402L, new Integer(0));
          return enumeration.hasMoreElements();
       } else {
          return true;
@@ -163,7 +163,7 @@ public class SecureEmailFactory implements SendMethodFactory, OptionsProviderReg
       boolean globalOptionsWereAutoConfigured = false;
       if (globalOptions.getSigningKeyStoreData() == null) {
          KeyStoreData autoConfiguredSigningData = null;
-         Enumeration enumeration = keyStore.elements(-2733667523168089402L, new Object(0));
+         Enumeration enumeration = keyStore.elements(-2733667523168089402L, new Integer(0));
          if (enumeration.hasMoreElements()) {
             autoConfiguredSigningData = (KeyStoreData)enumeration.nextElement();
             if (enumeration.hasMoreElements()) {
@@ -179,7 +179,7 @@ public class SecureEmailFactory implements SendMethodFactory, OptionsProviderReg
 
       if (globalOptions.getEncryptionKeyStoreData() == null) {
          KeyStoreData autoConfiguredEncryptionData = null;
-         Enumeration enumeration = keyStore.elements(-2733667523168089402L, new Object(1));
+         Enumeration enumeration = keyStore.elements(-2733667523168089402L, new Integer(1));
          if (enumeration.hasMoreElements()) {
             autoConfiguredEncryptionData = (KeyStoreData)enumeration.nextElement();
             if (enumeration.hasMoreElements()) {
@@ -236,7 +236,7 @@ public class SecureEmailFactory implements SendMethodFactory, OptionsProviderReg
 
    @Override
    public Vector getOptionsItems() {
-      Vector optionsItems = (Vector)(new Object(1));
+      Vector optionsItems = new Vector(1);
       optionsItems.addElement(this.createOptionsItem());
       return optionsItems;
    }
@@ -248,7 +248,7 @@ public class SecureEmailFactory implements SendMethodFactory, OptionsProviderReg
 
    @Override
    public SendMethod[] create(RIMModel message, ServiceRecord serviceRecord, Object context) {
-      if (message instanceof Object) {
+      if (message instanceof EmailMessageModel) {
          EmailMessageModel emailMessageModel = (EmailMessageModel)message;
          boolean isPIN = emailMessageModel.flagsSet(8192);
          if (isPIN && serviceRecord != null) {
@@ -263,7 +263,7 @@ public class SecureEmailFactory implements SendMethodFactory, OptionsProviderReg
       if (serviceRecord != null) {
          byte[] applicationData = serviceRecord.getApplicationData();
          if (applicationData != null && applicationData.length > 1 && applicationData[0] == 16) {
-            DataBuffer applicationDataBuffer = (DataBuffer)(new Object(applicationData, 1, applicationData.length, true));
+            DataBuffer applicationDataBuffer = new DataBuffer(applicationData, 1, applicationData.length, true);
 
             label105:
             try {
@@ -296,7 +296,7 @@ public class SecureEmailFactory implements SendMethodFactory, OptionsProviderReg
       }
 
       SecureEmailUtilities utilities = this.getUtilities();
-      SendMethod[] sendMethods = new Object[3];
+      SendMethod[] sendMethods = new SendMethod[3];
       int i = 0;
       if (!utilities.isEncryptionRequired()) {
          sendMethods[i++] = this.createSendMethod(message, serviceRecord, 1, context);

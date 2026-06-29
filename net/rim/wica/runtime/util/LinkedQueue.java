@@ -29,7 +29,7 @@ public class LinkedQueue {
 
    public void put(Object x) {
       if (x == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       LinkedQueue$LinkedNode p = new LinkedQueue$LinkedNode(x);
@@ -65,7 +65,7 @@ public class LinkedQueue {
 
    public void prepend(LinkedQueue queue) {
       if (queue == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._size = this._size + queue.size();

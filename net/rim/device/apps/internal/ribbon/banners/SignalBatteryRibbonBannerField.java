@@ -54,7 +54,7 @@ final class SignalBatteryRibbonBannerField implements BannerField, RibbonCompone
 
    @Override
    public final void applyTheme() {
-      Hashtable parms = (Hashtable)(new Object());
+      Hashtable parms = new Hashtable();
       parms.put("align", "right");
       Theme$Writer themeWriter = ThemeManager.getActiveTheme().getWriterInternalDeprecated();
       ThemeAttributeSet$Writer attributesWriter = themeWriter.createThemeAttributeSetWriter(null);

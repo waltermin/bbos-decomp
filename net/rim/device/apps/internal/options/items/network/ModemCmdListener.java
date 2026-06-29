@@ -24,7 +24,7 @@ public final class ModemCmdListener implements ModemListener {
             case 3:
             case 7:
                try {
-                  StringBuffer strBuf = (StringBuffer)(new Object(32));
+                  StringBuffer strBuf = new StringBuffer(32);
                   NumberUtilities.appendNumber(strBuf, networkId & 65535, 16);
                   strBuf.append('-');
                   NumberUtilities.appendNumber(strBuf, networkId >> 16 & 65535, 16);

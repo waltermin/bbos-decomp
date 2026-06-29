@@ -43,7 +43,7 @@ public final class SuplSession extends Thread implements LCSListener {
    static final byte[] SUPPORTED_POS_METHODS = new byte[]{0, 2, 1, 3, 4};
 
    final void establishConnection() throws SuplException {
-      this.timer = (Timer)(new Object());
+      this.timer = new Timer();
       System.out.println("Starting Connection guard timer");
       this.timer.schedule(new SuplSession$UTimerTask(this, 0), 30000);
       this.receiveThread = new SuplSession$TLSReceiveThread(this, this);
@@ -71,7 +71,7 @@ public final class SuplSession extends Thread implements LCSListener {
       System.out.println("Send ULP: ");
       pdu.print();
       byte[] payload = pdu.encode();
-      System.out.println(((StringBuffer)(new Object("Sending ULP message of length: "))).append(payload.length).toString());
+      System.out.println("Sending ULP message of length: " + payload.length);
 
       try {
          this.os.write(payload);
@@ -118,7 +118,7 @@ public final class SuplSession extends Thread implements LCSListener {
          Position storedPosition = null;
          if ((suplInitMessage.optionals & 4) == 4) {
             boolean QOPSatisfied = true;
-            GPSLocationExtended cachedLocation = (GPSLocationExtended)(new Object());
+            GPSLocationExtended cachedLocation = new GPSLocationExtended();
             GPS.getLocation(cachedLocation, 1);
             if (this.utils.cachedPositionAcceptable(cachedLocation, suplInitMessage.qop)) {
             }
@@ -133,7 +133,7 @@ public final class SuplSession extends Thread implements LCSListener {
 
    public final void connectionStatusEvent(boolean connectionUp) {
       System.out.println("Issuing CONNECTION_STATUS_EVENT");
-      this.eventMonitor.issueEvent(new SuplEvent(3, new Object(connectionUp)));
+      this.eventMonitor.issueEvent(new SuplEvent(3, new Boolean(connectionUp)));
    }
 
    public final void receivedUlpPduEvent(Ulp ulpPdu) {
@@ -145,7 +145,7 @@ public final class SuplSession extends Thread implements LCSListener {
    public final void RRLPPayloadIndicationEvent(int sessionId, int length) {
       if (sessionId == this.sessionId.setSessionId.sessionId) {
          System.out.println("Issuing RRLP_PAYLOAD_INDICATION_EVENT");
-         this.eventMonitor.issueEvent(new SuplEvent(0, new Object(length)));
+         this.eventMonitor.issueEvent(new SuplEvent(0, new Integer(length)));
       }
    }
 
@@ -192,8 +192,7 @@ public final class SuplSession extends Thread implements LCSListener {
          throw new SuplException((byte)2);
       }
 
-      System.out
-         .println(((StringBuffer)(new Object("Sending RRLP payload of "))).append(suplPos.posPayload.payload.length).append(" bytes to LCS thread").toString());
+      System.out.println("Sending RRLP payload of " + suplPos.posPayload.payload.length + " bytes to LCS thread");
       if (!LCS.processRrlp(suplPos.posPayload.payload, this.sessionId.setSessionId.sessionId)) {
          System.out.println("Error in RimLcsProcessRrlp");
          throw new SuplException((byte)3);
@@ -227,7 +226,7 @@ public final class SuplSession extends Thread implements LCSListener {
       System.out.println("Sending SUPL POS");
       this.sendUlpMsg(suplPos);
       this.state = 4;
-      this.timer = (Timer)(new Object());
+      this.timer = new Timer();
       System.out.println("Starting UT3");
       this.timer.schedule(new SuplSession$UTimerTask(this, 3), 10000);
    }
@@ -236,7 +235,7 @@ public final class SuplSession extends Thread implements LCSListener {
       SuplStart suplStart = new SuplStart(this.options.getSetCapabilities());
       System.out.println("Sending SUPL START");
       this.sendUlpMsg(suplStart);
-      this.timer = (Timer)(new Object());
+      this.timer = new Timer();
       System.out.println("Starting UT1");
       this.timer.schedule(new SuplSession$UTimerTask(this, 1), 10000);
       this.state = 3;
@@ -247,14 +246,14 @@ public final class SuplSession extends Thread implements LCSListener {
       System.out.println("Sending SUPL POS INIT");
       this.sendUlpMsg(suplPosInit);
       this.state = 4;
-      this.timer = (Timer)(new Object());
+      this.timer = new Timer();
       System.out.println("Starting UT2");
       this.timer.schedule(new SuplSession$UTimerTask(this, 2), 10000);
    }
 
    private final void timerExpired(int timerId) {
       System.out.println("Issuing UTIMER_EXPIRY_EVENT");
-      this.eventMonitor.issueEvent(new SuplEvent(2, new Object(timerId)));
+      this.eventMonitor.issueEvent(new SuplEvent(2, new Integer(timerId)));
    }
 
    private final void bindLCSListener() {
@@ -285,7 +284,7 @@ public final class SuplSession extends Thread implements LCSListener {
 
       while (true) {
          if (this.state != prevState) {
-            System.out.println(((StringBuffer)(new Object("Switching to state: "))).append(this.state).toString());
+            System.out.println("Switching to state: " + this.state);
          }
 
          prevState = this.state;
@@ -324,11 +323,11 @@ public final class SuplSession extends Thread implements LCSListener {
                   this.state = 5;
                   System.out.println(e.getMessage());
                   e.printStackTrace();
-                  System.out.println(((StringBuffer)(new Object("handleRcvSuplInit:"))).append(e).toString());
+                  System.out.println("handleRcvSuplInit:" + e);
                   break;
                }
 
-               System.out.println(((StringBuffer)(new Object("SUPL Exception:"))).append(var68).toString());
+               System.out.println("SUPL Exception:" + var68);
                this.sendSuplEnd(var68.error.status);
                break;
             case 2:
@@ -364,7 +363,7 @@ public final class SuplSession extends Thread implements LCSListener {
                      continue;
                   case 2: {
                      Integer wrapper = (Integer)receivedEvent.getData();
-                     System.out.println(((StringBuffer)(new Object("UTimer "))).append(wrapper.toString()).append(" expired.").toString());
+                     System.out.println("UTimer " + wrapper.toString() + " expired.");
                      this.sendSuplEnd((byte)0);
                      continue;
                   }
@@ -428,9 +427,9 @@ public final class SuplSession extends Thread implements LCSListener {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private final void calcVer(byte[] suplInitMsg) {
       Fqdn slpAddress = this.options.getSlpAddress();
-      HMACKey key = (HMACKey)(new Object(slpAddress.domainName.getBytes()));
-      SHA1Digest digest = (SHA1Digest)(new Object());
-      HMAC hmac = (HMAC)(new Object(key, digest));
+      HMACKey key = new HMACKey(slpAddress.domainName.getBytes());
+      SHA1Digest digest = new SHA1Digest();
+      HMAC hmac = new HMAC(key, digest);
       int verLength = hmac.getLength();
       hmac.update(suplInitMsg, 0, suplInitMsg.length);
       this.ver = new byte[verLength];
@@ -447,7 +446,7 @@ public final class SuplSession extends Thread implements LCSListener {
       System.out.println("VER is: ");
 
       for (int i = 0; i < verLength; i++) {
-         System.out.print(((StringBuffer)(new Object())).append(Integer.toHexString(255 & this.ver[i])).append(" ").toString());
+         System.out.print(Integer.toHexString(255 & this.ver[i]) + " ");
       }
    }
 

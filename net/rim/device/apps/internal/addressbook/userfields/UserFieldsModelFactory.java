@@ -4,6 +4,7 @@ import java.util.Vector;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.SyncBuffer;
 import net.rim.device.apps.api.framework.registration.RIMModelFactory;
+import net.rim.device.apps.api.framework.verb.RIMModelFactoryCreateVerb;
 import net.rim.device.apps.api.framework.verb.Verb;
 
 public class UserFieldsModelFactory extends RIMModelFactory {
@@ -55,7 +56,7 @@ public class UserFieldsModelFactory extends RIMModelFactory {
          }
 
          try {
-            String[] fields = new Object[4];
+            String[] fields = new String[4];
             boolean isData = false;
             int fieldCount = fields.length;
 
@@ -78,7 +79,7 @@ public class UserFieldsModelFactory extends RIMModelFactory {
       } else if (ContextObject.getFlag(initialData, 11) && ContextObject.getFlag(initialData, 43) && ContextObject.getFlag(initialData, 54)) {
          Vector data = (Vector)ContextObject.get(initialData, 249);
          int size = data.size();
-         String[] fields = new Object[4];
+         String[] fields = new String[4];
          boolean isData = false;
 
          for (int i = 0; i < size; i += 2) {
@@ -125,6 +126,6 @@ public class UserFieldsModelFactory extends RIMModelFactory {
 
    @Override
    public Verb[] getVerbs(Object context) {
-      return new Object[]{new Object(this, 16865360, 5390928610432442684L, "net.rim.device.apps.internal.resource.AddressBook", 1203)};
+      return new Verb[]{new RIMModelFactoryCreateVerb(this, 16865360, 5390928610432442684L, "net.rim.device.apps.internal.resource.AddressBook", 1203)};
    }
 }

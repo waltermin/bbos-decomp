@@ -22,19 +22,19 @@ public final class LCSControlPlaneListener implements LCSListener, DialogClosedL
          case 0:
             dialogType = 0;
             this.defaultChoice = 0;
-            resourceString = ((StringBuffer)(new Object())).append(clientName).append(" ").append(_rb.getString(4)).toString();
+            resourceString = clientName + " " + _rb.getString(4);
             break;
          case 1:
          default:
             this.defaultChoice = 4;
-            resourceString = ((StringBuffer)(new Object())).append(clientName).append(" ").append(_rb.getString(5)).toString();
+            resourceString = clientName + " " + _rb.getString(5);
             break;
          case 2:
             this.defaultChoice = -1;
-            resourceString = ((StringBuffer)(new Object())).append(clientName).append(" ").append(_rb.getString(5)).toString();
+            resourceString = clientName + " " + _rb.getString(5);
       }
 
-      this.dialog = (Dialog)(new Object(dialogType, resourceString, this.defaultChoice, null, 0));
+      this.dialog = new Dialog(dialogType, resourceString, this.defaultChoice, null, 0);
       this.dialog.setDialogClosedListener(this);
       Ui.getUiEngine().pushGlobalScreen(this.dialog, 50, 2);
    }
@@ -48,9 +48,7 @@ public final class LCSControlPlaneListener implements LCSListener, DialogClosedL
       if (length > 0) {
          byte[] clientName = new byte[length];
          if (LCS.getLCSClientName(clientName)) {
-            this.notifyAndVerify(
-               type, ((StringBuffer)(new Object())).append(_rb.getString(7)).append(" \"").append((String)(new Object(clientName))).append("\"").toString()
-            );
+            this.notifyAndVerify(type, _rb.getString(7) + " \"" + new String(clientName) + "\"");
          } else {
             LCS.verificationResponse(false);
          }

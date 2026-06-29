@@ -3,7 +3,7 @@ package net.rim.wica.runtime.util.internal;
 import java.util.Vector;
 
 public class BackgroundWorker extends Thread {
-   protected Vector _queue = (Vector)(new Object(5));
+   protected Vector _queue = new Vector(5);
 
    public BackgroundWorker() {
    }

@@ -16,7 +16,7 @@ public final class BrowserBookmarksCollection
    OTASyncPriorityProvider,
    CollectionEventSource,
    FolderEventListener {
-   private CollectionListenerManager _collectionListenerManager = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _collectionListenerManager = new CollectionListenerManager();
 
    public BrowserBookmarksCollection() {
       super(BrowserRepositoryCollection.BROWSER_BOOKMARKS_DB_NAME, 866);

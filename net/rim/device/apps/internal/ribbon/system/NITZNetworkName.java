@@ -36,18 +36,18 @@ final class NITZNetworkName {
          this._networkId = RadioInfo.convertNetworkId(this._networkId);
          if (RibbonApi._logONSState) {
             System.out.println("NITZ data:");
-            System.out.println(((StringBuffer)(new Object("_networkId = "))).append(String.valueOf(this._networkId)).toString());
-            System.out.println(((StringBuffer)(new Object("_needLongNameCountryCode = "))).append(String.valueOf(this._needLongNameCountryCode)).toString());
-            System.out.println(((StringBuffer)(new Object("_needShortNameCountryCode = "))).append(String.valueOf(this._needShortNameCountryCode)).toString());
-            System.out.println(((StringBuffer)(new Object("_longNameEncoding = "))).append(String.valueOf(this._longNameEncoding)).toString());
-            System.out.println(((StringBuffer)(new Object("_shortNameEncoding = "))).append(String.valueOf(this._shortNameEncoding)).toString());
-            System.out.println(((StringBuffer)(new Object("_longNameEncodedLength = "))).append(String.valueOf(this._longNameEncodedLength)).toString());
-            System.out.println(((StringBuffer)(new Object("_shortNameEncodedLength = "))).append(String.valueOf(this._shortNameEncodedLength)).toString());
+            System.out.println("_networkId = " + String.valueOf(this._networkId));
+            System.out.println("_needLongNameCountryCode = " + String.valueOf(this._needLongNameCountryCode));
+            System.out.println("_needShortNameCountryCode = " + String.valueOf(this._needShortNameCountryCode));
+            System.out.println("_longNameEncoding = " + String.valueOf(this._longNameEncoding));
+            System.out.println("_shortNameEncoding = " + String.valueOf(this._shortNameEncoding));
+            System.out.println("_longNameEncodedLength = " + String.valueOf(this._longNameEncodedLength));
+            System.out.println("_shortNameEncodedLength = " + String.valueOf(this._shortNameEncodedLength));
          }
 
          if (this._longNameEncoded != null && this._longNameEncoded.length > 0) {
             if (RibbonApi._logONSState) {
-               System.out.println(((StringBuffer)(new Object("_longNameEncoded = "))).append((String)(new Object(this._longNameEncoded))).toString());
+               System.out.println("_longNameEncoded = " + new String(this._longNameEncoded));
             }
 
             String newLongName = SMSService.decodeSMSData(this._longNameEncoding, this._longNameEncoded);
@@ -56,7 +56,7 @@ final class NITZNetworkName {
                this._longName = newLongName;
                longChanged = true;
                if (RibbonApi._logONSState) {
-                  System.out.println(((StringBuffer)(new Object("_longName = "))).append(this._longName).toString());
+                  System.out.println("_longName = " + this._longName);
                }
             }
          } else if (this._longName != null) {
@@ -69,7 +69,7 @@ final class NITZNetworkName {
 
          if (this._shortNameEncoded != null && this._shortNameEncoded.length > 0) {
             if (RibbonApi._logONSState) {
-               System.out.println(((StringBuffer)(new Object("_shortNameEncoded = "))).append((String)(new Object(this._shortNameEncoded))).toString());
+               System.out.println("_shortNameEncoded = " + new String(this._shortNameEncoded));
             }
 
             String newShortName = SMSService.decodeSMSData(this._shortNameEncoding, this._shortNameEncoded);
@@ -78,7 +78,7 @@ final class NITZNetworkName {
                this._shortName = newShortName;
                shortChanged = true;
                if (RibbonApi._logONSState) {
-                  System.out.println(((StringBuffer)(new Object("_shortName = "))).append(this._shortName).toString());
+                  System.out.println("_shortName = " + this._shortName);
                }
             }
          } else if (this._shortName != null) {
@@ -102,14 +102,7 @@ final class NITZNetworkName {
          return false;
       } else if (netId != this._networkId) {
          if (RibbonApi._logONSState) {
-            System.out
-               .println(
-                  ((StringBuffer)(new Object("NITZ ignored: ")))
-                     .append(String.valueOf(netId))
-                     .append(" != ")
-                     .append(String.valueOf(this._networkId))
-                     .toString()
-               );
+            System.out.println("NITZ ignored: " + String.valueOf(netId) + " != " + this._networkId);
          }
 
          return false;
@@ -131,14 +124,10 @@ final class NITZNetworkName {
    }
 
    protected final String getLongName(String countryInitials) {
-      return this._needLongNameCountryCode && countryInitials != null && countryInitials.length() > 0
-         ? ((StringBuffer)(new Object())).append(this._longName).append(countryInitials).toString()
-         : this._longName;
+      return this._needLongNameCountryCode && countryInitials != null && countryInitials.length() > 0 ? this._longName + countryInitials : this._longName;
    }
 
    protected final String getShortName(String countryInitials) {
-      return this._needShortNameCountryCode && countryInitials != null && countryInitials.length() > 0
-         ? ((StringBuffer)(new Object())).append(this._shortName).append(countryInitials).toString()
-         : this._shortName;
+      return this._needShortNameCountryCode && countryInitials != null && countryInitials.length() > 0 ? this._shortName + countryInitials : this._shortName;
    }
 }

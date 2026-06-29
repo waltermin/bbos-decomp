@@ -98,7 +98,7 @@ public class AbstractTransmissionService implements TransmissionService, GlobalE
 
    public GMEDatagram verifyGMEDatagram(DataBuffer packetDataBuffer, boolean verifySecure) {
       GMEDatagram gmeDatagram = null;
-      if (!(packetDataBuffer instanceof Object)) {
+      if (!(packetDataBuffer instanceof GMEDatagram)) {
          Firewall.getInstance().incrementBlockedCount((byte)-4);
          return null;
       }
@@ -131,13 +131,13 @@ public class AbstractTransmissionService implements TransmissionService, GlobalE
    public void processChangedService(long guid, int data0, int data1, Object object0, Object object1) {
       ServiceRecord targetSR = ServiceBook.getSB().getRecordById(data0);
       if (targetSR == null) {
-         if (guid == -7853136852381124900L && object0 instanceof Object) {
+         if (guid == -7853136852381124900L && object0 instanceof ServiceRecord) {
             this.serviceRecordChanged(targetSR, (ServiceRecord)object0);
          }
       } else {
          try {
             ServiceRecord oldServiceRecord = this._serviceRecord;
-            if (object1 instanceof Object) {
+            if (object1 instanceof ServiceRecord) {
                oldServiceRecord = (ServiceRecord)object1;
             }
 
@@ -230,7 +230,7 @@ public class AbstractTransmissionService implements TransmissionService, GlobalE
          }
 
          ContextObject co = null;
-         if (contextUsedToFindConverterAndToSend instanceof Object) {
+         if (contextUsedToFindConverterAndToSend instanceof ContextObject) {
             co = (ContextObject)contextUsedToFindConverterAndToSend;
             co.put(OBJECT_BEING_PACKETIZED, anObject);
          }
@@ -341,7 +341,7 @@ public class AbstractTransmissionService implements TransmissionService, GlobalE
       long factoryIdentifier, long eventLoggerGUID, boolean requireSR, boolean useServiceManager, ServiceIdentifier serviceIdentifier
    ) {
       this._factoryIdentifier = factoryIdentifier;
-      this._listeners = (Hashtable)(new Object());
+      this._listeners = new Hashtable();
       this._eventLoggerGUID = eventLoggerGUID;
       this._srUidHash = 0;
       this._srCidHash = 0;

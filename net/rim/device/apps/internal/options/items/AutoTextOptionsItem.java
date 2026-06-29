@@ -1,9 +1,10 @@
 package net.rim.device.apps.internal.options.items;
 
 import net.rim.device.api.collection.ReadableList;
-import net.rim.device.api.collection.util.KeywordFilterList;
+import net.rim.device.api.collection.util.PrefixKeywordFilterList;
 import net.rim.device.api.ui.autotext.AutoText;
 import net.rim.device.api.ui.container.MainScreen;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.registration.VerbRepository;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.options.MainScreenOptionsListItem;
@@ -15,7 +16,7 @@ public final class AutoTextOptionsItem extends MainScreenOptionsListItem {
    private static Verb _newAutoTextUnitVerb;
 
    public AutoTextOptionsItem() {
-      super(OptionsResources.getString(302), new Object(3, 5, 2));
+      super(OptionsResources.getString(302), new ContextObject(3, 5, 2));
    }
 
    public static final void initializeAutoTextOptions() {
@@ -39,7 +40,7 @@ public final class AutoTextOptionsItem extends MainScreenOptionsListItem {
    protected final MainScreen createMainScreen() {
       ReadableList sortedList = new AutoTextOptionsItem$AutoTextSortedReadableList(_autoTextEngine, new AutoTextOptionsItem$AutoTextComparator());
       AutoTextOptionsItem$AutoTextScreen autoTextScreen = new AutoTextOptionsItem$AutoTextScreen(
-         this, this.getDisplayName(), (KeywordFilterList)(new Object(sortedList, new AutoTextOptionsItem$AutoTextIndexHelper()))
+         this, this.getDisplayName(), new PrefixKeywordFilterList(sortedList, new AutoTextOptionsItem$AutoTextIndexHelper())
       );
       this._autoTextScreen = autoTextScreen;
       return this._autoTextScreen;

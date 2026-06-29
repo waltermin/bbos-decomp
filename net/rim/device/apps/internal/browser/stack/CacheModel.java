@@ -35,7 +35,7 @@ public final class CacheModel implements PersistableRIMModel, SyncObject, Conver
 
    @Override
    public final boolean convert(Object context, Object target) {
-      if (!(target instanceof Object)) {
+      if (!(target instanceof SyncBuffer)) {
          return false;
       }
 
@@ -48,7 +48,7 @@ public final class CacheModel implements PersistableRIMModel, SyncObject, Conver
    }
 
    public final boolean writeCacheModel(SyncBuffer syncBuffer) {
-      DataBuffer dataBuffer = (DataBuffer)(new Object(false));
+      DataBuffer dataBuffer = new DataBuffer(false);
       dataBuffer.setLength(0);
       dataBuffer.writeByte(this.isSticky() ? (this._cacheNode.getAvailableOffline() ? 2 : 1) : 0);
       dataBuffer.writeCompressedLong(this.getCreationDate());

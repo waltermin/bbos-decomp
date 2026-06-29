@@ -1,6 +1,6 @@
 package net.rim.device.apps.games.brickbreaker;
 
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 import javax.microedition.media.Manager;
 import javax.microedition.media.Player;
 import javax.microedition.media.control.VolumeControl;
@@ -11,7 +11,7 @@ import net.rim.device.resources.Resource;
 import net.rim.device.resources.Resource$Internal;
 
 final class Sounds {
-   private Player[] _players = new Object[8];
+   private Player[] _players = new Player[8];
    private AudioPathControl _audioPathControl;
    public static final int POPPILL = 0;
    public static final int EATPILL = 1;
@@ -55,9 +55,9 @@ final class Sounds {
          Resource resource = null;
          resource = Resource$Internal.getResourceClass(codfilename);
          if (resource != null) {
-            byte[] data = resource.getResource(((StringBuffer)(new Object())).append(series).append(".properties").toString());
+            byte[] data = resource.getResource(series + ".properties");
             if (data != null) {
-               StringTokenizer st = (StringTokenizer)(new Object((String)(new Object(data)), "=,\t\n\r\f"));
+               StringTokenizer st = new StringTokenizer(new String(data), "=,\t\n\r\f");
 
                while (st.hasMoreTokens()) {
                   String next = st.nextToken().trim();
@@ -99,7 +99,7 @@ final class Sounds {
 
                   if (index >= 0) {
                      try {
-                        this._players[index] = Manager.createPlayer((InputStream)(new Object(filedata)), mime);
+                        this._players[index] = Manager.createPlayer(new ByteArrayInputStream(filedata), mime);
                         this._players[index].prefetch();
                         if (this._audioPathControl == null) {
                            this._audioPathControl = (AudioPathControl)this._players[index].getControl("net.rim.device.api.media.control.AudioPathControl");
@@ -126,7 +126,7 @@ final class Sounds {
             p.setMediaTime(0);
             p.start();
          } catch (Throwable var5) {
-            System.out.println(((StringBuffer)(new Object("BrickBreaker sound: "))).append(any.toString()).toString());
+            System.out.println("BrickBreaker sound: " + any.toString());
             return;
          }
       } else {

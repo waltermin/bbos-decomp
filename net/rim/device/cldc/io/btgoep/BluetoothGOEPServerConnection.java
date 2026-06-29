@@ -1,5 +1,7 @@
 package net.rim.device.cldc.io.btgoep;
 
+import java.io.IOException;
+import java.io.InterruptedIOException;
 import javax.bluetooth.ServiceRegistrationException;
 import javax.microedition.io.Connection;
 import javax.obex.Authenticator;
@@ -14,7 +16,7 @@ import net.rim.device.cldc.io.btspp.BluetoothURL;
 
 public final class BluetoothGOEPServerConnection extends OBEXServerSession implements BluetoothServerConnection, SessionNotifier, BluetoothSerialPortListener {
    private Object _semaphore = new Object();
-   private BluetoothSerialPort _port = (BluetoothSerialPort)(new Object(3, 3, 0, 8192, 8192, this));
+   private BluetoothSerialPort _port = new BluetoothSerialPort(3, 3, 0, 8192, 8192, this);
    private LocalServiceRecord _serviceRecord;
    private boolean _serviceRecordAdded;
    private BluetoothStreamConnection _connection;
@@ -34,7 +36,7 @@ public final class BluetoothGOEPServerConnection extends OBEXServerSession imple
    @Override
    public final LocalServiceRecord getServiceRecord() {
       if (this._port == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return this._serviceRecord;
       }
@@ -43,7 +45,7 @@ public final class BluetoothGOEPServerConnection extends OBEXServerSession imple
    @Override
    public final int getServiceRecordHandle() {
       if (this._port == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return this._port.getSDPRecordHandle();
       }
@@ -51,13 +53,13 @@ public final class BluetoothGOEPServerConnection extends OBEXServerSession imple
 
    @Override
    public final int getPSM() {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public final int getRFCOMMChannel() {
       if (this._port == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return this._port.getRFCOMMChannel();
       }
@@ -124,12 +126,12 @@ public final class BluetoothGOEPServerConnection extends OBEXServerSession imple
    @Override
    public final Connection acceptAndOpen(ServerRequestHandler handler, Authenticator auth) {
       if (handler == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       synchronized (this._semaphore) {
          if (this._port == null) {
-            throw new Object("Port not open");
+            throw new IOException("Port not open");
          }
 
          if (!this._serviceRecordAdded) {
@@ -152,7 +154,7 @@ public final class BluetoothGOEPServerConnection extends OBEXServerSession imple
          while (this._port != null) {
             if (this._connection != null && this._connection.isConnected() && !this._connectionInUse) {
                this.init(handler, this._connection.openInputStream(), this._connection.openOutputStream(), auth);
-               ((Thread)(new Object(this))).start();
+               new Thread(this).start();
                this._connectionInUse = true;
                return this._connection;
             }
@@ -164,7 +166,7 @@ public final class BluetoothGOEPServerConnection extends OBEXServerSession imple
             }
          }
 
-         throw new Object();
+         throw new InterruptedIOException();
       }
    }
 

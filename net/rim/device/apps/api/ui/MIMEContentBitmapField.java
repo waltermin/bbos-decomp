@@ -1,5 +1,6 @@
 package net.rim.device.apps.api.ui;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.system.EncodedImage;
@@ -66,7 +67,7 @@ public class MIMEContentBitmapField extends BitmapField {
             mimeType = "image/vnd.wap.wbmp";
       }
 
-      InputStream istream = (InputStream)(new Object(image.getData(), image.getOffset(), image.getLength()));
+      InputStream istream = new ByteArrayInputStream(image.getData(), image.getOffset(), image.getLength());
       MenuItem[] menuItems = MIMEContentVerbRepository.getMenuItems(mimeType, istream, name, context);
       if (menuItems != null) {
          for (int idx = 0; idx < menuItems.length; idx++) {

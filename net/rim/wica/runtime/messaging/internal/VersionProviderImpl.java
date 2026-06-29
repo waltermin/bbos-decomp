@@ -53,7 +53,7 @@ public class VersionProviderImpl implements VersionProvider, EventListener {
          this._factory.handleMessage(this._defaultAgId, this._helper);
       } catch (Throwable var3) {
          InternalLogger.logError("MDS Runtime Messaging", null, t, null);
-         throw new Object(((StringBuffer)(new Object("Message creation failed for MDS Services "))).append(this._defaultAgId).toString());
+         throw new RuntimeException("Message creation failed for MDS Services " + this._defaultAgId);
       }
 
       return this._helper.getMessage();
@@ -64,7 +64,7 @@ public class VersionProviderImpl implements VersionProvider, EventListener {
       if (id == this._defaultAgId && id != 0) {
          return this._securityVersion;
       } else {
-         throw new VersionProviderException(((StringBuffer)(new Object("MDS Services "))).append(id).append(" not found").toString());
+         throw new VersionProviderException("MDS Services " + id + " not found");
       }
    }
 
@@ -73,7 +73,7 @@ public class VersionProviderImpl implements VersionProvider, EventListener {
       if (id == this._defaultAgId && id != 0) {
          return this._transportVersion;
       } else {
-         throw new VersionProviderException(((StringBuffer)(new Object("MDS Services "))).append(id).append(" not found").toString());
+         throw new VersionProviderException("MDS Services " + id + " not found");
       }
    }
 
@@ -118,7 +118,7 @@ public class VersionProviderImpl implements VersionProvider, EventListener {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

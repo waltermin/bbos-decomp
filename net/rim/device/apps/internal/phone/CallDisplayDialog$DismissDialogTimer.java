@@ -16,7 +16,7 @@ final class CallDisplayDialog$DismissDialogTimer implements Runnable {
       this._app = Application.getApplication();
       this._id = this._app.invokeLater(this, delayMillis, false);
       if (this._id == -1) {
-         throw new Object("No timer available for status popup.");
+         throw new RuntimeException("No timer available for status popup.");
       }
    }
 

@@ -1,8 +1,9 @@
 package net.rim.device.apps.internal.phone;
 
 import net.rim.device.api.system.RadioInfo;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.EditField;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.apps.api.ui.AppsMainScreen;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
 import net.rim.device.apps.internal.phone.api.PhoneUtilities;
@@ -21,14 +22,14 @@ public final class EditLineDescriptionScreen extends AppsMainScreen {
 
    private final void populateScreen() {
       String[] numbers = PhoneUtilities.getAllLineNumbers();
-      this._phoneDescriptionField = new Object[this._lineIds.length];
+      this._phoneDescriptionField = new EditField[this._lineIds.length];
 
       for (int i = 0; i < this._lineIds.length; i++) {
          if (i != 0) {
-            this.add((Field)(new Object()));
+            this.add(new SeparatorField());
          }
 
-         this.add((Field)(new Object(numbers[i])));
+         this.add(new LabelField(numbers[i]));
          this._phoneDescriptionField[i] = new EditLineDescriptionScreen$LineDescriptionField(PhoneUtilities.getLineDescription(this._lineIds[i]));
          this.add(this._phoneDescriptionField[i]);
       }

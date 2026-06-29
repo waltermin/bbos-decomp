@@ -21,7 +21,7 @@ import net.rim.wica.runtime.resources.RuntimeResources;
 public final class ResourceProvider implements ResponseListener {
    private String _uaProf;
    private String _acceptTypes;
-   private Hashtable _pendingResources = (Hashtable)(new Object(10));
+   private Hashtable _pendingResources = new Hashtable(10);
    private Wiclet _definition;
    private ResourceCollection _resources;
    private WicletStore _store;
@@ -69,7 +69,7 @@ public final class ResourceProvider implements ResponseListener {
          try {
             Vector listeners = (Vector)this._pendingResources.get(resourceName);
             if (listeners == null) {
-               listeners = (Vector)(new Object(1));
+               listeners = new Vector(1);
                this._pendingResources.put(resourceName, listeners);
                OutgoingRequest request = this._commService.createOutgoingRequestInstance(resourceName);
                request.setHeader("Accept", this.getAcceptTypes());
@@ -87,7 +87,7 @@ public final class ResourceProvider implements ResponseListener {
                this._commService.sendRequest(request);
             }
 
-            listeners.addElement(new Object(listener));
+            listeners.addElement(new WeakReference(listener));
             return resource;
          } finally {
             ;
@@ -140,7 +140,7 @@ public final class ResourceProvider implements ResponseListener {
          return this._acceptTypes;
       }
 
-      StringBuffer acceptTypes = (StringBuffer)(new Object());
+      StringBuffer acceptTypes = new StringBuffer();
       boolean addSeparator = false;
       int length = ACCEPT_TYPES.length;
 

@@ -69,7 +69,7 @@ public final class TLSBlockUnformatterEngine implements BlockUnformatterEngine {
          System.arraycopy(this._decryptedDataBuffer, 0, output, outputOffset, this._inputBlockLength);
          return this._inputBlockLength;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -84,7 +84,7 @@ public final class TLSBlockUnformatterEngine implements BlockUnformatterEngine {
 
    public TLSBlockUnformatterEngine(BlockDecryptorEngine decryptorEngine, boolean paddingVerification) {
       if (decryptorEngine == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._decryptorEngine = decryptorEngine;
@@ -101,7 +101,7 @@ public final class TLSBlockUnformatterEngine implements BlockUnformatterEngine {
          || output == null
          || outputOffset < 0
          || output.length - this._outputBlockLength < outputOffset) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (!lastBigBlock) {

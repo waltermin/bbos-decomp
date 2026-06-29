@@ -2,9 +2,10 @@ package net.rim.blackberry.api.pdap;
 
 import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.CompanyInfoModel;
-import net.rim.device.apps.api.addressbook.FriendlyNameAddressModel;
+import net.rim.device.apps.api.addressbook.EmailAddressModel;
 import net.rim.device.apps.api.addressbook.GroupAddressCardModel;
 import net.rim.device.apps.api.addressbook.MailingAddressModel;
+import net.rim.device.apps.api.addressbook.PINAddressModel;
 import net.rim.device.apps.api.addressbook.PersonNameModel;
 import net.rim.device.apps.internal.addressbook.addresscard.WebPageAddressModel;
 import net.rim.device.apps.internal.addressbook.userfields.UserFieldsModel;
@@ -65,30 +66,30 @@ class ContactComparator$StringMatchProvider extends ContactComparator$MatchProvi
 
       for (int i = 0; i < size; i++) {
          Object model = addressCard.getAt(i);
-         if (!(model instanceof Object) && !(model instanceof Object)) {
-            if (model instanceof Object) {
-               if (this.match(this._matchString, ((FriendlyNameAddressModel)model).getAddress())) {
+         if (!(model instanceof PersonNameModel) && !(model instanceof CompanyInfoModel)) {
+            if (model instanceof EmailAddressModel) {
+               if (this.match(this._matchString, ((EmailAddressModel)model).getAddress())) {
                   return true;
                }
-            } else if (model instanceof Object) {
+            } else if (model instanceof PhoneNumberModel) {
                if (this.match(this._matchString, ((PhoneNumberModel)model).getValue())) {
                   return true;
                }
-            } else if (model instanceof Object) {
+            } else if (model instanceof BodyModel) {
                if (this.match(this._matchString, ((BodyModel)model).getText())) {
                   return true;
                }
-            } else if (!(model instanceof Object)) {
-               if (!(model instanceof Object)) {
-                  if (model instanceof Object) {
-                     if (this.match(this._matchString, ((FriendlyNameAddressModel)model).getAddress())) {
+            } else if (!(model instanceof UserFieldsModel)) {
+               if (!(model instanceof MailingAddressModel)) {
+                  if (model instanceof PINAddressModel) {
+                     if (this.match(this._matchString, ((PINAddressModel)model).getAddress())) {
                         return true;
                      }
-                  } else if (model instanceof Object) {
+                  } else if (model instanceof TitleModel) {
                      if (this.match(this._matchString, ((TitleModel)model).getTitle())) {
                         return true;
                      }
-                  } else if (model instanceof Object) {
+                  } else if (model instanceof WebPageAddressModel) {
                      if (this.match(this._matchString, ((WebPageAddressModel)model).getAddress())) {
                         return true;
                      }

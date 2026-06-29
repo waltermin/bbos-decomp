@@ -8,6 +8,7 @@ import net.rim.device.api.synchronization.SyncCollectionStatisticsManager;
 import net.rim.device.api.synchronization.SyncCollectionStatusProvider;
 import net.rim.device.api.synchronization.SyncConverter;
 import net.rim.device.api.synchronization.SyncObject;
+import net.rim.device.api.system.UnsupportedOperationException;
 import net.rim.device.apps.api.calendar.caldb.CalDB;
 import net.rim.device.apps.api.calendar.caldb.CalendarService;
 import net.rim.device.apps.api.calendar.caldb.CalendarServiceManager;
@@ -47,7 +48,7 @@ public final class CalendarSyncCollection implements MultiServiceSyncCollection,
 
    @Override
    public final boolean addSyncObject(SyncObject object) {
-      if (!(object instanceof Object)) {
+      if (!(object instanceof Event)) {
          return false;
       }
 
@@ -59,7 +60,7 @@ public final class CalendarSyncCollection implements MultiServiceSyncCollection,
 
    @Override
    public final boolean updateSyncObject(SyncObject oldObject, SyncObject newObject) {
-      if (!(oldObject instanceof Object)) {
+      if (!(oldObject instanceof Event)) {
          return false;
       }
 
@@ -72,7 +73,7 @@ public final class CalendarSyncCollection implements MultiServiceSyncCollection,
 
    @Override
    public final boolean removeSyncObject(SyncObject object) {
-      if (!(object instanceof Object)) {
+      if (!(object instanceof Event)) {
          return false;
       }
 
@@ -91,7 +92,7 @@ public final class CalendarSyncCollection implements MultiServiceSyncCollection,
 
    @Override
    public final SyncObject[] getSyncObjects() {
-      SyncObject[] syncObjects = new Object[0];
+      SyncObject[] syncObjects = new SyncObject[0];
       int dest = 0;
       CalDB calDB = this._calendarService.getCalendarDatabase();
       synchronized (calDB.getLockObject()) {
@@ -101,7 +102,7 @@ public final class CalendarSyncCollection implements MultiServiceSyncCollection,
          calDB.getElements(objects);
 
          for (int src = 0; src < size; src++) {
-            if (objects[src] instanceof Object) {
+            if (objects[src] instanceof SyncObject) {
                syncObjects[dest++] = (SyncObject)objects[src];
             }
          }
@@ -114,8 +115,7 @@ public final class CalendarSyncCollection implements MultiServiceSyncCollection,
    @Override
    public final SyncObject getSyncObject(int uid) {
       CalDB calDB = this._calendarService.getCalendarDatabase();
-      SyncObject syncObject = (SyncObject)calDB.get(uid);
-      return syncObject;
+      return (SyncObject)calDB.get(uid);
    }
 
    @Override
@@ -213,7 +213,7 @@ public final class CalendarSyncCollection implements MultiServiceSyncCollection,
 
    @Override
    public final MultiServiceSyncCollection getCollection(long sid) {
-      throw new Object();
+      throw new UnsupportedOperationException();
    }
 
    @Override
@@ -228,11 +228,11 @@ public final class CalendarSyncCollection implements MultiServiceSyncCollection,
 
    @Override
    public final void setDefault(boolean isDefault) {
-      throw new Object();
+      throw new UnsupportedOperationException();
    }
 
    @Override
    public final void setSid(long sid) {
-      throw new Object();
+      throw new UnsupportedOperationException();
    }
 }

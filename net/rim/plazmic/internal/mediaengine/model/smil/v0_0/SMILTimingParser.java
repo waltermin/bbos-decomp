@@ -12,8 +12,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 public class SMILTimingParser {
-   private Event _triggerEvent = (Event)(new Object());
-   private Event _resultingEvent = (Event)(new Object());
+   private Event _triggerEvent = new Event();
+   private Event _resultingEvent = new Event();
 
    public void extractTimingData(Element element, TimeContainer parent, EventLogic logic, IdMap idMap) {
       this._resultingEvent._eventParam = this.getIntId(element, idMap);
@@ -38,7 +38,7 @@ public class SMILTimingParser {
    private void extractTimingAttribute(String timingAttribute, Element element, TimeContainer parent, EventLogic logic, IdMap idMap) {
       if (element.hasAttribute(timingAttribute)) {
          String criteria = DOMUtilities.getAttribute(element, timingAttribute);
-         StringTokenizer tokenizer = (StringTokenizer)(new Object(criteria, ";,"));
+         StringTokenizer tokenizer = new StringTokenizer(criteria, ";,");
 
          while (tokenizer.hasMoreTokens()) {
             this.parseTimingCriteria(tokenizer.nextToken(), element, parent, logic, idMap, this._triggerEvent, this._resultingEvent);
@@ -72,7 +72,7 @@ public class SMILTimingParser {
       } else if (!criteria.startsWith("accesskey") && !criteria.startsWith("wallclock")) {
          int indexOfPeriod = this.findCriteriaDelimiter(criteria, '.');
          if (indexOfPeriod == -1) {
-            throw new Object("FOR DEBUG");
+            throw new IllegalArgumentException("FOR DEBUG");
          }
 
          int indexOfOffset = Math.max(criteria.indexOf(43), this.findCriteriaDelimiter(criteria, '-'));
@@ -109,7 +109,7 @@ public class SMILTimingParser {
       do {
          previous = node.getPreviousSibling();
          node = previous;
-      } while (node != null && !(node instanceof Object));
+      } while (node != null && !(node instanceof Element));
 
       return (Element)previous;
    }
@@ -117,7 +117,7 @@ public class SMILTimingParser {
    private int getEventType(String type) {
       int id = SMILEvents.getIntId(type);
       if (id == -1) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return id;
       }

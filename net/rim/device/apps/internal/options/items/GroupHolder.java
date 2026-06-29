@@ -16,7 +16,7 @@ final class GroupHolder {
       if (o instanceof GroupHolder) {
          return this._cmg == ((GroupHolder)o)._cmg;
       } else {
-         return o instanceof Object ? this._cmg == o : super.equals(o);
+         return o instanceof CodeModuleGroup ? this._cmg == o : super.equals(o);
       }
    }
 }

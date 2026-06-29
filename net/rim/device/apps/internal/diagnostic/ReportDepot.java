@@ -4,7 +4,7 @@ import java.util.Vector;
 import net.rim.device.api.util.Persistable;
 
 public final class ReportDepot implements Persistable {
-   Vector v = (Vector)(new Object());
+   Vector v = new Vector();
 
    ReportDepot() {
    }

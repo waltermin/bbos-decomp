@@ -18,7 +18,7 @@ public final class ReminderDeepTimerScheduler {
    private static final Runnable scheduleEarliest(Object[] timeAndRunnable) {
       synchronized (timeAndRunnable) {
          long[] times = (long[])timeAndRunnable[0];
-         Runnable[] runnables = (Object[])timeAndRunnable[1];
+         Runnable[] runnables = (Runnable[])timeAndRunnable[1];
          int max = runnables.length;
          Runnable result = null;
          boolean scheduled = false;
@@ -65,7 +65,7 @@ public final class ReminderDeepTimerScheduler {
       synchronized (reg) {
          timeAndRunnable = (Object[])reg.get(-8995044480416259562L);
          if (timeAndRunnable == null) {
-            timeAndRunnable = new Object[]{new long[5], new Object[5]};
+            timeAndRunnable = new Object[]{new long[5], new Runnable[5]};
             reg.put(-8995044480416259562L, timeAndRunnable);
          }
       }
@@ -73,7 +73,7 @@ public final class ReminderDeepTimerScheduler {
       synchronized (timeAndRunnable) {
          purgeStaleRunnables(timeAndRunnable);
          long[] times = (long[])timeAndRunnable[0];
-         Runnable[] runnables = (Object[])timeAndRunnable[1];
+         Runnable[] runnables = (Runnable[])timeAndRunnable[1];
          boolean timerAvailable = false;
          int max = runnables.length;
 
@@ -118,7 +118,7 @@ public final class ReminderDeepTimerScheduler {
       if (timeAndRunnable != null) {
          synchronized (timeAndRunnable) {
             long[] times = (long[])timeAndRunnable[0];
-            Runnable[] runnables = (Object[])timeAndRunnable[1];
+            Runnable[] runnables = (Runnable[])timeAndRunnable[1];
             int max = runnables.length;
 
             for (int i = 0; i < max; i++) {
@@ -142,7 +142,7 @@ public final class ReminderDeepTimerScheduler {
       if (timeAndRunnable != null) {
          synchronized (timeAndRunnable) {
             long[] times = (long[])timeAndRunnable[0];
-            Runnable[] runnables = (Object[])timeAndRunnable[1];
+            Runnable[] runnables = (Runnable[])timeAndRunnable[1];
             int max = runnables.length;
 
             for (int i = 0; i < max; i++) {
@@ -162,7 +162,7 @@ public final class ReminderDeepTimerScheduler {
    private static final void resizeTimeAndRunnableList(Object[] timeAndRunnable) {
       synchronized (timeAndRunnable) {
          long[] times = (long[])timeAndRunnable[0];
-         Runnable[] runnables = (Object[])timeAndRunnable[1];
+         Runnable[] runnables = (Runnable[])timeAndRunnable[1];
          int max = runnables.length;
          int earliest = max;
 
@@ -203,7 +203,7 @@ public final class ReminderDeepTimerScheduler {
       long currentTime = System.currentTimeMillis();
       synchronized (timeAndRunnable) {
          long[] times = (long[])timeAndRunnable[0];
-         Runnable[] runnables = (Object[])timeAndRunnable[1];
+         Runnable[] runnables = (Runnable[])timeAndRunnable[1];
          int max = runnables.length;
 
          for (int i = 0; i < max; i++) {
@@ -225,7 +225,7 @@ public final class ReminderDeepTimerScheduler {
 
       ApplicationDescriptor descriptor = descriptors[0];
       if (descriptor != null) {
-         descriptor = (ApplicationDescriptor)(new Object(descriptor, null));
+         descriptor = new ApplicationDescriptor(descriptor, null);
          descriptor.setPowerOnBehavior(2);
       }
 

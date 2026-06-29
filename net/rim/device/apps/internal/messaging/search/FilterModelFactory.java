@@ -11,7 +11,7 @@ import net.rim.device.apps.internal.commonmodels.title.TitleModelFactory;
 final class FilterModelFactory extends RIMModelFactory {
    private static FilterModelFactory _singletonInstance = new FilterModelFactory();
    private static RIMModelFactory[] _factoryCache = RIMModelFactoryCache.allocate();
-   private static ContextObjectWR _decodeContextWR = (ContextObjectWR)(new Object(22, 19));
+   private static ContextObjectWR _decodeContextWR = new ContextObjectWR(22, 19);
 
    private FilterModelFactory() {
    }
@@ -23,7 +23,7 @@ final class FilterModelFactory extends RIMModelFactory {
    private static final RIMModelFactory[] getFactories() {
       RIMModelFactory[] factories = RIMModelFactoryRepository.getModelFactories(7820085525428081380L);
       int len = factories.length;
-      RIMModelFactory[] adjusted = new Object[len + 2];
+      RIMModelFactory[] adjusted = new RIMModelFactory[len + 2];
       System.arraycopy(factories, 0, adjusted, 0, len);
       adjusted[len] = ShortCutKeyModelFactory.getInstance();
       adjusted[len + 1] = TitleModelFactory.getInstance();
@@ -52,7 +52,7 @@ final class FilterModelFactory extends RIMModelFactory {
                   try {
                      var13 = true;
                      var10 = true;
-                     Object e = ContextObject.get(initialData, 255);
+                     SyncBuffer e = (SyncBuffer)ContextObject.get(initialData, 255);
                      if (e == null) {
                         factories = null;
                         var10 = false;
@@ -62,8 +62,8 @@ final class FilterModelFactory extends RIMModelFactory {
 
                      factories = getFactories();
                      decodeContext.put(255, e);
-                     RIMModelFactoryCache.addToModelWithCache(_factoryCache, factories, null, (SyncBuffer)e, model, decodeContext);
-                     int uid = ((SyncBuffer)e).getUID();
+                     RIMModelFactoryCache.addToModelWithCache(_factoryCache, factories, null, e, model, decodeContext);
+                     int uid = e.getUID();
                      if (uid != 0) {
                         model.setUID(uid);
                         var10 = false;

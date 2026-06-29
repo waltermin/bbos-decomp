@@ -22,7 +22,7 @@ final class MatchingWorkNumberFinder implements Visitor {
          return false;
       }
 
-      if (o instanceof Object) {
+      if (o instanceof AbstractPhoneNumberModel) {
          AbstractPhoneNumberModel apnm = (AbstractPhoneNumberModel)o;
          int type = apnm.getType();
          if ((type == 1 || type == 2) && apnm.equals(this._phoneNumber, true)) {

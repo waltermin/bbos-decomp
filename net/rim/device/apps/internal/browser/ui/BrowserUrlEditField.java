@@ -27,7 +27,7 @@ public class BrowserUrlEditField extends BasicEditField {
    @Override
    public void dispatchEvent(Event rEvent) {
       super.dispatchEvent(rEvent);
-      if (!rEvent.isConsumed() && rEvent instanceof Object) {
+      if (!rEvent.isConsumed() && rEvent instanceof NavigationEvent) {
          NavigationEvent event = (NavigationEvent)rEvent;
          int dx = event.getDxMagnitude();
          if (dx != 0) {

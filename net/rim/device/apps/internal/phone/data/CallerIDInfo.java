@@ -9,7 +9,6 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.util.FactoryUtil;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
-import net.rim.device.apps.api.addressbook.AddressCardElement;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.CompanyInfoModel;
 import net.rim.device.apps.api.addressbook.DisplayPictureModel;
@@ -25,7 +24,6 @@ import net.rim.device.apps.api.framework.model.PaintProvider;
 import net.rim.device.apps.api.framework.model.PersistableRIMModel;
 import net.rim.device.apps.api.framework.model.PhoneNumberProvider;
 import net.rim.device.apps.api.framework.model.RIMModel;
-import net.rim.device.apps.api.framework.model.Recognizer;
 import net.rim.device.apps.api.framework.model.SyncBuffer;
 import net.rim.device.apps.api.framework.model.SyncFieldIDProvider;
 import net.rim.device.apps.api.framework.model.UniqueIDProvider;
@@ -120,7 +118,7 @@ public class CallerIDInfo
             return paintUnknownNumber(graphics, x, y, width);
          }
 
-         if (numberModel instanceof Object) {
+         if (numberModel instanceof AbstractPhoneNumberModel) {
             AbstractPhoneNumberModel apnm = (AbstractPhoneNumberModel)numberModel;
             byte[] bytes = apnm.getBytes();
             if (bytes == null || bytes.length == 0) {
@@ -139,7 +137,7 @@ public class CallerIDInfo
             ContextObject.setFlag(context, 82);
          }
 
-         if (numberModel instanceof Object) {
+         if (numberModel instanceof PaintProvider) {
             PaintProvider paintProvider = (PaintProvider)numberModel;
             widthPainted = paintProvider.paint(graphics, x, y, width, height, context);
          }
@@ -154,7 +152,7 @@ public class CallerIDInfo
 
          return widthPainted;
       } else {
-         if (this.displayCompanyInfo() && this._friendlyName instanceof Object) {
+         if (this.displayCompanyInfo() && this._friendlyName instanceof CompanyInfoModel) {
             addressModel = this._friendlyName;
          } else {
             addressModel = this.getAddress();
@@ -181,7 +179,7 @@ public class CallerIDInfo
                this._flags &= -5;
             }
 
-            if (numberModel instanceof Object) {
+            if (numberModel instanceof PaintProvider) {
                PhoneUtilities.setPrivateFlag(context, 2);
                PhoneUtilities.setPrivateFlag(context, 8);
                contextObj.setFlag(41);
@@ -195,7 +193,7 @@ public class CallerIDInfo
 
             return widthPainted;
          } else {
-            if (!(numberModel instanceof Object)) {
+            if (!(numberModel instanceof PaintProvider)) {
                return paintUnknownNumber(graphics, x, y, width);
             }
 
@@ -219,7 +217,7 @@ public class CallerIDInfo
 
       if (ContextObject.getFlag(context, 119)) {
          Object number = this.getNumber();
-         if (!(number instanceof Object)) {
+         if (!(number instanceof PhoneNumberModel)) {
             return null;
          }
 
@@ -264,7 +262,7 @@ public class CallerIDInfo
       }
 
       if (!this.displayCompanyInfo() || !insideHotlist && !insideCallLog && !speedDial && !viewCallLog && !callLogView) {
-         if (!(address instanceof Object)) {
+         if (!(address instanceof VerbProvider)) {
             if (this._friendlyName != null) {
                ContextObject.put(newContext, -4886909117188079897L, this.getFriendlyName());
             }
@@ -274,7 +272,7 @@ public class CallerIDInfo
             }
 
             ContextObject.setFlag(newContext, 12);
-            if (numberModel instanceof Object) {
+            if (numberModel instanceof VerbProvider) {
                ContextObject.clearFlag(newContext, 44);
                VerbProvider verbProvider = (VerbProvider)numberModel;
                defaultVerb = verbProvider.getVerbs(newContext, verbs);
@@ -293,8 +291,8 @@ public class CallerIDInfo
 
             if (!this.displayCompanyInfo()
                && (insideHotlist || insideCallLog || viewCallLog || callLogView)
-               && address instanceof Object
-               && ((AddressCardElement)address).getUID() != -1) {
+               && address instanceof AddressCardModel
+               && ((AddressCardModel)address).getUID() != -1) {
                Array.resize(verbs, verbs.length + 1);
                verbs[verbs.length - 1] = new ViewAddressVerb(address);
             }
@@ -312,7 +310,7 @@ public class CallerIDInfo
 
    @Override
    public int match(Object criteria) {
-      if (criteria instanceof Object) {
+      if (criteria instanceof SearchCriterion) {
          SearchCriterion crit = (SearchCriterion)criteria;
          boolean incomingCall = this.isIncomingCall();
          switch (crit.getType()) {
@@ -362,7 +360,7 @@ public class CallerIDInfo
                return 0;
             }
 
-            String[] words = (Object[])values[2];
+            String[] words = (String[])values[2];
             AbstractPhoneNumberModel phone_number = (AbstractPhoneNumberModel)this.getNumber();
             if (words != null && phone_number != null) {
                String str_value = phone_number.getValue();
@@ -415,13 +413,13 @@ public class CallerIDInfo
    @Override
    public boolean convert(Object context, Object target) {
       ContextObject contextObject = ContextObject.clone(context);
-      StringBuffer tempBuffer = (StringBuffer)(new Object());
+      StringBuffer tempBuffer = new StringBuffer();
       StringBuffer resultBuffer = null;
       if (ContextObject.getFlag(context, 19)) {
          SyncBuffer syncBuffer = (SyncBuffer)target;
          syncBuffer.addLong(10, this._addressCardUid);
          syncBuffer.addInt(13, this._flags, 4);
-         if (!(this.getNumber() instanceof Object) || !((ConversionProvider)this.getNumber()).convert(contextObject, target)) {
+         if (!(this.getNumber() instanceof ConversionProvider) || !((ConversionProvider)this.getNumber()).convert(contextObject, target)) {
             return false;
          }
 
@@ -430,17 +428,17 @@ public class CallerIDInfo
             return true;
          }
 
-         if (this._friendlyName instanceof Object) {
+         if (this._friendlyName instanceof CompanyInfoModel) {
             contextObject.setFlag(11);
          }
 
-         return this._friendlyName instanceof Object && ((ConversionProvider)this._friendlyName).convert(contextObject, target);
+         return this._friendlyName instanceof ConversionProvider && ((ConversionProvider)this._friendlyName).convert(contextObject, target);
       } else {
          if (!ContextObject.getFlag(context, 24)) {
             return false;
          }
 
-         if (!(target instanceof Object)) {
+         if (!(target instanceof StringBuffer)) {
             return false;
          }
 
@@ -449,7 +447,7 @@ public class CallerIDInfo
          PersistableRIMModel address = this.getAddress();
          PersistableRIMModel number = this.getNumber();
          boolean inList = ContextObject.getFlag(context, 3);
-         if (address instanceof Object) {
+         if (address instanceof ConversionProvider) {
             ConversionProvider conversionProvider = (ConversionProvider)address;
             contextObject.setFlag(10);
             if (conversionProvider.convert(contextObject, tempBuffer)) {
@@ -459,7 +457,7 @@ public class CallerIDInfo
                   resultBuffer.append(' ');
                }
 
-               if (number instanceof Object) {
+               if (number instanceof ConversionProvider) {
                   conversionProvider = (ConversionProvider)number;
                   if (conversionProvider.convert(contextObject, tempBuffer)) {
                      String oldStr = tempBuffer.toString();
@@ -474,7 +472,7 @@ public class CallerIDInfo
 
          tempBuffer.setLength(0);
          contextObject.setFlag(42);
-         if (number instanceof Object) {
+         if (number instanceof ConversionProvider) {
             ConversionProvider conversionProvider = (ConversionProvider)number;
             if (conversionProvider.convert(contextObject, tempBuffer)) {
                resultBuffer.append('\n');
@@ -509,8 +507,10 @@ public class CallerIDInfo
          default:
             Object thisNumber = this.getNumber();
             Object thatNumber = obj.getNumber();
-            if (thisNumber instanceof Object) {
-               return ContextObject.getFlag(context, 93) ? ((AbstractPhoneNumberModel)thisNumber).equals(thatNumber, true) : thisNumber.equals(thatNumber);
+            if (thisNumber instanceof AbstractPhoneNumberModel) {
+               return ContextObject.getFlag(context, 93)
+                  ? ((AbstractPhoneNumberModel)thisNumber).equals(thatNumber, true)
+                  : ((AbstractPhoneNumberModel)thisNumber).equals(thatNumber);
             } else {
                return false;
             }
@@ -546,7 +546,7 @@ public class CallerIDInfo
    }
 
    public boolean isDefaultPhoneNumberType() {
-      return !(this._phoneNumber instanceof Object) ? false : ((AbstractPhoneNumberModel)this._phoneNumber).getType() == 0;
+      return !(this._phoneNumber instanceof AbstractPhoneNumberModel) ? false : ((AbstractPhoneNumberModel)this._phoneNumber).getType() == 0;
    }
 
    public boolean useSmartDialing() {
@@ -622,7 +622,7 @@ public class CallerIDInfo
             return str;
          case 1:
             Object objx = this.getAddress();
-            if (!(objx instanceof Object)) {
+            if (!(objx instanceof AddressCardModel)) {
                if (objx != null) {
                   return objx.toString();
                }
@@ -637,7 +637,7 @@ public class CallerIDInfo
             break;
          case 2:
             Object obj = this.getAddress();
-            if (obj instanceof Object) {
+            if (obj instanceof AddressCardModel) {
                CompanyInfoModel companyInfo = ((AddressCardModel)obj).getCompanyInfo();
                if (companyInfo != null) {
                   return companyInfo.toString();
@@ -658,7 +658,7 @@ public class CallerIDInfo
             AbstractPhoneNumberModel pnm = (AbstractPhoneNumberModel)this.getNumber();
             int type = pnm.getType();
             if (displayType == 5 && type != 0) {
-               StringBuffer buf = (StringBuffer)(new Object());
+               StringBuffer buf = new StringBuffer();
                buf.append(AbstractPhoneNumberModel.getTypeString(pnm.getType(), 0));
                buf.append(' ');
                buf.append(pnm.toString());
@@ -693,7 +693,7 @@ public class CallerIDInfo
 
    void setFriendlyName(String name, long objectTypeToCreate) {
       if (name != null && name.length() != 0) {
-         ContextObject context = (ContextObject)(new Object());
+         ContextObject context = new ContextObject();
          context.put(253, name);
          this._friendlyName = (PersistableRIMModel)FactoryUtil.createInstance(objectTypeToCreate, context);
       } else {
@@ -705,11 +705,8 @@ public class CallerIDInfo
       if (pnm == null) {
          this._friendlyName = null;
       } else {
-         String[] nameArray = new Object[3];
-         nameArray[0] = pnm.getSalutation();
-         nameArray[1] = pnm.getFirstName();
-         nameArray[2] = pnm.getLastName();
-         ContextObject context = (ContextObject)(new Object());
+         String[] nameArray = new String[]{pnm.getSalutation(), pnm.getFirstName(), pnm.getLastName()};
+         ContextObject context = new ContextObject();
          context.put(3129577024825566583L, nameArray);
          this._friendlyName = (PersistableRIMModel)FactoryUtil.createInstance(5149066071290992769L, context);
       }
@@ -744,13 +741,13 @@ public class CallerIDInfo
    String getNumberTypeString() {
       AbstractPhoneNumberModel number = (AbstractPhoneNumberModel)this.getNumber();
       PersistableRIMModel address = this.getAddressInternal(false, 0);
-      if (address instanceof Object) {
+      if (address instanceof PhoneNumberProvider) {
          PhoneNumberProvider provider = (PhoneNumberProvider)address;
          if (provider.getNumPhoneNumberModels() > 0) {
             Object[] models = provider.getPhoneNumberModels();
 
             for (int i = 0; i < models.length; i++) {
-               if (models[i] instanceof Object && number.equals(models[i], true)) {
+               if (models[i] instanceof AbstractPhoneNumberModel && number.equals(models[i], true)) {
                   String type = this.getTypeFromNumber((AbstractPhoneNumberModel)models[i]);
                   if (type != null) {
                      return type;
@@ -784,7 +781,7 @@ public class CallerIDInfo
       RIMModel number = this.getNumber();
       RIMModel address = this.getAddress();
       if (PhoneUtilities.getPrivateFlag(context, 39)) {
-         if (!(address instanceof Object)) {
+         if (!(address instanceof KeyProvider)) {
             if (keyArray.length == index) {
                Array.resize(keyArray, index + 1);
             }
@@ -793,12 +790,12 @@ public class CallerIDInfo
             if (friendlyName != null) {
                keyArray[index] = friendlyName;
                return 1;
-            } else if (!(number instanceof Object)) {
+            } else if (!(number instanceof AbstractPhoneNumberModel)) {
                keyArray[index] = "þ";
                return 1;
             } else {
                AbstractPhoneNumberModel model = (AbstractPhoneNumberModel)number;
-               keyArray[index] = ((StringBuffer)(new Object("þ"))).append(model.getValue()).toString();
+               keyArray[index] = "þ" + model.getValue();
                return 1;
             }
          } else {
@@ -806,7 +803,7 @@ public class CallerIDInfo
             return keyProvider.getKeys(context, keyArray, index, keyRequested);
          }
       } else {
-         if (!(number instanceof Object)) {
+         if (!(number instanceof KeyProvider)) {
             return 0;
          }
 
@@ -818,7 +815,7 @@ public class CallerIDInfo
    @Override
    public int getKeys(Object context, long[] keyArray, int index, long keyRequested) {
       RIMModel number = this.getNumber();
-      if (!(number instanceof Object)) {
+      if (!(number instanceof KeyProvider)) {
          return 0;
       }
 
@@ -830,14 +827,14 @@ public class CallerIDInfo
    public int getKeys(Object context, int[] keyArray, int index, long keyRequested) {
       RIMModel address = null;
       if (ContextObject.getFlag(context, 39)) {
-         RIMModel var8 = this.getAddress();
-         if (var8 instanceof Object) {
-            KeyProvider keyProvider = (KeyProvider)var8;
+         address = this.getAddress();
+         if (address instanceof KeyProvider) {
+            KeyProvider keyProvider = (KeyProvider)address;
             return keyProvider.getKeys(context, keyArray, index, keyRequested);
          }
       } else if (keyRequested == -4145532165335996154L) {
          Object number = this.getNumber();
-         if (number instanceof Object) {
+         if (number instanceof KeyProvider) {
             return ((KeyProvider)number).getKeys(context, keyArray, index, keyRequested);
          }
       }
@@ -952,7 +949,7 @@ public class CallerIDInfo
          preferredModel = this.getNumber();
       }
 
-      if (!(preferredModel instanceof Object)) {
+      if (!(preferredModel instanceof DefaultProvider)) {
          return null;
       }
 
@@ -982,18 +979,18 @@ public class CallerIDInfo
 
    @Override
    public boolean checkCrypt(boolean compress, boolean encrypt) {
-      return this._phoneNumber instanceof Object && !((EncryptableProvider)this._phoneNumber).checkCrypt(compress, encrypt)
+      return this._phoneNumber instanceof EncryptableProvider && !((EncryptableProvider)this._phoneNumber).checkCrypt(compress, encrypt)
          ? false
-         : !(this._friendlyName instanceof Object) || ((EncryptableProvider)this._friendlyName).checkCrypt(compress, encrypt);
+         : !(this._friendlyName instanceof EncryptableProvider) || ((EncryptableProvider)this._friendlyName).checkCrypt(compress, encrypt);
    }
 
    @Override
    public Object reCrypt(boolean compress, boolean encrypt) {
-      if (this._phoneNumber instanceof Object) {
+      if (this._phoneNumber instanceof EncryptableProvider) {
          ((EncryptableProvider)this._phoneNumber).reCrypt(compress, encrypt);
       }
 
-      if (this._friendlyName instanceof Object) {
+      if (this._friendlyName instanceof EncryptableProvider) {
          ((EncryptableProvider)this._friendlyName).reCrypt(compress, encrypt);
       }
 
@@ -1011,7 +1008,7 @@ public class CallerIDInfo
    private boolean updatePhoneNumber(Object addressCard) {
       if (this.isReadOnly()) {
          return false;
-      } else if (!(this._phoneNumber instanceof Object)) {
+      } else if (!(this._phoneNumber instanceof AbstractPhoneNumberModel)) {
          return false;
       } else {
          AbstractPhoneNumberModel phoneNumberComparator = (AbstractPhoneNumberModel)this._phoneNumber;
@@ -1106,13 +1103,13 @@ public class CallerIDInfo
    }
 
    private int getDefaultVerbIndex(Verb[] verbs, Object searchPhoneNumber) {
-      if (searchPhoneNumber instanceof Object) {
+      if (searchPhoneNumber instanceof AbstractPhoneNumberModel) {
          AbstractPhoneNumberModel phoneNumberComparator = (AbstractPhoneNumberModel)searchPhoneNumber;
 
          for (int i = 0; i < verbs.length; i++) {
             Verb verb = verbs[i];
 
-            while (verb instanceof Object) {
+            while (verb instanceof WrapperVerb) {
                verb = ((WrapperVerb)verb).getInnerVerb();
             }
 
@@ -1146,9 +1143,9 @@ public class CallerIDInfo
    }
 
    private Verb getDefaultInHolsterInputVerb(boolean callWaiting, int callId, Object context) {
-      Object o = ContextObject.get(context, -2949044237254437889L);
-      if (o instanceof Object) {
-         int inHolsterEvent = o;
+      Object o = (Integer)ContextObject.get(context, -2949044237254437889L);
+      if (o instanceof Integer) {
+         int inHolsterEvent = (Integer)o;
          switch (inHolsterEvent) {
             case 0:
                break;
@@ -1182,10 +1179,10 @@ public class CallerIDInfo
    }
 
    private Verb getIncomingCallVerbs(boolean callWaiting, Object context, Verb[] verbs) {
-      Object o = ContextObject.get(context, 2321140177253895719L);
+      Object o = (Integer)ContextObject.get(context, 2321140177253895719L);
       int callId = 0;
-      if (o instanceof Object) {
-         callId = o;
+      if (o instanceof Integer) {
+         callId = (Integer)o;
       }
 
       if (callId == 0) {
@@ -1258,7 +1255,7 @@ public class CallerIDInfo
       } else {
          label39: {
             if (PhoneUtilities.getPrivateFlag(context, 58)) {
-               if (!(phoneNumber instanceof Object)) {
+               if (!(phoneNumber instanceof PhoneNumberModel)) {
                   break label39;
                }
 
@@ -1271,7 +1268,7 @@ public class CallerIDInfo
          }
 
          this._addressCardUid = this.addressCardToUid(address);
-         if (address instanceof Object) {
+         if (address instanceof AddressCardModel) {
             AddressCardModel acm = (AddressCardModel)address;
             this.setFriendlyName(acm.getName());
          }
@@ -1279,7 +1276,7 @@ public class CallerIDInfo
 
       CallerIDInfo sourceCidi = (CallerIDInfo)ContextObject.get(context, 5898398779440734986L);
       if (sourceCidi != null) {
-         if (sourceCidi._friendlyName instanceof Object) {
+         if (sourceCidi._friendlyName instanceof CompanyInfoModel) {
             this._friendlyName = sourceCidi._friendlyName;
          } else {
             this.setFriendlyName(sourceCidi.getFriendlyName());
@@ -1312,7 +1309,7 @@ public class CallerIDInfo
       if (phoneNumberMatches != null && phoneNumberMatches.length > 0) {
          numberMatches = phoneNumberMatches;
       } else {
-         numberMatches = AddressBookServices.reverseLookup(phoneNumber, (Recognizer)phoneNumber, false);
+         numberMatches = AddressBookServices.reverseLookup(phoneNumber, (AbstractPhoneNumberModel)phoneNumber, false);
       }
 
       Object[] nameMatches = null;
@@ -1323,7 +1320,7 @@ public class CallerIDInfo
             return lookupResult;
          }
 
-         if (friendlyName != null && !(friendlyName instanceof Object)) {
+         if (friendlyName != null && !(friendlyName instanceof CompanyInfoModel)) {
             nameMatches = AddressBookServices.reverseLookup(friendlyName, null);
          }
 
@@ -1390,7 +1387,7 @@ public class CallerIDInfo
       if (phoneNumber != null && numberMatches != null) {
          for (int i = 0; i < numberMatches.length; i++) {
             Object card = numberMatches[i];
-            if (card instanceof Object) {
+            if (card instanceof AddressCardModel) {
                AddressCardModel acm = (AddressCardModel)card;
                CompanyInfoModel companyInfo = acm.getCompanyInfo();
                if (companyInfo != null) {
@@ -1426,7 +1423,7 @@ public class CallerIDInfo
          return null;
       } else {
          AddressLookupResult lookupResult = this.lookUpPhoneNumber(this._phoneNumber, this._friendlyName, numberMatches);
-         if (lookupResult != null && lookupResult._addressCard instanceof Object) {
+         if (lookupResult != null && lookupResult._addressCard instanceof AddressCardModel) {
             AddressCardModel acm = (AddressCardModel)lookupResult._addressCard;
             Object matchingPhoneNumber = null;
             if (lookupResult._companyWorkNumber != null) {
@@ -1440,7 +1437,7 @@ public class CallerIDInfo
                   this.copyPhoneNumber(matchingPhoneNumber);
                }
 
-               if (lookupResult._companyInfo instanceof Object) {
+               if (lookupResult._companyInfo instanceof CompanyInfoModel) {
                   if (!this.isReadOnly()) {
                      this.copyFriendlyName(lookupResult._companyInfo);
                      this._flags |= 8;
@@ -1494,7 +1491,7 @@ public class CallerIDInfo
          return false;
       }
 
-      if (friendlyName instanceof Object) {
+      if (friendlyName instanceof Copyable) {
          Copyable copyable = (Copyable)friendlyName;
          PersistableRIMModel newFriendlyName = (PersistableRIMModel)copyable.copy();
          if (newFriendlyName != null) {
@@ -1511,7 +1508,7 @@ public class CallerIDInfo
          return false;
       }
 
-      if (phoneNumber instanceof Object) {
+      if (phoneNumber instanceof Copyable) {
          Copyable copyable = (Copyable)phoneNumber;
          PersistableRIMModel newPhoneNumber = (PersistableRIMModel)copyable.copy();
          if (newPhoneNumber != null) {
@@ -1529,11 +1526,11 @@ public class CallerIDInfo
       }
 
       Object card = AddressBookServices.getAddressCard(uid);
-      return (PersistableRIMModel)(!(card instanceof Object) ? null : card);
+      return !(card instanceof PersistableRIMModel) ? null : (PersistableRIMModel)card;
    }
 
    private long addressCardToUid(Object addressCard) {
-      if (!(addressCard instanceof Object)) {
+      if (!(addressCard instanceof UniqueIDProvider)) {
          return 0;
       }
 

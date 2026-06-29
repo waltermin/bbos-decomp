@@ -24,10 +24,10 @@ public class PGPUniversalAuthenticationListener implements GlobalEventListener {
          this._threadWaiting = false;
       }
 
-      String[] serviceUIDArray = new Object[0];
+      String[] serviceUIDArray = new String[0];
       String serviceUIDString = ITPolicy.getString(24, 51);
       if (serviceUIDString != null) {
-         StringTokenizer tokenizer = (StringTokenizer)(new Object(serviceUIDString, ','));
+         StringTokenizer tokenizer = new StringTokenizer(serviceUIDString, ',');
 
          while (tokenizer.hasMoreTokens()) {
             Arrays.add(serviceUIDArray, tokenizer.nextToken());

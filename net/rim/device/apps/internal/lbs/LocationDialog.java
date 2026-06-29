@@ -8,14 +8,16 @@ import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.FontRegistry;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Keypad;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.component.ActiveRichTextField;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.FlowFieldManager;
 import net.rim.device.api.ui.container.PopupScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.FactoryUtil;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.RIMModel;
@@ -23,6 +25,7 @@ import net.rim.device.apps.api.framework.model.VerbProvider;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.CommonResources;
 import net.rim.device.apps.internal.lbs.resources.LBSResources;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 
 final class LocationDialog extends PopupScreen implements FieldChangeListener {
    private ButtonField _okField;
@@ -36,11 +39,11 @@ final class LocationDialog extends PopupScreen implements FieldChangeListener {
    private ActiveRichTextField _faxField;
    private ActiveRichTextField _urlField;
    private ActiveRichTextField _emailField;
-   private FlowFieldManager _hfm = (FlowFieldManager)(new Object(12884901888L));
+   private FlowFieldManager _hfm = new FlowFieldManager(12884901888L);
    private Location _location = new Location();
 
    LocationDialog(Location location, String[] legalNotices) {
-      super((Manager)(new Object(1153220571769602048L)), 196608);
+      super(new VerticalFieldManager(1153220571769602048L), 196608);
       this._location = location;
       this.applyTheme();
       this.addTitle(location._label);
@@ -64,10 +67,10 @@ final class LocationDialog extends PopupScreen implements FieldChangeListener {
 
    private final void addTitle(String title) {
       if (title != null && title.length() > 0) {
-         ActiveRichTextField labelField = (ActiveRichTextField)(new Object(title));
+         ActiveRichTextField labelField = new ActiveRichTextField(title);
          labelField.setFont(Font.getDefault().derive(1));
          this.add(labelField);
-         this.add((Field)(new Object()));
+         this.add(new SeparatorField());
          this._firstField = labelField;
       }
    }
@@ -82,9 +85,9 @@ final class LocationDialog extends PopupScreen implements FieldChangeListener {
          int numEmptyStars = 5 - numStars - numHalfStars;
          int width = 5 * (starWidth + 1);
          int height = starHeight + 2;
-         Bitmap stars = (Bitmap)(new Object(197, width, height));
+         Bitmap stars = new Bitmap(197, width, height);
          stars.createAlpha(2);
-         Graphics graphics = (Graphics)(new Object(stars));
+         Graphics graphics = new Graphics(stars);
          graphics.setGlobalAlpha(0);
          graphics.clear();
          graphics.setGlobalAlpha(255);
@@ -111,7 +114,7 @@ final class LocationDialog extends PopupScreen implements FieldChangeListener {
             }
          }
 
-         this._ratingField = (BitmapField)(new Object(stars));
+         this._ratingField = new BitmapField(stars);
          if (this._firstField == null) {
             this._firstField = this._ratingField;
          }
@@ -122,7 +125,7 @@ final class LocationDialog extends PopupScreen implements FieldChangeListener {
 
    private final void addDescription(String description) {
       if (description != null && description != "") {
-         this._descriptionField = (ActiveRichTextField)(new Object(description));
+         this._descriptionField = new ActiveRichTextField(description);
          if (this._firstField == null) {
             this._firstField = this._descriptionField;
          }
@@ -133,7 +136,7 @@ final class LocationDialog extends PopupScreen implements FieldChangeListener {
 
    private final void addAddress(String address) {
       if (address != null && !address.equals("")) {
-         this._addressField = (ActiveRichTextField)(new Object(address));
+         this._addressField = new ActiveRichTextField(address);
          this.add(this._addressField);
          if (this._firstField == null) {
             this._firstField = this._addressField;
@@ -143,11 +146,11 @@ final class LocationDialog extends PopupScreen implements FieldChangeListener {
 
    private final void addCityState(String city, String state) {
       if (city != null && !city.equals("") && state != null && !state.equals("")) {
-         this._cityStateField = (ActiveRichTextField)(new Object(((StringBuffer)(new Object())).append(city).append(", ").append(state).toString()));
+         this._cityStateField = new ActiveRichTextField(city + ", " + state);
       } else if (city != null && !city.equals("")) {
-         this._cityStateField = (ActiveRichTextField)(new Object(city));
+         this._cityStateField = new ActiveRichTextField(city);
       } else if (state != null && !state.equals("")) {
-         this._cityStateField = (ActiveRichTextField)(new Object(state));
+         this._cityStateField = new ActiveRichTextField(state);
       }
 
       if (this._cityStateField != null) {
@@ -160,13 +163,11 @@ final class LocationDialog extends PopupScreen implements FieldChangeListener {
 
    private final void addCountryPostalCode(String country, String postalCode) {
       if (country != null && !country.equals("") && postalCode != null && !postalCode.equals("")) {
-         this._countryPostalCodeField = (ActiveRichTextField)(new Object(
-            ((StringBuffer)(new Object())).append(country).append(", ").append(postalCode).toString()
-         ));
+         this._countryPostalCodeField = new ActiveRichTextField(country + ", " + postalCode);
       } else if (country != null && !country.equals("")) {
-         this._countryPostalCodeField = (ActiveRichTextField)(new Object(country));
+         this._countryPostalCodeField = new ActiveRichTextField(country);
       } else if (postalCode != null && !postalCode.equals("")) {
-         this._countryPostalCodeField = (ActiveRichTextField)(new Object(postalCode));
+         this._countryPostalCodeField = new ActiveRichTextField(postalCode);
       }
 
       if (this._countryPostalCodeField != null) {
@@ -179,7 +180,7 @@ final class LocationDialog extends PopupScreen implements FieldChangeListener {
 
    private final void addPhone(String phone) {
       if (phone != null && !phone.equals("")) {
-         this._phoneField = (ActiveRichTextField)(new Object(((StringBuffer)(new Object("Phone: "))).append(phone).toString()));
+         this._phoneField = new ActiveRichTextField("Phone: " + phone);
          this.add(this._phoneField);
          if (this._firstField == null) {
             this._firstField = this._phoneField;
@@ -189,7 +190,7 @@ final class LocationDialog extends PopupScreen implements FieldChangeListener {
 
    private final void addFax(String fax) {
       if (fax != null && !fax.equals("")) {
-         this._faxField = (ActiveRichTextField)(new Object(((StringBuffer)(new Object("Fax: "))).append(fax).toString()));
+         this._faxField = new ActiveRichTextField("Fax: " + fax);
          this.add(this._faxField);
          if (this._firstField == null) {
             this._firstField = this._faxField;
@@ -199,7 +200,7 @@ final class LocationDialog extends PopupScreen implements FieldChangeListener {
 
    private final void addURL(String url) {
       if (url != null && !url.equals("")) {
-         this._urlField = (ActiveRichTextField)(new Object(((StringBuffer)(new Object("Web Page: "))).append(url).toString()));
+         this._urlField = new ActiveRichTextField("Web Page: " + url);
          this.add(this._urlField);
          if (this._firstField == null) {
             this._firstField = this._urlField;
@@ -209,7 +210,7 @@ final class LocationDialog extends PopupScreen implements FieldChangeListener {
 
    private final void addEmail(String email) {
       if (email != null && !email.equals("")) {
-         this._emailField = (ActiveRichTextField)(new Object(((StringBuffer)(new Object("Email: "))).append(email).toString()));
+         this._emailField = new ActiveRichTextField("Email: " + email);
          this.add(this._emailField);
          if (this._firstField == null) {
             this._firstField = this._emailField;
@@ -220,13 +221,13 @@ final class LocationDialog extends PopupScreen implements FieldChangeListener {
    private final void addLegalNotices(String[] legalNotices) {
       if (legalNotices != null && legalNotices.length > 0) {
          int spaceHeight = Font.getDefault().derive(1).getHeight() >> 1;
-         this.add((Field)(new Object(spaceHeight)));
-         this.add((Field)(new Object(65536)));
-         this.add((Field)(new Object(spaceHeight)));
+         this.add(new VerticalSpacerField(spaceHeight));
+         this.add(new SeparatorField(65536));
+         this.add(new VerticalSpacerField(spaceHeight));
 
          for (int i = 0; i < legalNotices.length; i++) {
-            this.add((Field)(new Object(legalNotices[i])));
-            this.add((Field)(new Object(spaceHeight)));
+            this.add(new LabelField(legalNotices[i]));
+            this.add(new VerticalSpacerField(spaceHeight));
          }
       }
    }
@@ -243,7 +244,7 @@ final class LocationDialog extends PopupScreen implements FieldChangeListener {
    }
 
    private final void addButtons() {
-      this._okField = (ButtonField)(new Object(CommonResources.getString(117), 65536));
+      this._okField = new ButtonField(CommonResources.getString(117), 65536);
       this._okField.setChangeListener(this);
       this._hfm.add(this._okField);
       this.add(this._hfm);
@@ -280,22 +281,22 @@ final class LocationDialog extends PopupScreen implements FieldChangeListener {
       boolean addressExists = this._location._address != null && this._location._address.length() > 0;
       boolean phoneExists = this._location._phone != null && this._location._phone.length() > 0;
       if (addressExists && phoneExists) {
-         ContextObject tempContext = (ContextObject)(new Object());
+         ContextObject tempContext = new ContextObject();
          tempContext.reset();
          if (this._location._phone != null) {
             long contextId = 253;
             tempContext.put(contextId, this._location._phone);
             RIMModel numberModel = (RIMModel)FactoryUtil.createInstance(3797587162219887872L, tempContext);
             if (numberModel == null) {
-               throw new Object();
+               throw new RuntimeException();
             }
 
-            ContextObject contextObject = (ContextObject)(new Object(34));
+            ContextObject contextObject = new ContextObject(34);
             ContextObject.setFlag(contextObject, 20);
             contextObject.put(253, this._location._phone);
-            Verb[] verbs = new Object[0];
+            Verb[] verbs = new Verb[0];
             Verb defaultVerb = ((VerbProvider)numberModel).getVerbs(contextObject, verbs);
-            if (Dialog.ask(3, MessageFormat.format(LBSResources.getString(286), new Object[]{this._location._phone}), 4) == 4) {
+            if (Dialog.ask(3, MessageFormat.format(LBSResources.getString(286), new String[]{this._location._phone}), 4) == 4) {
                defaultVerb.invoke(contextObject);
             }
          }

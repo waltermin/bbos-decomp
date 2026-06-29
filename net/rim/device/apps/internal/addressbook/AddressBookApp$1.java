@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.addressbook;
 
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.registration.VerbRepository;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.internal.addressbook.resources.AddressBookResources;
@@ -19,7 +20,7 @@ final class AddressBookApp$1 implements Runnable {
       if (this.val$arg != null && this.val$arg.equals("compose")) {
          VerbRepository useOnceVerbRepository = VerbRepository.getVerbRepository(8016149483483360697L);
          Verb[] useOnceVerbs = useOnceVerbRepository.getVerbs(null);
-         this.this$0.pushScreen(AddressBookListUI.getInstance(AddressBookResources.getString(53), useOnceVerbs, new Object(7)));
+         this.this$0.pushScreen(AddressBookListUI.getInstance(AddressBookResources.getString(53), useOnceVerbs, new ContextObject(7)));
       } else {
          this.this$0.pushScreen(AddressBookListUI.getInstance(null));
       }

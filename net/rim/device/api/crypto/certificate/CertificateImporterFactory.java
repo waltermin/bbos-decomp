@@ -16,12 +16,12 @@ public class CertificateImporterFactory {
 
    public static synchronized boolean register(CertificateImporterFactory factory) {
       if (factory == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       String type = factory.getType();
       if (type == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (_hashtable.containsKey(type)) {
@@ -81,21 +81,21 @@ public class CertificateImporterFactory {
                privateKeys[i] = null;
             }
          } else if (privateKeys.length != numCerts) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          if (labels == null) {
-            labels = new Object[numCerts];
+            labels = new String[numCerts];
 
             for (int i = 0; i < numCerts; i++) {
                if (certificates[i] == null) {
-                  throw new Object();
+                  throw new IllegalArgumentException();
                }
 
                labels[i] = certificates[i].getSubjectFriendlyName();
             }
          } else if (labels.length != numCerts) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          for (int i = 0; i < numCerts; i++) {
@@ -106,7 +106,7 @@ public class CertificateImporterFactory {
 
          return true;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -131,7 +131,7 @@ public class CertificateImporterFactory {
             ;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -150,7 +150,7 @@ public class CertificateImporterFactory {
             ;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

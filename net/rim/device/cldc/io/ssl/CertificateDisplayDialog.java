@@ -62,7 +62,7 @@ public final class CertificateDisplayDialog extends TitledScrollingDialog {
       this.addScrollingLabelAndValue(_rb.getString(2), this._certChain[this._offset].getIssuer());
       this.addScrollingLabelAndValue(_rb.getString(3), this._certChain[this._offset].getSerialNumber());
       if (this._offset < this._certChain.length - 1) {
-         this._viewCert = (ButtonField)(new Object(_rb.getString(10), 12884901888L));
+         this._viewCert = new ButtonField(_rb.getString(10), 12884901888L);
          this._viewCert.setChangeListener(this);
          this.addScrollingField(this._viewCert);
       }
@@ -83,7 +83,7 @@ public final class CertificateDisplayDialog extends TitledScrollingDialog {
    }
 
    private final String formatDNForTitle(String subject) {
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       this.getString(subject, buffer, "CN=");
       if (buffer.length() > 0) {
          return buffer.toString();
@@ -109,7 +109,7 @@ public final class CertificateDisplayDialog extends TitledScrollingDialog {
    }
 
    private final String formatSubjectDN(String subject) {
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       this.getString(subject, buffer, "CN=");
       return buffer.length() > 0 ? buffer.toString() : null;
    }

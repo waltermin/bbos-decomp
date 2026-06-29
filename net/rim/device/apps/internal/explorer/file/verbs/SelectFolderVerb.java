@@ -16,9 +16,9 @@ public final class SelectFolderVerb extends Verb {
    @Override
    public final Object invoke(Object parameter) {
       Object selectedItem = parameter;
-      if (parameter instanceof Object) {
+      if (parameter instanceof ContextObject) {
          selectedItem = ContextObject.get(parameter, 2765042845091913199L);
-         if (super._rbKey == 133 && selectedItem instanceof Object) {
+         if (super._rbKey == 133 && selectedItem instanceof String) {
             String selectedPath = (String)selectedItem;
             if (!selectedPath.endsWith("/")) {
                int end = selectedPath.lastIndexOf(47, selectedPath.length());

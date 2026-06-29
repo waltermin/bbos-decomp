@@ -26,7 +26,7 @@ public class PGPSubKeyInfoDialog extends TitledScrollingDialog {
          this._cryptoSystemProperties = cryptoSystemProperties;
          this.setTitle(this._certificate.getSubjectFriendlyName());
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -64,7 +64,7 @@ public class PGPSubKeyInfoDialog extends TitledScrollingDialog {
    }
 
    private String getKeyUsageString() {
-      StringBuffer keyUsageStringBuffer = (StringBuffer)(new Object());
+      StringBuffer keyUsageStringBuffer = new StringBuffer();
 
       for (int i = 0; i < 15; i++) {
          long currentUsage = (long)1 << i;
@@ -81,7 +81,7 @@ public class PGPSubKeyInfoDialog extends TitledScrollingDialog {
    }
 
    private String[] getWarnings(long propertiesSummary) {
-      String[] warnings = new Object[0];
+      String[] warnings = new String[0];
       if ((propertiesSummary & 1024) != 0) {
          Arrays.add(warnings, this._rb.getString(8033));
       }

@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.qm.peer;
 
 import net.rim.device.api.crypto.Digest;
+import net.rim.device.api.crypto.MD5Digest;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
@@ -17,17 +18,17 @@ final class Utils {
    public static final int PUBLIC_KEY_BYTE_LENGTH = 21;
    public static final byte HIGH_BYTE_MASK = 0;
    public static final byte LOW_BYTE_MASK = 2;
-   private static StringBuffer _buffer = (StringBuffer)(new Object());
+   private static StringBuffer _buffer = new StringBuffer();
    private static byte[] _codes = new byte[256];
    private static final String _alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
    private static final String TOSTRIP = "\n\n";
-   private static final String TOSTRIP_GROUPWISE = (String)(new Object(new byte[]{32, 10, 32, 10}));
+   private static final String TOSTRIP_GROUPWISE = new String(new byte[]{32, 10, 32, 10});
 
    private Utils() {
    }
 
    public static final byte[] getMD5Hash(String str) {
-      Digest md5 = (Digest)(new Object());
+      Digest md5 = new MD5Digest();
       md5.update(str.getBytes());
       return md5.getDigest();
    }
@@ -182,7 +183,7 @@ final class Utils {
       _buffer.setLength(0);
       if (toResolve != null) {
          Object lookup = AddressBookServices.getAddressBook().reverseLookup(toResolve);
-         if (lookup instanceof Object) {
+         if (lookup instanceof AddressCardModel) {
             AddressCardModel card = (AddressCardModel)lookup;
             PersonNameModel person = card.getName();
             if (person != null) {
@@ -209,9 +210,9 @@ final class Utils {
    public static final Verb[] getVerbs(String toResolve) {
       Verb[] verbs = null;
       if (toResolve != null) {
-         verbs = new Object[0];
+         verbs = new Verb[0];
          Object lookup = AddressBookServices.getAddressBook().reverseLookup(toResolve);
-         if (lookup instanceof Object) {
+         if (lookup instanceof VerbProvider) {
             ((VerbProvider)lookup).getVerbs(null, verbs);
          }
       }
@@ -223,7 +224,7 @@ final class Utils {
       AddressCardModel result = null;
       if (toResolve != null) {
          Object lookup = AddressBookServices.getAddressBook().reverseLookup(toResolve);
-         if (lookup instanceof Object) {
+         if (lookup instanceof AddressCardModel) {
             result = (AddressCardModel)lookup;
          }
       }

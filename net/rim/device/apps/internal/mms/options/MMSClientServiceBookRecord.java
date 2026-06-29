@@ -36,7 +36,7 @@ class MMSClientServiceBookRecord {
       } else if (!createIfMissing) {
          return null;
       } else {
-         ServiceRecord sr = (ServiceRecord)(new Object());
+         ServiceRecord sr = new ServiceRecord();
          sr.setType(0);
          sr.setCid("MMS");
          sr.setUid("MMS0001");
@@ -46,7 +46,7 @@ class MMSClientServiceBookRecord {
          sr = sb.addRecord(sr);
          sb.commit();
          if (sr == null) {
-            throw new Object("Failed to add MMS client service book.");
+            throw new RuntimeException("Failed to add MMS client service book.");
          } else {
             return new MMSClientServiceBookRecord(sb, sr);
          }
@@ -58,7 +58,7 @@ class MMSClientServiceBookRecord {
       this._sr = sr;
       byte[] data = sr.getApplicationData();
       if (data != null) {
-         DataBuffer buf = (DataBuffer)(new Object());
+         DataBuffer buf = new DataBuffer();
          buf.write(data);
          buf.rewind();
 
@@ -83,7 +83,7 @@ class MMSClientServiceBookRecord {
    }
 
    public void save() {
-      DataBuffer buf = (DataBuffer)(new Object());
+      DataBuffer buf = new DataBuffer();
       if (this._integerTable != null) {
          IntEnumeration keys = this._integerTable.keys();
 
@@ -123,7 +123,7 @@ class MMSClientServiceBookRecord {
 
    public int getIntegerField(int key) {
       if (!isIntegerKey(key)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return this._integerTable == null ? -1 : this._integerTable.get(key);
       }
@@ -131,11 +131,11 @@ class MMSClientServiceBookRecord {
 
    public void setField(int key, int value) {
       if (!isIntegerKey(key)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (this._integerTable == null) {
-         this._integerTable = (IntIntHashtable)(new Object());
+         this._integerTable = new IntIntHashtable();
       }
 
       this._integerTable.put(key, value);
@@ -143,15 +143,15 @@ class MMSClientServiceBookRecord {
 
    public String getStringField(int key) {
       if (!isStringKey(key)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
-         return (String)(this._stringTable == null ? null : this._stringTable.get(key));
+         return this._stringTable == null ? null : (String)this._stringTable.get(key);
       }
    }
 
    public void setField(int key, String value) {
       if (!isStringKey(key)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (value == null) {
@@ -161,7 +161,7 @@ class MMSClientServiceBookRecord {
          }
       } else {
          if (this._stringTable == null) {
-            this._stringTable = (IntHashtable)(new Object());
+            this._stringTable = new IntHashtable();
          }
 
          this._stringTable.put(key, value);

@@ -15,6 +15,6 @@ public final class HostedChangePasswordScreen extends ChangePasswordScreen {
    @Override
    protected final String getTitle() {
       Mailbox mailboxToEdit = ClientSessionState.getInstance().getMailboxToModify();
-      return MessageFormat.format(ApplicationResources.getString(266), new Object[]{mailboxToEdit.getDescription()});
+      return MessageFormat.format(ApplicationResources.getString(266), new String[]{mailboxToEdit.getDescription()});
    }
 }

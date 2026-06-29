@@ -5,7 +5,7 @@ import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.IntIntHashtable;
 
 public class NewMessageEventManager {
-   private IntIntHashtable _unreadEventFlags = (IntIntHashtable)(new Object());
+   private IntIntHashtable _unreadEventFlags = new IntIntHashtable();
    private NewMessageEventListener[] _newMessageEventListeners;
    public static final int NEW_MESSAGE = 1;
    public static final int MISSED_CALL = 2;

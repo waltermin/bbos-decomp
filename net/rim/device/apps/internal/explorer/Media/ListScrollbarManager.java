@@ -4,7 +4,7 @@ import net.rim.device.api.ui.Manager;
 import net.rim.device.internal.ui.component.Scrollbar;
 
 public final class ListScrollbarManager extends Manager {
-   private Scrollbar _scrollbar = (Scrollbar)(new Object());
+   private Scrollbar _scrollbar = new Scrollbar();
    private Manager _list;
 
    public ListScrollbarManager(Manager list) {

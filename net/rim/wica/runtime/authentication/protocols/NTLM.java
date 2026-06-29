@@ -15,9 +15,9 @@ public final class NTLM {
       byte[] lmResponse = new byte[24];
       byte[] keyBytes = new byte[21];
       System.arraycopy(lmHash, 0, keyBytes, 0, 16);
-      DESEncryptorEngine lowEncryptor = (DESEncryptorEngine)(new Object(createDESKey(keyBytes, 0)));
-      DESEncryptorEngine middleEncryptor = (DESEncryptorEngine)(new Object(createDESKey(keyBytes, 7)));
-      DESEncryptorEngine highEncryptor = (DESEncryptorEngine)(new Object(createDESKey(keyBytes, 14)));
+      DESEncryptorEngine lowEncryptor = new DESEncryptorEngine(createDESKey(keyBytes, 0));
+      DESEncryptorEngine middleEncryptor = new DESEncryptorEngine(createDESKey(keyBytes, 7));
+      DESEncryptorEngine highEncryptor = new DESEncryptorEngine(createDESKey(keyBytes, 14));
       lowEncryptor.encrypt(challenge, 0, lmResponse, 0);
       middleEncryptor.encrypt(challenge, 0, lmResponse, 8);
       highEncryptor.encrypt(challenge, 0, lmResponse, 16);
@@ -31,8 +31,8 @@ public final class NTLM {
       byte[] oemPassword = password.toUpperCase().getBytes("US-ASCII");
       int length = Math.min(oemPassword.length, 14);
       System.arraycopy(oemPassword, 0, keyBytes, 0, length);
-      DESEncryptorEngine lowEncryptor = (DESEncryptorEngine)(new Object(createDESKey(keyBytes, 0)));
-      DESEncryptorEngine highEncryptor = (DESEncryptorEngine)(new Object(createDESKey(keyBytes, 7)));
+      DESEncryptorEngine lowEncryptor = new DESEncryptorEngine(createDESKey(keyBytes, 0));
+      DESEncryptorEngine highEncryptor = new DESEncryptorEngine(createDESKey(keyBytes, 7));
       lowEncryptor.encrypt(magicConstant, 0, lmHash, 0);
       highEncryptor.encrypt(magicConstant, 0, lmHash, 8);
       return lmHash;
@@ -51,6 +51,6 @@ public final class NTLM {
          (byte)(keyBytes[5] << 2 | (keyBytes[6] & 255) >>> 6),
          (byte)(keyBytes[6] << 1)
       };
-      return (DESKey)(new Object(material));
+      return new DESKey(material);
    }
 }

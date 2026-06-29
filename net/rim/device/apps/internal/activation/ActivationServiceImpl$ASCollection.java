@@ -17,9 +17,7 @@ public final class ActivationServiceImpl$ASCollection implements SyncCollection,
 
    @Override
    public final SyncObject[] getSyncObjects() {
-      SyncObject[] objs = new Object[1];
-      objs[0] = this;
-      return objs;
+      return new SyncObject[]{this};
    }
 
    @Override

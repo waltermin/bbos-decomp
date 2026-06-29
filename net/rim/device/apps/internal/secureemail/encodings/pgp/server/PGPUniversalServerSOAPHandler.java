@@ -8,6 +8,7 @@ import javax.microedition.io.Connector;
 import javax.microedition.io.HttpConnection;
 import javax.microedition.io.SocketConnection;
 import net.rim.device.api.crypto.tls.tls10.TLS10Connection;
+import net.rim.device.api.io.IONotRoutableException;
 import net.rim.device.api.servicebook.ServiceBook;
 import net.rim.device.api.servicebook.ServiceRouting;
 import net.rim.device.api.system.Application;
@@ -16,6 +17,7 @@ import net.rim.device.api.system.PersistentContentListener;
 import net.rim.device.api.xml.XMLHashtable;
 import net.rim.device.api.xml.parsers.SAXParser;
 import net.rim.device.apps.internal.secureemail.server.SecureEmailServerOperationListener;
+import net.rim.device.cldc.io.devicehttp.ClientProtocol;
 import net.rim.device.cldc.io.utility.URL;
 
 public final class PGPUniversalServerSOAPHandler implements PersistentContentListener {
@@ -60,14 +62,14 @@ public final class PGPUniversalServerSOAPHandler implements PersistentContentLis
       // 21: putfield net/rim/device/apps/internal/secureemail/encodings/pgp/server/PGPUniversalServerSOAPHandler._saxParser Lnet/rim/device/api/xml/parsers/SAXParser;
       // 24: return
       // 25: astore 3
-      // 26: new java/lang/Object
+      // 26: new java/lang/RuntimeException
       // 29: dup
       // 2a: aload 3
       // 2b: invokevirtual net/rim/device/api/xml/parsers/ParserConfigurationException.toString ()Ljava/lang/String;
       // 2e: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 31: athrow
       // 32: astore 3
-      // 33: new java/lang/Object
+      // 33: new java/lang/RuntimeException
       // 36: dup
       // 37: aload 3
       // 38: invokevirtual org/xml/sax/SAXException.toString ()Ljava/lang/String;
@@ -84,18 +86,17 @@ public final class PGPUniversalServerSOAPHandler implements PersistentContentLis
    public final boolean requestEnrollment(String email, String ephemeralPublicKey, String userValue, SecureEmailServerOperationListener listener) {
       EventLogger.logEvent(234044482576569793L, 1431455086);
       XMLHashtable response = this.sendSOAPMessage(
-         ((StringBuffer)(new Object("<ovidsrv:Enroll xmlns:ovidsrv=\"http://www.pgp.com/\">\n<email>")))
-            .append(email)
-            .append("</email>")
-            .append("<keyblock>")
-            .append(ephemeralPublicKey)
-            .append("</keyblock>")
-            .append("<user-value>")
-            .append(userValue)
-            .append("</user-value>")
-            .append("<version>\n<major>1</major>\n<minor>5</minor>\n</version>\n")
-            .append("</ovidsrv:Enroll>")
-            .toString(),
+         "<ovidsrv:Enroll xmlns:ovidsrv=\"http://www.pgp.com/\">\n<email>"
+            + email
+            + "</email>"
+            + "<keyblock>"
+            + ephemeralPublicKey
+            + "</keyblock>"
+            + "<user-value>"
+            + userValue
+            + "</user-value>"
+            + "<version>\n<major>1</major>\n<minor>5</minor>\n</version>\n"
+            + "</ovidsrv:Enroll>",
          listener
       );
       return response.isPresent("/EnrollResponse");
@@ -104,16 +105,15 @@ public final class PGPUniversalServerSOAPHandler implements PersistentContentLis
    public final XMLHashtable authenticateInternalWithUsernamePassword(String username, String password, SecureEmailServerOperationListener listener) {
       EventLogger.logEvent(234044482576569793L, 1430341973);
       return this.sendSOAPMessage(
-         ((StringBuffer)(new Object("<ovidsrv:AuthenticateInternalPassphrase xmlns:ovidsrv=\"http://www.pgp.com/\"><username>")))
-            .append(username)
-            .append("</username>")
-            .append("<passphrase>")
-            .append(password)
-            .append("</passphrase>")
-            .append("<version>\n<major>1</major>\n<minor>5</minor>\n</version>\n")
-            .append("<client-version>\n<major>9</major>\n<minor>0</minor>\n<subminor>0</subminor>\n<subsubminor>0</subsubminor>\n</client-version>\n")
-            .append("</ovidsrv:AuthenticateInternalPassphrase>")
-            .toString(),
+         "<ovidsrv:AuthenticateInternalPassphrase xmlns:ovidsrv=\"http://www.pgp.com/\"><username>"
+            + username
+            + "</username>"
+            + "<passphrase>"
+            + password
+            + "</passphrase>"
+            + "<version>\n<major>1</major>\n<minor>5</minor>\n</version>\n"
+            + "<client-version>\n<major>9</major>\n<minor>0</minor>\n<subminor>0</subminor>\n<subsubminor>0</subsubminor>\n</client-version>\n"
+            + "</ovidsrv:AuthenticateInternalPassphrase>",
          listener
       );
    }
@@ -121,13 +121,12 @@ public final class PGPUniversalServerSOAPHandler implements PersistentContentLis
    public final XMLHashtable authenticateInternalWithCookie(String authenticationCookie, SecureEmailServerOperationListener listener) {
       EventLogger.logEvent(234044482576569793L, 1430341955);
       return this.sendSOAPMessage(
-         ((StringBuffer)(new Object("<ovidsrv:AuthenticateInternal xmlns:ovidsrv=\"http://www.pgp.com/\"><cookie>")))
-            .append(authenticationCookie)
-            .append("</cookie>")
-            .append("<version>\n<major>1</major>\n<minor>5</minor>\n</version>\n")
-            .append("<client-version>\n<major>9</major>\n<minor>0</minor>\n<subminor>0</subminor>\n<subsubminor>0</subsubminor>\n</client-version>\n")
-            .append("</ovidsrv:AuthenticateInternal>")
-            .toString(),
+         "<ovidsrv:AuthenticateInternal xmlns:ovidsrv=\"http://www.pgp.com/\"><cookie>"
+            + authenticationCookie
+            + "</cookie>"
+            + "<version>\n<major>1</major>\n<minor>5</minor>\n</version>\n"
+            + "<client-version>\n<major>9</major>\n<minor>0</minor>\n<subminor>0</subminor>\n<subsubminor>0</subsubminor>\n</client-version>\n"
+            + "</ovidsrv:AuthenticateInternal>",
          listener
       );
    }
@@ -155,38 +154,27 @@ public final class PGPUniversalServerSOAPHandler implements PersistentContentLis
    public final XMLHashtable getKeyByEmail(String email, SecureEmailServerOperationListener listener) {
       EventLogger.logEvent(234044482576569793L, 1430735685);
       return this.sendSOAPMessage(
-         ((StringBuffer)(new Object("<ovidsrv:GetKeyByEmail xmlns:ovidsrv=\"http://www.pgp.com/\"><email>")))
-            .append(email)
-            .append("</email>")
-            .append("</ovidsrv:GetKeyByEmail>")
-            .toString(),
-         listener
+         "<ovidsrv:GetKeyByEmail xmlns:ovidsrv=\"http://www.pgp.com/\"><email>" + email + "</email>" + "</ovidsrv:GetKeyByEmail>", listener
       );
    }
 
    public final XMLHashtable getKeyByID(String keyID, SecureEmailServerOperationListener listener) {
       EventLogger.logEvent(234044482576569793L, 1430735684);
       return this.sendSOAPMessage(
-         ((StringBuffer)(new Object("<ovidsrv:GetKeyByKeyID xmlns:ovidsrv=\"http://www.pgp.com/\"><keyid>")))
-            .append(keyID)
-            .append("</keyid>")
-            .append("</ovidsrv:GetKeyByKeyID>")
-            .toString(),
-         listener
+         "<ovidsrv:GetKeyByKeyID xmlns:ovidsrv=\"http://www.pgp.com/\"><keyid>" + keyID + "</keyid>" + "</ovidsrv:GetKeyByKeyID>", listener
       );
    }
 
    public final XMLHashtable getKeyByID(String keyID, String email, SecureEmailServerOperationListener listener) {
       EventLogger.logEvent(234044482576569793L, 1430735689);
       return this.sendSOAPMessage(
-         ((StringBuffer)(new Object("<ovidsrv:GetKeyByKeyID xmlns:ovidsrv=\"http://www.pgp.com/\"><keyid>")))
-            .append(keyID)
-            .append("</keyid>")
-            .append("<email>")
-            .append(email)
-            .append("</email>")
-            .append("</ovidsrv:GetKeyByKeyID>")
-            .toString(),
+         "<ovidsrv:GetKeyByKeyID xmlns:ovidsrv=\"http://www.pgp.com/\"><keyid>"
+            + keyID
+            + "</keyid>"
+            + "<email>"
+            + email
+            + "</email>"
+            + "</ovidsrv:GetKeyByKeyID>",
          listener
       );
    }
@@ -194,23 +182,17 @@ public final class PGPUniversalServerSOAPHandler implements PersistentContentLis
    public final XMLHashtable getKeyValidity(String key, SecureEmailServerOperationListener listener) {
       EventLogger.logEvent(234044482576569793L, 1430735702);
       return this.sendSOAPMessage(
-         ((StringBuffer)(new Object("<ovidsrv:CheckKeyValidity xmlns:ovidsrv=\"http://www.pgp.com/\"><keyblock>")))
-            .append(key)
-            .append("</keyblock>")
-            .append("</ovidsrv:CheckKeyValidity>")
-            .toString(),
-         listener
+         "<ovidsrv:CheckKeyValidity xmlns:ovidsrv=\"http://www.pgp.com/\"><keyblock>" + key + "</keyblock>" + "</ovidsrv:CheckKeyValidity>", listener
       );
    }
 
    public final XMLHashtable getCertificateChain(String certificateEncoding, SecureEmailServerOperationListener listener) {
       EventLogger.logEvent(234044482576569793L, 1430733635);
       return this.sendSOAPMessage(
-         ((StringBuffer)(new Object("<ovidsrv:GetCertificateChain xmlns:ovidsrv=\"http://www.pgp.com/\"><certificate>")))
-            .append(certificateEncoding)
-            .append("</certificate>")
-            .append("</ovidsrv:GetCertificateChain>")
-            .toString(),
+         "<ovidsrv:GetCertificateChain xmlns:ovidsrv=\"http://www.pgp.com/\"><certificate>"
+            + certificateEncoding
+            + "</certificate>"
+            + "</ovidsrv:GetCertificateChain>",
          listener
       );
    }
@@ -223,12 +205,12 @@ public final class PGPUniversalServerSOAPHandler implements PersistentContentLis
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private final synchronized XMLHashtable sendSOAPMessage(String request, SecureEmailServerOperationListener listener) throws IOException {
+   private final synchronized XMLHashtable sendSOAPMessage(String request, SecureEmailServerOperationListener listener) throws IOException, IONotRoutableException {
       if (Application.isEventDispatchThread()) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
-      StringBuffer connectionStringBuffer = (StringBuffer)(new Object());
+      StringBuffer connectionStringBuffer = new StringBuffer();
       connectionStringBuffer.append(this._hostName).append(':').append("443");
       connectionStringBuffer.append("/pgpuniversaldesktop");
       connectionStringBuffer.append(";deviceside=false;endtoenddesired");
@@ -245,19 +227,19 @@ public final class PGPUniversalServerSOAPHandler implements PersistentContentLis
 
          if (chosenUID == null) {
             EventLogger.logEvent(234044482576569793L, 1430867794);
-            throw new Object();
+            throw new IONotRoutableException();
          }
 
-         connectionStringBuffer.append(((StringBuffer)(new Object(";connectionuid="))).append(chosenUID).toString());
+         connectionStringBuffer.append(";connectionuid=" + chosenUID);
       }
 
       String connectionString = connectionStringBuffer.toString();
       boolean tlsConnectionOpened = false;
 
       while (true) {
-         HttpConnection connection;
+         ClientProtocol var36;
          while (true) {
-            connection = null;
+            HttpConnection connection = null;
             if (this._tlsConnection == null) {
                this.openTLSConnection(connectionString);
                tlsConnectionOpened = true;
@@ -268,10 +250,10 @@ public final class PGPUniversalServerSOAPHandler implements PersistentContentLis
             try {
                DataInputStream tlsDataInputStream = this._tlsConnection.openDataInputStream();
                DataOutputStream tlsDataOutputStream = this._tlsConnection.openDataOutputStream();
-               URL httpsURL = (URL)(new Object("https", connectionString));
-               connection = (HttpConnection)(new Object(
+               URL httpsURL = new URL("https", connectionString);
+               var36 = new ClientProtocol(
                   null, httpsURL, this._tlsConnection, tlsDataInputStream, tlsDataOutputStream, false, true, 3, false, true, null, false
-               ));
+               );
                break;
             } catch (Throwable var30) {
                this._tlsConnection = null;
@@ -283,26 +265,26 @@ public final class PGPUniversalServerSOAPHandler implements PersistentContentLis
             }
          }
 
-         connection.setRequestMethod("POST");
-         connection.setRequestProperty("User-Agent", "PGP (Unix)");
-         connection.setRequestProperty("Content-Type", "text/xml; charset=\"utf-8\"");
-         connection.setRequestProperty("SOAPAction", "");
+         var36.setRequestMethod("POST");
+         var36.setRequestProperty("User-Agent", "PGP (Unix)");
+         var36.setRequestProperty("Content-Type", "text/xml; charset=\"utf-8\"");
+         var36.setRequestProperty("SOAPAction", "");
          if (this._httpCookie != null) {
-            connection.setRequestProperty("Cookie", this._httpCookie);
+            var36.setRequestProperty("Cookie", this._httpCookie);
          }
 
          if (listener != null) {
-            listener.setServerConnection(connection);
+            listener.setServerConnection(var36);
          }
 
          boolean var17 = false /* VF: Semaphore variable */;
 
-         StringBuffer faultStringBuffer;
+         XMLHashtable var42;
          label455: {
             try {
                label476: {
                   var17 = true;
-                  OutputStream var37 = connection.openOutputStream();
+                  OutputStream var37 = var36.openOutputStream();
                   this.write(
                      var37,
                      "<se:Envelope xmlns:se=\"http://schemas.xmlsoap.org/soap/envelope/\" se:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">\n<se:Header>\n<version>\n<major>1</major>\n<minor>5</minor>\n</version>\n</se:Header>\n<se:Body>\n"
@@ -311,25 +293,17 @@ public final class PGPUniversalServerSOAPHandler implements PersistentContentLis
                   this.write(var37, "</se:Body></se:Envelope>");
 
                   try {
-                     int responseCode = connection.getResponseCode();
+                     int responseCode = var36.getResponseCode();
                      if (responseCode != 200) {
-                        throw new Object(
-                           ((StringBuffer)(new Object("HTTP response code: ")))
-                              .append(responseCode)
-                              .append(" ")
-                              .append(connection.getHeaderField("Location"))
-                              .append(" ")
-                              .append(connection.getResponseMessage())
-                              .toString()
-                        );
+                        throw new IOException("HTTP response code: " + responseCode + " " + var36.getHeaderField("Location") + " " + var36.getResponseMessage());
                      }
 
-                     String type = connection.getType();
+                     String type = var36.getType();
                      if (type == null || !type.startsWith("text/xml")) {
-                        throw new Object("Unexpected Content Type");
+                        throw new IOException("Unexpected Content Type");
                      }
 
-                     String cookie = connection.getHeaderField("Set-Cookie");
+                     String cookie = var36.getHeaderField("Set-Cookie");
                      if (cookie != null) {
                         this._httpCookie = cookie;
                      }
@@ -351,9 +325,9 @@ public final class PGPUniversalServerSOAPHandler implements PersistentContentLis
                   }
 
                   try {
-                     XMLHashtable response = (XMLHashtable)(new Object(this._saxParser, connection.openInputStream(), false, false, "/Envelope/Body"));
+                     XMLHashtable response = new XMLHashtable(this._saxParser, var36.openInputStream(), false, false, "/Envelope/Body");
                      if (response.isPresent("/Fault")) {
-                        faultStringBuffer = (StringBuffer)(new Object());
+                        StringBuffer faultStringBuffer = new StringBuffer();
                         faultStringBuffer.append("SOAP Fault: ");
                         faultStringBuffer.append(response.getString("/Fault/faultstring", null));
                         faultStringBuffer.append(',').append(' ');
@@ -364,13 +338,13 @@ public final class PGPUniversalServerSOAPHandler implements PersistentContentLis
                         throw new PGPUniversalServerSoapFaultException(response);
                      }
 
-                     faultStringBuffer = response;
+                     var42 = response;
                      var17 = false;
                      break label455;
                   } catch (Throwable var31) {
                      String detailMessage = e.toString();
                      EventLogger.logEvent(234044482576569793L, detailMessage.getBytes());
-                     throw new Object(detailMessage);
+                     throw new IOException(detailMessage);
                   }
                }
             } finally {
@@ -391,20 +365,20 @@ public final class PGPUniversalServerSOAPHandler implements PersistentContentLis
             listener.clearServerConnection();
          }
 
-         return faultStringBuffer;
+         return var42;
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private final void openTLSConnection(String connectionString) {
+   private final void openTLSConnection(String connectionString) throws IOException {
       EventLogger.logEvent(234044482576569793L, 1431262275);
 
       try {
-         SocketConnection socketConnection = (SocketConnection)Connector.open(((StringBuffer)(new Object("socket://"))).append(connectionString).toString());
-         this._tlsConnection = (TLS10Connection)(new Object(socketConnection, ((StringBuffer)(new Object("tls://"))).append(connectionString).toString(), false));
+         SocketConnection socketConnection = (SocketConnection)Connector.open("socket://" + connectionString);
+         this._tlsConnection = new TLS10Connection(socketConnection, "tls://" + connectionString, false);
       } catch (Throwable var4) {
-         throw new Object(e.toString());
+         throw new IOException(e.toString());
       }
    }
 

@@ -131,16 +131,10 @@ public final class MapletMapField extends MapField implements Request$Listener, 
 
       if (total >= 1024) {
          String KB = LBSResources.getString(289);
-         lbl = ((StringBuffer)(new Object()))
-            .append((int)(current / 1149239296))
-            .append(KB)
-            .append(" / ")
-            .append((int)(total / 1149239296))
-            .append(KB)
-            .toString();
+         lbl = (int)(current / 1149239296) + KB + " / " + (int)(total / 1149239296) + KB;
       } else {
          String Byte = LBSResources.getString(290);
-         lbl = ((StringBuffer)(new Object())).append(current + 32).append(Byte).append(" / ").append(total).append(' ').append(Byte).toString();
+         lbl = current + 32 + Byte + " / " + total + ' ' + Byte;
       }
 
       try {

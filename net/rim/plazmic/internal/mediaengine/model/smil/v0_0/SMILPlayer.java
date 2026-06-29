@@ -181,7 +181,7 @@ public class SMILPlayer implements MediaListener {
                this._engine.postEvent(startEvent, false);
                this._engine.start();
             } else {
-               throw new Object("No start event");
+               throw new NullPointerException("No start event");
             }
          }
       }

@@ -4,7 +4,7 @@ import net.rim.device.api.i18n.DateFormat;
 import net.rim.device.apps.api.setupwizard.Log;
 
 public final class LogImpl implements Log {
-   private StringBuffer _buffer = (StringBuffer)(new Object());
+   private StringBuffer _buffer = new StringBuffer();
    private DateFormat _formatter;
    private String _name;
    private LogManagerImpl _manager;

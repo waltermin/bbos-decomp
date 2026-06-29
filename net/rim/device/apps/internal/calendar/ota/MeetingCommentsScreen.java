@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.calendar.ota;
 
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.AutoTextEditField;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.EditField;
 import net.rim.device.apps.api.framework.verb.Verb;
@@ -9,7 +10,7 @@ import net.rim.device.apps.api.ui.AppsMainScreen;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
 
 class MeetingCommentsScreen extends AppsMainScreen {
-   private EditField _commentField = (EditField)(new Object());
+   private EditField _commentField = new AutoTextEditField();
    private boolean _sendSelected;
    private static final int MENU_ID_SEND = 100;
    private static final int MENU_ID_CANCEL = 101;

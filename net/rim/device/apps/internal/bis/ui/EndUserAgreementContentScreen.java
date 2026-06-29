@@ -3,7 +3,8 @@ package net.rim.device.apps.internal.bis.ui;
 import java.util.Hashtable;
 import net.rim.device.api.i18n.DateFormat;
 import net.rim.device.api.i18n.MessageFormat;
-import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.TextField;
 import net.rim.device.apps.internal.bis.ApplicationResources;
 import net.rim.device.apps.internal.bis.api.ui.Button;
 import net.rim.device.apps.internal.bis.event.BackEvent;
@@ -26,9 +27,9 @@ public final class EndUserAgreementContentScreen extends UserSettingsScreen {
          DateFormat dateStamp = DateFormat.getInstance(48);
          String euaText = MessageFormat.format(
             ApplicationResources.getString(91),
-            new Object[]{userName, agreementVersion, dateStamp.formatLocal(time).toString(), timeStamp.formatLocal(time).toString()}
+            new String[]{userName, agreementVersion, dateStamp.formatLocal(time).toString(), timeStamp.formatLocal(time).toString()}
          );
-         this.addContentField((Field)(new Object(euaText)));
+         this.addContentField(new LabelField(euaText));
          this.addContentLineBreak();
       }
 
@@ -36,12 +37,12 @@ public final class EndUserAgreementContentScreen extends UserSettingsScreen {
       this.attachEventToField(ok, okEvent);
       this.setDefaultEvent(okEvent);
       this.addContentField(
-         (Field)(new Object(
+         new TextField(
             null,
             ClientSessionState.getInstance().getTermsAndConditions(),
             ClientSessionState.getInstance().getTermsAndConditions().length(),
             9007199254740992L
-         ))
+         )
       );
       this.addButtonBarButtons(new Button[]{ok}, false);
       this.setHelp("66462.wml");

@@ -9,7 +9,7 @@ final class CalendarViewController$LoadCalendarViewThread extends Thread {
 
    CalendarViewController$LoadCalendarViewThread(CalendarViewController _1) {
       this.this$0 = _1;
-      this._loadViewRequests = (Vector)(new Object());
+      this._loadViewRequests = new Vector();
    }
 
    public final void addLoadRequest(

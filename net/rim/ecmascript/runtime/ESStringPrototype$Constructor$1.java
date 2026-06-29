@@ -10,7 +10,7 @@ class ESStringPrototype$Constructor$1 extends HostFunction {
 
    @Override
    public long run() {
-      StringBuffer b = (StringBuffer)(new Object());
+      StringBuffer b = new StringBuffer();
       int nParms = this.getNumParms();
 
       for (int i = 0; i < nParms; i++) {

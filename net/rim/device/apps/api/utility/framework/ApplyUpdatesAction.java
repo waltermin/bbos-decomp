@@ -19,7 +19,7 @@ class ApplyUpdatesAction implements CollectionListenerAction {
    @Override
    public void invoke(Collection collection, CollectionListener listener) {
       BulkUpdateCollectionListener bulkUpdateListener = null;
-      if (listener instanceof Object) {
+      if (listener instanceof BulkUpdateCollectionListener) {
          bulkUpdateListener = (BulkUpdateCollectionListener)listener;
          bulkUpdateListener.beginBulkUpdate(collection);
       }

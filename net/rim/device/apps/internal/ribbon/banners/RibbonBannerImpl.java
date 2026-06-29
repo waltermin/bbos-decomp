@@ -47,10 +47,10 @@ public final class RibbonBannerImpl extends RibbonBanner {
          return null;
       }
 
-      ContextObject context = (ContextObject)(new Object());
-      ContextObject.put(context, 265370977573465368L, new Object(524288));
+      ContextObject context = new ContextObject();
+      ContextObject.put(context, 265370977573465368L, new Long(524288));
       Field field = attributes.getLayout(context);
-      if (field instanceof Object) {
+      if (field instanceof StringProps) {
          StringProps props = (StringProps)field;
          props.set("title".hashCode(), title);
       }
@@ -78,7 +78,7 @@ public final class RibbonBannerImpl extends RibbonBanner {
 
       switch (style) {
          case 0:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 1:
          default:
             banner = new StandardRibbonBannerField(this._bannerManager, title, false);
@@ -149,7 +149,7 @@ public final class RibbonBannerImpl extends RibbonBanner {
          }
       }
 
-      if (!(field instanceof Object)) {
+      if (!(field instanceof StringProps)) {
          if (field instanceof BannerField) {
             BannerField rb = (BannerField)field;
             rb.setTitle(title);

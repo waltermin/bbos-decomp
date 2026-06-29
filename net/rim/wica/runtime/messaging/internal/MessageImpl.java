@@ -121,7 +121,7 @@ public class MessageImpl implements Message {
    @Override
    public void setSecurityMode(int securityMode) {
       if (securityMode != 2 && securityMode != 0 && securityMode != 1) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._securityMode = securityMode;
@@ -176,7 +176,7 @@ public class MessageImpl implements Message {
 
    @Override
    public String toString() {
-      StringBuffer str = (StringBuffer)(new Object("Message[ "));
+      StringBuffer str = new StringBuffer("Message[ ");
       if (this._agId != 0) {
          str.append("ServerId=").append(this._agId).append(",");
       }

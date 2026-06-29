@@ -5,7 +5,7 @@ import net.rim.device.api.ui.Graphics;
 import net.rim.device.apps.internal.qm.peer.common.EllipsesText;
 
 final class ContactTreeField$ContactListBranch extends ContactTreeField$SortedBranch {
-   private StringBuffer _label = (StringBuffer)(new Object(16));
+   private StringBuffer _label = new StringBuffer(16);
    private int _availableCount = 0;
 
    ContactTreeField$ContactListBranch(PeerContactList contactList) {

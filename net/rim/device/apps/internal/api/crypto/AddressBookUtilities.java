@@ -24,23 +24,23 @@ public class AddressBookUtilities {
 
    public static EmailAddressModel[] getEmailAddresses(EmailAddressModel itemToSelect, String usePrefix) {
       PersistableRIMModel model = getEmailPINAddress(false, itemToSelect, usePrefix);
-      if (model instanceof Object) {
-         return new Object[]{model};
+      if (model instanceof EmailAddressModel) {
+         return new EmailAddressModel[]{(EmailAddressModel)model};
       }
 
-      if (!(model instanceof Object)) {
+      if (!(model instanceof GroupAddressCardModel)) {
          return null;
       }
 
       GroupAddressCardModel groupModel = (GroupAddressCardModel)model;
       int groupModelSize = groupModel.size();
-      EmailAddressModel[] newModels = new Object[groupModelSize];
+      EmailAddressModel[] newModels = new EmailAddressModel[groupModelSize];
       int total = 0;
 
       for (int j = 0; j < groupModelSize; j++) {
          if (groupModel.getAddressModelTypeAt(j) == 0) {
             RIMModel memberAddress = groupModel.getAddressModelAt(j);
-            if (memberAddress != null && memberAddress instanceof Object) {
+            if (memberAddress != null && memberAddress instanceof EmailAddressModel) {
                newModels[j] = (EmailAddressModel)memberAddress;
                total++;
             }
@@ -61,16 +61,16 @@ public class AddressBookUtilities {
          Recognizer baseRecognizer = null;
          Verb[] useOnceVerbs;
          if (isPin) {
-            useOnceVerbs = new Object[]{UseOnceAddressVerb.newUseOncePINAddressVerb(null)};
+            useOnceVerbs = new Verb[]{UseOnceAddressVerb.newUseOncePINAddressVerb(null)};
             baseRecognizer = pinRecognizer;
          } else {
-            useOnceVerbs = new Object[]{UseOnceAddressVerb.newUseOnceEmailAddressVerb(false)};
+            useOnceVerbs = new Verb[]{UseOnceAddressVerb.newUseOnceEmailAddressVerb(false)};
             baseRecognizer = RecognizerRepository.getRecognizers(-2985347935260258684L);
          }
 
          Recognizer recognizerToUse;
          if (groupAddressRecognizer != null) {
-            CompoundRecognizer compoundRecognizer = (CompoundRecognizer)(new Object());
+            CompoundRecognizer compoundRecognizer = new CompoundRecognizer();
             compoundRecognizer.addRecognizer(groupAddressRecognizer);
             compoundRecognizer.addRecognizer(baseRecognizer);
             recognizerToUse = compoundRecognizer;
@@ -78,13 +78,13 @@ public class AddressBookUtilities {
             recognizerToUse = baseRecognizer;
          }
 
-         Recognizer[] recognizers = new Object[]{recognizerToUse};
-         ContextObject selectionContextObject = (ContextObject)(new Object());
-         AddressSelectionContext selectionContext = (AddressSelectionContext)(new Object(null, null, null, recognizers, useOnceVerbs));
+         Recognizer[] recognizers = new Recognizer[]{recognizerToUse};
+         ContextObject selectionContextObject = new ContextObject();
+         AddressSelectionContext selectionContext = new AddressSelectionContext(null, null, null, recognizers, useOnceVerbs);
          int verbGroupId = isPin ? 13685231 : 15556151;
-         selectionContextObject.put(6609423255094033855L, new Object(verbGroupId));
+         selectionContextObject.put(6609423255094033855L, new Integer(verbGroupId));
          selectionContext.setContext(selectionContextObject);
-         selectionContext.setUseEntryPrefixes(new Object[]{usePrefix});
+         selectionContext.setUseEntryPrefixes(new String[]{usePrefix});
          selectionContext.setPreferredDefaultIndex(isPin ? 1 : 0);
          if (itemToSelect != null) {
             AddressBookServices.setLastSelectedAddress(itemToSelect);
@@ -92,7 +92,7 @@ public class AddressBookUtilities {
 
          newModel = (PersistableRIMModel)verbs[0].invoke(selectionContext);
          if (newModel != null && ObjectGroup.isInGroup(newModel)) {
-            ContextObject cloneContext = (ContextObject)(new Object());
+            ContextObject cloneContext = new ContextObject();
             cloneContext.put(254, newModel);
             long addressObjectType = -2985347935260258684L;
             if (groupAddressRecognizer != null && groupAddressRecognizer.recognize(newModel)) {

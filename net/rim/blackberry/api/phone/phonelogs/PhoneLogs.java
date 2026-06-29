@@ -39,8 +39,8 @@ public final class PhoneLogs {
    }
 
    public static final CallLog createCallLogFromInternalModel(Object model) {
-      if (!(model instanceof Object)) {
-         throw new Object("Incorrect internal model specified");
+      if (!(model instanceof PhoneCallModelImpl)) {
+         throw new IllegalArgumentException("Incorrect internal model specified");
       }
 
       PhoneCallModelImpl call = (PhoneCallModelImpl)model;
@@ -63,28 +63,28 @@ public final class PhoneLogs {
             if (type != 3 && type != 2) {
                PhoneFolders.replaceItem(_calls.getAt(index), newCall);
             } else {
-               throw new Object("Cannot replace normal call with missed call");
+               throw new IllegalArgumentException("Cannot replace normal call with missed call");
             }
          } else {
             if (folderID != 7042951934619290849L) {
-               throw new Object("Must specify valid folderID");
+               throw new IllegalArgumentException("Must specify valid folderID");
             }
 
             if (type != 3 && type != 2) {
-               throw new Object("Cannot replace missed call with normal call");
+               throw new IllegalArgumentException("Cannot replace missed call with normal call");
             }
 
             PhoneFolders.replaceItem(_missedCalls.getAt(index), newCall);
          }
       } else {
-         throw new Object(index);
+         throw new ArrayIndexOutOfBoundsException(index);
       }
    }
 
    public final void deleteCall(int index, long folderID) {
       assertPermission();
       if (index < 0 || index >= this.numberOfCalls(folderID)) {
-         throw new Object(index);
+         throw new ArrayIndexOutOfBoundsException(index);
       }
 
       if (folderID == 5390902206192375236L) {
@@ -92,7 +92,7 @@ public final class PhoneLogs {
       } else if (folderID == 7042951934619290849L) {
          PhoneFolders.removeItem(_missedCalls.getAt(index));
       } else {
-         throw new Object("Must specify valid folderID");
+         throw new IllegalArgumentException("Must specify valid folderID");
       }
    }
 
@@ -103,7 +103,7 @@ public final class PhoneLogs {
       } else if (folderID == 7042951934619290849L) {
          return _missedCalls.size();
       } else {
-         throw new Object("Must specify valid folderID");
+         throw new IllegalArgumentException("Must specify valid folderID");
       }
    }
 
@@ -115,7 +115,7 @@ public final class PhoneLogs {
             call = PhoneFolders.getWritableCallLog((PhoneCallModelImpl)_calls.getAt(index));
          } else {
             if (folderID != 7042951934619290849L) {
-               throw new Object("Invalid folderID");
+               throw new IllegalArgumentException("Invalid folderID");
             }
 
             call = PhoneFolders.getWritableCallLog((PhoneCallModelImpl)_missedCalls.getAt(index));
@@ -123,7 +123,7 @@ public final class PhoneLogs {
 
          return createCallLog(call);
       } else {
-         throw new Object(index);
+         throw new ArrayIndexOutOfBoundsException(index);
       }
    }
 
@@ -131,7 +131,7 @@ public final class PhoneLogs {
       PhoneCallLogID participant = null;
       if (!(call instanceof PhoneCallLog)) {
          if (!(call instanceof ConferencePhoneCallLog)) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          participant = ((ConferencePhoneCallLog)call).getParticipantAt(0);
@@ -141,14 +141,14 @@ public final class PhoneLogs {
 
       Object connectionParameters = PhoneUtilities.getCallConnectionParameters(participant.getNumber(), null, null, null);
       CallerIDInfo callID = PhoneUtilities.createCallerIDInfo(participant.getNumber());
-      PhoneCallInitialData phoneData = (PhoneCallInitialData)(new Object(1, (byte)1, 0, callID, connectionParameters));
+      PhoneCallInitialData phoneData = new PhoneCallInitialData(1, (byte)1, 0, callID, connectionParameters);
       PhoneCallModelImpl newCall = (PhoneCallModelImpl)PhoneUtilities.createPhoneCallModel(phoneData);
       if (newCall == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (newCall == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       newCall.setElapsedTime(call.getDuration());
@@ -179,12 +179,12 @@ public final class PhoneLogs {
 
    private static final CallerIDInfo[] getCallerIDsFromCallLog(PhoneCallModelImpl call) {
       int submemberCount = call.size();
-      CallerIDInfo[] callerIDs = new Object[submemberCount];
+      CallerIDInfo[] callerIDs = new CallerIDInfo[submemberCount];
       int callerIDCount = 0;
 
       for (int i = 0; i < submemberCount; i++) {
          Object o = call.getAt(i);
-         if (o instanceof Object) {
+         if (o instanceof CallerIDInfo) {
             callerIDs[callerIDCount++] = (CallerIDInfo)o;
          }
       }
@@ -218,7 +218,7 @@ public final class PhoneLogs {
 
    public static final void addListener(PhoneLogListener listener) {
       if (listener == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       assertPermission();

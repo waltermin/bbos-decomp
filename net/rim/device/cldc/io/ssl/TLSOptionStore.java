@@ -29,7 +29,7 @@ public final class TLSOptionStore implements Persistable {
    private boolean _useTLS;
    private boolean _useSSL;
    private boolean _doRedirection;
-   private Vector _trustedHosts = (Vector)(new Object());
+   private Vector _trustedHosts = new Vector();
    private static final long ID = -8454003508201959L;
    private static final long SYNC_ID = -7331796252605079226L;
    public static final int PROXY_TLS = 1;

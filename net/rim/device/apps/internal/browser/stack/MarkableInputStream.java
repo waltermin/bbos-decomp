@@ -1,5 +1,7 @@
 package net.rim.device.apps.internal.browser.stack;
 
+import java.io.EOFException;
+import java.io.IOException;
 import java.io.InputStream;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.internal.browser.util.Pipe;
@@ -13,7 +15,7 @@ public final class MarkableInputStream extends InputStream implements PipeInput 
    private byte[] _buffer;
    private int _bufferPos = -1;
    private boolean _marking;
-   private DataBuffer _copy = (DataBuffer)(new Object());
+   private DataBuffer _copy = new DataBuffer();
    private boolean _saveContent;
    private byte[] _tmpArray;
    private int _tmpArraySize;
@@ -32,14 +34,14 @@ public final class MarkableInputStream extends InputStream implements PipeInput 
    }
 
    @Override
-   public final synchronized int readCompressedInt() {
+   public final synchronized int readCompressedInt() throws EOFException {
       int result = 0;
 
       int i;
       do {
          i = this.read();
          if (i == -1) {
-            throw new Object();
+            throw new EOFException();
          }
 
          result = result << 7 | i & 127;
@@ -51,11 +53,11 @@ public final class MarkableInputStream extends InputStream implements PipeInput 
    @Override
    public final synchronized Pipe getPipe() {
       byte[] data = this._copy.toArray();
-      return (Pipe)(new Object(data, data.length));
+      return new Pipe(data, data.length);
    }
 
    @Override
-   public final synchronized void skipInlineString() {
+   public final synchronized void skipInlineString() throws IOException {
       int c = this.read();
 
       while (c != -1 && c != 0) {
@@ -63,12 +65,12 @@ public final class MarkableInputStream extends InputStream implements PipeInput 
       }
 
       if (c == -1) {
-         throw new Object();
+         throw new IOException();
       }
    }
 
    @Override
-   public final synchronized String readInlineString(String encoding) {
+   public final synchronized String readInlineString(String encoding) throws IOException {
       if (this._tmpArray == null) {
          this._tmpArray = new byte[200];
       }
@@ -102,9 +104,9 @@ public final class MarkableInputStream extends InputStream implements PipeInput 
       }
 
       if (c == -1) {
-         throw new Object();
+         throw new IOException();
       } else {
-         return (String)(new Object(this._tmpArray, 0, i, encoding));
+         return new String(this._tmpArray, 0, i, encoding);
       }
    }
 
@@ -114,13 +116,13 @@ public final class MarkableInputStream extends InputStream implements PipeInput 
    }
 
    @Override
-   public final synchronized int read(byte[] b, int off, int len) {
+   public final synchronized int read(byte[] b, int off, int len) throws IOException {
       if (b == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       if (off < 0 || off > b.length || len < 0 || off + len > b.length || off + len < 0) {
-         throw new Object();
+         throw new IndexOutOfBoundsException();
       }
 
       if (len == 0) {
@@ -141,7 +143,7 @@ public final class MarkableInputStream extends InputStream implements PipeInput 
          int inRead = this._in.read(b, off, len);
          if (this._marking && inRead > 0) {
             if (this._buffer == null) {
-               throw new Object();
+               throw new IOException();
             }
 
             int originalLength = this._buffer.length;
@@ -222,7 +224,7 @@ public final class MarkableInputStream extends InputStream implements PipeInput 
    }
 
    @Override
-   public final synchronized int read() {
+   public final synchronized int read() throws IOException {
       if (this._buffer != null && this._bufferPos > -1 && this._buffer.length > this._bufferPos) {
          int value = this._buffer[this._bufferPos] & 255;
          this._bufferPos++;
@@ -236,7 +238,7 @@ public final class MarkableInputStream extends InputStream implements PipeInput 
          int value = this._in.read();
          if (this._marking) {
             if (this._buffer == null) {
-               throw new Object();
+               throw new IOException();
             }
 
             Array.resize(this._buffer, this._buffer.length + 1);

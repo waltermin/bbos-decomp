@@ -8,6 +8,7 @@ import net.rim.device.api.browser.field.RenderingOptions;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.apps.internal.docview.gui.DocViewRequestMore;
+import net.rim.device.apps.internal.docview.gui.DocViewSlideshowField;
 
 public final class BrowserContentImpl extends BrowserContentBaseImpl {
    private DocViewRequestMore _more;
@@ -25,7 +26,7 @@ public final class BrowserContentImpl extends BrowserContentBaseImpl {
       this.setTitle(connection.getFile());
       this._more = moreHandler;
       this._connection = connection;
-      if (content instanceof Object && ((Manager)content).getFieldCount() > 0 && ((Manager)content).getField(0) instanceof Object) {
+      if (content instanceof Manager && ((Manager)content).getFieldCount() > 0 && ((Manager)content).getField(0) instanceof DocViewSlideshowField) {
          this.setBrowserPageContext(new BrowserContentImpl$DocViewFullScreenBrowserPageContext(null));
       }
    }

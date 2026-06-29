@@ -7,8 +7,8 @@ import net.rim.device.api.util.WeakReferenceUtilities;
 import net.rim.vm.WeakReference;
 
 public final class PhoneNumberMnemonicStringPattern extends StringPattern {
-   private WeakReference _scanbufferWR = (WeakReference)(new Object(null));
-   private WeakReference _strWR = (WeakReference)(new Object(null));
+   private WeakReference _scanbufferWR = new WeakReference(null);
+   private WeakReference _strWR = new WeakReference(null);
    private int _state;
    private int _beginIndex;
    private int _endIndex;

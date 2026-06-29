@@ -1,6 +1,7 @@
 package net.rim.device.api.xml.jaxp;
 
 import org.w3c.dom.Attr;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -68,21 +69,18 @@ class DOMElementImpl extends DOMNodeImpl implements Element, NamedNodeMap {
    public Attr setAttributeNode(Attr newAttr) {
       DOMNodeImpl attrNode = (DOMNodeImpl)newAttr;
       if (super._ir != attrNode._ir) {
-         throw new Object((short)4, "");
+         throw new DOMException((short)4, "");
+      } else {
+         super._ir.notReadOnly(super._node);
+         Node parent = super._ir.getNode(super._ir.getParent(attrNode._node));
+         if (parent == this) {
+            return newAttr;
+         } else if (parent != null) {
+            throw new DOMException((short)10, "");
+         } else {
+            return (Attr)super._ir.getNode(super._ir.setAttributeNode(super._node, attrNode._node));
+         }
       }
-
-      super._ir.notReadOnly(super._node);
-      Node parent = super._ir.getNode(super._ir.getParent(attrNode._node));
-      if (parent == this) {
-         return newAttr;
-      }
-
-      if (parent != null) {
-         throw new Object((short)10, "");
-      }
-
-      Attr rc = (Attr)super._ir.getNode(super._ir.setAttributeNode(super._node, attrNode._node));
-      return rc;
    }
 
    @Override
@@ -90,11 +88,10 @@ class DOMElementImpl extends DOMNodeImpl implements Element, NamedNodeMap {
       super._ir.notReadOnly(super._node);
       int iAttr = ((DOMNodeImpl)oldAttr)._node;
       if (super._ir.getParent(iAttr) != super._node) {
-         throw new Object((short)8, "");
+         throw new DOMException((short)8, "");
+      } else {
+         return (Attr)super._ir.getNode(super._ir.removeAttributeNode(super._node, ((DOMNodeImpl)oldAttr)._node));
       }
-
-      Attr rc = (Attr)super._ir.getNode(super._ir.removeAttributeNode(super._node, ((DOMNodeImpl)oldAttr)._node));
-      return rc;
    }
 
    @Override
@@ -159,8 +156,8 @@ class DOMElementImpl extends DOMNodeImpl implements Element, NamedNodeMap {
    @Override
    public Node setNamedItem(Node arg) {
       super._ir.notReadOnly(super._node);
-      if (!(arg instanceof Object)) {
-         throw new Object((short)3, "");
+      if (!(arg instanceof Attr)) {
+         throw new DOMException((short)3, "");
       } else {
          return this.setAttributeNode((Attr)arg);
       }
@@ -171,7 +168,7 @@ class DOMElementImpl extends DOMNodeImpl implements Element, NamedNodeMap {
       super._ir.notReadOnly(super._node);
       int removed = super._ir.removeAttribute(super._node, name);
       if (removed == 0) {
-         throw new Object((short)8, "");
+         throw new DOMException((short)8, "");
       } else {
          return super._ir.getNode(removed);
       }
@@ -207,8 +204,8 @@ class DOMElementImpl extends DOMNodeImpl implements Element, NamedNodeMap {
    @Override
    public Node setNamedItemNS(Node arg) {
       super._ir.notReadOnly(super._node);
-      if (!(arg instanceof Object)) {
-         throw new Object((short)3, "");
+      if (!(arg instanceof Attr)) {
+         throw new DOMException((short)3, "");
       } else {
          return this.setAttributeNodeNS((Attr)arg);
       }
@@ -219,7 +216,7 @@ class DOMElementImpl extends DOMNodeImpl implements Element, NamedNodeMap {
       super._ir.notReadOnly(super._node);
       int removed = super._ir.removeAttributeNS(super._node, namespaceURI, localName);
       if (removed == 0) {
-         throw new Object((short)8, "");
+         throw new DOMException((short)8, "");
       } else {
          return super._ir.getNode(removed);
       }
@@ -229,7 +226,6 @@ class DOMElementImpl extends DOMNodeImpl implements Element, NamedNodeMap {
    public void setPrefix(String prefix) {
       super._ir.notReadOnly(super._node);
       DOMInternalRepresentation.isNCName(prefix);
-      super._ir
-         .setElementQName(super._node, ((StringBuffer)(new Object())).append(prefix).append(":").append(super._ir.getElementLocalName(super._node)).toString());
+      super._ir.setElementQName(super._node, prefix + ":" + super._ir.getElementLocalName(super._node));
    }
 }

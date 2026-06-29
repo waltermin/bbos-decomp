@@ -67,7 +67,7 @@ public final class GMEAddress extends DatagramAddressBase {
       if (this._target != null) {
          return this._target;
       } else if (this._targets == null) {
-         throw new Object();
+         throw new ArrayIndexOutOfBoundsException();
       } else {
          return (GMETarget)this._targets.elementAt(index);
       }
@@ -75,7 +75,7 @@ public final class GMEAddress extends DatagramAddressBase {
 
    private final void addTarget(GMETarget target) {
       if (this._target != null) {
-         this._targets = (Vector)(new Object(2));
+         this._targets = new Vector(2);
          this._targets.addElement(this._target);
          this._targets.addElement(target);
          this._target = null;
@@ -102,7 +102,7 @@ public final class GMEAddress extends DatagramAddressBase {
       if (length > 0) {
          delim = DatagramAddressBase.indexOfNextDelim(address, 0);
          if (delim <= 0) {
-            throw new Object("Bad CID");
+            throw new IllegalArgumentException("Bad CID");
          }
 
          this._cid = address.substring(0, delim);
@@ -116,7 +116,7 @@ public final class GMEAddress extends DatagramAddressBase {
             scan = delim + 1;
             delim = DatagramAddressBase.indexOfNextDelim(address, scan);
             if (delim <= scan) {
-               throw new Object("Bad UID");
+               throw new IllegalArgumentException("Bad UID");
             }
 
             name = address.substring(scan, delim);
@@ -129,7 +129,7 @@ public final class GMEAddress extends DatagramAddressBase {
             scan = delim + 1;
             delim = DatagramAddressBase.indexOfNextDelim(address, scan);
             if (delim <= scan) {
-               throw new Object("Bad PIN");
+               throw new IllegalArgumentException("Bad PIN");
             }
 
             name = address.substring(scan, delim);
@@ -140,14 +140,14 @@ public final class GMEAddress extends DatagramAddressBase {
             scan = delim + 1;
             delim = address.indexOf(41, scan);
             if (delim <= scan) {
-               throw new Object("Bad REDIRECT");
+               throw new IllegalArgumentException("Bad REDIRECT");
             }
 
             redirect = address.substring(scan, delim);
             scan = delim + 1;
             delim = DatagramAddressBase.indexOfNextDelim(address, scan);
             if (delim != scan) {
-               throw new Object("Bad REDIRECT");
+               throw new IllegalArgumentException("Bad REDIRECT");
             }
          }
 
@@ -159,7 +159,7 @@ public final class GMEAddress extends DatagramAddressBase {
          scan = delim + 1;
          delim = DatagramAddressBase.indexOfNextDelim(address, scan);
          if (delim <= scan) {
-            throw new Object("Bad SRC");
+            throw new IllegalArgumentException("Bad SRC");
          }
 
          String name = address.substring(scan, delim);
@@ -167,14 +167,14 @@ public final class GMEAddress extends DatagramAddressBase {
             scan = delim + 1;
             delim = address.indexOf(41, scan);
             if (delim <= scan) {
-               throw new Object("Bad REDIRECT");
+               throw new IllegalArgumentException("Bad REDIRECT");
             }
 
             redirect = address.substring(scan, delim);
             scan = delim + 1;
             delim = DatagramAddressBase.indexOfNextDelim(address, scan);
             if (delim != scan) {
-               throw new Object("Bad REDIRECT");
+               throw new IllegalArgumentException("Bad REDIRECT");
             }
          }
 
@@ -182,7 +182,7 @@ public final class GMEAddress extends DatagramAddressBase {
       }
 
       if (delim < length) {
-         throw new Object("Bad address");
+         throw new IllegalArgumentException("Bad address");
       }
 
       super._address = address;
@@ -238,7 +238,7 @@ public final class GMEAddress extends DatagramAddressBase {
    }
 
    public static final String makeAddress(boolean open, String cid, GMETarget target, Vector targets, GMETarget src) {
-      StringBuffer buf = (StringBuffer)(new Object(128));
+      StringBuffer buf = new StringBuffer(128);
       appendAddress(buf, open, cid, target, targets, src);
       return buf.toString();
    }

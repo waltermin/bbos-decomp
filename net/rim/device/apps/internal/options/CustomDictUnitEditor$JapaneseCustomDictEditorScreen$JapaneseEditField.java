@@ -56,7 +56,7 @@ class CustomDictUnitEditor$JapaneseCustomDictEditorScreen$JapaneseEditField exte
 
    @Override
    public void dispatchEvent(Event rEvent) {
-      if (!(rEvent instanceof Object)) {
+      if (!(rEvent instanceof KeyEvent)) {
          super.dispatchEvent(rEvent);
       } else {
          KeyEvent event = (KeyEvent)rEvent;
@@ -70,7 +70,7 @@ class CustomDictUnitEditor$JapaneseCustomDictEditorScreen$JapaneseEditField exte
                super.dispatchEvent(rEvent);
                if (!rEvent.isConsumed()) {
                   if (rEvent.getID() == 516) {
-                     Menu menu = (Menu)(new Object(65536));
+                     Menu menu = new Menu(65536);
                      ContextMenu cmenu = this.getContextMenu();
                      menu.add(cmenu, true);
                      menu.add(

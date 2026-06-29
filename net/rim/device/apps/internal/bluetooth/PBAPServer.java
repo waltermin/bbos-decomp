@@ -177,7 +177,7 @@ class PBAPServer extends ServerRequestHandler implements Runnable, Authenticator
             this._conn = (BluetoothStreamConnection)notifier.acceptAndOpen(this, this);
          }
       } catch (Throwable var7) {
-         throw new Object(ex.getMessage());
+         throw new RuntimeException(ex.getMessage());
       }
    }
 
@@ -226,7 +226,7 @@ class PBAPServer extends ServerRequestHandler implements Runnable, Authenticator
             long filter = 0;
             int format = 0;
             if (params != null) {
-               DataBuffer db = (DataBuffer)(new Object(params, 0, params.length, true));
+               DataBuffer db = new DataBuffer(params, 0, params.length, true);
 
                while (!db.eof()) {
                   int value = db.readUnsignedByte();
@@ -247,7 +247,7 @@ class PBAPServer extends ServerRequestHandler implements Runnable, Authenticator
                               return 204;
                            case 0:
                            case 1:
-                              System.out.println(((StringBuffer)(new Object("Order: "))).append(searchOrder).toString());
+                              System.out.println("Order: " + searchOrder);
                               continue;
                            case 2:
                            default:
@@ -261,8 +261,8 @@ class PBAPServer extends ServerRequestHandler implements Runnable, Authenticator
                               length--;
                            }
 
-                           searchValue = ((String)(new Object(data, 0, length, "utf-8"))).toLowerCase();
-                           System.out.println(((StringBuffer)(new Object("SearchValue: "))).append(searchValue).toString());
+                           searchValue = new String(data, 0, length, "utf-8").toLowerCase();
+                           System.out.println("SearchValue: " + searchValue);
                         }
                         break;
                      case 3:
@@ -285,7 +285,7 @@ class PBAPServer extends ServerRequestHandler implements Runnable, Authenticator
                               return 209;
                         }
 
-                        System.out.println(((StringBuffer)(new Object("SearchAttribute: "))).append(attribute).toString());
+                        System.out.println("SearchAttribute: " + attribute);
                         break;
                      case 4:
                         if (length != 2) {
@@ -293,7 +293,7 @@ class PBAPServer extends ServerRequestHandler implements Runnable, Authenticator
                         }
 
                         maxListCount = db.readUnsignedShort();
-                        System.out.println(((StringBuffer)(new Object("MaxListCount: "))).append(maxListCount).toString());
+                        System.out.println("MaxListCount: " + maxListCount);
                         break;
                      case 5:
                         if (length != 2) {
@@ -301,7 +301,7 @@ class PBAPServer extends ServerRequestHandler implements Runnable, Authenticator
                         }
 
                         listStartOffset = db.readUnsignedShort();
-                        System.out.println(((StringBuffer)(new Object("ListStartOffset: "))).append(listStartOffset).toString());
+                        System.out.println("ListStartOffset: " + listStartOffset);
                         break;
                      case 6:
                         if (length != 8) {
@@ -309,7 +309,7 @@ class PBAPServer extends ServerRequestHandler implements Runnable, Authenticator
                         }
 
                         filter = db.readLong();
-                        System.out.println(((StringBuffer)(new Object("Filter: 0x"))).append(NumberUtilities.toString(filter, 16)).toString());
+                        System.out.println("Filter: 0x" + NumberUtilities.toString(filter, 16));
                         break;
                      case 7:
                         if (length != 1) {
@@ -323,7 +323,7 @@ class PBAPServer extends ServerRequestHandler implements Runnable, Authenticator
                               return 204;
                            case 0:
                            case 1:
-                              System.out.println(((StringBuffer)(new Object("Format: 0x"))).append(Integer.toHexString(format)).toString());
+                              System.out.println("Format: 0x" + Integer.toHexString(format));
                         }
                   }
                }
@@ -455,11 +455,9 @@ class PBAPServer extends ServerRequestHandler implements Runnable, Authenticator
          }
 
          ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
-         ContextObject context = (ContextObject)(new Object());
+         ContextObject context = new ContextObject();
          Factory personNameModelFactory = (Factory)ar.get(5149066071290992769L);
-         String[] personName = new Object[2];
-         personName[0] = firstName;
-         personName[1] = lastName;
+         String[] personName = new String[]{firstName, lastName};
          context.put(251, personName);
          Object personNameModel = personNameModelFactory.createInstance(context);
          ownerCard.add(personNameModel);
@@ -540,8 +538,8 @@ class PBAPServer extends ServerRequestHandler implements Runnable, Authenticator
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private void buildCallHistory(AddressCardWrapper[] list, SimpleFolder phoneFolder, int folder, boolean missed) {
-      SimpleDateFormat dateFormat = (SimpleDateFormat)(new Object("yyyyMMddTHHmmss"));
-      StringBuffer sb = (StringBuffer)(new Object());
+      SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddTHHmmss");
+      StringBuffer sb = new StringBuffer();
       ReadableList collection = (ReadableList)phoneFolder.getContainedItems();
       int items = collection.size();
 
@@ -550,9 +548,9 @@ class PBAPServer extends ServerRequestHandler implements Runnable, Authenticator
 
          try {
             var20 = true;
-            PhoneCallModelImpl call = collection.getAt(i);
+            PhoneCallModelImpl call = (PhoneCallModelImpl)collection.getAt(i);
             String vCardExtensionName;
-            if (((PhoneCallModelImpl)call).isIncoming()) {
+            if (call.isIncoming()) {
                if (folder == 4) {
                   var20 = false;
                   continue;
@@ -572,18 +570,18 @@ class PBAPServer extends ServerRequestHandler implements Runnable, Authenticator
                vCardExtensionName = "IRMC-CALL-DATETIME;DIALED";
             }
 
-            long timestamp = ((PhoneCallModelImpl)call).getTimeStamp();
+            long timestamp = call.getTimeStamp();
             sb.setLength(0);
             dateFormat.formatLocal(sb, timestamp);
             String vCardExtensionData = sb.toString();
-            CallerIDInfo clid = ((PhoneCallModelImpl)call).getCallerIDInfo();
+            CallerIDInfo clid = call.getCallerIDInfo();
             Object o = clid.getAddress();
             if (!clid.isPrivateNumber()) {
                if (clid.isUnknownNumber()) {
                   var20 = false;
                } else {
                   AddressCardModel card;
-                  if (!(o instanceof Object)) {
+                  if (!(o instanceof AddressCardModel)) {
                      PersistableRIMModel phoneNumber = clid.getNumber();
                      if (phoneNumber == null) {
                         var20 = false;
@@ -670,7 +668,7 @@ class PBAPServer extends ServerRequestHandler implements Runnable, Authenticator
          return 196;
       }
 
-      System.out.println(((StringBuffer)(new Object("New folder: "))).append(newFolder).toString());
+      System.out.println("New folder: " + newFolder);
       this._currentFolder = newFolder;
       return 160;
    }
@@ -782,20 +780,18 @@ class PBAPServer extends ServerRequestHandler implements Runnable, Authenticator
          if ((list.length == 0 || startOffset < list.length) && startOffset >= 0) {
             ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
             Factory converter = (Factory)ar.get(-5888220356524146836L);
-            ContextObject context = (ContextObject)(new Object());
+            ContextObject context = new ContextObject();
             StupidCLDCByteArrayOutputStream vCardStream = new StupidCLDCByteArrayOutputStream();
             context.put(-980891548873596767L, vCardStream);
-            context.put(-4054673099568009991L, new Object((int)filter));
-            context.put(4086083307293257364L, new Object(format == 1));
+            context.put(-4054673099568009991L, new Integer((int)filter));
+            context.put(4086083307293257364L, new Boolean(format == 1));
             context.setFlag(127);
 
             for (int i = startOffset; i < list.length && maxListCount > 0; maxListCount--) {
                AddressCardWrapper wrapper = list[i];
                context.put(254, wrapper._card);
                if (wrapper._vCardExtensionName != null) {
-                  String[] data = new Object[2];
-                  data[0] = wrapper._vCardExtensionName;
-                  data[1] = wrapper._vCardExtensionData;
+                  String[] data = new String[]{wrapper._vCardExtensionName, wrapper._vCardExtensionData};
                   context.put(251, data);
                }
 
@@ -804,8 +800,8 @@ class PBAPServer extends ServerRequestHandler implements Runnable, Authenticator
             }
 
             HeaderSet hs = this.createHeaderSet();
-            hs.setHeader(1, ((StringBuffer)(new Object())).append(addressBookName).append(".vcf").toString());
-            hs.setHeader(195, new Object(vCardStream.size()));
+            hs.setHeader(1, addressBookName + ".vcf");
+            hs.setHeader(195, new Long(vCardStream.size()));
             op.sendHeaders(hs);
             OutputStream out = op.openOutputStream();
             vCardStream.writeTo(out);
@@ -859,7 +855,7 @@ class PBAPServer extends ServerRequestHandler implements Runnable, Authenticator
 
             listingStream.write(LISTING_FOOTER);
             HeaderSet hs = this.createHeaderSet();
-            hs.setHeader(195, new Object(listingStream.size()));
+            hs.setHeader(195, new Long(listingStream.size()));
             op.sendHeaders(hs);
             OutputStream out = op.openOutputStream();
             listingStream.writeTo(out);
@@ -885,7 +881,7 @@ class PBAPServer extends ServerRequestHandler implements Runnable, Authenticator
    private void listingStreamFini(StupidCLDCByteArrayOutputStream listingStream, Operation op) {
       listingStream.write(LISTING_FOOTER);
       HeaderSet hs = this.createHeaderSet();
-      hs.setHeader(195, new Object(listingStream.size()));
+      hs.setHeader(195, new Long(listingStream.size()));
       op.sendHeaders(hs);
       OutputStream out = op.openOutputStream();
       listingStream.writeTo(out);
@@ -1040,7 +1036,7 @@ class PBAPServer extends ServerRequestHandler implements Runnable, Authenticator
                return firstName;
             }
 
-            name = ((StringBuffer)(new Object())).append(name).append(';').append(firstName).toString();
+            name = name + ';' + firstName;
          }
 
          return name;

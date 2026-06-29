@@ -15,12 +15,12 @@ final class Loader {
       // 07: invokestatic net/rim/device/api/browser/plugin/BrowserContentProviderRegistry.getInstance ()Lnet/rim/device/api/browser/plugin/BrowserContentProviderRegistry;
       // 0a: astore 2
       // 0b: aload 2
-      // 0c: new java/lang/Object
+      // 0c: new net/rim/device/apps/internal/browser/html/HTMLRenderingConverter
       // 0f: dup
       // 10: invokespecial net/rim/device/apps/internal/browser/html/HTMLRenderingConverter.<init> ()V
       // 13: invokevirtual net/rim/device/api/browser/plugin/BrowserContentProviderRegistry.register (Lnet/rim/device/api/browser/plugin/BrowserContentProvider;)V
       // 16: aload 2
-      // 17: new java/lang/Object
+      // 17: new net/rim/device/apps/internal/browser/wml/WMLRenderingConverter
       // 1a: dup
       // 1b: invokespecial net/rim/device/apps/internal/browser/wml/WMLRenderingConverter.<init> ()V
       // 1e: invokevirtual net/rim/device/api/browser/plugin/BrowserContentProviderRegistry.register (Lnet/rim/device/api/browser/plugin/BrowserContentProvider;)V
@@ -32,7 +32,7 @@ final class Loader {
       // 2c: aload 2
       // 2d: aload 3
       // 2e: invokevirtual java/lang/Class.newInstance ()Ljava/lang/Object;
-      // 31: checkcast java/lang/Object
+      // 31: checkcast net/rim/device/api/browser/plugin/BrowserContentProvider
       // 34: invokevirtual net/rim/device/api/browser/plugin/BrowserContentProviderRegistry.register (Lnet/rim/device/api/browser/plugin/BrowserContentProvider;)V
       // 37: goto 43
       // 3a: astore 3
@@ -41,7 +41,7 @@ final class Loader {
       // 3f: goto 43
       // 42: astore 3
       // 43: aload 2
-      // 44: new java/lang/Object
+      // 44: new net/rim/device/apps/internal/browser/img/ImageRenderingConverter
       // 47: dup
       // 48: invokespecial net/rim/device/apps/internal/browser/img/ImageRenderingConverter.<init> ()V
       // 4b: invokevirtual net/rim/device/api/browser/plugin/BrowserContentProviderRegistry.register (Lnet/rim/device/api/browser/plugin/BrowserContentProvider;)V

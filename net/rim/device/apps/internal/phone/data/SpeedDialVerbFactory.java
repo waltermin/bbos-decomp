@@ -14,7 +14,7 @@ final class SpeedDialVerbFactory implements VerbFactory {
    public final Verb[] getVerbs(Object context) {
       if (ContextObject.getFlag(context, 11)) {
          Object focusedModel = ContextObject.get(context, 250);
-         if (focusedModel instanceof Object) {
+         if (focusedModel instanceof PhoneNumberModel) {
             PhoneNumberModel phoneNumber = (PhoneNumberModel)focusedModel;
             Object addressCard = ContextObject.get(context, 252);
             char keyChar = QuickContactList.getInstance().getQuickContactKey(phoneNumber);
@@ -27,10 +27,10 @@ final class SpeedDialVerbFactory implements VerbFactory {
                   keyChar = Keypad.map(keycode);
                }
 
-               return new Object[]{new SpeedDialVerb(cidi, 6072, 16777232, keyChar, keycode)};
+               return new Verb[]{new SpeedDialVerb(cidi, 6072, 16777232, keyChar, keycode)};
             }
 
-            return new Object[]{new SpeedDialVerb(null, 6073, 16777248, keyChar)};
+            return new Verb[]{new SpeedDialVerb(null, 6073, 16777248, keyChar)};
          }
       }
 

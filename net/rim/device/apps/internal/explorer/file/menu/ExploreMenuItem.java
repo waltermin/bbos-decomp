@@ -15,6 +15,6 @@ public final class ExploreMenuItem extends MenuItem {
 
    @Override
    public final void run() {
-      this._mgr.explore((FileSelectionFilter)(new Object(0, this._mgr.getFilter().getSelectFilter())));
+      this._mgr.explore(new FileSelectionFilter(0, this._mgr.getFilter().getSelectFilter()));
    }
 }

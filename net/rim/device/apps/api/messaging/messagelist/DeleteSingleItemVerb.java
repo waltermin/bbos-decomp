@@ -83,7 +83,7 @@ public final class DeleteSingleItemVerb extends Verb {
          }
       }
 
-      ContextObject invokeContextObject = (ContextObject)(new Object());
+      ContextObject invokeContextObject = new ContextObject();
       if (deleteWithCurrentContext || deleteWithSavedContext) {
          invokeContextObject.setFlag(39);
          invokeContextObject.setFlag(40);

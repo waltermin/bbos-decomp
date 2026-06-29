@@ -60,21 +60,21 @@ class AbstractComposeVerb extends ShowMessageAppVerb implements SetParameter, Co
 
    protected void resolveAddress() {
       int PHONE_NUMBER_RECOGNIZER = 0;
-      Recognizer[] recognizers = new Object[]{
+      Recognizer[] recognizers = new Recognizer[]{
          RecognizerRepository.getRecognizers(3797587162219887872L), RecognizerRepository.getRecognizers(-2985347935260258684L)
       };
-      CompoundRecognizer compoundRecognizer = (CompoundRecognizer)(new Object(recognizers));
+      CompoundRecognizer compoundRecognizer = new CompoundRecognizer(recognizers);
       Verb addressSelectionVerb = AddressBookServices.getAddressSelectionVerb(3797587162219887872L);
       if (addressSelectionVerb != null) {
-         Verb[] useOnceVerbs = new Object[]{new MMSUseOnceVerb()};
-         AddressSelectionContext selectionContext = (AddressSelectionContext)(new Object(
+         Verb[] useOnceVerbs = new Verb[]{new MMSUseOnceVerb()};
+         AddressSelectionContext selectionContext = new AddressSelectionContext(
             MMSResources.getString(111), MMSResources.getString(10), null, compoundRecognizer, useOnceVerbs
-         ));
-         ContextObject phoneNumberSelectionContext = (ContextObject)(new Object());
+         );
+         ContextObject phoneNumberSelectionContext = new ContextObject();
          phoneNumberSelectionContext.setFlag(42, 34);
-         phoneNumberSelectionContext.put(6609423255094033855L, new Object(12759082));
+         phoneNumberSelectionContext.put(6609423255094033855L, new Integer(12759082));
          selectionContext.setContext(phoneNumberSelectionContext);
-         selectionContext.setUseEntryPrefixes(new Object[]{MMSResources.getString(9)});
+         selectionContext.setUseEntryPrefixes(new String[]{MMSResources.getString(9)});
          this._address = (PersistableRIMModel)addressSelectionVerb.invoke(selectionContext);
          if (recognizers[PHONE_NUMBER_RECOGNIZER].recognize(this._address)) {
             Object selectedSource = selectionContext.getSelectedSource();
@@ -88,11 +88,11 @@ class AbstractComposeVerb extends ShowMessageAppVerb implements SetParameter, Co
             addressCard = (PersistableRIMModel)selectionContext.getSelectedSource();
          }
 
-         if (addressCard != null && this._address instanceof Object) {
+         if (addressCard != null && this._address instanceof FriendlyNameAddressModel) {
             FriendlyNameAddressModel friendlyModel = (FriendlyNameAddressModel)this._address;
             if (friendlyModel.getFriendlyName() == null) {
                String friendlyName = getAddressDescription(this._address, addressCard, phoneNumberSelectionContext);
-               if (friendlyName != null && friendlyModel instanceof Object) {
+               if (friendlyName != null && friendlyModel instanceof Copyable) {
                   friendlyModel = (FriendlyNameAddressModel)((Copyable)friendlyModel).copy();
                   friendlyModel.setFriendlyName(friendlyName);
                   this._address = friendlyModel;
@@ -184,7 +184,7 @@ class AbstractComposeVerb extends ShowMessageAppVerb implements SetParameter, Co
          return null;
       }
 
-      if (!(address instanceof Object)) {
+      if (!(address instanceof VerbDescriptionProvider)) {
          return address.toString();
       }
 

@@ -32,12 +32,12 @@ public final class Artist implements MediaInfo, PaintProvider, KeyProvider, Verb
       if (name == null) {
          ResourceBundle rb = ResourceBundle.getBundle(349501092522026426L, "net.rim.device.apps.internal.resource.Explorer");
          this._keywords = StringUtilities.stringToKeywords(rb.getString(148));
-         this._prefixedKeywords = new Object[1];
+         this._prefixedKeywords = new String[1];
          this._prefixedKeywords[0] = FilterConstants.generateKey('ￊ', FilterConstants.UNKNOWN_ID);
       } else {
          this._name = name.trim();
          this._keywords = StringUtilities.stringToKeywords(this._name);
-         this._prefixedKeywords = new Object[1];
+         this._prefixedKeywords = new String[1];
          String hash = FilterConstants.generateKey('ￊ', Math.abs(this._name.toLowerCase().hashCode()));
          this._prefixedKeywords[0] = hash;
       }

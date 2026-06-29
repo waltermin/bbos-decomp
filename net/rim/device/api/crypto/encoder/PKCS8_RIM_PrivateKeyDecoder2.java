@@ -2,9 +2,14 @@ package net.rim.device.api.crypto.encoder;
 
 import net.rim.device.api.crypto.CryptoSystem;
 import net.rim.device.api.crypto.DHCryptoSystem;
+import net.rim.device.api.crypto.DHPrivateKey;
 import net.rim.device.api.crypto.DSACryptoSystem;
+import net.rim.device.api.crypto.DSAPrivateKey;
+import net.rim.device.api.crypto.InvalidCryptoSystemException;
+import net.rim.device.api.crypto.InvalidKeyEncodingException;
 import net.rim.device.api.crypto.PrivateKey;
 import net.rim.device.api.crypto.RSACryptoSystem;
+import net.rim.device.api.crypto.RSAPrivateKey;
 import net.rim.device.api.crypto.asn1.ASN1InputByteArray;
 import net.rim.device.api.crypto.asn1.ASN1InputStream;
 
@@ -12,7 +17,7 @@ final class PKCS8_RIM_PrivateKeyDecoder2 extends PKCS8_PrivateKeyDecoder {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final PrivateKey decodeKey(ASN1InputStream parameters, ASN1InputStream privateKeyInfo, CryptoSystem cryptoSystem, String algorithm) {
+   public final PrivateKey decodeKey(ASN1InputStream parameters, ASN1InputStream privateKeyInfo, CryptoSystem cryptoSystem, String algorithm) throws InvalidCryptoSystemException, InvalidKeyEncodingException {
       if (!algorithm.equals("DH")) {
          if (algorithm.equals("DSA")) {
             boolean var21 = false /* VF: Semaphore variable */;
@@ -25,11 +30,11 @@ final class PKCS8_RIM_PrivateKeyDecoder2 extends PKCS8_PrivateKeyDecoder {
                   byte[] p = params.readIntegerAsByteArray();
                   byte[] q = params.readIntegerAsByteArray();
                   byte[] g = params.readIntegerAsByteArray();
-                  _cryptoSystem = (DSACryptoSystem)(new Object(p, q, g));
+                  _cryptoSystem = new DSACryptoSystem(p, q, g);
                   var21 = false;
                } else {
-                  if (!(cryptoSystem instanceof Object)) {
-                     throw new Object();
+                  if (!(cryptoSystem instanceof DSACryptoSystem)) {
+                     throw new InvalidCryptoSystemException();
                   }
 
                   _cryptoSystem = (DSACryptoSystem)cryptoSystem;
@@ -38,8 +43,8 @@ final class PKCS8_RIM_PrivateKeyDecoder2 extends PKCS8_PrivateKeyDecoder {
             } finally {
                if (var21) {
                   label136: {
-                     if (!(cryptoSystem instanceof Object)) {
-                        throw new Object();
+                     if (!(cryptoSystem instanceof DSACryptoSystem)) {
+                        throw new InvalidCryptoSystemException();
                      }
 
                      _cryptoSystem = (DSACryptoSystem)cryptoSystem;
@@ -50,16 +55,16 @@ final class PKCS8_RIM_PrivateKeyDecoder2 extends PKCS8_PrivateKeyDecoder {
 
             ASN1InputByteArray in = new ASN1InputByteArray(privateKeyInfo.readOctetStringAsByteArray());
             byte[] keyData = in.readIntegerAsByteArray();
-            return (PrivateKey)(new Object(_cryptoSystem, keyData));
+            return new DSAPrivateKey(_cryptoSystem, keyData);
          } else {
             if (!algorithm.equals("RSA")) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             ASN1InputByteArray rsaPrivateKeySequence = new ASN1InputByteArray(privateKeyInfo.readOctetStringAsByteArray());
             rsaPrivateKeySequence.readSequence();
             if (rsaPrivateKeySequence == null) {
-               throw new Object();
+               throw new InvalidKeyEncodingException();
             }
 
             int version = rsaPrivateKeySequence.readInteger();
@@ -73,8 +78,8 @@ final class PKCS8_RIM_PrivateKeyDecoder2 extends PKCS8_PrivateKeyDecoder {
                   byte[] dModPm1 = rsaPrivateKeySequence.readIntegerAsByteArray();
                   byte[] dModQm1 = rsaPrivateKeySequence.readIntegerAsByteArray();
                   byte[] qInvModP = rsaPrivateKeySequence.readIntegerAsByteArray();
-                  RSACryptoSystem rsaCryptoSystem = (RSACryptoSystem)(new Object(n.length * 8));
-                  return (PrivateKey)(new Object(rsaCryptoSystem, e, d, n, p, q, dModPm1, dModQm1, qInvModP));
+                  RSACryptoSystem rsaCryptoSystem = new RSACryptoSystem(n.length * 8);
+                  return new RSAPrivateKey(rsaCryptoSystem, e, d, n, p, q, dModPm1, dModQm1, qInvModP);
                }
                case 127: {
                   byte[] e = rsaPrivateKeySequence.readIntegerAsByteArray();
@@ -83,11 +88,11 @@ final class PKCS8_RIM_PrivateKeyDecoder2 extends PKCS8_PrivateKeyDecoder {
                   byte[] dModPm1 = rsaPrivateKeySequence.readIntegerAsByteArray();
                   byte[] dModQm1 = rsaPrivateKeySequence.readIntegerAsByteArray();
                   byte[] qInvModP = rsaPrivateKeySequence.readIntegerAsByteArray();
-                  RSACryptoSystem rsaCryptoSystem = (RSACryptoSystem)(new Object((p.length + q.length) * 8));
-                  return (PrivateKey)(new Object(rsaCryptoSystem, e, p, q, dModPm1, dModQm1, qInvModP));
+                  RSACryptoSystem rsaCryptoSystem = new RSACryptoSystem((p.length + q.length) * 8);
+                  return new RSAPrivateKey(rsaCryptoSystem, e, p, q, dModPm1, dModQm1, qInvModP);
                }
                default:
-                  throw new Object(((StringBuffer)(new Object("Unsupported PKCS8 version:"))).append(version).toString());
+                  throw new InvalidKeyEncodingException("Unsupported PKCS8 version:" + version);
             }
          }
       } else {
@@ -102,15 +107,15 @@ final class PKCS8_RIM_PrivateKeyDecoder2 extends PKCS8_PrivateKeyDecoder {
                byte[] g = params.readIntegerAsByteArray();
                byte[] q = params.readIntegerAsByteArray();
                if (q.length == 1 && q[0] == 0) {
-                  _cryptoSystem = (DHCryptoSystem)(new Object(p, g));
+                  _cryptoSystem = new DHCryptoSystem(p, g);
                   var18 = false;
                } else {
-                  _cryptoSystem = (DHCryptoSystem)(new Object(p, q, g));
+                  _cryptoSystem = new DHCryptoSystem(p, q, g);
                   var18 = false;
                }
             } else {
-               if (!(cryptoSystem instanceof Object)) {
-                  throw new Object();
+               if (!(cryptoSystem instanceof DHCryptoSystem)) {
+                  throw new InvalidCryptoSystemException();
                }
 
                _cryptoSystem = (DHCryptoSystem)cryptoSystem;
@@ -119,8 +124,8 @@ final class PKCS8_RIM_PrivateKeyDecoder2 extends PKCS8_PrivateKeyDecoder {
          } finally {
             if (var18) {
                label151: {
-                  if (!(cryptoSystem instanceof Object)) {
-                     throw new Object();
+                  if (!(cryptoSystem instanceof DHCryptoSystem)) {
+                     throw new InvalidCryptoSystemException();
                   }
 
                   _cryptoSystem = (DHCryptoSystem)cryptoSystem;
@@ -131,7 +136,7 @@ final class PKCS8_RIM_PrivateKeyDecoder2 extends PKCS8_PrivateKeyDecoder {
 
          ASN1InputByteArray in = new ASN1InputByteArray(privateKeyInfo.readOctetStringAsByteArray());
          byte[] keyData = in.readIntegerAsByteArray();
-         return (PrivateKey)(new Object(_cryptoSystem, keyData));
+         return new DHPrivateKey(_cryptoSystem, keyData);
       }
    }
 

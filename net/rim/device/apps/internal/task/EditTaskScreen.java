@@ -5,6 +5,8 @@ import net.rim.device.api.system.RIMGlobalMessagePoster;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.MenuItem;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -16,6 +18,8 @@ import net.rim.device.apps.api.task.TaskCollection;
 import net.rim.device.apps.api.task.TaskModel;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
 import net.rim.device.apps.api.utility.editor.EditorUsingRIMModelFactory;
+import net.rim.device.apps.internal.commonmodels.categories.CategoriesModel;
+import net.rim.device.apps.internal.commonmodels.categories.DisplayCategoriesForFieldVerb;
 import net.rim.device.apps.internal.task.resources.TaskResources;
 
 final class EditTaskScreen extends EditorUsingRIMModelFactory {
@@ -75,8 +79,8 @@ final class EditTaskScreen extends EditorUsingRIMModelFactory {
                menu.add(this._deleteVerb);
             }
 
-            if (this._categoriesField != null && !(this.getModelFieldWithFocus().getCookie() instanceof Object)) {
-               menu.add((Verb)(new Object(this._categoriesField)));
+            if (this._categoriesField != null && !(this.getModelFieldWithFocus().getCookie() instanceof CategoriesModel)) {
+               menu.add(new DisplayCategoriesForFieldVerb(this._categoriesField));
             }
 
             if (!this.isDirty()) {
@@ -96,7 +100,7 @@ final class EditTaskScreen extends EditorUsingRIMModelFactory {
       switch (action) {
          case 1:
             Field field = this.getModelFieldWithFocus();
-            if (field.getCookie() instanceof Object) {
+            if (field.getCookie() instanceof CategoriesModel) {
                return this.invokeDefaultMenuItem(0);
             }
          default:
@@ -205,9 +209,9 @@ final class EditTaskScreen extends EditorUsingRIMModelFactory {
    }
 
    private final void insertInfo() {
-      VerticalFieldManager vfm = (VerticalFieldManager)(new Object());
-      vfm.add((Field)(new Object(((StringBuffer)(new Object("RefId: "))).append(this._task.getUID()).toString(), 18014398509481984L)));
-      vfm.add((Field)(new Object()));
+      VerticalFieldManager vfm = new VerticalFieldManager();
+      vfm.add(new LabelField("RefId: " + this._task.getUID(), 18014398509481984L));
+      vfm.add(new SeparatorField());
       this.insert(vfm, 0);
       vfm.setFocus();
       this._infoVisible = true;
@@ -219,7 +223,7 @@ final class EditTaskScreen extends EditorUsingRIMModelFactory {
       if (order == 13500) {
          manager = new EditTaskScreen$1(this);
       } else {
-         manager = (Manager)(new Object());
+         manager = new VerticalFieldManager();
       }
 
       if (order == 13000) {

@@ -1,9 +1,11 @@
 package net.rim.device.cldc.io.waphttp;
 
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import net.rim.device.api.io.IOCancelledException;
 import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.api.io.http.HttpProtocolConstants;
 import net.rim.device.api.io.http.HttpServerConnection;
@@ -21,9 +23,9 @@ public final class ServerProtocol implements HttpServerConnection, HttpProtocolC
       }
    }
 
-   public final HttpHeaders getHeaders() {
+   public final HttpHeaders getHeaders() throws IOCancelledException {
       if (this._closed) {
-         throw new Object();
+         throw new IOCancelledException();
       } else {
          return this._headers;
       }
@@ -112,12 +114,12 @@ public final class ServerProtocol implements HttpServerConnection, HttpProtocolC
 
    @Override
    public final OutputStream openOutputStream() {
-      return (OutputStream)(new Object());
+      return new ByteArrayOutputStream();
    }
 
    @Override
    public final DataOutputStream openDataOutputStream() {
-      return (DataOutputStream)(new Object(this.openOutputStream()));
+      return new DataOutputStream(this.openOutputStream());
    }
 
    @Override

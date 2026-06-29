@@ -1,5 +1,7 @@
 package net.rim.device.internal.synchronization.ota.session;
 
+import java.io.IOException;
+import java.io.InterruptedIOException;
 import java.util.Vector;
 import net.rim.device.cldc.io.sync.SyncCommandsPool;
 import net.rim.device.cldc.io.sync.SyncDatagram;
@@ -228,13 +230,13 @@ public class Session extends Thread {
                   var13 = false;
                } finally {
                   if (var13) {
-                     throw new Object();
+                     throw new InterruptedIOException();
                   }
                }
             }
 
             if (this.getState() == 9) {
-               throw new Object();
+               throw new IOException();
             }
          }
 

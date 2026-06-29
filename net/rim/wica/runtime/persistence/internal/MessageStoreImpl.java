@@ -110,7 +110,7 @@ public class MessageStoreImpl implements MessageStore {
    public BigVector loadInRequestQueue() {
       PersistentObject persistentObject = PersistentStore.getPersistentObject(-6071652197342507152L);
       Object obj = persistentObject.getContents();
-      return (BigVector)(!(obj instanceof Object) ? null : obj);
+      return !(obj instanceof BigVector) ? null : (BigVector)obj;
    }
 
    public static void wipe() {

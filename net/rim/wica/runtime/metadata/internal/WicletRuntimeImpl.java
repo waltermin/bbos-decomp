@@ -183,7 +183,7 @@ public final class WicletRuntimeImpl implements WicletRuntime, Serviceable {
       try {
          this._scriptEngine.startEngine(new WicletRuntimeImpl$ScriptMonitorImpl(this, null));
       } catch (Throwable var10) {
-         throw new Object(((StringBuffer)(new Object("ScriptEngine: "))).append(e.getMessage()).toString());
+         throw new RuntimeException("ScriptEngine: " + e.getMessage());
       }
 
       boolean var6 = false /* VF: Semaphore variable */;
@@ -379,7 +379,7 @@ public final class WicletRuntimeImpl implements WicletRuntime, Serviceable {
 
    @Override
    public final void requestMenuShow(int instance) {
-      this.requestTask(5, new Object(instance));
+      this.requestTask(5, new Integer(instance));
    }
 
    @Override
@@ -430,7 +430,7 @@ public final class WicletRuntimeImpl implements WicletRuntime, Serviceable {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

@@ -28,10 +28,10 @@ final class WizardCustomResourceLoader {
          if (url != null) {
             String coreImageName = getCoreImageName(resource);
             if (coreImageName != null && _imageBrandingReplacements != null && _imageBrandingReplacements.containsKey(coreImageName)) {
-               return ((StringBuffer)(new Object())).append(url).append((String)_imageBrandingReplacements.get(coreImageName)).toString();
+               return url + (String)_imageBrandingReplacements.get(coreImageName);
             }
 
-            return ((StringBuffer)(new Object())).append(url).append(coreImageName).toString();
+            return url + coreImageName;
          }
       }
 
@@ -44,7 +44,7 @@ final class WizardCustomResourceLoader {
    }
 
    private static final Hashtable buildImageReplacementHash() {
-      Hashtable brandingImageReplacements = (Hashtable)(new Object());
+      Hashtable brandingImageReplacements = new Hashtable();
       int formFactor = InternalServices.getFormFactor();
       int vendorId = Branding.getVendorId();
       int hardwareId = InternalServices.getHardwareID();

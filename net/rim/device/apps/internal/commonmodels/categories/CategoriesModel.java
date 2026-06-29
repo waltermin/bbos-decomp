@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.commonmodels.categories;
 
 import net.rim.device.api.ui.Field;
-import net.rim.device.api.ui.component.BasicEditField;
+import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.apps.api.framework.model.CloneProvider;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -29,7 +29,7 @@ public final class CategoriesModel implements PersistableRIMModel, FieldProvider
       } else {
          Field uiField = (Field)ContextObject.get(context, 9045827404276417370L);
          Array.resize(verbs, 0);
-         if ((uiField instanceof CategoriesField || uiField instanceof Object) && uiField.getCookie() instanceof CategoriesModel) {
+         if ((uiField instanceof CategoriesField || uiField instanceof EditField) && uiField.getCookie() instanceof CategoriesModel) {
             Verb verb = new DisplayCategoriesForFieldVerb(uiField);
             Array.resize(verbs, 1);
             verbs[0] = verb;
@@ -126,8 +126,8 @@ public final class CategoriesModel implements PersistableRIMModel, FieldProvider
    public final boolean grabDataFromField(Field field, Object context) {
       String categoryNames = null;
       if (!(field instanceof CategoriesField)) {
-         if (field instanceof Object) {
-            categoryNames = ((BasicEditField)field).getText().trim();
+         if (field instanceof EditField) {
+            categoryNames = ((EditField)field).getText().trim();
          }
       } else {
          categoryNames = ((CategoriesField)field).getCategoryNames();
@@ -181,11 +181,11 @@ public final class CategoriesModel implements PersistableRIMModel, FieldProvider
       label49:
       try {
          var11 = true;
-         categoryNames = (String)(encoding != null ? new Object(data, offset, length - 1, encoding) : new Object(data, offset, length - 1));
+         categoryNames = encoding != null ? new String(data, offset, length - 1, encoding) : new String(data, offset, length - 1);
          var11 = false;
       } finally {
          if (var11) {
-            categoryNames = (String)(new Object(data, offset, length - 1));
+            categoryNames = new String(data, offset, length - 1);
             break label49;
          }
       }
@@ -193,7 +193,7 @@ public final class CategoriesModel implements PersistableRIMModel, FieldProvider
       int[] categoryIds = new int[0];
       int numCategories = CategoryList.getInstance().getCategoryIds(categoryNames, categoryIds, true);
       if (numCategories > 0) {
-         DataBuffer db = (DataBuffer)(new Object(true));
+         DataBuffer db = new DataBuffer(true);
 
          for (int i = 0; i < numCategories; i++) {
             db.writeCompressedInt(categoryIds[i]);
@@ -230,7 +230,7 @@ public final class CategoriesModel implements PersistableRIMModel, FieldProvider
    }
 
    public CategoriesModel(Object initialData) {
-      if (initialData instanceof Object) {
+      if (initialData instanceof String) {
          this.populateCategoryIds((String)initialData);
       } else {
          ContextObject contextObject = ContextObject.verifyNonNull(initialData);
@@ -249,7 +249,7 @@ public final class CategoriesModel implements PersistableRIMModel, FieldProvider
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public static final byte[] uncompressCategories(byte[] data, int offset, int length, String encoding) {
-      DataBuffer db = (DataBuffer)(new Object(data, offset, length, true));
+      DataBuffer db = new DataBuffer(data, offset, length, true);
       int[] categoryIds = new int[0];
       int numCategoryIds = 0;
 

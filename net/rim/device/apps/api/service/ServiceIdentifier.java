@@ -27,8 +27,8 @@ public class ServiceIdentifier implements Persistable {
 
    public static long createServiceID(Object key) {
       long id = 0;
-      if (!(key instanceof Object)) {
-         if (key instanceof Object) {
+      if (!(key instanceof ServiceRecord)) {
+         if (key instanceof String) {
             String keyString = (String)key;
             byte[] keyBytes = keyString.getBytes();
             id = UIDGenerator.makeLUID(CRC32.update(-1, keyBytes), CRC32.update(-1, keyBytes));
@@ -101,7 +101,7 @@ public class ServiceIdentifier implements Persistable {
 
    public boolean isSecureService() {
       boolean result = false;
-      if (this._key instanceof Object) {
+      if (this._key instanceof ServiceRecord) {
          ServiceRecord sr = (ServiceRecord)this._key;
          result = sr.isSecureService();
       }

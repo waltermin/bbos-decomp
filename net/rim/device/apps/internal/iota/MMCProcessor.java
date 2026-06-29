@@ -55,7 +55,7 @@ public final class MMCProcessor extends Thread implements EngineeringDataListene
    public final synchronized void openTunnel() {
       EventLogger.logEvent(4411276428801970910L, 1414426480);
       if (this._tunnel == null) {
-         TunnelConfig config = (TunnelConfig)(new Object("iota", "IOTA - TUNNEL", this));
+         TunnelConfig config = new TunnelConfig("iota", "IOTA - TUNNEL", this);
          config.setPriority(0);
          config.setLingerTimeout(0);
          this._tunnel = TunnelFactory.openTunnel(config);
@@ -91,7 +91,7 @@ public final class MMCProcessor extends Thread implements EngineeringDataListene
          }
 
          if (this._tunnel != null && this._tunnel.getStatus() != 3) {
-            throw new Object("TNac - timeout");
+            throw new RuntimeException("TNac - timeout");
          }
       }
    }
@@ -126,7 +126,7 @@ public final class MMCProcessor extends Thread implements EngineeringDataListene
    }
 
    private final void parseMMCDocument(byte[] data, String contentType) {
-      ByteArrayInputStream mmcByteArrayInputStream = (ByteArrayInputStream)(new Object(data));
+      ByteArrayInputStream mmcByteArrayInputStream = new ByteArrayInputStream(data);
       SAXParserFactory factory = SAXParserFactory.newInstance();
       SAXParser saxParser = factory.newSAXParser();
       saxParser.setAllowUndefinedNamespaces(true);
@@ -143,15 +143,15 @@ public final class MMCProcessor extends Thread implements EngineeringDataListene
             MimeMultipart multipart = new MimeMultipart(mmcByteArrayInputStream, contentType);
             BodyPart mmcBodyPart = multipart.getRootBodyPart();
             if (mmcBodyPart == null) {
-               throw new Object("Multipart Body missing");
+               throw new IllegalStateException("Multipart Body missing");
             }
 
             byte[] mmcBytes = mmcBodyPart.getBytes();
-            mmcByteArrayInputStream = (ByteArrayInputStream)(new Object(mmcBytes));
+            mmcByteArrayInputStream = new ByteArrayInputStream(mmcBytes);
             this._parserHandler = new MMCDocHandler(this, this._psa, this._httpUserAgent, multipart);
          } else {
             if (!StringUtilities.strEqualIgnoreCase(contentTypeWithoutParameters, "application/vnd.phonecom.mmc-xml", 1701707776)) {
-               throw new Object(((StringBuffer)(new Object("Unexpected Content-Type: "))).append(contentTypeWithoutParameters).toString());
+               throw new RuntimeException("Unexpected Content-Type: " + contentTypeWithoutParameters);
             }
 
             EventLogger.logEvent(4411276428801970910L, 1299737964, 5);
@@ -281,7 +281,7 @@ public final class MMCProcessor extends Thread implements EngineeringDataListene
                                  var11 = false;
                                  var16 = false;
                               } else {
-                                 this._httpUserAgent = new HttpUserAgent((String)(new Object(nai)), "pcs", prxy);
+                                 this._httpUserAgent = new HttpUserAgent(new String(nai), "pcs", prxy);
                                  byte[] data = this._httpUserAgent.get(this._connURL);
                                  this._connURL = null;
 
@@ -299,7 +299,7 @@ public final class MMCProcessor extends Thread implements EngineeringDataListene
                                     }
 
                                     if (!this._psa.trustURL(this._httpUserAgent.getURL())) {
-                                       throw new Object("Untrusted URL");
+                                       throw new RuntimeException("Untrusted URL");
                                     }
 
                                     this.parseMMCDocument(data, this._httpUserAgent.getContentType());
@@ -453,7 +453,7 @@ public final class MMCProcessor extends Thread implements EngineeringDataListene
       byte firstByte = getByteFromHexString(proxyEncoded, byteIndex);
       if ((firstByte & 128) != 0) {
          if (getByteFromHexString(proxyEncoded, ++byteIndex) != 0) {
-            throw new Object("Only IPv4 proxy addresses are supported");
+            throw new RuntimeException("Only IPv4 proxy addresses are supported");
          }
       }
 
@@ -465,10 +465,10 @@ public final class MMCProcessor extends Thread implements EngineeringDataListene
 
       int addressLength = firstByte & 63;
       if (addressLength != 4) {
-         throw new Object(((StringBuffer)(new Object("Expected 4-byte address length but got "))).append(addressLength).toString());
+         throw new RuntimeException("Expected 4-byte address length but got " + addressLength);
       }
 
-      StringBuffer address = (StringBuffer)(new Object());
+      StringBuffer address = new StringBuffer();
 
       for (int i = 0; i < addressLength; i++) {
          if (i > 0) {

@@ -102,7 +102,7 @@ public class BasePushModel implements Persistable, Runnable {
       if (this._connectionType == 1) {
          label119:
          try {
-            ContextObject context = (ContextObject)(new Object());
+            ContextObject context = new ContextObject();
             ContextObject.put(context, 253, source);
             comparisonObject = FactoryUtil.createInstance(3797587162219887872L, context);
          } finally {
@@ -110,14 +110,14 @@ public class BasePushModel implements Persistable, Runnable {
          }
       }
 
-      StringTokenizer tokenizer = (StringTokenizer)(new Object(filter, ','));
+      StringTokenizer tokenizer = new StringTokenizer(filter, ',');
 
       while (tokenizer.hasMoreTokens()) {
          String token = tokenizer.nextToken();
          if (comparisonObject != null && this._connectionType == 1) {
             label109:
             try {
-               ContextObject context = (ContextObject)(new Object());
+               ContextObject context = new ContextObject();
                ContextObject.put(context, 253, token);
                Object testObject = FactoryUtil.createInstance(3797587162219887872L, context);
                if (testObject != null && testObject.equals(comparisonObject)) {
@@ -133,7 +133,7 @@ public class BasePushModel implements Persistable, Runnable {
          }
       }
 
-      EventLogger.logEvent(-1133226195824034738L, ((StringBuffer)(new Object("RMnf\n"))).append(source).toString().getBytes(), 0);
+      EventLogger.logEvent(-1133226195824034738L, ("RMnf\n" + source).getBytes(), 0);
       return 3;
    }
 

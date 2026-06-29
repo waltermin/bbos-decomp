@@ -8,7 +8,7 @@ import net.rim.device.internal.system.InternalServices;
 public final class MediaCardOptionsProvider implements OptionsProviderRegistration$OptionsProvider {
    @Override
    public final Vector getOptionsItems() {
-      Vector items = (Vector)(new Object());
+      Vector items = new Vector();
       items.addElement(new MediaCardOptionsItem());
       return items;
    }

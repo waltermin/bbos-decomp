@@ -50,7 +50,7 @@ final class CalendarViewController$CalendarViewHeader$UpdateDateHeader implement
                   int weeknum = DateTimeUtilities.getWeekOfYear(this.this$1.this$0._cal, this._selectedDateValue, fdow);
                   if (this.this$1._weekNum != weeknum) {
                      this.this$1._weekNum = weeknum;
-                     String value = MessageFormat.format(CalendarApp._rb.getString(626), new Object[]{Integer.toString(weeknum)});
+                     String value = MessageFormat.format(CalendarApp._rb.getString(626), new String[]{Integer.toString(weeknum)});
                      this.this$1._currentWeekNumber.setText(value);
                   }
                }

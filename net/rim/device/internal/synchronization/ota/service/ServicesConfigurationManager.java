@@ -31,7 +31,7 @@ public final class ServicesConfigurationManager {
 
    private final LongHashtable performIntegerityCheck(LongHashtable loadedConfigurations) {
       if (loadedConfigurations == null) {
-         return (LongHashtable)(new Object(1));
+         return new LongHashtable(1);
       }
 
       long[] xKeys = new long[loadedConfigurations.size()];

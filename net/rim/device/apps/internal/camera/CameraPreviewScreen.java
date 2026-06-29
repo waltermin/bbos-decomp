@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.camera;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import javax.microedition.io.Connection;
 import javax.microedition.io.Connector;
 import javax.microedition.io.file.FileConnection;
 import net.rim.device.api.math.Fixed32;
@@ -25,6 +25,7 @@ import net.rim.device.apps.api.framework.file.ExplorerServices;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.registration.MIMEContentVerbRepository;
 import net.rim.device.apps.api.framework.registration.VerbRepository;
+import net.rim.device.apps.api.framework.verb.PopupVerbWrapperSelectionDialog;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ribbon.RibbonBanner;
 import net.rim.device.apps.api.ui.HintPollingThread;
@@ -32,6 +33,7 @@ import net.rim.device.apps.api.ui.HintPollingThread$HintProvider;
 import net.rim.device.apps.api.ui.HintPopup;
 import net.rim.device.apps.api.ui.PopupStatus;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
+import net.rim.device.apps.api.ui.VerbMenuItem;
 import net.rim.device.internal.camera.Camera;
 import net.rim.device.internal.io.file.FileUtilities;
 import net.rim.plazmic.internal.mediaengine.MediaServices;
@@ -73,7 +75,7 @@ final class CameraPreviewScreen extends MainScreen implements MediaListener, Hin
 
    public final void updatePreview() {
       if (this._previewBitmap == null) {
-         this._previewBitmap = (Bitmap)(new Object(197, 240, 180));
+         this._previewBitmap = new Bitmap(197, 240, 180);
          this._previewImage.setBitmap(this._previewBitmap);
       }
 
@@ -94,20 +96,20 @@ final class CameraPreviewScreen extends MainScreen implements MediaListener, Hin
    public final boolean renameImage() {
       Object obj = null;
       if (this._filename != null && !this._filename.equals("")) {
-         String fileURL = FileUtilities.makeFileURL(this._path, ((StringBuffer)(new Object())).append(this._filename).append(this._fileExtension).toString());
+         String fileURL = FileUtilities.makeFileURL(this._path, this._filename + this._fileExtension);
          if (FileUtilities.checkFileExists(fileURL)) {
             obj = fileURL;
          }
       }
 
       if (obj == null) {
-         obj = new Object(this._imageData, 0, this._imageData.length);
+         obj = new ByteArrayInputStream(this._imageData, 0, this._imageData.length);
       }
 
       Verb renameVerb = this.getRenameVerb();
       if (renameVerb != null) {
          obj = renameVerb.invoke(obj);
-         if (obj instanceof Object) {
+         if (obj instanceof String) {
             String newname = (String)obj;
             this.setFileName(FileUtilities.getPath(newname), FileUtilities.getName(newname));
             return true;
@@ -201,14 +203,14 @@ final class CameraPreviewScreen extends MainScreen implements MediaListener, Hin
             if ("send".equals(id) && this._sendVerbs != null && this._sendVerbs.length > 0) {
                int idx = 0;
                if (this._sendVerbs.length > 1) {
-                  String[] verbStrings = new Object[this._sendVerbs.length];
+                  String[] verbStrings = new String[this._sendVerbs.length];
                   int i = this._sendVerbs.length;
 
                   while (--i >= 0) {
                      verbStrings[i] = this._sendVerbs[i].toString();
                   }
 
-                  Dialog pickVerb = (Dialog)(new Object(CameraMain._rb.getString(19), verbStrings, 0, true));
+                  Dialog pickVerb = new PopupVerbWrapperSelectionDialog(CameraMain._rb.getString(19), verbStrings, 0, true);
                   pickVerb.setEscapeEnabled(true);
                   pickVerb.setIcon(ThemeManager.getThemeAwareImage("dialog_question"));
                   idx = pickVerb.doModal();
@@ -218,24 +220,16 @@ final class CameraPreviewScreen extends MainScreen implements MediaListener, Hin
                }
 
                if (this._sendVerbs[idx] != null) {
-                  ContextObject contextObj = (ContextObject)(new Object());
+                  ContextObject contextObj = new ContextObject();
                   if (this._filename != null && !this._filename.equals("")) {
-                     contextObj.put(
-                        2765042845091913199L,
-                        FileUtilities.makeFileURL(
-                           ((StringBuffer)(new Object())).append(this._path).append(this._filename).append(this._fileExtension).toString()
-                        )
-                     );
+                     contextObj.put(2765042845091913199L, FileUtilities.makeFileURL(this._path + this._filename + this._fileExtension));
                   } else {
-                     InputStream istream = (InputStream)(new Object(this._imageData, 0, this._imageData.length));
+                     InputStream istream = new ByteArrayInputStream(this._imageData, 0, this._imageData.length);
                      contextObj.put(5473606008898265655L, istream);
                   }
 
                   contextObj.put(-4241241545455759532L, "image/jpeg");
-                  String fileDisplayName = ((StringBuffer)(new Object()))
-                     .append(FileUtilities.getDisplayName(this._filename))
-                     .append(this._fileExtension)
-                     .toString();
+                  String fileDisplayName = FileUtilities.getDisplayName(this._filename) + this._fileExtension;
                   contextObj.put(-1188330299125235844L, fileDisplayName);
                   contextObj.put(-4886909117188079897L, fileDisplayName);
                   this._sendVerbs[idx].invoke(contextObj);
@@ -245,26 +239,21 @@ final class CameraPreviewScreen extends MainScreen implements MediaListener, Hin
          } else {
             Verb[] verbs = VerbRepository.getVerbRepository(-2843135760572915788L).getVerbs(-753816125826020042L);
             if (verbs == null) {
-               verbs = new Object[0];
+               verbs = new Verb[0];
             }
 
-            Arrays.add(
-               verbs,
-               new RenderImageVerb(
-                  FileUtilities.makeFileURL(this._path, ((StringBuffer)(new Object())).append(this._filename).append(this._fileExtension).toString())
-               )
-            );
+            Arrays.add(verbs, new RenderImageVerb(FileUtilities.makeFileURL(this._path, this._filename + this._fileExtension)));
             if (verbs != null && verbs.length > 0) {
                int idx = 0;
                if (verbs.length > 1) {
-                  String[] verbStrings = new Object[verbs.length];
+                  String[] verbStrings = new String[verbs.length];
                   int i = verbs.length;
 
                   while (--i >= 0) {
                      verbStrings[i] = verbs[i].toString();
                   }
 
-                  Dialog pickVerb = (Dialog)(new Object(CameraMain._rb.getString(18), verbStrings, 0, true));
+                  Dialog pickVerb = new PopupVerbWrapperSelectionDialog(CameraMain._rb.getString(18), verbStrings, 0, true);
                   pickVerb.setEscapeEnabled(true);
                   pickVerb.setIcon(ThemeManager.getThemeAwareImage("dialog_question"));
                   idx = pickVerb.doModal();
@@ -274,11 +263,9 @@ final class CameraPreviewScreen extends MainScreen implements MediaListener, Hin
                }
 
                if (verbs[idx] != null) {
-                  ContextObject contextObj = (ContextObject)(new Object());
+                  ContextObject contextObj = new ContextObject();
                   if (this._filename != null && !this._filename.equals("")) {
-                     contextObj.put(
-                        2765042845091913199L, ((StringBuffer)(new Object())).append(this._path).append(this._filename).append(this._fileExtension).toString()
-                     );
+                     contextObj.put(2765042845091913199L, this._path + this._filename + this._fileExtension);
                   } else {
                      contextObj.put(8849067667159082262L, this._imageData);
                   }
@@ -293,7 +280,7 @@ final class CameraPreviewScreen extends MainScreen implements MediaListener, Hin
 
    @Override
    public final Object getHint() {
-      LabelField hint = (LabelField)(new Object(this._hint, 51539607616L));
+      LabelField hint = new LabelField(this._hint, 51539607616L);
       hint.setTag(ThemeUtilities.TAG_CAMERA_HINT);
       return hint;
    }
@@ -306,30 +293,30 @@ final class CameraPreviewScreen extends MainScreen implements MediaListener, Hin
 
    @Override
    protected final void makeMenu(Menu menu, int instance) {
-      String fileString = ((StringBuffer)(new Object())).append(this._path).append(this._filename).append(this._fileExtension).toString();
-      InputStream istream = (InputStream)(new Object(this._imageData, 0, this._imageData.length));
-      ContextObject context = (ContextObject)(new Object());
+      String fileString = this._path + this._filename + this._fileExtension;
+      InputStream istream = new ByteArrayInputStream(this._imageData, 0, this._imageData.length);
+      ContextObject context = new ContextObject();
       context.put(2765042845091913199L, fileString);
       context.put(8849067667159082262L, this._imageData);
       context.put(-4241241545455759532L, "image/jpeg");
-      String fileDisplayName = ((StringBuffer)(new Object())).append(FileUtilities.getDisplayName(this._filename)).append(this._fileExtension).toString();
+      String fileDisplayName = FileUtilities.getDisplayName(this._filename) + this._fileExtension;
       context.put(-1188330299125235844L, fileDisplayName);
       context.put(-4886909117188079897L, fileDisplayName);
       context.put(5473606008898265655L, istream);
       MenuItem menuItem = new CameraPreviewScreen$RenameMenuItem(this);
       menu.add(menuItem);
-      menu.add((MenuItem)(new Object(new CameraOptionsVerb(), Integer.MAX_VALUE)));
+      menu.add(new VerbMenuItem(new CameraOptionsVerb(), Integer.MAX_VALUE));
       Verb browseVerb = ExplorerServices.getBrowseVerb(fileString, 128, null);
-      menu.add((MenuItem)(new Object(CameraMain._rb.getString(24), 591106, 0, browseVerb, null)));
+      menu.add(new VerbMenuItem(CameraMain._rb.getString(24), 591106, 0, browseVerb, null));
       Verb[] verbs = VerbRepository.getVerbRepository(-2843135760572915788L).getVerbs(-753816125826020042L);
       if (verbs == null) {
-         verbs = new Object[0];
+         verbs = new Verb[0];
       }
 
       Arrays.add(verbs, new RenderImageVerb(fileString));
       if (verbs != null) {
          for (int i = 0; i < verbs.length; i++) {
-            menu.add((MenuItem)(new Object(null, verbs[i].getOrdering(), Integer.MAX_VALUE, verbs[i], context)));
+            menu.add(new VerbMenuItem(null, verbs[i].getOrdering(), Integer.MAX_VALUE, verbs[i], context));
          }
       }
 
@@ -356,11 +343,9 @@ final class CameraPreviewScreen extends MainScreen implements MediaListener, Hin
          label25:
          try {
             var3 = true;
-            FileConnection ioe = Connector.open(
-               FileUtilities.makeFileURL(this._path, ((StringBuffer)(new Object())).append(this._filename).append(this._fileExtension).toString())
-            );
-            ((FileConnection)ioe).delete();
-            ((Connection)ioe).close();
+            FileConnection ioe = (FileConnection)Connector.open(FileUtilities.makeFileURL(this._path, this._filename + this._fileExtension));
+            ioe.delete();
+            ioe.close();
             var3 = false;
          } finally {
             if (var3) {
@@ -386,7 +371,7 @@ final class CameraPreviewScreen extends MainScreen implements MediaListener, Hin
 
    private final Verb getRenameVerb() {
       if (this._filename != null && !this._filename.equals("")) {
-         String fileURL = FileUtilities.makeFileURL(this._path, ((StringBuffer)(new Object())).append(this._filename).append(this._fileExtension).toString());
+         String fileURL = FileUtilities.makeFileURL(this._path, this._filename + this._fileExtension);
          return FileUtilities.checkFileExists(fileURL)
             ? ExplorerServices.getRenameVerb(FileUtilities.getDisplayName(this._filename), null)
             : ExplorerServices.getSaveInputStreamVerb(fileURL, 1, true, false);
@@ -411,7 +396,7 @@ final class CameraPreviewScreen extends MainScreen implements MediaListener, Hin
       this._banner = RibbonBanner.getInstance().getStatusBanner(null, 3);
       this._banner.setTag(ThemeUtilities.TAG_CAMERA_BANNER);
       this.setBanner(this._banner);
-      this._previewImage = (BitmapField)(new Object(null, 12884901888L));
+      this._previewImage = new BitmapField(null, 12884901888L);
       this.getMainManager().setTag(ThemeUtilities.TAG_CAMERA_PREVIEW);
       this.add(this._previewImage);
       String mediaName = null;
@@ -434,9 +419,9 @@ final class CameraPreviewScreen extends MainScreen implements MediaListener, Hin
          }
       }
 
-      this._mediaField = (MediaField)(new Object(18014398512627712L));
+      this._mediaField = new MediaField(18014398512627712L);
       this._manager = new CameraPreviewScreen$MyMediaManager(this);
-      this._pmePlayer = (MediaPlayer)(new Object());
+      this._pmePlayer = new MediaPlayer();
       this._pmePlayer.setUI(this._mediaField);
 
       label48:
@@ -445,7 +430,7 @@ final class CameraPreviewScreen extends MainScreen implements MediaListener, Hin
          this._pmePlayer.setMedia(this._model);
          this._pmePlayer.setInternalMediaListener(this);
          Object services = this._pmePlayer.getServices();
-         if (services instanceof Object) {
+         if (services instanceof MediaServices) {
             MediaServices mediaServices = (MediaServices)services;
             this._focusManager.setFocusInteractor((FocusInteractor)mediaServices.getService("FocusInteractor"));
          }
@@ -496,9 +481,9 @@ final class CameraPreviewScreen extends MainScreen implements MediaListener, Hin
 
    @Override
    public final Menu getMenu(int instance) {
-      ContextObject menuContext = (ContextObject)(new Object());
-      menuContext.put(244, new Object(244387));
-      SystemEnabledMenu menu = (SystemEnabledMenu)(new Object(menuContext, null));
+      ContextObject menuContext = new ContextObject();
+      menuContext.put(244, new Integer(244387));
+      SystemEnabledMenu menu = new SystemEnabledMenu(menuContext, null);
       Menu.setTargetScreen(this);
       menu.setInstance(instance);
       this.makeMenuWithContext(menu, instance);

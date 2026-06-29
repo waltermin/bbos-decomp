@@ -26,14 +26,14 @@ public class SLDataContainer {
    private char[] _prefixes;
    private int _prefixNo;
    private SLCurrentVariant _suffix;
-   private SLTextDataContainer _dataContainer = (SLTextDataContainer)(new Object());
+   private SLTextDataContainer _dataContainer = new SLTextDataContainer();
 
    public SLDataContainer(int aSize) {
       if (aSize > 0) {
-         this._buffer = new Object[aSize];
+         this._buffer = new StringBuffer[aSize];
 
          for (int i = 0; i < aSize; i++) {
-            this._buffer[i] = (StringBuffer)(new Object());
+            this._buffer[i] = new StringBuffer();
          }
       }
    }

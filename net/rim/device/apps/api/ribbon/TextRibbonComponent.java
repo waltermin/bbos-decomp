@@ -21,7 +21,7 @@ public class TextRibbonComponent implements SimpleRibbonComponent, RibbonCompone
    protected int _align;
    protected int _fgColor;
    protected boolean _fgColorSet;
-   private static ToIntHashtable _colors = (ToIntHashtable)(new Object(10));
+   private static ToIntHashtable _colors = new ToIntHashtable(10);
 
    protected void setAltFont(int locale) {
       if (this._altFont != null) {

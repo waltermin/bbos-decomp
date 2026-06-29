@@ -6,6 +6,7 @@ import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.api.util.Persistable;
 import net.rim.device.apps.api.framework.model.SyncBuffer;
+import net.rim.device.cldc.io.utility.URL;
 import net.rim.wica.compatibility.VersionContext;
 import net.rim.wica.runtime.management.versioning.REVersionUtils;
 import net.rim.wica.runtime.util.Util;
@@ -75,8 +76,8 @@ public final class AGInfo implements Persistable {
             this._UID = sr.getUid();
             byte[] data = sr.getApplicationData();
             if (data != null && data.length > 0) {
-               DataBuffer _tmpDataBuffer = (DataBuffer)(new Object(data, 0, data.length, true));
-               SyncBuffer _tmpSyncBuffer = (SyncBuffer)(new Object(_tmpDataBuffer, 0, 0));
+               DataBuffer _tmpDataBuffer = new DataBuffer(data, 0, data.length, true);
+               SyncBuffer _tmpSyncBuffer = new SyncBuffer(_tmpDataBuffer, 0, 0);
 
                while (!_tmpSyncBuffer.isEmpty()) {
                   try {
@@ -118,8 +119,8 @@ public final class AGInfo implements Persistable {
 
    public final boolean isValid() {
       try {
-         new Object(this._agRegURL);
-         new Object(this._agCompactMsgURL);
+         new URL(this._agRegURL);
+         new URL(this._agCompactMsgURL);
          if (Util.isNonEmptyString(this._agRegURL) && Util.isNonEmptyString(this._agCompactMsgURL) && Util.isNonEmptyString(this._IPPP_UID)) {
             return true;
          }
@@ -167,7 +168,7 @@ public final class AGInfo implements Persistable {
    }
 
    public final void setVersions(byte[] versions) {
-      this._versions = (Hashtable)(new Object());
+      this._versions = new Hashtable();
       if (versions == null) {
          this._transportVersion = 1;
          this._versions.put("Discovery", "1.1.0");
@@ -199,7 +200,7 @@ public final class AGInfo implements Persistable {
    }
 
    public static final String createAGCompactMsgURL(String baseURL) {
-      return Util.isValidURL(baseURL) ? ((StringBuffer)(new Object())).append(baseURL).append(AG_COMPACT_MSG_URL).toString() : "";
+      return Util.isValidURL(baseURL) ? baseURL + AG_COMPACT_MSG_URL : "";
    }
 
    public final void setAGCompactMsgURL(String compactMsgURL) {

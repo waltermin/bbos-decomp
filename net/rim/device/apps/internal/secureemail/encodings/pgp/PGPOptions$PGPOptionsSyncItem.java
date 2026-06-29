@@ -2,9 +2,9 @@ package net.rim.device.apps.internal.secureemail.encodings.pgp;
 
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.pgp.PGPCertificate;
+import net.rim.device.api.crypto.certificate.pgp.PGPFingerprintKeyStoreIndex;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
-import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.api.crypto.keystore.PGPKeyStore;
 import net.rim.device.api.i18n.Locale;
 import net.rim.device.api.synchronization.ConverterUtilities;
@@ -44,7 +44,7 @@ class PGPOptions$PGPOptionsSyncItem extends OTASyncCapableSyncItem {
       ConverterUtilities.convertInt(buffer, 1, this.this$0._useConventionalEncryption ? 1 : 0, 1);
       if (PGPOptions.access$100(this.this$0) != null) {
          Certificate certificate = PGPOptions.access$200(this.this$0).getCertificate();
-         if (certificate instanceof Object) {
+         if (certificate instanceof PGPCertificate) {
             PGPCertificate pgpCert = (PGPCertificate)certificate;
             ConverterUtilities.writeByteArray(buffer, 2, pgpCert.getFingerprint());
          }
@@ -59,7 +59,7 @@ class PGPOptions$PGPOptionsSyncItem extends OTASyncCapableSyncItem {
    @Override
    public synchronized boolean setSyncData(DataBuffer buffer, int version) {
       KeyStore keyStore = PGPKeyStore.getInstance();
-      keyStore.addIndex((KeyStoreIndex)(new Object()));
+      keyStore.addIndex(new PGPFingerprintKeyStoreIndex());
 
       label64:
       try {

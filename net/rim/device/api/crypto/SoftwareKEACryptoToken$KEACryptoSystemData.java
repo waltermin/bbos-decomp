@@ -12,7 +12,7 @@ final class SoftwareKEACryptoToken$KEACryptoSystemData implements CryptoTokenCry
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   SoftwareKEACryptoToken$KEACryptoSystemData(byte[] p, byte[] q, byte[] g, String name) {
+   SoftwareKEACryptoToken$KEACryptoSystemData(byte[] p, byte[] q, byte[] g, String name) throws InvalidCryptoSystemException {
       if (p != null && g != null && q != null) {
          p = CryptoByteArrayArithmetic.trim(p);
          q = CryptoByteArrayArithmetic.trim(q);
@@ -24,7 +24,7 @@ final class SoftwareKEACryptoToken$KEACryptoSystemData implements CryptoTokenCry
             var7 = false;
          } finally {
             if (var7) {
-               throw new Object();
+               throw new InvalidCryptoSystemException();
             }
          }
 
@@ -36,10 +36,10 @@ final class SoftwareKEACryptoToken$KEACryptoSystemData implements CryptoTokenCry
             this._name = name;
             this.setHashCode();
          } else {
-            throw new Object();
+            throw new InvalidCryptoSystemException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

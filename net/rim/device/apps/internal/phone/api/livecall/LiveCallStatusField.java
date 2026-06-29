@@ -16,7 +16,7 @@ public final class LiveCallStatusField extends SelfDrawingListField {
    private boolean _showTimer;
    private ColumnInformation _columnInformation;
    private int _fontSize = -1;
-   private ContextObject _contextObject = (ContextObject)(new Object());
+   private ContextObject _contextObject = new ContextObject();
    private int _statusWidth = Display.getWidth();
    private boolean _rightJustified;
    public static final int STATUS_COLUMN = 0;
@@ -31,7 +31,7 @@ public final class LiveCallStatusField extends SelfDrawingListField {
    public LiveCallStatusField(RIMModel liveCall, Object context) {
       super(1, 36028797018963968L);
       if (liveCall == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._liveCall = liveCall;
@@ -55,14 +55,14 @@ public final class LiveCallStatusField extends SelfDrawingListField {
       this._columnInformation = (ColumnInformation)ContextObject.get(context, 5141706140756983937L);
       if (this._columnInformation == null) {
          if (this._showTimer) {
-            this._columnInformation = (ColumnInformation)(new Object(3));
+            this._columnInformation = new ColumnInformation(3);
             this._columnInformation.setColumnWidth(0, 115);
             this._columnInformation.setColumnWidth(1, 3);
             this._columnInformation.setColumnWidth(2, 40);
             return;
          }
 
-         this._columnInformation = (ColumnInformation)(new Object(1));
+         this._columnInformation = new ColumnInformation(1);
          this._columnInformation.setColumnWidth(0, this._statusWidth);
       }
    }
@@ -85,7 +85,7 @@ public final class LiveCallStatusField extends SelfDrawingListField {
          paintingHeight = fieldFont.getHeight();
       }
 
-      if (this._liveCall instanceof Object) {
+      if (this._liveCall instanceof PaintProvider) {
          PaintProvider paintProvider = (PaintProvider)this._liveCall;
          paintProvider.paint(graphics, columnOffset, y, columnWidth, paintingHeight, this._contextObject);
       }
@@ -110,7 +110,7 @@ public final class LiveCallStatusField extends SelfDrawingListField {
          paintingHeight = fieldFont.getHeight();
       }
 
-      if (this._liveCall instanceof Object) {
+      if (this._liveCall instanceof PaintProvider) {
          PaintProvider paintProvider = (PaintProvider)this._liveCall;
          paintProvider.paint(graphics, columnOffset, y, columnWidth, paintingHeight, this._contextObject);
       }

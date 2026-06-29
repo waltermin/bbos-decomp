@@ -30,7 +30,7 @@ class SdpQuery {
    }
 
    byte[] getRequestData() {
-      DataBuffer queryData = (DataBuffer)(new Object());
+      DataBuffer queryData = new DataBuffer();
       switch (this._type) {
          case 4:
             queryData.writeInt(this._remoteServiceRecord.getHandle());
@@ -48,7 +48,7 @@ class SdpQuery {
             DataElementUtilities.write(serviceSearchPattern, queryData);
             break;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       queryData.writeShort(672);

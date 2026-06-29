@@ -37,6 +37,6 @@ class GranularPolicyKeyserver extends GranularPolicyElement {
 
    @Override
    public String getDebugPrintInfo() {
-      return ((StringBuffer)(new Object("Keyserver \""))).append(this._name).append("\" (").append(this._keyserver).append(")").toString();
+      return "Keyserver \"" + this._name + "\" (" + this._keyserver + ")";
    }
 }

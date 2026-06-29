@@ -61,7 +61,7 @@ public final class Configuration implements Persistable {
    private static final byte SERVER_CAPABILITIES = 9;
 
    public static final Configuration create(byte[] bytes, long sid) {
-      DataBuffer xDataBuffer = (DataBuffer)(new Object(bytes, 0, bytes.length, true));
+      DataBuffer xDataBuffer = new DataBuffer(bytes, 0, bytes.length, true);
       return create(xDataBuffer, sid);
    }
 
@@ -77,9 +77,9 @@ public final class Configuration implements Persistable {
       this._ignoredSessionTimeout = 1800000;
       this._numberOfRetries = 0;
       this._sid = sid;
-      this._dataSourceNameToDataSourceMap = (Hashtable)(new Object(3));
-      this._dataSourceIdToDataSourceMap = (IntHashtable)(new Object(3));
-      this._dataSourceNames = (Vector)(new Object(2));
+      this._dataSourceNameToDataSourceMap = new Hashtable(3);
+      this._dataSourceIdToDataSourceMap = new IntHashtable(3);
+      this._dataSourceNames = new Vector(2);
       this._userEnabled = true;
       this._numberOfOperationRetries = 3;
       this._operationRetryTimeout = 300000;
@@ -377,7 +377,7 @@ public final class Configuration implements Persistable {
 
    private final void validate(String dataSourceName, String databaseName) {
       if (dataSourceName == null || databaseName == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -462,7 +462,7 @@ public final class Configuration implements Persistable {
 
    @Override
    public final String toString() {
-      StringBuffer xSb = (StringBuffer)(new Object());
+      StringBuffer xSb = new StringBuffer();
       xSb.append("[Configuration]").append('\n');
       xSb.append("SID= ").append(this._sid).append('\n');
       xSb.append("Default Service= ").append(this._default).append('\n');

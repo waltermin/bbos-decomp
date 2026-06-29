@@ -29,9 +29,7 @@ final class ArznDocInfoContainer extends ArznObject {
             offset += 4;
             int height = super._ucsParser.readUnsignedInt();
             offset += 4;
-            parsingData.addDocInfoValue(
-               commandCode, ((StringBuffer)(new Object())).append(String.valueOf(width)).append('x').append(String.valueOf(height)).toString()
-            );
+            parsingData.addDocInfoValue(commandCode, String.valueOf(width) + 'x' + height);
             return offset;
          case 90:
          case 91:
@@ -43,10 +41,7 @@ final class ArznDocInfoContainer extends ArznObject {
                parsingData.addDocInfoValue(commandCode, String.valueOf(uintInfo));
                return offset;
             } else {
-               parsingData.addDocInfoValue(
-                  commandCode,
-                  ((StringBuffer)(new Object())).append(String.valueOf(uintInfo / 60)).append(":").append(String.valueOf(uintInfo % 60)).toString()
-               );
+               parsingData.addDocInfoValue(commandCode, uintInfo / 60 + ":" + uintInfo % 60);
             }
          default:
             return offset;

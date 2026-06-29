@@ -35,7 +35,7 @@ public final class WebPageAddressModelFactory extends RIMModelFactory {
          return syncBuffer != null && syncBuffer.getFieldType(true) == 54;
       } else if (ContextObject.getFlag(object, 11) && ContextObject.getFlag(object, 43) && ContextObject.getFlag(object, 54)) {
          Vector data = (Vector)ContextObject.get(object, 249);
-         return data != null && data.size() > 0 && data.elementAt(0).equals("URL");
+         return data != null && data.size() > 0 && ((String)data.elementAt(0)).equals("URL");
       } else {
          return false;
       }

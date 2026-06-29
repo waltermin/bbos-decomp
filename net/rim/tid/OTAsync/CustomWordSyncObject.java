@@ -16,7 +16,7 @@ public class CustomWordSyncObject implements SyncObject, Persistable {
    public static final int TYPE_ADDED = 1;
    public static final int TYPE_REMOVED = 2;
    public static final int TYPE_UPDATED = 3;
-   private static StringBuffer _buffer = (StringBuffer)(new Object());
+   private static StringBuffer _buffer = new StringBuffer();
 
    public boolean needImmediateSynch() {
       return this._needImmediateSynch;
@@ -99,7 +99,7 @@ public class CustomWordSyncObject implements SyncObject, Persistable {
 
    public CustomWordSyncObject(byte[] word, int offset, int length, String localeAndType, int freq, int recordType, boolean immediateSynch) {
       _buffer.setLength(0);
-      _buffer.append((String)(new Object(word, offset, length)));
+      _buffer.append(new String(word, offset, length));
       _buffer.append("__");
       _buffer.append(localeAndType);
       this._record = _buffer.toString();
@@ -132,9 +132,9 @@ public class CustomWordSyncObject implements SyncObject, Persistable {
       String record = this.getRecord();
       StringBuffer buffer;
       if (record != null) {
-         buffer = (StringBuffer)(new Object(record));
+         buffer = new StringBuffer(record);
       } else {
-         buffer = (StringBuffer)(new Object(((StringBuffer)(new Object("uid:"))).append(this._uid).toString()));
+         buffer = new StringBuffer("uid:" + this._uid);
       }
 
       buffer.append(" - ");
@@ -160,7 +160,7 @@ public class CustomWordSyncObject implements SyncObject, Persistable {
 
    public CustomWordSyncObject(byte[] word, int offset, int length, String locale, byte type, int freq, int recordType, boolean immediateSynch) {
       _buffer.setLength(0);
-      _buffer.append((String)(new Object(word, offset, length)));
+      _buffer.append(new String(word, offset, length));
       _buffer.append("__");
       _buffer.append(locale);
       _buffer.append("__");

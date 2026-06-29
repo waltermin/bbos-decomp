@@ -1,6 +1,7 @@
 package net.rim.device.cldc.io.proxyhttp;
 
 import com.sun.cldc.io.ConnectionBaseInterface;
+import java.io.IOException;
 import javax.microedition.io.Connection;
 import javax.microedition.io.Connector;
 import javax.microedition.io.ServerSocketConnection;
@@ -32,11 +33,11 @@ public final class Protocol implements ConnectionBaseInterface {
    }
 
    @Override
-   public final Connection openPrim(String name, int mode, boolean timeouts) {
-      URL url = (URL)(new Object("http", name));
+   public final Connection openPrim(String name, int mode, boolean timeouts) throws IOException {
+      URL url = new URL("http", name);
       URLParameters urlParameters = url.getRIMParameters();
       Connection connection = null;
-      StringBuffer urlToOpen = (StringBuffer)(new Object());
+      StringBuffer urlToOpen = new StringBuffer();
       boolean useCompression = true;
       String path = url.getPath();
       String hostName = url.getHost();
@@ -107,7 +108,7 @@ public final class Protocol implements ConnectionBaseInterface {
             if (urlParameters.containParameter("ConnectionHandler")) {
                String connectionHandlerValue = urlParameters.getValue("ConnectionHandler");
                if (connectionHandlerValue == null) {
-                  throw new Object("Connection Handler parameter is not assigned a value");
+                  throw new IOException("Connection Handler parameter is not assigned a value");
                }
 
                urlToOpen.append(connectionHandlerValue);

@@ -32,7 +32,7 @@ public final class EMSAcceptResponseOutputStream extends CMSOutputStream {
          this._version = version;
          this._clientId = clientId;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -42,9 +42,9 @@ public final class EMSAcceptResponseOutputStream extends CMSOutputStream {
 
    @Override
    public final void close() {
-      ASN1OutputStream stream = (ASN1OutputStream)(new Object(this._output));
-      ASN1OutputStream sequence = (ASN1OutputStream)(new Object());
-      ASN1OutputStream generalNames = (ASN1OutputStream)(new Object());
+      ASN1OutputStream stream = new ASN1OutputStream(this._output);
+      ASN1OutputStream sequence = new ASN1OutputStream();
+      ASN1OutputStream generalNames = new ASN1OutputStream();
 
       for (int i = this._names.length - 1; i >= 0; i--) {
          generalNames.writeIA5String(this._names[i], 2, 1);
@@ -56,7 +56,7 @@ public final class EMSAcceptResponseOutputStream extends CMSOutputStream {
       }
 
       if (this._certificates != null) {
-         ASN1OutputStream certificates = (ASN1OutputStream)(new Object());
+         ASN1OutputStream certificates = new ASN1OutputStream();
 
          for (int i = this._certificates.length - 1; i >= 0; i--) {
             certificates.writeRawByteArray(this._certificates[i].getEncoding());

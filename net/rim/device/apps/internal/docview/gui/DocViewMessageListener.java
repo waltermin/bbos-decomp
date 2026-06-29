@@ -21,7 +21,7 @@ final class DocViewMessageListener implements CollectionListener {
 
    @Override
    public final void elementAdded(Collection collection, Object element) {
-      if (AttachmentViewerFactory.isAttachmentViewingEnabled() && element instanceof Object) {
+      if (AttachmentViewerFactory.isAttachmentViewingEnabled() && element instanceof EmailMessageModel) {
          EmailMessageModel model = (EmailMessageModel)element;
          if (model.getStatus() == 2047 && AttachmentViewerFactory.isFastAttachmentEnabled()) {
             EmailPayloadModel payload = model.getPayload();
@@ -31,7 +31,7 @@ final class DocViewMessageListener implements CollectionListener {
 
                for (int i = 0; i < size; i++) {
                   Object item = payload.getAt(i);
-                  if (item instanceof Object) {
+                  if (item instanceof ProxyModel) {
                      item = ((ProxyModel)item).getObject();
                   }
 
@@ -148,9 +148,9 @@ final class DocViewMessageListener implements CollectionListener {
 
          for (int i = 0; i < submembersCount; i++) {
             Object submember = payload.getAt(i);
-            if (submember instanceof Object) {
+            if (submember instanceof ProxyModel) {
                Object subObject = ((ProxyModel)submember).getObject();
-               if (subObject instanceof Object) {
+               if (subObject instanceof MorePartModel) {
                   MorePartModel partModel = (MorePartModel)subObject;
                   if (partModel.getMorePartID() == morePartID) {
                      boolean retValue = partModel.getMoreRequestSent();

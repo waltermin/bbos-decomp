@@ -24,6 +24,6 @@ public final class CopyPhoneNumberVerb extends Verb {
 
    @Override
    public final String toString() {
-      return MessageFormat.format(CommonResources.getString(1810), new Object[]{this._number});
+      return MessageFormat.format(CommonResources.getString(1810), new String[]{this._number});
    }
 }

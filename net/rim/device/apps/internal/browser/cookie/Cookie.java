@@ -55,7 +55,7 @@ public final class Cookie implements Persistable, EncryptableProvider {
    }
 
    public final String encode() {
-      StringBuffer cookieBuffer = (StringBuffer)(new Object());
+      StringBuffer cookieBuffer = new StringBuffer();
       if (this._name != null) {
          cookieBuffer.append(this.getName());
          cookieBuffer.append('=');
@@ -89,7 +89,7 @@ public final class Cookie implements Persistable, EncryptableProvider {
       String domain = PersistentContent.decodeString(this._domain);
       domain = this.stripDoubleQuotes(domain);
       if (!domain.startsWith(".") && !DomainUtilities.isIPAddress(domain)) {
-         domain = ((StringBuffer)(new Object())).append('.').append(domain).toString();
+         domain = '.' + domain;
       }
 
       return domain;

@@ -6,8 +6,8 @@ import net.rim.device.apps.internal.api.serialformats.VCardProvider;
 class ContactVCardProvider implements VCardProvider {
    private int _version;
    ContactImpl _contact;
-   private String[] _nameArray = new Object[7];
-   private String[] _addressArray = new Object[7];
+   private String[] _nameArray = new String[7];
+   private String[] _addressArray = new String[7];
    private boolean _hasAddress;
    private int _currentPhoneIndex;
    private int _currentEmailIndex;
@@ -199,7 +199,7 @@ class ContactVCardProvider implements VCardProvider {
    @Override
    public void addAddress(int type, String postOffice, String extended, String street, String locality, String region, String postal, String country) {
       if (!this._hasAddress) {
-         this._contact.addStringArray(100, 0, new Object[]{postOffice, extended, street, locality, region, postal, country});
+         this._contact.addStringArray(100, 0, new String[]{postOffice, extended, street, locality, region, postal, country});
          this._hasAddress = true;
       }
    }
@@ -323,7 +323,7 @@ class ContactVCardProvider implements VCardProvider {
       } else if ((attributes & 512) != 0) {
          return 10;
       } else {
-         throw new Object();
+         throw new IllegalStateException();
       }
    }
 
@@ -591,7 +591,7 @@ class ContactVCardProvider implements VCardProvider {
    @Override
    public void setVersion(int version) {
       if (version != 2 && version != 1) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._version = version;

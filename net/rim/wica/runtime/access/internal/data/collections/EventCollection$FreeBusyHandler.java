@@ -10,7 +10,7 @@ final class EventCollection$FreeBusyHandler implements IntFieldHandler {
 
    @Override
    public final int getValue(Object item) {
-      return !(item instanceof Object) ? -1 : FreeBusyEnumConverter.deviceToCommon(((Event)item).getFreeBusy());
+      return !(item instanceof Event) ? -1 : FreeBusyEnumConverter.deviceToCommon(((Event)item).getFreeBusy());
    }
 
    EventCollection$FreeBusyHandler(EventCollection$1 x0) {

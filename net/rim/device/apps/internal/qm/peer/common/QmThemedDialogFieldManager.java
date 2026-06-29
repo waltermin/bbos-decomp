@@ -38,16 +38,16 @@ public final class QmThemedDialogFieldManager extends Manager {
 
    public QmThemedDialogFieldManager(long style, long messageStyle) {
       super(style);
-      this._vfmLabel = (VerticalFieldManager)(new Object(messageStyle));
+      this._vfmLabel = new VerticalFieldManager(messageStyle);
       this._vfmLabel.setNonfocusableOverride(true);
       this.add(this._vfmLabel);
-      this._fm = (Manager)(new Object(299067162755072L));
+      this._fm = new VerticalFieldManager(299067162755072L);
       this.add(this._fm);
-      this._middleManager = (Manager)(new Object());
+      this._middleManager = new VerticalFieldManager();
       this._fm.add(this._middleManager);
       this._buttonManager = new QmThemedDialogFieldManager$ButtonManager();
       this._fm.add(this._buttonManager);
-      this._bottomManager = (Manager)(new Object());
+      this._bottomManager = new VerticalFieldManager();
       this._fm.add(this._bottomManager);
       this._focusNullField = new QmThemedDialogFieldManager$FocusNullField(null);
       this.add(this._focusNullField);
@@ -195,7 +195,7 @@ public final class QmThemedDialogFieldManager extends Manager {
          minButtonHeight = this.getPreferredHeightOfChild(this._buttonManager.getField(0));
       } else if (this._middleManager.getFieldCount() != 0) {
          Field first = this._middleManager.getField(0);
-         if (!(first instanceof Object)) {
+         if (!(first instanceof ListField)) {
             minButtonHeight = this.getPreferredHeightOfChild(first);
          } else {
             minButtonHeight = ((ListField)first).getRowHeight();

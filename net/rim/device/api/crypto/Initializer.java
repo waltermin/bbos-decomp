@@ -43,7 +43,7 @@ final class Initializer {
       // 00: aload 0
       // 01: invokestatic java/lang/Class.forName (Ljava/lang/String;)Ljava/lang/Class;
       // 04: invokevirtual java/lang/Class.newInstance ()Ljava/lang/Object;
-      // 07: checkcast java/lang/Object
+      // 07: checkcast net/rim/device/api/crypto/Initialization
       // 0a: invokestatic net/rim/device/api/crypto/Initializer.initialize (Lnet/rim/device/api/crypto/Initialization;)V
       // 0d: return
       // 0e: astore 1
@@ -51,14 +51,14 @@ final class Initializer {
       // 10: astore 1
       // 11: return
       // 12: astore 1
-      // 13: new java/lang/Object
+      // 13: new java/lang/RuntimeException
       // 16: dup
       // 17: aload 1
       // 18: invokevirtual java/lang/InstantiationException.toString ()Ljava/lang/String;
       // 1b: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 1e: athrow
       // 1f: astore 1
-      // 20: new java/lang/Object
+      // 20: new java/lang/RuntimeException
       // 23: dup
       // 24: aload 1
       // 25: invokevirtual java/lang/IllegalAccessException.toString ()Ljava/lang/String;

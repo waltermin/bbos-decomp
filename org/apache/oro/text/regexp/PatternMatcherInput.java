@@ -63,12 +63,12 @@ public final class PatternMatcherInput {
    }
 
    public final String substring(int beginOffset, int endOffset) {
-      return (String)(new Object(this._originalBuffer, this._beginOffset + beginOffset, endOffset - beginOffset));
+      return new String(this._originalBuffer, this._beginOffset + beginOffset, endOffset - beginOffset);
    }
 
    public final String substring(int beginOffset) {
       beginOffset += this._beginOffset;
-      return (String)(new Object(this._originalBuffer, beginOffset, this._endOffset - beginOffset));
+      return new String(this._originalBuffer, beginOffset, this._endOffset - beginOffset);
    }
 
    public final Object getInput() {
@@ -110,19 +110,19 @@ public final class PatternMatcherInput {
 
    @Override
    public final String toString() {
-      return (String)(new Object(this._originalBuffer, this._beginOffset, this.length()));
+      return new String(this._originalBuffer, this._beginOffset, this.length());
    }
 
    public final String preMatch() {
-      return (String)(new Object(this._originalBuffer, this._beginOffset, this._matchBeginOffset - this._beginOffset));
+      return new String(this._originalBuffer, this._beginOffset, this._matchBeginOffset - this._beginOffset);
    }
 
    public final String postMatch() {
-      return (String)(new Object(this._originalBuffer, this._matchEndOffset, this._endOffset - this._matchEndOffset));
+      return new String(this._originalBuffer, this._matchEndOffset, this._endOffset - this._matchEndOffset);
    }
 
    public final String match() {
-      return (String)(new Object(this._originalBuffer, this._matchBeginOffset, this._matchEndOffset - this._matchBeginOffset));
+      return new String(this._originalBuffer, this._matchBeginOffset, this._matchEndOffset - this._matchBeginOffset);
    }
 
    public final void setMatchOffsets(int matchBeginOffset, int matchEndOffset) {

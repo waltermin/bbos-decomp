@@ -12,7 +12,7 @@ import net.rim.device.api.ui.text.TextRect;
 class MeetingField extends Field {
    private long _startDate;
    private long _endDate;
-   private TextRect _labelText = (TextRect)(new Object(this));
+   private TextRect _labelText = new TextRect(this);
    private TextRect _timeText = null;
    private TextRect _dateText = null;
 
@@ -21,10 +21,10 @@ class MeetingField extends Field {
       this._endDate = endDate;
       this._labelText.setText(labelText);
       int textStyle = this.getFieldStyle();
-      StringBuffer startTimeText = (StringBuffer)(new Object());
-      StringBuffer dateText = (StringBuffer)(new Object());
-      this._timeText = (TextRect)(new Object(this, startTimeText, textStyle));
-      this._dateText = (TextRect)(new Object(this, dateText, textStyle));
+      StringBuffer startTimeText = new StringBuffer();
+      StringBuffer dateText = new StringBuffer();
+      this._timeText = new TextRect(this, startTimeText, textStyle);
+      this._dateText = new TextRect(this, dateText, textStyle);
       this.calculateTextOutput();
    }
 
@@ -39,20 +39,20 @@ class MeetingField extends Field {
 
    private void calculateTextOutput() {
       Calendar startTime = Calendar.getInstance();
-      startTime.setTime((Date)(new Object(this._startDate)));
+      startTime.setTime(new Date(this._startDate));
       Calendar endTime = Calendar.getInstance();
-      endTime.setTime((Date)(new Object(this._endDate)));
-      StringBuffer dateBuffer = (StringBuffer)(new Object());
+      endTime.setTime(new Date(this._endDate));
+      StringBuffer dateBuffer = new StringBuffer();
       dateBuffer.append("DOW ");
       DateFormat df = DateFormat.getInstance(48);
-      df.format(startTime, dateBuffer, (FieldPosition)(new Object(7)));
-      this._dateText = (TextRect)(new Object(this, dateBuffer, this.getFieldStyle()));
+      df.format(startTime, dateBuffer, new FieldPosition(7));
+      this._dateText = new TextRect(this, dateBuffer, this.getFieldStyle());
       df = DateFormat.getInstance(7);
-      StringBuffer timeBuffer = (StringBuffer)(new Object());
-      df.format(startTime, timeBuffer, (FieldPosition)(new Object(6)));
+      StringBuffer timeBuffer = new StringBuffer();
+      df.format(startTime, timeBuffer, new FieldPosition(6));
       timeBuffer.append(" - ");
-      df.format(endTime, timeBuffer, (FieldPosition)(new Object(6)));
-      this._timeText = (TextRect)(new Object(this, timeBuffer, this.getFieldStyle()));
+      df.format(endTime, timeBuffer, new FieldPosition(6));
+      this._timeText = new TextRect(this, timeBuffer, this.getFieldStyle());
       this._labelText.layout(Font.getDefault().getAdvance(this._labelText.getTextString()), Font.getDefault().getHeight());
       this._dateText.layout(Font.getDefault().getAdvance(this._dateText.getTextString()), Font.getDefault().getHeight());
       this._timeText.layout(Font.getDefault().getAdvance(this._timeText.getTextString()), Font.getDefault().getHeight());

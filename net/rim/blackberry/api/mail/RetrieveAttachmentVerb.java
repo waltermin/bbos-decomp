@@ -16,9 +16,9 @@ final class RetrieveAttachmentVerb extends Verb {
    @Override
    public final Object invoke(Object context) {
       int preferredConversion = this._attachmentViewerModel.getPreferredConversion();
-      EmailMoreVerb retrieveMoreVerb = (EmailMoreVerb)(new Object(
+      EmailMoreVerb retrieveMoreVerb = new EmailMoreVerb(
          this._attachmentViewerModel, (byte)1, this._attachmentViewerModel._conversionsAvailable[preferredConversion]
-      ));
+      );
       return retrieveMoreVerb.invoke(context);
    }
 

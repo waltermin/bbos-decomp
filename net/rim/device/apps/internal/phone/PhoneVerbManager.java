@@ -3,7 +3,6 @@ package net.rim.device.apps.internal.phone;
 import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.UiApplication;
-import net.rim.device.api.util.LongHashtable;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.model.VerbProvider;
@@ -14,6 +13,7 @@ import net.rim.device.apps.api.phone.VoiceServices;
 import net.rim.device.apps.api.ribbon.indicators.VoicemailIconManager;
 import net.rim.device.apps.internal.phone.api.PhoneUtilities;
 import net.rim.device.apps.internal.phone.api.livecall.LiveCall;
+import net.rim.device.apps.internal.phone.api.verbs.ChangeVolumeVerb;
 import net.rim.device.apps.internal.phone.api.verbs.OutgoingCallConnector;
 import net.rim.device.apps.internal.phone.api.verbs.VoiceMailVerb;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
@@ -33,7 +33,7 @@ public final class PhoneVerbManager implements VerbFactory {
 
    @Override
    public final Verb[] getVerbs(Object context) {
-      Verb[] verbCache = new Object[0];
+      Verb[] verbCache = new Verb[0];
       Verb defaultVerb = null;
       ContextObject newContext = ContextObject.clone(context);
       CallManager callMgr = CallManager.getInstance();
@@ -44,29 +44,29 @@ public final class PhoneVerbManager implements VerbFactory {
       if (!ContextObject.getFlag(newContext, 90)) {
          if (PhoneUtilities.callIncoming(newContext) || PhoneUtilities.callWaiting(newContext)) {
             this.setPhoneStateVerbContext(newContext);
-            RIMModel var13 = ContextObject.get(newContext, 5898398779440734986L);
-            if (var13 instanceof Object) {
-               VerbProvider verbProvider = (VerbProvider)var13;
+            callerIDInfo = (RIMModel)ContextObject.get(newContext, 5898398779440734986L);
+            if (callerIDInfo instanceof VerbProvider) {
+               VerbProvider verbProvider = (VerbProvider)callerIDInfo;
                defaultVerb = verbProvider.getVerbs(newContext, verbCache);
             }
          } else if (!PhoneUtilities.getPrivateFlag(newContext, 30)
             && !PhoneUtilities.getPrivateFlag(newContext, 82)
             && !PhoneUtilities.getPrivateFlag(newContext, 41)) {
             if (PhoneUtilities.getPrivateFlag(newContext, 52)) {
-               if (callModel instanceof Object) {
+               if (callModel instanceof VerbProvider) {
                   VerbProvider verbProvider = (VerbProvider)callModel;
                   defaultVerb = verbProvider.getVerbs(newContext, verbCache);
                }
             } else if (PhoneUtilities.getPrivateFlag(newContext, 31)) {
-               if (callModel instanceof Object) {
+               if (callModel instanceof VerbProvider) {
                   VerbProvider verbProvider = (VerbProvider)callModel;
                   defaultVerb = verbProvider.getVerbs(newContext, verbCache);
                }
-            } else if (PhoneUtilities.getPrivateFlag(newContext, 27) && callModel instanceof Object) {
+            } else if (PhoneUtilities.getPrivateFlag(newContext, 27) && callModel instanceof VerbProvider) {
                VerbProvider verbProvider = (VerbProvider)callModel;
                defaultVerb = verbProvider.getVerbs(newContext, verbCache);
             }
-         } else if (callModel instanceof Object) {
+         } else if (callModel instanceof VerbProvider) {
             VerbProvider verbProvider = (VerbProvider)callModel;
             defaultVerb = verbProvider.getVerbs(newContext, verbCache);
             this.addVerbToCache(verbCache, defaultVerb);
@@ -87,13 +87,13 @@ public final class PhoneVerbManager implements VerbFactory {
                PhoneUtilities.setPrivateFlag(newContext, 34);
             }
 
-            if (callModel instanceof Object) {
+            if (callModel instanceof VerbProvider) {
                VerbProvider verbProvider = (VerbProvider)callModel;
                defaultVerb = verbProvider.getVerbs(newContext, verbCache);
             }
 
             if (!PhoneUtilities.getPrivateFlag(newContext, 43)) {
-               this.addVerbToCache(verbCache, (Verb)(new Object()));
+               this.addVerbToCache(verbCache, new ChangeVolumeVerb());
             }
 
             UiApplication voiceApp = VoiceServices.getUiApplication();
@@ -106,7 +106,7 @@ public final class PhoneVerbManager implements VerbFactory {
          if (!PhoneUtilities.getPrivateFlag(context, 69) && OutgoingCallConnector.outgoingCallPermitted() && VoicemailIconManager.getInstance().isIndicatorOn()
             )
           {
-            VoiceMailVerb vmailVerb = (VoiceMailVerb)(new Object());
+            VoiceMailVerb vmailVerb = new VoiceMailVerb();
             this.addVerbToCache(verbCache, vmailVerb);
             if (ContextObject.getFlag(context, 92) && ContextObject.getFlag(context, 37)) {
                vmailVerb.setPopScreenOnInvoke(true);
@@ -119,7 +119,7 @@ public final class PhoneVerbManager implements VerbFactory {
       }
 
       if ((ContextObject.getFlag(context, 20) || ContextObject.getFlag(context, 91)) && defaultVerb != null) {
-         ((LongHashtable)context).put(-3185095355580406181L, defaultVerb);
+         ((ContextObject)context).put(-3185095355580406181L, defaultVerb);
       }
 
       return verbCache;

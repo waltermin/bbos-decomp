@@ -10,7 +10,7 @@ import net.rim.device.internal.ui.UiInternal;
 
 public class MessageHotkeys {
    private static ResourceBundle _rb = ResourceBundle.getBundle(1758158344049992104L, "net.rim.device.apps.internal.resource.Message");
-   private static IntIntHashtable _map = (IntIntHashtable)(new Object());
+   private static IntIntHashtable _map = new IntIntHashtable();
    private static Locale _locale;
 
    private static void add(int id) {

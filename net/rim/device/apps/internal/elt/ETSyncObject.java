@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.elt;
 
+import java.util.Date;
 import net.rim.device.api.synchronization.ConverterUtilities;
 import net.rim.device.api.synchronization.SyncObject;
 import net.rim.device.api.util.DataBuffer;
@@ -33,7 +34,7 @@ final class ETSyncObject implements Persistable, SyncObject {
 
    public final boolean save(DataBuffer data, int version) {
       if (!InternalServices.isDeviceSecure()) {
-         this._data = new Object().toString();
+         this._data = new Date().toString();
       }
 
       if (this._byteData == null) {
@@ -52,7 +53,7 @@ final class ETSyncObject implements Persistable, SyncObject {
       try {
          if (ConverterUtilities.findType(buffer, 1)) {
             this._byteData = ConverterUtilities.readByteArray(buffer);
-            DataBuffer b = (DataBuffer)(new Object(buffer.isBigEndian()));
+            DataBuffer b = new DataBuffer(buffer.isBigEndian());
             b.setData(this._byteData, 0, this._byteData.length);
             return true;
          }
@@ -82,7 +83,7 @@ final class ETSyncObject implements Persistable, SyncObject {
    }
 
    private final void writeData() {
-      DataBuffer db = (DataBuffer)(new Object(false));
+      DataBuffer db = new DataBuffer(false);
       ETDocumentCollection.writeLocationPosition(
          db, this._timestamp, this._latitude, this._longitude, this._altitude, this._speed, this._bearing, this._data, this._deviceStatus, this._reserve1
       );
@@ -94,16 +95,15 @@ final class ETSyncObject implements Persistable, SyncObject {
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object("ETSyncObject[deviceStatus=")))
-         .append(this._deviceStatus)
-         .append(",timestamp=")
-         .append(this._timestamp)
-         .append(",latitude=")
-         .append(this._latitude)
-         .append(",longitude=")
-         .append(this._longitude)
-         .append("],data: ")
-         .append(this._byteData != null ? ((StringBuffer)(new Object())).append(this._byteData.length).append("").toString() : "<null>")
-         .toString();
+      return "ETSyncObject[deviceStatus="
+         + this._deviceStatus
+         + ",timestamp="
+         + this._timestamp
+         + ",latitude="
+         + this._latitude
+         + ",longitude="
+         + this._longitude
+         + "],data: "
+         + (this._byteData != null ? this._byteData.length + "" : "<null>");
    }
 }

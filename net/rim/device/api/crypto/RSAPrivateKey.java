@@ -77,7 +77,7 @@ public final class RSAPrivateKey implements PrivateKey, RSAKey, Persistable {
                   byte[] result = new byte[p.length];
                   CryptoByteArrayArithmetic.multiply(qInv, q, p, result);
                   if (!CryptoByteArrayArithmetic.isOne(result)) {
-                     throw new Object();
+                     throw new InvalidKeyException();
                   }
                }
             }
@@ -93,7 +93,7 @@ public final class RSAPrivateKey implements PrivateKey, RSAKey, Persistable {
                   byte[] result = new byte[n.length];
                   CryptoByteArrayArithmetic.multiply(p, q, n.length * 8, result);
                   if (CryptoByteArrayArithmetic.compare(n, result) != 0) {
-                     throw new Object("p * q != n");
+                     throw new InvalidKeyException("p * q != n");
                   }
                }
             }
@@ -136,11 +136,11 @@ public final class RSAPrivateKey implements PrivateKey, RSAKey, Persistable {
          RSACryptoToken cryptoToken = (RSACryptoToken)cryptoSystem.getAsymmetricCryptoToken();
          this.initialize(cryptoSystem, cryptoToken, cryptoTokenData);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
-   public RSAPrivateKey(RSACryptoSystem cryptoSystem, byte[] e, byte[] d, byte[] n, byte[] p, byte[] q, byte[] dModPm1, byte[] dModQm1, byte[] qInvModP) {
+   public RSAPrivateKey(RSACryptoSystem cryptoSystem, byte[] e, byte[] d, byte[] n, byte[] p, byte[] q, byte[] dModPm1, byte[] dModQm1, byte[] qInvModP) throws InvalidKeyException {
       if (cryptoSystem != null && e != null && d != null && n != null && p != null && q != null && dModPm1 != null && dModQm1 != null && qInvModP != null) {
          int modulusLength = cryptoSystem.getModulusLength();
          e = CryptoByteArrayArithmetic.trim(e);
@@ -161,14 +161,14 @@ public final class RSAPrivateKey implements PrivateKey, RSAKey, Persistable {
             RSACryptoToken cryptoToken = (RSACryptoToken)cryptoSystem.getAsymmetricCryptoToken();
             this.initialize(cryptoSystem, cryptoToken, cryptoToken.injectRSAPrivateKey(cryptoSystem, e, d, n, p, q, dModPm1, dModQm1, qInvModP));
          } else {
-            throw new Object();
+            throw new InvalidKeyException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
-   public RSAPrivateKey(RSACryptoSystem cryptoSystem, byte[] e, byte[] p, byte[] q, byte[] dModPm1, byte[] dModQm1, byte[] qInvModP) {
+   public RSAPrivateKey(RSACryptoSystem cryptoSystem, byte[] e, byte[] p, byte[] q, byte[] dModPm1, byte[] dModQm1, byte[] qInvModP) throws InvalidKeyException {
       if (cryptoSystem != null && p != null && q != null && dModPm1 != null && dModQm1 != null && qInvModP != null) {
          int modulusLength = cryptoSystem.getModulusLength();
          p = CryptoByteArrayArithmetic.trim(p);
@@ -190,14 +190,14 @@ public final class RSAPrivateKey implements PrivateKey, RSAKey, Persistable {
             RSACryptoToken cryptoToken = (RSACryptoToken)cryptoSystem.getAsymmetricCryptoToken();
             this.initialize(cryptoSystem, cryptoToken, cryptoToken.injectRSAPrivateKey(cryptoSystem, e, p, q, dModPm1, dModQm1, qInvModP));
          } else {
-            throw new Object();
+            throw new InvalidKeyException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
-   public RSAPrivateKey(RSACryptoSystem cryptoSystem, byte[] e, byte[] d, byte[] p, byte[] q) {
+   public RSAPrivateKey(RSACryptoSystem cryptoSystem, byte[] e, byte[] d, byte[] p, byte[] q) throws InvalidKeyException {
       if (cryptoSystem != null && d != null && p != null && q != null) {
          int modulusLength = cryptoSystem.getModulusLength();
          if (e != null) {
@@ -213,14 +213,14 @@ public final class RSAPrivateKey implements PrivateKey, RSAKey, Persistable {
             RSACryptoToken cryptoToken = (RSACryptoToken)cryptoSystem.getAsymmetricCryptoToken();
             this.initialize(cryptoSystem, cryptoToken, cryptoToken.injectRSAPrivateKey(cryptoSystem, e, d, p, q));
          } else {
-            throw new Object();
+            throw new InvalidKeyException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
-   public RSAPrivateKey(RSACryptoSystem cryptoSystem, byte[] e, byte[] d, byte[] n) {
+   public RSAPrivateKey(RSACryptoSystem cryptoSystem, byte[] e, byte[] d, byte[] n) throws InvalidKeyException {
       if (cryptoSystem != null && d != null && n != null) {
          int modulusLength = cryptoSystem.getModulusLength();
          if (e != null) {
@@ -235,10 +235,10 @@ public final class RSAPrivateKey implements PrivateKey, RSAKey, Persistable {
             RSACryptoToken cryptoToken = (RSACryptoToken)cryptoSystem.getAsymmetricCryptoToken();
             this.initialize(cryptoSystem, cryptoToken, cryptoToken.injectRSAPrivateKey(cryptoSystem, e, d, n));
          } else {
-            throw new Object();
+            throw new InvalidKeyException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

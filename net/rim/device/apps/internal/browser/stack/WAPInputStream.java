@@ -1,6 +1,8 @@
 package net.rim.device.apps.internal.browser.stack;
 
+import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
+import java.io.EOFException;
 import java.io.InputStream;
 import net.rim.device.internal.browser.util.Pipe;
 import net.rim.device.internal.browser.util.PipeContext;
@@ -9,10 +11,10 @@ import net.rim.device.internal.browser.util.PipePtr;
 
 public final class WAPInputStream extends DataInputStream {
    private PipeInput _pipeInStream;
-   private PipePtr _pipePtr = (PipePtr)(new Object());
+   private PipePtr _pipePtr = new PipePtr();
 
    public WAPInputStream(byte[] buf) {
-      this((InputStream)(new Object(buf)));
+      this(new ByteArrayInputStream(buf));
    }
 
    public WAPInputStream(InputStream inStream) {
@@ -50,21 +52,21 @@ public final class WAPInputStream extends DataInputStream {
       return this.readByteArrayRef(this.readCompressedInt());
    }
 
-   public final PipePtr readByteArrayRef(int size) {
+   public final PipePtr readByteArrayRef(int size) throws EOFException {
       int readSize = this._pipeInStream.readByteArray(this._pipePtr, size);
       if (readSize != size) {
-         throw new Object();
+         throw new EOFException();
       } else {
          return this._pipePtr;
       }
    }
 
-   public final byte[] readByteArray() {
+   public final byte[] readByteArray() throws EOFException {
       int size = this.readCompressedInt();
       byte[] data = new byte[size];
       int readSize = this.read(data, 0, size);
       if (readSize != size) {
-         throw new Object();
+         throw new EOFException();
       } else {
          return data;
       }
@@ -79,7 +81,7 @@ public final class WAPInputStream extends DataInputStream {
    }
 
    private static final InputStream getInputStream(InputStream inStream) {
-      return inStream instanceof Object ? inStream : new MarkableInputStream(inStream);
+      return inStream instanceof PipeInput ? inStream : new MarkableInputStream(inStream);
    }
 
    public final PipeContext getPosition() {

@@ -13,8 +13,8 @@ final class InPlaceEventDialog$StartAndDurationField extends Field {
    private CalendarExtensions _calEx = (CalendarExtensions)this._cal;
    private long _start;
    private long _duration;
-   private StringBuffer _startString = (StringBuffer)(new Object());
-   private StringBuffer _endString = (StringBuffer)(new Object());
+   private StringBuffer _startString = new StringBuffer();
+   private StringBuffer _endString = new StringBuffer();
    private int _maxTimeWidth;
    private int _widthPerBar;
    private int _heightPerLine;

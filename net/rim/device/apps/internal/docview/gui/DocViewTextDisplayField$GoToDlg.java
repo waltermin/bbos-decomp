@@ -8,7 +8,7 @@ public final class DocViewTextDisplayField$GoToDlg extends SimpleInputDialog {
    public DocViewTextDisplayField$GoToDlg(String prompt, int maxLimit) {
       super(0, prompt);
       if (maxLimit <= 0) {
-         throw new Object("Invalid maximum limit.");
+         throw new IllegalArgumentException("Invalid maximum limit.");
       }
 
       this._maxLimit = maxLimit;

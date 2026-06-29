@@ -27,6 +27,6 @@ public class StoreEvent extends MailEvent {
 
    @Override
    public String toString() {
-      return ((StringBuffer)(new Object("StoreEvent: "))).append(this._type).toString();
+      return "StoreEvent: " + this._type;
    }
 }

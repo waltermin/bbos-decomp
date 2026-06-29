@@ -13,16 +13,16 @@ public class LabelKeyStoreIndex implements KeyStoreIndex {
 
    @Override
    public int getHash(Object target) {
-      if (target instanceof Object) {
+      if (target instanceof String) {
          return target.hashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
    public boolean matches(KeyStoreData data, Object target) {
-      return !(target instanceof Object) ? false : target.equals(data.getLabel());
+      return !(target instanceof String) ? false : ((String)target).equals(data.getLabel());
    }
 
    @Override

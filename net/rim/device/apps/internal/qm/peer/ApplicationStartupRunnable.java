@@ -29,7 +29,7 @@ public class ApplicationStartupRunnable implements Runnable {
          }
       }
 
-      Message invokeLaterMessage = (Message)(new Object(0, 2, this, null));
+      Message invokeLaterMessage = new Message(0, 2, this, null);
       ((ApplicationManagerInternal)appManager).postMessage(pid, invokeLaterMessage);
    }
 

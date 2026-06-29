@@ -21,9 +21,9 @@ public final class ExploreScreen extends AppsMainScreen implements ExploreCallba
       ContextObject context = ContextObject.castOrCreate(ctx);
       context.setFlag(45);
       this.setContext(context);
-      this._pathField = (LabelField)(new Object(null, 1152921504606847168L));
+      this._pathField = new LabelField(null, 1152921504606847168L);
       this._pathSizeField = new FooterField();
-      this._vfm = (VerticalFieldManager)(new Object());
+      this._vfm = new VerticalFieldManager();
       this._vfm.add(this._pathField);
       this.setTitle(this._vfm);
       this._pathField.setEditable(false);

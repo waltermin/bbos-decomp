@@ -141,17 +141,17 @@ public final class RIMPushlet implements Pushlet, PushEventLogger {
    }
 
    private final void processObject(Object obj, PushInputStream data) {
-      if (!(obj instanceof Object)) {
+      if (!(obj instanceof Runnable)) {
          try {
             data.decline(238);
          } finally {
             return;
          }
       } else if (!(obj instanceof BasePushModel)) {
-         Object var60 = obj;
+         Runnable var60 = (Runnable)obj;
 
          try {
-            ((Runnable)var60).run();
+            var60.run();
             data.accept();
          } finally {
             return;
@@ -168,11 +168,7 @@ public final class RIMPushlet implements Pushlet, PushEventLogger {
                break label273;
             }
 
-            EventLogger.logEvent(
-               -1133226195824034738L,
-               ((StringBuffer)(new Object("Rejected reason: "))).append(rejectMessage).append(" source: ").append(data.getSource()).toString().getBytes(),
-               5
-            );
+            EventLogger.logEvent(-1133226195824034738L, ("Rejected reason: " + rejectMessage + " source: " + data.getSource()).getBytes(), 5);
          } else {
             BrowserImpl browserImpl = BrowserDaemonRegistry.getInstance();
             if (browserImpl == null) {

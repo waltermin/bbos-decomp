@@ -11,7 +11,7 @@ public class Model {
 
    @Override
    public String toString() {
-      return ((StringBuffer)(new Object())).append(this.getClassName()).append(this.getProperties()).toString();
+      return this.getClassName() + this.getProperties();
    }
 
    String getClassName() {
@@ -23,6 +23,6 @@ public class Model {
    }
 
    final String toPropertyString(String name, String value) {
-      return ((StringBuffer)(new Object(" "))).append(value).toString();
+      return " " + value;
    }
 }

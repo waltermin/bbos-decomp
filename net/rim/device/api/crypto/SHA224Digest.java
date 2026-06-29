@@ -34,7 +34,7 @@ public final class SHA224Digest extends AbstractDigest implements Digest {
             length -= updated;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -63,7 +63,7 @@ public final class SHA224Digest extends AbstractDigest implements Digest {
       digest.update(SelfTestData.PLAIN_TEXT_DIGEST, 0, SelfTestData.PLAIN_TEXT_DIGEST.length);
       digest.getDigest(target, 0);
       if (!Arrays.equals(target, 0, DIGEST_TEXT, 0, 28)) {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
    }
 
@@ -305,12 +305,12 @@ public final class SHA224Digest extends AbstractDigest implements Digest {
       // 14a: bipush -106
       // 14c: bastore
       // 14d: astore 1
-      // 14e: new java/lang/Object
+      // 14e: new net/rim/device/api/crypto/HMACKey
       // 151: dup
       // 152: aload 0
       // 153: invokespecial net/rim/device/api/crypto/HMACKey.<init> ([B)V
       // 156: astore 2
-      // 157: new java/lang/Object
+      // 157: new net/rim/device/api/crypto/HMAC
       // 15a: dup
       // 15b: aload 2
       // 15c: new net/rim/device/api/crypto/SHA224Digest
@@ -329,7 +329,7 @@ public final class SHA224Digest extends AbstractDigest implements Digest {
       // 177: astore 2
       // 178: goto 17c
       // 17b: astore 2
-      // 17c: new java/lang/Object
+      // 17c: new net/rim/device/api/crypto/CryptoSelfTestError
       // 17f: dup
       // 180: invokespecial net/rim/device/api/crypto/CryptoSelfTestError.<init> ()V
       // 183: athrow

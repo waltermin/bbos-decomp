@@ -36,7 +36,7 @@ public class CommonScriptBindingElement extends AbstractElement {
 
    @Override
    public String toString() {
-      StringBuffer buf = (StringBuffer)(new Object(128));
+      StringBuffer buf = new StringBuffer(128);
       buf.append(ProvisioningHelper.getClassName(this));
       buf.append("[script=");
       buf.append(this._script);

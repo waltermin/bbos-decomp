@@ -109,11 +109,11 @@ public class AnswerToReset implements Persistable {
 
    public AnswerToReset(byte[] atr) {
       if (atr == null || atr.length > MAX_ATR_BYTE_LENGTH || atr.length < 2) {
-         throw new Object(" The ATR is null or has an incorrect length ");
+         throw new IllegalArgumentException(" The ATR is null or has an incorrect length ");
       }
 
       if (atr[0] != 59 && atr[0] != 63) {
-         throw new Object(" The TS byte of the ATR was not 0x3b or 0x3f ");
+         throw new IllegalArgumentException(" The TS byte of the ATR was not 0x3b or 0x3f ");
       }
 
       this._protocolBytesLength = 1;
@@ -144,11 +144,11 @@ public class AnswerToReset implements Persistable {
                f = CLOCK_RATE_CONVERSION_FACTOR[indexF][1];
                di = BAUD_RATE_CONVERSION_FACTOR[indexD];
                if (di == 0) {
-                  throw new Object(" Error calculating the baud rate");
+                  throw new IllegalArgumentException(" Error calculating the baud rate");
                }
 
                if (f == 0 || fi == 0) {
-                  throw new Object(" Error calculating the clock rate");
+                  throw new IllegalArgumentException(" Error calculating the clock rate");
                }
 
                etu = fi / di * (1 / f);
@@ -222,7 +222,7 @@ public class AnswerToReset implements Persistable {
       this._numHistBytes = atr[1] & 15;
       if (this._protocol == 2) {
          if (atr.length != 1 + this._protocolBytesLength + this._numHistBytes + 1) {
-            throw new Object("The ATR provided has an incorrect length");
+            throw new IllegalArgumentException("The ATR provided has an incorrect length");
          }
 
          byte tck = atr[1 + this._protocolBytesLength + this._numHistBytes];
@@ -232,10 +232,10 @@ public class AnswerToReset implements Persistable {
          }
 
          if (tck != 0) {
-            throw new Object("TCK ATR check is invalid");
+            throw new IllegalArgumentException("TCK ATR check is invalid");
          }
       } else if (atr.length != 1 + this._protocolBytesLength + this._numHistBytes && atr.length != 1 + this._protocolBytesLength + this._numHistBytes + 1) {
-         throw new Object("The ATR provided has an incorrect length");
+         throw new IllegalArgumentException("The ATR provided has an incorrect length");
       }
 
       this._atr = atr;
@@ -273,7 +273,7 @@ public class AnswerToReset implements Persistable {
 
    @Override
    public String toString() {
-      StringBuffer data = (StringBuffer)(new Object());
+      StringBuffer data = new StringBuffer();
       if (this._atr != null) {
          int length = this._atr.length;
 

@@ -4,6 +4,7 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.component.NullField;
 import net.rim.wica.runtime.metadata.component.ui.UIControl;
 import net.rim.wica.runtime.metadata.component.ui.control.ChoiceControl;
 import net.rim.wica.runtime.resources.RuntimeResources;
@@ -78,7 +79,7 @@ class PagingController {
       int count = this.getDisplayItemsCount();
       if (fieldCount > 0) {
          if (this._nullField == null) {
-            this._nullField = (Field)(new Object());
+            this._nullField = new NullField();
          }
 
          this._view.add(this._nullField);
@@ -173,7 +174,7 @@ class PagingController {
    }
 
    private String getPageNumberLabelText() {
-      return ((StringBuffer)(new Object())).append(this._currentPage + 1).append("/").append(this.getNumberOfPages()).toString();
+      return this._currentPage + 1 + "/" + this.getNumberOfPages();
    }
 
    protected void makeContextMenu(Menu menu, int context) {

@@ -20,7 +20,7 @@ final class Notifications implements NotificationsEngineListener {
    }
 
    Notifications() {
-      this._deferredContext = (ContextObject)(new Object());
+      this._deferredContext = new ContextObject();
       this._deferredContext.setFlag(65);
       this.registerSource(-3969704423467496048L, 8);
       this.registerSource(4051365837710720090L, 47);

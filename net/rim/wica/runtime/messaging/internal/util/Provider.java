@@ -5,7 +5,7 @@ import net.rim.wica.runtime.service.DefaultContainer;
 import net.rim.wica.runtime.service.ServiceProvider;
 
 public class Provider extends DefaultContainer {
-   private Hashtable _componentTable = (Hashtable)(new Object());
+   private Hashtable _componentTable = new Hashtable();
    public static final String SCHEDULER = "Scheduler";
    public static final String BACKGROUND_SCHEDULER = "BackgroundScheduler";
 
@@ -19,11 +19,11 @@ public class Provider extends DefaultContainer {
 
    public void registerComponent(String name, Object componentImpl) {
       if (name == null) {
-         throw new Object("Name cannot be null");
+         throw new IllegalArgumentException("Name cannot be null");
       }
 
       if (this._componentTable.containsKey(name)) {
-         throw new Object(((StringBuffer)(new Object("The component "))).append(name).append("already exists in the container").toString());
+         throw new IllegalArgumentException("The component " + name + "already exists in the container");
       }
 
       this._componentTable.put(name, componentImpl);

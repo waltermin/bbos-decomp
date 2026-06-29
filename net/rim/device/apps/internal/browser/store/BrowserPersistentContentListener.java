@@ -47,15 +47,15 @@ final class BrowserPersistentContentListener implements PersistentContentListene
 
                   Object container = enumeration.nextElement();
                   if (!(container instanceof Object[])) {
-                     throw new Object("CPE2");
+                     throw new RuntimeException("CPE2");
                   }
 
                   Object[] pages = (Object[])container;
 
                   for (int i = pages.length - 1; i >= 0; i--) {
                      Object page = pages[i];
-                     if (!(page instanceof Object)) {
-                        throw new Object("CPE1");
+                     if (!(page instanceof EncryptableProvider)) {
+                        throw new RuntimeException("CPE1");
                      }
 
                      EncryptableProvider encryptable = (EncryptableProvider)page;

@@ -2,11 +2,12 @@ package net.rim.device.api.io.http;
 
 import java.util.Hashtable;
 import net.rim.device.api.system.ApplicationRegistry;
+import net.rim.device.api.system.ControlledAccessException;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.internal.applicationcontrol.ApplicationControl;
 
 public final class HttpFilterRegistry {
-   private Hashtable _filters = (Hashtable)(new Object());
+   private Hashtable _filters = new Hashtable();
    private static final long ID = 1270710104458132462L;
    private static HttpFilterRegistry _instance;
 
@@ -19,11 +20,11 @@ public final class HttpFilterRegistry {
 
    public static final void registerFilter(String fqdn, String protocolPackage, boolean isLocal) {
       if (fqdn == null || protocolPackage == null || fqdn.indexOf(46) == -1 || protocolPackage.indexOf(46) == -1) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (!ApplicationControl.isBrowserFilterAllowed(fqdn, true)) {
-         throw new Object();
+         throw new ControlledAccessException();
       }
 
       HttpFilterRegistry$Item item = new HttpFilterRegistry$Item(null);
@@ -34,11 +35,11 @@ public final class HttpFilterRegistry {
 
    public static final void deregisterFilter(String fqdn) {
       if (fqdn == null || fqdn.indexOf(46) == -1) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (!ApplicationControl.isBrowserFilterAllowed(fqdn, true)) {
-         throw new Object();
+         throw new ControlledAccessException();
       }
 
       _instance._filters.remove(StringUtilities.toLowerCase(fqdn, 1701707776));
@@ -46,7 +47,7 @@ public final class HttpFilterRegistry {
 
    public static final String getFilter(String fqdn) {
       if (fqdn == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       HttpFilterRegistry$Item item = (HttpFilterRegistry$Item)_instance._filters.get(StringUtilities.toLowerCase(fqdn, 1701707776));
@@ -55,7 +56,7 @@ public final class HttpFilterRegistry {
 
    public static final boolean isLocalFilter(String fqdn) {
       if (fqdn == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       HttpFilterRegistry$Item item = (HttpFilterRegistry$Item)_instance._filters.get(StringUtilities.toLowerCase(fqdn, 1701707776));

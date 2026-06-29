@@ -3,10 +3,13 @@ package net.rim.device.cldc.io.apdu;
 import com.sun.cldc.io.ConnectionBaseInterface;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InterruptedIOException;
 import java.io.OutputStream;
 import javax.microedition.apdu.APDUConnection;
 import javax.microedition.io.Connection;
+import javax.microedition.io.ConnectionNotFoundException;
 import javax.microedition.io.StreamConnection;
 import net.rim.device.api.system.ApplicationProcess;
 import net.rim.device.api.system.ApplicationRegistry;
@@ -72,7 +75,7 @@ public class Protocol implements SIMCardAPDUListener, APDUConnection, Connection
                SIMCard.removeListener(this._proxy, this);
                this._applicationProcess.removeCleanupRunnable(this._cleanupRunnable);
             } else {
-               throw new Object();
+               throw new IOException();
             }
          }
       }
@@ -81,9 +84,9 @@ public class Protocol implements SIMCardAPDUListener, APDUConnection, Connection
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public Connection openPrim(String name, int mode, boolean timeouts) {
+   public Connection openPrim(String name, int mode, boolean timeouts) throws ConnectionNotFoundException {
       if (!SIMCard.isJSR177Supported()) {
-         throw new Object("JSR 177 is not supported on this platform");
+         throw new ConnectionNotFoundException("JSR 177 is not supported on this platform");
       }
 
       byte[] aid = new byte[16];
@@ -91,7 +94,7 @@ public class Protocol implements SIMCardAPDUListener, APDUConnection, Connection
       int tempIndex = name.indexOf(59);
       int slot = 0;
       if (tempIndex == -1) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (tempIndex != 0) {
@@ -103,35 +106,35 @@ public class Protocol implements SIMCardAPDUListener, APDUConnection, Connection
             var16 = false;
          } finally {
             if (var16) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
          }
       }
 
       if (slot != 0) {
-         throw new Object();
+         throw new ConnectionNotFoundException();
       }
 
       name = name.substring(tempIndex + 1);
       if (!name.startsWith("target=")) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       name = name.substring(7);
       this._isSATConnection = name.indexOf("SAT") >= 0;
       if (this._isSATConnection) {
          if (name.length() != 3) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } else {
-         for (StringTokenizer st = (StringTokenizer)(new Object(name, '.')); st.hasMoreTokens(); aidLength++) {
+         for (StringTokenizer st = new StringTokenizer(name, '.'); st.hasMoreTokens(); aidLength++) {
             if (aidLength >= 16) {
-               throw new Object("Invalid AID; Too Long");
+               throw new IllegalArgumentException("Invalid AID; Too Long");
             }
 
             String temp = st.nextToken();
             if (temp.length() > 2) {
-               throw new Object("Invalid AID");
+               throw new IllegalArgumentException("Invalid AID");
             }
 
             boolean var13 = false /* VF: Semaphore variable */;
@@ -142,13 +145,13 @@ public class Protocol implements SIMCardAPDUListener, APDUConnection, Connection
                var13 = false;
             } finally {
                if (var13) {
-                  throw new Object("Invalid AID");
+                  throw new IllegalArgumentException("Invalid AID");
                }
             }
          }
 
          if (aidLength < 5 || aidLength > 16) {
-            throw new Object("Invalid AID; Too short or too long");
+            throw new IllegalArgumentException("Invalid AID; Too short or too long");
          }
       }
 
@@ -224,13 +227,13 @@ public class Protocol implements SIMCardAPDUListener, APDUConnection, Connection
    }
 
    @Override
-   public byte[] exchangeAPDU(byte[] commandAPDU) {
+   public byte[] exchangeAPDU(byte[] commandAPDU) throws IOException {
       if (commandAPDU == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (!this._isOpen) {
-         throw new Object();
+         throw new IOException();
       }
 
       synchronized (this._exchangeSemaphore) {
@@ -247,39 +250,39 @@ public class Protocol implements SIMCardAPDUListener, APDUConnection, Connection
             this._exchangeSuccessful = false;
             byte[] responseAPDU = SIMCard.getAPDUResponse(this._channelNumber, this._tag);
             if (responseAPDU == null) {
-               throw new Object();
+               throw new IOException();
             } else {
                return responseAPDU;
             }
          } else {
             switch (this._error) {
                case -1:
-                  throw new Object();
+                  throw new IOException();
                case 0:
                default:
-                  throw new Object();
+                  throw new InterruptedIOException();
                case 1:
                case 7:
-                  throw new Object();
+                  throw new IOException();
                case 2:
                case 3:
                case 4:
                case 5:
                case 6:
-                  throw new Object();
+                  throw new IllegalArgumentException();
             }
          }
       }
    }
 
    @Override
-   public byte[] changePin(int pinID) {
+   public byte[] changePin(int pinID) throws IOException {
       if (this._isSATConnection) {
          throw new UnsupportedOperationException();
       }
 
       if (!this._isOpen) {
-         throw new Object();
+         throw new IOException();
       }
 
       byte[] currentPin = this.getPIN(pinID);
@@ -292,13 +295,13 @@ public class Protocol implements SIMCardAPDUListener, APDUConnection, Connection
    }
 
    @Override
-   public byte[] disablePin(int pinID) {
+   public byte[] disablePin(int pinID) throws IOException {
       if (this._isSATConnection) {
          throw new UnsupportedOperationException();
       }
 
       if (!this._isOpen) {
-         throw new Object();
+         throw new IOException();
       }
 
       byte[] currentPin = this.getPIN(pinID);
@@ -306,13 +309,13 @@ public class Protocol implements SIMCardAPDUListener, APDUConnection, Connection
    }
 
    @Override
-   public byte[] enablePin(int pinID) {
+   public byte[] enablePin(int pinID) throws IOException {
       if (this._isSATConnection) {
          throw new UnsupportedOperationException();
       }
 
       if (!this._isOpen) {
-         throw new Object();
+         throw new IOException();
       }
 
       byte[] currentPin = this.getPIN(pinID);
@@ -320,13 +323,13 @@ public class Protocol implements SIMCardAPDUListener, APDUConnection, Connection
    }
 
    @Override
-   public byte[] enterPin(int pinID) {
+   public byte[] enterPin(int pinID) throws IOException {
       if (this._isSATConnection) {
          throw new UnsupportedOperationException();
       }
 
       if (!this._isOpen) {
-         throw new Object();
+         throw new IOException();
       }
 
       byte[] currentPin = this.getPIN(pinID);
@@ -334,11 +337,11 @@ public class Protocol implements SIMCardAPDUListener, APDUConnection, Connection
    }
 
    @Override
-   public byte[] unblockPin(int blockedPinID, int unblockingPinID) {
+   public byte[] unblockPin(int blockedPinID, int unblockingPinID) throws IOException {
       if (this._isSATConnection) {
          throw new UnsupportedOperationException();
       } else if (!this._isOpen) {
-         throw new Object();
+         throw new IOException();
       } else {
          String pin = this.getSIMCode(false, CommonResource.getString(10139));
          if (pin != null && pin.length() != 0) {
@@ -352,22 +355,22 @@ public class Protocol implements SIMCardAPDUListener, APDUConnection, Connection
 
    @Override
    public InputStream openInputStream() {
-      throw new Object("Not supported");
+      throw new IllegalArgumentException("Not supported");
    }
 
    @Override
    public DataOutputStream openDataOutputStream() {
-      throw new Object("Not supported");
+      throw new IllegalArgumentException("Not supported");
    }
 
    @Override
    public OutputStream openOutputStream() {
-      throw new Object("Not supported");
+      throw new IllegalArgumentException("Not supported");
    }
 
    @Override
    public DataInputStream openDataInputStream() {
-      throw new Object("Not supported");
+      throw new IllegalArgumentException("Not supported");
    }
 
    @Override
@@ -470,7 +473,7 @@ public class Protocol implements SIMCardAPDUListener, APDUConnection, Connection
       }
    }
 
-   private byte[] doPinOperation(int pinID, byte[] currentPin, byte[] newPin, int pinOperation) {
+   private byte[] doPinOperation(int pinID, byte[] currentPin, byte[] newPin, int pinOperation) throws IOException {
       if (currentPin.length == 8 && (newPin == null || newPin.length == 8)) {
          synchronized (this._pinSemaphore) {
             SIMCard.doAPDUPinOperation((byte)pinOperation, this._channelNumber, (byte)pinID, currentPin, newPin);
@@ -484,9 +487,9 @@ public class Protocol implements SIMCardAPDUListener, APDUConnection, Connection
 
             if (this._pinOperation != pinOperation || !this._pinOperationSuccessful && this._pinResult == 0) {
                if (this._error == 0) {
-                  throw new Object();
+                  throw new InterruptedIOException();
                } else {
-                  throw new Object();
+                  throw new IOException();
                }
             } else {
                byte[] result = new byte[]{(byte)(this._pinResult >> 8 & 0xFF), (byte)(this._pinResult & 0xFF)};
@@ -495,7 +498,7 @@ public class Protocol implements SIMCardAPDUListener, APDUConnection, Connection
             }
          }
       } else {
-         throw new Object();
+         throw new IOException();
       }
    }
 
@@ -504,9 +507,9 @@ public class Protocol implements SIMCardAPDUListener, APDUConnection, Connection
       synchronized (ar) {
          Byte tempTag = (Byte)ar.get(487410666346702508L);
          if (tempTag == null) {
-            tempTag = (Byte)(new Object((byte)0));
+            tempTag = new Byte((byte)0);
          } else {
-            tempTag = (Byte)(new Object((byte)(tempTag + 1)));
+            tempTag = new Byte((byte)(tempTag + 1));
          }
 
          ar.replace(487410666346702508L, tempTag);
@@ -538,16 +541,16 @@ public class Protocol implements SIMCardAPDUListener, APDUConnection, Connection
          SIMCard.removeListener(this._proxy, this);
          switch (this._error) {
             case 0:
-               throw new Object();
+               throw new IOException();
             case 1:
             default:
-               throw new Object("Unable to open; Open failed");
+               throw new IOException("Unable to open; Open failed");
             case 2:
                throw new UnsupportedOperationException("Unable to open; JSR177 is not supported on this platform");
             case 3:
-               throw new Object("Unable to open; Bad AID");
+               throw new ConnectionNotFoundException("Unable to open; Bad AID");
             case 4:
-               throw new Object("Unable to open; No free channels");
+               throw new IOException("Unable to open; No free channels");
          }
       }
    }
@@ -574,7 +577,7 @@ public class Protocol implements SIMCardAPDUListener, APDUConnection, Connection
          case 136:
             return pinId;
          default:
-            throw new Object("Error - Invalid Pin");
+            throw new IllegalArgumentException("Error - Invalid Pin");
       }
    }
 }

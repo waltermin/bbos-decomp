@@ -607,12 +607,12 @@ public class DataCollectionImpl implements DataCollection, DataOwner {
    public Object getFieldValueAsObject(long dataHandle, int field) {
       switch (this._defs.getFieldType(field)) {
          case 0:
-            return new Object(this.getBooleanFieldValue(dataHandle, field));
+            return new Boolean(this.getBooleanFieldValue(dataHandle, field));
          case 1:
          case 5:
-            return new Object(this.getIntFieldValue(dataHandle, field));
+            return new Integer(this.getIntFieldValue(dataHandle, field));
          case 2:
-            return new Object(this.getDoubleFieldValue(dataHandle, field));
+            return new Double(this.getDoubleFieldValue(dataHandle, field));
          case 3:
          case 32768:
          case 32769:
@@ -625,11 +625,11 @@ public class DataCollectionImpl implements DataCollection, DataOwner {
             return this.getObjectFieldValue(dataHandle, field);
          case 4:
          case 8:
-            return new Object(this.getLongFieldValue(dataHandle, field));
+            return new Long(this.getLongFieldValue(dataHandle, field));
          case 6:
-            return new Object(this.getReferenceField(dataHandle, field));
+            return new Long(this.getReferenceField(dataHandle, field));
          default:
-            throw new Object("Not recognized field type.");
+            throw new RuntimeException("Not recognized field type.");
       }
    }
 
@@ -637,24 +637,24 @@ public class DataCollectionImpl implements DataCollection, DataOwner {
    public void setFieldValueFromObject(long dataHandle, int field, Object value) {
       switch (this._defs.getFieldType(field)) {
          case 0:
-            this.setBooleanFieldValue(dataHandle, field, value == null ? false : value);
+            this.setBooleanFieldValue(dataHandle, field, value == null ? false : (Boolean)value);
             return;
          case 1:
          case 5:
-            this.setIntFieldValue(dataHandle, field, value == null ? 0 : value);
+            this.setIntFieldValue(dataHandle, field, value == null ? 0 : (Integer)value);
             return;
          case 2:
             double dValue = (double)0L;
-            if (!(value instanceof Object)) {
-               if (!(value instanceof Object)) {
+            if (!(value instanceof Double)) {
+               if (!(value instanceof Integer)) {
                   if (value != null) {
-                     throw new Object("Invalid value type for decimal variable or field");
+                     throw new RuntimeException("Invalid value type for decimal variable or field");
                   }
                } else {
                   dValue = ((Integer)value).intValue();
                }
             } else {
-               dValue = value;
+               dValue = (Double)value;
             }
 
             this.setDoubleFieldValue(dataHandle, field, dValue);
@@ -671,29 +671,29 @@ public class DataCollectionImpl implements DataCollection, DataOwner {
             this.setObjectFieldValue(dataHandle, field, value);
             return;
          case 4:
-            this.setLongFieldValue(dataHandle, field, value == null ? System.currentTimeMillis() : value);
+            this.setLongFieldValue(dataHandle, field, value == null ? System.currentTimeMillis() : (Long)value);
             return;
          case 6:
-            this.setReferenceField(dataHandle, field, value == null ? -1 : value);
+            this.setReferenceField(dataHandle, field, value == null ? -1 : (Long)value);
             return;
          case 8:
             long lValue = 0;
-            if (!(value instanceof Object)) {
-               if (!(value instanceof Object)) {
+            if (!(value instanceof Long)) {
+               if (!(value instanceof Integer)) {
                   if (value != null) {
-                     throw new Object("Invalid value type for long variable or field");
+                     throw new RuntimeException("Invalid value type for long variable or field");
                   }
                } else {
                   lValue = ((Integer)value).intValue();
                }
             } else {
-               lValue = value;
+               lValue = (Long)value;
             }
 
             this.setLongFieldValue(dataHandle, field, lValue);
             return;
          default:
-            throw new Object("Not recognized field type.");
+            throw new RuntimeException("Not recognized field type.");
       }
    }
 
@@ -726,13 +726,13 @@ public class DataCollectionImpl implements DataCollection, DataOwner {
          case 0:
          case 1:
          case 5:
-            if (this.getIntFieldValue(data, field) == o) {
+            if (this.getIntFieldValue(data, field) == (Integer)o) {
                return true;
             }
 
             return false;
          case 2:
-            if (this.getLongFieldValue(data, field) == Double.doubleToLongBits(o)) {
+            if (this.getLongFieldValue(data, field) == Double.doubleToLongBits((Double)o)) {
                return true;
             }
 
@@ -750,16 +750,16 @@ public class DataCollectionImpl implements DataCollection, DataOwner {
             return o == o1 || o != null && o.equals(o1);
          case 4:
          case 8:
-            if (this.getLongFieldValue(data, field) == o) {
+            if (this.getLongFieldValue(data, field) == (Long)o) {
                return true;
             }
 
             return false;
          case 6:
             DataCollection dc = this._wiclet.getDataCollection(this._defs.getFieldReferenceType(field));
-            return dc.equals(this.getReferenceField(data, field), o);
+            return dc.equals(this.getReferenceField(data, field), (Long)o);
          default:
-            throw new Object("Not supported type");
+            throw new RuntimeException("Not supported type");
       }
    }
 
@@ -799,7 +799,7 @@ public class DataCollectionImpl implements DataCollection, DataOwner {
 
    private void addFreeSlot(int index) {
       if (this._freeSlots == null) {
-         this._freeSlots = (IntStack)(new Object());
+         this._freeSlots = new IntStack();
       }
 
       int low = 0;
@@ -809,7 +809,7 @@ public class DataCollectionImpl implements DataCollection, DataOwner {
          int mid = low + high >> 1;
          int midValue = this._freeSlots.elementAt(mid);
          if (index == midValue) {
-            throw new Object("Slot was already marked as free slot!");
+            throw new RuntimeException("Slot was already marked as free slot!");
          }
 
          if (index > midValue) {
@@ -849,13 +849,13 @@ public class DataCollectionImpl implements DataCollection, DataOwner {
             if (this._numVectorFields > 0) {
                int size = this._numVectorFields * (this._dataFields.size() / this._numIntFields);
                if (size > 0) {
-                  this._refVectors = (BigVector)(new Object(size));
+                  this._refVectors = new BigVector(size);
 
                   for (int i = 0; i < size; i++) {
                      this._refVectors.addElement(null);
                   }
                } else {
-                  this._refVectors = (BigVector)(new Object());
+                  this._refVectors = new BigVector();
                }
             }
 
@@ -908,7 +908,7 @@ public class DataCollectionImpl implements DataCollection, DataOwner {
             DataCollection dc = this._wiclet.getDataCollection(this._defs.getFieldReferenceType(i));
             return dc.equals(this.getReferenceField(data1, i), dc2.getReferenceField(data2, i));
          default:
-            throw new Object("Not supported type");
+            throw new RuntimeException("Not supported type");
       }
    }
 
@@ -951,14 +951,14 @@ public class DataCollectionImpl implements DataCollection, DataOwner {
          case 1:
          case 5:
          default:
-            return new Object(this._dataFields.elementAt(this.getIntFieldIndex(slot, keyField)));
+            return new Integer(this._dataFields.elementAt(this.getIntFieldIndex(slot, keyField)));
          case 2:
-            return new Object(Double.longBitsToDouble(this._longData.elementAt(this.getLongFieldIndex(slot, keyField))));
+            return new Double(Double.longBitsToDouble(this._longData.elementAt(this.getLongFieldIndex(slot, keyField))));
          case 3:
             return this._refObjects.elementAt(this.getObjectFieldIndex(slot, keyField));
          case 4:
          case 8:
-            return new Object(this._longData.elementAt(this.getLongFieldIndex(slot, keyField)));
+            return new Long(this._longData.elementAt(this.getLongFieldIndex(slot, keyField)));
          case 6:
             KeyDataCollection dc = (KeyDataCollection)this._wiclet.getDataCollection(this._defs.getFieldReferenceType(keyField));
             long ref = this._longData.elementAt(this.getLongFieldIndex(slot, keyField));
@@ -973,7 +973,7 @@ public class DataCollectionImpl implements DataCollection, DataOwner {
 
    private void prepareData() {
       int numData = this._dataFields.size() / this._numIntFields;
-      this._dataIndicies = (IntIntHashtable)(new Object(numData + (numData >> 1)));
+      this._dataIndicies = new IntIntHashtable(numData + (numData >> 1));
 
       for (int slot = numData - 1; slot >= 0; slot--) {
          int handle = this._dataFields.elementAt(this.getHandleIndex(slot));
@@ -1057,17 +1057,17 @@ public class DataCollectionImpl implements DataCollection, DataOwner {
                : class$net$rim$wica$runtime$metadata$internal$util$PersistenceListener
          );
       if (!allowPersistence || !this.load()) {
-         this._dataFields = (BigIntVector)(new Object());
+         this._dataFields = new BigIntVector();
          if (this._numLongFields > 0) {
-            this._longData = (BigLongVector)(new Object());
+            this._longData = new BigLongVector();
          }
 
          if (this._numObjectFields > 0) {
-            this._refObjects = (BigVector)(new Object());
+            this._refObjects = new BigVector();
          }
 
          if (this._numVectorFields > 0) {
-            this._refVectors = (BigVector)(new Object());
+            this._refVectors = new BigVector();
          }
       }
 
@@ -1091,7 +1091,7 @@ public class DataCollectionImpl implements DataCollection, DataOwner {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

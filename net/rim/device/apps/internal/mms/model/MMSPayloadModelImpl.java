@@ -19,6 +19,7 @@ import net.rim.device.apps.internal.mms.api.MMSPayloadModel;
 import net.rim.device.apps.internal.mms.api.MMSPresentationModel;
 import net.rim.device.apps.internal.mms.service.MMSProtocolDataUnit;
 import net.rim.device.apps.internal.mms.service.MMSServiceUtil;
+import net.rim.vm.Persistable;
 
 final class MMSPayloadModelImpl implements MMSPayloadModel, PersistableRIMModel, AttachmentDataProvider, CloneProvider, MatchProvider, EncryptableProvider {
    private long _creationDate = System.currentTimeMillis();
@@ -34,7 +35,7 @@ final class MMSPayloadModelImpl implements MMSPayloadModel, PersistableRIMModel,
 
    final void addRecipients(Vector addressList) {
       if (this._toList == null) {
-         this._toList = (Vector)(new Object());
+         this._toList = new Vector();
       }
 
       Vector unwrapped = MMSServiceUtil.expandRecipientList(addressList);
@@ -90,7 +91,7 @@ final class MMSPayloadModelImpl implements MMSPayloadModel, PersistableRIMModel,
 
    final void addRecipient(RIMModel address) {
       if (this._toList == null) {
-         this._toList = (Vector)(new Object());
+         this._toList = new Vector();
       }
 
       this._toList.addElement(copyAddress(address));
@@ -113,7 +114,7 @@ final class MMSPayloadModelImpl implements MMSPayloadModel, PersistableRIMModel,
 
    final void addCcRecipient(RIMModel address) {
       if (this._ccList == null) {
-         this._ccList = (Vector)(new Object());
+         this._ccList = new Vector();
       }
 
       this._ccList.addElement(copyAddress(address));
@@ -121,7 +122,7 @@ final class MMSPayloadModelImpl implements MMSPayloadModel, PersistableRIMModel,
 
    final void addCcRecipients(Vector addressList) {
       if (this._ccList == null) {
-         this._ccList = (Vector)(new Object());
+         this._ccList = new Vector();
       }
 
       Vector unwrapped = MMSServiceUtil.expandRecipientList(addressList);
@@ -134,11 +135,11 @@ final class MMSPayloadModelImpl implements MMSPayloadModel, PersistableRIMModel,
 
    public final void addAttachment(MMSAttachment attachment) {
       if (this._attachments == null) {
-         this._attachments = (Hashtable)(new Object());
-         this._attachmentNames = (Vector)(new Object());
+         this._attachments = new Hashtable();
+         this._attachmentNames = new Vector();
       }
 
-      if (!(attachment instanceof Object)) {
+      if (!(attachment instanceof Persistable)) {
          attachment = new PersistedAttachmentImpl(attachment);
       }
 
@@ -150,7 +151,7 @@ final class MMSPayloadModelImpl implements MMSPayloadModel, PersistableRIMModel,
 
    final void addBccRecipient(RIMModel address) {
       if (this._bccList == null) {
-         this._bccList = (Vector)(new Object());
+         this._bccList = new Vector();
       }
 
       this._bccList.addElement(copyAddress(address));
@@ -158,7 +159,7 @@ final class MMSPayloadModelImpl implements MMSPayloadModel, PersistableRIMModel,
 
    final void addBccRecipients(Vector addressList) {
       if (this._bccList == null) {
-         this._bccList = (Vector)(new Object());
+         this._bccList = new Vector();
       }
 
       Vector unwrapped = MMSServiceUtil.expandRecipientList(addressList);
@@ -171,15 +172,15 @@ final class MMSPayloadModelImpl implements MMSPayloadModel, PersistableRIMModel,
 
    final void setAttribute(String attributeName, String value) {
       if (attributeName.equals("message-id")) {
-         this._messageID = new Object(value).toString();
-         value = new Object(value).toString();
+         this._messageID = value;
+         value = value;
       } else if (attributeName.equals("x-mms-transaction-id")) {
-         this._transactionID = new Object(value).toString();
-         value = new Object(value).toString();
+         this._transactionID = value;
+         value = value;
       }
 
       if (this._attributes == null) {
-         this._attributes = (Hashtable)(new Object());
+         this._attributes = new Hashtable();
       }
 
       this._attributes.put(StringUtilities.toLowerCase(attributeName, 1701707776), PersistentContent.encode(value));
@@ -345,7 +346,7 @@ final class MMSPayloadModelImpl implements MMSPayloadModel, PersistableRIMModel,
    }
 
    private static final RIMModel copyAddress(RIMModel address) {
-      return (RIMModel)(address == null ? null : ((Copyable)address).copy());
+      return address == null ? null : (RIMModel)((Copyable)address).copy();
    }
 
    private final MMSProtocolDataUnit getPDU() {
@@ -411,8 +412,8 @@ final class MMSPayloadModelImpl implements MMSPayloadModel, PersistableRIMModel,
    }
 
    private final boolean checkCrypt2(Object obj, boolean compress, boolean encrypt) {
-      if (!(obj instanceof Object)) {
-         if (obj instanceof Object && !PersistentContent.checkEncoding(obj, compress, encrypt)) {
+      if (!(obj instanceof EncryptableProvider)) {
+         if (obj instanceof String && !PersistentContent.checkEncoding(obj, compress, encrypt)) {
             return false;
          }
       } else {
@@ -467,7 +468,7 @@ final class MMSPayloadModelImpl implements MMSPayloadModel, PersistableRIMModel,
 
    private final Object reCrypt2(Object obj, boolean compress, boolean encrypt) {
       Object newObj;
-      if (!(obj instanceof Object)) {
+      if (!(obj instanceof EncryptableProvider)) {
          newObj = PersistentContent.reEncode(obj, compress, encrypt);
       } else {
          EncryptableProvider encryptable = (EncryptableProvider)obj;

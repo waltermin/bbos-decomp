@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.browser.multipart;
 import java.io.InputStream;
 import net.rim.device.api.browser.field.BrowserContent;
 import net.rim.device.apps.internal.browser.stack.FetchRequest;
+import net.rim.device.cldc.io.devicehttp.LengthControlledInputStream;
 import net.rim.device.internal.browser.util.Pipe;
 
 public final class MultipartInputStream extends InputStream {
@@ -23,7 +24,7 @@ public final class MultipartInputStream extends InputStream {
       this._mimeMultipartParser = mimeMultipartParser;
       this._fetchRequest = fetchRequest;
       InputStream pipeInputStream = data.getInputStream();
-      this._currentIn = (InputStream)(dataLen >= 0 ? new Object(pipeInputStream, dataLen, false, false) : pipeInputStream);
+      this._currentIn = dataLen >= 0 ? new LengthControlledInputStream(pipeInputStream, dataLen, false, false) : pipeInputStream;
    }
 
    @Override
@@ -85,7 +86,7 @@ public final class MultipartInputStream extends InputStream {
       // 59: goto 91
       // 5c: astore 2
       // 5d: goto 91
-      // 60: new java/lang/Object
+      // 60: new net/rim/device/api/browser/field/RequestedResource
       // 63: dup
       // 64: aload 1
       // 65: invokevirtual net/rim/device/apps/internal/browser/stack/CachedHttpConnection.getURL ()Ljava/lang/String;

@@ -14,7 +14,7 @@ public final class Crypto1EncoderInitialization implements Initialization {
          PublicKeyEncoder.register(new WTLS_RIM_PublicKeyEncoder());
          SignatureDecoder.register(new WTLS_RIM_SignatureDecoder(), new WTLS_SignatureDecoder());
       } finally {
-         throw new Object();
+         throw new RuntimeException();
       }
    }
 }

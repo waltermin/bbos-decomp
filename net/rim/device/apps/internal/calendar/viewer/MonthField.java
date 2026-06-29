@@ -8,6 +8,7 @@ import net.rim.device.api.ui.TextMetrics;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.ui.accessibility.AccessibleContext;
+import net.rim.device.api.ui.accessibility.AccessibleContextFactory;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.api.ui.theme.Theme;
 import net.rim.device.api.ui.theme.ThemeAttributeSet;
@@ -50,7 +51,7 @@ final class MonthField extends Field {
    private Font _fontNormal;
    private Font _fontBold;
    private Font _fontTitle;
-   TextMetrics _textMetrics = (TextMetrics)(new Object());
+   TextMetrics _textMetrics = new TextMetrics();
    private long _lastMonthChange;
    private int _numOfAccessibleItems = 2;
    private static final Tag BASE_TAG = Tag.create("month");
@@ -239,34 +240,27 @@ final class MonthField extends Field {
       switch (index) {
          case 0:
          default:
-            return (AccessibleContext)(new Object(
-               ((StringBuffer)(new Object()))
-                  .append(Integer.toString(selectedDay + 1))
-                  .append(" ")
-                  .append(StringUtilities.removeChars(this._longMonths[this._currentMonth], " "))
-                  .toString(),
-               28,
-               4,
-               this
-            ));
+            return new AccessibleContextFactory(
+               Integer.toString(selectedDay + 1) + " " + StringUtilities.removeChars(this._longMonths[this._currentMonth], " "), 28, 4, this
+            );
          case 1:
             if (this._daysInMonth > selectedDay && 0 <= selectedDay) {
                if (this.getSelectedDay() >= this._daysInMonth) {
                   if (this._busyPatternArrayNextMonth[selectedDay] != 0) {
-                     return (AccessibleContext)(new Object("Busy", 28, 4, this));
+                     return new AccessibleContextFactory("Busy", 28, 4, this);
                   }
                } else if (this.getSelectedDay() < 0) {
                   if (this._busyPatternArrayPreviousMonth[selectedDay] != 0) {
-                     return (AccessibleContext)(new Object("Busy", 28, 4, this));
+                     return new AccessibleContextFactory("Busy", 28, 4, this);
                   }
                } else if (this._busyPatternArray[selectedDay] != 0) {
-                  return (AccessibleContext)(new Object("Busy", 28, 4, this));
+                  return new AccessibleContextFactory("Busy", 28, 4, this);
                }
 
-               return (AccessibleContext)(new Object("Free", 28, 4, this));
+               return new AccessibleContextFactory("Free", 28, 4, this);
             }
          case -1:
-            return (AccessibleContext)(new Object("", 28, 4, this));
+            return new AccessibleContextFactory("", 28, 4, this);
       }
    }
 
@@ -634,7 +628,7 @@ final class MonthField extends Field {
       }
 
       if (Ui.isTTSEnabled()) {
-         super.accessibleEventOccurred(6, new Object(1), new Object(2), this);
+         super.accessibleEventOccurred(6, new Integer(1), new Integer(2), this);
       }
 
       return amount;

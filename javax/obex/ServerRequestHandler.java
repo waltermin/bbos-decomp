@@ -16,7 +16,7 @@ public class ServerRequestHandler {
       if (id >= -1 && id <= 4294967295L) {
          this._connectionID = id;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

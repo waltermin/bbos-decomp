@@ -3,6 +3,7 @@ package net.rim.device.internal.EScreens;
 import java.util.Random;
 import java.util.Vector;
 import net.rim.device.api.system.Application;
+import net.rim.device.api.system.RadioException;
 import net.rim.device.api.system.RadioPacketHeader;
 import net.rim.device.api.system.UDPPacketHeader;
 import net.rim.device.api.ui.Field;
@@ -13,8 +14,9 @@ import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
-import net.rim.device.api.ui.text.TextFilter;
+import net.rim.device.api.ui.text.IPTextFilter;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.NumberUtilities;
 import net.rim.device.cldc.io.dns.DNSListener;
@@ -51,7 +53,7 @@ public class EScreenSession extends MainScreen implements Runnable, DNSListener,
    protected static final int MENU_REFRESH = 1;
    protected static final int MENU_START = 3;
    protected static final int MENU_STOP = 4;
-   protected static Random _rand = (Random)(new Object());
+   protected static Random _rand = new Random();
    protected static final int UDP_HEADER = 0;
    protected static final int ICMP_HEADER = 1;
 
@@ -59,10 +61,10 @@ public class EScreenSession extends MainScreen implements Runnable, DNSListener,
       this._manager = manager;
       this._sessionIndex = si;
       this._timerId = -1;
-      this._fields = (Vector)(new Object(5));
-      this._ipField = (IPEditField)(new Object("IP: ", null));
-      this._ipField.setFilter((TextFilter)(new Object(1)));
-      this._apnField = (EditField)(new Object("APN: ", null));
+      this._fields = new Vector(5);
+      this._ipField = new IPEditField("IP: ", null);
+      this._ipField.setFilter(new IPTextFilter(1));
+      this._apnField = new EditField("APN: ", null);
       this._fields.addElement(this._ipField);
       this._fields.addElement(this._apnField);
       this.addParameterFields(this._fields);
@@ -72,11 +74,11 @@ public class EScreenSession extends MainScreen implements Runnable, DNSListener,
          this.add((Field)this._fields.elementAt(i));
       }
 
-      this.add((Field)(new Object()));
-      this._listField = (ListField)(new Object());
+      this.add(new SeparatorField());
+      this._listField = new ListField();
       this._listField.setCallback(this);
       this.add(this._listField);
-      this.setTitle(((StringBuffer)(new Object())).append(this.getSessionType()).append(" Session").toString());
+      this.setTitle(this.getSessionType() + " Session");
    }
 
    protected void onUnDisplay() {
@@ -124,7 +126,7 @@ public class EScreenSession extends MainScreen implements Runnable, DNSListener,
 
    protected void setNumResults(int numResults) {
       this._numResults = numResults;
-      this._results = new Object[numResults];
+      this._results = new String[numResults];
       this.setNumLines();
    }
 
@@ -227,12 +229,12 @@ public class EScreenSession extends MainScreen implements Runnable, DNSListener,
 
    protected RadioPacketHeader makeHeader(int type) throws EScreenSession$InvalidInputException {
       if (type == 0) {
-         UDPPacketHeader udpHeader = (UDPPacketHeader)(new Object());
+         UDPPacketHeader udpHeader = new UDPPacketHeader();
          udpHeader.setDestinationAddress(this._ipAddress);
          udpHeader.setAccessPointNumber(this._apnId);
          return udpHeader;
       } else if (type == 1) {
-         ICMPPacketHeader icmpHeader = (ICMPPacketHeader)(new Object());
+         ICMPPacketHeader icmpHeader = new ICMPPacketHeader();
          icmpHeader.setDestinationAddress(this._ipAddress);
          icmpHeader.setAccessPointNumber(this._apnId);
          return icmpHeader;
@@ -257,7 +259,7 @@ public class EScreenSession extends MainScreen implements Runnable, DNSListener,
 
    protected void setResult(int resultNum, String str, int counter) {
       int index = resultNum % this._numResults;
-      StringBuffer strBuf = (StringBuffer)(new Object(32));
+      StringBuffer strBuf = new StringBuffer(32);
       strBuf.append('#');
       strBuf.append(resultNum + 1);
       strBuf.append(':');
@@ -321,7 +323,7 @@ public class EScreenSession extends MainScreen implements Runnable, DNSListener,
 
    @Override
    public void drawListRow(ListField listField, Graphics graphics, int index, int y, int width) {
-      StringBuffer strBuf = (StringBuffer)(new Object(32));
+      StringBuffer strBuf = new StringBuffer(32);
       if (index == 0) {
          strBuf.append("Status: ");
          strBuf.append(STATE_STRS[this._curState]);
@@ -350,9 +352,9 @@ public class EScreenSession extends MainScreen implements Runnable, DNSListener,
       }
    }
 
-   private static final int getApnIdFromApn(String apn) {
+   private static final int getApnIdFromApn(String apn) throws RadioException {
       if (apn == null) {
-         throw new Object("Null APN");
+         throw new RadioException("Null APN");
       }
 
       if (apn.length() == 1) {

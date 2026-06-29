@@ -4,7 +4,7 @@ import java.util.Hashtable;
 
 final class net_rim_bb_ribbon_libRIMResourcesPopulator0 {
    static final void populate(Hashtable localZero) {
-      Object var1 = new byte[]{
+      byte[] var1 = new byte[]{
          71,
          73,
          70,
@@ -138,7 +138,7 @@ final class net_rim_bb_ribbon_libRIMResourcesPopulator0 {
          59
       };
       localZero.put("net_rim_KeyLockSystem.gif", var1);
-      var1 = new Object(0);
-      localZero.put("net_rim_LockSystem.gif", var1);
+      Integer var2 = new Integer(0);
+      localZero.put("net_rim_LockSystem.gif", var2);
    }
 }

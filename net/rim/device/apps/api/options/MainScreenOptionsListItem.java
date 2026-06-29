@@ -9,9 +9,10 @@ import net.rim.device.api.system.TrackwheelListener;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectListField;
 import net.rim.device.api.ui.container.MainScreen;
-import net.rim.device.api.util.LongHashtable;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.model.VerbProvider;
 import net.rim.device.apps.api.framework.verb.Verb;
@@ -44,7 +45,7 @@ public class MainScreenOptionsListItem extends OptionsListItem implements KeyLis
    }
 
    protected Field getTitleField() {
-      return (Field)(new Object(this.getDisplayName(), 64));
+      return new LabelField(this.getDisplayName(), 64);
    }
 
    protected void populateMainScreen(MainScreen _1) {
@@ -104,19 +105,19 @@ public class MainScreenOptionsListItem extends OptionsListItem implements KeyLis
          return null;
       }
 
-      if (this._context instanceof Object) {
-         ((LongHashtable)this._context).put(9045827404276417370L, field);
+      if (this._context instanceof ContextObject) {
+         ((ContextObject)this._context).put(9045827404276417370L, field);
       }
 
       RIMModel model = null;
       Object cookie = field.getCookie();
-      if (!(cookie instanceof Object)) {
-         if (field instanceof Object) {
+      if (!(cookie instanceof RIMModel)) {
+         if (field instanceof ObjectListField) {
             ObjectListField olf = (ObjectListField)field;
             int i = olf.getSelectedIndex();
             if (i != -1) {
                Object o = olf.get(olf, i);
-               if (o instanceof Object) {
+               if (o instanceof RIMModel) {
                   model = (RIMModel)o;
                }
             }
@@ -125,12 +126,12 @@ public class MainScreenOptionsListItem extends OptionsListItem implements KeyLis
          model = (RIMModel)cookie;
       }
 
-      if (!(model instanceof Object)) {
+      if (!(model instanceof VerbProvider)) {
          return null;
       }
 
       VerbProvider verbProvider = (VerbProvider)model;
-      Verb[] itemVerbs = new Object[0];
+      Verb[] itemVerbs = new Verb[0];
       Verb defaultVerb = verbProvider.getVerbs(this._context, itemVerbs);
       verbToMenu.addVerbs(itemVerbs);
       return defaultVerb;
@@ -295,7 +296,7 @@ public class MainScreenOptionsListItem extends OptionsListItem implements KeyLis
    public MainScreenOptionsListItem(String displayString, Object context) {
       super(displayString);
       this._context = context;
-      this._backdoor = (BackdoorKeyProcessor)(new Object(false, this));
+      this._backdoor = new BackdoorKeyProcessor(false, this);
    }
 
    @Override
@@ -309,7 +310,7 @@ public class MainScreenOptionsListItem extends OptionsListItem implements KeyLis
    public MainScreenOptionsListItem(ResourceBundleFamily rb, int key, Object context, long group) {
       super(rb, key, group);
       this._context = context;
-      this._backdoor = (BackdoorKeyProcessor)(new Object(false, this));
+      this._backdoor = new BackdoorKeyProcessor(false, this);
    }
 
    @Override
@@ -321,12 +322,12 @@ public class MainScreenOptionsListItem extends OptionsListItem implements KeyLis
    public MainScreenOptionsListItem(ResourceBundleFamily rb, int key, Object context) {
       super(rb, key);
       this._context = context;
-      this._backdoor = (BackdoorKeyProcessor)(new Object(false, this));
+      this._backdoor = new BackdoorKeyProcessor(false, this);
    }
 
    public MainScreenOptionsListItem(String displayString, Object context, long group) {
       super(displayString, group);
       this._context = context;
-      this._backdoor = (BackdoorKeyProcessor)(new Object(false, this));
+      this._backdoor = new BackdoorKeyProcessor(false, this);
    }
 }

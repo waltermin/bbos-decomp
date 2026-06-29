@@ -17,7 +17,7 @@ public class OptionsMainScreen extends AppsMainScreen {
    protected ContextObject getContext() {
       if (this._optionsListItem != null) {
          Object context = this._optionsListItem.getContext();
-         if (context instanceof Object) {
+         if (context instanceof ContextObject) {
             return (ContextObject)context;
          }
       }

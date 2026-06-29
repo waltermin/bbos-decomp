@@ -30,7 +30,7 @@ public final class QuickContactUtil {
    private static Tag _hotkeyTag = Tag.create("phone-hotlist-hotkey");
    private static ThemeAttributeSet _hotkeyTheme;
    private static int _themeGeneration;
-   private static GlyphMetrics _glyphMetrics = (GlyphMetrics)(new Object());
+   private static GlyphMetrics _glyphMetrics = new GlyphMetrics();
    private static Font _keyFont;
    private static Font _fieldFont;
    private static Image _hotkeyIcon = IconCollection.get("net_rim_Phone_SpeedDial", 1).getImage(0);
@@ -53,9 +53,7 @@ public final class QuickContactUtil {
 
    private static final String getSpeedDialString(char key, int type) {
       int resId = type == 0 ? 9135 : 9123;
-      return MessageFormat.format(
-         CommonResources.getString(resId), new Object[]{((StringBuffer)(new Object(""))).append(CharacterUtilities.toUpperCase(key, 1701707776)).toString()}
-      );
+      return MessageFormat.format(CommonResources.getString(resId), new String[]{"" + CharacterUtilities.toUpperCase(key, 1701707776)});
    }
 
    public static final void promptUserForNewQuickContactItem(int keycode) {
@@ -137,7 +135,7 @@ public final class QuickContactUtil {
       } else if (data instanceof byte[]) {
          EventLogger.logEvent(5258489903148434177L, (byte[])data);
       } else {
-         if (data instanceof Object) {
+         if (data instanceof String) {
             EventLogger.logEvent(5258489903148434177L, ((String)data).getBytes());
          }
       }

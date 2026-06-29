@@ -25,7 +25,7 @@ public final class AddImageVerb extends Verb {
       MMSAttachment attachment = this.promptForImage();
       if (attachment != null) {
          this._presentation.addPresentationElement(attachment, true);
-         if (this._presentation instanceof Object) {
+         if (this._presentation instanceof Manager) {
             Manager mgr = (Manager)this._presentation;
             mgr.setDirty(true);
          }
@@ -49,7 +49,7 @@ public final class AddImageVerb extends Verb {
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:185)
       //
       // Bytecode:
-      // 00: new java/lang/Object
+      // 00: new net/rim/device/apps/api/framework/file/FileSelector
       // 03: dup
       // 04: ldc_w "file:///store/samples/mms/pictures/"
       // 07: bipush 1
@@ -74,12 +74,12 @@ public final class AddImageVerb extends Verb {
       // 2c: astore 2
       // 2d: aload 2
       // 2e: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 31: checkcast java/lang/Object
+      // 31: checkcast javax/microedition/io/file/FileConnection
       // 34: astore 3
       // 35: aload 3
       // 36: invokeinterface javax/microedition/io/file/FileConnection.canRead ()Z 1
       // 3b: ifeq 8b
-      // 3e: new java/lang/Object
+      // 3e: new java/lang/String
       // 41: dup
       // 42: aload 2
       // 43: invokevirtual java/lang/String.getBytes ()[B

@@ -1,10 +1,11 @@
 package net.rim.device.apps.internal.explorer.file;
 
 import net.rim.device.api.ui.Field;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.PopupScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.VerbProvider;
 import net.rim.device.apps.api.framework.verb.Verb;
@@ -18,13 +19,13 @@ final class ExplorePopup extends PopupScreen implements ExploreCallback {
    private SelectionListener _selectionListener;
 
    ExplorePopup(SelectionListener selector, String title, Object ctx) {
-      super((Manager)(new Object()), 196608);
-      this._titleField = (LabelField)(new Object(title));
+      super(new VerticalFieldManager(), 196608);
+      this._titleField = new LabelField(title);
       this.add(this._titleField);
-      this._pathField = (LabelField)(new Object(null, 1152921504606847168L));
+      this._pathField = new LabelField(null, 1152921504606847168L);
       this._pathField.setEditable(false);
       this.add(this._pathField);
-      this.add((Field)(new Object(65536)));
+      this.add(new SeparatorField(65536));
       this._selectionListener = selector;
       this._explorer = new ExploreManager(this, ctx, true, 3459063580983296000L);
       this.add(this._explorer);
@@ -42,9 +43,9 @@ final class ExplorePopup extends PopupScreen implements ExploreCallback {
          selectedFileItem = this._explorer.getSelectedItem();
       }
 
-      if (this._selectionListener instanceof Object) {
-         Verb[] verbs = new Object[0];
-         ContextObject context = (ContextObject)(new Object());
+      if (this._selectionListener instanceof VerbProvider) {
+         Verb[] verbs = new Verb[0];
+         ContextObject context = new ContextObject();
          if (selectedFileItem == null) {
             selectedFileItem = this._explorer.getCurrentView();
          }
@@ -63,7 +64,7 @@ final class ExplorePopup extends PopupScreen implements ExploreCallback {
          if (verbs != null && verbs.length > 0) {
             for (int idx = 0; idx < verbs.length; idx++) {
                Verb verb = verbs[idx];
-               VerbMenuItem menuItem = (VerbMenuItem)(new Object(null, verb.getOrdering(), Integer.MAX_VALUE, verb, context));
+               VerbMenuItem menuItem = new VerbMenuItem(null, verb.getOrdering(), Integer.MAX_VALUE, verb, context);
                menu.add(menuItem);
                if (verb == defaultVerb) {
                   menu.setDefaultIgnoreContextMenuDefault(menuItem);

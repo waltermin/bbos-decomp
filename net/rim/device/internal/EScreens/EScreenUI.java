@@ -9,12 +9,14 @@ import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.Trackball;
 import net.rim.device.api.ui.component.BasicEditField;
+import net.rim.device.api.ui.component.ChoiceField;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.internal.ui.component.HexEditField;
@@ -39,7 +41,7 @@ public final class EScreenUI extends MainScreen implements ListFieldCallback {
    final void copyScreen() {
       int oldMode = this._model.getMode();
       int numUserItems = this._model.getNumUserItems();
-      StringBuffer strBuf = (StringBuffer)(new Object(128));
+      StringBuffer strBuf = new StringBuffer(128);
 
       for (int i = 0; i < numUserItems; i++) {
          Field f = this.getField(i);
@@ -47,8 +49,8 @@ public final class EScreenUI extends MainScreen implements ListFieldCallback {
             strBuf.append('\n');
          }
 
-         if (!(f instanceof Object)) {
-            if (f instanceof Object) {
+         if (!(f instanceof BasicEditField)) {
+            if (f instanceof ChoiceField) {
                ObjectChoiceField ocf = (ObjectChoiceField)f;
                String data = (String)ocf.getChoice(ocf.getSelectedIndex());
                strBuf.append(ocf.getLabel());
@@ -228,19 +230,19 @@ public final class EScreenUI extends MainScreen implements ListFieldCallback {
    }
 
    private final EditField makeEditField(String label, boolean hasData, byte[] data, int length) {
-      return (EditField)(new Object(label, (String)(hasData ? new Object(data, 0, length) : null)));
+      return new EditField(label, hasData ? new String(data, 0, length) : null);
    }
 
    private final HexEditField makeHexEditField(String label, boolean hasData, byte[] data, int length) {
-      return (HexEditField)(hasData ? new Object(label, this._itemData, 0, length) : new Object(label));
+      return hasData ? new HexEditField(label, this._itemData, 0, length) : new HexEditField(label);
    }
 
    private final IPEditField makeIPEditField(String label, boolean hasData, byte[] data, int length) {
       String value = null;
       if (hasData) {
-         StringBuffer strBuf = (StringBuffer)(new Object(16));
+         StringBuffer strBuf = new StringBuffer(16);
          if (length != 4) {
-            Dialog.alert(((StringBuffer)(new Object("Bad data length for IPEditField, length="))).append(length).toString());
+            Dialog.alert("Bad data length for IPEditField, length=" + length);
             return null;
          }
 
@@ -248,7 +250,7 @@ public final class EScreenUI extends MainScreen implements ListFieldCallback {
          value = strBuf.toString();
       }
 
-      return (IPEditField)(new Object(label, value));
+      return new IPEditField(label, value);
    }
 
    private final EditField makeNumericEditField(String label, boolean hasData, byte[] data, int length) {
@@ -281,16 +283,16 @@ public final class EScreenUI extends MainScreen implements ListFieldCallback {
                value = Long.toString(lValue);
                break;
             default:
-               Dialog.alert(((StringBuffer)(new Object("Bad length for numeric edit field, length="))).append(length).toString());
+               Dialog.alert("Bad length for numeric edit field, length=" + length);
                return null;
          }
       }
 
-      return (EditField)(new Object(label, value, Integer.MAX_VALUE, 83886080));
+      return new EditField(label, value, Integer.MAX_VALUE, 83886080);
    }
 
    private final PhoneNumberEditField makePhoneEditField(String label, boolean hasData, byte[] data, int length) {
-      return (PhoneNumberEditField)(new Object(label, (String)(hasData ? new Object(data, 0, length) : null)));
+      return new PhoneNumberEditField(label, hasData ? new String(data, 0, length) : null);
    }
 
    @Override
@@ -339,7 +341,7 @@ public final class EScreenUI extends MainScreen implements ListFieldCallback {
          this._boldFont = this._plainFont;
       }
 
-      this._immutables = (ListField)(new Object());
+      this._immutables = new ListField();
       this._immutables.setCallback(this);
       this._immutables.setEmptyString("* No Engineering Items *", 4);
       this._immutables.setSearchable(false);
@@ -394,7 +396,7 @@ public final class EScreenUI extends MainScreen implements ListFieldCallback {
          return null;
       }
 
-      String[] choices = new Object[intData];
+      String[] choices = new String[intData];
 
       for (int i = 0; i < intData; i++) {
          try {
@@ -402,22 +404,21 @@ public final class EScreenUI extends MainScreen implements ListFieldCallback {
             length = this._model.getData(id, this._itemData);
          } catch (EScreenException e) {
             Dialog.alert(
-               ((StringBuffer)(new Object("Unable to get choice option ")))
-                  .append(i)
-                  .append(", code=")
-                  .append(e.getCode())
-                  .append(".\n screenId=")
-                  .append(this._model.getScreenId())
-                  .append(" idCookie=")
-                  .append(this._model.getScreenIdCookie())
-                  .append(" itemId=")
-                  .append(id)
-                  .toString()
+               "Unable to get choice option "
+                  + i
+                  + ", code="
+                  + e.getCode()
+                  + ".\n screenId="
+                  + this._model.getScreenId()
+                  + " idCookie="
+                  + this._model.getScreenIdCookie()
+                  + " itemId="
+                  + id
             );
             continue;
          }
 
-         choices[i] = (String)(new Object(this._itemData, 0, length));
+         choices[i] = new String(this._itemData, 0, length);
       }
 
       try {
@@ -425,17 +426,16 @@ public final class EScreenUI extends MainScreen implements ListFieldCallback {
          length = this._model.getData(id, this._itemData);
       } catch (EScreenException e) {
          Dialog.alert(
-            ((StringBuffer)(new Object("Unable to get choice initial index, code=")))
-               .append(e.getCode())
-               .append(".\n screenId=")
-               .append(this._model.getScreenId())
-               .append(" idCookie=")
-               .append(this._model.getScreenIdCookie())
-               .append(" itemId=")
-               .append(id)
-               .toString()
+            "Unable to get choice initial index, code="
+               + e.getCode()
+               + ".\n screenId="
+               + this._model.getScreenId()
+               + " idCookie="
+               + this._model.getScreenIdCookie()
+               + " itemId="
+               + id
          );
-         return (ObjectChoiceField)(new Object(label, choices));
+         return new ObjectChoiceField(label, choices);
       }
 
       intData = 0;
@@ -449,7 +449,7 @@ public final class EScreenUI extends MainScreen implements ListFieldCallback {
          intData = 0;
       }
 
-      return (ObjectChoiceField)(new Object(label, choices, intData));
+      return new ObjectChoiceField(label, choices, intData);
    }
 
    private final void addMutables() {
@@ -460,15 +460,14 @@ public final class EScreenUI extends MainScreen implements ListFieldCallback {
          Field f = null;
          if ((flag & 1) == 0) {
             Dialog.alert(
-               ((StringBuffer)(new Object("Expected a mutable item, flag=")))
-                  .append(flag)
-                  .append(".\n screenId=")
-                  .append(this._model.getScreenId())
-                  .append(" idCookie=")
-                  .append(this._model.getScreenIdCookie())
-                  .append(" itemId=")
-                  .append(i)
-                  .toString()
+               "Expected a mutable item, flag="
+                  + flag
+                  + ".\n screenId="
+                  + this._model.getScreenId()
+                  + " idCookie="
+                  + this._model.getScreenIdCookie()
+                  + " itemId="
+                  + i
             );
          } else {
             int length;
@@ -476,18 +475,17 @@ public final class EScreenUI extends MainScreen implements ListFieldCallback {
             try {
                this._model.setMode(0);
                length = this._model.getData(i, this._itemData);
-               label = (String)(new Object(this._itemData, 0, length));
+               label = new String(this._itemData, 0, length);
             } catch (EScreenException e) {
                Dialog.alert(
-                  ((StringBuffer)(new Object("Unable to get mutable label, code=")))
-                     .append(e.getCode())
-                     .append(".\n screenId=")
-                     .append(this._model.getScreenId())
-                     .append(" idCookie=")
-                     .append(this._model.getScreenIdCookie())
-                     .append(" itemId=")
-                     .append(i)
-                     .toString()
+                  "Unable to get mutable label, code="
+                     + e.getCode()
+                     + ".\n screenId="
+                     + this._model.getScreenId()
+                     + " idCookie="
+                     + this._model.getScreenIdCookie()
+                     + " itemId="
+                     + i
                );
                continue;
             }
@@ -499,15 +497,14 @@ public final class EScreenUI extends MainScreen implements ListFieldCallback {
                   length = this._model.getData(i, this._itemData);
                } catch (EScreenException e) {
                   Dialog.alert(
-                     ((StringBuffer)(new Object("Unable to get mutable label, code=")))
-                        .append(e.getCode())
-                        .append(".\n screenId=")
-                        .append(this._model.getScreenId())
-                        .append(" idCookie=")
-                        .append(this._model.getScreenIdCookie())
-                        .append(" itemId=")
-                        .append(i)
-                        .toString()
+                     "Unable to get mutable label, code="
+                        + e.getCode()
+                        + ".\n screenId="
+                        + this._model.getScreenId()
+                        + " idCookie="
+                        + this._model.getScreenIdCookie()
+                        + " itemId="
+                        + i
                   );
                   continue;
                }
@@ -527,29 +524,27 @@ public final class EScreenUI extends MainScreen implements ListFieldCallback {
                f = this.makeChoiceEditField(label, i, this._itemData, length);
                if (f == null) {
                   Dialog.alert(
-                     ((StringBuffer)(new Object("Found choice field with no options.\n screenId=")))
-                        .append(this._model.getScreenId())
-                        .append(" idCookie=")
-                        .append(this._model.getScreenIdCookie())
-                        .append(" itemId=")
-                        .append(i)
-                        .toString()
+                     "Found choice field with no options.\n screenId="
+                        + this._model.getScreenId()
+                        + " idCookie="
+                        + this._model.getScreenIdCookie()
+                        + " itemId="
+                        + i
                   );
                   continue;
                }
             } else if ((flag & 32) != 0) {
-               f = (Field)(new Object());
+               f = new SeparatorField();
             } else {
                Dialog.alert(
-                  ((StringBuffer)(new Object("Unknown mutable type. Flags=")))
-                     .append(flag)
-                     .append(".\n screenId=")
-                     .append(this._model.getScreenId())
-                     .append(" idCookie=")
-                     .append(this._model.getScreenIdCookie())
-                     .append(" itemId=")
-                     .append(i)
-                     .toString()
+                  "Unknown mutable type. Flags="
+                     + flag
+                     + ".\n screenId="
+                     + this._model.getScreenId()
+                     + " idCookie="
+                     + this._model.getScreenIdCookie()
+                     + " itemId="
+                     + i
                );
             }
 
@@ -568,23 +563,23 @@ public final class EScreenUI extends MainScreen implements ListFieldCallback {
       }
 
       if (num != 0) {
-         this.add((Field)(new Object()));
+         this.add(new SeparatorField());
       }
    }
 
    private final void doAction(EScreenItemInfo itemInfo) {
       byte[] userData = null;
       if ((itemInfo.flags & 256) != 0) {
-         StringBuffer strBuf = (StringBuffer)(new Object(128));
+         StringBuffer strBuf = new StringBuffer(128);
 
          for (int i = 0; i < this.getFieldCount() - 1; i++) {
             Field f = this.getField(i);
             if (f.isEditable()) {
-               if (f instanceof Object) {
+               if (f instanceof BasicEditField) {
                   strBuf.append(((BasicEditField)f).getText());
                }
 
-               if (f instanceof Object) {
+               if (f instanceof ObjectChoiceField) {
                   ObjectChoiceField ocf = (ObjectChoiceField)f;
                   strBuf.append(ocf.getSelectedIndex());
                }
@@ -609,13 +604,7 @@ public final class EScreenUI extends MainScreen implements ListFieldCallback {
          if (e.getCode() == -6) {
             msg = "Bad user data. Please verify and try again.";
          } else {
-            msg = ((StringBuffer)(new Object("Unexpected error, code=")))
-               .append(e.getCode())
-               .append(".\nactionId=")
-               .append(itemInfo.id)
-               .append(" actionIdCookie=")
-               .append(itemInfo.idCookie)
-               .toString();
+            msg = "Unexpected error, code=" + e.getCode() + ".\nactionId=" + itemInfo.id + " actionIdCookie=" + itemInfo.idCookie;
          }
 
          Dialog.alert(msg);
@@ -637,15 +626,14 @@ public final class EScreenUI extends MainScreen implements ListFieldCallback {
          this._model.getMenuInfo(index, this._menuInfo);
       } catch (EScreenException e) {
          Dialog.alert(
-            ((StringBuffer)(new Object("Unable to get menuId, code=")))
-               .append(e.getCode())
-               .append(".\n screenId=")
-               .append(this._model.getScreenId())
-               .append(" idCookie=")
-               .append(this._model.getScreenIdCookie())
-               .append(" itemId=")
-               .append(index)
-               .toString()
+            "Unable to get menuId, code="
+               + e.getCode()
+               + ".\n screenId="
+               + this._model.getScreenId()
+               + " idCookie="
+               + this._model.getScreenIdCookie()
+               + " itemId="
+               + index
          );
       }
 
@@ -674,15 +662,7 @@ public final class EScreenUI extends MainScreen implements ListFieldCallback {
             this._menuModel.setScreen(this._menuInfo.menuId, this._menuInfo.idCookie);
             numMenuItems = this._menuModel.getNumItems();
          } catch (EScreenException e) {
-            Dialog.alert(
-               ((StringBuffer)(new Object("Unable to set menu 'screen', code=")))
-                  .append(e.getCode())
-                  .append(".\n screenId=")
-                  .append(this._menuInfo.menuId)
-                  .append(" idCookie=")
-                  .append(this._menuInfo.idCookie)
-                  .toString()
-            );
+            Dialog.alert("Unable to set menu 'screen', code=" + e.getCode() + ".\n screenId=" + this._menuInfo.menuId + " idCookie=" + this._menuInfo.idCookie);
             numMenuItems = 0;
          }
 
@@ -692,15 +672,14 @@ public final class EScreenUI extends MainScreen implements ListFieldCallback {
                length = this._menuModel.getData(i, this._itemData);
             } catch (EScreenException e) {
                Dialog.alert(
-                  ((StringBuffer)(new Object("Unable to get data for menuItem, code=")))
-                     .append(e.getCode())
-                     .append(".\n screenId=")
-                     .append(this._menuModel.getScreenId())
-                     .append(" idCookie=")
-                     .append(this._menuModel.getScreenIdCookie())
-                     .append(" itemId=")
-                     .append(i)
-                     .toString()
+                  "Unable to get data for menuItem, code="
+                     + e.getCode()
+                     + ".\n screenId="
+                     + this._menuModel.getScreenId()
+                     + " idCookie="
+                     + this._menuModel.getScreenIdCookie()
+                     + " itemId="
+                     + i
                );
                continue;
             }
@@ -711,15 +690,14 @@ public final class EScreenUI extends MainScreen implements ListFieldCallback {
             } else {
                if ((this._menuModel.getItemFlag(i) & 64) == 0) {
                   Dialog.alert(
-                     ((StringBuffer)(new Object("Unacceptable menu flags, flags=")))
-                        .append(this._menuModel.getItemFlag(i))
-                        .append(".\n screenId=")
-                        .append(this._menuModel.getScreenId())
-                        .append(" idCookie=")
-                        .append(this._menuModel.getScreenIdCookie())
-                        .append(" itemId=")
-                        .append(i)
-                        .toString()
+                     "Unacceptable menu flags, flags="
+                        + this._menuModel.getItemFlag(i)
+                        + ".\n screenId="
+                        + this._menuModel.getScreenId()
+                        + " idCookie="
+                        + this._menuModel.getScreenIdCookie()
+                        + " itemId="
+                        + i
                   );
                   continue;
                }
@@ -731,7 +709,7 @@ public final class EScreenUI extends MainScreen implements ListFieldCallback {
                new EScreenUI$MyMenuItem(
                   this,
                   type,
-                  (String)(new Object(this._itemData, 0, length)),
+                  new String(this._itemData, 0, length),
                   new EScreenItemInfo(this._menuModel.getItemFlag(i), this._menuModel.getItemId(i), this._menuModel.getItemIdCookie(i))
                )
             );
@@ -756,11 +734,11 @@ public final class EScreenUI extends MainScreen implements ListFieldCallback {
                byte[] data = EScreen.getBugDispLog(whichBugdisp);
                str = "No BugDisp log to copy.";
                if (data != null && data.length != 0) {
-                  Clipboard.getClipboard().put(new Object(data));
+                  Clipboard.getClipboard().put(new String(data));
                   str = "BugDisp log copied onto clipboard.";
                }
             } catch (EScreenException e) {
-               str = ((StringBuffer)(new Object("Failed to copy BugDisp log onto clipboard, code="))).append(e.getCode()).toString();
+               str = "Failed to copy BugDisp log onto clipboard, code=" + e.getCode();
             }
             break;
          case 1381191247:

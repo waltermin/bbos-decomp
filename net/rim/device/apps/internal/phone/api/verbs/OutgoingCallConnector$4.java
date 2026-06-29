@@ -25,8 +25,8 @@ class OutgoingCallConnector$4 extends SSRequestStatusDialog {
             this.close(eventId);
             break;
          case 10100:
-            if (context instanceof Object) {
-               int newCallID = context;
+            if (context instanceof Integer) {
+               int newCallID = (Integer)context;
                if (newCallID > 0) {
                   VoiceServices.broadcastEvent(1100, newCallID, null);
                }

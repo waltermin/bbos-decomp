@@ -6,11 +6,11 @@ public final class XMLUtils {
    private static final String UTF_ENCODING = "UTF-8";
 
    public static final void startElement(OutputStream ostream, String tag) {
-      ostream.write(((StringBuffer)(new Object("<"))).append(tag).append(">").toString().getBytes("UTF-8"));
+      ostream.write(("<" + tag + ">").getBytes("UTF-8"));
    }
 
    public static final void endElement(OutputStream ostream, String tag) {
-      ostream.write(((StringBuffer)(new Object("</"))).append(tag).append(">").toString().getBytes("UTF-8"));
+      ostream.write(("</" + tag + ">").getBytes("UTF-8"));
    }
 
    public static final void writeSimpleElement(OutputStream ostream, String tag, Object value) {

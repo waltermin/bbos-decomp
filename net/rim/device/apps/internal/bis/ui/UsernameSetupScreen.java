@@ -2,12 +2,12 @@ package net.rim.device.apps.internal.bis.ui;
 
 import java.util.Hashtable;
 import net.rim.device.api.i18n.MessageFormat;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.PasswordEditField;
 import net.rim.device.api.ui.component.RadioButtonField;
 import net.rim.device.api.ui.component.RadioButtonGroup;
+import net.rim.device.api.ui.component.TextField;
 import net.rim.device.apps.internal.bis.ApplicationResources;
 import net.rim.device.apps.internal.bis.api.ui.BoldLabelField;
 import net.rim.device.apps.internal.bis.api.ui.Button;
@@ -38,7 +38,7 @@ public final class UsernameSetupScreen extends UserSettingsScreen {
       this.setMenuOptions(31);
       this._failedIntegrationType = null;
       this.setTitle(ApplicationResources.getString(231));
-      this._userNameEdit = (BasicEditField)(new Object());
+      this._userNameEdit = new BasicEditField();
       if (screenParams != null && screenParams.containsKey("previousScreen")) {
          RefreshableScreen prevScreen = (RefreshableScreen)screenParams.get("previousScreen");
          if (prevScreen.getClass()
@@ -64,30 +64,30 @@ public final class UsernameSetupScreen extends UserSettingsScreen {
 
       if (screenParams != null && screenParams.containsKey("suggestions")) {
          this._userNameEdit.setChangeListener(new UsernameSetupScreen$CustomUsernameEditFieldListener(this, null));
-         this._userNameTakenLabel = (LabelField)(new Object());
+         this._userNameTakenLabel = new LabelField();
          this.addContentField(this._userNameTakenLabel);
          String userName = (String)screenParams.get("userName");
-         String userNameTakenText = MessageFormat.format(ApplicationResources.getString(36), new Object[]{userName});
+         String userNameTakenText = MessageFormat.format(ApplicationResources.getString(36), new String[]{userName});
          this._userNameTakenLabel.setText(userNameTakenText);
-         RadioButtonGroup _suggestionRadioGroup = (RadioButtonGroup)(new Object());
-         this._suggestionChoices = new Object[3];
-         this._suggestionChoices[0] = (RadioButtonField)(new Object(null, _suggestionRadioGroup, true));
-         this._suggestionChoices[1] = (RadioButtonField)(new Object(null, _suggestionRadioGroup, false));
-         this._suggestionChoices[2] = (RadioButtonField)(new Object(null, _suggestionRadioGroup, false));
-         this._customUserNameChoice = (RadioButtonField)(new Object(ApplicationResources.getString(65), _suggestionRadioGroup, false));
+         RadioButtonGroup _suggestionRadioGroup = new RadioButtonGroup();
+         this._suggestionChoices = new RadioButtonField[3];
+         this._suggestionChoices[0] = new RadioButtonField(null, _suggestionRadioGroup, true);
+         this._suggestionChoices[1] = new RadioButtonField(null, _suggestionRadioGroup, false);
+         this._suggestionChoices[2] = new RadioButtonField(null, _suggestionRadioGroup, false);
+         this._customUserNameChoice = new RadioButtonField(ApplicationResources.getString(65), _suggestionRadioGroup, false);
          this.addContentField(this._suggestionChoices[0]);
          this.addContentField(this._suggestionChoices[1]);
          this.addContentField(this._suggestionChoices[2]);
          this.addContentField(this._customUserNameChoice);
          this.addContentField(this._userNameEdit, true);
-         String[] suggestions = (Object[])screenParams.get("suggestions");
+         String[] suggestions = (String[])screenParams.get("suggestions");
          this._suggestionChoices[0].setLabel(suggestions[0]);
          this._suggestionChoices[1].setLabel(suggestions[1]);
          this._suggestionChoices[2].setLabel(suggestions[2]);
       } else {
          String introText = ApplicationResources.getString(232);
-         this.addContentField((Field)(new Object(null, introText, introText.length(), 9007199254740992L)));
-         LabelField toCreateLabel = (LabelField)(new Object(ApplicationResources.getString(233)));
+         this.addContentField(new TextField(null, introText, introText.length(), 9007199254740992L));
+         LabelField toCreateLabel = new LabelField(ApplicationResources.getString(233));
          toCreateLabel.setMargin(10, 0, 10, 0);
          this.addContentField(toCreateLabel);
          this.addContentField(new BoldLabelField(ApplicationResources.getString(13)));
@@ -96,8 +96,8 @@ public final class UsernameSetupScreen extends UserSettingsScreen {
       }
 
       this.addContentLineBreak();
-      this._passwordEdit = (PasswordEditField)(new Object(null, null));
-      this._passwordConfirmEdit = (PasswordEditField)(new Object(null, null));
+      this._passwordEdit = new PasswordEditField(null, null);
+      this._passwordConfirmEdit = new PasswordEditField(null, null);
       this.addContentField(new BoldLabelField(ApplicationResources.getString(14)));
       this.addContentField(this._passwordEdit, true);
       this.addContentField(new InputHintLabelField(ApplicationResources.getString(21)));
@@ -173,7 +173,7 @@ public final class UsernameSetupScreen extends UserSettingsScreen {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

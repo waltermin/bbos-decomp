@@ -20,7 +20,7 @@ class ScreenVisitor$ReferenceUtil {
    }
 
    private int[] breakDownInValueReference(String reference) {
-      IntVector vector = (IntVector)(new Object());
+      IntVector vector = new IntVector();
       vector.addElement(0);
       int filterStart = reference.indexOf(91);
       int resType;
@@ -122,11 +122,11 @@ class ScreenVisitor$ReferenceUtil {
             }
          } else {
             if (!this.this$0._inReferenceContainer) {
-               throw new Object("Reference to '*' in a control that is not part of a reference container(i.e. repetition or table)");
+               throw new RuntimeException("Reference to '*' in a control that is not part of a reference container(i.e. repetition or table)");
             }
 
             if (this.this$0._referenceContainerContext == null) {
-               throw new Object("Reference to '*' in a reference container(i.e. repetition or table) that has no proper inValue specified");
+               throw new RuntimeException("Reference to '*' in a reference container(i.e. repetition or table) that has no proper inValue specified");
             }
 
             vector.addElement(-1);
@@ -141,7 +141,7 @@ class ScreenVisitor$ReferenceUtil {
          FieldElement field = null;
          int fieldCount;
          if (currentToken < tokens.length) {
-            Vector fields = (Vector)(new Object());
+            Vector fields = new Vector();
             resolvedElement.resolvePath(tokens, fields, currentToken);
             DataElement dcontainer = resolvedElement;
             fieldCount = fields.size();

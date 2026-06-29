@@ -12,7 +12,7 @@ final class ITPolicyParser implements TLEFieldController {
    private static final int SET_PEER_TO_PEER_KEY_VERSION = 16;
 
    public ITPolicyParser(byte[] data, int offset, int length) {
-      this._buffer = (DataBuffer)(new Object(data, offset, length, true));
+      this._buffer = new DataBuffer(data, offset, length, true);
    }
 
    public final boolean parse() {
@@ -90,10 +90,10 @@ final class ITPolicyParser implements TLEFieldController {
             return false;
          case 1:
          default:
-            this._previousKey = (DataBuffer)(length == 0 ? null : new Object(db, length));
+            this._previousKey = length == 0 ? null : new DataBuffer(db, length);
             return true;
          case 2:
-            this._currentKey = (DataBuffer)(length == 0 ? null : new Object(db, length));
+            this._currentKey = length == 0 ? null : new DataBuffer(db, length);
             return true;
       }
    }

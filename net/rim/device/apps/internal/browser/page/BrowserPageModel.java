@@ -75,8 +75,8 @@ public final class BrowserPageModel
    static final int ICON_COLUMN = 0;
    static final int TIME_COLUMN = 1;
    static final int DESCRIPTION_COLUMN = 2;
-   private static WeakReference _dataBufferWR = (WeakReference)(new Object(null));
-   private static ContextObject _notificationsContext = (ContextObject)(new Object());
+   private static WeakReference _dataBufferWR = new WeakReference(null);
+   private static ContextObject _notificationsContext = new ContextObject();
 
    public final void setStatus(int status) {
       this._status = status;
@@ -192,7 +192,7 @@ public final class BrowserPageModel
 
    @Override
    public final boolean convert(Object context, Object target) {
-      if (!(target instanceof Object)) {
+      if (!(target instanceof SyncBuffer)) {
          return false;
       }
 
@@ -651,7 +651,7 @@ public final class BrowserPageModel
          && (contentType = requestHeaders.getPropertyValue("Content-Type")) != null
          && StringUtilities.startsWithIgnoreCase(contentType, "application/x-www-form-urlencoded", 1701707776)) {
          dataBuffer.writeBoolean(true);
-         dataBuffer.writeUTF((String)(new Object(postData)));
+         dataBuffer.writeUTF(new String(postData));
          postData = null;
       } else {
          dataBuffer.writeBoolean(false);

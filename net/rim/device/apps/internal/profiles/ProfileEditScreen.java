@@ -21,7 +21,7 @@ final class ProfileEditScreen extends InputHandlingScreen implements ListFieldCa
    private ListField _listField;
 
    public ProfileEditScreen(Profile profile, boolean newProfile) {
-      super((ContextObject)(new Object(newProfile ? 6 : 0)));
+      super(new ContextObject(newProfile ? 6 : 0));
       NotificationsManager.addSourceChangedListener(this);
       this.getSortedSources();
       if (profile.getIdentifier() == -1) {
@@ -30,7 +30,7 @@ final class ProfileEditScreen extends InputHandlingScreen implements ListFieldCa
 
       this.setTitle(profile, null);
       this._profile = profile;
-      this._listField = (ListField)(new Object(this._sources.length));
+      this._listField = new ListField(this._sources.length);
       this._listField.setCallback(this);
       this.add(this._listField);
    }
@@ -38,7 +38,7 @@ final class ProfileEditScreen extends InputHandlingScreen implements ListFieldCa
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private final void getSortedSources() {
-      this._sources = new Object[0];
+      this._sources = new SourceObjectWrapper[0];
       long[] registeredSourceIds = NotificationsManager.enumerateSourceIds();
 
       for (int i = 0; i < registeredSourceIds.length; i++) {
@@ -46,7 +46,7 @@ final class ProfileEditScreen extends InputHandlingScreen implements ListFieldCa
          if (!NotificationsManager.isHidden(sourceId)) {
             Object o = NotificationsManager.getSource(sourceId);
             if (o != null) {
-               Arrays.add(this._sources, new Object(o, sourceId));
+               Arrays.add(this._sources, new SourceObjectWrapper(o, sourceId));
             }
          }
       }
@@ -57,25 +57,19 @@ final class ProfileEditScreen extends InputHandlingScreen implements ListFieldCa
          int length = this._sources.length;
          String error = "\n";
          if (this._profile != null) {
-            error = ((StringBuffer)(new Object())).append(error).append("Profile - ").append(this._profile.getName()).append("\n").toString();
+            error = error + "Profile - " + this._profile.getName() + "\n";
          }
 
-         error = ((StringBuffer)(new Object())).append(error).append("Error sorting the following sources.\n").toString();
+         error = error + "Error sorting the following sources.\n";
 
          for (int index = 0; index < length; index++) {
             SourceObjectWrapper source = this._sources[index];
             if (source != null) {
-               error = ((StringBuffer)(new Object()))
-                  .append(error)
-                  .append(source.getString())
-                  .append(" : ")
-                  .append(NotificationsManager.getSourceId(source.getObject()))
-                  .append("\n")
-                  .toString();
+               error = error + source.getString() + " : " + NotificationsManager.getSourceId(source.getObject()) + "\n";
             }
          }
 
-         error = ((StringBuffer)(new Object())).append(error).append(e.toString()).toString();
+         error = error + e.toString();
          EventLogger.logEvent(6982943375119825480L, error.getBytes(), 2);
          return;
       }
@@ -149,7 +143,7 @@ final class ProfileEditScreen extends InputHandlingScreen implements ListFieldCa
          int rowHeight = aListField.getRowHeight();
          Object source = this._sources[indexInt];
          Object context = super._context;
-         if (source instanceof Object) {
+         if (source instanceof PaintProvider) {
             PaintProvider paintProvider = (PaintProvider)source;
             paintProvider.paint(aGraphics, 0, yInt, widthInt, rowHeight, context);
          }
@@ -163,7 +157,7 @@ final class ProfileEditScreen extends InputHandlingScreen implements ListFieldCa
 
       for (int i = startInt; i < listFieldSize; i++) {
          source = this._sources[i];
-         if (source instanceof Object && ((MatchProvider)source).match(prefixString) == 1) {
+         if (source instanceof MatchProvider && ((MatchProvider)source).match(prefixString) == 1) {
             return i;
          }
       }

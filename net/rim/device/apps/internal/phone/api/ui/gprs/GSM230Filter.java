@@ -71,7 +71,7 @@ public final class GSM230Filter extends PhoneNumberFilter {
          default:
             return this.getNextFilter().startCall(phoneNumber, flags);
          case 0:
-            Dialog.inform(((StringBuffer)(new Object("IMEI: "))).append(GPRSInfo.imeiToString(GPRSInfo.getIMEI())).toString());
+            Dialog.inform("IMEI: " + GPRSInfo.imeiToString(GPRSInfo.getIMEI()));
             return 0;
       }
    }

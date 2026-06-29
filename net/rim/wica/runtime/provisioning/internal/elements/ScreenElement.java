@@ -7,7 +7,7 @@ import net.rim.wica.runtime.provisioning.internal.ProvisioningHelper;
 import org.xml.sax.Attributes;
 
 public final class ScreenElement extends AbstractElement {
-   private Vector _controls = (Vector)(new Object());
+   private Vector _controls = new Vector();
    private boolean _dialog;
    private String _layout;
    private MenuElement _menu;
@@ -112,8 +112,8 @@ public final class ScreenElement extends AbstractElement {
                   this._style = new StyleElementReference(this, attValue);
                }
             } else {
-               StringTokenizer tokenizer = (StringTokenizer)(new Object(attValue, ' '));
-               Vector refreshMessages = (Vector)(new Object());
+               StringTokenizer tokenizer = new StringTokenizer(attValue, ' ');
+               Vector refreshMessages = new Vector();
                String token = null;
 
                while (tokenizer.hasMoreTokens()) {
@@ -134,7 +134,7 @@ public final class ScreenElement extends AbstractElement {
    @Override
    public final String toString() {
       String className = ProvisioningHelper.getClassName(this);
-      StringBuffer buf = (StringBuffer)(new Object(64));
+      StringBuffer buf = new StringBuffer(64);
       buf.append(className);
       buf.append("[name=");
       buf.append(super._name);
@@ -144,7 +144,7 @@ public final class ScreenElement extends AbstractElement {
 
    private final void addParam(ParamElement param) {
       if (this._params == null) {
-         this._params = (Vector)(new Object());
+         this._params = new Vector();
       }
 
       this._params.addElement(param);
@@ -152,7 +152,7 @@ public final class ScreenElement extends AbstractElement {
 
    private final void addVar(VarElement var) {
       if (this._vars == null) {
-         this._vars = (Vector)(new Object());
+         this._vars = new Vector();
       }
 
       this._vars.addElement(var);

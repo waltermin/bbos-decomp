@@ -41,7 +41,7 @@ public class DeleteEventVerb extends CalendarEventVerb {
       Event eventToReturn = null;
       long relatedLUID = this._event.getRelatedLUID();
       if (relatedLUID != 0 || this._event.isRecurring() && this._eventPartInstant != 0) {
-         String[] choices = new Object[]{rb.getString(163), rb.getString(164), rb.getString(650)};
+         String[] choices = new String[]{rb.getString(163), rb.getString(164), rb.getString(650)};
          int[] values = new int[]{0, 1, -1, -805044213, 775162112, 774909491, 3420721, -805044199, 1699878656, 1918985587, 1226860643, 1867325550};
          if (wasBackground) {
             app.requestForeground();

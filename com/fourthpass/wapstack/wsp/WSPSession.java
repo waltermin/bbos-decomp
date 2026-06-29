@@ -101,8 +101,8 @@ public class WSPSession implements IWapStackLayer {
       this._peerAddressQuad = new WSPAddressQuad(localAddress, destAddress);
       this._statusCode = 0;
       this._sessionState = 0;
-      this._registeredMethods = (Vector)(new Object());
-      this._registeredTransactions = (Vector)(new Object());
+      this._registeredMethods = new Vector();
+      this._registeredTransactions = new Vector();
       this._sessionId = -1;
    }
 }

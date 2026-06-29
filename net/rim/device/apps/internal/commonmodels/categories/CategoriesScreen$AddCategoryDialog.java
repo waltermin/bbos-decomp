@@ -1,15 +1,15 @@
 package net.rim.device.apps.internal.commonmodels.categories;
 
-import net.rim.device.api.ui.Field;
-import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.internal.ui.component.PopupDialog;
 
 final class CategoriesScreen$AddCategoryDialog extends PopupDialog {
    private CategoryEditField _categoryEditField;
 
    CategoriesScreen$AddCategoryDialog(String prompt) {
-      super((Manager)(new Object(1153202979583557632L)), 0);
-      this.add((Field)(new Object(prompt, 36028797018963968L)));
+      super(new VerticalFieldManager(1153202979583557632L), 0);
+      this.add(new RichTextField(prompt, 36028797018963968L));
       this._categoryEditField = new CategoryEditField(null);
       this.add(this._categoryEditField);
    }

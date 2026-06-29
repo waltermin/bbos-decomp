@@ -5,6 +5,7 @@ import javax.microedition.io.HttpConnection;
 import net.rim.device.api.browser.field.BrowserContent;
 import net.rim.device.api.browser.field.BrowserContentBaseImpl;
 import net.rim.device.api.browser.field.RenderingApplication;
+import net.rim.device.api.browser.field.RenderingException;
 import net.rim.device.api.browser.field.RenderingOptions;
 import net.rim.device.api.browser.plugin.BrowserContentProvider;
 import net.rim.device.api.browser.plugin.BrowserContentProviderContext;
@@ -47,7 +48,7 @@ public final class SecurityConverterDescriptor extends BrowserContentProvider {
       HttpConnection httpConnection = providerContext.getHttpConnection();
       int flags = providerContext.getFlags();
       long fieldStyle = (flags & 16) == 0 ? 2305843009213693952L : 0;
-      BrowserContentBaseImpl browserContent = (BrowserContentBaseImpl)(new Object(httpConnection.getURL(), null, renderingApplication, renderingOptions, flags));
+      BrowserContentBaseImpl browserContent = new BrowserContentBaseImpl(httpConnection.getURL(), null, renderingApplication, renderingOptions, flags);
       byte[] inputBytes = null;
       String contentType = null;
       InputStream in = null;
@@ -65,7 +66,7 @@ public final class SecurityConverterDescriptor extends BrowserContentProvider {
             var32 = false;
          } finally {
             if (var32) {
-               throw new Object();
+               throw new RenderingException();
             }
          }
       } finally {

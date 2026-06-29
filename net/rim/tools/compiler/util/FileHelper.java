@@ -69,7 +69,7 @@ public final class FileHelper implements Constants {
    }
 
    public static final String makeMultiName(String base, int ordinal, String extension) {
-      StringBuffer out = (StringBuffer)(new Object(256));
+      StringBuffer out = new StringBuffer(256);
       String result = null;
       if (ordinal == 0) {
          if (extension != null) {

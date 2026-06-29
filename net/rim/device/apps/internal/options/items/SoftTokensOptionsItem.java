@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.options.items;
 
+import java.io.IOException;
 import java.util.Vector;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.system.BackdoorKeyProcessor;
@@ -41,7 +42,7 @@ public final class SoftTokensOptionsItem
       return _rb.getString(stringID);
    }
 
-   public final void saveToken(String seedString, String passwordString, boolean promptForPassword) {
+   public final void saveToken(String seedString, String passwordString, boolean promptForPassword) throws IOException {
       int retCode = this._softTokenMgr.save(seedString, passwordString, -1, false, null);
       if (retCode != 0 && retCode != -2) {
          int errorStringID;
@@ -57,10 +58,10 @@ public final class SoftTokensOptionsItem
                if (passwordString.length() == 0) {
                   errorStringID = 12;
                   if (promptForPassword) {
-                     PasswordDialog passwordDialog = (PasswordDialog)(new Object(this.getString(22)));
+                     PasswordDialog passwordDialog = new PasswordDialog(this.getString(22));
                      passwordDialog.show();
                      if (passwordDialog.getCloseReason() != -1) {
-                        passwordString = (String)(new Object(passwordDialog.getPassword()));
+                        passwordString = new String(passwordDialog.getPassword());
                         this.saveToken(seedString, passwordString, false);
                         return;
                      }
@@ -80,7 +81,7 @@ public final class SoftTokensOptionsItem
                errorStringID = 9;
          }
 
-         throw new Object(this.getString(errorStringID));
+         throw new IOException(this.getString(errorStringID));
       } else {
          this._tokenList = this._softTokenMgr.getSoftTokens();
          this._tokenListField.setSize(this._tokenList.size());
@@ -94,7 +95,7 @@ public final class SoftTokensOptionsItem
 
    @Override
    public final Vector getOptionsItems() {
-      Vector items = (Vector)(new Object());
+      Vector items = new Vector();
       items.addElement(new SoftTokensOptionsItem());
       return items;
    }
@@ -120,7 +121,7 @@ public final class SoftTokensOptionsItem
 
    @Override
    public final Object get(ListField listField, int index) {
-      return this._tokenList.elementAt(index);
+      return (SoftToken)this._tokenList.elementAt(index);
    }
 
    @Override
@@ -137,9 +138,9 @@ public final class SoftTokensOptionsItem
    }
 
    public SoftTokensOptionsItem() {
-      super(_rb.getString(2), new Object(0, 2), 5294015899860238835L);
+      super(_rb.getString(2), new ContextObject(0, 2), 5294015899860238835L);
       if (WLAN.isSupported()) {
-         ContextObject.put(super._context, 244, new Object(100772));
+         ContextObject.put(super._context, 244, new Integer(100772));
       }
 
       this._softTokenMgr = SoftTokenManager.getInstance();
@@ -190,7 +191,7 @@ public final class SoftTokensOptionsItem
       if (this._softTokenMgr != null) {
          this._softTokenMgr.addListener(this);
          this._uiApp = UiApplication.getUiApplication();
-         this._tokenListField = (ListField)(new Object());
+         this._tokenListField = new ListField();
          this._tokenList = this._softTokenMgr.getSoftTokens();
          this._tokenListField.setCallback(this);
          this._tokenListField.setSize(this._tokenList.size());

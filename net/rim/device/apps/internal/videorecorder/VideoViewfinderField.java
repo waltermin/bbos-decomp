@@ -133,7 +133,7 @@ final class VideoViewfinderField extends Field {
          }
       } else {
          if (this._vfPauseBitmap == null || this._vfPauseBitmap.getHeight() != this._vfHeight || this._vfPauseBitmap.getWidth() != this._vfWidth) {
-            this._vfPauseBitmap = (Bitmap)(new Object(197, this._vfWidth, this._vfHeight));
+            this._vfPauseBitmap = new Bitmap(197, this._vfWidth, this._vfHeight);
          }
 
          Screen screen = this.getScreen();

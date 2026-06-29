@@ -39,6 +39,7 @@ import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.api.ui.theme.Theme;
 import net.rim.device.api.ui.theme.ThemeAttributeSet;
 import net.rim.device.api.ui.theme.ThemeManager;
+import net.rim.device.api.util.StringPattern;
 import net.rim.device.api.util.StringPatternContainer;
 import net.rim.device.apps.api.idlescreen.IdleScreenManager;
 import net.rim.device.apps.api.phone.PhoneEventListener;
@@ -123,7 +124,7 @@ public final class SecurityApp
          app.enterEventDispatcher();
       } else {
          ApplicationDescriptor descriptor = ApplicationDescriptor.currentApplicationDescriptor();
-         new SecurityManagerImpl((ApplicationDescriptor)(new Object(descriptor, new Object[]{_lockArg})));
+         new SecurityManagerImpl(new ApplicationDescriptor(descriptor, new String[]{_lockArg}));
       }
    }
 
@@ -136,8 +137,8 @@ public final class SecurityApp
       ApplicationManagerInternal appManagerInternal = (ApplicationManagerInternal)ApplicationManager.getApplicationManager();
       char ch = 27;
       int keycode = Keypad.keycode(ch, 0);
-      Message keyDown = (Message)(new Object(2, 513, ch, keycode, 0));
-      Message keyUp = (Message)(new Object(2, 515, ch, keycode, 0));
+      Message keyDown = new Message(2, 513, ch, keycode, 0);
+      Message keyUp = new Message(2, 515, ch, keycode, 0);
 
       int previousScreenCount;
       do {
@@ -169,7 +170,7 @@ public final class SecurityApp
       for (ApplicationProcess process : appManagerInternal.getProcesses()) {
          if (process.acceptsForeground()) {
             Application app = process.getApplication();
-            if (app instanceof Object && ((UiApplication)app).getScreenCount() > 0) {
+            if (app instanceof UiApplication && ((UiApplication)app).getScreenCount() > 0) {
                String appClassName = app.getClass().getName();
                if (!appClassName.equals("net.rim.device.apps.internal.ribbon.RibbonLauncherApp")) {
                   app.invokeLater(openScreenCloser);
@@ -334,12 +335,12 @@ public final class SecurityApp
             boolean havePhone = this._callHandler.isEnabled();
             if (!this._security.isPasswordEnabled() || havePhone && !this.validateChar(key)) {
                int[] values = new int[0];
-               String[] choices = new Object[0];
+               String[] choices = new String[0];
                if (!this._security.isPasswordEnabled() && Keypad.hasSendEndKeys() && !forceEmergencyCallChoiceDialogInsteadOfKeypadUnlockPrompt) {
                   Font font = Font.getDefault();
                   ActiveRichTextField field = this.getHintField(HintStringPattern.getHintStringPattern(), font);
                   field.setFont(font);
-                  field.setText("", this._rb.getString(707), new Object[]{font, font}, null);
+                  field.setText("", this._rb.getString(707), new Font[]{font, font}, null);
                   this._promptDialog = new SecurityApp$MyDialog(this, field, choices, values, -1, null, 0);
                } else {
                   int defaultChoice = this.getSecurityChoices(values, choices);
@@ -433,10 +434,10 @@ public final class SecurityApp
    }
 
    private final String getSIMCode(char key, boolean puk, String prompt) {
-      this._simCodeDialog = (SIMCodeDialog)(new Object(puk ? 3 : 1));
+      this._simCodeDialog = new SIMCodeDialog(puk ? 3 : 1);
       if (puk) {
          if (Character.isDigit(key) || key == '*') {
-            this._simCodeDialog.setText(((StringBuffer)(new Object(""))).append(key).toString());
+            this._simCodeDialog.setText("" + key);
          }
       } else if (key != 0) {
          char alted = Keypad.getAltedChar(key);
@@ -445,7 +446,7 @@ public final class SecurityApp
          }
 
          if (Character.isDigit(key)) {
-            this._simCodeDialog.setText(((StringBuffer)(new Object(""))).append(key).toString());
+            this._simCodeDialog.setText("" + key);
          }
       }
 
@@ -463,12 +464,7 @@ public final class SecurityApp
       String pin = null;
       String pinConfirmation = null;
       String puk = this.getSIMCode(
-         key,
-         true,
-         MessageFormat.format(
-            ((StringBuffer)(new Object())).append(this._rb.getString(217)).append(this._rb.getString(212)).toString(),
-            new Object[]{new Object(SIMCard.getPUKRetriesRemaining(1))}
-         )
+         key, true, MessageFormat.format(this._rb.getString(217) + this._rb.getString(212), new Integer[]{new Integer(SIMCard.getPUKRetriesRemaining(1))})
       );
       if (puk != null && puk.length() != 0) {
          if (!puk.startsWith("**05*")) {
@@ -526,12 +522,7 @@ public final class SecurityApp
       }
 
       String pin = this.getSIMCode(
-         key,
-         false,
-         MessageFormat.format(
-            ((StringBuffer)(new Object())).append(this._rb.getString(214)).append(this._rb.getString(212)).toString(),
-            new Object[]{new Object(SIMCard.getPINRetriesRemaining(1))}
-         )
+         key, false, MessageFormat.format(this._rb.getString(214) + this._rb.getString(212), new Integer[]{new Integer(SIMCard.getPINRetriesRemaining(1))})
       );
       return pin != null && pin.length() != 0 ? this.sendUnblockOrUnlockRequest(null, pin) : true;
    }
@@ -912,7 +903,7 @@ public final class SecurityApp
    @Override
    public final void eventOccurred(long guid, int data0, int data1, Object object0, Object object1) {
       if (guid == 1597563888101360867L) {
-         String prompt = (String)(!(object0 instanceof Object) ? null : object0);
+         String prompt = !(object0 instanceof String) ? null : (String)object0;
          this.unlock('\u0000', false, false, prompt);
       } else {
          if (guid != 8508406279413621091L && guid != -594020114676189989L) {
@@ -1099,8 +1090,8 @@ public final class SecurityApp
 
    private final ActiveRichTextField getHintField(HintStringPattern pattern, Font font) {
       pattern.setEmoticonSize(font.getHeight());
-      return (ActiveRichTextField)(new Object(
-         "", null, null, new Object[]{Font.getDefault()}, null, null, 36028797018963968L, (StringPatternContainer)(new Object(new Object[]{pattern}))
-      ));
+      return new ActiveRichTextField(
+         "", null, null, new Font[]{Font.getDefault()}, null, null, 36028797018963968L, new StringPatternContainer(new StringPattern[]{pattern})
+      );
    }
 }

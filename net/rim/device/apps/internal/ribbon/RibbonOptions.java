@@ -109,7 +109,7 @@ public final class RibbonOptions extends OptionsBase {
 
    private final void setTableValue(ToIntHashtable table, String key, int newValue) {
       if (key.indexOf(32) != -1 || key.indexOf(818) != -1) {
-         StringBuffer buffer = (StringBuffer)(new Object());
+         StringBuffer buffer = new StringBuffer();
          int length = key.length();
 
          for (int i = 0; i < length; i++) {

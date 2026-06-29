@@ -5,17 +5,20 @@ import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Keypad;
-import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.ui.ButtonContainer;
 import net.rim.device.apps.api.ui.CommonResources;
 import net.rim.device.apps.internal.phone.api.PhoneUtilities;
 import net.rim.device.apps.internal.phone.api.livecall.LiveCall;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
+import net.rim.device.internal.ui.component.HorizontalSpacerField;
 import net.rim.device.internal.ui.component.PopupDialog;
 import net.rim.device.internal.ui.component.PopupDialogClosedListener;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 
 final class AfterDialDialog extends PopupDialog {
    private LabelField _titleField;
@@ -30,7 +33,7 @@ final class AfterDialDialog extends PopupDialog {
    public static final int ENDCALL = 2;
 
    AfterDialDialog(PopupDialogClosedListener listener) {
-      super((Manager)(new Object(1152921504606846976L)), 33554432);
+      super(new VerticalFieldManager(1152921504606846976L), 33554432);
       this.setPopupDialogClosedListener(listener);
       this.setStatusPriority(-2147483645);
       this._font = Font.getDefault();
@@ -42,25 +45,25 @@ final class AfterDialDialog extends PopupDialog {
    }
 
    public final void show(String tones) {
-      this._titleField = (LabelField)(new Object(PhoneResources.getString(205)));
+      this._titleField = new LabelField(PhoneResources.getString(205));
       this.setFont(this._titleField, this._font);
-      HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object());
-      hfm.add((Field)(new Object(Bitmap.getPredefinedBitmap(1))));
-      hfm.add((Field)(new Object(4)));
+      HorizontalFieldManager hfm = new HorizontalFieldManager();
+      hfm.add(new BitmapField(Bitmap.getPredefinedBitmap(1)));
+      hfm.add(new HorizontalSpacerField(4));
       hfm.add(this._titleField);
       this.add(hfm);
-      this._endCallButton = (ButtonField)(new Object(PhoneResources.getString(402), 0));
+      this._endCallButton = new ButtonField(PhoneResources.getString(402), 0);
       if (tones != null && tones.length() > 0) {
-         String label = MessageFormat.format(PhoneResources.getString(252), new Object[]{tones});
-         this._dialButton = (ButtonField)(new Object(label, 0));
-         this._skipButton = (ButtonField)(new Object(PhoneResources.getString(460), 0));
+         String label = MessageFormat.format(PhoneResources.getString(252), new String[]{tones});
+         this._dialButton = new ButtonField(label, 0);
+         this._skipButton = new ButtonField(PhoneResources.getString(460), 0);
       } else {
-         this._dialButton = (ButtonField)(new Object(CommonResources.getString(800), 0));
+         this._dialButton = new ButtonField(CommonResources.getString(800), 0);
          this._skipButton = null;
       }
 
-      this.add((Field)(new Object(8)));
-      ButtonContainer container = (ButtonContainer)(new Object(this._font));
+      this.add(new VerticalSpacerField(8));
+      ButtonContainer container = new ButtonContainer(this._font);
       container.addButton(this._dialButton);
       if (this._skipButton != null) {
          container.addButton(this._skipButton);
@@ -68,7 +71,7 @@ final class AfterDialDialog extends PopupDialog {
 
       container.addButton(this._endCallButton);
       this.add(container);
-      this.add((Field)(new Object(4)));
+      this.add(new VerticalSpacerField(4));
       this._dialButton.setFocus();
       this._isDisplaying = true;
       super.show();

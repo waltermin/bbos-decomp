@@ -6,16 +6,18 @@ import net.rim.device.api.ldap.LDAPQuery;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Font;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.internal.i18n.CommonResource;
 import net.rim.device.internal.resource.crypto.CryptoIcons;
+import net.rim.device.internal.ui.component.HorizontalSpacerField;
 import net.rim.device.internal.ui.component.ImageField;
 import net.rim.device.internal.ui.component.PopupDialog;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 
 public class StatusErrorDialog extends PopupDialog implements FieldChangeListener {
    private VerticalFieldManager _vfm;
@@ -27,9 +29,9 @@ public class StatusErrorDialog extends PopupDialog implements FieldChangeListene
    }
 
    public StatusErrorDialog(CertificateStatusQuery query, long style) {
-      super((Manager)(new Object()), style);
+      super(new VerticalFieldManager(), style);
       if (query == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       String errorMessage = query.getErrorMessage();
@@ -40,10 +42,10 @@ public class StatusErrorDialog extends PopupDialog implements FieldChangeListene
    }
 
    public StatusErrorDialog(LDAPQuery query) {
-      super((Manager)(new Object()));
+      super(new VerticalFieldManager());
       this.setModal(true);
       if (query == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       String errorMessage = query.getErrorMsg();
@@ -54,25 +56,25 @@ public class StatusErrorDialog extends PopupDialog implements FieldChangeListene
 
    private void addFields(String errorMessage) {
       VerticalFieldManager vfm = (VerticalFieldManager)this.getDelegate();
-      LabelField titleField = (LabelField)(new Object(_rb.getString(17), 36028797018964032L));
+      LabelField titleField = new LabelField(_rb.getString(17), 36028797018964032L);
       Font boldFont = Font.getDefault();
       boldFont = boldFont.derive(boldFont.getStyle() | 1);
       titleField.setFont(boldFont);
       vfm.add(titleField);
-      vfm.add((Field)(new Object()));
-      this._vfm = (VerticalFieldManager)(new Object(299067162755072L));
-      HorizontalFieldManager messageManager = (HorizontalFieldManager)(new Object());
+      vfm.add(new SeparatorField());
+      this._vfm = new VerticalFieldManager(299067162755072L);
+      HorizontalFieldManager messageManager = new HorizontalFieldManager();
       ImageField iconField = CryptoIcons.getLargeImageField(CryptoIcons.getImage(4), 51539607552L);
       messageManager.add(iconField);
-      messageManager.add((Field)(new Object(4)));
-      RichTextField textMessage = (RichTextField)(new Object(errorMessage, 36028848558571520L));
+      messageManager.add(new HorizontalSpacerField(4));
+      RichTextField textMessage = new RichTextField(errorMessage, 36028848558571520L);
       messageManager.add(textMessage);
       this._vfm.add(messageManager);
-      HorizontalFieldManager buttonManager = (HorizontalFieldManager)(new Object(8589934592L));
-      this._okButton = (ButtonField)(new Object(CommonResource.getString(100)));
+      HorizontalFieldManager buttonManager = new HorizontalFieldManager(8589934592L);
+      this._okButton = new ButtonField(CommonResource.getString(100));
       this._okButton.setChangeListener(this);
       buttonManager.add(this._okButton);
-      this._vfm.add((Field)(new Object(4)));
+      this._vfm.add(new VerticalSpacerField(4));
       this._vfm.add(buttonManager);
       vfm.add(this._vfm);
    }
@@ -81,12 +83,12 @@ public class StatusErrorDialog extends PopupDialog implements FieldChangeListene
       Enumeration errorMessages = query.getProviderErrorMessages();
 
       while (errorMessages.hasMoreElements()) {
-         this.insertAdditionalField((Field)(new Object((String)errorMessages.nextElement())));
+         this.insertAdditionalField(new RichTextField((String)errorMessages.nextElement()));
       }
    }
 
    private void insertAdditionalField(Field field) {
-      this._vfm.insert((Field)(new Object()), 1);
+      this._vfm.insert(new SeparatorField(), 1);
       this._vfm.insert(field, 2);
    }
 

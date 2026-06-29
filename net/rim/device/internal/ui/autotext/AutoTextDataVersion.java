@@ -19,12 +19,12 @@ final class AutoTextDataVersion extends OTASyncCapableSyncItem {
    private AutoTextDataVersion() {
       synchronized (this._store) {
          if (this._store.getContents() == null) {
-            this._store.setContents(new Object(this._version), 51);
+            this._store.setContents(new Integer(this._version), 51);
             this._store.commit();
          }
       }
 
-      this._version = this._store.getContents();
+      this._version = (Integer)this._store.getContents();
    }
 
    static final AutoTextDataVersion getInstance() {
@@ -69,7 +69,7 @@ final class AutoTextDataVersion extends OTASyncCapableSyncItem {
    final void setVersion(int version) {
       if (this._version != version) {
          this._version = version;
-         this._store.setContents(new Object(this._version), 51);
+         this._store.setContents(new Integer(this._version), 51);
          this._store.commit();
          this.fireSyncItemUpdated();
       }

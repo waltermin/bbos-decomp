@@ -16,7 +16,7 @@ final class MailApiAttachmentViewerModel$MailApiViewAttachmentVerb extends Verb 
 
    @Override
    public final Object invoke(Object context) {
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          ContextObject c = (ContextObject)context;
          EmailMessageModel emm = (EmailMessageModel)c.get(250);
          Message m = new Message(emm);

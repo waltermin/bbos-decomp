@@ -13,7 +13,7 @@ public final class BrowserFieldRenderingApplication implements RenderingApplicat
    @Override
    public final Object eventOccurred(Event event) {
       int eventId = event.getUID();
-      System.out.println(((StringBuffer)(new Object("Unhandled event: "))).append(eventId).toString());
+      System.out.println("Unhandled event: " + eventId);
       return null;
    }
 
@@ -44,6 +44,6 @@ public final class BrowserFieldRenderingApplication implements RenderingApplicat
 
    @Override
    public final void invokeRunnable(Runnable runnable) {
-      ((Thread)(new Object(runnable))).run();
+      new Thread(runnable).run();
    }
 }

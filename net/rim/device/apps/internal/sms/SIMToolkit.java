@@ -190,12 +190,12 @@ public final class SIMToolkit implements SIMCardStatusListener, SIMCardATListene
       // Bytecode:
       // 00: bipush 6
       // 02: invokestatic net/rim/device/apps/internal/sms/SIMATEventLogger.logDebug (I)V
-      // 05: new java/lang/Object
+      // 05: new java/lang/String
       // 08: dup
       // 09: aload 2
       // 0a: invokespecial java/lang/String.<init> ([B)V
       // 0d: astore 7
-      // 0f: new java/lang/Object
+      // 0f: new java/lang/StringBuffer
       // 12: dup
       // 13: invokespecial java/lang/StringBuffer.<init> ()V
       // 16: astore 8
@@ -246,7 +246,7 @@ public final class SIMToolkit implements SIMCardStatusListener, SIMCardATListene
       // 74: aload 7
       // 76: invokestatic net/rim/device/apps/api/browser/BrowserServices.loadUrl (Ljava/lang/String;)Z
       // 79: istore 9
-      // 7b: new java/lang/Object
+      // 7b: new java/lang/StringBuffer
       // 7e: dup
       // 7f: ldc_w "launching browser:"
       // 82: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V

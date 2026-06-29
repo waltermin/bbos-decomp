@@ -24,9 +24,6 @@ public final class WaitForSessionReady extends Model {
 
    @Override
    final String getProperties() {
-      return ((StringBuffer)(new Object()))
-         .append(this.toPropertyString("sessionName", this._sessionName))
-         .append(this.toPropertyString("timeout", String.valueOf(this._timeout)))
-         .toString();
+      return this.toPropertyString("sessionName", this._sessionName) + this.toPropertyString("timeout", String.valueOf(this._timeout));
    }
 }

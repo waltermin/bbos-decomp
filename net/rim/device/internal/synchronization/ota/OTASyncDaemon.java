@@ -59,10 +59,10 @@ public final class OTASyncDaemon implements GlobalEventListener, SystemListener 
       SyncAgentStatisticsCollector.getAllSyncAgentStatistics();
       this.declareOTAPIMSyncCapabilities();
       this._servicesConfigurationManager = ServicesConfigurationManager.getSingletonInstance();
-      this._syncServiceGuidToSidMap = (IntLongHashtable)(new Object(2));
-      this._syncServiceGuidToDataSourceIdMap = (IntHashtable)(new Object(2));
-      this._sidToServiceIdentifierMap = (LongHashtable)(new Object(2));
-      this._sidToSessionManagerMap = (LongHashtable)(new Object(2));
+      this._syncServiceGuidToSidMap = new IntLongHashtable(2);
+      this._syncServiceGuidToDataSourceIdMap = new IntHashtable(2);
+      this._sidToServiceIdentifierMap = new LongHashtable(2);
+      this._sidToSessionManagerMap = new LongHashtable(2);
       this._eventHandler = new EventHandler();
       this._eventHandler.addEvent(new ServiceManagerEvent(this, 1));
       ProtocolDaemon.getInstance().addSystemListener(this);
@@ -185,11 +185,11 @@ public final class OTASyncDaemon implements GlobalEventListener, SystemListener 
          SessionManager xSessionManager = this.getSessionManagerForSid(sid);
          if (xSessionManager == null || !xSessionManager.isAlive()) {
             int xServiceRecordId = aSyncServiceRecord.getId();
-            SyncConnection xSyncConnection = (SyncConnection)Connector.open(((StringBuffer)(new Object("sync://"))).append(sid).toString());
+            SyncConnection xSyncConnection = (SyncConnection)Connector.open("sync://" + sid);
             Configuration xConfiguration = this._servicesConfigurationManager.getConfiguration(sid);
             byte[] xServiceRecordApplicationData = aSyncServiceRecord.getApplicationData();
             if (xServiceRecordApplicationData != null) {
-               DataBuffer xDataBuffer = (DataBuffer)(new Object(xServiceRecordApplicationData, 0, xServiceRecordApplicationData.length, true));
+               DataBuffer xDataBuffer = new DataBuffer(xServiceRecordApplicationData, 0, xServiceRecordApplicationData.length, true);
                xConfiguration.parseServiceRecordInfo(xDataBuffer);
             }
 
@@ -299,7 +299,7 @@ public final class OTASyncDaemon implements GlobalEventListener, SystemListener 
                byte[] xServiceRecordApplicationData = xServiceRecord.getApplicationData();
                if (xServiceRecordApplicationData != null) {
                   Configuration xConfiguration = this._servicesConfigurationManager.getConfiguration(ServiceIdentifier.createSid(xServiceRecord));
-                  DataBuffer xDataBuffer = (DataBuffer)(new Object(xServiceRecordApplicationData, 0, xServiceRecordApplicationData.length, true));
+                  DataBuffer xDataBuffer = new DataBuffer(xServiceRecordApplicationData, 0, xServiceRecordApplicationData.length, true);
                   xConfiguration.parseServiceRecordInfo(xDataBuffer);
                }
             }
@@ -371,7 +371,7 @@ public final class OTASyncDaemon implements GlobalEventListener, SystemListener 
                this._eventHandler.addEvent(xServiceRecordEvent);
             }
          } else if (eventId == -1426098722237447363L) {
-            if (object0 instanceof Object) {
+            if (object0 instanceof String) {
                String uid = (String)object0;
                ServiceBook xServiceBook = ServiceBook.getSB();
                ServiceRecord xSyncServiceRecord = xServiceBook.getRecordByUidAndCid(uid, "sync");

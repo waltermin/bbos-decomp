@@ -251,7 +251,7 @@ public class ReliableTransmissionHelper implements TransmissionStatusListener {
       this._listener = listener;
       this._typeString = typeString;
       this._service = service;
-      this._contextObject = (ContextObject)(new Object());
+      this._contextObject = new ContextObject();
       this._lastCheckedIndexId = PersistentInteger.getId(-9018585818145369823L, 0);
       PersistentObject persistentObject = RIMPersistentStore.getPersistentObject(-2159541579865757717L);
       synchronized (persistentObject) {

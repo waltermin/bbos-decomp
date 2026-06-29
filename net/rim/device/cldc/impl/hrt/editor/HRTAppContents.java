@@ -1,21 +1,21 @@
 package net.rim.device.cldc.impl.hrt.editor;
 
-import net.rim.device.api.hrt.DAC;
 import net.rim.device.api.hrt.HRUtils;
 import net.rim.device.api.hrt.HostRoutingInfo;
 import net.rim.device.api.hrt.HostRoutingTable;
-import net.rim.device.api.i18n.DateFormat;
+import net.rim.device.api.hrt.IPv4UdpDAC;
 import net.rim.device.api.i18n.ResourceBundleFamily;
+import net.rim.device.api.i18n.SimpleDateFormat;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.system.GlobalEventListener;
 import net.rim.device.api.system.RIMGlobalMessagePoster;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.component.TextField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.NumberUtilities;
@@ -31,7 +31,7 @@ public final class HRTAppContents extends MainScreen implements GlobalEventListe
    private ListField _list;
    private int _defaultIndex;
    private int _viewMode;
-   private StringBuffer _strBuf = (StringBuffer)(new Object(32));
+   private StringBuffer _strBuf = new StringBuffer(32);
    private TextField _registrationAddressField;
    private TextField _expiryField;
    private ResourceBundleFamily _rb;
@@ -39,7 +39,7 @@ public final class HRTAppContents extends MainScreen implements GlobalEventListe
    public HRTAppContents(HostRoutingTable hrt, int viewMode) {
       this._hrt = hrt;
       this._rb = HRTAppResources.getResourceBundle();
-      this._list = (ListField)(new Object(0));
+      this._list = new ListField(0);
       this._defaultIndex = hrt.getActiveIndex();
       this._list.setSize(hrt.getNumHris());
       this._list.setCallback(this);
@@ -129,8 +129,8 @@ public final class HRTAppContents extends MainScreen implements GlobalEventListe
          case 1381258316:
          default:
             if (this._expiryField == null) {
-               this.insert((Field)(new Object()), 0);
-               this._expiryField = (TextField)(new Object("Expiry Date: ", this.getExpiryFieldText(), 100, 9007199254740992L));
+               this.insert(new SeparatorField(), 0);
+               this._expiryField = new TextField("Expiry Date: ", this.getExpiryFieldText(), 100, 9007199254740992L);
                Font font = this.getFont();
                this._expiryField.setFont(font.derive(0));
                this.insert(this._expiryField, 0);
@@ -158,8 +158,8 @@ public final class HRTAppContents extends MainScreen implements GlobalEventListe
             break;
          case 1196250194:
             if (this._registrationAddressField == null) {
-               this.insert((Field)(new Object()), 0);
-               this._registrationAddressField = (TextField)(new Object("Registration Address: ", this.getRegistrationAddressFieldText(), 512, 9007207844675584L));
+               this.insert(new SeparatorField(), 0);
+               this._registrationAddressField = new TextField("Registration Address: ", this.getRegistrationAddressFieldText(), 512, 9007207844675584L);
                Font font = this.getFont();
                this._registrationAddressField.setFont(font.derive(0));
                this.insert(this._registrationAddressField, 0);
@@ -181,11 +181,11 @@ public final class HRTAppContents extends MainScreen implements GlobalEventListe
          case 1381192524:
          case 1381253968:
             boolean socket = backdoorCode == 1381253968;
-            HRTAppDacDialog d = new HRTAppDacDialog((DAC)(new Object(0, 0)), 2, null);
+            HRTAppDacDialog d = new HRTAppDacDialog(new IPv4UdpDAC(0, 0), 2, null);
             if (d.go() == 1) {
                String address = d.getRetObject();
                RIMGlobalMessagePoster.postGlobalEvent(-1112359896077348406L, 1, socket ? 1 : 2, address, null);
-               str = ((StringBuffer)(new Object("Relay Wi-Fi address "))).append(address).append(" added for ").append(socket ? "socket" : "ssl").toString();
+               str = "Relay Wi-Fi address " + address + " added for " + (socket ? "socket" : "ssl");
             }
             break;
          case 1381257030:
@@ -246,7 +246,7 @@ public final class HRTAppContents extends MainScreen implements GlobalEventListe
    }
 
    private final String getExpiryFieldText() {
-      return this._hrt.getTtl() > 0 ? ((DateFormat)(new Object("MMM/dd/yyyy HH:mm:ss"))).formatLocal(this._hrt.getTtlExpiry()) : "Never expire";
+      return this._hrt.getTtl() > 0 ? new SimpleDateFormat("MMM/dd/yyyy HH:mm:ss").formatLocal(this._hrt.getTtlExpiry()) : "Never expire";
    }
 
    private final void add() {

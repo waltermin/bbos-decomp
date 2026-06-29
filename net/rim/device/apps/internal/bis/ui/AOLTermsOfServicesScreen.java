@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.bis.ui;
 
 import java.util.Hashtable;
-import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.apps.internal.bis.ApplicationResources;
 import net.rim.device.apps.internal.bis.api.ui.Button;
 import net.rim.device.apps.internal.bis.event.CommandEvent;
@@ -20,7 +20,7 @@ public final class AOLTermsOfServicesScreen extends UserSettingsScreen {
    @Override
    public final void refresh(Hashtable screenParams) {
       this.setTitle(ApplicationResources.getString(149));
-      this.addContentField((Field)(new Object(ApplicationResources.getString(131))));
+      this.addContentField(new LabelField(ApplicationResources.getString(131)));
       Button accept = new Button(ApplicationResources.getString(125));
       Button decline = new Button(ApplicationResources.getString(126));
       this.addButtonBarButtons(new Button[]{decline, accept}, false, 1);

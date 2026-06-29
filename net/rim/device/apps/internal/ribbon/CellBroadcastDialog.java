@@ -14,9 +14,9 @@ final class CellBroadcastDialog extends Dialog {
       super(text, null, null, 0, null);
       this.setIcon(ThemeManager.getThemeAwareImage("dialog_exclamation"));
       this.setEscapeEnabled(false);
-      this._dismissButton = (ButtonField)(new Object(CommonResources.getString(9169), 12884901888L));
+      this._dismissButton = new ButtonField(CommonResources.getString(9169), 12884901888L);
       this._dismissButton.setChangeListener(this);
-      this._okButton = (ButtonField)(new Object(CommonResources.getString(117), 12884901888L));
+      this._okButton = new ButtonField(CommonResources.getString(117), 12884901888L);
       this._okButton.setChangeListener(this);
       this.add(this._dismissButton);
       this.add(this._okButton);

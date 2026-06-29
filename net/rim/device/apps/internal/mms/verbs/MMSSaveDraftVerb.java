@@ -52,7 +52,7 @@ public final class MMSSaveDraftVerb extends Verb {
          MessagingUtil.showMessageAppServiceView("MMSFolder");
       }
 
-      return (ContextObject)(new Object(39));
+      return new ContextObject(39);
    }
 
    @Override

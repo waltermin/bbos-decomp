@@ -13,11 +13,11 @@ public final class OAEPFormatterEngine implements BlockFormatterEngine {
    static final long ID_TEST_FORMATTER_OAEP = 8725101638433241759L;
 
    public OAEPFormatterEngine(PublicKeyEncryptorEngine engine) {
-      this(engine, (Digest)(new Object()), NO_PARAMETERS);
+      this(engine, new SHA1Digest(), NO_PARAMETERS);
    }
 
    public OAEPFormatterEngine(PublicKeyEncryptorEngine engine, byte[] parameters) {
-      this(engine, (Digest)(new Object()), parameters);
+      this(engine, new SHA1Digest(), parameters);
    }
 
    public OAEPFormatterEngine(PublicKeyEncryptorEngine engine, Digest digest) {
@@ -33,19 +33,19 @@ public final class OAEPFormatterEngine implements BlockFormatterEngine {
          int engineBlockLength = engine.getBlockLength();
          this._inputBlockLength = engineBlockLength - (this._digestLength + this._digestOfParameters.length + 2);
          if (this._inputBlockLength <= 0) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          this._outputBlockLength = engineBlockLength;
          this._engine = engine;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object())).append(this._engine.getAlgorithm()).append("/OAEP").toString();
+      return this._engine.getAlgorithm() + "/OAEP";
    }
 
    @Override
@@ -64,7 +64,7 @@ public final class OAEPFormatterEngine implements BlockFormatterEngine {
    }
 
    @Override
-   public final int formatAndEncrypt(byte[] input, int inputOffset, int inputLength, byte[] output, int outputOffset) {
+   public final int formatAndEncrypt(byte[] input, int inputOffset, int inputLength, byte[] output, int outputOffset) throws MessageTooLongException {
       if (input != null
          && inputOffset >= 0
          && inputLength >= 0
@@ -74,7 +74,7 @@ public final class OAEPFormatterEngine implements BlockFormatterEngine {
          && output.length - this._outputBlockLength >= outputOffset) {
          int paddingLength = this._inputBlockLength - inputLength;
          if (paddingLength < 0) {
-            throw new Object();
+            throw new MessageTooLongException();
          }
 
          byte[] encodedMessage = new byte[this._outputBlockLength];
@@ -94,22 +94,22 @@ public final class OAEPFormatterEngine implements BlockFormatterEngine {
          encodedMessage[encodedMessageOffset++] = 1;
          System.arraycopy(input, inputOffset, encodedMessage, encodedMessageOffset, inputLength);
          int dbLength = encodedMessage.length - dbOffset;
-         PseudoRandomSource mgf = (PseudoRandomSource)(new Object(encodedMessage, seedOffset, this._digestLength));
+         PseudoRandomSource mgf = new PKCS1MGF1PseudoRandomSource(encodedMessage, seedOffset, this._digestLength);
          mgf.xorBytes(encodedMessage, dbOffset, dbLength);
-         mgf = (PseudoRandomSource)(new Object(encodedMessage, dbOffset, dbLength));
+         mgf = new PKCS1MGF1PseudoRandomSource(encodedMessage, dbOffset, dbLength);
          mgf.xorBytes(encodedMessage, seedOffset, this._digestLength);
          this._engine.encrypt(encodedMessage, 0, output, outputOffset);
          return this._outputBlockLength;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    public static final void selfTest() {
       try {
-         RSACryptoSystem cryptoSystem = (RSACryptoSystem)(new Object(1024));
-         RSAPublicKey publicKeyRSA = (RSAPublicKey)(new Object(cryptoSystem, SelfTestData_PK1.RSA_E, SelfTestData_PK1.RSA_N));
-         RSAPrivateKey privateKeyRSA = (RSAPrivateKey)(new Object(
+         RSACryptoSystem cryptoSystem = new RSACryptoSystem(1024);
+         RSAPublicKey publicKeyRSA = new RSAPublicKey(cryptoSystem, SelfTestData_PK1.RSA_E, SelfTestData_PK1.RSA_N);
+         RSAPrivateKey privateKeyRSA = new RSAPrivateKey(
             cryptoSystem,
             SelfTestData_PK1.RSA_E,
             Arrays.copy(SelfTestData_PK1.RSA_D),
@@ -119,21 +119,21 @@ public final class OAEPFormatterEngine implements BlockFormatterEngine {
             Arrays.copy(SelfTestData_PK1.RSA_DMODPM1),
             Arrays.copy(SelfTestData_PK1.RSA_DMODQM1),
             Arrays.copy(SelfTestData_PK1.RSA_QINVMODP)
-         ));
-         OAEPFormatterEngine formatter = new OAEPFormatterEngine((PublicKeyEncryptorEngine)(new Object(publicKeyRSA)));
+         );
+         OAEPFormatterEngine formatter = new OAEPFormatterEngine(new RSAEncryptorEngine(publicKeyRSA));
          int blockLength = formatter.getOutputBlockLength();
          byte[] target = new byte[blockLength];
          formatter.formatAndEncrypt(SelfTestData_PK1.PLAIN_TEXT_PKCS1_RSA, 0, SelfTestData_PK1.PLAIN_TEXT_PKCS1_RSA.length, target, 0, false);
-         OAEPUnformatterEngine unformatter = new OAEPUnformatterEngine((PrivateKeyDecryptorEngine)(new Object(privateKeyRSA)));
+         OAEPUnformatterEngine unformatter = new OAEPUnformatterEngine(new RSADecryptorEngine(privateKeyRSA));
          unformatter.decryptAndUnformat(target, 0, target, 0, false);
          if (Arrays.equals(target, 0, SelfTestData_PK1.PLAIN_TEXT_PKCS1_RSA, 0, SelfTestData_PK1.PLAIN_TEXT_PKCS1_RSA.length)) {
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

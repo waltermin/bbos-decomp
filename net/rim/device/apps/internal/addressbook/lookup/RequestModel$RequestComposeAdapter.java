@@ -23,7 +23,7 @@ public class RequestModel$RequestComposeAdapter extends Verb {
 
    @Override
    public Object invoke(Object parameter) {
-      ContextObject contextObject = (ContextObject)(new Object());
+      ContextObject contextObject = new ContextObject();
       contextObject.put(254, this._request);
       return this._composeVerb.invoke(contextObject);
    }

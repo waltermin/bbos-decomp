@@ -7,7 +7,7 @@ final class DecimalFormat {
    private int width = -1;
    private int precision = -1;
    private char type;
-   private Vector substrings = (Vector)(new Object());
+   private Vector substrings = new Vector();
    private int fmtidx;
    private int count;
    private boolean firstPlain;
@@ -29,14 +29,14 @@ final class DecimalFormat {
          for (int k = escaped ? 1 : 0; k < i; k++) {
             char c = s.charAt(k);
             if (c == '%' && j > 0) {
-               String s1 = (String)(new Object(ac, 0, j));
+               String s1 = new String(ac, 0, j);
                this.substrings.addElement(s1);
                this.count++;
                j = 0;
             } else {
                ac[j++] = s.charAt(k);
                if (k == i - 1) {
-                  this.substrings.addElement(new Object(ac, 0, j));
+                  this.substrings.addElement(new String(ac, 0, j));
                   this.count++;
                }
             }
@@ -126,7 +126,7 @@ final class DecimalFormat {
    }
 
    private final String glueStrings(String s) {
-      StringBuffer stringbuffer = (StringBuffer)(new Object());
+      StringBuffer stringbuffer = new StringBuffer();
 
       for (int i = 0; i < this.count - 1; i++) {
          if (i == this.fmtidx) {
@@ -141,7 +141,7 @@ final class DecimalFormat {
       return stringbuffer.toString();
    }
 
-   private final int parse(String s, boolean dontSave) {
+   private final int parse(String s, boolean dontSave) throws Exception {
       char[] ac = new char[20];
       char[] ac1 = new char[20];
       int i = 0;
@@ -170,7 +170,7 @@ final class DecimalFormat {
                   k = 2;
                } else {
                   if (c != 'd' && c != 's' && c != 'f') {
-                     throw new Object();
+                     throw new Exception();
                   }
 
                   this.type = c;
@@ -182,7 +182,7 @@ final class DecimalFormat {
                   ac1[j++] = c;
                } else {
                   if (c != 'd' && c != 's' && c != 'f') {
-                     throw new Object();
+                     throw new Exception();
                   }
 
                   this.type = c;
@@ -198,11 +198,11 @@ final class DecimalFormat {
 
       if (!dontSave) {
          if (i > 0) {
-            this.width = Integer.parseInt(((String)(new Object(ac))).trim());
+            this.width = Integer.parseInt(new String(ac).trim());
          }
 
          if (j > 0) {
-            this.precision = Integer.parseInt(((String)(new Object(ac1))).trim());
+            this.precision = Integer.parseInt(new String(ac1).trim());
          }
       }
 
@@ -215,7 +215,7 @@ final class DecimalFormat {
       }
 
       int i = this.precision >= 0 ? this.precision : 6;
-      StringBuffer stringbuffer = (StringBuffer)(new Object());
+      StringBuffer stringbuffer = new StringBuffer();
       NumberUtilities.appendNumber(stringbuffer, (int)f, 10);
       if (i > 0) {
          stringbuffer.append('.');
@@ -255,7 +255,7 @@ final class DecimalFormat {
       }
 
       int actualWidth = stringWidth <= this.width ? this.width : stringWidth;
-      StringBuffer stringbuffer = (StringBuffer)(new Object(actualWidth));
+      StringBuffer stringbuffer = new StringBuffer(actualWidth);
       int stringMinor = stringWidth - l;
       int widthDif = actualWidth - stringWidth;
 
@@ -285,7 +285,7 @@ final class DecimalFormat {
 
       int widthDiff = this.width - s.length();
       if (widthDiff > 0 && (this.precision == -1 || this.width <= this.precision)) {
-         StringBuffer sb = (StringBuffer)(new Object());
+         StringBuffer sb = new StringBuffer();
 
          for (int j = 0; j < widthDiff; j++) {
             sb.append(' ');

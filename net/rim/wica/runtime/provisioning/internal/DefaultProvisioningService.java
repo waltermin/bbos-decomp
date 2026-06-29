@@ -142,9 +142,7 @@ public class DefaultProvisioningService implements ProvisioningService, Servicea
             ? (class$net$rim$wica$runtime$messaging$MessagingService = class$("net.rim.wica.runtime.messaging.MessagingService"))
             : class$net$rim$wica$runtime$messaging$MessagingService
       );
-      ToIntHashtable standardComponentCodes = (ToIntHashtable)(new Object(
-         AccessDataServiceImpl.getNumStdCompDefs() + (AccessDataServiceImpl.getNumStdCompDefs() >> 1)
-      ));
+      ToIntHashtable standardComponentCodes = new ToIntHashtable(AccessDataServiceImpl.getNumStdCompDefs() + (AccessDataServiceImpl.getNumStdCompDefs() >> 1));
       AccessDataServiceImpl.getAllStdCompDefs(standardComponentCodes);
       this._uniqueCodeGenerator = new UniqueCodeGenerator(standardComponentCodes);
    }
@@ -187,7 +185,7 @@ public class DefaultProvisioningService implements ProvisioningService, Servicea
    }
 
    private void logException(String message, Throwable t) {
-      Logger.log(this.toString(), ((StringBuffer)(new Object())).append(message).append("; Exception: ").append(t).toString(), 3);
+      Logger.log(this.toString(), message + "; Exception: " + t, 3);
    }
 
    // $VF: Could not inline inconsistent finally blocks
@@ -196,7 +194,7 @@ public class DefaultProvisioningService implements ProvisioningService, Servicea
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

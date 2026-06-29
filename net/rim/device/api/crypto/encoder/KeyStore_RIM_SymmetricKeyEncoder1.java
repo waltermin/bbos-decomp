@@ -8,8 +8,8 @@ final class KeyStore_RIM_SymmetricKeyEncoder1 extends SymmetricKeyEncoder {
    @Override
    protected final EncodedKey encodeKey(SymmetricKey key) {
       try {
-         ByteArrayOutputStream output = (ByteArrayOutputStream)(new Object());
-         DataOutputStream dataOut = (DataOutputStream)(new Object(output));
+         ByteArrayOutputStream output = new ByteArrayOutputStream();
+         DataOutputStream dataOut = new DataOutputStream(output);
          dataOut.writeInt(0);
          int algIdentifier;
          if (key.getAlgorithm().equals("AES")) {
@@ -24,7 +24,7 @@ final class KeyStore_RIM_SymmetricKeyEncoder1 extends SymmetricKeyEncoder {
             algIdentifier = 9;
          } else {
             if (!key.getAlgorithm().equals("HMAC")) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             algIdentifier = 5;
@@ -35,7 +35,7 @@ final class KeyStore_RIM_SymmetricKeyEncoder1 extends SymmetricKeyEncoder {
          dataOut.close();
          return new EncodedKey(output.toByteArray(), "KeyStore");
       } finally {
-         throw new Object();
+         throw new RuntimeException();
       }
    }
 

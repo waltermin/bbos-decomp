@@ -16,7 +16,7 @@ final class ReplyWithoutTextStubModel implements PersistableRIMModel, Conversion
 
    @Override
    public final boolean convert(Object context, Object target) {
-      if (!(target instanceof Object)) {
+      if (!(target instanceof RIMMessagingOutgoingMessage)) {
          return ContextObject.getFlag(context, 43) && ContextObject.getFlag(context, 19);
       }
 

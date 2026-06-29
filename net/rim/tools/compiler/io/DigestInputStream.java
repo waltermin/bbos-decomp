@@ -13,7 +13,7 @@ public class DigestInputStream extends InputStream {
          this._digest = digest;
          this._inputStream = inputStream;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -39,7 +39,7 @@ public class DigestInputStream extends InputStream {
 
          return bytesRead;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

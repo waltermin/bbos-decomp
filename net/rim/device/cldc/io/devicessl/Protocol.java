@@ -2,6 +2,7 @@ package net.rim.device.cldc.io.devicessl;
 
 import com.sun.cldc.io.ConnectionBaseInterface;
 import javax.microedition.io.Connection;
+import javax.microedition.io.ConnectionNotFoundException;
 import net.rim.device.cldc.io.utility.URL;
 
 public final class Protocol implements ConnectionBaseInterface {
@@ -22,12 +23,12 @@ public final class Protocol implements ConnectionBaseInterface {
 
    @Override
    public final Connection openPrim(String name, int mode, boolean timeouts) {
-      URL url = (URL)(new Object("tls", name));
+      URL url = new URL("tls", name);
       boolean connectionNotifier = url.getHost() == null && url.getPath() == null;
       return connectionNotifier ? null : this.doConnection(url, mode, timeouts);
    }
 
-   private final Connection doConnection(URL param1, int param2, boolean param3) {
+   private final Connection doConnection(URL param1, int param2, boolean param3) throws ConnectionNotFoundException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -35,7 +36,7 @@ public final class Protocol implements ConnectionBaseInterface {
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:174)
       //
       // Bytecode:
-      // 000: new java/lang/Object
+      // 000: new java/lang/StringBuffer
       // 003: dup
       // 004: ldc_w "socket://"
       // 007: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -210,7 +211,7 @@ public final class Protocol implements ConnectionBaseInterface {
       // 19e: iload 2
       // 19f: iload 3
       // 1a0: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;IZ)Ljavax/microedition/io/Connection;
-      // 1a3: checkcast java/lang/Object
+      // 1a3: checkcast javax/microedition/io/SocketConnection
       // 1a6: astore 9
       // 1a8: aload 9
       // 1aa: ifnull 1f9
@@ -243,7 +244,7 @@ public final class Protocol implements ConnectionBaseInterface {
       // 1ef: invokeinterface javax/microedition/io/Connection.close ()V 1
       // 1f4: goto 1f9
       // 1f7: astore 9
-      // 1f9: new java/lang/Object
+      // 1f9: new javax/microedition/io/ConnectionNotFoundException
       // 1fc: dup
       // 1fd: invokespecial javax/microedition/io/ConnectionNotFoundException.<init> ()V
       // 200: athrow

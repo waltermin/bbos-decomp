@@ -4,7 +4,9 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.FontFamily;
 import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
+import net.rim.device.apps.api.addressbook.CompanyInfoModel;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.FieldProvider;
 import net.rim.device.apps.api.framework.model.PersistableRIMModel;
@@ -21,11 +23,10 @@ final class FullCallerIDField extends VerticalFieldManager {
    public FullCallerIDField(CallerIDInfo callerIDInfo, ContextObject contextObject) {
       RIMModel number = callerIDInfo.getNumber();
       RIMModel address = null;
-      PersistableRIMModel var27;
-      if (callerIDInfo.displayCompanyInfo() && callerIDInfo._friendlyName instanceof Object) {
-         var27 = callerIDInfo._friendlyName;
+      if (callerIDInfo.displayCompanyInfo() && callerIDInfo._friendlyName instanceof CompanyInfoModel) {
+         address = callerIDInfo._friendlyName;
       } else {
-         var27 = callerIDInfo.getAddress();
+         address = callerIDInfo.getAddress();
       }
 
       this.setCookie(callerIDInfo);
@@ -63,9 +64,9 @@ final class FullCallerIDField extends VerticalFieldManager {
       Field friendlyNameField = null;
       boolean haveAddressField = false;
       if (number != null && number.toString().length() != 0) {
-         if (var27 instanceof Object) {
+         if (address instanceof FieldProvider) {
             contextObject.setFlags(BASE_CALLER_ID_CONTEXT_FLAGS);
-            addressField = ((FieldProvider)var27).getField(contextObject);
+            addressField = ((FieldProvider)address).getField(contextObject);
             if (addressField != null) {
                if (newFont != null) {
                   this.updateFont(addressField, newFont);
@@ -75,7 +76,7 @@ final class FullCallerIDField extends VerticalFieldManager {
                this.add(addressField);
                haveAddressField = true;
             }
-         } else if (callerIDInfo._friendlyName instanceof Object) {
+         } else if (callerIDInfo._friendlyName instanceof FieldProvider) {
             contextObject.setFlag(58, 17, 106);
             friendlyNameField = ((FieldProvider)callerIDInfo._friendlyName).getField(contextObject);
             if (friendlyNameField != null) {
@@ -116,17 +117,17 @@ final class FullCallerIDField extends VerticalFieldManager {
             String phoneNumberString = (String)contextObject.get(-799495460678763170L);
             if (phoneNumberString != null) {
                if (typeString != null) {
-                  StringBuffer buf = (StringBuffer)(new Object());
+                  StringBuffer buf = new StringBuffer();
                   buf.append(typeString);
                   buf.append(' ');
                   buf.append(phoneNumberString);
-                  numberField = (Field)(new Object(buf, 64));
+                  numberField = new LabelField(buf, 64);
                } else {
-                  numberField = (Field)(new Object(phoneNumberString, 64));
+                  numberField = new LabelField(phoneNumberString, 64);
                }
             } else if (typeString != null) {
                phoneNumberString = pnm.getDisplayablePhoneNumber();
-               StringBuffer buf = (StringBuffer)(new Object());
+               StringBuffer buf = new StringBuffer();
                buf.append(typeString);
                buf.append(' ');
                buf.append(phoneNumberString);
@@ -135,8 +136,8 @@ final class FullCallerIDField extends VerticalFieldManager {
                   style |= 18014398509481984L;
                }
 
-               numberField = (Field)(new Object(buf, style));
-            } else if (number instanceof Object) {
+               numberField = new LabelField(buf, style);
+            } else if (number instanceof FieldProvider) {
                numberField = ((FieldProvider)number).getField(contextObject);
             }
          }
@@ -158,15 +159,15 @@ final class FullCallerIDField extends VerticalFieldManager {
             if (redirectedNumber != null && redirectedNumber.length() > 0) {
                boolean incoming = callerIDInfo.isIncomingCall();
                int stringId = incoming ? 6029 : 6028;
-               Field labelField = (Field)(new Object(PhoneResources.getString(stringId)));
+               Field labelField = new LabelField(PhoneResources.getString(stringId));
                if (newFont != null) {
                   labelField.setFont(newFont);
                }
 
                this.add(labelField);
                Object model = PhoneUtilities.createNumberModel(redirectedNumber);
-               if (!(model instanceof Object)) {
-                  this.add((Field)(new Object(redirectedNumber)));
+               if (!(model instanceof PersistableRIMModel)) {
+                  this.add(new LabelField(redirectedNumber));
                } else {
                   CallerIDInfo cidi = new CallerIDInfo((PersistableRIMModel)model, null, incoming, false);
                   boolean oldSparseFlag = contextObject.getFlag(59);
@@ -196,9 +197,9 @@ final class FullCallerIDField extends VerticalFieldManager {
          }
       } else {
          if (callerIDInfo.isPrivateNumber()) {
-            addressField = (Field)(new Object(PhoneResources.getString(156)));
+            addressField = new LabelField(PhoneResources.getString(156));
          } else {
-            addressField = (Field)(new Object(PhoneResources.getString(117)));
+            addressField = new LabelField(PhoneResources.getString(117));
          }
 
          if (newFont != null) {
@@ -210,7 +211,7 @@ final class FullCallerIDField extends VerticalFieldManager {
    }
 
    private final void updateFont(Field field, Font font) {
-      if (!(field instanceof Object)) {
+      if (!(field instanceof Manager)) {
          field.setFont(font);
       } else {
          Manager mgr = (Manager)field;

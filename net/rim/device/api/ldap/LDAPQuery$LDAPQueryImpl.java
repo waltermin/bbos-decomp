@@ -2,10 +2,12 @@ package net.rim.device.api.ldap;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.InputStream;
+import java.io.IOException;
 import javax.microedition.io.Connector;
 import javax.microedition.io.StreamConnection;
+import net.rim.device.api.compress.ZLibInputStream;
 import net.rim.device.api.io.ConnectionClosedException;
+import net.rim.device.api.io.IOCancelledException;
 import net.rim.device.api.io.ServiceBookNotFoundException;
 import net.rim.device.api.servicebook.ServiceRouting;
 import net.rim.device.api.system.RadioInfo;
@@ -62,10 +64,10 @@ final class LDAPQuery$LDAPQueryImpl extends Thread implements StreamProtocolList
                   var64 = true;
                   if (!ServiceRouting.getInstance().isServiceRoutable(this.this$0._serviceUID, -1)) {
                      this.this$0._errorCode = RadioInfo.getActiveWAFs() == 0 && !ServiceRouting.getInstance().isSerialBypassActive() ? 4 : 127;
-                     throw new Object();
+                     throw new IOException();
                   }
 
-                  StringBuffer connectionStringBuffer = (StringBuffer)(new Object("ldap:"));
+                  StringBuffer connectionStringBuffer = new StringBuffer("ldap:");
                   if (this.this$0._serviceUID != null) {
                      connectionStringBuffer.append(";connectionuid=");
                      connectionStringBuffer.append(this.this$0._serviceUID);
@@ -95,7 +97,7 @@ final class LDAPQuery$LDAPQueryImpl extends Thread implements StreamProtocolList
 
                   this._out.flush();
                   if (this._in.readBoolean()) {
-                     this._in = (DataInputStream)(new Object((InputStream)(new Object(this._in))));
+                     this._in = new DataInputStream(new ZLibInputStream(this._in));
                   }
 
                   String attributeName = "";
@@ -168,7 +170,7 @@ final class LDAPQuery$LDAPQueryImpl extends Thread implements StreamProtocolList
                      var83 = 8;
                      this.this$0._errorCode = 3;
                      var64 = false;
-                  } else if (e instanceof Object) {
+                  } else if (e instanceof IOCancelledException) {
                      var83 = 9;
                      var64 = false;
                   } else {
@@ -318,7 +320,7 @@ final class LDAPQuery$LDAPQueryImpl extends Thread implements StreamProtocolList
          case 131:
          default:
             LDAPPasswordCache cache = LDAPPasswordCache.getInstance();
-            UsernamePasswordDialog dialog = (UsernamePasswordDialog)(new Object(CommonResource.getString(10029), this.this$0._userDN, null, null, 1, 134217728));
+            UsernamePasswordDialog dialog = new UsernamePasswordDialog(CommonResource.getString(10029), this.this$0._userDN, null, null, 1, 134217728);
             BackgroundDialog.show(dialog);
             if (dialog.getCloseReason() == -1) {
                cache.cleanPassword(this.this$0._server, this.this$0._baseQuery);

@@ -101,7 +101,7 @@ public class TableColumnModelImpl extends UIControlImpl implements TableColumnMo
 
    @Override
    public String getCell(int row) {
-      return (String)(super._value == null ? null : (super._valueType == 3 ? super._value : ((Vector)super._value).elementAt(row)));
+      return super._value == null ? null : (String)(super._valueType == 3 ? super._value : ((Vector)super._value).elementAt(row));
    }
 
    @Override

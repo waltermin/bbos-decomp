@@ -9,7 +9,7 @@ public final class KEAKeyAgreement {
 
    public static final byte[] generateSharedSecret(
       KEAPrivateKey localStaticPrivateKey, KEAPrivateKey localEphemeralPrivateKey, KEAPublicKey remoteStaticPublicKey, KEAPublicKey remoteEphemeralPublicKey
-   ) {
+   ) throws InvalidCryptoSystemException {
       if (localStaticPrivateKey != null && localEphemeralPrivateKey != null && remoteStaticPublicKey != null && remoteEphemeralPublicKey != null) {
          KEACryptoSystem cryptoSystem = localStaticPrivateKey.getKEACryptoSystem();
          if (cryptoSystem.equals(remoteStaticPublicKey.getKEACryptoSystem())
@@ -24,10 +24,10 @@ public final class KEAKeyAgreement {
                   remoteEphemeralPublicKey.getPublicKeyData()
                );
          } else {
-            throw new Object();
+            throw new InvalidCryptoSystemException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -47,10 +47,10 @@ public final class KEAKeyAgreement {
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

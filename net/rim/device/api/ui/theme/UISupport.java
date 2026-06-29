@@ -23,8 +23,8 @@ class UISupport {
    }
 
    public static Bitmap submap(Bitmap src, int x, int y, int width, int height) {
-      Bitmap result = (Bitmap)(new Object(src.getType(), width, height));
-      Graphics g = (Graphics)(new Object(result));
+      Bitmap result = new Bitmap(src.getType(), width, height);
+      Graphics g = new Graphics(result);
       g.drawBitmap(0, 0, width, height, src, x, y);
       return result;
    }
@@ -34,8 +34,8 @@ class UISupport {
       int h = src.getHeight();
       rollX = wrap(rollX, w);
       rollY = wrap(rollY, h);
-      Bitmap result = (Bitmap)(new Object(src.getType(), w, h));
-      Graphics g = (Graphics)(new Object(result));
+      Bitmap result = new Bitmap(src.getType(), w, h);
+      Graphics g = new Graphics(result);
       g.drawBitmap(w - rollX, h - rollY, rollX, rollY, src, 0, 0);
       g.drawBitmap(0, h - rollY, w - rollX, rollY, src, rollX, 0);
       g.drawBitmap(w - rollX, 0, rollX, h - rollY, src, 0, rollY);

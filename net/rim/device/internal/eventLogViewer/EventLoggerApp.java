@@ -12,10 +12,10 @@ public final class EventLoggerApp extends UiApplication {
          }
       } else {
          ApplicationDescriptor appDescrip = ApplicationDescriptor.currentApplicationDescriptor();
-         args = new Object[]{"Execute"};
-         ApplicationDescriptor var4 = new Object(appDescrip, args);
+         args = new String[]{"Execute"};
+         appDescrip = new ApplicationDescriptor(appDescrip, args);
          ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
-         ar.put(-1723378108824417453L, var4);
+         ar.put(-1723378108824417453L, appDescrip);
       }
    }
 

@@ -39,13 +39,13 @@ public class PGPKeyAttachmentModel extends CertificateAttachmentModel implements
    public void parseCertificatesAndPrivateKeys() {
       if (!this.isMoreAvailable()) {
          try {
-            ByteArrayInputStream inputStream = (ByteArrayInputStream)(new Object(this.getData()));
-            PGPArmorDecoder armorDecoder = (PGPArmorDecoder)(new Object(inputStream));
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(this.getData());
+            PGPArmorDecoder armorDecoder = new PGPArmorDecoder(inputStream);
             int numKeys = armorDecoder.numCertificates();
             if (numKeys != 0) {
                CryptoApplicationProperties cryptoApplicationProperties = CryptoApplicationProperties.getInstance();
-               super._certificates = new Object[numKeys];
-               super._privateKeys = new Object[numKeys];
+               super._certificates = new Certificate[numKeys];
+               super._privateKeys = new PrivateKey[numKeys];
 
                for (int i = 0; i < numKeys; i++) {
                   super._privateKeys[i] = armorDecoder.getPrivateKey(i);
@@ -77,9 +77,9 @@ public class PGPKeyAttachmentModel extends CertificateAttachmentModel implements
    @Override
    protected boolean writeToOutputStream(OutputStream outputStream) {
       try {
-         PGPArmorEncoder pgpArmorEncoder = (PGPArmorEncoder)(new Object(
+         PGPArmorEncoder pgpArmorEncoder = new PGPArmorEncoder(
             outputStream, PGPArmorEncoder.BEGIN_PUBLIC_KEY_DASHES, PGPArmorEncoder.END_PUBLIC_KEY_DASHES, VERSION_RIM_10, null, null, false
-         ));
+         );
          pgpArmorEncoder.write(PGPKeyEncoder.getEncoding(this.getData()));
          pgpArmorEncoder.close();
          return true;
@@ -120,13 +120,13 @@ public class PGPKeyAttachmentModel extends CertificateAttachmentModel implements
       }
 
       Certificate var10000 = super._certificates[index];
-      if (super._certificates[index] instanceof Object) {
+      if (super._certificates[index] instanceof PGPCertificate) {
          PGPCertificate pgpCert = (PGPCertificate)var10000;
          KeyStore x509KeyStore = DeviceKeyStore.getInstance();
-         Certificate[] certsInsertedWithPrivateData = new Object[0];
+         Certificate[] certsInsertedWithPrivateData = new Certificate[0];
          if (super._privateKeys != null) {
             PrivateKey var15 = super._privateKeys[index];
-            if (super._privateKeys[index] instanceof Object) {
+            if (super._privateKeys[index] instanceof PGPPrivateKey) {
                PGPPrivateKey pgpPrivateKey = (PGPPrivateKey)var15;
                PrivateKey dummyKey = pgpPrivateKey;
                Certificate[] parentKeyX509Certs = pgpCert.getEmbeddedX509Certificates(pgpPrivateKey.getKeyID());

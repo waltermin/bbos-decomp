@@ -16,8 +16,8 @@ final class UpdateStatusHandler$DownloadsHandler extends XMLToObjectHandler {
       Hashtable elementToValueMap = (Hashtable)super.getResult();
       Object download = elementToValueMap.get("download");
       if (download != null) {
-         if (!(download instanceof Object)) {
-            Vector downloadsVector = (Vector)(new Object());
+         if (!(download instanceof Vector)) {
+            Vector downloadsVector = new Vector();
             downloadsVector.addElement(download);
             return downloadsVector;
          } else {

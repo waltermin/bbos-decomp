@@ -1,25 +1,27 @@
 package net.rim.device.apps.internal.messaging.search;
 
-import net.rim.device.api.collection.LongKeyProviderAdaptor;
+import net.rim.device.api.collection.LongKeyProviderAdaptorComparator;
 import net.rim.device.api.system.Display;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.component.VariableHeightListField;
 import net.rim.device.api.ui.component.VariableHeightListFieldCallback;
-import net.rim.device.api.util.Comparator;
 import net.rim.device.apps.api.framework.model.FieldProvider;
+import net.rim.device.apps.api.messaging.DateSortKeyProviderIndirection;
 import net.rim.device.apps.api.messaging.messagelist.DateSortedSeparatedMessageArray;
 import net.rim.device.apps.api.messaging.messagelist.MessageListColumnPainter;
+import net.rim.device.apps.api.search.SearchCriterion;
 import net.rim.device.apps.api.search.SearchResultCollection;
+import net.rim.vm.WeakReference;
 
 final class MessageSearchResultCollection extends SearchResultCollection implements FieldProvider, VariableHeightListFieldCallback {
-   private MessageListColumnPainter _messageColumnPainter = (MessageListColumnPainter)(new Object());
+   private MessageListColumnPainter _messageColumnPainter = new MessageListColumnPainter();
    private MessageSearchResultField _listField;
-   private DateSortedSeparatedMessageArray _sortedSeparatedItems = (DateSortedSeparatedMessageArray)(new Object(102, (LongKeyProviderAdaptor)(new Object())));
+   private DateSortedSeparatedMessageArray _sortedSeparatedItems = new DateSortedSeparatedMessageArray(102, new DateSortKeyProviderIndirection());
 
    MessageSearchResultCollection(Object criteria) {
-      super((Object[])criteria, (Comparator)(new Object((LongKeyProviderAdaptor)(new Object()))), true, true);
-      this.addCollectionListener(new Object(this._sortedSeparatedItems));
+      super((SearchCriterion[])criteria, new LongKeyProviderAdaptorComparator(new DateSortKeyProviderIndirection()), true, true);
+      this.addCollectionListener(new WeakReference(this._sortedSeparatedItems));
       this._listField = new MessageSearchResultField(this._sortedSeparatedItems, this, this);
    }
 

@@ -14,6 +14,7 @@ import net.rim.device.api.util.StringUtilities;
 import net.rim.device.internal.system.InternalServices;
 import net.rim.device.internal.ui.StringBufferGap;
 import net.rim.tid.awt.Event;
+import net.rim.tid.awt.event.FocusEvent;
 import net.rim.tid.awt.event.KeyEvent;
 import net.rim.tid.awt.event.NavigationEvent;
 import net.rim.tid.awt.im.repository.CustomDictionary;
@@ -42,16 +43,16 @@ public class SLInputMethod implements InputMethod, InputMethodConstants {
    protected int _rollerCharacterIndex = -1;
    protected boolean _isLookupEnabled = true;
    protected int[] modifiersKey = new int[]{137, 1064304896, -1117257139, 1064304896};
-   protected Locale[] availableLocals = new Object[]{Locale.getDefault()};
+   protected Locale[] availableLocals = new Locale[]{Locale.getDefault()};
    protected SLComposedText composedText;
    protected Locale locale = Locale.getDefault();
    protected InputMethodContext context;
-   protected Hashtable layouts = (Hashtable)(new Object());
+   protected Hashtable layouts = new Hashtable();
    protected IConversion convEngine;
    protected Toolbar toolbar;
    protected SLKeyLayout lnkLayout;
-   protected Locale[] _directLocals = new Object[]{Locale.get("en")};
-   protected MinimalInputMethod _directInput = (MinimalInputMethod)(new Object(this._directLocals));
+   protected Locale[] _directLocals = new Locale[]{Locale.get("en")};
+   protected MinimalInputMethod _directInput = new MinimalInputMethod(this._directLocals);
    protected boolean compositionEnabled = true;
    protected int learningWordlistSize;
    protected SLControlObject controlObject;
@@ -60,14 +61,14 @@ public class SLInputMethod implements InputMethod, InputMethodConstants {
    protected boolean learning;
    protected boolean isAutoCorrectionEnabled;
    protected int lastKeyPressed = -1;
-   protected Vector wordlistsDataCache = (Vector)(new Object());
+   protected Vector wordlistsDataCache = new Vector();
    protected boolean isCaps;
    TextFilter _textFilter;
    private boolean keepSPUpdated;
    protected ConversionEvent cEvent = new ConversionEvent(null, null, 0, null, false);
-   protected StringBuffer iKeyCharsCache = (StringBuffer)(new Object());
-   protected XYRect _lookupBounds = (XYRect)(new Object());
-   protected XYRect _lookupBounds2 = (XYRect)(new Object());
+   protected StringBuffer iKeyCharsCache = new StringBuffer();
+   protected XYRect _lookupBounds = new XYRect();
+   protected XYRect _lookupBounds2 = new XYRect();
    protected int _keyboardID = Keypad.getHardwareLayout();
    protected ResourceBundleFamily _bundleFamily;
    protected SLInputMethod$IMOptions _optionsResource;
@@ -87,7 +88,7 @@ public class SLInputMethod implements InputMethod, InputMethodConstants {
    public static final byte FAST_AND_PREDICTIVE_MODE = 2;
    public static final byte EDIT_MODE = 3;
    public static final byte UNDEFINED_MODE = 127;
-   protected static WeakReference lookup = (WeakReference)(new Object(null));
+   protected static WeakReference lookup = new WeakReference(null);
    public static long _tlTime;
    public static long _startTimer;
    private static final int ACCEPTIBLE_EVENTS_MASK = Event.FOCUS_EVENT_MASK | Event.KEY_EVENT_MASK | Event.NAVIGATION_EVENT_MASK;
@@ -912,7 +913,7 @@ public class SLInputMethod implements InputMethod, InputMethodConstants {
                if (this.availableLocals[i].equals(aLocale)) {
                   if (this.loadKeyLayout(aLocale)) {
                      if (this.lnkLayout == null) {
-                        throw new Object("Key layout is null after loadKeyLayout");
+                        throw new IllegalStateException("Key layout is null after loadKeyLayout");
                      }
 
                      this.locale = aLocale;
@@ -1095,14 +1096,14 @@ public class SLInputMethod implements InputMethod, InputMethodConstants {
    @Override
    public void dispatchEvent(Event event) {
       if (this.compositionEnabled && (ACCEPTIBLE_EVENTS_MASK & event.getEventMask()) != 0) {
-         if (event instanceof Object) {
+         if (event instanceof FocusEvent) {
             if (event.getID() == 1005) {
                this.focusLost(event.getSource());
             }
-         } else if (event instanceof Object) {
+         } else if (event instanceof KeyEvent) {
             this.dispatchKeyEvent((KeyEvent)event);
          } else {
-            if (event instanceof Object) {
+            if (event instanceof NavigationEvent) {
                this.dispatchNavigationEvent((NavigationEvent)event);
             }
          }

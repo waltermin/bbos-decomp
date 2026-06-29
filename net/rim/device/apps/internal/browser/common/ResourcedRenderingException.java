@@ -23,7 +23,7 @@ public class ResourcedRenderingException extends RenderingException {
       String superMessage = super.getMessage();
       if (this._resourceId != -1) {
          String resourceStr = BrowserResources.getString(this._resourceId);
-         return superMessage != null ? ((StringBuffer)(new Object())).append(resourceStr).append(superMessage).toString() : resourceStr;
+         return superMessage != null ? resourceStr + superMessage : resourceStr;
       } else {
          return superMessage;
       }

@@ -12,6 +12,7 @@ import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.verb.Verb;
@@ -42,12 +43,10 @@ final class MemoryCleanerOptionsItem extends SaveableMainScreenOptionsListItem i
    @Override
    protected final void populateMainScreen(MainScreen mainScreen) {
       boolean forceCleanWhenHolstered = ITPolicy.getBoolean(27, 3, false);
-      this._cleanWhenHolsteredField = (BooleanChoiceField)(new Object(
-         _rb.getString(4), 0, forceCleanWhenHolstered || this._manager.getCleanWhenHolstered(), 268435456
-      ));
+      this._cleanWhenHolsteredField = new BooleanChoiceField(_rb.getString(4), 0, forceCleanWhenHolstered || this._manager.getCleanWhenHolstered(), 268435456);
       this._cleanWhenHolsteredField.setEditable(!forceCleanWhenHolstered);
       boolean forceCleanWhenIdle = ITPolicy.getBoolean(27, 2, false);
-      this._cleanWhenIdleField = (BooleanChoiceField)(new Object(_rb.getString(5), 0, forceCleanWhenIdle || this._manager.getCleanWhenIdle(), 268435456));
+      this._cleanWhenIdleField = new BooleanChoiceField(_rb.getString(5), 0, forceCleanWhenIdle || this._manager.getCleanWhenIdle(), 268435456);
       this._cleanWhenIdleField.setEditable(!forceCleanWhenIdle);
       long[] times = new long[]{
          60000L,
@@ -108,16 +107,16 @@ final class MemoryCleanerOptionsItem extends SaveableMainScreenOptionsListItem i
          -6888933387085454925L
       };
       long maxTimeout = (long)ITPolicy.getInteger(27, 1, 60) * 60000;
-      this._idleTimeoutField = (TimeChoiceField)(new Object(_rb.getString(6), 268435456));
+      this._idleTimeoutField = new TimeChoiceField(_rb.getString(6), 268435456);
       this._idleTimeoutField.setTimeChoicesIncludeMaxTimeChoice(times, 0, maxTimeout);
       this._idleTimeoutField.setSelectedTimeInMillis(this._manager.getIdleTimeout(), false);
       boolean showAppOnRibbon = this._manager.getShowAppOnRibbon();
-      this._showAppOnRibbonField = (BooleanChoiceField)(new Object(_rb.getString(13), 0, showAppOnRibbon));
+      this._showAppOnRibbonField = new BooleanChoiceField(_rb.getString(13), 0, showAppOnRibbon);
       this._showAppOnRibbonField.setEditable(true);
       MemoryCleanerManager manager = MemoryCleanerManager.getInstance();
       MemoryCleanerListener[] tempListeners = manager.getListeners();
       int numTempListeners = tempListeners.length;
-      this._listeners = new Object[numTempListeners];
+      this._listeners = new MemoryCleanerListener[numTempListeners];
       int numNonNullListeners = 0;
 
       for (int i = 0; i < numTempListeners; i++) {
@@ -130,11 +129,11 @@ final class MemoryCleanerOptionsItem extends SaveableMainScreenOptionsListItem i
       Array.resize(this._listeners, numNonNullListeners);
       Font defaultFont = Font.getDefault();
       Font boldFont = defaultFont.derive(defaultFont.getStyle() | 1);
-      this._registeredCleanersLabelField = (LabelField)(new Object(_rb.getString(9), 64));
+      this._registeredCleanersLabelField = new LabelField(_rb.getString(9), 64);
       this._registeredCleanersLabelField.setFont(boldFont);
-      this._listField = (ListField)(new Object(this._listeners.length));
+      this._listField = new ListField(this._listeners.length);
       this._listField.setCallback(this);
-      this._statusField = (BooleanChoiceField)(new Object(_rb.getString(16), 2, this._manager.enabled(), 268435456));
+      this._statusField = new BooleanChoiceField(_rb.getString(16), 2, this._manager.enabled(), 268435456);
       if (this._manager.enabled()) {
          this._statusField.setEditable(this._manager.userEnabled());
          this._statusField.setChangeListener(this);
@@ -148,12 +147,12 @@ final class MemoryCleanerOptionsItem extends SaveableMainScreenOptionsListItem i
    }
 
    private final void showEnabledOptions(MainScreen mainScreen) {
-      mainScreen.add((Field)(new Object()));
+      mainScreen.add(new SeparatorField());
       mainScreen.add(this._cleanWhenHolsteredField);
       mainScreen.add(this._cleanWhenIdleField);
       mainScreen.add(this._idleTimeoutField);
       mainScreen.add(this._showAppOnRibbonField);
-      mainScreen.add((Field)(new Object()));
+      mainScreen.add(new SeparatorField());
       mainScreen.add(this._registeredCleanersLabelField);
       mainScreen.add(this._listField);
    }

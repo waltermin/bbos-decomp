@@ -26,6 +26,6 @@ public final class SessionResetRequestMessage extends AbstractRequestMessage imp
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object("Session Reset Request: sessionId="))).append(this._newSessionId).toString();
+      return "Session Reset Request: sessionId=" + this._newSessionId;
    }
 }

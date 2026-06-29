@@ -16,7 +16,7 @@ final class ModuleGroupInformation$ApplicationControlMenuItem extends MenuItem {
 
    @Override
    public final void run() {
-      ApplicationControlInformation aci = (ApplicationControlInformation)(new Object(this._moduleHandles, this._name));
+      ApplicationControlInformation aci = new ApplicationControlInformation(this._moduleHandles, this._name);
       aci.open();
    }
 }

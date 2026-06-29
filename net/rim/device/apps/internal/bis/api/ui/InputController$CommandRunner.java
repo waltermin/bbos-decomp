@@ -59,7 +59,7 @@ final class InputController$CommandRunner implements Runnable {
                      && ClientSessionState.getInstance().getUserInfo().isAutoAuth()) {
                      this._commandID = 0;
                      domainCommand = new InitializationCommand();
-                     commandResult = domainCommand.run((Hashtable)(new Object()));
+                     commandResult = domainCommand.run(new Hashtable());
                      commandResult.setStatus(ApplicationResources.getString(224));
                   }
 
@@ -76,7 +76,7 @@ final class InputController$CommandRunner implements Runnable {
 
                            if (app.getActiveScreen() != null) {
                               if (this._params == null) {
-                                 this._params = (Hashtable)(new Object());
+                                 this._params = new Hashtable();
                               }
 
                               this._params.put("previousScreen", app.getActiveScreen());

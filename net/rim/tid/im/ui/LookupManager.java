@@ -19,12 +19,12 @@ public class LookupManager extends Manager implements ISLVariantsObserver {
    protected byte _type;
    private Font _auxilaryElementsFont;
    private Font _predictiveElementsFont;
-   private XYRect _bounds = (XYRect)(new Object());
+   private XYRect _bounds = new XYRect();
    private SLCurrentVariant _current = new SLCurrentVariant();
    protected SLVariants _currentVariant;
    protected int _currentIndex;
    private String[] _numbers;
-   private TextMetrics _textMetrics = (TextMetrics)(new Object());
+   private TextMetrics _textMetrics = new TextMetrics();
    private int _backgroundColor;
    private int _foregroundColor;
    private LookupManager$LookupLineGroup _firstLineGroup = new LookupManager$HorizontalLookupLineGroup(this, false);
@@ -48,7 +48,7 @@ public class LookupManager extends Manager implements ISLVariantsObserver {
    private boolean _listOfVariantsChanged;
    private int _lastAllowedHeight;
    private boolean _stickyLookupY;
-   private DrawTextParam _drawTextParam = (DrawTextParam)(new Object());
+   private DrawTextParam _drawTextParam = new DrawTextParam();
    public static final byte LOOKUP_DEFAULT = 0;
    public static final byte LOOKUP_WITH_AMOUNT = 1;
    public static final byte LOOKUP_WITH_NUMBERS = 8;
@@ -100,7 +100,7 @@ public class LookupManager extends Manager implements ISLVariantsObserver {
       }
 
       if ((this._type & 8) != 0) {
-         this._numbers = new Object[10];
+         this._numbers = new String[10];
 
          for (int i = 0; i < 10; i++) {
             this._numbers[i] = String.valueOf(i + 1);
@@ -149,7 +149,7 @@ public class LookupManager extends Manager implements ISLVariantsObserver {
             ret = this._activeLineGroup.prevPage();
             break;
          case 35:
-            if (aParameter != null && aParameter instanceof Object) {
+            if (aParameter != null && aParameter instanceof Integer) {
                ret = this._activeLineGroup.selectElement(((Integer)aParameter).byteValue());
             }
             break;

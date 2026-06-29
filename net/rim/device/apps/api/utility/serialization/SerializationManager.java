@@ -6,7 +6,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.vm.Array;
 
 public final class SerializationManager {
-   private Hashtable _descriptors = (Hashtable)(new Object(60));
+   private Hashtable _descriptors = new Hashtable(60);
    private static SerializationManager _instance;
    private static final long APPLICATION_REGISTRY_NAME = -531295951157606877L;
 

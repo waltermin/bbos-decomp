@@ -50,7 +50,7 @@ public class FolderMerge {
       synchronized (_mergesHashtable) {
          merge = (LongHashtable)_mergesHashtable.get(mergeId);
          if (merge == null) {
-            merge = (LongHashtable)(new Object());
+            merge = new LongHashtable();
             _mergesHashtable.put(mergeId, merge);
          }
       }

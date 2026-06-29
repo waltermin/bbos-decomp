@@ -1,6 +1,6 @@
 package net.rim.device.apps.internal.browser.push;
 
-import java.io.ByteArrayOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.DataInput;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -10,7 +10,9 @@ import net.rim.device.api.io.NoCopyByteArrayOutputStream;
 import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.api.system.Branding;
 import net.rim.device.api.system.EventLogger;
+import net.rim.device.apps.api.utility.general.AsciiStringInputStream;
 import net.rim.device.apps.api.utility.serialization.BaseConverter;
+import net.rim.device.apps.api.utility.serialization.SerializationException;
 
 final class StoreConverter extends BaseConverter {
    private static final String PUSH_LOCATION_KEY = "X-Rim-Content-Location";
@@ -26,8 +28,8 @@ final class StoreConverter extends BaseConverter {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final Object convert(DataInput inputStreamObj, Object headersObj) {
-      if (headersObj instanceof Object && inputStreamObj instanceof Object) {
+   public final Object convert(DataInput inputStreamObj, Object headersObj) throws SerializationException {
+      if (headersObj instanceof HttpHeaders && inputStreamObj instanceof InputStream) {
          InputStream inputStream = (InputStream)inputStreamObj;
          HttpHeaders headers = (HttpHeaders)headersObj;
 
@@ -36,26 +38,26 @@ final class StoreConverter extends BaseConverter {
             String path = headers.getPropertyValue("X-Rim-Content-Location");
             if (path == null) {
                EventLogger.logEvent(1907089860548946979L, 1347450220, 3);
-               throw new Object();
+               throw new SerializationException();
             } else if (!path.startsWith("/appdata/rim/idlescreen/carrier/")) {
                EventLogger.logEvent(1907089860548946979L, 1347447148, 3);
-               throw new Object();
+               throw new SerializationException();
             } else {
                StoreConverter$ContentData content = new StoreConverter$ContentData();
                this.readAndVerifyContent(inputStream, content, headers.getPropertyValue("X-ContentSig"));
                if (content._data == null) {
                   EventLogger.logEvent(1907089860548946979L, 1347449702, 3);
-                  throw new Object();
+                  throw new SerializationException();
                } else {
-                  return new StoreModel(content._data, ((StringBuffer)(new Object("/store"))).append(path).toString());
+                  return new StoreModel(content._data, "/store" + path);
                }
             }
          } catch (Throwable var8) {
-            EventLogger.logEvent(1907089860548946979L, ((StringBuffer)(new Object("Content Store Push: "))).append(e.getMessage()).toString().getBytes(), 3);
-            throw new Object();
+            EventLogger.logEvent(1907089860548946979L, ("Content Store Push: " + e.getMessage()).getBytes(), 3);
+            throw new SerializationException();
          }
       } else {
-         throw new Object();
+         throw new SerializationException();
       }
    }
 
@@ -72,14 +74,14 @@ final class StoreConverter extends BaseConverter {
       int dataLength;
       try {
          var14 = true;
-         Base64InputStream e = new Object((InputStream)(new Object(sigString)));
-         NoCopyByteArrayOutputStream sigByteArrayStream = new Object();
-         NoCopyByteArrayOutputStream dataByteArrayStream = new Object();
-         copyStreams((InputStream)e, (OutputStream)sigByteArrayStream);
-         copyStreams(is, (OutputStream)dataByteArrayStream);
-         byte[] sig = ((NoCopyByteArrayOutputStream)sigByteArrayStream).getByteArray();
-         data = ((NoCopyByteArrayOutputStream)dataByteArrayStream).getByteArray();
-         dataLength = ((ByteArrayOutputStream)dataByteArrayStream).size();
+         Base64InputStream e = new Base64InputStream(new AsciiStringInputStream(sigString));
+         NoCopyByteArrayOutputStream sigByteArrayStream = new NoCopyByteArrayOutputStream();
+         NoCopyByteArrayOutputStream dataByteArrayStream = new NoCopyByteArrayOutputStream();
+         copyStreams(e, sigByteArrayStream);
+         copyStreams(is, dataByteArrayStream);
+         byte[] sig = sigByteArrayStream.getByteArray();
+         data = dataByteArrayStream.getByteArray();
+         dataLength = dataByteArrayStream.size();
          returnVal = RIMSignature.verify(data, 0, dataLength, sig, 0, Branding.getData(16387));
          verified = returnVal > 0;
          var14 = false;
@@ -90,7 +92,7 @@ final class StoreConverter extends BaseConverter {
       }
 
       if (verified) {
-         content._data = (InputStream)(new Object(data, 0, dataLength));
+         content._data = new ByteArrayInputStream(data, 0, dataLength);
          content._timestamp = returnVal;
       }
    }

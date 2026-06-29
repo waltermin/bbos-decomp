@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.gme;
 
+import java.io.IOException;
 import java.util.Vector;
 import javax.microedition.io.Datagram;
 import net.rim.device.api.crypto.RandomSource;
@@ -11,6 +12,8 @@ import net.rim.device.api.io.DatagramBase;
 import net.rim.device.api.io.DatagramConnectionBase;
 import net.rim.device.api.io.DatagramStatusListener;
 import net.rim.device.api.io.DatagramTransportBase;
+import net.rim.device.api.io.IOCancelledException;
+import net.rim.device.api.io.IONotRoutableException;
 import net.rim.device.api.io.IOProperties;
 import net.rim.device.api.servicebook.ServiceBook;
 import net.rim.device.api.servicebook.ServiceRecord;
@@ -43,7 +46,7 @@ public final class Transport extends DatagramTransportBase implements DatagramSt
    private GmeRouter _router;
    private GMEDatagramInfo _xmitDInfo;
    private Datagram _subDg;
-   private Vector _waitingForRoutingInfo = (Vector)(new Object(1, 1));
+   private Vector _waitingForRoutingInfo = new Vector(1, 1);
    private Object _statusEventLock = new Object();
    protected GmeReceiveThread _receiveThread;
    protected ServiceAuthentication _serviceAuthentication;
@@ -170,7 +173,7 @@ public final class Transport extends DatagramTransportBase implements DatagramSt
 
       dgramId = dgramId != 0 ? dgramId : this.getNextDatagramId(null);
       GMEDatagramInfo di = this.getDatagramInfo(datagram, addr, properties, listener, dgramId);
-      DatagramBase txDg = (DatagramBase)(new Object());
+      DatagramBase txDg = new DatagramBase();
       if (di.encrypt || di.compress) {
          this.xmitDgslEvent(di.listener, di.transId, 3, null);
       }
@@ -202,7 +205,7 @@ public final class Transport extends DatagramTransportBase implements DatagramSt
    }
 
    @Override
-   protected final void superSend(Datagram datagram) {
+   protected final void superSend(Datagram datagram) throws IOCancelledException, IONotRoutableException {
       boolean cancelled = false;
 
       while (true) {
@@ -214,7 +217,7 @@ public final class Transport extends DatagramTransportBase implements DatagramSt
             if (this._serviceRouting.isServiceRoutable(null, -1)) {
                DatagramBase dg = (DatagramBase)datagram;
                this.xmitDgslEvent(dg.getDatagramStatusListener(), dg.getDatagramId(), 4226, null);
-               throw new Object();
+               throw new IONotRoutableException();
             }
 
             var12.setThreadAsCurrent();
@@ -237,7 +240,7 @@ public final class Transport extends DatagramTransportBase implements DatagramSt
             if (cancelled) {
                DatagramBase dg = (DatagramBase)datagram;
                this.xmitDgslEvent(dg.getDatagramStatusListener(), dg.getDatagramId(), 129, null);
-               throw new Object();
+               throw new IOCancelledException();
             }
          }
       }
@@ -265,7 +268,7 @@ public final class Transport extends DatagramTransportBase implements DatagramSt
       synchronized (this._statusEventLock) {
          if (this._xmitDInfo != null
             && this._xmitDInfo.transId != 0
-            && datagram instanceof Object
+            && datagram instanceof DatagramBase
             && ((DatagramBase)datagram).getDatagramId() == this._xmitDInfo.transId) {
             this._xmitDInfo = null;
             datagramToCancel = this._subDg;
@@ -353,14 +356,14 @@ public final class Transport extends DatagramTransportBase implements DatagramSt
          }
       }
 
-      if (superDatagram instanceof Object && datagram instanceof Object) {
+      if (superDatagram instanceof DatagramBase && datagram instanceof DatagramBase) {
          ((DatagramBase)superDatagram).copyFlagsInto((DatagramBase)datagram);
       }
 
       conn.send(datagram);
    }
 
-   private final GMEDatagramInfo getDatagramInfo(Datagram datagram, GMEAddress gmeAddr, IOProperties properties, DatagramStatusListener listener, int dgramId) {
+   private final GMEDatagramInfo getDatagramInfo(Datagram datagram, GMEAddress gmeAddr, IOProperties properties, DatagramStatusListener listener, int dgramId) throws IOException {
       logDebugInfo(1415071593);
       GMEDatagramInfo di = null;
       ServiceRecord[] srs = null;
@@ -374,7 +377,7 @@ public final class Transport extends DatagramTransportBase implements DatagramSt
 
       if (di == null) {
          di = new GMEDatagramInfo();
-         di.dataBuffer = (DataBuffer)(new Object(datagram.getData(), datagram.getOffset(), datagram.getLength(), true));
+         di.dataBuffer = new DataBuffer(datagram.getData(), datagram.getOffset(), datagram.getLength(), true);
       }
 
       int encryptMode = -1;
@@ -396,7 +399,7 @@ public final class Transport extends DatagramTransportBase implements DatagramSt
             GMETarget targ = gmeAddr.getTarget(i);
             switch (targ.type) {
                case 0:
-                  throw new Object();
+                  throw new IOException();
                case 1:
                default:
                   logInformation(1414092132);
@@ -620,7 +623,7 @@ public final class Transport extends DatagramTransportBase implements DatagramSt
                   }
 
                   if (target != null) {
-                     targets = (Vector)(new Object(2));
+                     targets = new Vector(2);
                      targets.addElement(target);
                      targets.addElement(new GMETarget(addr, targetType));
                      target = null;
@@ -716,7 +719,7 @@ public final class Transport extends DatagramTransportBase implements DatagramSt
       EventLogger.logEvent(super.GUID, 1381528436, 4);
       DatagramConnectionBase connection = routerConnection._subConnection;
       DatagramAddressBase subAddress = null;
-      if (datagram instanceof Object) {
+      if (datagram instanceof DatagramBase) {
          subAddress = ((DatagramBase)datagram).getAddressBase();
       }
 
@@ -939,7 +942,7 @@ public final class Transport extends DatagramTransportBase implements DatagramSt
       Firewall.getInstance().incrementBlockedCount(firewallErrorCode);
       logInformation(logErrorCode);
       logError(1380207475);
-      throw new Object(msg);
+      throw new SecurityException(msg);
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
@@ -962,7 +965,7 @@ public final class Transport extends DatagramTransportBase implements DatagramSt
       String[] addrs;
       if (dg.available() == 0) {
          logInformation(1380009587);
-         addrs = new Object[1];
+         addrs = new String[1];
          GMETarget src = dgInfo.address.getSrc();
          if (src == null) {
             logError(1380021619);
@@ -972,7 +975,7 @@ public final class Transport extends DatagramTransportBase implements DatagramSt
          addrs[0] = src.address;
       } else {
          logInformation(1380009580);
-         Vector v = (Vector)(new Object());
+         Vector v = new Vector();
 
          while (true) {
             boolean var9 = false /* VF: Semaphore variable */;
@@ -980,7 +983,7 @@ public final class Transport extends DatagramTransportBase implements DatagramSt
             try {
                var9 = true;
                if (dg.eof()) {
-                  addrs = new Object[v.size()];
+                  addrs = new String[v.size()];
                   v.copyInto(addrs);
                   var9 = false;
                   break;
@@ -1180,10 +1183,10 @@ public final class Transport extends DatagramTransportBase implements DatagramSt
       return pin;
    }
 
-   protected final void throwIOException(GMEDatagramInfo di, int eventLoggerCode, int dgslEvent) {
+   protected final void throwIOException(GMEDatagramInfo di, int eventLoggerCode, int dgslEvent) throws IOException {
       logError(eventLoggerCode);
       this.xmitDgslEvent(di.listener, di.transId, dgslEvent, null);
-      throw new Object();
+      throw new IOException();
    }
 
    private static final void logAlways(int code) {

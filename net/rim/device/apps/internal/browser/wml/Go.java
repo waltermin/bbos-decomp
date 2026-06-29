@@ -4,7 +4,6 @@ import javax.microedition.io.InputConnection;
 import net.rim.device.api.browser.field.RenderingApplication;
 import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.api.util.FactoryUtil;
-import net.rim.device.api.util.LongHashtable;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.VerbProvider;
@@ -93,7 +92,7 @@ final class Go extends Task {
          url = this._href.getName();
          if (this._postField != null) {
             if (this._offlineParameters == null) {
-               this._offlineParameters = (HttpHeaders)(new Object());
+               this._offlineParameters = new HttpHeaders();
             }
 
             FormData formData = this._postField.getFormData(0, this._accept_charset, this._offlineParameters, super._contextManager);
@@ -106,19 +105,19 @@ final class Go extends Task {
             String formDataStr = formData.toString();
             String str;
             if (url.indexOf(63) == -1) {
-               str = ((StringBuffer)(new Object())).append('?').append(formDataStr).toString();
+               str = '?' + formDataStr;
             } else {
-               str = ((StringBuffer)(new Object())).append('&').append(formDataStr).toString();
+               str = '&' + formDataStr;
             }
 
             int start = url.indexOf(35);
             if (start != -1) {
                String base = url.substring(0, start);
                String card = url.substring(start);
-               return ((StringBuffer)(new Object())).append(base).append(str).append(card).toString();
+               return base + str + card;
             }
 
-            url = ((StringBuffer)(new Object())).append(url).append(str).toString();
+            url = url + str;
          }
       }
 
@@ -129,12 +128,12 @@ final class Go extends Task {
    public final void loadPage(String url, Object context) {
       ContextObject contextObject = null;
       boolean programmatic = false;
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          contextObject = (ContextObject)context;
       }
 
       if (contextObject != null) {
-         Verb[] verbs = (Object[])contextObject.get(666175809445784644L);
+         Verb[] verbs = (Verb[])contextObject.get(666175809445784644L);
          if (verbs != null && verbs.length != 0) {
             verbs[0].invoke(context);
             return;
@@ -143,7 +142,7 @@ final class Go extends Task {
          programmatic = contextObject.getFlag(64);
       }
 
-      Verb verb = this.getVerbs(null, new Object[0]);
+      Verb verb = this.getVerbs(null, new Verb[0]);
       if (verb != null) {
          verb.invoke(context);
       } else if (super._browserContent != null) {
@@ -159,7 +158,7 @@ final class Go extends Task {
                FormData formData = this._postFormData;
                if (formData == null) {
                   if (this._offlineParameters == null) {
-                     this._offlineParameters = (HttpHeaders)(new Object());
+                     this._offlineParameters = new HttpHeaders();
                   }
 
                   formData = this._postField.getFormData(this._enctype, this._accept_charset, this._offlineParameters, super._contextManager);
@@ -169,7 +168,7 @@ final class Go extends Task {
                   postData = formData.getBytes();
                   String contentType = formData.getContentType();
                   if (contentType != null) {
-                     requestHeaders = (HttpHeaders)(new Object());
+                     requestHeaders = new HttpHeaders();
                      requestHeaders.setProperty("Content-Type", contentType);
                   }
                }
@@ -178,7 +177,7 @@ final class Go extends Task {
             int flags = super._browserContent.getSharedFlags() | 1;
             if (this._cacheControl != null) {
                if (requestHeaders == null) {
-                  requestHeaders = (HttpHeaders)(new Object());
+                  requestHeaders = new HttpHeaders();
                }
 
                requestHeaders.setProperty(HeaderParser.CACHE_CONTROL, this._cacheControl);
@@ -188,7 +187,7 @@ final class Go extends Task {
 
             if (this._sendReferrer) {
                if (requestHeaders == null) {
-                  requestHeaders = (HttpHeaders)(new Object());
+                  requestHeaders = new HttpHeaders();
                }
 
                RenderingUtilities.setReferrer(requestHeaders, super._browserContent.getURL());
@@ -234,15 +233,15 @@ final class Go extends Task {
       }
 
       if (addressType != 5019899335844518230L) {
-         ContextObject contextObject = (ContextObject)(new Object());
+         ContextObject contextObject = new ContextObject();
          contextObject.put(253, url);
          VerbProvider newModel = (VerbProvider)FactoryUtil.createInstance(addressType, contextObject);
          if (!(newModel instanceof HTTPAddressModel)) {
             if (context == null) {
-               context = new Object(2, 73, 96);
+               context = new ContextObject(2, 73, 96);
                ((ContextObject)context).setFlag(83);
                ((ContextObject)context).setFlag(61);
-               ((LongHashtable)context).put(8128293842573788963L, super._browserContent.getBrowserPhoneConfirmation());
+               ((ContextObject)context).put(8128293842573788963L, super._browserContent.getBrowserPhoneConfirmation());
             }
 
             return newModel.getVerbs(context, verbs);

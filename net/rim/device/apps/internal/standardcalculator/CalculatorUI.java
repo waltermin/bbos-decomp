@@ -5,12 +5,12 @@ import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.system.Display;
 import net.rim.device.api.system.PersistentObject;
 import net.rim.device.api.system.RIMPersistentStore;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FontFamily;
 import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Trackball;
 import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.NullField;
 import net.rim.device.api.ui.theme.Theme;
 import net.rim.device.api.ui.theme.ThemeManager;
 import net.rim.device.api.util.CharacterUtilities;
@@ -110,7 +110,7 @@ final class CalculatorUI extends Manager {
    CalculatorUI(CalculatorScreen calculatorScreen, long style) {
       super(style);
       this._calculatorScreen = calculatorScreen;
-      this._display = (LabelField)(new Object("0.", 1152921504606846981L));
+      this._display = new LabelField("0.", 1152921504606846981L);
       this._screenWidth = Display.getWidth();
       this._screenHeight = Display.getHeight();
       this._memoryField = new CalculatorUI$MemoryLabelField(1152921504606846982L);
@@ -250,13 +250,13 @@ final class CalculatorUI extends Manager {
          this._memoryField.setFont(memoryFont.getFont(0, var10));
       }
 
-      this._input = (StringBuffer)(new Object());
+      this._input = new StringBuffer();
       this._memory = new DeciFloat();
       this._memory.invalid();
       this.resetState();
       this.add(this._memoryField);
       this.add(this._display);
-      this.add((Field)(new Object(18014398509481984L)));
+      this.add(new NullField(18014398509481984L));
       this.getPersistentObjects();
    }
 

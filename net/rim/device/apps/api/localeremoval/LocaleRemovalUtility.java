@@ -101,12 +101,12 @@ public final class LocaleRemovalUtility {
          Object obj = persistentObject.getContents();
          if (obj instanceof Object[]) {
             Object[] objArrays = (Object[])obj;
-            if (objArrays[0] instanceof Object[]) {
-               locales = (Object[])objArrays[0];
+            if (objArrays[0] instanceof String[]) {
+               locales = (String[])objArrays[0];
             }
 
-            if (objArrays[1] instanceof Object[]) {
-               helpLocalesToKeep = (Object[])objArrays[1];
+            if (objArrays[1] instanceof String[]) {
+               helpLocalesToKeep = (String[])objArrays[1];
             }
          }
       }

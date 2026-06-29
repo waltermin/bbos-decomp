@@ -2,10 +2,11 @@ package net.rim.plazmic.internal.mediaengine.model.smil.v0_0.player;
 
 import java.io.InputStream;
 import javax.microedition.media.Manager;
+import javax.microedition.media.MediaException;
 import javax.microedition.media.control.VolumeControl;
-import javax.microedition.media.protocol.DataSource;
 import net.rim.device.apps.internal.profiles.Profile;
 import net.rim.device.apps.internal.profiles.Profiles;
+import net.rim.device.internal.media.FileDataSource;
 import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.SMILPlayer;
 
 public class AudioPlayerWrapper implements Player, javax.microedition.media.PlayerListener {
@@ -15,13 +16,13 @@ public class AudioPlayerWrapper implements Player, javax.microedition.media.Play
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public AudioPlayerWrapper(InputStream is, String type, long length) {
+   public AudioPlayerWrapper(InputStream is, String type, long length) throws MediaException {
       try {
-         this._player = Manager.createPlayer((DataSource)(new Object(is, type, length)));
+         this._player = Manager.createPlayer(new FileDataSource(is, type, length));
          this._player.realize();
          this._volumeControl = (VolumeControl)this._player.getControl("VolumeControl");
       } catch (Throwable var7) {
-         throw new Object(e.toString());
+         throw new MediaException(e.toString());
       }
    }
 
@@ -103,7 +104,7 @@ public class AudioPlayerWrapper implements Player, javax.microedition.media.Play
    @Override
    public void playerUpdate(javax.microedition.media.Player player, String event, Object eventData) {
       if ("endOfMedia".equals(event) && this._listener != null && eventData != null) {
-         this._listener.notifyComplete(eventData / 1000);
+         this._listener.notifyComplete((Long)eventData / 1000);
       }
    }
 

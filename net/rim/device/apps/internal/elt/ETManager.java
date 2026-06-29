@@ -67,7 +67,7 @@ final class ETManager implements SyncAgentListener {
       }
 
       if (this._getLocationThread != null) {
-         Logger.logEvent(this, ((StringBuffer)(new Object("disableTracking, started="))).append(this._getLocationThread.isStarted()).toString(), true);
+         Logger.logEvent(this, "disableTracking, started=" + this._getLocationThread.isStarted(), true);
          if (this._getLocationThread.isStarted()) {
             this.registerSync();
          }
@@ -92,10 +92,10 @@ final class ETManager implements SyncAgentListener {
 
    @Override
    public final void onSyncAgentEvent(int eventId, Object anObject) {
-      if (eventId == 22 && anObject instanceof Object) {
+      if (eventId == 22 && anObject instanceof SyncAgentUrl) {
          SyncAgentUrl obj = (SyncAgentUrl)anObject;
          if (this._syncTimestamp == 0 && obj.getDatabaseName().equals(this._etCollection.getSyncName())) {
-            Logger.logEvent(this, ((StringBuffer)(new Object("syncTimeSet: "))).append(System.currentTimeMillis()).toString(), false);
+            Logger.logEvent(this, "syncTimeSet: " + System.currentTimeMillis(), false);
             if (this._data.isEnabledByUser() && this._data.isEnabledByITPolicy()) {
                if (this._getLocationThread != null) {
                   this._syncTimestamp = System.currentTimeMillis();
@@ -121,16 +121,16 @@ final class ETManager implements SyncAgentListener {
             this.notify();
          }
       } catch (Throwable var11) {
-         Logger.logError(this, ((StringBuffer)(new Object("notify exception: "))).append(e).toString());
+         Logger.logError(this, "notify exception: " + e);
          break label81;
       }
 
-      Logger.logEvent(this, ((StringBuffer)(new Object("getLocationThread: "))).append(this._getLocationThread).toString(), false);
+      Logger.logEvent(this, "getLocationThread: " + this._getLocationThread, false);
       if (this._getLocationThread != null && this._getLocationThread.isStarted()) {
          this._getLocationThread.stop();
       }
 
-      Logger.logEvent(this, ((StringBuffer)(new Object("gpsFixThread: "))).append(this._gpsFixThread).toString(), false);
+      Logger.logEvent(this, "gpsFixThread: " + this._gpsFixThread, false);
       if (this._gpsFixThread != null) {
          this._gpsFixThread.stopAttempt();
       }
@@ -144,7 +144,7 @@ final class ETManager implements SyncAgentListener {
       try {
          ApplicationRegistry.getApplicationRegistry().remove(7659638648801846908L);
       } catch (Throwable var10) {
-         Logger.logError(this, ((StringBuffer)(new Object("remove app exception: "))).append(e).toString());
+         Logger.logError(this, "remove app exception: " + e);
          break label73;
       }
 
@@ -163,7 +163,7 @@ final class ETManager implements SyncAgentListener {
       }
 
       if (config == null) {
-         config = (Configuration)(new Object(sid));
+         config = new Configuration(sid);
       }
 
       serviceManager.setConfiguration(config);
@@ -178,7 +178,7 @@ final class ETManager implements SyncAgentListener {
       }
 
       SyncAgent.getSingletonInstance().registerListener(this);
-      Logger.logEvent(this, ((StringBuffer)(new Object("registerSync, sid: "))).append(sid).append(" config: ").append(config).toString(), true);
+      Logger.logEvent(this, "registerSync, sid: " + sid + " config: " + config, true);
       this._mgr = mgr;
    }
 
@@ -219,15 +219,14 @@ final class ETManager implements SyncAgentListener {
 
       Logger.logEvent(
          this,
-         ((StringBuffer)(new Object("location update, initialAttempt: ")))
-            .append(initialAttempt)
-            .append(", locationProvider=")
-            .append(provider)
-            .append(" enabledByUser=")
-            .append(this._data.isEnabledByUser())
-            .append(" enabledByITPolicy=")
-            .append(this._data.isEnabledByITPolicy())
-            .toString(),
+         "location update, initialAttempt: "
+            + initialAttempt
+            + ", locationProvider="
+            + provider
+            + " enabledByUser="
+            + this._data.isEnabledByUser()
+            + " enabledByITPolicy="
+            + this._data.isEnabledByITPolicy(),
          true
       );
       boolean acquired = false;
@@ -265,7 +264,7 @@ final class ETManager implements SyncAgentListener {
             }
          } catch (Throwable var23) {
             timeIn = 0;
-            Logger.logError(this, ((StringBuffer)(new Object("updateLocation exception: "))).append(e).toString());
+            Logger.logError(this, "updateLocation exception: " + e);
             break label152;
          }
 
@@ -277,15 +276,14 @@ final class ETManager implements SyncAgentListener {
 
          Logger.logEvent(
             this,
-            ((StringBuffer)(new Object("location update, initialAttempt: ")))
-               .append(initialAttempt)
-               .append(", fixTime=")
-               .append(this._gpsFixTime)
-               .append(" enabledByUser=")
-               .append(this._data.isEnabledByUser())
-               .append(" enabledByITPolicy=")
-               .append(this._data.isEnabledByITPolicy())
-               .toString(),
+            "location update, initialAttempt: "
+               + initialAttempt
+               + ", fixTime="
+               + this._gpsFixTime
+               + " enabledByUser="
+               + this._data.isEnabledByUser()
+               + " enabledByITPolicy="
+               + this._data.isEnabledByITPolicy(),
             false
          );
          if (initialAttempt
@@ -304,7 +302,7 @@ final class ETManager implements SyncAgentListener {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private final LocationProvider createLocationProvider(boolean forceAutonomous) {
       try {
-         Criteria criteria = (Criteria)(new Object());
+         Criteria criteria = new Criteria();
          criteria.setAddressInfoRequired(false);
          criteria.setAltitudeRequired(false);
          criteria.setPreferredResponseTime(forceAutonomous ? 60 : 16);
@@ -316,10 +314,10 @@ final class ETManager implements SyncAgentListener {
          boolean assistModeSupported = (capability & 2) != 0;
          boolean cellModeSupported = (capability & 1) != 0;
          boolean costing = !forceAutonomous ? assistModeSupported || cellModeSupported : false;
-         Logger.logEvent(this, ((StringBuffer)(new Object("costing: "))).append(costing).toString(), false);
+         Logger.logEvent(this, "costing: " + costing, false);
          criteria.setCostAllowed(costing);
          LocationProvider provider = LocationProvider.getInstance(criteria);
-         Logger.logEvent(this, ((StringBuffer)(new Object("GetLocationProvider: "))).append(provider).toString(), false);
+         Logger.logEvent(this, "GetLocationProvider: " + provider, false);
          return provider;
       } catch (Throwable var9) {
          Logger.logError(this, e.getMessage());

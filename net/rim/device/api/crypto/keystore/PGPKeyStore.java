@@ -26,7 +26,7 @@ public final class PGPKeyStore extends SyncableRIMKeyStore {
             var3 = false;
          } finally {
             if (var3) {
-               throw new Object();
+               throw new RuntimeException();
             }
          }
       }

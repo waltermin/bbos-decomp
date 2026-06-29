@@ -20,7 +20,7 @@ class CustomDictUnitEditor$ChineseCustomDictEditorScreen extends CustomDictUnitE
    public CustomDictUnitEditor$ChineseCustomDictEditorScreen(CustomDictUnitEditor _1, String title, String initialString) {
       super(title, initialString);
       this.this$0 = _1;
-      this._pinInfo = (PinInfo)(new Object());
+      this._pinInfo = new PinInfo();
       this._controlObject = (SLControlObject)InputContext.getInstance().getInputMethodControlObject();
       this._editorScreen = this;
       if (initialString != null && initialString.length() > 1) {
@@ -80,7 +80,7 @@ class CustomDictUnitEditor$ChineseCustomDictEditorScreen extends CustomDictUnitE
             }
 
             CustomWordlistScreen.getCustomDictionary().add(this._pinInfo);
-            this._pinInfo = (PinInfo)(new Object());
+            this._pinInfo = new PinInfo();
             this.close();
             return true;
          } else {
@@ -98,7 +98,7 @@ class CustomDictUnitEditor$ChineseCustomDictEditorScreen extends CustomDictUnitE
    public void createSinglePinInfoFromVector() {
       CustomDictUnitEditor$ChineseCustomDictEditorScreen$CustomChineseEditField temp = (CustomDictUnitEditor$ChineseCustomDictEditorScreen$CustomChineseEditField)this.getEditField();
       Vector pinInfoVector = temp.getPinInfoFR();
-      this._pinInfo = (PinInfo)(new Object());
+      this._pinInfo = new PinInfo();
       int i = 0;
 
       while (pinInfoVector.size() > 0) {

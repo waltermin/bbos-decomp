@@ -16,7 +16,7 @@ final class DataField extends AbstractForeignObject {
    private Bitmap BOMB = null;
    private boolean vertical = true;
    private boolean isTextType;
-   private XYRect _extent = (XYRect)(new Object());
+   private XYRect _extent = new XYRect();
    private int width;
 
    public DataField(Bitmap bitmap) {

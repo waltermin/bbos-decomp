@@ -2,7 +2,6 @@ package net.rim.device.apps.internal.phone.api.ui;
 
 import net.rim.device.api.system.Application;
 import net.rim.device.api.system.Bitmap;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.GaugeField;
 import net.rim.device.api.ui.component.RichTextField;
@@ -19,14 +18,14 @@ public final class PhoneStatusDialog extends PopupScreen implements Runnable {
    }
 
    public PhoneStatusDialog(String message, int numStages) {
-      super((Manager)(new Object()));
+      super(new DialogFieldManager());
       this._numProgressUpdates = numStages;
       DialogFieldManager dfm = (DialogFieldManager)this.getDelegate();
-      dfm.setMessage((RichTextField)(new Object(message, 36028797018963968L)));
-      BitmapField bmpField = (BitmapField)(new Object(Bitmap.getPredefinedBitmap(3)));
+      dfm.setMessage(new RichTextField(message, 36028797018963968L));
+      BitmapField bmpField = new BitmapField(Bitmap.getPredefinedBitmap(3));
       dfm.setIcon(bmpField);
       if (this._numProgressUpdates > 1) {
-         this._gaugeField = (GaugeField)(new Object(null, 0, 100, 5, 2));
+         this._gaugeField = new GaugeField(null, 0, 100, 5, 2);
          dfm.addCustomField(this._gaugeField);
       }
    }

@@ -1,6 +1,7 @@
 package net.rim.device.cldc.io.http;
 
 import com.sun.cldc.io.ConnectionBaseInterface;
+import java.io.IOException;
 import javax.microedition.io.Connection;
 import javax.microedition.io.Connector;
 import net.rim.device.api.io.http.HttpFilterRegistry;
@@ -21,8 +22,8 @@ public final class Protocol implements ConnectionBaseInterface {
    private static String WAP_IP = "wapgatewayip";
 
    @Override
-   public final int getProperties(String name) {
-      URL url = (URL)(new Object(PROXY_HTTP, name));
+   public final int getProperties(String name) throws IOException {
+      URL url = new URL(PROXY_HTTP, name);
       URLParameters params = url.getRIMParameters();
       if (params == null) {
          return RadioInfo.getNetworkType() == 5 ? 2 : 1;
@@ -50,7 +51,7 @@ public final class Protocol implements ConnectionBaseInterface {
 
       String uid = SocketTransportBase.findAcceptableConnectionUid(params);
       if (uid == null) {
-         throw new Object("Invalid url parameter.");
+         throw new IOException("Invalid url parameter.");
       } else {
          return ITPolicyInternal.verifyITAdminService(uid, false) ? 1 : 2;
       }
@@ -68,7 +69,7 @@ public final class Protocol implements ConnectionBaseInterface {
          }
       }
 
-      URL url = (URL)(new Object(httpMode, name));
+      URL url = new URL(httpMode, name);
       URLParameters params = url.getRIMParameters();
       boolean lookForFilter = true;
       if (params != null) {
@@ -107,7 +108,7 @@ public final class Protocol implements ConnectionBaseInterface {
 
          String protocol = HttpFilterRegistry.getFilter(name.substring(2, index));
          if (protocol != null) {
-            connection = Connector.open(((StringBuffer)(new Object())).append(protocol).append(':').append(name).toString(), mode, timeouts);
+            connection = Connector.open(protocol + ':' + name, mode, timeouts);
          }
       }
 

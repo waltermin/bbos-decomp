@@ -15,7 +15,7 @@ public class StandbyManager {
       synchronized (reg) {
          _cachedManager = (StandbyManager)reg.get(-4691466650299662765L);
          if (_cachedManager == null) {
-            throw new Object("Standby Manager not initialized");
+            throw new RuntimeException("Standby Manager not initialized");
          }
       }
 

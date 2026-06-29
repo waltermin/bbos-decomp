@@ -42,7 +42,7 @@ final class ETCollection implements SyncCollection, SyncConverter, OTASyncCapabl
             int altitude = (int)coords.getAltitude();
             float speed = location.getSpeed();
             float bearing = location.getCourse();
-            Logger.logEvent(this, ((StringBuffer)(new Object("update, lat="))).append(latitude).append(", lon=").append(longitude).toString(), false);
+            Logger.logEvent(this, "update, lat=" + latitude + ", lon=" + longitude, false);
             if (this._etSyncObject.length == 0 || this._etSyncObject[0] == null) {
                ETSyncObject obj = new ETSyncObject(location.getTimestamp(), latitude, longitude, altitude, speed, bearing, null, this._deviceStatus, 0);
                this.addSyncObject(obj);
@@ -109,7 +109,7 @@ final class ETCollection implements SyncCollection, SyncConverter, OTASyncCapabl
          Array.resize(this._etSyncObject, 1);
       }
 
-      Logger.logEvent(this, ((StringBuffer)(new Object("addSyncObject: "))).append(object).toString(), false);
+      Logger.logEvent(this, "addSyncObject: " + object, false);
       this._etSyncObject[0] = (ETSyncObject)object;
       this.commit();
       this._listenerManager.fireElementAdded(this, object);
@@ -118,7 +118,7 @@ final class ETCollection implements SyncCollection, SyncConverter, OTASyncCapabl
 
    @Override
    public final boolean updateSyncObject(SyncObject oldObject, SyncObject newObject) {
-      Logger.logEvent(this, ((StringBuffer)(new Object("updateSyncObject, old: "))).append(oldObject).append(" new:").append(newObject).toString(), false);
+      Logger.logEvent(this, "updateSyncObject, old: " + oldObject + " new:" + newObject, false);
       this.commit();
       this._listenerManager.fireElementUpdated(this, null, newObject);
       return true;
@@ -165,7 +165,7 @@ final class ETCollection implements SyncCollection, SyncConverter, OTASyncCapabl
    @Override
    public final boolean convert(SyncObject object, DataBuffer buffer, int version) {
       if (object instanceof ETSyncObject) {
-         Logger.logEvent(this, ((StringBuffer)(new Object("convert, save: "))).append(object).toString(), false);
+         Logger.logEvent(this, "convert, save: " + object, false);
          ETSyncObject etSyncObject = (ETSyncObject)object;
          return etSyncObject.save(buffer, version);
       } else {
@@ -176,7 +176,7 @@ final class ETCollection implements SyncCollection, SyncConverter, OTASyncCapabl
    @Override
    public final SyncObject convert(DataBuffer data, int version, int uid) {
       ETSyncObject etSyncObject = new ETSyncObject();
-      Logger.logEvent(this, ((StringBuffer)(new Object("convert, load buffer="))).append(data.getLength()).toString(), false);
+      Logger.logEvent(this, "convert, load buffer=" + data.getLength(), false);
       return etSyncObject.load(data, version) ? etSyncObject : null;
    }
 
@@ -187,13 +187,13 @@ final class ETCollection implements SyncCollection, SyncConverter, OTASyncCapabl
 
    @Override
    public final void addCollectionListener(Object listener) {
-      Logger.logEvent(this, ((StringBuffer)(new Object("addCollectionListener: "))).append(listener).toString(), false);
+      Logger.logEvent(this, "addCollectionListener: " + listener, false);
       this._listenerManager.addCollectionListener(listener);
    }
 
    @Override
    public final void removeCollectionListener(Object listener) {
-      Logger.logEvent(this, ((StringBuffer)(new Object("removeCollectionListener: "))).append(listener).toString(), false);
+      Logger.logEvent(this, "removeCollectionListener: " + listener, false);
       this._listenerManager.removeCollectionListener(listener);
    }
 
@@ -258,7 +258,7 @@ final class ETCollection implements SyncCollection, SyncConverter, OTASyncCapabl
          }
       }
 
-      this._listenerManager = (CollectionListenerManager)(new Object());
+      this._listenerManager = new CollectionListenerManager();
       SyncManager.getInstance().enableSynchronization(this, true);
    }
 }

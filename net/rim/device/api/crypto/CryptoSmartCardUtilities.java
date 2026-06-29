@@ -23,7 +23,7 @@ public final class CryptoSmartCardUtilities {
 
    public static final boolean importCertificates(KeyStore importKeyStore, KeyStore trustedKeyStore, String pleaseWaitMessage) {
       CryptoSmartCardUtilities$DoImportWork importWorker = new CryptoSmartCardUtilities$DoImportWork(importKeyStore, trustedKeyStore, null);
-      PleaseWaitDialog pleaseWait = (PleaseWaitDialog)(new Object(pleaseWaitMessage, importWorker));
+      PleaseWaitDialog pleaseWait = new PleaseWaitDialog(pleaseWaitMessage, importWorker);
       pleaseWait.display();
       return importWorker.wereCertificatesAdded();
    }
@@ -31,12 +31,12 @@ public final class CryptoSmartCardUtilities {
    public static final AssociatedData[] getSmartCardAssociatedData(Certificate cert) {
       AssociatedData[] associatedData = CertificateUtilities.getEmailAssociatedDataArray(cert);
       if (associatedData == null) {
-         associatedData = new Object[1];
+         associatedData = new AssociatedData[1];
       } else {
          Array.resize(associatedData, associatedData.length + 1);
       }
 
-      associatedData[associatedData.length - 1] = (AssociatedData)(new Object(-4699629744920546763L, new byte[0]));
+      associatedData[associatedData.length - 1] = new AssociatedData(-4699629744920546763L, new byte[0]);
       return associatedData;
    }
 }

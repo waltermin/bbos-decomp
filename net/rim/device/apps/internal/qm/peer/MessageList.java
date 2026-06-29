@@ -12,9 +12,9 @@ import net.rim.device.apps.internal.qm.peer.common.HintPollingThread;
 import net.rim.device.internal.ui.component.Scrollbar;
 
 final class MessageList extends Manager {
-   private VerticalFieldManager _fields = (VerticalFieldManager)(new Object(3477060387306733568L));
-   private Scrollbar _scrollbar = (Scrollbar)(new Object());
-   private Hashtable _lookup = (Hashtable)(new Object());
+   private VerticalFieldManager _fields = new VerticalFieldManager(3477060387306733568L);
+   private Scrollbar _scrollbar = new Scrollbar();
+   private Hashtable _lookup = new Hashtable();
    private static Tag TAG = Tag.create("bbmessenger-messagelist");
    private static final long VFM_STYLE = 3477060387306733568L;
    private static final int MAX_NUM_MESSAGES = 250;
@@ -87,7 +87,7 @@ final class MessageList extends Manager {
 
    final void remove(RIMModel message) {
       Object obj = this._lookup.get(message);
-      if (obj instanceof Object) {
+      if (obj instanceof Field) {
          this._fields.delete((Field)obj);
          this._lookup.remove(message);
       }

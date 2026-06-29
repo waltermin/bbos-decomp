@@ -16,14 +16,14 @@ class SecurityDialog$EnhancedPasswordDialog extends PasswordDialog {
       VerticalIndentFieldManager vifm = (VerticalIndentFieldManager)this.getDelegate();
       this.setStatusPriority(-1073741823);
       if (extendedChoices == null) {
-         this._extendedButtons = new Object[0];
+         this._extendedButtons = new ButtonField[0];
       } else {
-         HorizontalFieldManager buttonManager = (HorizontalFieldManager)(new Object(12884901888L));
+         HorizontalFieldManager buttonManager = new HorizontalFieldManager(12884901888L);
          int numChoices = extendedChoices.length;
-         this._extendedButtons = new Object[numChoices];
+         this._extendedButtons = new ButtonField[numChoices];
 
          for (int i = 0; i < numChoices; i++) {
-            this._extendedButtons[i] = (ButtonField)(new Object(extendedChoices[i].toString()));
+            this._extendedButtons[i] = new ButtonField(extendedChoices[i].toString());
             this._extendedButtons[i].setChangeListener(this);
             buttonManager.add(this._extendedButtons[i]);
          }
@@ -51,7 +51,7 @@ class SecurityDialog$EnhancedPasswordDialog extends PasswordDialog {
          return true;
       }
 
-      if (field instanceof Object) {
+      if (field instanceof ButtonField) {
          this.close(0);
 
          for (int i = 0; i < this._extendedButtons.length; i++) {

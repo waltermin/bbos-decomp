@@ -50,7 +50,7 @@ public final class PGPUserAttributePacket extends PGPPacket implements Persistab
    }
 
    public final Bitmap[] getImages() {
-      Bitmap[] userImages = new Object[0];
+      Bitmap[] userImages = new Bitmap[0];
       int numUserImageEncodings = this._userImageEncodings.length;
 
       for (int i = 0; i < numUserImageEncodings; i++) {

@@ -38,7 +38,7 @@ public final class MappedFieldElement extends AbstractElement {
 
    @Override
    public final String toString() {
-      StringBuffer buf = (StringBuffer)(new Object(128));
+      StringBuffer buf = new StringBuffer(128);
       buf.append("MappedFieldElement[name=").append(super._name).append(",mapping=").append(this._mapping).append(']');
       return buf.toString();
    }

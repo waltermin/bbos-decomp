@@ -1,5 +1,6 @@
 package javax.bluetooth;
 
+import java.io.IOException;
 import javax.microedition.io.Connection;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.apps.internal.bluetooth.BluetoothDevice;
@@ -20,7 +21,7 @@ public class RemoteDevice {
       this._address = address;
       this._addressAsBytes = BluetoothME.stringToDeviceAddress(address);
       if (Arrays.equals(this._addressAsBytes, BluetoothME.getLocalDeviceAddress())) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -33,10 +34,10 @@ public class RemoteDevice {
       return this.getDevice().getAuthorized() == 1;
    }
 
-   public String getFriendlyName(boolean alwaysAsk) {
+   public String getFriendlyName(boolean alwaysAsk) throws IOException {
       BluetoothDevice device = this.getDevice();
       if (alwaysAsk && !device.fetchName()) {
-         throw new Object("Could not contact device");
+         throw new IOException("Could not contact device");
       } else {
          return device.getName();
       }
@@ -61,52 +62,52 @@ public class RemoteDevice {
       return this._address.hashCode();
    }
 
-   public static RemoteDevice getRemoteDevice(Connection conn) {
+   public static RemoteDevice getRemoteDevice(Connection conn) throws IOException {
       assertPermission();
       if (conn == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       if (!(conn instanceof BluetoothConnection)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       BluetoothConnection btconn = (BluetoothConnection)conn;
       byte[] address = btconn.getRemoteAddress();
       if (address == null) {
-         throw new Object("Connection is closed");
+         throw new IOException("Connection is closed");
       }
 
       BluetoothDeviceManagerImpl btManager = (BluetoothDeviceManagerImpl)BluetoothDeviceManager.getInstance();
       return btManager.getDevice(address, 0).getRemoteDevice();
    }
 
-   public boolean authenticate() {
+   public boolean authenticate() throws IOException {
       if (this.getDevice().isConnected()) {
          return true;
       } else {
-         throw new Object();
+         throw new IOException();
       }
    }
 
-   public boolean authorize(Connection conn) {
+   public boolean authorize(Connection conn) throws IOException {
       if (getRemoteDevice(conn) != this) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else if (!(conn instanceof BluetoothServerConnection)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          BluetoothServerConnection serverConn = (BluetoothServerConnection)conn;
          if (serverConn.isConnected()) {
             return true;
          } else {
-            throw new Object();
+            throw new IOException();
          }
       }
    }
 
    public boolean encrypt(Connection conn, boolean on) {
       if (getRemoteDevice(conn) != this) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (!on) {
@@ -121,16 +122,16 @@ public class RemoteDevice {
       return this.getDevice().isConnected();
    }
 
-   public boolean isAuthorized(Connection conn) {
+   public boolean isAuthorized(Connection conn) throws IOException {
       if (!(conn instanceof BluetoothServerConnection)) {
          if (!(conn instanceof BluetoothConnection)) {
-            throw new Object();
+            throw new IllegalArgumentException();
          } else {
             BluetoothConnection clientConn = (BluetoothConnection)conn;
             if (clientConn.isConnected()) {
                return false;
             } else {
-               throw new Object();
+               throw new IOException();
             }
          }
       } else {
@@ -138,7 +139,7 @@ public class RemoteDevice {
          if (serverConn.isConnected()) {
             return true;
          } else {
-            throw new Object();
+            throw new IOException();
          }
       }
    }

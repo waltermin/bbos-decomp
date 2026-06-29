@@ -43,8 +43,7 @@ class EventBase implements BareEvent, PersistableRIMModel {
          return null;
       }
 
-      Verb[] defaultVerbs = new Object[2];
-      defaultVerbs[1] = deleteVerb;
+      Verb[] defaultVerbs = new Verb[]{null, deleteVerb};
       this.checkForVerbOverrides(context, defaultVerbs);
       if (!ContextObject.getFlag(context, 86)) {
          defaultVerbs[1] = null;
@@ -68,7 +67,7 @@ class EventBase implements BareEvent, PersistableRIMModel {
       }
 
       if (!reminder) {
-         Verb[] temp = new Object[0];
+         Verb[] temp = new Verb[0];
          EventUtilities.getExternalCalendarActionVerbs(temp);
          if (temp != null && temp.length > 0) {
             int oldLength = verbs.length;
@@ -88,7 +87,7 @@ class EventBase implements BareEvent, PersistableRIMModel {
             for (int i = oldLength; i < verbs.length; i++) {
                verbs[i] = vcalVerbs[i - oldLength];
                Verb var10000 = verbs[i];
-               if (verbs[i] instanceof Object) {
+               if (verbs[i] instanceof DefaultProvider) {
                   DefaultProvider dp = (DefaultProvider)var10000;
                   Object result = dp.getDefault(this, null);
                   if (verbs[i] == result) {

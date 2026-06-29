@@ -6,9 +6,13 @@ import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.api.util.StringTokenizer;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.RIMModel;
+import net.rim.device.apps.api.messaging.EmailBodyProvider;
 import net.rim.device.apps.internal.blackberryemail.body.EmailBodyModelImpl;
 import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
 import net.rim.device.apps.internal.blackberryemail.email.EmailPayloadModel;
+import net.rim.device.apps.internal.blackberryemail.email.ProxyModel;
+import net.rim.device.apps.internal.blackberryemail.unknown.UnknownMimePartModel;
+import net.rim.device.apps.internal.commonmodels.body.BodyModel;
 import net.rim.device.apps.internal.secureemail.AbortSendSecureEmailException;
 import net.rim.device.apps.internal.secureemail.SecureEmailBodyModel;
 import net.rim.device.apps.internal.secureemail.SecureEmailFactory;
@@ -35,15 +39,15 @@ public class PlainTextMessageEncoder implements MessageEncoder {
 
       for (int i = 0; i < numMessageModels; i++) {
          RIMModel currentMessageModel = (RIMModel)message.getAt(i);
-         if (currentMessageModel instanceof Object) {
+         if (currentMessageModel instanceof EmailPayloadModel) {
             EmailPayloadModel emailPayloadModel = (EmailPayloadModel)currentMessageModel;
             int numOriginalMessageModels = emailPayloadModel.size();
 
             for (int j = 0; j < numOriginalMessageModels; j++) {
                Object currentOriginalMessageModel = emailPayloadModel.getAt(j);
-               if ((currentOriginalMessageModel instanceof Object || currentOriginalMessageModel instanceof Object)
-                  && !(currentOriginalMessageModel instanceof Object)
-                  && !(currentOriginalMessageModel instanceof Object)) {
+               if ((currentOriginalMessageModel instanceof ProxyModel || currentOriginalMessageModel instanceof UnknownMimePartModel)
+                  && !(currentOriginalMessageModel instanceof BodyModel)
+                  && !(currentOriginalMessageModel instanceof EmailBodyProvider)) {
                   return true;
                }
             }
@@ -58,14 +62,14 @@ public class PlainTextMessageEncoder implements MessageEncoder {
 
       for (int i = 0; i < numMessageModels; i++) {
          RIMModel currentMessageModel = (RIMModel)message.getAt(i);
-         if (currentMessageModel instanceof Object) {
+         if (currentMessageModel instanceof EmailPayloadModel) {
             EmailPayloadModel emailPayloadModel = (EmailPayloadModel)currentMessageModel;
             int numOriginalMessageModels = emailPayloadModel.size();
 
             for (int j = 0; j < numOriginalMessageModels; j++) {
                Object currentOriginalMessageModel = emailPayloadModel.getAt(j);
                if (!(currentOriginalMessageModel instanceof SecureEmailBodyModel)) {
-                  if (currentOriginalMessageModel instanceof Object) {
+                  if (currentOriginalMessageModel instanceof EmailBodyModelImpl) {
                      EmailBodyModelImpl bodyModel = (EmailBodyModelImpl)currentOriginalMessageModel;
                      if (bodyModel.isMoreAvailable() || bodyModel.isTruncated()) {
                         return true;
@@ -89,7 +93,7 @@ public class PlainTextMessageEncoder implements MessageEncoder {
 
       for (int i = 0; i < numMessageModels; i++) {
          RIMModel currentMessageModel = (RIMModel)message.getAt(i);
-         if (currentMessageModel instanceof Object) {
+         if (currentMessageModel instanceof EmailPayloadModel) {
             EmailPayloadModel emailPayloadModel = (EmailPayloadModel)currentMessageModel;
             int numOriginalMessageModels = emailPayloadModel.size();
 
@@ -158,7 +162,7 @@ public class PlainTextMessageEncoder implements MessageEncoder {
             return false;
          }
 
-         StringTokenizer tokenizer = (StringTokenizer)(new Object(besVersion, '.'));
+         StringTokenizer tokenizer = new StringTokenizer(besVersion, '.');
 
          try {
             int majorVersion = Integer.parseInt(tokenizer.nextToken());

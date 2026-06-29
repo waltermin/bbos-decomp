@@ -12,14 +12,14 @@ public final class CryptoUtilities {
    private CryptoUtilities() {
    }
 
-   public static final byte[] copyKey(byte[] key, int keyLength) {
+   public static final byte[] copyKey(byte[] key, int keyLength) throws InvalidKeyException {
       if (key == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int dataLength = key.length;
       if (dataLength > keyLength) {
-         throw new Object();
+         throw new InvalidKeyException();
       }
 
       byte[] copy = new byte[keyLength];
@@ -52,7 +52,7 @@ public final class CryptoUtilities {
 
    public static final void writeByteArray4BigEndian(ByteArrayOutputStream output, byte[] data) {
       if (data.length > 4) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (data.length < 4) {

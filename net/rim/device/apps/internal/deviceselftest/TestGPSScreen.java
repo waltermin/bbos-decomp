@@ -1,11 +1,11 @@
 package net.rim.device.apps.internal.deviceselftest;
 
 import net.rim.device.api.system.Application;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.component.SeparatorField;
 
 final class TestGPSScreen extends TestScreenBase {
    MenuItem _stopFixMenuItem;
@@ -17,19 +17,19 @@ final class TestGPSScreen extends TestScreenBase {
 
    TestGPSScreen(TestGPS _handler) {
       this.handler = _handler;
-      super._title = (LabelField)(new Object(DeviceSelfTestResources.getString(106), 1152921504606846976L));
-      super._input = (LabelField)(new Object(DeviceSelfTestResources.getString(107), 1152921504606846976L));
-      super._output = (LabelField)(new Object(DeviceSelfTestResources.getString(108), 1152921504606846976L));
+      super._title = new LabelField(DeviceSelfTestResources.getString(106), 1152921504606846976L);
+      super._input = new LabelField(DeviceSelfTestResources.getString(107), 1152921504606846976L);
+      super._output = new LabelField(DeviceSelfTestResources.getString(108), 1152921504606846976L);
       this.setTitle(super._title);
       this.add(super._input);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.add(super._output);
-      this._status = (EditField)(new Object(DeviceSelfTestResources.getString(138), DeviceSelfTestResources.getString(142)));
+      this._status = new EditField(DeviceSelfTestResources.getString(138), DeviceSelfTestResources.getString(142));
       this._status.setEditable(false);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.add(this._status);
-      this.add((Field)(new Object()));
-      this._info = (EditField)(new Object(DeviceSelfTestResources.getString(139), ""));
+      this.add(new SeparatorField());
+      this._info = new EditField(DeviceSelfTestResources.getString(139), "");
       this._info.setEditable(false);
       this.add(this._info);
       this.setupMenuItems();

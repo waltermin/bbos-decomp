@@ -46,9 +46,9 @@ public final class DriverAssist {
       this._useZoom = useZoom;
       this._width = width >> scale;
       this._height = height >> scale;
-      this._currentCell = (XYPoint)(new Object());
-      this._colorHash = (IntHashtable)(new Object());
-      this._lblHash = (ToIntHashtable)(new Object());
+      this._currentCell = new XYPoint();
+      this._colorHash = new IntHashtable();
+      this._lblHash = new ToIntHashtable();
       this._resolution = scale;
       this.init();
    }
@@ -58,8 +58,8 @@ public final class DriverAssist {
    }
 
    private final void init() {
-      this._map = (Bitmap)(new Object(197, this._width, this._height));
-      this._mapG = (Graphics)(new Object(this._map));
+      this._map = new Bitmap(197, this._width, this._height);
+      this._mapG = new Graphics(this._map);
       this._mapG.setDrawingStyle(1, false);
    }
 
@@ -93,7 +93,7 @@ public final class DriverAssist {
                         continue;
                      }
 
-                     _textBuffer.append(LabelRender.toLowerCase((String)(new Object(label, labelStart, labelEnd - labelStart)), 0));
+                     _textBuffer.append(LabelRender.toLowerCase(new String(label, labelStart, labelEnd - labelStart), 0));
                      LabelRender.addLabelInfo(_textBuffer, label, labelStart - 4);
                   }
 
@@ -145,7 +145,7 @@ public final class DriverAssist {
 
                         if (europeanHwyV2) {
                            markerStart = sDicIdx;
-                           markerInfo = ((StringBuffer)(new Object())).append(startSt).append(markerMiddle).append(endSt).toString().trim();
+                           markerInfo = (startSt + markerMiddle + endSt).trim();
                            europeanHwyV1 = false;
 
                            while (label[labelPos++] != 0) {
@@ -250,13 +250,7 @@ public final class DriverAssist {
 
    private final String getMarker(int start, int middle, int end) {
       try {
-         return ((StringBuffer)(new Object()))
-            .append(MarkerDictionary.MARKER_START_ARRAY[start])
-            .append(" ")
-            .append(middle)
-            .append(MarkerDictionary.MARKER_END_ARRAY[end])
-            .toString()
-            .trim();
+         return (MarkerDictionary.MARKER_START_ARRAY[start] + " " + middle + MarkerDictionary.MARKER_END_ARRAY[end]).trim();
       } finally {
          ;
       }
@@ -400,8 +394,7 @@ public final class DriverAssist {
                this._map.getARGB(data, 0, 1, tx, ty, 1, 1);
                data[0] &= 16777215;
                if (data[0] != 16777215 && data[0] != this._pathColor) {
-                  String path = (String)this._colorHash.get(data[0]);
-                  return path;
+                  return (String)this._colorHash.get(data[0]);
                }
 
                if (data[0] != 16777215 && data[0] == this._pathColor) {

@@ -44,8 +44,7 @@ public class LearningHeader {
       }
 
       if (!locale_str.startsWith(lang)) {
-         System.err
-            .println(((StringBuffer)(new Object("Warning: locale "))).append(this._locale).append(" uses wordlist of locale ").append(locale_str).toString());
+         System.err.println("Warning: locale " + this._locale + " uses wordlist of locale " + locale_str);
       }
    }
 
@@ -79,8 +78,8 @@ public class LearningHeader {
    }
 
    protected void computeInitialSizes(LearningGlobalAlphabet aAlphabet) {
-      ByteArrayOutputStream baos = (ByteArrayOutputStream)(new Object());
-      DataOutputStream dos1 = (DataOutputStream)(new Object(baos));
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      DataOutputStream dos1 = new DataOutputStream(baos);
       this.writeHelper(dos1);
       this._headerSize = baos.size() + 6;
       this._fileSize = this._headerSize + aAlphabet.size() + 1;

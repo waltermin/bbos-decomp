@@ -1,5 +1,6 @@
 package net.rim.tools.compiler.codfile;
 
+import java.io.IOException;
 import net.rim.tools.compiler.io.StructuredOutputStream;
 
 public final class FieldDefForeign extends FieldDef {
@@ -22,8 +23,8 @@ public final class FieldDefForeign extends FieldDef {
    }
 
    @Override
-   public final void write(StructuredOutputStream out) {
-      throw new Object("cannot write non-local member fields");
+   public final void write(StructuredOutputStream out) throws IOException {
+      throw new IOException("cannot write non-local member fields");
    }
 
    @Override

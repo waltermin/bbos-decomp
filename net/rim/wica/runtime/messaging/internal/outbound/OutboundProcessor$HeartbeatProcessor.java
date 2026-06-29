@@ -75,14 +75,13 @@ final class OutboundProcessor$HeartbeatProcessor extends OutboundProcessor$Inter
          } else {
             InternalLogger.logWarning(
                this.this$0,
-               ((StringBuffer)(new Object("Heartbeat to MDS Services ")))
-                  .append(request.getUrl())
-                  .append(" failed with response code ")
-                  .append(response.getResponseCode())
-                  .append(" after ")
-                  .append(request.getAttemptCount())
-                  .append(" attempts")
-                  .toString(),
+               "Heartbeat to MDS Services "
+                  + request.getUrl()
+                  + " failed with response code "
+                  + response.getResponseCode()
+                  + " after "
+                  + request.getAttemptCount()
+                  + " attempts",
                null,
                null
             );

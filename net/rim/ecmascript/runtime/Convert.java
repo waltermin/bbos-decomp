@@ -86,7 +86,7 @@ public class Convert extends Value {
                ParsedDouble fd = new ParsedDouble(Value.getDoubleValue(value));
                int n = fd.decExponent;
                int k = fd.nDigits;
-               StringBuffer b = (StringBuffer)(new Object());
+               StringBuffer b = new StringBuffer();
                if (fd.isNegative) {
                   b.append('-');
                }
@@ -168,7 +168,7 @@ public class Convert extends Value {
          return str;
       }
 
-      StringBuffer b = (StringBuffer)(new Object());
+      StringBuffer b = new StringBuffer();
       int len = str.length();
 
       for (int i = 0; i < len; i++) {
@@ -191,7 +191,7 @@ public class Convert extends Value {
             return "";
          case 5:
             if (GlobalObject.getInstance().version == 120) {
-               return ((StringBuffer)(new Object("\""))).append(escapeQuote(toString(value))).append("\"").toString();
+               return "\"" + escapeQuote(toString(value)) + "\"";
             }
 
             return toString(value);

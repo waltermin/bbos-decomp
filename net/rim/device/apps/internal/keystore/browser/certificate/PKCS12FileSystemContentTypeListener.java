@@ -29,7 +29,7 @@ public class PKCS12FileSystemContentTypeListener implements FileSystemContentTyp
       // Bytecode:
       // 000: aconst_null
       // 001: astore 2
-      // 002: new java/lang/Object
+      // 002: new java/lang/StringBuffer
       // 005: dup
       // 006: ldc_w "file:///SDCard/blackberry/certificates/"
       // 009: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -37,7 +37,7 @@ public class PKCS12FileSystemContentTypeListener implements FileSystemContentTyp
       // 00d: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 010: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 013: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 016: checkcast java/lang/Object
+      // 016: checkcast javax/microedition/io/file/FileConnection
       // 019: astore 2
       // 01a: aload 2
       // 01b: invokeinterface javax/microedition/io/file/FileConnection.openInputStream ()Ljava/io/InputStream; 1
@@ -64,7 +64,7 @@ public class PKCS12FileSystemContentTypeListener implements FileSystemContentTyp
       // 040: iload 5
       // 042: invokevirtual java/io/InputStream.read ([BII)I
       // 045: pop
-      // 046: new java/lang/Object
+      // 046: new net/rim/device/api/crypto/PKCS12
       // 049: dup
       // 04a: aload 6
       // 04c: invokespecial net/rim/device/api/crypto/PKCS12.<init> ([B)V
@@ -144,7 +144,7 @@ public class PKCS12FileSystemContentTypeListener implements FileSystemContentTyp
       // 0ee: ifeq 118
       // 0f1: aload 14
       // 0f3: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 0f8: checkcast java/lang/Object
+      // 0f8: checkcast net/rim/device/api/crypto/keystore/KeyStoreData
       // 0fb: astore 15
       // 0fd: aload 15
       // 0ff: invokeinterface net/rim/device/api/crypto/keystore/KeyStoreData.isPrivateKeySet ()Z 1
@@ -158,9 +158,9 @@ public class PKCS12FileSystemContentTypeListener implements FileSystemContentTyp
       // 115: invokestatic net/rim/device/api/util/Arrays.add ([II)V
       // 118: iinc 13 1
       // 11b: goto 098
-      // 11e: new java/lang/Object
+      // 11e: new net/rim/device/api/ui/component/RichTextField
       // 121: dup
-      // 122: new java/lang/Object
+      // 122: new java/lang/StringBuffer
       // 125: dup
       // 126: invokespecial java/lang/StringBuffer.<init> ()V
       // 129: sipush 6098

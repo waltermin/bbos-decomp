@@ -13,7 +13,7 @@ class OCSPQuery$ResponderCertContainer {
 
    public OCSPQuery$ResponderCertContainer(X509Certificate cert) {
       this._cert = cert;
-      SHA1Digest digest = (SHA1Digest)(new Object());
+      SHA1Digest digest = new SHA1Digest();
       this._hash = new byte[5];
       digest.update(cert.getEncoding());
       byte[] hashBuffer = digest.getDigest();

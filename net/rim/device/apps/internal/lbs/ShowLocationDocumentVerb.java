@@ -35,7 +35,7 @@ final class ShowLocationDocumentVerb extends Verb {
       // 0f: iload 2
       // 10: isub
       // 11: istore 3
-      // 12: new java/lang/Object
+      // 12: new java/io/ByteArrayInputStream
       // 15: dup
       // 16: aload 1
       // 17: invokevirtual java/lang/String.getBytes ()[B
@@ -43,7 +43,7 @@ final class ShowLocationDocumentVerb extends Verb {
       // 1b: iload 3
       // 1c: invokespecial java/io/ByteArrayInputStream.<init> ([BII)V
       // 1f: astore 4
-      // 21: new java/lang/Object
+      // 21: new net/rim/device/api/io/Base64InputStream
       // 24: dup
       // 25: aload 4
       // 27: invokespecial net/rim/device/api/io/Base64InputStream.<init> (Ljava/io/InputStream;)V
@@ -55,7 +55,7 @@ final class ShowLocationDocumentVerb extends Verb {
       // 33: aload 6
       // 35: invokevirtual net/rim/device/api/io/Base64InputStream.read ([B)I
       // 38: pop
-      // 39: new java/lang/Object
+      // 39: new net/rim/device/api/util/DataBuffer
       // 3c: dup
       // 3d: aload 6
       // 3f: bipush 0
@@ -64,7 +64,7 @@ final class ShowLocationDocumentVerb extends Verb {
       // 43: bipush 1
       // 44: invokespecial net/rim/device/api/util/DataBuffer.<init> ([BIIZ)V
       // 47: astore 7
-      // 49: new java/lang/Object
+      // 49: new net/rim/device/api/util/DataBuffer
       // 4c: dup
       // 4d: invokespecial net/rim/device/api/util/DataBuffer.<init> ()V
       // 50: astore 8

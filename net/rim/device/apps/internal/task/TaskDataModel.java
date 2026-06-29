@@ -24,6 +24,8 @@ import net.rim.device.apps.api.framework.model.VerbProvider;
 import net.rim.device.apps.api.framework.registration.RIMModelFactory;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.reminders.ReminderModel;
+import net.rim.device.apps.api.reminders.ReminderModelAbsolute;
+import net.rim.device.apps.api.reminders.ReminderModelRelative;
 import net.rim.device.apps.api.task.TaskModel;
 import net.rim.device.apps.api.ui.CommonResources;
 import net.rim.device.apps.api.utility.framework.RecurUtil;
@@ -47,11 +49,11 @@ final class TaskDataModel implements FieldProvider, VerbProvider, ConversionProv
 
    public final void changeReminderType(byte type) {
       if (type == 2) {
-         this._reminderModel = (ReminderModel)_reminderFactory.createInstance(new Object((byte)2));
+         this._reminderModel = (ReminderModel)_reminderFactory.createInstance(new Byte((byte)2));
          this._reminderModel.setTime(-1);
       } else {
          if (type == 1) {
-            this._reminderModel = (ReminderModel)_reminderFactory.createInstance(new Object((byte)1));
+            this._reminderModel = (ReminderModel)_reminderFactory.createInstance(new Byte((byte)1));
             this._reminderModel.setTime(-1);
          }
       }
@@ -205,7 +207,7 @@ final class TaskDataModel implements FieldProvider, VerbProvider, ConversionProv
    }
 
    public final boolean isRecurring() {
-      if (this._recurrenceModel instanceof Object) {
+      if (this._recurrenceModel instanceof Recur) {
          Recur recurInfo = this._recurrenceModel;
          return recurInfo.getRecurType() != 0;
       } else {
@@ -227,16 +229,14 @@ final class TaskDataModel implements FieldProvider, VerbProvider, ConversionProv
 
    final DateField getDueDateField() {
       long timeStamp = this.hasDueDate() ? this._dueDate : TaskUtilities.convertToMidnightGMT(System.currentTimeMillis(), 1) + 61200000;
-      DateField df = (DateField)(new Object("", timeStamp, TaskUtilities._dateAndTimeFormat));
+      DateField df = new DateField("", timeStamp, TaskUtilities._dateAndTimeFormat);
       df.setTimeZone(TaskUtilities._gmtCalendar.getTimeZone());
       df.setChangeListener(this);
       return df;
    }
 
    final ObjectChoiceField getTimeZoneField() {
-      ObjectChoiceField tzcf = (ObjectChoiceField)(new Object(
-         CommonResources.getString(2013), TimeService.getTimeService().getTimeZoneNamesShort(), 0, 134217728
-      ));
+      ObjectChoiceField tzcf = new ObjectChoiceField(CommonResources.getString(2013), TimeService.getTimeService().getTimeZoneNamesShort(), 0, 134217728);
       tzcf.setSelectedIndex(TimeService.getTimeService().getTimeZoneIndex(this._timeZoneID));
       return tzcf;
    }
@@ -247,7 +247,7 @@ final class TaskDataModel implements FieldProvider, VerbProvider, ConversionProv
 
    final Field getReminderChoiceField(boolean includeRelative) {
       String label = "";
-      if (this._reminderModel instanceof Object) {
+      if (this._reminderModel instanceof DescriptionProvider) {
          label = ((DescriptionProvider)this._reminderModel).getStringForField(0);
       }
 
@@ -265,7 +265,7 @@ final class TaskDataModel implements FieldProvider, VerbProvider, ConversionProv
          choice = 2;
       }
 
-      ObjectChoiceField rcf = (ObjectChoiceField)(new Object(label, reminderChoices, choice));
+      ObjectChoiceField rcf = new ObjectChoiceField(label, reminderChoices, choice);
       rcf.setCookie(this._reminderModel);
       rcf.setChangeListener(this);
       return rcf;
@@ -280,7 +280,7 @@ final class TaskDataModel implements FieldProvider, VerbProvider, ConversionProv
    }
 
    final Field getReminderField(Object context) {
-      if (this._reminderModel instanceof Object && this._reminderModel.hasReminder()) {
+      if (this._reminderModel instanceof FieldProvider && this._reminderModel.hasReminder()) {
          ContextObject contextObject = ContextObject.clone(context);
          contextObject.setFlag(1);
          contextObject.setFlag(60);
@@ -321,7 +321,7 @@ final class TaskDataModel implements FieldProvider, VerbProvider, ConversionProv
       ChoiceField reminderChoiceField = (ChoiceField)reminderVFM.getField(0);
       Recur recurInfo = null;
       Field recurrenceField = mainVFM.getField(mainVFM.getFieldCount() - 1);
-      if (recurrenceField instanceof Object) {
+      if (recurrenceField instanceof RecurrenceField) {
          recurInfo = ((RecurrenceField)recurrenceField).getRecurrenceInfo();
       }
 
@@ -329,9 +329,9 @@ final class TaskDataModel implements FieldProvider, VerbProvider, ConversionProv
          Field reminderField = reminderVFM.getField(1);
          ((FieldProvider)this._reminderModel).grabDataFromField(reminderField, null);
          long time = 0;
-         if (this._reminderModel instanceof Object) {
+         if (this._reminderModel instanceof ReminderModelRelative) {
             time = dueDate - this._reminderModel.getTime();
-         } else if (this._reminderModel instanceof Object) {
+         } else if (this._reminderModel instanceof ReminderModelAbsolute) {
             time = TaskUtilities.convertFromGMT(this._reminderModel.getTime(), TimeZone.getTimeZone(tzid));
          }
 
@@ -395,8 +395,8 @@ final class TaskDataModel implements FieldProvider, VerbProvider, ConversionProv
    @Override
    public final Field getField(Object context) {
       ContextObject co = ContextObject.castOrCreate(context);
-      VerticalFieldManager mainVFM = (VerticalFieldManager)(new Object());
-      VerticalFieldManager reminderVFM = (VerticalFieldManager)(new Object());
+      VerticalFieldManager mainVFM = new VerticalFieldManager();
+      VerticalFieldManager reminderVFM = new VerticalFieldManager();
       Object[] inChoices = null;
       int status = this.getStatus();
       if (TaskUtilities.getCICALConfiguration().isInfiniteRecurrenceAllowed()) {
@@ -410,16 +410,16 @@ final class TaskDataModel implements FieldProvider, VerbProvider, ConversionProv
          }
       }
 
-      ObjectChoiceField ocf = (ObjectChoiceField)(new Object(TaskResources.getString(33), inChoices, status));
+      ObjectChoiceField ocf = new ObjectChoiceField(TaskResources.getString(33), inChoices, status);
       ocf.setCookie(context);
       mainVFM.add(ocf);
       inChoices = new Object[]{TaskResources.getString(14), TaskResources.getString(12), TaskResources.getString(13)};
-      ocf = (ObjectChoiceField)(new Object(TaskResources.getString(15), inChoices, this.getPriority()));
+      ocf = new ObjectChoiceField(TaskResources.getString(15), inChoices, this.getPriority());
       mainVFM.add(ocf);
       inChoices = new Object[]{TaskResources.getString(3), TaskResources.getString(9)};
-      ocf = (ObjectChoiceField)(new Object(TaskResources.getString(10), inChoices, this.hasDueDate() ? 1 : 0));
+      ocf = new ObjectChoiceField(TaskResources.getString(10), inChoices, this.hasDueDate() ? 1 : 0);
       ocf.setChangeListener(this);
-      VerticalFieldManager dueDateVFM = (VerticalFieldManager)(new Object(1152921504606846976L));
+      VerticalFieldManager dueDateVFM = new VerticalFieldManager(1152921504606846976L);
       dueDateVFM.add(ocf);
       if (this.hasDueDate()) {
          dueDateVFM.add(this.getDueDateField());
@@ -449,7 +449,7 @@ final class TaskDataModel implements FieldProvider, VerbProvider, ConversionProv
             startDate = this.getDueDate();
          }
 
-         Long startDateLong = (Long)(new Object(startDate));
+         Long startDateLong = new Long(startDate);
          ContextObject.put(co, 4143325197084129318L, startDateLong);
       }
 
@@ -468,14 +468,14 @@ final class TaskDataModel implements FieldProvider, VerbProvider, ConversionProv
    @Override
    public final void fieldChanged(Field f, int context) {
       if ((context & -2147483648) == 0) {
-         if (!(f instanceof Object)) {
-            if (f instanceof Object) {
+         if (!(f instanceof ObjectChoiceField)) {
+            if (f instanceof DateField) {
                DateField df = (DateField)f;
                this.dueDateChanged(df);
             }
          } else {
             ObjectChoiceField cf = (ObjectChoiceField)f;
-            if (cf.getCookie() instanceof Object) {
+            if (cf.getCookie() instanceof ReminderModel) {
                this.reminderOptionChanged(cf);
             } else {
                this.dueOptionChanged(cf);
@@ -489,7 +489,7 @@ final class TaskDataModel implements FieldProvider, VerbProvider, ConversionProv
    TaskDataModel(Object initialData) {
       this.changeReminderType((byte)2);
       this._timeZoneID = TimeZone.getDefault().getID();
-      this._recurrenceModel = (RecurImpl)(new Object());
+      this._recurrenceModel = new RecurImpl();
       if (ContextObject.getFlag(initialData, 19)) {
          SyncBuffer syncBuffer = (SyncBuffer)ContextObject.get(initialData, 255);
          boolean var10 = false /* VF: Semaphore variable */;
@@ -711,8 +711,8 @@ final class TaskDataModel implements FieldProvider, VerbProvider, ConversionProv
                rm.setTime(900000);
             }
 
-            if (rm instanceof Object) {
-               ContextObject contextObject = (ContextObject)(new Object(1, 60));
+            if (rm instanceof FieldProvider) {
+               ContextObject contextObject = new ContextObject(1, 60);
                Field reminderField = taskDataModel.getReminderField(contextObject);
                if (reminderField != null) {
                   reminderVFM.add(reminderField);
@@ -767,7 +767,7 @@ final class TaskDataModel implements FieldProvider, VerbProvider, ConversionProv
          DateField df = taskDataModel.getDueDateField();
          dueDateVFM.add(df);
          long dueDate = TaskUtilities.convertFromGMT(df.getDate(), TimeZone.getTimeZone(tzid));
-         Long dueDateLong = (Long)(new Object(dueDate));
+         Long dueDateLong = new Long(dueDate);
          ContextObject.put(context, 4143325197084129318L, dueDateLong);
          rfield = taskDataModel.getRecurrenceField(context);
          mainVFM.add(rfield);

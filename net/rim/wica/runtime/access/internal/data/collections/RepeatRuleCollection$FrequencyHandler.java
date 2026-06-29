@@ -10,7 +10,7 @@ final class RepeatRuleCollection$FrequencyHandler implements IntFieldHandler {
 
    @Override
    public final int getValue(Object item) {
-      return !(item instanceof Object) ? 0 : FrequencyEnumConverter.deviceToCommon(((Recur)item).getRecurType());
+      return !(item instanceof Recur) ? 0 : FrequencyEnumConverter.deviceToCommon(((Recur)item).getRecurType());
    }
 
    RepeatRuleCollection$FrequencyHandler(RepeatRuleCollection$1 x0) {

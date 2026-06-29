@@ -9,7 +9,7 @@ final class EventCollection$NoteHandler implements ObjectFieldHandler {
 
    @Override
    public final Object getValue(Object item) {
-      return !(item instanceof Object) ? null : ((Event)item).getNotes();
+      return !(item instanceof Event) ? null : ((Event)item).getNotes();
    }
 
    EventCollection$NoteHandler(EventCollection$1 x0) {

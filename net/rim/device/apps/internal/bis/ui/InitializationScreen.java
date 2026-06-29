@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.bis.ui;
 
 import java.util.Hashtable;
-import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.apps.internal.bis.ApplicationResources;
 import net.rim.device.apps.internal.bis.api.ui.BasicScreen;
 import net.rim.device.apps.internal.bis.api.ui.InputController;
@@ -13,7 +13,7 @@ public final class InitializationScreen extends BasicScreen {
 
    @Override
    public final void refresh(Hashtable screenParams) {
-      this.addContentField((Field)(new Object(ApplicationResources.getString(77))));
+      this.addContentField(new LabelField(ApplicationResources.getString(77)));
    }
 
    @Override

@@ -13,13 +13,13 @@ public class PGPOutputStream extends OutputStream {
 
    protected PGPOutputStream(OutputStream out, int tagFormat) {
       if (out != null && (tagFormat == 3 || tagFormat == 4)) {
-         this._out = (SharedOutputStream)(new Object(out));
+         this._out = new SharedOutputStream(out);
          this._tagFormat = tagFormat;
          if (out instanceof PGPOutputStream) {
             this._pgpOut = (PGPOutputStream)out;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

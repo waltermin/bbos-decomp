@@ -13,7 +13,7 @@ final class VCardHandler implements MessageHandler {
 
    @Override
    public final MessengerMessage handle(PeerContact contact, String contentType, String filename, byte[] data, int integer, Object context) {
-      ContextObject contextobject = (ContextObject)(new Object());
+      ContextObject contextobject = new ContextObject();
       ContextObject.put(contextobject, 8849067667159082262L, data);
       AddressCardModel card = (AddressCardModel)FactoryUtil.createInstance(9048770516632928843L, contextobject);
       return card != null ? new VCardMessage(contact, contentType, data, filename, data.length, card) : null;

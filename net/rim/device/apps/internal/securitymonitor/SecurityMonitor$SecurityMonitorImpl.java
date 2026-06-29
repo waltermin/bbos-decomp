@@ -19,7 +19,7 @@ import net.rim.device.internal.system.Security;
 
 final class SecurityMonitor$SecurityMonitorImpl implements SystemListener, GlobalEventListener, RealtimeClockListener, DelayedWipeManager {
    private Security _security = Security.getInstance();
-   private String _randomString = (String)(new Object(RandomSource.getBytes(32)));
+   private String _randomString = new String(RandomSource.getBytes(32));
    private String LOCK_WIPE = "lock";
    private String IT_POLICY_WIPE = "itpolicy";
    private String DELAYED_WIPE = "delayed";
@@ -54,9 +54,9 @@ final class SecurityMonitor$SecurityMonitorImpl implements SystemListener, Globa
 
    private SecurityMonitor$SecurityMonitorImpl() {
       ApplicationDescriptor ad = ApplicationDescriptor.currentApplicationDescriptor();
-      this._itPolicyWipeApplicationDescriptor = (ApplicationDescriptor)(new Object(ad, new Object[]{this.IT_POLICY_WIPE, this._randomString}));
-      this._lockWipeApplicationDescriptor = (ApplicationDescriptor)(new Object(ad, new Object[]{this.LOCK_WIPE, this._randomString}));
-      this._delayedWipeApplicationDescriptor = (ApplicationDescriptor)(new Object(ad, new Object[]{this.DELAYED_WIPE, this._randomString}));
+      this._itPolicyWipeApplicationDescriptor = new ApplicationDescriptor(ad, new String[]{this.IT_POLICY_WIPE, this._randomString});
+      this._lockWipeApplicationDescriptor = new ApplicationDescriptor(ad, new String[]{this.LOCK_WIPE, this._randomString});
+      this._delayedWipeApplicationDescriptor = new ApplicationDescriptor(ad, new String[]{this.DELAYED_WIPE, this._randomString});
       this._itPolicyWipeApplicationDescriptor.setPowerOnBehavior(3);
       this._lockWipeApplicationDescriptor.setPowerOnBehavior(3);
       this._delayedWipeApplicationDescriptor.setPowerOnBehavior(3);
@@ -252,7 +252,7 @@ final class SecurityMonitor$SecurityMonitorImpl implements SystemListener, Globa
    }
 
    private final void wipe(String reason) {
-      System.out.println(((StringBuffer)(new Object("SecurityMonitor: wiping device after "))).append(reason).toString());
+      System.out.println("SecurityMonitor: wiping device after " + reason);
       if (ITPolicy.getBoolean(24, 77, false) && ITPolicyInternal.isITAdminEnabled()) {
          NvStore.resetToFactoryDefaults();
          CodeModuleManager.deleteThirdPartyApplications();

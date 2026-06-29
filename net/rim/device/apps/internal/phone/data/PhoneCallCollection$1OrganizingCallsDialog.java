@@ -18,7 +18,7 @@ final class PhoneCallCollection$1OrganizingCallsDialog extends Dialog {
       super.onUiEngineAttached(attached);
       if (attached) {
          Runnable wrapperRunnable = new PhoneCallCollection$1OrganizingCallsDialog$1(this);
-         ((Thread)(new Object(wrapperRunnable))).start();
+         new Thread(wrapperRunnable).start();
       }
    }
 }

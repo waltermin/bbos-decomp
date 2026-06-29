@@ -17,8 +17,8 @@ class FreeBusyHeader extends Manager {
    private long _highlightedDate;
    private long _currentTime;
    private DateNavField _navField;
-   private LabelField _selectedDateField = (LabelField)(new Object(null, 4294967300L));
-   private LabelField _currentTimeField = (LabelField)(new Object("time", 1152921504606847044L));
+   private LabelField _selectedDateField = new LabelField(null, 4294967300L);
+   private LabelField _currentTimeField = new LabelField("time", 1152921504606847044L);
    private int _statusAreaPadding = 0;
    private int _selectedDateWidth = 0;
    private int _currentTimeWidth = 0;
@@ -80,17 +80,17 @@ class FreeBusyHeader extends Manager {
 
    private void computeDates() {
       Calendar selectedTime = Calendar.getInstance();
-      selectedTime.setTime((Date)(new Object(this._highlightedDate)));
-      StringBuffer highlightedDateBuffer = (StringBuffer)(new Object());
+      selectedTime.setTime(new Date(this._highlightedDate));
+      StringBuffer highlightedDateBuffer = new StringBuffer();
       DateFormat df = DateFormat.getInstance(48);
-      df.format(selectedTime, highlightedDateBuffer, (FieldPosition)(new Object(5)));
+      df.format(selectedTime, highlightedDateBuffer, new FieldPosition(5));
       this._selectedDateField.setText(highlightedDateBuffer.toString());
       this._selectedDateWidth = this._selectedDateField.getPreferredWidth();
       Calendar currentTime = Calendar.getInstance();
-      currentTime.setTime((Date)(new Object(System.currentTimeMillis())));
-      StringBuffer currentTimeBuffer = (StringBuffer)(new Object());
+      currentTime.setTime(new Date(System.currentTimeMillis()));
+      StringBuffer currentTimeBuffer = new StringBuffer();
       df = DateFormat.getInstance(6);
-      df.format(currentTime, currentTimeBuffer, (FieldPosition)(new Object(10)));
+      df.format(currentTime, currentTimeBuffer, new FieldPosition(10));
       this._currentTimeField.setText(currentTimeBuffer.toString());
       this._currentTimeWidth = this._currentTimeField.getPreferredWidth();
    }

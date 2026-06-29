@@ -6,7 +6,7 @@ import net.rim.device.apps.internal.attachment.AttachmentViewerModelConverter;
 final class DocViewModelConverter extends AttachmentViewerModelConverter {
    @Override
    public final boolean canConvert(Object parameters) {
-      if (parameters instanceof Object) {
+      if (parameters instanceof String) {
          String string = (String)parameters;
          if (StringUtilities.compareToIgnoreCase(string, "application/x-rimdeviceucs", 1701707776) == 0
             || StringUtilities.compareToIgnoreCase(string, "application/x-rimdevicezipucs", 1701707776) == 0) {

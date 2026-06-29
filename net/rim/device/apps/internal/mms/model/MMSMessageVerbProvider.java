@@ -87,7 +87,7 @@ final class MMSMessageVerbProvider {
 
             verbs[numberOfVerbsAdded++] = forwardVerb;
             if (defaultMenu) {
-               ForwardAsVerb forwardAsVerb = (ForwardAsVerb)(new Object(message));
+               ForwardAsVerb forwardAsVerb = new ForwardAsVerb(message);
                if (forwardAsVerb.canInvoke(null)) {
                   verbs[numberOfVerbsAdded++] = forwardAsVerb;
                }

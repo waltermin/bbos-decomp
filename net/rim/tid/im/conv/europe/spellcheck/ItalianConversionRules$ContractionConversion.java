@@ -1,7 +1,7 @@
 package net.rim.tid.im.conv.europe.spellcheck;
 
 class ItalianConversionRules$ContractionConversion extends ItalianConversionRules$Conversion {
-   private StringBuffer _contractionPrefix = (StringBuffer)(new Object());
+   private StringBuffer _contractionPrefix = new StringBuffer();
 
    ItalianConversionRules$ContractionConversion() {
       super(1);

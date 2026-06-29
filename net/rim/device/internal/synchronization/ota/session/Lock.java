@@ -24,7 +24,7 @@ final class Lock {
             this._ownerThread = null;
          }
       } else {
-         throw new Object();
+         throw new IllegalMonitorStateException();
       }
    }
 }

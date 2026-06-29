@@ -94,7 +94,7 @@ public class VideoPlayerWrapper implements Player, javax.microedition.media.Play
    @Override
    public void playerUpdate(javax.microedition.media.Player player, String event, Object eventData) {
       if ("endOfMedia".equals(event) && this._listener != null && eventData != null) {
-         this._listener.notifyComplete(eventData / 1000);
+         this._listener.notifyComplete((Long)eventData / 1000);
       }
    }
 

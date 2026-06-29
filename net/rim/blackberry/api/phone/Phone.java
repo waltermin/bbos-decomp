@@ -17,7 +17,7 @@ public final class Phone {
    public static final PhoneCall getActiveCall() {
       assertPermission();
       Object o = _voiceApp.getCurrentCall();
-      if (!(o instanceof Object)) {
+      if (!(o instanceof LiveCall)) {
          return null;
       }
 
@@ -31,7 +31,7 @@ public final class Phone {
 
       for (int i = v.size() - 1; i >= 0; i--) {
          Object o = v.elementAt(i);
-         if (o instanceof Object) {
+         if (o instanceof LiveCall) {
             LiveCall lc = (LiveCall)o;
             if (lc.getCallId() == callid) {
                return new PhoneCall(lc);

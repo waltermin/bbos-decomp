@@ -1,5 +1,6 @@
 package net.rim.tools.compiler.codfile;
 
+import java.io.IOException;
 import net.rim.tools.compiler.io.StructuredOutputStream;
 
 public final class RoutineLocal extends Routine {
@@ -36,7 +37,7 @@ public final class RoutineLocal extends Routine {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void write(StructuredOutputStream out) {
+   public final void write(StructuredOutputStream out) throws IOException {
       int baseOffset = out.getOffset();
       ((ClassDefLocal)super._classDef).ratchetStartCodeOffset(baseOffset);
       int numStackMaps = this.getNumStackMaps();
@@ -82,15 +83,7 @@ public final class RoutineLocal extends Routine {
       try {
          this._code.write(out);
       } catch (Throwable var8) {
-         throw new Object(
-            ((StringBuffer)(new Object()))
-               .append(ioe.getMessage())
-               .append(" in: ")
-               .append(super._classDef.getFullName())
-               .append(".")
-               .append(super._name.getString())
-               .toString()
-         );
+         throw new IOException(ioe.getMessage() + " in: " + super._classDef.getFullName() + "." + super._name.getString());
       }
 
       int num = this.getNumExceptionHandlers();

@@ -44,7 +44,7 @@ public class DataBuffer extends CompressedBuffer {
 
       int endPosition = super._cursor + utflen;
       this.ensureAvailable(endPosition);
-      StringBuffer str = (StringBuffer)(new Object(utflen));
+      StringBuffer str = new StringBuffer(utflen);
 
       while (super._cursor < endPosition) {
          int c = super._buffer[super._cursor] & 255;
@@ -97,7 +97,7 @@ public class DataBuffer extends CompressedBuffer {
          }
       }
 
-      return (String)(new Object(str));
+      return new String(str);
    }
 
    public void writeBoolean(boolean value) {

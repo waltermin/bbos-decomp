@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.phone.model;
 
 import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.container.FlowFieldManager;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.util.WeakReferenceUtilities;
@@ -11,7 +12,7 @@ import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.vm.WeakReference;
 
 class ReadOnlyPhoneNumberField extends AddressModelField {
-   private static WeakReference _strBufferWR = (WeakReference)(new Object(null));
+   private static WeakReference _strBufferWR = new WeakReference(null);
 
    public ReadOnlyPhoneNumberField(RIMModel phoneNumberModel, Object context) {
    }
@@ -26,7 +27,7 @@ class ReadOnlyPhoneNumberField extends AddressModelField {
 
       baseFriendlyField.setCookie(model);
       String typeString = null;
-      FlowFieldManager ffm = (FlowFieldManager)(new Object());
+      FlowFieldManager ffm = new FlowFieldManager();
       ffm.setCookie(model);
       ffm.add(baseFriendlyField);
       if (addressCardModel != null) {
@@ -45,14 +46,14 @@ class ReadOnlyPhoneNumberField extends AddressModelField {
          _strBuffer.setLength(0);
          _strBuffer.append(' ');
          AbstractPhoneNumberModel.formatTypeString(_strBuffer, typeString, true, false);
-         ffm.add((Field)(new Object(_strBuffer.toString())));
+         ffm.add(new LabelField(_strBuffer.toString()));
       }
 
       boolean includeLabel = !ContextObject.getFlag(context, 1);
       if (includeLabel) {
          String label = getLabel(model, context);
-         FlowFieldManager containerField = (FlowFieldManager)(new Object());
-         containerField.add((Field)(new Object(label)));
+         FlowFieldManager containerField = new FlowFieldManager();
+         containerField.add(new LabelField(label));
          containerField.add(ffm);
          containerField.setCookie(model);
          ffm = containerField;
@@ -66,7 +67,7 @@ class ReadOnlyPhoneNumberField extends AddressModelField {
       ContextObject contextObject = ContextObject.castOrCreate(context);
       contextObject.setFlag(84);
       Field qualifiedField = null;
-      if (model instanceof Object) {
+      if (model instanceof FieldProvider) {
          FieldProvider fieldProvider = (FieldProvider)model;
          qualifiedField = fieldProvider.getField(contextObject);
       }
@@ -79,8 +80,8 @@ class ReadOnlyPhoneNumberField extends AddressModelField {
       boolean includeLabel = !ContextObject.getFlag(context, 1);
       if (includeLabel) {
          String label = getLabel(model, context);
-         HorizontalFieldManager containerField = (HorizontalFieldManager)(new Object());
-         containerField.add((Field)(new Object(label)));
+         HorizontalFieldManager containerField = new HorizontalFieldManager();
+         containerField.add(new LabelField(label));
          containerField.add(qualifiedField);
          containerField.setCookie(model);
          qualifiedField = containerField;
@@ -91,9 +92,9 @@ class ReadOnlyPhoneNumberField extends AddressModelField {
 
    private static String getLabel(RIMModel model, Object context) {
       Object contextFieldLabel = ContextObject.get(context, 3986845832244503196L);
-      if (!(contextFieldLabel instanceof Object)) {
+      if (!(contextFieldLabel instanceof String)) {
          PhoneNumberModel numberModel = (PhoneNumberModel)model;
-         return ((StringBuffer)(new Object())).append(AbstractPhoneNumberModel.getTypeString(numberModel._type)).append(": ").toString();
+         return AbstractPhoneNumberModel.getTypeString(numberModel._type) + ": ";
       } else {
          return (String)contextFieldLabel;
       }

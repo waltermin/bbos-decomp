@@ -14,9 +14,9 @@ final class SMSListenForNet implements SMSServiceListener {
    @Override
    public final boolean smsMessageReceived(SMSPacketHeader header, byte[] data, byte[] userDataHeader, int[] ports) {
       try {
-         System.out.println(((StringBuffer)(new Object("SUPL: Received SMS on port:"))).append(ports[1]).toString());
+         System.out.println("SUPL: Received SMS on port:" + ports[1]);
          if (ports[1] == ports[0] && ports[1] == 7275) {
-            System.out.println(((StringBuffer)(new Object("Recv'd PER encoded PDU of length:"))).append(data.length).toString());
+            System.out.println("Recv'd PER encoded PDU of length:" + data.length);
             new SuplSessionManager(data);
             return true;
          }

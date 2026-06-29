@@ -9,7 +9,7 @@ public class MSCAPI_PrivateKeyDecoder extends PrivateKeyDecoder {
    @Override
    protected PrivateKey decodeKey(InputStream input, CryptoSystem defaultCryptoSystem, String defaultKeyAlgorithm) {
       if (input == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       CryptoUtilities.verifyKeyBytes(input, 7, 2, 0, 0);
@@ -21,7 +21,7 @@ public class MSCAPI_PrivateKeyDecoder extends PrivateKeyDecoder {
    }
 
    protected PrivateKey decodeKey(InputStream input, String algorithm) {
-      throw new Object();
+      throw new RuntimeException();
    }
 
    @Override

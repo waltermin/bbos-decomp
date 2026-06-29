@@ -44,7 +44,7 @@ final class KeyStoreManagerSyncCollection implements SyncCollection, MinimalSync
    @Override
    public final SyncObject[] getSyncObjects() {
       KeyStoreManagerHelper helper = KeyStoreManagerHelper.getInstance();
-      return new Object[]{helper};
+      return new SyncObject[]{helper};
    }
 
    @Override

@@ -11,8 +11,8 @@ class LandmarkStore$ProxyLandmarkStore implements Persistable {
 
    LandmarkStore$ProxyLandmarkStore(String name) {
       this._name = name;
-      this._landmarkStore = (Vector)(new Object());
-      this._categories = (Hashtable)(new Object());
+      this._landmarkStore = new Vector();
+      this._categories = new Hashtable();
    }
 
    LandmarkStore$ProxyLandmarkStore(LandmarkStore landmarkStore) {

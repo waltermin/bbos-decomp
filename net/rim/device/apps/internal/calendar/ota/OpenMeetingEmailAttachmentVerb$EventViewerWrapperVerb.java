@@ -23,7 +23,7 @@ final class OpenMeetingEmailAttachmentVerb$EventViewerWrapperVerb extends Verb {
       Object result = this._innerVerb.invoke(parameter);
       boolean closeViewer = false;
       if (result != null) {
-         if (result instanceof Object) {
+         if (result instanceof ContextObject) {
             if (ContextObject.getFlag(result, 39)) {
                closeViewer = true;
             }

@@ -8,8 +8,8 @@ import net.rim.device.apps.api.utility.serialization.BaseConverter;
 public class CertificateConverter extends BaseConverter {
    @Override
    public boolean canConvert(Object object) {
-      if (!(object instanceof Object)) {
-         if (object instanceof Object) {
+      if (!(object instanceof Parameters)) {
+         if (object instanceof String) {
             String contentType = (String)object;
             return this.isCertificateContentType(contentType);
          }
@@ -24,7 +24,7 @@ public class CertificateConverter extends BaseConverter {
          if (cmimeContentType.equals("application/octet-stream")) {
             byte[] name = parameters.getFirst((byte)-14);
             if (name != null && name.length > 0) {
-               return this.isCertificateFileName((String)(new Object(name)));
+               return this.isCertificateFileName(new String(name));
             }
          }
       }
@@ -34,9 +34,9 @@ public class CertificateConverter extends BaseConverter {
 
    @Override
    public Object convert(byte[] inputBytes, Object inputObject) {
-      if (inputBytes != null && inputObject instanceof Object) {
+      if (inputBytes != null && inputObject instanceof Parameters) {
          Parameters parameters = (Parameters)inputObject;
-         ContextObject context = (ContextObject)(new Object());
+         ContextObject context = new ContextObject();
          context.put(8849067667159082262L, inputBytes);
          context.put(-7353832199068708928L, parameters);
          return this.createCertificateAttachmentModel(context);

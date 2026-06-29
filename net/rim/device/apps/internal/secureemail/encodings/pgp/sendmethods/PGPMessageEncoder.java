@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.secureemail.encodings.pgp.sendmethods;
 
 import java.io.OutputStream;
 import java.util.Vector;
+import net.rim.device.api.crypto.InvalidKeyException;
 import net.rim.device.api.crypto.PrivateKey;
 import net.rim.device.api.crypto.PublicKey;
 import net.rim.device.api.crypto.certificate.Certificate;
@@ -19,6 +20,7 @@ import net.rim.device.api.crypto.pgp.PGPSignedOutputStream;
 import net.rim.device.api.i18n.MessageFormat;
 import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
+import net.rim.device.apps.internal.secureemail.AbortSendSecureEmailException;
 import net.rim.device.apps.internal.secureemail.RecipientData;
 import net.rim.device.apps.internal.secureemail.RecipientData$CertificateDetails;
 import net.rim.device.apps.internal.secureemail.SecureEmailOptions;
@@ -76,16 +78,16 @@ public class PGPMessageEncoder extends SecureEmailMessageEncoder {
                   warnedAboutSenderCertificate = true;
                }
 
-               PGPArmorEncoder var33 = new Object(innermostOutputStream, "Research In Motion 1.0", null, null, false);
-               encryptedPGPStream = (PGPEncryptedOutputStream)(new Object((OutputStream)var33, pgpContentCipher, 4));
+               armorEncoder = new PGPArmorEncoder(innermostOutputStream, "Research In Motion 1.0", null, null, false);
+               encryptedPGPStream = new PGPEncryptedOutputStream(armorEncoder, pgpContentCipher, 4);
                if (!signMessage) {
-                  PGPCompressedOutputStream compressedOut = (PGPCompressedOutputStream)(new Object(encryptedPGPStream));
-                  PGPLiteralOutputStream literalOut = (PGPLiteralOutputStream)(new Object(compressedOut));
+                  PGPCompressedOutputStream compressedOut = new PGPCompressedOutputStream(encryptedPGPStream);
+                  PGPLiteralOutputStream literalOut = new PGPLiteralOutputStream(compressedOut);
                   outermostOutputStream = literalOut;
                }
 
                this.updateSigningAndEncryptingMessage();
-               Vector adkIDsUsed = (Vector)(new Object());
+               Vector adkIDsUsed = new Vector();
                RecipientData[] messageRecipientData = this.getMessageRecipientData();
                int numMessageRecipientData = messageRecipientData != null ? messageRecipientData.length : 0;
 
@@ -118,19 +120,19 @@ public class PGPMessageEncoder extends SecureEmailMessageEncoder {
                }
             }
          } else {
-            PasswordDialog dialog = (PasswordDialog)(new Object(PGPResources.getString(8064), PGPResources.getString(8103), 255, 134217728));
+            PasswordDialog dialog = new PasswordDialog(PGPResources.getString(8064), PGPResources.getString(8103), 255, 134217728);
             BackgroundDialog.show(dialog);
             if (dialog.getCloseReason() == -1) {
-               throw new Object();
+               throw new AbortSendSecureEmailException();
             }
 
             byte[] password = dialog.getPassword();
-            PGPArmorEncoder var34 = new Object(innermostOutputStream, "Research In Motion 1.0", null, null, false);
-            PGPSaltedIteratedKDFPseudoRandomSource source = (PGPSaltedIteratedKDFPseudoRandomSource)(new Object((byte)10, password));
-            encryptedPGPStream = (PGPEncryptedOutputStream)(new Object((OutputStream)var34, pgpContentCipher, source, 4));
+            armorEncoder = new PGPArmorEncoder(innermostOutputStream, "Research In Motion 1.0", null, null, false);
+            PGPSaltedIteratedKDFPseudoRandomSource source = new PGPSaltedIteratedKDFPseudoRandomSource((byte)10, password);
+            encryptedPGPStream = new PGPEncryptedOutputStream(armorEncoder, pgpContentCipher, source, 4);
             if (!signMessage) {
-               PGPCompressedOutputStream compressedOut = (PGPCompressedOutputStream)(new Object(encryptedPGPStream));
-               PGPLiteralOutputStream literalOut = (PGPLiteralOutputStream)(new Object(compressedOut));
+               PGPCompressedOutputStream compressedOut = new PGPCompressedOutputStream(encryptedPGPStream);
+               PGPLiteralOutputStream literalOut = new PGPLiteralOutputStream(compressedOut);
                outermostOutputStream = literalOut;
             }
          }
@@ -161,22 +163,22 @@ public class PGPMessageEncoder extends SecureEmailMessageEncoder {
 
                privateKey.verify();
                if (encryptMessage) {
-                  PGPCompressedOutputStream compressedOut = (PGPCompressedOutputStream)(new Object(encryptedPGPStream));
-                  PGPSignedOutputStream signedOut = (PGPSignedOutputStream)(new Object(compressedOut, 0, privateKey, mySigningKeyID));
-                  PGPLiteralOutputStream literalOut = (PGPLiteralOutputStream)(new Object(signedOut));
+                  PGPCompressedOutputStream compressedOut = new PGPCompressedOutputStream(encryptedPGPStream);
+                  PGPSignedOutputStream signedOut = new PGPSignedOutputStream(compressedOut, 0, privateKey, mySigningKeyID);
+                  PGPLiteralOutputStream literalOut = new PGPLiteralOutputStream(signedOut);
                   outermostOutputStream = literalOut;
                   var27 = false;
                   var30 = false;
                } else {
-                  PGPArmorEncoder var35 = new Object(innermostOutputStream, "Research In Motion 1.0", null, null, true);
-                  PGPSignedOutputStream signedOut = (PGPSignedOutputStream)(new Object((OutputStream)var35, 1, privateKey, mySigningKeyID));
+                  armorEncoder = new PGPArmorEncoder(innermostOutputStream, "Research In Motion 1.0", null, null, true);
+                  PGPSignedOutputStream signedOut = new PGPSignedOutputStream(armorEncoder, 1, privateKey, mySigningKeyID);
                   outermostOutputStream = signedOut;
                   var27 = false;
                   var30 = false;
                }
             } finally {
                if (var30) {
-                  throw new Object();
+                  throw new AbortSendSecureEmailException();
                }
             }
          } finally {
@@ -195,7 +197,7 @@ public class PGPMessageEncoder extends SecureEmailMessageEncoder {
       return outermostOutputStream;
    }
 
-   private void encryptToCertificate(PGPEncryptedOutputStream encryptedPGPStream, PGPCertificate certificate) {
+   private void encryptToCertificate(PGPEncryptedOutputStream encryptedPGPStream, PGPCertificate certificate) throws InvalidKeyException {
       byte[] bestKeyID = null;
       PublicKey bestPublicKey = null;
       long[] properties = PGPSubKeyProperties.getPGPEncryptionSubKeyProperties(
@@ -216,7 +218,7 @@ public class PGPMessageEncoder extends SecureEmailMessageEncoder {
       }
 
       if (bestPublicKey == null) {
-         throw new Object("No public key for encryption");
+         throw new InvalidKeyException("No public key for encryption");
       }
 
       bestPublicKey.verify();
@@ -239,16 +241,12 @@ public class PGPMessageEncoder extends SecureEmailMessageEncoder {
       PGPSigningKeyNotAvailableException noKeyException = (PGPSigningKeyNotAvailableException)t;
       KeyStoreData keyData = noKeyException.getKeyData();
       if (keyData == null) {
-         throw new Object("No key store data set in PGPSigningKeyNotAvailableException");
+         throw new IllegalStateException("No key store data set in PGPSigningKeyNotAvailableException");
       }
 
-      String message = ((StringBuffer)(new Object()))
-         .append(PGPResources.getString(8115))
-         .append(" ")
-         .append(MessageFormat.format(PGPResources.getString(8113), new Object[]{keyData.getLabel()}))
-         .toString();
+      String message = PGPResources.getString(8115) + " " + MessageFormat.format(PGPResources.getString(8113), new String[]{keyData.getLabel()});
       String[] userOptions = PGPResources.getStringArray(8114);
-      SimpleChoiceDialog scd = (SimpleChoiceDialog)(new Object(message, userOptions, 0, null, 134217728));
+      SimpleChoiceDialog scd = new SimpleChoiceDialog(message, userOptions, 0, null, 134217728);
 
       while (true) {
          BackgroundDialog.show(scd);

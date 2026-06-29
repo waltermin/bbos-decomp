@@ -31,6 +31,7 @@ import net.rim.device.apps.api.sync.Reconcilable;
 import net.rim.device.apps.api.transmission.rim.CMIMEUtilities;
 import net.rim.device.apps.api.utility.framework.RecurUtil;
 import net.rim.device.apps.api.utility.serialization.BaseConverter;
+import net.rim.device.apps.api.utility.serialization.SerializationException;
 import net.rim.device.apps.internal.api.quincy.QuincyManager;
 import net.rim.device.apps.internal.commonmodels.pim.RecurImpl;
 import net.rim.device.cldc.util.CalendarExtensions;
@@ -43,7 +44,7 @@ class CICALBaseConverter extends BaseConverter {
    private int[] _dateTimeFields1 = new int[7];
    private int[] _dateTimeFields2 = new int[7];
    protected int[] _recurModifiers = new int[4];
-   protected Hashtable _childListTable = (Hashtable)(new Object());
+   protected Hashtable _childListTable = new Hashtable();
    static final long EXCLUSION_LIST_OVERRIDE = -8188970212168295222L;
    static final long RECUR_INSTANCE = -1184541483416107193L;
    protected static TimeZone _gmtTimeZone = TimeZone.getTimeZone(DateTimeUtilities.GMT);
@@ -62,8 +63,8 @@ class CICALBaseConverter extends BaseConverter {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
    public synchronized Object convert(byte[] inputBytes, Object contextObject) {
-      DataBuffer data = (DataBuffer)(new Object(inputBytes, 0, inputBytes.length, true));
-      Event[] events = new Object[0];
+      DataBuffer data = new DataBuffer(inputBytes, 0, inputBytes.length, true);
+      Event[] events = new Event[0];
       int count = 0;
       boolean unregisterFlag = false;
       boolean emptyData = false;
@@ -82,7 +83,7 @@ class CICALBaseConverter extends BaseConverter {
                   var27 = true;
                   data.readByte();
                   if (data.readByte() != 16) {
-                     throw new Object("Wrong version number");
+                     throw new SerializationException("Wrong version number");
                   }
 
                   this._childListTable.clear();
@@ -93,12 +94,12 @@ class CICALBaseConverter extends BaseConverter {
                         break;
                      }
 
-                     if (!(object instanceof Object)) {
+                     if (!(object instanceof Event)) {
                         break;
                      }
 
                      Event e = (Event)object;
-                     CalendarKey calendarKey = (CalendarKey)(new Object(calendarService.getUniqueServiceID(), calendarService.getPrimaryCalendarFolderID()));
+                     CalendarKey calendarKey = new CalendarKey(calendarService.getUniqueServiceID(), calendarService.getPrimaryCalendarFolderID());
                      e.setCalendarKey(calendarKey);
                      Array.resize(events, count + 1);
                      events[count++] = e;
@@ -107,7 +108,7 @@ class CICALBaseConverter extends BaseConverter {
                   if (events.length == 0) {
                      _blockQuincyForEmptyCICALErrors = true;
                      emptyData = true;
-                     throw new Object("Expecting at least one calendar event");
+                     throw new SerializationException("Expecting at least one calendar event");
                   }
 
                   if (events.length == 1) {
@@ -131,8 +132,8 @@ class CICALBaseConverter extends BaseConverter {
                      QuincyManager.sendJavaLogworthy("CICALBaseConverter");
                   }
 
-                  if (e instanceof Object) {
-                     throw (Object)e;
+                  if (e instanceof SerializationException) {
+                     throw (SerializationException)e;
                   }
 
                   var27 = false;
@@ -191,7 +192,7 @@ class CICALBaseConverter extends BaseConverter {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   Object convert(DataBuffer data, Object contextObject) {
+   Object convert(DataBuffer data, Object contextObject) throws SerializationException {
       Event event = null;
       TimeZone deviceTimeZone = TimeZone.getDefault();
       TimeZone serverTimeZone = null;
@@ -237,16 +238,16 @@ class CICALBaseConverter extends BaseConverter {
          }
 
          if (calendarKey != 1) {
-            throw new Object("Expecting component ID");
+            throw new SerializationException("Expecting component ID");
          }
 
          int intData = data.readCompressedInt();
          if (intData != 1) {
-            throw new Object("Expecting length of 1");
+            throw new SerializationException("Expecting length of 1");
          }
 
          if (data.readByte() != 1) {
-            throw new Object("Wrong component type");
+            throw new SerializationException("Wrong component type");
          }
 
          event = (Event)this._eventFactory.createInstance(null);
@@ -294,7 +295,7 @@ class CICALBaseConverter extends BaseConverter {
                case 65:
                   intData = data.readCompressedInt();
                   if (intData != 4) {
-                     throw new Object("Expecting 4");
+                     throw new SerializationException("Expecting 4");
                   }
 
                   intData = data.readInt();
@@ -345,7 +346,7 @@ class CICALBaseConverter extends BaseConverter {
                   boolean var77 = false /* VF: Semaphore variable */;
                   boolean var85 = false /* VF: Semaphore variable */;
 
-                  Object var111;
+                  String var111;
                   label1704: {
                      label1703: {
                         try {
@@ -353,7 +354,7 @@ class CICALBaseConverter extends BaseConverter {
                            try {
                               var85 = true;
                               var77 = true;
-                              var111 = CMIMEUtilities.getTextObject(data.getArray(), data.getArrayPosition(), length, isEncoded, null);
+                              var111 = (String)CMIMEUtilities.getTextObject(data.getArray(), data.getArrayPosition(), length, isEncoded, null);
                               var77 = false;
                               var85 = false;
                               break label1703;
@@ -380,16 +381,16 @@ class CICALBaseConverter extends BaseConverter {
                   isEncoded = false;
                   switch (fieldId) {
                      case 4:
-                        iCalendarID = (String)var111;
+                        iCalendarID = var111;
                         continue;
                      case 13:
-                        event.setSubject((String)var111);
+                        event.setSubject(var111);
                         continue;
                      case 14:
-                        event.setLocation((String)var111);
+                        event.setLocation(var111);
                         continue;
                      case 24:
-                        event.setNotes((String)var111);
+                        event.setNotes(var111);
                      default:
                         continue;
                   }
@@ -402,7 +403,7 @@ class CICALBaseConverter extends BaseConverter {
                   boolean var93 = false /* VF: Semaphore variable */;
                   boolean var101 = false /* VF: Semaphore variable */;
 
-                  Object var110;
+                  String var110;
                   label1695: {
                      label1694: {
                         try {
@@ -410,7 +411,7 @@ class CICALBaseConverter extends BaseConverter {
                            try {
                               var101 = true;
                               var93 = true;
-                              var110 = CMIMEUtilities.getTextObject(data.getArray(), data.getArrayPosition(), length, isEncoded, null);
+                              var110 = (String)CMIMEUtilities.getTextObject(data.getArray(), data.getArrayPosition(), length, isEncoded, null);
                               var93 = false;
                               var101 = false;
                               break label1694;
@@ -455,9 +456,9 @@ class CICALBaseConverter extends BaseConverter {
                         attendeeType = 4;
                   }
 
-                  ContextObject context = (ContextObject)(new Object());
+                  ContextObject context = new ContextObject();
                   context.setPrivateFlag(4567630869418996525L, 0);
-                  Attendee attendeeModel = AttendeeFactory.createAttendeeFromRFC822(attendeeType, (String)var110, context);
+                  Attendee attendeeModel = AttendeeFactory.createAttendeeFromRFC822(attendeeType, var110, context);
                   MeetingInfo meetingInfo = event.getMeetingInfo();
                   meetingInfo.addAttendee(attendeeModel);
                   break;
@@ -471,7 +472,7 @@ class CICALBaseConverter extends BaseConverter {
                case 96:
                   intData = data.readCompressedInt();
                   if (intData != 1) {
-                     throw new Object("Expecting 1");
+                     throw new SerializationException("Expecting 1");
                   }
 
                   int var120 = data.readByte();
@@ -530,7 +531,7 @@ class CICALBaseConverter extends BaseConverter {
                      var118 = data.readByte();
                   } else {
                      if (intData != 2) {
-                        throw new Object("Expecting 1 or 2");
+                        throw new SerializationException("Expecting 1 or 2");
                      }
 
                      var118 = data.readShort();
@@ -566,13 +567,13 @@ class CICALBaseConverter extends BaseConverter {
                case 31:
                   intData = data.readCompressedInt();
                   if (intData != 2) {
-                     throw new Object("Expecting 2");
+                     throw new SerializationException("Expecting 2");
                   }
 
                   int var115 = data.readShort();
                   switch (fieldId) {
                      case 29:
-                        event.put(-2053159172728646859L, new Object((short)var115));
+                        event.put(-2053159172728646859L, new OTABitmask((short)var115));
                         continue;
                      case 31:
                         String stringData = TimeService.getTimeService().getTimeZoneIDFromSerialSyncID(var115);
@@ -622,7 +623,7 @@ class CICALBaseConverter extends BaseConverter {
                case 50:
                   long longData = data.readCompressedLong();
                   if (longData != 8) {
-                     throw new Object("Expecting 8");
+                     throw new SerializationException("Expecting 8");
                   }
 
                   folderID = data.readLong();
@@ -635,7 +636,7 @@ class CICALBaseConverter extends BaseConverter {
       } finally {
          if (var69) {
             CICALEventLogger.logEvent(1129727314, 2, null, fieldId);
-            throw new Object("Malformed CICAL packet.");
+            throw new SerializationException("Malformed CICAL packet.");
          }
       }
 
@@ -643,7 +644,7 @@ class CICALBaseConverter extends BaseConverter {
          folderID = calendarService.getUniqueServiceID();
       }
 
-      CalendarKey calendarKey = (CalendarKey)(new Object(calendarService.getUniqueServiceID(), folderID));
+      CalendarKey calendarKey = new CalendarKey(calendarService.getUniqueServiceID(), folderID);
       event.setCalendarKey(calendarKey);
       if (!capabilitiesReceived) {
          MeetingInfo meetingInfo = event.getMeetingInfo();
@@ -870,13 +871,13 @@ class CICALBaseConverter extends BaseConverter {
       Object tmpObj = calendarService.getCalendarDatabase().get(event.getLUID());
       Event existingEvent = null;
       OTASyncData oldSyncData = null;
-      if (tmpObj instanceof Object) {
+      if (tmpObj instanceof Event) {
          existingEvent = (Event)tmpObj;
          oldSyncData = this._otaSyncDataManager.get(existingEvent);
       }
 
       if (sequenceNum != -1 && revisionNum != -1) {
-         OTASyncData syncData = (OTASyncData)(new Object(sequenceNum, revisionNum));
+         OTASyncData syncData = new OTASyncData(sequenceNum, revisionNum);
          synchronized (calendarService.getCalendarDatabase().getLockObject()) {
             syncData.updateChecksum(EventUtilities.getHashData(event), false);
             if (oldSyncData != null) {
@@ -1015,16 +1016,16 @@ class CICALBaseConverter extends BaseConverter {
       OTASyncData syncData = this._otaSyncDataManager.get(event);
       Integer sessionId = null;
       Long recurInstance = null;
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          ContextObject co = (ContextObject)context;
          Object o = ContextObject.get(co, -2725183197236608288L);
-         if (o instanceof Object) {
+         if (o instanceof Integer) {
             sessionId = (Integer)o;
             this.writeIntegerField(dataBuffer, 65, sessionId);
          }
 
          o = ContextObject.get(co, -1184541483416107193L);
-         if (o instanceof Object) {
+         if (o instanceof Long) {
             recurInstance = (Long)o;
          }
       }
@@ -1040,7 +1041,7 @@ class CICALBaseConverter extends BaseConverter {
 
       this.writeIntegerField(dataBuffer, 2, uid);
       if (syncData == null && sessionId != null) {
-         syncData = (OTASyncData)(new Object(0, 0));
+         syncData = new OTASyncData(0, 0);
          EventUtilities.incrementDeviceSequence(syncData, event);
          this._otaSyncDataManager.add(event, syncData);
       }
@@ -1090,9 +1091,9 @@ class CICALBaseConverter extends BaseConverter {
       }
    }
 
-   protected void convertEventBody(CalendarService calendarService, Object inputObject, DataBuffer dataBuffer, Object context) {
-      if (!(inputObject instanceof Object)) {
-         throw new Object("Unknown object type");
+   protected void convertEventBody(CalendarService calendarService, Object inputObject, DataBuffer dataBuffer, Object context) throws SerializationException {
+      if (!(inputObject instanceof Event)) {
+         throw new SerializationException("Unknown object type");
       }
 
       Event event = (Event)inputObject;
@@ -1154,7 +1155,7 @@ class CICALBaseConverter extends BaseConverter {
             cal.setTimeZone(TimeZone.getTimeZone(timeZoneID));
             switch (recurType) {
                case 0:
-                  throw new Object("Unrecognized recurrence type");
+                  throw new SerializationException("Unrecognized recurrence type");
                case 1:
                default:
                   recurType = 1;
@@ -1277,7 +1278,7 @@ class CICALBaseConverter extends BaseConverter {
                int addressLength = names[0] != null ? names[0].length() : 0;
                int friendlyAddressLength = names[1] != null ? names[1].length() : 0;
                if (sb == null) {
-                  sb = (StringBuffer)(new Object());
+                  sb = new StringBuffer();
                }
 
                if (addressLength > 0 || friendlyAddressLength > 0) {

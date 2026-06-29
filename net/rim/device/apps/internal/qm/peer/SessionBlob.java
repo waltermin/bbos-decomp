@@ -55,7 +55,7 @@ final class SessionBlob extends PeerDataBlob {
 
    @Override
    public final void pickle(DataBuffer db) {
-      DataBuffer db2 = (DataBuffer)(new Object());
+      DataBuffer db2 = new DataBuffer();
       ConverterUtilities.writeInt(db2, 1, this._type);
       ConverterUtilities.writeInt(db2, 4, this._id);
       if (this._application != null) {

@@ -9,7 +9,7 @@ import net.rim.device.apps.internal.bis.utils.xml.XMLToObjectHandler;
 
 public final class FiltersHandler extends XMLToObjectHandler implements BISServiceConstants {
    private SAXParser _parser;
-   private static final String[] REQUIRED_ELEMENTS = new Object[0];
+   private static final String[] REQUIRED_ELEMENTS = new String[0];
 
    public FiltersHandler() {
       super("filters", REQUIRED_ELEMENTS, true);
@@ -32,8 +32,8 @@ public final class FiltersHandler extends XMLToObjectHandler implements BISServi
       Hashtable elementToValueMap = (Hashtable)super.getResult();
       Object filters = elementToValueMap.get("filter");
       if (filters != null) {
-         if (!(filters instanceof Object)) {
-            Vector filtersVector = (Vector)(new Object());
+         if (!(filters instanceof Vector)) {
+            Vector filtersVector = new Vector();
             filtersVector.addElement(filters);
             return filtersVector;
          } else {

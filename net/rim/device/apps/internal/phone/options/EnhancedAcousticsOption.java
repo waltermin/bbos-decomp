@@ -18,7 +18,7 @@ public class EnhancedAcousticsOption extends VoiceOptionsListItem {
 
    @Override
    protected void populateMainScreen(MainScreen screen) {
-      this._avcChoiceField = (BooleanChoiceField)(new Object(PhoneResources.getString(6069), 2, AudioInternal.getAVCMode() == 2));
+      this._avcChoiceField = new BooleanChoiceField(PhoneResources.getString(6069), 2, AudioInternal.getAVCMode() == 2);
       screen.add(this._avcChoiceField);
    }
 

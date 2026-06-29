@@ -53,7 +53,7 @@ final class NotificationDataBlob extends PeerDataBlob {
 
    @Override
    public final void pickle(DataBuffer db) {
-      DataBuffer db2 = (DataBuffer)(new Object());
+      DataBuffer db2 = new DataBuffer();
       ConverterUtilities.writeInt(db2, 1, this._notifyCode);
       this.addStringToDataBuffer(db2, 2, this._message);
       ConverterUtilities.writeEmptyField(db2, 0);

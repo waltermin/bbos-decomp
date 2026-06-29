@@ -13,6 +13,7 @@ import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
 import net.rim.device.apps.internal.qm.peer.common.QmMainScreen;
 import net.rim.device.apps.internal.qm.peer.common.QmVerb;
+import net.rim.vm.WeakReference;
 
 final class ParticipantsListScreen extends QmMainScreen implements ListFieldCallback, CollectionListener {
    Vector _participants;
@@ -30,11 +31,11 @@ final class ParticipantsListScreen extends QmMainScreen implements ListFieldCall
       this.setTitle(this._title);
       this._participants = conversation.getParticipants();
       if (this._participants == null) {
-         this._participants = (Vector)(new Object());
+         this._participants = new Vector();
       }
 
       this._conversation = conversation;
-      this._conversation.addCollectionListener(new Object(this));
+      this._conversation.addCollectionListener(new WeakReference(this));
       this._list = new ParticipantsListField(this._participants.size());
       this._list.setCallback(this);
       this.add(this._list);
@@ -153,10 +154,8 @@ final class ParticipantsListScreen extends QmMainScreen implements ListFieldCall
                   info = contact.getId();
                }
 
-               String[] names = new Object[2];
-               names[0] = info;
-               names[1] = info;
-               ContextObject context = (ContextObject)(new Object());
+               String[] names = new String[]{info, info};
+               ContextObject context = new ContextObject();
                ContextObject.put(context, 251, names);
                EmailInvitationComposeVerb.doInvite(
                   FactoryUtil.createInstance(info.indexOf(64) == -1 ? 4246852237058296601L : -2985347935260258684L, context), null

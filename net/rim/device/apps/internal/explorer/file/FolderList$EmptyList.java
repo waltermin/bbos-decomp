@@ -10,7 +10,7 @@ final class FolderList$EmptyList implements ReadableList {
 
    @Override
    public final Object getAt(int index) {
-      throw new Object();
+      throw new ArrayIndexOutOfBoundsException();
    }
 
    @Override

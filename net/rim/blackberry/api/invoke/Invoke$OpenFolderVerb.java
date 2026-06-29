@@ -11,7 +11,7 @@ class Invoke$OpenFolderVerb extends ShowMessageAppVerb {
 
    @Override
    public Object doInvoke(Object context) {
-      if (context instanceof Object) {
+      if (context instanceof Folder) {
          MessageSearch.getInstance().folderSearch((Folder)context);
       }
 

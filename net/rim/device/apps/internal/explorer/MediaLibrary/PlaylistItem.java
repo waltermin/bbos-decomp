@@ -40,7 +40,7 @@ public final class PlaylistItem implements MediaInfo, KeyProvider, PaintProvider
       if (name != null) {
          this._name = name.trim();
          this._keywords = StringUtilities.stringToKeywords(this._name);
-         this._prefixedKeywords = new Object[1];
+         this._prefixedKeywords = new String[1];
          this._prefixedKeywords[0] = FilterConstants.PLAYLIST_PREFIX;
          Arrays.append(this._keywords, this._prefixedKeywords);
       }
@@ -62,7 +62,7 @@ public final class PlaylistItem implements MediaInfo, KeyProvider, PaintProvider
             }
 
             playlistFile.truncate(0);
-            writer = (PrintStream)(new Object(playlistFile.openOutputStream(Integer.MAX_VALUE)));
+            writer = new PrintStream(playlistFile.openOutputStream(Integer.MAX_VALUE));
             if (this._urls != null) {
                for (int i = 0; i < this._urls.length; i++) {
                   writer.println(this._urls[i]);
@@ -154,8 +154,8 @@ public final class PlaylistItem implements MediaInfo, KeyProvider, PaintProvider
 
    final int addMediaURL(String url) {
       if (this._urls == null) {
-         this._urls = new Object[0];
-         this._urlHashes = (IntIntHashtable)(new Object(5));
+         this._urls = new String[0];
+         this._urlHashes = new IntIntHashtable(5);
       }
 
       Arrays.add(this._urls, url);

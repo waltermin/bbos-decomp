@@ -24,7 +24,7 @@ final class ContactsScreenTitleField extends TitleField {
       String displayName = PeerApplication.getSession().getDisplayName();
       if (displayName != null) {
          if (Locale.getCLDCLocaleString().startsWith("en") && displayName.charAt(displayName.length() - 1) == 's') {
-            displayName = ((StringBuffer)(new Object())).append(displayName).append("' ").append(QmResources.getString(19)).toString();
+            displayName = displayName + "' " + QmResources.getString(19);
          } else {
             displayName = PeerResources.format(888, displayName);
          }

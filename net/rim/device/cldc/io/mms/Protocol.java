@@ -3,6 +3,7 @@ package net.rim.device.cldc.io.mms;
 import com.sun.cldc.io.ConnectionBaseInterface;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.ref.WeakReference;
@@ -38,7 +39,7 @@ public class Protocol implements MessageConnection, StreamConnection, Connection
    private Object _receiveSem = new Object();
    private MessageListener _listener;
    private long _timeout;
-   private Vector _messagequeue = (Vector)(new Object());
+   private Vector _messagequeue = new Vector();
    private String _applicationID;
    private static final long ID = 8757735821348010629L;
    public static String APPLICATION_ID = "application-id=";
@@ -55,19 +56,19 @@ public class Protocol implements MessageConnection, StreamConnection, Connection
 
    @Override
    public Connection openPrim(String name, int mode, boolean timeouts) {
-      this._address = ((StringBuffer)(new Object("mms:"))).append(name).toString();
+      this._address = "mms:" + name;
       if (name.startsWith("//")) {
          name = name.substring(2);
       }
 
       if (!isValid(name)) {
-         throw new Object("Invalid url");
+         throw new IllegalArgumentException("Invalid url");
       }
 
       int index = name.lastIndexOf(58);
       if (index != 0) {
          if (mode == 1) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          if (index != -1) {
@@ -79,18 +80,18 @@ public class Protocol implements MessageConnection, StreamConnection, Connection
          this._applicationID = name.substring(1);
          this._applicationID = this._applicationID.toLowerCase();
          if (this._applicationID.length() > 32) {
-            throw new Object("Application ID cannot exceed 32 chars");
+            throw new IllegalArgumentException("Application ID cannot exceed 32 chars");
          }
 
          synchronized (_connectionTable) {
             if (_connectionTable.containsKey(this._applicationID)) {
                WeakReference ref = (WeakReference)_connectionTable.get(this._applicationID);
                if (ref.get() != null && ((Protocol)ref.get())._isOpen) {
-                  throw new Object("Application ID already in use");
+                  throw new IOException("Application ID already in use");
                }
             }
 
-            _connectionTable.put(this._applicationID, new Object(this));
+            _connectionTable.put(this._applicationID, new WeakReference(this));
          }
       }
 
@@ -125,7 +126,7 @@ public class Protocol implements MessageConnection, StreamConnection, Connection
    @Override
    public Message newMessage(String type) {
       if (!type.equals("multipart")) {
-         throw new Object("this message type is not supported");
+         throw new IllegalArgumentException("this message type is not supported");
       }
 
       MultipartMessageImpl msg = new MultipartMessageImpl();
@@ -136,7 +137,7 @@ public class Protocol implements MessageConnection, StreamConnection, Connection
    @Override
    public Message newMessage(String type, String address) {
       if (!type.equals("multipart")) {
-         throw new Object("this message type is not supported");
+         throw new IllegalArgumentException("this message type is not supported");
       }
 
       MultipartMessageImpl msg = new MultipartMessageImpl();
@@ -145,23 +146,23 @@ public class Protocol implements MessageConnection, StreamConnection, Connection
    }
 
    @Override
-   public void send(Message msg) {
+   public void send(Message msg) throws IOException {
       if (!ControlledAccess.verifyRRISignatures(true) && !Firewall.getInstance().allowConnection("mms_send", null, false)) {
-         throw new Object("Permission denied");
+         throw new SecurityException("Permission denied");
       }
 
       if (!this._isOpen) {
-         throw new Object("operation not permitted on a closed connection");
+         throw new IOException("operation not permitted on a closed connection");
       }
 
       if (msg == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
-      if (msg instanceof Object) {
+      if (msg instanceof MultipartMessage) {
          MultipartMessageImpl mMsg = (MultipartMessageImpl)msg;
          if (mMsg.getAddresses(MultipartMessageImpl.TO) == null) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          MMSMessageModelBuilder builder = new MMSMessageModelBuilder();
@@ -190,7 +191,7 @@ public class Protocol implements MessageConnection, StreamConnection, Connection
             builder.setAttribute(key, value);
          }
 
-         StringBuffer sbuffer = (StringBuffer)(new Object());
+         StringBuffer sbuffer = new StringBuffer();
          sbuffer.append("application/vnd.wap.multipart.related");
          String appId = mMsg.getApplicationId();
          if (appId != null) {
@@ -219,24 +220,24 @@ public class Protocol implements MessageConnection, StreamConnection, Connection
          }
 
          MMSMessageModel message = builder.getResult();
-         ContextObject context = (ContextObject)(new Object());
+         ContextObject context = new ContextObject();
          context.setPrivateFlag(3826502739478037178L, 0);
          MMSSendVerb.send(message, message.getPayload(), message.getAttachmentDataProvider(), context);
       }
    }
 
    @Override
-   public Message receive() {
+   public Message receive() throws IOException {
       if (!ControlledAccess.verifyRRISignatures(true) && !Firewall.getInstance().allowConnection("mms_receive", null, false)) {
-         throw new Object("Permission denied");
+         throw new SecurityException("Permission denied");
       }
 
       if (!this._isServerMode) {
-         throw new Object("operation not permitted on a client connection");
+         throw new IOException("operation not permitted on a client connection");
       }
 
       if (!this._isOpen) {
-         throw new Object("Connection is already closed");
+         throw new IOException("Connection is already closed");
       }
 
       synchronized (this._messagequeue) {
@@ -268,17 +269,17 @@ public class Protocol implements MessageConnection, StreamConnection, Connection
    }
 
    @Override
-   public void setMessageListener(MessageListener l) {
+   public void setMessageListener(MessageListener l) throws IOException {
       if (!ControlledAccess.verifyRRISignatures(true) && !Firewall.getInstance().allowConnection("mms_receive", null, false)) {
-         throw new Object("Permission denied");
+         throw new SecurityException("Permission denied");
       }
 
       if (!this._isServerMode) {
-         throw new Object("operation not permitted on a client connection");
+         throw new IOException("operation not permitted on a client connection");
       }
 
       if (!this._isOpen) {
-         throw new Object("Connection is already closed");
+         throw new IOException("Connection is already closed");
       }
 
       this._listener = l;
@@ -296,22 +297,22 @@ public class Protocol implements MessageConnection, StreamConnection, Connection
 
    @Override
    public InputStream openInputStream() {
-      throw new Object("Not supported");
+      throw new IllegalArgumentException("Not supported");
    }
 
    @Override
    public DataInputStream openDataInputStream() {
-      throw new Object("Not supported");
+      throw new IllegalArgumentException("Not supported");
    }
 
    @Override
    public OutputStream openOutputStream() {
-      throw new Object("Not supported");
+      throw new IllegalArgumentException("Not supported");
    }
 
    @Override
    public DataOutputStream openDataOutputStream() {
-      throw new Object("Not supported");
+      throw new IllegalArgumentException("Not supported");
    }
 
    public static Protocol getConnection(String contentType) {
@@ -348,7 +349,7 @@ public class Protocol implements MessageConnection, StreamConnection, Connection
       Vector bccList = copyRecipients(payload.getBccRecipients());
       Vector ccList = copyRecipients(payload.getCcRecipients());
       Vector toList = copyRecipients(payload.getRecipients());
-      Hashtable headers = (Hashtable)(new Object());
+      Hashtable headers = new Hashtable();
       Enumeration en = payload.attributeNames();
       if (en != null) {
          while (en.hasMoreElements()) {
@@ -359,7 +360,7 @@ public class Protocol implements MessageConnection, StreamConnection, Connection
 
       AttachmentDataProvider adp = message.getAttachmentDataProvider();
       en = adp.attachmentNames();
-      Vector parts = (Vector)(new Object());
+      Vector parts = new Vector();
       if (en != null) {
          int contentId = 0;
 
@@ -368,9 +369,9 @@ public class Protocol implements MessageConnection, StreamConnection, Connection
             MMSAttachment attachment = adp.getAttachment(str);
 
             try {
-               MessagePart part = (MessagePart)(new Object(
+               MessagePart part = new MessagePart(
                   attachment.getData(), MMSUtilities.getMIMETypeString(attachment.getType()), String.valueOf(contentId++), str, attachment.getCharset()
-               ));
+               );
                parts.addElement(part);
             } finally {
                continue;
@@ -381,8 +382,8 @@ public class Protocol implements MessageConnection, StreamConnection, Connection
       String subject = payload.getAttribute("subject");
       RIMModel sender = payload.getSender();
       String senderStr = null;
-      if (!(sender instanceof Object)) {
-         if (sender instanceof Object) {
+      if (!(sender instanceof PhoneNumberModel)) {
+         if (sender instanceof FriendlyNameAddressModel) {
             senderStr = ((FriendlyNameAddressModel)sender).getAddress();
          }
       } else {
@@ -402,9 +403,9 @@ public class Protocol implements MessageConnection, StreamConnection, Connection
          }
 
          if (applicationID == null) {
-            senderStr = ((StringBuffer)(new Object("mms://"))).append(senderStr).toString();
+            senderStr = "mms://" + senderStr;
          } else {
-            senderStr = ((StringBuffer)(new Object("mms://"))).append(senderStr).append(":").append(applicationID).toString();
+            senderStr = "mms://" + senderStr + ":" + applicationID;
          }
       }
 
@@ -412,15 +413,15 @@ public class Protocol implements MessageConnection, StreamConnection, Connection
    }
 
    private static Vector copyRecipients(Vector recipients) {
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       if (recipients != null) {
          for (int i = recipients.size() - 1; i >= 0; i--) {
             Object obj = recipients.elementAt(i);
-            if (obj instanceof Object) {
+            if (obj instanceof String) {
                v.addElement(obj);
-            } else if (obj instanceof Object) {
+            } else if (obj instanceof PhoneNumberModel) {
                v.addElement(((PhoneNumberModel)obj).getValue());
-            } else if (obj instanceof Object) {
+            } else if (obj instanceof FriendlyNameAddressModel) {
                v.addElement(((FriendlyNameAddressModel)obj).getAddress());
             }
          }
@@ -456,7 +457,7 @@ public class Protocol implements MessageConnection, StreamConnection, Connection
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
       _connectionTable = (Hashtable)ar.getOrWaitFor(8757735821348010629L);
       if (_connectionTable == null) {
-         _connectionTable = (Hashtable)(new Object());
+         _connectionTable = new Hashtable();
          ar.put(8757735821348010629L, _connectionTable);
       }
    }

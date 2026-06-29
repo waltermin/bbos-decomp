@@ -27,9 +27,9 @@ class TwoStringLayout extends HorizontalLayout {
    private int _fontWeight2;
    private int _fontStyle2;
    private String _fontFamily2;
-   private TextGraphics _textGraphics = (TextGraphics)(new Object("BBMillbank", 10));
-   private DrawTextParam _textParams = (DrawTextParam)(new Object());
-   private StringBuffer _textBuffer = (StringBuffer)(new Object());
+   private TextGraphics _textGraphics = new TextGraphics("BBMillbank", 10);
+   private DrawTextParam _textParams = new DrawTextParam();
+   private StringBuffer _textBuffer = new StringBuffer();
    private static final int ELLIPSIS_LENGTH = 1;
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
@@ -40,28 +40,28 @@ class TwoStringLayout extends HorizontalLayout {
 
       try {
          var6 = true;
-         String e = params.get("ids");
+         String e = (String)params.get("ids");
          if (e != null) {
-            int delim = ((String)e).indexOf(59);
-            this._textHandle1 = model.getHandle(((String)e).substring(0, delim));
-            this._textHandle2 = model.getHandle(((String)e).substring(delim + 1));
+            int delim = e.indexOf(59);
+            this._textHandle1 = model.getHandle(e.substring(0, delim));
+            this._textHandle2 = model.getHandle(e.substring(delim + 1));
             this._origString1 = TextNodeImpl.getString(this._textHandle1, model);
             this._origString2 = TextNodeImpl.getString(this._textHandle2, model);
          }
 
-         e = params.get("spacing");
+         e = (String)params.get("spacing");
          if (e != null) {
-            this._spacing = Integer.parseInt((String)e);
+            this._spacing = Integer.parseInt(e);
          }
 
-         e = params.get("ellipsis");
+         e = (String)params.get("ellipsis");
          if (e != null) {
-            this._ellipsis = ((String)e).charAt(0);
+            this._ellipsis = e.charAt(0);
          }
 
-         e = params.get("firstsectionwidth");
+         e = (String)params.get("firstsectionwidth");
          if (e != null) {
-            this._maxInitialWidth = Integer.parseInt((String)e);
+            this._maxInitialWidth = Integer.parseInt(e);
             return;
          }
 

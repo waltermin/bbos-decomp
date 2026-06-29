@@ -17,6 +17,7 @@ import net.rim.device.apps.internal.blackberryemail.folder.EmailFolder;
 import net.rim.device.apps.internal.blackberryemail.folder.EmailHierarchy;
 import net.rim.device.apps.internal.blackberryemail.otasync.OTAMessageSync;
 import net.rim.vm.Array;
+import net.rim.vm.WeakReference;
 
 public final class EmailMessageSync extends EmailMessageSyncBase implements SyncEventListener, OTASyncPriorityProvider {
    private boolean _removeAllEmailMessagesPerformed;
@@ -97,18 +98,18 @@ public final class EmailMessageSync extends EmailMessageSyncBase implements Sync
          EmailHierarchy.getEmailHierarchy(i).addMessagesToFolderMerge(-5870816783098540986L);
          if (i == 0) {
             messages = (ReadableList)FolderMerge.getMergeCollection(-5870816783098540986L);
-            MessageFilter filter = (MessageFilter)(new Object(messages, (byte)4));
-            ((CollectionEventSource)messages).addCollectionListener(new Object(filter));
+            MessageFilter filter = new MessageFilter(messages, (byte)4);
+            ((CollectionEventSource)messages).addCollectionListener(new WeakReference(filter));
             messages = filter;
          }
       }
 
       if (messages == null) {
-         return new Object[0];
+         return new SyncObject[0];
       }
 
       int numMessages = messages.size();
-      SyncObject[] syncObjects = new Object[numMessages];
+      SyncObject[] syncObjects = new SyncObject[numMessages];
       LowMemoryManager.poll();
       synchronized (FolderHierarchies.getLockObject()) {
          numMessages = messages.size();
@@ -116,11 +117,11 @@ public final class EmailMessageSync extends EmailMessageSyncBase implements Sync
          messages.getAt(0, numMessages, syncObjects, 0);
       }
 
-      Folder[] mergedFolders = new Object[0];
+      Folder[] mergedFolders = new Folder[0];
       Enumeration e = FolderMerge.getMergedFolders(-5870816783098540986L);
       if (e != null) {
          while (e.hasMoreElements()) {
-            Arrays.add(mergedFolders, e.nextElement());
+            Arrays.add(mergedFolders, (Folder)e.nextElement());
          }
 
          for (int i = mergedFolders.length - 1; i >= 0; i--) {
@@ -158,7 +159,7 @@ public final class EmailMessageSync extends EmailMessageSyncBase implements Sync
       switch (eventId) {
          case 1:
          default:
-            _folderCache = (LongHashtable)(new Object());
+            _folderCache = new LongHashtable();
             return;
          case 2:
             _folderCache = null;

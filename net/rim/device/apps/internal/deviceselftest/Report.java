@@ -87,7 +87,7 @@ public final class Report implements Persistable {
    final void getDeviceInfo() {
       this.setPin(Integer.toHexString(DeviceInfo.getDeviceId()));
       this.setDeviceType(DeviceInfo.getDeviceName());
-      this.setAppVersion(((StringBuffer)(new Object("v"))).append(DeviceInfo.getSoftwareVersion()).toString());
+      this.setAppVersion("v" + DeviceInfo.getSoftwareVersion());
       this.setPlatform(DeviceInfo.getPlatformVersion());
    }
 }

@@ -35,7 +35,7 @@ final class AutoTextCollection
    OTASyncPriorityAndDependencyProvider {
    private PersistentObject _persistentObject;
    private AutoTextDatabase _database;
-   private CollectionListenerManager _listeners = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _listeners = new CollectionListenerManager();
    private boolean _inTransaction;
    private boolean _syncRemoveAllDone;
    private AutoTextCollection$AutoTextSyncConverter _autoTextSyncConverter;
@@ -64,7 +64,7 @@ final class AutoTextCollection
          }
       }
 
-      this._schema = (SyncCollectionSchema)(new Object());
+      this._schema = new SyncCollectionSchema();
       this._schema.setDefaultRecordType(1);
       this._schema.setKeyFieldIds(1, KEY_FIELD_IDS);
       Proxy.getInstance().addGlobalEventListener(this);
@@ -318,13 +318,13 @@ final class AutoTextCollection
    @Override
    public final SyncObject[] getSyncObjects() {
       synchronized (this._database) {
-         SyncObject[] objects = new Object[this.getSyncObjectCount()];
+         SyncObject[] objects = new SyncObject[this.getSyncObjectCount()];
          int dest = 0;
          Enumeration enumeration = this._database.getAllElements();
 
          while (enumeration.hasMoreElements()) {
             Object element = enumeration.nextElement();
-            if (element instanceof Object) {
+            if (element instanceof SyncObject) {
                objects[dest++] = (SyncObject)element;
             }
          }
@@ -340,7 +340,7 @@ final class AutoTextCollection
 
          while (e.hasMoreElements()) {
             Object element = e.nextElement();
-            if (element instanceof Object) {
+            if (element instanceof SyncObject) {
                SyncObject syncObject = (SyncObject)element;
                if (syncObject.getUID() == uid) {
                   return syncObject;

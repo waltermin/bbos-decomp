@@ -36,7 +36,7 @@ public class CompileError extends Error {
          s = Misc.replace(Resources.getString(17), Integer.toString(this._lineNumber), this._message);
       }
 
-      return ((StringBuffer)(new Object())).append(s).append('\n').append(this.getOffendingSource()).append('\n').toString();
+      return s + '\n' + this.getOffendingSource() + '\n';
    }
 
    void setTokenInfo(boolean inEval, String line, int lineNumber, int column) {
@@ -60,7 +60,7 @@ public class CompileError extends Error {
    }
 
    public String getCaretMarker() {
-      StringBuffer b = (StringBuffer)(new Object());
+      StringBuffer b = new StringBuffer();
 
       for (int i = 0; i < this._column; i++) {
          b.append(" ");

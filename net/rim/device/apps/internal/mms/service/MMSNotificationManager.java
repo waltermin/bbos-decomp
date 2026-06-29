@@ -31,8 +31,8 @@ final class MMSNotificationManager implements NotificationsEngineListener {
    @Override
    public final void proceedWithDeferredEvent(long sourceID, long eventID, Object eventReference, Object context) {
       if (sourceID == 8609386677418041260L && !Phone.getInstance().isActive() && eventReference instanceof MMSMessageModel) {
-         this._messageRef = (WeakReference)(new Object(eventReference));
-         ContextObject contextObject = (ContextObject)(new Object(64));
+         this._messageRef = new WeakReference(eventReference);
+         ContextObject contextObject = new ContextObject(64);
          ShowMessageApp.displayMessage((MMSMessageModel)eventReference, contextObject);
       }
    }

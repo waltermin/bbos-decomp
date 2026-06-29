@@ -1,21 +1,26 @@
 package net.rim.device.api.crypto.pgp;
 
 import java.io.OutputStream;
+import net.rim.device.api.crypto.AESEncryptorEngine;
 import net.rim.device.api.crypto.AESKey;
 import net.rim.device.api.crypto.BlockEncryptor;
-import net.rim.device.api.crypto.BlockFormatterEngine;
+import net.rim.device.api.crypto.CAST128EncryptorEngine;
 import net.rim.device.api.crypto.CAST128Key;
 import net.rim.device.api.crypto.CFBEncryptor;
+import net.rim.device.api.crypto.CryptoUnsupportedOperationException;
 import net.rim.device.api.crypto.DHPublicKey;
 import net.rim.device.api.crypto.Digest;
 import net.rim.device.api.crypto.ElGamalEncryptorEngine;
 import net.rim.device.api.crypto.InitializationVector;
+import net.rim.device.api.crypto.PKCS1FormatterEngine;
 import net.rim.device.api.crypto.PrivateKey;
 import net.rim.device.api.crypto.PublicKey;
 import net.rim.device.api.crypto.PublicKeyEncryptorEngine;
+import net.rim.device.api.crypto.RSAEncryptorEngine;
 import net.rim.device.api.crypto.RSAPublicKey;
 import net.rim.device.api.crypto.SymmetricKey;
 import net.rim.device.api.crypto.SymmetricKeyEncryptorEngine;
+import net.rim.device.api.crypto.TripleDESEncryptorEngine;
 import net.rim.device.api.crypto.TripleDESKey;
 import net.rim.device.api.io.NoCopyByteArrayOutputStream;
 import net.rim.device.api.io.SharedOutputStream;
@@ -70,7 +75,7 @@ public final class PGPEncryptedOutputStream extends PGPOutputStream {
       // 017: invokevirtual net/rim/device/api/io/SharedOutputStream.getOutputStream ()Ljava/io/OutputStream;
       // 01a: putfield net/rim/device/api/crypto/pgp/PGPEncryptedOutputStream._header Ljava/io/OutputStream;
       // 01d: aload 0
-      // 01e: new java/lang/Object
+      // 01e: new net/rim/device/api/io/NoCopyByteArrayOutputStream
       // 021: dup
       // 022: invokespecial net/rim/device/api/io/NoCopyByteArrayOutputStream.<init> ()V
       // 025: putfield net/rim/device/api/crypto/pgp/PGPEncryptedOutputStream._dataOut Lnet/rim/device/api/io/NoCopyByteArrayOutputStream;
@@ -82,11 +87,11 @@ public final class PGPEncryptedOutputStream extends PGPOutputStream {
       // 060: aload 0
       // 061: aload 3
       // 062: ifnonnull 06f
-      // 065: new java/lang/Object
+      // 065: new net/rim/device/api/crypto/TripleDESKey
       // 068: dup
       // 069: invokespecial net/rim/device/api/crypto/TripleDESKey.<init> ()V
       // 06c: goto 07e
-      // 06f: new java/lang/Object
+      // 06f: new net/rim/device/api/crypto/TripleDESKey
       // 072: dup
       // 073: aload 3
       // 074: bipush 24
@@ -97,11 +102,11 @@ public final class PGPEncryptedOutputStream extends PGPOutputStream {
       // 084: aload 0
       // 085: aload 3
       // 086: ifnonnull 093
-      // 089: new java/lang/Object
+      // 089: new net/rim/device/api/crypto/CAST128Key
       // 08c: dup
       // 08d: invokespecial net/rim/device/api/crypto/CAST128Key.<init> ()V
       // 090: goto 0a2
-      // 093: new java/lang/Object
+      // 093: new net/rim/device/api/crypto/CAST128Key
       // 096: dup
       // 097: aload 3
       // 098: bipush 16
@@ -112,12 +117,12 @@ public final class PGPEncryptedOutputStream extends PGPOutputStream {
       // 0a8: aload 0
       // 0a9: aload 3
       // 0aa: ifnonnull 0ba
-      // 0ad: new java/lang/Object
+      // 0ad: new net/rim/device/api/crypto/AESKey
       // 0b0: dup
       // 0b1: sipush 128
       // 0b4: invokespecial net/rim/device/api/crypto/AESKey.<init> (I)V
       // 0b7: goto 0c9
-      // 0ba: new java/lang/Object
+      // 0ba: new net/rim/device/api/crypto/AESKey
       // 0bd: dup
       // 0be: aload 3
       // 0bf: bipush 16
@@ -128,12 +133,12 @@ public final class PGPEncryptedOutputStream extends PGPOutputStream {
       // 0cf: aload 0
       // 0d0: aload 3
       // 0d1: ifnonnull 0e1
-      // 0d4: new java/lang/Object
+      // 0d4: new net/rim/device/api/crypto/AESKey
       // 0d7: dup
       // 0d8: sipush 192
       // 0db: invokespecial net/rim/device/api/crypto/AESKey.<init> (I)V
       // 0de: goto 0f0
-      // 0e1: new java/lang/Object
+      // 0e1: new net/rim/device/api/crypto/AESKey
       // 0e4: dup
       // 0e5: aload 3
       // 0e6: bipush 24
@@ -144,12 +149,12 @@ public final class PGPEncryptedOutputStream extends PGPOutputStream {
       // 0f6: aload 0
       // 0f7: aload 3
       // 0f8: ifnonnull 108
-      // 0fb: new java/lang/Object
+      // 0fb: new net/rim/device/api/crypto/AESKey
       // 0fe: dup
       // 0ff: sipush 256
       // 102: invokespecial net/rim/device/api/crypto/AESKey.<init> (I)V
       // 105: goto 117
-      // 108: new java/lang/Object
+      // 108: new net/rim/device/api/crypto/AESKey
       // 10b: dup
       // 10c: aload 3
       // 10d: bipush 32
@@ -157,7 +162,7 @@ public final class PGPEncryptedOutputStream extends PGPOutputStream {
       // 114: invokespecial net/rim/device/api/crypto/AESKey.<init> ([B)V
       // 117: putfield net/rim/device/api/crypto/pgp/PGPEncryptedOutputStream._sessionKey Lnet/rim/device/api/crypto/SymmetricKey;
       // 11a: goto 125
-      // 11d: new java/lang/Object
+      // 11d: new java/lang/IllegalArgumentException
       // 120: dup
       // 121: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 124: athrow
@@ -166,9 +171,9 @@ public final class PGPEncryptedOutputStream extends PGPOutputStream {
       // 129: invokestatic net/rim/device/api/crypto/EncryptorFactory.getBlockEncryptorEngine (Lnet/rim/device/api/crypto/Key;)Lnet/rim/device/api/crypto/BlockEncryptorEngine;
       // 12c: astore 5
       // 12e: aload 5
-      // 130: instanceof java/lang/Object
+      // 130: instanceof net/rim/device/api/crypto/SymmetricKeyEncryptorEngine
       // 133: ifne 13e
-      // 136: new java/lang/Object
+      // 136: new java/lang/RuntimeException
       // 139: dup
       // 13a: invokespecial java/lang/RuntimeException.<init> ()V
       // 13d: athrow
@@ -176,19 +181,19 @@ public final class PGPEncryptedOutputStream extends PGPOutputStream {
       // 13f: new net/rim/device/api/crypto/pgp/PGPCFBEncryptor
       // 142: dup
       // 143: aload 5
-      // 145: checkcast java/lang/Object
+      // 145: checkcast net/rim/device/api/crypto/SymmetricKeyEncryptorEngine
       // 148: aload 0
       // 149: getfield net/rim/device/api/crypto/pgp/PGPEncryptedOutputStream._dataOut Lnet/rim/device/api/io/NoCopyByteArrayOutputStream;
       // 14c: invokespecial net/rim/device/api/crypto/pgp/PGPCFBEncryptor.<init> (Lnet/rim/device/api/crypto/SymmetricKeyEncryptorEngine;Ljava/io/OutputStream;)V
       // 14f: putfield net/rim/device/api/crypto/pgp/PGPEncryptedOutputStream._blockEncryptor Lnet/rim/device/api/crypto/pgp/PGPCFBEncryptor;
       // 152: goto 169
       // 155: astore 5
-      // 157: new java/lang/Object
+      // 157: new java/lang/RuntimeException
       // 15a: dup
       // 15b: invokespecial java/lang/RuntimeException.<init> ()V
       // 15e: athrow
       // 15f: astore 5
-      // 161: new java/lang/Object
+      // 161: new java/lang/RuntimeException
       // 164: dup
       // 165: invokespecial java/lang/RuntimeException.<init> ()V
       // 168: athrow
@@ -201,17 +206,17 @@ public final class PGPEncryptedOutputStream extends PGPOutputStream {
       // 171: invokespecial net/rim/device/api/crypto/pgp/PGPEncryptedOutputStream.addRecipient (ILnet/rim/device/api/crypto/pgp/PGPPseudoRandomSource;Z)V
       // 174: goto 18b
       // 177: astore 5
-      // 179: new java/lang/Object
+      // 179: new java/lang/RuntimeException
       // 17c: dup
       // 17d: invokespecial java/lang/RuntimeException.<init> ()V
       // 180: athrow
       // 181: astore 5
-      // 183: new java/lang/Object
+      // 183: new java/lang/RuntimeException
       // 186: dup
       // 187: invokespecial java/lang/RuntimeException.<init> ()V
       // 18a: athrow
       // 18b: aload 0
-      // 18c: new java/lang/Object
+      // 18c: new net/rim/device/api/io/SharedOutputStream
       // 18f: dup
       // 190: aload 0
       // 191: getfield net/rim/device/api/crypto/pgp/PGPEncryptedOutputStream._blockEncryptor Lnet/rim/device/api/crypto/pgp/PGPCFBEncryptor;
@@ -224,10 +229,10 @@ public final class PGPEncryptedOutputStream extends PGPOutputStream {
       // try (22 -> 144): 150 null
    }
 
-   public final void addRecipient(byte[] keyID, PublicKey publicKey) {
+   public final void addRecipient(byte[] keyID, PublicKey publicKey) throws CryptoUnsupportedOperationException {
       if (keyID != null && publicKey != null) {
-         NoCopyByteArrayOutputStream temp1 = (NoCopyByteArrayOutputStream)(new Object());
-         NoCopyByteArrayOutputStream temp2 = (NoCopyByteArrayOutputStream)(new Object());
+         NoCopyByteArrayOutputStream temp1 = new NoCopyByteArrayOutputStream();
+         NoCopyByteArrayOutputStream temp2 = new NoCopyByteArrayOutputStream();
          temp1.write(3);
          temp1.write(keyID);
          byte[] sessionKey = new byte[this._sessionKey.getLength() + 3];
@@ -242,23 +247,23 @@ public final class PGPEncryptedOutputStream extends PGPOutputStream {
          sessionKey[sessionKey.length - 2] = (byte)(keyCheckSum >> 8);
          sessionKey[sessionKey.length - 1] = (byte)keyCheckSum;
          PublicKeyEncryptorEngine encryptorEngine;
-         if (publicKey instanceof Object) {
+         if (publicKey instanceof DHPublicKey) {
             temp1.write(16);
-            encryptorEngine = (PublicKeyEncryptorEngine)(new Object((DHPublicKey)publicKey));
+            encryptorEngine = new ElGamalEncryptorEngine((DHPublicKey)publicKey);
          } else {
-            if (!(publicKey instanceof Object)) {
-               throw new Object();
+            if (!(publicKey instanceof RSAPublicKey)) {
+               throw new CryptoUnsupportedOperationException();
             }
 
             temp1.write(1);
-            encryptorEngine = (PublicKeyEncryptorEngine)(new Object((RSAPublicKey)publicKey));
+            encryptorEngine = new RSAEncryptorEngine((RSAPublicKey)publicKey);
          }
 
-         BlockEncryptor engine = (BlockEncryptor)(new Object((BlockFormatterEngine)(new Object(encryptorEngine)), temp2));
+         BlockEncryptor engine = new BlockEncryptor(new PKCS1FormatterEngine(encryptorEngine), temp2);
          engine.write(sessionKey, 0, sessionKey.length);
          engine.close();
          temp2.close();
-         if (publicKey instanceof Object) {
+         if (publicKey instanceof DHPublicKey) {
             PGPUtilities.writeMPI(temp1, ((ElGamalEncryptorEngine)encryptorEngine).getEphemeralKey().getPublicKeyData());
          }
 
@@ -268,7 +273,7 @@ public final class PGPEncryptedOutputStream extends PGPOutputStream {
          PGPUtilities.writeTagAndLength(this._keyPackets, 1, temp1.size(), 4);
          this._keyPackets.write(temp1bytes, 0, temp1.size());
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -277,12 +282,12 @@ public final class PGPEncryptedOutputStream extends PGPOutputStream {
          && source != null) {
          this.addRecipient(symmetricAlgorithm, source, true);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
-   private final void addRecipient(int symmetricAlgorithm, PGPPseudoRandomSource source, boolean passSessionKey) {
-      NoCopyByteArrayOutputStream temp = (NoCopyByteArrayOutputStream)(new Object());
+   private final void addRecipient(int symmetricAlgorithm, PGPPseudoRandomSource source, boolean passSessionKey) throws CryptoUnsupportedOperationException {
+      NoCopyByteArrayOutputStream temp = new NoCopyByteArrayOutputStream();
       byte[] tempAsBytes = new byte[]{4, (byte)symmetricAlgorithm, 0, (byte)PGPUtilities.digestStringToConstant(source.getDigest().getAlgorithm())};
       if (source instanceof PGPSaltedKDFPseudoRandomSource) {
          tempAsBytes[2] = 1;
@@ -290,7 +295,7 @@ public final class PGPEncryptedOutputStream extends PGPOutputStream {
          temp.write(((PGPSaltedKDFPseudoRandomSource)source).getSalt());
       } else {
          if (!(source instanceof PGPSaltedIteratedKDFPseudoRandomSource)) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          tempAsBytes[2] = 3;
@@ -308,35 +313,33 @@ public final class PGPEncryptedOutputStream extends PGPOutputStream {
             case 4:
             case 5:
             case 6:
-               throw new Object();
+               throw new CryptoUnsupportedOperationException();
             case 2:
             default: {
                byte[] bytesFromPassphrase = source.getBytes(24);
-               symmetricEngine = (SymmetricKeyEncryptorEngine)(new Object((TripleDESKey)(new Object(bytesFromPassphrase))));
+               symmetricEngine = new TripleDESEncryptorEngine(new TripleDESKey(bytesFromPassphrase));
                break;
             }
             case 3:
                byte[] var13 = source.getBytes(16);
-               symmetricEngine = (SymmetricKeyEncryptorEngine)(new Object((CAST128Key)(new Object(var13))));
+               symmetricEngine = new CAST128EncryptorEngine(new CAST128Key(var13));
                break;
             case 7:
                byte[] var12 = source.getBytes(16);
-               symmetricEngine = (SymmetricKeyEncryptorEngine)(new Object((AESKey)(new Object(var12))));
+               symmetricEngine = new AESEncryptorEngine(new AESKey(var12));
                break;
             case 8:
                byte[] var11 = source.getBytes(24);
-               symmetricEngine = (SymmetricKeyEncryptorEngine)(new Object((AESKey)(new Object(var11))));
+               symmetricEngine = new AESEncryptorEngine(new AESKey(var11));
                break;
             case 9: {
                byte[] bytesFromPassphrase = source.getBytes(32);
-               symmetricEngine = (SymmetricKeyEncryptorEngine)(new Object((AESKey)(new Object(bytesFromPassphrase))));
+               symmetricEngine = new AESEncryptorEngine(new AESKey(bytesFromPassphrase));
             }
          }
 
          sessionKey[0] = (byte)symmetricAlgorithm;
-         CFBEncryptor engine = (CFBEncryptor)(new Object(
-            symmetricEngine, (InitializationVector)(new Object(new byte[symmetricEngine.getBlockLength()])), temp, true
-         ));
+         CFBEncryptor engine = new CFBEncryptor(symmetricEngine, new InitializationVector(new byte[symmetricEngine.getBlockLength()]), temp, true);
          engine.write(sessionKey, 0, sessionKey.length);
       }
 
@@ -351,7 +354,7 @@ public final class PGPEncryptedOutputStream extends PGPOutputStream {
       if (b != null && off >= 0 && len >= 0 && b.length - len >= off) {
          this._blockEncryptor.write(b, off, len);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -394,7 +397,7 @@ public final class PGPEncryptedOutputStream extends PGPOutputStream {
             super._pgpOut.update(data, offset, length);
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

@@ -15,6 +15,7 @@ import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
@@ -213,11 +214,11 @@ public final class ServiceProgramUI extends MainScreen implements ListFieldCallb
    }
 
    private final HexEditField makeHexEditField(String label, boolean hasData, byte[] data, int length, int maxLength) {
-      return (HexEditField)(hasData ? new Object(label, this._itemData, 0, length, maxLength) : new Object(label, maxLength));
+      return hasData ? new HexEditField(label, this._itemData, 0, length, maxLength) : new HexEditField(label, maxLength);
    }
 
    private final PhoneNumberEditField makePhoneEditField(String label, boolean hasData, byte[] data, int length, int maxLength) {
-      return (PhoneNumberEditField)(new Object(label, (String)(hasData ? new Object(data, 0, length) : null), maxLength, 6));
+      return new PhoneNumberEditField(label, hasData ? new String(data, 0, length) : null, maxLength, 6);
    }
 
    // $VF: Could not inline inconsistent finally blocks
@@ -235,7 +236,7 @@ public final class ServiceProgramUI extends MainScreen implements ListFieldCallb
          return null;
       }
 
-      String[] choices = new Object[intData];
+      String[] choices = new String[intData];
 
       for (int i = 0; i < intData; i++) {
          try {
@@ -243,22 +244,21 @@ public final class ServiceProgramUI extends MainScreen implements ListFieldCallb
             length = this._model.getData(id, this._itemData);
          } catch (Throwable var21) {
             Dialog.alert(
-               ((StringBuffer)(new Object("Unable to get choice option ")))
-                  .append(i)
-                  .append(", code=")
-                  .append(e.getCode())
-                  .append(".\n screenId=")
-                  .append(this._model.getScreenId())
-                  .append(" idCookie=")
-                  .append(this._model.getScreenIdCookie())
-                  .append(" itemId=")
-                  .append(id)
-                  .toString()
+               "Unable to get choice option "
+                  + i
+                  + ", code="
+                  + e.getCode()
+                  + ".\n screenId="
+                  + this._model.getScreenId()
+                  + " idCookie="
+                  + this._model.getScreenIdCookie()
+                  + " itemId="
+                  + id
             );
             continue;
          }
 
-         choices[i] = (String)(new Object(this._itemData, 0, length));
+         choices[i] = new String(this._itemData, 0, length);
       }
 
       try {
@@ -266,17 +266,16 @@ public final class ServiceProgramUI extends MainScreen implements ListFieldCallb
          length = this._model.getData(id, this._itemData);
       } catch (Throwable var20) {
          Dialog.alert(
-            ((StringBuffer)(new Object("Unable to get choice initial index, code=")))
-               .append(e.getCode())
-               .append(".\n screenId=")
-               .append(this._model.getScreenId())
-               .append(" idCookie=")
-               .append(this._model.getScreenIdCookie())
-               .append(" itemId=")
-               .append(id)
-               .toString()
+            "Unable to get choice initial index, code="
+               + e.getCode()
+               + ".\n screenId="
+               + this._model.getScreenId()
+               + " idCookie="
+               + this._model.getScreenIdCookie()
+               + " itemId="
+               + id
          );
-         return (ObjectChoiceField)(new Object(label, choices));
+         return new ObjectChoiceField(label, choices);
       }
 
       intData = 0;
@@ -295,17 +294,16 @@ public final class ServiceProgramUI extends MainScreen implements ListFieldCallb
          length = this._model.getData(id, this._itemData);
       } catch (Throwable var19) {
          Dialog.alert(
-            ((StringBuffer)(new Object("Unable to get choice initial index, code=")))
-               .append(e.getCode())
-               .append(".\n screenId=")
-               .append(this._model.getScreenId())
-               .append(" idCookie=")
-               .append(this._model.getScreenIdCookie())
-               .append(" itemId=")
-               .append(id)
-               .toString()
+            "Unable to get choice initial index, code="
+               + e.getCode()
+               + ".\n screenId="
+               + this._model.getScreenId()
+               + " idCookie="
+               + this._model.getScreenIdCookie()
+               + " itemId="
+               + id
          );
-         return (ObjectChoiceField)(new Object(label, choices));
+         return new ObjectChoiceField(label, choices);
       }
 
       if (length > 0) {
@@ -318,7 +316,7 @@ public final class ServiceProgramUI extends MainScreen implements ListFieldCallb
          }
       }
 
-      return (ObjectChoiceField)(new Object(label, choices, intData, 1152921504606846976L));
+      return new ObjectChoiceField(label, choices, intData, 1152921504606846976L);
    }
 
    // $VF: Could not inline inconsistent finally blocks
@@ -349,15 +347,7 @@ public final class ServiceProgramUI extends MainScreen implements ListFieldCallb
                this.setItemIndex(itemIndex);
                break;
             } catch (Throwable var8) {
-               Dialog.alert(
-                  ((StringBuffer)(new Object("Unable to popScreen, code=")))
-                     .append(e.getCode())
-                     .append(".\n screenId=")
-                     .append(screenId)
-                     .append(" idCookie=")
-                     .append(idCookie)
-                     .toString()
-               );
+               Dialog.alert("Unable to popScreen, code=" + e.getCode() + ".\n screenId=" + screenId + " idCookie=" + idCookie);
                continue;
             }
          }
@@ -387,15 +377,7 @@ public final class ServiceProgramUI extends MainScreen implements ListFieldCallb
             this._model.setScreen(screenId, idCookie);
             this.reset();
          } catch (Throwable var6) {
-            Dialog.alert(
-               ((StringBuffer)(new Object("Unable to set screen, code=")))
-                  .append(e.getCode())
-                  .append(".\nscreenId=")
-                  .append(screenId)
-                  .append(" idCookie=")
-                  .append(idCookie)
-                  .toString()
-            );
+            Dialog.alert("Unable to set screen, code=" + e.getCode() + ".\nscreenId=" + screenId + " idCookie=" + idCookie);
             this.popScreen();
             return;
          }
@@ -426,8 +408,8 @@ public final class ServiceProgramUI extends MainScreen implements ListFieldCallb
    public ServiceProgramUI(EScreenModel model) {
       this._model = model;
       this._itemData = new byte[256];
-      this._menuModel = (EScreenModel)(new Object(model.getAccessLevel()));
-      this._menuInfo = (EScreenMenuInfo)(new Object());
+      this._menuModel = new EScreenModel(model.getAccessLevel());
+      this._menuInfo = new EScreenMenuInfo();
       this._screenIdStack = new int[]{this._model.getScreenId()};
       this._screenIdCookieStack = new int[]{this._model.getScreenIdCookie()};
       this._screenItemIndexStack = new int[]{0, -804651006, 0, 1};
@@ -465,7 +447,7 @@ public final class ServiceProgramUI extends MainScreen implements ListFieldCallb
       }
 
       this._boldFont = this._plainFont.derive(1);
-      this._immutables = (ListField)(new Object());
+      this._immutables = new ListField();
       this._immutables.setCallback(this);
       this._immutables.setEmptyString("* No Engineering Items *", 4);
       this._immutables.setSearchable(false);
@@ -486,23 +468,20 @@ public final class ServiceProgramUI extends MainScreen implements ListFieldCallb
          this._model.getMenuInfo(index, this._menuInfo);
       } catch (Throwable var20) {
          Dialog.alert(
-            ((StringBuffer)(new Object("Unable to get menuId, code=")))
-               .append(e.getCode())
-               .append(".\n screenId=")
-               .append(this._model.getScreenId())
-               .append(" idCookie=")
-               .append(this._model.getScreenIdCookie())
-               .append(" itemId=")
-               .append(index)
-               .toString()
+            "Unable to get menuId, code="
+               + e.getCode()
+               + ".\n screenId="
+               + this._model.getScreenId()
+               + " idCookie="
+               + this._model.getScreenIdCookie()
+               + " itemId="
+               + index
          );
          break label184;
       }
 
       if (index >= 0) {
-         EScreenItemInfo itemInfo = (EScreenItemInfo)(new Object(
-            this._model.getItemFlag(index), this._model.getItemId(index), this._model.getItemIdCookie(index)
-         ));
+         EScreenItemInfo itemInfo = new EScreenItemInfo(this._model.getItemFlag(index), this._model.getItemId(index), this._model.getItemIdCookie(index));
          boolean actionOrDetails = false;
          menu.add(new ServiceProgramUI$MyMenuItem(this, "Copy Screen", 3));
          if ((this._model.getItemFlag(index) & 64) != 0) {
@@ -527,15 +506,7 @@ public final class ServiceProgramUI extends MainScreen implements ListFieldCallb
             this._menuModel.setScreen(this._menuInfo.menuId, this._menuInfo.idCookie);
             numMenuItems = this._menuModel.getNumItems();
          } catch (Throwable var19) {
-            Dialog.alert(
-               ((StringBuffer)(new Object("Unable to set menu 'screen', code=")))
-                  .append(e.getCode())
-                  .append(".\n screenId=")
-                  .append(this._menuInfo.menuId)
-                  .append(" idCookie=")
-                  .append(this._menuInfo.idCookie)
-                  .toString()
-            );
+            Dialog.alert("Unable to set menu 'screen', code=" + e.getCode() + ".\n screenId=" + this._menuInfo.menuId + " idCookie=" + this._menuInfo.idCookie);
             numMenuItems = 0;
             break label178;
          }
@@ -546,15 +517,14 @@ public final class ServiceProgramUI extends MainScreen implements ListFieldCallb
                length = this._menuModel.getData(i, this._itemData);
             } catch (Throwable var18) {
                Dialog.alert(
-                  ((StringBuffer)(new Object("Unable to get data for menuItem, code=")))
-                     .append(e.getCode())
-                     .append(".\n screenId=")
-                     .append(this._menuModel.getScreenId())
-                     .append(" idCookie=")
-                     .append(this._menuModel.getScreenIdCookie())
-                     .append(" itemId=")
-                     .append(i)
-                     .toString()
+                  "Unable to get data for menuItem, code="
+                     + e.getCode()
+                     + ".\n screenId="
+                     + this._menuModel.getScreenId()
+                     + " idCookie="
+                     + this._menuModel.getScreenIdCookie()
+                     + " itemId="
+                     + i
                );
                continue;
             }
@@ -565,15 +535,14 @@ public final class ServiceProgramUI extends MainScreen implements ListFieldCallb
             } else {
                if ((this._menuModel.getItemFlag(i) & 64) == 0) {
                   Dialog.alert(
-                     ((StringBuffer)(new Object("Unacceptable menu flags, flags=")))
-                        .append(this._menuModel.getItemFlag(i))
-                        .append(".\n screenId=")
-                        .append(this._menuModel.getScreenId())
-                        .append(" idCookie=")
-                        .append(this._menuModel.getScreenIdCookie())
-                        .append(" itemId=")
-                        .append(i)
-                        .toString()
+                     "Unacceptable menu flags, flags="
+                        + this._menuModel.getItemFlag(i)
+                        + ".\n screenId="
+                        + this._menuModel.getScreenId()
+                        + " idCookie="
+                        + this._menuModel.getScreenIdCookie()
+                        + " itemId="
+                        + i
                   );
                   continue;
                }
@@ -584,8 +553,8 @@ public final class ServiceProgramUI extends MainScreen implements ListFieldCallb
             menu.add(
                new ServiceProgramUI$MyMenuItem(
                   this,
-                  (String)(new Object(this._itemData, 0, length)),
-                  (EScreenItemInfo)(new Object(this._menuModel.getItemFlag(i), this._menuModel.getItemId(i), this._menuModel.getItemIdCookie(i))),
+                  new String(this._itemData, 0, length),
+                  new EScreenItemInfo(this._menuModel.getItemFlag(i), this._menuModel.getItemId(i), this._menuModel.getItemIdCookie(i)),
                   type
                )
             );
@@ -639,15 +608,14 @@ public final class ServiceProgramUI extends MainScreen implements ListFieldCallb
          Field f = null;
          if ((flag & 1) == 0) {
             Dialog.alert(
-               ((StringBuffer)(new Object("Expected a mutable item, flag=")))
-                  .append(flag)
-                  .append(".\n screenId=")
-                  .append(this._model.getScreenId())
-                  .append(" idCookie=")
-                  .append(this._model.getScreenIdCookie())
-                  .append(" itemId=")
-                  .append(i)
-                  .toString()
+               "Expected a mutable item, flag="
+                  + flag
+                  + ".\n screenId="
+                  + this._model.getScreenId()
+                  + " idCookie="
+                  + this._model.getScreenIdCookie()
+                  + " itemId="
+                  + i
             );
          } else {
             int length;
@@ -655,18 +623,17 @@ public final class ServiceProgramUI extends MainScreen implements ListFieldCallb
             try {
                this._model.setMode(0);
                length = this._model.getData(i, this._itemData);
-               label = (String)(new Object(this._itemData, 0, length));
+               label = new String(this._itemData, 0, length);
             } catch (Throwable var21) {
                Dialog.alert(
-                  ((StringBuffer)(new Object("Unable to get mutable label, code=")))
-                     .append(e.getCode())
-                     .append(".\n screenId=")
-                     .append(this._model.getScreenId())
-                     .append(" idCookie=")
-                     .append(this._model.getScreenIdCookie())
-                     .append(" itemId=")
-                     .append(i)
-                     .toString()
+                  "Unable to get mutable label, code="
+                     + e.getCode()
+                     + ".\n screenId="
+                     + this._model.getScreenId()
+                     + " idCookie="
+                     + this._model.getScreenIdCookie()
+                     + " itemId="
+                     + i
                );
                continue;
             }
@@ -679,15 +646,14 @@ public final class ServiceProgramUI extends MainScreen implements ListFieldCallb
                   maxLength = convertToInt(this._itemData, length);
                } catch (Throwable var20) {
                   Dialog.alert(
-                     ((StringBuffer)(new Object("Unable to get maximum Length, code=")))
-                        .append(e.getCode())
-                        .append(".\n screenId=")
-                        .append(this._model.getScreenId())
-                        .append(" idCookie=")
-                        .append(this._model.getScreenIdCookie())
-                        .append(" itemId=")
-                        .append(i)
-                        .toString()
+                     "Unable to get maximum Length, code="
+                        + e.getCode()
+                        + ".\n screenId="
+                        + this._model.getScreenId()
+                        + " idCookie="
+                        + this._model.getScreenIdCookie()
+                        + " itemId="
+                        + i
                   );
                   continue;
                }
@@ -700,15 +666,14 @@ public final class ServiceProgramUI extends MainScreen implements ListFieldCallb
                   length = this._model.getData(i, this._itemData);
                } catch (Throwable var19) {
                   Dialog.alert(
-                     ((StringBuffer)(new Object("Unable to get mutable label, code=")))
-                        .append(e.getCode())
-                        .append(".\n screenId=")
-                        .append(this._model.getScreenId())
-                        .append(" idCookie=")
-                        .append(this._model.getScreenIdCookie())
-                        .append(" itemId=")
-                        .append(i)
-                        .toString()
+                     "Unable to get mutable label, code="
+                        + e.getCode()
+                        + ".\n screenId="
+                        + this._model.getScreenId()
+                        + " idCookie="
+                        + this._model.getScreenIdCookie()
+                        + " itemId="
+                        + i
                   );
                   continue;
                }
@@ -728,29 +693,27 @@ public final class ServiceProgramUI extends MainScreen implements ListFieldCallb
                f = this.makeChoiceEditField(label, i, this._itemData, length);
                if (f == null) {
                   Dialog.alert(
-                     ((StringBuffer)(new Object("Found choice field with no options.\n screenId=")))
-                        .append(this._model.getScreenId())
-                        .append(" idCookie=")
-                        .append(this._model.getScreenIdCookie())
-                        .append(" itemId=")
-                        .append(i)
-                        .toString()
+                     "Found choice field with no options.\n screenId="
+                        + this._model.getScreenId()
+                        + " idCookie="
+                        + this._model.getScreenIdCookie()
+                        + " itemId="
+                        + i
                   );
                   continue;
                }
             } else if ((flag & 32) != 0) {
-               f = (Field)(new Object());
+               f = new SeparatorField();
             } else {
                Dialog.alert(
-                  ((StringBuffer)(new Object("Unknown mutable type. Flags=")))
-                     .append(flag)
-                     .append(".\n screenId=")
-                     .append(this._model.getScreenId())
-                     .append(" idCookie=")
-                     .append(this._model.getScreenIdCookie())
-                     .append(" itemId=")
-                     .append(i)
-                     .toString()
+                  "Unknown mutable type. Flags="
+                     + flag
+                     + ".\n screenId="
+                     + this._model.getScreenId()
+                     + " idCookie="
+                     + this._model.getScreenIdCookie()
+                     + " itemId="
+                     + i
                );
             }
 
@@ -769,7 +732,7 @@ public final class ServiceProgramUI extends MainScreen implements ListFieldCallb
       }
 
       if (num != 0) {
-         this.add((Field)(new Object()));
+         this.add(new SeparatorField());
       }
 
       this.addDependentListeners();
@@ -827,15 +790,14 @@ public final class ServiceProgramUI extends MainScreen implements ListFieldCallb
          }
       } catch (Throwable var13) {
          Dialog.alert(
-            ((StringBuffer)(new Object("Unable to get dependent id, code=")))
-               .append(e.getCode())
-               .append(".\n screenId=")
-               .append(this._model.getScreenId())
-               .append(" idCookie=")
-               .append(this._model.getScreenIdCookie())
-               .append(" itemId=")
-               .append(id)
-               .toString()
+            "Unable to get dependent id, code="
+               + e.getCode()
+               + ".\n screenId="
+               + this._model.getScreenId()
+               + " idCookie="
+               + this._model.getScreenIdCookie()
+               + " itemId="
+               + id
          );
          break label43;
       }
@@ -849,15 +811,15 @@ public final class ServiceProgramUI extends MainScreen implements ListFieldCallb
          }
       }
 
-      return (EditField)(new Object(label, (String)(hasData ? new Object(data, 0, length) : null), maxLength, 0));
+      return new EditField(label, hasData ? new String(data, 0, length) : null, maxLength, 0);
    }
 
    private final IPEditField makeIPEditField(String label, boolean hasData, byte[] data, int length, int maxLength) {
       String value = null;
       if (hasData) {
-         StringBuffer strBuf = (StringBuffer)(new Object(16));
+         StringBuffer strBuf = new StringBuffer(16);
          if (length != 4) {
-            Dialog.alert(((StringBuffer)(new Object("Bad data length for IPEditField, length="))).append(length).toString());
+            Dialog.alert("Bad data length for IPEditField, length=" + length);
             return null;
          }
 
@@ -865,7 +827,7 @@ public final class ServiceProgramUI extends MainScreen implements ListFieldCallb
          value = strBuf.toString();
       }
 
-      return (IPEditField)(new Object(label, value));
+      return new IPEditField(label, value);
    }
 
    private final EditField makeNumericEditField(String label, boolean hasData, byte[] data, int length, int maxLength) {
@@ -898,12 +860,12 @@ public final class ServiceProgramUI extends MainScreen implements ListFieldCallb
                value = Long.toString(lValue);
                break;
             default:
-               Dialog.alert(((StringBuffer)(new Object("Bad length for numeric edit field, length="))).append(length).toString());
+               Dialog.alert("Bad length for numeric edit field, length=" + length);
                return null;
          }
       }
 
-      return (EditField)(new Object(label, value, maxLength, 83886080));
+      return new EditField(label, value, maxLength, 83886080);
    }
 
    private final void statusShow(String message, boolean exitScreen) {

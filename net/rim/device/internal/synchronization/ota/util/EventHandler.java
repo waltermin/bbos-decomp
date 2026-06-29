@@ -3,7 +3,7 @@ package net.rim.device.internal.synchronization.ota.util;
 import java.util.Vector;
 
 public class EventHandler extends Thread {
-   private Vector _events = (Vector)(new Object());
+   private Vector _events = new Vector();
    private boolean _done;
 
    @Override

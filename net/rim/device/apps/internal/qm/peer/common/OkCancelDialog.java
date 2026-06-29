@@ -8,6 +8,8 @@ import net.rim.device.api.ui.FontRegistry;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.ButtonField;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.FlowFieldManager;
 import net.rim.device.apps.api.ui.CommonResources;
 import net.rim.device.apps.api.ui.PopupStatus;
@@ -19,17 +21,17 @@ public class OkCancelDialog extends QmThemedPopupScreen implements FieldChangeLi
    private ButtonField _pasteField;
    private BasicEditField _editField;
    private boolean _result;
-   private FlowFieldManager _hfm = (FlowFieldManager)(new Object(12884901888L));
+   private FlowFieldManager _hfm = new FlowFieldManager(12884901888L);
 
    public void addTitle(String title) {
       if (title != null && title.length() > 0) {
-         this.add((Field)(new Object(title)));
-         this.add((Field)(new Object()));
+         this.add(new LabelField(title));
+         this.add(new SeparatorField());
       }
    }
 
    public void addCancelButton() {
-      this._cancelField = (ButtonField)(new Object(CommonResources.getString(9042)));
+      this._cancelField = new ButtonField(CommonResources.getString(9042));
       this._cancelField.setChangeListener(this);
       this._hfm.add(this._cancelField);
       this.add(this._hfm);
@@ -42,7 +44,7 @@ public class OkCancelDialog extends QmThemedPopupScreen implements FieldChangeLi
    public void addPasteButton(BasicEditField field) {
       this._editField = field;
       if (this._pasteField == null) {
-         this._pasteField = (ButtonField)(new Object(QmResources.getString(55)));
+         this._pasteField = new ButtonField(QmResources.getString(55));
          this._pasteField.setChangeListener(this);
       }
 
@@ -123,11 +125,11 @@ public class OkCancelDialog extends QmThemedPopupScreen implements FieldChangeLi
    }
 
    private void addButtons(boolean okOnly) {
-      this._okField = (ButtonField)(new Object(CommonResources.getString(117)));
+      this._okField = new ButtonField(CommonResources.getString(117));
       this._okField.setChangeListener(this);
       this._hfm.add(this._okField);
       if (!okOnly) {
-         this._cancelField = (ButtonField)(new Object(CommonResources.getString(9042)));
+         this._cancelField = new ButtonField(CommonResources.getString(9042));
          this._cancelField.setChangeListener(this);
          this._hfm.add(this._cancelField);
       }

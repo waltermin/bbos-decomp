@@ -16,7 +16,7 @@ import net.rim.vm.WeakReference;
 
 public class IndicatorManagerImpl extends IndicatorManager implements RealtimeClockListener, TestPoint {
    private IndicatorManagerImpl$SuspendInfo _suspendInfo = new IndicatorManagerImpl$SuspendInfo();
-   private WeakReference[] _wrIndicatorChangedListeners = new Object[0];
+   private WeakReference[] _wrIndicatorChangedListeners = new WeakReference[0];
    private IndicatorDisplay[] _sortedIndicators = new IndicatorDisplay[0];
    private IndicatorComparator _indicatorComparator = new IndicatorComparator();
    private static final long MAXIMUM_INDICATOR_SUSPEND_TIME = 240000L;
@@ -39,7 +39,7 @@ public class IndicatorManagerImpl extends IndicatorManager implements RealtimeCl
    public void addIndicator(Indicator indicator) {
       IndicatorDisplay[] sortedIndicators = this._sortedIndicators;
       if (indicator == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       synchronized (sortedIndicators) {
@@ -68,7 +68,7 @@ public class IndicatorManagerImpl extends IndicatorManager implements RealtimeCl
    public void removeIndicator(Indicator indicator) {
       IndicatorDisplay[] sortedIndicators = this._sortedIndicators;
       if (indicator == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       synchronized (sortedIndicators) {
@@ -130,7 +130,7 @@ public class IndicatorManagerImpl extends IndicatorManager implements RealtimeCl
 
    private void cleanupIndicatorListeners() {
       if (Monitor.monitorOwned(this._wrIndicatorChangedListeners)) {
-         throw new Object("cleanupIndicatorListeners() called while holding a lock on the listeners");
+         throw new RuntimeException("cleanupIndicatorListeners() called while holding a lock on the listeners");
       }
 
       WeakReference[] wrIndicatorChangedListeners = this._wrIndicatorChangedListeners;
@@ -156,13 +156,13 @@ public class IndicatorManagerImpl extends IndicatorManager implements RealtimeCl
    void registerFieldForUpdates(RibbonComponent$RibbonComponentChangeListener changeListener) {
       WeakReference[] wrIndicatorChangedListeners = this._wrIndicatorChangedListeners;
       if (changeListener == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       synchronized (wrIndicatorChangedListeners) {
          int len = wrIndicatorChangedListeners.length;
          Array.resize(wrIndicatorChangedListeners, len + 1);
-         wrIndicatorChangedListeners[len] = (WeakReference)(new Object(changeListener));
+         wrIndicatorChangedListeners[len] = new WeakReference(changeListener);
       }
 
       this.cleanupIndicatorListeners();
@@ -177,7 +177,7 @@ public class IndicatorManagerImpl extends IndicatorManager implements RealtimeCl
       synchronized (sortedIndicators) {
          for (int i = sortedIndicators.length - 1; i >= 0; i--) {
             Indicator indicator = sortedIndicators[i]._indicator;
-            if (indicator instanceof Object && typename.equals(indicator.getTypeName())) {
+            if (indicator instanceof CountIndicator && typename.equals(indicator.getTypeName())) {
                return (CountIndicator)indicator;
             }
          }
@@ -271,15 +271,15 @@ public class IndicatorManagerImpl extends IndicatorManager implements RealtimeCl
    @Override
    public void test(Object id, Object value) {
       String typeName = null;
-      if (id instanceof Object) {
-         String var14 = id;
+      if (id instanceof String) {
+         typeName = (String)id;
          IndicatorDisplay[] sortedIndicators = this._sortedIndicators;
          synchronized (sortedIndicators) {
             for (int i = sortedIndicators.length - 1; i >= 0; i--) {
                try {
                   Indicator indicator = sortedIndicators[i]._indicator;
-                  if (((String)var14).equals(indicator.getTypeName())) {
-                     if (indicator instanceof Object) {
+                  if (typeName.equals(indicator.getTypeName())) {
+                     if (indicator instanceof TestPoint) {
                         TestPoint tp = (TestPoint)indicator;
                         tp.test(id, value);
                      }

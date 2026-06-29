@@ -14,9 +14,9 @@ final class InternalLBSNetworkScreen$4 implements Runnable {
    @Override
    public final void run() {
       synchronized (Application.getEventLock()) {
-         InternalLBSNetworkScreen.access$384(this.this$0, ((StringBuffer)(new Object("Trip time: "))).append(this.val$ping).append(" ms\n").toString());
+         InternalLBSNetworkScreen.access$384(this.this$0, "Trip time: " + this.val$ping + " ms\n");
          if (this.this$0._counter > 2) {
-            InternalLBSNetworkScreen.access$384(this.this$0, ((StringBuffer)(new Object("Avg. time: "))).append(this.this$0._pingAvg).append(" ms").toString());
+            InternalLBSNetworkScreen.access$384(this.this$0, "Avg. time: " + this.this$0._pingAvg + " ms");
          }
 
          this.this$0._pingValues.setText(this.this$0._pingText);

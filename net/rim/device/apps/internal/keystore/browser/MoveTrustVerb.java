@@ -2,9 +2,9 @@ package net.rim.device.apps.internal.keystore.browser;
 
 import java.util.Enumeration;
 import net.rim.device.api.crypto.certificate.Certificate;
+import net.rim.device.api.crypto.certificate.CertificateKeyStoreIndex;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
-import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.api.crypto.keystore.TrustedKeyStore;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.apps.api.framework.verb.Verb;
@@ -42,7 +42,7 @@ final class MoveTrustVerb extends Verb {
       // 004: arraylength
       // 005: istore 1
       // 006: invokestatic net/rim/device/api/crypto/keystore/TrustedKeyStore.getInstance ()Lnet/rim/device/api/crypto/keystore/KeyStore;
-      // 009: checkcast java/lang/Object
+      // 009: checkcast net/rim/device/api/crypto/keystore/TrustedKeyStore
       // 00c: astore 2
       // 00d: bipush -1
       // 00f: istore 3
@@ -119,7 +119,7 @@ final class MoveTrustVerb extends Verb {
       // 0a3: sipush 6056
       // 0a6: invokestatic net/rim/device/apps/internal/keystore/browser/KeyStoreBrowserResources.getStringArray (I)[Ljava/lang/String;
       // 0a9: astore 11
-      // 0ab: new java/lang/Object
+      // 0ab: new net/rim/device/internal/ui/component/SimpleChoiceDialog
       // 0ae: dup
       // 0af: aload 10
       // 0b1: aload 11
@@ -215,7 +215,7 @@ final class MoveTrustVerb extends Verb {
                errorOccured = true;
             } else if (this._browserDatas[i].isExplicitlyTrusted()) {
                KeyStore trustedKeyStore = TrustedKeyStore.getInstance();
-               trustedKeyStore.addIndex((KeyStoreIndex)(new Object()));
+               trustedKeyStore.addIndex(new CertificateKeyStoreIndex());
                Enumeration enumeration = trustedKeyStore.elements(-2038609988711824737L, certificate);
 
                while (enumeration.hasMoreElements()) {

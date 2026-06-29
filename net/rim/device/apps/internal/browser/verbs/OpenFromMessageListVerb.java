@@ -49,7 +49,7 @@ public final class OpenFromMessageListVerb extends BrowserVerb {
          browser.initiateFetchRequest(new FetchRequest(modelResult, browserConfigRecord));
          return null;
       } else {
-         RunnableDialog dialog = (RunnableDialog)(new Object(BrowserResources.getString(589), 1));
+         RunnableDialog dialog = new RunnableDialog(BrowserResources.getString(589), 1);
          dialog.run();
          return null;
       }

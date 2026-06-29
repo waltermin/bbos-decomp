@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.explorer.file.menu;
 
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.container.DialogFieldManager;
 import net.rim.device.api.ui.container.PopupScreen;
 
 final class PropertiesDialog extends PopupScreen {
@@ -11,7 +11,7 @@ final class PropertiesDialog extends PopupScreen {
    };
 
    public PropertiesDialog(Object field) {
-      super((Manager)(new Object(299067162755072L)), 299067162755072L);
+      super(new DialogFieldManager(299067162755072L), 299067162755072L);
       this.setItem(field);
    }
 
@@ -66,11 +66,11 @@ final class PropertiesDialog extends PopupScreen {
       // 046: goto 089
       // 049: aload 1
       // 04a: dup
-      // 04b: instanceof java/lang/Object
+      // 04b: instanceof net/rim/device/apps/internal/explorer/MediaLibrary/MediaInfo
       // 04e: ifne 055
       // 051: pop
       // 052: goto 089
-      // 055: checkcast java/lang/Object
+      // 055: checkcast net/rim/device/apps/internal/explorer/MediaLibrary/MediaInfo
       // 058: astore 7
       // 05a: aload 7
       // 05c: invokeinterface net/rim/device/apps/internal/explorer/MediaLibrary/MediaInfo.getLocation ()Ljava/lang/String; 1
@@ -97,14 +97,14 @@ final class PropertiesDialog extends PopupScreen {
       // 087: istore 6
       // 089: aload 0
       // 08a: invokevirtual net/rim/device/api/ui/Screen.getDelegate ()Lnet/rim/device/api/ui/Manager;
-      // 08d: checkcast java/lang/Object
+      // 08d: checkcast net/rim/device/api/ui/container/DialogFieldManager
       // 090: astore 7
       // 092: aload 7
-      // 094: new java/lang/Object
+      // 094: new net/rim/device/api/ui/component/NullField
       // 097: dup
       // 098: invokespecial net/rim/device/api/ui/component/NullField.<init> ()V
       // 09b: invokevirtual net/rim/device/api/ui/container/DialogFieldManager.addCustomField (Lnet/rim/device/api/ui/Field;)V
-      // 09e: new java/lang/Object
+      // 09e: new net/rim/device/api/ui/component/LabelField
       // 0a1: dup
       // 0a2: aload 3
       // 0a3: invokestatic net/rim/device/internal/io/file/FileUtilities.getDisplayName (Ljava/lang/String;)Ljava/lang/String;
@@ -113,7 +113,7 @@ final class PropertiesDialog extends PopupScreen {
       // 0ab: aload 7
       // 0ad: aload 8
       // 0af: invokevirtual net/rim/device/api/ui/container/DialogFieldManager.addCustomField (Lnet/rim/device/api/ui/Field;)V
-      // 0b2: new java/lang/Object
+      // 0b2: new net/rim/device/api/ui/component/LabelField
       // 0b5: dup
       // 0b6: invokespecial net/rim/device/api/ui/component/LabelField.<init> ()V
       // 0b9: astore 9
@@ -175,11 +175,11 @@ final class PropertiesDialog extends PopupScreen {
       // 160: astore 12
       // 162: goto 175
       // 165: aload 1
-      // 166: instanceof java/lang/Object
+      // 166: instanceof net/rim/device/apps/internal/explorer/MediaLibrary/MediaInfo
       // 169: ifeq 175
       // 16c: aload 3
       // 16d: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 170: checkcast java/lang/Object
+      // 170: checkcast javax/microedition/io/file/FileConnection
       // 173: astore 12
       // 175: bipush -1
       // 177: i2l
@@ -203,7 +203,7 @@ final class PropertiesDialog extends PopupScreen {
       // 1a4: aload 12
       // 1a6: invokeinterface javax/microedition/io/file/FileConnection.totalSize ()J 1
       // 1ab: lstore 17
-      // 1ad: new java/lang/Object
+      // 1ad: new net/rim/device/api/ui/container/VerticalFieldManager
       // 1b0: dup
       // 1b1: ldc2_w 299067162755072
       // 1b4: invokespecial net/rim/device/api/ui/container/VerticalFieldManager.<init> (J)V
@@ -243,9 +243,9 @@ final class PropertiesDialog extends PopupScreen {
       // 1f5: invokevirtual java/lang/String.substring (II)Ljava/lang/String;
       // 1f8: astore 22
       // 1fa: aload 19
-      // 1fc: new java/lang/Object
+      // 1fc: new net/rim/device/api/ui/component/LabelField
       // 1ff: dup
-      // 200: new java/lang/Object
+      // 200: new java/lang/StringBuffer
       // 203: dup
       // 204: invokespecial java/lang/StringBuffer.<init> ()V
       // 207: aload 22
@@ -260,9 +260,9 @@ final class PropertiesDialog extends PopupScreen {
       // 220: invokespecial net/rim/device/api/ui/component/LabelField.<init> (Ljava/lang/Object;J)V
       // 223: invokevirtual net/rim/device/api/ui/Manager.add (Lnet/rim/device/api/ui/Field;)V
       // 226: aload 19
-      // 228: new java/lang/Object
+      // 228: new net/rim/device/api/ui/component/LabelField
       // 22b: dup
-      // 22c: new java/lang/Object
+      // 22c: new java/lang/StringBuffer
       // 22f: dup
       // 230: invokespecial java/lang/StringBuffer.<init> ()V
       // 233: lload 15
@@ -278,9 +278,9 @@ final class PropertiesDialog extends PopupScreen {
       // 24e: invokespecial net/rim/device/api/ui/component/LabelField.<init> (Ljava/lang/Object;J)V
       // 251: invokevirtual net/rim/device/api/ui/Manager.add (Lnet/rim/device/api/ui/Field;)V
       // 254: aload 19
-      // 256: new java/lang/Object
+      // 256: new net/rim/device/api/ui/component/LabelField
       // 259: dup
-      // 25a: new java/lang/Object
+      // 25a: new java/lang/StringBuffer
       // 25d: dup
       // 25e: invokespecial java/lang/StringBuffer.<init> ()V
       // 261: lload 17
@@ -302,16 +302,16 @@ final class PropertiesDialog extends PopupScreen {
       // 287: bipush 100
       // 289: invokestatic net/rim/device/api/util/MathUtilities.clamp (III)I
       // 28c: istore 24
-      // 28e: new java/lang/Object
+      // 28e: new net/rim/device/api/ui/chart/ChartField
       // 291: dup
       // 292: invokespecial net/rim/device/api/ui/chart/ChartField.<init> ()V
       // 295: astore 25
-      // 297: new java/lang/Object
+      // 297: new net/rim/device/api/ui/chart/PieRenderer
       // 29a: dup
       // 29b: aload 25
       // 29d: invokespecial net/rim/device/api/ui/chart/PieRenderer.<init> (Lnet/rim/device/api/ui/chart/ChartField;)V
       // 2a0: astore 26
-      // 2a2: new java/lang/Object
+      // 2a2: new net/rim/device/api/ui/chart/XYDataset
       // 2a5: dup
       // 2a6: invokespecial net/rim/device/api/ui/chart/XYDataset.<init> ()V
       // 2a9: astore 27
@@ -336,7 +336,7 @@ final class PropertiesDialog extends PopupScreen {
       // 2d5: bipush 32
       // 2d7: invokestatic java/lang/Math.max (II)I
       // 2da: istore 28
-      // 2dc: new java/lang/Object
+      // 2dc: new net/rim/device/api/ui/container/HorizontalFieldManager
       // 2df: dup
       // 2e0: invokespecial net/rim/device/api/ui/container/HorizontalFieldManager.<init> ()V
       // 2e3: astore 29
@@ -358,11 +358,11 @@ final class PropertiesDialog extends PopupScreen {
       // 308: goto 349
       // 30b: aload 12
       // 30d: dup
-      // 30e: instanceof java/lang/Object
+      // 30e: instanceof net/rim/device/api/io/file/ExtendedFileConnection
       // 311: ifne 318
       // 314: pop
       // 315: goto 325
-      // 318: checkcast java/lang/Object
+      // 318: checkcast net/rim/device/api/io/file/ExtendedFileConnection
       // 31b: invokeinterface net/rim/device/api/io/file/ExtendedFileConnection.rawFileSize ()J 1
       // 320: lstore 13
       // 322: goto 32e
@@ -370,7 +370,7 @@ final class PropertiesDialog extends PopupScreen {
       // 327: invokeinterface javax/microedition/io/file/FileConnection.fileSize ()J 1
       // 32c: lstore 13
       // 32e: aload 7
-      // 330: new java/lang/Object
+      // 330: new net/rim/device/api/ui/component/DateField
       // 333: dup
       // 334: bipush 66
       // 336: invokestatic net/rim/device/apps/internal/explorer/file/resource/ExplorerResources.getString (I)Ljava/lang/String;
@@ -385,14 +385,14 @@ final class PropertiesDialog extends PopupScreen {
       // 34d: lcmp
       // 34e: iflt 377
       // 351: aload 7
-      // 353: new java/lang/Object
+      // 353: new net/rim/device/apps/api/ui/LeftRightFieldManager
       // 356: dup
-      // 357: new java/lang/Object
+      // 357: new net/rim/device/api/ui/component/LabelField
       // 35a: dup
       // 35b: bipush 67
       // 35d: invokestatic net/rim/device/apps/internal/explorer/file/resource/ExplorerResources.getString (I)Ljava/lang/String;
       // 360: invokespecial net/rim/device/api/ui/component/LabelField.<init> (Ljava/lang/Object;)V
-      // 363: new java/lang/Object
+      // 363: new net/rim/device/api/ui/component/LabelField
       // 366: dup
       // 367: lload 13
       // 369: invokestatic net/rim/device/internal/io/file/FileUtilities.sizeToString (J)Ljava/lang/String;
@@ -426,15 +426,15 @@ final class PropertiesDialog extends PopupScreen {
       // 3a7: invokevirtual net/rim/device/internal/io/file/MetaDataFile.getMetadataFromCache (Ljava/lang/String;I)Ljava/lang/Object;
       // 3aa: astore 17
       // 3ac: aload 17
-      // 3ae: instanceof java/lang/Object
+      // 3ae: instanceof java/lang/String
       // 3b1: ifeq 393
-      // 3b4: new java/lang/Object
+      // 3b4: new net/rim/device/api/ui/container/FlowFieldManager
       // 3b7: dup
       // 3b8: ldc2_w 1152921504606846984
       // 3bb: invokespecial net/rim/device/api/ui/container/FlowFieldManager.<init> (J)V
       // 3be: astore 18
       // 3c0: aload 18
-      // 3c2: new java/lang/Object
+      // 3c2: new net/rim/device/api/ui/component/LabelField
       // 3c5: dup
       // 3c6: getstatic net/rim/device/apps/internal/explorer/file/menu/PropertiesDialog.tagToLabel [[I
       // 3c9: bipush 1
@@ -445,10 +445,10 @@ final class PropertiesDialog extends PopupScreen {
       // 3d1: invokespecial net/rim/device/api/ui/component/LabelField.<init> (Ljava/lang/Object;)V
       // 3d4: invokevirtual net/rim/device/api/ui/Manager.add (Lnet/rim/device/api/ui/Field;)V
       // 3d7: aload 18
-      // 3d9: new java/lang/Object
+      // 3d9: new net/rim/device/api/ui/component/LabelField
       // 3dc: dup
       // 3dd: aload 17
-      // 3df: checkcast java/lang/Object
+      // 3df: checkcast java/lang/String
       // 3e2: invokespecial net/rim/device/api/ui/component/LabelField.<init> (Ljava/lang/Object;)V
       // 3e5: invokevirtual net/rim/device/api/ui/Manager.add (Lnet/rim/device/api/ui/Field;)V
       // 3e8: aload 7
@@ -456,7 +456,7 @@ final class PropertiesDialog extends PopupScreen {
       // 3ec: invokevirtual net/rim/device/api/ui/container/DialogFieldManager.addCustomField (Lnet/rim/device/api/ui/Field;)V
       // 3ef: goto 393
       // 3f2: aload 7
-      // 3f4: new java/lang/Object
+      // 3f4: new net/rim/device/api/ui/component/NullField
       // 3f7: dup
       // 3f8: invokespecial net/rim/device/api/ui/component/NullField.<init> ()V
       // 3fb: invokevirtual net/rim/device/api/ui/container/DialogFieldManager.addCustomField (Lnet/rim/device/api/ui/Field;)V

@@ -24,9 +24,9 @@ public class OBEXSession {
    protected static final boolean DEBUG = false;
 
    public void init(InputStream in, OutputStream out) {
-      this._din = (DataInputStream)(new Object(in));
+      this._din = new DataInputStream(in);
       this._dout = new OBEXDataOutputStream(out);
-      this._db = (DataBuffer)(new Object());
+      this._db = new DataBuffer();
    }
 
    protected HeaderSetImpl readHeaders(int length) {
@@ -46,7 +46,7 @@ public class OBEXSession {
    protected byte[] getAuthResponse(byte[] challengeData) {
       if (challengeData != null && this._authenticator != null) {
          try {
-            DataBuffer buffer = (DataBuffer)(new Object());
+            DataBuffer buffer = new DataBuffer();
             buffer.setData(challengeData, 0, challengeData.length);
             if (buffer.getLength() < 18) {
                return null;
@@ -83,17 +83,17 @@ public class OBEXSession {
                   buffer.read(realmArray);
                   switch (encoding) {
                      case 255:
-                        realm = (String)(new Object(realmArray, "UnicodeBigUnmarked"));
+                        realm = new String(realmArray, "UnicodeBigUnmarked");
                         break;
                      default:
-                        realm = (String)(new Object(realmArray));
+                        realm = new String(realmArray);
                   }
                }
             }
 
             PasswordAuthentication challenge = this._authenticator.onAuthenticationChallenge(realm, userName, fullAccess);
             byte[] digestData = this.getDigestData(nonce, challenge.getPassword());
-            DataBuffer resBuffer = (DataBuffer)(new Object());
+            DataBuffer resBuffer = new DataBuffer();
             resBuffer.writeByte(0);
             resBuffer.writeByte(digestData.length);
             resBuffer.write(digestData);
@@ -118,7 +118,7 @@ public class OBEXSession {
    protected boolean checkAuthResponse(byte[] authResponse, byte[] nonce) {
       if (authResponse != null && nonce != null) {
          try {
-            DataBuffer buffer = (DataBuffer)(new Object());
+            DataBuffer buffer = new DataBuffer();
             byte[] username = null;
             buffer.write(authResponse);
             buffer.setPosition(0);
@@ -164,7 +164,7 @@ public class OBEXSession {
       }
 
       try {
-         DataBuffer buffer = (DataBuffer)(new Object());
+         DataBuffer buffer = new DataBuffer();
          byte[] username = null;
          buffer.write(authResponse);
          buffer.readByte();

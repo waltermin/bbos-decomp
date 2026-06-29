@@ -14,7 +14,7 @@ final class PeerSendThread extends Thread {
 
    public PeerSendThread(PeerSession session, DatagramConnectionBase connection) {
       this._connection = connection;
-      this._requests = (Vector)(new Object());
+      this._requests = new Vector();
       this._alive = true;
       this._session = session;
    }
@@ -57,7 +57,7 @@ final class PeerSendThread extends Thread {
       }
 
       try {
-         StringBuffer strBuf = (StringBuffer)(new Object(32));
+         StringBuffer strBuf = new StringBuffer(32);
          strBuf.append("RIM_IM");
          if (req.contacts instanceof PeerContact) {
             strBuf.append(':');
@@ -72,9 +72,9 @@ final class PeerSendThread extends Thread {
                strBuf.append(':');
                strBuf.append(contacts[i].getId());
             }
-         } else if (!(req.contacts instanceof Object)) {
-            if (req.contacts instanceof Object[]) {
-               String[] contacts = (Object[])req.contacts;
+         } else if (!(req.contacts instanceof Vector)) {
+            if (req.contacts instanceof String[]) {
+               String[] contacts = (String[])req.contacts;
                if (contacts.length == 0) {
                   return;
                }
@@ -83,7 +83,7 @@ final class PeerSendThread extends Thread {
                   strBuf.append(':');
                   strBuf.append(contacts[i]);
                }
-            } else if (req.contacts instanceof Object) {
+            } else if (req.contacts instanceof String) {
                strBuf.append(':');
                strBuf.append((String)req.contacts);
             }

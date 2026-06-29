@@ -54,7 +54,7 @@ class WicletRuntimeImpl$ProcessingRequest implements Runnable {
                      var5 = false;
                      break label58;
                   case 5:
-                     this.this$0._uiService.showMenu(this._context);
+                     this.this$0._uiService.showMenu((Integer)this._context);
                      var5 = false;
                      break label58;
                   case 6:
@@ -66,7 +66,7 @@ class WicletRuntimeImpl$ProcessingRequest implements Runnable {
                      var5 = false;
                      break label58;
                   case 8:
-                     if (!(this._context instanceof Object)) {
+                     if (!(this._context instanceof Runnable)) {
                         var5 = false;
                      } else {
                         ((Runnable)this._context).run();

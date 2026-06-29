@@ -20,7 +20,7 @@ public final class FileExplorerVerb extends Verb {
    }
 
    private static final Screen createViewMediaScreen(int mediaContextValue) {
-      ContextInfo contextInfo = (ContextInfo)(new Object(mediaContextValue));
+      ContextInfo contextInfo = new ContextInfo(mediaContextValue);
       contextInfo.setExternal(true);
       return new TrackListScreen(contextInfo);
    }
@@ -28,9 +28,9 @@ public final class FileExplorerVerb extends Verb {
    @Override
    public final Object invoke(Object parameter) {
       ContextObject context = this._context;
-      if (parameter instanceof Object) {
+      if (parameter instanceof String) {
          this._context.put(2765042845091913199L, parameter);
-      } else if (parameter instanceof Object) {
+      } else if (parameter instanceof ContextObject) {
          context = (ContextObject)parameter;
          Integer invokeMenuItem = (Integer)ContextObject.get(context, -8073278814961745892L);
          if (invokeMenuItem != null) {

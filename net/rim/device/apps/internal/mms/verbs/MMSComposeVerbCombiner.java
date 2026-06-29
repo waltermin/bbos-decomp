@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.mms.verbs;
 
 import net.rim.device.apps.api.framework.model.ContextObject;
+import net.rim.device.apps.api.framework.verb.PopupVerbWrapper;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.framework.verb.VerbCombiner;
 import net.rim.device.apps.internal.mms.resources.MMSResources;
@@ -8,13 +9,13 @@ import net.rim.device.apps.internal.mms.resources.MMSResources;
 final class MMSComposeVerbCombiner implements VerbCombiner {
    @Override
    public final boolean recognize(Object object) {
-      return !(object instanceof Object) ? false : ((Verb)object).getVerbGroupId() == 12759082;
+      return !(object instanceof Verb) ? false : ((Verb)object).getVerbGroupId() == 12759082;
    }
 
    @Override
    public final Verb createWrapperVerb(Verb[] verbs, Verb defaultVerb) {
-      String[] descriptions = new Object[verbs.length];
-      ContextObject contextObject = (ContextObject)(new Object(51, 42, 34));
+      String[] descriptions = new String[verbs.length];
+      ContextObject contextObject = new ContextObject(51, 42, 34);
       contextObject.setFlag(63);
 
       for (int i = verbs.length - 1; i >= 0; i--) {
@@ -31,7 +32,7 @@ final class MMSComposeVerbCombiner implements VerbCombiner {
          verbDescription = MMSResources.getString(12);
       }
 
-      return (Verb)(new Object(verbDescription, MMSResources.getString(10), this.getPopupOrdering(verbs), verbs, descriptions, defaultVerb));
+      return new PopupVerbWrapper(verbDescription, MMSResources.getString(10), this.getPopupOrdering(verbs), verbs, descriptions, defaultVerb);
    }
 
    private final int getPopupOrdering(Verb[] verbs) {

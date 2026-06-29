@@ -58,9 +58,9 @@ public final class WAPPushRepositoryCollection implements SyncCollection, SyncCo
 
    @Override
    public final SyncObject[] getSyncObjects() {
-      Vector syncObjects = (Vector)(new Object());
+      Vector syncObjects = new Vector();
       this.addSubItems(this._folder, syncObjects);
-      SyncObject[] objects = new Object[syncObjects.size()];
+      SyncObject[] objects = new SyncObject[syncObjects.size()];
       syncObjects.copyInto(objects);
       return objects;
    }

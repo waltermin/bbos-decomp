@@ -10,12 +10,12 @@ public class CertificateSummaryDataSyncModelFactory {
 
    public static boolean register(CertificateSummaryDataSyncModelFactory factory) {
       if (factory == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       String type = factory.getType();
       if (type == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (_hashtable.containsKey(type)) {
@@ -28,7 +28,7 @@ public class CertificateSummaryDataSyncModelFactory {
 
    public static CertificateSummaryDataSyncModel createCertificateSummaryDataSyncModel(KeyStoreData keyStoreData) {
       if (keyStoreData == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       Certificate certificate = keyStoreData.getCertificate();
@@ -38,7 +38,7 @@ public class CertificateSummaryDataSyncModelFactory {
 
       String certificateType = certificate.getType();
       if (certificateType == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       CertificateSummaryDataSyncModelFactory factory = (CertificateSummaryDataSyncModelFactory)_hashtable.get(certificateType);

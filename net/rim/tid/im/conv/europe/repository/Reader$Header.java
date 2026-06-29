@@ -20,10 +20,10 @@ public final class Reader$Header {
    protected Reader$Header() {
    }
 
-   public final void read(DataInputStream aDis) {
+   public final void read(DataInputStream aDis) throws Exception {
       aDis.mark(Integer.MAX_VALUE);
       if (this.signature != aDis.readInt()) {
-         throw new Object("Incorrect signature");
+         throw new Exception("Incorrect signature");
       }
 
       this.header_size = aDis.readShort();
@@ -36,7 +36,7 @@ public final class Reader$Header {
       int len = aDis.readByte();
       byte[] locale = new byte[len];
       aDis.read(locale);
-      this.iLocale = (String)(new Object(locale));
+      this.iLocale = new String(locale);
       if (this.version_major <= 1 && this.version_minor <= 3) {
          this.i1CharWordNo = 1;
          this.i1CharWordUpperCase = 0;

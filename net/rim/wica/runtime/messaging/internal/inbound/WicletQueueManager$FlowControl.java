@@ -30,7 +30,7 @@ class WicletQueueManager$FlowControl {
    }
 
    void invalidEvent() {
-      throw new Object("Invalid event");
+      throw new RuntimeException("Invalid event");
    }
 
    WicletQueueManager$FlowControl(WicletQueueManager$1 x0) {

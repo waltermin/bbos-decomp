@@ -3,7 +3,6 @@ package net.rim.device.apps.internal.browser.ui;
 import com.sun.cldc.i18n.Helper;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.CheckboxField;
@@ -100,7 +99,7 @@ public final class DialogSelectCharset extends PopupScreen implements FieldChang
 
    @Override
    public final void fieldChanged(Field field, int context) {
-      if (field instanceof Object) {
+      if (field instanceof ButtonField) {
          this.handleSelection();
       }
    }
@@ -123,9 +122,9 @@ public final class DialogSelectCharset extends PopupScreen implements FieldChang
    }
 
    public DialogSelectCharset() {
-      super((Manager)(new Object()), 0);
+      super(new DialogFieldManager(), 0);
       DialogFieldManager dfm = (DialogFieldManager)this.getDelegate();
-      dfm.setMessage((RichTextField)(new Object(BrowserResources.getString(618), 36028797018963968L)));
+      dfm.setMessage(new RichTextField(BrowserResources.getString(618), 36028797018963968L));
       String defaultValue = GeneralProperty.getDefaultCharsetValue();
       BrowserSession session = BrowserSession.getCurrentSession();
       if (session != null && session.getConfig() != null) {
@@ -153,15 +152,15 @@ public final class DialogSelectCharset extends PopupScreen implements FieldChang
          }
       }
 
-      this._autoField = (CheckboxField)(new Object(BrowserResources.getString(619), GeneralProperty.getDefaultCharsetModeValue() == 0));
+      this._autoField = new BrowserCheckboxField(BrowserResources.getString(619), GeneralProperty.getDefaultCharsetModeValue() == 0);
       dfm.addCustomField(this._autoField);
-      this._charsetField = (ObjectChoiceField)(new Object(BrowserResources.getString(620), this._supportedEncodings, index));
+      this._charsetField = new ObjectChoiceField(BrowserResources.getString(620), this._supportedEncodings, index);
       dfm.addCustomField(this._charsetField);
-      HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(12884901888L));
-      this._buttonOk = (ButtonField)(new Object(CommonResources.getString(117)));
+      HorizontalFieldManager hfm = new HorizontalFieldManager(12884901888L);
+      this._buttonOk = new ButtonField(CommonResources.getString(117));
       this._buttonOk.setChangeListener(this);
       hfm.add(this._buttonOk);
-      this._buttonCancel = (ButtonField)(new Object(CommonResources.getString(9042)));
+      this._buttonCancel = new ButtonField(CommonResources.getString(9042));
       this._buttonCancel.setChangeListener(this);
       hfm.add(this._buttonCancel);
       dfm.addCustomField(hfm);

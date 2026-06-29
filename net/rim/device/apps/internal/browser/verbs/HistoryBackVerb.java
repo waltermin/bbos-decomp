@@ -19,8 +19,8 @@ public final class HistoryBackVerb extends BrowserVerb {
    @Override
    public final Object invoke(Object context) {
       boolean invokedByEscape = false;
-      if (context instanceof Object) {
-         invokedByEscape = context;
+      if (context instanceof Boolean) {
+         invokedByEscape = (Boolean)context;
       }
 
       BrowserDaemonRegistry.getInstance().goBack(invokedByEscape, false);

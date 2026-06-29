@@ -1,9 +1,9 @@
 package net.rim.device.apps.internal.task;
 
-import net.rim.device.api.collection.util.KeywordIndexerHelper;
 import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.apps.api.framework.model.ContextObject;
+import net.rim.device.apps.api.framework.model.RIMModelOrderHelper;
 
 final class Task {
    private TaskCollectionImpl _taskCollection = TaskCollectionImpl.getInstance();
@@ -34,9 +34,7 @@ final class Task {
       }
 
       if (this._keyList == null) {
-         this._keyList = new TaskStatusAndKeywordFilterList(
-            this.getUICollection(), (KeywordIndexerHelper)(new Object(new TaskComparator(), (ContextObject)(new Object(28)))), false
-         );
+         this._keyList = new TaskStatusAndKeywordFilterList(this.getUICollection(), new RIMModelOrderHelper(new TaskComparator(), new ContextObject(28)), false);
       }
 
       return this._keyList;

@@ -12,7 +12,7 @@ class JavaOverloadedCallable extends HostFunction {
    JavaOverloadedCallable(String type, JavaClass jc, String name, boolean isConstructor) {
       super(type, name, 0, isConstructor);
       this._javaClass = jc;
-      this._overloadVector = (Vector)(new Object());
+      this._overloadVector = new Vector();
       this._nOverloads = 0;
    }
 

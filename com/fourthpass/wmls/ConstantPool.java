@@ -1,14 +1,16 @@
 package com.fourthpass.wmls;
 
+import java.io.UnsupportedEncodingException;
+
 final class ConstantPool {
    private int _charSet;
    private Constant[] _constants;
 
-   public ConstantPool(WMLInputStream stream, String charsetString) {
+   public ConstantPool(WMLInputStream stream, String charsetString) throws UnsupportedEncodingException {
       int count = stream.readMBInt();
       this._charSet = stream.readMBInt();
       if (this._charSet != 1000 && this._charSet != 106 && this._charSet != 4 && this._charSet != 0) {
-         throw new Object();
+         throw new UnsupportedEncodingException();
       }
 
       if (this._charSet == 0) {
@@ -22,7 +24,7 @@ final class ConstantPool {
       }
    }
 
-   private final int getCharSet(String s) {
+   private final int getCharSet(String s) throws UnsupportedEncodingException {
       if (s == null) {
          return 106;
       } else if (s.equals("ISO-10646-UCS-2")) {
@@ -32,7 +34,7 @@ final class ConstantPool {
       } else if (s.equals("UTF-8")) {
          return 4;
       } else {
-         throw new Object();
+         throw new UnsupportedEncodingException();
       }
    }
 
@@ -40,11 +42,11 @@ final class ConstantPool {
       return this._constants[i];
    }
 
-   final Constant getConstant(WMLInputStream stream) {
+   final Constant getConstant(WMLInputStream stream) throws UnsupportedEncodingException, Exception {
       int type = stream.readUInt8();
       switch (type) {
          case -1:
-            throw new Object("Error Reading a Constant");
+            throw new Exception("Error Reading a Constant");
          case 0:
          default:
             return new ConstantInteger(stream.readInt8());
@@ -55,15 +57,15 @@ final class ConstantPool {
          case 3:
             return new ConstantFloat(stream.readIEEE754());
          case 4:
-            return new ConstantString((String)(new Object(this.readMBSizeGetBytes(stream), "utf-8")));
+            return new ConstantString(new String(this.readMBSizeGetBytes(stream), "utf-8"));
          case 5:
             return new ConstantString();
          case 6:
             switch (this._charSet) {
                case 4:
-                  return new ConstantString((String)(new Object(this.readMBSizeGetBytes(stream))));
+                  return new ConstantString(new String(this.readMBSizeGetBytes(stream)));
                case 106:
-                  return new ConstantString((String)(new Object(this.readMBSizeGetBytes(stream))));
+                  return new ConstantString(new String(this.readMBSizeGetBytes(stream)));
                case 1000:
                   int size = stream.readMBInt();
                   byte[] bytes = new byte[size];
@@ -74,9 +76,9 @@ final class ConstantPool {
                      ac[i / 2] = (char)(bytes[i] << 8 | bytes[i + 1]);
                   }
 
-                  return new ConstantString((String)(new Object(ac)));
+                  return new ConstantString(new String(ac));
                default:
-                  throw new Object();
+                  throw new UnsupportedEncodingException();
             }
       }
    }

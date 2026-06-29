@@ -1,13 +1,15 @@
 package net.rim.device.cldc.impl.tunnel;
 
 import java.util.Vector;
-import net.rim.device.api.hrt.HostRoutingInfo;
+import net.rim.device.api.hrt.CdmaHRI;
+import net.rim.device.api.hrt.GprsHRI;
+import net.rim.device.api.hrt.IdenHRI;
 import net.rim.device.api.system.Branding;
 import net.rim.device.api.system.RadioInfo;
 import net.rim.device.cldc.io.tunnel.TunnelApnList;
 
 public final class TunnelApnListImpl implements TunnelApnList {
-   private Vector _apnList = (Vector)(new Object());
+   private Vector _apnList = new Vector();
    private static String IIF_APN;
    private static int SUPPORTED_WAFS;
    private static int CDMA_AND_GPRS_MASK;
@@ -78,28 +80,28 @@ public final class TunnelApnListImpl implements TunnelApnList {
                   this.addLast(IIF_APN);
                }
 
-               if (hri instanceof Object) {
-                  this.addLast(((HostRoutingInfo)hri).getApn());
+               if (hri instanceof GprsHRI) {
+                  this.addLast(((GprsHRI)hri).getApn());
                } else {
                   this.addLast("blackberry.net");
                }
             }
 
-            if ((activeWafs & 10) != 0 && (hri instanceof Object || hri instanceof Object)) {
+            if ((activeWafs & 10) != 0 && (hri instanceof CdmaHRI || hri instanceof IdenHRI)) {
                this.addLast("");
                return;
             }
          } else if ((SUPPORTED_WAFS & 1) != 0) {
-            if (hri instanceof Object) {
-               this.addLast(((HostRoutingInfo)hri).getApn());
+            if (hri instanceof GprsHRI) {
+               this.addLast(((GprsHRI)hri).getApn());
                return;
             }
          } else {
             if ((SUPPORTED_WAFS & 10) == 0) {
-               throw new Object();
+               throw new RuntimeException();
             }
 
-            if (hri instanceof Object || hri instanceof Object) {
+            if (hri instanceof CdmaHRI || hri instanceof IdenHRI) {
                this.addLast("");
                return;
             }
@@ -110,7 +112,7 @@ public final class TunnelApnListImpl implements TunnelApnList {
    static {
       byte[] data = Branding.getData(13824);
       if (data != null) {
-         IIF_APN = (String)(new Object(data));
+         IIF_APN = new String(data);
       }
 
       SUPPORTED_WAFS = RadioInfo.getSupportedWAFs();

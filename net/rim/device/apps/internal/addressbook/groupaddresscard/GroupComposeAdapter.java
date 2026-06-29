@@ -39,7 +39,7 @@ final class GroupComposeAdapter extends Verb {
 
    @Override
    public final Object invoke(Object parameter) {
-      ContextObject contextObject = (ContextObject)(new Object());
+      ContextObject contextObject = new ContextObject();
       contextObject.put(254, this._gacm);
       return this._composeVerb.invoke(contextObject);
    }

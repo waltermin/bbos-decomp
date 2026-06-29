@@ -17,7 +17,7 @@ public final class DispatcherMessageWriter extends AbstractMessageWriter impleme
 
    @Override
    public final void openSession(String device, boolean hidden) {
-      this.writeMessage((byte)1, device, new Object(hidden));
+      this.writeMessage((byte)1, device, new Boolean(hidden));
    }
 
    @Override
@@ -32,7 +32,7 @@ public final class DispatcherMessageWriter extends AbstractMessageWriter impleme
 
    @Override
    public final void waitForSessionReady(String sessionName, int timeout) {
-      this.writeMessage((byte)4, sessionName, new Object(timeout));
+      this.writeMessage((byte)4, sessionName, new Integer(timeout));
    }
 
    @Override
@@ -87,7 +87,7 @@ public final class DispatcherMessageWriter extends AbstractMessageWriter impleme
 
    @Override
    public final void logMessage(String sessionName, int type, String message, String[] data) {
-      this.writeMessage((byte)14, sessionName, new Object(type), message, data);
+      this.writeMessage((byte)14, sessionName, new Integer(type), message, data);
    }
 
    @Override
@@ -169,15 +169,15 @@ public final class DispatcherMessageWriter extends AbstractMessageWriter impleme
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
    protected final byte[] getHeader() {
-      ByteArrayOutputStream baos = (ByteArrayOutputStream)(new Object());
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
       boolean var4 = false /* VF: Semaphore variable */;
 
       try {
          var4 = true;
-         DataOutputStream ioe = new Object(baos);
-         ((DataOutputStream)ioe).writeByte(77);
-         ((DataOutputStream)ioe).writeInt(ServiceInfo.getDispatcherServiceInfo().getVersion());
-         ((DataOutputStream)ioe).close();
+         DataOutputStream ioe = new DataOutputStream(baos);
+         ioe.writeByte(77);
+         ioe.writeInt(ServiceInfo.getDispatcherServiceInfo().getVersion());
+         ioe.close();
          var4 = false;
       } finally {
          if (var4) {

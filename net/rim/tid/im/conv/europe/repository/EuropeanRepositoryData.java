@@ -11,12 +11,12 @@ import net.rim.tid.im.conv.repository.ResultContainer;
 import net.rim.tid.itie.LinguisticData;
 
 public class EuropeanRepositoryData implements CustomWordsRepository {
-   Vector _readers = (Vector)(new Object());
+   Vector _readers = new Vector();
    WordLearningReader _learning;
    int _longestWordLength = 20;
    int _maxNestingLevel = 2;
-   private SLCurrentVariant _addVariant = (SLCurrentVariant)(new Object());
-   private ResultContainer _resContainer = (ResultContainer)(new Object());
+   private SLCurrentVariant _addVariant = new SLCurrentVariant();
+   private ResultContainer _resContainer = new ResultContainer();
    private MailExtractorRepository _extractorRepository = new MailExtractorRepository();
    private static String LEARNING_WORDLIST_NAME = "Learning Wordlist";
 
@@ -139,7 +139,7 @@ public class EuropeanRepositoryData implements CustomWordsRepository {
 
    synchronized String[] getAvailableWordlists() {
       int len = this._readers.size() == 0 ? 1 : this._readers.size() + 1;
-      String[] names = new Object[len];
+      String[] names = new String[len];
 
       for (int i = 0; i < len - 1; i++) {
          names[i] = ((Reader)this._readers.elementAt(i)).getName();
@@ -207,7 +207,7 @@ public class EuropeanRepositoryData implements CustomWordsRepository {
 
    @Override
    public int containsWord(char[] word, int length) {
-      if (this._learning.contains(new Object(word, 0, length))) {
+      if (this._learning.contains(new String(word, 0, length))) {
          return 1;
       }
 

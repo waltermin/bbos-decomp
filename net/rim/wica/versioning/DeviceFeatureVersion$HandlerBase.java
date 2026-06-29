@@ -15,7 +15,7 @@ public class DeviceFeatureVersion$HandlerBase implements DeviceFeatureVersion$Ha
 
    @Override
    public String serialize() {
-      return ((StringBuffer)(new Object())).append(this._name).append("=").toString();
+      return this._name + "=";
    }
 
    @Override

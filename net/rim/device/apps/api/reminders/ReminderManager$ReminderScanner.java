@@ -135,7 +135,7 @@ final class ReminderManager$ReminderScanner extends Thread {
 
                try {
                   this.this$0.logReminderEvent(1178686540, null, null);
-                  if (!(t instanceof Object)) {
+                  if (!(t instanceof OutOfMemoryError)) {
                      QuincyManager.sendJavaLogworthy("ReminderScanner");
                   }
 

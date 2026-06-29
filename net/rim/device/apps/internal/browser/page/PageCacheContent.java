@@ -15,20 +15,20 @@ public final class PageCacheContent {
          this._cacheResult = cr;
          this._style = style;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    public final void destroy() {
       Field f = this._ui.getDisplayableContent();
-      if (f instanceof Object) {
+      if (f instanceof Destroyable) {
          ((Destroyable)f).destroy();
       }
    }
 
    public final void setDestroyOnUndisplay(boolean value) {
       Field f = this._ui.getDisplayableContent();
-      if (f instanceof Object) {
+      if (f instanceof Destroyable) {
          ((Destroyable)f).setDestroyMethod(value ? 0 : 1);
       }
    }

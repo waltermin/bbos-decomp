@@ -4,6 +4,7 @@ import java.util.Enumeration;
 import java.util.Vector;
 import javax.bluetooth.RemoteDevice;
 import javax.bluetooth.UUID;
+import net.rim.device.api.bluetooth.BluetoothSerialPortInfo;
 import net.rim.device.api.i18n.MessageFormat;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.system.ApplicationManager;
@@ -105,7 +106,7 @@ public final class BluetoothDevice implements Runnable {
       this._waitingForPINRequest = false;
       this._waitingForPINResponse = false;
       this._serviceDiscoveryInProgress = false;
-      this._sdpQueryQueue = (Vector)(new Object());
+      this._sdpQueryQueue = new Vector();
    }
 
    final BluetoothDeviceData getData() {
@@ -446,7 +447,7 @@ public final class BluetoothDevice implements Runnable {
       // 03b: invokespecial net/rim/device/apps/internal/bluetooth/BluetoothDevice.doNextQuery ([B)Z
       // 03e: pop
       // 03f: return
-      // 040: new java/lang/Object
+      // 040: new net/rim/device/api/util/DataBuffer
       // 043: dup
       // 044: aload 2
       // 045: bipush 0
@@ -473,7 +474,7 @@ public final class BluetoothDevice implements Runnable {
       // 069: getfield net/rim/device/apps/internal/bluetooth/BluetoothDevice._partialQueryData Lnet/rim/device/api/util/DataBuffer;
       // 06c: ifnonnull 07b
       // 06f: aload 0
-      // 070: new java/lang/Object
+      // 070: new net/rim/device/api/util/DataBuffer
       // 073: dup
       // 074: bipush 1
       // 075: invokespecial net/rim/device/api/util/DataBuffer.<init> (Z)V
@@ -587,7 +588,7 @@ public final class BluetoothDevice implements Runnable {
    public final Enumeration getServiceNames() {
       synchronized (this._data._serviceRecords) {
          int numRecords = this._data._serviceRecords.length;
-         Vector names = (Vector)(new Object());
+         Vector names = new Vector();
 
          for (int i = 0; i < numRecords; i++) {
             String name = this.getServiceName(this._data._name, this._data._serviceRecords[i]);
@@ -610,7 +611,7 @@ public final class BluetoothDevice implements Runnable {
                String serviceName = this.getServiceName(null, record);
                int serverID = record.getRFCOMMServerChannel();
                if (serverID != 0) {
-                  v.addElement(new Object(this.getAddress(), this.getPageScanInfo(), this.getName(), serverID, serviceName));
+                  v.addElement(new BluetoothSerialPortInfo(this.getAddress(), this.getPageScanInfo(), this.getName(), serverID, serviceName));
                }
             }
          }

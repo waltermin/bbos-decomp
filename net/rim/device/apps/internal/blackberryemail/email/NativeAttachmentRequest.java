@@ -72,8 +72,8 @@ public class NativeAttachmentRequest {
       }
 
       ServiceRecord serviceRecord = null;
-      if (contextObject instanceof Object) {
-         serviceRecord = (ServiceRecord)ContextObject.get(contextObject, -6095803566992128485L);
+      if (contextObject instanceof ContextObject) {
+         serviceRecord = (ServiceRecord)ContextObject.get((ContextObject)contextObject, -6095803566992128485L);
          if (serviceRecord == null) {
             String logStr = "createNativeRequest: service is null.";
             EventLogger.logEvent(-1237457833540244999L, logStr.getBytes(), 0);
@@ -82,7 +82,7 @@ public class NativeAttachmentRequest {
       }
 
       NativeAttachmentRequest nativeAttachmentRequest = new NativeAttachmentRequest();
-      nativeAttachmentRequest._chunks = (IntHashtable)(new Object());
+      nativeAttachmentRequest._chunks = new IntHashtable();
       nativeAttachmentRequest._timestamp = -1;
       nativeAttachmentRequest.setComponentId(messagingIncomingMoreRequest.getComponentId());
       nativeAttachmentRequest.setContentPartId(messagingIncomingMoreRequest.getContentPartId());
@@ -123,7 +123,7 @@ public class NativeAttachmentRequest {
    }
 
    public void setMessage(EmailMessageModel message) {
-      this._message = (WeakReference)(new Object(message));
+      this._message = new WeakReference(message);
    }
 
    public int getOffset() {

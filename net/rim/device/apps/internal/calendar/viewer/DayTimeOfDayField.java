@@ -18,7 +18,7 @@ import net.rim.device.cldc.util.CalendarExtensions;
 final class DayTimeOfDayField extends DayList {
    private TimeBasedCollection _timeBasedCollection;
    private UiApplication _utilApp = UiApplication.getUiApplication();
-   private XYPoint _popupLocation = (XYPoint)(new Object());
+   private XYPoint _popupLocation = new XYPoint();
    private long _visibleStartOfList;
    private long _visibleEndOfList;
    private static final int DAYS_IN_WEEK = 7;
@@ -46,7 +46,7 @@ final class DayTimeOfDayField extends DayList {
 
    final Vector loadDay(long timeInTheDay, Object object) {
       this.calculateDayBoundaries(timeInTheDay);
-      Vector events = (Vector)(new Object());
+      Vector events = new Vector();
       long start = this.getStartOfList();
       long end = this.getEndOfList();
       this._timeBasedCollection.getElementsVisibleDuring(start, end - start, super._tz, events);

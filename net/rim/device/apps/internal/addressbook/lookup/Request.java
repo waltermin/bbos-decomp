@@ -10,7 +10,9 @@ import net.rim.device.api.ui.theme.ThemeManager;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.CompanyInfoModel;
+import net.rim.device.apps.api.addressbook.EmailAddressModel;
 import net.rim.device.apps.api.addressbook.FriendlyNameAddressModel;
+import net.rim.device.apps.api.addressbook.PINAddressModel;
 import net.rim.device.apps.api.addressbook.PersonNameModel;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.PaintProvider;
@@ -79,7 +81,7 @@ public final class Request implements ReadableList, VerbDescriptionProvider, Pai
                if (matches > 0 && this._selectedItem >= 0) {
                   RIMModel m = this._result.getAddress(this._selectedItem);
                   line0Params = new Object[]{m};
-                  if (m instanceof Object) {
+                  if (m instanceof AddressCardModel) {
                      AddressCardModel model = (AddressCardModel)m;
                      PersonNameModel personName = model.getName();
                      CompanyInfoModel companyInfo = model.getCompanyInfo();
@@ -92,7 +94,7 @@ public final class Request implements ReadableList, VerbDescriptionProvider, Pai
                   switch (matches) {
                      case -1:
                         line1ResId = 1753;
-                        line1Params = new Object[]{new Object(matches)};
+                        line1Params = new Object[]{new Integer(matches)};
                         break;
                      case 0:
                      default:
@@ -192,7 +194,7 @@ public final class Request implements ReadableList, VerbDescriptionProvider, Pai
    }
 
    public final boolean setResolved(Object element) {
-      if (element instanceof Object) {
+      if (element instanceof AddressCardModel) {
          AddressCardModel acm = (AddressCardModel)element;
          boolean isPIN = ContextObject.getFlag(this._context, 94);
          FriendlyNameAddressModel firstModel = null;
@@ -201,7 +203,7 @@ public final class Request implements ReadableList, VerbDescriptionProvider, Pai
 
          for (int i = 0; i < n; i++) {
             Object so = acm.getAt(i);
-            if (isPIN && so instanceof Object || !isPIN && so instanceof Object) {
+            if (isPIN && so instanceof PINAddressModel || !isPIN && so instanceof EmailAddressModel) {
                count++;
                if (firstModel == null) {
                   firstModel = (FriendlyNameAddressModel)so;
@@ -326,7 +328,7 @@ public final class Request implements ReadableList, VerbDescriptionProvider, Pai
    }
 
    final void setSearchString(String pattern) {
-      StringBuffer patternBuffer = (StringBuffer)(new Object(pattern));
+      StringBuffer patternBuffer = new StringBuffer(pattern);
       if (patternBuffer.length() > 256) {
          patternBuffer.setLength(256);
       }
@@ -392,7 +394,7 @@ public final class Request implements ReadableList, VerbDescriptionProvider, Pai
                switch (matches) {
                   case -1:
                      var6 = 310;
-                     parms = new Object[]{search, new Object(matches)};
+                     parms = new Object[]{search, new Integer(matches)};
                      break;
                   case 0:
                   default:
@@ -419,7 +421,7 @@ public final class Request implements ReadableList, VerbDescriptionProvider, Pai
             AddressBookServices.getAddressBook().addAddressCard(element);
             return;
          } catch (Throwable var5) {
-            String[] choices = new Object[]{AddressBookResources.getString(1740), AddressBookResources.getString(1741), CommonResources.getString(9042)};
+            String[] choices = new String[]{AddressBookResources.getString(1740), AddressBookResources.getString(1741), CommonResources.getString(9042)};
             int choice = Dialog.ask(AddressBookResources.getString(1710), choices, null, 1);
             switch (choice) {
                case -1:

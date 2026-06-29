@@ -12,7 +12,7 @@ class DocViewTextDisplayField$DocViewDeleteFieldRunnable implements Runnable {
          this._manager = manager;
          this._field = deleteField;
       } else {
-         throw new Object("Invalid delete parameters");
+         throw new IllegalArgumentException("Invalid delete parameters");
       }
    }
 

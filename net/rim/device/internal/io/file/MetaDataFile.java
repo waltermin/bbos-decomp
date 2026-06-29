@@ -2,6 +2,7 @@ package net.rim.device.internal.io.file;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.Enumeration;
 import java.util.Vector;
@@ -19,11 +20,11 @@ public final class MetaDataFile {
    private String _path;
    private MetaDataFile$CacheItem _head;
    private MetaDataFile$CacheItem _tail;
-   private StringCaseInsensitiveHashtable _cache = (StringCaseInsensitiveHashtable)(new Object());
+   private StringCaseInsensitiveHashtable _cache = new StringCaseInsensitiveHashtable();
    private int _cacheSize;
    private int _maxCacheSize = 40;
    private FileConnection _metaDataDatabase;
-   private StringToIntCaseInsensitiveHashtable _fileFilenameToEntry = (StringToIntCaseInsensitiveHashtable)(new Object());
+   private StringToIntCaseInsensitiveHashtable _fileFilenameToEntry = new StringToIntCaseInsensitiveHashtable();
    private long[] _fileOffsets = new long[0];
    private long[] _fileModTimes = new long[0];
    private int _numEntries;
@@ -85,21 +86,21 @@ public final class MetaDataFile {
          ApplicationRegistry registry = ApplicationRegistry.getApplicationRegistry();
          _openFileList = (Vector)registry.getOrWaitFor(5383068212830684791L);
          if (_openFileList == null) {
-            _openFileList = (Vector)(new Object());
+            _openFileList = new Vector();
             registry.put(5383068212830684791L, _openFileList);
          }
       }
 
       if (path != null) {
          if (!path.endsWith("/")) {
-            path = ((StringBuffer)(new Object())).append(path).append('/').toString();
+            path = path + '/';
          }
 
          synchronized (_openFileList) {
             MetaDataFile file = getIfOpen(path);
             if (file == null) {
                file = new MetaDataFile(path);
-               _openFileList.addElement(new Object(file));
+               _openFileList.addElement(new WeakReference(file));
             }
 
             return file;
@@ -155,7 +156,7 @@ public final class MetaDataFile {
       // 031: invokeinterface javax/microedition/io/file/FileConnection.openInputStream ()Ljava/io/InputStream; 1
       // 036: invokespecial net/rim/device/internal/io/file/CounterInputStream.<init> (Ljava/io/InputStream;)V
       // 039: astore 4
-      // 03b: new java/lang/Object
+      // 03b: new java/io/DataInputStream
       // 03e: dup
       // 03f: aload 4
       // 041: invokespecial java/io/DataInputStream.<init> (Ljava/io/InputStream;)V
@@ -164,7 +165,7 @@ public final class MetaDataFile {
       // 046: invokevirtual java/io/DataInputStream.readInt ()I
       // 049: ldc_w 604315651
       // 04c: if_icmpeq 057
-      // 04f: new java/lang/Object
+      // 04f: new java/io/IOException
       // 052: dup
       // 053: invokespecial java/io/IOException.<init> ()V
       // 056: athrow
@@ -172,7 +173,7 @@ public final class MetaDataFile {
       // 058: invokevirtual java/io/DataInputStream.readByte ()B
       // 05b: bipush 7
       // 05d: if_icmpeq 068
-      // 060: new java/lang/Object
+      // 060: new java/io/IOException
       // 063: dup
       // 064: invokespecial java/io/IOException.<init> ()V
       // 067: athrow
@@ -333,7 +334,7 @@ public final class MetaDataFile {
       // 199: getfield net/rim/device/internal/io/file/MetaDataFile._metaDataDatabase Ljavax/microedition/io/file/FileConnection;
       // 19c: lload 14
       // 19e: invokeinterface javax/microedition/io/file/FileConnection.truncate (J)V 3
-      // 1a3: new java/lang/Object
+      // 1a3: new net/rim/device/api/util/StringToIntCaseInsensitiveHashtable
       // 1a6: dup
       // 1a7: aload 0
       // 1a8: getfield net/rim/device/internal/io/file/MetaDataFile._fileFilenameToEntry Lnet/rim/device/api/util/StringToIntCaseInsensitiveHashtable;
@@ -343,15 +344,15 @@ public final class MetaDataFile {
       // 1b3: aload 0
       // 1b4: getfield net/rim/device/internal/io/file/MetaDataFile._path Ljava/lang/String;
       // 1b7: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 1ba: checkcast java/lang/Object
+      // 1ba: checkcast javax/microedition/io/file/FileConnection
       // 1bd: astore 5
       // 1bf: aload 5
       // 1c1: dup
-      // 1c2: instanceof java/lang/Object
+      // 1c2: instanceof net/rim/device/api/io/file/ExtendedFileConnection
       // 1c5: ifne 1cc
       // 1c8: pop
       // 1c9: goto 230
-      // 1cc: checkcast java/lang/Object
+      // 1cc: checkcast net/rim/device/api/io/file/ExtendedFileConnection
       // 1cf: astore 18
       // 1d1: aload 18
       // 1d3: ldc_w "*"
@@ -364,7 +365,7 @@ public final class MetaDataFile {
       // 1e8: goto 2f1
       // 1eb: aload 19
       // 1ed: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 1f2: checkcast java/lang/Object
+      // 1f2: checkcast net/rim/device/api/io/FileInfo
       // 1f5: astore 20
       // 1f7: aload 20
       // 1f9: invokevirtual net/rim/device/api/io/FileInfo.getFileName ()Ljava/lang/String;
@@ -401,7 +402,7 @@ public final class MetaDataFile {
       // 243: goto 2f1
       // 246: aload 18
       // 248: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 24d: checkcast java/lang/Object
+      // 24d: checkcast java/lang/String
       // 250: invokestatic net/rim/device/internal/io/file/FileUtilities.encodeString (Ljava/lang/String;)Ljava/lang/String;
       // 253: astore 19
       // 255: aload 0
@@ -414,7 +415,7 @@ public final class MetaDataFile {
       // 264: if_icmpeq 239
       // 267: aconst_null
       // 268: astore 21
-      // 26a: new java/lang/Object
+      // 26a: new java/lang/StringBuffer
       // 26d: dup
       // 26e: invokespecial java/lang/StringBuffer.<init> ()V
       // 271: aload 0
@@ -424,7 +425,7 @@ public final class MetaDataFile {
       // 27a: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 27d: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 280: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 283: checkcast java/lang/Object
+      // 283: checkcast javax/microedition/io/file/FileConnection
       // 286: astore 21
       // 288: aload 21
       // 28a: invokeinterface javax/microedition/io/file/FileConnection.exists ()Z 1
@@ -643,11 +644,11 @@ public final class MetaDataFile {
       // 01e: astore 7
       // 020: aload 7
       // 022: dup
-      // 023: instanceof java/lang/Object
+      // 023: instanceof java/lang/String
       // 026: ifne 02d
       // 029: pop
       // 02a: goto 056
-      // 02d: checkcast java/lang/Object
+      // 02d: checkcast java/lang/String
       // 030: ldc_w "utf-8"
       // 033: invokevirtual java/lang/String.getBytes (Ljava/lang/String;)[B
       // 036: arraylength
@@ -657,7 +658,7 @@ public final class MetaDataFile {
       // 03c: iload 8
       // 03e: sipush 1000
       // 041: if_icmple 04c
-      // 044: new java/lang/Object
+      // 044: new java/lang/IllegalArgumentException
       // 047: dup
       // 048: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 04b: athrow
@@ -668,11 +669,11 @@ public final class MetaDataFile {
       // 053: goto 0a8
       // 056: aload 7
       // 058: dup
-      // 059: instanceof java/lang/Object
+      // 059: instanceof java/lang/Long
       // 05c: ifne 063
       // 05f: pop
       // 060: goto 079
-      // 063: checkcast java/lang/Object
+      // 063: checkcast java/lang/Long
       // 066: invokevirtual java/lang/Long.longValue ()J
       // 069: lstore 8
       // 06b: lload 8
@@ -684,11 +685,11 @@ public final class MetaDataFile {
       // 076: goto 0a8
       // 079: aload 7
       // 07b: dup
-      // 07c: instanceof java/lang/Object
+      // 07c: instanceof net/rim/device/api/system/EncodedImage
       // 07f: ifne 086
       // 082: pop
       // 083: goto 0a8
-      // 086: checkcast java/lang/Object
+      // 086: checkcast net/rim/device/api/system/EncodedImage
       // 089: invokevirtual net/rim/device/api/system/EncodedImage.getLength ()I
       // 08c: bipush 5
       // 08e: iadd
@@ -696,7 +697,7 @@ public final class MetaDataFile {
       // 091: iload 8
       // 093: ldc_w 37632
       // 096: if_icmple 0a1
-      // 099: new java/lang/Object
+      // 099: new java/lang/IllegalArgumentException
       // 09c: dup
       // 09d: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 0a0: athrow
@@ -751,7 +752,7 @@ public final class MetaDataFile {
       // 110: astore 6
       // 112: aload 6
       // 114: ifnull 125
-      // 117: new java/lang/Object
+      // 117: new java/io/DataOutputStream
       // 11a: dup
       // 11b: aload 6
       // 11d: invokespecial java/io/DataOutputStream.<init> (Ljava/io/OutputStream;)V
@@ -771,7 +772,7 @@ public final class MetaDataFile {
       // 140: invokeinterface javax/microedition/io/file/FileConnection.openDataOutputStream ()Ljava/io/DataOutputStream; 1
       // 145: invokespecial net/rim/device/internal/io/file/CounterOutputStream.<init> (Ljava/io/OutputStream;)V
       // 148: astore 6
-      // 14a: new java/lang/Object
+      // 14a: new java/io/DataOutputStream
       // 14d: dup
       // 14e: aload 6
       // 150: invokespecial java/io/DataOutputStream.<init> (Ljava/io/OutputStream;)V
@@ -821,11 +822,11 @@ public final class MetaDataFile {
       // 1b1: astore 12
       // 1b3: aload 12
       // 1b5: dup
-      // 1b6: instanceof java/lang/Object
+      // 1b6: instanceof java/lang/String
       // 1b9: ifne 1c0
       // 1bc: pop
       // 1bd: goto 1e4
-      // 1c0: checkcast java/lang/Object
+      // 1c0: checkcast java/lang/String
       // 1c3: ldc_w "utf-8"
       // 1c6: invokevirtual java/lang/String.getBytes (Ljava/lang/String;)[B
       // 1c9: astore 13
@@ -842,11 +843,11 @@ public final class MetaDataFile {
       // 1e1: goto 250
       // 1e4: aload 12
       // 1e6: dup
-      // 1e7: instanceof java/lang/Object
+      // 1e7: instanceof java/lang/Long
       // 1ea: ifne 1f1
       // 1ed: pop
       // 1ee: goto 219
-      // 1f1: checkcast java/lang/Object
+      // 1f1: checkcast java/lang/Long
       // 1f4: invokevirtual java/lang/Long.longValue ()J
       // 1f7: lstore 13
       // 1f9: lload 13
@@ -866,11 +867,11 @@ public final class MetaDataFile {
       // 216: goto 250
       // 219: aload 12
       // 21b: dup
-      // 21c: instanceof java/lang/Object
+      // 21c: instanceof net/rim/device/api/system/EncodedImage
       // 21f: ifne 226
       // 222: pop
       // 223: goto 250
-      // 226: checkcast java/lang/Object
+      // 226: checkcast net/rim/device/api/system/EncodedImage
       // 229: astore 13
       // 22b: aload 7
       // 22d: iload 11
@@ -939,7 +940,7 @@ public final class MetaDataFile {
       // try (295 -> 296): 295 null
    }
 
-   private final Object[] readEntry(DataInputStream in) {
+   private final Object[] readEntry(DataInputStream in) throws IOException {
       if (this._metaDataDatabase == null) {
          return null;
       }
@@ -959,7 +960,7 @@ public final class MetaDataFile {
                   break;
                }
 
-               throw new Object();
+               throw new IOException();
             case 1:
             case 3:
             case 4:
@@ -968,18 +969,18 @@ public final class MetaDataFile {
                if (0 <= length && length <= 1000) {
                   byte[] data = new byte[length];
                   in.readFully(data);
-                  object[type] = new Object(data, "UTF-8");
+                  object[type] = new String(data, "UTF-8");
                   break;
                }
 
-               throw new Object();
+               throw new IOException();
             case 2:
             case 7:
                if (length != 8) {
-                  throw new Object();
+                  throw new IOException();
                }
 
-               object[type] = new Object(in.readLong());
+               object[type] = new Long(in.readLong());
                break;
             case 255:
                reachedEnd = true;
@@ -1015,13 +1016,13 @@ public final class MetaDataFile {
                   var227 = true;
                   var212 = true;
                   CounterInputStream e = new CounterInputStream(this._metaDataDatabase.openDataInputStream());
-                  in = (DataInputStream)(new Object(e));
+                  in = new DataInputStream(e);
                   in.readInt();
                   in.readByte();
                   StringToIntCaseInsensitiveHashtable validEntries = this._fileFilenameToEntry;
                   long[] validOffsets = this._fileOffsets;
                   long[] validModTimes = this._fileModTimes;
-                  this._fileFilenameToEntry = (StringToIntCaseInsensitiveHashtable)(new Object());
+                  this._fileFilenameToEntry = new StringToIntCaseInsensitiveHashtable();
                   int maxEntries = validEntries.size();
                   this._fileOffsets = new long[maxEntries];
                   this._fileModTimes = new long[maxEntries];
@@ -1050,7 +1051,7 @@ public final class MetaDataFile {
                   } while (this._numEntries < maxEntries);
 
                   outCounter = new CounterOutputStream(this._metaDataDatabase.openOutputStream(lastRecordOffset), lastRecordOffset);
-                  DataOutputStream out = (DataOutputStream)(new Object(outCounter));
+                  DataOutputStream out = new DataOutputStream(outCounter);
                   if (this._numEntries < maxEntries) {
                      if (eof) {
                         var212 = false;
@@ -1257,7 +1258,7 @@ public final class MetaDataFile {
 
    public final void setCacheSize(int size) {
       if (size <= 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       synchronized (this._cache) {
@@ -1381,7 +1382,7 @@ public final class MetaDataFile {
       // 001: astore 3
       // 002: aconst_null
       // 003: astore 4
-      // 005: new java/lang/Object
+      // 005: new java/lang/StringBuffer
       // 008: dup
       // 009: invokespecial java/lang/StringBuffer.<init> ()V
       // 00c: aload 0
@@ -1391,7 +1392,7 @@ public final class MetaDataFile {
       // 014: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 017: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 01a: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 01d: checkcast java/lang/Object
+      // 01d: checkcast javax/microedition/io/file/FileConnection
       // 020: astore 3
       // 021: aload 0
       // 022: aload 0
@@ -1575,7 +1576,7 @@ public final class MetaDataFile {
       // 1a5: sipush 1024
       // 1a8: newarray 8
       // 1aa: astore 8
-      // 1ac: new java/lang/Object
+      // 1ac: new java/lang/ref/WeakReference
       // 1af: dup
       // 1b0: aload 8
       // 1b2: invokespecial java/lang/ref/WeakReference.<init> (Ljava/lang/Object;)V
@@ -1653,7 +1654,7 @@ public final class MetaDataFile {
       // 252: aload 0
       // 253: aconst_null
       // 254: putfield net/rim/device/internal/io/file/MetaDataFile._metaDataDatabase Ljavax/microedition/io/file/FileConnection;
-      // 257: new java/lang/Object
+      // 257: new java/lang/StringBuffer
       // 25a: dup
       // 25b: invokespecial java/lang/StringBuffer.<init> ()V
       // 25e: aload 0
@@ -1663,7 +1664,7 @@ public final class MetaDataFile {
       // 268: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 26b: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 26e: astore 11
-      // 270: new java/lang/Object
+      // 270: new java/lang/StringBuffer
       // 273: dup
       // 274: invokespecial java/lang/StringBuffer.<init> ()V
       // 277: aload 0
@@ -1685,7 +1686,7 @@ public final class MetaDataFile {
       // 29e: aload 0
       // 29f: aload 11
       // 2a1: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 2a4: checkcast java/lang/Object
+      // 2a4: checkcast javax/microedition/io/file/FileConnection
       // 2a7: putfield net/rim/device/internal/io/file/MetaDataFile._metaDataDatabase Ljavax/microedition/io/file/FileConnection;
       // 2aa: aload 5
       // 2ac: monitorexit
@@ -2180,7 +2181,7 @@ public final class MetaDataFile {
 
       try {
          var4 = true;
-         this._metaDataDatabase = (FileConnection)Connector.open(((StringBuffer)(new Object())).append(this._path).append(THUMBS_DB_FILE).toString());
+         this._metaDataDatabase = (FileConnection)Connector.open(this._path + THUMBS_DB_FILE);
          this.readDatabase(true, createOnly);
          var4 = false;
       } finally {
@@ -2211,7 +2212,7 @@ public final class MetaDataFile {
       // 0f: return
       // 10: aconst_null
       // 11: astore 3
-      // 12: new java/lang/Object
+      // 12: new java/lang/StringBuffer
       // 15: dup
       // 16: invokespecial java/lang/StringBuffer.<init> ()V
       // 19: aload 0
@@ -2221,7 +2222,7 @@ public final class MetaDataFile {
       // 21: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 24: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 27: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 2a: checkcast java/lang/Object
+      // 2a: checkcast javax/microedition/io/file/FileConnection
       // 2d: astore 3
       // 2e: aload 3
       // 2f: invokeinterface javax/microedition/io/file/FileConnection.lastModified ()J 1
@@ -2242,7 +2243,7 @@ public final class MetaDataFile {
       // 50: lcmp
       // 51: ifeq 6e
       // 54: bipush 8
-      // 56: anewarray 4145
+      // 56: anewarray 4148
       // 59: astore 7
       // 5b: aload 7
       // 5d: bipush 0
@@ -2307,11 +2308,11 @@ public final class MetaDataFile {
       //
       // Bytecode:
       // 00: bipush 8
-      // 02: anewarray 4225
+      // 02: anewarray 4228
       // 05: astore 4
       // 07: aload 4
       // 09: bipush 7
-      // 0b: new java/lang/Object
+      // 0b: new java/lang/Long
       // 0e: dup
       // 0f: lload 2
       // 10: invokespecial java/lang/Long.<init> (J)V
@@ -2346,7 +2347,7 @@ public final class MetaDataFile {
       // 43: astore 5
       // 45: aconst_null
       // 46: astore 6
-      // 48: new java/lang/Object
+      // 48: new java/lang/StringBuffer
       // 4b: dup
       // 4c: invokespecial java/lang/StringBuffer.<init> ()V
       // 4f: aload 0
@@ -2356,7 +2357,7 @@ public final class MetaDataFile {
       // 57: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 5a: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 5d: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 60: checkcast java/lang/Object
+      // 60: checkcast javax/microedition/io/file/FileConnection
       // 63: astore 5
       // 65: aload 5
       // 67: invokeinterface javax/microedition/io/file/FileConnection.lastModified ()J 1
@@ -2412,7 +2413,7 @@ public final class MetaDataFile {
    }
 
    private static final boolean isEncrypted(FileConnection connection) {
-      return !(connection instanceof Object) ? false : ((ExtendedFileConnection)connection).isFileEncrypted();
+      return !(connection instanceof ExtendedFileConnection) ? false : ((ExtendedFileConnection)connection).isFileEncrypted();
    }
 
    private final boolean filesystemUsesLocalTimestamps() {

@@ -74,7 +74,7 @@ public class LocationWorker implements LocationListener, LocationCallback {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private final LocationProvider createLocationProvider(boolean forceAutonomous, boolean highPower) {
       try {
-         Criteria criteria = (Criteria)(new Object());
+         Criteria criteria = new Criteria();
          criteria.setAddressInfoRequired(false);
          criteria.setAltitudeRequired(false);
          criteria.setPreferredResponseTime(forceAutonomous ? 60 : 16);
@@ -298,11 +298,7 @@ public class LocationWorker implements LocationListener, LocationCallback {
    @Override
    public void providerStateChanged(LocationProvider provider, int newState) {
       if (this._callback == null) {
-         EventLogger.logEvent(
-            4560142210062134028L,
-            ((StringBuffer)(new Object("providerStateChanged: state = "))).append(newState).append(", callback = null").toString().getBytes(),
-            0
-         );
+         EventLogger.logEvent(4560142210062134028L, ("providerStateChanged: state = " + newState + ", callback = null").getBytes(), 0);
       } else if (newState == 2) {
          this._callback._status = 10;
          this._callback.fireDeviceEvent(this._callback, this.getString(10));

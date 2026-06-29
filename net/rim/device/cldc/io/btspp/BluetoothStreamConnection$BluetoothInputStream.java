@@ -32,7 +32,7 @@ class BluetoothStreamConnection$BluetoothInputStream extends InputStream {
    @Override
    public int read(byte[] b, int off, int len) {
       if (off < 0 || len < 0 || b.length - len < off) {
-         throw new Object();
+         throw new IndexOutOfBoundsException();
       }
 
       if (len == 0) {

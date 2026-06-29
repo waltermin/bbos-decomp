@@ -16,7 +16,7 @@ public class MIDletSecurityCryptoImpl extends MIDletSecurityCrypto {
    @Override
    public int checkJADCertChainImpl(String[] signingCerts) {
       if (signingCerts == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return signingCerts.length <= 0 ? 0 : this.doCheckMIDletSignatureImpl(null, null, signingCerts, null, null, CMIDSIG_NULL);
       }
@@ -52,7 +52,7 @@ public class MIDletSecurityCryptoImpl extends MIDletSecurityCrypto {
       // 026: istore 7
       // 028: iload 7
       // 02a: ifeq 035
-      // 02d: new java/lang/Object
+      // 02d: new java/lang/IllegalArgumentException
       // 030: dup
       // 031: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 034: athrow
@@ -63,7 +63,7 @@ public class MIDletSecurityCryptoImpl extends MIDletSecurityCrypto {
       // 03f: invokeinterface net/rim/device/api/crypto/keystore/KeyStore.existsIndex (J)Z 3
       // 044: ifne 056
       // 047: aload 8
-      // 049: new java/lang/Object
+      // 049: new net/rim/device/api/crypto/certificate/CertificateHashKeyStoreIndex
       // 04c: dup
       // 04d: invokespecial net/rim/device/api/crypto/certificate/CertificateHashKeyStoreIndex.<init> ()V
       // 050: invokeinterface net/rim/device/api/crypto/keystore/KeyStore.addIndex (Lnet/rim/device/api/crypto/keystore/KeyStoreIndex;)Z 2
@@ -74,9 +74,9 @@ public class MIDletSecurityCryptoImpl extends MIDletSecurityCrypto {
       // 05a: astore 10
       // 05c: aload 2
       // 05d: ifnull 094
-      // 060: new java/lang/Object
+      // 060: new net/rim/device/api/io/Base64InputStream
       // 063: dup
-      // 064: new java/lang/Object
+      // 064: new java/io/ByteArrayInputStream
       // 067: dup
       // 068: aload 2
       // 069: invokevirtual java/lang/String.getBytes ()[B
@@ -112,9 +112,9 @@ public class MIDletSecurityCryptoImpl extends MIDletSecurityCrypto {
       // 0a4: if_icmpge 0d2
       // 0a7: new net/rim/device/api/crypto/certificate/x509/X509Certificate
       // 0aa: dup
-      // 0ab: new java/lang/Object
+      // 0ab: new net/rim/device/api/io/Base64InputStream
       // 0ae: dup
-      // 0af: new java/lang/Object
+      // 0af: new java/io/ByteArrayInputStream
       // 0b2: dup
       // 0b3: aload 3
       // 0b4: iload 12
@@ -167,7 +167,7 @@ public class MIDletSecurityCryptoImpl extends MIDletSecurityCrypto {
       // 123: goto 316
       // 126: aload 15
       // 128: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 12d: checkcast java/lang/Object
+      // 12d: checkcast net/rim/device/api/crypto/keystore/KeyStoreData
       // 130: invokeinterface net/rim/device/api/crypto/keystore/KeyStoreData.getCertificate ()Lnet/rim/device/api/crypto/certificate/Certificate; 1
       // 135: astore 16
       // 137: aload 16
@@ -309,13 +309,13 @@ public class MIDletSecurityCryptoImpl extends MIDletSecurityCrypto {
       // 254: getstatic net/rim/device/api/crypto/MIDletSecurityCryptoImpl.CMIDSIG_CHECK_DIGEST I
       // 257: iand
       // 258: ifeq 280
-      // 25b: new java/lang/Object
+      // 25b: new net/rim/device/api/crypto/PKCS1SignatureVerifier
       // 25e: dup
       // 25f: aload 11
       // 261: bipush 0
       // 262: aaload
       // 263: invokevirtual net/rim/device/api/crypto/certificate/x509/X509Certificate.getPublicKey ()Lnet/rim/device/api/crypto/PublicKey;
-      // 266: checkcast java/lang/Object
+      // 266: checkcast net/rim/device/api/crypto/RSAPublicKey
       // 269: aload 1
       // 26a: aload 10
       // 26c: bipush 0
@@ -465,7 +465,7 @@ public class MIDletSecurityCryptoImpl extends MIDletSecurityCrypto {
       if (codfile != null && trailerBytes != null) {
          byte[] signature = this.sign(codfile, trailerBytes);
          int trailerLength = 4 + signature.length + 3 & -4;
-         DataBuffer buffer = (DataBuffer)(new Object());
+         DataBuffer buffer = new DataBuffer();
          buffer.writeByte(1);
          buffer.writeByte(0);
          buffer.writeByte(trailerLength & 0xFF);
@@ -483,7 +483,7 @@ public class MIDletSecurityCryptoImpl extends MIDletSecurityCrypto {
 
          return buffer.toArray();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -496,14 +496,14 @@ public class MIDletSecurityCryptoImpl extends MIDletSecurityCrypto {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private byte[] sign(byte[] codFile, byte[] codFileTrailer) {
-      Digest digest = (Digest)(new Object());
+      Digest digest = new SHA1Digest();
       boolean var9 = false /* VF: Semaphore variable */;
 
       try {
          var9 = true;
          int privateKey = readLittleEndianUnsignedShort(codFile, 36);
          if (privateKey < 74) {
-            throw new Object();
+            throw new RuntimeException();
          }
 
          int codeSize = readLittleEndianUnsignedShort(codFile, 38);
@@ -515,7 +515,7 @@ public class MIDletSecurityCryptoImpl extends MIDletSecurityCrypto {
          var9 = false;
       } finally {
          if (var9) {
-            throw new Object();
+            throw new RuntimeException();
          }
       }
 
@@ -531,7 +531,7 @@ public class MIDletSecurityCryptoImpl extends MIDletSecurityCrypto {
       byte[] r = new byte[21];
       byte[] s = new byte[21];
       NativeEC.signDSA(MIDletSecurityCrypto.CURVE_NAME, privateKey, digest.getDigest(), r, 0, s, 0);
-      DataBuffer buffer = (DataBuffer)(new Object(true));
+      DataBuffer buffer = new DataBuffer(true);
       TLEUtilities.writeDataField(buffer, 1, r);
       TLEUtilities.writeDataField(buffer, 2, s);
       return buffer.toArray();

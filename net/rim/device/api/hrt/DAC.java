@@ -16,7 +16,7 @@ public class DAC implements Persistable {
    public static final int LS_USE_RANDOM_ON_FAILURE = 4;
    public static final int LS_USE_LAST_RECEIVED_SEQUENTIAL_ON_FAILURE = 5;
    public static final int LS_USE_LAST_RECEIVED_RANDOM_ON_FAILURE = 6;
-   private static Random _rand = (Random)(new Object());
+   private static Random _rand = new Random();
 
    protected DAC() {
    }
@@ -97,7 +97,7 @@ public class DAC implements Persistable {
       int index = this._nextCodeIndex;
       boolean result = true;
       if (count <= 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (numDacs == 0) {

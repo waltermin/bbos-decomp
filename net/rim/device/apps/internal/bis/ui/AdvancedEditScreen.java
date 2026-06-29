@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.bis.ui;
 
 import java.util.Hashtable;
 import net.rim.device.api.i18n.MessageFormat;
+import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.CheckboxField;
@@ -30,12 +31,12 @@ public final class AdvancedEditScreen extends UserSettingsScreen {
    @Override
    public final void refresh(Hashtable screenParams) {
       Mailbox mailboxToEdit = ClientSessionState.getInstance().getMailboxToModify();
-      String title = MessageFormat.format(ApplicationResources.getString(150), new Object[]{mailboxToEdit.getDescription()});
+      String title = MessageFormat.format(ApplicationResources.getString(150), new String[]{mailboxToEdit.getDescription()});
       this.setTitle(title);
       this.addContentField(new HeadingField(ApplicationResources.getString(129)));
       this.addContentLineBreak();
       this.addContentField(new BoldLabelField(ApplicationResources.getString(44)));
-      this._serverEdit = (BasicEditField)(new Object(117440512));
+      this._serverEdit = new BasicEditField(117440512);
       if (mailboxToEdit.getServer() != null) {
          this._serverEdit.setText(mailboxToEdit.getServer());
       }
@@ -45,17 +46,17 @@ public final class AdvancedEditScreen extends UserSettingsScreen {
       String serverTypeLabel = ApplicationResources.getString(211);
       String serverType = mailboxToEdit.getProtocol();
       if (serverType != null) {
-         serverType = ((StringBuffer)(new Object(" "))).append(serverType.toUpperCase()).toString();
+         serverType = " " + serverType.toUpperCase();
       }
 
-      LabelField serverTypeField = new BoldLabelField(((StringBuffer)(new Object())).append(serverTypeLabel).append(serverType).toString());
-      this.addContentFieldRow(new Object[]{serverTypeField});
+      LabelField serverTypeField = new BoldLabelField(serverTypeLabel + serverType);
+      this.addContentFieldRow(new Field[]{serverTypeField});
       this.addContentLineBreak();
       BoldLabelField portLabel = new BoldLabelField(ApplicationResources.getString(212));
-      LabelField portValueLabel = (LabelField)(new Object(mailboxToEdit.getPort() != null ? mailboxToEdit.getPort().toString() : ""));
-      this.addContentFieldRow(new Object[]{portLabel, portValueLabel});
+      LabelField portValueLabel = new LabelField(mailboxToEdit.getPort() != null ? mailboxToEdit.getPort().toString() : "");
+      this.addContentFieldRow(new Field[]{portLabel, portValueLabel});
       this.addContentLineBreak();
-      this._sslCheckbox = (CheckboxField)(new Object(ApplicationResources.getString(213), mailboxToEdit.getUseSSL() != null ? mailboxToEdit.getUseSSL() : false));
+      this._sslCheckbox = new CheckboxField(ApplicationResources.getString(213), mailboxToEdit.getUseSSL() != null ? mailboxToEdit.getUseSSL() : false);
       this.addContentField(this._sslCheckbox);
       this.addContentLineBreak();
       String seconds = "";
@@ -65,10 +66,10 @@ public final class AdvancedEditScreen extends UserSettingsScreen {
             timeoutValue /= 1000;
          }
 
-         seconds = MessageFormat.format(ApplicationResources.getString(141), new Object[]{((StringBuffer)(new Object(" "))).append(timeoutValue).toString()});
+         seconds = MessageFormat.format(ApplicationResources.getString(141), new String[]{" " + timeoutValue});
       }
 
-      this.addContentFieldRow(new Object[]{new BoldLabelField(ApplicationResources.getString(144)), new Object(seconds)});
+      this.addContentFieldRow(new Field[]{new BoldLabelField(ApplicationResources.getString(144)), new LabelField(seconds)});
       Button cancel = new Button(ApplicationResources.getString(28));
       Button save = new Button(ApplicationResources.getString(29));
       this.addButtonBarButtons(new Button[]{cancel, save}, false, 1);

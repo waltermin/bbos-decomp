@@ -35,17 +35,6 @@ final class Ipv4Address extends IpAddress {
    }
 
    public final void print() {
-      System.out
-         .println(
-            ((StringBuffer)(new Object("Ipv4address: ")))
-               .append(255 & this.addr[0])
-               .append(".")
-               .append(255 & this.addr[1])
-               .append(".")
-               .append(255 & this.addr[2])
-               .append(".")
-               .append(255 & this.addr[3])
-               .toString()
-         );
+      System.out.println("Ipv4address: " + (0xFF & this.addr[0]) + "." + (0xFF & this.addr[1]) + "." + (0xFF & this.addr[2]) + "." + (0xFF & this.addr[3]));
    }
 }

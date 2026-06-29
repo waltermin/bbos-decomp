@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.implus;
 
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.VerbProvider;
 import net.rim.device.apps.api.framework.verb.Verb;
 
@@ -18,10 +19,10 @@ final class ViewAddressVerb extends Verb {
 
    @Override
    public final Object invoke(Object parameter) {
-      Verb[] verbs = new Object[0];
-      if (this._addressToView instanceof Object) {
+      Verb[] verbs = new Verb[0];
+      if (this._addressToView instanceof VerbProvider) {
          VerbProvider verbProvider = (VerbProvider)this._addressToView;
-         verbProvider.getVerbs(new Object(45, 18), verbs);
+         verbProvider.getVerbs(new ContextObject(45, 18), verbs);
       }
 
       if (verbs.length > 0) {

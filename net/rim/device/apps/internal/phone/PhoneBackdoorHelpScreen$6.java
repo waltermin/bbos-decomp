@@ -11,6 +11,6 @@ final class PhoneBackdoorHelpScreen$6 implements Runnable {
 
    @Override
    public final void run() {
-      VoiceServices.postEvent(150070, 1, new Object(3));
+      VoiceServices.postEvent(150070, 1, new Integer(3));
    }
 }

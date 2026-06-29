@@ -7,8 +7,8 @@ import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Font;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.AutoTextEditField;
 import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.DateField;
@@ -36,6 +36,7 @@ import net.rim.device.apps.internal.browser.ui.BrowserChoiceField;
 import net.rim.device.apps.internal.browser.util.FontCache;
 import net.rim.device.cldc.util.CalendarExtensions;
 import net.rim.device.internal.i18n.CommonResource;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 
 public final class DialogEditBookmark extends PopupScreen implements FieldChangeListener {
    private BasicEditField _editURL;
@@ -51,7 +52,7 @@ public final class DialogEditBookmark extends PopupScreen implements FieldChange
    private boolean _cancelled;
 
    public DialogEditBookmark(PageModel bookmark) {
-      super((Manager)(new Object(1153220571769602048L)), 196608);
+      super(new VerticalFieldManager(1153220571769602048L), 196608);
       String url = bookmark.getUrl();
       String title = bookmark.getTitle();
       CacheNode cacheNode = BrowserDaemonRegistry.getInstance().getRawDataCache().getCacheNode(url);
@@ -62,25 +63,25 @@ public final class DialogEditBookmark extends PopupScreen implements FieldChange
       this._originalURL = url;
       this._pageModel = bookmark;
       int fontHeight = Font.getDefault().getHeight();
-      RichTextField titleField = (RichTextField)(new Object(BrowserResources.getString(149), 36028797018963968L));
+      RichTextField titleField = new RichTextField(BrowserResources.getString(149), 36028797018963968L);
       titleField.setFont(FontCache.getInstance().getFont(null, 1, fontHeight));
       localVfm.add(titleField);
-      localVfm.add((Field)(new Object(fontHeight >> 1)));
+      localVfm.add(new VerticalSpacerField(fontHeight >> 1));
       String urlLabel = BrowserResources.getString(277);
       if (this._homePage) {
-         this._editURL = (BasicEditField)(new Object(urlLabel, url, 1000000, 45035996273704960L));
+         this._editURL = new EditField(urlLabel, url, 1000000, 45035996273704960L);
       } else {
          this._editURL = new UrlEditField(urlLabel, url, Integer.MAX_VALUE, 2264924160L, "http://");
       }
 
-      this._editTitle = (EditField)(new Object(CommonResources.getString(2002), title, 1000000, 2147483648L));
+      this._editTitle = new AutoTextEditField(CommonResources.getString(2002), title, 1000000, 2147483648L);
       localVfm.add(this._editURL);
-      localVfm.add((Field)(new Object(fontHeight >> 1)));
+      localVfm.add(new VerticalSpacerField(fontHeight >> 1));
       localVfm.add(this._editTitle);
-      localVfm.add((Field)(new Object(fontHeight >> 1)));
+      localVfm.add(new VerticalSpacerField(fontHeight >> 1));
       if (availableOffline) {
-         localVfm.add((Field)(new Object(BrowserResources.getString(300), 36028797018963968L)));
-         localVfm.add((Field)(new Object(fontHeight >> 1)));
+         localVfm.add(new RichTextField(BrowserResources.getString(300), 36028797018963968L));
+         localVfm.add(new VerticalSpacerField(fontHeight >> 1));
       }
 
       int index = 0;
@@ -91,14 +92,14 @@ public final class DialogEditBookmark extends PopupScreen implements FieldChange
          startTime = bookmark.getUpdateStart();
       }
 
-      this._updateIntervalField = (ObjectChoiceField)(new Object(BrowserResources.getString(759), BrowserResources.getStringArray(757), index));
+      this._updateIntervalField = new ObjectChoiceField(BrowserResources.getString(759), BrowserResources.getStringArray(757), index);
       boolean addAutoSync = !PersistentContent.isEncryptionEnabled() && !ITPolicy.getBoolean(30, 11, false);
       if (addAutoSync) {
          this._updateIntervalField.setChangeListener(this);
          localVfm.add(this._updateIntervalField);
       }
 
-      this._startTimeField = (DateField)(new Object(BrowserResources.getString(758), startTime, 32));
+      this._startTimeField = new DateField(BrowserResources.getString(758), startTime, 32);
       this._startTimeField.setTimeZone(TimeZone.getTimeZone(DateTimeUtilities.GMT));
       if (index != 0 && addAutoSync) {
          localVfm.add(this._startTimeField);
@@ -127,11 +128,11 @@ public final class DialogEditBookmark extends PopupScreen implements FieldChange
       }
 
       localVfm.add(this._browserChoiceField);
-      this._buttonAccept = (ButtonField)(new Object(BrowserResources.getString(150), 98304));
-      this._buttonCancel = (ButtonField)(new Object(CommonResource.getString(19), 98304));
+      this._buttonAccept = new ButtonField(BrowserResources.getString(150), 98304);
+      this._buttonCancel = new ButtonField(CommonResource.getString(19), 98304);
       this._buttonAccept.setChangeListener(this);
       this._buttonCancel.setChangeListener(this);
-      FlowFieldManager fmgr = (FlowFieldManager)(new Object(12884901888L));
+      FlowFieldManager fmgr = new FlowFieldManager(12884901888L);
       fmgr.add(this._buttonAccept);
       fmgr.add(this._buttonCancel);
       localVfm.add(fmgr);

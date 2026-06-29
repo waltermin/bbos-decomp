@@ -22,7 +22,7 @@ class SMSHandlerFactory {
 
    private SMSHandlerFactory() {
       this._helper = new CollectionListenerFactoryHelper();
-      Thread thread = (Thread)(new Object(new SMSHandlerFactory$1(this)));
+      Thread thread = new Thread(new SMSHandlerFactory$1(this));
       thread.setPriority(1);
       thread.start();
    }

@@ -25,6 +25,7 @@ import net.rim.device.api.util.FactoryUtil;
 import net.rim.device.api.util.ListenerUtilities;
 import net.rim.device.apps.api.addressbook.AddressBook;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
+import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.AddressSelectionContext;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.RIMModelSyncConverter;
@@ -34,6 +35,7 @@ import net.rim.device.apps.api.ui.CommonResources;
 import net.rim.device.internal.system.Security;
 import net.rim.device.internal.ui.UiInternal;
 import net.rim.vm.Array;
+import net.rim.vm.WeakReference;
 
 public final class QuickContactList
    implements SyncCollection,
@@ -47,7 +49,7 @@ public final class QuickContactList
    private Vector _listeners;
    private boolean _inOTASyncOperation;
    private RIMModelSyncConverter _syncConverter;
-   private CollectionListenerManager _collectionListenerManager = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _collectionListenerManager = new CollectionListenerManager();
    private SyncCollectionSchema _schema;
    private QuickContactItem[] _rejectedOTASyncObjects = null;
    private static final long GUID = 6813875849369102919L;
@@ -65,10 +67,10 @@ public final class QuickContactList
    private QuickContactList() {
       AddressBook ab = AddressBookServices.getAddressBook(true);
       if (ab != null) {
-         ab.addCollectionListener(new Object(this));
+         ab.addCollectionListener(new WeakReference(this));
       }
 
-      this._schema = (SyncCollectionSchema)(new Object());
+      this._schema = new SyncCollectionSchema();
       this._schema.setDefaultRecordType(1);
       this._schema.setKeyFieldIds(1, KEY_FIELD_IDS);
    }
@@ -374,16 +376,16 @@ public final class QuickContactList
       }
 
       int pickNumberDialogResource = 9141;
-      selectionContext = (AddressSelectionContext)(new Object(
+      selectionContext = new AddressSelectionContext(
          null, CommonResources.getString(pickNumberDialogResource), null, RecognizerRepository.getRecognizers(3797587162219887872L), useOnceVerbs
-      ));
-      ContextObject tmpContext = (ContextObject)(new Object());
+      );
+      ContextObject tmpContext = new ContextObject();
       tmpContext.setFlag(42, 34);
       if (terminateOnEsc) {
          tmpContext.setFlag(14);
       }
 
-      tmpContext.put(6609423255094033855L, new Object(1187214));
+      tmpContext.put(6609423255094033855L, new Integer(1187214));
       if (titleField != null) {
          tmpContext.put(-7261227923983886841L, titleField);
       }
@@ -394,7 +396,7 @@ public final class QuickContactList
 
       selectionContext.setContext(tmpContext);
       if (selectAddressMenuItemText != null) {
-         selectionContext.setUseEntryPrefixes(new Object[]{selectAddressMenuItemText});
+         selectionContext.setUseEntryPrefixes(new String[]{selectAddressMenuItemText});
       }
 
       Object phoneNumber = addressSelectionVerb.invoke(selectionContext);
@@ -402,12 +404,12 @@ public final class QuickContactList
       if (phoneNumber != null) {
          if (selectionContext != null) {
             Object addr = selectionContext.getSelectedSource();
-            if (addr instanceof Object) {
+            if (addr instanceof AddressCardModel) {
                address = addr;
             }
          }
 
-         ContextObject addressContext = (ContextObject)(new Object());
+         ContextObject addressContext = new ContextObject();
          addressContext.put(247, phoneNumber);
          if (address != null) {
             addressContext.put(252, address);
@@ -430,13 +432,7 @@ public final class QuickContactList
       }
 
       QuickContactItem qci = (QuickContactItem)object;
-      String logString = ((StringBuffer)(new Object("QCL.addSyncObj(key=")))
-         .append(qci.getKey())
-         .append(",addr=")
-         .append(qci.getRawAddressString())
-         .append(")-ota=")
-         .append(this._inOTASyncOperation)
-         .toString();
+      String logString = "QCL.addSyncObj(key=" + qci.getKey() + ",addr=" + qci.getRawAddressString() + ")-ota=" + this._inOTASyncOperation;
       QuickContactUtil.logEvent(logString);
       if (_fullQwertyMode && Character.isLowerCase(qci.getKey())) {
          qci.setKey(CharacterUtilities.toUpperCase(qci.getKey(), 1701707776));
@@ -472,12 +468,7 @@ public final class QuickContactList
          for (int i = this._rejectedOTASyncObjects.length - 1; i >= 0; i--) {
             QuickContactItem qci = this._rejectedOTASyncObjects[i];
             if (qci != null) {
-               String logString = ((StringBuffer)(new Object("QCL.reject(key=")))
-                  .append(qci.getKey())
-                  .append(",addr=")
-                  .append(qci.getRawAddressString())
-                  .append(")")
-                  .toString();
+               String logString = "QCL.reject(key=" + qci.getKey() + ",addr=" + qci.getRawAddressString() + ")";
                QuickContactUtil.logEvent(logString);
                if (this._inOTASyncOperation) {
                   this._collectionListenerManager.fireElementRemoved(this, qci);
@@ -536,7 +527,7 @@ public final class QuickContactList
    @Override
    public final SyncObject[] getSyncObjects() {
       int numItems = this._items.length;
-      SyncObject[] syncObjects = new Object[numItems];
+      SyncObject[] syncObjects = new SyncObject[numItems];
       int count = 0;
 
       for (int i = 0; i < numItems; i++) {
@@ -605,7 +596,7 @@ public final class QuickContactList
    @Override
    public final SyncConverter getSyncConverter() {
       if (this._syncConverter == null) {
-         this._syncConverter = (RIMModelSyncConverter)(new Object(79, 9021823141602707590L));
+         this._syncConverter = new RIMModelSyncConverter(79, 9021823141602707590L);
       }
 
       return this._syncConverter;

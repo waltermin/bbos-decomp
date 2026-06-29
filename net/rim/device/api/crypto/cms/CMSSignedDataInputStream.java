@@ -1,19 +1,29 @@
 package net.rim.device.api.crypto.cms;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Vector;
+import net.rim.device.api.crypto.AbstractDigest;
 import net.rim.device.api.crypto.CryptoTokenException;
 import net.rim.device.api.crypto.CryptoUnsupportedOperationException;
 import net.rim.device.api.crypto.Digest;
+import net.rim.device.api.crypto.MD5Digest;
 import net.rim.device.api.crypto.PublicKey;
+import net.rim.device.api.crypto.SHA1Digest;
+import net.rim.device.api.crypto.SHA256Digest;
+import net.rim.device.api.crypto.SHA384Digest;
+import net.rim.device.api.crypto.SHA512Digest;
 import net.rim.device.api.crypto.SignatureVerifier;
 import net.rim.device.api.crypto.asn1.ASN1InputByteArray;
 import net.rim.device.api.crypto.asn1.ASN1InputStream;
 import net.rim.device.api.crypto.asn1.ASN1OutputStream;
+import net.rim.device.api.crypto.certificate.CRLVerificationException;
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.CertificateUtilities;
+import net.rim.device.api.crypto.certificate.IssuerKeyStoreIndex;
 import net.rim.device.api.crypto.certificate.SerialNumberIssuerKeyStoreIndex;
+import net.rim.device.api.crypto.certificate.x509.SubjectKeyIdentifierKeyStoreIndex;
 import net.rim.device.api.crypto.certificate.x509.X509Certificate;
 import net.rim.device.api.crypto.certificate.x509.X509CertificateRevocationList;
 import net.rim.device.api.crypto.certificate.x509.X509DistinguishedName;
@@ -72,7 +82,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       // 011: ifne 018
       // 014: aload 0
       // 015: invokespecial net/rim/device/api/crypto/cms/CMSSignedDataInputStream.addKeyStoreIndices ()V
-      // 018: new java/lang/Object
+      // 018: new net/rim/device/api/crypto/asn1/ASN1InputStream
       // 01b: dup
       // 01c: aload 0
       // 01d: getfield net/rim/device/api/crypto/cms/CMSInputStream._input Ljava/io/InputStream;
@@ -120,7 +130,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       // 07a: aconst_null
       // 07b: putfield net/rim/device/api/crypto/cms/CMSSignedDataInputStream._dataBuffer [B
       // 07e: goto 1a7
-      // 081: new java/lang/Object
+      // 081: new net/rim/device/api/crypto/asn1/ASN1InputStream
       // 084: dup
       // 085: aload 7
       // 087: bipush 0
@@ -149,7 +159,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       // 0bf: aload 0
       // 0c0: new net/rim/device/api/crypto/cms/CMSSignedDataInputStream
       // 0c3: dup
-      // 0c4: new java/lang/Object
+      // 0c4: new java/io/ByteArrayInputStream
       // 0c7: dup
       // 0c8: aload 0
       // 0c9: getfield net/rim/device/api/crypto/cms/CMSSignedDataInputStream._dataBuffer [B
@@ -171,7 +181,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       // 0f1: aload 0
       // 0f2: new net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream
       // 0f5: dup
-      // 0f6: new java/lang/Object
+      // 0f6: new java/io/ByteArrayInputStream
       // 0f9: dup
       // 0fa: aload 0
       // 0fb: getfield net/rim/device/api/crypto/cms/CMSSignedDataInputStream._dataBuffer [B
@@ -194,7 +204,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       // 124: aload 0
       // 125: new net/rim/device/api/crypto/cms/CMSCompressedDataInputStream
       // 128: dup
-      // 129: new java/lang/Object
+      // 129: new java/io/ByteArrayInputStream
       // 12c: dup
       // 12d: aload 0
       // 12e: getfield net/rim/device/api/crypto/cms/CMSSignedDataInputStream._dataBuffer [B
@@ -216,7 +226,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       // 156: aload 0
       // 157: new net/rim/device/api/crypto/cms/CMSSignedReceiptInputStream
       // 15a: dup
-      // 15b: new java/lang/Object
+      // 15b: new java/io/ByteArrayInputStream
       // 15e: dup
       // 15f: aload 0
       // 160: getfield net/rim/device/api/crypto/cms/CMSSignedDataInputStream._dataBuffer [B
@@ -233,7 +243,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       // 17f: aload 0
       // 180: new net/rim/device/api/crypto/cms/EMSAcceptRequestInputStream
       // 183: dup
-      // 184: new java/lang/Object
+      // 184: new java/io/ByteArrayInputStream
       // 187: dup
       // 188: aload 0
       // 189: getfield net/rim/device/api/crypto/cms/CMSSignedDataInputStream._dataBuffer [B
@@ -242,7 +252,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       // 192: putfield net/rim/device/api/crypto/cms/CMSInputStream._data Ljava/io/InputStream;
       // 195: goto 1a7
       // 198: aload 0
-      // 199: new java/lang/Object
+      // 199: new java/io/ByteArrayInputStream
       // 19c: dup
       // 19d: aload 0
       // 19e: getfield net/rim/device/api/crypto/cms/CMSSignedDataInputStream._dataBuffer [B
@@ -355,7 +365,9 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
    }
 
    private final void addKeyStoreIndices() {
-      KeyStoreIndex[] indexArray = new Object[]{new Object(), new Object(), new Object()};
+      KeyStoreIndex[] indexArray = new KeyStoreIndex[]{
+         new IssuerKeyStoreIndex(), new SerialNumberIssuerKeyStoreIndex(), new SubjectKeyIdentifierKeyStoreIndex()
+      };
       if (this._keyStore != null) {
          this._keyStore.addIndices(indexArray);
       }
@@ -363,7 +375,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
 
    public final boolean isSignerCertificatePresent(CMSEntityIdentifier signer) throws CMSNoSuchEntityException {
       if (signer == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else if (signer.getCreator() != this) {
          throw new CMSNoSuchEntityException();
       } else {
@@ -376,7 +388,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
    }
 
    private final String[] readGeneralNames(ASN1InputByteArray input) {
-      String[] names = new Object[0];
+      String[] names = new String[0];
       input.readSequence();
       int endOffset = input.getEndPosition();
 
@@ -398,7 +410,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       if (this._signedContentIdentifier == null) {
          try {
             if (receipt != null) {
-               ASN1InputByteArray input = (ASN1InputByteArray)(new Object(receipt.getValue()));
+               ASN1InputByteArray input = new ASN1InputByteArray(receipt.getValue());
                input.readSet();
                input.readSequence();
                this._signedContentIdentifier = input.readOctetString();
@@ -444,7 +456,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
 
          return false;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -489,47 +501,48 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
                this.populateSignedReceiptValues(receipt);
                if (this._signedContentIdentifier != null) {
                   byte[] signatureEncoding = signer.getSignatureEncoding();
-                  ASN1InputByteArray asn1 = (ASN1InputByteArray)(new Object(signatureEncoding));
+                  ASN1InputByteArray asn1 = new ASN1InputByteArray(signatureEncoding);
                   asn1.skipField();
                   byte[] signatureValue = asn1.readFieldAsByteArray();
-                  ASN1InputByteArray digestAlgorithm = (ASN1InputByteArray)(new Object(signer.getDigestAlgorithm()));
+                  ASN1InputByteArray digestAlgorithm = new ASN1InputByteArray(signer.getDigestAlgorithm());
                   digestAlgorithm.readSequence();
                   OID digestOID = digestAlgorithm.readOID();
                   Digest digest = null;
+                  AbstractDigest var24;
                   if (digestOID.equals(OIDs.getOID(774767465))) {
-                     digest = (Digest)(new Object());
+                     var24 = new SHA1Digest();
                   } else if (digestOID.equals(OIDs.getOID(-472309042))) {
-                     digest = (Digest)(new Object());
+                     var24 = new MD5Digest();
                   } else if (digestOID.equals(OIDs.getOID(540600180))) {
-                     digest = (Digest)(new Object());
+                     var24 = new SHA256Digest();
                   } else if (digestOID.equals(OIDs.getOID(540862324))) {
-                     digest = (Digest)(new Object());
+                     var24 = new SHA384Digest();
                   } else {
                      if (!digestOID.equals(OIDs.getOID(541124468))) {
                         continue;
                      }
 
-                     digest = (Digest)(new Object());
+                     var24 = new SHA512Digest();
                   }
 
                   try {
-                     ASN1OutputStream sequence = (ASN1OutputStream)(new Object());
+                     ASN1OutputStream sequence = new ASN1OutputStream();
                      sequence.writeInteger(1);
                      sequence.writeOID(super._contentType);
                      sequence.writeOctetString(this._signedContentIdentifier);
                      sequence.writeRawByteArray(signatureValue);
-                     ASN1OutputStream stream = (ASN1OutputStream)(new Object());
+                     ASN1OutputStream stream = new ASN1OutputStream();
                      stream.writeSequence(sequence);
                      byte[] derEncoding = stream.toByteArray();
-                     digest.update(derEncoding);
+                     var24.update(derEncoding);
                   } finally {
                      continue;
                   }
 
-                  byte[] msgDigest = digest.getDigest();
-                  digest.reset();
-                  digest.update(signer.getSignedAttributeArray());
-                  byte[] msgSigDigest = digest.getDigest();
+                  byte[] msgDigest = var24.getDigest();
+                  var24.reset();
+                  var24.update(signer.getSignedAttributeArray());
+                  byte[] msgSigDigest = var24.getDigest();
                   Array.resize(receipts, receipts.length + 1);
                   receipts[receipts.length - 1] = new CMSReceiptData(this._signedContentIdentifier, signatureValue, super._contentType, msgDigest, msgSigDigest);
                }
@@ -546,7 +559,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
 
    public final String[] getSignedReceiptRequestors(CMSEntityIdentifier signer) {
       if (signer == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else if (!this.isSignedReceipt()) {
          CMSAttribute receipt = this.getSignerAttribute(OIDs.getOID(-1721363152), signer);
          this.populateSignedReceiptValues(receipt);
@@ -574,28 +587,28 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
          }
 
          byte[] signatureEncoding = signer.getSignatureEncoding();
-         ASN1InputByteArray asn1 = (ASN1InputByteArray)(new Object(signatureEncoding));
+         ASN1InputByteArray asn1 = new ASN1InputByteArray(signatureEncoding);
          asn1.skipField();
          byte[] signatureValue = asn1.readFieldAsByteArray();
          CMSSignedReceiptOutputStream stream = new CMSSignedReceiptOutputStream(output, super._contentType, this._signedContentIdentifier, signatureValue);
-         ASN1InputByteArray digestAlgorithm = (ASN1InputByteArray)(new Object(signer.getDigestAlgorithm()));
+         ASN1InputByteArray digestAlgorithm = new ASN1InputByteArray(signer.getDigestAlgorithm());
          digestAlgorithm.readSequence();
          OID digestOID = digestAlgorithm.readOID();
          Digest digest;
          if (digestOID.equals(OIDs.getOID(774767465))) {
-            digest = (Digest)(new Object());
+            digest = new SHA1Digest();
          } else if (digestOID.equals(OIDs.getOID(-472309042))) {
-            digest = (Digest)(new Object());
+            digest = new MD5Digest();
          } else if (digestOID.equals(OIDs.getOID(540600180))) {
-            digest = (Digest)(new Object());
+            digest = new SHA256Digest();
          } else if (digestOID.equals(OIDs.getOID(540862324))) {
-            digest = (Digest)(new Object());
+            digest = new SHA384Digest();
          } else {
             if (!digestOID.equals(OIDs.getOID(541124468))) {
-               throw new Object();
+               throw new CryptoUnsupportedOperationException();
             }
 
-            digest = (Digest)(new Object());
+            digest = new SHA512Digest();
          }
 
          digest.update(signer.getSignedAttributeArray());
@@ -608,7 +621,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
 
    public final CMSReceiptData setReceiptData(CMSReceiptData[] receiptData) {
       if (receiptData == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._receiptData = this.getStreamReceiptData(receiptData);
@@ -647,7 +660,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
    @Override
    public final int read(byte[] buffer, int offset, int length) {
       if (buffer == null || offset < 0 || length < 0 || buffer.length - length < offset) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return super._data == null ? -1 : super._data.read(buffer, offset, length);
       }
@@ -691,17 +704,17 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       }
 
       if (super._contentType.equals(OIDs.getOID(542121532))) {
-         super._data = new CMSSignedDataInputStream((InputStream)(new Object(this._dataBuffer)), this._keyStore, false, this._displayUI);
+         super._data = new CMSSignedDataInputStream(new ByteArrayInputStream(this._dataBuffer), this._keyStore, false, this._displayUI);
       } else if (super._contentType.equals(OIDs.getOID(542383676))) {
-         super._data = new CMSEnvelopedDataInputStream((InputStream)(new Object(this._dataBuffer)), this._keyStore, null, false, this._displayUI);
+         super._data = new CMSEnvelopedDataInputStream(new ByteArrayInputStream(this._dataBuffer), this._keyStore, null, false, this._displayUI);
       } else if (super._contentType.equals(OIDs.getOID(-1721352904))) {
-         super._data = new CMSCompressedDataInputStream((InputStream)(new Object(this._dataBuffer)), this._keyStore, false, this._displayUI);
+         super._data = new CMSCompressedDataInputStream(new ByteArrayInputStream(this._dataBuffer), this._keyStore, false, this._displayUI);
       } else if (super._contentType.equals(OIDs.getOID(-1721352925))) {
-         super._data = new CMSSignedReceiptInputStream((InputStream)(new Object(this._dataBuffer)));
+         super._data = new CMSSignedReceiptInputStream(new ByteArrayInputStream(this._dataBuffer));
       } else if (super._contentType.equals(OIDs.getOID(-477712249))) {
-         super._data = new EMSAcceptRequestInputStream((InputStream)(new Object(this._dataBuffer)));
+         super._data = new EMSAcceptRequestInputStream(new ByteArrayInputStream(this._dataBuffer));
       } else {
-         super._data = (InputStream)(new Object(this._dataBuffer));
+         super._data = new ByteArrayInputStream(this._dataBuffer);
       }
 
       this._contentComplete = true;
@@ -709,7 +722,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
 
    public final Certificate getSignerCertificate(CMSEntityIdentifier signer) throws CMSNoSuchEntityException {
       if (signer == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (signer.getCreator() != this) {
@@ -781,7 +794,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
 
    public final Certificate[][] getSignerCertificateChains(CMSEntityIdentifier signer) throws CMSNoSuchEntityException {
       if (signer == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (signer.getCreator() != this) {
@@ -789,10 +802,10 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       }
 
       Certificate cert = this.getSignerCertificate(signer);
-      return cert == null ? (Object[][])null : CertificateUtilities.buildCertificateChains(cert, this._pool, this._keyStore);
+      return cert == null ? (Certificate[][])null : CertificateUtilities.buildCertificateChains(cert, this._pool, this._keyStore);
    }
 
-   public final X509CertificateRevocationList getCRL() {
+   public final X509CertificateRevocationList getCRL() throws CRLVerificationException {
       if (this._crl != null) {
          return this._crl;
       }
@@ -802,16 +815,16 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       }
 
       if (this._keyStore == null) {
-         throw new Object();
+         throw new CRLVerificationException();
       }
 
-      this._crl = (X509CertificateRevocationList)(new Object((InputStream)(new Object(this._crls)), this._keyStore));
+      this._crl = new X509CertificateRevocationList(new ByteArrayInputStream(this._crls), this._keyStore);
       return this._crl;
    }
 
    public final CMSAttribute getSignerAttribute(OID oid, CMSEntityIdentifier signer) throws CMSNoSuchEntityException {
       if (signer == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (signer.getCreator() != this) {
@@ -833,7 +846,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
 
    public final Enumeration getSignerAttributes(CMSEntityIdentifier signer) throws CMSNoSuchEntityException {
       if (signer == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else if (signer.getCreator() != this) {
          throw new CMSNoSuchEntityException();
       } else {
@@ -886,14 +899,14 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       // 027: aload 1
       // 028: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputStream.readFieldAsByteArray ()[B
       // 02b: invokestatic net/rim/device/api/crypto/certificate/CertificateFactory.getInstance (Ljava/lang/String;[B)Lnet/rim/device/api/crypto/certificate/Certificate;
-      // 02e: checkcast java/lang/Object
+      // 02e: checkcast net/rim/device/api/crypto/certificate/x509/X509Certificate
       // 031: astore 3
       // 032: aload 0
       // 033: getfield net/rim/device/api/crypto/cms/CMSSignedDataInputStream._pool [Lnet/rim/device/api/crypto/certificate/x509/X509Certificate;
       // 036: ifnonnull 048
       // 039: aload 0
       // 03a: bipush 1
-      // 03b: anewarray 3191
+      // 03b: anewarray 3194
       // 03e: dup
       // 03f: bipush 0
       // 040: aload 3
@@ -948,7 +961,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       // 0a0: aload 7
       // 0a2: invokevirtual java/io/InputStream.read ([B)I
       // 0a5: pop
-      // 0a6: new java/lang/Object
+      // 0a6: new net/rim/device/api/crypto/certificate/x509/X509DistinguishedName
       // 0a9: dup
       // 0aa: aload 7
       // 0ac: invokespecial net/rim/device/api/crypto/certificate/x509/X509DistinguishedName.<init> ([B)V
@@ -975,7 +988,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       // 0d7: invokeinterface net/rim/device/api/crypto/keystore/KeyStore.existsIndex (J)Z 3
       // 0dc: ifne 0ee
       // 0df: aload 10
-      // 0e1: new java/lang/Object
+      // 0e1: new net/rim/device/api/crypto/certificate/CertificateHashKeyStoreIndex
       // 0e4: dup
       // 0e5: invokespecial net/rim/device/api/crypto/certificate/CertificateHashKeyStoreIndex.<init> ()V
       // 0e8: invokeinterface net/rim/device/api/crypto/keystore/KeyStore.addIndex (Lnet/rim/device/api/crypto/keystore/KeyStoreIndex;)Z 2
@@ -991,15 +1004,15 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       // 106: goto 011
       // 109: aload 11
       // 10b: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 110: checkcast java/lang/Object
+      // 110: checkcast net/rim/device/api/crypto/keystore/KeyStoreData
       // 113: invokeinterface net/rim/device/api/crypto/keystore/KeyStoreData.getCertificate ()Lnet/rim/device/api/crypto/certificate/Certificate; 1
       // 118: astore 12
       // 11a: aload 12
-      // 11c: instanceof java/lang/Object
+      // 11c: instanceof net/rim/device/api/crypto/certificate/x509/X509Certificate
       // 11f: ifne 125
       // 122: goto 0fc
       // 125: aload 12
-      // 127: checkcast java/lang/Object
+      // 127: checkcast net/rim/device/api/crypto/certificate/x509/X509Certificate
       // 12a: astore 13
       // 12c: aload 13
       // 12e: invokevirtual net/rim/device/api/crypto/certificate/x509/X509Certificate.getIssuer ()Lnet/rim/device/api/crypto/certificate/DistinguishedName;
@@ -1030,7 +1043,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       // 164: ifnonnull 177
       // 167: aload 0
       // 168: bipush 1
-      // 169: anewarray 3381
+      // 169: anewarray 3384
       // 16c: dup
       // 16d: bipush 0
       // 16e: aload 13
@@ -1069,7 +1082,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
 
    public final void verify(CMSEntityIdentifier signer) throws CMSNoCertificateFoundException, CMSNoSuchEntityException, CMSParsingException {
       if (signer == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (signer.getCreator() != this) {
@@ -1078,8 +1091,8 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
 
       if (!signer.getVerified()) {
          Exception lastException = signer.getLastException();
-         if (!(lastException instanceof Object)) {
-            if (!(lastException instanceof Object)) {
+         if (!(lastException instanceof CryptoTokenException)) {
+            if (!(lastException instanceof CryptoUnsupportedOperationException)) {
                if (this._signerInfos == null) {
                   throw new CMSParsingException();
                }
@@ -1093,10 +1106,10 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
 
                this.verify(signer, certificate);
             } else {
-               throw (Object)lastException;
+               throw (CryptoUnsupportedOperationException)lastException;
             }
          } else {
-            throw (Object)lastException;
+            throw (CryptoTokenException)lastException;
          }
       }
    }
@@ -1129,7 +1142,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       // 021: astore 7
       // 023: aload 7
       // 025: ifnull 042
-      // 028: new java/lang/Object
+      // 028: new net/rim/device/api/crypto/asn1/ASN1InputByteArray
       // 02b: dup
       // 02c: aload 7
       // 02e: invokevirtual net/rim/device/api/crypto/cms/CMSAttribute.getValue ()[B
@@ -1148,7 +1161,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       // 04d: astore 7
       // 04f: aload 7
       // 051: ifnull 06e
-      // 054: new java/lang/Object
+      // 054: new net/rim/device/api/crypto/asn1/ASN1InputByteArray
       // 057: dup
       // 058: aload 7
       // 05a: invokevirtual net/rim/device/api/crypto/cms/CMSAttribute.getValue ()[B
@@ -1300,7 +1313,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:174)
       //
       // Bytecode:
-      // 000: new java/lang/Object
+      // 000: new java/util/Vector
       // 003: dup
       // 004: invokespecial java/util/Vector.<init> ()V
       // 007: astore 1
@@ -1313,7 +1326,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       // 014: dup
       // 015: invokespecial net/rim/device/api/crypto/cms/CMSParsingException.<init> ()V
       // 018: athrow
-      // 019: new java/lang/Object
+      // 019: new net/rim/device/api/crypto/asn1/ASN1InputByteArray
       // 01c: dup
       // 01d: aload 0
       // 01e: getfield net/rim/device/api/crypto/cms/CMSSignedDataInputStream._signerInfos [B
@@ -1366,7 +1379,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       // 081: athrow
       // 082: aload 3
       // 083: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputByteArray.readSequence ()V
-      // 086: new java/lang/Object
+      // 086: new net/rim/device/api/crypto/certificate/x509/X509DistinguishedName
       // 089: dup
       // 08a: aload 3
       // 08b: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputByteArray.readFieldAsByteArray ()[B
@@ -1400,7 +1413,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       // 0c6: astore 7
       // 0c8: aconst_null
       // 0c9: astore 8
-      // 0cb: new java/lang/Object
+      // 0cb: new java/util/Vector
       // 0ce: dup
       // 0cf: invokespecial java/util/Vector.<init> ()V
       // 0d2: astore 9
@@ -1422,7 +1435,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       // 0f4: aload 3
       // 0f5: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputByteArray.readFieldAsByteArray ()[B
       // 0f8: astore 11
-      // 0fa: new java/lang/Object
+      // 0fa: new net/rim/device/api/crypto/asn1/ASN1InputByteArray
       // 0fd: dup
       // 0fe: aload 11
       // 100: invokespecial net/rim/device/api/crypto/asn1/ASN1InputByteArray.<init> ([B)V
@@ -1466,11 +1479,11 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       // 151: arraylength
       // 152: invokestatic java/lang/System.arraycopy (Ljava/lang/Object;ILjava/lang/Object;II)V
       // 155: goto 0eb
-      // 158: new java/lang/Object
+      // 158: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 15b: dup
       // 15c: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 15f: astore 11
-      // 161: new java/lang/Object
+      // 161: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 164: dup
       // 165: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 168: astore 12
@@ -1561,7 +1574,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       // 212: ifle 239
       // 215: aload 0
       // 216: iload 2
-      // 217: anewarray 4309
+      // 217: anewarray 4312
       // 21a: putfield net/rim/device/api/crypto/cms/CMSSignedDataInputStream._signers [Lnet/rim/device/api/crypto/cms/CMSEntityIdentifier;
       // 21d: iload 2
       // 21e: bipush 1
@@ -1617,9 +1630,7 @@ public final class CMSSignedDataInputStream extends CMSInputStream {
       boolean entrustBug
    ) throws CMSNoReceiptDataFoundException {
       boolean hashMatch = false;
-      DecodedSignature decoded = SignatureDecoder.decode(
-         (InputStream)(new Object(encoding)), "CMS", ((StringBuffer)(new Object("/"))).append(digest.getAlgorithm()).toString()
-      );
+      DecodedSignature decoded = SignatureDecoder.decode(new ByteArrayInputStream(encoding), "CMS", "/" + digest.getAlgorithm());
       SignatureVerifier verifier = decoded.getVerifier(publicKey);
       if (signedAttribute == null) {
          hashMatch = true;

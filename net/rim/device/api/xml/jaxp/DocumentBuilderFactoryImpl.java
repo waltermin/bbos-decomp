@@ -18,10 +18,10 @@ public class DocumentBuilderFactoryImpl extends DocumentBuilderFactory {
    }
 
    public void setAttribute(String name, Object value) {
-      throw new Object("not supported");
+      throw new IllegalArgumentException("not supported");
    }
 
    public Object getAttribute(String name) {
-      throw new Object("not supported");
+      throw new IllegalArgumentException("not supported");
    }
 }

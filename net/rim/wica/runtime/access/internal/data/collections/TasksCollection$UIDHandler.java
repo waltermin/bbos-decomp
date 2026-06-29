@@ -1,6 +1,6 @@
 package net.rim.wica.runtime.access.internal.data.collections;
 
-import javax.microedition.pim.PIMItem;
+import javax.microedition.pim.ToDo;
 import net.rim.wica.runtime.access.internal.data.handlers.IntFieldHandler;
 
 final class TasksCollection$UIDHandler implements IntFieldHandler {
@@ -9,9 +9,9 @@ final class TasksCollection$UIDHandler implements IntFieldHandler {
 
    @Override
    public final int getValue(Object item) {
-      if (item instanceof Object) {
+      if (item instanceof ToDo) {
          try {
-            String uid = ((PIMItem)item).getString(108, 0);
+            String uid = ((ToDo)item).getString(108, 0);
             return Integer.parseInt(uid);
          } finally {
             return -1;

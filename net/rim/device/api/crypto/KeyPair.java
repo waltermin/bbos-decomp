@@ -13,7 +13,7 @@ public class KeyPair implements Persistable {
 
    protected KeyPair(KeyPair keypair) {
       if (keypair == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this.setKeyPair(keypair.getPublicKey(), keypair.getPrivateKey());
@@ -25,7 +25,7 @@ public class KeyPair implements Persistable {
          this._privateKey = privateKey;
          this.setHashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

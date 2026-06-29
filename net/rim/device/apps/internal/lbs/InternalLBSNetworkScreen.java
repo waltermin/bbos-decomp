@@ -1,10 +1,10 @@
 package net.rim.device.apps.internal.lbs;
 
 import net.rim.device.api.system.Application;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 
 final class InternalLBSNetworkScreen extends MainScreen {
@@ -17,9 +17,9 @@ final class InternalLBSNetworkScreen extends MainScreen {
 
    InternalLBSNetworkScreen() {
       super(65536);
-      this.add(this._LBSServer = (BasicEditField)(new Object("LBS Server: ", LBSOptions.getURL(-7064416726417485961L), 255, 117440512)));
-      this.add((Field)(new Object()));
-      this.add(this._pingValues = (BasicEditField)(new Object(9007199254740992L)));
+      this.add(this._LBSServer = new BasicEditField("LBS Server: ", LBSOptions.getURL(-7064416726417485961L), 255, 117440512));
+      this.add(new SeparatorField());
+      this.add(this._pingValues = new BasicEditField(9007199254740992L));
    }
 
    @Override
@@ -56,6 +56,6 @@ final class InternalLBSNetworkScreen extends MainScreen {
    }
 
    static final String access$384(InternalLBSNetworkScreen x0, Object x1) {
-      return x0._pingText = ((StringBuffer)(new Object())).append(x0._pingText).append(x1).toString();
+      return x0._pingText = x0._pingText + x1;
    }
 }

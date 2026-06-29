@@ -20,7 +20,7 @@ final class CSSSelectorNode {
 
          if (classString != null) {
             if (classString.indexOf(32) != -1) {
-               StringTokenizer classes = (StringTokenizer)(new Object(classString, ' '));
+               StringTokenizer classes = new StringTokenizer(classString, ' ');
 
                while (classes.hasMoreTokens()) {
                   if (this._classString.equals(classes.nextToken())) {

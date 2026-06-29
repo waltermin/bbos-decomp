@@ -14,7 +14,7 @@ public class CertificateHashKeyStoreIndex implements KeyStoreIndex {
    public void addToIndex(KeyStoreData data, KeyStoreDataMap dataMap) {
       Certificate certificate = data.getCertificate();
       if (certificate != null) {
-         SHA1Digest digest = (SHA1Digest)(new Object());
+         SHA1Digest digest = new SHA1Digest();
          digest.update(certificate.getEncoding());
          dataMap.add(HashCodeCalculator.getDigest32(digest.getDigest()), data);
       }
@@ -23,7 +23,7 @@ public class CertificateHashKeyStoreIndex implements KeyStoreIndex {
    @Override
    public int getHash(Object target) {
       if (!(target instanceof byte[])) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return HashCodeCalculator.getDigest32((byte[])target);
       }
@@ -35,7 +35,7 @@ public class CertificateHashKeyStoreIndex implements KeyStoreIndex {
          byte[] hash = (byte[])target;
          Certificate cert = data.getCertificate();
          if (cert != null) {
-            SHA1Digest digest = (SHA1Digest)(new Object());
+            SHA1Digest digest = new SHA1Digest();
             digest.update(cert.getEncoding());
             return Arrays.equals(hash, digest.getDigest());
          }

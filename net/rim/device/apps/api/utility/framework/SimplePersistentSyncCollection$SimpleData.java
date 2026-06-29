@@ -11,6 +11,6 @@ public final class SimplePersistentSyncCollection$SimpleData implements Persista
    }
 
    public final void clear(int n) {
-      this._items = (BigVector)(new Object(n));
+      this._items = new BigVector(n);
    }
 }

@@ -36,7 +36,7 @@ import net.rim.device.apps.internal.options.resources.OptionsResources;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
 import net.rim.device.internal.system.InternalServices;
 import net.rim.device.internal.system.SIMCardEfHandler;
-import net.rim.device.internal.system.SIMCardEfTask;
+import net.rim.device.internal.system.SIMPhoneNumberReader;
 import net.rim.device.internal.system.SIMPhoneNumberReader$PhoneNumberList;
 import net.rim.device.internal.ui.component.SimplePasswordDialog;
 
@@ -281,7 +281,7 @@ public final class SIMCardOptionsItem
                if (line == 1 || line == 2) {
                   VerbFactory[] factories = VerbFactoryRepository.getVerbFactories(-4755272785484829483L);
                   if (factories != null) {
-                     ContextObject context = (ContextObject)(new Object());
+                     ContextObject context = new ContextObject();
                      context.putIntegerData(line);
 
                      for (int i = factories.length - 1; i >= 0; i--) {
@@ -297,7 +297,7 @@ public final class SIMCardOptionsItem
    }
 
    private final void createSIMCardItems() {
-      _simCardItems = (Vector)(new Object());
+      _simCardItems = new Vector();
       Font currentFont = null;
       if (this._simCardItemsField != null) {
          currentFont = this._simCardItemsField.getFont();
@@ -309,7 +309,7 @@ public final class SIMCardOptionsItem
       try {
          String name = OptionsResources.getString(1501);
          String value = SIMCard.iccidToString(SIMCard.getICCID());
-         StringBuffer sb = (StringBuffer)(new Object(name));
+         StringBuffer sb = new StringBuffer(name);
          sb.append(' ');
          sb.append(value);
          if (currentFont.getBounds(sb.toString()) < Display.getWidth()) {
@@ -332,8 +332,8 @@ public final class SIMCardOptionsItem
       }
 
       if (this.isValidSIMInserted()) {
-         Vector phoneNumbers = (Vector)(new Object());
-         this._lineMap = (Vector)(new Object());
+         Vector phoneNumbers = new Vector();
+         this._lineMap = new Vector();
          if (RadioInfo.areWAFsSupported(2)) {
             this.getWorldPhonePhoneNumbers(phoneNumbers);
          } else {
@@ -360,8 +360,8 @@ public final class SIMCardOptionsItem
    private final void getWorldPhonePhoneNumbers(Vector phoneNumbers) {
       Vector phoneNumberList = phoneNumbers;
       SIMPhoneNumberReader$PhoneNumberList phonelist = new SIMCardOptionsItem$1(this, phoneNumberList);
-      ((SIMCardEfHandler)(new Object())).startTask((SIMCardEfTask)(new Object(phonelist, 24, -1)), true);
-      this._lineMap.addElement(new Object(1));
+      new SIMCardEfHandler().startTask(new SIMPhoneNumberReader(phonelist, 24, -1), true);
+      this._lineMap.addElement(new Integer(1));
    }
 
    private final void getGSMDevicePhoneNumbers(Vector phoneNumbers, Font currentFont) {
@@ -378,20 +378,20 @@ public final class SIMCardOptionsItem
 
                String label = phone.getAlternateLineLabel(lineIds[i]);
                if (label != null && label.length() > 0) {
-                  label = ((StringBuffer)(new Object(" ("))).append(label).append(")").toString();
-                  String numberAndLabel = ((StringBuffer)(new Object())).append(number).append(label).toString();
+                  label = " (" + label + ")";
+                  String numberAndLabel = number + label;
                   if (currentFont.getBounds(numberAndLabel.toString()) + 10 < Display.getWidth()) {
                      phoneNumbers.addElement(numberAndLabel);
-                     this._lineMap.addElement(new Object(i + 1));
+                     this._lineMap.addElement(new Integer(i + 1));
                   } else {
                      phoneNumbers.addElement(number);
-                     this._lineMap.addElement(new Object(i + 1));
+                     this._lineMap.addElement(new Integer(i + 1));
                      phoneNumbers.addElement(label);
-                     this._lineMap.addElement(new Object(i + 1));
+                     this._lineMap.addElement(new Integer(i + 1));
                   }
                } else {
                   phoneNumbers.addElement(number);
-                  this._lineMap.addElement(new Object(i + 1));
+                  this._lineMap.addElement(new Integer(i + 1));
                }
             }
          }
@@ -416,18 +416,12 @@ public final class SIMCardOptionsItem
          Dialog.alert(OptionsResources.getString(1532));
          return null;
       } else {
-         return this.getSIMCode(
-            false,
-            MessageFormat.format(
-               ((StringBuffer)(new Object())).append(_srb.getString(id == 1 ? 214 : 215)).append(_srb.getString(212)).toString(),
-               new Object[]{new Object(retries)}
-            )
-         );
+         return this.getSIMCode(false, MessageFormat.format(_srb.getString(id == 1 ? 214 : 215) + _srb.getString(212), new Integer[]{new Integer(retries)}));
       }
    }
 
    private final String getSIMCode(boolean puk, String prompt) {
-      SIMCodeDialog d = (SIMCodeDialog)(new Object(puk ? 2 : 1));
+      SIMCodeDialog d = new SIMCodeDialog(puk ? 2 : 1);
       d.show(prompt);
       return d.getCloseReason() == -1 ? null : d.getText();
    }
@@ -453,7 +447,7 @@ public final class SIMCardOptionsItem
                try {
                   SIMCard.requestChangePIN(pinID, puk, oldPin, newPIN.getBytes());
                } finally {
-                  String[] parms = new Object[1];
+                  String[] parms = new String[1];
                   if (pinID == 2) {
                      parms[0] = "2";
                   } else {
@@ -516,11 +510,7 @@ public final class SIMCardOptionsItem
          }
 
          String puk = this.getSIMCode(
-            true,
-            MessageFormat.format(
-               ((StringBuffer)(new Object())).append(_srb.getString(pinID == 1 ? 217 : 213)).append(_srb.getString(212)).toString(),
-               new Object[]{new Object(retries)}
-            )
+            true, MessageFormat.format(_srb.getString(pinID == 1 ? 217 : 213) + _srb.getString(212), new Integer[]{new Integer(retries)})
          );
          if (puk != null) {
             this.changePIN(puk.getBytes(), pinID);
@@ -537,7 +527,7 @@ public final class SIMCardOptionsItem
    }
 
    private final String getTitle() {
-      StringBuffer titleBuffer = (StringBuffer)(new Object(this.getDisplayName()));
+      StringBuffer titleBuffer = new StringBuffer(this.getDisplayName());
       if (SIMCard.isSecuritySupported()) {
          titleBuffer.append(": ");
          int rc = 1506;
@@ -577,7 +567,7 @@ public final class SIMCardOptionsItem
    private final void addSIMCardItems(MainScreen mainScreen) {
       this.createSIMCardItems();
       if (_simCardItems.size() > 0) {
-         ListField simCardItemsField = (ListField)(new Object(_simCardItems.size(), 64));
+         ListField simCardItemsField = new ListField(_simCardItems.size(), 64);
          simCardItemsField.setCallback(this);
          mainScreen.add(simCardItemsField);
          simCardItemsField.setFocus();
@@ -622,12 +612,12 @@ public final class SIMCardOptionsItem
 
    @Override
    protected final Field getTitleField() {
-      this._titleField = (LabelField)(new Object(this.getTitle(), 64));
+      this._titleField = new LabelField(this.getTitle(), 64);
       return this._titleField;
    }
 
    public SIMCardOptionsItem() {
-      super(OptionsResources.getString(1500), new Object(2, 3), -1514481539159318190L);
+      super(OptionsResources.getString(1500), new ContextObject(2, 3), -1514481539159318190L);
       ContextObject.put(super._context, 244, "sim_card");
    }
 
@@ -659,8 +649,8 @@ public final class SIMCardOptionsItem
                }
 
                int retries = SIMCard.getMEPDeactivateRetriesRemaining(category);
-               String prompt = MessageFormat.format(CommonResources.getString(7010), new Object[]{CommonResources.getString(resId), new Object(retries)});
-               SimplePasswordDialog d = (SimplePasswordDialog)(new Object(prompt, 1, 16, true, 0));
+               String prompt = MessageFormat.format(CommonResources.getString(7010), new Object[]{CommonResources.getString(resId), new Integer(retries)});
+               SimplePasswordDialog d = new SimplePasswordDialog(prompt, 1, 16, true, 0);
                d.setRevealPassword(true);
                d.show(prompt);
                if (d.getCloseReason() != -1) {

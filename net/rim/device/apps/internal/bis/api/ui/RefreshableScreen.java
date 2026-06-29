@@ -64,14 +64,14 @@ public class RefreshableScreen extends AppsMainScreen {
    }
 
    protected void showStatusMessage() {
-      Dialog d = (Dialog)(new Object(this._statusMessage, new Object[]{ApplicationResources.getString(39)}, new int[]{0, -805044220, 0, -805044213}, 0, null, 0));
+      Dialog d = new Dialog(this._statusMessage, new Object[]{ApplicationResources.getString(39)}, new int[]{0, -805044220, 0, -805044213}, 0, null, 0);
       d.setIcon(ThemeManager.getThemeAwareImage("dialog_information"));
       d.doModal();
       this._statusMessage = null;
    }
 
    protected void showErrorMessage() {
-      Dialog d = (Dialog)(new Object(this._errorMessage, new Object[]{ApplicationResources.getString(39)}, new int[]{0, -805044220, 0, -805044213}, 0, null, 0));
+      Dialog d = new Dialog(this._errorMessage, new Object[]{ApplicationResources.getString(39)}, new int[]{0, -805044220, 0, -805044213}, 0, null, 0);
       d.setIcon(ThemeManager.getThemeAwareImage("dialog_exclamation"));
       d.doModal();
       this._errorMessage = null;

@@ -10,7 +10,7 @@ import net.rim.device.apps.api.transmission.rim.options.ServiceBookOptionsItem;
 class Registration$1 implements OptionsProviderRegistration$OptionsProvider {
    @Override
    public Vector getOptionsItems() {
-      Vector v = (Vector)(new Object(3));
+      Vector v = new Vector(3);
       if (RadioInfo.getNetworkType() != 6) {
          v.addElement(new HostRoutingTableOptionsItem());
       }

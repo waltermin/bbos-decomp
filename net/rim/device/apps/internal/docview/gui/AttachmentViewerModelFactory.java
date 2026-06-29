@@ -9,12 +9,12 @@ final class AttachmentViewerModelFactory extends RIMModelFactory {
    @Override
    public final Object createInstance(Object context) {
       int handle = this._proxyModelStore.add(new DocViewAttachmentViewerModel(context));
-      return new Object(this._proxyModelStore.getId(), handle);
+      return new ProxyModel(this._proxyModelStore.getId(), handle);
    }
 
    @Override
    public final boolean recognize(Object o) {
-      if (o instanceof Object) {
+      if (o instanceof ProxyModel) {
          o = ((ProxyModel)o).getObject();
       }
 

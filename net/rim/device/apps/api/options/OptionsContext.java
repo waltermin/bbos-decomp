@@ -17,7 +17,7 @@ public final class OptionsContext {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
       _contextObject = (ContextObject)ar.getOrWaitFor(-1925593203060784091L);
       if (_contextObject == null) {
-         _contextObject = (ContextObject)(new Object());
+         _contextObject = new ContextObject();
          ar.put(-1925593203060784091L, _contextObject);
       }
    }

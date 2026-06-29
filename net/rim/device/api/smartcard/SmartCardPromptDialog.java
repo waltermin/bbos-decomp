@@ -6,7 +6,6 @@ import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Keypad;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.RichTextField;
@@ -61,7 +60,7 @@ public class SmartCardPromptDialog extends PopupDialog implements FieldChangeLis
    }
 
    public SmartCardPromptDialog(String message, String[] messageParameters, SmartCardReader[] smartCardReaders, long style) {
-      super((Manager)(new Object(281474976710656L)), style);
+      super(new DialogFieldManager(281474976710656L), style);
       this.setStatusPriority(-2147483644);
       this._smartCardReaders = smartCardReaders;
       this._app = Application.getApplication();
@@ -79,16 +78,16 @@ public class SmartCardPromptDialog extends PopupDialog implements FieldChangeLis
          fieldMessage = message;
       }
 
-      RichTextField field = (RichTextField)(new Object(fieldMessage, 45035996273704960L));
+      RichTextField field = new RichTextField(fieldMessage, 45035996273704960L);
       this._dfm.setMessage(field);
       String[] okCancelStrings = CommonResource.getStringArray(10041);
-      this._okButton = (ButtonField)(new Object(okCancelStrings[0], 12884901888L));
+      this._okButton = new ButtonField(okCancelStrings[0], 12884901888L);
       this._okButton.setChangeListener(this);
-      this._cancelButton = (ButtonField)(new Object(okCancelStrings[1], 12884901888L));
+      this._cancelButton = new ButtonField(okCancelStrings[1], 12884901888L);
       this._cancelButton.setChangeListener(this);
       this._dfm.addCustomField(this._okButton);
       this._dfm.addCustomField(this._cancelButton);
-      this._dfm.setIcon((BitmapField)(new Object(Bitmap.getPredefinedBitmap(1))));
+      this._dfm.setIcon(new BitmapField(Bitmap.getPredefinedBitmap(1)));
       this.setCancelAllowed(true);
    }
 

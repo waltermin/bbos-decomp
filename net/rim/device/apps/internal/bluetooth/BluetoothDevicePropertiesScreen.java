@@ -5,10 +5,12 @@ import java.util.Vector;
 import javax.bluetooth.DeviceClass;
 import javax.bluetooth.RemoteDevice;
 import javax.bluetooth.ServiceRecord;
-import net.rim.device.api.ui.Field;
+import net.rim.device.api.bluetooth.BluetoothSerialPortInfo;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.EditField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.ui.container.VerticalFieldManager;
@@ -20,6 +22,7 @@ import net.rim.device.internal.bluetooth.BluetoothDeviceManager;
 import net.rim.device.internal.bluetooth.BluetoothME;
 import net.rim.device.internal.bluetooth.HandsfreeGateway;
 import net.rim.device.internal.i18n.CommonResource;
+import net.rim.device.internal.ui.component.PropertyField;
 
 final class BluetoothDevicePropertiesScreen extends SaveableMainScreenOptionsListItem implements BluetoothDeviceManagerListener {
    private EditField _nameField;
@@ -39,11 +42,9 @@ final class BluetoothDevicePropertiesScreen extends SaveableMainScreenOptionsLis
    @Override
    protected final void populateMainScreen(MainScreen mainScreen) {
       this._mainScreen = mainScreen;
-      this._nameField = (EditField)(new Object(BluetoothMainScreen.getString(1), this._device.getFriendlyName(), 64, 0));
+      this._nameField = new EditField(BluetoothMainScreen.getString(1), this._device.getFriendlyName(), 64, 0);
       mainScreen.add(this._nameField);
-      this._authorizedField = (ObjectChoiceField)(new Object(
-         BluetoothMainScreen.getString(21), CommonResource.getStringArray(10179), this._device.getAuthorized()
-      ));
+      this._authorizedField = new ObjectChoiceField(BluetoothMainScreen.getString(21), CommonResource.getStringArray(10179), this._device.getAuthorized());
       mainScreen.add(this._authorizedField);
       BluetoothDeviceManagerImpl btManager = (BluetoothDeviceManagerImpl)BluetoothDeviceManager.getInstance();
       boolean encryptionEnforced = btManager.getSecurityMode() == 1;
@@ -54,23 +55,21 @@ final class BluetoothDevicePropertiesScreen extends SaveableMainScreenOptionsLis
          encryptionEnabled = this._device.isEncryptionEnabled();
       }
 
-      this._encryptField = (BooleanChoiceField)(new Object(
-         ((StringBuffer)(new Object())).append(BluetoothMainScreen.getString(42)).append(':').toString(), 2, encryptionEnabled, 268435456
-      ));
+      this._encryptField = new BooleanChoiceField(BluetoothMainScreen.getString(42) + ':', 2, encryptionEnabled, 268435456);
       this._encryptField.setEditable(!encryptionEnforced);
       mainScreen.add(this._encryptField);
       if (this._device.hasHandsfree() && HandsfreeGateway.isNRECSupported()) {
-         this._nrecField = (ObjectChoiceField)(new Object(BluetoothMainScreen.getString(61), BluetoothMainScreen.getStringArray(62), this._device.getNRECMode()));
+         this._nrecField = new ObjectChoiceField(BluetoothMainScreen.getString(61), BluetoothMainScreen.getStringArray(62), this._device.getNRECMode());
          mainScreen.add(this._nrecField);
       }
 
-      mainScreen.add((Field)(new Object()));
+      mainScreen.add(new SeparatorField());
       mainScreen.add(
-         (Field)(new Object(BluetoothMainScreen.getString(77), BluetoothME.deviceAddressToString(this._device.getAddress(), true), 36028797018963968L))
+         new PropertyField(BluetoothMainScreen.getString(77), BluetoothME.deviceAddressToString(this._device.getAddress(), true), 36028797018963968L)
       );
-      mainScreen.add((Field)(new Object()));
-      mainScreen.add((Field)(new Object(BluetoothMainScreen.getString(34))));
-      this._servicesVFM = (VerticalFieldManager)(new Object());
+      mainScreen.add(new SeparatorField());
+      mainScreen.add(new LabelField(BluetoothMainScreen.getString(34)));
+      this._servicesVFM = new VerticalFieldManager();
       this.refreshServices();
       mainScreen.add(this._servicesVFM);
       btManager.addListener(this);
@@ -101,7 +100,7 @@ final class BluetoothDevicePropertiesScreen extends SaveableMainScreenOptionsLis
       Enumeration e = this._device.getServiceNames();
 
       while (e.hasMoreElements()) {
-         this._servicesVFM.add((Field)(new Object(((StringBuffer)(new Object("  "))).append(e.nextElement()).toString())));
+         this._servicesVFM.add(new LabelField("  " + e.nextElement()));
       }
    }
 
@@ -136,18 +135,18 @@ final class BluetoothDevicePropertiesScreen extends SaveableMainScreenOptionsLis
          case 1112298821:
             if (!this._showAllOptions) {
                this._showAllOptions = true;
-               this._mainScreen.add((Field)(new Object()));
-               Vector v = (Vector)(new Object());
+               this._mainScreen.add(new SeparatorField());
+               Vector v = new Vector();
                this._device.getSerialPortInfo(v);
 
                for (int i = v.size() - 1; i >= 0; i--) {
-                  this._mainScreen.add((Field)(new Object(v.elementAt(i).toString())));
+                  this._mainScreen.add(new LabelField(((BluetoothSerialPortInfo)v.elementAt(i)).toString()));
                }
             }
             break;
          case 1279872587:
             byte[] linkKey = this._device.getLinkKey();
-            StringBuffer sb = (StringBuffer)(new Object());
+            StringBuffer sb = new StringBuffer();
 
             for (int i = linkKey.length - 1; i >= 0; i--) {
                String s = Integer.toHexString(linkKey[i] & 255);
@@ -161,7 +160,7 @@ final class BluetoothDevicePropertiesScreen extends SaveableMainScreenOptionsLis
                }
             }
 
-            Dialog.inform(((StringBuffer)(new Object("Link key:\n"))).append(sb.toString().toUpperCase()).toString());
+            Dialog.inform("Link key:\n" + sb.toString().toUpperCase());
             return true;
          case 1380928581:
             String role;
@@ -177,13 +176,13 @@ final class BluetoothDevicePropertiesScreen extends SaveableMainScreenOptionsLis
                   role = "Slave";
             }
 
-            if (Dialog.ask(3, ((StringBuffer)(new Object("Current role: "))).append(role).append("\nSwitch roles?").toString()) != -1) {
-               System.out.println(((StringBuffer)(new Object("switchRole: "))).append(BluetoothME.switchRole(this._device.getAddress())).toString());
+            if (Dialog.ask(3, "Current role: " + role + "\nSwitch roles?") != -1) {
+               System.out.println("switchRole: " + BluetoothME.switchRole(this._device.getAddress()));
                return true;
             }
             break;
          case 1397639494:
-            Status.show(((StringBuffer)(new Object("Sniff mode enabled: "))).append(this._device.toggleSniffModeEnabled()).toString());
+            Status.show("Sniff mode enabled: " + this._device.toggleSniffModeEnabled());
             return true;
          default:
             return super.openDevelopmentBackdoor(backdoorCode);

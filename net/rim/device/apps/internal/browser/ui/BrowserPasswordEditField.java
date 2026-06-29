@@ -105,7 +105,7 @@ public final class BrowserPasswordEditField extends PasswordEditField implements
 
                while (this._filter.isLiteralAtIndex(cursorPosition)) {
                   if (buffer == null) {
-                     buffer = (StringBuffer)(new Object());
+                     buffer = new StringBuffer();
                   }
 
                   buffer.append(this._filter.getFormat()[cursorPosition]);
@@ -143,7 +143,7 @@ public final class BrowserPasswordEditField extends PasswordEditField implements
       if (this._filter.getLiteralPrefixEnd() != -1) {
          char[] prefix = new char[this._filter.getLiteralPrefixEnd() + 1];
          System.arraycopy(this._filter.getFormat(), 0, prefix, 0, this._filter.getLiteralPrefixEnd() + 1);
-         value = (String)(new Object(prefix));
+         value = new String(prefix);
          this.setText(value);
       } else {
          this.setText(value);

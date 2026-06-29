@@ -3,6 +3,7 @@ package net.rim.device.internal.io.store;
 import java.io.OutputStream;
 import java.util.Vector;
 import net.rim.device.api.io.ReservableSize;
+import net.rim.device.api.io.file.FileIOException;
 import net.rim.device.api.system.ApplicationRegistry;
 
 final class AutoCloseOutputStream extends OutputStream implements ReservableSize {
@@ -43,45 +44,45 @@ final class AutoCloseOutputStream extends OutputStream implements ReservableSize
    }
 
    @Override
-   public final void flush() {
+   public final void flush() throws FileIOException {
       if (this._underlying == null) {
-         throw new Object(1000);
+         throw new FileIOException(1000);
       }
 
       this._underlying.flush();
    }
 
    @Override
-   public final void reserveSize(long size) {
+   public final void reserveSize(long size) throws FileIOException {
       if (this._underlying == null) {
-         throw new Object(1000);
+         throw new FileIOException(1000);
       }
 
       ((ReservableSize)this._underlying).reserveSize(size);
    }
 
    @Override
-   public final void write(int b) {
+   public final void write(int b) throws FileIOException {
       if (this._underlying == null) {
-         throw new Object(1000);
+         throw new FileIOException(1000);
       }
 
       this._underlying.write(b);
    }
 
    @Override
-   public final void write(byte[] b, int off, int len) {
+   public final void write(byte[] b, int off, int len) throws FileIOException {
       if (this._underlying == null) {
-         throw new Object(1000);
+         throw new FileIOException(1000);
       }
 
       this._underlying.write(b, off, len);
    }
 
    @Override
-   public final void write(byte[] b) {
+   public final void write(byte[] b) throws FileIOException {
       if (this._underlying == null) {
-         throw new Object(1000);
+         throw new FileIOException(1000);
       }
 
       this._underlying.write(b);

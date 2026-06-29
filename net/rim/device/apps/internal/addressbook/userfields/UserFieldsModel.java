@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.addressbook.userfields;
 
 import net.rim.device.api.ui.Field;
-import net.rim.device.api.ui.component.BasicEditField;
+import net.rim.device.api.ui.component.ActiveAutoTextEditField;
 import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.StringMatch;
@@ -19,7 +19,7 @@ import net.rim.device.apps.api.search.SearchCriterion;
 import net.rim.vm.Array;
 
 public final class UserFieldsModel implements PersistableRIMModel, VerbProvider, FieldProvider, ConversionProvider, MatchProvider {
-   String[] _userDefinedFields = new Object[4];
+   String[] _userDefinedFields = new String[4];
    static final int USER_FIELD_COUNT = 4;
 
    public final void setUserDefinedField(int id, String value) {
@@ -34,7 +34,7 @@ public final class UserFieldsModel implements PersistableRIMModel, VerbProvider,
 
       Field uiField = (Field)ContextObject.get(context, 9045827404276417370L);
       Array.resize(verbs, 0);
-      if (uiField instanceof Object && uiField.isEditable()) {
+      if (uiField instanceof EditField && uiField.isEditable()) {
          EditField editField = (EditField)uiField;
          int index = uiField.getIndex();
          if (index >= 0 && index < 4) {
@@ -48,7 +48,7 @@ public final class UserFieldsModel implements PersistableRIMModel, VerbProvider,
 
    @Override
    public final int match(Object criteria) {
-      if (criteria instanceof Object) {
+      if (criteria instanceof SearchCriterion) {
          SearchCriterion crit = (SearchCriterion)criteria;
          if (crit.getType() != 21) {
             return -1;
@@ -73,12 +73,12 @@ public final class UserFieldsModel implements PersistableRIMModel, VerbProvider,
    @Override
    public final boolean grabDataFromField(Field field, Object context) {
       boolean result = false;
-      if (field instanceof Object) {
+      if (field instanceof VerticalFieldManager) {
          VerticalFieldManager vfm = (VerticalFieldManager)field;
          int fieldCount = vfm.getFieldCount();
          if (fieldCount == 4) {
             for (int i = 0; i < 4; i++) {
-               String str = ((BasicEditField)vfm.getField(i)).getText();
+               String str = ((EditField)vfm.getField(i)).getText();
                if (str != null && str.length() == 0) {
                   str = null;
                }
@@ -109,7 +109,7 @@ public final class UserFieldsModel implements PersistableRIMModel, VerbProvider,
          return true;
       } else {
          if (ContextObject.getFlag(context, 11) && ContextObject.getFlag(context, 43) && ContextObject.getFlag(context, 54)) {
-            if (target instanceof Object) {
+            if (target instanceof StringBuffer) {
                StringBuffer stringBuffer = (StringBuffer)target;
 
                for (int i = 0; i < count; i++) {
@@ -136,7 +136,7 @@ public final class UserFieldsModel implements PersistableRIMModel, VerbProvider,
 
                return true;
             }
-         } else if (target instanceof Object[]) {
+         } else if (target instanceof String[]) {
             Array.resize(target, count);
             System.arraycopy(fields, 0, target, 0, count);
             return true;
@@ -162,7 +162,7 @@ public final class UserFieldsModel implements PersistableRIMModel, VerbProvider,
 
    @Override
    public final Field getField(Object context) {
-      VerticalFieldManager vField = (VerticalFieldManager)(new Object(1152921504606846976L));
+      VerticalFieldManager vField = new VerticalFieldManager(1152921504606846976L);
       long flags = ContextObject.getFlag(context, 0) ? 4503599627370496L : 9007199254740992L;
 
       for (int i = 0; i < this._userDefinedFields.length; i++) {
@@ -173,7 +173,7 @@ public final class UserFieldsModel implements PersistableRIMModel, VerbProvider,
                fieldText = "";
             }
 
-            EditField field = (EditField)(new Object(fieldLabel, fieldText, 3072, flags | 2199023255552L));
+            EditField field = new ActiveAutoTextEditField(fieldLabel, fieldText, 3072, flags | 2199023255552L);
             field.setCookie(this);
             vField.add(field);
          }
@@ -184,10 +184,10 @@ public final class UserFieldsModel implements PersistableRIMModel, VerbProvider,
    }
 
    UserFieldsModel(Object initialData) {
-      if (initialData instanceof Object[]) {
-         String[] fields = (Object[])initialData;
+      if (initialData instanceof String[]) {
+         String[] fields = (String[])initialData;
          if (fields.length != 4) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          for (int i = 0; i < 4; i++) {
@@ -199,6 +199,6 @@ public final class UserFieldsModel implements PersistableRIMModel, VerbProvider,
    }
 
    private final String getUserFieldLabel(int id) {
-      return ((StringBuffer)(new Object())).append(AddressBookServices.getAddressBookOptions().getUserDefinedFieldLabel(id)).append(": ").toString();
+      return AddressBookServices.getAddressBookOptions().getUserDefinedFieldLabel(id) + ": ";
    }
 }

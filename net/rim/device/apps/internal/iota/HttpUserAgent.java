@@ -7,6 +7,7 @@ import javax.microedition.io.Connector;
 import javax.microedition.io.HttpConnection;
 import javax.microedition.io.StreamConnection;
 import net.rim.device.api.browser.util.UAProf;
+import net.rim.device.api.io.IOCancelledException;
 import net.rim.device.api.io.http.AuthScheme;
 import net.rim.device.api.servicebook.ServiceBook;
 import net.rim.device.api.servicebook.ServiceRecord;
@@ -34,19 +35,14 @@ final class HttpUserAgent {
    private String _proxyUsername;
    private String _proxyPassword;
    private static final boolean DEBUG = false;
-   private static final String USER_AGENT = ((StringBuffer)(new Object("BlackBerry")))
-      .append(DeviceInfo.getDeviceName())
-      .append('/')
-      .append(ApplicationDescriptor.currentApplicationDescriptor().getVersion())
-      .append(" RIMOS/")
-      .append(DeviceInfo.getPlatformVersion())
-      .append(" MMP/2.0")
-      .toString();
-   private static final String X_WAP_PROFILE = ((StringBuffer)(new Object()))
-      .append('"')
-      .append(UAProf.getFormattedUAProfURI("http://device.sprintpcs.com/RIM/BlackBerry{0}/{2}.rdf"))
-      .append('"')
-      .toString();
+   private static final String USER_AGENT = "BlackBerry"
+      + DeviceInfo.getDeviceName()
+      + '/'
+      + ApplicationDescriptor.currentApplicationDescriptor().getVersion()
+      + " RIMOS/"
+      + DeviceInfo.getPlatformVersion()
+      + " MMP/2.0";
+   private static final String X_WAP_PROFILE = '"' + UAProf.getFormattedUAProfURI("http://device.sprintpcs.com/RIM/BlackBerry{0}/{2}.rdf") + '"';
    private static final String ACCEPT = "application/vnd.phonecom.mmc-xml, multipart/related, application/octet-stream";
    private static final int MAX_REDIRECTS = 13;
    private static final String URL_PARAMETERS = ";apn=iota;DeviceSide=true;ConnectionSetup=delayed;ConnectionUID=IOTA Provisioning";
@@ -60,7 +56,7 @@ final class HttpUserAgent {
    public HttpUserAgent(String username, String pwd, String proxyAddress) {
       EventLogger.logEvent(4411276428801970910L, 1213546857);
       String nameAndUid = "IOTA Provisioning";
-      ServiceRecord serviceRecord = (ServiceRecord)(new Object());
+      ServiceRecord serviceRecord = new ServiceRecord();
       serviceRecord.setType(0);
       serviceRecord.setName(nameAndUid);
       serviceRecord.setUid(nameAndUid);
@@ -69,7 +65,7 @@ final class HttpUserAgent {
       serviceRecord.setCompressionMode(1);
 
       try {
-         WPTCPServiceRecord wptcpRecord = (WPTCPServiceRecord)(new Object());
+         WPTCPServiceRecord wptcpRecord = new WPTCPServiceRecord();
          wptcpRecord.setProperty(1, proxyAddress);
          wptcpRecord.setProperty(8, proxyAddress);
          wptcpRecord.setProperty(2, true);
@@ -77,12 +73,12 @@ final class HttpUserAgent {
          wptcpRecord.setProperty(20, 0);
          serviceRecord.setApplicationData(wptcpRecord.getEncodedData());
       } catch (Throwable var12) {
-         throw new Object(((StringBuffer)(new Object("Exception creating IOTA service record: "))).append(ioe.toString()).toString());
+         throw new RuntimeException("Exception creating IOTA service record: " + ioe.toString());
       }
 
       ServiceBook serviceBook = ServiceBook.getSB();
       if (serviceBook.addRecord(serviceRecord) == null) {
-         throw new Object("Unable to add IOTA service record");
+         throw new RuntimeException("Unable to add IOTA service record");
       }
 
       serviceBook.commit();
@@ -171,7 +167,7 @@ final class HttpUserAgent {
             }
          }
 
-         ProvisioningServiceAgent.logEvents(((StringBuffer)(new Object("Content-Range: "))).append(contentRange).toString());
+         ProvisioningServiceAgent.logEvents("Content-Range: " + contentRange);
       }
 
       return -1;
@@ -195,9 +191,9 @@ final class HttpUserAgent {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private final byte[] doGetOrPost(String url, String contentType, byte[] postData, String requestMethod, int contentOffset, int contentSize) {
+   private final byte[] doGetOrPost(String url, String contentType, byte[] postData, String requestMethod, int contentOffset, int contentSize) throws IOCancelledException {
       if (url == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       AuthScheme bas = AuthScheme.getAuthScheme("Basic");
@@ -211,7 +207,7 @@ final class HttpUserAgent {
          InputStream is = null;
          OutputStream os = null;
          if (this._cancelled) {
-            throw new Object();
+            throw new IOCancelledException();
          }
 
          boolean var132 = false /* VF: Semaphore variable */;
@@ -224,10 +220,7 @@ final class HttpUserAgent {
                EventLogger.logEvent(4411276428801970910L, httpsRequest ? 1215259507 : 1215259497);
                this._url = url;
                conn = this._connection = (HttpConnection)Connector.open(
-                  ((StringBuffer)(new Object()))
-                     .append(url)
-                     .append(";apn=iota;DeviceSide=true;ConnectionSetup=delayed;ConnectionUID=IOTA Provisioning")
-                     .toString()
+                  url + ";apn=iota;DeviceSide=true;ConnectionSetup=delayed;ConnectionUID=IOTA Provisioning"
                );
                EventLogger.logEvent(4411276428801970910L, 1215262820, 5);
                conn.setRequestMethod(requestMethod);
@@ -240,7 +233,7 @@ final class HttpUserAgent {
 
                if (contentOffset >= 0) {
                   EventLogger.logEvent(4411276428801970910L, 1215459953, 5);
-                  StringBuffer rangeHeader = (StringBuffer)(new Object("bytes="));
+                  StringBuffer rangeHeader = new StringBuffer("bytes=");
                   rangeHeader.append(contentOffset).append('-');
                   if (contentSize > 0) {
                      rangeHeader.append(contentOffset + contentSize - 1);
@@ -253,17 +246,13 @@ final class HttpUserAgent {
                   conn.setRequestProperty("Content-Type", contentType);
                }
 
-               if (conn instanceof Object) {
+               if (conn instanceof ClientProtocol) {
                   ClientProtocol httpsConn = (ClientProtocol)conn;
                   String host = conn.getHost();
                   if (host != null) {
-                     String originServer = ((StringBuffer)(new Object()))
-                        .append(StringUtilities.toLowerCase(host, 1701707776))
-                        .append(':')
-                        .append(conn.getPort())
-                        .toString();
+                     String originServer = StringUtilities.toLowerCase(host, 1701707776) + ':' + conn.getPort();
                      StreamConnection subConnection = httpsConn.getTLSSubConnection();
-                     if (subConnection instanceof Object) {
+                     if (subConnection instanceof HttpConnection) {
                         HttpConnection proxyConnection = (HttpConnection)subConnection;
                         if ("CONNECT".equals(proxyConnection.getRequestMethod())) {
                            label1502:
@@ -316,9 +305,7 @@ final class HttpUserAgent {
                   if (read < 0) {
                      length = conn.getResponseCode();
                      if (length != 200 && length != 206) {
-                        ProvisioningServiceAgent.logEvents(
-                           ((StringBuffer)(new Object())).append(String.valueOf(length)).append(' ').append(conn.getResponseMessage()).toString()
-                        );
+                        ProvisioningServiceAgent.logEvents(String.valueOf(length) + ' ' + conn.getResponseMessage());
                      }
 
                      if (length >= 300 && length < 400 && numRedirects < 13 && length != 305) {
@@ -458,8 +445,8 @@ final class HttpUserAgent {
          }
       } else {
          int state = 0;
-         StringBuffer fieldName = (StringBuffer)(new Object());
-         StringBuffer fieldValue = (StringBuffer)(new Object());
+         StringBuffer fieldName = new StringBuffer();
+         StringBuffer fieldValue = new StringBuffer();
          HttpHeader[] headers = null;
          int length = e2eHeadersValue.length();
 
@@ -467,7 +454,7 @@ final class HttpUserAgent {
             char ch = e2eHeadersValue.charAt(i);
             switch (state) {
                case -1:
-                  throw new Object();
+                  throw new IllegalStateException();
                case 0:
                default:
                   if (ch == '"') {
@@ -513,7 +500,7 @@ final class HttpUserAgent {
             }
          } else {
             if (this._e2eHeaders == null) {
-               this._e2eHeaders = (Hashtable)(new Object(1));
+               this._e2eHeaders = new Hashtable(1);
             }
 
             this._e2eHeaders.put(originServer, headers);

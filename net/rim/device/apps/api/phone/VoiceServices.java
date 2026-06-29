@@ -29,12 +29,12 @@ public final class VoiceServices implements PhoneListener, HolsterListener, SIMC
    private PostEventRunner _postEventRunner = new PostEventRunner();
    private int _lastConnectedCallId = 0;
    private int _lastDisconnectedCallId = 0;
-   private final Integer _talkStatusCanTalk = (Integer)(new Object(1));
-   private final Integer _talkStatusCannotTalk = (Integer)(new Object(2));
-   private final Integer _talkStatusPushToTalk = (Integer)(new Object(3));
-   private final Integer _callTypePrivate = (Integer)(new Object(1));
-   private final Integer _callTypeAlert = (Integer)(new Object(2));
-   private final Integer _callTypeGroup = (Integer)(new Object(3));
+   private final Integer _talkStatusCanTalk = new Integer(1);
+   private final Integer _talkStatusCannotTalk = new Integer(2);
+   private final Integer _talkStatusPushToTalk = new Integer(3);
+   private final Integer _callTypePrivate = new Integer(1);
+   private final Integer _callTypeAlert = new Integer(2);
+   private final Integer _callTypeGroup = new Integer(3);
    public static final long GUID = 5533786620429140277L;
    public static final long PHONE_OPTIONS_SYNC_ITEM = 9065083732853317491L;
    public static final long PHONE_REQUEST_UNLOCK = 1981938861510850567L;
@@ -51,11 +51,11 @@ public final class VoiceServices implements PhoneListener, HolsterListener, SIMC
 
    final void doSetVoiceApplication(VoiceApplication voiceApp) {
       if (voiceApp == null) {
-         throw new Object("Voice application instance is null.");
+         throw new RuntimeException("Voice application instance is null.");
       }
 
       this._voiceApp = voiceApp;
-      if (this._voiceApp instanceof Object) {
+      if (this._voiceApp instanceof Application) {
          Application app = (Application)voiceApp;
          app.addRadioListener(this);
          app.addHolsterListener(this);
@@ -66,7 +66,7 @@ public final class VoiceServices implements PhoneListener, HolsterListener, SIMC
 
          Audio.addListener(app, AudioRouter.getInstance());
       } else {
-         throw new Object("Voice application is not a valid Application instance.");
+         throw new RuntimeException("Voice application is not a valid Application instance.");
       }
    }
 
@@ -158,7 +158,7 @@ public final class VoiceServices implements PhoneListener, HolsterListener, SIMC
 
    @Override
    public final void callFailed(int callId, int reason) {
-      this.dispatchPhoneEvent(1006, callId, new Object(reason));
+      this.dispatchPhoneEvent(1006, callId, new Integer(reason));
    }
 
    @Override
@@ -168,7 +168,7 @@ public final class VoiceServices implements PhoneListener, HolsterListener, SIMC
 
    @Override
    public final void callManipulateFailed(int callId, int reason) {
-      this.dispatchPhoneEvent(1009, callId, new Object(reason));
+      this.dispatchPhoneEvent(1009, callId, new Integer(reason));
    }
 
    @Override
@@ -208,7 +208,7 @@ public final class VoiceServices implements PhoneListener, HolsterListener, SIMC
 
    @Override
    public final void callTransferred(int status, int reason) {
-      System.out.println(((StringBuffer)(new Object("PHONE-callTx("))).append(status).append(",").append(reason).append(")").toString());
+      System.out.println("PHONE-callTx(" + status + "," + reason + ")");
       this.dispatchPhoneEvent(1010, 0, new int[]{status, reason});
    }
 
@@ -231,37 +231,24 @@ public final class VoiceServices implements PhoneListener, HolsterListener, SIMC
 
    @Override
    public final void callVoicePrivacyUpdated(int callId, boolean on) {
-      this.dispatchPhoneEvent(150060, callId, new Object(on));
+      this.dispatchPhoneEvent(150060, callId, new Boolean(on));
    }
 
    @Override
    public final void callOTAStatusUpdated(int callId, int status) {
-      this.dispatchPhoneEvent(150070, callId, new Object(status));
+      this.dispatchPhoneEvent(150070, callId, new Integer(status));
    }
 
    @Override
    public final void ssRequestSucceeded(int ss, int action, int result, int bearerService, boolean isUSSDCmd, boolean forwardingNumberAvailable) {
-      System.out
-         .println(
-            ((StringBuffer)(new Object("SS_RQ_OK (")))
-               .append(ss)
-               .append(", ")
-               .append(action)
-               .append(", ")
-               .append(result)
-               .append(", ")
-               .append(bearerService)
-               .append(", ")
-               .append(forwardingNumberAvailable)
-               .toString()
-         );
+      System.out.println("SS_RQ_OK (" + ss + ", " + action + ", " + result + ", " + bearerService + ", " + forwardingNumberAvailable);
       int[] params = new int[]{ss, action, result, bearerService, forwardingNumberAvailable ? 1 : 0};
       this.dispatchPhoneEvent(5000, 0, params);
    }
 
    @Override
    public final void ssRequestFailed(int reason, int bearerService, boolean isUSSDCmd) {
-      System.out.println(((StringBuffer)(new Object("SS_RQ_FAILED ("))).append(reason).append(", ").append(bearerService).append(')').toString());
+      System.out.println("SS_RQ_FAILED (" + reason + ", " + bearerService + ')');
       int[] params = new int[]{reason, bearerService};
       this.dispatchPhoneEvent(5001, reason, params);
    }
@@ -291,7 +278,7 @@ public final class VoiceServices implements PhoneListener, HolsterListener, SIMC
 
    @Override
    public final void ssUpdated(int ssOption, int state) {
-      System.out.println(((StringBuffer)(new Object("SS_UPDATED ("))).append(state).append(')').toString());
+      System.out.println("SS_UPDATED (" + state + ')');
       this.dispatchPhoneEvent(5008, 0, new int[]{ssOption, state});
    }
 
@@ -305,9 +292,9 @@ public final class VoiceServices implements PhoneListener, HolsterListener, SIMC
       try {
          String msg;
          if (messageCoding == 0) {
-            msg = (String)(new Object(data, "SMS"));
+            msg = new String(data, "SMS");
          } else {
-            msg = (String)(new Object(data));
+            msg = new String(data);
          }
 
          this.dispatchPhoneEvent(5100, collectInput ? 1 : 0, msg);
@@ -349,7 +336,7 @@ public final class VoiceServices implements PhoneListener, HolsterListener, SIMC
 
    @Override
    public final void cardInvalid(int reason, int subReason) {
-      System.out.println(((StringBuffer)(new Object("EV_SIM_INVALID "))).append(reason).append(" : ").append(subReason).toString());
+      System.out.println("EV_SIM_INVALID " + reason + " : " + subReason);
       broadcastEvent(100201);
    }
 
@@ -371,7 +358,7 @@ public final class VoiceServices implements PhoneListener, HolsterListener, SIMC
 
    @Override
    public final void atCallControl(int status, int callId) {
-      postEvent(10100, status, new Object(callId));
+      postEvent(10100, status, new Integer(callId));
    }
 
    @Override
@@ -455,12 +442,12 @@ public final class VoiceServices implements PhoneListener, HolsterListener, SIMC
 
    @Override
    public final void dcCallDisconnected(int callId, int callType, int reason) {
-      this.dispatchPhoneEvent(201010, callId, new Object(reason));
+      this.dispatchPhoneEvent(201010, callId, new Integer(reason));
    }
 
    @Override
    public final void dcRequestFailed(int callId, int callType, int reason) {
-      this.dispatchPhoneEvent(202000, callId, new Object(reason));
+      this.dispatchPhoneEvent(202000, callId, new Integer(reason));
    }
 
    @Override
@@ -486,7 +473,7 @@ public final class VoiceServices implements PhoneListener, HolsterListener, SIMC
    public final void dcCallAlertUpdate(int callId, int alertState, int reason) {
       switch (alertState) {
          case 0:
-            throw new Object("Unknown alert state.");
+            throw new IllegalArgumentException("Unknown alert state.");
          case 1:
          default:
             this.dispatchPhoneEvent(202020, callId, null);
@@ -498,14 +485,14 @@ public final class VoiceServices implements PhoneListener, HolsterListener, SIMC
             this.dispatchPhoneEvent(202022, callId, null);
             return;
          case 4:
-            this.dispatchPhoneEvent(202023, callId, new Object(reason));
+            this.dispatchPhoneEvent(202023, callId, new Integer(reason));
       }
    }
 
    @Override
    public final void dcServiceUpdated(int service, boolean success, boolean enabled) {
       if (success) {
-         this.dispatchPhoneEvent(202030, service, new Object(enabled));
+         this.dispatchPhoneEvent(202030, service, new Boolean(enabled));
       } else {
          this.dispatchPhoneEvent(202031, service, null);
       }
@@ -762,7 +749,7 @@ public final class VoiceServices implements PhoneListener, HolsterListener, SIMC
       // 00: getstatic net/rim/device/apps/api/phone/VoiceServices.VERIFY_BEFORE_STARTING_CALL_ID I
       // 03: invokestatic net/rim/vm/PersistentInteger.get (I)I
       // 06: ifeq 3a
-      // 09: new java/lang/Object
+      // 09: new java/lang/StringBuffer
       // 0c: dup
       // 0d: ldc_w "Call \""
       // 10: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -920,7 +907,7 @@ public final class VoiceServices implements PhoneListener, HolsterListener, SIMC
 
    private final VoiceApplication getVoiceApp() {
       if (this._voiceApp == null) {
-         throw new Object("No voice application instance.");
+         throw new RuntimeException("No voice application instance.");
       } else {
          return this._voiceApp;
       }
@@ -1014,7 +1001,7 @@ public final class VoiceServices implements PhoneListener, HolsterListener, SIMC
    private final Integer talkStatusParameter(int talkStatus) {
       switch (talkStatus) {
          case 0:
-            return (Integer)(new Object(talkStatus));
+            return new Integer(talkStatus);
          case 1:
          default:
             return this._talkStatusCanTalk;
@@ -1028,7 +1015,7 @@ public final class VoiceServices implements PhoneListener, HolsterListener, SIMC
    private final Integer callTypeParameter(int callType) {
       switch (callType) {
          case 0:
-            return (Integer)(new Object(callType));
+            return new Integer(callType);
          case 1:
          default:
             return this._callTypePrivate;

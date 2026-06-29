@@ -61,7 +61,7 @@ public final class MapsServices implements GlobalEventListener {
          }
 
          boolean dataOk = false;
-         DataBuffer data = (DataBuffer)(new Object(rawdata, 0, rawdata.length, true));
+         DataBuffer data = new DataBuffer(rawdata, 0, rawdata.length, true);
          LBSOptions.setString(7706156913208477511L, sr.getName());
          String urlList = null;
 
@@ -167,7 +167,7 @@ public final class MapsServices implements GlobalEventListener {
    @Override
    public final void eventOccurred(long guid, int data0, int data1, Object object0, Object object1) {
       if ((guid == -4220058463650496006L || guid == 8288627527798139133L || guid == 6213587377148297993L || guid == 2522898683889177438L)
-         && object0 instanceof Object) {
+         && object0 instanceof ServiceRecord) {
          ServiceRecord record = (ServiceRecord)object0;
          if (StringUtilities.strEqualIgnoreCase(record.getCid(), "LbsConfig", 1701707776)) {
             if (guid != 2522898683889177438L && record.getType() == 0) {
@@ -219,7 +219,7 @@ public final class MapsServices implements GlobalEventListener {
 
                String context = cxtList.substring(ix, eix);
                if (context.equals(orgContext)) {
-                  LBSOptions.setURL(serverParam, ((StringBuffer)(new Object())).append(url).append(orgContext).toString(), false);
+                  LBSOptions.setURL(serverParam, url + orgContext, false);
                   return;
                }
 
@@ -245,7 +245,7 @@ public final class MapsServices implements GlobalEventListener {
       ApplicationDescriptor baseDescriptor = CodeModuleManager.getApplicationDescriptors(moduleHandle)[0];
       if (this._showIcon) {
          if (baseDescriptor != null) {
-            ApplicationEntryPoint entry = (ApplicationEntryPoint)(new Object(baseDescriptor));
+            ApplicationEntryPoint entry = new ApplicationEntryPoint(baseDescriptor);
             RibbonLauncher rib = RibbonLauncher.getInstance();
             rib.registerAction(baseDescriptor.getName(), entry);
             return;

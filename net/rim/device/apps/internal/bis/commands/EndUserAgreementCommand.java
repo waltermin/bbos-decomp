@@ -1,6 +1,6 @@
 package net.rim.device.apps.internal.bis.commands;
 
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 import java.util.Hashtable;
 import net.rim.device.api.i18n.Locale;
 import net.rim.device.apps.internal.bis.BISEventLogger;
@@ -103,32 +103,22 @@ public final class EndUserAgreementCommand implements DomainCommand {
       if (null != ClientSessionState.getInstance().getUserInfo() && ClientSessionState.getInstance().getUserInfo().getTimeStamp() > 0 && !this._acceptAgreement
          )
        {
-         StringBuffer urlBuffer = (StringBuffer)(new Object());
-         URIEncoder.encode(
-            urlBuffer, ((StringBuffer)(new Object())).append(userInfo.getUsername()).append(":").append(configRecord.getBrandName()).toString(), "UTF-8", true
-         );
-         url = ((StringBuffer)(new Object()))
-            .append(brandingInfo.getEndUserAgreementURL())
-            .append("?c=1&a=109")
-            .append("&")
-            .append("externalId=")
-            .append(urlBuffer.toString())
-            .toString();
+         StringBuffer urlBuffer = new StringBuffer();
+         URIEncoder.encode(urlBuffer, userInfo.getUsername() + ":" + configRecord.getBrandName(), "UTF-8", true);
+         url = brandingInfo.getEndUserAgreementURL() + "?c=1&a=109" + "&" + "externalId=" + urlBuffer.toString();
       } else {
          Locale locale = ClientPersistentState.getInstance().getLocale();
-         url = ((StringBuffer)(new Object()))
-            .append(brandingInfo.getEndUserAgreementURL())
-            .append("?c=10&a=44")
-            .append("&brand=")
-            .append(configRecord.getBrandName())
-            .append("&locale=")
-            .append(locale != null ? locale.toString() : null)
-            .toString();
+         url = brandingInfo.getEndUserAgreementURL()
+            + "?c=10&a=44"
+            + "&brand="
+            + configRecord.getBrandName()
+            + "&locale="
+            + (locale != null ? locale.toString() : null);
       }
 
       EndUserAgreementCommand$TermsAndConditionsResponseHandler termsHandler = new EndUserAgreementCommand$TermsAndConditionsResponseHandler(this);
       HttpResponse response = httpClient.doXmlExchange(url, "GET", null, null, null, true);
-      termsHandler.parse((InputStream)(new Object(response.getResponsePayload())));
+      termsHandler.parse(new ByteArrayInputStream(response.getResponsePayload()));
 
       while (termsHandler.isRetry()) {
          int retryTimeInSeconds = Integer.valueOf(termsHandler.getRetry());
@@ -137,7 +127,7 @@ public final class EndUserAgreementCommand implements DomainCommand {
          }
 
          response = httpClient.doXmlExchange(url, "GET", null, null, null, true);
-         termsHandler.parse((InputStream)(new Object(response.getResponsePayload())));
+         termsHandler.parse(new ByteArrayInputStream(response.getResponsePayload()));
       }
 
       String terms = termsHandler.getTermsAndConditions();

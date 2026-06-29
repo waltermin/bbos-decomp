@@ -1,6 +1,5 @@
 package net.rim.device.apps.internal.browser.stack;
 
-import javax.microedition.io.Connection;
 import javax.microedition.io.Connector;
 import javax.microedition.io.HttpConnection;
 import javax.microedition.io.InputConnection;
@@ -16,6 +15,7 @@ import net.rim.device.apps.internal.browser.core.BrowserStateListener;
 import net.rim.device.apps.internal.browser.options.BrowserConfigRecord;
 import net.rim.device.apps.internal.browser.resources.BrowserResources;
 import net.rim.device.apps.internal.browser.util.StatsManager;
+import net.rim.device.cldc.io.ssl.ProxySecurityInfo;
 import net.rim.device.cldc.io.utility.SessionStats;
 import net.rim.device.cldc.io.waphttp.WAPConnectionRegistry;
 import net.rim.device.internal.browser.wap.WAPServiceRecord;
@@ -164,12 +164,12 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // 0de: invokevirtual java/lang/String.length ()I
       // 0e1: ldc_w 32768
       // 0e4: if_icmple 0ef
-      // 0e7: new java/lang/Object
+      // 0e7: new java/io/IOException
       // 0ea: dup
       // 0eb: invokespecial java/io/IOException.<init> ()V
       // 0ee: athrow
       // 0ef: ldc2_w 1907089860548946979
-      // 0f2: new java/lang/Object
+      // 0f2: new java/lang/StringBuffer
       // 0f5: dup
       // 0f6: ldc_w "Hbco:"
       // 0f9: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -182,7 +182,7 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // 10c: pop
       // 10d: aconst_null
       // 10e: astore 14
-      // 110: new java/lang/Object
+      // 110: new net/rim/device/apps/api/utility/general/URI
       // 113: dup
       // 114: aload 13
       // 116: invokespecial net/rim/device/apps/api/utility/general/URI.<init> (Ljava/lang/String;)V
@@ -228,13 +228,13 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // 16e: astore 6
       // 170: goto 17d
       // 173: astore 19
-      // 175: new java/lang/Object
+      // 175: new net/rim/device/cldc/io/utility/MalformedURLException
       // 178: dup
       // 179: invokespecial net/rim/device/cldc/io/utility/MalformedURLException.<init> ()V
       // 17c: athrow
       // 17d: aload 6
       // 17f: ifnonnull 18a
-      // 182: new java/lang/Object
+      // 182: new java/io/IOException
       // 185: dup
       // 186: invokespecial java/io/IOException.<init> ()V
       // 189: athrow
@@ -421,12 +421,12 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // 34f: ldc_w "GET"
       // 352: invokeinterface javax/microedition/io/HttpConnection.setRequestMethod (Ljava/lang/String;)V 2
       // 357: aload 6
-      // 359: instanceof java/lang/Object
+      // 359: instanceof net/rim/device/cldc/io/http/HttpProtocolBase
       // 35c: ifeq 36e
       // 35f: new net/rim/device/apps/internal/browser/stack/HTTPStackAdapter$CheckState
       // 362: dup
       // 363: aload 6
-      // 365: checkcast java/lang/Object
+      // 365: checkcast net/rim/device/cldc/io/http/HttpProtocolBase
       // 368: aload 1
       // 369: invokespecial net/rim/device/apps/internal/browser/stack/HTTPStackAdapter$CheckState.<init> (Lnet/rim/device/cldc/io/http/HttpProtocolBase;Lnet/rim/device/apps/internal/browser/stack/FetchRequest;)V
       // 36c: astore 11
@@ -504,18 +504,18 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // 440: ifeq 463
       // 443: aload 6
       // 445: dup
-      // 446: instanceof java/lang/Object
+      // 446: instanceof net/rim/device/cldc/io/proxyhttp/ClientProtocol
       // 449: ifne 450
       // 44c: pop
       // 44d: goto 45a
-      // 450: checkcast java/lang/Object
+      // 450: checkcast net/rim/device/cldc/io/proxyhttp/ClientProtocol
       // 453: astore 24
       // 455: aload 24
       // 457: invokevirtual net/rim/device/cldc/io/proxyhttp/ClientProtocol.requestPipeInputStream ()V
       // 45a: aload 6
       // 45c: invokeinterface javax/microedition/io/InputConnection.openInputStream ()Ljava/io/InputStream; 1
       // 461: astore 7
-      // 463: new java/lang/Object
+      // 463: new net/rim/device/api/io/http/HttpHeaders
       // 466: dup
       // 467: invokespecial net/rim/device/api/io/http/HttpHeaders.<init> ()V
       // 46a: astore 24
@@ -578,11 +578,11 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // 4fe: istore 25
       // 500: aload 6
       // 502: dup
-      // 503: instanceof java/lang/Object
+      // 503: instanceof net/rim/device/cldc/io/waphttp/WAPRequest
       // 506: ifne 50d
       // 509: pop
       // 50a: goto 563
-      // 50d: checkcast java/lang/Object
+      // 50d: checkcast net/rim/device/cldc/io/waphttp/WAPRequest
       // 510: astore 26
       // 512: aload 1
       // 513: aload 26
@@ -620,11 +620,11 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // 560: goto 6a2
       // 563: aload 6
       // 565: dup
-      // 566: instanceof java/lang/Object
+      // 566: instanceof net/rim/device/cldc/io/proxyhttp/ClientProtocol
       // 569: ifne 570
       // 56c: pop
       // 56d: goto 614
-      // 570: checkcast java/lang/Object
+      // 570: checkcast net/rim/device/cldc/io/proxyhttp/ClientProtocol
       // 573: astore 26
       // 575: aload 26
       // 577: invokevirtual net/rim/device/cldc/io/proxyhttp/ClientProtocol.getInputStream ()Ljava/io/InputStream;
@@ -640,7 +640,7 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // 58a: aload 29
       // 58c: ifnull 5aa
       // 58f: aload 29
-      // 591: new java/lang/Object
+      // 591: new java/lang/StringBuffer
       // 594: dup
       // 595: ldc_w "UID = "
       // 598: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -666,11 +666,11 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // 5c2: invokevirtual net/rim/device/apps/internal/browser/stack/FetchRequest.setSecurityInfo (Ljavax/microedition/io/SecurityInfo;)V
       // 5c5: aload 27
       // 5c7: dup
-      // 5c8: instanceof java/lang/Object
+      // 5c8: instanceof net/rim/device/cldc/io/ippp/SocketPipeInputStream
       // 5cb: ifne 5d2
       // 5ce: pop
       // 5cf: goto 6a2
-      // 5d2: checkcast java/lang/Object
+      // 5d2: checkcast net/rim/device/cldc/io/ippp/SocketPipeInputStream
       // 5d5: astore 28
       // 5d7: aload 0
       // 5d8: getfield net/rim/device/apps/internal/browser/stack/HTTPStackAdapter._statsManager Lnet/rim/device/apps/internal/browser/util/StatsManager;
@@ -702,11 +702,11 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // 611: goto 6a2
       // 614: aload 6
       // 616: dup
-      // 617: instanceof java/lang/Object
+      // 617: instanceof net/rim/device/cldc/io/https/ProxyHttpsConnection
       // 61a: ifne 621
       // 61d: pop
       // 61e: goto 687
-      // 621: checkcast java/lang/Object
+      // 621: checkcast net/rim/device/cldc/io/https/ProxyHttpsConnection
       // 624: astore 26
       // 626: aload 0
       // 627: getfield net/rim/device/apps/internal/browser/stack/HTTPStackAdapter._syncObject Ljava/lang/Object;
@@ -719,7 +719,7 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // 634: aload 28
       // 636: ifnull 654
       // 639: aload 28
-      // 63b: new java/lang/Object
+      // 63b: new java/lang/StringBuffer
       // 63e: dup
       // 63f: ldc_w "UID = "
       // 642: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -755,11 +755,11 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // 684: goto 6a2
       // 687: aload 6
       // 689: dup
-      // 68a: instanceof java/lang/Object
+      // 68a: instanceof net/rim/device/cldc/io/devicehttps/ClientProtocol
       // 68d: ifne 694
       // 690: pop
       // 691: goto 6a2
-      // 694: checkcast java/lang/Object
+      // 694: checkcast net/rim/device/cldc/io/devicehttps/ClientProtocol
       // 697: astore 26
       // 699: aload 1
       // 69a: aload 26
@@ -769,7 +769,7 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // 6a4: ifeq 6f3
       // 6a7: iload 25
       // 6a9: ifne 6fc
-      // 6ac: new java/lang/Object
+      // 6ac: new net/rim/device/apps/internal/browser/stack/AccumulatorInputStream
       // 6af: dup
       // 6b0: aload 6
       // 6b2: aload 7
@@ -849,7 +849,7 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // 758: invokevirtual net/rim/device/apps/internal/browser/stack/CacheResult.setStatus (I)V
       // 75b: aload 12
       // 75d: invokevirtual net/rim/device/cldc/io/ssl/TLSIOException.getException ()Lnet/rim/device/cldc/io/ssl/TLSException;
-      // 760: instanceof java/lang/Object
+      // 760: instanceof net/rim/device/cldc/io/ssl/TLSCancelException
       // 763: ifeq 76a
       // 766: aload 1
       // 767: invokevirtual net/rim/device/apps/internal/browser/stack/FetchRequest.abort ()V
@@ -912,11 +912,11 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // 7f2: aload 6
       // 7f4: ifnull 806
       // 7f7: aload 6
-      // 7f9: checkcast java/lang/Object
+      // 7f9: checkcast net/rim/device/cldc/io/waphttp/WAPRequest
       // 7fc: invokeinterface net/rim/device/cldc/io/waphttp/WAPRequest.getParameters ()Lnet/rim/device/cldc/io/waphttp/WAPConnectionParams; 1
       // 801: astore 16
       // 803: goto 81a
-      // 806: new java/lang/Object
+      // 806: new net/rim/device/cldc/io/waphttp/WAPConnectionParams
       // 809: dup
       // 80a: invokespecial net/rim/device/cldc/io/waphttp/WAPConnectionParams.<init> ()V
       // 80d: astore 16
@@ -933,7 +933,7 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // 857: invokestatic net/rim/device/apps/internal/browser/resources/BrowserResources.getString (I)Ljava/lang/String;
       // 85a: astore 14
       // 85c: goto 9ae
-      // 85f: new java/lang/Object
+      // 85f: new java/lang/StringBuffer
       // 862: dup
       // 863: invokespecial java/lang/StringBuffer.<init> ()V
       // 866: sipush 215
@@ -955,7 +955,7 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // 890: bipush 1
       // 891: invokestatic net/rim/device/api/system/RadioInfo.areWAFsSupported (I)Z
       // 894: ifeq 8ef
-      // 897: new java/lang/Object
+      // 897: new java/lang/StringBuffer
       // 89a: dup
       // 89b: invokespecial java/lang/StringBuffer.<init> ()V
       // 89e: sipush 211
@@ -987,7 +987,7 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // 8e7: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 8ea: astore 14
       // 8ec: goto 9ae
-      // 8ef: new java/lang/Object
+      // 8ef: new java/lang/StringBuffer
       // 8f2: dup
       // 8f3: invokespecial java/lang/StringBuffer.<init> ()V
       // 8f6: sipush 211
@@ -1145,7 +1145,7 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // a74: invokevirtual net/rim/device/apps/internal/browser/stack/FetchRequest.isAborted ()Z
       // a77: ifne a9d
       // a7a: aload 4
-      // a7c: new java/lang/Object
+      // a7c: new java/lang/StringBuffer
       // a7f: dup
       // a80: invokespecial java/lang/StringBuffer.<init> ()V
       // a83: sipush 296
@@ -1191,7 +1191,7 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // ae7: invokevirtual net/rim/device/apps/internal/browser/stack/FetchRequest.isAborted ()Z
       // aea: ifne b10
       // aed: aload 4
-      // aef: new java/lang/Object
+      // aef: new java/lang/StringBuffer
       // af2: dup
       // af3: invokespecial java/lang/StringBuffer.<init> ()V
       // af6: sipush 296
@@ -1303,7 +1303,7 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // c0f: bipush 5
       // c11: if_icmplt c35
       // c14: ldc2_w 1907089860548946979
-      // c17: new java/lang/Object
+      // c17: new java/lang/StringBuffer
       // c1a: dup
       // c1b: ldc_w "HTTPStackAdapter: "
       // c1e: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -1329,11 +1329,11 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // c50: aload 6
       // c52: ifnull c64
       // c55: aload 6
-      // c57: checkcast java/lang/Object
+      // c57: checkcast net/rim/device/cldc/io/waphttp/WAPRequest
       // c5a: invokeinterface net/rim/device/cldc/io/waphttp/WAPRequest.getParameters ()Lnet/rim/device/cldc/io/waphttp/WAPConnectionParams; 1
       // c5f: astore 13
       // c61: goto c78
-      // c64: new java/lang/Object
+      // c64: new net/rim/device/cldc/io/waphttp/WAPConnectionParams
       // c67: dup
       // c68: invokespecial net/rim/device/cldc/io/waphttp/WAPConnectionParams.<init> ()V
       // c6b: astore 13
@@ -1347,7 +1347,7 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // c79: invokestatic net/rim/device/api/system/RadioInfo.areWAFsSupported (I)Z
       // c7c: ifeq cda
       // c7f: aload 4
-      // c81: new java/lang/Object
+      // c81: new java/lang/StringBuffer
       // c84: dup
       // c85: invokespecial java/lang/StringBuffer.<init> ()V
       // c88: sipush 211
@@ -1380,7 +1380,7 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
       // cd4: invokevirtual net/rim/device/apps/internal/browser/stack/CacheResult.setExceptionString (Ljava/lang/String;)V
       // cd7: goto d8b
       // cda: aload 4
-      // cdc: new java/lang/Object
+      // cdc: new java/lang/StringBuffer
       // cdf: dup
       // ce0: invokespecial java/lang/StringBuffer.<init> ()V
       // ce3: sipush 211
@@ -1575,9 +1575,9 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
 
    @Override
    public final void abort(Object context) {
-      if (context instanceof Object) {
+      if (context instanceof HttpConnection) {
          try {
-            ((Connection)context).close();
+            ((HttpConnection)context).close();
          } finally {
             return;
          }
@@ -1603,45 +1603,39 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
          case 1:
             String uid = this.getWAPServiceBook(browserConfig);
             if (uid != null) {
-               url = ((StringBuffer)(new Object()))
-                  .append(url)
-                  .append(";retrynocontext=true;WAPGatewayIP=;ConnectionUID=")
-                  .append(uid)
-                  .append(";ConnectionTimeout=")
-                  .append(browserConfig.getPropertyAsInt(6) * 1000)
-                  .toString();
+               url = url + ";retrynocontext=true;WAPGatewayIP=;ConnectionUID=" + uid + ";ConnectionTimeout=" + browserConfig.getPropertyAsInt(6) * 1000;
             }
 
             return (HttpConnection)Connector.open(url, 3, true);
          case 2:
          default:
-            url = ((StringBuffer)(new Object())).append(url).append(";DeviceSide=false;ConnectionSetup=delayed").toString();
+            url = url + ";DeviceSide=false;ConnectionSetup=delayed";
             String uid = null;
             if (StringUtilities.strEqualIgnoreCase(browserConfig.getPropertyAsString(3), BrowserConfigRecord.IPPP_SERVICE_CID, 1701707776)) {
                uid = browserConfig.getPropertyAsString(4);
             }
 
             if (uid != null && (uid.length() > 1 || uid.length() == 1 && uid.charAt(0) != '-')) {
-               url = ((StringBuffer)(new Object())).append(url).append(";ConnectionUID=").append(uid).toString();
+               url = url + ";ConnectionUID=" + uid;
             }
 
             if (specificUid != null) {
-               url = ((StringBuffer)(new Object())).append(url).append(";SpecificUID=").append(specificUid).toString();
+               url = url + ";SpecificUID=" + specificUid;
             }
 
-            url = ((StringBuffer)(new Object())).append(url).append(";ConnectionTimeout=").append(timeout).toString();
+            url = url + ";ConnectionTimeout=" + timeout;
             switch (browserConfig.getPropertyAsInt(26)) {
                case -1:
                   break;
                case 0:
                default:
-                  url = ((StringBuffer)(new Object())).append(url).append(";EndToEndRequired").toString();
+                  url = url + ";EndToEndRequired";
                   break;
                case 1:
-                  url = ((StringBuffer)(new Object())).append(url).append(";EndToEndDesired;EncryptRequired=true").toString();
+                  url = url + ";EndToEndDesired;EncryptRequired=true";
                   break;
                case 2:
-                  url = ((StringBuffer)(new Object())).append(url).append(";EncryptRequired=true").toString();
+                  url = url + ";EncryptRequired=true";
             }
 
             synchronized (this._syncObject) {
@@ -1653,14 +1647,14 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
 
             return (HttpConnection)Connector.open(url, 3, true);
          case 3:
-            url = ((StringBuffer)(new Object())).append(url).append(";retrynocontext=true;DeviceSide=true;ConnectionSetup=delayed").toString();
+            url = url + ";retrynocontext=true;DeviceSide=true;ConnectionSetup=delayed";
             String uid = null;
             if (StringUtilities.strEqualIgnoreCase(browserConfig.getPropertyAsString(3), BrowserConfigRecord.TCP_SERVICE_CID, 1701707776)) {
                uid = browserConfig.getPropertyAsString(4);
             }
 
             if (uid != null && (uid.length() > 1 || uid.length() == 1 && uid.charAt(0) != '-')) {
-               url = ((StringBuffer)(new Object())).append(url).append(";ConnectionUID=").append(uid).toString();
+               url = url + ";ConnectionUID=" + uid;
             }
 
             synchronized (this._syncObject) {
@@ -1731,7 +1725,7 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
             cipherSuite = "AES 256";
       }
 
-      return (SecurityInfo)(new Object(cipherSuite, BrowserResources.getString(522), "1", null));
+      return new ProxySecurityInfo(cipherSuite, BrowserResources.getString(522), "1", null);
    }
 
    public static final void registerOnStartup() {
@@ -1740,7 +1734,7 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
    }
 
    private final String ipv4AddrToString(int address) {
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       buffer.append(address >> 24 & 0xFF).append('.').append(address >> 16 & 0xFF).append('.').append(address >> 8 & 0xFF).append('.').append(address & 0xFF);
       return buffer.toString();
    }
@@ -1764,7 +1758,7 @@ public final class HTTPStackAdapter implements NetworkPageFetcher, AbortListener
          case 54:
             return BrowserResources.getString(481);
          default:
-            Object[] items = new Object[]{e, new Object(errorCode & 0xFF)};
+            Object[] items = new Object[]{e, new Integer(errorCode & 0xFF)};
             return MessageFormat.format(BrowserResources.getString(480), items);
       }
    }

@@ -173,9 +173,9 @@ public class TransitoryMessagePropertiesModel implements RIMModel, FieldProvider
 
    public void getVerbs(SystemEnabledMenu menu, Object context) {
       SendMethod selectedSendMethod = this.getSelectedSendMethod();
-      if (selectedSendMethod instanceof Object) {
+      if (selectedSendMethod instanceof VerbProvider) {
          VerbProvider verbProvider = (VerbProvider)selectedSendMethod;
-         Verb[] verbs = new Object[0];
+         Verb[] verbs = new Verb[0];
          Verb defaultVerb = verbProvider.getVerbs(context, verbs);
          menu.add(verbs);
          if (defaultVerb != null) {
@@ -293,7 +293,7 @@ public class TransitoryMessagePropertiesModel implements RIMModel, FieldProvider
 
       this._getFieldContext = ContextObject.castOrCreate(context).clone();
       this._emailEditorScreen = (ModelScreen)ContextObject.get(this._getFieldContext, -6581931217101110672L);
-      this._fieldManager = (VerticalFieldManager)(new Object());
+      this._fieldManager = new VerticalFieldManager();
       this.createServiceRecordField(this._messagePropertiesModel, this._getFieldContext);
       return this._fieldManager;
    }
@@ -335,7 +335,7 @@ public class TransitoryMessagePropertiesModel implements RIMModel, FieldProvider
       ServiceRecordSelector serviceRecordSelector = ServiceRecordSelector.getInstance();
       this._serviceRecords = serviceRecordSelector.getServiceRecords(this._emailMessageModel, context);
       int numServiceRecords = this._serviceRecords != null ? this._serviceRecords.length : 0;
-      String[] serviceRecordNames = new Object[numServiceRecords];
+      String[] serviceRecordNames = new String[numServiceRecords];
 
       for (int i = 0; i < numServiceRecords; i++) {
          serviceRecordNames[i] = this._serviceRecords[i].getName();
@@ -501,7 +501,7 @@ public class TransitoryMessagePropertiesModel implements RIMModel, FieldProvider
          return null;
       }
 
-      String[] recipient = new Object[2];
+      String[] recipient = new String[2];
       ehm.convert(null, recipient);
       return recipient[0] != null && recipient[0].length() > 0 ? recipient[0] : null;
    }

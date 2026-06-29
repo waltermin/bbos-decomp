@@ -31,7 +31,7 @@ public class StringSerializer extends AbstractArraySerializer {
 
    @Override
    protected Object[] createArray(int size) {
-      return new Object[size];
+      return new String[size];
    }
 
    private StringSerializer() {

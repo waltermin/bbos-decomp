@@ -42,7 +42,7 @@ public final class MsgMapper {
             Object data = this._wiclet.getData(map[0]);
             if (!(data instanceof Component)) {
                if (regHandles == null) {
-                  regHandles = (IntLongHashtable)(new Object());
+                  regHandles = new IntLongHashtable();
                }
 
                KeyDataCollection dc = (KeyDataCollection)data;
@@ -290,6 +290,6 @@ public final class MsgMapper {
          }
       }
 
-      throw new Object("Field level mapping must provide the primary key.");
+      throw new RuntimeException("Field level mapping must provide the primary key.");
    }
 }

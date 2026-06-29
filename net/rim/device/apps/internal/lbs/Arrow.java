@@ -118,10 +118,10 @@ class Arrow {
          }
 
          graphics.setFont(font);
-         XYRect rect = (XYRect)(new Object());
+         XYRect rect = new XYRect();
          if (distance != null && distance.length() > 0) {
-            distance = ((StringBuffer)(new Object("("))).append(distance).append(")").toString();
-            label = ((StringBuffer)(new Object())).append(label).append(" ").append(distance).toString();
+            distance = "(" + distance + ")";
+            label = label + " " + distance;
          }
 
          int screenWidth = transform._screenView.width();

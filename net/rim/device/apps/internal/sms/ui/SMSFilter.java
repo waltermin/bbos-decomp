@@ -4,7 +4,7 @@ import net.rim.device.api.system.SMSPacketHeader;
 import net.rim.device.api.ui.text.TextFilter;
 import net.rim.device.api.util.AbstractString;
 import net.rim.device.api.util.CharacterUtilities;
-import net.rim.device.apps.api.addressbook.FriendlyNameAddressModel;
+import net.rim.device.apps.api.addressbook.EmailAddressModel;
 import net.rim.device.apps.api.addressbook.GroupAddressCardModel;
 import net.rim.device.apps.internal.sms.SMSModel;
 import net.rim.device.apps.internal.sms.SMSService;
@@ -110,16 +110,16 @@ public class SMSFilter extends TextFilter {
 
    public int getNumberOfCharactersRequiredForAddress(Object address) {
       int requiredSpace = 0;
-      if (address instanceof Object) {
-         return this.getEncodedLength(((FriendlyNameAddressModel)address).getAddress()) + 1;
+      if (address instanceof EmailAddressModel) {
+         return this.getEncodedLength(((EmailAddressModel)address).getAddress()) + 1;
       }
 
-      if (address instanceof Object) {
+      if (address instanceof GroupAddressCardModel) {
          GroupAddressCardModel gacm = (GroupAddressCardModel)address;
 
          for (int i = 0; i < gacm.size(); i++) {
             if (gacm.getAddressModelTypeAt(i) == 0) {
-               requiredSpace = Math.max(requiredSpace, this.getEncodedLength(((FriendlyNameAddressModel)gacm.getAddressModelAt(i)).getAddress()) + 1);
+               requiredSpace = Math.max(requiredSpace, this.getEncodedLength(((EmailAddressModel)gacm.getAddressModelAt(i)).getAddress()) + 1);
             }
          }
       }

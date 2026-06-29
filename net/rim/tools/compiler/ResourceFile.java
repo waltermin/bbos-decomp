@@ -62,7 +62,7 @@ public class ResourceFile {
          return false;
       }
 
-      if (obj instanceof Object) {
+      if (obj instanceof String) {
          return this._relativeName != null && this._relativeName.equals(obj) ? true : this._absoluteName.equals(obj);
       }
 

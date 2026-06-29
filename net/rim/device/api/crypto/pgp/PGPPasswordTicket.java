@@ -1,6 +1,7 @@
 package net.rim.device.api.crypto.pgp;
 
 import net.rim.device.api.crypto.Digest;
+import net.rim.device.api.crypto.keystore.KeyStoreCancelException;
 import net.rim.device.api.i18n.MessageFormat;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.util.Arrays;
@@ -25,9 +26,9 @@ public class PGPPasswordTicket implements Persistable {
       this._promptParameters = promptParameters;
    }
 
-   public PGPPseudoRandomSource getPseudoRandomSource(int s2kType, byte[] salt, Digest digest, byte codedValue, boolean retry) {
+   public PGPPseudoRandomSource getPseudoRandomSource(int s2kType, byte[] salt, Digest digest, byte codedValue, boolean retry) throws KeyStoreCancelException {
       ResourceBundle rb = PGPUtilities.getResourceBundle();
-      StringBuffer promptBuffer = (StringBuffer)(new Object());
+      StringBuffer promptBuffer = new StringBuffer();
       if (retry) {
          promptBuffer.append(rb.getString(8036));
          this._password = null;
@@ -36,7 +37,7 @@ public class PGPPasswordTicket implements Persistable {
       if (this._password == null) {
          switch (this._promptType) {
             case -1:
-               throw new Object();
+               throw new IllegalArgumentException();
             case 0:
             default:
                if (this._promptParameters == null) {
@@ -53,10 +54,10 @@ public class PGPPasswordTicket implements Persistable {
                }
          }
 
-         PasswordDialog dialog = (PasswordDialog)(new Object(promptBuffer.toString(), false, 255, 134217728));
+         PasswordDialog dialog = new PasswordDialog(promptBuffer.toString(), false, 255, 134217728);
          BackgroundDialog.show(dialog);
          if (dialog.getCloseReason() == -1) {
-            throw new Object();
+            throw new KeyStoreCancelException();
          }
 
          this._password = dialog.getPassword();
@@ -66,7 +67,7 @@ public class PGPPasswordTicket implements Persistable {
       switch (s2kType) {
          case -1:
          case 2:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          default:
             return new PGPSimpleKDFPseudoRandomSource(password, digest);

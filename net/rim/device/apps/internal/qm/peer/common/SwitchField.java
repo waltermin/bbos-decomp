@@ -57,7 +57,7 @@ final class SwitchField extends LabelField {
          Screen scr = this.getScreen();
          if (scr != null) {
             Object scrCookie = scr.getCookie();
-            if (scrCookie instanceof Object) {
+            if (scrCookie instanceof ActionProvider) {
                return ((ActionProvider)scrCookie).perform(NotificationMessageField.MATCH, conversation);
             }
          }

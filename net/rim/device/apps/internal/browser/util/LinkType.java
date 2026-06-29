@@ -69,13 +69,13 @@ public final class LinkType {
                try {
                   var15 = true;
                   if (_stringEnum == null) {
-                     _stringEnum = (StringPatternEnumerator)(new Object(href, StringPatternRepository$Internal.getStringPatterns()));
+                     _stringEnum = new StringPatternEnumerator(href, StringPatternRepository$Internal.getStringPatterns());
                   } else {
                      _stringEnum.reset(href, 0, href.length());
                   }
 
                   if (_stringEnum.hasMoreMatches()) {
-                     StringPattern$Match stringMatch = (StringPattern$Match)(new Object());
+                     StringPattern$Match stringMatch = new StringPattern$Match();
                      _stringEnum.nextMatch(stringMatch);
                      if (stringMatch.beginIndex == 0) {
                         linkType = stringMatch.id;

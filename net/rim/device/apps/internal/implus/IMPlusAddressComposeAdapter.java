@@ -38,10 +38,10 @@ final class IMPlusAddressComposeAdapter extends Verb {
    @Override
    public final Object invoke(Object parameter) {
       ContextObject contextObject;
-      if (parameter instanceof Object) {
+      if (parameter instanceof ContextObject) {
          contextObject = ContextObject.clone(parameter);
       } else {
-         contextObject = (ContextObject)(new Object());
+         contextObject = new ContextObject();
       }
 
       contextObject.put(254, this._address);

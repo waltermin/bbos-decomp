@@ -38,9 +38,9 @@ final class EmailUtilities {
    ) {
       StringBuffer body;
       if (emailAsUserLocation) {
-         body = (StringBuffer)(new Object(LBSResources.getString(296)));
+         body = new StringBuffer(LBSResources.getString(296));
       } else {
-         body = (StringBuffer)(new Object(LBSResources.getString(29)));
+         body = new StringBuffer(LBSResources.getString(29));
       }
 
       body.append("\n\n");
@@ -51,7 +51,7 @@ final class EmailUtilities {
       );
       String subject = "";
       if (label != null && !label.equals("")) {
-         subject = MessageFormat.format(LBSResources.getString(120), new Object[]{label});
+         subject = MessageFormat.format(LBSResources.getString(120), new String[]{label});
       } else {
          subject = LBSResources.getString(28);
       }
@@ -66,24 +66,24 @@ final class EmailUtilities {
    private static final void emailDirectionsInternal(
       String startAddress, int startLatitude, int startLongitude, String endAddress, int endLatitude, int endLongitude, Route route
    ) {
-      StringBuffer body = (StringBuffer)(new Object(LBSResources.getString(234)));
+      StringBuffer body = new StringBuffer(LBSResources.getString(234));
       body.append("\n\n");
       body.append(Utilities.createDirectionsUrl(startAddress, startLatitude, startLongitude, endAddress, endLatitude, endLongitude));
       if (route != null) {
          body.append("\n");
 
          for (int i = 0; i < route._decisions._count; i++) {
-            body.append(((StringBuffer)(new Object("\n"))).append(route._decisions.getAt(i)._label).toString());
+            body.append("\n" + route._decisions.getAt(i)._label);
          }
       }
 
       String subject = "";
       if (startAddress != null && startAddress.length() > 0 && endAddress != null && endAddress.length() > 0) {
-         subject = MessageFormat.format(LBSResources.getString(236), new Object[]{startAddress, endAddress});
+         subject = MessageFormat.format(LBSResources.getString(236), new String[]{startAddress, endAddress});
       } else if (startAddress != null && startAddress.length() > 0) {
-         subject = ((StringBuffer)(new Object())).append(LBSResources.getString(107)).append(" ").append(startAddress).toString();
+         subject = LBSResources.getString(107) + " " + startAddress;
       } else if (endAddress != null && endAddress.length() > 0) {
-         subject = ((StringBuffer)(new Object())).append(LBSResources.getString(106)).append(" ").append(endAddress).toString();
+         subject = LBSResources.getString(106) + " " + endAddress;
       } else {
          subject = LBSResources.getString(235);
       }
@@ -97,7 +97,7 @@ final class EmailUtilities {
 
    static final void createEmail(String subject, String body, boolean asDirections, MessageAttachment attachment) {
       EmailUtilities$BrowserMessagePartsProvider bmpr = new EmailUtilities$BrowserMessagePartsProvider(body, subject, attachment);
-      ForwardAsVerb fwVerb = (ForwardAsVerb)(new Object(bmpr, 0, LBSResources.getResourceBundle(), asDirections ? 275 : 274));
+      ForwardAsVerb fwVerb = new ForwardAsVerb(bmpr, 0, LBSResources.getResourceBundle(), asDirections ? 275 : 274);
       if (fwVerb.canInvoke(null)) {
          fwVerb.invoke(null);
       }

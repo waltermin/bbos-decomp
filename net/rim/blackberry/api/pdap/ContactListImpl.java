@@ -14,15 +14,19 @@ import net.rim.device.api.system.Application;
 import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.system.DirectConnect;
 import net.rim.device.api.util.Arrays;
+import net.rim.device.api.util.EmptyEnumeration;
 import net.rim.device.api.util.FactoryUtil;
+import net.rim.device.api.util.ObjectEnumerator;
 import net.rim.device.apps.api.addressbook.AddressBook;
 import net.rim.device.apps.api.addressbook.AddressBookOptions;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
-import net.rim.device.apps.api.addressbook.AddressCardElement;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.AddressSelectionContext;
 import net.rim.device.apps.api.addressbook.CompanyInfoModel;
+import net.rim.device.apps.api.addressbook.EmailAddressModel;
 import net.rim.device.apps.api.addressbook.FriendlyNameAddressModel;
+import net.rim.device.apps.api.addressbook.GroupAddressCardModel;
+import net.rim.device.apps.api.addressbook.PINAddressModel;
 import net.rim.device.apps.api.addressbook.PersonNameModel;
 import net.rim.device.apps.api.framework.model.CompoundRecognizer;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -106,7 +110,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
    @Override
    public final Contact importContact(Contact contact) {
       if (contact == null) {
-         throw new Object();
+         throw new NullPointerException();
       } else {
          return new ContactImpl(contact, this);
       }
@@ -124,11 +128,11 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
       }
 
       if (super._mode == 1) {
-         throw new Object();
+         throw new SecurityException();
       }
 
       if (element == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       if (!(element instanceof ContactImpl)) {
@@ -137,7 +141,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
 
       ContactImpl contact = (ContactImpl)element;
       Object internalModel = contact.getInternalModel();
-      long id = ((AddressCardElement)internalModel).getUID();
+      long id = ((AddressCardModel)internalModel).getUID();
       Object foundAddress = _addressBook.getAddressCard(id);
       if (foundAddress != null) {
          _addressBook.removeAddressCard(foundAddress);
@@ -152,7 +156,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       } else if (super._mode == 2) {
-         throw new Object(WRITEONLY_MESSAGE);
+         throw new SecurityException(WRITEONLY_MESSAGE);
       } else {
          return new ContactListEnumeration(_addressBook.getAddressCards(), this, searchType);
       }
@@ -181,7 +185,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
    @Override
    public final void lookup(String matching, RemoteLookupListener listener) {
       if (listener == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (matching != null) {
@@ -195,18 +199,18 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
    @Override
    public final void lookup(Contact matching, RemoteLookupListener listener) {
       if (listener == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (matching != null && matching.countValues(106) > 0) {
          String[] name = matching.getStringArray(106, 0);
-         this.lookup(((StringBuffer)(new Object())).append(name[1]).append(' ').append(name[0]).toString(), listener);
+         this.lookup(name[1] + ' ' + name[0], listener);
       }
    }
 
    @Override
    public final Contact choose(Contact previous, int type, boolean allowCrossService) {
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       ContactImpl impl = (ContactImpl)previous;
       context.setFlag(5);
       if (null != previous) {
@@ -233,12 +237,12 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
       if (headerModelData != null) {
          String emailOrPIN = headerModelData.getAddress();
          ContactImpl tempContact = new ContactImpl();
-         if (headerModelData instanceof Object) {
+         if (headerModelData instanceof EmailAddressModel) {
             tempContact.addString(103, 0, emailOrPIN);
             return tempContact;
          }
 
-         if (headerModelData instanceof Object) {
+         if (headerModelData instanceof PINAddressModel) {
             tempContact.addString(20000927, 0, emailOrPIN);
             return tempContact;
          }
@@ -250,20 +254,20 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
    @Override
    public final PIMItem choose() {
       RIMModelFactory[] abEntryFactories = RIMModelFactoryRepository.getModelFactories(-7921492803965144520L);
-      CompoundRecognizer compoundRecognizer = (CompoundRecognizer)(new Object(abEntryFactories));
-      String titleString = ((StringBuffer)(new Object())).append(CommonResources.getString(9091)).append(": ").toString();
-      AddressSelectionContext selectionContext = (AddressSelectionContext)(new Object(titleString, null, null, compoundRecognizer, null));
+      CompoundRecognizer compoundRecognizer = new CompoundRecognizer(abEntryFactories);
+      String titleString = CommonResources.getString(9091) + ": ";
+      AddressSelectionContext selectionContext = new AddressSelectionContext(titleString, null, null, compoundRecognizer, null);
       selectionContext.setFindLabel(titleString);
-      selectionContext.setContext(new Object(108));
+      selectionContext.setContext(new ContextObject(108));
       Verb invokeAddressBookVerb = AddressBookServices.getAddressSelectionVerb(4738722199580714034L);
       selectionContext.setInitialSearchPattern(null);
       ContactListImpl$ChooseContactRunnable ccr = new ContactListImpl$ChooseContactRunnable(invokeAddressBookVerb, selectionContext);
       Application.getApplication().invokeAndWait(ccr);
       RIMModel addressBookEntry = ccr._chooseContactModel;
-      if (addressBookEntry instanceof Object) {
+      if (addressBookEntry instanceof GroupAddressCardModel) {
          return new ContactGroupImpl(addressBookEntry, this);
       } else {
-         return addressBookEntry instanceof Object ? new ContactImpl(addressBookEntry, this) : null;
+         return addressBookEntry instanceof AddressCardModel ? new ContactImpl(addressBookEntry, this) : null;
       }
    }
 
@@ -294,18 +298,18 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
       }
 
       if (super._mode == 2) {
-         throw new Object(WRITEONLY_MESSAGE);
+         throw new SecurityException(WRITEONLY_MESSAGE);
       }
 
       if (!(matching instanceof Contact)) {
          if (matching == null) {
-            throw new Object();
+            throw new NullPointerException();
          } else {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } else {
          if (!(matching instanceof ContactImpl)) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          ContactImpl contact = (ContactImpl)matching;
@@ -313,19 +317,19 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
             String[] name = contact.getStringArray(106, 0);
             String searchString = "";
             if (name[1] != null) {
-               searchString = ((StringBuffer)(new Object())).append(searchString).append(name[1]).append(' ').toString();
+               searchString = searchString + name[1] + ' ';
             }
 
             if (name[0] != null) {
-               searchString = ((StringBuffer)(new Object())).append(searchString).append(name[0]).toString();
+               searchString = searchString + name[0];
             }
 
             Object[] matchingItems = AddressBookServices.lookup(searchString, 5);
             if (matchingItems == null) {
-               return (Enumeration)(new Object());
+               return new EmptyEnumeration();
             }
 
-            Enumeration addressCards = (Enumeration)(new Object(matchingItems));
+            Enumeration addressCards = new ObjectEnumerator(matchingItems);
             return new ContactListEnumeration(addressCards, this, 1);
          } else {
             Enumeration addressCards = _addressBook.getAddressCards();
@@ -378,7 +382,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
          }
       }
 
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    private final Enumeration createItemsEnumeration(String matching, boolean searchNameOnly, int searchType) throws PIMException {
@@ -387,22 +391,22 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
       }
 
       if (super._mode == 2) {
-         throw new Object(WRITEONLY_MESSAGE);
+         throw new SecurityException(WRITEONLY_MESSAGE);
       }
 
-      if (!(matching instanceof Object)) {
+      if (!(matching instanceof String)) {
          if (matching == null) {
-            throw new Object();
+            throw new NullPointerException();
          } else {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } else if (searchNameOnly) {
          Object[] matchingItems = AddressBookServices.lookup(matching, 5);
          if (matchingItems == null) {
-            return (Enumeration)(new Object());
+            return new EmptyEnumeration();
          }
 
-         Enumeration addressCards = (Enumeration)(new Object(matchingItems));
+         Enumeration addressCards = new ObjectEnumerator(matchingItems);
          return new ContactListEnumeration(addressCards, this, searchType);
       } else {
          Enumeration addressCards = _addressBook.getAddressCards();
@@ -425,7 +429,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
          case 2:
          case 128:
          case 256:
-            throw new UnsupportedFieldException(((StringBuffer)(new Object("Attribute "))).append(attribute).append(" not supported.").toString(), attribute);
+            throw new UnsupportedFieldException("Attribute " + attribute + " not supported.", attribute);
          case 4:
             return phoneLabels[7];
          case 8:
@@ -443,7 +447,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
          case 33554432:
             return phoneLabels[2];
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -509,7 +513,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
          case 20000932:
             return DirectConnect.isSupported();
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -668,7 +672,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
          case 106:
             return new int[]{0, 1, 3, -805044213, 775162112, 774909491, 3420721, -805044199, 1699878656, 1918985587, 1226860643, 1867325550};
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -712,18 +716,18 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
          case 106:
             return 5;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
    @Override
    protected final PIMItem getPIMItemFor(Object element) {
-      if (element instanceof Object) {
+      if (element instanceof AddressCardModel) {
          return new ContactImpl(element, this);
-      } else if (element instanceof Object) {
+      } else if (element instanceof GroupAddressCardModel) {
          return new ContactGroupImpl(element, this);
       } else {
-         throw new Object();
+         throw new IllegalStateException();
       }
    }
 
@@ -774,7 +778,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
    public ContactListImpl(int mode) {
       super._mode = mode;
       if (_addressBook == null) {
-         throw new Object("Unable to obtain AddressBook.");
+         throw new IllegalStateException("Unable to obtain AddressBook.");
       }
    }
 
@@ -849,7 +853,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
          case 20000933:
             return ResourceBundle.getBundle(5390928610432442684L, "net.rim.device.apps.internal.resource.AddressBook").getString(1801);
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -857,7 +861,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
       _actualListeners = (Hashtable)ar.getOrWaitFor(-9144547334088878571L);
       if (_actualListeners == null) {
-         _actualListeners = (Hashtable)(new Object());
+         _actualListeners = new Hashtable();
          ar.put(-9144547334088878571L, _actualListeners);
       }
    }

@@ -37,7 +37,7 @@ public final class VCal implements VerbProvider, PaintProvider {
       if (this._vcalObject instanceof Event) {
          Event e = (Event)this._vcalObject;
          String subject = e.getSubject();
-         if ((subject == null || subject.trim().length() == 0) && context instanceof Object) {
+         if ((subject == null || subject.trim().length() == 0) && context instanceof String) {
             subject = (String)context;
          }
 

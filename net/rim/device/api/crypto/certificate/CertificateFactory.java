@@ -1,7 +1,9 @@
 package net.rim.device.api.crypto.certificate;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Hashtable;
+import net.rim.device.api.crypto.NoSuchAlgorithmException;
 import net.rim.device.api.crypto.RandomSource;
 import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.util.Arrays;
@@ -48,10 +50,10 @@ public class CertificateFactory {
       }
    }
 
-   private static CertificateFactory createCertificateFactory(String type) {
+   private static CertificateFactory createCertificateFactory(String type) throws NoSuchAlgorithmException {
       CertificateFactory factory = (CertificateFactory)_hashtable.get(type);
       if (factory == null) {
-         throw new Object(type);
+         throw new NoSuchAlgorithmException(type);
       } else {
          return factory;
       }
@@ -74,7 +76,7 @@ public class CertificateFactory {
 
    private static void updateCache(Certificate cert, byte[] encoding, int index) {
       if (index >= 256) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (encoding.length <= 2048) {
@@ -136,7 +138,7 @@ public class CertificateFactory {
 
    public static boolean register(CertificateFactory factory) {
       if (factory == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       String type = factory.getType();
@@ -157,7 +159,7 @@ public class CertificateFactory {
    }
 
    protected Certificate createCertificate(byte[] encoding) {
-      return this.createCertificate((InputStream)(new Object(encoding)));
+      return this.createCertificate(new ByteArrayInputStream(encoding));
    }
 
    static {

@@ -6,6 +6,7 @@ import net.rim.device.api.system.SMSPacketHeader;
 import net.rim.device.api.system.SMSParameters;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.ActiveRichTextField;
+import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.StringMatch;
@@ -13,6 +14,7 @@ import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.AddressMatch;
+import net.rim.device.apps.api.addressbook.EmailAddressModel;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.EncryptableProvider;
 import net.rim.device.apps.api.framework.model.MatchProvider;
@@ -109,11 +111,11 @@ public class SMSPayloadModel implements PersistableRIMModel, MatchProvider, Encr
    }
 
    protected void addAddress(PersistableRIMModel newAddress, int TON, int NPI) {
-      if (newAddress instanceof Object) {
-         Arrays.add(this._addresses, ((Copyable)newAddress).copy());
+      if (newAddress instanceof Copyable) {
+         Arrays.add(this._addresses, (PersistableRIMModel)((Copyable)newAddress).copy());
          Arrays.add(this._TONAndNPI, this.meshTwoInts(TON, NPI));
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -129,12 +131,12 @@ public class SMSPayloadModel implements PersistableRIMModel, MatchProvider, Encr
    }
 
    protected void resetAddresses() {
-      this._addresses = new Object[0];
+      this._addresses = new PersistableRIMModel[0];
       this._TONAndNPI = new int[0];
    }
 
    protected int changeAddress(RIMModel oldAddress, PersistableRIMModel newAddress) {
-      if (newAddress instanceof Object) {
+      if (newAddress instanceof Copyable) {
          for (int i = this._addresses.length - 1; i > -1; i--) {
             if (this._addresses[i].equals(oldAddress)) {
                this._addresses[i] = (PersistableRIMModel)((Copyable)newAddress).copy();
@@ -145,7 +147,7 @@ public class SMSPayloadModel implements PersistableRIMModel, MatchProvider, Encr
 
          return -1;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -283,8 +285,8 @@ public class SMSPayloadModel implements PersistableRIMModel, MatchProvider, Encr
          return null;
       }
 
-      StringBuffer result = (StringBuffer)(new Object());
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer result = new StringBuffer();
+      StringBuffer sb = new StringBuffer();
       int length = this._segments.length;
 
       for (int i = 0; i < length; i++) {
@@ -328,7 +330,7 @@ public class SMSPayloadModel implements PersistableRIMModel, MatchProvider, Encr
       try {
          data = text.getBytes(SMSService.getSmsEncoder(this.getMessageCoding()));
       } catch (Throwable var5) {
-         throw new Object(ex.getMessage());
+         throw new RuntimeException(ex.getMessage());
       }
 
       this.setData(data);
@@ -403,22 +405,22 @@ public class SMSPayloadModel implements PersistableRIMModel, MatchProvider, Encr
 
    public Field getMessageBodyField() {
       if (this._segments == null) {
-         return (Field)(new Object(18014398509481984L));
+         return new RichTextField(18014398509481984L);
       }
 
-      VerticalFieldManager field = (VerticalFieldManager)(new Object(1152921504606846976L));
+      VerticalFieldManager field = new VerticalFieldManager(1152921504606846976L);
       field.setCookie(this);
       if (this.messageBodyDecodeFailed()) {
          field.add(new SystemMessageField(395));
       }
 
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
       int length = this._segments.length;
 
       for (int i = 0; i < length; i++) {
          if (this._segments[i] == null) {
             if (sb.length() != 0) {
-               ActiveRichTextField text = (ActiveRichTextField)(new Object(sb.toString(), 18014398509481984L));
+               ActiveRichTextField text = new ActiveRichTextField(sb.toString(), 18014398509481984L);
                field.add(text);
                text.setAdjustAlignments(true);
                sb.setLength(0);
@@ -432,7 +434,7 @@ public class SMSPayloadModel implements PersistableRIMModel, MatchProvider, Encr
       }
 
       if (sb.length() != 0) {
-         ActiveRichTextField text = (ActiveRichTextField)(new Object(sb.toString(), 18014398509481984L));
+         ActiveRichTextField text = new ActiveRichTextField(sb.toString(), 18014398509481984L);
          field.add(text);
          text.setAdjustAlignments(true);
       }
@@ -465,7 +467,7 @@ public class SMSPayloadModel implements PersistableRIMModel, MatchProvider, Encr
       if (this._addresses != null) {
          for (int i = this._addresses.length - 1; i > -1; i--) {
             Object address = this._addresses[i];
-            if (address instanceof Object) {
+            if (address instanceof EncryptableProvider) {
                EncryptableProvider encryptable = (EncryptableProvider)address;
                PersistableRIMModel newAddress = (PersistableRIMModel)encryptable.reCrypt(compress, encrypt);
                if (newAddress != null) {
@@ -491,7 +493,7 @@ public class SMSPayloadModel implements PersistableRIMModel, MatchProvider, Encr
       if (this._addresses != null) {
          for (int i = this._addresses.length - 1; i > -1; i--) {
             Object address = this._addresses[i];
-            if (address instanceof Object) {
+            if (address instanceof EncryptableProvider) {
                EncryptableProvider encryptable = (EncryptableProvider)address;
                if (!encryptable.checkCrypt(compress, encrypt)) {
                   return false;
@@ -514,8 +516,8 @@ public class SMSPayloadModel implements PersistableRIMModel, MatchProvider, Encr
       while (i < newSize) {
          this._TONAndNPI[i] = newTONandNPI[j];
          PersistableRIMModel newAddress = newAddresses[j++];
-         if (!(newAddress instanceof Object)) {
-            throw new Object();
+         if (!(newAddress instanceof Copyable)) {
+            throw new IllegalArgumentException();
          }
 
          this._addresses[i] = (PersistableRIMModel)((Copyable)newAddress).copy();
@@ -547,7 +549,7 @@ public class SMSPayloadModel implements PersistableRIMModel, MatchProvider, Encr
       int modelCoding = 0;
 
       try {
-         SMSParameters params = (SMSParameters)(new Object());
+         SMSParameters params = new SMSParameters();
          RadioInternal.getDefaultSMSParameters(params);
          modelCoding = params.getMessageCoding();
          if (modelCoding == 1) {
@@ -561,7 +563,7 @@ public class SMSPayloadModel implements PersistableRIMModel, MatchProvider, Encr
    }
 
    public static final int getTON(PersistableRIMModel address) {
-      return address instanceof Object ? 100 : 0;
+      return address instanceof EmailAddressModel ? 100 : 0;
    }
 
    private boolean messageBodyDecodeFailed() {
@@ -575,9 +577,9 @@ public class SMSPayloadModel implements PersistableRIMModel, MatchProvider, Encr
          this._transmissionDate = this._creationDate;
          this._byteFields = new byte[12];
          this.setByteField(0, getPreferredMessageCoding());
-         if (initialData instanceof Object) {
+         if (initialData instanceof MessagePartsProvider) {
             MessagePartsProvider m = (MessagePartsProvider)initialData;
-            StringBuffer body = (StringBuffer)(new Object());
+            StringBuffer body = new StringBuffer();
             String subject = m.getSubject();
             if (subject != null && subject.length() > 0) {
                body.append(subject);
@@ -608,7 +610,7 @@ public class SMSPayloadModel implements PersistableRIMModel, MatchProvider, Encr
          }
 
          this.addAddresses(payload._addresses, payload._TONAndNPI);
-         if (payload._callbackAddress instanceof Object) {
+         if (payload._callbackAddress instanceof Copyable) {
             this._callbackAddress = (PersistableRIMModel)((Copyable)payload._callbackAddress).copy();
          }
 
@@ -624,9 +626,9 @@ public class SMSPayloadModel implements PersistableRIMModel, MatchProvider, Encr
       if (this._addresses != null) {
          for (int i = this._addresses.length - 1; i > -1; i--) {
             RIMModel address = this._addresses[i];
-            if (address instanceof Object) {
+            if (address instanceof EmailAddressModel) {
                Object addressCard = AddressBookServices.reverseLookup(address);
-               if (addressCard instanceof Object) {
+               if (addressCard instanceof AddressCardModel) {
                   if (AddressMatch.match((AddressCardModel)addressCard, crit) == 1) {
                      return 1;
                   }

@@ -32,7 +32,7 @@ final class BookmarksOrderHelper implements Comparator {
          } else {
             return timestamp1 == timestamp2 ? Memory.objectToInt(obj1) - Memory.objectToInt(obj2) : 1;
          }
-      } else if (obj1 instanceof Object && obj2 instanceof Object) {
+      } else if (obj1 instanceof Folder && obj2 instanceof Folder) {
          if (obj1 instanceof ProvisionedBookmarksFolder && !(obj2 instanceof ProvisionedBookmarksFolder)) {
             return -1;
          } else if (!(obj1 instanceof ProvisionedBookmarksFolder) && obj2 instanceof ProvisionedBookmarksFolder) {
@@ -55,11 +55,11 @@ final class BookmarksOrderHelper implements Comparator {
             }
          }
       } else {
-         if (obj1 instanceof Object && obj2 instanceof PageModel) {
+         if (obj1 instanceof Folder && obj2 instanceof PageModel) {
             return -1;
          }
 
-         if (obj1 instanceof PageModel && obj2 instanceof Object) {
+         if (obj1 instanceof PageModel && obj2 instanceof Folder) {
             return 1;
          }
 
@@ -71,12 +71,12 @@ final class BookmarksOrderHelper implements Comparator {
             } else {
                return timestamp1 == timestamp2 ? StringUtilities.compareToIgnoreCase(obj1.toString(), obj2.toString()) : 1;
             }
-         } else if (obj1 instanceof Object && obj2 instanceof ChannelModel) {
+         } else if (obj1 instanceof Folder && obj2 instanceof ChannelModel) {
             return -1;
-         } else if (obj1 instanceof ChannelModel && obj2 instanceof Object) {
+         } else if (obj1 instanceof ChannelModel && obj2 instanceof Folder) {
             return 1;
          } else {
-            throw new Object();
+            throw new ClassCastException();
          }
       }
    }

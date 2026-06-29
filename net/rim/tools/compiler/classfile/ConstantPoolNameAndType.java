@@ -1,5 +1,6 @@
 package net.rim.tools.compiler.classfile;
 
+import java.io.IOException;
 import net.rim.tools.compiler.io.StructuredInputStream;
 
 public final class ConstantPoolNameAndType extends ConstantPoolTwoIndex {
@@ -26,28 +27,28 @@ public final class ConstantPoolNameAndType extends ConstantPoolTwoIndex {
       return this._type.getString();
    }
 
-   public final void checkFieldType() {
+   public final void checkFieldType() throws IOException {
       String type = this._type.getString();
       if (type.charAt(0) == '(') {
-         throw new Object(((StringBuffer)(new Object("bad field type: "))).append(type).toString());
+         throw new IOException("bad field type: " + type);
       }
    }
 
-   public final void checkMethodType() {
+   public final void checkMethodType() throws IOException {
       String type = this._type.getString();
       if (type.charAt(0) != '(') {
-         throw new Object(((StringBuffer)(new Object("bad method type: "))).append(type).toString());
+         throw new IOException("bad method type: " + type);
       }
 
       if (this._name.getString().equals("<init>") && !type.endsWith(")V")) {
-         throw new Object(((StringBuffer)(new Object("bad <init> method return type: "))).append(type).toString());
+         throw new IOException("bad <init> method return type: " + type);
       }
    }
 
-   public final void checkMethodName() {
+   public final void checkMethodName() throws IOException {
       String name = this._name.getString();
       if (name.charAt(0) == '<' && !name.equals("<init>")) {
-         throw new Object(((StringBuffer)(new Object("bad method name: "))).append(name).toString());
+         throw new IOException("bad method name: " + name);
       }
    }
 }

@@ -5,7 +5,6 @@ import net.rim.device.api.i18n.MessageFormat;
 import net.rim.device.api.system.Display;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.CollectionListField;
 import net.rim.device.api.ui.component.Dialog;
@@ -14,12 +13,16 @@ import net.rim.device.api.ui.component.KeywordFilteredListFinder;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.PopupScreen;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.framework.model.PaintProvider;
 import net.rim.device.apps.api.ui.PopupStatus;
 import net.rim.device.apps.internal.explorer.Media.ListScrollbarManager;
+import net.rim.device.apps.internal.explorer.MediaLibrary.Album;
+import net.rim.device.apps.internal.explorer.MediaLibrary.Artist;
 import net.rim.device.apps.internal.explorer.MediaLibrary.FilterConstants;
+import net.rim.device.apps.internal.explorer.MediaLibrary.Genre;
 import net.rim.device.apps.internal.explorer.MediaLibrary.MediaInfo;
 import net.rim.device.apps.internal.explorer.MediaLibrary.MediaInfoCollection;
 import net.rim.device.apps.internal.explorer.MediaLibrary.MediaLibrary;
@@ -33,15 +36,15 @@ public final class PlaylistSelectionPopup extends PopupScreen implements ListFie
    private Object _contextInfo;
 
    public final boolean isGenre() {
-      return this._contextInfo instanceof Object;
+      return this._contextInfo instanceof Genre;
    }
 
    public final boolean isAlbum() {
-      return this._contextInfo instanceof Object;
+      return this._contextInfo instanceof Album;
    }
 
    public final boolean isArtist() {
-      return this._contextInfo instanceof Object;
+      return this._contextInfo instanceof Artist;
    }
 
    @Override
@@ -57,7 +60,7 @@ public final class PlaylistSelectionPopup extends PopupScreen implements ListFie
    @Override
    public final Object get(ListField listField, int index) {
       Object item = null;
-      if (!(listField instanceof Object)) {
+      if (!(listField instanceof CollectionListField)) {
          return this._collection.getAt(index);
       }
 
@@ -72,14 +75,14 @@ public final class PlaylistSelectionPopup extends PopupScreen implements ListFie
       } else {
          CollectionListField clf = null;
          Object item = null;
-         if (!(listField instanceof Object)) {
+         if (!(listField instanceof CollectionListField)) {
             item = this._collection.getAt(index);
          } else {
             clf = (CollectionListField)listField;
             item = clf.getElementAt(index);
          }
 
-         if (!(item instanceof Object)) {
+         if (!(item instanceof PaintProvider)) {
             if (clf != null && index == clf.getExtraRowCount()) {
                graphics.drawText(ExplorerResources.getString(161), 0, y, 4, width);
             }
@@ -92,7 +95,7 @@ public final class PlaylistSelectionPopup extends PopupScreen implements ListFie
 
    private final PlaylistItem getSelectedPlaylist() {
       Field field = this.getLeafFieldWithFocus();
-      if (!(field instanceof Object)) {
+      if (!(field instanceof KeywordFilterCollectionListField)) {
          return null;
       }
 
@@ -134,7 +137,7 @@ public final class PlaylistSelectionPopup extends PopupScreen implements ListFie
    private final int getSelectedIndex() {
       Field field = this.getLeafFieldWithFocus();
       int index = -1;
-      if (field instanceof Object) {
+      if (field instanceof KeywordFilterCollectionListField) {
          KeywordFilterCollectionListField kList = (KeywordFilterCollectionListField)field;
          index = kList.getSelectedIndex();
       }
@@ -144,27 +147,27 @@ public final class PlaylistSelectionPopup extends PopupScreen implements ListFie
 
    private final void initialize() {
       String title = ExplorerResources.getString(183);
-      LabelField label = (LabelField)(new Object(title));
-      VerticalFieldManager listManager = (VerticalFieldManager)(new Object(281474976710656L));
+      LabelField label = new LabelField(title);
+      VerticalFieldManager listManager = new VerticalFieldManager(281474976710656L);
       KeywordFilterList filter = this._collection.getKeywordFilterListInstance(null);
-      String[] keywords = new Object[]{FilterConstants.PLAYLIST_PREFIX};
+      String[] keywords = new String[]{FilterConstants.PLAYLIST_PREFIX};
       this._collection.addCriteria(filter, keywords);
-      KeywordFilterCollectionListField list = (KeywordFilterCollectionListField)(new Object(filter, this));
+      KeywordFilterCollectionListField list = new KeywordFilterCollectionListField(filter, this);
       list.setExtraRowCount(1);
       listManager.add(list);
       ListScrollbarManager scrollManager = new ListScrollbarManager(listManager);
       String search = ExplorerResources.getString(145);
-      this._finder = (KeywordFilteredListFinder)(new Object(search, search, false));
+      this._finder = new KeywordFilteredListFinder(search, search, false);
       this._finder.linkToField(list);
       this.add(label);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.add(this._finder);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.add(scrollManager);
    }
 
    public PlaylistSelectionPopup(MediaInfo[] media, Object context) {
-      super((Manager)(new Object(562949953421312L)));
+      super(new VerticalFieldManager(562949953421312L));
       this._media = media;
       this._collection = MediaLibrary.getInstance().getPlaylistCollection();
       this._contextInfo = context;
@@ -182,11 +185,11 @@ public final class PlaylistSelectionPopup extends PopupScreen implements ListFie
    private final void invoke() {
       Field field = this.getLeafFieldWithFocus();
       boolean createPlaylist = true;
-      if (field instanceof Object) {
+      if (field instanceof ListField) {
          PlaylistItem playlist = this.getSelectedPlaylist();
          if (this.isArtist() || this.isAlbum() || this.isGenre()) {
-            String formattedText = MessageFormat.format(ExplorerResources.getString(201), new Object[]{this.getType()});
-            Dialog dialog = (Dialog)(new Object(4, formattedText, -1, null, 0));
+            String formattedText = MessageFormat.format(ExplorerResources.getString(201), new String[]{this.getType()});
+            Dialog dialog = new Dialog(4, formattedText, -1, null, 0);
             createPlaylist = dialog.doModal() == 0;
          }
 
@@ -194,7 +197,7 @@ public final class PlaylistSelectionPopup extends PopupScreen implements ListFie
             if (playlist == null && this.getSelectedIndex() == 0) {
                NewPlaylistPopup newList = new NewPlaylistPopup(0);
                Object list = newList.doModal();
-               if (!(list instanceof Object)) {
+               if (!(list instanceof PlaylistItem)) {
                   return;
                }
 

@@ -13,7 +13,7 @@ import net.rim.device.cldc.io.tunnel.TunnelFactory;
 import net.rim.vm.WeakReference;
 
 public final class TunnelFactoryImpl extends TunnelFactory implements TunnelEvent {
-   private Hashtable _managers = (Hashtable)(new Object(2));
+   private Hashtable _managers = new Hashtable(2);
    private final int _capableTunnels;
 
    TunnelFactoryImpl() {
@@ -54,7 +54,7 @@ public final class TunnelFactoryImpl extends TunnelFactory implements TunnelEven
          if (w != null && (manager = (TunnelManagerImpl)w.get()) != null) {
             Object tunnels = manager.setup(-380645052, null);
             if (tunnels == null) {
-               throw new Object();
+               throw new IllegalStateException();
             }
 
             synchronized (tunnels) {
@@ -62,7 +62,7 @@ public final class TunnelFactoryImpl extends TunnelFactory implements TunnelEven
                   manager = null;
                } else {
                   if (!config.equivalent(manager.getConfig())) {
-                     throw new Object("Configuration does not match");
+                     throw new IllegalArgumentException("Configuration does not match");
                   }
 
                   manager.addTunnel(tunnel);
@@ -73,7 +73,7 @@ public final class TunnelFactoryImpl extends TunnelFactory implements TunnelEven
          if (manager == null) {
             manager = new TunnelManagerImpl(config);
             manager.addTunnel(tunnel);
-            this._managers.put(new TunnelFactoryImpl$APNKey(config.getName()), new Object(manager));
+            this._managers.put(new TunnelFactoryImpl$APNKey(config.getName()), new WeakReference(manager));
             ProtocolDaemon.getInstance().startThread(manager);
             if (this.outOfPhysicalTunnels()) {
                managerForDormancy = this.getManagerForDormancy();
@@ -163,7 +163,7 @@ public final class TunnelFactoryImpl extends TunnelFactory implements TunnelEven
    }
 
    private final Vector getTunnels(String name) {
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       synchronized (this._managers) {
          Enumeration e = this._managers.elements();
 
@@ -180,7 +180,7 @@ public final class TunnelFactoryImpl extends TunnelFactory implements TunnelEven
    }
 
    private final Vector getManagers(String name) {
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       synchronized (this._managers) {
          Enumeration e = this._managers.elements();
 

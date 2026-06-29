@@ -4,11 +4,12 @@ import java.util.Hashtable;
 import java.util.Vector;
 import net.rim.device.api.util.Arrays;
 import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class XMLToObjectHandler extends DefaultHandler {
-   protected Hashtable _elementToObjectMap = (Hashtable)(new Object());
-   protected Hashtable _elementToHandlerMap = (Hashtable)(new Object());
+   protected Hashtable _elementToObjectMap = new Hashtable();
+   protected Hashtable _elementToHandlerMap = new Hashtable();
    private String _startTag;
    private String[] _requiredElements;
    private boolean _allowNotRequiredElements;
@@ -40,15 +41,15 @@ public class XMLToObjectHandler extends DefaultHandler {
       if (this._currentHandler != null) {
          this._currentHandler.characters(ch, start, length);
       } else {
-         this._currentValue = (String)(ch != null && ch.length > 0 ? new Object(ch, start, length) : null);
+         this._currentValue = ch != null && ch.length > 0 ? new String(ch, start, length) : null;
       }
    }
 
    @Override
-   public void startElement(String uri, String localName, String qName, Attributes attributes) {
+   public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
       if (this._currentTag == null) {
          if (!this._startTag.equals(qName)) {
-            throw new Object(((StringBuffer)(new Object("Encountered unexpected element during parsing: "))).append(qName).toString());
+            throw new SAXException("Encountered unexpected element during parsing: " + qName);
          }
 
          this._currentTag = qName;
@@ -58,7 +59,7 @@ public class XMLToObjectHandler extends DefaultHandler {
             this._currentHandler.startElement(uri, localName, qName, attributes);
          } else {
             if (!this._allowNotRequiredElements && !Arrays.contains(this._requiredElements, qName)) {
-               throw new Object(((StringBuffer)(new Object("Encountered unexpected element during parsing"))).append(qName).toString());
+               throw new SAXException("Encountered unexpected element during parsing" + qName);
             }
 
             XMLToObjectHandler elementHandler = (XMLToObjectHandler)this._elementToHandlerMap.get(this._currentTag);
@@ -79,8 +80,8 @@ public class XMLToObjectHandler extends DefaultHandler {
             Object handlerResult = this._currentHandler.getResult();
             Object existingValue = this._elementToObjectMap.get(this._currentHandlerTag);
             if (existingValue != null) {
-               if (!(existingValue instanceof Object)) {
-                  Vector valueList = (Vector)(new Object());
+               if (!(existingValue instanceof Vector)) {
+                  Vector valueList = new Vector();
                   valueList.addElement(existingValue);
                   valueList.addElement(handlerResult);
                   this._elementToObjectMap.put(this._currentHandlerTag, valueList);
@@ -103,8 +104,8 @@ public class XMLToObjectHandler extends DefaultHandler {
 
          Object existingValue = this._elementToObjectMap.get(this._currentTag);
          if (existingValue != null) {
-            if (!(existingValue instanceof Object)) {
-               Vector valueList = (Vector)(new Object());
+            if (!(existingValue instanceof Vector)) {
+               Vector valueList = new Vector();
                valueList.addElement(existingValue);
                valueList.addElement(this._currentValue);
                this._elementToObjectMap.put(this._currentTag, valueList);

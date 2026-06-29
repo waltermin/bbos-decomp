@@ -1,31 +1,32 @@
 package net.rim.device.api.crypto.certificate.status.ocsp;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
-import net.rim.device.api.crypto.Digest;
 import net.rim.device.api.crypto.RandomSource;
+import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.CertificateChainProperties;
 import net.rim.device.api.crypto.certificate.CertificateServerInfo;
 import net.rim.device.api.crypto.certificate.CertificateServers;
 import net.rim.device.api.crypto.certificate.CertificateUtilities;
 import net.rim.device.api.crypto.certificate.DistinguishedName;
+import net.rim.device.api.crypto.certificate.SubjectKeyStoreIndex;
 import net.rim.device.api.crypto.certificate.status.ProviderRequestData;
 import net.rim.device.api.crypto.certificate.status.ProviderResponseData;
 import net.rim.device.api.crypto.certificate.status.ProviderUiContext;
 import net.rim.device.api.crypto.certificate.status.StatusProviderException;
 import net.rim.device.api.crypto.certificate.x509.X509Certificate;
 import net.rim.device.api.crypto.certificate.x509.X509DistinguishedName;
+import net.rim.device.api.crypto.certificate.x509.X509PublicKeyHashKeyStoreIndex;
 import net.rim.device.api.crypto.encoder.DecodedSignature;
 import net.rim.device.api.crypto.keystore.DeviceKeyStore;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
-import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.api.crypto.keystore.TrustedKeyStore;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.system.ApplicationRegistry;
@@ -57,9 +58,9 @@ final class OCSPQuery {
    private static final int ASN1_TAG_ADDITIONAL_CERTS = 0;
    private static final int ASN1_TAG_URI = 6;
    private static final ResourceBundle _rbCrypto = ResourceBundle.getBundle(-7644390350925054654L, "net.rim.device.internal.resource.crypto.StatusProviders");
-   private static final String[] POPUP_BUTTON_TEXT_1 = new Object[]{CommonResource.getString(10015), _rbCrypto.getString(34), CommonResource.getString(10005)};
-   private static final String[] POPUP_BUTTON_TEXT_2 = new Object[]{CommonResource.getStringArray(10012)[1], CommonResource.getStringArray(10012)[0]};
-   private static final String[] POPUP_BUTTON_TEXT_3 = new Object[]{
+   private static final String[] POPUP_BUTTON_TEXT_1 = new String[]{CommonResource.getString(10015), _rbCrypto.getString(34), CommonResource.getString(10005)};
+   private static final String[] POPUP_BUTTON_TEXT_2 = new String[]{CommonResource.getStringArray(10012)[1], CommonResource.getStringArray(10012)[0]};
+   private static final String[] POPUP_BUTTON_TEXT_3 = new String[]{
       CommonResource.getString(10015), CommonResource.getStringArray(10012)[1], CommonResource.getStringArray(10012)[0]
    };
    private static final int BUTTON_VIEW = 0;
@@ -77,8 +78,8 @@ final class OCSPQuery {
       this._uiContext = uiContext;
       this._certChain = this.getCompleteChain(certChain, checkEntireChain, keyStore);
       this._checkEntireChain = checkEntireChain;
-      this._contextInfoList = (Hashtable)(new Object());
-      this._responderUrls = (Vector)(new Object());
+      this._contextInfoList = new Hashtable();
+      this._responderUrls = new Vector();
       this._response = null;
    }
 
@@ -86,7 +87,7 @@ final class OCSPQuery {
       int length = checkEntireChain ? certChain.length : Math.min(certChain.length, 2);
 
       for (int i = 0; i < length; i++) {
-         if (!(certChain[i] instanceof Object)) {
+         if (!(certChain[i] instanceof X509Certificate)) {
             return false;
          }
       }
@@ -150,7 +151,7 @@ final class OCSPQuery {
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:174)
       //
       // Bytecode:
-      // 000: new java/lang/Object
+      // 000: new net/rim/device/api/crypto/SHA1Digest
       // 003: dup
       // 004: invokespecial net/rim/device/api/crypto/SHA1Digest.<init> ()V
       // 007: astore 4
@@ -203,9 +204,9 @@ final class OCSPQuery {
       // 072: aload 8
       // 074: ifnonnull 07a
       // 077: goto 0f5
-      // 07a: new java/lang/Object
+      // 07a: new net/rim/device/api/crypto/asn1/ASN1InputStream
       // 07d: dup
-      // 07e: new java/lang/Object
+      // 07e: new java/io/ByteArrayInputStream
       // 081: dup
       // 082: aload 8
       // 084: invokevirtual net/rim/device/api/crypto/certificate/CertificateExtension.getValue ()[B
@@ -237,7 +238,7 @@ final class OCSPQuery {
       // 0c3: bipush 5
       // 0c5: aload 12
       // 0c7: invokeinterface net/rim/device/api/crypto/certificate/status/ProviderRequestData.addCertField (Lnet/rim/device/api/crypto/certificate/Certificate;I[B)V 4
-      // 0cc: new java/lang/Object
+      // 0cc: new net/rim/device/api/crypto/asn1/ASN1InputStream
       // 0cf: dup
       // 0d0: aload 12
       // 0d2: invokespecial net/rim/device/api/crypto/asn1/ASN1InputStream.<init> ([B)V
@@ -281,8 +282,8 @@ final class OCSPQuery {
 
    private final void encodeUserOCSPResponders(ProviderRequestData request) {
       try {
-         ByteArrayOutputStream responders = (ByteArrayOutputStream)(new Object());
-         DataOutputStream out = (DataOutputStream)(new Object(responders));
+         ByteArrayOutputStream responders = new ByteArrayOutputStream();
+         DataOutputStream out = new DataOutputStream(responders);
          CertificateServers certOptions = CertificateServers.getInstance();
          int count = certOptions.getServerSize(2);
          out.writeInt(count);
@@ -302,7 +303,7 @@ final class OCSPQuery {
 
    private final void encodeCachedCertHashes(ProviderRequestData request) {
       try {
-         ByteArrayOutputStream responderCertHashes = (ByteArrayOutputStream)(new Object());
+         ByteArrayOutputStream responderCertHashes = new ByteArrayOutputStream();
          int length = this._responderUrls.size();
 
          for (int i = 0; i < length; i++) {
@@ -403,17 +404,17 @@ final class OCSPQuery {
          X509DistinguishedName responderSubjectDN = null;
          Enumeration enumeration;
          if (responderIdType == 1) {
-            responderSubjectDN = (X509DistinguishedName)(new Object(responderId));
-            keyStore.addIndex((KeyStoreIndex)(new Object()));
+            responderSubjectDN = new X509DistinguishedName(responderId);
+            keyStore.addIndex(new SubjectKeyStoreIndex());
             enumeration = keyStore.elements(-1581141357654337861L, responderSubjectDN);
          } else {
-            keyStore.addIndex((KeyStoreIndex)(new Object((Digest)(new Object()))));
+            keyStore.addIndex(new X509PublicKeyHashKeyStoreIndex(new SHA1Digest()));
             enumeration = keyStore.elements(751537200683994917L, responderId);
          }
 
          while (enumeration.hasMoreElements()) {
             KeyStoreData data = (KeyStoreData)enumeration.nextElement();
-            if (data.getCertificate() instanceof Object) {
+            if (data.getCertificate() instanceof X509Certificate) {
                X509Certificate cert = (X509Certificate)data.getCertificate();
                if (this.verifySignature(signature, responseBytes, cert)) {
                   return cert;
@@ -566,7 +567,7 @@ final class OCSPQuery {
       // 0de: ifne 11a
       // 0e1: invokestatic java/lang/System.currentTimeMillis ()J
       // 0e4: lstore 9
-      // 0e6: new java/lang/Object
+      // 0e6: new net/rim/device/api/crypto/certificate/CertificateStatus
       // 0e9: dup
       // 0ea: bipush 0
       // 0eb: lload 9
@@ -646,7 +647,7 @@ final class OCSPQuery {
       // 18c: ireturn
       // 18d: invokestatic java/lang/System.currentTimeMillis ()J
       // 190: lstore 12
-      // 192: new java/lang/Object
+      // 192: new net/rim/device/api/crypto/certificate/CertificateStatus
       // 195: dup
       // 196: bipush 0
       // 197: lload 12
@@ -747,9 +748,9 @@ final class OCSPQuery {
       // 0f: ldc_w 1688405111
       // 12: invokestatic net/rim/device/api/crypto/oid/OIDs.getOID (I)Lnet/rim/device/api/crypto/oid/OID;
       // 15: astore 3
-      // 16: new java/lang/Object
+      // 16: new net/rim/device/api/crypto/asn1/ASN1InputStream
       // 19: dup
-      // 1a: new java/lang/Object
+      // 1a: new java/io/ByteArrayInputStream
       // 1d: dup
       // 1e: aload 2
       // 1f: invokevirtual net/rim/device/api/crypto/certificate/CertificateExtension.getValue ()[B
@@ -837,7 +838,7 @@ final class OCSPQuery {
       // 006: aload 4
       // 008: ifnull 00e
       // 00b: goto 08d
-      // 00e: new java/lang/Object
+      // 00e: new net/rim/device/api/crypto/SHA1Digest
       // 011: dup
       // 012: invokespecial net/rim/device/api/crypto/SHA1Digest.<init> ()V
       // 015: astore 5
@@ -1069,7 +1070,7 @@ final class OCSPQuery {
 
       try {
          if (additionalCerts != null) {
-            DataInputStream in = (DataInputStream)(new Object((InputStream)(new Object(additionalCerts))));
+            DataInputStream in = new DataInputStream(new ByteArrayInputStream(additionalCerts));
             int count = in.readInt();
 
             while (count-- > 0) {
@@ -1079,7 +1080,7 @@ final class OCSPQuery {
                in.read(certBytes);
 
                try {
-                  this.addStoredResponderCert(url, (X509Certificate)(new Object(certBytes)));
+                  this.addStoredResponderCert(url, new X509Certificate(certBytes));
                } finally {
                   continue;
                }
@@ -1130,7 +1131,7 @@ final class OCSPQuery {
    private final Enumeration getStoredResponderCerts(X509DistinguishedName name) {
       synchronized (_responderCerts) {
          Enumeration enumeration = _responderCerts.elements();
-         Vector matched = (Vector)(new Object());
+         Vector matched = new Vector();
 
          while (enumeration.hasMoreElements()) {
             OCSPQuery$ResponderCertContainer container = (OCSPQuery$ResponderCertContainer)enumeration.nextElement();
@@ -1146,7 +1147,7 @@ final class OCSPQuery {
    private final Enumeration getStoredResponderCerts(byte[] keyHash) {
       synchronized (_responderCerts) {
          Enumeration enumeration = _responderCerts.elements();
-         Vector matched = (Vector)(new Object());
+         Vector matched = new Vector();
 
          while (enumeration.hasMoreElements()) {
             OCSPQuery$ResponderCertContainer container = (OCSPQuery$ResponderCertContainer)enumeration.nextElement();
@@ -1163,7 +1164,7 @@ final class OCSPQuery {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
       _responderCerts = (MultiMap)ar.getOrWaitFor(-8840675705458263554L);
       if (_responderCerts == null) {
-         _responderCerts = (MultiMap)(new Object());
+         _responderCerts = new MultiMap();
          ar.put(-8840675705458263554L, _responderCerts);
       }
    }

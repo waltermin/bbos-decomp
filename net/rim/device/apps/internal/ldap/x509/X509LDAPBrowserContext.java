@@ -4,6 +4,7 @@ import java.util.Enumeration;
 import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.CertificateChainProperties;
+import net.rim.device.api.crypto.certificate.CertificateHashKeyStoreIndex;
 import net.rim.device.api.crypto.certificate.CertificateServerInfo;
 import net.rim.device.api.crypto.certificate.CertificateStatus;
 import net.rim.device.api.crypto.certificate.CertificateUtilities;
@@ -11,7 +12,6 @@ import net.rim.device.api.crypto.keystore.AssociatedData;
 import net.rim.device.api.crypto.keystore.DeviceKeyStore;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
-import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.api.crypto.keystore.KeyStoreTicket;
 import net.rim.device.api.crypto.keystore.TrustedKeyStore;
 import net.rim.device.api.ldap.LDAPAttribute;
@@ -27,6 +27,7 @@ import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.internal.ldap.LDAPBrowser;
 import net.rim.device.apps.internal.ldap.LDAPBrowserContext;
+import net.rim.device.apps.internal.ldap.LDAPBrowserException;
 import net.rim.device.apps.internal.ldap.LDAPBrowserOptionStore;
 import net.rim.device.internal.i18n.CommonResource;
 import net.rim.device.internal.ui.component.SimpleChoiceDialog;
@@ -58,11 +59,11 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
    private static final String HASHED_CA_CERT_BINARY = "SHA1-cacertificate;binary";
 
    public X509LDAPBrowserContext() {
-      this._ks.addIndex((KeyStoreIndex)(new Object()));
+      this._ks.addIndex(new CertificateHashKeyStoreIndex());
       this._optionStore = LDAPBrowserOptionStore.getInstance();
-      this._ribbonApplicationDescriptor = (ApplicationDescriptor)(new Object(
-         ApplicationDescriptor.currentApplicationDescriptor(), LDAPBrowser.getString(40), new Object[0]
-      ));
+      this._ribbonApplicationDescriptor = new ApplicationDescriptor(
+         ApplicationDescriptor.currentApplicationDescriptor(), LDAPBrowser.getString(40), new String[0]
+      );
       MemoryCleanerDaemon.addWeakListener(this, false);
    }
 
@@ -94,22 +95,22 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final String getFriendlyName(LDAPEntry entry, Certificate certificate) {
+   public final String getFriendlyName(LDAPEntry entry, Certificate certificate) throws LDAPBrowserException {
       try {
-         return (String)(certificate != null ? certificate.getSubjectFriendlyName() : entry.getAttribute("cn").getValue(0));
+         return certificate != null ? certificate.getSubjectFriendlyName() : (String)entry.getAttribute("cn").getValue(0);
       } catch (Throwable var5) {
-         throw new Object(e);
+         throw new LDAPBrowserException(e);
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final String getEmail(LDAPEntry entry) {
+   public final String getEmail(LDAPEntry entry) throws LDAPBrowserException {
       try {
          return (String)entry.getAttribute("mail").getValue(0);
       } catch (Throwable var4) {
-         throw new Object(e);
+         throw new LDAPBrowserException(e);
       }
    }
 
@@ -140,7 +141,7 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
    }
 
    @Override
-   public final void addCrossCertificatesToKeyStore(LDAPEntry[] param1) {
+   public final void addCrossCertificatesToKeyStore(LDAPEntry[] param1) throws LDAPBrowserException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -150,7 +151,7 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
       // Bytecode:
       // 00: aload 1
       // 01: ifnonnull 0c
-      // 04: new java/lang/Object
+      // 04: new net/rim/device/apps/internal/ldap/LDAPBrowserException
       // 07: dup
       // 08: invokespecial net/rim/device/apps/internal/ldap/LDAPBrowserException.<init> ()V
       // 0b: athrow
@@ -163,7 +164,7 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
       // 12: iload 2
       // 13: if_icmpge 87
       // 16: bipush 0
-      // 17: anewarray 440
+      // 17: anewarray 446
       // 1a: astore 4
       // 1c: aload 0
       // 1d: aload 1
@@ -218,7 +219,7 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
       // 7b: astore 2
       // 7c: return
       // 7d: astore 2
-      // 7e: new java/lang/Object
+      // 7e: new net/rim/device/apps/internal/ldap/LDAPBrowserException
       // 81: dup
       // 82: aload 2
       // 83: invokespecial net/rim/device/apps/internal/ldap/LDAPBrowserException.<init> (Ljava/lang/Exception;)V
@@ -230,7 +231,7 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
 
    @Override
    public final boolean isCrossCertificateAvailable(LDAPEntry entry) {
-      Certificate[] crossCertificates = new Object[0];
+      Certificate[] crossCertificates = new Certificate[0];
       this.getCrossCertificateValues(entry, "crosscertificatepair", crossCertificates);
       this.getCrossCertificateValues(entry, "crosscertificatepair;binary", crossCertificates);
       int numCrossCertificates = crossCertificates.length;
@@ -247,9 +248,9 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void addSecondStageFilter(LDAPEntry entry, LDAPQuery query) {
+   public final void addSecondStageFilter(LDAPEntry entry, LDAPQuery query) throws LDAPBrowserException {
       try {
-         StringBuffer buffer = (StringBuffer)(new Object());
+         StringBuffer buffer = new StringBuffer();
 
          label55:
          try {
@@ -266,16 +267,16 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
             return;
          }
       } catch (Throwable var16) {
-         throw new Object(e);
+         throw new LDAPBrowserException(e);
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void addSecondStageFilter(LDAPEntry[] entries, LDAPQuery query) {
+   public final void addSecondStageFilter(LDAPEntry[] entries, LDAPQuery query) throws LDAPBrowserException {
       try {
-         StringBuffer buffer = (StringBuffer)(new Object());
+         StringBuffer buffer = new StringBuffer();
          buffer.append('(').append('|');
          int entriesLength = entries.length;
 
@@ -285,14 +286,14 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
 
             label116:
             try {
-               cn = ((StringBuffer)(new Object("cn="))).append(entries[i].getAttribute("cn").getValue(0).toString()).toString();
+               cn = "cn=" + entries[i].getAttribute("cn").getValue(0).toString();
             } finally {
                break label116;
             }
 
             label113:
             try {
-               mail = ((StringBuffer)(new Object("mail="))).append(entries[i].getAttribute("mail").getValue(0).toString()).toString();
+               mail = "mail=" + entries[i].getAttribute("mail").getValue(0).toString();
             } finally {
                break label113;
             }
@@ -310,14 +311,14 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
          buffer.append(')');
          query.addFilter(buffer.toString());
       } catch (Throwable var20) {
-         throw new Object(e);
+         throw new LDAPBrowserException(e);
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void addSecondStageAttributes(LDAPQuery query) {
+   public final void addSecondStageAttributes(LDAPQuery query) throws LDAPBrowserException {
       try {
          query.addAttribute("givenname");
          query.addAttribute("cn");
@@ -326,7 +327,7 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
          query.addAttribute("usercertificate");
          query.addAttribute("usercertificate;binary");
       } catch (Throwable var4) {
-         throw new Object(e);
+         throw new LDAPBrowserException(e);
       }
    }
 
@@ -349,9 +350,9 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void addFirstStageFilter(String[] firstNames, String[] lastNames, String[] emailAddresses, LDAPQuery query) {
+   public final void addFirstStageFilter(String[] firstNames, String[] lastNames, String[] emailAddresses, LDAPQuery query) throws LDAPBrowserException {
       try {
-         StringBuffer buffer = (StringBuffer)(new Object());
+         StringBuffer buffer = new StringBuffer();
          int numFirstNames = firstNames != null ? firstNames.length : 0;
          if (numFirstNames > 0) {
             buffer.append('(').append('|');
@@ -398,14 +399,14 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
          buffer.append(')');
          query.addFilter(buffer.toString());
       } catch (Throwable var11) {
-         throw new Object(e);
+         throw new LDAPBrowserException(e);
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void addFirstStageAttributes(LDAPQuery query) {
+   public final void addFirstStageAttributes(LDAPQuery query) throws LDAPBrowserException {
       try {
          query.addAttribute("givenname");
          query.addAttribute("cn");
@@ -414,16 +415,16 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
          query.addHashedAttribute("usercertificate");
          query.addHashedAttribute("usercertificate;binary");
       } catch (Throwable var4) {
-         throw new Object(e);
+         throw new LDAPBrowserException(e);
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void addRootCertFilter(LDAPQuery query) {
+   public final void addRootCertFilter(LDAPQuery query) throws LDAPBrowserException {
       try {
-         StringBuffer buffer = (StringBuffer)(new Object());
+         StringBuffer buffer = new StringBuffer();
          buffer.append('(').append('|').append('(').append("objectclass").append("=certificationAuthority)(");
          buffer.append("objectclass").append("=pkiCa)(").append("objectclass").append("=entrustCA))");
          query.addFilter(buffer.toString());
@@ -432,14 +433,14 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
          buffer.append("cacertificate;binary").append('=').append('*').append(')').append(')');
          query.addFilter(buffer.toString());
       } catch (Throwable var4) {
-         throw new Object(e);
+         throw new LDAPBrowserException(e);
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void addRootCertAttributes(LDAPQuery query) {
+   public final void addRootCertAttributes(LDAPQuery query) throws LDAPBrowserException {
       try {
          query.addAttribute("cacertificate");
          query.addAttribute("cacertificate;binary");
@@ -447,7 +448,7 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
          query.addAttribute("crosscertificatepair");
          query.addAttribute("crosscertificatepair;binary");
       } catch (Throwable var4) {
-         throw new Object(e);
+         throw new LDAPBrowserException(e);
       }
    }
 
@@ -547,7 +548,7 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
    private final boolean askYesNoQuestion(String message) {
       String[] yesNo = CommonResource.getStringArray(10012);
       Bitmap bitmap = Bitmap.getPredefinedBitmap(1);
-      SimpleChoiceDialog dialog = (SimpleChoiceDialog)(new Object(message, yesNo, 0, bitmap, 0));
+      SimpleChoiceDialog dialog = new SimpleChoiceDialog(message, yesNo, 0, bitmap, 0);
       synchronized (Application.getEventLock()) {
          dialog.show();
       }
@@ -555,7 +556,7 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
       return dialog.getSelectedIndex() == 0;
    }
 
-   private final void addSingleCertificateToKeyStore(LDAPEntry param1, Certificate param2, boolean param3, boolean param4) {
+   private final void addSingleCertificateToKeyStore(LDAPEntry param1, Certificate param2, boolean param3, boolean param4) throws LDAPBrowserException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -565,16 +566,16 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
       // Bytecode:
       // 000: aload 2
       // 001: ifnonnull 00c
-      // 004: new java/lang/Object
+      // 004: new net/rim/device/apps/internal/ldap/LDAPBrowserException
       // 007: dup
       // 008: invokespecial net/rim/device/apps/internal/ldap/LDAPBrowserException.<init> ()V
       // 00b: athrow
       // 00c: iload 3
       // 00d: ifeq 031
-      // 010: new java/lang/Object
+      // 010: new net/rim/device/api/crypto/certificate/status/CertificateStatusRequest
       // 013: dup
       // 014: bipush 1
-      // 015: anewarray 2199
+      // 015: anewarray 2229
       // 018: dup
       // 019: bipush 0
       // 01a: aload 2
@@ -611,7 +612,7 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
       // 050: bipush 8
       // 052: invokestatic net/rim/device/apps/internal/api/crypto/CryptoCommonResources.getString (I)Ljava/lang/String;
       // 055: bipush 1
-      // 056: anewarray 2255
+      // 056: anewarray 2285
       // 059: dup
       // 05a: bipush 0
       // 05b: aload 2
@@ -659,7 +660,7 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
       // 0b7: iload 4
       // 0b9: ifeq 124
       // 0bc: bipush 0
-      // 0bd: anewarray 2353
+      // 0bd: anewarray 2383
       // 0c0: astore 8
       // 0c2: aload 0
       // 0c3: aload 1
@@ -706,7 +707,7 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
       // 115: astore 5
       // 117: return
       // 118: astore 5
-      // 11a: new java/lang/Object
+      // 11a: new net/rim/device/apps/internal/ldap/LDAPBrowserException
       // 11d: dup
       // 11e: aload 5
       // 120: invokespecial net/rim/device/apps/internal/ldap/LDAPBrowserException.<init> (Ljava/lang/Exception;)V
@@ -735,12 +736,12 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
          if (associatedData == null) {
             if (entry != null) {
                int numEmailAddresses = entry.getAttribute("mail").getSize();
-               associatedData = new Object[numEmailAddresses];
+               associatedData = new AssociatedData[numEmailAddresses];
 
                for (int i = 0; i < numEmailAddresses; i++) {
                   String email = (String)entry.getAttribute("mail").getValue(i);
                   if (email != null && email.length() > 0) {
-                     associatedData[i] = (AssociatedData)(new Object(-1124699153917633064L, StringUtilities.toLowerCase(email, 1701707776).getBytes()));
+                     associatedData[i] = new AssociatedData(-1124699153917633064L, StringUtilities.toLowerCase(email, 1701707776).getBytes());
                   }
                }
 
@@ -768,7 +769,7 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
    private final void getCertificateValues(LDAPEntry entry, String attributeName, Certificate[] certificates, byte[][] certificateIDs) {
       try {
          LDAPAttribute attribute = entry.getAttribute(attributeName);
-         SHA1Digest sha1Digest = (SHA1Digest)(new Object());
+         SHA1Digest sha1Digest = new SHA1Digest();
          int numAttributeValues = attribute.getSize();
 
          for (int i = 0; i < numAttributeValues; i++) {
@@ -786,7 +787,7 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
       }
    }
 
-   private final void getCrossCertificateValues(LDAPEntry param1, String param2, Certificate[] param3) {
+   private final void getCrossCertificateValues(LDAPEntry param1, String param2, Certificate[] param3) throws LDAPBrowserException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -811,7 +812,7 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
       // 20: invokeinterface net/rim/device/api/ldap/LDAPAttribute.getValue (I)Ljava/lang/Object; 2
       // 25: checkcast [B
       // 28: astore 7
-      // 2a: new java/lang/Object
+      // 2a: new net/rim/device/api/crypto/asn1/ASN1InputByteArray
       // 2d: dup
       // 2e: aload 7
       // 30: invokespecial net/rim/device/api/crypto/asn1/ASN1InputByteArray.<init> ([B)V
@@ -846,7 +847,7 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
       // 73: iinc 6 1
       // 76: goto 15
       // 79: astore 4
-      // 7b: new java/lang/Object
+      // 7b: new net/rim/device/apps/internal/ldap/LDAPBrowserException
       // 7e: dup
       // 7f: aload 4
       // 81: invokespecial net/rim/device/apps/internal/ldap/LDAPBrowserException.<init> (Ljava/lang/Exception;)V
@@ -882,7 +883,7 @@ public final class X509LDAPBrowserContext implements LDAPBrowserContext, MemoryC
       int numCerts = addedCerts.length;
 
       for (int i = 0; i < numCerts; i++) {
-         if (addedCerts[i] instanceof Object) {
+         if (addedCerts[i] instanceof Certificate) {
             Certificate[] chain = CertificateUtilities.buildCertificateChain(addedCerts[i], this._ks);
             long properties = CertificateChainProperties.getCertificateChainProperties(chain, this._rks, System.currentTimeMillis());
             if ((properties & 8) != 0 && (properties & 1) != 0) {

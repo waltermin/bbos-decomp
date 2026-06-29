@@ -15,10 +15,10 @@ public final class SMSSyncConverter implements SyncConverter {
    public static final int CURRENT_VERSION = 5;
    public static final int FIRST_VERSION_SUPPORTED = 1;
    public static final int FAKE_DATAGRAM_ID = 1;
-   private static final ContextObject INBOUND_CONTEXT = (ContextObject)(new Object(38));
+   private static final ContextObject INBOUND_CONTEXT = new ContextObject(38);
    private static Factory _phoneNumberFactory;
    private static Factory _emailAddressFactory;
-   private static ContextObject _smsConversionContext = (ContextObject)(new Object(55, 19));
+   private static ContextObject _smsConversionContext = new ContextObject(55, 19);
 
    @Override
    public final boolean convert(SyncObject object, DataBuffer buffer, int version) {
@@ -27,7 +27,7 @@ public final class SMSSyncConverter implements SyncConverter {
       }
 
       ConversionProvider converter = (ConversionProvider)object;
-      SyncBuffer syncBuffer = (SyncBuffer)(new Object(buffer, version, 0));
+      SyncBuffer syncBuffer = new SyncBuffer(buffer, version, 0);
       return converter.convert(_smsConversionContext, syncBuffer);
    }
 
@@ -42,7 +42,7 @@ public final class SMSSyncConverter implements SyncConverter {
       int flags = 0;
       PersistableRIMModel address = null;
       SMSModel message = null;
-      SyncBuffer syncBuffer = (SyncBuffer)(new Object(dataBuffer, version, uid));
+      SyncBuffer syncBuffer = new SyncBuffer(dataBuffer, version, uid);
 
       try {
          while (!syncBuffer.isEmpty()) {
@@ -169,8 +169,8 @@ public final class SMSSyncConverter implements SyncConverter {
 
       if (message != null) {
          if (version < 5 && address != null) {
-            ContextObject ctx = (ContextObject)(new Object());
-            Integer datagramIDObject = (Integer)(new Object(1));
+            ContextObject ctx = new ContextObject();
+            Integer datagramIDObject = new Integer(1);
             ContextObject.put(ctx, -8210557334250400979L, datagramIDObject);
             int TON = message._payload.getByteField(8);
             int NPI = message._payload.getByteField(9);

@@ -1402,7 +1402,7 @@ public final class MapScreen extends FullScreen implements GPSProvider$Listener,
       GPSDevice[] gpsDevices = locProvider.getLocationDevices(false);
       GPSDevice currentDevice = null;
       String deviceID = LBSOptions.getString(6531936621597631078L, null);
-      EventLogger.logEvent(LBSApplication.UID, ((StringBuffer)(new Object("start tracking: "))).append(deviceID).toString().getBytes(), 0);
+      EventLogger.logEvent(LBSApplication.UID, ("start tracking: " + deviceID).getBytes(), 0);
       if (deviceID != null) {
          for (int i = 0; i < gpsDevices.length; i++) {
             if (gpsDevices[i].equals(deviceID)) {
@@ -1504,11 +1504,11 @@ public final class MapScreen extends FullScreen implements GPSProvider$Listener,
 
    public final boolean handleRespone(Object response) {
       if (response != null) {
-         if (response instanceof Object) {
-            System.out.println(((StringBuffer)(new Object("response="))).append((String)response).toString());
+         if (response instanceof String) {
+            System.out.println("response=" + (String)response);
             if (!response.equals("")) {
                this._mapField._currentLocations.clear();
-               this.openDocument("XML", response, 0, false, "POI_SERVER");
+               this.openDocument("XML", (String)response, 0, false, "POI_SERVER");
                if (this._mapField._currentPOIs.length > 0) {
                   this._mapField._locationsListScreen = new LocationsListScreen(this._mapField, -1);
                   UiApplication.getUiApplication().pushScreen(this._mapField._locationsListScreen);
@@ -1519,7 +1519,7 @@ public final class MapScreen extends FullScreen implements GPSProvider$Listener,
                return false;
             }
          } else if (response instanceof byte[]) {
-            System.err.println(((StringBuffer)(new Object("response="))).append((String)(new Object((byte[])response))).toString());
+            System.err.println("response=" + new String((byte[])response));
             this._mapField._currentLocations.clear();
             this.openDocument("XML", response, 0, false, "POI_SERVER");
             if (this._mapField._currentPOIs.length > 0) {
@@ -1551,9 +1551,9 @@ public final class MapScreen extends FullScreen implements GPSProvider$Listener,
 
          this._cellData.invoke(Boolean.TRUE);
          this._numbers.clear();
-         this._numbers.put(LATITUDE, new Object(this._gpsLocationData.getLatitudeInt()));
-         this._numbers.put(LONGITUDE, new Object(this._gpsLocationData.getLongitudeInt()));
-         this._numbers.put(SPEED, new Object(this._gpsLocationData.getSpeed()));
+         this._numbers.put(LATITUDE, new Integer(this._gpsLocationData.getLatitudeInt()));
+         this._numbers.put(LONGITUDE, new Integer(this._gpsLocationData.getLongitudeInt()));
+         this._numbers.put(SPEED, new Float(this._gpsLocationData.getSpeed()));
          this._cellData.invoke(this._numbers);
       }
    }
@@ -1612,7 +1612,7 @@ public final class MapScreen extends FullScreen implements GPSProvider$Listener,
                case 4:
                   EventLogger.logEvent(LBSApplication.UID, "GPS FORCED STOP".getBytes(), 5);
                   String deviceName = device != null ? device.toString() : "";
-                  displayMessage = MessageFormat.format(LBSResources.getString(70), new Object[]{deviceName});
+                  displayMessage = MessageFormat.format(LBSResources.getString(70), new String[]{deviceName});
                case 10:
                   EventLogger.logEvent(LBSApplication.UID, "GPS ERROR".getBytes(), 5);
                   displayMessage = userMessage;
@@ -1787,9 +1787,9 @@ public final class MapScreen extends FullScreen implements GPSProvider$Listener,
 
    @Override
    public final Menu getMenu(int instance) {
-      ContextObject menuContext = (ContextObject)(new Object());
-      menuContext.put(244, new Object(29488));
-      SystemEnabledMenu menu = (SystemEnabledMenu)(new Object(menuContext, null));
+      ContextObject menuContext = new ContextObject();
+      menuContext.put(244, new Integer(29488));
+      SystemEnabledMenu menu = new SystemEnabledMenu(menuContext, null);
       Menu.setTargetScreen(this);
       menu.setInstance(instance);
       this.makeMenuWithContext(menu, instance);
@@ -1957,7 +1957,7 @@ public final class MapScreen extends FullScreen implements GPSProvider$Listener,
                   this._mapField._paddingShield++;
                }
 
-               this._mapField.showHintLabel(((StringBuffer)(new Object("Shield padding is "))).append(this._mapField._paddingShield).append(".").toString());
+               this._mapField.showHintLabel("Shield padding is " + this._mapField._paddingShield + ".");
                this._mapField.update(true);
             }
 
@@ -1970,7 +1970,7 @@ public final class MapScreen extends FullScreen implements GPSProvider$Listener,
                   this._mapField._paddingTown++;
                }
 
-               this._mapField.showHintLabel(((StringBuffer)(new Object("Town padding is "))).append(this._mapField._paddingTown).append(".").toString());
+               this._mapField.showHintLabel("Town padding is " + this._mapField._paddingTown + ".");
                this._mapField.update(true);
             }
 
@@ -2017,9 +2017,7 @@ public final class MapScreen extends FullScreen implements GPSProvider$Listener,
       GPSDevice device = GPS.getDeviceInUse();
       if (device != null && device.getDeviceState() != 1) {
          if (this._reconnectGPS) {
-            EventLogger.logEvent(
-               LBSApplication.UID, ((StringBuffer)(new Object("Restarting GPS after being paused: "))).append(device).toString().getBytes(), 0
-            );
+            EventLogger.logEvent(LBSApplication.UID, ("Restarting GPS after being paused: " + device).getBytes(), 0);
             if (device.isInternalGPS()) {
                GPS.startReporting(device);
             } else {
@@ -2029,7 +2027,7 @@ public final class MapScreen extends FullScreen implements GPSProvider$Listener,
             this._reconnectGPS = false;
          }
       } else if (device != null && device.getDeviceState() == 1 && this._gpsPID != -1) {
-         EventLogger.logEvent(LBSApplication.UID, ((StringBuffer)(new Object("Cancel GPS pause. Resume GPS: "))).append(device).toString().getBytes(), 0);
+         EventLogger.logEvent(LBSApplication.UID, ("Cancel GPS pause. Resume GPS: " + device).getBytes(), 0);
          Application.getApplication().cancelInvokeLater(this._gpsPID);
          this._gpsPID = -1;
       }
@@ -2070,17 +2068,17 @@ public final class MapScreen extends FullScreen implements GPSProvider$Listener,
       this.initMapField();
       this._modeMgr = new ModeManager(this._mapField);
       this.add(this._dashboard);
-      this._gpsLocationData = (GPSLocationData)(new Object());
+      this._gpsLocationData = new GPSLocationData();
       VerbRepository verbs = VerbRepository.getVerbRepository(6503629165413339198L);
       if (verbs != null) {
          this._cellVerbs = verbs.getVerbs("");
          if (this._cellVerbs.length > 0) {
             this._cellData = this._cellVerbs[0];
-            this._numbers = (Hashtable)(new Object());
+            this._numbers = new Hashtable();
          }
       }
 
-      this._backdoor = (BackdoorKeyProcessor)(new Object(true, this));
+      this._backdoor = new BackdoorKeyProcessor(true, this);
       this._GPSUpdater = new MapScreen$GPSRenderUpdater(this, null);
    }
 
@@ -2267,7 +2265,7 @@ public final class MapScreen extends FullScreen implements GPSProvider$Listener,
                }
 
                if (this._gpsCaptureVerbs != null) {
-                  this._gpsCaptureVerbs[0].invoke(new Object(GPS_SIMULATOR_ITEM));
+                  this._gpsCaptureVerbs[0].invoke(new Long(GPS_SIMULATOR_ITEM));
                   return true;
                }
             } finally {

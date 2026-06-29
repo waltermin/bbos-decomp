@@ -7,8 +7,8 @@ import net.rim.vm.Array;
 import net.rim.vm.WeakReference;
 
 public class PhoneNumberServices {
-   private static WeakReference _workBufferWR = (WeakReference)(new Object(null));
-   private static WeakReference _byteBufferWR = (WeakReference)(new Object(null));
+   private static WeakReference _workBufferWR = new WeakReference(null);
+   private static WeakReference _byteBufferWR = new WeakReference(null);
 
    public static char getMnemonicKeyMapping(char key) {
       char lowerKey = CharacterUtilities.toLowerCase(key, 1701707776);

@@ -1,6 +1,7 @@
 package net.rim.device.api.xml.jaxrpc;
 
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
 import javax.microedition.xml.rpc.ComplexType;
 import javax.microedition.xml.rpc.Element;
@@ -11,13 +12,13 @@ public final class SoapMessageEncoder {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public static final void encode(OutputStream stream, Element element, Object value, String encoding, boolean compress, SoapWbxmlCodebook codebook) {
       try {
-         Writer writer = (Writer)(new Object(stream, encoding));
+         Writer writer = new OutputStreamWriter(stream, encoding);
          writer.write(
             "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<soapenv:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\""
          );
          if (element != null) {
             String namespace = element.name.getNamespaceURI();
-            writer.write(((StringBuffer)(new Object(" xmlns:tns=\""))).append(namespace).append("\">\n").toString());
+            writer.write(" xmlns:tns=\"" + namespace + "\">\n");
             writeStartTag(writer, "soapenv:Body", false, true);
             encode(writer, namespace, element, value);
             writeEndTag(writer, "soapenv:Body");
@@ -37,15 +38,10 @@ public final class SoapMessageEncoder {
       String id = null;
       boolean isDefaultNS = true;
       if (parent.name.getNamespaceURI().equals(defaultNamespace)) {
-         id = ((StringBuffer)(new Object("tns:"))).append(parent.name.getLocalPart()).toString();
+         id = "tns:" + parent.name.getLocalPart();
       } else {
          isDefaultNS = false;
-         id = ((StringBuffer)(new Object()))
-            .append(parent.name.getLocalPart())
-            .append(" xmlns=\"")
-            .append(parent.name.getNamespaceURI())
-            .append("\"")
-            .toString();
+         id = parent.name.getLocalPart() + " xmlns=\"" + parent.name.getNamespaceURI() + "\"";
       }
 
       if (value == null) {
@@ -93,9 +89,7 @@ public final class SoapMessageEncoder {
                      JAXRPCUtil.handleError("the value for an element of type complex must be an Object array.");
                   }
                } else {
-                  JAXRPCUtil.handleError(
-                     ((StringBuffer)(new Object("the description of "))).append(parent.name.getLocalPart()).append(" is invalid.").toString()
-                  );
+                  JAXRPCUtil.handleError("the description of " + parent.name.getLocalPart() + " is invalid.");
                }
 
                if (isDefaultNS) {
@@ -236,7 +230,7 @@ public final class SoapMessageEncoder {
    }
 
    private static final void writeEndTag(Writer writer, String qName) {
-      StringBuffer b = (StringBuffer)(new Object("</"));
+      StringBuffer b = new StringBuffer("</");
       b.append(qName);
       b.append(">\n");
       writer.write(b.toString());
@@ -270,7 +264,7 @@ public final class SoapMessageEncoder {
    }
 
    private static final void writeStartTag(Writer writer, String qName, boolean nil, boolean newLine) {
-      StringBuffer b = (StringBuffer)(new Object("<"));
+      StringBuffer b = new StringBuffer("<");
       b.append(qName);
       if (nil) {
          b.append(" xsi:nil=\"true\"/>");
@@ -286,7 +280,7 @@ public final class SoapMessageEncoder {
    }
 
    private static final void writeTag(Writer writer, String qName, String value) {
-      StringBuffer b = (StringBuffer)(new Object("<"));
+      StringBuffer b = new StringBuffer("<");
       b.append(qName);
       b.append('>');
       b.append(value);

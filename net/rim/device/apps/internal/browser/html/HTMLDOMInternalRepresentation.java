@@ -14,6 +14,7 @@ import net.rim.device.apps.internal.browser.util.RendererControl;
 import org.w3c.dom.Attr;
 import org.w3c.dom.CharacterData;
 import org.w3c.dom.Comment;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.DocumentType;
@@ -30,23 +31,23 @@ import org.w3c.dom.html2.HTMLDocument;
 public class HTMLDOMInternalRepresentation {
    private KnownKeysStringToIndex _names = new KnownKeysStringToIndex();
    private NameIdMultimap _nameIdMap = new NameIdMultimap();
-   private IntIntHashtable _qnameToPrefix = (IntIntHashtable)(new Object());
-   private IntIntHashtable _qnameToLocalName = (IntIntHashtable)(new Object());
+   private IntIntHashtable _qnameToPrefix = new IntIntHashtable();
+   private IntIntHashtable _qnameToLocalName = new IntIntHashtable();
    private ObjectToIndex _attrTypes = new ObjectToIndex();
    private ObjectToIndex _miscStringData = new ObjectToIndex();
    private ObjectToIndex _entityToIndex = new ObjectToIndex();
    private ObjectToIndex _dtdToIndex = new ObjectToIndex();
    private ResizableTextArray _text = new ResizableTextArray();
-   private Vector _attrValues = (Vector)(new Object());
-   private IntVector _attrIntValues = (IntVector)(new Object());
-   private IntVector _notations = (IntVector)(new Object());
-   private ToIntHashtable _notationHash = (ToIntHashtable)(new Object());
-   private IntVector _entities = (IntVector)(new Object());
-   private ToIntHashtable _entityHash = (ToIntHashtable)(new Object());
-   private Hashtable _internalEntities = (Hashtable)(new Object());
-   private Hashtable _defaultAttributes = (Hashtable)(new Object());
-   private IntIntHashtable _elementNamespaces = (IntIntHashtable)(new Object());
-   private IntHashtable _nodeList = (IntHashtable)(new Object());
+   private Vector _attrValues = new Vector();
+   private IntVector _attrIntValues = new IntVector();
+   private IntVector _notations = new IntVector();
+   private ToIntHashtable _notationHash = new ToIntHashtable();
+   private IntVector _entities = new IntVector();
+   private ToIntHashtable _entityHash = new ToIntHashtable();
+   private Hashtable _internalEntities = new Hashtable();
+   private Hashtable _defaultAttributes = new Hashtable();
+   private IntIntHashtable _elementNamespaces = new IntIntHashtable();
+   private IntHashtable _nodeList = new IntHashtable();
    private int _dtdNode = 0;
    private int _document = 0;
    private boolean _expandingEntities = true;
@@ -78,8 +79,8 @@ public class HTMLDOMInternalRepresentation {
    private ResizableIndexArray _elementQNameData = this._data[0];
    private ResizableIndexArray _elementURIData = this._data[1];
    private ResizableIndexArray _elementAttributesData = this._data[2];
-   private IntLongHashtable _elementAttributeBitSet1 = (IntLongHashtable)(new Object());
-   private IntLongHashtable _elementAttributeBitSet2 = (IntLongHashtable)(new Object());
+   private IntLongHashtable _elementAttributeBitSet1 = new IntLongHashtable();
+   private IntLongHashtable _elementAttributeBitSet2 = new IntLongHashtable();
    String _prefix;
    String _localName;
    int _numElementsDumped;
@@ -328,7 +329,7 @@ public class HTMLDOMInternalRepresentation {
 
          return count == 0 ? "" : this._text.makeSubstring(this.getTextHandle(node), offset, count);
       } else {
-         throw new Object();
+         throw new IndexOutOfBoundsException();
       }
    }
 
@@ -429,7 +430,7 @@ public class HTMLDOMInternalRepresentation {
    }
 
    private void fixupAttributeValues(int node) {
-      IntIntHashtable attrMap = (IntIntHashtable)(new Object());
+      IntIntHashtable attrMap = new IntIntHashtable();
       this.fixupAttributeValues(node, attrMap);
    }
 
@@ -555,7 +556,7 @@ public class HTMLDOMInternalRepresentation {
          return null;
       }
 
-      IntVector iv = (IntVector)(new Object());
+      IntVector iv = new IntVector();
       Enumeration e = attributeHash.keys();
 
       while (e.hasMoreElements()) {
@@ -741,7 +742,7 @@ public class HTMLDOMInternalRepresentation {
    }
 
    String getAttributeQName(int node) {
-      return (String)(node == 0 ? "" : this._names.get(this._attributeQNameData.get(node)));
+      return node == 0 ? "" : (String)this._names.get(this._attributeQNameData.get(node));
    }
 
    String getAttributePrefix(int node) {
@@ -762,9 +763,9 @@ public class HTMLDOMInternalRepresentation {
       }
 
       int valueIndex = this._attributeValueData.get(node);
-      return (String)((valueIndex & -2147483648) != 0
+      return (valueIndex & -2147483648) != 0
          ? Integer.toString(this._attrIntValues.elementAt(valueIndex & 2147483647))
-         : this._attrValues.elementAt(valueIndex));
+         : (String)this._attrValues.elementAt(valueIndex);
    }
 
    int getAttributeValueAsInt(int node) {
@@ -1200,24 +1201,24 @@ public class HTMLDOMInternalRepresentation {
       if (handle != this._document) {
          int nameStr = this._names.append("NAME");
          int idStr = this._names.append("ID");
-         Vector v = (Vector)(new Object());
+         Vector v = new Vector();
          this.getElementsByName(v, handle, name, nameStr, idStr);
          return v;
       }
 
       int item = this._nameIdMap.getSingle(name);
       if (item != -1) {
-         Vector v = (Vector)(new Object());
+         Vector v = new Vector();
          v.addElement(this.getNode(item));
          return v;
       }
 
       IntVector items = this._nameIdMap.getMultiple(name);
       if (items == null) {
-         return (Vector)(new Object());
+         return new Vector();
       }
 
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       int size = items.size();
 
       for (int i = 0; i < size; i++) {
@@ -1228,7 +1229,7 @@ public class HTMLDOMInternalRepresentation {
    }
 
    Vector getElementsByTagName(int handle, String tagName) {
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       if (tagName.length() == 1 && tagName.charAt(0) == '*') {
          this.getAllElements(v, handle);
          return v;
@@ -1252,7 +1253,7 @@ public class HTMLDOMInternalRepresentation {
    }
 
    Vector getElementsByTagNameNS(int handle, String uri, String localName) {
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       this.getElementsByTagNameNS(v, handle, uri, localName);
       return v;
    }
@@ -1438,14 +1439,14 @@ public class HTMLDOMInternalRepresentation {
    void notReadOnly(int node) {
       if (node != 0) {
          if ((this._types.get(node) & 32768) != 0) {
-            throw new Object((short)7, "");
+            throw new DOMException((short)7, "");
          }
       }
    }
 
    static void isNCName(String prefix) {
       if (!isValidName(prefix, false)) {
-         throw new Object((short)5, "");
+         throw new DOMException((short)5, "");
       }
    }
 
@@ -1455,7 +1456,7 @@ public class HTMLDOMInternalRepresentation {
 
    static void isQName(String name) {
       if (!isValidName(name, true)) {
-         throw new Object((short)5, "");
+         throw new DOMException((short)5, "");
       }
    }
 
@@ -1545,7 +1546,7 @@ public class HTMLDOMInternalRepresentation {
             }
          } else {
             if (deadNamespaces == null) {
-               deadNamespaces = (IntVector)(new Object());
+               deadNamespaces = new IntVector();
             }
 
             deadNamespaces.addElement(element);
@@ -1621,68 +1622,43 @@ public class HTMLDOMInternalRepresentation {
       int element = ((HTMLNode)e).getNode();
 
       for (int ns = this.getElementNamespaces(element); ns != 0; ns = this.getNamespaceNext(ns)) {
-         this.printlnIndent(
-            indent, ((StringBuffer)(new Object("xmlns:"))).append(this.getNamespacePrefix(ns)).append("=").append(this.getNamespaceURI(ns)).toString()
-         );
+         this.printlnIndent(indent, "xmlns:" + this.getNamespacePrefix(ns) + "=" + this.getNamespaceURI(ns));
       }
    }
 
    void dump(int indent, Element e) {
       if (e.getNamespaceURI().length() == 0) {
-         this.printlnIndent(indent, ((StringBuffer)(new Object("<"))).append(e.getNodeName()).append(">").toString());
+         this.printlnIndent(indent, "<" + e.getNodeName() + ">");
       } else {
-         this.printlnIndent(
-            indent,
-            ((StringBuffer)(new Object("<")))
-               .append(e.getPrefix())
-               .append(":")
-               .append(e.getNodeName())
-               .append("(")
-               .append(e.getNamespaceURI())
-               .append(")")
-               .append(">")
-               .toString()
-         );
+         this.printlnIndent(indent, "<" + e.getPrefix() + ":" + e.getNodeName() + "(" + e.getNamespaceURI() + ")" + ">");
       }
 
       this.dumpNamespaces(indent + 1, e);
       this.dumpAttributes(indent + 1, e);
       this.dumpChildren(indent + 1, e);
-      this.printlnIndent(indent, ((StringBuffer)(new Object("</"))).append(e.getNodeName()).append(">").toString());
+      this.printlnIndent(indent, "</" + e.getNodeName() + ">");
    }
 
    void dump(int indent, Attr a) {
       if (a.getSpecified()) {
          if (a.getNamespaceURI().length() == 0) {
-            this.printlnIndent(indent, ((StringBuffer)(new Object())).append(a.getNodeName()).append("=").append(a.getValue()).toString());
+            this.printlnIndent(indent, a.getNodeName() + "=" + a.getValue());
          } else {
-            this.printlnIndent(
-               indent,
-               ((StringBuffer)(new Object()))
-                  .append(a.getPrefix())
-                  .append(":")
-                  .append(a.getName())
-                  .append("(")
-                  .append(a.getNamespaceURI())
-                  .append(")")
-                  .append("=")
-                  .append(a.getValue())
-                  .toString()
-            );
+            this.printlnIndent(indent, a.getPrefix() + ":" + a.getName() + "(" + a.getNamespaceURI() + ")" + "=" + a.getValue());
          }
       }
    }
 
    void dump(int indent, CharacterData c) {
-      this.printlnIndent(indent, ((StringBuffer)(new Object("'"))).append(c.getData()).append("'").toString());
+      this.printlnIndent(indent, "'" + c.getData() + "'");
    }
 
    void dump(int indent, Comment c) {
-      this.printlnIndent(indent, ((StringBuffer)(new Object("<!--"))).append(c.getData()).append("-->").toString());
+      this.printlnIndent(indent, "<!--" + c.getData() + "-->");
    }
 
    void dump(int indent, ProcessingInstruction p) {
-      this.printlnIndent(indent, ((StringBuffer)(new Object("<?"))).append(p.getTarget()).append(" ").append(p.getData()).append("?>").toString());
+      this.printlnIndent(indent, "<?" + p.getTarget() + " " + p.getData() + "?>");
    }
 
    void dump(int indent, Document d) {
@@ -1703,13 +1679,13 @@ public class HTMLDOMInternalRepresentation {
    }
 
    void dump(int indent, DocumentType dtd) {
-      this.printlnIndent(indent, ((StringBuffer)(new Object("<DTD> "))).append(dtd.getName()).toString());
+      this.printlnIndent(indent, "<DTD> " + dtd.getName());
       if (dtd.getSystemId() != null) {
-         this.printlnIndent(indent, ((StringBuffer)(new Object("SYSID: "))).append(dtd.getSystemId()).toString());
+         this.printlnIndent(indent, "SYSID: " + dtd.getSystemId());
       }
 
       if (dtd.getPublicId() != null) {
-         this.printlnIndent(indent, ((StringBuffer)(new Object("PUBID: "))).append(dtd.getPublicId()).toString());
+         this.printlnIndent(indent, "PUBID: " + dtd.getPublicId());
       }
 
       this.printlnIndent(indent, dtd.getInternalSubset());
@@ -1740,22 +1716,22 @@ public class HTMLDOMInternalRepresentation {
    }
 
    void dump(int indent, EntityReference ent) {
-      this.printlnIndent(indent, ((StringBuffer)(new Object("&"))).append(ent.getNodeName()).append(";").toString());
+      this.printlnIndent(indent, "&" + ent.getNodeName() + ";");
       this.dumpChildren(indent + 1, ent);
    }
 
    void dumpAll(int indent, Node n) {
       this.dump(indent, n);
-      this.printlnIndent(indent, ((StringBuffer)(new Object("_numElementsDumped="))).append(this._numElementsDumped).toString());
-      this.printlnIndent(indent, ((StringBuffer)(new Object("_numAttributesDumped="))).append(this._numAttributesDumped).toString());
-      this.printlnIndent(indent, ((StringBuffer)(new Object("_numTextsDumped="))).append(this._numTextsDumped).toString());
-      this.printlnIndent(indent, ((StringBuffer)(new Object("_numPIsDumped="))).append(this._numPIsDumped).toString());
-      this.printlnIndent(indent, ((StringBuffer)(new Object("_numDocFragsDumped="))).append(this._numDocFragsDumped).toString());
-      this.printlnIndent(indent, ((StringBuffer)(new Object("_numDocumentsDumped="))).append(this._numDocumentsDumped).toString());
-      this.printlnIndent(indent, ((StringBuffer)(new Object("_numDTDsDumped="))).append(this._numDTDsDumped).toString());
-      this.printlnIndent(indent, ((StringBuffer)(new Object("_numNotationsDumped="))).append(this._numNotationsDumped).toString());
-      this.printlnIndent(indent, ((StringBuffer)(new Object("_numEntitiesDumped="))).append(this._numEntitiesDumped).toString());
-      this.printlnIndent(indent, ((StringBuffer)(new Object("_numEntRefsDumped="))).append(this._numEntRefsDumped).toString());
+      this.printlnIndent(indent, "_numElementsDumped=" + this._numElementsDumped);
+      this.printlnIndent(indent, "_numAttributesDumped=" + this._numAttributesDumped);
+      this.printlnIndent(indent, "_numTextsDumped=" + this._numTextsDumped);
+      this.printlnIndent(indent, "_numPIsDumped=" + this._numPIsDumped);
+      this.printlnIndent(indent, "_numDocFragsDumped=" + this._numDocFragsDumped);
+      this.printlnIndent(indent, "_numDocumentsDumped=" + this._numDocumentsDumped);
+      this.printlnIndent(indent, "_numDTDsDumped=" + this._numDTDsDumped);
+      this.printlnIndent(indent, "_numNotationsDumped=" + this._numNotationsDumped);
+      this.printlnIndent(indent, "_numEntitiesDumped=" + this._numEntitiesDumped);
+      this.printlnIndent(indent, "_numEntRefsDumped=" + this._numEntRefsDumped);
    }
 
    void dump(int indent, Node n) {

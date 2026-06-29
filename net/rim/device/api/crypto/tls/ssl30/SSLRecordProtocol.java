@@ -1,22 +1,27 @@
 package net.rim.device.api.crypto.tls.ssl30;
 
 import java.io.DataInputStream;
+import java.io.EOFException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.microedition.io.SecurityInfo;
 import javax.microedition.io.StreamConnection;
 import net.rim.device.api.crypto.BlockDecryptorEngine;
+import net.rim.device.api.crypto.BlockEncryptor;
 import net.rim.device.api.crypto.BlockEncryptorEngine;
-import net.rim.device.api.crypto.BlockFormatterEngine;
 import net.rim.device.api.crypto.DecryptorInputStream;
 import net.rim.device.api.crypto.EncryptorOutputStream;
 import net.rim.device.api.crypto.MAC;
+import net.rim.device.api.crypto.NullDecryptor;
+import net.rim.device.api.crypto.NullEncryptor;
 import net.rim.device.api.crypto.PrivateKey;
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
 import net.rim.device.api.crypto.tls.AlertProtocolMethods;
 import net.rim.device.api.crypto.tls.ChangeCipherSpecProtocol;
 import net.rim.device.api.crypto.tls.RecordProtocol;
+import net.rim.device.api.crypto.tls.TLSAlertException;
+import net.rim.device.api.crypto.tls.TLSBlockFormatterEngine;
 import net.rim.device.api.crypto.tls.TLSByteArrayInputStream;
 import net.rim.device.api.crypto.tls.TLSNoCopyByteArrayOutputStream;
 import net.rim.device.api.crypto.tls.TLSSecurityInfo;
@@ -25,6 +30,7 @@ import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.cldc.io.ippp.SocketOutputStream;
 import net.rim.device.cldc.io.ssl.SSLConnectionOptions;
+import net.rim.device.cldc.io.ssl.TLSException;
 import net.rim.device.cldc.io.utility.PacketLogger;
 import net.rim.device.cldc.io.utility.URL;
 
@@ -75,19 +81,19 @@ public class SSLRecordProtocol extends RecordProtocol implements SSLRecordProtoc
 
       label20:
       try {
-         this._connectionURL = (URL)(new Object(this._connectionName));
+         this._connectionURL = new URL(this._connectionName);
       } finally {
          break label20;
       }
 
-      this._readStream = (TLSByteArrayInputStream)(new Object());
-      this._writeStream = (TLSNoCopyByteArrayOutputStream)(new Object());
+      this._readStream = new TLSByteArrayInputStream();
+      this._writeStream = new TLSNoCopyByteArrayOutputStream();
       this._currentRead = new SSLConnectionState(this._readStream);
       this._currentWrite = new SSLConnectionState(this._writeStream);
       this._pendingRead = new SSLConnectionState(this._readStream);
       this._pendingWrite = new SSLConnectionState(this._writeStream);
       this._alertProtocol = new SSLAlertProtocol(this);
-      this._changeCipherSpecProtocol = (ChangeCipherSpecProtocol)(new Object(this));
+      this._changeCipherSpecProtocol = new ChangeCipherSpecProtocol(this);
       this._handshakeProtocol = new SSLHandshakeProtocol(this);
    }
 
@@ -137,7 +143,7 @@ public class SSLRecordProtocol extends RecordProtocol implements SSLRecordProtoc
                               }
 
                               if (bytesRead == -1) {
-                                 throw new Object();
+                                 throw new EOFException();
                               }
                            }
 
@@ -212,7 +218,7 @@ public class SSLRecordProtocol extends RecordProtocol implements SSLRecordProtoc
                               case 20:
                               default:
                                  this._changeCipherSpecProtocol.processChangeCipherSpecMessage(buffer);
-                                 newBuffer = (DataBuffer)(new Object());
+                                 newBuffer = new DataBuffer();
                                  newType = this.read(newBuffer);
                                  buffer.setData(newBuffer.getArray(), 0, newBuffer.getArrayLength());
                                  var13 = newType;
@@ -227,7 +233,7 @@ public class SSLRecordProtocol extends RecordProtocol implements SSLRecordProtoc
                                     this._state = 0;
                                     this._handshakeProtocol = this.createNewHandshakeProtocol(this);
                                     this._handshakeProtocol.helloRequest(buffer);
-                                    newBuffer = (DataBuffer)(new Object());
+                                    newBuffer = new DataBuffer();
                                     newType = this.read(newBuffer);
                                     buffer.setData(newBuffer.getArray(), 0, newBuffer.getArrayLength());
                                     var13 = newType;
@@ -313,7 +319,7 @@ public class SSLRecordProtocol extends RecordProtocol implements SSLRecordProtoc
       return false;
    }
 
-   private int handleV2Message(byte[] header, DataBuffer buffer) {
+   private int handleV2Message(byte[] header, DataBuffer buffer) throws TLSException {
       int length = (header[0] & 127) << 8 & 0xFF | header[1] & 255;
       if (length < 0) {
          TLSUtilities.sendAlertAndThrowException(this._alertProtocol, (byte)40);
@@ -327,7 +333,7 @@ public class SSLRecordProtocol extends RecordProtocol implements SSLRecordProtoc
       this._remoteVersion = header[3] << 8 | header[4];
       if (this._remoteVersion < 768) {
          this.writeV2Error();
-         throw new Object((Exception)(new Object((byte)3, (byte)40)));
+         throw new TLSException(new TLSAlertException((byte)3, (byte)40));
       } else {
          byte[] data = new byte[length];
          System.arraycopy(header, 2, data, 0, 3);
@@ -339,7 +345,7 @@ public class SSLRecordProtocol extends RecordProtocol implements SSLRecordProtoc
 
    private DecryptorInputStream generateDecryptor(SSLConnectionState state) {
       if (state.getBulkCipherAlgorithm() == null) {
-         return (DecryptorInputStream)(new Object(this._readStream));
+         return new NullDecryptor(this._readStream);
       } else if (state.getCipherType() == 2) {
          BlockDecryptorEngine engine = state.getDecryptorEngine();
          return new SSLBlockDecryptor(engine, this._readStream, this._remoteVersion != 768);
@@ -359,7 +365,7 @@ public class SSLRecordProtocol extends RecordProtocol implements SSLRecordProtoc
          if (data != null && offset >= 0 && length >= 0 && data.length - length >= offset) {
             try {
                if (length > 16384) {
-                  throw new Object((byte)3, (byte)22);
+                  throw new TLSAlertException((byte)3, (byte)22);
                }
 
                int macLength = this._currentWrite.getHashSize();
@@ -405,7 +411,7 @@ public class SSLRecordProtocol extends RecordProtocol implements SSLRecordProtoc
                   encodedData[12] = (byte)cipherLength;
                }
 
-               if (this._output instanceof Object) {
+               if (this._output instanceof SocketOutputStream) {
                   ((SocketOutputStream)this._output).setAutoFlushMode(false);
                }
 
@@ -417,7 +423,7 @@ public class SSLRecordProtocol extends RecordProtocol implements SSLRecordProtoc
                return;
             }
          } else {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       }
    }
@@ -435,10 +441,10 @@ public class SSLRecordProtocol extends RecordProtocol implements SSLRecordProtoc
 
    private EncryptorOutputStream generateEncryptor(SSLConnectionState state) {
       if (this._currentWrite.getBulkCipherAlgorithm() == null) {
-         return (EncryptorOutputStream)(new Object(this._writeStream));
+         return new NullEncryptor(this._writeStream);
       } else if (this._currentWrite.getCipherType() == 2) {
          BlockEncryptorEngine engine = this._currentWrite.getEncryptorEngine();
-         return (EncryptorOutputStream)(new Object((BlockFormatterEngine)(new Object(engine)), this._writeStream));
+         return new BlockEncryptor(new TLSBlockFormatterEngine(engine), this._writeStream);
       } else {
          return this._currentWrite.getEncryptor();
       }
@@ -452,7 +458,7 @@ public class SSLRecordProtocol extends RecordProtocol implements SSLRecordProtoc
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public void close() {
+   public void close() throws TLSException {
       try {
          label64:
          try {
@@ -475,7 +481,7 @@ public class SSLRecordProtocol extends RecordProtocol implements SSLRecordProtoc
 
          this._subConnection.close();
       } catch (Throwable var13) {
-         throw new Object(e);
+         throw new TLSException(e);
       }
    }
 
@@ -497,13 +503,13 @@ public class SSLRecordProtocol extends RecordProtocol implements SSLRecordProtoc
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public void closeOutput() {
+   public void closeOutput() throws TLSException {
       if (this._output != null) {
          try {
             this._output.flush();
             this._output.close();
          } catch (Throwable var3) {
-            throw new Object(e);
+            throw new TLSException(e);
          }
       }
    }
@@ -533,12 +539,12 @@ public class SSLRecordProtocol extends RecordProtocol implements SSLRecordProtoc
 
    @Override
    public InputStream getInputStream() {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public OutputStream getOutputStream() {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    public InputStream getUnderlyingInputStream() {

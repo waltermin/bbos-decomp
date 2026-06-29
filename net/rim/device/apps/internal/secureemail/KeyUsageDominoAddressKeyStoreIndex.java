@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.secureemail;
 
 import net.rim.device.api.crypto.certificate.Certificate;
+import net.rim.device.api.crypto.certificate.x509.X509Certificate;
 import net.rim.device.api.crypto.certificate.x509.X509DistinguishedName;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
 import net.rim.device.api.crypto.keystore.KeyStoreDataMap;
@@ -20,7 +21,7 @@ public class KeyUsageDominoAddressKeyStoreIndex implements KeyStoreIndex {
    @Override
    public void addToIndex(KeyStoreData data, KeyStoreDataMap dataMap) {
       Certificate certificate = data.getCertificate();
-      if (certificate != null && certificate instanceof Object) {
+      if (certificate != null && certificate instanceof X509Certificate) {
          if (SecureEmailUtilities.isCertificateSupported(data, 2)) {
             int dominoAddressHashCode = DominoAddressUtilities.computeDominoAddressHashCode((X509DistinguishedName)certificate.getSubject());
             boolean sign = certificate.queryKeyUsage(1) != 0;
@@ -42,7 +43,7 @@ public class KeyUsageDominoAddressKeyStoreIndex implements KeyStoreIndex {
    @Override
    public int getHash(Object target) {
       if (!(target instanceof KeyUsageDominoAddressKeyStoreIndex$Alias)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       KeyUsageDominoAddressKeyStoreIndex$Alias a = (KeyUsageDominoAddressKeyStoreIndex$Alias)target;
@@ -52,7 +53,7 @@ public class KeyUsageDominoAddressKeyStoreIndex implements KeyStoreIndex {
    @Override
    public boolean matches(KeyStoreData data, Object target) {
       if (!(target instanceof KeyUsageDominoAddressKeyStoreIndex$Alias)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       KeyUsageDominoAddressKeyStoreIndex$Alias a = (KeyUsageDominoAddressKeyStoreIndex$Alias)target;
@@ -61,7 +62,7 @@ public class KeyUsageDominoAddressKeyStoreIndex implements KeyStoreIndex {
       }
 
       Certificate certificate = data.getCertificate();
-      if (certificate == null || !(certificate instanceof Object)) {
+      if (certificate == null || !(certificate instanceof X509Certificate)) {
          return false;
       }
 
@@ -73,7 +74,7 @@ public class KeyUsageDominoAddressKeyStoreIndex implements KeyStoreIndex {
       boolean encrypt = certificate.queryKeyUsage(4) != 0 || certificate.queryKeyUsage(16) != 0;
       switch (a._usage) {
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          default:
             if (!sign) {

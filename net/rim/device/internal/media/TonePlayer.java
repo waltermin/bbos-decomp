@@ -2,6 +2,7 @@ package net.rim.device.internal.media;
 
 import java.io.InputStream;
 import javax.microedition.media.Control;
+import javax.microedition.media.MediaException;
 import javax.microedition.media.control.ToneControl;
 import net.rim.device.api.io.IOUtilities;
 import net.rim.device.api.system.Alert;
@@ -301,7 +302,7 @@ public class TonePlayer extends TunePlayer implements ToneControl, SimpleTonePla
          try {
             this.start();
          } catch (Throwable var11) {
-            throw new Object(e.toString());
+            throw new RuntimeException(e.toString());
          }
       }
    }
@@ -319,7 +320,7 @@ public class TonePlayer extends TunePlayer implements ToneControl, SimpleTonePla
       // 001: invokevirtual net/rim/device/internal/media/PlayerImpl.getState ()I
       // 004: sipush 300
       // 007: if_icmplt 015
-      // 00a: new java/lang/Object
+      // 00a: new java/lang/IllegalStateException
       // 00d: dup
       // 00e: ldc_w "cannot set seq after prefetched"
       // 011: invokespecial java/lang/IllegalStateException.<init> (Ljava/lang/String;)V
@@ -337,15 +338,15 @@ public class TonePlayer extends TunePlayer implements ToneControl, SimpleTonePla
       // 024: astore 6
       // 026: invokestatic net/rim/device/api/system/Alert.isBuzzerSupported ()Z
       // 029: istore 7
-      // 02b: new java/lang/Object
+      // 02b: new java/util/Stack
       // 02e: dup
       // 02f: invokespecial java/util/Stack.<init> ()V
       // 032: astore 8
-      // 034: new java/lang/Object
+      // 034: new java/util/Hashtable
       // 037: dup
       // 038: invokespecial java/util/Hashtable.<init> ()V
       // 03b: astore 9
-      // 03d: new java/lang/Object
+      // 03d: new java/util/Hashtable
       // 040: dup
       // 041: invokespecial java/util/Hashtable.<init> ()V
       // 044: astore 10
@@ -371,7 +372,7 @@ public class TonePlayer extends TunePlayer implements ToneControl, SimpleTonePla
       // 063: baload
       // 064: bipush 1
       // 065: if_icmpeq 070
-      // 068: new java/lang/Object
+      // 068: new java/lang/IllegalArgumentException
       // 06b: dup
       // 06c: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 06f: athrow
@@ -387,7 +388,7 @@ public class TonePlayer extends TunePlayer implements ToneControl, SimpleTonePla
       // 07e: baload
       // 07f: bipush 5
       // 081: if_icmpge 08c
-      // 084: new java/lang/Object
+      // 084: new java/lang/IllegalArgumentException
       // 087: dup
       // 088: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 08b: athrow
@@ -413,7 +414,7 @@ public class TonePlayer extends TunePlayer implements ToneControl, SimpleTonePla
       // 0a9: iadd
       // 0aa: baload
       // 0ab: ifgt 0b6
-      // 0ae: new java/lang/Object
+      // 0ae: new java/lang/IllegalArgumentException
       // 0b1: dup
       // 0b2: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 0b5: athrow
@@ -453,7 +454,7 @@ public class TonePlayer extends TunePlayer implements ToneControl, SimpleTonePla
       // 0f0: iadd
       // 0f1: baload
       // 0f2: ifgt 0fd
-      // 0f5: new java/lang/Object
+      // 0f5: new java/lang/IllegalArgumentException
       // 0f8: dup
       // 0f9: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 0fc: athrow
@@ -467,7 +468,7 @@ public class TonePlayer extends TunePlayer implements ToneControl, SimpleTonePla
       // 139: iadd
       // 13a: baload
       // 13b: ifge 146
-      // 13e: new java/lang/Object
+      // 13e: new java/lang/IllegalArgumentException
       // 141: dup
       // 142: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 145: athrow
@@ -480,11 +481,11 @@ public class TonePlayer extends TunePlayer implements ToneControl, SimpleTonePla
       // 14e: bipush 1
       // 14f: istore 11
       // 151: aload 10
-      // 153: new java/lang/Object
+      // 153: new java/lang/Integer
       // 156: dup
       // 157: iload 12
       // 159: invokespecial java/lang/Integer.<init> (I)V
-      // 15c: new java/lang/Object
+      // 15c: new java/lang/Integer
       // 15f: dup
       // 160: iload 16
       // 162: invokespecial java/lang/Integer.<init> (I)V
@@ -493,7 +494,7 @@ public class TonePlayer extends TunePlayer implements ToneControl, SimpleTonePla
       // 169: bipush 0
       // 16a: istore 13
       // 16c: goto 273
-      // 16f: new java/lang/Object
+      // 16f: new java/lang/IllegalArgumentException
       // 172: dup
       // 173: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 176: athrow
@@ -509,22 +510,22 @@ public class TonePlayer extends TunePlayer implements ToneControl, SimpleTonePla
       // 187: bipush 0
       // 188: istore 11
       // 18a: aload 9
-      // 18c: new java/lang/Object
+      // 18c: new java/lang/Integer
       // 18f: dup
       // 190: iload 12
       // 192: invokespecial java/lang/Integer.<init> (I)V
-      // 195: new java/lang/Object
+      // 195: new java/lang/Integer
       // 198: dup
       // 199: iload 13
       // 19b: invokespecial java/lang/Integer.<init> (I)V
       // 19e: invokevirtual java/util/Hashtable.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
       // 1a1: pop
       // 1a2: goto 273
-      // 1a5: new java/lang/Object
+      // 1a5: new java/lang/IllegalArgumentException
       // 1a8: dup
       // 1a9: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 1ac: athrow
-      // 1ad: new java/lang/Object
+      // 1ad: new java/lang/IllegalArgumentException
       // 1b0: dup
       // 1b1: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 1b4: athrow
@@ -535,7 +536,7 @@ public class TonePlayer extends TunePlayer implements ToneControl, SimpleTonePla
       // 1ba: baload
       // 1bb: bipush 2
       // 1bd: if_icmpge 1c8
-      // 1c0: new java/lang/Object
+      // 1c0: new java/lang/IllegalArgumentException
       // 1c3: dup
       // 1c4: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 1c7: athrow
@@ -552,7 +553,7 @@ public class TonePlayer extends TunePlayer implements ToneControl, SimpleTonePla
       // 1db: iload 15
       // 1dd: iflt 1e3
       // 1e0: goto 273
-      // 1e3: new java/lang/Object
+      // 1e3: new java/lang/IllegalArgumentException
       // 1e6: dup
       // 1e7: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 1ea: athrow
@@ -569,14 +570,14 @@ public class TonePlayer extends TunePlayer implements ToneControl, SimpleTonePla
       // 1f9: baload
       // 1fa: bipush 100
       // 1fc: if_icmple 207
-      // 1ff: new java/lang/Object
+      // 1ff: new java/lang/IllegalArgumentException
       // 202: dup
       // 203: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 206: athrow
       // 207: iinc 14 2
       // 20a: goto 273
       // 20d: aload 9
-      // 20f: new java/lang/Object
+      // 20f: new java/lang/Integer
       // 212: dup
       // 213: aload 1
       // 214: iload 16
@@ -586,12 +587,12 @@ public class TonePlayer extends TunePlayer implements ToneControl, SimpleTonePla
       // 219: invokespecial java/lang/Integer.<init> (I)V
       // 21c: invokevirtual java/util/Hashtable.get (Ljava/lang/Object;)Ljava/lang/Object;
       // 21f: ifnonnull 22a
-      // 222: new java/lang/Object
+      // 222: new java/lang/IllegalArgumentException
       // 225: dup
       // 226: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 229: athrow
       // 22a: aload 9
-      // 22c: new java/lang/Object
+      // 22c: new java/lang/Integer
       // 22f: dup
       // 230: aload 1
       // 231: iload 16
@@ -600,7 +601,7 @@ public class TonePlayer extends TunePlayer implements ToneControl, SimpleTonePla
       // 235: baload
       // 236: invokespecial java/lang/Integer.<init> (I)V
       // 239: invokevirtual java/util/Hashtable.get (Ljava/lang/Object;)Ljava/lang/Object;
-      // 23c: checkcast java/lang/Object
+      // 23c: checkcast java/lang/Integer
       // 23f: invokevirtual java/lang/Integer.intValue ()I
       // 242: istore 18
       // 244: iload 11
@@ -615,7 +616,7 @@ public class TonePlayer extends TunePlayer implements ToneControl, SimpleTonePla
       // 257: iadd
       // 258: istore 14
       // 25a: goto 273
-      // 25d: new java/lang/Object
+      // 25d: new java/lang/IllegalArgumentException
       // 260: dup
       // 261: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 264: athrow
@@ -628,7 +629,7 @@ public class TonePlayer extends TunePlayer implements ToneControl, SimpleTonePla
       // 276: goto 0c9
       // 279: iload 11
       // 27b: ifeq 286
-      // 27e: new java/lang/Object
+      // 27e: new java/lang/IllegalArgumentException
       // 281: dup
       // 282: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 285: athrow
@@ -663,7 +664,7 @@ public class TonePlayer extends TunePlayer implements ToneControl, SimpleTonePla
       // 2dd: if_icmpne 2d4
       // 2e0: goto 3b5
       // 2e3: aload 8
-      // 2e5: new java/lang/Object
+      // 2e5: new java/lang/Integer
       // 2e8: dup
       // 2e9: iload 16
       // 2eb: bipush 2
@@ -672,7 +673,7 @@ public class TonePlayer extends TunePlayer implements ToneControl, SimpleTonePla
       // 2f1: invokevirtual java/util/Stack.push (Ljava/lang/Object;)Ljava/lang/Object;
       // 2f4: pop
       // 2f5: aload 10
-      // 2f7: new java/lang/Object
+      // 2f7: new java/lang/Integer
       // 2fa: dup
       // 2fb: aload 1
       // 2fc: iload 16
@@ -681,7 +682,7 @@ public class TonePlayer extends TunePlayer implements ToneControl, SimpleTonePla
       // 300: baload
       // 301: invokespecial java/lang/Integer.<init> (I)V
       // 304: invokevirtual java/util/Hashtable.get (Ljava/lang/Object;)Ljava/lang/Object;
-      // 307: checkcast java/lang/Object
+      // 307: checkcast java/lang/Integer
       // 30a: invokevirtual java/lang/Integer.intValue ()I
       // 30d: bipush 2
       // 30f: iadd
@@ -689,7 +690,7 @@ public class TonePlayer extends TunePlayer implements ToneControl, SimpleTonePla
       // 312: goto 29b
       // 315: aload 8
       // 317: invokevirtual java/util/Stack.pop ()Ljava/lang/Object;
-      // 31a: checkcast java/lang/Object
+      // 31a: checkcast java/lang/Integer
       // 31d: invokevirtual java/lang/Integer.intValue ()I
       // 320: istore 16
       // 322: goto 29b
@@ -781,7 +782,7 @@ public class TonePlayer extends TunePlayer implements ToneControl, SimpleTonePla
       // 3bd: aload 8
       // 3bf: athrow
       // 3c0: astore 8
-      // 3c2: new java/lang/Object
+      // 3c2: new java/lang/IllegalArgumentException
       // 3c5: dup
       // 3c6: aload 8
       // 3c8: invokevirtual java/lang/Throwable.getMessage ()Ljava/lang/String;
@@ -841,11 +842,11 @@ public class TonePlayer extends TunePlayer implements ToneControl, SimpleTonePla
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   protected void read(InputStream stream) {
+   protected void read(InputStream stream) throws MediaException {
       try {
          this.setSequence(IOUtilities.streamToBytes(stream));
       } catch (Throwable var4) {
-         throw new Object(e.toString());
+         throw new MediaException(e.toString());
       }
    }
 }

@@ -1,6 +1,7 @@
 package net.rim.plazmic.internal.contentpreview.playback.io;
 
 import java.io.DataInput;
+import java.io.DataInputStream;
 import java.io.InputStream;
 import net.rim.plazmic.internal.contentpreview.message.AbstractMessageReader;
 import net.rim.plazmic.internal.contentpreview.message.MessageFormatException;
@@ -10,21 +11,21 @@ public final class PlaybackCommandMessageReader extends AbstractMessageReader {
    public static final String rcsid = "$Id:$";
 
    public static final void parse(InputStream is, PlaybackCommandHandler handler) throws MessageFormatException {
-      DataInput di = (DataInput)(new Object(is));
+      DataInput di = new DataInputStream(is);
       byte type = di.readByte();
       if (type != 0) {
-         throw new MessageFormatException(((StringBuffer)(new Object("not a playback message: "))).append(type).toString());
+         throw new MessageFormatException("not a playback message: " + type);
       }
 
       byte subtype = di.readByte();
       if (subtype != 32) {
-         throw new MessageFormatException(((StringBuffer)(new Object("not a playback command message: "))).append(subtype).toString());
+         throw new MessageFormatException("not a playback command message: " + subtype);
       }
 
       byte command = di.readByte();
       switch (command) {
          case 32:
-            throw new MessageFormatException(((StringBuffer)(new Object("unknown playback command: "))).append(command).toString());
+            throw new MessageFormatException("unknown playback command: " + command);
          case 33:
          default:
             handler.play();

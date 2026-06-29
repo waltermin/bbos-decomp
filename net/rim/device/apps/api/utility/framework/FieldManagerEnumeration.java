@@ -1,12 +1,13 @@
 package net.rim.device.apps.api.utility.framework;
 
 import java.util.Enumeration;
+import java.util.NoSuchElementException;
 import java.util.Vector;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
 
 public class FieldManagerEnumeration implements Enumeration {
-   Vector _managers = (Vector)(new Object());
+   Vector _managers = new Vector();
 
    public FieldManagerEnumeration(Manager baseManager) {
       if (baseManager.getFieldCount() > 0) {
@@ -27,7 +28,7 @@ public class FieldManagerEnumeration implements Enumeration {
 
          while (currentFrame._countWithinCurrentManager < currentFrame._manager.getFieldCount()) {
             nextField = currentFrame._manager.getField(currentFrame._countWithinCurrentManager++);
-            if (!(nextField instanceof Object)) {
+            if (!(nextField instanceof Manager)) {
                return nextField;
             }
 
@@ -41,6 +42,6 @@ public class FieldManagerEnumeration implements Enumeration {
          this._managers.removeElementAt(size - 1);
       }
 
-      throw new Object();
+      throw new NoSuchElementException();
    }
 }

@@ -9,6 +9,7 @@ import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.container.MainScreen;
@@ -27,12 +28,12 @@ import net.rim.device.apps.internal.browser.ui.BrowserIcons;
 import net.rim.device.internal.ui.IconCollection;
 
 public final class HistoryState extends MainScreen implements ListFieldCallback, BrowserLockScreen {
-   private Vector _options = (Vector)(new Object());
+   private Vector _options = new Vector();
    private int _currUrl = -1;
    private History _history;
 
    public HistoryState() {
-      this.setTitle((Field)(new Object(BrowserResources.getString(796))));
+      this.setTitle(new LabelField(BrowserResources.getString(796)));
       BrowserSession session = BrowserSession.getCurrentSession();
       if (session != null) {
          this._history = session.getHistory();
@@ -46,7 +47,7 @@ public final class HistoryState extends MainScreen implements ListFieldCallback,
             node = this._history.lookupNodeAt(i);
          }
 
-         ListField fields = (ListField)(new Object(this._options.size()));
+         ListField fields = new ListField(this._options.size());
          fields.setCallback(this);
          this.add(fields);
       }
@@ -89,7 +90,7 @@ public final class HistoryState extends MainScreen implements ListFieldCallback,
    }
 
    private final String get(int index) {
-      return (String)(index < this._options.size() && index >= 0 ? this._options.elementAt(index) : null);
+      return index < this._options.size() && index >= 0 ? (String)this._options.elementAt(index) : null;
    }
 
    @Override
@@ -138,7 +139,7 @@ public final class HistoryState extends MainScreen implements ListFieldCallback,
    private final void handleSelection() {
       Screen s = UiApplication.getUiApplication().getActiveScreen();
       Field fieldWithFocus = s.getLeafFieldWithFocus();
-      if (fieldWithFocus instanceof Object) {
+      if (fieldWithFocus instanceof ListField) {
          int index = ((ListField)fieldWithFocus).getSelectedIndex();
          if (this._history != null) {
             HistoryNode node = this._history.lookupNodeAt(index);
@@ -146,11 +147,9 @@ public final class HistoryState extends MainScreen implements ListFieldCallback,
                String prompt = BrowserResources.getString(223);
                String url = node.getUrl();
                String title = node.getTitle();
-               String[] choices = new Object[]{CommonResources.getString(117), CommonResources.getString(9042)};
-               String name = title != null && title.length() != 0 && !title.equals(url)
-                  ? ((StringBuffer)(new Object())).append(title).append(" (").append(url).append(')').toString()
-                  : url;
-               if (Dialog.ask(((StringBuffer)(new Object())).append(prompt).append(name).toString(), choices, 0) != 0) {
+               String[] choices = new String[]{CommonResources.getString(117), CommonResources.getString(9042)};
+               String name = title != null && title.length() != 0 && !title.equals(url) ? title + " (" + url + ')' : url;
+               if (Dialog.ask(prompt + name, choices, 0) != 0) {
                   return;
                }
 

@@ -24,7 +24,7 @@ final class SoftwareSkipjackCryptoToken$SkipjackKeyData implements CryptoTokenSy
          PersistentContent.markAsPlaintext(data);
          this.setHashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

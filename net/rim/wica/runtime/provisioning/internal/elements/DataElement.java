@@ -7,11 +7,11 @@ import net.rim.wica.runtime.provisioning.internal.ProvisioningHelper;
 import org.xml.sax.Attributes;
 
 public class DataElement extends AbstractElement {
-   private Vector _fields = (Vector)(new Object());
+   private Vector _fields = new Vector();
    private Vector _keyFields;
    private String _persist;
    private ElementReference _prototype;
-   private Vector _stringedFields = (Vector)(new Object());
+   private Vector _stringedFields = new Vector();
 
    @Override
    public void accept(DefinitionVisitor v) {
@@ -116,12 +116,12 @@ public class DataElement extends AbstractElement {
                this._prototype = new DataElementReference(this, attValue);
             } else if (attName.equals("key")) {
                if (this._keyFields == null) {
-                  this._keyFields = (Vector)(new Object());
+                  this._keyFields = new Vector();
                } else {
                   this._keyFields.removeAllElements();
                }
 
-               StringTokenizer tokenizer = (StringTokenizer)(new Object(attValue, ' '));
+               StringTokenizer tokenizer = new StringTokenizer(attValue, ' ');
                String token = null;
 
                while (tokenizer.hasMoreTokens()) {
@@ -137,7 +137,7 @@ public class DataElement extends AbstractElement {
 
    @Override
    public String toString() {
-      StringBuffer buf = (StringBuffer)(new Object(120));
+      StringBuffer buf = new StringBuffer(120);
       buf.append("DataElement[name=")
          .append(super._name)
          .append(",prototype=")
@@ -161,7 +161,7 @@ public class DataElement extends AbstractElement {
    }
 
    private Vector buildHierarchy(DataElement d) {
-      Vector hier = (Vector)(new Object());
+      Vector hier = new Vector();
       this.buildFieldHierarchy(hier, d);
       return hier;
    }

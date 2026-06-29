@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.voicenotesrecorder;
 
 import java.io.ByteArrayOutputStream;
 import javax.microedition.media.Manager;
+import javax.microedition.media.MediaException;
 import javax.microedition.media.Player;
 import javax.microedition.media.control.RecordControl;
 import net.rim.device.internal.media.StreamDataControl;
@@ -52,22 +53,22 @@ final class VoiceRecordController {
       return this._oStream == null ? 0 : this._oStream.size();
    }
 
-   public final void startRecording() {
+   public final void startRecording() throws MediaException {
       if (this._state == 0) {
          System.out.println("VoiceNotes.start");
          this._recordPlayer = Manager.createPlayer("capture://audio");
-         if (!(this._recordPlayer instanceof Object)) {
-            throw new Object();
+         if (!(this._recordPlayer instanceof StreamDataControl)) {
+            throw new MediaException();
          }
 
-         ((StreamDataControl)this._recordPlayer).setKeyValue("audiosource", new Object(2));
+         ((StreamDataControl)this._recordPlayer).setKeyValue("audiosource", new Integer(2));
          this._recordPlayer.realize();
          this._recordControl = (RecordControl)this._recordPlayer.getControl("RecordControl");
          if (this._recordControl == null) {
-            throw new Object();
+            throw new MediaException();
          }
 
-         this._oStream = (ByteArrayOutputStream)(new Object());
+         this._oStream = new ByteArrayOutputStream();
          this._recordControl.setRecordStream(this._oStream);
          this._recordControl.startRecord();
          this._recordPlayer.start();

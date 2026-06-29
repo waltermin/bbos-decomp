@@ -16,8 +16,8 @@ import net.rim.device.cldc.io.tunnel.TunnelConfig;
 import net.rim.device.internal.io.tunnel.TunnelWorker;
 
 public final class Protocol implements ConnectionBaseInterface {
-   private StringBuffer _sharedBuffer = (StringBuffer)(new Object());
-   private Random _randomProvider = (Random)(new Object());
+   private StringBuffer _sharedBuffer = new StringBuffer();
+   private Random _randomProvider = new Random();
    private static final int MAX_IPS_TO_TRY = 3;
    private static final char PORT_SEP = ':';
    private static final char PROTO_SEP = ':';
@@ -66,7 +66,7 @@ public final class Protocol implements ConnectionBaseInterface {
    }
 
    @Override
-   public final Connection openPrim(String name, int mode, boolean timeouts) {
+   public final Connection openPrim(String name, int mode, boolean timeouts) throws IOException {
       Protocol$ConnectionParams parms = new Protocol$ConnectionParams(null);
       Connection connToReturn = null;
       this.parseName(name, parms);
@@ -88,7 +88,7 @@ public final class Protocol implements ConnectionBaseInterface {
       }
 
       if (connToReturn == null) {
-         throw new Object("socketmanager couldn't open connection");
+         throw new IOException("socketmanager couldn't open connection");
       }
 
       tunnel.close();
@@ -162,7 +162,7 @@ public final class Protocol implements ConnectionBaseInterface {
 
             parms._primaryDNS = this.toIPAddress(value);
             if (parms._primaryDNS == null) {
-               throw new Object("bad primary dns");
+               throw new IllegalArgumentException("bad primary dns");
             }
             break;
          case 'R':
@@ -176,7 +176,7 @@ public final class Protocol implements ConnectionBaseInterface {
             if (StringUtilities.regionMatches(name, true, startOfName, "SecondaryDNS", 0, 12, 1701707776)) {
                parms._secondaryDNS = this.toIPAddress(value);
                if (parms._secondaryDNS == null) {
-                  throw new Object("bad secondary dns");
+                  throw new IllegalArgumentException("bad secondary dns");
                }
             } else if (StringUtilities.regionMatches(name, true, startOfName, "sessiontimeout", 0, 14, 1701707776)) {
                try {
@@ -205,13 +205,13 @@ public final class Protocol implements ConnectionBaseInterface {
    private final void parseName(String name, Protocol$ConnectionParams parms) {
       int index1 = name.indexOf("//");
       if (index1 < 0) {
-         throw new Object("socketmanager:// missing");
+         throw new IllegalArgumentException("socketmanager:// missing");
       }
 
       index1 += 2;
       int index2 = name.indexOf(58, index1);
       if (index2 < index1) {
-         throw new Object("socketmanager missing second colon");
+         throw new IllegalArgumentException("socketmanager missing second colon");
       }
 
       parms._hostName = name.substring(index1, index2);
@@ -229,7 +229,7 @@ public final class Protocol implements ConnectionBaseInterface {
       try {
          parms._port = Integer.parseInt(temp);
       } catch (Throwable var8) {
-         throw new Object(e.getMessage());
+         throw new IllegalArgumentException(e.getMessage());
       }
    }
 
@@ -247,8 +247,8 @@ public final class Protocol implements ConnectionBaseInterface {
          password = parms._password;
       }
 
-      TunnelWorker tw = (TunnelWorker)(new Object());
-      TunnelConfig config = (TunnelConfig)(new Object(apn, "dnstcp", null, username, password, tw));
+      TunnelWorker tw = new TunnelWorker();
+      TunnelConfig config = new TunnelConfig(apn, "dnstcp", null, username, password, tw);
       if (parms._sessionTimeout >= 0) {
          config.setLingerTimeout(parms._sessionTimeout);
       }
@@ -263,7 +263,7 @@ public final class Protocol implements ConnectionBaseInterface {
                ;
             } else {
                if (++i >= 2) {
-                  throw new Object("Tunnel opening timed out!");
+                  throw new IOException("Tunnel opening timed out!");
                }
                continue;
             }
@@ -272,7 +272,7 @@ public final class Protocol implements ConnectionBaseInterface {
    }
 
    private final Vector lookup(Protocol$ConnectionParams parms, Tunnel tunnel) {
-      DNSRequest req = (DNSRequest)(new Object(parms._hostName, null, tunnel.getIdentifier()));
+      DNSRequest req = new DNSRequest(parms._hostName, null, tunnel.getIdentifier());
       if (parms._primaryDNS != null) {
          req.setPrimaryDnsIp(parms._primaryDNS);
       }

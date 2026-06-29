@@ -9,11 +9,14 @@ import net.rim.device.api.crypto.asn1.ASN1InputByteArray;
 import net.rim.device.api.crypto.asn1.ASN1InputStream;
 import net.rim.device.api.crypto.asn1.ASN1SignedByteArray;
 import net.rim.device.api.crypto.certificate.Certificate;
+import net.rim.device.api.crypto.certificate.CertificateChainTooLongException;
 import net.rim.device.api.crypto.certificate.CertificateDisplayField;
 import net.rim.device.api.crypto.certificate.CertificateExtension;
+import net.rim.device.api.crypto.certificate.CertificateParsingException;
 import net.rim.device.api.crypto.certificate.CertificateResources;
 import net.rim.device.api.crypto.certificate.CertificateStatus;
 import net.rim.device.api.crypto.certificate.CertificateUtilities;
+import net.rim.device.api.crypto.certificate.CertificateVerificationException;
 import net.rim.device.api.crypto.certificate.DistinguishedName;
 import net.rim.device.api.crypto.keystore.CertificateStatusManager;
 import net.rim.device.api.crypto.keystore.KeyStore;
@@ -50,7 +53,7 @@ public final class X509Certificate implements Certificate, Persistable {
 
    public final boolean checkAgainstNameConstraints(X509Certificate cert) {
       if (cert == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return this._mid._content.checkAgainstNameConstraints(cert);
       }
@@ -219,21 +222,21 @@ public final class X509Certificate implements Certificate, Persistable {
    }
 
    @Override
-   public final void checkCertificateChain(int position, Certificate[] chain) {
+   public final void checkCertificateChain(int position, Certificate[] chain) throws CertificateChainTooLongException, CertificateVerificationException {
       if (chain != null && position >= 0 && position < chain.length) {
          int len = this.getBasicConstraints();
          if (len != Integer.MAX_VALUE && len != -1 && position - 1 > len) {
-            throw new Object();
+            throw new CertificateChainTooLongException();
          }
 
          if (this._mid._content.getVersion() >= 2 && position > 0 && this._mid._content.getExtensions() != null) {
             int result = this.queryKeyUsage(32);
             if (result == 0) {
-               throw new Object();
+               throw new CertificateVerificationException();
             }
 
             if (result == 1 && !this.isCA()) {
-               throw new Object();
+               throw new CertificateVerificationException();
             }
          }
 
@@ -246,13 +249,13 @@ public final class X509Certificate implements Certificate, Persistable {
                if (chain[i] instanceof X509Certificate) {
                   X509Certificate current = (X509Certificate)var10000;
                   if (!current.checkAgainstNameConstraints(cert)) {
-                     throw new Object();
+                     throw new CertificateVerificationException();
                   }
                }
             }
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -324,10 +327,10 @@ public final class X509Certificate implements Certificate, Persistable {
       }
 
       int numEmails = emails.length;
-      CertificateDisplayField[] displayFields = new Object[numEmails];
+      CertificateDisplayField[] displayFields = new CertificateDisplayField[numEmails];
 
       for (int i = 0; i < numEmails; i++) {
-         displayFields[i] = (CertificateDisplayField)(new Object(CertificateResources.getString(216), emails[i]));
+         displayFields[i] = new CertificateDisplayField(CertificateResources.getString(216), emails[i]);
       }
 
       return displayFields;
@@ -355,11 +358,11 @@ public final class X509Certificate implements Certificate, Persistable {
             return null;
          }
       } else if (id == -1188891808812199856L) {
-         return new Object(this.isRoot());
+         return new Boolean(this.isRoot());
       } else if (id != -7341435958452683242L) {
          return id == -5753772986264564736L ? CertificateUtilities.getX509WTLSSummaryText(this) : defaultValue;
       } else {
-         return new Object(!this.isRoot() && !this.isCA());
+         return new Boolean(!this.isRoot() && !this.isCA());
       }
    }
 
@@ -408,9 +411,9 @@ public final class X509Certificate implements Certificate, Persistable {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public X509Certificate(ASN1InputStream asn1Input) {
+   public X509Certificate(ASN1InputStream asn1Input) throws CertificateParsingException {
       if (asn1Input == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       boolean var5 = false /* VF: Semaphore variable */;
@@ -425,11 +428,11 @@ public final class X509Certificate implements Certificate, Persistable {
          var5 = false;
       } finally {
          if (var5) {
-            throw new Object();
+            throw new CertificateParsingException();
          }
       }
 
-      throw new Object();
+      throw new CertificateParsingException();
    }
 
    public X509Certificate(byte[] encoding) {
@@ -443,7 +446,7 @@ public final class X509Certificate implements Certificate, Persistable {
       String dnEmailAddress = dn.getEmailAddress();
       if (dnEmailAddress != null) {
          if (emailAddresses == null) {
-            return new Object[]{dnEmailAddress};
+            return new String[]{dnEmailAddress};
          }
 
          int numEmailAddresses = emailAddresses.length;
@@ -471,7 +474,7 @@ public final class X509Certificate implements Certificate, Persistable {
       long validNotAfterDate
    ) {
       if (subjectKeyPair == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       subjectKeyPair.verify();
@@ -504,7 +507,7 @@ public final class X509Certificate implements Certificate, Persistable {
          issuerKey.verify();
          return createX509CertificateImpl(subjectKey, subject, keyUsage, serialNumber, extensionList, issuer, issuerKey, validNotBeforeDate, validNotAfterDate);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -530,7 +533,7 @@ public final class X509Certificate implements Certificate, Persistable {
       // 001: ifnull 009
       // 004: aload 6
       // 006: ifnonnull 011
-      // 009: new java/lang/Object
+      // 009: new java/lang/IllegalArgumentException
       // 00c: dup
       // 00d: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 010: athrow
@@ -562,7 +565,7 @@ public final class X509Certificate implements Certificate, Persistable {
       // 04f: astore 14
       // 051: aload 14
       // 053: ifnonnull 05e
-      // 056: new java/lang/Object
+      // 056: new java/lang/IllegalArgumentException
       // 059: dup
       // 05a: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 05d: athrow
@@ -593,7 +596,7 @@ public final class X509Certificate implements Certificate, Persistable {
       // 0a0: invokestatic net/rim/device/api/crypto/oid/OIDs.getOID (I)Lnet/rim/device/api/crypto/oid/OID;
       // 0a3: invokevirtual net/rim/device/api/crypto/asn1/ASN1OutputStream.writeOID (Lnet/rim/device/api/crypto/oid/OID;)V
       // 0a6: goto 0b1
-      // 0a9: new java/lang/Object
+      // 0a9: new java/lang/IllegalArgumentException
       // 0ac: dup
       // 0ad: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 0b0: athrow
@@ -1087,7 +1090,7 @@ public final class X509Certificate implements Certificate, Persistable {
       // 44b: astore 12
       // 44d: goto 452
       // 450: astore 12
-      // 452: new java/lang/Object
+      // 452: new java/lang/RuntimeException
       // 455: dup
       // 456: invokespecial java/lang/RuntimeException.<init> ()V
       // 459: athrow

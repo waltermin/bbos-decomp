@@ -311,7 +311,7 @@ final class TextFlowManager$FocusField extends Field {
 
             if (this.this$0._selectionPosition.selectedRegion >= 0) {
                Object selectedObject = this.this$0._textFlowData.getRegionObject(this.this$0._selectionPosition.selectedRegion);
-               if (selectedObject instanceof Object) {
+               if (selectedObject instanceof Field) {
                   Field field = (Field)selectedObject;
                   rect.set(field.getLeft(), field.getTop(), field.getWidth(), field.getHeight());
                   return;

@@ -1,6 +1,6 @@
 package net.rim.device.apps.internal.qm.peer;
 
-import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.ui.container.MainScreen;
@@ -9,7 +9,7 @@ import net.rim.device.apps.internal.qm.resource.QmResources;
 import net.rim.device.internal.i18n.CommonResource;
 
 final class PeerData$OptionsScreen extends MainScreen {
-   private String[] YES_NO_STRINGS = new Object[]{CommonResources.getString(100), CommonResources.getString(101)};
+   private String[] YES_NO_STRINGS = new String[]{CommonResources.getString(100), CommonResources.getString(101)};
    private ObjectChoiceField _messagelistIntegration;
    private ObjectChoiceField _askQuestion;
    private ObjectChoiceField _vibrateOnBuzz;
@@ -17,16 +17,14 @@ final class PeerData$OptionsScreen extends MainScreen {
 
    private PeerData$OptionsScreen() {
       super(0);
-      this.setTitle((Field)(new Object(QmResources.getString(54))));
-      this._vibrateOnBuzz = (ObjectChoiceField)(new Object(PeerResources.getString(898), this.YES_NO_STRINGS, PeerData.isVibrateOnBuzz() ? 0 : 1));
+      this.setTitle(new LabelField(QmResources.getString(54)));
+      this._vibrateOnBuzz = new ObjectChoiceField(PeerResources.getString(898), this.YES_NO_STRINGS, PeerData.isVibrateOnBuzz() ? 0 : 1);
       this.add(this._vibrateOnBuzz);
-      this._askQuestion = (ObjectChoiceField)(new Object(PeerResources.getString(899), this.YES_NO_STRINGS, PeerData.isAskInviteQuestion() ? 0 : 1));
+      this._askQuestion = new ObjectChoiceField(PeerResources.getString(899), this.YES_NO_STRINGS, PeerData.isAskInviteQuestion() ? 0 : 1);
       this.add(this._askQuestion);
-      this._allowForwardInvite = (ObjectChoiceField)(new Object(PeerResources.getString(2005), this.YES_NO_STRINGS, PeerData.isAllowForwardInvite() ? 0 : 1));
+      this._allowForwardInvite = new ObjectChoiceField(PeerResources.getString(2005), this.YES_NO_STRINGS, PeerData.isAllowForwardInvite() ? 0 : 1);
       this.add(this._allowForwardInvite);
-      this._messagelistIntegration = (ObjectChoiceField)(new Object(
-         QmResources.getString(100), this.YES_NO_STRINGS, PeerData.isMessagelistIntegration() ? 0 : 1
-      ));
+      this._messagelistIntegration = new ObjectChoiceField(QmResources.getString(100), this.YES_NO_STRINGS, PeerData.isMessagelistIntegration() ? 0 : 1);
       this.add(this._messagelistIntegration);
    }
 

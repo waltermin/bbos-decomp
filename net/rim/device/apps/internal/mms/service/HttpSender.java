@@ -44,15 +44,7 @@ final class HttpSender {
       HttpConnection connection = null;
       OutputStream os = null;
       InputStream aDataInput = null;
-      System.out
-         .println(
-            ((StringBuffer)(new Object("MMS send 0x")))
-               .append(Integer.toHexString(this._data[1] & 255))
-               .append(" (")
-               .append(this._data.length)
-               .append(" bytes)")
-               .toString()
-         );
+      System.out.println("MMS send 0x" + Integer.toHexString(this._data[1] & 255) + " (" + this._data.length + " bytes)");
       if (MMSOptions.getInstance().getOptionFlag(256)) {
          Debug.dumpBytes(this._data);
       }
@@ -70,7 +62,7 @@ final class HttpSender {
          os.flush();
          this._responseType = connection.getHeaderField("content-type");
          if (this._responseType != null) {
-            System.out.println(((StringBuffer)(new Object("MMS send response type = "))).append(this._responseType).toString());
+            System.out.println("MMS send response type = " + this._responseType);
             aDataInput = connection.openInputStream();
             if (aDataInput != null) {
                String contentEncoding = connection.getHeaderField("Content-Encoding");

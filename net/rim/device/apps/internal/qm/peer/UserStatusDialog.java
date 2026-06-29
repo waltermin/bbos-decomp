@@ -13,13 +13,13 @@ import net.rim.device.apps.internal.qm.resource.QmResources;
 final class UserStatusDialog extends OkCancelDialog {
    private PeerApplication _application = PeerApplication.getInstance();
    private RadioButtonGroup _radioButtonGroup;
-   private RadioButtonField[] _radioButtons = new Object[0];
+   private RadioButtonField[] _radioButtons = new RadioButtonField[0];
    private AutoTextEditField _messageField;
    private OkCancelDialog$OkCancelDialogScrollManager _customVfm = new OkCancelDialog$OkCancelDialogScrollManager();
 
    UserStatusDialog() {
       this.addTitle(QmResources.getString(76));
-      this._radioButtonGroup = (RadioButtonGroup)(new Object());
+      this._radioButtonGroup = new RadioButtonGroup();
       this.addButton(PeerResources.getString(2033));
       this.addButton(PeerResources.getString(2034));
       if (this._application.isUserAvailable()) {
@@ -30,9 +30,7 @@ final class UserStatusDialog extends OkCancelDialog {
          this._radioButtons[0].setFocus();
       }
 
-      this._messageField = (AutoTextEditField)(new Object(
-         ((StringBuffer)(new Object())).append(QmResources.getString(44)).append(' ').toString(), this._application.getCustomStatusMessage(), 252, 2147483648L
-      ));
+      this._messageField = new AutoTextEditField(QmResources.getString(44) + ' ', this._application.getCustomStatusMessage(), 252, 2147483648L);
       this._messageField.setChangeListener(this);
       this._customVfm.add(this._messageField);
       this.add(this._customVfm);
@@ -59,7 +57,7 @@ final class UserStatusDialog extends OkCancelDialog {
    public final void fieldChanged(Field field, int context) {
       if (this.isDisplayed()) {
          super.fieldChanged(field, context);
-         if (field instanceof Object) {
+         if (field instanceof RadioButtonField) {
             this._messageField.setFocus();
             this._messageField.setCursorPosition(this._messageField.getTextLength());
          }

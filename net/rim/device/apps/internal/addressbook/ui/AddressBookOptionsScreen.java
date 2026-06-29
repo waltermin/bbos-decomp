@@ -1,12 +1,13 @@
 package net.rim.device.apps.internal.addressbook.ui;
 
 import net.rim.device.api.synchronization.SyncManager;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
 import net.rim.device.apps.api.options.SaveableMainScreenOptionsListItem;
@@ -15,6 +16,7 @@ import net.rim.device.apps.api.ui.CommonResources;
 import net.rim.device.apps.internal.addressbook.AddressBookOptionsImpl;
 import net.rim.device.apps.internal.addressbook.BlackBerryAddressBook;
 import net.rim.device.apps.internal.addressbook.resources.AddressBookResources;
+import net.rim.device.internal.ui.component.PropertyField;
 
 public final class AddressBookOptionsScreen extends SaveableMainScreenOptionsListItem {
    private ObjectChoiceField _sortOrder;
@@ -33,44 +35,44 @@ public final class AddressBookOptionsScreen extends SaveableMainScreenOptionsLis
    @Override
    protected final void populateMainScreen(MainScreen mainScreen) {
       Manager section = this.createSection(CommonResources.getString(9178), mainScreen);
-      this._sortOrder = (ObjectChoiceField)(new Object(
+      this._sortOrder = new ObjectChoiceField(
          AddressBookResources.getString(802),
          AddressBookOptionsScreen$SortOrder.getSortOrders(),
          AddressBookOptionsScreen$SortOrder.getSortOrder(this._addressBookOptions.getSortOrder())
-      ));
-      this._listSeparatorAppearance = (ObjectChoiceField)(new Object(
+      );
+      this._listSeparatorAppearance = new ObjectChoiceField(
          AddressBookResources.getString(1759),
          AddressBookResources.getResourceBundleFamily().getStringArray(1760),
          this._addressBookOptions.getListSeparatorAppearance()
-      ));
+      );
       section.add(this._sortOrder);
       section.add(this._listSeparatorAppearance);
       section = this.createSection(CommonResources.getString(9179), mainScreen);
-      this._allowDuplicateNames = (ObjectChoiceField)(new Object(AddressBookResources.getString(803), CommonResources.getYesNoArray(0)));
+      this._allowDuplicateNames = new ObjectChoiceField(AddressBookResources.getString(803), CommonResources.getYesNoArray(0));
       this._allowDuplicateNames.setSelectedIndex(this._addressBookOptions.getDuplicateNamesAllowed() ? 0 : 1);
       section.add(this._allowDuplicateNames);
-      this._deleteConfirm = (ObjectChoiceField)(new Object(CommonResources.getString(2008), CommonResources.getYesNoArray(0)));
+      this._deleteConfirm = new ObjectChoiceField(CommonResources.getString(2008), CommonResources.getYesNoArray(0));
       this._deleteConfirm.setSelectedIndex(this._addressBookOptions.getConfirmDelete() ? 0 : 1);
       section.add(this._deleteConfirm);
       if (SyncManager.getInstance().isOTASyncAvailable(BlackBerryAddressBook.getAddressBook().getCollection(), false)) {
-         this._allowWirelessSync = (BooleanChoiceField)(new Object(CommonResources.getString(9117), 0, this._addressBookOptions.isWirelessSyncAllowed()));
+         this._allowWirelessSync = new BooleanChoiceField(CommonResources.getString(9117), 0, this._addressBookOptions.isWirelessSyncAllowed());
          section.add(this._allowWirelessSync);
       }
 
       section = this.createSection(null, mainScreen);
-      section.add((Field)(new Object(CommonResources.getString(9133), Integer.toString(AddressBookServices.getAddressCount()))));
+      section.add(new PropertyField(CommonResources.getString(9133), Integer.toString(AddressBookServices.getAddressCount())));
    }
 
    protected final Manager createSection(String title, Manager parent) {
-      Manager section = (Manager)(new Object(1153484454560268288L));
+      Manager section = new VerticalFieldManager(1153484454560268288L);
       section.setTag(OPTIONS_SECTION_AREA_TAG);
       if (title != null) {
-         LabelField titleField = (LabelField)(new Object(title, 1152921504606846976L));
+         LabelField titleField = new LabelField(title, 1152921504606846976L);
          titleField.setTag(OPTIONS_SECTION_HEADER_TAG);
          section.add(titleField);
       }
 
-      section.add((Field)(new Object()));
+      section.add(new SeparatorField());
       parent.add(section);
       return section;
    }

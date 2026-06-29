@@ -51,7 +51,7 @@ public final class MMSSync implements SyncCollection, SyncCollectionStatistics {
 
    @Override
    public final SyncObject[] getSyncObjects() {
-      SyncObject[] objects = new Object[0];
+      SyncObject[] objects = new SyncObject[0];
       this.addFolderContents(objects, 8244211460627721111L);
       this.addFolderContents(objects, 949632297110531729L);
       this.addFolderContents(objects, -7297051376619864492L);

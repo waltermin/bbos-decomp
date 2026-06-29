@@ -68,7 +68,7 @@ class GranularPolicyRule extends GranularPolicyElement implements GranularPolicy
 
    @Override
    public String getDebugPrintInfo() {
-      return ((StringBuffer)(new Object("Rule \""))).append(this._name).append("\"").toString();
+      return "Rule \"" + this._name + "\"";
    }
 
    @Override

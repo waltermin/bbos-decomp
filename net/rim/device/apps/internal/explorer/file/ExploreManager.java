@@ -21,6 +21,8 @@ import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.component.SeparatorField;
+import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.Comparator;
@@ -55,7 +57,7 @@ public final class ExploreManager
    OptionsChangeListener,
    ExploreCallback,
    FocusChangeListener {
-   private Stack _pathStack = (Stack)(new Object());
+   private Stack _pathStack = new Stack();
    private long _myStoredUSN;
    private FolderList _shortcuts;
    private FolderList _gallery;
@@ -67,7 +69,7 @@ public final class ExploreManager
    private boolean _showAllMenuItems;
    private ExploreCallback _callback;
    private UiApplication _app;
-   private MenuItem _upMenuItem = (MenuItem)(new Object(null, 483584, 0, new UpNavigationVerb(this), null));
+   private MenuItem _upMenuItem = new VerbMenuItem(null, 483584, 0, new UpNavigationVerb(this), null);
    private Object _ctx;
    private ExploreManager$InvalidFileAlertVerb _invalidFileAlertVerb;
    private int _rootView;
@@ -308,7 +310,7 @@ public final class ExploreManager
       // 0a0: getfield net/rim/device/apps/internal/explorer/file/ExploreManager._ctx Ljava/lang/Object;
       // 0a3: ldc2_w 3941043584844673548
       // 0a6: invokestatic net/rim/device/apps/api/framework/model/ContextObject.get (Ljava/lang/Object;J)Ljava/lang/Object;
-      // 0a9: checkcast java/lang/Object
+      // 0a9: checkcast java/lang/Integer
       // 0ac: astore 8
       // 0ae: aload 1
       // 0af: new net/rim/device/apps/internal/explorer/file/menu/MoveMenuItem
@@ -335,7 +337,7 @@ public final class ExploreManager
       // 0d7: invokespecial net/rim/device/apps/internal/explorer/file/verbs/RenameFileVerb.<init> (Ljava/lang/Object;Lnet/rim/device/api/ui/Screen;)V
       // 0da: astore 8
       // 0dc: aload 1
-      // 0dd: new java/lang/Object
+      // 0dd: new net/rim/device/apps/api/ui/VerbMenuItem
       // 0e0: dup
       // 0e1: aconst_null
       // 0e2: aload 8
@@ -432,17 +434,17 @@ public final class ExploreManager
       // 1a9: invokevirtual net/rim/device/api/ui/component/Menu.add (Lnet/rim/device/api/ui/MenuItem;)V
       // 1ac: iinc 10 1
       // 1af: goto 19b
-      // 1b2: new java/lang/Object
+      // 1b2: new net/rim/device/apps/api/framework/model/ContextObject
       // 1b5: dup
       // 1b6: invokespecial net/rim/device/apps/api/framework/model/ContextObject.<init> ()V
       // 1b9: astore 8
       // 1bb: aload 1
       // 1bc: dup
-      // 1bd: instanceof java/lang/Object
+      // 1bd: instanceof net/rim/device/apps/api/ui/SystemEnabledMenu
       // 1c0: ifne 1c7
       // 1c3: pop
       // 1c4: goto 1e5
-      // 1c7: checkcast java/lang/Object
+      // 1c7: checkcast net/rim/device/apps/api/ui/SystemEnabledMenu
       // 1ca: invokevirtual net/rim/device/apps/api/ui/SystemEnabledMenu.getContext ()Lnet/rim/device/apps/api/framework/model/ContextObject;
       // 1cd: astore 9
       // 1cf: aload 9
@@ -478,7 +480,7 @@ public final class ExploreManager
       // 20f: arraylength
       // 210: if_icmpge 237
       // 213: aload 1
-      // 214: new java/lang/Object
+      // 214: new net/rim/device/apps/api/ui/VerbMenuItem
       // 217: dup
       // 218: aconst_null
       // 219: aload 9
@@ -521,18 +523,18 @@ public final class ExploreManager
       Verb[] verbs = vr.getVerbs(menuItemId);
       if (verbs != null && verbs.length > 0) {
          for (int i = 0; i < verbs.length; i++) {
-            MIMEMediaComparator comparator = (MIMEMediaComparator)(new Object());
-            if (verbs[i] instanceof Object) {
+            MIMEMediaComparator comparator = new MIMEMediaComparator();
+            if (verbs[i] instanceof MIMETypeProvider) {
                String mimeType = selectedItem == null ? null : MIMETypeAssociations.getMIMEType(filename);
                MIMETypeProvider provider = (MIMETypeProvider)verbs[i];
                String menuMimeType = provider.getMIMEType();
                if (menuMimeType == null || mimeType != null && comparator.compare(menuMimeType, mimeType) == 0) {
-                  VerbMenuItem vmi = (VerbMenuItem)(new Object(verbs[i], verbs[i].getOrdering()));
+                  VerbMenuItem vmi = new VerbMenuItem(verbs[i], verbs[i].getOrdering());
                   vmi.setContext(filename);
                   contextMenu.add(vmi);
                }
             } else {
-               VerbMenuItem vmi = (VerbMenuItem)(new Object(verbs[i], verbs[i].getOrdering()));
+               VerbMenuItem vmi = new VerbMenuItem(verbs[i], verbs[i].getOrdering());
                vmi.setContext(filename);
                contextMenu.add(vmi);
             }
@@ -593,12 +595,12 @@ public final class ExploreManager
             if (this._rootView == 1) {
                Comparator comparator = FileItemComparator.getInstance(options.getFilelistSortProperty());
                ReadableList list = this._shortcuts.getList();
-               if (list instanceof Object) {
+               if (list instanceof SortedReadableList) {
                   ((SortedReadableList)list).setComparator(comparator);
                }
 
                list = this._gallery.getList();
-               if (list instanceof Object) {
+               if (list instanceof SortedReadableList) {
                   ((SortedReadableList)list).setComparator(comparator);
                }
             }
@@ -608,7 +610,7 @@ public final class ExploreManager
 
    @Override
    public final void rootChanged(int state, String rootName) {
-      String rootPath = ((StringBuffer)(new Object("/"))).append(rootName).toString();
+      String rootPath = "/" + rootName;
       switch (state) {
          case -1:
             break;
@@ -887,7 +889,7 @@ public final class ExploreManager
       // 16e: ifeq 1b5
       // 171: aload 9
       // 173: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 178: checkcast java/lang/Object
+      // 178: checkcast java/lang/String
       // 17b: astore 10
       // 17d: aload 10
       // 17f: invokestatic net/rim/device/api/io/MIMETypeAssociations.getMediaType (Ljava/lang/String;)I
@@ -982,9 +984,9 @@ public final class ExploreManager
       int mediaTypeFilter = this._filter.getMediaType();
       if (selectedItem instanceof FileItemField) {
          FileItemField selectedFileItem = (FileItemField)selectedItem;
-         Verb[] verbs = new Object[0];
-         ContextObject context = (ContextObject)(new Object());
-         if (contextMenu instanceof Object) {
+         Verb[] verbs = new Verb[0];
+         ContextObject context = new ContextObject();
+         if (contextMenu instanceof SystemEnabledMenu) {
             ContextObject appContext = ((SystemEnabledMenu)contextMenu).getContext();
             if (appContext != null && appContext.getFlag(45)) {
                context.setFlag(45);
@@ -1043,7 +1045,7 @@ public final class ExploreManager
          if (verbs != null && verbs.length > 0) {
             for (int idx = 0; idx < verbs.length; idx++) {
                Verb verb = verbs[idx];
-               VerbMenuItem menuItem = (VerbMenuItem)(new Object(null, verb.getOrdering(), Integer.MAX_VALUE, verb, context));
+               VerbMenuItem menuItem = new VerbMenuItem(null, verb.getOrdering(), Integer.MAX_VALUE, verb, context);
                contextMenu.add(menuItem);
                if (verb == defaultVerb) {
                   contextMenu.setDefault(menuItem);
@@ -1080,7 +1082,7 @@ public final class ExploreManager
       if (!(path instanceof FileItemField)) {
          if (path instanceof LocalizedDirectoryItemField) {
             LocalizedDirectoryItemField root = (LocalizedDirectoryItemField)path;
-            UnsortedReadableList shortcutItems = (UnsortedReadableList)(new Object());
+            UnsortedReadableList shortcutItems = new UnsortedReadableList();
             shortcutItems.loadFrom(root.getPaths());
             this._shortcuts.setCurrentView(path.getURL(), shortcutItems);
             this._gallery.setCurrentView(path.getURL(), null);
@@ -1093,8 +1095,8 @@ public final class ExploreManager
          String directory = fileItem.getFullPath();
          int sortProperty = this._rootView == 1 ? ExplorerOptions.getOptions().getFilelistSortProperty() : 1;
          Comparator comparator = FileItemComparator.getInstance(sortProperty);
-         SortedReadableList shortcutList = (SortedReadableList)(new Object(comparator));
-         SortedReadableList fileList = (SortedReadableList)(new Object(comparator));
+         SortedReadableList shortcutList = new SortedReadableList(comparator);
+         SortedReadableList fileList = new SortedReadableList(comparator);
          if (this._pathStack.isEmpty() && !fileItem.isRoot() && this._upAlias == null) {
             this._upAlias = new UpAliasFileItemField(this);
          }
@@ -1190,7 +1192,7 @@ public final class ExploreManager
 
          while (roots.hasMoreElements()) {
             String nextRoot = (String)roots.nextElement();
-            FileItemField newRoot = new FileItemField(((StringBuffer)(new Object("/"))).append(nextRoot).toString());
+            FileItemField newRoot = new FileItemField("/" + nextRoot);
             shortcutList.elementAdded(null, newRoot);
          }
       } else {
@@ -1270,19 +1272,19 @@ public final class ExploreManager
       super(style);
       Object obj = ContextObject.get(ctx, -1002650280265073678L);
       int mediaType;
-      if (obj instanceof Object) {
+      if (obj instanceof FileSelectionFilter) {
          this._filter = (FileSelectionFilter)obj;
          mediaType = this._filter.getMediaType();
       } else {
          mediaType = ContextObject.getIntegerData(ctx, 0) & 0xFF;
          obj = ContextObject.get(ctx, -409744358660961448L);
          Recognizer recognizer = null;
-         if (obj instanceof Object) {
+         if (obj instanceof Recognizer) {
             recognizer = (Recognizer)obj;
          }
 
          if (mediaType != 0 || recognizer != null) {
-            this._filter = (FileSelectionFilter)(new Object(mediaType, -2147481600, recognizer));
+            this._filter = new FileSelectionFilter(mediaType, -2147481600, recognizer);
          }
       }
 
@@ -1292,7 +1294,7 @@ public final class ExploreManager
       } else {
          Object fn = ContextObject.get(ctx, 2765042845091913199L);
          String filename = null;
-         if (fn instanceof Object) {
+         if (fn instanceof String) {
             filename = (String)fn;
          }
 
@@ -1307,18 +1309,18 @@ public final class ExploreManager
       this._gallery = new FolderList(this, defaultViewMode, options.getNumberOfColumns(), useTooltips);
       this._thumbnailFetcher = new ThumbnailFetcher(this._gallery);
       this.add(this._shortcuts);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.add(this._gallery);
       this._exploreRoot = new LocalizedDirectoryItemField(0, false);
       this.initializeAliasEntries(mediaType);
       obj = ContextObject.get(ctx, 424670468422402792L);
-      if (obj instanceof Object) {
+      if (obj instanceof VerbProvider) {
          this._verbProvider = (VerbProvider)obj;
       }
 
       this._app = UiApplication.getUiApplication();
       if (this._filter == null) {
-         this._filter = (FileSelectionFilter)(new Object());
+         this._filter = new FileSelectionFilter();
       }
 
       FileConnectionHolder rootHolder;
@@ -1370,7 +1372,7 @@ public final class ExploreManager
             this.setFieldWithFocus(this._gallery);
             Integer invokeMenuItem = (Integer)ContextObject.get(ctx, -8073278814961745892L);
             if (invokeMenuItem != null) {
-               FileItemField fileItem = new FileItemField(((StringBuffer)(new Object())).append(path).append(filename).toString());
+               FileItemField fileItem = new FileItemField(path + filename);
                if (fileItem != null && fileItem.canView()) {
                   MenuItem menuItem = this.getMenuItem(invokeMenuItem, fileItem);
                   if (menuItem != null) {
@@ -1538,9 +1540,9 @@ public final class ExploreManager
          }
 
          success = true;
-      } else if (this._callback instanceof Object) {
+      } else if (this._callback instanceof MainScreen) {
          if (execute) {
-            ((Screen)this._callback).close();
+            ((MainScreen)this._callback).close();
          }
 
          success = true;

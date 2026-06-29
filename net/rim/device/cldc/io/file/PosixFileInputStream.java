@@ -4,9 +4,11 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import net.rim.device.api.io.FileInfo;
+import net.rim.device.api.io.file.FileIOException;
 import net.rim.device.api.system.ApplicationProcess;
 import net.rim.device.api.system.CodeSigningKey;
 import net.rim.device.api.system.ControlledAccess;
+import net.rim.device.api.system.ControlledAccessException;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.internal.io.file.EncryptedFile;
 import net.rim.device.internal.io.file.FileHandleProvider;
@@ -38,9 +40,7 @@ final class PosixFileInputStream extends InputStream implements FileHandleProvid
       long handleAndStatus = -1;
       boolean encrypted = StringUtilities.endsWithIgnoreCase(fileName, PosixFileConnection.ENCRYPTED_MEDIA_EXTENSION, 1701707776);
       if (autoResolveEncrypted && !encrypted) {
-         handleAndStatus = FileSystem.open(
-            fs, ((StringBuffer)(new Object())).append(fileName).append(PosixFileConnection.ENCRYPTED_MEDIA_EXTENSION).toString(), 1
-         );
+         handleAndStatus = FileSystem.open(fs, fileName + PosixFileConnection.ENCRYPTED_MEDIA_EXTENSION, 1);
          if ((int)handleAndStatus == 0) {
             encrypted = true;
          }
@@ -57,7 +57,7 @@ final class PosixFileInputStream extends InputStream implements FileHandleProvid
       this._cleanupRunnable = new PosixFileInputStream$FileInputStreamCleanupRunnable(this);
       ApplicationProcess process = (ApplicationProcess)Process.currentProcess();
       if (process != null) {
-         this._process = (WeakReference)(new Object(process));
+         this._process = new WeakReference(process);
          process.addCleanupRunnable(this._cleanupRunnable);
       }
 
@@ -65,10 +65,10 @@ final class PosixFileInputStream extends InputStream implements FileHandleProvid
          this._buffer = new byte[8192];
 
          try {
-            this._encryptedFile = EncryptedFile.readHeader(this._handle, (DataInputStream)(new Object(this)), FileSystemEncryption.getMasterKey(false));
+            this._encryptedFile = EncryptedFile.readHeader(this._handle, new DataInputStream(this), FileSystemEncryption.getMasterKey(false));
             CodeSigningKey key = this._encryptedFile.getCodeSigningKey();
             if (codeModuleCaller != -1 && key != null && !ControlledAccess.verifyCodeModuleSignature(codeModuleCaller, key)) {
-               throw new Object(key);
+               throw new ControlledAccessException(key);
             }
 
             this._eof = false;
@@ -88,7 +88,7 @@ final class PosixFileInputStream extends InputStream implements FileHandleProvid
    }
 
    public PosixFileInputStream(int fs, int fileHandle) {
-      FileSystemInfo fsInfo = (FileSystemInfo)(new Object());
+      FileSystemInfo fsInfo = new FileSystemInfo();
       PosixFileConnection.checkStatus(FileSystem.getFileSystemInfo(fs, fsInfo));
       this._buffer = new byte[fsInfo.getMaxReadLength()];
       this._offset = 0;
@@ -103,9 +103,9 @@ final class PosixFileInputStream extends InputStream implements FileHandleProvid
    }
 
    @Override
-   public final synchronized int read() {
+   public final synchronized int read() throws FileIOException {
       if (this._handle == -1) {
-         throw new Object(1000);
+         throw new FileIOException(1000);
       }
 
       if (this._available == 0) {
@@ -121,10 +121,10 @@ final class PosixFileInputStream extends InputStream implements FileHandleProvid
    }
 
    @Override
-   public final synchronized int read(byte[] b, int off, int len) {
+   public final synchronized int read(byte[] b, int off, int len) throws FileIOException {
       if (off >= 0 && len >= 0 && b.length - len >= off) {
          if (this._handle == -1) {
-            throw new Object(1000);
+            throw new FileIOException(1000);
          }
 
          int bytesCopied = 0;
@@ -150,7 +150,7 @@ final class PosixFileInputStream extends InputStream implements FileHandleProvid
 
          return bytesCopied;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -221,9 +221,9 @@ final class PosixFileInputStream extends InputStream implements FileHandleProvid
    }
 
    @Override
-   public final synchronized void reset() {
+   public final synchronized void reset() throws FileIOException {
       if (this._handle == -1) {
-         throw new Object(1000);
+         throw new FileIOException(1000);
       }
 
       long additionalOffset = 0;
@@ -239,9 +239,9 @@ final class PosixFileInputStream extends InputStream implements FileHandleProvid
    }
 
    @Override
-   public final synchronized long skip(long nBytes) {
+   public final synchronized long skip(long nBytes) throws FileIOException {
       if (this._handle == -1) {
-         throw new Object(1000);
+         throw new FileIOException(1000);
       }
 
       if (nBytes <= 0) {
@@ -258,7 +258,7 @@ final class PosixFileInputStream extends InputStream implements FileHandleProvid
 
       if (nBytes > 0 && !this._eof) {
          if (this._fileInfo == null) {
-            this._fileInfo = (FileInfo)(new Object());
+            this._fileInfo = new FileInfo();
          }
 
          PosixFileConnection.checkStatus(FileSystem.getFileInfo(this._handle, this._fileInfo));
@@ -307,7 +307,7 @@ final class PosixFileInputStream extends InputStream implements FileHandleProvid
    private final ApplicationProcess getProcess() {
       if (this._process != null) {
          Object process = this._process.get();
-         if (process instanceof Object) {
+         if (process instanceof ApplicationProcess) {
             return (ApplicationProcess)process;
          }
       }

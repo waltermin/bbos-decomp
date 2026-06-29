@@ -56,7 +56,6 @@ final class EmailResendVerb extends Verb {
          ShowMessageApp.showMessageApp();
       }
 
-      ContextObject invokeContextObject = (ContextObject)(new Object(39, 40));
-      return invokeContextObject;
+      return new ContextObject(39, 40);
    }
 }

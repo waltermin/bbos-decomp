@@ -10,14 +10,14 @@ public final class ClassUninitializedType extends ReferenceType {
    private boolean _preverified;
 
    public ClassUninitializedType(ClassType classType, int offset) {
-      super(((StringBuffer)(new Object("<"))).append(classType.getName()).append(">").toString());
+      super("<" + classType.getName() + ">");
       this._classType = classType;
       this._offset = offset;
       this._preverified = false;
    }
 
    public ClassUninitializedType(ClassType classType, int offset, boolean preverified) {
-      super(((StringBuffer)(new Object("<"))).append(classType.getName()).append(">").toString());
+      super("<" + classType.getName() + ">");
       this._classType = classType;
       this._offset = offset;
       this._preverified = preverified;

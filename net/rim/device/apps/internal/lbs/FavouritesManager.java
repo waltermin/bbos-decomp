@@ -56,16 +56,7 @@ public final class FavouritesManager implements CollectionListener {
          var9 = false;
       } finally {
          if (var9) {
-            EventLogger.logEvent(
-               LBSApplication.UID,
-               ((StringBuffer)(new Object("FavouritesManager<init> NPE, folder=")))
-                  .append(folder)
-                  .append(", collection=")
-                  .append(collection)
-                  .toString()
-                  .getBytes(),
-               2
-            );
+            EventLogger.logEvent(LBSApplication.UID, ("FavouritesManager<init> NPE, folder=" + folder + ", collection=" + collection).getBytes(), 2);
             return;
          }
       }
@@ -108,7 +99,7 @@ public final class FavouritesManager implements CollectionListener {
       if (folder != null) {
          SimpleFolder parent = (SimpleFolder)folder.getParentFolder();
          removeFolderItems(folder);
-         Stack stack = (Stack)(new Object());
+         Stack stack = new Stack();
          stack.push(folder.getSubFolders());
 
          do {
@@ -157,7 +148,7 @@ public final class FavouritesManager implements CollectionListener {
 
       if (folder == null) {
          folder = getRootFolder();
-         Stack stack = (Stack)(new Object());
+         Stack stack = new Stack();
          stack.push(folder.getSubFolders());
 
          do {
@@ -184,7 +175,7 @@ public final class FavouritesManager implements CollectionListener {
 
       if (folder != null) {
          Collection collection = folder.getContainedItems();
-         if (collection instanceof Object) {
+         if (collection instanceof WritableSet) {
             ((WritableSet)collection).remove(location);
          }
       }
@@ -200,7 +191,7 @@ public final class FavouritesManager implements CollectionListener {
       }
 
       Collection collection = folder.getContainedItems();
-      if (collection instanceof Object) {
+      if (collection instanceof WritableSet) {
          ((WritableSet)collection).add(location);
       }
    }
@@ -223,12 +214,12 @@ public final class FavouritesManager implements CollectionListener {
          return null;
       }
 
-      StringBuffer delimitedFolders = (StringBuffer)(new Object());
-      delimitedFolders.insert(0, ((StringBuffer)(new Object())).append(folders.getFriendlyName()).append("\u001f").toString());
+      StringBuffer delimitedFolders = new StringBuffer();
+      delimitedFolders.insert(0, folders.getFriendlyName() + "\u001f");
       Folder parent = folders;
 
       while ((parent = parent.getParentFolder()) != null) {
-         delimitedFolders.insert(0, ((StringBuffer)(new Object())).append(parent.getFriendlyName()).append("\u001f").toString());
+         delimitedFolders.insert(0, parent.getFriendlyName() + "\u001f");
       }
 
       return delimitedFolders.toString();

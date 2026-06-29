@@ -10,18 +10,18 @@ class BluetoothGPSLocationDevice$3 implements Runnable {
    @Override
    public void run() {
       String PSRF100 = "$PSRF100,1,4800,8,1,0*";
-      PSRF100 = ((StringBuffer)(new Object())).append(PSRF100).append(this.this$0.getChecksum(PSRF100)).toString();
+      PSRF100 = PSRF100 + this.this$0.getChecksum(PSRF100);
       this.this$0.messageDevice(PSRF100.getBytes());
 
       for (int i = 0; i < BluetoothGPSLocationDevice.NMEAdiscards.length; i++) {
-         String PSRF103 = ((StringBuffer)(new Object("$PSRF103,"))).append(BluetoothGPSLocationDevice.NMEAdiscards[i]).append(",255,00,01*").toString();
-         PSRF103 = ((StringBuffer)(new Object())).append(PSRF103).append(this.this$0.getChecksum(PSRF103)).toString();
+         String PSRF103 = "$PSRF103," + BluetoothGPSLocationDevice.NMEAdiscards[i] + ",255,00,01*";
+         PSRF103 = PSRF103 + this.this$0.getChecksum(PSRF103);
          this.this$0.messageDevice(PSRF103.getBytes());
       }
 
       for (int i = 0; i < BluetoothGPSLocationDevice.NMEAwanted.length; i++) {
-         String PSRF103 = ((StringBuffer)(new Object("$PSRF103,"))).append(BluetoothGPSLocationDevice.NMEAwanted[i]).append(",00,01,01*").toString();
-         PSRF103 = ((StringBuffer)(new Object())).append(PSRF103).append(this.this$0.getChecksum(PSRF103)).toString();
+         String PSRF103 = "$PSRF103," + BluetoothGPSLocationDevice.NMEAwanted[i] + ",00,01,01*";
+         PSRF103 = PSRF103 + this.this$0.getChecksum(PSRF103);
          this.this$0.messageDevice(PSRF103.getBytes());
       }
    }

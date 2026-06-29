@@ -16,7 +16,7 @@ public class MidiUtilities {
    public static byte[] convertNoteDurationToMidi(short[] tune, int timestampResolution, int tempo) {
       int numTrackBytes = 8;
       int numDataBytes = tune.length >> 1;
-      Vector timeStamps = (Vector)(new Object());
+      Vector timeStamps = new Vector();
 
       for (int i = 1; i < tune.length; i += 2) {
          byte[] currentVLQTimeStamp = getVariableLengthQuantityValue(tune[i] & 65535);
@@ -34,8 +34,8 @@ public class MidiUtilities {
       numTrackBytes += numDataBytes;
 
       try {
-         ByteArrayOutputStream baos = (ByteArrayOutputStream)(new Object(14 + numTrackBytes));
-         DataOutputStream resultDos = (DataOutputStream)(new Object(baos));
+         ByteArrayOutputStream baos = new ByteArrayOutputStream(14 + numTrackBytes);
+         DataOutputStream resultDos = new DataOutputStream(baos);
          resultDos.writeInt(1297377380);
          resultDos.writeInt(6);
          resultDos.writeShort(0);
@@ -86,7 +86,7 @@ public class MidiUtilities {
 
    public static byte[] getVariableLengthQuantityValue(int value) {
       if (value > 268435455) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int buffer = value & 127;

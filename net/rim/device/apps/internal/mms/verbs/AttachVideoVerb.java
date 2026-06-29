@@ -25,7 +25,7 @@ public final class AttachVideoVerb extends Verb {
       MMSAttachment attachment = this.promptForVideo();
       if (attachment != null) {
          this._presentation.addPresentationElement(attachment, true);
-         if (this._presentation instanceof Object) {
+         if (this._presentation instanceof Manager) {
             Manager mgr = (Manager)this._presentation;
             mgr.setDirty(true);
          }
@@ -49,7 +49,7 @@ public final class AttachVideoVerb extends Verb {
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:185)
       //
       // Bytecode:
-      // 00: new java/lang/Object
+      // 00: new net/rim/device/apps/api/framework/file/FileSelector
       // 03: dup
       // 04: ldc_w "file:///store/samples/mms/videos/"
       // 07: bipush 3
@@ -74,14 +74,14 @@ public final class AttachVideoVerb extends Verb {
       // 2d: astore 2
       // 2e: aload 2
       // 2f: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 32: checkcast java/lang/Object
+      // 32: checkcast javax/microedition/io/file/FileConnection
       // 35: astore 3
       // 36: aload 3
       // 37: ifnull 90
       // 3a: aload 3
       // 3b: invokeinterface javax/microedition/io/file/FileConnection.canRead ()Z 1
       // 40: ifeq 90
-      // 43: new java/lang/Object
+      // 43: new java/lang/String
       // 46: dup
       // 47: aload 2
       // 48: invokevirtual java/lang/String.getBytes ()[B

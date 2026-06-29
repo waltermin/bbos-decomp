@@ -26,7 +26,7 @@ final class ExploreManager$UpdateFolderList implements Runnable {
             FileItemField fileItem = new FileItemField(this._journalEntry.getPath());
             if ((!fileItem.isHidden() || !this.this$0._filter.isHideFilteredOn()) && this.this$0.match(this.this$0._filter, fileItem)) {
                ReadableList list = fileItem.isDirectory() ? this.this$0._shortcuts.getList() : this.this$0._gallery.getList();
-               if (list instanceof Object) {
+               if (list instanceof UnsortedReadableList) {
                   ((UnsortedReadableList)list).elementAdded(null, fileItem);
                   return;
                }
@@ -74,7 +74,7 @@ final class ExploreManager$UpdateFolderList implements Runnable {
 
             if (newItem != null) {
                ReadableList list = newItem.isDirectory() ? this.this$0._shortcuts.getList() : this.this$0._gallery.getList();
-               if (list instanceof Object) {
+               if (list instanceof UnsortedReadableList) {
                   ((UnsortedReadableList)list).elementAdded(null, newItem);
                   return;
                }
@@ -87,7 +87,7 @@ final class ExploreManager$UpdateFolderList implements Runnable {
          list = FileUtilities.isDirectory(path) ? this.this$0._shortcuts.getList() : this.this$0._gallery.getList();
       }
 
-      if (list instanceof Object) {
+      if (list instanceof UnsortedReadableList) {
          UnsortedReadableList itemList = (UnsortedReadableList)list;
          String name = FileUtilities.getName(path);
          int i = itemList.size();

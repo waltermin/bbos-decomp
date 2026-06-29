@@ -52,6 +52,6 @@ public final class IdEncode {
          num = ClassInfo.encodeBytes(bytes, num);
       }
 
-      return (String)(new Object(bytes, 0, num));
+      return new String(bytes, 0, num);
    }
 }

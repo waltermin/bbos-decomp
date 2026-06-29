@@ -40,7 +40,7 @@ final class ExternalActiveFieldCookie$CookieMenuItem extends MenuItem {
          }
       }
 
-      Message invokeLaterMessage = (Message)(new Object(0, 2, new ExternalActiveFieldCookie$CookieMenuItem$1(this), null));
+      Message invokeLaterMessage = new Message(0, 2, new ExternalActiveFieldCookie$CookieMenuItem$1(this), null);
       ((ApplicationManagerInternal)am).postMessage(pid, invokeLaterMessage);
    }
 }

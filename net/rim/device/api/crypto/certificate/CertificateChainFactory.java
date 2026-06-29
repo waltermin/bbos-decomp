@@ -16,12 +16,12 @@ public class CertificateChainFactory extends CertificateProperties {
 
    public static synchronized boolean register(CertificateChainFactory factory) {
       if (factory == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       String type = factory.getType();
       if (type == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (_hashtable.containsKey(type)) {
@@ -34,7 +34,7 @@ public class CertificateChainFactory extends CertificateProperties {
 
    public static Certificate[][] createCertificateChains(Certificate certificate, Certificate[] certificatePool, KeyStore keyStore, String emailAddress) {
       if (certificate == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       String certificateType = certificate.getType();
@@ -62,7 +62,7 @@ public class CertificateChainFactory extends CertificateProperties {
 
          return factory.getCertificateChainPropertiesInternal(certificateChain, keyStore, trustedKeyStore, date, cryptoSystemProperties);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

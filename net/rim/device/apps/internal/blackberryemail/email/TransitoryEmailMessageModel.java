@@ -7,7 +7,7 @@ import net.rim.device.apps.api.framework.model.RIMModel;
 
 public class TransitoryEmailMessageModel implements RIMModel, ReadableList {
    protected EmailMessageModel _message;
-   protected Vector _additionalItems = (Vector)(new Object());
+   protected Vector _additionalItems = new Vector();
 
    public void setModel(EmailMessageModel message) {
       this._message = message;

@@ -4,8 +4,8 @@ import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.itpolicy.ITPolicy;
 import net.rim.device.api.servicebook.ServiceBook;
 import net.rim.device.api.servicebook.ServiceRecord;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.StringUtilities;
@@ -101,18 +101,18 @@ final class KeyStoreOptionsItem extends SaveableMainScreenOptionsListItem {
          8243102965928322418L
       };
       long maxTimeout = (long)ITPolicy.getInteger(24, 8, 60) * 60000;
-      this._passphraseTimeoutField = (TimeChoiceField)(new Object(_rb.getString(7011), 268435456));
+      this._passphraseTimeoutField = new TimeChoiceField(_rb.getString(7011), 268435456);
       this._passphraseTimeoutField.setTimeChoicesIncludeMaxTimeChoice(times, 0, maxTimeout);
       this._passphraseTimeoutField.setSelectedTimeInMillis(KeyStoreOptions.getPassphraseTimeout(), false);
-      this._allowBackupRestoreField = (BooleanChoiceField)(new Object(_rb.getString(7005), 0, KeyStoreOptions.getAllowBackupRestore(), 268435456));
+      this._allowBackupRestoreField = new BooleanChoiceField(_rb.getString(7005), 0, KeyStoreOptions.getAllowBackupRestore(), 268435456);
       if (ITPolicy.getBoolean(24, 32, false)) {
          this._allowBackupRestoreField.setEditable(false);
       }
 
       ServiceRecord[] allServiceRecords = ServiceBook.getSB().findRecordsByCid("IPPP");
       int numServiceRecords = allServiceRecords != null ? allServiceRecords.length : 0;
-      ServiceRecord[] corporateServiceRecords = new Object[numServiceRecords];
-      String[] corporateServiceNames = new Object[numServiceRecords];
+      ServiceRecord[] corporateServiceRecords = new ServiceRecord[numServiceRecords];
+      String[] corporateServiceNames = new String[numServiceRecords];
       int defaultServiceRecordIndex = -1;
       if (numServiceRecords > 0) {
          int numCorporateServices = 0;
@@ -128,7 +128,7 @@ final class KeyStoreOptionsItem extends SaveableMainScreenOptionsListItem {
          Array.resize(corporateServiceRecords, numCorporateServices);
          Array.resize(corporateServiceNames, numCorporateServices);
          Arrays.sort(corporateServiceNames, 0, numCorporateServices, corporateServiceRecords, new KeyStoreOptionsItem$StringComparator());
-         this._corporateServiceUIDs = new Object[numCorporateServices];
+         this._corporateServiceUIDs = new String[numCorporateServices];
          String defaultServiceUID = KeyStoreOptions.getCertificateServiceUID();
 
          for (int i = 0; i < numCorporateServices; i++) {
@@ -139,13 +139,13 @@ final class KeyStoreOptionsItem extends SaveableMainScreenOptionsListItem {
          }
       }
 
-      this._certificateServiceField = (ObjectChoiceField)(new Object(_rb.getString(7023), corporateServiceNames));
+      this._certificateServiceField = new ObjectChoiceField(_rb.getString(7023), corporateServiceNames);
       this._certificateServiceField.setEmptyString(_rb.getFamily(), 7022);
       if (defaultServiceRecordIndex >= 0) {
          this._certificateServiceField.setSelectedIndex(defaultServiceRecordIndex);
       }
 
-      this._staleStatusField = (TimeChoiceField)(new Object(_rb.getString(7012), 268435456));
+      this._staleStatusField = new TimeChoiceField(_rb.getString(7012), 268435456);
       if (ITPolicy.getBoolean(24, 57, false)) {
          this._staleStatusField
             .setTimeChoices(
@@ -247,16 +247,16 @@ final class KeyStoreOptionsItem extends SaveableMainScreenOptionsListItem {
          this._staleStatusField.setSelectedTimeInMillis(CertificateStatusManager.getStaleTime(), false);
       }
 
-      this._allowUnverifiedCRLField = (BooleanChoiceField)(new Object(_rb.getString(7013), 0, KeyStoreOptions.getAllowUnverifiedCRLs(), 268435456));
+      this._allowUnverifiedCRLField = new BooleanChoiceField(_rb.getString(7013), 0, KeyStoreOptions.getAllowUnverifiedCRLs(), 268435456);
       if (ITPolicy.getBoolean(24, 41, false)) {
          this._allowUnverifiedCRLField.setEditable(false);
       }
 
-      this._keyStoreAddressInjectorField = (BooleanChoiceField)(new Object(_rb.getString(7021), 2, KeyStoreOptions.getKeyStoreAddressInjectorEnabled()));
+      this._keyStoreAddressInjectorField = new BooleanChoiceField(_rb.getString(7021), 2, KeyStoreOptions.getKeyStoreAddressInjectorEnabled());
       mainScreen.add(this._allowBackupRestoreField);
       mainScreen.add(this._passphraseTimeoutField);
       mainScreen.add(this._keyStoreAddressInjectorField);
-      mainScreen.add((Field)(new Object()));
+      mainScreen.add(new SeparatorField());
       mainScreen.add(this._certificateServiceField);
       mainScreen.add(this._staleStatusField);
       mainScreen.add(this._allowUnverifiedCRLField);

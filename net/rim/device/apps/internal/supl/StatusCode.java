@@ -42,6 +42,6 @@ final class StatusCode {
    }
 
    final void print() {
-      System.out.println(((StringBuffer)(new Object("StatusCode: "))).append(this.status).toString());
+      System.out.println("StatusCode: " + this.status);
    }
 }

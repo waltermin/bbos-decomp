@@ -11,7 +11,7 @@ class ModelColumnPainter extends ColumnPainter {
    boolean timeEmpty;
    boolean subjEmpty;
    boolean addrEmpty;
-   protected TextNode[] _nodes = new Object[3];
+   protected TextNode[] _nodes = new TextNode[3];
    private Handler _handler;
 
    public ModelColumnPainter(Handler handler, TextNode node1, TextNode node2, TextNode node3) {
@@ -71,8 +71,8 @@ class ModelColumnPainter extends ColumnPainter {
    public void drawModel(int columnId, RIMModel model, Object context) {
       switch (columnId) {
          case 3:
-            if (!(model instanceof Object)) {
-               if (model instanceof Object) {
+            if (!(model instanceof VerbDescriptionProvider)) {
+               if (model instanceof PersonNameModel) {
                   String text = this._handler.getFullName((PersonNameModel)model);
                   if (this._nodes[1] != null) {
                      this._nodes[1].setString(text.toCharArray());

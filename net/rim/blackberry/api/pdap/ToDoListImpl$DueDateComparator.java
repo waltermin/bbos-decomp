@@ -11,12 +11,12 @@ class ToDoListImpl$DueDateComparator implements Comparator {
       }
 
       if (!(o1 instanceof ToDo)) {
-         throw new Object();
+         throw new ClassCastException();
       }
 
       ToDo todo1 = (ToDo)o1;
       if (!(o2 instanceof ToDo)) {
-         throw new Object();
+         throw new ClassCastException();
       }
 
       ToDo todo2 = (ToDo)o2;

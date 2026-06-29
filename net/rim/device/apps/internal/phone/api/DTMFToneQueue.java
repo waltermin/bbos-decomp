@@ -16,9 +16,9 @@ public final class DTMFToneQueue extends Thread implements PhoneEventListener {
    private int _failureDelay;
    private long _waitUntilReleaseStartTime;
    private long _waitUntilReleaseEndTime;
-   private StringBuffer _queue = (StringBuffer)(new Object());
+   private StringBuffer _queue = new StringBuffer();
    private int _index;
-   private StringBuffer _queueHidden = (StringBuffer)(new Object());
+   private StringBuffer _queueHidden = new StringBuffer();
    private int _indexHidden;
    private static final int DTMF_EVENT = 1146375494;
    private static final int LOG_DTMF_START_TONE_FAILED = 1398035014;
@@ -146,7 +146,7 @@ public final class DTMFToneQueue extends Thread implements PhoneEventListener {
                }
             }
          } catch (Throwable var6) {
-            Out.p(((StringBuffer)(new Object("DTMFQueue exception: "))).append(e).toString());
+            Out.p("DTMFQueue exception: " + e);
             continue;
          }
       }

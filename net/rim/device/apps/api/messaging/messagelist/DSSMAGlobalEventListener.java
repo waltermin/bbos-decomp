@@ -9,7 +9,7 @@ final class DSSMAGlobalEventListener implements GlobalEventListener {
    private Application _app;
 
    DSSMAGlobalEventListener(DateSortedSeparatedMessageArray dssma, Application app) {
-      this._dssmaRef = (WeakReference)(new Object(dssma));
+      this._dssmaRef = new WeakReference(dssma);
       this._app = app;
    }
 

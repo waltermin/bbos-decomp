@@ -3,7 +3,7 @@ package net.rim.wica.runtime.script.internal.appenv;
 import java.util.Vector;
 import net.rim.device.api.util.IntVector;
 import net.rim.ecmascript.runtime.Convert;
-import net.rim.ecmascript.runtime.ESObject;
+import net.rim.ecmascript.runtime.ESDate;
 import net.rim.ecmascript.runtime.RedirectedObject;
 import net.rim.ecmascript.runtime.Value;
 import net.rim.wica.runtime.metadata.component.DataCollection;
@@ -85,7 +85,7 @@ public final class ESMDSArray extends RedirectedObject {
             objId = vStr == null ? Value.NULL : Value.makeStringValue(vStr);
             return objId;
          case 32772:
-            return Value.makeObjectValue((ESObject)(new Object(((LongVector)this._array).elementAt(index))));
+            return Value.makeObjectValue(new ESDate(((LongVector)this._array).elementAt(index)));
          case 32776:
             long theValue = ((LongVector)this._array).elementAt(index);
             return theValue == (int)theValue ? Value.makeIntegerValue((int)theValue) : Value.makeLongValue(theValue);

@@ -43,15 +43,15 @@ public final class FileStackAdapter implements NetworkPageFetcher {
       // 1a: bipush 3
       // 1c: bipush 1
       // 1d: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;IZ)Ljavax/microedition/io/Connection;
-      // 20: checkcast java/lang/Object
+      // 20: checkcast javax/microedition/io/file/FileConnection
       // 23: astore 5
       // 25: aload 5
       // 27: ifnonnull 32
-      // 2a: new java/lang/Object
+      // 2a: new java/io/IOException
       // 2d: dup
       // 2e: invokespecial java/io/IOException.<init> ()V
       // 31: athrow
-      // 32: new java/lang/Object
+      // 32: new net/rim/device/api/io/http/HttpHeaders
       // 35: dup
       // 36: invokespecial net/rim/device/api/io/http/HttpHeaders.<init> ()V
       // 39: astore 8
@@ -91,7 +91,7 @@ public final class FileStackAdapter implements NetworkPageFetcher {
       // 87: aload 4
       // 89: sipush 400
       // 8c: invokevirtual net/rim/device/apps/internal/browser/stack/CacheResult.setStatus (I)V
-      // 8f: new java/lang/Object
+      // 8f: new net/rim/device/cldc/io/utility/MalformedURLException
       // 92: dup
       // 93: invokespecial net/rim/device/cldc/io/utility/MalformedURLException.<init> ()V
       // 96: athrow

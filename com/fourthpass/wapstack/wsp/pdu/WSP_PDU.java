@@ -41,7 +41,7 @@ public class WSP_PDU {
    public WSP_PDU(boolean connectionLessMode, InputStream input) {
       this._connectionLessMode = connectionLessMode;
       byte extraOctet = 1;
-      ByteArrayOutputStream bos = (ByteArrayOutputStream)(new Object());
+      ByteArrayOutputStream bos = new ByteArrayOutputStream();
       boolean var8 = false /* VF: Semaphore variable */;
 
       byte[] data;

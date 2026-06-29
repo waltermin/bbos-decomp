@@ -60,7 +60,7 @@ final class SessionId {
 
    final void print() {
       System.out.println("Session ID: ");
-      System.out.println(((StringBuffer)(new Object("Optionals: "))).append(this.optionals).toString());
+      System.out.println("Optionals: " + this.optionals);
       if ((this.optionals & 2) == 2) {
          this.setSessionId.print();
       }

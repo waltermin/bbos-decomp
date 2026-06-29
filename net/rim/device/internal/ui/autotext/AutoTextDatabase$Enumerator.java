@@ -2,6 +2,7 @@ package net.rim.device.internal.ui.autotext;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.NoSuchElementException;
 import net.rim.device.api.i18n.Locale;
 import net.rim.device.api.util.IntHashtable;
 
@@ -79,7 +80,7 @@ final class AutoTextDatabase$Enumerator implements Enumeration {
          this._elementEnumeration = this._nextElementEnumeration;
          this.fetchNextElementEnumeration();
          if (this._elementEnumeration == null) {
-            throw new Object();
+            throw new NoSuchElementException();
          }
       }
 

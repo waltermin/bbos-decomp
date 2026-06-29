@@ -4,7 +4,7 @@ import java.util.Vector;
 import net.rim.device.api.util.DataBuffer;
 
 public final class History {
-   private Vector _nodes = (Vector)(new Object());
+   private Vector _nodes = new Vector();
    private int _currentNode = -1;
    private int _lastViewedNode = -1;
    private static final int VERSION = 6;

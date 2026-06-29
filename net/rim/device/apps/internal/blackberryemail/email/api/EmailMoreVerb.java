@@ -173,7 +173,7 @@ public class EmailMoreVerb extends Verb {
 
       int identifier = message.getCMIMEReferenceIdentifier();
       MessageLookups.put(-4420850319371185992L, identifier, message);
-      RIMMessagingMoreRequest more = (RIMMessagingMoreRequest)(new Object());
+      RIMMessagingMoreRequest more = new RIMMessagingMoreRequest();
       more.setReferenceIdentifier(identifier);
       int morePartIdentifier = morePartModel.getMorePartID();
       more.setPartIdentifier(morePartIdentifier);

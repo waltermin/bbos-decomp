@@ -125,7 +125,7 @@ final class BluetoothDeviceManagerImpl$BluetoothSyncItem extends OTASyncCapableS
          }
       }
 
-      data._pairedDeviceData = (Vector)(new Object());
+      data._pairedDeviceData = new Vector();
       String oldLocalName = data._localName;
       int pin = 0;
 
@@ -172,7 +172,7 @@ final class BluetoothDeviceManagerImpl$BluetoothSyncItem extends OTASyncCapableS
                   data._addressBookTransferMode = ConverterUtilities.readInt(buffer);
                   break;
                case 8:
-                  data._addressBookCategories = (CategoriesModel)(new Object(ConverterUtilities.readString(buffer)));
+                  data._addressBookCategories = new CategoriesModel(ConverterUtilities.readString(buffer));
                   break;
                case 9:
                   data._securityMode = ConverterUtilities.readInt(buffer);

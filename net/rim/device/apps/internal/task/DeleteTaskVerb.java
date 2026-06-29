@@ -49,7 +49,7 @@ final class DeleteTaskVerb extends Verb {
       TaskDataModel taskDataModel = taskToDelete.getTaskDataModel();
       Recur recurInfo = taskDataModel.getRecurrenceModel();
       if (recurInfo != null && recurInfo.getRecurType() != 0) {
-         String[] choices = new Object[]{rb.getString(50), rb.getString(51), CommonResource.getString(19)};
+         String[] choices = new String[]{rb.getString(50), rb.getString(51), CommonResource.getString(19)};
          int[] values = new int[]{0, 1, -1, -805044216, 67108864, 1953066601, -805044196, 1632896256, 7564147, 1935758355, 1850286187, 1634301033};
          switch (Dialog.ask(rb.getString(49), choices, values, -1)) {
             case -1:
@@ -73,7 +73,7 @@ final class DeleteTaskVerb extends Verb {
       }
 
       if (taskToDelete != null) {
-         if (context instanceof Object) {
+         if (context instanceof ContextObject) {
             ((ContextObject)context).setPrivateFlag(-3866311304884942232L, 1);
          }
 

@@ -33,7 +33,7 @@ public final class TaskUtilities implements GlobalEventListener {
    public static final int REMINDER_DATE_TIME_FIELD_ID = 15;
    public static final int TIME_ZONE_FIELD_ID = 16;
    public static final int REMINDER_STATE_FIELD_ID = 18;
-   private static RecurCalc recurrenceCalculator = (RecurCalc)(new Object());
+   private static RecurCalc recurrenceCalculator = new RecurCalc();
    private static final long TASK_FIELD_LISTENER_INSTANCE = -2888269685515488385L;
    static Calendar _gmtCalendar = Calendar.getInstance(TimeZone.getTimeZone(DateTimeUtilities.GMT));
    static Calendar _localCalendar = Calendar.getInstance();
@@ -150,7 +150,7 @@ public final class TaskUtilities implements GlobalEventListener {
       Recur recurInfo = recurringTask.getRecurrenceModel();
       if (recurInfo != null && recurInfo.getRecurType() != 0) {
          TaskCollectionImpl taskCollection = TaskCollectionImpl.getInstance();
-         Recur$Handle handle = (Recur$Handle)(new Object());
+         Recur$Handle handle = new Recur$Handle();
          long recurrenceStart = recurringTask.getRecurrenceStartDate();
          boolean validInstance = false;
          synchronized (_localCalendar) {

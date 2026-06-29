@@ -1,12 +1,15 @@
 package net.rim.device.cldc.impl.hrt.editor;
 
+import net.rim.device.api.hrt.CdmaHRI;
 import net.rim.device.api.hrt.DAC;
 import net.rim.device.api.hrt.DomainNameDAC;
 import net.rim.device.api.hrt.GprsHRI;
 import net.rim.device.api.hrt.HostRoutingInfo;
 import net.rim.device.api.hrt.HostRoutingTable;
 import net.rim.device.api.hrt.IPv4UdpDAC;
+import net.rim.device.api.hrt.IdenHRI;
 import net.rim.device.api.hrt.IntDAC;
+import net.rim.device.api.hrt.WifiHRI;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.system.GPRSQOSInfo;
 import net.rim.device.api.ui.Field;
@@ -19,6 +22,7 @@ import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.Arrays;
@@ -73,18 +77,18 @@ final class HRTAppInfoEditUI extends MainScreen implements ListFieldCallback {
       this._isNew = iNew;
       this._retCode = 1;
       this._viewMode = -1;
-      this._dacStrings = new Object[0];
-      if (theHri instanceof Object) {
+      this._dacStrings = new String[0];
+      if (theHri instanceof GprsHRI) {
          this._netType = 2;
-      } else if (theHri instanceof Object) {
+      } else if (theHri instanceof CdmaHRI) {
          this._netType = 3;
-      } else if (theHri instanceof Object) {
+      } else if (theHri instanceof IdenHRI) {
          this._netType = 4;
-      } else if (theHri instanceof Object) {
+      } else if (theHri instanceof WifiHRI) {
          this._netType = 5;
       }
 
-      this._screenTitle = (LabelField)(new Object());
+      this._screenTitle = new LabelField();
       this.setTitle(this._screenTitle);
       this.initDisplay();
       this.load();
@@ -186,9 +190,9 @@ final class HRTAppInfoEditUI extends MainScreen implements ListFieldCallback {
 
    private final void loadDacStrings(DAC dac) {
       if (dac.getNumCodes() > 0) {
-         if (!(dac instanceof Object)) {
-            if (!(dac instanceof Object)) {
-               if (dac instanceof Object) {
+         if (!(dac instanceof IntDAC)) {
+            if (!(dac instanceof IPv4UdpDAC)) {
+               if (dac instanceof DomainNameDAC) {
                   DomainNameDAC dnDac = (DomainNameDAC)dac;
                   String[] addrs = dnDac.getAddresses();
                   if (addrs != null) {
@@ -235,13 +239,13 @@ final class HRTAppInfoEditUI extends MainScreen implements ListFieldCallback {
                index = 31;
             }
 
-            GPRSQOSInfo qos = (GPRSQOSInfo)(new Object(
+            GPRSQOSInfo qos = new GPRSQOSInfo(
                this._qosPrecedenceField.getSelectedIndex(),
                this._qosReliabilityField.getSelectedIndex(),
                this._qosDelayField.getSelectedIndex(),
                this._qosPeakTPField.getSelectedIndex(),
                index
-            ));
+            );
             ghri.setQos(qos);
          default:
             this.saveDacStrings(dac);
@@ -250,11 +254,11 @@ final class HRTAppInfoEditUI extends MainScreen implements ListFieldCallback {
    }
 
    private final void saveDacStrings(DAC dac) {
-      if (!(dac instanceof Object)) {
-         if (!(dac instanceof Object)) {
-            if (dac instanceof Object) {
+      if (!(dac instanceof IntDAC)) {
+         if (!(dac instanceof IPv4UdpDAC)) {
+            if (dac instanceof DomainNameDAC) {
                DomainNameDAC dnDac = (DomainNameDAC)dac;
-               StringBuffer addrBuf = (StringBuffer)(new Object());
+               StringBuffer addrBuf = new StringBuffer();
 
                for (int i = 0; i < this._dacStrings.length; i++) {
                   addrBuf.append(this._dacStrings[i]);
@@ -307,8 +311,8 @@ final class HRTAppInfoEditUI extends MainScreen implements ListFieldCallback {
          && this._npcField.getTextLength() != 0
          && this._artField.getTextLength() != 0
          && this._pteField.getTextLength() != 0
-         && (!(this._hri instanceof Object) || this._dacStrings.length != 0)
-         && (this._hri instanceof Object || this._dacStrings.length != 0)) {
+         && (!(this._hri instanceof WifiHRI) || this._dacStrings.length != 0)
+         && (this._hri instanceof WifiHRI || this._dacStrings.length != 0)) {
          try {
             npc = Long.parseLong(this._npcField.getText(), 16);
          } finally {
@@ -424,14 +428,14 @@ final class HRTAppInfoEditUI extends MainScreen implements ListFieldCallback {
    }
 
    private final EditField addEditField(int titleId, String contents) {
-      EditField ef = (EditField)(new Object(HRTAppResources.getString(titleId), contents));
+      EditField ef = new EditField(HRTAppResources.getString(titleId), contents);
       this.add(ef);
       return ef;
    }
 
    private final ObjectChoiceField addObjectChoiceField(int titleId, int stringsId) {
       ResourceBundle rb = HRTAppResources.getResourceBundle();
-      ObjectChoiceField ocf = (ObjectChoiceField)(new Object(rb.getString(titleId), CommonResource.getStringArray(stringsId)));
+      ObjectChoiceField ocf = new ObjectChoiceField(rb.getString(titleId), CommonResource.getStringArray(stringsId));
       this.add(ocf);
       return ocf;
    }
@@ -441,27 +445,27 @@ final class HRTAppInfoEditUI extends MainScreen implements ListFieldCallback {
    }
 
    private final void initDisplay() {
-      this._nameField = (AutoTextEditField)(new Object(HRTAppResources.getString(102), null));
+      this._nameField = new AutoTextEditField(HRTAppResources.getString(102), null);
       this.add(this._nameField);
       this._npcField = this.addEditField(101, null);
       this._artField = this.addEditField(207, null);
       if (this._netType == 2) {
          this._apnField = this.addEditField(110, null);
-         this._apnUsernameField = (EditField)(new Object("Username: ", null));
-         this._apnPasswordField = (EditField)(new Object("Password: ", null));
+         this._apnUsernameField = new EditField("Username: ", null);
+         this._apnPasswordField = new EditField("Password: ", null);
       }
 
-      this.add((Field)(new Object(this.pickString(40))));
-      this._dacList = (ListField)(new Object(0));
+      this.add(new LabelField(this.pickString(40)));
+      this._dacList = new ListField(0);
       this._dacList.setCallback(this);
       this._dacList.setEmptyString(this.pickString(31), 4);
       this.add(this._dacList);
-      this.add((Field)(new Object()));
-      this._loadSharingField = (EditField)(new Object(HRTAppResources.getString(103), null, 10, 16777216));
+      this.add(new SeparatorField());
+      this._loadSharingField = new EditField(HRTAppResources.getString(103), null, 10, 16777216);
       this.add(this._loadSharingField);
       this._pteField = this.addEditField(208, null);
       if (this._netType == 2) {
-         this.add((Field)(new Object(CommonResource.getString(306))));
+         this.add(new LabelField(CommonResource.getString(306)));
          this._qosPrecedenceField = this.addObjectChoiceField(111, 301);
          this._qosReliabilityField = this.addObjectChoiceField(112, 302);
          this._qosDelayField = this.addObjectChoiceField(113, 303);

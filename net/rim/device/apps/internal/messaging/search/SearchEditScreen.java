@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.messaging.search;
 import java.util.Enumeration;
 import net.rim.device.api.collection.ReadableList;
 import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.EditField;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.FieldProvider;
 import net.rim.device.apps.api.framework.model.RIMModel;
@@ -27,7 +28,7 @@ public final class SearchEditScreen extends EditorUsingRIMModelFactory {
    public static final int INDENT_AMOUNT = 16;
 
    public SearchEditScreen(MessageSearchImpl search, boolean fromRibbon) {
-      super(new Object(0, 56), CommonResources.getString(9136), search.getCollectionId(), 10000);
+      super(new ContextObject(0, 56), CommonResources.getString(9136), search.getCollectionId(), 10000);
       this.setDefaultClose(false);
       this._search = search;
       this._saveSearchVerb = new SearchEditScreen$SaveSearchVerb(this);
@@ -65,7 +66,7 @@ public final class SearchEditScreen extends EditorUsingRIMModelFactory {
 
       if (menu.getDefaultVerb() == null) {
          Field f = this.getLeafFieldWithFocus();
-         if (f instanceof Object || f.isMuddy()) {
+         if (f instanceof EditField || f.isMuddy()) {
             menu.setDefault(this._executeSearchVerb);
          }
       }

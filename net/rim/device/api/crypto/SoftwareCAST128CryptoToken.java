@@ -32,7 +32,7 @@ final class SoftwareCAST128CryptoToken extends CAST128CryptoToken implements Per
    @Override
    public final CryptoTokenCipherContext initializeEncrypt(CryptoTokenSymmetricKeyData data) {
       if (!(data instanceof SoftwareCAST128CryptoToken$CAST128KeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareCAST128CryptoToken$CAST128KeyData key = (SoftwareCAST128CryptoToken$CAST128KeyData)data;
@@ -42,7 +42,7 @@ final class SoftwareCAST128CryptoToken extends CAST128CryptoToken implements Per
    @Override
    public final void encrypt(CryptoTokenCipherContext context, byte[] plaintext, int plaintextOffset, byte[] ciphertext, int ciphertextOffset) {
       if (!(context instanceof SoftwareCAST128CryptoToken$CAST128CipherContext)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       ((SoftwareCAST128CryptoToken$CAST128CipherContext)context).getNativeBlockCipher().crypt(plaintext, plaintextOffset, ciphertext, ciphertextOffset);
@@ -51,7 +51,7 @@ final class SoftwareCAST128CryptoToken extends CAST128CryptoToken implements Per
    @Override
    public final CryptoTokenCipherContext initializeDecrypt(CryptoTokenSymmetricKeyData data) {
       if (!(data instanceof SoftwareCAST128CryptoToken$CAST128KeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareCAST128CryptoToken$CAST128KeyData key = (SoftwareCAST128CryptoToken$CAST128KeyData)data;
@@ -61,7 +61,7 @@ final class SoftwareCAST128CryptoToken extends CAST128CryptoToken implements Per
    @Override
    public final void decrypt(CryptoTokenCipherContext context, byte[] ciphertext, int ciphertextOffset, byte[] plaintext, int plaintextOffset) {
       if (!(context instanceof SoftwareCAST128CryptoToken$CAST128CipherContext)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       ((SoftwareCAST128CryptoToken$CAST128CipherContext)context).getNativeBlockCipher().crypt(ciphertext, ciphertextOffset, plaintext, plaintextOffset);
@@ -70,7 +70,7 @@ final class SoftwareCAST128CryptoToken extends CAST128CryptoToken implements Per
    @Override
    public final byte[] extractKeyData(CryptoTokenSymmetricKeyData data) {
       if (!(data instanceof SoftwareCAST128CryptoToken$CAST128KeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareCAST128CryptoToken$CAST128KeyData)data).getData();
       }
@@ -103,7 +103,7 @@ final class SoftwareCAST128CryptoToken extends CAST128CryptoToken implements Per
       }
 
       if (!Arrays.equals(target, 0, PLAIN_TEXT, 0, length)) {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
       target = new byte[length];
@@ -118,7 +118,7 @@ final class SoftwareCAST128CryptoToken extends CAST128CryptoToken implements Per
       }
 
       if (!Arrays.equals(target, 0, CIPHER_TEXT, 0, length)) {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
    }
 

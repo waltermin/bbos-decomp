@@ -11,7 +11,7 @@ public class Parameters {
 
    public Parameters(int capacityInt, int incrementInt) {
       this._offsets = new Parameters$Integers(capacityInt, incrementInt, null);
-      this._counts = (IntIntHashtable)(new Object(capacityInt));
+      this._counts = new IntIntHashtable(capacityInt);
    }
 
    public Parameters(DataBuffer aDataBuffer, int capacityInt, int incrementInt) {

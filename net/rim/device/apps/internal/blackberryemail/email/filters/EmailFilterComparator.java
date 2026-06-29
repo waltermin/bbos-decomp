@@ -16,7 +16,7 @@ public final class EmailFilterComparator implements Comparator {
             return order1 == order2 ? 0 : 1;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

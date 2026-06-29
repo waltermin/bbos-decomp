@@ -62,7 +62,7 @@ final class Board extends AbstractForeignObject implements BrickBreakerResResour
       this._ball[1] = new Ball(this, this._bricks);
       this._ball[2] = new Ball(this, this._bricks);
       this._ball[3] = new Ball(this, this._bricks);
-      this.rng = (Random)(new Object());
+      this.rng = new Random();
       this._pills = new Pills(this);
       this._bomb = new Bullet(Game.BMP_BOMB, this);
       this._lasers = new Bullet[4];

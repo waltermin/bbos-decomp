@@ -15,7 +15,7 @@ public class ServiceProvider {
    private static final int BUFFER_SIZE = 2048;
 
    protected ServiceProvider(int numServices) {
-      this._services = (Hashtable)(new Object(numServices));
+      this._services = new Hashtable(numServices);
    }
 
    public final Object getService(String serviceId) {
@@ -31,7 +31,7 @@ public class ServiceProvider {
    }
 
    protected ByteArrayOutputStream bufferData(InputStream is) {
-      ByteArrayOutputStream os = (ByteArrayOutputStream)(new Object());
+      ByteArrayOutputStream os = new ByteArrayOutputStream();
       byte[] buffer = new byte[2048];
       int read = 0;
 

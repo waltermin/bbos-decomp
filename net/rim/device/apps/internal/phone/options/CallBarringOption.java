@@ -4,12 +4,15 @@ import net.rim.device.api.system.Application;
 import net.rim.device.api.system.RadioInfo;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.CommonResources;
 import net.rim.device.apps.api.utility.framework.VerbToMenu;
 import net.rim.device.apps.internal.phone.api.PhoneUtilities;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 import net.rim.vm.Array;
 
 final class CallBarringOption extends VoiceOptionsListItem implements QuerySSOptions$Listener, PhoneOptionsItem {
@@ -98,7 +101,7 @@ final class CallBarringOption extends VoiceOptionsListItem implements QuerySSOpt
    @Override
    public final void onOpen() {
       if (RadioInfo.getState() != 1) {
-         Dialog.alert(((StringBuffer)(new Object())).append(CommonResources.getString(9153)).append(' ').append(PhoneResources.getString(142)).toString());
+         Dialog.alert(CommonResources.getString(9153) + ' ' + PhoneResources.getString(142));
       } else {
          this._barIncomingAvailable = false;
          this._barOutgoingAvailable = false;
@@ -159,16 +162,16 @@ final class CallBarringOption extends VoiceOptionsListItem implements QuerySSOpt
       }
 
       if (this._barIncomingAvailable) {
-         screen.add((Field)(new Object(PhoneResources.getString(203))));
-         screen.add((Field)(new Object()));
+         screen.add(new LabelField(PhoneResources.getString(203)));
+         screen.add(new SeparatorField());
          screen.add(this._incomingCallsListField);
-         screen.add((Field)(new Object(4)));
-         screen.add((Field)(new Object()));
+         screen.add(new VerticalSpacerField(4));
+         screen.add(new SeparatorField());
       }
 
       if (this._barOutgoingAvailable) {
-         screen.add((Field)(new Object(PhoneResources.getString(204))));
-         screen.add((Field)(new Object()));
+         screen.add(new LabelField(PhoneResources.getString(204)));
+         screen.add(new SeparatorField());
          screen.add(this._outgoingCallsListField);
       }
    }

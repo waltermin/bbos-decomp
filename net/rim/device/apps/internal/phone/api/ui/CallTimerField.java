@@ -14,7 +14,7 @@ import net.rim.device.apps.internal.phone.api.livecall.LiveCall;
 
 public final class CallTimerField extends LabelField implements CallTimerListener, Runnable {
    private int _time = -1;
-   private StringBuffer _buf = (StringBuffer)(new Object(8));
+   private StringBuffer _buf = new StringBuffer(8);
    private boolean _queuedUpdate;
    private static final boolean _charmScreenOrBetter = Display.getHeight() > 240 && Display.getWidth() > 240;
    private static int _networkType;

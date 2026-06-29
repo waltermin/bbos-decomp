@@ -22,7 +22,7 @@ final class VoiceNotesRecorderMain$VoiceNotesRecorderAliasFileEntry extends Alia
 
       String filename = path;
       if (filename.startsWith("/")) {
-         filename = ((StringBuffer)(new Object("file://"))).append(filename).toString();
+         filename = "file://" + filename;
       }
 
       return StringUtilities.startsWithIgnoreCase(filename, VoiceNotesRecorderMain.SDFOLDER, 1701707776)

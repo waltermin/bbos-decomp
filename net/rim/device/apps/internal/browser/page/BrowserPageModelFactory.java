@@ -196,7 +196,7 @@ public final class BrowserPageModelFactory implements Factory {
       int numRequestHeaders = dataBuffer.readCompressedInt();
       HttpHeaders requestHeaders = null;
       if (numRequestHeaders > 0) {
-         requestHeaders = (HttpHeaders)(new Object());
+         requestHeaders = new HttpHeaders();
 
          for (int i = 0; i < numRequestHeaders; i++) {
             String key = dataBuffer.readUTF();
@@ -219,7 +219,7 @@ public final class BrowserPageModelFactory implements Factory {
 
       if (refererURL != null) {
          if (requestHeaders == null) {
-            requestHeaders = (HttpHeaders)(new Object());
+            requestHeaders = new HttpHeaders();
          }
 
          RenderingUtilities.setReferrer(requestHeaders, refererURL);

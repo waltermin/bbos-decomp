@@ -3,7 +3,6 @@ package net.rim.device.apps.internal.implus;
 import net.rim.device.api.servicebook.ServiceBook;
 import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.api.ui.Field;
-import net.rim.device.api.ui.component.ChoiceField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -26,7 +25,7 @@ final class IMPlusRequestOptionModelImpl implements RIMModel, VerbProvider, Fiel
 
    final void initialize(Object context) {
       this._msgComposeOptionSetting = 0;
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          this._default = true;
          if (((ContextObject)context).getFlag(75)) {
             this._type = 0;
@@ -45,7 +44,7 @@ final class IMPlusRequestOptionModelImpl implements RIMModel, VerbProvider, Fiel
          }
 
          Object message = ContextObject.get(context, 254);
-         if (message instanceof Object) {
+         if (message instanceof EmailMessageModel) {
             EmailMessageModel emailMsgModel = (EmailMessageModel)message;
             this._msgComposeOptionSetting = 1;
             ServiceRecord serviceRec = emailMsgModel.getServiceRecordForMessage();
@@ -175,7 +174,7 @@ final class IMPlusRequestOptionModelImpl implements RIMModel, VerbProvider, Fiel
                stringID = 5;
          }
 
-         ObjectChoiceField field = (ObjectChoiceField)(new Object(IMPlusResources.getString(stringID), yesOrNo, choiceIndex));
+         ObjectChoiceField field = new ObjectChoiceField(IMPlusResources.getString(stringID), yesOrNo, choiceIndex);
          field.setCookie(this);
          return field;
       } else {
@@ -186,13 +185,13 @@ final class IMPlusRequestOptionModelImpl implements RIMModel, VerbProvider, Fiel
    @Override
    public final boolean grabDataFromField(Field field, Object context) {
       boolean returnVal = false;
-      if (field instanceof Object) {
+      if (field instanceof ObjectChoiceField) {
          EmailMessageModel message = null;
          if (context != null) {
             message = (EmailMessageModel)ContextObject.get(context, 254);
          }
 
-         int choiceIndex = ((ChoiceField)field).getSelectedIndex();
+         int choiceIndex = ((ObjectChoiceField)field).getSelectedIndex();
          if (this._default) {
             if (this._receiptCapableService == null) {
                return false;

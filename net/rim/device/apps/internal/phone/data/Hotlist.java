@@ -59,7 +59,7 @@ public final class Hotlist
    private RIMModelSyncConverter _syncConverter;
    private Object[] _deletedOTASyncObjects = null;
    private boolean _inOTASyncOperation;
-   private CollectionListenerManager _collectionListenerManager = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _collectionListenerManager = new CollectionListenerManager();
    private SyncCollectionSchema _schema;
    public static final long PERSISTENCE_GUID = -7816720225881682866L;
    public static final long GUID = 8059360440319940910L;
@@ -88,7 +88,7 @@ public final class Hotlist
    private static boolean _enableSync;
    private static final int[] KEY_FIELD_IDS = new int[]{3, -804651006, 3, 20};
    private static final int DEFAULT_RECORD_TYPE = 1;
-   private static ContextObject _sortContext = (ContextObject)(new Object());
+   private static ContextObject _sortContext = new ContextObject();
 
    public final void cleanup() {
       this.initialize(false, true);
@@ -141,7 +141,7 @@ public final class Hotlist
    }
 
    public final void setListener(HotlistEventListener listener) {
-      WeakReference weakReference = (WeakReference)(new Object(listener));
+      WeakReference weakReference = new WeakReference(listener);
       this._listeners = ListenerUtilities.addListener(this._listeners, weakReference);
    }
 
@@ -214,7 +214,7 @@ public final class Hotlist
       if (!this._registeredWithAddressBook) {
          AddressBook ab = AddressBookServices.getAddressBook(false);
          if (ab != null) {
-            ab.addCollectionListener(new Object(this));
+            ab.addCollectionListener(new WeakReference(this));
             this._registeredWithAddressBook = true;
          }
       }
@@ -273,7 +273,7 @@ public final class Hotlist
          case 2002:
          case 203010:
          case 203020:
-            if (context instanceof Object) {
+            if (context instanceof ContextObject) {
                cidi = (CallerIDInfo)ContextObject.get(context, 5898398779440734986L);
             } else if (context instanceof CallerIDInfo) {
                cidi = (CallerIDInfo)context;
@@ -286,7 +286,7 @@ public final class Hotlist
             }
             break;
          case 3006:
-            if (context instanceof Object) {
+            if (context instanceof ContextObject) {
                cidi = (CallerIDInfo)ContextObject.get(context, 5898398779440734986L);
                if (cidi != null) {
                   this.callEvent(cidi, context);
@@ -419,7 +419,7 @@ public final class Hotlist
 
    @Override
    public final SyncObject[] getSyncObjects() {
-      SyncObject[] objects = new Object[0];
+      SyncObject[] objects = new SyncObject[0];
       synchronized (this) {
          int count = this._phoneListItems.size();
          int dest = 0;
@@ -427,7 +427,7 @@ public final class Hotlist
 
          for (int i = 0; i < count; i++) {
             Object o = this._phoneListItems.elementAt(i);
-            if (o instanceof Object) {
+            if (o instanceof SyncObject) {
                SyncObject syncObj = (SyncObject)o;
                objects[dest++] = syncObj;
             }
@@ -445,7 +445,7 @@ public final class Hotlist
 
          for (int i = 0; i < numElements; i++) {
             Object element = this._phoneListItems.elementAt(i);
-            if (element instanceof Object) {
+            if (element instanceof SyncObject) {
                SyncObject syncObject = (SyncObject)element;
                if (syncObject.getUID() == uid) {
                   return syncObject;
@@ -570,7 +570,7 @@ public final class Hotlist
             HotlistEventListener listener = null;
             Object o = listeners[i];
             if (!(o instanceof HotlistEventListener)) {
-               if (o instanceof Object) {
+               if (o instanceof WeakReference) {
                   WeakReference wr = (WeakReference)o;
                   Object ref = wr.get();
                   if (ref == null) {
@@ -659,11 +659,11 @@ public final class Hotlist
 
    public Hotlist() {
       this.initialize(true, false);
-      this._schema = (SyncCollectionSchema)(new Object());
+      this._schema = new SyncCollectionSchema();
       this._schema.setDefaultRecordType(1);
       this._schema.setKeyFieldIds(1, KEY_FIELD_IDS);
       VoiceServices.addPhoneEventListener(this);
-      this._syncConverter = (RIMModelSyncConverter)(new Object(20, -3466239368616563929L));
+      this._syncConverter = new RIMModelSyncConverter(20, -3466239368616563929L);
    }
 
    private final boolean doAddressBookSanityCheck(boolean initialization) {
@@ -717,7 +717,7 @@ public final class Hotlist
 
          if (!_enableSync) {
             _enableSync = true;
-            applicationRegistry.put(-6522422586188035503L, new Object(_enableSync));
+            applicationRegistry.put(-6522422586188035503L, new Boolean(_enableSync));
             SyncManager syncManager = SyncManager.getInstance();
             if (syncManager != null) {
                syncManager.enableSynchronization(getInstance());
@@ -780,7 +780,7 @@ public final class Hotlist
    }
 
    private final Object addItem(PhoneListItem item, boolean syncOperation) {
-      if (item instanceof Object) {
+      if (item instanceof EncryptableProvider) {
          EncryptableProvider encryptable = (EncryptableProvider)item;
          if (!encryptable.checkCrypt(true, true)) {
             encryptable.reCrypt(true, true);
@@ -821,7 +821,7 @@ public final class Hotlist
       if (this._inSyncTransaction) {
          this._inSyncTransaction = false;
          DirtyBits.commit();
-         ((Thread)(new Object(this))).start();
+         new Thread(this).start();
       }
    }
 

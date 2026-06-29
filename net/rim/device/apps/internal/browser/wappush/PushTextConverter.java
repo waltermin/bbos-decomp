@@ -3,8 +3,10 @@ package net.rim.device.apps.internal.browser.wappush;
 import java.io.DataInput;
 import java.io.DataInputStream;
 import java.io.InputStream;
+import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.apps.api.utility.serialization.BaseConverter;
 import net.rim.device.apps.api.utility.serialization.Converter;
+import net.rim.device.apps.api.utility.serialization.SerializationException;
 import net.rim.device.apps.api.utility.serialization.SerializationManager;
 import net.rim.device.apps.internal.browser.markup.HTMLUtilities;
 import net.rim.device.apps.internal.browser.markup.MarkupBinaryConstants;
@@ -1072,8 +1074,8 @@ final class PushTextConverter extends BaseConverter {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final Object convert(DataInput aDataInput, Object contextObject) {
-      if (contextObject instanceof Object && aDataInput instanceof Object) {
+   public final Object convert(DataInput aDataInput, Object contextObject) throws SerializationException {
+      if (contextObject instanceof HttpHeaders && aDataInput instanceof DataInputStream) {
          DataInputStream in = (DataInputStream)aDataInput;
          boolean var24 = false /* VF: Semaphore variable */;
 
@@ -1093,7 +1095,7 @@ final class PushTextConverter extends BaseConverter {
             int[] aTokens;
             switch (this._type) {
                case -1:
-                  throw new Object();
+                  throw new SerializationException();
                case 0:
                default:
                   mimeType = "application/vnd.wap.sic";
@@ -1165,7 +1167,7 @@ final class PushTextConverter extends BaseConverter {
                      Converter converter = SerializationManager.getConverter(mimeType, "net.rim.device.apps.internal.browser.wappush");
                      if (converter != null) {
                         Object obj = converter.convert(new PushTextDataInputStream(markupIn, in), contextObject);
-                        System.out.println(((StringBuffer)(new Object("Took time: "))).append(System.currentTimeMillis() - e).toString());
+                        System.out.println("Took time: " + (System.currentTimeMillis() - e));
                         var20 = obj;
                         var27 = false;
                         break label107;
@@ -1180,7 +1182,7 @@ final class PushTextConverter extends BaseConverter {
 
                   markupIn.close();
                   var24 = false;
-                  throw new Object();
+                  throw new SerializationException();
                }
 
                markupIn.close();
@@ -1190,11 +1192,11 @@ final class PushTextConverter extends BaseConverter {
             }
          } finally {
             if (var24) {
-               throw new Object();
+               throw new SerializationException();
             }
          }
       }
 
-      throw new Object();
+      throw new SerializationException();
    }
 }

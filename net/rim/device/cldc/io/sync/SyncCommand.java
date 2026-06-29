@@ -8,7 +8,7 @@ import net.rim.device.internal.synchronization.ota.util.ReusableObject;
 public class SyncCommand implements ReusableObject {
    private int _tag;
    private int _id;
-   protected static final IOException NotSupportedVersionException = (IOException)(new Object("NSV"));
+   protected static final IOException NotSupportedVersionException = new IOException("NSV");
    public static final byte UNKNOWEN = 0;
    public static final byte ADD = 1;
    public static final byte DELETE = 2;

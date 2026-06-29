@@ -20,12 +20,12 @@ public final class InputController {
 
    public final void submitInput(int commandID, Hashtable params) {
       if (ApplicationController.getInstance().getDomainCommand(commandID) == null) {
-         throw new Object("Unknown command id");
+         throw new IllegalArgumentException("Unknown command id");
       }
 
       if (this._commandRunner == null) {
          this._commandRunner = new InputController$CommandRunner();
-         this._commandExecutionThread = (Thread)(new Object(this._commandRunner, "CommandRunner"));
+         this._commandExecutionThread = new Thread(this._commandRunner, "CommandRunner");
          this._commandExecutionThread.start();
       }
 
@@ -52,7 +52,7 @@ public final class InputController {
                Hashtable params = null;
                if (app.getActiveScreen() != null) {
                   if (params == null) {
-                     params = (Hashtable)(new Object());
+                     params = new Hashtable();
                   }
 
                   params.put("previousScreen", app.getActiveScreen());

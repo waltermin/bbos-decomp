@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.browser.wml;
 
 import net.rim.device.api.browser.field.BrowserContent;
+import net.rim.device.api.browser.field.RenderingException;
 import net.rim.device.api.browser.field.RenderingOptions;
 import net.rim.device.api.browser.plugin.BrowserContentProvider;
 import net.rim.device.api.browser.plugin.BrowserContentProviderContext;
@@ -27,7 +28,7 @@ public final class WMLRenderingConverter extends BrowserContentProvider implemen
    }
 
    @Override
-   public final BrowserContent getBrowserContent(BrowserContentProviderContext param1) {
+   public final BrowserContent getBrowserContent(BrowserContentProviderContext param1) throws RenderingException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -100,7 +101,7 @@ public final class WMLRenderingConverter extends BrowserContentProvider implemen
       // 085: ifnull 08c
       // 088: aload 3
       // 089: ifnonnull 097
-      // 08c: new java/lang/Object
+      // 08c: new net/rim/device/api/browser/field/RenderingException
       // 08f: dup
       // 090: ldc_w "InputConnection or RenderingOptions is not set"
       // 093: invokespecial net/rim/device/api/browser/field/RenderingException.<init> (Ljava/lang/String;)V
@@ -166,11 +167,11 @@ public final class WMLRenderingConverter extends BrowserContentProvider implemen
       // 11b: bipush 1
       // 11c: aaload
       // 11d: dup
-      // 11e: instanceof java/lang/Object
+      // 11e: instanceof java/io/InputStream
       // 121: ifne 128
       // 124: pop
       // 125: goto 130
-      // 128: checkcast java/lang/Object
+      // 128: checkcast java/io/InputStream
       // 12b: astore 5
       // 12d: bipush 1
       // 12e: istore 16
@@ -194,11 +195,11 @@ public final class WMLRenderingConverter extends BrowserContentProvider implemen
       // 158: ifnonnull 175
       // 15b: aload 4
       // 15d: dup
-      // 15e: instanceof java/lang/Object
+      // 15e: instanceof javax/microedition/io/HttpConnection
       // 161: ifne 168
       // 164: pop
       // 165: goto 175
-      // 168: checkcast java/lang/Object
+      // 168: checkcast javax/microedition/io/HttpConnection
       // 16b: ldc_w "Accept-Charset"
       // 16e: invokeinterface javax/microedition/io/HttpConnection.getHeaderField (Ljava/lang/String;)Ljava/lang/String; 2
       // 173: astore 18
@@ -257,9 +258,9 @@ public final class WMLRenderingConverter extends BrowserContentProvider implemen
       // 1f0: astore 14
       // 1f2: goto 21a
       // 1f5: astore 15
-      // 1f7: new java/lang/Object
+      // 1f7: new net/rim/device/api/browser/field/RenderingException
       // 1fa: dup
-      // 1fb: new java/lang/Object
+      // 1fb: new java/lang/StringBuffer
       // 1fe: dup
       // 1ff: invokespecial java/lang/StringBuffer.<init> ()V
       // 202: sipush 551
@@ -315,7 +316,7 @@ public final class WMLRenderingConverter extends BrowserContentProvider implemen
       // 277: astore 16
       // 279: aload 13
       // 27b: invokevirtual java/io/InputStream.reset ()V
-      // 27e: new java/lang/Object
+      // 27e: new net/rim/device/api/browser/plugin/BrowserContentProviderContext
       // 281: dup
       // 282: aload 4
       // 284: aload 13
@@ -343,9 +344,9 @@ public final class WMLRenderingConverter extends BrowserContentProvider implemen
       // 2b4: astore 15
       // 2b6: goto 328
       // 2b9: astore 16
-      // 2bb: new java/lang/Object
+      // 2bb: new net/rim/device/api/browser/field/RenderingException
       // 2be: dup
-      // 2bf: new java/lang/Object
+      // 2bf: new java/lang/StringBuffer
       // 2c2: dup
       // 2c3: invokespecial java/lang/StringBuffer.<init> ()V
       // 2c6: sipush 551
@@ -358,9 +359,9 @@ public final class WMLRenderingConverter extends BrowserContentProvider implemen
       // 2da: invokespecial net/rim/device/api/browser/field/RenderingException.<init> (Ljava/lang/String;)V
       // 2dd: athrow
       // 2de: astore 16
-      // 2e0: new java/lang/Object
+      // 2e0: new net/rim/device/api/browser/field/RenderingException
       // 2e3: dup
-      // 2e4: new java/lang/Object
+      // 2e4: new java/lang/StringBuffer
       // 2e7: dup
       // 2e8: invokespecial java/lang/StringBuffer.<init> ()V
       // 2eb: sipush 551
@@ -373,9 +374,9 @@ public final class WMLRenderingConverter extends BrowserContentProvider implemen
       // 2ff: invokespecial net/rim/device/api/browser/field/RenderingException.<init> (Ljava/lang/String;)V
       // 302: athrow
       // 303: astore 16
-      // 305: new java/lang/Object
+      // 305: new net/rim/device/api/browser/field/RenderingException
       // 308: dup
-      // 309: new java/lang/Object
+      // 309: new java/lang/StringBuffer
       // 30c: dup
       // 30d: invokespecial java/lang/StringBuffer.<init> ()V
       // 310: sipush 551

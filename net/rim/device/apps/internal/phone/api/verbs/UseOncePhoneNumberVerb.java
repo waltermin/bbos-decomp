@@ -24,7 +24,7 @@ public final class UseOncePhoneNumberVerb extends Verb implements PhoneVerb {
    public final Object invoke(Object param) {
       String initialValue = (String)ContextObject.get(param, 253);
       if (initialValue != null) {
-         PhoneTextFilter filter = (PhoneTextFilter)(new Object());
+         PhoneTextFilter filter = new PhoneTextFilter();
          AbstractStringWrapper asw = AbstractStringWrapper.createInstance(initialValue);
          if (!filter.validate(asw)) {
             initialValue = "";
@@ -33,14 +33,14 @@ public final class UseOncePhoneNumberVerb extends Verb implements PhoneVerb {
          initialValue = "";
       }
 
-      ContextObject context = (ContextObject)(new Object(20));
+      ContextObject context = new ContextObject(20);
       PhoneUtilities.setPrivateFlag(context, 83);
       String fieldLabel = PhoneResources.getString(6033);
       ContextObject.put(context, 3986845832244503196L, fieldLabel);
       Object result = UseOnceEditorScreen.showUseOnceScreen(PhoneResources.getString(109), 3797587162219887872L, initialValue, context);
       if (result != null && this._composeVerb != null) {
          this._composeVerb.invoke(result);
-         return new Object(39);
+         return new ContextObject(39);
       } else {
          return result;
       }

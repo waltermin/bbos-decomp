@@ -9,7 +9,7 @@ final class RepeatRuleCollection$IntervalHandler implements IntFieldHandler {
 
    @Override
    public final int getValue(Object item) {
-      return !(item instanceof Object) ? 1 : ((Recur)item).getRecurPeriod();
+      return !(item instanceof Recur) ? 1 : ((Recur)item).getRecurPeriod();
    }
 
    RepeatRuleCollection$IntervalHandler(RepeatRuleCollection$1 x0) {

@@ -40,7 +40,7 @@ public final class FileSelectionVerb extends Verb implements SelectionListener, 
       String title = null;
       int selectionAttribs = 0;
       Object obj = ContextObject.get(folderParam, -1002650280265073678L);
-      if (!(obj instanceof Object)) {
+      if (!(obj instanceof FileSelectionFilter)) {
          selectionAttribs = ContextObject.getIntegerData(folderParam, ContextObject.getIntegerData(this._context, 0));
       } else {
          selectionAttribs = ((FileSelectionFilter)obj).getSelectFilter();
@@ -71,7 +71,7 @@ public final class FileSelectionVerb extends Verb implements SelectionListener, 
 
       this._popupExplorer = new ExplorePopup(this, title, folderParam);
       UiApplication.getUiApplication().pushModalScreen(this._popupExplorer);
-      return this._selected;
+      return (String)this._selected;
    }
 
    @Override
@@ -91,7 +91,7 @@ public final class FileSelectionVerb extends Verb implements SelectionListener, 
 
    @Override
    public final void selected(Object selected) {
-      if (selected instanceof Object) {
+      if (selected instanceof String) {
          String filename = (String)selected;
          boolean isFolder = filename.endsWith("/");
          if (isFolder && (this._allowedSelectionType & 2) != 0 || !isFolder && (this._allowedSelectionType & 1) != 0) {
@@ -112,12 +112,12 @@ public final class FileSelectionVerb extends Verb implements SelectionListener, 
    public final Verb getVerbs(Object context, Verb[] verbs) {
       Object verbSupplier = ContextObject.get(this._context, 424670468422402792L);
       Verb defaultVerb = null;
-      if (verbSupplier instanceof Object) {
+      if (verbSupplier instanceof VerbProvider) {
          defaultVerb = ((VerbProvider)verbSupplier).getVerbs(context, verbs);
       }
 
       Object obj = ContextObject.get(context, 2765042845091913199L);
-      if (obj instanceof Object) {
+      if (obj instanceof String) {
          String filename = (String)obj;
          obj = ContextObject.get(context, 6420606222376351919L);
          if (obj instanceof AliasFileItemField && ((AliasFileItemField)obj).isExecutable()) {

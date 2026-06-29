@@ -20,7 +20,7 @@ public final class SmartCardReaderFactory {
    public static final boolean addReader(SmartCardReader newReader) {
       synchronized (_readers) {
          if (newReader == null) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          int size = _readers.size();
@@ -110,7 +110,7 @@ public final class SmartCardReaderFactory {
                return installedReaders[0];
             }
 
-            String[] choices = new Object[numInstalledReaders];
+            String[] choices = new String[numInstalledReaders];
 
             for (int i = 0; i < numInstalledReaders; i++) {
                choices[i] = installedReaders[i].getLabel();
@@ -289,10 +289,10 @@ public final class SmartCardReaderFactory {
             int index = Arrays.getIndex(idBuffer, (byte)0);
             if (index != -1) {
                Array.resize(idBuffer, index);
-               smartCardIDLabel = (String)(new Object(idBuffer));
+               smartCardIDLabel = new String(idBuffer);
             }
 
-            messageParameters = new Object[]{smartCardIDLabel, smartCard != null ? smartCard.getLabel() : ""};
+            messageParameters = new String[]{smartCardIDLabel, smartCard != null ? smartCard.getLabel() : ""};
             if (installedReaders.length > 0) {
                message = _rb.getString(8);
             } else {
@@ -303,7 +303,7 @@ public final class SmartCardReaderFactory {
             messageParameters = new String[]{""};
          } else {
             message = _rb.getString(3);
-            messageParameters = new Object[]{smartCard != null ? smartCard.getLabel() : ""};
+            messageParameters = new String[]{smartCard != null ? smartCard.getLabel() : ""};
          }
 
          SmartCardReader[] readersToListenTo;

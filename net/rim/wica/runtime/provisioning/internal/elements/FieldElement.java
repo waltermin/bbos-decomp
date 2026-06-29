@@ -81,7 +81,7 @@ public class FieldElement extends AbstractElement {
 
    @Override
    public String toString() {
-      StringBuffer buf = (StringBuffer)(new Object(120));
+      StringBuffer buf = new StringBuffer(120);
       buf.append("DfieldElement[name=")
          .append(super._name)
          .append(",type=")

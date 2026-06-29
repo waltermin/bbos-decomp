@@ -7,6 +7,6 @@ class GranularPolicyIgnoredElement extends GranularPolicyElement {
 
    @Override
    public String getDebugPrintInfo() {
-      return ((StringBuffer)(new Object())).append(this.getXMLTag()).append(" (ignored)").toString();
+      return this.getXMLTag() + " (ignored)";
    }
 }

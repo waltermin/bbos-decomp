@@ -25,7 +25,7 @@ public class UnregisterV1_1 implements UnregisterV1 {
 
    @Override
    public String getPIN() {
-      return (String)(new Object(this._pin));
+      return new String(this._pin);
    }
 
    @Override

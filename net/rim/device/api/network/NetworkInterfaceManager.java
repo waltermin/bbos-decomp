@@ -41,7 +41,7 @@ public class NetworkInterfaceManager {
       this._info = info;
       this._proxy = Proxy.getInstance();
       this._lock = new Object();
-      EventLogger.register(guid, ((StringBuffer)(new Object("net.rim.if-"))).append(name).toString(), 2);
+      EventLogger.register(guid, "net.rim.if-" + name, 2);
    }
 
    protected void invokeListeners(boolean status, Object context, boolean redirect) {

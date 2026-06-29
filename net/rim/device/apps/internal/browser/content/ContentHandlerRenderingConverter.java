@@ -6,6 +6,7 @@ import javax.microedition.io.InputConnection;
 import net.rim.device.api.browser.field.BrowserContent;
 import net.rim.device.api.browser.field.BrowserContentBaseImpl;
 import net.rim.device.api.browser.field.RenderingApplication;
+import net.rim.device.api.browser.field.RenderingException;
 import net.rim.device.api.browser.field.RenderingOptions;
 import net.rim.device.api.browser.plugin.BrowserContentProvider;
 import net.rim.device.api.browser.plugin.BrowserContentProviderContext;
@@ -20,7 +21,7 @@ public class ContentHandlerRenderingConverter extends BrowserContentProvider {
    private final String[] _type;
 
    public ContentHandlerRenderingConverter(String type) {
-      this._type = new Object[]{type};
+      this._type = new String[]{type};
    }
 
    @Override
@@ -36,10 +37,10 @@ public class ContentHandlerRenderingConverter extends BrowserContentProvider {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public BrowserContent getBrowserContent(BrowserContentProviderContext context) {
+   public BrowserContent getBrowserContent(BrowserContentProviderContext context) throws RenderingException {
       int flags = context.getFlags();
       if ((flags & 16) != 0) {
-         throw new Object("Content Handlers cannot render embedded content");
+         throw new RenderingException("Content Handlers cannot render embedded content");
       }
 
       InputConnection connection = context.getInputConnection();
@@ -50,32 +51,32 @@ public class ContentHandlerRenderingConverter extends BrowserContentProvider {
 
          try {
             var16 = true;
-            Invocation application = new Object(url);
-            ((Invocation)application).setResponseRequired(false);
-            ((Invocation)application).setAction("open");
-            registry.invoke((Invocation)application);
+            Invocation application = new Invocation(url);
+            application.setResponseRequired(false);
+            application.setAction("open");
+            registry.invoke(application);
             var16 = false;
          } finally {
             if (var16) {
-               throw new Object("Could not start content handler");
+               throw new RenderingException("Could not start content handler");
             }
          }
 
          RenderingApplication application = context.getRenderingApplication();
          RenderingOptions options = context.getRenderingSession().getRenderingOptions();
-         BrowserContentBaseImpl content = (BrowserContentBaseImpl)(new Object(url, null, application, options, flags));
-         VerticalFieldManager manager = (VerticalFieldManager)(new Object(5764607523034234880L));
+         BrowserContentBaseImpl content = new BrowserContentBaseImpl(url, null, application, options, flags);
+         VerticalFieldManager manager = new VerticalFieldManager(5764607523034234880L);
          int slash = url.lastIndexOf(47);
          String filename = slash == -1 ? url : url.substring(slash + 1);
-         String msg = MessageFormat.format(BrowserResources.getString(900), new Object[]{filename});
-         RichTextField field = (RichTextField)(new Object(msg, 2305843073705312256L));
+         String msg = MessageFormat.format(BrowserResources.getString(900), new String[]{filename});
+         RichTextField field = new RichTextField(msg, 2305843073705312256L);
          int padding = Font.getDefault().getHeight() * 2;
          field.setPadding(padding, 0, padding, 0);
          manager.add(field);
          content.setContent(manager);
          return content;
       } else {
-         throw new Object("Content Handler cannot be invoked without a URL");
+         throw new RenderingException("Content Handler cannot be invoked without a URL");
       }
    }
 }

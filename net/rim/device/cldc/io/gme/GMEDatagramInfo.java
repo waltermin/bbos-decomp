@@ -20,7 +20,7 @@ final class GMEDatagramInfo {
    public boolean compress;
    public boolean encrypt;
    public String source;
-   public Vector cryptoAliases = (Vector)(new Object(1));
+   public Vector cryptoAliases = new Vector(1);
    public DatagramStatusListener listener;
    public boolean passUpSubLayerEvents;
    public int retryCount;

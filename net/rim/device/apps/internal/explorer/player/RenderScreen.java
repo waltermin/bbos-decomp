@@ -5,6 +5,7 @@ import net.rim.device.api.browser.field.BrowserContent;
 import net.rim.device.api.system.Display;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.api.util.CharacterUtilities;
 import net.rim.device.apps.api.ui.AppsMainScreen;
@@ -58,22 +59,22 @@ public final class RenderScreen extends AppsMainScreen {
       // 02e: istore 6
       // 030: aload 2
       // 031: dup
-      // 032: instanceof java/lang/Object
+      // 032: instanceof javax/microedition/io/HttpConnection
       // 035: ifne 03c
       // 038: pop
       // 039: goto 04c
-      // 03c: checkcast java/lang/Object
+      // 03c: checkcast javax/microedition/io/HttpConnection
       // 03f: invokeinterface javax/microedition/io/ContentConnection.getType ()Ljava/lang/String; 1
       // 044: invokestatic net/rim/device/api/io/MIMETypeAssociations.getMediaTypeFromMIMEType (Ljava/lang/String;)I
       // 047: istore 6
       // 049: goto 081
       // 04c: aload 2
       // 04d: dup
-      // 04e: instanceof java/lang/Object
+      // 04e: instanceof javax/microedition/io/file/FileConnection
       // 051: ifne 058
       // 054: pop
       // 055: goto 081
-      // 058: checkcast java/lang/Object
+      // 058: checkcast javax/microedition/io/file/FileConnection
       // 05b: invokeinterface javax/microedition/io/file/FileConnection.getURL ()Ljava/lang/String; 1
       // 060: astore 3
       // 061: aload 3
@@ -95,7 +96,7 @@ public final class RenderScreen extends AppsMainScreen {
       // 0a4: aload 1
       // 0a5: ldc2_w -4054673099568009991
       // 0a8: invokestatic net/rim/device/apps/api/framework/model/ContextObject.get (Ljava/lang/Object;J)Ljava/lang/Object;
-      // 0ab: checkcast java/lang/Object
+      // 0ab: checkcast java/lang/Integer
       // 0ae: astore 7
       // 0b0: aload 7
       // 0b2: ifnonnull 0b9
@@ -230,7 +231,7 @@ public final class RenderScreen extends AppsMainScreen {
    }
 
    private final Field createRenderErrorField() {
-      return (Field)(new Object("Unable to play content.", 36028797018963968L));
+      return new RichTextField("Unable to play content.", 36028797018963968L);
    }
 
    public final int getContentWindowWidth() {

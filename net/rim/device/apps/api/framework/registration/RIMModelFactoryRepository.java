@@ -32,7 +32,7 @@ public class RIMModelFactoryRepository {
 
    public static void addFactory(long collectionId, RIMModelFactory modelFactory) {
       if (modelFactory == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       RIMModelFactory[] factories;

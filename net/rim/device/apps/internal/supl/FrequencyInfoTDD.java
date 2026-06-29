@@ -15,6 +15,6 @@ final class FrequencyInfoTDD extends FrequencyInfo {
    @Override
    final void print() {
       System.out.println("Frequency Info TDD: ");
-      System.out.println(((StringBuffer)(new Object("UARFCN NT: "))).append(this.uarfcnNt).toString());
+      System.out.println("UARFCN NT: " + this.uarfcnNt);
    }
 }

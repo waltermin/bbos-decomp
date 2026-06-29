@@ -24,7 +24,7 @@ public final class AddressMatch {
       long[] cardLUIDs = (long[])values[1];
       Object[] cards = (Object[])values[0];
       int length = cardLUIDs != null ? cardLUIDs.length : 0;
-      if (length > 0 && address instanceof Object) {
+      if (length > 0 && address instanceof UniqueIDProvider) {
          long luid = ((UniqueIDProvider)address).getLUID(null);
 
          for (int i = length - 1; i >= 0; i--) {
@@ -43,6 +43,6 @@ public final class AddressMatch {
 
    private static final int verifyMatch(AddressCardModel address, SearchCriterion criteria) {
       PersonNameModel name = address.getName();
-      return name instanceof Object && ((MatchProvider)name).match(criteria) == 1 ? 1 : 0;
+      return name instanceof MatchProvider && ((MatchProvider)name).match(criteria) == 1 ? 1 : 0;
    }
 }

@@ -9,6 +9,7 @@ import net.rim.device.apps.api.addressbook.AddressBookServices;
 import net.rim.device.apps.api.addressbook.AddressCardElement;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.AddressSelectionContext;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.SyncFieldIDProvider;
 import net.rim.device.apps.api.framework.registration.RecognizerRepository;
 import net.rim.device.apps.api.framework.verb.Verb;
@@ -48,10 +49,10 @@ final class EditGroupAddressCardScreen$GroupMemberVerb extends Verb {
          }
 
          RecognizerRepository.registerRecognizer(-7235894928116123639L, new EditGroupAddressCardScreen$EligibleGroupAddressMemberRecognizer());
-         AddressSelectionContext selectionContext = (AddressSelectionContext)(new Object(
+         AddressSelectionContext selectionContext = new AddressSelectionContext(
             null, null, null, RecognizerRepository.getRecognizers(-7235894928116123639L), null
-         ));
-         selectionContext.setContext(new Object(108));
+         );
+         selectionContext.setContext(new ContextObject(108));
          AddressCardModel selectedAddressCard = (AddressCardModel)addressSelectionVerb.invoke(selectionContext);
          RecognizerRepository.unregisterRecognizer(-7235894928116123639L);
          Object[] members = new Object[0];
@@ -75,8 +76,8 @@ final class EditGroupAddressCardScreen$GroupMemberVerb extends Verb {
             int index = members.length == 1 ? 0 : this.this$0.pickAddressFromList(selectedAddressCard, members);
             if (index >= 0) {
                Object selectedAddress = members[index];
-               if (selectedAddress instanceof Object && this.this$0.checkDuplicates(selectedAddress)) {
-                  int addressCardFieldSyncId = ((SyncFieldIDProvider)selectedAddress).getSyncFieldId(new Object(18));
+               if (selectedAddress instanceof SyncFieldIDProvider && this.this$0.checkDuplicates(selectedAddress)) {
+                  int addressCardFieldSyncId = ((SyncFieldIDProvider)selectedAddress).getSyncFieldId(new ContextObject(18));
                   GroupAddressCardMember member = new GroupAddressCardMember(selectedAddressCard.getUID(), (byte)index, addressCardFieldSyncId);
                   if (this._type == 0) {
                      int memberIndex = this.this$0._listField.getSelectedIndex();
@@ -119,7 +120,7 @@ final class EditGroupAddressCardScreen$GroupMemberVerb extends Verb {
          boolean deleteConfirmed = false;
          if (AddressBookServices.getAddressBookOptions().getConfirmDelete()) {
             String pattern = AddressBookResources.getString(1023);
-            String formattedString = MessageFormat.format(pattern, new Object[]{acm.toString()});
+            String formattedString = MessageFormat.format(pattern, new String[]{acm.toString()});
             if (Dialog.ask(2, formattedString, 3) == 3) {
                deleteConfirmed = true;
             }
@@ -160,7 +161,7 @@ final class EditGroupAddressCardScreen$GroupMemberVerb extends Verb {
          Object[] matches = AddressBookServices.lookup(trimmedName, 1);
          if (matches != null
             && matches.length > 0
-            && (matches.length != 1 || !(matches[0] instanceof Object) || this.this$0._gacm.getUID() != ((AddressCardElement)matches[0]).getUID())) {
+            && (matches.length != 1 || !(matches[0] instanceof AddressCardElement) || this.this$0._gacm.getUID() != ((AddressCardElement)matches[0]).getUID())) {
             Status.show(AddressBookResources.getString(1100));
             this.this$0.setFocus(this.this$0._nameField, 0, 0, 0, 0);
             return null;

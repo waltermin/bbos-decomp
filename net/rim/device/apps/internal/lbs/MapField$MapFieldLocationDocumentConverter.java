@@ -66,7 +66,7 @@ final class MapField$MapFieldLocationDocumentConverter extends LocationDocumentC
       );
       if (this.this$0._currentRoute._routeName == null || this.this$0._currentRoute._routeName.equals("")) {
          this.this$0._currentRoute._routeName = MessageFormat.format(
-            LBSResources.getString(236), new Object[]{this.this$0._currentRoute._startAddress, this.this$0._currentRoute._endAddress}
+            LBSResources.getString(236), new String[]{this.this$0._currentRoute._startAddress, this.this$0._currentRoute._endAddress}
          );
          this.this$0._currentRoute._label = this.this$0._currentRoute._routeName;
       }
@@ -144,7 +144,7 @@ final class MapField$MapFieldLocationDocumentConverter extends LocationDocumentC
          }
 
          this.this$0._currentLocations.add(location);
-         this.expandBBox((XYRect)(new Object(x, y, 1, 1)));
+         this.expandBBox(new XYRect(x, y, 1, 1));
          if (this.this$0._lbsDocSource != null && this.this$0._lbsDocSource.equals("POI_SERVER")) {
             Arrays.add(this.this$0._currentPOIs, location);
             this.this$0._currentLocations.setFocus(this.this$0._currentPOIs[0]);
@@ -194,7 +194,7 @@ final class MapField$MapFieldLocationDocumentConverter extends LocationDocumentC
    private final void expandBBox(XYRect rect) {
       if (rect != null) {
          if (this._mapField._bbox == null) {
-            this._mapField._bbox = (XYRect)(new Object(rect));
+            this._mapField._bbox = new XYRect(rect);
             return;
          }
 

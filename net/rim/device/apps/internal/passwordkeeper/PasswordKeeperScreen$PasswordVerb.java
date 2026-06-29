@@ -36,7 +36,7 @@ final class PasswordKeeperScreen$PasswordVerb extends Verb {
 
             PasswordKeeperElement element = null;
             if (searchPattern != null && searchPattern.length() > 0) {
-               element = new PasswordKeeperElement(new Object[0], new Object[]{searchPattern, "", "", "", ""});
+               element = new PasswordKeeperElement(new String[0], new String[]{searchPattern, "", "", "", ""});
             }
 
             this.this$0.showScreen(element);

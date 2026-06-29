@@ -34,17 +34,17 @@ public final class KEAPublicKey implements KEAKey, PublicKey, Persistable {
             byte[] q = cs.getQ();
             byte[] y = this.getPublicKeyData();
             if (CryptoByteArrayArithmetic.isZero(y)) {
-               throw new Object();
+               throw new InvalidKeyException();
             }
 
             if (CryptoByteArrayArithmetic.isOne(y) || CryptoByteArrayArithmetic.compare(y, p) >= 0) {
-               throw new Object();
+               throw new InvalidKeyException();
             }
 
             byte[] result = new byte[p.length];
             CryptoByteArrayArithmetic.exponent(y, q, p, result);
             if (!CryptoByteArrayArithmetic.isOne(result)) {
-               throw new Object();
+               throw new InvalidKeyException();
             }
          } finally {
             break label71;
@@ -85,21 +85,21 @@ public final class KEAPublicKey implements KEAKey, PublicKey, Persistable {
          KEACryptoToken cryptoToken = (KEACryptoToken)cryptoSystem.getAsymmetricCryptoToken();
          this.initialize(cryptoSystem, cryptoToken, cryptoTokenData);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
-   public KEAPublicKey(KEACryptoSystem cryptoSystem, byte[] data) {
+   public KEAPublicKey(KEACryptoSystem cryptoSystem, byte[] data) throws InvalidKeyException {
       if (cryptoSystem != null && data != null) {
          data = CryptoByteArrayArithmetic.trim(data);
          if (data.length > cryptoSystem.getPublicKeyLength()) {
-            throw new Object();
+            throw new InvalidKeyException();
          }
 
          KEACryptoToken cryptoToken = (KEACryptoToken)cryptoSystem.getAsymmetricCryptoToken();
          this.initialize(cryptoSystem, cryptoToken, cryptoToken.injectKEAPublicKey(cryptoSystem.getCryptoTokenData(), data));
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

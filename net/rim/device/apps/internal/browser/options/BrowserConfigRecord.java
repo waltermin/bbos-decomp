@@ -1,7 +1,6 @@
 package net.rim.device.apps.internal.browser.options;
 
 import java.io.ByteArrayInputStream;
-import net.rim.device.api.collection.LongKeyProviderAdaptor;
 import net.rim.device.api.i18n.HashResourceBundle;
 import net.rim.device.api.i18n.Locale;
 import net.rim.device.api.i18n.ResourceBundle;
@@ -19,6 +18,7 @@ import net.rim.device.api.util.DataBuffer;
 import net.rim.device.api.util.StringTokenizer;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.api.framework.model.SyncBuffer;
+import net.rim.device.apps.api.messaging.DateSortKeyProviderIndirection;
 import net.rim.device.apps.api.messaging.util.SortedCollection;
 import net.rim.device.apps.internal.browser.bookmark.BookmarksFolderList;
 import net.rim.device.apps.internal.browser.core.BrowserDaemonRegistry;
@@ -380,7 +380,7 @@ public final class BrowserConfigRecord {
 
             return true;
          default:
-            throw new Object();
+            throw new RuntimeException();
       }
    }
 
@@ -393,8 +393,8 @@ public final class BrowserConfigRecord {
       boolean bsmEnabledSet = false;
       boolean useSeparateIconSet = false;
       if (data != null && data.length != 0) {
-         DataBuffer _tmpDataBuffer = (DataBuffer)(new Object(data, 0, data.length, true));
-         SyncBuffer _tmpSyncBuffer = (SyncBuffer)(new Object(_tmpDataBuffer, 0, 0));
+         DataBuffer _tmpDataBuffer = new DataBuffer(data, 0, data.length, true);
+         SyncBuffer _tmpSyncBuffer = new SyncBuffer(_tmpDataBuffer, 0, 0);
          _tmpDataBuffer.readByte();
 
          while (!_tmpSyncBuffer.isEmpty()) {
@@ -407,7 +407,7 @@ public final class BrowserConfigRecord {
                      String encodedBookmark = _tmpSyncBuffer.getString();
                      if (encodedBookmark != null && encodedBookmark.length() > 2) {
                         if (browserConfig._bookmarks == null) {
-                           browserConfig._bookmarks = new Object[40];
+                           browserConfig._bookmarks = new String[40];
                         }
 
                         browserConfig._bookmarks[fieldType - 60] = encodedBookmark;
@@ -798,15 +798,15 @@ public final class BrowserConfigRecord {
    }
 
    public final byte[] getEncodedData() {
-      DataBuffer tmpDataBuffer = (DataBuffer)(new Object());
-      SyncBuffer tmpSyncBuffer = (SyncBuffer)(new Object(tmpDataBuffer, 0, 0));
+      DataBuffer tmpDataBuffer = new DataBuffer();
+      SyncBuffer tmpSyncBuffer = new SyncBuffer(tmpDataBuffer, 0, 0);
       tmpDataBuffer.writeByte(2);
       tmpSyncBuffer.addField(1, this._homePageUrl);
       tmpSyncBuffer.addInt(2, this._startupPageValue, 1);
       tmpSyncBuffer.addField(3, this._transportServiceCID);
       String transportServiceUID = this._transportServiceUID;
       if (this._configType == 6) {
-         transportServiceUID = ((StringBuffer)(new Object("AD_"))).append(this._transportServiceUID).toString();
+         transportServiceUID = "AD_" + this._transportServiceUID;
       }
 
       tmpSyncBuffer.addField(4, transportServiceUID);
@@ -961,7 +961,7 @@ public final class BrowserConfigRecord {
          case 55:
             return this._useSeparateIcon;
          default:
-            throw new Object();
+            throw new RuntimeException();
       }
    }
 
@@ -1012,7 +1012,7 @@ public final class BrowserConfigRecord {
          case 58:
             return this._javascriptWatchdogTimeout;
          default:
-            throw new Object();
+            throw new RuntimeException();
       }
    }
 
@@ -1061,7 +1061,7 @@ public final class BrowserConfigRecord {
          case 56:
             return this._domains;
          default:
-            throw new Object();
+            throw new RuntimeException();
       }
    }
 
@@ -1074,23 +1074,23 @@ public final class BrowserConfigRecord {
 
             return false;
          default:
-            throw new Object();
+            throw new RuntimeException();
       }
    }
 
    public static final String encodeBookmark(String url, String title) {
-      return ((StringBuffer)(new Object())).append(url).append('|').append(title).toString();
+      return url + '|' + title;
    }
 
    public final SortedCollection getProvisionedBookmarks() {
       String[] bookmarks = this._bookmarks;
       if (bookmarks != null && bookmarks.length > 0) {
-         SortedCollection bookmarksCollection = (SortedCollection)(new Object());
-         bookmarksCollection.initialize(0, BookmarksFolderList.getProvisionedFolderLUID(this._uid), (LongKeyProviderAdaptor)(new Object()), null);
+         SortedCollection bookmarksCollection = new SortedCollection();
+         bookmarksCollection.initialize(0, BookmarksFolderList.getProvisionedFolderLUID(this._uid), new DateSortKeyProviderIndirection(), null);
 
          for (int i = 0; i < bookmarks.length; i++) {
             if (bookmarks[i] != null && bookmarks[i].length() > 2) {
-               StringTokenizer tokenizer = (StringTokenizer)(new Object(bookmarks[i], '|'));
+               StringTokenizer tokenizer = new StringTokenizer(bookmarks[i], '|');
                String uri = tokenizer.nextToken();
                if (uri != null && uri.length() > 0) {
                   String title = tokenizer.nextToken();
@@ -1119,7 +1119,7 @@ public final class BrowserConfigRecord {
          case 14:
             return this.decodeIconData(this._icon);
          default:
-            throw new Object();
+            throw new RuntimeException();
       }
    }
 
@@ -1171,7 +1171,7 @@ public final class BrowserConfigRecord {
                var4 = 17;
                break;
             default:
-               throw new Object();
+               throw new RuntimeException();
          }
 
          if (var4 != 0) {
@@ -1194,7 +1194,7 @@ public final class BrowserConfigRecord {
             case 34:
             case 41:
             case 42:
-               throw new Object();
+               throw new RuntimeException();
             case 33:
             default:
                var4 = 6;
@@ -1280,7 +1280,7 @@ public final class BrowserConfigRecord {
    }
 
    public final int getResourceID(int property) {
-      return (int)StringUtilities.stringHashToLong(((StringBuffer)(new Object())).append(this._uid).append((char)95).append(property).toString());
+      return (int)StringUtilities.stringHashToLong(this._uid + 95 + property);
    }
 
    private static final ResourceBundleFamily getResourceBundleFamily() {
@@ -1322,7 +1322,7 @@ public final class BrowserConfigRecord {
             String currentToken = null;
             int state = 1;
             int typecode = -1;
-            StringTokenizer tokenizer = (StringTokenizer)(new Object(this._localizedStrings, '|'));
+            StringTokenizer tokenizer = new StringTokenizer(this._localizedStrings, '|');
 
             while (tokenizer.hasMoreTokens()) {
                currentToken = tokenizer.nextToken();
@@ -1337,7 +1337,7 @@ public final class BrowserConfigRecord {
 
                switch (state) {
                   case 0:
-                     throw new Object();
+                     throw new IllegalStateException();
                   case 1:
                   default:
                      boolean var16 = false /* VF: Semaphore variable */;
@@ -1389,11 +1389,11 @@ public final class BrowserConfigRecord {
 
    private static final HashResourceBundle getOrCreateBundle(Locale locale, ResourceBundleFamily bundleFamily) {
       ResourceBundle existingBundle = bundleFamily.getBundle(locale);
-      if (existingBundle instanceof Object && locale != null && locale.equals(existingBundle.getLocale())) {
+      if (existingBundle instanceof HashResourceBundle && locale != null && locale.equals(existingBundle.getLocale())) {
          return (HashResourceBundle)existingBundle;
       }
 
-      HashResourceBundle bundle = (HashResourceBundle)(new Object(locale));
+      HashResourceBundle bundle = new HashResourceBundle(locale);
       if (locale != null) {
          bundleFamily.put(locale, bundle);
       }
@@ -1428,9 +1428,9 @@ public final class BrowserConfigRecord {
       if (base64EncodedString != null) {
          try {
             byte[] b64Data = base64EncodedString.getBytes();
-            ByteArrayInputStream bais = (ByteArrayInputStream)(new Object(b64Data));
-            Base64InputStream b64is = (Base64InputStream)(new Object(bais));
-            DataBuffer dataBuffer = (DataBuffer)(new Object());
+            ByteArrayInputStream bais = new ByteArrayInputStream(b64Data);
+            Base64InputStream b64is = new Base64InputStream(bais);
+            DataBuffer dataBuffer = new DataBuffer();
             byte[] byteBuffer = new byte[20];
             int bytesRead = 0;
 
@@ -1454,7 +1454,7 @@ public final class BrowserConfigRecord {
       boolean match = true;
       if (this._vendorId != VENDOR_ID_NONE) {
          int brandingVendorId = Branding.getVendorId();
-         StringTokenizer tokens = (StringTokenizer)(new Object(this._vendorId, ' '));
+         StringTokenizer tokens = new StringTokenizer(this._vendorId, ' ');
 
          while (tokens.hasMoreTokens()) {
             String token = tokens.nextToken();
@@ -1544,7 +1544,7 @@ public final class BrowserConfigRecord {
             this._javascriptWatchdogTimeout = value;
             return;
          default:
-            throw new Object();
+            throw new RuntimeException();
       }
    }
 
@@ -1614,7 +1614,7 @@ public final class BrowserConfigRecord {
             this._domains = value;
             return;
          default:
-            throw new Object();
+            throw new RuntimeException();
       }
    }
 
@@ -1657,7 +1657,7 @@ public final class BrowserConfigRecord {
             this._useSeparateIcon = value;
             return;
          default:
-            throw new Object();
+            throw new RuntimeException();
       }
    }
 

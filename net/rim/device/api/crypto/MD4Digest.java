@@ -34,7 +34,7 @@ public final class MD4Digest extends AbstractDigest implements Digest {
             length -= updated;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -68,7 +68,7 @@ public final class MD4Digest extends AbstractDigest implements Digest {
       }
 
       if (!Arrays.equals(target, 0, DIGEST_TEXT, 0, 16)) {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
    }
 

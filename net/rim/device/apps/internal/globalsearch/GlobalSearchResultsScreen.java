@@ -9,6 +9,7 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -28,8 +29,8 @@ import net.rim.vm.WeakReference;
 
 final class GlobalSearchResultsScreen extends AppsMainScreen implements CollectionListener, FilterProgressListener {
    private byte _status;
-   private LabelField _resultsStatusLabel = (LabelField)(new Object(CommonResources.getString(9139)));
-   private VerticalFieldManager _vfm = (VerticalFieldManager)(new Object());
+   private LabelField _resultsStatusLabel = new LabelField(CommonResources.getString(9139));
+   private VerticalFieldManager _vfm = new VerticalFieldManager();
    private SearchResultCollection[] _results;
    private int _numResults;
    private ContextObject _menuContext;
@@ -38,7 +39,7 @@ final class GlobalSearchResultsScreen extends AppsMainScreen implements Collecti
    private InvokeLaterRunnable _invokeLaterRunnable;
    private boolean _displayIcons;
    private static ResourceBundle _rb = ResourceBundle.getBundle(1181520400124563677L, "net.rim.device.apps.internal.resource.GlobalSearch");
-   private static StringBuffer _sb = (StringBuffer)(new Object());
+   private static StringBuffer _sb = new StringBuffer();
    private static final int SEARCH_INITIALIZING = 0;
    private static final int SEARCH_IN_PROGRESS = 1;
    private static final int SEARCH_FINISHED = 2;
@@ -47,22 +48,22 @@ final class GlobalSearchResultsScreen extends AppsMainScreen implements Collecti
    GlobalSearchResultsScreen(boolean displayIcons) {
       super(65536);
       this._displayIcons = displayIcons;
-      this._menuContext = (ContextObject)(new Object(78, 2, 86));
+      this._menuContext = new ContextObject(78, 2, 86);
       this._menuContext.setFlag(3);
       this._updaterRunnable = new GlobalSearchResultsScreen$UpdaterRunnable(this);
       this._application = Application.getApplication();
-      this._invokeLaterRunnable = (InvokeLaterRunnable)(new Object());
+      this._invokeLaterRunnable = new InvokeLaterRunnable();
       this.setTitle(CommonResources.getString(9143));
       this.add(this._resultsStatusLabel);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.add(this._vfm);
    }
 
    final boolean performSearch(SearchableWrapper[] searchableWrappers, SearchCriterion[] sc) {
       this._status = 0;
-      WeakReference listener = (WeakReference)(new Object(this));
+      WeakReference listener = new WeakReference(this);
       this._numResults = searchableWrappers.length;
-      this._results = new Object[this._numResults];
+      this._results = new SearchResultCollection[this._numResults];
       this._vfm.deleteAll();
 
       for (int i = this._numResults - 1; i >= 0; i--) {
@@ -88,8 +89,8 @@ final class GlobalSearchResultsScreen extends AppsMainScreen implements Collecti
       super.makeMenu(menu, instance);
       Verb defaultVerb = null;
       Field leafWithFocus = this.getLeafFieldWithFocus();
-      Verb[] fieldVerbs = new Object[0];
-      if (leafWithFocus instanceof Object) {
+      Verb[] fieldVerbs = new Verb[0];
+      if (leafWithFocus instanceof VerbProvider) {
          ContextObject context = ContextObject.castOrCreate(this.getMenuContextObject());
          if (instance == 65536) {
             context.setFlag(81);
@@ -100,7 +101,7 @@ final class GlobalSearchResultsScreen extends AppsMainScreen implements Collecti
       }
 
       Object selectedObject = null;
-      if (leafWithFocus instanceof Object) {
+      if (leafWithFocus instanceof SearchResultField) {
          selectedObject = ((SearchResultField)leafWithFocus).getSelectedObject();
       }
 

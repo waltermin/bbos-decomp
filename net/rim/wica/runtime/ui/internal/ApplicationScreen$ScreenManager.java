@@ -15,7 +15,7 @@ final class ApplicationScreen$ScreenManager extends Manager {
    ApplicationScreen$ScreenManager() {
       super(3458764513820540928L);
       this._focusManager = new FocusManager();
-      this._verticalScrollbar = (Scrollbar)(new Object());
+      this._verticalScrollbar = new Scrollbar();
       this.add(this._titleField);
       this.add(this._focusManager);
       this.add(this._verticalScrollbar);

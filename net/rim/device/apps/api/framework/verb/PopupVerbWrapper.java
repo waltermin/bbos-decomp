@@ -17,7 +17,7 @@ public class PopupVerbWrapper extends Verb {
    public PopupVerbWrapper(String menuDescription, int ordering, Verb[] verbs) {
       super(ordering);
       int count = verbs.length;
-      String[] descriptions = new Object[count];
+      String[] descriptions = new String[count];
 
       for (int i = 0; i < count; i++) {
          descriptions[i] = verbs[i].toString();

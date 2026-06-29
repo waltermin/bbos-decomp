@@ -169,11 +169,11 @@ public final class Tasks {
 
    public final void dequeue(int[] ret) {
       if (ret == null) {
-         throw new Object("Invalid Array: null");
+         throw new IllegalArgumentException("Invalid Array: null");
       }
 
       if (ret == null || ret.length < 2) {
-         throw new Object("Invalid Array: Size is too small.");
+         throw new IllegalArgumentException("Invalid Array: Size is too small.");
       }
 
       if (this._currentQueueCur != -1) {

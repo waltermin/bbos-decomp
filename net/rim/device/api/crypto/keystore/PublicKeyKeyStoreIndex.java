@@ -18,7 +18,7 @@ public class PublicKeyKeyStoreIndex implements KeyStoreIndex {
       if (target instanceof PublicKey) {
          return target.hashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

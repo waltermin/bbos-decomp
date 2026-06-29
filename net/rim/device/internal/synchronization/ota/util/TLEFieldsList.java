@@ -35,9 +35,9 @@ public final class TLEFieldsList extends IntHashtable {
 
    public TLEFieldsList(byte[] bytes) {
       try {
-         this.readFrom((DataBuffer)(new Object(bytes, 0, bytes.length, true)));
+         this.readFrom(new DataBuffer(bytes, 0, bytes.length, true));
       } finally {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -92,12 +92,12 @@ public final class TLEFieldsList extends IntHashtable {
       try {
          return this.toDataBuffer().getArray();
       } catch (Throwable var3) {
-         throw new Object(e.getMessage());
+         throw new RuntimeException(e.getMessage());
       }
    }
 
    public final DataBuffer toDataBuffer() {
-      DataBuffer xDataBuffer = (DataBuffer)(new Object(true));
+      DataBuffer xDataBuffer = new DataBuffer(true);
       this.writeTo(xDataBuffer);
       xDataBuffer.trim();
       xDataBuffer.rewind();

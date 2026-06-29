@@ -37,7 +37,7 @@ class ESNumberPrototype$5 extends HostFunction {
       ParsedDouble fd = new ParsedDouble(d);
       int n = fd.decExponent;
       int k = fd.nDigits;
-      StringBuffer b = (StringBuffer)(new Object());
+      StringBuffer b = new StringBuffer();
       if (fd.isNegative) {
          b.append('-');
       }

@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.qm.peer;
 
 import java.io.ByteArrayOutputStream;
 import javax.microedition.media.Manager;
+import javax.microedition.media.MediaException;
 import javax.microedition.media.Player;
 import javax.microedition.media.PlayerListener;
 import javax.microedition.media.control.RecordControl;
@@ -73,12 +74,12 @@ public final class VoiceRecordController {
       this._listener = listener;
    }
 
-   public final void startRecording() {
+   public final void startRecording() throws MediaException {
       if (this._state == 0) {
          System.out.println("VoiceNotes.start");
          this._recordPlayer = Manager.createPlayer("capture://audio");
          if (this._recordPlayer == null) {
-            throw new Object();
+            throw new MediaException();
          }
 
          this._recordPlayer.realize();
@@ -88,10 +89,10 @@ public final class VoiceRecordController {
 
          this._recordControl = (RecordControl)this._recordPlayer.getControl("RecordControl");
          if (this._recordControl == null) {
-            throw new Object();
+            throw new MediaException();
          }
 
-         this._oStream = (ByteArrayOutputStream)(new Object());
+         this._oStream = new ByteArrayOutputStream();
          this._recordControl.setRecordStream(this._oStream);
          this._recordControl.setRecordSizeLimit(this._maxRecordSize);
          this._recordControl.startRecord();

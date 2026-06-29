@@ -11,7 +11,7 @@ final class UtcTime {
 
    final void decode(Nibbler nib) {
       int length = nib.getBitsLarge(8);
-      StringBuffer strBuf = (StringBuffer)(new Object());
+      StringBuffer strBuf = new StringBuffer();
 
       for (int i = 0; i < length; i++) {
          strBuf.append((char)(0xFF & nib.getBitsLarge(7)));
@@ -21,6 +21,6 @@ final class UtcTime {
    }
 
    final void print() {
-      System.out.println(((StringBuffer)(new Object("Utc Time: "))).append(this.utcTimeString).toString());
+      System.out.println("Utc Time: " + this.utcTimeString);
    }
 }

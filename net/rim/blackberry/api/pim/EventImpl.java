@@ -148,7 +148,7 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
          case 20000929:
             return 1;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -181,7 +181,7 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
             this._event.setSubject(null);
             break;
          case 108:
-            throw new Object("UID is a read-only field.");
+            throw new IllegalArgumentException("UID is a read-only field.");
          case 20000927:
             MeetingInfo meetingInfo = this._event.getMeetingInfo();
             meetingInfo.removeAttendee(this.getAttendee(index));
@@ -190,7 +190,7 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
          case 20000929:
             return;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       this._modified = true;
@@ -208,7 +208,7 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
       }
 
       if (this._mode == 1) {
-         throw new Object();
+         throw new SecurityException();
       }
 
       if (this.isEmpty()) {
@@ -307,13 +307,13 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
          case 106:
             return this.getStartDate();
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
    private final void setAlarm(int value) {
       if (value < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       LongProp reminderObject = (LongProp)this._event.get(813899564474876953L);
@@ -324,7 +324,7 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
 
    private final void setEndDate(long value) {
       if (value < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (this.countValues(106) > 0) {
@@ -334,12 +334,12 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
          this._event.setAllDayFlag(duration == 0);
       }
 
-      this._dtend = (Date)(new Object(value));
+      this._dtend = new Date(value);
    }
 
    private final void setStartDate(long value) {
       if (value < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       EventFieldsModel fieldsModel = null;
@@ -377,7 +377,7 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
             this.setStartDate(value);
             break;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       this._modified = true;
@@ -410,7 +410,7 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
          case 20000929:
             return this._event.getFreeBusy();
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -427,7 +427,7 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
             this._event.setFreeBusy((byte)value);
             break;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       this._modified = true;
@@ -454,7 +454,7 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
             Object address = attendee.getAddress();
             return address.toString();
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -472,14 +472,14 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
             this._event.setSubject(value);
             break;
          case 108:
-            throw new Object("UID is a read-only field.");
+            throw new IllegalArgumentException("UID is a read-only field.");
          case 20000927:
             MeetingInfo meetingInfo = this._event.getMeetingInfo();
             Attendee attendee = AttendeeFactory.createAttendeeFromRFC822(1, value);
             meetingInfo.addAttendee(attendee);
             break;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       this._modified = true;
@@ -489,7 +489,7 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
    public final void addBoolean(int field, int attributes, boolean value) {
       switch (field) {
          case 20000927:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 20000928:
          default:
             this._event.setAllDayFlag(value);
@@ -501,7 +501,7 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
    public final boolean getBoolean(int field, int index) {
       switch (field) {
          case 20000927:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 20000928:
          default:
             return this._event.getAllDayFlag();
@@ -512,7 +512,7 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
    public final void setBoolean(int field, int index, int attributes, boolean value) {
       switch (field) {
          case 20000927:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 20000928:
          default:
             this._event.setAllDayFlag(value);
@@ -665,7 +665,7 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
             long[] exclusions = recur.getExclusions(null);
             long[] inclusions = recur.getInclusions(null);
             Calendar cal = Calendar.getInstance();
-            cal.setTime((Date)(new Object(startDate)));
+            cal.setTime(new Date(startDate));
             if (modifyType == 1) {
                recur.clearAllModifiers();
             }
@@ -1019,7 +1019,7 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
             this.setStartDate(value);
             break;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       this._modified = true;
@@ -1038,7 +1038,7 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
             this._event.setFreeBusy((byte)value);
             break;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       this._modified = true;
@@ -1058,7 +1058,7 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
             this._event.setSubject(value);
             break;
          case 108:
-            throw new Object("UID is a read-only field.");
+            throw new IllegalArgumentException("UID is a read-only field.");
          case 20000927:
             Attendee temp = AttendeeFactory.createAttendeeFromRFC822(1, value);
             Object address = temp.getAddress();
@@ -1066,7 +1066,7 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
             attendee.setAddress(address);
             break;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       this._modified = true;
@@ -1146,7 +1146,7 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
       if (e.getAllDayFlag() && e.getInstanceDuration() != 0) {
          this.addDate(102, 0, this.getDate(106, 0));
       } else {
-         this._dtend = (Date)(new Object(this.getStartDate() + e.getInstanceDuration()));
+         this._dtend = new Date(this.getStartDate() + e.getInstanceDuration());
       }
    }
 
@@ -1380,7 +1380,7 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
    private final int getMaxDayInMonth(int month, int year) {
       switch (month) {
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          case 2:
          case 4:
@@ -1422,7 +1422,7 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
          Recur recur = this._event.getRecurrenceCopy();
          long startDate = this.getDate(106, 0);
          Calendar cal = Calendar.getInstance();
-         cal.setTime((Date)(new Object(startDate)));
+         cal.setTime(new Date(startDate));
          if (this.getRepeatInt(repeat, 2) == 0 && (recur.numModifierValues(1) != 0 || this.getRepeatInt(repeat, 5) == 17)) {
             RepeatRuleUtil.setDayInWeekToRecur(recur, 1 << 17 - cal.get(7));
             this._event.setRecurrence(recur);
@@ -1510,7 +1510,7 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
          }
 
          Calendar occurrence = this._searchCalendar1;
-         occurrence.setTime((Date)(new Object(date)));
+         occurrence.setTime(new Date(date));
          int year = occurrence.get(1);
          int month = occurrence.get(2);
          int day = occurrence.get(5);
@@ -1521,14 +1521,14 @@ public final class EventImpl extends PIMItemImpl implements BlackBerryEvent {
          Calendar cal = this._searchCalendar2;
          dateIndex = -dateIndex - 1;
          if (dateIndex < array.length) {
-            cal.setTime((Date)(new Object(array[dateIndex])));
+            cal.setTime(new Date(array[dateIndex]));
             if (cal.get(1) == year && cal.get(2) == month && cal.get(5) == day) {
                return true;
             }
          }
 
          if (dateIndex > 0) {
-            cal.setTime((Date)(new Object(array[dateIndex - 1])));
+            cal.setTime(new Date(array[dateIndex - 1]));
             if (cal.get(1) == year && cal.get(2) == month && cal.get(5) == day) {
                return true;
             }

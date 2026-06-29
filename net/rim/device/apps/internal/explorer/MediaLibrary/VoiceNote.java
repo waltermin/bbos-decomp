@@ -42,11 +42,7 @@ public final class VoiceNote implements MediaInfo, PaintProvider, KeyProvider, V
 
       if (this._length >= 0) {
          int dur = (int)(this._length / 1000000);
-         lengthString = ((StringBuffer)(new Object()))
-            .append(Integer.toString(dur / 60))
-            .append(':')
-            .append(NumberUtilities.toString(dur % 60, 10, 2))
-            .toString();
+         lengthString = Integer.toString(dur / 60) + ':' + NumberUtilities.toString(dur % 60, 10, 2);
       }
 
       drawParam.iTruncateWithEllipsis = 2;
@@ -137,7 +133,7 @@ public final class VoiceNote implements MediaInfo, PaintProvider, KeyProvider, V
    @Override
    public final void setPreloaded(boolean preloaded) {
       if (this._keywords == null) {
-         this._keywords = new Object[0];
+         this._keywords = new String[0];
       }
 
       if (preloaded) {

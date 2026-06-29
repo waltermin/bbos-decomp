@@ -23,12 +23,12 @@ final class WicletDropdownListField extends WicletDropdownListFrame implements V
       this._visibility = (byte)(model.isVisible() ? 0 : 1);
       Vector values = (Vector)model.getValue();
       if (values == null) {
-         values = (Vector)(new Object());
+         values = new Vector();
       }
 
       Object[] itemArray = new Object[values.size()];
       values.copyInto(itemArray);
-      ObjectChoiceField choice = (ObjectChoiceField)(new Object("", null, 0, 4294967296L));
+      ObjectChoiceField choice = new ObjectChoiceField("", null, 0, 4294967296L);
       choice.setEditable(!model.isReadOnly());
       choice.setChoices(itemArray);
       if (itemArray.length > 0) {
@@ -125,7 +125,7 @@ final class WicletDropdownListField extends WicletDropdownListFrame implements V
       ObjectChoiceField choice = (ObjectChoiceField)this.getField(0);
       Vector values = (Vector)this._model.getValue();
       if (values == null) {
-         values = (Vector)(new Object());
+         values = new Vector();
       }
 
       Object[] itemArray = new Object[values.size()];

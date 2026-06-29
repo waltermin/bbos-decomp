@@ -240,12 +240,12 @@ class ComponentImpl extends ComponentDefImpl implements Component, DataOwner {
    public Object getFieldValueAsObject(int field) {
       switch (this.getFieldType(field)) {
          case 0:
-            return new Object(this.getBooleanFieldValue(field));
+            return new Boolean(this.getBooleanFieldValue(field));
          case 1:
          case 5:
-            return new Object(this.getIntFieldValue(field));
+            return new Integer(this.getIntFieldValue(field));
          case 2:
-            return new Object(this.getDoubleFieldValue(field));
+            return new Double(this.getDoubleFieldValue(field));
          case 3:
          case 32768:
          case 32769:
@@ -258,11 +258,11 @@ class ComponentImpl extends ComponentDefImpl implements Component, DataOwner {
             return this.getObjectFieldValue(field);
          case 4:
          case 8:
-            return new Object(this.getLongFieldValue(field));
+            return new Long(this.getLongFieldValue(field));
          case 6:
-            return new Object(this.getReferenceField(field));
+            return new Long(this.getReferenceField(field));
          default:
-            throw new Object("Not recognized field type.");
+            throw new RuntimeException("Not recognized field type.");
       }
    }
 
@@ -270,24 +270,24 @@ class ComponentImpl extends ComponentDefImpl implements Component, DataOwner {
    public void setFieldValueFromObject(int field, Object value) {
       switch (this.getFieldType(field)) {
          case 0:
-            this.setBooleanFieldValue(field, value == null ? false : value);
+            this.setBooleanFieldValue(field, value == null ? false : (Boolean)value);
             return;
          case 1:
          case 5:
-            this.setIntFieldValue(field, value == null ? 0 : value);
+            this.setIntFieldValue(field, value == null ? 0 : (Integer)value);
             return;
          case 2:
             double dValue = (double)0L;
-            if (!(value instanceof Object)) {
-               if (!(value instanceof Object)) {
+            if (!(value instanceof Double)) {
+               if (!(value instanceof Integer)) {
                   if (value != null) {
-                     throw new Object("Invalid value type for decimal variable or field");
+                     throw new RuntimeException("Invalid value type for decimal variable or field");
                   }
                } else {
                   dValue = ((Integer)value).intValue();
                }
             } else {
-               dValue = value;
+               dValue = (Double)value;
             }
 
             this.setDoubleFieldValue(field, dValue);
@@ -304,29 +304,29 @@ class ComponentImpl extends ComponentDefImpl implements Component, DataOwner {
             this.setObjectFieldValue(field, value);
             return;
          case 4:
-            this.setLongFieldValue(field, value == null ? System.currentTimeMillis() : value);
+            this.setLongFieldValue(field, value == null ? System.currentTimeMillis() : (Long)value);
             return;
          case 6:
-            this.setReferenceField(field, value == null ? -1 : value);
+            this.setReferenceField(field, value == null ? -1 : (Long)value);
             return;
          case 8:
             long lValue = 0;
-            if (!(value instanceof Object)) {
-               if (!(value instanceof Object)) {
+            if (!(value instanceof Long)) {
+               if (!(value instanceof Integer)) {
                   if (value != null) {
-                     throw new Object("Invalid value type for long variable or field");
+                     throw new RuntimeException("Invalid value type for long variable or field");
                   }
                } else {
                   lValue = ((Integer)value).intValue();
                }
             } else {
-               lValue = value;
+               lValue = (Long)value;
             }
 
             this.setLongFieldValue(field, lValue);
             return;
          default:
-            throw new Object("Not recognized field type.");
+            throw new RuntimeException("Not recognized field type.");
       }
    }
 

@@ -18,7 +18,7 @@ final class ETDocumentCollection {
    public static final void writeLocationPosition(
       DataBuffer db, long timestamp, int latitude, int longitude, int altitude, float speed, float bearing, String data, int deviceStatus, int reserve1
    ) {
-      SyncBuffer buffer = (SyncBuffer)(new Object(db, 0, -1492538911));
+      SyncBuffer buffer = new SyncBuffer(db, 0, -1492538911);
       buffer.addInt(1, (int)timestamp, 4);
       buffer.addInt(2, latitude, 4);
       buffer.addInt(3, longitude, 4);

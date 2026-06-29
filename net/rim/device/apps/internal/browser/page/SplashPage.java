@@ -1,6 +1,6 @@
 package net.rim.device.apps.internal.browser.page;
 
-import net.rim.device.api.browser.field.BrowserContent;
+import net.rim.device.api.browser.field.BrowserContentBaseImpl;
 import net.rim.device.api.browser.field.RenderingOptions;
 import net.rim.device.api.system.Branding;
 import net.rim.device.api.system.EncodedImage;
@@ -20,7 +20,7 @@ public final class SplashPage extends Page {
 
    SplashPage(RenderingOptions renderingOptions) {
       super(null, null, 18);
-      this.setBrowserContent((BrowserContentImpl)(new Object((BrowserContent)(new Object(null, new SplashPageManager(), this, renderingOptions, 0)))));
+      this.setBrowserContent(new BrowserContentWrapper(new BrowserContentBaseImpl(null, new SplashPageManager(), this, renderingOptions, 0)));
    }
 
    public static final Page createInstance(RenderingOptions renderingOptions, BrowserSession session) {
@@ -38,7 +38,7 @@ public final class SplashPage extends Page {
       }
 
       if (encodedImage != null) {
-         BitmapField bf = (BitmapField)(new Object(null, 3458764513820540964L));
+         BitmapField bf = new BitmapField(null, 3458764513820540964L);
          bf.setImage(encodedImage);
          page.getBrowserContent().getContentManager().add(bf);
       }

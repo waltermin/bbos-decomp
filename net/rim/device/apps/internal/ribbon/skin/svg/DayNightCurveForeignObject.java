@@ -57,7 +57,7 @@ class DayNightCurveForeignObject extends AbstractForeignObject implements Global
    private int[] _yCoordsCur;
    private int _handle1;
    int _C;
-   private static GregorianCalendar _cal = (GregorianCalendar)(new Object());
+   private static GregorianCalendar _cal = new GregorianCalendar();
    private static final int MAX_C = 11863283;
    private static final int MIN_1_OVER_C = 363;
    private static final int MAX_THETA_32 = Fixed32.tenThouToFP(4102);
@@ -133,7 +133,7 @@ class DayNightCurveForeignObject extends AbstractForeignObject implements Global
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private void readParams(String query) {
-      StringTokenizer tokenizer = (StringTokenizer)(new Object(query, '&'));
+      StringTokenizer tokenizer = new StringTokenizer(query, '&');
 
       while (tokenizer.hasMoreTokens()) {
          String nameValuePair = tokenizer.nextToken();
@@ -196,7 +196,7 @@ class DayNightCurveForeignObject extends AbstractForeignObject implements Global
             }
          } finally {
             if (var9) {
-               System.out.println(((StringBuffer)(new Object("Invalid number format parsing "))).append(name).append(" in DayNightCurve").toString());
+               System.out.println("Invalid number format parsing " + name + " in DayNightCurve");
                continue;
             }
          }

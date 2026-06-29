@@ -95,7 +95,7 @@ class DOMInternalRepresentation$Handler extends DefaultHandler implements RIMExt
    public void defaultAttribute(String element, String attribute, String defaultValue) {
       Hashtable attributeHash = (Hashtable)this.this$0._defaultAttributes.get(element);
       if (attributeHash == null) {
-         attributeHash = (Hashtable)(new Object());
+         attributeHash = new Hashtable();
          this.this$0._defaultAttributes.put(element, attributeHash);
       }
 
@@ -146,15 +146,15 @@ class DOMInternalRepresentation$Handler extends DefaultHandler implements RIMExt
 
    DOMInternalRepresentation$Handler(DOMInternalRepresentation _1) {
       this.this$0 = _1;
-      this._entityReferences = (Hashtable)(new Object());
-      this._namespaceMap = (Hashtable)(new Object());
-      this._namespaceStack = (Vector)(new Object());
-      this._namespacePending = (Vector)(new Object());
+      this._entityReferences = new Hashtable();
+      this._namespaceMap = new Hashtable();
+      this._namespaceStack = new Vector();
+      this._namespacePending = new Vector();
       this._noExtendedAttributes = new DOMInternalRepresentation$Handler$1(this);
    }
 
    private String getPrefix(String uri) {
-      return (String)(uri.length() == 0 ? "" : this._namespaceMap.get(uri));
+      return uri.length() == 0 ? "" : (String)this._namespaceMap.get(uri);
    }
 
    @Override
@@ -183,7 +183,7 @@ class DOMInternalRepresentation$Handler extends DefaultHandler implements RIMExt
       }
 
       if (namespaceNext != 0) {
-         this._namespacePending = (Vector)(new Object());
+         this._namespacePending = new Vector();
          this.this$0.pushChild(namespaceNext);
       }
 

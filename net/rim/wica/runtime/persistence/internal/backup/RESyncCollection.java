@@ -93,7 +93,7 @@ public final class RESyncCollection implements SyncCollection, SyncConverter, Sy
    @Override
    public final SyncObject[] getSyncObjects() {
       int size = this.getSyncObjectCount();
-      SyncObject[] objects = new Object[size];
+      SyncObject[] objects = new SyncObject[size];
 
       for (int i = 0; i < size; i++) {
          objects[i] = new RESyncCollection$RESyncObject(i - 1);
@@ -401,7 +401,7 @@ public final class RESyncCollection implements SyncCollection, SyncConverter, Sy
    }
 
    private final Vector filterApplications(Enumeration applications) {
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
 
       while (applications.hasMoreElements()) {
          WicletStore store = (WicletStore)applications.nextElement();
@@ -423,7 +423,7 @@ public final class RESyncCollection implements SyncCollection, SyncConverter, Sy
       model.setPackageLocation(info.getPackageLocation());
       IntEnumeration defIds = store.loadDataDefinitionIds();
       if (defIds != null) {
-         Vector v = (Vector)(new Object());
+         Vector v = new Vector();
 
          while (defIds.hasMoreElements()) {
             int defId = defIds.nextElement();
@@ -446,7 +446,7 @@ public final class RESyncCollection implements SyncCollection, SyncConverter, Sy
             }
 
             if (this._restoredApplications == null) {
-               this._restoredApplications = (Vector)(new Object());
+               this._restoredApplications = new Vector();
             }
          }
 

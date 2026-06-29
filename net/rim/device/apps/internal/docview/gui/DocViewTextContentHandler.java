@@ -14,7 +14,7 @@ final class DocViewTextContentHandler {
    private DocViewTextInformation _tocInfo;
    private IntIntHashtable _bookmarkMap;
    private BreakObj[] _breakSortedVector;
-   private final StringBuffer _paraBuf = (StringBuffer)(new Object(1));
+   private final StringBuffer _paraBuf = new StringBuffer(1);
    private int _afterParagraphSpacing;
    private boolean _paraIncomplete;
    private boolean _paragraphDeletedByTrackChange;
@@ -36,7 +36,7 @@ final class DocViewTextContentHandler {
 
       this._trackChangesOn = trackChangesOn;
       if (copy._bookmarkMap != null) {
-         this._bookmarkMap = (IntIntHashtable)(new Object(copy._bookmarkMap.size()));
+         this._bookmarkMap = new IntIntHashtable(copy._bookmarkMap.size());
          IntEnumeration e = copy._bookmarkMap.keys();
 
          while (e.hasMoreElements()) {
@@ -63,7 +63,7 @@ final class DocViewTextContentHandler {
 
    final void append(DocViewTextContentHandler appendInstance) {
       if (this._trackChangesOn != appendInstance.getTrackChangesOn()) {
-         throw new Object("Trying to append a handler with a different value for track changes parsing. Not supported. ");
+         throw new IllegalArgumentException("Trying to append a handler with a different value for track changes parsing. Not supported. ");
       }
 
       if (this._hasTrackChanges && appendInstance.hasTrackChanges()) {
@@ -82,7 +82,7 @@ final class DocViewTextContentHandler {
 
       if (appendInstance._bookmarkMap != null) {
          if (this._bookmarkMap == null) {
-            this._bookmarkMap = (IntIntHashtable)(new Object(appendInstance._bookmarkMap.size()));
+            this._bookmarkMap = new IntIntHashtable(appendInstance._bookmarkMap.size());
          }
 
          IntEnumeration e = appendInstance._bookmarkMap.keys();
@@ -203,7 +203,7 @@ final class DocViewTextContentHandler {
 
    final void addBookmarkInfo(int bookmarkID) {
       if (this._bookmarkMap == null) {
-         this._bookmarkMap = (IntIntHashtable)(new Object(1));
+         this._bookmarkMap = new IntIntHashtable(1);
       }
 
       this._bookmarkMap.put(bookmarkID, this._docInfo.getStringContents().length());
@@ -290,22 +290,16 @@ final class DocViewTextContentHandler {
                break;
             case 0:
             default:
-               strName = ((StringBuffer)(new Object())).append('[').append(bundle.getString(45)).toString();
+               strName = '[' + bundle.getString(45);
                if (embHint._index != -1) {
-                  strName = ((StringBuffer)(new Object())).append(strName).append(':').append(String.valueOf(embHint._index + 1)).toString();
+                  strName = strName + ':' + (embHint._index + 1);
                }
 
-               strName = ((StringBuffer)(new Object())).append(strName).append(']').toString();
+               strName = strName + ']';
                newHyperlink._linkType = 1;
                break;
             case 1:
-               strName = ((StringBuffer)(new Object()))
-                  .append('[')
-                  .append(bundle.getString(37))
-                  .append(':')
-                  .append(embHint._name.toString())
-                  .append(']')
-                  .toString();
+               strName = '[' + bundle.getString(37) + ':' + embHint._name.toString() + ']';
                newHyperlink._linkType = 3;
                break;
             case 2:
@@ -314,26 +308,26 @@ final class DocViewTextContentHandler {
                   commentName = String.valueOf(embHint._index + 1);
                }
 
-               strName = ((StringBuffer)(new Object())).append('[').append(bundle.getString(61)).append(':').append(commentName).append(']').toString();
+               strName = '[' + bundle.getString(61) + ':' + commentName + ']';
                newHyperlink._linkType = 4;
                embHint._name = commentName;
                break;
             case 3:
-               strName = ((StringBuffer)(new Object())).append('[').append(bundle.getString(87)).toString();
+               strName = '[' + bundle.getString(87);
                if (embHint._index != -1) {
-                  strName = ((StringBuffer)(new Object())).append(strName).append(':').append(String.valueOf(embHint._index + 1)).toString();
+                  strName = strName + ':' + (embHint._index + 1);
                }
 
-               strName = ((StringBuffer)(new Object())).append(strName).append(']').toString();
+               strName = strName + ']';
                newHyperlink._linkType = 5;
                break;
             case 4:
-               strName = ((StringBuffer)(new Object())).append('[').append(bundle.getString(96)).toString();
+               strName = '[' + bundle.getString(96);
                if (embHint._index != -1) {
-                  strName = ((StringBuffer)(new Object())).append(strName).append(':').append(String.valueOf(embHint._index + 1)).toString();
+                  strName = strName + ':' + (embHint._index + 1);
                }
 
-               strName = ((StringBuffer)(new Object())).append(strName).append(']').toString();
+               strName = strName + ']';
                newHyperlink._linkType = 6;
          }
 
@@ -345,7 +339,7 @@ final class DocViewTextContentHandler {
          newHyperlink._linkStartOffset = linkStart;
          newHyperlink._linkEndOffset = newHyperlink._linkStartOffset + strName.length() - 1;
          newHyperlink._linkTargetString = domID;
-         this._docInfo.addProgrammaticLinksContent(newHyperlink, (StringBuffer)(new Object(strName)), deviceFontSize);
+         this._docInfo.addProgrammaticLinksContent(newHyperlink, new StringBuffer(strName), deviceFontSize);
       }
    }
 

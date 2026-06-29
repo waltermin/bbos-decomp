@@ -23,7 +23,7 @@ final class TextFlowCell$ExtentStack {
       this._height = new int[sectionSize];
       this._rowEnd = new int[sectionSize];
       this._oolIndex = new int[sectionSize];
-      this._unUsed = (BitSet)(new Object(sectionSize));
+      this._unUsed = new BitSet(sectionSize);
       this._unUsed.not();
       this._top = new int[sectionSize];
       this._size = new byte[sectionSize];

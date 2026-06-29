@@ -9,6 +9,9 @@ import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.ActiveAutoTextEditField;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
+import net.rim.device.api.ui.menu.MenuScreen;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.FieldProvider;
 import net.rim.device.apps.api.framework.model.RIMModel;
@@ -83,7 +86,7 @@ public final class MMSEditorScreen extends MMSModelScreen implements MMSPayloadM
 
    public final void setAttribute(String name, String value) {
       if (this._attributes == null) {
-         this._attributes = (Hashtable)(new Object());
+         this._attributes = new Hashtable();
       }
 
       this._attributes.put(name, value);
@@ -109,7 +112,7 @@ public final class MMSEditorScreen extends MMSModelScreen implements MMSPayloadM
       if (attributeName.equals("subject")) {
          return this._subjectField.getText();
       } else {
-         return (String)(this._attributes == null ? null : this._attributes.get(attributeName));
+         return this._attributes == null ? null : (String)this._attributes.get(attributeName);
       }
    }
 
@@ -135,7 +138,7 @@ public final class MMSEditorScreen extends MMSModelScreen implements MMSPayloadM
 
    @Override
    public final void draftSaveOnClose() {
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       ContextObject.setFlag(context, 121);
       this._saveDraftVerb.invoke(context);
    }
@@ -147,10 +150,10 @@ public final class MMSEditorScreen extends MMSModelScreen implements MMSPayloadM
 
    @Override
    protected final void makeMenu(SystemEnabledMenu menu, int instance) {
-      ContextObject ctx = (ContextObject)(new Object(37));
+      ContextObject ctx = new ContextObject(37);
       Verb defaultVerb = null;
       if ((instance == 0 || instance == 65536) && !this.isSelecting()) {
-         Verb[] verbs = new Object[0];
+         Verb[] verbs = new Verb[0];
          ((VerbProvider)this.getMessageModel()).getVerbs(ctx, verbs);
          menu.add(verbs);
          defaultVerb = this._saveDraftVerb;
@@ -176,9 +179,9 @@ public final class MMSEditorScreen extends MMSModelScreen implements MMSPayloadM
 
          menu.add(this._optionsVerb);
          if (this.getRecipientCount() < MMSClientServiceBook.getMaxRecipientCount() || MMSClientServiceBook.getRestrictedSendMode() != 1) {
-            String addToString = ((StringBuffer)(new Object())).append(EmailResources.getString(25)).append(EmailResources.getString(51)).toString();
-            String addCcString = ((StringBuffer)(new Object())).append(EmailResources.getString(25)).append(EmailResources.getString(52)).toString();
-            String addBccString = ((StringBuffer)(new Object())).append(EmailResources.getString(25)).append(EmailResources.getString(53)).toString();
+            String addToString = EmailResources.getString(25) + EmailResources.getString(51);
+            String addCcString = EmailResources.getString(25) + EmailResources.getString(52);
+            String addBccString = EmailResources.getString(25) + EmailResources.getString(53);
             Verb addToVerb = new AddRecipientVerb(addToString, 16859648, this._addressFields);
             Verb addCcVerb = new AddRecipientVerb(addCcString, 16859664, this._ccAddressFields);
             Verb addBccVerb = new AddRecipientVerb(addBccString, 16859680, this._bccAddressFields);
@@ -262,7 +265,7 @@ public final class MMSEditorScreen extends MMSModelScreen implements MMSPayloadM
       this._sender = payload.getSender();
       Enumeration names = payload.attributeNames();
       if (names != null) {
-         this._attributes = (Hashtable)(new Object());
+         this._attributes = new Hashtable();
 
          while (names.hasMoreElements()) {
             String attributeName = (String)names.nextElement();
@@ -284,9 +287,9 @@ public final class MMSEditorScreen extends MMSModelScreen implements MMSPayloadM
       String subjectLabel = MMSResources.getString(18);
       String subjectText = payload.getAttribute("subject");
       long subjectFlags = 4503601774854144L;
-      this._subjectField = (ActiveAutoTextEditField)(new Object(subjectLabel, subjectText, 40, subjectFlags));
+      this._subjectField = new ActiveAutoTextEditField(subjectLabel, subjectText, 40, subjectFlags);
       this.add(this._subjectField);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       context.put(-7651695713744129224L, message);
       MMSPresentationModel presentation = payload.getPresentationModel();
       if (presentation != null) {
@@ -298,7 +301,7 @@ public final class MMSEditorScreen extends MMSModelScreen implements MMSPayloadM
             }
          }
       } else {
-         this.add((Field)(new Object(MMSResources.getString(26), 36028797018963968L)));
+         this.add(new RichTextField(MMSResources.getString(26), 36028797018963968L));
       }
 
       this._subjectField.setFocus();
@@ -332,7 +335,7 @@ public final class MMSEditorScreen extends MMSModelScreen implements MMSPayloadM
 
    private final synchronized void closeEditor() {
       Screen activeScreen = UiApplication.getUiApplication().getActiveScreen();
-      if (activeScreen instanceof Object) {
+      if (activeScreen instanceof MenuScreen) {
          UiApplication.getUiApplication().popScreen(activeScreen);
          activeScreen = UiApplication.getUiApplication().getActiveScreen();
       }
@@ -361,7 +364,7 @@ public final class MMSEditorScreen extends MMSModelScreen implements MMSPayloadM
 
    public MMSEditorScreen(Object context) {
       super(context);
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          this._context = (ContextObject)context;
       }
 

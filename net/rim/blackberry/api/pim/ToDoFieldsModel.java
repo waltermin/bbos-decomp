@@ -41,7 +41,7 @@ final class ToDoFieldsModel implements Persistable {
 
    public final void put(String key, Object value) {
       if (this._customFieldTable == null) {
-         this._customFieldTable = (Hashtable)(new Object());
+         this._customFieldTable = new Hashtable();
       }
 
       if (this._customFieldTable.put(key, value) == null) {
@@ -52,7 +52,7 @@ final class ToDoFieldsModel implements Persistable {
    public final String[] getCustomLabels() {
       if (this._customFieldTable != null && this._customCount != 0) {
          Enumeration keys = this._customFieldTable.keys();
-         String[] labels = new Object[this._customCount];
+         String[] labels = new String[this._customCount];
 
          for (int i = 0; keys.hasMoreElements(); i++) {
             labels[i] = (String)keys.nextElement();
@@ -66,11 +66,11 @@ final class ToDoFieldsModel implements Persistable {
 
    public final void addCategory(String category) {
       if (category == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       if (this._categories == null) {
-         this._categories = (Vector)(new Object());
+         this._categories = new Vector();
       }
 
       if (!this._categories.contains(category)) {
@@ -80,7 +80,7 @@ final class ToDoFieldsModel implements Persistable {
 
    public final boolean removeCategory(String category) {
       if (category == null) {
-         throw new Object();
+         throw new NullPointerException();
       } else {
          return this._categories == null ? false : this._categories.removeElement(category);
       }
@@ -96,7 +96,7 @@ final class ToDoFieldsModel implements Persistable {
          return null;
       }
 
-      String[] categories = new Object[size];
+      String[] categories = new String[size];
       this._categories.copyInto(categories);
       return categories;
    }

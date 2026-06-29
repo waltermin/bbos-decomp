@@ -16,71 +16,71 @@ public class KEACryptoToken implements AsymmetricCryptoToken, Persistable {
       return false;
    }
 
-   public int getKEACryptoSystemBitLength(CryptoTokenCryptoSystemData cryptoTokenData) {
-      throw new Object();
+   public int getKEACryptoSystemBitLength(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public String getKEACryptoSystemName(CryptoTokenCryptoSystemData cryptoTokenData) {
-      throw new Object();
+   public String getKEACryptoSystemName(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public byte[] getKEACryptoSystemP(CryptoTokenCryptoSystemData cryptoTokenData) {
-      throw new Object();
+   public byte[] getKEACryptoSystemP(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public byte[] getKEACryptoSystemQ(CryptoTokenCryptoSystemData cryptoTokenData) {
-      throw new Object();
+   public byte[] getKEACryptoSystemQ(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public byte[] getKEACryptoSystemG(CryptoTokenCryptoSystemData cryptoTokenData) {
-      throw new Object();
+   public byte[] getKEACryptoSystemG(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public int getKEAPublicKeyLength(CryptoTokenCryptoSystemData cryptoTokenData) {
-      throw new Object();
+   public int getKEAPublicKeyLength(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public int getKEAPrivateKeyLength(CryptoTokenCryptoSystemData cryptoTokenData) {
-      throw new Object();
+   public int getKEAPrivateKeyLength(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public byte[] extractKEAPublicKeyData(CryptoTokenPublicKeyData cryptoTokenData) {
-      throw new Object();
+   public byte[] extractKEAPublicKeyData(CryptoTokenPublicKeyData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public byte[] extractKEAPublicKeyData(CryptoTokenPrivateKeyData cryptoTokenData) {
-      throw new Object();
+   public byte[] extractKEAPublicKeyData(CryptoTokenPrivateKeyData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public byte[] extractKEAPrivateKeyData(CryptoTokenPrivateKeyData cryptoTokenData) {
-      throw new Object();
+   public byte[] extractKEAPrivateKeyData(CryptoTokenPrivateKeyData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
    public void verifyKEACryptoSystemData(CryptoTokenCryptoSystemData cryptoSystemData) {
    }
 
-   public CryptoTokenCryptoSystemData getKEACryptoSystemData(byte[] p, byte[] q, byte[] g, String name) {
-      throw new Object();
+   public CryptoTokenCryptoSystemData getKEACryptoSystemData(byte[] p, byte[] q, byte[] g, String name) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public KEAKeyPair createKEAKeyPair(CryptoTokenCryptoSystemData cryptoTokenData) {
-      throw new Object();
+   public KEAKeyPair createKEAKeyPair(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public CryptoTokenPublicKeyData injectKEAPublicKey(CryptoTokenCryptoSystemData cryptoSystemData, byte[] data) {
-      throw new Object();
+   public CryptoTokenPublicKeyData injectKEAPublicKey(CryptoTokenCryptoSystemData cryptoSystemData, byte[] data) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public CryptoTokenPrivateKeyData injectKEAPrivateKey(CryptoTokenCryptoSystemData cryptoSystemData, byte[] data) {
-      throw new Object();
+   public CryptoTokenPrivateKeyData injectKEAPrivateKey(CryptoTokenCryptoSystemData cryptoSystemData, byte[] data) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public void deleteKEAPublicKey(CryptoTokenPublicKeyData data) {
-      throw new Object();
+   public void deleteKEAPublicKey(CryptoTokenPublicKeyData data) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public void deleteKEAPrivateKey(CryptoTokenPrivateKeyData data) {
-      throw new Object();
+   public void deleteKEAPrivateKey(CryptoTokenPrivateKeyData data) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
    public byte[] generateKEASharedSecret(
@@ -89,8 +89,8 @@ public class KEACryptoToken implements AsymmetricCryptoToken, Persistable {
       CryptoTokenPrivateKeyData cryptoTokenLocalEphemeralPrivateKeyData,
       byte[] remoteStaticPublicKeyData,
       byte[] remoteEphemeralPublicKeyData
-   ) {
-      throw new Object();
+   ) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
    @Override

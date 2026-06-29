@@ -35,7 +35,7 @@ public final class DeviceUtils {
    static final String getIMEIESN() {
       String imeiESN = null;
       if (RadioInfo.getNetworkType() == 4) {
-         StringBuffer esn = (StringBuffer)(new Object(SerialNumber.getDecimalSerialNumber()));
+         StringBuffer esn = new StringBuffer(SerialNumber.getDecimalSerialNumber());
          esn.insert(3, '/');
          return esn.toString();
       } else {
@@ -65,7 +65,7 @@ public final class DeviceUtils {
             return null;
          }
 
-         StringBuffer buff = (StringBuffer)(new Object());
+         StringBuffer buff = new StringBuffer();
 
          for (int i = 0; i < imsi.length; i++) {
             NumberUtilities.appendNumber(buff, imsi[i], 16);

@@ -106,7 +106,7 @@ public final class RIMMessagingMoreMessage extends RIMMessagingTransmission {
       // 022: putfield net/rim/device/apps/api/transmission/rim/RIMMessagingMoreMessage._nestedParameters Lnet/rim/device/apps/api/transmission/Parameters;
       // 025: aload 0
       // 026: getfield net/rim/device/apps/api/transmission/rim/RIMMessagingMoreMessage._nestedParameters Lnet/rim/device/apps/api/transmission/Parameters;
-      // 029: new java/lang/Object
+      // 029: new net/rim/device/api/util/DataBuffer
       // 02c: dup
       // 02d: aload 2
       // 02e: bipush 0

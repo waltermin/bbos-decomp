@@ -20,7 +20,7 @@ import net.rim.tid.itie.EventHandler;
 public class VerticalLookup extends Lookup implements ISLVariantsObserver, TextInputDialog {
    protected int _currentVariantIndex;
    protected SLVariants _currentVariant;
-   protected XYRect _bounds = (XYRect)(new Object());
+   protected XYRect _bounds = new XYRect();
    protected boolean _needBoundsCalc;
    protected int _firstItem = -1;
    protected int _lastItem = -1;
@@ -32,14 +32,14 @@ public class VerticalLookup extends Lookup implements ISLVariantsObserver, TextI
    private int _widestNumWidth;
    private int _widestProgressNumWidth;
    private int _statusAreaWidth;
-   private StringBuffer _widthCalculationBuffer = (StringBuffer)(new Object());
+   private StringBuffer _widthCalculationBuffer = new StringBuffer();
    private String _maxVariantsStringHolder = "";
    private boolean _recalcNumbering;
    private byte _scrollStyle;
    private byte _numberingStyle;
    private Bitmap _upArrowBitmap;
    private Bitmap _downArrowBitmap;
-   private XYRect _composedBounds = (XYRect)(new Object());
+   private XYRect _composedBounds = new XYRect();
    public static final byte SCROLL_VARIANTS = 1;
    public static final byte NUMBER_VARIANTS = 1;
    public static final byte VARIANT_PROGRESS_NUMBER = 2;
@@ -194,7 +194,7 @@ public class VerticalLookup extends Lookup implements ISLVariantsObserver, TextI
             }
             break;
          case 35:
-            if (aParameter != null && aParameter instanceof Object) {
+            if (aParameter != null && aParameter instanceof Integer) {
                int tempx = ((Integer)aParameter).byteValue();
                if (tempx < 1 || tempx > this._lastItem - this._firstItem + 1) {
                   return 1;

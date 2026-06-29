@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.browser.pme.form;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import net.rim.device.api.browser.field.BrowserContent;
@@ -8,6 +9,8 @@ import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.apps.internal.browser.api.UrlRequestedInternalEvent;
 import net.rim.device.apps.internal.browser.common.RenderingUtilities;
 import net.rim.device.apps.internal.browser.stack.FormData;
+import net.rim.device.apps.internal.browser.stack.MultipartFormData;
+import net.rim.device.apps.internal.browser.stack.URLEncodedFormData;
 import net.rim.plazmic.mediaengine.MediaListener;
 
 public final class PMEForm implements MediaListener {
@@ -18,8 +21,8 @@ public final class PMEForm implements MediaListener {
 
    PMEForm(BrowserContent browserContent) {
       this._browserContent = browserContent;
-      this._controls = (Hashtable)(new Object());
-      this._submissions = (Hashtable)(new Object());
+      this._controls = new Hashtable();
+      this._submissions = new Hashtable();
    }
 
    final void addControl(String ref, FormField control) {
@@ -74,11 +77,11 @@ public final class PMEForm implements MediaListener {
          FormData formData = null;
          Object buffer = null;
          if (submission._multipart) {
-            formData = (FormData)(new Object(submission._encoding, false));
-            buffer = new Object();
+            formData = new MultipartFormData(submission._encoding, false);
+            buffer = new ByteArrayOutputStream();
          } else {
-            formData = (FormData)(new Object(submission._encoding, false));
-            StringBuffer stringBuffer = (StringBuffer)(new Object());
+            formData = new URLEncodedFormData(submission._encoding, false);
+            StringBuffer stringBuffer = new StringBuffer();
             if (!submission._post) {
                stringBuffer.append(submission._action);
                stringBuffer.append('?');
@@ -101,7 +104,7 @@ public final class PMEForm implements MediaListener {
 
          String url = null;
          byte[] postData = null;
-         HttpHeaders requestHeaders = (HttpHeaders)(new Object());
+         HttpHeaders requestHeaders = new HttpHeaders();
          String var14;
          if (!submission._post) {
             var14 = buffer.toString();
@@ -117,7 +120,7 @@ public final class PMEForm implements MediaListener {
          }
 
          RenderingUtilities.setReferrer(requestHeaders, this._browserContent.getURL());
-         UrlRequestedInternalEvent event = (UrlRequestedInternalEvent)(new Object(this._browserContent, var14, null, postData, requestHeaders, false, 3));
+         UrlRequestedInternalEvent event = new UrlRequestedInternalEvent(this._browserContent, var14, null, postData, requestHeaders, false, 3);
          event.setSubmitOffline(true);
          renderingApplication.eventOccurred(event);
       }

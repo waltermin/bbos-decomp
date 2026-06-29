@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.btgoep;
 
+import java.io.IOException;
 import javax.obex.Authenticator;
 import javax.obex.ClientSession;
 import javax.obex.HeaderSet;
@@ -13,7 +14,7 @@ public class OBEXClientSession extends OBEXSession implements ClientSession {
    @Override
    public void setAuthenticator(Authenticator auth) {
       if (auth == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       super._authenticator = auth;
@@ -29,7 +30,7 @@ public class OBEXClientSession extends OBEXSession implements ClientSession {
       if (id >= 0 && id <= 4294967295L) {
          this._connectionID = id;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -41,12 +42,12 @@ public class OBEXClientSession extends OBEXSession implements ClientSession {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public synchronized HeaderSet connect(HeaderSet headers) {
+   public synchronized HeaderSet connect(HeaderSet headers) throws IOException {
       HeaderSetImpl responseHeaders = null;
 
       while (!this._connected) {
          if (super._operationInProgress) {
-            throw new Object("Operation in progress");
+            throw new IOException("Operation in progress");
          }
 
          int length = 7;
@@ -65,7 +66,7 @@ public class OBEXClientSession extends OBEXSession implements ClientSession {
                }
             } finally {
                if (var9) {
-                  throw new Object();
+                  throw new IllegalArgumentException();
                }
             }
          }
@@ -104,18 +105,18 @@ public class OBEXClientSession extends OBEXSession implements ClientSession {
          }
       }
 
-      throw new Object("Already connected");
+      throw new IOException("Already connected");
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public synchronized HeaderSet disconnect(HeaderSet headers) {
+   public synchronized HeaderSet disconnect(HeaderSet headers) throws IOException {
       HeaderSetImpl responseHeaders = null;
 
       while (this._connected) {
          if (super._operationInProgress) {
-            throw new Object("Operation in progress");
+            throw new IOException("Operation in progress");
          }
 
          int length = 3;
@@ -134,7 +135,7 @@ public class OBEXClientSession extends OBEXSession implements ClientSession {
                }
             } finally {
                if (var7) {
-                  throw new Object();
+                  throw new IllegalArgumentException();
                }
             }
          }
@@ -159,18 +160,18 @@ public class OBEXClientSession extends OBEXSession implements ClientSession {
          }
       }
 
-      throw new Object("Not connected");
+      throw new IOException("Not connected");
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public synchronized HeaderSet setPath(HeaderSet headers, boolean backup, boolean create) {
+   public synchronized HeaderSet setPath(HeaderSet headers, boolean backup, boolean create) throws IOException {
       HeaderSetImpl responseHeaders = null;
 
       while (this._connected) {
          if (super._operationInProgress) {
-            throw new Object("Operation in progress");
+            throw new IOException("Operation in progress");
          }
 
          int length = 5;
@@ -189,7 +190,7 @@ public class OBEXClientSession extends OBEXSession implements ClientSession {
                }
             } finally {
                if (var11) {
-                  throw new Object();
+                  throw new IllegalArgumentException();
                }
             }
          }
@@ -222,18 +223,18 @@ public class OBEXClientSession extends OBEXSession implements ClientSession {
          }
       }
 
-      throw new Object("Not connected");
+      throw new IOException("Not connected");
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public synchronized HeaderSet delete(HeaderSet headers) {
+   public synchronized HeaderSet delete(HeaderSet headers) throws IOException {
       HeaderSetImpl responseHeaders = null;
 
       while (this._connected) {
          if (super._operationInProgress) {
-            throw new Object("Operation in progress");
+            throw new IOException("Operation in progress");
          }
 
          int length = 3;
@@ -252,7 +253,7 @@ public class OBEXClientSession extends OBEXSession implements ClientSession {
                }
             } finally {
                if (var7) {
-                  throw new Object();
+                  throw new IllegalArgumentException();
                }
             }
          }
@@ -273,7 +274,7 @@ public class OBEXClientSession extends OBEXSession implements ClientSession {
          }
       }
 
-      throw new Object("Not connected");
+      throw new IOException("Not connected");
    }
 
    private boolean authenticateResponseRequired(int responseCode, HeaderSet headers, HeaderSet responseHeaders) {
@@ -289,46 +290,46 @@ public class OBEXClientSession extends OBEXSession implements ClientSession {
       return false;
    }
 
-   private void checkAuthenticateResponse(HeaderSet headers, HeaderSet resHeaders) {
+   private void checkAuthenticateResponse(HeaderSet headers, HeaderSet resHeaders) throws IOException {
       if (headers != null && headers.getHeader(77) != null) {
          byte[] authResponseArray = (byte[])resHeaders.getHeader(78);
          if (authResponseArray == null || !this.checkAuthResponse(authResponseArray, ((HeaderSetImpl)headers)._nonce)) {
-            throw new Object("Authentication Failure");
+            throw new IOException("Authentication Failure");
          }
       }
    }
 
    @Override
-   public synchronized Operation get(HeaderSet headers) {
+   public synchronized Operation get(HeaderSet headers) throws IOException {
       if (!this._connected) {
-         throw new Object("Not connected");
+         throw new IOException("Not connected");
       }
 
       if (super._operationInProgress) {
-         throw new Object("Operation in progress");
+         throw new IOException("Operation in progress");
       }
 
       try {
          return new OBEXClientSession$ClientOperationImpl(this, false, (HeaderSetImpl)headers);
       } finally {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
-   public synchronized Operation put(HeaderSet headers) {
+   public synchronized Operation put(HeaderSet headers) throws IOException {
       if (!this._connected) {
-         throw new Object("Not connected");
+         throw new IOException("Not connected");
       }
 
       if (super._operationInProgress) {
-         throw new Object("Operation in progress");
+         throw new IOException("Operation in progress");
       }
 
       try {
          return new OBEXClientSession$ClientOperationImpl(this, true, (HeaderSetImpl)headers);
       } finally {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

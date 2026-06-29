@@ -41,13 +41,13 @@ class EncodingActionMessageSearchableSubItem implements MessageSearchableSubItem
 
    private TextSearchModel locateTextSearchModel(SearchCriterion[] searchCriteria) {
       for (SearchCriterion currentCriterion : searchCriteria) {
-         if (currentCriterion instanceof Object) {
+         if (currentCriterion instanceof TextSearchModel) {
             return (TextSearchModel)currentCriterion;
          }
 
-         if (currentCriterion instanceof Object) {
+         if (currentCriterion instanceof OrSearchCriterion) {
             OrSearchCriterion orCriterion = (OrSearchCriterion)currentCriterion;
-            TextSearchModel textSearchModel = this.locateTextSearchModel((Object[])orCriterion.getValue());
+            TextSearchModel textSearchModel = this.locateTextSearchModel((SearchCriterion[])orCriterion.getValue());
             if (textSearchModel != null) {
                return textSearchModel;
             }

@@ -3,18 +3,22 @@ package net.rim.device.api.crypto.certificate.pgp;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Vector;
+import net.rim.device.api.crypto.CryptoUnsupportedOperationException;
+import net.rim.device.api.crypto.DecodeException;
 import net.rim.device.api.crypto.HashCodeCalculator;
 import net.rim.device.api.crypto.PublicKey;
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.CertificateDisplayField;
 import net.rim.device.api.crypto.certificate.CertificateExtension;
 import net.rim.device.api.crypto.certificate.CertificateStatus;
+import net.rim.device.api.crypto.certificate.CertificateVerificationException;
 import net.rim.device.api.crypto.certificate.DistinguishedName;
+import net.rim.device.api.crypto.keystore.BackwardStatusException;
 import net.rim.device.api.crypto.keystore.CertificateStatusManager;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
-import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.api.crypto.keystore.PGPKeyStore;
+import net.rim.device.api.crypto.keystore.PublicKeyKeyStoreIndex;
 import net.rim.device.api.crypto.oid.OID;
 import net.rim.device.api.crypto.pgp.PGPEncodingException;
 import net.rim.device.api.crypto.pgp.PGPVerificationException;
@@ -68,7 +72,7 @@ public final class PGPCertificate implements Certificate {
 
    public final Certificate[] getEmbeddedX509Certificates(byte[] keyID) {
       int numEmbeddedCerts = this._content._x509EmbeddedCertificates.length;
-      Certificate[] x509Certs = new Object[0];
+      Certificate[] x509Certs = new Certificate[0];
       if (numEmbeddedCerts > 0) {
          for (int i = 0; i < numEmbeddedCerts; i++) {
             if (Arrays.equals(this._content._x509EmbeddedCertificates[i].getParentID(), keyID)) {
@@ -83,10 +87,10 @@ public final class PGPCertificate implements Certificate {
    public final Certificate[] getEmbeddedX509Certificates() {
       int numEmbeddedCerts = this._content._x509EmbeddedCertificates.length;
       if (numEmbeddedCerts <= 0) {
-         return new Object[0];
+         return new Certificate[0];
       }
 
-      Certificate[] x509Certs = new Object[numEmbeddedCerts];
+      Certificate[] x509Certs = new Certificate[numEmbeddedCerts];
 
       for (int i = 0; i < numEmbeddedCerts; i++) {
          x509Certs[i] = this._content._x509EmbeddedCertificates[i].extractX509Certificate();
@@ -163,7 +167,7 @@ public final class PGPCertificate implements Certificate {
    }
 
    public final Bitmap[] getUserImages() {
-      Bitmap[] userImages = new Object[0];
+      Bitmap[] userImages = new Bitmap[0];
       int numUserAttributePackets = this._content._userAttributes.length;
 
       for (int i = 0; i < numUserAttributePackets; i++) {
@@ -191,13 +195,13 @@ public final class PGPCertificate implements Certificate {
          }
       }
 
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    public final String[] getEmailAddresses() {
       int numEmailAddresses = 0;
       int length = this._content._userIDs.length;
-      String[] emailAddresses = new Object[length];
+      String[] emailAddresses = new String[length];
 
       for (int i = 0; i < length; i++) {
          String currentEmailAddress = this._content._userIDs[i].getEmailAddress();
@@ -223,7 +227,7 @@ public final class PGPCertificate implements Certificate {
          }
       }
 
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    public final String getPrimaryUserID() {
@@ -232,7 +236,7 @@ public final class PGPCertificate implements Certificate {
 
    public final String[] getUserIDs() {
       int length = this._content._userIDs.length;
-      String[] userIDs = new Object[length];
+      String[] userIDs = new String[length];
 
       for (int i = 0; i < length; i++) {
          userIDs[i] = this._content._userIDs[i].getUserID();
@@ -267,14 +271,14 @@ public final class PGPCertificate implements Certificate {
          }
       }
 
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    public final byte[] getSubKeyID(int index) {
       if (index >= 0 && index < this._content._subKeyIDs.length) {
          return this._content._subKeyIDs[index];
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -292,7 +296,7 @@ public final class PGPCertificate implements Certificate {
             ;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -302,7 +306,7 @@ public final class PGPCertificate implements Certificate {
 
    public final PublicKey[] getSubKeys() {
       int numSubKeys = this._content._subKeys.length;
-      PublicKey[] subKeys = new Object[numSubKeys];
+      PublicKey[] subKeys = new PublicKey[numSubKeys];
 
       try {
          for (int i = 0; i < numSubKeys; i++) {
@@ -318,7 +322,7 @@ public final class PGPCertificate implements Certificate {
    }
 
    public final String[] getSelfSignatureDigestAlgorithms() {
-      String[] digestAlgorithms = new Object[0];
+      String[] digestAlgorithms = new String[0];
       PGPSignaturePacket[] certificationSignatures = this.getCertificationSignatures();
       PGPSignaturePacket[] selfSignatures = this.getSelfSignatures(certificationSignatures);
 
@@ -338,7 +342,7 @@ public final class PGPCertificate implements Certificate {
       return digestAlgorithms;
    }
 
-   public final void verify(byte[] keyID) {
+   public final void verify(byte[] keyID) throws DecodeException, CertificateVerificationException {
       if (Arrays.equals(keyID, this._content._keyID)) {
          this.verify();
       } else {
@@ -357,7 +361,7 @@ public final class PGPCertificate implements Certificate {
                      verified = true;
                   } catch (PGPVerificationException var10) {
                   } catch (PGPEncodingException e) {
-                     throw new Object(e.toString());
+                     throw new DecodeException(e.toString());
                   }
                }
                break;
@@ -365,7 +369,7 @@ public final class PGPCertificate implements Certificate {
          }
 
          if (!verified) {
-            throw new Object();
+            throw new CertificateVerificationException();
          }
       }
    }
@@ -374,7 +378,7 @@ public final class PGPCertificate implements Certificate {
       return this.isValid(System.currentTimeMillis(), keyID);
    }
 
-   public final void verifyTrustedIntroducer(PGPCertificate signer, int depth, long date) {
+   public final void verifyTrustedIntroducer(PGPCertificate signer, int depth, long date) throws CertificateVerificationException {
       byte[] keyid = signer.getKeyID();
       PGPSignaturePacket[] signatures = this.getCertificationSignatures();
       int signatureLength = signatures.length;
@@ -384,21 +388,21 @@ public final class PGPCertificate implements Certificate {
             Vector subPackets = signatures[i].getSignatureSubPackets();
             PGPSignatureSubPacketParser parser = new PGPSignatureSubPacketParser(subPackets);
             if (parser.getTrustLevel() < depth) {
-               throw new Object("CTTD");
+               throw new CertificateVerificationException("CTTD");
             }
 
             long signatureCreationTime = parser.getSignatureCreationTime();
             if (signatureCreationTime < 0 || signatureCreationTime > date) {
-               throw new Object("CTIT");
+               throw new CertificateVerificationException("CTIT");
             }
 
             long signatureExpirationTime = parser.getSignatureExpirationTime();
             if (signatureExpirationTime != 0 && signatureExpirationTime + signatureCreationTime < date) {
-               throw new Object("CTIT");
+               throw new CertificateVerificationException("CTIT");
             }
 
             if (parser.isRevocable() && parser.getRevocationCode() != -1) {
-               throw new Object("CTKR");
+               throw new CertificateVerificationException("CTKR");
             }
          }
       }
@@ -421,13 +425,13 @@ public final class PGPCertificate implements Certificate {
          }
       }
 
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
-   public final void verify(PGPCertificate certificate) {
+   public final void verify(PGPCertificate certificate) throws DecodeException, CertificateVerificationException {
       boolean verified = false;
       if (certificate == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int numUserIDs = this._content._userIDs.length;
@@ -451,20 +455,20 @@ public final class PGPCertificate implements Certificate {
                }
             } catch (PGPVerificationException var12) {
             } catch (PGPEncodingException e) {
-               throw new Object(e.toString());
+               throw new DecodeException(e.toString());
             }
          }
       }
 
       if (!verified) {
-         throw new Object();
+         throw new CertificateVerificationException();
       }
    }
 
    public final int queryKeyUsage(String userID, long purpose) {
       int userIDIndex = this.getUserIDIndex(userID);
       if (userIDIndex < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return this.queryKeyUsage(this._content._userIDSignatures[userIDIndex], purpose);
       }
@@ -497,17 +501,17 @@ public final class PGPCertificate implements Certificate {
             }
          }
 
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
-   public final void setStatus(CertificateStatus status) {
-      throw new Object();
+   public final void setStatus(CertificateStatus status) throws BackwardStatusException {
+      throw new BackwardStatusException();
    }
 
    @Override
-   public final void verify() {
+   public final void verify() throws DecodeException, CertificateVerificationException {
       int numUserIDs = this._content._userIDs.length;
 
       for (int i = 0; i < numUserIDs; i++) {
@@ -521,15 +525,15 @@ public final class PGPCertificate implements Certificate {
                currentSignature.verify(this._content._publicKey, this._content._userIDs[i]);
             }
          } catch (PGPEncodingException e) {
-            throw new Object(e.toString());
+            throw new DecodeException(e.toString());
          } catch (PGPVerificationException e) {
-            throw new Object(e.toString());
+            throw new CertificateVerificationException(e.toString());
          }
       }
    }
 
    @Override
-   public final void verify(KeyStore keyStore) {
+   public final void verify(KeyStore keyStore) throws DecodeException, CertificateVerificationException {
       keyStore.addIndex(new PGPKeyIDKeyStoreIndex());
       boolean verified = false;
       int numUserIDs = this._content._userIDs.length;
@@ -550,27 +554,27 @@ public final class PGPCertificate implements Certificate {
                }
             } catch (PGPVerificationException var13) {
             } catch (PGPEncodingException e) {
-               throw new Object(e.toString());
+               throw new DecodeException(e.toString());
             }
          }
       }
 
       if (!verified) {
-         throw new Object();
+         throw new CertificateVerificationException();
       }
    }
 
    @Override
-   public final void verify(PublicKey issuerPublicKey) {
+   public final void verify(PublicKey issuerPublicKey) throws DecodeException, CertificateVerificationException {
       if (issuerPublicKey == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (issuerPublicKey.equals(this.getPublicKey())) {
          this.verify();
       } else {
          KeyStore keyStore = PGPKeyStore.getInstance();
-         keyStore.addIndex((KeyStoreIndex)(new Object()));
+         keyStore.addIndex(new PublicKeyKeyStoreIndex());
          Enumeration enumeration = keyStore.elements(7540601854220086457L, issuerPublicKey);
 
          while (enumeration.hasMoreElements()) {
@@ -592,13 +596,13 @@ public final class PGPCertificate implements Certificate {
                   verified = true;
                } catch (PGPVerificationException var11) {
                } catch (PGPEncodingException e) {
-                  throw new Object(e.toString());
+                  throw new DecodeException(e.toString());
                }
             }
          }
 
          if (!verified) {
-            throw new Object();
+            throw new CertificateVerificationException();
          }
       }
    }
@@ -740,7 +744,7 @@ public final class PGPCertificate implements Certificate {
       } else if (id == -7341435958452683242L) {
          return Boolean.TRUE;
       } else if (id == -5753772986264564736L) {
-         StringBuffer buffer = (StringBuffer)(new Object());
+         StringBuffer buffer = new StringBuffer();
          ResourceBundle rb = PGPUtilities.getResourceBundle();
          buffer.append(rb.getString(8031));
          buffer.append(this.getSubjectFriendlyName());
@@ -835,7 +839,7 @@ public final class PGPCertificate implements Certificate {
             revocationReason = 0;
       }
 
-      return (CertificateStatus)(new Object(1, System.currentTimeMillis(), signatureCreationTime, -1, signatureCreationTime, revocationReason));
+      return new CertificateStatus(1, System.currentTimeMillis(), signatureCreationTime, -1, signatureCreationTime, revocationReason);
    }
 
    private final PGPSignaturePacket[] getCertificationSignatures() {
@@ -957,7 +961,7 @@ public final class PGPCertificate implements Certificate {
             int currentSignatureVersion = selfSignatures[i].getVersion();
             switch (currentSignatureVersion) {
                case 2:
-                  throw new Object(((StringBuffer)(new Object("Ver:"))).append(currentSignatureVersion).toString());
+                  throw new CryptoUnsupportedOperationException("Ver:" + currentSignatureVersion);
                case 3:
                default:
                   currentCreationTime = selfSignatures[i].getCreationTime();
@@ -1053,9 +1057,9 @@ public final class PGPCertificate implements Certificate {
       // 95: ldc_w "CNRC"
       // 98: invokespecial net/rim/device/api/crypto/pgp/PGPEncodingException.<init> (Ljava/lang/String;)V
       // 9b: athrow
-      // 9c: new java/lang/Object
+      // 9c: new net/rim/device/api/crypto/CryptoUnsupportedOperationException
       // 9f: dup
-      // a0: new java/lang/Object
+      // a0: new java/lang/StringBuffer
       // a3: dup
       // a4: ldc_w "Ver:"
       // a7: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -1078,7 +1082,7 @@ public final class PGPCertificate implements Certificate {
       // cd: astore 9
       // cf: iinc 6 1
       // d2: goto 0b
-      // d5: new java/lang/Object
+      // d5: new net/rim/device/api/crypto/certificate/CertificateStatus
       // d8: dup
       // d9: bipush 0
       // da: invokestatic java/lang/System.currentTimeMillis ()J

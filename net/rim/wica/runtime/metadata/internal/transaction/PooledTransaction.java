@@ -16,7 +16,7 @@ import net.rim.wica.runtime.util.Poolable;
 
 final class PooledTransaction implements Poolable {
    private final Wiclet _wiclet;
-   private LongHashtable _operations = (LongHashtable)(new Object());
+   private LongHashtable _operations = new LongHashtable();
    private Vector _objFields;
    private int _id;
    static final int OP_DUMMY = 0;
@@ -228,7 +228,7 @@ final class PooledTransaction implements Poolable {
    }
 
    private final IntVector initEntry(int op) {
-      IntVector entry = (IntVector)(new Object());
+      IntVector entry = new IntVector();
       entry.addElement(op);
       entry.addElement(-1);
       return entry;
@@ -411,7 +411,7 @@ final class PooledTransaction implements Poolable {
 
    public PooledTransaction(Wiclet wiclet) {
       this._wiclet = wiclet;
-      this._objFields = (Vector)(new Object());
+      this._objFields = new Vector();
       this.setNewTransID();
    }
 

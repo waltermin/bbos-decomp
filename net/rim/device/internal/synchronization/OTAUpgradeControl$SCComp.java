@@ -17,12 +17,12 @@ class OTAUpgradeControl$SCComp implements Comparator {
       int brOrder = this._restoreOrder ? 1 : -1;
       int p1 = 5;
       int p2 = 5;
-      if (o1 instanceof Object) {
+      if (o1 instanceof OTASyncPriorityProvider) {
          OTASyncPriorityProvider pp = (OTASyncPriorityProvider)o1;
          p1 = pp.getSyncPriority();
       }
 
-      if (o2 instanceof Object) {
+      if (o2 instanceof OTASyncPriorityProvider) {
          OTASyncPriorityProvider pp = (OTASyncPriorityProvider)o2;
          p2 = pp.getSyncPriority();
       }
@@ -41,13 +41,13 @@ class OTAUpgradeControl$SCComp implements Comparator {
       } else {
          int dep1 = 255;
          int dep2 = 255;
-         if (o1 instanceof Object) {
+         if (o1 instanceof OTASyncPriorityAndDependencyProvider) {
             OTASyncPriorityAndDependencyProvider pdp = (OTASyncPriorityAndDependencyProvider)o1;
             dep1 = pdp.getDependencyLevel();
             dep1 = this.getValidDependency(dep1);
          }
 
-         if (o2 instanceof Object) {
+         if (o2 instanceof OTASyncPriorityAndDependencyProvider) {
             OTASyncPriorityAndDependencyProvider pdp = (OTASyncPriorityAndDependencyProvider)o2;
             dep2 = pdp.getDependencyLevel();
             dep2 = this.getValidDependency(dep2);

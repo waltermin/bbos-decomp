@@ -19,16 +19,16 @@ class TextMailConverter implements MailConverter {
 
    @Override
    public boolean canConvert(Object o) {
-      return o instanceof Object || o instanceof TextBodyPart;
+      return o instanceof BodyModel || o instanceof TextBodyPart;
    }
 
    @Override
    public Object convert(Object o, Object context) {
-      if (o instanceof Object && context instanceof Multipart) {
+      if (o instanceof BodyModel && context instanceof Multipart) {
          BodyModel body = (BodyModel)o;
          Multipart parent = (Multipart)context;
          TextBodyPart tbp = new TextBodyPart(parent, body.getText());
-         if (body instanceof Object) {
+         if (body instanceof MorePartModel) {
             MorePartModel mpm = (MorePartModel)body;
             Message m = (Message)parent.getParent();
             EmailMessageModel emm = m.getEmailMessageModel();
@@ -36,7 +36,7 @@ class TextMailConverter implements MailConverter {
          }
 
          return tbp;
-      } else if (o instanceof TextBodyPart && context instanceof Object) {
+      } else if (o instanceof TextBodyPart && context instanceof EmailMessageModel) {
          TextBodyPart tbp = (TextBodyPart)o;
          EmailMessageModel m = (EmailMessageModel)context;
          EmailPayloadModel oldpayload = EmailModifier.beginChanges(m, null);
@@ -47,7 +47,7 @@ class TextMailConverter implements MailConverter {
 
          for (int i = 0; i < size; i++) {
             Object element = l.getAt(i);
-            if (element instanceof Object) {
+            if (element instanceof BodyModel) {
                body = (BodyModel)element;
                body.setText(s);
             }

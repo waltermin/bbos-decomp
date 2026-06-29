@@ -36,18 +36,18 @@ public final class UseEntryVerb extends Verb {
       } else {
          Object[] matches = this._selectionListener.getMatches(this._selectedEntry);
          if (matches != null && matches.length != 0) {
-            if (matches[0] instanceof Object) {
+            if (matches[0] instanceof VerbDescriptionProvider) {
                ContextObject contextObject = ContextObject.clone(context);
                contextObject.clearFlag(34);
                VerbDescriptionProvider verbDescriptionProvider = (VerbDescriptionProvider)matches[0];
                String desc = verbDescriptionProvider.getVerbDescription(contextObject);
                if (desc != null) {
-                  this._description = ((StringBuffer)(new Object())).append(prefix).append(' ').append(desc).toString();
+                  this._description = prefix + ' ' + desc;
                }
             }
 
             if (this._description == null) {
-               this._description = ((StringBuffer)(new Object())).append(prefix).append(' ').append(matches[0].toString()).toString();
+               this._description = prefix + ' ' + matches[0].toString();
             }
          } else {
             this._description = prefix;

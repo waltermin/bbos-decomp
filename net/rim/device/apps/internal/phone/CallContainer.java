@@ -23,7 +23,7 @@ import net.rim.device.internal.ui.ScaleBitmap;
 final class CallContainer extends Field implements PersistentContentListener {
    private Object _calls;
    private int _flags;
-   private StringBuffer _workBuf = (StringBuffer)(new Object());
+   private StringBuffer _workBuf = new StringBuffer();
    private boolean _pictureAvailable = false;
    private Bitmap _cachedBitmap = null;
    private String _cachedBitmapID = "";
@@ -178,7 +178,7 @@ final class CallContainer extends Field implements PersistentContentListener {
    }
 
    private final void paintSinglePartyCall(Graphics g, LiveCall call, int y, XYRect rect) {
-      if (call instanceof Object) {
+      if (call instanceof PaintProvider) {
          PaintProvider pp = call;
          if (pp.paint(g, 0, y, rect.width, rect.height, null) != 0) {
             return;
@@ -209,7 +209,7 @@ final class CallContainer extends Field implements PersistentContentListener {
 
          g.drawBitmap(4, 4, rect.width, rect.height, this._cachedBitmap, 0, 0);
          int widthUsedForImage = this._cachedBitmap.getWidth() + 8;
-         rect = (XYRect)(new Object(rect.x + widthUsedForImage, rect.y, rect.width - widthUsedForImage, rect.height));
+         rect = new XYRect(rect.x + widthUsedForImage, rect.y, rect.width - widthUsedForImage, rect.height);
          this._pictureAvailable = true;
       } else {
          this._pictureAvailable = false;
@@ -328,10 +328,10 @@ final class CallContainer extends Field implements PersistentContentListener {
    @Override
    protected final void paint(Graphics g) {
       XYRect extent = this.getExtent();
-      if (this._calls instanceof Object) {
+      if (this._calls instanceof LiveCall) {
          this.paintCall(g, (LiveCall)this._calls, 0, extent);
       } else {
-         if (this._calls instanceof Object) {
+         if (this._calls instanceof Vector) {
             Vector calls = (Vector)this._calls;
             int count = calls.size();
             switch (count) {
@@ -346,7 +346,7 @@ final class CallContainer extends Field implements PersistentContentListener {
                   int y1 = 0;
                   int y2 = heightOver2 + 2;
                   Font oldFont = g.getFont();
-                  XYRect paintingRect = (XYRect)(new Object(extent.x, extent.y, extent.width, heightOver2));
+                  XYRect paintingRect = new XYRect(extent.x, extent.y, extent.width, heightOver2);
                   LiveCall callA = (LiveCall)calls.elementAt(0);
                   LiveCall callB = (LiveCall)calls.elementAt(1);
                   int statusFontSize = paintingRect.height >> 1;
@@ -401,7 +401,7 @@ final class CallContainer extends Field implements PersistentContentListener {
       }
 
       if (call instanceof ConferenceCall && multipleCalls) {
-         line1 = ((StringBuffer)(new Object("("))).append(PhoneResources.getString(113)).append(")").toString();
+         line1 = "(" + PhoneResources.getString(113) + ")";
          fontSize -= 2;
       }
 
@@ -442,8 +442,8 @@ final class CallContainer extends Field implements PersistentContentListener {
    }
 
    private final void removeDisconnectedCalls() {
-      if (!(this._calls instanceof Object)) {
-         if (this._calls instanceof Object) {
+      if (!(this._calls instanceof LiveCall)) {
+         if (this._calls instanceof Vector) {
             Vector calls = (Vector)this._calls;
 
             for (int idx = calls.size() - 1; idx >= 0; idx--) {

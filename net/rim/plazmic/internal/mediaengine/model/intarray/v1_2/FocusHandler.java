@@ -14,7 +14,7 @@ public class FocusHandler implements MediaService, FocusInteractor {
    private AnimationModel _data;
    private MediaServices _services;
    private EventEngine _engine;
-   private Event _event = (Event)(new Object());
+   private Event _event = new Event();
    private boolean _inFocus;
 
    public void setItemInFocus(int newItem) {
@@ -269,7 +269,7 @@ public class FocusHandler implements MediaService, FocusInteractor {
    @Override
    public void setServices(MediaServices s) {
       if (s == null) {
-         throw new Object("Provided MediaServices cannot be null");
+         throw new IllegalArgumentException("Provided MediaServices cannot be null");
       }
 
       this._services = s;

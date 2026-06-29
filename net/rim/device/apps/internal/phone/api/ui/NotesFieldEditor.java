@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.phone.api.ui;
 
 import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 
 public final class NotesFieldEditor extends VerticalFieldManager {
@@ -13,7 +14,7 @@ public final class NotesFieldEditor extends VerticalFieldManager {
    public NotesFieldEditor(Field notesField, boolean addSeparator) {
       super(299067162755072L);
       if (addSeparator) {
-         this.add((Field)(new Object()));
+         this.add(new SeparatorField());
       }
 
       this.add(notesField);

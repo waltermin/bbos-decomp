@@ -18,6 +18,9 @@ import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
+import net.rim.device.api.ui.container.HorizontalFieldManager;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.apps.api.options.OptionsListItem;
 import net.rim.device.apps.internal.options.resources.OptionsResources;
@@ -78,7 +81,7 @@ public final class AboutOptionsItem extends OptionsListItem implements KeyListen
       Font cur_fnt = this.getAboutFont();
 
       for (int i = 0; i < fieldCount; i++) {
-         if (m.getField(i) instanceof Object) {
+         if (m.getField(i) instanceof RichTextField) {
             RichTextField field = (RichTextField)m.getField(i);
             Font field_fnt = field.getFont();
             if (!field_fnt.getFontFamily().getName().equals(cur_fnt.getFontFamily().getName())
@@ -88,7 +91,7 @@ public final class AboutOptionsItem extends OptionsListItem implements KeyListen
             }
          }
 
-         if (m.getField(i) instanceof Object) {
+         if (m.getField(i) instanceof Manager) {
             this.updateAboutFont((Manager)m.getField(i));
          }
       }
@@ -104,12 +107,12 @@ public final class AboutOptionsItem extends OptionsListItem implements KeyListen
       }
 
       int totalBitmapFieldWidth = image.getWidth() + 0;
-      BitmapField deviceBitmap = (BitmapField)(new Object(image, 4));
+      BitmapField deviceBitmap = new BitmapField(image, 4);
       deviceBitmap.setSpace(0, 5);
       Manager manager = this.getDisplayManager(totalBitmapFieldWidth);
       screen.add(manager);
       screen.getDelegate().setNonfocusableOverride(true);
-      Font[] fonts = new Object[]{this.getAboutFont()};
+      Font[] fonts = new Font[]{this.getAboutFont()};
       int[] infoOffsets = new int[]{0, 0};
       int[] copyrightOffsets = new int[]{0, 0};
       byte[] attributes = new byte[]{0};
@@ -117,7 +120,7 @@ public final class AboutOptionsItem extends OptionsListItem implements KeyListen
       String jtwiVersion = System.getProperty("microedition.jtwi.version");
       String mediaVersion = System.getProperty("microedition.media.version");
       String pimVersion = System.getProperty("microedition.pim.version");
-      String[] info = new Object[]{
+      String[] info = new String[]{
          DeviceInfo.getDeviceName(),
          this.getNetworkString(),
          ModuleInformation.trimVersion(DeviceInfo.getPlatformVersion()),
@@ -136,26 +139,26 @@ public final class AboutOptionsItem extends OptionsListItem implements KeyListen
       };
       String aboutText = MessageFormat.format(OptionsResources.getString(101), info);
       infoOffsets[1] = aboutText.length();
-      Field field = (Field)(new Object(aboutText, infoOffsets, attributes, fonts, 36028797018963968L));
+      Field field = new RichTextField(aboutText, infoOffsets, attributes, fonts, 36028797018963968L);
       screen.add(field);
       String copyableText = aboutText;
       aboutText = OptionsResources.getString(102);
       copyrightOffsets[1] = aboutText.length();
-      field = (Field)(new Object(aboutText, copyrightOffsets, attributes, fonts, 36028797018963968L));
+      field = new RichTextField(aboutText, copyrightOffsets, attributes, fonts, 36028797018963968L);
       screen.add(field);
-      copyableText = ((StringBuffer)(new Object())).append(copyableText).append(aboutText).toString();
+      copyableText = copyableText + aboutText;
       screen.setScreenCopyableText(copyableText);
       return screen;
    }
 
    private final String getApplicationVersion() {
       String applicationVersion = DeviceInfo.getSoftwareVersion();
-      return applicationVersion.length() == 0 ? "" : ModuleInformation.trimVersion(((StringBuffer)(new Object("v"))).append(applicationVersion).toString());
+      return applicationVersion.length() == 0 ? "" : ModuleInformation.trimVersion("v" + applicationVersion);
    }
 
    private final String getWLANVersion() {
       if (WLAN.isSupported()) {
-         StringBuffer sb = (StringBuffer)(new Object());
+         StringBuffer sb = new StringBuffer();
          sb.append('\n');
          sb.append(OptionsResources.getString(105));
          String versionString = null;
@@ -176,7 +179,7 @@ public final class AboutOptionsItem extends OptionsListItem implements KeyListen
 
    private final String getSATSAVersion() {
       if (SIMCard.isSupported() && SIMCard.isJSR177Supported()) {
-         StringBuffer sb = (StringBuffer)(new Object());
+         StringBuffer sb = new StringBuffer();
          sb.append('\n');
          sb.append(OptionsResources.getString(2041));
          sb.append(System.getProperty("microedition.satsa.version"));
@@ -196,26 +199,26 @@ public final class AboutOptionsItem extends OptionsListItem implements KeyListen
       }
 
       int totalBitmapFieldWidth = javalogo.getWidth() + (javalogo.getWidth() >> 1) + 0;
-      BitmapField javaBitmap = (BitmapField)(new Object(javalogo, this.isHorizontalOrientation(totalBitmapFieldWidth) ? 0 : 4));
+      BitmapField javaBitmap = new BitmapField(javalogo, this.isHorizontalOrientation(totalBitmapFieldWidth) ? 0 : 4);
       javaBitmap.setSpace((javalogo.getWidth() >> 2) + 0, 5);
       Manager manager = this.getDisplayManager(totalBitmapFieldWidth);
       screen.add(manager);
       screen.getDelegate().setNonfocusableOverride(true);
-      Font[] fonts = new Object[]{this.getAboutFont()};
+      Font[] fonts = new Font[]{this.getAboutFont()};
       int[] infoOffsets = new int[]{0, 0};
       int[] copyrightOffsets = new int[]{0, 0};
       byte[] attributes = new byte[]{0};
       manager.add(javaBitmap);
       String aboutText = OptionsResources.getString(103);
       infoOffsets[1] = aboutText.length();
-      Field field = (Field)(new Object(aboutText, infoOffsets, attributes, fonts, 36028797018963968L));
+      Field field = new RichTextField(aboutText, infoOffsets, attributes, fonts, 36028797018963968L);
       manager.add(field);
       String copyableText = aboutText;
       aboutText = OptionsResources.getString(104);
       copyrightOffsets[1] = aboutText.length();
-      field = (Field)(new Object(aboutText, copyrightOffsets, attributes, fonts, 36028797018963968L));
+      field = new RichTextField(aboutText, copyrightOffsets, attributes, fonts, 36028797018963968L);
       screen.add(field);
-      copyableText = ((StringBuffer)(new Object())).append(copyableText).append(aboutText).toString();
+      copyableText = copyableText + aboutText;
       screen.setScreenCopyableText(copyableText);
       return screen;
    }
@@ -224,17 +227,17 @@ public final class AboutOptionsItem extends OptionsListItem implements KeyListen
       AboutOptionsItem$AboutScreen screen = new AboutOptionsItem$AboutScreen(this, 299067162820608L);
       Bitmap logo = Bitmap.getBitmapResource("voicesignal.png");
       int totalBitmapFieldWidth = logo.getWidth() + (logo.getWidth() >> 1) + 0;
-      BitmapField vadBitmap = (BitmapField)(new Object(logo, this.isHorizontalOrientation(totalBitmapFieldWidth) ? 0 : 4));
+      BitmapField vadBitmap = new BitmapField(logo, this.isHorizontalOrientation(totalBitmapFieldWidth) ? 0 : 4);
       vadBitmap.setSpace((logo.getWidth() >> 2) + 0, 5);
       Manager manager = this.getDisplayManager(totalBitmapFieldWidth);
       screen.add(manager);
       screen.getDelegate().setNonfocusableOverride(true);
-      Font[] fonts = new Object[]{this.getAboutFont()};
+      Font[] fonts = new Font[]{this.getAboutFont()};
       byte[] attributes = new byte[]{0};
       manager.add(vadBitmap);
       String text = OptionsResources.getString(2029);
       int[] infoOffsets = new int[]{0, text.length()};
-      Field field = (Field)(new Object(text, infoOffsets, attributes, fonts, 36028797018963968L));
+      Field field = new RichTextField(text, infoOffsets, attributes, fonts, 36028797018963968L);
       manager.add(field);
       String copyableText = text;
       String[] versions = VADLanguageSetting.getInstance().getVersionInfo();
@@ -242,18 +245,18 @@ public final class AboutOptionsItem extends OptionsListItem implements KeyListen
          Arrays.add(versions, DeviceInfo.getDeviceName());
          text = MessageFormat.format(OptionsResources.getString(2028), versions);
          int[] versionOffsets = new int[]{0, text.length()};
-         field = (Field)(new Object(text, versionOffsets, attributes, fonts, 36028797018963968L));
-         manager.add((Field)(new Object()));
+         field = new RichTextField(text, versionOffsets, attributes, fonts, 36028797018963968L);
+         manager.add(new SeparatorField());
          manager.add(field);
-         manager.add((Field)(new Object()));
-         copyableText = ((StringBuffer)(new Object())).append(copyableText).append(text).toString();
+         manager.add(new SeparatorField());
+         copyableText = copyableText + text;
       }
 
       text = OptionsResources.getString(2030);
       int[] copyrightOffsets = new int[]{0, text.length()};
-      field = (Field)(new Object(text, copyrightOffsets, attributes, fonts, 36028797018963968L));
+      field = new RichTextField(text, copyrightOffsets, attributes, fonts, 36028797018963968L);
       manager.add(field);
-      copyableText = ((StringBuffer)(new Object())).append(copyableText).append(text).toString();
+      copyableText = copyableText + text;
       screen.setScreenCopyableText(copyableText);
       return screen;
    }
@@ -264,7 +267,7 @@ public final class AboutOptionsItem extends OptionsListItem implements KeyListen
    }
 
    private final Manager getDisplayManager(int bitmapWidth) {
-      return (Manager)(this.isHorizontalOrientation(bitmapWidth) ? new Object() : new Object());
+      return this.isHorizontalOrientation(bitmapWidth) ? new HorizontalFieldManager() : new VerticalFieldManager();
    }
 
    private final Font getAboutFont() {
@@ -275,7 +278,7 @@ public final class AboutOptionsItem extends OptionsListItem implements KeyListen
    }
 
    private final String getNetworkString() {
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
       int wafs = RadioInfo.getSupportedWAFs();
       if ((wafs & 1) != 0) {
          if (InternalServices.isUMTSCapable()) {

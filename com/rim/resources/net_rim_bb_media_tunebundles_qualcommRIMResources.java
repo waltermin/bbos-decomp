@@ -4,7 +4,7 @@ import java.util.Hashtable;
 import net.rim.device.resources.Resource;
 
 public final class net_rim_bb_media_tunebundles_qualcommRIMResources extends Resource {
-   public static Hashtable _resources = (Hashtable)(new Object(127));
+   public static Hashtable _resources = new Hashtable(127);
    public static Hashtable _properties;
    public static byte[] _appCount = new byte[]{1};
    public static byte[] _resourceExtensions = new byte[]{46, 97, 97, 99, 10};

@@ -278,7 +278,7 @@ public class WicletImpl implements WicletEx {
          dc = this.getDataCollection((int)(handle >> 32));
       }
 
-      return new Object(handle);
+      return new Long(handle);
    }
 
    @Override
@@ -296,7 +296,7 @@ public class WicletImpl implements WicletEx {
          Data data = (Data)object;
          int type = data.getDef().getFieldType(fields[start]);
          if (type != 6) {
-            throw new Object("Can not be a primitive");
+            throw new RuntimeException("Can not be a primitive");
          }
 
          handle = data.getReferenceField(fields[start++]);
@@ -312,7 +312,7 @@ public class WicletImpl implements WicletEx {
       for (int i = start; i < end; i++) {
          int type = dc.getDef().getFieldType(fields[i]);
          if (type != 6) {
-            throw new Object("Can not be a primitive");
+            throw new RuntimeException("Can not be a primitive");
          }
 
          handle = dc.getReferenceField(handle, fields[i]);
@@ -433,8 +433,8 @@ public class WicletImpl implements WicletEx {
    public WicletImpl(WicletContext context, WicletRuntime runtime) {
       this._context = context;
       this._defs = (Definitions)context.getWicletStore().loadDefinitions();
-      this._cmpHandlers = (IntHashtable)(new Object());
-      this._nameToHandle = (ToIntHashtable)(new Object());
+      this._cmpHandlers = new IntHashtable();
+      this._nameToHandle = new ToIntHashtable();
       this._dataLock = new Lock();
       this._runtime = runtime;
       this._access = (AccessDataService)this._runtime
@@ -453,7 +453,7 @@ public class WicletImpl implements WicletEx {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

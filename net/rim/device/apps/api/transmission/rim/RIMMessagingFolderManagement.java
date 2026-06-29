@@ -1,11 +1,12 @@
 package net.rim.device.apps.api.transmission.rim;
 
+import java.io.IOException;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.api.util.Persistable;
 import net.rim.device.apps.api.transmission.rim.otasync.OTAFMConfiguration;
 
 public class RIMMessagingFolderManagement extends RIMMessagingTransmission implements Persistable {
-   private DataBuffer _buffer = (DataBuffer)(new Object(true));
+   private DataBuffer _buffer = new DataBuffer(true);
    private static final byte FM_SUBCOMMAND_TERMINATOR = 0;
    private static final byte FM_MOVE_MESSAGE = 1;
    private static final byte FM_DELETE_MESSAGE = 2;
@@ -80,7 +81,7 @@ public class RIMMessagingFolderManagement extends RIMMessagingTransmission imple
 
    @Override
    public DataBuffer write() {
-      DataBuffer result = (DataBuffer)(new Object(true));
+      DataBuffer result = new DataBuffer(true);
       result.writeByte(7);
       synchronized (this._buffer) {
          this._buffer.trim();
@@ -93,15 +94,15 @@ public class RIMMessagingFolderManagement extends RIMMessagingTransmission imple
    }
 
    @Override
-   public void read(DataBuffer packetDataBuffer) {
+   public void read(DataBuffer packetDataBuffer) throws IOException {
       int length = packetDataBuffer.available();
       if (length <= 0) {
-         throw new Object("IL");
+         throw new IOException("IL");
       }
 
       byte[] data = new byte[length];
       packetDataBuffer.read(data);
-      this._buffer = (DataBuffer)(new Object(data, 0, length, true));
+      this._buffer = new DataBuffer(data, 0, length, true);
    }
 
    public int size() {
@@ -129,7 +130,7 @@ public class RIMMessagingFolderManagement extends RIMMessagingTransmission imple
       switch (length) {
          case 0:
          case 3:
-            throw new Object(((StringBuffer)(new Object("UL="))).append(length).toString());
+            throw new IllegalArgumentException("UL=" + length);
          case 1:
          default:
             return this._buffer.readByte();
@@ -143,7 +144,7 @@ public class RIMMessagingFolderManagement extends RIMMessagingTransmission imple
    private byte getByte() {
       byte length = this._buffer.readByte();
       if (length != 1) {
-         throw new Object(((StringBuffer)(new Object("UL="))).append(length).toString());
+         throw new IllegalArgumentException("UL=" + length);
       } else {
          return this._buffer.readByte();
       }

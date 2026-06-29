@@ -17,13 +17,13 @@ public final class RptRuleFreqEnumDef extends EnumDefinition {
    public static final String REPEAT_RULE_FREQUENCY_ENUM_NAME = "REPEAT_RULE_FREQUENCY";
 
    public RptRuleFreqEnumDef() {
-      super._enumNames = new Object[5];
+      super._enumNames = new String[5];
       super._enumNames[0] = "NONE";
       super._enumNames[1] = "DAILY";
       super._enumNames[2] = "WEEKLY";
       super._enumNames[3] = "MONTHLY";
       super._enumNames[4] = "YEARLY";
-      super._enumValues = (ToIntHashtable)(new Object(7));
+      super._enumValues = new ToIntHashtable(7);
       super._enumValues.put("NONE", 0);
       super._enumValues.put("DAILY", 1);
       super._enumValues.put("WEEKLY", 2);

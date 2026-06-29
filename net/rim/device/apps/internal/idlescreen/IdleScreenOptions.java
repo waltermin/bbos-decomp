@@ -87,7 +87,7 @@ public final class IdleScreenOptions extends IdleScreenOptionsProvider {
       if (result == null) {
          result = Options.getInstance().getString(845737328485785096L);
          if (result != null) {
-            return ((StringBuffer)(new Object("/store"))).append(result).toString();
+            return "/store" + result;
          }
       }
 
@@ -126,13 +126,13 @@ public final class IdleScreenOptions extends IdleScreenOptionsProvider {
    @Override
    public final void populateMainScreen(MainScreen screen) {
       int timeout = getTimeout();
-      this._enabledField = (BooleanChoiceField)(new Object(_rb.getString(1), 2, timeout > 0));
+      this._enabledField = new BooleanChoiceField(_rb.getString(1), 2, timeout > 0);
       if (-1 == timeout || 0 == timeout) {
          timeout = 600;
       }
 
       screen.add(this._enabledField);
-      this._timeoutField = (TimeChoiceField)(new Object(_rb.getString(2), this._timeouts, (timeout < 0 ? -timeout : timeout) * 1000));
+      this._timeoutField = new TimeChoiceField(_rb.getString(2), this._timeouts, (timeout < 0 ? -timeout : timeout) * 1000);
       screen.add(this._timeoutField);
       screen.add(new IdleScreenOptions$PreviewButtonField());
    }

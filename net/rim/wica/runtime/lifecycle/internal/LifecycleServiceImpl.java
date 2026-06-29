@@ -100,7 +100,7 @@ public final class LifecycleServiceImpl implements LifecycleService, EventListen
    final void quarantineWiclet(long id, boolean quarantine) throws LifecycleException {
       WicletImpl wiclet = (WicletImpl)this.getWiclet(id);
       if (wiclet == null) {
-         throw new LifecycleException(((StringBuffer)(new Object("Application [ID: "))).append(id).append("] does not exist.").toString());
+         throw new LifecycleException("Application [ID: " + id + "] does not exist.");
       }
 
       wiclet.quarantine(quarantine);
@@ -114,7 +114,7 @@ public final class LifecycleServiceImpl implements LifecycleService, EventListen
       Logger.log("L UW");
       WicletImpl wiclet = (WicletImpl)this.getWiclet(id);
       if (wiclet == null) {
-         throw new LifecycleException(((StringBuffer)(new Object("Application [ID: "))).append(id).append("] does not exist.").toString());
+         throw new LifecycleException("Application [ID: " + id + "] does not exist.");
       }
 
       wiclet.setUninstallTask(new UninstallTaskInfo(type, expiryDate));
@@ -134,14 +134,7 @@ public final class LifecycleServiceImpl implements LifecycleService, EventListen
       WicletImpl wiclet = (WicletImpl)this.getWiclet(upgradeDescriptor.getUri());
       if (wiclet != null && !wiclet.getVersion().equals(upgradeDescriptor.getVersion())) {
          if (this.violatesMultiDomainPolicy(upgradeDescriptor)) {
-            Logger.log(
-               this.toString(),
-               ((StringBuffer)(new Object("Ignoring upgrade notification for ")))
-                  .append(upgradeDescriptor.getName())
-                  .append(", multi domain not allowed.")
-                  .toString(),
-               4
-            );
+            Logger.log(this.toString(), "Ignoring upgrade notification for " + upgradeDescriptor.getName() + ", multi domain not allowed.", 4);
             return;
          }
 
@@ -259,7 +252,7 @@ public final class LifecycleServiceImpl implements LifecycleService, EventListen
    final void clearApplicationResourceCache(long id) throws LifecycleException {
       WicletImpl wiclet = this._manager.getApplication(id);
       if (wiclet == null) {
-         throw new LifecycleException(((StringBuffer)(new Object("Application [ID: "))).append(id).append("] does not exist").toString());
+         throw new LifecycleException("Application [ID: " + id + "] does not exist");
       }
 
       wiclet.getWicletStore().freeResources();
@@ -502,7 +495,7 @@ public final class LifecycleServiceImpl implements LifecycleService, EventListen
    public final void startWiclet(long applicationId) throws LifecycleException {
       WicletImpl application = this._manager.getApplication(applicationId);
       if (application == null) {
-         throw new LifecycleException(((StringBuffer)(new Object("Application [ID: "))).append(applicationId).append("] does not exist").toString());
+         throw new LifecycleException("Application [ID: " + applicationId + "] does not exist");
       }
 
       application.start();
@@ -512,7 +505,7 @@ public final class LifecycleServiceImpl implements LifecycleService, EventListen
    public final void startWiclet(String applicationUri) throws LifecycleException {
       WicletImpl application = this._manager.getApplication(applicationUri);
       if (application == null) {
-         throw new LifecycleException(((StringBuffer)(new Object("Application [URI: "))).append(applicationUri).append("] does not exist").toString());
+         throw new LifecycleException("Application [URI: " + applicationUri + "] does not exist");
       }
 
       application.start();
@@ -522,7 +515,7 @@ public final class LifecycleServiceImpl implements LifecycleService, EventListen
    public final void stopApplication(long applicationId) throws LifecycleException {
       WicletImpl application = this._manager.getApplication(applicationId);
       if (application == null) {
-         throw new LifecycleException(((StringBuffer)(new Object("Application [ID: "))).append(applicationId).append("] does not exist").toString());
+         throw new LifecycleException("Application [ID: " + applicationId + "] does not exist");
       }
 
       application.stop(true);
@@ -532,7 +525,7 @@ public final class LifecycleServiceImpl implements LifecycleService, EventListen
    public final void stopApplication(String applicationUri) throws LifecycleException {
       WicletImpl application = this._manager.getApplication(applicationUri);
       if (application == null) {
-         throw new LifecycleException(((StringBuffer)(new Object("Application [URI: "))).append(applicationUri).append("] does not exist").toString());
+         throw new LifecycleException("Application [URI: " + applicationUri + "] does not exist");
       }
 
       application.stop(true);
@@ -572,7 +565,7 @@ public final class LifecycleServiceImpl implements LifecycleService, EventListen
    public final void loadWiclet(String uri) throws LifecycleException {
       WicletImpl wiclet = this._manager.getApplication(uri);
       if (wiclet == null) {
-         throw new LifecycleException(((StringBuffer)(new Object("Application [URI: "))).append(uri).append("] does not exist").toString());
+         throw new LifecycleException("Application [URI: " + uri + "] does not exist");
       }
 
       wiclet.load();
@@ -582,7 +575,7 @@ public final class LifecycleServiceImpl implements LifecycleService, EventListen
    public final void uninstallWiclet(long id) throws LifecycleException {
       WicletImpl wiclet = this._manager.getApplication(id);
       if (wiclet == null) {
-         throw new LifecycleException(((StringBuffer)(new Object("Application [ID: "))).append(id).append("] does not exist").toString());
+         throw new LifecycleException("Application [ID: " + id + "] does not exist");
       }
 
       this.uninstallWiclet(id, 32);
@@ -603,7 +596,7 @@ public final class LifecycleServiceImpl implements LifecycleService, EventListen
    public final void upgradeWiclet(long id) throws LifecycleException {
       WicletImpl wiclet = this._manager.getApplication(id);
       if (wiclet == null) {
-         throw new LifecycleException(((StringBuffer)(new Object("Application [ID: "))).append(id).append("] does not exist").toString());
+         throw new LifecycleException("Application [ID: " + id + "] does not exist");
       }
 
       wiclet.upgrade();
@@ -737,7 +730,7 @@ public final class LifecycleServiceImpl implements LifecycleService, EventListen
    }
 
    private final String createLogMessage(String event, String uri, String version, String details) {
-      StringBuffer message = (StringBuffer)(new Object(event));
+      StringBuffer message = new StringBuffer(event);
       message.append(":\nURI - ");
       message.append(uri);
       message.append("\nVersion - ");
@@ -789,7 +782,7 @@ public final class LifecycleServiceImpl implements LifecycleService, EventListen
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

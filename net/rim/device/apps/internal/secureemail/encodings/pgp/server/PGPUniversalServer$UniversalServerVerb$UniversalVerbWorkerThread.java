@@ -20,7 +20,7 @@ class PGPUniversalServer$UniversalServerVerb$UniversalVerbWorkerThread extends P
       // Bytecode:
       // 00: aload 0
       // 01: getfield net/rim/device/internal/ui/component/PleaseWaitWorkerThread._pleaseWaitDialog Lnet/rim/device/internal/ui/component/PleaseWaitDialog;
-      // 04: checkcast java/lang/Object
+      // 04: checkcast net/rim/device/apps/internal/secureemail/server/SecureEmailServerOperationListener
       // 07: astore 1
       // 08: bipush -1
       // 0a: istore 2
@@ -94,7 +94,7 @@ class PGPUniversalServer$UniversalServerVerb$UniversalVerbWorkerThread extends P
       // bc: getfield net/rim/device/apps/internal/secureemail/encodings/pgp/server/PGPUniversalServer$UniversalServerVerb.this$0 Lnet/rim/device/apps/internal/secureemail/encodings/pgp/server/PGPUniversalServer;
       // bf: invokespecial net/rim/device/apps/internal/secureemail/encodings/pgp/server/PGPUniversalServer.clearCache ()V
       // c2: goto d6
-      // c5: new java/lang/Object
+      // c5: new java/lang/IllegalArgumentException
       // c8: dup
       // c9: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // cc: athrow

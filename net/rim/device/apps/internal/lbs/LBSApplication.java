@@ -56,9 +56,9 @@ public final class LBSApplication extends UiApplication implements GlobalEventLi
             LocationDocumentCollection.registerOnStartup();
             FavouritesManager.registerOnStartup();
             ApplicationDescriptor original = ApplicationDescriptor.currentApplicationDescriptor();
-            ApplicationDescriptor descriptor = (ApplicationDescriptor)(new Object(
+            ApplicationDescriptor descriptor = new ApplicationDescriptor(
                original, "LBS", null, Bitmap.getBitmapResource("net_rim_bb_lbs.png"), original.getPosition(), "net.rim.device.apps.internal.lbs.LBS", 7
-            ));
+            );
             ApplicationRegistry.getApplicationRegistry().put(UID, descriptor);
             String url = LBSOptions.getURL(-7064416726417485961L);
             if (url != null) {
@@ -93,7 +93,7 @@ public final class LBSApplication extends UiApplication implements GlobalEventLi
       ApplicationDescriptor descriptor = (ApplicationDescriptor)ApplicationRegistry.getApplicationRegistry().get(UID);
       if (descriptor != null) {
          if (!ApplicationDescriptor.currentApplicationDescriptor().equals(descriptor)) {
-            descriptor = (ApplicationDescriptor)(new Object(descriptor, new String[]{"externalOpen"}));
+            descriptor = new ApplicationDescriptor(descriptor, new String[]{"externalOpen"});
          }
 
          ApplicationManager applicationManager = ApplicationManager.getApplicationManager();
@@ -115,7 +115,7 @@ public final class LBSApplication extends UiApplication implements GlobalEventLi
       ApplicationDescriptor descriptor = (ApplicationDescriptor)ApplicationRegistry.getApplicationRegistry().get(UID);
       if (descriptor != null) {
          if (!ApplicationDescriptor.currentApplicationDescriptor().equals(descriptor)) {
-            descriptor = (ApplicationDescriptor)(new Object(descriptor, new String[]{"externalOpen"}));
+            descriptor = new ApplicationDescriptor(descriptor, new String[]{"externalOpen"});
          }
 
          ApplicationManager applicationManager = ApplicationManager.getApplicationManager();
@@ -136,7 +136,7 @@ public final class LBSApplication extends UiApplication implements GlobalEventLi
 
          try {
             int pid = applicationManager.runApplication(descriptor, false);
-            RIMGlobalMessagePoster.postGlobalEvent(pid, GUID_APP_STATUS, 0, 0, new Object(enabled), null);
+            RIMGlobalMessagePoster.postGlobalEvent(pid, GUID_APP_STATUS, 0, 0, new Boolean(enabled), null);
          } finally {
             return;
          }
@@ -163,11 +163,11 @@ public final class LBSApplication extends UiApplication implements GlobalEventLi
    public final void eventOccurred(long guid, int data0, int data1, Object object0, Object object1) {
       boolean showMapScreen = false;
       if (guid == GUID_VIEW_LOCATION) {
-         if (object0 instanceof Object) {
+         if (object0 instanceof ContextObject) {
             ContextObject context = (ContextObject)object0;
-            int latitude = context.get(-200747095229876690L);
-            int longitude = context.get(6606581876924152793L);
-            int zoom = context.get(581052036187634982L);
+            int latitude = (Integer)context.get(-200747095229876690L);
+            int longitude = (Integer)context.get(6606581876924152793L);
+            int zoom = (Integer)context.get(581052036187634982L);
             object0 = new Location(latitude, longitude, zoom);
          }
 
@@ -179,7 +179,7 @@ public final class LBSApplication extends UiApplication implements GlobalEventLi
          }
       }
 
-      if (guid == GUID_VIEW_ADDRESS && object0 instanceof Object) {
+      if (guid == GUID_VIEW_ADDRESS && object0 instanceof MailingAddressModel) {
          this.showEULA();
          MailingAddressModel mailingAddressModel = (MailingAddressModel)object0;
          ViewAddressVerb.doAction(mailingAddressModel, null);
@@ -187,7 +187,7 @@ public final class LBSApplication extends UiApplication implements GlobalEventLi
 
       if (guid == GUID_OPEN_DOCUMENT) {
          this.showEULA();
-         if (object0 instanceof Object) {
+         if (object0 instanceof String) {
             this._mapScreen.openDocument((String)object0, object1, data0);
          }
 
@@ -200,7 +200,7 @@ public final class LBSApplication extends UiApplication implements GlobalEventLi
       }
 
       if ((guid == -4220058463650496006L || guid == 8288627527798139133L || guid == 6213587377148297993L || guid == 2522898683889177438L)
-         && object0 instanceof Object) {
+         && object0 instanceof ServiceRecord) {
          ServiceRecord record = (ServiceRecord)object0;
          if (StringUtilities.strEqualIgnoreCase(record.getUid(), "SYNC", 1701707776)) {
             LBSOptions.checkSyncOTA(false);
@@ -208,7 +208,7 @@ public final class LBSApplication extends UiApplication implements GlobalEventLi
       }
 
       if (guid == GUID_APP_STATUS) {
-         this.handleAppStatus(object0);
+         this.handleAppStatus((Boolean)object0);
       }
    }
 
@@ -334,7 +334,7 @@ public final class LBSApplication extends UiApplication implements GlobalEventLi
    public static final void runApplicationUpdate() {
       LBSOptions.setStringNoBackup(7544824750646866888L, "APP_INVALID");
       String url = LBSOptions.getString(-9040565055715388692L, "http://maps.blackberry.com");
-      EventLogger.logEvent(UID, ((StringBuffer)(new Object("Client to receive new app from "))).append(url).toString().getBytes(), 5);
+      EventLogger.logEvent(UID, ("Client to receive new app from " + url).getBytes(), 5);
       synchronized (Application.getEventLock()) {
          Application.getApplication().invokeLater(new LBSApplication$2(url));
       }
@@ -342,7 +342,7 @@ public final class LBSApplication extends UiApplication implements GlobalEventLi
 
    public static final void setPOIMenuVisibility() {
       boolean showPOI = LBSOptions.getBoolean(4717295063260546653L, false);
-      System.out.println(((StringBuffer)(new Object("pingPOIserver, showPOI? "))).append(showPOI).toString());
+      System.out.println("pingPOIserver, showPOI? " + showPOI);
       if (RadioInfo.getActiveWAFs() != 0) {
          if (!showPOI) {
             if (MapsServices.getInstance().isRimBranded() || LBSOptions.getURL(3589376987760903020L) != null) {

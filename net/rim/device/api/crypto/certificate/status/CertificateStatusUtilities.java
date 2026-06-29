@@ -40,7 +40,7 @@ public class CertificateStatusUtilities {
                }
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -79,7 +79,7 @@ public class CertificateStatusUtilities {
                }
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

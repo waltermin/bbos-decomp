@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.browser.debug;
 
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Screen;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.apps.internal.browser.core.BrowserDaemonRegistry;
@@ -18,14 +18,14 @@ final class ContextState implements DebugListItem {
 
    @Override
    public final Screen getScreen() {
-      MainScreen screen = (MainScreen)(new Object(1196268651020288L));
-      screen.setTitle((Field)(new Object(BrowserResources.getString(369))));
+      MainScreen screen = new MainScreen(1196268651020288L);
+      screen.setTitle(new LabelField(BrowserResources.getString(369)));
       BrowserImpl browser = BrowserDaemonRegistry.getInstance();
       Page page = browser.getCurrentPage();
       if (page != null) {
          IBrowserContext context = page.getContext();
          if (context != null) {
-            RichTextField field = (RichTextField)(new Object(context.toString()));
+            RichTextField field = new RichTextField(context.toString());
             screen.add(field);
          }
       }

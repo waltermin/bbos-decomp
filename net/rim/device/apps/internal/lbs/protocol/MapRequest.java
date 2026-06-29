@@ -46,7 +46,7 @@ public final class MapRequest extends Request {
       this._rect.copy(rect);
       this._zoom = zoom;
       super._version = (byte)(LBSOptions.getInt(3743068244816784828L, 1) & 0xFF);
-      this._mapletList = (Vector)(new Object());
+      this._mapletList = new Vector();
       this._timer = new Timing();
    }
 
@@ -363,7 +363,7 @@ public final class MapRequest extends Request {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private final String parseAppURL(DataInputStream in) {
-      StringBuffer URL = (StringBuffer)(new Object());
+      StringBuffer URL = new StringBuffer();
 
       try {
          int len = in.readInt();
@@ -373,8 +373,8 @@ public final class MapRequest extends Request {
             URL.append((char)c);
          }
       } catch (Throwable var7) {
-         System.err.println(((StringBuffer)(new Object("parseAppURL ioex: "))).append(ioex.getMessage()).toString());
-         EventLogger.logEvent(LBSApplication.UID, ((StringBuffer)(new Object("parseAppURL ioex: "))).append(ioex.getMessage()).toString().getBytes(), 2);
+         System.err.println("parseAppURL ioex: " + ioex.getMessage());
+         EventLogger.logEvent(LBSApplication.UID, ("parseAppURL ioex: " + ioex.getMessage()).getBytes(), 2);
          return URL.toString();
       }
 
@@ -399,14 +399,7 @@ public final class MapRequest extends Request {
          RequestThread.addRequest(this);
          EventLogger.logEvent(
             LBSApplication.UID,
-            ((StringBuffer)(new Object("Maplet version change from ")))
-               .append(Integer.toHexString(super._version & 255))
-               .append(" to ")
-               .append(ver)
-               .append(", from: ")
-               .append(this.getURL())
-               .toString()
-               .getBytes(),
+            ("Maplet version change from " + Integer.toHexString(super._version & 255) + " to " + ver + ", from: " + this.getURL()).getBytes(),
             5
          );
       }

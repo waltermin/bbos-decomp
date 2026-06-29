@@ -133,19 +133,19 @@ public final class EmailSendUtility {
       // 099: aload 5
       // 09b: ifnonnull 0a1
       // 09e: goto 39c
-      // 0a1: new java/lang/Object
+      // 0a1: new net/rim/device/apps/api/transmission/rim/RIMMessagingOutgoingMessage
       // 0a4: dup
       // 0a5: invokespecial net/rim/device/apps/api/transmission/rim/RIMMessagingOutgoingMessage.<init> ()V
       // 0a8: astore 6
       // 0aa: aload 2
       // 0ab: ldc2_w -6095803566992128485
       // 0ae: invokestatic net/rim/device/apps/api/framework/model/ContextObject.get (Ljava/lang/Object;J)Ljava/lang/Object;
-      // 0b1: checkcast java/lang/Object
+      // 0b1: checkcast net/rim/device/api/servicebook/ServiceRecord
       // 0b4: astore 7
       // 0b6: invokestatic net/rim/device/api/system/ApplicationRegistry.getApplicationRegistry ()Lnet/rim/device/api/system/ApplicationRegistry;
       // 0b9: ldc2_w -2205884509140292945
       // 0bc: invokevirtual net/rim/device/api/system/ApplicationRegistry.get (J)Ljava/lang/Object;
-      // 0bf: checkcast java/lang/Object
+      // 0bf: checkcast net/rim/device/apps/api/messaging/implus/IMPlusServiceModel
       // 0c2: astore 8
       // 0c4: aload 8
       // 0c6: ifnull 0ec
@@ -201,7 +201,7 @@ public final class EmailSendUtility {
       // 146: invokeinterface net/rim/device/apps/internal/blackberryemail/email/EmailMessageModel.getPriority ()B 1
       // 14b: invokevirtual net/rim/device/apps/api/transmission/rim/RIMMessagingMessage.setImportance (B)V
       // 14e: aload 0
-      // 14f: checkcast java/lang/Object
+      // 14f: checkcast net/rim/device/apps/api/framework/model/FolderProvider
       // 152: invokeinterface net/rim/device/apps/api/framework/model/FolderProvider.getFolderId ()J 1
       // 157: lstore 12
       // 159: lload 12
@@ -225,7 +225,7 @@ public final class EmailSendUtility {
       // 180: invokevirtual net/rim/device/apps/api/framework/model/ContextObject.setFlag (I)V
       // 183: aload 2
       // 184: ldc2_w -8804918554992595454
-      // 187: new java/lang/Object
+      // 187: new java/lang/StringBuffer
       // 18a: dup
       // 18b: ldc_w "CMIME"
       // 18e: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -297,7 +297,7 @@ public final class EmailSendUtility {
       // 21d: invokevirtual net/rim/device/apps/api/transmission/rim/RIMMessagingMessage.setText (Ljava/lang/Object;Lnet/rim/device/apps/api/transmission/Parameters;Ljava/lang/String;)V
       // 220: aload 2
       // 221: ldc2_w -1943436819741481055
-      // 224: new java/lang/Object
+      // 224: new net/rim/device/apps/api/transmission/rim/ContentPartIDGenerator
       // 227: dup
       // 228: invokespecial net/rim/device/apps/api/transmission/rim/ContentPartIDGenerator.<init> ()V
       // 22b: invokevirtual net/rim/device/api/util/LongHashtable.put (JLjava/lang/Object;)Ljava/lang/Object;
@@ -314,10 +314,10 @@ public final class EmailSendUtility {
       // 244: aload 0
       // 245: iload 16
       // 247: invokeinterface net/rim/device/api/collection/ReadableList.getAt (I)Ljava/lang/Object; 2
-      // 24c: checkcast java/lang/Object
+      // 24c: checkcast net/rim/device/apps/api/framework/model/RIMModel
       // 24f: astore 17
       // 251: aload 17
-      // 253: instanceof java/lang/Object
+      // 253: instanceof net/rim/device/apps/api/framework/model/ConversionProvider
       // 256: ifeq 2bd
       // 259: iload 3
       // 25a: ifne 2ab
@@ -353,7 +353,7 @@ public final class EmailSendUtility {
       // 2a6: bipush 70
       // 2a8: invokevirtual net/rim/device/apps/api/framework/model/ContextObject.setFlag (I)V
       // 2ab: aload 17
-      // 2ad: checkcast java/lang/Object
+      // 2ad: checkcast net/rim/device/apps/api/framework/model/ConversionProvider
       // 2b0: astore 18
       // 2b2: aload 18
       // 2b4: aload 2
@@ -371,9 +371,9 @@ public final class EmailSendUtility {
       // 2d2: aload 2
       // 2d3: ldc2_w -8804918554992595454
       // 2d6: invokevirtual net/rim/device/api/util/LongHashtable.get (J)Ljava/lang/Object;
-      // 2d9: checkcast java/lang/Object
+      // 2d9: checkcast java/lang/StringBuffer
       // 2dc: astore 16
-      // 2de: new java/lang/Object
+      // 2de: new net/rim/device/cldc/io/gme/GMEAddress
       // 2e1: dup
       // 2e2: invokespecial net/rim/device/cldc/io/gme/GMEAddress.<init> ()V
       // 2e5: astore 17
@@ -550,7 +550,7 @@ public final class EmailSendUtility {
    }
 
    public static final boolean allAddressesResolved(RIMModel item) {
-      if (!(item instanceof Object)) {
+      if (!(item instanceof ReadableList)) {
          return true;
       }
 
@@ -565,7 +565,7 @@ public final class EmailSendUtility {
             EmailHeaderModel ehm = (LargeAttachmentModel$LargeCachedAttachmentModel)model;
             RIMModel insideModel = ehm.getInsideModel();
             resolvedCount++;
-            if (insideModel instanceof Object) {
+            if (insideModel instanceof ResolvedStatusProvider) {
                ResolvedStatusProvider rsp = (ResolvedStatusProvider)insideModel;
                if (!rsp.isResolved()) {
                   resolvedCount--;
@@ -579,7 +579,7 @@ public final class EmailSendUtility {
          return true;
       }
 
-      if (resolvedCount != 0 && item instanceof Object) {
+      if (resolvedCount != 0 && item instanceof WritableSet) {
          WritableSet wl = (WritableSet)item;
          String continueText = EmailResources.getString(1120);
          if (Dialog.ask(3, continueText, -1) == 4) {
@@ -742,7 +742,7 @@ public final class EmailSendUtility {
          if (model instanceof LargeAttachmentModel$LargeCachedAttachmentModel) {
             EmailHeaderModel header = (LargeAttachmentModel$LargeCachedAttachmentModel)model;
             RIMModel insideModel = header.getInsideModel();
-            if (insideModel instanceof Object) {
+            if (insideModel instanceof GroupAddressCardModel) {
                if (groupAddresses == null) {
                   groupAddresses = new LargeAttachmentModel$LargeCachedAttachmentModel[0];
                }
@@ -755,13 +755,15 @@ public final class EmailSendUtility {
       if (groupAddresses != null) {
          for (EmailHeaderModel header : groupAddresses) {
             GroupAddressCardModel gacm = (GroupAddressCardModel)header.getInsideModel();
-            ContextObject emailHeaderContext = (ContextObject)(new Object());
+            ContextObject emailHeaderContext = new ContextObject();
             int gacmSize = gacm.size();
 
             for (int j = 0; j < gacmSize; j++) {
                if (gacm.getAddressModelTypeAt(j) == (isPin ? 1 : 0)) {
                   RIMModel rm = gacm.getAddressModelAt(j);
-                  if (rm != null && rm instanceof Object && !isEmailAddressPresentInMessage(((FriendlyNameAddressModel)rm).getAddress(), message)) {
+                  if (rm != null
+                     && rm instanceof FriendlyNameAddressModel
+                     && !isEmailAddressPresentInMessage(((FriendlyNameAddressModel)rm).getAddress(), message)) {
                      emailHeaderContext.put(254, rm);
                      message.add(EmailHeaderModelFactory.createInstance(header.getHeaderType(), emailHeaderContext));
                   }
@@ -784,7 +786,7 @@ public final class EmailSendUtility {
             model = ((LargeAttachmentModel$LargeCachedAttachmentModel)model).getInsideModel();
          }
 
-         if (model instanceof Object) {
+         if (model instanceof FriendlyNameAddressModel) {
             String address2 = ((FriendlyNameAddressModel)model).getAddress();
             if (address2 != null && StringUtilities.compareToIgnoreCase(address, address2, 1701707776) == 0) {
                return true;
@@ -810,10 +812,8 @@ public final class EmailSendUtility {
 
    public static final EmailMessageModel send(String to, String subject, String body) {
       EmailMessageModel msg = (EmailMessageModel)FactoryUtil.createInstance(-6822293833372928884L, null);
-      String[] names = new Object[2];
-      names[0] = to;
-      names[1] = to;
-      ContextObject context = (ContextObject)(new Object());
+      String[] names = new String[]{to, to};
+      ContextObject context = new ContextObject();
       ContextObject.put(context, 251, names);
       Object recipient = FactoryUtil.createInstance(-2985347935260258684L, context);
       EmailBuilderApi.addRecipient(msg, 0, (RIMModel)recipient);
@@ -831,22 +831,20 @@ public final class EmailSendUtility {
       }
 
       context.reset();
-      sendMessage(msg, sr, new Object());
+      sendMessage(msg, sr, new ContextObject());
       return msg;
    }
 
    private static final void sendDuressNotification() {
       String email = ITPolicy.getString(22, 7);
       if (email != null) {
-         ContextObject context = (ContextObject)(new Object());
-         String[] addr = new Object[2];
-         addr[0] = email;
-         addr[1] = EmailResources.getString(152);
+         ContextObject context = new ContextObject();
+         String[] addr = new String[]{email, EmailResources.getString(152)};
          ContextObject.put(context, 251, addr);
          RIMModel eam = (RIMModel)FactoryUtil.createInstance(-2985347935260258684L, context);
          EmailMessageModel emm = (EmailMessageModel)FactoryUtil.createInstance(-6822293833372928884L, null);
          TransmissionService transmissionService = TransmissionServiceManager.get(8399767144006445082L);
-         if (transmissionService instanceof Object) {
+         if (transmissionService instanceof RIMMessagingService) {
             ServiceRecord serviceRecord = ((RIMMessagingService)transmissionService).getOutgoingServiceRecord();
             if (serviceRecord != null) {
                EmailBuilderApi.addSubjectLine(emm, EmailResources.getString(154));
@@ -873,26 +871,25 @@ public final class EmailSendUtility {
 
    private static final String getDuressInfo(ServiceRecord sr) {
       DateFormat date = DateFormat.getInstance(54);
-      return ((StringBuffer)(new Object("Name: ")))
-         .append(Owner.getOwnerName())
-         .append('\n')
-         .append("Email: ")
-         .append(CMIMEUtilities.getEmailAddress(sr))
-         .append('\n')
-         .append("PIN: ")
-         .append(StringUtilities.toUpperCase(Integer.toHexString(DeviceInfo.getDeviceId()), 1701707776))
-         .append('\n')
-         .append("Time: ")
-         .append(date.formatLocal(System.currentTimeMillis()))
-         .append('\n')
-         .toString();
+      return "Name: "
+         + Owner.getOwnerName()
+         + '\n'
+         + "Email: "
+         + CMIMEUtilities.getEmailAddress(sr)
+         + '\n'
+         + "PIN: "
+         + StringUtilities.toUpperCase(Integer.toHexString(DeviceInfo.getDeviceId()), 1701707776)
+         + '\n'
+         + "Time: "
+         + date.formatLocal(System.currentTimeMillis())
+         + '\n';
    }
 
    private static final Vector getSendListeners() {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
       Vector sendListeners = (Vector)ar.getOrWaitFor(922368635746834671L);
       if (sendListeners == null) {
-         sendListeners = (Vector)(new Object(1));
+         sendListeners = new Vector(1);
          ar.put(922368635746834671L, sendListeners);
       }
 

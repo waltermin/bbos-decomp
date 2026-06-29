@@ -46,7 +46,7 @@ final class ContactTreeField$ContactLeaf extends Field implements TreeItem, Bran
    private final Vector moveLeaves(Vector existing) {
       Vector oldManagers = null;
       if (existing != null) {
-         oldManagers = (Vector)(new Object());
+         oldManagers = new Vector();
 
          for (int i = 0; i < existing.size(); i++) {
             Manager m = ((ContactTreeField$ContactLeaf)existing.elementAt(i)).getManager();
@@ -95,7 +95,7 @@ final class ContactTreeField$ContactLeaf extends Field implements TreeItem, Bran
 
    private final void one2manyBranches(Branch[] branches, PeerContact contact) {
       ContactTreeField.access$1500(this.this$0).remove(contact);
-      Vector contacts = (Vector)(new Object(branches.length));
+      Vector contacts = new Vector(branches.length);
       boolean found = false;
       Manager oldManager = this.getManager();
 
@@ -118,7 +118,7 @@ final class ContactTreeField$ContactLeaf extends Field implements TreeItem, Bran
    }
 
    private final void many2manyBranches(Branch[] branches, PeerContact contact, Vector oldManagers, Vector existing) {
-      Vector branchVector = (Vector)(new Object(branches.length));
+      Vector branchVector = new Vector(branches.length);
 
       for (int i = 0; i < branches.length; i++) {
          branchVector.addElement(branches[i]);

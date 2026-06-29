@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.calendar.sync;
 
 import java.util.Enumeration;
 import java.util.TimeZone;
+import java.util.Vector;
 import net.rim.device.api.i18n.Locale;
 import net.rim.device.api.synchronization.SyncCollection;
 import net.rim.device.api.synchronization.SyncCollectionStatistics;
@@ -97,11 +98,11 @@ public final class CalendarSupportCollection implements SyncCollection, SyncColl
       CalDB[] calDBs = manager.getCalendarDatabases();
       if (this._mode != 1) {
          Object[] objects = manager.getEvents();
-         SyncObject[] syncObjects = new Object[objects.length];
+         SyncObject[] syncObjects = new SyncObject[objects.length];
          int dest = 0;
 
          for (int src = 0; src < objects.length; src++) {
-            if (objects[src] instanceof Object) {
+            if (objects[src] instanceof SyncObject) {
                syncObjects[dest++] = (SyncObject)objects[src];
             }
          }
@@ -112,10 +113,10 @@ public final class CalendarSupportCollection implements SyncCollection, SyncColl
          return syncObjects;
       } else {
          Object[] events = new Object[0];
-         new Object(0);
+         new Vector(0);
 
          for (int i = 0; i < calDBs.length; i++) {
-            SimpleSortingVector subVector = (SimpleSortingVector)(new Object());
+            SimpleSortingVector subVector = new SimpleSortingVector();
             calDBs[i].getElementsVisibleDuring(time, duration, TimeZone.getDefault(), subVector);
             Object[] subArray = new Object[subVector.size()];
             subVector.copyInto(subArray);
@@ -126,8 +127,8 @@ public final class CalendarSupportCollection implements SyncCollection, SyncColl
          Arrays.sort(events, this._reportConverter.getComparator());
          int startingIndex = 0;
          int endingIndex = events.length - 1;
-         IntHashtable recurrencesTable = (IntHashtable)(new Object());
-         SyncObject[] detailedRecords = new Object[events.length];
+         IntHashtable recurrencesTable = new IntHashtable();
+         SyncObject[] detailedRecords = new SyncObject[events.length];
 
          for (int i = startingIndex; i <= endingIndex; i++) {
             CalendarReportDetailedRecord drec = new CalendarReportDetailedRecord(events[i]);
@@ -197,7 +198,7 @@ public final class CalendarSupportCollection implements SyncCollection, SyncColl
 
    @Override
    public final String getSyncName() {
-      return ((StringBuffer)(new Object())).append(SYNC_NAME).append("(").append(this._mode == 1 ? "Detailed)" : "Simple)").toString();
+      return SYNC_NAME + "(" + (this._mode == 1 ? "Detailed)" : "Simple)");
    }
 
    @Override

@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.phone;
 
 import net.rim.device.apps.api.framework.verb.Verb;
-import net.rim.device.apps.api.options.OptionsListItem;
+import net.rim.device.apps.internal.phone.options.PhoneInfoOption;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
 
 final class PhoneAppScreen$PhoneInfoVerb extends Verb {
@@ -11,7 +11,7 @@ final class PhoneAppScreen$PhoneInfoVerb extends Verb {
 
    @Override
    public final Object invoke(Object context) {
-      ((OptionsListItem)(new Object())).perform(6099736323056465049L, null);
+      new PhoneInfoOption().perform(6099736323056465049L, null);
       return null;
    }
 }

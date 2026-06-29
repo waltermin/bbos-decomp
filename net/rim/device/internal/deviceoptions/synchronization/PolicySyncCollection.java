@@ -79,7 +79,7 @@ public class PolicySyncCollection implements SyncCollection, SyncConverter, Alwa
    @Override
    public SyncObject[] getSyncObjects() {
       int len = this._records.length;
-      SyncObject[] result = new Object[len];
+      SyncObject[] result = new SyncObject[len];
       System.arraycopy(this._records, 0, result, 0, len);
       return result;
    }

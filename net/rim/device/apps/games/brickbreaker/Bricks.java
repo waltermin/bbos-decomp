@@ -44,7 +44,7 @@ final class Bricks {
       if (resource != null) {
          this._levels = resource.getResource("levels.bin");
          if (this._levels == null) {
-            throw new Object("No levels!");
+            throw new RuntimeException("No levels!");
          }
 
          numLevels = this._levels[0];

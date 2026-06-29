@@ -17,7 +17,7 @@ final class DSADecodedSignature extends DecodedSignature {
          this._s = s;
          this._digest = digest;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -26,7 +26,7 @@ final class DSADecodedSignature extends DecodedSignature {
       if (digest != null && digest.getClass() == this._digest.getClass()) {
          this._digest = digest;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -35,12 +35,12 @@ final class DSADecodedSignature extends DecodedSignature {
       if (key instanceof DSAPublicKey) {
          return new DSASignatureVerifier((DSAPublicKey)key, this._digest, this._r, 0, this._s, 0);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object("DSA/"))).append(this._digest.getAlgorithm()).toString();
+      return "DSA/" + this._digest.getAlgorithm();
    }
 }

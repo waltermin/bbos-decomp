@@ -174,7 +174,7 @@ public class TLSCipherSuites {
 
    public static void addCipherSuite(int cipherSuite, int priority) {
       if (notSupported(cipherSuite)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       removeCipherSuite(cipherSuite);

@@ -150,7 +150,7 @@ public class TextNodeImpl extends VisualNodeImpl implements TextNode {
 
    public static void insertFirstTSpan(int firstTSpan, int textHandle, ModelInteractorImpl model) {
       if (NodeImpl.isInSceneGraph(firstTSpan, model) || NodeImpl.getType(textHandle, model) != 50 || NodeImpl.getType(firstTSpan, model) != 32) {
-         throw new Object("The node to be inserted already exists in the scene graph, isn't a TSpan node, or the parent is not a text node.");
+         throw new IllegalArgumentException("The node to be inserted already exists in the scene graph, isn't a TSpan node, or the parent is not a text node.");
       }
 
       if (getLastTSpan(textHandle, model) < 0) {
@@ -167,7 +167,7 @@ public class TextNodeImpl extends VisualNodeImpl implements TextNode {
 
    public static void insertLastTSpan(int lastTSpan, int textHandle, ModelInteractorImpl model) {
       if (NodeImpl.isInSceneGraph(lastTSpan, model) || NodeImpl.getType(textHandle, model) != 50 || NodeImpl.getType(lastTSpan, model) != 32) {
-         throw new Object("The node to be inserted already exists in the scene graph, isn't a TSpan node, or the parent is not a text node.");
+         throw new IllegalArgumentException("The node to be inserted already exists in the scene graph, isn't a TSpan node, or the parent is not a text node.");
       }
 
       if (getFirstTSpan(textHandle, model) < 0) {

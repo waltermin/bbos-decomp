@@ -29,6 +29,7 @@ import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.transmission.TransmissionService;
 import net.rim.device.apps.api.transmission.TransmissionServiceManager;
 import net.rim.device.apps.api.transmission.rim.CMIMEUtilities;
+import net.rim.device.apps.api.utility.options.OptionsEditorVerb;
 import net.rim.device.apps.internal.blackberryemail.address.EmailAddressStringPattern;
 import net.rim.device.apps.internal.blackberryemail.address.PINAddressStringPattern;
 import net.rim.device.apps.internal.blackberryemail.address.UseOnceAddressVerb;
@@ -98,7 +99,9 @@ public final class PackageManager implements EmailEventLoggerEvents, GlobalEvent
       VerbRepository.getVerbRepository(6270925675423896343L).register(composeVerb, -2985347935260258684L);
       Verb forwardEmailVerb = new EmailResponseVerb(602880, 9149, 13, false, true);
       VerbRepository.getVerbRepository(-110058785485458643L).register(forwardEmailVerb, -6822293833372928884L);
-      Verb composeOptionsVerb = (Verb)(new Object(16978176, CommonResource.getBundle(), 20, EmailResources.getResourceBundle(), 128, 3735013535338552331L, 1000));
+      Verb composeOptionsVerb = new OptionsEditorVerb(
+         16978176, CommonResource.getBundle(), 20, EmailResources.getResourceBundle(), 128, 3735013535338552331L, 1000
+      );
       VerbRepository.getVerbRepository(5244072729690617291L).register(composeOptionsVerb, -6822293833372928884L);
       VerbRepository.getVerbRepository(-2204303273264560528L).register(new MessageListOptionsVerb(), -6822293833372928884L);
       NotificationsManager.registerSource(-1845850106795451018L, new PackageManager$1(), 2);
@@ -273,8 +276,8 @@ public final class PackageManager implements EmailEventLoggerEvents, GlobalEvent
          if (solid) {
             attr.setColor(0, colour);
          } else {
-            Bitmap bitmap = (Bitmap)(new Object(length, length));
-            Graphics g = (Graphics)(new Object(bitmap));
+            Bitmap bitmap = new Bitmap(length, length);
+            Graphics g = new Graphics(bitmap);
             int backgroundRGB = g.getBackgroundColor();
 
             for (int x = 0; x < length; x++) {
@@ -294,7 +297,7 @@ public final class PackageManager implements EmailEventLoggerEvents, GlobalEvent
    private static final void handleServiceBookEvents(long guid, int data0, int data1, Object object0, Object object1) {
       if (guid == -4220058463650496006L || guid == 2522898683889177438L || guid == 8288627527798139133L) {
          if (guid == -4220058463650496006L) {
-            if (object0 instanceof Object && !ALLOW_ONLY_ONE_PROFILE_CONFIGURATION_FOR_CMIME) {
+            if (object0 instanceof ServiceRecord && !ALLOW_ONLY_ONE_PROFILE_CONFIGURATION_FOR_CMIME) {
                ServiceRecord sr = (ServiceRecord)object0;
                if (StringUtilities.strEqualIgnoreCase(sr.getCid(), "CMIME", 1701707776)) {
                   registerCMIMEProfile(sr);
@@ -302,17 +305,17 @@ public final class PackageManager implements EmailEventLoggerEvents, GlobalEvent
                }
             }
          } else if (guid == 2522898683889177438L) {
-            if (object0 instanceof Object && !ALLOW_ONLY_ONE_PROFILE_CONFIGURATION_FOR_CMIME) {
+            if (object0 instanceof ServiceRecord && !ALLOW_ONLY_ONE_PROFILE_CONFIGURATION_FOR_CMIME) {
                ServiceRecord sr = (ServiceRecord)object0;
                if (StringUtilities.strEqualIgnoreCase(sr.getCid(), "CMIME", 1701707776)) {
                   deRegisterCMIMEProfile(sr);
                   return;
                }
             }
-         } else if (guid == 8288627527798139133L && object0 instanceof Object && !ALLOW_ONLY_ONE_PROFILE_CONFIGURATION_FOR_CMIME) {
+         } else if (guid == 8288627527798139133L && object0 instanceof ServiceRecord && !ALLOW_ONLY_ONE_PROFILE_CONFIGURATION_FOR_CMIME) {
             ServiceRecord sr = (ServiceRecord)object0;
             ServiceRecord sr2 = null;
-            if (object0 instanceof Object) {
+            if (object0 instanceof ServiceRecord) {
                sr2 = (ServiceRecord)object0;
             }
 

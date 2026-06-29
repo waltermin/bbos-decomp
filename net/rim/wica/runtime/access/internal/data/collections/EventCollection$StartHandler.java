@@ -9,7 +9,7 @@ final class EventCollection$StartHandler implements LongFieldHandler {
 
    @Override
    public final long getValue(Object item) {
-      return !(item instanceof Object) ? -1 : ((Event)item).getTrueStartDate();
+      return !(item instanceof Event) ? -1 : ((Event)item).getTrueStartDate();
    }
 
    EventCollection$StartHandler(EventCollection$1 x0) {

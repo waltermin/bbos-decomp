@@ -17,10 +17,10 @@ public final class ClientPersistentState {
    private ClientPersistentState() {
       synchronized (this._store) {
          Object contents = this._store.getContents();
-         if (contents != null && contents instanceof Object) {
+         if (contents != null && contents instanceof ContentProtectedHashtable) {
             this._content = (ContentProtectedHashtable)contents;
          } else {
-            this._content = (ContentProtectedHashtable)(new Object(true));
+            this._content = new ContentProtectedHashtable(true);
             this._store.setContents(this._content, 51);
             this._store.commit();
          }

@@ -7,7 +7,7 @@ import org.xml.sax.Attributes;
 
 public final class GlobalElement extends FieldElement {
    private boolean _persist = false;
-   private Vector _values = (Vector)(new Object());
+   private Vector _values = new Vector();
 
    @Override
    public final void accept(DefinitionVisitor v) {
@@ -63,7 +63,7 @@ public final class GlobalElement extends FieldElement {
 
    @Override
    public final String toString() {
-      StringBuffer buf = (StringBuffer)(new Object(120));
+      StringBuffer buf = new StringBuffer(120);
       buf.append("GlobalElement[name=")
          .append(super._name)
          .append(",type=")

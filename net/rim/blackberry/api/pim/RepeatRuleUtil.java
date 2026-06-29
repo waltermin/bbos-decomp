@@ -65,7 +65,7 @@ class RepeatRuleUtil {
    static int getRecurMonth(Recur recur) {
       int result = 0;
       int count = recur.numModifierValues(2);
-      Recur$Modifier modifier = (Recur$Modifier)(new Object());
+      Recur$Modifier modifier = new Recur$Modifier();
 
       for (int i = 0; i < count; i++) {
          recur.getModifierAt(2, i, modifier);
@@ -78,7 +78,7 @@ class RepeatRuleUtil {
    static int getRecurWeekInMonth(Recur recur) {
       int result = 0;
       int count = recur.numModifierValues(1);
-      Recur$Modifier modifier = (Recur$Modifier)(new Object());
+      Recur$Modifier modifier = new Recur$Modifier();
 
       for (int i = 0; i < count; i++) {
          recur.getModifierAt(1, i, modifier);
@@ -154,7 +154,7 @@ class RepeatRuleUtil {
       int i = recur.numModifierValues(1) - 1;
       int weeks = 0;
       int weekInMonth = 0;
-      Recur$Modifier modifier = (Recur$Modifier)(new Object());
+      Recur$Modifier modifier = new Recur$Modifier();
 
       while (i >= 0) {
          recur.getModifierAt(1, i, modifier);

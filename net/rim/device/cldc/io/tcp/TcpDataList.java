@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.tcp;
 
+import java.io.IOException;
 import net.rim.device.internal.io.tcp.TcpDataBlock;
 import net.rim.device.internal.io.tcp.TcpUtils;
 
@@ -140,7 +141,7 @@ class TcpDataList {
    TcpDataBlock dequeueHead() {
       synchronized (this.lockObj) {
          if (this._head == null) {
-            throw new Object("List is empty");
+            throw new IOException("List is empty");
          }
 
          TcpDataBlock ret = this._head;

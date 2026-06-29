@@ -72,7 +72,7 @@ final class SuplPosInit extends UlpMessage {
    @Override
    final void print() {
       System.out.println("SUPL POS INIT: ");
-      System.out.println(((StringBuffer)(new Object("Optionals: "))).append(this.optionals).toString());
+      System.out.println("Optionals: " + this.optionals);
       this.setCapabilities.print();
       if ((this.optionals & 8) == 8) {
          this.reqAssistData.print();
@@ -87,7 +87,7 @@ final class SuplPosInit extends UlpMessage {
          System.out.println("Ver: ");
 
          for (int i = 0; i < 8; i++) {
-            System.out.print(((StringBuffer)(new Object())).append(Integer.toHexString(255 & this.ver[i])).append(" ").toString());
+            System.out.print(Integer.toHexString(255 & this.ver[i]) + " ");
          }
 
          System.out.print("\n");

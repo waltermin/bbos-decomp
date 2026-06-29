@@ -9,14 +9,15 @@ import net.rim.device.api.system.RadioInfo;
 import net.rim.device.api.system.RadioStatusListener;
 import net.rim.device.api.system.SystemListener;
 import net.rim.device.api.ui.Graphics;
-import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.component.ObjectListField;
 import net.rim.device.api.ui.container.MainScreen;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.registration.VerbRepository;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.options.MainScreenOptionsListItem;
+import net.rim.device.apps.api.ui.VerbMenuItem;
 import net.rim.device.apps.api.utility.framework.VerbToMenu;
 import net.rim.device.apps.internal.options.resources.OptionsResources;
 import net.rim.device.internal.system.VoiceDataUsage;
@@ -30,11 +31,11 @@ public final class StatusOptionsItem extends MainScreenOptionsListItem implement
    private static final int BATTERY_LEVEL = 1;
 
    public StatusOptionsItem() {
-      super(OptionsResources.getString(400), new Object(2, 3));
+      super(OptionsResources.getString(400), new ContextObject(2, 3));
    }
 
    private static final Object[] getSerials(int waf) {
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       if ((waf & 1) != 0) {
          v.addElement(new StatusSerialNumber(true, 1));
       }
@@ -104,7 +105,7 @@ public final class StatusOptionsItem extends MainScreenOptionsListItem implement
          for (int i = verbs.length - 1; i >= 0; i--) {
             Verb verbToAdd = verbs[i];
             if (verbToAdd != null) {
-               mainScreen.addMenuItem((MenuItem)(new Object(verbToAdd, Integer.MAX_VALUE)));
+               mainScreen.addMenuItem(new VerbMenuItem(verbToAdd, Integer.MAX_VALUE));
             }
          }
       }
@@ -112,7 +113,7 @@ public final class StatusOptionsItem extends MainScreenOptionsListItem implement
 
    @Override
    protected final void populateMainScreen(MainScreen mainScreen) {
-      ObjectListField olf = (ObjectListField)(new Object());
+      ObjectListField olf = new ObjectListField();
       olf.set(_listItems);
       olf.setCallback(this);
       mainScreen.add(olf);

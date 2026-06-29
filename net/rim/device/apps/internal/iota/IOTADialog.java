@@ -13,7 +13,7 @@ final class IOTADialog implements Runnable {
 
    @Override
    public final void run() {
-      Dialog dlg = (Dialog)(new Object(0, this._msg, 0, Bitmap.getPredefinedBitmap(2), 33554432));
+      Dialog dlg = new Dialog(0, this._msg, 0, Bitmap.getPredefinedBitmap(2), 33554432);
       dlg.show();
    }
 

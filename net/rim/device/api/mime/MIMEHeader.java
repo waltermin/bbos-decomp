@@ -20,12 +20,12 @@ final class MIMEHeader {
 
    public MIMEHeader(String encoding) {
       if (encoding == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
-      this._parameters = (Vector)(new Object());
+      this._parameters = new Vector();
       this._encoding = StringUtilities.toLowerCase(encoding, 1701707776);
-      this._extensions = (Vector)(new Object());
+      this._extensions = new Vector();
    }
 
    public final void setContentType(String contentType) {

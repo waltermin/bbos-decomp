@@ -13,12 +13,12 @@ public class AbstractMessageReader {
          ca[i] = din.readChar();
       }
 
-      return (String)(new Object(ca));
+      return new String(ca);
    }
 
    protected static String[] readStringArray(DataInput din) {
       int count = din.readInt();
-      String[] sa = new Object[count];
+      String[] sa = new String[count];
 
       for (int i = 0; i < count; i++) {
          sa[i] = readString(din);

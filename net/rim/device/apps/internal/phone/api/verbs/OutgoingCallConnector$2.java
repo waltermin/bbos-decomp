@@ -17,7 +17,7 @@ class OutgoingCallConnector$2 implements Runnable {
       if (this.this$0._communicationsState == 2) {
          ApplicationRegistry applicationRegistry = ApplicationRegistry.getApplicationRegistry();
          o = applicationRegistry.get(1185883946270450222L);
-         if (!(o instanceof Object)) {
+         if (!(o instanceof Runnable)) {
             Radio.requestPowerOn();
             System.out.println("OutgoingCallConnector requesting Radio on.");
          } else {

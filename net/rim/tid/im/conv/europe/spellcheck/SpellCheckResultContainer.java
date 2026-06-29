@@ -19,7 +19,7 @@ public class SpellCheckResultContainer extends ResultContainer {
    public byte[] _subDistance;
    private char[] _metaphoneKey = new char[10];
    private int _metaphoneLen;
-   private SLCurrentVariant _metaphoneKey1 = (SLCurrentVariant)(new Object());
+   private SLCurrentVariant _metaphoneKey1 = new SLCurrentVariant();
    private short[] _distTable = new short[100];
    private int _weightJump;
    private int _weightIncrease;
@@ -36,8 +36,8 @@ public class SpellCheckResultContainer extends ResultContainer {
    private Word word;
    private Word lower;
    private Word accentless;
-   private Word _tempWord = (Word)(new Object());
-   private ExtendedCurrentVariant _tempVariant = (ExtendedCurrentVariant)(new Object());
+   private Word _tempWord = new Word();
+   private ExtendedCurrentVariant _tempVariant = new ExtendedCurrentVariant();
    private char[] _tempBuf = new char[50];
    public static final byte LEARNED_WORDS_FUNCTION = 1;
    public static final byte LEARNED_WORDS_FUNCTION_WEIGHT = 1;
@@ -134,8 +134,8 @@ public class SpellCheckResultContainer extends ResultContainer {
       }
 
       if (this.word == null) {
-         this.word = (Word)(new Object());
-         this.accentless = (Word)(new Object());
+         this.word = new Word();
+         this.accentless = new Word();
       }
 
       this.word.init(aWord, 0, aLen, this._locale);

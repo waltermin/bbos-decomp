@@ -98,7 +98,7 @@ final class LocationPersistObject implements LocationSyncable, Persistable {
       this._data = data;
       this._uid = loc._uid;
       if (!InternalServices.isDeviceSecure() && this._uid == 0) {
-         throw new Object("FinderHistory, LocationPersistObject UID is zero!");
+         throw new IllegalArgumentException("FinderHistory, LocationPersistObject UID is zero!");
       }
 
       this._lastAccessed = System.currentTimeMillis();

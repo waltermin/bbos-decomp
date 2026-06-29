@@ -2,6 +2,7 @@ package net.rim.device.api.crypto.tls;
 
 import java.io.InputStream;
 import net.rim.device.api.util.DataBuffer;
+import net.rim.device.cldc.io.ssl.TLSIOException;
 
 public final class TLSInputStream extends InputStream {
    private RecordProtocol _recordProtocol;
@@ -12,11 +13,11 @@ public final class TLSInputStream extends InputStream {
 
    public TLSInputStream(RecordProtocol recordProtocol) {
       if (recordProtocol == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._recordProtocol = recordProtocol;
-      this._buffer = (DataBuffer)(new Object());
+      this._buffer = new DataBuffer();
    }
 
    @Override
@@ -34,7 +35,7 @@ public final class TLSInputStream extends InputStream {
    }
 
    @Override
-   public final int read() {
+   public final int read() throws TLSIOException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -73,7 +74,7 @@ public final class TLSInputStream extends InputStream {
       // 3c: invokevirtual net/rim/device/api/util/DataBuffer.readUnsignedByte ()I
       // 3f: ireturn
       // 40: astore 1
-      // 41: new java/lang/Object
+      // 41: new net/rim/device/cldc/io/ssl/TLSIOException
       // 44: dup
       // 45: aload 1
       // 46: invokespecial net/rim/device/cldc/io/ssl/TLSIOException.<init> (Lnet/rim/device/cldc/io/ssl/TLSException;)V
@@ -86,7 +87,7 @@ public final class TLSInputStream extends InputStream {
    }
 
    @Override
-   public final int read(byte[] param1, int param2, int param3) {
+   public final int read(byte[] param1, int param2, int param3) throws TLSIOException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -106,7 +107,7 @@ public final class TLSInputStream extends InputStream {
       // 0f: aload 1
       // 10: arraylength
       // 11: if_icmple 1c
-      // 14: new java/lang/Object
+      // 14: new java/lang/IllegalArgumentException
       // 17: dup
       // 18: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 1b: athrow
@@ -144,7 +145,7 @@ public final class TLSInputStream extends InputStream {
       // 5e: invokevirtual net/rim/device/api/util/DataBuffer.read ([BII)I
       // 61: ireturn
       // 62: astore 4
-      // 64: new java/lang/Object
+      // 64: new net/rim/device/cldc/io/ssl/TLSIOException
       // 67: dup
       // 68: aload 4
       // 6a: invokespecial net/rim/device/cldc/io/ssl/TLSIOException.<init> (Lnet/rim/device/cldc/io/ssl/TLSException;)V

@@ -39,7 +39,7 @@ public class FieldDef extends Member {
          }
       } else {
          if (obj != null && this._specificFixups == null) {
-            this._specificFixups = (Vector)(new Object());
+            this._specificFixups = new Vector();
          }
 
          int num = this._specificFixups == null ? 0 : this._specificFixups.size();

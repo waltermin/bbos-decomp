@@ -11,8 +11,8 @@ public class Applet {
    public Applet(String name, String className) {
       this._name = name;
       this._className = className;
-      this._iconNames = (Vector)(new Object());
-      this._icons = (Vector)(new Object());
+      this._iconNames = new Vector();
+      this._icons = new Vector();
    }
 
    public void setName(String name) {

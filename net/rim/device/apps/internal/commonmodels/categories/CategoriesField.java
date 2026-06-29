@@ -1,6 +1,5 @@
 package net.rim.device.apps.internal.commonmodels.categories;
 
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.apps.api.framework.verb.Verb;
@@ -13,10 +12,10 @@ final class CategoriesField extends HorizontalFieldManager {
 
    public CategoriesField(String label, String initialCategoryNames) {
       if (label != null) {
-         this.add((Field)(new Object(label)));
+         this.add(new LabelField(label));
       }
 
-      this._namesField = (LabelField)(new Object(null, 18014398509482048L));
+      this._namesField = new LabelField(null, 18014398509482048L);
       this.setCategoryNames(initialCategoryNames);
       this.add(this._namesField);
       this._displayCategoriesVerb = new DisplayCategoriesForFieldVerb(this);

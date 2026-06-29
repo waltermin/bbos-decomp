@@ -20,7 +20,7 @@ class DefaultCertificateChainFactory extends CertificateChainFactory {
    @Override
    protected Certificate[][] createCertificateChainsInternal(Certificate certificate, Certificate[] pool, KeyStore keyStore, String emailAddress) {
       if (certificate == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (keyStore != null && !keyStore.existsIndex(-1581141357654337861L)) {
@@ -38,11 +38,11 @@ class DefaultCertificateChainFactory extends CertificateChainFactory {
          }
       }
 
-      Vector chains = (Vector)(new Object(10));
-      Vector certQueue = (Vector)(new Object(10));
+      Vector chains = new Vector(10);
+      Vector certQueue = new Vector(10);
       certQueue.addElement(new Certificate[]{certificate});
-      Hashtable chainPublicKeys = (Hashtable)(new Object(4));
-      Vector issuerCerts = (Vector)(new Object(4));
+      Hashtable chainPublicKeys = new Hashtable(4);
+      Vector issuerCerts = new Vector(4);
 
       while (!certQueue.isEmpty()) {
          Certificate[] chain = (Certificate[])certQueue.firstElement();

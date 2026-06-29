@@ -257,14 +257,14 @@ public final class WTPLayer implements IWapStackLayer {
 
    public WTPLayer(IWapStackLayer submissionLayer, boolean sarMode) {
       this._sarMode = sarMode;
-      this._requestorsTable = (Hashtable)(new Object());
-      this._transactionsTable = (IntHashtable)(new Object());
-      this._lastTIDTable = (Hashtable)(new Object());
+      this._requestorsTable = new Hashtable();
+      this._transactionsTable = new IntHashtable();
+      this._lastTIDTable = new Hashtable();
       this._submissionLayer = submissionLayer;
       this._transiver = (IPacketTransiver)submissionLayer;
       this._wtpListenerThread = new WTPListenerThread(this);
       Proxy.getInstance().startThread(this._wtpListenerThread);
-      Random r = (Random)(new Object(System.currentTimeMillis()));
+      Random r = new Random(System.currentTimeMillis());
       this._TID = r.nextInt() & 16383;
       this._TIDnew = true;
       this._WTPTimer = new WTimer();

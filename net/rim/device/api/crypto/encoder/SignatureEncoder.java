@@ -13,7 +13,7 @@ public class SignatureEncoder {
 
    public static EncodedSignature encode(SignatureSigner signer, String encodingAlgorithm) {
       if (signer == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SignatureEncoder encoder = getEncoder(encodingAlgorithm, signer.getAlgorithm());
@@ -33,7 +33,7 @@ public class SignatureEncoder {
          signatureAlgorithm = RIMFactoryUtilities.getLeftMostSubAlgorithm(signatureAlgorithm);
          return (SignatureEncoder)Utility.getCoder(_encoderHashtable, encodingAlgorithm, signatureAlgorithm);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

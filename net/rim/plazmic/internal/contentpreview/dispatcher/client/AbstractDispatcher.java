@@ -118,7 +118,7 @@ public class AbstractDispatcher implements Dispatcher {
    protected static DispatcherServiceException createServiceException(Model response) {
       String msg;
       if (!(response instanceof DispatcherServiceFailure)) {
-         msg = ((StringBuffer)(new Object("unexpected response "))).append(response).toString();
+         msg = "unexpected response " + response;
       } else {
          msg = ((DispatcherServiceFailure)response).getMessage();
       }

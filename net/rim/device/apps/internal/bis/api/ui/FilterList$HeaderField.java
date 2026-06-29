@@ -15,7 +15,7 @@ final class FilterList$HeaderField extends RichTextField {
    }
 
    public FilterList$HeaderField(FilterList _1, String column1, String column2) {
-      super(((StringBuffer)(new Object())).append(column1).append("    ").append(column2).toString(), 1188950301625810944L);
+      super(column1 + "    " + column2, 1188950301625810944L);
       this.this$0 = _1;
       this._column1 = column1;
       this._column2 = column2;

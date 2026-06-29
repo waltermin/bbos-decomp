@@ -34,11 +34,11 @@ class FileMessage extends MessengerMessageImpl implements FieldProvider, Convers
       this._filename = PersistentContent.encode(filename, true, true);
       this._data = data;
       this._size = size;
-      super._serialized.put(0, new Object(1));
+      super._serialized.put(0, new Integer(1));
       super._serialized.put(4, this._contentType);
       super._serialized.put(5, this._filename);
       super._serialized.put(6, this._data);
-      super._serialized.put(7, new Object(this._size));
+      super._serialized.put(7, new Integer(this._size));
       this.commit();
    }
 
@@ -52,13 +52,13 @@ class FileMessage extends MessengerMessageImpl implements FieldProvider, Convers
       }
 
       obj = message.get(7);
-      if (obj instanceof Object) {
-         this._size = obj;
+      if (obj instanceof Integer) {
+         this._size = (Integer)obj;
       }
 
       obj = message.get(8);
-      if (obj instanceof Object) {
-         this._state = obj;
+      if (obj instanceof Integer) {
+         this._state = (Integer)obj;
       }
    }
 
@@ -69,7 +69,7 @@ class FileMessage extends MessengerMessageImpl implements FieldProvider, Convers
 
    void setState(int state) {
       this._state = state;
-      super._serialized.put(8, new Object(this._state));
+      super._serialized.put(8, new Integer(this._state));
       this.commit();
    }
 
@@ -133,7 +133,7 @@ class FileMessage extends MessengerMessageImpl implements FieldProvider, Convers
 
    @Override
    public boolean convert(Object context, Object target) {
-      if (!(target instanceof Object)) {
+      if (!(target instanceof RIMMessagingOutgoingMessage)) {
          return false;
       }
 
@@ -145,7 +145,7 @@ class FileMessage extends MessengerMessageImpl implements FieldProvider, Convers
 
    static MessengerMessageImpl deserialize(IntHashtable message, PeerContactListCollection contactList) {
       FileMessage result = null;
-      if (message instanceof Object) {
+      if (message instanceof IntHashtable) {
          result = new FileMessage(message, contactList);
       }
 

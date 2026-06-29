@@ -19,7 +19,7 @@ final class DownloadDescriptorField$3 implements Runnable {
    @Override
    public final void run() {
       try {
-         HttpHeaders requestHeaders = (HttpHeaders)(new Object());
+         HttpHeaders requestHeaders = new HttpHeaders();
          String nextURL = null;
          if (this.val$nextStepDialog.doModal() == 0 && this.this$0._savedFilename != null) {
             label34:

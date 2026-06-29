@@ -54,9 +54,7 @@ public class BrowserRepositoryCollection implements SyncCollection, SyncCollecti
       SimpleFolder parentFolder = (SimpleFolder)FolderHierarchies.getFolder(this._hierarchy, parentFolderLUID);
       if (parentFolder == null) {
          SimpleFolder rootFolder = SimpleFolder.getInstance(BrowserFolders.BROWSER_FAMILY, BrowserFolders.RIM_BROWSER_BOOKMARKS_HIERARCHY_ID);
-         parentFolder = (SimpleFolder)(new Object(
-            BrowserFolders.BROWSER_FAMILY, parentFolderLUID, null, BrowserFolders.BROWSER_FOLDER_COLLECTION_CLASS, rootFolder, 1
-         ));
+         parentFolder = new SimpleFolder(BrowserFolders.BROWSER_FAMILY, parentFolderLUID, null, BrowserFolders.BROWSER_FOLDER_COLLECTION_CLASS, rootFolder, 1);
          rootFolder.putFolder(parentFolder);
       }
 
@@ -112,9 +110,9 @@ public class BrowserRepositoryCollection implements SyncCollection, SyncCollecti
 
    @Override
    public SyncObject[] getSyncObjects() {
-      Vector syncObjects = (Vector)(new Object());
+      Vector syncObjects = new Vector();
       this.addSubItems(this._folder, syncObjects);
-      SyncObject[] objects = new Object[syncObjects.size()];
+      SyncObject[] objects = new SyncObject[syncObjects.size()];
       syncObjects.copyInto(objects);
       return objects;
    }

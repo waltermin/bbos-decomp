@@ -8,7 +8,7 @@ class IconFetcher$Worker$URL {
 
    public IconFetcher$Worker$URL(IconFetcher$Worker _1, String baseURL) {
       this.this$1 = _1;
-      this.url = (StringBuffer)(new Object(baseURL));
+      this.url = new StringBuffer(baseURL);
    }
 
    public void addParam(String param, int value) {

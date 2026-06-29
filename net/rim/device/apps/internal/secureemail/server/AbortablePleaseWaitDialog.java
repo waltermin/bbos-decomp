@@ -27,9 +27,9 @@ public class AbortablePleaseWaitDialog extends PleaseWaitDialog implements Secur
    public AbortablePleaseWaitDialog(String message, PleaseWaitWorkerThread workerThread) {
       super(message, workerThread);
       DialogFieldManager dfm = (DialogFieldManager)this.getDelegate();
-      this._buttonFieldManager = (HorizontalFieldManager)(new Object(12884901888L));
+      this._buttonFieldManager = new HorizontalFieldManager(12884901888L);
       dfm.addCustomField(this._buttonFieldManager);
-      this._abortButtonField = (ButtonField)(new Object(SecureEmailResources.getString(165), 12884901888L));
+      this._abortButtonField = new ButtonField(SecureEmailResources.getString(165), 12884901888L);
       this._abortButtonField.setChangeListener(this);
    }
 
@@ -46,7 +46,7 @@ public class AbortablePleaseWaitDialog extends PleaseWaitDialog implements Secur
             this._buttonFieldManager.add(this._abortButtonField);
          }
 
-         this._abortButtonSpacer = (VerticalSpacerField)(new Object(this._buttonFieldManager.getHeight()));
+         this._abortButtonSpacer = new VerticalSpacerField(this._buttonFieldManager.getHeight());
          this._buttonFieldManager.add(this._abortButtonSpacer);
          if (!abortButtonAdded) {
             this._buttonFieldManager.delete(this._abortButtonField);

@@ -15,6 +15,6 @@ public final class MessageResources {
    }
 
    public static final String[] getStringArray(int id) {
-      return (Object[])_rb.getObject(id);
+      return (String[])_rb.getObject(id);
    }
 }

@@ -1,14 +1,15 @@
 package net.rim.device.apps.internal.calendar.viewer;
 
-import net.rim.device.api.collection.LongKeyProviderAdaptor;
+import net.rim.device.api.collection.LongKeyProviderAdaptorComparator;
 import net.rim.device.api.ui.Field;
-import net.rim.device.api.util.Comparator;
+import net.rim.device.apps.api.calendar.caldb.CalendarLongKeyAdaptor;
 import net.rim.device.apps.api.framework.model.FieldProvider;
+import net.rim.device.apps.api.search.SearchCriterion;
 import net.rim.device.apps.api.search.SearchResultCollection;
 
 final class CalendarSearchResultCollection extends SearchResultCollection implements FieldProvider {
    public CalendarSearchResultCollection(Object criteria) {
-      super((Object[])criteria, (Comparator)(new Object((LongKeyProviderAdaptor)(new Object(-7347526267900023482L)))), true, false);
+      super((SearchCriterion[])criteria, new LongKeyProviderAdaptorComparator(new CalendarLongKeyAdaptor(-7347526267900023482L)), true, false);
    }
 
    @Override

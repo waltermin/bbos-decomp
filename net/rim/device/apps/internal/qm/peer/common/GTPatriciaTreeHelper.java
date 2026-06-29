@@ -7,7 +7,7 @@ import net.rim.tid.im.layout.SLKeyLayout;
 import net.rim.vm.WeakReference;
 
 public final class GTPatriciaTreeHelper {
-   private static WeakReference _tmpBufferWR = (WeakReference)(new Object(null));
+   private static WeakReference _tmpBufferWR = new WeakReference(null);
    private static char[] _characterMap = new char[26];
    private static final int[] _bitCountMasks = new int[]{
       -1431655766,
@@ -168,7 +168,7 @@ public final class GTPatriciaTreeHelper {
    private static final synchronized StringBuffer getStringBuffer() {
       StringBuffer stringBuffer = (StringBuffer)_tmpBufferWR.get();
       if (stringBuffer == null) {
-         stringBuffer = (StringBuffer)(new Object());
+         stringBuffer = new StringBuffer();
          _tmpBufferWR.set(stringBuffer);
       }
 

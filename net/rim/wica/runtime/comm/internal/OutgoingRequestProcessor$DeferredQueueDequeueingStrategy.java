@@ -16,7 +16,7 @@ class OutgoingRequestProcessor$DeferredQueueDequeueingStrategy implements Runnab
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:174)
       //
       // Bytecode:
-      // 000: new java/lang/Object
+      // 000: new java/util/Vector
       // 003: dup
       // 004: invokespecial java/util/Vector.<init> ()V
       // 007: astore 1
@@ -31,7 +31,7 @@ class OutgoingRequestProcessor$DeferredQueueDequeueingStrategy implements Runnab
       // 01c: goto 1c8
       // 01f: aload 2
       // 020: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 025: checkcast java/lang/Object
+      // 025: checkcast java/lang/String
       // 028: astore 3
       // 029: aload 0
       // 02a: getfield net/rim/wica/runtime/comm/internal/OutgoingRequestProcessor$DeferredQueueDequeueingStrategy.this$0 Lnet/rim/wica/runtime/comm/internal/OutgoingRequestProcessor;
@@ -225,7 +225,7 @@ class OutgoingRequestProcessor$DeferredQueueDequeueingStrategy implements Runnab
       // 1d4: aload 1
       // 1d5: iload 6
       // 1d7: invokevirtual java/util/Vector.elementAt (I)Ljava/lang/Object;
-      // 1da: checkcast java/lang/Object
+      // 1da: checkcast java/lang/String
       // 1dd: astore 3
       // 1de: aload 0
       // 1df: getfield net/rim/wica/runtime/comm/internal/OutgoingRequestProcessor$DeferredQueueDequeueingStrategy.this$0 Lnet/rim/wica/runtime/comm/internal/OutgoingRequestProcessor;

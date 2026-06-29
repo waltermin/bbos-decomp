@@ -19,7 +19,7 @@ public final class EmailHeaderAddVerb extends Verb {
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object())).append(EmailResources.getString(25)).append(HeaderTypes.getStringForHeaderType(this._typeOfHeader)).toString();
+      return EmailResources.getString(25) + HeaderTypes.getStringForHeaderType(this._typeOfHeader);
    }
 
    @Override

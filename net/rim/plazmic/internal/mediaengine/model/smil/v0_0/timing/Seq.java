@@ -14,10 +14,10 @@ public class Seq extends TimeContainer {
    @Override
    public void setEndLogic(EventLogic logic) {
       if (this.isImplicitDuration()) {
-         Event seqEvent = (Event)(new Object());
+         Event seqEvent = new Event();
          seqEvent._event = 2;
          seqEvent._eventParam = this.getId();
-         Event seqEndTrigger = (Event)(new Object());
+         Event seqEndTrigger = new Event();
          seqEndTrigger._event = 2;
          seqEndTrigger._eventParam = this.getLastChild().getId();
          logic.addEventDependancy(seqEndTrigger, seqEvent, 0);

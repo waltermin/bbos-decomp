@@ -385,7 +385,7 @@ class SerialLayer extends NativeLayer {
       // 24c: pop
       // 24d: aload 11
       // 24f: ifnonnull 27d
-      // 252: new java/lang/Object
+      // 252: new net/rim/device/api/io/DatagramBase
       // 255: dup
       // 256: invokespecial net/rim/device/api/io/DatagramBase.<init> ()V
       // 259: astore 11

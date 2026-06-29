@@ -7,7 +7,7 @@ import net.rim.device.api.util.IntHashtable;
 public final class FontFactory {
    private String _fontFamilyName;
    private Font _baseFont;
-   private IntHashtable _fontHash = (IntHashtable)(new Object());
+   private IntHashtable _fontHash = new IntHashtable();
    private static final int PREF_HEIGHT = 10;
 
    public final void setFontFamilyName(String fontFamily) {
@@ -41,7 +41,7 @@ public final class FontFactory {
             return (Font)fontStyleHash.get(fontStyle);
          }
       } else {
-         fontStyleHash = (IntHashtable)(new Object());
+         fontStyleHash = new IntHashtable();
          this._fontHash.put(cpdSize, fontStyleHash);
       }
 

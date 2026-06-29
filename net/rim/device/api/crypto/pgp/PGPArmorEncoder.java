@@ -77,7 +77,7 @@ public final class PGPArmorEncoder extends OutputStream {
    public PGPArmorEncoder(OutputStream out, byte[] header, byte[] tail, String version, String comment, String charSet, boolean clearSigned) {
       if (header != null && tail != null) {
          this._tail = tail;
-         this._sharedOutput = (SharedOutputStream)(new Object(out));
+         this._sharedOutput = new SharedOutputStream(out);
          this._isClearSigned = clearSigned;
          if (this._isClearSigned) {
             this._clearPart = this._sharedOutput.getOutputStream();
@@ -107,10 +107,10 @@ public final class PGPArmorEncoder extends OutputStream {
          }
 
          this._mainPart.write(CRLF);
-         this._baseOut = (NoCopyByteArrayOutputStream)(new Object());
-         this._base64Part = (Base64OutputStream)(new Object(this._baseOut, true, true));
+         this._baseOut = new NoCopyByteArrayOutputStream();
+         this._base64Part = new Base64OutputStream(this._baseOut, true, true);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -120,7 +120,7 @@ public final class PGPArmorEncoder extends OutputStream {
 
    final void writeClearSignedHeader(String[] digests) {
       if (this._clearPart == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._clearPart.write(CRLF);
@@ -153,7 +153,7 @@ public final class PGPArmorEncoder extends OutputStream {
          this._crc = CRC24.update(this._crc, data, offset, length);
          this._base64Part.write(data, offset, length);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -189,8 +189,8 @@ public final class PGPArmorEncoder extends OutputStream {
 
       this._base64Part.close();
       byte[] crc = new byte[]{(byte)this._crc, (byte)(this._crc >> 8), (byte)(this._crc >> 16)};
-      NoCopyByteArrayOutputStream temp = (NoCopyByteArrayOutputStream)(new Object());
-      Base64OutputStream base64 = (Base64OutputStream)(new Object(temp));
+      NoCopyByteArrayOutputStream temp = new NoCopyByteArrayOutputStream();
+      Base64OutputStream base64 = new Base64OutputStream(temp);
       base64.write(crc);
       base64.close();
       this._mainPart.write(this._baseOut.getByteArray(), 0, this._baseOut.size());

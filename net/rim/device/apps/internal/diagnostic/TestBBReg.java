@@ -17,7 +17,6 @@ import net.rim.device.apps.api.transmission.TransmissionService;
 import net.rim.device.apps.api.transmission.TransmissionServiceListener;
 import net.rim.device.apps.api.transmission.TransmissionServiceManager;
 import net.rim.device.apps.api.transmission.rim.RIMMessagingIncomingMessage;
-import net.rim.device.apps.api.transmission.rim.RIMMessagingMessage;
 import net.rim.device.apps.api.transmission.rim.RIMMessagingService;
 import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModelImpl;
 import net.rim.device.apps.internal.blackberryemail.email.api.EmailBuilderApi;
@@ -103,7 +102,7 @@ public final class TestBBReg extends Thread implements TransmissionServiceListen
          this.responseFlag = false;
          long startTimeStamp = ((CalendarExtensions)this.cal).getTimeLong();
          HRUtils.getThunks().sendRegistrationRequest();
-         this.timer = (Timer)(new Object());
+         this.timer = new Timer();
          this.bbRegTimeout = new TestBBReg$bbRegRequestExpired(this);
          this.timer.schedule(this.bbRegTimeout, 30000);
 
@@ -146,7 +145,7 @@ public final class TestBBReg extends Thread implements TransmissionServiceListen
          this.responseFlag = false;
          long startTimeStamp = ((CalendarExtensions)this.cal).getTimeLong();
          this.sendMdpPing();
-         this.timer = (Timer)(new Object());
+         this.timer = new Timer();
          this.mdpPingTimeout = new TestBBReg$mdpPingExpired(this);
          this.timer.schedule(this.mdpPingTimeout, 15000);
 
@@ -214,7 +213,7 @@ public final class TestBBReg extends Thread implements TransmissionServiceListen
       // 1e: aload 0
       // 1f: invokespecial net/rim/device/apps/internal/diagnostic/TestBBReg.sendPin2PinPing ()V
       // 22: aload 0
-      // 23: new java/lang/Object
+      // 23: new java/util/Timer
       // 26: dup
       // 27: invokespecial java/util/Timer.<init> ()V
       // 2a: putfield net/rim/device/apps/internal/diagnostic/TestBBReg.timer Ljava/util/Timer;
@@ -327,17 +326,15 @@ public final class TestBBReg extends Thread implements TransmissionServiceListen
    private final void sendPin2PinPing() {
       String to = this.report.getPin();
       this.subject = this.report.getPin();
-      long tmpLong = ((Random)(new Object())).nextLong();
-      this.bodyStr = new Object(tmpLong).toString();
-      ContextObject contextObject = (ContextObject)(new Object());
+      long tmpLong = new Random().nextLong();
+      this.bodyStr = new Long(tmpLong).toString();
+      ContextObject contextObject = new ContextObject();
       contextObject.setFlag(31);
       contextObject.setFlag(85);
       contextObject.setFlag(94);
-      EmailMessageModelImpl msg = (EmailMessageModelImpl)(new Object(contextObject));
-      String[] names = new Object[2];
-      names[0] = to;
-      names[1] = to;
-      ContextObject context = (ContextObject)(new Object());
+      EmailMessageModelImpl msg = new EmailMessageModelImpl(contextObject);
+      String[] names = new String[]{to, to};
+      ContextObject context = new ContextObject();
       ContextObject.put(context, 251, names);
       Object recipient = FactoryUtil.createInstance(-2985347935260258684L, context);
       EmailBuilderApi.addRecipient(msg, 0, (RIMModel)recipient);
@@ -348,7 +345,7 @@ public final class TestBBReg extends Thread implements TransmissionServiceListen
       if (service != null) {
          ServiceRecord sr = service.getOutgoingServiceRecord();
          context.reset();
-         EmailSendUtility.sendMessage(msg, sr, new Object());
+         EmailSendUtility.sendMessage(msg, sr, new ContextObject());
          EmailHierarchy.removeMessage(msg, msg.getFolderId());
       }
    }
@@ -358,7 +355,7 @@ public final class TestBBReg extends Thread implements TransmissionServiceListen
 
       try {
          String addressBase = HRUtils.getDefaultHRT().getActiveHri().getAddressBase().getAddress();
-         String url = ((StringBuffer)(new Object("udp:"))).append(addressBase).toString();
+         String url = "udp:" + addressBase;
          DatagramConnectionBase _subConnection = (DatagramConnectionBase)Connector.open(url);
          DatagramBase dgram = (DatagramBase)_subConnection.newDatagram();
          MdpUtil$DatagramInfo info = MdpUtil.makeDatagramInfo(1);
@@ -383,18 +380,18 @@ public final class TestBBReg extends Thread implements TransmissionServiceListen
          RIMMessagingIncomingMessage incMsg = null;
          String body = null;
          String sub = null;
-         if (!(transmissionObject instanceof Object)) {
+         if (!(transmissionObject instanceof RIMMessagingIncomingMessage)) {
             return false;
          } else {
-            RIMMessagingIncomingMessage var12 = transmissionObject;
-            Object emailbody = ((RIMMessagingMessage)var12).getText();
-            Object emailsub = ((RIMMessagingMessage)var12).getSubject();
-            if (!(emailbody instanceof Object)) {
+            incMsg = (RIMMessagingIncomingMessage)transmissionObject;
+            Object emailbody = incMsg.getText();
+            Object emailsub = incMsg.getSubject();
+            if (!(emailbody instanceof String)) {
                return false;
             } else {
-               String var13 = emailbody;
-               String var14 = emailsub;
-               if (((String)var13).equals(this.bodyStr) && ((String)var14).equals(this.subject)) {
+               body = (String)emailbody;
+               sub = (String)emailsub;
+               if (body.equals(this.bodyStr) && sub.equals(this.subject)) {
                   this.responseFlag = true;
                   return true;
                } else {

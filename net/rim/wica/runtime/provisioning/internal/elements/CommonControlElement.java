@@ -64,7 +64,7 @@ public class CommonControlElement extends AbstractElement {
 
    @Override
    public String toString() {
-      StringBuffer buf = (StringBuffer)(new Object(64));
+      StringBuffer buf = new StringBuffer(64);
       String className = ProvisioningHelper.getClassName(this);
       buf.append(className);
       buf.append("[name=");

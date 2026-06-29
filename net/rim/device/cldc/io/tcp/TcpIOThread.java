@@ -11,7 +11,7 @@ class TcpIOThread extends Thread implements TcpConstants {
    long GUID;
    int _waitTag;
    Object _sendLock = new Object();
-   Deque _receiveRequestDeque = (Deque)(new Object());
+   Deque _receiveRequestDeque = new Deque();
    int _sendRequestsPendingSize;
    Object _trigger = new Object();
 

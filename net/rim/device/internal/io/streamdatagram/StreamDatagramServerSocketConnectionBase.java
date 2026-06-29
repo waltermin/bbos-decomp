@@ -1,5 +1,6 @@
 package net.rim.device.internal.io.streamdatagram;
 
+import java.io.IOException;
 import java.util.Vector;
 import javax.microedition.io.Connection;
 import javax.microedition.io.ServerSocketConnection;
@@ -12,11 +13,11 @@ public class StreamDatagramServerSocketConnectionBase implements ServerSocketCon
    protected StreamDatagramAddressBase _myAddress;
    protected boolean _isClosed;
    protected Object _backlogWaitObj = new Object();
-   protected Vector _tcpConnectionBacklog = (Vector)(new Object());
+   protected Vector _tcpConnectionBacklog = new Vector();
    protected StreamDatagramTransportBase _transport;
    protected Tunnel _tunnel;
    public Object _pendingConnectionWaitObj = new Object();
-   public Vector _pendingConnectionList = (Vector)(new Object());
+   public Vector _pendingConnectionList = new Vector();
    protected int _mode;
    protected boolean _timeouts;
    private static String STR_CLOSED = "connection is closed";
@@ -36,18 +37,18 @@ public class StreamDatagramServerSocketConnectionBase implements ServerSocketCon
       return this._timeouts;
    }
 
-   public Connection openPrim(StreamDatagramAddressBase myAddr, int mode, boolean timeouts) {
+   public Connection openPrim(StreamDatagramAddressBase myAddr, int mode, boolean timeouts) throws IOException {
       if (this._transport != null && this._transport.isConnectionTableFull()) {
          EventLogger.logEvent(447071754022829032L, 1413696867, 3);
          this._transport.logConnections();
-         throw new Object("Max connections opened.");
+         throw new IOException("Max connections opened.");
       }
 
       this._myAddress = myAddr;
       this._mode = mode;
       this._timeouts = timeouts;
       if (this._transport == null) {
-         throw new Object();
+         throw new RuntimeException();
       }
 
       this.openPrimChores();
@@ -63,9 +64,9 @@ public class StreamDatagramServerSocketConnectionBase implements ServerSocketCon
       return this._mode;
    }
 
-   protected void throwIOExceptionIfThisConnIsClosed() {
+   protected void throwIOExceptionIfThisConnIsClosed() throws IOException {
       if (this._isClosed) {
-         throw new Object(STR_CLOSED);
+         throw new IOException(STR_CLOSED);
       }
    }
 

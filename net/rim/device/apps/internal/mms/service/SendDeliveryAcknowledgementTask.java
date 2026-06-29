@@ -38,8 +38,8 @@ final class SendDeliveryAcknowledgementTask implements MMSTask {
    public final void run() {
       String url = this._url;
       if (url != null && url.length() != 0) {
-         url = ((StringBuffer)(new Object())).append(url).append(MMSTransportServiceBook.getMMSCConnectionParameters()).toString();
-         System.out.println(((StringBuffer)(new Object("MMS Acknowledge.ind sending to "))).append(url).toString());
+         url = url + MMSTransportServiceBook.getMMSCConnectionParameters();
+         System.out.println("MMS Acknowledge.ind sending to " + url);
          int status = 0;
          int rc = 0;
          int wapIOExceptionError = 0;
@@ -56,7 +56,7 @@ final class SendDeliveryAcknowledgementTask implements MMSTask {
             }
          } catch (Throwable var9) {
             status = MMSUtilities.hasDataCoverage() ? 8191 : 131071;
-            if (e instanceof Object) {
+            if (e instanceof WAPIOException) {
                WAPIOException ioe = (WAPIOException)e;
                wapIOExceptionError = ioe.getError();
                wapIOExceptionAdditionalData = ioe.getAdditionalData();
@@ -72,7 +72,7 @@ final class SendDeliveryAcknowledgementTask implements MMSTask {
             this._attempts++;
             if (this._attempts < 5) {
                int delay = this.getRetryDelay();
-               System.out.println(((StringBuffer)(new Object("MMS Acknowledge.ind failed. Retry in "))).append(delay).toString());
+               System.out.println("MMS Acknowledge.ind failed. Retry in " + delay);
                BackgroundTaskThread.addTask(this, delay);
             } else {
                System.out.println("MMS Acknowledge.ind failed. Exceeded retry maximum.");
@@ -90,7 +90,7 @@ final class SendDeliveryAcknowledgementTask implements MMSTask {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private final byte[] buildResponse() {
-      DataBuffer dataBuffer = (DataBuffer)(new Object());
+      DataBuffer dataBuffer = new DataBuffer();
       MMSOptions options = MMSOptions.getInstance();
 
       try {
@@ -105,7 +105,7 @@ final class SendDeliveryAcknowledgementTask implements MMSTask {
             writer.writeReportAllowed(129);
          }
       } catch (Throwable var5) {
-         System.out.println(((StringBuffer)(new Object("DeliveryAckTask.buildResponse "))).append(e.toString()).toString());
+         System.out.println("DeliveryAckTask.buildResponse " + e.toString());
          return dataBuffer.toArray();
       }
 

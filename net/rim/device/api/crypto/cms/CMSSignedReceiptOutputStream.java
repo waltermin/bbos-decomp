@@ -18,7 +18,7 @@ public final class CMSSignedReceiptOutputStream extends CMSOutputStream {
          this._signedID = signedContentIdentifier;
          this._signatureValue = signatureValue;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -28,8 +28,8 @@ public final class CMSSignedReceiptOutputStream extends CMSOutputStream {
 
    @Override
    public final void close() {
-      ASN1OutputStream stream = (ASN1OutputStream)(new Object(this._output));
-      ASN1OutputStream sequence = (ASN1OutputStream)(new Object());
+      ASN1OutputStream stream = new ASN1OutputStream(this._output);
+      ASN1OutputStream sequence = new ASN1OutputStream();
       sequence.writeInteger(1);
       sequence.writeOID(this._messageType);
       sequence.writeOctetString(this._signedID);

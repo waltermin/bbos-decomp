@@ -15,7 +15,7 @@ final class ESDebug extends ESObject {
 
    private final String constructMessage(HostFunction function) {
       int count = function.getNumParms();
-      StringBuffer out = (StringBuffer)(new Object());
+      StringBuffer out = new StringBuffer();
 
       for (int i = 0; i < count; i++) {
          out.append(Convert.toString(function.getParm(i)));

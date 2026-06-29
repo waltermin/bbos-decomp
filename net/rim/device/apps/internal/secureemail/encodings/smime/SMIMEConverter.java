@@ -20,7 +20,7 @@ public final class SMIMEConverter extends BaseConverter {
 
    @Override
    public final boolean canConvert(Object parameters) {
-      if (parameters instanceof Object) {
+      if (parameters instanceof Parameters) {
          Parameters cmimeParameters = (Parameters)parameters;
          byte[] securityEncoding = cmimeParameters.getFirst((byte)-11);
          if (securityEncoding == null) {
@@ -45,7 +45,7 @@ public final class SMIMEConverter extends BaseConverter {
    public final Object convert(byte[] inputBytes, Object parametersObject) {
       SMIMEBodyModel model = null;
       Parameters parameters = (Parameters)parametersObject;
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       context.put(-7353832199068708928L, parameters);
       if (inputBytes == null) {
          byte[] secureEmailBodyData = parameters.getFirst((byte)-9);

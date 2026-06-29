@@ -24,13 +24,13 @@ public final class OID implements Persistable {
 
          this.setHashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    public OID(String oid) {
       if (oid != null && oid.length() != 0) {
-         ByteArrayOutputStream bytes = (ByteArrayOutputStream)(new Object(16));
+         ByteArrayOutputStream bytes = new ByteArrayOutputStream(16);
          int numInts = 0;
          int firstInt = 0;
          int length = oid.length();
@@ -63,7 +63,7 @@ public final class OID implements Persistable {
          this._derEncoding = bytes.toByteArray();
          this.setHashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -73,7 +73,7 @@ public final class OID implements Persistable {
 
    @Override
    public final String toString() {
-      StringBuffer value = (StringBuffer)(new Object());
+      StringBuffer value = new StringBuffer();
       value.append(this._derEncoding[0] / 40);
       value.append('.');
       value.append(this._derEncoding[0] % 40);

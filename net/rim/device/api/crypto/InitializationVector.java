@@ -9,7 +9,7 @@ public final class InitializationVector implements Persistable {
 
    public InitializationVector(int length) {
       if (length <= 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._data = RandomSource.getBytes(length);
@@ -24,7 +24,7 @@ public final class InitializationVector implements Persistable {
          this._data = new byte[length];
          System.arraycopy(data, offset, this._data, 0, length);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

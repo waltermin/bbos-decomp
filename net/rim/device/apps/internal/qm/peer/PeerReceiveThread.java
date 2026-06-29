@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.qm.peer;
 
+import java.io.IOException;
 import net.rim.device.api.io.DatagramAddressBase;
 import net.rim.device.api.io.DatagramBase;
 import net.rim.device.api.io.DatagramConnectionBase;
@@ -85,7 +86,7 @@ final class PeerReceiveThread extends Thread {
 
    private final String extractSrc(DatagramBase dg) {
       DatagramAddressBase addr = dg.getAddressBase();
-      if (addr instanceof Object) {
+      if (addr instanceof GMEAddress) {
          GMETarget targ = ((GMEAddress)addr).getSrc();
          if (targ != null) {
             return targ.address;
@@ -95,11 +96,11 @@ final class PeerReceiveThread extends Thread {
       return null;
    }
 
-   private final PeerDataBlob[] parseDatagram(DatagramBase dg) {
+   private final PeerDataBlob[] parseDatagram(DatagramBase dg) throws IOException {
       int version = dg.readByte();
       PeerDataBlob[] blobs = new PeerDataBlob[0];
       if ((version & 240) != 16) {
-         throw new Object("Invalid version");
+         throw new IOException("Invalid version");
       }
 
       int type;

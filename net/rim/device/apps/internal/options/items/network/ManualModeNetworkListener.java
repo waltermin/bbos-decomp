@@ -137,7 +137,7 @@ public final class ManualModeNetworkListener implements RadioStatusListener, Dia
 
             int flags = this.getFlags();
             if ((flags & 2) == 0) {
-               Dialog dialog = (Dialog)(new Object(3, OptionsResources.getString(2065), 0, Bitmap.getPredefinedBitmap(1), 33554432));
+               Dialog dialog = new Dialog(3, OptionsResources.getString(2065), 0, Bitmap.getPredefinedBitmap(1), 33554432);
                dialog.setDontAskAgainPrompt(true);
                dialog.setDialogClosedListener(this);
                dialog.show(10);
@@ -158,7 +158,7 @@ public final class ManualModeNetworkListener implements RadioStatusListener, Dia
    }
 
    private final void logEvent(int code, int networkId) {
-      StringBuffer tempBuffer = (StringBuffer)(new Object(StringUtilities.intToString(code)));
+      StringBuffer tempBuffer = new StringBuffer(StringUtilities.intToString(code));
       tempBuffer.append(":");
       tempBuffer.append(Integer.toHexString(networkId));
       EventLogger.logEvent(-4272982832973947638L, tempBuffer.toString().getBytes(), 0);

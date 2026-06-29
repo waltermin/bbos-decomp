@@ -20,7 +20,7 @@ public final class TLSByteArrayInputStream extends ByteArrayInputStream {
          super.count = Math.min(offset + length, super.buf.length);
          super.mark = offset;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

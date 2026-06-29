@@ -19,7 +19,7 @@ final class AddDelayVerb extends Verb {
    @Override
    public final Object invoke(Object parameter) {
       char ch = (char)(this._type == 0 ? 33 : 44);
-      this._editField.insert(((StringBuffer)(new Object(""))).append(ch).toString());
+      this._editField.insert("" + ch);
       this._editField.setDirty(true);
       return null;
    }

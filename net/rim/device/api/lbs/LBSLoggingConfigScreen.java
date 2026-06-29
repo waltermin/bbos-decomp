@@ -3,12 +3,13 @@ package net.rim.device.api.lbs;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Ui;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.container.MainScreen;
 
 final class LBSLoggingConfigScreen extends MainScreen {
    LBSLoggingConfigScreen() {
-      this.add((Field)(new Object("LBS Logging Configuration")));
+      this.add(new LabelField("LBS Logging Configuration"));
       LoggingFlags flags = Logger.getInstance()._loggableFlags;
       this.add(new LBSLoggingConfigScreen$FlagSettingCheckboxField(this, "Protocol", flags, 32));
       Ui.getUiEngine().pushScreen(this);

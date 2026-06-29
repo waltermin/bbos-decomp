@@ -37,7 +37,7 @@ class PIMICalendarProvider implements ICalendarProvider {
       if (vCalendarBeginTag == -217959020) {
          this._calendarComponent = vCalendarBeginTag;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -51,7 +51,7 @@ class PIMICalendarProvider implements ICalendarProvider {
       if (alarmNestedBeginTag == -1770502245) {
          this._alarmNestedCalendarComponent = alarmNestedBeginTag;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -84,7 +84,7 @@ class PIMICalendarProvider implements ICalendarProvider {
          this._version = 1;
       } else {
          if (!"1.0".equals(version) && !version.equals("VCALENDAR/1.0")) {
-            throw new Object("invalid value");
+            throw new IllegalArgumentException("invalid value");
          }
 
          this._version = 0;
@@ -487,7 +487,7 @@ class PIMICalendarProvider implements ICalendarProvider {
    @Override
    public void setCalendarComponent(int component) {
       if (component != this.getCalendarComponent()) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

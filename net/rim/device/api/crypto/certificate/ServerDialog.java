@@ -4,7 +4,6 @@ import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Font;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.AutoTextEditField;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.Dialog;
@@ -12,6 +11,7 @@ import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.internal.i18n.CommonResource;
 import net.rim.device.internal.ui.component.PopupDialog;
@@ -93,7 +93,7 @@ final class ServerDialog extends PopupDialog implements FieldChangeListener {
    }
 
    ServerDialog(String label, CertificateServerInfo serverInfo, boolean editable, int type, long style) {
-      super((Manager)(new Object(1153220571769602048L)), style);
+      super(new VerticalIndentFieldManager(1153220571769602048L), style);
       VerticalIndentFieldManager vifm = (VerticalIndentFieldManager)this.getDelegate();
       this._editable = editable;
       this._boldFont = Font.getDefault();
@@ -120,12 +120,12 @@ final class ServerDialog extends PopupDialog implements FieldChangeListener {
       }
 
       if (label != null) {
-         RichTextField labelField = (RichTextField)(new Object(label, 45035996273704960L));
+         RichTextField labelField = new RichTextField(label, 45035996273704960L);
          labelField.setFont(this._boldFont);
          vifm.add(labelField);
       }
 
-      vifm.add((Field)(new Object()));
+      vifm.add(new SeparatorField());
       String friendlyName = null;
       String server = null;
       String baseQuery = null;
@@ -150,10 +150,10 @@ final class ServerDialog extends PopupDialog implements FieldChangeListener {
             friendlyName = "";
          }
 
-         LabelField labelField = (LabelField)(new Object(_rb.getString(4)));
+         LabelField labelField = new LabelField(_rb.getString(4));
          labelField.setFont(this._boldFont);
          vifm.add(labelField);
-         this._friendlyNameField = (AutoTextEditField)(new Object(null, friendlyName, 256, 2147483648L));
+         this._friendlyNameField = new AutoTextEditField(null, friendlyName, 256, 2147483648L);
          vifm.add(this._friendlyNameField, 12);
       }
 
@@ -164,14 +164,14 @@ final class ServerDialog extends PopupDialog implements FieldChangeListener {
 
          LabelField labelField;
          if (type == 1) {
-            labelField = (LabelField)(new Object(_rb.getString(2)));
+            labelField = new LabelField(_rb.getString(2));
          } else {
-            labelField = (LabelField)(new Object(_rb.getString(3)));
+            labelField = new LabelField(_rb.getString(3));
          }
 
          labelField.setFont(this._boldFont);
          vifm.add(labelField);
-         this._serverField = (AutoTextEditField)(new Object(null, server, 1024, 2264924160L));
+         this._serverField = new AutoTextEditField(null, server, 1024, 2264924160L);
          vifm.add(this._serverField, 12);
       }
 
@@ -181,38 +181,38 @@ final class ServerDialog extends PopupDialog implements FieldChangeListener {
                baseQuery = "";
             }
 
-            LabelField labelField = (LabelField)(new Object(_rb.getString(5)));
+            LabelField labelField = new LabelField(_rb.getString(5));
             labelField.setFont(this._boldFont);
             vifm.add(labelField);
-            this._baseQueryField = (AutoTextEditField)(new Object(null, baseQuery, 1024, 2147483648L));
+            this._baseQueryField = new AutoTextEditField(null, baseQuery, 1024, 2147483648L);
             vifm.add(this._baseQueryField, 12);
          }
 
-         LabelField labelField = (LabelField)(new Object(_rb.getString(6)));
+         LabelField labelField = new LabelField(_rb.getString(6));
          labelField.setFont(this._boldFont);
          vifm.add(labelField);
-         this._portField = (EditField)(new Object(null, String.valueOf(port), 10, style | 16777216 | 2147483648L));
+         this._portField = new EditField(null, String.valueOf(port), 10, style | 16777216 | 2147483648L);
          vifm.add(this._portField, 12);
-         RichTextField authLabelField = (RichTextField)(new Object(_rb.getString(118), 45035996273704960L));
+         RichTextField authLabelField = new RichTextField(_rb.getString(118), 45035996273704960L);
          authLabelField.setFont(this._boldFont);
          vifm.add(authLabelField);
-         this._authField = (ObjectChoiceField)(new Object(null, _rb.getStringArray(119), authType, 4294967296L));
+         this._authField = new ObjectChoiceField(null, _rb.getStringArray(119), authType, 4294967296L);
          this._authField.setEditable(this._editable);
          vifm.add(this._authField, 12);
-         RichTextField connectionTypeLabelField = (RichTextField)(new Object(_rb.getString(120), 45035996273704960L));
+         RichTextField connectionTypeLabelField = new RichTextField(_rb.getString(120), 45035996273704960L);
          connectionTypeLabelField.setFont(this._boldFont);
          vifm.add(connectionTypeLabelField);
-         this._connectionTypeField = (ObjectChoiceField)(new Object(null, _rb.getStringArray(121), connectionType, 4294967296L));
+         this._connectionTypeField = new ObjectChoiceField(null, _rb.getStringArray(121), connectionType, 4294967296L);
          this._connectionTypeField.setEditable(this._editable);
          vifm.add(this._connectionTypeField, 12);
       }
 
-      HorizontalFieldManager buttonManager = (HorizontalFieldManager)(new Object(12884901888L));
-      this._ok = (ButtonField)(new Object(CommonResource.getString(100)));
+      HorizontalFieldManager buttonManager = new HorizontalFieldManager(12884901888L);
+      this._ok = new ButtonField(CommonResource.getString(100));
       this._ok.setChangeListener(this);
       buttonManager.add(this._ok);
       if (this._editable) {
-         this._cancel = (ButtonField)(new Object(CommonResource.getString(10005)));
+         this._cancel = new ButtonField(CommonResource.getString(10005));
          this._cancel.setChangeListener(this);
          buttonManager.add(this._cancel);
       }

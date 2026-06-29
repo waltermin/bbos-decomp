@@ -7,6 +7,7 @@ import net.rim.device.api.crypto.cms.CMSInputStream;
 import net.rim.device.api.crypto.cms.CMSSignedDataInputStream;
 import net.rim.device.api.crypto.cms.EMSAcceptRequestInputStream;
 import net.rim.device.api.mime.MIMEInputStream;
+import net.rim.device.api.mime.MIMEParsingException;
 import net.rim.device.apps.internal.secureemail.SecureEmailConstants;
 import net.rim.device.apps.internal.secureemail.SecureEmailProcessor;
 import net.rim.device.apps.internal.secureemail.cache.CachedIncludedCertificatesField;
@@ -50,12 +51,12 @@ final class SMIMEProcessor extends SecureEmailProcessor {
       // 019: astore 4
       // 01b: aload 4
       // 01d: ifnull 03f
-      // 020: new java/lang/Object
+      // 020: new java/io/ByteArrayInputStream
       // 023: dup
       // 024: aload 1
       // 025: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
       // 028: astore 5
-      // 02a: new java/lang/Object
+      // 02a: new net/rim/device/api/mime/MIMEInputStream
       // 02d: dup
       // 02e: aload 5
       // 030: invokespecial net/rim/device/api/mime/MIMEInputStream.<init> (Ljava/io/InputStream;)V
@@ -72,11 +73,11 @@ final class SMIMEProcessor extends SecureEmailProcessor {
       // 046: aload 0
       // 047: getfield net/rim/device/apps/internal/secureemail/SecureEmailProcessor._secureEmailBodyModel Lnet/rim/device/apps/internal/secureemail/SecureEmailBodyModel;
       // 04a: invokevirtual net/rim/device/apps/internal/secureemail/SecureEmailCache.getAndRemoveProcessingContext (Lnet/rim/device/apps/internal/commonmodels/body/BodyModel;)Ljava/lang/Object;
-      // 04d: checkcast java/lang/Object
+      // 04d: checkcast net/rim/device/api/crypto/cms/CMSContext
       // 050: astore 4
       // 052: aload 4
       // 054: ifnonnull 081
-      // 057: new java/lang/Object
+      // 057: new java/io/ByteArrayInputStream
       // 05a: dup
       // 05b: aload 1
       // 05c: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -86,7 +87,7 @@ final class SMIMEProcessor extends SecureEmailProcessor {
       // 065: checkcast net/rim/device/apps/internal/secureemail/encodings/smime/SMIMEBodyModel
       // 068: getfield net/rim/device/apps/internal/secureemail/encodings/smime/SMIMEBodyModel._isStoredAsBase64 Z
       // 06b: ifeq 07a
-      // 06e: new java/lang/Object
+      // 06e: new net/rim/device/api/io/Base64InputStream
       // 071: dup
       // 072: aload 5
       // 074: bipush 1
@@ -118,7 +119,7 @@ final class SMIMEProcessor extends SecureEmailProcessor {
       // 0ab: istore 8
       // 0ad: iload 8
       // 0af: ifle 0cc
-      // 0b2: new java/lang/Object
+      // 0b2: new java/lang/StringBuffer
       // 0b5: dup
       // 0b6: invokespecial java/lang/StringBuffer.<init> ()V
       // 0b9: aload 6
@@ -158,7 +159,7 @@ final class SMIMEProcessor extends SecureEmailProcessor {
       // 109: sipush 2028
       // 10c: invokestatic net/rim/device/apps/internal/secureemail/encodings/smime/SMIMEResources.getString (I)Ljava/lang/String;
       // 10f: astore 13
-      // 111: new java/lang/Object
+      // 111: new java/lang/StringBuffer
       // 114: dup
       // 115: invokespecial java/lang/StringBuffer.<init> ()V
       // 118: aload 6
@@ -180,7 +181,7 @@ final class SMIMEProcessor extends SecureEmailProcessor {
       // 142: invokespecial net/rim/device/apps/internal/secureemail/encodings/smime/cache/CachedSMIMEMissingPrivateKeyField.<init> ()V
       // 145: astore 9
       // 147: aload 9
-      // 149: new java/lang/Object
+      // 149: new net/rim/device/apps/internal/secureemail/cache/CachedBodyField
       // 14c: dup
       // 14d: aload 6
       // 14f: invokespecial net/rim/device/apps/internal/secureemail/cache/CachedBodyField.<init> (Ljava/lang/String;)V
@@ -215,7 +216,7 @@ final class SMIMEProcessor extends SecureEmailProcessor {
 
    @Override
    protected final boolean getFieldsFromInputStream(InputStream inputStream, CachedManager cachedManager) {
-      if (inputStream instanceof Object) {
+      if (inputStream instanceof CMSInputStream) {
          return this.getFieldsFromInputStream_CMS((CMSInputStream)inputStream, cachedManager);
       } else {
          return inputStream instanceof SMIMEProcessor$SMIMENoVerifyInputStream
@@ -239,9 +240,9 @@ final class SMIMEProcessor extends SecureEmailProcessor {
       boolean gotFields = false;
       CachedManager innerManager = cachedManager;
       Certificate[] includedCertificates = null;
-      if (!(cmsStream instanceof Object)) {
-         if (!(cmsStream instanceof Object)) {
-            if (cmsStream instanceof Object) {
+      if (!(cmsStream instanceof CMSSignedDataInputStream)) {
+         if (!(cmsStream instanceof CMSEnvelopedDataInputStream)) {
+            if (cmsStream instanceof EMSAcceptRequestInputStream) {
                cachedManager.addField(new CachedEMSAcceptRequestField((EMSAcceptRequestInputStream)cmsStream));
                gotFields = true;
             }
@@ -288,7 +289,7 @@ final class SMIMEProcessor extends SecureEmailProcessor {
 
       InputStream innerInputStream = cmsStream.getCMSInputStream();
       if (innerInputStream == null && cmsStream.getContentType() == 10) {
-         innerInputStream = (InputStream)(new Object(cmsStream));
+         innerInputStream = new MIMEInputStream(cmsStream);
          String cannotVerifyOnDeviceReasonValue = (String)super._securityEncodingOptionalParameterTable.get("nv");
          if (cannotVerifyOnDeviceReasonValue != null) {
             innerInputStream = new SMIMEProcessor$SMIMENoVerifyInputStream((MIMEInputStream)innerInputStream);
@@ -306,7 +307,7 @@ final class SMIMEProcessor extends SecureEmailProcessor {
       if (includedCertificates != null) {
          int numCerts = includedCertificates.length;
          if (numCerts > 0) {
-            CachedIncludedCertificatesField includedCertificatesField = (CachedIncludedCertificatesField)(new Object(super._secureEmailFactory));
+            CachedIncludedCertificatesField includedCertificatesField = new CachedIncludedCertificatesField(super._secureEmailFactory);
 
             for (int i = 0; i < numCerts; i++) {
                includedCertificatesField.addCertificate(includedCertificates[i]);
@@ -328,12 +329,12 @@ final class SMIMEProcessor extends SecureEmailProcessor {
          : super.getFieldsFromInputStream_MIME_Multipart(mimeStream, cachedManager);
    }
 
-   private final boolean getFieldsFromInputStream_MIME_MultipartSigned(MIMEInputStream mimeStream, CachedManager cachedManager) {
+   private final boolean getFieldsFromInputStream_MIME_MultipartSigned(MIMEInputStream mimeStream, CachedManager cachedManager) throws MIMEParsingException {
       boolean gotFields = false;
       MIMEInputStream[] innerParts = mimeStream.getParts();
       int numInnerParts = innerParts.length;
       if (numInnerParts > 2) {
-         throw new Object();
+         throw new MIMEParsingException();
       }
 
       if (numInnerParts > 0) {

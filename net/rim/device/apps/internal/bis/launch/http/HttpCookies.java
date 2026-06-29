@@ -4,17 +4,17 @@ import java.util.Vector;
 import net.rim.device.api.util.StringTokenizer;
 
 public final class HttpCookies {
-   Vector cookies = (Vector)(new Object());
+   Vector cookies = new Vector();
 
    public final String getCookieHeader() {
       String cookieHeader = "";
 
       for (int i = 0; i < this.cookies.size(); i++) {
          if (i > 0) {
-            cookieHeader = ((StringBuffer)(new Object())).append(cookieHeader).append(", ").toString();
+            cookieHeader = cookieHeader + ", ";
          }
 
-         cookieHeader = ((StringBuffer)(new Object())).append(cookieHeader).append(this.cookies.elementAt(i).toString()).toString();
+         cookieHeader = cookieHeader + this.cookies.elementAt(i).toString();
       }
 
       return cookieHeader;
@@ -25,7 +25,7 @@ public final class HttpCookies {
    }
 
    public final void parseSetCookieHeader(String setCookieString) {
-      StringTokenizer tokenizer = (StringTokenizer)(new Object(setCookieString, ";,"));
+      StringTokenizer tokenizer = new StringTokenizer(setCookieString, ";,");
 
       while (tokenizer.hasMoreTokens()) {
          String token = tokenizer.nextToken().trim();

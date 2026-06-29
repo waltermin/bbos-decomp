@@ -22,9 +22,9 @@ public class PKCS10CertificateRequest {
          this._publicKey = publicKey;
          this._name = name;
          this._signer = signer;
-         this._extensions = (Vector)(new Object());
+         this._extensions = new Vector();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -52,7 +52,7 @@ public class PKCS10CertificateRequest {
       // 00e: aload 0
       // 00f: getfield net/rim/device/api/crypto/certificate/x509/PKCS10CertificateRequest._encoding [B
       // 012: areturn
-      // 013: new java/lang/Object
+      // 013: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 016: dup
       // 017: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 01a: astore 1
@@ -73,7 +73,7 @@ public class PKCS10CertificateRequest {
       // 037: aload 2
       // 038: invokevirtual net/rim/device/api/crypto/encoder/EncodedKey.getEncodedKey ()[B
       // 03b: invokevirtual net/rim/device/api/crypto/asn1/ASN1OutputStream.writeRawByteArray ([B)V
-      // 03e: new java/lang/Object
+      // 03e: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 041: dup
       // 042: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 045: astore 3
@@ -85,7 +85,7 @@ public class PKCS10CertificateRequest {
       // 051: ldc_w 545269308
       // 054: invokestatic net/rim/device/api/crypto/oid/OIDs.getOID (I)Lnet/rim/device/api/crypto/oid/OID;
       // 057: invokevirtual net/rim/device/api/crypto/asn1/ASN1OutputStream.writeOID (Lnet/rim/device/api/crypto/oid/OID;)V
-      // 05a: new java/lang/Object
+      // 05a: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 05d: dup
       // 05e: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 061: astore 4
@@ -100,9 +100,9 @@ public class PKCS10CertificateRequest {
       // 073: getfield net/rim/device/api/crypto/certificate/x509/PKCS10CertificateRequest._extensions Ljava/util/Vector;
       // 076: iload 5
       // 078: invokevirtual java/util/Vector.elementAt (I)Ljava/lang/Object;
-      // 07b: checkcast java/lang/Object
+      // 07b: checkcast net/rim/device/api/crypto/certificate/CertificateExtension
       // 07e: astore 6
-      // 080: new java/lang/Object
+      // 080: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 083: dup
       // 084: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 087: astore 7
@@ -131,7 +131,7 @@ public class PKCS10CertificateRequest {
       // 0bc: bipush 2
       // 0be: bipush 0
       // 0bf: invokevirtual net/rim/device/api/crypto/asn1/ASN1OutputStream.writeSet (Lnet/rim/device/api/crypto/asn1/ASN1OutputStream;II)V
-      // 0c2: new java/lang/Object
+      // 0c2: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 0c5: dup
       // 0c6: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 0c9: astore 4
@@ -144,7 +144,7 @@ public class PKCS10CertificateRequest {
       // 0d8: aload 0
       // 0d9: getfield net/rim/device/api/crypto/certificate/x509/PKCS10CertificateRequest._signer Lnet/rim/device/api/crypto/SignatureSigner;
       // 0dc: ifnonnull 0e7
-      // 0df: new java/lang/Object
+      // 0df: new java/lang/IllegalArgumentException
       // 0e2: dup
       // 0e3: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 0e6: athrow
@@ -161,7 +161,7 @@ public class PKCS10CertificateRequest {
       // 100: aload 6
       // 102: invokevirtual net/rim/device/api/crypto/encoder/EncodedSignature.getEncodedSignature ()[B
       // 105: invokevirtual net/rim/device/api/crypto/asn1/ASN1OutputStream.writeRawByteArray ([B)V
-      // 108: new java/lang/Object
+      // 108: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 10b: dup
       // 10c: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 10f: astore 7
@@ -200,14 +200,11 @@ public class PKCS10CertificateRequest {
             return null;
          }
 
-         ByteArrayOutputStream output = (ByteArrayOutputStream)(new Object());
-         Base64OutputStream base = (Base64OutputStream)(new Object(output, true, true));
+         ByteArrayOutputStream output = new ByteArrayOutputStream();
+         Base64OutputStream base = new Base64OutputStream(output, true, true);
          base.write(this._encoding);
          base.close();
-         return ((StringBuffer)(new Object("-----BEGIN NEW CERTIFICATE REQUEST-----\r\n")))
-            .append((String)(new Object(output.toByteArray())))
-            .append("-----END NEW CERTIFICATE REQUEST-----\r\n")
-            .toString();
+         return "-----BEGIN NEW CERTIFICATE REQUEST-----\r\n" + new String(output.toByteArray()) + "-----END NEW CERTIFICATE REQUEST-----\r\n";
       } finally {
          ;
       }

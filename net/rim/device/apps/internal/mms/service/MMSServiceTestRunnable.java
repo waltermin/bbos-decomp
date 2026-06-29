@@ -4,6 +4,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.system.Phone;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.internal.mms.MMSUtilities;
 import net.rim.device.apps.internal.mms.api.MMSMessageModel;
 import net.rim.device.apps.internal.mms.api.MMSTask;
@@ -38,29 +39,29 @@ final class MMSServiceTestRunnable implements MMSTask {
          if (url == null) {
             alert("MMSC url not set.");
          } else {
-            url = ((StringBuffer)(new Object())).append(url).append(MMSTransportServiceBook.getMMSCConnectionParameters()).toString();
+            url = url + MMSTransportServiceBook.getMMSCConnectionParameters();
             if (!MMSUtilities.canSend()) {
                alert("Insufficient radio coverage.");
             } else {
                String EOL = "\n\n";
                String subject = "Test MMS message.";
-               StringBuffer body = (StringBuffer)(new Object());
-               body.append(((StringBuffer)(new Object("Phone Number: "))).append(number).append(EOL).toString());
-               body.append(((StringBuffer)(new Object("MMSC url: "))).append(url).append(EOL).toString());
+               StringBuffer body = new StringBuffer();
+               body.append("Phone Number: " + number + EOL);
+               body.append("MMSC url: " + url + EOL);
                Hashtable requestHeaders = MMSHttpUtilities.getStandardRequestHeaders().toHashtable();
                Enumeration keys = requestHeaders.keys();
 
                while (keys.hasMoreElements()) {
                   String key = (String)keys.nextElement();
-                  body.append(((StringBuffer)(new Object())).append(key).append(": ").append((String)requestHeaders.get(key)).append(EOL).toString());
+                  body.append(key + ": " + (String)requestHeaders.get(key) + EOL);
                }
 
                MMSMessageModelBuilder builder = new MMSMessageModelBuilder();
-               builder.addRecipient(((StringBuffer)(new Object())).append(number).append("/TYPE=PLMN").toString());
+               builder.addRecipient(number + "/TYPE=PLMN");
                builder.setSubject(subject);
                builder.addAttachment("body.txt", 3, body.toString());
                MMSMessageModel message = builder.getResult();
-               boolean isSent = MMSSendVerb.send(message, message.getPayload(), message.getAttachmentDataProvider(), new Object());
+               boolean isSent = MMSSendVerb.send(message, message.getPayload(), message.getAttachmentDataProvider(), new ContextObject());
                if (isSent) {
                   inform("Test message queued.");
                } else {

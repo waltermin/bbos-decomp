@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.secureemail;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.io.OutputStream;
 import net.rim.device.api.crypto.certificate.CertificateServerInfo;
 import net.rim.device.api.crypto.certificate.CertificateServers;
@@ -34,7 +34,7 @@ public class CertificateServersAttachmentModel extends UnknownMimePartModel impl
       super(initialData);
       ContextObject contextObject = ContextObject.castOrCreate(initialData);
       Object certificateServerDataObject = contextObject.get(-8616111138651597975L);
-      if (certificateServerDataObject instanceof Object) {
+      if (certificateServerDataObject instanceof CertificateServerInfo) {
          CertificateServerInfo serverInfo = (CertificateServerInfo)certificateServerDataObject;
          this._serverInfo = serverInfo;
       }
@@ -43,7 +43,7 @@ public class CertificateServersAttachmentModel extends UnknownMimePartModel impl
          this.setNameBytes(this._serverInfo.getFriendlyName().getBytes());
       } else {
          Object friendlyNameObject = contextObject.get(-4886909117188079897L);
-         if (friendlyNameObject instanceof Object) {
+         if (friendlyNameObject instanceof String) {
             String friendlyName = (String)friendlyNameObject;
             this.setNameBytes(friendlyName.getBytes());
          }
@@ -67,7 +67,7 @@ public class CertificateServersAttachmentModel extends UnknownMimePartModel impl
          return _rb.getString(112);
       }
 
-      StringBuffer labelBuffer = (StringBuffer)(new Object());
+      StringBuffer labelBuffer = new StringBuffer();
       if (CertificateServers.getInstance().contains(this._serverInfo)) {
          labelBuffer.append('☑');
       } else {
@@ -86,25 +86,25 @@ public class CertificateServersAttachmentModel extends UnknownMimePartModel impl
 
    @Override
    public boolean convert(Object context, Object target) {
-      if (!(target instanceof Object)) {
-         if (target instanceof Object && ContextObject.getFlag(context, 54) && ContextObject.getFlag(context, 43)) {
+      if (!(target instanceof RIMMessagingOutgoingMessage)) {
+         if (target instanceof MIMEOutputStream && ContextObject.getFlag(context, 54) && ContextObject.getFlag(context, 43)) {
             MIMEOutputStream outputStream = (MIMEOutputStream)target;
             MIMEOutputStream mime = outputStream.getPartOutputStream(false, this.getOutgoingMIMEEncoding());
             mime.setContentType(this.getOutgoingMIMEContentType());
-            String name = (String)(new Object(this.getNameBytes()));
+            String name = new String(this.getNameBytes());
             mime.addContentTypeParameter(NAME, name);
-            mime.addHeaderField(((StringBuffer)(new Object())).append(CONTENT_DISPOSITION).append(name).toString());
+            mime.addHeaderField(CONTENT_DISPOSITION + name);
             return this.writeToOutputStream(mime);
          } else {
             return false;
          }
       } else {
          RIMMessagingOutgoingMessage message = (RIMMessagingOutgoingMessage)target;
-         ByteArrayOutputStream byteArrayOutputStream = (ByteArrayOutputStream)(new Object());
+         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
          this.writeToOutputStream(byteArrayOutputStream);
          ContextObject contextObject = (ContextObject)context;
          ContentPartIDGenerator contentPartIDGenerator = (ContentPartIDGenerator)contextObject.get(-1943436819741481055L);
-         CMIMEParameters parameters = (CMIMEParameters)(new Object((DataBuffer)(new Object()), 2, 1));
+         CMIMEParameters parameters = new CMIMEParameters(new DataBuffer(), 2, 1);
          parameters.add((byte)-14, this.getNameBytes());
          parameters.addCMIMEInteger((byte)-15, contentPartIDGenerator.generateContentPartID());
          message.addAttachment(byteArrayOutputStream.toByteArray(), parameters, SendCertificateServerVerb.TYPE_APPLICATION_CERTIFICATE_SERVERS);
@@ -126,7 +126,7 @@ public class CertificateServersAttachmentModel extends UnknownMimePartModel impl
 
       label26:
       try {
-         Base64InputStream base64Stream = (Base64InputStream)(new Object((InputStream)(new Object(originalData))));
+         Base64InputStream base64Stream = new Base64InputStream(new ByteArrayInputStream(originalData));
          byte[] binaryData = new byte[originalData.length];
          int length = base64Stream.read(binaryData);
          Array.resize(binaryData, length);
@@ -183,7 +183,7 @@ public class CertificateServersAttachmentModel extends UnknownMimePartModel impl
       // 1c: astore 3
       // 1d: aload 3
       // 1e: ifnull 3a
-      // 21: new java/lang/Object
+      // 21: new net/rim/device/api/io/Base64OutputStream
       // 24: dup
       // 25: aload 1
       // 26: bipush 1

@@ -2,7 +2,7 @@ package net.rim.device.apps.internal.bis.ui;
 
 import java.util.Hashtable;
 import net.rim.device.api.i18n.MessageFormat;
-import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.apps.internal.bis.ApplicationResources;
 import net.rim.device.apps.internal.bis.api.ui.BasicScreen;
 import net.rim.device.apps.internal.bis.api.ui.Button;
@@ -15,9 +15,9 @@ public final class PinChangeDetectedScreen extends BasicScreen {
    public final void refresh(Hashtable screenParams) {
       String newPin = DeviceIDs.getInstance().getPIN();
       String oldPin = ClientSessionState.getInstance().getTempCurrentPin();
-      this.addContentField((Field)(new Object(MessageFormat.format(ApplicationResources.getString(185), new Object[]{oldPin}))));
+      this.addContentField(new LabelField(MessageFormat.format(ApplicationResources.getString(185), new String[]{oldPin})));
       this.addContentLineBreak();
-      this.addContentField((Field)(new Object(MessageFormat.format(ApplicationResources.getString(186), new Object[]{newPin}))));
+      this.addContentField(new LabelField(MessageFormat.format(ApplicationResources.getString(186), new String[]{newPin})));
       this.addContentLineBreak();
       Button yesButton = new Button(ApplicationResources.getString(32));
       Button noButton = new Button(ApplicationResources.getString(31));

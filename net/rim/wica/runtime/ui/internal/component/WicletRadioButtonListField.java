@@ -18,7 +18,7 @@ final class WicletRadioButtonListField extends ChoiceField implements FieldChang
 
    @Override
    protected final void addInternal(int fromIndex, int count) {
-      this._group = (RadioButtonGroup)(new Object());
+      this._group = new RadioButtonGroup();
 
       for (int i = fromIndex; i < fromIndex + count; i++) {
          WicletRadioButtonListField$WicletRadioButtonField radio = new WicletRadioButtonListField$WicletRadioButtonField(this.getLabel(i), this._group, false);

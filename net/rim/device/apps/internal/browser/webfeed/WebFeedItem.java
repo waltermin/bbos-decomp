@@ -93,7 +93,7 @@ final class WebFeedItem extends Field {
 
    public final String getGuid() {
       if (this._guid == null && this._link != null) {
-         this._guid = ((StringBuffer)(new Object())).append(this._link).append(this._pubDate).toString();
+         this._guid = this._link + this._pubDate;
       }
 
       return this._guid;

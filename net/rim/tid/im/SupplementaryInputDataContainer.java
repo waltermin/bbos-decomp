@@ -44,8 +44,8 @@ public class SupplementaryInputDataContainer implements ISupplementaryInputData 
          return null;
       }
 
-      String[] result = new Object[this._supplementarySearchReadings._count];
-      StringBuffer buffer = (StringBuffer)(new Object());
+      String[] result = new String[this._supplementarySearchReadings._count];
+      StringBuffer buffer = new StringBuffer();
       int index = 0;
 
       while (this._supplementarySearchReadings.next(buffer)) {

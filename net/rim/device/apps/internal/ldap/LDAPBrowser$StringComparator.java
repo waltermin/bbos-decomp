@@ -9,7 +9,7 @@ class LDAPBrowser$StringComparator implements Comparator {
 
    @Override
    public int compare(Object o1, Object o2) {
-      return StringUtilities.compareObjectToStringIgnoreCase(o1, o2, 1701707776);
+      return StringUtilities.compareObjectToStringIgnoreCase((String)o1, (String)o2, 1701707776);
    }
 
    LDAPBrowser$StringComparator(LDAPBrowser$1 x0) {

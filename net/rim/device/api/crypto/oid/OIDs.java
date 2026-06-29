@@ -331,7 +331,7 @@ public final class OIDs {
          OID internedOid = getInternedOID(hashCode);
          if (internedOid == null || !internedOid.equals(oid)) {
             internedOid = oid;
-            _oids.put(hashCode, new Object(internedOid));
+            _oids.put(hashCode, new WeakReference(internedOid));
          }
 
          return internedOid;
@@ -345,20 +345,20 @@ public final class OIDs {
             OID internedOid = getInternedOID(hashCode);
             if (internedOid == null || !internedOid.equals(encoding, offset, length)) {
                internedOid = new OID(encoding, offset, length);
-               _oids.put(hashCode, new Object(internedOid));
+               _oids.put(hashCode, new WeakReference(internedOid));
             }
 
             return internedOid;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    private static final OID getInternedOID(int hashCode) {
       Object ref = _oids.get(hashCode);
       if (!(ref instanceof OID)) {
-         return !(ref instanceof Object) ? null : (OID)((WeakReference)ref).get();
+         return !(ref instanceof WeakReference) ? null : (OID)((WeakReference)ref).get();
       } else {
          return (OID)ref;
       }
@@ -367,7 +367,7 @@ public final class OIDs {
    private static final synchronized Hashtable getOidHashtable(long association) {
       Hashtable hashtable = (Hashtable)_associationToOIDHashtables.get(association);
       if (hashtable == null) {
-         hashtable = (Hashtable)(new Object());
+         hashtable = new Hashtable();
          _associationToOIDHashtables.put(association, hashtable);
       }
 
@@ -377,7 +377,7 @@ public final class OIDs {
    private static final synchronized Hashtable getObjectHashtable(long association) {
       Hashtable hashtable = (Hashtable)_associationToObjectHashtables.get(association);
       if (hashtable == null) {
-         hashtable = (Hashtable)(new Object());
+         hashtable = new Hashtable();
          _associationToObjectHashtables.put(association, hashtable);
       }
 
@@ -416,7 +416,7 @@ public final class OIDs {
    }
 
    public static final OID getAssociatedOID(long association, int integer) {
-      return getAssociatedOID(association, new Object(integer));
+      return getAssociatedOID(association, new Integer(integer));
    }
 
    static {

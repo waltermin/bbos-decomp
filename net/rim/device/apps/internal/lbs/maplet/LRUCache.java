@@ -8,8 +8,8 @@ import net.rim.device.api.util.IntLongHashtable;
 import net.rim.vm.Persistable;
 
 final class LRUCache implements Persistable {
-   private IntHashtable _cache = (IntHashtable)(new Object(8));
-   private IntLongHashtable _lastUsed = (IntLongHashtable)(new Object());
+   private IntHashtable _cache = new IntHashtable(8);
+   private IntLongHashtable _lastUsed = new IntLongHashtable();
    static final int AGE_THRESHOLD = DeviceInfo.isSimulator() ? 180000 : 259200000;
 
    public LRUCache() {
@@ -43,7 +43,7 @@ final class LRUCache implements Persistable {
 
    public final synchronized void put(int key, Object value) {
       if (key == 0) {
-         throw new Object("Key cannot be zero.");
+         throw new IllegalArgumentException("Key cannot be zero.");
       }
 
       this._lastUsed.put(key, System.currentTimeMillis());

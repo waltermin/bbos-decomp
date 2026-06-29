@@ -7,7 +7,7 @@ import net.rim.device.apps.api.framework.verb.Verb;
 
 public class FileBrowser {
    private Verb _fileBrowserVerb;
-   private ContextObject _ctx = (ContextObject)(new Object());
+   private ContextObject _ctx = new ContextObject();
    public static final int VIEW_MODE_THUMBNAIL = 0;
    public static final int VIEW_MODE_LIST = 1;
    public static final int VIEW_MODE_DETAILS = 2;

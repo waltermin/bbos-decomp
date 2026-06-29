@@ -18,6 +18,6 @@ final class FormatIndicator {
    }
 
    final void print() {
-      System.out.println(((StringBuffer)(new Object("FormatInd: "))).append(this.indicator).toString());
+      System.out.println("FormatInd: " + this.indicator);
    }
 }

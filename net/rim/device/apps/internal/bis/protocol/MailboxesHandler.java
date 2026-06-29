@@ -17,8 +17,8 @@ final class MailboxesHandler extends XMLToObjectHandler implements BISServiceCon
       Hashtable elementToValueMap = (Hashtable)super.getResult();
       Object emailAccount = elementToValueMap.get("emailAccount");
       if (emailAccount != null) {
-         if (!(emailAccount instanceof Object)) {
-            Vector emailAccountsVector = (Vector)(new Object());
+         if (!(emailAccount instanceof Vector)) {
+            Vector emailAccountsVector = new Vector();
             emailAccountsVector.addElement(emailAccount);
             return emailAccountsVector;
          } else {

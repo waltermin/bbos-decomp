@@ -46,7 +46,7 @@ public class DefaultReceiveThread extends BaseConnectionThread {
       // 019: getfield net/rim/device/apps/api/transmission/BaseConnectionThread._connection Ljavax/microedition/io/DatagramConnection;
       // 01c: sipush 1024
       // 01f: invokeinterface javax/microedition/io/DatagramConnection.newDatagram (I)Ljavax/microedition/io/Datagram; 2
-      // 024: checkcast java/lang/Object
+      // 024: checkcast net/rim/device/api/io/DatagramBase
       // 027: astore 1
       // 028: aload 1
       // 029: astore 2
@@ -70,7 +70,7 @@ public class DefaultReceiveThread extends BaseConnectionThread {
       // 04d: aload 1
       // 04e: invokeinterface javax/microedition/io/DatagramConnection.receive (Ljavax/microedition/io/Datagram;)V 2
       // 053: aload 1
-      // 054: instanceof java/lang/Object
+      // 054: instanceof net/rim/device/cldc/io/gme/GMEDatagram
       // 057: istore 6
       // 059: aload 0
       // 05a: getfield net/rim/device/apps/api/transmission/BaseConnectionThread._eventLoggerGUID J
@@ -78,7 +78,7 @@ public class DefaultReceiveThread extends BaseConnectionThread {
       // 060: iload 6
       // 062: ifeq 06f
       // 065: aload 1
-      // 066: checkcast java/lang/Object
+      // 066: checkcast net/rim/device/cldc/io/gme/GMEDatagram
       // 069: invokevirtual net/rim/device/cldc/io/gme/GMEDatagram.getTransactionId ()I
       // 06c: goto 070
       // 06f: bipush 0
@@ -103,7 +103,7 @@ public class DefaultReceiveThread extends BaseConnectionThread {
       // 092: ifne 098
       // 095: goto 13c
       // 098: aload 1
-      // 099: checkcast java/lang/Object
+      // 099: checkcast net/rim/device/cldc/io/gme/GMEDatagram
       // 09c: astore 8
       // 09e: aload 8
       // 0a0: invokevirtual net/rim/device/cldc/io/gme/GMEDatagram.getBoundServiceRecord ()Lnet/rim/device/api/servicebook/ServiceRecord;
@@ -112,7 +112,7 @@ public class DefaultReceiveThread extends BaseConnectionThread {
       // 0a6: ifnull 0c2
       // 0a9: aload 3
       // 0aa: ifnonnull 0b5
-      // 0ad: new java/lang/Object
+      // 0ad: new net/rim/device/apps/api/framework/model/ContextObject
       // 0b0: dup
       // 0b1: invokespecial net/rim/device/apps/api/framework/model/ContextObject.<init> ()V
       // 0b4: astore 3
@@ -127,7 +127,7 @@ public class DefaultReceiveThread extends BaseConnectionThread {
       // 0c7: ifeq 0dd
       // 0ca: aload 3
       // 0cb: ifnonnull 0d6
-      // 0ce: new java/lang/Object
+      // 0ce: new net/rim/device/apps/api/framework/model/ContextObject
       // 0d1: dup
       // 0d2: invokespecial net/rim/device/apps/api/framework/model/ContextObject.<init> ()V
       // 0d5: astore 3
@@ -146,7 +146,7 @@ public class DefaultReceiveThread extends BaseConnectionThread {
       // 0f3: ifeq 108
       // 0f6: aload 3
       // 0f7: ifnonnull 102
-      // 0fa: new java/lang/Object
+      // 0fa: new net/rim/device/apps/api/framework/model/ContextObject
       // 0fd: dup
       // 0fe: invokespecial net/rim/device/apps/api/framework/model/ContextObject.<init> ()V
       // 101: astore 3
@@ -158,7 +158,7 @@ public class DefaultReceiveThread extends BaseConnectionThread {
       // 10d: ifeq 122
       // 110: aload 3
       // 111: ifnonnull 11c
-      // 114: new java/lang/Object
+      // 114: new net/rim/device/apps/api/framework/model/ContextObject
       // 117: dup
       // 118: invokespecial net/rim/device/apps/api/framework/model/ContextObject.<init> ()V
       // 11b: astore 3
@@ -170,7 +170,7 @@ public class DefaultReceiveThread extends BaseConnectionThread {
       // 127: ifeq 13c
       // 12a: aload 3
       // 12b: ifnonnull 136
-      // 12e: new java/lang/Object
+      // 12e: new net/rim/device/apps/api/framework/model/ContextObject
       // 131: dup
       // 132: invokespecial net/rim/device/apps/api/framework/model/ContextObject.<init> ()V
       // 135: astore 3
@@ -184,7 +184,7 @@ public class DefaultReceiveThread extends BaseConnectionThread {
       // 143: ifnull 15c
       // 146: aload 3
       // 147: ifnonnull 152
-      // 14a: new java/lang/Object
+      // 14a: new net/rim/device/apps/api/framework/model/ContextObject
       // 14d: dup
       // 14e: invokespecial net/rim/device/apps/api/framework/model/ContextObject.<init> ()V
       // 151: astore 3
@@ -216,11 +216,11 @@ public class DefaultReceiveThread extends BaseConnectionThread {
       // 18a: aload 0
       // 18b: getfield net/rim/device/apps/api/transmission/BaseConnectionThread._connection Ljavax/microedition/io/DatagramConnection;
       // 18e: dup
-      // 18f: instanceof java/lang/Object
+      // 18f: instanceof net/rim/device/api/io/DatagramConnectionBase
       // 192: ifne 199
       // 195: pop
       // 196: goto 03c
-      // 199: checkcast java/lang/Object
+      // 199: checkcast net/rim/device/api/io/DatagramConnectionBase
       // 19c: iload 7
       // 19e: invokevirtual net/rim/device/api/io/DatagramConnectionBase.datagramProcessed (I)V
       // 1a1: goto 03c

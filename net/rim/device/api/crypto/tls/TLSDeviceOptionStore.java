@@ -8,7 +8,7 @@ import net.rim.device.api.system.RIMPersistentStore;
 import net.rim.device.api.util.Persistable;
 
 public class TLSDeviceOptionStore implements Persistable {
-   private Hashtable _defaultClientCerts = (Hashtable)(new Object());
+   private Hashtable _defaultClientCerts = new Hashtable();
    private Object _defaultCert;
    private static final long ID = -5479247544345008286L;
    private static final String DEFAULT = "DEFAULT";

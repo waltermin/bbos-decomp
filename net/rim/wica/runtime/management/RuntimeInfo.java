@@ -17,11 +17,11 @@ public final class RuntimeInfo implements Persistable {
    private AGInfo _defaultAGInfo;
    private AGInfo _newAGInfo;
    private long _timeLastREStatusSent;
-   private LongHashtable _keyRefreshParams = (LongHashtable)(new Object(1));
+   private LongHashtable _keyRefreshParams = new LongHashtable(1);
 
    @Override
    public final String toString() {
-      StringBuffer b = (StringBuffer)(new Object("M Details\n"));
+      StringBuffer b = new StringBuffer("M Details\n");
       b.append("Registered: ");
       b.append(this._registered);
       b.append("Registering: ");

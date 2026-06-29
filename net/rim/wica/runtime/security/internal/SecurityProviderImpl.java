@@ -1,19 +1,20 @@
 package net.rim.wica.runtime.security.internal;
 
 import java.io.ByteArrayInputStream;
+import net.rim.device.api.crypto.AESDecryptorEngine;
+import net.rim.device.api.crypto.AESEncryptorEngine;
 import net.rim.device.api.crypto.AESKey;
-import net.rim.device.api.crypto.BlockDecryptorEngine;
-import net.rim.device.api.crypto.BlockEncryptorEngine;
-import net.rim.device.api.crypto.BlockFormatterEngine;
-import net.rim.device.api.crypto.BlockUnformatterEngine;
-import net.rim.device.api.crypto.CryptoInputStream;
-import net.rim.device.api.crypto.CryptoOutputStream;
+import net.rim.device.api.crypto.BlockDecryptor;
+import net.rim.device.api.crypto.BlockEncryptor;
+import net.rim.device.api.crypto.CBCDecryptorEngine;
+import net.rim.device.api.crypto.CBCEncryptorEngine;
 import net.rim.device.api.crypto.DecryptorInputStream;
-import net.rim.device.api.crypto.Digest;
 import net.rim.device.api.crypto.ECCryptoSystem;
 import net.rim.device.api.crypto.ECDHKeyAgreement;
 import net.rim.device.api.crypto.ECDSASignatureSigner;
 import net.rim.device.api.crypto.ECDSASignatureVerifier;
+import net.rim.device.api.crypto.ECIESDecryptor;
+import net.rim.device.api.crypto.ECIESEncryptor;
 import net.rim.device.api.crypto.ECKeyPair;
 import net.rim.device.api.crypto.ECPrivateKey;
 import net.rim.device.api.crypto.ECPublicKey;
@@ -21,14 +22,19 @@ import net.rim.device.api.crypto.EncryptorOutputStream;
 import net.rim.device.api.crypto.HMAC;
 import net.rim.device.api.crypto.HMACKey;
 import net.rim.device.api.crypto.InitializationVector;
+import net.rim.device.api.crypto.PKCS1FormatterEngine;
 import net.rim.device.api.crypto.PKCS1SignatureSigner;
 import net.rim.device.api.crypto.PKCS1SignatureVerifier;
-import net.rim.device.api.crypto.PrivateKeyDecryptorEngine;
+import net.rim.device.api.crypto.PKCS1UnformatterEngine;
+import net.rim.device.api.crypto.PKCS5FormatterEngine;
+import net.rim.device.api.crypto.PKCS5UnformatterEngine;
 import net.rim.device.api.crypto.PublicKey;
-import net.rim.device.api.crypto.PublicKeyEncryptorEngine;
+import net.rim.device.api.crypto.RSADecryptorEngine;
+import net.rim.device.api.crypto.RSAEncryptorEngine;
 import net.rim.device.api.crypto.RSAPrivateKey;
 import net.rim.device.api.crypto.RSAPublicKey;
 import net.rim.device.api.crypto.RandomSource;
+import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.crypto.SignatureVerifierInputStream;
 import net.rim.device.api.crypto.encoder.EncodedKey;
 import net.rim.device.api.crypto.encoder.PrivateKeyDecoder;
@@ -50,7 +56,7 @@ final class SecurityProviderImpl implements SecurityProvider {
    public final Key decodeKey(KeyType keyType, byte[] encodedKey, boolean asymIsPublic) throws SecurityProviderException {
       try {
          if (keyType.equals(KeyType.AES)) {
-            return new Key(new Object(encodedKey), keyType);
+            return new Key(new AESKey(encodedKey), keyType);
          }
 
          if (keyType.equals(KeyType.RSA)) {
@@ -58,15 +64,13 @@ final class SecurityProviderImpl implements SecurityProvider {
          }
 
          if (keyType.equals(KeyType.ECDSA)) {
-            return new Key(
-               asymIsPublic ? new Object((ECCryptoSystem)(new Object()), encodedKey) : new Object((ECCryptoSystem)(new Object()), encodedKey), keyType
-            );
+            return new Key(asymIsPublic ? new ECPublicKey(new ECCryptoSystem(), encodedKey) : new ECPrivateKey(new ECCryptoSystem(), encodedKey), keyType);
          }
       } catch (Throwable var6) {
          throw new SecurityProviderException(e);
       }
 
-      throw new SecurityProviderException(((StringBuffer)(new Object("Not supported operation: decodeKey for type "))).append(keyType.getName()).toString());
+      throw new SecurityProviderException("Not supported operation: decodeKey for type " + keyType.getName());
    }
 
    // $VF: Could not inline inconsistent finally blocks
@@ -75,14 +79,14 @@ final class SecurityProviderImpl implements SecurityProvider {
    public final int sign(byte[] text, int textOffset, int textLength, byte[] output, int outputOffset, SecurityAlgorithm algorithm, Key key) throws SecurityProviderException {
       try {
          if (SecurityAlgorithm.HMAC_SHA1 == algorithm) {
-            HMAC hMAC = (HMAC)(new Object((HMACKey)(new Object(((AESKey)key.getNativeKey()).getData())), (Digest)(new Object())));
+            HMAC hMAC = new HMAC(new HMACKey(((AESKey)key.getNativeKey()).getData()), new SHA1Digest());
             hMAC.update(text, textOffset, textLength);
             hMAC.getMAC(output, outputOffset, true);
             return hMAC.getLength();
          }
 
          if (SecurityAlgorithm.ECDSA_SHA1 == algorithm) {
-            ECDSASignatureSigner signer = (ECDSASignatureSigner)(new Object((ECPrivateKey)key.getNativeKey(), (Digest)(new Object())));
+            ECDSASignatureSigner signer = new ECDSASignatureSigner((ECPrivateKey)key.getNativeKey(), new SHA1Digest());
             signer.update(text, textOffset, textLength);
             signer.sign(output, outputOffset, output, outputOffset + signer.getRLength());
             signer.reset();
@@ -90,7 +94,7 @@ final class SecurityProviderImpl implements SecurityProvider {
          }
 
          if (SecurityAlgorithm.RSA_SHA1 == algorithm) {
-            PKCS1SignatureSigner signer = (PKCS1SignatureSigner)(new Object((RSAPrivateKey)key.getNativeKey(), (Digest)(new Object())));
+            PKCS1SignatureSigner signer = new PKCS1SignatureSigner((RSAPrivateKey)key.getNativeKey(), new SHA1Digest());
             signer.update(text, textOffset, textLength);
             signer.sign(output, outputOffset);
             signer.reset();
@@ -100,7 +104,7 @@ final class SecurityProviderImpl implements SecurityProvider {
          throw new SecurityProviderException(e);
       }
 
-      throw new SecurityProviderException(((StringBuffer)(new Object("Sign: unsupported algorithm "))).append(algorithm.getName()).toString());
+      throw new SecurityProviderException("Sign: unsupported algorithm " + algorithm.getName());
    }
 
    @Override
@@ -116,7 +120,7 @@ final class SecurityProviderImpl implements SecurityProvider {
    ) throws SecurityProviderException {
       try {
          if (SecurityAlgorithm.HMAC_SHA1 == algorithm) {
-            HMAC hMAC = (HMAC)(new Object((HMACKey)(new Object(((AESKey)key.getNativeKey()).getData())), (Digest)(new Object())));
+            HMAC hMAC = new HMAC(new HMACKey(((AESKey)key.getNativeKey()).getData()), new SHA1Digest());
             hMAC.update(text, textOffset, textLength);
             byte[] signed = hMAC.getMAC(true);
             return Arrays.equals(signed, 0, signature, signatureOffset, signed.length);
@@ -124,18 +128,18 @@ final class SecurityProviderImpl implements SecurityProvider {
 
          if (SecurityAlgorithm.ECDSA_SHA1 == algorithm) {
             ECPublicKey pubKey = (ECPublicKey)key.getNativeKey();
-            ECDSASignatureVerifier verifierECC = (ECDSASignatureVerifier)(new Object(
+            ECDSASignatureVerifier verifierECC = new ECDSASignatureVerifier(
                pubKey, signature, signatureOffset, signature, signatureOffset + pubKey.getECCryptoSystem().getFieldLength()
-            ));
-            ByteArrayInputStream inputStream = (ByteArrayInputStream)(new Object(text, textOffset, textLength));
-            SignatureVerifierInputStream verifierStream = (SignatureVerifierInputStream)(new Object(verifierECC, inputStream));
+            );
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(text, textOffset, textLength);
+            SignatureVerifierInputStream verifierStream = new SignatureVerifierInputStream(verifierECC, inputStream);
             byte[] data = new byte[verifierStream.available()];
             verifierStream.read(data);
             return verifierECC.verify();
          }
 
          if (SecurityAlgorithm.RSA_SHA1 == algorithm) {
-            PKCS1SignatureVerifier verifier = (PKCS1SignatureVerifier)(new Object((RSAPublicKey)key.getNativeKey(), signature, signatureOffset));
+            PKCS1SignatureVerifier verifier = new PKCS1SignatureVerifier((RSAPublicKey)key.getNativeKey(), signature, signatureOffset);
             verifier.update(text, textOffset, textLength);
             return verifier.verify();
          }
@@ -143,7 +147,7 @@ final class SecurityProviderImpl implements SecurityProvider {
          throw new SecurityProviderException(e);
       }
 
-      throw new SecurityProviderException(((StringBuffer)(new Object("Verify signature: unsupported algorithm "))).append(algorithm.getName()).toString());
+      throw new SecurityProviderException("Verify signature: unsupported algorithm " + algorithm.getName());
    }
 
    @Override
@@ -158,38 +162,36 @@ final class SecurityProviderImpl implements SecurityProvider {
       byte[] plaintext, int plaintextOffset, int plaintextLength, byte[] IV, int ivOffset, int ivLength, SecurityAlgorithm algorithm, Key key
    ) throws SecurityProviderException {
       byte[] cipherTxt = null;
-      NoCopyByteArrayOutputStream out = (NoCopyByteArrayOutputStream)(new Object());
+      NoCopyByteArrayOutputStream out = new NoCopyByteArrayOutputStream();
       EncryptorOutputStream cryptoStream = null;
 
       SecurityProviderException e;
       try {
          try {
-            Object var18;
             if (SecurityAlgorithm.AES_CBC_PKCS5 == algorithm) {
-               var18 = new Object(
-                  (BlockFormatterEngine)(new Object(
-                     (BlockEncryptorEngine)(new Object(
-                        (BlockEncryptorEngine)(new Object((AESKey)key.getNativeKey())),
-                        (InitializationVector)(IV == null ? null : new Object(IV, ivOffset, ivLength))
-                     ))
-                  )),
+               cryptoStream = new BlockEncryptor(
+                  new PKCS5FormatterEngine(
+                     new CBCEncryptorEngine(
+                        new AESEncryptorEngine((AESKey)key.getNativeKey()), IV == null ? null : new InitializationVector(IV, ivOffset, ivLength)
+                     )
+                  ),
                   out
                );
             } else {
                if (SecurityAlgorithm.RSA_ECB_PKCS1 != algorithm) {
-                  throw new SecurityProviderException(((StringBuffer)(new Object("Encrypt: unsupported algorithm "))).append(algorithm.getName()).toString());
+                  throw new SecurityProviderException("Encrypt: unsupported algorithm " + algorithm.getName());
                }
 
                if (key.getKeyType() == KeyType.RSA) {
-                  var18 = new Object((BlockFormatterEngine)(new Object((PublicKeyEncryptorEngine)(new Object((RSAPublicKey)key.getNativeKey())))), out);
+                  cryptoStream = new BlockEncryptor(new PKCS1FormatterEngine(new RSAEncryptorEngine((RSAPublicKey)key.getNativeKey())), out);
                } else {
-                  var18 = new Object(out, (ECPublicKey)key.getNativeKey());
+                  cryptoStream = new ECIESEncryptor(out, (ECPublicKey)key.getNativeKey());
                }
             }
 
-            ((CryptoOutputStream)var18).write(plaintext, plaintextOffset, plaintextLength);
-            ((CryptoOutputStream)var18).flush();
-            ((CryptoOutputStream)var18).close();
+            cryptoStream.write(plaintext, plaintextOffset, plaintextLength);
+            cryptoStream.flush();
+            cryptoStream.close();
             int finalLength = out.size();
             cipherTxt = new byte[finalLength];
             System.arraycopy(out.getByteArray(), 0, cipherTxt, 0, finalLength);
@@ -217,37 +219,34 @@ final class SecurityProviderImpl implements SecurityProvider {
       byte[] ciphertext, int ciphertextOffset, int ciphertextLength, byte[] IV, int ivOffset, int ivLength, SecurityAlgorithm algorithm, Key key
    ) throws SecurityProviderException {
       byte[] plainTxt = null;
-      ByteArrayInputStream in = (ByteArrayInputStream)(new Object(ciphertext, ciphertextOffset, ciphertextLength));
+      ByteArrayInputStream in = new ByteArrayInputStream(ciphertext, ciphertextOffset, ciphertextLength);
       DecryptorInputStream decryptoStream = null;
 
       SecurityProviderException e;
       try {
          try {
-            Object var18;
             if (SecurityAlgorithm.AES_CBC_PKCS5 == algorithm) {
-               var18 = new Object(
-                  (BlockUnformatterEngine)(new Object(
-                     (BlockDecryptorEngine)(new Object(
-                        (BlockDecryptorEngine)(new Object((AESKey)key.getNativeKey())), (InitializationVector)(new Object(IV, ivOffset, ivLength))
-                     ))
-                  )),
+               decryptoStream = new BlockDecryptor(
+                  new PKCS5UnformatterEngine(
+                     new CBCDecryptorEngine(new AESDecryptorEngine((AESKey)key.getNativeKey()), new InitializationVector(IV, ivOffset, ivLength))
+                  ),
                   in
                );
             } else {
                if (SecurityAlgorithm.RSA_ECB_PKCS1 != algorithm) {
-                  throw new SecurityProviderException(((StringBuffer)(new Object("Decrypt: unsupported algorithm "))).append(algorithm.getName()).toString());
+                  throw new SecurityProviderException("Decrypt: unsupported algorithm " + algorithm.getName());
                }
 
                if (key.getKeyType() == KeyType.ECDSA) {
-                  var18 = new Object(in, (ECPrivateKey)key.getNativeKey());
+                  decryptoStream = new ECIESDecryptor(in, (ECPrivateKey)key.getNativeKey());
                } else {
-                  var18 = new Object((BlockUnformatterEngine)(new Object((PrivateKeyDecryptorEngine)(new Object((RSAPrivateKey)key.getNativeKey())))), in);
+                  decryptoStream = new BlockDecryptor(new PKCS1UnformatterEngine(new RSADecryptorEngine((RSAPrivateKey)key.getNativeKey())), in);
                }
             }
 
             plainTxt = new byte[ciphertextLength];
-            int actual = ((CryptoInputStream)var18).read(plainTxt, 0, ciphertextLength);
-            ((CryptoInputStream)var18).close();
+            int actual = decryptoStream.read(plainTxt, 0, ciphertextLength);
+            decryptoStream.close();
             Array.resize(plainTxt, actual);
             return plainTxt;
          } catch (SecurityProviderException var15) {
@@ -268,9 +267,9 @@ final class SecurityProviderImpl implements SecurityProvider {
    @Override
    public final Key generateKey(KeyType keyType) {
       if (keyType.equals(KeyType.AES)) {
-         return new Key(new Object(), KeyType.AES);
+         return new Key(new AESKey(), KeyType.AES);
       } else {
-         throw new Object(((StringBuffer)(new Object("Invalid key type: "))).append(keyType.getName()).toString());
+         throw new IllegalArgumentException("Invalid key type: " + keyType.getName());
       }
    }
 
@@ -280,14 +279,14 @@ final class SecurityProviderImpl implements SecurityProvider {
    public final KeyPair generateKeyPair(KeyType keyType) throws SecurityProviderException {
       try {
          if (keyType.equals(KeyType.ECDSA)) {
-            ECKeyPair keyPair = (ECKeyPair)(new Object((ECCryptoSystem)(new Object())));
+            ECKeyPair keyPair = new ECKeyPair(new ECCryptoSystem());
             return new KeyPair(new Key(keyPair.getPrivateKey(), KeyType.ECDSA), new Key(keyPair.getPublicKey(), KeyType.ECDSA));
          }
       } catch (Throwable var4) {
          throw new SecurityProviderException(e);
       }
 
-      throw new Object(((StringBuffer)(new Object("Invalid key type"))).append(keyType.getName()).toString());
+      throw new IllegalArgumentException("Invalid key type" + keyType.getName());
    }
 
    // $VF: Could not inline inconsistent finally blocks
@@ -302,7 +301,7 @@ final class SecurityProviderImpl implements SecurityProvider {
          }
 
          if (keyType.equals(KeyType.ECDSA)) {
-            if (key.getNativeKey() instanceof Object) {
+            if (key.getNativeKey() instanceof ECPublicKey) {
                ECPublicKey pKey = (ECPublicKey)key.getNativeKey();
                return pKey.getPublicKeyData();
             }
@@ -319,9 +318,7 @@ final class SecurityProviderImpl implements SecurityProvider {
          throw new SecurityProviderException(e);
       }
 
-      throw new SecurityProviderException(
-         ((StringBuffer)(new Object("Not supported operation: encodeKey for type "))).append(key.getKeyType().getName()).toString()
-      );
+      throw new SecurityProviderException("Not supported operation: encodeKey for type " + key.getKeyType().getName());
    }
 
    @Override
@@ -335,13 +332,13 @@ final class SecurityProviderImpl implements SecurityProvider {
    public final byte[] sign(byte[] text, SecurityAlgorithm algorithm, Key key) throws SecurityProviderException {
       try {
          if (SecurityAlgorithm.HMAC_SHA1 == algorithm) {
-            HMAC hMAC = (HMAC)(new Object((HMACKey)(new Object(((AESKey)key.getNativeKey()).getData())), (Digest)(new Object())));
+            HMAC hMAC = new HMAC(new HMACKey(((AESKey)key.getNativeKey()).getData()), new SHA1Digest());
             hMAC.update(text, 0, text.length);
             return hMAC.getMAC(true);
          }
 
          if (SecurityAlgorithm.ECDSA_SHA1 == algorithm) {
-            ECDSASignatureSigner signer = (ECDSASignatureSigner)(new Object((ECPrivateKey)key.getNativeKey(), (Digest)(new Object())));
+            ECDSASignatureSigner signer = new ECDSASignatureSigner((ECPrivateKey)key.getNativeKey(), new SHA1Digest());
             signer.update(text, 0, text.length);
             byte[] signed = new byte[signer.getRLength() + signer.getSLength()];
             signer.sign(signed, 0, signed, signer.getRLength());
@@ -350,7 +347,7 @@ final class SecurityProviderImpl implements SecurityProvider {
          }
 
          if (SecurityAlgorithm.RSA_SHA1 == algorithm) {
-            PKCS1SignatureSigner signer = (PKCS1SignatureSigner)(new Object((RSAPrivateKey)key.getNativeKey(), (Digest)(new Object())));
+            PKCS1SignatureSigner signer = new PKCS1SignatureSigner((RSAPrivateKey)key.getNativeKey(), new SHA1Digest());
             signer.update(text, 0, text.length);
             byte[] signed = new byte[signer.getLength()];
             signer.sign(signed, 0);
@@ -361,7 +358,7 @@ final class SecurityProviderImpl implements SecurityProvider {
          throw new SecurityProviderException(e);
       }
 
-      throw new SecurityProviderException(((StringBuffer)(new Object("Sign: unsupported algorithm "))).append(algorithm.getName()).toString());
+      throw new SecurityProviderException("Sign: unsupported algorithm " + algorithm.getName());
    }
 
    // $VF: Could not inline inconsistent finally blocks
@@ -372,9 +369,7 @@ final class SecurityProviderImpl implements SecurityProvider {
       ECPrivateKey deviceKey = (ECPrivateKey)privateKey.getNativeKey();
 
       try {
-         return ((AESKey)(new Object(
-               ECDHKeyAgreement.generateSharedSecret(deviceKey, (ECPublicKey)(new Object(deviceKey.getECCryptoSystem(), encodedRemotePublicKey)), false)
-            )))
+         return new AESKey(ECDHKeyAgreement.generateSharedSecret(deviceKey, new ECPublicKey(deviceKey.getECCryptoSystem(), encodedRemotePublicKey), false))
             .getData();
       } catch (Throwable var8) {
          throw new SecurityProviderException("Derive secret: ", e);

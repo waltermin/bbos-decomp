@@ -9,7 +9,7 @@ final class EventCollection$LocationHandler implements ObjectFieldHandler {
 
    @Override
    public final Object getValue(Object item) {
-      return !(item instanceof Object) ? null : ((Event)item).getLocation();
+      return !(item instanceof Event) ? null : ((Event)item).getLocation();
    }
 
    EventCollection$LocationHandler(EventCollection$1 x0) {

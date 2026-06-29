@@ -1,6 +1,6 @@
 package net.rim.device.api.crypto.cms;
 
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 import net.rim.device.api.crypto.AESDecryptorEngine;
 import net.rim.device.api.crypto.AESKey;
 import net.rim.device.api.crypto.BlockDecryptor;
@@ -14,6 +14,7 @@ import net.rim.device.api.crypto.InitializationVector;
 import net.rim.device.api.crypto.RC2Key;
 import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.crypto.SymmetricKey;
+import net.rim.device.api.crypto.TripleDESDecryptorEngine;
 import net.rim.device.api.crypto.TripleDESKey;
 import net.rim.device.api.util.Arrays;
 
@@ -35,10 +36,9 @@ final class CMSKeyUnWrap {
             return null;
          }
 
-         BlockDecryptor decryptor = (BlockDecryptor)(new Object(
-            (BlockDecryptorEngine)(new Object((BlockDecryptorEngine)(new Object(kekKey)), (InitializationVector)(new Object(WRAP_IV)))),
-            (InputStream)(new Object(wrappedKey))
-         ));
+         BlockDecryptor decryptor = new BlockDecryptor(
+            new CBCDecryptorEngine(new TripleDESDecryptorEngine(kekKey), new InitializationVector(WRAP_IV)), new ByteArrayInputStream(wrappedKey)
+         );
          byte[] TEMP3 = new byte[WRAPPEDLENGTH];
          decryptor.read(TEMP3);
          byte[] TEMP2 = new byte[WRAPPEDLENGTH];
@@ -51,27 +51,26 @@ final class CMSKeyUnWrap {
          byte[] TEMP1 = new byte[TEMP1LENGTH];
          System.arraycopy(TEMP2, 0, IV, 0, IVLENGTH);
          System.arraycopy(TEMP2, IVLENGTH, TEMP1, 0, TEMP1LENGTH);
-         BlockDecryptor decryptor2 = (BlockDecryptor)(new Object(
-            (BlockDecryptorEngine)(new Object((BlockDecryptorEngine)(new Object(kekKey)), (InitializationVector)(new Object(IV)))),
-            (InputStream)(new Object(TEMP1))
-         ));
+         BlockDecryptor decryptor2 = new BlockDecryptor(
+            new CBCDecryptorEngine(new TripleDESDecryptorEngine(kekKey), new InitializationVector(IV)), new ByteArrayInputStream(TEMP1)
+         );
          byte[] CEKICV = new byte[CEKLENGTH + ICVLENGTH];
          decryptor2.read(CEKICV);
          byte[] CEK = new byte[CEKLENGTH];
          byte[] ICV = new byte[ICVLENGTH];
          System.arraycopy(CEKICV, 0, CEK, 0, CEKLENGTH);
          System.arraycopy(CEKICV, CEKLENGTH, ICV, 0, ICVLENGTH);
-         SHA1Digest digest = (SHA1Digest)(new Object());
+         SHA1Digest digest = new SHA1Digest();
          digest.update(CEK);
          byte[] checkSum = digest.getDigest();
          if (!Arrays.equals(ICV, 0, checkSum, 0, ICVLENGTH)) {
             return null;
          }
 
-         TripleDESKey contentKey = (TripleDESKey)(new Object(CEK));
+         TripleDESKey contentKey = new TripleDESKey(CEK);
          return !Arrays.equals(CEK, 0, contentKey.getData(), 0, CEKLENGTH) ? null : CEK;
       } finally {
-         throw new Object();
+         throw new RuntimeException();
       }
    }
 
@@ -94,7 +93,7 @@ final class CMSKeyUnWrap {
       // 0a: aload 2
       // 0b: athrow
       // 0c: astore 2
-      // 0d: new java/lang/Object
+      // 0d: new net/rim/device/api/crypto/CryptoUnsupportedOperationException
       // 10: dup
       // 11: aload 2
       // 12: invokevirtual net/rim/device/api/crypto/CryptoException.toString ()Ljava/lang/String;
@@ -124,7 +123,7 @@ final class CMSKeyUnWrap {
       // 0a: aload 2
       // 0b: athrow
       // 0c: astore 2
-      // 0d: new java/lang/Object
+      // 0d: new net/rim/device/api/crypto/CryptoUnsupportedOperationException
       // 10: dup
       // 11: aload 2
       // 12: invokevirtual net/rim/device/api/crypto/CryptoException.toString ()Ljava/lang/String;
@@ -145,10 +144,9 @@ final class CMSKeyUnWrap {
 
          int WRAPPEDLENGTH = wrappedKey.length;
          int TEMP1LENGTH = WRAPPEDLENGTH - IVLENGTH;
-         BlockDecryptor decryptor = (BlockDecryptor)(new Object(
-            (BlockDecryptorEngine)(new Object(DecryptorFactory.getBlockDecryptorEngine(kekKey), (InitializationVector)(new Object(WRAP_IV)))),
-            (InputStream)(new Object(wrappedKey))
-         ));
+         BlockDecryptor decryptor = new BlockDecryptor(
+            new CBCDecryptorEngine(DecryptorFactory.getBlockDecryptorEngine(kekKey), new InitializationVector(WRAP_IV)), new ByteArrayInputStream(wrappedKey)
+         );
          byte[] TEMP3 = new byte[WRAPPEDLENGTH];
          decryptor.read(TEMP3);
          byte[] TEMP2 = new byte[WRAPPEDLENGTH];
@@ -161,10 +159,9 @@ final class CMSKeyUnWrap {
          byte[] TEMP1 = new byte[TEMP1LENGTH];
          System.arraycopy(TEMP2, 0, IV, 0, IVLENGTH);
          System.arraycopy(TEMP2, IVLENGTH, TEMP1, 0, TEMP1LENGTH);
-         BlockDecryptor decryptor2 = (BlockDecryptor)(new Object(
-            (BlockDecryptorEngine)(new Object(DecryptorFactory.getBlockDecryptorEngine(kekKey), (InitializationVector)(new Object(IV)))),
-            (InputStream)(new Object(TEMP1))
-         ));
+         BlockDecryptor decryptor2 = new BlockDecryptor(
+            new CBCDecryptorEngine(DecryptorFactory.getBlockDecryptorEngine(kekKey), new InitializationVector(IV)), new ByteArrayInputStream(TEMP1)
+         );
          int LCEKPADLENGTH = TEMP1.length - ICVLENGTH;
          byte[] LCEKPADICV = new byte[LCEKPADLENGTH + ICVLENGTH];
          decryptor2.read(LCEKPADICV);
@@ -172,7 +169,7 @@ final class CMSKeyUnWrap {
          byte[] ICV = new byte[ICVLENGTH];
          System.arraycopy(LCEKPADICV, 0, LCEKPAD, 0, LCEKPADLENGTH);
          System.arraycopy(LCEKPADICV, LCEKPADLENGTH, ICV, 0, ICVLENGTH);
-         SHA1Digest digest = (SHA1Digest)(new Object());
+         SHA1Digest digest = new SHA1Digest();
          digest.update(LCEKPAD);
          byte[] checkSum = digest.getDigest();
          if (!Arrays.equals(ICV, 0, checkSum, 0, ICVLENGTH)) {
@@ -188,7 +185,7 @@ final class CMSKeyUnWrap {
 
          return CEK;
       } finally {
-         throw new Object();
+         throw new RuntimeException();
       }
    }
 
@@ -201,19 +198,17 @@ final class CMSKeyUnWrap {
 
       byte[] almostClearData = new byte[wrappedData.length];
       int numBlocks = wrappedData.length / blockLength;
-      CBCDecryptorEngine firstEngine = (CBCDecryptorEngine)(new Object(
-         blockEngine, (InitializationVector)(new Object(wrappedData, (numBlocks - 2) * blockLength, blockLength))
-      ));
+      CBCDecryptorEngine firstEngine = new CBCDecryptorEngine(blockEngine, new InitializationVector(wrappedData, (numBlocks - 2) * blockLength, blockLength));
       firstEngine.decrypt(wrappedData, (numBlocks - 1) * blockLength, almostClearData, (numBlocks - 1) * blockLength);
-      CBCDecryptorEngine secondEngine = (CBCDecryptorEngine)(new Object(
-         blockEngine, (InitializationVector)(new Object(almostClearData, (numBlocks - 1) * blockLength, blockLength))
-      ));
+      CBCDecryptorEngine secondEngine = new CBCDecryptorEngine(
+         blockEngine, new InitializationVector(almostClearData, (numBlocks - 1) * blockLength, blockLength)
+      );
 
       for (int i = 0; i < almostClearData.length - blockLength; i += blockLength) {
          secondEngine.decrypt(wrappedData, i, almostClearData, i);
       }
 
-      CBCDecryptorEngine finalEngine = (CBCDecryptorEngine)(new Object(blockEngine, iv));
+      CBCDecryptorEngine finalEngine = new CBCDecryptorEngine(blockEngine, iv);
       byte[] clearData = new byte[almostClearData.length];
 
       for (int i = 0; i < clearData.length; i += blockLength) {
@@ -238,7 +233,7 @@ final class CMSKeyUnWrap {
    }
 
    static final byte[] AESKeyUnWrap(AESKey kekKey, byte[] wrappedKey) {
-      AESDecryptorEngine engine = (AESDecryptorEngine)(new Object(kekKey));
+      AESDecryptorEngine engine = new AESDecryptorEngine(kekKey);
       byte[] rValues = new byte[wrappedKey.length - 8];
       System.arraycopy(wrappedKey, 8, rValues, 0, wrappedKey.length - 8);
       byte[] B = new byte[16];

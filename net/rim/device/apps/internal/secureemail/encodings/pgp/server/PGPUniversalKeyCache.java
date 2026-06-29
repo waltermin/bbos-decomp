@@ -3,11 +3,12 @@ package net.rim.device.apps.internal.secureemail.encodings.pgp.server;
 import java.util.Enumeration;
 import java.util.Vector;
 import net.rim.device.api.crypto.certificate.Certificate;
+import net.rim.device.api.crypto.certificate.CertificateKeyStoreIndex;
 import net.rim.device.api.crypto.certificate.CertificateUtilities;
 import net.rim.device.api.crypto.certificate.pgp.PGPCertificate;
+import net.rim.device.api.crypto.certificate.pgp.PGPKeyIDKeyStoreIndex;
 import net.rim.device.api.crypto.certificate.x509.X509Certificate;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
-import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.api.crypto.keystore.KeyStoreTicket;
 import net.rim.device.api.crypto.keystore.RIMKeyStore;
 import net.rim.device.api.system.EventLogger;
@@ -32,17 +33,17 @@ class PGPUniversalKeyCache extends RIMKeyStore {
       try {
          return new PGPUniversalKeyCache();
       } catch (Throwable var2) {
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       }
    }
 
    private PGPUniversalKeyCache() {
       super("PGP Universal Key Cache");
-      this.addIndex((KeyStoreIndex)(new Object()));
-      this.addIndex((KeyStoreIndex)(new Object()));
-      this.addIndex((KeyStoreIndex)(new Object()));
-      this._cachedKeyProperties = (ToIntHashtable)(new Object());
-      this._cachedKeyExpiryData = (SimpleSortingVector)(new Object());
+      this.addIndex(new KeyUsageEmailAddressKeyStoreIndex());
+      this.addIndex(new PGPKeyIDKeyStoreIndex());
+      this.addIndex(new CertificateKeyStoreIndex());
+      this._cachedKeyProperties = new ToIntHashtable();
+      this._cachedKeyExpiryData = new SimpleSortingVector();
       this._cachedKeyExpiryData.setSort(true);
       this._cachedKeyExpiryData.setSortComparator(new PGPUniversalKeyCache$CachedKeyExpiryComparator(null));
    }
@@ -97,15 +98,15 @@ class PGPUniversalKeyCache extends RIMKeyStore {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public synchronized void cacheKey(Certificate certificate, int certificateProperties) {
       this.removeExpiredCachedKeys();
-      if (!(certificate instanceof Object)) {
-         if (certificate instanceof Object) {
+      if (!(certificate instanceof PGPCertificate)) {
+         if (certificate instanceof X509Certificate) {
             X509Certificate x509Certificate = (X509Certificate)certificate;
             this._cachedKeyProperties.put(x509Certificate, certificateProperties);
             this._cachedKeyExpiryData.addElement(new PGPUniversalKeyCache$CachedKeyExpiryData(x509Certificate, null));
          }
       } else {
          PGPCertificate pgpCertificate = (PGPCertificate)certificate;
-         Vector matchingKeysVector = (Vector)(new Object());
+         Vector matchingKeysVector = new Vector();
          Enumeration matchingKeysEnumeration = this.elements(-2737350786039236692L, pgpCertificate.getKeyID());
 
          while (matchingKeysEnumeration.hasMoreElements()) {
@@ -151,7 +152,7 @@ class PGPUniversalKeyCache extends RIMKeyStore {
    }
 
    public synchronized void clear() {
-      Vector allKeysVector = (Vector)(new Object());
+      Vector allKeysVector = new Vector();
       Enumeration allKeysEnumeration = this.elements();
 
       while (allKeysEnumeration.hasMoreElements()) {

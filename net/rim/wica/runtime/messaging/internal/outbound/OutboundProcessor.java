@@ -40,9 +40,9 @@ public final class OutboundProcessor implements ResponseListener, MessageHandler
    private Provider _provider;
    private OutboundSecureMsgHandler _secureMsgHandler;
    private ConcurrentQueue _intermediaryQueue;
-   private LongHashtable _queueTable = (LongHashtable)(new Object());
+   private LongHashtable _queueTable = new LongHashtable();
    private Hashtable _urlToQueueTable;
-   private LongHashtable _queueConnTable = (LongHashtable)(new Object());
+   private LongHashtable _queueConnTable = new LongHashtable();
    private OutboundProcessor$MessageProcessor _messageProcessor;
    private OutboundProcessor$ResponseProcessor _responseProcessor;
    private OutboundProcessor$StateProcessor _stateProcessor;
@@ -64,12 +64,12 @@ public final class OutboundProcessor implements ResponseListener, MessageHandler
    static Class class$net$rim$wica$runtime$lifecycle$LifecycleService;
 
    public OutboundProcessor() {
-      this._urlToQueueTable = (Hashtable)(new Object());
+      this._urlToQueueTable = new Hashtable();
       this._intermediaryQueue = new ConcurrentQueue();
       this._lcEventListener = new OutboundProcessor$LifecycleEventListener(this, null);
       this._commEventListener = new OutboundProcessor$CommEventListener(this, null);
       this._mgmtEventListener = new OutboundProcessor$ManagementEventListener(this, null);
-      this._bundle = (Vector)(new Object());
+      this._bundle = new Vector();
    }
 
    @Override
@@ -122,7 +122,7 @@ public final class OutboundProcessor implements ResponseListener, MessageHandler
          this._hbProcessor = new OutboundProcessor$HeartbeatProcessor(this, null);
          this._gcProcessor = new OutboundProcessor$GCProcessor(this, null);
       } else {
-         throw new Object();
+         throw new RuntimeException();
       }
    }
 
@@ -197,7 +197,7 @@ public final class OutboundProcessor implements ResponseListener, MessageHandler
 
    private final void installWiclet(Wiclet w) {
       if (w.getAgId() == 0) {
-         throw new Object(((StringBuffer)(new Object("Invalid MDS Services ID 0 for application "))).append(w.getId()).toString());
+         throw new RuntimeException("Invalid MDS Services ID 0 for application " + w.getId());
       }
 
       OutboundQueueConnectionImpl wInfo = new OutboundQueueConnectionImpl(w.getId(), w.getAgId(), w.getOutboundQueueSizeLimit());
@@ -242,16 +242,14 @@ public final class OutboundProcessor implements ResponseListener, MessageHandler
       if (wicletID != 0) {
          OutboundQueueConnectionImpl qConn = (OutboundQueueConnectionImpl)this._queueConnTable.get(wicletID);
          if (qConn == null) {
-            throw new MessagingException(((StringBuffer)(new Object("Application ["))).append(wicletID).append("] not found.").toString());
+            throw new MessagingException("Application [" + wicletID + "] not found.");
          }
 
          qConn.incrementMessageCount();
          message.setAGID(qConn.getAgId());
       } else {
          if (message.getAGID() == 0) {
-            InternalLogger.logError(
-               this, ((StringBuffer)(new Object("MDS Services "))).append(message.getAGID()).append(" not found; dropping message.").toString(), null, message
-            );
+            InternalLogger.logError(this, "MDS Services " + message.getAGID() + " not found; dropping message.", null, message);
             return null;
          }
 
@@ -480,7 +478,7 @@ public final class OutboundProcessor implements ResponseListener, MessageHandler
             r.setRequestMethod("POST");
             this._communicationService.sendRequest(r);
          } catch (Throwable var5) {
-            InternalLogger.logError(this, ((StringBuffer)(new Object("Heartbeat to MDS Services "))).append(q.getId()).append(" failed.").toString(), t, null);
+            InternalLogger.logError(this, "Heartbeat to MDS Services " + q.getId() + " failed.", t, null);
             return;
          }
       }
@@ -537,7 +535,7 @@ public final class OutboundProcessor implements ResponseListener, MessageHandler
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

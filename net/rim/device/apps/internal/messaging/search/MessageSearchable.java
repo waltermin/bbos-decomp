@@ -97,11 +97,11 @@ public class MessageSearchable implements Searchable {
 
    @Override
    public SearchResultCollection search(long[] ids, Object searchCriteria) {
-      SearchCriterion[] originalSearchCriteria = (Object[])searchCriteria;
+      SearchCriterion[] originalSearchCriteria = (SearchCriterion[])searchCriteria;
       SearchCriterion[] finalSearchCriteria;
       if (ids != null) {
          int numOriginalCriteria = originalSearchCriteria.length;
-         finalSearchCriteria = new Object[numOriginalCriteria];
+         finalSearchCriteria = new SearchCriterion[numOriginalCriteria];
          System.arraycopy(originalSearchCriteria, 0, finalSearchCriteria, 0, numOriginalCriteria);
          this.processIds(ids, finalSearchCriteria);
       } else {
@@ -189,7 +189,7 @@ public class MessageSearchable implements Searchable {
 
    private void processIds(long[] ids, SearchCriterion[] searchCriteria) {
       TypeSearchModelFactory tsmf = TypeSearchModelFactory.getInstance();
-      SearchCriterion[] typeCriteriaArray = new Object[0];
+      SearchCriterion[] typeCriteriaArray = new SearchCriterion[0];
 
       for (int i = ids.length - 1; i >= 0; i--) {
          long id = ids[i];
@@ -217,7 +217,7 @@ public class MessageSearchable implements Searchable {
       }
 
       if (typeCriteriaArray.length > 0) {
-         OrSearchCriterion typeCriteria = (OrSearchCriterion)(new Object());
+         OrSearchCriterion typeCriteria = new OrSearchCriterion();
          typeCriteria.setValue(typeCriteriaArray);
          int numExistingCriteria = searchCriteria.length;
          Array.resize(searchCriteria, numExistingCriteria + 1);

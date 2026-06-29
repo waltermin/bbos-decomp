@@ -1,7 +1,9 @@
 package net.rim.device.api.crypto.encoder;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Hashtable;
+import net.rim.device.api.crypto.NoSuchAlgorithmException;
 import net.rim.device.api.crypto.RIMFactoryUtilities;
 import net.rim.device.api.system.ApplicationRegistry;
 
@@ -22,17 +24,17 @@ public class SignatureDecoder {
 
    public static DecodedSignature decode(byte[] encodedSignature, int offset, String encodingAlgorithm) {
       if (encodedSignature == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
-         return decode((InputStream)(new Object(encodedSignature, offset, encodedSignature.length - offset)), encodingAlgorithm, null);
+         return decode(new ByteArrayInputStream(encodedSignature, offset, encodedSignature.length - offset), encodingAlgorithm, null);
       }
    }
 
-   public static DecodedSignature decode(InputStream encodedSignature, String encodingAlgorithm, String signatureAlgorithm) {
+   public static DecodedSignature decode(InputStream encodedSignature, String encodingAlgorithm, String signatureAlgorithm) throws NoSuchAlgorithmException {
       if (encodedSignature != null && encodingAlgorithm != null) {
          SignatureDecoder decoder = (SignatureDecoder)_decoderHashtable.get(encodingAlgorithm);
          if (decoder == null) {
-            throw new Object(encodingAlgorithm);
+            throw new NoSuchAlgorithmException(encodingAlgorithm);
          }
 
          String digestAlgorithm = null;
@@ -43,15 +45,15 @@ public class SignatureDecoder {
 
          return decoder.decodeSignature(encodedSignature, signatureAlgorithm, digestAlgorithm);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    public static DecodedSignature decode(byte[] encodedSignature, int offset, String encodingAlgorithm, String signatureAlgorithm) {
       if (encodedSignature == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
-         return decode((InputStream)(new Object(encodedSignature, offset, encodedSignature.length - offset)), encodingAlgorithm, signatureAlgorithm);
+         return decode(new ByteArrayInputStream(encodedSignature, offset, encodedSignature.length - offset), encodingAlgorithm, signatureAlgorithm);
       }
    }
 
@@ -81,7 +83,7 @@ public class SignatureDecoder {
 
    protected static SignatureDecoder getDecoder(String encodingAlgorithm, String signatureAlgorithm) {
       if (signatureAlgorithm == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       signatureAlgorithm = RIMFactoryUtilities.getLeftMostSubAlgorithm(signatureAlgorithm);

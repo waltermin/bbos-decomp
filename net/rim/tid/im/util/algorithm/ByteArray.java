@@ -58,10 +58,10 @@ public class ByteArray {
 
    @Override
    public String toString() {
-      StringBuffer buf = (StringBuffer)(new Object());
+      StringBuffer buf = new StringBuffer();
 
       for (int i = this.offset; i < this.offset + this.count; i++) {
-         buf.append(((StringBuffer)(new Object(","))).append(this.value[i]).toString());
+         buf.append("," + this.value[i]);
       }
 
       return buf.toString();

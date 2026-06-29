@@ -1,6 +1,7 @@
 package net.rim.device.api.crypto.keystore;
 
 import java.util.Enumeration;
+import java.util.NoSuchElementException;
 
 final class MultipleKeyStoreEnumeration implements Enumeration {
    private Enumeration[] _enum;
@@ -32,6 +33,6 @@ final class MultipleKeyStoreEnumeration implements Enumeration {
          }
       }
 
-      throw new Object();
+      throw new NoSuchElementException();
    }
 }

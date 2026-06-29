@@ -138,17 +138,17 @@ public final class OperationImpl extends Operation {
    }
 
    private final String getProperty(String key) {
-      return (String)(this._properties != null ? this._properties.get(key) : null);
+      return this._properties != null ? (String)this._properties.get(key) : null;
    }
 
    @Override
    public final void setProperty(String name, String value) {
       if (name == null) {
-         throw new Object("The name of the property must not be null.");
+         throw new IllegalArgumentException("The name of the property must not be null.");
       }
 
       if (value == null) {
-         throw new Object("The value of the property must not be null.");
+         throw new IllegalArgumentException("The value of the property must not be null.");
       }
 
       if (!name.equals("javax.xml.rpc.soap.http.soapaction.uri")
@@ -158,11 +158,11 @@ public final class OperationImpl extends Operation {
          && !name.equals("javax.xml.rpc.session.maintain")
          && !name.equals("net.rim.device.api.xml.jaxrpc.compression.wbxml")
          && !name.equals("net.rim.device.api.xml.jaxrpc.compression.wbxml.codebook")) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (this._properties == null) {
-         this._properties = (Hashtable)(new Object(7));
+         this._properties = new Hashtable(7);
       }
 
       this._properties.put(name, value);
@@ -183,11 +183,11 @@ public final class OperationImpl extends Operation {
          soapAction = "\"\"";
       } else {
          if (soapAction.charAt(0) != '"') {
-            soapAction = ((StringBuffer)(new Object("\""))).append(soapAction).toString();
+            soapAction = "\"" + soapAction;
          }
 
          if (soapAction.charAt(soapAction.length() - 1) != '"') {
-            soapAction = ((StringBuffer)(new Object())).append(soapAction).append("\"").toString();
+            soapAction = soapAction + "\"";
          }
       }
 
@@ -195,9 +195,9 @@ public final class OperationImpl extends Operation {
       String userName = this.getProperty("javax.xml.rpc.security.auth.username");
       String password = this.getProperty("javax.xml.rpc.security.auth.password");
       if (userName != null) {
-         byte[] authData = ((StringBuffer)(new Object())).append(userName).append(":").append(password == null ? "" : password).toString().getBytes();
+         byte[] authData = (userName + ":" + (password == null ? "" : password)).getBytes();
          String encodedAuthData = Base64OutputStream.encodeAsString(authData, 0, authData.length, false, false);
-         connection.setRequestProperty("Authorization", ((StringBuffer)(new Object("Basic "))).append(encodedAuthData).toString());
+         connection.setRequestProperty("Authorization", "Basic " + encodedAuthData);
       }
 
       return connection.openOutputStream();

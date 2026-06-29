@@ -16,7 +16,7 @@ final class EditMemoVerb extends Verb implements SetParameter {
    @Override
    public final Object invoke(Object parameter) {
       new MemoEditScreen(this._memo, 0, 0, false).go();
-      return !ContextObject.getFlag(parameter, 5) ? new Object(39, 40) : null;
+      return !ContextObject.getFlag(parameter, 5) ? new ContextObject(39, 40) : null;
    }
 
    @Override

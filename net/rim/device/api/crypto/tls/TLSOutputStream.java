@@ -1,7 +1,9 @@
 package net.rim.device.api.crypto.tls;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import net.rim.device.api.util.DataBuffer;
+import net.rim.device.cldc.io.ssl.TLSIOException;
 
 public final class TLSOutputStream extends OutputStream {
    private RecordProtocol _recordProtocol;
@@ -11,7 +13,7 @@ public final class TLSOutputStream extends OutputStream {
 
    public TLSOutputStream(RecordProtocol recordProtocol) {
       this._recordProtocol = recordProtocol;
-      this._buffer = (DataBuffer)(new Object());
+      this._buffer = new DataBuffer();
    }
 
    @Override
@@ -53,10 +55,10 @@ public final class TLSOutputStream extends OutputStream {
       // 37: ifne 3d
       // 3a: goto 50
       // 3d: aload 2
-      // 3e: instanceof java/lang/Object
+      // 3e: instanceof net/rim/device/api/io/ConnectionClosedException
       // 41: ifeq 47
       // 44: goto 50
-      // 47: new java/lang/Object
+      // 47: new net/rim/device/cldc/io/ssl/TLSIOException
       // 4a: dup
       // 4b: aload 1
       // 4c: invokespecial net/rim/device/cldc/io/ssl/TLSIOException.<init> (Lnet/rim/device/cldc/io/ssl/TLSException;)V
@@ -89,9 +91,9 @@ public final class TLSOutputStream extends OutputStream {
    }
 
    @Override
-   public final void write(byte[] b, int off, int len) {
+   public final void write(byte[] b, int off, int len) throws IOException {
       if (this._isClosed) {
-         throw new Object();
+         throw new IOException();
       }
 
       this._buffer.write(b, off, len);
@@ -99,9 +101,9 @@ public final class TLSOutputStream extends OutputStream {
    }
 
    @Override
-   public final void write(int b) {
+   public final void write(int b) throws IOException {
       if (this._isClosed) {
-         throw new Object();
+         throw new IOException();
       }
 
       this._buffer.write(b);
@@ -110,7 +112,7 @@ public final class TLSOutputStream extends OutputStream {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private final void flushFullRecords() {
+   private final void flushFullRecords() throws TLSIOException {
       int len = this._buffer.getPosition();
       if (len >= 1300) {
          int pos = 0;
@@ -130,7 +132,7 @@ public final class TLSOutputStream extends OutputStream {
             System.arraycopy(buffer, pos, data, 0, data.length);
             this._buffer.setData(data, 0, data.length);
          } catch (Throwable var7) {
-            throw new Object(e);
+            throw new TLSIOException(e);
          }
       }
    }
@@ -138,15 +140,15 @@ public final class TLSOutputStream extends OutputStream {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void flush() {
+   public final void flush() throws IOException, TLSIOException {
       if (this._isClosed) {
-         throw new Object();
+         throw new IOException();
       }
 
       try {
          this.flushImpl();
       } catch (Throwable var3) {
-         throw new Object(e);
+         throw new TLSIOException(e);
       }
    }
 

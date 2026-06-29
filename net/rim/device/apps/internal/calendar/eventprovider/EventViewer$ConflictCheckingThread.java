@@ -88,14 +88,14 @@ class EventViewer$ConflictCheckingThread extends Thread {
          ServiceIdentifier[] calendarServices = CalendarServiceManager.getInstance().getCalendarServices(true);
          int calendarCount = calendarServices.length - 1;
          int conflictCount = 0;
-         String[] conflictArray = new Object[conflictCount];
+         String[] conflictArray = new String[conflictCount];
          int adjacentCount = 0;
-         String[] adjacentArray = new Object[adjacentCount];
+         String[] adjacentArray = new String[adjacentCount];
          boolean allDay = this.this$0._allDayFlag.getChecked();
          if (this.this$0._newEvent || !allDay && this.this$0._wasAllDay || this.this$0._eventData.getFreeBusy() != 0) {
             int percentComplete = 0;
             ResourceBundle rb = ResourceBundle.getBundle(912302513268743237L, "net.rim.device.apps.internal.resource.Calendar");
-            String conflictMessage = MessageFormat.format(rb.getString(640), new Object[]{Integer.toString(percentComplete)});
+            String conflictMessage = MessageFormat.format(rb.getString(640), new String[]{Integer.toString(percentComplete)});
             TimeZone tz = allDay ? EventViewer._gmtTZ : this.this$0._sharedTZ;
             Calendar cal = this.this$0._cal;
             cal.setTimeZone(tz);
@@ -166,7 +166,7 @@ class EventViewer$ConflictCheckingThread extends Thread {
                      percentComplete = 100;
                   }
 
-                  conflictMessage = MessageFormat.format(rb.getString(640), new Object[]{Integer.toString(percentComplete)});
+                  conflictMessage = MessageFormat.format(rb.getString(640), new String[]{Integer.toString(percentComplete)});
                   long uptime = InternalServices.getUptime();
                   if (uptime - lastUpdatedScreen > 2000 || uptime - startedChecking > 5000) {
                      if (!messageShown && uptime - startedChecking > 5000) {
@@ -290,7 +290,7 @@ class EventViewer$ConflictCheckingThread extends Thread {
                   } else if (this._sameCalendar) {
                      conflictMessage = rb.getString(125);
                   } else {
-                     conflictMessage = MessageFormat.format(rb.getString(614), new Object[]{this.buildCalendarNameList(conflictArray)});
+                     conflictMessage = MessageFormat.format(rb.getString(614), new String[]{this.buildCalendarNameList(conflictArray)});
                   }
 
                   this.this$0._conflictsField.setText(conflictMessage);
@@ -300,7 +300,7 @@ class EventViewer$ConflictCheckingThread extends Thread {
                   } else if (this._sameCalendar) {
                      conflictMessage = rb.getString(121);
                   } else {
-                     conflictMessage = MessageFormat.format(rb.getString(616), new Object[]{this.buildCalendarNameList(conflictArray)});
+                     conflictMessage = MessageFormat.format(rb.getString(616), new String[]{this.buildCalendarNameList(conflictArray)});
                   }
 
                   this.this$0._conflictsField.setText(conflictMessage);
@@ -310,7 +310,7 @@ class EventViewer$ConflictCheckingThread extends Thread {
                   } else if (this._sameCalendar) {
                      conflictMessage = rb.getString(124);
                   } else {
-                     conflictMessage = MessageFormat.format(rb.getString(615), new Object[]{this.buildCalendarNameList(adjacentArray)});
+                     conflictMessage = MessageFormat.format(rb.getString(615), new String[]{this.buildCalendarNameList(adjacentArray)});
                   }
 
                   this.this$0._conflictsField.setText(conflictMessage);
@@ -320,7 +320,7 @@ class EventViewer$ConflictCheckingThread extends Thread {
                   } else if (this._sameCalendar) {
                      conflictMessage = rb.getString(120);
                   } else {
-                     conflictMessage = MessageFormat.format(rb.getString(617), new Object[]{this.buildCalendarNameList(adjacentArray)});
+                     conflictMessage = MessageFormat.format(rb.getString(617), new String[]{this.buildCalendarNameList(adjacentArray)});
                   }
 
                   this.this$0._conflictsField.setText(conflictMessage);
@@ -340,7 +340,7 @@ class EventViewer$ConflictCheckingThread extends Thread {
 
    private void updateConflictAdjacentArray(String[] array, CalendarService service, long folderID) {
       CalendarFolder folder = service.getCalendarFolder(folderID);
-      String calendarName = ((StringBuffer)(new Object())).append(service.getServiceName()).append(folder.getFolderNameSuffix()).toString();
+      String calendarName = service.getServiceName() + folder.getFolderNameSuffix();
       if (!Arrays.contains(array, calendarName)) {
          Arrays.add(array, calendarName);
       }
@@ -352,7 +352,7 @@ class EventViewer$ConflictCheckingThread extends Thread {
    }
 
    private String buildCalendarNameList(String[] array) {
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
 
       for (int i = 0; i < array.length; i++) {
          sb.append(array[i]);

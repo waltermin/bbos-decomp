@@ -12,7 +12,7 @@ final class TotalAttachmentDataSizeField extends ObjectChoiceField {
       int kb = size / 1024;
       int rem = size - kb * 1024;
       int dot = (10 * rem + 1023) / 1024;
-      String choice = ((StringBuffer)(new Object())).append(Integer.toString(kb)).append('.').append(Integer.toString(dot)).append(" KB").toString();
+      String choice = Integer.toString(kb) + '.' + Integer.toString(dot) + " KB";
       return new Object[]{choice};
    }
 }

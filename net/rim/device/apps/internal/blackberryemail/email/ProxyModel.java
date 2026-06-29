@@ -24,7 +24,7 @@ public final class ProxyModel implements PersistableRIMModel, FieldProvider, Ver
    @Override
    public final Verb getVerbs(Object context, Verb[] verbs) {
       Object o = this.getObject();
-      if (!(o instanceof Object)) {
+      if (!(o instanceof VerbProvider)) {
          return null;
       }
 
@@ -53,7 +53,7 @@ public final class ProxyModel implements PersistableRIMModel, FieldProvider, Ver
          var11 = true;
          contextObject.put(5983802064804519487L, this);
          Object o = this.getObject();
-         if (!(o instanceof Object)) {
+         if (!(o instanceof ActionProvider)) {
             var11 = false;
          } else {
             ActionProvider ap = (ActionProvider)o;
@@ -82,7 +82,7 @@ public final class ProxyModel implements PersistableRIMModel, FieldProvider, Ver
    @Override
    public final boolean convert(Object context, Object target) {
       Object o = this.getObject();
-      if (!(o instanceof Object)) {
+      if (!(o instanceof ConversionProvider)) {
          return false;
       }
 
@@ -102,7 +102,7 @@ public final class ProxyModel implements PersistableRIMModel, FieldProvider, Ver
    @Override
    public final boolean grabDataFromField(Field field, Object context) {
       Object o = this.getObject();
-      if (!(o instanceof Object)) {
+      if (!(o instanceof FieldProvider)) {
          return false;
       }
 
@@ -113,7 +113,7 @@ public final class ProxyModel implements PersistableRIMModel, FieldProvider, Ver
    @Override
    public final boolean validate(Field field, Object context) {
       Object o = this.getObject();
-      if (!(o instanceof Object)) {
+      if (!(o instanceof FieldProvider)) {
          return false;
       }
 
@@ -124,7 +124,7 @@ public final class ProxyModel implements PersistableRIMModel, FieldProvider, Ver
    @Override
    public final int getOrder(Object context) {
       Object o = this.getObject();
-      if (!(o instanceof Object)) {
+      if (!(o instanceof FieldProvider)) {
          return 0;
       }
 
@@ -135,7 +135,7 @@ public final class ProxyModel implements PersistableRIMModel, FieldProvider, Ver
    @Override
    public final Field getField(Object context) {
       Object o = this.getObject();
-      if (!(o instanceof Object)) {
+      if (!(o instanceof FieldProvider)) {
          return null;
       }
 
@@ -150,13 +150,13 @@ public final class ProxyModel implements PersistableRIMModel, FieldProvider, Ver
 
    public ProxyModel(Object context) {
       Object o = ContextObject.get(context, 1480271510226910726L);
-      if (o instanceof Object) {
+      if (o instanceof Long) {
          Long l = (Long)o;
          this._root = l;
       }
 
       o = ContextObject.get(context, -4673191042266301337L);
-      if (o instanceof Object) {
+      if (o instanceof Integer) {
          Integer i = (Integer)o;
          this._objecthandle = i;
       }

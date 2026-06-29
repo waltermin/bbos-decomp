@@ -2,6 +2,8 @@ package net.rim.device.apps.internal.browser.bookmark;
 
 import java.util.Enumeration;
 import net.rim.device.api.collection.Collection;
+import net.rim.device.api.util.EmptyEnumeration;
+import net.rim.device.api.util.ObjectEnumerator;
 import net.rim.device.apps.api.messaging.Folder;
 import net.rim.device.apps.api.messaging.util.SortedCollection;
 
@@ -67,7 +69,7 @@ public class ProvisionedBookmarksFolder implements Folder {
 
    @Override
    public Enumeration getSubFolders() {
-      return (Enumeration)(this._subfolders != null ? new Object(this._subfolders) : new Object());
+      return this._subfolders != null ? new ObjectEnumerator(this._subfolders) : new EmptyEnumeration();
    }
 
    @Override

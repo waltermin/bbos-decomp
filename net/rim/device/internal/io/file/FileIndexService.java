@@ -8,7 +8,7 @@ import net.rim.vm.Array;
 import net.rim.vm.WeakReference;
 
 public class FileIndexService {
-   private WeakReference[] _metaDatalisteners = new Object[0];
+   private WeakReference[] _metaDatalisteners = new WeakReference[0];
    private FilteredListenerRec[] _filteredFileListenerList = new FilteredListenerRec[0];
    private FilteredListenerRec[] _filteredFolderListenerList = new FilteredListenerRec[0];
    private MetaDataFileInfo _info = new MetaDataFileInfo();
@@ -27,7 +27,7 @@ public class FileIndexService {
    private static final int TOTAL_FS_MAP_INDICIES = 2;
    private static final int MAX_MEDIA_TYPE = 7;
    private static final int[] _MediaTypeMap = new int[8];
-   private static final String[][] _DefaultMediaFolders = new Object[2][];
+   private static final String[][] _DefaultMediaFolders = new String[2][];
    private static final int RINGTONE;
    private static String SDCARD_HOME_STR = "/SDCard/";
    private static String FLASH_HOME_STR = "/store/home/user/";
@@ -122,7 +122,7 @@ public class FileIndexService {
 
    public void addMetaDataListener(MetaDataListener listener) {
       if (listener == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       synchronized (this._metaDatalisteners) {
@@ -139,7 +139,7 @@ public class FileIndexService {
             }
          }
 
-         Arrays.add(this._metaDatalisteners, new Object(listener));
+         Arrays.add(this._metaDatalisteners, new WeakReference(listener));
       }
    }
 
@@ -157,7 +157,7 @@ public class FileIndexService {
 
    private int addFilteredListener(Object listener, int mediaType, FilteredListenerRec[] list, int listMediaTypeMask) {
       if (listener == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       int mediaTypeMask = mediaType == 0 ? -1 : 1 << mediaType;
@@ -217,7 +217,7 @@ public class FileIndexService {
                         break;
                      case 1:
                         if (fullPathURL == null) {
-                           fullPathURL = ((StringBuffer)(new Object())).append(pathURL).append(fileName).toString();
+                           fullPathURL = pathURL + fileName;
                         }
 
                         listener.metaDataDeleted(fullPathURL);
@@ -226,7 +226,7 @@ public class FileIndexService {
                         listener.metaDataAdded(this._info);
                   }
                } catch (Throwable var13) {
-                  EventLogger.logEvent(4014511989342665574L, ((StringBuffer)(new Object("listener threw "))).append(t).toString().getBytes(), 2);
+                  EventLogger.logEvent(4014511989342665574L, ("listener threw " + t).getBytes(), 2);
                   Arrays.removeAt(this._metaDatalisteners, i);
                   continue;
                }
@@ -291,7 +291,7 @@ public class FileIndexService {
                         }
                   }
                } catch (Throwable var12) {
-                  EventLogger.logEvent(4014511989342665574L, ((StringBuffer)(new Object("listener threw "))).append(t.toString()).toString().getBytes(), 2);
+                  EventLogger.logEvent(4014511989342665574L, ("listener threw " + t.toString()).getBytes(), 2);
                   Arrays.removeAt(this._filteredFileListenerList, i);
                   recalcMaskNeeded = true;
                   continue;
@@ -339,8 +339,8 @@ public class FileIndexService {
    }
 
    static {
-      _DefaultMediaFolders[0] = new Object[6];
-      _DefaultMediaFolders[1] = new Object[6];
+      _DefaultMediaFolders[0] = new String[6];
+      _DefaultMediaFolders[1] = new String[6];
       int i = 0;
       i = initMediaFolderMapping(i, 0, FLASH_HOME_STR, SDCARD_HOME_STR);
       int audio = i;

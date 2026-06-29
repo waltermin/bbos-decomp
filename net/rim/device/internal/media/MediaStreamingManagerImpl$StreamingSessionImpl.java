@@ -95,7 +95,7 @@ public class MediaStreamingManagerImpl$StreamingSessionImpl extends MediaStreami
          }
 
          if (this._mediaPlayer != null) {
-            throw new Object("AUDIOMANAGER: can't kill old MediaPlayer");
+            throw new IllegalStateException("AUDIOMANAGER: can't kill old MediaPlayer");
          }
       }
    }
@@ -114,7 +114,7 @@ public class MediaStreamingManagerImpl$StreamingSessionImpl extends MediaStreami
          int result = this.this$0.startSink(this._session);
          if (result == 3) {
             this.endSource();
-            throw new Object("STREAMING_ERROR_SESSION_NOT_OPENED");
+            throw new IllegalStateException("STREAMING_ERROR_SESSION_NOT_OPENED");
          }
       }
 
@@ -129,7 +129,7 @@ public class MediaStreamingManagerImpl$StreamingSessionImpl extends MediaStreami
          }
 
          if (this._mediaPlayer != null) {
-            throw new Object("AUDIOMANAGER: can't kill old MediaPlayer");
+            throw new IllegalStateException("AUDIOMANAGER: can't kill old MediaPlayer");
          }
       }
    }
@@ -383,7 +383,7 @@ public class MediaStreamingManagerImpl$StreamingSessionImpl extends MediaStreami
          this.this$0.stopStreamSession(this._channel, false);
          this._doneReason = 2;
       } else {
-         throw new Object();
+         throw new IllegalStateException();
       }
    }
 
@@ -413,7 +413,7 @@ public class MediaStreamingManagerImpl$StreamingSessionImpl extends MediaStreami
    @Override
    public synchronized void unregisterMediaPlayer(MediaPlayer mediaPlayer) {
       if (mediaPlayer != this._mediaPlayer) {
-         throw new Object("AUDIOMANAGER: unregisterMediaPlayer not registered");
+         throw new IllegalStateException("AUDIOMANAGER: unregisterMediaPlayer not registered");
       }
 
       this._mediaPlayer = null;
@@ -422,11 +422,11 @@ public class MediaStreamingManagerImpl$StreamingSessionImpl extends MediaStreami
    @Override
    public synchronized void registerMediaPlayer(MediaPlayer mediaPlayer) {
       if (mediaPlayer == null) {
-         throw new Object("AUDIOMANAGER: registerMediaPlayer null");
+         throw new IllegalArgumentException("AUDIOMANAGER: registerMediaPlayer null");
       }
 
       if (this._mediaPlayer != null) {
-         throw new Object("AUDIOMANAGER: registerMediaPlayer already registered");
+         throw new IllegalStateException("AUDIOMANAGER: registerMediaPlayer already registered");
       }
 
       this._mediaPlayer = mediaPlayer;

@@ -11,18 +11,18 @@ import net.rim.device.internal.ui.container.VerticalIndentFieldManager;
 public class DefaultCertificateSummaryFieldFactory extends CertificateSummaryFieldFactory {
    @Override
    public Field createCertificateSummaryPageField(Certificate certificate) {
-      VerticalIndentFieldManager manager = (VerticalIndentFieldManager)(new Object());
+      VerticalIndentFieldManager manager = new VerticalIndentFieldManager();
       Font boldFont = Font.getDefault();
       boldFont = boldFont.derive(boldFont.getStyle() | 1);
-      LabelField subjectLabelField = (LabelField)(new Object(CertificateResources.getString(3)));
+      LabelField subjectLabelField = new LabelField(CertificateResources.getString(3));
       subjectLabelField.setFont(boldFont);
       manager.add(subjectLabelField);
-      RichTextField subjectField = (RichTextField)(new Object(CertificateUtilities.formatDistinguishedName(certificate.getSubject(), '\n')));
+      RichTextField subjectField = new RichTextField(CertificateUtilities.formatDistinguishedName(certificate.getSubject(), '\n'));
       manager.add(subjectField, 12);
-      LabelField issuerLabelField = (LabelField)(new Object(CertificateResources.getString(9)));
+      LabelField issuerLabelField = new LabelField(CertificateResources.getString(9));
       issuerLabelField.setFont(boldFont);
       manager.add(issuerLabelField);
-      RichTextField issuerField = (RichTextField)(new Object(CertificateUtilities.formatDistinguishedName(certificate.getIssuer(), '\n')));
+      RichTextField issuerField = new RichTextField(CertificateUtilities.formatDistinguishedName(certificate.getIssuer(), '\n'));
       manager.add(issuerField, 12);
       return manager;
    }

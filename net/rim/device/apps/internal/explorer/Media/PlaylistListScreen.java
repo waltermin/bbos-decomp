@@ -18,6 +18,7 @@ import net.rim.device.apps.internal.explorer.MediaLibrary.MediaInfo;
 import net.rim.device.apps.internal.explorer.MediaLibrary.MediaInfoCollection;
 import net.rim.device.apps.internal.explorer.MediaLibrary.MediaLibrary;
 import net.rim.device.apps.internal.explorer.MediaLibrary.PlaylistItem;
+import net.rim.device.apps.internal.explorer.MediaLibrary.SmartlistItem;
 import net.rim.device.apps.internal.explorer.file.menu.PropertiesMenuItem;
 import net.rim.device.apps.internal.explorer.file.resource.ExplorerResources;
 import net.rim.device.apps.internal.explorer.file.verbs.RenameFileVerb;
@@ -77,12 +78,12 @@ final class PlaylistListScreen extends MediaListScreen {
    protected final void makeMenu(SystemEnabledMenu menu, int instance) {
       super.makeMenu(menu, instance);
       Object selection = this.getSelectedObject();
-      ContextObject context = (ContextObject)(new Object());
-      if (selection instanceof Object) {
+      ContextObject context = new ContextObject();
+      if (selection instanceof MediaInfo) {
          String location = ((MediaInfo)selection).getLocation();
          context.put(2765042845091913199L, location);
          ContextObject.put(menu.getContext(), 2765042845091913199L, location);
-         menu.add(new PropertiesMenuItem(selection));
+         menu.add(new PropertiesMenuItem((MediaInfo)selection));
          menu.add(new MediaVerb(6068253483645874830L, this, 591107, CommonResource.getBundle(), 17));
          menu.add(new RenameFileVerb(null, null));
       }
@@ -128,7 +129,7 @@ final class PlaylistListScreen extends MediaListScreen {
 
    private final void delete() {
       Field field = this.getLeafFieldWithFocus();
-      if (field instanceof Object) {
+      if (field instanceof ListField) {
          MediaInfo playlist = (MediaInfo)this.getSelectedObject();
          if (playlist != null) {
             String location = playlist.getLocation();
@@ -147,7 +148,7 @@ final class PlaylistListScreen extends MediaListScreen {
    private final void createNewPlaylist() {
       NewPlaylistPopup newList = new NewPlaylistPopup(0);
       Object list = newList.doModal();
-      if (list instanceof Object) {
+      if (list instanceof PlaylistItem) {
          PlaylistItem playlist = (PlaylistItem)list;
          if (playlist != null) {
             ContextInfo contextInfo = ContextInfo.createCopy(super._contextInfo);
@@ -162,19 +163,19 @@ final class PlaylistListScreen extends MediaListScreen {
 
    private final void playPlaylist(long actionId) {
       Field field = this.getLeafFieldWithFocus();
-      if (field instanceof Object) {
+      if (field instanceof ListField) {
          Object item = this.getSelectedObject();
          ContextInfo contextInfo = ContextInfo.createCopy(super._contextInfo);
          ActionProvider action = null;
-         if (item instanceof Object) {
+         if (item instanceof PlaylistItem) {
             contextInfo.setType(17);
-            contextInfo.setData(16, item);
+            contextInfo.setData(16, (PlaylistItem)item);
             action = new TrackListScreen(contextInfo);
             action.perform(actionId, item);
          } else {
-            if (item instanceof Object) {
+            if (item instanceof SmartlistItem) {
                contextInfo.setType(16);
-               contextInfo.setData(16, item);
+               contextInfo.setData(16, (SmartlistItem)item);
                ActionProvider var7 = new SmartlistScreen(contextInfo, false);
                var7.perform(actionId, item);
             }
@@ -185,7 +186,7 @@ final class PlaylistListScreen extends MediaListScreen {
    @Override
    protected final void invoke() {
       Field field = this.getLeafFieldWithFocus();
-      if (field instanceof Object) {
+      if (field instanceof ListField) {
          Object item = this.getSelectedObject();
          ContextInfo contextInfo = ContextInfo.createCopy(super._contextInfo);
          Screen screen = null;
@@ -193,13 +194,13 @@ final class PlaylistListScreen extends MediaListScreen {
             this.createNewPlaylist();
          }
 
-         if (item instanceof Object) {
+         if (item instanceof PlaylistItem) {
             contextInfo.setType(17);
-            contextInfo.setData(16, item);
+            contextInfo.setData(16, (PlaylistItem)item);
             screen = new TrackListScreen(contextInfo);
-         } else if (item instanceof Object) {
+         } else if (item instanceof SmartlistItem) {
             contextInfo.setType(16);
-            contextInfo.setData(16, item);
+            contextInfo.setData(16, (SmartlistItem)item);
             screen = new SmartlistScreen(contextInfo, false);
          }
 

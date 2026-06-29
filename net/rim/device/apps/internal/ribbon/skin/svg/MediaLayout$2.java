@@ -35,7 +35,7 @@ class MediaLayout$2 implements Runnable {
          var3 = false;
       } finally {
          if (var3) {
-            System.err.println(((StringBuffer)(new Object("Exception thrown while loading "))).append(this.val$localUrl).toString());
+            System.err.println("Exception thrown while loading " + this.val$localUrl);
             return;
          }
       }

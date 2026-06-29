@@ -20,5 +20,5 @@ final class CalendarOptions$PersistedCalendarOptions implements Persistable {
    boolean _useLegacyAgendaView = false;
    int _timeToShowFreeBlocks = 15;
    boolean _showEndTime = true;
-   Hashtable _calendarPropertyTable = (Hashtable)(new Object(3));
+   Hashtable _calendarPropertyTable = new Hashtable(3);
 }

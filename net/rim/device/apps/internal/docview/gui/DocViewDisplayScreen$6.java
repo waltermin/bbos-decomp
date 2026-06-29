@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.docview.gui;
 
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.util.ObjectUtilities;
+import net.rim.device.apps.api.ui.PopupStatus;
 import net.rim.device.internal.ui.Image;
 
 class DocViewDisplayScreen$6 implements Runnable {
@@ -25,7 +26,7 @@ class DocViewDisplayScreen$6 implements Runnable {
       try {
          activeScreen = this.this$0.getUiEngine().getActiveScreen();
 
-         while (activeScreen instanceof Object) {
+         while (activeScreen instanceof PopupStatus) {
             activeScreen = activeScreen.getScreenBelow();
          }
       } finally {

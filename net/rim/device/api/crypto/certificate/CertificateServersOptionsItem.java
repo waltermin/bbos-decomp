@@ -13,6 +13,7 @@ import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.Comparator;
 import net.rim.device.api.util.SimpleSortingVector;
@@ -41,7 +42,7 @@ final class CertificateServersOptionsItem extends MainScreenOptionsListItem impl
    public final String getDescription(int type) {
       switch (type) {
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          default:
             return _rb.getString(0);
@@ -104,15 +105,15 @@ final class CertificateServersOptionsItem extends MainScreenOptionsListItem impl
          String friendlyName2 = ((CertificateServerInfo)o2).getFriendlyName();
          return friendlyName1.compareTo(friendlyName2);
       } else {
-         throw new Object();
+         throw new ClassCastException();
       }
    }
 
    private final ListField addServerGroup(int serverGroupId, MainScreen mainScreen, Font boldFont) {
-      LabelField labelField = (LabelField)(new Object(_rb.getString(serverGroupId)));
+      LabelField labelField = new LabelField(_rb.getString(serverGroupId));
       labelField.setFont(boldFont);
       mainScreen.add(labelField);
-      ListField listField = (ListField)(new Object());
+      ListField listField = new ListField();
       listField.setCallback(this);
       listField.setEmptyString(_rb.getString(103), 4);
       mainScreen.add(listField);
@@ -193,14 +194,14 @@ final class CertificateServersOptionsItem extends MainScreenOptionsListItem impl
    }
 
    public CertificateServersOptionsItem() {
-      super(_rb.getString(401), new Object(0, 2), 5294015899860238835L);
+      super(_rb.getString(401), new ContextObject(0, 2), 5294015899860238835L);
       ContextObject.put(super._context, 244, "net_rim_bb_secureemail_help/certificate_servers");
    }
 
    private static final int getOrdering(int type) {
       switch (type) {
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          default:
             return 589904;
@@ -241,11 +242,11 @@ final class CertificateServersOptionsItem extends MainScreenOptionsListItem impl
       if (verbs != null) {
          for (int i = 0; i < verbs.length; i++) {
             Verb var10000 = verbs[i];
-            if (verbs[i] instanceof Object) {
+            if (verbs[i] instanceof SetParameter) {
                ((SetParameter)var10000).setParameter(info);
             }
 
-            if (verbs[i] instanceof Object) {
+            if (verbs[i] instanceof Copyable) {
                verbToMenu.addVerb((Verb)((Copyable)verbs[i]).copy());
             } else {
                verbToMenu.addVerb(verbs[i]);
@@ -263,7 +264,7 @@ final class CertificateServersOptionsItem extends MainScreenOptionsListItem impl
 
    private final CertificateServerInfo getSelectedCertificateServerInfo() {
       Field field = super._mainScreen.getFieldWithFocus();
-      if (field instanceof Object) {
+      if (field instanceof ListField) {
          ListField list = (ListField)field;
          int index = list.getSelectedIndex();
          if (index != -1) {
@@ -275,7 +276,7 @@ final class CertificateServersOptionsItem extends MainScreenOptionsListItem impl
    }
 
    private final void refreshServerGroup(MainScreen mainScreen, int type, ListField listField) {
-      SimpleSortingVector servers = (SimpleSortingVector)(new Object());
+      SimpleSortingVector servers = new SimpleSortingVector();
       servers.setSortComparator(this);
       Enumeration enumeration = this._certificateOptions.getServers(type);
 
@@ -297,9 +298,9 @@ final class CertificateServersOptionsItem extends MainScreenOptionsListItem impl
       Font font = Font.getDefault();
       Font boldFont = font.derive(font.getStyle() | 1);
       this._ldapListField = this.addServerGroup(102, mainScreen, boldFont);
-      mainScreen.add((Field)(new Object()));
+      mainScreen.add(new SeparatorField());
       this._ocspListField = this.addServerGroup(104, mainScreen, boldFont);
-      mainScreen.add((Field)(new Object()));
+      mainScreen.add(new SeparatorField());
       this._crlListField = this.addServerGroup(105, mainScreen, boldFont);
       this.refreshServers(mainScreen);
    }

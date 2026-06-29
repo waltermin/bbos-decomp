@@ -37,12 +37,12 @@ public class CachedSignatureField extends CachedManager {
       MorePartModel morePartModel = EmailMoreVerb.findBodyMorePartModel(emailMessageModel);
       this._moreAvailable = morePartModel != null && morePartModel.isMoreAvailable();
       if (this._inbound) {
-         String[] senderAddressAndName = new Object[2];
+         String[] senderAddressAndName = new String[2];
          int numModels = emailMessageModel.size();
 
          for (int i = 0; i < numModels; i++) {
             Object submember = emailMessageModel.getAt(i);
-            if (submember instanceof Object) {
+            if (submember instanceof EmailHeaderModel) {
                EmailHeaderModel emailHeaderModel = (EmailHeaderModel)submember;
                if (emailHeaderModel.getHeaderType() == 3 || emailHeaderModel.getHeaderType() == 4) {
                   boolean result = emailHeaderModel.convert(null, senderAddressAndName);

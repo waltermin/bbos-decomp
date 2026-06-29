@@ -5,7 +5,7 @@ import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.theme.ThemeAttributeSet;
-import net.rim.device.internal.ui.Border;
+import net.rim.device.internal.ui.BorderTransparent;
 
 final class WicletRepetitionManager$RowManager extends HorizontalFieldManager {
    private Manager _rowFocusManager;
@@ -17,7 +17,7 @@ final class WicletRepetitionManager$RowManager extends HorizontalFieldManager {
       this.this$0 = this$0;
       this.setTag(WicletRepetitionManager.TAG);
       this._content = new WicletRepetitionManager$1(this);
-      this._content.setBorder((Border)(new Object(3, 3, 3, 3)));
+      this._content.setBorder(new BorderTransparent(3, 3, 3, 3));
       ComponentHelper.buildLayout(this$0._context, this._content, this$0._model, row, 36028797018963968L);
       this._rowFocusManager = new WicletRepetitionManager$RowFocusManager(this$0);
       this.add(this._content);

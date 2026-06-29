@@ -36,13 +36,13 @@ public final class WSPCapabilities {
       }
 
       if (this._extendedMethodMap == null) {
-         this._extendedMethodMap = (Hashtable)(new Object());
+         this._extendedMethodMap = new Hashtable();
       } else {
          this._extendedMethodMap.clear();
       }
 
       if (this._headerPageMap == null) {
-         this._headerPageMap = (Hashtable)(new Object());
+         this._headerPageMap = new Hashtable();
       } else {
          this._headerPageMap.clear();
       }
@@ -58,8 +58,8 @@ public final class WSPCapabilities {
 
       this._baos = null;
       this._encodedCapabilities = null;
-      this._baos = (ByteArrayOutputStream)(new Object());
-      this._encodedCapabilities = (ByteArrayOutputStream)(new Object());
+      this._baos = new ByteArrayOutputStream();
+      this._encodedCapabilities = new ByteArrayOutputStream();
       this._varLengthInt = new byte[5];
       this._decodePos = 0;
    }
@@ -78,18 +78,18 @@ public final class WSPCapabilities {
 
    public final void addExtendedMethod(short PDUType, String methodName) {
       if (this._extendedMethodMap == null) {
-         this._extendedMethodMap = (Hashtable)(new Object());
+         this._extendedMethodMap = new Hashtable();
       }
 
-      this._extendedMethodMap.put(new Object(PDUType), methodName);
+      this._extendedMethodMap.put(new Short(PDUType), methodName);
    }
 
    public final void addHeaderCodePages(short pageCode, String pageName) {
       if (this._headerPageMap == null) {
-         this._headerPageMap = (Hashtable)(new Object());
+         this._headerPageMap = new Hashtable();
       }
 
-      this._headerPageMap.put(new Object(pageCode), pageName);
+      this._headerPageMap.put(new Short(pageCode), pageName);
    }
 
    public final byte[] getCapabilitiesData() {
@@ -271,7 +271,7 @@ public final class WSPCapabilities {
                }
                break;
             case 7:
-               Vector all = (Vector)(new Object());
+               Vector all = new Vector();
                byte bearertype = 0;
                int portnumber = 0;
 
@@ -328,7 +328,7 @@ public final class WSPCapabilities {
 
    private final String readNulTermString(byte[] b) {
       this._nullTermStringPos = 0;
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
       char c = (char)b[this._decodePos + this._nullTermStringPos];
       this._nullTermStringPos++;
 
@@ -354,13 +354,13 @@ public final class WSPCapabilities {
 
    private final void initializeByteBuffers() {
       if (this._baos == null) {
-         this._baos = (ByteArrayOutputStream)(new Object());
+         this._baos = new ByteArrayOutputStream();
       } else {
          this._baos.reset();
       }
 
       if (this._encodedCapabilities == null) {
-         this._encodedCapabilities = (ByteArrayOutputStream)(new Object());
+         this._encodedCapabilities = new ByteArrayOutputStream();
       } else {
          this._encodedCapabilities.reset();
       }

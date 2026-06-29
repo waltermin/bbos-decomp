@@ -10,11 +10,11 @@ import net.rim.device.api.system.RIMPersistentStore;
 public class LearningDataManager {
    private final String[] ENCODE_RESTRICTED_DATA_TYPES = new String[]{"opt"};
    private PersistentObject _persistentObject;
-   private StringBuffer _buffer = (StringBuffer)(new Object());
+   private StringBuffer _buffer = new StringBuffer();
    private Hashtable _learningRecords;
    private PersistentObject _stateStore;
    private Boolean _isDataEncoded;
-   private Hashtable _learningDataTable = (Hashtable)(new Object());
+   private Hashtable _learningDataTable = new Hashtable();
    public static final byte DEFAULT_TYPE = 0;
    public static final byte LEARNING_TYPE = 1;
    public static final byte IMOPTIONS_TYPE = 2;
@@ -36,7 +36,7 @@ public class LearningDataManager {
    private LearningDataManager() {
       this._persistentObject = RIMPersistentStore.getPersistentObject(-8960920648966008846L);
       if (this._persistentObject.getContents() == null) {
-         this._persistentObject.setContents(new Object(), 51);
+         this._persistentObject.setContents(new Hashtable(), 51);
          this._persistentObject.commit();
       }
 

@@ -9,7 +9,7 @@ public class FontManagerProvider implements ResourceProvider {
    @Override
    public Object createResource(String type, Object data, ResourceContext context, Object referrer) {
       Object resource = null;
-      if (data instanceof Object) {
+      if (data instanceof String) {
          resource = this.createFontManager((String)data);
       }
 

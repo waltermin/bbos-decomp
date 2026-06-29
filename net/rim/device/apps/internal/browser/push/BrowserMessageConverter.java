@@ -8,6 +8,7 @@ import net.rim.device.api.system.EventLogger;
 import net.rim.device.apps.api.messaging.Folder;
 import net.rim.device.apps.api.messaging.FolderHierarchies;
 import net.rim.device.apps.api.utility.serialization.BaseConverter;
+import net.rim.device.apps.api.utility.serialization.SerializationException;
 import net.rim.device.apps.internal.browser.options.BrowserConfigRecord;
 import net.rim.device.apps.internal.browser.page.BrowserPageModel;
 import net.rim.device.apps.internal.browser.stack.CacheResult;
@@ -25,15 +26,15 @@ final class BrowserMessageConverter extends BaseConverter {
    }
 
    @Override
-   public final Object convert(DataInput inputStreamObj, Object headersObj) {
-      if (headersObj instanceof Object && inputStreamObj instanceof Object) {
+   public final Object convert(DataInput inputStreamObj, Object headersObj) throws SerializationException {
+      if (headersObj instanceof HttpHeaders && inputStreamObj instanceof InputStream) {
          InputStream inputStream = (InputStream)inputStreamObj;
          HttpHeaders headers = (HttpHeaders)headersObj;
          EventLogger.logEvent(1907089860548946979L, 1347448941, 5);
          String preferredConfigUid = null;
          int preferredConfigType = 1;
          String preferredTransportCid = BrowserConfigRecord.IPPP_SERVICE_CID;
-         if (inputStream instanceof Object) {
+         if (inputStream instanceof PushInputStream) {
             PushInputStream in = (PushInputStream)inputStream;
             if (in.getConnectionType() == 3) {
                preferredConfigUid = BrowserConfigRecord.mapTransportUIDToConfigUID("IPPP", in.getSource());
@@ -49,7 +50,7 @@ final class BrowserMessageConverter extends BaseConverter {
          String url = headers.getPropertyValue("Content-Location");
          if (url == null) {
             EventLogger.logEvent(1907089860548946979L, 1347450229, 3);
-            throw new Object();
+            throw new SerializationException();
          }
 
          String title = headers.getPropertyValue("X-Rim-Push-Title");
@@ -73,10 +74,10 @@ final class BrowserMessageConverter extends BaseConverter {
             BrowserPageModel pageModel = new BrowserPageModel(0, title, modelResult, browserFolder.getLUID());
             return new BrowserMessageModel(browserFolder, pageModel, url);
          } else {
-            throw new Object();
+            throw new SerializationException();
          }
       } else {
-         throw new Object();
+         throw new SerializationException();
       }
    }
 }

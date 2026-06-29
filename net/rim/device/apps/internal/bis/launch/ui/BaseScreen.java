@@ -13,7 +13,7 @@ import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.apps.internal.bis.launch.resource.ApplicationResources;
 
 public class BaseScreen extends MainScreen implements FieldChangeListener {
-   Hashtable _runnables = (Hashtable)(new Object());
+   Hashtable _runnables = new Hashtable();
    LabelField _titleField;
    protected MenuItem[] _menuItems;
    protected MenuItem _defaultMenuItem;
@@ -26,7 +26,7 @@ public class BaseScreen extends MainScreen implements FieldChangeListener {
 
    public LabelField createLabelField(int resourceKey) {
       String label = ApplicationResources.getString(resourceKey);
-      LabelField labelField = (LabelField)(new Object(label));
+      LabelField labelField = new LabelField(label);
       labelField.setFont(this.getFont().derive(0));
       return labelField;
    }

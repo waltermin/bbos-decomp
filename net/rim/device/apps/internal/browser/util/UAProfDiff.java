@@ -25,9 +25,9 @@ public final class UAProfDiff {
          }
 
          _cachedProfile = profile;
-         _cachedXWapProfile = ((StringBuffer)(new Object())).append('"').append(profile).append('"').toString();
+         _cachedXWapProfile = '"' + profile + '"';
          if (_cachedMD5Value != null) {
-            _cachedXWapProfile = ((StringBuffer)(new Object())).append(_cachedXWapProfile).append(", \"1-").append(_cachedMD5Value).append('"').toString();
+            _cachedXWapProfile = _cachedXWapProfile + ", \"1-" + _cachedMD5Value + '"';
          }
 
          return _cachedXWapProfile;
@@ -64,7 +64,7 @@ public final class UAProfDiff {
                _cachedXWapProfileDiff = null;
                _cachedMD5Value = null;
             } else {
-               StringBuffer result = (StringBuffer)(new Object(BEGIN_TAG));
+               StringBuffer result = new StringBuffer(BEGIN_TAG);
                if (!tablesOn) {
                   result.append("<prf:TablesCapable>No</prf:TablesCapable>");
                }
@@ -80,7 +80,7 @@ public final class UAProfDiff {
 
                label64:
                try {
-                  MD5Digest digest = (MD5Digest)(new Object());
+                  MD5Digest digest = new MD5Digest();
                   digest.update(_cachedProfileDiff.getBytes());
                   byte[] outData = digest.getDigest();
                   _cachedMD5Value = Base64OutputStream.encodeAsString(outData, 0, outData.length, false, false);

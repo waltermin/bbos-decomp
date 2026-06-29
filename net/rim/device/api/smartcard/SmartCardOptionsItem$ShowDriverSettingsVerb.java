@@ -12,7 +12,7 @@ class SmartCardOptionsItem$ShowDriverSettingsVerb extends Verb {
 
    @Override
    public Object invoke(Object parameter) {
-      if (!(this._driver instanceof Object)) {
+      if (!(this._driver instanceof SmartCardReader)) {
          ((SmartCard)this._driver).displaySettings(null);
          return null;
       } else {

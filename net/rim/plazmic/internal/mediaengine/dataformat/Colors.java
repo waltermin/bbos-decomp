@@ -42,7 +42,7 @@ public class Colors {
       // Bytecode:
       // 00: bipush -1
       // 02: istore 1
-      // 03: new java/lang/Object
+      // 03: new net/rim/device/api/util/StringTokenizer
       // 06: dup
       // 07: aload 0
       // 08: bipush 4
@@ -52,19 +52,19 @@ public class Colors {
       // 13: astore 2
       // 14: aload 2
       // 15: invokevirtual net/rim/device/api/util/StringTokenizer.nextElement ()Ljava/lang/Object;
-      // 18: checkcast java/lang/Object
+      // 18: checkcast java/lang/String
       // 1b: invokevirtual java/lang/String.trim ()Ljava/lang/String;
       // 1e: invokestatic java/lang/Integer.parseInt (Ljava/lang/String;)I
       // 21: istore 3
       // 22: aload 2
       // 23: invokevirtual net/rim/device/api/util/StringTokenizer.nextElement ()Ljava/lang/Object;
-      // 26: checkcast java/lang/Object
+      // 26: checkcast java/lang/String
       // 29: invokevirtual java/lang/String.trim ()Ljava/lang/String;
       // 2c: invokestatic java/lang/Integer.parseInt (Ljava/lang/String;)I
       // 2f: istore 4
       // 31: aload 2
       // 32: invokevirtual net/rim/device/api/util/StringTokenizer.nextElement ()Ljava/lang/Object;
-      // 35: checkcast java/lang/Object
+      // 35: checkcast java/lang/String
       // 38: invokevirtual java/lang/String.trim ()Ljava/lang/String;
       // 3b: invokestatic java/lang/Integer.parseInt (Ljava/lang/String;)I
       // 3e: istore 5
@@ -123,7 +123,7 @@ public class Colors {
                c[index + 1] = c[index];
             }
 
-            name = (String)(new Object(c));
+            name = new String(c);
             color = Integer.parseInt(name, 16);
          } else if (length == 6) {
             return Integer.parseInt(name, 16);
@@ -136,7 +136,7 @@ public class Colors {
    }
 
    private static void init() {
-      colors = (ToIntHashtable)(new Object(147));
+      colors = new ToIntHashtable(147);
       colors.put("aliceblue", 15792383);
       colors.put("antiquewhite", 16444375);
       colors.put("aqua", 65535);

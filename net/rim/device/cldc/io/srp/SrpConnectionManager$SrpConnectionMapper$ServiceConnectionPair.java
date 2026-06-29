@@ -9,7 +9,7 @@ final class SrpConnectionManager$SrpConnectionMapper$ServiceConnectionPair {
 
    private SrpConnectionManager$SrpConnectionMapper$ServiceConnectionPair(SrpConnectionManager$SrpConnectionMapper _1) {
       this.this$0 = _1;
-      this._connections = (Vector)(new Object(3));
+      this._connections = new Vector(3);
    }
 
    SrpConnectionManager$SrpConnectionMapper$ServiceConnectionPair(SrpConnectionManager$SrpConnectionMapper x0, SrpConnectionManager$1 x1) {

@@ -3,7 +3,7 @@ package net.rim.device.apps.internal.blackberryemail.folder;
 import java.util.Enumeration;
 import java.util.Vector;
 import net.rim.device.api.collection.Collection;
-import net.rim.device.api.collection.LongKeyProviderAdaptor;
+import net.rim.device.api.collection.LongKeyProviderAdaptorComparator;
 import net.rim.device.api.collection.ReadableList;
 import net.rim.device.api.collection.WritableSet;
 import net.rim.device.api.servicebook.ServiceBook;
@@ -14,8 +14,10 @@ import net.rim.device.api.system.RIMPersistentStore;
 import net.rim.device.api.util.Comparator;
 import net.rim.device.api.util.IntHashtable;
 import net.rim.device.api.util.LongHashtable;
+import net.rim.device.api.util.ObjectEnumerator;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.FolderProvider;
+import net.rim.device.apps.api.messaging.DateSortKeyProviderIndirection;
 import net.rim.device.apps.api.messaging.Folder;
 import net.rim.device.apps.api.messaging.FolderHierarchies;
 import net.rim.device.apps.api.messaging.FolderMerge;
@@ -156,7 +158,7 @@ public class EmailHierarchy implements EmailFolderBase, Folder {
 
    public void ensureFiledMessagesInFiledCollection() {
       if (this._missingFolderTimestamp != -1) {
-         ((Thread)(new Object(new EmailHierarchy$MoveFiledMessagesWorker(this, null)))).start();
+         new Thread(new EmailHierarchy$MoveFiledMessagesWorker(this, null)).start();
       }
    }
 
@@ -393,9 +395,9 @@ public class EmailHierarchy implements EmailFolderBase, Folder {
       FolderMerge.deregisterMergedFolder(FolderMerge.getMergeCollectionId(this.getLUID(), -271343505), this._filedFolder);
       FolderMerge.deregisterMergedFolder(7509894771240321003L, this._unfiledFolder);
       FolderMerge.deregisterMergedFolder(7509894771240321003L, this._filedFolder);
-      PurgeManager.getInstance().removeCollection((Collection)this._unfiledFolder.getContainedItems());
-      PurgeManager.getInstance().removeCollection((Collection)this._filedFolder.getContainedItems());
-      PurgeManager.getInstance().removeCollection((Collection)this._orphanedSavedFolder.getContainedItems());
+      PurgeManager.getInstance().removeCollection((ReadableList)this._unfiledFolder.getContainedItems());
+      PurgeManager.getInstance().removeCollection((ReadableList)this._filedFolder.getContainedItems());
+      PurgeManager.getInstance().removeCollection((ReadableList)this._orphanedSavedFolder.getContainedItems());
    }
 
    protected void register() {
@@ -410,9 +412,9 @@ public class EmailHierarchy implements EmailFolderBase, Folder {
       FolderMerge.registerMergedFolder(7509894771240321003L, this._unfiledFolder);
       FolderMerge.registerMergedFolder(7509894771240321003L, this._filedFolder);
       FolderMerge.registerMergedFolder(7509894771240321003L, this._orphanedSavedFolder);
-      PurgeManager.getInstance().addCollection((Collection)this._unfiledFolder.getContainedItems());
-      PurgeManager.getInstance().addCollection((Collection)this._filedFolder.getContainedItems());
-      PurgeManager.getInstance().addCollection((Collection)this._orphanedSavedFolder.getContainedItems());
+      PurgeManager.getInstance().addCollection((ReadableList)this._unfiledFolder.getContainedItems());
+      PurgeManager.getInstance().addCollection((ReadableList)this._filedFolder.getContainedItems());
+      PurgeManager.getInstance().addCollection((ReadableList)this._orphanedSavedFolder.getContainedItems());
    }
 
    public int getFolderIdForFolder(long folderLUID) {
@@ -555,7 +557,7 @@ public class EmailHierarchy implements EmailFolderBase, Folder {
          int length = this._subFolders.length;
          Object[] objects = new Object[length];
          System.arraycopy(this._subFolders, 0, objects, 0, length);
-         return (Enumeration)(new Object(objects));
+         return new ObjectEnumerator(objects);
       }
    }
 
@@ -1045,7 +1047,7 @@ public class EmailHierarchy implements EmailFolderBase, Folder {
          ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
          _preverifyListeners = (Vector)ar.getOrWaitFor(1684962353143705358L);
          if (_preverifyListeners == null) {
-            _preverifyListeners = (Vector)(new Object(1));
+            _preverifyListeners = new Vector(1);
             ar.put(1684962353143705358L, _preverifyListeners);
          }
       }
@@ -1094,7 +1096,7 @@ public class EmailHierarchy implements EmailFolderBase, Folder {
       this._folderId = folderId;
       this._luid = makeHierarchyLUID(uidHash, nameHash, folderId);
       this._missingFolderTimestamp = -1;
-      this._refIdToMessageTable = (IntHashtable)(new Object());
+      this._refIdToMessageTable = new IntHashtable();
       this._subFolders = new EmailFolder[0];
       this._inboxFolder = this.makeNewFolder(EmailFolderId.getNextFolderId(), 2, true, true, EmailResources.getString(70));
       this._sentFolder = this.makeNewFolder(EmailFolderId.getNextFolderId(), 4, true, true, EmailResources.getString(71));
@@ -1117,13 +1119,13 @@ public class EmailHierarchy implements EmailFolderBase, Folder {
          _folderCollections = ar.getLongHashtable(4848635152656490553L);
          _longKeyProviderAdaptorComparator = (Comparator)ar.getOrWaitFor(-7100114292399893306L);
          if (_longKeyProviderAdaptorComparator == null) {
-            _longKeyProviderAdaptorComparator = (Comparator)(new Object((LongKeyProviderAdaptor)(new Object())));
+            _longKeyProviderAdaptorComparator = new LongKeyProviderAdaptorComparator(new DateSortKeyProviderIndirection());
             ar.put(-7100114292399893306L, _longKeyProviderAdaptorComparator);
          }
 
          _emailFolderListeners = (Vector)ar.getOrWaitFor(-8357190046905569807L);
          if (_emailFolderListeners == null) {
-            _emailFolderListeners = (Vector)(new Object());
+            _emailFolderListeners = new Vector();
             ar.put(-8357190046905569807L, _emailFolderListeners);
          }
       }

@@ -6,10 +6,10 @@ import net.rim.device.api.util.IntHashtable;
 import net.rim.device.apps.internal.bis.utils.ArgValidationUtils;
 
 public final class ApplicationController {
-   private IntHashtable _commandIDToDomainCommandMap = (IntHashtable)(new Object());
-   private IntHashtable _commandIDToForwardsMap = (IntHashtable)(new Object());
-   private IntHashtable _linkIDToViewMap = (IntHashtable)(new Object());
-   private Hashtable _globalCommandResultToForwardMap = (Hashtable)(new Object());
+   private IntHashtable _commandIDToDomainCommandMap = new IntHashtable();
+   private IntHashtable _commandIDToForwardsMap = new IntHashtable();
+   private IntHashtable _linkIDToViewMap = new IntHashtable();
+   private Hashtable _globalCommandResultToForwardMap = new Hashtable();
 
    private ApplicationController() {
    }
@@ -25,11 +25,11 @@ public final class ApplicationController {
 
    public final void registerViewForward(int commandID, String commandResult, int viewID) {
       if (this._globalCommandResultToForwardMap.get(commandResult) != null) {
-         throw new Object(((StringBuffer)(new Object("There is already a global view associated with '"))).append(commandResult).toString());
+         throw new IllegalArgumentException("There is already a global view associated with '" + commandResult);
       }
 
       if (this._commandIDToForwardsMap.get(commandID) == null) {
-         this._commandIDToForwardsMap.put(commandID, new Object());
+         this._commandIDToForwardsMap.put(commandID, new Hashtable());
       }
 
       Hashtable forwardsMap = (Hashtable)this._commandIDToForwardsMap.get(commandID);

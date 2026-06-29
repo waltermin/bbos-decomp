@@ -46,8 +46,8 @@ public final class BISClientConfigRecord {
             return null;
          }
 
-         ByteArrayInputStream bais = (ByteArrayInputStream)(new Object(applicationData));
-         DataInputStream dis = (DataInputStream)(new Object(bais));
+         ByteArrayInputStream bais = new ByteArrayInputStream(applicationData);
+         DataInputStream dis = new DataInputStream(bais);
 
          try {
             BISClientConfigRecord configRecord = new BISClientConfigRecord();
@@ -60,9 +60,9 @@ public final class BISClientConfigRecord {
             configRecord._autoStart = readLTEBoolean(dis, (byte)6);
             configRecord._brandingIconIndex = readLTEInteger(dis, (byte)7);
             configRecord._showOnRibbon = readLTEBoolean(dis, (byte)8);
-            configRecord._ribbonTitles = (Hashtable)(new Object());
+            configRecord._ribbonTitles = new Hashtable();
             String locales = readLTEString(dis, (byte)9, true);
-            StringTokenizer tokenizer = (StringTokenizer)(new Object(locales, ","));
+            StringTokenizer tokenizer = new StringTokenizer(locales, ",");
 
             while (tokenizer.hasMoreTokens()) {
                String locale = tokenizer.nextToken();
@@ -72,7 +72,7 @@ public final class BISClientConfigRecord {
 
             return configRecord;
          } catch (Throwable var13) {
-            System.out.println(((StringBuffer)(new Object("Exception occurred"))).append(e.toString()).toString());
+            System.out.println("Exception occurred" + e.toString());
             return bisClientConfigRecord;
          }
       } else {
@@ -100,12 +100,12 @@ public final class BISClientConfigRecord {
       short length = dis.readShort();
       byte type = dis.readByte();
       if (type != expectedType) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       byte[] stringBytes = new byte[length];
       dis.read(stringBytes);
-      String result = (String)(new Object(stringBytes, "UTF-8"));
+      String result = new String(stringBytes, "UTF-8");
       if (stripNull && length > 0 && result.charAt(result.length() - 1) == 0) {
          result = result.substring(0, result.length() - 1);
       }
@@ -117,7 +117,7 @@ public final class BISClientConfigRecord {
       dis.readShort();
       byte type = dis.readByte();
       if (type != expectedType) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return dis.readInt();
       }

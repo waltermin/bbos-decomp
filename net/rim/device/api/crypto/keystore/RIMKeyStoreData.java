@@ -83,25 +83,25 @@ public final class RIMKeyStoreData implements KeyStoreData, Persistable, SyncObj
       // 20: goto 48
       // 23: aload 1
       // 24: dup
-      // 25: instanceof java/lang/Object
+      // 25: instanceof net/rim/device/api/crypto/SymmetricKey
       // 28: ifne 2f
       // 2b: pop
       // 2c: goto 40
-      // 2f: checkcast java/lang/Object
+      // 2f: checkcast net/rim/device/api/crypto/SymmetricKey
       // 32: aload 0
       // 33: getfield net/rim/device/api/crypto/keystore/RIMKeyStoreData._payload Lnet/rim/device/api/crypto/keystore/RIMKeyStoreData$Payload;
       // 36: getfield net/rim/device/api/crypto/keystore/RIMKeyStoreData$Payload._symmetricKeyEncodingAlgorithm Ljava/lang/String;
       // 39: invokestatic net/rim/device/api/crypto/encoder/SymmetricKeyEncoder.encode (Lnet/rim/device/api/crypto/SymmetricKey;Ljava/lang/String;)Lnet/rim/device/api/crypto/encoder/EncodedKey;
       // 3c: astore 2
       // 3d: goto 48
-      // 40: new java/lang/Object
+      // 40: new java/lang/RuntimeException
       // 43: dup
       // 44: invokespecial java/lang/RuntimeException.<init> ()V
       // 47: athrow
       // 48: aload 2
       // 49: invokevirtual net/rim/device/api/crypto/encoder/EncodedKey.getEncodedKey ()[B
       // 4c: astore 3
-      // 4d: new java/lang/Object
+      // 4d: new net/rim/device/api/crypto/SHA1Digest
       // 50: dup
       // 51: invokespecial net/rim/device/api/crypto/SHA1Digest.<init> ()V
       // 54: astore 4
@@ -579,7 +579,7 @@ public final class RIMKeyStoreData implements KeyStoreData, Persistable, SyncObj
 
    private final boolean protectedDataProvideAuthentication() {
       if (!(this._payload._privateKey instanceof PrivateKey)) {
-         if (!(this._payload._symmetricKey instanceof Object)) {
+         if (!(this._payload._symmetricKey instanceof SymmetricKey)) {
             return false;
          }
 
@@ -611,8 +611,8 @@ public final class RIMKeyStoreData implements KeyStoreData, Persistable, SyncObj
          this._payload._hashCode = this._payload._hashCode ^ HashCodeCalculator.getCRC32((byte[])this._payload._privateKey);
       }
 
-      if (this._payload._symmetricKey instanceof Object) {
-         this._payload._hashCode = this._payload._hashCode ^ this._payload._symmetricKey.hashCode();
+      if (this._payload._symmetricKey instanceof SymmetricKey) {
+         this._payload._hashCode = this._payload._hashCode ^ ((SymmetricKey)this._payload._symmetricKey).hashCode();
       } else if (this._payload._symmetricKey instanceof byte[]) {
          this._payload._hashCode = this._payload._hashCode ^ HashCodeCalculator.getCRC32((byte[])this._payload._symmetricKey);
       }
@@ -667,7 +667,7 @@ public final class RIMKeyStoreData implements KeyStoreData, Persistable, SyncObj
    }
 
    private final void createAssociations(AssociatedData[] associatedData) {
-      this._payload._associations = (LongHashtable)(new Object());
+      this._payload._associations = new LongHashtable();
       if (associatedData != null) {
          long association = 0;
 
@@ -703,8 +703,8 @@ public final class RIMKeyStoreData implements KeyStoreData, Persistable, SyncObj
          try {
             var9 = true;
             if (!(key instanceof PrivateKey)) {
-               if (!(key instanceof Object)) {
-                  throw new Object();
+               if (!(key instanceof SymmetricKey)) {
+                  throw new RuntimeException();
                }
 
                encodedKey = SymmetricKeyEncoder.encode((SymmetricKey)key, encodingAlgorithm);
@@ -723,7 +723,7 @@ public final class RIMKeyStoreData implements KeyStoreData, Persistable, SyncObj
                   return;
                }
 
-               if (key instanceof Object) {
+               if (key instanceof SymmetricKey) {
                   this._payload._symmetricKey = key;
                   this._payload._symmetricKeyEncodingAlgorithm = null;
                }
@@ -739,7 +739,7 @@ public final class RIMKeyStoreData implements KeyStoreData, Persistable, SyncObj
             return;
          }
 
-         if (key instanceof Object) {
+         if (key instanceof SymmetricKey) {
             this._payload._symmetricKey = passwordManager.encrypt(securityLevel, keyEncoding, this._payload.getLabel(), this.getPasswordTicket(ticket));
          }
       }
@@ -774,7 +774,7 @@ public final class RIMKeyStoreData implements KeyStoreData, Persistable, SyncObj
 
       String dialogPrompt = null;
       if (existingLabel != null) {
-         dialogPrompt = MessageFormat.format(KeyStoreResources.getString(7014), new Object[]{existingLabel});
+         dialogPrompt = MessageFormat.format(KeyStoreResources.getString(7014), new String[]{existingLabel});
       } else {
          dialogPrompt = KeyStoreResources.getString(7);
       }
@@ -843,11 +843,11 @@ public final class RIMKeyStoreData implements KeyStoreData, Persistable, SyncObj
       // 05f: getfield net/rim/device/api/crypto/keystore/RIMKeyStoreData._payload Lnet/rim/device/api/crypto/keystore/RIMKeyStoreData$Payload;
       // 062: getfield net/rim/device/api/crypto/keystore/RIMKeyStoreData$Payload._symmetricKey Ljava/lang/Object;
       // 065: dup
-      // 066: instanceof java/lang/Object
+      // 066: instanceof net/rim/device/api/crypto/SymmetricKey
       // 069: ifne 070
       // 06c: pop
       // 06d: goto 091
-      // 070: checkcast java/lang/Object
+      // 070: checkcast net/rim/device/api/crypto/SymmetricKey
       // 073: astore 3
       // 074: aload 3
       // 075: invokeinterface net/rim/device/api/crypto/SymmetricKey.getSymmetricCryptoToken ()Lnet/rim/device/api/crypto/SymmetricCryptoToken; 1
@@ -995,7 +995,7 @@ public final class RIMKeyStoreData implements KeyStoreData, Persistable, SyncObj
       // 1b9: dup
       // 1ba: invokespecial net/rim/device/api/crypto/keystore/KeyStoreDecodeException.<init> ()V
       // 1bd: athrow
-      // 1be: new java/lang/Object
+      // 1be: new java/io/ByteArrayInputStream
       // 1c1: dup
       // 1c2: aload 6
       // 1c4: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -1064,7 +1064,7 @@ public final class RIMKeyStoreData implements KeyStoreData, Persistable, SyncObj
       this._payload = new RIMKeyStoreData$Payload();
       if (certificateEncoding == null) {
          if (certStatus != null) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } else {
          this._payload._certificate = CertificateRepository.getInstance().addCertificate(certificateEncoding, certificateType);
@@ -1147,7 +1147,7 @@ public final class RIMKeyStoreData implements KeyStoreData, Persistable, SyncObj
       // 020: putfield net/rim/device/api/crypto/keystore/RIMKeyStoreData$Payload._uid I
       // 023: aload 10
       // 025: ifnull 086
-      // 028: new java/lang/Object
+      // 028: new java/lang/IllegalArgumentException
       // 02b: dup
       // 02c: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 02f: athrow

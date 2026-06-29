@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.smartcard.datakey;
 
 import net.rim.device.api.crypto.CryptoSmartCard;
 import net.rim.device.api.crypto.CryptoToken;
+import net.rim.device.api.crypto.NoSuchAlgorithmException;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.smartcard.AnswerToReset;
 import net.rim.device.api.smartcard.SmartCardCapabilities;
@@ -14,8 +15,8 @@ public class DatakeyCryptoSmartCard extends CryptoSmartCard implements Persistab
    private static ResourceBundle _rb = ResourceBundle.getBundle(-2744454300651253428L, "net.rim.device.apps.internal.resource.crypto.SmartCard");
    private static final byte[] DATAKEY_330_A = new byte[]{59, -1, 17, 0, 0, -127, 49, -2, 77, -128, 37, -96, 0, 0, 0, 86, 87, 68, 75, 51, 51, 48, 6, 0, -48};
    private static final byte[] DATAKEY_330_B = new byte[]{59, -1, 19, 0, 0, -127, 49, -2, 77, -128, 37, -96, 0, 0, 0, 86, 87, 68, 75, 51, 51, 48, 6, 0, -46};
-   private static final AnswerToReset _datakey330ATRA = (AnswerToReset)(new Object(DATAKEY_330_A));
-   private static final AnswerToReset _datakey330ATRB = (AnswerToReset)(new Object(DATAKEY_330_B));
+   private static final AnswerToReset _datakey330ATRA = new AnswerToReset(DATAKEY_330_A);
+   private static final AnswerToReset _datakey330ATRB = new AnswerToReset(DATAKEY_330_B);
 
    public static void libMain(String[] args) {
       try {
@@ -47,17 +48,17 @@ public class DatakeyCryptoSmartCard extends CryptoSmartCard implements Persistab
 
    @Override
    protected SmartCardCapabilities getCapabilitiesImpl() {
-      return (SmartCardCapabilities)(new Object(2));
+      return new SmartCardCapabilities(2);
    }
 
    @Override
-   public CryptoToken getCryptoToken(String algorithm) {
+   public CryptoToken getCryptoToken(String algorithm) throws NoSuchAlgorithmException {
       if (algorithm.equals("RSA")) {
          return new DatakeyRSACryptoToken();
       } else if (algorithm.equals("DSA")) {
          return new DatakeyDSACryptoToken();
       } else {
-         throw new Object();
+         throw new NoSuchAlgorithmException();
       }
    }
 }

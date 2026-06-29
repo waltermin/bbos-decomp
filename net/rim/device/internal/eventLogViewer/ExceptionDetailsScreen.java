@@ -16,7 +16,7 @@ final class ExceptionDetailsScreen extends BaseDetailsScreen {
 
    @Override
    public final String getEventSummary(int eventHandle) {
-      StringBuffer strBuf = (StringBuffer)(new Object(64));
+      StringBuffer strBuf = new StringBuffer(64);
       strBuf.append(TraceBack.getMessage(EventLog.getData(eventHandle), 0));
       return strBuf.toString();
    }
@@ -30,7 +30,7 @@ final class ExceptionDetailsScreen extends BaseDetailsScreen {
    @Override
    protected final String getDataFieldString(int eventHandle) {
       Object backTrace = EventLog.getData(eventHandle);
-      StringBuffer strBuf = (StringBuffer)(new Object(128));
+      StringBuffer strBuf = new StringBuffer(128);
       int j = 1;
 
       while (true) {

@@ -4,7 +4,7 @@ import java.util.Hashtable;
 
 final class net_rim_bb_mc_appRIMResourcesPopulator0 {
    static final void populate(Hashtable localZero) {
-      Object var1 = new byte[]{
+      byte[] var1 = new byte[]{
          -119,
          80,
          78,
@@ -420,8 +420,8 @@ final class net_rim_bb_mc_appRIMResourcesPopulator0 {
       };
       localZero.put("dialog_cleaning_memory.png", var1);
       localZero.put("resources/dialog_cleaning_memory.png", var1);
-      var1 = new Object(0);
-      localZero.put("Ribbon28.gif", var1);
-      localZero.put("resources/Ribbon28.gif", var1);
+      Integer var2 = new Integer(0);
+      localZero.put("Ribbon28.gif", var2);
+      localZero.put("resources/Ribbon28.gif", var2);
    }
 }

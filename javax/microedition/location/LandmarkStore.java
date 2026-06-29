@@ -18,8 +18,8 @@ public class LandmarkStore {
 
    private LandmarkStore(String name) {
       this._name = name;
-      this._landmarkStore = (Vector)(new Object());
-      this._categories = (Hashtable)(new Object());
+      this._landmarkStore = new Vector();
+      this._categories = new Hashtable();
    }
 
    public static LandmarkStore getInstance(String storeName) {
@@ -35,18 +35,18 @@ public class LandmarkStore {
    public void addLandmark(Landmark landmark, String category) {
       LocationProvider.checkSecurity(TraceBack.getCallingModule(0), "lapi_landmarkstore_write");
       if (landmark == null) {
-         throw new Object("Landmark cannot be null");
+         throw new NullPointerException("Landmark cannot be null");
       }
 
       if (category != null && !this._categories.containsKey(category)) {
-         throw new Object("The LandmarkStore does not contain this category");
+         throw new IllegalArgumentException("The LandmarkStore does not contain this category");
       }
 
       LandmarkStore$ProxyLandmark plm = new LandmarkStore$ProxyLandmark(landmark);
       if (category != null) {
          Vector v = (Vector)this._categories.get(category);
          if (v == null) {
-            new Object();
+            new Vector();
          } else {
             v.addElement(plm);
          }
@@ -61,7 +61,7 @@ public class LandmarkStore {
    }
 
    public Enumeration getLandmarks(String category, String name) {
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       Enumeration enumeration = this._landmarkStore.elements();
       Vector categoryLandmarks = null;
       if (category != null) {
@@ -101,7 +101,7 @@ public class LandmarkStore {
          return null;
       }
 
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       Enumeration enumeration = this._landmarkStore.elements();
 
       while (enumeration != null && enumeration.hasMoreElements()) {
@@ -115,26 +115,26 @@ public class LandmarkStore {
 
    public Enumeration getLandmarks(String category, double minLatitude, double maxLatitude, double minLongitude, double maxLongitude) {
       if (minLatitude < -4587338432941916160L || minLatitude > 4636033603912859648L) {
-         throw new Object("Illegal value of minLatitude");
+         throw new IllegalArgumentException("Illegal value of minLatitude");
       }
 
       if (maxLatitude < -4587338432941916160L || maxLatitude > 4636033603912859648L) {
-         throw new Object("Illegal value of maxLatitude");
+         throw new IllegalArgumentException("Illegal value of maxLatitude");
       }
 
       if (minLongitude < -4582834833314545664L || minLongitude >= 4640537203540230144L) {
-         throw new Object("Illegal value of minLongitude");
+         throw new IllegalArgumentException("Illegal value of minLongitude");
       }
 
       if (maxLongitude < -4582834833314545664L || maxLongitude >= 4640537203540230144L) {
-         throw new Object("Illegal value of maxLongitude");
+         throw new IllegalArgumentException("Illegal value of maxLongitude");
       }
 
       if (minLatitude > maxLatitude) {
-         throw new Object("MinLatitude cannot be less than maxLatitude");
+         throw new IllegalArgumentException("MinLatitude cannot be less than maxLatitude");
       }
 
-      Vector landmarks = (Vector)(new Object());
+      Vector landmarks = new Vector();
       Vector categoryLandmarks = null;
       if (category != null) {
          categoryLandmarks = (Vector)this._categories.get(category);
@@ -178,7 +178,7 @@ public class LandmarkStore {
    public void deleteLandmark(Landmark lm) throws LandmarkException {
       LocationProvider.checkSecurity(TraceBack.getCallingModule(0), "lapi_landmarkstore_write");
       if (lm == null) {
-         throw new Object("Landmark is null");
+         throw new NullPointerException("Landmark is null");
       }
 
       LandmarkStore$ProxyLandmark plm = new LandmarkStore$ProxyLandmark(lm);
@@ -200,25 +200,25 @@ public class LandmarkStore {
    public void addCategory(String categoryName) {
       LocationProvider.checkSecurity(TraceBack.getCallingModule(0), "lapi_landmarkstore_category");
       if (categoryName == null) {
-         throw new Object("Category name is null");
+         throw new NullPointerException("Category name is null");
       }
 
       if (this._categories.containsKey(categoryName)) {
-         throw new Object("Already contains the category");
+         throw new IllegalArgumentException("Already contains the category");
       }
 
-      this._categories.put(categoryName, new Object());
+      this._categories.put(categoryName, new Vector());
       save();
    }
 
    public static void createLandmarkStore(String storeName) {
       LocationProvider.checkSecurity(TraceBack.getCallingModule(0), "lapi_landmarkstore_management");
       if (storeName == null) {
-         throw new Object("Store name cannot be null");
+         throw new NullPointerException("Store name cannot be null");
       }
 
       if (_landmarkStores.containsKey(storeName)) {
-         throw new Object("Landmark store with the specified name already exists");
+         throw new IllegalArgumentException("Landmark store with the specified name already exists");
       }
 
       LandmarkStore$ProxyLandmarkStore plandmarkStore = new LandmarkStore$ProxyLandmarkStore(new LandmarkStore(storeName));
@@ -229,7 +229,7 @@ public class LandmarkStore {
    public void deleteCategory(String categoryName) {
       LocationProvider.checkSecurity(TraceBack.getCallingModule(0), "lapi_landmarkstore_category");
       if (categoryName == null) {
-         throw new Object("Category name cannot be null");
+         throw new NullPointerException("Category name cannot be null");
       }
 
       if (this._categories.containsKey(categoryName)) {
@@ -241,7 +241,7 @@ public class LandmarkStore {
    public static void deleteLandmarkStore(String storeName) {
       LocationProvider.checkSecurity(TraceBack.getCallingModule(0), "lapi_landmarkstore_management");
       if (storeName == null) {
-         throw new Object("Store name cannot be null");
+         throw new NullPointerException("Store name cannot be null");
       }
 
       if (_landmarkStores.containsKey(storeName)) {
@@ -257,7 +257,7 @@ public class LandmarkStore {
    public static String[] listLandmarkStores() {
       LocationProvider.checkSecurity(TraceBack.getCallingModule(0), "lapi_landmarkstore_read");
       Enumeration enumeration = _landmarkStores.keys();
-      String[] landmarkStores = new Object[_landmarkStores.size() - 1];
+      String[] landmarkStores = new String[_landmarkStores.size() - 1];
       int i = 0;
 
       while (enumeration.hasMoreElements()) {
@@ -284,14 +284,14 @@ public class LandmarkStore {
             save();
          }
       } else {
-         throw new Object("Landmark or Category cannot be null");
+         throw new NullPointerException("Landmark or Category cannot be null");
       }
    }
 
    public void updateLandmark(Landmark lm) throws LandmarkException {
       LocationProvider.checkSecurity(TraceBack.getCallingModule(0), "lapi_landmarkstore_write");
       if (lm == null) {
-         throw new Object("Null parameter passed");
+         throw new NullPointerException("Null parameter passed");
       }
 
       boolean present = false;
@@ -336,7 +336,7 @@ public class LandmarkStore {
    static {
       synchronized (_store) {
          if (_store.getContents() == null) {
-            _landmarkStores = (Hashtable)(new Object());
+            _landmarkStores = new Hashtable();
             _landmarkStores.put(DEFAULT_STORE, new LandmarkStore$ProxyLandmarkStore(DEFAULT_STORE));
             _store.setContents(_landmarkStores, 51);
             _store.commit();

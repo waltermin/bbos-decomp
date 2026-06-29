@@ -16,7 +16,7 @@ public final class RecordsHashes extends SyncCommand {
 
    public final void addRecordHashes(SyncAgentRecordHashes aSyncAgentRecordHashes) {
       if (this._records == null) {
-         this._records = (Vector)(new Object());
+         this._records = new Vector();
       }
 
       this._records.addElement(aSyncAgentRecordHashes);

@@ -5,6 +5,7 @@ import net.rim.device.api.system.ObjectGroup;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.task.TaskCollection;
+import net.rim.device.apps.api.task.TaskModel;
 import net.rim.device.apps.api.utility.general.SetParameter;
 import net.rim.device.internal.i18n.CommonResource;
 
@@ -70,7 +71,7 @@ final class OpenTaskVerb extends Verb implements SetParameter {
 
    @Override
    public final void setParameter(Object parameter) {
-      if (parameter instanceof Object) {
+      if (parameter instanceof TaskModel) {
          this._record = parameter;
          this._taskCollection = Task.getInstance().getUICollection();
       }

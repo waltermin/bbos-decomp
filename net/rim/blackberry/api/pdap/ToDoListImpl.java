@@ -11,6 +11,8 @@ import net.rim.device.api.collection.CollectionEventSource;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.util.Arrays;
+import net.rim.device.api.util.EmptyEnumeration;
+import net.rim.device.api.util.ObjectEnumerator;
 import net.rim.device.apps.api.task.TaskCollection;
 import net.rim.device.apps.api.task.TaskCollectionHolder;
 import net.rim.device.apps.api.task.TaskModel;
@@ -76,7 +78,7 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
          case 20000927:
             return "";
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -100,7 +102,7 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
          case 16777225:
             return 3;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -121,7 +123,7 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
          case 20000927:
             return true;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -146,7 +148,7 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
       }
 
       if (super._mode == 2) {
-         throw new Object(WRITEONLY_MESSAGE);
+         throw new SecurityException(WRITEONLY_MESSAGE);
       }
 
       int size = this._collection.size();
@@ -156,7 +158,7 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
          matchingElements[i] = new ToDoImpl(super._mode, (TaskModel)this._collection.getAt(i), this);
       }
 
-      return (Enumeration)(new Object(matchingElements));
+      return new ObjectEnumerator(matchingElements);
    }
 
    @Override
@@ -166,15 +168,15 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
       }
 
       if (super._mode == 2) {
-         throw new Object(WRITEONLY_MESSAGE);
+         throw new SecurityException(WRITEONLY_MESSAGE);
       }
 
       if (matching == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       if (!(matching instanceof ToDo)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       ToDo matchingToDo = (ToDo)matching;
@@ -210,7 +212,7 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
          }
       }
 
-      return (Enumeration)(new Object(matchingElements));
+      return new ObjectEnumerator(matchingElements);
    }
 
    @Override
@@ -220,11 +222,11 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
       }
 
       if (super._mode == 2) {
-         throw new Object(WRITEONLY_MESSAGE);
+         throw new SecurityException(WRITEONLY_MESSAGE);
       }
 
       if (matching == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       int size = this._collection.size();
@@ -238,7 +240,7 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
          }
       }
 
-      return (Enumeration)(new Object(matchingElements));
+      return new ObjectEnumerator(matchingElements);
    }
 
    @Override
@@ -248,15 +250,15 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
       }
 
       if (startDate > endDate) {
-         throw new Object("End date is before start date.");
+         throw new IllegalArgumentException("End date is before start date.");
       }
 
       if (this.getFieldDataType(field) != 2) {
-         throw new Object("Field not of type DATE.");
+         throw new IllegalArgumentException("Field not of type DATE.");
       }
 
       if (super._mode == 2) {
-         throw new Object(WRITEONLY_MESSAGE);
+         throw new SecurityException(WRITEONLY_MESSAGE);
       }
 
       int size = this._collection.size();
@@ -273,7 +275,7 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
       }
 
       Arrays.sort(matchingElements, new ToDoListImpl$DueDateComparator());
-      return (Enumeration)(new Object(matchingElements));
+      return new ObjectEnumerator(matchingElements);
    }
 
    @Override
@@ -339,7 +341,7 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
    @Override
    public final ToDo importToDo(ToDo element) {
       if (element == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       ToDo newToDo = this.createToDo();
@@ -377,11 +379,11 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
       }
 
       if (super._mode == 1) {
-         throw new Object(READONLY_MESSAGE);
+         throw new SecurityException(READONLY_MESSAGE);
       }
 
       if (element == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       if (!(element instanceof ToDoImpl)) {
@@ -389,8 +391,8 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
       }
 
       ToDoImpl todo = (ToDoImpl)element;
-      if (this._collection.contains(todo.getInternalModel())) {
-         this._collection.remove(todo.getInternalModel());
+      if (this._collection.contains((TaskModel)todo.getInternalModel())) {
+         this._collection.remove((TaskModel)todo.getInternalModel());
          todo.removeFromList();
       } else {
          throw new PIMException(PIMListImpl.NOT_FOUND_MESSAGE, 6);
@@ -445,7 +447,7 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
       if (category != null) {
          categoryID = CategoryList.getInstance().getCategoryId(category);
          if (categoryID == -1) {
-            return (Enumeration)(new Object());
+            return new EmptyEnumeration();
          }
       }
 
@@ -482,14 +484,14 @@ public final class ToDoListImpl extends PIMListImpl implements BlackBerryToDoLis
          }
       }
 
-      return (Enumeration)(new Object(matchingElements));
+      return new ObjectEnumerator(matchingElements);
    }
 
    static {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
       _actualListeners = (Hashtable)ar.getOrWaitFor(-6969096308581534025L);
       if (_actualListeners == null) {
-         _actualListeners = (Hashtable)(new Object());
+         _actualListeners = new Hashtable();
          ar.put(-6969096308581534025L, _actualListeners);
       }
 

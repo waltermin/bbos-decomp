@@ -14,6 +14,7 @@ import net.rim.device.api.system.Application;
 import net.rim.device.api.system.EventLogger;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Screen;
+import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.apps.internal.blackberryemail.resources.EmailResources;
 
 public class NativeAttachmentViewer implements RenderingApplication, ResourceProvider {
@@ -25,7 +26,7 @@ public class NativeAttachmentViewer implements RenderingApplication, ResourcePro
          this._screen = screen;
          this._attachment = attachment;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -114,14 +115,7 @@ public class NativeAttachmentViewer implements RenderingApplication, ResourcePro
    }
 
    private Field createRenderErrorField() {
-      return (Field)(new Object(
-         ((StringBuffer)(new Object()))
-            .append(EmailResources.getString(107))
-            .append('\n')
-            .append(this._attachment != null ? this._attachment.getDisplayName() : "")
-            .toString(),
-         36028797018963968L
-      ));
+      return new RichTextField(EmailResources.getString(107) + '\n' + (this._attachment != null ? this._attachment.getDisplayName() : ""), 36028797018963968L);
    }
 
    private void logError(RenderingException error) {

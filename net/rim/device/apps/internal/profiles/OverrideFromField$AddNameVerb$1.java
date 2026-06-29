@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.profiles;
 
+import net.rim.device.apps.api.addressbook.GroupAddressCardModel;
 import net.rim.device.apps.api.framework.model.CompoundRecognizer;
 import net.rim.device.apps.api.framework.model.Recognizer;
 
@@ -15,6 +16,6 @@ class OverrideFromField$AddNameVerb$1 extends CompoundRecognizer {
 
    @Override
    public synchronized boolean recognize(Object o) {
-      return o instanceof Object ? false : super.recognize(o);
+      return o instanceof GroupAddressCardModel ? false : super.recognize(o);
    }
 }

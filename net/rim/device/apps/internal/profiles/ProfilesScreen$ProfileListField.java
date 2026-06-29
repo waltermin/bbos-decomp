@@ -23,9 +23,9 @@ final class ProfilesScreen$ProfileListField extends CollectionListField implemen
       switch (action) {
          case 1:
             Profile profile = (Profile)this.this$0._listField.getSelectedElement();
-            if (profile instanceof Object) {
+            if (profile instanceof VerbProvider) {
                VerbProvider verbProvider = profile;
-               Verb[] providedVerbs = new Object[0];
+               Verb[] providedVerbs = new Verb[0];
                Verb defaultVerb = verbProvider.getVerbs(null, providedVerbs);
                if (defaultVerb != null) {
                   Object result = defaultVerb.invoke(null);
@@ -53,11 +53,11 @@ final class ProfilesScreen$ProfileListField extends CollectionListField implemen
          return true;
       } else {
          Profile profile = (Profile)this.getSelectedElement();
-         if (profile instanceof Object) {
+         if (profile instanceof VerbProvider) {
             VerbProvider verbProvider = profile;
-            ContextObject context = (ContextObject)(new Object());
+            ContextObject context = new ContextObject();
             context.putIntegerData(keyChar);
-            Verb[] providedVerbs = new Object[0];
+            Verb[] providedVerbs = new Verb[0];
             Verb defaultVerb = verbProvider.getVerbs(context, providedVerbs);
             if (defaultVerb != null) {
                Object result = defaultVerb.invoke(context);

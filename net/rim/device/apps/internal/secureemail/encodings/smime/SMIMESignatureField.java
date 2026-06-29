@@ -2,13 +2,13 @@ package net.rim.device.apps.internal.secureemail.encodings.smime;
 
 import java.util.Enumeration;
 import net.rim.device.api.crypto.certificate.Certificate;
+import net.rim.device.api.crypto.certificate.CertificateHashKeyStoreIndex;
 import net.rim.device.api.crypto.certificate.x509.X509Certificate;
 import net.rim.device.api.crypto.cms.CMSEntityIdentifier;
 import net.rim.device.api.crypto.cms.CMSSignedDataInputStream;
 import net.rim.device.api.crypto.keystore.DeviceKeyStore;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
-import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.api.crypto.keystore.TrustedKeyStore;
 import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.api.system.Application;
@@ -17,8 +17,10 @@ import net.rim.device.api.ui.Manager;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.ObjectUtilities;
 import net.rim.device.apps.api.framework.model.MatchProvider;
-import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.VerbMenuItem;
+import net.rim.device.apps.internal.api.crypto.verb.FetchCertificateStatusVerb;
+import net.rim.device.apps.internal.api.crypto.verb.ImportCertificatesVerb;
+import net.rim.device.apps.internal.api.crypto.verb.TrustCertificatesVerb;
 import net.rim.device.apps.internal.secureemail.SecureEmailSignatureField;
 import net.rim.device.apps.internal.secureemail.SecureEmailSignatureField$SignatureStatusField;
 import net.rim.device.apps.internal.secureemail.SecureEmailSignatureField$TrustStatusField;
@@ -103,7 +105,7 @@ public final class SMIMESignatureField extends SecureEmailSignatureField {
    protected final void getSignerCertificateWithoutVerifying() {
       if (super._besSignerCertificateHash != null && super._secureEmailCertificateServers.length == 0) {
          KeyStore keyStore = super._secureEmailFactory.getPreferredKeyStore();
-         keyStore.addIndex((KeyStoreIndex)(new Object()));
+         keyStore.addIndex(new CertificateHashKeyStoreIndex());
          Enumeration enumeration = keyStore.elements(4966172969402917741L, super._besSignerCertificateHash);
 
          while (super._signerCertificate == null && enumeration.hasMoreElements()) {
@@ -249,11 +251,11 @@ public final class SMIMESignatureField extends SecureEmailSignatureField {
       // 87: areturn
       // 88: aload 6
       // 8a: dup
-      // 8b: instanceof java/lang/Object
+      // 8b: instanceof net/rim/device/api/crypto/certificate/pgp/PGPCertificate
       // 8e: ifne 95
       // 91: pop
       // 92: goto de
-      // 95: checkcast java/lang/Object
+      // 95: checkcast net/rim/device/api/crypto/certificate/pgp/PGPCertificate
       // 98: astore 7
       // 9a: aload 7
       // 9c: invokevirtual net/rim/device/api/crypto/certificate/pgp/PGPCertificate.containsEmbeddedX509Certificates ()Z
@@ -304,7 +306,7 @@ public final class SMIMESignatureField extends SecureEmailSignatureField {
    }
 
    private final boolean certificateMatches(CMSEntityIdentifier entity, Certificate certificate) {
-      if (certificate instanceof Object) {
+      if (certificate instanceof X509Certificate) {
          X509Certificate x509Certificate = (X509Certificate)certificate;
          if (!SecureEmailUtilities.isCertificateSupported(x509Certificate, 2) || x509Certificate.queryKeyUsage(1) == 0) {
             return false;
@@ -370,9 +372,9 @@ public final class SMIMESignatureField extends SecureEmailSignatureField {
          KeyStore deviceKeyStore = DeviceKeyStore.getInstance();
          if (!deviceKeyStore.isMember(super._signerCertificate)) {
             if (this._importSignerCertificateMenuItem == null) {
-               this._importSignerCertificateMenuItem = (VerbMenuItem)(new Object(
-                  (Verb)(new Object(SMIMEResources.getString(2), super._signerCertificateChain, deviceKeyStore)), Integer.MAX_VALUE
-               ));
+               this._importSignerCertificateMenuItem = new VerbMenuItem(
+                  new ImportCertificatesVerb(SMIMEResources.getString(2), super._signerCertificateChain, deviceKeyStore), Integer.MAX_VALUE
+               );
             }
 
             contextMenu.addItem(this._importSignerCertificateMenuItem);
@@ -381,25 +383,25 @@ public final class SMIMESignatureField extends SecureEmailSignatureField {
          TrustedKeyStore trustedKeyStore = (TrustedKeyStore)TrustedKeyStore.getInstance();
          if ((super._signerCertificateChainProperties & 8) != 0 && trustedKeyStore.isAllowed(super._signerCertificateChain[0])) {
             if (this._trustSignerCertificateMenuItem == null) {
-               this._trustSignerCertificateMenuItem = (VerbMenuItem)(new Object(
-                  (Verb)(new Object(SMIMEResources.getString(6), super._signerCertificateChain, deviceKeyStore)), Integer.MAX_VALUE
-               ));
+               this._trustSignerCertificateMenuItem = new VerbMenuItem(
+                  new TrustCertificatesVerb(SMIMEResources.getString(6), super._signerCertificateChain, deviceKeyStore), Integer.MAX_VALUE
+               );
             }
 
             contextMenu.addItem(this._trustSignerCertificateMenuItem);
          }
 
          if (this._fetchSignerCertificateStatusMenuItem == null) {
-            this._fetchSignerCertificateStatusMenuItem = (VerbMenuItem)(new Object(
-               (Verb)(new Object(SMIMEResources.getBundle(), 7, super._signerCertificateChain, false, deviceKeyStore)), Integer.MAX_VALUE
-            ));
+            this._fetchSignerCertificateStatusMenuItem = new VerbMenuItem(
+               new FetchCertificateStatusVerb(SMIMEResources.getBundle(), 7, super._signerCertificateChain, false, deviceKeyStore), Integer.MAX_VALUE
+            );
          }
 
          contextMenu.addItem(this._fetchSignerCertificateStatusMenuItem);
          if (this._fetchSignerCertificateChainStatusMenuItem == null) {
-            this._fetchSignerCertificateChainStatusMenuItem = (VerbMenuItem)(new Object(
-               (Verb)(new Object(SMIMEResources.getBundle(), 8, super._signerCertificateChain, true, deviceKeyStore)), Integer.MAX_VALUE
-            ));
+            this._fetchSignerCertificateChainStatusMenuItem = new VerbMenuItem(
+               new FetchCertificateStatusVerb(SMIMEResources.getBundle(), 8, super._signerCertificateChain, true, deviceKeyStore), Integer.MAX_VALUE
+            );
          }
 
          contextMenu.addItem(this._fetchSignerCertificateChainStatusMenuItem);

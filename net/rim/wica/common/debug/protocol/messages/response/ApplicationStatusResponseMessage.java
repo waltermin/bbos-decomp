@@ -29,10 +29,6 @@ final class ApplicationStatusResponseMessage extends ApplicationCommandResponseM
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object("Application Status Response: app id=")))
-         .append(this.getApplicationId())
-         .append(", isRunning=")
-         .append(this.isRunning())
-         .toString();
+      return "Application Status Response: app id=" + this.getApplicationId() + ", isRunning=" + this.isRunning();
    }
 }

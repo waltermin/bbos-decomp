@@ -44,7 +44,7 @@ public final class CookieCache implements BrowserStateListener, PersistentConten
 
          try {
             var18 = true;
-            absUrl = (URI)(new Object(url));
+            absUrl = new URI(url);
             var18 = false;
          } finally {
             if (var18) {
@@ -93,16 +93,12 @@ public final class CookieCache implements BrowserStateListener, PersistentConten
                      var24 = var20;
                   }
                } catch (Throwable var21) {
-                  EventLogger.logEvent(1907089860548946979L, ((StringBuffer)(new Object("Invalid cookie "))).append(cookieString).toString().getBytes(), 0);
+                  EventLogger.logEvent(1907089860548946979L, ("Invalid cookie " + cookieString).getBytes(), 0);
                   QuincyUtil.sendQuincy(t, false);
                   continue;
                }
 
-               EventLogger.logEvent(
-                  1907089860548946979L,
-                  ((StringBuffer)(new Object())).append(Integer.toString(var24.getCode())).append(" :").append(cookieString).toString().getBytes(),
-                  5
-               );
+               EventLogger.logEvent(1907089860548946979L, (Integer.toString(var24.getCode()) + " :" + cookieString).getBytes(), 5);
             }
 
             this.addCookie(currentCookie);
@@ -199,7 +195,7 @@ public final class CookieCache implements BrowserStateListener, PersistentConten
          URI absUrl = null;
 
          try {
-            absUrl = (URI)(new Object(url));
+            absUrl = new URI(url);
          } finally {
             ;
          }
@@ -211,7 +207,7 @@ public final class CookieCache implements BrowserStateListener, PersistentConten
          for (int i = 0; i < matchingCookies.length; i++) {
             Cookie currentCookie = matchingCookies[i];
             if (cookieBuff == null) {
-               cookieBuff = (StringBuffer)(new Object());
+               cookieBuff = new StringBuffer();
             } else {
                cookieBuff.append(';');
                cookieBuff.append(' ');
@@ -328,7 +324,7 @@ public final class CookieCache implements BrowserStateListener, PersistentConten
    private CookieCache() {
       PersistentObject store = RIMPersistentStore.getPersistentObject(6375174330656707005L);
       if (store.getContents() == null) {
-         this._cookies = (LongHashtable)(new Object());
+         this._cookies = new LongHashtable();
       } else {
          this._cookies = (LongHashtable)store.getContents();
       }
@@ -345,7 +341,7 @@ public final class CookieCache implements BrowserStateListener, PersistentConten
          this.addMatchingCookies(cookies, matchingCookies, requestHost, requestURI, isSecure);
       }
 
-      hashCode = HashCodeCalculator.getDigest64(((StringBuffer)(new Object())).append('.').append(requestHost).toString().getBytes());
+      hashCode = HashCodeCalculator.getDigest64(('.' + requestHost).getBytes());
       cookies = (Cookie[])this._cookies.get(hashCode);
       if (cookies != null) {
          this.addMatchingCookies(cookies, matchingCookies, requestHost, requestURI, isSecure);

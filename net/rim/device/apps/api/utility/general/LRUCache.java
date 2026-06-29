@@ -13,7 +13,7 @@ public class LRUCache implements Persistable {
    }
 
    public LRUCache(int size) {
-      this._cache = (Hashtable)(new Object(size));
+      this._cache = new Hashtable(size);
       this._keys = new Object[size];
    }
 

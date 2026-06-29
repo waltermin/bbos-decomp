@@ -84,7 +84,7 @@ public class PKCS12Utilities {
       }
 
       int size = bags.length;
-      Certificate[] certificates = new Object[size];
+      Certificate[] certificates = new Certificate[size];
 
       for (int i = 0; i < size; i++) {
          certificates[i] = bags[i].getCertificate();
@@ -135,7 +135,7 @@ public class PKCS12Utilities {
       }
 
       int size = bags.length;
-      PrivateKey[] keys = new Object[size];
+      PrivateKey[] keys = new PrivateKey[size];
 
       for (int i = 0; i < size; i++) {
          keys[i] = bags[i].getPrivateKey();

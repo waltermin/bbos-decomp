@@ -7,6 +7,7 @@ import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.quickcontact.QuickContactUtil;
@@ -14,6 +15,7 @@ import net.rim.device.apps.internal.phone.api.PhoneUtilities;
 import net.rim.device.apps.internal.phone.model.PhoneNumberModel;
 import net.rim.device.apps.internal.phone.model.PhoneNumberServices;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 
 final class CallSummaryField extends VerticalFieldManager implements ListFieldCallback {
    private CallSummaryInfo _summaryInfo;
@@ -33,33 +35,33 @@ final class CallSummaryField extends VerticalFieldManager implements ListFieldCa
       if (!this._summaryInfo.haveAddress()) {
          char sdKey = this._summaryInfo.getSpeedDialKey();
          if (sdKey != 0) {
-            label = (LabelField)(new Object(this._summaryInfo.getCallerIDString(), 64));
+            label = new LabelField(this._summaryInfo.getCallerIDString(), 64);
             label.setPosition(2);
             callerIDField = new SpeedDialCallerIDField(label, sdKey);
          }
       }
 
       if (callerIDField == null) {
-         label = (LabelField)(new Object(this._summaryInfo.getCallerIDString(), 64));
+         label = new LabelField(this._summaryInfo.getCallerIDString(), 64);
          label.setPosition(2);
          callerIDField = label;
       }
 
-      this.add((Field)(new Object(2)));
+      this.add(new VerticalSpacerField(2));
       this.add(callerIDField);
       this._numLines++;
       if (!this._summaryInfo.displayCompanyName() && this._summaryInfo.getPersonName() != null) {
          String companyName = this._summaryInfo.getCompanyName();
          if (companyName != null) {
-            label = (LabelField)(new Object(companyName, 64));
+            label = new LabelField(companyName, 64);
             label.setPosition(2);
             this.add(label);
             this._numLines++;
          }
       }
 
-      this.add((Field)(new Object(2)));
-      this.add((Field)(new Object()));
+      this.add(new VerticalSpacerField(2));
+      this.add(new SeparatorField());
       this._phoneNumberCount = this._summaryInfo.getPhoneNumberCount();
       int numListRows;
       if (this._phoneNumberCount == 0) {
@@ -73,7 +75,7 @@ final class CallSummaryField extends VerticalFieldManager implements ListFieldCa
       }
 
       this._numLines += numListRows;
-      this._listField = (ListField)(new Object(numListRows, 36028797018963968L));
+      this._listField = new ListField(numListRows, 36028797018963968L);
       this._listField.setCallback(this);
       this.add(this._listField);
       this.update(callLog);
@@ -97,7 +99,7 @@ final class CallSummaryField extends VerticalFieldManager implements ListFieldCa
          int height = g.getFont().getHeight();
          int keyWidth = height;
          int x = Display.getWidth() - keyWidth;
-         ContextObject context = (ContextObject)(new Object());
+         ContextObject context = new ContextObject();
          context.put(9045827404276417370L, this);
          QuickContactUtil.paintHotkey(speedDialKey, g, x, 0, width, height, 5, context);
          width -= keyWidth - 2;
@@ -111,7 +113,7 @@ final class CallSummaryField extends VerticalFieldManager implements ListFieldCa
    }
 
    private final void paintCallType(Graphics g, int y, int width) {
-      String callTypeString = MessageFormat.format(PhoneResources.getString(253), new Object[]{this._call.getTypeString()});
+      String callTypeString = MessageFormat.format(PhoneResources.getString(253), new String[]{this._call.getTypeString()});
       g.drawText(callTypeString, 0, y, 64, width);
    }
 
@@ -124,11 +126,11 @@ final class CallSummaryField extends VerticalFieldManager implements ListFieldCa
          } else {
             int errorCode = this._call.getErrorCode();
             if (errorCode == 0) {
-               buf = (StringBuffer)(new Object());
+               buf = new StringBuffer();
                buf.append(PhoneResources.getString(169));
                buf.append(PhoneResources.getString(123));
             } else if (this._call.getType() == 1) {
-               buf = (StringBuffer)(new Object());
+               buf = new StringBuffer();
                int labelId = errorCode == 1 ? 169 : 170;
                buf.append(PhoneResources.getString(labelId));
                buf.append(PhoneUtilities.getCallFailureErrorString(errorCode));
@@ -139,7 +141,7 @@ final class CallSummaryField extends VerticalFieldManager implements ListFieldCa
             g.drawText(buf, 0, buf.length(), 0, y, 64, width);
          }
       } else {
-         buf = (StringBuffer)(new Object());
+         buf = new StringBuffer();
          buf.append(PhoneResources.getString(6020));
          buf.append(this._call.getElapsedTime());
          g.drawText(buf, 0, buf.length(), 0, y, 64, width);

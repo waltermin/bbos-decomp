@@ -19,7 +19,7 @@ final class BrowserProperty$BrowserPropertyScreen extends AppsMainScreen {
    public final boolean keyChar(char key, int status, int time) {
       if (key == 27) {
          if (UiApplication.getUiApplication().getActiveScreen().isDirty()) {
-            ExitVerb closeVerb = (ExitVerb)(new Object(0, this.this$0));
+            ExitVerb closeVerb = new ExitVerb(0, this.this$0);
             closeVerb.invoke(null);
             return true;
          } else {
@@ -33,10 +33,10 @@ final class BrowserProperty$BrowserPropertyScreen extends AppsMainScreen {
 
    @Override
    public final void makeMenu(SystemEnabledMenu menu, int instance) {
-      Verb[] verbs = new Object[0];
+      Verb[] verbs = new Verb[0];
       Verb defaultVerb = this.this$0.getVerbs(verbs);
       menu.add(verbs);
-      menu.add((Verb)(new Object(0, this.this$0)));
+      menu.add(new ExitVerb(0, this.this$0));
       if (UiApplication.getUiApplication().getActiveScreen().isMuddy() && defaultVerb != null) {
          menu.setDefault(defaultVerb);
       }

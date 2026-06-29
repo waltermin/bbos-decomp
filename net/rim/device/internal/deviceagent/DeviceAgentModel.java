@@ -6,7 +6,7 @@ import net.rim.device.api.util.Persistable;
 
 public final class DeviceAgentModel implements Persistable, SyncObject {
    private int _uid;
-   private DataBuffer _data = (DataBuffer)(new Object(false));
+   private DataBuffer _data = new DataBuffer(false);
 
    public final byte getTableId() {
       // $VF: Couldn't be decompiled

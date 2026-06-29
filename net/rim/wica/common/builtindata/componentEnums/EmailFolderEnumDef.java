@@ -11,10 +11,10 @@ public final class EmailFolderEnumDef extends EnumDefinition {
    public static final String FOLDER_ENUM_NAME = "FOLDER";
 
    public EmailFolderEnumDef() {
-      super._enumNames = new Object[2];
+      super._enumNames = new String[2];
       super._enumNames[0] = "INBOX";
       super._enumNames[1] = "SENT";
-      super._enumValues = (ToIntHashtable)(new Object(3));
+      super._enumValues = new ToIntHashtable(3);
       super._enumValues.put("INBOX", 0);
       super._enumValues.put("SENT", 1);
       super._enumName = "FOLDER";

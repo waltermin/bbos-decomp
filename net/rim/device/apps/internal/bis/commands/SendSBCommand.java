@@ -29,7 +29,7 @@ public final class SendSBCommand extends NetCommand {
             return DomainCommand.SESSION_TIMEOUT_RESULT;
          }
 
-         BISEventLogger.logEvent(((StringBuffer)(new Object("Send SB: Unhandled REST response code: "))).append(callResult.getRESTStatusCode()).toString(), 0);
+         BISEventLogger.logEvent("Send SB: Unhandled REST response code: " + callResult.getRESTStatusCode(), 0);
          commandErrorMsg = ApplicationResources.getString(192);
          commandResult = "failed";
       }

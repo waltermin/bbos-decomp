@@ -82,7 +82,7 @@ public final class SignedReceiptHelper {
             try {
                if (signedStream.isSignedReceiptRequested(currentSigner, address)) {
                   if (signersRequestingReceipts == null) {
-                     signersRequestingReceipts = new Object[numSigners];
+                     signersRequestingReceipts = new CMSEntityIdentifier[numSigners];
                   }
 
                   signersRequestingReceipts[numSignersRequestingReceipts++] = currentSigner;
@@ -103,7 +103,7 @@ public final class SignedReceiptHelper {
          SignedReceiptHelper$DoSigningWork signingWorker = new SignedReceiptHelper$DoSigningWork(
             signedStream, receivedModel, isPIN, numSignersRequestingReceipts, signersRequestingReceipts, serviceRecord, null
          );
-         PleaseWaitDialog pleaseWait = (PleaseWaitDialog)(new Object(SMIMEResources.getString(2086), signingWorker));
+         PleaseWaitDialog pleaseWait = new PleaseWaitDialog(SMIMEResources.getString(2086), signingWorker);
          pleaseWait.display();
          return signingWorker.getResult();
       } else {
@@ -115,7 +115,7 @@ public final class SignedReceiptHelper {
       boolean isPIN = message.flagsSet(8192);
       String address = getDeviceAddress(isPIN, serviceRecord);
       if (address != null) {
-         signedCMSStream.addReceiptRequest((CMSReceiptRequest)(new Object(new Object[]{address}, null)));
+         signedCMSStream.addReceiptRequest(new CMSReceiptRequest(new String[]{address}, null));
       }
    }
 
@@ -127,10 +127,10 @@ public final class SignedReceiptHelper {
    }
 
    private static final void addReceiptDataToCache(CMSReceiptData[] receiptData, EmailMessageModel message) {
-      StringBuffer subject = (StringBuffer)(new Object());
-      StringBuffer to = (StringBuffer)(new Object());
-      StringBuffer cc = (StringBuffer)(new Object());
-      StringBuffer bcc = (StringBuffer)(new Object());
+      StringBuffer subject = new StringBuffer();
+      StringBuffer to = new StringBuffer();
+      StringBuffer cc = new StringBuffer();
+      StringBuffer bcc = new StringBuffer();
       long sent = getMessageData(message, subject, to, cc, bcc);
 
       for (int i = 0; i < receiptData.length; i++) {
@@ -145,13 +145,13 @@ public final class SignedReceiptHelper {
 
    private static final long getMessageData(EmailMessageModel message, StringBuffer subject, StringBuffer to, StringBuffer cc, StringBuffer bcc) {
       subject.append(message.getSubject());
-      String[] stringArray = new Object[2];
+      String[] stringArray = new String[2];
       StringBuffer tempBuffer = null;
       int numModels = message.size();
 
       for (int j = 0; j < numModels; j++) {
          Object submember = message.getAt(j);
-         if (submember instanceof Object) {
+         if (submember instanceof EmailHeaderModel) {
             EmailHeaderModel emailHeaderModel = (EmailHeaderModel)submember;
             if (!emailHeaderModel.isBlank()) {
                emailHeaderModel.convert(null, stringArray);

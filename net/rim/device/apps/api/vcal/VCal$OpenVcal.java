@@ -39,8 +39,7 @@ public class VCal$OpenVcal extends Verb {
          if (viewer != null) {
             ResourceBundle rb = ResourceBundle.getBundle(912302513268743237L, "net.rim.device.apps.internal.resource.Calendar");
             String title = rb.getString(3);
-            Verb[] verbs = new Object[1];
-            verbs[0] = new VCal$AddToDevice(this._vcalItem);
+            Verb[] verbs = new Verb[]{new VCal$AddToDevice(this._vcalItem)};
             viewer.openViewer(title, verbs, -1, -1, true);
          }
       }

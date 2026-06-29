@@ -1,7 +1,9 @@
 package net.rim.device.api.crypto.pgp;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Enumeration;
+import net.rim.device.api.crypto.CryptoUnsupportedOperationException;
 import net.rim.device.api.crypto.certificate.pgp.PGPCertificate;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.io.Base64InputStream;
@@ -64,7 +66,7 @@ final class PGPInternalArmorDecoder extends InputStream {
       // 00b: bipush 0
       // 00c: putfield net/rim/device/api/crypto/pgp/PGPInternalArmorDecoder._hasUnsupportedOperation Z
       // 00f: aload 0
-      // 010: new java/lang/Object
+      // 010: new net/rim/device/api/util/MultiMap
       // 013: dup
       // 014: invokespecial net/rim/device/api/util/MultiMap.<init> ()V
       // 017: putfield net/rim/device/api/crypto/pgp/PGPInternalArmorDecoder._headers Lnet/rim/device/api/util/MultiMap;
@@ -77,7 +79,7 @@ final class PGPInternalArmorDecoder extends InputStream {
       // 024: aload 0
       // 025: iload 3
       // 026: putfield net/rim/device/api/crypto/pgp/PGPInternalArmorDecoder._displayUI Z
-      // 029: new java/lang/Object
+      // 029: new net/rim/device/api/io/LineReader
       // 02c: dup
       // 02d: aload 0
       // 02e: getfield net/rim/device/api/crypto/pgp/PGPInternalArmorDecoder._input Lnet/rim/device/api/io/SharedInputStream;
@@ -164,7 +166,7 @@ final class PGPInternalArmorDecoder extends InputStream {
       // 0d4: ifne 0f1
       // 0d7: new net/rim/device/api/crypto/pgp/PGPEncodingException
       // 0da: dup
-      // 0db: new java/lang/Object
+      // 0db: new java/lang/StringBuffer
       // 0de: dup
       // 0df: ldc_w "AIAH"
       // 0e2: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -520,7 +522,7 @@ final class PGPInternalArmorDecoder extends InputStream {
       // 3ad: isub
       // 3ae: invokevirtual net/rim/device/api/io/SharedInputStream.setLength (I)V
       // 3b1: aload 0
-      // 3b2: new java/lang/Object
+      // 3b2: new net/rim/device/api/io/Base64InputStream
       // 3b5: dup
       // 3b6: aload 4
       // 3b8: invokespecial net/rim/device/api/io/Base64InputStream.<init> (Ljava/io/InputStream;)V
@@ -538,7 +540,7 @@ final class PGPInternalArmorDecoder extends InputStream {
       // 3d4: isub
       // 3d5: invokevirtual net/rim/device/api/io/SharedInputStream.setLength (I)V
       // 3d8: aload 0
-      // 3d9: new java/lang/Object
+      // 3d9: new net/rim/device/api/io/Base64InputStream
       // 3dc: dup
       // 3dd: aload 4
       // 3df: invokespecial net/rim/device/api/io/Base64InputStream.<init> (Ljava/io/InputStream;)V
@@ -610,7 +612,7 @@ final class PGPInternalArmorDecoder extends InputStream {
 
    private final void readCRC(byte[] data, int offset) {
       try {
-         Base64InputStream crcStream = (Base64InputStream)(new Object((InputStream)(new Object(data, offset, 4))));
+         Base64InputStream crcStream = new Base64InputStream(new ByteArrayInputStream(data, offset, 4));
          byte[] crcBytes = new byte[3];
          int crcReadLength = crcStream.read(crcBytes);
          if (crcReadLength == 3) {
@@ -635,9 +637,9 @@ final class PGPInternalArmorDecoder extends InputStream {
       return this._headers.elements();
    }
 
-   public final InputStream getInnerStream() {
+   public final InputStream getInnerStream() throws CryptoUnsupportedOperationException {
       if (this._hasUnsupportedOperation) {
-         throw new Object();
+         throw new CryptoUnsupportedOperationException();
       }
 
       if (!this._wereProcessingErrors) {
@@ -730,7 +732,7 @@ final class PGPInternalArmorDecoder extends InputStream {
 
          return -1;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -786,7 +788,7 @@ final class PGPInternalArmorDecoder extends InputStream {
          this.validateIndex(this._certificates, index);
          return this._certificates[index];
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -803,7 +805,7 @@ final class PGPInternalArmorDecoder extends InputStream {
          this.validateIndex(this._privateKeys, index);
          return this._privateKeys[index];
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -845,7 +847,7 @@ final class PGPInternalArmorDecoder extends InputStream {
 
          return -1;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -859,9 +861,9 @@ final class PGPInternalArmorDecoder extends InputStream {
             endIndex--;
          }
 
-         return (String)(new Object(line, startIndex, endIndex - startIndex));
+         return new String(line, startIndex, endIndex - startIndex);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -900,7 +902,7 @@ final class PGPInternalArmorDecoder extends InputStream {
 
    private final void validateIndex(Object[] array, int index) {
       if (index < 0 || index >= array.length) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

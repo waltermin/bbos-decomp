@@ -3,6 +3,7 @@ package net.rim.device.internal.io.streamdatagram;
 import com.sun.cldc.io.ConnectionBaseInterface;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Hashtable;
@@ -51,7 +52,7 @@ public class StreamDatagramConnectionBase
    protected boolean _freshnessSealed = true;
    protected Tunnel _tunnel;
    protected TrafficLogger _tLogger;
-   private TunnelWorker _tunnelWorker = (TunnelWorker)(new Object());
+   private TunnelWorker _tunnelWorker = new TunnelWorker();
    private long EVL_SDConnectionBase_GUID = -5856082934285904418L;
    private String EvlName = "StreamDatagramConnectionBase";
    private int _flags;
@@ -69,21 +70,21 @@ public class StreamDatagramConnectionBase
    }
 
    @Override
-   public Connection openPrim(String name, int mode, boolean timeouts) {
+   public Connection openPrim(String name, int mode, boolean timeouts) throws IOException {
       String transportName = this.getClass().getName();
       this._mode = mode;
       this._timeouts = timeouts;
       int index = transportName.lastIndexOf(46);
       if (index == -1) {
-         throw new Object("Unable to find underlying transport class");
+         throw new IOException("Unable to find underlying transport class");
       }
 
-      transportName = ((StringBuffer)(new Object())).append(transportName.substring(0, index + 1)).append("Transport").toString();
+      transportName = transportName.substring(0, index + 1) + "Transport";
       if ((this._transport = (StreamDatagramTransportBase)TransportRegistry.get(transportName)) != null && !this._isListenConnection) {
          if (this._transport.isConnectionTableFull()) {
             EventLogger.logEvent(447071754022829032L, 1413696867, 3);
             this._transport.logConnections();
-            throw new Object("Max connections opened.");
+            throw new IOException("Max connections opened.");
          }
 
          this._transport.addConnection(this);
@@ -132,7 +133,7 @@ public class StreamDatagramConnectionBase
          apnPassword = TunnelCredentialsProvider.getInstance().getApnPassword();
       }
 
-      TunnelConfig tunnelConfig = (TunnelConfig)(new Object(apn, "net.rim.tcp", null, apnUsername, apnPassword, this._tunnelWorker));
+      TunnelConfig tunnelConfig = new TunnelConfig(apn, "net.rim.tcp", null, apnUsername, apnPassword, this._tunnelWorker);
       if (lingerTimeout >= 0) {
          tunnelConfig.setLingerTimeout(lingerTimeout);
       }
@@ -228,21 +229,21 @@ public class StreamDatagramConnectionBase
 
    @Override
    public DataOutputStream openDataOutputStream() {
-      return (DataOutputStream)(new Object(this.openOutputStream()));
+      return new DataOutputStream(this.openOutputStream());
    }
 
    @Override
-   public OutputStream openOutputStream() throws ConnectionClosedException {
+   public OutputStream openOutputStream() throws IOException, ConnectionClosedException {
       if (this._outStream == null || this._closeRequested) {
          throw new ConnectionClosedException();
       }
 
       if (this._outputStreamClosed) {
-         throw new Object(STR_STREAM_IS_ALREADY_CLOSED);
+         throw new IOException(STR_STREAM_IS_ALREADY_CLOSED);
       }
 
       if (this._outputStreamOpened) {
-         throw new Object(STR_STREAM_IS_ALREADY_OPEN);
+         throw new IOException(STR_STREAM_IS_ALREADY_OPEN);
       }
 
       this._outputStreamOpened = true;
@@ -251,21 +252,21 @@ public class StreamDatagramConnectionBase
 
    @Override
    public DataInputStream openDataInputStream() {
-      return (DataInputStream)(new Object(this.openInputStream()));
+      return new DataInputStream(this.openInputStream());
    }
 
    @Override
-   public InputStream openInputStream() throws ConnectionClosedException {
+   public InputStream openInputStream() throws IOException, ConnectionClosedException {
       if (this._inStream == null || this._closeRequested) {
          throw new ConnectionClosedException();
       }
 
       if (this._inputStreamClosed) {
-         throw new Object(STR_STREAM_IS_ALREADY_CLOSED);
+         throw new IOException(STR_STREAM_IS_ALREADY_CLOSED);
       }
 
       if (this._inputStreamOpened) {
-         throw new Object(STR_STREAM_IS_ALREADY_OPEN);
+         throw new IOException(STR_STREAM_IS_ALREADY_OPEN);
       }
 
       this._inputStreamOpened = true;
@@ -376,7 +377,7 @@ public class StreamDatagramConnectionBase
    @Override
    public Object setProperty(String name, Object data) {
       if (this._properties == null) {
-         this._properties = (Hashtable)(new Object());
+         this._properties = new Hashtable();
       }
 
       return this._properties.put(name, data);

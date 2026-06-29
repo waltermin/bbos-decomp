@@ -10,7 +10,7 @@ import net.rim.device.apps.api.ui.ProgressIndicator;
 import net.rim.device.apps.internal.options.resources.OptionsResources;
 
 final class ApplicationList extends AbstractItemList {
-   private Hashtable _indents = (Hashtable)(new Object());
+   private Hashtable _indents = new Hashtable();
    protected static final int INDENT_SIZE = 5;
    private static Object _loadLock = new Object();
    private static boolean _isProcessing = false;
@@ -30,7 +30,7 @@ final class ApplicationList extends AbstractItemList {
          version = OptionsResources.getString(1428);
       }
 
-      version = ((StringBuffer)(new Object())).append(' ').append(version).toString();
+      version = ' ' + version;
       Integer indentLevel = (Integer)this._indents.get(element);
       int indentation = 5 * (indentLevel != null ? indentLevel : 0);
       Font f = graphics.getFont();
@@ -55,7 +55,7 @@ final class ApplicationList extends AbstractItemList {
 
    @Override
    public final void refresh() {
-      ProgressIndicator indicator = (ProgressIndicator)(new Object(4));
+      ProgressIndicator indicator = new ProgressIndicator(4);
       indicator.setProgressRunnable(new ApplicationList$ApplicationListLoader(this));
       indicator.run();
    }

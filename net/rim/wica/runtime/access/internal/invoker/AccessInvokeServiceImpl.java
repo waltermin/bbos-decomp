@@ -103,7 +103,7 @@ public class AccessInvokeServiceImpl implements AccessInvokeService, Serviceable
       // 28: aload 3
       // 29: invokevirtual net/rim/wica/runtime/persistence/Resource.getData ()[B
       // 2c: ifnull 45
-      // 2f: new java/lang/Object
+      // 2f: new java/io/ByteArrayInputStream
       // 32: dup
       // 33: aload 3
       // 34: invokevirtual net/rim/wica/runtime/persistence/Resource.getData ()[B
@@ -142,7 +142,7 @@ public class AccessInvokeServiceImpl implements AccessInvokeService, Serviceable
          try {
             this._lifecycleService.startWiclet(applicationUri);
          } catch (Throwable var4) {
-            throw new Object(e.toString());
+            throw new RuntimeException(e.toString());
          }
       }
    }
@@ -151,7 +151,7 @@ public class AccessInvokeServiceImpl implements AccessInvokeService, Serviceable
    public void startCall(String number) {
       if (this.verifyAccessGranted()) {
          try {
-            PhoneArguments phoneArgs = (PhoneArguments)(new Object("call", number));
+            PhoneArguments phoneArgs = new PhoneArguments("call", number);
             if (phoneArgs != null) {
                Invoke.invokeApplication(4, phoneArgs);
                return;
@@ -198,7 +198,7 @@ public class AccessInvokeServiceImpl implements AccessInvokeService, Serviceable
             int caps = service.getStatus();
             ServiceRecord sr = service.getOutgoingServiceRecord();
             if ((caps & 1) != 0 && sr != null) {
-               EmailSendUtility.sendMessage(emm, sr, new Object());
+               EmailSendUtility.sendMessage(emm, sr, new ContextObject());
                retValue = 1;
             } else {
                this.saveMessageAsDraftInternal(emm);
@@ -235,7 +235,7 @@ public class AccessInvokeServiceImpl implements AccessInvokeService, Serviceable
    }
 
    private void saveMessageAsDraftInternal(EmailMessageModel emm) {
-      ContextObject co = (ContextObject)(new Object());
+      ContextObject co = new ContextObject();
       long folderToPutMessageIn = EmailSendUtility.assignFolderToMessage(emm, co);
       EmailSendUtility.fileOutgoingMessageInFolder(emm, folderToPutMessageIn, co);
    }
@@ -266,7 +266,7 @@ public class AccessInvokeServiceImpl implements AccessInvokeService, Serviceable
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

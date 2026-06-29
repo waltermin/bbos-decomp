@@ -5,6 +5,7 @@ import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.CheckboxField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.wica.runtime.metadata.component.ui.control.ChoiceControl;
 
 final class WicletCheckboxListField extends ChoiceField implements FieldChangeListener {
@@ -34,10 +35,10 @@ final class WicletCheckboxListField extends ChoiceField implements FieldChangeLi
       ChoiceControl controller = (ChoiceControl)this.getModel();
       Manager manager = this;
       if (controller.isMandatory()) {
-         HorizontalFieldManager hManager = (HorizontalFieldManager)(new Object());
+         HorizontalFieldManager hManager = new HorizontalFieldManager();
          this._mandatoryLabel = new WicletCheckboxListField$MandatoryLabel(this, "*", 17179869184L);
          this._isMandatorySatisfied = this.isMandatorySatisfied(controller);
-         manager = (Manager)(new Object());
+         manager = new VerticalFieldManager();
          hManager.add(this._mandatoryLabel);
          hManager.add(manager);
          this.add(hManager);

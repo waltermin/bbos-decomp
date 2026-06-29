@@ -16,6 +16,7 @@ import net.rim.device.apps.internal.mms.ui.MMSModelScreen;
 import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.SMILPlayer;
 import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.SMILVolumeControl;
 import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.VolumeChangeListener;
+import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.player.AnimatedBitmapPlayer;
 import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.player.Player;
 import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.verbs.MMSNextSlideVerb;
 import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.verbs.MMSPrevSlideVerb;
@@ -42,7 +43,7 @@ public class SlideManager extends Manager implements FieldChangeListener, Volume
       if (this._volumeField == null) {
          ResourceBundle mmsResources = ResourceBundle.getBundle(8432718016989017157L, "net.rim.device.apps.internal.resource.MMS");
          String volumeStr = mmsResources.getString(117);
-         this._volumeField = (NumericChoiceField)(new Object(volumeStr, 0, 9, 1, SMILPlayer.getVolumeLevel() / 11, 4503608217305088L));
+         this._volumeField = new NumericChoiceField(volumeStr, 0, 9, 1, SMILPlayer.getVolumeLevel() / 11, 4503608217305088L);
          boolean var5 = false /* VF: Semaphore variable */;
 
          label24:
@@ -101,8 +102,7 @@ public class SlideManager extends Manager implements FieldChangeListener, Volume
          this.addSlideToView(id);
          this.removeSlideFromView(oldSlideID);
          int curSlide = this._ids.indexOf(this._idSlideInFocus) + 1;
-         this._slideNumberField
-            .setText(((StringBuffer)(new Object())).append(this._slideNumberLabel).append(" ").append(curSlide).append("/").append(this._numSlides).toString());
+         this._slideNumberField.setText(this._slideNumberLabel + " " + curSlide + "/" + this._numSlides);
       }
    }
 
@@ -151,7 +151,7 @@ public class SlideManager extends Manager implements FieldChangeListener, Volume
    public void onDisplay() {
       super.onDisplay();
       Object screen = UiApplication.getUiApplication().getActiveScreen();
-      if (screen instanceof Object) {
+      if (screen instanceof MMSModelScreen) {
          MMSModelScreen mmsScreen = (MMSModelScreen)screen;
          if (this._volumeField != null) {
             mmsScreen.setVolumeControl(this._player.getVolumeControl());
@@ -171,9 +171,9 @@ public class SlideManager extends Manager implements FieldChangeListener, Volume
 
    private void animateImageComponent(Slide slide) {
       Field imageComponent = slide.getImageComponent();
-      if (imageComponent != null && imageComponent instanceof Object) {
+      if (imageComponent != null && imageComponent instanceof ScalableBitmapField) {
          ScalableBitmapField sbf = (ScalableBitmapField)imageComponent;
-         Player player = (Player)(new Object(sbf, 200));
+         Player player = new AnimatedBitmapPlayer(sbf, 200);
          player.start();
       }
    }
@@ -237,11 +237,11 @@ public class SlideManager extends Manager implements FieldChangeListener, Volume
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public SlideManager(long style) {
       super(style);
-      this._slides = (IntHashtable)(new Object());
-      this._ids = (IntVector)(new Object());
-      this._nextVerb = (VerbMenuItem)(new Object(new MMSNextSlideVerb(this), 500));
-      this._previousVerb = (VerbMenuItem)(new Object(new MMSPrevSlideVerb(this), 450));
-      this._slideNumberField = (RichTextField)(new Object(36028797018963968L));
+      this._slides = new IntHashtable();
+      this._ids = new IntVector();
+      this._nextVerb = new VerbMenuItem(new MMSNextSlideVerb(this), 500);
+      this._previousVerb = new VerbMenuItem(new MMSPrevSlideVerb(this), 450);
+      this._slideNumberField = new RichTextField(36028797018963968L);
       boolean var5 = false /* VF: Semaphore variable */;
 
       label20:

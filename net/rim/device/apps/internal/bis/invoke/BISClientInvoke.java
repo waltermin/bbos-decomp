@@ -11,12 +11,12 @@ public class BISClientInvoke {
    public static final String RIBBON_INVOKE_ARGUMENT = "RIBBON";
    public static final String BIS_CLIENT_MODULE_NAME = "net_rim_bis_client";
    public static final String BIS_LAUNCH_MODULE_NAME = "net_rim_bis_launch";
-   private static ApplicationDescriptor _wizardDescriptor = (ApplicationDescriptor)(new Object(
+   private static ApplicationDescriptor _wizardDescriptor = new ApplicationDescriptor(
       BISClientInvoke._baseDescriptor, "net_rim_bis_launch", new String[]{"WIZARD"}
-   ));
-   private static ApplicationDescriptor _ribbonDescriptor = (ApplicationDescriptor)(new Object(
+   );
+   private static ApplicationDescriptor _ribbonDescriptor = new ApplicationDescriptor(
       BISClientInvoke._baseDescriptor, "net_rim_bis_launch", new String[]{"RIBBON"}
-   ));
+   );
    private static ApplicationDescriptor _baseDescriptor = CodeModuleManager.getApplicationDescriptors(CodeModuleManager.getModuleHandle("net_rim_bis_launch"))[0];
 
    public static boolean canBeInvoked() {

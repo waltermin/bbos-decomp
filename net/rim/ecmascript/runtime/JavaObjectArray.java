@@ -27,14 +27,10 @@ class JavaObjectArray extends JavaArray {
                ((Object[])super._obj)[index] = ((JavaObject)Value.checkIfObjectValue(value)).getJavaObject();
                return true;
             } finally {
-               throw ThrownValue.typeError(
-                  Resources.getString(38), Convert.toString(value), ((StringBuffer)(new Object())).append(this._cls.getName()).append("[]").toString()
-               );
+               throw ThrownValue.typeError(Resources.getString(38), Convert.toString(value), this._cls.getName() + "[]");
             }
          default:
-            throw ThrownValue.typeError(
-               Resources.getString(38), Convert.toString(value), ((StringBuffer)(new Object())).append(this._cls.getName()).append("[]").toString()
-            );
+            throw ThrownValue.typeError(Resources.getString(38), Convert.toString(value), this._cls.getName() + "[]");
       }
    }
 

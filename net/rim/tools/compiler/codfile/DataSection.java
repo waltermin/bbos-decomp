@@ -232,7 +232,7 @@ public final class DataSection extends CodfileItem {
 
       int ordinal = this._modules.size();
       if (isBrittle) {
-         StringBuffer v = (StringBuffer)(new Object());
+         StringBuffer v = new StringBuffer();
          if (version != null) {
             v.append(version);
          }

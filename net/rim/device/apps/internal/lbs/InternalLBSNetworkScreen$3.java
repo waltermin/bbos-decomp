@@ -31,7 +31,7 @@ final class InternalLBSNetworkScreen$3 implements Runnable {
       // 016: astore 6
       // 018: invokestatic net/rim/device/api/system/DeviceInfo.isSimulator ()Z
       // 01b: ifeq 038
-      // 01e: new java/lang/Object
+      // 01e: new java/lang/StringBuffer
       // 021: dup
       // 022: invokespecial java/lang/StringBuffer.<init> ()V
       // 025: aload 6
@@ -44,7 +44,7 @@ final class InternalLBSNetworkScreen$3 implements Runnable {
       // 038: invokestatic net/rim/device/api/system/RadioInfo.getNetworkType ()I
       // 03b: bipush 5
       // 03d: if_icmpne 057
-      // 040: new java/lang/Object
+      // 040: new java/lang/StringBuffer
       // 043: dup
       // 044: invokespecial java/lang/StringBuffer.<init> ()V
       // 047: aload 6
@@ -55,7 +55,7 @@ final class InternalLBSNetworkScreen$3 implements Runnable {
       // 055: astore 6
       // 057: aload 6
       // 059: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 05c: checkcast java/lang/Object
+      // 05c: checkcast javax/microedition/io/HttpConnection
       // 05f: astore 3
       // 060: goto 06e
       // 063: astore 7

@@ -8,8 +8,8 @@ import net.rim.device.api.util.CyclicQueue;
 
 final class GmeReceiveThread extends Thread implements ConnectionListener {
    private Transport _transport;
-   private Hashtable _connections = (Hashtable)(new Object());
-   private CyclicQueue _queue = (CyclicQueue)(new Object(32));
+   private Hashtable _connections = new Hashtable();
+   private CyclicQueue _queue = new CyclicQueue(32);
 
    public GmeReceiveThread(Transport transport) {
       this._transport = transport;
@@ -52,7 +52,7 @@ final class GmeReceiveThread extends Thread implements ConnectionListener {
       // 18: aload 0
       // 19: getfield net/rim/device/cldc/io/gme/GmeReceiveThread._queue Lnet/rim/device/api/util/CyclicQueue;
       // 1c: invokevirtual net/rim/device/api/util/CyclicQueue.dequeue ()Ljava/lang/Object;
-      // 1f: checkcast java/lang/Object
+      // 1f: checkcast net/rim/device/api/io/DatagramConnectionBase
       // 22: astore 1
       // 23: aload 3
       // 24: monitorexit

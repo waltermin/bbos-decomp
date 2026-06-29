@@ -10,7 +10,7 @@ class ESFunctionPrototype$Constructor extends Constructor {
 
    @Override
    public long run() throws ThrownValue {
-      StringBuffer fd = (StringBuffer)(new Object());
+      StringBuffer fd = new StringBuffer();
       if (this.getVersion() == 120) {
          fd.append("function (");
       } else {

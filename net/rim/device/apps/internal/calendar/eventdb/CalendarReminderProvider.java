@@ -25,7 +25,7 @@ public final class CalendarReminderProvider implements CollectionListener, Remin
    private long _nearestFuture = Long.MAX_VALUE;
    private long _nearestEventLUID;
    private boolean _nearestFutureSet;
-   private Recur$Handle _sharedHandle = (Recur$Handle)(new Object());
+   private Recur$Handle _sharedHandle = new Recur$Handle();
    private static final int REMINDER_COUNT_MISMATCH = 1380796755;
    private static boolean _markAllPendingForRetry = true;
 
@@ -43,7 +43,7 @@ public final class CalendarReminderProvider implements CollectionListener, Remin
 
    @Override
    public final void elementAdded(Collection collection, Object element) {
-      if (element instanceof Object) {
+      if (element instanceof Reminder) {
          long adjustedTime = this._reminderManager.getAdjustedCurrentTimeMillis();
          TimeZone tz = TimeZone.getDefault();
          Reminder r = this.getNextReminderWorker(adjustedTime, tz, (Event)element);
@@ -55,7 +55,7 @@ public final class CalendarReminderProvider implements CollectionListener, Remin
 
    @Override
    public final void elementUpdated(Collection collection, Object oldElement, Object newElement) {
-      if (oldElement instanceof Object) {
+      if (oldElement instanceof Reminder) {
          Reminder oldReminder = (Reminder)oldElement;
          Reminder newReminder = (Reminder)newElement;
          Event oldEvent = (Event)oldElement;
@@ -99,7 +99,7 @@ public final class CalendarReminderProvider implements CollectionListener, Remin
 
    @Override
    public final void elementRemoved(Collection collection, Object element) {
-      if (element instanceof Object) {
+      if (element instanceof Reminder) {
          Reminder r = (Reminder)element;
          this._reminderManager.removeReminder(this, r);
       }
@@ -122,7 +122,7 @@ public final class CalendarReminderProvider implements CollectionListener, Remin
          if (updatedEvent == null) {
             for (int i = 0; i < max; i++) {
                Object o = calObjects[i];
-               if (o instanceof Object) {
+               if (o instanceof Event) {
                   Event event = (Event)o;
                   this.examineEvent(event, time, tz);
                }
@@ -149,7 +149,7 @@ public final class CalendarReminderProvider implements CollectionListener, Remin
    private final Reminder markPreviousInstanceFired(Reminder instance, long currentTime, TimeZone tz) {
       Reminder result = instance;
       if (((Event)instance).isRecurring()) {
-         Recur$Handle handle = (Recur$Handle)(new Object());
+         Recur$Handle handle = new Recur$Handle();
          ReminderModel rm = instance.getReminderData();
          if (rm != null) {
             long reminderDelta = rm.getTime();
@@ -212,8 +212,8 @@ public final class CalendarReminderProvider implements CollectionListener, Remin
             this._nearestEventLUID = event.getLUID();
          }
       } else {
-         Event var15 = this.updateReminderState(event.getReminderID(), 6, this._sharedHandle._handle - rm.getTime());
-         this._reminderManager.immediateReminder(this, (Reminder)var15);
+         event = (Event)this.updateReminderState(event.getReminderID(), 6, this._sharedHandle._handle - rm.getTime());
+         this._reminderManager.immediateReminder(this, event);
       }
    }
 
@@ -231,8 +231,8 @@ public final class CalendarReminderProvider implements CollectionListener, Remin
          int state = rm.getState();
          if (reminderPoint <= adjustedCurrentTime && adjustedCurrentTime <= endTime && (rm.getReminderFiredFor() < this._sharedHandle._handle || state == 4)) {
             long reminderTimer = this._sharedHandle._handle - reminderDelta;
-            Event var18 = this.updateReminderState(event.getReminderID(), 6, reminderTimer);
-            this._reminderManager.immediateReminder(this, (Reminder)var18);
+            event = (Event)this.updateReminderState(event.getReminderID(), 6, reminderTimer);
+            this._reminderManager.immediateReminder(this, event);
             return;
          }
       }
@@ -290,20 +290,20 @@ public final class CalendarReminderProvider implements CollectionListener, Remin
       Reminder result = null;
       Event event = null;
       long eventLUID = reminderID;
-      Event var11 = this._calendardb.get(eventLUID);
-      if (var11 != null) {
-         var11 = ObjectGroup.expandGroup(var11);
-         if (var11 == null) {
+      event = (Event)this._calendardb.get(eventLUID);
+      if (event != null) {
+         event = (Event)ObjectGroup.expandGroup(event);
+         if (event == null) {
             return null;
          }
 
-         ReminderModel rmodel = ((Reminder)var11).getReminderData();
+         ReminderModel rmodel = event.getReminderData();
          if (rmodel == null) {
             return null;
          }
 
-         result = (Reminder)var11;
-         if (!((Event)var11).isRecurring()) {
+         result = event;
+         if (!event.isRecurring()) {
             rmodel.setState(state);
          } else {
             if (state == 2 || state == 5 || state == 6 || state == 4 || state == 3) {
@@ -317,11 +317,11 @@ public final class CalendarReminderProvider implements CollectionListener, Remin
             }
          }
 
-         ((Reminder)var11).updateReminderData(rmodel);
+         event.updateReminderData(rmodel);
          if (state != 5 && state != 6) {
-            this._calendardb.addWithAction(var11, 2);
+            this._calendardb.addWithAction(event, 2);
          } else {
-            this._calendardb.addWithAction(var11, 6);
+            this._calendardb.addWithAction(event, 6);
          }
       }
 

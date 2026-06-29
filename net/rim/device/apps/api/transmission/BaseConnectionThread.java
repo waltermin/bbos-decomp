@@ -22,7 +22,7 @@ public class BaseConnectionThread extends Thread implements EventLoggerEvents, D
          boolean startThread = this._connection == null;
          this._connection = aDatagramConnection;
          EventLogger.logEvent(this._eventLoggerGUID, 1129530708, 5);
-         if (this._connection instanceof Object) {
+         if (this._connection instanceof DatagramConnectionBase) {
             ((DatagramConnectionBase)this._connection).setDatagramStatusListener(this);
          }
 

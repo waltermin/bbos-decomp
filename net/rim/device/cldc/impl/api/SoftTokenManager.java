@@ -41,7 +41,7 @@ public class SoftTokenManager {
    }
 
    public static void logEvent(int value, String text, int level) {
-      StringBuffer tempBuffer = (StringBuffer)(new Object());
+      StringBuffer tempBuffer = new StringBuffer();
       tempBuffer.append(StringUtilities.intToString(value));
       tempBuffer.append(":");
       tempBuffer.append(text);

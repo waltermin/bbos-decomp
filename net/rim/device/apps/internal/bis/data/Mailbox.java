@@ -56,7 +56,7 @@ public final class Mailbox {
    }
 
    public final void setHosted(boolean hosted) {
-      this._hosted = (Boolean)(new Object(hosted));
+      this._hosted = new Boolean(hosted);
    }
 
    public final String getEmail() {
@@ -112,7 +112,7 @@ public final class Mailbox {
    }
 
    public final void setUseSSL(boolean useSSL) {
-      this._useSSL = (Boolean)(new Object(useSSL));
+      this._useSSL = new Boolean(useSSL);
    }
 
    public final String getFriendlyName() {
@@ -152,7 +152,7 @@ public final class Mailbox {
    }
 
    public final void setAutoForwardAll(boolean autoForwardAll) {
-      this._autoForwardAll = (Boolean)(new Object(autoForwardAll));
+      this._autoForwardAll = new Boolean(autoForwardAll);
    }
 
    public final String getSignature() {
@@ -164,7 +164,7 @@ public final class Mailbox {
    }
 
    public final void setDeleteSync(boolean deleteSync) {
-      this._deleteSync = (Boolean)(new Object(deleteSync));
+      this._deleteSync = new Boolean(deleteSync);
    }
 
    public final Boolean getDeleteSync() {
@@ -180,7 +180,7 @@ public final class Mailbox {
    }
 
    public final void setTimeout(int timeout) {
-      this._timeout = (Integer)(new Object(timeout));
+      this._timeout = new Integer(timeout);
    }
 
    public final Integer getPort() {
@@ -188,7 +188,7 @@ public final class Mailbox {
    }
 
    public final void setPort(int port) {
-      this._port = (Integer)(new Object(port));
+      this._port = new Integer(port);
    }
 
    public final String getSrcMboxID() {
@@ -224,7 +224,7 @@ public final class Mailbox {
    }
 
    public final Boolean getForwardMessages() {
-      return (Boolean)((this._settings & 1048576) == 1048576 ? new Object(true) : new Object(false));
+      return (this._settings & 1048576) == 1048576 ? new Boolean(true) : new Boolean(false);
    }
 
    public final boolean isForwardMessagesToDevice() {
@@ -266,7 +266,7 @@ public final class Mailbox {
 
    public final void addFilter(Filter filter) {
       if (this._filters == null) {
-         this._filters = (Vector)(new Object());
+         this._filters = new Vector();
       }
 
       this._filters.addElement(filter);

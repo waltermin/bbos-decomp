@@ -36,7 +36,7 @@ class ESNumberPrototype$4 extends HostFunction {
          throw ThrownValue.rangeError(Resources.getString(34), Integer.toString(p), "toPrecision");
       }
 
-      StringBuffer b = (StringBuffer)(new Object());
+      StringBuffer b = new StringBuffer();
       ParsedDouble fd = new ParsedDouble(d);
       if (fd.isNegative) {
          b.append('-');
@@ -48,7 +48,7 @@ class ESNumberPrototype$4 extends HostFunction {
       }
 
       fd.roundDigits(fd.nDigits, p);
-      StringBuffer digits = (StringBuffer)(new Object());
+      StringBuffer digits = new StringBuffer();
       int e;
       if (d == 0L) {
          for (int i = 0; i < p; i++) {

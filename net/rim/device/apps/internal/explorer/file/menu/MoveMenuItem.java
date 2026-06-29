@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.explorer.file.menu;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.Screen;
+import net.rim.device.apps.api.framework.file.FileSelectionFilter;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.internal.explorer.file.FileItemField;
 import net.rim.device.apps.internal.explorer.file.FileSelectionVerb;
@@ -31,18 +32,18 @@ public final class MoveMenuItem extends MenuItem implements CopyProgressCallback
 
    @Override
    public final void run() {
-      ContextObject ctx = (ContextObject)(new Object(5));
+      ContextObject ctx = new ContextObject(5);
       ctx.put(424670468422402792L, this);
       if (this._rootView != null) {
          ContextObject.put(ctx, 3941043584844673548L, this._rootView);
       }
 
-      ctx.put(-1002650280265073678L, new Object(this._sourceFile.getMediaType(), -2147476480));
-      String startingPath = _lastMovePath != null ? _lastMovePath : ((StringBuffer)(new Object("file://"))).append(this._sourceFile.getPath()).toString();
+      ctx.put(-1002650280265073678L, new FileSelectionFilter(this._sourceFile.getMediaType(), -2147476480));
+      String startingPath = _lastMovePath != null ? _lastMovePath : "file://" + this._sourceFile.getPath();
       ctx.put(2765042845091913199L, startingPath);
       FileSelectionVerb selectFileVerb = new FileSelectionVerb(ctx, ExplorerResources.getResourceBundleFamily(), this._copy ? 119 : 38);
       Object filename = selectFileVerb.invoke(ctx);
-      if (filename instanceof Object) {
+      if (filename instanceof String) {
          if (this._screenToClose != null) {
             this._screenToClose.close();
          }

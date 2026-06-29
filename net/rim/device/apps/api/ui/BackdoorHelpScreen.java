@@ -1,7 +1,7 @@
 package net.rim.device.apps.api.ui;
 
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.container.MainScreen;
 
 public final class BackdoorHelpScreen extends MainScreen {
@@ -10,7 +10,7 @@ public final class BackdoorHelpScreen extends MainScreen {
       if (helpStrings != null && helpStrings.length > 0) {
          this.add(new BackdoorHelpScreen$1(this, strings.length, 36028797018963968L, strings));
       } else {
-         this.add((Field)(new Object("no help strings provided")));
+         this.add(new LabelField("no help strings provided"));
       }
    }
 

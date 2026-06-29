@@ -66,7 +66,7 @@ public final class Method extends NameAndType {
       this._parameters[index] = parmType;
       this._parmLocalCount = this._parmLocalCount + type.getLocalCount();
       if (this._parmLocalCount > 255) {
-         throw new CompileException(((StringBuffer)(new Object("Too many parameters in method "))).append(this.getName()).toString());
+         throw new CompileException("Too many parameters in method " + this.getName());
       }
    }
 
@@ -215,16 +215,7 @@ public final class Method extends NameAndType {
          return true;
       }
 
-      compiler.generateWarning(
-         false,
-         thisClass.getFullName(),
-         ((StringBuffer)(new Object("Method ")))
-            .append(this.getName())
-            .append(" does not override ")
-            .append(otherClass.getFullName())
-            .append(this.getName())
-            .toString()
-      );
+      compiler.generateWarning(false, thisClass.getFullName(), "Method " + this.getName() + " does not override " + otherClass.getFullName() + this.getName());
       return false;
    }
 

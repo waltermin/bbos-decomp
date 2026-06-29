@@ -13,7 +13,7 @@ public class ASN1SignedByteArray implements Persistable {
          this._value = value;
          this._isPositive = isPositive;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

@@ -28,7 +28,7 @@ public final class BrowserURLCollection
    OTASyncCapable,
    OTASyncPriorityProvider,
    UrlCollectionListener {
-   private CollectionListenerManager _collectionListenerManager = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _collectionListenerManager = new CollectionListenerManager();
    public static String BROWSER_URLS_DB_NAME = "Browser Urls";
    public static int SYNC_VERSION = 1;
 
@@ -124,7 +124,7 @@ public final class BrowserURLCollection
    public final SyncObject[] getSyncObjects() {
       VisitedURLStore visitedURLStore = VisitedURLStore.getInstance();
       int length = visitedURLStore.size();
-      SyncObject[] objects = new Object[length];
+      SyncObject[] objects = new SyncObject[length];
 
       for (int i = length - 1; i >= 0; i--) {
          String url = visitedURLStore.getRecentElementAt(i);
@@ -239,7 +239,7 @@ public final class BrowserURLCollection
 
       BrowserURLSyncObject object = (BrowserURLSyncObject)syncObject;
       ConversionProvider converter = object;
-      SyncBuffer syncBuffer = (SyncBuffer)(new Object(buffer, version, object.getUID()));
+      SyncBuffer syncBuffer = new SyncBuffer(buffer, version, object.getUID());
       return converter.convert(null, syncBuffer);
    }
 }

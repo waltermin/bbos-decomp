@@ -124,9 +124,7 @@ final class WicletQueueManager extends Processor implements InboundQueueConnecti
          m.setMessageCode(this._messageCodeMap.get(m.getMessageCode()));
          m.setWicletID(this._wicletId);
       } else {
-         throw new MessagingException(
-            ((StringBuffer)(new Object("Message code map not found for upgraded wiclet, message = "))).append(m.toString()).toString()
-         );
+         throw new MessagingException("Message code map not found for upgraded wiclet, message = " + m.toString());
       }
    }
 
@@ -296,7 +294,7 @@ final class WicletQueueManager extends Processor implements InboundQueueConnecti
 
    private final void handleKeepLast(Message m) {
       if (this._replacementTable == null) {
-         this._replacementTable = (Hashtable)(new Object());
+         this._replacementTable = new Hashtable();
       }
 
       if (WicletQueueManager$ReplacementAlgorithm.replace(this._replacementTable, this._fgQueue, m)) {
@@ -506,11 +504,7 @@ final class WicletQueueManager extends Processor implements InboundQueueConnecti
       if (threshold == 0) {
          InternalLogger.logWarning(
             this,
-            ((StringBuffer)(new Object("Application ")))
-               .append(this._wicletId)
-               .append(" has inbound queue limit of 0. Application will immediately")
-               .append(" suspend all messages from MDS Server.")
-               .toString(),
+            "Application " + this._wicletId + " has inbound queue limit of 0. Application will immediately" + " suspend all messages from MDS Server.",
             null,
             null
          );
@@ -657,7 +651,7 @@ final class WicletQueueManager extends Processor implements InboundQueueConnecti
             }
 
             if (this._replacementTable == null) {
-               this._replacementTable = (Hashtable)(new Object());
+               this._replacementTable = new Hashtable();
             }
 
             if (this._replacementTable.containsKey(id)) {
@@ -699,7 +693,7 @@ final class WicletQueueManager extends Processor implements InboundQueueConnecti
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

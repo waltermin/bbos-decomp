@@ -27,9 +27,9 @@ public class ContentRegistry {
          if (uri.startsWith("cod://")) {
             conn = (HttpConnection)Connector.open(uri);
          } else {
-            HttpHeaders requestHeaders = (HttpHeaders)(new Object());
+            HttpHeaders requestHeaders = new HttpHeaders();
             requestHeaders.setProperty("x-rim-transcode-content", "none");
-            RequestedResource resource = (RequestedResource)(new Object(uri, requestHeaders, 0));
+            RequestedResource resource = new RequestedResource(uri, requestHeaders, 0);
             conn = _browserContent.getRenderingApplication().getResource(resource, null);
          }
 

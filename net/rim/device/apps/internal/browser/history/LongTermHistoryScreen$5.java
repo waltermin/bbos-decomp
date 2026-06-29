@@ -17,7 +17,7 @@ class LongTermHistoryScreen$5 extends MenuItem {
       Object item = this.this$0._treeField.getCookie(this.this$0._treeField.getCurrentNode());
       LongTermHistoryNode node = (LongTermHistoryNode)item;
       String time = LongTermHistoryScreen.DATE_FORMAT.formatLocal(node.getTimestamp());
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       buffer.append(BrowserResources.getString(706));
       buffer.append(' ');
       buffer.append(node.getTitle());
@@ -29,7 +29,7 @@ class LongTermHistoryScreen$5 extends MenuItem {
       buffer.append(BrowserResources.getString(801));
       buffer.append(' ');
       buffer.append(time);
-      Dialog dialog = (Dialog)(new Object(0, buffer.toString(), 0, null, 0));
+      Dialog dialog = new Dialog(0, buffer.toString(), 0, null, 0);
       dialog.doModal();
    }
 }

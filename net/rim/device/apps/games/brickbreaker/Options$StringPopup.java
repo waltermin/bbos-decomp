@@ -3,6 +3,8 @@ package net.rim.device.apps.games.brickbreaker;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.EditField;
+import net.rim.device.api.ui.component.PasswordEditField;
 import net.rim.device.api.ui.component.TextField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.apps.api.ui.CommonResources;
@@ -16,19 +18,19 @@ public final class Options$StringPopup extends Dialog {
       super(message, null, null, 0, null);
       this.setEscapeEnabled(false);
       if (passwordField) {
-         this._editString = (TextField)(new Object("", "", 24, 4503601774854144L));
+         this._editString = new PasswordEditField("", "", 24, 4503601774854144L);
       } else {
-         this._editString = (TextField)(new Object("", "", 24, 4503601774854144L));
+         this._editString = new EditField("", "", 24, 4503601774854144L);
       }
 
       this._editString.setFilter(new HighScoreTextFilter());
       this._editString.setAllowUnicodeInput(false);
       this.add(this._editString);
-      this._buttonOk = (ButtonField)(new Object(CommonResources.getString(117)));
+      this._buttonOk = new ButtonField(CommonResources.getString(117));
       this._buttonOk.setChangeListener(this);
-      this._buttonCancel = (ButtonField)(new Object(CommonResources.getString(9042)));
+      this._buttonCancel = new ButtonField(CommonResources.getString(9042));
       this._buttonCancel.setChangeListener(this);
-      HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(12884901888L));
+      HorizontalFieldManager hfm = new HorizontalFieldManager(12884901888L);
       hfm.add(this._buttonOk);
       hfm.add(this._buttonCancel);
       this.add(hfm);

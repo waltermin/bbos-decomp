@@ -37,9 +37,7 @@ final class IOTATimerThread extends Thread {
       }
 
       this._timedOut = true;
-      ProvisioningServiceAgent.logEvents(
-         ((StringBuffer)(new Object("Client Timed out after"))).append(this._timeoutVal / 60000).append(" minutes...").toString()
-      );
+      ProvisioningServiceAgent.logEvents("Client Timed out after" + this._timeoutVal / 60000 + " minutes...");
       this._theProcessor.cancelProcessing();
    }
 }

@@ -22,33 +22,24 @@ public final class SuplUtilities implements DialogClosedListener {
       } else {
          double horUncertainty = position.getHorizontalUncertainty();
          double specifiedHorAcc = desiredQOP.getHorizontalAccuracy();
-         System.out
-            .println(((StringBuffer)(new Object("HorAcc Specified: "))).append(specifiedHorAcc).append(" HorUncert: ").append(horUncertainty).toString());
+         System.out.println("HorAcc Specified: " + specifiedHorAcc + " HorUncert: " + horUncertainty);
          result = horUncertainty < specifiedHorAcc;
          if ((desiredQOP.optionals & 4) == 4) {
             double verUncertainty = position.getVerticalUncertainity();
             double specifiedVerAcc = desiredQOP.getVerticalAccuracy();
-            System.out
-               .println(((StringBuffer)(new Object("VerAcc Specified: "))).append(specifiedVerAcc).append(" VerUncert: ").append(verUncertainty).toString());
+            System.out.println("VerAcc Specified: " + specifiedVerAcc + " VerUncert: " + verUncertainty);
             result = result && verUncertainty < specifiedVerAcc;
          }
 
          if ((desiredQOP.optionals & 2) == 2) {
             long positionTimestamp = position.getUTCTime();
             long currentTime = System.currentTimeMillis();
-            System.out
-               .println(
-                  ((StringBuffer)(new Object("MaxLocAge Specified: ")))
-                     .append(desiredQOP.maxLocAge)
-                     .append(" Position Age: ")
-                     .append(currentTime - positionTimestamp)
-                     .toString()
-               );
+            System.out.println("MaxLocAge Specified: " + desiredQOP.maxLocAge + " Position Age: " + (currentTime - positionTimestamp));
             result = result && currentTime - positionTimestamp < desiredQOP.maxLocAge;
          }
 
          if ((desiredQOP.optionals & 1) == 1) {
-            System.out.println(((StringBuffer)(new Object("Specified Delay: "))).append(desiredQOP.delay).toString());
+            System.out.println("Specified Delay: " + desiredQOP.delay);
             return result;
          }
       }
@@ -79,9 +70,9 @@ public final class SuplUtilities implements DialogClosedListener {
             resourceString = _rb.getString(3);
       }
 
-      this.dialog = (Dialog)(new Object(dialogType, resourceString, this.defaultChoice, null, 0));
+      this.dialog = new Dialog(dialogType, resourceString, this.defaultChoice, null, 0);
       this.dialog.setDialogClosedListener(this);
-      this.timer = (Timer)(new Object());
+      this.timer = new Timer();
       this.timer.schedule(new SuplUtilities$VerificationTimerTask(this, null), 30000);
       UiApplication.getUiApplication().invokeAndWait(new SuplUtilities$1(this));
 

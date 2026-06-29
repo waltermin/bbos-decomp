@@ -30,7 +30,7 @@ public class PhoneAwareScreen extends AppsMainScreen implements PhoneEventListen
       } else {
          int state = VoiceServices.getPhoneState();
          if (state != 0 && state != 1 && state != 6) {
-            System.out.println(((StringBuffer)(new Object("Kept active mode due to state = "))).append(state).toString());
+            System.out.println("Kept active mode due to state = " + state);
             return true;
          } else {
             return false;

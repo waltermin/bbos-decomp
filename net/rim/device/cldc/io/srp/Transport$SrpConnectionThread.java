@@ -10,7 +10,7 @@ final class Transport$SrpConnectionThread extends Thread {
 
    private Transport$SrpConnectionThread(Transport _1) {
       this.this$0 = _1;
-      this._queue = (Vector)(new Object(3));
+      this._queue = new Vector(3);
    }
 
    final void add(Transport$SrpConnectionEvent event) {

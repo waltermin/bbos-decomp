@@ -6,7 +6,7 @@ public class PasswordAuthentication {
 
    public PasswordAuthentication(byte[] userName, byte[] password) {
       if (password == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       this._userName = userName;

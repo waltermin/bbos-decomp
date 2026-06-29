@@ -33,8 +33,8 @@ final class ScreenTitleField extends Field implements RibbonComponent$RibbonComp
    private int _y1;
    private ScreenTitleField$RedrawRunnable _redrawRunnable = new ScreenTitleField$RedrawRunnable(this);
    private static final Tag TAG = Tag.create("title");
-   private static Hashtable _signalParameters = (Hashtable)(new Object());
-   private static Hashtable _indicatorParameters = (Hashtable)(new Object());
+   private static Hashtable _signalParameters = new Hashtable();
+   private static Hashtable _indicatorParameters = new Hashtable();
    private static ThemeAttributeSet _signalAttributes;
    private static final int SEPARATOR_HEIGHT = 1;
    private static final int COMPONENT_GAP = 2;

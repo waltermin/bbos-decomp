@@ -4,7 +4,7 @@ import net.rim.device.api.util.Arrays;
 import net.rim.vm.Array;
 
 public class JapaneseVariants extends SLVariants {
-   private StringBuffer _romaji = (StringBuffer)(new Object());
+   private StringBuffer _romaji = new StringBuffer();
 
    public JapaneseVariants(int hCount, int vCount) {
       super(vCount, false);

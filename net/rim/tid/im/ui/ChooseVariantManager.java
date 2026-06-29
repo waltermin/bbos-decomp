@@ -33,7 +33,7 @@ class ChooseVariantManager extends VerticalFieldManager implements FieldChangeLi
       this.setScrollArrowWidth();
       this._spellChecker = spellChecker;
       if (this.includeMenuButton()) {
-         this._menuButton = (ButtonField)(new Object(this._bundleFamily.getString(22)));
+         this._menuButton = new ButtonField(this._bundleFamily.getString(22));
          this.add(this._menuButton);
       }
 

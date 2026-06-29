@@ -7,6 +7,7 @@ import net.rim.device.api.ui.component.AutoTextEditField;
 import net.rim.device.api.ui.component.CheckboxField;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.VerbProvider;
@@ -15,6 +16,7 @@ import net.rim.device.apps.api.framework.profiles.TuneManager;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.AppsMainScreen;
 import net.rim.device.apps.api.ui.Confirmation;
+import net.rim.device.apps.api.ui.ExitVerb;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
 import net.rim.device.internal.i18n.CommonResource;
 
@@ -28,12 +30,12 @@ class OverrideEditScreen extends AppsMainScreen implements Confirmation {
    private boolean _newOverride;
    private Verb _saveVerb;
    private ContextObject _context;
-   private Verb _closeVerb = (Verb)(new Object(0, this));
+   private Verb _closeVerb = new ExitVerb(0, this);
    static final int ACTIVE_PROFILE_UID = -1;
 
    OverrideEditScreen(Override override, boolean newOverride) {
       super(0);
-      this._context = (ContextObject)(new Object(newOverride ? 6 : 0));
+      this._context = new ContextObject(newOverride ? 6 : 0);
       ResourceBundle resources = ResourceBundle.getBundle(2384708948246157241L, "net.rim.device.apps.internal.resource.Profiles");
       this._saveVerb = new OverrideEditScreen$SaveVerb(this, null);
       this._override = override;
@@ -44,15 +46,15 @@ class OverrideEditScreen extends AppsMainScreen implements Confirmation {
       }
 
       if (this._override.isFromAddressBook()) {
-         this._titleField = (AutoTextEditField)(new Object(resources.getString(241), name, name.length(), 36028797018963968L));
+         this._titleField = new AutoTextEditField(resources.getString(241), name, name.length(), 36028797018963968L);
       } else {
-         this._titleField = (AutoTextEditField)(new Object(resources.getString(241), name));
+         this._titleField = new AutoTextEditField(resources.getString(241), name);
       }
 
       this.setTitle(this._titleField);
       this._fromField = new OverrideFromField(this._override);
       this.add(this._fromField);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       Profiles profiles = Profiles.getInstance();
       int numProfiles = profiles.size();
       int profileUID = this._override.getProfileUID();
@@ -61,7 +63,7 @@ class OverrideEditScreen extends AppsMainScreen implements Confirmation {
          selectedProfileIndex = 0;
       }
 
-      String[] p = new Object[numProfiles + 1];
+      String[] p = new String[numProfiles + 1];
       p[0] = resources.getString(235);
 
       for (int i = 0; i < numProfiles; i++) {
@@ -74,17 +76,17 @@ class OverrideEditScreen extends AppsMainScreen implements Confirmation {
       }
 
       if (this._override.isFromAddressBook()) {
-         this._profileField = (ObjectChoiceField)(new Object(resources.getString(236), p, selectedProfileIndex, 36028797018963968L));
+         this._profileField = new ObjectChoiceField(resources.getString(236), p, selectedProfileIndex, 36028797018963968L);
       } else {
-         this._profileField = (ObjectChoiceField)(new Object(resources.getString(236), p, selectedProfileIndex, 18014398509481984L));
+         this._profileField = new ObjectChoiceField(resources.getString(236), p, selectedProfileIndex, 18014398509481984L);
       }
 
       this.add(this._profileField);
       boolean useTune = this._override.getUseTune();
       if (this._override.isFromAddressBook()) {
-         this._useTuneCheckbox = (CheckboxField)(new Object(resources.getString(237), useTune, 45035996273704960L));
+         this._useTuneCheckbox = new CheckboxField(resources.getString(237), useTune, 45035996273704960L);
       } else {
-         this._useTuneCheckbox = (CheckboxField)(new Object(resources.getString(237), useTune));
+         this._useTuneCheckbox = new CheckboxField(resources.getString(237), useTune);
       }
 
       this.add(this._useTuneCheckbox);
@@ -99,7 +101,7 @@ class OverrideEditScreen extends AppsMainScreen implements Confirmation {
    protected void makeMenu(SystemEnabledMenu menu, int instance) {
       super.makeMenu(menu, instance);
       Field focusField = this.getFieldWithFocus();
-      if (focusField instanceof Object) {
+      if (focusField instanceof VerbProvider) {
          VerbProvider verbProvider = (VerbProvider)focusField;
          menu.add(verbProvider, 0);
       }

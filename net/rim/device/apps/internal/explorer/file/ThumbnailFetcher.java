@@ -59,7 +59,7 @@ final class ThumbnailFetcher implements Runnable {
 
    private final void checkStartThread() {
       if (this._myThread == null) {
-         this._myThread = (Thread)(new Object(this, "ThumbnailFetcher"));
+         this._myThread = new Thread(this, "ThumbnailFetcher");
          this._myThread.setPriority(this._myThread.getPriority() - 1);
          this._myThread.start();
       }
@@ -252,11 +252,11 @@ final class ThumbnailFetcher implements Runnable {
       // 10e: iload 5
       // 110: tableswitch 32 -1 2 70 32 42 63
       // 130: aload 6
-      // 132: instanceof java/lang/Object
+      // 132: instanceof net/rim/device/api/system/EncodedImage
       // 135: istore 7
       // 137: goto 156
       // 13a: aload 6
-      // 13c: instanceof java/lang/Object
+      // 13c: instanceof java/lang/String
       // 13f: istore 7
       // 141: iload 7
       // 143: ifne 156
@@ -266,7 +266,7 @@ final class ThumbnailFetcher implements Runnable {
       // 14a: invokevirtual net/rim/device/internal/io/file/MetaDataFile.getMetadataFromCache (Ljava/lang/String;I)Ljava/lang/Object;
       // 14d: astore 6
       // 14f: aload 6
-      // 151: instanceof java/lang/Object
+      // 151: instanceof java/lang/Long
       // 154: istore 7
       // 156: iload 7
       // 158: ifeq 163

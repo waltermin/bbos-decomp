@@ -51,12 +51,12 @@ public final class EditSaveCommand implements DomainCommand {
 
          if (callResult.getRESTStatusCode() == 10202) {
             ForgotHostedPasswordCommand.handleAttempts(params, tempMailbox, restClient, configRecord);
-            String errorMsg = MessageFormat.format(ApplicationResources.getString(228), new Object[]{mailboxToEdit.getDescription()});
+            String errorMsg = MessageFormat.format(ApplicationResources.getString(228), new String[]{mailboxToEdit.getDescription()});
             return new DomainCommandResult("validationFailed", errorMsg, null);
          }
 
          if (callResult.getRESTStatusCode() == 10005) {
-            String errorMsg = MessageFormat.format(ApplicationResources.getString(228), new Object[]{mailboxToEdit.getDescription()});
+            String errorMsg = MessageFormat.format(ApplicationResources.getString(228), new String[]{mailboxToEdit.getDescription()});
             return new DomainCommandResult("hostedValidationFailed", errorMsg, null);
          }
 
@@ -64,7 +64,7 @@ public final class EditSaveCommand implements DomainCommand {
             return DomainCommand.SESSION_TIMEOUT_RESULT;
          }
 
-         BISEventLogger.logEvent(((StringBuffer)(new Object("Save: Unhandled REST response code: "))).append(callResult.getRESTStatusCode()).toString(), 0);
+         BISEventLogger.logEvent("Save: Unhandled REST response code: " + callResult.getRESTStatusCode(), 0);
          return new DomainCommandResult("failed", null, ApplicationResources.getString(192));
       } catch (Throwable var14) {
          BISEventLogger.logEvent(e.toString(), 0);
@@ -179,11 +179,11 @@ public final class EditSaveCommand implements DomainCommand {
    protected final String getSuccessMessage(Hashtable params) {
       String mailbox = ClientSessionState.getInstance().getMailboxToModify().getDescription();
       if (params.containsKey("oldPassword")) {
-         return MessageFormat.format(ApplicationResources.getString(260), new Object[]{mailbox});
+         return MessageFormat.format(ApplicationResources.getString(260), new String[]{mailbox});
       } else {
          return !params.containsKey("answer") || !params.containsKey("question") && !params.containsKey("questionId")
             ? ApplicationResources.getString(112)
-            : MessageFormat.format(ApplicationResources.getString(261), new Object[]{mailbox});
+            : MessageFormat.format(ApplicationResources.getString(261), new String[]{mailbox});
       }
    }
 }

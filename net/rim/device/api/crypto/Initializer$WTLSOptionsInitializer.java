@@ -11,7 +11,7 @@ final class Initializer$WTLSOptionsInitializer implements OptionsProviderRegistr
 
    @Override
    public final Vector getOptionsItems() {
-      Vector items = (Vector)(new Object());
+      Vector items = new Vector();
       items.addElement(new WTLSOptionsItem());
       return items;
    }

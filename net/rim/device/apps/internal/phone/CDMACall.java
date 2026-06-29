@@ -69,7 +69,7 @@ final class CDMACall extends StandardCall {
 
                if (cidProvider != null) {
                   Object number = cidProvider.getNumber();
-                  if (number instanceof Object) {
+                  if (number instanceof AbstractPhoneNumberModel) {
                      cidNumber = ((AbstractPhoneNumberModel)number).getValue();
                   }
                }
@@ -105,9 +105,9 @@ final class CDMACall extends StandardCall {
             if (this.matchCallId(callId)) {
                PhoneUtilities.setLastNumberDialed("");
                this.setFlag(512);
-               if (context instanceof Object) {
-                  int status = context;
-                  System.out.println(((StringBuffer)(new Object("EV_OTA_STATUS_CHANGE("))).append(callId).append(", ").append(status).append(')').toString());
+               if (context instanceof Integer) {
+                  int status = (Integer)context;
+                  System.out.println("EV_OTA_STATUS_CHANGE(" + callId + ", " + status + ')');
                   this.setOTAFlag(status);
                   return;
                }
@@ -131,9 +131,9 @@ final class CDMACall extends StandardCall {
          call.mute();
       }
 
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          Object info = ContextObject.get(context, 5898398779440734986L);
-         if (info instanceof Object) {
+         if (info instanceof CallerIDInfo) {
             CallerIDInfo callerIDInfo = (CallerIDInfo)info;
             this._displayCallerIDInfo = callerIDInfo;
             this.clearFlag(4096);
@@ -141,7 +141,7 @@ final class CDMACall extends StandardCall {
             if (callerIDInfo.isIncomingCall()) {
                boolean hasConnected = this.getFlag(2);
                if (!hasConnected && PhoneOptions.getOptions().getBooleanOption(8)) {
-                  PhoneCallInitialData data = (PhoneCallInitialData)(new Object(0, (byte)0, 8, callerIDInfo, null));
+                  PhoneCallInitialData data = new PhoneCallInitialData(0, (byte)0, 8, callerIDInfo, null);
                   PhoneCallModel phoneCall = (PhoneCallModel)PhoneUtilities.createPhoneCallModel(data);
                   if (phoneCall != null) {
                      MessageLookups.put(-7579072715623987642L, phoneCall.getRefId(), phoneCall);

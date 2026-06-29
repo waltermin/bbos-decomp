@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.mms.ui;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.AutoTextEditField;
 import net.rim.device.api.ui.component.DateField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -17,7 +18,7 @@ class StatusReportField$StatusReportScreen extends MainScreen {
    public StatusReportField$StatusReportScreen(StatusReportField _1, MMSMessageModel message, Object context) {
       super(196608);
       this.this$0 = _1;
-      VerticalFieldManager vfm = (VerticalFieldManager)(new Object());
+      VerticalFieldManager vfm = new VerticalFieldManager();
       vfm.deleteAll();
       if (_1._type == 74) {
          this.addDeliveryReports(vfm, message, context);
@@ -47,7 +48,7 @@ class StatusReportField$StatusReportScreen extends MainScreen {
    }
 
    private Field createField(MMSStatusReport report, Object context) {
-      VerticalFieldManager vfm = (VerticalFieldManager)(new Object(36028797018963968L));
+      VerticalFieldManager vfm = new VerticalFieldManager(36028797018963968L);
       if (report.getAddress() != null) {
          RIMModel address = StatusReportField.getAddressModel(report.getAddress());
          ContextObject ctx = ContextObject.clone(context);
@@ -56,11 +57,11 @@ class StatusReportField$StatusReportScreen extends MainScreen {
          vfm.add(f);
       }
 
-      DateField df = (DateField)(new Object(MMSResources.getString(81), report.getDate(), 36028801313931312L));
+      DateField df = new DateField(MMSResources.getString(81), report.getDate(), 36028801313931312L);
       df.setEditable(false);
       vfm.add(df);
       vfm.add(this.getStatusField(report.getStatus()));
-      vfm.add((Field)(new Object()));
+      vfm.add(new SeparatorField());
       return vfm;
    }
 
@@ -108,7 +109,6 @@ class StatusReportField$StatusReportScreen extends MainScreen {
       }
 
       long style = 36028803461414912L;
-      AutoTextEditField f = (AutoTextEditField)(new Object(MMSResources.getString(80), str, str.length(), style));
-      return f;
+      return new AutoTextEditField(MMSResources.getString(80), str, str.length(), style);
    }
 }

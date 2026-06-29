@@ -1,6 +1,7 @@
 package net.rim.device.cldc.io.waphttp;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.microedition.io.SecurityInfo;
@@ -129,7 +130,7 @@ public class WAPRequestImpl extends HttpProtocolBase implements WAPRequest {
    @Override
    protected final OutputStream getOutputStream() {
       if (this._outputStream == null) {
-         this._outputStream = (ByteArrayOutputStream)(new Object());
+         this._outputStream = new ByteArrayOutputStream();
       }
 
       return this._outputStream;
@@ -153,11 +154,11 @@ public class WAPRequestImpl extends HttpProtocolBase implements WAPRequest {
    }
 
    @Override
-   protected final void readResponse() {
+   protected final void readResponse() throws IOException {
       WAPConnectionRegistry.getInstance();
       WAPConnectionImpl connection = (WAPConnectionImpl)WAPConnectionRegistry.getConnection(this._params);
       if (connection == null) {
-         throw new Object("Failed to open connection");
+         throw new IOException("Failed to open connection");
       }
 
       synchronized (this._abortSync) {
@@ -176,8 +177,8 @@ public class WAPRequestImpl extends HttpProtocolBase implements WAPRequest {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private void processUrlParameters(URLParameters parameters) {
-      this._params = (WAPConnectionParams)(new Object());
+   private void processUrlParameters(URLParameters parameters) throws IOException {
+      this._params = new WAPConnectionParams();
       boolean xEnableWTLSFound = false;
       String temp = parameters.getValue("ConnectionTimeout");
       if (temp != null) {
@@ -218,7 +219,7 @@ public class WAPRequestImpl extends HttpProtocolBase implements WAPRequest {
          }
 
          if (!valueSet) {
-            throw new Object("WapGatewayIP should be assigned an IP address");
+            throw new IOException("WapGatewayIP should be assigned an IP address");
          }
 
          temp = parameters.getValue("WapGatewayAPN");
@@ -226,12 +227,12 @@ public class WAPRequestImpl extends HttpProtocolBase implements WAPRequest {
             case 3:
             case 7:
                if (temp == null) {
-                  throw new Object("WapGatewayAPN should be provided");
+                  throw new IOException("WapGatewayAPN should be provided");
                }
 
                this._params._wapServerAPN = temp.trim();
                if (this._params._wapServerAPN.length() == 0) {
-                  throw new Object("WapGatewayAPN should be provided with a value");
+                  throw new IOException("WapGatewayAPN should be provided with a value");
                }
                break;
             default:
@@ -277,7 +278,7 @@ public class WAPRequestImpl extends HttpProtocolBase implements WAPRequest {
                }
             } finally {
                if (var21) {
-                  throw new Object("WapGatewayPort parameter is invalid");
+                  throw new IOException("WapGatewayPort parameter is invalid");
                }
             }
          }
@@ -294,7 +295,7 @@ public class WAPRequestImpl extends HttpProtocolBase implements WAPRequest {
                var16 = false;
             } finally {
                if (var16) {
-                  throw new Object("WapSourcePort parameter is invalid");
+                  throw new IOException("WapSourcePort parameter is invalid");
                }
             }
          }

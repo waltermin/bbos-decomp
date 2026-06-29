@@ -29,7 +29,7 @@ public final class ProfileManager {
 
    public static final void reset(String name) {
       if (_enabled) {
-         ProfileElement element = (ProfileElement)_elements.get(((StringBuffer)(new Object())).append(_appName).append(name).toString());
+         ProfileElement element = (ProfileElement)_elements.get(_appName + name);
          if (element != null) {
             element.reset();
          }
@@ -49,7 +49,7 @@ public final class ProfileManager {
    }
 
    public static final void initialize(String name) {
-      ProfileElement element = (ProfileElement)_elements.get(((StringBuffer)(new Object())).append(_appName).append(name).toString());
+      ProfileElement element = (ProfileElement)_elements.get(_appName + name);
       if (element != null) {
          element.initialize();
       }
@@ -66,7 +66,7 @@ public final class ProfileManager {
    }
 
    public static final ProfileElement add(String name, int elementType) {
-      return addGlobal(((StringBuffer)(new Object())).append(_appName).append(name).toString(), elementType);
+      return addGlobal(_appName + name, elementType);
    }
 
    public static final ProfileElement addGlobal(String name, int elementType) {
@@ -96,11 +96,11 @@ public final class ProfileManager {
    }
 
    public static final void remove(String name) {
-      _elements.remove(((StringBuffer)(new Object())).append(_appName).append(name).toString());
+      _elements.remove(_appName + name);
    }
 
    public static final ProfileElement get(String name, int elementType) {
-      return getGlobal(((StringBuffer)(new Object())).append(_appName).append(name).toString(), elementType);
+      return getGlobal(_appName + name, elementType);
    }
 
    public static final ProfileElement getGlobal(String name, int elementType) {
@@ -131,7 +131,7 @@ public final class ProfileManager {
    }
 
    public static final ProfileElement get(String name) {
-      return (ProfileElement)_elements.get(((StringBuffer)(new Object())).append(_appName).append(name).toString());
+      return (ProfileElement)_elements.get(_appName + name);
    }
 
    public static final ProfileElement getGlobal(String name) {
@@ -207,7 +207,7 @@ public final class ProfileManager {
    }
 
    public static final int getValue(String name) {
-      ProfileElement element = (ProfileElement)_elements.get(((StringBuffer)(new Object())).append(_appName).append(name).toString());
+      ProfileElement element = (ProfileElement)_elements.get(_appName + name);
       return element != null && element instanceof ProfileVariable ? ((ProfileVariable)element).get() : -1;
    }
 
@@ -231,7 +231,7 @@ public final class ProfileManager {
          var7 = true;
          _elements = (Hashtable)store.get(1416792644370612918L);
          if (_elements == null) {
-            _elements = (Hashtable)(new Object());
+            _elements = new Hashtable();
             store.put(1416792644370612918L, _elements);
             var7 = false;
          } else {
@@ -240,7 +240,7 @@ public final class ProfileManager {
       } finally {
          if (var7) {
             if (_elements == null) {
-               _elements = (Hashtable)(new Object());
+               _elements = new Hashtable();
             }
             break label73;
          }
@@ -254,7 +254,7 @@ public final class ProfileManager {
          var4 = true;
          _symbolMap = (IntHashtable)store.get(8128867418941961688L);
          if (_symbolMap == null) {
-            _symbolMap = (IntHashtable)(new Object());
+            _symbolMap = new IntHashtable();
             store.put(8128867418941961688L, _symbolMap);
             var4 = false;
          } else {
@@ -263,7 +263,7 @@ public final class ProfileManager {
       } finally {
          if (var4) {
             if (_symbolMap == null) {
-               _symbolMap = (IntHashtable)(new Object());
+               _symbolMap = new IntHashtable();
             }
             break label66;
          }
@@ -271,6 +271,6 @@ public final class ProfileManager {
 
       _appName = "";
       ApplicationDescriptor ad = ApplicationDescriptor.currentApplicationDescriptor();
-      _appName = ((StringBuffer)(new Object())).append(ad.getName()).append(":").toString();
+      _appName = ad.getName() + ":";
    }
 }

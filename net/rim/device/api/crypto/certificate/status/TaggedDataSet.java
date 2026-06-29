@@ -15,17 +15,17 @@ class TaggedDataSet {
       if (compressionTable == null) {
          this._fields = null;
          this._compressionTable = null;
-         this._uncompressedFields = (IntHashtable)(new Object());
+         this._uncompressedFields = new IntHashtable();
       } else {
          this._compressionTable = compressionTable;
-         this._fields = (IntIntHashtable)(new Object());
+         this._fields = new IntIntHashtable();
          this._uncompressedFields = null;
       }
    }
 
    public void addField(int tag, byte[] value) {
       if (value == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (this._compressionTable == null) {
@@ -61,11 +61,11 @@ class TaggedDataSet {
 
    public void serialize(DataOutputStream out) {
       if (this._compressionTable == null) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       if (out == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       out.writeShort((short)this._fields.size());
@@ -80,11 +80,11 @@ class TaggedDataSet {
 
    public void unSerialize(DataInputStream in) {
       if (this._compressionTable == null) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       if (in == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int length = in.readShort() & '\uffff';

@@ -32,7 +32,7 @@ final class UserInfoDataBlob extends PeerDataBlob {
 
    @Override
    public final void pickle(DataBuffer db) {
-      DataBuffer db2 = (DataBuffer)(new Object(db.isBigEndian()));
+      DataBuffer db2 = new DataBuffer(db.isBigEndian());
       db2.writeUTF(this._conversationId);
       db2.writeUTF(this._originalInfo);
       db2.writeCompressedInt(this._request ? 1 : 0);

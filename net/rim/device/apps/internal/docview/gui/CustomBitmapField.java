@@ -11,10 +11,10 @@ import net.rim.device.apps.api.ui.FocusPaintManager;
 
 class CustomBitmapField extends BitmapField {
    protected String _domID;
-   private FocusPaintManager _focusManager = (FocusPaintManager)(new Object());
+   private FocusPaintManager _focusManager = new FocusPaintManager();
 
    CustomBitmapField(EncodedImage image, long style) {
-      super((Bitmap)((Object)null), style);
+      super((Bitmap)null, style);
       this.setImage(image);
    }
 
@@ -63,14 +63,14 @@ class CustomBitmapField extends BitmapField {
    @Override
    protected void drawFocus(Graphics graphics, boolean on) {
       if (on) {
-         XYRect focusRect = (XYRect)(new Object());
+         XYRect focusRect = new XYRect();
          this.getFocusRect(focusRect);
          focusRect.x = focusRect.x + this.getXPos();
          focusRect.y = focusRect.y + this.getYPos();
          focusRect.width = Math.min(focusRect.width, this.getBitmapWidth());
          focusRect.height = Math.min(focusRect.height, this.getBitmapHeight());
          this._focusManager.drawFocus(graphics, focusRect, ThemeAttributeSet.getColor(this, 2));
-         focusRect = null;
+         Object var6 = null;
       } else {
          try {
             super.drawFocus(graphics, on);

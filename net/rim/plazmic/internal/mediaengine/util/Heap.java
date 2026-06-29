@@ -133,7 +133,7 @@ public class Heap {
       }
 
       Event o = new Event();
-      StringBuffer buff = (StringBuffer)(new Object());
+      StringBuffer buff = new StringBuffer();
 
       for (int i = 0; i < this._end; i++) {
          this._heap.get(o, i);

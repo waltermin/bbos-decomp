@@ -64,6 +64,6 @@ public class FileSelector extends FileSelectionFilter {
          this._ctx.put(2765042845091913199L, path);
       }
 
-      return (String)(this._fileSelectVerb != null ? this._fileSelectVerb.invoke(this._ctx) : null);
+      return this._fileSelectVerb != null ? (String)this._fileSelectVerb.invoke(this._ctx) : null;
    }
 }

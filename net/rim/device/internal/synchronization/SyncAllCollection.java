@@ -9,13 +9,14 @@ import net.rim.device.api.synchronization.SyncCollectionStatusProvider;
 import net.rim.device.api.synchronization.SyncConverter;
 import net.rim.device.api.synchronization.SyncManager;
 import net.rim.device.api.synchronization.SyncObject;
+import net.rim.device.api.system.UnsupportedOperationException;
 import net.rim.device.api.util.IntHashtable;
 import net.rim.device.api.util.LongHashtable;
 import net.rim.vm.Memory;
 
 public class SyncAllCollection implements SyncCollection, SyncCollectionStatusProvider {
-   private LongHashtable _collections = (LongHashtable)(new Object());
-   private IntHashtable _syncObjects = (IntHashtable)(new Object());
+   private LongHashtable _collections = new LongHashtable();
+   private IntHashtable _syncObjects = new IntHashtable();
    private int _syncObjectCount = 0;
    private String _syncCollectionName = " - All";
    private static final String _syncCollectionNameSuffix = " - All";
@@ -118,7 +119,7 @@ public class SyncAllCollection implements SyncCollection, SyncCollectionStatusPr
 
    @Override
    public SyncObject[] getSyncObjects() {
-      SyncObject[] syncObjects = new Object[this._syncObjects.size()];
+      SyncObject[] syncObjects = new SyncObject[this._syncObjects.size()];
       Enumeration e = this._syncObjects.elements();
 
       for (int count = 0; e.hasMoreElements(); count++) {
@@ -166,22 +167,22 @@ public class SyncAllCollection implements SyncCollection, SyncCollectionStatusPr
 
    @Override
    public boolean addSyncObject(SyncObject object) {
-      throw new Object("Invalid Usage: This method not supported in SyncAllCollection.");
+      throw new UnsupportedOperationException("Invalid Usage: This method not supported in SyncAllCollection.");
    }
 
    @Override
    public boolean updateSyncObject(SyncObject oldObject, SyncObject newObject) {
-      throw new Object("Invalid Usage: This method not supported in SyncAllCollection.");
+      throw new UnsupportedOperationException("Invalid Usage: This method not supported in SyncAllCollection.");
    }
 
    @Override
    public boolean removeSyncObject(SyncObject object) {
-      throw new Object("Invalid Usage: This method not supported in SyncAllCollection.");
+      throw new UnsupportedOperationException("Invalid Usage: This method not supported in SyncAllCollection.");
    }
 
    @Override
    public boolean removeAllSyncObjects() {
-      throw new Object("Invalid Usage: This method not supported in SyncAllCollection.");
+      throw new UnsupportedOperationException("Invalid Usage: This method not supported in SyncAllCollection.");
    }
 
    @Override
@@ -191,7 +192,7 @@ public class SyncAllCollection implements SyncCollection, SyncCollectionStatusPr
 
    @Override
    public SyncConverter getSyncConverter() {
-      throw new Object("Invalid Usage: This method not supported in SyncAllCollection.");
+      throw new UnsupportedOperationException("Invalid Usage: This method not supported in SyncAllCollection.");
    }
 
    @Override
@@ -230,7 +231,7 @@ public class SyncAllCollection implements SyncCollection, SyncCollectionStatusPr
 
    public SyncAllCollection(String defaultCollectionName) {
       if (defaultCollectionName != null) {
-         this._syncCollectionName = ((StringBuffer)(new Object())).append(defaultCollectionName).append(" - All").toString();
+         this._syncCollectionName = defaultCollectionName + " - All";
       }
    }
 }

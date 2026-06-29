@@ -9,7 +9,7 @@ import net.rim.wica.runtime.ui.HomeScreenUtilities;
 
 class RestoreTaskProcessor$RestoreEntrypoint implements HomeScreenEntry {
    private ApplicationSyncModel _model;
-   private static final Integer DEFAULT_POSITION = (Integer)(new Object(60));
+   private static final Integer DEFAULT_POSITION = new Integer(60);
    private static final Bitmap ICON = Bitmap.getBitmapResource("default_icon.png");
 
    RestoreTaskProcessor$RestoreEntrypoint(ApplicationSyncModel model) {
@@ -33,12 +33,7 @@ class RestoreTaskProcessor$RestoreEntrypoint implements HomeScreenEntry {
 
    @Override
    public String getEntryDescription() {
-      return ((StringBuffer)(new Object()))
-         .append(this._model.getDescriptor().getName())
-         .append(" (")
-         .append(RuntimeResources.getString(118))
-         .append(")")
-         .toString();
+      return this._model.getDescriptor().getName() + " (" + RuntimeResources.getString(118) + ")";
    }
 
    @Override

@@ -40,7 +40,7 @@ final class ThemeOptionsScreen$ThemePreviewField extends Field {
 
    @Override
    protected final void paint(Graphics graphics) {
-      new Object();
+      new XYPoint();
       graphics.setGlobalAlpha(255);
       XYPoint pt = this.getCenterAnchor(this._previewBitmap.getWidth(), this._previewBitmap.getHeight());
       graphics.drawBitmap(pt.x, pt.y, this.getWidth(), this.getHeight(), this._previewBitmap, 0, 0);
@@ -54,7 +54,7 @@ final class ThemeOptionsScreen$ThemePreviewField extends Field {
    }
 
    private final XYPoint getCenterAnchor(int objectWidth, int objectHeight) {
-      XYPoint point = (XYPoint)(new Object());
+      XYPoint point = new XYPoint();
       point.x = (this.getWidth() >> 1) - (objectWidth >> 1);
       point.y = (this.getHeight() >> 1) - (objectHeight >> 1);
       return point;

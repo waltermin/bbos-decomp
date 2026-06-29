@@ -416,7 +416,7 @@ public class AnimationModel implements MediaModel, MediaListener {
    public void setFocus(int item) {
       this.inFocus = item >= 0;
       if (this.numHotspots <= item) {
-         throw new Object();
+         throw new RuntimeException();
       }
 
       if (item < 0 || this.bitsAreSet(this.hotspotList[item], 129)) {
@@ -680,7 +680,7 @@ public class AnimationModel implements MediaModel, MediaListener {
    @Override
    public String[] getExternalResources(int category) {
       int size = this.getExternalResourcesCount(category);
-      String[] result = new Object[size];
+      String[] result = new String[size];
       if (size > 0) {
          int offset = 0;
          if ((category & 4) != 0) {

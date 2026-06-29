@@ -45,7 +45,7 @@ public class MMSSendVCalVerb extends MMSComposeVerb implements UniqueIDProvider,
 
    @Override
    public Object invoke(Object context) {
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          ContextObject co = (ContextObject)context;
          Object o = ContextObject.get(co, 3696141428889703675L);
          ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
@@ -56,9 +56,9 @@ public class MMSSendVCalVerb extends MMSComposeVerb implements UniqueIDProvider,
                CalendarProxy.closeCalendar();
                byte[] data = converter.convert(o, co);
                String name = null;
-               if (o instanceof Object) {
+               if (o instanceof EventInstance) {
                   EventInstance ee = (EventInstance)o;
-                  name = ((StringBuffer)(new Object())).append(ee.getEventInstance().getSubject()).append(".vcs").toString();
+                  name = ee.getEventInstance().getSubject() + ".vcs";
                   ContextObject.put(context, -4886909117188079897L, name);
                }
 
@@ -67,14 +67,14 @@ public class MMSSendVCalVerb extends MMSComposeVerb implements UniqueIDProvider,
                   MMSAttachment attachment = new MMSAttachmentImpl(name, type, data, null);
                   if (attachment != null) {
                      this._presentation.addPresentationElement(attachment, true);
-                     if (this._presentation instanceof Object) {
+                     if (this._presentation instanceof Manager) {
                         Manager mgr = (Manager)this._presentation;
                         mgr.setDirty(true);
                      }
                   }
                } else {
                   ContextObject.put(co, -4241241545455759532L, "text/x-vcalendar");
-                  ByteArrayInputStream inputStream = (ByteArrayInputStream)(new Object(data));
+                  ByteArrayInputStream inputStream = new ByteArrayInputStream(data);
                   ContextObject.put(co, 5473606008898265655L, inputStream);
                   super.invoke(co);
                }

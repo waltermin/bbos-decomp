@@ -16,7 +16,7 @@ final class GIFMetadataExtractor extends MetaDataControlImpl {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public GIFMetadataExtractor(EncodedImage encImage, int modifyDataFlags) {
-      if (encImage instanceof Object) {
+      if (encImage instanceof GIFEncodedImage) {
          GIFEncodedImage gifEncImg = (GIFEncodedImage)encImage;
          this._imageBytes = gifEncImg.getData();
          boolean var6 = false /* VF: Semaphore variable */;
@@ -81,7 +81,7 @@ final class GIFMetadataExtractor extends MetaDataControlImpl {
                   this._blockIndex++;
 
                   for (int i = 0; i < 255; i++) {
-                     comment = ((StringBuffer)(new Object())).append(comment).append((char)this._imageBytes[this._blockIndex + i]).toString();
+                     comment = comment + (char)this._imageBytes[this._blockIndex + i];
                   }
 
                   this._blockIndex += commentSize;
@@ -91,7 +91,7 @@ final class GIFMetadataExtractor extends MetaDataControlImpl {
                this._blockIndex++;
 
                for (int i = 0; i < commentSize; i++) {
-                  comment = ((StringBuffer)(new Object())).append(comment).append((char)this._imageBytes[this._blockIndex + i]).toString();
+                  comment = comment + (char)this._imageBytes[this._blockIndex + i];
                }
 
                this._blockIndex += commentSize;

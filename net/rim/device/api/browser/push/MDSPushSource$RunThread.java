@@ -36,9 +36,7 @@ final class MDSPushSource$RunThread extends Thread {
                try {
                   try {
                      var46 = true;
-                     this._notifier = (StreamConnectionNotifier)Connector.open(
-                        ((StringBuffer)(new Object("http://:"))).append(this.this$0._port).append(";DeviceSide=false").toString()
-                     );
+                     this._notifier = (StreamConnectionNotifier)Connector.open("http://:" + this.this$0._port + ";DeviceSide=false");
                      ApplicationRegistry ioe = ApplicationRegistry.getApplicationRegistry();
                      synchronized (ioe) {
                         ioe.replace(-713047639350268568L, this._notifier);
@@ -50,9 +48,9 @@ final class MDSPushSource$RunThread extends Thread {
 
                         try {
                            connection.close();
-                           connection = null;
+                           HttpServerConnection var71 = null;
                         } catch (Throwable var68) {
-                           EventLogger.logEvent(-1133226195824034738L, ((StringBuffer)(new Object("PPce\n"))).append(e.toString()).toString().getBytes(), 0);
+                           EventLogger.logEvent(-1133226195824034738L, ("PPce\n" + e.toString()).getBytes(), 0);
                            continue;
                         }
                      }
@@ -66,7 +64,7 @@ final class MDSPushSource$RunThread extends Thread {
                            break label491;
                         }
 
-                        EventLogger.logEvent(-1133226195824034738L, ((StringBuffer)(new Object("PPex\n"))).append(ioe.toString()).toString().getBytes(), 0);
+                        EventLogger.logEvent(-1133226195824034738L, ("PPex\n" + ioe.toString()).getBytes(), 0);
                         var46 = false;
                         break label498;
                      }

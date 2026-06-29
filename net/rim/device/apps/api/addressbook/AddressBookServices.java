@@ -121,7 +121,7 @@ public final class AddressBookServices {
       Verb[] verbs = addressVerbs.getVerbs(type);
       if (verbs != null && verbs.length > 0) {
          Verb verb = verbs[0];
-         return (Verb)(!(verb instanceof Object) ? verb : ((Copyable)verb).copy());
+         return !(verb instanceof Copyable) ? verb : (Verb)((Copyable)verb).copy();
       } else {
          return null;
       }
@@ -132,7 +132,7 @@ public final class AddressBookServices {
       Verb[] verbs = addressVerbs.getVerbs(3797587162219887872L);
       if (verbs != null && verbs.length > 0) {
          Verb verb = verbs[0];
-         return (Verb)(!(verb instanceof Object) ? verb : ((Copyable)verb).copy());
+         return !(verb instanceof Copyable) ? verb : (Verb)((Copyable)verb).copy();
       } else {
          return null;
       }
@@ -160,7 +160,7 @@ public final class AddressBookServices {
 
    public static final String getReverseLookupString(String string) {
       int length = string.length();
-      StringBuffer buffer = (StringBuffer)(new Object(length));
+      StringBuffer buffer = new StringBuffer(length);
 
       for (int i = 0; i < length; i++) {
          buffer.append(CharacterUtilities.toLowerCase(string.charAt(i), 1701707776));
@@ -175,8 +175,8 @@ public final class AddressBookServices {
 
    public static final int getReverseLookupKeys(Object element, int[] keys, boolean allChars) {
       int keyCount = 0;
-      if (!(element instanceof Object)) {
-         if (element instanceof Object) {
+      if (!(element instanceof KeyProvider)) {
+         if (element instanceof String) {
             if (keys.length < 2) {
                Array.resize(keys, 2);
             }

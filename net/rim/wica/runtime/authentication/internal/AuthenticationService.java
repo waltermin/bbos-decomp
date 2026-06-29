@@ -109,7 +109,7 @@ public final class AuthenticationService implements MessageConsumer, Startable, 
          long id = Long.parseLong(s.readString());
          this._store.clearCredentials(id, true);
       } catch (MessageException e) {
-         Logger.log(this.toString(), ((StringBuffer)(new Object("Clear credentials failed: "))).append(e.getMessage()).toString(), 2);
+         Logger.log(this.toString(), "Clear credentials failed: " + e.getMessage(), 2);
       }
    }
 
@@ -118,7 +118,7 @@ public final class AuthenticationService implements MessageConsumer, Startable, 
       try {
          request = new AuthenticationRequest(this, m.openReadableDataStream());
       } catch (MessageException e) {
-         Logger.log(this.toString(), ((StringBuffer)(new Object("Authentication failed: "))).append(e.getMessage()).toString(), 2);
+         Logger.log(this.toString(), "Authentication failed: " + e.getMessage(), 2);
          return;
       }
 
@@ -166,7 +166,7 @@ public final class AuthenticationService implements MessageConsumer, Startable, 
          try {
             lmResponse = NTLM.getLMResponse(secretToken, request.getChallenge());
          } catch (Throwable var8) {
-            Logger.log(this.toString(), ((StringBuffer)(new Object("Authentication failed: "))).append(e.getMessage()).toString(), 2);
+            Logger.log(this.toString(), "Authentication failed: " + e.getMessage(), 2);
             return;
          }
 
@@ -200,7 +200,7 @@ public final class AuthenticationService implements MessageConsumer, Startable, 
       try {
          this._messaging.sendMessage(m);
       } catch (MessagingException e) {
-         Logger.log(this.toString(), ((StringBuffer)(new Object("Authentication failed: "))).append(e.getMessage()).toString(), 2);
+         Logger.log(this.toString(), "Authentication failed: " + e.getMessage(), 2);
       }
    }
 
@@ -223,7 +223,7 @@ public final class AuthenticationService implements MessageConsumer, Startable, 
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

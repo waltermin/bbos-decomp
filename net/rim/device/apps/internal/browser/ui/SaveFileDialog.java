@@ -50,7 +50,7 @@ public final class SaveFileDialog extends FileDialog {
       if (contentType != null && filename != null) {
          String extension = MIMETypeAssociations.getExtensionFromMIMEType(RendererControl.stripContentTypeParameters(contentType));
          if (extension != null && extension.length() > 0) {
-            StringBuffer newFilename = (StringBuffer)(new Object(filename));
+            StringBuffer newFilename = new StringBuffer(filename);
             int currentExtensionIndex = filename.indexOf(46);
             if (currentExtensionIndex != -1) {
                newFilename.setLength(currentExtensionIndex + 1);
@@ -67,7 +67,7 @@ public final class SaveFileDialog extends FileDialog {
    }
 
    private final void addCheckbox(String label) {
-      this._checkbox = (CheckboxField)(new Object(label, false, 1073741824));
+      this._checkbox = new CheckboxField(label, false, 1073741824);
       this.add(this._checkbox);
    }
 
@@ -105,7 +105,7 @@ public final class SaveFileDialog extends FileDialog {
       // 02: aload 0
       // 03: invokevirtual net/rim/device/apps/api/framework/file/FileDialog.getURL ()Ljava/lang/String;
       // 06: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 09: checkcast java/lang/Object
+      // 09: checkcast javax/microedition/io/file/FileConnection
       // 0c: astore 1
       // 0d: aload 1
       // 0e: invokeinterface javax/microedition/io/file/FileConnection.exists ()Z 1
@@ -145,7 +145,7 @@ public final class SaveFileDialog extends FileDialog {
       // 59: astore 5
       // 5b: aload 4
       // 5d: athrow
-      // 5e: new java/lang/Object
+      // 5e: new net/rim/device/api/ui/component/Dialog
       // 61: dup
       // 62: bipush 3
       // 64: sipush 10082
@@ -215,7 +215,7 @@ public final class SaveFileDialog extends FileDialog {
             return null;
          }
       } else {
-         RunnableDialog runnableDialog = (RunnableDialog)(new Object(saveDialog));
+         RunnableDialog runnableDialog = new RunnableDialog(saveDialog);
          Application.getApplication().invokeAndWait(runnableDialog);
          if (runnableDialog.getResult() == -1) {
             return null;
@@ -239,7 +239,7 @@ public final class SaveFileDialog extends FileDialog {
       // Bytecode:
       // 000: aload 4
       // 002: ifnonnull 00d
-      // 005: new java/lang/Object
+      // 005: new java/lang/NullPointerException
       // 008: dup
       // 009: invokespecial java/lang/NullPointerException.<init> ()V
       // 00c: athrow
@@ -261,7 +261,7 @@ public final class SaveFileDialog extends FileDialog {
       // 02c: if_icmpne 050
       // 02f: aconst_null
       // 030: areturn
-      // 031: new java/lang/Object
+      // 031: new net/rim/device/apps/api/ui/RunnableDialog
       // 034: dup
       // 035: aload 7
       // 037: invokespecial net/rim/device/apps/api/ui/RunnableDialog.<init> (Lnet/rim/device/api/ui/component/Dialog;)V
@@ -282,7 +282,7 @@ public final class SaveFileDialog extends FileDialog {
       // 056: aload 7
       // 058: invokevirtual net/rim/device/apps/api/framework/file/FileDialog.getURL ()Ljava/lang/String;
       // 05b: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 05e: checkcast java/lang/Object
+      // 05e: checkcast javax/microedition/io/file/FileConnection
       // 061: astore 8
       // 063: aload 8
       // 065: invokeinterface javax/microedition/io/file/FileConnection.exists ()Z 1
@@ -293,11 +293,11 @@ public final class SaveFileDialog extends FileDialog {
       // 075: ifeq 09e
       // 078: aload 8
       // 07a: dup
-      // 07b: instanceof java/lang/Object
+      // 07b: instanceof net/rim/device/api/io/file/ExtendedFileConnection
       // 07e: ifne 085
       // 081: pop
       // 082: goto 09e
-      // 085: checkcast java/lang/Object
+      // 085: checkcast net/rim/device/api/io/file/ExtendedFileConnection
       // 088: astore 10
       // 08a: aload 10
       // 08c: bipush 51
@@ -469,7 +469,7 @@ public final class SaveFileDialog extends FileDialog {
       if (Application.isEventDispatchThread()) {
          Dialog.alert(message);
       } else {
-         Application.getApplication().invokeAndWait((Runnable)(new Object(message, 0)));
+         Application.getApplication().invokeAndWait(new RunnableDialog(message, 0));
       }
    }
 }

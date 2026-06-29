@@ -38,7 +38,7 @@ final class IconLoadListener implements PendingRequestListener {
                RibbonLauncher ribbon = RibbonLauncher.getInstance();
                if (ribbon != null) {
                   EntryPointDescriptor epd = ribbon.getRegisteredAction(this._id);
-                  if (epd instanceof Object) {
+                  if (epd instanceof ApplicationEntryPoint) {
                      ApplicationEntryPoint aep = (ApplicationEntryPoint)epd;
                      aep.set(4, icon);
                      ribbon.updateRegisteredAction(this._id);

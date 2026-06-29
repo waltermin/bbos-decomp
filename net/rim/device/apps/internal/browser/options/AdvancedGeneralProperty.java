@@ -25,16 +25,16 @@ public final class AdvancedGeneralProperty extends BrowserProperty {
    public final Screen getScreen(boolean restrictedAccess) {
       super._restrictedAccess = restrictedAccess;
       MainScreen screen = this.generateScreen(BrowserResources.getString(715));
-      this._acceptCookiesField = (CheckboxField)(new Object(BrowserResources.getString(177), GeneralProperty.getCurrentPropertyAsBoolean(30)));
+      this._acceptCookiesField = new CheckboxField(BrowserResources.getString(177), GeneralProperty.getCurrentPropertyAsBoolean(30));
       screen.add(this._acceptCookiesField);
-      this._rawDataCacheSizeField = (NumericChoiceField)(new Object(BrowserResources.getString(193), 0, 4096, 1, GeneralProperty.getCurrentPropertyAsInt(31)));
+      this._rawDataCacheSizeField = new NumericChoiceField(BrowserResources.getString(193), 0, 4096, 1, GeneralProperty.getCurrentPropertyAsInt(31));
       screen.add(this._rawDataCacheSizeField);
-      this._pageCacheSizeField = (NumericChoiceField)(new Object(BrowserResources.getString(723), 0, 5, 1, GeneralProperty.getCurrentPropertyAsInt(34)));
+      this._pageCacheSizeField = new NumericChoiceField(BrowserResources.getString(723), 0, 5, 1, GeneralProperty.getCurrentPropertyAsInt(34));
       if (Memory.getFlashTotal() > 16777216) {
          screen.add(this._pageCacheSizeField);
       }
 
-      this._menuDelayTimeField = (NumericChoiceField)(new Object("Menu Delay Time:", 100, 1000, 50, (GeneralProperty.getCurrentPropertyAsInt(35) - 100) / 50));
+      this._menuDelayTimeField = new NumericChoiceField("Menu Delay Time:", 100, 1000, 50, (GeneralProperty.getCurrentPropertyAsInt(35) - 100) / 50);
       screen.add(this._menuDelayTimeField);
       return screen;
    }

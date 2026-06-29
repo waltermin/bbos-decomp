@@ -9,14 +9,7 @@ class BluetoothGPSLocationDevice$2 implements Runnable {
 
    @Override
    public void run() {
-      System.out
-         .println(
-            ((StringBuffer)(new Object("attemptReconnect,reconnectThread, status=")))
-               .append(this.this$0._status)
-               .append(" reconnectAttempt=")
-               .append(this.this$0._reconnectAttempt)
-               .toString()
-         );
+      System.out.println("attemptReconnect,reconnectThread, status=" + this.this$0._status + " reconnectAttempt=" + this.this$0._reconnectAttempt);
       BluetoothGPSLocationDevice.access$208(this.this$0);
       this.this$0.startReporting();
    }

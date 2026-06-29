@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.explorer.Media;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.KeywordFilterCollectionListField;
+import net.rim.device.api.ui.component.ListField;
 import net.rim.device.apps.internal.explorer.Media.verbs.SelectMediaVerb;
 import net.rim.device.apps.internal.explorer.MediaLibrary.ContextInfo;
 import net.rim.device.apps.internal.explorer.MediaLibrary.Genre;
@@ -71,7 +72,7 @@ public final class GenreListScreen extends MediaListScreen {
    @Override
    protected final void invoke() {
       Field field = this.getLeafFieldWithFocus();
-      if (field instanceof Object) {
+      if (field instanceof ListField) {
          Genre genre = (Genre)this.getSelectedObject();
          SelectionListener listener = this.getSelectionListener();
          if (listener != null) {

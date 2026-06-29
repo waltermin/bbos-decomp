@@ -73,7 +73,7 @@ public final class QmThemedDialog extends QmThemedPopupScreen implements FieldCh
       1987005697,
       16831589
    };
-   private static IntHashtable _globalResources = (IntHashtable)(new Object());
+   private static IntHashtable _globalResources = new IntHashtable();
 
    public final void cancel() {
       this._returnValue = -1;
@@ -93,7 +93,7 @@ public final class QmThemedDialog extends QmThemedPopupScreen implements FieldCh
    public final void setIcon(Image image) {
       ImageField field = null;
       if (image != null) {
-         field = (ImageField)(new Object());
+         field = new ImageField();
          field.setImage(image);
       }
 
@@ -121,7 +121,7 @@ public final class QmThemedDialog extends QmThemedPopupScreen implements FieldCh
 
    @Override
    public final void fieldChanged(Field field, int context) {
-      if (field instanceof Object) {
+      if (field instanceof ButtonField) {
          this.select();
       }
    }
@@ -216,7 +216,7 @@ public final class QmThemedDialog extends QmThemedPopupScreen implements FieldCh
    }
 
    private final void addChoice(String choice) {
-      ButtonField button = (ButtonField)(new Object(choice, 12884901888L));
+      ButtonField button = new ButtonField(choice, 12884901888L);
       button.setChangeListener(this);
       this._dfm.addButtonField(button);
       this._preferredWidth = Math.max(this._preferredWidth, this.getFont().getBounds(choice, 0, choice.length()));
@@ -283,10 +283,10 @@ public final class QmThemedDialog extends QmThemedPopupScreen implements FieldCh
 
    private final void setup(String message, Object[] choices, int[] values, int defaultChoice, CheckboxField checkbox, Bitmap bitmap) {
       this._dfm = (QmThemedDialogFieldManager)this.getMainManager();
-      this._label = (RichTextField)(new Object(message, 36028797086072832L));
+      this._label = new RichTextField(message, 36028797086072832L);
       this._dfm.setMessage(this._label);
       if (bitmap != null) {
-         this._dfm.setIcon((BitmapField)(new Object(bitmap, 65568)));
+         this._dfm.setIcon(new BitmapField(bitmap, 65568));
       }
 
       this._returnValue = this._defaultChoice = defaultChoice;
@@ -369,7 +369,7 @@ public final class QmThemedDialog extends QmThemedPopupScreen implements FieldCh
       this._choices = choices;
       if (choices != null) {
          if (this.isStyle(1)) {
-            ObjectListField list = (ObjectListField)(new Object(this._drawStyle));
+            ObjectListField list = new ObjectListField(this._drawStyle);
             list.set(choices);
             this._list = list;
             this._dfm.addCustomField(this._list);

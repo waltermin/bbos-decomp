@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.keystore.browser;
 
 import net.rim.device.api.ui.Screen;
+import net.rim.device.api.ui.menu.MenuScreen;
 import net.rim.device.apps.api.framework.verb.Verb;
 
 class KeyStoreBrowserOptionsItem$1 implements Runnable {
@@ -13,7 +14,7 @@ class KeyStoreBrowserOptionsItem$1 implements Runnable {
    @Override
    public void run() {
       Screen activeScreen = this.this$0._app.getActiveScreen();
-      if (activeScreen instanceof Object) {
+      if (activeScreen instanceof MenuScreen) {
          this.this$0._app.popScreen(activeScreen);
          activeScreen = this.this$0._app.getActiveScreen();
       }

@@ -11,7 +11,7 @@ final class SoftwareAESCryptoToken$AESKeyData implements CryptoTokenSymmetricKey
 
    SoftwareAESCryptoToken$AESKeyData(int bitLength) {
       if (bitLength != 128 && bitLength != 192 && bitLength != 256) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._data = RandomSource.getBytes(bitLength >> 3);
@@ -22,7 +22,7 @@ final class SoftwareAESCryptoToken$AESKeyData implements CryptoTokenSymmetricKey
 
    SoftwareAESCryptoToken$AESKeyData(byte[] data, int offset, int bitLength) {
       if (bitLength != 128 && bitLength != 192 && bitLength != 256) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int length = bitLength >> 3;
@@ -33,7 +33,7 @@ final class SoftwareAESCryptoToken$AESKeyData implements CryptoTokenSymmetricKey
          PersistentContent.markAsPlaintext(data);
          this.setHashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

@@ -19,7 +19,7 @@ public class AssociatedData implements Persistable {
    public AssociatedData(long association, byte[] data) {
       this._association = association;
       if (data == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._data = new byte[1][data.length];
@@ -29,7 +29,7 @@ public class AssociatedData implements Persistable {
    public AssociatedData(long association, byte[][] data) {
       this._association = association;
       if (data == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._data = new byte[data.length][0];

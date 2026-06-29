@@ -16,7 +16,7 @@ final class JAXRPCUtil {
    }
 
    static final void handleError(String message, String arg) {
-      throw new JAXRPCException(MessageFormat.format(message, new Object[]{arg}));
+      throw new JAXRPCException(MessageFormat.format(message, new String[]{arg}));
    }
 
    static final void handleError(String message, Object[] args) {

@@ -38,7 +38,7 @@ final class PKCS8_RIM_PrivateKeyEncoder2 extends PrivateKeyEncoder {
             privateKeyInfo.writeOctetString(tempSequence.toByteArray());
             ASN1OutputStream asn1Stream = new ASN1OutputStream();
             asn1Stream.writeSequence(privateKeyInfo);
-            return (EncodedKey)(new Object(asn1Stream.toByteArray(), "PKCS8"));
+            return new EncodedKey(asn1Stream.toByteArray(), "PKCS8");
          }
 
          if (key.getAlgorithm().equals("DH")) {
@@ -65,7 +65,7 @@ final class PKCS8_RIM_PrivateKeyEncoder2 extends PrivateKeyEncoder {
             privateKeyInfo.writeOctetString(converter.toByteArray());
             ASN1OutputStream asn1Stream = new ASN1OutputStream();
             asn1Stream.writeSequence(privateKeyInfo);
-            return (EncodedKey)(new Object(asn1Stream.toByteArray(), "PKCS8"));
+            return new EncodedKey(asn1Stream.toByteArray(), "PKCS8");
          }
 
          if (key.getAlgorithm().equals("DSA")) {
@@ -86,13 +86,13 @@ final class PKCS8_RIM_PrivateKeyEncoder2 extends PrivateKeyEncoder {
             privateKeyInfo.writeOctetString(converter.toByteArray());
             ASN1OutputStream asn1Stream = new ASN1OutputStream();
             asn1Stream.writeSequence(privateKeyInfo);
-            return (EncodedKey)(new Object(asn1Stream.toByteArray(), "PKCS8"));
+            return new EncodedKey(asn1Stream.toByteArray(), "PKCS8");
          }
       } catch (Throwable var11) {
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       }
 
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override

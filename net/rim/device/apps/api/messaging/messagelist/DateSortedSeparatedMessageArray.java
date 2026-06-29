@@ -45,7 +45,7 @@ public final class DateSortedSeparatedMessageArray
    protected int _rangeDirection;
    private NoMessagesBar _noMessagesBar;
    private LongKeyProviderAdaptor _longKeyProviderAdaptor;
-   DialogWithBackgroundThread _dialogWithBackgroundThread = (DialogWithBackgroundThread)(new Object());
+   DialogWithBackgroundThread _dialogWithBackgroundThread = new DialogWithBackgroundThread();
    DateSortedSeparatedMessageArray$ApplyRunnable _applyRunnable = new DateSortedSeparatedMessageArray$ApplyRunnable(this);
    private static final boolean CHECK_ASSERT = false;
    private static final int ASCENDING_DIRECTION = 1;
@@ -82,7 +82,7 @@ public final class DateSortedSeparatedMessageArray
    @Override
    public final int getProgress() {
       ReadableList dateSortedItems = this._dateSortedItems;
-      if (!(dateSortedItems instanceof Object)) {
+      if (!(dateSortedItems instanceof FilterProgress)) {
          return 100;
       }
 
@@ -198,7 +198,7 @@ public final class DateSortedSeparatedMessageArray
    protected final void assertHaveFolderLock() {
       if (!Monitor.monitorOwned(FolderHierarchies.getLockObject())) {
          try {
-            throw new Object("DSSMA modified outside of FolderHierarchies lock.");
+            throw new Throwable("DSSMA modified outside of FolderHierarchies lock.");
          } finally {
             return;
          }
@@ -354,7 +354,7 @@ public final class DateSortedSeparatedMessageArray
    @Override
    public final void suspendNotification(Object context) {
       this.assertHaveFolderLock();
-      if (this._dateSortedItems instanceof Object) {
+      if (this._dateSortedItems instanceof NotificationSuspension) {
          ((NotificationSuspension)this._dateSortedItems).suspendNotification(context);
       }
    }
@@ -362,7 +362,7 @@ public final class DateSortedSeparatedMessageArray
    @Override
    public final void resumeNotification(Object context) {
       this.assertHaveFolderLock();
-      if (this._dateSortedItems instanceof Object) {
+      if (this._dateSortedItems instanceof NotificationSuspension) {
          ((NotificationSuspension)this._dateSortedItems).resumeNotification(context);
       }
 
@@ -373,13 +373,13 @@ public final class DateSortedSeparatedMessageArray
       this._longKeyProviderAdaptor = longKeyProviderAdaptor;
       this._calendar = Calendar.getInstance();
       this._noMessagesBar = new NoMessagesBar(noMessagesStringId);
-      this._collectionListenerManager = (CollectionListenerManager)(new Object());
+      this._collectionListenerManager = new CollectionListenerManager();
       Application app = Application.getApplication();
       app.addGlobalEventListener(new DSSMAGlobalEventListener(this, app));
    }
 
    private final void handleCriticalError(String reason, long date, int doy, int extraInt, long extraLong, boolean attemptEmergencyRecovery) {
-      StringBuffer sb = (StringBuffer)(new Object(reason));
+      StringBuffer sb = new StringBuffer(reason);
       sb.append(": date = ");
       sb.append(date);
       sb.append(", doy = ");
@@ -399,7 +399,7 @@ public final class DateSortedSeparatedMessageArray
       EventLogger.logEvent(4720449521217587723L, sb.toString().getBytes(), 1);
 
       try {
-         throw new Object("DSSMA Forced Stack Trace");
+         throw new Throwable("DSSMA Forced Stack Trace");
       } finally {
          if (attemptEmergencyRecovery) {
             this.reset(null);
@@ -411,7 +411,7 @@ public final class DateSortedSeparatedMessageArray
    }
 
    private final void badState(int id, int index) {
-      StringBuffer sb = (StringBuffer)(new Object("DSSMA Bad State: "));
+      StringBuffer sb = new StringBuffer("DSSMA Bad State: ");
       sb.append(id);
       sb.append(", Size=");
       sb.append(this._dateSortedItems.size());
@@ -427,7 +427,7 @@ public final class DateSortedSeparatedMessageArray
       }
 
       EventLogger.logEvent(4720449521217587723L, sb.toString().getBytes(), 1);
-      throw new Object(((StringBuffer)(new Object("DSSMA: invalid state("))).append(id).append("): ").append(index).toString());
+      throw new RuntimeException("DSSMA: invalid state(" + id + "): " + index);
    }
 
    private final int invertSepIndex(int separator_index) {
@@ -540,7 +540,7 @@ public final class DateSortedSeparatedMessageArray
    }
 
    private final boolean setItems(Object o) {
-      if (!(o instanceof Object)) {
+      if (!(o instanceof ReadableList)) {
          return false;
       }
 
@@ -638,9 +638,7 @@ public final class DateSortedSeparatedMessageArray
 
          this._dateSortedItemsSize++;
       } finally {
-         this.handleCriticalError(
-            ((StringBuffer)(new Object("Add Failed ("))).append(element.getClass().getName()).append(")").toString(), date, day_of_year, 0, 0, true
-         );
+         this.handleCriticalError("Add Failed (" + element.getClass().getName() + ")", date, day_of_year, 0, 0, true);
          return;
       }
    }
@@ -656,9 +654,7 @@ public final class DateSortedSeparatedMessageArray
          this._dateSortedItemsSize--;
          return true;
       } else {
-         this.handleCriticalError(
-            ((StringBuffer)(new Object("Remove Failed ("))).append(element.getClass().getName()).append(")").toString(), date, day_of_year, date_idx, 0, true
-         );
+         this.handleCriticalError("Remove Failed (" + element.getClass().getName() + ")", date, day_of_year, date_idx, 0, true);
          return found;
       }
    }
@@ -729,7 +725,7 @@ public final class DateSortedSeparatedMessageArray
 
       this._rangeLen = 0;
       this._rangeDirection = 1;
-      if (this._dateSortedItems instanceof Object) {
+      if (this._dateSortedItems instanceof OrderedList) {
          OrderedList ol = (OrderedList)this._dateSortedItems;
          if (!ol.isAscending()) {
             this._rangeDirection = -1;
@@ -764,7 +760,7 @@ public final class DateSortedSeparatedMessageArray
          }
       }
 
-      throw new Object();
+      throw new ArrayIndexOutOfBoundsException();
    }
 
    private final int getDateRangeContainingSubElement(Object sub_element, long date, short day_of_year) {
@@ -806,13 +802,13 @@ public final class DateSortedSeparatedMessageArray
    }
 
    private final boolean displayPopupScreen(Object context) {
-      if (!(context instanceof Object)) {
+      if (!(context instanceof ContextObject)) {
          return true;
       }
 
       ContextObject contextObject = (ContextObject)context;
       Object value = contextObject.get(2800326993345467839L);
-      return !(value instanceof Object) ? true : value;
+      return !(value instanceof Boolean) ? true : (Boolean)value;
    }
 
    private final boolean addToEnd(int index, long date, short doy) {

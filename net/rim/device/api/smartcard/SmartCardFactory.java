@@ -25,7 +25,7 @@ public final class SmartCardFactory {
    public static final boolean addSmartCard(SmartCard newCard) {
       synchronized (_cards) {
          if (newCard == null) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          boolean var9 = false /* VF: Semaphore variable */;
@@ -36,7 +36,7 @@ public final class SmartCardFactory {
             var9 = false;
          } finally {
             if (var9) {
-               throw new Object("SmartCard drivers registering with the Smart Card Framework must be Persistable");
+               throw new IllegalArgumentException("SmartCard drivers registering with the Smart Card Framework must be Persistable");
             }
          }
 
@@ -78,7 +78,7 @@ public final class SmartCardFactory {
          } else {
             readersToListenTo = new SmartCardReader[]{reader};
             message = _rb.getString(5);
-            messageParameters = new Object[]{reader.getLabel()};
+            messageParameters = new String[]{reader.getLabel()};
          }
 
          SmartCardPromptDialog.promptUserToInsertSmartCard(message, messageParameters, readersToListenTo);
@@ -139,7 +139,7 @@ public final class SmartCardFactory {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    static final SmartCardSession getSmartCardSession(SmartCardID smartCardID, boolean forced) {
       if (smartCardID == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SmartCard card = smartCardID.getSmartCard();
@@ -166,7 +166,7 @@ public final class SmartCardFactory {
             scSession.close();
             scSession = null;
             SmartCardPromptDialog.promptUserToInsertSmartCard(
-               _rb.getString(8), new Object[]{smartCardID.getLabel(), card.getLabel()}, readerSession.getSmartCardReader(), true
+               _rb.getString(8), new String[]{smartCardID.getLabel(), card.getLabel()}, readerSession.getSmartCardReader(), true
             );
             var10 = false;
          } finally {
@@ -335,7 +335,7 @@ public final class SmartCardFactory {
       synchronized (_supportedATRs) {
          Vector atrs = (Vector)_supportedATRs.get(card);
          if (atrs == null) {
-            atrs = (Vector)(new Object(1));
+            atrs = new Vector(1);
          }
 
          atrs.addElement(atr);

@@ -8,7 +8,7 @@ public final class PRNGEncryptor extends StreamEncryptor {
    public PRNGEncryptor(PseudoRandomSource keystream, OutputStream output) {
       super(output);
       if (keystream == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._keystream = keystream;
@@ -30,7 +30,7 @@ public final class PRNGEncryptor extends StreamEncryptor {
          System.arraycopy(plaintext, plaintextOffset, ciphertext, 0, plaintextLength);
          this._keystream.xorBytes(ciphertext, 0, plaintextLength);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

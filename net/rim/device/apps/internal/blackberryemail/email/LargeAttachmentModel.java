@@ -12,7 +12,7 @@ import net.rim.device.apps.api.transmission.rim.RIMMessagingOutgoingMessage;
 public class LargeAttachmentModel extends AbstractEmailFileAttachment implements Persistable {
    @Override
    public boolean convert(Object context, Object target) {
-      if (!(target instanceof Object)) {
+      if (!(target instanceof RIMMessagingOutgoingMessage)) {
          return false;
       }
 
@@ -28,7 +28,7 @@ public class LargeAttachmentModel extends AbstractEmailFileAttachment implements
       ContextObject contextObject = (ContextObject)context;
       ContentPartIDGenerator contentPartIDGenerator = (ContentPartIDGenerator)contextObject.get(-1943436819741481055L);
       int contentPartID = contentPartIDGenerator.generateContentPartID();
-      CMIMEParameters parameters = (CMIMEParameters)(new Object(db, 2, 2));
+      CMIMEParameters parameters = new CMIMEParameters(db, 2, 2);
       parameters.addCMIMEInteger((byte)-15, contentPartID);
       this.setContentPartId((short)contentPartID);
       byte[] data = new byte[0];

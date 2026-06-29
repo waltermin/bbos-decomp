@@ -55,7 +55,7 @@ public final class MemoImpl extends PIMItemImpl implements BlackBerryMemo {
                      }
                      break;
                   default:
-                     throw new Object();
+                     throw new IllegalStateException();
                }
             }
          }
@@ -135,7 +135,7 @@ public final class MemoImpl extends PIMItemImpl implements BlackBerryMemo {
       }
 
       if (this._memoList._mode == 1) {
-         throw new Object();
+         throw new SecurityException();
       }
 
       if (this._isModified) {
@@ -174,44 +174,44 @@ public final class MemoImpl extends PIMItemImpl implements BlackBerryMemo {
 
    @Override
    public final void addDate(int field, int attributes, long value) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public final long getDate(int field, int index) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public final void setDate(int field, int index, int attributes, long value) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public final void addInt(int field, int attributes, int value) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public final int getInt(int field, int index) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public final void setInt(int field, int index, int attributes, int value) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public final void addString(int field, int attributes, String value) {
       this.checkFieldNotFull(field);
       if (value == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       switch (field) {
          case 99:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 100:
          default:
             BodyModel notesModel = (BodyModel)_bodyModelFactory.createInstance(value);
@@ -223,7 +223,7 @@ public final class MemoImpl extends PIMItemImpl implements BlackBerryMemo {
             break;
          case 102:
             if (this._committed) {
-               throw new Object(UID_READ_ONLY_MESSAGE);
+               throw new IllegalArgumentException(UID_READ_ONLY_MESSAGE);
             }
 
             this._uncommittedUID = value;
@@ -237,7 +237,7 @@ public final class MemoImpl extends PIMItemImpl implements BlackBerryMemo {
       this.checkIndex(field, index);
       switch (field) {
          case 99:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 100:
          default:
             return this._memoModel.getNotesModel().getText();
@@ -252,12 +252,12 @@ public final class MemoImpl extends PIMItemImpl implements BlackBerryMemo {
    public final void setString(int field, int index, int attributes, String value) {
       this.checkIndex(field, index);
       if (value == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       switch (field) {
          case 99:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 100:
          default:
             this._memoModel.getNotesModel().setText(value);
@@ -267,7 +267,7 @@ public final class MemoImpl extends PIMItemImpl implements BlackBerryMemo {
             break;
          case 102:
             if (this._committed) {
-               throw new Object(UID_READ_ONLY_MESSAGE);
+               throw new IllegalArgumentException(UID_READ_ONLY_MESSAGE);
             }
 
             this._uncommittedUID = value;
@@ -280,7 +280,7 @@ public final class MemoImpl extends PIMItemImpl implements BlackBerryMemo {
    public final int countValues(int field) {
       switch (field) {
          case 99:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 100:
          default:
             if (this._memoModel.getNotesModel() == null) {
@@ -308,7 +308,7 @@ public final class MemoImpl extends PIMItemImpl implements BlackBerryMemo {
       this.checkIndex(field, index);
       switch (field) {
          case 99:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 100:
          default:
             BodyModel notesModel = this._memoModel.getNotesModel();
@@ -320,7 +320,7 @@ public final class MemoImpl extends PIMItemImpl implements BlackBerryMemo {
             break;
          case 102:
             if (this._committed) {
-               throw new Object(UID_READ_ONLY_MESSAGE);
+               throw new IllegalArgumentException(UID_READ_ONLY_MESSAGE);
             }
 
             this._uncommittedUID = null;

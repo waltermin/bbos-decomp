@@ -23,7 +23,7 @@ final class IdleScreenApplication$GlobalData implements FileSystemListener, File
 
    IdleScreenApplication$GlobalData() {
       ApplicationDescriptor descriptor = ApplicationDescriptor.currentApplicationDescriptor();
-      this._showDescriptor = (ApplicationDescriptor)(new Object(descriptor, new String[]{"show"}));
+      this._showDescriptor = new ApplicationDescriptor(descriptor, new String[]{"show"});
       this._clockListener = new IdleScreenApplication$MyRealtimeClockListener();
       Proxy proxy = Proxy.getInstance();
       proxy.addGlobalEventListener(this);

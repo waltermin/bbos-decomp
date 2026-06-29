@@ -18,6 +18,7 @@ import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.StringTokenizer;
 import net.rim.device.internal.i18n.CommonResource;
@@ -71,7 +72,7 @@ final class SBAppEditRecordUI extends MainScreen implements ListFieldCallback {
       this._rec = theRec;
       this._isNew = iNew;
       this._viewMode = -1;
-      this._screenTitle = (LabelField)(new Object("", 64));
+      this._screenTitle = new LabelField("", 64);
       this.setTitle(this._screenTitle);
       ResourceBundle rb = SBAppResources.getResourceBundle();
       this._encryptModeDescriptions = rb.getStringArray(333);
@@ -85,19 +86,19 @@ final class SBAppEditRecordUI extends MainScreen implements ListFieldCallback {
       this._recSourceField = this.makeObjectChoiceField(rb, 324, 323);
       this._recCARealmField = this.makeAutoTextEditField(rb, 207, 127);
       this._recCAAddressField = this.makeAutoTextEditField(rb, 208, 127);
-      this._recCAPortField = (EditField)(new Object(rb.getString(209), null, 1000000, 16777216));
+      this._recCAPortField = new EditField(rb.getString(209), null, 1000000, 16777216);
       this._recHriUsageField = this.makeObjectChoiceField(rb, 210, 301);
       this._recDescriptionField = this.makeAutoTextEditField(rb, 211, 127);
-      this._recAppDataField = (HexEditField)(new Object(rb.getString(212), 1023));
+      this._recAppDataField = new HexEditField(rb.getString(212), 1023);
       this._recHomeAddressField = this.makeAutoTextEditField(rb, 326, 127);
-      this._recBBRRoutingField = (EditField)(new Object(rb.getString(335), ""));
-      this._recDataSourceIdField = (EditField)(new Object(rb.getString(328), ""));
-      this._recUserIdField = (EditField)(new Object(rb.getString(329), ""));
-      this._serviceIdTypeField = (EditField)(new Object(rb.getString(216), ""));
-      this._serviceIdSubTypeField = (EditField)(new Object(rb.getString(217), ""));
-      this._isRestoredFromBackupField = (CheckboxField)(new Object(rb.getString(220), theRec.isRestoredFromBackup()));
-      this._isRestoreEnabledField = (CheckboxField)(new Object(rb.getString(219), theRec.isRestoreEnabled()));
-      this._isRestoreDisabledField = (CheckboxField)(new Object(rb.getString(218), theRec.isRestoreDisabled()));
+      this._recBBRRoutingField = new EditField(rb.getString(335), "");
+      this._recDataSourceIdField = new EditField(rb.getString(328), "");
+      this._recUserIdField = new EditField(rb.getString(329), "");
+      this._serviceIdTypeField = new EditField(rb.getString(216), "");
+      this._serviceIdSubTypeField = new EditField(rb.getString(217), "");
+      this._isRestoredFromBackupField = new CheckboxField(rb.getString(220), theRec.isRestoredFromBackup());
+      this._isRestoreEnabledField = new CheckboxField(rb.getString(219), theRec.isRestoreEnabled());
+      this._isRestoreDisabledField = new CheckboxField(rb.getString(218), theRec.isRestoreDisabled());
       int id;
       switch (RadioInfo.getNetworkType()) {
          case 2:
@@ -147,7 +148,7 @@ final class SBAppEditRecordUI extends MainScreen implements ListFieldCallback {
    protected final boolean keyCharUnhandled(char key, int status, int time) {
       if (key == ' ') {
          Field f = this.getLeafFieldWithFocus();
-         if (f instanceof Object) {
+         if (f instanceof ListField) {
             ListField lf = (ListField)f;
             int index = lf.getSelectedIndex();
             int mask = 1 << lf.getSelectedIndex();
@@ -236,9 +237,9 @@ final class SBAppEditRecordUI extends MainScreen implements ListFieldCallback {
       label128:
       try {
          if (this._recBBRRoutingField.getText().length() > 0) {
-            StringTokenizer strtok = (StringTokenizer)(new Object(this._recBBRRoutingField.getText(), "//:;", false));
+            StringTokenizer strtok = new StringTokenizer(this._recBBRRoutingField.getText(), "//:;", false);
             int count = strtok.countTokens() / 2;
-            String[] hosts = new Object[count];
+            String[] hosts = new String[count];
             int[] ports = new int[count];
 
             for (int i = 0; i < count; i++) {
@@ -295,10 +296,10 @@ final class SBAppEditRecordUI extends MainScreen implements ListFieldCallback {
       this.add(this._recNameField);
       this.add(this._recUidField);
       this.add(this._recCidField);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.add(this._recUserIdField);
       this.add(this._recDataSourceIdField);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.add(this._recActivePinField);
       this.add(this._recDescriptionField);
       if (this._displayAllFields) {
@@ -310,20 +311,20 @@ final class SBAppEditRecordUI extends MainScreen implements ListFieldCallback {
       ResourceBundle rb = SBAppResources.getResourceBundle();
       if (!this._displayAllFields) {
          this.delete(this._recActivePinField);
-         this.add((Field)(new Object(rb.getString(205))));
+         this.add(new LabelField(rb.getString(205)));
          this.add(this._recEncryptField);
-         this.add((Field)(new Object(rb.getString(206))));
+         this.add(new LabelField(rb.getString(206)));
          this.add(this._recCompField);
          this.add(this._recSourceField);
          this.add(this._recHriUsageField);
          this.add(this._recBBRRoutingField);
-         this.add((Field)(new Object()));
+         this.add(new SeparatorField());
          this.add(this._recCARealmField);
          this.add(this._recCAAddressField);
          this.add(this._recCAPortField);
-         this.add((Field)(new Object()));
+         this.add(new SeparatorField());
          this.add(this._recAppDataField);
-         this.add((Field)(new Object()));
+         this.add(new SeparatorField());
          this.add(this._recHomeAddressField);
          this._displayAllFields = true;
       }
@@ -374,7 +375,7 @@ final class SBAppEditRecordUI extends MainScreen implements ListFieldCallback {
       if (this._rec.getBBRHosts() != null && this._rec.getBBRPorts() != null) {
          String[] hosts = this._rec.getBBRHosts();
          int[] ports = this._rec.getBBRPorts();
-         StringBuffer buf = (StringBuffer)(new Object(64));
+         StringBuffer buf = new StringBuffer(64);
 
          for (int i = 0; i < hosts.length; i++) {
             buf.append('/');
@@ -437,15 +438,15 @@ final class SBAppEditRecordUI extends MainScreen implements ListFieldCallback {
    }
 
    private final AutoTextEditField makeAutoTextEditField(ResourceBundle rb, int id, int maxSize) {
-      return (AutoTextEditField)(new Object(rb.getString(id), null, maxSize, 2199023255552L));
+      return new AutoTextEditField(rb.getString(id), null, maxSize, 2199023255552L);
    }
 
    private final ObjectChoiceField makeObjectChoiceField(ResourceBundle rb, int labelId, int stringsId) {
-      return (ObjectChoiceField)(new Object(rb.getString(labelId), rb.getStringArray(stringsId)));
+      return new ObjectChoiceField(rb.getString(labelId), rb.getStringArray(stringsId));
    }
 
    private final ListField makeListField(int size) {
-      ListField lf = (ListField)(new Object(size));
+      ListField lf = new ListField(size);
       lf.setCallback(this);
       return lf;
    }
@@ -483,7 +484,7 @@ final class SBAppEditRecordUI extends MainScreen implements ListFieldCallback {
       }
 
       value &= 1 << index;
-      return new Object(value != 0);
+      return new Boolean(value != 0);
    }
 
    @Override

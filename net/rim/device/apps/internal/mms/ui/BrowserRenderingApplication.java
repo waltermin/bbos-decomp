@@ -110,6 +110,6 @@ class BrowserRenderingApplication implements RenderingApplication {
 
    @Override
    public void invokeRunnable(Runnable runnable) {
-      ((Thread)(new Object(runnable))).run();
+      new Thread(runnable).run();
    }
 }

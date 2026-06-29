@@ -32,8 +32,8 @@ final class WTLSRecordProtocol extends RecordProtocol {
    private WTLSAlertProtocol _alertProtocol;
    private ChangeCipherSpecProtocol _changeCipherSpecProtocol;
    private DataBuffer _lastReadCipherTextMessage;
-   private DataBuffer _lastWrittenCipherTextMessage = (DataBuffer)(new Object());
-   private DataBuffer _pendingData = (DataBuffer)(new Object());
+   private DataBuffer _lastWrittenCipherTextMessage = new DataBuffer();
+   private DataBuffer _pendingData = new DataBuffer();
    private byte[] _lastDataSent = new byte[1492];
    private int _lastDataSentSize;
    private int[] _receivedWindow = new int[32];
@@ -43,7 +43,7 @@ final class WTLSRecordProtocol extends RecordProtocol {
    private boolean _autoflush = true;
    private int _keyAgreementSize;
    private boolean _piggyBack;
-   private DataBuffer _receivedBuffer = (DataBuffer)(new Object());
+   private DataBuffer _receivedBuffer = new DataBuffer();
    protected WTLSConnectionState _currentRead;
    protected WTLSConnectionState _currentWrite;
    protected WTLSConnectionState _pendingState;
@@ -172,13 +172,13 @@ final class WTLSRecordProtocol extends RecordProtocol {
                byte[] payloadData = new byte[Math.min(length, this._receivedBuffer.available())];
                this._receivedBuffer.read(payloadData);
                if (returnType == 1) {
-                  DataBuffer tempBuffer = (DataBuffer)(new Object(payloadData, 0, payloadData.length, true));
+                  DataBuffer tempBuffer = new DataBuffer(payloadData, 0, payloadData.length, true);
                   this._changeCipherSpecProtocol.processChangeCipherSpecMessage(tempBuffer);
                   continue;
                }
 
                if (returnType == 2) {
-                  DataBuffer tempBuffer = (DataBuffer)(new Object(payloadData, 0, payloadData.length, true));
+                  DataBuffer tempBuffer = new DataBuffer(payloadData, 0, payloadData.length, true);
 
                   try {
                      this._alertProtocol.processAlertMessage(tempBuffer);
@@ -226,9 +226,9 @@ final class WTLSRecordProtocol extends RecordProtocol {
                   TLSUtilities.sendAlertAndThrowException(this._alertProtocol, (byte)47);
                }
 
-               DataBuffer temp = (DataBuffer)(new Object(this._receivedBuffer.getArray(), this._receivedBuffer.getArrayPosition(), length, true));
+               DataBuffer temp = new DataBuffer(this._receivedBuffer.getArray(), this._receivedBuffer.getArrayPosition(), length, true);
                this._receivedBuffer.skipBytes(length);
-               DataBuffer outData = (DataBuffer)(new Object());
+               DataBuffer outData = new DataBuffer();
                int dataLength = cipher.decryptAndUnformat(temp, outData);
                byte[] data = outData.getArray();
                dataLength -= macLength;
@@ -382,7 +382,7 @@ final class WTLSRecordProtocol extends RecordProtocol {
             return;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -520,7 +520,7 @@ final class WTLSRecordProtocol extends RecordProtocol {
          System.arraycopy(super._serverRandom, 0, random, 2, super._serverRandom.length);
          System.arraycopy(super._clientRandom, 0, random, 2 + super._serverRandom.length, super._clientRandom.length);
          WTLSPRF prf = new WTLSPRF(this._cipherSuite & 0xFF, super._masterSecret, CLIENT_EXPANSION, random);
-         HMACKey writeHMACKey = (HMACKey)(new Object(prf.getBytes(write.getMACKeySize())));
+         HMACKey writeHMACKey = new HMACKey(prf.getBytes(write.getMACKeySize()));
          int keyLength = write.getKeySize();
          SymmetricKey writeKey = null;
          byte[] keyBytes = null;
@@ -537,9 +537,7 @@ final class WTLSRecordProtocol extends RecordProtocol {
          WTLSPRF exportIV = null;
          byte[] exportRandom = null;
          if (!write.getIsExportable()) {
-            writeKey = SymmetricKeyFactory.getInstance(
-               ((StringBuffer)(new Object())).append(write.getBulkCipherAlgorithm()).append("_").append(keyLength << 3).toString(), keyBytes, 0, keyLength
-            );
+            writeKey = SymmetricKeyFactory.getInstance(write.getBulkCipherAlgorithm() + "_" + (keyLength << 3), keyBytes, 0, keyLength);
          } else {
             exportRandom = new byte[super._clientRandom.length + super._serverRandom.length];
             System.arraycopy(super._clientRandom, 0, exportRandom, 0, super._clientRandom.length);
@@ -548,10 +546,7 @@ final class WTLSRecordProtocol extends RecordProtocol {
             if (keyLength > 0) {
                WTLSPRF writeExportPRF = new WTLSPRF(this._cipherSuite & 0xFF, keyBytes, CLIENT_WRITE_KEY, exportRandom);
                writeKey = SymmetricKeyFactory.getInstance(
-                  ((StringBuffer)(new Object())).append(write.getBulkCipherAlgorithm()).append("_").append(keyLength << 3).toString(),
-                  writeExportPRF.getBytes(keyLength),
-                  0,
-                  keyLength
+                  write.getBulkCipherAlgorithm() + "_" + (keyLength << 3), writeExportPRF.getBytes(keyLength), 0, keyLength
                );
             }
 
@@ -582,7 +577,7 @@ final class WTLSRecordProtocol extends RecordProtocol {
          System.arraycopy(super._serverRandom, 0, random, 2, super._serverRandom.length);
          System.arraycopy(super._clientRandom, 0, random, 2 + super._serverRandom.length, super._clientRandom.length);
          WTLSPRF prf = new WTLSPRF(this._cipherSuite & 0xFF, super._masterSecret, SERVER_EXPANSION, random);
-         HMACKey readHMACKey = (HMACKey)(new Object(prf.getBytes(read.getMACKeySize())));
+         HMACKey readHMACKey = new HMACKey(prf.getBytes(read.getMACKeySize()));
          int keyLength = read.getKeySize();
          SymmetricKey readKey = null;
          byte[] keyBytes = null;
@@ -598,9 +593,7 @@ final class WTLSRecordProtocol extends RecordProtocol {
          WTLSPRF exportIV = null;
          byte[] exportRandom = null;
          if (!read.getIsExportable()) {
-            readKey = SymmetricKeyFactory.getInstance(
-               ((StringBuffer)(new Object())).append(read.getBulkCipherAlgorithm()).append("_").append(keyLength << 3).toString(), keyBytes, 0, keyLength
-            );
+            readKey = SymmetricKeyFactory.getInstance(read.getBulkCipherAlgorithm() + "_" + (keyLength << 3), keyBytes, 0, keyLength);
          } else {
             exportRandom = new byte[super._clientRandom.length + super._serverRandom.length];
             System.arraycopy(super._clientRandom, 0, exportRandom, 0, super._clientRandom.length);
@@ -609,10 +602,7 @@ final class WTLSRecordProtocol extends RecordProtocol {
             if (keyLength > 0) {
                WTLSPRF readExportPRF = new WTLSPRF(this._cipherSuite & 0xFF, keyBytes, SERVER_WRITE_KEY, exportRandom);
                readKey = SymmetricKeyFactory.getInstance(
-                  ((StringBuffer)(new Object())).append(read.getBulkCipherAlgorithm()).append("_").append(keyLength << 3).toString(),
-                  readExportPRF.getBytes(keyLength),
-                  0,
-                  keyLength
+                  read.getBulkCipherAlgorithm() + "_" + (keyLength << 3), readExportPRF.getBytes(keyLength), 0, keyLength
                );
             }
 

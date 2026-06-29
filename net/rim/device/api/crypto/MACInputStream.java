@@ -9,7 +9,7 @@ public class MACInputStream extends CryptoInputStream {
    public MACInputStream(MAC mac, InputStream inputStream) {
       super(inputStream);
       if (mac == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._mac = mac;
@@ -40,7 +40,7 @@ public class MACInputStream extends CryptoInputStream {
             throw new CryptoIOException(e);
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

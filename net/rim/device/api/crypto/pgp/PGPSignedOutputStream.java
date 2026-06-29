@@ -2,10 +2,15 @@ package net.rim.device.api.crypto.pgp;
 
 import java.io.OutputStream;
 import java.util.Vector;
+import net.rim.device.api.crypto.CryptoIOException;
+import net.rim.device.api.crypto.CryptoUnsupportedOperationException;
 import net.rim.device.api.crypto.DSAPrivateKey;
+import net.rim.device.api.crypto.DSASignatureSigner;
 import net.rim.device.api.crypto.Digest;
+import net.rim.device.api.crypto.PKCS1SignatureSigner;
 import net.rim.device.api.crypto.PrivateKey;
 import net.rim.device.api.crypto.RSAPrivateKey;
+import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.crypto.SignatureSigner;
 import net.rim.device.internal.crypto.pgp.PGPSignatureSubPacket;
 import net.rim.device.internal.crypto.pgp.PGPUtilities;
@@ -34,7 +39,7 @@ public final class PGPSignedOutputStream extends PGPOutputStream {
    private static final int MAX_CLEAR_SIGNED_LINE_LENGTH = 76;
 
    public PGPSignedOutputStream(OutputStream out, int signatureType, PrivateKey privateKey, byte[] keyID) {
-      this(out, signatureType, privateKey, keyID, (Digest)(new Object()), 3, 4);
+      this(out, signatureType, privateKey, keyID, new SHA1Digest(), 3, 4);
    }
 
    public PGPSignedOutputStream(OutputStream out, int signatureType, PrivateKey privateKey, byte[] keyID, Digest digest) {
@@ -45,7 +50,7 @@ public final class PGPSignedOutputStream extends PGPOutputStream {
       this(out, signatureType, privateKey, keyID, digest, 3, tagFormat);
    }
 
-   public PGPSignedOutputStream(OutputStream out, int signatureType, PrivateKey privateKey, byte[] keyID, Digest digest, int signatureVersion, int tagFormat) {
+   public PGPSignedOutputStream(OutputStream out, int signatureType, PrivateKey privateKey, byte[] keyID, Digest digest, int signatureVersion, int tagFormat) throws CryptoUnsupportedOperationException {
       super(out, tagFormat);
       this._privateKey = privateKey;
       this._signatureType = signatureType;
@@ -59,30 +64,30 @@ public final class PGPSignedOutputStream extends PGPOutputStream {
 
          if (this._isClearSigned) {
             if (!(out instanceof PGPArmorEncoder)) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this._clearOut = (PGPArmorEncoder)out;
-            this._clearOut.writeClearSignedHeader(new Object[]{digest.getAlgorithm()});
+            this._clearOut.writeClearSignedHeader(new String[]{digest.getAlgorithm()});
          }
 
-         this._signedSubPackets = (Vector)(new Object());
-         this._unsignedSubPackets = (Vector)(new Object());
+         this._signedSubPackets = new Vector();
+         this._unsignedSubPackets = new Vector();
          this._headerStream = super._out.getOutputStream();
          this._internalStream = super._out.getOutputStream();
          if (!this._isClearSigned) {
             this._dataStream = super._out.getOutputStream();
          }
 
-         if (this._privateKey instanceof Object) {
-            this._signer = (SignatureSigner)(new Object((DSAPrivateKey)this._privateKey, this._digest));
+         if (this._privateKey instanceof DSAPrivateKey) {
+            this._signer = new DSASignatureSigner((DSAPrivateKey)this._privateKey, this._digest);
             this._publicKeyAlgorithm = 17;
          } else {
-            if (!(this._privateKey instanceof Object)) {
-               throw new Object();
+            if (!(this._privateKey instanceof RSAPrivateKey)) {
+               throw new CryptoUnsupportedOperationException();
             }
 
-            this._signer = (SignatureSigner)(new Object((RSAPrivateKey)this._privateKey, this._digest, true));
+            this._signer = new PKCS1SignatureSigner((RSAPrivateKey)this._privateKey, this._digest, true);
             this._publicKeyAlgorithm = 1;
          }
 
@@ -94,7 +99,7 @@ public final class PGPSignedOutputStream extends PGPOutputStream {
             this._signedSubPackets.addElement(new PGPSignatureSubPacket(2, this._signedTime));
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -119,7 +124,7 @@ public final class PGPSignedOutputStream extends PGPOutputStream {
       // 00f: isub
       // 010: iload 2
       // 011: if_icmpge 01c
-      // 014: new java/lang/Object
+      // 014: new java/lang/IllegalArgumentException
       // 017: dup
       // 018: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 01b: athrow
@@ -132,14 +137,14 @@ public final class PGPSignedOutputStream extends PGPOutputStream {
       // 02a: bipush 1
       // 02b: if_icmpeq 031
       // 02e: goto 151
-      // 031: new java/lang/Object
+      // 031: new java/io/ByteArrayInputStream
       // 034: dup
       // 035: aload 1
       // 036: iload 2
       // 037: iload 3
       // 038: invokespecial java/io/ByteArrayInputStream.<init> ([BII)V
       // 03b: astore 4
-      // 03d: new java/lang/Object
+      // 03d: new net/rim/device/api/io/LineReader
       // 040: dup
       // 041: aload 4
       // 043: invokespecial net/rim/device/api/io/LineReader.<init> (Ljava/io/InputStream;)V
@@ -304,12 +309,12 @@ public final class PGPSignedOutputStream extends PGPOutputStream {
             super._pgpOut.update(data, offset, length);
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
-   public final void close() {
+   public final void close() throws CryptoIOException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -448,7 +453,7 @@ public final class PGPSignedOutputStream extends PGPOutputStream {
       // 0e5: arraylength
       // 0e6: iadd
       // 0e7: istore 1
-      // 0e8: new java/lang/Object
+      // 0e8: new net/rim/device/api/io/NoCopyByteArrayOutputStream
       // 0eb: dup
       // 0ec: invokespecial net/rim/device/api/io/NoCopyByteArrayOutputStream.<init> ()V
       // 0ef: astore 3
@@ -576,7 +581,7 @@ public final class PGPSignedOutputStream extends PGPOutputStream {
       // 1cb: aload 7
       // 1cd: arraylength
       // 1ce: invokeinterface net/rim/device/api/crypto/SignatureSigner.update ([BII)V 4
-      // 1d3: new java/lang/Object
+      // 1d3: new net/rim/device/api/io/NoCopyByteArrayOutputStream
       // 1d6: dup
       // 1d7: invokespecial net/rim/device/api/io/NoCopyByteArrayOutputStream.<init> ()V
       // 1da: astore 3
@@ -633,7 +638,7 @@ public final class PGPSignedOutputStream extends PGPOutputStream {
       // 23a: invokevirtual java/io/ByteArrayOutputStream.size ()I
       // 23d: invokevirtual java/io/OutputStream.write ([BII)V
       // 240: goto 252
-      // 243: new java/lang/Object
+      // 243: new net/rim/device/api/crypto/CryptoIOException
       // 246: dup
       // 247: new net/rim/device/api/crypto/pgp/PGPEncodingException
       // 24a: dup
@@ -643,11 +648,11 @@ public final class PGPSignedOutputStream extends PGPOutputStream {
       // 252: aload 0
       // 253: getfield net/rim/device/api/crypto/pgp/PGPSignedOutputStream._signer Lnet/rim/device/api/crypto/SignatureSigner;
       // 256: dup
-      // 257: instanceof java/lang/Object
+      // 257: instanceof net/rim/device/api/crypto/DSASignatureSigner
       // 25a: ifne 261
       // 25d: pop
       // 25e: goto 2ba
-      // 261: checkcast java/lang/Object
+      // 261: checkcast net/rim/device/api/crypto/DSASignatureSigner
       // 264: astore 2
       // 265: aload 2
       // 266: invokevirtual net/rim/device/api/crypto/DSASignatureSigner.getRLength ()I
@@ -697,11 +702,11 @@ public final class PGPSignedOutputStream extends PGPOutputStream {
       // 2ba: aload 0
       // 2bb: getfield net/rim/device/api/crypto/pgp/PGPSignedOutputStream._signer Lnet/rim/device/api/crypto/SignatureSigner;
       // 2be: dup
-      // 2bf: instanceof java/lang/Object
+      // 2bf: instanceof net/rim/device/api/crypto/PKCS1SignatureSigner
       // 2c2: ifne 2c9
       // 2c5: pop
       // 2c6: goto 307
-      // 2c9: checkcast java/lang/Object
+      // 2c9: checkcast net/rim/device/api/crypto/PKCS1SignatureSigner
       // 2cc: astore 2
       // 2cd: aload 2
       // 2ce: invokevirtual net/rim/device/api/crypto/PKCS1SignatureSigner.getLength ()I
@@ -733,7 +738,7 @@ public final class PGPSignedOutputStream extends PGPOutputStream {
       // 302: iadd
       // 303: istore 1
       // 304: goto 30f
-      // 307: new java/lang/Object
+      // 307: new net/rim/device/api/crypto/CryptoUnsupportedOperationException
       // 30a: dup
       // 30b: invokespecial net/rim/device/api/crypto/CryptoUnsupportedOperationException.<init> ()V
       // 30e: athrow
@@ -755,13 +760,13 @@ public final class PGPSignedOutputStream extends PGPOutputStream {
       // 32f: invokevirtual net/rim/device/api/io/SharedOutputStream.close ()V
       // 332: return
       // 333: astore 1
-      // 334: new java/lang/Object
+      // 334: new net/rim/device/api/crypto/CryptoIOException
       // 337: dup
       // 338: aload 1
       // 339: invokespecial net/rim/device/api/crypto/CryptoIOException.<init> (Lnet/rim/device/api/crypto/CryptoException;)V
       // 33c: athrow
       // 33d: astore 1
-      // 33e: new java/lang/Object
+      // 33e: new net/rim/device/api/crypto/CryptoIOException
       // 341: dup
       // 342: aload 1
       // 343: invokespecial net/rim/device/api/crypto/CryptoIOException.<init> (Lnet/rim/device/api/crypto/CryptoException;)V

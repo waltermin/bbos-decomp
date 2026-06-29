@@ -35,7 +35,7 @@ public final class ETApplication extends Application {
          try {
             ApplicationManager.getApplicationManager().runApplication(descriptors[0]);
          } catch (Throwable var5) {
-            Logger.logError("getETManager", ((StringBuffer)(new Object("ApplicationManagerException: "))).append(e).toString());
+            Logger.logError("getETManager", "ApplicationManagerException: " + e);
             break label31;
          }
 
@@ -56,7 +56,7 @@ public final class ETApplication extends Application {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

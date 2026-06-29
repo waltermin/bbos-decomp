@@ -24,7 +24,7 @@ public final class MMSTransportServiceBook {
 
    static final String getAPN() {
       HostRoutingInfo activeHri = getHostRoutingInfo(getServiceRecord());
-      if (!(activeHri instanceof Object)) {
+      if (!(activeHri instanceof GprsHRI)) {
          return null;
       }
 
@@ -34,7 +34,7 @@ public final class MMSTransportServiceBook {
 
    static final void setAPN(String apn) {
       HostRoutingInfo activeHri = getHostRoutingInfo(getServiceRecord());
-      if (activeHri instanceof Object) {
+      if (activeHri instanceof GprsHRI) {
          GprsHRI hri = (GprsHRI)activeHri;
          hri.setApn(apn);
       }
@@ -67,7 +67,7 @@ public final class MMSTransportServiceBook {
    public static final String getProxyAddress() {
       Object o = getServiceRecord();
       String url = null;
-      if (o instanceof Object) {
+      if (o instanceof WPTCPServiceRecord) {
          WPTCPServiceRecord rec = (WPTCPServiceRecord)o;
          url = rec.getPropertyAsString(1);
       }
@@ -81,14 +81,14 @@ public final class MMSTransportServiceBook {
       Object record = getServiceRecord();
 
       try {
-         if (record instanceof Object) {
+         if (record instanceof WPTCPServiceRecord) {
             WPTCPServiceRecord rec = (WPTCPServiceRecord)record;
             rec.setProperty(1, url);
             rec.saveData();
             return;
          }
       } catch (Throwable var4) {
-         System.out.println(((StringBuffer)(new Object("MMSC.setProxyAddress "))).append(e.toString()).toString());
+         System.out.println("MMSC.setProxyAddress " + e.toString());
          return;
       }
    }
@@ -99,8 +99,8 @@ public final class MMSTransportServiceBook {
       Object record = getServiceRecord();
 
       try {
-         if (!(record instanceof Object)) {
-            if (record instanceof Object) {
+         if (!(record instanceof WAPServiceRecord)) {
+            if (record instanceof WPTCPServiceRecord) {
                WPTCPServiceRecord rec = (WPTCPServiceRecord)record;
                rec.setProperty(13, url);
                rec.saveData();
@@ -112,7 +112,7 @@ public final class MMSTransportServiceBook {
             rec.saveData();
          }
       } catch (Throwable var4) {
-         System.out.println(((StringBuffer)(new Object("MMSC.setMMSCUrl "))).append(e.toString()).toString());
+         System.out.println("MMSC.setMMSCUrl " + e.toString());
          return;
       }
    }
@@ -120,8 +120,8 @@ public final class MMSTransportServiceBook {
    public static final String getMMSCUrl() {
       Object record = getServiceRecord();
       String url = null;
-      if (!(record instanceof Object)) {
-         if (record instanceof Object) {
+      if (!(record instanceof WAPServiceRecord)) {
+         if (record instanceof WPTCPServiceRecord) {
             WPTCPServiceRecord rec = (WPTCPServiceRecord)record;
             url = rec.getPropertyAsString(13);
          }
@@ -135,13 +135,13 @@ public final class MMSTransportServiceBook {
             String number = Phone.getInstance().getNumber(0);
             if (number != null && number.length() > 0 && number.charAt(0) != '+') {
                if (number.charAt(0) != '1') {
-                  number = ((StringBuffer)(new Object("1"))).append(number).toString();
+                  number = "1" + number;
                }
 
-               number = ((StringBuffer)(new Object("+"))).append(number).toString();
+               number = "+" + number;
             }
 
-            return ((StringBuffer)(new Object())).append(url).append(number).toString();
+            return url + number;
          } finally {
             return url;
          }
@@ -159,17 +159,17 @@ public final class MMSTransportServiceBook {
          String wapUid = getWAPTransportUID();
          String params = ";retrynocontext=true;WAPGatewayIP=";
          if (wapUid != null && wapUid.length() > 0) {
-            params = ((StringBuffer)(new Object())).append(params).append(";ConnectionUID=").append(wapUid).toString();
+            params = params + ";ConnectionUID=" + wapUid;
          }
 
          int timeout = MMSClientServiceBook.getConnectionTimeout();
          if (timeout > 0) {
-            params = ((StringBuffer)(new Object())).append(params).append(";ConnectionTimeout=").append(Integer.toString(timeout * 1000)).toString();
+            params = params + ";ConnectionTimeout=" + Integer.toString(timeout * 1000);
          }
 
          return params;
       } else {
-         return ((StringBuffer)(new Object(";retrynocontext=true;DeviceSide=true;ConnectionUID="))).append(getWPTCPTransportUID()).toString();
+         return ";retrynocontext=true;DeviceSide=true;ConnectionUID=" + getWPTCPTransportUID();
       }
    }
 
@@ -178,8 +178,8 @@ public final class MMSTransportServiceBook {
    }
 
    private static final String getMMSCUsername(Object record) {
-      if (!(record instanceof Object)) {
-         if (!(record instanceof Object)) {
+      if (!(record instanceof WAPServiceRecord)) {
+         if (!(record instanceof WPTCPServiceRecord)) {
             return null;
          }
 
@@ -201,8 +201,8 @@ public final class MMSTransportServiceBook {
             setMMSCPassword(record, "");
          }
 
-         if (!(record instanceof Object)) {
-            if (record instanceof Object) {
+         if (!(record instanceof WAPServiceRecord)) {
+            if (record instanceof WPTCPServiceRecord) {
                WPTCPServiceRecord rec = (WPTCPServiceRecord)record;
                rec.setProperty(11, username);
                rec.saveData();
@@ -214,7 +214,7 @@ public final class MMSTransportServiceBook {
             rec.saveData();
          }
       } catch (Throwable var4) {
-         System.out.println(((StringBuffer)(new Object("MMSC.setMMSCUsername "))).append(e.toString()).toString());
+         System.out.println("MMSC.setMMSCUsername " + e.toString());
          return;
       }
    }
@@ -224,8 +224,8 @@ public final class MMSTransportServiceBook {
    }
 
    private static final String getMMSCPassword(Object record) {
-      if (!(record instanceof Object)) {
-         if (!(record instanceof Object)) {
+      if (!(record instanceof WAPServiceRecord)) {
+         if (!(record instanceof WPTCPServiceRecord)) {
             return null;
          }
 
@@ -249,8 +249,8 @@ public final class MMSTransportServiceBook {
             password = "";
          }
 
-         if (!(record instanceof Object)) {
-            if (record instanceof Object) {
+         if (!(record instanceof WAPServiceRecord)) {
+            if (record instanceof WPTCPServiceRecord) {
                WPTCPServiceRecord rec = (WPTCPServiceRecord)record;
                rec.setProperty(12, password);
                rec.saveData();
@@ -262,15 +262,15 @@ public final class MMSTransportServiceBook {
             rec.saveData();
          }
       } catch (Throwable var4) {
-         System.out.println(((StringBuffer)(new Object("MMSC.setMMSCPassword "))).append(e.toString()).toString());
+         System.out.println("MMSC.setMMSCPassword " + e.toString());
          return;
       }
    }
 
    public static final String getMessageUrlPrefix() {
       Object record = getServiceRecord();
-      if (!(record instanceof Object)) {
-         if (!(record instanceof Object)) {
+      if (!(record instanceof WAPServiceRecord)) {
+         if (!(record instanceof WPTCPServiceRecord)) {
             return null;
          }
 
@@ -288,8 +288,8 @@ public final class MMSTransportServiceBook {
       Object record = getServiceRecord();
 
       try {
-         if (!(record instanceof Object)) {
-            if (record instanceof Object) {
+         if (!(record instanceof WAPServiceRecord)) {
+            if (record instanceof WPTCPServiceRecord) {
                WPTCPServiceRecord rec = (WPTCPServiceRecord)record;
                rec.setProperty(15, prefix);
                rec.saveData();
@@ -301,15 +301,15 @@ public final class MMSTransportServiceBook {
             rec.saveData();
          }
       } catch (Throwable var4) {
-         System.out.println(((StringBuffer)(new Object("MMSC.setMMSCPassword "))).append(e.toString()).toString());
+         System.out.println("MMSC.setMMSCPassword " + e.toString());
          return;
       }
    }
 
    public static final String getAuthenticationHeader() {
       Object record = getServiceRecord();
-      if (!(record instanceof Object)) {
-         if (!(record instanceof Object)) {
+      if (!(record instanceof WAPServiceRecord)) {
+         if (!(record instanceof WPTCPServiceRecord)) {
             return null;
          }
 
@@ -327,8 +327,8 @@ public final class MMSTransportServiceBook {
       Object record = getServiceRecord();
 
       try {
-         if (!(record instanceof Object)) {
-            if (record instanceof Object) {
+         if (!(record instanceof WAPServiceRecord)) {
+            if (record instanceof WPTCPServiceRecord) {
                WPTCPServiceRecord rec = (WPTCPServiceRecord)record;
                rec.setProperty(16, header);
                rec.saveData();
@@ -340,18 +340,18 @@ public final class MMSTransportServiceBook {
             rec.saveData();
          }
       } catch (Throwable var4) {
-         System.out.println(((StringBuffer)(new Object("MMSC.setAuthenticationHeader "))).append(e.toString()).toString());
+         System.out.println("MMSC.setAuthenticationHeader " + e.toString());
          return;
       }
    }
 
    public static final boolean isWAPServiceRecord() {
-      return getServiceRecord() instanceof Object;
+      return getServiceRecord() instanceof WAPServiceRecord;
    }
 
    public static final int getWAPAccessMode() {
       Object record = getServiceRecord();
-      if (!(record instanceof Object)) {
+      if (!(record instanceof WAPServiceRecord)) {
          return 0;
       }
 
@@ -365,21 +365,21 @@ public final class MMSTransportServiceBook {
       Object record = getServiceRecord();
 
       try {
-         if (record instanceof Object) {
+         if (record instanceof WAPServiceRecord) {
             WAPServiceRecord rec = (WAPServiceRecord)record;
             rec.setSecureAccess(mode);
             rec.saveData();
             return;
          }
       } catch (Throwable var4) {
-         System.out.println(((StringBuffer)(new Object("MMSC.setWAPAccessMode "))).append(e.toString()).toString());
+         System.out.println("MMSC.setWAPAccessMode " + e.toString());
          return;
       }
    }
 
    public static final int getWTLSClientType() {
       Object record = getServiceRecord();
-      if (!(record instanceof Object)) {
+      if (!(record instanceof WAPServiceRecord)) {
          return 0;
       }
 
@@ -393,21 +393,21 @@ public final class MMSTransportServiceBook {
       Object record = getServiceRecord();
 
       try {
-         if (record instanceof Object) {
+         if (record instanceof WAPServiceRecord) {
             WAPServiceRecord rec = (WAPServiceRecord)record;
             rec.setWtlsClientIdType(type);
             rec.saveData();
             return;
          }
       } catch (Throwable var4) {
-         System.out.println(((StringBuffer)(new Object("MMSC.setWTLSClientType "))).append(e.toString()).toString());
+         System.out.println("MMSC.setWTLSClientType " + e.toString());
          return;
       }
    }
 
    public static final int getWTLSMode() {
       Object record = getServiceRecord();
-      if (!(record instanceof Object)) {
+      if (!(record instanceof WAPServiceRecord)) {
          return 0;
       }
 
@@ -421,21 +421,21 @@ public final class MMSTransportServiceBook {
       Object record = getServiceRecord();
 
       try {
-         if (record instanceof Object) {
+         if (record instanceof WAPServiceRecord) {
             WAPServiceRecord rec = (WAPServiceRecord)record;
             rec.setWtlsModeValue(mode);
             rec.saveData();
             return;
          }
       } catch (Throwable var4) {
-         System.out.println(((StringBuffer)(new Object("MMSC.setWTLSMode "))).append(e.toString()).toString());
+         System.out.println("MMSC.setWTLSMode " + e.toString());
          return;
       }
    }
 
    public static final boolean getWAP20Conformance() {
       Object record = getServiceRecord();
-      if (!(record instanceof Object)) {
+      if (!(record instanceof WAPServiceRecord)) {
          return false;
       }
 
@@ -449,22 +449,22 @@ public final class MMSTransportServiceBook {
       Object record = getServiceRecord();
 
       try {
-         if (record instanceof Object) {
+         if (record instanceof WAPServiceRecord) {
             WAPServiceRecord rec = (WAPServiceRecord)record;
             rec.setWAP20Conformance(mode ? 1 : 0);
             rec.saveData();
             return;
          }
       } catch (Throwable var4) {
-         System.out.println(((StringBuffer)(new Object("MMSC.setWAP20Conformace "))).append(e.toString()).toString());
+         System.out.println("MMSC.setWAP20Conformace " + e.toString());
          return;
       }
    }
 
    static final int getAutoRetrievalMode() {
       Object record = getServiceRecord();
-      if (!(record instanceof Object)) {
-         if (!(record instanceof Object)) {
+      if (!(record instanceof WAPServiceRecord)) {
+         if (!(record instanceof WPTCPServiceRecord)) {
             return -1;
          }
 
@@ -482,8 +482,8 @@ public final class MMSTransportServiceBook {
       Object record = getServiceRecord();
 
       try {
-         if (!(record instanceof Object)) {
-            if (record instanceof Object) {
+         if (!(record instanceof WAPServiceRecord)) {
+            if (record instanceof WPTCPServiceRecord) {
                WPTCPServiceRecord rec = (WPTCPServiceRecord)record;
                rec.setProperty(14, mode);
                rec.saveData();
@@ -495,15 +495,15 @@ public final class MMSTransportServiceBook {
             rec.saveData();
          }
       } catch (Throwable var4) {
-         System.out.println(((StringBuffer)(new Object("MMSC.setAutoRetrievalMode "))).append(e.toString()).toString());
+         System.out.println("MMSC.setAutoRetrievalMode " + e.toString());
          return;
       }
    }
 
    static final int getMMSCVersion() {
       Object record = getServiceRecord();
-      if (!(record instanceof Object)) {
-         if (!(record instanceof Object)) {
+      if (!(record instanceof WAPServiceRecord)) {
+         if (!(record instanceof WPTCPServiceRecord)) {
             return 16;
          }
 
@@ -537,12 +537,12 @@ public final class MMSTransportServiceBook {
    }
 
    private static final HostRoutingTable getHostRoutingTable(Object record) {
-      if (record instanceof Object) {
+      if (record instanceof WAPServiceRecord) {
          ServiceRecord rec = getWAPTransportServiceRecord();
          if (rec != null) {
             return rec.getAttachedHrt();
          }
-      } else if (record instanceof Object) {
+      } else if (record instanceof WPTCPServiceRecord) {
          ServiceRecord rec = getWPTCPTransportServiceRecord();
          if (rec != null) {
             return rec.getAttachedHrt();
@@ -640,7 +640,7 @@ public final class MMSTransportServiceBook {
             return;
          }
       } catch (Throwable var4) {
-         System.out.println(((StringBuffer)(new Object("MMSC.setPPGAddress "))).append(e.toString()).toString());
+         System.out.println("MMSC.setPPGAddress " + e.toString());
          return;
       }
    }

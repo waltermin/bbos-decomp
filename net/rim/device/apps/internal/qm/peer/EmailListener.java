@@ -6,7 +6,6 @@ import net.rim.device.apps.api.transmission.TransmissionService;
 import net.rim.device.apps.api.transmission.TransmissionServiceListener;
 import net.rim.device.apps.api.transmission.TransmissionServiceManager;
 import net.rim.device.apps.api.transmission.rim.RIMMessagingIncomingMessage;
-import net.rim.device.apps.api.transmission.rim.RIMMessagingMessage;
 import net.rim.device.apps.api.transmission.rim.RIMMessagingService;
 
 final class EmailListener implements TransmissionServiceListener {
@@ -25,13 +24,13 @@ final class EmailListener implements TransmissionServiceListener {
       ContextObject contextObject = ContextObject.castOrCreate(context);
       RIMMessagingIncomingMessage incMsg = null;
       String emailtext = null;
-      if (!(transmissionObject instanceof Object)) {
+      if (!(transmissionObject instanceof RIMMessagingIncomingMessage)) {
          return false;
       }
 
-      RIMMessagingIncomingMessage var18 = transmissionObject;
-      Object emailbody = ((RIMMessagingMessage)var18).getText();
-      if (!(emailbody instanceof Object)) {
+      incMsg = (RIMMessagingIncomingMessage)transmissionObject;
+      Object emailbody = incMsg.getText();
+      if (!(emailbody instanceof String)) {
          return false;
       }
 
@@ -42,7 +41,8 @@ final class EmailListener implements TransmissionServiceListener {
          return false;
       }
 
-      if ((emailbody = EmailInvitation.stripData(emailtext)) == null) {
+      byte[] var21;
+      if ((var21 = EmailInvitation.stripData(emailtext)) == null) {
          return false;
       }
 
@@ -51,14 +51,14 @@ final class EmailListener implements TransmissionServiceListener {
       String sender;
       String recipient;
       try {
-         if (!email.unPickle((byte[])emailbody)) {
+         if (!email.unPickle(var21)) {
             return false;
          }
 
-         String[][] address = ((RIMMessagingMessage)var18).getFrom();
+         String[][] address = incMsg.getFrom();
          sender = address[0][0];
          email.setReplyTo(sender);
-         address = ((RIMMessagingMessage)var18).getTo();
+         address = incMsg.getTo();
          recipient = address[0][0];
       } finally {
          ;
@@ -75,7 +75,7 @@ final class EmailListener implements TransmissionServiceListener {
 
       String finalbody = Utils.stripLastTwoParagraphs(body);
       ServiceRecord serviceRecord = ((RIMMessagingService)aTransmissionService).getOutgoingServiceRecord();
-      int refId = ((RIMMessagingMessage)var18).getReferenceIdentifier();
+      int refId = incMsg.getReferenceIdentifier();
       PeerApplication.getInstance().invokeLater(new EmailListener$1(this, email, sender, finalbody, recipient, serviceRecord, refId));
       return true;
    }

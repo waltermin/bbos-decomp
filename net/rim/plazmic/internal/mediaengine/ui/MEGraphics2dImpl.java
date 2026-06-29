@@ -475,8 +475,8 @@ public final class MEGraphics2dImpl implements MEGraphics2d {
             fo.draw(this.g, x, y);
          }
       } else {
-         if (!(image instanceof Object)) {
-            if (image instanceof Object) {
+         if (!(image instanceof EncodedImage)) {
+            if (image instanceof Bitmap) {
                Bitmap cast = (Bitmap)image;
                if (isIdentity) {
                   this.g.drawBitmap(x, y, cast.getWidth(), cast.getHeight(), cast, 0, 0);
@@ -550,8 +550,8 @@ public final class MEGraphics2dImpl implements MEGraphics2d {
             fo.draw(this.g, x, y);
          }
       } else {
-         if (!(image instanceof Object)) {
-            if (image instanceof Object) {
+         if (!(image instanceof EncodedImage)) {
+            if (image instanceof Bitmap) {
                Bitmap cast = (Bitmap)image;
                this.transformPoints(x, y, width, height, tempx, tempy);
                int p = this.stackCurrentPosition - 9;
@@ -657,7 +657,7 @@ public final class MEGraphics2dImpl implements MEGraphics2d {
                var13 = 12;
                break;
             default:
-               throw new Object();
+               throw new IllegalArgumentException();
          }
 
          if (!_family.isStyleSupported(prefStyle)) {
@@ -690,7 +690,7 @@ public final class MEGraphics2dImpl implements MEGraphics2d {
          }
 
          if (fontObject == null) {
-            throw new Object("Could not find font match.");
+            throw new RuntimeException("Could not find font match.");
          }
 
          hashValues[hash] = fontObject;
@@ -818,7 +818,7 @@ public final class MEGraphics2dImpl implements MEGraphics2d {
          case 100:
             return 262148;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -834,7 +834,7 @@ public final class MEGraphics2dImpl implements MEGraphics2d {
          case 40:
             return 3;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 

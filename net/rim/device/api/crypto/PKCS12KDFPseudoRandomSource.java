@@ -13,7 +13,7 @@ public class PKCS12KDFPseudoRandomSource extends AbstractPseudoRandomSource impl
    private int _v;
 
    public PKCS12KDFPseudoRandomSource(byte[] password, byte[] salt, int iterationCount, byte ID) {
-      this(password, salt, iterationCount, ID, (Digest)(new Object()));
+      this(password, salt, iterationCount, ID, new SHA1Digest());
    }
 
    public PKCS12KDFPseudoRandomSource(byte[] password, byte[] salt, int iterationCount, byte ID, Digest digest) {
@@ -24,27 +24,27 @@ public class PKCS12KDFPseudoRandomSource extends AbstractPseudoRandomSource impl
          if (ID >= 1 && ID <= 3) {
             this._ID = ID;
             if (digest == null) {
-               this._digest = (Digest)(new Object());
+               this._digest = new SHA1Digest();
             } else {
                this._digest = digest;
             }
 
-            if (this._digest instanceof Object) {
+            if (this._digest instanceof SHA1Digest) {
                this._u = 160;
                this._v = 512;
             } else {
-               if (!(this._digest instanceof Object) && !(this._digest instanceof Object)) {
-                  throw new Object();
+               if (!(this._digest instanceof MD2Digest) && !(this._digest instanceof MD5Digest)) {
+                  throw new IllegalArgumentException();
                }
 
                this._u = 128;
                this._v = 512;
             }
          } else {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -133,7 +133,7 @@ public class PKCS12KDFPseudoRandomSource extends AbstractPseudoRandomSource impl
             buffer[bufferOffset + i] = (byte)(buffer[bufferOffset + i] ^ finalA[i]);
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -171,10 +171,10 @@ public class PKCS12KDFPseudoRandomSource extends AbstractPseudoRandomSource impl
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

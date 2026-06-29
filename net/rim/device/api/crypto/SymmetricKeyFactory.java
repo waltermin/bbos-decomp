@@ -14,11 +14,11 @@ public class SymmetricKeyFactory {
       if (algorithm != null && data != null && offset >= 0 && length >= 0 && data.length - length >= offset) {
          return privateGetInstance(algorithm, data, offset, length);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
-   private static SymmetricKey privateGetInstance(String algorithm, byte[] data, int offset, int length) {
+   private static SymmetricKey privateGetInstance(String algorithm, byte[] data, int offset, int length) throws NoSuchAlgorithmException {
       algorithm = RIMFactoryUtilities.getLeftMostSubAlgorithm(algorithm);
       String checkAlgorithm = algorithm;
 
@@ -43,19 +43,19 @@ public class SymmetricKeyFactory {
                }
 
                if (length < keyByteLength) {
-                  throw new Object();
+                  throw new IllegalArgumentException();
                } else {
                   return factory.create(baseAlgorithm, data, offset, keyBitLength);
                }
             } finally {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
          }
 
          checkAlgorithm = RIMFactoryUtilities.stripBaseAlgorithm(checkAlgorithm);
       } while (checkAlgorithm != null);
 
-      throw new Object(algorithm);
+      throw new NoSuchAlgorithmException(algorithm);
    }
 
    public static SymmetricKey getInstance(String algorithm, byte[] data, int offset) {
@@ -68,7 +68,7 @@ public class SymmetricKeyFactory {
 
    public static void register(SymmetricKeyFactory factory) {
       if (factory == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       String[] algorithms = factory.getFactoryAlgorithms();

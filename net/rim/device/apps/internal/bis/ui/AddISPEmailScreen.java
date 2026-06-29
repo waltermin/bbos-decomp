@@ -2,10 +2,11 @@ package net.rim.device.apps.internal.bis.ui;
 
 import java.util.Hashtable;
 import net.rim.device.api.i18n.MessageFormat;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.EmailAddressEditField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.PasswordEditField;
+import net.rim.device.apps.api.utility.general.URI;
 import net.rim.device.apps.internal.bis.ApplicationResources;
 import net.rim.device.apps.internal.bis.api.ui.BoldLabelField;
 import net.rim.device.apps.internal.bis.api.ui.Button;
@@ -35,19 +36,19 @@ public final class AddISPEmailScreen extends UserSettingsScreen {
       this.setTitle(ApplicationResources.getString(40));
       this.addContentField(new BoldLabelField(ApplicationResources.getString(41)));
       String sessionSimpleEmail = ClientSessionState.getInstance().getIntegrationEmail();
-      String acctConfigDescriptionText = MessageFormat.format(ApplicationResources.getString(42), new Object[]{sessionSimpleEmail});
-      this.addContentField((Field)(new Object(acctConfigDescriptionText)));
+      String acctConfigDescriptionText = MessageFormat.format(ApplicationResources.getString(42), new String[]{sessionSimpleEmail});
+      this.addContentField(new LabelField(acctConfigDescriptionText));
       this.addContentField(new BoldLabelField(ApplicationResources.getString(136)));
-      this._emailAddressEdit = (EmailAddressEditField)(new Object(null, null));
+      this._emailAddressEdit = new EmailAddressEditField(null, null);
       this.addContentField(this._emailAddressEdit, true);
       this.addContentField(new BoldLabelField(ApplicationResources.getString(13)));
-      this._userNameEdit = (BasicEditField)(new Object());
+      this._userNameEdit = new BasicEditField();
       this.addContentField(this._userNameEdit, true);
       this.addContentField(new BoldLabelField(ApplicationResources.getString(14)));
-      this._passwordEdit = (PasswordEditField)(new Object());
+      this._passwordEdit = new PasswordEditField();
       this.addContentField(this._passwordEdit, true);
       this.addContentField(new BoldLabelField(ApplicationResources.getString(206)));
-      this._emailServerEdit = (BasicEditField)(new Object());
+      this._emailServerEdit = new BasicEditField();
       this.addContentField(this._emailServerEdit, true);
       Button closeButton = new Button(ApplicationResources.getString(15));
       Button backButton = new Button(ApplicationResources.getString(16));
@@ -84,7 +85,7 @@ public final class AddISPEmailScreen extends UserSettingsScreen {
 
          try {
             var8 = true;
-            new Object(server);
+            new URI(server);
             var8 = false;
          } finally {
             if (var8) {

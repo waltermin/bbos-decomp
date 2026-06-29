@@ -29,7 +29,7 @@ public final class SearchAddressVerb extends Verb {
       if (addresses.length > 0) {
          int selectedAddressIndex = 0;
          if (addresses.length > 1) {
-            Dialog selectionDialog = (Dialog)(new Object(MessageResources.getString(110), addresses, null, 0, Bitmap.getPredefinedBitmap(1)));
+            Dialog selectionDialog = new Dialog(MessageResources.getString(110), addresses, null, 0, Bitmap.getPredefinedBitmap(1));
             selectionDialog.setEscapeEnabled(true);
             selectedAddressIndex = selectionDialog.doModal();
             if (selectedAddressIndex == -1) {
@@ -39,7 +39,7 @@ public final class SearchAddressVerb extends Verb {
 
          EmailHeaderModel headerModel = (LargeAttachmentModel$LargeCachedAttachmentModel)addresses[selectedAddressIndex];
          ConversionProvider converter = headerModel;
-         String[] names = new Object[2];
+         String[] names = new String[2];
          converter.convert(null, names);
          String address = names[1];
          if (address == null || address.length() == 0) {

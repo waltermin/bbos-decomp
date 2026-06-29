@@ -10,7 +10,7 @@ import net.rim.device.apps.internal.browser.common.AcceptValueProvider;
 import net.rim.device.apps.internal.browser.javascript.JavaScriptRegistry;
 
 public final class AcceptValueProviderRegistry {
-   private Vector _acceptValueProviders = (Vector)(new Object());
+   private Vector _acceptValueProviders = new Vector();
    static final String MIME_TYPE_BINARY_CSS = "application/vnd.rim.css;v=1";
    static final String MIME_TYPE_TEXT_CSS = "text/css;media=";
 
@@ -35,7 +35,7 @@ public final class AcceptValueProviderRegistry {
    public static final String getAcceptCharsetValues() {
       String[] encodings = Helper.getSupportedEncodings();
       if (encodings != null && encodings.length != 0) {
-         StringBuffer buff = (StringBuffer)(new Object("ISO-8859-1"));
+         StringBuffer buff = new StringBuffer("ISO-8859-1");
 
          for (int i = 0; i < encodings.length; i++) {
             if (!StringUtilities.strEqualIgnoreCase("ISO-8859-1", encodings[i], 1701707776)) {
@@ -51,8 +51,8 @@ public final class AcceptValueProviderRegistry {
    }
 
    public final Vector getSupportedMimeType(RenderingOptions renderingOptions) {
-      Vector currentVector = (Vector)(new Object());
-      Hashtable currentSet = (Hashtable)(new Object());
+      Vector currentVector = new Vector();
+      Hashtable currentSet = new Hashtable();
       int size = this._acceptValueProviders.size();
 
       for (int i = 0; i < size; i++) {
@@ -88,9 +88,7 @@ public final class AcceptValueProviderRegistry {
          && renderingOptions.getPropertyWithBooleanValue(4550690918222697397L, 18, true)) {
          String value = "application/vnd.rim.css;v=1";
          currentVector.addElement(value);
-         value = ((StringBuffer)(new Object("text/css;media=")))
-            .append(renderingOptions.getPropertyWithStringValue(4550690918222697397L, 19, "handheld"))
-            .toString();
+         value = "text/css;media=" + renderingOptions.getPropertyWithStringValue(4550690918222697397L, 19, "handheld");
          currentVector.addElement(value);
       }
 
@@ -99,7 +97,7 @@ public final class AcceptValueProviderRegistry {
 
    public final String getAcceptTypes(RenderingOptions renderingOptions) {
       Vector currentVector = this.getSupportedMimeType(renderingOptions);
-      StringBuffer acceptValues = (StringBuffer)(new Object());
+      StringBuffer acceptValues = new StringBuffer();
       int currentVectorSize = currentVector.size();
       boolean appendSeparator = false;
       boolean acceptTextHtml = false;

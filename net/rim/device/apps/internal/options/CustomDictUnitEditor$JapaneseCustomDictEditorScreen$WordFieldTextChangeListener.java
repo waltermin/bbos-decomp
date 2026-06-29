@@ -1,6 +1,5 @@
 package net.rim.device.apps.internal.options;
 
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.TextChangeListener;
 import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.tid.awt.event.InputMethodEvent;
@@ -18,7 +17,7 @@ public class CustomDictUnitEditor$JapaneseCustomDictEditorScreen$WordFieldTextCh
 
    @Override
    public void inputMethodTextChanged(Object source, InputMethodEvent event) {
-      if (source instanceof Object && ((Field)source).isFocus()) {
+      if (source instanceof BasicEditField && ((BasicEditField)source).isFocus()) {
          if (event.getCommittedCharacterCount() != 0) {
             StringBuffer reading = event.getOriginalReading();
             if (reading != null) {
@@ -35,7 +34,7 @@ public class CustomDictUnitEditor$JapaneseCustomDictEditorScreen$WordFieldTextCh
 
    @Override
    public void textValueChanged(Object source, int eventID) {
-      if (source instanceof Object && ((Field)source).isFocus()) {
+      if (source instanceof BasicEditField && ((BasicEditField)source).isFocus()) {
          BasicEditField sourceField = (BasicEditField)source;
          if (sourceField.getTextLength() == 0) {
             this._readingField.clear(0);

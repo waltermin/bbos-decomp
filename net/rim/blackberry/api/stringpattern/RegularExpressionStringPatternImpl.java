@@ -5,24 +5,26 @@ import org.apache.oro.text.regexp.MatchResult;
 import org.apache.oro.text.regexp.Pattern;
 import org.apache.oro.text.regexp.PatternCompiler;
 import org.apache.oro.text.regexp.PatternMatcher;
+import org.apache.oro.text.regexp.Perl5Compiler;
+import org.apache.oro.text.regexp.Perl5Matcher;
 
 final class RegularExpressionStringPatternImpl extends ExternalStringPatternImpl {
    private Pattern _pattern;
 
    RegularExpressionStringPatternImpl(String stringPattern, long id) {
       super(stringPattern, id);
-      PatternCompiler compiler = (PatternCompiler)(new Object());
+      PatternCompiler compiler = new Perl5Compiler();
 
       try {
          this._pattern = compiler.compile(super._stringPattern);
       } finally {
-         throw new Object("Malformed regular expression");
+         throw new IllegalArgumentException("Malformed regular expression");
       }
    }
 
    @Override
    protected final boolean doMatch(String searchString, int beginIndex, int maxIndex, StringPattern$Match match) {
-      PatternMatcher matcher = (PatternMatcher)(new Object());
+      PatternMatcher matcher = new Perl5Matcher();
       if (matcher.contains(searchString.substring(beginIndex, maxIndex), this._pattern)) {
          MatchResult result = matcher.getMatch();
          match.beginIndex = result.beginOffset(0) + beginIndex;

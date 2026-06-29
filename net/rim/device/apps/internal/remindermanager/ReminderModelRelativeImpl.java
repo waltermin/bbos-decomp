@@ -228,7 +228,7 @@ public final class ReminderModelRelativeImpl extends ReminderModelImpl implement
    public final Field getField(Object context) {
       String label = CommonResources.getString(9052);
       boolean defaultChoices = true;
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          ContextObject co = (ContextObject)context;
          if (co.getFlag(1)) {
             label = "";
@@ -268,12 +268,12 @@ public final class ReminderModelRelativeImpl extends ReminderModelImpl implement
          reminderChoices = REMINDER_CHOICES;
       }
 
-      return (Field)(new Object(label, reminderChoices, this.getTime()));
+      return new TimeChoiceField(label, reminderChoices, this.getTime());
    }
 
    @Override
    public final boolean grabDataFromField(Field field, Object context) {
-      if (!(field instanceof Object)) {
+      if (!(field instanceof TimeChoiceField)) {
          return false;
       }
 

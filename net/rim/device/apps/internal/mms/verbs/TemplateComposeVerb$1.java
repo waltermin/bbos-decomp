@@ -5,7 +5,7 @@ import net.rim.device.apps.api.framework.model.Recognizer;
 class TemplateComposeVerb$1 implements Recognizer {
    @Override
    public boolean recognize(Object obj) {
-      if (obj instanceof Object) {
+      if (obj instanceof String) {
          String filename = (String)obj;
          int extPos = filename.lastIndexOf(46);
          if (extPos > 0) {

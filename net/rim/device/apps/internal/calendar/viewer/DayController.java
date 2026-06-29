@@ -15,7 +15,7 @@ import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.cldc.util.CalendarExtensions;
 
 final class DayController extends CalendarViewController {
-   private VerticalFieldManager _listVFM = (VerticalFieldManager)(new Object(2306142076376449024L));
+   private VerticalFieldManager _listVFM = new VerticalFieldManager(2306142076376449024L);
    private DayTimeOfDayField _tod = new DayTimeOfDayField();
    private DayController$DayViewNavField _navField = new DayController$DayViewNavField(this);
    private CalendarOptions _calendarOptions = CalendarOptions.getOptions();

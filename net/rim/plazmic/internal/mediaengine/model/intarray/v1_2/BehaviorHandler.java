@@ -6,7 +6,7 @@ import net.rim.plazmic.internal.mediaengine.event.EventEngine;
 import net.rim.plazmic.internal.mediaengine.service.ModelInteractor;
 
 class BehaviorHandler {
-   protected Event _event = (Event)(new Object());
+   protected Event _event = new Event();
    protected MediaServices _services;
    protected EventEngine _engine;
    protected AnimationModel _data;

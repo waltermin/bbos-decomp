@@ -4,7 +4,7 @@ import net.rim.device.api.ui.component.CheckboxField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 
 public class ContentCipherField extends VerticalFieldManager {
-   private CheckboxField[] _checkboxFields = new Object[9];
+   private CheckboxField[] _checkboxFields = new CheckboxField[9];
    private int _ciphersToShow;
 
    public ContentCipherField(int ciphersToShow, int ciphersToCheck) {
@@ -15,7 +15,7 @@ public class ContentCipherField extends VerticalFieldManager {
       for (int i = 0; i < 9; i++) {
          int currentBit = 1 << i;
          if ((ciphersToShow & currentBit) != 0) {
-            CheckboxField currentField = (CheckboxField)(new Object(cipherLabels[i], (ciphersToCheck & currentBit) != 0));
+            CheckboxField currentField = new CheckboxField(cipherLabels[i], (ciphersToCheck & currentBit) != 0);
             this.add(currentField);
             this._checkboxFields[i] = currentField;
          }

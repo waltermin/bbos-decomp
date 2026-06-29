@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.btgoep;
 
+import java.io.IOException;
 import net.rim.device.api.util.DataBuffer;
 
 class OBEXServerSession$ServerOperationImpl extends OBEXSession$OperationImpl {
@@ -11,8 +12,8 @@ class OBEXServerSession$ServerOperationImpl extends OBEXSession$OperationImpl {
       super(_1);
       this.this$0 = _1;
       super._receivedHeaders = requestHeaders;
-      super._receiveBuffer = (DataBuffer)(new Object());
-      super._sendBuffer = (DataBuffer)(new Object());
+      super._receiveBuffer = new DataBuffer();
+      super._sendBuffer = new DataBuffer();
       this.checkForIncomingData(requestHeaders);
    }
 
@@ -121,13 +122,13 @@ class OBEXServerSession$ServerOperationImpl extends OBEXSession$OperationImpl {
    }
 
    @Override
-   public int getResponseCode() {
-      throw new Object();
+   public int getResponseCode() throws IOException {
+      throw new IOException();
    }
 
    @Override
-   public void abort() {
-      throw new Object();
+   public void abort() throws IOException {
+      throw new IOException();
    }
 
    @Override

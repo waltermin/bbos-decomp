@@ -7,9 +7,9 @@ import net.rim.device.apps.api.framework.model.ContextObject;
 public final class HTTPAddressModelFactory implements Factory {
    @Override
    public final Object createInstance(Object initialData) {
-      if (initialData instanceof Object) {
+      if (initialData instanceof ActiveFieldContext) {
          ActiveFieldContext afc = (ActiveFieldContext)initialData;
-         initialData = new Object();
+         initialData = new ContextObject();
          ContextObject.put(initialData, 253, afc.getData());
       }
 

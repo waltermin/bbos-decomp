@@ -17,7 +17,7 @@ public final class ContentProtectionIndicator implements Indicator, PersistentCo
    private Bitmap _bitmap;
    private int _bitmapWidth;
    private int _themeGeneration;
-   private StringBuffer _text = (StringBuffer)(new Object(3));
+   private StringBuffer _text = new StringBuffer(3);
    private int _state = 1;
    private int _bitmapState = -1;
    private static final long CONTENT_PROTECTION_INDICATOR = -8125869066658600065L;
@@ -53,7 +53,7 @@ public final class ContentProtectionIndicator implements Indicator, PersistentCo
                }
             }
 
-            System.out.println(((StringBuffer)(new Object("PCI: update: "))).append(numPlaintext).toString());
+            System.out.println("PCI: update: " + numPlaintext);
          }
       }
 
@@ -128,7 +128,7 @@ public final class ContentProtectionIndicator implements Indicator, PersistentCo
 
    @Override
    public final void test(Object id, Object testvalue) {
-      if (testvalue instanceof Object) {
+      if (testvalue instanceof Integer) {
          Integer integer = (Integer)testvalue;
          this.persistentContentStateChanged(integer);
          if (integer != 1) {

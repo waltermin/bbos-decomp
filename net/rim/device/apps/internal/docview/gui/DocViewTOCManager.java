@@ -26,7 +26,7 @@ public final class DocViewTOCManager extends VerticalFieldManager {
    DocViewTOCManager(DocViewDisplayField delegate, byte style, Font initialFont) {
       super(281474976710656L);
       if (delegate == null) {
-         throw new Object("Null delegate manager for TOC.");
+         throw new IllegalArgumentException("Null delegate manager for TOC.");
       }
 
       this._styleInfo = style;
@@ -44,14 +44,14 @@ public final class DocViewTOCManager extends VerticalFieldManager {
 
    private final void createMoreVerb() {
       if (this._moreVerb == null) {
-         this._moreVerb = (VerbMenuItem)(new Object(new DocViewGuiVerb(21, 344064, EmailResources.getResourceBundle(), 80, this._delegateMgr), 0));
+         this._moreVerb = new VerbMenuItem(new DocViewGuiVerb(21, 344064, EmailResources.getResourceBundle(), 80, this._delegateMgr), 0);
       }
    }
 
    public final void setItems(DocViewDisplayField$ItemInfo[] items, int selectedIndex, boolean addRetrievePreview, boolean preserveSelectedIndex) {
       if (this._styleInfo == 0) {
          if (items == null || items.length == 0) {
-            throw new Object("Invalid items parameter for TOC.");
+            throw new IllegalArgumentException("Invalid items parameter for TOC.");
          }
 
          int prevSelectedIndex = this._listField.getSelectedIndex();

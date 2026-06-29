@@ -39,7 +39,7 @@ public class TestTaskBase implements KeyListener {
 
    public static void showMessage(String msg) {
       if (d == null || !d.isVisible()) {
-         d = (Dialog)(new Object(0, msg, 0, null, 33554432));
+         d = new Dialog(0, msg, 0, null, 33554432);
          d.setIcon(ThemeManager.getThemeAwareImage("dialog_exclamation"));
          Application.getApplication().invokeLater(new TestTaskBase$1());
       }

@@ -10,6 +10,6 @@ public class GenericSmartCardUserAuthenticator extends SmartCardUserAuthenticato
 
    @Override
    public String getName() {
-      return ((StringBuffer)(new Object("Generic Smart Card Authenticator: "))).append(super.getName()).toString();
+      return "Generic Smart Card Authenticator: " + super.getName();
    }
 }

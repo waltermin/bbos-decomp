@@ -60,13 +60,13 @@ final class PositionEstimate {
 
    final void print() {
       System.out.println("Position Est: ");
-      System.out.println(((StringBuffer)(new Object("Optionals: "))).append(this.optionals).toString());
+      System.out.println("Optionals: " + this.optionals);
       if ((this.optionals & 4) == 4) {
          this.uncertainty.print();
       }
 
       if ((this.optionals & 2) == 2) {
-         System.out.println(((StringBuffer)(new Object("Confidence: "))).append(this.confidence).toString());
+         System.out.println("Confidence: " + this.confidence);
       }
 
       if ((this.optionals & 1) == 1) {

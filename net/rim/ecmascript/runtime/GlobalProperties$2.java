@@ -29,7 +29,7 @@ class GlobalProperties$2 extends HostFunction {
          return parm;
       }
 
-      codeString = ((StringBuffer)(new Object())).append(codeString).append("\n").toString();
+      codeString = codeString + "\n";
       GlobalObject global = this.getGlobalInstance();
 
       CompiledScript code;

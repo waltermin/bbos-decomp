@@ -9,17 +9,19 @@ import net.rim.device.api.system.PersistentObject;
 import net.rim.device.api.system.RIMPersistentStore;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Keypad;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.DialogFieldManager;
+import net.rim.device.api.ui.container.PopupScreen;
 import net.rim.device.apps.api.addressbook.AddressBookOptions;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
+import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.AddressSelectionContext;
 import net.rim.device.apps.api.addressbook.SelectionListener;
+import net.rim.device.apps.api.addressbook.UseEntryVerb;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.model.ResolvedStatusProvider;
@@ -30,6 +32,8 @@ import net.rim.device.apps.api.framework.registration.VerbFactory;
 import net.rim.device.apps.api.framework.registration.VerbFactoryRepository;
 import net.rim.device.apps.api.framework.registration.VerbRepository;
 import net.rim.device.apps.api.framework.verb.DefaultVerbProvider;
+import net.rim.device.apps.api.framework.verb.LastUsedDefaultVerbProvider;
+import net.rim.device.apps.api.framework.verb.SendKeyInvocableVerb;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.options.OptionsChangeListener;
 import net.rim.device.apps.api.ui.KeywordFilteredScreen;
@@ -41,6 +45,7 @@ import net.rim.device.apps.internal.addressbook.BlackBerryAddressBook;
 import net.rim.device.apps.internal.addressbook.lookup.ALPConfiguration;
 import net.rim.device.apps.internal.addressbook.lookup.Request;
 import net.rim.device.apps.internal.addressbook.lookup.RequestModel;
+import net.rim.device.apps.internal.addressbook.lookup.RequestVerb;
 import net.rim.device.apps.internal.addressbook.resources.AddressBookResources;
 import net.rim.device.apps.internal.commonmodels.categories.FilterByCategoriesVerb;
 import net.rim.device.apps.internal.commonmodels.categories.FilteredByCategoriesTitleField;
@@ -56,7 +61,7 @@ public final class AddressBookListUI extends KeywordFilteredScreen implements Gl
    private Verb[] _useOnceVerbsWrapped;
    private ContextObject _baseContext;
    private ContextObject _trackwheelclickContext;
-   private Verb[] _tmpVerbs = new Object[0];
+   private Verb[] _tmpVerbs = new Verb[0];
    private SelectionListener _selectionListener;
    private AddressSelectionContext _selectionContext;
    private UiApplication _updatingUIApplication;
@@ -73,21 +78,14 @@ public final class AddressBookListUI extends KeywordFilteredScreen implements Gl
    private static final long BACKSPACE_DELETE_GUARD = 300L;
 
    AddressBookListUI(String title, Verb[] useOnceVerbs, Object initialContext) {
-      super(
-         title,
-         (String)((Object)null),
-         AddressBookListField.getInstance(useOnceVerbs != null && useOnceVerbs.length != 0, true, initialContext),
-         true,
-         null,
-         768
-      );
+      super(title, (String)null, AddressBookListField.getInstance(useOnceVerbs != null && useOnceVerbs.length != 0, true, initialContext), true, null, 768);
       this.setDefaultClose(false);
       this._useOnceVerbs = useOnceVerbs;
       if (this._useOnceVerbs != null) {
          if (this._useOnceVerbs.length == 0) {
             this._useOnceVerbs = null;
          } else {
-            this._useOnceVerbsWrapped = new Object[this._useOnceVerbs.length];
+            this._useOnceVerbsWrapped = new Verb[this._useOnceVerbs.length];
 
             for (int lv = this._useOnceVerbs.length - 1; lv >= 0; lv--) {
                this._useOnceVerbsWrapped[lv] = new AddressBookListUI$CustomActionVerb(this, this._useOnceVerbs[lv]);
@@ -116,7 +114,7 @@ public final class AddressBookListUI extends KeywordFilteredScreen implements Gl
       Verb[] useOnceVerbs = selectionContext.getUseOnceVerbs();
       if (useOnceVerbs != null) {
          this._useOnceVerbs = useOnceVerbs;
-         this._useOnceVerbsWrapped = new Object[this._useOnceVerbs.length];
+         this._useOnceVerbsWrapped = new Verb[this._useOnceVerbs.length];
 
          for (int lv = this._useOnceVerbs.length - 1; lv >= 0; lv--) {
             this._useOnceVerbsWrapped[lv] = new AddressBookListUI$CustomActionVerb(this, this._useOnceVerbs[lv]);
@@ -141,7 +139,7 @@ public final class AddressBookListUI extends KeywordFilteredScreen implements Gl
       }
 
       this.setTitleField(null);
-      this._titleField = (FilteredByCategoriesTitleField)(new Object(oldTitleField));
+      this._titleField = new FilteredByCategoriesTitleField(oldTitleField);
       this.setTitleField(this._titleField);
       if (killManagerTag) {
          this._titleField.getManager().setTag(null);
@@ -254,15 +252,15 @@ public final class AddressBookListUI extends KeywordFilteredScreen implements Gl
       }
 
       Object defaultMenuItem = this.getDefaultMenuItem(0);
-      if (defaultMenuItem instanceof Object) {
+      if (defaultMenuItem instanceof VerbMenuItem) {
          VerbMenuItem vmi = (VerbMenuItem)defaultMenuItem;
-         if (vmi.getVerb() instanceof Object && this.invokeDefaultMenuItem(0)) {
+         if (vmi.getVerb() instanceof SendKeyInvocableVerb && this.invokeDefaultMenuItem(0)) {
             return true;
          }
       }
 
       Object item = this.getSelectedElement();
-      ContextObject resultContext = (ContextObject)(new Object());
+      ContextObject resultContext = new ContextObject();
       if (ControllerUtilities.invokeSendKeyVerb(item, resultContext)) {
          if (ContextObject.getFlag(resultContext, 39)) {
             this.terminateScreen();
@@ -391,7 +389,7 @@ public final class AddressBookListUI extends KeywordFilteredScreen implements Gl
          if (this._selectionListener != null && this._selectionListener.select(result, useOnceVerbIndex)) {
             UiApplication.getUiApplication().popScreen(this);
          }
-      } else if (!(verb instanceof Object) && this._selectionListener != null && this._selectionListener.hasSelectedObject()) {
+      } else if (!(verb instanceof UseEntryVerb) && this._selectionListener != null && this._selectionListener.hasSelectedObject()) {
          UiApplication.getUiApplication().popScreen(this);
       } else {
          if (!this._listField.isEmpty()) {
@@ -401,8 +399,8 @@ public final class AddressBookListUI extends KeywordFilteredScreen implements Gl
          if (verb instanceof AddressBookListUI$NewAddressBookEntryVerb && result != null) {
             this.setElementWithFocus(result);
             pattern = null;
-         } else if (!(result instanceof Object)) {
-            if (result instanceof Object) {
+         } else if (!(result instanceof Request)) {
+            if (result instanceof AddressCardModel) {
                this.setElementWithFocus(result);
                pattern = null;
             } else {
@@ -433,7 +431,7 @@ public final class AddressBookListUI extends KeywordFilteredScreen implements Gl
                   useOnceVerb = this._useOnceVerbsWrapped[this._selectionContext.getPreferredDefaultIndex()];
                } else {
                   Menu menu = this.getMenu(0);
-                  if (menu instanceof Object) {
+                  if (menu instanceof SystemEnabledMenu) {
                      useOnceVerb = ((SystemEnabledMenu)menu).getFirstVerbAt(327680);
                   }
 
@@ -488,14 +486,14 @@ public final class AddressBookListUI extends KeywordFilteredScreen implements Gl
             menu.add(new DeleteEntryVerb(selectedElement));
          }
 
-         if (selectedElement instanceof Object) {
+         if (selectedElement instanceof VerbProvider) {
             VerbProvider verbProvider = (VerbProvider)selectedElement;
             boolean oldBackgroundFlag = this._trackwheelclickContext.getFlag(96);
             this._trackwheelclickContext.setFlag(96);
 
             label348:
             try {
-               if (selectedElement instanceof Object) {
+               if (selectedElement instanceof RequestModel) {
                   ContextObject.put(this._trackwheelclickContext, -7302237785847991426L, this._selectionListener);
                }
             } finally {
@@ -510,7 +508,7 @@ public final class AddressBookListUI extends KeywordFilteredScreen implements Gl
 
             for (int i = 0; i < this._tmpVerbs.length; i++) {
                Verb tmpVerb = this._tmpVerbs[i];
-               if (tmpVerb instanceof Object) {
+               if (tmpVerb instanceof RequestVerb) {
                   this._tmpVerbs[i] = new AddressBookListUI$CustomActionVerb(this, tmpVerb);
                }
 
@@ -523,7 +521,7 @@ public final class AddressBookListUI extends KeywordFilteredScreen implements Gl
 
       label340:
       if (this._mode == 1) {
-         if (selectedElement instanceof Object) {
+         if (selectedElement instanceof RequestModel) {
             RequestModel requestModel = (RequestModel)selectedElement;
             Request request = requestModel.fetchRequest();
             if (request != null && !requestModel.isResolved() && requestModel.numberAvailableForResolution() != 1) {
@@ -533,7 +531,7 @@ public final class AddressBookListUI extends KeywordFilteredScreen implements Gl
 
          if (!this._listField.isUseOnceIndex(index)) {
             Object element = selectedElement;
-            if (element instanceof Object) {
+            if (element instanceof ResolvedStatusProvider) {
                ResolvedStatusProvider resolvedStatus = (ResolvedStatusProvider)element;
                if (resolvedStatus.isResolved()) {
                   element = resolvedStatus.getResolvedItem();
@@ -541,7 +539,7 @@ public final class AddressBookListUI extends KeywordFilteredScreen implements Gl
             }
 
             if (this._selectionListener.canSelect(element) && this._trackwheelclickContext.getFlag(5)) {
-               Verb[] verbs = new Object[0];
+               Verb[] verbs = new Verb[0];
                Verb verb = this._selectionListener.getVerbs(verbs, element, this._trackwheelclickContext);
                if (verb != null && verb.getOrdering() < priority) {
                   defaultVerb = verb;
@@ -602,8 +600,8 @@ public final class AddressBookListUI extends KeywordFilteredScreen implements Gl
       }
 
       DefaultVerbProvider defaultVerbProvider = null;
-      if (selectedElement instanceof Object) {
-         defaultVerbProvider = (DefaultVerbProvider)(new Object((RIMModel)selectedElement));
+      if (selectedElement instanceof RIMModel) {
+         defaultVerbProvider = new LastUsedDefaultVerbProvider((RIMModel)selectedElement);
       }
 
       Array.resize(this._tmpVerbs, 0);
@@ -618,7 +616,7 @@ public final class AddressBookListUI extends KeywordFilteredScreen implements Gl
 
       Verb continuationVerb = menu.getFirstVerbAt(327680);
       if (!defaultVerbIsContinuationVerb && continuationVerb != null && continuationVerb.getOrdering() <= 367001) {
-         if (!(selectedElement instanceof Object)) {
+         if (!(selectedElement instanceof RequestModel)) {
             if (continuationVerb.getOrdering() < priority) {
                defaultVerb = continuationVerb;
                priority = continuationVerb.getOrdering();
@@ -644,7 +642,7 @@ public final class AddressBookListUI extends KeywordFilteredScreen implements Gl
          defaultVerb = verb;
       }
 
-      menu.add((Verb)(new Object(this, this._titleField, this._filterCategoryIds)));
+      menu.add(new FilterByCategoriesVerb(this, this._titleField, this._filterCategoryIds));
       menu.setDefault(defaultVerb);
    }
 
@@ -674,7 +672,7 @@ public final class AddressBookListUI extends KeywordFilteredScreen implements Gl
       co = ContextObject.castOrCreate(co);
       Object element = this.getSelectedElement();
       if (element != null) {
-         if (!(element instanceof Object)) {
+         if (!(element instanceof RequestModel)) {
             ContextObject.put(co, 3696141428889703675L, element);
          } else {
             Request r = ((RequestModel)element).fetchRequest();
@@ -692,10 +690,10 @@ public final class AddressBookListUI extends KeywordFilteredScreen implements Gl
    }
 
    private final void showListReorganizationDialog() {
-      this._reorgScreen = (Screen)(new Object((Manager)(new Object())));
+      this._reorgScreen = new PopupScreen(new DialogFieldManager());
       DialogFieldManager manager = (DialogFieldManager)this._reorgScreen.getDelegate();
-      manager.setMessage((RichTextField)(new Object(AddressBookResources.getString(52), 36028797018963968L)));
-      manager.setIcon((BitmapField)(new Object(Bitmap.getPredefinedBitmap(3), 51539607552L)));
+      manager.setMessage(new RichTextField(AddressBookResources.getString(52), 36028797018963968L));
+      manager.setIcon(new BitmapField(Bitmap.getPredefinedBitmap(3), 51539607552L));
       synchronized (this) {
          this._updatingUIApplication = UiApplication.getUiApplication();
          this._updatingUIApplication.pushScreen(this._reorgScreen);
@@ -731,7 +729,7 @@ public final class AddressBookListUI extends KeywordFilteredScreen implements Gl
             }
 
             if (guid == -6376745458772725637L
-               && object0 instanceof Object
+               && object0 instanceof RequestModel
                && this._listField.getElementWithFocus() == object0
                && UiApplication.getUiApplication().getActiveScreen() == this) {
                RequestModel requestModel = (RequestModel)object0;
@@ -739,7 +737,7 @@ public final class AddressBookListUI extends KeywordFilteredScreen implements Gl
                   ContextObject.put(this._trackwheelclickContext, -7302237785847991426L, this._selectionListener);
                }
 
-               Verb[] verbs = new Object[0];
+               Verb[] verbs = new Verb[0];
                Verb defaultVerb = requestModel.getVerbs(this._trackwheelclickContext, verbs);
                if (this._selectionListener != null) {
                   ContextObject.remove(this._trackwheelclickContext, -7302237785847991426L);

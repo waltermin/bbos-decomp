@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.addressbook.addresscard;
 
+import java.io.EOFException;
 import net.rim.device.api.i18n.Locale;
 import net.rim.device.api.synchronization.ConverterUtilities;
 import net.rim.device.api.synchronization.SyncObject;
@@ -16,7 +17,6 @@ import net.rim.device.api.util.BitSet;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
-import net.rim.device.apps.api.addressbook.AddressCardElement;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.AddressMatch;
 import net.rim.device.apps.api.addressbook.CompanyInfoModel;
@@ -100,7 +100,7 @@ final class CompressedAddressCardModel
       int adjustedY = 0;
       boolean namePresent = this._firstNameEncoding != null || this._lastNameEncoding != null;
       long sortOrder;
-      if (!(sortOrderObject instanceof Object)) {
+      if (!(sortOrderObject instanceof Long)) {
          switch (Locale.getSystemNameOrder()) {
             case 1:
                sortOrder = -227891759293611117L;
@@ -109,7 +109,7 @@ final class CompressedAddressCardModel
                sortOrder = 1232448844688687736L;
          }
       } else {
-         sortOrder = sortOrderObject;
+         sortOrder = (Long)sortOrderObject;
       }
 
       if (ContextObject.getFlag(context, 128)) {
@@ -211,7 +211,7 @@ final class CompressedAddressCardModel
    public final Verb getVerbs(Object context, Verb[] verbs) {
       AddressCardModel addressCard = AddressCardCache.resolve(this);
       Verb defaultVerb = null;
-      if (addressCard instanceof Object) {
+      if (addressCard instanceof VerbProvider) {
          ContextObject contextObject = ContextObject.castOrCreate(context);
          boolean var8 = false /* VF: Semaphore variable */;
 
@@ -234,8 +234,8 @@ final class CompressedAddressCardModel
 
    @Override
    public final int match(Object criteria) {
-      if (!(criteria instanceof Object)) {
-         return Match.match(this, this, (Object[])criteria, _hints);
+      if (!(criteria instanceof SearchCriterion)) {
+         return Match.match(this, this, (SearchCriterion[])criteria, _hints);
       }
 
       SearchCriterion crit = (SearchCriterion)criteria;
@@ -243,7 +243,7 @@ final class CompressedAddressCardModel
          case 5:
             return AddressMatch.match(this, crit);
          case 24:
-            if (crit.getValue() == this.getUID()) {
+            if ((Integer)crit.getValue() == this.getUID()) {
                return 1;
             }
 
@@ -389,8 +389,8 @@ final class CompressedAddressCardModel
 
    @Override
    public final void add(Object element) {
-      if (!(element instanceof Object)) {
-         throw new Object();
+      if (!(element instanceof PersonNameModel)) {
+         throw new RuntimeException();
       }
 
       PersonNameModel pnm = (PersonNameModel)element;
@@ -402,17 +402,17 @@ final class CompressedAddressCardModel
 
    @Override
    public final boolean contains(Object element) {
-      throw new Object();
+      throw new RuntimeException();
    }
 
    @Override
    public final void remove(Object element) {
-      throw new Object();
+      throw new RuntimeException();
    }
 
    @Override
    public final void removeAll() {
-      throw new Object();
+      throw new RuntimeException();
    }
 
    @Override
@@ -687,7 +687,7 @@ final class CompressedAddressCardModel
    @Override
    public final Object makeReadWrite() {
       Object result = AddressCardCache.resolve(this);
-      if (result instanceof Object) {
+      if (result instanceof EditableProvider) {
          result = ((EditableProvider)result).makeReadWrite();
       }
 
@@ -782,7 +782,7 @@ final class CompressedAddressCardModel
       this._uid = AddressCardUtilities.generateUniqueID();
    }
 
-   CompressedAddressCardModel(Object initialData, SyncBuffer syncBuffer) {
+   CompressedAddressCardModel(Object initialData, SyncBuffer syncBuffer) throws EOFException {
       int position = syncBuffer.getPosition();
       this.setSalutation(syncBuffer.getString(position, 55, true));
       this.setFirstName(syncBuffer.getString(position, 32, true));
@@ -817,7 +817,7 @@ final class CompressedAddressCardModel
          if (fieldType != 255) {
             int length = buffer.available();
             if (length < 3) {
-               throw new Object();
+               throw new EOFException();
             }
 
             int offset = buffer.getArrayPosition();
@@ -869,7 +869,7 @@ final class CompressedAddressCardModel
       if (this == o) {
          return true;
       } else {
-         return !(o instanceof Object) ? false : ((AddressCardElement)o).getUID() == this._uid;
+         return !(o instanceof AddressCardModel) ? false : ((AddressCardModel)o).getUID() == this._uid;
       }
    }
 
@@ -1178,7 +1178,7 @@ final class CompressedAddressCardModel
             int compressedTag = tag == 41 ? 58 : 76;
             String countryName = null;
             if (!isEncoded && isBOM == 0) {
-               countryName = (String)(new Object(data, offset, --length));
+               countryName = new String(data, offset, --length);
             } else {
                countryName = isBOM != 0
                   ? StringUtilities.decodeBOM(data, offset, length, true)
@@ -1460,7 +1460,7 @@ final class CompressedAddressCardModel
    }
 
    static final StringBuffer toString(String salutation, String firstName, String lastName) {
-      StringBuffer result = (StringBuffer)(new Object());
+      StringBuffer result = new StringBuffer();
       String firstNameSeparator = Locale.getPersonalNamesSeparator(0);
       switch (Locale.getSystemNameOrder()) {
          case 1:

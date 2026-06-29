@@ -45,7 +45,7 @@ public class BrowserContentProviderContext {
    }
 
    public HttpConnection getHttpConnection() {
-      return (HttpConnection)(!(this._inputConnection instanceof Object) ? null : this._inputConnection);
+      return !(this._inputConnection instanceof HttpConnection) ? null : (HttpConnection)this._inputConnection;
    }
 
    public InputConnection getInputConnection() {

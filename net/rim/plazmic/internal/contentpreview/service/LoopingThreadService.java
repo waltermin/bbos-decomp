@@ -24,7 +24,7 @@ public final class LoopingThreadService implements Service {
    public final synchronized void startService(boolean wait) throws ServiceException {
       if (!this._enabled && !this.isRunning()) {
          this._enabled = true;
-         ((Thread)(new Object(new LoopingThreadService$Loop(this, null)))).start();
+         new Thread(new LoopingThreadService$Loop(this, null)).start();
          if (wait) {
             try {
                this.waitForStart();
@@ -79,7 +79,7 @@ public final class LoopingThreadService implements Service {
             }
          }
       } else {
-         throw new Object("The method next() is not applicable to a LoopingThreadService that does not wait.");
+         throw new RuntimeException("The method next() is not applicable to a LoopingThreadService that does not wait.");
       }
    }
 

@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.lstp;
 
+import java.io.IOException;
 import net.rim.device.api.io.DatagramBase;
 import net.rim.device.api.system.EventLogger;
 import net.rim.device.api.util.StringUtilities;
@@ -37,7 +38,7 @@ class SerialMuxerThread extends MuxerThread {
    }
 
    @Override
-   protected void expectChallengeResponse() {
+   protected void expectChallengeResponse() throws IOException {
       DatagramBase dgram = (DatagramBase)super._conn.newDatagram();
       super._conn.receive(dgram);
       this._baudrate = dgram.readInt();
@@ -47,7 +48,7 @@ class SerialMuxerThread extends MuxerThread {
          dgram.read(response);
          if (!Security.getInstance().verifyStoredPasswordOnly(StringUtilities.cStr2String(response, 0, response.length))) {
             EventLogger.logEvent(-754053862978797267L, 1297637734, 3);
-            throw new Object();
+            throw new IOException();
          }
       }
    }

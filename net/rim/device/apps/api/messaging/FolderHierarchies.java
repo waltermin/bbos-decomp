@@ -3,6 +3,7 @@ package net.rim.device.apps.api.messaging;
 import java.util.Enumeration;
 import net.rim.device.api.collection.CollectionLock;
 import net.rim.device.api.system.ApplicationRegistry;
+import net.rim.device.api.util.ObjectEnumerator;
 import net.rim.vm.Array;
 
 public class FolderHierarchies {
@@ -52,7 +53,7 @@ public class FolderHierarchies {
    }
 
    public static Enumeration getFolderHierarchies() {
-      return (Enumeration)(new Object(_folderHierarchies));
+      return new ObjectEnumerator(_folderHierarchies);
    }
 
    public static Folder getFolderHierarchy(long hierarchyId) {

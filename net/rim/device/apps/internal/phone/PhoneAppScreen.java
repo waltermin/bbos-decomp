@@ -7,6 +7,7 @@ import net.rim.device.api.system.RadioInfo;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.CharacterUtilities;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -21,11 +22,14 @@ import net.rim.device.apps.internal.phone.api.PTTKeyHandler;
 import net.rim.device.apps.internal.phone.api.PhoneUtilities;
 import net.rim.device.apps.internal.phone.api.ui.PhoneAwareScreen;
 import net.rim.device.apps.internal.phone.api.ui.ThemedBannerCache;
+import net.rim.device.apps.internal.phone.api.verbs.InitiateCallVerb;
 import net.rim.device.apps.internal.phone.api.verbs.OutgoingCallConnector;
 import net.rim.device.apps.internal.phone.api.verbs.PhoneOptionsVerb;
+import net.rim.device.apps.internal.phone.api.verbs.UnlockVerb;
 import net.rim.device.apps.internal.phone.api.verbs.VoiceMailVerb;
 import net.rim.device.apps.internal.phone.options.PhoneOptions;
 import net.rim.device.internal.system.Security;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 import net.rim.tid.im.SLControlObject;
 
 class PhoneAppScreen extends PhoneAwareScreen implements PhoneInputScreen {
@@ -42,7 +46,7 @@ class PhoneAppScreen extends PhoneAwareScreen implements PhoneInputScreen {
    private boolean _newCallScreen = false;
    private long _onActivationTime = -1;
    private boolean _inputReceived = false;
-   private VoiceMailVerb _voicemailVerb = (VoiceMailVerb)(new Object(131585));
+   private VoiceMailVerb _voicemailVerb = new VoiceMailVerb(131585);
    private boolean _ignoreKeyRepeat = false;
    private boolean _ignoreKeyUp = false;
    private int _savedMode = 0;
@@ -52,7 +56,7 @@ class PhoneAppScreen extends PhoneAwareScreen implements PhoneInputScreen {
    private char _initialKey;
    private static ThemedBannerCache _idleBannerCache;
    private static final int DIALING_FIELD_SPACING = 4;
-   private static PhoneOptionsVerb _phoneOptionsVerb = (PhoneOptionsVerb)(new Object());
+   private static PhoneOptionsVerb _phoneOptionsVerb = new PhoneOptionsVerb();
    private static PhoneAppScreen$PhoneInfoVerb _phoneInfoVerb = new PhoneAppScreen$PhoneInfoVerb();
 
    static void initializeOnceOnSystemStart() {
@@ -70,7 +74,7 @@ class PhoneAppScreen extends PhoneAwareScreen implements PhoneInputScreen {
       this._newCallScreen = newCallScreen;
       this.setId("phone-main");
       this.setCloseVerb(ExitVerb.createCloseVerb(2, null));
-      this._titleFieldManager = (VerticalFieldManager)(new Object(1152921504606846976L));
+      this._titleFieldManager = new VerticalFieldManager(1152921504606846976L);
       this._myNumberField = new PhoneStatusField();
       this._finderField = new PhoneNumberKeywordFinder(this);
       this._phoneNumberInput = new PhoneNumberInput(this, uiApplication, this._finderField);
@@ -114,10 +118,10 @@ class PhoneAppScreen extends PhoneAwareScreen implements PhoneInputScreen {
       }
 
       this.setMyNumberField(true);
-      this.add((Field)(new Object(4)));
+      this.add(new VerticalSpacerField(4));
       this.add(this._phoneNumberInput);
-      this.add((Field)(new Object(4)));
-      this.add((Field)(new Object()));
+      this.add(new VerticalSpacerField(4));
+      this.add(new SeparatorField());
       this.add(this._phoneListManager);
    }
 
@@ -128,7 +132,7 @@ class PhoneAppScreen extends PhoneAwareScreen implements PhoneInputScreen {
          }
 
          if (this._myNumberField.getManager() == null) {
-            this.insert((Field)(new Object()), this._titleFieldManager.getIndex());
+            this.insert(new SeparatorField(), this._titleFieldManager.getIndex());
             this.insert(this._myNumberField, this._titleFieldManager.getIndex());
             return;
          }
@@ -142,7 +146,7 @@ class PhoneAppScreen extends PhoneAwareScreen implements PhoneInputScreen {
       if (add) {
          if (this._finderField.getManager() == null) {
             this.insert(this._finderField, this._phoneListManager.getIndex());
-            this.insert((Field)(new Object()), this._phoneListManager.getIndex());
+            this.insert(new SeparatorField(), this._phoneListManager.getIndex());
             return;
          }
       } else if (this._finderField.getManager() != null) {
@@ -160,7 +164,7 @@ class PhoneAppScreen extends PhoneAwareScreen implements PhoneInputScreen {
 
          if (currentMode != mode) {
             SLControlObject cObj = (SLControlObject)this._phoneNumberInput.getInputContext().getInputMethodControlObject();
-            cObj.actionPerformed(106, new Object(mode));
+            cObj.actionPerformed(106, new Integer(mode));
          }
       }
    }
@@ -221,7 +225,7 @@ class PhoneAppScreen extends PhoneAwareScreen implements PhoneInputScreen {
 
    @Override
    protected ContextObject getMenuContextObject() {
-      ContextObject context = (ContextObject)(new Object(20));
+      ContextObject context = new ContextObject(20);
       if (!this._systemLocked) {
          context.put(244, "phone");
       }
@@ -241,10 +245,10 @@ class PhoneAppScreen extends PhoneAwareScreen implements PhoneInputScreen {
          }
 
          if (this._systemLocked) {
-            menu.add((Verb)(new Object()));
+            menu.add(new UnlockVerb());
          } else if (!(field instanceof PhoneStatusField)) {
             if (this._isOutgoingCallAllowed) {
-               Verb callFromAddressBookVerb = (Verb)(new Object(6238, 131072));
+               Verb callFromAddressBookVerb = new InitiateCallVerb(6238, 131072);
                menu.add(callFromAddressBookVerb);
                menu.setDefault(callFromAddressBookVerb);
             }
@@ -574,7 +578,7 @@ class PhoneAppScreen extends PhoneAwareScreen implements PhoneInputScreen {
          Verb[] verbs = vr.getVerbs(null);
          if (verbs != null) {
             for (Verb v : verbs) {
-               if (v instanceof Object) {
+               if (v instanceof ConditionalVerb) {
                   ConditionalVerb cv = (ConditionalVerb)v;
                   if (!cv.canInvoke(null)) {
                      continue;

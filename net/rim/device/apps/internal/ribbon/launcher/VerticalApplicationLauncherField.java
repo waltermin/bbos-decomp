@@ -21,6 +21,7 @@ import net.rim.device.api.util.Arrays;
 import net.rim.device.apps.api.ribbon.RibbonComponentInitializer;
 import net.rim.device.internal.ui.Background;
 import net.rim.device.internal.ui.Border;
+import net.rim.device.internal.ui.BorderSimple;
 import net.rim.vm.Array;
 
 final class VerticalApplicationLauncherField extends VerticalFieldManager implements ApplicationLauncherField, ListFieldCallback, RibbonComponentInitializer {
@@ -33,8 +34,8 @@ final class VerticalApplicationLauncherField extends VerticalFieldManager implem
    private ApplicationEntry _movingApplication;
    private ThemeAttributeSet _attrNormal;
    private ThemeAttributeSet _attrFocus;
-   private final XYRect _borderRect = (XYRect)(new Object());
-   private final XYRect _iconRect = (XYRect)(new Object());
+   private final XYRect _borderRect = new XYRect();
+   private final XYRect _iconRect = new XYRect();
    private Bitmap _backgroundBitmap;
    private int _rowHeight = -1;
    private boolean _hotKeysDisabled;
@@ -69,8 +70,8 @@ final class VerticalApplicationLauncherField extends VerticalFieldManager implem
    private static String TAG_ID = "chooser";
    private static String OPTIONS_ID = "net_rim_bb_options_app.Options";
    private static final String TEXT_DISPLACEMENT_FROM_ICON_ID = "ApplicationMenuTextDisplacementFromIcon";
-   private static XYEdges _emptyEdges = (XYEdges)(new Object());
-   private static Border _emptyBorder = (Border)(new Object(0, 0, 0, 0));
+   private static XYEdges _emptyEdges = new XYEdges();
+   private static Border _emptyBorder = new BorderSimple(0, 0, 0, 0);
 
    VerticalApplicationLauncherField(HierarchyManager hierarchyManager, boolean isForApplicationMenu) {
       super(1152921504606846976L | (isForApplicationMenu ? 0 : 2305843009213693952L) | 281474976710656L | 17592186044416L);

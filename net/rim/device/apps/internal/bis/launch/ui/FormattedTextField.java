@@ -31,7 +31,7 @@ public final class FormattedTextField extends RichTextField {
       if ((currentFont.getStyle() & 1) == 0 && this.offsets != null && this.boldStartingPos != null && text != null && text.length() > 0) {
          Font boldFont = currentFont.derive(currentFont.getStyle() | 1);
          byte[] attributes = this.generateAttributes();
-         super.setText(text, this.offsets, attributes, new Object[]{DEFAULT_FONT, boldFont});
+         super.setText(text, this.offsets, attributes, new Font[]{DEFAULT_FONT, boldFont});
       } else {
          super.setText(text);
       }
@@ -42,7 +42,7 @@ public final class FormattedTextField extends RichTextField {
          return null;
       }
 
-      StringBuffer breakSearchAndReplaceBuffer = (StringBuffer)(new Object(original));
+      StringBuffer breakSearchAndReplaceBuffer = new StringBuffer(original);
       int breakIndex = 0;
 
       while ((breakIndex = breakSearchAndReplaceBuffer.toString().indexOf("<br>", breakIndex)) != -1) {
@@ -58,7 +58,7 @@ public final class FormattedTextField extends RichTextField {
          return null;
       }
 
-      StringBuffer startParagraphSearchAndReplaceBuffer = (StringBuffer)(new Object(original));
+      StringBuffer startParagraphSearchAndReplaceBuffer = new StringBuffer(original);
       int startParagraphIndex = 0;
 
       while ((startParagraphIndex = startParagraphSearchAndReplaceBuffer.toString().indexOf("<p>", startParagraphIndex)) != -1) {
@@ -67,7 +67,7 @@ public final class FormattedTextField extends RichTextField {
       }
 
       String formattedText = startParagraphSearchAndReplaceBuffer.toString();
-      StringBuffer endParagraphSearchAndReplaceBuffer = (StringBuffer)(new Object(formattedText));
+      StringBuffer endParagraphSearchAndReplaceBuffer = new StringBuffer(formattedText);
       int endParagraphIndex = 0;
 
       while ((endParagraphIndex = endParagraphSearchAndReplaceBuffer.toString().indexOf("</p>", endParagraphIndex)) != -1) {
@@ -79,7 +79,7 @@ public final class FormattedTextField extends RichTextField {
    }
 
    private final String getBoldTextOffsets(String original) {
-      StringBuffer boldTagsReplaceBuffer = (StringBuffer)(new Object(original));
+      StringBuffer boldTagsReplaceBuffer = new StringBuffer(original);
       int offsetsListLength = original.length() < 2 ? 2 : original.length();
       int[] offsetsList = new int[offsetsListLength];
       int[] boldStartingPositionsList = new int[offsetsListLength / 2];

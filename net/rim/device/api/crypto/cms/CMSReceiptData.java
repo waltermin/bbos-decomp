@@ -20,7 +20,7 @@ public final class CMSReceiptData implements Persistable {
          this._messageDigest = messageDigest;
          this._msgSigDigest = msgSigDigest;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

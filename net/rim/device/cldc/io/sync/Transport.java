@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.sync;
 
+import java.io.IOException;
 import java.util.Enumeration;
 import javax.microedition.io.Connector;
 import javax.microedition.io.Datagram;
@@ -30,9 +31,9 @@ import net.rim.vm.WeakReference;
 public final class Transport extends DatagramTransportBase implements ServiceRoutingListener2, DatagramStatusListener, Runnable {
    private ServiceRouting _serviceRouting;
    private ReusableObjectPool _syncDatagramsPool;
-   private LongHashtable _connections = (LongHashtable)(new Object());
-   private IntLongHashtable _transactionIdToSid = (IntLongHashtable)(new Object());
-   private CyclicQueue _receivedGMEDatagrams = (CyclicQueue)(new Object());
+   private LongHashtable _connections = new LongHashtable();
+   private IntLongHashtable _transactionIdToSid = new IntLongHashtable();
+   private CyclicQueue _receivedGMEDatagrams = new CyclicQueue();
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
@@ -48,10 +49,10 @@ public final class Transport extends DatagramTransportBase implements ServiceRou
          String xServiceUid = this.getServiceUidMappedFor(sid);
          if (xServiceUid == null) {
             Logger.logTransportationDropDatagram("Tx", xSyncDatagram);
-            throw new Object();
+            throw new IOException();
          }
 
-         xGMEDatagram.setAddress(((StringBuffer)(new Object("sync/"))).append(xServiceUid).toString());
+         xGMEDatagram.setAddress("sync/" + xServiceUid);
          int xSyncDatagramSize = xGMEDatagram.getPosition();
          xSyncDatagram.writeTo(xGMEDatagram);
          xGMEDatagram.setLength(xGMEDatagram.getPosition());
@@ -96,13 +97,13 @@ public final class Transport extends DatagramTransportBase implements ServiceRou
          if (xWref != null) {
             Object xObject = xWref.get();
             if (xObject != null) {
-               throw new Object();
+               throw new IOException();
             }
 
-            xWref = (WeakReference)(new Object(aSyncConnection));
+            xWref = new WeakReference(aSyncConnection);
             this._connections.put(sid, xWref);
          } else {
-            this._connections.put(sid, new Object(aSyncConnection));
+            this._connections.put(sid, new WeakReference(aSyncConnection));
          }
       }
    }
@@ -355,7 +356,7 @@ public final class Transport extends DatagramTransportBase implements ServiceRou
 
    @Override
    public final void init() {
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
       sb.append("gme:").append("sync");
       super.init((DatagramConnection)Connector.open(sb.toString()));
       ProtocolDaemon.getInstance().submitRunnable(this);

@@ -8,6 +8,7 @@ import net.rim.device.api.system.EventLogger;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.api.utility.general.URI;
 import net.rim.device.apps.api.utility.serialization.BaseConverter;
+import net.rim.device.apps.api.utility.serialization.SerializationException;
 import net.rim.device.apps.internal.browser.channel.ChannelModel;
 import net.rim.device.apps.internal.browser.options.BrowserConfigRecord;
 import net.rim.device.apps.internal.browser.stack.AccumulatorInputStream;
@@ -34,13 +35,13 @@ final class BrowserChannelConverter extends BaseConverter {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final Object convert(DataInput inputStreamObj, Object headersObj) {
-      if (headersObj instanceof Object && inputStreamObj instanceof Object) {
+   public final Object convert(DataInput inputStreamObj, Object headersObj) throws SerializationException {
+      if (headersObj instanceof HttpHeaders && inputStreamObj instanceof InputStream) {
          InputStream inputStream = (InputStream)inputStreamObj;
          String preferredConfigUid = null;
          int preferredConfigType = 1;
          String preferredTransportCid = BrowserConfigRecord.IPPP_SERVICE_CID;
-         if (inputStream instanceof Object) {
+         if (inputStream instanceof PushInputStream) {
             PushInputStream pis = (PushInputStream)inputStream;
             if (pis.getConnectionType() == 3) {
                preferredConfigUid = BrowserConfigRecord.mapTransportUIDToConfigUID("IPPP", pis.getSource());
@@ -58,14 +59,14 @@ final class BrowserChannelConverter extends BaseConverter {
          String id = headers.getPropertyValue("X-Rim-Push-Channel-Id");
          if (id == null) {
             EventLogger.logEvent(1907089860548946979L, 1347450217, 3);
-            throw new Object();
+            throw new SerializationException();
          }
 
-         id = (String)(new Object(id.toCharArray()));
+         id = new String(id.toCharArray());
          String url = headers.getPropertyValue("Content-Location");
          if (url == null) {
             EventLogger.logEvent(1907089860548946979L, 1347450229, 3);
-            throw new Object();
+            throw new SerializationException();
          }
 
          String deleteUrl = headers.getPropertyValue("X-Rim-Push-Delete-Url");
@@ -88,13 +89,13 @@ final class BrowserChannelConverter extends BaseConverter {
             try {
                ribbonPosition = Integer.parseInt(ribbonPos);
             } catch (Throwable var23) {
-               EventLogger.logEvent(1907089860548946979L, ((StringBuffer)(new Object("PPex\n"))).append(nfe.toString()).toString().getBytes(), 3);
+               EventLogger.logEvent(1907089860548946979L, ("PPex\n" + nfe.toString()).getBytes(), 3);
                break label89;
             }
          }
 
          CacheResult cacheResult = null;
-         AccumulatorInputStream in = (AccumulatorInputStream)(new Object(null, inputStream, null, false));
+         AccumulatorInputStream in = new AccumulatorInputStream(null, inputStream, null, false);
          Pipe pipe = in.getPipe();
          if (pipe != null && pipe.getLength() > 0) {
             url = URI.getAbsoluteURL(url, null);
@@ -134,7 +135,7 @@ final class BrowserChannelConverter extends BaseConverter {
             cacheResult
          );
       } else {
-         throw new Object();
+         throw new SerializationException();
       }
    }
 }

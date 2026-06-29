@@ -62,7 +62,7 @@ final class EndUserAgreementCommand$TermsAndConditionsResponseHandler extends De
 
    @Override
    public final void characters(char[] ch, int start, int length) {
-      String result = (String)(ch != null && ch.length > 0 ? new Object(ch, start, length) : null);
+      String result = ch != null && ch.length > 0 ? new String(ch, start, length) : null;
       if (this._foundRetryTag) {
          this._retry = result;
       } else if (this._foundTermsAndConditionsTag) {

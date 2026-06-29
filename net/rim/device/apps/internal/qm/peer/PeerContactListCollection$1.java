@@ -17,7 +17,7 @@ final class PeerContactListCollection$1 implements Comparator {
    private final int getHash(Object o) {
       int hash = 0;
       if (!(o instanceof PeerContact)) {
-         if (o instanceof Object) {
+         if (o instanceof String) {
             hash = ((String)o).toUpperCase().hashCode();
          }
 

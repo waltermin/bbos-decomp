@@ -89,7 +89,7 @@ final class DomainOverrides$DomainOverrideComparator implements Comparator {
    }
 
    private final int getAuthoritySpecificity(String authority) {
-      return ((StringTokenizer)(new Object(authority, (char)46))).countTokens();
+      return new StringTokenizer(authority, (char)46).countTokens();
    }
 
    private final int getPathSpecificity(String path) {

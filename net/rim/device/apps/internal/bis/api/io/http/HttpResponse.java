@@ -30,6 +30,6 @@ public final class HttpResponse {
    }
 
    public final String getResponseProperty(String key) {
-      return (String)(this._responsePropertiesMap == null ? null : this._responsePropertiesMap.get(key));
+      return this._responsePropertiesMap == null ? null : (String)this._responsePropertiesMap.get(key);
    }
 }

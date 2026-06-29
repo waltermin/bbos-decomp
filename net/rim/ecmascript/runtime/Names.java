@@ -205,7 +205,7 @@ public class Names {
    public static final String UTC = "UTC";
    public static final String valueOf = "valueOf";
    public static final String version = "version";
-   public static final Hashtable constructors = (Hashtable)(new Object());
+   public static final Hashtable constructors = new Hashtable();
    public static final long[] NoParms = Misc.newMixedArray(0);
 
    private Names() {

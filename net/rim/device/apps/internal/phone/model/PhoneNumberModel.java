@@ -13,6 +13,7 @@ import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.CookieProvider;
 import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.FlowFieldManager;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.VerticalFieldManager;
@@ -24,7 +25,7 @@ import net.rim.device.api.util.FactoryUtil;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.api.util.WeakReferenceUtilities;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
-import net.rim.device.apps.api.addressbook.AddressCardElement;
+import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.CustomContactImageProvider;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.ConversionProvider;
@@ -42,6 +43,8 @@ import net.rim.device.apps.api.framework.registration.VerbFactory;
 import net.rim.device.apps.api.framework.registration.VerbFactoryRepository;
 import net.rim.device.apps.api.framework.registration.VerbRepository;
 import net.rim.device.apps.api.framework.verb.ConditionalVerb;
+import net.rim.device.apps.api.framework.verb.SendKeyInvocableVerb;
+import net.rim.device.apps.api.framework.verb.ToggleQualifiedFriendlyVerb;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.framework.verb.WrapperVerb;
 import net.rim.device.apps.api.messaging.implus.IMPlusServiceModel;
@@ -51,6 +54,7 @@ import net.rim.device.apps.api.quickcontact.QuickContactUtil;
 import net.rim.device.apps.api.search.SearchCriterion;
 import net.rim.device.apps.api.ui.CommonResources;
 import net.rim.device.apps.api.ui.CookieProviderUtilities;
+import net.rim.device.apps.api.ui.LeftRightFieldManager;
 import net.rim.device.apps.api.ui.ToggleableField;
 import net.rim.device.apps.api.utility.framework.ControllerUtilities;
 import net.rim.device.apps.api.utility.general.Copyable;
@@ -81,7 +85,7 @@ public class PhoneNumberModel
    private static final boolean ALLOW_PHONE_TYPE_CHANGES = false;
    private static String CTI_PREFIX = "cti:";
    private static final int MESSAGE_ADDRESS_DATA_SIZE = 8;
-   private static WeakReference _convertBufferWR = (WeakReference)(new Object(null));
+   private static WeakReference _convertBufferWR = new WeakReference(null);
 
    protected void getTransmittablePhoneNumber(StringBuffer buffer, Object context) {
       PhoneNumberConverter.convertForTransmission(buffer, this.toString().toCharArray(), context);
@@ -117,7 +121,7 @@ public class PhoneNumberModel
       if (PackageManager.isPhoneEnabled()) {
          if (editable && hasFocus && !hyperlink && !ContextObject.getPrivateFlag(context, 4936088360624690805L, 63)) {
             Object field = ContextObject.get(context, 9045827404276417370L);
-            if (field instanceof Object) {
+            if (field instanceof EditField) {
                EditField editField = (EditField)field;
                if (editField != null) {
                   String currentValue = editField.getText();
@@ -144,7 +148,7 @@ public class PhoneNumberModel
    @Override
    public boolean grabDataFromField(Field field, Object context) {
       if (!(field instanceof PhoneNumberModelEditField)) {
-         if (!(field instanceof Object)) {
+         if (!(field instanceof PhoneNumberEditField)) {
             return false;
          }
 
@@ -220,8 +224,8 @@ public class PhoneNumberModel
          label = "";
       } else {
          Object contextFieldLabel = ContextObject.get(context, 3986845832244503196L);
-         if (!(contextFieldLabel instanceof Object)) {
-            label = ((StringBuffer)(new Object())).append(typeString).append(": ").toString();
+         if (!(contextFieldLabel instanceof String)) {
+            label = typeString + ": ";
          } else {
             label = (String)contextFieldLabel;
          }
@@ -235,7 +239,7 @@ public class PhoneNumberModel
             ContextObject contextCopy = ContextObject.clone(context);
             contextCopy.put(3986845832244503196L, label);
             contextCopy.put(247, this.getValue());
-            editField = (Field)f.createInstance(contextCopy);
+            editField = (EditField)f.createInstance(contextCopy);
          }
 
          if (editField == null) {
@@ -246,18 +250,18 @@ public class PhoneNumberModel
          return editField;
       } else {
          if (ContextObject.getFlag(context, 24)) {
-            StringBuffer strBuffer = (StringBuffer)(new Object());
+            StringBuffer strBuffer = new StringBuffer();
             this.getDisplayablePhoneNumber(strBuffer, false);
-            label = ((StringBuffer)(new Object())).append(label).append(strBuffer.toString()).toString();
+            label = label + strBuffer.toString();
             long flags = 18014398509481984L;
-            return this.checkIfIconRequired((Field)(new Object(label, flags)));
+            return this.checkIfIconRequired(new RichTextField(label, flags));
          }
 
          if (!ContextObject.getFlag(context, 58)) {
             if (ContextObject.getFlag(context, 128)) {
-               Field leftField = (Field)(new Object(label));
+               Field leftField = new LabelField(label);
                Field rightField = this.checkIfIconRequired(this.getQualifiedAddressField(context));
-               Field manager = (Field)(new Object(leftField, rightField));
+               Field manager = new LeftRightFieldManager(leftField, rightField);
                rightField.setCookie(this);
                manager.setCookie(this);
                return manager;
@@ -278,18 +282,18 @@ public class PhoneNumberModel
                Field fieldToReturn = this.checkIfIconRequired(new ReadOnlyPhoneNumberField(this, context));
                IMPlusServiceModel implusService = (IMPlusServiceModel)ApplicationRegistry.getApplicationRegistry().get(-2205884509140292945L);
                if (implusService != null && implusService.isIMPlusCompose(context) && ContextObject.get(context, 252) == null) {
-                  StringBuffer postfixBuffer = (StringBuffer)(new Object());
+                  StringBuffer postfixBuffer = new StringBuffer();
                   postfixBuffer.append(' ');
                   postfixBuffer.append('(');
                   if (this._type == 7) {
-                     postfixBuffer.append((String)((Object[])PhoneResources.getObject(601))[7]);
+                     postfixBuffer.append(((String[])PhoneResources.getObject(601))[7]);
                   } else {
-                     postfixBuffer.append((String)((Object[])PhoneResources.getObject(601))[0]);
+                     postfixBuffer.append(((String[])PhoneResources.getObject(601))[0]);
                   }
 
                   postfixBuffer.append(')');
-                  FlowFieldManager ffm = (FlowFieldManager)(new Object(fieldToReturn.getStyle()));
-                  LabelField postfixLabel = (LabelField)(new Object(postfixBuffer.toString(), 36028797018963968L));
+                  FlowFieldManager ffm = new FlowFieldManager(fieldToReturn.getStyle());
+                  LabelField postfixLabel = new LabelField(postfixBuffer.toString(), 36028797018963968L);
                   ffm.add(fieldToReturn);
                   ffm.setCookie(fieldToReturn.getCookie());
                   ffm.add(postfixLabel);
@@ -315,32 +319,31 @@ public class PhoneNumberModel
 
             int index = PhoneNumberConverter.findExtensionOffset(num.toString().toCharArray());
             if (index == -1) {
-               label = ((StringBuffer)(new Object())).append(label).append(num).toString();
+               label = label + num;
             } else {
                String labelPhoneNumber = num.substring(0, index);
                labelPhoneNumber = labelPhoneNumber.trim();
                if (labelPhoneNumber.length() > 0) {
-                  label = ((StringBuffer)(new Object())).append(label).append(labelPhoneNumber).toString();
+                  label = label + labelPhoneNumber;
                } else {
-                  StringBuffer strBuffer = (StringBuffer)(new Object());
+                  StringBuffer strBuffer = new StringBuffer();
                   this.getDisplayablePhoneNumber(strBuffer, context);
-                  label = ((StringBuffer)(new Object())).append(label).append(strBuffer.toString()).toString();
+                  label = label + strBuffer.toString();
                }
             }
 
             LabelField labelField = null;
-            Object var28;
             if (ContextObject.getFlag(context, 34) && this._type != 0) {
-               StringBuffer buf = (StringBuffer)(new Object());
+               StringBuffer buf = new StringBuffer();
                buf.append(typeString);
                buf.append(' ');
                buf.append(label);
-               var28 = new Object(buf, 64);
+               labelField = new LabelField(buf, 64);
             } else {
-               var28 = new Object(label, 64);
+               labelField = new LabelField(label, 64);
             }
 
-            return this.checkIfIconRequired((Field)var28);
+            return this.checkIfIconRequired(labelField);
          }
       }
    }
@@ -383,7 +386,7 @@ public class PhoneNumberModel
                ContextObject contextObject = ContextObject.clone(context);
                contextObject.put(247, this);
                Array.resize(verbs, 0);
-               boolean isInAddressBook = !(addressCard instanceof Object) ? false : ((AddressCardElement)addressCard).getUID() != -1;
+               boolean isInAddressBook = !(addressCard instanceof AddressCardModel) ? false : ((AddressCardModel)addressCard).getUID() != -1;
                if (!isInAddressBook && hasFocus && !editable) {
                   if (!ContextObject.getPrivateFlag(contextObject, 4936088360624690805L, 55)) {
                      Object friendlyName = ContextObject.get(context, -4886909117188079897L);
@@ -436,7 +439,7 @@ public class PhoneNumberModel
                            defaultVerb = hasFocus ? verbs[maxPriorityComposeVerbIndex] : null;
                         }
                      }
-                  } else if (addressCard instanceof Object) {
+                  } else if (addressCard instanceof VerbProvider) {
                      VerbProvider verbProvider = (VerbProvider)addressCard;
                      ContextObject tmpContext = ContextObject.clone(context);
                      ContextObject.setFlag(tmpContext, 44);
@@ -457,7 +460,7 @@ public class PhoneNumberModel
                      ToggleableField toggleableField = null;
 
                      while (mgr != null) {
-                        if (mgr instanceof Object) {
+                        if (mgr instanceof ToggleableField) {
                            toggleableField = (ToggleableField)mgr;
                            break;
                         }
@@ -468,7 +471,7 @@ public class PhoneNumberModel
                      if (toggleableField != null) {
                         Array.resize(verbs, verbs.length + 1);
                         int resId = toggleableField.isFriendlyVisible() ? 1650 : 1700;
-                        verbs[verbs.length - 1] = (Verb)(new Object(toggleableField, CommonResources.getResourceBundle(), resId));
+                        verbs[verbs.length - 1] = new ToggleQualifiedFriendlyVerb(toggleableField, CommonResources.getResourceBundle(), resId);
                      }
                   }
                }
@@ -600,7 +603,7 @@ public class PhoneNumberModel
       }
 
       if (ContextObject.getFlag(context, 11) && ContextObject.getFlag(context, 43) && ContextObject.getFlag(context, 54)) {
-         if (target instanceof Object) {
+         if (target instanceof StringBuffer) {
             StringBuffer stringBuffer = (StringBuffer)target;
             String label;
             switch (this._type) {
@@ -745,13 +748,13 @@ public class PhoneNumberModel
          }
 
          if (ContextObject.getFlag(context, 21)) {
-            if (target instanceof Object) {
+            if (target instanceof StringBuffer) {
                StringBuffer buf = (StringBuffer)target;
                this.getTransmittablePhoneNumber(buf, context);
                return true;
             }
-         } else if (ContextObject.getFlag(context, 10) && target instanceof Object[]) {
-            String[] names = (Object[])target;
+         } else if (ContextObject.getFlag(context, 10) && target instanceof String[]) {
+            String[] names = (String[])target;
             if (names.length == 2) {
                this.getAddressAndFriendlyName(names);
                return true;
@@ -791,7 +794,7 @@ public class PhoneNumberModel
    @Override
    public MenuItem getFocusVerbs(CookieProvider provider, Object context, Vector items) {
       if (context == null) {
-         ContextObject contextObject = (ContextObject)(new Object());
+         ContextObject contextObject = new ContextObject();
          contextObject.setFlag(2);
          contextObject.setFlag(83);
          if (provider == null || provider.getCookieWithFocus() != null) {
@@ -859,7 +862,7 @@ public class PhoneNumberModel
          int index = getFirstIndexForReverseLookupCode(number, 7);
 
          try {
-            return (String)(new Object(number, index, number.length - index));
+            return new String(number, index, number.length - index);
          } finally {
             ;
          }
@@ -963,12 +966,12 @@ public class PhoneNumberModel
    }
 
    private Verb copyVerbAndSetParameters(Verb verbToCopy, Object context) {
-      if (!(verbToCopy instanceof Object)) {
+      if (!(verbToCopy instanceof Copyable)) {
          return null;
       }
 
       Verb copy = (Verb)((Copyable)verbToCopy).copy();
-      if (copy instanceof Object) {
+      if (copy instanceof SetParameter) {
          ((SetParameter)copy).setParameter(context);
       }
 
@@ -1023,7 +1026,7 @@ public class PhoneNumberModel
          Verb[] composeVerbs = this.getPhoneNumberComposeVerbs();
 
          for (int i = 0; i < composeVerbs.length; i++) {
-            if (composeVerbs[i] instanceof Object && composeVerbs[i] instanceof Object && composeVerbs[i] instanceof Object) {
+            if (composeVerbs[i] instanceof SendKeyInvocableVerb && composeVerbs[i] instanceof Copyable && composeVerbs[i] instanceof SetParameter) {
                ContextObject co = ContextObject.clone(context);
                co.put(247, this);
                Object addressCard = ContextObject.get(context, 252);
@@ -1048,9 +1051,9 @@ public class PhoneNumberModel
       if (this._type == 13) {
          return false;
       } else {
-         return context instanceof Object && ((ContextObject)context).getPrivateFlag(4936088360624690805L, 15) && !(verb instanceof DialPhoneNumberVerb)
+         return context instanceof ContextObject && ((ContextObject)context).getPrivateFlag(4936088360624690805L, 15) && !(verb instanceof DialPhoneNumberVerb)
             ? false
-            : !(verb instanceof Object) || ((ConditionalVerb)verb).canInvoke(context);
+            : !(verb instanceof ConditionalVerb) || ((ConditionalVerb)verb).canInvoke(context);
       }
    }
 
@@ -1077,7 +1080,7 @@ public class PhoneNumberModel
             numberType = 5;
          }
 
-         ContextObject ctxt = (ContextObject)(new Object(34));
+         ContextObject ctxt = new ContextObject(34);
          ctxt.putIntegerData(numberType);
          ctxt.put(254, this);
          PersistableRIMModel phoneNumberModel = (PersistableRIMModel)FactoryUtil.createInstance(3797587162219887872L, ctxt);
@@ -1088,7 +1091,7 @@ public class PhoneNumberModel
             menuOrdering = 16867328;
          }
 
-         ContextObject ctx = (ContextObject)(new Object());
+         ContextObject ctx = new ContextObject();
          if (phoneNumberModel != null) {
             ctx.put(254, phoneNumberModel);
          }
@@ -1097,13 +1100,13 @@ public class PhoneNumberModel
             ctx.put(-4886909117188079897L, friendlyName);
          }
 
-         WrapperVerb wrapper = (WrapperVerb)(new Object(addToABVerb, ctx, menuOrdering));
+         WrapperVerb wrapper = new WrapperVerb(addToABVerb, ctx, menuOrdering);
          verbs[verbInsertionIndex++] = wrapper;
          defaultVerb = wrapper;
       }
 
       if (copyContext) {
-         StringBuffer strBuffer = (StringBuffer)(new Object());
+         StringBuffer strBuffer = new StringBuffer();
          this.getDisplayablePhoneNumber(strBuffer, false);
          CopyPhoneNumberVerb copyNumberVerb = new CopyPhoneNumberVerb();
          copyNumberVerb.setNumber(strBuffer.toString());
@@ -1150,14 +1153,14 @@ public class PhoneNumberModel
       if (PackageManager.isPhoneEnabled()) {
          String convertedString = PhoneNumberServices.convertInternalToDisplay(this.getValue());
          if (fullContents) {
-            Field returnField = (Field)(new Object(convertedString, style));
+            Field returnField = new RichTextField(convertedString, style);
             returnField.setCookie(this);
             char speedDialKey = QuickContactList.getInstance().getQuickContactKey(this);
             if (speedDialKey != 0) {
-               VerticalFieldManager vfm = (VerticalFieldManager)(new Object());
+               VerticalFieldManager vfm = new VerticalFieldManager();
                String label = QuickContactUtil.getSpeedDialKeyLabel(speedDialKey);
                vfm.add(returnField);
-               vfm.add((Field)(new Object(label)));
+               vfm.add(new LabelField(label));
                vfm.setCookie(this);
                return vfm;
             } else {
@@ -1167,7 +1170,7 @@ public class PhoneNumberModel
             return new SmartPhoneNumberLabelField(convertedString, style);
          }
       } else {
-         return (Field)(fullContents ? new Object(this.getValue(), style) : new Object(this.getValue(), style));
+         return fullContents ? new RichTextField(this.getValue(), style) : new LabelField(this.getValue(), style);
       }
    }
 
@@ -1188,7 +1191,7 @@ public class PhoneNumberModel
 
    public PhoneNumberModel(Object initialData) {
       this._type = 0;
-      if (initialData instanceof Object) {
+      if (initialData instanceof String) {
          this.initialize((String)initialData, false);
       } else if (initialData != null) {
          ContextObject contextObject = ContextObject.verifyNonNull(initialData);
@@ -1204,7 +1207,7 @@ public class PhoneNumberModel
          Object model = contextObject.get(254);
          if (model != null) {
             if (!(model instanceof PhoneNumberModel)) {
-               throw new Object(((StringBuffer)(new Object("IllegalClassName: "))).append(model.getClass().getName()).toString());
+               throw new IllegalArgumentException("IllegalClassName: " + model.getClass().getName());
             }
 
             PhoneNumberModel pnm = (PhoneNumberModel)model;
@@ -1226,8 +1229,8 @@ public class PhoneNumberModel
    private Field checkIfIconRequired(Field in) {
       Bitmap bmp = CustomContactImageProvider.getDisplayIcon(this);
       if (bmp != null) {
-         BitmapField bitmapField = (BitmapField)(new Object(bmp));
-         HorizontalFieldManager out = (HorizontalFieldManager)(new Object());
+         BitmapField bitmapField = new BitmapField(bmp);
+         HorizontalFieldManager out = new HorizontalFieldManager();
          out.add(bitmapField);
          out.add(in);
          return out;
@@ -1255,7 +1258,7 @@ public class PhoneNumberModel
    }
 
    private static boolean isSMS(Object item) {
-      if (!(item instanceof Object)) {
+      if (!(item instanceof MatchProvider)) {
          return false;
       }
 

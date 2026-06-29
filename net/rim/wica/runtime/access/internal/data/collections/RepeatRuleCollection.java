@@ -17,10 +17,10 @@ public class RepeatRuleCollection extends AccessInnerDataCollection {
    }
 
    private void initFieldHandlers() {
-      super._intFieldHandlers = (IntHashtable)(new Object(3));
+      super._intFieldHandlers = new IntHashtable(3);
       super._intFieldHandlers.put(0, new RepeatRuleCollection$FrequencyHandler(null));
       super._intFieldHandlers.put(1, new RepeatRuleCollection$IntervalHandler(null));
-      super._longFieldHandlers = (IntHashtable)(new Object(1));
+      super._longFieldHandlers = new IntHashtable(1);
       super._longFieldHandlers.put(2, new RepeatRuleCollection$EndHandler(null));
    }
 
@@ -47,7 +47,7 @@ public class RepeatRuleCollection extends AccessInnerDataCollection {
             DataCollection ownerDC = super._wiclet.getDataCollection((int)(owner._dataHandle >> 32));
             if (ownerDC instanceof EventCollection) {
                Object ownerInstance = ((EventCollection)ownerDC).getDBItemFromHandle(owner._dataHandle);
-               if (ownerInstance instanceof Object) {
+               if (ownerInstance instanceof Event) {
                   return ((Event)ownerInstance).getReadOnlyRecurrence();
                }
             }

@@ -11,7 +11,7 @@ import net.rim.device.apps.api.framework.model.SyncBuffer;
 
 final class CacheModelConverter implements SyncConverter {
    public static final int VERSION_SUPPORTED = 1;
-   private static ContextObjectWR _convertContextWR = (ContextObjectWR)(new Object(19, 72));
+   private static ContextObjectWR _convertContextWR = new ContextObjectWR(19, 72);
 
    @Override
    public final boolean convert(SyncObject object, DataBuffer buffer, int version) {
@@ -21,7 +21,7 @@ final class CacheModelConverter implements SyncConverter {
 
       CacheModel model = (CacheModel)object;
       ConversionProvider converter = model;
-      SyncBuffer syncBuffer = (SyncBuffer)(new Object(buffer, version, model.getUID()));
+      SyncBuffer syncBuffer = new SyncBuffer(buffer, version, model.getUID());
       return converter.convert(_convertContextWR.getContextObject(), syncBuffer);
    }
 
@@ -31,7 +31,7 @@ final class CacheModelConverter implements SyncConverter {
          return null;
       }
 
-      SyncBuffer syncBuffer = (SyncBuffer)(new Object(dataBuffer, version, uid));
+      SyncBuffer syncBuffer = new SyncBuffer(dataBuffer, version, uid);
       ContextObject convertContext = _convertContextWR.getContextObject();
       convertContext.put(255, syncBuffer);
       CacheModel model = (CacheModel)FactoryUtil.createInstance(1043003344163629438L, convertContext);

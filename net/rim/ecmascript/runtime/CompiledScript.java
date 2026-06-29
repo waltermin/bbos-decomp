@@ -2,6 +2,7 @@ package net.rim.ecmascript.runtime;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import net.rim.device.api.util.Arrays;
@@ -46,7 +47,7 @@ public class CompiledScript implements DebugScript {
    static char[] _charBuffer = new char[0];
 
    public void serialize(OutputStream stream) {
-      DataOutputStream out = (DataOutputStream)(new Object(stream));
+      DataOutputStream out = new DataOutputStream(stream);
       writeStringArray(out, this.ids);
       writeStringArray(out, this.strings);
       writeDoubleArray(out, this.doubles);
@@ -658,7 +659,7 @@ public class CompiledScript implements DebugScript {
 
    public static CompiledScript deserialize(InputStream stream, boolean verify) {
       synchronized (_syncObj) {
-         DataInputStream in = (DataInputStream)(new Object(stream));
+         DataInputStream in = new DataInputStream(stream);
          String[] ids = readStringArray(in);
          String[] strings = readStringArray(in);
          double[] doubles = readDoubleArray(in);
@@ -673,7 +674,7 @@ public class CompiledScript implements DebugScript {
             try {
                new Verifier(script.locals == null ? 0 : script.locals.length).verify(script);
             } catch (VerifyError ve) {
-               throw new Object("invalid script");
+               throw new IOException("invalid script");
             }
          }
 
@@ -797,9 +798,9 @@ public class CompiledScript implements DebugScript {
       return script;
    }
 
-   private static void arraySizeCheck(boolean ok) {
+   private static void arraySizeCheck(boolean ok) throws IOException {
       if (!ok) {
-         throw new Object("Script too large");
+         throw new IOException("Script too large");
       }
    }
 
@@ -823,7 +824,7 @@ public class CompiledScript implements DebugScript {
          return null;
       }
 
-      String[] a = new Object[length];
+      String[] a = new String[length];
 
       for (int i = 0; i < length; i++) {
          a[i] = Misc.stringIntern(readString(in));
@@ -870,7 +871,7 @@ public class CompiledScript implements DebugScript {
          }
 
          in.readFully(_byteBuffer, 0, length);
-         return (String)(new Object(_byteBuffer, 0, length));
+         return new String(_byteBuffer, 0, length);
       } else {
          length = -length;
          if (length > _charBuffer.length) {
@@ -881,7 +882,7 @@ public class CompiledScript implements DebugScript {
             _charBuffer[i] = readSmallChar(in);
          }
 
-         return (String)(new Object(_charBuffer, 0, length));
+         return new String(_charBuffer, 0, length);
       }
    }
 
@@ -929,14 +930,14 @@ public class CompiledScript implements DebugScript {
       }
    }
 
-   private static byte[] readBigByteArray(DataInputStream in) {
+   private static byte[] readBigByteArray(DataInputStream in) throws IOException {
       int length = in.readInt();
       if (length == Integer.MAX_VALUE) {
          return null;
       }
 
       if (length > in.available()) {
-         throw new Object("Unexpected EOF");
+         throw new IOException("Unexpected EOF");
       }
 
       byte[] a = new byte[length];

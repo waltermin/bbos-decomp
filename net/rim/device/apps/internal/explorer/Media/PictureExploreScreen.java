@@ -31,7 +31,7 @@ public final class PictureExploreScreen extends AppsMainScreen implements Explor
       context.setFlag(45);
       this.setContext(context);
       context.putIntegerData(1);
-      ContextObject.put(context, 3941043584844673548L, new Object(1));
+      ContextObject.put(context, 3941043584844673548L, new Integer(1));
       this._thumbInfoField = new FooterField();
       this._thumbInfoField.setTag(ThemeUtilities.TEXT_TAG);
       this._manager = new ExploreManager(this, ctx, false, 3459045988797251584L);

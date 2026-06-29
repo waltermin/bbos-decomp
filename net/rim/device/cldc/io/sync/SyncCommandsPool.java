@@ -24,7 +24,7 @@ import net.rim.device.cldc.io.sync.command.Use;
 import net.rim.device.internal.synchronization.ota.util.ReusableObjectPool;
 
 public final class SyncCommandsPool {
-   private IntHashtable _pools = (IntHashtable)(new Object());
+   private IntHashtable _pools = new IntHashtable();
    private static final long KEY_VALUE_PREFIX = CRC32.update(-1, "SCP:".getBytes());
 
    private static final long getKeyFor(long sid) {

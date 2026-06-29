@@ -9,7 +9,7 @@ import net.rim.wica.runtime.event.EventService;
 import net.rim.wica.runtime.logging.Logger;
 
 public class EventServiceImpl implements EventService {
-   private IntHashtable _listeners = (IntHashtable)(new Object(10));
+   private IntHashtable _listeners = new IntHashtable(10);
 
    public void dispatchEvent(int event, int eventParam, Object data) {
       this.dispatchEvent(null, event, eventParam, data);
@@ -49,18 +49,7 @@ public class EventServiceImpl implements EventService {
             try {
                listener.handleEvent(sender, event, eventParam, data);
             } catch (Throwable var11) {
-               Logger.log(
-                  ((StringBuffer)(new Object("EventListener ")))
-                     .append(listener.getClass())
-                     .append(" threw ")
-                     .append(e)
-                     .append(" on event ")
-                     .append(event)
-                     .append(" sent from ")
-                     .append(sender.getClass())
-                     .toString(),
-                  3
-               );
+               Logger.log("EventListener " + listener.getClass() + " threw " + e + " on event " + event + " sent from " + sender.getClass(), 3);
                continue;
             }
          }
@@ -75,13 +64,13 @@ public class EventServiceImpl implements EventService {
    @Override
    public void addListener(int[] events, EventListener listener) {
       if (listener == null) {
-         throw new Object("listener");
+         throw new NullPointerException("listener");
       }
 
       for (int i = 0; i < events.length; i++) {
          Vector listeners = (Vector)this._listeners.get(events[i]);
-         Vector var5 = ListenerUtilities.fastAddListener(listeners, listener);
-         this._listeners.put(events[i], var5);
+         listeners = ListenerUtilities.fastAddListener(listeners, listener);
+         this._listeners.put(events[i], listeners);
       }
    }
 
@@ -93,17 +82,17 @@ public class EventServiceImpl implements EventService {
    @Override
    public void removeListener(int[] events, EventListener listener) {
       if (listener == null) {
-         throw new Object("listener");
+         throw new NullPointerException("listener");
       }
 
       for (int i = 0; i < events.length; i++) {
          Vector listeners = (Vector)this._listeners.get(events[i]);
          if (listeners != null) {
-            Vector var5 = ListenerUtilities.removeListener(listeners, listener);
-            if (var5 == null) {
+            listeners = ListenerUtilities.removeListener(listeners, listener);
+            if (listeners == null) {
                this._listeners.remove(events[i]);
             } else {
-               this._listeners.put(events[i], var5);
+               this._listeners.put(events[i], listeners);
             }
          }
       }
@@ -112,7 +101,7 @@ public class EventServiceImpl implements EventService {
    @Override
    public void removeListener(EventListener listener) {
       if (listener == null) {
-         throw new Object("listener");
+         throw new NullPointerException("listener");
       }
 
       IntEnumeration e = this._listeners.keys();

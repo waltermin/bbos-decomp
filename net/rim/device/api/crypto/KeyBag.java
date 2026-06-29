@@ -20,7 +20,7 @@ public class KeyBag extends SafeBag {
       // 01: getfield net/rim/device/api/crypto/SafeBag._parsed Z
       // 04: ifeq 08
       // 07: return
-      // 08: new java/lang/Object
+      // 08: new net/rim/device/api/crypto/asn1/ASN1InputByteArray
       // 0b: dup
       // 0c: aload 0
       // 0d: getfield net/rim/device/api/crypto/SafeBag._bagData [B
@@ -35,7 +35,7 @@ public class KeyBag extends SafeBag {
       // 22: aload 0
       // 23: getfield net/rim/device/api/crypto/SafeBag._bagAttributes [B
       // 26: ifnull 73
-      // 29: new java/lang/Object
+      // 29: new net/rim/device/api/crypto/asn1/ASN1InputByteArray
       // 2c: dup
       // 2d: aload 0
       // 2e: getfield net/rim/device/api/crypto/SafeBag._bagAttributes [B

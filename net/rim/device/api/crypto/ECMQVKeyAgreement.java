@@ -10,7 +10,7 @@ public final class ECMQVKeyAgreement {
       ECPublicKey remoteStaticPublicKey,
       ECPublicKey remoteEphemeralPublicKey,
       boolean useCofactor
-   ) {
+   ) throws InvalidCryptoSystemException {
       if (localStaticPrivateKey != null && localEphemeralKeyPair != null && remoteStaticPublicKey != null && remoteEphemeralPublicKey != null) {
          ECCryptoSystem cryptoSystem = localStaticPrivateKey.getECCryptoSystem();
          if (cryptoSystem.equals(remoteStaticPublicKey.getECCryptoSystem())
@@ -29,10 +29,10 @@ public final class ECMQVKeyAgreement {
                   useCofactor
                );
          } else {
-            throw new Object();
+            throw new InvalidCryptoSystemException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

@@ -51,7 +51,7 @@ public final class TcpUtils implements TcpConstants {
             return localPort;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -76,7 +76,7 @@ public final class TcpUtils implements TcpConstants {
 
    public static final void logConnectionDatabase() {
       if (EventLogger.getMinimumLevel() == 5) {
-         StringBuffer strbuf = (StringBuffer)(new Object());
+         StringBuffer strbuf = new StringBuffer();
          strbuf.append("TCP Connection Database:\n");
          synchronized (_hpa) {
             Vector database = TcpConnectionDatabase.getInstance().getTcpConnectionDatabase();

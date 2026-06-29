@@ -1,11 +1,14 @@
 package net.rim.device.cldc.io.ippp;
 
+import java.io.IOException;
+import java.io.InterruptedIOException;
 import javax.microedition.io.Datagram;
 import net.rim.device.api.io.ConnectionClosedException;
 import net.rim.device.api.io.DatagramAddressBase;
 import net.rim.device.api.io.DatagramBase;
 import net.rim.device.api.io.DatagramConnectionBase;
 import net.rim.device.api.io.DatagramStatusListener;
+import net.rim.device.api.io.IOCancelledException;
 import net.rim.device.api.system.ControlledAccess;
 import net.rim.device.api.system.EventLogger;
 import net.rim.device.cldc.io.utility.URL;
@@ -45,9 +48,9 @@ public class ConnectionBase extends DatagramConnectionBase implements DatagramSt
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   protected void initialize(String name, boolean useTimeouts) {
+   protected void initialize(String name, boolean useTimeouts) throws IOException {
       this._protocolVersion = 16;
-      this._url = (URL)(new Object("ippp", name));
+      this._url = new URL("ippp", name);
       URLParameters parameters = this._url.getRIMParameters();
       super.openPrim(name, 0, useTimeouts);
       this._detereminedGroupUID = SocketTransportBase.findAcceptableConnectionUid(parameters);
@@ -74,9 +77,9 @@ public class ConnectionBase extends DatagramConnectionBase implements DatagramSt
                var14 = false;
             } finally {
                if (var14) {
-                  StringBuffer sb = (StringBuffer)(new Object());
+                  StringBuffer sb = new StringBuffer();
                   sb.append("ConnectionTimeout").append(" must have a valid long value");
-                  throw new Object(sb.toString());
+                  throw new IOException(sb.toString());
                }
             }
          }
@@ -93,9 +96,9 @@ public class ConnectionBase extends DatagramConnectionBase implements DatagramSt
                var11 = false;
             } finally {
                if (var11) {
-                  StringBuffer sb = (StringBuffer)(new Object());
+                  StringBuffer sb = new StringBuffer();
                   sb.append("FlowControlTimeout").append(" must have a valid short value");
-                  throw new Object(sb.toString());
+                  throw new IOException(sb.toString());
                }
             }
          }
@@ -303,10 +306,10 @@ public class ConnectionBase extends DatagramConnectionBase implements DatagramSt
       this._connectRequestSent = true;
    }
 
-   protected ConnectionBase(String name, boolean useTimeouts) {
+   protected ConnectionBase(String name, boolean useTimeouts) throws IOException {
       this.initialize(name, useTimeouts);
       if (this._detereminedGroupUID == null) {
-         throw new Object("Could not find a service book entry for IPPP");
+         throw new IOException("Could not find a service book entry for IPPP");
       }
 
       SocketTransportBase transport = this.getTransport();
@@ -317,13 +320,13 @@ public class ConnectionBase extends DatagramConnectionBase implements DatagramSt
    }
 
    @Override
-   public void send(Datagram datagram) throws ConnectionClosedException {
+   public void send(Datagram datagram) throws IOException, ConnectionClosedException {
       if (!super._isActive) {
          throw new ConnectionClosedException();
       }
 
       if (this._errorOccured) {
-         throw new Object(this._errorMessage);
+         throw new IOException(this._errorMessage);
       }
 
       if (this._groupUID == null) {
@@ -366,11 +369,11 @@ public class ConnectionBase extends DatagramConnectionBase implements DatagramSt
                receivedDatagram = this._queue.get(this._datagramSequenceNumber);
                if (receivedDatagram == null) {
                   if (this._errorOccured) {
-                     throw new Object(this._errorMessage);
+                     throw new IOException(this._errorMessage);
                   }
 
                   if (!super._isActive || !this._receiveActive) {
-                     throw new Object();
+                     throw new IOCancelledException();
                   }
 
                   boolean sysCheckSent = false;
@@ -391,15 +394,15 @@ public class ConnectionBase extends DatagramConnectionBase implements DatagramSt
                         if (receivedDatagram == null) {
                            tempTimeOut -= et - st;
                            if (tempTimeOut <= 0) {
-                              throw new Object(((StringBuffer)(new Object("Local connection timed out after ~ "))).append(super._timeout).toString());
+                              throw new InterruptedIOException("Local connection timed out after ~ " + super._timeout);
                            }
 
                            if (this._errorOccured) {
-                              throw new Object(this._errorMessage);
+                              throw new IOException(this._errorMessage);
                            }
 
                            if (!super._isActive || !this._receiveActive) {
-                              throw new Object();
+                              throw new IOCancelledException();
                            }
 
                            if (this._sysCheckTimeout != 0) {
@@ -432,7 +435,7 @@ public class ConnectionBase extends DatagramConnectionBase implements DatagramSt
 
             if (!ControlledAccess.verifyCodeModuleSignature(TraceBack.getCallingModule(0), 51)
                && !Firewall.getInstance().allowConnection(this._url.getScheme(), "", this.getProperties(this._url.toString()))) {
-               throw new Object("Permission denied");
+               throw new IOException("Permission denied");
             }
 
             ((DatagramBase)datagram).copy(receivedDatagram);

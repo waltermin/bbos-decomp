@@ -1,7 +1,7 @@
 package net.rim.wica.runtime.access.internal.data.collections;
 
 import net.rim.device.apps.api.addressbook.AddressCardModel;
-import net.rim.device.apps.api.addressbook.FriendlyNameAddressModel;
+import net.rim.device.apps.api.addressbook.EmailAddressModel;
 import net.rim.wica.runtime.access.internal.data.handlers.ObjectFieldHandler;
 
 final class ContactCollection$EmailHandler implements ObjectFieldHandler {
@@ -13,16 +13,16 @@ final class ContactCollection$EmailHandler implements ObjectFieldHandler {
 
    @Override
    public final Object getValue(Object item) {
-      if (item instanceof Object) {
+      if (item instanceof AddressCardModel) {
          AddressCardModel model = (AddressCardModel)item;
          int size = model.size();
          int emailCount = 0;
 
          for (int i = 0; i < size; i++) {
             Object subModel = model.getAt(i);
-            if (subModel instanceof Object) {
+            if (subModel instanceof EmailAddressModel) {
                if (emailCount == this._emailIndex) {
-                  return ((FriendlyNameAddressModel)subModel).getAddress();
+                  return ((EmailAddressModel)subModel).getAddress();
                }
 
                emailCount++;

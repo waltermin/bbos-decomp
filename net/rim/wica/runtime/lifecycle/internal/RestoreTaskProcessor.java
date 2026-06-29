@@ -40,7 +40,7 @@ final class RestoreTaskProcessor implements Runnable, EventListener {
    @Override
    public final void run() {
       int length = this._restoredApplications.size();
-      this._pendingInstalls = (LongHashtable)(new Object(length));
+      this._pendingInstalls = new LongHashtable(length);
       EventService eventService = (EventService)this._provider
          .getService(
             class$net$rim$wica$runtime$event$EventService == null
@@ -99,7 +99,7 @@ final class RestoreTaskProcessor implements Runnable, EventListener {
                break;
             case 3:
             default:
-               Logger.log(((StringBuffer)(new Object("Unable to restore application:\n"))).append(model.getDescriptor().getUri()).toString());
+               Logger.log("Unable to restore application:\n" + model.getDescriptor().getUri());
             case 2:
                HomeScreenUtilities.unregisterEntry(entrypoint);
                this._pendingInstalls.remove(id);
@@ -124,7 +124,7 @@ final class RestoreTaskProcessor implements Runnable, EventListener {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

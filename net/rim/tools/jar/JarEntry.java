@@ -1,6 +1,9 @@
 package net.rim.tools.jar;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import net.rim.device.api.compress.ZLibInputStream;
 import net.rim.tools.compiler.exec.MyArrays;
 
 public class JarEntry {
@@ -16,23 +19,23 @@ public class JarEntry {
    private static final int TRAILER_SIZE = 16;
    private static final int TRAILER_FIRST_BYTE = 80;
 
-   private final void checkCompression(int compression) {
+   private final void checkCompression(int compression) throws IOException {
       if (compression != 0 && compression != 8) {
-         throw new Object(((StringBuffer)(new Object("bad file header compression method: "))).append(compression).toString());
+         throw new IOException("bad file header compression method: " + compression);
       }
    }
 
-   JarEntry(byte[] bytes, int offset) {
+   JarEntry(byte[] bytes, int offset) throws IOException {
       this._bytes = bytes;
       int signature = JarFile.extractInt(this._bytes, offset);
       if (signature != 33639248) {
-         throw new Object(((StringBuffer)(new Object("missing central directory header signature: "))).append(this._name).toString());
+         throw new IOException("missing central directory header signature: " + this._name);
       }
 
       offset = offset + 4 + 2 + 2;
       int flags = JarFile.extractShort(this._bytes, offset);
       if ((flags & 1) != 0) {
-         throw new Object("encrypted input not supported");
+         throw new IOException("encrypted input not supported");
       }
 
       offset += 2;
@@ -56,7 +59,7 @@ public class JarEntry {
       offset = relativeOffset;
       signature = JarFile.extractInt(this._bytes, offset);
       if (signature != 67324752) {
-         throw new Object("bad local file header signature");
+         throw new IOException("bad local file header signature");
       }
 
       offset = offset + 4 + 2 + 2 + 2 + 2 + 2 + 4 + 4 + 4;
@@ -69,7 +72,7 @@ public class JarEntry {
    }
 
    private static String extractString(byte[] bytes, int offset, int length) {
-      StringBuffer buff = (StringBuffer)(new Object(length));
+      StringBuffer buff = new StringBuffer(length);
 
       for (int i = 0; i < length; i++) {
          buff.append((char)bytes[offset + i]);
@@ -78,7 +81,7 @@ public class JarEntry {
       return buff.toString();
    }
 
-   JarEntry(InputStream in) {
+   JarEntry(InputStream in) throws IOException {
       in.skip(2);
       int gpbf = JarInputStream.readShort(in);
       boolean trailer = (gpbf & 8) != 0;
@@ -91,7 +94,7 @@ public class JarEntry {
       int extraLen = JarInputStream.readShort(in);
       byte[] nameBytes = new byte[nameLen];
       if (in.read(nameBytes, 0, nameLen) != nameLen) {
-         throw new Object("unable to read entry name");
+         throw new IOException("unable to read entry name");
       }
 
       this._name = extractString(nameBytes, 0, nameLen);
@@ -104,7 +107,7 @@ public class JarEntry {
          while (have < this._bytes.length) {
             int got = in.read(this._bytes, have, this._bytes.length - have);
             if (got < 0) {
-               throw new Object("unable to read all data bytes");
+               throw new IOException("unable to read all data bytes");
             }
 
             have += got;
@@ -143,7 +146,7 @@ public class JarEntry {
 
             int got = in.read(this._bytes, have, sofar - have);
             if (got < 0) {
-               throw new Object("unable to find trailer bytes");
+               throw new IOException("unable to find trailer bytes");
             }
 
             have += got;
@@ -164,9 +167,9 @@ public class JarEntry {
    }
 
    InputStream makeInputStream() {
-      InputStream in = (InputStream)(new Object(this._bytes, this._offset, this._compressedLength));
+      InputStream in = new ByteArrayInputStream(this._bytes, this._offset, this._compressedLength);
       if (this._compression == 8) {
-         in = (InputStream)(new Object(in, true));
+         in = new ZLibInputStream(in, true);
       }
 
       return in;

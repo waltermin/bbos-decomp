@@ -20,7 +20,7 @@ class JavaCallable extends HostFunction {
    }
 
    String getFullName() {
-      return ((StringBuffer)(new Object())).append(this._javaClass.getName()).append(".").append(this.getName()).toString();
+      return this._javaClass.getName() + "." + this.getName();
    }
 
    static void convertOneArg(long arg, int want, IntVector javaParms, Vector v) throws ThrownValue {
@@ -66,7 +66,7 @@ class JavaCallable extends HostFunction {
                   break;
                case 0:
                case 7:
-                  var15 = (JavaObject)(new Object(Convert.toDouble(arg)));
+                  var15 = new Double(Convert.toDouble(arg));
                   v.addElement(var15);
                   javaParms.addElement(Misc.toInt(var15));
                   break;
@@ -81,7 +81,7 @@ class JavaCallable extends HostFunction {
                   javaParms.addElement(0);
                   return;
                case 4:
-                  var15 = (JavaObject)(new Object(Value.getBooleanValue(arg)));
+                  var15 = new Boolean(Value.getBooleanValue(arg));
                   v.addElement(var15);
                   javaParms.addElement(Misc.toInt(var15));
                   break;
@@ -150,7 +150,7 @@ class JavaCallable extends HostFunction {
       if (parms.length != nParms) {
       }
 
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       IntVector javaParms = new IntVector();
 
       for (int i = 0; i < nParms; i++) {

@@ -15,7 +15,7 @@ final class HideIconToggleVerb extends RibbonBarVerb {
    public final String toString() {
       String string = RibbonResources.getString(31);
       if (!this._applicationEntry.isVisible()) {
-         string = ((StringBuffer)(new Object())).append('✓').append(string).toString();
+         string = '✓' + string;
       }
 
       return string;

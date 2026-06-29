@@ -27,7 +27,7 @@ public final class Util {
    }
 
    public static final Vector split(PatternMatcher matcher, Pattern pattern, String input, int limit) {
-      Vector results = (Vector)(new Object(20));
+      Vector results = new Vector(20);
       split(results, matcher, pattern, input, limit);
       return results;
    }
@@ -37,7 +37,7 @@ public final class Util {
    }
 
    public static final String substitute(PatternMatcher matcher, Pattern pattern, Substitution sub, String input, int numSubs) {
-      StringBuffer buffer = (StringBuffer)(new Object(input.length()));
+      StringBuffer buffer = new StringBuffer(input.length());
       PatternMatcherInput pinput = new PatternMatcherInput(input);
       return substitute(buffer, matcher, pattern, sub, pinput, numSubs) != 0 ? buffer.toString() : input;
    }

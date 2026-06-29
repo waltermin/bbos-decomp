@@ -32,6 +32,6 @@ class EmailComposeComboField$AddFreeFormVerb extends Verb {
    public String toString() {
       String addCommand = this.this$0._messageType.getPrefixString();
       String translatedText = this.this$0._messageType.translate(this.this$0.getText());
-      return ((StringBuffer)(new Object())).append(addCommand).append(translatedText).toString();
+      return addCommand + translatedText;
    }
 }

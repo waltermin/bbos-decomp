@@ -4,7 +4,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.ui.Field;
-import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.util.ObjectUtilities;
@@ -16,7 +15,7 @@ import net.rim.device.apps.internal.blackberryemail.resources.EmailResources;
 import net.rim.vm.Memory;
 
 final class DocViewImageDisplayField extends DocViewDisplayField {
-   private Hashtable _displayHash = (Hashtable)(new Object(1));
+   private Hashtable _displayHash = new Hashtable(1);
    private final int _flipValue;
    private final byte _presentationValue;
    private static final long IMAGEFIELDDISPLAY_STYLE = 18014398509482020L;
@@ -335,19 +334,19 @@ final class DocViewImageDisplayField extends DocViewDisplayField {
       this.setMenuFlags(flags);
       if (super._fullDocState && fld instanceof DocViewImageField) {
          if (isMainImageField && this.isMoreAvailable() && this.getNextDomIDIfNotRetrieved() != null) {
-            menu.add((MenuItem)(new Object((Verb)(new Object(27, 344064, EmailResources.getResourceBundle(), 80, this)), 0)));
+            menu.add(new VerbMenuItem(new DocViewGuiVerb(27, 344064, EmailResources.getResourceBundle(), 80, this), 0));
          }
 
          DocViewImageField imgField = (DocViewImageField)fld;
          if (isMainImageField) {
             int fullImageMenuID = this.getFullImageMenuItemID();
             if (state.isEnlargeAllAreaRetrieved()) {
-               menu.add((MenuItem)(new Object((Verb)(new Object(19, 65552, DocViewDisplayField._resources, fullImageMenuID, this)), 0)));
+               menu.add(new VerbMenuItem(new DocViewGuiVerb(19, 65552, DocViewDisplayField._resources, fullImageMenuID, this), 0));
             } else if (!state._enlargeAllRequestSent && this.isMoreSupported()) {
                XYRect cropRect = imgField.getCropRect();
                if (cropRect != null
                   && (cropRect.width > DocViewGUIInternalConstants.SCREEN_WIDTH || cropRect.height > DocViewGUIInternalConstants.SCREEN_HEIGHT)) {
-                  menu.add((MenuItem)(new Object((Verb)(new Object(20, 65552, DocViewDisplayField._resources, fullImageMenuID, this)), 0)));
+                  menu.add(new VerbMenuItem(new DocViewGuiVerb(20, 65552, DocViewDisplayField._resources, fullImageMenuID, this), 0));
                }
             }
          }
@@ -355,7 +354,7 @@ final class DocViewImageDisplayField extends DocViewDisplayField {
          DocViewImageDisplayField$DocViewSaveImageVerb saveImageVb = new DocViewImageDisplayField$DocViewSaveImageVerb(
             this, this.getFileName(), imgField.getEncodedImage(), imgField.isProtected()
          );
-         menu.add((MenuItem)(new Object(saveImageVb, saveImageVb.getOrdering())));
+         menu.add(new VerbMenuItem(saveImageVb, saveImageVb.getOrdering()));
          Verb[] verbs = VerbRepository.getVerbRepository(-2843135760572915788L).getVerbs(-753816125826020042L);
          if (verbs != null && verbs.length > 0) {
             ContextObject context = ContextObject.castOrCreate(null);
@@ -365,21 +364,21 @@ final class DocViewImageDisplayField extends DocViewDisplayField {
 
                for (int idx = 0; idx < verbs.length; idx++) {
                   Verb verb = verbs[idx];
-                  VerbMenuItem item = (VerbMenuItem)(new Object(null, verb.getOrdering(), 500, verb, context));
+                  VerbMenuItem item = new VerbMenuItem(null, verb.getOrdering(), 500, verb, context);
                   menu.add(item);
                }
             }
          }
 
          if (!state._enlargeRequestSent && imgField.hasRectForDetail() && this.isMoreSupported()) {
-            menu.add((MenuItem)(new Object((Verb)(new Object(26, 65552, DocViewDisplayField._resources, 98, this)), 0)));
+            menu.add(new VerbMenuItem(new DocViewGuiVerb(26, 65552, DocViewDisplayField._resources, 98, this), 0));
          }
 
          if (!imgField.isInOriginalState()) {
             menu.add(
-               (MenuItem)(new Object(
-                  (Verb)(new Object(32, 131072, ResourceBundle.getBundle(2545338480386147321L, "net.rim.device.apps.internal.resource.Ui"), 111, this)), 0
-               ))
+               new VerbMenuItem(
+                  new DocViewGuiVerb(32, 131072, ResourceBundle.getBundle(2545338480386147321L, "net.rim.device.apps.internal.resource.Ui"), 111, this), 0
+               )
             );
          }
       }
@@ -500,14 +499,14 @@ final class DocViewImageDisplayField extends DocViewDisplayField {
       DocViewImageField imgField = null;
       String arbDomID = arDomID == null ? DocViewDisplayField.getFirstArbitraryDomID(parsingData) : arDomID;
       Object obj = parsingData.getObjectWithDOMID(arbDomID);
-      if (obj instanceof Object) {
+      if (obj instanceof DocViewImageData) {
          DocViewImageData image = (DocViewImageData)obj;
          byte[] imgContents = image.getImageContents();
          if (imgContents != null && imgContents.length > 0) {
             try {
                XYRect origRect = cropRect;
                if (origRect == null) {
-                  origRect = (XYRect)(new Object(0, 0, image.getOriginalWidth(), image.getOriginalHeight()));
+                  origRect = new XYRect(0, 0, image.getOriginalWidth(), image.getOriginalHeight());
                }
 
                imgField = new DocViewImageField(imgContents, origRect, style | 4503599627370496L, this._presentationValue == 1 || this._presentationValue == 2);

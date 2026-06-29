@@ -17,15 +17,15 @@ final class FindVerb extends Verb {
    @Override
    public final Object invoke(Object context) {
       boolean foundSomething = false;
-      if (context instanceof Object) {
+      if (context instanceof StringMatch) {
          this._findManager._stringMatch = (StringMatch)context;
          foundSomething = this._findManager.findMatch(false, false);
       } else {
-         SimpleInputDialog dialog = (SimpleInputDialog)(new Object(0, CommonResources.getString(9025), 0, 256, 0));
+         SimpleInputDialog dialog = new SimpleInputDialog(0, CommonResources.getString(9025), 0, 256, 0);
          dialog.show();
          String searchString = dialog.getText();
          if (searchString != null && searchString.length() > 0) {
-            this._findManager._stringMatch = (StringMatch)(new Object(searchString, false, false));
+            this._findManager._stringMatch = new StringMatch(searchString, false, false);
             foundSomething = this._findManager.findMatch(false, true);
          }
       }

@@ -10,13 +10,13 @@ final class ContactCollection$NoteHandler implements ObjectFieldHandler {
 
    @Override
    public final Object getValue(Object item) {
-      if (item instanceof Object) {
+      if (item instanceof AddressCardModel) {
          AddressCardModel model = (AddressCardModel)item;
          int size = model.size();
 
          for (int i = 0; i < size; i++) {
             Object subModel = model.getAt(i);
-            if (subModel instanceof Object) {
+            if (subModel instanceof BodyModel) {
                return ((BodyModel)subModel).getText();
             }
          }

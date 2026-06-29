@@ -30,20 +30,20 @@ final class ReminderDisplayManager implements NotificationsEngineListener, Dialo
    private ReminderDisplayManager$ReminderQueueProcessor _reminderQueueProcessor;
    private Dialog _reminderDialog;
    private ReminderApplication _app;
-   private Verb[] _actions = new Object[0];
+   private Verb[] _actions = new Verb[0];
    private Verb _dismissAction = new ReminderDisplayManager$DismissAction();
    private Verb _dismissAllAction = new ReminderDisplayManager$DismissAllAction();
-   private Vector _reminderQueue = (Vector)(new Object());
-   private ContextObject _context = (ContextObject)(new Object());
+   private Vector _reminderQueue = new Vector();
+   private ContextObject _context = new ContextObject();
    private Proxy _proxy;
-   private Vector _globalScreenQueue = (Vector)(new Object());
+   private Vector _globalScreenQueue = new Vector();
    private static final long REMINDER_DISPLAY_MANAGER_KEY = -1132927491084502231L;
 
    final void init(ReminderApplication app, ReminderManager reminderManager) {
       this._app = app;
       this._reminderQueueProcessor = new ReminderDisplayManager$ReminderQueueProcessor(this);
       this._app.addGlobalEventListener(this._reminderQueueProcessor);
-      ContextObject.put(this._context, -442409970680484936L, new Object(-7539463754156969819L));
+      ContextObject.put(this._context, -442409970680484936L, new Long(-7539463754156969819L));
       this._proxy = Proxy.getInstance();
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
       ar.put(-1132927491084502231L, this);
@@ -113,9 +113,9 @@ final class ReminderDisplayManager implements NotificationsEngineListener, Dialo
          Verb[] actions = this._actions;
          int defaultAction = 0;
          reminder = reminderProvider.updateReminderState(reminder.getReminderID(), 2, reminderTime);
-         if (reminder instanceof Object) {
+         if (reminder instanceof VerbProvider) {
             VerbProvider vp = (VerbProvider)reminder;
-            this._context.put(2006691216517637157L, new Object(reminderTime));
+            this._context.put(2006691216517637157L, new Long(reminderTime));
             this._context.setFlag(36);
             vp.getVerbs(this._context, actions);
             int size = actions.length;
@@ -161,7 +161,7 @@ final class ReminderDisplayManager implements NotificationsEngineListener, Dialo
 
    @Override
    public final void proceedWithDeferredEvent(long sourceIdLong, long eventIdLong, Object eventReferenceObject, Object contextObject) {
-      if (eventReferenceObject instanceof Object) {
+      if (eventReferenceObject instanceof ReminderElement) {
          this._proxy.invokeRunnable(new ReminderDisplayManager$ProceedRunnable((ReminderElement)eventReferenceObject));
       }
    }
@@ -231,7 +231,7 @@ final class ReminderDisplayManager implements NotificationsEngineListener, Dialo
                         if (unhandledReminders != null) {
                            for (int i = 0; i < unhandledReminders.length; i++) {
                               Object var10000 = unhandledReminders[i];
-                              if (unhandledReminders[i] instanceof Object) {
+                              if (unhandledReminders[i] instanceof ReminderElement) {
                                  ReminderElement re = (ReminderElement)var10000;
                                  long reminderID = re.getReminderID();
                                  Reminder reminder = rp.getReminder(reminderID);
@@ -271,8 +271,8 @@ final class ReminderDisplayManager implements NotificationsEngineListener, Dialo
             } finally {
                if (var20) {
                   QuincyManager.sendUncaughtException("ReminderDialog:Close");
-                  ContextObject contextObject = (ContextObject)(new Object());
-                  ContextObject.put(contextObject, -442409970680484936L, new Object(-7539463754156969819L));
+                  ContextObject contextObject = new ContextObject();
+                  ContextObject.put(contextObject, -442409970680484936L, new Long(-7539463754156969819L));
                   if (this._reminderProviderBeingHandled != null && this._reminderBeingHandled != null) {
                      NotificationsManager.cancelAllDeferredEvents(
                         this._reminderProviderBeingHandled.getProfileID(this._reminderBeingHandled.getReminderID()), 1, contextObject

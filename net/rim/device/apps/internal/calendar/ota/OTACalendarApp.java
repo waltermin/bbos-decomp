@@ -45,7 +45,7 @@ public final class OTACalendarApp implements RealtimeClockListener, LowMemoryLis
    private long _lastCheckTime;
    private boolean _purgingOldAppointments;
    private static final int TRANSMISSION_MANAGER_UPDATE_FREQUENCY = 4;
-   private static LongHashtable _transmissionServiceTable = (LongHashtable)(new Object(3));
+   private static LongHashtable _transmissionServiceTable = new LongHashtable(3);
    private static long[] _inclusions = new long[0];
 
    private OTACalendarApp() {
@@ -68,7 +68,7 @@ public final class OTACalendarApp implements RealtimeClockListener, LowMemoryLis
          }
 
          DataBuffer buffer = null;
-         buffer = (DataBuffer)(new Object(otacCapabilities, 0, otacCapabilities.length, true));
+         buffer = new DataBuffer(otacCapabilities, 0, otacCapabilities.length, true);
          bitfield |= 1;
          bitfield |= 2;
          bitfield |= 4;
@@ -99,7 +99,7 @@ public final class OTACalendarApp implements RealtimeClockListener, LowMemoryLis
 
       for (int i = 0; i < services.length; i++) {
          ServiceIdentifier var10000 = services[i];
-         if (services[i] instanceof Object) {
+         if (services[i] instanceof CalendarService) {
             registerCalendarService((CalendarService)var10000, false);
          }
       }
@@ -208,14 +208,14 @@ public final class OTACalendarApp implements RealtimeClockListener, LowMemoryLis
          long elapsedTime = currentTime - this._lastCheckTime;
          if ((elapsedTime > 86400000 || elapsedTime < 0) && Process.ensureMinimumIdleTime(30) > 0 && !this._purgingOldAppointments) {
             this._purgingOldAppointments = true;
-            ((Thread)(new Object(new OTACalendarApp$PurgeOldAppointmentsRunnable(this, currentTime)))).start();
+            new Thread(new OTACalendarApp$PurgeOldAppointmentsRunnable(this, currentTime)).start();
          }
       }
    }
 
    private final Event getStaleEvent(CalDB calDB, TimeZone timeZone, long staleDate) {
       Object candidate = calDB.getElementWithEarliestEndDate();
-      if (candidate instanceof Object) {
+      if (candidate instanceof Event) {
          Event event = (Event)candidate;
          if (this.isEventStale(event, timeZone, staleDate)) {
             return event;

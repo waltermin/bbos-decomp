@@ -14,7 +14,8 @@ final class ConversationScreen$2 implements Runnable {
 
    @Override
    public final void run() {
-      if ((!(this.val$context instanceof Object) || !((ContextObject)this.val$context).getFlag(26)) && ConversationScreen.access$100(this.this$0) != null) {
+      if ((!(this.val$context instanceof ContextObject) || !((ContextObject)this.val$context).getFlag(26))
+         && ConversationScreen.access$100(this.this$0) != null) {
          ConversationScreen.access$100(this.this$0).setFocus();
       } else {
          ConversationScreen.access$200(this.this$0).setFocus();
@@ -23,7 +24,7 @@ final class ConversationScreen$2 implements Runnable {
             focusField.setFocus();
          }
 
-         if (ConversationScreen.access$300(this.this$0) == null && this.val$context instanceof Object) {
+         if (ConversationScreen.access$300(this.this$0) == null && this.val$context instanceof ContextObject) {
             ConversationScreen.access$302(this.this$0, (ContextObject)this.val$context);
             return;
          }

@@ -6,7 +6,7 @@ import net.rim.device.apps.api.options.OptionsProviderRegistration$OptionsProvid
 final class MemoryCleanerProvider implements OptionsProviderRegistration$OptionsProvider {
    @Override
    public final Vector getOptionsItems() {
-      Vector items = (Vector)(new Object());
+      Vector items = new Vector();
       items.addElement(new MemoryCleanerOptionsItem());
       return items;
    }

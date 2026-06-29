@@ -1,6 +1,7 @@
 package net.rim.device.cldc.io.simultcp;
 
 import java.io.OutputStream;
+import net.rim.device.api.io.ConnectionClosedException;
 import net.rim.device.internal.io.streamdatagram.StreamDatagramConnectionBase;
 
 final class SimulTcpOutputStream extends OutputStream {
@@ -17,7 +18,7 @@ final class SimulTcpOutputStream extends OutputStream {
    public final void write(int someChar) {
       synchronized (this.SendBlock) {
          if (this._isClosed) {
-            throw new Object();
+            throw new ConnectionClosedException();
          }
 
          byte[] temp = new byte[]{(byte)(someChar & 0xFF)};
@@ -30,11 +31,11 @@ final class SimulTcpOutputStream extends OutputStream {
    public final void write(byte[] output, int offset, int length) {
       synchronized (this.SendBlock) {
          if (this._isClosed) {
-            throw new Object();
+            throw new ConnectionClosedException();
          }
 
          if (offset < 0 || length < 0 || offset + length > output.length) {
-            throw new Object();
+            throw new IndexOutOfBoundsException();
          }
 
          if (length != 0) {
@@ -53,9 +54,9 @@ final class SimulTcpOutputStream extends OutputStream {
    }
 
    @Override
-   public final void flush() {
+   public final void flush() throws ConnectionClosedException {
       if (this._isClosed) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
    }
 

@@ -8,7 +8,7 @@ import net.rim.vm.WeakReference;
 
 final class GeneralProperty$GeneralPropertyData {
    WeakReference[] _generalPropertyListeners;
-   BitSet _changedOptions = (BitSet)(new Object());
+   BitSet _changedOptions = new BitSet();
    int _quitHandle;
    int _executeHandle;
    int _clearHandle;
@@ -38,7 +38,7 @@ final class GeneralProperty$GeneralPropertyData {
    int _enableMobileCursorHandle;
    int _audioPathHeadsetHandsfreeHandle;
    int _audioPathBluetootha2dpHandle;
-   WeakReference _emulationModeStringWR = (WeakReference)(new Object(null));
+   WeakReference _emulationModeStringWR = new WeakReference(null);
    int _showFullScreenHandle;
    final Object _persistentSync = new Object();
    static final long KEY = 4417702636629415150L;

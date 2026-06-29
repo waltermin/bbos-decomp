@@ -9,22 +9,22 @@ final class RIMVariableLengthSymmetricKeyFactory1 extends SymmetricKeyFactory {
    }
 
    @Override
-   protected final SymmetricKey create(String algorithm, byte[] data, int offset, int bitLength) {
+   protected final SymmetricKey create(String algorithm, byte[] data, int offset, int bitLength) throws NoSuchAlgorithmException {
       if (algorithm.equals("AES")) {
          return new AESKey(data, offset, Math.min(bitLength, 256));
       } else if (algorithm.equals("ARC4") || algorithm.equals("RC4")) {
          return new ARC4Key(data, offset, Math.min(bitLength >> 3, 32));
       } else if (algorithm.equals("HMAC")) {
-         return (SymmetricKey)(new Object(data, offset, Math.min(bitLength >> 3, 32)));
+         return new HMACKey(data, offset, Math.min(bitLength >> 3, 32));
       } else if (algorithm.equals("RC5")) {
          return new RC5Key(data, offset, Math.min(bitLength, 2040));
       } else {
-         throw new Object(algorithm);
+         throw new NoSuchAlgorithmException(algorithm);
       }
    }
 
    @Override
-   protected final int getDefaultKeyLength(String algorithm) {
+   protected final int getDefaultKeyLength(String algorithm) throws NoSuchAlgorithmException {
       if (algorithm.equals("AES")) {
          return 128;
       } else if (algorithm.equals("ARC4") || algorithm.equals("RC4")) {
@@ -34,7 +34,7 @@ final class RIMVariableLengthSymmetricKeyFactory1 extends SymmetricKeyFactory {
       } else if (algorithm.equals("RC5")) {
          return 128;
       } else {
-         throw new Object();
+         throw new NoSuchAlgorithmException();
       }
    }
 }

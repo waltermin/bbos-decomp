@@ -46,7 +46,7 @@ final class MemoList extends KeywordFilteredScreen implements ListFieldCallback 
       listField.setSize(this._memoCollection.size());
       Field oldTitleField = this.getTitleField();
       this.setTitleField(null);
-      this._titleField = (FilteredByCategoriesTitleField)(new Object(oldTitleField));
+      this._titleField = new FilteredByCategoriesTitleField(oldTitleField);
       this.setTitleField(this._titleField);
       this.initFilterCategoryIds();
       FilterByCategoriesVerb.filterByCategories(this, this._titleField, this._filterCategoryIds);
@@ -134,7 +134,7 @@ final class MemoList extends KeywordFilteredScreen implements ListFieldCallback 
       if (element instanceof MemoModelImpl) {
          VerbProvider verbProvider = (VerbProvider)element;
          menu.add(verbProvider);
-         Verb[] verbHolder = new Object[0];
+         Verb[] verbHolder = new Verb[0];
          Verb verb = verbProvider.getVerbs(null, verbHolder);
          if (defaultVerb != null) {
             ;
@@ -151,7 +151,7 @@ final class MemoList extends KeywordFilteredScreen implements ListFieldCallback 
          menu.add(new MemoList$ShowAllMemosVerb(this));
       }
 
-      menu.add((Verb)(new Object(this, this._titleField, this._filterCategoryIds)));
+      menu.add(new FilterByCategoriesVerb(this, this._titleField, this._filterCategoryIds));
       menu.setDefault(defaultVerb);
    }
 
@@ -215,7 +215,7 @@ final class MemoList extends KeywordFilteredScreen implements ListFieldCallback 
    public final void drawListRow(ListField listField, Graphics graphics, int index, int y, int width) {
       CollectionListField clf = (CollectionListField)listField;
       Object element = clf.getElementAt(index);
-      if (element instanceof Object) {
+      if (element instanceof PaintProvider) {
          this._cachedContext = VariableRowHeightProxy.addHeightAdjusterToContext(this._cachedContext, listField);
          ((PaintProvider)element).paint(graphics, 0, y, width, 100, this._cachedContext);
       } else {

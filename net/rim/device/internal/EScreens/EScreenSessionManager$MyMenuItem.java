@@ -27,7 +27,7 @@ class EScreenSessionManager$MyMenuItem extends MenuItem {
             ((EScreenSession)this._context).stop();
             return;
          case 3:
-            this.this$0.removeSession(this._context);
+            this.this$0.removeSession((Integer)this._context);
             this.this$0._listField.setSize(this.this$0._sessions.size());
             return;
          case 4:
@@ -46,7 +46,7 @@ class EScreenSessionManager$MyMenuItem extends MenuItem {
                return;
             }
          case 5:
-            if (this._context instanceof Object) {
+            if (this._context instanceof Integer) {
                Integer i = (Integer)this._context;
                EScreenSession s = (EScreenSession)this.this$0._sessions.elementAt(i);
                UiApplication.getUiApplication().pushScreen(s);

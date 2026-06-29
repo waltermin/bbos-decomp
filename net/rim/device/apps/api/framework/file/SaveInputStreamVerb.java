@@ -31,9 +31,9 @@ public class SaveInputStreamVerb extends Verb {
 
    @Override
    public Object invoke(Object parameter) {
-      if (parameter instanceof Object) {
+      if (parameter instanceof InputStream) {
          this._ctx.put(5473606008898265655L, parameter);
-      } else if (parameter instanceof Object) {
+      } else if (parameter instanceof ContextObject) {
          this._ctx = (ContextObject)parameter;
       }
 

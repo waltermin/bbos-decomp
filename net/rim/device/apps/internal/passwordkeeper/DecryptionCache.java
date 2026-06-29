@@ -5,7 +5,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.internal.util.ByteArray;
 
 public final class DecryptionCache {
-   private Hashtable _hashtable = (Hashtable)(new Object());
+   private Hashtable _hashtable = new Hashtable();
    private static final long ID = -7206766548996023071L;
 
    private DecryptionCache() {
@@ -23,12 +23,12 @@ public final class DecryptionCache {
    }
 
    public final void add(byte[] encoded, String decoded) {
-      ByteArray byteArray = (ByteArray)(new Object(encoded));
+      ByteArray byteArray = new ByteArray(encoded);
       this._hashtable.put(byteArray, decoded);
    }
 
    public final String get(byte[] encoded) {
-      ByteArray byteArray = (ByteArray)(new Object(encoded));
+      ByteArray byteArray = new ByteArray(encoded);
       return (String)this._hashtable.get(byteArray);
    }
 

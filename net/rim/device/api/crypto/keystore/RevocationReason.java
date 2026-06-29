@@ -17,7 +17,7 @@ public final class RevocationReason {
 
    public static final String getRevocationReason(int revocationReason) {
       if (revocationReason < -1 || revocationReason > 9) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (revocationReason == -1) {

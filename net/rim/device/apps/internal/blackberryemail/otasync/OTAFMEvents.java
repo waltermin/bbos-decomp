@@ -84,7 +84,7 @@ final class OTAFMEvents {
    }
 
    private static final String serviceRecordName(ServiceRecord serviceRecord) {
-      return ((StringBuffer)(new Object())).append(serviceRecord.getName()).append('/').append(serviceRecord.getUid()).toString();
+      return serviceRecord.getName() + '/' + serviceRecord.getUid();
    }
 
    static final void logEvent(int eventId, ServiceRecord serviceRecord, int level) {
@@ -120,7 +120,7 @@ final class OTAFMEvents {
    static final void logEvent(int eventId, ServiceRecord serviceRecord, String message, int level, boolean force) {
       if (level <= EventLogger.getMinimumLevel()) {
          if (getDebugLevel() >= 1 || level == 2 || force) {
-            logEvent(eventId, ((StringBuffer)(new Object())).append(serviceRecordName(serviceRecord)).append(", ").append(message).toString(), level, force);
+            logEvent(eventId, serviceRecordName(serviceRecord) + ", " + message, level, force);
             return;
          }
 
@@ -146,7 +146,7 @@ final class OTAFMEvents {
    static final void logEvent(int eventId, String message, int level, boolean force) {
       if (level <= EventLogger.getMinimumLevel()) {
          if (getDebugLevel() >= 1 || level == 2 || force) {
-            StringBuffer buffer = (StringBuffer)(new Object());
+            StringBuffer buffer = new StringBuffer();
             buffer.append((char)(eventId >> 24 & 0xFF)).append((char)(eventId >> 16 & 0xFF)).append((char)(eventId >> 8 & 0xFF)).append((char)(eventId & 0xFF));
             buffer.append(" - ").append(message);
             EventLogger.logEvent(-4961693082956770146L, buffer.toString().getBytes(), level);

@@ -43,7 +43,7 @@ public final class ToDoImpl extends PIMItemImpl implements InternalToDo {
 
    @Override
    public final boolean isInternalModel(Object selected) {
-      return selected instanceof Object;
+      return selected instanceof TaskModel;
    }
 
    @Override
@@ -54,7 +54,7 @@ public final class ToDoImpl extends PIMItemImpl implements InternalToDo {
          this._todoList = (ToDoListImpl)todoList;
       }
 
-      if (input instanceof Object) {
+      if (input instanceof TaskModel) {
          this._committedTaskModel = (TaskModel)input;
          this._taskModel = (TaskModel)((EditableProvider)input).makeReadWrite();
          super._categoriesModel = this._taskModel.getCategoriesModel();
@@ -172,7 +172,7 @@ public final class ToDoImpl extends PIMItemImpl implements InternalToDo {
 
             return 0;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -185,7 +185,7 @@ public final class ToDoImpl extends PIMItemImpl implements InternalToDo {
          case 20000927:
             return this._taskModel.getReminderModel().getTime();
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -200,7 +200,7 @@ public final class ToDoImpl extends PIMItemImpl implements InternalToDo {
             this._taskModel.getReminderModel().setTime(value);
             break;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       this._modified = true;
@@ -213,7 +213,7 @@ public final class ToDoImpl extends PIMItemImpl implements InternalToDo {
          case 101:
             return this._taskModel.isCompleted();
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -232,7 +232,7 @@ public final class ToDoImpl extends PIMItemImpl implements InternalToDo {
             this._modified = true;
             return;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -251,7 +251,7 @@ public final class ToDoImpl extends PIMItemImpl implements InternalToDo {
 
             return this._uid;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -259,7 +259,7 @@ public final class ToDoImpl extends PIMItemImpl implements InternalToDo {
    public final void addString(int field, int attributes, String value) {
       this.checkFieldNotFull(field);
       if (value == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       switch (field) {
@@ -272,13 +272,13 @@ public final class ToDoImpl extends PIMItemImpl implements InternalToDo {
             break;
          case 108:
             if (this._committed) {
-               throw new Object("UID is a read-only field.");
+               throw new IllegalArgumentException("UID is a read-only field.");
             }
 
             this._uid = value;
             break;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       this._modified = true;
@@ -303,13 +303,13 @@ public final class ToDoImpl extends PIMItemImpl implements InternalToDo {
          case 16777225:
             return this._taskModel.getStatus();
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
    private final void setPriority(int value) {
       if (value < 0 || value > 9) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (value == 0) {
@@ -333,14 +333,14 @@ public final class ToDoImpl extends PIMItemImpl implements InternalToDo {
             break;
          case 16777225:
             if (value < 0 || value > 4) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this._taskModel.setStatus(value);
             this.statusFieldSet = true;
             break;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       this._modified = true;
@@ -370,7 +370,7 @@ public final class ToDoImpl extends PIMItemImpl implements InternalToDo {
             break;
          case 108:
             if (this._committed) {
-               throw new Object("UID is a read-only field.");
+               throw new IllegalArgumentException("UID is a read-only field.");
             }
 
             this._uid = null;
@@ -383,7 +383,7 @@ public final class ToDoImpl extends PIMItemImpl implements InternalToDo {
             this._taskModel.getReminderModel().setTime(-1);
             break;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       this._modified = true;
@@ -409,7 +409,7 @@ public final class ToDoImpl extends PIMItemImpl implements InternalToDo {
       }
 
       if (this._mode == 1) {
-         throw new Object();
+         throw new SecurityException();
       }
 
       if (this._taskModel.getTitleModel() == null) {
@@ -500,7 +500,7 @@ public final class ToDoImpl extends PIMItemImpl implements InternalToDo {
             this._modified = true;
             return;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -515,7 +515,7 @@ public final class ToDoImpl extends PIMItemImpl implements InternalToDo {
             this._taskModel.getReminderModel().setTime(value);
             break;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       this._modified = true;
@@ -530,13 +530,13 @@ public final class ToDoImpl extends PIMItemImpl implements InternalToDo {
             break;
          case 16777225:
             if (value < 0 || value > 4) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this._taskModel.setStatus(value);
             break;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       this._modified = true;
@@ -546,7 +546,7 @@ public final class ToDoImpl extends PIMItemImpl implements InternalToDo {
    public final void setString(int field, int index, int attributes, String value) {
       this.checkIndex(field, index);
       if (value == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       switch (field) {
@@ -558,13 +558,13 @@ public final class ToDoImpl extends PIMItemImpl implements InternalToDo {
             break;
          case 108:
             if (this._committed) {
-               throw new Object("UID is a read-only field.");
+               throw new IllegalArgumentException("UID is a read-only field.");
             }
 
             this._uid = value;
             break;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       this._modified = true;

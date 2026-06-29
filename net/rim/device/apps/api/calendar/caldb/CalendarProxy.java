@@ -90,7 +90,7 @@ public class CalendarProxy {
       if (descriptor != null) {
          try {
             if (args != null) {
-               descriptor = (ApplicationDescriptor)(new Object(descriptor, args));
+               descriptor = new ApplicationDescriptor(descriptor, args);
             }
 
             appManager.runApplication(descriptor);

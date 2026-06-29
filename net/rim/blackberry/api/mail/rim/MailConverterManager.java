@@ -4,7 +4,7 @@ import java.util.Vector;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public class MailConverterManager {
-   private Vector _converters = (Vector)(new Object());
+   private Vector _converters = new Vector();
    public static final long ID = 6928350173436200986L;
    private static MailConverterManager _instance;
 

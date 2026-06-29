@@ -8,21 +8,21 @@ final class SoftwareECCryptoToken$ECPublicKeyData implements CryptoTokenPublicKe
    private byte[] _data;
    private int _hashCode;
 
-   public SoftwareECCryptoToken$ECPublicKeyData(SoftwareECCryptoToken$ECCryptoSystemData cryptoSystem, byte[] data) {
+   public SoftwareECCryptoToken$ECPublicKeyData(SoftwareECCryptoToken$ECCryptoSystemData cryptoSystem, byte[] data) throws InvalidKeyException {
       if (cryptoSystem != null && data != null) {
          if (data.length != cryptoSystem.getPublicKeyLength(true) && data.length != cryptoSystem.getPublicKeyLength(false)) {
-            throw new Object();
+            throw new InvalidKeyException();
          }
 
          if (CryptoByteArrayArithmetic.isZero(data)) {
-            throw new Object();
+            throw new InvalidKeyException();
          }
 
          this._cryptoSystem = cryptoSystem;
          this._data = Arrays.copy(data);
          this.setHashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

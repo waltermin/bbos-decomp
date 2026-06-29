@@ -11,7 +11,7 @@ public final class PhoneCallLog extends CallLog {
    public static final int TYPE_MISSED_CALL_OPENED = 3;
 
    public PhoneCallLog(Date date, int callType, int callDuration, int callStatus, PhoneCallLogID participant, String notes) {
-      super(date, callType, callDuration, callStatus, (Vector)(new Object()), notes);
+      super(date, callType, callDuration, callStatus, new Vector(), notes);
       super._participants.addElement(participant);
    }
 

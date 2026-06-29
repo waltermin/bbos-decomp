@@ -1,5 +1,7 @@
 package net.rim.wica.runtime.util;
 
+import java.util.NoSuchElementException;
+
 public class LinkedQueue$Iterator {
    protected LinkedQueue$LinkedNode _current;
    protected LinkedQueue$LinkedNode _previous;
@@ -18,7 +20,7 @@ public class LinkedQueue$Iterator {
 
    public Object next() {
       if (!this.hasNext()) {
-         throw new Object();
+         throw new NoSuchElementException();
       }
 
       this._previous = this._current;
@@ -29,7 +31,7 @@ public class LinkedQueue$Iterator {
 
    public Object peekNext() {
       if (!this.hasNext()) {
-         throw new Object();
+         throw new NoSuchElementException();
       } else {
          return this._current.next.value;
       }
@@ -37,7 +39,7 @@ public class LinkedQueue$Iterator {
 
    public void replace(Object x) {
       if (!this._goodState) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       this._current.value = x;
@@ -45,7 +47,7 @@ public class LinkedQueue$Iterator {
 
    public void remove() {
       if (!this._goodState) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       if (this._current == this.this$0._last) {
@@ -60,7 +62,7 @@ public class LinkedQueue$Iterator {
 
    public void removeNext() {
       if (!this.hasNext()) {
-         throw new Object();
+         throw new NoSuchElementException();
       }
 
       if (this._current.next == this.this$0._last) {

@@ -121,7 +121,7 @@ public final class FileTransfer implements USBPortListener, FileSystemJournalLis
 
       try {
          this._connection = new Connection();
-         this._connection._port = (USBPortInternal)(new Object(this._channel));
+         this._connection._port = new USBPortInternal(this._channel);
          this._connection._writeBufferSize = this._writeBufferSize;
          this._connection._readBufferSize = this._readBufferSize;
       } finally {

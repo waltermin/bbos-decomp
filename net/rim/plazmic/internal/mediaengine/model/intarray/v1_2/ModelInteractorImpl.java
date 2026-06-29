@@ -17,8 +17,8 @@ import net.rim.plazmic.mediaengine.MediaManager;
 public final class ModelInteractorImpl extends AnimationModel implements ModelInteractor, EventSubscription {
    private PME_Reader _pme12Reader = new PME_Reader();
    private MediaManager _manager;
-   private Event _event = (Event)(new Object());
-   private EventSubscriptionHelper _subscription = (EventSubscriptionHelper)(new Object());
+   private Event _event = new Event();
+   private EventSubscriptionHelper _subscription = new EventSubscriptionHelper();
    private EventEngine _engine;
    private Object _eventResolver;
    private Object _behaviorManager;
@@ -76,7 +76,7 @@ public final class ModelInteractorImpl extends AnimationModel implements ModelIn
 
    public final void parseIntoModel(byte[] pme, ModelInteractorImpl$RootsHandles roots, int bitShift, int offsetX, int offsetY, int maxValue) {
       if (this._manager == null) {
-         this._manager = (MediaManager)(new Object());
+         this._manager = new MediaManager();
       }
 
       this._pme12Reader.readIntoModel(this, roots, pme, 0, ResourceContext.createContext(), this._manager, bitShift, offsetX, offsetY, maxValue);
@@ -95,7 +95,7 @@ public final class ModelInteractorImpl extends AnimationModel implements ModelIn
    }
 
    public final String[] getCustomEventIds() {
-      String[] result = new Object[0];
+      String[] result = new String[0];
 
       for (int i = 0; i < super._ids.length; i++) {
          int handle = super._handlesWithId[i];
@@ -163,7 +163,7 @@ public final class ModelInteractorImpl extends AnimationModel implements ModelIn
 
    final void addNodeInstance(int UID, Node node) {
       if (this._nodeInstances == null) {
-         this._nodeInstances = new Object[super._maxUID];
+         this._nodeInstances = new Node[super._maxUID];
       } else if (this._nodeInstances.length < super._maxUID) {
          super._platform.arrayResize(this._nodeInstances, super._maxUID);
       }

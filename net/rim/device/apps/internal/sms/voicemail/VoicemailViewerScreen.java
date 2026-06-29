@@ -4,10 +4,10 @@ import net.rim.device.api.i18n.DateFormat;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.VerticalFieldManager;
-import net.rim.device.api.util.LongHashtable;
 import net.rim.device.apps.api.framework.hotkeys.HotKeyCheck;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.FieldProvider;
@@ -54,7 +54,7 @@ public final class VoicemailViewerScreen extends ModelScreen {
    @Override
    public final void setModel(Object model) {
       if (!(model instanceof SMSModel)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       super.setModel(model);
@@ -65,7 +65,7 @@ public final class VoicemailViewerScreen extends ModelScreen {
 
    protected final void populateScreen() {
       SMSModel message = (SMSModel)super._model;
-      if (message instanceof Object) {
+      if (message instanceof FieldProvider) {
          FieldProvider fieldProvider = message;
          Field field = fieldProvider.getField(null);
          if (field != null) {
@@ -75,17 +75,17 @@ public final class VoicemailViewerScreen extends ModelScreen {
          }
       }
 
-      StringBuffer stringBuffer = (StringBuffer)(new Object());
-      ImageField iconField = (ImageField)(new Object(36028797019029504L));
+      StringBuffer stringBuffer = new StringBuffer();
+      ImageField iconField = new ImageField(36028797019029504L);
       iconField.setImage(MessageIcons.getIcons().getImage(message.getOverallStatusIcon()));
-      HorizontalFieldManager statusHfm = (HorizontalFieldManager)(new Object());
+      HorizontalFieldManager statusHfm = new HorizontalFieldManager();
       statusHfm.add(iconField);
       stringBuffer.append(' ');
       DateFormat.getInstance(53).formatLocal(stringBuffer, message._payload.getDisplayDate());
-      statusHfm.add((Field)(new Object(stringBuffer, 18014398509481984L)));
+      statusHfm.add(new LabelField(stringBuffer, 18014398509481984L));
       this.add(statusHfm);
       String text = message._payload.getText();
-      RichTextField richTextField = (RichTextField)(new Object(text, 18014398509481984L));
+      RichTextField richTextField = new RichTextField(text, 18014398509481984L);
       this.add(richTextField);
       richTextField.setFocus();
    }
@@ -93,7 +93,7 @@ public final class VoicemailViewerScreen extends ModelScreen {
    private final void setFocusToTimestamp(Field field) {
       if (field.isFocusable()) {
          field.setFocus();
-         if (field instanceof Object) {
+         if (field instanceof VerticalFieldManager) {
             VerticalFieldManager vfm = (VerticalFieldManager)field;
             if (vfm.getFieldCount() >= 3) {
                vfm.getField(2).setFocus();
@@ -137,7 +137,7 @@ public final class VoicemailViewerScreen extends ModelScreen {
          menu.add(this._smsSaveVerb);
       }
 
-      VerbFactory outerVerbFactory = (VerbFactory)((LongHashtable)super._context).get(-2846768035584909703L);
+      VerbFactory outerVerbFactory = (VerbFactory)((ContextObject)super._context).get(-2846768035584909703L);
       if (outerVerbFactory != null) {
          Verb[] verbs = outerVerbFactory.getVerbs(null);
          menu.add(verbs);
@@ -164,7 +164,7 @@ public final class VoicemailViewerScreen extends ModelScreen {
          return hotkey != null && hotkey.invokeHotkey(MessageHotkeys.map(keycode), super._context);
       }
 
-      DeleteSingleItemVerb deleteVerb = (DeleteSingleItemVerb)(new Object(611472, 1000));
+      DeleteSingleItemVerb deleteVerb = new DeleteSingleItemVerb(611472, 1000);
       deleteVerb.setParameters(super._model, super._context);
       super._returnValue = deleteVerb.invoke(null);
       if (ContextObject.getFlag(super._returnValue, 39)) {

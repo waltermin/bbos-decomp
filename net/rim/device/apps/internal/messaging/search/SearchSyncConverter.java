@@ -9,20 +9,20 @@ import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.model.SyncBuffer;
 
 final class SearchSyncConverter implements SyncConverter {
-   private static ContextObjectWR _encodeContextWR = (ContextObjectWR)(new Object(22, 19));
-   private static ContextObjectWR _decodeContextWR = (ContextObjectWR)(new Object(22, 19));
+   private static ContextObjectWR _encodeContextWR = new ContextObjectWR(22, 19);
+   private static ContextObjectWR _decodeContextWR = new ContextObjectWR(22, 19);
 
    public SearchSyncConverter() {
    }
 
    @Override
    public final boolean convert(SyncObject object, DataBuffer buffer, int version) {
-      if (!(object instanceof Object)) {
+      if (!(object instanceof RIMModel)) {
          return false;
       }
 
       RIMModel model = (RIMModel)object;
-      SyncBuffer syncBuffer = (SyncBuffer)(new Object(buffer, version, 0));
+      SyncBuffer syncBuffer = new SyncBuffer(buffer, version, 0);
       return syncBuffer.addModel(model, _encodeContextWR.getContextObject());
    }
 
@@ -38,7 +38,7 @@ final class SearchSyncConverter implements SyncConverter {
             version = 2;
          }
 
-         SyncBuffer syncBuffer = (SyncBuffer)(new Object(dataBuffer, version, uid));
+         SyncBuffer syncBuffer = new SyncBuffer(dataBuffer, version, uid);
          ContextObject decodeContext = _decodeContextWR.getContextObject();
          synchronized (decodeContext) {
             decodeContext.put(255, syncBuffer);

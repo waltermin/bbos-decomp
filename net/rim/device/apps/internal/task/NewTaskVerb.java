@@ -48,7 +48,7 @@ final class NewTaskVerb extends Verb implements SetParameter, Copyable {
 
    @Override
    public final void setParameter(Object parameter) {
-      if (parameter instanceof Object) {
+      if (parameter instanceof TaskModel) {
          this._model = (TaskModel)parameter;
       }
    }

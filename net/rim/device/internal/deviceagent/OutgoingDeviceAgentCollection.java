@@ -107,7 +107,7 @@ public class OutgoingDeviceAgentCollection
       String besVersion = ITPolicy.getString(21, 3);
       this._is413OrLaterBES = false;
       if (besVersion != null) {
-         StringTokenizer tokenizer = (StringTokenizer)(new Object(besVersion, "."));
+         StringTokenizer tokenizer = new StringTokenizer(besVersion, ".");
          String majorString = null;
          String minorString = null;
          String patchString = null;
@@ -231,7 +231,7 @@ public class OutgoingDeviceAgentCollection
    }
 
    private String getBootRomVersionFromMetrics(byte[] metrics) {
-      StringBuffer buffer = (StringBuffer)(new Object(7));
+      StringBuffer buffer = new StringBuffer(7);
       String seperator = ".";
       buffer.append(metrics[11]);
       buffer.append(seperator);
@@ -334,7 +334,7 @@ public class OutgoingDeviceAgentCollection
    }
 
    private DataBuffer removeTag(DataBuffer buffer, int tag) {
-      DataBuffer newBuffer = (DataBuffer)(new Object(false));
+      DataBuffer newBuffer = new DataBuffer(false);
       buffer.rewind();
 
       try {
@@ -378,7 +378,7 @@ public class OutgoingDeviceAgentCollection
       // 03: if_icmpeq 08
       // 06: aconst_null
       // 07: areturn
-      // 08: new java/lang/Object
+      // 08: new net/rim/device/api/util/DataBuffer
       // 0b: dup
       // 0c: invokespecial net/rim/device/api/util/DataBuffer.<init> ()V
       // 0f: astore 2
@@ -614,7 +614,7 @@ public class OutgoingDeviceAgentCollection
    private DeviceAgentModel createServiceBookInformation(ServiceRecord sr) {
       byte[] tableID = new byte[]{6};
       int time = (int)(System.currentTimeMillis() / 1000);
-      String recordId = ((StringBuffer)(new Object())).append(sr.getUid()).append(sr.getCid()).append(sr.getDataSourceId()).toString();
+      String recordId = sr.getUid() + sr.getCid() + sr.getDataSourceId();
       byte[] appData = sr.getApplicationData();
       DeviceAgentModel model = new DeviceAgentModel(100663296 | CRC24.update(13501623, recordId.getBytes()));
       DataBuffer data = model.getData();
@@ -661,7 +661,7 @@ public class OutgoingDeviceAgentCollection
    }
 
    private IntVector getSnapshotOfCurrentModules() {
-      IntVector uids = (IntVector)(new Object());
+      IntVector uids = new IntVector();
       int[] handles = CodeModuleManager.getModuleHandles();
 
       for (int i = handles.length - 1; i >= 0; i--) {
@@ -735,7 +735,7 @@ public class OutgoingDeviceAgentCollection
    }
 
    private IntVector getSnapshotOfCurrentALX() {
-      IntVector uids = (IntVector)(new Object());
+      IntVector uids = new IntVector();
       CodeModuleGroup[] group = CodeModuleGroupManager.loadAll();
       if (group == null) {
          return null;
@@ -810,7 +810,7 @@ public class OutgoingDeviceAgentCollection
       if (enumeration != null) {
          while (enumeration.hasMoreElements()) {
             String name = (String)enumeration.nextElement();
-            list = ((StringBuffer)(new Object())).append(list).append(name).append(';').toString();
+            list = list + name + ';';
          }
       }
 
@@ -962,7 +962,7 @@ public class OutgoingDeviceAgentCollection
 
    private String getSupportedBands() {
       int bands = RadioInfo.getSupportedBands();
-      StringBuffer strBuf = (StringBuffer)(new Object());
+      StringBuffer strBuf = new StringBuffer();
       if ((bands & 256) != 0) {
          this.addBand(strBuf, "GSM 850");
       }

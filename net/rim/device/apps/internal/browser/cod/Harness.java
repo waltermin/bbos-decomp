@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.browser.cod;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -15,12 +16,12 @@ import net.rim.vm.ClassInfo;
 final class Harness implements Host, JARCompiler {
    private ByteArrayOutputStream _bout;
    private PrintStream _pout;
-   private StringBuffer _diagnostics = (StringBuffer)(new Object());
+   private StringBuffer _diagnostics = new StringBuffer();
    private int _progressState;
    private String _name;
    private int _jarSize;
    private InputStream _jarFile;
-   private Vector _outputStreams = (Vector)(new Object());
+   private Vector _outputStreams = new Vector();
    private ApplicationDownloadListener _listener;
    private int _resultCode;
    private String _error;
@@ -33,7 +34,7 @@ final class Harness implements Host, JARCompiler {
    @Override
    public final String extractManifest(InputStream inputStream) {
       String result = "";
-      JarInputStream jarStream = (JarInputStream)(new Object(inputStream, false));
+      JarInputStream jarStream = new JarInputStream(inputStream, false);
       Manifest manifest = jarStream.getManifest();
       if (manifest != null) {
          result = manifest.getString();
@@ -44,7 +45,7 @@ final class Harness implements Host, JARCompiler {
             String entryName = entry.getName();
             int nameLen = entryName.length();
             if (nameLen == 20 && entryName.regionMatches(true, 0, "META-INF/MANIFEST.MF", 0, nameLen)) {
-               manifest = (Manifest)(new Object(jarStream));
+               manifest = new Manifest(jarStream);
                result = manifest.getString();
                jarStream.closeEntry();
                break;
@@ -83,7 +84,7 @@ final class Harness implements Host, JARCompiler {
       // 017: astore 6
       // 019: bipush 1
       // 01a: istore 7
-      // 01c: new java/lang/Object
+      // 01c: new net/rim/tools/compiler/util/CompilerProperties
       // 01f: dup
       // 020: invokespecial net/rim/tools/compiler/util/CompilerProperties.<init> ()V
       // 023: astore 8
@@ -97,7 +98,7 @@ final class Harness implements Host, JARCompiler {
       // 036: ldc_w "1"
       // 039: invokevirtual java/util/Hashtable.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
       // 03c: pop
-      // 03d: new java/lang/Object
+      // 03d: new java/util/Vector
       // 040: dup
       // 041: invokespecial java/util/Vector.<init> ()V
       // 044: astore 9
@@ -108,7 +109,7 @@ final class Harness implements Host, JARCompiler {
       // 050: pop
       // 051: aload 8
       // 053: ldc_w "rapc_resourceBinaries"
-      // 056: new java/lang/Object
+      // 056: new java/util/Vector
       // 059: dup
       // 05a: invokespecial java/util/Vector.<init> ()V
       // 05d: invokevirtual java/util/Hashtable.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
@@ -119,7 +120,7 @@ final class Harness implements Host, JARCompiler {
       // 067: invokevirtual java/util/Hashtable.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
       // 06a: pop
       // 06b: aload 9
-      // 06d: new java/lang/Object
+      // 06d: new java/lang/StringBuffer
       // 070: dup
       // 071: invokespecial java/lang/StringBuffer.<init> ()V
       // 074: aload 0
@@ -254,7 +255,7 @@ final class Harness implements Host, JARCompiler {
       // 18f: getfield net/rim/device/apps/internal/browser/cod/Harness._outputStreams Ljava/util/Vector;
       // 192: iload 9
       // 194: invokevirtual java/util/Vector.elementAt (I)Ljava/lang/Object;
-      // 197: checkcast java/lang/Object
+      // 197: checkcast java/io/ByteArrayOutputStream
       // 19a: astore 10
       // 19c: aload 10
       // 19e: invokevirtual java/io/ByteArrayOutputStream.toByteArray ()[B
@@ -307,25 +308,25 @@ final class Harness implements Host, JARCompiler {
    @Override
    public final PrintStream openDiagnose() {
       if (this._pout == null) {
-         this._bout = (ByteArrayOutputStream)(new Object());
-         this._pout = (PrintStream)(new Object(this._bout));
+         this._bout = new ByteArrayOutputStream();
+         this._pout = new PrintStream(this._bout);
       }
 
       return this._pout;
    }
 
    @Override
-   public final InputStream openInput(String name) {
+   public final InputStream openInput(String name) throws IOException {
       if (name.endsWith(".jar")) {
          return this._jarFile;
       } else {
-         throw new Object(((StringBuffer)(new Object("file not found: "))).append(name).toString());
+         throw new IOException("file not found: " + name);
       }
    }
 
    @Override
    public final OutputStream openOutput(String name) {
-      ByteArrayOutputStream out = (ByteArrayOutputStream)(new Object());
+      ByteArrayOutputStream out = new ByteArrayOutputStream();
       this._outputStreams.addElement(out);
       return out;
    }

@@ -10,14 +10,14 @@ public class Landmark {
 
    public Landmark(String name, String description, QualifiedCoordinates coordinates, AddressInfo addressInfo) {
       if (name == null) {
-         throw new Object("Name of the Landmark cannot be null");
+         throw new NullPointerException("Name of the Landmark cannot be null");
       }
 
       this._name = name;
       this._description = description;
       this._qualifiedCoordinates = coordinates;
       this._addressInfo = addressInfo;
-      this._landmarkID = ((StringBuffer)(new Object())).append(this._name).append(description).append(this.hashCode()).toString();
+      this._landmarkID = this._name + description + this.hashCode();
    }
 
    public String getName() {
@@ -26,7 +26,7 @@ public class Landmark {
 
    public void setName(String name) {
       if (name == null) {
-         throw new Object("Name cannot be set to null");
+         throw new NullPointerException("Name cannot be set to null");
       }
 
       this._name = name;

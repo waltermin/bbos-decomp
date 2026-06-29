@@ -37,14 +37,14 @@ public final class ViewAddressVerb extends AbstractViewVerb implements Condition
 
    @Override
    public final String toString(Object context) {
-      if (!(super._address instanceof Object)) {
+      if (!(super._address instanceof MailingAddressModelImpl)) {
          return LBSResources.getString(31);
       }
 
       MailingAddressModelImpl model = (MailingAddressModelImpl)super._address;
       String formatString = LBSResources.getString(32);
       String toFormat = LBSResources.getString(model.getType() == 0 ? 34 : 33);
-      return MessageFormat.format(formatString, new Object[]{toFormat});
+      return MessageFormat.format(formatString, new String[]{toFormat});
    }
 
    public static final Object doAction(MailingAddressModel model, Object contextObject) {
@@ -64,8 +64,8 @@ public final class ViewAddressVerb extends AbstractViewVerb implements Condition
          ContextObject contextObject = ContextObject.clone(context);
          Object model = ContextObject.get(contextObject, 254);
          Object results = null;
-         if (!(model instanceof Object)) {
-            if (super._address instanceof Object) {
+         if (!(model instanceof MailingAddressModel)) {
+            if (super._address instanceof MailingAddressModel) {
                results = doAction((MailingAddressModel)super._address, contextObject);
             }
          } else {

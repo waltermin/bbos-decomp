@@ -44,11 +44,11 @@ public class CallLog {
 
    CallLog(PhoneCallModelImpl call) {
       this._callmodel = call;
-      this._participants = (Vector)(new Object());
+      this._participants = new Vector();
    }
 
    public Date getDate() {
-      return (Date)(this._callmodel != null ? new Object(this._callmodel.getTimeStamp()) : this._date);
+      return this._callmodel != null ? new Date(this._callmodel.getTimeStamp()) : this._date;
    }
 
    public int getDuration() {

@@ -116,7 +116,7 @@ public final class FirewallImpl extends Firewall {
       this._pipeControl = this._settingStore._pipeControl;
       this._blockings = this._settingStore._blockings;
       this._droppings = this._settingStore._droppings;
-      this._blockedCountListeners = (Vector)(new Object());
+      this._blockedCountListeners = new Vector();
       this.syncSetup();
       EventLog.registerApp(7954265007165122082L, 2, "FW");
       Proxy.getInstance().addRealtimeClockListener(new FirewallImpl$BlockedCountSyncRunnable(this, null));
@@ -197,8 +197,8 @@ public final class FirewallImpl extends Firewall {
          finaltarget = target;
       }
 
-      String[] details = new Object[]{finalapplication, finalprotocol, finaltarget};
-      FirewallDialog dialog = (FirewallDialog)(new Object(details, finaltarget == null || finaltarget.length() <= 0));
+      String[] details = new String[]{finalapplication, finalprotocol, finaltarget};
+      FirewallDialog dialog = new FirewallDialog(details, finaltarget == null || finaltarget.length() <= 0);
       BackgroundDialog.showOnProxy(dialog);
       result = dialog.getSelectedValue();
       if (dialog.isProtocolChecked()) {
@@ -249,7 +249,7 @@ public final class FirewallImpl extends Firewall {
       // 025: ldc_w "utf-8"
       // 028: invokestatic net/rim/device/cldc/io/utility/URIDecoder.decode (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
       // 02b: astore 2
-      // 02c: new java/lang/Object
+      // 02c: new net/rim/device/cldc/io/utility/URL
       // 02f: dup
       // 030: aload 1
       // 031: aload 2
@@ -1480,7 +1480,7 @@ public final class FirewallImpl extends Firewall {
       BlockedCountListener[] listeners;
       synchronized (this._blockedCountListeners) {
          numElements = this._blockedCountListeners.size();
-         listeners = new Object[numElements];
+         listeners = new BlockedCountListener[numElements];
          this._blockedCountListeners.copyInto(listeners);
       }
 

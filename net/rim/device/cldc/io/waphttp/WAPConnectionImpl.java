@@ -100,7 +100,7 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
       // 007: aload 0
       // 008: getfield net/rim/device/cldc/io/waphttp/WAPConnectionImpl._currentConfig Lnet/rim/device/cldc/io/waphttp/WAPConnectionImpl$CurrentConfig;
       // 00b: ifnonnull 019
-      // 00e: new java/lang/Object
+      // 00e: new java/io/IOException
       // 011: dup
       // 012: ldc_w "Connection closed"
       // 015: invokespecial java/io/IOException.<init> (Ljava/lang/String;)V
@@ -146,7 +146,7 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
       // 063: aload 1
       // 064: invokevirtual net/rim/device/cldc/io/waphttp/WAPRequestImpl.isAborted ()Z
       // 067: ifeq 075
-      // 06a: new java/lang/Object
+      // 06a: new net/rim/device/cldc/io/waphttp/WAPIOException
       // 06d: dup
       // 06e: sipush 1000
       // 071: invokespecial net/rim/device/cldc/io/waphttp/WAPIOException.<init> (I)V
@@ -165,7 +165,7 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
       // 08d: aload 1
       // 08e: invokevirtual net/rim/device/cldc/io/waphttp/WAPRequestImpl.isAborted ()Z
       // 091: ifeq 09f
-      // 094: new java/lang/Object
+      // 094: new net/rim/device/cldc/io/waphttp/WAPIOException
       // 097: dup
       // 098: sipush 1000
       // 09b: invokespecial net/rim/device/cldc/io/waphttp/WAPIOException.<init> (I)V
@@ -373,7 +373,7 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   final boolean getURI(WSPHeaders headers, WAPRequestImpl fetchRequest) {
+   final boolean getURI(WSPHeaders headers, WAPRequestImpl fetchRequest) throws WAPIOException {
       EventLogger.logEvent(-2968315138570648581L, 1466398068, 5);
       InputStream resultStream = null;
       int rawStatus = 0;
@@ -388,7 +388,7 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
 
             int maxServerSDUSize = this._currentConfig._currentWapSession.getMaxServerSDUSize();
             if (postData != null && maxServerSDUSize != 0 && postData.length > maxServerSDUSize) {
-               throw new Object(1005, 230);
+               throw new WAPIOException(1005, 230);
             }
          }
 
@@ -406,7 +406,7 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
                   var35 = false;
                } finally {
                   if (var35) {
-                     throw new Object(1006);
+                     throw new WAPIOException(1006);
                   }
                }
 
@@ -424,7 +424,7 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
                         );
                         fetchRequest.setAbortContext(this._currentConfig._method);
                         if (fetchRequest.isAborted()) {
-                           throw new Object(1000);
+                           throw new WAPIOException(1000);
                         }
 
                         EventLogger.logEvent(-2968315138570648581L, 1466398057, 5);
@@ -483,7 +483,7 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
             }
 
             if (resultStream == null && (abortCode >= 1 && abortCode <= 9 || abortCode == 230)) {
-               throw new Object(1005, abortCode);
+               throw new WAPIOException(1005, abortCode);
             }
          }
 
@@ -497,7 +497,7 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
          }
 
          if (resultStream != null) {
-            WSPHeaderDecoder oldHeaderDecoder = (WSPHeaderDecoder)(new Object(fetchRequest.getResponseHeaders()));
+            WSPHeaderDecoder oldHeaderDecoder = new WSPHeaderDecoder(fetchRequest.getResponseHeaders());
             oldHeaderDecoder.decode(headers.getAttributeList(), true);
             fetchRequest.setPipe(((PipeInputStream)resultStream).getCacheableData());
             fetchRequest.setInputStream(resultStream);
@@ -505,7 +505,7 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
             EventLogger.logEvent(-2968315138570648581L, 1466398050, 5);
             return true;
          } else if (fetchRequest.isAborted()) {
-            throw new Object(1000);
+            throw new WAPIOException(1000);
          } else {
             return false;
          }
@@ -526,12 +526,12 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
                this._currentConfig._method.abort();
             }
          }
-      } else if (abortContext instanceof Object) {
+      } else if (abortContext instanceof Tunnel) {
          synchronized (this._tunnelSyncObject) {
             this._tunnelStatus = -1;
             this._tunnelSyncObject.notify();
          }
-      } else if (abortContext instanceof Object) {
+      } else if (abortContext instanceof WAPConnection) {
          this.close();
       } else if (abortContext == this._semaphore) {
          synchronized (this._semaphore) {
@@ -730,14 +730,14 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
 
    private final WSPHeaders encodeHeaders(HttpHeaders requestHeaders, byte[] postData, boolean sendConnectHeaders) {
       if (requestHeaders == null) {
-         requestHeaders = (HttpHeaders)(new Object());
+         requestHeaders = new HttpHeaders();
       }
 
       if (!sendConnectHeaders) {
          return new WSPHeaders(requestHeaders, postData);
       }
 
-      HttpHeaders connectHeaders = (HttpHeaders)(new Object());
+      HttpHeaders connectHeaders = new HttpHeaders();
       int index = 0;
 
       while (true) {
@@ -777,7 +777,7 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
 
    private final boolean openConnectionModeConnection(
       InetAddress param1, int param2, String param3, int param4, WSPHeaders param5, WAPRequestImpl param6, InetAddress param7, int param8
-   ) {
+   ) throws WAPIOException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -785,7 +785,7 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:174)
       //
       // Bytecode:
-      // 000: new java/lang/Object
+      // 000: new java/lang/StringBuffer
       // 003: dup
       // 004: invokespecial java/lang/StringBuffer.<init> ()V
       // 007: aload 7
@@ -963,7 +963,7 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
       // 168: astore 16
       // 16a: aload 13
       // 16c: invokevirtual com/fourthpass/wapstack/wdp/WDPLayer.close ()V
-      // 16f: new java/lang/Object
+      // 16f: new net/rim/device/cldc/io/waphttp/WAPIOException
       // 172: dup
       // 173: sipush 1000
       // 176: invokespecial net/rim/device/cldc/io/waphttp/WAPIOException.<init> (I)V
@@ -971,7 +971,7 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
       // 17a: astore 16
       // 17c: aload 13
       // 17e: invokevirtual com/fourthpass/wapstack/wdp/WDPLayer.close ()V
-      // 181: new java/lang/Object
+      // 181: new net/rim/device/cldc/io/waphttp/WAPIOException
       // 184: dup
       // 185: sipush 1007
       // 188: aload 16
@@ -981,7 +981,7 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
       // 191: astore 16
       // 193: aload 13
       // 195: invokevirtual com/fourthpass/wapstack/wdp/WDPLayer.close ()V
-      // 198: new java/lang/Object
+      // 198: new net/rim/device/cldc/io/waphttp/WAPIOException
       // 19b: dup
       // 19c: sipush 1004
       // 19f: invokespecial net/rim/device/cldc/io/waphttp/WAPIOException.<init> (I)V
@@ -990,7 +990,7 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
       // 1a5: ifnonnull 1b8
       // 1a8: aload 13
       // 1aa: invokevirtual com/fourthpass/wapstack/wdp/WDPLayer.close ()V
-      // 1ad: new java/lang/Object
+      // 1ad: new net/rim/device/cldc/io/waphttp/WAPIOException
       // 1b0: dup
       // 1b1: sipush 1008
       // 1b4: invokespecial net/rim/device/cldc/io/waphttp/WAPIOException.<init> (I)V
@@ -1555,7 +1555,7 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
       // try (714 -> 722): 719 null
    }
 
-   private final boolean openConnection(HttpHeaders connectHeaders, WAPRequestImpl fetchRequest) {
+   private final boolean openConnection(HttpHeaders connectHeaders, WAPRequestImpl fetchRequest) throws WAPIOException {
       boolean connectionMode = this._params._connectionMode;
       if (!connectionMode) {
          synchronized (this._syncObject) {
@@ -1573,7 +1573,7 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
       } else {
          synchronized (this._syncObject) {
             if (this._currentConfig == null) {
-               throw new Object(1000);
+               throw new WAPIOException(1000);
             }
 
             if (this._currentConfig._wspSession != null) {
@@ -1627,12 +1627,12 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
 
                   if (this._currentConfig._redirectAddress == null) {
                      if (this._currentConfig._connectAbortReply == null) {
-                        throw new Object(1003);
+                        throw new WAPIOException(1003);
                      }
 
                      headers = this._currentConfig._connectAbortReply.getHeaderInfo(headers);
                      InputStream resultStream = this._currentConfig._connectAbortReply.getData();
-                     WSPHeaderDecoder oldHeaderDecoder = (WSPHeaderDecoder)(new Object(fetchRequest.getResponseHeaders()));
+                     WSPHeaderDecoder oldHeaderDecoder = new WSPHeaderDecoder(fetchRequest.getResponseHeaders());
                      oldHeaderDecoder.decode(headers.getAttributeList(), true);
                      fetchRequest.setPipe(((PipeInputStream)resultStream).getCacheableData());
                      fetchRequest.setInputStream(resultStream);
@@ -1659,7 +1659,7 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
          }
 
          if (redirectCount == 30) {
-            throw new Object(1002);
+            throw new WAPIOException(1002);
          } else {
             return true;
          }
@@ -1671,9 +1671,9 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
       this.close(false);
    }
 
-   private final void sendRequestInternal(WAPRequestImpl request) {
+   private final void sendRequestInternal(WAPRequestImpl request) throws WAPIOException {
       if (request.isAborted()) {
-         throw new Object(1000);
+         throw new WAPIOException(1000);
       }
 
       HttpHeaders htHeaders = request.getRequestHeaders2();
@@ -1683,9 +1683,7 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
       for (int retryCounter = 0; !successful && retryCounter < 3; retryCounter++) {
          if (this._tunnel == null) {
             this._tunnelStatus = 0;
-            TunnelConfig config = (TunnelConfig)(new Object(
-               this._params._wapServerAPN, "wap", null, this._params._authUsername, this._params._authPassword, this
-            ));
+            TunnelConfig config = new TunnelConfig(this._params._wapServerAPN, "wap", null, this._params._authUsername, this._params._authPassword, this);
             config.setLingerTimeout(0);
             config.setMaxAttempts(3);
             synchronized (this._syncObject) {
@@ -1711,9 +1709,9 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
 
                switch (this._tunnelStatus) {
                   case -1:
-                     throw new Object(1000);
+                     throw new WAPIOException(1000);
                   case 4:
-                     throw new Object(1009);
+                     throw new WAPIOException(1009);
                }
             }
          }
@@ -1727,7 +1725,7 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
          }
 
          if (request.isAborted()) {
-            throw new Object(1000);
+            throw new WAPIOException(1000);
          }
 
          boolean openConnection = false;
@@ -1748,7 +1746,7 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
          this._newConnectionParameters = false;
          request.clearAbortContext();
          if (request.isAborted()) {
-            throw new Object(1000);
+            throw new WAPIOException(1000);
          }
 
          successful = this.getURI(requestHeaders, request);
@@ -1758,7 +1756,7 @@ final class WAPConnectionImpl extends WAPConnection implements IWapStackLayer, T
       }
 
       if (!successful) {
-         throw new Object(1001);
+         throw new WAPIOException(1001);
       }
    }
 

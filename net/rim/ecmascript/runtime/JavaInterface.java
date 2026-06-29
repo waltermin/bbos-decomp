@@ -16,7 +16,7 @@ class JavaInterface extends HostFunction implements ESThunkInterface {
    @Override
    public long run() {
       JavaObject obj = JavaObject.createInstance(this);
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       this._overrides.enumerate(v);
 
       for (int i = v.size() - 1; i >= 0; i--) {

@@ -55,7 +55,7 @@ public final class CertificateStatusQuery {
    private static final ResourceBundle _rb = ResourceBundle.getBundle(-7644390350925054654L, "net.rim.device.internal.resource.crypto.StatusProviders");
 
    public CertificateStatusQuery(CertificateStatusRequest request, String serviceUID, CertificateStatusListener listener) {
-      this.ERROR_STRINGS = new Object[]{
+      this.ERROR_STRINGS = new String[]{
          _rb.getString(0),
          _rb.getString(1),
          _rb.getString(2),
@@ -77,13 +77,13 @@ public final class CertificateStatusQuery {
       this._request = request;
       this._certChain = request.getCertChain();
       this._checkEntireChain = request.checkEntireChain();
-      this._listenerWR = (WeakReference)(listener != null ? new Object(listener) : null);
+      this._listenerWR = listener != null ? new WeakReference(listener) : null;
       this._errorCode = 0;
-      this._providerErrorMessages = (Vector)(new Object());
+      this._providerErrorMessages = new Vector();
       this._lock = new Object();
       this._providers = CertificateStatusProvider.getProviders();
-      this._providerContextData = (Hashtable)(new Object());
-      this._providerCertificates = (Vector)(new Object());
+      this._providerContextData = new Hashtable();
+      this._providerCertificates = new Vector();
       this._serviceUID = serviceUID;
    }
 
@@ -206,7 +206,7 @@ public final class CertificateStatusQuery {
          this._responseCerts = null;
       } else {
          int numResponseCerts = responseCerts.length;
-         this._responseCerts = new Object[numResponseCerts];
+         this._responseCerts = new Certificate[numResponseCerts];
 
          for (int i = 0; i < numResponseCerts; i++) {
             this._responseCerts[i] = responseCerts[i];
@@ -218,7 +218,7 @@ public final class CertificateStatusQuery {
          this._responseStatus = null;
       } else {
          int numResponseStatus = responseStatus.length;
-         this._responseStatus = new Object[numResponseStatus];
+         this._responseStatus = new CertificateStatus[numResponseStatus];
 
          for (int i = 0; i < numResponseStatus; i++) {
             this._responseStatus[i] = responseStatus[i];
@@ -291,7 +291,7 @@ public final class CertificateStatusQuery {
          if (errorCode < this.ERROR_STRINGS.length && errorCode >= 0) {
             return this.ERROR_STRINGS[errorCode];
          } else {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       }
    }
@@ -300,7 +300,7 @@ public final class CertificateStatusQuery {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private final boolean encodeRequest(CertificateStatusProvider[] compatibleProviders, DataOutputStream out) {
       ProviderCompressionTable compressionTable = new ProviderCompressionTable();
-      Vector requestData = (Vector)(new Object());
+      Vector requestData = new Vector();
       CertificateStatusQuery$ProviderUiContextImpl uiContext = new CertificateStatusQuery$ProviderUiContextImpl(this, null);
       boolean success = false;
 
@@ -316,7 +316,7 @@ public final class CertificateStatusQuery {
                } catch (StatusProviderException var20) {
                }
             } catch (Throwable var21) {
-               System.out.println(((StringBuffer)(new Object("Fatal provider error "))).append(t.toString()).toString());
+               System.out.println("Fatal provider error " + t.toString());
                continue;
             }
 
@@ -376,7 +376,7 @@ public final class CertificateStatusQuery {
       // 00e: astore 2
       // 00f: bipush 0
       // 010: istore 3
-      // 011: new java/lang/Object
+      // 011: new java/util/Hashtable
       // 014: dup
       // 015: invokespecial java/util/Hashtable.<init> ()V
       // 018: astore 4
@@ -467,7 +467,7 @@ public final class CertificateStatusQuery {
       // 0d5: ifeq 12a
       // 0d8: aload 9
       // 0da: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 0df: checkcast java/lang/Object
+      // 0df: checkcast net/rim/device/api/crypto/certificate/Certificate
       // 0e2: astore 10
       // 0e4: aload 7
       // 0e6: aload 10
@@ -494,7 +494,7 @@ public final class CertificateStatusQuery {
       // 115: goto 0ce
       // 118: aload 4
       // 11a: aload 10
-      // 11c: new java/lang/Object
+      // 11c: new net/rim/device/api/crypto/certificate/CertificateStatus
       // 11f: dup
       // 120: invokespecial net/rim/device/api/crypto/certificate/CertificateStatus.<init> ()V
       // 123: invokevirtual java/util/Hashtable.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
@@ -539,14 +539,14 @@ public final class CertificateStatusQuery {
       // 177: iload 8
       // 179: aload 6
       // 17b: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 180: checkcast java/lang/Object
+      // 180: checkcast net/rim/device/api/crypto/certificate/Certificate
       // 183: aastore
       // 184: aload 0
       // 185: getfield net/rim/device/api/crypto/certificate/status/CertificateStatusQuery._responseStatus [Lnet/rim/device/api/crypto/certificate/CertificateStatus;
       // 188: iload 8
       // 18a: aload 7
       // 18c: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 191: checkcast java/lang/Object
+      // 191: checkcast net/rim/device/api/crypto/certificate/CertificateStatus
       // 194: aastore
       // 195: iinc 8 1
       // 198: goto 169

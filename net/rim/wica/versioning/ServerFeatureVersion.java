@@ -12,7 +12,7 @@ public class ServerFeatureVersion extends CommonFeatureVersion {
 
    @Override
    public String serialize() {
-      return ((StringBuffer)(new Object())).append(super.serialize()).append(this._curVersion).toString();
+      return super.serialize() + this._curVersion;
    }
 
    public static ServerFeatureVersion createByDeserializing(String inStr) {
@@ -31,7 +31,7 @@ public class ServerFeatureVersion extends CommonFeatureVersion {
    public static ServerFeatureVersion createFromValues(String name, int ver) {
       ServerFeatureVersion srvVer = new ServerFeatureVersion();
       srvVer.setFeatureName(name);
-      srvVer._curVersion = ((StringBuffer)(new Object(""))).append(ver).toString();
+      srvVer._curVersion = "" + ver;
       return srvVer;
    }
 

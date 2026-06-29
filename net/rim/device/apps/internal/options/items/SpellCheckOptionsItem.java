@@ -1,6 +1,6 @@
 package net.rim.device.apps.internal.options.items;
 
-import net.rim.device.api.collection.util.KeywordFilterList;
+import net.rim.device.api.collection.util.PrefixKeywordFilterList;
 import net.rim.device.api.collection.util.SortedReadableList;
 import net.rim.device.api.i18n.Locale;
 import net.rim.device.api.ui.Field;
@@ -79,19 +79,19 @@ public final class SpellCheckOptionsItem extends SaveableMainScreenOptionsListIt
    protected final void populateMainScreen(MainScreen mainScreen) {
       this._spellCheckProperties = SpellCheckUtilities.getIMProperties();
       if (this._spellCheckProperties != null) {
-         this._differentLetterCaseAsSame = (CheckboxField)(new Object(getResource(1822), this.getBooleanOption(0)));
+         this._differentLetterCaseAsSame = new CheckboxField(getResource(1822), this.getBooleanOption(0));
          mainScreen.add(this._differentLetterCaseAsSame);
-         this._upperCaseIngnore = (CheckboxField)(new Object(getResource(1823), this.getBooleanOption(1)));
+         this._upperCaseIngnore = new CheckboxField(getResource(1823), this.getBooleanOption(1));
          mainScreen.add(this._upperCaseIngnore);
-         this._wordsWithNumbersIgnore = (CheckboxField)(new Object(getResource(1824), this.getBooleanOption(2)));
+         this._wordsWithNumbersIgnore = new CheckboxField(getResource(1824), this.getBooleanOption(2));
          mainScreen.add(this._wordsWithNumbersIgnore);
-         this._spellCheckEmailBeforeSendField = (CheckboxField)(new Object(getResource(1819), this.getBooleanOption(7)));
+         this._spellCheckEmailBeforeSendField = new CheckboxField(getResource(1819), this.getBooleanOption(7));
          mainScreen.add(this._spellCheckEmailBeforeSendField);
          int initialValue = this.getByteOption(11);
-         this._minWordSizeForCheck = (NumericChoiceField)(new Object(getResource(1454), 2, 10, 1));
+         this._minWordSizeForCheck = new NumericChoiceField(getResource(1454), 2, 10, 1);
          this._minWordSizeForCheck.setSelectedValue(initialValue);
          mainScreen.add(this._minWordSizeForCheck);
-         this._editCustomDictButton = (ButtonField)(new Object(getResource(1491), 12885000192L));
+         this._editCustomDictButton = new ButtonField(getResource(1491), 12885000192L);
          this._editCustomDictButton.setChangeListener(this);
          mainScreen.add(this._editCustomDictButton);
       }
@@ -123,9 +123,9 @@ public final class SpellCheckOptionsItem extends SaveableMainScreenOptionsListIt
          }
 
          this._transactedCustomDict = new SpellCheckOptionsItem$TransactedCustomDictionary(custDict);
-         SortedReadableList sortedList = (SortedReadableList)(new Object(this._transactedCustomDict, new SpellCheckOptionsItem$CustomDictComparator()));
+         SortedReadableList sortedList = new SortedReadableList(this._transactedCustomDict, new SpellCheckOptionsItem$CustomDictComparator());
          _customDictScreen = new SpellCheckOptionsItem$CustomDictScreen(
-            getResource(1491), (KeywordFilterList)(new Object(sortedList, new SpellCheckOptionsItem$CustomDictIndexHelper())), this._transactedCustomDict
+            getResource(1491), new PrefixKeywordFilterList(sortedList, new SpellCheckOptionsItem$CustomDictIndexHelper()), this._transactedCustomDict
          );
       }
 

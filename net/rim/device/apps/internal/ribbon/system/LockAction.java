@@ -34,7 +34,7 @@ final class LockAction extends Action implements GlobalEventListener {
    public final void eventOccurred(long guid, int data0, int data1, Object object0, Object object1) {
       if (guid == -1789715216180579536L) {
          RibbonLauncher rl = RibbonLauncher.getInstance();
-         rl.updateRegisteredAction(this.get(1, (String)((Object)null)));
+         rl.updateRegisteredAction(this.get(1, (String)null));
       }
    }
 

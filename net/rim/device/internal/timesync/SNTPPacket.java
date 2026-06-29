@@ -18,7 +18,7 @@ public final class SNTPPacket {
 
    public SNTPPacket(int transactionId) {
       this._transactionId = transactionId;
-      this._requestData = (DataBuffer)(new Object(48, true));
+      this._requestData = new DataBuffer(48, true);
       this._requestData.setLength(48);
       this._requestData.writeByte(35);
       this._requestData.skipBytes(2);
@@ -45,7 +45,7 @@ public final class SNTPPacket {
          return false;
       }
 
-      DataBuffer buf = (DataBuffer)(new Object(responseData, 0, responseData.length, true));
+      DataBuffer buf = new DataBuffer(responseData, 0, responseData.length, true);
 
       try {
          byte byte0 = buf.readByte();

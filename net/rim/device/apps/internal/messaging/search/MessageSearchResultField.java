@@ -37,13 +37,13 @@ final class MessageSearchResultField extends VariableHeightCollectionListField i
    @Override
    protected final boolean keyChar(char key, int status, int time) {
       Object selectedElement = this.getSelectedElement();
-      if (selectedElement instanceof Object) {
+      if (selectedElement instanceof ActionProvider) {
          if (key == '\n') {
             return this.openSelectedMessage();
          }
 
          if (key == 127 || Keypad.getAltedChar(key) == 127) {
-            DeleteSingleItemVerb deleteVerb = (DeleteSingleItemVerb)(new Object(611472, 1000));
+            DeleteSingleItemVerb deleteVerb = new DeleteSingleItemVerb(611472, 1000);
             deleteVerb.setParameters(selectedElement, null);
             deleteVerb.invoke(null);
             return true;
@@ -63,7 +63,7 @@ final class MessageSearchResultField extends VariableHeightCollectionListField i
       switch (action) {
          case 1:
             Object selectedElement = this.getSelectedElement();
-            if (selectedElement instanceof Object) {
+            if (selectedElement instanceof ActionProvider) {
                return this.openSelectedMessage();
             }
          default:
@@ -154,11 +154,11 @@ final class MessageSearchResultField extends VariableHeightCollectionListField i
             }
 
             RIMModel model = (RIMModel)this._dateSortedSeparatedItems.getAt(itemToCheck);
-            if (model instanceof Object) {
+            if (model instanceof ActionProvider) {
                ActionProvider actionProvider = (ActionProvider)model;
                ContextObject context = null;
                if (action == -2415955221176628574L) {
-                  context = (ContextObject)(new Object());
+                  context = new ContextObject();
                   ContextObject.put(context, -321822713458159100L, this.getSelectedElement());
                }
 
@@ -174,9 +174,9 @@ final class MessageSearchResultField extends VariableHeightCollectionListField i
    public final boolean keyDown(int keycode, int time) {
       int hotk = MessageHotkeys.map(keycode);
       RIMModel modelCurrentlyOperatedOn = (RIMModel)this.getSelectedElement();
-      if (modelCurrentlyOperatedOn instanceof Object) {
+      if (modelCurrentlyOperatedOn instanceof HotKeyProvider) {
          HotKeyProvider d = (HotKeyProvider)modelCurrentlyOperatedOn;
-         Object result = d.invokeHotkey(new Object(), hotk);
+         Object result = d.invokeHotkey(new ContextObject(), hotk);
          if (result != null) {
             return true;
          }
@@ -221,20 +221,20 @@ final class MessageSearchResultField extends VariableHeightCollectionListField i
    public final Verb getVerbs(Object context, Verb[] verbs) {
       Verb defaultVerb = null;
       Object selectedElement = this.getSelectedElement();
-      if (selectedElement instanceof Object) {
+      if (selectedElement instanceof VerbProvider) {
          ContextObject newContext = ContextObject.clone(context);
          ContextObject.clearFlag(newContext, 2);
          defaultVerb = ((VerbProvider)selectedElement).getVerbs(newContext, verbs);
-         DeleteSingleItemVerb deleteVerb = (DeleteSingleItemVerb)(new Object(611472, 1000));
+         DeleteSingleItemVerb deleteVerb = new DeleteSingleItemVerb(611472, 1000);
          deleteVerb.setParameters(selectedElement, newContext);
          Arrays.add(verbs, deleteVerb);
          return defaultVerb;
       }
 
-      if (selectedElement instanceof Object) {
+      if (selectedElement instanceof DateSeparator) {
          ContextObject newContext = ContextObject.castOrCreate(null);
          ContextObject.put(newContext, 250, selectedElement);
-         Verb[] verbArray = new Object[0];
+         Verb[] verbArray = new Verb[0];
          if (ContextObject.getFlag(context, 81)) {
             defaultVerb = ((DateSeparator)selectedElement).getContextMenuVerbs(verbArray, this.getSelectedIndex(), this._dateSortedSeparatedItems, newContext);
          } else {

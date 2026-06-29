@@ -20,7 +20,7 @@ import net.rim.device.apps.internal.explorer.file.resource.ExplorerResources;
 import net.rim.device.internal.media.MediaPlayerState;
 
 public class MediaLibraryScreen extends AppsMainScreen implements ListFieldCallback, ActionProvider {
-   protected String[] ITEMS = new Object[0];
+   protected String[] ITEMS = new String[0];
    protected ListField _library;
    private int _nowPlaying;
    private int _mediaType;
@@ -55,7 +55,7 @@ public class MediaLibraryScreen extends AppsMainScreen implements ListFieldCallb
 
    protected int getSelectedIndex() {
       Field field = this.getLeafFieldWithFocus();
-      return !(field instanceof Object) ? -1 : this._library.getSelectedIndex();
+      return !(field instanceof ListField) ? -1 : this._library.getSelectedIndex();
    }
 
    protected void update() {
@@ -191,18 +191,18 @@ public class MediaLibraryScreen extends AppsMainScreen implements ListFieldCallb
       }
 
       Arrays.append(this.ITEMS, this.getItems());
-      this._library = (ListField)(new Object(this.ITEMS.length));
+      this._library = new ListField(this.ITEMS.length);
       this._library.setCallback(this);
       this._library.setSearchable(false);
       this._library.setTag(ThemeUtilities.LIST_TAG);
       Field banner = ThemeUtilities.getTitleField(this.getTitle());
-      VerticalFieldManager listManager = (VerticalFieldManager)(new Object(281474976710656L));
+      VerticalFieldManager listManager = new VerticalFieldManager(281474976710656L);
       listManager.add(this._library);
       ListScrollbarManager scrollManager = new ListScrollbarManager(listManager);
       this.add(banner);
       this.add(scrollManager);
       this.setHelp(32247);
-      this._context = (ContextInfo)(context == null ? new Object() : context);
+      this._context = context == null ? new ContextInfo() : context;
       this.initialize();
    }
 }

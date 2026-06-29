@@ -1,8 +1,8 @@
 package net.rim.device.apps.internal.options.items;
 
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.component.NullField;
 import net.rim.device.api.util.MathUtilities;
 import net.rim.device.apps.api.ui.AppsMainScreen;
 
@@ -12,7 +12,7 @@ final class InfoMainScreen extends AppsMainScreen {
    InfoMainScreen(Font font, long style) {
       super(style);
       this._scrollQuanta = font.getHeight();
-      this.add((Field)(new Object(18014398509481984L)));
+      this.add(new NullField(18014398509481984L));
    }
 
    @Override

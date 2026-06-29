@@ -28,7 +28,7 @@ public final class AttachVoiceNoteVerb extends Verb {
       MMSAttachment attachment = this.promptForVoiceNote();
       if (attachment != null) {
          this._presentation.addPresentationElement(attachment, true);
-         if (this._presentation instanceof Object) {
+         if (this._presentation instanceof Manager) {
             Manager mgr = (Manager)this._presentation;
             mgr.setDirty(true);
          }
@@ -57,7 +57,7 @@ public final class AttachVoiceNoteVerb extends Verb {
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:185)
       //
       // Bytecode:
-      // 000: new java/lang/Object
+      // 000: new net/rim/device/apps/api/framework/model/ContextObject
       // 003: dup
       // 004: invokespecial net/rim/device/apps/api/framework/model/ContextObject.<init> ()V
       // 007: astore 1
@@ -66,7 +66,7 @@ public final class AttachVoiceNoteVerb extends Verb {
       // 00b: invokevirtual net/rim/device/apps/api/framework/model/ContextObject.setFlag (I)V
       // 00e: aload 1
       // 00f: ldc2_w 3941043584844673548
-      // 012: new java/lang/Object
+      // 012: new java/lang/Integer
       // 015: dup
       // 016: bipush 5
       // 018: invokespecial java/lang/Integer.<init> (I)V
@@ -80,7 +80,7 @@ public final class AttachVoiceNoteVerb extends Verb {
       // 02a: goto 031
       // 02d: ldc_w "file:///store/home/user/voicenotes/"
       // 030: astore 2
-      // 031: new java/lang/Object
+      // 031: new net/rim/device/apps/api/framework/file/FileSelector
       // 034: dup
       // 035: aload 2
       // 036: aload 1
@@ -104,12 +104,12 @@ public final class AttachVoiceNoteVerb extends Verb {
       // 059: astore 4
       // 05b: aload 4
       // 05d: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 060: checkcast java/lang/Object
+      // 060: checkcast javax/microedition/io/file/FileConnection
       // 063: astore 5
       // 065: aload 5
       // 067: invokeinterface javax/microedition/io/file/FileConnection.canRead ()Z 1
       // 06c: ifeq 0c4
-      // 06f: new java/lang/Object
+      // 06f: new java/lang/String
       // 072: dup
       // 073: aload 4
       // 075: invokevirtual java/lang/String.getBytes ()[B

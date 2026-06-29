@@ -4,29 +4,39 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Vector;
+import net.rim.device.api.crypto.AESDecryptorEngine;
 import net.rim.device.api.crypto.AESKey;
 import net.rim.device.api.crypto.BlockDecryptor;
-import net.rim.device.api.crypto.BlockDecryptorEngine;
-import net.rim.device.api.crypto.BlockUnformatterEngine;
+import net.rim.device.api.crypto.CAST128DecryptorEngine;
 import net.rim.device.api.crypto.CAST128Key;
+import net.rim.device.api.crypto.CBCDecryptorEngine;
+import net.rim.device.api.crypto.DESDecryptorEngine;
 import net.rim.device.api.crypto.DESKey;
 import net.rim.device.api.crypto.Digest;
 import net.rim.device.api.crypto.DigestFactory;
 import net.rim.device.api.crypto.InitializationVector;
 import net.rim.device.api.crypto.Key;
-import net.rim.device.api.crypto.PrivateKeyDecryptorEngine;
+import net.rim.device.api.crypto.OAEPUnformatterEngine;
+import net.rim.device.api.crypto.PKCS1UnformatterEngine;
 import net.rim.device.api.crypto.PseudoRandomSource;
 import net.rim.device.api.crypto.PublicKey;
+import net.rim.device.api.crypto.RC2DecryptorEngine;
 import net.rim.device.api.crypto.RC2Key;
+import net.rim.device.api.crypto.RSADecryptorEngine;
 import net.rim.device.api.crypto.RSAPrivateKey;
+import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.crypto.SymmetricKey;
+import net.rim.device.api.crypto.TripleDESDecryptorEngine;
 import net.rim.device.api.crypto.TripleDESKey;
+import net.rim.device.api.crypto.UnsupportedCryptoSystemException;
 import net.rim.device.api.crypto.asn1.ASN1InputByteArray;
 import net.rim.device.api.crypto.asn1.ASN1InputStream;
 import net.rim.device.api.crypto.asn1.ASN1OutputStream;
+import net.rim.device.api.crypto.certificate.CRLVerificationException;
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.CertificateUtilities;
 import net.rim.device.api.crypto.certificate.SerialNumberIssuerKeyStoreIndex;
+import net.rim.device.api.crypto.certificate.x509.SubjectKeyIdentifierKeyStoreIndex;
 import net.rim.device.api.crypto.certificate.x509.X509Certificate;
 import net.rim.device.api.crypto.certificate.x509.X509CertificateRevocationList;
 import net.rim.device.api.crypto.certificate.x509.X509DistinguishedName;
@@ -84,7 +94,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 001: aload 1
       // 002: invokespecial net/rim/device/api/crypto/cms/CMSInputStream.<init> (Ljava/io/InputStream;)V
       // 005: aload 0
-      // 006: new java/lang/Object
+      // 006: new java/util/Vector
       // 009: dup
       // 00a: invokespecial java/util/Vector.<init> ()V
       // 00d: putfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._attributes Ljava/util/Vector;
@@ -101,7 +111,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 022: ifne 029
       // 025: aload 0
       // 026: invokespecial net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream.addKeyStoreIndices ()V
-      // 029: new java/lang/Object
+      // 029: new net/rim/device/api/crypto/asn1/ASN1InputStream
       // 02c: dup
       // 02d: aload 0
       // 02e: getfield net/rim/device/api/crypto/cms/CMSInputStream._input Ljava/io/InputStream;
@@ -169,7 +179,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 0b9: invokestatic net/rim/device/api/io/SharedInputStream.getSharedInputStream (Ljava/io/InputStream;)Lnet/rim/device/api/io/SharedInputStream;
       // 0bc: putfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._encryptedContentInfoStream Lnet/rim/device/api/io/SharedInputStream;
       // 0bf: aload 0
-      // 0c0: new java/lang/Object
+      // 0c0: new net/rim/device/api/crypto/asn1/ASN1InputStream
       // 0c3: dup
       // 0c4: aload 0
       // 0c5: getfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._encryptedContentInfoStream Lnet/rim/device/api/io/SharedInputStream;
@@ -354,7 +364,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       this._displayUI = displayUI;
       this.addKeyStoreIndices();
       if (this._recipientInfosData != null && this._encryptedContentInfoStream != null) {
-         this._encryptedContentInfo = (ASN1InputStream)(new Object(this._encryptedContentInfoStream.readInputStream()));
+         this._encryptedContentInfo = new ASN1InputStream(this._encryptedContentInfoStream.readInputStream());
          this.readRecipientInfos();
       } else {
          throw new CMSParsingException();
@@ -362,7 +372,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
    }
 
    private final void addKeyStoreIndices() {
-      KeyStoreIndex[] indexArray = new Object[]{new Object(), new Object()};
+      KeyStoreIndex[] indexArray = new KeyStoreIndex[]{new SerialNumberIssuerKeyStoreIndex(), new SubjectKeyIdentifierKeyStoreIndex()};
       if (this._keyStore != null) {
          this._keyStore.addIndices(indexArray);
       }
@@ -396,71 +406,58 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
    }
 
    @Override
-   public final void setData(InputStream data) throws CMSDecryptionException {
+   public final void setData(InputStream data) throws UnsupportedCryptoSystemException, CMSDecryptionException {
       BlockDecryptor cryptoStream;
       if (this._encryptionType.equals(OIDs.getOID(-472306990))) {
-         if (!(this._sessionKey instanceof Object)) {
+         if (!(this._sessionKey instanceof TripleDESKey)) {
             throw new CMSDecryptionException();
          }
 
-         cryptoStream = (BlockDecryptor)(new Object(
+         cryptoStream = new BlockDecryptor(
             new CMSBlockUnformatterEngine(
-               (BlockDecryptorEngine)(new Object(
-                  (BlockDecryptorEngine)(new Object((TripleDESKey)this._sessionKey)), (InitializationVector)(new Object(this._iv))
-               ))
+               new CBCDecryptorEngine(new TripleDESDecryptorEngine((TripleDESKey)this._sessionKey), new InitializationVector(this._iv))
             ),
             data
-         ));
+         );
       } else if (this._encryptionType.equals(OIDs.getOID(774757737))) {
-         if (!(this._sessionKey instanceof Object)) {
+         if (!(this._sessionKey instanceof DESKey)) {
             throw new CMSDecryptionException();
          }
 
-         cryptoStream = (BlockDecryptor)(new Object(
-            new CMSBlockUnformatterEngine(
-               (BlockDecryptorEngine)(new Object((BlockDecryptorEngine)(new Object((DESKey)this._sessionKey)), (InitializationVector)(new Object(this._iv))))
-            ),
-            data
-         ));
+         cryptoStream = new BlockDecryptor(
+            new CMSBlockUnformatterEngine(new CBCDecryptorEngine(new DESDecryptorEngine((DESKey)this._sessionKey), new InitializationVector(this._iv))), data
+         );
       } else if (this._encryptionType.equals(OIDs.getOID(-472312110))) {
-         if (!(this._sessionKey instanceof Object)) {
+         if (!(this._sessionKey instanceof RC2Key)) {
             throw new CMSDecryptionException();
          }
 
-         cryptoStream = (BlockDecryptor)(new Object(
-            new CMSBlockUnformatterEngine(
-               (BlockDecryptorEngine)(new Object((BlockDecryptorEngine)(new Object((RC2Key)this._sessionKey)), (InitializationVector)(new Object(this._iv))))
-            ),
-            data
-         ));
+         cryptoStream = new BlockDecryptor(
+            new CMSBlockUnformatterEngine(new CBCDecryptorEngine(new RC2DecryptorEngine((RC2Key)this._sessionKey), new InitializationVector(this._iv))), data
+         );
       } else if (!this._encryptionType.equals(OIDs.getOID(540861300))
          && !this._encryptionType.equals(OIDs.getOID(546104180))
          && !this._encryptionType.equals(OIDs.getOID(551347060))) {
          if (!this._encryptionType.equals(OIDs.getOID(552133493))) {
-            throw new Object(this._encryptionType.toString());
+            throw new UnsupportedCryptoSystemException(this._encryptionType.toString());
          }
 
-         if (!(this._sessionKey instanceof Object)) {
+         if (!(this._sessionKey instanceof CAST128Key)) {
             throw new CMSDecryptionException();
          }
 
-         cryptoStream = (BlockDecryptor)(new Object(
-            new CMSBlockUnformatterEngine(
-               (BlockDecryptorEngine)(new Object((BlockDecryptorEngine)(new Object((CAST128Key)this._sessionKey)), (InitializationVector)(new Object(this._iv))))
-            ),
+         cryptoStream = new BlockDecryptor(
+            new CMSBlockUnformatterEngine(new CBCDecryptorEngine(new CAST128DecryptorEngine((CAST128Key)this._sessionKey), new InitializationVector(this._iv))),
             data
-         ));
+         );
       } else {
-         if (!(this._sessionKey instanceof Object)) {
+         if (!(this._sessionKey instanceof AESKey)) {
             throw new CMSDecryptionException();
          }
 
-         cryptoStream = (BlockDecryptor)(new Object(
-            new CMSBlockUnformatterEngine(
-               (BlockDecryptorEngine)(new Object((BlockDecryptorEngine)(new Object((AESKey)this._sessionKey)), (InitializationVector)(new Object(this._iv))))
-            ),
-            data
-         ));
+         cryptoStream = new BlockDecryptor(
+            new CMSBlockUnformatterEngine(new CBCDecryptorEngine(new AESDecryptorEngine((AESKey)this._sessionKey), new InitializationVector(this._iv))), data
+         );
       }
 
       if (super._contentType.equals(OIDs.getOID(542121532))) {
@@ -499,7 +496,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 01f: getfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._sessionKey Lnet/rim/device/api/crypto/SymmetricKey;
       // 022: ifnonnull 034
       // 025: aload 0
-      // 026: new java/lang/Object
+      // 026: new net/rim/device/api/crypto/TripleDESKey
       // 029: dup
       // 02a: aload 0
       // 02b: getfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._sessionKeyData [B
@@ -507,7 +504,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 031: putfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._sessionKey Lnet/rim/device/api/crypto/SymmetricKey;
       // 034: aload 0
       // 035: getfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._sessionKey Lnet/rim/device/api/crypto/SymmetricKey;
-      // 038: instanceof java/lang/Object
+      // 038: instanceof net/rim/device/api/crypto/TripleDESKey
       // 03b: ifeq 049
       // 03e: aload 0
       // 03f: aload 2
@@ -531,7 +528,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 068: getfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._sessionKey Lnet/rim/device/api/crypto/SymmetricKey;
       // 06b: ifnonnull 07d
       // 06e: aload 0
-      // 06f: new java/lang/Object
+      // 06f: new net/rim/device/api/crypto/DESKey
       // 072: dup
       // 073: aload 0
       // 074: getfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._sessionKeyData [B
@@ -539,7 +536,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 07a: putfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._sessionKey Lnet/rim/device/api/crypto/SymmetricKey;
       // 07d: aload 0
       // 07e: getfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._sessionKey Lnet/rim/device/api/crypto/SymmetricKey;
-      // 081: instanceof java/lang/Object
+      // 081: instanceof net/rim/device/api/crypto/DESKey
       // 084: ifeq 092
       // 087: aload 0
       // 088: aload 2
@@ -587,9 +584,9 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 0ea: bipush 103
       // 0ec: putfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._encryptionConstant I
       // 0ef: goto 10c
-      // 0f2: new java/lang/Object
+      // 0f2: new net/rim/device/api/crypto/UnsupportedCryptoSystemException
       // 0f5: dup
-      // 0f6: new java/lang/Object
+      // 0f6: new java/lang/StringBuffer
       // 0f9: dup
       // 0fa: ldc_w "RC2 "
       // 0fd: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -602,7 +599,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 10d: getfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._sessionKey Lnet/rim/device/api/crypto/SymmetricKey;
       // 110: ifnonnull 124
       // 113: aload 0
-      // 114: new java/lang/Object
+      // 114: new net/rim/device/api/crypto/RC2Key
       // 117: dup
       // 118: aload 0
       // 119: getfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._sessionKeyData [B
@@ -611,7 +608,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 121: putfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._sessionKey Lnet/rim/device/api/crypto/SymmetricKey;
       // 124: aload 0
       // 125: getfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._sessionKey Lnet/rim/device/api/crypto/SymmetricKey;
-      // 128: instanceof java/lang/Object
+      // 128: instanceof net/rim/device/api/crypto/RC2Key
       // 12b: ifeq 13a
       // 12e: aload 0
       // 12f: aload 4
@@ -653,9 +650,9 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 183: iload 5
       // 185: sipush 128
       // 188: if_icmpeq 1a5
-      // 18b: new java/lang/Object
+      // 18b: new net/rim/device/api/crypto/UnsupportedCryptoSystemException
       // 18e: dup
-      // 18f: new java/lang/Object
+      // 18f: new java/lang/StringBuffer
       // 192: dup
       // 193: ldc_w "CAST "
       // 196: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -669,7 +666,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 1a9: ifnull 1af
       // 1ac: goto 269
       // 1af: aload 0
-      // 1b0: new java/lang/Object
+      // 1b0: new net/rim/device/api/crypto/CAST128Key
       // 1b3: dup
       // 1b4: aload 0
       // 1b5: getfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._sessionKeyData [B
@@ -727,7 +724,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 23a: getfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._sessionKey Lnet/rim/device/api/crypto/SymmetricKey;
       // 23d: ifnonnull 24f
       // 240: aload 0
-      // 241: new java/lang/Object
+      // 241: new net/rim/device/api/crypto/AESKey
       // 244: dup
       // 245: aload 0
       // 246: getfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._sessionKeyData [B
@@ -738,7 +735,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 251: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputStream.readOctetStringAsByteArray ()[B
       // 254: putfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._iv [B
       // 257: goto 269
-      // 25a: new java/lang/Object
+      // 25a: new net/rim/device/api/crypto/UnsupportedCryptoSystemException
       // 25d: dup
       // 25e: aload 0
       // 25f: getfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._encryptionType Lnet/rim/device/api/crypto/oid/OID;
@@ -767,7 +764,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       return this._sessionKey;
    }
 
-   public final X509CertificateRevocationList getCRL() {
+   public final X509CertificateRevocationList getCRL() throws CRLVerificationException {
       if (this._crl != null) {
          return this._crl;
       }
@@ -777,17 +774,17 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       }
 
       if (this._keyStore == null) {
-         throw new Object();
+         throw new CRLVerificationException();
       }
 
-      this._crl = (X509CertificateRevocationList)(new Object((InputStream)(new Object(this._originatorCrls)), this._keyStore));
+      this._crl = new X509CertificateRevocationList(new ByteArrayInputStream(this._originatorCrls), this._keyStore);
       return this._crl;
    }
 
    @Override
    public final int read(byte[] buffer, int offset, int length) {
       if (buffer == null || offset < 0 || length < 0 || buffer.length - length < offset) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return super._data == null ? -1 : super._data.read(buffer, offset, length);
       }
@@ -831,14 +828,14 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 28: getfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._originatorCerts Lnet/rim/device/api/crypto/asn1/ASN1InputStream;
       // 2b: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputStream.readFieldAsByteArray ()[B
       // 2e: invokestatic net/rim/device/api/crypto/certificate/CertificateFactory.getInstance (Ljava/lang/String;[B)Lnet/rim/device/api/crypto/certificate/Certificate;
-      // 31: checkcast java/lang/Object
+      // 31: checkcast net/rim/device/api/crypto/certificate/x509/X509Certificate
       // 34: astore 1
       // 35: aload 0
       // 36: getfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._pool [Lnet/rim/device/api/crypto/certificate/x509/X509Certificate;
       // 39: ifnonnull 4b
       // 3c: aload 0
       // 3d: bipush 1
-      // 3e: anewarray 2627
+      // 3e: anewarray 2632
       // 41: dup
       // 42: bipush 0
       // 43: aload 1
@@ -905,11 +902,11 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 10: ifnonnull 15
       // 13: aconst_null
       // 14: areturn
-      // 15: new java/lang/Object
+      // 15: new java/util/Vector
       // 18: dup
       // 19: invokespecial java/util/Vector.<init> ()V
       // 1c: astore 1
-      // 1d: new java/lang/Object
+      // 1d: new net/rim/device/api/crypto/asn1/ASN1InputByteArray
       // 20: dup
       // 21: aload 0
       // 22: getfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._recipientInfosData [B
@@ -943,9 +940,9 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 59: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputByteArray.peekNextTag ()I
       // 5c: bipush 1
       // 5d: if_icmpne 88
-      // 60: new java/lang/Object
+      // 60: new net/rim/device/api/crypto/asn1/ASN1InputStream
       // 63: dup
-      // 64: new java/lang/Object
+      // 64: new java/io/ByteArrayInputStream
       // 67: dup
       // 68: aload 2
       // 69: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputByteArray.readFieldAsByteArray ()[B
@@ -972,7 +969,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 97: ifle c4
       // 9a: aload 0
       // 9b: iload 4
-      // 9d: anewarray 2852
+      // 9d: anewarray 2857
       // a0: putfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._recipients [Lnet/rim/device/api/crypto/cms/CMSEntityIdentifier;
       // a3: iload 4
       // a5: bipush 1
@@ -1035,7 +1032,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
          ASN1InputStream recipient = recipientEncryptedKeys.readSequence();
          if (recipient.peekNextTag() == 16) {
             ASN1InputStream recipientIssuerAndSerialNumber = recipient.readSequence();
-            X509DistinguishedName recipientIssuer = (X509DistinguishedName)(new Object(recipientIssuerAndSerialNumber));
+            X509DistinguishedName recipientIssuer = new X509DistinguishedName(recipientIssuerAndSerialNumber);
             byte[] recipientSerialNumber = recipientIssuerAndSerialNumber.readIntegerAsByteArray();
             recipients.addElement(new CMSEntityIdentifier(recipientSerialNumber, recipientIssuer));
          } else {
@@ -1066,7 +1063,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
          }
 
          recipientInfos.readSequence();
-         X509DistinguishedName issuer = (X509DistinguishedName)(new Object(recipientInfos.readFieldAsByteArray()));
+         X509DistinguishedName issuer = new X509DistinguishedName(recipientInfos.readFieldAsByteArray());
          byte[] serialNumber = recipientInfos.readIntegerAsByteArray();
          recipients.addElement(new CMSEntityIdentifier(serialNumber, issuer));
       }
@@ -1093,7 +1090,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 016: dup
       // 017: invokespecial net/rim/device/api/crypto/cms/CMSParsingException.<init> ()V
       // 01a: athrow
-      // 01b: new java/lang/Object
+      // 01b: new net/rim/device/api/crypto/asn1/ASN1InputByteArray
       // 01e: dup
       // 01f: aload 0
       // 020: getfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._recipientInfosData [B
@@ -1133,9 +1130,9 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 065: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputByteArray.peekNextTag ()I
       // 068: bipush 1
       // 069: if_icmpne 09a
-      // 06c: new java/lang/Object
+      // 06c: new net/rim/device/api/crypto/asn1/ASN1InputStream
       // 06f: dup
-      // 070: new java/lang/Object
+      // 070: new java/io/ByteArrayInputStream
       // 073: dup
       // 074: aload 1
       // 075: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputByteArray.readFieldAsByteArray ()[B
@@ -1257,7 +1254,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 003: bipush 5
       // 005: if_icmplt 00b
       // 008: goto 278
-      // 00b: new java/lang/Object
+      // 00b: new net/rim/device/api/crypto/asn1/ASN1InputByteArray
       // 00e: dup
       // 00f: aload 1
       // 010: invokespecial net/rim/device/api/crypto/asn1/ASN1InputByteArray.<init> ([B)V
@@ -1279,7 +1276,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 030: astore 5
       // 032: iload 2
       // 033: ifne 052
-      // 036: new java/lang/Object
+      // 036: new net/rim/device/internal/ui/component/PasswordDialog
       // 039: dup
       // 03a: getstatic net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._rb Lnet/rim/device/api/i18n/ResourceBundle;
       // 03d: sipush 6046
@@ -1290,7 +1287,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 04a: invokespecial net/rim/device/internal/ui/component/PasswordDialog.<init> (Ljava/lang/String;ZII)V
       // 04d: astore 5
       // 04f: goto 06b
-      // 052: new java/lang/Object
+      // 052: new net/rim/device/internal/ui/component/PasswordDialog
       // 055: dup
       // 056: getstatic net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._rb Lnet/rim/device/api/i18n/ResourceBundle;
       // 059: sipush 6047
@@ -1376,7 +1373,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 0fe: invokestatic net/rim/device/api/crypto/oid/OIDs.getOID (I)Lnet/rim/device/api/crypto/oid/OID;
       // 101: invokevirtual net/rim/device/api/crypto/oid/OID.equals (Ljava/lang/Object;)Z
       // 104: ifeq 119
-      // 107: new java/lang/Object
+      // 107: new net/rim/device/api/crypto/PKCS5KDF2PseudoRandomSource
       // 10a: dup
       // 10b: aload 6
       // 10d: aload 9
@@ -1429,14 +1426,14 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 17a: invokestatic net/rim/device/api/crypto/oid/OIDs.getOID (I)Lnet/rim/device/api/crypto/oid/OID;
       // 17d: invokevirtual net/rim/device/api/crypto/oid/OID.equals (Ljava/lang/Object;)Z
       // 180: ifeq 1a3
-      // 183: new java/lang/Object
+      // 183: new net/rim/device/api/crypto/TripleDESKey
       // 186: dup
       // 187: aload 11
       // 189: bipush 24
       // 18b: invokevirtual net/rim/device/api/crypto/AbstractPseudoRandomSource.getBytes (I)[B
       // 18e: invokespecial net/rim/device/api/crypto/TripleDESKey.<init> ([B)V
       // 191: astore 15
-      // 193: new java/lang/Object
+      // 193: new net/rim/device/api/crypto/InitializationVector
       // 196: dup
       // 197: aload 3
       // 198: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputByteArray.readOctetString ()[B
@@ -1448,7 +1445,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 1a8: invokestatic net/rim/device/api/crypto/oid/OIDs.getOID (I)Lnet/rim/device/api/crypto/oid/OID;
       // 1ab: invokevirtual net/rim/device/api/crypto/oid/OID.equals (Ljava/lang/Object;)Z
       // 1ae: ifeq 1c4
-      // 1b1: new java/lang/Object
+      // 1b1: new net/rim/device/api/crypto/AESKey
       // 1b4: dup
       // 1b5: aload 11
       // 1b7: bipush 16
@@ -1461,7 +1458,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 1c9: invokestatic net/rim/device/api/crypto/oid/OIDs.getOID (I)Lnet/rim/device/api/crypto/oid/OID;
       // 1cc: invokevirtual net/rim/device/api/crypto/oid/OID.equals (Ljava/lang/Object;)Z
       // 1cf: ifeq 1e5
-      // 1d2: new java/lang/Object
+      // 1d2: new net/rim/device/api/crypto/AESKey
       // 1d5: dup
       // 1d6: aload 11
       // 1d8: bipush 24
@@ -1474,7 +1471,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 1ea: invokestatic net/rim/device/api/crypto/oid/OIDs.getOID (I)Lnet/rim/device/api/crypto/oid/OID;
       // 1ed: invokevirtual net/rim/device/api/crypto/oid/OID.equals (Ljava/lang/Object;)Z
       // 1f0: ifeq 206
-      // 1f3: new java/lang/Object
+      // 1f3: new net/rim/device/api/crypto/AESKey
       // 1f6: dup
       // 1f7: aload 11
       // 1f9: bipush 32
@@ -1519,7 +1516,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 258: ifeq 269
       // 25b: aload 0
       // 25c: aload 15
-      // 25e: checkcast java/lang/Object
+      // 25e: checkcast net/rim/device/api/crypto/AESKey
       // 261: aload 16
       // 263: invokestatic net/rim/device/api/crypto/cms/CMSKeyUnWrap.AESKeyUnWrap (Lnet/rim/device/api/crypto/AESKey;[B)[B
       // 266: putfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._sessionKeyData [B
@@ -1576,7 +1573,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 010: dup
       // 011: invokespecial net/rim/device/api/crypto/cms/CMSParsingException.<init> ()V
       // 014: athrow
-      // 015: new java/lang/Object
+      // 015: new net/rim/device/api/crypto/asn1/ASN1InputStream
       // 018: dup
       // 019: aload 1
       // 01a: bipush 0
@@ -1664,7 +1661,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 0cf: aload 14
       // 0d1: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputStream.readSequence ()Lnet/rim/device/api/crypto/asn1/ASN1InputStream;
       // 0d4: astore 15
-      // 0d6: new java/lang/Object
+      // 0d6: new net/rim/device/api/crypto/certificate/x509/X509DistinguishedName
       // 0d9: dup
       // 0da: aload 15
       // 0dc: invokespecial net/rim/device/api/crypto/certificate/x509/X509DistinguishedName.<init> (Lnet/rim/device/api/crypto/asn1/ASN1InputStream;)V
@@ -1683,11 +1680,11 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 0f7: astore 18
       // 0f9: aload 18
       // 0fb: dup
-      // 0fc: instanceof java/lang/Object
+      // 0fc: instanceof net/rim/device/api/crypto/DHPrivateKey
       // 0ff: ifne 106
       // 102: pop
       // 103: goto 10b
-      // 106: checkcast java/lang/Object
+      // 106: checkcast net/rim/device/api/crypto/DHPrivateKey
       // 109: astore 12
       // 10b: new net/rim/device/api/crypto/cms/CMSEntityIdentifier
       // 10e: dup
@@ -1696,7 +1693,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 113: invokespecial net/rim/device/api/crypto/cms/CMSEntityIdentifier.<init> ([BLnet/rim/device/api/crypto/certificate/x509/X509DistinguishedName;)V
       // 116: astore 2
       // 117: aload 18
-      // 119: instanceof java/lang/Object
+      // 119: instanceof net/rim/device/api/crypto/SymmetricKey
       // 11c: ifeq 177
       // 11f: aload 2
       // 120: areturn
@@ -1721,11 +1718,11 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 147: astore 17
       // 149: aload 17
       // 14b: dup
-      // 14c: instanceof java/lang/Object
+      // 14c: instanceof net/rim/device/api/crypto/DHPrivateKey
       // 14f: ifne 156
       // 152: pop
       // 153: goto 15b
-      // 156: checkcast java/lang/Object
+      // 156: checkcast net/rim/device/api/crypto/DHPrivateKey
       // 159: astore 12
       // 15b: new net/rim/device/api/crypto/cms/CMSEntityIdentifier
       // 15e: dup
@@ -1733,7 +1730,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 161: invokespecial net/rim/device/api/crypto/cms/CMSEntityIdentifier.<init> ([B)V
       // 164: astore 2
       // 165: aload 17
-      // 167: instanceof java/lang/Object
+      // 167: instanceof net/rim/device/api/crypto/SymmetricKey
       // 16a: ifeq 177
       // 16d: aload 2
       // 16e: areturn
@@ -1770,9 +1767,9 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 1b4: dup
       // 1b5: invokespecial net/rim/device/api/crypto/cms/CMSParsingException.<init> ()V
       // 1b8: athrow
-      // 1b9: new java/lang/Object
+      // 1b9: new net/rim/device/api/crypto/asn1/ASN1InputStream
       // 1bc: dup
-      // 1bd: new java/lang/Object
+      // 1bd: new java/io/ByteArrayInputStream
       // 1c0: dup
       // 1c1: aload 7
       // 1c3: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputStream.readBitString ()Lnet/rim/device/api/crypto/asn1/ASN1BitSet;
@@ -1783,7 +1780,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 1d1: aload 17
       // 1d3: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputStream.readIntegerAsByteArray ()[B
       // 1d6: astore 18
-      // 1d8: new java/lang/Object
+      // 1d8: new net/rim/device/api/crypto/DHPublicKey
       // 1db: dup
       // 1dc: aload 12
       // 1de: invokevirtual net/rim/device/api/crypto/DHPrivateKey.getDHCryptoSystem ()Lnet/rim/device/api/crypto/DHCryptoSystem;
@@ -1794,7 +1791,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 1eb: aload 5
       // 1ed: ifnonnull 1f3
       // 1f0: goto 295
-      // 1f3: new java/lang/Object
+      // 1f3: new net/rim/device/api/crypto/certificate/x509/X509DistinguishedName
       // 1f6: dup
       // 1f7: aload 5
       // 1f9: invokespecial net/rim/device/api/crypto/certificate/x509/X509DistinguishedName.<init> (Lnet/rim/device/api/crypto/asn1/ASN1InputStream;)V
@@ -1813,11 +1810,11 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 214: astore 17
       // 216: aload 17
       // 218: dup
-      // 219: instanceof java/lang/Object
+      // 219: instanceof net/rim/device/api/crypto/DHPublicKey
       // 21c: ifne 223
       // 21f: pop
       // 220: goto 228
-      // 223: checkcast java/lang/Object
+      // 223: checkcast net/rim/device/api/crypto/DHPublicKey
       // 226: astore 14
       // 228: aload 14
       // 22a: ifnull 230
@@ -1856,7 +1853,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 26f: iload 18
       // 271: aaload
       // 272: invokespecial net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream.getPublicKeyFromPool (Lnet/rim/device/api/crypto/certificate/Certificate;)Lnet/rim/device/api/crypto/PublicKey;
-      // 275: checkcast java/lang/Object
+      // 275: checkcast net/rim/device/api/crypto/DHPublicKey
       // 278: astore 14
       // 27a: aload 14
       // 27c: ifnull 282
@@ -1881,11 +1878,11 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 2a7: astore 15
       // 2a9: aload 15
       // 2ab: dup
-      // 2ac: instanceof java/lang/Object
+      // 2ac: instanceof net/rim/device/api/crypto/DHPublicKey
       // 2af: ifne 2b6
       // 2b2: pop
       // 2b3: goto 2bb
-      // 2b6: checkcast java/lang/Object
+      // 2b6: checkcast net/rim/device/api/crypto/DHPublicKey
       // 2b9: astore 14
       // 2bb: aload 14
       // 2bd: ifnonnull 313
@@ -1915,7 +1912,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 2ed: iload 16
       // 2ef: aaload
       // 2f0: invokespecial net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream.getPublicKeyFromPool (Lnet/rim/device/api/crypto/certificate/Certificate;)Lnet/rim/device/api/crypto/PublicKey;
-      // 2f3: checkcast java/lang/Object
+      // 2f3: checkcast net/rim/device/api/crypto/DHPublicKey
       // 2f6: astore 14
       // 2f8: aload 14
       // 2fa: ifnull 300
@@ -1944,7 +1941,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 330: invokestatic net/rim/device/api/crypto/oid/OIDs.getOID (I)Lnet/rim/device/api/crypto/oid/OID;
       // 333: invokevirtual net/rim/device/api/crypto/oid/OID.equals (Ljava/lang/Object;)Z
       // 336: ifeq 356
-      // 339: new java/lang/Object
+      // 339: new net/rim/device/api/crypto/RFC2631KDFPseudoRandomSource
       // 33c: dup
       // 33d: aload 15
       // 33f: aload 17
@@ -1970,7 +1967,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 36b: if_icmpeq 370
       // 36e: aload 2
       // 36f: areturn
-      // 370: new java/lang/Object
+      // 370: new net/rim/device/api/crypto/RFC2631KDFPseudoRandomSource
       // 373: dup
       // 374: aload 15
       // 376: aload 17
@@ -1996,7 +1993,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 3a4: if_icmpeq 3a9
       // 3a7: aload 2
       // 3a8: areturn
-      // 3a9: new java/lang/Object
+      // 3a9: new net/rim/device/api/crypto/RFC2631KDFPseudoRandomSource
       // 3ac: dup
       // 3ad: aload 15
       // 3af: aload 17
@@ -2016,7 +2013,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 3cc: invokestatic net/rim/device/api/crypto/oid/OIDs.getOID (I)Lnet/rim/device/api/crypto/oid/OID;
       // 3cf: invokevirtual net/rim/device/api/crypto/oid/OID.equals (Ljava/lang/Object;)Z
       // 3d2: ifeq 3f3
-      // 3d5: new java/lang/Object
+      // 3d5: new net/rim/device/api/crypto/RFC2631KDFPseudoRandomSource
       // 3d8: dup
       // 3d9: aload 15
       // 3db: aload 17
@@ -2036,7 +2033,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 3f8: invokestatic net/rim/device/api/crypto/oid/OIDs.getOID (I)Lnet/rim/device/api/crypto/oid/OID;
       // 3fb: invokevirtual net/rim/device/api/crypto/oid/OID.equals (Ljava/lang/Object;)Z
       // 3fe: ifeq 41f
-      // 401: new java/lang/Object
+      // 401: new net/rim/device/api/crypto/RFC2631KDFPseudoRandomSource
       // 404: dup
       // 405: aload 15
       // 407: aload 17
@@ -2056,7 +2053,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 424: invokestatic net/rim/device/api/crypto/oid/OIDs.getOID (I)Lnet/rim/device/api/crypto/oid/OID;
       // 427: invokevirtual net/rim/device/api/crypto/oid/OID.equals (Ljava/lang/Object;)Z
       // 42a: ifeq 44b
-      // 42d: new java/lang/Object
+      // 42d: new net/rim/device/api/crypto/RFC2631KDFPseudoRandomSource
       // 430: dup
       // 431: aload 15
       // 433: aload 17
@@ -2102,7 +2099,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 48e: aload 14
       // 490: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputStream.readSequence ()Lnet/rim/device/api/crypto/asn1/ASN1InputStream;
       // 493: astore 15
-      // 495: new java/lang/Object
+      // 495: new net/rim/device/api/crypto/certificate/x509/X509DistinguishedName
       // 498: dup
       // 499: aload 15
       // 49b: invokespecial net/rim/device/api/crypto/certificate/x509/X509DistinguishedName.<init> (Lnet/rim/device/api/crypto/asn1/ASN1InputStream;)V
@@ -2121,11 +2118,11 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 4b6: astore 18
       // 4b8: aload 18
       // 4ba: dup
-      // 4bb: instanceof java/lang/Object
+      // 4bb: instanceof net/rim/device/api/crypto/ECPrivateKey
       // 4be: ifne 4c5
       // 4c1: pop
       // 4c2: goto 4ca
-      // 4c5: checkcast java/lang/Object
+      // 4c5: checkcast net/rim/device/api/crypto/ECPrivateKey
       // 4c8: astore 12
       // 4ca: new net/rim/device/api/crypto/cms/CMSEntityIdentifier
       // 4cd: dup
@@ -2134,7 +2131,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 4d2: invokespecial net/rim/device/api/crypto/cms/CMSEntityIdentifier.<init> ([BLnet/rim/device/api/crypto/certificate/x509/X509DistinguishedName;)V
       // 4d5: astore 2
       // 4d6: aload 18
-      // 4d8: instanceof java/lang/Object
+      // 4d8: instanceof net/rim/device/api/crypto/SymmetricKey
       // 4db: ifeq 536
       // 4de: aload 2
       // 4df: areturn
@@ -2159,11 +2156,11 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 506: astore 17
       // 508: aload 17
       // 50a: dup
-      // 50b: instanceof java/lang/Object
+      // 50b: instanceof net/rim/device/api/crypto/ECPrivateKey
       // 50e: ifne 515
       // 511: pop
       // 512: goto 51a
-      // 515: checkcast java/lang/Object
+      // 515: checkcast net/rim/device/api/crypto/ECPrivateKey
       // 518: astore 12
       // 51a: new net/rim/device/api/crypto/cms/CMSEntityIdentifier
       // 51d: dup
@@ -2171,7 +2168,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 520: invokespecial net/rim/device/api/crypto/cms/CMSEntityIdentifier.<init> ([B)V
       // 523: astore 2
       // 524: aload 17
-      // 526: instanceof java/lang/Object
+      // 526: instanceof net/rim/device/api/crypto/SymmetricKey
       // 529: ifeq 536
       // 52c: aload 2
       // 52d: areturn
@@ -2214,7 +2211,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 57f: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputStream.readBitString ()Lnet/rim/device/api/crypto/asn1/ASN1BitSet;
       // 582: invokevirtual net/rim/device/api/crypto/asn1/ASN1BitSet.toByteArray ()[B
       // 585: astore 16
-      // 587: new java/lang/Object
+      // 587: new net/rim/device/api/crypto/ECPublicKey
       // 58a: dup
       // 58b: aload 12
       // 58d: invokevirtual net/rim/device/api/crypto/ECPrivateKey.getECCryptoSystem ()Lnet/rim/device/api/crypto/ECCryptoSystem;
@@ -2237,11 +2234,11 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 5b6: aload 20
       // 5b8: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputStream.readOID ()Lnet/rim/device/api/crypto/oid/OID;
       // 5bb: astore 21
-      // 5bd: new java/lang/Object
+      // 5bd: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 5c0: dup
       // 5c1: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 5c4: astore 22
-      // 5c6: new java/lang/Object
+      // 5c6: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 5c9: dup
       // 5ca: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 5cd: astore 23
@@ -2286,7 +2283,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 610: bipush 1
       // 611: bipush 2
       // 613: invokevirtual net/rim/device/api/crypto/asn1/ASN1OutputStream.writeOctetString ([BII)V
-      // 616: new java/lang/Object
+      // 616: new net/rim/device/api/crypto/X963KDFPseudoRandomSource
       // 619: dup
       // 61a: aload 19
       // 61c: aload 0
@@ -2328,7 +2325,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 656: bipush 1
       // 657: bipush 2
       // 659: invokevirtual net/rim/device/api/crypto/asn1/ASN1OutputStream.writeOctetString ([BII)V
-      // 65c: new java/lang/Object
+      // 65c: new net/rim/device/api/crypto/X963KDFPseudoRandomSource
       // 65f: dup
       // 660: aload 19
       // 662: aload 0
@@ -2376,7 +2373,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 6a9: bipush 1
       // 6aa: bipush 2
       // 6ac: invokevirtual net/rim/device/api/crypto/asn1/ASN1OutputStream.writeOctetString ([BII)V
-      // 6af: new java/lang/Object
+      // 6af: new net/rim/device/api/crypto/X963KDFPseudoRandomSource
       // 6b2: dup
       // 6b3: aload 19
       // 6b5: aload 0
@@ -2424,7 +2421,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 6fd: bipush 1
       // 6fe: bipush 2
       // 700: invokevirtual net/rim/device/api/crypto/asn1/ASN1OutputStream.writeOctetString ([BII)V
-      // 703: new java/lang/Object
+      // 703: new net/rim/device/api/crypto/X963KDFPseudoRandomSource
       // 706: dup
       // 707: aload 19
       // 709: aload 0
@@ -2466,7 +2463,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 744: bipush 1
       // 745: bipush 2
       // 747: invokevirtual net/rim/device/api/crypto/asn1/ASN1OutputStream.writeOctetString ([BII)V
-      // 74a: new java/lang/Object
+      // 74a: new net/rim/device/api/crypto/X963KDFPseudoRandomSource
       // 74d: dup
       // 74e: aload 19
       // 750: aload 0
@@ -2508,7 +2505,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 78a: bipush 1
       // 78b: bipush 2
       // 78d: invokevirtual net/rim/device/api/crypto/asn1/ASN1OutputStream.writeOctetString ([BII)V
-      // 790: new java/lang/Object
+      // 790: new net/rim/device/api/crypto/X963KDFPseudoRandomSource
       // 793: dup
       // 794: aload 19
       // 796: aload 0
@@ -2552,7 +2549,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 7e8: aload 15
       // 7ea: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputStream.readSequence ()Lnet/rim/device/api/crypto/asn1/ASN1InputStream;
       // 7ed: astore 16
-      // 7ef: new java/lang/Object
+      // 7ef: new net/rim/device/api/crypto/certificate/x509/X509DistinguishedName
       // 7f2: dup
       // 7f3: aload 16
       // 7f5: invokespecial net/rim/device/api/crypto/certificate/x509/X509DistinguishedName.<init> (Lnet/rim/device/api/crypto/asn1/ASN1InputStream;)V
@@ -2571,20 +2568,20 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 810: astore 19
       // 812: aload 19
       // 814: dup
-      // 815: instanceof java/lang/Object
+      // 815: instanceof net/rim/device/api/crypto/ECPrivateKey
       // 818: ifne 81f
       // 81b: pop
       // 81c: goto 824
-      // 81f: checkcast java/lang/Object
+      // 81f: checkcast net/rim/device/api/crypto/ECPrivateKey
       // 822: astore 12
       // 824: aload 12
       // 826: ifnull 856
-      // 829: new java/lang/Object
+      // 829: new net/rim/device/api/crypto/ECKeyPair
       // 82c: dup
       // 82d: aload 0
       // 82e: getfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._recipientCertificate Lnet/rim/device/api/crypto/certificate/Certificate;
       // 831: invokeinterface net/rim/device/api/crypto/certificate/Certificate.getPublicKey ()Lnet/rim/device/api/crypto/PublicKey; 1
-      // 836: checkcast java/lang/Object
+      // 836: checkcast net/rim/device/api/crypto/ECPublicKey
       // 839: aload 12
       // 83b: invokespecial net/rim/device/api/crypto/ECKeyPair.<init> (Lnet/rim/device/api/crypto/ECPublicKey;Lnet/rim/device/api/crypto/ECPrivateKey;)V
       // 83e: astore 13
@@ -2607,7 +2604,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 85e: invokespecial net/rim/device/api/crypto/cms/CMSEntityIdentifier.<init> ([BLnet/rim/device/api/crypto/certificate/x509/X509DistinguishedName;)V
       // 861: astore 2
       // 862: aload 19
-      // 864: instanceof java/lang/Object
+      // 864: instanceof net/rim/device/api/crypto/SymmetricKey
       // 867: ifne 86d
       // 86a: goto 8f7
       // 86d: aload 2
@@ -2633,20 +2630,20 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 895: astore 18
       // 897: aload 18
       // 899: dup
-      // 89a: instanceof java/lang/Object
+      // 89a: instanceof net/rim/device/api/crypto/ECPrivateKey
       // 89d: ifne 8a4
       // 8a0: pop
       // 8a1: goto 8a9
-      // 8a4: checkcast java/lang/Object
+      // 8a4: checkcast net/rim/device/api/crypto/ECPrivateKey
       // 8a7: astore 12
       // 8a9: aload 12
       // 8ab: ifnull 8db
-      // 8ae: new java/lang/Object
+      // 8ae: new net/rim/device/api/crypto/ECKeyPair
       // 8b1: dup
       // 8b2: aload 0
       // 8b3: getfield net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream._recipientCertificate Lnet/rim/device/api/crypto/certificate/Certificate;
       // 8b6: invokeinterface net/rim/device/api/crypto/certificate/Certificate.getPublicKey ()Lnet/rim/device/api/crypto/PublicKey; 1
-      // 8bb: checkcast java/lang/Object
+      // 8bb: checkcast net/rim/device/api/crypto/ECPublicKey
       // 8be: aload 12
       // 8c0: invokespecial net/rim/device/api/crypto/ECKeyPair.<init> (Lnet/rim/device/api/crypto/ECPublicKey;Lnet/rim/device/api/crypto/ECPrivateKey;)V
       // 8c3: astore 13
@@ -2668,7 +2665,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 8e1: invokespecial net/rim/device/api/crypto/cms/CMSEntityIdentifier.<init> ([B)V
       // 8e4: astore 2
       // 8e5: aload 18
-      // 8e7: instanceof java/lang/Object
+      // 8e7: instanceof net/rim/device/api/crypto/SymmetricKey
       // 8ea: ifeq 8f7
       // 8ed: aload 2
       // 8ee: areturn
@@ -2691,7 +2688,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 910: aload 5
       // 912: ifnonnull 918
       // 915: goto 9bd
-      // 918: new java/lang/Object
+      // 918: new net/rim/device/api/crypto/certificate/x509/X509DistinguishedName
       // 91b: dup
       // 91c: aload 5
       // 91e: invokespecial net/rim/device/api/crypto/certificate/x509/X509DistinguishedName.<init> (Lnet/rim/device/api/crypto/asn1/ASN1InputStream;)V
@@ -2710,11 +2707,11 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 939: astore 18
       // 93b: aload 18
       // 93d: dup
-      // 93e: instanceof java/lang/Object
+      // 93e: instanceof net/rim/device/api/crypto/ECPublicKey
       // 941: ifne 948
       // 944: pop
       // 945: goto 94d
-      // 948: checkcast java/lang/Object
+      // 948: checkcast net/rim/device/api/crypto/ECPublicKey
       // 94b: astore 15
       // 94d: aload 15
       // 94f: ifnull 955
@@ -2753,7 +2750,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 994: iload 19
       // 996: aaload
       // 997: invokespecial net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream.getPublicKeyFromPool (Lnet/rim/device/api/crypto/certificate/Certificate;)Lnet/rim/device/api/crypto/PublicKey;
-      // 99a: checkcast java/lang/Object
+      // 99a: checkcast net/rim/device/api/crypto/ECPublicKey
       // 99d: astore 15
       // 99f: aload 15
       // 9a1: ifnull 9a7
@@ -2779,11 +2776,11 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 9cf: astore 16
       // 9d1: aload 16
       // 9d3: dup
-      // 9d4: instanceof java/lang/Object
+      // 9d4: instanceof net/rim/device/api/crypto/ECPublicKey
       // 9d7: ifne 9de
       // 9da: pop
       // 9db: goto 9e3
-      // 9de: checkcast java/lang/Object
+      // 9de: checkcast net/rim/device/api/crypto/ECPublicKey
       // 9e1: astore 15
       // 9e3: aload 15
       // 9e5: ifnull 9eb
@@ -2814,7 +2811,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // a18: iload 17
       // a1a: aaload
       // a1b: invokespecial net/rim/device/api/crypto/cms/CMSEnvelopedDataInputStream.getPublicKeyFromPool (Lnet/rim/device/api/crypto/certificate/Certificate;)Lnet/rim/device/api/crypto/PublicKey;
-      // a1e: checkcast java/lang/Object
+      // a1e: checkcast net/rim/device/api/crypto/ECPublicKey
       // a21: astore 15
       // a23: aload 15
       // a25: ifnull a2b
@@ -2848,7 +2845,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // a69: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputStream.readBitString ()Lnet/rim/device/api/crypto/asn1/ASN1BitSet;
       // a6c: invokevirtual net/rim/device/api/crypto/asn1/ASN1BitSet.toByteArray ()[B
       // a6f: astore 18
-      // a71: new java/lang/Object
+      // a71: new net/rim/device/api/crypto/ECPublicKey
       // a74: dup
       // a75: aload 12
       // a77: invokevirtual net/rim/device/api/crypto/ECPrivateKey.getECCryptoSystem ()Lnet/rim/device/api/crypto/ECCryptoSystem;
@@ -2866,7 +2863,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // a94: dup
       // a95: invokespecial net/rim/device/api/crypto/cms/CMSParsingException.<init> ()V
       // a98: athrow
-      // a99: new java/lang/Object
+      // a99: new net/rim/device/api/crypto/asn1/ASN1InputStream
       // a9c: dup
       // a9d: aload 8
       // a9f: invokespecial net/rim/device/api/crypto/asn1/ASN1InputStream.<init> ([B)V
@@ -2896,7 +2893,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // ad8: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputStream.readBitString ()Lnet/rim/device/api/crypto/asn1/ASN1BitSet;
       // adb: invokevirtual net/rim/device/api/crypto/asn1/ASN1BitSet.toByteArray ()[B
       // ade: astore 21
-      // ae0: new java/lang/Object
+      // ae0: new net/rim/device/api/crypto/ECPublicKey
       // ae3: dup
       // ae4: aload 12
       // ae6: invokevirtual net/rim/device/api/crypto/ECPrivateKey.getECCryptoSystem ()Lnet/rim/device/api/crypto/ECCryptoSystem;
@@ -2926,11 +2923,11 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // b19: aload 25
       // b1b: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputStream.readOID ()Lnet/rim/device/api/crypto/oid/OID;
       // b1e: astore 26
-      // b20: new java/lang/Object
+      // b20: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // b23: dup
       // b24: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // b27: astore 27
-      // b29: new java/lang/Object
+      // b29: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // b2c: dup
       // b2d: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // b30: astore 28
@@ -2975,7 +2972,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // b73: bipush 1
       // b74: bipush 2
       // b76: invokevirtual net/rim/device/api/crypto/asn1/ASN1OutputStream.writeOctetString ([BII)V
-      // b79: new java/lang/Object
+      // b79: new net/rim/device/api/crypto/X963KDFPseudoRandomSource
       // b7c: dup
       // b7d: aload 24
       // b7f: aload 0
@@ -3017,7 +3014,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // bb9: bipush 1
       // bba: bipush 2
       // bbc: invokevirtual net/rim/device/api/crypto/asn1/ASN1OutputStream.writeOctetString ([BII)V
-      // bbf: new java/lang/Object
+      // bbf: new net/rim/device/api/crypto/X963KDFPseudoRandomSource
       // bc2: dup
       // bc3: aload 24
       // bc5: aload 0
@@ -3065,7 +3062,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // c0c: bipush 1
       // c0d: bipush 2
       // c0f: invokevirtual net/rim/device/api/crypto/asn1/ASN1OutputStream.writeOctetString ([BII)V
-      // c12: new java/lang/Object
+      // c12: new net/rim/device/api/crypto/X963KDFPseudoRandomSource
       // c15: dup
       // c16: aload 24
       // c18: aload 0
@@ -3113,7 +3110,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // c60: bipush 1
       // c61: bipush 2
       // c63: invokevirtual net/rim/device/api/crypto/asn1/ASN1OutputStream.writeOctetString ([BII)V
-      // c66: new java/lang/Object
+      // c66: new net/rim/device/api/crypto/X963KDFPseudoRandomSource
       // c69: dup
       // c6a: aload 24
       // c6c: aload 0
@@ -3155,7 +3152,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // ca7: bipush 1
       // ca8: bipush 2
       // caa: invokevirtual net/rim/device/api/crypto/asn1/ASN1OutputStream.writeOctetString ([BII)V
-      // cad: new java/lang/Object
+      // cad: new net/rim/device/api/crypto/X963KDFPseudoRandomSource
       // cb0: dup
       // cb1: aload 24
       // cb3: aload 0
@@ -3197,7 +3194,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // ced: bipush 1
       // cee: bipush 2
       // cf0: invokevirtual net/rim/device/api/crypto/asn1/ASN1OutputStream.writeOctetString ([BII)V
-      // cf3: new java/lang/Object
+      // cf3: new net/rim/device/api/crypto/X963KDFPseudoRandomSource
       // cf6: dup
       // cf7: aload 24
       // cf9: aload 0
@@ -3236,12 +3233,12 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
 
          byte[] subjectKeyIdentifier = recipientInfos.readOctetString(2, 0);
          Key readKey = this.findKeyWithSubjectKeyIdentifier(subjectKeyIdentifier, false, "RSA", 4);
-         if (readKey instanceof Object) {
+         if (readKey instanceof RSAPrivateKey) {
             key = (RSAPrivateKey)readKey;
          }
 
          identifier = new CMSEntityIdentifier(subjectKeyIdentifier);
-         if (readKey instanceof Object) {
+         if (readKey instanceof SymmetricKey) {
             return identifier;
          }
 
@@ -3254,15 +3251,15 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
          }
 
          recipientInfos.readSequence();
-         X509DistinguishedName issuer = (X509DistinguishedName)(new Object(recipientInfos.readFieldAsByteArray()));
+         X509DistinguishedName issuer = new X509DistinguishedName(recipientInfos.readFieldAsByteArray());
          byte[] serialNumber = recipientInfos.readIntegerAsByteArray();
          Key readKey = this.findKeyWithIssuerAndSerialNumber(issuer, serialNumber, false, "RSA", 4);
-         if (readKey instanceof Object) {
+         if (readKey instanceof RSAPrivateKey) {
             key = (RSAPrivateKey)readKey;
          }
 
          identifier = new CMSEntityIdentifier(serialNumber, issuer);
-         if (readKey instanceof Object) {
+         if (readKey instanceof SymmetricKey) {
             return identifier;
          }
 
@@ -3275,10 +3272,10 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       OID keyAlgorithm = recipientInfos.readOID();
       byte[] params = recipientInfos.readFieldAsByteArray();
       byte[] encryptedKey = recipientInfos.readOctetString();
-      ByteArrayInputStream in = (ByteArrayInputStream)(new Object(encryptedKey));
+      ByteArrayInputStream in = new ByteArrayInputStream(encryptedKey);
       BlockDecryptor cryptoStream;
       if (keyAlgorithm.equals(OIDs.getOID(543426108))) {
-         ASN1InputByteArray parameters = (ASN1InputByteArray)(new Object(params));
+         ASN1InputByteArray parameters = new ASN1InputByteArray(params);
          parameters.readSequence();
          Digest digest = null;
          if (parameters.peekNextTag() == 0) {
@@ -3291,12 +3288,12 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
                ;
             }
          } else {
-            digest = (Digest)(new Object());
+            digest = new SHA1Digest();
          }
 
-         cryptoStream = (BlockDecryptor)(new Object((BlockUnformatterEngine)(new Object((PrivateKeyDecryptorEngine)(new Object(key)), digest)), in));
+         cryptoStream = new BlockDecryptor(new OAEPUnformatterEngine(new RSADecryptorEngine(key), digest), in);
       } else {
-         cryptoStream = (BlockDecryptor)(new Object((BlockUnformatterEngine)(new Object((PrivateKeyDecryptorEngine)(new Object(key)))), in));
+         cryptoStream = new BlockDecryptor(new PKCS1UnformatterEngine(new RSADecryptorEngine(key)), in);
       }
 
       byte[] tempdata = new byte[encryptedKey.length];
@@ -3340,7 +3337,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
       // 009: goto 156
       // 00c: aload 1
       // 00d: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 012: checkcast java/lang/Object
+      // 012: checkcast net/rim/device/api/crypto/keystore/KeyStoreData
       // 015: astore 6
       // 017: iload 2
       // 018: ifeq 050
@@ -3521,28 +3518,28 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
          case 1:
          default: {
             byte[] keyData = source.getBytes(24);
-            this._sessionKeyData = CMSKeyUnWrap.TripleDESKeyUnWrap((TripleDESKey)(new Object(keyData)), wrappedData);
+            this._sessionKeyData = CMSKeyUnWrap.TripleDESKeyUnWrap(new TripleDESKey(keyData), wrappedData);
             return;
          }
          case 2:
             byte[] var8 = source.getBytes(16);
-            this._sessionKeyData = CMSKeyUnWrap.RC2KeyUnWrap((RC2Key)(new Object(var8, 128)), wrappedData);
+            this._sessionKeyData = CMSKeyUnWrap.RC2KeyUnWrap(new RC2Key(var8, 128), wrappedData);
             return;
          case 3:
             byte[] var7 = source.getBytes(16);
-            this._sessionKeyData = CMSKeyUnWrap.CASTKeyUnWrap((CAST128Key)(new Object(var7)), wrappedData);
+            this._sessionKeyData = CMSKeyUnWrap.CASTKeyUnWrap(new CAST128Key(var7), wrappedData);
             return;
          case 4:
             byte[] var6 = source.getBytes(16);
-            this._sessionKeyData = CMSKeyUnWrap.AESKeyUnWrap((AESKey)(new Object(var6)), wrappedData);
+            this._sessionKeyData = CMSKeyUnWrap.AESKeyUnWrap(new AESKey(var6), wrappedData);
             return;
          case 5:
             byte[] var5 = source.getBytes(24);
-            this._sessionKeyData = CMSKeyUnWrap.AESKeyUnWrap((AESKey)(new Object(var5)), wrappedData);
+            this._sessionKeyData = CMSKeyUnWrap.AESKeyUnWrap(new AESKey(var5), wrappedData);
             return;
          case 6: {
             byte[] keyData = source.getBytes(32);
-            this._sessionKeyData = CMSKeyUnWrap.AESKeyUnWrap((AESKey)(new Object(keyData)), wrappedData);
+            this._sessionKeyData = CMSKeyUnWrap.AESKeyUnWrap(new AESKey(keyData), wrappedData);
          }
       }
    }
@@ -3561,7 +3558,7 @@ public final class CMSEnvelopedDataInputStream extends CMSInputStream {
    }
 
    private final byte[] writeSequence(ASN1OutputStream outputSequence) {
-      ASN1OutputStream sharedInfoOut = (ASN1OutputStream)(new Object());
+      ASN1OutputStream sharedInfoOut = new ASN1OutputStream();
       sharedInfoOut.writeSequence(outputSequence);
       return sharedInfoOut.toByteArray();
    }

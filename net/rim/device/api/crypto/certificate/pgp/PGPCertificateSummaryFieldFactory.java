@@ -21,22 +21,22 @@ public class PGPCertificateSummaryFieldFactory extends CertificateSummaryFieldFa
 
    @Override
    public Field createCertificateSummaryPageField(Certificate certificate) {
-      VerticalIndentFieldManager manager = (VerticalIndentFieldManager)(new Object());
+      VerticalIndentFieldManager manager = new VerticalIndentFieldManager();
       String[] userIDs = ((PGPCertificate)certificate).getUserIDs();
       Font boldFont = Font.getDefault();
       boldFont = boldFont.derive(boldFont.getStyle() | 1);
-      LabelField userLabelField = (LabelField)(new Object(this._rb.getString(8041)));
+      LabelField userLabelField = new LabelField(this._rb.getString(8041));
       userLabelField.setFont(boldFont);
       manager.add(userLabelField);
 
       for (int i = 0; i < userIDs.length; i++) {
-         manager.add((Field)(new Object(userIDs[i])), 12);
+         manager.add(new RichTextField(userIDs[i]), 12);
       }
 
-      LabelField fingerLabelField = (LabelField)(new Object(this._rb.getString(8045)));
+      LabelField fingerLabelField = new LabelField(this._rb.getString(8045));
       fingerLabelField.setFont(boldFont);
       manager.add(fingerLabelField);
-      RichTextField fingerField = (RichTextField)(new Object(CertificateUtilities.getHexAsciiString(((PGPCertificate)certificate).getFingerprint())));
+      RichTextField fingerField = new RichTextField(CertificateUtilities.getHexAsciiString(((PGPCertificate)certificate).getFingerprint()));
       manager.add(fingerField, 12);
       return manager;
    }

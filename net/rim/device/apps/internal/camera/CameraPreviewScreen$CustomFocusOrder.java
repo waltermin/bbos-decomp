@@ -20,7 +20,7 @@ final class CameraPreviewScreen$CustomFocusOrder extends DefaultHandler {
       this.this$0 = _1;
       this._defaultFocus = -1;
       this._vector = new FocusVector();
-      this._stack = (Stack)(new Object());
+      this._stack = new Stack();
    }
 
    public final void parseXml(InputStream param1) {

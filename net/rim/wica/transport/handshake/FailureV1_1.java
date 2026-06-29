@@ -25,7 +25,7 @@ public class FailureV1_1 implements FailureV1 {
 
    @Override
    public String getReason() {
-      return (String)(this._reason == null ? null : new Object(this._reason));
+      return this._reason == null ? null : new String(this._reason);
    }
 
    @Override

@@ -47,11 +47,11 @@ final class ExploreManager$OpenDirectoryWorker implements Runnable {
       // 007: aload 0
       // 008: getfield net/rim/device/apps/internal/explorer/file/ExploreManager$OpenDirectoryWorker._hasDetails Z
       // 00b: istore 3
-      // 00c: new java/lang/Object
+      // 00c: new java/util/Vector
       // 00f: dup
       // 010: invokespecial java/util/Vector.<init> ()V
       // 013: astore 4
-      // 015: new java/lang/Object
+      // 015: new java/util/Vector
       // 018: dup
       // 019: invokespecial java/util/Vector.<init> ()V
       // 01c: astore 5
@@ -62,11 +62,11 @@ final class ExploreManager$OpenDirectoryWorker implements Runnable {
       // 026: invokevirtual net/rim/device/apps/internal/explorer/file/FileItemField.getFileConnection ()Ljavax/microedition/io/file/FileConnection;
       // 029: astore 1
       // 02a: aload 1
-      // 02b: instanceof java/lang/Object
+      // 02b: instanceof net/rim/device/api/io/file/ExtendedFileConnection
       // 02e: ifeq 05c
       // 031: aload 0
       // 032: aload 1
-      // 033: checkcast java/lang/Object
+      // 033: checkcast net/rim/device/api/io/file/ExtendedFileConnection
       // 036: ldc_w "*"
       // 039: aload 0
       // 03a: getfield net/rim/device/apps/internal/explorer/file/ExploreManager$OpenDirectoryWorker._filter Lnet/rim/device/apps/api/framework/file/FileSelectionFilter;
@@ -114,7 +114,7 @@ final class ExploreManager$OpenDirectoryWorker implements Runnable {
       // 095: ifeq 0d1
       // 098: aload 2
       // 099: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 09e: checkcast java/lang/Object
+      // 09e: checkcast net/rim/device/api/io/FileInfo
       // 0a1: astore 8
       // 0a3: aload 8
       // 0a5: invokevirtual net/rim/device/api/io/FileInfo.getFileName ()Ljava/lang/String;
@@ -124,7 +124,7 @@ final class ExploreManager$OpenDirectoryWorker implements Runnable {
       // 0af: bipush 16
       // 0b1: iand
       // 0b2: ifeq 0dc
-      // 0b5: new java/lang/Object
+      // 0b5: new java/lang/StringBuffer
       // 0b8: dup
       // 0b9: invokespecial java/lang/StringBuffer.<init> ()V
       // 0bc: aload 7
@@ -138,7 +138,7 @@ final class ExploreManager$OpenDirectoryWorker implements Runnable {
       // 0ce: goto 0dc
       // 0d1: aload 2
       // 0d2: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 0d7: checkcast java/lang/Object
+      // 0d7: checkcast java/lang/String
       // 0da: astore 7
       // 0dc: aconst_null
       // 0dd: astore 10
@@ -161,7 +161,7 @@ final class ExploreManager$OpenDirectoryWorker implements Runnable {
       // 101: aconst_null
       // 102: astore 12
       // 104: aload 11
-      // 106: instanceof java/lang/Object
+      // 106: instanceof java/lang/IllegalArgumentException
       // 109: ifeq 116
       // 10c: bipush 44
       // 10e: invokestatic net/rim/device/apps/internal/explorer/file/resource/ExplorerResources.getString (I)Ljava/lang/String;
@@ -169,11 +169,11 @@ final class ExploreManager$OpenDirectoryWorker implements Runnable {
       // 113: goto 135
       // 116: aload 11
       // 118: dup
-      // 119: instanceof java/lang/Object
+      // 119: instanceof net/rim/device/api/io/file/FileIOException
       // 11c: ifne 123
       // 11f: pop
       // 120: goto 12e
-      // 123: checkcast java/lang/Object
+      // 123: checkcast net/rim/device/api/io/file/FileIOException
       // 126: invokevirtual net/rim/device/api/io/file/FileIOException.getMessage ()Ljava/lang/String;
       // 129: astore 12
       // 12b: goto 135
@@ -182,7 +182,7 @@ final class ExploreManager$OpenDirectoryWorker implements Runnable {
       // 133: astore 12
       // 135: new net/rim/device/apps/internal/explorer/file/AliasFileItemField
       // 138: dup
-      // 139: new java/lang/Object
+      // 139: new net/rim/device/apps/api/framework/file/AliasFileEntry
       // 13c: dup
       // 13d: aload 7
       // 13f: aload 0

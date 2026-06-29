@@ -7,7 +7,7 @@ public final class ApplicationResources implements BISLaunchResource {
 
    public static final String getString(int id) {
       if (_resources == null) {
-         throw new Object("No resource strings present on device");
+         throw new IllegalStateException("No resource strings present on device");
       } else {
          return _resources.getString(id);
       }

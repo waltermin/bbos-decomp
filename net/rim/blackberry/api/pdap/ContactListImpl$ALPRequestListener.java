@@ -32,7 +32,7 @@ class ContactListImpl$ALPRequestListener implements CollectionListener {
          int size = this._request.size();
          Object[] results = new Object[size];
          this._request.getAt(0, size, results, 0);
-         Vector resultsVector = (Vector)(new Object(size));
+         Vector resultsVector = new Vector(size);
 
          for (int i = 0; i < size; i++) {
             Contact newContact = new ContactImpl(results[i], this.this$0);

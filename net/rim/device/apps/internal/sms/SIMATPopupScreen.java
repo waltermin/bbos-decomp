@@ -3,15 +3,17 @@ package net.rim.device.apps.internal.sms;
 import net.rim.device.api.system.SIMCard;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.ButtonField;
+import net.rim.device.api.ui.component.EditField;
+import net.rim.device.api.ui.component.PasswordEditField;
 import net.rim.device.api.ui.component.RadioButtonField;
 import net.rim.device.api.ui.component.RadioButtonGroup;
 import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.PopupScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.ThemeManager;
 import net.rim.device.apps.api.ui.CommonResources;
 import net.rim.device.apps.internal.sms.ui.SMSFilter;
@@ -81,32 +83,32 @@ class SIMATPopupScreen extends PopupScreen implements FieldChangeListener {
 
    protected void go(int buttons) {
       if ((buttons & 1) != 0) {
-         this._okButton = (ButtonField)(new Object(CommonResources.getString(117), 12884901888L));
+         this._okButton = new ButtonField(CommonResources.getString(117), 12884901888L);
          this.add(this._okButton);
       }
 
       if ((buttons & 16) != 0) {
-         this._yesButton = (ButtonField)(new Object(CommonResources.getString(100), 12884901888L));
+         this._yesButton = new ButtonField(CommonResources.getString(100), 12884901888L);
          this.add(this._yesButton);
       }
 
       if ((buttons & 32) != 0) {
-         this._noButton = (ButtonField)(new Object(CommonResources.getString(101), 12884901888L));
+         this._noButton = new ButtonField(CommonResources.getString(101), 12884901888L);
          this.add(this._noButton);
       }
 
       if ((buttons & 2) != 0) {
-         this._backButton = (ButtonField)(new Object(CommonResources.getString(9033), 12884901888L));
+         this._backButton = new ButtonField(CommonResources.getString(9033), 12884901888L);
          this.add(this._backButton);
       }
 
       if ((buttons & 4) != 0) {
-         this._cancelButton = (ButtonField)(new Object(CommonResources.getString(9042), 12884901888L));
+         this._cancelButton = new ButtonField(CommonResources.getString(9042), 12884901888L);
          this.add(this._cancelButton);
       }
 
       if ((buttons & 8) != 0) {
-         this._helpButton = (ButtonField)(new Object(CommonResources.getString(9034), 12884901888L));
+         this._helpButton = new ButtonField(CommonResources.getString(9034), 12884901888L);
          this.add(this._helpButton);
       }
 
@@ -134,13 +136,13 @@ class SIMATPopupScreen extends PopupScreen implements FieldChangeListener {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    SIMATPopupScreen(SIMToolkit stk, String text) {
-      super((Manager)(new Object(299067162755072L)));
+      super(new VerticalFieldManager(299067162755072L));
       this._stk = stk;
-      HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object());
+      HorizontalFieldManager hfm = new HorizontalFieldManager();
 
       label20:
       try {
-         ImageField imageField = (ImageField)(new Object(51539607552L));
+         ImageField imageField = new ImageField(51539607552L);
          imageField.setImage(ThemeManager.getThemeAwareImage(SetupMenuEntryPoint.UNIQUE_NAME));
          hfm.add(imageField);
       } catch (Throwable var6) {
@@ -148,14 +150,14 @@ class SIMATPopupScreen extends PopupScreen implements FieldChangeListener {
          break label20;
       }
 
-      this._label = (RichTextField)(new Object(text, 18014450049089536L));
+      this._label = new RichTextField(text, 18014450049089536L);
       hfm.add(this._label);
       this.add(hfm);
    }
 
    private void select(int type, Object[] items, int[] ids, int defaultId, boolean helpAvailable) {
       this._type = type;
-      this._radioField = (RadioButtonGroup)(new Object());
+      this._radioField = new RadioButtonGroup();
       this._radioIds = ids;
       int selectedIndex = 0;
 
@@ -165,7 +167,7 @@ class SIMATPopupScreen extends PopupScreen implements FieldChangeListener {
                selectedIndex = i;
             }
 
-            this.add((Field)(new Object(SIMCard.decodeAlphaId((byte[])items[i]), this._radioField, i == 0)));
+            this.add(new RadioButtonField(SIMCard.decodeAlphaId((byte[])items[i]), this._radioField, i == 0));
          }
       }
 
@@ -187,7 +189,7 @@ class SIMATPopupScreen extends PopupScreen implements FieldChangeListener {
       super.navigationClick(status, time);
       Field f = this.getLeafFieldWithFocus();
       if (f != this._label) {
-         if (f instanceof Object) {
+         if (f instanceof RadioButtonField) {
             RadioButtonField rb = (RadioButtonField)f;
             rb.setSelected(true);
          }
@@ -398,9 +400,9 @@ class SIMATPopupScreen extends PopupScreen implements FieldChangeListener {
          buttons |= 48;
       } else {
          if (echo) {
-            this._editField = (BasicEditField)(new Object(null, null, maxLength, 0));
+            this._editField = new EditField(null, null, maxLength, 0);
          } else {
-            this._editField = (BasicEditField)(new Object(null, null, maxLength, 0));
+            this._editField = new PasswordEditField(null, null, maxLength, 0);
          }
 
          if (allowedKeys != 0 && echo) {

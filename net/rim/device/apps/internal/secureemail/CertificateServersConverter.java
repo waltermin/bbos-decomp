@@ -11,7 +11,7 @@ import net.rim.device.apps.api.utility.serialization.BaseConverter;
 public class CertificateServersConverter extends BaseConverter {
    @Override
    public boolean canConvert(Object parameters) {
-      if (!(parameters instanceof Object)) {
+      if (!(parameters instanceof Parameters)) {
          return false;
       }
 
@@ -22,9 +22,9 @@ public class CertificateServersConverter extends BaseConverter {
 
    @Override
    public Object convert(byte[] inputBytes, Object inputObject) {
-      if (inputBytes != null && inputObject instanceof Object) {
+      if (inputBytes != null && inputObject instanceof Parameters) {
          Parameters parameters = (Parameters)inputObject;
-         ContextObject context = (ContextObject)(new Object());
+         ContextObject context = new ContextObject();
          context.put(8849067667159082262L, inputBytes);
          context.put(-7353832199068708928L, parameters);
          return new CertificateServersAttachmentModel(context);
@@ -35,21 +35,21 @@ public class CertificateServersConverter extends BaseConverter {
 
    public static byte[] convert(CertificateServerInfo serverInfo) {
       if (serverInfo == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
-      DataBuffer buffer = (DataBuffer)(new Object());
-      CertificateOptionsSyncConverter converter = (CertificateOptionsSyncConverter)(new Object());
+      DataBuffer buffer = new DataBuffer();
+      CertificateOptionsSyncConverter converter = new CertificateOptionsSyncConverter();
       return converter.convert(serverInfo, buffer, 0) ? buffer.toArray() : null;
    }
 
    public static CertificateServerInfo convert(byte[] data) {
       if (data == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
-      DataBuffer buffer = (DataBuffer)(new Object(data, 0, data.length, true));
-      CertificateOptionsSyncConverter converter = (CertificateOptionsSyncConverter)(new Object());
+      DataBuffer buffer = new DataBuffer(data, 0, data.length, true);
+      CertificateOptionsSyncConverter converter = new CertificateOptionsSyncConverter();
 
       try {
          return (CertificateServerInfo)converter.convert(buffer, 0, -1);

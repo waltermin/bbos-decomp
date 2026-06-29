@@ -1,7 +1,6 @@
 package net.rim.device.apps.internal.activation;
 
 import net.rim.device.api.system.RadioInfo;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.apps.api.framework.verb.Verb;
@@ -29,11 +28,11 @@ public final class EmailSetupWizard$EmailSetupPage extends ListWizardPage implem
       boolean bisAvailable = EmailSetupWizard.isBisAvailable() && this.this$0._bisSetupUID != null || BISClientInvoke.canBeInvoked();
       boolean besAvailable = EmailSetupWizard.isBesAvailable();
       if (!bisAvailable && !besAvailable) {
-         this.setHeaderField((Field)(new Object(EmailSetupWizard._resources.getString(163))));
+         this.setHeaderField(new LabelField(EmailSetupWizard._resources.getString(163)));
       } else if (RadioInfo.getState() != 1) {
-         this.setHeaderField((Field)(new Object(EmailSetupWizard._resources.getString(161))));
+         this.setHeaderField(new LabelField(EmailSetupWizard._resources.getString(161)));
       } else {
-         LabelField header = (LabelField)(new Object(EmailSetupWizard._resources.getString(164)));
+         LabelField header = new LabelField(EmailSetupWizard._resources.getString(164));
          header.setFont(this.getHeaderFont());
          this.setHeaderField(header);
          int numItems = 2;
@@ -41,7 +40,7 @@ public final class EmailSetupWizard$EmailSetupPage extends ListWizardPage implem
             numItems++;
          }
 
-         String[] items = new Object[numItems];
+         String[] items = new String[numItems];
          this._cookies = new Object[numItems];
          int i = 0;
          if (bisAvailable) {

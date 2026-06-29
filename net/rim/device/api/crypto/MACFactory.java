@@ -27,7 +27,7 @@ public class MACFactory {
       // 01: ifnonnull 10
       // 04: aload 0
       // 05: ifnonnull 10
-      // 08: new java/lang/Object
+      // 08: new java/lang/IllegalArgumentException
       // 0b: dup
       // 0c: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 0f: athrow
@@ -44,7 +44,7 @@ public class MACFactory {
       // 25: if_icmpne 44
       // 28: aload 1
       // 29: ifnull 44
-      // 2c: new java/lang/Object
+      // 2c: new java/lang/StringBuffer
       // 2f: dup
       // 30: invokespecial java/lang/StringBuffer.<init> ()V
       // 33: aload 1
@@ -92,13 +92,13 @@ public class MACFactory {
       // 8a: aload 5
       // 8c: athrow
       // 8d: astore 5
-      // 8f: new java/lang/Object
+      // 8f: new java/lang/IllegalArgumentException
       // 92: dup
       // 93: aload 5
       // 95: invokevirtual net/rim/device/api/crypto/CryptoException.toString ()Ljava/lang/String;
       // 98: invokespecial java/lang/IllegalArgumentException.<init> (Ljava/lang/String;)V
       // 9b: athrow
-      // 9c: new java/lang/Object
+      // 9c: new net/rim/device/api/crypto/NoSuchAlgorithmException
       // 9f: dup
       // a0: aload 0
       // a1: invokespecial net/rim/device/api/crypto/NoSuchAlgorithmException.<init> (Ljava/lang/String;)V
@@ -110,7 +110,7 @@ public class MACFactory {
 
    public static void register(MACFactory factory) {
       if (factory == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       String[] algorithms = factory.getFactoryAlgorithms();

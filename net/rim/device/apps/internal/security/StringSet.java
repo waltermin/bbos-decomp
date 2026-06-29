@@ -4,7 +4,7 @@ import net.rim.device.api.util.AbstractString;
 import net.rim.device.api.util.IntHashtable;
 
 final class StringSet {
-   private IntHashtable roots = (IntHashtable)(new Object(47));
+   private IntHashtable roots = new IntHashtable(47);
 
    final void add(String text, int key) {
       int len = text.length();
@@ -13,12 +13,12 @@ final class StringSet {
       for (int i = 0; i < len; i++) {
          char c = Character.toUpperCase(text.charAt(i));
          if (c == ' ') {
-            currentLevel.put(0, new Object(key));
+            currentLevel.put(0, new Integer(key));
             currentLevel = this.roots;
          } else {
             IntHashtable nextLevel = (IntHashtable)currentLevel.get(c);
             if (nextLevel == null) {
-               nextLevel = (IntHashtable)(new Object(5));
+               nextLevel = new IntHashtable(5);
                currentLevel.put(c, nextLevel);
             }
 
@@ -26,7 +26,7 @@ final class StringSet {
          }
       }
 
-      currentLevel.put(0, new Object(key));
+      currentLevel.put(0, new Integer(key));
    }
 
    public final boolean findMatch(AbstractString str, int start, int end, StringSetMatch match) {

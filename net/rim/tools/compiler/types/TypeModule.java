@@ -91,7 +91,7 @@ public final class TypeModule implements Constants {
       classType.setTypeModule(this);
       Vector v = this._classes;
       if (v == null) {
-         v = (Vector)(new Object());
+         v = new Vector();
          this._classes = v;
       } else {
          int num = v.size();
@@ -156,7 +156,7 @@ public final class TypeModule implements Constants {
    public final void addUndefinedClass(String className) {
       int weight = className.length() * 2;
       if (this._undefinedClasses == null) {
-         this._undefinedClasses = (StringBuffer)(new Object());
+         this._undefinedClasses = new StringBuffer();
          weight += 13;
       } else {
          this._undefinedClasses.append(',');

@@ -12,7 +12,7 @@ public class LDAPComparator implements Comparator {
 
    public LDAPComparator(String[] sortAttributes) {
       if (sortAttributes == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._sortFields = sortAttributes;
@@ -56,9 +56,9 @@ public class LDAPComparator implements Comparator {
             for (int j = 0; j < size1; j++) {
                Object t1 = a1.getValue(j);
                Object t2 = a2.getValue(j);
-               if (t1 instanceof Object) {
+               if (t1 instanceof String) {
                   String s1 = (String)t1;
-                  if (t2 instanceof Object) {
+                  if (t2 instanceof String) {
                      String s2 = (String)t2;
                      int testval = s1.compareTo(s2);
                      if (testval != 0) {

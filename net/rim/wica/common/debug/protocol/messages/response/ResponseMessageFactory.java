@@ -61,7 +61,7 @@ public final class ResponseMessageFactory {
       IResponseMessage msg;
       switch (messageType) {
          case -1:
-            throw new Object(((StringBuffer)(new Object("Unsupported messageType: "))).append(messageType).toString());
+            throw new IllegalArgumentException("Unsupported messageType: " + messageType);
          case 0:
          default:
             msg = createHandshakeResponseMessage();

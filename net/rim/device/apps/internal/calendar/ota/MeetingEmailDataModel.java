@@ -105,9 +105,9 @@ class MeetingEmailDataModel
          flags |= 64;
       }
 
-      LabelField field = (LabelField)(new Object(
+      LabelField field = new LabelField(
          ResourceBundle.getBundle(8008824311162635875L, "net.rim.device.apps.internal.resource.CalendarOTA").getString(var6), flags
-      ));
+      );
       field.setCookie(this);
       return field;
    }
@@ -120,7 +120,7 @@ class MeetingEmailDataModel
    @Override
    public boolean convert(Object context, Object target) {
       byte[] attachmentData = this.getAttachmentData();
-      if (target instanceof Object && attachmentData != null) {
+      if (target instanceof RIMMessagingOutgoingMessage && attachmentData != null) {
          RIMMessagingOutgoingMessage message = (RIMMessagingOutgoingMessage)target;
          message.addAttachment(attachmentData, null, "application/x-rimdevicecalendar");
          return true;
@@ -147,7 +147,7 @@ class MeetingEmailDataModel
    @Override
    public boolean checkCrypt(boolean compress, boolean encrypt) {
       boolean result = true;
-      if (this._event instanceof Object) {
+      if (this._event instanceof EncryptableProvider) {
          EncryptableProvider ep = (EncryptableProvider)this._event;
          result = ep.checkCrypt(compress, encrypt);
       }
@@ -162,15 +162,15 @@ class MeetingEmailDataModel
    @Override
    public Object reCrypt(boolean compress, boolean encrypt) {
       this._attachment = PersistentContent.reEncode(this._attachment, compress, encrypt);
-      if (this._event instanceof Object) {
+      if (this._event instanceof EncryptableProvider) {
          EncryptableProvider encryptable = (EncryptableProvider)this._event;
          if (!encryptable.checkCrypt(compress, encrypt)) {
             if (ObjectGroup.isInGroup(this._event)) {
-               this._event = (Persistable)ObjectGroup.expandGroup(this._event);
+               this._event = (Event)ObjectGroup.expandGroup(this._event);
             }
 
             if (!ObjectGroup.isInGroup(this._event)) {
-               this._event = (Persistable)((EncryptableProvider)this._event).reCrypt(compress, encrypt);
+               this._event = (Event)((EncryptableProvider)this._event).reCrypt(compress, encrypt);
 
                try {
                   ObjectGroup.createGroup(this._event);

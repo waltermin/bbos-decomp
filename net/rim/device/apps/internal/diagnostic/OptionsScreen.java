@@ -4,8 +4,10 @@ import net.rim.device.api.itpolicy.ITPolicy;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.EditField;
+import net.rim.device.api.ui.component.EmailAddressEditField;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.component.PINAddressEditField;
 import net.rim.device.api.ui.container.MainScreen;
 
 public final class OptionsScreen extends MainScreen {
@@ -19,22 +21,22 @@ public final class OptionsScreen extends MainScreen {
    OptionsScreen(Diag manager) {
       this.setupMenuItems();
       this._manager = manager;
-      this._title = (LabelField)(new Object(DiagnosticResources.getString(14), 1152921504606846976L));
+      this._title = new LabelField(DiagnosticResources.getString(14), 1152921504606846976L);
       this.setTitle(this._title);
-      this._email = (EditField)(new Object(
-         ((StringBuffer)(new Object())).append(DiagnosticResources.getString(12)).append(":  ").toString(),
+      this._email = new EmailAddressEditField(
+         DiagnosticResources.getString(12) + ":  ",
          this._manager.isEmailRecptSetByITPolicy() ? ITPolicy.getString(46, 2) : DiagOptions.getOptions().getEmailRecpt()
-      ));
+      );
       this._email.setMaxSize(255);
       this.add(this._email);
       if (this._manager.isEmailRecptSetByITPolicy()) {
          this._email.setEditable(false);
       }
 
-      this._pin = (EditField)(new Object(
-         ((StringBuffer)(new Object())).append(DiagnosticResources.getString(13)).append(":  ").toString(),
+      this._pin = new PINAddressEditField(
+         DiagnosticResources.getString(13) + ":  ",
          this._manager.isPinRecptSetByITPolicy() ? this.formatPinRecpt(ITPolicy.getString(46, 3)) : DiagOptions.getOptions().getPinRecpt()
-      ));
+      );
       this._pin.setMaxSize(8);
       this.add(this._pin);
       if (this._manager.isPinRecptSetByITPolicy()) {
@@ -43,7 +45,7 @@ public final class OptionsScreen extends MainScreen {
    }
 
    private final String formatPinRecpt(String original) {
-      StringBuffer formatted = (StringBuffer)(new Object(original.length()));
+      StringBuffer formatted = new StringBuffer(original.length());
 
       for (int i = 0; i < original.length(); i++) {
          char c = original.charAt(i);

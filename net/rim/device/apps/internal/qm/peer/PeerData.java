@@ -48,13 +48,13 @@ final class PeerData {
 
       while (enumeration.hasMoreElements()) {
          Object obj = enumeration.nextElement();
-         if (obj instanceof Object) {
+         if (obj instanceof String) {
             _hashtable.put(_hashtable.getKey(obj), PersistentContent.reEncode(obj, true, true));
          }
       }
 
       Object obj = _hashtable.get(-8344431410952200744L);
-      if (obj instanceof Object) {
+      if (obj instanceof Vector) {
          Vector conversations = (Vector)obj;
 
          for (int i = conversations.size() - 1; i >= 0; i--) {
@@ -118,7 +118,7 @@ final class PeerData {
    static final boolean isExpanded(long collectionId, int branchId) {
       boolean result = true;
       Object obj = _hashtable.get(collectionId);
-      if (obj instanceof Object) {
+      if (obj instanceof IntIntHashtable) {
          result = ((IntIntHashtable)obj).get(branchId) != -1;
       }
 
@@ -128,8 +128,8 @@ final class PeerData {
    static final void setExpanded(long collectionId, int branchId, boolean expanded) {
       Object obj = _hashtable.get(collectionId);
       IntIntHashtable hashtable = null;
-      if (!(obj instanceof Object)) {
-         hashtable = (IntIntHashtable)(new Object());
+      if (!(obj instanceof IntIntHashtable)) {
+         hashtable = new IntIntHashtable();
          _hashtable.put(collectionId, hashtable);
       } else {
          hashtable = (IntIntHashtable)obj;
@@ -147,14 +147,14 @@ final class PeerData {
    private static final int getInt(long key, int def) {
       Integer flags = (Integer)_hashtable.get(key);
       if (flags == null) {
-         flags = (Integer)(new Object(def));
+         flags = new Integer(def);
       }
 
       return flags;
    }
 
    private static final void saveInt(long key, int value) {
-      _hashtable.put(key, new Object(value));
+      _hashtable.put(key, new Integer(value));
    }
 
    private static final boolean checkFlag(long key, int defaultValue, int mask) {
@@ -174,7 +174,7 @@ final class PeerData {
 
    static final BigVector getContactListCollectionData(long pclcId) {
       Object obj = _hashtable.get(pclcId);
-      return (BigVector)(!(obj instanceof Object) ? null : obj);
+      return !(obj instanceof BigVector) ? null : (BigVector)obj;
    }
 
    static final void addContactListCollectionData(long pclcId, BigVector pclc) {
@@ -308,7 +308,7 @@ final class PeerData {
       synchronized (_persistentObject) {
          _hashtable = (LongHashtable)_persistentObject.getContents();
          if (_hashtable == null) {
-            _hashtable = (LongHashtable)(new Object());
+            _hashtable = new LongHashtable();
             _persistentObject.setContents(_hashtable, 51);
             _persistentObject.commit();
          }

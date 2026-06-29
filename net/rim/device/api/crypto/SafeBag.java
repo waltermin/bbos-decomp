@@ -16,11 +16,11 @@ public class SafeBag extends PKCS12ContentInfo {
       super(null, parent);
       this._bagData = data;
       this._bagAttributes = attributes;
-      this._attributes = (Vector)(new Object());
+      this._attributes = new Vector();
    }
 
    public static SafeBag getSafeBag(byte[] encoding, PKCS12ContentInfo parent) {
-      return getSafeBag((ASN1InputByteArray)(new Object(encoding)), parent);
+      return getSafeBag(new ASN1InputByteArray(encoding), parent);
    }
 
    public static SafeBag getSafeBag(ASN1InputByteArray stream, PKCS12ContentInfo parent) throws PKCS12ParsingException {
@@ -93,7 +93,7 @@ public class SafeBag extends PKCS12ContentInfo {
       try {
          PKCS12Attribute attribute = this.getAttribute(OIDs.getOID(546842172));
          if (attribute != null) {
-            ASN1InputByteArray attr = (ASN1InputByteArray)(new Object(attribute.getValue()));
+            ASN1InputByteArray attr = new ASN1InputByteArray(attribute.getValue());
             if (attr.peekNextTag() != 17) {
                throw new PKCS12ParsingException();
             }
@@ -115,7 +115,7 @@ public class SafeBag extends PKCS12ContentInfo {
       try {
          PKCS12Attribute attribute = this.getAttribute(OIDs.getOID(547104316));
          if (attribute != null) {
-            ASN1InputByteArray attr = (ASN1InputByteArray)(new Object(attribute.getValue()));
+            ASN1InputByteArray attr = new ASN1InputByteArray(attribute.getValue());
             if (attr.peekNextTag() != 17) {
                throw new PKCS12ParsingException();
             }

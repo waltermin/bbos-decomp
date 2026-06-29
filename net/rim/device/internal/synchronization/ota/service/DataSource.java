@@ -15,8 +15,8 @@ public final class DataSource implements Persistable, TLESerializableObject {
    private String _name;
    private int _hashCode;
    private boolean _default;
-   private Hashtable _nameToDatabaseMap = (Hashtable)(new Object());
-   private IntHashtable _idToDatabaseMap = (IntHashtable)(new Object());
+   private Hashtable _nameToDatabaseMap = new Hashtable();
+   private IntHashtable _idToDatabaseMap = new IntHashtable();
    private boolean _couldHandleNonSync;
    private static final byte VERSION = 1;
    private static final byte NAME = 2;
@@ -29,7 +29,7 @@ public final class DataSource implements Persistable, TLESerializableObject {
       int xDatabaseId = aDataSourceDatabase.getId();
       IntHashtable xVersionToDatabaseMap = (IntHashtable)this._nameToDatabaseMap.get(xName);
       if (xVersionToDatabaseMap == null) {
-         xVersionToDatabaseMap = (IntHashtable)(new Object(1));
+         xVersionToDatabaseMap = new IntHashtable(1);
          this._idToDatabaseMap.put(xDatabaseId, xVersionToDatabaseMap);
          this._nameToDatabaseMap.put(xName, xVersionToDatabaseMap);
       }
@@ -160,7 +160,7 @@ public final class DataSource implements Persistable, TLESerializableObject {
    }
 
    public static final DataSource create(byte[] bytes) {
-      return create((DataBuffer)(new Object(bytes, 0, bytes.length, true)));
+      return create(new DataBuffer(bytes, 0, bytes.length, true));
    }
 
    public DataSource() {
@@ -182,7 +182,7 @@ public final class DataSource implements Persistable, TLESerializableObject {
 
    @Override
    public final String toString() {
-      StringBuffer xSb = (StringBuffer)(new Object());
+      StringBuffer xSb = new StringBuffer();
       xSb.append('[').append(this._name).append(']').append('\n');
       xSb.append("Version= ").append(this._version).append('\n');
       xSb.append("ID= ").append(this._id).append('\n');

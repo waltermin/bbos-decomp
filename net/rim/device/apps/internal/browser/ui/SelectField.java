@@ -50,7 +50,7 @@ public class SelectField extends Field {
       this._multiple = multiple;
       this._optionFont = this.getFont();
       this._lineHeight = this._optionFont.getHeight();
-      this._options = new Object[0];
+      this._options = new String[0];
       this._flags = new byte[0];
    }
 

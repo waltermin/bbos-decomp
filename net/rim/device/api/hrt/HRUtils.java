@@ -336,7 +336,7 @@ public final class HRUtils implements RadioStatusListener, SIMCardStatusListener
    private static final long getNPC(int type) {
       switch (type) {
          case 2:
-            throw new Object();
+            throw new RuntimeException();
          case 3:
          case 7:
          default:
@@ -386,7 +386,7 @@ public final class HRUtils implements RadioStatusListener, SIMCardStatusListener
          hri = new IdenHRI();
       } else {
          if (npcBase != 96) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          hri = new WifiHRI();
@@ -410,7 +410,7 @@ public final class HRUtils implements RadioStatusListener, SIMCardStatusListener
       } else if (waf == 4) {
          return new WifiHRI();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -449,10 +449,10 @@ public final class HRUtils implements RadioStatusListener, SIMCardStatusListener
                return parseVersionThree(buf);
          }
       } finally {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    private static final HostRoutingInfo[] parseVersionOne(DataBuffer buf) {
@@ -475,7 +475,7 @@ public final class HRUtils implements RadioStatusListener, SIMCardStatusListener
                hris[0] = hri;
                return hris;
             } else {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
          case 3:
          case 4:
@@ -483,7 +483,7 @@ public final class HRUtils implements RadioStatusListener, SIMCardStatusListener
          case 6:
          case 7:
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -613,7 +613,7 @@ public final class HRUtils implements RadioStatusListener, SIMCardStatusListener
 
          if (baseHris.length > 0) {
             for (int j = cInfo.clonedNpcs.size() - 1; j >= 0; j--) {
-               long clonedNpc = cInfo.clonedNpcs.elementAt(j);
+               long clonedNpc = (Long)cInfo.clonedNpcs.elementAt(j);
                long clonedNpcBase = clonedNpc & 4294967295L & 252;
 
                for (int k = 0; k < baseHris.length; k++) {
@@ -649,7 +649,7 @@ public final class HRUtils implements RadioStatusListener, SIMCardStatusListener
       if (hri != null) {
          long npc = hri.getNpc();
          if (npc == 0) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          long npcBase = npc & 4294967295L & 252;
@@ -659,7 +659,7 @@ public final class HRUtils implements RadioStatusListener, SIMCardStatusListener
             || npcBase == 96 && hri instanceof WifiHRI) {
             for (int i = hris.length - 1; i >= 0; i--) {
                if (hri.getNpc() == hris[i].getNpc() && (hri.getArt() & hris[i].getArt()) != 0) {
-                  throw new Object();
+                  throw new IllegalArgumentException();
                }
             }
 

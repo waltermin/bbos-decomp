@@ -11,7 +11,7 @@ public final class NewContactListDialog extends OkCancelDialog {
 
    public NewContactListDialog() {
       this.addTitle(QmResources.getString(5));
-      this._nameField = (AutoTextEditField)(new Object(QmResources.getString(18), null, 128, 2147483648L));
+      this._nameField = new AutoTextEditField(QmResources.getString(18), null, 128, 2147483648L);
       this._customVfm.add(this._nameField);
       this.add(this._customVfm);
       this.addOkCancelButtons();

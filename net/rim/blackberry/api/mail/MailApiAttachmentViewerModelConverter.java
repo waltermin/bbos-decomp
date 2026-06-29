@@ -29,11 +29,11 @@ final class MailApiAttachmentViewerModelConverter extends AttachmentViewerModelC
       // Bytecode:
       // 000: aload 1
       // 001: dup
-      // 002: instanceof java/lang/Object
+      // 002: instanceof java/lang/String
       // 005: ifne 00c
       // 008: pop
       // 009: goto 052
-      // 00c: checkcast java/lang/Object
+      // 00c: checkcast java/lang/String
       // 00f: astore 2
       // 010: aload 2
       // 011: ldc_w "text/plain"
@@ -67,7 +67,7 @@ final class MailApiAttachmentViewerModelConverter extends AttachmentViewerModelC
       // 04c: iinc 5 -1
       // 04f: goto 02f
       // 052: aload 1
-      // 053: instanceof java/lang/Object
+      // 053: instanceof net/rim/device/apps/api/transmission/Parameters
       // 056: ifne 05c
       // 059: goto 126
       // 05c: aload 0
@@ -75,9 +75,9 @@ final class MailApiAttachmentViewerModelConverter extends AttachmentViewerModelC
       // 05e: invokespecial net/rim/device/apps/internal/attachment/AttachmentViewerModelConverter.canConvert (Ljava/lang/Object;)Z
       // 061: pop
       // 062: aload 1
-      // 063: checkcast java/lang/Object
+      // 063: checkcast net/rim/device/apps/api/transmission/Parameters
       // 066: astore 2
-      // 067: new java/lang/Object
+      // 067: new java/lang/StringBuffer
       // 06a: dup
       // 06b: invokespecial java/lang/StringBuffer.<init> ()V
       // 06e: astore 3
@@ -117,7 +117,7 @@ final class MailApiAttachmentViewerModelConverter extends AttachmentViewerModelC
       // 0b2: aload 5
       // 0b4: bipush 1
       // 0b5: invokestatic net/rim/device/apps/api/transmission/rim/CMIMEUtilities.getTextObject ([BZ)Ljava/lang/Object;
-      // 0b8: checkcast java/lang/Object
+      // 0b8: checkcast java/lang/String
       // 0bb: astore 7
       // 0bd: aload 7
       // 0bf: ifnonnull 10e
@@ -137,7 +137,7 @@ final class MailApiAttachmentViewerModelConverter extends AttachmentViewerModelC
       // 0e3: astore 7
       // 0e5: aload 9
       // 0e7: athrow
-      // 0e8: new java/lang/Object
+      // 0e8: new java/lang/String
       // 0eb: dup
       // 0ec: aload 5
       // 0ee: bipush 0
@@ -148,7 +148,7 @@ final class MailApiAttachmentViewerModelConverter extends AttachmentViewerModelC
       // 0f8: astore 7
       // 0fa: goto 10e
       // 0fd: astore 8
-      // 0ff: new java/lang/Object
+      // 0ff: new java/lang/String
       // 102: dup
       // 103: aload 5
       // 105: bipush 0
@@ -181,9 +181,9 @@ final class MailApiAttachmentViewerModelConverter extends AttachmentViewerModelC
    @Override
    public final Object convert(byte[] inputBytes, Object contextObject) {
       ContextObject context = null;
-      if (contextObject instanceof Object) {
+      if (contextObject instanceof Parameters) {
          Parameters parameters = (Parameters)contextObject;
-         context = (ContextObject)(new Object());
+         context = new ContextObject();
          if (inputBytes != null) {
             context.put(8849067667159082262L, inputBytes);
          }

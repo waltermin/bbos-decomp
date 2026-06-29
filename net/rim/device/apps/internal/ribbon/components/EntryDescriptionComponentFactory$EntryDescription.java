@@ -45,7 +45,7 @@ final class EntryDescriptionComponentFactory$EntryDescription extends StringRibb
                if (this._showInfo) {
                   String extra = entry.getExtraInfo();
                   if (extra.length() > 0 && extra.charAt(0) != '0') {
-                     StringBuffer sb = (StringBuffer)(new Object(this._text.length() + extra.length() + 2 + 1));
+                     StringBuffer sb = new StringBuffer(this._text.length() + extra.length() + 2 + 1);
                      if (this._leftAlign) {
                         sb.append(this._openChar).append(extra).append(this._closeChar).append(' ').append(this._text);
                      } else {

@@ -14,8 +14,10 @@ import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.ui.container.VerticalFieldManager;
+import net.rim.device.api.ui.menu.MenuScreen;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.FieldProvider;
 import net.rim.device.apps.api.framework.model.RIMModel;
@@ -37,7 +39,7 @@ public final class SMSEditorScreen extends ModelScreen implements FieldChangeLis
    private SMSModel _backupModel;
    private SMSEditField _textField;
    private LabelField _numberOfCharactersField;
-   private StringBuffer _numberOfCharactersStringBuffer = (StringBuffer)(new Object());
+   private StringBuffer _numberOfCharactersStringBuffer = new StringBuffer();
    private SMSSendVerb _sendVerb = new SMSSendVerb(this);
    private SMSSaveDraftVerb _saveDraftVerb = new SMSSaveDraftVerb(this);
    private VerticalFieldManager _addressFieldManager;
@@ -57,7 +59,7 @@ public final class SMSEditorScreen extends ModelScreen implements FieldChangeLis
    }
 
    protected final void populateScreen(int modelCoding) {
-      VerticalFieldManager vfm = (VerticalFieldManager)(new Object());
+      VerticalFieldManager vfm = new VerticalFieldManager();
       ContextObject addressContextObject = ContextObject.clone(super._context);
       addressContextObject.clearFlag(0);
       addressContextObject.setFlag(9);
@@ -66,9 +68,9 @@ public final class SMSEditorScreen extends ModelScreen implements FieldChangeLis
       addressContextObject.setFlag(1);
       addressContextObject.clearFlag(128);
       ContextObject.remove(addressContextObject, 252);
-      this._addressFieldManager = (VerticalFieldManager)(new Object());
+      this._addressFieldManager = new VerticalFieldManager();
       RIMModel[] addresses = this._model._payload.getAddresses();
-      this._addressHashtable = (Hashtable)(new Object(1));
+      this._addressHashtable = new Hashtable(1);
       int total = addresses.length;
 
       for (int i = 0; i < total; i++) {
@@ -80,13 +82,13 @@ public final class SMSEditorScreen extends ModelScreen implements FieldChangeLis
          }
       }
 
-      this._numberOfCharactersField = (LabelField)(new Object("", 1152921504606846980L));
+      this._numberOfCharactersField = new LabelField("", 1152921504606846980L);
       this._numberOfCharactersField.setPosition(0);
-      vfm.add((Field)(new Object(SMSResources.getString(2), 6)));
+      vfm.add(new LabelField(SMSResources.getString(2), 6));
       vfm.add(this._numberOfCharactersField);
       this.setTitle(vfm);
       this.add(this._addressFieldManager);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       long style = 4503599627374592L;
       if (SMSOptions.getDisableAutoText()) {
          style |= 131072;
@@ -127,7 +129,7 @@ public final class SMSEditorScreen extends ModelScreen implements FieldChangeLis
       this.updateNumberOfCharactersField(true);
       ContextObject contextObject = ContextObject.clone(super._context);
       contextObject.setFlag(54);
-      this._historyManager = (Manager)(new Object());
+      this._historyManager = new VerticalFieldManager();
       long fromTime = this._model._payload._creationDate;
       boolean includeMessageAtFromTime = false;
       Object selectedItem = contextObject.get(250);
@@ -166,7 +168,7 @@ public final class SMSEditorScreen extends ModelScreen implements FieldChangeLis
 
    @Override
    public final void draftSaveOnClose() {
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       ContextObject.setFlag(context, 121);
       this._saveDraftVerb.invoke(context);
    }
@@ -321,7 +323,7 @@ public final class SMSEditorScreen extends ModelScreen implements FieldChangeLis
          }
 
          retFromEditor = editor.run();
-      } while (retFromEditor instanceof Object && editor._runAgain);
+      } while (retFromEditor instanceof ContextObject && editor._runAgain);
 
       if (!editable) {
          contextObject.clearFlag(0);
@@ -336,7 +338,7 @@ public final class SMSEditorScreen extends ModelScreen implements FieldChangeLis
          super.onUiEngineAttached(attached);
          super._application.addHolsterListener(this);
          if (this._truncatedCharacterCount > 0) {
-            Status.show(MessageFormat.format(SMSResources.getString(417), new Object[]{Integer.toString(this._truncatedCharacterCount)}));
+            Status.show(MessageFormat.format(SMSResources.getString(417), new String[]{Integer.toString(this._truncatedCharacterCount)}));
             this._truncatedCharacterCount = 0;
             return;
          }
@@ -365,7 +367,7 @@ public final class SMSEditorScreen extends ModelScreen implements FieldChangeLis
 
    private final synchronized void closeEditor() {
       Screen activeScreen = UiApplication.getUiApplication().getActiveScreen();
-      if (activeScreen instanceof Object) {
+      if (activeScreen instanceof MenuScreen) {
          UiApplication.getUiApplication().popScreen(activeScreen);
          activeScreen = UiApplication.getUiApplication().getActiveScreen();
       }
@@ -436,10 +438,10 @@ public final class SMSEditorScreen extends ModelScreen implements FieldChangeLis
    private SMSEditorScreen(Object context) {
       super(0, null, context);
       this._segmented = SMSPacketHeader.isSegmentationSupported();
-      if (super._context instanceof Object) {
+      if (super._context instanceof ContextObject) {
          ContextObject contextObject = (ContextObject)super._context;
          contextObject.setFlag(96);
-         contextObject.put(244, new Object(26407));
+         contextObject.put(244, new Integer(26407));
       }
    }
 }

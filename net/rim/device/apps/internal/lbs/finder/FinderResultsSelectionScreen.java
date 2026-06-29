@@ -1,11 +1,11 @@
 package net.rim.device.apps.internal.lbs.finder;
 
 import net.rim.device.api.system.Display;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Graphics;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.component.VariableHeightListField;
 import net.rim.device.api.ui.component.VariableHeightListFieldCallback;
 import net.rim.device.api.ui.container.PopupScreen;
@@ -22,15 +22,15 @@ final class FinderResultsSelectionScreen extends PopupScreen implements Variable
    private int _width;
 
    FinderResultsSelectionScreen(Location[] choices) {
-      super((Manager)(new Object()));
+      super(new VerticalFieldManager());
       this._choices = choices;
-      this.add((Field)(new Object(LBSResources.getString(72))));
-      this.add((Field)(new Object()));
-      this._listField = (VariableHeightListField)(new Object());
+      this.add(new LabelField(LBSResources.getString(72)));
+      this.add(new SeparatorField());
+      this._listField = new VariableHeightListField();
       this._listField.setSize(choices.length);
       this._listField.setCallback(this);
       this._listField.setFont(Font.getDefault());
-      VerticalFieldManager vfm = (VerticalFieldManager)(new Object(299067162755072L));
+      VerticalFieldManager vfm = new VerticalFieldManager(299067162755072L);
       vfm.add(this._listField);
       this.add(vfm);
       this._width = Display.getWidth() - this.getMarginRight() - this.getMarginLeft();

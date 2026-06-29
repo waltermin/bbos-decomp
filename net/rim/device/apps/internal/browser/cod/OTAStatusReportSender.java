@@ -129,7 +129,7 @@ public final class OTAStatusReportSender implements OTAStatusReportService, Pers
       // 00c: getfield net/rim/device/apps/internal/browser/cod/OTAStatusReportSender$Report._transportServiceCID Ljava/lang/String;
       // 00f: invokestatic net/rim/device/apps/internal/browser/options/BrowserConfigRecord.getDecodedConfig (Ljava/lang/String;ILjava/lang/String;)Lnet/rim/device/apps/internal/browser/options/BrowserConfigRecord;
       // 012: astore 5
-      // 014: new java/lang/Object
+      // 014: new net/rim/device/api/io/http/HttpHeaders
       // 017: dup
       // 018: invokespecial net/rim/device/api/io/http/HttpHeaders.<init> ()V
       // 01b: astore 6
@@ -151,7 +151,7 @@ public final class OTAStatusReportSender implements OTAStatusReportService, Pers
       // 03d: invokespecial net/rim/device/apps/internal/browser/stack/ModelResult.<init> (Ljava/lang/String;ILnet/rim/device/api/io/http/HttpHeaders;)V
       // 040: astore 7
       // 042: aload 7
-      // 044: new java/lang/Object
+      // 044: new java/lang/StringBuffer
       // 047: dup
       // 048: invokespecial java/lang/StringBuffer.<init> ()V
       // 04b: aload 2
@@ -227,7 +227,7 @@ public final class OTAStatusReportSender implements OTAStatusReportService, Pers
       // 0f8: astore 14
       // 0fa: aload 13
       // 0fc: athrow
-      // 0fd: new java/lang/Object
+      // 0fd: new java/lang/StringBuffer
       // 100: dup
       // 101: ldc_w "OTAr:"
       // 104: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V

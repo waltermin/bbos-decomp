@@ -76,7 +76,7 @@ class ESControl extends RedirectedObject {
                int[] s = selectable.getSelectedIndices();
                if (s != null) {
                   int sSize = s.length;
-                  IntVector iV = (IntVector)(new Object(sSize));
+                  IntVector iV = new IntVector(sSize);
                   System.arraycopy(s, 0, iV.getArray(), 0, sSize);
                   iV.setSize(sSize);
                   return Value.makeObjectValue(new ESMDSArray(32769, iV, null, "int[]", this._context));
@@ -130,8 +130,8 @@ class ESControl extends RedirectedObject {
                      break;
                   case 6:
                      oValue = Value.getObjectValue(value);
-                     if (oValue instanceof Object) {
-                        oValue = new Object((long)((ESDate)oValue).getValue());
+                     if (oValue instanceof ESDate) {
+                        oValue = new Long((long)((ESDate)oValue).getValue());
                      } else {
                         if (!(oValue instanceof ESEnum)) {
                            throw ThrownValue.typeError(RuntimeResources.getString(92));
@@ -149,7 +149,7 @@ class ESControl extends RedirectedObject {
                   case 6:
                      oValue = Value.getObjectValue(value);
                      if (!(oValue instanceof ESMDSArray)) {
-                        if (!(oValue instanceof Object)) {
+                        if (!(oValue instanceof ESArray)) {
                            throw ThrownValue.typeError(RuntimeResources.getString(94));
                         }
 
@@ -185,7 +185,7 @@ class ESControl extends RedirectedObject {
                   case 6:
                      oValue = Value.getObjectValue(value);
                      if (!(oValue instanceof ESMDSArray)) {
-                        if (!(oValue instanceof Object)) {
+                        if (!(oValue instanceof ESArray)) {
                            throw ThrownValue.typeError(RuntimeResources.getString(93));
                         }
 
@@ -195,7 +195,7 @@ class ESControl extends RedirectedObject {
                         if (size == 0) {
                            switch (valueType) {
                               case 32771:
-                                 oValue = new Object(0);
+                                 oValue = new Vector(0);
                                  break label163;
                               case 32772:
                               default:
@@ -208,11 +208,11 @@ class ESControl extends RedirectedObject {
                                  if (valueType == 32772) {
                                     oValue = new LongVector(size);
                                  } else {
-                                    oValue = new Object(size);
+                                    oValue = new Vector(size);
                                  }
                                  break label163;
                               case 5:
-                                 oValue = new Object();
+                                 oValue = new Vector();
                                  Vector v = (Vector)oValue;
                                  int i = 0;
 
@@ -279,13 +279,13 @@ class ESControl extends RedirectedObject {
             }
 
             Object objV = Value.getObjectValue(value);
-            if (!(objV instanceof Object)) {
+            if (!(objV instanceof ESArray)) {
                if (!(objV instanceof ESMDSArray)) {
                   EcmaUtilities.throwESError(RuntimeResources.getString(95));
                } else {
                   ESMDSArray esArray = (ESMDSArray)objV;
                   Object theInts = esArray.getValue();
-                  if (!(theInts instanceof Object)) {
+                  if (!(theInts instanceof IntVector)) {
                      EcmaUtilities.throwESError(RuntimeResources.getString(95));
                   } else {
                      selectedIndices = ((IntVector)theInts).toArray();

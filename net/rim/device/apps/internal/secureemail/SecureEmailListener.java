@@ -19,9 +19,9 @@ import net.rim.device.apps.internal.secureemail.server.SecureEmailServerManager;
 import net.rim.device.internal.proxy.Proxy;
 
 public class SecureEmailListener implements MemoryCleanerListener, ModelViewListener, CollectionListener {
-   private MultiMap _messageClosedListeners = (MultiMap)(new Object());
-   private MultiMap _collectionListeners = (MultiMap)(new Object());
-   private Hashtable _openMessages = (Hashtable)(new Object());
+   private MultiMap _messageClosedListeners = new MultiMap();
+   private MultiMap _collectionListeners = new MultiMap();
+   private Hashtable _openMessages = new Hashtable();
    private static final long ID_LOCK = -7546370436645685145L;
    private static final long ID = -7678865984852433251L;
 
@@ -59,11 +59,11 @@ public class SecureEmailListener implements MemoryCleanerListener, ModelViewList
    }
 
    public boolean isMessageOpen(Object message) {
-      if (message instanceof Object) {
-         return this._openMessages.containsKey(message);
+      if (message instanceof EmailMessageModel) {
+         return this._openMessages.containsKey((EmailMessageModel)message);
       }
 
-      if (!(message instanceof Object)) {
+      if (!(message instanceof BodyModel)) {
          return false;
       }
 

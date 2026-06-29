@@ -6,7 +6,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.util.Arrays;
 
 public class ExplorerRegistry {
-   private Hashtable _aliasMap = (Hashtable)(new Object());
+   private Hashtable _aliasMap = new Hashtable();
    private AliasFileEntry[][] _globalAlias = new AliasFileEntry[7][];
    protected static final long REGKEY = -999583750915911489L;
    private static ExplorerRegistry _registry;

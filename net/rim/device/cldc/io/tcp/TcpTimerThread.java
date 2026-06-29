@@ -6,8 +6,8 @@ import net.rim.device.internal.io.tcp.TcpTimerInterface;
 import net.rim.device.internal.io.tcp.TcpTimers;
 
 final class TcpTimerThread extends Thread implements TcpConstants {
-   private Vector _timers = (Vector)(new Object());
-   private Vector _expired = (Vector)(new Object());
+   private Vector _timers = new Vector();
+   private Vector _expired = new Vector();
    private boolean _dieNow;
    private Object _timerSync = new Object();
    private long _currTime;
@@ -56,7 +56,7 @@ final class TcpTimerThread extends Thread implements TcpConstants {
       synchronized (this._timerSync) {
          TcpTimers thisTimer = this.getTimer(conn);
          if (thisTimer == null) {
-            throw new Object();
+            throw new RuntimeException();
          }
 
          thisTimer._active[timer] = true;
@@ -69,7 +69,7 @@ final class TcpTimerThread extends Thread implements TcpConstants {
       synchronized (this._timerSync) {
          TcpTimers thisTimer = this.getTimer(conn);
          if (thisTimer == null) {
-            throw new Object();
+            throw new RuntimeException();
          }
 
          thisTimer._active[timer] = false;

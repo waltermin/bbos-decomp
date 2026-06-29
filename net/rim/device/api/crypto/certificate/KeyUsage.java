@@ -31,7 +31,7 @@ public final class KeyUsage {
    public static final Long getLong(long usage) {
       Long l = (Long)_hashtable.get(usage);
       if (l == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return l;
       }
@@ -48,21 +48,21 @@ public final class KeyUsage {
    static {
       synchronized (_hashtable) {
          if (_hashtable.size() == 0) {
-            _hashtable.put(1, new Object(1));
-            _hashtable.put(2, new Object(2));
-            _hashtable.put(4, new Object(4));
-            _hashtable.put(8, new Object(8));
-            _hashtable.put(16, new Object(16));
-            _hashtable.put(32, new Object(32));
-            _hashtable.put(64, new Object(64));
-            _hashtable.put(128, new Object(128));
-            _hashtable.put(256, new Object(256));
-            _hashtable.put(512, new Object(512));
-            _hashtable.put(1024, new Object(1024));
-            _hashtable.put(2048, new Object(2048));
-            _hashtable.put(4096, new Object(4096));
-            _hashtable.put(8192, new Object(8192));
-            _hashtable.put(16384, new Object(16384));
+            _hashtable.put(1, new Long(1));
+            _hashtable.put(2, new Long(2));
+            _hashtable.put(4, new Long(4));
+            _hashtable.put(8, new Long(8));
+            _hashtable.put(16, new Long(16));
+            _hashtable.put(32, new Long(32));
+            _hashtable.put(64, new Long(64));
+            _hashtable.put(128, new Long(128));
+            _hashtable.put(256, new Long(256));
+            _hashtable.put(512, new Long(512));
+            _hashtable.put(1024, new Long(1024));
+            _hashtable.put(2048, new Long(2048));
+            _hashtable.put(4096, new Long(4096));
+            _hashtable.put(8192, new Long(8192));
+            _hashtable.put(16384, new Long(16384));
             Memory.createGroup(_hashtable);
          }
       }

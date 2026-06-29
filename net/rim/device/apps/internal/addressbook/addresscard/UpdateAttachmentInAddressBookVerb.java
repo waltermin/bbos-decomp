@@ -17,7 +17,7 @@ final class UpdateAttachmentInAddressBookVerb extends Verb {
    @Override
    public final Object invoke(Object parameter) {
       AddressCardModel addressCard = AddressCardUtilities.expandGroup(this._newAddressCard);
-      if (this._oldAddressCard instanceof Object) {
+      if (this._oldAddressCard instanceof AddressCardModel) {
          AddressCardModel oldAddressCard = (AddressCardModel)this._oldAddressCard;
          addressCard.setUID(oldAddressCard.getUID());
       }

@@ -5,6 +5,7 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.AutoTextEditField;
 import net.rim.device.api.ui.component.CheckboxField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.addressbook.AddressReference;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -161,36 +162,36 @@ final class EmailFilterBodyModelImpl implements FieldProvider, ConversionProvide
          EmailResources.getString(170),
          EmailResources.getString(171)
       };
-      Field from = (Field)(new Object(EmailResources.getString(54), this.getFromList(), 1000000, 4503601774854144L));
+      Field from = new AutoTextEditField(EmailResources.getString(54), this.getFromList(), 1000000, 4503601774854144L);
       from.setCookie(new FilterNameSearchModel());
-      Field sentTo = (Field)(new Object(EmailResources.getString(172), this.getSentToList(), 1000000, 4503601774854144L));
+      Field sentTo = new AutoTextEditField(EmailResources.getString(172), this.getSentToList(), 1000000, 4503601774854144L);
       sentTo.setCookie(new FilterNameSearchModel());
-      Field subject = (Field)(new Object(EmailResources.getString(1012), this.getSubject(), 1000000, 4503601774854144L));
-      Field body = (Field)(new Object(EmailResources.getString(173), this.getBody(), 1000000, 4503601774854144L));
-      CheckboxField directlyToMe = (CheckboxField)(new Object(EmailResources.getString(174), this.recipientFlagsSet(1)));
-      CheckboxField ccToMe = (CheckboxField)(new Object(EmailResources.getString(175), this.recipientFlagsSet(2)));
-      CheckboxField bccToMe = (CheckboxField)(new Object(EmailResources.getString(176), this.recipientFlagsSet(4)));
-      ObjectChoiceField icf = (ObjectChoiceField)(new Object(EmailResources.getString(620), importanceChoices, this.getImportance()));
+      Field subject = new AutoTextEditField(EmailResources.getString(1012), this.getSubject(), 1000000, 4503601774854144L);
+      Field body = new AutoTextEditField(EmailResources.getString(173), this.getBody(), 1000000, 4503601774854144L);
+      CheckboxField directlyToMe = new CheckboxField(EmailResources.getString(174), this.recipientFlagsSet(1));
+      CheckboxField ccToMe = new CheckboxField(EmailResources.getString(175), this.recipientFlagsSet(2));
+      CheckboxField bccToMe = new CheckboxField(EmailResources.getString(176), this.recipientFlagsSet(4));
+      ObjectChoiceField icf = new ObjectChoiceField(EmailResources.getString(620), importanceChoices, this.getImportance());
       icf.setCookie(this);
-      ObjectChoiceField scf = (ObjectChoiceField)(new Object(EmailResources.getString(177), sensitivityChoices, this.getSensitivity()));
+      ObjectChoiceField scf = new ObjectChoiceField(EmailResources.getString(177), sensitivityChoices, this.getSensitivity());
       scf.setCookie(this);
-      VerticalFieldManager vfm = (VerticalFieldManager)(new Object(1152921504606846976L));
+      VerticalFieldManager vfm = new VerticalFieldManager(1152921504606846976L);
       vfm.setCookie(this);
       vfm.deleteAll();
-      vfm.add((Field)(new Object()));
+      vfm.add(new SeparatorField());
       vfm.add(from);
       vfm.add(sentTo);
       vfm.add(subject);
       vfm.add(body);
-      vfm.add((Field)(new Object()));
+      vfm.add(new SeparatorField());
       vfm.add(directlyToMe);
       vfm.add(ccToMe);
       vfm.add(bccToMe);
-      vfm.add((Field)(new Object()));
+      vfm.add(new SeparatorField());
       vfm.add(icf);
       vfm.add(scf);
-      vfm.add((Field)(new Object()));
-      vfm.add((Field)(new Object()));
+      vfm.add(new SeparatorField());
+      vfm.add(new SeparatorField());
       new EmailFilterBodyModelImpl$EmailForwardingChoiceField(this, vfm);
       return vfm;
    }
@@ -202,8 +203,8 @@ final class EmailFilterBodyModelImpl implements FieldProvider, ConversionProvide
 
    @Override
    public final boolean grabDataFromField(Field field, Object context) {
-      if (!(field instanceof Object)) {
-         throw new Object("Unrecognized field");
+      if (!(field instanceof VerticalFieldManager)) {
+         throw new RuntimeException("Unrecognized field");
       }
 
       VerticalFieldManager vfm = (VerticalFieldManager)field;

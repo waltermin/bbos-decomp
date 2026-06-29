@@ -16,7 +16,7 @@ public final class WSPHeaderDecoder {
    private int _pos;
    private byte[] _buf;
    private HttpHeaders _nameValuePairs;
-   private static SimpleDateFormat _dateFormat = (SimpleDateFormat)(new Object("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.get(1701707776)));
+   private static SimpleDateFormat _dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.get(1701707776));
    private static final int DEFAULT_STRING_BUFFER_LENGTH = 128;
 
    public WSPHeaderDecoder(HttpHeaders decodeTo) {
@@ -254,7 +254,7 @@ public final class WSPHeaderDecoder {
          count++;
       }
 
-      return (String)(new Object(this._buf, start, count));
+      return new String(this._buf, start, count);
    }
 
    private final String readTextValue() {
@@ -263,7 +263,7 @@ public final class WSPHeaderDecoder {
          case 0:
             return null;
          case 34:
-            return ((StringBuffer)(new Object())).append('"').append(this.readTextString()).append('"').toString();
+            return '"' + this.readTextString() + '"';
          default:
             this._pos--;
             return this.readTextString();
@@ -357,7 +357,7 @@ public final class WSPHeaderDecoder {
                boolean isQuoted = (char)this._buf[this._pos] == '"';
                paramValue = this.readTextString();
                if (isQuoted) {
-                  paramValue = ((StringBuffer)(new Object())).append(paramValue).append('"').toString();
+                  paramValue = paramValue + '"';
                }
             } else {
                paramValue = Long.toString(this.readInteger());
@@ -376,7 +376,7 @@ public final class WSPHeaderDecoder {
                      qValue -= 100;
                   }
 
-                  StringBuffer qBuffer = (StringBuffer)(new Object());
+                  StringBuffer qBuffer = new StringBuffer();
 
                   while (qValue > 0) {
                      int newQValue = qValue / 10;
@@ -441,7 +441,7 @@ public final class WSPHeaderDecoder {
 
    private final void handleAccept(byte type) {
       String headerValue = null;
-      StringBuffer headerValueBuffer = (StringBuffer)(new Object(128));
+      StringBuffer headerValueBuffer = new StringBuffer(128);
       switch (type) {
          case -1:
             break;
@@ -493,7 +493,7 @@ public final class WSPHeaderDecoder {
             break;
          case 0:
          case 1:
-            StringBuffer sb = (StringBuffer)(new Object(128));
+            StringBuffer sb = new StringBuffer(128);
             int oldPos = this._pos;
             int lengthByte = this.readValueLength();
             if (isText((char)this._buf[this._pos])) {
@@ -736,11 +736,11 @@ public final class WSPHeaderDecoder {
 
          label35:
          try {
-            ByteArrayOutputStream bytesOut = (ByteArrayOutputStream)(new Object());
-            Base64OutputStream b64os = (Base64OutputStream)(new Object(bytesOut));
+            ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
+            Base64OutputStream b64os = new Base64OutputStream(bytesOut);
             b64os.write(this._buf, this._pos, len);
             b64os.close();
-            headerValue = (String)(new Object(bytesOut.toByteArray()));
+            headerValue = new String(bytesOut.toByteArray());
          } finally {
             break label35;
          }
@@ -775,17 +775,17 @@ public final class WSPHeaderDecoder {
 
             int oldPos = this._pos;
             type = this.getFieldValueInterpretation(this.readOctet());
-            StringBuffer param = (StringBuffer)(new Object());
+            StringBuffer param = new StringBuffer();
             if (type == 2) {
                this._pos--;
                String name = this.readTextString();
                this.parseParameters(param, len - (this._pos - oldPos));
-               headerValue = ((StringBuffer)(new Object())).append(name).append(param.toString()).toString();
+               headerValue = name + param.toString();
             } else if (type == 3 || type == 0) {
                this._pos--;
                String name = getContentTypeName(this.readInteger());
                this.parseParameters(param, len - (this._pos - oldPos));
-               headerValue = ((StringBuffer)(new Object())).append(name).append(param.toString()).toString();
+               headerValue = name + param.toString();
             }
             break;
          case 2:
@@ -806,7 +806,7 @@ public final class WSPHeaderDecoder {
    private final void handleDate(String header, byte type) {
       String headerValue = null;
       if (type == 0) {
-         Date date = (Date)(new Object(this.readLongInteger() * 1000));
+         Date date = new Date(this.readLongInteger() * 1000);
          Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
          calendar.setTime(date);
          headerValue = _dateFormat.format(calendar);
@@ -849,7 +849,7 @@ public final class WSPHeaderDecoder {
          case 1:
          default:
             int len = this.readValueLength();
-            StringBuffer stbuf = (StringBuffer)(new Object());
+            StringBuffer stbuf = new StringBuffer();
             this.parseParameters(stbuf, len);
             headerValue = stbuf.toString();
             break;
@@ -870,24 +870,24 @@ public final class WSPHeaderDecoder {
          int len = this.readValueLength();
          if (this._buf[this._pos] == -128) {
             this._pos++;
-            String tempStr = ((StringBuffer)(new Object())).append(this.readTextString()).append(':').append(this.readTextString()).toString();
+            String tempStr = this.readTextString() + ':' + this.readTextString();
 
             label36:
             try {
-               ByteArrayOutputStream bytesOut = (ByteArrayOutputStream)(new Object());
-               Base64OutputStream b64os = (Base64OutputStream)(new Object(bytesOut));
+               ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
+               Base64OutputStream b64os = new Base64OutputStream(bytesOut);
                b64os.write(tempStr.getBytes());
                b64os.close();
-               headerValue = ((StringBuffer)(new Object("Basic "))).append((String)(new Object(bytesOut.toByteArray()))).toString();
+               headerValue = "Basic " + new String(bytesOut.toByteArray());
             } finally {
                break label36;
             }
          } else {
             int oldPos = this._pos;
             String auth_scheme = this.readTextString();
-            StringBuffer stbuf = (StringBuffer)(new Object());
+            StringBuffer stbuf = new StringBuffer();
             this.parseParameters(stbuf, len - (this._pos - oldPos));
-            headerValue = ((StringBuffer)(new Object())).append(auth_scheme).append(';').append(stbuf.toString()).toString();
+            headerValue = auth_scheme + ';' + stbuf.toString();
          }
       }
 
@@ -973,7 +973,7 @@ public final class WSPHeaderDecoder {
          case 1:
          default:
             this.readValueLength();
-            StringBuffer buff = (StringBuffer)(new Object());
+            StringBuffer buff = new StringBuffer();
             int i = this.readShortInteger();
             if ((i < 10 || i > 13) && i != 99) {
                if (i == 14) {
@@ -1007,18 +1007,18 @@ public final class WSPHeaderDecoder {
          int len = this.readValueLength();
          int oldPos = this._pos;
          if (this.readOctet() == -128) {
-            headerValue = ((StringBuffer)(new Object("Basic realm=\""))).append(this.readTextString()).append("\"").toString();
+            headerValue = "Basic realm=\"" + this.readTextString() + "\"";
          } else {
             this._pos--;
             String scheme = this.readTextString();
             String realm = null;
             if (!scheme.startsWith("Passport")) {
-               realm = ((StringBuffer)(new Object("realm=\""))).append(this.readTextString()).append("\"").toString();
+               realm = "realm=\"" + this.readTextString() + "\"";
             }
 
-            StringBuffer buffer = (StringBuffer)(new Object());
+            StringBuffer buffer = new StringBuffer();
             this.parseParameters(buffer, len - (this._pos - oldPos));
-            StringBuffer b = (StringBuffer)(new Object());
+            StringBuffer b = new StringBuffer();
             b.append(scheme);
             b.append(' ');
             if (realm != null) {
@@ -1148,7 +1148,7 @@ public final class WSPHeaderDecoder {
             int oldPos = this._pos;
             type = this.getFieldValueInterpretation(this.readOctet());
             this._pos--;
-            StringBuffer buffer = (StringBuffer)(new Object());
+            StringBuffer buffer = new StringBuffer();
             String version;
             if (type == 2) {
                version = this.readTextString();
@@ -1163,7 +1163,7 @@ public final class WSPHeaderDecoder {
             buffer.append("Version");
             buffer.append("=");
             buffer.append(version);
-            StringBuffer params = (StringBuffer)(new Object());
+            StringBuffer params = new StringBuffer();
             this.parseParameters(params, len - (this._pos - oldPos));
             buffer.append(params.toString());
             headerValue = buffer.toString();
@@ -1184,7 +1184,7 @@ public final class WSPHeaderDecoder {
             int oldPos = this._pos;
             type = this.getFieldValueInterpretation(this.readOctet());
             this._pos--;
-            StringBuffer buffer = (StringBuffer)(new Object());
+            StringBuffer buffer = new StringBuffer();
             buffer.append("Version");
             buffer.append("=");
             if (type == 2) {
@@ -1238,7 +1238,7 @@ public final class WSPHeaderDecoder {
             break;
          case 1:
             int value = this.readShortInteger();
-            headerValue = ((StringBuffer)(new Object())).append(Integer.toString(value >> 4)).append('.').append(Integer.toString(value & 15)).toString();
+            headerValue = Integer.toString(value >> 4) + '.' + Integer.toString(value & 15);
             break;
          case 2:
             headerValue = this.readTextString();
@@ -1802,7 +1802,7 @@ public final class WSPHeaderDecoder {
             lang = 30055;
       }
 
-      return (String)(new Object(new char[]{(char)(lang >> 8), (char)(lang & 0xFF)}));
+      return new String(new char[]{(char)(lang >> 8), (char)(lang & 0xFF)});
    }
 
    static final String getContentTypeName(long n) {
@@ -1990,7 +1990,7 @@ public final class WSPHeaderDecoder {
                field = this.readTextString();
                count += this._pos - numBytes;
             } else {
-               field = new Object(this.readShortInteger()).toString();
+               field = new Byte(this.readShortInteger()).toString();
                count += 1;
             }
             break;
@@ -2001,16 +2001,16 @@ public final class WSPHeaderDecoder {
             while (count < len) {
                int var19 = this._buf[this._pos];
                if (var19 > 128 && var19 < 255) {
-                  field = ((StringBuffer)(new Object())).append(field).append(',').append(new Object(this.readShortInteger()).toString()).toString();
+                  field = field + ',' + new Byte(this.readShortInteger()).toString();
                   count += 1;
                } else {
                   numBytes = this._pos;
-                  field = ((StringBuffer)(new Object())).append(field).append(',').append(this.readTextString()).toString();
+                  field = field + ',' + this.readTextString();
                   count += this._pos - numBytes;
                }
             }
 
-            field = ((StringBuffer)(new Object())).append(field).append('"').toString();
+            field = field + '"';
          case 129:
          case 133:
          case 134:
@@ -2031,17 +2031,17 @@ public final class WSPHeaderDecoder {
             while (count < len) {
                first = this._buf[this._pos] & 255;
                if (first > 128) {
-                  field = ((StringBuffer)(new Object())).append(field).append(',').append(new Object(this.readShortInteger()).toString()).toString();
+                  field = field + ',' + new Byte(this.readShortInteger()).toString();
                   count += 1;
                } else {
                   numBytes = this._pos;
-                  field = ((StringBuffer)(new Object())).append(field).append(',').append(this.readTextString()).toString();
+                  field = field + ',' + this.readTextString();
                   count += this._pos - numBytes;
                }
             }
       }
 
-      return field == null && field.length() <= 0 ? cacheName : ((StringBuffer)(new Object())).append(cacheName).append('=').append(field).toString();
+      return field == null && field.length() <= 0 ? cacheName : cacheName + '=' + field;
    }
 
    private final String decodeLanguageGeneralFrom() {
@@ -2052,7 +2052,7 @@ public final class WSPHeaderDecoder {
    private final String readDeltaSeconds() {
       byte i = this._buf[this._pos];
       if (i >= -128 && i <= 0) {
-         return new Object(this.readShortInteger()).toString();
+         return new Byte(this.readShortInteger()).toString();
       } else if (i >= 0 && i <= 30) {
          this._pos++;
          return Long.toString(this.readLongInteger());

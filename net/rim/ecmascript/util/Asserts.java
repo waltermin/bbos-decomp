@@ -20,7 +20,7 @@ public class Asserts {
 
    public static void check(boolean b) {
       if (!b) {
-         Error e = (Error)(new Object("assertion failed"));
+         Error e = new Error("assertion failed");
          e.printStackTrace();
          throw e;
       }

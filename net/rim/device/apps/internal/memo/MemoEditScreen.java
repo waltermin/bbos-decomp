@@ -5,6 +5,8 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.AutoTextEditField;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.FactoryUtil;
@@ -15,6 +17,7 @@ import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
 import net.rim.device.apps.api.utility.editor.EditorUsingRIMModelFactory;
 import net.rim.device.apps.api.utility.framework.FindVerbManager;
+import net.rim.device.apps.internal.commonmodels.categories.DisplayCategoriesForFieldVerb;
 import net.rim.device.apps.internal.memo.resources.MemoResources;
 
 final class MemoEditScreen extends EditorUsingRIMModelFactory {
@@ -23,7 +26,7 @@ final class MemoEditScreen extends EditorUsingRIMModelFactory {
    private MemoModelImpl _originalMemo;
    private MemoModelImpl _savedMemo;
    private Field _categoriesField;
-   private FindVerbManager _findVerbManager = (FindVerbManager)(new Object(this.getDelegate()));
+   private FindVerbManager _findVerbManager = new FindVerbManager(this.getDelegate());
    boolean _infoVisible;
 
    MemoEditScreen(MemoModelImpl memo, int initialTextPosition, int initialScrollPosition, boolean newMemo) {
@@ -31,7 +34,7 @@ final class MemoEditScreen extends EditorUsingRIMModelFactory {
    }
 
    MemoEditScreen(MemoModelImpl memo, String pattern, int initialTextPosition, int initialScrollPosition, boolean newMemo) {
-      super(new Object(0, 8), null, 8809206174646860213L, -1);
+      super(new ContextObject(0, 8), null, 8809206174646860213L, -1);
       this._originalMemo = newMemo ? null : memo;
       if (memo == null) {
          memo = new MemoModelImpl();
@@ -53,12 +56,12 @@ final class MemoEditScreen extends EditorUsingRIMModelFactory {
    protected final Manager createManagerForField(Field f, int order) {
       Manager manager = null;
       if (order <= 0) {
-         manager = (Manager)(new Object());
+         manager = new VerticalFieldManager();
          manager.setTag(ThemeUtilities.MEMO_TITLE_AREA_TAG);
       }
 
       if (order > 0) {
-         manager = (Manager)(new Object(4611686018427387904L));
+         manager = new VerticalFieldManager(4611686018427387904L);
          manager.setTag(ThemeUtilities.MEMO_DATA_AREA_TAG);
       }
 
@@ -132,7 +135,7 @@ final class MemoEditScreen extends EditorUsingRIMModelFactory {
             }
 
             if (this._categoriesField != null) {
-               menu.add((Verb)(new Object(this._categoriesField)));
+               menu.add(new DisplayCategoriesForFieldVerb(this._categoriesField));
             }
          }
 
@@ -196,9 +199,9 @@ final class MemoEditScreen extends EditorUsingRIMModelFactory {
    }
 
    private final void insertInfo() {
-      VerticalFieldManager vfm = (VerticalFieldManager)(new Object());
-      vfm.add((Field)(new Object(((StringBuffer)(new Object("RefId: "))).append(((MemoModelImpl)this.getModel()).getUID()).toString(), 18014398509481984L)));
-      vfm.add((Field)(new Object()));
+      VerticalFieldManager vfm = new VerticalFieldManager();
+      vfm.add(new LabelField("RefId: " + ((MemoModelImpl)this.getModel()).getUID(), 18014398509481984L));
+      vfm.add(new SeparatorField());
       this.insert(vfm, 0);
       vfm.setFocus();
       this._infoVisible = true;

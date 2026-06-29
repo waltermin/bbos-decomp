@@ -42,7 +42,7 @@ final class AddressAttachmentFactory extends RIMModelFactory {
          }
 
          if (this._attachAddressVerbs == null) {
-            this._attachAddressVerbs = new Object[]{new AttachAddressVerb()};
+            this._attachAddressVerbs = new Verb[]{new AttachAddressVerb()};
          }
 
          return this._attachAddressVerbs;

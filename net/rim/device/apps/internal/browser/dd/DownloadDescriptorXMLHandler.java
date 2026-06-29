@@ -6,7 +6,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 final class DownloadDescriptorXMLHandler extends DefaultHandler {
    private DownloadDescriptorAttributes _ddAttributes;
-   private Stack _elementStack = (Stack)(new Object());
+   private Stack _elementStack = new Stack();
 
    public DownloadDescriptorXMLHandler(DownloadDescriptorAttributes ddAttributes) {
       this._ddAttributes = ddAttributes;

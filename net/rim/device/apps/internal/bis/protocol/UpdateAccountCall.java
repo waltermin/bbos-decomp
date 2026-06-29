@@ -97,7 +97,7 @@ final class UpdateAccountCall implements XMLCall, BISServiceConstants {
       }
 
       if (!this._mailbox.isValid()) {
-         XMLUtils.writeSimpleElement(ostream, "valid", new Object(false));
+         XMLUtils.writeSimpleElement(ostream, "valid", new Boolean(false));
       }
 
       if (this._oldPassword != null) {

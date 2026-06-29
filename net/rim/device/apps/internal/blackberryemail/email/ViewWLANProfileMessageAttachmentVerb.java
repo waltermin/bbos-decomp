@@ -30,7 +30,7 @@ public class ViewWLANProfileMessageAttachmentVerb extends Verb {
 
    private void invokeDisplaySummaryScreenVerb(byte[] profileData) {
       if (profileData != null && profileData.length > 0) {
-         ContextObject contextObject = (ContextObject)(new Object());
+         ContextObject contextObject = new ContextObject();
          ContextObject.put(contextObject, 8849067667159082262L, profileData);
          Verb displaySummaryScreenVerb = this.getProfileSummaryVerb();
          if (displaySummaryScreenVerb != null) {

@@ -244,7 +244,7 @@ public class PairLearningSimplePrefixTable extends LearningSimplePrefixTable {
                      trim_len++;
                   } else if (trim_start != -1) {
                      if (offset - trim_start != trim_len) {
-                        throw new Object("");
+                        throw new IllegalStateException("");
                      }
 
                      System.arraycopy(super._wordsDefTable, offset, super._wordsDefTable, trim_start, super._reader.getFileSize() - offset);
@@ -273,7 +273,7 @@ public class PairLearningSimplePrefixTable extends LearningSimplePrefixTable {
                } else {
                   if (trim_start != -1) {
                      if (offset - trim_start != trim_len) {
-                        throw new Object("");
+                        throw new IllegalStateException("");
                      }
 
                      System.arraycopy(super._wordsDefTable, offset, super._wordsDefTable, trim_start, super._reader.getFileSize() - offset);

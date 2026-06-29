@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.docview.gui;
 import net.rim.device.api.i18n.Locale;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.ui.MenuItem;
+import net.rim.device.internal.ui.InputMethodSwitcher;
 import net.rim.tid.util.Utils;
 
 class DocViewDisplayField$4 extends MenuItem {
@@ -16,6 +17,6 @@ class DocViewDisplayField$4 extends MenuItem {
    @Override
    public void run() {
       Locale[] locales = Utils.getAvailableInputLocales(true);
-      new Object(locales, Utils.getInputLocalesDisplayNames(locales), true, null);
+      new InputMethodSwitcher(locales, Utils.getInputLocalesDisplayNames(locales), true, null);
    }
 }

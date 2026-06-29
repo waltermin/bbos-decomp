@@ -34,7 +34,7 @@ final class GeneralPhoneOption extends VoiceOptionsListItem {
    protected final void populateMainScreen(MainScreen screen) {
       int[] lineIds = PhoneUtilities.getAllLineIds();
       if (lineIds.length > 1) {
-         String[] lineDesc = new Object[lineIds.length];
+         String[] lineDesc = new String[lineIds.length];
 
          for (int i = lineIds.length - 1; i >= 0; i--) {
             lineDesc[i] = PhoneUtilities.getLineDescription(lineIds[i]);
@@ -51,7 +51,7 @@ final class GeneralPhoneOption extends VoiceOptionsListItem {
 
             for (int i = lineIds.length - 1; i >= 0; i--) {
                if (currentLine == lineIds[i]) {
-                  this._currentLineField = (ObjectChoiceField)(new Object(PhoneResources.getString(6307), lineDesc, i));
+                  this._currentLineField = new ObjectChoiceField(PhoneResources.getString(6307), lineDesc, i);
                   screen.add(this._currentLineField);
                   break;
                }
@@ -60,13 +60,13 @@ final class GeneralPhoneOption extends VoiceOptionsListItem {
       }
 
       if (Audio.hasBuiltInHeadset()) {
-         this._autoCallAnswerChoiceField = (ObjectChoiceField)(new Object(PhoneResources.getString(5), this.getCallAnswerArray(), this.getCallAnswerIndex()));
-         this._autoCallHangupChoiceField = (ObjectChoiceField)(new Object(PhoneResources.getString(6), this.getCallHangupArray(), this.getCallHangupIndex()));
+         this._autoCallAnswerChoiceField = new ObjectChoiceField(PhoneResources.getString(5), this.getCallAnswerArray(), this.getCallAnswerIndex());
+         this._autoCallHangupChoiceField = new ObjectChoiceField(PhoneResources.getString(6), this.getCallHangupArray(), this.getCallHangupIndex());
          screen.add(this._autoCallAnswerChoiceField);
          screen.add(this._autoCallHangupChoiceField);
       }
 
-      this._confirmDelete = (BooleanChoiceField)(new Object(CommonResources.getString(2008), 0, !super._phoneOptions.getBooleanOption(8192)));
+      this._confirmDelete = new BooleanChoiceField(CommonResources.getString(2008), 0, !super._phoneOptions.getBooleanOption(8192));
       screen.add(this._confirmDelete);
       if (PhoneUtilities.canBlockIdentity()) {
          int initialIndex = 2;
@@ -84,40 +84,40 @@ final class GeneralPhoneOption extends VoiceOptionsListItem {
                initialIndex = 1;
          }
 
-         this._blockIdentityField = (ObjectChoiceField)(new Object(
+         this._blockIdentityField = new ObjectChoiceField(
             PhoneResources.getString(456),
-            new Object[]{PhoneResources.getString(6309), PhoneResources.getString(6330), PhoneResources.getString(6334)},
+            new String[]{PhoneResources.getString(6309), PhoneResources.getString(6330), PhoneResources.getString(6334)},
             initialIndex
-         ));
+         );
          screen.add(this._blockIdentityField);
       }
 
       int phoneListViewType = PhoneOptions.getOptions().getPhoneListViewType();
-      this._phoneListViewField = (ObjectChoiceField)(new Object(PhoneResources.getString(6245), this.getPhoneListViewChoices(), phoneListViewType));
+      this._phoneListViewField = new ObjectChoiceField(PhoneResources.getString(6245), this.getPhoneListViewChoices(), phoneListViewType);
       screen.add(this._phoneListViewField);
       if (!PhoneUtilities.isQwertyReducedKeyboard()) {
-         this._dialFromHomeScreenField = (BooleanChoiceField)(new Object(PhoneResources.getString(6039), 0, super._phoneOptions.getBooleanOption(16384)));
+         this._dialFromHomeScreenField = new BooleanChoiceField(PhoneResources.getString(6039), 0, super._phoneOptions.getBooleanOption(16384));
          screen.add(this._dialFromHomeScreenField);
       }
 
       if (lineIds.length < 2) {
-         this._showMyNumberField = (BooleanChoiceField)(new Object(PhoneResources.getString(6085), 0, !super._phoneOptions.getBooleanOption(65536)));
+         this._showMyNumberField = new BooleanChoiceField(PhoneResources.getString(6085), 0, !super._phoneOptions.getBooleanOption(65536));
          screen.add(this._showMyNumberField);
       }
 
       int defaultVolumeSetting = super._phoneOptions.getDefaultCallVolume();
       int volumeChoiceIndex = defaultVolumeSetting / 25;
-      this._defaultCallVolumeField = (ObjectChoiceField)(new Object(PhoneResources.getString(6129), this.getDefaultCallVolumeChoices(), volumeChoiceIndex));
+      this._defaultCallVolumeField = new ObjectChoiceField(PhoneResources.getString(6129), this.getDefaultCallVolumeChoices(), volumeChoiceIndex);
       screen.add(this._defaultCallVolumeField);
       if (EnhanceCallAudioServices.getInstance().isECASupported()) {
          int defaultECASetting = super._phoneOptions.getDefaultEnhanceCallAudio();
-         this._defaultEnhanceCallAudioField = (ObjectChoiceField)(new Object(PhoneResources.getString(6324), this.getDefaultECAChoices(), defaultECASetting));
+         this._defaultEnhanceCallAudioField = new ObjectChoiceField(PhoneResources.getString(6324), this.getDefaultECAChoices(), defaultECASetting);
          screen.add(this._defaultEnhanceCallAudioField);
       }
 
       if (InternalServices.isDeviceCapable(23)) {
-         String[] ringtoneLightStyles = new Object[]{CommonResources.getString(107), PhoneResources.getString(6302)};
-         this._ringtoneLightField = (ObjectChoiceField)(new Object(PhoneResources.getString(6301), ringtoneLightStyles, 0, 134217728));
+         String[] ringtoneLightStyles = new String[]{CommonResources.getString(107), PhoneResources.getString(6302)};
+         this._ringtoneLightField = new ObjectChoiceField(PhoneResources.getString(6301), ringtoneLightStyles, 0, 134217728);
          this._ringtoneLightField.setSelectedIndex(super._phoneOptions.getRingtoneLightStyle());
          screen.add(this._ringtoneLightField);
       }
@@ -219,7 +219,7 @@ final class GeneralPhoneOption extends VoiceOptionsListItem {
    }
 
    private final String[] getCallAnswerArray() {
-      return new Object[]{CommonResources.getString(2014), PhoneResources.getString(7)};
+      return new String[]{CommonResources.getString(2014), PhoneResources.getString(7)};
    }
 
    private final int getCallAnswerIndex() {
@@ -227,19 +227,19 @@ final class GeneralPhoneOption extends VoiceOptionsListItem {
    }
 
    private final String[] getCallHangupArray() {
-      return new Object[]{CommonResources.getString(2014), PhoneResources.getString(8)};
+      return new String[]{CommonResources.getString(2014), PhoneResources.getString(8)};
    }
 
    private final String[] getPhoneListViewChoices() {
-      return new Object[]{PhoneResources.getString(6035), PhoneResources.getString(6037), PhoneResources.getString(6034), PhoneResources.getString(6244)};
+      return new String[]{PhoneResources.getString(6035), PhoneResources.getString(6037), PhoneResources.getString(6034), PhoneResources.getString(6244)};
    }
 
    private final String[] getDefaultCallVolumeChoices() {
-      return new Object[]{PhoneResources.getString(6130), "25%", "50%", "75%", "100%"};
+      return new String[]{PhoneResources.getString(6130), "25%", "50%", "75%", "100%"};
    }
 
    private final String[] getDefaultECAChoices() {
-      return new Object[]{PhoneResources.getString(6130), PhoneResources.getString(6327), PhoneResources.getString(6325), PhoneResources.getString(6326)};
+      return new String[]{PhoneResources.getString(6130), PhoneResources.getString(6327), PhoneResources.getString(6325), PhoneResources.getString(6326)};
    }
 
    private final int getCallHangupIndex() {

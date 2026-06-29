@@ -30,10 +30,10 @@ public final class DiagScreen extends MainScreen {
    DiagScreen(Diag diag) {
       this.setupMenuItems();
       this._manager = diag;
-      this._title = (LabelField)(new Object(DiagnosticResources.getString(0), 1152921504606846976L));
+      this._title = new LabelField(DiagnosticResources.getString(0), 1152921504606846976L);
       this.setTitle(this._title);
       this._callback = new DiagScreen$ReportListCallback();
-      this._reportList = (ListField)(new Object());
+      this._reportList = new ListField();
       this._reportList.setCallback(this._callback);
       this._reportList.setSearchable(false);
       this.add(this._reportList);

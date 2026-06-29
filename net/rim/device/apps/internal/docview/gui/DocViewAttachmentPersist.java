@@ -175,7 +175,7 @@ final class DocViewAttachmentPersist implements LowMemoryListener {
    }
 
    final void checkPendingState() {
-      IntVector msgIDVector = (IntVector)(new Object());
+      IntVector msgIDVector = new IntVector();
       if (this._data.checkPendingState(msgIDVector)) {
          ForwardScreen[] fwdScreens = DocViewDisplayScreenInstance.getForwardScreenInstances();
          if (fwdScreens != null && fwdScreens.length > 0) {
@@ -187,7 +187,7 @@ final class DocViewAttachmentPersist implements LowMemoryListener {
          }
       }
 
-      msgIDVector = null;
+      IntVector var4 = null;
    }
 
    final int getAttachmentBlockCount(int messageID, int attachmentIndex, String archiveIndicator, String embeddedDomID) {
@@ -284,8 +284,8 @@ final class DocViewAttachmentPersist implements LowMemoryListener {
 
    @Override
    public final boolean freeStaleObject(int priority) {
-      IntVector msgIDVector = (IntVector)(new Object());
-      IntVector msgIDForEmbeddedAndLinksVector = (IntVector)(new Object());
+      IntVector msgIDVector = new IntVector();
+      IntVector msgIDForEmbeddedAndLinksVector = new IntVector();
       boolean retValue = this._data.freeStaleObject(priority, msgIDVector, msgIDForEmbeddedAndLinksVector);
       if (retValue) {
          this._attachmentDataSize = this._data.getCurrentTotalAttachmentSize();
@@ -308,8 +308,8 @@ final class DocViewAttachmentPersist implements LowMemoryListener {
          }
       }
 
-      msgIDVector = null;
-      msgIDForEmbeddedAndLinksVector = null;
+      IntVector var8 = null;
+      IntVector var9 = null;
       return retValue;
    }
 

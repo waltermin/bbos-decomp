@@ -1,6 +1,6 @@
 package net.rim.device.apps.internal.qm.peer;
 
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 import net.rim.device.api.browser.util.StaticHttpConnection;
 import net.rim.device.api.io.MIMETypeAssociations;
 import net.rim.device.api.io.http.HttpHeaders;
@@ -10,6 +10,7 @@ import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.FlowFieldManager;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.VerticalFieldManager;
@@ -28,7 +29,7 @@ final class FileMessageField extends MessageField implements FieldChangeListener
    private FlowFieldManager _buttonManager;
    private boolean _isImage;
    private boolean _isPlayable;
-   VerticalFieldManager _manager = (VerticalFieldManager)(new Object());
+   VerticalFieldManager _manager = new VerticalFieldManager();
 
    FileMessageField(FileMessage message) {
       this._message = message;
@@ -50,51 +51,51 @@ final class FileMessageField extends MessageField implements FieldChangeListener
          this._isPlayable = true;
       }
 
-      this._vfm = (VerticalFieldManager)(new Object());
-      this._vfm.add((Field)(new Object(this._message.getText(), 36028797018963968L)));
+      this._vfm = new VerticalFieldManager();
+      this._vfm.add(new RichTextField(this._message.getText(), 36028797018963968L));
       int state = message.getState();
       Field rtf = this.getTextField(state);
       if (rtf != null) {
          this._vfm.add(rtf);
       }
 
-      this._buttonManager = (FlowFieldManager)(new Object());
+      this._buttonManager = new FlowFieldManager();
       if (this._isImage) {
-         this._viewButton = (ButtonField)(new Object(PeerResources.getString(2053), 12884901888L));
+         this._viewButton = new ButtonField(PeerResources.getString(2053), 12884901888L);
          this._viewButton.setChangeListener(this);
          this._buttonManager.add(this._viewButton);
       }
 
       if (this._isPlayable) {
-         this._playButton = (ButtonField)(new Object(QmResources.getString(59), 12884901888L));
+         this._playButton = new ButtonField(QmResources.getString(59), 12884901888L);
          this._playButton.setChangeListener(this);
          this._buttonManager.add(this._playButton);
       }
 
       if (state == 0) {
          if (!this._isImage || bitmap != null) {
-            this._saveButton = (ButtonField)(new Object(PeerResources.getString(5), 12884901888L));
+            this._saveButton = new ButtonField(PeerResources.getString(5), 12884901888L);
             this._saveButton.setChangeListener(this);
             this._buttonManager.add(this._saveButton);
          }
 
-         this._cancelButton = (ButtonField)(new Object(PeerResources.getString(6), 12884901888L));
+         this._cancelButton = new ButtonField(PeerResources.getString(6), 12884901888L);
          this._cancelButton.setChangeListener(this);
          this._buttonManager.add(this._cancelButton);
       }
 
       this._vfm.add(this._buttonManager);
-      this._hfm = (HorizontalFieldManager)(new Object());
+      this._hfm = new HorizontalFieldManager();
       if (bitmap != null) {
-         BitmapField thumbnail = (BitmapField)(new Object(bitmap, 51539607552L));
+         BitmapField thumbnail = new BitmapField(bitmap, 51539607552L);
          thumbnail.setSpace(5, 5);
          this._hfm.add(thumbnail);
       }
 
       this._hfm.add(this._vfm);
-      this._manager.add((Field)(new Object()));
+      this._manager.add(new SeparatorField());
       this._manager.add(this._hfm);
-      this._manager.add((Field)(new Object()));
+      this._manager.add(new SeparatorField());
       this.add(this._manager);
    }
 
@@ -132,16 +133,16 @@ final class FileMessageField extends MessageField implements FieldChangeListener
          }
 
          if (field == this._viewButton || field == this._playButton) {
-            HttpHeaders headers = (HttpHeaders)(new Object());
+            HttpHeaders headers = new HttpHeaders();
             headers.addProperty("content-type", this._message.getContentType());
-            headers.addProperty("content-length", ((StringBuffer)(new Object(""))).append(this._message.getData().length).toString());
-            StaticHttpConnection connection = (StaticHttpConnection)(new Object(this._message.getFilename(), this._message.getData(), headers));
+            headers.addProperty("content-length", "" + this._message.getData().length);
+            StaticHttpConnection connection = new StaticHttpConnection(this._message.getFilename(), this._message.getData(), headers);
             PeerApplication.getInstance().displayRenderScreen(connection);
          }
       } else {
          String savedFilename = ExplorerServices.saveInputStream(
             this._message.getFilename(),
-            (InputStream)(new Object(this._message.getData())),
+            new ByteArrayInputStream(this._message.getData()),
             MIMETypeAssociations.getMediaTypeFromMIMEType(this._message.getContentType()),
             true,
             false
@@ -186,15 +187,15 @@ final class FileMessageField extends MessageField implements FieldChangeListener
       switch (state) {
          case 1:
          default:
-            rtf = (RichTextField)(new Object(PeerResources.getString(890), 36028797018963968L));
+            rtf = new RichTextField(PeerResources.getString(890), 36028797018963968L);
             rtf.setAttributes(new int[]{32768, -805044223, 1, -805037994}, new int[]{16777215, 207814912, 1851099757, 1956816537});
             return rtf;
          case 2:
-            rtf = (RichTextField)(new Object(PeerResources.getString(891), 36028797018963968L));
+            rtf = new RichTextField(PeerResources.getString(891), 36028797018963968L);
             rtf.setAttributes(new int[]{16711680, -805044213, 775162112, 774909491}, new int[]{16777215, 207814912, 1851099757, 1956816537});
             return rtf;
          case 3:
-            rtf = (RichTextField)(new Object(PeerResources.getString(892), 36028797018963968L));
+            rtf = new RichTextField(PeerResources.getString(892), 36028797018963968L);
             rtf.setAttributes(new int[]{16711680, -805044213, 775162112, 774909491}, new int[]{16777215, 207814912, 1851099757, 1956816537});
          case 0:
             return rtf;

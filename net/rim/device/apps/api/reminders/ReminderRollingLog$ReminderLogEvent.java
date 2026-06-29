@@ -67,35 +67,35 @@ final class ReminderRollingLog$ReminderLogEvent implements Persistable {
          ReminderRollingLog._scratchBuffer.setLength(0);
          ReminderRollingLog._currentTimeFormat.format(ReminderRollingLog._cal, ReminderRollingLog._scratchBuffer, null);
          this.codeToString(this._code, ReminderRollingLog._scratchBuffer);
-         String msg = ((StringBuffer)(new Object())).append(ReminderRollingLog._scratchBuffer.toString()).append(":").toString();
+         String msg = ReminderRollingLog._scratchBuffer.toString() + ":";
          if (this._providerName != null) {
-            msg = ((StringBuffer)(new Object())).append(msg).append(this._providerName).toString();
+            msg = msg + this._providerName;
          }
 
          if (this._reminderTime != -1) {
             ReminderRollingLog._scratchBuffer.setLength(0);
             calEx.setTimeLong((long)this._reminderTime * 1000);
             ReminderRollingLog._eventTimeFormat.format(ReminderRollingLog._cal, ReminderRollingLog._scratchBuffer, null);
-            msg = ((StringBuffer)(new Object())).append(msg).append(":").append(ReminderRollingLog._scratchBuffer.toString()).toString();
+            msg = msg + ":" + ReminderRollingLog._scratchBuffer.toString();
          }
 
          if (this._reminderFiredFor != -1) {
             ReminderRollingLog._scratchBuffer.setLength(0);
             calEx.setTimeLong((long)this._reminderFiredFor * 1000);
             ReminderRollingLog._eventTimeFormat.format(ReminderRollingLog._cal, ReminderRollingLog._scratchBuffer, null);
-            msg = ((StringBuffer)(new Object())).append(msg).append(":").append(ReminderRollingLog._scratchBuffer.toString()).toString();
+            msg = msg + ":" + ReminderRollingLog._scratchBuffer.toString();
          }
 
          if (this._state != -1) {
-            msg = ((StringBuffer)(new Object())).append(msg).append(":").append(this._state).toString();
+            msg = msg + ":" + this._state;
          }
 
          if (this._reminderID != -1) {
-            msg = ((StringBuffer)(new Object())).append(msg).append(":").append(this._reminderID).toString();
+            msg = msg + ":" + this._reminderID;
          }
 
          if (this._extraInfo != null) {
-            msg = ((StringBuffer)(new Object())).append(msg).append(":").append(this._extraInfo).toString();
+            msg = msg + ":" + this._extraInfo;
          }
 
          return msg;

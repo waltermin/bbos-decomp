@@ -1,5 +1,6 @@
 package net.rim.device.api.crypto.tls.server;
 
+import java.io.EOFException;
 import java.util.Enumeration;
 import net.rim.device.api.crypto.DHCryptoSystem;
 import net.rim.device.api.crypto.DHKeyPair;
@@ -16,6 +17,7 @@ import net.rim.device.api.crypto.SignatureSigner;
 import net.rim.device.api.crypto.asn1.ASN1OutputStream;
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.CertificateUtilities;
+import net.rim.device.api.crypto.certificate.DistinguishedName;
 import net.rim.device.api.crypto.keystore.DeviceKeyStore;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
@@ -24,6 +26,7 @@ import net.rim.device.api.crypto.tls.AlertProtocolMethods;
 import net.rim.device.api.crypto.tls.ConnectionState;
 import net.rim.device.api.crypto.tls.RandomStructure;
 import net.rim.device.api.crypto.tls.RecordProtocol;
+import net.rim.device.api.crypto.tls.TLSAlertException;
 import net.rim.device.api.crypto.tls.TLSUtilities;
 import net.rim.device.api.crypto.tls.ssl30.SSLConnectionState;
 import net.rim.device.api.crypto.tls.ssl30.SSLDigest;
@@ -35,6 +38,7 @@ import net.rim.device.api.crypto.tls.tls10.TLSHandshakeProtocol;
 import net.rim.device.api.crypto.tls.tls10.TLSRecordProtocol;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.api.util.StringUtilities;
+import net.rim.device.cldc.io.ssl.TLSException;
 import net.rim.vm.Array;
 
 public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
@@ -48,12 +52,12 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
    }
 
    public void helloRequest() {
-      throw new Object();
+      throw new RuntimeException();
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public void clientHello(DataBuffer buffer, boolean SSLv2) {
+   public void clientHello(DataBuffer buffer, boolean SSLv2) throws TLSException {
       try {
          if (!SSLv2) {
             int version1 = buffer.readUnsignedByte();
@@ -119,7 +123,7 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
                if (challengeLength > 32) {
                   int skipBytes = challengeLength - 32;
                   if (buffer.skipBytes(skipBytes) != skipBytes) {
-                     throw new Object();
+                     throw new EOFException();
                   }
 
                   buffer.readFully(clientRandom);
@@ -130,19 +134,19 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
                ((RecordProtocol)super._recordProtocol).setClientRandom(clientRandom);
             } else {
                ((TLSAlertProtocol)super._alertProtocol).sendAlertMessage((byte)3, (byte)40);
-               throw new Object((Exception)(new Object((byte)3, (byte)40)));
+               throw new TLSException(new TLSAlertException((byte)3, (byte)40));
             }
          }
       } catch (Throwable var20) {
-         throw new Object(e);
+         throw new TLSException(e);
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public void serverHello() {
+   public void serverHello() throws TLSException {
       try {
-         DataBuffer buffer = (DataBuffer)(new Object());
+         DataBuffer buffer = new DataBuffer();
          buffer.write(2);
          buffer.writeByte(0);
          buffer.writeByte(0);
@@ -182,7 +186,7 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
 
          if (!found) {
             ((TLSAlertProtocol)super._alertProtocol).sendAlertMessage((byte)3, (byte)40);
-            throw new Object((Exception)(new Object((byte)3, (byte)40)));
+            throw new TLSException(new TLSAlertException((byte)3, (byte)40));
          }
 
          buffer.writeByte(super._cipherSuite >>> 8);
@@ -194,7 +198,7 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
          ((SSLRecordProtocol)super._recordProtocol).setPendingWrite(writeState);
          this.write(buffer);
       } catch (Throwable var10) {
-         throw new Object(e);
+         throw new TLSException(e);
       }
    }
 
@@ -202,7 +206,7 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
       super._types = new byte[]{1};
       KeyStore keyStore = TrustedKeyStore.getInstance();
       Enumeration enumeration = keyStore.elements();
-      super._dn = new Object[0];
+      super._dn = new DistinguishedName[0];
 
       while (enumeration.hasMoreElements()) {
          KeyStoreData data = (KeyStoreData)enumeration.nextElement();
@@ -214,7 +218,7 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
       }
 
       try {
-         DataBuffer buffer = (DataBuffer)(new Object());
+         DataBuffer buffer = new DataBuffer();
          buffer.write(11);
          TLSUtilities.writeIntegerThreeBytes(buffer, 0);
          Certificate[] certChain = null;
@@ -239,7 +243,7 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public void serverKeyExchange() {
       try {
-         DataBuffer buffer = (DataBuffer)(new Object());
+         DataBuffer buffer = new DataBuffer();
          buffer.write(12);
          TLSUtilities.writeIntegerThreeBytes(buffer, 0);
          ConnectionState connectionState = ((SSLRecordProtocol)super._recordProtocol).getPendingWrite();
@@ -257,11 +261,11 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
                label177:
                try {
                   var30 = true;
-                  if (!(super._privateKey instanceof Object)) {
+                  if (!(super._privateKey instanceof RSAPrivateKey)) {
                      TLSUtilities.sendAlertAndThrowException((AlertProtocolMethods)super._alertProtocol, (byte)47);
                   }
 
-                  RSACryptoSystem system = (RSACryptoSystem)(new Object(1024));
+                  RSACryptoSystem system = new RSACryptoSystem(1024);
                   RSAKeyPair keyPair = system.createRSAKeyPair();
                   RSAPublicKey pubKey = keyPair.getRSAPublicKey();
                   byte[] n = pubKey.getN();
@@ -275,7 +279,7 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
                   buffer.writeShort(e.length);
                   buffer.write(e);
                   SSLDigest digest = new SSLDigest();
-                  PKCS1SignatureSigner signer = (PKCS1SignatureSigner)(new Object((RSAPrivateKey)super._privateKey, digest, false));
+                  PKCS1SignatureSigner signer = new PKCS1SignatureSigner((RSAPrivateKey)super._privateKey, digest, false);
                   signer.update(((RecordProtocol)super._recordProtocol).getClientRandom());
                   signer.update(((RecordProtocol)super._recordProtocol).getServerRandom());
                   signer.update(mLength1);
@@ -309,15 +313,15 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
                label174:
                try {
                   var34 = true;
-                  DHCryptoSystem e = new Object();
-                  DHKeyPair dhKeys = ((DHCryptoSystem)e).createDHKeyPair();
+                  DHCryptoSystem e = new DHCryptoSystem();
+                  DHKeyPair dhKeys = e.createDHKeyPair();
                   DHPublicKey dhPub = dhKeys.getDHPublicKey();
-                  byte[] p = ((DHCryptoSystem)e).getP();
+                  byte[] p = e.getP();
                   int pLength1 = p.length >> 8;
                   int pLength2 = p.length & 0xFF;
                   buffer.writeShort(p.length);
                   buffer.write(p);
-                  byte[] g = ((DHCryptoSystem)e).getG();
+                  byte[] g = e.getG();
                   int gLength1 = g.length >> 8;
                   int gLength2 = g.length & 0xFF;
                   buffer.writeShort(g.length);
@@ -331,17 +335,17 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
                      PrivateKey priv = ((SSLRecordProtocol)super._recordProtocol).getLocalPrivateKey();
                      SignatureSigner signer;
                      if (keyExchangeAlgorithm != 6 && keyExchangeAlgorithm != 7) {
-                        if (!(priv instanceof Object)) {
+                        if (!(priv instanceof RSAPrivateKey)) {
                            TLSUtilities.sendAlertAndThrowException((AlertProtocolMethods)super._alertProtocol, (byte)47);
                         }
 
-                        signer = (SignatureSigner)(new Object((RSAPrivateKey)priv, new SSLDigest(), false));
+                        signer = new PKCS1SignatureSigner((RSAPrivateKey)priv, new SSLDigest(), false);
                      } else {
-                        if (!(priv instanceof Object)) {
+                        if (!(priv instanceof DSAPrivateKey)) {
                            TLSUtilities.sendAlertAndThrowException((AlertProtocolMethods)super._alertProtocol, (byte)47);
                         }
 
-                        signer = (SignatureSigner)(new Object((DSAPrivateKey)priv));
+                        signer = new DSASignatureSigner((DSAPrivateKey)priv);
                      }
 
                      signer.update(((RecordProtocol)super._recordProtocol).getClientRandom());
@@ -402,9 +406,9 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public void serverCertificateRequest() {
+   public void serverCertificateRequest() throws TLSException {
       try {
-         DataBuffer buffer = (DataBuffer)(new Object());
+         DataBuffer buffer = new DataBuffer();
          buffer.write(13);
          buffer.writeByte(0);
          buffer.writeByte(0);
@@ -430,22 +434,22 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
          buffer.write(lengthBytes);
          this.write(buffer);
       } catch (Throwable var7) {
-         throw new Object(e);
+         throw new TLSException(e);
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public void serverHelloDone() {
+   public void serverHelloDone() throws TLSException {
       try {
-         DataBuffer buffer = (DataBuffer)(new Object());
+         DataBuffer buffer = new DataBuffer();
          buffer.write(14);
          buffer.writeByte(0);
          buffer.writeByte(0);
          buffer.writeByte(0);
          this.write(buffer);
       } catch (Throwable var3) {
-         throw new Object(e);
+         throw new TLSException(e);
       }
    }
 
@@ -453,7 +457,7 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
       super.serverCertificate(buffer);
    }
 
-   public void clientKeyExchange(DataBuffer param1) {
+   public void clientKeyExchange(DataBuffer param1) throws TLSException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -463,7 +467,7 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
       // Bytecode:
       // 000: aload 0
       // 001: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._privateKey Lnet/rim/device/api/crypto/PrivateKey;
-      // 004: instanceof java/lang/Object
+      // 004: instanceof net/rim/device/api/crypto/RSAPrivateKey
       // 007: ifne 00d
       // 00a: goto 0fe
       // 00d: bipush 0
@@ -498,24 +502,24 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
       // 045: aload 1
       // 046: aload 3
       // 047: invokevirtual net/rim/device/api/util/DataBuffer.readFully ([B)V
-      // 04a: new java/lang/Object
+      // 04a: new net/rim/device/api/crypto/RSADecryptorEngine
       // 04d: dup
       // 04e: aload 0
       // 04f: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._privateKey Lnet/rim/device/api/crypto/PrivateKey;
-      // 052: checkcast java/lang/Object
+      // 052: checkcast net/rim/device/api/crypto/RSAPrivateKey
       // 055: invokespecial net/rim/device/api/crypto/RSADecryptorEngine.<init> (Lnet/rim/device/api/crypto/RSAPrivateKey;)V
       // 058: astore 4
-      // 05a: new java/lang/Object
+      // 05a: new net/rim/device/api/crypto/PKCS1UnformatterEngine
       // 05d: dup
       // 05e: aload 4
       // 060: invokespecial net/rim/device/api/crypto/PKCS1UnformatterEngine.<init> (Lnet/rim/device/api/crypto/PrivateKeyDecryptorEngine;)V
       // 063: astore 5
-      // 065: new java/lang/Object
+      // 065: new java/io/ByteArrayInputStream
       // 068: dup
       // 069: aload 3
       // 06a: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
       // 06d: astore 6
-      // 06f: new java/lang/Object
+      // 06f: new net/rim/device/api/crypto/BlockDecryptor
       // 072: dup
       // 073: aload 5
       // 075: aload 6
@@ -577,9 +581,9 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
       // 0e3: bipush 3
       // 0e5: bipush 21
       // 0e7: invokevirtual net/rim/device/api/crypto/tls/tls10/TLSAlertProtocol.sendAlertMessage (BB)V
-      // 0ea: new java/lang/Object
+      // 0ea: new net/rim/device/cldc/io/ssl/TLSException
       // 0ed: dup
-      // 0ee: new java/lang/Object
+      // 0ee: new net/rim/device/api/crypto/tls/TLSAlertException
       // 0f1: dup
       // 0f2: bipush 3
       // 0f4: bipush 21
@@ -589,7 +593,7 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
       // 0fd: return
       // 0fe: aload 0
       // 0ff: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._privateKey Lnet/rim/device/api/crypto/PrivateKey;
-      // 102: instanceof java/lang/Object
+      // 102: instanceof net/rim/device/api/crypto/DHPrivateKey
       // 105: ifeq 140
       // 108: aload 1
       // 109: invokevirtual net/rim/device/api/util/DataBuffer.readShort ()S
@@ -600,19 +604,19 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
       // 111: aload 1
       // 112: aload 3
       // 113: invokevirtual net/rim/device/api/util/DataBuffer.readFully ([B)V
-      // 116: new java/lang/Object
+      // 116: new net/rim/device/api/crypto/DHPublicKey
       // 119: dup
       // 11a: aload 0
       // 11b: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._privateKey Lnet/rim/device/api/crypto/PrivateKey;
       // 11e: invokeinterface net/rim/device/api/crypto/PrivateKey.getCryptoSystem ()Lnet/rim/device/api/crypto/CryptoSystem; 1
-      // 123: checkcast java/lang/Object
+      // 123: checkcast net/rim/device/api/crypto/DHCryptoSystem
       // 126: aload 3
       // 127: invokespecial net/rim/device/api/crypto/DHPublicKey.<init> (Lnet/rim/device/api/crypto/DHCryptoSystem;[B)V
       // 12a: astore 4
       // 12c: aload 0
       // 12d: aload 0
       // 12e: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._privateKey Lnet/rim/device/api/crypto/PrivateKey;
-      // 131: checkcast java/lang/Object
+      // 131: checkcast net/rim/device/api/crypto/DHPrivateKey
       // 134: aload 4
       // 136: bipush 0
       // 137: invokestatic net/rim/device/api/crypto/DHKeyAgreement.generateSharedSecret (Lnet/rim/device/api/crypto/DHPrivateKey;Lnet/rim/device/api/crypto/DHPublicKey;Z)[B
@@ -620,26 +624,26 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
       // 13d: goto 170
       // 140: aload 0
       // 141: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._privateKey Lnet/rim/device/api/crypto/PrivateKey;
-      // 144: instanceof java/lang/Object
+      // 144: instanceof net/rim/device/api/crypto/DSAPrivateKey
       // 147: ifeq 170
-      // 14a: new java/lang/Object
+      // 14a: new java/lang/RuntimeException
       // 14d: dup
       // 14e: invokespecial java/lang/RuntimeException.<init> ()V
       // 151: athrow
       // 152: astore 2
-      // 153: new java/lang/Object
+      // 153: new net/rim/device/cldc/io/ssl/TLSException
       // 156: dup
       // 157: aload 2
       // 158: invokespecial net/rim/device/cldc/io/ssl/TLSException.<init> (Ljava/lang/Exception;)V
       // 15b: athrow
       // 15c: astore 2
-      // 15d: new java/lang/Object
+      // 15d: new net/rim/device/cldc/io/ssl/TLSException
       // 160: dup
       // 161: aload 2
       // 162: invokespecial net/rim/device/cldc/io/ssl/TLSException.<init> (Ljava/lang/Exception;)V
       // 165: athrow
       // 166: astore 2
-      // 167: new java/lang/Object
+      // 167: new net/rim/device/cldc/io/ssl/TLSException
       // 16a: dup
       // 16b: aload 2
       // 16c: invokespecial net/rim/device/cldc/io/ssl/TLSException.<init> (Ljava/lang/Exception;)V
@@ -653,7 +657,7 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
       // try (126 -> 165): 177 null
    }
 
-   public void clientCertificateVerify(DataBuffer param1) {
+   public void clientCertificateVerify(DataBuffer param1) throws TLSException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -663,7 +667,7 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
       // Bytecode:
       // 00: aload 0
       // 01: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._publicKey Lnet/rim/device/api/crypto/PublicKey;
-      // 04: instanceof java/lang/Object
+      // 04: instanceof net/rim/device/api/crypto/RSAPublicKey
       // 07: ifeq 77
       // 0a: aload 1
       // 0b: invokevirtual net/rim/device/api/util/DataBuffer.readUnsignedByte ()I
@@ -691,11 +695,11 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
       // 31: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._verifySHAHash Lnet/rim/device/api/crypto/SHA1Digest;
       // 34: invokespecial net/rim/device/api/crypto/tls/ssl30/SSLDigest.<init> (Lnet/rim/device/api/crypto/MD5Digest;Lnet/rim/device/api/crypto/SHA1Digest;)V
       // 37: astore 6
-      // 39: new java/lang/Object
+      // 39: new net/rim/device/api/crypto/PKCS1SignatureVerifier
       // 3c: dup
       // 3d: aload 0
       // 3e: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._publicKey Lnet/rim/device/api/crypto/PublicKey;
-      // 41: checkcast java/lang/Object
+      // 41: checkcast net/rim/device/api/crypto/RSAPublicKey
       // 44: aload 6
       // 46: aload 5
       // 48: bipush 0
@@ -710,9 +714,9 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
       // 5d: bipush 3
       // 5f: bipush 40
       // 61: invokevirtual net/rim/device/api/crypto/tls/tls10/TLSAlertProtocol.sendAlertMessage (BB)V
-      // 64: new java/lang/Object
+      // 64: new net/rim/device/cldc/io/ssl/TLSException
       // 67: dup
-      // 68: new java/lang/Object
+      // 68: new net/rim/device/api/crypto/tls/TLSAlertException
       // 6b: dup
       // 6c: bipush 3
       // 6e: bipush 40
@@ -721,7 +725,7 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
       // 76: athrow
       // 77: aload 0
       // 78: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._publicKey Lnet/rim/device/api/crypto/PublicKey;
-      // 7b: instanceof java/lang/Object
+      // 7b: instanceof net/rim/device/api/crypto/DSAPublicKey
       // 7e: ifeq 84
       // 81: goto e9
       // 84: getstatic java/lang/System.out Ljava/io/PrintStream;
@@ -732,9 +736,9 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
       // 91: bipush 3
       // 93: bipush 47
       // 95: invokevirtual net/rim/device/api/crypto/tls/tls10/TLSAlertProtocol.sendAlertMessage (BB)V
-      // 98: new java/lang/Object
+      // 98: new net/rim/device/cldc/io/ssl/TLSException
       // 9b: dup
-      // 9c: new java/lang/Object
+      // 9c: new net/rim/device/api/crypto/tls/TLSAlertException
       // 9f: dup
       // a0: bipush 3
       // a2: bipush 47
@@ -747,9 +751,9 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
       // b0: bipush 3
       // b2: bipush 51
       // b4: invokevirtual net/rim/device/api/crypto/tls/tls10/TLSAlertProtocol.sendAlertMessage (BB)V
-      // b7: new java/lang/Object
+      // b7: new net/rim/device/cldc/io/ssl/TLSException
       // ba: dup
-      // bb: new java/lang/Object
+      // bb: new net/rim/device/api/crypto/tls/TLSAlertException
       // be: dup
       // bf: bipush 3
       // c1: bipush 51
@@ -762,9 +766,9 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
       // cf: bipush 3
       // d1: bipush 50
       // d3: invokevirtual net/rim/device/api/crypto/tls/tls10/TLSAlertProtocol.sendAlertMessage (BB)V
-      // d6: new java/lang/Object
+      // d6: new net/rim/device/cldc/io/ssl/TLSException
       // d9: dup
-      // da: new java/lang/Object
+      // da: new net/rim/device/api/crypto/tls/TLSAlertException
       // dd: dup
       // de: bipush 3
       // e0: bipush 50
@@ -777,11 +781,11 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
    }
 
    @Override
-   public void changeCipherSpec(DataBuffer buffer) {
+   public void changeCipherSpec(DataBuffer buffer) throws TLSException {
       try {
          if (buffer != null) {
             ((TLSAlertProtocol)super._alertProtocol).sendAlertMessage((byte)3, (byte)10);
-            throw new Object((Exception)(new Object("Change cipher spec message should never be received at this layer.")));
+            throw new TLSException(new IllegalArgumentException("Change cipher spec message should never be received at this layer."));
          }
 
          System.out.println("SSL: Sent change cipher spec packet.");
@@ -789,22 +793,22 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
          ((SSLRecordProtocol)super._recordProtocol).changeWriteCipherSpec();
       } finally {
          ((TLSAlertProtocol)super._alertProtocol).sendAlertMessage((byte)3, (byte)50);
-         throw new Object((Exception)(new Object((byte)3, (byte)50)));
+         throw new TLSException(new TLSAlertException((byte)3, (byte)50));
       }
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public void accept() {
+   public void accept() throws TLSException {
       try {
          ((SSLRecordProtocol)super._recordProtocol).setClientMode(false);
          ((SSLRecordProtocol)super._recordProtocol).setState(2);
          DataBuffer[] buffer = null;
-         buffer = new Object[1];
+         buffer = new DataBuffer[1];
          int type = this.read(buffer);
          if (type != 1 && type != 24) {
             ((TLSAlertProtocol)super._alertProtocol).sendAlertMessage((byte)3, (byte)10);
-            throw new Object((byte)3, (byte)10);
+            throw new TLSAlertException((byte)3, (byte)10);
          }
 
          this.clientHello(buffer[0], type == 24);
@@ -864,7 +868,7 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
          type = this.read(buffer);
          if (type != 16) {
             ((TLSAlertProtocol)super._alertProtocol).sendAlertMessage((byte)3, (byte)10);
-            throw new Object((byte)3, (byte)10);
+            throw new TLSAlertException((byte)3, (byte)10);
          }
 
          this.clientKeyExchange(buffer[0]);
@@ -872,7 +876,7 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
          type = this.read(buffer);
          if (type != 20) {
             ((TLSAlertProtocol)super._alertProtocol).sendAlertMessage((byte)3, (byte)10);
-            throw new Object((byte)3, (byte)10);
+            throw new TLSAlertException((byte)3, (byte)10);
          }
 
          this.finished(buffer[0]);
@@ -881,18 +885,18 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
          ((SSLRecordProtocol)super._recordProtocol).setState(1);
          System.out.println("SSL: Client connection has been accepted.  Handshake complete!");
       } finally {
-         throw new Object((Exception)(new Object((byte)3, (byte)40)));
+         throw new TLSException(new TLSAlertException((byte)3, (byte)40));
       }
    }
 
    @Override
-   public int read(DataBuffer[] buffer) {
+   public int read(DataBuffer[] buffer) throws TLSException {
       int type = 0;
       if (super._dataBuffer.getPosition() == super._dataBuffer.getLength()) {
          type = ((SSLRecordProtocol)super._recordProtocol).read(super._dataBuffer);
          if (type != 22 && type != 24) {
             ((TLSAlertProtocol)super._alertProtocol).sendAlertMessage((byte)3, (byte)10);
-            throw new Object((Exception)(new Object((byte)3, (byte)10)));
+            throw new TLSException(new TLSAlertException((byte)3, (byte)10));
          }
 
          super._dataBuffer.rewind();
@@ -928,9 +932,9 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
          int v2Type = super._dataBuffer.readUnsignedByte();
          if (v2Type != 1) {
             ((TLSAlertProtocol)super._alertProtocol).sendAlertMessage((byte)3, (byte)40);
-            throw new Object((Exception)(new Object((byte)3, (byte)40)));
+            throw new TLSException(new TLSAlertException((byte)3, (byte)40));
          } else {
-            buffer[0] = (DataBuffer)(new Object(super._dataBuffer, super._dataBuffer.getLength() - super._dataBuffer.getPosition()));
+            buffer[0] = new DataBuffer(super._dataBuffer, super._dataBuffer.getLength() - super._dataBuffer.getPosition());
             return type;
          }
       } else {
@@ -939,7 +943,7 @@ public class TLSServerHandshakeProtocol extends TLSHandshakeProtocol {
          int length2 = super._dataBuffer.readUnsignedByte();
          int length3 = super._dataBuffer.readUnsignedByte();
          int length = (length1 << 16) + (length2 << 8) + length3;
-         buffer[0] = (DataBuffer)(new Object(super._dataBuffer, length));
+         buffer[0] = new DataBuffer(super._dataBuffer, length);
          return type;
       }
    }

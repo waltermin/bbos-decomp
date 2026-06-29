@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import net.rim.device.api.crypto.AESKey;
 import net.rim.device.api.crypto.ARC4Key;
 import net.rim.device.api.crypto.DESKey;
+import net.rim.device.api.crypto.HMACKey;
 import net.rim.device.api.crypto.InvalidKeyEncodingException;
 import net.rim.device.api.crypto.RC5Key;
 import net.rim.device.api.crypto.SymmetricKey;
@@ -24,7 +25,7 @@ final class KeyStore_RIM_SymmetricKeyDecoder1 extends KeyStore_SymmetricKeyDecod
             case '6':
             case '8':
                var5 = false;
-               throw new Object();
+               throw new IllegalArgumentException();
             case '1':
             default:
                byte[] keyData = Utility.readData(input);
@@ -37,7 +38,7 @@ final class KeyStore_RIM_SymmetricKeyDecoder1 extends KeyStore_SymmetricKeyDecod
                return new DESKey(var9, 0);
             case '5':
                byte[] var8 = Utility.readData(input);
-               return (SymmetricKey)(new Object(var8, 0, var8.length));
+               return new HMACKey(var8, 0, var8.length);
             case '7':
                byte[] var7 = Utility.readData(input);
                return new RC5Key(var7, 0, var7.length * 8);

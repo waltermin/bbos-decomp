@@ -6,6 +6,7 @@ import net.rim.device.api.servicebook.ServiceRoutingListener;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.system.RadioInfo;
 import net.rim.device.api.system.RadioStatusListener;
+import net.rim.device.cldc.io.utility.MalformedURLException;
 import net.rim.device.cldc.io.utility.URL;
 import net.rim.wica.runtime.comm.CommunicationService;
 import net.rim.wica.runtime.comm.IncomingRequestListener;
@@ -59,7 +60,7 @@ public final class CommunicationServiceImpl implements CommunicationService, Ser
    }
 
    final void logException(String message, Throwable t) {
-      Logger.log(this.toString(), ((StringBuffer)(new Object())).append(message).append(t.toString()).toString(), 3);
+      Logger.log(this.toString(), message + t.toString(), 3);
    }
 
    final boolean isRunning() {
@@ -127,7 +128,7 @@ public final class CommunicationServiceImpl implements CommunicationService, Ser
    @Override
    public final void registerIncomingRequestListener(IncomingRequestListener listener) {
       if (listener == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       this._incomingRequestProcessor.setIncomingRequestListener(listener);
@@ -141,7 +142,7 @@ public final class CommunicationServiceImpl implements CommunicationService, Ser
    @Override
    public final void sendRequest(OutgoingRequest request) {
       if (request == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       this._outgoingRequestProcessor.sendRequest((OutgoingRequestImpl)request);
@@ -154,7 +155,7 @@ public final class CommunicationServiceImpl implements CommunicationService, Ser
          outRequest.setProgressMonitor(pm);
          this._outgoingRequestProcessor.sendRequest(outRequest);
       } else {
-         throw new Object();
+         throw new NullPointerException();
       }
    }
 
@@ -194,9 +195,9 @@ public final class CommunicationServiceImpl implements CommunicationService, Ser
       this._inDataCoverage = (RadioInfo.getNetworkService() & 4) != 0;
       this._eventService.addListener(302, this._outgoingRequestProcessor);
       this._eventService.addListener(100, this._outgoingRequestProcessor);
-      Thread outgoingRequestProcessorThread = (Thread)(new Object(this._outgoingRequestProcessor, "CommOutgoingRequestProcessor"));
+      Thread outgoingRequestProcessorThread = new Thread(this._outgoingRequestProcessor, "CommOutgoingRequestProcessor");
       outgoingRequestProcessorThread.start();
-      Thread incomingRequestProcessorThread = (Thread)(new Object(this._incomingRequestProcessor, "CommIncomingRequestProcessor"));
+      Thread incomingRequestProcessorThread = new Thread(this._incomingRequestProcessor, "CommIncomingRequestProcessor");
       incomingRequestProcessorThread.start();
    }
 
@@ -230,9 +231,9 @@ public final class CommunicationServiceImpl implements CommunicationService, Ser
    }
 
    @Override
-   public final OutgoingRequest createOutgoingRequestInstance(URL url) {
+   public final OutgoingRequest createOutgoingRequestInstance(URL url) throws MalformedURLException {
       if (url.getHost() == null) {
-         throw new Object();
+         throw new MalformedURLException();
       } else {
          return new OutgoingRequestImpl(url);
       }
@@ -240,7 +241,7 @@ public final class CommunicationServiceImpl implements CommunicationService, Ser
 
    @Override
    public final OutgoingRequest createOutgoingRequestInstance(String url) {
-      return this.createOutgoingRequestInstance((URL)(new Object(url)));
+      return this.createOutgoingRequestInstance(new URL(url));
    }
 
    @Override
@@ -280,7 +281,7 @@ public final class CommunicationServiceImpl implements CommunicationService, Ser
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

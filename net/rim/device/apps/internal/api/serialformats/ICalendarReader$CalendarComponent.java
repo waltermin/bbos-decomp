@@ -8,7 +8,7 @@ class ICalendarReader$CalendarComponent {
 
    public ICalendarReader$CalendarComponent(int tag) {
       this.tag = tag;
-      this.properties = (IntVector)(new Object());
+      this.properties = new IntVector();
    }
 
    public int getTag() {

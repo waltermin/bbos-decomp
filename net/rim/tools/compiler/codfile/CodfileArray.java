@@ -1,5 +1,6 @@
 package net.rim.tools.compiler.codfile;
 
+import java.io.IOException;
 import net.rim.tools.compiler.exec.MyArrays;
 import net.rim.tools.compiler.io.StructuredOutputStream;
 import net.rim.tools.compiler.vm.Constants;
@@ -61,13 +62,13 @@ public final class CodfileArray extends CodfileItem implements Constants {
       this.write(out, false);
    }
 
-   public final void writeRelative(StructuredOutputStream out, int relative) {
+   public final void writeRelative(StructuredOutputStream out, int relative) throws IOException {
       int num = this.writePrefix(out, false);
 
       for (int i = 0; i < num; i++) {
          CodfileItem item = this._items[i];
          if (!(item instanceof CodfileItemRelative)) {
-            throw new Object("cannot write relative offset for non-relative item");
+            throw new IOException("cannot write relative offset for non-relative item");
          }
 
          CodfileItemRelative cfr = (CodfileItemRelative)item;
@@ -77,13 +78,13 @@ public final class CodfileArray extends CodfileItem implements Constants {
       this.setExtent(out);
    }
 
-   public final void writeAbsoluteOrdinals(StructuredOutputStream out) {
+   public final void writeAbsoluteOrdinals(StructuredOutputStream out) throws IOException {
       int num = this.writePrefix(out, false);
 
       for (int i = 0; i < num; i++) {
          CodfileItem item = this._items[i];
          if (!(item instanceof ClassDef)) {
-            throw new Object("cannot write absolute ordinals for non-classdef item");
+            throw new IOException("cannot write absolute ordinals for non-classdef item");
          }
 
          ClassDef classDef = (ClassDef)item;

@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.tcpdatagram;
 
+import java.io.IOException;
 import javax.microedition.io.Datagram;
 import net.rim.device.api.io.DatagramAddressBase;
 import net.rim.device.api.io.IOProperties;
@@ -7,7 +8,6 @@ import net.rim.device.api.system.Branding;
 import net.rim.device.api.system.DeviceInfo;
 import net.rim.device.api.system.EventLogger;
 import net.rim.device.api.system.RadioInfo;
-import net.rim.device.api.system.RadioPacketHeader;
 import net.rim.device.api.system.WLAN;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.cldc.io.datarecovery.DataRecovery;
@@ -198,7 +198,7 @@ public final class Transport extends NativeTransport implements TcpObjectPool, T
       EventLogger.register(super.GUID, super.STR, 2);
       EventLogger.logEvent(super.GUID, "nativeInit function called.  TcpDatagram being initialised".getBytes());
       super._networkServiceMask = 4;
-      super._txHeader = (RadioPacketHeader)(new Object());
+      super._txHeader = new TCPPacketHeader();
       super._maxPacketSize = TCPPacketHeader.getMaxPacketSize();
       DataRecovery.getInstance().addListener(this);
    }
@@ -207,14 +207,14 @@ public final class Transport extends NativeTransport implements TcpObjectPool, T
       super.GUID = 3177555665113652794L;
       super.STR = "net.rim.tcpdatagram";
       super.SEND_BACKOFF_DEF = 2000;
-      this._dgPool = (Deque)(new Object());
+      this._dgPool = new Deque();
       int num = 4;
 
       for (int i = 0; i < num; i++) {
          this._dgPool.enqueueHead(new TcpDatagramBase());
       }
 
-      this._tcpDgPropsPool = (Deque)(new Object());
+      this._tcpDgPropsPool = new Deque();
       int var4 = 4;
 
       for (int i = 0; i < var4; i++) {
@@ -251,14 +251,14 @@ public final class Transport extends NativeTransport implements TcpObjectPool, T
             }
          }
 
-         throw new Object("Bad address");
+         throw new RuntimeException("Bad address");
       }
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void nativePreSend() {
+   public final void nativePreSend() throws IOException {
       TcpAddress tcpAddress = (TcpAddress)super._txAddressBase;
       TCPPacketHeader header = (TCPPacketHeader)super._txHeader;
       String apn = tcpAddress.getApnName();
@@ -273,7 +273,7 @@ public final class Transport extends NativeTransport implements TcpObjectPool, T
          } finally {
             if (var7) {
                EventLogger.logEvent(3177555665113652794L, 1413763891, 2);
-               throw new Object();
+               throw new IOException();
             }
          }
       } else {
@@ -289,7 +289,7 @@ public final class Transport extends NativeTransport implements TcpObjectPool, T
       TCPPacketHeader header = (TCPPacketHeader)super._txHeader;
       TcpDatagramProperties tcpProps = ((TcpDatagramBase)datagram)._tcpProps;
       if (tcpProps == null) {
-         throw new Object("Invalid datagram properties");
+         throw new IllegalArgumentException("Invalid datagram properties");
       }
 
       int length = datagram.getLength();
@@ -300,11 +300,11 @@ public final class Transport extends NativeTransport implements TcpObjectPool, T
          || tcpAddress.getLocalPort() == -1
          || tcpAddress.getApnName().length() == 0 && (RadioInfo.getNetworkType() == 3 || RadioInfo.getNetworkType() == 7)) {
          if (length > super._maxPacketSize) {
-            throw new Object("Bad length");
+            throw new IllegalArgumentException("Bad length");
          } else if (tcpAddress.getApnName().length() != 0 || RadioInfo.getNetworkType() != 3 && RadioInfo.getNetworkType() != 7) {
-            throw new Object("Bad address");
+            throw new IllegalArgumentException("Bad address");
          } else {
-            throw new Object("Bad APN");
+            throw new IllegalArgumentException("Bad APN");
          }
       } else {
          synchronized (this._sendLock) {
@@ -320,7 +320,7 @@ public final class Transport extends NativeTransport implements TcpObjectPool, T
             header._dataOffset = tcpProps._dataOffset;
             this._txRetryOnNoContext = properties == null ? false : properties.isFlagSet(1024);
             if (!this._txRetryOnNoContext && !this._connectionAvailable && this._isBlackBerryTrafficInvalid) {
-               throw new Object();
+               throw new IOException();
             }
          }
       }
@@ -438,7 +438,7 @@ public final class Transport extends NativeTransport implements TcpObjectPool, T
 
          return newAddress;
       } finally {
-         throw new Object("Bad address");
+         throw new RuntimeException("Bad address");
       }
    }
 }

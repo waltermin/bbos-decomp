@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.btspp;
 
+import java.io.EOFException;
 import java.io.OutputStream;
 
 class BluetoothStreamConnection$BluetoothOutputStream extends OutputStream {
@@ -24,14 +25,14 @@ class BluetoothStreamConnection$BluetoothOutputStream extends OutputStream {
             }
          }
 
-         throw new Object();
+         throw new EOFException();
       }
    }
 
    @Override
    public void write(byte[] b, int off, int len) {
       if (off < 0 || len < 0 || b.length - len < off) {
-         throw new Object();
+         throw new IndexOutOfBoundsException();
       }
 
       if (len != 0) {
@@ -52,7 +53,7 @@ class BluetoothStreamConnection$BluetoothOutputStream extends OutputStream {
                }
             }
 
-            throw new Object();
+            throw new EOFException();
          }
       }
    }

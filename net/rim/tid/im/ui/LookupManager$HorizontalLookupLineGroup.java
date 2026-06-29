@@ -26,22 +26,22 @@ class LookupManager$HorizontalLookupLineGroup extends LookupManager$LookupLineGr
    public LookupManager$HorizontalLookupLineGroup(LookupManager _1, boolean isAdditionalVariants) {
       super(_1, isAdditionalVariants);
       this.this$0 = _1;
-      this._indexesOfFramesWithOneVariant = (ByteVector)(new Object(1));
-      this._variantsLengths = (IntVector)(new Object(10, 3));
-      this._metrics = (FontMetrics)(new Object());
+      this._indexesOfFramesWithOneVariant = new ByteVector(1);
+      this._variantsLengths = new IntVector(10, 3);
+      this._metrics = new FontMetrics();
    }
 
    @Override
    public void init() {
-      this._frameOffsets = (ByteVector)(new Object(10, 2));
+      this._frameOffsets = new ByteVector(10, 2);
       switch (this.this$0._type & 3) {
          case 0:
-            this._frameArrows = (ByteVector)(new Object(10, 2));
+            this._frameArrows = new ByteVector(10, 2);
          case -1:
             return;
          case 1:
          default:
-            this._infoString = (StringBuffer)(new Object(5));
+            this._infoString = new StringBuffer(5);
       }
    }
 
@@ -285,14 +285,7 @@ class LookupManager$HorizontalLookupLineGroup extends LookupManager$LookupLineGr
                break;
             case 1:
                this._infoString.setLength(0);
-               this._infoString
-                  .append(
-                     ((StringBuffer)(new Object()))
-                        .append(this.this$0._currentIndex + 1)
-                        .append("/")
-                        .append(this.this$0._currentVariant.getVariantsCount())
-                        .toString()
-                  );
+               this._infoString.append(this.this$0._currentIndex + 1 + "/" + this.this$0._currentVariant.getVariantsCount());
                graphics.drawText(this._infoString, 0, this._infoString.length(), x, textY, 0, -1);
          }
 
@@ -402,7 +395,7 @@ class LookupManager$HorizontalLookupLineGroup extends LookupManager$LookupLineGr
 
    private String formLongVariant(Font aFont) {
       this.this$0._currentVariant.getVariantAt(this.this$0._currentIndex, this.this$0._current);
-      StringBuffer buffer = (StringBuffer)(new Object(" ..."));
+      StringBuffer buffer = new StringBuffer(" ...");
       if ((this.this$0._type & 8) != 0) {
          buffer.insert(0, "1");
       }

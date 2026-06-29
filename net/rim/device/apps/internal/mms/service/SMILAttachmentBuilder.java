@@ -20,8 +20,8 @@ final class SMILAttachmentBuilder {
    private int _videoCountInPar;
    private int _audioCountInPar;
    private boolean _inPar;
-   private StringBuffer _parBuf = (StringBuffer)(new Object());
-   private StringBuffer _buf = (StringBuffer)(new Object("<?xml version=\"1.0\"?>"));
+   private StringBuffer _parBuf = new StringBuffer();
+   private StringBuffer _buf = new StringBuffer("<?xml version=\"1.0\"?>");
 
    private SMILAttachmentBuilder(AttachmentDataProvider attachmentProvider) {
       this._attachmentProvider = attachmentProvider;
@@ -30,7 +30,7 @@ final class SMILAttachmentBuilder {
       this.append("<layout>", 1);
       String width = Integer.toString(Display.getWidth());
       String height = Integer.toString(Display.getHeight());
-      this.append(((StringBuffer)(new Object("<root-layout width=\""))).append(width).append("\" height=\"").append(height).append("\"/>").toString());
+      this.append("<root-layout width=\"" + width + "\" height=\"" + height + "\"/>");
       this.append("<region id=\"Image\" width=\"100%\" height=\"70%\" fit=\"meet\"/>");
       this.append("<region id=\"Text\" width=\"100%\" height=\"30%\" top=\"70%\" fit=\"scroll\"/>");
       this.append("</layout>", -1);
@@ -83,15 +83,15 @@ final class SMILAttachmentBuilder {
          }
       }
 
-      String paramSrc = ((StringBuffer)(new Object("src=\"cid:"))).append(name).append('"').toString();
-      String paramType = ((StringBuffer)(new Object("type=\""))).append(MMSUtilities.getMIMETypeString(type)).append('"').toString();
+      String paramSrc = "src=\"cid:" + name + '"';
+      String paramType = "type=\"" + MMSUtilities.getMIMETypeString(type) + '"';
       if (MMSUtilities.isImageType(type)) {
          if (this._videoCountInPar > 0 || this._imageCountInPar > 0) {
             this.endPar();
          }
 
          this.beginPar();
-         this.append(((StringBuffer)(new Object("<img "))).append(paramSrc).append(" region=\"Image\" ").append(paramType).append("/>").toString());
+         this.append("<img " + paramSrc + " region=\"Image\" " + paramType + "/>");
          this._imageCount++;
          this._imageCountInPar++;
       } else if (MMSUtilities.isAudioType(type)) {
@@ -100,7 +100,7 @@ final class SMILAttachmentBuilder {
          }
 
          this.beginPar();
-         this.append(((StringBuffer)(new Object("<audio "))).append(paramSrc).append(' ').append(paramType).append("/>").toString());
+         this.append("<audio " + paramSrc + ' ' + paramType + "/>");
          this._audioCount++;
          this._audioCountInPar++;
       } else if (!MMSUtilities.isVideoType(type)) {
@@ -112,7 +112,7 @@ final class SMILAttachmentBuilder {
             }
 
             this.beginPar();
-            this.append(((StringBuffer)(new Object("<text "))).append(paramSrc).append(" region=\"Text\" ").append(paramType).append("/>").toString());
+            this.append("<text " + paramSrc + " region=\"Text\" " + paramType + "/>");
             this._textCount++;
             this._textCountInPar++;
          }
@@ -122,7 +122,7 @@ final class SMILAttachmentBuilder {
          }
 
          this.beginPar();
-         this.append(((StringBuffer)(new Object("<video "))).append(paramSrc).append(" region=\"Image\" ").append(paramType).append("/>").toString());
+         this.append("<video " + paramSrc + " region=\"Image\" " + paramType + "/>");
          this._videoCount++;
          this._videoCountInPar++;
       }
@@ -147,7 +147,7 @@ final class SMILAttachmentBuilder {
       if (this._inPar) {
          this._inPar = false;
          this.append("<par>");
-         String dur = ((StringBuffer)(new Object("dur=\""))).append(Integer.toString(duration)).append("s\" ").toString();
+         String dur = "dur=\"" + Integer.toString(duration) + "s\" ";
          String par = this._parBuf.toString();
          par = insertParam(par, "<img ", dur);
          par = insertParam(par, "<text ", dur);
@@ -166,7 +166,7 @@ final class SMILAttachmentBuilder {
          }
 
          idx += prefix.length();
-         buf = ((StringBuffer)(new Object())).append(buf.substring(0, idx)).append(param).append(buf.substring(idx)).toString();
+         buf = buf.substring(0, idx) + param + buf.substring(idx);
          idx += param.length();
       }
 

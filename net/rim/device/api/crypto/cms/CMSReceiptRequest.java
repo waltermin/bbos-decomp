@@ -21,7 +21,7 @@ public final class CMSReceiptRequest {
          System.arraycopy(time, 0, this._signedContentIdentifier, firstName.length, time.length);
          System.arraycopy(random, 0, this._signedContentIdentifier, firstName.length + time.length, random.length);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -39,15 +39,15 @@ public final class CMSReceiptRequest {
 
    final CMSAttribute getReceiptRequestAttribute() {
       try {
-         ASN1OutputStream struct = (ASN1OutputStream)(new Object());
-         ASN1OutputStream set = (ASN1OutputStream)(new Object());
-         ASN1OutputStream sequence = (ASN1OutputStream)(new Object());
+         ASN1OutputStream struct = new ASN1OutputStream();
+         ASN1OutputStream set = new ASN1OutputStream();
+         ASN1OutputStream sequence = new ASN1OutputStream();
          sequence.writeOctetString(this._signedContentIdentifier);
          if (this._receiptsFrom != null && this._receiptsFrom.length != 0) {
-            ASN1OutputStream names = (ASN1OutputStream)(new Object());
+            ASN1OutputStream names = new ASN1OutputStream();
 
             for (int i = 0; i < this._receiptsFrom.length; i++) {
-               ASN1OutputStream generalName = (ASN1OutputStream)(new Object());
+               ASN1OutputStream generalName = new ASN1OutputStream();
                generalName.writeIA5String(this._receiptsFrom[i], 2, 1);
                names.writeSequence(generalName);
             }
@@ -57,10 +57,10 @@ public final class CMSReceiptRequest {
             sequence.writeInteger(0, 2, 0);
          }
 
-         ASN1OutputStream names = (ASN1OutputStream)(new Object());
+         ASN1OutputStream names = new ASN1OutputStream();
 
          for (int i = 0; i < this._receiptsTo.length; i++) {
-            ASN1OutputStream generalName = (ASN1OutputStream)(new Object());
+            ASN1OutputStream generalName = new ASN1OutputStream();
             generalName.writeIA5String(this._receiptsTo[i], 2, 1);
             names.writeSequence(generalName);
          }

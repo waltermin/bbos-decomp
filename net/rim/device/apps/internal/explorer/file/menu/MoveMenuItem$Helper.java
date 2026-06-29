@@ -42,7 +42,7 @@ final class MoveMenuItem$Helper extends Thread {
       // 033: getfield net/rim/device/apps/internal/explorer/file/menu/MoveMenuItem$Helper.this$0 Lnet/rim/device/apps/internal/explorer/file/menu/MoveMenuItem;
       // 036: getfield net/rim/device/apps/internal/explorer/file/menu/MoveMenuItem._destPath Ljava/lang/String;
       // 039: goto 053
-      // 03c: new java/lang/Object
+      // 03c: new java/lang/StringBuffer
       // 03f: dup
       // 040: ldc_w "file://"
       // 043: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -52,7 +52,7 @@ final class MoveMenuItem$Helper extends Thread {
       // 04d: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 050: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 053: putfield net/rim/device/apps/internal/explorer/file/menu/MoveMenuItem._destPath Ljava/lang/String;
-      // 056: new java/lang/Object
+      // 056: new java/lang/StringBuffer
       // 059: dup
       // 05a: invokespecial java/lang/StringBuffer.<init> ()V
       // 05d: aload 0
@@ -72,7 +72,7 @@ final class MoveMenuItem$Helper extends Thread {
       // 07b: getfield net/rim/device/apps/internal/explorer/file/menu/MoveMenuItem$Helper.this$0 Lnet/rim/device/apps/internal/explorer/file/menu/MoveMenuItem;
       // 07e: getfield net/rim/device/apps/internal/explorer/file/menu/MoveMenuItem._destPath Ljava/lang/String;
       // 081: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 084: checkcast java/lang/Object
+      // 084: checkcast javax/microedition/io/file/FileConnection
       // 087: astore 3
       // 088: aload 3
       // 089: invokeinterface javax/microedition/io/file/FileConnection.exists ()Z 1
@@ -90,7 +90,7 @@ final class MoveMenuItem$Helper extends Thread {
       // 0a9: goto 170
       // 0ac: aload 1
       // 0ad: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 0b0: checkcast java/lang/Object
+      // 0b0: checkcast javax/microedition/io/file/FileConnection
       // 0b3: astore 3
       // 0b4: aload 3
       // 0b5: invokeinterface javax/microedition/io/file/FileConnection.exists ()Z 1

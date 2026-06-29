@@ -8,7 +8,7 @@ final class FunctionName {
       this._index = stream.readUInt8();
       byte[] bytes = new byte[stream.readUInt8()];
       stream.readBytes(bytes);
-      this._name = (String)(new Object(bytes));
+      this._name = new String(bytes);
    }
 
    final int getIndex() {

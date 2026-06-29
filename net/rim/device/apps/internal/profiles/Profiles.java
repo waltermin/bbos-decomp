@@ -110,7 +110,7 @@ public final class Profiles
    public static final int LAST_RIM_PROFILE_UID = 7;
    private static final int[] KEY_FIELD_IDS = new int[]{1, -804651005, 1, 2};
    private static final int DEFAULT_RECORD_TYPE = 1;
-   private static final LongIntHashtable _sourcesToExpire = (LongIntHashtable)(new Object());
+   private static final LongIntHashtable _sourcesToExpire = new LongIntHashtable();
 
    @Override
    public final void setLegacyDeviceOptions(DataBuffer aDataBuffer) {
@@ -263,7 +263,7 @@ public final class Profiles
                }
             } else {
                if (duplicateProfileIndex != -1) {
-                  throw new Object("MDPE");
+                  throw new RuntimeException("MDPE");
                }
 
                duplicateProfileIndex = i;
@@ -444,7 +444,7 @@ public final class Profiles
 
    public final Profile getByIdentifier(byte identifierByte) {
       if (identifierByte == -1) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       synchronized (this._profiles) {
@@ -611,7 +611,7 @@ public final class Profiles
       int idx = 0;
       synchronized (this._profiles) {
          int numProfiles = this._profiles.size();
-         array = new Object[numProfiles];
+         array = new SyncObject[numProfiles];
 
          for (int i = 0; i < numProfiles; i++) {
             Profile profile = (Profile)this._profiles.elementAt(i);
@@ -1008,7 +1008,7 @@ public final class Profiles
       PersistentObject persistentObject = RIMPersistentStore.getPersistentObject(-126079441489341474L);
       synchronized (persistentObject) {
          if ((this._profiles = (Vector)persistentObject.getContents()) == null) {
-            this._profiles = (Vector)(new Object());
+            this._profiles = new Vector();
             persistentObject.setContents(this._profiles, 51);
             persistentObject.commit();
          }
@@ -1021,10 +1021,10 @@ public final class Profiles
 
       this._enabledProfileId = PersistentInteger.getId(-5522933223976053723L, 3);
       this._previousProfileId = PersistentInteger.getId(7792220392351022642L, 2);
-      this._collectionListenerManager = (CollectionListenerManager)(new Object());
+      this._collectionListenerManager = new CollectionListenerManager();
       this._restoredEnabledProfile = null;
       this._lastVersionRestored = -1;
-      this._schema = (SyncCollectionSchema)(new Object());
+      this._schema = new SyncCollectionSchema();
       this._schema.setDefaultRecordType(1);
       this._schema.setKeyFieldIds(1, KEY_FIELD_IDS);
       this.checkForOrphanedSources();
@@ -1035,19 +1035,13 @@ public final class Profiles
    public static final String[] getDefaultTuneNames(long sourceId) {
       Consequence consequence = NotificationsManager.getConsequence(-2870941457036655797L);
       AlertConfiguration defaultConfiguration = (AlertConfiguration)consequence.newConfiguration(-2870941457036655797L, sourceId, (byte)3, 0, null);
-      String[] tuneNames = new Object[2];
-      tuneNames[0] = defaultConfiguration.getTuneName(true);
-      tuneNames[1] = defaultConfiguration.getTuneName(false);
-      return tuneNames;
+      return new String[]{defaultConfiguration.getTuneName(true), defaultConfiguration.getTuneName(false)};
    }
 
    public static final String[] getDefaultTuneNames(long sourceId, byte profileIdentifier) {
       Consequence consequence = NotificationsManager.getConsequence(-2870941457036655797L);
       AlertConfiguration defaultConfiguration = (AlertConfiguration)consequence.newConfiguration(-2870941457036655797L, sourceId, profileIdentifier, 0, null);
-      String[] tuneNames = new Object[2];
-      tuneNames[0] = defaultConfiguration.getTuneName(true);
-      tuneNames[1] = defaultConfiguration.getTuneName(false);
-      return tuneNames;
+      return new String[]{defaultConfiguration.getTuneName(true), defaultConfiguration.getTuneName(false)};
    }
 
    private final void addBuiltInProfiles() {

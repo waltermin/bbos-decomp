@@ -7,7 +7,6 @@ import net.rim.device.api.util.DataBuffer;
 import net.rim.device.api.util.Factory;
 import net.rim.device.api.util.LongHashtable;
 import net.rim.device.apps.api.framework.model.ContextObject;
-import net.rim.device.apps.api.framework.model.Recognizer;
 import net.rim.device.apps.api.framework.model.SyncBuffer;
 import net.rim.device.apps.api.framework.registration.RIMModelFactory;
 
@@ -16,7 +15,7 @@ public class QuickContactItemRegistrationFactory extends RIMModelFactory {
    private static LongHashtable _factories = ApplicationRegistry.getApplicationRegistry().getLongHashtable(931849679150063665L);
 
    QuickContactItemRegistrationFactory() {
-      _factories = (LongHashtable)(new Object());
+      _factories = new LongHashtable();
    }
 
    public static void registerQuickContactItemFactory(long factoryId, Object factory) {
@@ -53,7 +52,7 @@ public class QuickContactItemRegistrationFactory extends RIMModelFactory {
 
          while (elems.hasMoreElements()) {
             Object elem = elems.nextElement();
-            if (elem instanceof Object && ((Recognizer)elem).recognize(o)) {
+            if (elem instanceof RIMModelFactory && ((RIMModelFactory)elem).recognize(o)) {
                return (RIMModelFactory)elem;
             }
          }

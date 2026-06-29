@@ -43,11 +43,11 @@ public final class LocalStackAdapter implements NetworkPageFetcher {
       // 01a: bipush 3
       // 01c: bipush 1
       // 01d: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;IZ)Ljavax/microedition/io/Connection;
-      // 020: checkcast java/lang/Object
+      // 020: checkcast javax/microedition/io/HttpConnection
       // 023: astore 5
       // 025: aload 5
       // 027: ifnonnull 032
-      // 02a: new java/lang/Object
+      // 02a: new java/io/IOException
       // 02d: dup
       // 02e: invokespecial java/io/IOException.<init> ()V
       // 031: athrow
@@ -82,7 +82,7 @@ public final class LocalStackAdapter implements NetworkPageFetcher {
       // 075: invokeinterface javax/microedition/io/HttpConnection.setRequestProperty (Ljava/lang/String;Ljava/lang/String;)V 3
       // 07a: iinc 10 1
       // 07d: goto 05a
-      // 080: new java/lang/Object
+      // 080: new net/rim/device/api/io/http/HttpHeaders
       // 083: dup
       // 084: invokespecial net/rim/device/api/io/http/HttpHeaders.<init> ()V
       // 087: astore 9
@@ -115,7 +115,7 @@ public final class LocalStackAdapter implements NetworkPageFetcher {
       // 0c9: aload 10
       // 0cb: ifnull 0e0
       // 0ce: aload 4
-      // 0d0: new java/lang/Object
+      // 0d0: new net/rim/device/internal/browser/util/Pipe
       // 0d3: dup
       // 0d4: aload 10
       // 0d6: aload 10
@@ -163,7 +163,7 @@ public final class LocalStackAdapter implements NetworkPageFetcher {
       // 13b: aload 4
       // 13d: sipush 400
       // 140: invokevirtual net/rim/device/apps/internal/browser/stack/CacheResult.setStatus (I)V
-      // 143: new java/lang/Object
+      // 143: new net/rim/device/cldc/io/utility/MalformedURLException
       // 146: dup
       // 147: invokespecial net/rim/device/cldc/io/utility/MalformedURLException.<init> ()V
       // 14a: athrow

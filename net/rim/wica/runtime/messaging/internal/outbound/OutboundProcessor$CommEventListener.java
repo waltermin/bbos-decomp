@@ -1,6 +1,7 @@
 package net.rim.wica.runtime.messaging.internal.outbound;
 
 import java.util.Enumeration;
+import net.rim.device.cldc.io.utility.URL;
 import net.rim.wica.runtime.event.EventListener;
 import net.rim.wica.runtime.messaging.internal.util.InternalLogger;
 
@@ -28,12 +29,12 @@ final class OutboundProcessor$CommEventListener implements EventListener {
                return;
             }
          case 301:
-            if (!(data instanceof Object)) {
+            if (!(data instanceof URL)) {
                InternalLogger.logBadEvent(this, event);
                return;
             }
 
-            OutboundQueue q = (OutboundQueue)this.this$0._urlToQueueTable.get(data.toString());
+            OutboundQueue q = (OutboundQueue)this.this$0._urlToQueueTable.get(((URL)data).toString());
             if (q != null) {
                this.this$0.changeStateOnAgDisabled(q);
                return;
@@ -53,12 +54,12 @@ final class OutboundProcessor$CommEventListener implements EventListener {
                return;
             }
          case 303:
-            if (!(data instanceof Object)) {
+            if (!(data instanceof URL)) {
                InternalLogger.logBadEvent(this, event);
                return;
             }
 
-            OutboundQueue q = (OutboundQueue)this.this$0._urlToQueueTable.get(data.toString());
+            OutboundQueue q = (OutboundQueue)this.this$0._urlToQueueTable.get(((URL)data).toString());
             if (q != null) {
                this.this$0.changeStateOnAgEnabled(q);
                return;
@@ -68,7 +69,7 @@ final class OutboundProcessor$CommEventListener implements EventListener {
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object())).append(this.this$0.toString()).append("#CommunicationEventListener").toString();
+      return this.this$0.toString() + "#CommunicationEventListener";
    }
 
    OutboundProcessor$CommEventListener(OutboundProcessor x0, OutboundProcessor$1 x1) {

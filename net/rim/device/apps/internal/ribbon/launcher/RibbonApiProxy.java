@@ -41,7 +41,7 @@ public final class RibbonApiProxy extends RibbonApi {
          for (int j = aearray.length - 1; j >= 0; j--) {
             ApplicationEntry tempae = aearray[j];
             EntryPointDescriptor epd = tempae.getDescriptor();
-            if (epd instanceof Object) {
+            if (epd instanceof ApplicationEntryPoint) {
                ApplicationEntryPoint tempaep = (ApplicationEntryPoint)epd;
                ApplicationDescriptor ad = tempaep.getApplicationDescriptor();
                if (moduleName.equals(ad.getModuleName()) && ad.getIndex() == index) {
@@ -59,14 +59,7 @@ public final class RibbonApiProxy extends RibbonApi {
    public final String getName(int moduleHandle, int index) {
       ApplicationEntry ae = this.getApplicationEntry(moduleHandle, index);
       if (ae == null) {
-         throw new Object(
-            ((StringBuffer)(new Object("Module with handle [")))
-               .append(moduleHandle)
-               .append("] and index [")
-               .append(index)
-               .append("] has no application entry point")
-               .toString()
-         );
+         throw new IllegalArgumentException("Module with handle [" + moduleHandle + "] and index [" + index + "] has no application entry point");
       } else {
          return ae.getDescription(true);
       }
@@ -80,18 +73,11 @@ public final class RibbonApiProxy extends RibbonApi {
    private final void setIcon(long property, int moduleHandle, Bitmap icon, int index) {
       ApplicationEntry ae = this.getApplicationEntry(moduleHandle, index);
       if (ae == null) {
-         throw new Object(
-            ((StringBuffer)(new Object("Module with handle [")))
-               .append(moduleHandle)
-               .append("] and index [")
-               .append(index)
-               .append("] has no application entry point")
-               .toString()
-         );
+         throw new IllegalArgumentException("Module with handle [" + moduleHandle + "] and index [" + index + "] has no application entry point");
       }
 
       ApplicationEntryPoint aep = (ApplicationEntryPoint)ae.getDescriptor();
-      if (aep instanceof Object) {
+      if (aep instanceof ObjectProps) {
          ObjectProps oprops = aep;
          oprops.set(property, icon);
          this._entryPointDescriptionStore.putBitmap(moduleHandle, index, property, icon);
@@ -99,14 +85,7 @@ public final class RibbonApiProxy extends RibbonApi {
 
       RibbonIconField rif = ae.getRibbonIcon();
       if (null == rif) {
-         throw new Object(
-            ((StringBuffer)(new Object("Module with handle [")))
-               .append(moduleHandle)
-               .append("] and index [")
-               .append(index)
-               .append("] has no ribbon icon")
-               .toString()
-         );
+         throw new IllegalArgumentException("Module with handle [" + moduleHandle + "] and index [" + index + "] has no ribbon icon");
       }
 
       rif.setBitmap();
@@ -116,19 +95,12 @@ public final class RibbonApiProxy extends RibbonApi {
    public final void setName(int moduleHandle, int index, String name) {
       ApplicationEntry ae = this.getApplicationEntry(moduleHandle, index);
       if (ae == null) {
-         throw new Object(
-            ((StringBuffer)(new Object("Module with handle [")))
-               .append(moduleHandle)
-               .append("] and index [")
-               .append(index)
-               .append("] has no application entry point")
-               .toString()
-         );
+         throw new IllegalArgumentException("Module with handle [" + moduleHandle + "] and index [" + index + "] has no application entry point");
       }
 
       this._entryPointDescriptionStore.putString(moduleHandle, index, 3, name);
       ApplicationEntryPoint aep = (ApplicationEntryPoint)ae.getDescriptor();
-      if (aep instanceof Object) {
+      if (aep instanceof StringProps) {
          StringProps oprops = aep;
          oprops.set(3, name);
          this._entryPointDescriptionStore.putString(moduleHandle, index, 3, name);
@@ -136,14 +108,7 @@ public final class RibbonApiProxy extends RibbonApi {
 
       RibbonIconField rif = ae.getRibbonIcon();
       if (null == rif) {
-         throw new Object(
-            ((StringBuffer)(new Object("Module with handle [")))
-               .append(moduleHandle)
-               .append("] and index [")
-               .append(index)
-               .append("] has no ribbon icon")
-               .toString()
-         );
+         throw new IllegalArgumentException("Module with handle [" + moduleHandle + "] and index [" + index + "] has no ribbon icon");
       }
 
       ae.clearDescription();
@@ -157,9 +122,9 @@ public final class RibbonApiProxy extends RibbonApi {
    public final void applyTo(int moduleHandle, ApplicationEntry ae) {
       if (this._entryPointDescriptionStore._moduleLookup.containsKey(moduleHandle)) {
          EntryPointDescriptor epd = ae.getDescriptor();
-         if (epd instanceof Object) {
+         if (epd instanceof ApplicationEntryPoint) {
             ApplicationEntryPoint aep = (ApplicationEntryPoint)epd;
-            if (aep instanceof Object) {
+            if (aep instanceof ObjectProps) {
                ObjectProps oprops = aep;
                ApplicationDescriptor ad = aep.getApplicationDescriptor();
                int index = ad.getIndex();

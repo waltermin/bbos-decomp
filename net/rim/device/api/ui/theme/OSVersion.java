@@ -9,16 +9,16 @@ class OSVersion {
    private int _major;
    private int _minor;
    private Integer _subMinor;
-   private static Hashtable _valuesByName = (Hashtable)(new Object());
+   private static Hashtable _valuesByName = new Hashtable();
    public static final OSVersion OS_VERSION_4_1 = new OSVersion("4.1", 4, 1);
    public static final OSVersion OS_VERSION_4_2 = new OSVersion("4.2", 4, 2);
-   public static final OSVersion OS_VERSION_4_2_1 = new OSVersion("4.2.1", 4, 2, (Integer)(new Object(1)));
-   public static final OSVersion OS_VERSION_4_2_2 = new OSVersion("4.2.2", 4, 2, (Integer)(new Object(2)));
-   public static final OSVersion OS_VERSION_4_2_3 = new OSVersion("4.2.3", 4, 2, (Integer)(new Object(3)));
+   public static final OSVersion OS_VERSION_4_2_1 = new OSVersion("4.2.1", 4, 2, new Integer(1));
+   public static final OSVersion OS_VERSION_4_2_2 = new OSVersion("4.2.2", 4, 2, new Integer(2));
+   public static final OSVersion OS_VERSION_4_2_3 = new OSVersion("4.2.3", 4, 2, new Integer(3));
    public static final OSVersion OS_VERSION_4_3 = new OSVersion("4.3", 4, 3);
-   public static final OSVersion OS_VERSION_4_3_1 = new OSVersion("4.3.1", 4, 3, (Integer)(new Object(1)));
-   public static final OSVersion OS_VERSION_4_3_2 = new OSVersion("4.3.2", 4, 3, (Integer)(new Object(2)));
-   public static final OSVersion OS_VERSION_4_3_3 = new OSVersion("4.3.3", 4, 3, (Integer)(new Object(3)));
+   public static final OSVersion OS_VERSION_4_3_1 = new OSVersion("4.3.1", 4, 3, new Integer(1));
+   public static final OSVersion OS_VERSION_4_3_2 = new OSVersion("4.3.2", 4, 3, new Integer(2));
+   public static final OSVersion OS_VERSION_4_3_3 = new OSVersion("4.3.3", 4, 3, new Integer(3));
    public static final OSVersion OS_VERSION_5_0 = new OSVersion("5.0", 5, 0);
    private static final OSVersion DEFAULT_OS_VERSION = OS_VERSION_4_3;
 
@@ -69,7 +69,7 @@ class OSVersion {
             Integer minor = tokenizer.nextToken();
             if (minor != null) {
                Integer subMinor = tokenizer.nextToken();
-               StringBuffer builtUp = (StringBuffer)(new Object());
+               StringBuffer builtUp = new StringBuffer();
                builtUp.append(major.toString()).append('.').append(minor.toString());
                if (subMinor != null) {
                   builtUp.append('.').append(subMinor.toString());

@@ -17,7 +17,6 @@ import net.rim.device.apps.api.framework.model.SyncBuffer;
 import net.rim.device.apps.api.framework.registration.RIMModelFactory;
 import net.rim.device.apps.api.framework.registration.RIMModelFactoryRepository;
 import net.rim.device.apps.api.messaging.MessageLookups;
-import net.rim.device.apps.api.transmission.Parameters;
 import net.rim.device.apps.api.transmission.rim.CMIMEConverterRegistry;
 import net.rim.device.apps.api.transmission.rim.CMIMEParameters;
 import net.rim.device.apps.api.transmission.rim.CMIMEUtilities;
@@ -31,13 +30,13 @@ import net.rim.vm.Array;
 import net.rim.vm.WeakReference;
 
 final class EmailMessageModelFactory implements Factory, Recognizer {
-   private WeakReference _folderDataBufferWR = (WeakReference)(new Object(null));
-   private WeakReference _addressPairWR = (WeakReference)(new Object(null));
+   private WeakReference _folderDataBufferWR = new WeakReference(null);
+   private WeakReference _addressPairWR = new WeakReference(null);
    private RIMModelFactory[] _factoryCache = RIMModelFactoryCache.allocate();
-   private WeakReference _submemberCreationContextWR = (WeakReference)(new Object(null));
+   private WeakReference _submemberCreationContextWR = new WeakReference(null);
    private EmailPayloadRecognizer _emailPayloadRecognizer = EmailPayloadRecognizer.getInstance();
-   private IntHashtable _fixUpList = (IntHashtable)(new Object());
-   private ContextObject _replyWithoutTextStubContext = (ContextObject)(new Object());
+   private IntHashtable _fixUpList = new IntHashtable();
+   private ContextObject _replyWithoutTextStubContext = new ContextObject();
 
    @Override
    public final boolean recognize(Object o) {
@@ -263,7 +262,7 @@ final class EmailMessageModelFactory implements Factory, Recognizer {
    }
 
    private final void clearFixUpList() {
-      this._fixUpList = (IntHashtable)(new Object());
+      this._fixUpList = new IntHashtable();
    }
 
    private final EmailMessageModelImpl readStatus(byte[] dataBuffer, int pos, ContextObject contextObject) {
@@ -571,11 +570,11 @@ final class EmailMessageModelFactory implements Factory, Recognizer {
             label227:
             try {
                var25 = true;
-               wholeAddress = (String)(new Object(dataBufferArray, startOfData, length, encoding));
+               wholeAddress = new String(dataBufferArray, startOfData, length, encoding);
                var25 = false;
             } finally {
                if (var25) {
-                  wholeAddress = (String)(new Object(dataBufferArray, startOfData, length));
+                  wholeAddress = new String(dataBufferArray, startOfData, length);
                   break label227;
                }
             }
@@ -596,7 +595,7 @@ final class EmailMessageModelFactory implements Factory, Recognizer {
                }
 
                if (message.flagsSet(8388608)) {
-                  StringBuffer addressBuffer = (StringBuffer)(new Object());
+                  StringBuffer addressBuffer = new StringBuffer();
                   switch (addressType) {
                      case 1:
                         break;
@@ -618,9 +617,9 @@ final class EmailMessageModelFactory implements Factory, Recognizer {
                   address = addressBuffer.toString();
                }
 
-               String[] addressPair = (Object[])this._addressPairWR.get();
+               String[] addressPair = (String[])this._addressPairWR.get();
                if (addressPair == null) {
-                  addressPair = new Object[2];
+                  addressPair = new String[2];
                   this._addressPairWR.set(addressPair);
                }
 
@@ -689,11 +688,11 @@ final class EmailMessageModelFactory implements Factory, Recognizer {
             label199:
             try {
                var27 = true;
-               name = (String)(new Object(dataBufferArray, pos, length, encoding));
+               name = new String(dataBufferArray, pos, length, encoding);
                var27 = false;
             } finally {
                if (var27) {
-                  name = (String)(new Object(dataBufferArray, pos, length));
+                  name = new String(dataBufferArray, pos, length);
                   break label199;
                }
             }
@@ -728,7 +727,7 @@ final class EmailMessageModelFactory implements Factory, Recognizer {
    private final ContextObject getSubmemberCreationContext() {
       ContextObject context = (ContextObject)this._submemberCreationContextWR.get();
       if (context == null) {
-         context = (ContextObject)(new Object());
+         context = new ContextObject();
          this._submemberCreationContextWR.set(context);
       }
 
@@ -870,17 +869,16 @@ final class EmailMessageModelFactory implements Factory, Recognizer {
 
          Converter converter = null;
          CMIMEParameters parameters = null;
-         Object var72;
          if (hackyNewAttachmentDataFormatByte == 1) {
             int cmimeParameterLength = dataBuffer.readInt();
-            DataBuffer cmimeParameterBuffer = (DataBuffer)(new Object());
+            DataBuffer cmimeParameterBuffer = new DataBuffer();
             if (cmimeParameterLength > 0) {
                cmimeParameterBuffer.setData(dataBuffer.getArray(), dataBuffer.getArrayPosition(), cmimeParameterLength);
             }
 
-            var72 = new Object(3, 5);
-            ((Parameters)var72).read(cmimeParameterBuffer, (byte)0);
-            converter = CMIMEConverterRegistry.getDefaultConverter((Parameters)var72);
+            parameters = new CMIMEParameters(3, 5);
+            parameters.read(cmimeParameterBuffer, (byte)0);
+            converter = CMIMEConverterRegistry.getDefaultConverter(parameters);
 
             try {
                data = cmimeParameterBuffer.readByteArray();
@@ -897,7 +895,7 @@ final class EmailMessageModelFactory implements Factory, Recognizer {
             }
 
             converter = CMIMEConverterRegistry.getDefaultConverter(mimeType);
-            var72 = new Object((DataBuffer)(new Object()), 3, 5);
+            parameters = new CMIMEParameters(new DataBuffer(), 3, 5);
             if (isEncoded) {
                byte encodingByte = CMIMEUtilities.getEncoding("UTF-8\r");
                byte[] nameBytes = null;
@@ -917,9 +915,9 @@ final class EmailMessageModelFactory implements Factory, Recognizer {
                }
 
                if (isEncoded && encodingByte == 0) {
-                  ((Parameters)var72).add((byte)-6, encodingByte, nameBytes);
+                  parameters.add((byte)-6, encodingByte, nameBytes);
                } else {
-                  ((Parameters)var72).add((byte)-14, nameBytes);
+                  parameters.add((byte)-14, nameBytes);
                }
             } else {
                boolean var50 = false /* VF: Semaphore variable */;
@@ -927,24 +925,24 @@ final class EmailMessageModelFactory implements Factory, Recognizer {
                label433:
                try {
                   var50 = true;
-                  ((Parameters)var72).add((byte)-14, filename.getBytes("windows-1252\r"));
+                  parameters.add((byte)-14, filename.getBytes("windows-1252\r"));
                   var50 = false;
                } finally {
                   if (var50) {
-                     ((Parameters)var72).add((byte)-14, filename.getBytes());
+                     parameters.add((byte)-14, filename.getBytes());
                      break label433;
                   }
                }
             }
 
-            ((Parameters)var72).add((byte)1, typeString.getBytes());
+            parameters.add((byte)1, typeString.getBytes());
          }
 
          Object attachmentModel = null;
          if (converter != null) {
             label427:
             try {
-               attachmentModel = converter.convert(data, var72);
+               attachmentModel = converter.convert(data, parameters);
             } finally {
                break label427;
             }
@@ -955,7 +953,7 @@ final class EmailMessageModelFactory implements Factory, Recognizer {
 
             label421:
             try {
-               attachmentModel = converter.convert(data, var72);
+               attachmentModel = converter.convert(data, parameters);
             } finally {
                break label421;
             }
@@ -969,7 +967,7 @@ final class EmailMessageModelFactory implements Factory, Recognizer {
             }
          }
 
-         if (attachmentModel instanceof Object) {
+         if (attachmentModel instanceof PersistableRIMModel) {
             message.add(attachmentModel);
             attachmentAdded = true;
          }

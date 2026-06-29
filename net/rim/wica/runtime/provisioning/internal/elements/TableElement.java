@@ -20,7 +20,7 @@ public final class TableElement extends CommonControlElement implements TableSty
    private String _gridlineColor;
 
    public TableElement() {
-      this._nestedElements = (Vector)(new Object());
+      this._nestedElements = new Vector();
    }
 
    @Override

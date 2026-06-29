@@ -6,7 +6,7 @@ import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 
 final class TestHeadsetDetectScreen$ReportListCallback implements ListFieldCallback {
-   private Vector reports = (Vector)(new Object());
+   private Vector reports = new Vector();
 
    public final int size() {
       return this.reports.size();

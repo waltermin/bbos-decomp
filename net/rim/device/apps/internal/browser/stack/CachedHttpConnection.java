@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.microedition.io.HttpConnection;
+import net.rim.device.api.io.IOCancelledException;
 import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.api.io.http.HttpProtocolConstants;
 import net.rim.device.api.util.StringUtilities;
@@ -43,7 +44,7 @@ public final class CachedHttpConnection implements HttpConnection, HttpProtocolC
       this._url = url;
 
       try {
-         this._decodedUrl = (URI)(new Object(this._url));
+         this._decodedUrl = new URI(this._url);
       } finally {
          return;
       }
@@ -52,7 +53,7 @@ public final class CachedHttpConnection implements HttpConnection, HttpProtocolC
    public final InputStream openMarkableInputStream() {
       InputStream in = this.openInputStream();
       if (in != null && !in.markSupported()) {
-         this._inputStream = in = (InputStream)(new Object(in));
+         this._inputStream = in = new MarkableInputStream(in);
       }
 
       return in;
@@ -237,9 +238,9 @@ public final class CachedHttpConnection implements HttpConnection, HttpProtocolC
    }
 
    @Override
-   public final InputStream openInputStream() {
+   public final InputStream openInputStream() throws IOCancelledException {
       if (this._closed) {
-         throw new Object();
+         throw new IOCancelledException();
       }
 
       if (this._inputStream == null && this._cacheResult != null) {
@@ -252,7 +253,7 @@ public final class CachedHttpConnection implements HttpConnection, HttpProtocolC
    @Override
    public final DataInputStream openDataInputStream() {
       InputStream in = this.openInputStream();
-      return (DataInputStream)(!(in instanceof Object) ? new Object(in) : in);
+      return !(in instanceof DataInputStream) ? new DataInputStream(in) : (DataInputStream)in;
    }
 
    @Override
@@ -288,7 +289,7 @@ public final class CachedHttpConnection implements HttpConnection, HttpProtocolC
       this._requestHeaders = requestHeaders;
 
       try {
-         this._decodedUrl = (URI)(new Object(this._url));
+         this._decodedUrl = new URI(this._url);
       } finally {
          return;
       }

@@ -1,5 +1,6 @@
 package net.rim.tools.compiler.classfile;
 
+import java.io.IOException;
 import net.rim.tools.compiler.io.StructuredInputStream;
 import net.rim.tools.compiler.vm.Constants;
 
@@ -14,7 +15,7 @@ public final class Classfile implements Constants {
    private ClassfileMethod[] _methods;
    private AttributeList _attributes;
 
-   public Classfile(byte[] inBytes, boolean shallow) {
+   public Classfile(byte[] inBytes, boolean shallow) throws IOException {
       StructuredInputStream in = new StructuredInputStream(inBytes, false);
       if (in.readByte() == -54 && in.readByte() == -2 && in.readByte() == -70 && in.readByte() == -66) {
          in.readUnsignedShort();
@@ -53,15 +54,15 @@ public final class Classfile implements Constants {
 
             this._attributes = new AttributeList(in, this._constantPool, 1, shallow);
             if (in.read() != -1) {
-               throw new Object("Extra bytes in class file");
+               throw new IOException("Extra bytes in class file");
             }
 
             in.close();
          } else {
-            throw new Object("Incorrect classfile version");
+            throw new IOException("Incorrect classfile version");
          }
       } else {
-         throw new Object("Not a classfile");
+         throw new IOException("Not a classfile");
       }
    }
 
@@ -69,24 +70,24 @@ public final class Classfile implements Constants {
       return this._accessFlags;
    }
 
-   public final String getFullClassName() {
+   public final String getFullClassName() throws IOException {
       String name = null;
       if (this._thisClass != 0) {
          name = this._constantPool.getClassName(this._thisClass);
          if (name.charAt(0) == '[') {
-            throw new Object(((StringBuffer)(new Object("invalid class name: "))).append(name).toString());
+            throw new IOException("invalid class name: " + name);
          }
       }
 
       return name;
    }
 
-   public final String getFullBaseClassName() {
+   public final String getFullBaseClassName() throws IOException {
       String name = null;
       if (this._superClass != 0) {
          name = this._constantPool.getClassName(this._superClass);
          if (name.charAt(0) == '[') {
-            throw new Object(((StringBuffer)(new Object("invalid class name: "))).append(name).toString());
+            throw new IOException("invalid class name: " + name);
          }
       }
 
@@ -101,10 +102,10 @@ public final class Classfile implements Constants {
       return this._interfaces == null ? 0 : this._interfaces.length;
    }
 
-   public final String getFullInterfaceName(int index) {
+   public final String getFullInterfaceName(int index) throws IOException {
       String name = this._constantPool.getClassName(this._interfaces[index]);
       if (name.charAt(0) == '[') {
-         throw new Object(((StringBuffer)(new Object("invalid interface name: "))).append(name).toString());
+         throw new IOException("invalid interface name: " + name);
       } else {
          return name;
       }

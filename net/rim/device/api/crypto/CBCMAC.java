@@ -23,7 +23,7 @@ public final class CBCMAC extends AbstractMAC implements MAC {
          this._cbcBuffer = new byte[this._blockLength];
          this.reset();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -37,7 +37,7 @@ public final class CBCMAC extends AbstractMAC implements MAC {
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object("CBCMAC/"))).append(this._encryptorEngine.getAlgorithm()).toString();
+      return "CBCMAC/" + this._encryptorEngine.getAlgorithm();
    }
 
    @Override
@@ -62,7 +62,7 @@ public final class CBCMAC extends AbstractMAC implements MAC {
             }
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -93,7 +93,7 @@ public final class CBCMAC extends AbstractMAC implements MAC {
 
          return this._blockLength;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -248,22 +248,22 @@ public final class CBCMAC extends AbstractMAC implements MAC {
       // 0be: bipush -17
       // 0c0: bastore
       // 0c1: astore 4
-      // 0c3: new java/lang/Object
+      // 0c3: new net/rim/device/api/crypto/DESKey
       // 0c6: dup
       // 0c7: aload 0
       // 0c8: invokespecial net/rim/device/api/crypto/DESKey.<init> ([B)V
       // 0cb: astore 5
-      // 0cd: new java/lang/Object
+      // 0cd: new net/rim/device/api/crypto/DESEncryptorEngine
       // 0d0: dup
       // 0d1: aload 5
       // 0d3: invokespecial net/rim/device/api/crypto/DESEncryptorEngine.<init> (Lnet/rim/device/api/crypto/DESKey;)V
       // 0d6: astore 6
-      // 0d8: new java/lang/Object
+      // 0d8: new net/rim/device/api/crypto/DESKey
       // 0db: dup
       // 0dc: aload 1
       // 0dd: invokespecial net/rim/device/api/crypto/DESKey.<init> ([B)V
       // 0e0: astore 7
-      // 0e2: new java/lang/Object
+      // 0e2: new net/rim/device/api/crypto/DESDecryptorEngine
       // 0e5: dup
       // 0e6: aload 7
       // 0e8: invokespecial net/rim/device/api/crypto/DESDecryptorEngine.<init> (Lnet/rim/device/api/crypto/DESKey;)V
@@ -303,7 +303,7 @@ public final class CBCMAC extends AbstractMAC implements MAC {
       // 128: astore 5
       // 12a: goto 12f
       // 12d: astore 5
-      // 12f: new java/lang/Object
+      // 12f: new net/rim/device/api/crypto/CryptoSelfTestError
       // 132: dup
       // 133: invokespecial net/rim/device/api/crypto/CryptoSelfTestError.<init> ()V
       // 136: athrow

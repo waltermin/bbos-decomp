@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.lstp;
 
+import java.io.IOException;
 import javax.microedition.io.Datagram;
 import net.rim.device.api.bluetooth.BluetoothSerialPort;
 import net.rim.device.api.io.ConnEvent;
@@ -7,6 +8,7 @@ import net.rim.device.api.io.DatagramAddressBase;
 import net.rim.device.api.io.DatagramBase;
 import net.rim.device.api.io.DatagramStatusListener;
 import net.rim.device.api.io.DatagramTransportBase;
+import net.rim.device.api.io.IOFormatException;
 import net.rim.device.api.io.IOProperties;
 import net.rim.device.api.system.EventLogger;
 import net.rim.device.api.util.DataBuffer;
@@ -40,20 +42,20 @@ public final class Transport extends DatagramTransportBase implements LstpListen
    public final void init() {
       super.init(null);
       EventLogger.register(-754053862978797267L, "net.rim.lstp", 2);
-      this._txBuffer = (DataBuffer)(new Object());
+      this._txBuffer = new DataBuffer();
       LstpUtil.getInstance().addListener(this);
       this.createNativeLayer();
       EventLogger.logEvent(-754053862978797267L, 1229878386, 0);
    }
 
-   private final void createNativeLayer() {
+   private final void createNativeLayer() throws IOException {
       if (USBPortInternal.isSupported()) {
          this._primaryNativeLayer = new UsbLayer(this);
          if (BluetoothSerialPort.isSupported()) {
             new BluetoothLayer(this);
          }
       } else {
-         throw new Object();
+         throw new IOException();
       }
    }
 
@@ -115,7 +117,7 @@ public final class Transport extends DatagramTransportBase implements LstpListen
    }
 
    @Override
-   public final void send(Datagram param1, DatagramAddressBase param2, IOProperties param3, DatagramStatusListener param4, int param5) {
+   public final void send(Datagram param1, DatagramAddressBase param2, IOProperties param3, DatagramStatusListener param4, int param5) throws IOFormatException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -163,7 +165,7 @@ public final class Transport extends DatagramTransportBase implements LstpListen
       // 053: sipush 12674
       // 056: aconst_null
       // 057: invokevirtual net/rim/device/api/io/DatagramTransportBase.xmitDgslEvent (Lnet/rim/device/api/io/DatagramStatusListener;IILjava/lang/Object;)V
-      // 05a: new java/lang/Object
+      // 05a: new net/rim/device/api/io/IOFormatException
       // 05d: dup
       // 05e: invokespecial net/rim/device/api/io/IOFormatException.<init> ()V
       // 061: athrow
@@ -359,7 +361,7 @@ public final class Transport extends DatagramTransportBase implements LstpListen
       // 1d4: sipush 8321
       // 1d7: aconst_null
       // 1d8: invokevirtual net/rim/device/api/io/DatagramTransportBase.xmitDgslEvent (Lnet/rim/device/api/io/DatagramStatusListener;IILjava/lang/Object;)V
-      // 1db: new java/lang/Object
+      // 1db: new java/io/IOException
       // 1de: dup
       // 1df: invokespecial java/io/IOException.<init> ()V
       // 1e2: athrow
@@ -386,7 +388,7 @@ public final class Transport extends DatagramTransportBase implements LstpListen
       // 20e: invokespecial net/rim/device/cldc/io/lstp/Transport.getNativeLayer ()Lnet/rim/device/cldc/io/lstp/NativeLayer;
       // 211: bipush 1
       // 212: invokevirtual net/rim/device/cldc/io/lstp/NativeLayer.close (Z)V
-      // 215: new java/lang/Object
+      // 215: new net/rim/device/api/io/IONotRoutableException
       // 218: dup
       // 219: invokespecial net/rim/device/api/io/IONotRoutableException.<init> ()V
       // 21c: athrow
@@ -398,7 +400,7 @@ public final class Transport extends DatagramTransportBase implements LstpListen
       // 22a: bipush 3
       // 22c: invokestatic net/rim/device/api/system/EventLogger.logEvent (JII)Z
       // 22f: pop
-      // 230: new java/lang/Object
+      // 230: new net/rim/device/api/io/IONotRoutableException
       // 233: dup
       // 234: invokespecial net/rim/device/api/io/IONotRoutableException.<init> ()V
       // 237: athrow
@@ -416,7 +418,7 @@ public final class Transport extends DatagramTransportBase implements LstpListen
       // 250: sipush 129
       // 253: aconst_null
       // 254: invokevirtual net/rim/device/api/io/DatagramTransportBase.xmitDgslEvent (Lnet/rim/device/api/io/DatagramStatusListener;IILjava/lang/Object;)V
-      // 257: new java/lang/Object
+      // 257: new net/rim/device/api/io/IOCancelledException
       // 25a: dup
       // 25b: invokespecial net/rim/device/api/io/IOCancelledException.<init> ()V
       // 25e: athrow
@@ -435,7 +437,7 @@ public final class Transport extends DatagramTransportBase implements LstpListen
       // 278: sipush 12673
       // 27b: aconst_null
       // 27c: invokevirtual net/rim/device/api/io/DatagramTransportBase.xmitDgslEvent (Lnet/rim/device/api/io/DatagramStatusListener;IILjava/lang/Object;)V
-      // 27f: new java/lang/Object
+      // 27f: new java/io/IOException
       // 282: dup
       // 283: invokespecial java/io/IOException.<init> ()V
       // 286: athrow

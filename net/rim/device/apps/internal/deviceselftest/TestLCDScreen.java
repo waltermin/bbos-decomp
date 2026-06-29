@@ -1,17 +1,17 @@
 package net.rim.device.apps.internal.deviceselftest;
 
 import net.rim.device.api.system.Application;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
 
 final class TestLCDScreen extends TestScreenBase {
    TestLCDScreen() {
-      super._title = (LabelField)(new Object(DeviceSelfTestResources.getString(71), 1152921504606846976L));
-      super._input = (LabelField)(new Object(DeviceSelfTestResources.getString(69), 1152921504606846976L));
-      super._output = (LabelField)(new Object(DeviceSelfTestResources.getString(70), 1152921504606846976L));
+      super._title = new LabelField(DeviceSelfTestResources.getString(71), 1152921504606846976L);
+      super._input = new LabelField(DeviceSelfTestResources.getString(69), 1152921504606846976L);
+      super._output = new LabelField(DeviceSelfTestResources.getString(70), 1152921504606846976L);
       this.setTitle(super._title);
       this.add(super._input);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.add(super._output);
       this.setupMenuItems();
    }

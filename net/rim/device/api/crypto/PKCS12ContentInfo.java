@@ -20,7 +20,7 @@ public class PKCS12ContentInfo {
    }
 
    public static PKCS12ContentInfo getInstance(byte[] encoding, PKCS12ContentInfo parent) {
-      return getInstance((ASN1InputByteArray)(new Object(encoding)), parent);
+      return getInstance(new ASN1InputByteArray(encoding), parent);
    }
 
    public static PKCS12ContentInfo getInstance(ASN1InputByteArray stream, PKCS12ContentInfo parent) throws PKCS12ParsingException {
@@ -51,7 +51,7 @@ public class PKCS12ContentInfo {
          this._parent.addPassword(password);
       } else {
          if (this._passwords == null) {
-            this._passwords = (Vector)(new Object());
+            this._passwords = new Vector();
          }
 
          int size = this._passwords.size();

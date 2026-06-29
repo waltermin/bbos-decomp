@@ -29,7 +29,7 @@ public class EuropeanCustomDictionaryEngine extends CustomDictionary implements 
    @Override
    public boolean isInRepository(Object entry) {
       int res = 0;
-      if (entry instanceof Object) {
+      if (entry instanceof String) {
          String word = (String)entry;
          int len = word.length();
          char[] content = new char[len];

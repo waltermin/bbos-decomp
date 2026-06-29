@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.browser.page;
 
 import net.rim.device.api.browser.field.BrowserContent;
-import net.rim.device.api.browser.field.Event;
+import net.rim.device.api.browser.field.BrowserContentChangedEvent;
 import net.rim.device.api.browser.field.RenderingOptions;
 import net.rim.device.api.system.Display;
 import net.rim.device.api.system.EncodedImage;
@@ -9,7 +9,6 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Manager;
-import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
@@ -23,6 +22,7 @@ import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.messaging.Folder;
 import net.rim.device.apps.api.messaging.FolderHierarchies;
+import net.rim.device.apps.api.ui.VerbMenuItem;
 import net.rim.device.apps.internal.browser.bookmark.Bookmarks;
 import net.rim.device.apps.internal.browser.core.BrowserDaemonRegistry;
 import net.rim.device.apps.internal.browser.core.BrowserImpl;
@@ -38,6 +38,7 @@ import net.rim.device.apps.internal.browser.stack.RawDataCache;
 import net.rim.device.apps.internal.browser.stack.StackManager;
 import net.rim.device.apps.internal.browser.store.BrowserFolders;
 import net.rim.device.apps.internal.browser.ui.BrowserIcons;
+import net.rim.device.apps.internal.browser.ui.RigidManager;
 import net.rim.device.apps.internal.browser.ui.UrlEntryField;
 import net.rim.device.apps.internal.browser.util.ImageConverter;
 import net.rim.device.internal.ui.Image;
@@ -62,7 +63,7 @@ public final class StartupPage extends Page implements FieldChangeListener {
 
    public StartupPage(RenderingOptions renderingOptions) {
       super(new FetchRequest(new ModelResult(STARTUP_URL, 0, null), null, 0), null, 0);
-      this.setBrowserContent((BrowserContentImpl)(new Object(null, STARTUP_URL, (Manager)(new Object(3459045988797251584L)), this, renderingOptions, 0)));
+      this.setBrowserContent(new BrowserContentImpl(null, STARTUP_URL, new VerticalIndentFieldManager(3459045988797251584L), this, renderingOptions, 0));
       String configUID = BrowserDaemonRegistry.getInstance().getInitialConfigUID();
       BrowserConfigRecord currentConfig = BrowserConfigRecord.getDecodedConfig(configUID, BrowserConfigRecord.INVALID_VALUE, null);
       if (currentConfig != null) {
@@ -86,7 +87,7 @@ public final class StartupPage extends Page implements FieldChangeListener {
       super.addPageSpecificMenuItems(menu);
       Verb backVerb = this.getPrevVerb();
       if (backVerb != null) {
-         menu.add((MenuItem)(new Object(backVerb, 0)));
+         menu.add(new VerbMenuItem(backVerb, 0));
       }
    }
 
@@ -94,13 +95,13 @@ public final class StartupPage extends Page implements FieldChangeListener {
       LabelField lf = new StartupPage$CopyDisabledLabelField(this, text, cookie);
       lf.setTag(attrTag);
       if (showImage) {
-         HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object());
+         HorizontalFieldManager hfm = new HorizontalFieldManager();
          if (img != null) {
-            BitmapField bf = (BitmapField)(new Object());
+            BitmapField bf = new BitmapField();
             bf.setImage(img);
             hfm.add(bf);
          } else {
-            ImageField imgField = (ImageField)(new Object());
+            ImageField imgField = new ImageField();
             imgField.setImage(this._defaultPageImage);
             imgField.setPreferredSize(16, 16);
             hfm.add(imgField);
@@ -135,7 +136,7 @@ public final class StartupPage extends Page implements FieldChangeListener {
       if (currentConfig != null) {
          this._initialConfigUID = currentConfig.getUid();
          this.setTitle(currentConfig.getLocalizedString(11));
-         this.eventOccurred((Event)(new Object(this.getBrowserContent())));
+         this.eventOccurred(new BrowserContentChangedEvent(this.getBrowserContent()));
       }
    }
 
@@ -158,12 +159,12 @@ public final class StartupPage extends Page implements FieldChangeListener {
       UrlEntryField urlText = new UrlEntryField(urlFont);
       urlText.setChangeListener(this);
       int numChars = Display.getWidth() * 8 / 10 / urlFont.getAdvance('x');
-      Manager subMgr = (Manager)(new Object(numChars, 1, 1125899906842624L, urlFont));
+      Manager subMgr = new RigidManager(numChars, 1, 1125899906842624L, urlFont);
       subMgr.add(urlText);
-      FrameLayout urlTextManager = (FrameLayout)(new Object(12884901889L));
+      FrameLayout urlTextManager = new FrameLayout(12884901889L);
       urlTextManager.setTag(URL_ENTRY_TAG);
       urlTextManager.add(subMgr);
-      VerticalFieldManager vmgr = (VerticalFieldManager)(new Object(1152921504606846976L));
+      VerticalFieldManager vmgr = new VerticalFieldManager(1152921504606846976L);
       vmgr.setTag(URL_ENTRY_BG);
       vmgr.add(urlTextManager);
       mgr.add(vmgr);
@@ -172,7 +173,7 @@ public final class StartupPage extends Page implements FieldChangeListener {
 
    private final void populateVariableItems(VerticalIndentFieldManager mgr) {
       this._variableItemIndex = mgr.getFieldCount();
-      mgr.add(this.getLabelField(BrowserResources.getString(849), false, null, HEADER_TAG, new Object(0)));
+      mgr.add(this.getLabelField(BrowserResources.getString(849), false, null, HEADER_TAG, new Integer(0)));
       PageModel[] bookmarkModels = Bookmarks.getLastAccessedBookmarks(5);
 
       for (int i = 0; i < bookmarkModels.length; i++) {
@@ -183,7 +184,7 @@ public final class StartupPage extends Page implements FieldChangeListener {
                BrowserPageModel bmark = (BrowserPageModel)var10000;
                Folder folder = FolderHierarchies.getFolder(BrowserFolders.RIM_BROWSER_BOOKMARKS_HIERARCHY_ID, bmark.getFolderId());
                if (folder != null && folder.getFriendlyName().length() > 0) {
-                  title = ((StringBuffer)(new Object())).append(title).append(" (").append(folder.getFriendlyName()).append(')').toString();
+                  title = title + " (" + folder.getFriendlyName() + ')';
                }
             }
          }
@@ -191,11 +192,11 @@ public final class StartupPage extends Page implements FieldChangeListener {
          mgr.add(this.getLabelField(title, true, this.getIconImage(bookmarkModels[i].getIconUrl()), ENTRY_TAG, bookmarkModels[i]), 5);
       }
 
-      mgr.add(this.getLabelField(BrowserResources.getString(891), false, null, HEADER_TAG, new Object(1)));
+      mgr.add(this.getLabelField(BrowserResources.getString(891), false, null, HEADER_TAG, new Integer(1)));
       bookmarkModels = LongTermHistory.getInstance().getMostRecentUrls(5);
 
       for (int i = 0; i < bookmarkModels.length; i++) {
-         String iconUrl = ((StringBuffer)(new Object("http://"))).append(bookmarkModels[i].getDomain()).append("/favicon.ico").toString();
+         String iconUrl = "http://" + bookmarkModels[i].getDomain() + "/favicon.ico";
          mgr.add(this.getLabelField(bookmarkModels[i].getTitle(), true, this.getIconImage(iconUrl), ENTRY_TAG, bookmarkModels[i]), 5);
       }
    }

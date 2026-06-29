@@ -5,6 +5,8 @@ import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.model.Recognizer;
 import net.rim.device.apps.api.framework.model.VerbDescriptionProvider;
 import net.rim.device.apps.api.framework.verb.Verb;
+import net.rim.device.apps.api.messaging.implus.InteractiveHHAddressModel;
+import net.rim.device.apps.api.messaging.implus.OneWayPagerAddressModel;
 import net.rim.device.apps.internal.blackberryemail.email.EmailBuilder;
 import net.rim.device.apps.internal.blackberryemail.email.EmailEditorScreen;
 import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
@@ -30,19 +32,19 @@ final class IMPlusComposeVerb extends Verb {
 
       String description = null;
       if (!ContextObject.getFlag(context, 51) && !ContextObject.getFlag(context, 63)) {
-         if (model instanceof Object) {
+         if (model instanceof InteractiveHHAddressModel) {
             description = IMPlusResources.getString(0);
-         } else if (model instanceof Object) {
+         } else if (model instanceof OneWayPagerAddressModel) {
             description = IMPlusResources.getString(16);
          }
 
          if (description != null) {
-            if (model instanceof Object) {
+            if (model instanceof VerbDescriptionProvider) {
                VerbDescriptionProvider descriptor = (VerbDescriptionProvider)model;
-               return ((StringBuffer)(new Object())).append(description).append(" ").append(descriptor.getVerbDescription(context)).toString();
+               return description + " " + descriptor.getVerbDescription(context);
             }
 
-            description = ((StringBuffer)(new Object())).append(description).append(" ").append(model.toString()).toString();
+            description = description + " " + model.toString();
          }
 
          return description;
@@ -68,7 +70,7 @@ final class IMPlusComposeVerb extends Verb {
       }
 
       contextObject.setFlag(0);
-      EmailEditorScreen editor = (EmailEditorScreen)(new Object(contextObject));
+      EmailEditorScreen editor = new EmailEditorScreen(contextObject);
       message.setFlags(8388608);
       editor.setModel(message);
       editor.setFocus(_subjectFieldRecognizer);

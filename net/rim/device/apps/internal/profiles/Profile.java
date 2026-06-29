@@ -10,6 +10,7 @@ import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.component.AutoTextEditField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.LongEnumeration;
@@ -31,16 +32,12 @@ public final class Profile implements PersistableRIMModel, SyncObject, VerbProvi
 
    @Override
    public final int paint(Graphics graphics, int x, int y, int width, int height, Object context) {
-      StringBuffer buffer = (StringBuffer)(new Object(this.getName()));
+      StringBuffer buffer = new StringBuffer(this.getName());
       boolean on = Profiles.getInstance().getEnabled() == this;
       Font f;
       if (on) {
          f = Font.getDefault().derive(1 | Font.getDefault().getStyle());
-         buffer.append(
-            ((StringBuffer)(new Object(" ")))
-               .append(ResourceBundle.getBundle(2384708948246157241L, "net.rim.device.apps.internal.resource.Profiles").getString(248))
-               .toString()
-         );
+         buffer.append(" " + ResourceBundle.getBundle(2384708948246157241L, "net.rim.device.apps.internal.resource.Profiles").getString(248));
       } else {
          f = Font.getDefault();
       }
@@ -133,7 +130,7 @@ public final class Profile implements PersistableRIMModel, SyncObject, VerbProvi
       synchronized (this._configurations) {
          LongHashtable configurationsPerSource = (LongHashtable)this._configurations.get(sourceIdLong);
          if (configurationsPerSource == null) {
-            configurationsPerSource = (LongHashtable)(new Object());
+            configurationsPerSource = new LongHashtable();
             this._configurations.put(sourceIdLong, configurationsPerSource);
             PersistentObject.commit(this._configurations);
          }
@@ -144,7 +141,7 @@ public final class Profile implements PersistableRIMModel, SyncObject, VerbProvi
             long parentSourceID = NotificationsManager.getParentSourceID(sourceIdLong);
             if (parentSourceID != -1) {
                Object parentConfiguration = configurationsPerSource.get(parentSourceID);
-               if (parentConfiguration instanceof Object) {
+               if (parentConfiguration instanceof Copyable) {
                   Copyable cp = (Copyable)parentConfiguration;
                   configuration = cp.copy();
                }
@@ -166,7 +163,7 @@ public final class Profile implements PersistableRIMModel, SyncObject, VerbProvi
       synchronized (this._configurations) {
          LongHashtable configurationsPerSource = (LongHashtable)this._configurations.get(sourceIdLong);
          if (configurationsPerSource == null) {
-            configurationsPerSource = (LongHashtable)(new Object());
+            configurationsPerSource = new LongHashtable();
             this._configurations.put(sourceIdLong, configurationsPerSource);
             PersistentObject.commit(this._configurations);
          }
@@ -180,7 +177,7 @@ public final class Profile implements PersistableRIMModel, SyncObject, VerbProvi
             for (int i = 0; i < relatedSourceIDs.length; i++) {
                LongHashtable relatedSourceConfigurations = (LongHashtable)this._configurations.get(relatedSourceIDs[i]);
                if (relatedSourceConfigurations == null) {
-                  relatedSourceConfigurations = (LongHashtable)(new Object());
+                  relatedSourceConfigurations = new LongHashtable();
                   this._configurations.put(relatedSourceIDs[i], relatedSourceConfigurations);
                   PersistentObject.commit(this._configurations);
                }
@@ -340,16 +337,16 @@ public final class Profile implements PersistableRIMModel, SyncObject, VerbProvi
    @Override
    public final Field getField(Object contextObject) {
       if (this.isRemovable()) {
-         Field field = (Field)(new Object(
+         Field field = new AutoTextEditField(
             ResourceBundle.getBundle(2384708948246157241L, "net.rim.device.apps.internal.resource.Profiles").getString(200),
             this.getName(),
             Integer.MAX_VALUE,
             4503601774854144L
-         ));
+         );
          field.setCookie(this);
          return field;
       } else {
-         return (Field)(new Object(this.getName(), 64));
+         return new LabelField(this.getName(), 64);
       }
    }
 
@@ -357,7 +354,7 @@ public final class Profile implements PersistableRIMModel, SyncObject, VerbProvi
       this._name = nameString;
       this._identifier = identifierByte;
       this._uid = uid;
-      this._configurations = (LongHashtable)(new Object());
+      this._configurations = new LongHashtable();
    }
 
    @Override

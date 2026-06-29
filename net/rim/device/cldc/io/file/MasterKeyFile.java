@@ -1,5 +1,7 @@
 package net.rim.device.cldc.io.file;
 
+import java.io.EOFException;
+import java.io.IOException;
 import net.rim.device.api.crypto.SHA256Digest;
 import net.rim.device.api.system.DeviceInfo;
 import net.rim.device.api.system.EventLogger;
@@ -100,9 +102,9 @@ public class MasterKeyFile implements TLEFieldController {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public void decryptMasterKey(byte[] pwd) {
+   public void decryptMasterKey(byte[] pwd) throws IOException {
       if (this._cipherAlgorithm != 1) {
-         throw new Object("Bad cipher algorithm");
+         throw new IOException("Bad cipher algorithm");
       }
 
       byte[] userKey = FileSystemEncryption.getUserKey(pwd, this._salt, this._lockType);
@@ -112,17 +114,17 @@ public class MasterKeyFile implements TLEFieldController {
          int numBytes = EncryptionUtilities.decrypt(userKey, this._cipher, 0, this._cipher.length, this._masterKey, 0);
          Array.resize(this._masterKey, numBytes);
       } catch (Throwable var6) {
-         throw new Object(((StringBuffer)(new Object("failed to decrypt "))).append(e.getMessage()).toString());
+         throw new IOException("failed to decrypt " + e.getMessage());
       }
 
       int keyLength = this._masterKey.length - 32;
-      SHA256Digest digest = (SHA256Digest)(new Object());
+      SHA256Digest digest = new SHA256Digest();
       digest.update(this._masterKey, 0, keyLength);
       if (Arrays.equals(digest.getDigest(), 0, this._masterKey, keyLength, 32)) {
          Array.resize(this._masterKey, keyLength);
       } else {
          EventLogger.logEvent(4782370668738403183L, 1819764580, 0);
-         throw new Object("Error trying to open file where device key doesn't match card");
+         throw new IOException("Error trying to open file where device key doesn't match card");
       }
    }
 
@@ -190,7 +192,7 @@ public class MasterKeyFile implements TLEFieldController {
    }
 
    @Override
-   public boolean processField(int type, int length, DataBuffer db) {
+   public boolean processField(int type, int length, DataBuffer db) throws EOFException {
       try {
          switch (type) {
             case 0:
@@ -219,7 +221,7 @@ public class MasterKeyFile implements TLEFieldController {
                return true;
          }
       } finally {
-         throw new Object();
+         throw new EOFException();
       }
    }
 

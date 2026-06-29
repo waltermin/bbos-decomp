@@ -26,8 +26,8 @@ class OTACalendarListener implements CollectionListener {
    private static OTACalendarListener _instance;
 
    private OTACalendarListener() {
-      this._transmissionServiceTable = (LongHashtable)(new Object(3));
-      this._context = (ContextObject)(new Object());
+      this._transmissionServiceTable = new LongHashtable(3);
+      this._context = new ContextObject();
    }
 
    public static OTACalendarListener getInstance() {
@@ -72,7 +72,7 @@ class OTACalendarListener implements CollectionListener {
 
    @Override
    public void reset(Collection collection) {
-      if (collection instanceof Object) {
+      if (collection instanceof ReadableSet) {
          ReadableSet set = (ReadableSet)collection;
          if (set.size() == 0) {
             this._otaSyncDataManager.clear();
@@ -173,7 +173,7 @@ class OTACalendarListener implements CollectionListener {
       // 0c9: aload 0
       // 0ca: getfield net/rim/device/apps/internal/calendar/ota/OTACalendarListener._context Lnet/rim/device/apps/api/framework/model/ContextObject;
       // 0cd: ldc2_w -1184541483416107193
-      // 0d0: new java/lang/Object
+      // 0d0: new java/lang/Long
       // 0d3: dup
       // 0d4: aload 11
       // 0d6: iload 12
@@ -246,7 +246,7 @@ class OTACalendarListener implements CollectionListener {
 
    @Override
    public void elementAdded(Collection collection, Object element) {
-      if (element instanceof Object) {
+      if (element instanceof Event) {
          Event event = (Event)element;
          CalendarService calendarService = this._calendarServiceManager.findCalendarService(event);
          this.doSendCheck(event, null, calendarService);
@@ -255,13 +255,13 @@ class OTACalendarListener implements CollectionListener {
 
    @Override
    public void elementUpdated(Collection collection, Object oldElement, Object newElement) {
-      if (newElement instanceof Object) {
+      if (newElement instanceof Event) {
          Event newEvent = (Event)newElement;
          OTASyncData syncData = null;
          Event oldEvent = null;
          CalendarService calendarService = this._calendarServiceManager.findCalendarService(newEvent);
          CICALConfiguration cicalConfiguration = calendarService.getCICALConfiguration();
-         if (oldElement instanceof Object) {
+         if (oldElement instanceof Event) {
             oldEvent = (Event)oldElement;
             syncData = this._otaSyncDataManager.get(oldEvent);
             this._otaSyncDataManager.remove(oldEvent);
@@ -307,11 +307,11 @@ class OTACalendarListener implements CollectionListener {
       // 00b: return
       // 00c: aload 2
       // 00d: dup
-      // 00e: instanceof java/lang/Object
+      // 00e: instanceof net/rim/device/apps/api/calendar/modelcontrollerinterface/Event
       // 011: ifne 018
       // 014: pop
       // 015: goto 10b
-      // 018: checkcast java/lang/Object
+      // 018: checkcast net/rim/device/apps/api/calendar/modelcontrollerinterface/Event
       // 01b: astore 6
       // 01d: aload 5
       // 01f: invokevirtual net/rim/device/apps/api/calendar/caldb/CalendarService.getCICALConfiguration ()Lnet/rim/device/apps/api/calendar/ota/CICALConfiguration;
@@ -340,7 +340,7 @@ class OTACalendarListener implements CollectionListener {
       // 057: aload 0
       // 058: getfield net/rim/device/apps/internal/calendar/ota/OTACalendarListener._context Lnet/rim/device/apps/api/framework/model/ContextObject;
       // 05b: ldc2_w -1184541483416107193
-      // 05e: new java/lang/Object
+      // 05e: new java/lang/Long
       // 061: dup
       // 062: lload 3
       // 063: invokespecial java/lang/Long.<init> (J)V
@@ -424,11 +424,11 @@ class OTACalendarListener implements CollectionListener {
       // Bytecode:
       // 000: aload 2
       // 001: dup
-      // 002: instanceof java/lang/Object
+      // 002: instanceof net/rim/device/apps/api/calendar/modelcontrollerinterface/Event
       // 005: ifne 00c
       // 008: pop
       // 009: goto 10d
-      // 00c: checkcast java/lang/Object
+      // 00c: checkcast net/rim/device/apps/api/calendar/modelcontrollerinterface/Event
       // 00f: astore 3
       // 010: aload 0
       // 011: getfield net/rim/device/apps/internal/calendar/ota/OTACalendarListener._calendarServiceManager Lnet/rim/device/apps/api/calendar/caldb/CalendarServiceManager;

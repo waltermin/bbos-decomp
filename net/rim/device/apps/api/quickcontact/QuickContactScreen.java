@@ -48,7 +48,7 @@ public final class QuickContactScreen extends AppsMainScreen implements ListFiel
    private static final int INTER_COLUMN_SPACE = 4;
    private static final int KEY_OFFSET = 0;
    private static final int ADDRESS_WIDTH = SCREEN_WIDTH * 45 / 100;
-   private static ContextObject _paintingContext = (ContextObject)(new Object());
+   private static ContextObject _paintingContext = new ContextObject();
 
    QuickContactScreen(QuickContactItem item, int flags) {
       super(562949953486848L);
@@ -79,7 +79,7 @@ public final class QuickContactScreen extends AppsMainScreen implements ListFiel
    }
 
    private final void addTitle() {
-      this._titleField = (LabelField)(new Object());
+      this._titleField = new LabelField();
       this.updateTitleText();
       this.setTitle(this._titleField);
    }
@@ -94,7 +94,7 @@ public final class QuickContactScreen extends AppsMainScreen implements ListFiel
          this.setFont(currentFont.derive(currentFont.getStyle(), 10));
       }
 
-      this._vfm = (VerticalFieldManager)(new Object(3459063580983296000L));
+      this._vfm = new VerticalFieldManager(3459063580983296000L);
       this._vfm.setVerticalQuantization(-1);
       this._vfm.add(this._listField);
       this.add(this._vfm);
@@ -491,10 +491,10 @@ public final class QuickContactScreen extends AppsMainScreen implements ListFiel
       if (item != null) {
          outItem = item.getFriendlyNameString();
          if (outItem != null) {
-            outItem = ((StringBuffer)(new Object())).append(outItem).append(" ").toString();
+            outItem = outItem + " ";
          }
 
-         outItem = ((StringBuffer)(new Object())).append(outItem).append(item.getRawAddressString()).toString();
+         outItem = outItem + item.getRawAddressString();
       }
 
       return outItem;

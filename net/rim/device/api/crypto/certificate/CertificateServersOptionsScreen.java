@@ -11,6 +11,7 @@ import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.api.framework.registration.VerbRepository;
 import net.rim.device.apps.api.framework.verb.Verb;
@@ -67,15 +68,15 @@ public final class CertificateServersOptionsScreen extends AppsMainScreen implem
          this.setTitle(this._serverInfo.getFriendlyName());
       }
 
-      String[] choices = new Object[]{_rb.getString(111), _rb.getString(110), _rb.getString(109)};
+      String[] choices = new String[]{_rb.getString(111), _rb.getString(110), _rb.getString(109)};
       Font font = Font.getDefault();
       this._boldFont = font.derive(font.getStyle() | 1);
-      this._serverTypeField = (ObjectChoiceField)(new Object(_rb.getString(1), choices, this.convertTypeToIndex(this._initialType)));
+      this._serverTypeField = new ObjectChoiceField(_rb.getString(1), choices, this.convertTypeToIndex(this._initialType));
       this._serverTypeField.setFont(this._boldFont);
       this._serverTypeField.setEditable(true);
       this._serverTypeField.setChangeListener(this);
       this.add(this._serverTypeField);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       String friendlyName = null;
       String server = null;
       String baseQuery = null;
@@ -97,17 +98,17 @@ public final class CertificateServersOptionsScreen extends AppsMainScreen implem
 
       server = server.trim();
       int type = this.getType();
-      this._vifm = (VerticalIndentFieldManager)(new Object(1153220571769602048L));
+      this._vifm = new VerticalIndentFieldManager(1153220571769602048L);
       this.add(this._vifm);
       long style = 0;
       if (friendlyName == null) {
          friendlyName = "";
       }
 
-      LabelField labelField = (LabelField)(new Object(_rb.getString(4), 45035996273704960L));
+      LabelField labelField = new LabelField(_rb.getString(4), 45035996273704960L);
       labelField.setFont(this._boldFont);
       this._vifm.add(labelField);
-      this._friendlyNameField = (AutoTextEditField)(new Object(null, friendlyName, 256, style | 2147483648L));
+      this._friendlyNameField = new AutoTextEditField(null, friendlyName, 256, style | 2147483648L);
       this._vifm.add(this._friendlyNameField, 12);
       if (server == null) {
          server = "";
@@ -120,28 +121,28 @@ public final class CertificateServersOptionsScreen extends AppsMainScreen implem
          label = _rb.getString(3);
       }
 
-      this._serverLabelField = (RichTextField)(new Object(label, 45035996273704960L));
+      this._serverLabelField = new RichTextField(label, 45035996273704960L);
       this._serverLabelField.setFont(this._boldFont);
       this._vifm.add(this._serverLabelField);
-      this._serverField = (EditField)(new Object(null, server, 1024, style | 2147483648L | 117440512));
+      this._serverField = new EditField(null, server, 1024, style | 2147483648L | 117440512);
       this._vifm.add(this._serverField, 12);
       if (baseQuery == null) {
          baseQuery = "";
       }
 
-      this._baseQueryLabelField = (RichTextField)(new Object(_rb.getString(5), 45035996273704960L));
+      this._baseQueryLabelField = new RichTextField(_rb.getString(5), 45035996273704960L);
       this._baseQueryLabelField.setFont(this._boldFont);
-      this._baseQueryField = (EditField)(new Object(null, baseQuery, 1024, style | 2147483648L));
-      this._portLabelField = (RichTextField)(new Object(_rb.getString(6), 45035996273704960L));
+      this._baseQueryField = new EditField(null, baseQuery, 1024, style | 2147483648L);
+      this._portLabelField = new RichTextField(_rb.getString(6), 45035996273704960L);
       this._portLabelField.setFont(this._boldFont);
-      this._portField = (EditField)(new Object(null, String.valueOf(port), 10, style | 16777216 | 2147483648L));
-      this._authLabelField = (RichTextField)(new Object(_rb.getString(118), 45035996273704960L));
+      this._portField = new EditField(null, String.valueOf(port), 10, style | 16777216 | 2147483648L);
+      this._authLabelField = new RichTextField(_rb.getString(118), 45035996273704960L);
       this._authLabelField.setFont(this._boldFont);
-      this._authField = (ObjectChoiceField)(new Object(null, _rb.getStringArray(119), authType, 4294967296L));
+      this._authField = new ObjectChoiceField(null, _rb.getStringArray(119), authType, 4294967296L);
       this._authField.setEditable(true);
-      this._connectionTypeLabelField = (RichTextField)(new Object(_rb.getString(120), 45035996273704960L));
+      this._connectionTypeLabelField = new RichTextField(_rb.getString(120), 45035996273704960L);
       this._connectionTypeLabelField.setFont(this._boldFont);
-      this._connectionTypeField = (ObjectChoiceField)(new Object(null, _rb.getStringArray(121), connType, 4294967296L));
+      this._connectionTypeField = new ObjectChoiceField(null, _rb.getStringArray(121), connType, 4294967296L);
       this._connectionTypeField.setEditable(true);
       this._connectionTypeField.setChangeListener(this);
       if (type == 1) {
@@ -241,7 +242,7 @@ public final class CertificateServersOptionsScreen extends AppsMainScreen implem
    private final int convertTypeToIndex(int type) {
       switch (type) {
          case 0:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 1:
          default:
             return 0;
@@ -255,7 +256,7 @@ public final class CertificateServersOptionsScreen extends AppsMainScreen implem
    private final int convertIndexToType(int index) {
       switch (index) {
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          default:
             return 1;
@@ -285,11 +286,11 @@ public final class CertificateServersOptionsScreen extends AppsMainScreen implem
          if (verbs != null) {
             for (int i = 0; i < verbs.length; i++) {
                Verb var10000 = verbs[i];
-               if (verbs[i] instanceof Object) {
+               if (verbs[i] instanceof SetParameter) {
                   ((SetParameter)var10000).setParameter(this._serverInfo);
                }
 
-               if (verbs[i] instanceof Object) {
+               if (verbs[i] instanceof Copyable) {
                   menu.add((Verb)((Copyable)verbs[i]).copy());
                } else {
                   menu.add(verbs[i]);

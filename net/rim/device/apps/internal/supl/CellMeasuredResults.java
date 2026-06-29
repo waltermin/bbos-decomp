@@ -19,9 +19,9 @@ final class CellMeasuredResults {
 
    final void print() {
       System.out.println("Cell Measured Results: ");
-      System.out.println(((StringBuffer)(new Object("Optionals: "))).append(this.optionals).toString());
+      System.out.println("Optionals: " + this.optionals);
       if ((this.optionals & 1) == 1) {
-         System.out.println(((StringBuffer)(new Object("Cell Id: "))).append(this.cellId).toString());
+         System.out.println("Cell Id: " + this.cellId);
       }
 
       this.info.print();

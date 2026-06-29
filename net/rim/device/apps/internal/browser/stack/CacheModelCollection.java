@@ -64,7 +64,7 @@ public final class CacheModelCollection implements SyncCollection, SyncCollectio
    @Override
    public final SyncObject[] getSyncObjects() {
       RawDataCache rawDataCache = BrowserDaemonRegistry.getInstance().getRawDataCache();
-      Vector syncObjects = (Vector)(new Object());
+      Vector syncObjects = new Vector();
       Enumeration e = rawDataCache.getLongTermCacheElements();
 
       while (e.hasMoreElements()) {
@@ -74,7 +74,7 @@ public final class CacheModelCollection implements SyncCollection, SyncCollectio
          }
       }
 
-      SyncObject[] objects = new Object[syncObjects.size()];
+      SyncObject[] objects = new SyncObject[syncObjects.size()];
       syncObjects.copyInto(objects);
       return objects;
    }

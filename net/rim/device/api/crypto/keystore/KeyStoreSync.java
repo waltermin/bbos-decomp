@@ -365,12 +365,12 @@ class KeyStoreSync implements SyncCollection, SyncConverter, MinimalSyncCollecti
    public SyncObject[] getSyncObjects() {
       KeyStoreManagerHelper keyStoreManagerHelper = KeyStoreManagerHelper.getInstance();
       if (!keyStoreManagerHelper.getAllowBackupRestore() && !keyStoreManagerHelper.getAccess()) {
-         return new Object[0];
+         return new SyncObject[0];
       }
 
       int numElements = this._keyStore.size();
       Enumeration enumeration = this._keyStore.elements();
-      SyncObject[] objects = new Object[numElements];
+      SyncObject[] objects = new SyncObject[numElements];
 
       for (int i = 0; i < numElements; i++) {
          objects[i] = (SyncObject)enumeration.nextElement();
@@ -669,7 +669,7 @@ class KeyStoreSync implements SyncCollection, SyncConverter, MinimalSyncCollecti
       // 077: aload 36
       // 079: ldc2_w -6244618566307895102
       // 07c: invokevirtual net/rim/device/api/system/ApplicationRegistry.get (J)Ljava/lang/Object;
-      // 07f: checkcast java/lang/Object
+      // 07f: checkcast net/rim/device/api/util/IntHashtable
       // 082: astore 37
       // 084: aload 37
       // 086: ifnonnull 08c
@@ -1045,7 +1045,7 @@ class KeyStoreSync implements SyncCollection, SyncConverter, MinimalSyncCollecti
 
          return result;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

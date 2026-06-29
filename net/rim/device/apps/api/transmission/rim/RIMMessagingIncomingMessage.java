@@ -127,7 +127,7 @@ public final class RIMMessagingIncomingMessage extends RIMMessagingMessage {
       // 095: getfield net/rim/device/apps/api/transmission/rim/RIMMessagingIncomingMessage._bodyLength I
       // 098: ifle 105
       // 09b: aload 8
-      // 09d: new java/lang/Object
+      // 09d: new java/lang/StringBuffer
       // 0a0: dup
       // 0a1: ldc_w ";charset="
       // 0a4: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -294,7 +294,7 @@ public final class RIMMessagingIncomingMessage extends RIMMessagingMessage {
       // 1f5: getfield net/rim/device/apps/api/transmission/rim/RIMMessagingIncomingMessage._bodyLength I
       // 1f8: ifle 26a
       // 1fb: aload 8
-      // 1fd: new java/lang/Object
+      // 1fd: new java/lang/StringBuffer
       // 200: dup
       // 201: ldc_w ";charset="
       // 204: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V

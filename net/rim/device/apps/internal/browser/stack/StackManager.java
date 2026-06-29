@@ -41,7 +41,7 @@ import net.rim.device.internal.system.DataServices;
 import net.rim.device.internal.ui.component.UsernamePasswordDialog;
 
 public final class StackManager implements BrowserStateListener, PhoneCallListener, AbortListener {
-   private Hashtable _networkPageFetcherRegistry = (Hashtable)(new Object());
+   private Hashtable _networkPageFetcherRegistry = new Hashtable();
    private CookieCache _cookieCache;
    private AuthScheme _currentScheme;
    private AuthScheme _proxyCurrentScheme;
@@ -132,7 +132,7 @@ public final class StackManager implements BrowserStateListener, PhoneCallListen
 
       label3086:
       try {
-         URI uri = (URI)(new Object(fetchRequest.getModelResult().getURL()));
+         URI uri = new URI(fetchRequest.getModelResult().getURL());
          String authority = uri.getAuthority();
          if (authority != null && HttpFilterRegistry.isLocalFilter(authority)) {
             protocol = "local";
@@ -342,9 +342,9 @@ public final class StackManager implements BrowserStateListener, PhoneCallListen
                         int var182 = fetchRequest.getModelResult().getCacheResult().getStatus();
                         String title = null;
                         if (var182 == 401) {
-                           title = ((StringBuffer)(new Object())).append(BrowserResources.getString(220)).append(realm).toString();
+                           title = BrowserResources.getString(220) + realm;
                         } else if (var182 == 407) {
-                           title = ((StringBuffer)(new Object())).append(BrowserResources.getString(501)).append(realm).toString();
+                           title = BrowserResources.getString(501) + realm;
                         }
 
                         String username = null;
@@ -358,7 +358,7 @@ public final class StackManager implements BrowserStateListener, PhoneCallListen
                            }
                         }
 
-                        UsernamePasswordDialog upd = (UsernamePasswordDialog)(new Object(title, username, rimDomain, null, 2, 0));
+                        UsernamePasswordDialog upd = new UsernamePasswordDialog(title, username, rimDomain, null, 2, 0);
                         upd.setAllowUnicodePassword(true);
                         Application.getApplication().invokeAndWait(new UPDRunnable(upd));
                         if (upd.getCloseReason() == -1) {
@@ -377,7 +377,7 @@ public final class StackManager implements BrowserStateListener, PhoneCallListen
                            rimDomain = upd.getDomain();
                            String domainUsername = username;
                            if (rimDomain != null) {
-                              domainUsername = ((StringBuffer)(new Object())).append(rimDomain).append("\\").append(username).toString();
+                              domainUsername = rimDomain + "\\" + username;
                            }
 
                            newScheme.setParameter("username", domainUsername);
@@ -389,7 +389,7 @@ public final class StackManager implements BrowserStateListener, PhoneCallListen
                            }
 
                            if (upd.rememberCredentials()) {
-                              credentials = new Object[rimDomain != null ? 3 : 2];
+                              credentials = new String[rimDomain != null ? 3 : 2];
                               credentials[0] = username;
                               credentials[1] = "";
                               if (rimDomain != null) {
@@ -681,7 +681,7 @@ public final class StackManager implements BrowserStateListener, PhoneCallListen
          if (domain != null) {
             domain = StringUtilities.toLowerCase(domain, 1701707776);
             String uri = StringUtilities.toLowerCase(fetchRequest.getModelResult().getURL(), 1701707776);
-            StringTokenizer tokens = (StringTokenizer)(new Object(domain, ' '));
+            StringTokenizer tokens = new StringTokenizer(domain, ' ');
 
             while (tokens.hasMoreElements()) {
                if (uri.startsWith(tokens.nextToken())) {
@@ -691,7 +691,7 @@ public final class StackManager implements BrowserStateListener, PhoneCallListen
             }
          } else if (rimHost != null) {
             try {
-               URI uri = (URI)(new Object(fetchRequest.getModelResult().getURL()));
+               URI uri = new URI(fetchRequest.getModelResult().getURL());
                if (StringUtilities.strEqualIgnoreCase(rimHost, uri.getAuthority(), 1701707776)) {
                   this.addAuth(type, fetchRequest);
                   return;
@@ -721,7 +721,7 @@ public final class StackManager implements BrowserStateListener, PhoneCallListen
       label72:
       try {
          String url = fetchRequest.getModelResult().getURL();
-         URI uri = (URI)(new Object(url));
+         URI uri = new URI(url);
          String query = uri.getQuery();
          if (query != null && query.length() == 0) {
             query = null;
@@ -732,13 +732,7 @@ public final class StackManager implements BrowserStateListener, PhoneCallListen
             scheme.setParameter("uri", uri.getAuthority());
          } else {
             scheme.setParameter("method", fetchRequest.getModelResult().getPostData() != null ? "POST" : "GET");
-            scheme.setParameter(
-               "uri",
-               ((StringBuffer)(new Object()))
-                  .append(uri.getPath())
-                  .append(query == null ? "" : ((StringBuffer)(new Object())).append('?').append(query).toString())
-                  .toString()
-            );
+            scheme.setParameter("uri", uri.getPath() + (query == null ? "" : '?' + query));
          }
       } finally {
          break label72;
@@ -777,7 +771,7 @@ public final class StackManager implements BrowserStateListener, PhoneCallListen
 
                if (scheme.getType() == 1) {
                   try {
-                     URI uri = (URI)(new Object(fetchRequest.getModelResult().getURL()));
+                     URI uri = new URI(fetchRequest.getModelResult().getURL());
                      scheme.setParameter("rimhost", uri.getAuthority());
                   } finally {
                      return scheme;

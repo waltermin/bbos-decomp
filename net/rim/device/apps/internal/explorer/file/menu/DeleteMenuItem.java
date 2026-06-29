@@ -69,7 +69,7 @@ public final class DeleteMenuItem extends MenuItem {
                } catch (Throwable var36) {
                   label375: {
                      String errorString = null;
-                     if (ioe instanceof Object) {
+                     if (ioe instanceof FileIOException) {
                         errorString = ((FileIOException)ioe).getMessage();
                      }
 

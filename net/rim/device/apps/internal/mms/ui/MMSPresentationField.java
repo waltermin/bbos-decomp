@@ -53,7 +53,7 @@ public final class MMSPresentationField extends VerticalFieldManager implements 
    }
 
    final void reduceImages(int bytesToTrim, int maxImageWidth, int maxImageHeight) {
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       int total = 0;
       int count = this.getFieldCount();
 
@@ -474,7 +474,7 @@ public final class MMSPresentationField extends VerticalFieldManager implements 
    @Override
    public final void delete(Field field) {
       if (this.isImmutable()) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       Object eventLock = this.getAppEventLock();
@@ -644,7 +644,7 @@ public final class MMSPresentationField extends VerticalFieldManager implements 
    @Override
    public final void add(Field field) {
       if (this.isImmutable()) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       Object eventLock = this.getAppEventLock();
@@ -676,7 +676,7 @@ public final class MMSPresentationField extends VerticalFieldManager implements 
 
       if (name.length() > 98) {
          root = root.substring(0, 98 - suffix.length());
-         name = ((StringBuffer)(new Object())).append(root).append(suffix).toString();
+         name = root + suffix;
          if (!this.hasAttachment(name)) {
             return new AliasedAttachment(name, attachment);
          }
@@ -685,7 +685,7 @@ public final class MMSPresentationField extends VerticalFieldManager implements 
       int i = 1;
 
       while (true) {
-         name = ((StringBuffer)(new Object())).append(root).append(Integer.toString(i)).append(suffix).toString();
+         name = root + Integer.toString(i) + suffix;
          if (!this.hasAttachment(name)) {
             return new AliasedAttachment(name, attachment);
          }

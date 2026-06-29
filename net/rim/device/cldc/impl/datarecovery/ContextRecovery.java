@@ -30,15 +30,15 @@ public final class ContextRecovery implements DataRecoveryListener, ContextRecov
             case 3:
             case 7:
                hri = HRUtils.getDefaultHRT().getActiveHri();
-               if (hri != null && hri instanceof Object) {
+               if (hri != null && hri instanceof GprsHRI) {
                   GprsHRI gprsHri = (GprsHRI)hri;
-                  tunnelConfig = (TunnelConfig)(new Object(
+                  tunnelConfig = new TunnelConfig(
                      gprsHri.getApn(), "net.rim.conrec", gprsHri.getQos(), gprsHri.getApnUsername(), gprsHri.getApnPassword(), null
-                  ));
+                  );
                }
                break;
             default:
-               tunnelConfig = (TunnelConfig)(new Object("", "net.rim.conrec", null));
+               tunnelConfig = new TunnelConfig("", "net.rim.conrec", null);
          }
 
          TunnelApnList tunnelApnList = TunnelApnListFactory.getTunnelApnListFactory().createTunnelApnList();

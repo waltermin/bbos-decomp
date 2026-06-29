@@ -23,7 +23,7 @@ class BluetoothSerialPortGPSProvider extends LocationProvider implements GlobalE
    }
 
    @Override
-   public Location getLocation(int timeout) throws LocationException {
+   public Location getLocation(int timeout) throws InterruptedException, LocationException {
       LocationProvider.checkSecurity(TraceBack.getCallingModule(0), "lapi_location");
       if (timeout != 0 && timeout >= -1) {
          if (timeout == -1) {
@@ -40,7 +40,7 @@ class BluetoothSerialPortGPSProvider extends LocationProvider implements GlobalE
             throw new LocationException();
          } else if (super._reset) {
             super._reset = false;
-            throw new Object();
+            throw new InterruptedException();
          } else {
             Location location = this._gpsRegistry.getLocation();
             this._gpsRegistry.removeGPSConsumer(Process.currentProcess().getProcessId());
@@ -53,7 +53,7 @@ class BluetoothSerialPortGPSProvider extends LocationProvider implements GlobalE
             }
          }
       } else {
-         throw new Object("Invalid value of timeout parameter");
+         throw new IllegalArgumentException("Invalid value of timeout parameter");
       }
    }
 
@@ -93,7 +93,7 @@ class BluetoothSerialPortGPSProvider extends LocationProvider implements GlobalE
                case 0:
             }
          } else {
-            throw new Object("Illegal value of interval, timeout or maxAge passed in");
+            throw new IllegalArgumentException("Illegal value of interval, timeout or maxAge passed in");
          }
       }
    }

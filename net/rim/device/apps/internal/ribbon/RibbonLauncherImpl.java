@@ -104,7 +104,7 @@ final class RibbonLauncherImpl
    private boolean _compressedBanners = Display.getHeight() < 160;
    private boolean _hotKeysDisabled;
    HierarchyManager _hierarchyManager;
-   private ClickAndHoldKeyListener _clickAndHoldKeyListener = (ClickAndHoldKeyListener)(new Object(null));
+   private ClickAndHoldKeyListener _clickAndHoldKeyListener = new ClickAndHoldKeyListener(null);
    private Hashtable _homeScreenFactories;
    RibbonGlobalKeyListenerImpl _unhandledGlobalKeyListener = new RibbonGlobalKeyListenerImpl();
    private boolean _isReducedKeyboard = InternalServices.isReducedFormFactor();
@@ -155,8 +155,8 @@ final class RibbonLauncherImpl
          return null;
       }
 
-      ContextObject context = (ContextObject)(new Object());
-      ContextObject.put(context, 265370977573465368L, new Object(3476778912330022912L));
+      ContextObject context = new ContextObject();
+      ContextObject.put(context, 265370977573465368L, new Long(3476778912330022912L));
       return attributes.getLayout(context);
    }
 
@@ -265,7 +265,7 @@ final class RibbonLauncherImpl
                cause = causeArray[0];
             }
 
-            Dialog.ask(0, ((StringBuffer)(new Object())).append(RibbonResources.getString(54)).append(cause).toString());
+            Dialog.ask(0, RibbonResources.getString(54) + cause);
             return true;
          case 1279740999:
             EventLogger.startEventLogViewer();
@@ -367,7 +367,7 @@ final class RibbonLauncherImpl
             }
 
             if (this._imSwitchScreen == null) {
-               this._appSwitchScreen = (ApplicationSwitcher)(new Object(this._appSwitchEnd, data1));
+               this._appSwitchScreen = new ApplicationSwitcher(this._appSwitchEnd, data1);
                return;
             }
          } else if (guid == -8249535590121003989L) {
@@ -381,7 +381,7 @@ final class RibbonLauncherImpl
                if (IMSwitcherOption.getInstance().getState() != 3) {
                   Locale[] imLocales = Utils.getAvailableInputLocales(true);
                   if (imLocales.length > 1 && InputContext.getInstance().isIMSwitchAllowed()) {
-                     this._imSwitchScreen = (InputMethodSwitcher)(new Object(imLocales, Utils.getInputLocalesDisplayNames(imLocales), false, this._appSwitchEnd));
+                     this._imSwitchScreen = new InputMethodSwitcher(imLocales, Utils.getInputLocalesDisplayNames(imLocales), false, this._appSwitchEnd);
                   } else {
                      applyLock = true;
                   }
@@ -395,7 +395,7 @@ final class RibbonLauncherImpl
                }
             }
          } else if (guid == 9056933960126321432L) {
-            if (object0 instanceof Object) {
+            if (object0 instanceof String) {
                TraceBackDialog.show(this._app, (String)object0, object1);
                return;
             }
@@ -493,7 +493,7 @@ final class RibbonLauncherImpl
             String strBounds = PMEGraphics.showBounds() ? "Hide Bounds" : "Show Bounds";
             String strClip = PMEGraphics.showClip() ? "Hide Clip" : "Show Clip";
             String strStats = PMEGraphics.logStats() ? "Disable Stats" : "Enable Stats";
-            String[] choices = new Object[]{strDisable, strBounds, strClip, strStats, "Cancel"};
+            String[] choices = new String[]{strDisable, strBounds, strClip, strStats, "Cancel"};
             int[] values = new int[]{
                1,
                3,
@@ -516,7 +516,7 @@ final class RibbonLauncherImpl
                1835036,
                -1939865088
             };
-            Dialog dialogOptions = (Dialog)(new Object("PMEGraphics Options", choices, values, 0, null));
+            Dialog dialogOptions = new Dialog("PMEGraphics Options", choices, values, 0, null);
             int choice = dialogOptions.doModal();
             PMEGraphics.toggleRegOption(choice);
             break;
@@ -570,7 +570,7 @@ final class RibbonLauncherImpl
          BackgroundImage image = this._ribbonOptions.getBackgroundImage(ThemeManager.getActiveName());
          if (image != null) {
             String imageName = image._name;
-            if (imageName != null && imageName.startsWith(((StringBuffer)(new Object())).append('/').append(rootName).toString())) {
+            if (imageName != null && imageName.startsWith('/' + rootName)) {
                this.updateBackgroundImage();
             }
          }
@@ -607,7 +607,7 @@ final class RibbonLauncherImpl
 
    @Override
    public final void addRibbonListener(RibbonListener listener) {
-      this._ribbonListeners.addElement(new Object(listener));
+      this._ribbonListeners.addElement(new WeakReference(listener));
    }
 
    @Override
@@ -623,7 +623,7 @@ final class RibbonLauncherImpl
 
    @Override
    public final void registerAction(String name, EntryPointDescriptor descriptor) {
-      System.out.println(((StringBuffer)(new Object("HomeScreen registerAction "))).append(name).toString());
+      System.out.println("HomeScreen registerAction " + name);
       ApplicationEntry application = new ApplicationEntry(descriptor, this._hotKeysDisabled);
       synchronized (this._app.getAppEventLock()) {
          this.completeMoveApplication(false);
@@ -634,7 +634,7 @@ final class RibbonLauncherImpl
 
    @Override
    public final void unregisterAction(String name) {
-      System.out.println(((StringBuffer)(new Object("HomeScreen unRegisterAction "))).append(name).toString());
+      System.out.println("HomeScreen unRegisterAction " + name);
       synchronized (this._app.getAppEventLock()) {
          this.completeMoveApplication(false);
          if (this._hierarchyManager.unregisterTemporaryApplication(name)) {
@@ -749,19 +749,19 @@ final class RibbonLauncherImpl
       if (object == null && theme != null) {
          ThemeAttributeSet attributes = theme.getAttributeSet(Tag.create("homescreen"));
          if (attributes != null) {
-            Bitmap bitmap = (Bitmap)(new Object(Display.getWidth(), Display.getHeight()));
-            Graphics g2 = (Graphics)(new Object(bitmap));
+            Bitmap bitmap = new Bitmap(Display.getWidth(), Display.getHeight());
+            Graphics g2 = new Graphics(bitmap);
             Background background = attributes.getBackground();
             if (background != null) {
-               background.draw(g2, (XYRect)(new Object(0, 0, Display.getWidth(), Display.getHeight())));
+               background.draw(g2, new XYRect(0, 0, Display.getWidth(), Display.getHeight()));
                object = bitmap;
             }
          }
       }
 
-      if (object instanceof Object) {
+      if (object instanceof String) {
          imageName = (String)object;
-         object = FileUtilities.getEncodedImage(((StringBuffer)(new Object("file://"))).append(imageName).toString());
+         object = FileUtilities.getEncodedImage("file://" + imageName);
          if (object == null) {
             this.setBackgroundImage(null, null, false);
             return;
@@ -772,7 +772,7 @@ final class RibbonLauncherImpl
          }
       }
 
-      if (object instanceof Object) {
+      if (object instanceof EncodedImage) {
          if (params != null && params.length >= 4) {
             int scaleFP = params[0] == null ? 0 : Integer.parseInt(params[0]);
             int rotation = params[1] == null ? 0 : Integer.parseInt(params[1]);
@@ -781,14 +781,14 @@ final class RibbonLauncherImpl
             EncodedImage image = (EncodedImage)object;
             int screenWidth = Display.getWidth();
             int screenHeight = Display.getHeight();
-            Bitmap newBitmap = (Bitmap)(new Object(screenWidth, screenHeight));
+            Bitmap newBitmap = new Bitmap(screenWidth, screenHeight);
             synchronized (Application.getEventLock()) {
                RibbonLauncherImpl$ZoomBitmapFieldExt zoom = new RibbonLauncherImpl$ZoomBitmapFieldExt(image, 1, 36);
                RibbonLauncherImpl$DummyScreen screen = new RibbonLauncherImpl$DummyScreen();
                screen.add(zoom);
                screen.doLayoutHack();
                zoom.setScale(scaleFP, topX, topY, rotation);
-               Graphics graphics = (Graphics)(new Object(newBitmap));
+               Graphics graphics = new Graphics(newBitmap);
                zoom.paintHack(graphics);
             }
 
@@ -801,13 +801,13 @@ final class RibbonLauncherImpl
                object = image.getBitmap();
             } else {
                synchronized (Application.getEventLock()) {
-                  Bitmap newBitmap = (Bitmap)(new Object(width, height));
+                  Bitmap newBitmap = new Bitmap(width, height);
                   RibbonLauncherImpl$ZoomBitmapFieldExt zoom = new RibbonLauncherImpl$ZoomBitmapFieldExt(image, 1, 36);
                   RibbonLauncherImpl$DummyScreen screen = new RibbonLauncherImpl$DummyScreen();
                   screen.add(zoom);
                   zoom.scaleToFit(width, height, true, 0, 0, 0);
                   screen.doLayoutHack();
-                  Graphics graphics = (Graphics)(new Object(newBitmap));
+                  Graphics graphics = new Graphics(newBitmap);
                   zoom.paintHack(graphics);
                   object = newBitmap;
                }
@@ -816,7 +816,7 @@ final class RibbonLauncherImpl
       }
 
       Bitmap bitmap = null;
-      if (object instanceof Object) {
+      if (object instanceof Bitmap) {
          bitmap = (Bitmap)object;
       }
 
@@ -853,21 +853,21 @@ final class RibbonLauncherImpl
             layout = new String[]{"Banner?align=title", "AppChooser.GridAppChooser?chooser", "AppDescription?align=bottom"};
          }
 
-         Field[] fields = new Object[layout.length];
+         Field[] fields = new Field[layout.length];
          if (this._applicationIconArea != null) {
-            ((Field)this._applicationIconArea).setFocusListener(null);
+            ((Manager)this._applicationIconArea).setFocusListener(null);
          }
 
          ((RibbonScreenManager)this._ribbonAppScreen.getDelegate())._noLayouts = true;
-         Hashtable[] layoutArgs = new Object[layout.length];
+         Hashtable[] layoutArgs = new Hashtable[layout.length];
 
          for (int i = 0; i < layout.length; i++) {
             String layoutInfo = layout[i];
             int index = layoutInfo.indexOf(63);
             String factory = layoutInfo;
-            layoutArgs[i] = (Hashtable)(new Object());
+            layoutArgs[i] = new Hashtable();
             if (index >= 0) {
-               StringTokenizer tokenizer = (StringTokenizer)(new Object(layoutInfo.substring(index + 1), '&'));
+               StringTokenizer tokenizer = new StringTokenizer(layoutInfo.substring(index + 1), '&');
                int count = tokenizer.countTokens();
                factory = layoutInfo.substring(0, index);
 
@@ -896,15 +896,15 @@ final class RibbonLauncherImpl
             }
 
             fields[i] = (Field)((Factory)this._homeScreenFactories.get(factory)).createInstance(factoryArgs);
-            Object var10000 = fields[i];
-            if (fields[i] instanceof Object) {
+            Field var10000 = fields[i];
+            if (fields[i] instanceof RibbonComponentInitializer) {
                ((RibbonComponentInitializer)var10000).initialize(layoutArgs[i], null);
             }
          }
 
          this._ribbonAppScreen.setHomeScreenContents(layoutArgs, fields);
          this.updateBackgroundImage();
-         ((Field)this._applicationIconArea).setFocusListener(this);
+         ((Manager)this._applicationIconArea).setFocusListener(this);
          this.eventOccurred(-4394903006263251010L, 0, 0, null, null);
       }
    }
@@ -1004,7 +1004,7 @@ final class RibbonLauncherImpl
 
    private final void initializeHomeScreen() {
       if (this._applicationIconArea != null) {
-         ((Field)this._applicationIconArea).setFocusListener(null);
+         ((Manager)this._applicationIconArea).setFocusListener(null);
          this._applicationIconArea = null;
       }
 
@@ -1037,7 +1037,7 @@ final class RibbonLauncherImpl
             Object listenerObject = wr.get();
             if (listenerObject == null) {
                this._ribbonListeners.removeElementAt(i);
-            } else if (listenerObject instanceof Object) {
+            } else if (listenerObject instanceof RibbonKeyListener) {
                RibbonKeyListener listener = (RibbonKeyListener)listenerObject;
 
                try {
@@ -1109,7 +1109,7 @@ final class RibbonLauncherImpl
       EventLogger.register(-6210296463828503575L, "net.rim.ribbon", 2);
       _instanceImpl = this;
       this._ribbonOptions = RibbonOptions.getOptions();
-      this._ribbonListeners = (Vector)(new Object());
+      this._ribbonListeners = new Vector();
       this._app = UiApplication.getUiApplication();
       this._app.addGlobalEventListener(this);
       ConvenienceKeyOptionsImpl.register();
@@ -1118,7 +1118,7 @@ final class RibbonLauncherImpl
       this._hierarchyManager = HierarchyManager.getInstance();
       this._ribbonAppScreen = new HomeScreen(this, this._compressedBanners);
       this._ribbonAppScreen.addKeyListener(this);
-      this._homeScreenFactories = (Hashtable)(new Object());
+      this._homeScreenFactories = new Hashtable();
       this._homeScreenFactories.put("Banner", new RibbonLauncherImpl$1(this));
       this._homeScreenFactories.put("AppChooser", new RibbonLauncherImpl$2(this));
       this._homeScreenFactories.put("AppDescription", new RibbonLauncherImpl$3(this));
@@ -1132,7 +1132,7 @@ final class RibbonLauncherImpl
       }
 
       ContentProtectionIndicator.initialize();
-      this._backdoor = (BackdoorKeyProcessor)(new Object(true, this));
+      this._backdoor = new BackdoorKeyProcessor(true, this);
       this._app.addFileSystemListener(this);
       this._app.addFileSystemJournalListener(this);
       this._myStoredUSN = FileSystemJournal.getNextUSN();
@@ -1165,32 +1165,15 @@ final class RibbonLauncherImpl
          } else {
             ApplicationEntry movingEntry = this._applicationIconArea.getMovingApplication();
             if (movingEntry == null) {
-               throw new Object("Moving entry not found with move in progress");
+               throw new NullPointerException("Moving entry not found with move in progress");
             }
 
             if (!(selectedEntry.getDescriptor() instanceof FolderEntryPointDescriptor) || movingEntry.getDescriptor() instanceof FolderEntryPointDescriptor) {
-               text = ((StringBuffer)(new Object()))
-                  .append(text)
-                  .append(RibbonResources.getString(20))
-                  .append(' ')
-                  .append(selectedEntry.getDescription(this._hotKeysDisabled))
-                  .toString();
+               text = text + RibbonResources.getString(20) + ' ' + selectedEntry.getDescription(this._hotKeysDisabled);
             } else if (selectedEntry.getUniqueName().length() == 0) {
-               text = ((StringBuffer)(new Object()))
-                  .append(text)
-                  .append(RibbonResources.getString(21))
-                  .append(' ')
-                  .append(selectedEntry.getDescription(this._hotKeysDisabled))
-                  .toString();
+               text = text + RibbonResources.getString(21) + ' ' + selectedEntry.getDescription(this._hotKeysDisabled);
             } else {
-               text = ((StringBuffer)(new Object()))
-                  .append(text)
-                  .append(RibbonResources.getString(21))
-                  .append(' ')
-                  .append(RibbonResources.getString(173))
-                  .append(' ')
-                  .append(selectedEntry.getDescription(this._hotKeysDisabled))
-                  .toString();
+               text = text + RibbonResources.getString(21) + ' ' + RibbonResources.getString(173) + ' ' + selectedEntry.getDescription(this._hotKeysDisabled);
             }
          }
 

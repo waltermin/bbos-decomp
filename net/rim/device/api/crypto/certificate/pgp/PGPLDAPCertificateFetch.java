@@ -9,7 +9,7 @@ public class PGPLDAPCertificateFetch extends LDAPCertificateFetch {
    @Override
    protected void addAttributesAndFilters(LDAPQuery query, String[] emailAddresses) {
       query.addAttribute(PGPCertificate.PGP_KEY);
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       int numEmailAddresses = emailAddresses != null ? emailAddresses.length : 0;
       if (numEmailAddresses > 0) {
          buffer.append('(').append('|');
@@ -26,7 +26,7 @@ public class PGPLDAPCertificateFetch extends LDAPCertificateFetch {
    @Override
    protected void addAttributesAndFilters(LDAPQuery query, Object[] keyIDs) {
       query.addAttribute(PGPCertificate.PGP_KEY);
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       int numKeyIDs = keyIDs != null ? keyIDs.length : 0;
       if (numKeyIDs > 0) {
          buffer.append('(').append('|');
@@ -63,7 +63,7 @@ public class PGPLDAPCertificateFetch extends LDAPCertificateFetch {
       // 01: ifnull 08
       // 04: aload 2
       // 05: ifnonnull 10
-      // 08: new java/lang/Object
+      // 08: new java/lang/IllegalArgumentException
       // 0b: dup
       // 0c: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 0f: athrow
@@ -87,11 +87,11 @@ public class PGPLDAPCertificateFetch extends LDAPCertificateFetch {
       // 34: aload 3
       // 35: iload 5
       // 37: invokeinterface net/rim/device/api/ldap/LDAPAttribute.getValue (I)Ljava/lang/Object; 2
-      // 3c: checkcast java/lang/Object
+      // 3c: checkcast java/lang/String
       // 3f: astore 6
       // 41: new net/rim/device/api/crypto/pgp/PGPArmorDecoder
       // 44: dup
-      // 45: new java/lang/Object
+      // 45: new java/io/ByteArrayInputStream
       // 48: dup
       // 49: aload 6
       // 4b: invokevirtual java/lang/String.getBytes ()[B
@@ -132,7 +132,7 @@ public class PGPLDAPCertificateFetch extends LDAPCertificateFetch {
       int i = b & 255;
       String hexString = Integer.toHexString(i);
       if (i < 16) {
-         hexString = ((StringBuffer)(new Object("0"))).append(hexString).toString();
+         hexString = "0" + hexString;
       }
 
       return hexString.toUpperCase();

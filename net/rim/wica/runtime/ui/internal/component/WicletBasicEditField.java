@@ -41,7 +41,7 @@ public class WicletBasicEditField extends ActiveAutoTextEditField implements Mul
    private void parseLiterals(String format) {
       if (format != null) {
          int litFound = 0;
-         this._literals = (IntIntHashtable)(new Object());
+         this._literals = new IntIntHashtable();
          int length = format.length();
 
          for (int i = 0; i < length; i++) {

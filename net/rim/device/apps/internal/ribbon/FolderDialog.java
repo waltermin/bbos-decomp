@@ -7,6 +7,7 @@ import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.DialogFieldManager;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.apps.api.ui.CommonResources;
@@ -95,7 +96,7 @@ final class FolderDialog extends Dialog implements RibbonResource, FocusChangeLi
 
       _instance.setMode(0);
       _instance.setCustomImageName(null);
-      String name = ((StringBuffer)(new Object())).append(RibbonResources.getString(169)).append(_folderSuffix).toString();
+      String name = RibbonResources.getString(169) + _folderSuffix;
       _instance.setFolderName(name);
       _instance.setFolderDescription(name);
       _instance.loadImages();
@@ -125,24 +126,24 @@ final class FolderDialog extends Dialog implements RibbonResource, FocusChangeLi
    private FolderDialog() {
       super("", null, null, 0, null, 35184372088832L);
       _folderSuffix = 1;
-      this._labelTitle = (RichTextField)(new Object("", 36028797086072832L));
+      this._labelTitle = new RichTextField("", 36028797086072832L);
       DialogFieldManager dfm = (DialogFieldManager)this.getDelegate();
       dfm.setMessage(this._labelTitle);
-      this.add((Field)(new Object()));
-      this._labelFolder = (LabelField)(new Object(RibbonResources.getString(170)));
-      this._editFolder = (EditField)(new Object("", "", 1000000, 4503602043289600L));
+      this.add(new SeparatorField());
+      this._labelFolder = new LabelField(RibbonResources.getString(170));
+      this._editFolder = new EditField("", "", 1000000, 4503602043289600L);
       this._editFolder.setPadding(0, 15, 0, 0);
       this._editFolder.setFocusListener(this);
-      HorizontalFieldManager editManager = (HorizontalFieldManager)(new Object(4294967296L));
+      HorizontalFieldManager editManager = new HorizontalFieldManager(4294967296L);
       editManager.add(this._labelFolder);
       editManager.add(this._editFolder);
       this.add(editManager);
 
       label20:
       try {
-         this._labelIcon = (LabelField)(new Object(RibbonResources.getString(171)));
+         this._labelIcon = new LabelField(RibbonResources.getString(171));
          this._filmstripFolder = new FilmstripField(18014411394383872L, "file:///store/samples/folder icons/");
-         HorizontalFieldManager folderManager = (HorizontalFieldManager)(new Object(4294967296L));
+         HorizontalFieldManager folderManager = new HorizontalFieldManager(4294967296L);
          this._labelIcon.setPadding(0, 15, 0, 0);
          folderManager.add(this._labelIcon);
          folderManager.add(this._filmstripFolder);
@@ -151,11 +152,11 @@ final class FolderDialog extends Dialog implements RibbonResource, FocusChangeLi
          break label20;
       }
 
-      this._buttonAdd = (ButtonField)(new Object(CommonResources.getString(9045)));
+      this._buttonAdd = new ButtonField(CommonResources.getString(9045));
       this._buttonAdd.setChangeListener(this);
-      this._buttonCancel = (ButtonField)(new Object(CommonResources.getString(9042)));
+      this._buttonCancel = new ButtonField(CommonResources.getString(9042));
       this._buttonCancel.setChangeListener(this);
-      HorizontalFieldManager buttonManager = (HorizontalFieldManager)(new Object(12884901888L));
+      HorizontalFieldManager buttonManager = new HorizontalFieldManager(12884901888L);
       buttonManager.add(this._buttonAdd);
       buttonManager.add(this._buttonCancel);
       this.add(buttonManager);

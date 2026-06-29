@@ -5,9 +5,8 @@ import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.i18n.ResourceBundleFamily;
 import net.rim.device.api.itpolicy.ITPolicy;
 import net.rim.device.api.system.WLAN;
-import net.rim.device.api.ui.Field;
-import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.Factory;
@@ -16,6 +15,7 @@ import net.rim.device.apps.api.ribbon.GlobalFactoryRepository;
 import net.rim.device.apps.api.ribbon.ImageProviderRibbonComponent;
 import net.rim.device.apps.api.ribbon.RibbonComponent;
 import net.rim.device.apps.api.ribbon.RibbonComponentInitializer;
+import net.rim.device.apps.api.ui.VerbMenuItem;
 import net.rim.device.internal.bluetooth.BluetoothME;
 
 final class ServicesStatusScreen extends MainScreen {
@@ -47,19 +47,19 @@ final class ServicesStatusScreen extends MainScreen {
 
       this._bluetoothEnabled = BluetoothME.isSupported() && !ITPolicy.getBoolean(34, 1, false);
       this._data = new ServicesStatusData(this._wifiEnabled);
-      this.addMenuItem((MenuItem)(new Object(new MobileNetworkOptionsVerb(), 310)));
+      this.addMenuItem(new VerbMenuItem(new MobileNetworkOptionsVerb(), 310));
       if (this._wifiEnabled) {
-         this.addMenuItem((MenuItem)(new Object(new WiFiOptionsVerb(), 320)));
+         this.addMenuItem(new VerbMenuItem(new WiFiOptionsVerb(), 320));
       }
 
       if (this._bluetoothEnabled) {
-         this.addMenuItem((MenuItem)(new Object(new BluetoothOptionsVerb(), 330)));
+         this.addMenuItem(new VerbMenuItem(new BluetoothOptionsVerb(), 330));
       }
 
       FactoryRepository repos = GlobalFactoryRepository.getFactoryRepository(-4018062520840731194L);
       Factory factory = repos.getFactory("SignalLevel");
       ImageProviderRibbonComponent wirelessSignalComponent = (ImageProviderRibbonComponent)factory.createInstance(null);
-      Hashtable signalParams = (Hashtable)(new Object());
+      Hashtable signalParams = new Hashtable();
       signalParams.put("xOfs", "10");
       signalParams.put("yOfs", "2");
       signalParams.put("align", "left");
@@ -76,45 +76,45 @@ final class ServicesStatusScreen extends MainScreen {
          ((RibbonComponent)wlanSignalComponent).setChangeListener(this._wifiSignal);
       }
 
-      this.add((Field)(new Object(this._rbf.getString(15), 0)));
-      this._voiceStatus = (LabelField)(new Object("", 18014398509481984L));
+      this.add(new LabelField(this._rbf.getString(15), 0));
+      this._voiceStatus = new LabelField("", 18014398509481984L);
       this.add(this._voiceStatus);
-      this._voiceConnection = (LabelField)(new Object("", 18014398509481984L));
+      this._voiceConnection = new LabelField("", 18014398509481984L);
       this.add(this._voiceConnection);
-      this.add((Field)(new Object(this._rbf.getString(16), 0)));
-      this._bisConnection = (LabelField)(new Object("", 18014398509481984L));
+      this.add(new LabelField(this._rbf.getString(16), 0));
+      this._bisConnection = new LabelField("", 18014398509481984L);
       this.add(this._bisConnection);
-      this.add((Field)(new Object(this._rbf.getString(17), 0)));
-      this._besConnection = (LabelField)(new Object("", 18014398509481984L));
+      this.add(new LabelField(this._rbf.getString(17), 0));
+      this._besConnection = new LabelField("", 18014398509481984L);
       this.add(this._besConnection);
-      this.add((Field)(new Object()));
-      HorizontalFieldManager hm = (HorizontalFieldManager)(new Object());
-      hm.add((Field)(new Object(this._rbf.getString(2), 0)));
+      this.add(new SeparatorField());
+      HorizontalFieldManager hm = new HorizontalFieldManager();
+      hm.add(new LabelField(this._rbf.getString(2), 0));
       hm.add(this._wirelessSignal);
       this.add(hm);
-      this._coverage = (LabelField)(new Object("", 18014398509481984L));
+      this._coverage = new LabelField("", 18014398509481984L);
       this.add(this._coverage);
-      this.add((Field)(new Object(this._rbf.getString(20), 0)));
-      this._networkProvider = (LabelField)(new Object("", 18014398509481984L));
+      this.add(new LabelField(this._rbf.getString(20), 0));
+      this._networkProvider = new LabelField("", 18014398509481984L);
       this.add(this._networkProvider);
       if (this._wifiEnabled) {
-         this.add((Field)(new Object()));
-         hm = (HorizontalFieldManager)(new Object());
-         hm.add((Field)(new Object(this._rbf.getString(21), 0)));
+         this.add(new SeparatorField());
+         hm = new HorizontalFieldManager();
+         hm.add(new LabelField(this._rbf.getString(21), 0));
          hm.add(this._wifiSignal);
          this.add(hm);
-         this._activeProfile = (LabelField)(new Object("", 18014398509481984L));
+         this._activeProfile = new LabelField("", 18014398509481984L);
          this.add(this._activeProfile);
-         this._wifiSSID = (LabelField)(new Object("", 18014398509481984L));
+         this._wifiSSID = new LabelField("", 18014398509481984L);
          this.add(this._wifiSSID);
-         this._wifiType = (LabelField)(new Object("", 18014398509481984L));
+         this._wifiType = new LabelField("", 18014398509481984L);
          this.add(this._wifiType);
       }
 
       if (this._bluetoothEnabled) {
-         this.add((Field)(new Object()));
-         this.add((Field)(new Object(this._rbf.getString(34), 0)));
-         this._bluetoothStatus = (LabelField)(new Object("", 18014398509481984L));
+         this.add(new SeparatorField());
+         this.add(new LabelField(this._rbf.getString(34), 0));
+         this._bluetoothStatus = new LabelField("", 18014398509481984L);
          this.add(this._bluetoothStatus);
       }
 
@@ -129,28 +129,20 @@ final class ServicesStatusScreen extends MainScreen {
       this._data.update();
       String connectionLabel = this._rbf.getString(8);
       String statusLabel = this._rbf.getString(9);
-      this._voiceStatus.setText(((StringBuffer)(new Object())).append('\t').append(statusLabel).append(' ').append(this._data.getVoiceStatus()).toString());
-      this._voiceConnection
-         .setText(((StringBuffer)(new Object())).append('\t').append(connectionLabel).append(' ').append(this._data.getVoiceConnection()).toString());
-      this._bisConnection
-         .setText(((StringBuffer)(new Object())).append('\t').append(connectionLabel).append(' ').append(this._data.getBISConnection()).toString());
-      this._besConnection
-         .setText(((StringBuffer)(new Object())).append('\t').append(connectionLabel).append(' ').append(this._data.getBESConnection()).toString());
-      this._coverage.setText(((StringBuffer)(new Object())).append('\t').append(this._data.getCoverage()).toString());
-      this._networkProvider.setText(((StringBuffer)(new Object())).append('\t').append(this._data.getProviderString()).toString());
+      this._voiceStatus.setText('\t' + statusLabel + ' ' + this._data.getVoiceStatus());
+      this._voiceConnection.setText('\t' + connectionLabel + ' ' + this._data.getVoiceConnection());
+      this._bisConnection.setText('\t' + connectionLabel + ' ' + this._data.getBISConnection());
+      this._besConnection.setText('\t' + connectionLabel + ' ' + this._data.getBESConnection());
+      this._coverage.setText('\t' + this._data.getCoverage());
+      this._networkProvider.setText('\t' + this._data.getProviderString());
       if (this._wifiEnabled) {
-         this._activeProfile
-            .setText(
-               ((StringBuffer)(new Object())).append('\t').append(this._rbf.getString(22)).append(' ').append(this._data.getWiFiActiveProfile()).toString()
-            );
-         this._wifiSSID
-            .setText(((StringBuffer)(new Object())).append('\t').append(this._rbf.getString(23)).append(' ').append(this._data.getWiFiSSID()).toString());
-         this._wifiType
-            .setText(((StringBuffer)(new Object())).append('\t').append(this._rbf.getString(29)).append(' ').append(this._data.getWiFiType()).toString());
+         this._activeProfile.setText('\t' + this._rbf.getString(22) + ' ' + this._data.getWiFiActiveProfile());
+         this._wifiSSID.setText('\t' + this._rbf.getString(23) + ' ' + this._data.getWiFiSSID());
+         this._wifiType.setText('\t' + this._rbf.getString(29) + ' ' + this._data.getWiFiType());
       }
 
       if (this._bluetoothEnabled) {
-         this._bluetoothStatus.setText(((StringBuffer)(new Object())).append('\t').append(this._data.getBluetoothStatus()).toString());
+         this._bluetoothStatus.setText('\t' + this._data.getBluetoothStatus());
       }
    }
 }

@@ -1,14 +1,17 @@
 package net.rim.device.internal.crypto.pgp;
 
+import java.io.EOFException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
+import net.rim.device.api.crypto.CryptoUnsupportedOperationException;
 import net.rim.device.api.crypto.SymmetricKey;
 import net.rim.device.api.crypto.SymmetricKeyFactory;
 import net.rim.device.api.crypto.certificate.Certificate;
+import net.rim.device.api.crypto.certificate.CertificateKeyStoreIndex;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
-import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.api.crypto.pgp.PGPEncodingException;
 import net.rim.device.api.crypto.pgp.PGPPseudoRandomSource;
 import net.rim.device.api.i18n.ResourceBundle;
@@ -52,7 +55,7 @@ public final class PGPUtilities {
          out.write(buffer, offset, bytelength);
          return bytelength + 2;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -60,7 +63,7 @@ public final class PGPUtilities {
       return readMPI(input, null);
    }
 
-   public static final byte[] readMPI(InputStream input, byte[] encodedLength) {
+   public static final byte[] readMPI(InputStream input, byte[] encodedLength) throws IOException {
       int length;
       if (encodedLength == null) {
          length = input.read();
@@ -78,12 +81,12 @@ public final class PGPUtilities {
       }
 
       if (length < 0) {
-         throw new Object();
+         throw new IOException();
       } else {
          byte[] result = new byte[length];
          length = input.read(result);
          if (length != result.length) {
-            throw new Object();
+            throw new IOException();
          } else {
             return result;
          }
@@ -102,7 +105,7 @@ public final class PGPUtilities {
       if (tagVersion != 3) {
          if (tagVersion == 4) {
             if (tag > 63) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             out.write(192 | tag);
@@ -119,11 +122,11 @@ public final class PGPUtilities {
                out.write(length);
             }
          } else {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } else {
          if (tag > 15) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          if (length >> 16 != 0) {
@@ -206,7 +209,7 @@ public final class PGPUtilities {
                }
 
                if (templength < 0) {
-                  throw new Object();
+                  throw new IOException();
                }
 
                Array.resize(buffer, length + templength);
@@ -274,7 +277,7 @@ public final class PGPUtilities {
       }
    }
 
-   public static final int digestStringToConstant(String digest) {
+   public static final int digestStringToConstant(String digest) throws CryptoUnsupportedOperationException {
       if (digest.equals("SHA1")) {
          return 2;
       } else if (digest.equals("RIPEMD160")) {
@@ -290,17 +293,17 @@ public final class PGPUtilities {
       } else if (digest.equals("SHA512")) {
          return 10;
       } else {
-         throw new Object(((StringBuffer)(new Object("Hash:"))).append(digest).toString());
+         throw new CryptoUnsupportedOperationException("Hash:" + digest);
       }
    }
 
-   public static final String digestConstantToString(int hashAlgorithm) {
+   public static final String digestConstantToString(int hashAlgorithm) throws CryptoUnsupportedOperationException {
       switch (hashAlgorithm) {
          case 0:
          case 4:
          case 6:
          case 7:
-            throw new Object(((StringBuffer)(new Object("Hash:"))).append(hashAlgorithm).toString());
+            throw new CryptoUnsupportedOperationException("Hash:" + hashAlgorithm);
          case 1:
             return "MD5";
          case 2:
@@ -319,13 +322,13 @@ public final class PGPUtilities {
       }
    }
 
-   public static final String encryptionConstantToString(int symmetricAlgorithm) {
+   public static final String encryptionConstantToString(int symmetricAlgorithm) throws CryptoUnsupportedOperationException {
       switch (symmetricAlgorithm) {
          case 1:
          case 4:
          case 5:
          case 6:
-            throw new Object(((StringBuffer)(new Object("Sym:"))).append(symmetricAlgorithm).toString());
+            throw new CryptoUnsupportedOperationException("Sym:" + symmetricAlgorithm);
          case 2:
          default:
             return "TripleDES";
@@ -340,7 +343,7 @@ public final class PGPUtilities {
       }
    }
 
-   public static final String publicKeyAlgorithmConstantToString(int publicKeyAlgorithm) {
+   public static final String publicKeyAlgorithmConstantToString(int publicKeyAlgorithm) throws CryptoUnsupportedOperationException {
       switch (publicKeyAlgorithm) {
          case 1:
             return "RSA";
@@ -361,11 +364,11 @@ public final class PGPUtilities {
          case 21:
             return "DH";
          default:
-            throw new Object(((StringBuffer)(new Object("Pub:"))).append(publicKeyAlgorithm).toString());
+            throw new CryptoUnsupportedOperationException("Pub:" + publicKeyAlgorithm);
       }
    }
 
-   public static final SymmetricKey getSessionKey(int algorithm, PGPPseudoRandomSource randomSource) {
+   public static final SymmetricKey getSessionKey(int algorithm, PGPPseudoRandomSource randomSource) throws CryptoUnsupportedOperationException {
       String algorithmString = encryptionConstantToString(algorithm);
       byte[] sessionKey;
       switch (algorithm) {
@@ -373,7 +376,7 @@ public final class PGPUtilities {
          case 4:
          case 5:
          case 6:
-            throw new Object(((StringBuffer)(new Object("Sym:"))).append(algorithm).toString());
+            throw new CryptoUnsupportedOperationException("Sym:" + algorithm);
          case 2:
          case 8:
             sessionKey = new byte[24];
@@ -400,7 +403,7 @@ public final class PGPUtilities {
          time += data[offset] & 0xFF;
          return time * 1000;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -469,7 +472,7 @@ public final class PGPUtilities {
       }
 
       if (!keyStore.existsIndex(-2038609988711824737L)) {
-         keyStore.addIndex((KeyStoreIndex)(new Object()));
+         keyStore.addIndex(new CertificateKeyStoreIndex());
       }
 
       Enumeration enumeration = keyStore.elements(-2038609988711824737L, certificate);
@@ -485,7 +488,7 @@ public final class PGPUtilities {
    }
 
    public static final String binaryToHexASCIIString(byte[] byteArray) {
-      StringBuffer hexASCIIStringBuffer = (StringBuffer)(new Object());
+      StringBuffer hexASCIIStringBuffer = new StringBuffer();
       hexASCIIStringBuffer.append('0').append('x');
       int byteArrayLength = byteArray.length;
 
@@ -500,7 +503,7 @@ public final class PGPUtilities {
    private static final char binaryByteToHexASCII(byte binaryByte) {
       switch (binaryByte) {
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          default:
             return '0';
@@ -616,14 +619,14 @@ public final class PGPUtilities {
          case 102:
             return 15;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
-   private static final int nextInt(InputStream input) {
+   private static final int nextInt(InputStream input) throws EOFException {
       int next = input.read();
       if (next == -1) {
-         throw new Object();
+         throw new EOFException();
       } else {
          return next;
       }

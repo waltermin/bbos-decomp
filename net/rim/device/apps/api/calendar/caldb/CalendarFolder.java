@@ -17,7 +17,7 @@ public class CalendarFolder implements Persistable {
 
    public CalendarFolder(long folderID) {
       if (folderID == 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._folderID = folderID;
@@ -34,7 +34,7 @@ public class CalendarFolder implements Persistable {
    }
 
    public String getFolderNameSuffix() {
-      return this._folderName == null ? "" : ((StringBuffer)(new Object(" - "))).append(this._folderName).toString();
+      return this._folderName == null ? "" : " - " + this._folderName;
    }
 
    public void setFolderName(String folderName) {

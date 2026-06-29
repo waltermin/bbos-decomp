@@ -91,7 +91,7 @@ public final class CertificateServerInfo implements SyncObject, Persistable {
             this._uid ^= authType;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -110,7 +110,7 @@ public final class CertificateServerInfo implements SyncObject, Persistable {
 
    @Override
    public final String toString() {
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       switch (this._type) {
          case 0:
             break;

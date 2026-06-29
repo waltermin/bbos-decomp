@@ -56,7 +56,7 @@ class SSLCryptoSystemProperties extends CryptoSystemProperties implements SSLRec
                return bitLength >= connectionOptions.getMinimumStrongECKeySize();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

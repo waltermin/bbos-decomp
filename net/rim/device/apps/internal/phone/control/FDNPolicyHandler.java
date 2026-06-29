@@ -114,7 +114,7 @@ public final class FDNPolicyHandler implements GlobalEventListener {
    private final void unitTest(String policy) {
       FDNPolicyHandler$BlackWhiteTable table = new FDNPolicyHandler$BlackWhiteTable(this, policy);
       if (!policy.equals(table.toString())) {
-         throw new Object();
+         throw new IllegalStateException();
       }
    }
 

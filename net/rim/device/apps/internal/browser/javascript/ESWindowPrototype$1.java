@@ -15,7 +15,7 @@ class ESWindowPrototype$1 extends JavaScriptHostFunction {
    @Override
    public long run() {
       int count = this.getNumParms();
-      StringBuffer out = (StringBuffer)(new Object());
+      StringBuffer out = new StringBuffer();
 
       for (int i = 0; i < count; i++) {
          try {

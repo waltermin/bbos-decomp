@@ -162,7 +162,7 @@ public class QuickContactItem implements PersistableRIMModel, SyncObject, Encryp
       int position = syncBuffer.getPosition();
       if (type != syncBuffer.getLong(1, true)) {
          syncBuffer.setPosition(position);
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return (char)syncBuffer.getInt(2, true);
       }

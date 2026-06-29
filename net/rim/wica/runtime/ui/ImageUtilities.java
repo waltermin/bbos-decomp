@@ -5,9 +5,9 @@ import net.rim.device.api.ui.Graphics;
 
 public final class ImageUtilities {
    public static final Bitmap paintOverlay(Bitmap background, int x, int y, Bitmap overlay) {
-      Bitmap buffer = (Bitmap)(new Object(background.getWidth(), background.getHeight()));
+      Bitmap buffer = new Bitmap(background.getWidth(), background.getHeight());
       buffer.createAlpha(2);
-      Graphics gfx = (Graphics)(new Object(buffer));
+      Graphics gfx = new Graphics(buffer);
       gfx.setGlobalAlpha(0);
       gfx.clear();
       gfx.setGlobalAlpha(255);

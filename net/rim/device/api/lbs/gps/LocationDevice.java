@@ -14,8 +14,8 @@ public class LocationDevice extends GPSDevice {
          super._friendlyName = this.getString(0);
          super._name = GPS.GPS_SOURCE_DEVICE;
          super._deviceID = super._name;
-      } else if (!(activationParam instanceof Object)) {
-         if (activationParam instanceof Object) {
+      } else if (!(activationParam instanceof BluetoothSerialPortInfo)) {
+         if (activationParam instanceof BluetoothDevice) {
             BluetoothDevice device = (BluetoothDevice)activationParam;
             super._name = device.getName();
             super._friendlyName = device.getFriendlyName();
@@ -30,7 +30,7 @@ public class LocationDevice extends GPSDevice {
 
    @Override
    public boolean equals(Object obj) {
-      if (obj instanceof Object) {
+      if (obj instanceof String) {
          return this._internal ? obj.equals(super._name) : obj.equals(this.getDeviceID());
       } else {
          return obj instanceof LocationDevice ? this.equals(((LocationDevice)obj).getName()) : super.equals(obj);

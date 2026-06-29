@@ -7,5 +7,5 @@ final class SetupWizardOptions$PersistedOptions implements Persistable {
    boolean _offerSetupWizard = true;
    boolean _loggingEnabled = false;
    boolean _wizardCompleted = false;
-   IntHashtable _wizardPageOptions = (IntHashtable)(new Object());
+   IntHashtable _wizardPageOptions = new IntHashtable();
 }

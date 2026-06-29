@@ -13,13 +13,13 @@ public final class ActivationEventQueue extends Thread {
       ApplicationRegistry theApplicationRegistry = ApplicationRegistry.getApplicationRegistry();
       theApplicationRegistry.replace(33491840932755780L, this);
       this._run = true;
-      this._eventQueue = (Vector)(new Object(10));
+      this._eventQueue = new Vector(10);
       this._queueIsEmpty = true;
       this.start();
    }
 
    public final void addEvent(ActivationEventQueueCallback callback, long guid, int data0, int data1, Object object0, Object object1) {
-      Object[] event = new Object[]{callback, new Object(guid), new Object(data0), new Object(data1), object0, object1};
+      Object[] event = new Object[]{callback, new Long(guid), new Integer(data0), new Integer(data1), object0, object1};
       synchronized (this._eventQueue) {
          this._eventQueue.addElement(event);
          if (this._queueIsEmpty) {
@@ -50,7 +50,7 @@ public final class ActivationEventQueue extends Thread {
 
             ActivationEventQueueCallback callback = (ActivationEventQueueCallback)event[0];
             if (callback != null) {
-               callback.onEventFromActivationEventQueue(event[1], event[2], event[3], event[4], event[5]);
+               callback.onEventFromActivationEventQueue((Long)event[1], (Integer)event[2], (Integer)event[3], event[4], event[5]);
                ActivationEventQueueCallback var14 = null;
             }
 

@@ -27,7 +27,7 @@ class DocViewParserObj$DocViewParseNotifyImpl$1 implements Runnable {
          } else if (this.val$displayField != null
             && this.this$1.this$0._displayImageAsSlideshow
             && this.this$1.this$0._coreData.getParsingData().getDocumentType() == 2) {
-            AppsMainScreen displayScreen = (AppsMainScreen)(new Object(2814751914590208L));
+            AppsMainScreen displayScreen = new AppsMainScreen(2814751914590208L);
             displayScreen.setHelp("messages_index");
             displayScreen.add(this.val$displayField);
             UiApplication.getUiApplication().pushModalScreen(displayScreen);

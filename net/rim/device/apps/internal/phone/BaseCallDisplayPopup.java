@@ -1,9 +1,9 @@
 package net.rim.device.apps.internal.phone;
 
 import net.rim.device.api.system.Display;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.ui.container.PopupScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 
 final class BaseCallDisplayPopup extends PopupScreen {
    private static final int _SCALE_FACTOR = 9;
@@ -11,7 +11,7 @@ final class BaseCallDisplayPopup extends PopupScreen {
    private static final int _INSIDE_SPACE = 3;
 
    public BaseCallDisplayPopup() {
-      super((Manager)(new Object()), 0);
+      super(new VerticalFieldManager(), 0);
    }
 
    @Override

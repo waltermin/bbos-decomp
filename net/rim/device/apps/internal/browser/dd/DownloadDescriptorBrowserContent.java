@@ -121,7 +121,7 @@ final class DownloadDescriptorBrowserContent extends BrowserContentImpl {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private static final String cidURLtoContentID(String cidURL) {
-      StringBuffer buffer = (StringBuffer)(new Object(cidURL.length()));
+      StringBuffer buffer = new StringBuffer(cidURL.length());
       buffer.append('<');
       int urlLength = cidURL.length();
 

@@ -17,6 +17,7 @@ import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.ButtonField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.DialogFieldManager;
 import net.rim.device.cldc.util.CalendarExtensions;
@@ -43,7 +44,7 @@ final class AutoOffDialog extends PopupDialog implements Runnable, PopupDialogCl
    private static final long BATTERY_DEAD_OFF_PROMPT_TIME = 5000L;
 
    AutoOffDialog(UiApplication app, int type) {
-      super((Manager)(new Object()), 33554432);
+      super(new DialogFieldManager(), 33554432);
       RadioOffWarningManagerImpl.fire(1);
       this._forceAutoOn = Security.getInstance().isAutoOnRequired();
       Font font = Font.getDefault();
@@ -57,7 +58,7 @@ final class AutoOffDialog extends PopupDialog implements Runnable, PopupDialogCl
       this.setStatusPriority(-2147483647);
       this._onTimeLong = ApplicationManager.getApplicationManager().getNextAlarm(1);
       DialogFieldManager dfm = (DialogFieldManager)this.getDelegate();
-      dfm.setIcon((BitmapField)(new Object(Bitmap.getPredefinedBitmap(2), 51539607552L)));
+      dfm.setIcon(new BitmapField(Bitmap.getPredefinedBitmap(2), 51539607552L));
       this.setDialogType(type);
       this._app = app;
       this._app.addSystemListener(this);
@@ -97,9 +98,9 @@ final class AutoOffDialog extends PopupDialog implements Runnable, PopupDialogCl
          case 1:
          case 3: {
             Calendar calOn = this.getOnTimeCalendar();
-            dfm.addCustomField((Field)(new Object(resources.getString(41), 12884901888L)));
-            dfm.addCustomField((Field)(new Object(DateFormat.getInstance(48).format(calOn), 12884901888L)));
-            dfm.addCustomField((Field)(new Object(DateFormat.getInstance(6).format(calOn), 12884901888L)));
+            dfm.addCustomField(new LabelField(resources.getString(41), 12884901888L));
+            dfm.addCustomField(new LabelField(DateFormat.getInstance(48).format(calOn), 12884901888L));
+            dfm.addCustomField(new LabelField(DateFormat.getInstance(6).format(calOn), 12884901888L));
             this._allowAutoOn = true;
             cancel = true;
             msg = resources.getString(40);
@@ -111,21 +112,16 @@ final class AutoOffDialog extends PopupDialog implements Runnable, PopupDialogCl
             this._allowAutoOn = false;
             cancel = false;
             Calendar calOn = this.getOnTimeCalendar();
-            msg = ((StringBuffer)(new Object()))
-               .append(resources.getString(68))
-               .append(DateFormat.getInstance(48).format(calOn))
-               .append(" ")
-               .append(DateFormat.getInstance(6).format(calOn))
-               .toString();
-            dfm.addCustomField(this._autoOff = (ButtonField)(new Object(resources.getString(77), 12884901888L)));
-            dfm.addCustomField((Field)(new Object(resources.getString(75), 12884901888L)));
+            msg = resources.getString(68) + DateFormat.getInstance(48).format(calOn) + " " + DateFormat.getInstance(6).format(calOn);
+            dfm.addCustomField(this._autoOff = new ButtonField(resources.getString(77), 12884901888L));
+            dfm.addCustomField(new ButtonField(resources.getString(75), 12884901888L));
          }
       }
 
-      dfm.setMessage((RichTextField)(new Object(msg, 36028797018963968L)));
+      dfm.setMessage(new RichTextField(msg, 36028797018963968L));
       if (cancel) {
-         dfm.addCustomField((Field)(new Object("")));
-         this._pressAnyKeyField = (Field)(new Object(resources.getString(42), 36028797019226112L));
+         dfm.addCustomField(new LabelField(""));
+         this._pressAnyKeyField = new RichTextField(resources.getString(42), 36028797019226112L);
          dfm.addCustomField(this._pressAnyKeyField);
       }
 

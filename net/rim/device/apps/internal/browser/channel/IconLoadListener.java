@@ -42,7 +42,7 @@ final class IconLoadListener implements PendingRequestListener, Persistable {
 
          RibbonLauncher ribbon = RibbonLauncher.getInstance();
          if (ribbon != null) {
-            String id = ((StringBuffer)(new Object("channel."))).append(this._channel.getID()).toString();
+            String id = "channel." + this._channel.getID();
             EntryPointDescriptor epd = ribbon.getRegisteredAction(id);
             if (epd instanceof ChannelApplicationEntryPoint) {
                ChannelApplicationEntryPoint aep = (ChannelApplicationEntryPoint)epd;

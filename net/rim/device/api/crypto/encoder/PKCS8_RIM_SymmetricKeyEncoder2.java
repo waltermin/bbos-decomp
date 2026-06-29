@@ -20,7 +20,7 @@ final class PKCS8_RIM_SymmetricKeyEncoder2 extends SymmetricKeyEncoder {
       } else if (key.getAlgorithm().equals("HMAC")) {
          return encodeKey(key, 1536208887);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -35,9 +35,9 @@ final class PKCS8_RIM_SymmetricKeyEncoder2 extends SymmetricKeyEncoder {
          symmetricKeyInfo.writeOctetString(key.getData());
          ASN1OutputStream asn1Stream = new ASN1OutputStream();
          asn1Stream.writeSequence(symmetricKeyInfo);
-         return (EncodedKey)(new Object(asn1Stream.toByteArray(), "PKCS8"));
+         return new EncodedKey(asn1Stream.toByteArray(), "PKCS8");
       } finally {
-         throw new Object();
+         throw new RuntimeException();
       }
    }
 

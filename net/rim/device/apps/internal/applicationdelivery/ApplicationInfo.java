@@ -21,7 +21,7 @@ class ApplicationInfo implements Persistable {
    ApplicationInfo(int moduleCount, long transactionId) {
       this._moduleCount = moduleCount;
       this._transactionId = transactionId;
-      this._modules = (Hashtable)(new Object());
+      this._modules = new Hashtable();
    }
 
    void setApplicationGroupData(byte[] groupData) {
@@ -73,7 +73,7 @@ class ApplicationInfo implements Persistable {
       boolean errorOccured = false;
       if (ApplicationDeliveryTransmissionService._debugMode) {
          int flashFree = Memory.getFlashFree();
-         System.out.println(((StringBuffer)(new Object("APPD - Available Flash before transaction: "))).append(flashFree).toString());
+         System.out.println("APPD - Available Flash before transaction: " + flashFree);
       }
 
       int transactionHandle = CodeModuleManager.beginTransaction();
@@ -132,7 +132,7 @@ class ApplicationInfo implements Persistable {
       int endTransactionResult = CodeModuleManager.endTransaction(transactionHandle);
       if (ApplicationDeliveryTransmissionService._debugMode) {
          int flashFree = Memory.getFlashFree();
-         System.out.println(((StringBuffer)(new Object("APPD - Available Flash after transaction: "))).append(flashFree).toString());
+         System.out.println("APPD - Available Flash after transaction: " + flashFree);
       }
 
       if (endTransactionResult == 13) {

@@ -4,6 +4,7 @@ import java.io.DataInput;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.utility.serialization.BaseConverter;
+import net.rim.device.apps.api.utility.serialization.SerializationException;
 
 class ALPResultConverter extends BaseConverter {
    @Override
@@ -11,8 +12,8 @@ class ALPResultConverter extends BaseConverter {
       return true;
    }
 
-   private static void badInput() {
-      throw new Object("Unknown ALP encoding");
+   private static void badInput() throws SerializationException {
+      throw new SerializationException("Unknown ALP encoding");
    }
 
    private RIMModel parseAddress(LengthEncodedValueDataBuffer in, int amtToRead) {
@@ -83,7 +84,7 @@ class ALPResultConverter extends BaseConverter {
    @Override
    public Object convert(DataInput input, Object contextObject) {
       Result result = null;
-      if (input instanceof Object) {
+      if (input instanceof DataBuffer) {
          DataBuffer dataBuffer = (DataBuffer)input;
          LengthEncodedValueDataBuffer dataBufferTLE = new LengthEncodedValueDataBuffer();
          dataBufferTLE.setData(dataBuffer.getArray(), dataBuffer.getArrayPosition(), dataBuffer.getLength());

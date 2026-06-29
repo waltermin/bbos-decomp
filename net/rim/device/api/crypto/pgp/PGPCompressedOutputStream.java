@@ -1,6 +1,7 @@
 package net.rim.device.api.crypto.pgp;
 
 import java.io.OutputStream;
+import net.rim.device.api.compress.ZLibOutputStream;
 import net.rim.device.api.crypto.Digest;
 import net.rim.device.api.crypto.PrivateKey;
 import net.rim.device.api.io.SharedOutputStream;
@@ -23,7 +24,7 @@ public final class PGPCompressedOutputStream extends PGPOutputStream {
       super(output, tagFormat);
       switch (algorithm) {
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          default:
             this._pgpLengthCounter = new PGPLengthCounterOutputStream(super._out.getOutputStream());
@@ -31,14 +32,14 @@ public final class PGPCompressedOutputStream extends PGPOutputStream {
             break;
          case 1:
             this._pgpLengthCounter = new PGPLengthCounterOutputStream(super._out.getOutputStream());
-            this._internalStream = (OutputStream)(new Object(this._pgpLengthCounter, true, 13));
+            this._internalStream = new ZLibOutputStream(this._pgpLengthCounter, true, 13);
             break;
          case 2:
             this._pgpLengthCounter = new PGPLengthCounterOutputStream(super._out.getOutputStream());
-            this._internalStream = (OutputStream)(new Object(this._pgpLengthCounter, false, 13));
+            this._internalStream = new ZLibOutputStream(this._pgpLengthCounter, false, 13);
       }
 
-      this._sharedInternal = (SharedOutputStream)(new Object(this._internalStream));
+      this._sharedInternal = new SharedOutputStream(this._internalStream);
       this._compressionAlgorithm = algorithm;
       this._compressedLengthWritten = 0;
    }
@@ -49,7 +50,7 @@ public final class PGPCompressedOutputStream extends PGPOutputStream {
          this._internalStream.write(data, offset, length);
          this._compressedLengthWritten += length;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -60,7 +61,7 @@ public final class PGPCompressedOutputStream extends PGPOutputStream {
             super._pgpOut.update(data, offset, length);
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

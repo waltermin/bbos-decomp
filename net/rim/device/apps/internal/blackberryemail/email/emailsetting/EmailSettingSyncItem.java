@@ -41,7 +41,7 @@ public final class EmailSettingSyncItem extends SyncItem {
       _persistentObject = RIMPersistentStore.getPersistentObject(5873493118923882263L);
       synchronized (_persistentObject) {
          if (_persistentObject.getContents() == null) {
-            IntHashtable optionsTable = (IntHashtable)(new Object(1));
+            IntHashtable optionsTable = new IntHashtable(1);
             _persistentObject.setContents(optionsTable, 51);
             optionsTable.put(1, "");
             _persistentObject.commit();

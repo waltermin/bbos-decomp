@@ -4,8 +4,8 @@ import java.util.Vector;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.system.GlobalEventListener;
 import net.rim.device.api.system.SystemListener2;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.CheckboxField;
+import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.internal.i18n.CommonResource;
 import net.rim.device.internal.system.USBPasswordRedirectManager;
 import net.rim.device.internal.system.USBPortInternal$Internal;
@@ -21,7 +21,7 @@ public class SecurityDialog$USBPasswordRedirectDialog extends SimplePasswordDial
    public SecurityDialog$USBPasswordRedirectDialog() {
       super(null, 1, 32, false, 0);
       this.setStatusPriority(-2147483644);
-      this._choices = (Vector)(new Object());
+      this._choices = new Vector();
       this._redirectManager = USBPasswordRedirectManager.getInstance();
       this._app = Application.getApplication();
       this._app.addGlobalEventListener(this);
@@ -68,14 +68,14 @@ public class SecurityDialog$USBPasswordRedirectDialog extends SimplePasswordDial
          var6 = true;
 
          for (int ioe = 0; ioe < this._channels.size(); ioe++) {
-            String usbPeripheralName = USBPortInternal$Internal.getChannelName(this._channels.elementAt(ioe));
+            String usbPeripheralName = USBPortInternal$Internal.getChannelName((Integer)this._channels.elementAt(ioe));
             if (usbPeripheralName.equals("RIM Bypass")) {
                usbPeripheralName = CommonResource.getString(10183);
             } else if (usbPeripheralName.equals("RIM Desktop")) {
                usbPeripheralName = CommonResource.getString(10181);
             }
 
-            CheckboxField checkboxField = (CheckboxField)(new Object(usbPeripheralName, true));
+            CheckboxField checkboxField = new CheckboxField(usbPeripheralName, true);
             this.add(checkboxField);
             this._choices.addElement(checkboxField);
          }
@@ -88,26 +88,24 @@ public class SecurityDialog$USBPasswordRedirectDialog extends SimplePasswordDial
          }
       }
 
-      this.add(
-         (Field)(new Object(((StringBuffer)(new Object())).append(CommonResources.getString(2012)).append(deviceAttempts).toString(), 36028797018963968L))
-      );
+      this.add(new RichTextField(CommonResources.getString(2012) + deviceAttempts, 36028797018963968L));
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public int[] getSelectedChannels() {
-      Vector selectedChannels = (Vector)(new Object());
+      Vector selectedChannels = new Vector();
 
       for (int i = 0; i < this._channels.size(); i++) {
          if (((CheckboxField)this._choices.elementAt(i)).getChecked()) {
             selectedChannels.addElement(this._channels.elementAt(i));
          } else {
-            this._redirectManager.allowChannel(this._channels.elementAt(i), false);
+            this._redirectManager.allowChannel((Integer)this._channels.elementAt(i), false);
             boolean var5 = false /* VF: Semaphore variable */;
 
             try {
                var5 = true;
-               this._redirectManager.addToDisallowedChannels(USBPortInternal$Internal.getChannelName(this._channels.elementAt(i)));
+               this._redirectManager.addToDisallowedChannels(USBPortInternal$Internal.getChannelName((Integer)this._channels.elementAt(i)));
                var5 = false;
             } finally {
                if (var5) {
@@ -121,7 +119,7 @@ public class SecurityDialog$USBPasswordRedirectDialog extends SimplePasswordDial
       int[] selectedChannelsInt = new int[selectedChannels.size()];
 
       for (int i = 0; i < selectedChannels.size(); i++) {
-         selectedChannelsInt[i] = selectedChannels.elementAt(i);
+         selectedChannelsInt[i] = (Integer)selectedChannels.elementAt(i);
       }
 
       return selectedChannelsInt;
@@ -129,7 +127,7 @@ public class SecurityDialog$USBPasswordRedirectDialog extends SimplePasswordDial
 
    @Override
    protected boolean navigationClick(int status, int time) {
-      if (this.getLeafFieldWithFocus() instanceof Object) {
+      if (this.getLeafFieldWithFocus() instanceof CheckboxField) {
          if (((CheckboxField)this.getLeafFieldWithFocus()).getChecked()) {
             ((CheckboxField)this.getLeafFieldWithFocus()).setChecked(false);
             return true;

@@ -20,7 +20,7 @@ public class MenuModelImpl extends UIComponentImpl implements MenuModel {
    protected void setMenuItemCount(int count) {
       this._items = new MenuItemModelImpl[count];
       this._inValues = new Object[count];
-      this._menuMap = (IntIntHashtable)(new Object(count + (count >> 2)));
+      this._menuMap = new IntIntHashtable(count + (count >> 2));
    }
 
    protected void setMenuItem(int menuItem, int id, Object inValue, int clickId, boolean visibility) {

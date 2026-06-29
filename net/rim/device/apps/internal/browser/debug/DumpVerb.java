@@ -15,7 +15,7 @@ final class DumpVerb extends Verb {
    @Override
    public final Object invoke(Object context) {
       if (this._text != null) {
-         System.out.println(((StringBuffer)(new Object("URL: "))).append(this._url).toString());
+         System.out.println("URL: " + this._url);
          System.out.println(this._text);
       }
 

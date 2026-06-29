@@ -16,7 +16,7 @@ public class Resources implements ECMACompilerResource {
             try {
                int clazz = Reflect.getClassClass(Class.forName("net.rim.ecmascript.resources.J2SEResources"));
                int[] fields = Reflect.getFields(clazz, false);
-               _resources = (Object[])Misc.toObject(Reflect.getWordField(clazz, fields[0], null));
+               _resources = (String[])Misc.toObject(Reflect.getWordField(clazz, fields[0], null));
             } finally {
                return _resources != null ? _resources[id] : _rb.getString(id);
             }

@@ -4,11 +4,11 @@ import java.util.Vector;
 import net.rim.device.api.util.ToIntHashtable;
 
 class ObjectToIndex {
-   private Vector _v = (Vector)(new Object());
+   private Vector _v = new Vector();
    private int _index = 0;
    private int _added = 0;
    private int _sizeAdded = 0;
-   private ToIntHashtable _h = (ToIntHashtable)(new Object());
+   private ToIntHashtable _h = new ToIntHashtable();
    private static final int NULLINDEX = 65535;
 
    Object get(int index) {

@@ -22,7 +22,7 @@ public final class X509DistinguishedName implements DistinguishedName, Persistab
    private int _hashCode;
    private static final int INITIAL_NUM_TYPES = 6;
    private static final int INITIAL_NUM_VALUES_PER_TYPE = 2;
-   private static final OID[] RFC2253_OIDS = new Object[]{
+   private static final OID[] RFC2253_OIDS = new OID[]{
       OIDs.getOID(-1250238803),
       OIDs.getOID(-1253056853),
       OIDs.getOID(-1252532565),
@@ -38,7 +38,7 @@ public final class X509DistinguishedName implements DistinguishedName, Persistab
    public static final int STRING_FORMAT_RFC2253 = 1;
 
    public final String toString(int stringFormat) {
-      StringBuffer outputBuffer = (StringBuffer)(new Object());
+      StringBuffer outputBuffer = new StringBuffer();
       int numRFC2253OIDs = RFC2253_OIDS.length;
 
       for (int i = 0; i < numRFC2253OIDs; i++) {
@@ -63,7 +63,7 @@ public final class X509DistinguishedName implements DistinguishedName, Persistab
    }
 
    public final String[] getValues(OID oid) {
-      String[] values = new Object[0];
+      String[] values = new String[0];
       Enumeration attributeValues = this._attributes.elements(oid);
 
       while (attributeValues.hasMoreElements()) {
@@ -120,7 +120,7 @@ public final class X509DistinguishedName implements DistinguishedName, Persistab
 
    @Override
    public final String getString(OID oid) {
-      StringBuffer attributeValueString = (StringBuffer)(new Object());
+      StringBuffer attributeValueString = new StringBuffer();
       Enumeration attributeValues = this._attributes.elements(oid);
 
       while (attributeValues.hasMoreElements()) {
@@ -222,7 +222,7 @@ public final class X509DistinguishedName implements DistinguishedName, Persistab
 
    public X509DistinguishedName(byte[] encoding, int offset, int length) {
       if (encoding != null && encoding.length - length >= offset && offset >= 0 && length >= 0) {
-         this._attributes = (MultiMap)(new Object(6, 2));
+         this._attributes = new MultiMap(6, 2);
          this._derEncoding = Arrays.copy(encoding, offset, length);
          ASN1InputByteArray context = new ASN1InputByteArray(this._derEncoding);
          context.readSequence();
@@ -254,7 +254,7 @@ public final class X509DistinguishedName implements DistinguishedName, Persistab
                      attributeValue = context.readBMPString();
                      break;
                   default:
-                     attributeValue = (String)(new Object(context.readFieldAsByteArray()));
+                     attributeValue = new String(context.readFieldAsByteArray());
                }
 
                this.addAttributeValue(attributeType, attributeValue);
@@ -263,7 +263,7 @@ public final class X509DistinguishedName implements DistinguishedName, Persistab
 
          this._commonName = this.getString(-1253056853);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -293,7 +293,7 @@ public final class X509DistinguishedName implements DistinguishedName, Persistab
       if (this == obj) {
          return true;
       } else if (!(obj instanceof X509DistinguishedName)) {
-         return obj instanceof Object ? CertificateUtilities.compareDistinguishedNames(this, (DistinguishedName)obj) : false;
+         return obj instanceof DistinguishedName ? CertificateUtilities.compareDistinguishedNames(this, (DistinguishedName)obj) : false;
       } else {
          X509DistinguishedName distinguishedName = (X509DistinguishedName)obj;
          if (!StringUtilities.strEqual(this._commonName, distinguishedName._commonName)) {
@@ -315,11 +315,11 @@ public final class X509DistinguishedName implements DistinguishedName, Persistab
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public X509DistinguishedName(String input, char delimiter) {
       if (input == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       try {
-         this._attributes = (MultiMap)(new Object(6, 2));
+         this._attributes = new MultiMap(6, 2);
          this._hashCode = 0;
          ASN1OutputStream outerSequence = new ASN1OutputStream();
          char[] delimiters = new char[]{delimiter, '+'};
@@ -327,8 +327,8 @@ public final class X509DistinguishedName implements DistinguishedName, Persistab
          int currentPos = 0;
 
          while (currentPos < inputStringLength) {
-            StringBuffer attributeType = (StringBuffer)(new Object());
-            StringBuffer attributeValue = (StringBuffer)(new Object());
+            StringBuffer attributeType = new StringBuffer();
+            StringBuffer attributeValue = new StringBuffer();
             currentPos = this.extractAttributeType(input, currentPos, attributeType);
             currentPos = this.extractAttributeValue(input, delimiters, ++currentPos, attributeValue);
             currentPos++;
@@ -340,9 +340,9 @@ public final class X509DistinguishedName implements DistinguishedName, Persistab
                      continue;
                   }
 
-                  typeOID = (OID)(new Object(typeString));
+                  typeOID = new OID(typeString);
                } else {
-                  typeOID = (OID)(new Object(typeString.substring(4)));
+                  typeOID = new OID(typeString.substring(4));
                }
             }
 
@@ -366,7 +366,7 @@ public final class X509DistinguishedName implements DistinguishedName, Persistab
          finish.writeSequence(outerSequence);
          this._derEncoding = finish.toByteArray();
       } catch (Throwable var15) {
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       }
    }
 
@@ -379,7 +379,7 @@ public final class X509DistinguishedName implements DistinguishedName, Persistab
       boolean escapeCharacters;
       switch (stringFormat) {
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
             delimiter = ';';
             escapeCharacters = false;
@@ -408,7 +408,7 @@ public final class X509DistinguishedName implements DistinguishedName, Persistab
          if (!escapeCharacters) {
             attributeValueString = currentValue;
          } else {
-            StringBuffer escapedValueStringBuffer = (StringBuffer)(new Object());
+            StringBuffer escapedValueStringBuffer = new StringBuffer();
             int currentValueLength = currentValue.length();
 
             for (int i = 0; i < currentValueLength; i++) {

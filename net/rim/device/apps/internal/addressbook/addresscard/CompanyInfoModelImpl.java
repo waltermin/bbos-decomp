@@ -4,9 +4,10 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
-import net.rim.device.api.ui.Manager;
-import net.rim.device.api.ui.component.BasicEditField;
+import net.rim.device.api.ui.component.AutoTextEditField;
 import net.rim.device.api.ui.component.EditField;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.StringMatch;
 import net.rim.device.api.util.StringUtilities;
@@ -85,13 +86,13 @@ final class CompanyInfoModelImpl
       if (ContextObject.getFlag(context, 51)) {
          Field field;
          if (ContextObject.getFlag(context, 45)) {
-            field = (Field)(new Object(companyName, flags));
+            field = new LabelField(companyName, flags);
          } else {
             if (isMultiSendMethodCapable) {
                flags |= 67108864;
             }
 
-            field = (Field)(new Object(companyName, flags));
+            field = new RichTextField(companyName, flags);
          }
 
          field.setCookie(this);
@@ -100,18 +101,18 @@ final class CompanyInfoModelImpl
          boolean singleLineField = ContextObject.getFlag(context, 106);
          if (companyName != null) {
             if (ContextObject.getFlag(context, 11) && this._companyNameYOMIEncoding != null) {
-               companyName = ((StringBuffer)(new Object())).append(companyName).append(" (").append(this.getCompanyNameYOMI()).append(")").toString();
+               companyName = companyName + " (" + this.getCompanyNameYOMI() + ")";
             }
 
             Field f;
             if (singleLineField) {
-               f = (Field)(new Object(companyName, flags));
+               f = new LabelField(companyName, flags);
             } else {
                if (isMultiSendMethodCapable) {
                   flags |= 67108864;
                }
 
-               f = (Field)(new Object(companyName, flags));
+               f = new RichTextField(companyName, flags);
             }
 
             f.setCookie(this);
@@ -124,7 +125,7 @@ final class CompanyInfoModelImpl
             companyName = "";
          }
 
-         EditField companyNameField = (EditField)(new Object(AddressBookResources.getString(101), companyName, 2048, 4505800798126336L));
+         EditField companyNameField = new AutoTextEditField(AddressBookResources.getString(101), companyName, 2048, 4505800798126336L);
          companyNameField.setCookie(this);
          String companyNameYOMI = this.getCompanyNameYOMI();
          Field f;
@@ -139,7 +140,7 @@ final class CompanyInfoModelImpl
             yomiField.setCookie(this);
             YomiFieldTextChangeListener companyInfoYOMIlistener = new YomiFieldTextChangeListener(yomiField);
             companyNameField.addTextChangeListener(companyInfoYOMIlistener);
-            VerticalFieldManager vfm = (VerticalFieldManager)(new Object(1152921504606846976L));
+            VerticalFieldManager vfm = new VerticalFieldManager(1152921504606846976L);
             vfm.add(companyNameField);
             vfm.add(yomiField);
             vfm.setCookie(this);
@@ -157,9 +158,9 @@ final class CompanyInfoModelImpl
 
    @Override
    public final boolean validate(Field field, Object context) {
-      if (field instanceof Object) {
+      if (field instanceof EditField) {
          if (ContextObject.getFlag(context, 95)) {
-            String companyName = ((BasicEditField)field).getText().trim();
+            String companyName = ((EditField)field).getText().trim();
             if (companyName.length() == 0) {
                return false;
             }
@@ -167,7 +168,7 @@ final class CompanyInfoModelImpl
 
          return true;
       } else {
-         return field instanceof Object ? this.validate(((Manager)field).getField(0), context) : false;
+         return field instanceof VerticalFieldManager ? this.validate(((VerticalFieldManager)field).getField(0), context) : false;
       }
    }
 
@@ -232,11 +233,11 @@ final class CompanyInfoModelImpl
 
    @Override
    public final boolean grabDataFromField(Field field, Object context) {
-      if (!(field instanceof Object)) {
-         if (field instanceof Object) {
+      if (!(field instanceof EditField)) {
+         if (field instanceof VerticalFieldManager) {
             VerticalFieldManager vfm = (VerticalFieldManager)field;
             boolean result = this.grabDataFromField(vfm.getField(0), context);
-            String yomi = ((BasicEditField)vfm.getField(1)).getText().trim();
+            String yomi = ((EditField)vfm.getField(1)).getText().trim();
             this.setCompanyNameYOMI(yomi);
             return result;
          }
@@ -286,7 +287,7 @@ final class CompanyInfoModelImpl
          return true;
       }
 
-      if (!(o instanceof Object)) {
+      if (!(o instanceof CompanyInfoModel)) {
          return false;
       }
 
@@ -306,17 +307,17 @@ final class CompanyInfoModelImpl
    }
 
    CompanyInfoModelImpl(Object initialData) {
-      if (initialData instanceof Object[]) {
-         String[] info = (Object[])initialData;
+      if (initialData instanceof String[]) {
+         String[] info = (String[])initialData;
          if (info.length == 1) {
             this.setCompanyName(info[0]);
          } else {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
-      } else if (initialData instanceof Object) {
+      } else if (initialData instanceof String) {
          this.setCompanyName((String)initialData);
       } else {
-         if (initialData instanceof Object) {
+         if (initialData instanceof ContextObject) {
             String str = (String)ContextObject.get(initialData, 253);
             if (str != null) {
                this.setCompanyName(str);

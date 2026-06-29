@@ -38,7 +38,7 @@ final class SBAppEditRecordUI$MyMenuItem extends MenuItem {
             if (this.this$0._recHriUsageField.getSelectedIndex() == 0) {
                hrt = HRUtils.getDefaultHRT();
             } else if (hrt == null) {
-               hrt = (HostRoutingTable)(new Object());
+               hrt = new HostRoutingTable();
                this.this$0._rec.setAttachedHrt(hrt);
             }
 

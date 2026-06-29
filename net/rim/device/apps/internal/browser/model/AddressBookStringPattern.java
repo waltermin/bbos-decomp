@@ -7,7 +7,7 @@ import net.rim.device.api.util.WeakReferenceUtilities;
 import net.rim.vm.WeakReference;
 
 public final class AddressBookStringPattern extends StringPattern {
-   private WeakReference _scanbufferWR = (WeakReference)(new Object(null));
+   private WeakReference _scanbufferWR = new WeakReference(null);
    private static final int SCAN_BUFFER_SIZE = 64;
    private static final int STATE_INIT = 0;
    private static final int STATE_W = 10;

@@ -16,7 +16,7 @@ final class DocViewTextDisplayField$DocViewInsertFieldRunnable implements Runnab
          this._insertIndex = insertIndex;
          this._isAllowedControl = isAllowedControl;
       } else {
-         throw new Object("Invalid insert parameters");
+         throw new IllegalArgumentException("Invalid insert parameters");
       }
    }
 

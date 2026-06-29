@@ -11,6 +11,7 @@ import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.CookieProvider;
+import net.rim.device.api.ui.menu.MenuScreen;
 import net.rim.device.api.util.MathUtilities;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.RIMModel;
@@ -18,6 +19,7 @@ import net.rim.device.apps.api.framework.registration.ModelViewListenerRegistry;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.CookieProviderUtilities;
 import net.rim.device.apps.api.utility.framework.ModelScreen;
+import net.rim.device.apps.api.utility.framework.ModelScreen$NotificationRunnable;
 import net.rim.device.apps.internal.mms.api.MMSMessageModel;
 import net.rim.vm.PersistentInteger;
 
@@ -29,10 +31,10 @@ public class MMSModelScreen extends ModelScreen implements HolsterListener, Syst
 
    public MMSModelScreen(Object context) {
       super(0, null, ContextObject.clone(context));
-      if (super._context instanceof Object) {
+      if (super._context instanceof ContextObject) {
          ContextObject contextObject = (ContextObject)super._context;
          contextObject.setFlag(15);
-         contextObject.put(244, new Object(26274));
+         contextObject.put(244, new Integer(26274));
       }
    }
 
@@ -154,7 +156,7 @@ public class MMSModelScreen extends ModelScreen implements HolsterListener, Syst
 
    protected final void closeMessage() {
       Screen activeScreen = UiApplication.getUiApplication().getActiveScreen();
-      if (activeScreen instanceof Object) {
+      if (activeScreen instanceof MenuScreen) {
          UiApplication.getUiApplication().popScreen(activeScreen);
          activeScreen = UiApplication.getUiApplication().getActiveScreen();
       }
@@ -166,17 +168,17 @@ public class MMSModelScreen extends ModelScreen implements HolsterListener, Syst
 
    protected final boolean isOnHyperlink() {
       Field focusedField = this.getFieldWithFocus();
-      if (focusedField instanceof Object) {
+      if (focusedField instanceof CookieProvider) {
          Object cookie = CookieProviderUtilities.getDefaultCookie(((CookieProvider)focusedField).getCookieWithFocus());
-         if (cookie instanceof Object) {
+         if (cookie instanceof RIMModel) {
             return true;
          }
       }
 
       focusedField = this.getLeafFieldWithFocus();
-      if (focusedField instanceof Object) {
+      if (focusedField instanceof CookieProvider) {
          Object cookie = CookieProviderUtilities.getDefaultCookie(((CookieProvider)focusedField).getCookieWithFocus());
-         if (cookie instanceof Object) {
+         if (cookie instanceof RIMModel) {
             return true;
          }
       }
@@ -211,7 +213,7 @@ public class MMSModelScreen extends ModelScreen implements HolsterListener, Syst
    public void notifyOfOpenedModelChange(RIMModel oldModel, RIMModel newModel, Object moreContext) {
       if (this._message == oldModel && newModel instanceof MMSMessageModel) {
          if (super._application != Application.getApplication() || !Application.isEventDispatchThread()) {
-            super._application.invokeLater((Runnable)(new Object(this, oldModel, newModel, moreContext)));
+            super._application.invokeLater(new ModelScreen$NotificationRunnable(this, oldModel, newModel, moreContext));
             return;
          }
 

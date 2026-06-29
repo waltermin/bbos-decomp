@@ -92,7 +92,7 @@ final class SpellCheckOptions$SpellCheckOptionsSyncItem extends OTASyncCapableSy
    @Override
    public final synchronized boolean getSyncData(DataBuffer buffer, int version) {
       SpellCheckOptions options = SpellCheckOptions.getOptions();
-      this._buffer = (DataBuffer)(new Object(buffer.isBigEndian()));
+      this._buffer = new DataBuffer(buffer.isBigEndian());
       this._buffer.writeInt(0);
       this._buffer.writeByte(options.getFlag(1));
       this._buffer.writeInt(2);

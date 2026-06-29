@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.api.util.IntStack;
 import net.rim.device.apps.api.utility.general.URI;
+import net.rim.device.apps.api.utility.serialization.SerializationException;
 import net.rim.device.apps.internal.browser.stack.WAPInputStream;
 
 final class COCModelFactory {
@@ -21,11 +22,11 @@ final class COCModelFactory {
    private static final int DOT_NET = 135;
    private static final int DOT_ORG = 136;
 
-   public static final Object createCOCModel(DataInputStream inStream, HttpHeaders headers) {
+   public static final Object createCOCModel(DataInputStream inStream, HttpHeaders headers) throws SerializationException {
       try {
          COCModel model = new COCModel();
-         WAPInputStream in = (WAPInputStream)(new Object(inStream));
-         IntStack tagStack = (IntStack)(new Object());
+         WAPInputStream in = new WAPInputStream(inStream);
+         IntStack tagStack = new IntStack();
          in.read();
          int publicIdentifierId = in.readMBInt();
          if (publicIdentifierId == 0) {
@@ -71,7 +72,7 @@ final class COCModelFactory {
             }
          }
       } finally {
-         throw new Object();
+         throw new SerializationException();
       }
    }
 
@@ -133,8 +134,8 @@ final class COCModelFactory {
 
                   try {
                      var12 = true;
-                     URI e = new Object(value, baseUri, true);
-                     model.addObjectUri(((URI)e).getAbsoluteURL());
+                     URI e = new URI(value, baseUri, true);
+                     model.addObjectUri(e.getAbsoluteURL());
                      var12 = false;
                      continue;
                   } finally {
@@ -186,8 +187,8 @@ final class COCModelFactory {
 
                   try {
                      var12 = true;
-                     URI e = new Object(value, baseUri, true);
-                     model.addServiceUri(((URI)e).getAbsoluteURL());
+                     URI e = new URI(value, baseUri, true);
+                     model.addServiceUri(e.getAbsoluteURL());
                      var12 = false;
                      continue;
                   } finally {
@@ -220,7 +221,7 @@ final class COCModelFactory {
    }
 
    public static final String readHrefAttribute(WAPInputStream in, String encoding, byte[] stringTable, String inString) {
-      StringBuffer result = (StringBuffer)(new Object(inString));
+      StringBuffer result = new StringBuffer(inString);
       int next = -1;
 
       while (next != 1) {
@@ -275,11 +276,11 @@ final class COCModelFactory {
 
       try {
          var9 = true;
-         retVal = (String)(new Object(stringTable, start, length, encoding));
+         retVal = new String(stringTable, start, length, encoding);
          var9 = false;
       } finally {
          if (var9) {
-            return (String)(new Object(stringTable, start, length));
+            return new String(stringTable, start, length);
          }
       }
 

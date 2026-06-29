@@ -19,7 +19,7 @@ class ESDataPrototype$1 extends HostFunction {
    public long run() {
       ESData thiz = (ESData)this.getThis();
       if (this.getNumParms() != 0) {
-         EcmaUtilities.throwESError(thiz.getId(), RuntimeResources.getString(76, ((StringBuffer)(new Object())).append(this.getName()).append("()").toString()));
+         EcmaUtilities.throwESError(thiz.getId(), RuntimeResources.getString(76, this.getName() + "()"));
       }
 
       DataCollection collection = thiz.getCollection();

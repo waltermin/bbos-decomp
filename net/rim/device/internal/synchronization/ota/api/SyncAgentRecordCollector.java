@@ -10,7 +10,7 @@ public final class SyncAgentRecordCollector extends Vector {
 
    private final byte[] getCollectedFields() {
       try {
-         ByteArrayOutputStream xTemp = (ByteArrayOutputStream)(new Object());
+         ByteArrayOutputStream xTemp = new ByteArrayOutputStream();
          int xLastIndex = this.size();
 
          for (int xIndex = 0; xIndex < xLastIndex; xIndex++) {

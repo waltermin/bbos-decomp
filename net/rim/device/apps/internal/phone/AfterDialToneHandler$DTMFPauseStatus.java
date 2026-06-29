@@ -3,9 +3,9 @@ package net.rim.device.apps.internal.phone;
 import net.rim.device.api.media.control.AudioPathControl;
 import net.rim.device.api.system.AudioRouter;
 import net.rim.device.api.system.Bitmap;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.PopupScreen;
 import net.rim.device.apps.internal.phone.api.PhoneUtilities;
 
@@ -18,12 +18,12 @@ final class AfterDialToneHandler$DTMFPauseStatus extends PopupScreen implements 
    private final AfterDialToneHandler this$0;
 
    public AfterDialToneHandler$DTMFPauseStatus(AfterDialToneHandler _1, AfterDialToneHandler toneHandler) {
-      super((Manager)(new Object()), 0);
+      super(new HorizontalFieldManager(), 0);
       this.this$0 = _1;
       this._timerId = -1;
-      this._iconField = (BitmapField)(new Object(Bitmap.getPredefinedBitmap(3)));
+      this._iconField = new BitmapField(Bitmap.getPredefinedBitmap(3));
       this._iconField.setPadding(0, 3, 0, 0);
-      this._messageField = (RichTextField)(new Object(null, 36028797018963968L));
+      this._messageField = new RichTextField(null, 36028797018963968L);
       this.add(this._iconField);
       this.add(this._messageField);
       this._toneHandler = toneHandler;
@@ -35,7 +35,7 @@ final class AfterDialToneHandler$DTMFPauseStatus extends PopupScreen implements 
       this._isDisplaying = true;
       this._timerId = this.this$0._app.invokeLater(this, time, false);
       if (this._timerId == -1) {
-         throw new Object("no timers available for pause status");
+         throw new RuntimeException("no timers available for pause status");
       }
 
       this.this$0._app.pushGlobalScreen(this, -2147483645, 2);

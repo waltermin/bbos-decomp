@@ -2,6 +2,7 @@ package net.rim.device.api.crypto.tls.tls10;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.microedition.io.SecurityInfo;
@@ -16,6 +17,7 @@ import net.rim.device.api.io.SocketConnectionEnhanced;
 import net.rim.device.api.system.ControlledAccess;
 import net.rim.device.cldc.io.ssl.SSLConnection;
 import net.rim.device.cldc.io.ssl.SSLConnectionOptions;
+import net.rim.device.cldc.io.ssl.TLSIOException;
 import net.rim.vm.TraceBack;
 
 public class TLS10Connection implements SSLConnection, ParentStreamProvider, ConnectionCloseProvider, ConnectionCloseListener, SocketConnectionEnhanced {
@@ -41,7 +43,7 @@ public class TLS10Connection implements SSLConnection, ParentStreamProvider, Con
                   this._recordProtocol.close();
                   var5 = false;
                } catch (Throwable var8) {
-                  throw new Object(e);
+                  throw new TLSIOException(e);
                }
             } finally {
                if (var5) {
@@ -55,46 +57,46 @@ public class TLS10Connection implements SSLConnection, ParentStreamProvider, Con
    }
 
    @Override
-   public DataInputStream openDataInputStream() {
+   public DataInputStream openDataInputStream() throws IOException {
       if (this._isClosed) {
-         throw new Object();
+         throw new IOException();
       } else {
-         return (DataInputStream)(new Object(this.openInputStream()));
+         return new DataInputStream(this.openInputStream());
       }
    }
 
    @Override
-   public OutputStream openOutputStream() {
+   public OutputStream openOutputStream() throws IOException {
       if (this._isClosed) {
-         throw new Object();
+         throw new IOException();
       }
 
       if (this._outputStream == null) {
-         this._outputStream = (TLSOutputStream)(new Object(this._recordProtocol));
+         this._outputStream = new TLSOutputStream(this._recordProtocol);
       } else if (this._outputStream.isClosed()) {
-         throw new Object("output stream closed");
+         throw new IOException("output stream closed");
       }
 
       return this._outputStream;
    }
 
    @Override
-   public DataOutputStream openDataOutputStream() {
+   public DataOutputStream openDataOutputStream() throws IOException {
       if (this._isClosed) {
-         throw new Object();
+         throw new IOException();
       } else {
-         return (DataOutputStream)(new Object(this.openOutputStream()));
+         return new DataOutputStream(this.openOutputStream());
       }
    }
 
    @Override
-   public InputStream openInputStream() {
+   public InputStream openInputStream() throws IOException {
       if (this._isClosed) {
-         throw new Object();
+         throw new IOException();
       }
 
       if (this._inputStream == null) {
-         this._inputStream = (TLSInputStream)(new Object(this._recordProtocol));
+         this._inputStream = new TLSInputStream(this._recordProtocol);
       }
 
       return this._inputStream;
@@ -103,23 +105,23 @@ public class TLS10Connection implements SSLConnection, ParentStreamProvider, Con
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public SecurityInfo getSecurityInfo() {
+   public SecurityInfo getSecurityInfo() throws IOException, TLSIOException {
       if (this._isClosed) {
-         throw new Object();
+         throw new IOException();
       }
 
       try {
          this._recordProtocol.connect();
          return this._recordProtocol.getSecurityInfo();
       } catch (Throwable var3) {
-         throw new Object(e);
+         throw new TLSIOException(e);
       }
    }
 
    @Override
    public void setSocketOption(byte option, int value) {
-      if (!(this._subConnection instanceof Object)) {
-         throw new Object();
+      if (!(this._subConnection instanceof SocketConnection)) {
+         throw new IllegalArgumentException();
       }
 
       ((SocketConnection)this._subConnection).setSocketOption(option, value);
@@ -127,8 +129,8 @@ public class TLS10Connection implements SSLConnection, ParentStreamProvider, Con
 
    @Override
    public int getSocketOption(byte option) {
-      if (!(this._subConnection instanceof Object)) {
-         throw new Object();
+      if (!(this._subConnection instanceof SocketConnection)) {
+         throw new IllegalArgumentException();
       } else {
          return ((SocketConnection)this._subConnection).getSocketOption(option);
       }
@@ -136,8 +138,8 @@ public class TLS10Connection implements SSLConnection, ParentStreamProvider, Con
 
    @Override
    public String getLocalAddress() {
-      if (!(this._subConnection instanceof Object)) {
-         throw new Object();
+      if (!(this._subConnection instanceof SocketConnection)) {
+         throw new IllegalArgumentException();
       } else {
          return ((SocketConnection)this._subConnection).getLocalAddress();
       }
@@ -145,8 +147,8 @@ public class TLS10Connection implements SSLConnection, ParentStreamProvider, Con
 
    @Override
    public int getLocalPort() {
-      if (!(this._subConnection instanceof Object)) {
-         throw new Object();
+      if (!(this._subConnection instanceof SocketConnection)) {
+         throw new IllegalArgumentException();
       } else {
          return ((SocketConnection)this._subConnection).getLocalPort();
       }
@@ -154,8 +156,8 @@ public class TLS10Connection implements SSLConnection, ParentStreamProvider, Con
 
    @Override
    public String getAddress() {
-      if (!(this._subConnection instanceof Object)) {
-         throw new Object();
+      if (!(this._subConnection instanceof SocketConnection)) {
+         throw new IllegalArgumentException();
       } else {
          return ((SocketConnection)this._subConnection).getAddress();
       }
@@ -163,8 +165,8 @@ public class TLS10Connection implements SSLConnection, ParentStreamProvider, Con
 
    @Override
    public int getPort() {
-      if (!(this._subConnection instanceof Object)) {
-         throw new Object();
+      if (!(this._subConnection instanceof SocketConnection)) {
+         throw new IllegalArgumentException();
       } else {
          return ((SocketConnection)this._subConnection).getPort();
       }
@@ -177,19 +179,21 @@ public class TLS10Connection implements SSLConnection, ParentStreamProvider, Con
 
    @Override
    public boolean connectionStatusAvailable() {
-      return !(this._subConnection instanceof Object) ? false : ((ConnectionCloseProvider)this._subConnection).connectionStatusAvailable();
+      return !(this._subConnection instanceof ConnectionCloseProvider) ? false : ((ConnectionCloseProvider)this._subConnection).connectionStatusAvailable();
    }
 
    @Override
    public boolean isConnectionEstablished() {
-      return this._isClosed || !(this._subConnection instanceof Object) || !((ConnectionCloseProvider)this._subConnection).isConnectionEstablished()
+      return this._isClosed
+            || !(this._subConnection instanceof ConnectionCloseProvider)
+            || !((ConnectionCloseProvider)this._subConnection).isConnectionEstablished()
          ? false
          : !this._recordProtocol.peekForAlert();
    }
 
    @Override
    public void setConnectionCloseListener(ConnectionCloseListener listener) {
-      if (this._subConnection instanceof Object) {
+      if (this._subConnection instanceof ConnectionCloseProvider) {
          ((ConnectionCloseProvider)this._subConnection).setConnectionCloseListener(this);
       }
 
@@ -205,8 +209,8 @@ public class TLS10Connection implements SSLConnection, ParentStreamProvider, Con
 
    @Override
    public void setSocketOptionEx(short option, long value) {
-      if (!(this._subConnection instanceof Object)) {
-         throw new Object();
+      if (!(this._subConnection instanceof SocketConnectionEnhanced)) {
+         throw new IllegalArgumentException();
       }
 
       ((SocketConnectionEnhanced)this._subConnection).setSocketOptionEx(option, value);
@@ -214,8 +218,8 @@ public class TLS10Connection implements SSLConnection, ParentStreamProvider, Con
 
    @Override
    public long getSocketOptionEx(short option) {
-      if (!(this._subConnection instanceof Object)) {
-         throw new Object();
+      if (!(this._subConnection instanceof SocketConnectionEnhanced)) {
+         throw new IllegalArgumentException();
       } else {
          return ((SocketConnectionEnhanced)this._subConnection).getSocketOptionEx(option);
       }
@@ -235,7 +239,7 @@ public class TLS10Connection implements SSLConnection, ParentStreamProvider, Con
             this._recordProtocol.connect();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

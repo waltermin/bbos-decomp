@@ -1,6 +1,7 @@
 package net.rim.device.cldc.io.ssl;
 
 import com.sun.cldc.io.ConnectionBaseInterface;
+import java.io.IOException;
 import javax.microedition.io.Connection;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.util.StringUtilities;
@@ -19,8 +20,8 @@ public final class Protocol implements ConnectionBaseInterface {
    private static final String USE_PIPE = "UsePipe";
 
    @Override
-   public final int getProperties(String name) {
-      URL url = (URL)(new Object("ssl", name));
+   public final int getProperties(String name) throws IOException {
+      URL url = new URL("ssl", name);
       URLParameters parameters = url.getRIMParameters();
       if (parameters == null) {
          return 1;
@@ -44,7 +45,7 @@ public final class Protocol implements ConnectionBaseInterface {
 
       String uid = SocketTransportBase.findAcceptableConnectionUid(parameters);
       if (uid == null) {
-         throw new Object("Invalid url parameter.");
+         throw new IOException("Invalid url parameter.");
       } else {
          return ITPolicyInternal.verifyITAdminService(uid, false) ? 1 : 2;
       }
@@ -65,7 +66,7 @@ public final class Protocol implements ConnectionBaseInterface {
       // 006: astore 5
       // 008: bipush 1
       // 009: istore 6
-      // 00b: new java/lang/Object
+      // 00b: new net/rim/device/cldc/io/utility/URL
       // 00e: dup
       // 00f: ldc_w "ssl"
       // 012: aload 1
@@ -221,7 +222,7 @@ public final class Protocol implements ConnectionBaseInterface {
       // 189: aload 7
       // 18b: invokevirtual net/rim/device/cldc/io/utility/URL.getPort ()I
       // 18e: istore 12
-      // 190: new java/lang/Object
+      // 190: new java/lang/StringBuffer
       // 193: dup
       // 194: invokespecial java/lang/StringBuffer.<init> ()V
       // 197: astore 13
@@ -257,7 +258,7 @@ public final class Protocol implements ConnectionBaseInterface {
       // 1dc: aload 13
       // 1de: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 1e1: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 1e4: checkcast java/lang/Object
+      // 1e4: checkcast javax/microedition/io/SocketConnection
       // 1e7: astore 14
       // 1e9: ldc_w "net.rim.device.api.crypto.tls.TLSConnectionFactory"
       // 1ec: invokestatic java/lang/Class.forName (Ljava/lang/String;)Ljava/lang/Class;

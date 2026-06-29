@@ -19,7 +19,7 @@ public final class Protocol implements ConnectionBaseInterface {
 
    @Override
    public final Connection openPrim(String name, int mode, boolean timeouts) {
-      URL url = (URL)(new Object("devicehttp", name));
+      URL url = new URL("devicehttp", name);
       boolean connectionNotifier = url.getHost() == null && url.getPath() == null;
       return connectionNotifier ? null : this.doConnection(url, mode, timeouts);
    }

@@ -8,7 +8,7 @@ public class RegularExpression$EmptyCharacterIterator implements RegularExpressi
 
    @Override
    public char next() {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override

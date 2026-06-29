@@ -21,20 +21,20 @@ public class UniqueCodeGenerator {
    public UniqueCodeGenerator(ToIntHashtable standardComponentCodes) {
       if (standardComponentCodes != null && !standardComponentCodes.isEmpty()) {
          this._standardComponents = standardComponentCodes;
-         this._collisionCodes = (ToIntHashtable)(new Object());
-         this._nameToCode = (ToIntHashtable)(new Object());
-         this._codeToName = (IntHashtable)(new Object());
-         this._r = (Random)(new Object());
+         this._collisionCodes = new ToIntHashtable();
+         this._nameToCode = new ToIntHashtable();
+         this._codeToName = new IntHashtable();
+         this._r = new Random();
          this.storeReservedKeywords();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    public void clear() {
-      this._collisionCodes = (ToIntHashtable)(new Object());
-      this._nameToCode = (ToIntHashtable)(new Object());
-      this._codeToName = (IntHashtable)(new Object());
+      this._collisionCodes = new ToIntHashtable();
+      this._nameToCode = new ToIntHashtable();
+      this._codeToName = new IntHashtable();
       this.storeReservedKeywords();
    }
 
@@ -77,15 +77,15 @@ public class UniqueCodeGenerator {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public void setMappingTable(byte[] compressedTable) {
       this.clear();
-      ByteArrayInputStream bs = (ByteArrayInputStream)(new Object(compressedTable));
-      GZIPInputStream gzips = (GZIPInputStream)(new Object(bs));
-      DataInputStream dis = (DataInputStream)(new Object(gzips));
+      ByteArrayInputStream bs = new ByteArrayInputStream(compressedTable);
+      GZIPInputStream gzips = new GZIPInputStream(bs);
+      DataInputStream dis = new DataInputStream(gzips);
 
       try {
          while (dis.available() != -1) {
             byte[] stringBytes = new byte[dis.readInt()];
             dis.readFully(stringBytes);
-            this.storeCode(dis.readInt(), (String)(new Object(stringBytes)));
+            this.storeCode(dis.readInt(), new String(stringBytes));
          }
       } catch (Throwable var7) {
          e.printStackTrace();
@@ -94,9 +94,9 @@ public class UniqueCodeGenerator {
    }
 
    public byte[] getMappingTable() {
-      ByteArrayOutputStream bs = (ByteArrayOutputStream)(new Object());
-      GZIPOutputStream gzips = (GZIPOutputStream)(new Object(bs));
-      DataOutputStream ds = (DataOutputStream)(new Object(gzips));
+      ByteArrayOutputStream bs = new ByteArrayOutputStream();
+      GZIPOutputStream gzips = new GZIPOutputStream(bs);
+      DataOutputStream ds = new DataOutputStream(gzips);
       Enumeration e = this._nameToCode.keys();
 
       try {
@@ -119,7 +119,7 @@ public class UniqueCodeGenerator {
    @Override
    public String toString() {
       int size = this._nameToCode.size() * 16 + this._collisionCodes.size() * 16;
-      StringBuffer buffer = (StringBuffer)(new Object(size));
+      StringBuffer buffer = new StringBuffer(size);
       buffer.append("UniqueCodeGenerator[codes:");
       Enumeration e = this._nameToCode.keys();
       String name = null;

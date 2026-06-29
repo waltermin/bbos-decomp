@@ -15,7 +15,7 @@ public class StringLookupTable implements Persistable {
 
    public StringLookupTable() {
       this._bundles[0] = new StringLookupTable$StringBundle();
-      this._sortedIndex = (BigIntVector)(new Object());
+      this._sortedIndex = new BigIntVector();
    }
 
    public static StringLookupTable getInstance() {

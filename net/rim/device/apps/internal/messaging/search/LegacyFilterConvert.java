@@ -96,7 +96,7 @@ public final class LegacyFilterConvert {
          }
       }
 
-      return (String)(len == 0 ? null : new Object(buff, offset, len));
+      return len == 0 ? null : new String(buff, offset, len);
    }
 
    public static final long extractFolderLUID(byte[] blob, int offset, boolean big_endian) {
@@ -115,7 +115,7 @@ public final class LegacyFilterConvert {
 
    static final DataBuffer translateFromBB21Format(DataBuffer in_buff) {
       boolean big_endian = in_buff.isBigEndian();
-      DataBuffer out_buff = (DataBuffer)(new Object(big_endian));
+      DataBuffer out_buff = new DataBuffer(big_endian);
 
       try {
          byte[] blob = ConverterUtilities.readByteArray(in_buff, true);

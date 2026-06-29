@@ -9,7 +9,7 @@ import net.rim.device.internal.ui.component.BackgroundDialog;
 
 public class SmartCardReader {
    private SmartCardReaderSession _currentSession;
-   private Vector _listeners = (Vector)(new Object(1));
+   private Vector _listeners = new Vector(1);
    private int _readerStatus = -1;
    private CallBackThread _readerCallBackThread = new CallBackThread();
    private CallBackThread _readerSessionCallBackThread;
@@ -60,7 +60,7 @@ public class SmartCardReader {
             this._currentSession.openReaderSession(this._readerSessionCallBackThread);
             return this._currentSession;
          } catch (SmartCardNoReaderPresentException var7) {
-            String message = MessageFormat.format(_rb.getString(4), new Object[]{this.getLabel()});
+            String message = MessageFormat.format(_rb.getString(4), new String[]{this.getLabel()});
             if (BackgroundDialog.getChoice(message, CommonResource.getStringArray(10041), 0, -2147483644) != 0) {
                throw new SmartCardCancelException();
             }
@@ -152,7 +152,7 @@ public class SmartCardReader {
    }
 
    protected final void setReaderStatus(int readerStatus) {
-      System.out.println(((StringBuffer)(new Object("SRS:"))).append(readerStatus).toString());
+      System.out.println("SRS:" + readerStatus);
       if (this._readerStatus != readerStatus) {
          this._readerStatus = readerStatus;
          synchronized (this._listeners) {

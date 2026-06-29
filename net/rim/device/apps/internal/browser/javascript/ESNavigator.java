@@ -13,7 +13,7 @@ final class ESNavigator {
    }
 
    public static final ESObject getInstance(RenderingSession renderingSession) {
-      ESObject instance = (ESObject)(new Object());
+      ESObject instance = new ESObject();
       instance.setGrowthIncrement(12);
       instance.addField("appCodeName", 5, Value.makeStringValue("Mozilla"));
       instance.addField("appName", 5, Value.makeStringValue("Netscape"));
@@ -32,7 +32,7 @@ final class ESNavigator {
 
       if (types != null) {
          int count = types.size();
-         ESArray mimeTypes = (ESArray)(new Object(count));
+         ESArray mimeTypes = new ESArray(count);
 
          for (int i = 0; i < count; i++) {
             try {
@@ -46,7 +46,7 @@ final class ESNavigator {
       }
 
       instance.addField("platform", 5, Value.makeStringValue("BlackBerry"));
-      ESArray plugins = (ESArray)(new Object(0));
+      ESArray plugins = new ESArray(0);
       plugins.addHostFunction(new NoopHostFunction(Names.Navigator, "refresh"));
       instance.addField("plugins", 5, Value.makeObjectValue(plugins));
       String userAgent = "";
@@ -55,7 +55,7 @@ final class ESNavigator {
       }
 
       if (userAgent != null && userAgent.startsWith("BlackBerry")) {
-         userAgent = ((StringBuffer)(new Object("Mozilla/4.0 "))).append(userAgent).toString();
+         userAgent = "Mozilla/4.0 " + userAgent;
       }
 
       instance.addField("userAgent", 5, JavaScriptEngine.makeStringValue(userAgent));
@@ -67,7 +67,7 @@ final class ESNavigator {
    }
 
    private static final ESObject createMimeType(String type) {
-      ESObject obj = (ESObject)(new Object());
+      ESObject obj = new ESObject();
       obj.setGrowthIncrement(4);
       obj.addField("type", 5, Value.makeStringValue(type));
       obj.addField("description", 5, Value.makeStringValue(type));

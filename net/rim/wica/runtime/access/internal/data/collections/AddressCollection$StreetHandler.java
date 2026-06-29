@@ -9,7 +9,7 @@ final class AddressCollection$StreetHandler implements ObjectFieldHandler {
 
    @Override
    public final Object getValue(Object item) {
-      return !(item instanceof Object) ? null : ((MailingAddressModel)item).getAddressLine1();
+      return !(item instanceof MailingAddressModel) ? null : ((MailingAddressModel)item).getAddressLine1();
    }
 
    AddressCollection$StreetHandler(AddressCollection$1 x0) {

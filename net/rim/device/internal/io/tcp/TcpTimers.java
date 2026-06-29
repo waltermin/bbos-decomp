@@ -9,7 +9,7 @@ public final class TcpTimers implements TcpConstants {
    public WeakReference _connection;
 
    public TcpTimers(TcpTimerInterface conn) {
-      this._connection = (WeakReference)(new Object(conn));
+      this._connection = new WeakReference(conn);
       this._active = new boolean[10];
       this._running = new boolean[10];
       this._finish = new long[10];

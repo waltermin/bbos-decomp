@@ -16,10 +16,10 @@ public class EnglishMetaphone implements IMetaphone {
    private static String EXCP_PAIR = "AGKPW";
    private static String NEXT_LTR = "ENNNR";
    private static String VOWELS = "aeiouy";
-   private static String VOWEL_WILDCARD = ((StringBuffer)(new Object("\u0002"))).append(VOWELS).append('\u0003').append('\u0001').toString();
+   private static String VOWEL_WILDCARD = "\u0002" + VOWELS + '\u0003' + '\u0001';
    private static final int VOWEL_WILDCARD_LEN = VOWEL_WILDCARD.length();
    private static String VOWELS1 = "aeiou";
-   private static String VOWEL1_WILDCARD = ((StringBuffer)(new Object("\u0002"))).append(VOWELS1).append('\u0003').append('\u0001').toString();
+   private static String VOWEL1_WILDCARD = "\u0002" + VOWELS1 + '\u0003' + '\u0001';
    private static final int VOWEL1_WILDCARD_LEN = VOWEL1_WILDCARD.length();
    private static String METAPHONE_ALPHABET = "BCFHJKLMNPRSTWXY0\u0001";
    private static String[] METAPHONE_ALPHABET_WILDCARDS = new String[]{
@@ -43,14 +43,14 @@ public class EnglishMetaphone implements IMetaphone {
       "\u0002bcdfghjklmnpqrstvwxyz\u0003"
    };
    private static String FIRST_METAPHONE_ALPHABET = "AEIOUBCFHJKLMNPRSTWXY0\u0001";
-   private static String[][] FIRST_METAPHONE_REPLACEMENTS = new Object[][]{
+   private static String[][] FIRST_METAPHONE_REPLACEMENTS = new String[][]{
       {"a", "o", "u"},
       {"e", "ae", "i", "a"},
       {"i", "e"},
       {"o"},
       {"u", "a", "o"},
       {"b"},
-      new Object[0],
+      new String[0],
       {"f", "v", "ph"},
       {"h"},
       {"g", "j"},
@@ -68,7 +68,7 @@ public class EnglishMetaphone implements IMetaphone {
       {"th"},
       {"\u0001"}
    };
-   private static String[][] SECOND_METAPHONE_REPLACEMENTS = new Object[][]{
+   private static String[][] SECOND_METAPHONE_REPLACEMENTS = new String[][]{
       {"b\u0002b\u0003\u0001"},
       {"cc"},
       {"f\u0002f\u0003\u0001", "v", "ph"},
@@ -336,7 +336,7 @@ public class EnglishMetaphone implements IMetaphone {
 
          int id = FIRST_METAPHONE_ALPHABET.indexOf(aMetaphone[0]);
          if (id == -1) {
-            throw new Object("");
+            throw new IllegalStateException("");
          }
 
          String[] replacements = FIRST_METAPHONE_REPLACEMENTS[id];
@@ -368,7 +368,7 @@ public class EnglishMetaphone implements IMetaphone {
                if (aMetaLen > 1) {
                   id = METAPHONE_ALPHABET.indexOf(aMetaphone[1]);
                   if (id == -1) {
-                     throw new Object("");
+                     throw new IllegalStateException("");
                   }
 
                   String[] replacements2 = SECOND_METAPHONE_REPLACEMENTS[id];
@@ -418,7 +418,7 @@ public class EnglishMetaphone implements IMetaphone {
       for (int i = aMetaStart; i < aMetaLen; i++) {
          int id = METAPHONE_ALPHABET.indexOf(aMetaphone[i]);
          if (id == -1) {
-            throw new Object("");
+            throw new IllegalStateException("");
          }
 
          String cons_wildcard = METAPHONE_ALPHABET_WILDCARDS[id];

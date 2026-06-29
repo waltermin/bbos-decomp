@@ -10,6 +10,7 @@ import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.PersonNameModel;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.RIMModelFactoryCache;
+import net.rim.device.apps.api.framework.model.RIMModelSyncConverter;
 import net.rim.device.apps.api.framework.model.Recognizer;
 import net.rim.device.apps.api.framework.model.SyncBuffer;
 import net.rim.device.apps.api.framework.registration.RIMModelFactory;
@@ -32,10 +33,10 @@ final class AddressCardModelFactory extends RIMModelFactory {
 
    AddressCardModelFactory() {
       this._opaqueFactory = (RIMModelFactory)ApplicationRegistry.getApplicationRegistry().waitFor(-8058545440370075039L);
-      this._decodeContext = (ContextObject)(new Object(11, 19));
-      this._dataBufferWR = (WeakReference)(new Object(null));
-      this._syncBufferWR = (WeakReference)(new Object(null));
-      this._syncConverter = (SyncConverter)(new Object(18, -7921492803965144520L));
+      this._decodeContext = new ContextObject(11, 19);
+      this._dataBufferWR = new WeakReference(null);
+      this._syncBufferWR = new WeakReference(null);
+      this._syncConverter = new RIMModelSyncConverter(18, -7921492803965144520L);
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
@@ -57,7 +58,7 @@ final class AddressCardModelFactory extends RIMModelFactory {
                            try {
                               var16 = true;
                               var12 = true;
-                              Object var22 = ContextObject.get(initialData, 255);
+                              SyncBuffer var22 = (SyncBuffer)ContextObject.get(initialData, 255);
                               if (var22 == null) {
                                  var24 = null;
                                  var12 = false;
@@ -65,8 +66,8 @@ final class AddressCardModelFactory extends RIMModelFactory {
                                  break label234;
                               }
 
-                              addressCard = new CompressedAddressCardModel(initialData, (SyncBuffer)var22);
-                              addressCard.setUID(((SyncBuffer)var22).getUID());
+                              addressCard = new CompressedAddressCardModel(initialData, var22);
+                              addressCard.setUID(var22.getUID());
                               var12 = false;
                               var16 = false;
                               break label233;
@@ -189,7 +190,7 @@ final class AddressCardModelFactory extends RIMModelFactory {
 
    @Override
    public final boolean recognize(Object object) {
-      if (object instanceof Object) {
+      if (object instanceof AddressCardModel) {
          return true;
       }
 
@@ -223,7 +224,7 @@ final class AddressCardModelFactory extends RIMModelFactory {
    public final Verb[] getVerbs(Object context) {
       if (ContextObject.getFlag(context, 18)) {
          if (this._addressBookVerbs == null) {
-            this._addressBookVerbs = new Object[]{new AddressCardVerb(0, 610816)};
+            this._addressBookVerbs = new Verb[]{new AddressCardVerb(0, 610816)};
          }
 
          return this._addressBookVerbs;
@@ -273,7 +274,7 @@ final class AddressCardModelFactory extends RIMModelFactory {
       // 029: invokeinterface net/rim/device/api/collection/WritableSet.add (Ljava/lang/Object;)V 2
       // 02e: aload 3
       // 02f: aload 1
-      // 030: new java/lang/Object
+      // 030: new net/rim/device/apps/api/framework/model/ContextObject
       // 033: dup
       // 034: bipush 11
       // 036: invokespecial net/rim/device/apps/api/framework/model/ContextObject.<init> (I)V

@@ -67,7 +67,7 @@ final class AlarmOptions$AlarmOptionsSyncItem extends OTASyncCapableSyncItem {
                   byte[] tuneNameBytes = new byte[dataLength];
                   buffer.readFully(tuneNameBytes);
                   if (!fqnTuneNameRead) {
-                     String tuneNameStringx = (String)(new Object(tuneNameBytes));
+                     String tuneNameStringx = new String(tuneNameBytes);
                      options.setTuneName(tuneNameStringx);
                   }
                   break;
@@ -81,8 +81,8 @@ final class AlarmOptions$AlarmOptionsSyncItem extends OTASyncCapableSyncItem {
                case 9: {
                   byte[] tuneNameBytes = new byte[dataLength];
                   buffer.readFully(tuneNameBytes);
-                  String tuneNameString = new Object(tuneNameBytes);
-                  options.setTuneName((String)tuneNameString);
+                  String tuneNameString = new String(tuneNameBytes);
+                  options.setTuneName(tuneNameString);
                   fqnTuneNameRead = true;
                }
             }

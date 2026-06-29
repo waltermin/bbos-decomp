@@ -28,15 +28,15 @@ final class MediaUtilities {
       // 01: astore 1
       // 02: aload 0
       // 03: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 06: checkcast java/lang/Object
+      // 06: checkcast javax/microedition/io/file/FileConnection
       // 09: astore 1
       // 0a: aload 1
       // 0b: dup
-      // 0c: instanceof java/lang/Object
+      // 0c: instanceof net/rim/device/api/io/file/ExtendedFileConnection
       // 0f: ifne 16
       // 12: pop
       // 13: goto 42
-      // 16: checkcast java/lang/Object
+      // 16: checkcast net/rim/device/api/io/file/ExtendedFileConnection
       // 19: astore 2
       // 1a: aload 2
       // 1b: invokeinterface net/rim/device/api/io/file/ExtendedFileConnection.isContentDRMForwardLocked ()Z 1

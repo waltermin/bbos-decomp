@@ -14,6 +14,7 @@ import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.StringTokenizer;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -57,8 +58,8 @@ public class SecureEmailOptionsModel implements RIMModel, VerbProvider, FieldPro
       int initialCertIndex = -1;
       int defaultCertIndex = -1;
       int numData = 0;
-      String[] dataLabels = new Object[0];
-      Certificate[] certificates = new Object[0];
+      String[] dataLabels = new String[0];
+      Certificate[] certificates = new Certificate[0];
       Array.resize(keyStoreDataArray, 0);
       Certificate initialCert = null;
       if (initialSelection != null) {
@@ -66,7 +67,7 @@ public class SecureEmailOptionsModel implements RIMModel, VerbProvider, FieldPro
       }
 
       keyStore.addIndex(new KeyUsagePrivateKeysKeyStoreIndex());
-      Enumeration enumeration = keyStore.elements(-2733667523168089402L, new Object(keyUsage));
+      Enumeration enumeration = keyStore.elements(-2733667523168089402L, new Integer(keyUsage));
 
       while (enumeration.hasMoreElements()) {
          KeyStoreData data = (KeyStoreData)enumeration.nextElement();
@@ -126,14 +127,14 @@ public class SecureEmailOptionsModel implements RIMModel, VerbProvider, FieldPro
       Verb defaultVerb = null;
       Array.resize(verbs, 0);
       Field fieldWithFocus = this._vfm.getLeafFieldWithFocus();
-      if (fieldWithFocus instanceof Object) {
+      if (fieldWithFocus instanceof CertificateChoiceField) {
          CertificateChoiceField certificateChoiceField = (CertificateChoiceField)fieldWithFocus;
          Certificate selectedCertificate = certificateChoiceField.getSelectedCertificate();
          if (selectedCertificate != null) {
             if (this._displayCertificateVerb == null) {
-               String[] containerStringUpperSingularArray = new Object[]{this._factory.getPublicKeyContainerString(true, false)};
+               String[] containerStringUpperSingularArray = new String[]{this._factory.getPublicKeyContainerString(true, false)};
                String displayCertificateVerbDescription = MessageFormat.format(SecureEmailResources.getString(164), containerStringUpperSingularArray);
-               this._displayCertificateVerb = (DisplayCertificateVerb)(new Object(displayCertificateVerbDescription));
+               this._displayCertificateVerb = new DisplayCertificateVerb(displayCertificateVerbDescription);
             }
 
             this._displayCertificateVerb
@@ -149,7 +150,7 @@ public class SecureEmailOptionsModel implements RIMModel, VerbProvider, FieldPro
    protected String getCMIMEServiceName() {
       String besUIDs = ITPolicy.getString(24, 51);
       if (besUIDs != null) {
-         StringTokenizer tokenizer = (StringTokenizer)(new Object(besUIDs, ','));
+         StringTokenizer tokenizer = new StringTokenizer(besUIDs, ',');
          String uid = null;
 
          while (tokenizer.hasMoreElements()) {
@@ -167,21 +168,21 @@ public class SecureEmailOptionsModel implements RIMModel, VerbProvider, FieldPro
    }
 
    protected void addGlobalOptionsFields() {
-      this._showMessageDetailsField = (BooleanChoiceField)(new Object(
+      this._showMessageDetailsField = new BooleanChoiceField(
          SecureEmailResources.getString(9), SecureEmailResources.getStringArray(7), this._secureEmailOptions.getShowMessageDetails()
-      ));
+      );
       this._vfm.add(this._showMessageDetailsField);
       String alwaysBCCAddress = this._utilities.getAlwaysBCCEmailAddress(null);
       if (alwaysBCCAddress != null && alwaysBCCAddress.length() > 0) {
          String cmimeServiceName = this.getCMIMEServiceName();
          String alwaysBCCLabel;
          if (cmimeServiceName != null) {
-            alwaysBCCLabel = MessageFormat.format(SecureEmailResources.getString(152), new Object[]{cmimeServiceName});
+            alwaysBCCLabel = MessageFormat.format(SecureEmailResources.getString(152), new String[]{cmimeServiceName});
          } else {
             alwaysBCCLabel = SecureEmailResources.getString(0);
          }
 
-         ObjectChoiceField alwaysBCCAddressField = (ObjectChoiceField)(new Object(alwaysBCCLabel, new Object[]{alwaysBCCAddress}));
+         ObjectChoiceField alwaysBCCAddressField = new ObjectChoiceField(alwaysBCCLabel, new String[]{alwaysBCCAddress});
          alwaysBCCAddressField.setEditable(false);
          this._vfm.add(alwaysBCCAddressField);
       }
@@ -189,10 +190,10 @@ public class SecureEmailOptionsModel implements RIMModel, VerbProvider, FieldPro
       String promptProblemMessage = MessageFormat.format(
          SecureEmailResources.getString(172), new Object[]{this._factory.getPublicKeyContainerString(false, true)}
       );
-      this._promptProblemPersonalCertsField = (BooleanChoiceField)(new Object(promptProblemMessage, 0, this._secureEmailOptions.getPromptProblemPersonalCerts()));
+      this._promptProblemPersonalCertsField = new BooleanChoiceField(promptProblemMessage, 0, this._secureEmailOptions.getPromptProblemPersonalCerts());
       this._vfm.add(this._promptProblemPersonalCertsField);
       String promptTruncatedMessage = SecureEmailResources.getString(180);
-      this._promptTruncatedMessageField = (BooleanChoiceField)(new Object(promptTruncatedMessage, 0, this._secureEmailOptions.getPromptTruncatedMessage()));
+      this._promptTruncatedMessageField = new BooleanChoiceField(promptTruncatedMessage, 0, this._secureEmailOptions.getPromptTruncatedMessage());
       this._vfm.add(this._promptTruncatedMessageField);
    }
 
@@ -211,7 +212,7 @@ public class SecureEmailOptionsModel implements RIMModel, VerbProvider, FieldPro
    @Override
    public boolean validate(Field field, Object context) {
       if (this._contentCipherField.getCheckedCiphers() == 0) {
-         SimpleChoiceDialog dialog = (SimpleChoiceDialog)(new Object(SecureEmailResources.getString(40), CommonResource.getStringArray(10004), 0, null));
+         SimpleChoiceDialog dialog = new SimpleChoiceDialog(SecureEmailResources.getString(40), CommonResource.getStringArray(10004), 0, null);
          dialog.setModal(true);
          dialog.show();
          return false;
@@ -269,7 +270,7 @@ public class SecureEmailOptionsModel implements RIMModel, VerbProvider, FieldPro
    @Override
    public final Field getField(Object context) {
       this._applicationEventLock = Application.getEventLock();
-      this._vfm = (VerticalIndentFieldManager)(new Object());
+      this._vfm = new VerticalIndentFieldManager();
       this._vfm.setCookie(this);
       SecureEmailOptions secureEmailGlobalOptions = this._factory.createGlobalOptionsCopy();
       if (this._message == null) {
@@ -284,7 +285,7 @@ public class SecureEmailOptionsModel implements RIMModel, VerbProvider, FieldPro
 
       this.addGlobalAndPerMessageOptionsFields(this._secureEmailOptions);
       if (this._message == null) {
-         this._vfm.add((Field)(new Object()));
+         this._vfm.add(new SeparatorField());
          this.addGlobalOptionsFields();
       }
 

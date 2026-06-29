@@ -5,7 +5,7 @@ import net.rim.wica.runtime.provisioning.internal.DefinitionVisitor;
 import org.xml.sax.Attributes;
 
 public final class EnumerationElement extends AbstractElement {
-   private Vector _values = (Vector)(new Object());
+   private Vector _values = new Vector();
 
    @Override
    public final void accept(DefinitionVisitor v) {
@@ -40,7 +40,7 @@ public final class EnumerationElement extends AbstractElement {
 
    @Override
    public final String toString() {
-      StringBuffer buf = (StringBuffer)(new Object(120));
+      StringBuffer buf = new StringBuffer(120);
       buf.append("EnumerationElement[name=").append(super._name).append(']');
       return buf.toString();
    }

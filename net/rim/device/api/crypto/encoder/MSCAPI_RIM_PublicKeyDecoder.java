@@ -3,22 +3,26 @@ package net.rim.device.api.crypto.encoder;
 import java.io.InputStream;
 import net.rim.device.api.crypto.CryptoUtilities;
 import net.rim.device.api.crypto.DHCryptoSystem;
+import net.rim.device.api.crypto.DHPublicKey;
 import net.rim.device.api.crypto.DSACryptoSystem;
+import net.rim.device.api.crypto.DSAPublicKey;
+import net.rim.device.api.crypto.InvalidKeyEncodingException;
 import net.rim.device.api.crypto.PublicKey;
 import net.rim.device.api.crypto.RSACryptoSystem;
+import net.rim.device.api.crypto.RSAPublicKey;
 import net.rim.device.api.util.Arrays;
 import net.rim.vm.Array;
 
 final class MSCAPI_RIM_PublicKeyDecoder extends MSCAPI_PublicKeyDecoder {
    @Override
-   public final PublicKey decodeKey(InputStream input, String algorithm) {
+   public final PublicKey decodeKey(InputStream input, String algorithm) throws InvalidKeyEncodingException {
       switch (algorithm.charAt(0)) {
          case '1':
             byte[] header = CryptoUtilities.readByteArrayFromInputStream(input, 4);
             boolean version3 = true;
             if (!Arrays.equals(header, "DSS3".getBytes())) {
                if (!Arrays.equals(header, "DSS1".getBytes())) {
-                  throw new Object();
+                  throw new InvalidKeyEncodingException();
                }
 
                version3 = false;
@@ -47,12 +51,12 @@ final class MSCAPI_RIM_PublicKeyDecoder extends MSCAPI_PublicKeyDecoder {
             CryptoUtilities.flipArray(p);
             CryptoUtilities.flipArray(g);
             CryptoUtilities.flipArray(q);
-            DSACryptoSystem cryptoSystem = (DSACryptoSystem)(new Object(p, q, g));
-            return (PublicKey)(new Object(cryptoSystem, CryptoUtilities.flipArray(y)));
+            DSACryptoSystem cryptoSystem = new DSACryptoSystem(p, q, g);
+            return new DSAPublicKey(cryptoSystem, CryptoUtilities.flipArray(y));
          case '2':
             CryptoUtilities.verifyKeyBytes(input, 82, 83, 65, 49);
             int bitlen = CryptoUtilities.readIntegerLittleEndian(input);
-            RSACryptoSystem cryptoSystem = (RSACryptoSystem)(new Object(bitlen));
+            RSACryptoSystem cryptoSystem = new RSACryptoSystem(bitlen);
             byte[] e = CryptoUtilities.readInteger4BigEndianAsByteArray(input);
             int i = 4;
 
@@ -63,7 +67,7 @@ final class MSCAPI_RIM_PublicKeyDecoder extends MSCAPI_PublicKeyDecoder {
             Array.resize(e, i);
             byte[] n = CryptoUtilities.readByteArrayFromInputStream(input, (bitlen + 7) / 8);
             CryptoUtilities.flipArray(n);
-            return (PublicKey)(new Object(cryptoSystem, e, n));
+            return new RSAPublicKey(cryptoSystem, e, n);
          case '5':
             CryptoUtilities.verifyKeyBytes(input, 0, 68, 72, 51);
             int bitlenP = CryptoUtilities.readIntegerLittleEndian(input);
@@ -80,17 +84,17 @@ final class MSCAPI_RIM_PublicKeyDecoder extends MSCAPI_PublicKeyDecoder {
             if (bitlenQ == 0) {
                CryptoUtilities.flipArray(p);
                CryptoUtilities.flipArray(g);
-               cryptoSystem = (DHCryptoSystem)(new Object(p, g));
+               cryptoSystem = new DHCryptoSystem(p, g);
             } else {
                CryptoUtilities.flipArray(p);
                CryptoUtilities.flipArray(g);
                CryptoUtilities.flipArray(q);
-               cryptoSystem = (DHCryptoSystem)(new Object(p, q, g));
+               cryptoSystem = new DHCryptoSystem(p, q, g);
             }
 
-            return (PublicKey)(new Object(cryptoSystem, CryptoUtilities.flipArray(y)));
+            return new DHPublicKey(cryptoSystem, CryptoUtilities.flipArray(y));
          default:
-            throw new Object();
+            throw new InvalidKeyEncodingException();
       }
    }
 

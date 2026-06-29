@@ -13,12 +13,12 @@ public class SpellCheckWordMatchState implements RegularExpressionState {
 
    @Override
    public Object newMark() {
-      return new Object(this.index);
+      return new Integer(this.index);
    }
 
    @Override
    public void rollback(Object mark) {
-      this.index = mark;
+      this.index = (Integer)mark;
    }
 
    @Override

@@ -1,8 +1,12 @@
 package net.rim.device.internal.media;
 
+import java.io.ByteArrayInputStream;
+import java.io.EOFException;
+import java.io.IOException;
 import java.io.InputStream;
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.media.Control;
+import javax.microedition.media.MediaException;
 import javax.microedition.media.Player;
 import javax.microedition.media.PlayerListener;
 import javax.microedition.media.control.MetaDataControl;
@@ -17,6 +21,7 @@ import net.rim.device.api.system.Alert;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.system.Display;
+import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.util.MathUtilities;
 import net.rim.device.internal.lcdui.LcduiPlayerController;
@@ -104,7 +109,7 @@ class StreamingMediaPlayer
    public StreamingMediaPlayer() {
       this._streamingManager = MediaStreamingManager.getInstance();
       this._dataChunkSize = this.getStreamingChunkSize(-1);
-      this._mediaBuffer = (RingBuffer)(new Object(this._dataChunkSize));
+      this._mediaBuffer = new RingBuffer(this._dataChunkSize);
       super._mediaTime = -1;
       super._audioSourceId = 10;
    }
@@ -226,7 +231,7 @@ class StreamingMediaPlayer
       try {
          var4 = true;
          if (this._dsInputStream == null) {
-            this._dsInputStream = (DataSourceInputStream)(new Object(this._mediaSourceStream));
+            this._dsInputStream = new DataSourceInputStream(this._mediaSourceStream);
          }
 
          bytesRead = this._mediaBuffer.write(this._dsInputStream);
@@ -264,7 +269,7 @@ class StreamingMediaPlayer
    @Override
    public void streamingDone(int reason) {
       this._streamingSession = null;
-      System.out.println(((StringBuffer)(new Object("Streaming done reason="))).append(reason).append(" prev-state=").append(super._state).toString());
+      System.out.println("Streaming done reason=" + reason + " prev-state=" + super._state);
       this.onDone(reason);
    }
 
@@ -319,7 +324,7 @@ class StreamingMediaPlayer
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   protected void doRealize() {
+   protected void doRealize() throws MediaException {
       super.doRealize();
       if (this._mediaSourceStream != null && this._mediaSourceStream.getContentDescriptor().getContentType().startsWith("audio")) {
          byte[] buffer = null;
@@ -329,7 +334,7 @@ class StreamingMediaPlayer
                if (this._codec == 10 && this._mediaSourceStream.getSeekType() == 2 && "audio/mp4".equals(super._type)) {
                   try {
                      long startPosition = this._mediaSourceStream.tell();
-                     MP4Info mp4Info = new MP4Info((InputStream)(new Object(this._mediaSourceStream)));
+                     MP4Info mp4Info = new MP4Info(new DataSourceInputStream(this._mediaSourceStream));
                      this._metaDataControl = mp4Info.getMetaData();
                      if (this._duration == -1) {
                         this._duration = mp4Info.getDuration();
@@ -337,7 +342,7 @@ class StreamingMediaPlayer
 
                      this._mediaSourceStream.seek(startPosition);
                   } catch (Throwable var94) {
-                     throw new Object(ioe.getMessage());
+                     throw new MediaException(ioe.getMessage());
                   }
                } else if (this._codec == 12) {
                   buffer = new byte[24];
@@ -374,7 +379,7 @@ class StreamingMediaPlayer
                      this._mediaBuffer.write(buffer, 0, bytesRead);
                      offset += bytesRead;
                   } catch (Throwable var99) {
-                     throw new Object(ioe.getMessage());
+                     throw new MediaException(ioe.getMessage());
                   }
                }
             } else {
@@ -392,7 +397,7 @@ class StreamingMediaPlayer
                         tagSize = ID3v2Reader.getTagSize(buffer);
                         if (tagSize > 2097152) {
                            tagSize = -1;
-                           throw new Object();
+                           throw new IllegalArgumentException();
                         }
 
                         var56 = false;
@@ -421,7 +426,7 @@ class StreamingMediaPlayer
                      offset += bytesRead;
                   }
                } catch (Throwable var101) {
-                  throw new Object(ioe.getMessage());
+                  throw new MediaException(ioe.getMessage());
                }
             }
          }
@@ -449,7 +454,7 @@ class StreamingMediaPlayer
                   Array.resize(buffer, offset + bytesRead);
                }
             } catch (Throwable var95) {
-               throw new Object(ioe.getMessage());
+               throw new MediaException(ioe.getMessage());
             }
 
             long contentLength = this._mediaSourceStream.getContentLength();
@@ -482,7 +487,7 @@ class StreamingMediaPlayer
                   this._mediaSourceStream.seek(startPosition);
                   return;
                } catch (Throwable var93) {
-                  throw new Object(ioe.getMessage());
+                  throw new MediaException(ioe.getMessage());
                }
             }
          }
@@ -495,10 +500,10 @@ class StreamingMediaPlayer
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private void initialize() {
+   private void initialize() throws MediaException {
       if (super._state <= 300) {
          if (Proxy.getInstance() == Application.getApplication() && Proxy.getInstance().isEventThread()) {
-            throw new Object("Player cannot be run on Proxy's application event thread.");
+            throw new IllegalStateException("Player cannot be run on Proxy's application event thread.");
          }
 
          long time = System.currentTimeMillis();
@@ -521,13 +526,13 @@ class StreamingMediaPlayer
             if (this._fileHandle < 0 && this._rtspUrl == null) {
                if (this._alreadyPlayed) {
                   if (seekType == 0 && this._mediaSourceStream.tell() > this._dataOffset) {
-                     throw new Object("Unable to play non-seekable stream again");
+                     throw new MediaException("Unable to play non-seekable stream again");
                   }
 
                   try {
                      if (seekType != 0 && (seekType != 2 || this._mediaSourceStream.seek(this._dataOffset) > this._dataOffset)) {
                         if (this._mediaSourceStream.seek(0) != 0) {
-                           throw new Object("Seek to beginning failed");
+                           throw new MediaException("Seek to beginning failed");
                         }
 
                         if (this._dataOffset > 0) {
@@ -538,7 +543,7 @@ class StreamingMediaPlayer
 
                      this._mediaBuffer.clear();
                   } catch (Throwable var16) {
-                     throw new Object(e.getMessage());
+                     throw new MediaException(e.getMessage());
                   }
                } else {
                   this._alreadyPlayed = true;
@@ -578,7 +583,7 @@ class StreamingMediaPlayer
                   if (this._mediaPlayer == null) {
                      super._state = 200;
                      this.notifyListeners("error", Integer.toString(1));
-                     throw new Object("Media processor is busy.");
+                     throw new MediaException("Media processor is busy.");
                   }
 
                   return;
@@ -593,7 +598,7 @@ class StreamingMediaPlayer
          return true;
       }
 
-      if (this._mediaSourceStream instanceof Object) {
+      if (this._mediaSourceStream instanceof HTTPDataSource) {
          HTTPBufferingManager bufferingManager = ((HTTPDataSource)this._mediaSourceStream).getBufferingManager();
          if (bufferingManager != null && bufferingManager.bufferWillContainAllContent()) {
             return true;
@@ -634,7 +639,7 @@ class StreamingMediaPlayer
 
                this.starting();
                this._mediaPlayer.play();
-               this.notifyListeners("started", new Object(this.getMediaTime()));
+               this.notifyListeners("started", new Long(this.getMediaTime()));
             }
          }
       }
@@ -681,7 +686,7 @@ class StreamingMediaPlayer
             }
 
             if (super._state == 400) {
-               this.notifyListeners("stopped", new Object(super._mediaTime));
+               this.notifyListeners("stopped", new Long(super._mediaTime));
             }
          }
       }
@@ -696,20 +701,20 @@ class StreamingMediaPlayer
    @Override
    public void setKeyValue(String key, Object value) {
       if ("interrupt_on_user_input".equals(key)) {
-         if (value instanceof Object) {
-            this.setInterruptible(value);
+         if (value instanceof Integer) {
+            this.setInterruptible((Integer)value);
             return;
          }
       } else if ("datasource".equals(key)) {
          this._dataSource = (DataSource)value;
          SourceStream[] streams = this._dataSource.getStreams();
          this._mediaSourceStream = streams[0];
-         if (this._dataSource instanceof Object) {
+         if (this._dataSource instanceof SourceInformationProvider) {
             this._fileHandle = ((SourceInformationProvider)this._dataSource).getFileHandle();
             return;
          }
 
-         if (this._dataSource instanceof Object) {
+         if (this._dataSource instanceof RTSPDataSource) {
             RTSPDataSource source = (RTSPDataSource)this._dataSource;
             this._rtspUrl = source.getLocator();
             this._rtspUserAgent = source.getUserAgent();
@@ -718,7 +723,7 @@ class StreamingMediaPlayer
          }
       } else {
          if ("audiosource".equals(key)) {
-            super._audioSourceId = value;
+            super._audioSourceId = (Integer)value;
             return;
          }
 
@@ -779,7 +784,7 @@ class StreamingMediaPlayer
    public Control[] getControls() {
       Control[] controls = super.getControls();
       if (controls == null) {
-         controls = new Object[this._metaDataControl != null ? 2 : 1];
+         controls = new Control[this._metaDataControl != null ? 2 : 1];
          controls[0] = this;
          if (controls.length > 1) {
             controls[1] = this._metaDataControl;
@@ -804,7 +809,7 @@ class StreamingMediaPlayer
    }
 
    @Override
-   public synchronized long setMediaTime(long now) {
+   public synchronized long setMediaTime(long now) throws MediaException {
       this.chkClosed(true);
       if (now < 0) {
          now = 0;
@@ -823,7 +828,7 @@ class StreamingMediaPlayer
          now /= 1000;
          boolean allowSeekToHead = this._mediaSourceStream.getSeekType() != 0 && now == 0;
          if (!this._seekable && !allowSeekToHead) {
-            throw new Object("Seeking not allowed on media.");
+            throw new MediaException("Seeking not allowed on media.");
          }
 
          int milliseconds = (int)now;
@@ -1016,7 +1021,7 @@ class StreamingMediaPlayer
             length *= 1000;
             if (length != this._duration) {
                this._duration = length;
-               durationUpdate = (Long)(new Object(length));
+               durationUpdate = new Long(length);
             }
          }
 
@@ -1029,8 +1034,8 @@ class StreamingMediaPlayer
             this.notifyListeners("durationUpdated", durationUpdate);
          }
 
-         this.notifyListeners("com.rim.seekableUpdate", new Object(this._seekable));
-         this.notifyListeners("com.rim.playableStreams", new Object(streams));
+         this.notifyListeners("com.rim.seekableUpdate", new Boolean(this._seekable));
+         this.notifyListeners("com.rim.playableStreams", new Integer(streams));
          if (mediaPlayer != null) {
             if (this._fullscreen) {
                this._mediaPlayer.resizeAndRelocate(0, 0, Display.getWidth(), Display.getHeight());
@@ -1046,7 +1051,7 @@ class StreamingMediaPlayer
                this._queuePlayback = false;
                this.starting();
                mediaPlayer.play();
-               this.notifyListeners("started", new Object(this.getMediaTime()));
+               this.notifyListeners("started", new Long(this.getMediaTime()));
             }
 
             this._loaded = true;
@@ -1067,7 +1072,7 @@ class StreamingMediaPlayer
                super._mediaTime = this._duration;
             }
 
-            Long mediaTimeObject = (Long)(new Object(super._mediaTime));
+            Long mediaTimeObject = new Long(super._mediaTime);
             this.notifyListeners("endOfMedia", mediaTimeObject);
             this.doLoop();
          }
@@ -1089,17 +1094,17 @@ class StreamingMediaPlayer
    @Override
    public Object initDisplayMode(int mode, Object arg) {
       if (this._initDisplayCalled) {
-         throw new Object("initDisplayMode already called successfully.");
+         throw new IllegalStateException("initDisplayMode already called successfully.");
       }
 
       Object obj = null;
       switch (mode) {
          case -1:
-            throw new Object("Invalid display mode");
+            throw new IllegalArgumentException("Invalid display mode");
          case 0:
             if (arg != null) {
-               if (!(arg instanceof Object)) {
-                  throw new Object("arg must be null or a java.lang.String");
+               if (!(arg instanceof String)) {
+                  throw new IllegalArgumentException("arg must be null or a java.lang.String");
                }
 
                if (arg.equals("javax.microedition.lcdui.Item")) {
@@ -1107,7 +1112,7 @@ class StreamingMediaPlayer
                   obj = this._controller.getComponent();
                } else {
                   if (!arg.equals("net.rim.device.api.ui.Field")) {
-                     throw new Object("GUI primitive type not supported");
+                     throw new IllegalArgumentException("GUI primitive type not supported");
                   }
 
                   this._controller = PlayerRegistry.getMMAPIConnector().getMediaField(this, this._videoWidth, this._videoHeight);
@@ -1120,18 +1125,18 @@ class StreamingMediaPlayer
             break;
          case 1:
          default:
-            if (arg instanceof Object) {
+            if (arg instanceof Canvas) {
                this._controller = PlayerRegistry.getMMAPIConnector().setMediaCanvas((Canvas)arg, this);
             } else {
-               if (!(arg instanceof Object)) {
-                  throw new Object("arg must not be null and must be a javax.microedition.lcdui.Canvas");
+               if (!(arg instanceof Field)) {
+                  throw new IllegalArgumentException("arg must not be null and must be a javax.microedition.lcdui.Canvas");
                }
 
                if (!PlayerRegistry.hasInternalMMAPIAccess()) {
-                  throw new Object("arg must not be null and must be a javax.microedition.lcdui.Canvas");
+                  throw new IllegalArgumentException("arg must not be null and must be a javax.microedition.lcdui.Canvas");
                }
 
-               if (arg instanceof Object) {
+               if (arg instanceof LcduiPlayerController) {
                   this._controller = (LcduiPlayerController)arg;
                   this._controller.setPlayer(this);
                }
@@ -1139,7 +1144,7 @@ class StreamingMediaPlayer
       }
 
       this._initDisplayCalled = true;
-      if (arg instanceof Object) {
+      if (arg instanceof Canvas) {
          this.setVisible(false);
       }
 
@@ -1266,7 +1271,7 @@ class StreamingMediaPlayer
             this._controller.refresh();
          }
       } else {
-         throw new Object("Values must be positive.");
+         throw new IllegalArgumentException("Values must be positive.");
       }
    }
 
@@ -1325,13 +1330,13 @@ class StreamingMediaPlayer
    }
 
    @Override
-   public byte[] getSnapshot(String imageType) {
-      throw new Object("VideoControl.getSnapshot not supported");
+   public byte[] getSnapshot(String imageType) throws MediaException {
+      throw new MediaException("VideoControl.getSnapshot not supported");
    }
 
    private void checkInitDisplayed() {
       if (!this._initDisplayCalled) {
-         throw new Object("initDisplayMode not called.");
+         throw new IllegalStateException("initDisplayMode not called.");
       }
    }
 
@@ -1404,7 +1409,7 @@ class StreamingMediaPlayer
          try {
             switch (this._codec) {
                case 0:
-                  this._duration = getWavDuration((InputStream)(new Object(data)));
+                  this._duration = getWavDuration(new ByteArrayInputStream(data));
                   if (this._duration != -1) {
                      super._mediaTime = 0;
                   }
@@ -1498,33 +1503,33 @@ class StreamingMediaPlayer
       return -1;
    }
 
-   private static int readIntLittleEndian(InputStream is) {
+   private static int readIntLittleEndian(InputStream is) throws EOFException {
       int b1 = is.read();
       int b2 = is.read();
       int b3 = is.read();
       int b4 = is.read();
       if ((b1 | b2 | b3 | b4) < 0) {
-         throw new Object();
+         throw new EOFException();
       } else {
          return b4 << 24 | b3 << 16 | b2 << 8 | b1;
       }
    }
 
-   private static int readUnsignedShortLittleEndian(InputStream is) {
+   private static int readUnsignedShortLittleEndian(InputStream is) throws EOFException {
       int b1 = is.read();
       int b2 = is.read();
       if ((b1 | b2) < 0) {
-         throw new Object();
+         throw new EOFException();
       } else {
          return b2 << 8 | b1;
       }
    }
 
-   private static void skipFully(InputStream is, int numBytes) {
+   private static void skipFully(InputStream is, int numBytes) throws IOException {
       while (numBytes > 0) {
          int skipped = (int)is.skip(numBytes);
          if (skipped <= 0) {
-            throw new Object();
+            throw new IOException();
          }
 
          numBytes -= skipped;

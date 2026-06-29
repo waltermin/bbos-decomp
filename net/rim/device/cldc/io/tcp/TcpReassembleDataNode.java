@@ -52,7 +52,7 @@ final class TcpReassembleDataNode implements TcpDataBlock {
          this._offset = 0;
       } else {
          System.out.println("ERROR: RTE - TcpReassembleDataNode::setRightEdge - This should always be positive.");
-         throw new Object("setRightEdge should always be positive.");
+         throw new RuntimeException("setRightEdge should always be positive.");
       }
    }
 
@@ -66,7 +66,7 @@ final class TcpReassembleDataNode implements TcpDataBlock {
             this._leftEdge = seqNo;
          } else {
             System.out.println("ERROR: RTE - TcpReassembleDataNode::trimLeftEdge() Bad LeftEdge trim attempt");
-            throw new Object("Bad LeftEdge trim attempt");
+            throw new RuntimeException("Bad LeftEdge trim attempt");
          }
       }
    }

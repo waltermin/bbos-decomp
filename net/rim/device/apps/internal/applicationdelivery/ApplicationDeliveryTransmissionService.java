@@ -73,7 +73,7 @@ class ApplicationDeliveryTransmissionService extends AbstractTransmissionService
 
    void clearApplications() {
       synchronized (this._applicationDeliveryPersistedData._pendingApplications) {
-         this._applicationDeliveryPersistedData._pendingApplications = (LongHashtable)(new Object());
+         this._applicationDeliveryPersistedData._pendingApplications = new LongHashtable();
          this._persistentData.commit();
          this.isCleanerNecessary();
       }
@@ -83,7 +83,7 @@ class ApplicationDeliveryTransmissionService extends AbstractTransmissionService
       boolean securityViolation = true;
       String besUIDs = ITPolicy.getString(24, 51);
       if (besUIDs != null) {
-         StringTokenizer tokenizer = (StringTokenizer)(new Object(besUIDs, ','));
+         StringTokenizer tokenizer = new StringTokenizer(besUIDs, ',');
          String uid = null;
 
          while (tokenizer.hasMoreElements()) {
@@ -105,7 +105,7 @@ class ApplicationDeliveryTransmissionService extends AbstractTransmissionService
    void processDataBuffer(DataBuffer data) {
       if (_debugMode) {
          int flashFree = Memory.getFlashFree();
-         System.out.println(((StringBuffer)(new Object("APPD - Available Flash before processing databuffer: "))).append(flashFree).toString());
+         System.out.println("APPD - Available Flash before processing databuffer: " + flashFree);
       }
 
       synchronized (this._applicationDeliveryPersistedData._pendingApplications) {
@@ -115,7 +115,7 @@ class ApplicationDeliveryTransmissionService extends AbstractTransmissionService
 
       if (_debugMode) {
          int flashFree = Memory.getFlashFree();
-         System.out.println(((StringBuffer)(new Object("APPD - Available Flash after processing databuffer: "))).append(flashFree).toString());
+         System.out.println("APPD - Available Flash after processing databuffer: " + flashFree);
       }
    }
 
@@ -197,7 +197,7 @@ class ApplicationDeliveryTransmissionService extends AbstractTransmissionService
          int moduleSize = TLEUtilities.readIntegerField(data);
          data.setPosition(tleStartPosition);
          Hashtable modules = applicationInfo.getModules();
-         ByteArray moduleHashByteArray = (ByteArray)(new Object(moduleHash));
+         ByteArray moduleHashByteArray = new ByteArray(moduleHash);
          moduleInfo = (ModuleInfo)modules.get(moduleHashByteArray);
          if (moduleInfo == null) {
             moduleInfo = new ModuleInfo(moduleSize, moduleHash);
@@ -244,12 +244,12 @@ class ApplicationDeliveryTransmissionService extends AbstractTransmissionService
             System.out.println("----------------------------------------");
             System.out.println("APPD - Module Hash: ");
             DebugUtilities.printArrayContents(moduleHash);
-            System.out.println(((StringBuffer)(new Object("APPD - Number of Modules:"))).append(moduleCount).toString());
-            System.out.println(((StringBuffer)(new Object("APPD - Sequence Number:"))).append(sequenceNumber).toString());
-            System.out.println(((StringBuffer)(new Object("APPD - Transaction Id:"))).append(transactionId).toString());
-            System.out.println(((StringBuffer)(new Object("APPD - Module Offset:"))).append(moduleOffset).toString());
-            System.out.println(((StringBuffer)(new Object("APPD - Sequence Length: "))).append(sequenceLength).toString());
-            System.out.println(((StringBuffer)(new Object("APPD - Module Size: "))).append(moduleSize).toString());
+            System.out.println("APPD - Number of Modules:" + moduleCount);
+            System.out.println("APPD - Sequence Number:" + sequenceNumber);
+            System.out.println("APPD - Transaction Id:" + transactionId);
+            System.out.println("APPD - Module Offset:" + moduleOffset);
+            System.out.println("APPD - Sequence Length: " + sequenceLength);
+            System.out.println("APPD - Module Size: " + moduleSize);
             System.out.println("----------------------------------------");
          }
 
@@ -383,7 +383,7 @@ class ApplicationDeliveryTransmissionService extends AbstractTransmissionService
       if (serviceRecord == null) {
          gcfURL = "gme:APPD";
       } else {
-         gcfURL = ((StringBuffer)(new Object("gme:APPD/"))).append(serviceRecord.getUid()).toString();
+         gcfURL = "gme:APPD/" + serviceRecord.getUid();
       }
 
       return (DatagramConnection)Connector.open(gcfURL);
@@ -394,7 +394,7 @@ class ApplicationDeliveryTransmissionService extends AbstractTransmissionService
       if (uid == null) {
          gcfURL = "gme:APPD";
       } else {
-         gcfURL = ((StringBuffer)(new Object("gme:APPD/"))).append(uid).toString();
+         gcfURL = "gme:APPD/" + uid;
       }
 
       return (DatagramConnection)Connector.open(gcfURL);
@@ -407,13 +407,13 @@ class ApplicationDeliveryTransmissionService extends AbstractTransmissionService
             return false;
          }
 
-         targetUID = (String)(new Object(this._applicationDeliveryPersistedData._sourceUid));
+         targetUID = new String(this._applicationDeliveryPersistedData._sourceUid);
       }
 
-      DataBuffer data = (DataBuffer)(new Object(true));
+      DataBuffer data = new DataBuffer(true);
       data.writeByte(1);
       data.writeByte(2);
-      DataBuffer tleData = (DataBuffer)(new Object(true));
+      DataBuffer tleData = new DataBuffer(true);
       if (transactionStatus == 5) {
          tleData.writeByte(9);
          tleData.writeCompressedInt(1);
@@ -437,7 +437,7 @@ class ApplicationDeliveryTransmissionService extends AbstractTransmissionService
          return false;
       }
 
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       ContextObject.put(context, -7050660451800027507L, srs);
       super._serviceRecord = srs[0];
       if (super._serviceRecord != null) {
@@ -449,7 +449,7 @@ class ApplicationDeliveryTransmissionService extends AbstractTransmissionService
          }
       }
 
-      Packet packet = (Packet)(new Object(data, null, 0, context));
+      Packet packet = new Packet(data, null, 0, context);
       this.transmitPacket(packet, null);
       return true;
    }
@@ -460,7 +460,7 @@ class ApplicationDeliveryTransmissionService extends AbstractTransmissionService
          return 2;
       }
 
-      ServiceRecord[] srs = ServiceBook.getSB().findRecordsByUid((String)(new Object(this._applicationDeliveryPersistedData._sourceUid)));
+      ServiceRecord[] srs = ServiceBook.getSB().findRecordsByUid(new String(this._applicationDeliveryPersistedData._sourceUid));
       return srs != null && srs.length > 0 ? 3 : 2;
    }
 
@@ -481,7 +481,7 @@ class ApplicationDeliveryTransmissionService extends AbstractTransmissionService
 
    @Override
    protected DatagramConnectionUser createReceiverThread(DatagramConnection connection) {
-      DefaultReceiveThread receiveThread = (DefaultReceiveThread)(new Object(this, 8238338396594524829L));
+      DefaultReceiveThread receiveThread = new DefaultReceiveThread(this, 8238338396594524829L);
 
       try {
          receiveThread.setDatagramConnection(this.createReceivingConnection(null));
@@ -496,7 +496,7 @@ class ApplicationDeliveryTransmissionService extends AbstractTransmissionService
       this._persistentData = RIMPersistentStore.getPersistentObject(-5859617397995461741L);
       synchronized (this._persistentData) {
          if (this._persistentData.getContents() == null) {
-            this._persistentData.setContents(new ApplicationDeliveryTransmissionService$ApplicationDeliveryPersistedData((LongHashtable)(new Object())), 51);
+            this._persistentData.setContents(new ApplicationDeliveryTransmissionService$ApplicationDeliveryPersistedData(new LongHashtable()), 51);
             this._persistentData.commit();
          }
       }

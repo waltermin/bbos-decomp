@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.addressbook.addresscard;
 
 import net.rim.device.apps.api.browser.BrowserServices;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.internal.addressbook.resources.AddressBookResources;
 
@@ -20,6 +21,6 @@ final class WebPageAddressModel$FollowLinkVerb extends Verb {
    @Override
    public final Object invoke(Object param) {
       BrowserServices.loadUrl(this._address);
-      return new Object(39);
+      return new ContextObject(39);
    }
 }

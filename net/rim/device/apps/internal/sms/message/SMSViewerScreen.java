@@ -11,10 +11,10 @@ import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.CookieProvider;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.FlowFieldManager;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.Arrays;
-import net.rim.device.api.util.LongHashtable;
 import net.rim.device.apps.api.framework.hotkeys.HotKeyCheck;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.FieldProvider;
@@ -34,6 +34,7 @@ import net.rim.device.apps.api.ui.PopupStatus;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
 import net.rim.device.apps.api.utility.framework.FindVerbManager;
 import net.rim.device.apps.api.utility.framework.ModelScreen;
+import net.rim.device.apps.api.utility.framework.ModelScreen$NotificationRunnable;
 import net.rim.device.apps.internal.messaging.MessageHotkeys;
 import net.rim.device.apps.internal.sms.SMSChangeStatusVerb;
 import net.rim.device.apps.internal.sms.SMSModel;
@@ -48,7 +49,7 @@ public final class SMSViewerScreen extends ModelScreen implements HolsterListene
    private SMSChangeStatusVerb _smsSaveVerb;
    private SMSForwardVerb _smsForwardVerb;
    private ViewFolderVerb _viewFolderVerb;
-   private FindVerbManager _findVerbManager = (FindVerbManager)(new Object(this.getDelegate()));
+   private FindVerbManager _findVerbManager = new FindVerbManager(this.getDelegate());
    private Manager _historyManager;
    private Field[] _addressFields;
    private SMSMessageModel _model;
@@ -95,7 +96,7 @@ public final class SMSViewerScreen extends ModelScreen implements HolsterListene
       addressContextObject.setFlag(1);
       addressContextObject.clearFlag(0);
       int loopEnd = addresses.length;
-      VerticalFieldManager vfm = (VerticalFieldManager)(new Object());
+      VerticalFieldManager vfm = new VerticalFieldManager();
 
       for (int i = 0; i < loopEnd; i++) {
          PersistableRIMModel address = addresses[i];
@@ -103,11 +104,11 @@ public final class SMSViewerScreen extends ModelScreen implements HolsterListene
          addressField = fieldProvider.getField(ContextObject.clone(addressContextObject));
          if (addressField != null) {
             if (this._addressFields == null) {
-               this._addressFields = new Object[0];
+               this._addressFields = new Field[0];
             }
 
             Arrays.add(this._addressFields, addressField);
-            FlowFieldManager statusFfm = (FlowFieldManager)(new Object());
+            FlowFieldManager statusFfm = new FlowFieldManager();
             statusFfm.add(new StatusIconField(this._model, i));
             statusFfm.add(addressField);
             statusFfm.add(new StatusTextField(this._model, i));
@@ -116,7 +117,7 @@ public final class SMSViewerScreen extends ModelScreen implements HolsterListene
       }
 
       this.add(vfm);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       ContextObject contextObject = ContextObject.clone(super._context);
       field = this._model.getField(contextObject);
       if (field != null) {
@@ -125,7 +126,7 @@ public final class SMSViewerScreen extends ModelScreen implements HolsterListene
       }
 
       contextObject.setFlag(54);
-      this._historyManager = (Manager)(new Object());
+      this._historyManager = new VerticalFieldManager();
       includeMessageThread(this._model, this._historyManager, contextObject, this._model._payload._creationDate, false);
       if (this._historyManager.getFieldCount() == 0) {
          this._historyManager = null;
@@ -154,7 +155,7 @@ public final class SMSViewerScreen extends ModelScreen implements HolsterListene
                }
             }
 
-            if (!(currentField instanceof Object)) {
+            if (!(currentField instanceof Manager)) {
                return false;
             }
 
@@ -205,7 +206,7 @@ public final class SMSViewerScreen extends ModelScreen implements HolsterListene
          }
 
          if (instance != 65536) {
-            ForwardAsVerb forwardAsVerb = (ForwardAsVerb)(new Object(this._model));
+            ForwardAsVerb forwardAsVerb = new ForwardAsVerb(this._model);
             if (forwardAsVerb.canInvoke(null)) {
                menu.add(forwardAsVerb);
             }
@@ -213,7 +214,7 @@ public final class SMSViewerScreen extends ModelScreen implements HolsterListene
       }
 
       if (instance == 65536) {
-         DeleteSingleItemVerb deleteSingleItemVerb = (DeleteSingleItemVerb)(new Object(611472, 1000));
+         DeleteSingleItemVerb deleteSingleItemVerb = new DeleteSingleItemVerb(611472, 1000);
          deleteSingleItemVerb.setParameters(this._model, ContextObject.castOrCreate(super._context));
          menu.add(deleteSingleItemVerb);
       } else {
@@ -229,7 +230,7 @@ public final class SMSViewerScreen extends ModelScreen implements HolsterListene
          }
 
          menu.add(this._findVerbManager.getVerbs());
-         VerbFactory outerVerbFactory = (VerbFactory)((LongHashtable)super._context).get(-2846768035584909703L);
+         VerbFactory outerVerbFactory = (VerbFactory)((ContextObject)super._context).get(-2846768035584909703L);
          if (outerVerbFactory != null) {
             menu.add(outerVerbFactory.getVerbs(super._context));
          }
@@ -258,17 +259,17 @@ public final class SMSViewerScreen extends ModelScreen implements HolsterListene
 
    private final boolean isOnHyperlink() {
       Field focusedField = this.getFieldWithFocus();
-      if (focusedField instanceof Object) {
+      if (focusedField instanceof CookieProvider) {
          Object cookie = CookieProviderUtilities.getDefaultCookie(((CookieProvider)focusedField).getCookieWithFocus());
-         if (cookie instanceof Object) {
+         if (cookie instanceof RIMModel) {
             return true;
          }
       }
 
       focusedField = this.getLeafFieldWithFocus();
-      if (focusedField instanceof Object) {
+      if (focusedField instanceof CookieProvider) {
          Object cookie = CookieProviderUtilities.getDefaultCookie(((CookieProvider)focusedField).getCookieWithFocus());
-         if (cookie instanceof Object) {
+         if (cookie instanceof RIMModel) {
             return true;
          }
       }
@@ -346,7 +347,7 @@ public final class SMSViewerScreen extends ModelScreen implements HolsterListene
                return false;
          }
       } else {
-         DeleteSingleItemVerb deleteVerb = (DeleteSingleItemVerb)(new Object(611472, 1000));
+         DeleteSingleItemVerb deleteVerb = new DeleteSingleItemVerb(611472, 1000);
          deleteVerb.setParameters(this._model, super._context);
          super._returnValue = deleteVerb.invoke(null);
          if (ContextObject.getFlag(super._returnValue, 39)) {
@@ -441,11 +442,11 @@ public final class SMSViewerScreen extends ModelScreen implements HolsterListene
    public final void notifyOfOpenedModelChange(RIMModel oldModel, RIMModel newModel, Object moreContext) {
       if (this._model == oldModel && newModel instanceof SMSMessageModel) {
          if (super._application != Application.getApplication() || !Application.isEventDispatchThread()) {
-            super._application.invokeLater((Runnable)(new Object(this, oldModel, newModel, moreContext)));
+            super._application.invokeLater(new ModelScreen$NotificationRunnable(this, oldModel, newModel, moreContext));
             return;
          }
 
-         if (moreContext instanceof Object && ((ContextObject)moreContext).getFlag(27)) {
+         if (moreContext instanceof ContextObject && ((ContextObject)moreContext).getFlag(27)) {
             this.invalidate();
             return;
          }

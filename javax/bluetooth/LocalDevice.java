@@ -57,7 +57,7 @@ public class LocalDevice {
             if (mode >= 10390272 && mode <= 10390335) {
                return false;
             } else {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
       }
    }
@@ -81,11 +81,11 @@ public class LocalDevice {
 
    public ServiceRecord getRecord(Connection notifier) {
       if (notifier == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       if (!(notifier instanceof BluetoothServerConnection)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       BluetoothServerConnection conn = (BluetoothServerConnection)notifier;
@@ -94,11 +94,11 @@ public class LocalDevice {
 
    public void updateRecord(ServiceRecord srvRecord) {
       if (srvRecord == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       if (!(srvRecord instanceof LocalServiceRecord)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       ((LocalServiceRecord)srvRecord).updateRecord();

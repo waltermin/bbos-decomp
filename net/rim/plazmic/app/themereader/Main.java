@@ -1,6 +1,6 @@
 package net.rim.plazmic.app.themereader;
 
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 import java.util.Enumeration;
 import java.util.Vector;
 import net.rim.device.api.system.Application;
@@ -59,7 +59,7 @@ public class Main extends Application implements GlobalEventListener {
             byte[] themeDescription = getThemeDescription(themeManifest, r);
             if (isValidTheme(moduleName, themeManifest, themeDescription, themeEventLogger)) {
                mgr.discoverTheme(
-                  (InputStream)(new Object(themeDescription)),
+                  new ByteArrayInputStream(themeDescription),
                   moduleName,
                   r,
                   themeManifest.getManifestVersion(),
@@ -85,7 +85,7 @@ public class Main extends Application implements GlobalEventListener {
 
    public static boolean registerTheme(String themeName) {
       boolean success = true;
-      int handle = CodeModuleManager.getModuleHandle(((StringBuffer)(new Object("com_plazmic_theme_"))).append(themeName).toString());
+      int handle = CodeModuleManager.getModuleHandle("com_plazmic_theme_" + themeName);
       if (handle == 0) {
          return false;
       }
@@ -95,7 +95,7 @@ public class Main extends Application implements GlobalEventListener {
    }
 
    private static Enumeration collectModuleNames(int[] handles, ThemeEventLogger themeEventLogger) {
-      Vector names = (Vector)(new Object());
+      Vector names = new Vector();
 
       for (int i = 0; i < handles.length; i++) {
          String name = null;
@@ -125,7 +125,7 @@ public class Main extends Application implements GlobalEventListener {
       byte[] manifestData = r.getResource("theme_manifest.mf");
       if (manifestData != null) {
          try {
-            return new ThemeManifest((InputStream)(new Object(manifestData)));
+            return new ThemeManifest(new ByteArrayInputStream(manifestData));
          } finally {
             return manifest;
          }
@@ -179,7 +179,7 @@ public class Main extends Application implements GlobalEventListener {
    }
 
    private static int getActualHash(byte[] b) {
-      HashSum hs = (HashSum)(new Object());
+      HashSum hs = new HashSum();
       hs.update(b);
       return hs.getCasualHash();
    }

@@ -1,5 +1,7 @@
 package net.rim.device.cldc.io.btgoep;
 
+import java.io.IOException;
+import java.util.Calendar;
 import javax.obex.HeaderSet;
 import net.rim.device.api.crypto.Digest;
 import net.rim.device.api.crypto.DigestFactory;
@@ -36,7 +38,7 @@ public class HeaderSetImpl implements HeaderSet {
       this._responseCode = responseCode;
    }
 
-   public HeaderSetImpl(DataBuffer data) {
+   public HeaderSetImpl(DataBuffer data) throws IOException {
       this();
 
       while (!data.eof()) {
@@ -58,7 +60,7 @@ public class HeaderSetImpl implements HeaderSet {
                   }
 
                   data.skipBytes(2);
-                  o = new Object(array);
+                  o = new String(array);
                }
                break;
             case 64:
@@ -72,20 +74,20 @@ public class HeaderSetImpl implements HeaderSet {
                      }
                   case 68:
                   case 71:
-                     o = new Object(array, 0, length);
+                     o = new String(array, 0, length);
                      break label49;
                   default:
                      o = array;
                      break label49;
                }
             case 128:
-               o = new Object(data.readByte());
+               o = new Byte(data.readByte());
                break;
             case 192:
-               o = new Object(data.readInt() & 4294967295L);
+               o = new Long(data.readInt() & 4294967295L);
                break;
             default:
-               throw new Object(((StringBuffer)(new Object("Unknown data type: "))).append(Integer.toHexString(header)).toString());
+               throw new IOException("Unknown data type: " + Integer.toHexString(header));
          }
 
          int i = this._headers.length - 1;
@@ -138,21 +140,21 @@ public class HeaderSetImpl implements HeaderSet {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public synchronized DataBuffer getData() {
+   public synchronized DataBuffer getData() throws IOException {
       int length = this._headers.length;
       if (length == 0) {
          return null;
       }
 
-      DataBuffer db = (DataBuffer)(new Object());
+      DataBuffer db = new DataBuffer();
 
       for (int x = 0; x < length; x++) {
          int header = this._headers[x];
          Object o = this._objects[x];
          db.writeByte(header);
-         if (!(o instanceof Object)) {
-            if (!(o instanceof Object)) {
-               if (!(o instanceof Object)) {
+         if (!(o instanceof String)) {
+            if (!(o instanceof Byte)) {
+               if (!(o instanceof Long)) {
                   byte[] b = (byte[])o;
                   db.writeShort(b.length + 3);
                   db.write(b, 0, b.length);
@@ -172,7 +174,7 @@ public class HeaderSetImpl implements HeaderSet {
                try {
                   db.write(s.getBytes("UnicodeBigUnmarked"));
                } catch (Throwable var9) {
-                  throw new Object(ex.getMessage());
+                  throw new IOException(ex.getMessage());
                }
 
                db.writeShort(0);
@@ -195,14 +197,14 @@ public class HeaderSetImpl implements HeaderSet {
          case 1:
          case 5:
          case 66:
-            if (headerValue != null && !(headerValue instanceof Object)) {
-               throw new Object();
+            if (headerValue != null && !(headerValue instanceof String)) {
+               throw new IllegalArgumentException();
             }
             break;
          case 68:
          case 196:
-            if (headerValue != null && !(headerValue instanceof Object)) {
-               throw new Object();
+            if (headerValue != null && !(headerValue instanceof Calendar)) {
+               throw new IllegalArgumentException();
             }
             break;
          case 70:
@@ -213,29 +215,29 @@ public class HeaderSetImpl implements HeaderSet {
          case 78:
          case 79:
             if (headerValue != null && !(headerValue instanceof byte[])) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
             break;
          case 192:
          case 195:
          case 203:
-            if (headerValue != null && !(headerValue instanceof Object)) {
-               throw new Object();
+            if (headerValue != null && !(headerValue instanceof Long)) {
+               throw new IllegalArgumentException();
             }
             break;
          default:
             if (headerID >= 48 && headerID <= 63
-               ? headerValue != null && !(headerValue instanceof Object)
+               ? headerValue != null && !(headerValue instanceof String)
                : (
                   headerID >= 112 && headerID <= 127
                      ? headerValue != null && !(headerValue instanceof byte[])
                      : (
                         headerID >= 176 && headerID <= 191
-                           ? headerValue != null && !(headerValue instanceof Object)
-                           : headerID < 240 || headerID > 255 || headerValue != null && !(headerValue instanceof Object)
+                           ? headerValue != null && !(headerValue instanceof Byte)
+                           : headerID < 240 || headerID > 255 || headerValue != null && !(headerValue instanceof Long)
                      )
                )) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
       }
 
@@ -247,11 +249,11 @@ public class HeaderSetImpl implements HeaderSet {
             }
          }
       } else {
-         if (headerValue instanceof Object) {
+         if (headerValue instanceof Long) {
             Long l = (Long)headerValue;
             long ll = l;
             if (ll < 0 || ll > 4294967295L) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
          }
 
@@ -293,7 +295,7 @@ public class HeaderSetImpl implements HeaderSet {
                && (headerID < 112 || headerID > 127)
                && (headerID < 176 || headerID > 191)
                && (headerID < 240 || headerID > 255)) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
       }
 
@@ -315,12 +317,12 @@ public class HeaderSetImpl implements HeaderSet {
 
    @Override
    public void createAuthenticationChallenge(String realm, boolean userID, boolean access) {
-      DataBuffer buffer = (DataBuffer)(new Object());
+      DataBuffer buffer = new DataBuffer();
       byte[] digestData = null;
 
       label36:
       try {
-         String nouce = ((StringBuffer)(new Object())).append(System.currentTimeMillis() + 58).append("RIM-NONCE-KEY").toString();
+         String nouce = System.currentTimeMillis() + 58 + "RIM-NONCE-KEY";
          Digest digest = DigestFactory.getInstance("MD5");
          digest.update(nouce.getBytes());
          digestData = digest.getDigest();
@@ -354,9 +356,9 @@ public class HeaderSetImpl implements HeaderSet {
    }
 
    @Override
-   public int getResponseCode() {
+   public int getResponseCode() throws IOException {
       if (this._responseCode == -1) {
-         throw new Object();
+         throw new IOException();
       } else {
          return this._responseCode;
       }
@@ -364,7 +366,7 @@ public class HeaderSetImpl implements HeaderSet {
 
    @Override
    public synchronized String toString() {
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
       int numHeaders = this._headers.length;
 
       for (int x = 0; x < numHeaders; x++) {
@@ -424,13 +426,13 @@ public class HeaderSetImpl implements HeaderSet {
                sb.append("Connection Id");
                break;
             default:
-               sb.append(((StringBuffer)(new Object("User defined 0x"))).append(Integer.toHexString(header)).toString());
+               sb.append("User defined 0x" + Integer.toHexString(header));
          }
 
          sb.append(": ");
          if (!(o instanceof byte[])) {
-            if (!(o instanceof Object)) {
-               if (!(o instanceof Object)) {
+            if (!(o instanceof Byte)) {
+               if (!(o instanceof Long)) {
                   sb.append(o);
                } else {
                   Long l = (Long)o;

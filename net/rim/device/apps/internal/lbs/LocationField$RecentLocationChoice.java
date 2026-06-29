@@ -10,13 +10,6 @@ final class LocationField$RecentLocationChoice extends LocationField$LocationCho
    @Override
    public final String toString() {
       String label = this._location._label;
-      return label != null
-         ? label
-         : ((StringBuffer)(new Object("(")))
-            .append(Integer.toString(this._location._latitude))
-            .append(",")
-            .append(Integer.toString(this._location._longitude))
-            .append(")")
-            .toString();
+      return label != null ? label : "(" + Integer.toString(this._location._latitude) + "," + Integer.toString(this._location._longitude) + ")";
    }
 }

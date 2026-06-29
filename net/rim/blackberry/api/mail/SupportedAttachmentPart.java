@@ -1,5 +1,6 @@
 package net.rim.blackberry.api.mail;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -73,7 +74,7 @@ public class SupportedAttachmentPart extends BodyPart {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public void writeTo(OutputStream out) {
+   public void writeTo(OutputStream out) throws IOException {
       super.writeTo(out);
       out.write(BodyPart.CRLF);
       out.write(BodyPart.CRLF);
@@ -85,7 +86,7 @@ public class SupportedAttachmentPart extends BodyPart {
          var4 = false;
       } finally {
          if (var4) {
-            throw new Object();
+            throw new IOException();
          }
       }
 
@@ -94,6 +95,6 @@ public class SupportedAttachmentPart extends BodyPart {
    }
 
    public String getName() {
-      return (String)(new Object(this._data.getNameBytes()));
+      return new String(this._data.getNameBytes());
    }
 }

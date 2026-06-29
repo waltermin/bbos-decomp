@@ -38,16 +38,16 @@ final class BlackBerryMessengerImpl extends BlackBerryMessenger {
    public final void registerService(Service service, String name, ApplicationDescriptor application) {
       this.assertPermission();
       if (!Utils.isValidString(name)) {
-         throw new Object("String name must not be null or zero-length");
+         throw new IllegalArgumentException("String name must not be null or zero-length");
       }
 
       if (application != null) {
          if (application.getModuleHandle() != ApplicationDescriptor.currentApplicationDescriptor().getModuleHandle()) {
-            throw new Object("ApplicationDescriptor must describe the registering application");
+            throw new IllegalArgumentException("ApplicationDescriptor must describe the registering application");
          }
 
          if (service == null) {
-            throw new Object("service cannot be null");
+            throw new IllegalArgumentException("service cannot be null");
          }
 
          synchronized (this._services) {
@@ -56,7 +56,7 @@ final class BlackBerryMessengerImpl extends BlackBerryMessenger {
             }
          }
       } else {
-         throw new Object("application cannot be null");
+         throw new IllegalArgumentException("application cannot be null");
       }
    }
 
@@ -76,16 +76,16 @@ final class BlackBerryMessengerImpl extends BlackBerryMessenger {
       this.assertPermission();
       if (application != null) {
          if (application.getModuleHandle() != ApplicationDescriptor.currentApplicationDescriptor().getModuleHandle()) {
-            throw new Object("ApplicationDescriptor must describe the registering application");
+            throw new IllegalArgumentException("ApplicationDescriptor must describe the registering application");
          }
 
          if (listener != null) {
             SessionManager.getInstance().addRequestListener(listener, application);
          } else {
-            throw new Object("listener cannot be null");
+            throw new IllegalArgumentException("listener cannot be null");
          }
       } else {
-         throw new Object("application cannot be null");
+         throw new IllegalArgumentException("application cannot be null");
       }
    }
 

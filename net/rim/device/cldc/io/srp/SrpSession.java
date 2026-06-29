@@ -120,9 +120,9 @@ final class SrpSession extends Thread implements SrpConnectionStatusListener {
       if (manager != null && configuration != null) {
          this._manager = manager;
          this._config = configuration;
-         this._queue = (Vector)(new Object(3));
+         this._queue = new Vector(3);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

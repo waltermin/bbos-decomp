@@ -8,7 +8,7 @@ import net.rim.vm.WeakReference;
 
 public class SLComposedText {
    protected SLVariants[] _variantsContainer;
-   private Stack _poolOfFreeVariants = (Stack)(new Object());
+   private Stack _poolOfFreeVariants = new Stack();
    private int _hCountInitial;
    private int _committedVariantsCount;
    private int _committedCharactersCount;
@@ -23,8 +23,8 @@ public class SLComposedText {
    private int _boldedIndex = -1;
    private int _convertedCharacterCount;
    private int _type = 1;
-   private WeakReference _outputWR = (WeakReference)(new Object(null));
-   private WeakReference _outputBufferWR = (WeakReference)(new Object(null));
+   private WeakReference _outputWR = new WeakReference(null);
+   private WeakReference _outputBufferWR = new WeakReference(null);
    private long _underlineAttribute;
    private SLVariants _editModeVariant;
    private int _editModeCaretPos = -1;
@@ -302,7 +302,7 @@ public class SLComposedText {
       StringBuffer outputBuffer = WeakReferenceUtilities.getStringBuffer(this._outputBufferWR);
       AttributedString output = (AttributedString)this._outputWR.get();
       if (output == null) {
-         output = (AttributedString)(new Object());
+         output = new AttributedString();
          this._outputWR.set(output);
       }
 

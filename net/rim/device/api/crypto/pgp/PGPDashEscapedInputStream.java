@@ -21,7 +21,7 @@ final class PGPDashEscapedInputStream extends InputStream {
 
    public PGPDashEscapedInputStream(InputStream input) {
       if (input == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._input = input;
@@ -57,7 +57,7 @@ final class PGPDashEscapedInputStream extends InputStream {
    @Override
    public final int read(byte[] b, int off, int len) {
       if (b == null || off < 0 || len < 0 || b.length - len < off) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (this._bufferLength < 0) {
@@ -80,7 +80,7 @@ final class PGPDashEscapedInputStream extends InputStream {
          label51:
          switch (this._currentState) {
             case -1:
-               throw new Object();
+               throw new IllegalStateException();
             case 0:
             default:
                switch (currentByte) {

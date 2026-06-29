@@ -8,7 +8,7 @@ public class EventResolverImpl implements EventResolver {
    private EventLogic _logic;
    private Event _event = new Event();
    private EventEngine _engine;
-   private IntHashtable _listenerTable = (IntHashtable)(new Object());
+   private IntHashtable _listenerTable = new IntHashtable();
 
    @Override
    public Object getEventLogic() {
@@ -18,7 +18,7 @@ public class EventResolverImpl implements EventResolver {
    @Override
    public void setEventLogic(Object data) {
       if (data != null && !(data instanceof EventLogic)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._logic = (EventLogic)data;

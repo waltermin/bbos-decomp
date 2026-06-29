@@ -14,7 +14,7 @@ final class DatabaseStatisticsScreen$CopyStatisticsVerb extends Verb {
 
    @Override
    public final Object invoke(Object parameter) {
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
       sb.append(OptionsResources.getString(1887));
       sb.append('\n');
       sb.append('\n');

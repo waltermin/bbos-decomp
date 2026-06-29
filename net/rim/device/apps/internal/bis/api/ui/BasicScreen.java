@@ -15,6 +15,7 @@ import net.rim.device.api.ui.Trackball;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.component.NullField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.internal.bis.ApplicationResources;
@@ -25,6 +26,7 @@ import net.rim.device.apps.internal.bis.event.CloseEvent;
 import net.rim.device.apps.internal.bis.event.CommandEvent;
 import net.rim.device.apps.internal.bis.event.EventWrapper;
 import net.rim.device.apps.internal.bis.session.ClientSessionState;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 import net.rim.device.internal.ui.container.FrameLayout;
 
 public class BasicScreen extends RefreshableScreen implements GlobalEventListener, FieldChangeListener, NotificationMenuItemListener {
@@ -36,10 +38,10 @@ public class BasicScreen extends RefreshableScreen implements GlobalEventListene
    private String _helpURL;
    private BitmapField _helpImage;
    private NotificationMenuItem _helpMenuItem;
-   private Vector _contentAreaEvents = (Vector)(new Object());
-   private Vector _buttonBarEvents = (Vector)(new Object());
-   private Hashtable _fieldToEvent = (Hashtable)(new Object());
-   private Hashtable _fieldToMenuItems = (Hashtable)(new Object());
+   private Vector _contentAreaEvents = new Vector();
+   private Vector _buttonBarEvents = new Vector();
+   private Hashtable _fieldToEvent = new Hashtable();
+   private Hashtable _fieldToMenuItems = new Hashtable();
    private NotificationMenuItem _closeMenuItem;
    private boolean _canGoBack;
    private Event _defaultEvent;
@@ -100,7 +102,7 @@ public class BasicScreen extends RefreshableScreen implements GlobalEventListene
 
    public void addContentField(Field field, boolean includeFrame) {
       if (includeFrame) {
-         FrameLayout frame = (FrameLayout)(new Object());
+         FrameLayout frame = new FrameLayout();
          frame.add(field);
          frame.setBorder(0, 4, 0, 4);
          this._content.add(frame);
@@ -112,7 +114,7 @@ public class BasicScreen extends RefreshableScreen implements GlobalEventListene
    }
 
    public void addContentFieldRow(Field[] fields) {
-      HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object());
+      HorizontalFieldManager hfm = new HorizontalFieldManager();
       int numFields = fields.length;
 
       for (int i = 0; i < numFields; i++) {
@@ -187,7 +189,7 @@ public class BasicScreen extends RefreshableScreen implements GlobalEventListene
 
    public void addContentLineBreak() {
       int verticalBufferSpace = this.getFont().getHeight();
-      this.addContentField((Field)(new Object(verticalBufferSpace)));
+      this.addContentField(new VerticalSpacerField(verticalBufferSpace));
    }
 
    @Override
@@ -244,7 +246,7 @@ public class BasicScreen extends RefreshableScreen implements GlobalEventListene
                }
 
                String countryCode = language.substring(3, 5);
-               language = ((StringBuffer)(new Object())).append(languageCode).append("/").append(countryCode).toString();
+               language = languageCode + "/" + countryCode;
             } else {
                language = language.substring(0, 2);
             }
@@ -262,17 +264,7 @@ public class BasicScreen extends RefreshableScreen implements GlobalEventListene
             accountType = "bis";
          }
 
-         return ((StringBuffer)(new Object()))
-            .append(ClientSessionState.getInstance().getBrandingInfo().getHelpRootURL())
-            .append("/")
-            .append(accountType)
-            .append("/")
-            .append(inputMethod)
-            .append("/")
-            .append(language)
-            .append("/")
-            .append(wmlFile)
-            .toString();
+         return ClientSessionState.getInstance().getBrandingInfo().getHelpRootURL() + "/" + accountType + "/" + inputMethod + "/" + language + "/" + wmlFile;
       } else {
          return null;
       }
@@ -419,12 +411,12 @@ public class BasicScreen extends RefreshableScreen implements GlobalEventListene
          } else {
             CommandEvent commandEvent = (CommandEvent)event;
             CommandDescriptor commandDescriptor = commandEvent.getDescriptor();
-            Hashtable inputMap = (Hashtable)(new Object());
+            Hashtable inputMap = new Hashtable();
             if (this.importFormDataFromUI(inputMap)) {
                Hashtable paramMap = null;
                String[] paramNames = commandDescriptor.getParamNames();
                if (paramNames != null) {
-                  paramMap = (Hashtable)(new Object());
+                  paramMap = new Hashtable();
                   int numParams = paramNames.length;
 
                   for (int i = 0; i < numParams; i++) {
@@ -458,7 +450,7 @@ public class BasicScreen extends RefreshableScreen implements GlobalEventListene
       this._buttonBarEvents.removeAllElements();
       if (this._content != null) {
          this._content.deleteAll();
-         this._content.add((Field)(new Object()));
+         this._content.add(new NullField());
       }
 
       this._contentAreaEvents.removeAllElements();
@@ -469,8 +461,8 @@ public class BasicScreen extends RefreshableScreen implements GlobalEventListene
    public BasicScreen() {
       super(562949953421312L);
       this._pageLayoutManager = new PageLayoutManager();
-      this._content = (VerticalFieldManager)(new Object(281474976710656L));
-      this._content.add((Field)(new Object()));
+      this._content = new VerticalFieldManager(281474976710656L);
+      this._content.add(new NullField());
       this._pageLayoutManager.setContent(this._content);
       this.add(this._pageLayoutManager);
       this._closeMenuItem = new NotificationMenuItem(ApplicationResources.getString(15), Integer.MAX_VALUE, 1);

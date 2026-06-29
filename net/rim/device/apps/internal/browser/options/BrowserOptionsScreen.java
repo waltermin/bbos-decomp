@@ -6,6 +6,7 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.container.MainScreen;
@@ -35,8 +36,8 @@ public final class BrowserOptionsScreen extends MainScreen implements ListFieldC
       this._userOptions = new IBrowserProperty[]{new BrowserConfigProperty(), new GeneralProperty(), new CacheOpsScreen()};
       this._restrictedOptions = new IBrowserProperty[]{new BrowserPushModel()};
       this._plugInOptions = BrowserDaemonRegistry.getPlugInOptions();
-      this.setTitle((Field)(new Object(BrowserResources.getString(131))));
-      this._options = (ListField)(new Object(this._userOptions.length + this._plugInOptions.length));
+      this.setTitle(new LabelField(BrowserResources.getString(131)));
+      this._options = new ListField(this._userOptions.length + this._plugInOptions.length);
       this._options.setCallback(this);
       this.add(this._options);
    }
@@ -119,7 +120,7 @@ public final class BrowserOptionsScreen extends MainScreen implements ListFieldC
          case 1:
             Screen s = UiApplication.getUiApplication().getActiveScreen();
             Field fieldWithFocus = s.getLeafFieldWithFocus();
-            if (fieldWithFocus instanceof Object) {
+            if (fieldWithFocus instanceof ListField) {
                int index = ((ListField)fieldWithFocus).getSelectedIndex();
                if (index >= 0) {
                   Verb openVerb = this.get(index).getOpenVerb(this._restrictedAccess);
@@ -145,7 +146,7 @@ public final class BrowserOptionsScreen extends MainScreen implements ListFieldC
       } else if (key == '\n') {
          Screen s = UiApplication.getUiApplication().getActiveScreen();
          Field fieldWithFocus = s.getLeafFieldWithFocus();
-         if (fieldWithFocus instanceof Object) {
+         if (fieldWithFocus instanceof ListField) {
             int index = ((ListField)fieldWithFocus).getSelectedIndex();
             this.get(index).getOpenVerb(this._restrictedAccess).invoke(null);
          }

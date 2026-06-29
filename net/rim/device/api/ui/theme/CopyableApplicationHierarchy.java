@@ -7,7 +7,7 @@ import net.rim.device.apps.api.ribbon.ApplicationProperties;
 import net.rim.device.apps.api.ribbon.ModuleApplication;
 
 class CopyableApplicationHierarchy extends ApplicationHierarchy {
-   private String[] _applicationNames = new Object[0];
+   private String[] _applicationNames = new String[0];
 
    public CopyableApplicationHierarchy(String name) {
       super(name);
@@ -41,7 +41,7 @@ class CopyableApplicationHierarchy extends ApplicationHierarchy {
          String name = folders[i].getName();
          String bundleName = folders[i].getResourceBundleName();
          int resourceId = folders[i].getResourceId();
-         copy.addFolder((ApplicationFolder)(new Object(name, bundleName, resourceId)));
+         copy.addFolder(new ApplicationFolder(name, bundleName, resourceId));
       }
    }
 
@@ -52,7 +52,7 @@ class CopyableApplicationHierarchy extends ApplicationHierarchy {
          String name = modules[i].getName();
          String bundleName = modules[i].getResourceBundleName();
          int resourceId = modules[i].getResourceId();
-         ModuleApplication module = (ModuleApplication)(new Object(name, bundleName, resourceId));
+         ModuleApplication module = new ModuleApplication(name, bundleName, resourceId);
          module.setLaunchString(modules[i].getLaunchString());
          copy.addModule(module);
       }

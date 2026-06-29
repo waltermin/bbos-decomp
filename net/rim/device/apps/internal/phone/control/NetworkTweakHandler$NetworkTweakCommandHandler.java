@@ -37,7 +37,7 @@ class NetworkTweakHandler$NetworkTweakCommandHandler extends CallCommandHandler 
          && number.length() >= 3
          && number.charAt(0) == '+'
          && (number.charAt(1) != '8' || number.charAt(2) != '1')) {
-         number = ((StringBuffer)(new Object("009130010"))).append(number.substring(1)).toString();
+         number = "009130010" + number.substring(1);
       }
 
       return super.startCall(number, clir);

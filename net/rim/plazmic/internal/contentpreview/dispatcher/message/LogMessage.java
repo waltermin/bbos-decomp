@@ -31,11 +31,9 @@ public final class LogMessage extends Model {
 
    @Override
    final String getProperties() {
-      return ((StringBuffer)(new Object()))
-         .append(this.toPropertyString("sessionName", String.valueOf(this._sessionName)))
-         .append(this.toPropertyString("type", String.valueOf(this._type)))
-         .append(this.toPropertyString("message", String.valueOf(this._message)))
-         .append(this.toPropertyString("data", String.valueOf(this._data)))
-         .toString();
+      return this.toPropertyString("sessionName", String.valueOf(this._sessionName))
+         + this.toPropertyString("type", String.valueOf(this._type))
+         + this.toPropertyString("message", String.valueOf(this._message))
+         + this.toPropertyString("data", String.valueOf(this._data));
    }
 }

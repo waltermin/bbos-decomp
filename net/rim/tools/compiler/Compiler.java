@@ -1,5 +1,6 @@
 package net.rim.tools.compiler;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Hashtable;
@@ -72,10 +73,10 @@ public class Compiler implements Optimization {
    private boolean _inclusive;
    private Vector _typeModules;
    private Hashtable _classes;
-   private Vector _classesReferenced = (Vector)(new Object());
+   private Vector _classesReferenced = new Vector();
    private int _classesReferencedIndex;
-   private Vector _classTypesUsed = (Vector)(new Object());
-   private Vector _methodsUsed = (Vector)(new Object());
+   private Vector _classTypesUsed = new Vector();
+   private Vector _methodsUsed = new Vector();
    private int _methodsUsedIndex;
    private Vector _potentialMIDlets;
    private Vector _timers;
@@ -133,7 +134,7 @@ public class Compiler implements Optimization {
    public static final int RESULT_FAILURE_BAD_CONF_PROF = 908;
    public static final int RESULT_FAILURE_AUTHENTICATION = 909;
    public static final int RESULT_FAILURE_AUTHORIZATION = 910;
-   private static Vector _parmTypes = (Vector)(new Object());
+   private static Vector _parmTypes = new Vector();
    private static final boolean _convertPNG = false;
 
    public Compiler(Object host, CompilerProperties properties) {
@@ -150,8 +151,8 @@ public class Compiler implements Optimization {
       this._floatType = new BaseType("float", 4, 11);
       this._doubleType = new BaseType("double", 8, 12);
       this._host = (Host)host;
-      this._typeModules = (Vector)(new Object());
-      this._classes = (Hashtable)(new Object(64));
+      this._typeModules = new Vector();
+      this._classes = new Hashtable(64);
       this._properties = properties;
       this._jarFiles = properties.getVector("rapc_jarFiles");
       this._resourceBinaries = properties.getVector("rapc_resourceBinaries");
@@ -267,7 +268,7 @@ public class Compiler implements Optimization {
 
    private String validateModuleName(String name) {
       int n = name.length();
-      StringBuffer buf = (StringBuffer)(new Object(n + 1));
+      StringBuffer buf = new StringBuffer(n + 1);
       char ch = name.charAt(0);
       if (!CharacterHelper.isJavaIdentifierStart(ch)) {
          buf.append('_');
@@ -296,10 +297,10 @@ public class Compiler implements Optimization {
 
    public final void generateWarning(boolean possibleError, String fileName, String message) {
       if (fileName != null) {
-         Diagnose.out.print(((StringBuffer)(new Object())).append(fileName).append(": ").toString());
+         Diagnose.out.print(fileName + ": ");
       }
 
-      Diagnose.out.println(((StringBuffer)(new Object("Warning!: "))).append(message).toString());
+      Diagnose.out.println("Warning!: " + message);
    }
 
    public final boolean isOptimizePackage() {
@@ -363,7 +364,7 @@ public class Compiler implements Optimization {
    public final void addPotentialMIDlet(ClassType classType) {
       if (this._makingMIDlet) {
          if (this._potentialMIDlets == null) {
-            this._potentialMIDlets = (Vector)(new Object());
+            this._potentialMIDlets = new Vector();
          }
 
          this._potentialMIDlets.addElement(classType);
@@ -473,7 +474,7 @@ public class Compiler implements Optimization {
       }
 
       Object obj = this._exportedStaticMethods.elementAt(location);
-      if (!(obj instanceof Object)) {
+      if (!(obj instanceof String)) {
          return false;
       }
 
@@ -488,7 +489,7 @@ public class Compiler implements Optimization {
       }
 
       Object obj = this._exportedStaticData.elementAt(location);
-      if (!(obj instanceof Object)) {
+      if (!(obj instanceof String)) {
          return false;
       }
 
@@ -503,7 +504,7 @@ public class Compiler implements Optimization {
       }
 
       Object obj = this._exportedFields.elementAt(location);
-      if (!(obj instanceof Object)) {
+      if (!(obj instanceof String)) {
          return false;
       }
 
@@ -518,7 +519,7 @@ public class Compiler implements Optimization {
       }
 
       Object obj = this._exportedStrings.elementAt(location);
-      if (!(obj instanceof Object)) {
+      if (!(obj instanceof String)) {
          return false;
       }
 
@@ -585,8 +586,8 @@ public class Compiler implements Optimization {
 
    private void parseOptimizations(String name, boolean turnOn) {
       Object o = this._properties.get(name);
-      if (!(o instanceof Object)) {
-         if (o instanceof Object) {
+      if (!(o instanceof Vector)) {
+         if (o instanceof String) {
             String opt = (String)o;
             this.parseOptimization(opt, turnOn);
          }
@@ -619,13 +620,13 @@ public class Compiler implements Optimization {
       // 01: getfield net/rim/tools/compiler/Compiler._finalStatics Ljava/util/Vector;
       // 04: ifnonnull 12
       // 07: aload 0
-      // 08: new java/lang/Object
+      // 08: new java/util/Vector
       // 0b: dup
       // 0c: invokespecial java/util/Vector.<init> ()V
       // 0f: putfield net/rim/tools/compiler/Compiler._finalStatics Ljava/util/Vector;
       // 12: aload 2
       // 13: ifnull 51
-      // 16: new java/lang/Object
+      // 16: new java/io/DataInputStream
       // 19: dup
       // 1a: aload 2
       // 1b: invokespecial java/io/DataInputStream.<init> (Ljava/io/InputStream;)V
@@ -669,7 +670,7 @@ public class Compiler implements Optimization {
       Vector vt = this._objectClassVTable;
       ClassType classType = this._objectClass;
       classType.addModifiers(131072);
-      Vector parms = (Vector)(new Object());
+      Vector parms = new Vector();
       int n = vt.size();
 
       for (int i = 0; i < n; i++) {
@@ -683,7 +684,7 @@ public class Compiler implements Optimization {
             parms.addElement(classType);
          } else {
             if (!TOSTRING.equals(name)) {
-               throw new CompileException(null, ((StringBuffer)(new Object("unrecognized method in java.lang.object: "))).append(name).toString());
+               throw new CompileException(null, "unrecognized method in java.lang.object: " + name);
             }
 
             returnType = this._stringClass;
@@ -736,13 +737,13 @@ public class Compiler implements Optimization {
       }
 
       Vector v = this._finalStatics;
-      String match = ((StringBuffer)(new Object())).append('P').append(classType.getPackageName()).toString();
+      String match = 'P' + classType.getPackageName();
       int index = v.indexOf(match);
       if (index == -1) {
          return null;
       }
 
-      match = ((StringBuffer)(new Object())).append('C').append(classType.getName()).toString();
+      match = 'C' + classType.getName();
       int num = v.size();
       index++;
 
@@ -760,7 +761,7 @@ public class Compiler implements Optimization {
          index++;
       }
 
-      match = ((StringBuffer)(new Object())).append('F').append(name).append(':').append(type.encodeType()).append('=').toString();
+      match = 'F' + name + ':' + type.encodeType() + '=';
       index++;
 
       while (index < num) {
@@ -801,7 +802,7 @@ public class Compiler implements Optimization {
 
       String localPackageName = null;
       if (sep == -1 && this._packageName != null && this._packageName.length() > 0) {
-         localPackageName = ((StringBuffer)(new Object())).append(this._packageName).append(".").append(fullName).toString();
+         localPackageName = this._packageName + "." + fullName;
          classType = (ClassType)this._classes.get(localPackageName);
          if (classType != null) {
             return classType;
@@ -967,7 +968,7 @@ public class Compiler implements Optimization {
       }
 
       v = this._methodsUsed = null;
-      Vector typeModuleVector = (Vector)(new Object());
+      Vector typeModuleVector = new Vector();
       int bucket = 0;
       TypeModule typeModule = this.makeOutputTypeModule(bucket);
       typeModuleVector.addElement(typeModule);
@@ -1109,11 +1110,9 @@ public class Compiler implements Optimization {
             exportObject = this._exportedStrings.elementAt(exportIndex);
             if (exportObject != null) {
                if (!(exportObject instanceof Exported)) {
-                  Object var26 = exportObject;
+                  String var26 = (String)exportObject;
                   if (this._warning && !diagnosedExport[exportIndex]) {
-                     this.generateWarning(
-                        false, null, ((StringBuffer)(new Object("No definition found for exported string: "))).append((String)var26).toString()
-                     );
+                     this.generateWarning(false, null, "No definition found for exported string: " + var26);
                   }
 
                   diagnosedExport[exportIndex] = true;
@@ -1176,7 +1175,7 @@ public class Compiler implements Optimization {
    private Classfile parseClassfile(String jarName, String inName, InputStream in, int length, TypeModule typeModule, boolean parsingImport) throws CompileException {
       String fileName = inName;
       if (jarName != null) {
-         fileName = ((StringBuffer)(new Object())).append(jarName).append('(').append(inName).append(')').toString();
+         fileName = jarName + '(' + inName + ')';
       }
 
       byte[] inBytes = StructuredInputStream.readAll(in, length, fileName);
@@ -1190,7 +1189,7 @@ public class Compiler implements Optimization {
 
          String className = classFile.getFullClassName();
          if (className == null) {
-            throw new CompileException(fileName, ((StringBuffer)(new Object("No class name found in classfile: "))).append(inName).toString());
+            throw new CompileException(fileName, "No class name found in classfile: " + inName);
          }
 
          int classModifiers = Modifier.translateClassfileAccessFlags(classFile.getAccessFlags());
@@ -1198,18 +1197,14 @@ public class Compiler implements Optimization {
          if (!parsingImport) {
             String tnm = FileHelper.removeExtension(inName, FileHelper.ext_class).replace('/', '.').replace('\\', '.');
             if (!tnm.endsWith(className)) {
-               this.generateWarning(
-                  false,
-                  fileName,
-                  ((StringBuffer)(new Object("Class name: "))).append(className).append(" does not match file name: ").append(inName).toString()
-               );
+               this.generateWarning(false, fileName, "Class name: " + className + " does not match file name: " + inName);
                classModifiers |= 134217728;
                className = tnm;
             }
 
             this._packageName = ClassType.extractPackageName(className);
             if (_verbosity >= 1) {
-               Diagnose.out.println(((StringBuffer)(new Object("Parsing classfile: "))).append(inName).toString());
+               Diagnose.out.println("Parsing classfile: " + inName);
             }
          }
 
@@ -1247,22 +1242,20 @@ public class Compiler implements Optimization {
 
             modifiers = this.augmentFieldModifiers(classType, modifiers);
             if ((modifiers & 8256) == 8256) {
-               throw new CompileException(fileName, ((StringBuffer)(new Object("Invalid modifier combination for field: "))).append(fieldName).toString());
+               throw new CompileException(fileName, "Invalid modifier combination for field: " + fieldName);
             }
 
             if (classType.is(2048)) {
                int mask = 12288;
                int want = 0;
                if ((modifiers & mask) != want) {
-                  throw new CompileException(
-                     fileName, ((StringBuffer)(new Object("Invalid modifier combination for interface field: "))).append(fieldName).toString()
-                  );
+                  throw new CompileException(fileName, "Invalid modifier combination for interface field: " + fieldName);
                }
 
                int var62 = 962;
                int var68 = 194;
                if ((modifiers & var62) != var68) {
-                  this.generateWarning(false, fileName, ((StringBuffer)(new Object("Invalid modifiers for interface field: "))).append(fieldName).toString());
+                  this.generateWarning(false, fileName, "Invalid modifiers for interface field: " + fieldName);
                   modifiers |= 134217728;
                }
             }
@@ -1270,10 +1263,7 @@ public class Compiler implements Optimization {
             TypeDescriptor descriptor = classfileField.getDescriptor();
             Type type = Type.translateType(this, descriptor);
             if (descriptor.getCharsRemaining() != 0) {
-               throw new CompileException(
-                  fileName,
-                  ((StringBuffer)(new Object("Invalid type descriptor '"))).append(descriptor.getString()).append("' for field: ").append(fieldName).toString()
-               );
+               throw new CompileException(fileName, "Invalid type descriptor '" + descriptor.getString() + "' for field: " + fieldName);
             }
 
             Constant value = null;
@@ -1282,22 +1272,16 @@ public class Compiler implements Optimization {
                if (attr != null) {
                   if ((modifiers & 2) == 0) {
                      if ((modifiers & 64) == 64) {
-                        this.generateWarning(
-                           true, fileName, ((StringBuffer)(new Object("Constant value final member data is not static: "))).append(fieldName).toString()
-                        );
+                        this.generateWarning(true, fileName, "Constant value final member data is not static: " + fieldName);
                      }
                   } else if (!(type instanceof BaseType)) {
                      if (!(type instanceof ClassType)) {
-                        throw new CompileException(
-                           fileName, ((StringBuffer)(new Object("Invalid type for static constant field: "))).append(fieldName).toString()
-                        );
+                        throw new CompileException(fileName, "Invalid type for static constant field: " + fieldName);
                      }
 
                      ClassType fieldClassType = (ClassType)type;
                      if (!fieldClassType.equals(this.getStringClass())) {
-                        throw new CompileException(
-                           fileName, ((StringBuffer)(new Object("Invalid type for static constant field: "))).append(fieldName).toString()
-                        );
+                        throw new CompileException(fileName, "Invalid type for static constant field: " + fieldName);
                      }
 
                      String str = attr.getConstantString();
@@ -1314,9 +1298,7 @@ public class Compiler implements Optimization {
                         case 8:
                         case 9:
                         case 10:
-                           throw new CompileException(
-                              fileName, ((StringBuffer)(new Object("Invalid type for static constant field: "))).append(fieldName).toString()
-                           );
+                           throw new CompileException(fileName, "Invalid type for static constant field: " + fieldName);
                         case 1:
                         case 2:
                         case 3:
@@ -1360,15 +1342,13 @@ public class Compiler implements Optimization {
                }
             } else {
                if (!StringHelper.validateIdentifier(methodName)) {
-                  throw new CompileException(fileName, ((StringBuffer)(new Object("Invalid method name: "))).append(methodName).toString());
+                  throw new CompileException(fileName, "Invalid method name: " + methodName);
                }
 
                if ((modifiers & 32) != 0) {
                   int mask = 49152;
                   if ((modifiers & mask) != 0) {
-                     throw new CompileException(
-                        fileName, ((StringBuffer)(new Object("Invalid modifier combination for method: "))).append(methodName).toString()
-                     );
+                     throw new CompileException(fileName, "Invalid modifier combination for method: " + methodName);
                   }
                }
             }
@@ -1381,14 +1361,7 @@ public class Compiler implements Optimization {
                Type.translateTypes(this, prototype, _parmTypes);
                Type type = Type.translateType(this, prototype);
                if (prototype.getCharsRemaining() != 0) {
-                  throw new CompileException(
-                     fileName,
-                     ((StringBuffer)(new Object("Invalid type descriptor '")))
-                        .append(prototype.getString())
-                        .append("' for method: ")
-                        .append(methodName)
-                        .toString()
-                  );
+                  throw new CompileException(fileName, "Invalid type descriptor '" + prototype.getString() + "' for method: " + methodName);
                }
 
                int n = _parmTypes.size();
@@ -1415,22 +1388,18 @@ public class Compiler implements Optimization {
                   int plc = method.getParmLocalCount();
                   method.setBody(new InstructionCode(method, 0, plc, null, null));
                   if (!method.is(33)) {
-                     this.generateWarning(false, fileName, ((StringBuffer)(new Object("Method has no code attribute: "))).append(method.getName()).toString());
+                     this.generateWarning(false, fileName, "Method has no code attribute: " + method.getName());
                   }
                } else {
                   boolean badCode = false;
                   if (method.is(1)) {
-                     this.generateWarning(
-                        false, fileName, ((StringBuffer)(new Object("Native method has code attribute: "))).append(method.getName()).toString()
-                     );
+                     this.generateWarning(false, fileName, "Native method has code attribute: " + method.getName());
                      method.addModifiers(134217728);
                      badCode = true;
                   }
 
                   if (method.is(32)) {
-                     this.generateWarning(
-                        false, fileName, ((StringBuffer)(new Object("Abstract method has code attribute: "))).append(method.getName()).toString()
-                     );
+                     this.generateWarning(false, fileName, "Abstract method has code attribute: " + method.getName());
                      method.addModifiers(134217728);
                      badCode = true;
                   }
@@ -1441,7 +1410,7 @@ public class Compiler implements Optimization {
                   if (code != null) {
                      codeLength = code.length;
                      if (codeLength >= 65536) {
-                        throw new CompileException(fileName, ((StringBuffer)(new Object("Code attribute too large: "))).append(method.getName()).toString());
+                        throw new CompileException(fileName, "Code attribute too large: " + method.getName());
                      }
                   }
 
@@ -1466,16 +1435,12 @@ public class Compiler implements Optimization {
                         int start = h.getStart();
                         int end = h.getEnd();
                         if (end <= start || end > codeLength) {
-                           throw new CompileException(
-                              fileName, ((StringBuffer)(new Object("invalid exception handler range in: "))).append(method.getName()).toString()
-                           );
+                           throw new CompileException(fileName, "invalid exception handler range in: " + method.getName());
                         }
 
                         int handler = h.getHandler();
                         if (handler >= codeLength) {
-                           throw new CompileException(
-                              fileName, ((StringBuffer)(new Object("invalid exception handler offset in: "))).append(method.getName()).toString()
-                           );
+                           throw new CompileException(fileName, "invalid exception handler offset in: " + method.getName());
                         }
 
                         ClassType exceptionClassType = null;
@@ -1499,13 +1464,11 @@ public class Compiler implements Optimization {
                      for (int var53 = 0; var53 < var55; var53++) {
                         AttributeStackMap sme = stackMapTable.getStackMap(var53);
                         if (sme.getLocalSize() > maxLocals) {
-                           throw new CompileException(
-                              fileName, ((StringBuffer)(new Object("Invalid locals map in method: "))).append(method.getName()).toString()
-                           );
+                           throw new CompileException(fileName, "Invalid locals map in method: " + method.getName());
                         }
 
                         if (sme.getStackSize() > maxStack) {
-                           this.generateWarning(false, fileName, ((StringBuffer)(new Object("stack map too big: "))).append(method.getName()).toString());
+                           this.generateWarning(false, fileName, "stack map too big: " + method.getName());
                            method.addModifiers(134217728);
                         }
 
@@ -1536,7 +1499,7 @@ public class Compiler implements Optimization {
             if (msg == null) {
                ce = new CompileException(inName, "Invalid class file");
             } else {
-               ce = new CompileException(inName, ((StringBuffer)(new Object("Invalid class file: "))).append(msg).toString());
+               ce = new CompileException(inName, "Invalid class file: " + msg);
             }
          } else {
             ce = (CompileException)var40;
@@ -1546,7 +1509,7 @@ public class Compiler implements Optimization {
       }
    }
 
-   private void parseJar(String jarName, JarInputStream jarStream) throws CompileException {
+   private void parseJar(String jarName, JarInputStream jarStream) throws IOException, CompileException {
       boolean foundManifest = false;
       if (this._makingMIDlet) {
          Manifest manifest = (Manifest)jarStream.getManifest();
@@ -1574,7 +1537,7 @@ public class Compiler implements Optimization {
             } else if (nameLen == 20 && entryName.regionMatches(true, 0, "META-INF/MANIFEST.MF", 0, nameLen)) {
                if (this._makingMIDlet) {
                   if (_verbosity >= 1) {
-                     Diagnose.out.println(((StringBuffer)(new Object("Parsing manifest: "))).append(entryName).toString());
+                     Diagnose.out.println("Parsing manifest: " + entryName);
                   }
 
                   Manifest manifest = new Manifest(jarStream);
@@ -1584,12 +1547,12 @@ public class Compiler implements Optimization {
                }
             } else {
                if (_verbosity >= 1) {
-                  Diagnose.out.println(((StringBuffer)(new Object("Reading resource: "))).append(entryName).toString());
+                  Diagnose.out.println("Reading resource: " + entryName);
                }
 
                ResourceFile rf = null;
                if (size > 4194304) {
-                  throw new Object(((StringBuffer)(new Object())).append(entryName).append(": too large: ").append(size).append(" bytes").toString());
+                  throw new IOException(entryName + ": too large: " + size + " bytes");
                }
 
                if (FileHelper.checkExtensions(entryName, FileHelper.ext_images) != -1) {
@@ -1609,15 +1572,15 @@ public class Compiler implements Optimization {
       }
 
       if (this._makingMIDlet && !foundManifest) {
-         throw new CompileException(907, null, ((StringBuffer)(new Object("Missing manifest: "))).append(jarName).toString());
+         throw new CompileException(907, null, "Missing manifest: " + jarName);
       }
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private void write(TypeModule[] typeModules) {
+   private void write(TypeModule[] typeModules) throws IOException {
       int numCods = typeModules.length;
-      StringBuffer errorBuffer = (StringBuffer)(new Object());
+      StringBuffer errorBuffer = new StringBuffer();
 
       for (int i = 0; i < numCods; i++) {
          TypeModule typeModule = typeModules[i];
@@ -1626,13 +1589,13 @@ public class Compiler implements Optimization {
 
       if (errorBuffer.length() > 0) {
          if (this._properties.getQuotedProperty("nolimit") == null) {
-            throw new Object(errorBuffer.toString());
+            throw new IOException(errorBuffer.toString());
          }
 
          Diagnose.out.println(errorBuffer.toString());
       }
 
-      OutputStream[] outs = new Object[numCods];
+      OutputStream[] outs = new OutputStream[numCods];
       boolean var12 = false /* VF: Semaphore variable */;
 
       try {
@@ -1799,7 +1762,7 @@ public class Compiler implements Optimization {
 
    public static Compiler compile(Object cookie, CompilerProperties properties) {
       Compiler compiler = null;
-      Vector timers = (Vector)(new Object());
+      Vector timers = new Vector();
       ExecutionTimer timer_total = new ExecutionTimer("total", timers);
       Host host = (Host)cookie;
       Diagnose.out = host.openDiagnose();

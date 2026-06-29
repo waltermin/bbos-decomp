@@ -36,7 +36,7 @@ public class TasksCollection extends StdCmpCollectionImpl {
                this._uidMatchToDo.addString(108, 0, "");
             }
 
-            this._uidsToTasks = (IntHashtable)(new Object());
+            this._uidsToTasks = new IntHashtable();
          } finally {
             return;
          }
@@ -46,7 +46,7 @@ public class TasksCollection extends StdCmpCollectionImpl {
    @Override
    public void loadItem(long dataHandle, Object item) {
       if (this._taskList != null) {
-         if (item instanceof Object) {
+         if (item instanceof ToDo) {
             this.setIntFieldValue(dataHandle, 2, ((IntFieldHandler)super._intFieldHandlers.get(2)).getValue(item));
             this.setObjectFieldValue(dataHandle, 0, ((ObjectFieldHandler)super._objectFieldHandlers.get(0)).getValue(item));
             this.setObjectFieldValue(dataHandle, 1, ((ObjectFieldHandler)super._objectFieldHandlers.get(1)).getValue(item));
@@ -69,8 +69,8 @@ public class TasksCollection extends StdCmpCollectionImpl {
       }
 
       if (items != null && items.hasMoreElements()) {
-         uidsInDB = (IntVector)(new Object());
-         this._uidsToTasks = (IntHashtable)(new Object());
+         uidsInDB = new IntVector();
+         this._uidsToTasks = new IntHashtable();
 
          while (items.hasMoreElements()) {
             ToDo task = (ToDo)items.nextElement();
@@ -105,7 +105,7 @@ public class TasksCollection extends StdCmpCollectionImpl {
          } else {
             for (int i = super._deletedItems.size() - 1; i >= 0; i--) {
                Object taskToRemove = this.getDBItemFromHandle((long)super._defs.getId() << 32 | 4294967295L & super._deletedItems.elementAt(i));
-               if (taskToRemove instanceof Object) {
+               if (taskToRemove instanceof ToDo) {
                   try {
                      this._taskList.removeToDo((ToDo)taskToRemove);
                   } finally {
@@ -144,7 +144,7 @@ public class TasksCollection extends StdCmpCollectionImpl {
    }
 
    private ToDo getTaskByUID(int uid) {
-      return (ToDo)(this._uidsToTasks != null ? this._uidsToTasks.get(uid) : null);
+      return this._uidsToTasks != null ? (ToDo)this._uidsToTasks.get(uid) : null;
    }
 
    private ToDo updateToDoItem(int handle) {
@@ -228,17 +228,17 @@ public class TasksCollection extends StdCmpCollectionImpl {
 
    @Override
    public void initFieldHandlers() {
-      super._objectFieldHandlers = (IntHashtable)(new Object(3));
+      super._objectFieldHandlers = new IntHashtable(3);
       super._objectFieldHandlers.put(0, new TasksCollection$NoteHandler(null));
       super._objectFieldHandlers.put(1, new TasksCollection$SummaryHandler(null));
-      super._intFieldHandlers = (IntHashtable)(new Object(4));
+      super._intFieldHandlers = new IntHashtable(4);
       super._intFieldHandlers.put(2, new TasksCollection$UIDHandler(null));
       if (this._taskList != null) {
          super._intFieldHandlers.put(5, new TasksCollection$StatusHandler(this._taskList.isSupportedField(16777225)));
       }
 
       super._intFieldHandlers.put(3, new TasksCollection$PriorityHandler(null));
-      super._longFieldHandlers = (IntHashtable)(new Object(1));
+      super._longFieldHandlers = new IntHashtable(1);
       super._longFieldHandlers.put(4, new TasksCollection$DueDateHandler(null));
    }
 }

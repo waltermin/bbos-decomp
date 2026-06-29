@@ -33,22 +33,22 @@ public final class AccountSetupSuggestionsScreen extends BasicScreen {
    @Override
    public final void refresh(Hashtable screenParams) {
       this.setTitle(ApplicationResources.getString(2));
-      this._userNameTakenLabel = (LabelField)(new Object());
+      this._userNameTakenLabel = new LabelField();
       this.addContentField(this._userNameTakenLabel);
-      RadioButtonGroup _suggestionRadioGroup = (RadioButtonGroup)(new Object());
-      this._suggestion1Choice = (RadioButtonField)(new Object(null, _suggestionRadioGroup, true));
-      this._suggestion2Choice = (RadioButtonField)(new Object(null, _suggestionRadioGroup, false));
-      this._suggestion3Choice = (RadioButtonField)(new Object(null, _suggestionRadioGroup, false));
-      this._customUserNameChoice = (RadioButtonField)(new Object(ApplicationResources.getString(65), _suggestionRadioGroup, false));
-      this._customUserNameEdit = (BasicEditField)(new Object());
+      RadioButtonGroup _suggestionRadioGroup = new RadioButtonGroup();
+      this._suggestion1Choice = new RadioButtonField(null, _suggestionRadioGroup, true);
+      this._suggestion2Choice = new RadioButtonField(null, _suggestionRadioGroup, false);
+      this._suggestion3Choice = new RadioButtonField(null, _suggestionRadioGroup, false);
+      this._customUserNameChoice = new RadioButtonField(ApplicationResources.getString(65), _suggestionRadioGroup, false);
+      this._customUserNameEdit = new BasicEditField();
       this._customUserNameEdit.setChangeListener(new AccountSetupSuggestionsScreen$CustomUsernameEditFieldListener(this, null));
       this.addContentField(this._suggestion1Choice);
       this.addContentField(this._suggestion2Choice);
       this.addContentField(this._suggestion3Choice);
       this.addContentField(this._customUserNameChoice);
       this.addContentField(this._customUserNameEdit, true);
-      this._passwordEdit = (PasswordEditField)(new Object(null, null));
-      this._passwordConfirmEdit = (PasswordEditField)(new Object(null, null));
+      this._passwordEdit = new PasswordEditField(null, null);
+      this._passwordConfirmEdit = new PasswordEditField(null, null);
       this.addContentField(new BoldLabelField(ApplicationResources.getString(14)));
       this.addContentField(this._passwordEdit, true);
       this.addContentField(new InputHintLabelField(ApplicationResources.getString(21)));
@@ -65,7 +65,7 @@ public final class AccountSetupSuggestionsScreen extends BasicScreen {
       this.attachEventToField(nextButton, nextEvent);
       this.setDefaultEvent(nextEvent);
       String userName = ClientSessionState.getInstance().getAccountSetupUserName();
-      String userNameTakenText = MessageFormat.format(ApplicationResources.getString(36), new Object[]{userName});
+      String userNameTakenText = MessageFormat.format(ApplicationResources.getString(36), new String[]{userName});
       this._userNameTakenLabel.setText(userNameTakenText);
       String[] suggestions = ClientSessionState.getInstance().getAccountSetupSuggestions();
       this._suggestion1Choice.setLabel(suggestions[0]);

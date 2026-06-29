@@ -108,7 +108,7 @@ public class FastEuropeanWordLearningOTAReader extends WordLearningReader implem
    @Override
    public int trim(int desiredSize) {
       super._internalEvent = (byte)(super._internalEvent | 2);
-      CustomWordsSyncManager sm = (CustomWordsSyncManager)(new Object(2));
+      CustomWordsSyncManager sm = new CustomWordsSyncManager(2);
       int res = this.trim(this.getTrimControllerForTrim(super._type == 3 ? 7 : 3, sm));
       if (super._listener != null && sm.size() > 0 && res >= desiredSize) {
          super._listener.remove(sm);

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 import javacard.framework.APDUException;
 import javacard.framework.CardException;
 import javacard.framework.CardRuntimeException;
@@ -18,6 +19,7 @@ import javacard.framework.UserException;
 import javacard.framework.service.ServiceException;
 import javacard.security.CryptoException;
 import javax.microedition.io.Connection;
+import javax.microedition.io.ConnectionNotFoundException;
 import javax.microedition.io.StreamConnection;
 import javax.microedition.jcrmi.JavaCardRMIConnection;
 import javax.microedition.jcrmi.RemoteStub;
@@ -47,7 +49,7 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
    }
 
    @Override
-   public Connection openPrim(String param1, int param2, boolean param3) throws IOException {
+   public Connection openPrim(String param1, int param2, boolean param3) throws IOException, ConnectionNotFoundException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -69,7 +71,7 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
       // 014: iload 7
       // 016: bipush -1
       // 018: if_icmpne 023
-      // 01b: new java/lang/Object
+      // 01b: new java/lang/IllegalArgumentException
       // 01e: dup
       // 01f: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 022: athrow
@@ -85,13 +87,13 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
       // 035: istore 6
       // 037: goto 044
       // 03a: astore 8
-      // 03c: new java/lang/Object
+      // 03c: new java/lang/IllegalArgumentException
       // 03f: dup
       // 040: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 043: athrow
       // 044: iload 6
       // 046: ifeq 051
-      // 049: new java/lang/Object
+      // 049: new javax/microedition/io/ConnectionNotFoundException
       // 04c: dup
       // 04d: invokespecial javax/microedition/io/ConnectionNotFoundException.<init> ()V
       // 050: athrow
@@ -105,7 +107,7 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
       // 05b: ldc_w "AID="
       // 05e: invokevirtual java/lang/String.startsWith (Ljava/lang/String;)Z
       // 061: ifne 06c
-      // 064: new java/lang/Object
+      // 064: new java/lang/IllegalArgumentException
       // 067: dup
       // 068: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 06b: athrow
@@ -113,7 +115,7 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
       // 06d: bipush 4
       // 06f: invokevirtual java/lang/String.substring (I)Ljava/lang/String;
       // 072: astore 1
-      // 073: new java/lang/Object
+      // 073: new net/rim/device/api/util/StringTokenizer
       // 076: dup
       // 077: aload 1
       // 078: bipush 46
@@ -125,7 +127,7 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
       // 087: iload 5
       // 089: bipush 16
       // 08b: if_icmplt 099
-      // 08e: new java/lang/Object
+      // 08e: new java/lang/IllegalArgumentException
       // 091: dup
       // 092: ldc_w "Invalid AID; Too Long"
       // 095: invokespecial java/lang/IllegalArgumentException.<init> (Ljava/lang/String;)V
@@ -137,7 +139,7 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
       // 0a2: invokevirtual java/lang/String.length ()I
       // 0a5: bipush 2
       // 0a7: if_icmple 0b5
-      // 0aa: new java/lang/Object
+      // 0aa: new java/lang/IllegalArgumentException
       // 0ad: dup
       // 0ae: ldc_w "Invalid AID"
       // 0b1: invokespecial java/lang/IllegalArgumentException.<init> (Ljava/lang/String;)V
@@ -151,7 +153,7 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
       // 0c1: bastore
       // 0c2: goto 0d2
       // 0c5: astore 10
-      // 0c7: new java/lang/Object
+      // 0c7: new java/lang/IllegalArgumentException
       // 0ca: dup
       // 0cb: ldc_w "Invalid AID"
       // 0ce: invokespecial java/lang/IllegalArgumentException.<init> (Ljava/lang/String;)V
@@ -168,7 +170,7 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
       // 0e3: iload 5
       // 0e5: bipush 16
       // 0e7: if_icmple 0f5
-      // 0ea: new java/lang/Object
+      // 0ea: new java/lang/IllegalArgumentException
       // 0ed: dup
       // 0ee: ldc_w "Invalid AID; Too short or too long"
       // 0f1: invokespecial java/lang/IllegalArgumentException.<init> (Ljava/lang/String;)V
@@ -194,7 +196,7 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
       // 118: aload 0
       // 119: getfield net/rim/device/cldc/io/jcrmi/Protocol._apduConnection Lnet/rim/device/cldc/io/apdu/Protocol;
       // 11c: invokevirtual net/rim/device/cldc/io/apdu/Protocol.close ()V
-      // 11f: new java/lang/Object
+      // 11f: new java/lang/IllegalArgumentException
       // 122: dup
       // 123: aload 11
       // 125: invokevirtual java/lang/Throwable.toString ()Ljava/lang/String;
@@ -219,14 +221,14 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
       return this._invokeINS;
    }
 
-   Object invokeMethod(byte[] command, String method) {
+   Object invokeMethod(byte[] command, String method) throws RemoteException {
       byte[] response = this._apduConnection.exchangeAPDU(command);
       if (response != null && response.length >= 2) {
-         DataBuffer buffer = (DataBuffer)(new Object());
+         DataBuffer buffer = new DataBuffer();
          buffer.setData(response, 0, response.length);
          buffer.setPosition(response.length - 2);
          if (buffer.readShort() != -28672) {
-            throw new Object();
+            throw new RemoteException();
          }
 
          buffer.setPosition(0);
@@ -240,24 +242,24 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
          }
 
          if (tag != -127) {
-            throw new Object();
+            throw new RemoteException();
          }
 
          int index = method.indexOf(41);
          char rType = method.charAt(index + 1);
          switch (rType) {
             case 'B':
-               return new Object(buffer.readByte());
+               return new Byte(buffer.readByte());
             case 'I':
-               return new Object(buffer.readInt());
+               return new Integer(buffer.readInt());
             case 'L':
                return this.readReference(buffer.getArray(), buffer.getPosition() - 1, buffer.getLength() - 2);
             case 'S':
-               return new Object(buffer.readShort());
+               return new Short(buffer.readShort());
             case 'V':
                return null;
             case 'Z':
-               return new Object(buffer.readByte() == 1);
+               return new Boolean(buffer.readByte() == 1);
             case '[':
                int length = buffer.readByte();
                char arrayType = method.charAt(index + 2);
@@ -299,13 +301,13 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
                return null;
          }
       } else {
-         throw new Object();
+         throw new RemoteException();
       }
    }
 
    @Override
    public DataInputStream openDataInputStream() {
-      throw new Object("Not supported");
+      throw new IllegalArgumentException("Not supported");
    }
 
    @Override
@@ -316,7 +318,7 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public short enterPin(int pinID) {
+   public short enterPin(int pinID) throws RemoteException {
       if (this._apduConnection.isOpen() && this._rmiReference != null) {
          try {
             byte[] currentPin = this._apduConnection.getPIN(pinID);
@@ -325,19 +327,19 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
             }
 
             Object result = this._rmiReference.invoke("verifyPin([B)S", new Object[]{currentPin});
-            return result;
+            return (Short)result;
          } catch (Throwable var6) {
-            throw new Object(null, e);
+            throw new RemoteException(null, e);
          }
       } else {
-         throw new Object();
+         throw new RemoteException();
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public short changePin(int pinID) {
+   public short changePin(int pinID) throws RemoteException {
       if (this._apduConnection.isOpen() && this._rmiReference != null) {
          try {
             byte[] currentPin = this._apduConnection.getPIN(pinID);
@@ -351,19 +353,19 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
             }
 
             Object result = this._rmiReference.invoke("changePin([B[B)S", new Object[]{currentPin, newPin});
-            return result;
+            return (Short)result;
          } catch (Throwable var7) {
-            throw new Object(null, e);
+            throw new RemoteException(null, e);
          }
       } else {
-         throw new Object();
+         throw new RemoteException();
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public short disablePin(int pinID) {
+   public short disablePin(int pinID) throws RemoteException {
       if (this._apduConnection.isOpen() && this._rmiReference != null) {
          try {
             byte[] currentPin = this._apduConnection.getPIN(pinID);
@@ -372,19 +374,19 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
             }
 
             Object result = this._rmiReference.invoke("disablePin([B)S", new Object[]{currentPin});
-            return result;
+            return (Short)result;
          } catch (Throwable var6) {
-            throw new Object(null, e);
+            throw new RemoteException(null, e);
          }
       } else {
-         throw new Object();
+         throw new RemoteException();
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public short enablePin(int pinID) {
+   public short enablePin(int pinID) throws RemoteException {
       if (this._apduConnection.isOpen() && this._rmiReference != null) {
          try {
             byte[] currentPin = this._apduConnection.getPIN(pinID);
@@ -393,19 +395,19 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
             }
 
             Object result = this._rmiReference.invoke("enablePin([B)S", new Object[]{currentPin});
-            return result;
+            return (Short)result;
          } catch (Throwable var6) {
-            throw new Object(null, e);
+            throw new RemoteException(null, e);
          }
       } else {
-         throw new Object();
+         throw new RemoteException();
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public short unblockPin(int blockedPinID, int unblockingPinID) {
+   public short unblockPin(int blockedPinID, int unblockingPinID) throws RemoteException {
       if (this._apduConnection.isOpen() && this._rmiReference != null) {
          try {
             String pin = this._apduConnection.getSIMCode(false, CommonResource.getString(10139));
@@ -416,49 +418,49 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
                }
 
                Object result = this._rmiReference.invoke("unblockPin([B[B)S", new Object[]{this._apduConnection.ensurePINSize(pin.getBytes()), blockedPin});
-               return result;
+               return (Short)result;
             } else {
                return -1;
             }
          } catch (Throwable var8) {
-            throw new Object(null, e);
+            throw new RemoteException(null, e);
          }
       } else {
-         throw new Object();
+         throw new RemoteException();
       }
    }
 
    @Override
    public InputStream openInputStream() {
-      throw new Object("Not supported");
+      throw new IllegalArgumentException("Not supported");
    }
 
    @Override
    public DataOutputStream openDataOutputStream() {
-      throw new Object("Not supported");
+      throw new IllegalArgumentException("Not supported");
    }
 
    @Override
    public OutputStream openOutputStream() {
-      throw new Object("Not supported");
+      throw new IllegalArgumentException("Not supported");
    }
 
-   private void readFCI(byte[] fci) {
+   private void readFCI(byte[] fci) throws RemoteException {
       if (fci[0] == 111 && fci[2] == 110 && fci[4] == 94 && fci[3] == fci[5] + 2 && fci.length >= 9) {
          this._invokeINS = fci[8];
          int length = fci[5] & 255;
          this._initialStub = this.readReference(fci, 9, length - 2);
       } else {
-         throw new Object("Invalid FCI format");
+         throw new RemoteException("Invalid FCI format");
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private RemoteStub readReference(byte[] array, int offset, int length) {
+   private RemoteStub readReference(byte[] array, int offset, int length) throws RemoteException {
       try {
-         DataBuffer buffer = (DataBuffer)(new Object());
+         DataBuffer buffer = new DataBuffer();
          buffer.setData(array, offset, length);
          byte ntag = buffer.readByte();
          if (ntag != -127) {
@@ -474,7 +476,7 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
          byte[] hashModifier = new byte[hashLength];
          buffer.readFully(hashModifier);
          int interfaceCount = buffer.readByte();
-         Class[] classes = new Object[interfaceCount];
+         Class[] classes = new Class[interfaceCount];
          Class fClass = null;
          String fFullName = null;
 
@@ -492,11 +494,7 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
             int cLength = buffer.readByte();
             byte[] cname = new byte[cLength];
             buffer.readFully(cname);
-            String fullName = ((StringBuffer)(new Object()))
-               .append((String)(new Object(pkg, "UTF-8")))
-               .append('.')
-               .append((String)(new Object(cname, "UTF-8")))
-               .toString();
+            String fullName = new String(pkg, "UTF-8") + '.' + new String(cname, "UTF-8");
             Class tempClass = Class.forName(fullName);
             if (fClass == null) {
                fClass = tempClass;
@@ -511,21 +509,21 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
 
          for (int i = 0; i < interfaceCount; i++) {
             if (!classes[i].isAssignableFrom(fClass)) {
-               throw new Object();
+               throw new RemoteException();
             }
          }
 
-         RMIReference reference = new RMIReference(refID, (String)(new Object(hashModifier, "UTF-8")), fFullName, this);
+         RMIReference reference = new RMIReference(refID, new String(hashModifier, "UTF-8"), fFullName, this);
          RemoteStub stub = null;
          boolean var24 = false /* VF: Semaphore variable */;
 
          try {
             var24 = true;
-            stub = (RemoteStub)Class.forName(((StringBuffer)(new Object())).append(fFullName).append("_Stub").toString()).newInstance();
+            stub = (RemoteStub)Class.forName(fFullName + "_Stub").newInstance();
             var24 = false;
          } finally {
             if (var24) {
-               throw new Object("Cannot find remote object stub");
+               throw new RemoteException("Cannot find remote object stub");
             }
          }
 
@@ -533,39 +531,39 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
          this._rmiReference = reference;
          return stub;
       } catch (Throwable var26) {
-         throw new Object(null, exception);
+         throw new RemoteException(null, exception);
       }
    }
 
-   private void throwException(short type, short reason) throws CardException, UserException {
+   private void throwException(short type, short reason) throws IOException, Exception, RemoteException, CardException, UserException {
       String s = "User defined exception thrown by remote method";
       switch (type) {
          case 0:
-            throw new Object(s);
+            throw new Exception(s);
          case 1:
-            throw new Object(s);
+            throw new ArithmeticException(s);
          case 2:
-            throw new Object(s);
+            throw new ArrayIndexOutOfBoundsException(s);
          case 3:
-            throw new Object(s);
+            throw new ArrayStoreException(s);
          case 4:
-            throw new Object(s);
+            throw new ClassCastException(s);
          case 5:
-            throw new Object(s);
+            throw new Exception(s);
          case 6:
-            throw new Object(s);
+            throw new IndexOutOfBoundsException(s);
          case 7:
-            throw new Object(s);
+            throw new NegativeArraySizeException(s);
          case 8:
-            throw new Object(s);
+            throw new NullPointerException(s);
          case 9:
-            throw new Object(s);
+            throw new RuntimeException(s);
          case 10:
-            throw new Object(s);
+            throw new SecurityException(s);
          case 11:
-            throw new Object(s);
+            throw new IOException(s);
          case 12:
-            throw new Object(s);
+            throw new RemoteException(s);
          case 32:
             throw new APDUException(reason);
          case 33:
@@ -587,11 +585,11 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
          case 64:
             throw new ServiceException(reason);
          default:
-            throw new Object();
+            throw new RemoteException();
       }
    }
 
-   private void throwError(int detail) {
+   private void throwError(int detail) throws RemoteException {
       String s = "";
       switch (detail) {
          case 1:
@@ -616,6 +614,6 @@ public class Protocol implements JavaCardRMIConnection, ConnectionBaseInterface,
             s = "Internal Error Occurred";
       }
 
-      throw new Object(s);
+      throw new RemoteException(s);
    }
 }

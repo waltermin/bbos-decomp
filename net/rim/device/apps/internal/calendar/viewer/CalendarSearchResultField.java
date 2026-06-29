@@ -14,7 +14,7 @@ import net.rim.device.apps.api.search.SearchResultField;
 import net.rim.device.cldc.util.CalendarExtensions;
 
 final class CalendarSearchResultField extends DayList implements SearchResultField, CollectionListener, PersistentContentListener {
-   private Vector _eventVector = (Vector)(new Object());
+   private Vector _eventVector = new Vector();
    private CalendarSearchResultCollection _results;
    private Application _application = Application.getApplication();
    private CalendarSearchResultField$UpdateListRunnable _updateListRunnable = new CalendarSearchResultField$UpdateListRunnable(this);

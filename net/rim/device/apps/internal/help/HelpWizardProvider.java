@@ -41,7 +41,7 @@ public class HelpWizardProvider extends HelpScreen implements WizardPage, FieldC
    protected int _wizardResult;
    private ResourceBundle _rb;
    private int _rbTitleId;
-   private String[] _topics = new Object[0];
+   private String[] _topics = new String[0];
    private int _currentTopic;
    private Manager _contentContainer;
    private WizardButtonBar _buttonBar;
@@ -71,7 +71,7 @@ public class HelpWizardProvider extends HelpScreen implements WizardPage, FieldC
 
    public void setTopics(String[] topics) {
       if (topics == null) {
-         this._topics = new Object[0];
+         this._topics = new String[0];
       } else {
          this._topics = topics;
       }
@@ -79,7 +79,7 @@ public class HelpWizardProvider extends HelpScreen implements WizardPage, FieldC
 
    protected void createTitleBar() {
       if ((this._wizardFlags & 131072) == 0) {
-         this._titleBar = (WizardTitleBar)(new Object(""));
+         this._titleBar = new WizardTitleBar("");
          if ((this._wizardFlags & 2) != 0) {
             this._titleBar.setProgressHidden(true);
          }
@@ -98,7 +98,7 @@ public class HelpWizardProvider extends HelpScreen implements WizardPage, FieldC
       if (this._log != null) {
          long currentTime = System.currentTimeMillis();
          if (this._logBuffer == null) {
-            this._logBuffer = (StringBuffer)(new Object());
+            this._logBuffer = new StringBuffer();
          }
 
          this._logBuffer.setLength(0);
@@ -132,13 +132,13 @@ public class HelpWizardProvider extends HelpScreen implements WizardPage, FieldC
       Field field = this.getLeafFieldWithFocus();
       Manager manager = field.getManager();
 
-      while (manager != null && !(manager instanceof Object)) {
+      while (manager != null && !(manager instanceof CookieProvider)) {
          manager = manager.getManager();
       }
 
       if (manager != null) {
          Object cookie = CookieProviderUtilities.getDefaultCookie(((CookieProvider)manager).getCookieWithFocus());
-         if (cookie instanceof Object) {
+         if (cookie instanceof HTTPAddressModel) {
             this.launchUrl(((HTTPAddressModel)cookie).getURL());
             return true;
          }
@@ -284,7 +284,7 @@ public class HelpWizardProvider extends HelpScreen implements WizardPage, FieldC
 
    @Override
    public void fieldChanged(Field field, int context) {
-      if (field instanceof Object) {
+      if (field instanceof WizardButtonBar) {
          switch (context) {
             case 0:
                this.doCancel();
@@ -342,7 +342,7 @@ public class HelpWizardProvider extends HelpScreen implements WizardPage, FieldC
       renderingOptions.setProperty(4550690918222697397L, 31, defaultFont.getFontFamily().getName());
       renderingOptions.setProperty(4550690918222697397L, 32, fontPt);
       this._contentContainer = new HelpWizardProvider$1(this, 2306124484190404608L);
-      WizardLayoutManager wizardLayoutManager = (WizardLayoutManager)(new Object());
+      WizardLayoutManager wizardLayoutManager = new WizardLayoutManager();
       wizardLayoutManager.setContent(this._contentContainer);
       wizardLayoutManager.setScrollbarEnabled(true);
       this._buttonBar = null;
@@ -470,7 +470,7 @@ public class HelpWizardProvider extends HelpScreen implements WizardPage, FieldC
    public Object eventOccurred(Event event) {
       switch (event.getUID()) {
          case 10001:
-            if (this._titleBar != null && event.getSource() instanceof Object) {
+            if (this._titleBar != null && event.getSource() instanceof BrowserContent) {
                BrowserContent browserField = (BrowserContent)event.getSource();
                String newTitle = browserField.getTitle();
                synchronized (Application.getApplication().getAppEventLock()) {

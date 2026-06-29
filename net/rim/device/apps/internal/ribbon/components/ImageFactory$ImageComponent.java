@@ -36,7 +36,7 @@ final class ImageFactory$ImageComponent implements SimpleRibbonComponent, Ribbon
 
          if (src.startsWith("store://")) {
             try {
-               EncodedImage image = FileUtilities.getEncodedImage(((StringBuffer)(new Object("file:///store"))).append(src.substring(7)).toString());
+               EncodedImage image = FileUtilities.getEncodedImage("file:///store" + src.substring(7));
                if (image != null) {
                   this._bitmap = image.getBitmap();
                   return;

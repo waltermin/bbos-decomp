@@ -1,5 +1,6 @@
 package net.rim.wica.runtime.messaging.internal.notification;
 
+import net.rim.device.api.system.UnsupportedOperationException;
 import net.rim.wica.runtime.lifecycle.LifecycleService;
 import net.rim.wica.runtime.lifecycle.Wiclet;
 import net.rim.wica.runtime.messaging.InboundQueueConnection;
@@ -111,7 +112,7 @@ public class BackgroundProcessor extends Processor implements WicletRuntime {
          this._msgMapper = new MsgMapper(this._wiclet);
       } catch (Throwable var7) {
          InternalLogger.logError(this, null, e, null);
-         throw new Object("Unable to create background processor");
+         throw new RuntimeException("Unable to create background processor");
       }
    }
 
@@ -222,7 +223,7 @@ public class BackgroundProcessor extends Processor implements WicletRuntime {
 
    @Override
    public void notifyStartupLock() {
-      throw new Object();
+      throw new UnsupportedOperationException();
    }
 
    @Override
@@ -235,12 +236,12 @@ public class BackgroundProcessor extends Processor implements WicletRuntime {
 
    @Override
    public void stop() {
-      throw new Object();
+      throw new UnsupportedOperationException();
    }
 
    @Override
    public void requestScreenBack() {
-      throw new Object();
+      throw new UnsupportedOperationException();
    }
 
    @Override
@@ -250,12 +251,12 @@ public class BackgroundProcessor extends Processor implements WicletRuntime {
 
    @Override
    public void requestMenuShow(int instance) {
-      throw new Object();
+      throw new UnsupportedOperationException();
    }
 
    @Override
    public void enqueueRunnable(Runnable runnable) {
-      throw new Object();
+      throw new UnsupportedOperationException();
    }
 
    @Override
@@ -383,7 +384,7 @@ public class BackgroundProcessor extends Processor implements WicletRuntime {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

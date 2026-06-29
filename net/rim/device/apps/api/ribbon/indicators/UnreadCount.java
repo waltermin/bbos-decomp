@@ -19,7 +19,7 @@ public class UnreadCount implements Indicator, CountIndicator {
    private int _iconIndex;
    private int _typeIndex;
    private int _priority;
-   private StringBuffer _workBuffer = (StringBuffer)(new Object());
+   private StringBuffer _workBuffer = new StringBuffer();
    private boolean _visible = true;
    StringProps _action;
    boolean _mergeWithText;
@@ -95,7 +95,7 @@ public class UnreadCount implements Indicator, CountIndicator {
    public boolean hasNewStatus() {
       String appState = null;
       if (this._action != null) {
-         appState = this._action.get(2, (String)((Object)null));
+         appState = this._action.get(2, (String)null);
       }
 
       return appState != null && "new".equals(appState);
@@ -123,7 +123,7 @@ public class UnreadCount implements Indicator, CountIndicator {
          if (this._unreadCount < 0) {
             label29:
             try {
-               throw new Object(((StringBuffer)(new Object("Unread count is invalid: "))).append(this._unreadCount).toString());
+               throw new Throwable("Unread count is invalid: " + this._unreadCount);
             } finally {
                this._unreadCount = 0;
                break label29;

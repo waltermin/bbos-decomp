@@ -41,7 +41,7 @@ final class EditAddressVerb extends Verb {
 
       allowCrossServiceAddressSelection &= !ITPolicy.getBoolean(24, 38, false);
       boolean isPin = ContextObject.getFlag(context, 94);
-      Verb[] verbs = new Object[0];
+      Verb[] verbs = new Verb[0];
       if (isPin || allowCrossServiceAddressSelection) {
          Verb[] tempVerbs = addressVerbs.getVerbs(4246852237058296601L);
          Array.resize(verbs, verbs.length + tempVerbs.length);
@@ -59,15 +59,15 @@ final class EditAddressVerb extends Verb {
       Recognizer emailRecognizer = RecognizerRepository.getRecognizers(-2985347935260258684L);
       Recognizer groupAddressRecognizer = RecognizerRepository.getRecognizers(-1326186686655625745L);
       if (verbs.length > 0) {
-         String[] useEntryPrefixes = new Object[0];
-         Verb[] useOnceVerbs = new Object[0];
-         Recognizer[] recognizers = new Object[0];
+         String[] useEntryPrefixes = new String[0];
+         Verb[] useOnceVerbs = new Verb[0];
+         Recognizer[] recognizers = new Recognizer[0];
          if (!isPin || allowCrossServiceAddressSelection) {
             Array.resize(useOnceVerbs, useOnceVerbs.length + 1);
             useOnceVerbs[useOnceVerbs.length - 1] = UseOnceAddressVerb.newUseOnceEmailAddressVerb(false);
             Recognizer recognizerToUse = null;
             if (groupAddressRecognizer != null) {
-               CompoundRecognizer compoundRecognizer = (CompoundRecognizer)(new Object());
+               CompoundRecognizer compoundRecognizer = new CompoundRecognizer();
                compoundRecognizer.addRecognizer(groupAddressRecognizer);
                compoundRecognizer.addRecognizer(emailRecognizer);
                recognizerToUse = compoundRecognizer;
@@ -90,7 +90,7 @@ final class EditAddressVerb extends Verb {
             useEntryPrefixes[useEntryPrefixes.length - 1] = EmailResources.getString(1101);
          }
 
-         ContextObject selectionContextObject = (ContextObject)(new Object());
+         ContextObject selectionContextObject = new ContextObject();
          IMPlusServiceModel implusService = (IMPlusServiceModel)ApplicationRegistry.getApplicationRegistry().get(-2205884509140292945L);
          IMPlusComposeModel[] implusComposeModels = null;
          if (implusService != null && (ContextObject.getPrivateFlag(context, -3859986508589425865L, 1) || allowCrossServiceAddressSelection)) {
@@ -111,13 +111,13 @@ final class EditAddressVerb extends Verb {
             }
          }
 
-         AddressSelectionContext selectionContext = (AddressSelectionContext)(new Object(null, null, null, recognizers, useOnceVerbs));
+         AddressSelectionContext selectionContext = new AddressSelectionContext(null, null, null, recognizers, useOnceVerbs);
          int verbGroupId = 15556151;
          if (isPin) {
             verbGroupId = 13685231;
          }
 
-         selectionContextObject.put(6609423255094033855L, new Object(verbGroupId));
+         selectionContextObject.put(6609423255094033855L, new Integer(verbGroupId));
          selectionContext.setContext(selectionContextObject);
          selectionContext.setUseEntryPrefixes(useEntryPrefixes);
          selectionContext.setPreferredDefaultIndex(isPin ? 1 : 0);
@@ -128,7 +128,7 @@ final class EditAddressVerb extends Verb {
          newModel = (PersistableRIMModel)verbs[0].invoke(selectionContext);
          if (newModel != null) {
             if (ObjectGroup.isInGroup(newModel)) {
-               ContextObject cloneContext = (ContextObject)(new Object());
+               ContextObject cloneContext = new ContextObject();
                cloneContext.put(254, newModel);
                long addressObjectType = -2985347935260258684L;
                if (groupAddressRecognizer != null && groupAddressRecognizer.recognize(newModel)) {

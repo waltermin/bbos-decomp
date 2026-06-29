@@ -3,7 +3,7 @@ package net.rim.blackberry.api.pim;
 class PIMItemImpl implements PIMItem {
    protected void checkIndex(int field, int index) {
       if (index < 0 || this.countValues(field) <= index) {
-         throw new Object();
+         throw new IndexOutOfBoundsException();
       }
    }
 
@@ -15,47 +15,47 @@ class PIMItemImpl implements PIMItem {
 
    @Override
    public void addBinary(int field, int attributes, byte[] value, int offset, int length) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public byte[] getBinary(int field, int index) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public void setBinary(int field, int index, int attributes, byte[] value, int offset, int length) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public void addBoolean(int field, int attributes, boolean value) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public boolean getBoolean(int field, int index) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public void setBoolean(int field, int index, int attributes, boolean value) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public void addStringArray(int field, int attributes, String[] value) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public String[] getStringArray(int field, int index) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public void setStringArray(int field, int index, int attributes, String[] value) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
@@ -63,7 +63,7 @@ class PIMItemImpl implements PIMItem {
       if (index >= 0 && this.countValues(field) > index) {
          return 0;
       } else {
-         throw new Object();
+         throw new IndexOutOfBoundsException();
       }
    }
 
@@ -75,13 +75,13 @@ class PIMItemImpl implements PIMItem {
    @Override
    public void removeFromCategory(String category) {
       if (category == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
    }
 
    @Override
    public String[] getCategories() {
-      return new Object[0];
+      return new String[0];
    }
 
    @Override

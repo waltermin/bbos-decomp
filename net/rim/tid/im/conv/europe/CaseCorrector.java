@@ -22,14 +22,14 @@ public class CaseCorrector {
    boolean _allUpper = true;
    boolean _allLetters = true;
    private Locale _locale;
-   private ExtendedCurrentVariant _correctionVariant = (ExtendedCurrentVariant)(new Object());
-   private WeakReference _tempCharBuffer = (WeakReference)(new Object(null));
+   private ExtendedCurrentVariant _correctionVariant = new ExtendedCurrentVariant();
+   private WeakReference _tempCharBuffer = new WeakReference(null);
    public static final byte LOWER_CASE = 0;
    public static final byte UPPER_CASE = 1;
    public static final byte CAPITALIZED = 2;
    public static final byte MIXED_CAPITALIZED = 3;
    public static final byte MIXED_CASE = 4;
-   private static WeakReference iTempBufferWR = (WeakReference)(new Object(null));
+   private static WeakReference iTempBufferWR = new WeakReference(null);
 
    public CaseCorrector(Locale aLocale, int aLongestWordLength) {
       this._locale = aLocale;
@@ -166,7 +166,7 @@ public class CaseCorrector {
       if (this._caseNeedsCorrection && !aContainer.hasCaseCorrected()) {
          char[] words = aContainer.getWords();
          int count = aContainer.getVariantsCount();
-         IntVector hs = (IntVector)(new Object(count));
+         IntVector hs = new IntVector(count);
 
          for (int i = 0; i < count; i++) {
             aContainer.getRefToVariantAt(i, this._correctionVariant);

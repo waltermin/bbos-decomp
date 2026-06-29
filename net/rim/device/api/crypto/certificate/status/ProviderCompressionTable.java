@@ -7,8 +7,8 @@ import net.rim.device.api.crypto.HashCodeCalculator;
 import net.rim.device.api.util.Arrays;
 
 final class ProviderCompressionTable {
-   private Vector _hashes = (Vector)(new Object());
-   private Vector _values = (Vector)(new Object());
+   private Vector _hashes = new Vector();
+   private Vector _values = new Vector();
 
    public ProviderCompressionTable() {
    }
@@ -20,10 +20,10 @@ final class ProviderCompressionTable {
       }
 
       if (this._hashes.size() == 32767) {
-         throw new Object();
+         throw new IndexOutOfBoundsException();
       }
 
-      this._hashes.addElement(new Object(HashCodeCalculator.getCRC32(data)));
+      this._hashes.addElement(new Integer(HashCodeCalculator.getCRC32(data)));
       this._values.addElement(data);
       return this._hashes.size() - 1;
    }
@@ -35,7 +35,7 @@ final class ProviderCompressionTable {
    private final int matchEntry(byte[] data) {
       int index = -1;
       int last = this._hashes.size() - 1;
-      Integer hash = (Integer)(new Object(HashCodeCalculator.getCRC32(data)));
+      Integer hash = new Integer(HashCodeCalculator.getCRC32(data));
 
       while (index < last) {
          index = this._hashes.indexOf(hash, index + 1);

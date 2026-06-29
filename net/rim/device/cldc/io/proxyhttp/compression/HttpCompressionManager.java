@@ -8,8 +8,8 @@ import net.rim.device.cldc.io.proxyhttp.Protocol;
 
 public final class HttpCompressionManager {
    private final Object _loadLock = new Object();
-   private Hashtable _uidToMessageEncoder = (Hashtable)(new Object(5));
-   private IntHashtable _messageEncoderCache = (IntHashtable)(new Object(3));
+   private Hashtable _uidToMessageEncoder = new Hashtable(5);
+   private IntHashtable _messageEncoderCache = new IntHashtable(3);
    private static final String STRING_codebookURLPrefix = "www.blackberry.net/go/mobile/mds/http/codebook_";
    private static final String STRING_codebookURLPostfix = ".xml";
    private static final String STRING_codebookXslURL = "http://www.blackberry.net/go/mobile/mds/http/codebook2prop.xsl";
@@ -95,7 +95,7 @@ public final class HttpCompressionManager {
 
          int majorVersion = version >> 4;
          int minorVersion = version & 15;
-         StringBuffer codebookURL = (StringBuffer)(new Object(55));
+         StringBuffer codebookURL = new StringBuffer(55);
          codebookURL.append("www.blackberry.net/go/mobile/mds/http/codebook_").append(majorVersion).append('.');
          codebookURL.append(minorVersion).append(".xml");
          Protocol protocol = new Protocol();

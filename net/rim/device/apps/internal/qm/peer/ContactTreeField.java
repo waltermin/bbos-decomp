@@ -26,8 +26,8 @@ final class ContactTreeField extends VerticalFieldManager implements CollectionL
    private PeerApplication _application;
    private ContactListProvider _contactLists;
    private WeakReference _collectionListener;
-   private Hashtable _lookup = (Hashtable)(new Object(24));
-   private Hashtable _lookupMulti = (Hashtable)(new Object(2));
+   private Hashtable _lookup = new Hashtable(24);
+   private Hashtable _lookupMulti = new Hashtable(2);
    private int _fontHeight;
    private int _iconHeight;
    private ContactTreeField$ConversationBranch _conversationBranch = new ContactTreeField$ConversationBranch(null);
@@ -48,8 +48,8 @@ final class ContactTreeField extends VerticalFieldManager implements CollectionL
       this.setTag(TAG);
       this._application = PeerApplication.getInstance();
       this._contactLists = contactList;
-      this._collectionListener = (WeakReference)(new Object(this));
-      if (this._contactLists instanceof Object) {
+      this._collectionListener = new WeakReference(this);
+      if (this._contactLists instanceof CollectionEventSource) {
          CollectionEventSource collectionEventSource = (CollectionEventSource)this._contactLists;
          collectionEventSource.addCollectionListener(this._collectionListener);
       }
@@ -380,7 +380,7 @@ final class ContactTreeField extends VerticalFieldManager implements CollectionL
          }
       } else if (contactLeaf.getManager() != null) {
          this._lookup.remove(contact);
-         Vector v = (Vector)(new Object(2));
+         Vector v = new Vector(2);
          v.addElement(contactLeaf);
          contactLeaf = new ContactTreeField$ContactLeaf(this, contact);
          v.addElement(contactLeaf);

@@ -9,6 +9,7 @@ import net.rim.device.api.xml.WBXMLConstants;
 import org.xml.sax.Attributes;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class WBXMLWriter extends DefaultHandler implements RIMExtendedHandler, WBXMLConstants {
@@ -28,12 +29,12 @@ public class WBXMLWriter extends DefaultHandler implements RIMExtendedHandler, W
 
    public WBXMLWriter(OutputStream out) {
       this._writer = out;
-      this._writerBuf = (ByteArrayOutputStream)(new Object());
-      this._tagTable = (IntHashtable)(new Object());
-      this._attrNameTable = (IntHashtable)(new Object());
-      this._attrValueTable = (IntHashtable)(new Object());
-      this._strTable = (Vector)(new Object());
-      this._strIndex = (ToIntHashtable)(new Object());
+      this._writerBuf = new ByteArrayOutputStream();
+      this._tagTable = new IntHashtable();
+      this._attrNameTable = new IntHashtable();
+      this._attrValueTable = new IntHashtable();
+      this._strTable = new Vector();
+      this._strIndex = new ToIntHashtable();
       this._publicid = 1;
       this._version = 3;
       this._charset = 106;
@@ -47,7 +48,7 @@ public class WBXMLWriter extends DefaultHandler implements RIMExtendedHandler, W
             this._charset = charset;
             return;
          default:
-            throw new Object("Unsupported character set");
+            throw new IllegalArgumentException("Unsupported character set");
       }
    }
 
@@ -60,14 +61,14 @@ public class WBXMLWriter extends DefaultHandler implements RIMExtendedHandler, W
             this._publicid = publicID;
             return;
          default:
-            throw new Object("Unsupported public id");
+            throw new IllegalArgumentException("Unsupported public id");
       }
    }
 
    public void setVersion(int version) {
       switch (version) {
          case 0:
-            throw new Object("Unsupported version");
+            throw new IllegalArgumentException("Unsupported version");
          case 1:
          case 2:
          case 3:
@@ -78,14 +79,14 @@ public class WBXMLWriter extends DefaultHandler implements RIMExtendedHandler, W
 
    public void setTagTable(int page, String[] tagTable) {
       if (page > 0) {
-         throw new Object("page>0 unsupported");
+         throw new IllegalArgumentException("page>0 unsupported");
       }
 
       if (tagTable.length >= 59) {
-         throw new Object("table too big");
+         throw new IllegalArgumentException("table too big");
       }
 
-      ToIntHashtable table = (ToIntHashtable)(new Object());
+      ToIntHashtable table = new ToIntHashtable();
 
       for (int i = 0; i < tagTable.length; i++) {
          String tag = tagTable[i];
@@ -99,14 +100,14 @@ public class WBXMLWriter extends DefaultHandler implements RIMExtendedHandler, W
 
    public void setAttrStartTable(int page, String[] attrStartTable) {
       if (page > 0) {
-         throw new Object("page>0 not supported yet");
+         throw new IllegalArgumentException("page>0 not supported yet");
       }
 
       if (attrStartTable.length >= 256) {
-         throw new Object("table too big");
+         throw new IllegalArgumentException("table too big");
       }
 
-      ToIntHashtable table = (ToIntHashtable)(new Object());
+      ToIntHashtable table = new ToIntHashtable();
 
       for (int i = 0; i < attrStartTable.length; i++) {
          String attrStart = attrStartTable[i];
@@ -120,14 +121,14 @@ public class WBXMLWriter extends DefaultHandler implements RIMExtendedHandler, W
 
    public void setAttrValueTable(int page, String[] attrValueTable) {
       if (page > 0) {
-         throw new Object("page>0 not supported yet");
+         throw new IllegalArgumentException("page>0 not supported yet");
       }
 
       if (attrValueTable.length >= 256) {
-         throw new Object("table too big");
+         throw new IllegalArgumentException("table too big");
       }
 
-      ToIntHashtable table = (ToIntHashtable)(new Object());
+      ToIntHashtable table = new ToIntHashtable();
 
       for (int i = 0; i < attrValueTable.length; i++) {
          String attrValue = attrValueTable[i];
@@ -152,7 +153,7 @@ public class WBXMLWriter extends DefaultHandler implements RIMExtendedHandler, W
          }
       }
 
-      throw new Object("encoding not supported for WBXML");
+      throw new IllegalArgumentException("encoding not supported for WBXML");
    }
 
    public void setEntityResolver(EntityResolver entityResolver) {
@@ -317,12 +318,12 @@ public class WBXMLWriter extends DefaultHandler implements RIMExtendedHandler, W
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public void characters(char[] ch, int start, int length) {
+   public void characters(char[] ch, int start, int length) throws SAXException {
       try {
          this._writerBuf.write(3);
          this.write_STR_I(this._writerBuf, ch, start, length);
       } catch (Throwable var6) {
-         throw new Object(ioe.getMessage());
+         throw new SAXException(ioe.getMessage());
       }
    }
 
@@ -337,26 +338,26 @@ public class WBXMLWriter extends DefaultHandler implements RIMExtendedHandler, W
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public void startDocument() {
+   public void startDocument() throws SAXException {
       try {
          this._writer.write(this._version);
          this._writer.write(this._publicid);
          this._writer.write(this._charset);
       } catch (Throwable var3) {
-         throw new Object(ioe.getMessage());
+         throw new SAXException(ioe.getMessage());
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public void endDocument() {
+   public void endDocument() throws SAXException {
       try {
          this.outputStrTable(this._writer);
          this._writer.write(this._writerBuf.toByteArray());
          this._writer.flush();
       } catch (Throwable var3) {
-         throw new Object(ioe.getMessage());
+         throw new SAXException(ioe.getMessage());
       }
    }
 
@@ -390,7 +391,7 @@ public class WBXMLWriter extends DefaultHandler implements RIMExtendedHandler, W
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private void element(String eUri, String localName, String qName, Attributes attributes, boolean hasContent) {
+   private void element(String eUri, String localName, String qName, Attributes attributes, boolean hasContent) throws SAXException {
       try {
          boolean hasAttributes = attributes.getLength() != 0 || this._pendingNamespaces != null;
          int idx = this.tableLookup(this._tagTable, qName);
@@ -421,7 +422,7 @@ public class WBXMLWriter extends DefaultHandler implements RIMExtendedHandler, W
                   String prefix = (String)this._pendingNamespaces.elementAt(i);
                   String uri = (String)this._pendingNamespaces.elementAt(i + 1);
                   if (prefix.length() != 0) {
-                     this.attribute(((StringBuffer)(new Object("xmlns:"))).append(prefix).toString(), uri);
+                     this.attribute("xmlns:" + prefix, uri);
                   } else {
                      this.attribute("xmlns", uri);
                   }
@@ -439,7 +440,7 @@ public class WBXMLWriter extends DefaultHandler implements RIMExtendedHandler, W
             this._writerBuf.write(1);
          }
       } catch (Throwable var14) {
-         throw new Object(ioe.getMessage());
+         throw new SAXException(ioe.getMessage());
       }
    }
 
@@ -452,7 +453,7 @@ public class WBXMLWriter extends DefaultHandler implements RIMExtendedHandler, W
    public void startPrefixMapping(String prefix, String uri) {
       if (!prefix.equals(XMLParser.XML) || !uri.equals(XMLParser.XMLURL)) {
          if (this._pendingNamespaces == null) {
-            this._pendingNamespaces = (Vector)(new Object());
+            this._pendingNamespaces = new Vector();
          }
 
          this._pendingNamespaces.addElement(prefix);

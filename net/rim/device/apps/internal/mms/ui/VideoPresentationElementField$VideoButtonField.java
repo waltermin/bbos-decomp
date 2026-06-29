@@ -61,7 +61,7 @@ class VideoPresentationElementField$VideoButtonField extends ButtonField {
    protected void makeContextMenu(ContextMenu contextMenu) {
       super.makeContextMenu(contextMenu);
       if (this._deleteVerb != null) {
-         VerbMenuItem verbMenuItem = (VerbMenuItem)(new Object(null, this._deleteVerb.getOrdering(), 15, this._deleteVerb, null));
+         VerbMenuItem verbMenuItem = new VerbMenuItem(null, this._deleteVerb.getOrdering(), 15, this._deleteVerb, null);
          contextMenu.addItem(verbMenuItem);
       }
    }

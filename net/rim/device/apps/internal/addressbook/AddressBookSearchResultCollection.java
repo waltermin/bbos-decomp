@@ -9,18 +9,22 @@ import net.rim.device.apps.api.addressbook.AddressBookServices;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.FieldProvider;
 import net.rim.device.apps.api.framework.model.PaintProvider;
+import net.rim.device.apps.api.search.SearchCriterion;
 import net.rim.device.apps.api.search.SearchResultCollection;
 import net.rim.device.apps.api.ui.VariableRowHeightProxy;
 import net.rim.device.apps.internal.addressbook.resources.AddressBookResources;
 
 final class AddressBookSearchResultCollection extends SearchResultCollection implements ListFieldCallback, FieldProvider {
-   private ContextObject _paintContext = (ContextObject)(new Object(78, 4));
+   private ContextObject _paintContext = new ContextObject(78, 4);
 
    public AddressBookSearchResultCollection(Object criteria) {
       super(
-         (Object[])criteria, AddressBookServices.getAddressBook().getComparator(null, AddressBookServices.getAddressBookOptions().getSortOrder()), true, false
+         (SearchCriterion[])criteria,
+         AddressBookServices.getAddressBook().getComparator(null, AddressBookServices.getAddressBookOptions().getSortOrder()),
+         true,
+         false
       );
-      this._paintContext.put(614335798810617774L, new Object(AddressBookServices.getAddressBookOptions().getSortOrder()));
+      this._paintContext.put(614335798810617774L, new Long(AddressBookServices.getAddressBookOptions().getSortOrder()));
    }
 
    @Override
@@ -34,7 +38,7 @@ final class AddressBookSearchResultCollection extends SearchResultCollection imp
          break label32;
       }
 
-      if (addressCard instanceof Object) {
+      if (addressCard instanceof PaintProvider) {
          VariableRowHeightProxy.addHeightAdjusterToContext(this._paintContext, listField);
          ((PaintProvider)addressCard).paint(graphics, 0, y, width, 100, this._paintContext);
       } else {

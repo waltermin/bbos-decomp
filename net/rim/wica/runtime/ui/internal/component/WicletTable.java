@@ -45,7 +45,7 @@ public class WicletTable extends PagedView implements FocusChangeListener, Field
 
             for (int i = numOfCols - 1; i >= 0; i--) {
                TableColumnModel columnModel = (TableColumnModel)columnModels[i];
-               String[] cells = new Object[count];
+               String[] cells = new String[count];
                int j = fromIndex + count - 1;
 
                for (int rowIndex = count - 1; j >= fromIndex; rowIndex--) {

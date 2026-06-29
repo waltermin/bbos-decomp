@@ -12,7 +12,7 @@ final class DRMAttachment implements MMSAttachment {
    public DRMAttachment(MMSAttachment attachment) {
       this._inner = attachment;
       String EOL = "\r\n";
-      StringBuffer buf = (StringBuffer)(new Object());
+      StringBuffer buf = new StringBuffer();
       buf.append("--boundary-1");
       buf.append(EOL);
       buf.append("Content-type: ");
@@ -41,7 +41,7 @@ final class DRMAttachment implements MMSAttachment {
 
    @Override
    public final byte[] getData() {
-      DataBuffer buf = (DataBuffer)(new Object());
+      DataBuffer buf = new DataBuffer();
       buf.write(this._head);
       buf.write(this._inner.getData());
       buf.write(this._tail);

@@ -68,7 +68,7 @@ public final class VideoRecorderMain extends UiApplication implements DialogClos
       RootRegister register = RootRegister.getInstance();
       if (!register.isCardMounted()) {
          int msg = register.isMassStorageActive() ? 24 : 23;
-         this._mediaDialog = (Dialog)(new Object(0, VideoRecorderResources.getString(msg), 0, null, 0));
+         this._mediaDialog = new Dialog(0, VideoRecorderResources.getString(msg), 0, null, 0);
          this._mediaDialog.setIcon(ThemeManager.getThemeAwareImage("dialog_exclamation"));
          this._mediaDialog.setEscapeEnabled(true);
          this._mediaDialog.setDialogClosedListener(this);

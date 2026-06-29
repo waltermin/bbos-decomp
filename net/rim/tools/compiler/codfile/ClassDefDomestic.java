@@ -1,5 +1,6 @@
 package net.rim.tools.compiler.codfile;
 
+import java.io.IOException;
 import net.rim.tools.compiler.io.StructuredOutputStream;
 
 public final class ClassDefDomestic extends ClassDef {
@@ -41,8 +42,8 @@ public final class ClassDefDomestic extends ClassDef {
    }
 
    @Override
-   public final void write(StructuredOutputStream out) {
-      throw new Object("unable to write domestic class def");
+   public final void write(StructuredOutputStream out) throws IOException {
+      throw new IOException("unable to write domestic class def");
    }
 
    @Override
@@ -51,8 +52,8 @@ public final class ClassDefDomestic extends ClassDef {
    }
 
    @Override
-   public final void writeRelativeOrdinal(StructuredOutputStream out) {
-      throw new Object("cannot write ordinal for non-local class");
+   public final void writeRelativeOrdinal(StructuredOutputStream out) throws IOException {
+      throw new IOException("cannot write ordinal for non-local class");
    }
 
    public final void writeAbsoluteOrdinal(StructuredOutputStream out) {

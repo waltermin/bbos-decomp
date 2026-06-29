@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.jcrmi;
 
+import java.rmi.RemoteException;
 import javax.microedition.jcrmi.RemoteRef;
 import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.util.DataBuffer;
@@ -30,8 +31,8 @@ class RMIReference implements RemoteRef {
    }
 
    @Override
-   public Object invoke(String s, Object[] aobj) {
-      DataBuffer buffer = (DataBuffer)(new Object());
+   public Object invoke(String s, Object[] aobj) throws RemoteException {
+      DataBuffer buffer = new DataBuffer();
       byte cla = -128;
       buffer.writeByte(cla);
       buffer.writeByte(this._protocol.getInvokeINS());
@@ -39,8 +40,8 @@ class RMIReference implements RemoteRef {
       buffer.writeByte(2);
       buffer.writeByte(0);
       buffer.writeShort((short)this._refId);
-      SHA1Digest digest = (SHA1Digest)(new Object());
-      String str = ((StringBuffer)(new Object())).append(this._hashModifier).append(s).toString();
+      SHA1Digest digest = new SHA1Digest();
+      String str = this._hashModifier + s;
       digest.update(str.getBytes());
       byte[] dArray = digest.getDigest();
       buffer.writeByte(dArray[0]);
@@ -48,18 +49,18 @@ class RMIReference implements RemoteRef {
       if (aobj != null) {
          for (int i = 0; i < aobj.length; i++) {
             Object obj = aobj[i];
-            if (obj instanceof Object) {
-               buffer.writeByte(obj);
-            } else if (!(obj instanceof Object)) {
-               if (obj instanceof Object) {
-                  buffer.writeShort(obj);
-               } else if (obj instanceof Object) {
-                  buffer.writeInt(obj);
+            if (obj instanceof Byte) {
+               buffer.writeByte((Byte)obj);
+            } else if (!(obj instanceof Boolean)) {
+               if (obj instanceof Short) {
+                  buffer.writeShort((Short)obj);
+               } else if (obj instanceof Integer) {
+                  buffer.writeInt((Integer)obj);
                } else if (!(obj instanceof byte[])) {
                   if (!(obj instanceof boolean[])) {
                      if (!(obj instanceof short[])) {
                         if (!(obj instanceof int[])) {
-                           throw new Object("Parameter type not supported");
+                           throw new RemoteException("Parameter type not supported");
                         }
 
                         int[] iArray = (int[])obj;

@@ -27,7 +27,7 @@ final class SBAppContents$MyMenuItem extends MenuItem {
       switch (this._id) {
          case 10:
          default:
-            rec = (ServiceRecord)(new Object(4));
+            rec = new ServiceRecord(4);
             SBAppEditRecordUI editUI = new SBAppEditRecordUI(this.this$0._sb, rec, true);
             editUI.go(0, true);
             return;

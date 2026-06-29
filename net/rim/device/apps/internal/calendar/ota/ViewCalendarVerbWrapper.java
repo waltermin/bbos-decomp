@@ -11,7 +11,7 @@ import net.rim.device.cldc.util.CalendarExtensions;
 class ViewCalendarVerbWrapper extends WrapperVerb {
    ViewCalendarVerbWrapper(Verb viewCalendarVerb, Event event) {
       super(viewCalendarVerb, null, viewCalendarVerb.getOrdering());
-      ContextObject contextObject = (ContextObject)(new Object());
+      ContextObject contextObject = new ContextObject();
       Calendar calendar = Calendar.getInstance();
       ((CalendarExtensions)calendar).setTimeLong(event.getStartDate(TimeZone.getDefault()));
       contextObject.put(4143325197084129318L, calendar);

@@ -52,7 +52,7 @@ class HomeAwayOptionField extends ObjectChoiceField implements MMSOptionsScreen$
 
    private static String[] getChoices(int[] modes) {
       int count = modes.length;
-      String[] choices = new Object[count];
+      String[] choices = new String[count];
 
       for (int idx = 0; idx < count; idx++) {
          choices[idx] = getModeString(modes[idx]);

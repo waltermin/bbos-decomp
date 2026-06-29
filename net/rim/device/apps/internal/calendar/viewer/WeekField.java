@@ -12,6 +12,7 @@ import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.ui.accessibility.AccessibleContext;
+import net.rim.device.api.ui.accessibility.AccessibleContextFactory;
 import net.rim.device.api.ui.component.DateField;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.api.ui.theme.Theme;
@@ -53,14 +54,14 @@ final class WeekField extends Field {
       new WeekField$WeekFieldDayContents(this),
       new WeekField$WeekFieldDayContents(this)
    };
-   private StringBuffer _yearText = (StringBuffer)(new Object());
-   private StringBuffer _monthText = (StringBuffer)(new Object());
-   private SimpleDateFormat _yearFormatter = (SimpleDateFormat)(new Object("yyyy"));
-   private SimpleDateFormat _monthFormatter = (SimpleDateFormat)(new Object("MMM"));
-   private StringBuffer _tempBuffer = (StringBuffer)(new Object());
+   private StringBuffer _yearText = new StringBuffer();
+   private StringBuffer _monthText = new StringBuffer();
+   private SimpleDateFormat _yearFormatter = new SimpleDateFormat("yyyy");
+   private SimpleDateFormat _monthFormatter = new SimpleDateFormat("MMM");
+   private StringBuffer _tempBuffer = new StringBuffer();
    private String[] _dow = CommonResources.getStringArray(116);
    private String[] _dowMedium = CommonResources.getStringArray(9094);
-   private XYRect _focusRect = (XYRect)(new Object());
+   private XYRect _focusRect = new XYRect();
    private long _topOfScreenFromEndOfDay;
    private int _startHour;
    private int _endHour;
@@ -79,8 +80,8 @@ final class WeekField extends Field {
    private boolean _lowResolution;
    private int _leftColumnWidth;
    private TimeBasedCollection _timeBasedCollection;
-   private XYRect _dayHeaderInvalidFocusRect = (XYRect)(new Object());
-   private Vector _eventVector = (Vector)(new Object());
+   private XYRect _dayHeaderInvalidFocusRect = new XYRect();
+   private Vector _eventVector = new Vector();
    private ThemeAttributeSet _baseAttr;
    private ThemeAttributeSet _daysOfWeekAttr;
    private ThemeAttributeSet _currentDayFocusHilightAttr;
@@ -642,11 +643,11 @@ final class WeekField extends Field {
    private final void drawAppointment(Graphics graphics, int x, int y, int width, int height, Object obj, boolean highlighted) {
       boolean eventIsMeeting = false;
       int eventColor = -1;
-      if (obj instanceof Object) {
+      if (obj instanceof MultiServiceEvent) {
          eventColor = ((MultiServiceEvent)obj).getColour();
       }
 
-      if (obj instanceof Object) {
+      if (obj instanceof MeetingInfoProvider) {
          eventIsMeeting = ((MeetingInfoProvider)obj).isMeeting();
       }
 
@@ -728,18 +729,17 @@ final class WeekField extends Field {
       WeekField$WeekFieldDayContents temp = this._days[this._dayWithFocusIndex];
       WeekField$EventEntry focusEventEntry = temp.getEntryWithFocus();
       if (focusEventEntry != null) {
-         EventImpl focusEventImpl = (EventImpl)focusEventEntry._object;
-         return focusEventImpl;
+         return (EventImpl)focusEventEntry._object;
       }
 
       long start = temp.getStartOfFocus();
       String date = "";
       if (start > 0) {
-         DateField dateField = (DateField)(new Object("Date: ", start, 48));
-         date = ((StringBuffer)(new Object())).append(date).append(dateField.toString()).toString();
+         DateField dateField = new DateField("Date: ", start, 48);
+         date = date + dateField.toString();
       }
 
-      return (AccessibleContext)(new Object(date, 28, 4, null));
+      return new AccessibleContextFactory(date, 28, 4, null);
    }
 
    @Override
@@ -1107,7 +1107,7 @@ final class WeekField extends Field {
       }
 
       if (Ui.isTTSEnabled()) {
-         super.accessibleEventOccurred(6, new Object(1), new Object(2), this);
+         super.accessibleEventOccurred(6, new Integer(1), new Integer(2), this);
       }
 
       return 0;
@@ -1145,7 +1145,7 @@ final class WeekField extends Field {
          }
 
          if (Ui.isTTSEnabled()) {
-            super.accessibleEventOccurred(6, new Object(1), new Object(2), this);
+            super.accessibleEventOccurred(6, new Integer(1), new Integer(2), this);
          }
       }
    }

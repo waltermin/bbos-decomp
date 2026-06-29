@@ -19,7 +19,7 @@ final class SoftwareRSACryptoToken extends RSACryptoToken implements Persistable
    @Override
    public final byte[] extractRSAPublicKeyE(CryptoTokenPublicKeyData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareRSACryptoToken$RSAPublicKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareRSACryptoToken$RSAPublicKeyData)cryptoTokenData).copyE();
       }
@@ -28,7 +28,7 @@ final class SoftwareRSACryptoToken extends RSACryptoToken implements Persistable
    @Override
    public final byte[] extractRSAPublicKeyN(CryptoTokenPublicKeyData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareRSACryptoToken$RSAPublicKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareRSACryptoToken$RSAPublicKeyData)cryptoTokenData).copyN();
       }
@@ -37,7 +37,7 @@ final class SoftwareRSACryptoToken extends RSACryptoToken implements Persistable
    @Override
    public final byte[] extractRSAPrivateKeyE(CryptoTokenPrivateKeyData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareRSACryptoToken$RSAPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareRSACryptoToken$RSAPrivateKeyData)cryptoTokenData).copyE();
       }
@@ -46,7 +46,7 @@ final class SoftwareRSACryptoToken extends RSACryptoToken implements Persistable
    @Override
    public final byte[] extractRSAPrivateKeyN(CryptoTokenPrivateKeyData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareRSACryptoToken$RSAPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareRSACryptoToken$RSAPrivateKeyData)cryptoTokenData).copyN();
       }
@@ -55,7 +55,7 @@ final class SoftwareRSACryptoToken extends RSACryptoToken implements Persistable
    @Override
    public final byte[] extractRSAPrivateKeyD(CryptoTokenPrivateKeyData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareRSACryptoToken$RSAPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareRSACryptoToken$RSAPrivateKeyData)cryptoTokenData).copyD();
       }
@@ -64,7 +64,7 @@ final class SoftwareRSACryptoToken extends RSACryptoToken implements Persistable
    @Override
    public final byte[] extractRSAPrivateKeyP(CryptoTokenPrivateKeyData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareRSACryptoToken$RSAPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareRSACryptoToken$RSAPrivateKeyData)cryptoTokenData).copyP();
       }
@@ -73,7 +73,7 @@ final class SoftwareRSACryptoToken extends RSACryptoToken implements Persistable
    @Override
    public final byte[] extractRSAPrivateKeyQ(CryptoTokenPrivateKeyData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareRSACryptoToken$RSAPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareRSACryptoToken$RSAPrivateKeyData)cryptoTokenData).copyQ();
       }
@@ -82,7 +82,7 @@ final class SoftwareRSACryptoToken extends RSACryptoToken implements Persistable
    @Override
    public final byte[] extractRSAPrivateKeyDModPm1(CryptoTokenPrivateKeyData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareRSACryptoToken$RSAPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareRSACryptoToken$RSAPrivateKeyData)cryptoTokenData).copyDModPm1();
       }
@@ -91,7 +91,7 @@ final class SoftwareRSACryptoToken extends RSACryptoToken implements Persistable
    @Override
    public final byte[] extractRSAPrivateKeyDModQm1(CryptoTokenPrivateKeyData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareRSACryptoToken$RSAPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareRSACryptoToken$RSAPrivateKeyData)cryptoTokenData).copyDModQm1();
       }
@@ -100,7 +100,7 @@ final class SoftwareRSACryptoToken extends RSACryptoToken implements Persistable
    @Override
    public final byte[] extractRSAPrivateKeyQInvModP(CryptoTokenPrivateKeyData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareRSACryptoToken$RSAPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareRSACryptoToken$RSAPrivateKeyData)cryptoTokenData).copyQInvModP();
       }
@@ -137,21 +137,21 @@ final class SoftwareRSACryptoToken extends RSACryptoToken implements Persistable
       // 13: aastore
       // 14: areturn
       // 15: astore 1
-      // 16: new java/lang/Object
+      // 16: new java/lang/RuntimeException
       // 19: dup
       // 1a: aload 1
       // 1b: invokevirtual net/rim/device/api/crypto/CryptoTokenException.toString ()Ljava/lang/String;
       // 1e: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 21: athrow
       // 22: astore 1
-      // 23: new java/lang/Object
+      // 23: new java/lang/RuntimeException
       // 26: dup
       // 27: aload 1
       // 28: invokevirtual net/rim/device/api/crypto/CryptoUnsupportedOperationException.toString ()Ljava/lang/String;
       // 2b: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 2e: athrow
       // 2f: astore 1
-      // 30: new java/lang/Object
+      // 30: new java/lang/RuntimeException
       // 33: dup
       // 34: aload 1
       // 35: invokevirtual net/rim/device/api/crypto/UnsupportedCryptoSystemException.toString ()Ljava/lang/String;
@@ -163,7 +163,7 @@ final class SoftwareRSACryptoToken extends RSACryptoToken implements Persistable
    }
 
    @Override
-   public final RSAKeyPair createRSAKeyPair(RSACryptoSystem param1, byte[] param2) {
+   public final RSAKeyPair createRSAKeyPair(RSACryptoSystem param1, byte[] param2) throws CryptoUnsupportedOperationException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -175,7 +175,7 @@ final class SoftwareRSACryptoToken extends RSACryptoToken implements Persistable
       // 001: ifnull 008
       // 004: aload 2
       // 005: ifnonnull 010
-      // 008: new java/lang/Object
+      // 008: new java/lang/IllegalArgumentException
       // 00b: dup
       // 00c: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 00f: athrow
@@ -184,7 +184,7 @@ final class SoftwareRSACryptoToken extends RSACryptoToken implements Persistable
       // 014: bipush 1
       // 015: invokestatic net/rim/device/api/crypto/NativeRSA.isSupported (II)Z
       // 018: ifne 023
-      // 01b: new java/lang/Object
+      // 01b: new net/rim/device/api/crypto/CryptoUnsupportedOperationException
       // 01e: dup
       // 01f: invokespecial net/rim/device/api/crypto/CryptoUnsupportedOperationException.<init> ()V
       // 022: athrow
@@ -195,7 +195,7 @@ final class SoftwareRSACryptoToken extends RSACryptoToken implements Persistable
       // 029: bipush 3
       // 02b: iand
       // 02c: ifeq 037
-      // 02f: new java/lang/Object
+      // 02f: new java/lang/IllegalArgumentException
       // 032: dup
       // 033: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 036: athrow
@@ -293,7 +293,7 @@ final class SoftwareRSACryptoToken extends RSACryptoToken implements Persistable
       // 0d8: aload 16
       // 0da: invokestatic net/rim/device/api/util/Arrays.equals ([B[B)Z
       // 0dd: ifeq 0e8
-      // 0e0: new java/lang/Object
+      // 0e0: new net/rim/device/api/crypto/CryptoSelfTestError
       // 0e3: dup
       // 0e4: invokespecial net/rim/device/api/crypto/CryptoSelfTestError.<init> ()V
       // 0e7: athrow
@@ -308,7 +308,7 @@ final class SoftwareRSACryptoToken extends RSACryptoToken implements Persistable
       // 0f6: aload 17
       // 0f8: invokestatic net/rim/device/api/util/Arrays.equals ([B[B)Z
       // 0fb: ifne 106
-      // 0fe: new java/lang/Object
+      // 0fe: new net/rim/device/api/crypto/CryptoSelfTestError
       // 101: dup
       // 102: invokespecial net/rim/device/api/crypto/CryptoSelfTestError.<init> ()V
       // 105: athrow
@@ -327,21 +327,21 @@ final class SoftwareRSACryptoToken extends RSACryptoToken implements Persistable
       // 11e: invokespecial net/rim/device/api/crypto/RSAKeyPair.<init> (Lnet/rim/device/api/crypto/RSAPublicKey;Lnet/rim/device/api/crypto/RSAPrivateKey;)V
       // 121: areturn
       // 122: astore 13
-      // 124: new java/lang/Object
+      // 124: new java/lang/RuntimeException
       // 127: dup
       // 128: aload 13
       // 12a: invokevirtual net/rim/device/api/crypto/InvalidKeyException.toString ()Ljava/lang/String;
       // 12d: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 130: athrow
       // 131: astore 13
-      // 133: new java/lang/Object
+      // 133: new java/lang/RuntimeException
       // 136: dup
       // 137: aload 13
       // 139: invokevirtual net/rim/device/api/crypto/InvalidKeyPairException.toString ()Ljava/lang/String;
       // 13c: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 13f: athrow
       // 140: astore 13
-      // 142: new java/lang/Object
+      // 142: new java/lang/RuntimeException
       // 145: dup
       // 146: aload 13
       // 148: invokevirtual net/rim/device/api/crypto/CryptoTokenException.toString ()Ljava/lang/String;
@@ -416,9 +416,9 @@ final class SoftwareRSACryptoToken extends RSACryptoToken implements Persistable
    @Override
    public final void signRSA(
       RSACryptoSystem cryptoSystem, CryptoTokenPrivateKeyData privateKeyData, byte[] input, int inputOffset, byte[] output, int outputOffset
-   ) {
+   ) throws CryptoUnsupportedOperationException {
       if (!NativeRSA.isSupported(cryptoSystem.getBitLength(), 4)) {
-         throw new Object();
+         throw new CryptoUnsupportedOperationException();
       }
 
       privateKeyOperation(cryptoSystem, privateKeyData, input, inputOffset, output, outputOffset);
@@ -427,9 +427,9 @@ final class SoftwareRSACryptoToken extends RSACryptoToken implements Persistable
    @Override
    public final void verifyRSA(
       RSACryptoSystem cryptoSystem, CryptoTokenPublicKeyData publicKeyData, byte[] input, int inputOffset, byte[] output, int outputOffset
-   ) {
+   ) throws CryptoUnsupportedOperationException {
       if (!NativeRSA.isSupported(cryptoSystem.getBitLength(), 2)) {
-         throw new Object();
+         throw new CryptoUnsupportedOperationException();
       }
 
       publicKeyOperation(cryptoSystem, publicKeyData, input, inputOffset, output, outputOffset);
@@ -439,7 +439,7 @@ final class SoftwareRSACryptoToken extends RSACryptoToken implements Persistable
       RSACryptoSystem cryptoSystem, CryptoTokenPublicKeyData cryptoTokenPublicKeyData, byte[] input, int inputOffset, byte[] output, int outputOffset
    ) {
       if (!(cryptoTokenPublicKeyData instanceof SoftwareRSACryptoToken$RSAPublicKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareRSACryptoToken$RSAPublicKeyData publicKeyData = (SoftwareRSACryptoToken$RSAPublicKeyData)cryptoTokenPublicKeyData;
@@ -451,7 +451,7 @@ final class SoftwareRSACryptoToken extends RSACryptoToken implements Persistable
       RSACryptoSystem cryptoSystem, CryptoTokenPrivateKeyData cryptoTokenPrivateKeyData, byte[] input, int inputOffset, byte[] output, int outputOffset
    ) {
       if (!(cryptoTokenPrivateKeyData instanceof SoftwareRSACryptoToken$RSAPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareRSACryptoToken$RSAPrivateKeyData privateKeyData = (SoftwareRSACryptoToken$RSAPrivateKeyData)cryptoTokenPrivateKeyData;
@@ -712,10 +712,10 @@ final class SoftwareRSACryptoToken extends RSACryptoToken implements Persistable
          }
       } catch (UnsupportedCryptoSystemException var11) {
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

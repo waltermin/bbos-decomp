@@ -55,15 +55,15 @@ final class ListenerManager
    PreverifierListener,
    EmailSendListener,
    TransmissionServiceListener {
-   private LongHashtable _storeIds = (LongHashtable)(new Object());
-   private LongHashtable _folderIds = (LongHashtable)(new Object());
-   private LongHashtable _messageIds = (LongHashtable)(new Object());
-   private Vector _storeListeners = (Vector)(new Object());
-   private Vector _viewListeners = (Vector)(new Object());
+   private LongHashtable _storeIds = new LongHashtable();
+   private LongHashtable _folderIds = new LongHashtable();
+   private LongHashtable _messageIds = new LongHashtable();
+   private Vector _storeListeners = new Vector();
+   private Vector _viewListeners = new Vector();
    private MergedCollection _mergedCollection;
-   private IntHashtable _serviceListeners = (IntHashtable)(new Object());
-   private LongHashtable _sendListeners = (LongHashtable)(new Object());
-   private Vector _defaultSessionListeners = (Vector)(new Object());
+   private IntHashtable _serviceListeners = new IntHashtable();
+   private LongHashtable _sendListeners = new LongHashtable();
+   private Vector _defaultSessionListeners = new Vector();
    private static final long ID = 4422687540963743150L;
 
    public final boolean removeEmailSendListener(long serviceUidHash, SendListener l) {
@@ -135,7 +135,7 @@ final class ListenerManager
    public final void addEmailSendListener(int serviceUidHash, SendListener l) {
       Vector v = (Vector)this._sendListeners.get(serviceUidHash);
       if (v == null) {
-         v = (Vector)(new Object());
+         v = new Vector();
       }
 
       if (!v.contains(l)) {
@@ -199,7 +199,7 @@ final class ListenerManager
 
                emailMsg.changeStatus(0, 0, 8191, 129, false, false, false, false, null);
                String refuseMessage = EmailResources.getString(207);
-               emailMsg.setTransmissionErrorMessage(((StringBuffer)(new Object())).append(refuseMessage).append(" ").append(applicationName).toString());
+               emailMsg.setTransmissionErrorMessage(refuseMessage + " " + applicationName);
                return false;
             }
          }
@@ -212,7 +212,7 @@ final class ListenerManager
 
    @Override
    public final void elementUpdated(Collection collection, Object oldElement, Object newElement) {
-      if (newElement instanceof Object && collection == this._mergedCollection) {
+      if (newElement instanceof EmailMessageModel && collection == this._mergedCollection) {
          EmailMessageModel m = (EmailMessageModel)newElement;
          this.update(m);
       }
@@ -220,7 +220,7 @@ final class ListenerManager
 
    @Override
    public final void elementRemoved(Collection collection, Object element) {
-      if (element instanceof Object && collection == this._mergedCollection) {
+      if (element instanceof EmailMessageModel && collection == this._mergedCollection) {
          EmailMessageModel m = (EmailMessageModel)element;
          this.dispatchFolderEvent(2, m);
       }
@@ -381,7 +381,7 @@ final class ListenerManager
    private final void addListener(long id, LongHashtable map, EventListener listener) {
       Vector v = (Vector)map.get(id);
       if (v == null) {
-         v = (Vector)(new Object());
+         v = new Vector();
       }
 
       if (!v.contains(listener)) {
@@ -434,7 +434,7 @@ final class ListenerManager
    private final void handleModelViewListenerEvents(int eventId, OpenViewer openViewer, Object context) {
       if (this._viewListeners.size() > 0) {
          Object o = null;
-         if (openViewer instanceof Object) {
+         if (openViewer instanceof ModelScreen) {
             ModelScreen ms = (ModelScreen)openViewer;
 
             label57:
@@ -444,24 +444,24 @@ final class ListenerManager
                break label57;
             }
 
-            if (!(o instanceof Object)) {
+            if (!(o instanceof EmailMessageModel)) {
                o = ContextObject.get(context, 250);
             }
 
-            if (!(o instanceof Object)) {
+            if (!(o instanceof EmailMessageModel)) {
                o = ContextObject.get(context, 254);
             }
 
-            if (!(o instanceof Object)) {
+            if (!(o instanceof EmailMessageModel)) {
                o = ContextObject.get(context, 32241034113959076L);
-               if (o instanceof Object) {
+               if (o instanceof TransitoryMessagePropertiesModel) {
                   TransitoryMessagePropertiesModel tmpm = (TransitoryMessagePropertiesModel)o;
                   o = tmpm.getEmailMessageModel();
                }
             }
          }
 
-         if (o instanceof Object) {
+         if (o instanceof EmailMessageModel) {
             EmailMessageModel emm = (EmailMessageModel)o;
             this.doMessageEventDispatch(this._viewListeners, emm.getFolderId(), emm, eventId);
          }
@@ -483,7 +483,7 @@ final class ListenerManager
 
          Vector v = (Vector)lm._serviceListeners.get(key);
          if (v == null) {
-            v = (Vector)(new Object());
+            v = new Vector();
             lm._serviceListeners.put(key, v);
          }
 

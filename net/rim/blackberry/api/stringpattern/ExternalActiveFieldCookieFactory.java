@@ -10,7 +10,7 @@ import net.rim.device.api.util.LongEnumeration;
 import net.rim.device.api.util.LongHashtable;
 
 final class ExternalActiveFieldCookieFactory implements Factory {
-   private LongHashtable _cookies = (LongHashtable)(new Object());
+   private LongHashtable _cookies = new LongHashtable();
    private int _scope = UIDGenerator.getUniqueScopingValue();
    static final long ID = 2591848032186709274L;
    private static ExternalActiveFieldCookieFactory _factory;
@@ -48,7 +48,7 @@ final class ExternalActiveFieldCookieFactory implements Factory {
 
    @Override
    public final Object createInstance(Object initialData) {
-      if (!(initialData instanceof Object)) {
+      if (!(initialData instanceof ActiveFieldContext)) {
          return null;
       }
 

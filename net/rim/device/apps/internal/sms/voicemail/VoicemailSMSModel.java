@@ -2,7 +2,9 @@ package net.rim.device.apps.internal.sms.voicemail;
 
 import net.rim.device.api.i18n.DateFormat;
 import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.framework.model.ColumnPainter;
@@ -69,11 +71,11 @@ public class VoicemailSMSModel extends SMSModel implements PersistableRIMModel {
             Array.resize(verbs, verbs.length + vmailVerbs.length);
 
             for (int i = 0; i < vmailVerbs.length; i++) {
-               if (ContextObject.getFlag(context, 37) && vmailVerbs[i] instanceof Object) {
+               if (ContextObject.getFlag(context, 37) && vmailVerbs[i] instanceof SetParameter) {
                   Verb var10000 = vmailVerbs[i];
-                  if (vmailVerbs[i] instanceof Object) {
+                  if (vmailVerbs[i] instanceof Copyable) {
                      Verb copy = (Verb)((Copyable)var10000).copy();
-                     ((SetParameter)copy).setParameter(new Object(122));
+                     ((SetParameter)copy).setParameter(new ContextObject(122));
                      verbs[numberOfVerbsAdded++] = copy;
                      if (defaultVerb == null) {
                         defaultVerb = copy;
@@ -93,7 +95,7 @@ public class VoicemailSMSModel extends SMSModel implements PersistableRIMModel {
 
    @Override
    public int match(Object criteria) {
-      if (!(criteria instanceof Object)) {
+      if (!(criteria instanceof SearchCriterion)) {
          return super.match(criteria);
       }
 
@@ -109,26 +111,26 @@ public class VoicemailSMSModel extends SMSModel implements PersistableRIMModel {
    @Override
    public Field getField(Object context) {
       Object delegateUi = SMSUiRegistry.getRegistry().getCurrentUi();
-      if (delegateUi != null && delegateUi instanceof Object) {
+      if (delegateUi != null && delegateUi instanceof FieldProvider) {
          ContextObject contObj = ContextObject.castOrCreate(context);
          ContextObject.put(contObj, 250, this);
          return ((FieldProvider)delegateUi).getField(contObj);
       } else {
-         VerticalFieldManager field = (VerticalFieldManager)(new Object(1152921504606846976L));
+         VerticalFieldManager field = new VerticalFieldManager(1152921504606846976L);
          field.setCookie(this);
          Field titleField = this.getTitleField(context);
          field.add(titleField);
-         field.add((Field)(new Object()));
-         ImageField iconField = (ImageField)(new Object(36028797019029504L));
+         field.add(new SeparatorField());
+         ImageField iconField = new ImageField(36028797019029504L);
          iconField.setImage(MessageIcons.getIcons().getImage(this.getOverallStatusIcon()));
-         HorizontalFieldManager statusHfm = (HorizontalFieldManager)(new Object());
+         HorizontalFieldManager statusHfm = new HorizontalFieldManager();
          statusHfm.add(iconField);
-         StringBuffer stringBuffer = (StringBuffer)(new Object());
+         StringBuffer stringBuffer = new StringBuffer();
          stringBuffer.append(' ');
          DateFormat.getInstance(53).formatLocal(stringBuffer, super._payload.getDisplayDate());
-         statusHfm.add((Field)(new Object(stringBuffer, 18014398509481984L)));
+         statusHfm.add(new LabelField(stringBuffer, 18014398509481984L));
          field.add(statusHfm);
-         RichTextField rtf = (RichTextField)(new Object(this.getBody(), 18014398509481984L));
+         RichTextField rtf = new RichTextField(this.getBody(), 18014398509481984L);
          rtf.setCookie(this);
          field.add(rtf);
          return field;
@@ -180,7 +182,7 @@ public class VoicemailSMSModel extends SMSModel implements PersistableRIMModel {
          PersistableRIMModel[] addresses = super._payload.getAddresses();
          if (addresses.length > 0) {
             PersistableRIMModel var10000 = addresses[0];
-            if (addresses[0] instanceof Object) {
+            if (addresses[0] instanceof FieldProvider) {
                FieldProvider fieldProvider = (FieldProvider)var10000;
                ContextObject addressContextObject = ContextObject.clone(context);
                addressContextObject.setFlag(1);
@@ -192,13 +194,13 @@ public class VoicemailSMSModel extends SMSModel implements PersistableRIMModel {
       }
 
       String voiceMailString = SMSResources.getString(35);
-      HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object());
+      HorizontalFieldManager hfm = new HorizontalFieldManager();
       if (addressField != null) {
-         hfm.add((Field)(new Object(((StringBuffer)(new Object())).append(voiceMailString).append(" (").toString())));
+         hfm.add(new LabelField(voiceMailString + " ("));
          hfm.add(addressField);
-         hfm.add((Field)(new Object(")")));
+         hfm.add(new LabelField(")"));
       } else {
-         hfm.add((Field)(new Object(voiceMailString)));
+         hfm.add(new LabelField(voiceMailString));
       }
 
       return hfm;

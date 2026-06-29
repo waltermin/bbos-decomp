@@ -11,7 +11,7 @@ public final class FilterByCategoriesVerb extends DisplayCategoriesVerb {
    public FilterByCategoriesVerb(KeywordFilteredScreen screen, int[] selectedCategoryIds) {
       super(CommonResources.getResourceBundle(), 9108);
       if (screen == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._screen = screen;

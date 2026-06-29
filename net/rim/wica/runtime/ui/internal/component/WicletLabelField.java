@@ -24,7 +24,7 @@ final class WicletLabelField extends LabelField implements View {
       Object value = this._model.getValue();
       if (value == null) {
          this.setText(null);
-      } else if (value instanceof Object) {
+      } else if (value instanceof Vector) {
          this.setText(((Vector)value).elementAt(row));
       } else {
          this.setText(value);

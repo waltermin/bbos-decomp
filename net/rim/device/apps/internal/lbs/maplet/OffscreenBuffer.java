@@ -24,8 +24,8 @@ final class OffscreenBuffer {
       this._width = width;
       this._height = height;
       this._transform = transform;
-      this._bitmap = (Bitmap)(new Object(width, height));
-      this._graphics = (Graphics)(new Object(this._bitmap));
+      this._bitmap = new Bitmap(width, height);
+      this._graphics = new Graphics(this._bitmap);
       this._x = new int[]{0, width, width, 0};
       this._y = new int[]{0, 0, height, height};
    }

@@ -12,18 +12,18 @@ public final class TaskArguments extends ApplicationArguments {
 
    public TaskArguments(String arg) {
       if (arg != null && arg.equals("new")) {
-         super._args = new Object[]{arg};
+         super._args = new String[]{arg};
       } else {
-         throw new Object("Invalid argument. Please use one of the TaskArguments constants.");
+         throw new IllegalArgumentException("Invalid argument. Please use one of the TaskArguments constants.");
       }
    }
 
    public TaskArguments(String arg, ToDo todo) {
       if (arg == null || !arg.equals("new") && !arg.equals("view")) {
-         throw new Object("Invalid argument. Please use one of the TaskArguments contstants.");
+         throw new IllegalArgumentException("Invalid argument. Please use one of the TaskArguments contstants.");
       }
 
-      super._args = new Object[]{arg};
+      super._args = new String[]{arg};
       this._todo = todo;
    }
 

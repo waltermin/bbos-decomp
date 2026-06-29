@@ -37,7 +37,7 @@ final class LifecycleServiceImpl$LocalizationTask implements Runnable, EventList
       Vector apps = this.this$0._manager.getApplications();
       int size = apps.size();
       this.this$0._eventService.addListener(200, this);
-      this._pendingInstalls = (LongHashtable)(new Object(size));
+      this._pendingInstalls = new LongHashtable(size);
 
       for (int i = 0; i < size; i++) {
          WicletImpl app = (WicletImpl)apps.elementAt(i);
@@ -50,7 +50,7 @@ final class LifecycleServiceImpl$LocalizationTask implements Runnable, EventList
             descriptor.setLanguages(app.getInfo().getLanguages());
             int language = Util.arrayFind(descriptor.getLanguages(), this._locale.getLanguage());
             long applicationId = app.getId();
-            this._pendingInstalls.put(applicationId, new Object(applicationId));
+            this._pendingInstalls.put(applicationId, new Long(applicationId));
             boolean persistPackage = true;
             byte[] appPackage = app.getWicletStore().getPackage();
             if (appPackage == null) {

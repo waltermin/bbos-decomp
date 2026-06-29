@@ -68,7 +68,7 @@ public final class MarqueeDetailsField extends Field implements Animation {
       this._running = false;
       if (this._listener != null) {
          Object listener = this._listener.get();
-         if (listener instanceof Object) {
+         if (listener instanceof AnimationListener) {
             ((AnimationListener)listener).animationStopped(this);
          }
       }
@@ -76,7 +76,7 @@ public final class MarqueeDetailsField extends Field implements Animation {
 
    @Override
    public final void addAnimationListener(AnimationListener listener) {
-      this._listener = (WeakReference)(new Object(listener));
+      this._listener = new WeakReference(listener);
    }
 
    @Override
@@ -174,7 +174,7 @@ public final class MarqueeDetailsField extends Field implements Animation {
       font.measureText(this._text, 0, this._text.length(), null, metrics);
       this._textWidth = metrics.iBoundsBrX - metrics.iBoundsTlX;
       Ui.returnTmpTextMetrics(metrics);
-      this._textRect = (TextRect)(new Object(this, this._text, 6));
+      this._textRect = new TextRect(this, this._text, 6);
       this._textRect.layout(Integer.MAX_VALUE, Integer.MAX_VALUE);
       int textHeight = this._textRect.getExtent().height;
       this._orientation = this.calculateTextOrientation();
@@ -195,7 +195,7 @@ public final class MarqueeDetailsField extends Field implements Animation {
 
       this._textRect.setStyle(drawStyle);
       if (this._marqueeNeeded) {
-         this._textRect2 = (TextRect)(new Object(this, this._text, drawStyle));
+         this._textRect2 = new TextRect(this, this._text, drawStyle);
       }
 
       if (textHeight > height) {
@@ -217,7 +217,7 @@ public final class MarqueeDetailsField extends Field implements Animation {
             this._running = true;
             if (this._listener != null) {
                Object listener = this._listener.get();
-               if (listener instanceof Object) {
+               if (listener instanceof AnimationListener) {
                   ((AnimationListener)listener).animationStarted(this);
                }
             }

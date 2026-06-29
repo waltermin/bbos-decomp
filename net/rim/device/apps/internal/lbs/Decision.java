@@ -109,7 +109,7 @@ public final class Decision extends Location {
             if (this._address.length() == 0) {
                this._caption = LBSResources.getString(293);
             } else {
-               this._caption = MessageFormat.format(LBSResources.getString(265), new Object[]{this._address});
+               this._caption = MessageFormat.format(LBSResources.getString(265), new String[]{this._address});
             }
             break;
          case 3:
@@ -120,11 +120,11 @@ public final class Decision extends Location {
                default:
                   this._sign = Bitmap.getBitmapResource("resources/directions/continue.png");
                   if (this._name.length() > 0 && this._towards.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(366), new Object[]{this._name, this._towards});
+                     this._caption = MessageFormat.format(LBSResources.getString(366), new String[]{this._name, this._towards});
                   } else if (this._name.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(365), new Object[]{this._name});
+                     this._caption = MessageFormat.format(LBSResources.getString(365), new String[]{this._name});
                   } else if (this._towards.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(367), new Object[]{this._towards});
+                     this._caption = MessageFormat.format(LBSResources.getString(367), new String[]{this._towards});
                   } else {
                      this._caption = LBSResources.getString(239);
                   }
@@ -133,11 +133,11 @@ public final class Decision extends Location {
                case 2:
                   this._sign = Bitmap.getBitmapResource("resources/directions/bearLeft.png");
                   if (this._name.length() > 0 && this._towards.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(358), new Object[]{this._name, this._towards});
+                     this._caption = MessageFormat.format(LBSResources.getString(358), new String[]{this._name, this._towards});
                   } else if (this._name.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(357), new Object[]{this._name});
+                     this._caption = MessageFormat.format(LBSResources.getString(357), new String[]{this._name});
                   } else if (this._towards.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(359), new Object[]{this._towards});
+                     this._caption = MessageFormat.format(LBSResources.getString(359), new String[]{this._towards});
                   } else {
                      this._caption = LBSResources.getString(241);
                   }
@@ -147,11 +147,11 @@ public final class Decision extends Location {
                case 5:
                   this._sign = Bitmap.getBitmapResource("resources/directions/turnLeft.png");
                   if (this._name.length() > 0 && this._towards.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(370), new Object[]{this._name, this._towards});
+                     this._caption = MessageFormat.format(LBSResources.getString(370), new String[]{this._name, this._towards});
                   } else if (this._name.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(369), new Object[]{this._name});
+                     this._caption = MessageFormat.format(LBSResources.getString(369), new String[]{this._name});
                   } else if (this._towards.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(371), new Object[]{this._towards});
+                     this._caption = MessageFormat.format(LBSResources.getString(371), new String[]{this._towards});
                   } else {
                      this._caption = LBSResources.getString(243);
                   }
@@ -160,11 +160,11 @@ public final class Decision extends Location {
                case 7:
                   this._sign = Bitmap.getBitmapResource("resources/directions/turnSharpLeft.png");
                   if (this._name.length() > 0 && this._towards.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(378), new Object[]{this._name, this._towards});
+                     this._caption = MessageFormat.format(LBSResources.getString(378), new String[]{this._name, this._towards});
                   } else if (this._name.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(377), new Object[]{this._name});
+                     this._caption = MessageFormat.format(LBSResources.getString(377), new String[]{this._name});
                   } else if (this._towards.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(379), new Object[]{this._towards});
+                     this._caption = MessageFormat.format(LBSResources.getString(379), new String[]{this._towards});
                   } else {
                      this._caption = LBSResources.getString(245);
                   }
@@ -172,11 +172,11 @@ public final class Decision extends Location {
                case 8:
                   this._sign = Bitmap.getBitmapResource("resources/directions/uTurn.png");
                   if (this._name.length() > 0 && this._towards.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(386), new Object[]{this._name, this._towards});
+                     this._caption = MessageFormat.format(LBSResources.getString(386), new String[]{this._name, this._towards});
                   } else if (this._name.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(385), new Object[]{this._name});
+                     this._caption = MessageFormat.format(LBSResources.getString(385), new String[]{this._name});
                   } else if (this._towards.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(387), new Object[]{this._towards});
+                     this._caption = MessageFormat.format(LBSResources.getString(387), new String[]{this._towards});
                   } else {
                      this._caption = LBSResources.getString(247);
                   }
@@ -185,11 +185,11 @@ public final class Decision extends Location {
                case 10:
                   this._sign = Bitmap.getBitmapResource("resources/directions/turnSharpRight.png");
                   if (this._name.length() > 0 && this._towards.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(382), new Object[]{this._name, this._towards});
+                     this._caption = MessageFormat.format(LBSResources.getString(382), new String[]{this._name, this._towards});
                   } else if (this._name.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(381), new Object[]{this._name});
+                     this._caption = MessageFormat.format(LBSResources.getString(381), new String[]{this._name});
                   } else if (this._towards.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(383), new Object[]{this._towards});
+                     this._caption = MessageFormat.format(LBSResources.getString(383), new String[]{this._towards});
                   } else {
                      this._caption = LBSResources.getString(1);
                   }
@@ -199,11 +199,11 @@ public final class Decision extends Location {
                case 13:
                   this._sign = Bitmap.getBitmapResource("resources/directions/turnRight.png");
                   if (this._name.length() > 0 && this._towards.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(374), new Object[]{this._name, this._towards});
+                     this._caption = MessageFormat.format(LBSResources.getString(374), new String[]{this._name, this._towards});
                   } else if (this._name.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(373), new Object[]{this._name});
+                     this._caption = MessageFormat.format(LBSResources.getString(373), new String[]{this._name});
                   } else if (this._towards.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(375), new Object[]{this._towards});
+                     this._caption = MessageFormat.format(LBSResources.getString(375), new String[]{this._towards});
                   } else {
                      this._caption = LBSResources.getString(16);
                   }
@@ -212,11 +212,11 @@ public final class Decision extends Location {
                case 15:
                   this._sign = Bitmap.getBitmapResource("resources/directions/bearRight.png");
                   if (this._name.length() > 0 && this._towards.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(362), new Object[]{this._name, this._towards});
+                     this._caption = MessageFormat.format(LBSResources.getString(362), new String[]{this._name, this._towards});
                   } else if (this._name.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(361), new Object[]{this._name});
+                     this._caption = MessageFormat.format(LBSResources.getString(361), new String[]{this._name});
                   } else if (this._towards.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(363), new Object[]{this._towards});
+                     this._caption = MessageFormat.format(LBSResources.getString(363), new String[]{this._towards});
                   } else {
                      this._caption = LBSResources.getString(36);
                   }
@@ -227,7 +227,7 @@ public final class Decision extends Location {
          case 4:
             this._sign = Bitmap.getBitmapResource("resources/directions/continue.png");
             if (this._name.length() > 0 && this._connector.length() > 0) {
-               name = ((StringBuffer)(new Object())).append(this._name).append(" - ").append(this._connector).toString();
+               name = this._name + " - " + this._connector;
             } else if (this._name.length() > 0) {
                name = this._name;
             } else {
@@ -236,11 +236,11 @@ public final class Decision extends Location {
 
             this.createHighwayShield(name);
             if (name.length() > 0 && this._towards.length() > 0) {
-               this._caption = MessageFormat.format(LBSResources.getString(451), new Object[]{name, this._towards});
+               this._caption = MessageFormat.format(LBSResources.getString(451), new String[]{name, this._towards});
             } else if (name.length() > 0) {
-               this._caption = MessageFormat.format(LBSResources.getString(240), new Object[]{name});
+               this._caption = MessageFormat.format(LBSResources.getString(240), new String[]{name});
             } else if (this._towards.length() > 0) {
-               this._caption = MessageFormat.format(LBSResources.getString(452), new Object[]{this._towards});
+               this._caption = MessageFormat.format(LBSResources.getString(452), new String[]{this._towards});
             } else {
                this._caption = LBSResources.getString(239);
             }
@@ -272,7 +272,7 @@ public final class Decision extends Location {
             }
 
             if (this._name.length() > 0 && this._connector.length() > 0) {
-               name = ((StringBuffer)(new Object())).append(this._name).append(" - ").append(this._connector).toString();
+               name = this._name + " - " + this._connector;
             } else if (this._name.length() > 0) {
                name = this._name;
             } else {
@@ -281,11 +281,11 @@ public final class Decision extends Location {
 
             this.createHighwayShield(name);
             if (name.length() > 0 && this._towards.length() > 0) {
-               this._caption = MessageFormat.format(LBSResources.getString(445), new Object[]{name, this._towards});
+               this._caption = MessageFormat.format(LBSResources.getString(445), new String[]{name, this._towards});
             } else if (name.length() > 0) {
-               this._caption = MessageFormat.format(LBSResources.getString(82), new Object[]{name});
+               this._caption = MessageFormat.format(LBSResources.getString(82), new String[]{name});
             } else if (this._towards.length() > 0) {
-               this._caption = MessageFormat.format(LBSResources.getString(446), new Object[]{this._towards});
+               this._caption = MessageFormat.format(LBSResources.getString(446), new String[]{this._towards});
             } else {
                this._caption = LBSResources.getString(55);
             }
@@ -293,7 +293,7 @@ public final class Decision extends Location {
          case 6:
             this._sign = Bitmap.getBitmapResource("resources/directions/continue.png");
             if (this._name.length() > 0 && this._connector.length() > 0) {
-               name = ((StringBuffer)(new Object())).append(this._name).append(" - ").append(this._connector).toString();
+               name = this._name + " - " + this._connector;
             } else if (this._name.length() > 0) {
                name = this._name;
             } else {
@@ -302,18 +302,18 @@ public final class Decision extends Location {
 
             this.createHighwayShield(name);
             if (name.length() > 0 && this._towards.length() > 0) {
-               this._caption = MessageFormat.format(LBSResources.getString(450), new Object[]{name, this._towards});
+               this._caption = MessageFormat.format(LBSResources.getString(450), new String[]{name, this._towards});
             } else if (name.length() > 0) {
-               this._caption = MessageFormat.format(LBSResources.getString(448), new Object[]{name});
+               this._caption = MessageFormat.format(LBSResources.getString(448), new String[]{name});
             } else if (this._towards.length() > 0) {
-               this._caption = MessageFormat.format(LBSResources.getString(449), new Object[]{this._towards});
+               this._caption = MessageFormat.format(LBSResources.getString(449), new String[]{this._towards});
             } else {
                this._caption = LBSResources.getString(55);
             }
             break;
          case 7:
             if (this._name.length() > 0 && this._connector.length() > 0) {
-               name = ((StringBuffer)(new Object())).append(this._name).append(" - ").append(this._connector).toString();
+               name = this._name + " - " + this._connector;
             } else if (this._name.length() > 0) {
                name = this._name;
             } else {
@@ -362,11 +362,11 @@ public final class Decision extends Location {
             }
 
             if (name.length() > 0 && this._towards.length() > 0) {
-               this._caption = MessageFormat.format(LBSResources.getString(444), new Object[]{name, this._towards});
+               this._caption = MessageFormat.format(LBSResources.getString(444), new String[]{name, this._towards});
             } else if (name.length() > 0) {
-               this._caption = MessageFormat.format(LBSResources.getString(442), new Object[]{name});
+               this._caption = MessageFormat.format(LBSResources.getString(442), new String[]{name});
             } else if (this._towards.length() > 0) {
-               this._caption = MessageFormat.format(LBSResources.getString(443), new Object[]{this._towards});
+               this._caption = MessageFormat.format(LBSResources.getString(443), new String[]{this._towards});
             } else {
                switch (actionInfo) {
                   case -1:
@@ -420,14 +420,14 @@ public final class Decision extends Location {
                         exitNum = this._exit;
                      }
 
-                     this._bitMapText = ((StringBuffer)(new Object())).append(LBSResources.getString(472)).append(" ").append(exitNum).toString();
+                     this._bitMapText = LBSResources.getString(472) + " " + exitNum;
                      break;
                   }
 
                   this._sign = Bitmap.getBitmapResource("resources/directions/exitRight.png");
                   this._bitMapText = LBSResources.getString(472);
                   if (this._name.length() > 0 && this._connector.length() > 0) {
-                     name = ((StringBuffer)(new Object())).append(this._name).append(" - ").append(this._connector).toString();
+                     name = this._name + " - " + this._connector;
                   } else if (this._name.length() > 0) {
                      name = this._name;
                   } else {
@@ -454,7 +454,7 @@ public final class Decision extends Location {
                         exitNum = this._exit;
                      }
 
-                     this._bitMapText = ((StringBuffer)(new Object())).append(LBSResources.getString(472)).append(" ").append(exitNum).toString();
+                     this._bitMapText = LBSResources.getString(472) + " " + exitNum;
                   } else {
                      this._sign = Bitmap.getBitmapResource("resources/directions/exitLeft.png");
                      this._bitMapText = LBSResources.getString(472);
@@ -483,56 +483,56 @@ public final class Decision extends Location {
                   this._caption = LBSResources.getString(422);
                   break label516;
                case 1:
-                  this._caption = MessageFormat.format(LBSResources.getString(436), new Object[]{this._towards});
+                  this._caption = MessageFormat.format(LBSResources.getString(436), new String[]{this._towards});
                   break label516;
                case 16:
-                  this._caption = MessageFormat.format(LBSResources.getString(434), new Object[]{this._name});
+                  this._caption = MessageFormat.format(LBSResources.getString(434), new String[]{this._name});
                   break label516;
                case 17:
-                  this._caption = MessageFormat.format(LBSResources.getString(435), new Object[]{this._name, this._towards});
+                  this._caption = MessageFormat.format(LBSResources.getString(435), new String[]{this._name, this._towards});
                   break label516;
                case 256:
-                  this._caption = MessageFormat.format(LBSResources.getString(430), new Object[]{this._connector});
+                  this._caption = MessageFormat.format(LBSResources.getString(430), new String[]{this._connector});
                   break label516;
                case 257:
-                  this._caption = MessageFormat.format(LBSResources.getString(433), new Object[]{this._connector, this._towards});
+                  this._caption = MessageFormat.format(LBSResources.getString(433), new String[]{this._connector, this._towards});
                   break label516;
                case 272:
-                  this._caption = MessageFormat.format(LBSResources.getString(431), new Object[]{this._connector, this._name});
+                  this._caption = MessageFormat.format(LBSResources.getString(431), new String[]{this._connector, this._name});
                   break label516;
                case 273:
-                  this._caption = MessageFormat.format(LBSResources.getString(432), new Object[]{this._connector, this._name, this._towards});
+                  this._caption = MessageFormat.format(LBSResources.getString(432), new String[]{this._connector, this._name, this._towards});
                   break label516;
                case 4096:
-                  this._caption = MessageFormat.format(LBSResources.getString(349), new Object[]{this._exit});
+                  this._caption = MessageFormat.format(LBSResources.getString(349), new String[]{this._exit});
                   break label516;
                case 4097:
-                  this._caption = MessageFormat.format(LBSResources.getString(429), new Object[]{this._exit, this._towards});
+                  this._caption = MessageFormat.format(LBSResources.getString(429), new String[]{this._exit, this._towards});
                   break label516;
                case 4112:
-                  this._caption = MessageFormat.format(LBSResources.getString(427), new Object[]{this._exit, this._name});
+                  this._caption = MessageFormat.format(LBSResources.getString(427), new String[]{this._exit, this._name});
                   break label516;
                case 4113:
-                  this._caption = MessageFormat.format(LBSResources.getString(428), new Object[]{this._exit, this._name, this._towards});
+                  this._caption = MessageFormat.format(LBSResources.getString(428), new String[]{this._exit, this._name, this._towards});
                   break label516;
                case 4352:
-                  this._caption = MessageFormat.format(LBSResources.getString(423), new Object[]{this._exit, this._connector});
+                  this._caption = MessageFormat.format(LBSResources.getString(423), new String[]{this._exit, this._connector});
                   break label516;
                case 4353:
-                  this._caption = MessageFormat.format(LBSResources.getString(426), new Object[]{this._exit, this._connector, this._towards});
+                  this._caption = MessageFormat.format(LBSResources.getString(426), new String[]{this._exit, this._connector, this._towards});
                   break label516;
                case 4368:
-                  this._caption = MessageFormat.format(LBSResources.getString(424), new Object[]{this._exit, this._connector, this._name});
+                  this._caption = MessageFormat.format(LBSResources.getString(424), new String[]{this._exit, this._connector, this._name});
                   break label516;
                case 4369:
-                  this._caption = MessageFormat.format(LBSResources.getString(425), new Object[]{this._exit, this._connector, this._name, this._towards});
+                  this._caption = MessageFormat.format(LBSResources.getString(425), new String[]{this._exit, this._connector, this._name, this._towards});
                default:
                   break label516;
             }
          case 9:
             this._sign = Bitmap.getBitmapResource("resources/directions/enterCircle.png");
             if (this._name.length() > 0 && this._connector.length() > 0) {
-               name = ((StringBuffer)(new Object())).append(this._name).append(" - ").append(this._connector).toString();
+               name = this._name + " - " + this._connector;
             } else if (this._name.length() > 0) {
                name = this._name;
             } else {
@@ -540,68 +540,68 @@ public final class Decision extends Location {
             }
 
             if (name.length() > 0 && this._towards.length() > 0) {
-               this._caption = MessageFormat.format(LBSResources.getString(460), new Object[]{name, this._towards});
+               this._caption = MessageFormat.format(LBSResources.getString(460), new String[]{name, this._towards});
             } else if (name.length() > 0) {
-               this._caption = MessageFormat.format(LBSResources.getString(459), new Object[]{name});
+               this._caption = MessageFormat.format(LBSResources.getString(459), new String[]{name});
             } else if (this._towards.length() > 0) {
-               this._caption = MessageFormat.format(LBSResources.getString(461), new Object[]{this._towards});
+               this._caption = MessageFormat.format(LBSResources.getString(461), new String[]{this._towards});
             } else {
                this._caption = LBSResources.getString(167);
             }
             break;
          case 10:
             if (this._name.length() > 0 && this._connector.length() > 0) {
-               name = ((StringBuffer)(new Object())).append(this._name).append(" - ").append(this._connector).toString();
+               name = this._name + " - " + this._connector;
             } else if (this._name.length() > 0) {
                name = this._name;
             } else {
                name = this._connector;
             }
 
-            this._bitMapText = ((StringBuffer)(new Object(""))).append(actionInfo).toString();
+            this._bitMapText = "" + actionInfo;
             this._sign = Bitmap.getBitmapResource("resources/directions/enterCircle.png");
             switch (actionInfo) {
                case 0:
                   if (name.length() > 0 && this._towards.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(480), new Object[]{this._bitMapText, name, this._towards});
+                     this._caption = MessageFormat.format(LBSResources.getString(480), new String[]{this._bitMapText, name, this._towards});
                   } else if (name.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(479), new Object[]{this._bitMapText, name});
+                     this._caption = MessageFormat.format(LBSResources.getString(479), new String[]{this._bitMapText, name});
                   } else if (this._towards.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(481), new Object[]{this._bitMapText, this._towards});
+                     this._caption = MessageFormat.format(LBSResources.getString(481), new String[]{this._bitMapText, this._towards});
                   } else {
-                     this._caption = MessageFormat.format(LBSResources.getString(478), new Object[]{this._bitMapText});
+                     this._caption = MessageFormat.format(LBSResources.getString(478), new String[]{this._bitMapText});
                   }
                   break label516;
                case 1:
                default:
                   if (name.length() > 0 && this._towards.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(453), new Object[]{name, this._towards});
+                     this._caption = MessageFormat.format(LBSResources.getString(453), new String[]{name, this._towards});
                   } else if (name.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(252), new Object[]{name});
+                     this._caption = MessageFormat.format(LBSResources.getString(252), new String[]{name});
                   } else if (this._towards.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(454), new Object[]{this._towards});
+                     this._caption = MessageFormat.format(LBSResources.getString(454), new String[]{this._towards});
                   } else {
                      this._caption = LBSResources.getString(251);
                   }
                   break label516;
                case 2:
                   if (name.length() > 0 && this._towards.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(455), new Object[]{name, this._towards});
+                     this._caption = MessageFormat.format(LBSResources.getString(455), new String[]{name, this._towards});
                   } else if (name.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(254), new Object[]{name});
+                     this._caption = MessageFormat.format(LBSResources.getString(254), new String[]{name});
                   } else if (this._towards.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(456), new Object[]{this._towards});
+                     this._caption = MessageFormat.format(LBSResources.getString(456), new String[]{this._towards});
                   } else {
                      this._caption = LBSResources.getString(253);
                   }
                   break label516;
                case 3:
                   if (name.length() > 0 && this._towards.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(457), new Object[]{name, this._towards});
+                     this._caption = MessageFormat.format(LBSResources.getString(457), new String[]{name, this._towards});
                   } else if (name.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(256), new Object[]{name});
+                     this._caption = MessageFormat.format(LBSResources.getString(256), new String[]{name});
                   } else if (this._towards.length() > 0) {
-                     this._caption = MessageFormat.format(LBSResources.getString(458), new Object[]{this._towards});
+                     this._caption = MessageFormat.format(LBSResources.getString(458), new String[]{this._towards});
                   } else {
                      this._caption = LBSResources.getString(255);
                   }
@@ -637,7 +637,7 @@ public final class Decision extends Location {
             }
 
             if (this._name.length() > 0 && this._connector.length() > 0) {
-               name = ((StringBuffer)(new Object())).append(this._name).append(" - ").append(this._connector).toString();
+               name = this._name + " - " + this._connector;
             } else if (this._name.length() > 0) {
                name = this._name;
             } else {
@@ -647,30 +647,30 @@ public final class Decision extends Location {
             this.createHighwayShield(name);
             if (direction == 1) {
                if (name.length() > 0 && this._towards.length() > 0) {
-                  this._caption = MessageFormat.format(LBSResources.getString(466), new Object[]{name, this._towards});
+                  this._caption = MessageFormat.format(LBSResources.getString(466), new String[]{name, this._towards});
                } else if (name.length() > 0) {
-                  this._caption = MessageFormat.format(LBSResources.getString(465), new Object[]{name});
+                  this._caption = MessageFormat.format(LBSResources.getString(465), new String[]{name});
                } else if (this._towards.length() > 0) {
-                  this._caption = MessageFormat.format(LBSResources.getString(467), new Object[]{this._towards});
+                  this._caption = MessageFormat.format(LBSResources.getString(467), new String[]{this._towards});
                } else {
                   this._caption = LBSResources.getString(464);
                }
             } else if (direction == 2) {
                if (name.length() > 0 && this._towards.length() > 0) {
-                  this._caption = MessageFormat.format(LBSResources.getString(470), new Object[]{name, this._towards});
+                  this._caption = MessageFormat.format(LBSResources.getString(470), new String[]{name, this._towards});
                } else if (name.length() > 0) {
-                  this._caption = MessageFormat.format(LBSResources.getString(469), new Object[]{name});
+                  this._caption = MessageFormat.format(LBSResources.getString(469), new String[]{name});
                } else if (this._towards.length() > 0) {
-                  this._caption = MessageFormat.format(LBSResources.getString(471), new Object[]{this._towards});
+                  this._caption = MessageFormat.format(LBSResources.getString(471), new String[]{this._towards});
                } else {
                   this._caption = LBSResources.getString(468);
                }
             } else if (name.length() > 0 && this._towards.length() > 0) {
-               this._caption = MessageFormat.format(LBSResources.getString(462), new Object[]{name, this._towards});
+               this._caption = MessageFormat.format(LBSResources.getString(462), new String[]{name, this._towards});
             } else if (name.length() > 0) {
-               this._caption = MessageFormat.format(LBSResources.getString(270), new Object[]{name});
+               this._caption = MessageFormat.format(LBSResources.getString(270), new String[]{name});
             } else if (this._towards.length() > 0) {
-               this._caption = MessageFormat.format(LBSResources.getString(463), new Object[]{this._towards});
+               this._caption = MessageFormat.format(LBSResources.getString(463), new String[]{this._towards});
             } else {
                this._caption = LBSResources.getString(269);
             }
@@ -678,11 +678,7 @@ public final class Decision extends Location {
 
       if (action != 2) {
          float numKilometres = this._distance / 1148846080;
-         this._caption = ((StringBuffer)(new Object()))
-            .append(this._caption)
-            .append(" ")
-            .append(MessageFormat.format(LBSResources.getString(199), new Object[]{Distance.formatDistance(numKilometres)}))
-            .toString();
+         this._caption = this._caption + " " + MessageFormat.format(LBSResources.getString(199), new String[]{Distance.formatDistance(numKilometres)});
       }
 
       super._label = this._caption;
@@ -792,7 +788,7 @@ public final class Decision extends Location {
          i++;
       }
 
-      return isNumber && number.length() != 0 ? ((StringBuffer)(new Object())).append(number).append(direction).toString() : "";
+      return isNumber && number.length() != 0 ? number + direction : "";
    }
 
    private final String getHwyDirection(String name) {
@@ -805,7 +801,7 @@ public final class Decision extends Location {
          || name.indexOf(" WB ") != -1
          || name.indexOf(" WB-") != -1
          || name.indexOf(" WB/") != -1) {
-         return ((StringBuffer)(new Object(" "))).append(LBSResources.getString(133)).toString();
+         return " " + LBSResources.getString(133);
       }
 
       if (name.endsWith(" E")
@@ -816,7 +812,7 @@ public final class Decision extends Location {
          || name.indexOf(" EB ") != -1
          || name.indexOf(" EB-") != -1
          || name.indexOf(" EB/") != -1) {
-         return ((StringBuffer)(new Object(" "))).append(LBSResources.getString(129)).toString();
+         return " " + LBSResources.getString(129);
       }
 
       if (!name.endsWith(" N")
@@ -835,12 +831,12 @@ public final class Decision extends Location {
             || name.indexOf(" SB ") != -1
             || name.indexOf(" SB-") != -1
             || name.indexOf(" SB/") != -1) {
-            direction = ((StringBuffer)(new Object(" "))).append(LBSResources.getString(53)).toString();
+            direction = " " + LBSResources.getString(53);
          }
 
          return direction;
       } else {
-         return ((StringBuffer)(new Object(" "))).append(LBSResources.getString(52)).toString();
+         return " " + LBSResources.getString(52);
       }
    }
 
@@ -871,21 +867,20 @@ public final class Decision extends Location {
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object("Decision: latitude: ")))
-         .append(super._latitude / 1203982336)
-         .append(", longitude: ")
-         .append(super._longitude / 1203982336)
-         .append(", action: ")
-         .append(this._action)
-         .append(", actionInfo: ")
-         .append(this._actionInfo)
-         .append(", distance: ")
-         .append(this._distance)
-         .append(", address: ")
-         .append(this._address)
-         .append(", description: ")
-         .append(super._description)
-         .toString();
+      return "Decision: latitude: "
+         + super._latitude / 1203982336
+         + ", longitude: "
+         + super._longitude / 1203982336
+         + ", action: "
+         + this._action
+         + ", actionInfo: "
+         + this._actionInfo
+         + ", distance: "
+         + this._distance
+         + ", address: "
+         + this._address
+         + ", description: "
+         + super._description;
    }
 
    public final void paint(Graphics graphics, Transform transform, boolean focus, boolean drawCaption) {

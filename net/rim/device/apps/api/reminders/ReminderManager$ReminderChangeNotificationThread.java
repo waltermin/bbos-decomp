@@ -3,7 +3,7 @@ package net.rim.device.apps.api.reminders;
 import net.rim.vm.Array;
 
 final class ReminderManager$ReminderChangeNotificationThread extends Thread {
-   Runnable[] _changeQueue = new Object[0];
+   Runnable[] _changeQueue = new Runnable[0];
 
    public final void addRunnable(Runnable r) {
       synchronized (this._changeQueue) {
@@ -28,7 +28,7 @@ final class ReminderManager$ReminderChangeNotificationThread extends Thread {
                   break label96;
                }
 
-               localchangeQueue = new Object[this._changeQueue.length];
+               localchangeQueue = new Runnable[this._changeQueue.length];
 
                for (int i = 0; i < this._changeQueue.length; i++) {
                   localchangeQueue[i] = this._changeQueue[i];
@@ -40,7 +40,7 @@ final class ReminderManager$ReminderChangeNotificationThread extends Thread {
             for (int i = 0; i < localchangeQueue.length; i++) {
                Runnable r = localchangeQueue[i];
                r.run();
-               r = null;
+               Object var16 = null;
             }
 
             Array.resize(localchangeQueue, 0);

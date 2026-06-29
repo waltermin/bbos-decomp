@@ -4,7 +4,7 @@ import java.util.Hashtable;
 import net.rim.device.resources.Resource;
 
 public final class net_rim_tid_spell_checkRIMResources extends Resource {
-   public static Hashtable _resources = (Hashtable)(new Object(65));
+   public static Hashtable _resources = new Hashtable(65);
    public static Hashtable _properties;
    public static byte[] _appFlags = new byte[]{-93};
    public static byte[] _appCount = new byte[]{0};

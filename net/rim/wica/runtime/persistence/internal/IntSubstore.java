@@ -7,10 +7,10 @@ import net.rim.device.api.util.Persistable;
 
 final class IntSubstore implements Persistable {
    private BigVector _objects;
-   private IntIntHashtable _index = (IntIntHashtable)(new Object());
+   private IntIntHashtable _index = new IntIntHashtable();
 
    public IntSubstore() {
-      this._objects = (BigVector)(new Object());
+      this._objects = new BigVector();
    }
 
    public final boolean containsKey(int key) {

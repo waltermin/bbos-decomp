@@ -36,7 +36,7 @@ public class BrowserPushModel extends BasePushModel {
             activeScreen.close();
          }
 
-         PushDisplayDialog dialog = new PushDisplayDialog(MessageFormat.format(BrowserPushResources.getString(messageId), new Object[]{param}));
+         PushDisplayDialog dialog = new PushDisplayDialog(MessageFormat.format(BrowserPushResources.getString(messageId), new String[]{param}));
          dialog.setModal(true);
          dialog.show();
          if (dialog.getCloseReason() != 0) {

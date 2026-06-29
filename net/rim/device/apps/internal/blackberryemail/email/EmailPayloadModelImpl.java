@@ -7,7 +7,7 @@ import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.api.system.ObjectGroup;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Font;
-import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.StringUtilities;
@@ -27,6 +27,7 @@ import net.rim.device.apps.api.transmission.rim.RIMMessagingOutgoingMessage;
 import net.rim.device.apps.api.utility.framework.FieldUtility;
 import net.rim.device.apps.internal.blackberryemail.header.TimeStampModel;
 import net.rim.device.apps.internal.blackberryemail.resources.EmailResources;
+import net.rim.device.apps.internal.commonmodels.body.BodyModel;
 import net.rim.vm.Array;
 
 public final class EmailPayloadModelImpl
@@ -78,14 +79,14 @@ public final class EmailPayloadModelImpl
 
    @Override
    public final boolean convert(Object context, Object target) {
-      if (!(target instanceof Object)) {
+      if (!(target instanceof RIMMessagingOutgoingMessage)) {
          if (ContextObject.getFlag(context, 43) && ContextObject.getFlag(context, 19)) {
             SyncBuffer syncBuffer = (SyncBuffer)target;
             syncBuffer.addField(18, "");
             return true;
          }
 
-         if (target instanceof Object && ContextObject.getFlag(context, 70)) {
+         if (target instanceof StringBuffer && ContextObject.getFlag(context, 70)) {
             StringBuffer stringBuffer = (StringBuffer)target;
             stringBuffer.append('\n');
             stringBuffer.append(EmailResources.getString(50));
@@ -99,7 +100,7 @@ public final class EmailPayloadModelImpl
             }
 
             unsortedModels[numSubmembers] = new TimeStampModel(this._timestamp);
-            RIMModel[] sortedModels = new Object[numUnsortedModels];
+            RIMModel[] sortedModels = new RIMModel[numUnsortedModels];
             int[] orders = new int[numUnsortedModels];
             ContextObject newContext = ContextObject.clone(context);
             newContext.clearFlag(37);
@@ -109,7 +110,7 @@ public final class EmailPayloadModelImpl
 
             for (int i = 0; i < numSortedModels; i++) {
                RIMModel currentModel = sortedModels[i];
-               if (currentModel instanceof Object) {
+               if (currentModel instanceof ConversionProvider) {
                   int currentValue = orders[i];
                   if (fieldSeparation > 0) {
                      int thisGroup = currentValue / fieldSeparation;
@@ -142,7 +143,7 @@ public final class EmailPayloadModelImpl
          }
 
          ContextObject.put(context, 4465382771624174900L, target);
-         StringBuffer stringBuffer = (StringBuffer)(new Object());
+         StringBuffer stringBuffer = new StringBuffer();
          this.convert(context, stringBuffer);
          byte encoding = this.getEncoding();
          String messageText = stringBuffer.toString();
@@ -182,7 +183,7 @@ public final class EmailPayloadModelImpl
 
       for (int i = 0; i < size; i++) {
          RIMModel submember = (RIMModel)this.getAt(i);
-         if (submember instanceof Object) {
+         if (submember instanceof CloneProvider) {
             CloneProvider cloneProvider = (CloneProvider)submember;
             newPayload.add(cloneProvider.clone(contextObject));
          }
@@ -315,14 +316,14 @@ public final class EmailPayloadModelImpl
          return null;
       }
 
-      VerticalFieldManager field = (VerticalFieldManager)(new Object(1152921504606846976L));
+      VerticalFieldManager field = new VerticalFieldManager(1152921504606846976L);
       VerticalFieldManager headerFieldManager = null;
-      VerticalFieldManager var13 = new Object();
-      ((Field)var13).setTag(ThemeUtilities.EMAIL_ORIGINAL_MESSAGE_HEADER_AREA_TAG);
+      headerFieldManager = new VerticalFieldManager();
+      headerFieldManager.setTag(ThemeUtilities.EMAIL_ORIGINAL_MESSAGE_HEADER_AREA_TAG);
       field.setCookie(this);
       field.setTag(ThemeUtilities.EMAIL_ORIGINAL_MESSAGE_TAG);
       field.add(new LabelSeparatorField(EmailResources.getString(1125), ThemeUtilities.EMAIL_ORIGINAL_MESSAGE_SEPARATOR_TAG));
-      field.add((Field)var13);
+      field.add(headerFieldManager);
       ContextObject newContext = ContextObject.clone(context);
       ContextObject.clearFlag(newContext, 0);
       if (ContextObject.getFlag(context, 53) || ContextObject.getFlag(context, 13) || ContextObject.getFlag(context, 30)) {
@@ -349,7 +350,7 @@ public final class EmailPayloadModelImpl
       for (int i = 0; i < numFields; i++) {
          Field f = (Field)orderedFields.elementAt(i);
          Object cookie = f.getCookie();
-         if (cookie instanceof Object) {
+         if (cookie instanceof FieldProvider) {
             int order = ((FieldProvider)cookie).getOrder(newContext);
             switch (order) {
                case 2600:
@@ -360,13 +361,13 @@ public final class EmailPayloadModelImpl
             }
 
             if (order <= 2750) {
-               ((Manager)var13).add(f);
+               headerFieldManager.add(f);
                f = null;
             }
          }
 
-         if (cookie instanceof Object) {
-            field.add((Field)(new Object("")));
+         if (cookie instanceof BodyModel) {
+            field.add(new LabelField(""));
          }
 
          if (f != null) {
@@ -400,7 +401,7 @@ public final class EmailPayloadModelImpl
 
       for (int i = 0; i < n; i++) {
          RIMModel m = (RIMModel)subMembers[i];
-         if (m instanceof Object) {
+         if (m instanceof KeyProvider) {
             KeyProvider keyProvider = (KeyProvider)m;
             keyCount += keyProvider.getKeys(context, keyArray, index + keyCount, keyRequested);
          }
@@ -435,7 +436,7 @@ public final class EmailPayloadModelImpl
 
       for (int i = 0; i < numSubmembers; i++) {
          Object object = this._submembers[i];
-         if (object instanceof Object) {
+         if (object instanceof EncryptableProvider) {
             EncryptableProvider encryptable = (EncryptableProvider)object;
             if (!encryptable.checkCrypt(compress, encrypt)) {
                return false;
@@ -464,7 +465,7 @@ public final class EmailPayloadModelImpl
 
       for (int i = 0; i < count; i++) {
          RIMModel member = (RIMModel)subMembers[i];
-         if (member instanceof Object) {
+         if (member instanceof VerbProvider) {
             ((VerbProvider)member).getVerbs(context, verbs);
          }
       }
@@ -501,7 +502,7 @@ public final class EmailPayloadModelImpl
          for (int i = 0; i < totalSubmembers; i++) {
             Object submember1 = this.getAt(i);
             Object submember2 = payload.getAt(i);
-            if (!(submember1 instanceof Object)) {
+            if (!(submember1 instanceof MemberComparator)) {
                if (!submember1.equals(submember2)) {
                   return false;
                }
@@ -521,7 +522,7 @@ public final class EmailPayloadModelImpl
 
       for (int i = 0; i < numSubmembers; i++) {
          Object object = model._submembers[i];
-         if (object instanceof Object) {
+         if (object instanceof EncryptableProvider) {
             EncryptableProvider encryptable = (EncryptableProvider)object;
             Object newObject = encryptable.reCrypt(compress, encrypt);
             if (newObject != null) {

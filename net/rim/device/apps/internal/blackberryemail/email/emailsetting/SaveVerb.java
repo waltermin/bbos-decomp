@@ -22,7 +22,7 @@ final class SaveVerb extends Verb {
    }
 
    static final SaveVerb getInstance(FolderRedirectionList folderRedirectionList, FolderRedirectionTreeField folderRedirectTreeField, ServiceRecord sr) {
-      _theVerb._folderRedirectionListWR = (WeakReference)(new Object(folderRedirectionList));
+      _theVerb._folderRedirectionListWR = new WeakReference(folderRedirectionList);
       _theVerb._folderRedirectTreeField = folderRedirectTreeField;
       _theVerb._sr = sr;
       return _theVerb;
@@ -31,7 +31,7 @@ final class SaveVerb extends Verb {
    @Override
    public final Object invoke(Object parameter) {
       int[] folderCookies = this._folderRedirectTreeField.getFolderCookies();
-      RIMMessagingFolderManagement packet = (RIMMessagingFolderManagement)(new Object());
+      RIMMessagingFolderManagement packet = new RIMMessagingFolderManagement();
 
       for (int i = folderCookies.length - 1; i >= 0; i--) {
          Object obj = this._folderRedirectTreeField.getCookie(folderCookies[i]);

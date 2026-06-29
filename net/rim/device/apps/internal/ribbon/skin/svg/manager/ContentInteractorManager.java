@@ -174,7 +174,7 @@ final class ContentInteractorManager implements GlobalEventListener, SystemListe
       this.updateHandlersDateFormat();
       this._focusInteractor = fi;
       this._modelInteractor = mi;
-      String[][] fieldLists = new Object[][]{{"time", "info"}, {"time", "from", "subject"}, {"time", "subject", "location"}, {"time", "from", "body"}};
+      String[][] fieldLists = new String[][]{{"time", "info"}, {"time", "from", "subject"}, {"time", "subject", "location"}, {"time", "from", "body"}};
       String[] names = new String[]{"missedcalls", "email", "calendar", "sms"};
       int maxCount = 0;
 
@@ -185,9 +185,9 @@ final class ContentInteractorManager implements GlobalEventListener, SystemListe
          for (int i = 0; i < fields.length; i++) {
             int count = 0;
 
-            for (Node workingNode = mi.getNode(((StringBuffer)(new Object())).append(name).append(count + 1).append(fields[i]).toString());
-               workingNode != null && workingNode instanceof Object;
-               workingNode = mi.getNode(((StringBuffer)(new Object())).append(name).append(count + 1).append(fields[i]).toString())
+            for (Node workingNode = mi.getNode(name + (count + 1) + fields[i]);
+               workingNode != null && workingNode instanceof TextNode;
+               workingNode = mi.getNode(name + (count + 1) + fields[i])
             ) {
                this._handlers[k].setNode(i + count * fields.length, (TextNode)workingNode);
                if (++count > maxCount) {
@@ -202,7 +202,7 @@ final class ContentInteractorManager implements GlobalEventListener, SystemListe
 
       for (int i = this._possibleKeys.length - 1; i >= 0; i--) {
          Node node = mi.getNode(this._possibleKeys[i]);
-         if (node != null && node instanceof Object) {
+         if (node != null && node instanceof TextNode) {
             if (this._possibleKeys[i].equals("emailcount")) {
                this._handlers[1].setRibbonComponentUnreadCountInteractor((TextNode)node, "message", false);
             } else if (this._possibleKeys[i].equals("emailcount-round")) {

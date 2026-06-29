@@ -40,7 +40,7 @@ public final class RecipientCache implements RecryptableCollection, PersistentCo
    private RecipientCache() {
       synchronized (this._persist) {
          if (this._persist.getContents() == null) {
-            this._persist.setContents(new Object(128), 51);
+            this._persist.setContents(new LRUCache(128), 51);
             this._persist.commit();
          }
       }
@@ -72,13 +72,13 @@ public final class RecipientCache implements RecryptableCollection, PersistentCo
    }
 
    public final void add(EmailMessageModel message, int serviceUserId, int serviceUIDHash, int messageClassification, long encodingUID, int flags) {
-      ContextObject contextObject = (ContextObject)(new Object(124));
+      ContextObject contextObject = new ContextObject(124);
 
       for (int j = message.size() - 1; j >= 0; j--) {
          Object submember = message.getAt(j);
          if (submember instanceof EmailHeaderModel) {
             EmailHeaderModel emailHeaderModel = (EmailHeaderModel)submember;
-            String[] addressAndName = new Object[2];
+            String[] addressAndName = new String[2];
             if (emailHeaderModel.convert(contextObject, addressAndName)) {
                int maxAddressIndex = addressAndName.length - 2;
 

@@ -28,7 +28,7 @@ public class SerialNumberIssuerKeyStoreIndex implements KeyStoreIndex {
       if (target instanceof SerialNumberIssuerKeyStoreIndex$Alias) {
          return target.hashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

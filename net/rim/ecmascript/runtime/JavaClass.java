@@ -22,8 +22,8 @@ class JavaClass extends RedirectedObject {
       super("JavaClass", GlobalObject.getInstance().objectPrototype);
       this._name = name;
       this._shortName = shortName;
-      this._instanceFields = (Vector)(new Object());
-      this._instanceNames = (Vector)(new Object());
+      this._instanceFields = new Vector();
+      this._instanceNames = new Vector();
       this._class = clazz;
       this.getConstructors();
    }
@@ -84,7 +84,7 @@ class JavaClass extends RedirectedObject {
    }
 
    private static String buildParmDescriptor(String name, int[] parms) {
-      StringBuffer b = (StringBuffer)(new Object());
+      StringBuffer b = new StringBuffer();
       b.append(name);
       b.append("(");
       int nParms = parms.length;
@@ -225,7 +225,7 @@ class JavaClass extends RedirectedObject {
 
    @Override
    public long defaultStringValue() {
-      return Value.makeStringValue(((StringBuffer)(new Object("[JavaClass "))).append(this._name).append("]").toString());
+      return Value.makeStringValue("[JavaClass " + this._name + "]");
    }
 
    void export(ESObject toObject) {

@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.proxyhttp.compression.coders;
 
+import java.io.EOFException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import net.rim.device.api.system.ApplicationRegistry;
@@ -24,7 +25,7 @@ public final class TextCoder implements Coder {
             while (currentByte != 0) {
                switch (currentByte) {
                   case -1:
-                     throw new Object();
+                     throw new EOFException();
                   default:
                      scratch.append((char)currentByte);
                   case 127:

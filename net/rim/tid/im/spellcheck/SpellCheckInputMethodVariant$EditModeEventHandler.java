@@ -63,7 +63,7 @@ class SpellCheckInputMethodVariant$EditModeEventHandler extends SpellCheckInputM
 
                if (this.this$0._state == 5) {
                   this.this$0.sendCommittedComposed(true);
-                  this.this$0._inputMethodContext.dispatchInputMethodEvent(1102, null, 0, 0, 0, (TextHitInfo)(new Object(caret, true)), null);
+                  this.this$0._inputMethodContext.dispatchInputMethodEvent(1102, null, 0, 0, 0, new TextHitInfo(caret, true), null);
                   this.this$0._state = 6;
                }
 

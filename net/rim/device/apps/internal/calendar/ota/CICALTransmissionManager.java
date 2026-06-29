@@ -41,10 +41,10 @@ public class CICALTransmissionManager extends Thread implements TransmissionStat
    void setDataForPacket(int tagId, byte[] data, int offset, int length, Object context) {
       Event e = null;
       CICALSlowSyncEvent slowSyncEvent = null;
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          ContextObject co = (ContextObject)context;
          Object o = co.get(AbstractTransmissionService.OBJECT_BEING_PACKETIZED);
-         if (!(o instanceof Object)) {
+         if (!(o instanceof Event)) {
             if (o instanceof CICALSlowSyncEvent) {
                slowSyncEvent = (CICALSlowSyncEvent)o;
             }
@@ -59,7 +59,7 @@ public class CICALTransmissionManager extends Thread implements TransmissionStat
          System.arraycopy(data, offset, saveMe, 0, length);
       }
 
-      TrackingData trackingData = (TrackingData)(new Object(saveMe));
+      TrackingData trackingData = new TrackingData(saveMe);
       if (e != null) {
          trackingData.setUID(e.getUID());
          trackingData.setPacketType(1);
@@ -104,7 +104,7 @@ public class CICALTransmissionManager extends Thread implements TransmissionStat
             TrackingData data = (TrackingData)trackingElements.nextElement();
             if (data != null && data._uid == uid) {
                if (result == null) {
-                  result = new Object[1];
+                  result = new TrackingData[1];
                } else {
                   Array.resize(result, result.length + 1);
                }
@@ -119,7 +119,7 @@ public class CICALTransmissionManager extends Thread implements TransmissionStat
 
    public TrackingData[] getAllTrackingEvents() {
       synchronized (this._trackingStore) {
-         TrackingData[] result = new Object[this._trackingStore.size()];
+         TrackingData[] result = new TrackingData[this._trackingStore.size()];
          Enumeration trackingElements = this._trackingStore.elements();
          int count = 0;
 
@@ -267,7 +267,7 @@ public class CICALTransmissionManager extends Thread implements TransmissionStat
       PersistentObject persistentObject = RIMPersistentStore.getPersistentObject(-6581519639896522540L);
       this._trackingStore = (IntHashtable)persistentObject.getContents();
       if (this._trackingStore == null) {
-         this._trackingStore = (IntHashtable)(new Object());
+         this._trackingStore = new IntHashtable();
          persistentObject.setContents(this._trackingStore, 51);
          persistentObject.commit();
       }
@@ -374,7 +374,7 @@ public class CICALTransmissionManager extends Thread implements TransmissionStat
 
                                  if (resendPacket) {
                                     if (packet == null) {
-                                       packet = (Packet)(new Object());
+                                       packet = new Packet();
                                     }
 
                                     packet.setPayload(data.getData());

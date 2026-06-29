@@ -16,17 +16,17 @@ import net.rim.device.cldc.util.CalendarExtensions;
 
 final class CurrentDateTimeComponentFactory implements Factory, GlobalEventListener, RealtimeClockListener, SystemListener {
    private ComponentFactoryHelper _helper = new ComponentFactoryHelper();
-   private GlobalListenerFactoryHelper _globalHelper = (GlobalListenerFactoryHelper)(new Object());
+   private GlobalListenerFactoryHelper _globalHelper = new GlobalListenerFactoryHelper();
    private ResourceBundleFamily _rbf = ResourceBundle.getBundle(1137270090621229274L, "net.rim.device.apps.internal.resource.Ribbon");
-   private StringBuffer _lastDate = (StringBuffer)(new Object());
+   private StringBuffer _lastDate = new StringBuffer();
    private SimpleDateFormat _dateFormat;
-   private StringBuffer _lastTime = (StringBuffer)(new Object());
-   private StringBuffer _lastTimeNoAmPm = (StringBuffer)(new Object());
-   private StringBuffer _lastAmPm = (StringBuffer)(new Object());
+   private StringBuffer _lastTime = new StringBuffer();
+   private StringBuffer _lastTimeNoAmPm = new StringBuffer();
+   private StringBuffer _lastAmPm = new StringBuffer();
    private SimpleDateFormat _timeFormat;
    private SimpleDateFormat _timeFormatNoAmPm;
    private SimpleDateFormat _formatAmPm;
-   private StringBuffer _lastDateTime = (StringBuffer)(new Object());
+   private StringBuffer _lastDateTime = new StringBuffer();
    private Calendar _cachedCal;
    private CalendarExtensions _cachedCalEx;
    static final int INVALID_TYPE = 0;
@@ -68,8 +68,8 @@ final class CurrentDateTimeComponentFactory implements Factory, GlobalEventListe
    }
 
    private final void updateFormats() {
-      this._dateFormat = (SimpleDateFormat)(new Object(this._rbf.getString(11)));
-      this._timeFormat = (SimpleDateFormat)(new Object(6));
+      this._dateFormat = new SimpleDateFormat(this._rbf.getString(11));
+      this._timeFormat = new SimpleDateFormat(6);
       String timeFormatPattern = this._timeFormat.getPattern();
       int amPmIndex = timeFormatPattern.indexOf(97);
 
@@ -81,8 +81,8 @@ final class CurrentDateTimeComponentFactory implements Factory, GlobalEventListe
          this._timeFormatNoAmPm = this._timeFormat;
          this._formatAmPm = null;
       } else {
-         this._timeFormatNoAmPm = (SimpleDateFormat)(new Object(timeFormatPattern.substring(0, amPmIndex)));
-         this._formatAmPm = (SimpleDateFormat)(new Object(timeFormatPattern.substring(amPmIndex)));
+         this._timeFormatNoAmPm = new SimpleDateFormat(timeFormatPattern.substring(0, amPmIndex));
+         this._formatAmPm = new SimpleDateFormat(timeFormatPattern.substring(amPmIndex));
       }
 
       DateFormat.getInstance(54);

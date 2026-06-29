@@ -94,7 +94,7 @@ final class PhoneOptions$PhoneOptionsSyncItem extends OTASyncCapableSyncItem imp
       DirectConnectOptions directConnectOptions = DirectConnectOptions.getOptions();
       SmartDialingOptions smartDialingOptions = SmartDialingOptions.getOptions();
       int networkType = RadioInfo.getNetworkType();
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
       int lineId = 1;
 
       label147:

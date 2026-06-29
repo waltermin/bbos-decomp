@@ -200,7 +200,7 @@ public final class ServiceRecord implements Persistable, GlobalEventListener {
          this._type = type;
          this._dirty = true;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -219,7 +219,7 @@ public final class ServiceRecord implements Persistable, GlobalEventListener {
          this._nameHash = this.hashBytes(name.getBytes());
          this._dirty = true;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -234,7 +234,7 @@ public final class ServiceRecord implements Persistable, GlobalEventListener {
    public final void setUid(String uid) {
       ControlledAccess.assertRRISignature(TraceBack.getCallingModule(0));
       if (uid == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (uid.length() > 0 && uid.length() < 128) {
@@ -242,7 +242,7 @@ public final class ServiceRecord implements Persistable, GlobalEventListener {
          this._uidHash = this.hashBytes(StringUtilities.toLowerCase(uid, 1701707776).getBytes());
          this._dirty = true;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -257,7 +257,7 @@ public final class ServiceRecord implements Persistable, GlobalEventListener {
    public final void setCid(String cid) {
       ControlledAccess.assertRRISignature(TraceBack.getCallingModule(0));
       if (cid == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (cid.length() > 0 && cid.length() < 128) {
@@ -265,7 +265,7 @@ public final class ServiceRecord implements Persistable, GlobalEventListener {
          this._cidHash = this.hashBytes(StringUtilities.toLowerCase(cid, 1701707776).getBytes());
          this._dirty = true;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -293,7 +293,7 @@ public final class ServiceRecord implements Persistable, GlobalEventListener {
          this._encryptMode = mode;
          this._dirty = true;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -307,7 +307,7 @@ public final class ServiceRecord implements Persistable, GlobalEventListener {
          this._compMode = mode;
          this._dirty = true;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -321,7 +321,7 @@ public final class ServiceRecord implements Persistable, GlobalEventListener {
          if (realm.length() == 0) {
             realm = null;
          } else if (realm.length() > 127) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       }
 
@@ -339,7 +339,7 @@ public final class ServiceRecord implements Persistable, GlobalEventListener {
          if (address.length() == 0) {
             address = null;
          } else if (address.length() > 127) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       }
 
@@ -501,7 +501,7 @@ public final class ServiceRecord implements Persistable, GlobalEventListener {
 
    public final DataBuffer getCryptoKey() {
       ControlledAccess.assertRRISignature(TraceBack.getCallingModule(0));
-      return (DataBuffer)(this._cryptoKeyBuffer != null ? new Object(this._cryptoKeyBuffer, this._cryptoKeyStart, this._cryptoKeyLength, true) : null);
+      return this._cryptoKeyBuffer != null ? new DataBuffer(this._cryptoKeyBuffer, this._cryptoKeyStart, this._cryptoKeyLength, true) : null;
    }
 
    public final void setCryptoKey(byte[] cryptoKey) {
@@ -536,7 +536,7 @@ public final class ServiceRecord implements Persistable, GlobalEventListener {
          this._homeAddress = null;
       } else {
          if (homeAddr.length() >= 128) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          this._homeAddress = homeAddr;
@@ -578,7 +578,7 @@ public final class ServiceRecord implements Persistable, GlobalEventListener {
          this._source = source;
          this._dirty = true;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -628,12 +628,12 @@ public final class ServiceRecord implements Persistable, GlobalEventListener {
    }
 
    public final URLParameters[] getBBRParameters() {
-      URLParameters[] urlParameters = new Object[0];
+      URLParameters[] urlParameters = new URLParameters[0];
       if (this._bbrHosts != null && this._bbrHosts.length > 0) {
          Array.resize(urlParameters, this._bbrHosts.length);
 
          for (int i = 0; i < this._bbrHosts.length; i++) {
-            urlParameters[i] = (URLParameters)(new Object());
+            urlParameters[i] = new URLParameters();
             if (this._bbrParameterKeys != null
                && this._bbrParameterValues != null
                && this._bbrParameterKeys.length == this._bbrHosts.length
@@ -654,8 +654,8 @@ public final class ServiceRecord implements Persistable, GlobalEventListener {
       ControlledAccess.assertRRISignature(TraceBack.getCallingModule(0));
       this._dirty = true;
       if (urlParameters != null && urlParameters.length != 0) {
-         this._bbrParameterKeys = new Object[urlParameters.length][0];
-         this._bbrParameterValues = new Object[urlParameters.length][0];
+         this._bbrParameterKeys = new String[urlParameters.length][0];
+         this._bbrParameterValues = new String[urlParameters.length][0];
 
          for (int i = 0; i < urlParameters.length; i++) {
             Vector keys = urlParameters[i].getKeys();
@@ -670,8 +670,8 @@ public final class ServiceRecord implements Persistable, GlobalEventListener {
             }
          }
       } else {
-         this._bbrParameterKeys = (Object[][])null;
-         this._bbrParameterValues = (Object[][])null;
+         this._bbrParameterKeys = (String[][])null;
+         this._bbrParameterValues = (String[][])null;
       }
    }
 
@@ -680,7 +680,7 @@ public final class ServiceRecord implements Persistable, GlobalEventListener {
       Transport t = tr.get(this._cid);
       if (t == null) {
          try {
-            throw new Object(((StringBuffer)(new Object("SRNT: "))).append(this._cid).toString());
+            throw new Throwable("SRNT: " + this._cid);
          } finally {
             return t;
          }
@@ -690,7 +690,7 @@ public final class ServiceRecord implements Persistable, GlobalEventListener {
    }
 
    private final int hashBytes(byte[] data) {
-      SHA1Digest digest = (SHA1Digest)(new Object());
+      SHA1Digest digest = new SHA1Digest();
       digest.update(data);
       byte[] result = digest.getDigest();
       int ret = 0;
@@ -996,8 +996,6 @@ public final class ServiceRecord implements Persistable, GlobalEventListener {
    @Override
    public final String toString() {
       String result = "";
-      return this._dataSourceId != null && this._userId != -1
-         ? ((StringBuffer)(new Object())).append(this._dataSourceId).append("[").append(this._userId).append("]").toString()
-         : ((StringBuffer)(new Object())).append(this._uid).append("[").append(this._name).append("]").toString();
+      return this._dataSourceId != null && this._userId != -1 ? this._dataSourceId + "[" + this._userId + "]" : this._uid + "[" + this._name + "]";
    }
 }

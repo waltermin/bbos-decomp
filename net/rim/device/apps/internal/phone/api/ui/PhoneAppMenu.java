@@ -9,7 +9,7 @@ import net.rim.device.apps.api.utility.framework.VerbToMenuFactory;
 
 public final class PhoneAppMenu extends SystemEnabledMenu {
    public PhoneAppMenu() {
-      this((ContextObject)(new Object()));
+      this(new ContextObject());
    }
 
    public PhoneAppMenu(ContextObject context) {

@@ -1,5 +1,7 @@
 package net.rim.device.apps.internal.secureemail.encodings.pgp;
 
+import net.rim.device.api.crypto.pgp.PGPNoKeyFoundException;
+import net.rim.device.api.crypto.pgp.PGPVerificationException;
 import net.rim.device.api.system.Application;
 import net.rim.device.apps.internal.secureemail.SecureEmailSignatureField$SignatureStatusField;
 import net.rim.device.apps.internal.secureemail.SecureEmailSignatureField$ThrowableHandlerData;
@@ -14,10 +16,10 @@ public class PGPSignatureField$PGPSignatureStatusField extends SecureEmailSignat
 
    @Override
    public void handleThrowable(Throwable t, SecureEmailSignatureField$ThrowableHandlerData throwableHandlerData) {
-      if (t instanceof Object) {
+      if (t instanceof PGPVerificationException) {
          throwableHandlerData._status = 2;
          throwableHandlerData._details = PGPResources.getString(8040);
-      } else if (t instanceof Object) {
+      } else if (t instanceof PGPNoKeyFoundException) {
          throwableHandlerData._status = 3;
       } else {
          super.handleThrowable(t, throwableHandlerData);

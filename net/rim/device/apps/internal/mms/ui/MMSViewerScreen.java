@@ -7,7 +7,6 @@ import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.UiApplication;
-import net.rim.device.api.util.LongHashtable;
 import net.rim.device.apps.api.framework.hotkeys.HotKeyCheck;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.HotKeyProvider;
@@ -93,7 +92,7 @@ public final class MMSViewerScreen extends MMSModelScreen {
                   this.getMediaNames(pdu);
                } else if (MMSUtilities.isVideoType(attachment.getType())) {
                   if (this._videos == null) {
-                     this._videos = new Object[]{attachment.getName()};
+                     this._videos = new String[]{attachment.getName()};
                   } else {
                      int index = this._videos.length;
                      Array.resize(this._videos, index + 1);
@@ -101,7 +100,7 @@ public final class MMSViewerScreen extends MMSModelScreen {
                   }
                } else if (MMSUtilities.isRingtoneAudioType(attachment.getType())) {
                   if (this._ringtones == null) {
-                     this._ringtones = new Object[]{attachment.getName()};
+                     this._ringtones = new String[]{attachment.getName()};
                   } else {
                      int index = this._ringtones.length;
                      Array.resize(this._ringtones, index + 1);
@@ -109,7 +108,7 @@ public final class MMSViewerScreen extends MMSModelScreen {
                   }
                } else if (MMSUtilities.isVoiceNoteAudioType(attachment.getType())) {
                   if (this._voicenotes == null) {
-                     this._voicenotes = new Object[]{attachment.getName()};
+                     this._voicenotes = new String[]{attachment.getName()};
                   } else {
                      int index = this._voicenotes.length;
                      Array.resize(this._voicenotes, index + 1);
@@ -133,10 +132,10 @@ public final class MMSViewerScreen extends MMSModelScreen {
       MMSMessageModel message = (MMSMessageModel)this.getMessageModel();
       MMSPayloadModel payload = message.getPayload();
       Verb defaultVerb = null;
-      ContextObject ctx = (ContextObject)(new Object(44, 37));
+      ContextObject ctx = new ContextObject(44, 37);
       if (instance == 65536) {
          ContextObject.setFlag(ctx, 81);
-         DeleteSingleItemVerb deleteVerb = (DeleteSingleItemVerb)(new Object(611472, 1000));
+         DeleteSingleItemVerb deleteVerb = new DeleteSingleItemVerb(611472, 1000);
          deleteVerb.setParameters(message, ctx);
          menu.add(deleteVerb);
       }
@@ -153,14 +152,14 @@ public final class MMSViewerScreen extends MMSModelScreen {
             menu.add(verbRepository.getVerbs(null));
          }
 
-         Verb[] verbs = new Object[0];
+         Verb[] verbs = new Verb[0];
          defaultVerb = message.getVerbs(ctx, verbs);
          menu.add(verbs);
          menu.setDefault(defaultVerb);
       }
 
       if (instance == 0) {
-         VerbFactory outerVerbFactory = (VerbFactory)((LongHashtable)super._context).get(-2846768035584909703L);
+         VerbFactory outerVerbFactory = (VerbFactory)((ContextObject)super._context).get(-2846768035584909703L);
          if (outerVerbFactory != null) {
             menu.add(outerVerbFactory.getVerbs(super._context));
          }
@@ -175,7 +174,7 @@ public final class MMSViewerScreen extends MMSModelScreen {
             Verb verb = new MMSSaveMediaVerb(
                this._videos, message.getAttachmentDataProvider(), message.isForwardLocked(), MMSResources.getString(127), MMSResources.getString(126)
             );
-            VerbMenuItem verbMenuItem = (VerbMenuItem)(new Object(null, verb.getOrdering(), 500, verb, null));
+            VerbMenuItem verbMenuItem = new VerbMenuItem(null, verb.getOrdering(), 500, verb, null);
             menu.add(verbMenuItem);
          }
 
@@ -183,7 +182,7 @@ public final class MMSViewerScreen extends MMSModelScreen {
             Verb verb = new MMSSaveMediaVerb(
                this._ringtones, message.getAttachmentDataProvider(), message.isForwardLocked(), MMSResources.getString(63), MMSResources.getString(64)
             );
-            VerbMenuItem verbMenuItem = (VerbMenuItem)(new Object(null, verb.getOrdering(), 500, verb, null));
+            VerbMenuItem verbMenuItem = new VerbMenuItem(null, verb.getOrdering(), 500, verb, null);
             menu.add(verbMenuItem);
          }
 
@@ -191,7 +190,7 @@ public final class MMSViewerScreen extends MMSModelScreen {
             Verb verb = new MMSSaveMediaVerb(
                this._voicenotes, message.getAttachmentDataProvider(), message.isForwardLocked(), MMSResources.getString(125), MMSResources.getString(124)
             );
-            VerbMenuItem verbMenuItem = (VerbMenuItem)(new Object(null, verb.getOrdering(), 500, verb, null));
+            VerbMenuItem verbMenuItem = new VerbMenuItem(null, verb.getOrdering(), 500, verb, null);
             menu.add(verbMenuItem);
          }
 
@@ -203,9 +202,9 @@ public final class MMSViewerScreen extends MMSModelScreen {
          }
 
          if (!this.isOnHyperlink() && !this.isFieldInFocus(this._viewField.getAddressField())) {
-            Verb[] contactVerbs = new Object[0];
+            Verb[] contactVerbs = new Verb[0];
             RIMModel composeAddress = payload.getSender();
-            if (composeAddress instanceof Object) {
+            if (composeAddress instanceof VerbProvider) {
                if (message.isSmartDialed()) {
                   ctx.setFlag(117);
                }
@@ -231,7 +230,7 @@ public final class MMSViewerScreen extends MMSModelScreen {
             return true;
          }
 
-         if (!(field instanceof Object)) {
+         if (!(field instanceof Manager)) {
             break;
          }
       }
@@ -251,7 +250,7 @@ public final class MMSViewerScreen extends MMSModelScreen {
             this.scroll(direction);
             return true;
          case '\u007f':
-            DeleteSingleItemVerb deleteVerb = (DeleteSingleItemVerb)(new Object(611472, 1000));
+            DeleteSingleItemVerb deleteVerb = new DeleteSingleItemVerb(611472, 1000);
             deleteVerb.setParameters(this.getMessageModel(), super._context);
             super._returnValue = deleteVerb.invoke(null);
             if (ContextObject.getFlag(super._returnValue, 39)) {

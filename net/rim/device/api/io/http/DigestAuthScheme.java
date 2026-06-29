@@ -32,7 +32,7 @@ public final class DigestAuthScheme extends AuthScheme {
             qop = "auth";
          }
 
-         MD5Digest md5 = (MD5Digest)(new Object());
+         MD5Digest md5 = new MD5Digest();
          md5.update(Long.toString(System.currentTimeMillis()).getBytes());
          String cnonce = this.toHex(md5.getDigest());
          String nc = NumberUtilities.toString(++_nc, 16, 8);
@@ -73,7 +73,7 @@ public final class DigestAuthScheme extends AuthScheme {
          }
 
          md5.update(this.toHex(ha2).getBytes());
-         StringBuffer buffer = (StringBuffer)(new Object("Digest username=\""));
+         StringBuffer buffer = new StringBuffer("Digest username=\"");
          buffer.append(username).append("\", realm=\"");
          buffer.append(realm).append("\", nonce=\"");
          buffer.append(nonce).append("\", uri=\"");
@@ -102,7 +102,7 @@ public final class DigestAuthScheme extends AuthScheme {
 
          return buffer.toString();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -134,7 +134,7 @@ public final class DigestAuthScheme extends AuthScheme {
    }
 
    private final String toHex(byte[] data) {
-      StringBuffer buffer = (StringBuffer)(new Object(data.length << 1));
+      StringBuffer buffer = new StringBuffer(data.length << 1);
 
       for (int i = 0; i < data.length; i++) {
          buffer.append(NumberUtilities.intToHexDigit(data[i] >> 4));

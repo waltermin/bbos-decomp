@@ -13,13 +13,13 @@ public final class DialVerbCombiner implements VerbCombiner {
 
    @Override
    public final boolean recognize(Object object) {
-      if (object instanceof Object) {
+      if (object instanceof Verb) {
          Verb verb = (Verb)object;
          if (verb.getVerbGroupId() != 1187214) {
             return false;
          }
 
-         while (verb instanceof Object) {
+         while (verb instanceof WrapperVerb) {
             verb = ((WrapperVerb)verb).getInnerVerb();
          }
 
@@ -43,12 +43,12 @@ public final class DialVerbCombiner implements VerbCombiner {
    public final Verb createWrapperVerb(Verb[] verbs, Verb defaultVerb) {
       Arrays.sort(verbs, 0, verbs.length, new DialVerbTypeComparator());
       ContextObject contextObject = null;
-      String[] descriptions = new Object[verbs.length];
+      String[] descriptions = new String[verbs.length];
 
       for (int i = verbs.length - 1; i >= 0; i--) {
          Verb verb = verbs[i];
 
-         while (verb instanceof Object) {
+         while (verb instanceof WrapperVerb) {
             verb = ((WrapperVerb)verb).getInnerVerb();
          }
 

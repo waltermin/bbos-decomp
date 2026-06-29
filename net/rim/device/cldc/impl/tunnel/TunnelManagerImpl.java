@@ -22,7 +22,7 @@ public final class TunnelManagerImpl extends Thread implements GlobalEventListen
    private long _age;
    private int _status;
    private int _tunnelId = -1;
-   private Vector _tunnels = (Vector)(new Object(2));
+   private Vector _tunnels = new Vector(2);
    private int _waitTmo;
    private int _waitState;
    private int _nextAction;
@@ -81,7 +81,7 @@ public final class TunnelManagerImpl extends Thread implements GlobalEventListen
       this.logEvent(4292459735430940092L, 1332766062, tunnel.getConfig().getName(), 0);
       synchronized (this._tunnels) {
          this.pruneDeadHandles(null);
-         this._tunnels.addElement(new Object(tunnel));
+         this._tunnels.addElement(new WeakReference(tunnel));
       }
    }
 
@@ -179,17 +179,17 @@ public final class TunnelManagerImpl extends Thread implements GlobalEventListen
          case -380645052:
             return this._tunnels;
          case -380645051:
-            return new Object(this._waitTmo);
+            return new Integer(this._waitTmo);
          case -380645050:
-            return new Object(this._waitState);
+            return new Integer(this._waitState);
          case -380645049:
-            return new Object(this._nextAction);
+            return new Integer(this._nextAction);
          case -380645048:
-            return new Object(this._nextData);
+            return new Integer(this._nextData);
          case -380645047:
-            return new Object(this._activationAttempts);
+            return new Integer(this._activationAttempts);
          case -380645046:
-            return new Object(this._dataService);
+            return new Boolean(this._dataService);
          case 202662285:
             return this.getTunnels((Vector)context);
          case 1483043725:

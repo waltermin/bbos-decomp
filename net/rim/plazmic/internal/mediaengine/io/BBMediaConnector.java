@@ -1,10 +1,13 @@
 package net.rim.plazmic.internal.mediaengine.io;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import javax.microedition.io.Connection;
 import javax.microedition.io.HttpConnection;
 import javax.microedition.io.file.FileConnection;
+import net.rim.device.api.io.FileNotFoundException;
 import net.rim.device.api.system.DeviceInfo;
+import net.rim.device.cldc.io.utility.MalformedURLException;
 import net.rim.device.resources.Resource;
 import net.rim.device.resources.Resource$Internal;
 import net.rim.plazmic.internal.mediaengine.MediaFactory;
@@ -27,12 +30,7 @@ public class BBMediaConnector implements Connector {
    public static final String JAR_PROTOCOL = "jar://";
    protected static final boolean JAR_ENABLED = true;
    private static final String UAPROF_NAME = "profile";
-   private static final String UAPROF_VALUE = ((StringBuffer)(new Object("http://www.blackberry.net/go/mobile/profiles/uaprof/")))
-      .append(DeviceInfo.getDeviceName())
-      .append('/')
-      .append("4.0.0")
-      .append(".rdf")
-      .toString();
+   private static final String UAPROF_VALUE = "http://www.blackberry.net/go/mobile/profiles/uaprof/" + DeviceInfo.getDeviceName() + '/' + "4.0.0" + ".rdf";
    private static String CONNECTION_TIMEOUT = ";ConnectionTimeout=";
    protected static final boolean COD_ENABLED = true;
    public static final String COD_PROTOCOL = "cod://";
@@ -51,11 +49,11 @@ public class BBMediaConnector implements Connector {
    public void setRequestHeader(String name, String value) {
       if (name != null && value != null) {
          if (this._requestHeaders == null) {
-            this._requestHeaders = new Object[]{name, value};
+            this._requestHeaders = new String[]{name, value};
             return;
          }
 
-         String[] temp = new Object[this._requestHeaders.length + 2];
+         String[] temp = new String[this._requestHeaders.length + 2];
          System.arraycopy(this._requestHeaders, 0, temp, 0, this._requestHeaders.length);
          temp[temp.length - 2] = name;
          temp[temp.length - 1] = value;
@@ -63,12 +61,12 @@ public class BBMediaConnector implements Connector {
       }
    }
 
-   protected InputStream getCodInputStream(String uri, ConnectionInfo info) {
+   protected InputStream getCodInputStream(String uri, ConnectionInfo info) throws FileNotFoundException, MalformedURLException {
       InputStream is = null;
       String resource = uri.substring(6);
       int codIndex = resource.indexOf(47);
       if (codIndex < 0) {
-         throw new Object(uri);
+         throw new MalformedURLException(uri);
       }
 
       String codname = resource.substring(0, codIndex);
@@ -82,12 +80,12 @@ public class BBMediaConnector implements Connector {
       if (r != null) {
          byte[] resourceBytes = r.getResource(resource);
          if (resourceBytes != null) {
-            is = (InputStream)(new Object(resourceBytes));
+            is = new ByteArrayInputStream(resourceBytes);
          }
       }
 
       if (is == null) {
-         throw new Object(uri);
+         throw new FileNotFoundException(uri);
       } else {
          return is;
       }
@@ -100,7 +98,7 @@ public class BBMediaConnector implements Connector {
       InputStream is = null;
       this._previousConnection = null;
       if (this.connectionTimeout != null) {
-         uri = ((StringBuffer)(new Object())).append(uri).append(this.connectionTimeout).toString();
+         uri = uri + this.connectionTimeout;
       }
 
       HttpConnection c = (HttpConnection)javax.microedition.io.Connector.open(uri, 1, true);
@@ -186,29 +184,29 @@ public class BBMediaConnector implements Connector {
       return is;
    }
 
-   protected InputStream getStoreInputStream(String uri, ConnectionInfo info) {
+   protected InputStream getStoreInputStream(String uri, ConnectionInfo info) throws FileNotFoundException {
       InputStream is = null;
       String resource = uri.substring(7);
-      FileConnection file = (FileConnection)javax.microedition.io.Connector.open(((StringBuffer)(new Object("file:///store"))).append(resource).toString());
+      FileConnection file = (FileConnection)javax.microedition.io.Connector.open("file:///store" + resource);
       if (file != null && file.exists()) {
          return file.openInputStream();
       } else {
-         throw new Object(uri);
+         throw new FileNotFoundException(uri);
       }
    }
 
-   protected InputStream getSDCardInputStream(String uri, ConnectionInfo info) {
+   protected InputStream getSDCardInputStream(String uri, ConnectionInfo info) throws FileNotFoundException {
       InputStream is = null;
       String resource = uri.substring(6);
-      FileConnection file = (FileConnection)javax.microedition.io.Connector.open(((StringBuffer)(new Object("file:///SDCard"))).append(resource).toString());
+      FileConnection file = (FileConnection)javax.microedition.io.Connector.open("file:///SDCard" + resource);
       if (file != null && file.exists()) {
          return file.openInputStream();
       } else {
-         throw new Object(uri);
+         throw new FileNotFoundException(uri);
       }
    }
 
-   protected InputStream getJarInputStream(String uri, ConnectionInfo info) {
+   protected InputStream getJarInputStream(String uri, ConnectionInfo info) throws FileNotFoundException {
       InputStream is = null;
       String resource = uri.substring(6);
       int questionIndex = resource.indexOf(63);
@@ -218,7 +216,7 @@ public class BBMediaConnector implements Connector {
 
       is = this.getClass().getResourceAsStream(resource);
       if (is == null) {
-         throw new Object(uri);
+         throw new FileNotFoundException(uri);
       } else {
          return is;
       }
@@ -259,7 +257,7 @@ public class BBMediaConnector implements Connector {
    public void releaseConnection(ConnectionInfo info) {
       if (info != null) {
          Object con = info.getConnection();
-         if (con instanceof Object) {
+         if (con instanceof Connection) {
             ((Connection)con).close();
          }
       }
@@ -279,13 +277,13 @@ public class BBMediaConnector implements Connector {
             var10 = false;
          } finally {
             if (var10) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
          }
 
          if (this._timeOut != intValue && intValue > 0) {
             this._timeOut = intValue;
-            this.connectionTimeout = ((StringBuffer)(new Object())).append(CONNECTION_TIMEOUT).append(intValue).toString();
+            this.connectionTimeout = CONNECTION_TIMEOUT + intValue;
          }
       } else if ("Retry".equals(name)) {
          int intValue = 0;
@@ -297,7 +295,7 @@ public class BBMediaConnector implements Connector {
             var7 = false;
          } finally {
             if (var7) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
          }
 
@@ -307,7 +305,7 @@ public class BBMediaConnector implements Connector {
             this._retry = intValue;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

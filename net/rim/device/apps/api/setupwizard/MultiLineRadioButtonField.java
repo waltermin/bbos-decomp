@@ -28,7 +28,7 @@ class MultiLineRadioButtonField extends RadioButtonField {
       super.layout(width, height);
       String text = this.getLabel();
       if ((this.getStyle() & 2147483648L) != 0 && text != null && text.indexOf(10) >= 0) {
-         TextRect textRect = (TextRect)(new Object(this));
+         TextRect textRect = new TextRect(this);
          textRect.setText(text);
          textRect.layout(width, height);
          Font font = this.getFont();

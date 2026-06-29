@@ -12,7 +12,7 @@ final class MessageListOptionsScreenVerbFactory implements VerbFactory {
 
    MessageListOptionsScreenVerbFactory(OTAFMConfigurationManagerImpl configManager) {
       this._configManager = configManager;
-      this._verbs = new Object[0];
+      this._verbs = new Verb[0];
    }
 
    @Override

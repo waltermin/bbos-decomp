@@ -71,7 +71,7 @@ public class FolderList extends AppsMainScreen implements TreeFieldCallback, Tre
    private int _maxFolderWidth;
    private boolean _inFolderWidthCalculation;
    private FolderList$DataSearchRepositoryImpl _inputMethodSearchDelegate = new FolderList$DataSearchRepositoryImpl(this, null);
-   private StringBuffer _getQueryBuffer = (StringBuffer)(new Object());
+   private StringBuffer _getQueryBuffer = new StringBuffer();
    private static final long DEFAULT_STYLE = 1196268651020288L;
    private static final int FL_REFLAST_LAST_IDX = 0;
    private static final int FL_REFLAST_CURR_IDX = 1;
@@ -473,13 +473,13 @@ public class FolderList extends AppsMainScreen implements TreeFieldCallback, Tre
          this.setStartFolder(startFolder);
       }
 
-      this._collectionListener = (WeakReference)(new Object(this));
-      this._query = new Object[0];
-      this._field = new FolderList$SearchFolderField(this, ((StringBuffer)(new Object())).append(title).append(": ").toString());
+      this._collectionListener = new WeakReference(this);
+      this._query = new String[0];
+      this._field = new FolderList$SearchFolderField(this, title + ": ");
       this.setTitle(this._field);
       this._treeField = new FolderList$CustomTreeField(this, 0, this._field);
       this._treeField.setDefaultExpanded(false);
-      this.setContext((ContextObject)(new Object()));
+      this.setContext(new ContextObject());
       this._shouldMakeSelectVerbDefaultInitially = shouldMakeSelectVerbDefaultInitially;
       this._showContainedItems = showContainedItems;
       this._comparator = comparator;
@@ -550,12 +550,12 @@ public class FolderList extends AppsMainScreen implements TreeFieldCallback, Tre
          return false;
       }
 
-      if (!(this._selectVerb instanceof Object)) {
+      if (!(this._selectVerb instanceof ConditionalVerb)) {
          return true;
       }
 
       ConditionalVerb conditionalVerb = (ConditionalVerb)this._selectVerb;
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       context.put(-1219344331000926502L, folder);
       return conditionalVerb.canInvoke(context);
    }
@@ -629,7 +629,7 @@ public class FolderList extends AppsMainScreen implements TreeFieldCallback, Tre
          this._initialized = true;
          this._disp = this.makeTreeField();
          if (this.isStyle(1125899906842624L)) {
-            HorizontalFieldManager horizontalScroller = (HorizontalFieldManager)(new Object(1125899906842624L));
+            HorizontalFieldManager horizontalScroller = new HorizontalFieldManager(1125899906842624L);
             horizontalScroller.add(this._disp);
             this.add(horizontalScroller);
          } else {
@@ -895,7 +895,7 @@ public class FolderList extends AppsMainScreen implements TreeFieldCallback, Tre
 
    private void addContainedItems(TreeField treeField, Folder folder, int onto, boolean addListener) {
       Collection collection = folder.getContainedItems();
-      if (collection instanceof Object) {
+      if (collection instanceof ReadableList) {
          ReadableList list = (ReadableList)collection;
 
          for (int i = list.size() - 1; i >= 0; i--) {
@@ -909,7 +909,7 @@ public class FolderList extends AppsMainScreen implements TreeFieldCallback, Tre
             }
          }
 
-         if (addListener && collection instanceof Object) {
+         if (addListener && collection instanceof CollectionEventSource) {
             ((CollectionEventSource)collection).addCollectionListener(this._collectionListener);
          }
       }
@@ -920,7 +920,7 @@ public class FolderList extends AppsMainScreen implements TreeFieldCallback, Tre
          synchronized (this._lockObj) {
             this.removeContainedItems(this._treeField, collection);
             this.removeContainedItems(this._disp, collection);
-            if (collection instanceof Object) {
+            if (collection instanceof ReadableList) {
                ReadableList list = (ReadableList)collection;
 
                for (int i = list.size() - 1; i >= 0; i--) {

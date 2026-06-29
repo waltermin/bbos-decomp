@@ -45,7 +45,7 @@ final class SaveViewedEventVerb extends SaveEventVerb {
             int day = cal.get(5);
             DateTimeUtilities.zeroCalendarTime(cal);
             long searchStartTime = ((CalendarExtensions)cal).getTimeLong();
-            Recur$Handle foundOccurrence = (Recur$Handle)(new Object());
+            Recur$Handle foundOccurrence = new Recur$Handle();
             if (savedEvent.getHandleAfterTime(foundOccurrence, searchStartTime, tz)) {
                ((CalendarExtensions)cal).setTimeLong(foundOccurrence._handle);
                if (day == cal.get(5) && month == cal.get(2) && year == cal.get(1)) {

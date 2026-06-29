@@ -1,5 +1,6 @@
 package net.rim.device.internal.io.streamdatagram;
 
+import java.io.IOException;
 import net.rim.device.api.io.DatagramAddressBase;
 import net.rim.device.api.system.DeviceInfo;
 import net.rim.device.api.system.RadioInfo;
@@ -142,7 +143,7 @@ public class StreamDatagramAddressBase extends DatagramAddressBase implements St
    }
 
    public static String makeAddress(boolean open, byte[] ipAddress, int destPort, int srcPort, String apn, int apnOffset, int apnLength) {
-      StringBuffer buf = (StringBuffer)(new Object(128));
+      StringBuffer buf = new StringBuffer(128);
       if (open) {
          buf.append(
             DeviceInfo.isSimulator() && !StringUtilities.strEqualIgnoreCase(DebugSupport.getenv(RAW_TCP), TRUE, 1701707776) ? SIMULTCP_SCHEME : TCP_SCHEME
@@ -174,7 +175,7 @@ public class StreamDatagramAddressBase extends DatagramAddressBase implements St
    }
 
    public static String getPeerAddressInternal(int ipAddress) {
-      StringBuffer buf = (StringBuffer)(new Object(20));
+      StringBuffer buf = new StringBuffer(20);
       byte[] b = new byte[4];
 
       for (int i = 3; i >= 0; i--) {
@@ -188,12 +189,12 @@ public class StreamDatagramAddressBase extends DatagramAddressBase implements St
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public static String getLocalAddressInternal(String apnName) {
+   public static String getLocalAddressInternal(String apnName) throws IOException {
       if (apnName == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
-      StringBuffer buf = (StringBuffer)(new Object(20));
+      StringBuffer buf = new StringBuffer(20);
       boolean var4 = false /* VF: Semaphore variable */;
 
       try {
@@ -202,7 +203,7 @@ public class StreamDatagramAddressBase extends DatagramAddressBase implements St
          var4 = false;
       } finally {
          if (var4) {
-            throw new Object("Can't get local ip address");
+            throw new IOException("Can't get local ip address");
          }
       }
 

@@ -29,10 +29,10 @@ final class ObjectSerializer extends AbstractBigVectorSerializer {
 
    @Override
    public final void serialize(DataBuffer buffer, byte type, Object obj) {
-      if (obj instanceof Object) {
+      if (obj instanceof String) {
          SerializerUtil.writeString(buffer, (byte)0, (String)obj);
-      } else if (obj instanceof Object[]) {
-         StringSerializer.getInstance().serializeArray(buffer, (byte)1, (Object[])obj);
+      } else if (obj instanceof String[]) {
+         StringSerializer.getInstance().serializeArray(buffer, (byte)1, (String[])obj);
       } else if (obj instanceof byte[]) {
          SerializerUtil.writeByteArray(buffer, (byte)2, (byte[])obj);
       } else if (obj instanceof int[]) {

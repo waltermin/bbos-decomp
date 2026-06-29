@@ -43,7 +43,7 @@ public final class BootstrapApplication extends Application implements HolsterLi
          }
       }
 
-      System.err.println(((StringBuffer)(new Object("Could not send SessionReady signal: "))).append(e.toString()).toString());
+      System.err.println("Could not send SessionReady signal: " + e.toString());
    }
 
    private final void registerPMEBrowserFieldFactory() {

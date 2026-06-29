@@ -94,9 +94,9 @@ public final class UpdateNowRunnable implements FieldChangeRunnable {
       int defaultChoice = 0;
       String label = ApplicationResources.getString(10);
       Image icon = ThemeManager.getThemeAwareImage("dialog_information");
-      Dialog dialog = (Dialog)(new Object(label, choices, null, defaultChoice, null, 0));
+      Dialog dialog = new Dialog(label, choices, null, defaultChoice, null, 0);
       dialog.setIcon(icon);
-      RunnableDialog rd = (RunnableDialog)(new Object(dialog));
+      RunnableDialog rd = new RunnableDialog(dialog);
       rd.run();
       int result = rd.getResult();
       return result == 1;
@@ -107,9 +107,9 @@ public final class UpdateNowRunnable implements FieldChangeRunnable {
       int defaultChoice = 0;
       String label = ApplicationResources.getString(18);
       Image icon = ThemeManager.getThemeAwareImage("dialog_information");
-      Dialog dialog = (Dialog)(new Object(label, choices, null, defaultChoice, null, 0));
+      Dialog dialog = new Dialog(label, choices, null, defaultChoice, null, 0);
       dialog.setIcon(icon);
-      RunnableDialog rd = (RunnableDialog)(new Object(dialog));
+      RunnableDialog rd = new RunnableDialog(dialog);
       rd.run();
       int result = rd.getResult();
       return result == 1;

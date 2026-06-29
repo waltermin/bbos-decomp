@@ -41,10 +41,10 @@ public final class MediaBrowserField$MyMediaManager extends MediaManager {
       // 28: getfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField$MyMediaManager.this$0 Lnet/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField;
       // 2b: getfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._focusManager Ljava/lang/Object;
       // 2e: ifnull 4f
-      // 31: new java/lang/Object
+      // 31: new java/io/ByteArrayInputStream
       // 34: dup
       // 35: aload 2
-      // 36: checkcast java/lang/Object
+      // 36: checkcast java/lang/String
       // 39: invokevirtual java/lang/String.getBytes ()[B
       // 3c: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
       // 3f: astore 6
@@ -57,13 +57,13 @@ public final class MediaBrowserField$MyMediaManager extends MediaManager {
       // 4e: areturn
       // 4f: aload 2
       // 50: dup
-      // 51: instanceof java/lang/Object
+      // 51: instanceof java/lang/String
       // 54: ifne 5b
       // 57: pop
       // 58: goto be
-      // 5b: checkcast java/lang/Object
+      // 5b: checkcast java/lang/String
       // 5e: astore 5
-      // 60: new java/lang/Object
+      // 60: new java/lang/StringBuffer
       // 63: dup
       // 64: ldc_w "<?xml version=\"1.0\"?><body>"
       // 67: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -77,17 +77,17 @@ public final class MediaBrowserField$MyMediaManager extends MediaManager {
       // 7d: dup
       // 7e: invokespecial net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField$MyXMLHandler.<init> ()V
       // 81: astore 6
-      // 83: new java/lang/Object
+      // 83: new java/io/ByteArrayInputStream
       // 86: dup
       // 87: aload 5
       // 89: ldc_w "UTF8"
       // 8c: invokevirtual java/lang/String.getBytes (Ljava/lang/String;)[B
       // 8f: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
       // 92: astore 7
-      // 94: new java/lang/Object
+      // 94: new net/rim/device/api/xml/jaxp/SAXParserImpl
       // 97: dup
       // 98: invokespecial net/rim/device/api/xml/jaxp/SAXParserImpl.<init> ()V
-      // 9b: new java/lang/Object
+      // 9b: new org/xml/sax/InputSource
       // 9e: dup
       // 9f: aload 7
       // a1: invokespecial org/xml/sax/InputSource.<init> (Ljava/io/InputStream;)V

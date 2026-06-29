@@ -10,6 +10,7 @@ import net.rim.device.api.io.DatagramAddressBase;
 import net.rim.device.api.io.DatagramBase;
 import net.rim.device.api.io.DatagramConnectionBase;
 import net.rim.device.api.io.IOCancelledException;
+import net.rim.device.api.io.IONotRoutableException;
 import net.rim.device.api.servicebook.ServiceRouting;
 import net.rim.device.api.servicebook.ServiceRoutingProperties;
 import net.rim.device.cldc.io.mdp.MdpAddress;
@@ -22,7 +23,7 @@ public final class MdpBridge extends GmeRouterConnection {
    private static final int CAPABILITIES = 63;
 
    protected MdpBridge(Transport transport) {
-      super(transport, (DatagramConnectionBase)Connector.open(MdpAddress.makeAddress(true, (String)((Object)null), 2, 2)));
+      super(transport, (DatagramConnectionBase)Connector.open(MdpAddress.makeAddress(true, (String)null, 2, 2)));
       super._subConnection.setup(1462989747, null);
       this._defHrt = HRUtils.getDefaultHRT();
       this._dataServices = DataServices.getInstance();
@@ -34,12 +35,12 @@ public final class MdpBridge extends GmeRouterConnection {
       return this._defHrt.getActiveHri() == null || !this._dataServices.isDataServicesEnabled();
    }
 
-   private final void findRoutingInformation(HostRoutingTable hrt, GMEDatagramInfo di) {
+   private final void findRoutingInformation(HostRoutingTable hrt, GMEDatagramInfo di) throws IONotRoutableException {
       HostRoutingInfo hri = hrt.getActiveHri();
       if (hri == null) {
          if (!di.failWhenMissing && (hrt == this._defHrt || HRUtils.getNpcForActiveNetwork() == -1)) {
             Transport.logWarning(1414090098);
-            throw new Object();
+            throw new IONotRoutableException();
          }
 
          super._transport.throwIOException(di, 1414090344, 4226);
@@ -55,7 +56,7 @@ public final class MdpBridge extends GmeRouterConnection {
    }
 
    @Override
-   public final void send(DatagramBase param1, GMEDatagramInfo param2, Datagram param3) throws IOException, IOCancelledException {
+   public final void send(DatagramBase param1, GMEDatagramInfo param2, Datagram param3) throws IOException, IOCancelledException, IONotRoutableException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -72,7 +73,7 @@ public final class MdpBridge extends GmeRouterConnection {
       // 00e: pop
       // 00f: ldc_w 1414090098
       // 012: invokestatic net/rim/device/cldc/io/gme/Transport.logWarning (I)V
-      // 015: new java/lang/Object
+      // 015: new net/rim/device/api/io/IONotRoutableException
       // 018: dup
       // 019: invokespecial net/rim/device/api/io/IONotRoutableException.<init> ()V
       // 01c: athrow

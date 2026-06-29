@@ -55,7 +55,7 @@ public final class InternalLogger {
    }
 
    private static final void log(Object o, String message, Throwable t, Object param, int logType) {
-      StringBuffer s = (StringBuffer)(new Object());
+      StringBuffer s = new StringBuffer();
       if (message != null) {
          s.append(message).append(", ");
       }

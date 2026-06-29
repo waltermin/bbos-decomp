@@ -18,7 +18,7 @@ public final class WMLContext implements IBrowserContext, Persistable {
    private static final int VERSION = 1;
 
    public WMLContext() {
-      this._nameToValue = (Hashtable)(new Object());
+      this._nameToValue = new Hashtable();
       this._timer = -1;
    }
 
@@ -66,7 +66,7 @@ public final class WMLContext implements IBrowserContext, Persistable {
 
    @Override
    public final boolean serialize(SyncBuffer syncBuffer) {
-      DataBuffer dataBuffer = (DataBuffer)(new Object(false));
+      DataBuffer dataBuffer = new DataBuffer(false);
       dataBuffer.writeCompressedInt(this._nameToValue.size());
       Enumeration e = this._nameToValue.keys();
 
@@ -88,7 +88,7 @@ public final class WMLContext implements IBrowserContext, Persistable {
 
    @Override
    public final String toString() {
-      StringBuffer buff = (StringBuffer)(new Object(MessageFormat.format(BrowserResources.getString(371), new Object[]{Integer.toString(this._timer)})));
+      StringBuffer buff = new StringBuffer(MessageFormat.format(BrowserResources.getString(371), new String[]{Integer.toString(this._timer)}));
       buff.append('\n');
       Enumeration e = this._nameToValue.keys();
 
@@ -122,7 +122,7 @@ public final class WMLContext implements IBrowserContext, Persistable {
 
       try {
          int numContextEntries = dataBuffer.readCompressedInt();
-         nameToValue = (Hashtable)(new Object());
+         nameToValue = new Hashtable();
 
          for (int i = 0; i < numContextEntries; i++) {
             String key = dataBuffer.readUTF();

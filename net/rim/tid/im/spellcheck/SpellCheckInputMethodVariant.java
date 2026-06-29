@@ -30,6 +30,7 @@ import net.rim.tid.im.SLControlObject;
 import net.rim.tid.im.conv.SLComposedText;
 import net.rim.tid.im.conv.SLCurrentVariant;
 import net.rim.tid.im.conv.SLVariants;
+import net.rim.tid.im.conv.europe.repository.EuropeanCustomDictionaryEngine;
 import net.rim.tid.im.conv.europe.repository.WordLearningReader;
 import net.rim.tid.im.conv.europe.spellcheck.MisspelledWordIterator;
 import net.rim.tid.im.conv.europe.spellcheck.SpellCheckResultContainer;
@@ -67,10 +68,10 @@ public class SpellCheckInputMethodVariant
    private SLComposedText _composedText;
    private SLVariants _variants;
    private boolean _lookupVisible;
-   private XYRect _lookupBounds = (XYRect)(new Object());
+   private XYRect _lookupBounds = new XYRect();
    private TokenBounds _bounds = new TokenBounds();
-   private StringBuffer _misspelledWord = (StringBuffer)(new Object());
-   private StringBuffer _correctedWord = (StringBuffer)(new Object());
+   private StringBuffer _misspelledWord = new StringBuffer();
+   private StringBuffer _correctedWord = new StringBuffer();
    private int _textLength = -1;
    private int _state = 1;
    private SpellCheckInputMethodVariant$DispatchEventHandler[] _sureTypeDispatchEventHandler;
@@ -92,7 +93,7 @@ public class SpellCheckInputMethodVariant
       this, 3, 4294967296L, 34359738368L
    );
    private ChooseVariantDialog _lookup = new ChooseVariantDialog(this);
-   private Vector _variantsVector = (Vector)(new Object());
+   private Vector _variantsVector = new Vector();
    private boolean _delaying;
    private Application _app;
    private boolean _cancelDelay;
@@ -133,7 +134,7 @@ public class SpellCheckInputMethodVariant
 
    public void addCustomWord(String customWord) {
       char[] chs = customWord.toCharArray();
-      SLCurrentVariant wordToAdd = (SLCurrentVariant)(new Object());
+      SLCurrentVariant wordToAdd = new SLCurrentVariant();
       wordToAdd._variants = chs;
       wordToAdd._offset = 0;
       wordToAdd._length = chs.length;
@@ -142,11 +143,11 @@ public class SpellCheckInputMethodVariant
    }
 
    public void addLearningPair(String original, String correction) {
-      StringBuffer buf = (StringBuffer)(new Object());
+      StringBuffer buf = new StringBuffer();
       buf.append(original);
       char[] tmp = new char[correction.length()];
       correction.getChars(0, tmp.length, tmp, 0);
-      SLCurrentVariant variant = (SLCurrentVariant)(new Object());
+      SLCurrentVariant variant = new SLCurrentVariant();
       variant._variants = tmp;
       variant._offset = 0;
       variant._length = correction.length();
@@ -154,10 +155,10 @@ public class SpellCheckInputMethodVariant
    }
 
    public void getSuggestedCorrections(String misspelled, Vector ret) {
-      StringBufferGap misspelledBuf = (StringBufferGap)(new Object(misspelled));
+      StringBufferGap misspelledBuf = new StringBufferGap(misspelled);
       this._resultContainer.reset();
       this._creator.getVariants(misspelledBuf, 0, misspelledBuf.length(), this._resultContainer);
-      StringBuffer buf = (StringBuffer)(new Object());
+      StringBuffer buf = new StringBuffer();
 
       for (int i = 0; i < this._resultContainer.getVariantsCount(); i++) {
          buf.setLength(0);
@@ -167,7 +168,7 @@ public class SpellCheckInputMethodVariant
    }
 
    public int getWordCorrectness(String word) {
-      AttributedString attrText = (AttributedString)(new Object(word));
+      AttributedString attrText = new AttributedString(word);
       this._iterator.init(attrText, 0);
       this._bounds.start = 0;
       this._bounds.end = 0;
@@ -382,8 +383,8 @@ public class SpellCheckInputMethodVariant
          case 1:
             WordLearningReader newWords = this._creator.getMainRepository().getRepositoryData().getLearningReader();
             WordLearningReader freqWords = newWords;
-            Vector checkRepositories = (Vector)(new Object());
-            return (CustomDictionary)(new Object(newWords, freqWords, null, checkRepositories));
+            Vector checkRepositories = new Vector();
+            return new EuropeanCustomDictionaryEngine(newWords, freqWords, null, checkRepositories);
          default:
             return this._inputMethod.getCustomDictionary(type);
       }
@@ -472,12 +473,12 @@ public class SpellCheckInputMethodVariant
             this._userInteractionOccurred = false;
             this._inputMethod.endComposition();
             this.initState();
-            if (parameter instanceof Object) {
+            if (parameter instanceof FieldChangeListener) {
                this._listener = (FieldChangeListener)parameter;
             }
 
             this._currentComponent = InputContext.getInstance().getInputComponent();
-            if (this._currentComponent instanceof Object && ((TextField)this._currentComponent).isSelecting()) {
+            if (this._currentComponent instanceof TextField && ((TextField)this._currentComponent).isSelecting()) {
                ((TextField)this._currentComponent).select(false);
             }
 
@@ -488,11 +489,11 @@ public class SpellCheckInputMethodVariant
             break;
          case 42:
             this.hideWindows();
-            if (!(parameter instanceof Object)) {
+            if (!(parameter instanceof Integer)) {
                this._userInteractionOccurred = true;
                this.stopSpellCheck(1);
             } else {
-               int reason = parameter;
+               int reason = (Integer)parameter;
                this.stopSpellCheck(reason);
             }
             break;
@@ -529,14 +530,14 @@ public class SpellCheckInputMethodVariant
          case 60:
             if (this._state != 1 && this._state != 0) {
                this._currentComponent = InputContext.getInstance().getInputComponent();
-               if (this._currentComponent instanceof Object && ((TextField)this._currentComponent).isSelecting()) {
+               if (this._currentComponent instanceof TextField && ((TextField)this._currentComponent).isSelecting()) {
                   ((TextField)this._currentComponent).select(false);
                }
 
                this.continueSpellCheck();
             } else {
                this._inputMethod.endComposition();
-               if (parameter instanceof Object) {
+               if (parameter instanceof FieldChangeListener) {
                   this._listener = (FieldChangeListener)parameter;
                }
 
@@ -598,7 +599,7 @@ public class SpellCheckInputMethodVariant
    private void showMenu(int mode) {
       switch (mode) {
          case 0:
-            throw new Object(((StringBuffer)(new Object("Invalid state: "))).append(mode).toString());
+            throw new IllegalStateException("Invalid state: " + mode);
          case 1:
             Application.getApplication().invokeLater(this._delayedLookupMisspelledRunnable, 20, false);
             return;
@@ -614,7 +615,7 @@ public class SpellCheckInputMethodVariant
    private void adjustCaretToBounds(TokenBounds bounds) {
       int caret = this._inputMethodContext.getCaretPosition();
       if (caret > bounds.end) {
-         this._inputMethodContext.dispatchInputMethodEvent(1101, null, 0, 0, 0, (TextHitInfo)(new Object(bounds.end - bounds.start, true)), null);
+         this._inputMethodContext.dispatchInputMethodEvent(1101, null, 0, 0, 0, new TextHitInfo(bounds.end - bounds.start, true), null);
       }
    }
 
@@ -638,7 +639,7 @@ public class SpellCheckInputMethodVariant
       if (this._state != 5 && this._misspelledWord.length() > 0 && this._correctedWord.length() > 0) {
          char[] tmp = new char[this._correctedWord.length()];
          this._correctedWord.getChars(0, tmp.length, tmp, 0);
-         SLCurrentVariant correction = (SLCurrentVariant)(new Object());
+         SLCurrentVariant correction = new SLCurrentVariant();
          correction._variants = tmp;
          correction._offset = 0;
          correction._length = tmp.length;
@@ -723,7 +724,7 @@ public class SpellCheckInputMethodVariant
       }
 
       this._state = 1;
-      if (this._listener != null && this._currentComponent instanceof Object) {
+      if (this._listener != null && this._currentComponent instanceof Field) {
          int evt = 42;
          if (this._userInteractionOccurred) {
             stopReason |= 4;
@@ -843,10 +844,10 @@ public class SpellCheckInputMethodVariant
             caret = this._bounds.end;
          }
 
-         this._inputMethodContext.dispatchInputMethodEvent(1102, null, 0, 0, 0, (TextHitInfo)(new Object(caret, true)), null);
+         this._inputMethodContext.dispatchInputMethodEvent(1102, null, 0, 0, 0, new TextHitInfo(caret, true), null);
          return rc;
       } else {
-         StringBufferGap misspelled = (StringBufferGap)(new Object(attrText.getText(this._bounds.start, this._bounds.end)));
+         StringBufferGap misspelled = new StringBufferGap(attrText.getText(this._bounds.start, this._bounds.end));
          this._inputMethodContext.setComposedText(this._bounds.start, this._bounds.end);
          this.adjustCaretToBounds(subBounds);
          int caret = this._inputMethodContext.getCaretPosition();
@@ -859,7 +860,7 @@ public class SpellCheckInputMethodVariant
    }
 
    private void showInputBounds() {
-      if (this._currentComponent instanceof Object) {
+      if (this._currentComponent instanceof TextField) {
          this._inputBounds.start = this._bounds.start;
          this._inputBounds.end = this._bounds.end;
          TextField tf = (TextField)this._currentComponent;
@@ -890,7 +891,7 @@ public class SpellCheckInputMethodVariant
    }
 
    private void unshowInputBounds() {
-      if (this._currentComponent instanceof Object) {
+      if (this._currentComponent instanceof TextField) {
          TextField tf = (TextField)this._currentComponent;
          AttributedString attrText = this._inputMethodContext.getAttributedText();
          int caret = tf.getCaretPosition();
@@ -1001,7 +1002,7 @@ public class SpellCheckInputMethodVariant
             }
 
             int committedLen = this._textLength - (this._inputMethodContext.getComposedTextEnd() - this._inputMethodContext.getComposedTextStart());
-            attrText = (AttributedString)(new Object(attrText, 0, committedLen));
+            attrText = new AttributedString(attrText, 0, committedLen);
             this._iterator.init(attrText, 0);
 
             while (true) {
@@ -1019,7 +1020,7 @@ public class SpellCheckInputMethodVariant
                }
 
                attrText = this._inputMethodContext.getAttributedText();
-               StringBufferGap misspelled = (StringBufferGap)(new Object(attrText.getText(this._bounds.start, this._bounds.end)));
+               StringBufferGap misspelled = new StringBufferGap(attrText.getText(this._bounds.start, this._bounds.end));
                String changeTo = this._iterator.isInChangeAll(misspelled, 0, misspelled.length());
                if (changeTo != null) {
                   this.changeTokenToWord(misspelled.toString(), changeTo, false);
@@ -1054,8 +1055,8 @@ public class SpellCheckInputMethodVariant
    private void lookupDuplicate() {
       this._inputMethodContext.setComposedText(this._bounds.previousStart, this._bounds.end);
       AttributedString attrStr = this._inputMethodContext.getAttributedText();
-      StringBufferGap repeated = (StringBufferGap)(new Object(attrStr.getText(this._bounds.previousStart, this._bounds.end)));
-      StringBufferGap notRepeated = (StringBufferGap)(new Object(attrStr.getText(this._bounds.start, this._bounds.end)));
+      StringBufferGap repeated = new StringBufferGap(attrStr.getText(this._bounds.previousStart, this._bounds.end));
+      StringBufferGap notRepeated = new StringBufferGap(attrStr.getText(this._bounds.start, this._bounds.end));
       this._bounds.start = this._bounds.previousStart;
       this._variants.setOriginal(repeated);
       this._resultContainer.reset();
@@ -1112,27 +1113,25 @@ public class SpellCheckInputMethodVariant
       int committedCcount = this._composedText.getCommittedCharactersCountL();
       int convertedCount = this._composedText.getConvertedCharacterCount();
       int caretPosition = this._composedText.getCaretPosition();
-      boolean isDirty = !(this._currentComponent instanceof Object) ? false : ((Field)this._currentComponent).isDirty();
+      boolean isDirty = !(this._currentComponent instanceof Field) ? false : ((Field)this._currentComponent).isDirty();
       if (committedCcount > 0) {
          this.unshowInputBounds();
       }
 
       this._inputMethodContext
-         .dispatchInputMethodEvent(
-            1100, 0, str, attrMask, committedCcount, convertedCount, TextHitInfo.leading(caretPosition), (TextHitInfo)((Object)null), null
-         );
+         .dispatchInputMethodEvent(1100, 0, str, attrMask, committedCcount, convertedCount, TextHitInfo.leading(caretPosition), (TextHitInfo)null, null);
       this.adjustCaretToBounds(this._bounds);
       if (committedCcount == 0) {
          this.showInputBounds();
       }
 
-      if (this._currentComponent instanceof Object && !isTextChanged && !isDirty) {
+      if (this._currentComponent instanceof Field && !isTextChanged && !isDirty) {
          ((Field)this._currentComponent).setDirty(false);
       }
    }
 
    private void changeTokenToWord(boolean changeAll) {
-      StringBuffer replacement = (StringBuffer)(new Object());
+      StringBuffer replacement = new StringBuffer();
       this._variants.addCurrentVariantTo(replacement);
       if (changeAll) {
          this._iterator.changeAll(this._variants.getOriginal(), replacement);
@@ -1174,7 +1173,7 @@ public class SpellCheckInputMethodVariant
    }
 
    private void addToken() {
-      SLCurrentVariant wordToAdd = (SLCurrentVariant)(new Object());
+      SLCurrentVariant wordToAdd = new SLCurrentVariant();
       StringBuffer original = this._variants.getOriginal();
       int misspelledLength = original.length();
       char[] dest = new char[misspelledLength];
@@ -1189,7 +1188,7 @@ public class SpellCheckInputMethodVariant
    }
 
    private void showLookup(int lookupMode) {
-      SLCurrentVariant variant = (SLCurrentVariant)(new Object());
+      SLCurrentVariant variant = new SLCurrentVariant();
       this._variantsVector.setSize(0);
 
       for (int i = 0; i < this._variants.getVariantsCount() && i < 8; i++) {
@@ -1232,7 +1231,7 @@ public class SpellCheckInputMethodVariant
       this._SCEProperties = new byte[18];
       this._options = SpellCheckOptions.getOptions();
       this.updateProperties();
-      this._composedText = (SLComposedText)(new Object(1, 1));
+      this._composedText = new SLComposedText(1, 1);
       this._variants = this._composedText.getCurrentVariant(true);
       this._creator.enablePairLearning(true);
       this._creator.setUseLocaleSpecificRules(true);

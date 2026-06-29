@@ -6,6 +6,7 @@ import javax.microedition.pim.PIMException;
 import javax.microedition.pim.PIMItem;
 import javax.microedition.pim.UnsupportedFieldException;
 import net.rim.device.api.collection.CollectionEventSource;
+import net.rim.device.api.util.EmptyEnumeration;
 import net.rim.device.apps.internal.commonmodels.categories.CategoryList;
 import net.rim.device.apps.internal.commonmodels.categories.CategoryModel;
 
@@ -53,13 +54,13 @@ class PIMListImpl implements BlackBerryPIMList {
    }
 
    public int getFieldDateType(int field) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public void deleteCategory(String category, boolean deleteUnassignedItems) throws PIMException {
       if (category == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       if (this._closed) {
@@ -67,7 +68,7 @@ class PIMListImpl implements BlackBerryPIMList {
       }
 
       if (this._mode == 1) {
-         throw new Object();
+         throw new SecurityException();
       }
 
       if (deleteUnassignedItems) {
@@ -98,7 +99,7 @@ class PIMListImpl implements BlackBerryPIMList {
          }
 
          if (this._mode == 1) {
-            throw new Object();
+            throw new SecurityException();
          }
 
          if (!currentCategory.equalsIgnoreCase(newCategory)) {
@@ -115,7 +116,7 @@ class PIMListImpl implements BlackBerryPIMList {
             categoryList.removeCategory(categoryList.getCategoryId(currentCategory));
          }
       } else {
-         throw new Object();
+         throw new NullPointerException();
       }
    }
 
@@ -124,9 +125,9 @@ class PIMListImpl implements BlackBerryPIMList {
       if (this._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       } else if (this._mode == 2) {
-         throw new Object(WRITEONLY_MESSAGE);
+         throw new SecurityException(WRITEONLY_MESSAGE);
       } else {
-         return (Enumeration)(category != null && CategoryList.getInstance().getCategoryId(category) == -1 ? new Object() : this.getItemsInCategory(category));
+         return category != null && CategoryList.getInstance().getCategoryId(category) == -1 ? new EmptyEnumeration() : this.getItemsInCategory(category);
       }
    }
 
@@ -135,14 +136,14 @@ class PIMListImpl implements BlackBerryPIMList {
       if (this.getFieldDateType(stringArrayField) == 5) {
          throw new UnsupportedFieldException();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
    public void addCategory(String category) throws PIMException {
       if (category == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       if (category.length() <= 0 || this._closed) {
@@ -150,7 +151,7 @@ class PIMListImpl implements BlackBerryPIMList {
       }
 
       if (this._mode == 1) {
-         throw new Object();
+         throw new SecurityException();
       }
 
       CategoryList.getInstance().addCategoryIfNecessary(category);
@@ -183,7 +184,7 @@ class PIMListImpl implements BlackBerryPIMList {
    @Override
    public boolean isCategory(String category) throws PIMException {
       if (category == null) {
-         throw new Object();
+         throw new NullPointerException();
       } else if (this._closed) {
          throw new PIMException();
       } else {
@@ -217,7 +218,7 @@ class PIMListImpl implements BlackBerryPIMList {
 
       CategoryList categoryList = CategoryList.getInstance();
       int numCategories = categoryList.size();
-      String[] results = new Object[numCategories];
+      String[] results = new String[numCategories];
 
       for (int i = numCategories - 1; i >= 0; i--) {
          CategoryModel category = (CategoryModel)categoryList.getAt(i);
@@ -229,7 +230,7 @@ class PIMListImpl implements BlackBerryPIMList {
 
    @Override
    public String getArrayElementLabel(int stringArrayField, int arrayElement) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
@@ -237,7 +238,7 @@ class PIMListImpl implements BlackBerryPIMList {
       if (attribute == 0) {
          return "";
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -252,7 +253,7 @@ class PIMListImpl implements BlackBerryPIMList {
 
    @Override
    public int stringArraySize(int stringArrayField) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override

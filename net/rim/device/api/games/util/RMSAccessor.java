@@ -2,9 +2,9 @@ package net.rim.device.api.games.util;
 
 import javax.microedition.rms.RecordEnumeration;
 import javax.microedition.rms.RecordStore;
-import net.rim.device.api.crypto.Digest;
 import net.rim.device.api.crypto.HMAC;
 import net.rim.device.api.crypto.HMACKey;
+import net.rim.device.api.crypto.MD5Digest;
 import net.rim.device.api.util.Arrays;
 
 public final class RMSAccessor {
@@ -36,7 +36,7 @@ public final class RMSAccessor {
       }
 
       try {
-         HMAC hmac = (HMAC)(new Object((HMACKey)(new Object(key)), (Digest)(new Object())));
+         HMAC hmac = new HMAC(new HMACKey(key), new MD5Digest());
          hmac.update(data);
          byte[] mac = hmac.getMAC();
          RecordStore rms = RecordStore.openRecordStore(name, true);
@@ -74,7 +74,7 @@ public final class RMSAccessor {
             Arrays.insertAt(key, qmsp[i], 0);
          }
 
-         HMAC hmac = (HMAC)(new Object((HMACKey)(new Object(key)), (Digest)(new Object())));
+         HMAC hmac = new HMAC(new HMACKey(key), new MD5Digest());
          hmac.update(result);
          byte[] mac2 = hmac.getMAC();
          return Arrays.equals(mac, mac2) ? result : null;

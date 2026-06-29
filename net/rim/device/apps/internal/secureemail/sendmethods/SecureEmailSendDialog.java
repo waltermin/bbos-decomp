@@ -9,12 +9,15 @@ import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.GaugeField;
 import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.DialogFieldManager;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.apps.internal.secureemail.SecureEmailResources;
 import net.rim.device.apps.internal.secureemail.server.SecureEmailServerOperationListener;
+import net.rim.device.internal.ui.component.HorizontalSpacerField;
 import net.rim.device.internal.ui.component.PleaseWaitDialog;
 import net.rim.device.internal.ui.component.PleaseWaitWorkerThread;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 
 public class SecureEmailSendDialog extends PleaseWaitDialog implements SecureEmailServerOperationListener, FieldChangeListener {
    private GaugeField _recipientGauge;
@@ -48,7 +51,7 @@ public class SecureEmailSendDialog extends PleaseWaitDialog implements SecureEma
 
    public void setNumRecipients(int numRecipients, int numGaugeStepsPerRecipient) {
       synchronized (this._applicationEventLock) {
-         this._recipientGauge = (GaugeField)(new Object(null, 0, numRecipients * numGaugeStepsPerRecipient, 0, 4));
+         this._recipientGauge = new GaugeField(null, 0, numRecipients * numGaugeStepsPerRecipient, 0, 4);
       }
 
       this._numGaugeStepsPerRecipient = numGaugeStepsPerRecipient;
@@ -203,12 +206,12 @@ public class SecureEmailSendDialog extends PleaseWaitDialog implements SecureEma
    private void prepareButtonManager() {
       if (this._buttonFieldManager == null) {
          DialogFieldManager dfm = (DialogFieldManager)this.getDelegate();
-         this._abortButtonField = (ButtonField)(new Object(SecureEmailResources.getString(165), 12884901888L));
+         this._abortButtonField = new ButtonField(SecureEmailResources.getString(165), 12884901888L);
          this._abortButtonField.setChangeListener(this);
-         this._buttonFieldManager = (HorizontalFieldManager)(new Object(12884901888L));
+         this._buttonFieldManager = new HorizontalFieldManager(12884901888L);
          dfm.addCustomField(this._buttonFieldManager);
          this._buttonFieldManager.add(this._abortButtonField);
-         this._buttonFieldManager.add((Field)(new Object(this._buttonFieldManager.getHeight())));
+         this._buttonFieldManager.add(new VerticalSpacerField(this._buttonFieldManager.getHeight()));
          this._buttonFieldManager.delete(this._abortButtonField);
       }
    }
@@ -216,14 +219,14 @@ public class SecureEmailSendDialog extends PleaseWaitDialog implements SecureEma
    private void prepareRecipientFields() {
       if (this._recipientName == null) {
          DialogFieldManager dfm = (DialogFieldManager)this.getDelegate();
-         this._recipientName = (LabelField)(new Object("", 64));
-         this._recipientAction = (LabelField)(new Object("", 64));
-         dfm.addCustomField((Field)(new Object()));
-         dfm.addCustomField((Field)(new Object(6)));
+         this._recipientName = new LabelField("", 64);
+         this._recipientAction = new LabelField("", 64);
+         dfm.addCustomField(new SeparatorField());
+         dfm.addCustomField(new VerticalSpacerField(6));
          dfm.addCustomField(this._recipientGauge);
          dfm.addCustomField(this._recipientName);
-         HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(1152921504606846976L));
-         hfm.add((Field)(new Object(12)));
+         HorizontalFieldManager hfm = new HorizontalFieldManager(1152921504606846976L);
+         hfm.add(new HorizontalSpacerField(12));
          hfm.add(this._recipientAction);
          dfm.addCustomField(hfm);
       }

@@ -6,7 +6,7 @@ import net.rim.device.api.util.Persistable;
 import net.rim.vm.Array;
 
 final class OTAFMConfigurationData implements Persistable {
-   ServiceRecord[] _serviceRecords = new Object[0];
+   ServiceRecord[] _serviceRecords = new ServiceRecord[0];
    ServiceSyncInfo[] _serviceSyncInfo = new ServiceSyncInfo[0];
    boolean _messageListRestored;
 

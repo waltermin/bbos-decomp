@@ -21,9 +21,9 @@ final class AbstractPhoneNumberModel$ViewAddressVerb extends Verb {
 
    @Override
    public final Object invoke(Object context) {
-      ContextObject viewCtx = (ContextObject)(new Object(18, 45));
-      Verb[] verbs = new Object[0];
-      if (this._address instanceof Object) {
+      ContextObject viewCtx = new ContextObject(18, 45);
+      Verb[] verbs = new Verb[0];
+      if (this._address instanceof VerbProvider) {
          VerbProvider verbProvider = (VerbProvider)this._address;
          verbProvider.getVerbs(viewCtx, verbs);
       }

@@ -14,7 +14,7 @@ final class SetAsIdleScreenVerb extends Verb {
    @Override
    public final Object invoke(Object context) {
       Object filenameObj = ContextObject.get(context, 250);
-      if (filenameObj instanceof Object) {
+      if (filenameObj instanceof String) {
          String filename = (String)filenameObj;
          String scaleFPString = (String)ContextObject.get(context, -354255994408004207L);
          if (scaleFPString != null) {

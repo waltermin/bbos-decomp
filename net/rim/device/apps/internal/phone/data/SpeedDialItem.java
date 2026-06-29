@@ -60,7 +60,7 @@ public final class SpeedDialItem extends QuickContactItem implements Persistable
    public final boolean matchAddress(Object address, Object context) {
       Object number = this._cidi.getNumber();
       if (number != null) {
-         if (number instanceof Object) {
+         if (number instanceof AbstractPhoneNumberModel) {
             boolean typeIndependent = ContextObject.getFlag(context, 93);
             return ((AbstractPhoneNumberModel)number).equals(address, typeIndependent);
          } else {
@@ -116,7 +116,7 @@ public final class SpeedDialItem extends QuickContactItem implements Persistable
          int type = pnm.getType();
          if (type != 0 && this._cidi.getAddress() != null) {
             String typeString = AbstractPhoneNumberModel.getTypeString(pnm.getType(), flags);
-            return ((StringBuffer)(new Object())).append(typeString).append(" ").append(numberString).toString();
+            return typeString + " " + numberString;
          } else {
             return numberString;
          }
@@ -134,21 +134,21 @@ public final class SpeedDialItem extends QuickContactItem implements Persistable
          return false;
       }
 
-      Verb[] verbs = new Object[0];
-      ContextObject context = (ContextObject)(new Object());
+      Verb[] verbs = new Verb[0];
+      ContextObject context = new ContextObject();
       if (!PhoneUtilities.isQuietProfileOn() && !PhoneUtilities.isDiscreetProfileOn()) {
          context.put(2848872683723475070L, "speed_dial.mp3");
       }
 
       PhoneUtilities.setPrivateFlag(context, 66);
       Verb defaultVerb = this._cidi.getVerbs(context, verbs);
-      PhoneLogger.log(((StringBuffer)(new Object("SDI.invoke key = "))).append(this.getKey()).toString());
+      PhoneLogger.log("SDI.invoke key = " + this.getKey());
       return defaultVerb != null ? this.invokeVerb(defaultVerb) : this.invokeVerb(new DialVerb(this._cidi.getNumber(), this._cidi.getAddress(), context));
    }
 
    private final boolean invokeVerb(Verb verb) {
       Backlight.enable(true);
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       PhoneUtilities.setPrivateFlag(context, 66);
       Object result = verb.invoke(context);
       return ContextObject.getFlag(result, 39);
@@ -166,7 +166,7 @@ public final class SpeedDialItem extends QuickContactItem implements Persistable
 
    @Override
    public final void edit() {
-      Object addressInfo = QuickContactList.selectFromAddressBook(null, null, CommonResources.getString(8), new Object[]{new UseOncePhoneNumberVerb()}, true);
+      Object addressInfo = QuickContactList.selectFromAddressBook(null, null, CommonResources.getString(8), new Verb[]{new UseOncePhoneNumberVerb()}, true);
       if (addressInfo != null) {
          Object number = ContextObject.get(addressInfo, 247);
          Object address = ContextObject.get(addressInfo, 252);
@@ -177,7 +177,7 @@ public final class SpeedDialItem extends QuickContactItem implements Persistable
 
    @Override
    public final String getInvokeVerbString() {
-      ContextObject co = (ContextObject)(new Object());
+      ContextObject co = new ContextObject();
       co.put(5898398779440734986L, this._cidi);
       return new DialVerb(this._cidi.getNumber(), this._cidi.getAddress(), co).toString();
    }

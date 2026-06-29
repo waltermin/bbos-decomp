@@ -9,7 +9,7 @@ final class PasswordWizard$PasswordRunnable implements Runnable {
    @Override
    public final void run() {
       String label = CryptoCommonResources.getString(3);
-      this._dialog = (PasswordDialog)(new Object(label, false, 32, 33554432));
+      this._dialog = new PasswordDialog(label, false, 32, 33554432);
       this._dialog.setStatusPriority(-2147483642);
       this._dialog.setPopupDialogClosedListener(new PasswordWizard$PasswordRunnable$GlobalStatusListener(this));
       this._dialog.show();

@@ -5,7 +5,7 @@ public class DeviceClass {
 
    public DeviceClass(int record) {
       if ((record & 0xFF000000) != 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._record = record;

@@ -40,7 +40,7 @@ final class ActivationHelper implements EventListener {
       } else {
          ServiceRecord ipppRecord = this.getServiceRecord();
          if (ipppRecord != null) {
-            AGInfo serverInfo = (AGInfo)(new Object());
+            AGInfo serverInfo = new AGInfo();
             serverInfo.setAGCompactMsgURL(AGInfo.createAGCompactMsgURL(activationUrl));
             serverInfo.setAGRegURL(activationUrl);
             serverInfo.setIPPP_UID(ipppRecord.getUid());
@@ -110,7 +110,7 @@ final class ActivationHelper implements EventListener {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

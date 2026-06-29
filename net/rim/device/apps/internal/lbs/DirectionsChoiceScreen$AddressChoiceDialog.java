@@ -10,9 +10,9 @@ final class DirectionsChoiceScreen$AddressChoiceDialog extends Dialog {
 
    DirectionsChoiceScreen$AddressChoiceDialog(String message, Object[] choices, int[] values, int defaultChoice) {
       super(message, null, null, 0, null, 0);
-      ButtonField workAddress = (ButtonField)(new Object((String)choices[0], 12884901888L));
-      ButtonField homeAddress = (ButtonField)(new Object((String)choices[1], 12884901888L));
-      this._cancel = (ButtonField)(new Object(CommonResource.getString(10005), 12884901888L));
+      ButtonField workAddress = new ButtonField((String)choices[0], 12884901888L);
+      ButtonField homeAddress = new ButtonField((String)choices[1], 12884901888L);
+      this._cancel = new ButtonField(CommonResource.getString(10005), 12884901888L);
       this.add(workAddress);
       this.add(homeAddress);
       this.add(this._cancel);

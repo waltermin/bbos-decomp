@@ -27,7 +27,7 @@ final class ConvInviteBlob extends PeerDataBlob {
    }
 
    private final void formatContacts() {
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
 
       for (int i = this._contacts.size() - 1; i >= 0; i--) {
          sb.append((String)this._contacts.elementAt(i));
@@ -40,9 +40,9 @@ final class ConvInviteBlob extends PeerDataBlob {
    }
 
    private final void unpackContacts() {
-      this._contacts = (Vector)(new Object(1));
-      this._contactNames = (Vector)(new Object(1));
-      StringTokenizer st = (StringTokenizer)(new Object(this._contactsStr, ','));
+      this._contacts = new Vector(1);
+      this._contactNames = new Vector(1);
+      StringTokenizer st = new StringTokenizer(this._contactsStr, ',');
 
       while (st.hasMoreTokens()) {
          String s = st.nextToken();
@@ -77,7 +77,7 @@ final class ConvInviteBlob extends PeerDataBlob {
 
    @Override
    public final void pickle(DataBuffer db) {
-      DataBuffer db2 = (DataBuffer)(new Object());
+      DataBuffer db2 = new DataBuffer();
       this.addStringToDataBuffer(db2, 1, this._convId);
       this.addStringToDataBuffer(db2, 2, this._contactsStr);
       ConverterUtilities.writeEmptyField(db2, 0);

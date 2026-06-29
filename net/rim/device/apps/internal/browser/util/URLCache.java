@@ -8,14 +8,14 @@ import net.rim.device.apps.api.utility.general.URI;
 import net.rim.device.cldc.io.utility.URIEncoder;
 
 public final class URLCache {
-   private Hashtable _relative = (Hashtable)(new Object());
-   private Hashtable _absolute = (Hashtable)(new Object());
+   private Hashtable _relative = new Hashtable();
+   private Hashtable _absolute = new Hashtable();
    private String _lastAbsoluteLookup;
    private String _lastAbsoluteResult;
    private URI _base;
    private RenderingOptions _renderingOptions;
    private static String DEVICE_HOME = "device:home";
-   private static StringMatch _stringMatch = (StringMatch)(new Object("\r \n \t", false, true, false));
+   private static StringMatch _stringMatch = new StringMatch("\r \n \t", false, true, false);
 
    public URLCache(String url, RenderingOptions renderingOptions) {
       this.setBase(url);
@@ -44,7 +44,7 @@ public final class URLCache {
 
       label30:
       try {
-         this._base = (URI)(new Object(url));
+         this._base = new URI(url);
       } finally {
          break label30;
       }
@@ -84,7 +84,7 @@ public final class URLCache {
       if (url.startsWith(DEVICE_HOME) && this._renderingOptions != null) {
          String homePage = this._renderingOptions.getPropertyWithStringValue(4550690918222697397L, 15, RenderingOptions.HOME_PAGE_URL_DEFAULT);
          if (homePage != null) {
-            url = ((StringBuffer)(new Object())).append(homePage).append(url.substring(DEVICE_HOME.length())).toString();
+            url = homePage + url.substring(DEVICE_HOME.length());
          }
       }
 
@@ -99,7 +99,7 @@ public final class URLCache {
       }
 
       try {
-         result = (URI)(new Object(url, this.getBase(), allowRelativeRef));
+         result = new URI(url, this.getBase(), allowRelativeRef);
          if (result.saveInCache()) {
             this.put(allowRelativeRef ? url : null, result);
             return result;
@@ -133,7 +133,7 @@ public final class URLCache {
          if (this._renderingOptions != null) {
             String homePage = this._renderingOptions.getPropertyWithStringValue(4550690918222697397L, 15, RenderingOptions.HOME_PAGE_URL_DEFAULT);
             if (homePage != null) {
-               result = ((StringBuffer)(new Object())).append(homePage).append(url.substring(DEVICE_HOME.length())).toString();
+               result = homePage + url.substring(DEVICE_HOME.length());
             }
          }
       } else if (!url.startsWith("http://") && !url.startsWith("https://")) {
@@ -149,9 +149,9 @@ public final class URLCache {
             }
 
             if (pathStart == -1) {
-               url = ((StringBuffer)(new Object())).append(url).append('/').toString();
+               url = url + '/';
             } else {
-               url = ((StringBuffer)(new Object())).append(url.substring(0, pathStart)).append('/').append(url.substring(pathStart)).toString();
+               url = url.substring(0, pathStart) + '/' + url.substring(pathStart);
             }
          }
 
@@ -180,7 +180,7 @@ public final class URLCache {
             return str;
          }
 
-         StringBuffer buffer = (StringBuffer)(new Object());
+         StringBuffer buffer = new StringBuffer();
          int start = 0;
          int length = str.length();
 
@@ -223,10 +223,7 @@ public final class URLCache {
       for (int i = 0; i < endOfHost; i++) {
          char aChar = uriReference.charAt(i);
          if (aChar >= 'A' && aChar <= 'Z') {
-            uriReference = ((StringBuffer)(new Object()))
-               .append(StringUtilities.toLowerCase(uriReference.substring(0, endOfHost), 1701707776))
-               .append(uriReference.substring(endOfHost))
-               .toString();
+            uriReference = StringUtilities.toLowerCase(uriReference.substring(0, endOfHost), 1701707776) + uriReference.substring(endOfHost);
             break;
          }
       }

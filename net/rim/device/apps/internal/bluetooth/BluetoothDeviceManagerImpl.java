@@ -160,7 +160,7 @@ public final class BluetoothDeviceManagerImpl extends BluetoothDeviceManager imp
    }
 
    final void commitDeviceData() {
-      this._bluetoothOptionsData._pairedDeviceData = (Vector)(new Object());
+      this._bluetoothOptionsData._pairedDeviceData = new Vector();
       synchronized (this._pairedDevices) {
          for (int i = this._pairedDevices.size() - 1; i >= 0; i--) {
             BluetoothDevice device = (BluetoothDevice)this._pairedDevices.elementAt(i);
@@ -250,7 +250,7 @@ public final class BluetoothDeviceManagerImpl extends BluetoothDeviceManager imp
          numCategories = categoryIDs.length;
          CategoryList categoryList = CategoryList.getInstance();
          if (numCategories != 0) {
-            categoryKeys = new Object[0];
+            categoryKeys = new String[0];
 
             for (int i = 0; i < numCategories; i++) {
                CategoryModel model = categoryList.getCategory(categoryIDs[i]);
@@ -263,7 +263,7 @@ public final class BluetoothDeviceManagerImpl extends BluetoothDeviceManager imp
          }
       }
 
-      AddressCardModel[] list = new Object[0];
+      AddressCardModel[] list = new AddressCardModel[0];
       if (mode == 2) {
          Hotlist hotlist = Hotlist.getInstance();
          int count = hotlist.getCount();
@@ -273,10 +273,10 @@ public final class BluetoothDeviceManagerImpl extends BluetoothDeviceManager imp
                HotlistItem item = (HotlistItem)hotlist.get(i);
                if (item != null) {
                   Object o = item.getAddress();
-                  if (o instanceof Object) {
+                  if (o instanceof CallerIDInfo) {
                      CallerIDInfo info = (CallerIDInfo)o;
                      Object address = info.getAddress();
-                     if (address instanceof Object) {
+                     if (address instanceof AddressCardModel) {
                         AddressCardModel card = (AddressCardModel)address;
                         int numPhoneNumbers = card.getNumPhoneNumberModels();
                         if (numPhoneNumbers != 0) {
@@ -334,7 +334,7 @@ public final class BluetoothDeviceManagerImpl extends BluetoothDeviceManager imp
          }
       }
 
-      BluetoothEvents.log(((StringBuffer)(new Object("AB: "))).append(list.length).append(' ').append(System.currentTimeMillis() - startTime).toString());
+      BluetoothEvents.log("AB: " + list.length + ' ' + (System.currentTimeMillis() - startTime));
       return list;
    }
 
@@ -413,7 +413,7 @@ public final class BluetoothDeviceManagerImpl extends BluetoothDeviceManager imp
    }
 
    public final Vector getInRangeDevices(boolean ignorePairedDevices) {
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       synchronized (this._inRangeDevices) {
          for (int i = 0; i < this._inRangeDevices.size(); i++) {
             BluetoothDevice device = (BluetoothDevice)this._inRangeDevices.elementAt(i);
@@ -452,7 +452,7 @@ public final class BluetoothDeviceManagerImpl extends BluetoothDeviceManager imp
 
    final void postEvent(int event, int data0, int data1, Object object0, Object object1) {
       ApplicationManagerInternal am = (ApplicationManagerInternal)ApplicationManager.getApplicationManager();
-      Message msg = (Message)(new Object(29, event, 0, data0, data1, object0, object1));
+      Message msg = new Message(29, event, 0, data0, data1, object0, object1);
       am.postMessage(msg);
    }
 
@@ -694,7 +694,7 @@ public final class BluetoothDeviceManagerImpl extends BluetoothDeviceManager imp
       } else {
          label64:
          try {
-            String str = (String)(new Object(name, "UTF8"));
+            String str = new String(name, "UTF8");
             device.setName(str);
             commitRequired = true;
             this.postEvent(4);
@@ -933,7 +933,7 @@ public final class BluetoothDeviceManagerImpl extends BluetoothDeviceManager imp
             ar.put(-4148425341967320934L, btManager);
             BluetoothMainScreen.init();
             btManager._pbapServer = new PBAPServer();
-            ((Thread)(new Object(btManager._pbapServer))).start();
+            new Thread(btManager._pbapServer).start();
 
             while (true) {
                try {
@@ -998,7 +998,7 @@ public final class BluetoothDeviceManagerImpl extends BluetoothDeviceManager imp
          this._indicatorManager.addIndicator(new BluetoothIndicator(this));
       }
 
-      this._inRangeDevices = (SimpleSortingVector)(new Object());
+      this._inRangeDevices = new SimpleSortingVector();
       this._inRangeDevices.setSortComparator(new RSSIComparator());
       this._retryConnection = new RetryConnection(this);
       this.addRibbonSetupIcon();
@@ -1034,7 +1034,7 @@ public final class BluetoothDeviceManagerImpl extends BluetoothDeviceManager imp
          if (!this._powerIconOnRibbon) {
             RibbonLauncher rl = RibbonLauncher.getInstance();
             if (rl != null) {
-               rl.registerAction(this._bluetoothPowerAction.get(1, (String)((Object)null)), this._bluetoothPowerAction);
+               rl.registerAction(this._bluetoothPowerAction.get(1, (String)null), this._bluetoothPowerAction);
             }
 
             this._powerIconOnRibbon = true;
@@ -1047,7 +1047,7 @@ public final class BluetoothDeviceManagerImpl extends BluetoothDeviceManager imp
          if (!this._setupIconOnRibbon) {
             RibbonLauncher rl = RibbonLauncher.getInstance();
             if (rl != null) {
-               rl.registerAction(this._bluetoothSetupAction.get(1, (String)((Object)null)), this._bluetoothSetupAction);
+               rl.registerAction(this._bluetoothSetupAction.get(1, (String)null), this._bluetoothSetupAction);
             }
 
             this._setupIconOnRibbon = true;
@@ -1073,7 +1073,7 @@ public final class BluetoothDeviceManagerImpl extends BluetoothDeviceManager imp
 
    @Override
    public final BluetoothSerialPortInfo[] getSerialPortInfo() {
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       synchronized (this._pairedDevices) {
          for (int i = this._pairedDevices.size() - 1; i >= 0; i--) {
             BluetoothDevice device = (BluetoothDevice)this._pairedDevices.elementAt(i);
@@ -1081,7 +1081,7 @@ public final class BluetoothDeviceManagerImpl extends BluetoothDeviceManager imp
          }
       }
 
-      BluetoothSerialPortInfo[] a = new Object[v.size()];
+      BluetoothSerialPortInfo[] a = new BluetoothSerialPortInfo[v.size()];
       v.copyInto(a);
       return a;
    }
@@ -1090,7 +1090,7 @@ public final class BluetoothDeviceManagerImpl extends BluetoothDeviceManager imp
       if (this._powerIconOnRibbon) {
          RibbonLauncher rl = RibbonLauncher.getInstance();
          if (rl != null) {
-            rl.updateRegisteredAction(this._bluetoothPowerAction.get(1, (String)((Object)null)));
+            rl.updateRegisteredAction(this._bluetoothPowerAction.get(1, (String)null));
          }
       }
    }
@@ -1108,7 +1108,7 @@ public final class BluetoothDeviceManagerImpl extends BluetoothDeviceManager imp
       if (this._powerIconOnRibbon) {
          RibbonLauncher rl = RibbonLauncher.getInstance();
          if (rl != null) {
-            rl.unregisterAction(this._bluetoothPowerAction.get(1, (String)((Object)null)));
+            rl.unregisterAction(this._bluetoothPowerAction.get(1, (String)null));
          }
 
          this._powerIconOnRibbon = false;
@@ -1124,7 +1124,7 @@ public final class BluetoothDeviceManagerImpl extends BluetoothDeviceManager imp
       if (this._setupIconOnRibbon) {
          RibbonLauncher rl = RibbonLauncher.getInstance();
          if (rl != null) {
-            rl.unregisterAction(this._bluetoothSetupAction.get(1, (String)((Object)null)));
+            rl.unregisterAction(this._bluetoothSetupAction.get(1, (String)null));
          }
 
          this._setupIconOnRibbon = false;
@@ -1132,9 +1132,9 @@ public final class BluetoothDeviceManagerImpl extends BluetoothDeviceManager imp
    }
 
    private final void init() {
-      this._pairedDevices = (CloneableVector)(new Object());
+      this._pairedDevices = new CloneableVector();
       this._isConnected = false;
-      this._devicesToLookup = (Vector)(new Object());
+      this._devicesToLookup = new Vector();
       boolean disabledByITPolicy = ITPolicy.getBoolean(34, 1, false);
       if (this._bluetoothOptionsData._powerOn && disabledByITPolicy) {
          this._bluetoothOptionsData._powerOn = false;

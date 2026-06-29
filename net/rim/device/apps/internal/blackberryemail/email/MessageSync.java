@@ -30,12 +30,12 @@ public class MessageSync extends EmailSyncState implements SyncCollection, SyncC
    EmailMessageConverter _converter = new EmailMessageConverter();
    boolean _inTransaction;
    boolean _inSerialTransaction;
-   private Hashtable _batchedAddMessages = (Hashtable)(new Object());
+   private Hashtable _batchedAddMessages = new Hashtable();
    private int _batchedMessageSize = 0;
    public static final long DELETE_WITHOUT_GHOST = -8494690080715024104L;
    public static final long DELETE_WITHOUT_GHOST_AND_ORPHAN = 2817016600554138331L;
    private static final int SYNC_VERSION = 3;
-   static ContextObject _syncContextObject = (ContextObject)(new Object(19));
+   static ContextObject _syncContextObject = new ContextObject(19);
    private static int EMAIL_BATCH_ADD_LIMIT = 100;
 
    void cleanupAllFolderPreselectorsAfterSync() {
@@ -65,7 +65,7 @@ public class MessageSync extends EmailSyncState implements SyncCollection, SyncC
    void syncTransactionStarted() {
       this._inTransaction = true;
       MergedCollection.suspendResetProcessing();
-      ShowMessageApp.postEvent(2625733777879188248L, 0, 0, new Object(19), null);
+      ShowMessageApp.postEvent(2625733777879188248L, 0, 0, new ContextObject(19), null);
    }
 
    @Override
@@ -81,7 +81,7 @@ public class MessageSync extends EmailSyncState implements SyncCollection, SyncC
    public boolean addSyncObject(SyncObject object) {
       EmailMessageModelImpl message = (EmailMessageModelImpl)object;
       WritableSet folderContents = (WritableSet)EmailHierarchy.getStorageCollection(message.getFolderId(), message.flagsSet(2));
-      if (folderContents instanceof Object) {
+      if (folderContents instanceof PersistedSortedCollection) {
          if (this._inSerialTransaction) {
             this.batchMessage(message, folderContents);
             if (this._batchedMessageSize >= EMAIL_BATCH_ADD_LIMIT) {
@@ -93,7 +93,7 @@ public class MessageSync extends EmailSyncState implements SyncCollection, SyncC
       } else {
          if (folderContents == null) {
             try {
-               throw new Object();
+               throw new Throwable();
             } finally {
                QuincyManager.sendJavaLogworthy("MessageSync:NoStorageForMessage");
                return true;
@@ -211,7 +211,7 @@ public class MessageSync extends EmailSyncState implements SyncCollection, SyncC
    private void batchMessage(Object message, Object key) {
       Vector messages = (Vector)this._batchedAddMessages.get(key);
       if (messages == null) {
-         messages = (Vector)(new Object());
+         messages = new Vector();
       }
 
       messages.addElement(message);

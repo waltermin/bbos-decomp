@@ -30,6 +30,6 @@ final class HTMLNodeList implements NodeList {
    }
 
    HTMLNodeList() {
-      this((Vector)(new Object()));
+      this(new Vector());
    }
 }

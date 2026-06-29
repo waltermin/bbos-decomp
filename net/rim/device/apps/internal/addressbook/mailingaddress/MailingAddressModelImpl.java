@@ -4,7 +4,10 @@ import net.rim.device.api.i18n.Locale;
 import net.rim.device.api.synchronization.ConverterUtilities;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldLabelProvider;
+import net.rim.device.api.ui.component.AutoTextEditField;
 import net.rim.device.api.ui.component.EditField;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.api.util.StringProvider;
@@ -33,7 +36,7 @@ public final class MailingAddressModelImpl implements MailingAddressModel, Field
    @Override
    public final void setType(int type) {
       if (type != 0 && type != 1) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._type = type;
@@ -71,7 +74,10 @@ public final class MailingAddressModelImpl implements MailingAddressModel, Field
          this.convertField(syncBuffer, work ? 40 : 71, this.getZipOrPostalCode());
          this.convertField(syncBuffer, work ? 41 : 72, this.getCountry());
          return true;
-      } else if (ContextObject.getFlag(context, 11) && ContextObject.getFlag(context, 43) && ContextObject.getFlag(context, 54) && target instanceof Object) {
+      } else if (ContextObject.getFlag(context, 11)
+         && ContextObject.getFlag(context, 43)
+         && ContextObject.getFlag(context, 54)
+         && target instanceof StringBuffer) {
          StringBuffer stringBuffer = (StringBuffer)target;
          this.convertField(stringBuffer, "Address1", this.getAddressLine1());
          this.convertField(stringBuffer, "Address2", this.getAddressLine2());
@@ -149,19 +155,19 @@ public final class MailingAddressModelImpl implements MailingAddressModel, Field
    @Override
    public final Field getField(Object context) {
       int displayOrder = this.getDisplayOrder(context);
-      VerticalFieldManager vfm = (VerticalFieldManager)(new Object(1152921504606846976L));
+      VerticalFieldManager vfm = new VerticalFieldManager(1152921504606846976L);
       vfm.setCookie(this);
       String label = this.getLabel();
       if (!ContextObject.getFlag(context, 0)) {
-         Field labelField = (Field)(new Object(label));
+         Field labelField = new LabelField(label);
          if (ContextObject.getFlag(context, 128)) {
             labelField.setTag(Tag.create("addressbook-mailingaddress-title"));
             vfm.setTag(Tag.create("addressbook-mailingaddress"));
          }
 
          vfm.add(labelField);
-         StringBuffer line = (StringBuffer)(new Object());
-         StringBuffer address = (StringBuffer)(new Object());
+         StringBuffer line = new StringBuffer();
+         StringBuffer address = new StringBuffer();
          String zip = this.getZipOrPostalCode();
          String area = this.getArea();
          String city = this.getCity();
@@ -239,14 +245,14 @@ public final class MailingAddressModelImpl implements MailingAddressModel, Field
             label = label.substring(0, colon);
          }
 
-         Field labelField = (Field)(new Object(label));
+         Field labelField = new LabelField(label);
          vfm.add(labelField);
          if (ContextObject.getFlag(context, 128)) {
             labelField.setTag(Tag.create("addressbook-mailingaddress-title-edit"));
             vfm.setTag(Tag.create("addressbook-mailingaddress-edit"));
          }
 
-         EditField zipField = (EditField)(new Object(AddressBookResources.getString(704), this.getZipOrPostalCode(), 2048, 4505800798109696L));
+         EditField zipField = new EditField(AddressBookResources.getString(704), this.getZipOrPostalCode(), 2048, 4505800798109696L);
          zipField.setFilter(new MailingAddressModelImpl$1(this));
          zipField.setCookie(this);
          zipField.setPadding(0, 0, 0, 8);
@@ -272,8 +278,8 @@ public final class MailingAddressModelImpl implements MailingAddressModel, Field
 
    @Override
    public final boolean grabDataFromField(Field field, Object context) {
-      if (!(field instanceof Object)) {
-         throw new Object();
+      if (!(field instanceof VerticalFieldManager)) {
+         throw new RuntimeException();
       }
 
       VerticalFieldManager vfm = (VerticalFieldManager)field;
@@ -349,7 +355,7 @@ public final class MailingAddressModelImpl implements MailingAddressModel, Field
 
    @Override
    public final void setLabelStringProvider(StringProvider label) {
-      throw new Object("Unsupported API");
+      throw new IllegalStateException("Unsupported API");
    }
 
    public static final String getCountry(int index) {
@@ -379,13 +385,13 @@ public final class MailingAddressModelImpl implements MailingAddressModel, Field
    private final void addField(VerticalFieldManager vfm, int resourceId, String value, boolean editable) {
       Field field;
       if (editable) {
-         field = (Field)(new Object(AddressBookResources.getString(resourceId), value, 2048, 4505800798109696L));
+         field = new AutoTextEditField(AddressBookResources.getString(resourceId), value, 2048, 4505800798109696L);
       } else {
          if (value == null || value.length() <= 0) {
             return;
          }
 
-         field = (Field)(new Object(value, 27021597764222976L));
+         field = new RichTextField(value, 27021597764222976L);
       }
 
       field.setPadding(0, 0, 0, 8);
@@ -424,7 +430,7 @@ public final class MailingAddressModelImpl implements MailingAddressModel, Field
    private final int getDisplayOrder(Object context) {
       Object locale = ContextObject.get(context, 1387359264132630355L);
       int localeCode;
-      if (!(locale instanceof Object)) {
+      if (!(locale instanceof Locale)) {
          localeCode = Locale.getDefaultForSystem().getCode();
       } else {
          localeCode = ((Locale)locale).getCode();

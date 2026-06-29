@@ -2,6 +2,7 @@ package net.rim.device.internal.io.store;
 
 import net.rim.device.api.io.NoCopyByteArrayOutputStream;
 import net.rim.device.api.io.ReservableSize;
+import net.rim.device.api.io.file.FileIOException;
 import net.rim.vm.Array;
 
 class FileImpl$ReservableByteArrayOutputStream extends NoCopyByteArrayOutputStream implements ReservableSize {
@@ -15,18 +16,18 @@ class FileImpl$ReservableByteArrayOutputStream extends NoCopyByteArrayOutputStre
       return rc;
    }
 
-   public void ensureSpace(int len) {
+   public void ensureSpace(int len) throws FileIOException {
       if (super.count + len >= super.buf.length) {
          try {
             Array.extend(super.buf, len);
          } finally {
-            throw new Object(9);
+            throw new FileIOException(9);
          }
       }
    }
 
    @Override
-   public void reserveSize(long size) {
+   public void reserveSize(long size) throws FileIOException {
       FileImpl.verifyLength(size);
 
       try {
@@ -36,7 +37,7 @@ class FileImpl$ReservableByteArrayOutputStream extends NoCopyByteArrayOutputStre
 
          Array.resize(super.buf, Math.max(super.count, (int)size));
       } finally {
-         throw new Object(9);
+         throw new FileIOException(9);
       }
    }
 

@@ -68,7 +68,7 @@ public class GlobalObject extends RedirectedObject implements Debugger {
    String namePrototype;
    DebugCallback debugCallback;
    StepInfo stepInfo = new StepInfo();
-   private Hashtable _allDebugScripts = (Hashtable)(new Object());
+   private Hashtable _allDebugScripts = new Hashtable();
    private Vector _importedPackages = null;
    private Object _syncObject = new Object();
    private GlobalObject[] _previousGlobals = new GlobalObject[10];
@@ -96,7 +96,7 @@ public class GlobalObject extends RedirectedObject implements Debugger {
 
    String dateFormat(long time) {
       if (this._dateFormat == null) {
-         this._dateFormat = (SimpleDateFormat)(new Object(32));
+         this._dateFormat = new SimpleDateFormat(32);
       }
 
       return this._dateFormat.formatLocal(time);
@@ -104,7 +104,7 @@ public class GlobalObject extends RedirectedObject implements Debugger {
 
    String timeFormat(long time) {
       if (this._timeFormat == null) {
-         this._timeFormat = (SimpleDateFormat)(new Object(4));
+         this._timeFormat = new SimpleDateFormat(4);
       }
 
       return this._timeFormat.formatLocal(time);
@@ -112,7 +112,7 @@ public class GlobalObject extends RedirectedObject implements Debugger {
 
    String dateTimeFormat(long time) {
       if (this._dateTimeFormat == null) {
-         this._dateTimeFormat = (SimpleDateFormat)(new Object(36));
+         this._dateTimeFormat = new SimpleDateFormat(36);
       }
 
       return this._dateTimeFormat.formatLocal(time);
@@ -130,7 +130,7 @@ public class GlobalObject extends RedirectedObject implements Debugger {
 
    void importPackage(JavaPackage pkg) {
       if (this._importedPackages == null) {
-         this._importedPackages = (Vector)(new Object());
+         this._importedPackages = new Vector();
       }
 
       this._importedPackages.addElement(pkg);
@@ -223,7 +223,7 @@ public class GlobalObject extends RedirectedObject implements Debugger {
    public static GlobalObject getInstance(Thread thread) {
       GlobalObject global = getInstanceNoThrow(thread);
       if (global == null) {
-         throw new Object(Resources.getString(68));
+         throw new RuntimeException(Resources.getString(68));
       } else {
          return global;
       }
@@ -347,7 +347,7 @@ public class GlobalObject extends RedirectedObject implements Debugger {
          this.typeErrorConstructor = new ESTypeErrorPrototype$Constructor();
          this.URIErrorConstructor = new ESURIErrorPrototype$Constructor();
          this.regExpConstructor = new ESRegExpPrototype$Constructor();
-         this.javaClassLookupTable = (Hashtable)(new Object());
+         this.javaClassLookupTable = new Hashtable();
          boolean var10 = false /* VF: Semaphore variable */;
 
          label55:
@@ -437,8 +437,8 @@ public class GlobalObject extends RedirectedObject implements Debugger {
       if (!versionCheck(script)) {
          throw ThrownValue.syntaxError(
             Resources.getString(49),
-            ((StringBuffer)(new Object())).append(script.compilerVersionMajor).append(".").append(script.compilerVersionMinor).toString(),
-            ((StringBuffer)(new Object())).append(Compiler.getMajorVersion()).append(".").append(Compiler.getMinorVersion()).toString()
+            script.compilerVersionMajor + "." + script.compilerVersionMinor,
+            Compiler.getMajorVersion() + "." + Compiler.getMinorVersion()
          );
       }
 
@@ -646,7 +646,7 @@ public class GlobalObject extends RedirectedObject implements Debugger {
          ((CompiledScript)e.nextElement()).clearAllBreakpoints();
       }
 
-      this._allDebugScripts = (Hashtable)(new Object());
+      this._allDebugScripts = new Hashtable();
    }
 
    @Override

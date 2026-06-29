@@ -13,7 +13,7 @@ final class ShowAllToggleVerb extends RibbonBarVerb {
    public final String toString() {
       String string = RibbonResources.getString(30);
       if (super._ribbonOptions.getShowHiddenApps()) {
-         string = ((StringBuffer)(new Object())).append('✓').append(string).toString();
+         string = '✓' + string;
       }
 
       return string;

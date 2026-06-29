@@ -1,6 +1,7 @@
 package net.rim.device.cldc.io.btspp;
 
 import com.sun.cldc.io.ConnectionBaseInterface;
+import java.io.IOException;
 import javax.microedition.io.Connection;
 import net.rim.device.cldc.io.utility.EventThreadCheck;
 import net.rim.device.internal.bluetooth.BluetoothDeviceManager;
@@ -14,10 +15,10 @@ public class Protocol implements ConnectionBaseInterface {
    }
 
    @Override
-   public Connection openPrim(String name, int mode, boolean timeouts) {
+   public Connection openPrim(String name, int mode, boolean timeouts) throws IOException {
       EventThreadCheck.throwException();
       if (!BluetoothDeviceManager.getInstance().isRadioOnPromptIfOff(false)) {
-         throw new Object("Radio is off");
+         throw new IOException("Radio is off");
       }
 
       BluetoothURL url = new BluetoothURL("btspp", name);

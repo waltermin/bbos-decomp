@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.btgoep;
 
+import java.io.IOException;
 import java.io.OutputStream;
 
 class OBEXSession$OperationImpl$OperationOutputStream extends OutputStream {
@@ -14,7 +15,7 @@ class OBEXSession$OperationImpl$OperationOutputStream extends OutputStream {
    public void write(int b) {
       synchronized (this.this$1.this$0) {
          if (this._closed) {
-            throw new Object("Stream closed");
+            throw new IOException("Stream closed");
          }
 
          this.this$1._sendBuffer.writeByte(b);
@@ -28,15 +29,15 @@ class OBEXSession$OperationImpl$OperationOutputStream extends OutputStream {
    public void write(byte[] b, int off, int len) {
       synchronized (this.this$1.this$0) {
          if (this._closed) {
-            throw new Object("Stream closed");
+            throw new IOException("Stream closed");
          }
 
          if (b == null) {
-            throw new Object();
+            throw new NullPointerException();
          }
 
          if (off < 0 || off > b.length || len < 0 || off + len > b.length || off + len < 0) {
-            throw new Object();
+            throw new IndexOutOfBoundsException();
          }
 
          if (len != 0) {

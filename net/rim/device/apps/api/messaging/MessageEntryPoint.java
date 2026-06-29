@@ -43,11 +43,7 @@ public final class MessageEntryPoint extends Action {
    }
 
    private MessageEntryPoint(String name, String argument, int descriptionId) {
-      super(
-         (ApplicationDescriptor)(new Object(getApplicationDescriptor(), new Object[]{argument})),
-         ((StringBuffer)(new Object("net_rim_bb_messaging_app."))).append(name).toString(),
-         10
-      );
+      super(new ApplicationDescriptor(getApplicationDescriptor(), new String[]{argument}), "net_rim_bb_messaging_app." + name, 10);
       this._descriptionId = descriptionId;
    }
 
@@ -78,7 +74,7 @@ public final class MessageEntryPoint extends Action {
    public final void set(long propID, Object valueToSet) {
       if (propID == 12) {
          this.setExtraInfo(valueToSet);
-         if (valueToSet instanceof Object) {
+         if (valueToSet instanceof UnreadCount$NewAndUnreadCount) {
             UnreadCount$NewAndUnreadCount newCount = (UnreadCount$NewAndUnreadCount)valueToSet;
             newCount.updateActionState();
             return;
@@ -145,7 +141,7 @@ public final class MessageEntryPoint extends Action {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
       _entries = (Hashtable)ar.getOrWaitFor(1654139945643910585L);
       if (_entries == null) {
-         _entries = (Hashtable)(new Object(1));
+         _entries = new Hashtable(1);
          ar.put(1654139945643910585L, _entries);
       }
    }

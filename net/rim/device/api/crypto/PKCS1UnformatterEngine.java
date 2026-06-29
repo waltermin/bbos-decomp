@@ -11,7 +11,7 @@ public final class PKCS1UnformatterEngine implements BlockUnformatterEngine {
 
    public PKCS1UnformatterEngine(PrivateKeyDecryptorEngine decryptorEngine) {
       if (decryptorEngine == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._decryptorEngine = decryptorEngine;
@@ -22,7 +22,7 @@ public final class PKCS1UnformatterEngine implements BlockUnformatterEngine {
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object())).append(this._decryptorEngine.getAlgorithm()).append("/PKCS1").toString();
+      return this._decryptorEngine.getAlgorithm() + "/PKCS1";
    }
 
    @Override
@@ -67,7 +67,7 @@ public final class PKCS1UnformatterEngine implements BlockUnformatterEngine {
             throw new DecodeException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

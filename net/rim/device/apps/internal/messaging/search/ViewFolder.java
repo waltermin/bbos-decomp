@@ -5,6 +5,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.FolderProvider;
+import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.registration.VerbFactory;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.messaging.Folder;
@@ -32,11 +33,11 @@ final class ViewFolder extends Verb implements VerbFactory {
    public final Object invoke(Object subject) {
       Object selected = ContextObject.get(this._context, 250);
       FolderProvider fp = null;
-      if (!(selected instanceof Object)) {
+      if (!(selected instanceof FolderProvider)) {
          selected = ContextObject.get(this._context, -2364888284414893834L);
-         if (selected instanceof Object[]) {
-            for (Object message : (Object[])selected) {
-               if (message instanceof Object) {
+         if (selected instanceof RIMModel[]) {
+            for (Object message : (RIMModel[])selected) {
+               if (message instanceof FolderProvider) {
                   Folder f = (Folder)message;
                   if (this.inDatabase(f)) {
                      break;
@@ -62,7 +63,7 @@ final class ViewFolder extends Verb implements VerbFactory {
          Folder f = null;
          ServiceRecord serviceRecord = null;
          TransmissionService transmissionService = TransmissionServiceManager.get(8399767144006445082L);
-         if (transmissionService instanceof Object) {
+         if (transmissionService instanceof RIMMessagingService) {
             serviceRecord = ((RIMMessagingService)transmissionService).getOutgoingServiceRecord();
             if (serviceRecord != null) {
                f = FolderUtil.getHierarchyByService(serviceRecord);
@@ -106,7 +107,7 @@ final class ViewFolder extends Verb implements VerbFactory {
    }
 
    private final boolean inDatabase(Folder f) {
-      if (!(f instanceof Object)) {
+      if (!(f instanceof EmailFolder)) {
          return true;
       }
 
@@ -118,6 +119,6 @@ final class ViewFolder extends Verb implements VerbFactory {
    public final Verb[] getVerbs(Object context) {
       this._context = context;
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
-      return new Object[]{ar.get(7054367301267426154L)};
+      return new Verb[]{(Verb)ar.get(7054367301267426154L)};
    }
 }

@@ -34,8 +34,8 @@ public final class GPSProvider {
 
    private GPSProvider() {
       this._locationDataInternal = new GPSLocationData();
-      this._listeners = (Vector)(new Object());
-      this._listenerLocationDatas = (Vector)(new Object());
+      this._listeners = new Vector();
+      this._listenerLocationDatas = new Vector();
       EventLogger.register(4560142210062134028L, "LBS-GPSProvider", 2);
       _lbsBundle = ResourceBundle.getBundle(5578399137938411462L, "net.rim.device.api.lbs.LBSapi");
       this.checkLAPI();
@@ -48,7 +48,7 @@ public final class GPSProvider {
             String pass = "1";
             String ip = "1.1.1.1";
             int port = 0;
-            String str = ((StringBuffer)(new Object())).append(ip).append(";").append(user).append(";").append(pass).toString();
+            String str = ip + ";" + user + ";" + pass;
             GPSSettings.setPDEInfo(str, port);
             if (user.equals("1") && pass.equals("1") && ip.equals("1.1.1.1") && port == 0) {
                CAN_USE_GPS = false;
@@ -98,7 +98,7 @@ public final class GPSProvider {
          this._internalGPS = (GPSDevice)ar.get(-5162649070632360034L);
          if (this._internalGPS == null) {
             int moduleHandle = CodeModuleManager.getModuleHandle("net_rim_bb_lbs_internal_gps");
-            EventLogger.logEvent(4560142210062134028L, ((StringBuffer)(new Object("Internal GPS code module: "))).append(moduleHandle).toString().getBytes(), 0);
+            EventLogger.logEvent(4560142210062134028L, ("Internal GPS code module: " + moduleHandle).getBytes(), 0);
             if (moduleHandle > 0) {
                ApplicationDescriptor[] descriptors = CodeModuleManager.getApplicationDescriptors(moduleHandle);
                ApplicationDescriptor descriptor = null;
@@ -129,7 +129,7 @@ public final class GPSProvider {
             this._internalGPS = (GPSDevice)ar.get(-5162649070632360034L);
          }
 
-         EventLogger.logEvent(4560142210062134028L, ((StringBuffer)(new Object("Registering GPS device: "))).append(this._internalGPS).toString().getBytes(), 0);
+         EventLogger.logEvent(4560142210062134028L, ("Registering GPS device: " + this._internalGPS).getBytes(), 0);
       }
 
       this._checkForInternalGPS = false;
@@ -167,7 +167,7 @@ public final class GPSProvider {
                Array.resize(devices, listIx + btDevices.length);
 
                for (int i = 0; i < btDevices.length; i++) {
-                  if (((BluetoothDevice)btDevices[i]).getServiceRecord((UUID)(new Object(4353))) == null) {
+                  if (((BluetoothDevice)btDevices[i]).getServiceRecord(new UUID(4353)) == null) {
                      notAddedCount++;
                   } else {
                      String deviceName = ((BluetoothDevice)btDevices[i]).getName();
@@ -216,7 +216,7 @@ public final class GPSProvider {
 
       this.stopReportingInternal(device, false);
       if (this._useLAPI && device != null && device != this._locationDevice) {
-         EventLogger.logEvent(4560142210062134028L, ((StringBuffer)(new Object("reset provider: "))).append(device).toString().getBytes(), 5);
+         EventLogger.logEvent(4560142210062134028L, ("reset provider: " + device).getBytes(), 5);
          LocationWorker.getInstance().resetLocationProvider();
       }
 
@@ -296,17 +296,13 @@ public final class GPSProvider {
 
             for (int i = this._listeners.size() - 1; i >= 0; i--) {
                if (clazz.getName().equals(this._listeners.elementAt(i).getClass().getName())) {
-                  EventLogger.logEvent(
-                     4560142210062134028L,
-                     ((StringBuffer)(new Object("Multiple instances of the same class are in the listener: "))).append(clazz.getName()).toString().getBytes(),
-                     3
-                  );
+                  EventLogger.logEvent(4560142210062134028L, ("Multiple instances of the same class are in the listener: " + clazz.getName()).getBytes(), 3);
                   this._listeners.removeElementAt(i);
                   this._listenerLocationDatas.removeElementAt(i);
                }
             }
 
-            EventLogger.logEvent(4560142210062134028L, ((StringBuffer)(new Object("adding listener: "))).append(listener).toString().getBytes(), 5);
+            EventLogger.logEvent(4560142210062134028L, ("adding listener: " + listener).getBytes(), 5);
             this._listeners.addElement(listener);
             this._listenerLocationDatas.addElement(data);
          }
@@ -315,7 +311,7 @@ public final class GPSProvider {
 
    public final void removeLocationListener(GPSProvider$Listener listener) {
       synchronized (this._listeners) {
-         EventLogger.logEvent(4560142210062134028L, ((StringBuffer)(new Object("removing listener: "))).append(listener).toString().getBytes(), 5);
+         EventLogger.logEvent(4560142210062134028L, ("removing listener: " + listener).getBytes(), 5);
          int ix = this._listeners.indexOf(listener);
          if (ix >= 0) {
             this._listeners.removeElementAt(ix);

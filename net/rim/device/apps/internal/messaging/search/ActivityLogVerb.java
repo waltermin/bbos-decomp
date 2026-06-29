@@ -20,7 +20,7 @@ public final class ActivityLogVerb extends Verb implements SetParameter {
 
    @Override
    public final void setParameter(Object object) {
-      if (object instanceof Object) {
+      if (object instanceof String) {
          this._nameString = (String)object;
       }
    }

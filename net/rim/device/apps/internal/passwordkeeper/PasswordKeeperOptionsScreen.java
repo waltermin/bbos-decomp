@@ -1,14 +1,15 @@
 package net.rim.device.apps.internal.passwordkeeper;
 
 import net.rim.device.api.synchronization.SyncManager;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.NumericChoiceField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.apps.api.ui.AppsMainScreen;
 import net.rim.device.apps.api.ui.CommonResources;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
 import net.rim.device.internal.i18n.CommonResource;
+import net.rim.device.internal.ui.component.PropertyField;
 
 public final class PasswordKeeperOptionsScreen extends AppsMainScreen {
    private NumericChoiceField _passwordLength;
@@ -41,15 +42,15 @@ public final class PasswordKeeperOptionsScreen extends AppsMainScreen {
       int allowIndex = options.getAllowCopy() ? 0 : 1;
       int showIndex = options.getShowPassword() ? 0 : 1;
       int otaSyncIndex = options.getOTASync() ? 0 : 1;
-      this._passwordLength = (NumericChoiceField)(new Object(PasswordKeeper.getString(3012), 4, 16, 1, options.getRandomPasswordLength() - 4));
-      this._passwordAlpha = (ObjectChoiceField)(new Object(PasswordKeeper.getString(3025), PasswordKeeper.getStringArray(3013), alphaIndex));
-      this._passwordNumeric = (ObjectChoiceField)(new Object(PasswordKeeper.getString(3014), PasswordKeeper.getStringArray(3013), numericIndex));
-      this._passwordSymbol = (ObjectChoiceField)(new Object(PasswordKeeper.getString(3015), PasswordKeeper.getStringArray(3013), symbolIndex));
-      this._confirmDelete = (ObjectChoiceField)(new Object(CommonResources.getString(2008), PasswordKeeper.getStringArray(3013), confirmIndex));
-      this._passwordAttempts = (NumericChoiceField)(new Object(PasswordKeeper.getString(3017), 1, 20, 1, options.getPasswordThreshold() - 1));
-      this._allowCopy = (ObjectChoiceField)(new Object(PasswordKeeper.getString(3020), PasswordKeeper.getStringArray(3013), allowIndex));
-      this._showPassword = (ObjectChoiceField)(new Object(PasswordKeeper.getString(3021), PasswordKeeper.getStringArray(3013), showIndex));
-      this._otaSync = (ObjectChoiceField)(new Object(PasswordKeeper.getString(3038), CommonResources.getYesNoArray(0), otaSyncIndex));
+      this._passwordLength = new NumericChoiceField(PasswordKeeper.getString(3012), 4, 16, 1, options.getRandomPasswordLength() - 4);
+      this._passwordAlpha = new ObjectChoiceField(PasswordKeeper.getString(3025), PasswordKeeper.getStringArray(3013), alphaIndex);
+      this._passwordNumeric = new ObjectChoiceField(PasswordKeeper.getString(3014), PasswordKeeper.getStringArray(3013), numericIndex);
+      this._passwordSymbol = new ObjectChoiceField(PasswordKeeper.getString(3015), PasswordKeeper.getStringArray(3013), symbolIndex);
+      this._confirmDelete = new ObjectChoiceField(CommonResources.getString(2008), PasswordKeeper.getStringArray(3013), confirmIndex);
+      this._passwordAttempts = new NumericChoiceField(PasswordKeeper.getString(3017), 1, 20, 1, options.getPasswordThreshold() - 1);
+      this._allowCopy = new ObjectChoiceField(PasswordKeeper.getString(3020), PasswordKeeper.getStringArray(3013), allowIndex);
+      this._showPassword = new ObjectChoiceField(PasswordKeeper.getString(3021), PasswordKeeper.getStringArray(3013), showIndex);
+      this._otaSync = new ObjectChoiceField(PasswordKeeper.getString(3038), CommonResources.getYesNoArray(0), otaSyncIndex);
       this.add(this._passwordLength);
       this.add(this._passwordAlpha);
       this.add(this._passwordNumeric);
@@ -63,8 +64,8 @@ public final class PasswordKeeperOptionsScreen extends AppsMainScreen {
          this.add(this._otaSync);
       }
 
-      this.add((Field)(new Object()));
-      this.add((Field)(new Object(CommonResources.getString(9133), Integer.toString(passwordKeeperSync.getSyncObjectCount()))));
+      this.add(new SeparatorField());
+      this.add(new PropertyField(CommonResources.getString(9133), Integer.toString(passwordKeeperSync.getSyncObjectCount())));
    }
 
    @Override

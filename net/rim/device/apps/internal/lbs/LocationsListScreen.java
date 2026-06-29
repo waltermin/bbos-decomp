@@ -16,6 +16,7 @@ import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.FactoryUtil;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -23,6 +24,7 @@ import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.model.VerbProvider;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.internal.lbs.resources.LBSResources;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 
 public final class LocationsListScreen extends MainScreen implements ListFieldCallback, FocusChangeListener {
    private MapField _field;
@@ -116,32 +118,32 @@ public final class LocationsListScreen extends MainScreen implements ListFieldCa
 
          if (index == this._selectedPOI + 1 && this._expanded) {
             if (addressExists) {
-               graphics.drawText(((StringBuffer)(new Object("  "))).append(this._field._currentPOIs[this._selectedPOI]._address).toString(), 0, y, 64);
+               graphics.drawText("  " + this._field._currentPOIs[this._selectedPOI]._address, 0, y, 64);
                return;
             }
 
             if (phoneExists) {
-               graphics.drawText(((StringBuffer)(new Object("  "))).append(this._field._currentPOIs[this._selectedPOI]._phone).toString(), 0, y, 64);
+               graphics.drawText("  " + this._field._currentPOIs[this._selectedPOI]._phone, 0, y, 64);
                return;
             }
 
-            graphics.drawText(((StringBuffer)(new Object("  "))).append(LBSResources.getString(94)).toString(), 0, y, 64);
+            graphics.drawText("  " + LBSResources.getString(94), 0, y, 64);
             return;
          }
 
          if (index == this._selectedPOI + 2 && this._expanded) {
             if (addressExists && phoneExists) {
-               graphics.drawText(((StringBuffer)(new Object("  "))).append(this._field._currentPOIs[this._selectedPOI]._phone).toString(), 0, y, 64);
+               graphics.drawText("  " + this._field._currentPOIs[this._selectedPOI]._phone, 0, y, 64);
                return;
             }
 
-            graphics.drawText(((StringBuffer)(new Object("  "))).append(LBSResources.getString(94)).toString(), 0, y, 64);
+            graphics.drawText("  " + LBSResources.getString(94), 0, y, 64);
             return;
          }
 
          if (index == this._selectedPOI + 3 && this._expanded) {
             if (addressExists && phoneExists) {
-               graphics.drawText(((StringBuffer)(new Object("  "))).append(LBSResources.getString(94)).toString(), 0, y, 64);
+               graphics.drawText("  " + LBSResources.getString(94), 0, y, 64);
                return;
             }
 
@@ -232,7 +234,7 @@ public final class LocationsListScreen extends MainScreen implements ListFieldCa
             menu.add(
                new LocationsListScreen$4(
                   this,
-                  MessageFormat.format(LBSResources.getString(306), new Object[]{this._location._phone}),
+                  MessageFormat.format(LBSResources.getString(306), new String[]{this._location._phone}),
                   1,
                   this._selectedIndex - this._selectedPOI == 2 ? 0 : 2
                )
@@ -298,14 +300,12 @@ public final class LocationsListScreen extends MainScreen implements ListFieldCa
       String distance = Distance.formatDistance(
          this._field._searchLatitude, this._field._searchLongitude, this._field._currentPOIs[index]._latitude, this._field._currentPOIs[index]._longitude
       );
-      graphics.drawText(
-         ((StringBuffer)(new Object())).append(this._field._currentPOIs[index]._label).append(" (").append(distance).append(")").toString(), x, y, 64
-      );
+      graphics.drawText(this._field._currentPOIs[index]._label + " (" + distance + ")", x, y, 64);
    }
 
    private final void addDescription(String description) {
       if (description != null && description != "") {
-         ActiveRichTextField descriptionField = (ActiveRichTextField)(new Object(description));
+         ActiveRichTextField descriptionField = new ActiveRichTextField(description);
          Font f = descriptionField.getFont();
          int height = (int)(f.getHeight() * 1062836634);
          if (height < 12) {
@@ -338,15 +338,9 @@ public final class LocationsListScreen extends MainScreen implements ListFieldCa
       }
 
       if (bGoogle) {
-         this.setTitle(
-            (Field)(new Object(
-               ((StringBuffer)(new Object("Google "))).append(LBSResources.getString(287)).append(": ").append(this._field._poiKeywords).toString()
-            ))
-         );
+         this.setTitle(new LabelField("Google " + LBSResources.getString(287) + ": " + this._field._poiKeywords));
       } else {
-         this.setTitle(
-            (Field)(new Object(((StringBuffer)(new Object())).append(LBSResources.getString(287)).append(": ").append(this._field._poiKeywords).toString()))
-         );
+         this.setTitle(new LabelField(LBSResources.getString(287) + ": " + this._field._poiKeywords));
       }
    }
 
@@ -363,7 +357,7 @@ public final class LocationsListScreen extends MainScreen implements ListFieldCa
 
    private final void addLabel(String title) {
       if (title != null && title.length() > 0) {
-         LabelField labelField = (LabelField)(new Object(title));
+         LabelField labelField = new LabelField(title);
          labelField.setFont(Font.getDefault().derive(1));
          this.add(labelField);
       }
@@ -466,22 +460,22 @@ public final class LocationsListScreen extends MainScreen implements ListFieldCa
    }
 
    private final void makePhoneCall(String phoneNumber) {
-      ContextObject tempContext = (ContextObject)(new Object());
+      ContextObject tempContext = new ContextObject();
       tempContext.reset();
       if (phoneNumber != null) {
          long contextId = 253;
          tempContext.put(contextId, phoneNumber);
          RIMModel numberModel = (RIMModel)FactoryUtil.createInstance(3797587162219887872L, tempContext);
          if (numberModel == null) {
-            throw new Object();
+            throw new RuntimeException();
          }
 
-         ContextObject contextObject = (ContextObject)(new Object(34));
+         ContextObject contextObject = new ContextObject(34);
          ContextObject.setFlag(contextObject, 20);
          contextObject.put(253, phoneNumber);
-         Verb[] verbs = new Object[0];
+         Verb[] verbs = new Verb[0];
          Verb defaultVerb = ((VerbProvider)numberModel).getVerbs(contextObject, verbs);
-         if (Dialog.ask(3, MessageFormat.format(LBSResources.getString(286), new Object[]{phoneNumber}), 4) == 4) {
+         if (Dialog.ask(3, MessageFormat.format(LBSResources.getString(286), new String[]{phoneNumber}), 4) == 4) {
             defaultVerb.invoke(contextObject);
          }
       }
@@ -513,10 +507,10 @@ public final class LocationsListScreen extends MainScreen implements ListFieldCa
       this.addTitle();
       if (this._field._currentPOIs != null) {
          this._numPOIs = this._field._currentPOIs.length;
-         this._list = (ListField)(new Object(this._numPOIs));
+         this._list = new ListField(this._numPOIs);
          this._list.setCallback(this);
          this._list.setFocusListener(this);
-         this._listActions = (ListField)(new Object(2));
+         this._listActions = new ListField(2);
          this._listActions.setCallback(this);
          this._listActions.setFocusListener(this);
          if (focusIndex == -1) {
@@ -524,19 +518,19 @@ public final class LocationsListScreen extends MainScreen implements ListFieldCa
          }
 
          int spaceHeight = this._list.getFont().getHeight() >> 1;
-         this.add((Field)(new Object(spaceHeight)));
+         this.add(new VerticalSpacerField(spaceHeight));
          this.add(this._listActions);
-         this.add((Field)(new Object(65536)));
-         this.add((Field)(new Object(spaceHeight)));
+         this.add(new SeparatorField(65536));
+         this.add(new VerticalSpacerField(spaceHeight));
          this.add(this._list);
          if (this._field._currentLegalNotices != null && this._field._currentLegalNotices.length > 0) {
-            this.add((Field)(new Object(spaceHeight)));
-            this.add((Field)(new Object(65536)));
-            this.add((Field)(new Object(spaceHeight)));
+            this.add(new VerticalSpacerField(spaceHeight));
+            this.add(new SeparatorField(65536));
+            this.add(new VerticalSpacerField(spaceHeight));
 
             for (int i = 0; i < this._field._currentLegalNotices.length; i++) {
-               this.add((Field)(new Object(this._field._currentLegalNotices[i])));
-               this.add((Field)(new Object(spaceHeight)));
+               this.add(new LabelField(this._field._currentLegalNotices[i]));
+               this.add(new VerticalSpacerField(spaceHeight));
             }
          }
 
@@ -563,7 +557,7 @@ public final class LocationsListScreen extends MainScreen implements ListFieldCa
             Location location = mapField._currentAds[i];
             this.addLink(location._label, location._url);
             this.addDescription(location._description);
-            this.add((Field)(new Object()));
+            this.add(new SeparatorField());
          }
 
          for (int var9 = 0; var9 < this._numPOIs; var9++) {
@@ -571,11 +565,11 @@ public final class LocationsListScreen extends MainScreen implements ListFieldCa
             if (location._sponsored != null && location._sponsored.equalsIgnoreCase("yes")) {
                this.addLink(location._label, location._url);
                this.addDescription(location._description);
-               this.add((Field)(new Object()));
+               this.add(new SeparatorField());
             }
          }
 
-         this.add((Field)(new Object()));
+         this.add(new SeparatorField());
       }
    }
 

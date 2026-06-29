@@ -1,9 +1,9 @@
 package net.rim.device.apps.internal.options;
 
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.tid.awt.im.InputContext;
 import net.rim.tid.im.SLControlObject;
@@ -46,8 +46,8 @@ class CustomDictUnitEditor$JapaneseCustomDictEditorScreen extends CustomDictUnit
             return false;
          }
 
-         JapaneseCustomWord newWord = (JapaneseCustomWord)(new Object(this._reading.getText(), this._candidate.getText(), 0));
-         JapaneseCustomWord oldWord = (JapaneseCustomWord)(this.this$0._model != null ? this.this$0._model.getEntry() : null);
+         JapaneseCustomWord newWord = new JapaneseCustomWord(this._reading.getText(), this._candidate.getText(), 0);
+         JapaneseCustomWord oldWord = this.this$0._model != null ? (JapaneseCustomWord)this.this$0._model.getEntry() : null;
          if (CustomWordlistScreen.getCustomDictionary().isInRepository(newWord)) {
             Dialog.inform(OptionsResources.getString(1463));
             return false;
@@ -57,7 +57,7 @@ class CustomDictUnitEditor$JapaneseCustomDictEditorScreen extends CustomDictUnit
             CustomWordlistScreen.getCustomDictionary().remove(oldWord);
          }
 
-         if (!(CustomWordlistScreen.getCustomDictionary().add(newWord) instanceof Object)) {
+         if (!(CustomWordlistScreen.getCustomDictionary().add(newWord) instanceof JapaneseCustomWord)) {
             Dialog.inform(CustomDictUnitEditor$CustomDictEditorScreen._rb.getString(20));
          }
 
@@ -79,7 +79,7 @@ class CustomDictUnitEditor$JapaneseCustomDictEditorScreen extends CustomDictUnit
          this.delete(editField);
       }
 
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       Font f = this.getFont().derive(this.getFont().getStyle() | 1);
       this._candidate = new CustomDictUnitEditor$JapaneseCustomDictEditorScreen$JapaneseEditField(this, false, 4505800798126336L, this);
       this._candidate.setFont(f);
@@ -99,12 +99,12 @@ class CustomDictUnitEditor$JapaneseCustomDictEditorScreen extends CustomDictUnit
       readingLabel.setFont(f);
       int stringWidth = Math.max(candidateLabel.getFont().getBounds(candidateString), readingLabel.getFont().getBounds(readingString)) + 2;
       candidateLabel.setWidth(stringWidth);
-      HorizontalFieldManager hfm1 = (HorizontalFieldManager)(new Object());
+      HorizontalFieldManager hfm1 = new HorizontalFieldManager();
       hfm1.add(candidateLabel);
       hfm1.add(this._candidate);
       this.add(hfm1);
       readingLabel.setWidth(stringWidth);
-      HorizontalFieldManager hfm2 = (HorizontalFieldManager)(new Object());
+      HorizontalFieldManager hfm2 = new HorizontalFieldManager();
       hfm2.add(readingLabel);
       hfm2.add(this._reading);
       this.add(hfm2);

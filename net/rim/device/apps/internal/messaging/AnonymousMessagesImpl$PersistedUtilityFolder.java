@@ -2,7 +2,7 @@ package net.rim.device.apps.internal.messaging;
 
 import java.util.Enumeration;
 import net.rim.device.api.collection.Collection;
-import net.rim.device.api.collection.LongKeyProviderAdaptor;
+import net.rim.device.apps.api.messaging.DateSortKeyProviderIndirection;
 import net.rim.device.apps.api.messaging.Folder;
 import net.rim.device.apps.api.messaging.util.PersistedSortedCollection;
 
@@ -13,8 +13,8 @@ final class AnonymousMessagesImpl$PersistedUtilityFolder implements Folder {
 
    public AnonymousMessagesImpl$PersistedUtilityFolder(long luid) {
       this._luid = luid;
-      this._collection = (PersistedSortedCollection)(new Object());
-      this._wasCreated = this._collection.initialize(3205022748636245883L, this._luid, (LongKeyProviderAdaptor)(new Object()), null);
+      this._collection = new PersistedSortedCollection();
+      this._wasCreated = this._collection.initialize(3205022748636245883L, this._luid, new DateSortKeyProviderIndirection(), null);
    }
 
    final boolean wasCreated() {
@@ -28,7 +28,7 @@ final class AnonymousMessagesImpl$PersistedUtilityFolder implements Folder {
 
    @Override
    public final String getFriendlyName() {
-      return ((StringBuffer)(new Object("ersistedPay tilityUay olderFay"))).append(Long.toString(this._luid)).toString();
+      return "ersistedPay tilityUay olderFay" + Long.toString(this._luid);
    }
 
    @Override

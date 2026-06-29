@@ -16,7 +16,7 @@ public final class MisspelledWordIterator {
    private BreakIterator _breakIterator;
    private StringBufferGap _text;
    private SpellCheckVariantsCreator _creator;
-   private Vector _textFilters = (Vector)(new Object());
+   private Vector _textFilters = new Vector();
    private boolean _ignoreUpperCaseWords = true;
    private boolean _ignoreWordsWithDigits = true;
    private int _ignoreWordsWithSymbolsFilterId = -1;
@@ -25,12 +25,12 @@ public final class MisspelledWordIterator {
    private int _fileNameFilterId = -1;
    private int _minimalCheckLength = 2;
    private boolean _isCaseSensitive = true;
-   private StringBuffer _tempBuffer = (StringBuffer)(new Object());
+   private StringBuffer _tempBuffer = new StringBuffer();
    private Locale _locale;
    private boolean _checkForAmbiguousWords;
-   private Word _word = (Word)(new Object());
-   private static IntHashtable _ignoredWords = (IntHashtable)(new Object());
-   private static IntHashtable _changeAllPairs = (IntHashtable)(new Object());
+   private Word _word = new Word();
+   private static IntHashtable _ignoredWords = new IntHashtable();
+   private static IntHashtable _changeAllPairs = new IntHashtable();
    private static boolean NEW_LOOKUP = true;
 
    public MisspelledWordIterator(SpellCheckVariantsCreator aCreator) {

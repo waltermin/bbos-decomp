@@ -33,7 +33,7 @@ public final class ReentrantLock {
 
    public final synchronized void release() {
       if (!this.currentThreadHasLock()) {
-         throw new Object("Thread calling release() doesn't own lock");
+         throw new IllegalStateException("Thread calling release() doesn't own lock");
       }
 
       if (--this._count <= 0) {

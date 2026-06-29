@@ -13,8 +13,8 @@ import net.rim.device.cldc.io.utility.URIEncoder;
 import net.rim.device.internal.system.InternalServices;
 
 final class DownloadDescriptorAttributes {
-   private String[] _attributes = new Object[11];
-   private String[] _types = new Object[0];
+   private String[] _attributes = new String[11];
+   private String[] _types = new String[0];
    private String[] _errors;
    private int _statusCode = 900;
    private int _size = -1;
@@ -54,14 +54,14 @@ final class DownloadDescriptorAttributes {
       try {
          return this._attributes[attributeToken];
       } finally {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    final void setAttribute(String attribute, char[] value, int valueStart, int valueLength) {
       int attributeToken = getAttributeToken(attribute);
       if (attributeToken != -1) {
-         String valueStr = ((String)(new Object(value, valueStart, valueLength))).trim();
+         String valueStr = new String(value, valueStart, valueLength).trim();
          if (attributeToken == 1000) {
             int semicolon = valueStr.indexOf(59);
             if (semicolon >= 0) {
@@ -88,7 +88,7 @@ final class DownloadDescriptorAttributes {
 
       anyURI = URIEncoder.encodeNonUSASCII(anyURI, false);
       int anyURILength = anyURI.length();
-      StringBuffer uri = (StringBuffer)(new Object(anyURILength + 8));
+      StringBuffer uri = new StringBuffer(anyURILength + 8);
 
       for (int i = 0; i < anyURILength; i++) {
          char ch = anyURI.charAt(i);
@@ -180,7 +180,7 @@ final class DownloadDescriptorAttributes {
       // 061: goto 122
       // 064: aload 7
       // 066: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 06b: checkcast java/lang/Object
+      // 06b: checkcast java/lang/String
       // 06e: astore 8
       // 070: iload 2
       // 071: ifeq 081
@@ -192,7 +192,7 @@ final class DownloadDescriptorAttributes {
       // 080: istore 2
       // 081: aconst_null
       // 082: astore 9
-      // 084: new java/lang/Object
+      // 084: new java/lang/StringBuffer
       // 087: dup
       // 088: ldc_w "file:///"
       // 08b: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -200,7 +200,7 @@ final class DownloadDescriptorAttributes {
       // 090: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 093: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 096: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 099: checkcast java/lang/Object
+      // 099: checkcast javax/microedition/io/file/FileConnection
       // 09c: astore 9
       // 09e: aload 9
       // 0a0: invokeinterface javax/microedition/io/file/FileConnection.availableSize ()J 1
@@ -314,7 +314,7 @@ final class DownloadDescriptorAttributes {
       }
 
       if (this._errors == null) {
-         this._errors = new Object[1];
+         this._errors = new String[1];
          this._errors[0] = errorMessage;
       } else {
          Arrays.add(this._errors, errorMessage);
@@ -434,7 +434,7 @@ final class DownloadDescriptorAttributes {
 
             return;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 

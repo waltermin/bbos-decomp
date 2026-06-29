@@ -10,7 +10,7 @@ final class ApplicationMenuItemRepository$SdkVerbFactory implements VerbFactory 
 
    ApplicationMenuItemRepository$SdkVerbFactory(long id, ApplicationMenuItem ami, ApplicationDescriptor application) {
       Verb v = new SdkProxyVerb(ami, id, application);
-      this._verbs = new Object[1];
+      this._verbs = new Verb[1];
       this._verbs[0] = v;
    }
 

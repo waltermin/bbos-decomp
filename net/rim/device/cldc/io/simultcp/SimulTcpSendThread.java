@@ -16,7 +16,7 @@ final class SimulTcpSendThread extends Thread implements SimulTcpConstants {
    private Timer closeTimer;
 
    SimulTcpSendThread(Protocol connection) {
-      Random temp = (Random)(new Object());
+      Random temp = new Random();
       this.sequenceNumber = temp.nextInt();
       this.protocol = connection;
       SimulTcpProcess.getInstance().invokeAndWait(new SimulTcpSendThread$1(this));
@@ -100,7 +100,7 @@ final class SimulTcpSendThread extends Thread implements SimulTcpConstants {
                   var15 = false;
                } finally {
                   if (var15) {
-                     throw new Object();
+                     throw new RuntimeException();
                   }
                }
             }

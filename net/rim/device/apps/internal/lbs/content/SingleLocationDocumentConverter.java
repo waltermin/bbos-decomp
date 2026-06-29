@@ -9,7 +9,7 @@ import net.rim.device.apps.internal.lbs.Route;
 
 public final class SingleLocationDocumentConverter extends LocationDocumentConverter {
    private Location _location;
-   private DataBuffer _db = (DataBuffer)(new Object());
+   private DataBuffer _db = new DataBuffer();
    private Location[] _cachedLocations = new Location[0];
    private String _label;
    private static SingleLocationDocumentConverter INSTANCE;

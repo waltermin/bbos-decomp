@@ -24,11 +24,11 @@ public class WLANProfileMessageAttachmentConverter extends BaseConverter {
 
    @Override
    public boolean canConvert(Object parameters) {
-      if (parameters instanceof Object) {
+      if (parameters instanceof String) {
          return this.canConvertBasedOnMimeType((String)parameters);
       }
 
-      if (parameters instanceof Object) {
+      if (parameters instanceof Parameters) {
          Parameters cmimeParameters = (Parameters)parameters;
          String type = CMIMEContentType.getBaseType(cmimeParameters.getFirst((byte)1));
          if (this.canConvertBasedOnMimeType(type)) {
@@ -38,7 +38,7 @@ public class WLANProfileMessageAttachmentConverter extends BaseConverter {
          if ("application/octet-stream".equals(type)) {
             byte[] name = cmimeParameters.getFirst((byte)-14);
             if (name != null && name.length > 0) {
-               return WLANProfileMessageAttachmentModel.isProfileFileName((String)(new Object(name)));
+               return WLANProfileMessageAttachmentModel.isProfileFileName(new String(name));
             }
          }
       }
@@ -56,9 +56,9 @@ public class WLANProfileMessageAttachmentConverter extends BaseConverter {
 
    @Override
    public Object convert(byte[] inputBytes, Object contextObject) {
-      if (inputBytes != null && contextObject instanceof Object) {
+      if (inputBytes != null && contextObject instanceof Parameters) {
          Parameters parameters = (Parameters)contextObject;
-         ContextObject context = (ContextObject)(new Object());
+         ContextObject context = new ContextObject();
          context.put(8849067667159082262L, inputBytes);
          context.put(-7353832199068708928L, parameters);
          return new WLANProfileMessageAttachmentModel(context);

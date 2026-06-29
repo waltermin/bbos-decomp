@@ -58,7 +58,7 @@ public final class CacheResult implements Persistable, EncryptableProvider {
 
       this._urlWithoutFragmentEncoding = urlWithoutFragment;
       if (data != null) {
-         this._cachedData = new Object(data, data.length, groupData);
+         this._cachedData = new Pipe(data, data.length, groupData);
       }
 
       this.setResponseHeaders(responseHeaders);
@@ -74,7 +74,7 @@ public final class CacheResult implements Persistable, EncryptableProvider {
    }
 
    public CacheResult(Exception e, String msg, String detail) {
-      this("", null, (HttpHeaders)(new Object()), 400);
+      this("", null, new HttpHeaders(), 400);
       if (e != null) {
          this._exceptionString = e.toString();
          this._exceptionDetail = detail;
@@ -112,7 +112,7 @@ public final class CacheResult implements Persistable, EncryptableProvider {
       if (this._exceptionDetail == null) {
          this._exceptionDetail = exceptionDetail;
       } else {
-         this._exceptionDetail = ((StringBuffer)(new Object())).append(this._exceptionDetail).append('\n').append(exceptionDetail).toString();
+         this._exceptionDetail = this._exceptionDetail + '\n' + exceptionDetail;
       }
    }
 
@@ -165,7 +165,7 @@ public final class CacheResult implements Persistable, EncryptableProvider {
    }
 
    public final Pipe getData() {
-      if (!(this._cachedData instanceof Object)) {
+      if (!(this._cachedData instanceof Pipe)) {
          if (!(this._cachedData instanceof CacheResult$EncryptedPipe)) {
             Pipe result = this.getTranscodedData();
             if (result != null) {
@@ -182,11 +182,11 @@ public final class CacheResult implements Persistable, EncryptableProvider {
    }
 
    final boolean isDataClosed() {
-      return !(this._cachedData instanceof Object) ? true : ((Pipe)this._cachedData).isClosed();
+      return !(this._cachedData instanceof Pipe) ? true : ((Pipe)this._cachedData).isClosed();
    }
 
    public final Pipe getTranscodedData() {
-      if (!(this._transcodedData instanceof Object)) {
+      if (!(this._transcodedData instanceof Pipe)) {
          return !(this._transcodedData instanceof CacheResult$EncryptedPipe) ? null : ((CacheResult$EncryptedPipe)this._transcodedData).getDecryptedPipe();
       } else {
          return (Pipe)this._transcodedData;
@@ -198,7 +198,7 @@ public final class CacheResult implements Persistable, EncryptableProvider {
    }
 
    public final boolean hasUnecryptedPipe() {
-      return this._cachedData instanceof Object;
+      return this._cachedData instanceof Pipe;
    }
 
    public final CacheResult getParentCacheResult() {
@@ -208,7 +208,7 @@ public final class CacheResult implements Persistable, EncryptableProvider {
    public final int getDataLength() {
       if (this._parentCacheResult != null) {
          return this._length;
-      } else if (!(this._cachedData instanceof Object)) {
+      } else if (!(this._cachedData instanceof Pipe)) {
          return !(this._cachedData instanceof CacheResult$EncryptedPipe) ? 0 : ((CacheResult$EncryptedPipe)this._cachedData).getLength();
       } else {
          return ((Pipe)this._cachedData).getLength();
@@ -272,7 +272,7 @@ public final class CacheResult implements Persistable, EncryptableProvider {
    }
 
    public final void setData(byte[] data, int length) {
-      this.setData((Pipe)(new Object(data, length)));
+      this.setData(new Pipe(data, length));
    }
 
    public final HttpHeaders getResponseHeaders() {
@@ -374,7 +374,7 @@ public final class CacheResult implements Persistable, EncryptableProvider {
 
    public final boolean writeCacheResult(SyncBuffer syncBuffer) {
       try {
-         DataBuffer dataBuffer = (DataBuffer)(new Object(false));
+         DataBuffer dataBuffer = new DataBuffer(false);
          dataBuffer.setLength(0);
          if (this._urlWithoutFragmentEncoding == null) {
             dataBuffer.writeBoolean(false);
@@ -508,7 +508,7 @@ public final class CacheResult implements Persistable, EncryptableProvider {
       int numResponseHeaders = dataBuffer.readCompressedInt();
       HttpHeaders responseHeaders = null;
       if (numResponseHeaders > 0) {
-         responseHeaders = (HttpHeaders)(new Object());
+         responseHeaders = new HttpHeaders();
 
          for (int i = 0; i < numResponseHeaders; i++) {
             String key = dataBuffer.readUTF();
@@ -575,7 +575,7 @@ public final class CacheResult implements Persistable, EncryptableProvider {
                   int offset = data.length;
                   int length = chunk.length;
                   Array.resize(data, offset + length);
-                  ByteArrayInputStream bais = (ByteArrayInputStream)(new Object(chunk));
+                  ByteArrayInputStream bais = new ByteArrayInputStream(chunk);
                   bais.read(data, offset, length);
                }
             }

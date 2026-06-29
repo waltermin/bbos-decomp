@@ -56,7 +56,7 @@ final class DocViewOptions$DocViewOptionsSyncItem extends OTASyncCapableSyncItem
 
          label127:
          try {
-            docFontName = (String)(new Object(buffer.readByteArray()));
+            docFontName = new String(buffer.readByteArray());
          } finally {
             break label127;
          }
@@ -65,7 +65,7 @@ final class DocViewOptions$DocViewOptionsSyncItem extends OTASyncCapableSyncItem
 
          label123:
          try {
-            sheetFontName = (String)(new Object(buffer.readByteArray()));
+            sheetFontName = new String(buffer.readByteArray());
          } finally {
             break label123;
          }

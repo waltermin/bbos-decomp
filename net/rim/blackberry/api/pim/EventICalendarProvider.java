@@ -28,7 +28,7 @@ class EventICalendarProvider extends PIMICalendarProvider {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
    protected String getUIDString() {
-      StringBuffer uid = (StringBuffer)(new Object());
+      StringBuffer uid = new StringBuffer();
       boolean var4 = false /* VF: Semaphore variable */;
 
       label20:
@@ -44,7 +44,7 @@ class EventICalendarProvider extends PIMICalendarProvider {
       }
 
       uid.append('-');
-      uid.append(((Date)(new Object())).getTime());
+      uid.append(new Date().getTime());
       uid.append("@rim.net");
       return uid.toString();
    }
@@ -101,7 +101,7 @@ class EventICalendarProvider extends PIMICalendarProvider {
 
    @Override
    public Date getDateTimeStartValue() {
-      return (Date)(this._event.countValues(106) > 0 ? new Object(this._event.getDate(106, 0)) : null);
+      return this._event.countValues(106) > 0 ? new Date(this._event.getDate(106, 0)) : null;
    }
 
    @Override
@@ -122,7 +122,7 @@ class EventICalendarProvider extends PIMICalendarProvider {
 
    @Override
    public Date getDateTimeEndValue() {
-      return (Date)(this._event.countValues(102) > 0 ? new Object(this._event.getDate(102, 0)) : null);
+      return this._event.countValues(102) > 0 ? new Date(this._event.getDate(102, 0)) : null;
    }
 
    @Override
@@ -143,7 +143,7 @@ class EventICalendarProvider extends PIMICalendarProvider {
 
    @Override
    public Date getTrigger() {
-      return (Date)(this._event.countValues(100) > 0 ? new Object(this._event.getDate(106, 0) - this._event.getInt(100, 0) * 1000) : null);
+      return this._event.countValues(100) > 0 ? new Date(this._event.getDate(106, 0) - this._event.getInt(100, 0) * 1000) : null;
    }
 
    @Override
@@ -172,7 +172,7 @@ class EventICalendarProvider extends PIMICalendarProvider {
       if (desc == null) {
          desc = "";
       } else {
-         desc = ((StringBuffer)(new Object())).append(desc).append('\n').toString();
+         desc = desc + '\n';
       }
 
       try {
@@ -180,7 +180,7 @@ class EventICalendarProvider extends PIMICalendarProvider {
          long end = this._event.getDate(102, 0);
          if (start != 0 && end != 0) {
             DateFormat format = DateFormat.getInstance(54);
-            return ((StringBuffer)(new Object())).append(desc).append(format.formatLocal(start)).append('\n').append(format.formatLocal(end)).toString();
+            return desc + format.formatLocal(start) + '\n' + format.formatLocal(end);
          }
       } finally {
          return desc;
@@ -233,10 +233,10 @@ class EventICalendarProvider extends PIMICalendarProvider {
       if (this._repeat != null) {
          long[] exceptTimes = this._repeat.getExceptDates();
          int length = exceptTimes.length;
-         dates = new Object[length];
+         dates = new Date[length];
 
          for (int i = 0; i < length; i++) {
-            dates[i] = (Date)(new Object(exceptTimes[i]));
+            dates[i] = new Date(exceptTimes[i]);
          }
       }
 
@@ -277,7 +277,7 @@ class EventICalendarProvider extends PIMICalendarProvider {
                return;
             default:
                this._repeat = null;
-               throw new Object("invalid value");
+               throw new IllegalArgumentException("invalid value");
          }
       }
    }
@@ -326,7 +326,7 @@ class EventICalendarProvider extends PIMICalendarProvider {
    public Date getUntil() {
       if (this._repeat != null) {
          try {
-            return (Date)(new Object(this._repeat.getDate(4)));
+            return new Date(this._repeat.getDate(4));
          } catch (FieldEmptyException var2) {
          }
       }
@@ -434,7 +434,7 @@ class EventICalendarProvider extends PIMICalendarProvider {
          }
 
          if (thisWkDay < 1 || thisWkDay > 7 || thisOrdWk < -maxOrderWeek || thisOrdWk > maxOrderWeek) {
-            throw new Object("invalid value");
+            throw new IllegalArgumentException("invalid value");
          }
 
          try {
@@ -507,7 +507,7 @@ class EventICalendarProvider extends PIMICalendarProvider {
          this._repeat.setInt(2, days);
          this._repeat.setInt(8, weeks);
       } else {
-         throw new Object("invalid value");
+         throw new IllegalArgumentException("invalid value");
       }
    }
 
@@ -568,7 +568,7 @@ class EventICalendarProvider extends PIMICalendarProvider {
          if (monthDay >= -31 && monthDay <= -1) {
             this._repeat.setInt(1, 32 + monthDay);
          } else {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } else {
          this._repeat.setInt(1, monthDay);
@@ -628,7 +628,7 @@ class EventICalendarProvider extends PIMICalendarProvider {
 
       if (yearDay <= 0 && super._version == 1) {
          if (yearDay < -366 || yearDay > -1) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } else {
          this._repeat.setInt(3, yearDay);
@@ -677,7 +677,7 @@ class EventICalendarProvider extends PIMICalendarProvider {
       for (int i = 0; i < monthLength; i++) {
          int thisMonth = month[i];
          if (thisMonth <= 0 || thisMonth >= 13) {
-            throw new Object("invalid value");
+            throw new IllegalArgumentException("invalid value");
          }
 
          intMonths |= 1 << thisMonth - 1 + 17;
@@ -707,7 +707,7 @@ class EventICalendarProvider extends PIMICalendarProvider {
          intMonths |= 1 << month - 1 + 17;
          this._repeat.setInt(7, intMonths);
       } else {
-         throw new Object("invalid value");
+         throw new IllegalArgumentException("invalid value");
       }
    }
 

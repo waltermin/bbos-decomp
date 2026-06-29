@@ -128,8 +128,8 @@ public class ZoomImageCropper extends MainScreen {
       int bitmapHeightFP = Fixed32.mul(scaleForImageFP, Fixed32.toFP(this._imageField.getBitmapHeight()));
       int minFinalWidth = Math.min(this._finalWidth, Fixed32.toInt(bitmapWidthFP));
       int minFinalHeight = Math.min(this._finalHeight, Fixed32.toInt(bitmapHeightFP));
-      Bitmap bitmap = (Bitmap)(new Object(minFinalWidth, minFinalHeight));
-      Graphics graphics = (Graphics)(new Object(bitmap));
+      Bitmap bitmap = new Bitmap(minFinalWidth, minFinalHeight);
+      Graphics graphics = new Graphics(bitmap);
       int scaleFP = this._imageField.getScale();
       int finalOverCropFP = Fixed32.div(Fixed32.toFP(this._finalWidth), Fixed32.toFP(this._imageField.getCropWidth()));
       int scaleFinalFP = Fixed32.mul(scaleFP, finalOverCropFP);

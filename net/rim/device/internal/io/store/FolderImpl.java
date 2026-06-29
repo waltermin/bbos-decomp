@@ -1,7 +1,9 @@
 package net.rim.device.internal.io.store;
 
+import java.io.IOException;
 import java.util.Enumeration;
 import net.rim.device.api.io.IOUtilities;
+import net.rim.device.api.io.file.FileIOException;
 import net.rim.device.api.synchronization.SyncObject;
 import net.rim.device.api.synchronization.UIDGenerator;
 import net.rim.device.api.util.Persistable;
@@ -20,11 +22,11 @@ final class FolderImpl implements FSDescriptor, Persistable, SyncObject {
    private static final int ARCHIVE_ATTR_OFF = 2052;
    private static final int ATTR_CONSTANT = -134217728;
 
-   public final FileImpl addFile(String name, int open) {
+   public final FileImpl addFile(String name, int open) throws IOException, FileIOException {
       FileImpl prev = this.getFile(name);
       if (prev != null && prev.isAlive()) {
          if ((open & 6) == 0) {
-            throw new Object(7);
+            throw new FileIOException(7);
          }
 
          if (!(prev instanceof SymbolicLinkImpl)) {
@@ -35,11 +37,11 @@ final class FolderImpl implements FSDescriptor, Persistable, SyncObject {
       }
 
       if (this.getId() == 0) {
-         throw new Object("Folder cannot be root.");
+         throw new IOException("Folder cannot be root.");
       }
 
       if ((open & 1) == 0) {
-         throw new Object(8);
+         throw new FileIOException(8);
       }
 
       boolean isSystem = false;
@@ -77,11 +79,11 @@ final class FolderImpl implements FSDescriptor, Persistable, SyncObject {
       }
    }
 
-   public final SymbolicLinkImpl addSymbolicLink(String name, int open) {
+   public final SymbolicLinkImpl addSymbolicLink(String name, int open) throws IOException, FileIOException {
       FileImpl prev = this.getFile(name);
       if (prev != null && prev.isAlive()) {
          if ((open & 2) == 0) {
-            throw new Object(7);
+            throw new FileIOException(7);
          }
 
          if (prev instanceof SymbolicLinkImpl) {
@@ -92,11 +94,11 @@ final class FolderImpl implements FSDescriptor, Persistable, SyncObject {
       }
 
       if (this.getId() == 0) {
-         throw new Object("Folder cannot be root.");
+         throw new IOException("Folder cannot be root.");
       }
 
       if ((open & 1) == 0) {
-         throw new Object("File does not exist.");
+         throw new IOException("File does not exist.");
       }
 
       synchronized (ContentStoreDatabase.getInstance()) {
@@ -130,7 +132,7 @@ final class FolderImpl implements FSDescriptor, Persistable, SyncObject {
             FileSystem.addFileJournalEntry(this.getJSRPath(), oldPath, 3);
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -195,7 +197,7 @@ final class FolderImpl implements FSDescriptor, Persistable, SyncObject {
    @Override
    public final String getJSRPath() {
       try {
-         return FileUtilities.encodeString(((StringBuffer)(new Object("/store"))).append(this.getPath()).toString());
+         return FileUtilities.encodeString("/store" + this.getPath());
       } finally {
          ;
       }
@@ -230,11 +232,11 @@ final class FolderImpl implements FSDescriptor, Persistable, SyncObject {
    public final void remove() {
       synchronized (ContentStoreImpl.getInstance().getMonitor()) {
          if (!this.isAlive()) {
-            throw new Object();
+            throw new IllegalStateException();
          }
 
          if (this._uid >= 0 && this._uid <= 16) {
-            throw new Object(12);
+            throw new FileIOException(12);
          }
 
          fileTable().removeAllFilesIn(this);
@@ -257,7 +259,7 @@ final class FolderImpl implements FSDescriptor, Persistable, SyncObject {
    public final void resurrect() {
       synchronized (ContentStoreImpl.getInstance().getMonitor()) {
          if (this.isAlive()) {
-            throw new Object();
+            throw new IllegalStateException();
          }
 
          FolderImpl parent = this.getFolder();

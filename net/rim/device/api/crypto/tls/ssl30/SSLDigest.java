@@ -11,8 +11,8 @@ public class SSLDigest extends AbstractDigest implements Digest {
    public static final int DIGEST_LENGTH = 36;
 
    public SSLDigest() {
-      this._md5 = (MD5Digest)(new Object());
-      this._sha = (SHA1Digest)(new Object());
+      this._md5 = new MD5Digest();
+      this._sha = new SHA1Digest();
    }
 
    public SSLDigest(MD5Digest md5Digest, SHA1Digest shaDigest) {
@@ -32,7 +32,7 @@ public class SSLDigest extends AbstractDigest implements Digest {
          this._sha.getDigest(buffer, offset + 16, resetDigest);
          return 36;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

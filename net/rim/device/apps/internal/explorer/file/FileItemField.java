@@ -286,11 +286,7 @@ public class FileItemField implements FileConnectionHolder, VerbProvider {
 
             if (duration != null) {
                int dur = (int)(duration / 1000000);
-               lengthString = ((StringBuffer)(new Object()))
-                  .append(Integer.toString(dur / 60))
-                  .append(':')
-                  .append(NumberUtilities.toString(dur % 60, 10, 2))
-                  .toString();
+               lengthString = Integer.toString(dur / 60) + ':' + NumberUtilities.toString(dur % 60, 10, 2);
             } else {
                lengthString = "";
             }
@@ -402,7 +398,7 @@ public class FileItemField implements FileConnectionHolder, VerbProvider {
          return this.getPath();
       }
 
-      StringBuffer sbuf = (StringBuffer)(new Object(this.getPath()));
+      StringBuffer sbuf = new StringBuffer(this.getPath());
       sbuf.append(this.getName());
       return sbuf.toString();
    }
@@ -509,7 +505,7 @@ public class FileItemField implements FileConnectionHolder, VerbProvider {
 
    @Override
    public String getURL() {
-      StringBuffer sbuf = (StringBuffer)(new Object("file://"));
+      StringBuffer sbuf = new StringBuffer("file://");
       sbuf.append(this.getPath());
       if (!this.isAlias()) {
          sbuf.append(this.getName());
@@ -549,9 +545,7 @@ public class FileItemField implements FileConnectionHolder, VerbProvider {
       this(
          path,
          filename,
-         path.length() == 1
-            ? FileUtilities.getDisplayName(((StringBuffer)(new Object())).append('/').append(filename).toString()).substring(1)
-            : FileUtilities.getDisplayName(filename),
+         path.length() == 1 ? FileUtilities.getDisplayName('/' + filename).substring(1) : FileUtilities.getDisplayName(filename),
          isLocalizedDirectory,
          fileInfo,
          parent
@@ -590,11 +584,11 @@ public class FileItemField implements FileConnectionHolder, VerbProvider {
       // 1a: astore 2
       // 1b: aload 2
       // 1c: dup
-      // 1d: instanceof java/lang/Object
+      // 1d: instanceof net/rim/device/api/io/file/ExtendedFileConnection
       // 20: ifne 27
       // 23: pop
       // 24: goto 49
-      // 27: checkcast java/lang/Object
+      // 27: checkcast net/rim/device/api/io/file/ExtendedFileConnection
       // 2a: astore 3
       // 2b: aload 3
       // 2c: invokeinterface net/rim/device/api/io/file/ExtendedFileConnection.isContentDRMForwardLocked ()Z 1
@@ -892,7 +886,7 @@ public class FileItemField implements FileConnectionHolder, VerbProvider {
       // 1ca: aload 1
       // 1cb: invokestatic net/rim/device/internal/io/file/FileUtilities.makeFileURL (Ljava/lang/String;)Ljava/lang/String;
       // 1ce: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 1d1: checkcast java/lang/Object
+      // 1d1: checkcast javax/microedition/io/file/FileConnection
       // 1d4: astore 7
       // 1d6: aload 7
       // 1d8: ifnull 1ee

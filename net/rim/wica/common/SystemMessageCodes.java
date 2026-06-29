@@ -28,104 +28,56 @@ public final class SystemMessageCodes {
 
    public static final String toString(int msgCode) {
       switch (msgCode) {
-         case 0: {
-            String msgCodeAsString = "ERROR";
-            return msgCodeAsString;
-         }
-         case 1: {
-            String msgCodeAsString = "HEARTBEAT";
-            return msgCodeAsString;
-         }
-         case 2: {
-            String msgCodeAsString = "FLOW_CONTROL";
-            return msgCodeAsString;
-         }
-         case 3: {
-            String msgCodeAsString = "RE_STATUS_REQUEST";
-            return msgCodeAsString;
-         }
-         case 4: {
-            String msgCodeAsString = "RE_STATUS";
-            return msgCodeAsString;
-         }
-         case 5: {
-            String msgCodeAsString = "POLICIES";
-            return msgCodeAsString;
-         }
-         case 6: {
-            String msgCodeAsString = "RE_UPGRADE_AVAILABLE";
-            return msgCodeAsString;
-         }
-         case 7: {
-            String msgCodeAsString = "RE_UPGRADE_REQUIRED";
-            return msgCodeAsString;
-         }
-         case 8: {
-            String msgCodeAsString = "RE_UPGRADE_STATUS";
-            return msgCodeAsString;
-         }
-         case 9: {
-            String msgCodeAsString = "RE_KEY_REFRESH";
-            return msgCodeAsString;
-         }
-         case 128: {
-            String msgCodeAsString = "WICLET_UPGRADE";
-            return msgCodeAsString;
-         }
-         case 129: {
-            String msgCodeAsString = "DESTROY_WICLET";
-            return msgCodeAsString;
-         }
-         case 130: {
-            String msgCodeAsString = "QUARANTINE_WICLET";
-            return msgCodeAsString;
-         }
-         case 131: {
-            String msgCodeAsString = "DELIVER_SCRIPT";
-            return msgCodeAsString;
-         }
-         case 132: {
-            String msgCodeAsString = "LIFECYCLE_STATUS";
-            return msgCodeAsString;
-         }
-         case 133: {
-            String msgCodeAsString = "INSTALL_WICLET";
-            return msgCodeAsString;
-         }
-         case 256: {
-            String msgCodeAsString = "SUBSCRIBE_REFRESH_KEY";
-            return msgCodeAsString;
-         }
-         case 257: {
-            String msgCodeAsString = "SUBSCRIBE_RE_STATUS";
-            return msgCodeAsString;
-         }
-         case 258: {
-            String msgCodeAsString = "SUBSCRIBE_DESTROY_WICLET";
-            return msgCodeAsString;
-         }
-         case 259: {
-            String msgCodeAsString = "SUBSCRIBE_QUARANTINE_WICLET";
-            return msgCodeAsString;
-         }
-         case 260: {
-            String msgCodeAsString = "SUBSCRIBE_UPGRADE_WICLET";
-            return msgCodeAsString;
-         }
-         case 512: {
-            String msgCodeAsString = "AUTHENTICATION_REQUEST";
-            return msgCodeAsString;
-         }
-         case 513: {
-            String msgCodeAsString = "AUTHENTICATION_RESPONSE";
-            return msgCodeAsString;
-         }
-         case 514: {
-            String msgCodeAsString = "CANCEL_AUTHENTICATION";
-            return msgCodeAsString;
-         }
+         case 0:
+            return "ERROR";
+         case 1:
+            return "HEARTBEAT";
+         case 2:
+            return "FLOW_CONTROL";
+         case 3:
+            return "RE_STATUS_REQUEST";
+         case 4:
+            return "RE_STATUS";
+         case 5:
+            return "POLICIES";
+         case 6:
+            return "RE_UPGRADE_AVAILABLE";
+         case 7:
+            return "RE_UPGRADE_REQUIRED";
+         case 8:
+            return "RE_UPGRADE_STATUS";
+         case 9:
+            return "RE_KEY_REFRESH";
+         case 128:
+            return "WICLET_UPGRADE";
+         case 129:
+            return "DESTROY_WICLET";
+         case 130:
+            return "QUARANTINE_WICLET";
+         case 131:
+            return "DELIVER_SCRIPT";
+         case 132:
+            return "LIFECYCLE_STATUS";
+         case 133:
+            return "INSTALL_WICLET";
+         case 256:
+            return "SUBSCRIBE_REFRESH_KEY";
+         case 257:
+            return "SUBSCRIBE_RE_STATUS";
+         case 258:
+            return "SUBSCRIBE_DESTROY_WICLET";
+         case 259:
+            return "SUBSCRIBE_QUARANTINE_WICLET";
+         case 260:
+            return "SUBSCRIBE_UPGRADE_WICLET";
+         case 512:
+            return "AUTHENTICATION_REQUEST";
+         case 513:
+            return "AUTHENTICATION_RESPONSE";
+         case 514:
+            return "CANCEL_AUTHENTICATION";
          default:
-            return ((StringBuffer)(new Object())).append(msgCode).append("(NO DESC AVAIL)").toString();
+            return msgCode + "(NO DESC AVAIL)";
       }
    }
 }

@@ -13,12 +13,12 @@ public class QName {
       }
 
       if (localName == null) {
-         throw new Object("The local name cannot be null.");
+         throw new IllegalArgumentException("The local name cannot be null.");
       }
 
       this.localName = localName;
       if (prefix == null) {
-         throw new Object("The prefix cannot be null.");
+         throw new IllegalArgumentException("The prefix cannot be null.");
       }
 
       this.prefix = prefix;
@@ -61,9 +61,7 @@ public class QName {
 
    @Override
    public String toString() {
-      return this.namespaceURI.equals("")
-         ? this.localName
-         : ((StringBuffer)(new Object("{"))).append(this.namespaceURI).append("}").append(this.localName).toString();
+      return this.namespaceURI.equals("") ? this.localName : "{" + this.namespaceURI + "}" + this.localName;
    }
 
    public static QName valueOf(String aString) {
@@ -74,19 +72,15 @@ public class QName {
          } else {
             int endNsURI = aString.indexOf(125);
             if (endNsURI == -1) {
-               throw new Object(
-                  ((StringBuffer)(new Object("A QName cannot be constructed from \""))).append(aString).append("\": missing closing \"}\".").toString()
-               );
+               throw new IllegalArgumentException("A QName cannot be constructed from \"" + aString + "\": missing closing \"}\".");
             } else if (endNsURI == aString.length() - 1) {
-               throw new Object(
-                  ((StringBuffer)(new Object("A QName cannot be constructed from \""))).append(aString).append("\": missing local name.").toString()
-               );
+               throw new IllegalArgumentException("A QName cannot be constructed from \"" + aString + "\": missing local name.");
             } else {
                return new QName(aString.substring(1, endNsURI), aString.substring(endNsURI + 1), "");
             }
          }
       } else {
-         throw new Object("A QName cannot be constructed from null or an empty string.");
+         throw new IllegalArgumentException("A QName cannot be constructed from null or an empty string.");
       }
    }
 }

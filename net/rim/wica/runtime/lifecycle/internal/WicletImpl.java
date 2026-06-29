@@ -48,7 +48,7 @@ final class WicletImpl implements Wiclet, HomeScreenEntry {
    private boolean _pendingAlerts;
    private Object _lock = new Object();
    private Hashtable _properties;
-   private static final Integer DEFAULT_HOME_SCREEN_POSITION = (Integer)(new Object(60));
+   private static final Integer DEFAULT_HOME_SCREEN_POSITION = new Integer(60);
    private static final String BUNDLE_NAME = "net.rim.mds.runtime.ribbon";
    private static final Bitmap DEFAULT_ICON_RESOURCE = RuntimeResources.getBitmapResource("default_icon.png");
    private static final long BUNDLE_ID = 8037818566004125802L;
@@ -284,7 +284,7 @@ final class WicletImpl implements Wiclet, HomeScreenEntry {
             this._lifecycleService.startProvisioning(task.getDeploymentDescriptor());
             return;
          default:
-            throw new Object("The application cannot updated.");
+            throw new IllegalStateException("The application cannot updated.");
       }
    }
 
@@ -301,7 +301,7 @@ final class WicletImpl implements Wiclet, HomeScreenEntry {
                ? (class$net$rim$wica$runtime$event$EventService = class$("net.rim.wica.runtime.event.EventService"))
                : class$net$rim$wica$runtime$event$EventService
          );
-      eventService.dispatchEvent(this, 203, new Object(this._info.getId()));
+      eventService.dispatchEvent(this, 203, new Long(this._info.getId()));
 
       try {
          this._app = new WicaApplication(this);
@@ -329,7 +329,7 @@ final class WicletImpl implements Wiclet, HomeScreenEntry {
 
    @Override
    public final String getEntryDescription() {
-      StringBuffer description = (StringBuffer)(new Object());
+      StringBuffer description = new StringBuffer();
       description.append(this.getName());
       if (this.isInstalling() || this.isQuarantined() || this.hasUpgrade() || this.hasRibbonAlerts()) {
          description.append(" (");
@@ -359,9 +359,7 @@ final class WicletImpl implements Wiclet, HomeScreenEntry {
    @Override
    public final String getEntryId() {
       if (this._uniqueId == null) {
-         this._uniqueId = HomeScreenUtilities.createEntryIdentifier(
-            ((StringBuffer)(new Object())).append(this._info.getUri()).append('.').append(this._info.getVersion()).toString()
-         );
+         this._uniqueId = HomeScreenUtilities.createEntryIdentifier(this._info.getUri() + '.' + this._info.getVersion());
       }
 
       return this._uniqueId;
@@ -531,7 +529,7 @@ final class WicletImpl implements Wiclet, HomeScreenEntry {
                ? (class$net$rim$wica$runtime$event$EventService = class$("net.rim.wica.runtime.event.EventService"))
                : class$net$rim$wica$runtime$event$EventService
          );
-      eventService.dispatchEvent(this, 204, new Object(this._info.getId()));
+      eventService.dispatchEvent(this, 204, new Long(this._info.getId()));
       UninstallTaskInfo task = this._info.getUninstallTask();
       if (task != null) {
          this.uninstallInternal(task);
@@ -759,22 +757,22 @@ final class WicletImpl implements Wiclet, HomeScreenEntry {
       HashResourceBundle bundle = (HashResourceBundle)registry.get(8037818566004125802L);
       if (bundle == null) {
          Locale rootLocale = Locale.get(null);
-         bundle = (HashResourceBundle)(new Object(rootLocale));
+         bundle = new HashResourceBundle(rootLocale);
          registry.put(8037818566004125802L, bundle);
          ResourceBundleFamily bundles = ResourceBundle.getBundle(8037818566004125802L, "net.rim.mds.runtime.ribbon");
          bundles.put(rootLocale, bundle);
       }
 
       bundle.put((int)this._info.getId(), this._info.getName());
-      return (ApplicationDescriptor)(new Object(
+      return new ApplicationDescriptor(
          ApplicationDescriptor.currentApplicationDescriptor(),
          this.getEntryId(),
-         new Object[]{String.valueOf(this._info.getUri())},
+         new String[]{String.valueOf(this._info.getUri())},
          this.getDefaultIcon(),
          DEFAULT_HOME_SCREEN_POSITION,
          "net.rim.mds.runtime.ribbon",
          (int)this._info.getId()
-      ));
+      );
    }
 
    private final void save() {
@@ -813,7 +811,7 @@ final class WicletImpl implements Wiclet, HomeScreenEntry {
       this._store = store;
       this._info = store.getInfo();
       this._lifecycleService = lifecycleService;
-      this._properties = (Hashtable)(new Object());
+      this._properties = new Hashtable();
       if (!this._info.hasUninstallTask()) {
          if (this._info.getAlerts().length > 0) {
             this._alertManager = new AlertManager(this);
@@ -832,7 +830,7 @@ final class WicletImpl implements Wiclet, HomeScreenEntry {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

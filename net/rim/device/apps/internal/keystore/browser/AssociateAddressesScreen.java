@@ -10,6 +10,7 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectListField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.api.ui.AppsMainScreen;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
@@ -34,34 +35,34 @@ public final class AssociateAddressesScreen extends AppsMainScreen {
       Font boldFont = font.derive(font.getStyle() | 1);
       Certificate certificate = data.getCertificate();
       if (certificate != null) {
-         String[] fixedEmails = (Object[])certificate.getInformation(-7850001002262082664L, null, null);
+         String[] fixedEmails = (String[])certificate.getInformation(-7850001002262082664L, null, null);
          String inlineLabelText = MessageFormat.format(
-            KeyStoreBrowserResources.getString(6082), new Object[]{optionsItem.getBrowserContext().getPublicKeyContainerString(true, false)}
+            KeyStoreBrowserResources.getString(6082), new String[]{optionsItem.getBrowserContext().getPublicKeyContainerString(true, false)}
          );
-         LabelField inlineLabelField = (LabelField)(new Object(inlineLabelText));
+         LabelField inlineLabelField = new LabelField(inlineLabelText);
          inlineLabelField.setFont(boldFont);
          this.add(inlineLabelField);
-         this._linlineAddressesListField = (ObjectListField)(new Object());
+         this._linlineAddressesListField = new ObjectListField();
          if (fixedEmails != null) {
             this._linlineAddressesListField.set(fixedEmails);
          }
 
          this.add(this._linlineAddressesListField);
-         this.add((Field)(new Object()));
+         this.add(new SeparatorField());
       }
 
-      LabelField otherAddressLabelField = (LabelField)(new Object(KeyStoreBrowserResources.getString(6083)));
+      LabelField otherAddressLabelField = new LabelField(KeyStoreBrowserResources.getString(6083));
       otherAddressLabelField.setFont(boldFont);
       this.add(otherAddressLabelField);
-      this._associatedAddressesListField = (ObjectListField)(new Object());
+      this._associatedAddressesListField = new ObjectListField();
       KeyStoreData keyStoreData = this._keyStoreBrowserData.getKeyStoreData();
       byte[][] emailAddresses = keyStoreData.getAssociatedData(-1124699153917633064L);
       if (emailAddresses != null) {
          int numEmailAddresses = emailAddresses.length;
-         String[] emailAddressStrings = new Object[0];
+         String[] emailAddressStrings = new String[0];
 
          for (int i = 0; i < numEmailAddresses; i++) {
-            String email = (String)(new Object(emailAddresses[i]));
+            String email = new String(emailAddresses[i]);
             if (!this.addressExists(email)) {
                Array.resize(emailAddressStrings, emailAddressStrings.length + 1);
                emailAddressStrings[emailAddressStrings.length - 1] = email;
@@ -107,7 +108,7 @@ public final class AssociateAddressesScreen extends AppsMainScreen {
    private final AssociatedData[] getAssociatedDataArray() {
       AssociatedData[] associatedData = CertificateUtilities.getEmailAssociatedDataArray(this._keyStoreBrowserData.getKeyStoreData().getCertificate());
       if (associatedData == null) {
-         associatedData = new Object[0];
+         associatedData = new AssociatedData[0];
       }
 
       int size = this._associatedAddressesListField.getSize();
@@ -115,9 +116,7 @@ public final class AssociateAddressesScreen extends AppsMainScreen {
       for (int i = 0; i < size; i++) {
          Array.resize(associatedData, associatedData.length + 1);
          String address = (String)this._associatedAddressesListField.get(this._associatedAddressesListField, i);
-         associatedData[associatedData.length - 1] = (AssociatedData)(new Object(
-            -1124699153917633064L, StringUtilities.toLowerCase(address, 1701707776).getBytes()
-         ));
+         associatedData[associatedData.length - 1] = new AssociatedData(-1124699153917633064L, StringUtilities.toLowerCase(address, 1701707776).getBytes());
       }
 
       return associatedData;

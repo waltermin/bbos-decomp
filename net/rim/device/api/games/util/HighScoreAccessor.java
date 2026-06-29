@@ -29,7 +29,7 @@ public final class HighScoreAccessor {
    }
 
    private static final String crypt(String data) {
-      StringBuffer result = (StringBuffer)(new Object());
+      StringBuffer result = new StringBuffer();
       byte[] pinData = laLlave;
       byte[] urlData = data.getBytes();
       int k = 0;
@@ -42,11 +42,11 @@ public final class HighScoreAccessor {
          }
       }
 
-      return (String)(new Object(result));
+      return new String(result);
    }
 
    private static final String decrypt(String data) {
-      StringBuffer result = (StringBuffer)(new Object());
+      StringBuffer result = new StringBuffer();
       byte[] pinData = laLlave;
       byte[] urlData = data.getBytes();
       int k = 0;
@@ -59,7 +59,7 @@ public final class HighScoreAccessor {
          }
       }
 
-      return (String)(new Object(result));
+      return new String(result);
    }
 
    public static final void sendScore(
@@ -75,50 +75,36 @@ public final class HighScoreAccessor {
          userName = URIEncoder.encode(null, userName, "utf-8", true);
          password = URIEncoder.encode(null, password, "utf-8", true);
          String crypted = crypt(
-            ((StringBuffer)(new Object("user_name=")))
-               .append(userName)
-               .append(";password=")
-               .append(password)
-               .append(";game_name=")
-               .append(game)
-               .append(";game_version=")
-               .append(version)
-               .append(";score_attr1=")
-               .append(highScore)
-               .append(";score_attr2=")
-               .append(highLevel)
-               .toString()
+            "user_name="
+               + userName
+               + ";password="
+               + password
+               + ";game_name="
+               + game
+               + ";game_version="
+               + version
+               + ";score_attr1="
+               + highScore
+               + ";score_attr2="
+               + highLevel
          );
-         String url = ((StringBuffer)(new Object()))
-            .append(getServer())
-            .append("/mss/submithighscore?data=")
-            .append("01")
-            .append(crypted)
-            .append(";connectiontimeout=")
-            .append(timeout)
-            .toString();
+         String url = getServer() + "/mss/submithighscore?data=" + "01" + crypted + ";connectiontimeout=" + timeout;
          Sender sender = new Sender(url, listener);
-         ((Thread)(new Object(sender))).start();
+         new Thread(sender).start();
       }
    }
 
    public static final String getHighScoreURL(String game, String version) {
-      String crypted = crypt(((StringBuffer)(new Object("game_name="))).append(game).append(";game_version=").append(version).toString());
-      return ((StringBuffer)(new Object())).append(getServer()).append("/mss/leaderboard?data=").append("01").append(crypted).toString();
+      String crypted = crypt("game_name=" + game + ";game_version=" + version);
+      return getServer() + "/mss/leaderboard?data=" + "01" + crypted;
    }
 
    public static final void isGameActivated(String game, String version, HighScoreServerListener listener) {
       if (!DeviceInfo.isSimulator()) {
-         String crypted = crypt(((StringBuffer)(new Object("game_name="))).append(game).append(";game_version=").append(version).toString());
-         String url = ((StringBuffer)(new Object()))
-            .append(getServer())
-            .append("/mss/checkgame?data=")
-            .append("01")
-            .append(crypted)
-            .append(";connectiontimeout=30000")
-            .toString();
+         String crypted = crypt("game_name=" + game + ";game_version=" + version);
+         String url = getServer() + "/mss/checkgame?data=" + "01" + crypted + ";connectiontimeout=30000";
          Sender sender = new Sender(url, listener);
-         ((Thread)(new Object(sender))).start();
+         new Thread(sender).start();
       }
    }
 

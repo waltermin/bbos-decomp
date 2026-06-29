@@ -42,29 +42,22 @@ final class AutoTextMacro {
          }
 
          char[] a = new char[]{'%', MACRO_CHARS[index]};
-         return (String)(new Object(a));
+         return new String(a);
       } else {
-         throw new Object(
-            ((StringBuffer)(new Object("There are ")))
-               .append(numTypes)
-               .append(" macro indices. Please enter a number in the interval [0, ")
-               .append(numTypes - 1)
-               .append("]")
-               .toString()
-         );
+         throw new ArrayIndexOutOfBoundsException("There are " + numTypes + " macro indices. Please enter a number in the interval [0, " + (numTypes - 1) + "]");
       }
    }
 
    static final String[] getMacroChoices() {
       ResourceBundleFamily family = ResourceBundle.getBundle(8562590855522002223L, "net.rim.device.internal.resource.Input");
-      String[] entries = (Object[])family.getObject(16, true);
-      String[] choices = new Object[entries.length];
+      String[] entries = (String[])family.getObject(16, true);
+      String[] choices = new String[entries.length];
       int count = 0;
 
       for (int i = 0; i < choices.length; i++) {
          if (MACRO_CHARS[i] != 0) {
             byte[] a = new byte[]{32, 40, 37, (byte)MACRO_CHARS[i], 41};
-            choices[count++] = ((StringBuffer)(new Object())).append(entries[i]).append((String)(new Object(a))).toString();
+            choices[count++] = entries[i] + new String(a);
          }
       }
 

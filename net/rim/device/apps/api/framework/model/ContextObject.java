@@ -62,13 +62,13 @@ public final class ContextObject extends LongHashtable {
       } else if (context == null) {
          return new ContextObject();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    public static final ContextObject verifyNonNull(Object o) {
       if (!(o instanceof ContextObject)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return (ContextObject)o;
       }
@@ -88,7 +88,7 @@ public final class ContextObject extends LongHashtable {
 
    public final void setFlag(int bitflag) {
       if (bitflag < 0 || bitflag >= 192) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (bitflag < 64) {
@@ -149,7 +149,7 @@ public final class ContextObject extends LongHashtable {
 
    public final void clearFlag(int bitflag) {
       if (bitflag < 0 || bitflag >= 192) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (bitflag < 64) {
@@ -197,7 +197,7 @@ public final class ContextObject extends LongHashtable {
 
    public final boolean getFlag(int bitflag) {
       if (bitflag < 0 || bitflag >= 192) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else if (bitflag < 64) {
          return (this._bitflags1 & (long)1 << bitflag) != 0;
       } else {
@@ -251,7 +251,7 @@ public final class ContextObject extends LongHashtable {
 
    public static final Object put(Object context, long key, Object value) {
       if (!(context instanceof ContextObject)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       ContextObject contextObject = (ContextObject)context;
@@ -260,7 +260,7 @@ public final class ContextObject extends LongHashtable {
 
    public static final Object remove(Object context, long key) {
       if (!(context instanceof ContextObject)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       ContextObject contextObject = (ContextObject)context;
@@ -297,7 +297,7 @@ public final class ContextObject extends LongHashtable {
 
    public final void setPrivateFlag(long privateKey, int flag) {
       if (flag < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (flag >= 64) {
@@ -311,7 +311,7 @@ public final class ContextObject extends LongHashtable {
 
    public final void clearPrivateFlag(long privateKey, int flag) {
       if (flag < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (flag >= 64) {
@@ -327,7 +327,7 @@ public final class ContextObject extends LongHashtable {
 
    public final boolean getPrivateFlag(long privateKey, int flag) {
       if (flag < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (flag >= 64) {
@@ -341,7 +341,7 @@ public final class ContextObject extends LongHashtable {
 
    public static final void setPrivateFlag(Object context, long privateKey, int flag) {
       if (!(context instanceof ContextObject)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       ContextObject contextObject = (ContextObject)context;
@@ -351,7 +351,7 @@ public final class ContextObject extends LongHashtable {
    public static final void clearPrivateFlag(Object context, long privateKey, int flag) {
       if (!(context instanceof ContextObject)) {
          if (context != null) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } else {
          ContextObject contextObject = (ContextObject)context;
@@ -364,7 +364,7 @@ public final class ContextObject extends LongHashtable {
          if (context == null) {
             return false;
          } else {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } else {
          ContextObject contextObject = (ContextObject)context;
@@ -373,7 +373,7 @@ public final class ContextObject extends LongHashtable {
    }
 
    public final void putIntegerData(int value) {
-      this.put(-4054673099568009991L, new Object(value));
+      this.put(-4054673099568009991L, new Integer(value));
    }
 
    public final int getIntegerData(int defaultValue) {

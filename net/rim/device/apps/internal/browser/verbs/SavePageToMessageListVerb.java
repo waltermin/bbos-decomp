@@ -36,16 +36,16 @@ public final class SavePageToMessageListVerb extends BrowserVerb {
       Page page = BrowserDaemonRegistry.getInstance().getCurrentPage();
       if (page != null && page.getModelResult() != null) {
          boolean confirm = true;
-         if (context instanceof Object) {
+         if (context instanceof ContextObject) {
             confirm = !((ContextObject)context).getFlag(64);
          }
 
          int result = 0;
          String title = page.getTitle();
          if (confirm) {
-            DialogEnterString dialog = (DialogEnterString)(new Object(
+            DialogEnterString dialog = new DialogEnterString(
                BrowserResources.getString(525), title, CommonResources.getString(117), CommonResources.getString(2002)
-            ));
+            );
             result = dialog.doModal();
             title = dialog.getResult();
          }

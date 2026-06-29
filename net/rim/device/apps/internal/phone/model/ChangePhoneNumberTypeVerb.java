@@ -35,8 +35,8 @@ class ChangePhoneNumberTypeVerb extends Verb {
       // 0d: getstatic net/rim/device/apps/internal/phone/model/ChangePhoneNumberTypeVerb._resources Lnet/rim/device/api/i18n/ResourceBundle;
       // 10: sipush 601
       // 13: invokevirtual net/rim/device/api/i18n/ResourceBundle.getObject (I)Ljava/lang/Object;
-      // 16: checkcast [Ljava/lang/Object;
-      // 19: checkcast [Ljava/lang/Object;
+      // 16: checkcast [Ljava/lang/String;
+      // 19: checkcast [Ljava/lang/String;
       // 1c: astore 3
       // 1d: aload 2
       // 1e: invokevirtual net/rim/device/api/ui/component/BasicEditField.getLabel ()Ljava/lang/String;
@@ -68,7 +68,7 @@ class ChangePhoneNumberTypeVerb extends Verb {
       // 50: goto 59
       // 53: iinc 6 1
       // 56: goto 39
-      // 59: new java/lang/Object
+      // 59: new net/rim/device/api/ui/component/Dialog
       // 5c: dup
       // 5d: getstatic net/rim/device/apps/internal/phone/model/ChangePhoneNumberTypeVerb._resources Lnet/rim/device/api/i18n/ResourceBundle;
       // 60: sipush 600
@@ -89,7 +89,7 @@ class ChangePhoneNumberTypeVerb extends Verb {
       // 7e: bipush -1
       // 80: if_icmpeq a4
       // 83: aload 2
-      // 84: new java/lang/Object
+      // 84: new java/lang/StringBuffer
       // 87: dup
       // 88: invokespecial java/lang/StringBuffer.<init> ()V
       // 8b: aload 3

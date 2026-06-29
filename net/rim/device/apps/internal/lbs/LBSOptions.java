@@ -34,7 +34,7 @@ public final class LBSOptions
    ReadableList,
    CollectionListener,
    SyncObject {
-   private CollectionListenerManager _listenerManager = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _listenerManager = new CollectionListenerManager();
    private boolean _dirty;
    private LongHashtable _hashtable;
    private LongHashtable _hashtableNoBackup;
@@ -102,16 +102,7 @@ public final class LBSOptions
 
    final boolean checkITPolicy() {
       boolean disabled = ITPolicy.getBoolean(48, 1, false);
-      EventLogger.logEvent(
-         LBSApplication.UID,
-         ((StringBuffer)(new Object("DISABLE_BLACKBERRY_MAPS=")))
-            .append(disabled)
-            .append(", currentState=")
-            .append(this._disabledByITPolicy)
-            .toString()
-            .getBytes(),
-         5
-      );
+      EventLogger.logEvent(LBSApplication.UID, ("DISABLE_BLACKBERRY_MAPS=" + disabled + ", currentState=" + this._disabledByITPolicy).getBytes(), 5);
       boolean changed = disabled != this._disabledByITPolicy;
       this._disabledByITPolicy = disabled;
       if (changed) {
@@ -237,7 +228,7 @@ public final class LBSOptions
    @Override
    public final SyncObject[] getSyncObjects() {
       FinderHistory fh = FinderHistory.getInstance();
-      SyncObject[] objects = new Object[this.getSyncObjectCount()];
+      SyncObject[] objects = new SyncObject[this.getSyncObjectCount()];
       objects[0] = this;
       fh.getAt(0, objects.length - 1, objects, 1);
       return objects;
@@ -327,7 +318,7 @@ public final class LBSOptions
    public final void elementRemoved(Collection collection, Object element) {
       if (collection instanceof FinderHistory) {
          this.markDirty(true);
-         this._listenerManager.fireElementRemoved(this, element);
+         this._listenerManager.fireElementRemoved(this, (SyncObject)element);
       }
    }
 
@@ -335,7 +326,7 @@ public final class LBSOptions
    public final void elementUpdated(Collection collection, Object oldElement, Object newElement) {
       this.markDirty(true);
       if (collection instanceof FinderHistory) {
-         this._listenerManager.fireElementUpdated(this, oldElement, newElement);
+         this._listenerManager.fireElementUpdated(this, (SyncObject)oldElement, (SyncObject)newElement);
       }
    }
 
@@ -363,15 +354,15 @@ public final class LBSOptions
    }
 
    public static final void setLong(long id, long newValue) {
-      getInstance().put(id, new Object(newValue));
+      getInstance().put(id, new Long(newValue));
    }
 
    public static final void setInt(long id, int newValue) {
-      getInstance().put(id, new Object(newValue));
+      getInstance().put(id, new Integer(newValue));
    }
 
    public static final void setBoolean(long id, boolean newValue) {
-      getInstance().put(id, new Object(newValue));
+      getInstance().put(id, new Boolean(newValue));
    }
 
    public static final void setStringNoBackup(long id, String value) {
@@ -380,7 +371,7 @@ public final class LBSOptions
 
    static final void wipeMapsStore(Object context) {
       if (!(context instanceof InternalLBSOptionsScreen)) {
-         throw new Object("Invalid context to wipe maps store!");
+         throw new RuntimeException("Invalid context to wipe maps store!");
       }
 
       SyncManager syncManager = SyncManager.getInstance();
@@ -417,12 +408,8 @@ public final class LBSOptions
       Object obj = null;
       obj = getInstance()._hashtable.get(id);
       if (obj != null) {
-         if (!(obj instanceof Object)) {
-            EventLogger.logEvent(
-               LBSApplication.UID,
-               ((StringBuffer)(new Object("Exception in getBoolean(id): "))).append(id).append(", val: ").append(obj).toString().getBytes(),
-               2
-            );
+         if (!(obj instanceof Boolean)) {
+            EventLogger.logEvent(LBSApplication.UID, ("Exception in getBoolean(id): " + id + ", val: " + obj).getBytes(), 2);
          } else {
             b = (Boolean)obj;
          }
@@ -436,10 +423,8 @@ public final class LBSOptions
       Object obj = null;
       obj = getInstance()._hashtable.get(id);
       if (obj != null) {
-         if (!(obj instanceof Object)) {
-            EventLogger.logEvent(
-               LBSApplication.UID, ((StringBuffer)(new Object("Exception in getInt(id): "))).append(id).append(", val: ").append(obj).toString().getBytes(), 2
-            );
+         if (!(obj instanceof Integer)) {
+            EventLogger.logEvent(LBSApplication.UID, ("Exception in getInt(id): " + id + ", val: " + obj).getBytes(), 2);
          } else {
             i = (Integer)obj;
          }
@@ -480,28 +465,28 @@ public final class LBSOptions
 
    private final void getOptionsData(DataBuffer buffer) {
       try {
-         DataBuffer temp = (DataBuffer)(new Object());
+         DataBuffer temp = new DataBuffer();
          LongEnumeration enumeration = this._hashtable.keys();
 
          while (enumeration.hasMoreElements()) {
             long key = enumeration.nextElement();
             temp.writeLong(key);
             Object object = this._hashtable.get(key);
-            if (!(object instanceof Object)) {
-               if (!(object instanceof Object)) {
-                  if (!(object instanceof Object)) {
-                     if (object instanceof Object) {
-                        long value = object;
+            if (!(object instanceof String)) {
+               if (!(object instanceof Boolean)) {
+                  if (!(object instanceof Integer)) {
+                     if (object instanceof Long) {
+                        long value = (Long)object;
                         temp.writeInt(3);
                         temp.writeLong(value);
                      }
                   } else {
-                     int value = object;
+                     int value = (Integer)object;
                      temp.writeInt(2);
                      temp.writeInt(value);
                   }
                } else {
-                  boolean value = object;
+                  boolean value = (Boolean)object;
                   temp.writeInt(6);
                   temp.writeBoolean(value);
                }
@@ -523,7 +508,7 @@ public final class LBSOptions
    private final void setOptionsData(DataBuffer buffer) {
       if (this._hashtable.get(4012146088380808725L) == null) {
          this._hashtable.put(4012146088380808725L, new Object());
-         DataBuffer temp = (DataBuffer)(new Object());
+         DataBuffer temp = new DataBuffer();
 
          while (buffer.available() > 0) {
             try {
@@ -605,7 +590,7 @@ public final class LBSOptions
       synchronized (this._persistentObject) {
          this._hashtable = (LongHashtable)this._persistentObject.getContents();
          if (this._hashtable == null) {
-            this._hashtable = (LongHashtable)(new Object());
+            this._hashtable = new LongHashtable();
             this._persistentObject.setContents(this._hashtable, 51);
             this._persistentObject.commit();
          }
@@ -615,7 +600,7 @@ public final class LBSOptions
       synchronized (this._persistentObjectNoBackup) {
          this._hashtableNoBackup = (LongHashtable)this._persistentObjectNoBackup.getContents();
          if (this._hashtableNoBackup == null) {
-            this._hashtableNoBackup = (LongHashtable)(new Object());
+            this._hashtableNoBackup = new LongHashtable();
             this._persistentObjectNoBackup.setContents(this._hashtableNoBackup, 51);
             this._persistentObjectNoBackup.commit();
          }

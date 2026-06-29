@@ -15,7 +15,7 @@ public final class AttendeeModel extends AddressReference implements Attendee, P
    int _attendeeType;
 
    AttendeeModel(Object initialData) {
-      if (initialData instanceof Object) {
+      if (initialData instanceof PersistableRIMModel) {
          this.setAddress(initialData);
       }
    }
@@ -26,7 +26,7 @@ public final class AttendeeModel extends AddressReference implements Attendee, P
          return true;
       }
 
-      if (!(other instanceof Object)) {
+      if (!(other instanceof Attendee)) {
          return false;
       }
 
@@ -64,7 +64,7 @@ public final class AttendeeModel extends AddressReference implements Attendee, P
       }
 
       Object address = thisModel.getInsideModel();
-      if (address instanceof Object) {
+      if (address instanceof Copyable) {
          address = ((Copyable)address).copy();
       }
 
@@ -75,10 +75,10 @@ public final class AttendeeModel extends AddressReference implements Attendee, P
 
    @Override
    public final Verb getVerbs(Object context, Verb[] verbs) {
-      Verb[] tempVerbs = new Object[0];
+      Verb[] tempVerbs = new Verb[0];
       ContextObject localContext = ContextObject.clone(context);
       PersistableRIMModel address = (PersistableRIMModel)this.getAddress();
-      if (address instanceof Object) {
+      if (address instanceof VerbProvider) {
          VerbProvider provider = (VerbProvider)address;
          provider.getVerbs(localContext, tempVerbs);
          localContext.setPrivateFlag(-337556985625701066L, 0);
@@ -89,10 +89,10 @@ public final class AttendeeModel extends AddressReference implements Attendee, P
    }
 
    private final WrapperVerb[] getWrappedVerbs(Verb[] verbs, Object context) {
-      WrapperVerb[] wrappedVerbs = new Object[verbs.length];
+      WrapperVerb[] wrappedVerbs = new WrapperVerb[verbs.length];
 
       for (int i = 0; i < verbs.length; i++) {
-         wrappedVerbs[i] = (WrapperVerb)(new Object(verbs[i], context, verbs[i].getOrdering()));
+         wrappedVerbs[i] = new WrapperVerb(verbs[i], context, verbs[i].getOrdering());
       }
 
       return wrappedVerbs;

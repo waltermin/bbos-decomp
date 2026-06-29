@@ -1,9 +1,9 @@
 package net.rim.device.apps.internal.phone.options;
 
 import net.rim.device.api.system.DirectConnect;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.RadioButtonField;
 import net.rim.device.api.ui.component.RadioButtonGroup;
+import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
 
@@ -26,20 +26,20 @@ final class CallLogsOption extends VoiceOptionsListItem {
 
    @Override
    protected final void populateMainScreen(MainScreen screen) {
-      screen.add((Field)(new Object(PhoneResources.getString(454), 36028797018963968L)));
-      this._rbGroup = (RadioButtonGroup)(new Object());
+      screen.add(new RichTextField(PhoneResources.getString(454), 36028797018963968L));
+      this._rbGroup = new RadioButtonGroup();
       this._originalSelectedIndex = PhoneOptions.getOptions().getShowCallLogsOption();
       if (this._originalSelectedIndex == 3 && !DirectConnect.isSupported()) {
          this._originalSelectedIndex = 1;
       }
 
-      this._missedCallsRb = (RadioButtonField)(new Object(PhoneResources.getString(6243), this._rbGroup, this._originalSelectedIndex == 0));
-      this._allCallsRb = (RadioButtonField)(new Object(PhoneResources.getString(220), this._rbGroup, this._originalSelectedIndex == 1));
+      this._missedCallsRb = new RadioButtonField(PhoneResources.getString(6243), this._rbGroup, this._originalSelectedIndex == 0);
+      this._allCallsRb = new RadioButtonField(PhoneResources.getString(220), this._rbGroup, this._originalSelectedIndex == 1);
       if (DirectConnect.isSupported()) {
-         this._allCallsNoDirectConnectRb = (RadioButtonField)(new Object(PhoneResources.getString(6260), this._rbGroup, this._originalSelectedIndex == 3));
+         this._allCallsNoDirectConnectRb = new RadioButtonField(PhoneResources.getString(6260), this._rbGroup, this._originalSelectedIndex == 3);
       }
 
-      this._noneRb = (RadioButtonField)(new Object(PhoneResources.getString(6017), this._rbGroup, this._originalSelectedIndex == 2));
+      this._noneRb = new RadioButtonField(PhoneResources.getString(6017), this._rbGroup, this._originalSelectedIndex == 2);
       screen.add(this._missedCallsRb);
       screen.add(this._allCallsRb);
       if (this._allCallsNoDirectConnectRb != null) {

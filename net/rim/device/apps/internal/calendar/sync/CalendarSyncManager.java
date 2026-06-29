@@ -28,7 +28,7 @@ public class CalendarSyncManager {
    }
 
    private void init() {
-      this._syncCollections = (LongHashtable)(new Object(3));
+      this._syncCollections = new LongHashtable(3);
    }
 
    public void addCalendarSyncCollection(long calendarServiceID, CalendarSyncCollection calendarSyncCollection) {

@@ -10,8 +10,8 @@ public class Dynamic_ling_data_english_gb_35k_2 extends ILingDataLoader {
 
    private Dynamic_ling_data_english_gb_35k_2() {
       String[] names = new String[]{"english_gb_35k_2.001.wrd", "english_gb_35k_2.002.wrd", "english_gb_35k_2.003.wrd"};
-      super._resNames = new Object[][]{names};
-      super._locales = new Object[]{Locale.get("en", "GB")};
+      super._resNames = new String[][]{names};
+      super._locales = new Locale[]{Locale.get("en", "GB")};
       super._types = new int[]{17, -805044219, 1685223214, 10};
       super._versions = new int[]{65537, -804651007, 17, -805044219};
    }

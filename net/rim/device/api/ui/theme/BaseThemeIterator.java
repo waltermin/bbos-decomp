@@ -1,5 +1,6 @@
 package net.rim.device.api.ui.theme;
 
+import java.util.NoSuchElementException;
 import net.rim.device.api.util.StringTokenizer;
 
 class BaseThemeIterator {
@@ -15,7 +16,7 @@ class BaseThemeIterator {
          this._alternateBase = null;
          this._alternateBaseFirstRedundant = 0;
       } else {
-         this._alternateBase = (StringTokenizer)(new Object(alternateBase, ", "));
+         this._alternateBase = new StringTokenizer(alternateBase, ", ");
          int alternateBaseLen = this._alternateBase.countTokens();
          this._alternateBaseFirstRedundant = alternateBaseFirstRedundant == null ? alternateBaseLen : Math.min(alternateBaseFirstRedundant, alternateBaseLen);
       }
@@ -35,7 +36,7 @@ class BaseThemeIterator {
          this._alternateBaseIndex++;
          return result;
       } else {
-         throw new Object("no more base theme names");
+         throw new NoSuchElementException("no more base theme names");
       }
    }
 }

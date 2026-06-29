@@ -13,7 +13,7 @@ final class DocViewTextDisplayField$DocViewAppendFieldRunnable implements Runnab
          this._manager = manager;
          this._field = insertField;
       } else {
-         throw new Object("Invalid insert parameters");
+         throw new IllegalArgumentException("Invalid insert parameters");
       }
    }
 

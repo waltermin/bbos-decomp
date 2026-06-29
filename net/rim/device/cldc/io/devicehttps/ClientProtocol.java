@@ -1,7 +1,9 @@
 package net.rim.device.cldc.io.devicehttps;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import javax.microedition.io.HttpConnection;
 import javax.microedition.io.HttpsConnection;
 import javax.microedition.io.SecureConnection;
 import javax.microedition.io.SecurityInfo;
@@ -64,18 +66,18 @@ public final class ClientProtocol extends net.rim.device.cldc.io.devicehttp.Clie
    @Override
    protected final void setSocketConnection(SocketConnection socketConnection) {
       super.setSocketConnection(socketConnection);
-      if (socketConnection instanceof Object) {
+      if (socketConnection instanceof SecureConnection) {
          this._secureConnection = (SecureConnection)socketConnection;
       }
    }
 
    @Override
-   protected final synchronized void transitionToState(int newState) {
+   protected final synchronized void transitionToState(int newState) throws IOException {
       if (newState == 1 && super._state != 1) {
          HttpHeaders hdrs = (HttpHeaders)this.getRequestHeaders();
          hdrs.addProperty("X-RIM-HTTPS", "1.1");
          StreamConnection sub = this.getTLSSubConnection();
-         if (sub instanceof Object) {
+         if (sub instanceof HttpConnection) {
             HttpProtocolBase proxyConn = (HttpProtocolBase)sub;
             int size = hdrs.size();
             String proxyStr = "proxy-";
@@ -118,7 +120,7 @@ public final class ClientProtocol extends net.rim.device.cldc.io.devicehttp.Clie
             }
 
             if (i != 200) {
-               throw new Object();
+               throw new IOException();
             }
          }
 

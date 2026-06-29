@@ -1671,7 +1671,7 @@ final class SoftwareECCryptoToken$ECCryptoSystemData implements CryptoTokenCrypt
    public static final void selfTest(String name, boolean checkRegistry) {
       int index = getIndex(name);
       if (index == -1) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (checkRegistry) {
@@ -1696,7 +1696,7 @@ final class SoftwareECCryptoToken$ECCryptoSystemData implements CryptoTokenCrypt
       Certicom.assertAccessAllowed();
       NativeEC.generateDHSharedSecretNoCofactor(name, privateKey, publicKey, testSecret, 0);
       if (!Arrays.equals(testSecret, sharedSecret)) {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
    }
 
@@ -1740,9 +1740,9 @@ final class SoftwareECCryptoToken$ECCryptoSystemData implements CryptoTokenCrypt
       }
    }
 
-   public SoftwareECCryptoToken$ECCryptoSystemData(String name) {
+   public SoftwareECCryptoToken$ECCryptoSystemData(String name) throws UnsupportedCryptoSystemException {
       if (name == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (name.equals("EC160R1")) {
@@ -1798,7 +1798,7 @@ final class SoftwareECCryptoToken$ECCryptoSystemData implements CryptoTokenCrypt
          this._privateKeyLength = 72;
       } else {
          if (!name.equals("EC571R1")) {
-            throw new Object();
+            throw new UnsupportedCryptoSystemException();
          }
 
          this._fieldBitLength = 571;

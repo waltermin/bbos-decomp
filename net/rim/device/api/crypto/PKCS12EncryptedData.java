@@ -23,7 +23,7 @@ public class PKCS12EncryptedData extends PKCS12ContentInfo {
       // 001: getfield net/rim/device/api/crypto/PKCS12ContentInfo._parsed Z
       // 004: ifeq 008
       // 007: return
-      // 008: new java/lang/Object
+      // 008: new net/rim/device/api/crypto/asn1/ASN1InputByteArray
       // 00b: dup
       // 00c: aload 0
       // 00d: getfield net/rim/device/api/crypto/PKCS12ContentInfo._buffer [B
@@ -112,7 +112,7 @@ public class PKCS12EncryptedData extends PKCS12ContentInfo {
       // 0ba: iload 16
       // 0bc: bipush 2
       // 0be: if_icmpne 0dc
-      // 0c1: new java/lang/Object
+      // 0c1: new net/rim/device/internal/ui/component/PasswordDialog
       // 0c4: dup
       // 0c5: getstatic net/rim/device/api/crypto/PKCS12EncryptedData._rb Lnet/rim/device/api/i18n/ResourceBundle;
       // 0c8: sipush 6046
@@ -123,7 +123,7 @@ public class PKCS12EncryptedData extends PKCS12ContentInfo {
       // 0d4: invokespecial net/rim/device/internal/ui/component/PasswordDialog.<init> (Ljava/lang/String;ZII)V
       // 0d7: astore 10
       // 0d9: goto 0f4
-      // 0dc: new java/lang/Object
+      // 0dc: new net/rim/device/internal/ui/component/PasswordDialog
       // 0df: dup
       // 0e0: getstatic net/rim/device/api/crypto/PKCS12EncryptedData._rb Lnet/rim/device/api/i18n/ResourceBundle;
       // 0e3: sipush 6047
@@ -201,9 +201,9 @@ public class PKCS12EncryptedData extends PKCS12ContentInfo {
       // 175: bipush 1
       // 176: invokespecial net/rim/device/api/crypto/PKCS12KDFPseudoRandomSource.<init> ([B[BIB)V
       // 179: astore 13
-      // 17b: new java/lang/Object
+      // 17b: new net/rim/device/api/crypto/ARC4PseudoRandomSource
       // 17e: dup
-      // 17f: new java/lang/Object
+      // 17f: new net/rim/device/api/crypto/ARC4Key
       // 182: dup
       // 183: aload 13
       // 185: bipush 16
@@ -211,10 +211,10 @@ public class PKCS12EncryptedData extends PKCS12ContentInfo {
       // 18a: invokespecial net/rim/device/api/crypto/ARC4Key.<init> ([B)V
       // 18d: invokespecial net/rim/device/api/crypto/ARC4PseudoRandomSource.<init> (Lnet/rim/device/api/crypto/ARC4Key;)V
       // 190: astore 20
-      // 192: new java/lang/Object
+      // 192: new net/rim/device/api/crypto/PRNGDecryptor
       // 195: dup
       // 196: aload 20
-      // 198: new java/lang/Object
+      // 198: new java/io/ByteArrayInputStream
       // 19b: dup
       // 19c: aload 8
       // 19e: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -240,9 +240,9 @@ public class PKCS12EncryptedData extends PKCS12ContentInfo {
       // 1cc: bipush 1
       // 1cd: invokespecial net/rim/device/api/crypto/PKCS12KDFPseudoRandomSource.<init> ([B[BIB)V
       // 1d0: astore 13
-      // 1d2: new java/lang/Object
+      // 1d2: new net/rim/device/api/crypto/ARC4PseudoRandomSource
       // 1d5: dup
-      // 1d6: new java/lang/Object
+      // 1d6: new net/rim/device/api/crypto/ARC4Key
       // 1d9: dup
       // 1da: aload 13
       // 1dc: bipush 5
@@ -250,10 +250,10 @@ public class PKCS12EncryptedData extends PKCS12ContentInfo {
       // 1e1: invokespecial net/rim/device/api/crypto/ARC4Key.<init> ([B)V
       // 1e4: invokespecial net/rim/device/api/crypto/ARC4PseudoRandomSource.<init> (Lnet/rim/device/api/crypto/ARC4Key;)V
       // 1e7: astore 20
-      // 1e9: new java/lang/Object
+      // 1e9: new net/rim/device/api/crypto/PRNGDecryptor
       // 1ec: dup
       // 1ed: aload 20
-      // 1ef: new java/lang/Object
+      // 1ef: new java/io/ByteArrayInputStream
       // 1f2: dup
       // 1f3: aload 8
       // 1f5: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -287,26 +287,26 @@ public class PKCS12EncryptedData extends PKCS12ContentInfo {
       // 233: bipush 2
       // 235: invokespecial net/rim/device/api/crypto/PKCS12KDFPseudoRandomSource.<init> ([B[BIB)V
       // 238: astore 14
-      // 23a: new java/lang/Object
+      // 23a: new net/rim/device/api/crypto/TripleDESKey
       // 23d: dup
       // 23e: aload 13
       // 240: bipush 24
       // 242: invokevirtual net/rim/device/api/crypto/AbstractPseudoRandomSource.getBytes (I)[B
       // 245: invokespecial net/rim/device/api/crypto/TripleDESKey.<init> ([B)V
       // 248: astore 17
-      // 24a: new java/lang/Object
+      // 24a: new net/rim/device/api/crypto/InitializationVector
       // 24d: dup
       // 24e: aload 14
       // 250: bipush 8
       // 252: invokevirtual net/rim/device/api/crypto/AbstractPseudoRandomSource.getBytes (I)[B
       // 255: invokespecial net/rim/device/api/crypto/InitializationVector.<init> ([B)V
       // 258: astore 19
-      // 25a: new java/lang/Object
+      // 25a: new net/rim/device/api/crypto/CBCDecryptorEngine
       // 25d: dup
-      // 25e: new java/lang/Object
+      // 25e: new net/rim/device/api/crypto/TripleDESDecryptorEngine
       // 261: dup
       // 262: aload 17
-      // 264: checkcast java/lang/Object
+      // 264: checkcast net/rim/device/api/crypto/TripleDESKey
       // 267: invokespecial net/rim/device/api/crypto/TripleDESDecryptorEngine.<init> (Lnet/rim/device/api/crypto/TripleDESKey;)V
       // 26a: aload 19
       // 26c: invokespecial net/rim/device/api/crypto/CBCDecryptorEngine.<init> (Lnet/rim/device/api/crypto/BlockDecryptorEngine;Lnet/rim/device/api/crypto/InitializationVector;)V
@@ -333,26 +333,26 @@ public class PKCS12EncryptedData extends PKCS12ContentInfo {
       // 29c: bipush 2
       // 29e: invokespecial net/rim/device/api/crypto/PKCS12KDFPseudoRandomSource.<init> ([B[BIB)V
       // 2a1: astore 14
-      // 2a3: new java/lang/Object
+      // 2a3: new net/rim/device/api/crypto/TripleDESKey
       // 2a6: dup
       // 2a7: aload 13
       // 2a9: bipush 16
       // 2ab: invokevirtual net/rim/device/api/crypto/AbstractPseudoRandomSource.getBytes (I)[B
       // 2ae: invokespecial net/rim/device/api/crypto/TripleDESKey.<init> ([B)V
       // 2b1: astore 17
-      // 2b3: new java/lang/Object
+      // 2b3: new net/rim/device/api/crypto/InitializationVector
       // 2b6: dup
       // 2b7: aload 14
       // 2b9: bipush 8
       // 2bb: invokevirtual net/rim/device/api/crypto/AbstractPseudoRandomSource.getBytes (I)[B
       // 2be: invokespecial net/rim/device/api/crypto/InitializationVector.<init> ([B)V
       // 2c1: astore 19
-      // 2c3: new java/lang/Object
+      // 2c3: new net/rim/device/api/crypto/CBCDecryptorEngine
       // 2c6: dup
-      // 2c7: new java/lang/Object
+      // 2c7: new net/rim/device/api/crypto/TripleDESDecryptorEngine
       // 2ca: dup
       // 2cb: aload 17
-      // 2cd: checkcast java/lang/Object
+      // 2cd: checkcast net/rim/device/api/crypto/TripleDESKey
       // 2d0: invokespecial net/rim/device/api/crypto/TripleDESDecryptorEngine.<init> (Lnet/rim/device/api/crypto/TripleDESKey;)V
       // 2d3: aload 19
       // 2d5: invokespecial net/rim/device/api/crypto/CBCDecryptorEngine.<init> (Lnet/rim/device/api/crypto/BlockDecryptorEngine;Lnet/rim/device/api/crypto/InitializationVector;)V
@@ -386,14 +386,14 @@ public class PKCS12EncryptedData extends PKCS12ContentInfo {
       // 314: invokevirtual net/rim/device/api/crypto/AbstractPseudoRandomSource.getBytes (I)[B
       // 317: invokespecial net/rim/device/api/crypto/RC2Key.<init> ([B)V
       // 31a: astore 17
-      // 31c: new java/lang/Object
+      // 31c: new net/rim/device/api/crypto/InitializationVector
       // 31f: dup
       // 320: aload 14
       // 322: bipush 8
       // 324: invokevirtual net/rim/device/api/crypto/AbstractPseudoRandomSource.getBytes (I)[B
       // 327: invokespecial net/rim/device/api/crypto/InitializationVector.<init> ([B)V
       // 32a: astore 19
-      // 32c: new java/lang/Object
+      // 32c: new net/rim/device/api/crypto/CBCDecryptorEngine
       // 32f: dup
       // 330: new net/rim/device/api/crypto/RC2DecryptorEngine
       // 333: dup
@@ -432,14 +432,14 @@ public class PKCS12EncryptedData extends PKCS12ContentInfo {
       // 37d: invokevirtual net/rim/device/api/crypto/AbstractPseudoRandomSource.getBytes (I)[B
       // 380: invokespecial net/rim/device/api/crypto/RC2Key.<init> ([B)V
       // 383: astore 17
-      // 385: new java/lang/Object
+      // 385: new net/rim/device/api/crypto/InitializationVector
       // 388: dup
       // 389: aload 14
       // 38b: bipush 8
       // 38d: invokevirtual net/rim/device/api/crypto/AbstractPseudoRandomSource.getBytes (I)[B
       // 390: invokespecial net/rim/device/api/crypto/InitializationVector.<init> ([B)V
       // 393: astore 19
-      // 395: new java/lang/Object
+      // 395: new net/rim/device/api/crypto/CBCDecryptorEngine
       // 398: dup
       // 399: new net/rim/device/api/crypto/RC2DecryptorEngine
       // 39c: dup
@@ -451,13 +451,13 @@ public class PKCS12EncryptedData extends PKCS12ContentInfo {
       // 3aa: astore 18
       // 3ac: goto 3b0
       // 3af: return
-      // 3b0: new java/lang/Object
+      // 3b0: new net/rim/device/api/crypto/BlockDecryptor
       // 3b3: dup
-      // 3b4: new java/lang/Object
+      // 3b4: new net/rim/device/api/crypto/PKCS5UnformatterEngine
       // 3b7: dup
       // 3b8: aload 18
       // 3ba: invokespecial net/rim/device/api/crypto/PKCS5UnformatterEngine.<init> (Lnet/rim/device/api/crypto/BlockDecryptorEngine;)V
-      // 3bd: new java/lang/Object
+      // 3bd: new java/io/ByteArrayInputStream
       // 3c0: dup
       // 3c1: aload 8
       // 3c3: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -467,7 +467,7 @@ public class PKCS12EncryptedData extends PKCS12ContentInfo {
       // 3cd: aload 9
       // 3cf: invokevirtual net/rim/device/api/crypto/CryptoInputStream.read ([B)I
       // 3d2: pop
-      // 3d3: new java/lang/Object
+      // 3d3: new net/rim/device/api/crypto/asn1/ASN1InputByteArray
       // 3d6: dup
       // 3d7: aload 9
       // 3d9: invokespecial net/rim/device/api/crypto/asn1/ASN1InputByteArray.<init> ([B)V

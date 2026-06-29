@@ -12,7 +12,7 @@ public final class ElGamalDecryptorEngine implements PrivateKeyDecryptorEngine {
    public ElGamalDecryptorEngine(DHPrivateKey localPrivateKey, DHPublicKey remoteEphemeralKey) {
       if (localPrivateKey != null && remoteEphemeralKey != null) {
          if (!localPrivateKey.getDHCryptoSystem().equals(remoteEphemeralKey.getDHCryptoSystem())) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          this._localPrivateKey = localPrivateKey;
@@ -20,12 +20,12 @@ public final class ElGamalDecryptorEngine implements PrivateKeyDecryptorEngine {
          this._ephemeralkey = remoteEphemeralKey;
          this._available = true;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
-   public final void decrypt(byte[] param1, int param2, byte[] param3, int param4) {
+   public final void decrypt(byte[] param1, int param2, byte[] param3, int param4) throws CryptoTokenException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -55,14 +55,14 @@ public final class ElGamalDecryptorEngine implements PrivateKeyDecryptorEngine {
       // 22: isub
       // 23: iload 4
       // 25: if_icmpge 30
-      // 28: new java/lang/Object
+      // 28: new java/lang/IllegalArgumentException
       // 2b: dup
       // 2c: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 2f: athrow
       // 30: aload 0
       // 31: getfield net/rim/device/api/crypto/ElGamalDecryptorEngine._available Z
       // 34: ifne 3f
-      // 37: new java/lang/Object
+      // 37: new java/lang/IllegalStateException
       // 3a: dup
       // 3b: invokespecial java/lang/IllegalStateException.<init> ()V
       // 3e: athrow
@@ -101,21 +101,21 @@ public final class ElGamalDecryptorEngine implements PrivateKeyDecryptorEngine {
       // 7c: invokestatic net/rim/device/api/crypto/CryptoByteArrayArithmetic.multiply ([BII[BII[BII[BII)V
       // 7f: goto af
       // 82: astore 5
-      // 84: new java/lang/Object
+      // 84: new net/rim/device/api/crypto/CryptoTokenException
       // 87: dup
       // 88: aload 5
       // 8a: invokevirtual net/rim/device/api/crypto/CryptoUnsupportedOperationException.toString ()Ljava/lang/String;
       // 8d: invokespecial net/rim/device/api/crypto/CryptoTokenException.<init> (Ljava/lang/String;)V
       // 90: athrow
       // 91: astore 5
-      // 93: new java/lang/Object
+      // 93: new net/rim/device/api/crypto/CryptoTokenException
       // 96: dup
       // 97: aload 5
       // 99: invokevirtual net/rim/device/api/crypto/InvalidCryptoSystemException.toString ()Ljava/lang/String;
       // 9c: invokespecial net/rim/device/api/crypto/CryptoTokenException.<init> (Ljava/lang/String;)V
       // 9f: athrow
       // a0: astore 5
-      // a2: new java/lang/Object
+      // a2: new net/rim/device/api/crypto/CryptoTokenException
       // a5: dup
       // a6: aload 5
       // a8: invokevirtual net/rim/device/api/crypto/InvalidKeyException.toString ()Ljava/lang/String;
@@ -142,19 +142,19 @@ public final class ElGamalDecryptorEngine implements PrivateKeyDecryptorEngine {
 
    public static final void selfTest() {
       try {
-         DHCryptoSystem system = (DHCryptoSystem)(new Object("SUN1024"));
-         DHPrivateKey key = (DHPrivateKey)(new Object(system, Arrays.copy(SelfTestData_PK2.ELGAMAL_LOCAL_PRIVATE_KEY)));
-         ElGamalDecryptorEngine engine = new ElGamalDecryptorEngine(key, (DHPublicKey)(new Object(system, SelfTestData_PK2.ELGAMAL_EPHEMERAL_PUBLIC_KEY)));
+         DHCryptoSystem system = new DHCryptoSystem("SUN1024");
+         DHPrivateKey key = new DHPrivateKey(system, Arrays.copy(SelfTestData_PK2.ELGAMAL_LOCAL_PRIVATE_KEY));
+         ElGamalDecryptorEngine engine = new ElGamalDecryptorEngine(key, new DHPublicKey(system, SelfTestData_PK2.ELGAMAL_EPHEMERAL_PUBLIC_KEY));
          byte[] text = "testing ElGamal Encryptor Engine".getBytes();
          byte[] plaintext = new byte[engine.getBlockLength()];
          System.arraycopy(text, 0, plaintext, 1, text.length);
          byte[] result = new byte[plaintext.length];
          engine.decrypt(SelfTestData_PK2.ELGAMAL_CIPHERTEXT, 0, result, 0);
          if (!Arrays.equals(plaintext, result)) {
-            throw new Object();
+            throw new CryptoSelfTestError();
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
    }
 

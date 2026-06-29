@@ -14,14 +14,7 @@ final class ManagementServiceImpl$KeyRefreshTask extends TimerTask {
 
    @Override
    public final void run() {
-      Logger.log(
-         this.toString(),
-         ((StringBuffer)(new Object("Key Refresh; agID: ")))
-            .append(this._params._agID)
-            .append(this.isRetryTimer() ? "; retryTimer" : "; regularTimer")
-            .toString(),
-         4
-      );
+      Logger.log(this.toString(), "Key Refresh; agID: " + this._params._agID + (this.isRetryTimer() ? "; retryTimer" : "; regularTimer"), 4);
       this.this$0.performKeyRefresh(this._params._agID);
    }
 

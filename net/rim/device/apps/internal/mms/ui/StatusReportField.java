@@ -24,7 +24,7 @@ final class StatusReportField extends VerticalFieldManager {
       this._context = context;
       this._reportCount = this._type == 74 ? this._message.getDeliveryReportCount() : this._message.getReadReportCount();
       this.deleteAll();
-      EditField field = (EditField)(new Object(MMSResources.getString(this._type), ((StringBuffer)(new Object(" "))).append(this._reportCount).toString()));
+      EditField field = new EditField(MMSResources.getString(this._type), " " + this._reportCount);
       field.setEditable(false);
       this.add(field);
    }
@@ -32,7 +32,7 @@ final class StatusReportField extends VerticalFieldManager {
    @Override
    protected final void makeMenu(Menu menu, int instance) {
       super.makeMenu(menu, instance);
-      if (this._reportCount > 0 && menu instanceof Object) {
+      if (this._reportCount > 0 && menu instanceof SystemEnabledMenu) {
          SystemEnabledMenu systemMenu = (SystemEnabledMenu)menu;
          Verb showDetailsVerb = new StatusReportField$1(this, 16978432, MMSResources.getResourceBundle(), 70);
          systemMenu.add(showDetailsVerb);
@@ -44,7 +44,7 @@ final class StatusReportField extends VerticalFieldManager {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
       Factory phoneNumberFactory = (Factory)ar.waitFor(3797587162219887872L);
       Factory emailAddressFactory = (Factory)ar.waitFor(-2985347935260258684L);
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       int pos = str.indexOf("/TYPE");
       if (pos >= 0) {
          String globalPhoneNumber = str.substring(0, pos).trim();

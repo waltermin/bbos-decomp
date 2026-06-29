@@ -12,6 +12,7 @@ import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.system.Display;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.apps.api.ribbon.RibbonBanner;
 import net.rim.device.apps.api.ui.AppsMainScreen;
@@ -77,7 +78,7 @@ public final class RenderScreen extends AppsMainScreen implements RenderingAppli
 
    private final Field createRenderErrorField() {
       ResourceBundle rb = ResourceBundle.getBundle(-6927834585541129670L, "net.rim.device.apps.internal.resource.MediaRecorder");
-      return (Field)(new Object(rb.getString(13), 36028797018963968L));
+      return new RichTextField(rb.getString(13), 36028797018963968L);
    }
 
    public final int getContentWindowWidth() {

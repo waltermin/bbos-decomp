@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.qm.peer;
 
 import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.ActiveAutoTextEditField;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
@@ -15,10 +16,10 @@ final class RenameContactDialog extends OkCancelDialog {
 
    RenameContactDialog(PeerContact contact) {
       this.addTitle(QmResources.getString(58));
-      StringPattern[] smileys = new Object[]{Smileys.getSmileyFacility()};
-      StringPatternContainer patterns = (StringPatternContainer)(new Object(smileys));
-      this._nameField = (EditField)(new Object("", contact.getDisplayName(), 1000000, 10737418240L, patterns));
-      HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(1125899906842624L));
+      StringPattern[] smileys = new StringPattern[]{Smileys.getSmileyFacility()};
+      StringPatternContainer patterns = new StringPatternContainer(smileys);
+      this._nameField = new ActiveAutoTextEditField("", contact.getDisplayName(), 1000000, 10737418240L, patterns);
+      HorizontalFieldManager hfm = new HorizontalFieldManager(1125899906842624L);
       hfm.add(this._nameField);
       this.add(hfm);
       this.addOkCancelButtons();

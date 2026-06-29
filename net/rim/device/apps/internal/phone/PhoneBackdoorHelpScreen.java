@@ -3,10 +3,10 @@ package net.rim.device.apps.internal.phone;
 import net.rim.device.api.itpolicy.ITPolicy;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.system.Branding;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.apps.api.phone.VoiceServices;
 import net.rim.device.apps.internal.phone.api.PhoneCallInitialData;
@@ -52,7 +52,7 @@ final class PhoneBackdoorHelpScreen extends MainScreen {
 
    public PhoneBackdoorHelpScreen(PhoneAppScreen phoneAppScreen) {
       super(2306142076376449024L);
-      this.setTitle((Field)(new Object("Press ESCAPE to return")));
+      this.setTitle(new LabelField("Press ESCAPE to return"));
       boolean insecureDevice = !InternalServices.isDeviceSecure() || Branding.getData(16) != null;
       if (insecureDevice) {
          _backdoorStrings = _developmentBackdoorStrings;
@@ -129,8 +129,8 @@ final class PhoneBackdoorHelpScreen extends MainScreen {
             return true;
          case 1346587734:
             for (int i = 0; i < 20; i++) {
-               CallerIDInfo callerIDInfo = PhoneUtilities.createCallerIDInfo(((StringBuffer)(new Object(""))).append(i).toString());
-               PhoneCallInitialData data = (PhoneCallInitialData)(new Object(0, (byte)1, 0, callerIDInfo, null));
+               CallerIDInfo callerIDInfo = PhoneUtilities.createCallerIDInfo("" + i);
+               PhoneCallInitialData data = new PhoneCallInitialData(0, (byte)1, 0, callerIDInfo, null);
                PhoneCallModelImpl callLog = (PhoneCallModelImpl)PhoneUtilities.createPhoneCallModel(data);
                if (callLog != null) {
                   PhoneFolders.addItem(callLog);
@@ -142,7 +142,7 @@ final class PhoneBackdoorHelpScreen extends MainScreen {
             return true;
          case 1363952964:
             boolean ledPolicy = ITPolicy.getBoolean(54, false);
-            Dialog.inform(((StringBuffer)(new Object("Force LED Blink = "))).append(ledPolicy).toString());
+            Dialog.inform("Force LED Blink = " + ledPolicy);
             return true;
          case 1396916556:
             Runnable callAlertRunner = new PhoneBackdoorHelpScreen$8(this);
@@ -170,7 +170,7 @@ final class PhoneBackdoorHelpScreen extends MainScreen {
             return true;
          case 1397903686:
             this.exit();
-            SimpleInputDialog dlg = (SimpleInputDialog)(new Object(3, "enter SS error code"));
+            SimpleInputDialog dlg = new SimpleInputDialog(3, "enter SS error code");
             dlg.setModal(true);
             dlg.show();
             String error = dlg.getText();

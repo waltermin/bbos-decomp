@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.supl;
 
 import java.io.DataInput;
 import net.rim.device.apps.api.utility.serialization.BaseConverter;
+import net.rim.device.apps.api.utility.serialization.SerializationException;
 
 final class ULPConverter extends BaseConverter {
    private static final byte ASCII_LF = 10;
@@ -14,7 +15,7 @@ final class ULPConverter extends BaseConverter {
    }
 
    @Override
-   public final Object convert(DataInput param1, Object param2) {
+   public final Object convert(DataInput param1, Object param2) throws SerializationException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -34,10 +35,10 @@ final class ULPConverter extends BaseConverter {
       // 0f: bipush 0
       // 10: istore 7
       // 12: aload 2
-      // 13: instanceof java/lang/Object
+      // 13: instanceof net/rim/device/api/io/http/HttpHeaders
       // 16: ifeq 85
       // 19: aload 1
-      // 1a: instanceof java/lang/Object
+      // 1a: instanceof net/rim/device/api/io/http/PushInputStream
       // 1d: ifeq 85
       // 20: getstatic java/lang/System.out Ljava/io/PrintStream;
       // 23: ldc_w "Parsing PDU"
@@ -89,7 +90,7 @@ final class ULPConverter extends BaseConverter {
       // 7e: astore 8
       // 80: goto 85
       // 83: astore 8
-      // 85: new java/lang/Object
+      // 85: new net/rim/device/apps/api/utility/serialization/SerializationException
       // 88: dup
       // 89: invokespecial net/rim/device/apps/api/utility/serialization/SerializationException.<init> ()V
       // 8c: athrow

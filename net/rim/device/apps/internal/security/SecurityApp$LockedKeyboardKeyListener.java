@@ -17,7 +17,7 @@ final class SecurityApp$LockedKeyboardKeyListener implements KeyListener {
       this.this$0 = _1;
       this._applicationManager = ApplicationManager.getApplicationManager();
       this._phone = Phone.getInstance();
-      this._buffer = (StringBuffer)(new Object());
+      this._buffer = new StringBuffer();
    }
 
    @Override

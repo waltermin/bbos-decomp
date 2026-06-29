@@ -51,12 +51,12 @@ final class DiagOptions$DiagOptionsSyncItem extends OTASyncCapableSyncItem {
                default:
                   byte[] pinBytes = new byte[dataLength];
                   buffer.readFully(pinBytes);
-                  options.setPinRecpt((String)(new Object(pinBytes)));
+                  options.setPinRecpt(new String(pinBytes));
                   break;
                case 1:
                   byte[] emailBytes = new byte[dataLength];
                   buffer.readFully(emailBytes);
-                  options.setEmailRecpt((String)(new Object(emailBytes)));
+                  options.setEmailRecpt(new String(emailBytes));
             }
          } finally {
             if (var11) {

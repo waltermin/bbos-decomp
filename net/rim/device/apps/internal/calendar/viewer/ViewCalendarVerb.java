@@ -29,7 +29,7 @@ public final class ViewCalendarVerb extends CalendarViewerVerb {
          }
 
          if (pid == -1) {
-            this._calendarAppDescriptor = (ApplicationDescriptor)(new Object(this._calendarAppDescriptor, new String[]{"noview"}));
+            this._calendarAppDescriptor = new ApplicationDescriptor(this._calendarAppDescriptor, new String[]{"noview"});
             pid = appManager.runApplication(this._calendarAppDescriptor);
          }
 

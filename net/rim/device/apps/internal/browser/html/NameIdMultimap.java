@@ -5,8 +5,8 @@ import net.rim.device.api.util.IntVector;
 import net.rim.device.api.util.ToIntHashtable;
 
 class NameIdMultimap {
-   private ToIntHashtable _singletons = (ToIntHashtable)(new Object());
-   private Hashtable _multiple = (Hashtable)(new Object());
+   private ToIntHashtable _singletons = new ToIntHashtable();
+   private Hashtable _multiple = new Hashtable();
 
    public NameIdMultimap() {
    }
@@ -29,7 +29,7 @@ class NameIdMultimap {
             this._singletons.put(key, value);
          } else {
             this._singletons.remove(key);
-            IntVector v = (IntVector)(new Object());
+            IntVector v = new IntVector();
             v.addElement(item);
             v.addElement(value);
             this._multiple.put(key, v);

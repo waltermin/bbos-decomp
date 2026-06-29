@@ -12,7 +12,7 @@ import net.rim.device.internal.proxy.Proxy;
 final class UpdateLastUsedEntryVerb extends WrapperVerb implements Runnable {
    private AddressCardModel _addressCard;
    Object _entry;
-   private static ContextObjectWR _contextObjectWR = (ContextObjectWR)(new Object(36));
+   private static ContextObjectWR _contextObjectWR = new ContextObjectWR(36);
 
    UpdateLastUsedEntryVerb(AddressCardModel addressCard, Object entry, Verb verb) {
       super(verb, null, verb.getOrdering());
@@ -23,11 +23,11 @@ final class UpdateLastUsedEntryVerb extends WrapperVerb implements Runnable {
    @Override
    public final Object invoke(Object parameter) {
       Object result = super._innerVerb.invoke(parameter);
-      if (this._addressCard instanceof Object) {
+      if (this._addressCard instanceof DefaultProvider) {
          DefaultProvider defaultProvider = (DefaultProvider)this._addressCard;
          ContextObject contextObject = _contextObjectWR.getContextObject();
          synchronized (contextObject) {
-            contextObject.put(6609423255094033855L, new Object(super._innerVerb.getVerbGroupId()));
+            contextObject.put(6609423255094033855L, new Integer(super._innerVerb.getVerbGroupId()));
             defaultProvider.getDefault(null, contextObject);
          }
 
@@ -42,7 +42,7 @@ final class UpdateLastUsedEntryVerb extends WrapperVerb implements Runnable {
       DefaultProvider defaultProvider = (DefaultProvider)this._addressCard;
       ContextObject contextObject = _contextObjectWR.getContextObject();
       synchronized (contextObject) {
-         contextObject.put(6609423255094033855L, new Object(super._innerVerb.getVerbGroupId()));
+         contextObject.put(6609423255094033855L, new Integer(super._innerVerb.getVerbGroupId()));
          defaultProvider.updateDefault(this._entry, contextObject);
       }
    }

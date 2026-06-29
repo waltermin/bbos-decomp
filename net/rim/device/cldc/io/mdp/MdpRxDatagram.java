@@ -37,7 +37,7 @@ final class MdpRxDatagram implements Persistable {
       }
 
       this._subAddress = subAddress;
-      if (subAddress instanceof Object) {
+      if (subAddress instanceof UdpInternalAddress) {
          this._wtAddress = ((UdpInternalAddress)subAddress).getGpakHostAddress();
       }
    }

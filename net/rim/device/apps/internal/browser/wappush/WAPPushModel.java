@@ -64,7 +64,7 @@ public class WAPPushModel
    static final int ICON_COLUMN = 0;
    static final int TIME_COLUMN = 1;
    static final int DESCRIPTION_COLUMN = 2;
-   private static ContextObject _notificationsContext = (ContextObject)(new Object());
+   private static ContextObject _notificationsContext = new ContextObject();
 
    public int getPreferredConfigType() {
       return this._preferredConfigType;
@@ -306,7 +306,7 @@ public class WAPPushModel
 
    @Override
    public boolean convert(Object context, Object target) {
-      if (!(target instanceof Object)) {
+      if (!(target instanceof SyncBuffer)) {
          return false;
       }
 
@@ -331,8 +331,8 @@ public class WAPPushModel
 
    @Override
    public int match(Object criteria) {
-      if (!(criteria instanceof Object)) {
-         SearchCriterion[] crit = (Object[])criteria;
+      if (!(criteria instanceof SearchCriterion)) {
+         SearchCriterion[] crit = (SearchCriterion[])criteria;
          int var6 = crit.length;
 
          while (--var6 >= 0) {
@@ -358,7 +358,7 @@ public class WAPPushModel
                match = true;
                break;
             case 24:
-               match = crit.getValue() == this.getUID();
+               match = (Integer)crit.getValue() == this.getUID();
                break;
             case 28:
                match = this._status == 1;

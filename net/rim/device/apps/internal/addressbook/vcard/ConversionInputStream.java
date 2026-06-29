@@ -83,11 +83,11 @@ class ConversionInputStream extends InputStream {
    private void ensureStream() {
       if (this._istream == null) {
          try {
-            ByteArrayOutputStream ostream = (ByteArrayOutputStream)(new Object());
+            ByteArrayOutputStream ostream = new ByteArrayOutputStream();
             AddressCardToVCardConverter.writeVCard(this._model, ostream, this._version, this._attributeMask, this._convertForBluetooth, this._extensionData);
-            this._istream = (ByteArrayInputStream)(new Object(ostream.toByteArray()));
+            this._istream = new ByteArrayInputStream(ostream.toByteArray());
          } finally {
-            this._istream = (ByteArrayInputStream)(new Object(new byte[0]));
+            this._istream = new ByteArrayInputStream(new byte[0]);
             return;
          }
       }

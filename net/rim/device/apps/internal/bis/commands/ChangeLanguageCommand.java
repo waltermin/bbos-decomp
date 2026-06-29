@@ -55,9 +55,7 @@ public final class ChangeLanguageCommand implements DomainCommand {
             return DomainCommand.SESSION_TIMEOUT_RESULT;
          }
 
-         BISEventLogger.logEvent(
-            ((StringBuffer)(new Object("Change Language: Unhandled REST response code: "))).append(callResult.getRESTStatusCode()).toString(), 0
-         );
+         BISEventLogger.logEvent("Change Language: Unhandled REST response code: " + callResult.getRESTStatusCode(), 0);
          return new DomainCommandResult("failed", ApplicationResources.getString(192), null);
       } catch (Throwable var14) {
          BISEventLogger.logEvent(e.toString(), 0);

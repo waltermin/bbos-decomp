@@ -21,7 +21,7 @@ public class PGPSecureEmailServerDefaultSendMethod extends SecureEmailAwareSendM
       if (CertificateHarvesterManager.addCertificateHarvester(certificateHarvester, context) && serviceRecord != null) {
          String alwaysBCCEmailAddress = PGPFactory.getInstance().getUtilities().getAlwaysBCCEmailAddress(serviceRecord.getUid());
          if (alwaysBCCEmailAddress != null && alwaysBCCEmailAddress.length() > 0) {
-            RecipientData recipientData = (RecipientData)(new Object(null, 1, new Object[]{alwaysBCCEmailAddress}, null));
+            RecipientData recipientData = new RecipientData(null, 1, new String[]{alwaysBCCEmailAddress}, null);
             certificateHarvester.recipientAdded(recipientData);
          }
       }

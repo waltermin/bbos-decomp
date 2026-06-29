@@ -15,7 +15,7 @@ final class PhoneEntry extends Action {
    Object _extraInfo;
 
    PhoneEntry() {
-      super((ApplicationDescriptor)(new Object(ApplicationDescriptor.currentApplicationDescriptor(), new String[]{"show"})), "net_rim_bb_phone_app.Phone", 20);
+      super(new ApplicationDescriptor(ApplicationDescriptor.currentApplicationDescriptor(), new String[]{"show"}), "net_rim_bb_phone_app.Phone", 20);
    }
 
    @Override

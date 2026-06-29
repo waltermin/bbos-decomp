@@ -32,7 +32,7 @@ public class EScreenController implements EngineeringDataListener, Runnable, Sys
       if ((actionId & -65536) == 0) {
          switch (actionId) {
             case 0:
-               Dialog.alert(((StringBuffer)(new Object("Invalid actionId="))).append(actionId).toString());
+               Dialog.alert("Invalid actionId=" + actionId);
                return;
             case 1:
             default:
@@ -72,7 +72,7 @@ public class EScreenController implements EngineeringDataListener, Runnable, Sys
       if ((screenId & -65536) == 0) {
          switch (screenId) {
             case 0:
-               Dialog.alert(((StringBuffer)(new Object("Invalid screenId="))).append(screenId).toString());
+               Dialog.alert("Invalid screenId=" + screenId);
                return;
             case 1:
                break;
@@ -107,15 +107,7 @@ public class EScreenController implements EngineeringDataListener, Runnable, Sys
          this._model.setScreen(screenId, idCookie);
          this._view.reset();
       } catch (EScreenException e) {
-         Dialog.alert(
-            ((StringBuffer)(new Object("Unable to set screen, code=")))
-               .append(e.getCode())
-               .append(".\nscreenId=")
-               .append(screenId)
-               .append(" idCookie=")
-               .append(idCookie)
-               .toString()
-         );
+         Dialog.alert("Unable to set screen, code=" + e.getCode() + ".\nscreenId=" + screenId + " idCookie=" + idCookie);
          this.popScreen();
       }
    }
@@ -145,15 +137,7 @@ public class EScreenController implements EngineeringDataListener, Runnable, Sys
                this._view.setItemIndex(itemIndex);
                break;
             } catch (EScreenException e) {
-               Dialog.alert(
-                  ((StringBuffer)(new Object("Unable to popScreen, code=")))
-                     .append(e.getCode())
-                     .append(".\n screenId=")
-                     .append(screenId)
-                     .append(" idCookie=")
-                     .append(idCookie)
-                     .toString()
-               );
+               Dialog.alert("Unable to popScreen, code=" + e.getCode() + ".\n screenId=" + screenId + " idCookie=" + idCookie);
             }
          }
       }

@@ -92,7 +92,7 @@ public class DeviceInfoCollection extends DataCollectionImpl {
             deviceIMEI = this.imeiToString(GPRSInfo.getIMEI());
             break;
          case 4:
-            deviceIMEI = ((StringBuffer)(new Object(""))).append(CDMAInfo.getESN()).toString();
+            deviceIMEI = "" + CDMAInfo.getESN();
             break;
          case 5:
             deviceIMEI = this.imeiToString(IDENInfo.getIMEI());
@@ -106,7 +106,7 @@ public class DeviceInfoCollection extends DataCollectionImpl {
          return null;
       }
 
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
 
       for (int i = 0; i < imei.length; i++) {
          sb.append((char)(imei[i] + 48));
@@ -181,7 +181,7 @@ public class DeviceInfoCollection extends DataCollectionImpl {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

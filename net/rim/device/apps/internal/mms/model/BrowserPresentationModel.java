@@ -40,32 +40,32 @@ final class BrowserPresentationModel implements MMSPresentationModel, FieldProvi
 
    @Override
    public final void addPresentationElement(String filename, int type, boolean isEditable) {
-      throw new Object("Not implemented yet");
+      throw new RuntimeException("Not implemented yet");
    }
 
    @Override
    public final void addPresentationElement(String filename, int type, boolean isEditable, boolean isForwardLocked) {
-      throw new Object("Not implemented yet");
+      throw new RuntimeException("Not implemented yet");
    }
 
    @Override
    public final void addPresentationElement(MMSAttachment attachment, boolean isEditable) {
-      throw new Object("Not implemented yet");
+      throw new RuntimeException("Not implemented yet");
    }
 
    @Override
    public final void addPresentationElement(MMSAttachment attachment, boolean isEditable, boolean isForwardLocked) {
-      throw new Object("Not implemented yet");
+      throw new RuntimeException("Not implemented yet");
    }
 
    @Override
    public final void addSlideBreak(int duration, boolean isEditable) {
-      throw new Object("Not implemented yet");
+      throw new RuntimeException("Not implemented yet");
    }
 
    @Override
    public final boolean canAddPresentationElement(int attachmentType, long attachmentSize) {
-      throw new Object("Not implemented yet");
+      throw new RuntimeException("Not implemented yet");
    }
 
    @Override

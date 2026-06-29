@@ -13,10 +13,10 @@ import net.rim.device.apps.internal.browser.page.Renderer;
 import net.rim.device.internal.browser.util.PipeContext;
 
 final class AtomRenderer extends Renderer {
-   private StringBuffer _buffer = (StringBuffer)(new Object());
+   private StringBuffer _buffer = new StringBuffer();
    private WebFeedField _webFeedField;
-   private Stack _itemStack = (Stack)(new Object());
-   private CharacterEntitiesParser _charEntities = (CharacterEntitiesParser)(new Object());
+   private Stack _itemStack = new Stack();
+   private CharacterEntitiesParser _charEntities = new CharacterEntitiesParser();
    private WebFeedItem _currentItem;
    private BrowserContentImpl _browserContent;
    private InputStream _in;
@@ -37,9 +37,9 @@ final class AtomRenderer extends Renderer {
    public AtomRenderer(HttpConnection connection, RenderingSession renderingSession, RenderingApplication renderingApplication, String referrer, int flags) {
       super(connection, renderingSession, renderingApplication, referrer, flags);
       this._webFeedField = new WebFeedField(renderingSession);
-      this._browserContent = (BrowserContentImpl)(new Object(
+      this._browserContent = new BrowserContentImpl(
          this, connection.getURL(), this._webFeedField, super._renderingApplication, super._renderingOptions, super._flags
-      ));
+      );
       this._webFeedField.setBrowserContent(this._browserContent);
    }
 
@@ -75,7 +75,7 @@ final class AtomRenderer extends Renderer {
       // 1f: ifnull a1
       // 22: aload 0
       // 23: getfield net/rim/device/apps/internal/browser/webfeed/AtomRenderer._in Ljava/io/InputStream;
-      // 26: instanceof java/lang/Object
+      // 26: instanceof net/rim/device/internal/browser/util/PipeInput
       // 29: ifeq a1
       // 2c: bipush 0
       // 2d: i2l
@@ -83,17 +83,17 @@ final class AtomRenderer extends Renderer {
       // 2f: aload 0
       // 30: getfield net/rim/device/apps/internal/browser/page/Renderer._inputConnection Ljavax/microedition/io/InputConnection;
       // 33: dup
-      // 34: instanceof java/lang/Object
+      // 34: instanceof javax/microedition/io/HttpConnection
       // 37: ifne 3e
       // 3a: pop
       // 3b: goto 47
-      // 3e: checkcast java/lang/Object
+      // 3e: checkcast javax/microedition/io/HttpConnection
       // 41: invokeinterface javax/microedition/io/ContentConnection.getLength ()J 1
       // 46: lstore 3
       // 47: aload 0
       // 48: aload 0
       // 49: getfield net/rim/device/apps/internal/browser/webfeed/AtomRenderer._in Ljava/io/InputStream;
-      // 4c: checkcast java/lang/Object
+      // 4c: checkcast net/rim/device/internal/browser/util/PipeInput
       // 4f: invokeinterface net/rim/device/internal/browser/util/PipeInput.getPosition ()Lnet/rim/device/internal/browser/util/PipeContext; 1
       // 54: putfield net/rim/device/apps/internal/browser/webfeed/AtomRenderer._pipePosition Lnet/rim/device/internal/browser/util/PipeContext;
       // 57: lload 3
@@ -105,7 +105,7 @@ final class AtomRenderer extends Renderer {
       // 5f: getfield net/rim/device/apps/internal/browser/webfeed/AtomRenderer._pipePosition Lnet/rim/device/internal/browser/util/PipeContext;
       // 62: ifnull a1
       // 65: aload 0
-      // 66: new java/lang/Object
+      // 66: new net/rim/device/api/browser/field/ContentReadEvent
       // 69: dup
       // 6a: aload 0
       // 6b: getfield net/rim/device/apps/internal/browser/page/Renderer._inputConnection Ljavax/microedition/io/InputConnection;
@@ -144,7 +144,7 @@ final class AtomRenderer extends Renderer {
       // b2: invokestatic net/rim/device/apps/internal/browser/webfeed/WebFeedStatusStore.getInstance ()Lnet/rim/device/apps/internal/browser/webfeed/WebFeedStatusStore;
       // b5: aload 0
       // b6: getfield net/rim/device/apps/internal/browser/page/Renderer._inputConnection Ljavax/microedition/io/InputConnection;
-      // b9: checkcast java/lang/Object
+      // b9: checkcast javax/microedition/io/HttpConnection
       // bc: invokeinterface javax/microedition/io/HttpConnection.getURL ()Ljava/lang/String; 1
       // c1: aload 0
       // c2: getfield net/rim/device/apps/internal/browser/webfeed/AtomRenderer._webFeedField Lnet/rim/device/apps/internal/browser/webfeed/WebFeedField;

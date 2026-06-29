@@ -14,7 +14,7 @@ public final class BitmapCache {
    private int _thumbnailHeight;
 
    public BitmapCache(int size) {
-      this._cacheImages = new Object[size];
+      this._cacheImages = new EncodedImage[size];
       this._lru = new int[size];
       int i = 0;
 
@@ -28,8 +28,8 @@ public final class BitmapCache {
          this.clear();
          this._thumbnailWidth = thumbnailWidth;
          this._thumbnailHeight = thumbnailHeight;
-         this._cacheBitmap = (Bitmap)(new Object(thumbnailWidth, this._lru.length * thumbnailHeight));
-         this._cacheGraphics = (Graphics)(new Object(this._cacheBitmap));
+         this._cacheBitmap = new Bitmap(thumbnailWidth, this._lru.length * thumbnailHeight);
+         this._cacheGraphics = new Graphics(this._cacheBitmap);
       }
    }
 

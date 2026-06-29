@@ -84,7 +84,7 @@ public final class DataVisitor extends DefinitionVisitorAdapter {
       defs.setElementAt(objectOffset, defOffset + 2);
       Vector objectData = this._dataDefs._objectData;
       Vector enums = enumeration.getValues();
-      String[] enumValues = new Object[enums.size()];
+      String[] enumValues = new String[enums.size()];
       enums.copyInto(enumValues);
       objectData.addElement(enumValues);
       this._dataDefsOffset._defsOffset = defsSize;

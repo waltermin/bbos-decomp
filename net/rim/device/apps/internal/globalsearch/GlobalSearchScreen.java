@@ -13,9 +13,11 @@ import net.rim.device.api.ui.component.AutoTextEditField;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
-import net.rim.device.api.ui.text.TextFilter;
+import net.rim.device.api.ui.component.SeparatorField;
+import net.rim.device.api.ui.text.NumericTextFilter;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.StringUtilities;
+import net.rim.device.apps.api.addressbook.SelectNameVerb;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.search.GlobalSearchRegistry;
 import net.rim.device.apps.api.search.SearchCriterion;
@@ -59,25 +61,25 @@ final class GlobalSearchScreen extends AppsMainScreen implements BackdoorKeyList
       this.deleteAll();
       PersistentContent.addWeakListener(this);
       this.setTitle(StringUtilities.removeChars(_rb.getString(0), "̲"));
-      this._searchString = (AutoTextEditField)(new Object(CommonResources.getString(9134), null, 1000000, 4503601774854144L));
+      this._searchString = new AutoTextEditField(CommonResources.getString(9134), null, 1000000, 4503601774854144L);
       this.add(this._searchString);
-      this._nameString = (AutoTextEditField)(new Object(CommonResources.getString(2002), null, 1000000, 4503601774854144L));
+      this._nameString = new AutoTextEditField(CommonResources.getString(2002), null, 1000000, 4503601774854144L);
       this.add(this._nameString);
       if (this._advancedMode) {
-         this._idString = (EditField)(new Object(_rb.getString(15), null, 1000000, 4503601774854144L));
-         this._idString.setFilter((TextFilter)(new Object(1)));
+         this._idString = new EditField(_rb.getString(15), null, 1000000, 4503601774854144L);
+         this._idString.setFilter(new NumericTextFilter(1));
          this.add(this._idString);
       }
 
       if (this._developmentMode) {
-         this.add((Field)(new Object()));
-         this._searchForAll = (ObjectChoiceField)(new Object(_rb.getString(12), new Object[]{_rb.getString(13), _rb.getString(14)}, 0));
+         this.add(new SeparatorField());
+         this._searchForAll = new ObjectChoiceField(_rb.getString(12), new String[]{_rb.getString(13), _rb.getString(14)}, 0);
          this.add(this._searchForAll);
-         this._combineUsing = (ObjectChoiceField)(new Object(_rb.getString(9), new Object[]{_rb.getString(10), _rb.getString(11)}, 1));
+         this._combineUsing = new ObjectChoiceField(_rb.getString(9), new String[]{_rb.getString(10), _rb.getString(11)}, 1);
          this.add(this._combineUsing);
       }
 
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       long[] ids = GlobalSearchRegistry.getRegistrationIds();
       int numIds = ids.length;
       int[] priorities = new int[numIds];
@@ -144,21 +146,21 @@ final class GlobalSearchScreen extends AppsMainScreen implements BackdoorKeyList
 
       String searchString = this._searchString.getText().trim();
       String nameString = this._nameString.getText().trim();
-      SearchCriterion[] orCriteria = new Object[0];
+      SearchCriterion[] orCriteria = new SearchCriterion[0];
       if (searchString.length() != 0) {
-         TextSearchModel textCriteria = (TextSearchModel)(new Object());
+         TextSearchModel textCriteria = new TextSearchModel();
          textCriteria.setMatchAllPatterns(!this._developmentMode || this._searchForAll.getSelectedIndex() == 0);
          textCriteria.setValue(searchString);
          Arrays.add(orCriteria, textCriteria);
          if (this.doesStringContainNumber(searchString)) {
-            PhoneNumberSearchModel numberCriteria = (PhoneNumberSearchModel)(new Object());
+            PhoneNumberSearchModel numberCriteria = new PhoneNumberSearchModel();
             numberCriteria.setValue(searchString);
             Arrays.add(orCriteria, numberCriteria);
          }
       }
 
       if (nameString.length() != 0) {
-         NameSearchModel nameCriteria = (NameSearchModel)(new Object());
+         NameSearchModel nameCriteria = new NameSearchModel();
          nameCriteria.setNameString(nameString);
          Arrays.add(orCriteria, nameCriteria);
       }
@@ -166,7 +168,7 @@ final class GlobalSearchScreen extends AppsMainScreen implements BackdoorKeyList
       if (this._idString != null) {
          String idString = this._idString.getText().trim();
          if (idString.length() != 0) {
-            IdSearchModel idCriteria = (IdSearchModel)(new Object());
+            IdSearchModel idCriteria = new IdSearchModel();
             boolean var11 = false /* VF: Semaphore variable */;
 
             try {
@@ -191,10 +193,9 @@ final class GlobalSearchScreen extends AppsMainScreen implements BackdoorKeyList
          if (this._developmentMode && this._combineUsing.getSelectedIndex() == 0) {
             sc = orCriteria;
          } else {
-            OrSearchCriterion osc = (OrSearchCriterion)(new Object());
+            OrSearchCriterion osc = new OrSearchCriterion();
             osc.setValue(orCriteria);
-            sc = new Object[1];
-            sc[0] = osc;
+            sc = new SearchCriterion[]{osc};
          }
 
          SearchableWrapper[] searchablesArray = new SearchableWrapper[0];
@@ -244,7 +245,7 @@ final class GlobalSearchScreen extends AppsMainScreen implements BackdoorKeyList
       Verb defaultVerb = null;
       Field fieldWithFocus = this.getFieldWithFocus();
       if (fieldWithFocus == this._nameString) {
-         Verb selectNameVerb = (Verb)(new Object(this._nameString));
+         Verb selectNameVerb = new SelectNameVerb(this._nameString);
          menu.add(selectNameVerb);
          if (!this._nameString.isMuddy()) {
             defaultVerb = selectNameVerb;

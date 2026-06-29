@@ -1,5 +1,7 @@
 package net.rim.device.api.crypto.asn1;
 
+import java.io.EOFException;
+import java.io.IOException;
 import java.io.InputStream;
 import net.rim.device.api.io.SharedInputStream;
 
@@ -30,9 +32,9 @@ final class ASN1Field {
       this(input, offset, lengthLimit, -1);
    }
 
-   ASN1Field(SharedInputStream input, int offset, int lengthLimit, int explicitTag) {
+   ASN1Field(SharedInputStream input, int offset, int lengthLimit, int explicitTag) throws EOFException {
       if (input == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._input = input;
@@ -46,7 +48,7 @@ final class ASN1Field {
 
       this._tag = this._input.read();
       if (this._tag == -1) {
-         throw new Object();
+         throw new EOFException();
       }
 
       if (explicitTag != -1) {
@@ -58,7 +60,7 @@ final class ASN1Field {
          this.readDefiniteLength(true);
          this._tag = this._input.read();
          if (this._tag == -1) {
-            throw new Object();
+            throw new EOFException();
          }
       }
 
@@ -133,11 +135,11 @@ final class ASN1Field {
       return array;
    }
 
-   private final byte[] getByteArray(int length) {
+   private final byte[] getByteArray(int length) throws IOException {
       byte[] array = new byte[length];
       int lengthRead = this._input.read(array);
       if (lengthRead != length) {
-         throw new Object();
+         throw new IOException();
       } else {
          return array;
       }
@@ -147,10 +149,10 @@ final class ASN1Field {
       return this._isExplicit;
    }
 
-   private final int readDefiniteLength(boolean setEnd) throws ASN1EncodingException {
+   private final int readDefiniteLength(boolean setEnd) throws EOFException, ASN1EncodingException {
       int length = this._input.read();
       if (length == -1) {
-         throw new Object();
+         throw new EOFException();
       }
 
       if (length == 128) {
@@ -169,7 +171,7 @@ final class ASN1Field {
          for (int i = 0; i < numLengthOctets; i++) {
             int next = this._input.read();
             if (next == -1) {
-               throw new Object();
+               throw new EOFException();
             }
 
             length = length << 8 | next & 0xFF;

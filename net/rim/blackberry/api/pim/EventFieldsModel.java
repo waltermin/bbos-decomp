@@ -35,7 +35,7 @@ final class EventFieldsModel implements PersistableRIMModel, SyncObject {
    private static final int LONG_LENGTH = 8;
 
    public final byte[] getData() {
-      DataBuffer buffer = (DataBuffer)(new Object(true));
+      DataBuffer buffer = new DataBuffer(true);
       buffer.writeInt(-12975410);
       buffer.writeByte(1);
       buffer.writeCompressedInt(4);
@@ -188,7 +188,7 @@ final class EventFieldsModel implements PersistableRIMModel, SyncObject {
    }
 
    public EventFieldsModel(byte[] data) {
-      DataBuffer buffer = (DataBuffer)(new Object(data, 0, data.length, true));
+      DataBuffer buffer = new DataBuffer(data, 0, data.length, true);
 
       try {
          int signature = buffer.readInt();

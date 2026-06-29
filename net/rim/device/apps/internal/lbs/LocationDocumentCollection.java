@@ -25,7 +25,7 @@ import net.rim.device.apps.internal.lbs.resources.LBSResources;
 
 final class LocationDocumentCollection implements SyncCollection, SyncConverter, OTASyncCapable, OTASyncPriorityProvider, CollectionEventSource, ReadableList {
    private boolean _dirty;
-   private CollectionListenerManager _listenerManager = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _listenerManager = new CollectionListenerManager();
    private PersistentObject _persistentObject = RIMPersistentStore.getPersistentObject(3038715446844855584L);
    LocationSyncable[] _locations;
    private static final long GUID = -1967313653648119582L;
@@ -40,7 +40,7 @@ final class LocationDocumentCollection implements SyncCollection, SyncConverter,
    }
 
    public final void addOrUpdate(Location location, SimpleFolder folder) {
-      DataBuffer db = (DataBuffer)(new Object());
+      DataBuffer db = new DataBuffer();
       String folderHeirarchy = FavouritesManager.createFolderHeirarchiesString(folder);
       if (folderHeirarchy == null && location._folderHierarchy != null) {
          folderHeirarchy = location._folderHierarchy;
@@ -79,7 +79,7 @@ final class LocationDocumentCollection implements SyncCollection, SyncConverter,
    }
 
    final void updateFolderHeirarchy(LocationSyncable loc, SimpleFolder folder) {
-      DataBuffer db = (DataBuffer)(new Object());
+      DataBuffer db = new DataBuffer();
       String folderHeirarchy = FavouritesManager.createFolderHeirarchiesString(folder);
       Location location = this.getLocation(loc);
       if (loc.getType() == 1) {
@@ -106,7 +106,7 @@ final class LocationDocumentCollection implements SyncCollection, SyncConverter,
       String label;
       do {
          _index++;
-         label = ((StringBuffer)(new Object())).append(LBSResources.getString(97)).append(Integer.toString(_index)).toString();
+         label = LBSResources.getString(97) + Integer.toString(_index);
       } while (this.findElementByLabel(label) >= 0);
 
       return label;

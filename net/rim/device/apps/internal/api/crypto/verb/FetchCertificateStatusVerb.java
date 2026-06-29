@@ -32,7 +32,7 @@ public final class FetchCertificateStatusVerb extends Verb {
    @Override
    public final Object invoke(Object context) {
       if (this._chain != null && CertificateStatusProviderFacade.queryStatusAvailability()) {
-         CertificateStatusRequest request = (CertificateStatusRequest)(new Object(this._chain, this._fetchChainStatus, this._keyStore, null, null));
+         CertificateStatusRequest request = new CertificateStatusRequest(this._chain, this._fetchChainStatus, this._keyStore, null, null);
          CertificateStatusProviderFacade.requestCertificateStatus(request, null, true, true);
          return null;
       } else {

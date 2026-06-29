@@ -9,20 +9,20 @@ final class RIMVariableLengthSymmetricKeyFactory3 extends SymmetricKeyFactory {
    }
 
    @Override
-   protected final SymmetricKey create(String algorithm, byte[] data, int offset, int bitLength) {
+   protected final SymmetricKey create(String algorithm, byte[] data, int offset, int bitLength) throws NoSuchAlgorithmException {
       if (algorithm.equals("RC2")) {
          return new RC2Key(data, offset, Math.min(bitLength, 1024));
       } else {
-         throw new Object(algorithm);
+         throw new NoSuchAlgorithmException(algorithm);
       }
    }
 
    @Override
-   protected final int getDefaultKeyLength(String algorithm) {
+   protected final int getDefaultKeyLength(String algorithm) throws NoSuchAlgorithmException {
       if (algorithm.equals("RC2")) {
          return 128;
       } else {
-         throw new Object();
+         throw new NoSuchAlgorithmException();
       }
    }
 }

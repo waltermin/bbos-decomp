@@ -14,7 +14,7 @@ class PhoneEventProvider extends CountEventProvider {
 
    static void initialize() {
       _helper = new PhoneEventProvider$Helper();
-      _events = (ToIntHashtable)(new Object(10));
+      _events = new ToIntHashtable(10);
       _events.put("new_missed_call", 0);
       _events.put("no_new_missed_call", 0);
       _events.put("new_missed_call_visible", 0);

@@ -29,7 +29,7 @@ public final class DeleteExecuteCommand implements DomainCommand {
                return DomainCommand.SESSION_TIMEOUT_RESULT;
             }
 
-            BISEventLogger.logEvent(((StringBuffer)(new Object("Delete: Unhandled REST response code: "))).append(callResult.getRESTStatusCode()).toString(), 0);
+            BISEventLogger.logEvent("Delete: Unhandled REST response code: " + callResult.getRESTStatusCode(), 0);
             return new DomainCommandResult("failed", ApplicationResources.getString(192), null);
          }
 

@@ -37,7 +37,7 @@ public final class FileExplorerApp extends UiApplication implements KeyListener,
    public static final int TUNES_ROOT = 2;
 
    public FileExplorerApp(String entry) {
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       context.putIntegerData(1);
       if (entry != null) {
          if (entry.equals("pictures")) {
@@ -224,7 +224,7 @@ public final class FileExplorerApp extends UiApplication implements KeyListener,
    private final void mediaCardCheck() {
       RootRegister register = RootRegister.getInstance();
       if (register.isMassStorageActive() && !register.isBatteryDoorOpen()) {
-         this._mediaDialog = (Dialog)(new Object(0, ExplorerResources.getString(167), 0, null, 0));
+         this._mediaDialog = new Dialog(0, ExplorerResources.getString(167), 0, null, 0);
          this._mediaDialog.setIcon(ThemeManager.getThemeAwareImage("dialog_exclamation"));
          this._mediaDialog.setEscapeEnabled(true);
          this._mediaDialog.setDialogClosedListener(this);

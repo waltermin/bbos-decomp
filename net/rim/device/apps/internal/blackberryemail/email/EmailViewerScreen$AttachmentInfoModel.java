@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.blackberryemail.email;
 
 import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.apps.api.framework.model.FieldProvider;
 import net.rim.device.apps.api.framework.model.RIMModel;
@@ -17,13 +18,13 @@ final class EmailViewerScreen$AttachmentInfoModel implements RIMModel, FieldProv
 
    @Override
    public final Field getField(Object context) {
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       buffer.append(this._attachmentCount);
       buffer.append(this._attachmentCount > 1 ? EmailResources.getString(141) : EmailResources.getString(140));
-      Field attachmentInfo = (Field)(new Object(buffer, 18014398509481984L));
+      Field attachmentInfo = new LabelField(buffer, 18014398509481984L);
       attachmentInfo.setTag(ThemeUtilities.EMAIL_ATTACHMENT_STATUS_TAG);
-      HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object());
-      ImageField iconField = (ImageField)(new Object(65536));
+      HorizontalFieldManager hfm = new HorizontalFieldManager();
+      ImageField iconField = new ImageField(65536);
       iconField.setImage(FileIcon.getFileIconImage(0));
       hfm.add(iconField);
       hfm.add(attachmentInfo);

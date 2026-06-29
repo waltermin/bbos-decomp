@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.TimeZone;
 import net.rim.device.api.collection.ReadableList;
-import net.rim.device.api.collection.ReadableLongMap;
 import net.rim.device.api.collection.util.ReadableListUtil;
 import net.rim.device.api.i18n.DateFormat;
 import net.rim.device.api.i18n.ResourceBundle;
@@ -16,12 +15,14 @@ import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.ui.AccessibleEventDispatcher;
 import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.accessibility.AccessibleContext;
+import net.rim.device.api.ui.accessibility.AccessibleContextFactory;
 import net.rim.device.api.ui.accessibility.AccessibleText;
 import net.rim.device.api.ui.accessibility.AccessibleValue;
 import net.rim.device.api.ui.component.DateField;
 import net.rim.device.api.util.CRC32;
 import net.rim.device.api.util.DateTimeUtilities;
-import net.rim.device.api.util.LongHashtable;
+import net.rim.device.api.util.EmptyEnumeration;
+import net.rim.device.api.util.ObjectEnumerator;
 import net.rim.device.api.util.StringMatch;
 import net.rim.device.apps.api.calendar.caldb.CalDB;
 import net.rim.device.apps.api.calendar.caldb.CalendarKey;
@@ -113,21 +114,21 @@ public final class EventImpl
    private static final long EVENT_SEQUENCE_ID = 5328208744741124224L;
    private static int _persistentId = PersistentInteger.getId(5328208744741124224L, -1);
    static final long CONTROLLER_ID = 7604121982064887442L;
-   static RecurCalc _recurCalc = (RecurCalc)(new Object());
-   private static Recur$Modifier _modifier = (Recur$Modifier)(new Object());
+   static RecurCalc _recurCalc = new RecurCalc();
+   private static Recur$Modifier _modifier = new Recur$Modifier();
    private static long[] _exclusions = new long[0];
    private static long[] _inclusions = new long[0];
    private static Object _calLock;
    private static Calendar _gmtCal = Calendar.getInstance(TimeZone.getTimeZone(DateTimeUtilities.GMT));
    private static Calendar _currCal = Calendar.getInstance();
-   private static ContextObjectWR _reconcileContextWR = (ContextObjectWR)(new Object());
+   private static ContextObjectWR _reconcileContextWR = new ContextObjectWR();
    private static final int PACKEDINFO_FREE_BUSY = 255;
    private static final int PACKEDINFO_ALL_DAY = 256;
    private static int[] _hints = new int[0];
    private static final long SORT_KEY_START = -7347526267900023482L;
    private static final long SORT_KEY_END = -104331952420113366L;
    private static final long SORT_KEY_DUR = -1863931878973078146L;
-   private static Recur$Handle _sharedHandle = (Recur$Handle)(new Object());
+   private static Recur$Handle _sharedHandle = new Recur$Handle();
 
    protected final void accessibleEventOccurred(int event, Object oldValue, Object newValue, AccessibleContext context) {
       AccessibleEventDispatcher.dispatchAccessibleEvent(event, oldValue, newValue, context);
@@ -159,7 +160,7 @@ public final class EventImpl
       int locationLength = location == null ? 0 : location.length();
       int subjectLength = subject == null ? 0 : subject.length();
       if (locationLength + subjectLength > 0) {
-         StringBuffer b = (StringBuffer)(new Object());
+         StringBuffer b = new StringBuffer();
          b.setLength(0);
          if (subjectLength > 0) {
             b.append(subject);
@@ -223,7 +224,7 @@ public final class EventImpl
    protected final String getVerboseSummary() {
       String str = null;
       ResourceBundle rb = EventBase._rb;
-      StringBuffer b = (StringBuffer)(new Object());
+      StringBuffer b = new StringBuffer();
       b.setLength(0);
       b.append(rb.getString(600));
       if (this.isRecurring()) {
@@ -254,7 +255,7 @@ public final class EventImpl
       DateFormat timeFormat = DateFormat.getInstance(6);
       long start = this.getStart(tz);
       ((CalendarExtensions)cal).setTimeLong(start);
-      StringBuffer recurDesc = (StringBuffer)(new Object());
+      StringBuffer recurDesc = new StringBuffer();
       Recur recur = this.getReadOnlyRecurrence();
       boolean allDay = this.getAllDayFlag();
       RecurUtil.getDesc(recur, allDay, recurDesc, tz);
@@ -295,7 +296,7 @@ public final class EventImpl
          return null;
       }
 
-      StringBuffer b = (StringBuffer)(new Object());
+      StringBuffer b = new StringBuffer();
       b.setLength(0);
       long start = this.getStart(tz);
       long end;
@@ -423,7 +424,7 @@ public final class EventImpl
       if (duration <= Integer.MAX_VALUE && duration >= Integer.MIN_VALUE) {
          this._duration = (int)duration;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -548,7 +549,7 @@ public final class EventImpl
          }
       }
 
-      Recur$Handle foundOccurrence = (Recur$Handle)(new Object());
+      Recur$Handle foundOccurrence = new Recur$Handle();
       if (adjustStartTime) {
          timeToStartSearching -= offset;
       }
@@ -607,13 +608,7 @@ public final class EventImpl
 
    @Override
    public final Recur getRecurrenceCopy() {
-      if (!this.isRecurring()) {
-         RecurImpl recurToReturn = (RecurImpl)(new Object());
-         return recurToReturn;
-      } else {
-         RecurImpl recurToReturn = (RecurImpl)this._recur.clone(null);
-         return recurToReturn;
-      }
+      return !this.isRecurring() ? new RecurImpl() : (RecurImpl)this._recur.clone(null);
    }
 
    @Override
@@ -843,12 +838,12 @@ public final class EventImpl
    public final Enumeration getElements() {
       synchronized (this.getCalLock()) {
          if (this._externalObjects == null) {
-            return (Enumeration)(new Object());
+            return new EmptyEnumeration();
          }
 
          Object[] arrayToReturn = new Object[this._externalObjects.length];
          System.arraycopy(this._externalObjects, 0, arrayToReturn, 0, arrayToReturn.length);
-         return (Enumeration)(new Object(arrayToReturn));
+         return new ObjectEnumerator(arrayToReturn);
       }
    }
 
@@ -887,7 +882,7 @@ public final class EventImpl
 
          for (int i = 0; i < max; i++) {
             Object o = externalObjects[i];
-            if (o instanceof Object) {
+            if (o instanceof Copyable) {
                Copyable copyable = (Copyable)o;
                that.put(externalKeys[i], copyable.copy());
             }
@@ -901,7 +896,7 @@ public final class EventImpl
    public final long getChecksum(Object context) {
       long result = 0;
       ContextObject co = null;
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          co = (ContextObject)context;
       }
 
@@ -938,14 +933,14 @@ public final class EventImpl
    @Override
    public final void reconcile(Object objectToReconcile, Object context) {
       Event eventToReconcile = null;
-      if (objectToReconcile instanceof Object) {
-         Event var13 = objectToReconcile;
+      if (objectToReconcile instanceof Event) {
+         eventToReconcile = (Event)objectToReconcile;
          ContextObject reconcileContext = _reconcileContextWR.getContextObject();
          ContextObject.put(reconcileContext, -442904859142728844L, this);
-         ContextObject.put(reconcileContext, 4930575420328309875L, var13);
+         ContextObject.put(reconcileContext, 4930575420328309875L, eventToReconcile);
          synchronized (this.getCalLock()) {
             if (this.getICalID() == null) {
-               this.setICalID(((Event)var13).getICalID());
+               this.setICalID(eventToReconcile.getICalID());
             }
 
             Object[] externalObjects = this._externalObjects;
@@ -954,8 +949,8 @@ public final class EventImpl
 
             for (int i = 0; i < max; i++) {
                Object o = externalObjects[i];
-               if (o instanceof Object) {
-                  ((Reconcilable)o).reconcile(((ReadableLongMap)var13).get(externalKeys[i]), reconcileContext);
+               if (o instanceof Reconcilable) {
+                  ((Reconcilable)o).reconcile(eventToReconcile.get(externalKeys[i]), reconcileContext);
                }
             }
          }
@@ -967,7 +962,7 @@ public final class EventImpl
       long eventPartInstance = 0;
       boolean reminder = false;
       if (context != null) {
-         Long reminderTime = (Long)((LongHashtable)context).get(2006691216517637157L);
+         Long reminderTime = (Long)((ContextObject)context).get(2006691216517637157L);
          if (reminderTime != null) {
             ReminderModel rm = this.getReminderData();
             long offset = 0;
@@ -1003,7 +998,7 @@ public final class EventImpl
          return null;
       }
 
-      Verb[] defaultVerbs = new Object[2];
+      Verb[] defaultVerbs = new Verb[2];
       DeleteEventVerb deleteVerb = new DeleteEventVerb(this);
       defaultVerbs[1] = deleteVerb;
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
@@ -1240,7 +1235,7 @@ public final class EventImpl
 
          for (int i = 0; i < numExternalObjects; i++) {
             Object object = this._externalObjects[i];
-            if (object instanceof Object) {
+            if (object instanceof EncryptableProvider) {
                EncryptableProvider encryptable = (EncryptableProvider)object;
                if (!encryptable.checkCrypt(compress, encrypt)) {
                   return false;
@@ -1263,7 +1258,7 @@ public final class EventImpl
 
       for (int i = 0; i < numExternalObjects; i++) {
          Object object = this._externalObjects[i];
-         if (object instanceof Object) {
+         if (object instanceof EncryptableProvider) {
             EncryptableProvider encryptable = (EncryptableProvider)object;
             Object newObject = encryptable.reCrypt(compress, encrypt);
             if (newObject != null) {
@@ -1324,7 +1319,7 @@ public final class EventImpl
       long duration = this.isRecurring() ? this.getInstanceDuration() : this.getDuration(tz);
       String subject = this.getStringForField(5649235763655597796L);
       String location = this.getStringForField(9164664086580876244L);
-      StringBuffer b = (StringBuffer)(new Object());
+      StringBuffer b = new StringBuffer();
       b.setLength(0);
       int locationLength = location == null ? 0 : location.length();
       int subjectLength = subject == null ? 0 : subject.length();
@@ -1490,22 +1485,22 @@ public final class EventImpl
    public final AccessibleContext getAccessibleChildAt(int index) {
       switch (index) {
          case -1:
-            return (AccessibleContext)(new Object("", 28, 4, this));
+            return new AccessibleContextFactory("", 28, 4, this);
          case 0:
          default:
             Calendar cal = Calendar.getInstance();
             TimeZone tz = cal.getTimeZone();
             long start = this.getStartDate(tz);
-            DateField dateField = (DateField)(new Object("Date: ", start, 16));
-            return (AccessibleContext)(new Object(dateField.toString(), 28, 4, this));
+            DateField dateField = new DateField("Date: ", start, 16);
+            return new AccessibleContextFactory(dateField.toString(), 28, 4, this);
          case 1:
-            return (AccessibleContext)(new Object(this.getSubject(), 28, 4, this));
+            return new AccessibleContextFactory(this.getSubject(), 28, 4, this);
          case 2:
-            return (AccessibleContext)(new Object(this.getLocation(), 28, 4, this));
+            return new AccessibleContextFactory(this.getLocation(), 28, 4, this);
          case 3:
-            return (AccessibleContext)(this.isAllDay()
-               ? new Object("All Day", 28, 4, this)
-               : new Object(this.getStringForField(-8797898085576394050L), 28, 4, this));
+            return this.isAllDay()
+               ? new AccessibleContextFactory("All Day", 28, 4, this)
+               : new AccessibleContextFactory(this.getStringForField(-8797898085576394050L), 28, 4, this);
       }
    }
 
@@ -1518,9 +1513,9 @@ public final class EventImpl
 
    @Override
    public final int match(Object criteria) {
-      if (!(criteria instanceof Object)) {
+      if (!(criteria instanceof SearchCriterion)) {
          try {
-            SearchCriterion[] crit = (Object[])criteria;
+            SearchCriterion[] crit = (SearchCriterion[])criteria;
             return Match.match(this, this, crit, _hints);
          } finally {
             return -1;
@@ -1618,9 +1613,9 @@ public final class EventImpl
 
          for (int i = 0; i < max; i++) {
             Object exData = this._externalObjects[i];
-            if (exData instanceof Object) {
+            if (exData instanceof RIMModel) {
                RIMModel rm = (RIMModel)exData;
-               if (rm instanceof Object) {
+               if (rm instanceof DescriptionProvider) {
                   DescriptionProvider dp = (DescriptionProvider)rm;
                   numIconsAdded += dp.getIconsForField(field, icons, indices);
                }
@@ -1639,7 +1634,7 @@ public final class EventImpl
 
             if (this._notesEncoding != null) {
                boolean showNotesIcon = true;
-               if (this._notesEncoding instanceof Object) {
+               if (this._notesEncoding instanceof String) {
                   String str = (String)this._notesEncoding;
                   if (str.trim().length() == 0) {
                      showNotesIcon = false;
@@ -1821,9 +1816,9 @@ public final class EventImpl
 
       for (int i = 0; i < count; i++) {
          Object model = models[i];
-         if (model instanceof Object) {
+         if (model instanceof VerbProvider) {
             VerbProvider verbProvider = (VerbProvider)model;
-            verbProvider.getVerbs(contextObject, new Object[0]);
+            verbProvider.getVerbs(contextObject, new Verb[0]);
          }
       }
 
@@ -1889,7 +1884,7 @@ public final class EventImpl
             return rm.getReminderFiredFor() - rm.getTime();
          }
 
-         Recur$Handle handle = (Recur$Handle)(new Object());
+         Recur$Handle handle = new Recur$Handle();
          boolean validInstance = this.getHandleAfterTime(
             handle, rm.getReminderFiredFor() + (this.getInstanceDuration() == 0 ? 1 : this.getInstanceDuration()), tz
          );
@@ -1903,7 +1898,7 @@ public final class EventImpl
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object(""))).append(this.getUID()).append("  -  ").append(this.getSubject()).toString();
+      return "" + this.getUID() + "  -  " + this.getSubject();
    }
 
    @Override
@@ -1925,9 +1920,9 @@ public final class EventImpl
             this.getElements(sharedArray);
 
             for (Object exData : sharedArray) {
-               if (exData instanceof Object) {
+               if (exData instanceof RIMModel) {
                   RIMModel rm = (RIMModel)exData;
-                  if (rm instanceof Object) {
+                  if (rm instanceof DescriptionProvider) {
                      DescriptionProvider dp = (DescriptionProvider)rm;
                      str = dp.getStringForField(field);
                      if (str != null) {

@@ -11,11 +11,11 @@ final class DocViewTextInformation {
    private boolean _keepTheLatestLink;
 
    DocViewTextInformation(int iInitialStringSize) {
-      this._strContents = (StringBuffer)(new Object(iInitialStringSize));
+      this._strContents = new StringBuffer(iInitialStringSize);
    }
 
    DocViewTextInformation(DocViewTextInformation copy) {
-      this._strContents = (StringBuffer)(new Object(copy._strContents.length()));
+      this._strContents = new StringBuffer(copy._strContents.length());
       this._strContents.append(copy._strContents);
       if (copy._trackChanges != null) {
          this._trackChanges = new DocViewTrackChange[copy._trackChanges.length];

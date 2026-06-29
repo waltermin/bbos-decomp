@@ -20,8 +20,8 @@ final class UpdateAddressCardVerb extends Verb {
 
    @Override
    public final Object invoke(Object newModel) {
-      if (!(newModel instanceof Object)) {
-         throw new Object();
+      if (!(newModel instanceof AddressCardModel)) {
+         throw new IllegalArgumentException();
       }
 
       if (this._request == null) {

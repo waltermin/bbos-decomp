@@ -7,8 +7,11 @@ import net.rim.device.api.system.GlobalEventListener;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.MainScreen;
@@ -29,6 +32,7 @@ import net.rim.device.internal.io.file.RootRegister;
 import net.rim.device.internal.system.InternalServices;
 import net.rim.device.internal.system.Security;
 import net.rim.device.internal.system.USBPortInternal;
+import net.rim.device.internal.ui.component.PropertyField;
 
 public final class MediaCardOptionsItem extends SaveableMainScreenOptionsListItem implements GlobalEventListener, FieldChangeListener, FileSystemListener {
    private VerticalFieldManager _vfm;
@@ -47,23 +51,21 @@ public final class MediaCardOptionsItem extends SaveableMainScreenOptionsListIte
 
    public MediaCardOptionsItem() {
       super(ExplorerResources.getResourceBundleFamily(), 52, 1888231790844671165L);
-      ContextObject.put(super._context, 244, new Object(33881));
+      ContextObject.put(super._context, 244, new Integer(33881));
    }
 
    @Override
    protected final void populateMainScreen(MainScreen mainScreen) {
-      this._vfm = (VerticalFieldManager)(new Object());
+      this._vfm = new VerticalFieldManager();
       mainScreen.add(this._vfm);
-      this._externalMemoryEnabledChoice = (BooleanChoiceField)(new Object(
+      this._externalMemoryEnabledChoice = new BooleanChoiceField(
          ExplorerResources.getString(56), 1, false, getRestrictedStyle(ITPolicy.getBoolean(24, 58, false))
-      ));
-      this._encryptionModeChoice = (ObjectChoiceField)(new Object(ExplorerResources.getString(53), ExplorerResources.getStringArray(54)));
-      this._encryptionMediaFilesChoice = (BooleanChoiceField)(new Object(ExplorerResources.getString(55), 0, false));
-      this._usbMassStorageModeChoice = (BooleanChoiceField)(new Object(
-         ExplorerResources.getString(60), 1, false, getRestrictedStyle(ITPolicy.getBoolean(24, 59, false))
-      ));
-      this._usbMassStoragePromptChoice = (ObjectChoiceField)(new Object(ExplorerResources.getString(61), ExplorerResources.getStringArray(62), 0));
-      this._safelyRemovePromptChoice = (ObjectChoiceField)(new Object(ExplorerResources.getString(127), ExplorerResources.getStringArray(62), 0));
+      );
+      this._encryptionModeChoice = new ObjectChoiceField(ExplorerResources.getString(53), ExplorerResources.getStringArray(54));
+      this._encryptionMediaFilesChoice = new BooleanChoiceField(ExplorerResources.getString(55), 0, false);
+      this._usbMassStorageModeChoice = new BooleanChoiceField(ExplorerResources.getString(60), 1, false, getRestrictedStyle(ITPolicy.getBoolean(24, 59, false)));
+      this._usbMassStoragePromptChoice = new ObjectChoiceField(ExplorerResources.getString(61), ExplorerResources.getStringArray(62), 0);
+      this._safelyRemovePromptChoice = new ObjectChoiceField(ExplorerResources.getString(127), ExplorerResources.getStringArray(62), 0);
       this.updateScreenItems(true);
       this.addScreenItems();
       this._externalMemoryEnabledChoice.setChangeListener(this);
@@ -112,40 +114,40 @@ public final class MediaCardOptionsItem extends SaveableMainScreenOptionsListIte
             this._vfm.add(this._safelyRemovePromptChoice);
          }
 
-         this._vfm.add((Field)(new Object()));
+         this._vfm.add(new SeparatorField());
          if (this._externalMemoryEnabledChoice.isDirty()) {
-            this._vfm.add((Field)(new Object(ExplorerResources.getString(111))));
+            this._vfm.add(new RichTextField(ExplorerResources.getString(111)));
             return;
          }
 
          RootRegister register = RootRegister.getInstance();
          if (register.isCardInserted()) {
             if (register.isMassStorageActive()) {
-               HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(1152921504606846976L));
-               hfm.add((Field)(new Object(Bitmap.getPredefinedBitmap(2))));
-               hfm.add((Field)(new Object(ExplorerResources.getString(64))));
+               HorizontalFieldManager hfm = new HorizontalFieldManager(1152921504606846976L);
+               hfm.add(new BitmapField(Bitmap.getPredefinedBitmap(2)));
+               hfm.add(new RichTextField(ExplorerResources.getString(64)));
                this._vfm.add(hfm);
                return;
             }
 
-            FileSystemInfo info = (FileSystemInfo)(new Object());
+            FileSystemInfo info = new FileSystemInfo();
             int status = FileSystem.getFileSystemInfo(1, info);
             if (status == 0) {
-               this._vfm.add((Field)(new Object(ExplorerResources.getString(59), FileUtilities.sizeToString(info.getTotalSpace()))));
-               this._vfm.add((Field)(new Object(ExplorerResources.getString(58), FileUtilities.sizeToString(info.getFreeSpace()))));
+               this._vfm.add(new PropertyField(ExplorerResources.getString(59), FileUtilities.sizeToString(info.getTotalSpace())));
+               this._vfm.add(new PropertyField(ExplorerResources.getString(58), FileUtilities.sizeToString(info.getFreeSpace())));
                return;
             }
 
             if (register.isBatteryDoorOpen()) {
-               this._vfm.add((Field)(new Object(ExplorerResources.getString(151))));
+               this._vfm.add(new RichTextField(ExplorerResources.getString(151)));
                return;
             }
 
-            this._vfm.add((Field)(new Object(ExplorerResources.getString(51))));
+            this._vfm.add(new RichTextField(ExplorerResources.getString(51)));
             return;
          }
 
-         this._vfm.add((Field)(new Object(ExplorerResources.getString(114))));
+         this._vfm.add(new RichTextField(ExplorerResources.getString(114)));
       }
    }
 

@@ -1,8 +1,8 @@
 package net.rim.device.apps.internal.qm.peer;
 
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.AutoTextEditField;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.apps.internal.qm.peer.common.FixedHeightManager;
 import net.rim.device.apps.internal.qm.peer.common.OkCancelDialog;
 import net.rim.device.apps.internal.qm.resource.QmResources;
@@ -13,9 +13,9 @@ final class ContactAddMessageDialog extends OkCancelDialog {
    ContactAddMessageDialog() {
       this.addTitle(QmResources.getString(7));
       String invitation = PeerResources.format(67, PeerApplication.getSession().getDisplayName());
-      this._messageField = (AutoTextEditField)(new Object("", invitation, Math.max(200, invitation.length()), 2147483648L));
+      this._messageField = new AutoTextEditField("", invitation, Math.max(200, invitation.length()), 2147483648L);
       FixedHeightManager fhf = new FixedHeightManager(this._messageField, 2);
-      this.add((Field)(new Object(QmResources.getString(44))));
+      this.add(new LabelField(QmResources.getString(44)));
       this.add(fhf);
       this.addOkCancelButtons();
       this.addPasteButton(this._messageField);

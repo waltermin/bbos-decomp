@@ -25,16 +25,16 @@ public class BooleanChoiceField extends ObjectChoiceField {
       String[] choices;
       switch (type) {
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          default:
             choices = CommonResources.getYesNoArray(0);
             break;
          case 1:
-            choices = new Object[]{CommonResources.getString(106), CommonResources.getString(107)};
+            choices = new String[]{CommonResources.getString(106), CommonResources.getString(107)};
             break;
          case 2:
-            choices = new Object[]{CommonResources.getString(108), CommonResources.getString(109)};
+            choices = new String[]{CommonResources.getString(108), CommonResources.getString(109)};
       }
 
       this.initialize(choices, initialValue);
@@ -62,7 +62,7 @@ public class BooleanChoiceField extends ObjectChoiceField {
          this.setChoices(values);
          this.setSelectedIndex(initialValue ? 0 : 1);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

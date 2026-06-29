@@ -2,7 +2,6 @@ package net.rim.device.apps.api.utility.framework;
 
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.system.PersistentContent;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.DialogFieldManager;
@@ -38,10 +37,10 @@ public class WaitForUnlock extends Thread {
    @Override
    public void run() {
       this._ticket = PersistentContent.waitForTicket();
-      PopupScreen pleaseWaitScreen = (PopupScreen)(new Object((Manager)(new Object())));
+      PopupScreen pleaseWaitScreen = new PopupScreen(new DialogFieldManager());
       DialogFieldManager manager = (DialogFieldManager)pleaseWaitScreen.getDelegate();
-      manager.setMessage((RichTextField)(new Object(this._string, 36028797018963968L)));
-      manager.setIcon((BitmapField)(new Object(Bitmap.getPredefinedBitmap(3), 51539607552L)));
+      manager.setMessage(new RichTextField(this._string, 36028797018963968L));
+      manager.setIcon(new BitmapField(Bitmap.getPredefinedBitmap(3), 51539607552L));
       Proxy.getInstance().invokeLater(new WaitForUnlock$1(this, pleaseWaitScreen));
       boolean var5 = false /* VF: Semaphore variable */;
 

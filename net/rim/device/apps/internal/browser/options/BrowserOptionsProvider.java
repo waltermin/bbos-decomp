@@ -6,7 +6,7 @@ import net.rim.device.apps.api.options.OptionsProviderRegistration$OptionsProvid
 public final class BrowserOptionsProvider implements OptionsProviderRegistration$OptionsProvider {
    @Override
    public final Vector getOptionsItems() {
-      Vector items = (Vector)(new Object());
+      Vector items = new Vector();
       items.addElement(new BrowserOptionsProvider$BrowserOptionsItem());
       return items;
    }

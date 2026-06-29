@@ -3,7 +3,6 @@ package net.rim.device.apps.internal.browser.ui;
 import java.util.Enumeration;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.Dialog;
@@ -54,7 +53,7 @@ public final class DialogEnterSubFolderName extends PopupScreen implements Field
 
    @Override
    public final void fieldChanged(Field field, int context) {
-      if (field instanceof Object) {
+      if (field instanceof ButtonField) {
          this.handleSelection();
       }
    }
@@ -75,19 +74,19 @@ public final class DialogEnterSubFolderName extends PopupScreen implements Field
    }
 
    public DialogEnterSubFolderName(Folder currentFolder, String defaultValue) {
-      super((Manager)(new Object()), 0);
+      super(new DialogFieldManager(), 0);
       this._currentFolder = currentFolder;
       DialogFieldManager dfm = (DialogFieldManager)this.getDelegate();
-      dfm.setMessage((RichTextField)(new Object(BrowserResources.getString(595), 36028797018963968L)));
-      this._editSubFolderName = (EditField)(new Object("", defaultValue));
-      HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(1125899906842624L));
+      dfm.setMessage(new RichTextField(BrowserResources.getString(595), 36028797018963968L));
+      this._editSubFolderName = new EditField("", defaultValue);
+      HorizontalFieldManager hfm = new HorizontalFieldManager(1125899906842624L);
       hfm.add(this._editSubFolderName);
       dfm.addCustomField(hfm);
-      this._buttonOk = (ButtonField)(new Object(CommonResource.getString(100)));
-      this._buttonCancel = (ButtonField)(new Object(CommonResource.getString(10005)));
+      this._buttonOk = new ButtonField(CommonResource.getString(100));
+      this._buttonCancel = new ButtonField(CommonResource.getString(10005));
       this._buttonOk.setChangeListener(this);
       this._buttonCancel.setChangeListener(this);
-      HorizontalFieldManager hfmb = (HorizontalFieldManager)(new Object(12884901888L));
+      HorizontalFieldManager hfmb = new HorizontalFieldManager(12884901888L);
       hfmb.add(this._buttonOk);
       hfmb.add(this._buttonCancel);
       dfm.addCustomField(hfmb);

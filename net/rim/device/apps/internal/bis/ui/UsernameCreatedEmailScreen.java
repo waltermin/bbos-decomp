@@ -19,11 +19,11 @@ public final class UsernameCreatedEmailScreen extends UserSettingsScreen {
    public final void refresh(Hashtable screenParams) {
       this.setTitle(ApplicationResources.getString(313));
       ClientSessionState session = ClientSessionState.getInstance();
-      String confirmation = MessageFormat.format(ApplicationResources.getString(312), new Object[]{session.getIntegrationEmail()});
+      String confirmation = MessageFormat.format(ApplicationResources.getString(312), new String[]{session.getIntegrationEmail()});
       FormattedTextField confirmLabel = new FormattedTextField(confirmation);
       this.addContentField(confirmLabel);
       this.addContentLineBreak();
-      LabelField orLabel = (LabelField)(new Object(ApplicationResources.getString(237)));
+      LabelField orLabel = new LabelField(ApplicationResources.getString(237));
       this.addContentField(orLabel);
       this.addContentLineBreak();
       FormattedTextField nextLabel = new FormattedTextField(ApplicationResources.getString(244));

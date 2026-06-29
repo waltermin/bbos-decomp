@@ -62,7 +62,7 @@ class FocusGroup {
 
       for (int i = 0; i < count; i++) {
          Object item = this._items[i];
-         if (!(item instanceof Object)) {
+         if (!(item instanceof String)) {
             if (item instanceof FocusGroup) {
                FocusGroup focusGroup = (FocusGroup)item;
                focusGroup.resolveIds(modelInteractor);
@@ -70,7 +70,7 @@ class FocusGroup {
          } else {
             String sId = (String)item;
             int id = modelInteractor.getHandle(sId);
-            this._items[i] = new Object(id);
+            this._items[i] = new Integer(id);
          }
       }
 
@@ -78,14 +78,14 @@ class FocusGroup {
       this._customEventMoveFocusPrevious = new int[count];
 
       for (int i = 0; i < count; i++) {
-         this._customEventMoveFocusNext[i] = modelInteractor.getHandle(((StringBuffer)(new Object("moveFocusNext"))).append(i).toString());
-         this._customEventMoveFocusPrevious[i] = modelInteractor.getHandle(((StringBuffer)(new Object("moveFocusPrevious"))).append(i).toString());
+         this._customEventMoveFocusNext[i] = modelInteractor.getHandle("moveFocusNext" + i);
+         this._customEventMoveFocusPrevious[i] = modelInteractor.getHandle("moveFocusPrevious" + i);
       }
    }
 
    int getCurrentFocus() {
       Object item = this._items[this._index];
-      if (!(item instanceof Object)) {
+      if (!(item instanceof Integer)) {
          FocusGroup focusGroup = (FocusGroup)item;
          return focusGroup.getCurrentFocus();
       } else {
@@ -99,7 +99,7 @@ class FocusGroup {
 
       for (int i = 0; i < count; i++) {
          Object item = this._items[i];
-         if (!(item instanceof Object)) {
+         if (!(item instanceof Integer)) {
             if (item instanceof FocusGroup) {
                FocusGroup focusGroup = (FocusGroup)item;
                if (focusGroup.setFocus(handle)) {
@@ -124,8 +124,8 @@ class FocusGroup {
    }
 
    private boolean isFocusable(Object item, ModelInteractorImpl mi) {
-      if (item instanceof Object) {
-         int handle = item;
+      if (item instanceof Integer) {
+         int handle = (Integer)item;
          return VisualNodeImpl.isResolvedDisplayable(handle, mi);
       }
 

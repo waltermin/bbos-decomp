@@ -15,8 +15,8 @@ final class KeyStore_RIM_PrivateKeyEncoder1 extends PrivateKeyEncoder {
    @Override
    protected final EncodedKey encodeKey(PrivateKey key) {
       try {
-         ByteArrayOutputStream output = (ByteArrayOutputStream)(new Object());
-         DataOutputStream dataOut = (DataOutputStream)(new Object(output));
+         ByteArrayOutputStream output = new ByteArrayOutputStream();
+         DataOutputStream dataOut = new DataOutputStream(output);
          dataOut.writeInt(0);
          if (key.getAlgorithm().equals("RSA")) {
             RSAPrivateKey k = (RSAPrivateKey)key;
@@ -39,7 +39,7 @@ final class KeyStore_RIM_PrivateKeyEncoder1 extends PrivateKeyEncoder {
             Utility.writeData(k.getPrivateKeyData(), dataOut);
          } else {
             if (!key.getAlgorithm().equals("DSA")) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             DSAPrivateKey k = (DSAPrivateKey)key;
@@ -54,7 +54,7 @@ final class KeyStore_RIM_PrivateKeyEncoder1 extends PrivateKeyEncoder {
          dataOut.close();
          return new EncodedKey(output.toByteArray(), "KeyStore");
       } catch (Throwable var7) {
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       }
    }
 

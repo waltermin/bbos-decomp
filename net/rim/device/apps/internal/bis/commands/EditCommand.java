@@ -14,7 +14,7 @@ public final class EditCommand implements DomainCommand {
       UserInfo userInfo = ClientSessionState.getInstance().getUserInfo();
       Mailbox mailboxToEdit = userInfo.getMailbox(description);
       if (mailboxToEdit == null) {
-         throw new Object(((StringBuffer)(new Object("Unknown mailbox specified: "))).append(description).toString());
+         throw new IllegalArgumentException("Unknown mailbox specified: " + description);
       }
 
       ClientSessionState.getInstance().setMailboxToModify(mailboxToEdit);
@@ -22,7 +22,7 @@ public final class EditCommand implements DomainCommand {
       switch (mailboxType) {
          case 1:
             ClientSessionState.getInstance().setMailboxToModify(null);
-            throw new Object("Attempt to edit a mailbox that didn't contain enough type information");
+            throw new IllegalStateException("Attempt to edit a mailbox that didn't contain enough type information");
          case 2:
          default:
             return new DomainCommandResult("editHosted", null, null);

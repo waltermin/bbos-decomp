@@ -22,7 +22,7 @@ class SupportedAttachmentConverter implements MailConverter {
 
    @Override
    public boolean canConvert(Object o) {
-      if (o instanceof Object) {
+      if (o instanceof ProxyModel) {
          ProxyModel pm = (ProxyModel)o;
          o = pm.getObject();
       }
@@ -32,7 +32,7 @@ class SupportedAttachmentConverter implements MailConverter {
 
    @Override
    public Object convert(Object o, Object context) {
-      if (o instanceof Object) {
+      if (o instanceof ProxyModel) {
          ProxyModel m = (ProxyModel)o;
          o = m.getObject();
       }
@@ -41,7 +41,7 @@ class SupportedAttachmentConverter implements MailConverter {
          MailApiAttachmentViewerModel maavm = (MailApiAttachmentViewerModel)o;
          Multipart parent = (Multipart)context;
          SupportedAttachmentPart sap = new SupportedAttachmentPart(parent, maavm);
-         if (maavm instanceof Object) {
+         if (maavm instanceof MorePartModel) {
             MorePartModel mpm = maavm;
             Message m = (Message)parent.getParent();
             EmailMessageModel emm = m.getEmailMessageModel();
@@ -49,10 +49,10 @@ class SupportedAttachmentConverter implements MailConverter {
          }
 
          return sap;
-      } else if (o instanceof SupportedAttachmentPart && context instanceof Object) {
+      } else if (o instanceof SupportedAttachmentPart && context instanceof EmailMessageModel) {
          SupportedAttachmentPart sap = (SupportedAttachmentPart)o;
          int handle = this._store.add(sap._data);
-         return new Object(this._store.getId(), handle);
+         return new ProxyModel(this._store.getId(), handle);
       } else {
          return null;
       }

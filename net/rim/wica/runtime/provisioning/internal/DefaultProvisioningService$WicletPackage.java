@@ -1,5 +1,6 @@
 package net.rim.wica.runtime.provisioning.internal;
 
+import java.io.IOException;
 import net.rim.device.api.io.IOUtilities;
 import net.rim.wica.packaging.PackageUtilities;
 import net.rim.wica.runtime.persistence.Resource;
@@ -19,7 +20,7 @@ final class DefaultProvisioningService$WicletPackage {
       this.extract();
    }
 
-   private final void extract() {
+   private final void extract() throws IOException {
       ZipEntry entry = this._zipFile.getEntry("wiclet.wbxml");
       if (entry == null) {
          entry = this._zipFile.getEntry(DefaultProvisioningService.PLAINTEXT_WICLET_XML_FILENAME);
@@ -27,7 +28,7 @@ final class DefaultProvisioningService$WicletPackage {
       }
 
       if (entry == null) {
-         throw new Object("Application definition not found in package.");
+         throw new IOException("Application definition not found in package.");
       }
 
       this._wicletDefinition = this.getEntryContents(entry);

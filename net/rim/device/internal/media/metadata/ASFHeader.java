@@ -30,7 +30,7 @@ public final class ASFHeader {
       if (first24bytes != null && first24bytes.length >= 24 && startsWithHeaderObjectGUID(first24bytes, 0)) {
          return getObjectSize(first24bytes, 16);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -47,7 +47,7 @@ public final class ASFHeader {
       if (size >= 24 && size <= Integer.MAX_VALUE) {
          return (int)size;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -69,7 +69,7 @@ public final class ASFHeader {
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:174)
       //
       // Bytecode:
-      // 00: new java/lang/Object
+      // 00: new net/rim/device/internal/media/metadata/MetaDataControlImpl
       // 03: dup
       // 04: invokespecial net/rim/device/internal/media/metadata/MetaDataControlImpl.<init> ()V
       // 07: astore 2
@@ -253,7 +253,7 @@ public final class ASFHeader {
       length = getStringLength(data, offset, length);
       if (length > 0) {
          try {
-            return (String)(new Object(data, offset, length, "UTF-16LE"));
+            return new String(data, offset, length, "UTF-16LE");
          } finally {
             ;
          }
@@ -264,7 +264,7 @@ public final class ASFHeader {
 
    private static final void readPicture(byte[] data, int offset, int length, MetaDataControlImpl metaData) {
       if (length > 0) {
-         MetaDataObject image = (MetaDataObject)(new Object());
+         MetaDataObject image = new MetaDataObject();
          image.setPictureType(data[offset++]);
          if (--length > 4) {
             int imageSize = readLittleEndianInt(data, offset);

@@ -1,6 +1,7 @@
 package net.rim.device.api.crypto.keystore;
 
 import java.util.Enumeration;
+import java.util.NoSuchElementException;
 import net.rim.vm.WeakReference;
 
 class KeyStoreEnumeration implements Enumeration {
@@ -40,6 +41,6 @@ class KeyStoreEnumeration implements Enumeration {
          }
       }
 
-      throw new Object();
+      throw new NoSuchElementException();
    }
 }

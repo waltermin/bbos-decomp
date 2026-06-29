@@ -37,7 +37,7 @@ final class GroupAddressCardModelFactory extends RIMModelFactory {
             for (int i = 0; i < numMembers; i++) {
                byte[] groupMemberInfo = syncBuffer.getBytes(52, true);
                if (groupMemberInfo != null && groupMemberInfo.length >= 5) {
-                  DataBuffer infoBuff = (DataBuffer)(new Object(groupMemberInfo, 0, groupMemberInfo.length, false));
+                  DataBuffer infoBuff = new DataBuffer(groupMemberInfo, 0, groupMemberInfo.length, false);
                   int addressCardUid = infoBuff.readInt();
                   byte index = (byte)(infoBuff.readByte() - 1);
                   int syncFieldId = infoBuff.readInt();
@@ -66,7 +66,7 @@ final class GroupAddressCardModelFactory extends RIMModelFactory {
 
    @Override
    public final boolean recognize(Object object) {
-      if (object instanceof Object) {
+      if (object instanceof GroupAddressCardModel) {
          return ((GroupAddressCardModel)object).isValid();
       }
 
@@ -97,12 +97,12 @@ final class GroupAddressCardModelFactory extends RIMModelFactory {
    public final Verb[] getVerbs(Object context) {
       if (!ContextObject.getFlag(context, 81) && ContextObject.getFlag(context, 18) && !ContextObject.getFlag(context, 108)) {
          if (this._groupAddressBookVerbs == null) {
-            this._groupAddressBookVerbs = new Object[]{new GroupAddressCardVerb(0, null)};
+            this._groupAddressBookVerbs = new Verb[]{new GroupAddressCardVerb(0, null)};
          }
 
          return this._groupAddressBookVerbs;
       } else {
-         return new Object[0];
+         return new Verb[0];
       }
    }
 }

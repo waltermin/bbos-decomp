@@ -51,9 +51,7 @@ public final class ForgotHostedPasswordCommand implements DomainCommand {
             handleAttempts(params, mailbox, restClient, configRecord);
             return new DomainCommandResult("failed", ApplicationResources.getString(248), null, params);
          } else {
-            BISEventLogger.logEvent(
-               ((StringBuffer)(new Object("Forgot Hosted Password: Unhandled REST response code: "))).append(callResult.getRESTStatusCode()).toString(), 0
-            );
+            BISEventLogger.logEvent("Forgot Hosted Password: Unhandled REST response code: " + callResult.getRESTStatusCode(), 0);
             return new DomainCommandResult("error", null, null);
          }
       } catch (Throwable var10) {
@@ -65,9 +63,9 @@ public final class ForgotHostedPasswordCommand implements DomainCommand {
    public static final void handleAttempts(Hashtable params, Mailbox mailbox, RestClient restClient, BISClientConfigRecord configRecord) {
       Integer attempt = (Integer)params.get("validationAttempt");
       if (attempt == null) {
-         attempt = (Integer)(new Object(1));
+         attempt = new Integer(1);
       } else {
-         attempt = (Integer)(new Object(attempt + 1));
+         attempt = new Integer(attempt + 1);
       }
 
       if (attempt >= ClientSessionState.getInstance().getBrandingInfo().getNumValidationAttempts() && mailbox.isValid()) {
@@ -75,9 +73,7 @@ public final class ForgotHostedPasswordCommand implements DomainCommand {
             configRecord.getBrandName(), ClientSessionState.getInstance().getUserInfo().getUsername(), mailbox, null
          );
          if (updateCallResult.getRESTStatusCode() != 200) {
-            BISEventLogger.logEvent(
-               ((StringBuffer)(new Object("Invalidate account: Unhandled REST response code: "))).append(updateCallResult.getRESTStatusCode()).toString(), 0
-            );
+            BISEventLogger.logEvent("Invalidate account: Unhandled REST response code: " + updateCallResult.getRESTStatusCode(), 0);
          } else {
             mailbox.setInvalid();
          }

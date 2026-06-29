@@ -10,7 +10,7 @@ final class QueueRunner implements Runnable {
 
    QueueRunner(Application application) {
       this._application = application;
-      this._queue = (Vector)(new Object());
+      this._queue = new Vector();
    }
 
    final void addRunnable(Runnable element) {

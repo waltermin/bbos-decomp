@@ -63,15 +63,15 @@ class CustomWordlistScreen$CustomDictScreen extends KeywordFilteredScreen implem
       CollectionListField collectionListField = (CollectionListField)listField;
       Object element = collectionListField.getElementAt(index);
       if (element != null) {
-         if (element instanceof Object) {
+         if (element instanceof String) {
             graphics.drawText((String)element, 0, ((String)element).length(), 0, y, 70, width - 2);
          } else {
             String str;
-            if (!(element instanceof Object)) {
+            if (!(element instanceof JapaneseCustomWord)) {
                str = element.toString();
             } else {
                JapaneseCustomWord word = (JapaneseCustomWord)element;
-               str = ((StringBuffer)(new Object())).append(word.getCandidate()).append(" 〚").append(word.getReading()).append("〛").toString();
+               str = word.getCandidate() + " 〚" + word.getReading() + "〛";
             }
 
             graphics.drawText(str, 0, str.length(), 0, y, 70, width - 2);
@@ -98,7 +98,7 @@ class CustomWordlistScreen$CustomDictScreen extends KeywordFilteredScreen implem
       this.setAllowSpacesInSearchText(false);
       this.setHelp("typing");
       this._newItemValue = newItemValue;
-      ContextObject context = (ContextObject)(new Object(3, 5, 2));
+      ContextObject context = new ContextObject(3, 5, 2);
       SLControlObject controlObject = (SLControlObject)this.getInputContext().getInputMethodControlObject();
       if (controlObject.getIMStyleAsBoolean(1)) {
          context.setFlag(85);
@@ -224,7 +224,7 @@ class CustomWordlistScreen$CustomDictScreen extends KeywordFilteredScreen implem
       Object entry = this.getSelectedEntry();
       if (entry != null) {
          CustomDictUnitModel model = new CustomDictUnitModel(entry, CustomWordlistScreen._screenType, CustomWordlistScreen._customDictionary);
-         Verb[] verbs = new Object[0];
+         Verb[] verbs = new Verb[0];
          Verb defaultVerb = model.getVerbs(this._context, verbs);
          menu.add(verbs);
          menu.setDefault(defaultVerb);
@@ -242,10 +242,8 @@ class CustomWordlistScreen$CustomDictScreen extends KeywordFilteredScreen implem
    }
 
    private PrefixKeywordFilterList getList() {
-      SortedReadableList sortedList = (SortedReadableList)(new Object(
-         CustomWordlistScreen.getCustomDictionary(), new CustomWordlistScreen$CustomDictComparator()
-      ));
-      return (PrefixKeywordFilterList)(new Object(sortedList, new CustomWordlistScreen$CustomDictIndexHelper()));
+      SortedReadableList sortedList = new SortedReadableList(CustomWordlistScreen.getCustomDictionary(), new CustomWordlistScreen$CustomDictComparator());
+      return new PrefixKeywordFilterList(sortedList, new CustomWordlistScreen$CustomDictIndexHelper());
    }
 
    @Override

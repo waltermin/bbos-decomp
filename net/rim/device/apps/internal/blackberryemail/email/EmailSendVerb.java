@@ -67,8 +67,8 @@ final class EmailSendVerb extends Verb {
    private final Object performInvocation(Object context) {
       this._message = (EmailMessageModel)this._screen.getModel(false);
       byte encoding = this._message.getEncoding();
-      if (encoding != -1 && (encoding & 112) == 0 && context instanceof Object) {
-         Font font = (Font)ContextObject.get(context, 77);
+      if (encoding != -1 && (encoding & 112) == 0 && context instanceof ContextObject) {
+         Font font = (Font)ContextObject.get((ContextObject)context, 77);
          if (font != null) {
             this._message.setEncoding(CMIMEUtilities.addHints(encoding, font));
          }
@@ -180,8 +180,7 @@ final class EmailSendVerb extends Verb {
                ShowMessageApp.showMessageApp();
             }
 
-            ContextObject invokeContextObject = (ContextObject)(new Object(39));
-            return invokeContextObject;
+            return new ContextObject(39);
          }
       }
    }
@@ -195,7 +194,7 @@ final class EmailSendVerb extends Verb {
                currentBodyString = oldBodyModel.getText();
             }
 
-            StringBuffer sb = (StringBuffer)(new Object(prependedDisclaimer));
+            StringBuffer sb = new StringBuffer(prependedDisclaimer);
             if (currentBodyString != null) {
                sb.append('\n');
                sb.append(currentBodyString);
@@ -213,7 +212,7 @@ final class EmailSendVerb extends Verb {
          currentBodyString = messageClassification.addBodyIndicator(currentBodyString);
       }
 
-      return (BodyModel)(currentBodyString == null ? null : FactoryUtil.createInstance(5987399499453925075L, currentBodyString));
+      return currentBodyString == null ? null : (BodyModel)FactoryUtil.createInstance(5987399499453925075L, currentBodyString);
    }
 
    private final SubjectModel getModifiedMessageSubject(SubjectModel oldSubjectModel, MessageClassification messageClassification) {
@@ -239,7 +238,7 @@ final class EmailSendVerb extends Verb {
          return null;
       }
 
-      ContextObject subjectCreationContext = (ContextObject)(new Object());
+      ContextObject subjectCreationContext = new ContextObject();
       ContextObject.put(subjectCreationContext, 253, currentSubjectString);
       return (SubjectModel)FactoryUtil.createInstance(3928489455534245796L, subjectCreationContext);
    }

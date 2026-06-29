@@ -19,19 +19,19 @@ public final class MMSAttachmentImpl implements MMSAttachment {
       this._data = data;
       this._charset = charset;
       if (data == null) {
-         throw new Object("Missing attachment data.");
+         throw new RuntimeException("Missing attachment data.");
       }
    }
 
    public static final MMSAttachment copy(MMSAttachment attachment) {
       String name = attachment.getName();
       if (name != null) {
-         name = new Object(name).toString();
+         name = name;
       }
 
       String charset = attachment.getCharset();
       if (charset != null) {
-         charset = new Object(charset).toString();
+         charset = charset;
       }
 
       byte[] data = attachment.getData();

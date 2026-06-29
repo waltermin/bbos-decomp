@@ -15,7 +15,7 @@ public class MapField extends Field {
    private float _zoom;
    private int _rotation;
    public static long GUID_FACTORY = -4344764831123724779L;
-   private static final XYPoint _point = (XYPoint)(new Object());
+   private static final XYPoint _point = new XYPoint();
 
    public MapField(int style) {
       super(style);
@@ -78,7 +78,7 @@ public class MapField extends Field {
    }
 
    public Coordinates getCoordinates() {
-      return (Coordinates)(new Object(4681608360884174848L * this.getLatitude(), 4681608360884174848L * this.getLongitude(), (float)false));
+      return new Coordinates(4681608360884174848L * this.getLatitude(), 4681608360884174848L * this.getLongitude(), (float)false);
    }
 
    public void setRotation(int rotation) {

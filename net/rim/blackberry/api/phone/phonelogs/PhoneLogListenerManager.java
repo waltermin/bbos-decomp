@@ -5,6 +5,7 @@ import net.rim.device.api.collection.Collection;
 import net.rim.device.api.collection.CollectionListener;
 import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.apps.api.messaging.util.PersistedSortedCollection;
+import net.rim.device.apps.internal.phone.data.PhoneCallModelImpl;
 import net.rim.device.apps.internal.phone.data.PhoneFolders;
 
 final class PhoneLogListenerManager implements CollectionListener {
@@ -115,11 +116,11 @@ final class PhoneLogListenerManager implements CollectionListener {
    }
 
    private final boolean validate(Collection c, Object o) {
-      return o instanceof Object && (c == this._calls || c == this._missedCalls);
+      return o instanceof PhoneCallModelImpl && (c == this._calls || c == this._missedCalls);
    }
 
    private PhoneLogListenerManager() {
-      this._listeners = (Vector)(new Object());
+      this._listeners = new Vector();
       this._calls.addCollectionListener(this);
       this._missedCalls.addCollectionListener(this);
    }

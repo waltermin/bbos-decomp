@@ -15,7 +15,7 @@ public class SecureEmailMailBoxOptionsModel implements RIMModel, FieldProvider, 
 
    @Override
    public Field getField(Object context) {
-      if (!(this._selectedEncodingOptionsModel instanceof Object)) {
+      if (!(this._selectedEncodingOptionsModel instanceof FieldProvider)) {
          return null;
       }
 
@@ -25,7 +25,7 @@ public class SecureEmailMailBoxOptionsModel implements RIMModel, FieldProvider, 
 
    @Override
    public Verb getVerbs(Object context, Verb[] verbs) {
-      if (!(this._selectedEncodingOptionsModel instanceof Object)) {
+      if (!(this._selectedEncodingOptionsModel instanceof VerbProvider)) {
          return null;
       }
 
@@ -35,7 +35,7 @@ public class SecureEmailMailBoxOptionsModel implements RIMModel, FieldProvider, 
 
    @Override
    public boolean grabDataFromField(Field field, Object context) {
-      if (!(this._selectedEncodingOptionsModel instanceof Object)) {
+      if (!(this._selectedEncodingOptionsModel instanceof FieldProvider)) {
          return false;
       }
 
@@ -47,7 +47,7 @@ public class SecureEmailMailBoxOptionsModel implements RIMModel, FieldProvider, 
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
    public boolean validate(Field field, Object context) {
-      if (!(this._selectedEncodingOptionsModel instanceof Object)) {
+      if (!(this._selectedEncodingOptionsModel instanceof FieldProvider)) {
          return false;
       }
 
@@ -59,7 +59,7 @@ public class SecureEmailMailBoxOptionsModel implements RIMModel, FieldProvider, 
       boolean var6;
       try {
          var9 = true;
-         ContextObject.put(context, -6134954812221890959L, new Object(encodingAction));
+         ContextObject.put(context, -6134954812221890959L, new Integer(encodingAction));
          var6 = fieldProvider.validate(field, context);
          var9 = false;
       } finally {
@@ -79,7 +79,7 @@ public class SecureEmailMailBoxOptionsModel implements RIMModel, FieldProvider, 
 
    SecureEmailMailBoxOptionsModel(RIMModel[] encodingOptionsModels, Object context) {
       if (encodingOptionsModels == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._messagePropertiesModel = (TransitoryMessagePropertiesModel)ContextObject.get(context, 32241034113959076L);

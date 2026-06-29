@@ -40,7 +40,7 @@ public class PGPCertificateImporterFactory extends CertificateImporterFactory {
             }
 
             KeyStore x509KeyStore = DeviceKeyStore.getInstance();
-            Certificate[] certsInsertedWithPrivateData = new Object[0];
+            Certificate[] certsInsertedWithPrivateData = new Certificate[0];
             if (privateKey != null) {
                Certificate[] parentKeyX509Certs = pgpCert.getEmbeddedX509Certificates(pgpPrivateKey.getKeyID());
                if (parentKeyX509Certs != null) {
@@ -86,7 +86,7 @@ public class PGPCertificateImporterFactory extends CertificateImporterFactory {
             }
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

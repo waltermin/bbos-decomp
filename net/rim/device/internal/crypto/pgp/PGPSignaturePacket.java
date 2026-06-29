@@ -1,11 +1,12 @@
 package net.rim.device.internal.crypto.pgp;
 
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.Vector;
+import net.rim.device.api.crypto.CryptoUnsupportedOperationException;
 import net.rim.device.api.crypto.PublicKey;
 import net.rim.device.api.crypto.SignatureVerifier;
 import net.rim.device.api.crypto.certificate.Certificate;
+import net.rim.device.api.crypto.certificate.x509.X509Certificate;
 import net.rim.device.api.crypto.pgp.PGPEncodingException;
 import net.rim.device.api.crypto.pgp.PGPVerificationException;
 import net.rim.device.api.util.Arrays;
@@ -29,14 +30,14 @@ public final class PGPSignaturePacket extends PGPPacket implements Persistable {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public PGPSignaturePacket(int tag, byte[] encoding) throws PGPEncodingException {
+   public PGPSignaturePacket(int tag, byte[] encoding) throws CryptoUnsupportedOperationException, PGPEncodingException {
       super(tag, encoding);
       int offset = 0;
-      this._signatureSubPackets = (Vector)(new Object());
+      this._signatureSubPackets = new Vector();
       this._version = encoding[offset++] & 255;
       switch (this._version) {
          case 2:
-            throw new Object(((StringBuffer)(new Object("Ver:"))).append(this._version).toString());
+            throw new CryptoUnsupportedOperationException("Ver:" + this._version);
          case 3:
          default:
             int hashLength = encoding[offset++] & 255;
@@ -61,15 +62,15 @@ public final class PGPSignaturePacket extends PGPPacket implements Persistable {
 
             try {
                var15 = true;
-               ByteArrayInputStream var38 = new Object(encoding, offset, encoding.length - offset);
+               ByteArrayInputStream var38 = new ByteArrayInputStream(encoding, offset, encoding.length - offset);
                if (this._publicKeyAlgorithm == 17) {
-                  this._ephemeralKey = PGPUtilities.readMPI((InputStream)var38);
-                  this._signature = PGPUtilities.readMPI((InputStream)var38);
+                  this._ephemeralKey = PGPUtilities.readMPI(var38);
+                  this._signature = PGPUtilities.readMPI(var38);
                   var15 = false;
                } else if (this._publicKeyAlgorithm != 1) {
                   var15 = false;
                } else {
-                  this._signature = PGPUtilities.readMPI((InputStream)var38);
+                  this._signature = PGPUtilities.readMPI(var38);
                   var15 = false;
                }
                break;
@@ -108,13 +109,13 @@ public final class PGPSignaturePacket extends PGPPacket implements Persistable {
 
             try {
                var12 = true;
-               ByteArrayInputStream e = new Object(encoding, offset, encoding.length - offset);
+               ByteArrayInputStream e = new ByteArrayInputStream(encoding, offset, encoding.length - offset);
                if (this._publicKeyAlgorithm == 17) {
-                  this._ephemeralKey = PGPUtilities.readMPI((InputStream)e);
-                  this._signature = PGPUtilities.readMPI((InputStream)e);
+                  this._ephemeralKey = PGPUtilities.readMPI(e);
+                  this._signature = PGPUtilities.readMPI(e);
                   var12 = false;
                } else if (this._publicKeyAlgorithm == 1) {
-                  this._signature = PGPUtilities.readMPI((InputStream)e);
+                  this._signature = PGPUtilities.readMPI(e);
                   var12 = false;
                } else {
                   var12 = false;
@@ -225,7 +226,7 @@ public final class PGPSignaturePacket extends PGPPacket implements Persistable {
       // Bytecode:
       // 00: aload 1
       // 01: ifnonnull 0c
-      // 04: new java/lang/Object
+      // 04: new java/lang/IllegalArgumentException
       // 07: dup
       // 08: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 0b: athrow
@@ -239,10 +240,10 @@ public final class PGPSignaturePacket extends PGPPacket implements Persistable {
       // 19: aload 0
       // 1a: getfield net/rim/device/internal/crypto/pgp/PGPSignaturePacket._publicKeyAlgorithm I
       // 1d: lookupswitch 68 2 1 50 17 27
-      // 38: new java/lang/Object
+      // 38: new net/rim/device/api/crypto/DSASignatureVerifier
       // 3b: dup
       // 3c: aload 1
-      // 3d: checkcast java/lang/Object
+      // 3d: checkcast net/rim/device/api/crypto/DSAPublicKey
       // 40: aload 3
       // 41: aload 0
       // 42: getfield net/rim/device/internal/crypto/pgp/PGPSignaturePacket._ephemeralKey [B
@@ -252,19 +253,19 @@ public final class PGPSignaturePacket extends PGPPacket implements Persistable {
       // 4a: bipush 0
       // 4b: invokespecial net/rim/device/api/crypto/DSASignatureVerifier.<init> (Lnet/rim/device/api/crypto/DSAPublicKey;Lnet/rim/device/api/crypto/Digest;[BI[BI)V
       // 4e: areturn
-      // 4f: new java/lang/Object
+      // 4f: new net/rim/device/api/crypto/PKCS1SignatureVerifier
       // 52: dup
       // 53: aload 1
-      // 54: checkcast java/lang/Object
+      // 54: checkcast net/rim/device/api/crypto/RSAPublicKey
       // 57: aload 3
       // 58: aload 0
       // 59: getfield net/rim/device/internal/crypto/pgp/PGPSignaturePacket._signature [B
       // 5c: bipush 0
       // 5d: invokespecial net/rim/device/api/crypto/PKCS1SignatureVerifier.<init> (Lnet/rim/device/api/crypto/RSAPublicKey;Lnet/rim/device/api/crypto/Digest;[BI)V
       // 60: areturn
-      // 61: new java/lang/Object
+      // 61: new net/rim/device/api/crypto/CryptoUnsupportedOperationException
       // 64: dup
-      // 65: new java/lang/Object
+      // 65: new java/lang/StringBuffer
       // 68: dup
       // 69: ldc_w "Pub:"
       // 6c: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -311,7 +312,7 @@ public final class PGPSignaturePacket extends PGPPacket implements Persistable {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private final void verify(PGPPublicKeyPacket parentKey, PGPPublicKeyPacket keyToHash, PublicKey verificationKey, PGPUserIDPacket userID) throws PGPVerificationException {
       if (parentKey == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (keyToHash == null) {
@@ -428,8 +429,7 @@ public final class PGPSignaturePacket extends PGPPacket implements Persistable {
          System.arraycopy(this._x509CertPacket.getEncoding(), 3, certData, 0, certData.length);
 
          try {
-            Certificate embeddedCert = (Certificate)(new Object(certData));
-            return embeddedCert;
+            return new X509Certificate(certData);
          } finally {
             ;
          }

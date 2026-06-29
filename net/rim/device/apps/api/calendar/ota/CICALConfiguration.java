@@ -62,7 +62,7 @@ public class CICALConfiguration implements Persistable {
          }
 
          Object o = calendarService.getServiceKey();
-         if (o instanceof Object) {
+         if (o instanceof ServiceRecord) {
             ServiceRecord sr = (ServiceRecord)o;
             if (sr.isSecureService()) {
                result = calendarService.getCICALConfiguration();
@@ -82,7 +82,7 @@ public class CICALConfiguration implements Persistable {
    public static synchronized CICALConfiguration initialize(Object serviceKey, int source) {
       CICALConfiguration configuration = new CICALConfiguration();
       ServiceRecord cicalServiceRecord = null;
-      if (serviceKey instanceof Object) {
+      if (serviceKey instanceof ServiceRecord) {
          cicalServiceRecord = (ServiceRecord)serviceKey;
          configuration._calendarServiceID = ServiceIdentifier.createServiceID(cicalServiceRecord);
       }

@@ -22,7 +22,7 @@ class OpenMeetingEmailDataVerb extends Verb {
    @Override
    public Object invoke(Object parameter) {
       Event event = this._meetingData.getEvent();
-      if (event instanceof Object) {
+      if (event instanceof CalendarEventViewerProvider) {
          CalendarEventViewerProvider viewerProvider = (CalendarEventViewerProvider)event;
          CalendarEventViewer viewer = viewerProvider.getCalendarEventViewer(null);
          if (viewer != null) {

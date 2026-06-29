@@ -88,7 +88,7 @@ public class ProfileVariable extends ProfileElement {
          if (this._savedValue == null || this._savedValue.length < capacity) {
             this._savedValue = new int[capacity];
             this._savedTime = new long[capacity];
-            this._savedName = new Object[capacity];
+            this._savedName = new String[capacity];
          }
 
          if (this._savedValue != null && this._savedTime != null && this._savedName != null) {

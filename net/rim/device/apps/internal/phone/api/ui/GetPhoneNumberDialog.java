@@ -1,11 +1,12 @@
 package net.rim.device.apps.internal.phone.api.ui;
 
-import net.rim.device.api.ui.Field;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.EditField;
+import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.text.TextFilter;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
 import net.rim.device.internal.ui.component.PopupDialog;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 
 public final class GetPhoneNumberDialog extends PopupDialog {
    EditField _phoneNumberField;
@@ -15,14 +16,14 @@ public final class GetPhoneNumberDialog extends PopupDialog {
    }
 
    public GetPhoneNumberDialog(String prompt, int maxLength) {
-      super((Manager)(new Object(1153202979583557632L)));
+      super(new VerticalFieldManager(1153202979583557632L));
       this.setModal(true);
-      this._phoneNumberField = (EditField)(new Object(PhoneResources.getString(500), "", maxLength, 0));
+      this._phoneNumberField = new EditField(PhoneResources.getString(500), "", maxLength, 0);
       this.setFilter(new SimplePhoneNumberFilter());
       this.addPrompt(prompt);
-      this.add((Field)(new Object(4)));
+      this.add(new VerticalSpacerField(4));
       this.add(this._phoneNumberField);
-      this.add((Field)(new Object(4)));
+      this.add(new VerticalSpacerField(4));
    }
 
    public final void setFilter(TextFilter textFilter) {
@@ -30,7 +31,7 @@ public final class GetPhoneNumberDialog extends PopupDialog {
    }
 
    protected final void addPrompt(String prompt) {
-      this.add((Field)(new Object(prompt, 36028797018963968L)));
+      this.add(new RichTextField(prompt, 36028797018963968L));
    }
 
    @Override

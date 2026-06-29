@@ -445,7 +445,7 @@ public final class RootRegister implements SystemListener3, GlobalEventListener,
             Alert.startMIDI(midiData, 2);
          }
 
-         this._safelyRemoveDialog = (Dialog)(new Object(3, CommonResource.getString(10132), -1, Bitmap.getPredefinedBitmap(1), 33554432, true));
+         this._safelyRemoveDialog = new Dialog(3, CommonResource.getString(10132), -1, Bitmap.getPredefinedBitmap(1), 33554432, true);
          this._safelyRemoveDialog.setDialogClosedListener(this);
          this._safelyRemoveDialog.show(-2147483646);
       }
@@ -489,7 +489,7 @@ public final class RootRegister implements SystemListener3, GlobalEventListener,
 
    private final void showUpgradeLockDialog() {
       if (this._upgradeLockDialog == null) {
-         this._upgradeLockDialog = (Dialog)(new Object(3, CommonResource.getString(10123), 4, Bitmap.getPredefinedBitmap(1), 33554432));
+         this._upgradeLockDialog = new Dialog(3, CommonResource.getString(10123), 4, Bitmap.getPredefinedBitmap(1), 33554432);
          this._upgradeLockDialog.setDialogClosedListener(this);
          this._upgradeLockDialog.show();
       }
@@ -508,7 +508,7 @@ public final class RootRegister implements SystemListener3, GlobalEventListener,
 
    private final void showPromptDialog() {
       if (this._promptDialog == null) {
-         this._promptDialog = (Dialog)(new Object(3, CommonResource.getString(10119), -1, Bitmap.getPredefinedBitmap(1), 33554432, true));
+         this._promptDialog = new Dialog(3, CommonResource.getString(10119), -1, Bitmap.getPredefinedBitmap(1), 33554432, true);
          this._promptDialog.setDialogClosedListener(this);
          this._promptDialog.show();
       }
@@ -612,7 +612,7 @@ public final class RootRegister implements SystemListener3, GlobalEventListener,
 
    private final void showChangePwdDialog() {
       if (this._changePwdDialog == null) {
-         this._changePwdDialog = (Dialog)(new Object(3, CommonResource.getString(10122), 0, Bitmap.getPredefinedBitmap(1), 33554432));
+         this._changePwdDialog = new Dialog(3, CommonResource.getString(10122), 0, Bitmap.getPredefinedBitmap(1), 33554432);
          this._changePwdDialog.setDialogClosedListener(this);
          this._changePwdDialog.show();
       }
@@ -652,7 +652,7 @@ public final class RootRegister implements SystemListener3, GlobalEventListener,
       // 17: astore 1
       // 18: return
       // 19: astore 1
-      // 1a: new java/lang/Object
+      // 1a: new java/lang/RuntimeException
       // 1d: dup
       // 1e: ldc_w "net_rim_os requires net_rim_bb_apps_framework"
       // 21: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
@@ -690,7 +690,7 @@ public final class RootRegister implements SystemListener3, GlobalEventListener,
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 

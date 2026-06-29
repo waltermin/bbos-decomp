@@ -4,7 +4,6 @@ import net.rim.device.api.system.Application;
 import net.rim.device.api.system.AudioRouter;
 import net.rim.device.api.system.DeviceInfo;
 import net.rim.device.api.system.Phone;
-import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.ScreenUiEngineAttachedListener;
 import net.rim.device.api.ui.component.Dialog;
@@ -16,6 +15,7 @@ import net.rim.device.apps.api.framework.registration.MIMEContentVerbRepository;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.options.OptionsChangeListener;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
+import net.rim.device.apps.api.ui.VerbMenuItem;
 import net.rim.device.apps.internal.mediarecorder.MediaRecorderScreen;
 import net.rim.device.internal.camera.Camera;
 import net.rim.device.internal.camera.CameraVideoListener;
@@ -65,11 +65,11 @@ final class VideoRecorderScreen extends MediaRecorderScreen implements CameraVid
       int time = accumTime / 1000;
       int minutes = time / 60;
       int seconds = time % 60;
-      String text = ((StringBuffer)(new Object())).append(minutes).append(":").toString();
+      String text = minutes + ":";
       if (seconds < 10) {
-         text = ((StringBuffer)(new Object())).append(text).append('0').append(seconds).toString();
+         text = text + '0' + seconds;
       } else {
-         text = ((StringBuffer)(new Object())).append(text).append(seconds).toString();
+         text = text + seconds;
       }
 
       return text.toCharArray();
@@ -89,7 +89,7 @@ final class VideoRecorderScreen extends MediaRecorderScreen implements CameraVid
 
       if (ContextObject.getFlag(ctx, 39)) {
          Object obj = ContextObject.get(ctx, -3185095355580406181L);
-         if (obj instanceof Object) {
+         if (obj instanceof Verb) {
             this._terminalVerb = (Verb)obj;
          }
       } else {
@@ -97,7 +97,7 @@ final class VideoRecorderScreen extends MediaRecorderScreen implements CameraVid
       }
 
       Object screen = ContextObject.get(ctx, -1477447097671931650L);
-      if (screen instanceof Object) {
+      if (screen instanceof Screen) {
          ((Screen)screen).addScreenUiEngineAttachedListener(this);
       }
    }
@@ -170,7 +170,7 @@ final class VideoRecorderScreen extends MediaRecorderScreen implements CameraVid
             this._vrc.fileAlreadyTranscoded();
             return;
          default:
-            System.out.println(((StringBuffer)(new Object("VIDEO error:"))).append(error).toString());
+            System.out.println("VIDEO error:" + error);
             this.updateTranscodeProgress(-1);
             if (this._transcoded) {
                this._vrc.cleanupStreamsAndFiles(true);
@@ -290,7 +290,7 @@ final class VideoRecorderScreen extends MediaRecorderScreen implements CameraVid
    private final ContextObject createContextForSendVerb() {
       String filename = this._vrc.getVideoFileName(true);
       String fileDisplayName = FileUtilities.getDisplayBaseName(filename);
-      ContextObject contextObj = (ContextObject)(new Object());
+      ContextObject contextObj = new ContextObject();
       contextObj.put(2765042845091913199L, filename);
       contextObj.put(-4241241545455759532L, "video/3gpp");
       contextObj.put(-1188330299125235844L, fileDisplayName);
@@ -366,16 +366,16 @@ final class VideoRecorderScreen extends MediaRecorderScreen implements CameraVid
          this.activatePause();
       }
 
-      ContextObject menuContext = (ContextObject)(new Object());
-      menuContext.put(244, new Object(244387));
-      SystemEnabledMenu menu = (SystemEnabledMenu)(new Object(menuContext, null));
+      ContextObject menuContext = new ContextObject();
+      menuContext.put(244, new Integer(244387));
+      SystemEnabledMenu menu = new SystemEnabledMenu(menuContext, null);
       Menu.setTargetScreen(this);
       menu.setInstance(instance);
       this.makeMenuWithContext(menu, instance);
       String path = this._options.getDestinationFolder();
       Verb browseVerb = ExplorerServices.getBrowseVerb(path, 130, null);
-      menu.add((MenuItem)(new Object(VideoRecorderResources.getString(19), 591106, 0, browseVerb, null)));
-      menu.add((MenuItem)(new Object(new VideoRecorderScreen$OptionsVerb(), 0)));
+      menu.add(new VerbMenuItem(VideoRecorderResources.getString(19), 591106, 0, browseVerb, null));
+      menu.add(new VerbMenuItem(new VideoRecorderScreen$OptionsVerb(), 0));
       if (this.isRecording() || this._transcoded) {
          Verb[] sendVerbs = MIMEContentVerbRepository.getVerbs("video/3gpp");
          if (sendVerbs != null && sendVerbs.length > 0) {
@@ -383,7 +383,7 @@ final class VideoRecorderScreen extends MediaRecorderScreen implements CameraVid
 
             for (int idx = 0; idx < sendVerbs.length; idx++) {
                Verb verb = new VideoRecorderScreen$TranscodeWrapperVerb(this, sendVerbs[idx]);
-               menu.add((MenuItem)(new Object(null, verb.getOrdering(), 0, verb, context)));
+               menu.add(new VerbMenuItem(null, verb.getOrdering(), 0, verb, context));
             }
          }
       }
@@ -404,7 +404,7 @@ final class VideoRecorderScreen extends MediaRecorderScreen implements CameraVid
       }
 
       this._viewfinder = new VideoViewfinderField(format[0], format[1], format[2], this._options.getColourEffect());
-      HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(2305843022098595840L));
+      HorizontalFieldManager hfm = new HorizontalFieldManager(2305843022098595840L);
       hfm.add(this._viewfinder);
       this.add(hfm);
       this.setFlashMode(this._options.getFlashModeIndex());
@@ -434,7 +434,7 @@ final class VideoRecorderScreen extends MediaRecorderScreen implements CameraVid
             long newTime = InternalServices.getUptime();
             if (newTime - this._progressLastUpdated > 250) {
                if (this._progressDialog == null) {
-                  this._progressDialog = (ProgressDialog)(new Object(VideoRecorderResources.getString(4)));
+                  this._progressDialog = new ProgressDialog(VideoRecorderResources.getString(4));
                   this._progressDialog.show();
                }
 

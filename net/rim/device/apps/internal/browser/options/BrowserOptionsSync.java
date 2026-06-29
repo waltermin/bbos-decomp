@@ -51,7 +51,7 @@ public final class BrowserOptionsSync extends OTASyncCapableSyncItem implements 
    @Override
    public final void optionsChanged(BitSet changedOptions) {
       if (this._fireUpdates) {
-         BitSet bitSet = (BitSet)(new Object(changedOptions));
+         BitSet bitSet = new BitSet(changedOptions);
          bitSet.and(GeneralProperty.BACKUP_RESTORE_MASK);
          if (bitSet.getNumSet() > 0) {
             this.fireSyncItemUpdated();
@@ -297,7 +297,7 @@ public final class BrowserOptionsSync extends OTASyncCapableSyncItem implements 
                                                                var13 = false;
                                                                var16 = false;
                                                             } else {
-                                                               DataBuffer tmpDataBuffer = (DataBuffer)(new Object());
+                                                               DataBuffer tmpDataBuffer = new DataBuffer();
 
                                                                while (!buffer.eof()) {
                                                                   int type;
@@ -507,7 +507,7 @@ public final class BrowserOptionsSync extends OTASyncCapableSyncItem implements 
 
    @Override
    public final boolean getSyncData(DataBuffer buffer, int version) {
-      DataBuffer tmpBuffer = (DataBuffer)(new Object(buffer.isBigEndian()));
+      DataBuffer tmpBuffer = new DataBuffer(buffer.isBigEndian());
 
       try {
          tmpBuffer.writeBoolean(GeneralProperty.getCurrentPropertyAsBoolean(1));
@@ -570,7 +570,7 @@ public final class BrowserOptionsSync extends OTASyncCapableSyncItem implements 
          TLEUtilities.writeIntegerField(tmpBuffer, 16, GeneralProperty.getCurrentPropertyAsInt(36), false);
          TLEUtilities.writeIntegerField(tmpBuffer, 17, GeneralProperty.getCurrentPropertyAsInt(37), false);
          TLEUtilities.writeIntegerField(tmpBuffer, 20, GeneralProperty.getCurrentPropertyAsInt(40), false);
-         DataBuffer tmpBuffer2 = (DataBuffer)(new Object());
+         DataBuffer tmpBuffer2 = new DataBuffer();
          this.writeIntOverrides(21, tmpBuffer2);
          TLEUtilities.writeDataField(tmpBuffer, 6, tmpBuffer2.getArray(), tmpBuffer2.getArrayStart(), tmpBuffer2.getArrayLength());
          tmpBuffer2.reset();
@@ -704,7 +704,7 @@ public final class BrowserOptionsSync extends OTASyncCapableSyncItem implements 
          for (int i = 0; i < numCredentials; i++) {
             String realm = buffer.readUTF();
             int num = buffer.readCompressedInt();
-            String[] credentials = new Object[num];
+            String[] credentials = new String[num];
 
             for (int j = 0; j < num; j++) {
                credentials[j] = buffer.readUTF();
@@ -731,7 +731,7 @@ public final class BrowserOptionsSync extends OTASyncCapableSyncItem implements 
          while (keys.hasMoreElements()) {
             String realm = (String)keys.nextElement();
             tmpBuffer.writeUTF(realm);
-            String[] credentials = (Object[])table.get(realm);
+            String[] credentials = (String[])table.get(realm);
             tmpBuffer.writeCompressedInt(credentials.length);
 
             for (int i = 0; i < credentials.length; i++) {

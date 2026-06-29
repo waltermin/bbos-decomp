@@ -37,7 +37,7 @@ public final class EmailFilterVerb extends Verb {
 
    @Override
    public final Object invoke(Object obj) {
-      if (!(obj instanceof Object)) {
+      if (!(obj instanceof ContextObject)) {
          return null;
       }
 
@@ -73,7 +73,7 @@ public final class EmailFilterVerb extends Verb {
       }
 
       int size = srs.length;
-      String[] srNames = new Object[size];
+      String[] srNames = new String[size];
       int[] userIds = new int[size];
 
       for (int i = 0; i < size; i++) {

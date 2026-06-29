@@ -26,7 +26,7 @@ final class SavedEmailOTASync
    OTASyncPriorityProvider,
    SyncCollectionStatusProvider,
    SyncEventListener {
-   private CollectionListenerManager _collectionListenerManager = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _collectionListenerManager = new CollectionListenerManager();
 
    public SavedEmailOTASync() {
       CollectionEventSource eventSource = (CollectionEventSource)FolderMerge.getMergeCollection(6368823655991217730L);
@@ -98,7 +98,7 @@ final class SavedEmailOTASync
    public final SyncObject[] getSyncObjects() {
       ReadableList collection = (ReadableList)FolderMerge.getMergeCollection(6368823655991217730L);
       int len = collection.size();
-      SyncObject[] objects = new Object[len];
+      SyncObject[] objects = new SyncObject[len];
       LowMemoryManager.poll();
       synchronized (FolderHierarchies.getLockObject()) {
          int idx = 0;
@@ -179,7 +179,9 @@ final class SavedEmailOTASync
          EmailMessageModelImpl email = (EmailMessageModelImpl)object;
          long folderId = email.getFolderId();
          EmailHierarchy hierarchy = EmailHierarchy.getEmailHierarchyForFolder(folderId);
-         ReadableList[] collections = new Object[]{hierarchy.getFiledFolder().getContainedItems(), hierarchy.getUnfiledFolder().getContainedItems()};
+         ReadableList[] collections = new ReadableList[]{
+            (ReadableList)hierarchy.getFiledFolder().getContainedItems(), (ReadableList)hierarchy.getUnfiledFolder().getContainedItems()
+         };
          synchronized (FolderHierarchies.getLockObject()) {
             for (int i = 0; i < collections.length; i++) {
                int len = collections[i].size();

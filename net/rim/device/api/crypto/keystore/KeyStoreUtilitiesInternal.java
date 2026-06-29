@@ -53,7 +53,7 @@ public final class KeyStoreUtilitiesInternal {
             return password;
          }
 
-         StringBuffer pleaseEnterPasswordPrompt = (StringBuffer)(new Object(KeyStoreResources.getString(3001)));
+         StringBuffer pleaseEnterPasswordPrompt = new StringBuffer(KeyStoreResources.getString(3001));
          if (passwordAttempts > 1 && passwordAttempts < passwordThreshold) {
             pleaseEnterPasswordPrompt.append(' ');
             pleaseEnterPasswordPrompt.append('(');
@@ -65,13 +65,13 @@ public final class KeyStoreUtilitiesInternal {
 
          pleaseEnterPasswordPrompt.append(':');
          boolean revealPassword = passwordAttempts > _helper.getRevealPasswordAttempts();
-         TicketDialog ticketDialog = (TicketDialog)(new Object(
+         TicketDialog ticketDialog = new TicketDialog(
             RichTextFieldUtilities.getBoldFormattedRichTextField(reasonDescription, 9007199254740992L),
             refreshCachedPassword,
             pleaseEnterPasswordPrompt.toString(),
             revealPassword,
             134217728
-         ));
+         );
          BackgroundDialog.show(ticketDialog);
          if (ticketDialog.getCloseReason() == -1) {
             throw new KeyStoreCancelException();
@@ -106,7 +106,7 @@ public final class KeyStoreUtilitiesInternal {
    }
 
    public static final byte[] computeHash(byte[] password) {
-      SHA256Digest digest = (SHA256Digest)(new Object());
+      SHA256Digest digest = new SHA256Digest();
       digest.update(password);
       return digest.getDigest();
    }
@@ -153,7 +153,7 @@ public final class KeyStoreUtilitiesInternal {
    }
 
    public static final byte[] encode(byte[] key, byte[] salt, byte[] hash, int passwordVersion, int securityLevel) {
-      DataBuffer buffer = (DataBuffer)(new Object());
+      DataBuffer buffer = new DataBuffer();
       TLEUtilities.writeDataField(buffer, 1, key);
       TLEUtilities.writeDataField(buffer, 2, salt);
       TLEUtilities.writeDataField(buffer, 3, hash);
@@ -183,7 +183,7 @@ public final class KeyStoreUtilitiesInternal {
          throw new KeyStoreDecodeException();
       }
 
-      DataBuffer buffer = (DataBuffer)(new Object(encoding, 0, encoding.length, true));
+      DataBuffer buffer = new DataBuffer(encoding, 0, encoding.length, true);
       TLEUtilities.writeIntegerField(buffer, 4, passwordVersion, true);
    }
 
@@ -223,11 +223,11 @@ public final class KeyStoreUtilitiesInternal {
       // 0f: isub
       // 10: iload 1
       // 11: if_icmpge 1c
-      // 14: new java/lang/Object
+      // 14: new java/lang/IllegalArgumentException
       // 17: dup
       // 18: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 1b: athrow
-      // 1c: new java/lang/Object
+      // 1c: new net/rim/device/api/util/DataBuffer
       // 1f: dup
       // 20: aload 0
       // 21: iload 1
@@ -274,11 +274,11 @@ public final class KeyStoreUtilitiesInternal {
       // 0f: isub
       // 10: iload 1
       // 11: if_icmpge 1c
-      // 14: new java/lang/Object
+      // 14: new java/lang/IllegalArgumentException
       // 17: dup
       // 18: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 1b: athrow
-      // 1c: new java/lang/Object
+      // 1c: new net/rim/device/api/util/DataBuffer
       // 1f: dup
       // 20: aload 0
       // 21: iload 1

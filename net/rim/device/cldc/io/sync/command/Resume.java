@@ -14,7 +14,7 @@ public class Resume extends SyncCommand {
 
    public final void addCommand(int aCommandTag) {
       if (this._commands == null) {
-         this._commands = (IntVector)(new Object(5));
+         this._commands = new IntVector(5);
       }
 
       this._commands.addElement(aCommandTag);

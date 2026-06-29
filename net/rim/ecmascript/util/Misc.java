@@ -47,7 +47,7 @@ public class Misc {
             return str;
          }
 
-         str = ((StringBuffer)(new Object())).append(str.substring(0, oldIndex)).append(newStr).append(str.substring(oldIndex + oldStr.length())).toString();
+         str = str.substring(0, oldIndex) + newStr + str.substring(oldIndex + oldStr.length());
          oldIndex += newLength;
       }
    }

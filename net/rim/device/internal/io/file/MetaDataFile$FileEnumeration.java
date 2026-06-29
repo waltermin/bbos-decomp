@@ -59,7 +59,7 @@ class MetaDataFile$FileEnumeration implements Enumeration {
       // 11: aload 0
       // 12: getfield net/rim/device/internal/io/file/MetaDataFile$FileEnumeration._keys Ljava/util/Enumeration;
       // 15: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 1a: checkcast java/lang/Object
+      // 1a: checkcast java/lang/String
       // 1d: astore 2
       // 1e: aload 0
       // 1f: getfield net/rim/device/internal/io/file/MetaDataFile$FileEnumeration.this$0 Lnet/rim/device/internal/io/file/MetaDataFile;

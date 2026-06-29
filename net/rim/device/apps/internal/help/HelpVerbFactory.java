@@ -8,17 +8,17 @@ import net.rim.device.apps.api.framework.verb.Verb;
 final class HelpVerbFactory implements VerbFactory {
    @Override
    public final Verb[] getVerbs(Object context) {
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          ContextObject contextObj = (ContextObject)context;
          Object topic = contextObj.get(244);
-         if (!(topic instanceof Object)) {
-            if (topic instanceof Object) {
-               return new Object[]{new HelpVerb(topic.toString())};
+         if (!(topic instanceof String)) {
+            if (topic instanceof Integer) {
+               return new Verb[]{new HelpVerb(topic.toString())};
             }
          } else {
             String topicStr = (String)topic;
             if (includeHelpVerb(topicStr)) {
-               return new Object[]{new HelpVerb(topicStr)};
+               return new Verb[]{new HelpVerb(topicStr)};
             }
          }
       }

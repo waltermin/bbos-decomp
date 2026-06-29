@@ -9,7 +9,7 @@ public final class PKCS5UnformatterEngine implements BlockUnformatterEngine {
 
    public PKCS5UnformatterEngine(BlockDecryptorEngine decryptorEngine) {
       if (decryptorEngine == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._decryptorEngine = decryptorEngine;
@@ -18,7 +18,7 @@ public final class PKCS5UnformatterEngine implements BlockUnformatterEngine {
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object())).append(this._decryptorEngine.getAlgorithm()).append("/PKCS5").toString();
+      return this._decryptorEngine.getAlgorithm() + "/PKCS5";
    }
 
    @Override
@@ -50,7 +50,7 @@ public final class PKCS5UnformatterEngine implements BlockUnformatterEngine {
 
          return actualLength;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -75,10 +75,10 @@ public final class PKCS5UnformatterEngine implements BlockUnformatterEngine {
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

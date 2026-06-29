@@ -21,12 +21,12 @@ public class PhoneNumberConverter {
    private static String EXTENSION_KEY = "ext";
    private static int _cc;
    private static String _ccString;
-   private static WeakReference _strBufferWR1 = (WeakReference)(new Object(null));
-   private static WeakReference _strBufferWR2 = (WeakReference)(new Object(null));
+   private static WeakReference _strBufferWR1 = new WeakReference(null);
+   private static WeakReference _strBufferWR2 = new WeakReference(null);
 
    public static String format(String number, String pattern) {
       if (pattern != null && pattern.length() != 0) {
-         StringBuffer buffer = (StringBuffer)(new Object());
+         StringBuffer buffer = new StringBuffer();
          int patternIndex = pattern.length();
 
          for (int idx = number.length() - 1; idx >= 0; idx--) {
@@ -67,9 +67,9 @@ public class PhoneNumberConverter {
          canPrompt = false;
       }
 
-      StringBuffer dtmf = (StringBuffer)(new Object());
+      StringBuffer dtmf = new StringBuffer();
       convertForTransmission(output, dtmf, input, smartDialing, wildcardDigits, simDigits, isSMS, canPrompt);
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          ContextObject contextObject = (ContextObject)context;
          if (dtmf.length() > 0) {
             contextObject.put(7528018505720453076L, dtmf.toString());
@@ -147,7 +147,7 @@ public class PhoneNumberConverter {
       dtmf.setLength(0);
       if (dtmfIndex < input.length) {
          boolean isCorporateExtension = output.length() == 0;
-         StringUtilities.append(dtmf, (String)(new Object(input)), dtmfIndex, input.length - dtmfIndex);
+         StringUtilities.append(dtmf, new String(input), dtmfIndex, input.length - dtmfIndex);
          convertAfterDialTones(dtmf, isCorporateExtension);
       }
 
@@ -173,7 +173,7 @@ public class PhoneNumberConverter {
          if (canDirectDialExtensions) {
             smartDialing = false;
          } else if (additionalTones.length() == 0) {
-            String corporateNumber = ((StringBuffer)(new Object())).append(getCorporatePhoneNumber(canPrompt)).append(output.toString()).toString();
+            String corporateNumber = getCorporatePhoneNumber(canPrompt) + output.toString();
             copyTransmittableDigits(output, corporateNumber, -1, false, false);
          } else {
             dtmf.append(additionalTones);
@@ -471,7 +471,7 @@ public class PhoneNumberConverter {
          if (idd != null) {
             int iddLen = idd.length;
             if (matchDigits(idd, number, 0)) {
-               StringBuffer tmpNumber = (StringBuffer)(new Object());
+               StringBuffer tmpNumber = new StringBuffer();
                StringUtilities.append(tmpNumber, number, iddLen, number.length() - iddLen);
                promoteToInternationalForm(tmpNumber);
                if (tmpNumber.charAt(0) == '+') {
@@ -741,9 +741,9 @@ public class PhoneNumberConverter {
 
       if (canPrompt && ApplicationRegistry.getApplicationRegistry().get(-4905871728754809133L) != null) {
          String fmtString = PhoneResources.getString(6051);
-         Object[] fmtParams = new Object[]{new Object(digitCount)};
+         Object[] fmtParams = new Object[]{new Integer(digitCount)};
          String prompt = MessageFormat.format(fmtString, fmtParams);
-         Dialog dialog = (Dialog)(new Object(3, prompt, 0, Bitmap.getPredefinedBitmap(1), 0));
+         Dialog dialog = new Dialog(3, prompt, 0, Bitmap.getPredefinedBitmap(1), 0);
          dialog.setEscapeEnabled(false);
          int result = dialog.doModal();
          if (result == 4) {

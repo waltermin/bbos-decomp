@@ -11,11 +11,12 @@ import net.rim.device.api.system.KeyListener;
 import net.rim.device.api.system.Phone;
 import net.rim.device.api.system.RadioInfo;
 import net.rim.device.api.ui.Keypad;
-import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.verb.Verb;
+import net.rim.device.apps.api.framework.verb.WrapperVerb;
 import net.rim.device.apps.api.phone.VoiceServices;
 import net.rim.device.apps.api.ribbon.ConvenienceKeyOptionsProvider;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
@@ -30,6 +31,8 @@ import net.rim.device.apps.internal.phone.api.ui.PhoneAwareScreen;
 import net.rim.device.apps.internal.phone.api.ui.gprs.GSM230Filter;
 import net.rim.device.apps.internal.phone.api.verbs.DialVerb;
 import net.rim.device.apps.internal.phone.api.verbs.OutgoingCallConnector;
+import net.rim.device.apps.internal.phone.api.verbs.ShowAddressBookVerb;
+import net.rim.device.apps.internal.phone.api.verbs.VoiceMailVerb;
 import net.rim.device.apps.internal.phone.options.PhoneOptions;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
 import net.rim.device.internal.system.Security;
@@ -45,7 +48,7 @@ final class ActivePhoneScreen extends PhoneAwareScreen {
    private int _oldKeyRepeatDelay = UiSettings.getKeypadRepeatDelay();
    private Verb _showHomeScreenVerb = new ActivePhoneScreen$ShowHomeScreenVerb(this);
    private Verb _newCallVerb = new ActivePhoneScreen$NewCallVerb(this);
-   private Verb _showAddressBookVerb = (Verb)(new Object((Verb)(new Object(16777280)), null, 16777280));
+   private Verb _showAddressBookVerb = new WrapperVerb(new ShowAddressBookVerb(16777280), null, 16777280);
    private boolean _pttKeyDownHappenedHere;
    static final int CALL_DISCONNECTION_DELAY = 1500;
 
@@ -154,7 +157,7 @@ final class ActivePhoneScreen extends PhoneAwareScreen {
                      return super.processKeyEvent(event, key, keycode, time);
                   }
 
-                  promptString = MessageFormat.format(PhoneResources.getString(6295), new Object[]{convenienceApplication.toString()});
+                  promptString = MessageFormat.format(PhoneResources.getString(6295), new String[]{convenienceApplication.toString()});
                }
 
                Dialog dlg = new ActivePhoneScreen$ExitFromActivePhoneScreenDlg(this, promptString, null);
@@ -204,13 +207,13 @@ final class ActivePhoneScreen extends PhoneAwareScreen {
       } else {
          String dtmfTones = this._ui.getDTMFString();
          if (dtmfTones != null && dtmfTones.length() > 0) {
-            Out.p(((StringBuffer)(new Object("PHONE: SEND "))).append(dtmfTones).toString());
+            Out.p("PHONE: SEND " + dtmfTones);
             if (this.invokeAudioSEND(dtmfTones)) {
                return true;
             }
 
             if (GSM230Filter.getCode(dtmfTones) != -1) {
-               ((DialVerb)(new Object(dtmfTones, null))).invoke(null);
+               new DialVerb(dtmfTones, null).invoke(null);
                return true;
             }
          }
@@ -273,7 +276,7 @@ final class ActivePhoneScreen extends PhoneAwareScreen {
       PTTKeyHandler hdlr = getPTTKeyHandler();
       boolean isPttKey = isPTTKey(keycode);
       if (isPttKey) {
-         if (hdlr instanceof Object) {
+         if (hdlr instanceof KeyListener) {
             ((KeyListener)hdlr).keyUp(keycode, time);
          }
 
@@ -427,7 +430,7 @@ final class ActivePhoneScreen extends PhoneAwareScreen {
                switch (RadioInfo.getNetworkType()) {
                   case 3:
                   case 7:
-                     Out.p(((StringBuffer)(new Object("PHONE: SEND "))).append(dtmfTones).toString());
+                     Out.p("PHONE: SEND " + dtmfTones);
                      if (dtmfTones != null && dtmfTones.length() > 0) {
                         this.invokeAudioSEND(dtmfTones);
                      }
@@ -440,7 +443,7 @@ final class ActivePhoneScreen extends PhoneAwareScreen {
                            try {
                               Object obj = Class.forName("net.rim.device.apps.internal.phone.api.ui.cdma.CDMAStatusScreen").newInstance();
                               if (obj != null) {
-                                 UiApplication.getUiApplication().pushScreen((Screen)obj);
+                                 UiApplication.getUiApplication().pushScreen((MainScreen)obj);
                                  VoiceServices.broadcastEvent(3006);
                                  return true;
                               }
@@ -617,7 +620,7 @@ final class ActivePhoneScreen extends PhoneAwareScreen {
          }
       } else {
          super.makeMenu(menu, instance);
-         Verb[] verbs = new Object[0];
+         Verb[] verbs = new Verb[0];
          LiveCall call = (LiveCall)CallManager.getInstance().getCurrentCall();
          if (call != null) {
             Verb defaultVerb = call.getVerbs(null, verbs);
@@ -642,14 +645,14 @@ final class ActivePhoneScreen extends PhoneAwareScreen {
             }
          } else {
             if (OutgoingCallConnector.outgoingCallPermitted()) {
-               menu.add((Verb)(new Object(131585)));
+               menu.add(new VoiceMailVerb(131585));
                menu.add(this._newCallVerb);
             }
 
             menu.add(this._showAddressBookVerb);
             Verb showCalendarVerb = (Verb)ApplicationRegistry.getApplicationRegistry().get(8025740836317336000L);
             if (showCalendarVerb != null) {
-               menu.add((Verb)(new Object(showCalendarVerb, null, 16777280)));
+               menu.add(new WrapperVerb(showCalendarVerb, null, 16777280));
             }
 
             Verb showMessagesVerb = (Verb)ApplicationRegistry.getApplicationRegistry().get(-634672356903020959L);
@@ -676,7 +679,7 @@ final class ActivePhoneScreen extends PhoneAwareScreen {
 
    @Override
    protected final ContextObject getMenuContextObject() {
-      ContextObject context = (ContextObject)(new Object(20));
+      ContextObject context = new ContextObject(20);
       if (!this.isSystemLocked()) {
          context.put(244, "phone");
       }

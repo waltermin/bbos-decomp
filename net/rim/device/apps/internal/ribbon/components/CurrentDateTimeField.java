@@ -22,10 +22,10 @@ final class CurrentDateTimeField extends StringBufferRibbonComponent implements 
    private Font _ampmFont;
    private static final int DEFAULT_WIDTH = 70;
    private static final int DEFAULT_SIZE = Integer.MAX_VALUE;
-   private static FontMetrics _fontMetrics = (FontMetrics)(new Object());
-   private static TextGraphics _textGraphics = (TextGraphics)(new Object("BBMillbank", 10));
-   private static DrawTextParam _textParams = (DrawTextParam)(new Object());
-   private static TextMetrics _textMetrics = (TextMetrics)(new Object());
+   private static FontMetrics _fontMetrics = new FontMetrics();
+   private static TextGraphics _textGraphics = new TextGraphics("BBMillbank", 10);
+   private static DrawTextParam _textParams = new DrawTextParam();
+   private static TextMetrics _textMetrics = new TextMetrics();
 
    private CurrentDateTimeField() {
       super._width = 70;
@@ -58,7 +58,7 @@ final class CurrentDateTimeField extends StringBufferRibbonComponent implements 
       if (this._clockType == 3 && this._ampmSize != Integer.MAX_VALUE) {
          Font currentFont = super._font;
          if (currentFont == null) {
-            throw new Object("Undefined font");
+            throw new NullPointerException("Undefined font");
          }
 
          graphics.pushContext(x, y, width, height, 0, 0);

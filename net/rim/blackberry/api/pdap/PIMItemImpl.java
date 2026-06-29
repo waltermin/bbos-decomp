@@ -18,7 +18,7 @@ class PIMItemImpl implements PIMItem {
 
    protected void checkIndex(int field, int index) {
       if (index < 0 || this.countValues(field) <= index) {
-         throw new Object();
+         throw new IndexOutOfBoundsException();
       }
    }
 
@@ -30,7 +30,7 @@ class PIMItemImpl implements PIMItem {
 
    protected boolean removeCategoryFromModel(WritableSet internalModel, String category) {
       if (category == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       if (this._categoriesModel != null) {
@@ -59,7 +59,7 @@ class PIMItemImpl implements PIMItem {
 
    protected boolean addCategoryToModel(WritableSet internalModel, String category) throws PIMException {
       if (category == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       CategoryList categoryList = CategoryList.getInstance();
@@ -75,7 +75,7 @@ class PIMItemImpl implements PIMItem {
             return false;
          }
 
-         StringBuffer categoryBuffer = (StringBuffer)(new Object(category));
+         StringBuffer categoryBuffer = new StringBuffer(category);
          if (ids.length > 0) {
             categoryBuffer.append(',');
             categoryBuffer.append(categoryList.getCategoryNames(ids));
@@ -92,37 +92,37 @@ class PIMItemImpl implements PIMItem {
 
    @Override
    public void setBinary(int field, int index, int attributes, byte[] value, int offset, int length) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public void addBoolean(int field, int attributes, boolean value) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public boolean getBoolean(int field, int index) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public void setBoolean(int field, int index, int attributes, boolean value) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public void addStringArray(int field, int attributes, String[] value) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public String[] getStringArray(int field, int index) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public void setStringArray(int field, int index, int attributes, String[] value) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
@@ -130,29 +130,29 @@ class PIMItemImpl implements PIMItem {
       if (index >= 0 && this.countValues(field) > index) {
          return 0;
       } else {
-         throw new Object();
+         throw new IndexOutOfBoundsException();
       }
    }
 
    @Override
    public byte[] getBinary(int field, int index) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public void addBinary(int field, int attributes, byte[] value, int offset, int length) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public String[] getCategories() {
       if (this._categoriesModel == null) {
-         return new Object[0];
+         return new String[0];
       }
 
       int[] ids = new int[0];
       this._categoriesModel.getCategoryIds(ids);
-      String[] results = new Object[ids.length];
+      String[] results = new String[ids.length];
       int numResults = 0;
       CategoryList categoryList = CategoryList.getInstance();
 

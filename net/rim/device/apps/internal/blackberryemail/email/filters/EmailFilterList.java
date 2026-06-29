@@ -16,6 +16,7 @@ import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.MathUtilities;
 import net.rim.device.apps.api.framework.model.VerbProvider;
@@ -36,7 +37,7 @@ public final class EmailFilterList extends MainScreenOptionsListItem implements 
    private ObjectChoiceField _service;
    private MainScreen _mainScreen;
    private String _userId;
-   private WeakReference _weakReference = (WeakReference)(new Object(this));
+   private WeakReference _weakReference = new WeakReference(this);
    private EmailFilterList$EmailFilterSaveVerb _saveVerb;
    private static final long ID = -4706366031686710983L;
 
@@ -164,21 +165,21 @@ public final class EmailFilterList extends MainScreenOptionsListItem implements 
       if (info._listField != null) {
          if (info._forward != null) {
             this._mainScreen.add(info._forward);
-            this._mainScreen.add((Field)(new Object()));
+            this._mainScreen.add(new SeparatorField());
          }
       } else {
          info._listField = new EmailFilterCollectionListField(
             this._mainScreen, this._userId, this.cloneSortedReadableList(EmailFilter.getCollection(this._userId)), this
          );
          if (this._userId != null) {
-            String[] noYesOptions = new Object[]{EmailResources.getString(190), EmailResources.getString(191)};
+            String[] noYesOptions = new String[]{EmailResources.getString(190), EmailResources.getString(191)};
             EmailSettingModelImpl emailSetting = (EmailSettingModelImpl)EmailSettingCollectionImpl.getInstance(this._userId).getAt(0);
             if (emailSetting != null) {
                int filterDefaultAction = MathUtilities.clamp(0, emailSetting.getFilterDefaultAction(), noYesOptions.length - 1);
-               info._forward = (ObjectChoiceField)(new Object(EmailResources.getString(189), noYesOptions, filterDefaultAction));
+               info._forward = new ObjectChoiceField(EmailResources.getString(189), noYesOptions, filterDefaultAction);
                info._forward.setCookie(emailSetting);
                this._mainScreen.add(info._forward);
-               this._mainScreen.add((Field)(new Object()));
+               this._mainScreen.add(new SeparatorField());
                EmailFilterCollectionImpl.getInstance(this._userId).addCollectionListener(this._weakReference);
             }
          }
@@ -229,7 +230,7 @@ public final class EmailFilterList extends MainScreenOptionsListItem implements 
          if (mm instanceof EmailFilterModelImplClone) {
             EmailFilterModelImplClone model = (EmailFilterModelImplClone)mm;
             VerbProvider verbProvider = (VerbProvider)mm;
-            Verb[] itemVerbs = new Object[5];
+            Verb[] itemVerbs = new Verb[5];
             verbProvider.getVerbs(null, itemVerbs);
             verbToMenu.addVerbs(itemVerbs);
             verbToMenu.addVerb(EmailFilterEditVerb.getInstance(model, this._userId, listField));
@@ -258,7 +259,7 @@ public final class EmailFilterList extends MainScreenOptionsListItem implements 
       this._mainScreen = screen;
       this._mainScreen.setTitle(EmailResources.getString(160));
       this._id = PersistentInteger.getId(-4706366031686710983L, 0);
-      this._service = (ObjectChoiceField)(new Object(EmailResources.getString(161), null));
+      this._service = new ObjectChoiceField(EmailResources.getString(161), null);
       this._saveVerb = new EmailFilterList$EmailFilterSaveVerb(this);
       this.populateService();
       if (this._service.getSize() != 0) {
@@ -292,7 +293,7 @@ public final class EmailFilterList extends MainScreenOptionsListItem implements 
    }
 
    private final SortedReadableList cloneSortedReadableList(EmailFilterCollectionImpl collection) {
-      SortedReadableList list = (SortedReadableList)(new Object(new EmailFilterComparator()));
+      SortedReadableList list = new SortedReadableList(new EmailFilterComparator());
       int size = collection.size();
 
       for (int i = 0; i < size; i++) {

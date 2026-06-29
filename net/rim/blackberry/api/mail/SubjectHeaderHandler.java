@@ -25,7 +25,7 @@ final class SubjectHeaderHandler implements HeaderHandler {
 
    @Override
    public final String[] getHeader(String header, Message m) {
-      return new Object[]{m.getSubject()};
+      return new String[]{m.getSubject()};
    }
 
    @Override

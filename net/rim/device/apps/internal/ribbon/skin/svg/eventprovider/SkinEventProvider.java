@@ -57,7 +57,7 @@ public class SkinEventProvider implements MediaService, MediaListener {
 
    @Override
    public void setMedia(Object media) {
-      if (media instanceof Object) {
+      if (media instanceof ModelInteractorImpl) {
          this._model = (ModelInteractorImpl)media;
          String[] eventIds = this._model.getCustomEventIds();
 

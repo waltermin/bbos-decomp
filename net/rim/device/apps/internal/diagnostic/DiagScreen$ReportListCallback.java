@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.diagnostic;
 
+import java.util.Date;
 import java.util.Vector;
 import net.rim.device.api.system.Display;
 import net.rim.device.api.ui.Graphics;
@@ -7,7 +8,7 @@ import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 
 final class DiagScreen$ReportListCallback implements ListFieldCallback {
-   private Vector reports = (Vector)(new Object());
+   private Vector reports = new Vector();
 
    public final int size() {
       return this.reports.size();
@@ -43,8 +44,8 @@ final class DiagScreen$ReportListCallback implements ListFieldCallback {
          if (this.reports.elementAt(this.reports.size() - 1 - index) instanceof Report) {
             Report temp = (Report)this.reports.elementAt(this.reports.size() - 1 - index);
             text = "Report@";
-            String str = new Object(temp.startTimeStamp).toString();
-            text = ((StringBuffer)(new Object())).append(text).append(str.substring(0, 20)).toString();
+            String str = new Date(temp.startTimeStamp).toString();
+            text = text + str.substring(0, 20);
          } else {
             text = DiagnosticResources.getString(26);
          }

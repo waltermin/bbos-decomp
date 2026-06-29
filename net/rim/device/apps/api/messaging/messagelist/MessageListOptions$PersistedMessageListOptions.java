@@ -6,7 +6,7 @@ import net.rim.vm.Persistable;
 final class MessageListOptions$PersistedMessageListOptions implements Persistable {
    int _flags = -665;
    short _keepMessagesDuration = MessageListOptions.KEEP_MESSAGES_DURATION_CHOICES[1];
-   Hashtable _serviceSettings = (Hashtable)(new Object());
+   Hashtable _serviceSettings = new Hashtable();
    short _displayMessageCount = 1;
    int _messageListLineMode = 0;
    short _SMSEmailInbox = 0;

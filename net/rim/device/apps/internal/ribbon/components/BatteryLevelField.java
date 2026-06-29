@@ -103,7 +103,7 @@ final class BatteryLevelField extends TextRibbonComponent implements RibbonCompo
          super._height = collection.getHeight(Integer.MAX_VALUE, Integer.MAX_VALUE);
          return collection;
       } else {
-         collection = (IconCollection)(new Object(12, 2));
+         collection = new IconCollection(12, 2);
          int ext = name.indexOf(46);
          if (ext != -1) {
             name = name.substring(0, ext);
@@ -111,7 +111,7 @@ final class BatteryLevelField extends TextRibbonComponent implements RibbonCompo
 
          EncodedImage image = ThemeManager.getActiveTheme().getImage(name, true);
          if (image == null) {
-            throw new Object(((StringBuffer)(new Object("Image not found: "))).append(name).toString());
+            throw new NullPointerException("Image not found: " + name);
          } else {
             super._width = image.getWidth() / 12;
             super._height = image.getHeight() / 2;
@@ -119,7 +119,7 @@ final class BatteryLevelField extends TextRibbonComponent implements RibbonCompo
                collection.addImage(image, super._width, super._height, true);
                return collection;
             } else {
-               throw new Object(((StringBuffer)(new Object("Image is the wrong size: "))).append(name).toString());
+               throw new IllegalArgumentException("Image is the wrong size: " + name);
             }
          }
       }

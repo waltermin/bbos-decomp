@@ -5,7 +5,6 @@ import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.RichTextField;
@@ -17,7 +16,7 @@ final class ApplicationPermissionsProxy$PermissionsRequestDialog extends PopupDi
    ButtonField _viewButton;
 
    ApplicationPermissionsProxy$PermissionsRequestDialog(String requestor) {
-      super((Manager)(new Object()), 134217728);
+      super(new DialogFieldManager(), 134217728);
       this._requestor = requestor;
       this.populateFields();
    }
@@ -25,11 +24,11 @@ final class ApplicationPermissionsProxy$PermissionsRequestDialog extends PopupDi
    private final void populateFields() {
       ResourceBundle rb = ResourceBundle.getBundle(-1488627819050031640L, "net.rim.device.apps.internal.resource.Security");
       DialogFieldManager dfm = (DialogFieldManager)this.getDelegate();
-      dfm.setIcon((BitmapField)(new Object(Bitmap.getPredefinedBitmap(2), 32)));
+      dfm.setIcon(new BitmapField(Bitmap.getPredefinedBitmap(2), 32));
       String message = MessageFormat.format(rb.getString(749), new Object[]{this._requestor});
-      RichTextField messageField = (RichTextField)(new Object(message, 45035996273704960L));
+      RichTextField messageField = new RichTextField(message, 45035996273704960L);
       dfm.addCustomField(messageField);
-      this._viewButton = (ButtonField)(new Object(rb.getString(750), 12884901888L));
+      this._viewButton = new ButtonField(rb.getString(750), 12884901888L);
       this._viewButton.setChangeListener(this);
       dfm.addCustomField(this._viewButton);
    }

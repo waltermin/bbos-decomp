@@ -23,8 +23,8 @@ final class SetCapabilities {
 
    final void print() {
       System.out.println("Set Capabilities: ");
-      System.out.println(((StringBuffer)(new Object("Pos Technology: "))).append(this.posTechnology).toString());
+      System.out.println("Pos Technology: " + this.posTechnology);
       this.prefMethod.print();
-      System.out.println(((StringBuffer)(new Object("Pos Protocol: "))).append(this.posProtocol).toString());
+      System.out.println("Pos Protocol: " + this.posProtocol);
    }
 }

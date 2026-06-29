@@ -15,12 +15,12 @@ import net.rim.device.api.util.SimpleSortingVector;
 import net.rim.device.apps.api.messaging.FolderHierarchies;
 
 final class Conversations implements ReadableList, CollectionEventSource, CollectionListener, Comparator {
-   private CollectionListenerManager _clm = (CollectionListenerManager)(new Object());
-   private SimpleSortingVector _conversations = (SimpleSortingVector)(new Object());
+   private CollectionListenerManager _clm = new CollectionListenerManager();
+   private SimpleSortingVector _conversations = new SimpleSortingVector();
    private Vector _persistedConversations;
    private PeerConversationsFolder _folder;
-   private IntHashtable _hashtable = (IntHashtable)(new Object());
-   private IntHashtable _contact2Conv = (IntHashtable)(new Object());
+   private IntHashtable _hashtable = new IntHashtable();
+   private IntHashtable _contact2Conv = new IntHashtable();
    private static long MILLISECONDS_INA_DAY = 86400000;
 
    Conversations(PeerContactListCollection contactList, PeerConversationsFolder folder) {
@@ -32,8 +32,8 @@ final class Conversations implements ReadableList, CollectionEventSource, Collec
 
    final void populatePersistedConversations(PeerContactListCollection contactList) {
       Object obj = PeerData.getPersistedConversations();
-      if (!(obj instanceof Object)) {
-         this._persistedConversations = (Vector)(new Object());
+      if (!(obj instanceof Vector)) {
+         this._persistedConversations = new Vector();
          PeerData.setPersistedConversations(this._persistedConversations);
       } else {
          this._persistedConversations = (Vector)obj;
@@ -41,7 +41,7 @@ final class Conversations implements ReadableList, CollectionEventSource, Collec
 
          for (int index = 0; index < length; index++) {
             IntHashtable data = (IntHashtable)this._persistedConversations.elementAt(index);
-            int idHash = data.get(2);
+            int idHash = (Integer)data.get(2);
             if (!this._hashtable.containsKey(idHash)) {
                PeerConversation conversation = new PeerConversation(data, contactList, this._folder);
                this._conversations.add(conversation);
@@ -80,7 +80,7 @@ final class Conversations implements ReadableList, CollectionEventSource, Collec
    }
 
    private static final String getRandomId() {
-      StringBuffer randomId = (StringBuffer)(new Object());
+      StringBuffer randomId = new StringBuffer();
 
       for (int i = 0; i < 5; i++) {
          randomId.append((char)(65 + RandomSource.getInt(26)));
@@ -216,7 +216,7 @@ final class Conversations implements ReadableList, CollectionEventSource, Collec
 
    @Override
    public final synchronized int getAt(int index, int count, Object[] elements, int destIndex) {
-      throw new Object();
+      throw new RuntimeException();
    }
 
    @Override
@@ -290,12 +290,12 @@ final class Conversations implements ReadableList, CollectionEventSource, Collec
             return t1 > t2 ? 1 : 0;
          }
       } else {
-         throw new Object();
+         throw new RuntimeException();
       }
    }
 
    @Override
    public final boolean equals(Object obj) {
-      throw new Object();
+      throw new RuntimeException();
    }
 }

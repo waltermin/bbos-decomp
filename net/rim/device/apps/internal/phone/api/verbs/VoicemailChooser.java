@@ -2,7 +2,8 @@ package net.rim.device.apps.internal.phone.api.verbs;
 
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
-import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.component.ButtonField;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.internal.ui.component.PopupDialog;
 
 class VoicemailChooser extends PopupDialog implements FieldChangeListener {
@@ -26,13 +27,13 @@ class VoicemailChooser extends PopupDialog implements FieldChangeListener {
 
    @Override
    public void fieldChanged(Field field, int context) {
-      if (field instanceof Object) {
+      if (field instanceof ButtonField) {
          this.select();
       }
    }
 
    VoicemailChooser() {
-      super((Manager)(new Object()));
+      super(new VerticalFieldManager());
    }
 
    @Override
@@ -54,7 +55,7 @@ class VoicemailChooser extends PopupDialog implements FieldChangeListener {
 
    @Override
    public void add(Field field) {
-      if (this._firstButton == -1 && field instanceof Object) {
+      if (this._firstButton == -1 && field instanceof ButtonField) {
          this._firstButton = this.getFieldCount();
       }
 

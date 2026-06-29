@@ -28,7 +28,7 @@ public class SavingDownloadManager extends DownloadManager implements Job {
    private long _timeFinished;
 
    public void setListener(SavingDownloadManagerListener listener) {
-      this._listener = (WeakReference)(new Object(listener));
+      this._listener = new WeakReference(listener);
    }
 
    public String getFilename() {
@@ -51,7 +51,7 @@ public class SavingDownloadManager extends DownloadManager implements Job {
    }
 
    public long getDownloadedSize() {
-      if (!(this._inStream instanceof Object)) {
+      if (!(this._inStream instanceof CountedInputStream)) {
          return super._totalDecodedSizeDownloaded;
       }
 

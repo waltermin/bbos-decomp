@@ -28,7 +28,7 @@ final class OwnerOptionsController implements GlobalEventListener {
    protected final void populateMainScreen(MainScreen mainScreen, Manager content) {
       String nameLabel = OptionsResources.getString(1001);
       String infoLabel = OptionsResources.getString(1002);
-      this._ownerNameField = (AutoTextEditField)(new Object(this._isWizard ? "" : nameLabel, "", 39, 4503601774854144L));
+      this._ownerNameField = new AutoTextEditField(this._isWizard ? "" : nameLabel, "", 39, 4503601774854144L);
       this._ownerInfoField = new OwnerOptionsController$1(this, this._isWizard ? "" : infoLabel, "", 127, 4503599627370496L);
       this.updateFields();
       if (!this._isWizard) {
@@ -36,17 +36,17 @@ final class OwnerOptionsController implements GlobalEventListener {
          content.add(this._ownerInfoField);
       } else {
          Font labelFont = mainScreen.getFont().derive(1);
-         LabelField label = (LabelField)(new Object(nameLabel, 36028797018963968L));
+         LabelField label = new LabelField(nameLabel, 36028797018963968L);
          label.setFont(labelFont);
          content.add(label);
-         FrameLayout frame = (FrameLayout)(new Object());
+         FrameLayout frame = new FrameLayout();
          frame.add(this._ownerNameField);
          frame.setBorder(0, 4, 0, 4);
          content.add(frame);
-         label = (LabelField)(new Object(infoLabel, 36028797018963968L));
+         label = new LabelField(infoLabel, 36028797018963968L);
          label.setFont(labelFont);
          content.add(label);
-         frame = (FrameLayout)(new Object());
+         frame = new FrameLayout();
          frame.add(this._ownerInfoField);
          frame.setBorder(0, 4, 0, 4);
          content.add(frame);

@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.qm.peer;
 
 import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.RichTextField;
 
 final class SessionManager$NoApplicationMessage implements MessengerMessage {
    private String _text;
@@ -18,7 +19,7 @@ final class SessionManager$NoApplicationMessage implements MessengerMessage {
 
    @Override
    public final Field getField(Object context) {
-      return (Field)(new Object(this._text));
+      return new RichTextField(this._text);
    }
 
    @Override

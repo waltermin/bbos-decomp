@@ -14,7 +14,7 @@ public final class RepetitionElement extends CommonControlElement {
    private int _visibleRows = Integer.MAX_VALUE;
 
    public RepetitionElement() {
-      this._nestedElements = (Vector)(new Object());
+      this._nestedElements = new Vector();
    }
 
    @Override

@@ -32,7 +32,7 @@ final class EmailFilterDeleteVerb extends Verb {
       if (obj != null) {
          EmailFilterModelImplClone m = (EmailFilterModelImplClone)obj;
          String promptmessage = EmailResources.getString(192);
-         promptmessage = promptmessage.concat(((StringBuffer)(new Object(" '"))).append(m.getName()).append("'?").toString());
+         promptmessage = promptmessage.concat(" '" + m.getName() + "'?");
          int retVal = Dialog.ask(2, promptmessage, -1);
          if (retVal == 3) {
             this._listField.delete(this._listField.getSelectedIndex());

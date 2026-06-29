@@ -17,8 +17,8 @@ final class FolderVerb extends Verb {
    @Override
    public final Object invoke(Object context) {
       SimpleFolder selectedFolder = null;
-      if (!(context instanceof Object)) {
-         if (context instanceof Object) {
+      if (!(context instanceof ContextObject)) {
+         if (context instanceof SimpleFolder) {
             selectedFolder = (SimpleFolder)context;
          }
       } else {
@@ -36,15 +36,15 @@ final class FolderVerb extends Verb {
                String subFolderNamex = enterSubFolderNamex.getName();
                if (subFolderNamex != null) {
                   long luid = BrowserFolders.makeUniqueLUID(selectedFolder);
-                  SimpleFolder newSubFolder = (SimpleFolder)(new Object(
+                  SimpleFolder newSubFolder = new SimpleFolder(
                      BrowserFolders.BROWSER_FAMILY, luid, subFolderNamex, BrowserFolders.BROWSER_FOLDER_COLLECTION_CLASS, selectedFolder, 1
-                  ));
+                  );
                   BrowserFolders.addSubFolder(selectedFolder, newSubFolder);
                   return null;
                }
                break;
             case 169:
-               String message = MessageFormat.format(BrowserResources.getString(282), new Object[]{selectedFolder.getFriendlyName()});
+               String message = MessageFormat.format(BrowserResources.getString(282), new String[]{selectedFolder.getFriendlyName()});
                if (Dialog.ask(2, message) == 3) {
                   SimpleFolder parentFolder = (SimpleFolder)selectedFolder.getParentFolder();
                   long defaultFolderID = BookmarksFolderList.getDefaultFolderID();

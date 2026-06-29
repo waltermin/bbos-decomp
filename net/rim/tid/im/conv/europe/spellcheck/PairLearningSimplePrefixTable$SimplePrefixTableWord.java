@@ -25,7 +25,7 @@ class PairLearningSimplePrefixTable$SimplePrefixTableWord {
    @Override
    public String toString() {
       LearningGlobalAlphabet alphabet = PairLearningSimplePrefixTable.access$100(this.this$0).getAlphabet();
-      StringBuffer buf = (StringBuffer)(new Object());
+      StringBuffer buf = new StringBuffer();
 
       for (int i = 0; i < this.length(); i++) {
          int coded = this.codedCharAt(i);

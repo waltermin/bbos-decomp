@@ -6,6 +6,8 @@ import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.apps.api.framework.model.FieldProvider;
+import net.rim.device.apps.api.framework.model.PaintProvider;
+import net.rim.device.apps.api.search.SearchCriterion;
 import net.rim.device.apps.api.search.SearchResultCollection;
 import net.rim.device.apps.api.ui.VariableRowHeightProxy;
 import net.rim.device.apps.internal.memo.resources.MemoResources;
@@ -14,7 +16,7 @@ final class MemoSearchResultCollection extends SearchResultCollection implements
    private Object _cachedContext;
 
    public MemoSearchResultCollection(Object criteria) {
-      super((Object[])criteria, new MemoCollectionImpl$MemoComparator(), true, false);
+      super((SearchCriterion[])criteria, new MemoCollectionImpl$MemoComparator(), true, false);
    }
 
    @Override
@@ -28,7 +30,7 @@ final class MemoSearchResultCollection extends SearchResultCollection implements
          break label32;
       }
 
-      if (memo instanceof Object) {
+      if (memo instanceof PaintProvider) {
          this._cachedContext = VariableRowHeightProxy.addHeightAdjusterToContext(this._cachedContext, listField);
          memo.paint(graphics, 0, y, width, 100, this._cachedContext);
       } else {

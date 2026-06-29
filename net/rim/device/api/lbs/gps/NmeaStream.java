@@ -195,13 +195,13 @@ public class NmeaStream {
       // 0eb: if_icmpne 0f1
       // 0ee: goto 158
       // 0f1: ldc2_w 4560142210062134028
-      // 0f4: new java/lang/Object
+      // 0f4: new java/lang/StringBuffer
       // 0f7: dup
       // 0f8: ldc_w "GPS lock "
       // 0fb: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
       // 0fe: iload 11
       // 100: ifeq 11a
-      // 103: new java/lang/Object
+      // 103: new java/lang/StringBuffer
       // 106: dup
       // 107: ldc_w "accquired, satellite count: "
       // 10a: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -210,7 +210,7 @@ public class NmeaStream {
       // 111: invokevirtual java/lang/StringBuffer.append (I)Ljava/lang/StringBuffer;
       // 114: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 117: goto 149
-      // 11a: new java/lang/Object
+      // 11a: new java/lang/StringBuffer
       // 11d: dup
       // 11e: ldc_w "lost at lat: "
       // 121: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -333,7 +333,7 @@ public class NmeaStream {
       for (int index = offset; index < end; index++) {
          int digit = buffer[index] - 48;
          if (digit < 0 || 9 < digit) {
-            throw new Object();
+            throw new NumberFormatException();
          }
 
          value = 10 * value + digit;

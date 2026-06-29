@@ -14,7 +14,7 @@ final class BrowserTitleField extends Field {
 
    public BrowserTitleField(String label) {
       this._label = label;
-      this._value = (StringBuffer)(new Object());
+      this._value = new StringBuffer();
       this._possibleValues = KeyStoreBrowserResources.getStringArray(6048);
    }
 
@@ -64,7 +64,7 @@ final class BrowserTitleField extends Field {
       if (type >= 0 && type < this._possibleValues.length) {
          this.setValue(this._possibleValues[type]);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

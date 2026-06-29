@@ -11,28 +11,28 @@ public final class X931SignatureVerifier implements SignatureVerifier {
    private static final long ID_TEST_VERIFIER_X931 = -1181815458422461446L;
 
    public X931SignatureVerifier(RSAPublicKey key, byte[] signature, int signatureOffset) {
-      this(key, (Digest)(new Object()), signature, signatureOffset);
+      this(key, new SHA1Digest(), signature, signatureOffset);
    }
 
-   public X931SignatureVerifier(RSAPublicKey key, Digest digest, byte[] signature, int signatureOffset) {
+   public X931SignatureVerifier(RSAPublicKey key, Digest digest, byte[] signature, int signatureOffset) throws InvalidSignatureEncodingException {
       if (key != null && digest != null && signature != null && signatureOffset >= 0) {
          this._key = key;
          this._length = key.getRSACryptoSystem().getModulusLength();
          this._digest = digest;
          if (signatureOffset > signature.length - this._length) {
-            throw new Object();
+            throw new InvalidSignatureEncodingException();
          }
 
          this._signature = new byte[this._length];
          System.arraycopy(signature, signatureOffset, this._signature, 0, this._length);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object("RSA_X931/"))).append(this._digest.getAlgorithm()).toString();
+      return "RSA_X931/" + this._digest.getAlgorithm();
    }
 
    @Override
@@ -229,18 +229,18 @@ public final class X931SignatureVerifier implements SignatureVerifier {
       };
 
       try {
-         RSACryptoSystem cryptoSystem = (RSACryptoSystem)(new Object(1024));
-         RSAPublicKey pubKey = (RSAPublicKey)(new Object(cryptoSystem, SelfTestData_PK1.RSA_E, SelfTestData_PK1.RSA_N));
+         RSACryptoSystem cryptoSystem = new RSACryptoSystem(1024);
+         RSAPublicKey pubKey = new RSAPublicKey(cryptoSystem, SelfTestData_PK1.RSA_E, SelfTestData_PK1.RSA_N);
          X931SignatureVerifier verifier = new X931SignatureVerifier(pubKey, SIGNATURE, 0);
          verifier.update(SelfTestData_PK1.PLAIN_TEXT_PKCS1_RSA);
          if (verifier.verify()) {
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

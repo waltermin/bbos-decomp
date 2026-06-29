@@ -1,6 +1,7 @@
 package net.rim.device.cldc.io.proxyhttp.compression.coders;
 
 import java.io.ByteArrayOutputStream;
+import java.io.EOFException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import net.rim.device.api.memorycleaner.MemoryCleanerDaemon;
@@ -39,7 +40,7 @@ public class EscapedTextCoder implements Coder {
             int currentByte;
             while ((currentByte = ins.read()) != 0) {
                if (currentByte == -1) {
-                  throw new Object();
+                  throw new EOFException();
                }
 
                if (currentByte <= 31) {
@@ -75,7 +76,7 @@ public class EscapedTextCoder implements Coder {
             }
          }
 
-         ByteArrayOutputStream tempOut = (ByteArrayOutputStream)(new Object());
+         ByteArrayOutputStream tempOut = new ByteArrayOutputStream();
          int offset = 0;
          int length = decoded.length();
          byte[] data = decoded.getBytes();
@@ -123,10 +124,10 @@ public class EscapedTextCoder implements Coder {
 
    public EscapedTextCoder(String[] table, boolean isCaseSensitive) {
       this._table = table;
-      this._kmpMatcher = (StringMatch)(new Object(table, isCaseSensitive, false));
+      this._kmpMatcher = new StringMatch(table, isCaseSensitive, false);
       this._cacheHash = new int[4];
       this._cacheValue = new byte[4][];
-      this._cacheKey = new Object[4];
+      this._cacheKey = new String[4];
       this._memoryCleanerListener = new EscapedTextCoder$MyMemoryCleanerListener(this, null);
       MemoryCleanerDaemon.addWeakListener(this._memoryCleanerListener, false);
    }

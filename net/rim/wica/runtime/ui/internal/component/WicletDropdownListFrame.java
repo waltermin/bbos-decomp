@@ -4,6 +4,7 @@ import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.ui.theme.Theme;
 
 class WicletDropdownListFrame extends Manager {
@@ -78,7 +79,7 @@ class WicletDropdownListFrame extends Manager {
 
       this.setExtent(width, height);
       this.setVirtualExtent(virtualWidth, virtualHeight);
-      this._labelWidth = field.getFont().getBounds(((net.rim.device.api.ui.component.ChoiceField)field).getLabel());
+      this._labelWidth = field.getFont().getBounds(((ObjectChoiceField)field).getLabel());
    }
 
    @Override

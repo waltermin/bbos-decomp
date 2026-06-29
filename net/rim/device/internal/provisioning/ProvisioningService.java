@@ -1,5 +1,6 @@
 package net.rim.device.internal.provisioning;
 
+import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Vector;
 import net.rim.device.api.servicebook.ServiceBook;
@@ -48,7 +49,7 @@ public final class ProvisioningService extends Thread implements GlobalEventList
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private ProvisioningService(Application app) {
       EventLogger.register(2028567949942654338L, "prov", 2);
-      this._handlers = (Vector)(new Object());
+      this._handlers = new Vector();
       this._sb = ServiceBook.getSB();
       this._srId = this.pickServiceRecord();
       boolean isBBXpSupported = true;
@@ -123,8 +124,8 @@ public final class ProvisioningService extends Thread implements GlobalEventList
    }
 
    public final void updateHandler(ProvisioningHandler handler) {
-      DataBuffer db = (DataBuffer)(new Object(true));
-      IntIntHashtable iih = (IntIntHashtable)(new Object());
+      DataBuffer db = new DataBuffer(true);
+      IntIntHashtable iih = new IntIntHashtable();
       this.parseData(this.getAppData(), iih, db);
       handler.updateProvisioningData(iih, db);
    }
@@ -138,12 +139,12 @@ public final class ProvisioningService extends Thread implements GlobalEventList
       return sr;
    }
 
-   private final void parseData(byte[] data, IntIntHashtable iih, DataBuffer db) {
+   private final void parseData(byte[] data, IntIntHashtable iih, DataBuffer db) throws IOException {
       if (data != null && data.length > 0) {
          db.setData(data, 0, data.length);
          int version = db.readUnsignedByte();
          if ((version & 240) != 16) {
-            throw new Object();
+            throw new IOException();
          }
       }
 
@@ -220,8 +221,8 @@ public final class ProvisioningService extends Thread implements GlobalEventList
    }
 
    private final void processData(byte[] data) {
-      DataBuffer db = (DataBuffer)(new Object(true));
-      IntIntHashtable iih = (IntIntHashtable)(new Object());
+      DataBuffer db = new DataBuffer(true);
+      IntIntHashtable iih = new IntIntHashtable();
       if (data != null) {
          log("Prov data updating", 5);
          this.parseData(data, iih, db);

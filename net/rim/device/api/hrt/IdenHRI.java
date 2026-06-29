@@ -1,6 +1,7 @@
 package net.rim.device.api.hrt;
 
 import net.rim.device.api.io.DatagramAddressBase;
+import net.rim.device.api.io.UdpAddress;
 import net.rim.device.api.util.Persistable;
 
 public final class IdenHRI extends HostRoutingInfo implements Persistable {
@@ -40,7 +41,7 @@ public final class IdenHRI extends HostRoutingInfo implements Persistable {
       if (d instanceof IPv4UdpDAC) {
          super.setDac(d);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -57,7 +58,7 @@ public final class IdenHRI extends HostRoutingInfo implements Persistable {
       }
 
       long addr = addrs[index];
-      return (DatagramAddressBase)(new Object(IPv4UdpDAC.addr2IpAddress(addr), IPv4UdpDAC.addr2DstPort(addr), IPv4UdpDAC.addr2SrcPort(addr), super._apn, 2));
+      return new UdpAddress(IPv4UdpDAC.addr2IpAddress(addr), IPv4UdpDAC.addr2DstPort(addr), IPv4UdpDAC.addr2SrcPort(addr), super._apn, 2);
    }
 
    @Override

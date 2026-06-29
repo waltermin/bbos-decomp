@@ -183,7 +183,7 @@ public class UIDefAccess implements ResourceCollection, StyleCollection {
 
    public String getEditFormat(int controlIndex) {
       int formatIndex = this._uiDefs._defs[controlIndex + 11];
-      return (String)(formatIndex == -1 ? null : this._uiDefs._objectData[formatIndex]);
+      return formatIndex == -1 ? null : (String)this._uiDefs._objectData[formatIndex];
    }
 
    public int[] getEditMapping(int controlIndex) {
@@ -214,7 +214,7 @@ public class UIDefAccess implements ResourceCollection, StyleCollection {
 
    public String getChoiceFormat(int controlIndex) {
       int formatIndex = this._uiDefs._defs[controlIndex + 10];
-      return (String)(formatIndex == -1 ? null : this._uiDefs._objectData[formatIndex]);
+      return formatIndex == -1 ? null : (String)this._uiDefs._objectData[formatIndex];
    }
 
    public int[] getChoiceMapping(int controlIndex) {
@@ -336,7 +336,7 @@ public class UIDefAccess implements ResourceCollection, StyleCollection {
 
    public String getTableColumnName(int componentIndex) {
       int widthIndex = this._uiDefs._defs[componentIndex + 1];
-      return (String)(widthIndex == -1 ? null : this._uiDefs._objectData[widthIndex]);
+      return widthIndex == -1 ? null : (String)this._uiDefs._objectData[widthIndex];
    }
 
    public boolean getTableColumnVisible(int componentIndex) {
@@ -397,7 +397,7 @@ public class UIDefAccess implements ResourceCollection, StyleCollection {
 
    public String getTableGridlineColor(int componentIndex) {
       int gridlineIndex = this._uiDefs._defs[componentIndex + 12];
-      return (String)(gridlineIndex == -1 ? null : this._uiDefs._objectData[gridlineIndex]);
+      return gridlineIndex == -1 ? null : (String)this._uiDefs._objectData[gridlineIndex];
    }
 
    public boolean isTableShowGridline(int componentIndex) {
@@ -437,12 +437,12 @@ public class UIDefAccess implements ResourceCollection, StyleCollection {
 
    public String getTableColumnFormat(int componentIndex) {
       int formatIndex = this._uiDefs._defs[componentIndex + 5];
-      return (String)(formatIndex == -1 ? null : this._uiDefs._objectData[formatIndex]);
+      return formatIndex == -1 ? null : (String)this._uiDefs._objectData[formatIndex];
    }
 
    public String getTableColumnWidth(int componentIndex) {
       int widthIndex = this._uiDefs._defs[componentIndex + 6];
-      return (String)(widthIndex == -1 ? null : this._uiDefs._objectData[widthIndex]);
+      return widthIndex == -1 ? null : (String)this._uiDefs._objectData[widthIndex];
    }
 
    public int getTableColumnStyle(int componentIndex) {
@@ -465,7 +465,7 @@ public class UIDefAccess implements ResourceCollection, StyleCollection {
 
             return (String)this._uiDefs._objectData[fontIndex];
          default:
-            throw new Object("Invalid style property");
+            throw new IllegalArgumentException("Invalid style property");
       }
    }
 
@@ -482,7 +482,7 @@ public class UIDefAccess implements ResourceCollection, StyleCollection {
          case 8:
             return this._uiDefs._defs[styleIndex + 7];
          default:
-            throw new Object("Invalid style property");
+            throw new IllegalArgumentException("Invalid style property");
       }
    }
 
@@ -492,7 +492,7 @@ public class UIDefAccess implements ResourceCollection, StyleCollection {
       switch (property) {
          case -1:
          case 6:
-            throw new Object("Invalid style property");
+            throw new IllegalArgumentException("Invalid style property");
          case 0:
          default:
             if (this._uiDefs._defs[styleIndex + 4] != -1) {
@@ -545,7 +545,7 @@ public class UIDefAccess implements ResourceCollection, StyleCollection {
    public String getResourceContentType(int resourceDefId) {
       int resIndex = this._idToDefIndex.get(resourceDefId);
       int objIndex = this._uiDefs._defs[resIndex + 3];
-      return (String)(objIndex == -1 ? null : this._uiDefs._objectData[objIndex]);
+      return objIndex == -1 ? null : (String)this._uiDefs._objectData[objIndex];
    }
 
    @Override
@@ -558,7 +558,7 @@ public class UIDefAccess implements ResourceCollection, StyleCollection {
    public UIDefAccess(ComponentDefStruct uiDefs) {
       this._uiDefs = uiDefs;
       int size = this._uiDefs._defs.length;
-      this._idToDefIndex = (IntIntHashtable)(new Object());
+      this._idToDefIndex = new IntIntHashtable();
       int i = 0;
 
       while (i < size) {
@@ -568,7 +568,7 @@ public class UIDefAccess implements ResourceCollection, StyleCollection {
                case 127:
                case 136:
                case 138:
-                  throw new Object("Illegal control definition in ui defs");
+                  throw new RuntimeException("Illegal control definition in ui defs");
                case 128:
                default:
                   i += 8;
@@ -611,7 +611,7 @@ public class UIDefAccess implements ResourceCollection, StyleCollection {
             switch (type) {
                case 9:
                case 11:
-                  throw new Object("Illegal definition in ui defs");
+                  throw new RuntimeException("Illegal definition in ui defs");
                case 10:
                default:
                   i += 15;

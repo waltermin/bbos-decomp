@@ -47,7 +47,7 @@ class AssociateAddressesScreen$AssociateAddressesVerb extends Verb {
             }
             break;
          case 2:
-            SimpleInputDialog dialog = (SimpleInputDialog)(new Object(8, KeyStoreBrowserResources.getString(6086)));
+            SimpleInputDialog dialog = new SimpleInputDialog(8, KeyStoreBrowserResources.getString(6086));
             dialog.setText((String)this.this$0._associatedAddressesListField.get(this.this$0._associatedAddressesListField, this._index));
             dialog.show();
             if (dialog.getCloseReason() == 0) {

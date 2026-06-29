@@ -10,7 +10,7 @@ import net.rim.device.apps.api.transmission.rim.CMIMEUtilities;
 final class Result$Address {
    private byte[] _firstName;
    private byte[] _lastName;
-   private SyncBuffer _buff = (SyncBuffer)(new Object((DataBuffer)(new Object(false)), 0, 0));
+   private SyncBuffer _buff = new SyncBuffer(new DataBuffer(false), 0, 0);
    private byte _areNamesEncoded = 0;
 
    private static final String cleanseValue(byte[] v, boolean isEncoded) {
@@ -68,7 +68,7 @@ final class Result$Address {
          case 35:
          case 61:
             boolean work = type == 35;
-            String line1Str = (String)(new Object(v));
+            String line1Str = new String(v);
             int line2Pos = line1Str.indexOf(13);
             if (line2Pos == -1) {
                this.appendItem(type, line1Str.getBytes(), isEncoded);
@@ -77,7 +77,7 @@ final class Result$Address {
 
             String line1 = line1Str.substring(0, line2Pos);
             this.appendItem(work ? 35 : 61, line1.getBytes(), isEncoded);
-            StringBuffer line2Buffer = (StringBuffer)(new Object());
+            StringBuffer line2Buffer = new StringBuffer();
             int line1Length = line1Str.length();
             boolean spaceAdded = false;
 
@@ -122,7 +122,7 @@ final class Result$Address {
    final RIMModel convertToModel() {
       this.appendItem(32, this._firstName, (this._areNamesEncoded & 1) == 1);
       this.appendItem(32, this._lastName, (this._areNamesEncoded & 2) == 2);
-      ContextObject context = (ContextObject)(new Object(18, 19));
+      ContextObject context = new ContextObject(18, 19);
       context.put(255, this._buff);
       this._buff.setPosition(0);
       return (RIMModel)FactoryUtil.createInstance(-3124646573404667739L, context);

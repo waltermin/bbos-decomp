@@ -28,7 +28,7 @@ class ServiceRecord$SRParser implements TLEFieldController {
    private static String makeString(DataBuffer db, int length) {
       String str = TLEUtilities.getStringFromBuffer(db, length);
       if (str.length() == 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return str;
       }
@@ -42,7 +42,7 @@ class ServiceRecord$SRParser implements TLEFieldController {
             return true;
          case 2:
             String str = makeString(db, length);
-            DataBuffer appBuf = (DataBuffer)(new Object(64, true));
+            DataBuffer appBuf = new DataBuffer(64, true);
             appBuf.writeByte(16);
             appBuf.writeByte(16);
             appBuf.writeCompressedInt(str.length());
@@ -197,8 +197,8 @@ class ServiceRecord$SRParser implements TLEFieldController {
             default:
                int numHosts = db.readUnsignedByte();
                if (numHosts > 0) {
-                  hosts = new Object[numHosts];
-                  StringTokenizer strtok = (StringTokenizer)(new Object((String)(new Object(db.getArray(), db.getArrayPosition(), db.available())), "", false));
+                  hosts = new String[numHosts];
+                  StringTokenizer strtok = new StringTokenizer(new String(db.getArray(), db.getArrayPosition(), db.available()), "", false);
 
                   for (int i = 0; i < numHosts; i++) {
                      if (!strtok.hasMoreTokens()) {

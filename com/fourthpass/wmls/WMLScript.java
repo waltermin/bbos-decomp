@@ -21,15 +21,15 @@ public final class WMLScript {
          if (accessDomain != null) {
             String authority = referer.getAuthority();
             if (authority != null && !authority.endsWith(accessDomain)) {
-               throw new Object("Domain does not match");
+               throw new RuntimeException("Domain does not match");
             }
          }
 
          String accessPath = this._pp.getAccessPath(this._cp);
          if (accessPath != null) {
-            accessPath = ((URI)(new Object(accessPath, referer.getAbsoluteURL()))).getPath();
+            accessPath = new URI(accessPath, referer.getAbsoluteURL()).getPath();
             if (!referer.getPath().startsWith(accessPath)) {
-               throw new Object("Path does not match");
+               throw new RuntimeException("Path does not match");
             }
          }
       }
@@ -47,11 +47,11 @@ public final class WMLScript {
       return this._fp;
    }
 
-   private static final void verifyVersion(int version) {
+   private static final void verifyVersion(int version) throws Exception {
       int major = ((version & 0xFF) >> 4) + 1;
       int minor = version & 15;
       if (major != 1 && minor != 1) {
-         throw new Object("Unsupported Script Version, only 1.1 is supported");
+         throw new Exception("Unsupported Script Version, only 1.1 is supported");
       }
    }
 }

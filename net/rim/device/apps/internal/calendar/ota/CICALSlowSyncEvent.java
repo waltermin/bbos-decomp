@@ -9,7 +9,7 @@ import net.rim.device.apps.api.service.ServiceObject;
 import net.rim.device.apps.api.sync.OTASyncData;
 
 public class CICALSlowSyncEvent implements ServiceObject {
-   private DataBuffer _commandData = (DataBuffer)(new Object());
+   private DataBuffer _commandData = new DataBuffer();
    int _totalRecordCount;
    int _outgoingRecordCount;
    int _incomingRecordCount;
@@ -23,7 +23,7 @@ public class CICALSlowSyncEvent implements ServiceObject {
    long _syncEndDate = Long.MAX_VALUE;
    int _rangeHash;
    private CalendarService _calendarService;
-   static DataBuffer _recordHashDataBuffer = (DataBuffer)(new Object(true));
+   static DataBuffer _recordHashDataBuffer = new DataBuffer(true);
 
    void addEvent(Event event, OTASyncData syncData, boolean debug) {
       this.writeIntegerField(this._commandData, 2, event.getUID());

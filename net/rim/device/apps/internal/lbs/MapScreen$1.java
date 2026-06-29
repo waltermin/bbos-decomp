@@ -19,14 +19,14 @@ final class MapScreen$1 implements Runnable {
          int longitude = (int)LBSOptions.getLong(9116370231748750706L, -9677355);
          int zoom = LBSOptions.getInt(4041863254631303397L, 15);
          Object object = ApplicationRegistry.getApplicationRegistry().get(2809568335828852197L);
-         if (object instanceof Object) {
+         if (object instanceof Verb) {
             Verb verb = (Verb)object;
             object = verb.invoke(null);
-            if (object instanceof Object) {
+            if (object instanceof ContextObject) {
                ContextObject context = (ContextObject)object;
-               latitude = ContextObject.get(context, -200747095229876690L);
-               longitude = ContextObject.get(context, 6606581876924152793L);
-               zoom = ContextObject.get(context, 581052036187634982L);
+               latitude = (Integer)ContextObject.get(context, -200747095229876690L);
+               longitude = (Integer)ContextObject.get(context, 6606581876924152793L);
+               zoom = (Integer)ContextObject.get(context, 581052036187634982L);
             }
          }
 

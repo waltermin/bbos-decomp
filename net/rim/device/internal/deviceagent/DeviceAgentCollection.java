@@ -27,7 +27,7 @@ class DeviceAgentCollection
    GlobalEventListener {
    PersistentObject _persistDatabase;
    IntHashtable _database;
-   CollectionListenerManager _listeners = (CollectionListenerManager)(new Object());
+   CollectionListenerManager _listeners = new CollectionListenerManager();
    boolean _inTransaction;
 
    int getVersion() {
@@ -178,12 +178,12 @@ class DeviceAgentCollection
    public SyncObject[] getSyncObjects() {
       synchronized (this._database) {
          int dest = 0;
-         SyncObject[] objects = new Object[this.getSyncObjectCount()];
+         SyncObject[] objects = new SyncObject[this.getSyncObjectCount()];
          Enumeration enumeration = this._database.elements();
 
          while (enumeration.hasMoreElements()) {
             Object element = enumeration.nextElement();
-            if (element instanceof Object) {
+            if (element instanceof SyncObject) {
                objects[dest++] = (SyncObject)element;
             }
          }
@@ -311,7 +311,7 @@ class DeviceAgentCollection
       this._persistDatabase = RIMPersistentStore.getPersistentObject(guid);
       synchronized (this._persistDatabase) {
          if (this._persistDatabase.getContents() == null) {
-            this._persistDatabase.setContents(new Object(), 51);
+            this._persistDatabase.setContents(new IntHashtable(), 51);
          }
       }
 

@@ -6,7 +6,6 @@ import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.i18n.ResourceBundleFamily;
 import net.rim.device.api.ui.FieldLabelProvider;
 import net.rim.device.api.ui.Graphics;
-import net.rim.device.api.util.LongHashtable;
 import net.rim.device.api.util.StringMatch;
 import net.rim.device.api.util.StringProvider;
 import net.rim.device.api.util.StringUtilities;
@@ -31,9 +30,9 @@ public class AbstractPhoneNumberModel implements PersistableRIMModel, PaintProvi
    public static final int DEFAULT_DIGITS_IN_REVERSE_LOOKUP_HASH = 7;
    public static final int SHORT_NUMBER_TYPE = 2;
    public static final int TYPE_IN_PARENS = 4;
-   protected static WeakReference _strBufferWR = (WeakReference)(new Object(null));
-   protected static ContextObjectWR _friendlyContextWR = (ContextObjectWR)(new Object(10));
-   protected static String[] _nameStrings = new Object[2];
+   protected static WeakReference _strBufferWR = new WeakReference(null);
+   protected static ContextObjectWR _friendlyContextWR = new ContextObjectWR(10);
+   protected static String[] _nameStrings = new String[2];
 
    @Override
    public int paint(Graphics g, int x, int y, int width, int height, Object context) {
@@ -72,7 +71,7 @@ public class AbstractPhoneNumberModel implements PersistableRIMModel, PaintProvi
             return g.drawText(buf, 0, buf.length(), x, y, 64, width);
          } else {
             Object associatedAddress = this.getAddressBookEntry(context);
-            if (!(associatedAddress instanceof Object)) {
+            if (!(associatedAddress instanceof PaintProvider)) {
                return this.paintRawPhoneNumber(g, x, y, width, height, 64, context);
             }
 
@@ -99,7 +98,7 @@ public class AbstractPhoneNumberModel implements PersistableRIMModel, PaintProvi
       }
 
       Object[] values = (Object[])crit.getValue();
-      String[] testWords = (Object[])values[2];
+      String[] testWords = (String[])values[2];
       int result = Match.nameStringMatch(this.getValue(), testWords);
       if (result == 1) {
          return result;
@@ -188,7 +187,7 @@ public class AbstractPhoneNumberModel implements PersistableRIMModel, PaintProvi
    }
 
    protected void getAddressAndFriendlyNameGivenAddress(Object addressBookEntry, String[] names) {
-      if (!(addressBookEntry instanceof Object)) {
+      if (!(addressBookEntry instanceof ConversionProvider)) {
          names[0] = this.getValue();
          names[1] = "";
       } else {
@@ -212,11 +211,11 @@ public class AbstractPhoneNumberModel implements PersistableRIMModel, PaintProvi
    }
 
    public Object matchPhoneNumber(Object addressCard, Object context) {
-      if (addressCard instanceof Object) {
-         addressCard = ((LongHashtable)addressCard).get(254);
+      if (addressCard instanceof ContextObject) {
+         addressCard = ((ContextObject)addressCard).get(254);
       }
 
-      if (addressCard instanceof Object) {
+      if (addressCard instanceof ReadableList) {
          ReadableList list = (ReadableList)addressCard;
          int size = list.size();
 
@@ -240,12 +239,12 @@ public class AbstractPhoneNumberModel implements PersistableRIMModel, PaintProvi
          value = "";
       }
 
-      return ((StringBuffer)(new Object("tel:"))).append(value).toString();
+      return "tel:" + value;
    }
 
    @Override
    public void setLabelStringProvider(StringProvider label) {
-      throw new Object("Unsupported API");
+      throw new IllegalStateException("Unsupported API");
    }
 
    @Override
@@ -266,8 +265,8 @@ public class AbstractPhoneNumberModel implements PersistableRIMModel, PaintProvi
       int length = original.length();
       char[] originalCharArray = new char[length];
       original.getChars(0, length, originalCharArray, 0);
-      StringBuffer output = (StringBuffer)(new Object());
-      StringBuffer dtmf = (StringBuffer)(new Object());
+      StringBuffer output = new StringBuffer();
+      StringBuffer dtmf = new StringBuffer();
       PhoneNumberConverter.convertForTransmission(output, dtmf, originalCharArray, false);
       output.append(' ');
       output.append(dtmf);
@@ -276,7 +275,7 @@ public class AbstractPhoneNumberModel implements PersistableRIMModel, PaintProvi
 
    private int indexOfMatch(String queryString) {
       String addressNumber = this.formatStringForComparison(this.getValue());
-      StringMatch queryStringMatch = (StringMatch)(new Object(this.formatStringForComparison(queryString), false, true));
+      StringMatch queryStringMatch = new StringMatch(this.formatStringForComparison(queryString), false, true);
       return Match.stringMatchMatch(queryStringMatch, addressNumber);
    }
 
@@ -289,25 +288,25 @@ public class AbstractPhoneNumberModel implements PersistableRIMModel, PaintProvi
       if (locale != null) {
          try {
             ResourceBundle rb = rbf.getBundle(locale);
-            return (Object[])rb.getObject(601);
+            return (String[])rb.getObject(601);
          } finally {
-            return (Object[])rbf.getObject(601);
+            return (String[])rbf.getObject(601);
          }
       } else {
-         return (Object[])rbf.getObject(601);
+         return (String[])rbf.getObject(601);
       }
    }
 
    public static String getTypeString(int type, int flags) {
       ResourceBundle resources = ResourceBundle.getBundle(2699923441625099942L, "net.rim.device.apps.internal.resource.Phone");
       if (type >= 12) {
-         return (String)((Object[])resources.getObject(601))[0];
+         return ((String[])resources.getObject(601))[0];
       } else if (type >= 9) {
-         return (String)((Object[])resources.getObject(602))[type - 9];
+         return ((String[])resources.getObject(602))[type - 9];
       } else if ((flags & 2) != 0) {
-         return (String)((flags & 4) != 0 ? ((Object[])resources.getObject(6079))[type] : ((Object[])resources.getObject(6078))[type]);
+         return (flags & 4) != 0 ? ((String[])resources.getObject(6079))[type] : ((String[])resources.getObject(6078))[type];
       } else {
-         return (String)((Object[])resources.getObject(601))[type];
+         return ((String[])resources.getObject(601))[type];
       }
    }
 
@@ -315,7 +314,7 @@ public class AbstractPhoneNumberModel implements PersistableRIMModel, PaintProvi
    public final boolean equals(Object other) {
       ContextObject context = null;
       boolean typeIndependent = false;
-      if (other instanceof Object) {
+      if (other instanceof ContextObject) {
          context = (ContextObject)other;
          other = context.get(254);
          typeIndependent = context.getFlag(93);

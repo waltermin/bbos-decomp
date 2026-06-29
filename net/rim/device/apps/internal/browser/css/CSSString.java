@@ -24,7 +24,7 @@ public final class CSSString {
    }
 
    private final String decode(String source, int startIndex, int endIndex) {
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       int i = startIndex;
 
       while (i < endIndex) {
@@ -104,7 +104,7 @@ public final class CSSString {
       int startIndex;
       int length;
       if (!(object instanceof CSSString)) {
-         if (!(object instanceof Object)) {
+         if (!(object instanceof String)) {
             return false;
          }
 

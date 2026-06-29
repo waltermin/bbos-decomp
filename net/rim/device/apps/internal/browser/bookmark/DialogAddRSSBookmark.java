@@ -8,7 +8,6 @@ import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Font;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.CheckboxField;
@@ -16,6 +15,7 @@ import net.rim.device.api.ui.component.DateField;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.FlowFieldManager;
 import net.rim.device.api.ui.container.PopupScreen;
 import net.rim.device.api.ui.container.VerticalFieldManager;
@@ -27,6 +27,7 @@ import net.rim.device.apps.internal.browser.resources.BrowserResources;
 import net.rim.device.apps.internal.browser.ui.BrowserChoiceField;
 import net.rim.device.cldc.util.CalendarExtensions;
 import net.rim.device.internal.i18n.CommonResource;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 import org.w3c.dom.html2.HTMLLinkElement;
 
 public final class DialogAddRSSBookmark extends PopupScreen implements FieldChangeListener {
@@ -42,35 +43,35 @@ public final class DialogAddRSSBookmark extends PopupScreen implements FieldChan
    private BrowserContent _browserContent;
 
    public DialogAddRSSBookmark(BrowserContent content, HTMLLinkElement[] feeds) {
-      super((Manager)(new Object(1153220571769602048L)), 196608);
+      super(new VerticalFieldManager(1153220571769602048L), 196608);
       VerticalFieldManager localVfm = (VerticalFieldManager)this.getDelegate();
       this._browserContent = content;
       this._feeds = feeds;
       this._selectedFolder = BookmarksFolderList.getDefaultFolderForSessionConfig();
       String folderName = this._selectedFolder.getFriendlyName();
       this._selectedFolder = BookmarksFolderList.getDefaultFolder();
-      localVfm.add((Field)(new Object(BrowserResources.getString(751), 36028797018963968L)));
-      VerticalFieldManager checkboxVfm = (VerticalFieldManager)(new Object(299067162755072L));
+      localVfm.add(new RichTextField(BrowserResources.getString(751), 36028797018963968L));
+      VerticalFieldManager checkboxVfm = new VerticalFieldManager(299067162755072L);
       int size = feeds.length;
-      this._checkboxes = new Object[size];
+      this._checkboxes = new CheckboxField[size];
 
       for (int i = 0; i < size; i++) {
-         this._checkboxes[i] = (CheckboxField)(new Object(feeds[i].getTitle(), false));
+         this._checkboxes[i] = new CheckboxField(feeds[i].getTitle(), false);
          checkboxVfm.add(this._checkboxes[i]);
       }
 
       localVfm.add(checkboxVfm);
       int fontHeight = Font.getDefault().getHeight();
-      localVfm.add((Field)(new Object(fontHeight >> 1)));
-      this._folderNameField = (ObjectChoiceField)(new Object(BrowserResources.getString(297), new Object[]{folderName}, 0, 9007199254740992L));
+      localVfm.add(new VerticalSpacerField(fontHeight >> 1));
+      this._folderNameField = new ObjectChoiceField(BrowserResources.getString(297), new String[]{folderName}, 0, 9007199254740992L);
       localVfm.add(this._folderNameField);
-      this._updateIntervalField = (ObjectChoiceField)(new Object(BrowserResources.getString(759), BrowserResources.getStringArray(757)));
+      this._updateIntervalField = new ObjectChoiceField(BrowserResources.getString(759), BrowserResources.getStringArray(757));
       if (!PersistentContent.isEncryptionEnabled() && !ITPolicy.getBoolean(30, 11, false)) {
          this._updateIntervalField.setChangeListener(this);
          localVfm.add(this._updateIntervalField);
       }
 
-      this._startTimeField = (DateField)(new Object(BrowserResources.getString(758), 28800000, 32));
+      this._startTimeField = new DateField(BrowserResources.getString(758), 28800000, 32);
       this._startTimeField.setTimeZone(TimeZone.getTimeZone(DateTimeUtilities.GMT));
       String currentConfigUID = null;
       BrowserSession currentSession = BrowserSession.getCurrentSession();
@@ -80,11 +81,11 @@ public final class DialogAddRSSBookmark extends PopupScreen implements FieldChan
 
       this._browserChoiceField = new BrowserChoiceField(BrowserResources.getString(819), currentConfigUID);
       localVfm.add(this._browserChoiceField);
-      this._buttonAdd = (ButtonField)(new Object(CommonResources.getString(9045), 98304));
-      this._buttonCancel = (ButtonField)(new Object(CommonResource.getString(19), 98304));
+      this._buttonAdd = new ButtonField(CommonResources.getString(9045), 98304);
+      this._buttonCancel = new ButtonField(CommonResource.getString(19), 98304);
       this._buttonAdd.setChangeListener(this);
       this._buttonCancel.setChangeListener(this);
-      FlowFieldManager fmgr = (FlowFieldManager)(new Object(12884901888L));
+      FlowFieldManager fmgr = new FlowFieldManager(12884901888L);
       fmgr.add(this._buttonAdd);
       fmgr.add(this._buttonCancel);
       localVfm.add(fmgr);

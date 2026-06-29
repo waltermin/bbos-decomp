@@ -26,13 +26,13 @@ public final class RFC2631KDFPseudoRandomSource extends AbstractPseudoRandomSour
 
    public RFC2631KDFPseudoRandomSource(byte[] sharedSecret, int offset, int length, OID algorithm, byte[] partyAInfo, int derivedKeyLength) {
       if (sharedSecret != null && length >= 0 && offset >= 0 && sharedSecret.length - length >= offset && algorithm != null && derivedKeyLength >= 0) {
-         this._digest = (SHA1Digest)(new Object());
+         this._digest = new SHA1Digest();
          this._outputLength = this._digest.getDigestLength();
          this._sharedSecret = new byte[length];
          System.arraycopy(sharedSecret, offset, this._sharedSecret, 0, length);
          if (partyAInfo != null) {
             if (partyAInfo.length != 64) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
          } else {
             partyAInfo = new byte[0];
@@ -48,7 +48,7 @@ public final class RFC2631KDFPseudoRandomSource extends AbstractPseudoRandomSour
 
          label44:
          try {
-            ByteArrayOutputStream out = (ByteArrayOutputStream)(new Object());
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
             this._counterOffset = 0;
             this._counterOffset = this._counterOffset + this.encodeTag(out, 48, otherInfoLength, false, 0);
             this._counterOffset = this._counterOffset + this.encodeTag(out, 48, keySpecificInfoLength, false, 0);
@@ -70,7 +70,7 @@ public final class RFC2631KDFPseudoRandomSource extends AbstractPseudoRandomSour
          this._outputBuffer = new byte[this._outputLength];
          this._previousOutputBuffer = new byte[this._outputLength];
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -175,7 +175,7 @@ public final class RFC2631KDFPseudoRandomSource extends AbstractPseudoRandomSour
             }
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -203,16 +203,16 @@ public final class RFC2631KDFPseudoRandomSource extends AbstractPseudoRandomSour
       };
 
       try {
-         RFC2631KDFPseudoRandomSource source = new RFC2631KDFPseudoRandomSource(SelfTestData.RANDOM_DATA, (OID)(new Object(new byte[]{0})), null, 0);
+         RFC2631KDFPseudoRandomSource source = new RFC2631KDFPseudoRandomSource(SelfTestData.RANDOM_DATA, new OID(new byte[]{0}), null, 0);
          byte[] data = source.getBytes(32);
          if (Arrays.equals(data, result)) {
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

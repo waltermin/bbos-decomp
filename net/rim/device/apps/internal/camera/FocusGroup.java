@@ -44,7 +44,7 @@ final class FocusGroup {
 
       for (int i = 0; i < count; i++) {
          Object item = this._items[i];
-         if (!(item instanceof Object)) {
+         if (!(item instanceof String)) {
             if (item instanceof FocusGroup) {
                FocusGroup focusGroup = (FocusGroup)item;
                focusGroup.resolveIds(modelInteractor);
@@ -52,14 +52,14 @@ final class FocusGroup {
          } else {
             String sId = (String)item;
             int id = modelInteractor.getHandle(sId);
-            this._items[i] = new Object(id);
+            this._items[i] = new Integer(id);
          }
       }
    }
 
    final int getCurrentFocus() {
       Object item = this._items[this._index];
-      if (!(item instanceof Object)) {
+      if (!(item instanceof Integer)) {
          FocusGroup focusGroup = (FocusGroup)item;
          return focusGroup.getCurrentFocus();
       } else {
@@ -73,7 +73,7 @@ final class FocusGroup {
 
       for (int i = 0; i < count; i++) {
          Object item = this._items[i];
-         if (item instanceof Object) {
+         if (item instanceof Integer) {
             Integer integer = (Integer)item;
             if (handle == integer) {
                return true;
@@ -150,7 +150,7 @@ final class FocusGroup {
 
       for (int i = 0; i < count; i++) {
          Object item = this._items[i];
-         if (item instanceof Object) {
+         if (item instanceof Integer) {
             Integer integer = (Integer)item;
             if (handle == integer) {
                if (enable) {

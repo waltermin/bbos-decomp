@@ -42,7 +42,7 @@ public class RegionManager implements MediaListener, Interactor {
    @Override
    public void mediaEvent(Object sender, int event, int id, Object eventData) {
       if (this._engine == null || this._resolver == null) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       if (this._model != null) {

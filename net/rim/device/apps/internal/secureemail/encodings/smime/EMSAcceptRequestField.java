@@ -13,6 +13,7 @@ import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
 import net.rim.device.internal.i18n.CommonResource;
 import net.rim.device.internal.ui.RichTextFieldUtilities;
 import net.rim.device.internal.ui.component.PleaseWaitDialog;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 
 public class EMSAcceptRequestField extends VerticalFieldManager implements FieldChangeListener {
    EMSAcceptRequestInputStream _emsAcceptRequestInputStream;
@@ -28,21 +29,21 @@ public class EMSAcceptRequestField extends VerticalFieldManager implements Field
       this._emsAcceptRequestInputStream = emsAcceptRequestInputStream;
       this._certificate = certificate;
       this._emailMessageModel = emailMessageModel;
-      String acceptRequestString = MessageFormat.format(SMIMEResources.getString(2095), new Object[]{displayName});
+      String acceptRequestString = MessageFormat.format(SMIMEResources.getString(2095), new String[]{displayName});
       this.add(RichTextFieldUtilities.getBoldFormattedRichTextField(acceptRequestString, 9007199254740992L));
-      HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(12884901888L));
-      this._viewButton = (ButtonField)(new Object(CommonResource.getString(10015), 98304));
+      HorizontalFieldManager hfm = new HorizontalFieldManager(12884901888L);
+      this._viewButton = new ButtonField(CommonResource.getString(10015), 98304);
       this._viewButton.setChangeListener(this);
       hfm.add(this._viewButton);
-      this._acceptButton = (ButtonField)(new Object(SMIMEResources.getString(2097), 98304));
+      this._acceptButton = new ButtonField(SMIMEResources.getString(2097), 98304);
       this._acceptButton.setChangeListener(this);
       hfm.add(this._acceptButton);
-      this._declineButton = (ButtonField)(new Object(SMIMEResources.getString(2098), 98304));
+      this._declineButton = new ButtonField(SMIMEResources.getString(2098), 98304);
       this._declineButton.setChangeListener(this);
       hfm.add(this._declineButton);
-      this.add((Field)(new Object(6)));
+      this.add(new VerticalSpacerField(6));
       this.add(hfm);
-      this.add((Field)(new Object(6)));
+      this.add(new VerticalSpacerField(6));
    }
 
    @Override
@@ -68,7 +69,7 @@ public class EMSAcceptRequestField extends VerticalFieldManager implements Field
       }
 
       EMSAcceptRequestField$SendAcceptResponseWorker sendAcceptResponseWorker = new EMSAcceptRequestField$SendAcceptResponseWorker(this, accept);
-      PleaseWaitDialog pleaseWait = (PleaseWaitDialog)(new Object(SMIMEResources.getString(2096), sendAcceptResponseWorker));
+      PleaseWaitDialog pleaseWait = new PleaseWaitDialog(SMIMEResources.getString(2096), sendAcceptResponseWorker);
       pleaseWait.display();
       return sendAcceptResponseWorker.getResult();
    }

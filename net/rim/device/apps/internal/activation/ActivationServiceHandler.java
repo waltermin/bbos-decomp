@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.activation;
 
+import java.io.IOException;
 import net.rim.device.api.system.EventLogger;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.api.util.IntIntHashtable;
@@ -29,7 +30,7 @@ final class ActivationServiceHandler implements ProvisioningHandler {
          if (chunks.containsKey(1)) {
             db.setPosition(chunks.get(1));
             if (db.readCompressedInt() != 1) {
-               throw new Object();
+               throw new IOException();
             }
 
             newValue = db.readByte();

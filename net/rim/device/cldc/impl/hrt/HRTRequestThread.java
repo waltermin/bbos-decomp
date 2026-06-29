@@ -1,5 +1,6 @@
 package net.rim.device.cldc.impl.hrt;
 
+import java.io.IOException;
 import java.util.Vector;
 import javax.microedition.io.Connector;
 import javax.microedition.io.Datagram;
@@ -13,6 +14,7 @@ import net.rim.device.api.hrt.HostRoutingTable;
 import net.rim.device.api.io.DatagramAddressBase;
 import net.rim.device.api.io.DatagramBase;
 import net.rim.device.api.io.DatagramConnectionBase;
+import net.rim.device.api.io.IOCancelledException;
 import net.rim.device.api.servicebook.ServiceBook;
 import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.api.system.Application;
@@ -30,6 +32,7 @@ import net.rim.device.api.system.RadioInfo;
 import net.rim.device.api.system.RadioStatusListener;
 import net.rim.device.api.system.RealtimeClockListener;
 import net.rim.device.api.system.SIMCard;
+import net.rim.device.api.system.SIMCardException;
 import net.rim.device.api.system.SIMCardStatusListener;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.Comparator;
@@ -479,9 +482,9 @@ public final class HRTRequestThread extends Thread implements SIMCardStatusListe
    }
 
    private final int generateServiceBookHash() {
-      SHA1Digest digest = (SHA1Digest)(new Object());
+      SHA1Digest digest = new SHA1Digest();
       int newHash = 0;
-      Vector uidVec = (Vector)(new Object(10));
+      Vector uidVec = new Vector(10);
       ServiceRecord[] records = this._sb.findRecordsByType(0);
 
       for (int i = records.length - 1; i >= 0; i--) {
@@ -495,7 +498,7 @@ public final class HRTRequestThread extends Thread implements SIMCardStatusListe
          }
       }
 
-      String[] uids = new Object[uidVec.size()];
+      String[] uids = new String[uidVec.size()];
       uidVec.copyInto(uids);
       Arrays.sort(uids, this);
 
@@ -556,7 +559,7 @@ public final class HRTRequestThread extends Thread implements SIMCardStatusListe
       // 041: iload 6
       // 043: bipush 8
       // 045: if_icmpeq 050
-      // 048: new java/lang/Object
+      // 048: new java/lang/IllegalArgumentException
       // 04b: dup
       // 04c: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 04f: athrow
@@ -583,7 +586,7 @@ public final class HRTRequestThread extends Thread implements SIMCardStatusListe
       // 0a5: aload 3
       // 0a6: invokespecial net/rim/device/cldc/impl/hrt/HRTRequestThread.parseVersionFour (Lnet/rim/device/api/util/DataBuffer;Lnet/rim/device/cldc/impl/hrt/HRTRequestThread$RegistrationInfo;)V
       // 0a9: goto 0b4
-      // 0ac: new java/lang/Object
+      // 0ac: new java/lang/IllegalArgumentException
       // 0af: dup
       // 0b0: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 0b3: athrow
@@ -784,12 +787,12 @@ public final class HRTRequestThread extends Thread implements SIMCardStatusListe
 
       if (buf.readUnsignedByte() != 1) {
          EventLogger.logEvent(4019666953250015899L, 1383293805, 3);
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (this._requestKey == null) {
          EventLogger.logEvent(4019666953250015899L, 1383427693, 3);
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int cryptoLength = buf.readCompressedInt();
@@ -806,15 +809,15 @@ public final class HRTRequestThread extends Thread implements SIMCardStatusListe
       Array.resize(plain, len);
       if (!RegistrationUtilities.checkMAC(plain, this._requestKey, sigResponse)) {
          EventLogger.logEvent(4019666953250015899L, 1383295335, 3);
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
-      this.parseVersionThree((DataBuffer)(new Object(plain, 0, len, true)), regInfo);
+      this.parseVersionThree(new DataBuffer(plain, 0, len, true), regInfo);
    }
 
    private final void parseServiceRoutingInfo(DataBuffer buf) {
       ServiceBook sb = ServiceBook.getSB();
-      Vector uidList = (Vector)(new Object());
+      Vector uidList = new Vector();
       int hrisPos = -1;
       int hrisSize = 0;
       boolean disabled = false;
@@ -856,7 +859,7 @@ public final class HRTRequestThread extends Thread implements SIMCardStatusListe
                   buf.setPosition(hrisPos);
                   buf.setLength(hrisPos + hrisSize);
                   HostRoutingInfo[] hris = HRUtils.parseBuffer(buf);
-                  hrt = (HostRoutingTable)(new Object());
+                  hrt = new HostRoutingTable();
                   hrt.setHris(hris);
                }
 
@@ -875,7 +878,7 @@ public final class HRTRequestThread extends Thread implements SIMCardStatusListe
       String password = null;
       String username = null;
       QOSInfo qos = null;
-      if (hri instanceof Object) {
+      if (hri instanceof GprsHRI) {
          GprsHRI ghri = (GprsHRI)hri;
          password = ghri.getApnPassword();
          username = ghri.getApnUsername();
@@ -918,7 +921,7 @@ public final class HRTRequestThread extends Thread implements SIMCardStatusListe
    }
 
    private final MdpAddress createMdpAddress(HostRoutingInfo hri) {
-      return (MdpAddress)(new Object(hri.getAddressBase(), 3, 3));
+      return new MdpAddress(hri.getAddressBase(), 3, 3);
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
@@ -946,18 +949,18 @@ public final class HRTRequestThread extends Thread implements SIMCardStatusListe
       if ((SUPPORTED_WAFS & 1) != 0 && (SUPPORTED_WAFS & 2) != 0) {
          byte[] data = Branding.getData(13824);
          if (data != null) {
-            CDMA_IIF_APN = (String)(new Object(data));
+            CDMA_IIF_APN = new String(data);
          }
 
          if (CDMA_IIF_APN != null) {
             data = Branding.getData(13825);
             if (data != null) {
-               CDMA_IIF_USERNAME = (String)(new Object(data));
+               CDMA_IIF_USERNAME = new String(data);
             }
 
             data = Branding.getData(13826);
             if (data != null) {
-               CDMA_IIF_PASSWORD = (String)(new Object(data));
+               CDMA_IIF_PASSWORD = new String(data);
             }
 
             this.initializeIIF_HRI();
@@ -975,7 +978,7 @@ public final class HRTRequestThread extends Thread implements SIMCardStatusListe
       } finally {
          if (var12) {
             this.logEvent(1313034062, 1);
-            throw new Object();
+            throw new RuntimeException();
          }
       }
 
@@ -1054,7 +1057,7 @@ public final class HRTRequestThread extends Thread implements SIMCardStatusListe
 
          for (int i = hris.length - 1; i >= 0; i--) {
             if (hris[i].getNpc() == 64) {
-               this._reg_IIF_HRI = (HostRoutingInfo)(new Object());
+               this._reg_IIF_HRI = new GprsHRI();
                this._reg_IIF_HRI.setName("IIF GPRS to CDMA");
                this._reg_IIF_HRI.setNpc((long)48);
                this._reg_IIF_HRI.setApn(CDMA_IIF_APN);
@@ -1359,7 +1362,7 @@ public final class HRTRequestThread extends Thread implements SIMCardStatusListe
                      switch (parsedRetCode) {
                         case -1:
                         case 4:
-                           throw new Object();
+                           throw new RuntimeException();
                         case 0:
                            this._regCause |= 64;
                            extraEventInfo = -1;
@@ -1404,7 +1407,7 @@ public final class HRTRequestThread extends Thread implements SIMCardStatusListe
                               this._dynamicPINTimeout = 0;
                            }
 
-                           StringBuffer tempBuffer = (StringBuffer)(new Object());
+                           StringBuffer tempBuffer = new StringBuffer();
                            tempBuffer.append(StringUtilities.intToString(1162891891));
                            tempBuffer.append(":");
                            tempBuffer.append(StringUtilities.toUpperCase(Integer.toHexString(DeviceInfo.getDeviceId()), 1701707776));
@@ -1825,7 +1828,7 @@ public final class HRTRequestThread extends Thread implements SIMCardStatusListe
       // 0d5: goto 11f
       // 0d8: aload 0
       // 0d9: invokespecial net/rim/device/cldc/impl/hrt/HRTRequestThread.setTemporaryPIN ()V
-      // 0dc: new java/lang/Object
+      // 0dc: new java/lang/StringBuffer
       // 0df: dup
       // 0e0: ldc_w 1481658993
       // 0e3: invokestatic net/rim/device/api/util/StringUtilities.intToString (I)Ljava/lang/String;
@@ -1952,7 +1955,7 @@ public final class HRTRequestThread extends Thread implements SIMCardStatusListe
          synchronized (this._eventQueue) {
             synchronized (this._sendLock) {
                if (this._eventQueue.size() != 0 || this._cancelled) {
-                  throw new Object();
+                  throw new IOCancelledException();
                }
 
                this._sendConn = conn;
@@ -2059,7 +2062,7 @@ public final class HRTRequestThread extends Thread implements SIMCardStatusListe
       dgram.writeByte(type);
       dgram.skipBytes(5);
       TLEUtilities.writeDataField(dgram, 1, RegistrationUtilities.encryptSessionKey(this._requestKey));
-      DataBuffer buf = (DataBuffer)(new Object(256, true));
+      DataBuffer buf = new DataBuffer(256, true);
       TLEUtilities.writeIntegerField(buf, 135, ++this._currentRequestId, true);
       TLEUtilities.writeIntegerField(buf, 136, this._regCause, true);
       if (!requestDefaultHrt) {
@@ -2105,7 +2108,7 @@ public final class HRTRequestThread extends Thread implements SIMCardStatusListe
          synchronized (this._eventQueue) {
             synchronized (this._sendLock) {
                if (this._eventQueue.size() != 0 || this._cancelled) {
-                  throw new Object();
+                  throw new IOCancelledException();
                }
 
                this._sendConn = this._gmeConn;
@@ -2177,7 +2180,7 @@ public final class HRTRequestThread extends Thread implements SIMCardStatusListe
          this._conns[i] = new HRTRequestThread$ConnInfo();
       }
 
-      this._eventQueue = (Vector)(new Object());
+      this._eventQueue = new Vector();
       this._currentCmdFlashId = PersistentInteger.getId(8565489477584473616L, 0);
       this._currentCmd = PersistentInteger.get(this._currentCmdFlashId);
       if (NvStore.readData(32) == null) {
@@ -2200,7 +2203,7 @@ public final class HRTRequestThread extends Thread implements SIMCardStatusListe
       switch (this._currentCmd) {
          case 0:
          case 4:
-            throw new Object();
+            throw new RuntimeException();
          case 1:
          case 3:
          default:
@@ -2366,9 +2369,9 @@ public final class HRTRequestThread extends Thread implements SIMCardStatusListe
       NvStore.writeInt(21, deviceId);
    }
 
-   private final void setTemporaryPIN() {
+   private final void setTemporaryPIN() throws IOException {
       int temporaryPIN = 0;
-      SHA1Digest digest = (SHA1Digest)(new Object());
+      SHA1Digest digest = new SHA1Digest();
       byte[] hwIDBytes = null;
       int primaryWAF = RadioInternal.getPrimaryWAF();
       if (primaryWAF == 1) {
@@ -2391,7 +2394,7 @@ public final class HRTRequestThread extends Thread implements SIMCardStatusListe
          temporaryPIN = -251658240 | (var9[0] & 255) << 16 | (var9[1] & 255) << 8 | var9[2] & 255;
          this.setDeviceId(temporaryPIN);
       } else {
-         throw new Object("No hardware identifier present!");
+         throw new IOException("No hardware identifier present!");
       }
    }
 
@@ -2414,18 +2417,18 @@ public final class HRTRequestThread extends Thread implements SIMCardStatusListe
       }
    }
 
-   private final int generateSimHash() {
+   private final int generateSimHash() throws SIMCardException {
       int newSimHash = 0;
       boolean enabled = SIMCard.isReady() && SIMCard.isValid();
       if (!enabled) {
-         throw new Object(null);
+         throw new SIMCardException(null);
       }
 
       if (!this.areICCIDAndIMSIPopulated()) {
          this.logEvent(1315916105, 3);
       }
 
-      SHA1Digest digest = (SHA1Digest)(new Object());
+      SHA1Digest digest = new SHA1Digest();
       if ((SUPPORTED_WAFS & 8) == 0) {
          digest.update(SIMCard.getIMSI());
       }

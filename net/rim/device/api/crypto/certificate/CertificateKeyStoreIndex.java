@@ -20,7 +20,7 @@ public class CertificateKeyStoreIndex implements KeyStoreIndex {
       if (target instanceof Certificate) {
          return target.hashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

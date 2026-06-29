@@ -5,6 +5,7 @@ import net.rim.device.apps.api.addressbook.AddressBookServices;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.AddressSelectionContext;
 import net.rim.device.apps.api.framework.model.CompoundRecognizer;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.registration.RIMModelFactory;
 import net.rim.device.apps.api.framework.registration.RIMModelFactoryRepository;
@@ -24,10 +25,10 @@ final class OverrideFromField$AddNameVerb extends Verb {
       if (this._selectionContext == null) {
          RIMModelFactory[] abEntryFactories = RIMModelFactoryRepository.getModelFactories(-7921492803965144520L);
          CompoundRecognizer compoundRecognizer = new OverrideFromField$AddNameVerb$1(this, abEntryFactories, _1);
-         String titleString = ((StringBuffer)(new Object())).append(CommonResources.getString(9091)).append(": ").toString();
-         this._selectionContext = (AddressSelectionContext)(new Object(titleString, null, null, compoundRecognizer, null));
+         String titleString = CommonResources.getString(9091) + ": ";
+         this._selectionContext = new AddressSelectionContext(titleString, null, null, compoundRecognizer, null);
          this._selectionContext.setFindLabel(titleString);
-         this._selectionContext.setContext(new Object(108));
+         this._selectionContext.setContext(new ContextObject(108));
          this._invokeAddressBookVerb = AddressBookServices.getAddressSelectionVerb(4738722199580714034L);
       }
    }
@@ -42,7 +43,7 @@ final class OverrideFromField$AddNameVerb extends Verb {
    public final Object invoke(Object context) {
       this._selectionContext.setInitialSearchPattern(null);
       RIMModel addressBookEntry = (RIMModel)this._invokeAddressBookVerb.invoke(this._selectionContext);
-      if (addressBookEntry instanceof Object) {
+      if (addressBookEntry instanceof AddressCardModel) {
          if (this._changeFrom) {
             this.this$0.changeName((AddressCardModel)addressBookEntry);
             return null;

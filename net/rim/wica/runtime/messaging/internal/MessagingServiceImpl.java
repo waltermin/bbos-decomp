@@ -34,7 +34,7 @@ public final class MessagingServiceImpl implements Serviceable, Startable, Event
    private WicletMessageProcessor _wicletMessageProcessor;
    private SystemMessageProcessor _systemMessageProcessor;
    private ServiceMessageProcessor _serviceMessageProcessor;
-   private IntHashtable _routingTable = (IntHashtable)(new Object(4));
+   private IntHashtable _routingTable = new IntHashtable(4);
    private VersionProviderImpl _versionProvider;
    private Scheduler _scheduler = new Scheduler();
    private Scheduler _bgScheduler = new Scheduler();
@@ -202,7 +202,7 @@ public final class MessagingServiceImpl implements Serviceable, Startable, Event
 
    private final void startThreads() {
       this._scheduler.start(this.toString());
-      this._bgScheduler.start(((StringBuffer)(new Object())).append(this.toString()).append(" Background").toString());
+      this._bgScheduler.start(this.toString() + " Background");
    }
 
    private final synchronized void activate() {
@@ -250,7 +250,7 @@ public final class MessagingServiceImpl implements Serviceable, Startable, Event
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

@@ -1,5 +1,8 @@
 package net.rim.device.cldc.io.lstp;
 
+import java.io.IOException;
+import net.rim.device.api.io.IOCancelledException;
+import net.rim.device.api.io.IONotRoutableException;
 import net.rim.device.api.system.EventLogger;
 import net.rim.device.api.system.USBPortListener;
 import net.rim.device.api.util.DataBuffer;
@@ -33,7 +36,7 @@ final class UsbLayer extends NativeLayer implements USBPortListener {
 
    @Override
    protected final void nativeOpen() {
-      this._port = (USBPortInternal)(new Object(this._channel));
+      this._port = new USBPortInternal(this._channel);
    }
 
    @Override
@@ -54,9 +57,9 @@ final class UsbLayer extends NativeLayer implements USBPortListener {
    }
 
    @Override
-   protected final void sendPacket(byte[] buffer, int offset, int length) {
+   protected final void sendPacket(byte[] buffer, int offset, int length) throws IOException, IONotRoutableException {
       if (this._port == null) {
-         throw new Object();
+         throw new IONotRoutableException();
       }
 
       synchronized (this._portSendLock) {
@@ -65,7 +68,7 @@ final class UsbLayer extends NativeLayer implements USBPortListener {
 
       if (this._port.write(buffer, offset, length) != length) {
          EventLogger.logEvent(-754053862978797267L, 1415013985, 3);
-         throw new Object();
+         throw new IOException();
       }
 
       synchronized (this._portSendLock) {
@@ -81,15 +84,15 @@ final class UsbLayer extends NativeLayer implements USBPortListener {
          switch (this._portSendStatus) {
             case -1:
                EventLogger.logEvent(-754053862978797267L, 1415016051, 3);
-               throw new Object();
+               throw new IOException();
             case 0:
                EventLogger.logEvent(-754053862978797267L, 1415017583, 3);
-               throw new Object();
+               throw new IOException();
             case 1:
                break;
             case 2:
             default:
-               throw new Object();
+               throw new IOCancelledException();
          }
       }
 
@@ -278,7 +281,7 @@ final class UsbLayer extends NativeLayer implements USBPortListener {
       // 0c2: goto 014
       // 0c5: aload 5
       // 0c7: ifnonnull 0f6
-      // 0ca: new java/lang/Object
+      // 0ca: new net/rim/device/api/io/DatagramBase
       // 0cd: dup
       // 0ce: invokespecial net/rim/device/api/io/DatagramBase.<init> ()V
       // 0d1: astore 5

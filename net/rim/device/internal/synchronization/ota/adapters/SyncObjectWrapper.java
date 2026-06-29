@@ -91,13 +91,13 @@ final class SyncObjectWrapper {
 
    private final void makeOtaFormOfSyncObjectBufferReady() {
       if (this._otaFormOfSyncObject == null) {
-         this._otaFormOfSyncObject = (DataBuffer)(new Object(true));
+         this._otaFormOfSyncObject = new DataBuffer(true);
       }
    }
 
    private final void makeSerialFormOfSyncObjectBufferReady() {
       if (this._serialFormOfSyncObject == null) {
-         this._serialFormOfSyncObject = (DataBuffer)(new Object(false));
+         this._serialFormOfSyncObject = new DataBuffer(false);
       }
    }
 

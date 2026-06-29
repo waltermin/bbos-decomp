@@ -106,7 +106,7 @@ public final class FolderList extends Field implements CollectionListener, HintP
    }
 
    public final void setCurrentView(String directory, ReadableList items) {
-      if (this._items instanceof Object) {
+      if (this._items instanceof UnsortedReadableList) {
          ((UnsortedReadableList)this._items).removeCollectionListener(this);
       }
 
@@ -125,7 +125,7 @@ public final class FolderList extends Field implements CollectionListener, HintP
       this._userSelected = false;
       this._currentIndex = this.determineInitialIndex();
       this.updateLayout();
-      if (items instanceof Object) {
+      if (items instanceof UnsortedReadableList) {
          ((UnsortedReadableList)items).addCollectionListener(this);
       }
    }
@@ -330,7 +330,7 @@ public final class FolderList extends Field implements CollectionListener, HintP
       LabelField hint = null;
       FileItemField field;
       if (this._showToolTip && (field = this.getSelectedItem()) != null) {
-         hint = (LabelField)(new Object(field.getDisplayName(), 36028848558571520L));
+         hint = new LabelField(field.getDisplayName(), 36028848558571520L);
          hint.setTag(TOOLTIP_TAG);
       }
 
@@ -438,10 +438,10 @@ public final class FolderList extends Field implements CollectionListener, HintP
                   if (this._mode == 2 && this._metadataDb != null && item.hasThumbnailAvailabe()) {
                      String name = item.getName();
                      Object obj1 = this._metadataDb.getMetadataFromCache(name, 1);
-                     if (obj1 instanceof Object) {
+                     if (obj1 instanceof String) {
                         Object obj2 = this._metadataDb.getMetadataFromCache(name, 3);
-                        if (obj2 instanceof Object) {
-                           StringBuffer sb = (StringBuffer)(new Object((String)obj1));
+                        if (obj2 instanceof String) {
+                           StringBuffer sb = new StringBuffer((String)obj1);
                            sb.append(' ').append('-').append(' ').append((String)obj2);
                            title = sb.toString();
                         } else {
@@ -450,7 +450,7 @@ public final class FolderList extends Field implements CollectionListener, HintP
                      }
 
                      Object obj2 = this._metadataDb.getMetadataFromCache(name, 2);
-                     if (obj2 instanceof Object) {
+                     if (obj2 instanceof Long) {
                         duration = (Long)obj2;
                      }
 
@@ -475,7 +475,7 @@ public final class FolderList extends Field implements CollectionListener, HintP
                } else {
                   if (this._metadataDb != null && item.hasThumbnailAvailabe()) {
                      Object obj = this._metadataDb.getMetadataFromCache(item.getName(), 0);
-                     if (obj instanceof Object) {
+                     if (obj instanceof EncodedImage) {
                         thumb = (EncodedImage)obj;
                      }
 
@@ -656,9 +656,7 @@ public final class FolderList extends Field implements CollectionListener, HintP
       if (_focusBorder == null) {
          int color_blue = ThemeAttributeSet.getColor(this, 2);
          int color_darkBlue = 139;
-         _focusBorder = (Border3d)(new Object(
-            4, 4, 4, 4, color_blue, color_darkBlue, color_blue, color_darkBlue, color_blue, color_darkBlue, color_blue, color_darkBlue
-         ));
+         _focusBorder = new Border3d(4, 4, 4, 4, color_blue, color_darkBlue, color_blue, color_darkBlue, color_blue, color_darkBlue, color_blue, color_darkBlue);
       }
 
       return _focusBorder;

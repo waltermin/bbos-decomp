@@ -45,7 +45,7 @@ public final class ResourceElement extends AbstractElement {
 
    @Override
    public final String toString() {
-      StringBuffer buf = (StringBuffer)(new Object(120));
+      StringBuffer buf = new StringBuffer(120);
       buf.append("ResourceElement[name=").append(super._name).append(",url=").append(this._url).append(",mimeType=").append(this._mimeType).append(']');
       return buf.toString();
    }

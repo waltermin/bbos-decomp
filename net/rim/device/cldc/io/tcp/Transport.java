@@ -18,7 +18,7 @@ import net.rim.vm.WeakReference;
 public final class Transport extends StreamDatagramTransportBase implements TcpConstants {
    private int _maxPacketSize;
    private TcpTimerThread _timerThread;
-   Vector _tcpConnectionDatabase = (Vector)(new Object());
+   Vector _tcpConnectionDatabase = new Vector();
    static final int TCP_PENDING_WORTHY_FLAGS = 23;
    static final int TCP_FLAGS_RESET_OR_ACK = 20;
 
@@ -36,8 +36,7 @@ public final class Transport extends StreamDatagramTransportBase implements TcpC
    }
 
    private final DatagramConnection openNativeConnection() {
-      DatagramConnection newConnection = (DatagramConnection)Connector.open("tcpdatagram://");
-      return newConnection;
+      return (DatagramConnection)Connector.open("tcpdatagram://");
    }
 
    protected final int getMaximumLength() {
@@ -112,7 +111,7 @@ public final class Transport extends StreamDatagramTransportBase implements TcpC
          if (w != null && tcpServerSocketConnPtr != null) {
             try {
                if (this.passDatagramToTcpServerSocketConn(tcpServerSocketConnPtr, tcpDatagram, datagramListenPort, flags)) {
-                  super._wServerCache = (WeakReference)(new Object(tcpServerSocketConnPtr));
+                  super._wServerCache = new WeakReference(tcpServerSocketConnPtr);
                   return true;
                }
             } finally {
@@ -177,7 +176,7 @@ public final class Transport extends StreamDatagramTransportBase implements TcpC
                pendingConnectionList.removeElementAt(i--);
                pendingConnectionListSize--;
             } else if (tcpConn.isAddressed(tcpDatagram.getAddressBase())) {
-               super._wPendingCache = (WeakReference)(new Object(tcpConn));
+               super._wPendingCache = new WeakReference(tcpConn);
                int tcpState = tcpConn.pendingConnectionDatagramReceived(tcpDatagram);
                switch (tcpState) {
                   case -1:
@@ -236,7 +235,7 @@ public final class Transport extends StreamDatagramTransportBase implements TcpC
       // 18: invokevirtual net/rim/device/cldc/io/tcp/Protocol.spawnNewConnectionForServerSocket (Lnet/rim/device/internal/io/tcp/TcpDatagramBase;IZ)Ljavax/microedition/io/Connection;
       // 1b: pop
       // 1c: aload 0
-      // 1d: new java/lang/Object
+      // 1d: new net/rim/vm/WeakReference
       // 20: dup
       // 21: aload 3
       // 22: invokespecial net/rim/vm/WeakReference.<init> (Ljava/lang/Object;)V

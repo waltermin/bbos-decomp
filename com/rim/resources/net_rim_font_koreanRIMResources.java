@@ -4,7 +4,7 @@ import java.util.Hashtable;
 import net.rim.device.resources.Resource;
 
 public final class net_rim_font_koreanRIMResources extends Resource {
-   public static Hashtable _resources = (Hashtable)(new Object(19));
+   public static Hashtable _resources = new Hashtable(19);
    public static Hashtable _properties;
    public static byte[] _appFlags = new byte[]{-61};
    public static byte[] _appCount = new byte[]{0};

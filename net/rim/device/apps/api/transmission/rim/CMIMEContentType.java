@@ -5,7 +5,7 @@ import net.rim.device.api.util.StringUtilities;
 
 public final class CMIMEContentType implements CMIMEConstants {
    private String _fullContentType;
-   private static String[][] TYPE_WORDS = new Object[][]{
+   private static String[][] TYPE_WORDS = new String[][]{
       {"unknown/", "unknown"},
       {"multipart/", "mixed", "report"},
       {"text/", "plain", "html"},
@@ -26,7 +26,7 @@ public final class CMIMEContentType implements CMIMEConstants {
    }
 
    public final void updateContentType(String data) {
-      this._fullContentType = ((StringBuffer)(new Object())).append(this._fullContentType).append(data).toString();
+      this._fullContentType = this._fullContentType + data;
    }
 
    public final String getBaseType() {
@@ -34,7 +34,7 @@ public final class CMIMEContentType implements CMIMEConstants {
    }
 
    public static final String getBaseType(String contentTypeString) {
-      return ((StringBuffer)(new Object())).append(getMajorType(contentTypeString)).append('/').append(getMinorType(contentTypeString)).toString();
+      return getMajorType(contentTypeString) + '/' + getMinorType(contentTypeString);
    }
 
    public static final String getBaseType(byte[] contentTypeBytes) {
@@ -52,7 +52,7 @@ public final class CMIMEContentType implements CMIMEConstants {
             int type = byteArray[0] & 255;
             if (type > 0 && type < TYPE_WORDS.length) {
                String[] words = TYPE_WORDS[type];
-               StringBuffer typeAndSubtypeBuffer = (StringBuffer)(new Object());
+               StringBuffer typeAndSubtypeBuffer = new StringBuffer();
                typeAndSubtypeBuffer.append(words[0]);
                int subtype = byteArray[1] & 255;
                typeAndSubtypeBuffer.append(subtype > 0 && subtype < words.length ? words[subtype] : TYPE_WORDS[0][1]);
@@ -60,8 +60,8 @@ public final class CMIMEContentType implements CMIMEConstants {
             }
          } else {
             byte[] bytes = null;
-            StringBuffer typeAndSubtypeBuffer = (StringBuffer)(new Object());
-            DataBuffer dataBuffer = (DataBuffer)(new Object());
+            StringBuffer typeAndSubtypeBuffer = new StringBuffer();
+            DataBuffer dataBuffer = new DataBuffer();
             dataBuffer.setData(byteArray, 0, byteArray.length);
 
             try {
@@ -71,7 +71,7 @@ public final class CMIMEContentType implements CMIMEConstants {
                if (type == 255) {
                   bytes = dataBuffer.readByteArray();
                   if (bytes != null && bytes.length > 0) {
-                     typeAndSubtypeBuffer.append((String)(new Object(bytes)));
+                     typeAndSubtypeBuffer.append(new String(bytes));
                      typeAndSubtypeBuffer.append('/');
                   }
                } else if (type > 0 && type < TYPE_WORDS.length) {
@@ -86,7 +86,7 @@ public final class CMIMEContentType implements CMIMEConstants {
                   if (subtype == 255) {
                      bytes = dataBuffer.readByteArray();
                      if (bytes != null && bytes.length > 0) {
-                        typeAndSubtypeBuffer.append((String)(new Object(bytes)));
+                        typeAndSubtypeBuffer.append(new String(bytes));
                      }
                   } else if (!typeIsPredefined) {
                      typeAndSubtypeBuffer.append(TYPE_WORDS[0][1]);
@@ -101,7 +101,7 @@ public final class CMIMEContentType implements CMIMEConstants {
                   byte[] parameterBytes = new byte[extraParametersLength];
                   dataBuffer.readFully(parameterBytes);
                   typeAndSubtypeBuffer.append(';');
-                  typeAndSubtypeBuffer.append((String)(new Object(parameterBytes)));
+                  typeAndSubtypeBuffer.append(new String(parameterBytes));
                }
 
                typeAndSubtype = typeAndSubtypeBuffer.toString();

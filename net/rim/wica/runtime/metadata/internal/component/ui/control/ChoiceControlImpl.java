@@ -1,5 +1,6 @@
 package net.rim.wica.runtime.metadata.internal.component.ui.control;
 
+import java.util.Date;
 import java.util.Vector;
 import net.rim.device.api.i18n.SimpleDateFormat;
 import net.rim.device.api.util.Arrays;
@@ -141,7 +142,7 @@ public final class ChoiceControlImpl extends UIControlImpl implements ChoiceCont
 
    @Override
    public final String getFormattedDate(long longValue) {
-      return this._dateFormatter != null ? this._dateFormatter.format(new Object(longValue)) : null;
+      return this._dateFormatter != null ? this._dateFormatter.format(new Date(longValue)) : null;
    }
 
    @Override
@@ -159,13 +160,13 @@ public final class ChoiceControlImpl extends UIControlImpl implements ChoiceCont
          }
 
          if (this._selectedIndex != -1) {
-            return new Object(this._dataHandles[this._selectedIndex]);
+            return new Long(this._dataHandles[this._selectedIndex]);
          }
       } else if (super._value != null) {
          if (this._selectedIndices != null) {
             int size = this._selectedIndices.size();
-            if (super._value instanceof Object) {
-               Vector v = (Vector)(new Object(size));
+            if (super._value instanceof Vector) {
+               Vector v = new Vector(size);
 
                for (int i = 0; i < size; i++) {
                   v.addElement(((Vector)super._value).elementAt(this._selectedIndices.elementAt(i)));
@@ -184,12 +185,12 @@ public final class ChoiceControlImpl extends UIControlImpl implements ChoiceCont
                return v;
             }
          } else if (this._selectedIndex != -1) {
-            if (super._value instanceof Object) {
+            if (super._value instanceof Vector) {
                return ((Vector)super._value).elementAt(this._selectedIndex);
             }
 
             if (super._value instanceof LongVector) {
-               return new Object(((LongVector)super._value).elementAt(this._selectedIndex));
+               return new Long(((LongVector)super._value).elementAt(this._selectedIndex));
             }
          }
       }
@@ -210,7 +211,7 @@ public final class ChoiceControlImpl extends UIControlImpl implements ChoiceCont
       if (super._value == null) {
          return 0;
       } else {
-         return !(super._value instanceof Object) ? ((LongVector)super._value).size() : ((Vector)super._value).size();
+         return !(super._value instanceof Vector) ? ((LongVector)super._value).size() : ((Vector)super._value).size();
       }
    }
 
@@ -280,8 +281,8 @@ public final class ChoiceControlImpl extends UIControlImpl implements ChoiceCont
       Object dataMappedValue = this.getDataMappedValue();
       if (dataMappedValue != null && this._mappingTypeVector != null) {
          this.setSelectedIndex(-1, false, false);
-         if (!(dataMappedValue instanceof Object)) {
-            if (!(dataMappedValue instanceof Object)) {
+         if (!(dataMappedValue instanceof Vector)) {
+            if (!(dataMappedValue instanceof IntVector)) {
                if (!(dataMappedValue instanceof DoubleVector)) {
                   if (dataMappedValue instanceof LongVector) {
                      boolean doSimpleLookup = true;
@@ -359,16 +360,16 @@ public final class ChoiceControlImpl extends UIControlImpl implements ChoiceCont
       if (dataMappedValue != null) {
          int index = -1;
          if (this._mappingTypeVector == null) {
-            if ((int)(super._mappingType & 4294967295L) == 6 && dataMappedValue instanceof Object) {
-               long handle = dataMappedValue;
+            if ((int)(super._mappingType & 4294967295L) == 6 && dataMappedValue instanceof Long) {
+               long handle = (Long)dataMappedValue;
                if (handle != -1) {
                   DataCollection dc = this.getScreen().getWiclet().getDataCollection((int)(super._mappingType >> 32));
                   if (dc instanceof KeyDataCollection) {
                      Object value = ((KeyDataCollection)dc).getPKey(handle);
                      if (value != null) {
-                        if (!(super._value instanceof Object)) {
+                        if (!(super._value instanceof Vector)) {
                            if (super._value instanceof LongVector) {
-                              index = ((LongVector)super._value).indexOf(value);
+                              index = ((LongVector)super._value).indexOf((Long)value);
                            }
                         } else {
                            index = ((Vector)super._value).indexOf(value.toString());
@@ -377,14 +378,14 @@ public final class ChoiceControlImpl extends UIControlImpl implements ChoiceCont
                   }
                }
             }
-         } else if (!(this._mappingTypeVector instanceof Object)) {
-            if (this._mappingTypeVector instanceof Object) {
-               if (dataMappedValue instanceof Object) {
-                  boolean value = dataMappedValue;
-                  dataMappedValue = new Object(value ? 1 : 0);
+         } else if (!(this._mappingTypeVector instanceof Vector)) {
+            if (this._mappingTypeVector instanceof IntVector) {
+               if (dataMappedValue instanceof Boolean) {
+                  boolean value = (Boolean)dataMappedValue;
+                  dataMappedValue = new Integer(value ? 1 : 0);
                }
 
-               index = ((IntVector)this._mappingTypeVector).indexOf(dataMappedValue);
+               index = ((IntVector)this._mappingTypeVector).indexOf((Integer)dataMappedValue);
             } else if (!(this._mappingTypeVector instanceof DoubleVector)) {
                if (this._mappingTypeVector instanceof LongVector) {
                   boolean doSimpleLookup = true;
@@ -392,7 +393,7 @@ public final class ChoiceControlImpl extends UIControlImpl implements ChoiceCont
                      DataCollection dc = this.getScreen().getWiclet().getDataCollection((int)(super._mappingType >> 32));
                      if (!dc.getDef().hasKey()) {
                         doSimpleLookup = false;
-                        long mappedHandle = dataMappedValue;
+                        long mappedHandle = (Long)dataMappedValue;
                         if (dc.contains(mappedHandle)) {
                            LongVector dataHandles = (LongVector)this._mappingTypeVector;
                            int dataHandlesCount = dataHandles.size();
@@ -409,11 +410,11 @@ public final class ChoiceControlImpl extends UIControlImpl implements ChoiceCont
                   }
 
                   if (doSimpleLookup) {
-                     index = ((LongVector)this._mappingTypeVector).indexOf(dataMappedValue);
+                     index = ((LongVector)this._mappingTypeVector).indexOf((Long)dataMappedValue);
                   }
                }
             } else {
-               index = ((DoubleVector)this._mappingTypeVector).indexOf(dataMappedValue);
+               index = ((DoubleVector)this._mappingTypeVector).indexOf((Double)dataMappedValue);
             }
          } else {
             index = ((Vector)this._mappingTypeVector).indexOf(dataMappedValue);
@@ -483,7 +484,7 @@ public final class ChoiceControlImpl extends UIControlImpl implements ChoiceCont
             break;
          case 32771:
          default:
-            super._value = new Object();
+            super._value = new Vector();
             break;
          case 32774:
             super._value = new LongVector();
@@ -499,13 +500,13 @@ public final class ChoiceControlImpl extends UIControlImpl implements ChoiceCont
             case 1:
             case 5:
             default:
-               this._mappingTypeVector = new Object();
+               this._mappingTypeVector = new IntVector();
                return;
             case 2:
                this._mappingTypeVector = new DoubleVector();
                return;
             case 3:
-               this._mappingTypeVector = new Object();
+               this._mappingTypeVector = new Vector();
                break;
             case 4:
             case 6:
@@ -530,11 +531,11 @@ public final class ChoiceControlImpl extends UIControlImpl implements ChoiceCont
    private final void updateSingleMappedValue() {
       if (this._mappingTypeVector == null) {
          if (6 == (int)(super._mappingType & 4294967295L)) {
-            Object key = !(super._value instanceof Object)
-               ? new Object(((LongVector)super._value).elementAt(this._selectedIndex))
+            Object key = !(super._value instanceof Vector)
+               ? new Long(((LongVector)super._value).elementAt(this._selectedIndex))
                : ((Vector)super._value).elementAt(this._selectedIndex);
             Wiclet wiclet = this.getScreen().getWiclet();
-            super._mappedValue = SingleValueHelper.convertValue(wiclet, super._mappingType, super._value instanceof Object ? 3 : 8, key, 0);
+            super._mappedValue = SingleValueHelper.convertValue(wiclet, super._mappingType, super._value instanceof Vector ? 3 : 8, key, 0);
          } else {
             super._mappedValue = null;
          }
@@ -547,26 +548,26 @@ public final class ChoiceControlImpl extends UIControlImpl implements ChoiceCont
                return;
             case 0:
                super._mappedValue = ((IntVector)this._mappingTypeVector).size() > 0
-                  ? new Object(((IntVector)this._mappingTypeVector).elementAt(this._selectedIndex) == 1)
+                  ? new Boolean(((IntVector)this._mappingTypeVector).elementAt(this._selectedIndex) == 1)
                   : null;
                return;
             case 1:
             case 5:
             default:
                super._mappedValue = ((IntVector)this._mappingTypeVector).size() > 0
-                  ? new Object(((IntVector)this._mappingTypeVector).elementAt(this._selectedIndex))
+                  ? new Integer(((IntVector)this._mappingTypeVector).elementAt(this._selectedIndex))
                   : null;
                return;
             case 2:
                super._mappedValue = ((DoubleVector)this._mappingTypeVector).size() > 0
-                  ? new Object(((DoubleVector)this._mappingTypeVector).elementAt(this._selectedIndex))
+                  ? new Double(((DoubleVector)this._mappingTypeVector).elementAt(this._selectedIndex))
                   : null;
                return;
             case 4:
             case 6:
             case 8:
                super._mappedValue = ((LongVector)this._mappingTypeVector).size() > 0
-                  ? new Object(((LongVector)this._mappingTypeVector).elementAt(this._selectedIndex))
+                  ? new Long(((LongVector)this._mappingTypeVector).elementAt(this._selectedIndex))
                   : null;
          }
       }
@@ -583,7 +584,7 @@ public final class ChoiceControlImpl extends UIControlImpl implements ChoiceCont
          case 32773:
          default:
             if (super._mappedValue == null) {
-               super._mappedValue = new Object(size);
+               super._mappedValue = new IntVector(size);
             } else {
                ((IntVector)super._mappedValue).removeAllElements();
             }
@@ -597,7 +598,7 @@ public final class ChoiceControlImpl extends UIControlImpl implements ChoiceCont
             break;
          case 32771:
             if (super._mappedValue == null) {
-               super._mappedValue = new Object(size);
+               super._mappedValue = new Vector(size);
             } else {
                ((Vector)super._mappedValue).removeAllElements();
             }
@@ -616,13 +617,11 @@ public final class ChoiceControlImpl extends UIControlImpl implements ChoiceCont
          if (32774 == (int)(super._mappingType & 4294967295L)) {
             for (int i = 0; i < size; i++) {
                int index = this._selectedIndices.elementAt(i);
-               Object key = !(super._value instanceof Object)
-                  ? new Object(((LongVector)super._value).elementAt(index))
-                  : ((Vector)super._value).elementAt(index);
+               Object key = !(super._value instanceof Vector) ? new Long(((LongVector)super._value).elementAt(index)) : ((Vector)super._value).elementAt(index);
                Wiclet wiclet = this.getScreen().getWiclet();
-               Object returnedValue = SingleValueHelper.convertValue(wiclet, super._mappingType & -32769, super._value instanceof Object ? 3 : 8, key, 0);
-               if (returnedValue instanceof Object) {
-                  ((LongVector)super._mappedValue).addElement(returnedValue);
+               Object returnedValue = SingleValueHelper.convertValue(wiclet, super._mappingType & -32769, super._value instanceof Vector ? 3 : 8, key, 0);
+               if (returnedValue instanceof Long) {
+                  ((LongVector)super._mappedValue).addElement((Long)returnedValue);
                }
             }
          }
@@ -685,7 +684,7 @@ public final class ChoiceControlImpl extends UIControlImpl implements ChoiceCont
       this._visibleRows = visibleRows;
       this._format = format;
       if (this._format != null) {
-         this._dateFormatter = (SimpleDateFormat)(new Object(this._format));
+         this._dateFormatter = new SimpleDateFormat(this._format);
       } else {
          this._dateFormatter = Util.DEFAULT_DATE_FORMATTER;
       }
@@ -693,7 +692,7 @@ public final class ChoiceControlImpl extends UIControlImpl implements ChoiceCont
       this.setEvent(1, changeId);
       this.setMapping(mapping);
       if (choiceType == 1 || choiceType == 4) {
-         this._selectedIndices = (IntVector)(new Object());
+         this._selectedIndices = new IntVector();
       }
 
       this.createInValueVectors();

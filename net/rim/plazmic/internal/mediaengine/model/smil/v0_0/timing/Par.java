@@ -12,10 +12,10 @@ public class Par extends TimeContainer {
    @Override
    public void setEndLogic(EventLogic logic) {
       if (this.isImplicitDuration()) {
-         Event parEvent = (Event)(new Object());
+         Event parEvent = new Event();
          parEvent._event = 2;
          parEvent._eventParam = this.getId();
-         Event triggerEvent = (Event)(new Object());
+         Event triggerEvent = new Event();
          triggerEvent._event = 2;
          Vector children = this.getChildren();
          if (children.size() == 0) {

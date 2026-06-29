@@ -12,7 +12,7 @@ public class CompressedBuffer {
 
    public CompressedBuffer(int bufferLength) {
       if (bufferLength < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._buffer = new byte[bufferLength];
@@ -29,7 +29,7 @@ public class CompressedBuffer {
          this._start = offset;
          this._end = offset + length;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -284,7 +284,7 @@ public class CompressedBuffer {
 
    public void rewind(int cursor) {
       if (cursor < this._start) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._cursor = cursor;
@@ -292,7 +292,7 @@ public class CompressedBuffer {
 
    public void forward(int numBytes) {
       if (numBytes > this.available()) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._cursor += numBytes;
@@ -310,7 +310,7 @@ public class CompressedBuffer {
             this._cursor += length;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

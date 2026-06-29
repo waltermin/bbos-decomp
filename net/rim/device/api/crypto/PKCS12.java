@@ -20,7 +20,7 @@ public class PKCS12 {
       if (this._buffer != null) {
          if (!this._parsed) {
             try {
-               ASN1InputByteArray pfx = (ASN1InputByteArray)(new Object(this._buffer));
+               ASN1InputByteArray pfx = new ASN1InputByteArray(this._buffer);
                pfx.readSequence();
                this._version = pfx.readInteger();
                if (this._version != 3) {

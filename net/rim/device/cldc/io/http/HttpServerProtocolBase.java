@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.http;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -8,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import javax.microedition.io.SocketConnection;
 import javax.microedition.io.StreamConnection;
+import net.rim.device.api.io.IOCancelledException;
 import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.api.io.http.HttpProtocolConstants;
 import net.rim.device.api.io.http.HttpServerConnection;
@@ -79,7 +81,7 @@ public class HttpServerProtocolBase implements HttpServerConnection, HttpProtoco
             || !this._headersRead
             || this._inputStream instanceof LengthControlledInputStream && ((LengthControlledInputStream)this._inputStream).getLength() > 0
             || this._inputStream instanceof ChunkedInputStream && !((ChunkedInputStream)this._inputStream).eof()
-            || this._inputStream instanceof Object && this._inputStream.available() > 0) {
+            || this._inputStream instanceof ByteArrayInputStream && this._inputStream.available() > 0) {
             label227:
             try {
                if (this._subIn != null) {
@@ -109,7 +111,7 @@ public class HttpServerProtocolBase implements HttpServerConnection, HttpProtoco
    }
 
    public String getAddress() {
-      return !(this._subConnection instanceof Object) ? null : ((SocketConnection)this._subConnection).getAddress();
+      return !(this._subConnection instanceof SocketConnection) ? null : ((SocketConnection)this._subConnection).getAddress();
    }
 
    public String getResponseProperty(int n) {
@@ -120,9 +122,9 @@ public class HttpServerProtocolBase implements HttpServerConnection, HttpProtoco
       return this._responseHeaders.getPropertyKey(n);
    }
 
-   public final HttpHeaders getHeaders() {
+   public final HttpHeaders getHeaders() throws IOCancelledException {
       if (this._closed) {
-         throw new Object();
+         throw new IOCancelledException();
       }
 
       if (!this._headersRead) {
@@ -161,12 +163,12 @@ public class HttpServerProtocolBase implements HttpServerConnection, HttpProtoco
    }
 
    @Override
-   public final String getRequestMethod() {
+   public final String getRequestMethod() throws IOException {
       RequestLine requestLine = this.getRequestLine();
       if (requestLine != null) {
          return requestLine.getMethod();
       } else {
-         throw new Object("RequestLine is Null");
+         throw new IOException("RequestLine is Null");
       }
    }
 
@@ -208,7 +210,7 @@ public class HttpServerProtocolBase implements HttpServerConnection, HttpProtoco
    @Override
    public final OutputStream openOutputStream() {
       if (this._outputStream == null) {
-         this._outputStream = (ByteArrayOutputStream)(new Object());
+         this._outputStream = new ByteArrayOutputStream();
       }
 
       return this._outputStream;
@@ -218,10 +220,10 @@ public class HttpServerProtocolBase implements HttpServerConnection, HttpProtoco
    public final DataInputStream openDataInputStream() {
       if (this._dataInputStream == null) {
          InputStream in = this.openInputStream();
-         if (in instanceof Object) {
+         if (in instanceof DataInputStream) {
             this._dataInputStream = (DataInputStream)in;
          } else {
-            this._dataInputStream = (DataInputStream)(new Object(in));
+            this._dataInputStream = new DataInputStream(in);
          }
       }
 
@@ -229,9 +231,9 @@ public class HttpServerProtocolBase implements HttpServerConnection, HttpProtoco
    }
 
    @Override
-   public final InputStream openInputStream() {
+   public final InputStream openInputStream() throws IOCancelledException {
       if (this._closed) {
-         throw new Object();
+         throw new IOCancelledException();
       }
 
       if (!this._headersRead) {
@@ -247,18 +249,18 @@ public class HttpServerProtocolBase implements HttpServerConnection, HttpProtoco
    }
 
    @Override
-   public void setResponseProperty(String key, String value) {
+   public void setResponseProperty(String key, String value) throws IOException {
       if (this._closed) {
-         throw new Object();
+         throw new IOException();
       }
 
       this._responseHeaders.setProperty(key, value);
    }
 
    @Override
-   public void setResponseCode(int code) {
+   public void setResponseCode(int code) throws IOException {
       if (this._closed) {
-         throw new Object();
+         throw new IOException();
       }
 
       if (this._statusLine == null) {
@@ -271,7 +273,7 @@ public class HttpServerProtocolBase implements HttpServerConnection, HttpProtoco
    @Override
    public final DataOutputStream openDataOutputStream() {
       if (this._dataOutputStream == null) {
-         this._dataOutputStream = (DataOutputStream)(new Object(this.openOutputStream()));
+         this._dataOutputStream = new DataOutputStream(this.openOutputStream());
       }
 
       return this._dataOutputStream;
@@ -279,7 +281,7 @@ public class HttpServerProtocolBase implements HttpServerConnection, HttpProtoco
 
    private boolean containsToken(String value, String token) {
       if (value != null && token != null) {
-         StringTokenizer tokenizer = (StringTokenizer)(new Object(value, ','));
+         StringTokenizer tokenizer = new StringTokenizer(value, ',');
 
          while (tokenizer.hasMoreTokens()) {
             if (StringUtilities.strEqualIgnoreCase(tokenizer.nextToken().trim(), token, 1701707776)) {
@@ -340,11 +342,11 @@ public class HttpServerProtocolBase implements HttpServerConnection, HttpProtoco
       URL url, HttpServerSocketConnectionBase serverAcceptConnection, StreamConnection subConnection, DataInputStream subIn, DataOutputStream subOut
    ) {
       if (url == null) {
-         throw new Object("Url is Null");
+         throw new IllegalArgumentException("Url is Null");
       }
 
       if (subConnection == null) {
-         throw new Object("SubConnection is Null");
+         throw new IllegalArgumentException("SubConnection is Null");
       }
 
       this._serverAcceptConnection = serverAcceptConnection;

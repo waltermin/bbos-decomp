@@ -9,7 +9,7 @@ public class SignatureVerifierInputStream extends CryptoInputStream {
    public SignatureVerifierInputStream(SignatureVerifier verifier, InputStream inputStream) {
       super(inputStream);
       if (verifier == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._verifier = verifier;

@@ -306,7 +306,7 @@ final class TLSCipherSuiteFactory extends SSLCipherSuiteFactory {
       // 04c: aload 4
       // 04e: ifnonnull 060
       // 051: aload 1
-      // 052: new java/lang/Object
+      // 052: new net/rim/device/api/crypto/NullDecryptor
       // 055: dup
       // 056: aload 3
       // 057: invokespecial net/rim/device/api/crypto/NullDecryptor.<init> (Ljava/io/InputStream;)V
@@ -324,7 +324,7 @@ final class TLSCipherSuiteFactory extends SSLCipherSuiteFactory {
       // 073: ifeq 09b
       // 076: aload 2
       // 077: invokevirtual net/rim/device/api/crypto/tls/KeyMaterial.getServerCipher ()Lnet/rim/device/api/crypto/SymmetricKey;
-      // 07a: new java/lang/Object
+      // 07a: new java/lang/StringBuffer
       // 07d: dup
       // 07e: invokespecial java/lang/StringBuffer.<init> ()V
       // 081: aload 4
@@ -339,7 +339,7 @@ final class TLSCipherSuiteFactory extends SSLCipherSuiteFactory {
       // 098: goto 0bd
       // 09b: aload 2
       // 09c: invokevirtual net/rim/device/api/crypto/tls/KeyMaterial.getClientCipher ()Lnet/rim/device/api/crypto/SymmetricKey;
-      // 09f: new java/lang/Object
+      // 09f: new java/lang/StringBuffer
       // 0a2: dup
       // 0a3: invokespecial java/lang/StringBuffer.<init> ()V
       // 0a6: aload 4
@@ -355,9 +355,9 @@ final class TLSCipherSuiteFactory extends SSLCipherSuiteFactory {
       // 0be: aload 5
       // 0c0: invokevirtual net/rim/device/api/crypto/tls/ssl30/SSLConnectionState.setDecryptorEngine (Lnet/rim/device/api/crypto/BlockDecryptorEngine;)V
       // 0c3: aload 1
-      // 0c4: new java/lang/Object
+      // 0c4: new net/rim/device/api/crypto/BlockDecryptor
       // 0c7: dup
-      // 0c8: new java/lang/Object
+      // 0c8: new net/rim/device/api/crypto/tls/TLSBlockUnformatterEngine
       // 0cb: dup
       // 0cc: aload 5
       // 0ce: bipush 1
@@ -398,7 +398,7 @@ final class TLSCipherSuiteFactory extends SSLCipherSuiteFactory {
       // 118: aload 5
       // 11a: ifnonnull 12b
       // 11d: aload 1
-      // 11e: new java/lang/Object
+      // 11e: new net/rim/device/api/crypto/NullMAC
       // 121: dup
       // 122: invokespecial net/rim/device/api/crypto/NullMAC.<init> ()V
       // 125: invokevirtual net/rim/device/api/crypto/tls/ConnectionState.setMAC (Lnet/rim/device/api/crypto/MAC;)V
@@ -407,21 +407,21 @@ final class TLSCipherSuiteFactory extends SSLCipherSuiteFactory {
       // 12c: getfield net/rim/device/api/crypto/tls/ssl30/SSLCipherSuiteFactory._recordProtocol Lnet/rim/device/api/crypto/tls/ssl30/SSLRecordProtocol;
       // 12f: invokevirtual net/rim/device/api/crypto/tls/ssl30/SSLRecordProtocol.getClientMode ()Z
       // 132: ifeq 14d
-      // 135: new java/lang/Object
+      // 135: new net/rim/device/api/crypto/HMAC
       // 138: dup
       // 139: aload 2
       // 13a: invokevirtual net/rim/device/api/crypto/tls/KeyMaterial.getServerMAC ()Lnet/rim/device/api/crypto/SymmetricKey;
-      // 13d: checkcast java/lang/Object
+      // 13d: checkcast net/rim/device/api/crypto/HMACKey
       // 140: aload 5
       // 142: invokestatic net/rim/device/api/crypto/DigestFactory.getInstance (Ljava/lang/String;)Lnet/rim/device/api/crypto/Digest;
       // 145: invokespecial net/rim/device/api/crypto/HMAC.<init> (Lnet/rim/device/api/crypto/HMACKey;Lnet/rim/device/api/crypto/Digest;)V
       // 148: astore 6
       // 14a: goto 162
-      // 14d: new java/lang/Object
+      // 14d: new net/rim/device/api/crypto/HMAC
       // 150: dup
       // 151: aload 2
       // 152: invokevirtual net/rim/device/api/crypto/tls/KeyMaterial.getClientMAC ()Lnet/rim/device/api/crypto/SymmetricKey;
-      // 155: checkcast java/lang/Object
+      // 155: checkcast net/rim/device/api/crypto/HMACKey
       // 158: aload 5
       // 15a: invokestatic net/rim/device/api/crypto/DigestFactory.getInstance (Ljava/lang/String;)Lnet/rim/device/api/crypto/Digest;
       // 15d: invokespecial net/rim/device/api/crypto/HMAC.<init> (Lnet/rim/device/api/crypto/HMACKey;Lnet/rim/device/api/crypto/Digest;)V
@@ -499,7 +499,7 @@ final class TLSCipherSuiteFactory extends SSLCipherSuiteFactory {
       // 04f: aload 5
       // 051: ifnonnull 063
       // 054: aload 1
-      // 055: new java/lang/Object
+      // 055: new net/rim/device/api/crypto/NullEncryptor
       // 058: dup
       // 059: aload 3
       // 05a: invokespecial net/rim/device/api/crypto/NullEncryptor.<init> (Ljava/io/OutputStream;)V
@@ -517,7 +517,7 @@ final class TLSCipherSuiteFactory extends SSLCipherSuiteFactory {
       // 076: ifeq 09e
       // 079: aload 2
       // 07a: invokevirtual net/rim/device/api/crypto/tls/KeyMaterial.getClientCipher ()Lnet/rim/device/api/crypto/SymmetricKey;
-      // 07d: new java/lang/Object
+      // 07d: new java/lang/StringBuffer
       // 080: dup
       // 081: invokespecial java/lang/StringBuffer.<init> ()V
       // 084: aload 5
@@ -532,7 +532,7 @@ final class TLSCipherSuiteFactory extends SSLCipherSuiteFactory {
       // 09b: goto 0c0
       // 09e: aload 2
       // 09f: invokevirtual net/rim/device/api/crypto/tls/KeyMaterial.getServerCipher ()Lnet/rim/device/api/crypto/SymmetricKey;
-      // 0a2: new java/lang/Object
+      // 0a2: new java/lang/StringBuffer
       // 0a5: dup
       // 0a6: invokespecial java/lang/StringBuffer.<init> ()V
       // 0a9: aload 5
@@ -548,9 +548,9 @@ final class TLSCipherSuiteFactory extends SSLCipherSuiteFactory {
       // 0c1: aload 6
       // 0c3: invokevirtual net/rim/device/api/crypto/tls/ssl30/SSLConnectionState.setEncryptorEngine (Lnet/rim/device/api/crypto/BlockEncryptorEngine;)V
       // 0c6: aload 1
-      // 0c7: new java/lang/Object
+      // 0c7: new net/rim/device/api/crypto/BlockEncryptor
       // 0ca: dup
-      // 0cb: new java/lang/Object
+      // 0cb: new net/rim/device/api/crypto/tls/TLSBlockFormatterEngine
       // 0ce: dup
       // 0cf: aload 6
       // 0d1: invokespecial net/rim/device/api/crypto/tls/TLSBlockFormatterEngine.<init> (Lnet/rim/device/api/crypto/BlockEncryptorEngine;)V
@@ -590,7 +590,7 @@ final class TLSCipherSuiteFactory extends SSLCipherSuiteFactory {
       // 11a: aload 6
       // 11c: ifnonnull 12d
       // 11f: aload 1
-      // 120: new java/lang/Object
+      // 120: new net/rim/device/api/crypto/NullMAC
       // 123: dup
       // 124: invokespecial net/rim/device/api/crypto/NullMAC.<init> ()V
       // 127: invokevirtual net/rim/device/api/crypto/tls/ConnectionState.setMAC (Lnet/rim/device/api/crypto/MAC;)V
@@ -599,21 +599,21 @@ final class TLSCipherSuiteFactory extends SSLCipherSuiteFactory {
       // 12e: getfield net/rim/device/api/crypto/tls/ssl30/SSLCipherSuiteFactory._recordProtocol Lnet/rim/device/api/crypto/tls/ssl30/SSLRecordProtocol;
       // 131: invokevirtual net/rim/device/api/crypto/tls/ssl30/SSLRecordProtocol.getClientMode ()Z
       // 134: ifeq 14f
-      // 137: new java/lang/Object
+      // 137: new net/rim/device/api/crypto/HMAC
       // 13a: dup
       // 13b: aload 2
       // 13c: invokevirtual net/rim/device/api/crypto/tls/KeyMaterial.getClientMAC ()Lnet/rim/device/api/crypto/SymmetricKey;
-      // 13f: checkcast java/lang/Object
+      // 13f: checkcast net/rim/device/api/crypto/HMACKey
       // 142: aload 6
       // 144: invokestatic net/rim/device/api/crypto/DigestFactory.getInstance (Ljava/lang/String;)Lnet/rim/device/api/crypto/Digest;
       // 147: invokespecial net/rim/device/api/crypto/HMAC.<init> (Lnet/rim/device/api/crypto/HMACKey;Lnet/rim/device/api/crypto/Digest;)V
       // 14a: astore 7
       // 14c: goto 164
-      // 14f: new java/lang/Object
+      // 14f: new net/rim/device/api/crypto/HMAC
       // 152: dup
       // 153: aload 2
       // 154: invokevirtual net/rim/device/api/crypto/tls/KeyMaterial.getServerMAC ()Lnet/rim/device/api/crypto/SymmetricKey;
-      // 157: checkcast java/lang/Object
+      // 157: checkcast net/rim/device/api/crypto/HMACKey
       // 15a: aload 6
       // 15c: invokestatic net/rim/device/api/crypto/DigestFactory.getInstance (Ljava/lang/String;)Lnet/rim/device/api/crypto/Digest;
       // 15f: invokespecial net/rim/device/api/crypto/HMAC.<init> (Lnet/rim/device/api/crypto/HMACKey;Lnet/rim/device/api/crypto/Digest;)V

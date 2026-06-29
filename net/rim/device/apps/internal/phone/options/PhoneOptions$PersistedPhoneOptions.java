@@ -34,8 +34,8 @@ final class PhoneOptions$PersistedPhoneOptions implements Persistable {
 
    final void reset() {
       this._booleanOptions = 21022;
-      this._voiceMailNumberEncoding = (IntHashtable)(new Object());
-      this._voiceMailTonesEncoding = (IntHashtable)(new Object());
+      this._voiceMailNumberEncoding = new IntHashtable();
+      this._voiceMailTonesEncoding = new IntHashtable();
       this._forwardingNumbersEncoding = new Object[4];
       this._cachedSIMVoiceMailNumber = "";
       this._phonelistViewType = 3;
@@ -47,7 +47,7 @@ final class PhoneOptions$PersistedPhoneOptions implements Persistable {
       this._HACMode = 0;
       this._ringtoneLight = 0;
       this._TTYMode = 3;
-      this._lineDescriptions = (IntHashtable)(new Object());
+      this._lineDescriptions = new IntHashtable();
    }
 
    private final int getDefaultShowCallLogsOption() {

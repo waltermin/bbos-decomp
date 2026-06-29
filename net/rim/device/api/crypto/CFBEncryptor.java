@@ -16,16 +16,16 @@ public final class CFBEncryptor extends StreamEncryptor {
    public CFBEncryptor(SymmetricKeyEncryptorEngine engine, InitializationVector iv, OutputStream output, boolean eightBitCFB) {
       super(output);
       if (engine == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int blockLength = engine.getBlockLength();
       if (iv == null) {
-         iv = (InitializationVector)(new Object(blockLength));
+         iv = new InitializationVector(blockLength);
       }
 
       if (iv.getLength() != blockLength) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._engine = engine;
@@ -38,7 +38,7 @@ public final class CFBEncryptor extends StreamEncryptor {
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object())).append(this._engine.getAlgorithm()).append("/CFB").toString();
+      return this._engine.getAlgorithm() + "/CFB";
    }
 
    public final InitializationVector getIV() {
@@ -78,7 +78,7 @@ public final class CFBEncryptor extends StreamEncryptor {
             }
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -87,20 +87,20 @@ public final class CFBEncryptor extends StreamEncryptor {
       byte[] CIPHER_TEXT = new byte[]{70, 64, -100, -125, -95, 126, -117, 42, 0, 9, -44, -54, -23, -49};
       byte[] IV = new byte[]{4, -1, -36, -60, -31, 53, -55, 95};
       int length = PLAIN_TEXT.length;
-      ByteArrayOutputStream out = (ByteArrayOutputStream)(new Object());
+      ByteArrayOutputStream out = new ByteArrayOutputStream();
 
       try {
-         CFBEncryptor encryptor = new CFBEncryptor((SymmetricKeyEncryptorEngine)(new Object()), (InitializationVector)(new Object(IV)), out, true);
+         CFBEncryptor encryptor = new CFBEncryptor(new TestEngine(), new InitializationVector(IV), out, true);
          encryptor.write(PLAIN_TEXT, 0, length);
          encryptor.close();
          if (Arrays.equals(out.toByteArray(), 0, CIPHER_TEXT, 0, length)) {
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

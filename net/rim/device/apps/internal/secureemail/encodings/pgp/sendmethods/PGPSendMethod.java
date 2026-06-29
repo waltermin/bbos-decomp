@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.secureemail.encodings.pgp.sendmethods;
 
 import net.rim.device.api.crypto.certificate.Certificate;
+import net.rim.device.api.crypto.certificate.pgp.PGPCertificate;
 import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.apps.api.framework.model.Recognizer;
 import net.rim.device.apps.api.utility.framework.SubmemberUtilities;
@@ -43,6 +44,6 @@ public final class PGPSendMethod extends SecureEmailMessageEncoderProvider {
 
    @Override
    public final Certificate obtainSuitableRecipientCertificate(Certificate certificate) {
-      return certificate instanceof Object ? certificate : null;
+      return certificate instanceof PGPCertificate ? certificate : null;
    }
 }

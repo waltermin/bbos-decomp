@@ -47,7 +47,7 @@ public final class SkipjackKey implements SymmetricKey, Persistable {
          this._cryptoTokenData = cryptoTokenData;
          this.setHashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -68,14 +68,14 @@ public final class SkipjackKey implements SymmetricKey, Persistable {
       // 0a: invokespecial net/rim/device/api/crypto/SkipjackKey.initialize (Lnet/rim/device/api/crypto/SkipjackCryptoToken;[BI)V
       // 0d: return
       // 0e: astore 3
-      // 0f: new java/lang/Object
+      // 0f: new java/lang/RuntimeException
       // 12: dup
       // 13: aload 3
       // 14: invokevirtual net/rim/device/api/crypto/CryptoTokenException.toString ()Ljava/lang/String;
       // 17: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 1a: athrow
       // 1b: astore 3
-      // 1c: new java/lang/Object
+      // 1c: new java/lang/RuntimeException
       // 1f: dup
       // 20: aload 3
       // 21: invokevirtual net/rim/device/api/crypto/CryptoUnsupportedOperationException.toString ()Ljava/lang/String;
@@ -104,14 +104,14 @@ public final class SkipjackKey implements SymmetricKey, Persistable {
       // 08: invokespecial net/rim/device/api/crypto/SkipjackKey.initialize (Lnet/rim/device/api/crypto/SkipjackCryptoToken;)V
       // 0b: return
       // 0c: astore 1
-      // 0d: new java/lang/Object
+      // 0d: new java/lang/RuntimeException
       // 10: dup
       // 11: aload 1
       // 12: invokevirtual net/rim/device/api/crypto/CryptoTokenException.toString ()Ljava/lang/String;
       // 15: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 18: athrow
       // 19: astore 1
-      // 1a: new java/lang/Object
+      // 1a: new java/lang/RuntimeException
       // 1d: dup
       // 1e: aload 1
       // 1f: invokevirtual net/rim/device/api/crypto/CryptoUnsupportedOperationException.toString ()Ljava/lang/String;
@@ -131,7 +131,7 @@ public final class SkipjackKey implements SymmetricKey, Persistable {
 
    private final void initialize(SkipjackCryptoToken cryptoToken) {
       if (cryptoToken == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this.initialize(cryptoToken, cryptoToken.createKey());
@@ -141,7 +141,7 @@ public final class SkipjackKey implements SymmetricKey, Persistable {
       if (cryptoToken != null && data != null && offset >= 0 && data.length - 10 >= offset) {
          this.initialize(cryptoToken, cryptoToken.injectKey(data, offset));
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

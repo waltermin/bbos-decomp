@@ -4,7 +4,7 @@ import java.util.Hashtable;
 
 final class net_rim_bb_alarm_appRIMResourcesPopulator0 {
    static final void populate(Hashtable localZero) {
-      Object var1 = new byte[]{
+      byte[] var1 = new byte[]{
          71,
          73,
          70,
@@ -153,7 +153,7 @@ final class net_rim_bb_alarm_appRIMResourcesPopulator0 {
          59
       };
       localZero.put("net_rim_alarm_reminder.gif", var1);
-      var1 = new Object(0);
-      localZero.put("Alarm28x28.gif", var1);
+      Integer var3 = new Integer(0);
+      localZero.put("Alarm28x28.gif", var3);
    }
 }

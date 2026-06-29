@@ -17,7 +17,7 @@ final class LBSApplication$2 implements Runnable {
       if (!ITPolicy.getBoolean(2, true)) {
          Dialog.alert(LBSResources.getString(146));
       } else {
-         Dialog.inform(MessageFormat.format(LBSResources.getString(147), new Object[]{this.val$url}));
+         Dialog.inform(MessageFormat.format(LBSResources.getString(147), new String[]{this.val$url}));
          MapScreen.saveMapApp();
          System.exit(0);
       }

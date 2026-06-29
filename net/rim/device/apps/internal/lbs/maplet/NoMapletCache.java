@@ -4,7 +4,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.util.IntVector;
 
 public final class NoMapletCache {
-   private IntVector _maplets = (IntVector)(new Object());
+   private IntVector _maplets = new IntVector();
    private static NoMapletCache _instance;
    public static final long GUID = -4533593630392893058L;
 

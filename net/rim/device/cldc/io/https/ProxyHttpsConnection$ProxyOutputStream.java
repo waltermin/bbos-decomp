@@ -10,7 +10,7 @@ public final class ProxyHttpsConnection$ProxyOutputStream extends OutputStream {
    public ProxyHttpsConnection$ProxyOutputStream(ProxyHttpsConnection _1, OutputStream output) {
       this.this$0 = _1;
       this._output = output;
-      _1._buffer = (DataBuffer)(new Object());
+      _1._buffer = new DataBuffer();
    }
 
    @Override

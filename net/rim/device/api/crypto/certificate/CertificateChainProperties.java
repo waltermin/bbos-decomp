@@ -42,7 +42,7 @@ public class CertificateChainProperties extends CertificateProperties {
 
          return properties;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

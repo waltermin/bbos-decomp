@@ -27,6 +27,6 @@ final class DeleteMemoVerb extends Verb {
       }
 
       MemoCollectionImpl.getInstance().remove(this._memo);
-      return !ContextObject.getFlag(parameter, 5) ? new Object(39, 40) : null;
+      return !ContextObject.getFlag(parameter, 5) ? new ContextObject(39, 40) : null;
    }
 }

@@ -2,7 +2,6 @@ package net.rim.device.apps.internal.sms;
 
 import java.util.Vector;
 import net.rim.device.api.i18n.MessageFormat;
-import net.rim.device.api.io.DatagramAddressBase;
 import net.rim.device.api.io.DatagramBase;
 import net.rim.device.api.io.DatagramConnectionBase;
 import net.rim.device.api.io.DatagramStatusListener;
@@ -21,7 +20,7 @@ import net.rim.device.api.system.SMSPacketHeader;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.util.FactoryUtil;
 import net.rim.device.api.util.ListenerUtilities;
-import net.rim.device.apps.api.addressbook.FriendlyNameAddressModel;
+import net.rim.device.apps.api.addressbook.EmailAddressModel;
 import net.rim.device.apps.api.addressbook.GroupAddressCardModel;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.ConversionProvider;
@@ -34,6 +33,7 @@ import net.rim.device.apps.api.messaging.MessageLookups;
 import net.rim.device.apps.api.messaging.messagelist.ShowMessageApp;
 import net.rim.device.apps.api.messaging.util.PersistedSortedCollection;
 import net.rim.device.apps.api.ribbon.indicators.VoicemailIconManager;
+import net.rim.device.apps.internal.phone.model.PhoneNumberModel;
 import net.rim.device.apps.internal.sms.resources.SMSResources;
 import net.rim.device.cldc.io.daemon.ProtocolDaemon;
 import net.rim.device.cldc.io.daemon.TransportRegistry;
@@ -44,9 +44,9 @@ import net.rim.device.internal.firewall.Firewall;
 import net.rim.device.internal.proxy.Proxy;
 
 public final class SMSService extends Thread implements DatagramStatusListener, NotificationsEngineListener {
-   private ContextObject _newMessageContext = (ContextObject)(new Object());
+   private ContextObject _newMessageContext = new ContextObject();
    private Object _displayedMessage;
-   private ContextObject _immediateContext = (ContextObject)(new Object());
+   private ContextObject _immediateContext = new ContextObject();
    private ContextObject _deferredContext;
    private Object[] _smsServiceListeners;
    private DatagramConnectionBase _conn;
@@ -78,7 +78,7 @@ public final class SMSService extends Thread implements DatagramStatusListener, 
       if (data != null) {
          for (int i = 0; i < addresses.length; i++) {
             addressModel = addresses[i];
-            if (addressModel instanceof Object) {
+            if (addressModel instanceof GroupAddressCardModel) {
                boolean firstValidAddressInThisGroup = true;
                GroupAddressCardModel group = (GroupAddressCardModel)addressModel;
                int total = group.size();
@@ -101,16 +101,16 @@ public final class SMSService extends Thread implements DatagramStatusListener, 
             if (!onlySendIfErrorStatus || !SMSModel.isSuccessfullySent(model.getStatus(i))) {
                addressModel = addresses[i];
                String addressString = null;
-               if (addressModel instanceof Object) {
+               if (addressModel instanceof ConversionProvider) {
                   ConversionProvider conversionProvider = (ConversionProvider)addressModel;
-                  ContextObject context = (ContextObject)(new Object());
+                  ContextObject context = new ContextObject();
                   ContextObject.setFlag(context, 21);
                   ContextObject.setFlag(context, 55);
                   if (model.useSmartDialing(i)) {
                      ContextObject.setFlag(context, 117);
                   }
 
-                  StringBuffer buf = (StringBuffer)(new Object());
+                  StringBuffer buf = new StringBuffer();
                   if (conversionProvider.convert(context, buf)) {
                      addressString = buf.toString();
                   }
@@ -126,7 +126,7 @@ public final class SMSService extends Thread implements DatagramStatusListener, 
                   npi = 1;
                }
 
-               SMSPacketHeader header = (SMSPacketHeader)(new Object());
+               SMSPacketHeader header = new SMSPacketHeader();
                header.setPeerAddress(addressString, ton, npi);
                if (payload._scAddress != null) {
                   ton = payload.getByteField(10);
@@ -146,7 +146,7 @@ public final class SMSService extends Thread implements DatagramStatusListener, 
                DatagramBase datagram;
                try {
                   datagram = (DatagramBase)this._conn.newDatagram(data.length + udhLength);
-                  datagram.setAddressBase((DatagramAddressBase)(new Object(header, null)));
+                  datagram.setAddressBase(new SmsAddress(header, null));
                   if (udhLength != 0) {
                      datagram.write(payload._userDataHeader);
                   }
@@ -188,7 +188,7 @@ public final class SMSService extends Thread implements DatagramStatusListener, 
    public final void proceedWithDeferredEvent(long sourceIdLong, long eventIdLong, Object eventReferenceObject, Object context) {
       if (sourceIdLong == 7986617465467730856L && !Phone.getInstance().isActive() && eventReferenceObject instanceof SMSModel) {
          this._displayedMessage = eventReferenceObject;
-         ContextObject contextObject = (ContextObject)(new Object(64));
+         ContextObject contextObject = new ContextObject(64);
          ShowMessageApp.displayMessage((SMSModel)eventReferenceObject, contextObject);
       }
    }
@@ -213,8 +213,8 @@ public final class SMSService extends Thread implements DatagramStatusListener, 
       if (message == null) {
          log(1431588422);
       } else {
-         ContextObject ctx = (ContextObject)(new Object());
-         Integer datagramIDObject = (Integer)(new Object(dgId));
+         ContextObject ctx = new ContextObject();
+         Integer datagramIDObject = new Integer(dgId);
          ContextObject.put(ctx, -8210557334250400979L, datagramIDObject);
          int newStatus;
          switch (code) {
@@ -222,7 +222,7 @@ public final class SMSService extends Thread implements DatagramStatusListener, 
             case 3:
                log(1431590227);
                newStatus = 8191;
-               if (context instanceof Object) {
+               if (context instanceof Integer) {
                   Integer intObject = (Integer)context;
                   ctx.putIntegerData(intObject);
                }
@@ -262,9 +262,9 @@ public final class SMSService extends Thread implements DatagramStatusListener, 
 
    SMSService() {
       this._immediateContext.putIntegerData(0);
-      this._deferredContext = (ContextObject)(new Object());
+      this._deferredContext = new ContextObject();
       this._deferredContext.setFlag(65);
-      this._sendQueue = (Vector)(new Object());
+      this._sendQueue = new Vector();
       ProtocolDaemon.getInstance().startThread(this);
       ApplicationRegistry.getApplicationRegistry().put(4928152549260665053L, this);
       EventLogger.register(-5553929614158418545L, "net.rim.smsui", 2);
@@ -284,7 +284,7 @@ public final class SMSService extends Thread implements DatagramStatusListener, 
          Folder folder = Storage.getSMSFolder(folderId);
          if (folder != null) {
             PersistedSortedCollection collection = (PersistedSortedCollection)folder.getContainedItems();
-            ContextObject addressComparisonContext = (ContextObject)(new Object());
+            ContextObject addressComparisonContext = new ContextObject();
             addressComparisonContext.setFlag(93);
 
             for (int i = collection.size() - 1; i >= 0; i--) {
@@ -365,9 +365,7 @@ public final class SMSService extends Thread implements DatagramStatusListener, 
 
    private final String getPopupMessage(int count) {
       String message = null;
-      return count > 1
-         ? MessageFormat.format(SMSResources.getString(396), new Object[]{((StringBuffer)(new Object(""))).append(count).toString()})
-         : SMSResources.getString(372);
+      return count > 1 ? MessageFormat.format(SMSResources.getString(396), new String[]{"" + count}) : SMSResources.getString(372);
    }
 
    private final void processIncomingDatagram(DatagramBase datagram) {
@@ -681,7 +679,7 @@ public final class SMSService extends Thread implements DatagramStatusListener, 
 
       try {
          if (data != null) {
-            return (String)(new Object(data, getSmsEncoder(messageCoding)));
+            return new String(data, getSmsEncoder(messageCoding));
          }
       } finally {
          return null;
@@ -730,13 +728,13 @@ public final class SMSService extends Thread implements DatagramStatusListener, 
       // 07: aload 0
       // 08: aload 2
       // 09: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 0c: checkcast java/lang/Object
+      // 0c: checkcast net/rim/device/api/io/DatagramConnectionBase
       // 0f: putfield net/rim/device/apps/internal/sms/SMSService._conn Lnet/rim/device/api/io/DatagramConnectionBase;
       // 12: aload 0
       // 13: getfield net/rim/device/apps/internal/sms/SMSService._conn Lnet/rim/device/api/io/DatagramConnectionBase;
       // 16: bipush 0
       // 17: invokevirtual net/rim/device/api/io/DatagramConnectionBase.newDatagram (I)Ljavax/microedition/io/Datagram;
-      // 1a: checkcast java/lang/Object
+      // 1a: checkcast net/rim/device/api/io/DatagramBase
       // 1d: astore 1
       // 1e: goto 29
       // 21: astore 2
@@ -780,8 +778,8 @@ public final class SMSService extends Thread implements DatagramStatusListener, 
 
    public static final boolean validateAddress(RIMModel address) {
       boolean emailIsValid = isEmailAddressAsSMSAddressSupported();
-      if (address instanceof Object && emailIsValid) {
-         String addressString = ((FriendlyNameAddressModel)address).getAddress();
+      if (address instanceof EmailAddressModel && emailIsValid) {
+         String addressString = ((EmailAddressModel)address).getAddress();
          if (addressString != null) {
             if (addressString.length() <= 120) {
                return true;
@@ -792,8 +790,8 @@ public final class SMSService extends Thread implements DatagramStatusListener, 
 
          return false;
       } else {
-         if (!(address instanceof Object)) {
-            if (address instanceof Object) {
+         if (!(address instanceof GroupAddressCardModel)) {
+            if (address instanceof PhoneNumberModel) {
                return true;
             }
          } else {

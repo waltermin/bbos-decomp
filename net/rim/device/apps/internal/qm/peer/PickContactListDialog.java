@@ -62,7 +62,7 @@ final class PickContactListDialog extends OkCancelDialog implements ListFieldCal
 
       if (key == '\n') {
          Field field = this.getFieldWithFocus();
-         if (field instanceof Object) {
+         if (field instanceof Manager) {
             field = ((Manager)field).getFieldWithFocus();
          }
 
@@ -78,7 +78,7 @@ final class PickContactListDialog extends OkCancelDialog implements ListFieldCal
    @Override
    protected final boolean trackwheelClick(int status, int time) {
       Field field = this.getFieldWithFocus();
-      if (field instanceof Object) {
+      if (field instanceof Manager) {
          field = ((Manager)field).getFieldWithFocus();
       }
 
@@ -99,7 +99,7 @@ final class PickContactListDialog extends OkCancelDialog implements ListFieldCal
       }
 
       this._skipList = skip;
-      this._listField = (ListField)(new Object(count));
+      this._listField = new ListField(count);
       this._listField.setCallback(this);
       this._listField.setSelectedIndex(count / 2);
       this.add(this._listField);

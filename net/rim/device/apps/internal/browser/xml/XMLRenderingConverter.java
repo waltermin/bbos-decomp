@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.browser.xml;
 
 import net.rim.device.api.browser.field.BrowserContent;
+import net.rim.device.api.browser.field.RenderingException;
 import net.rim.device.api.browser.field.RenderingOptions;
 import net.rim.device.api.browser.plugin.BrowserContentProvider;
 import net.rim.device.api.browser.plugin.BrowserContentProviderContext;
@@ -19,7 +20,7 @@ public final class XMLRenderingConverter extends BrowserContentProvider {
    }
 
    @Override
-   public final BrowserContent getBrowserContent(BrowserContentProviderContext param1) {
+   public final BrowserContent getBrowserContent(BrowserContentProviderContext param1) throws RenderingException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -32,18 +33,18 @@ public final class XMLRenderingConverter extends BrowserContentProvider {
       // 04: astore 2
       // 05: aload 2
       // 06: dup
-      // 07: instanceof java/lang/Object
+      // 07: instanceof net/rim/device/apps/internal/browser/stack/CachedHttpConnection
       // 0a: ifne 11
       // 0d: pop
       // 0e: goto 95
-      // 11: checkcast java/lang/Object
+      // 11: checkcast net/rim/device/apps/internal/browser/stack/CachedHttpConnection
       // 14: astore 3
       // 15: aload 3
       // 16: invokevirtual net/rim/device/apps/internal/browser/stack/CachedHttpConnection.openMarkableInputStream ()Ljava/io/InputStream;
       // 19: astore 4
       // 1b: aload 4
       // 1d: ifnonnull 28
-      // 20: new java/lang/Object
+      // 20: new net/rim/device/api/browser/field/RenderingException
       // 23: dup
       // 24: invokespecial net/rim/device/api/browser/field/RenderingException.<init> ()V
       // 27: athrow
@@ -98,7 +99,7 @@ public final class XMLRenderingConverter extends BrowserContentProvider {
       // 90: invokestatic net/rim/device/apps/internal/browser/util/RendererControl.renderBrowserContent (Lnet/rim/device/api/browser/field/RenderingSession;Ljavax/microedition/io/InputConnection;Ljava/io/InputStream;Ljava/lang/String;Lnet/rim/device/api/browser/field/RenderingApplication;ILnet/rim/device/api/browser/field/Event;Ljava/lang/Object;Lnet/rim/device/apps/internal/browser/util/Frame;)Lnet/rim/device/api/browser/field/BrowserContent;
       // 93: areturn
       // 94: astore 3
-      // 95: new java/lang/Object
+      // 95: new net/rim/device/api/browser/field/RenderingException
       // 98: dup
       // 99: invokespecial net/rim/device/api/browser/field/RenderingException.<init> ()V
       // 9c: athrow

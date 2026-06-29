@@ -34,15 +34,15 @@ public class WizardExitDialog extends Dialog {
    }
 
    private static WizardExitDialog createExitDialog(int wizardResourceKeySpecificText, boolean globalRestartOnly) {
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       if (wizardResourceKeySpecificText >= 0) {
-         buffer.append(((StringBuffer)(new Object())).append(SetupWizardAPIResources.getString(wizardResourceKeySpecificText)).append(" ").toString());
+         buffer.append(SetupWizardAPIResources.getString(wizardResourceKeySpecificText) + " ");
       }
 
-      ButtonField[] buttons = new Object[3];
+      ButtonField[] buttons = new ButtonField[3];
       int[] values = new int[2];
       if ((LocaleRemovalUtility.getMultiLanguageBuildType(false) & 1) != 0 && !LocaleRemovalUtility.isLocaleRemovalComplete()) {
-         buffer.append(((StringBuffer)(new Object())).append(SetupWizardAPIResources.getString(19)).append(" ").toString());
+         buffer.append(SetupWizardAPIResources.getString(19) + " ");
       }
 
       buffer.append(SetupWizardAPIResources.getString(13));
@@ -81,9 +81,9 @@ public class WizardExitDialog extends Dialog {
    public static void scheduledRestart() {
       if (ApplicationRegistry.getApplicationRegistry().get(-2647672557108466860L) == null) {
          ApplicationRegistry.getApplicationRegistry().put(-2647672557108466860L, new Object());
-         ApplicationDescriptor descriptor = (ApplicationDescriptor)(new Object(
+         ApplicationDescriptor descriptor = new ApplicationDescriptor(
             ApplicationDescriptor.currentApplicationDescriptor(), new String[]{"Wizard-Restart-Prompt"}
-         ));
+         );
          ApplicationManager.getApplicationManager().scheduleApplication(descriptor, System.currentTimeMillis() + 86400000, true);
       }
    }

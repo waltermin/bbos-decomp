@@ -21,7 +21,7 @@ class SoftTokensOptionsItem$InstallTokenVerb extends Verb {
    @Override
    public Object invoke(Object parameter) {
       if (this.this$0._fileSelector == null) {
-         this.this$0._fileSelector = (FileSelector)(new Object("/SDCard/", 0, new SoftTokensOptionsItem$InstallTokenVerb$1(this)));
+         this.this$0._fileSelector = new FileSelector("/SDCard/", 0, new SoftTokensOptionsItem$InstallTokenVerb$1(this));
       }
 
       String name = this.this$0._fileSelector.selectFile("/SDCard/");
@@ -33,7 +33,7 @@ class SoftTokensOptionsItem$InstallTokenVerb extends Verb {
             if (fconn.canRead()) {
                byte[] seedBytes = IOUtilities.streamToBytes(fconn.openInputStream());
                if (seedBytes != null) {
-                  String seedString = (String)(new Object(seedBytes));
+                  String seedString = new String(seedBytes);
                   this.this$0.saveToken(seedString, "", true);
                   Dialog.inform(this.this$0.getString(8));
                   return null;

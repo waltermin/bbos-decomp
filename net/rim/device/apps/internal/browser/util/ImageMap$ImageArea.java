@@ -36,7 +36,7 @@ public final class ImageMap$ImageArea {
       }
 
       this._areaElement = areaElement;
-      StringTokenizer tokenizer = (StringTokenizer)(new Object(coords, ", -'\""));
+      StringTokenizer tokenizer = new StringTokenizer(coords, ", -'\"");
       int tokenCount = tokenizer.countTokens();
       switch (this._shape) {
          case -1:

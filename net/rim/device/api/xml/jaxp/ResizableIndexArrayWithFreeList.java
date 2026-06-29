@@ -4,7 +4,7 @@ import java.util.Vector;
 
 class ResizableIndexArrayWithFreeList extends ResizableIndexArray {
    protected int _highWaterMark = 0;
-   Vector _others = (Vector)(new Object());
+   Vector _others = new Vector();
 
    ResizableIndexArrayWithFreeList() {
       this.addParallelArray(this);

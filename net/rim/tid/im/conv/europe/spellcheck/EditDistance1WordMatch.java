@@ -17,9 +17,9 @@ public class EditDistance1WordMatch implements RegularExpression {
    boolean supportsSharedCharacters;
    int len;
    int maxEditDistance;
-   private Stack iterators = (Stack)(new Object());
-   private Stack strIterators = (Stack)(new Object());
-   private Stack alphaIterators = (Stack)(new Object());
+   private Stack iterators = new Stack();
+   private Stack strIterators = new Stack();
+   private Stack alphaIterators = new Stack();
 
    public void setWord(Word word, Locale locale, AccentGrouping accentGrp) {
       this.len = word.length();
@@ -95,7 +95,7 @@ public class EditDistance1WordMatch implements RegularExpression {
 
          return iter;
       } else {
-         return this.getAcceptableChars(state, (String)((Object)null));
+         return this.getAcceptableChars(state, (String)null);
       }
    }
 

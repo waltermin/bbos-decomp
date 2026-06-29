@@ -29,7 +29,7 @@ public class Definitions {
       this.setMsgAccess(msgDefs);
       this.setScriptAccess(scriptDefs);
       this.setUiAccess(uiDefs);
-      this._builtinDefs = (ToIntHashtable)(new Object());
+      this._builtinDefs = new ToIntHashtable();
       AccessDataServiceImpl.getAllStdCompDefs(this._builtinDefs);
    }
 

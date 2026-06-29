@@ -52,7 +52,7 @@ final class AudioPresentationElementField extends HorizontalFieldManager impleme
       // 36: invokestatic net/rim/device/apps/internal/mms/MMSUtilities.getMIMETypeString (I)Ljava/lang/String;
       // 39: astore 6
       // 3b: aload 0
-      // 3c: new java/lang/Object
+      // 3c: new java/io/ByteArrayInputStream
       // 3f: dup
       // 40: aload 5
       // 42: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -70,7 +70,7 @@ final class AudioPresentationElementField extends HorizontalFieldManager impleme
       // 5f: getfield net/rim/device/apps/internal/mms/ui/AudioPresentationElementField._tunePlayer Ljavax/microedition/media/Player;
       // 62: ldc_w "javax.microedition.media.control.VolumeControl"
       // 65: invokeinterface javax/microedition/media/Controllable.getControl (Ljava/lang/String;)Ljavax/microedition/media/Control; 2
-      // 6a: checkcast java/lang/Object
+      // 6a: checkcast javax/microedition/media/control/VolumeControl
       // 6d: putfield net/rim/device/apps/internal/mms/ui/AudioPresentationElementField._volumeControl Ljavax/microedition/media/control/VolumeControl;
       // 70: goto 7a
       // 73: astore 5
@@ -87,7 +87,7 @@ final class AudioPresentationElementField extends HorizontalFieldManager impleme
       // 8c: invokestatic net/rim/device/api/system/Bitmap.getBitmapResource (Ljava/lang/String;)Lnet/rim/device/api/system/Bitmap;
       // 8f: astore 5
       // 91: aload 0
-      // 92: new java/lang/Object
+      // 92: new net/rim/device/api/ui/component/BitmapField
       // 95: dup
       // 96: aload 5
       // 98: invokespecial net/rim/device/api/ui/component/BitmapField.<init> (Lnet/rim/device/api/system/Bitmap;)V

@@ -29,7 +29,7 @@ public final class Perl5Compiler implements PatternCompiler {
    public static final int READ_ONLY_MASK = 32768;
 
    public static final String quotemeta(char[] expression) {
-      StringBuffer buffer = (StringBuffer)(new Object(2 * expression.length));
+      StringBuffer buffer = new StringBuffer(2 * expression.length);
 
       for (int ch = 0; ch < expression.length; ch++) {
          if (!OpCode._isWordCharacter(expression[ch])) {
@@ -348,9 +348,7 @@ public final class Perl5Compiler implements PatternCompiler {
                   return -1;
                }
 
-               throw new MalformedPatternException(
-                  ((StringBuffer)(new Object("Error in expression at "))).append(this.__input._toString(this.__input._getOffset())).toString()
-               );
+               throw new MalformedPatternException("Error in expression at " + this.__input._toString(this.__input._getOffset()));
             case '*':
             case '+':
             case '?':
@@ -402,7 +400,7 @@ public final class Perl5Compiler implements PatternCompiler {
                   case '7':
                   case '8':
                   case '9':
-                     StringBuffer buffer = (StringBuffer)(new Object(10));
+                     StringBuffer buffer = new StringBuffer(10);
                      int num = 0;
 
                      for (char var23 = this.__input._getValueRelative(num); Character.isDigit(var23); var23 = this.__input._getValueRelative(++num)) {
@@ -413,9 +411,7 @@ public final class Perl5Compiler implements PatternCompiler {
                         num = Integer.parseInt(buffer.toString());
                      } catch (Throwable var21) {
                         throw new MalformedPatternException(
-                           ((StringBuffer)(new Object("Unexpected number format exception.  Please report this bug.NumberFormatException message: ")))
-                              .append(e.getMessage())
-                              .toString()
+                           "Unexpected number format exception.  Please report this bug.NumberFormatException message: " + e.getMessage()
                         );
                      }
 
@@ -423,7 +419,7 @@ public final class Perl5Compiler implements PatternCompiler {
                         doDefault = true;
                      } else {
                         if (num >= this.__numParentheses) {
-                           throw new MalformedPatternException(((StringBuffer)(new Object("Invalid backreference: \\"))).append(num).toString());
+                           throw new MalformedPatternException("Invalid backreference: \\" + num);
                         }
 
                         this.__sawBackreference = true;
@@ -577,7 +573,7 @@ public final class Perl5Compiler implements PatternCompiler {
 
                            var25 = this.__input._getValue(pOffset + 1);
                            if (Character.isDigit(var25)) {
-                              StringBuffer buffer = (StringBuffer)(new Object(10));
+                              StringBuffer buffer = new StringBuffer(10);
                               int num = pOffset;
 
                               for (char var29 = this.__input._getValue(num); Character.isDigit(var29); var29 = this.__input._getValue(++num)) {
@@ -588,9 +584,7 @@ public final class Perl5Compiler implements PatternCompiler {
                                  num = Integer.parseInt(buffer.toString());
                               } catch (Throwable var20) {
                                  throw new MalformedPatternException(
-                                    ((StringBuffer)(new Object("Unexpected number format exception.  Please report this bug.NumberFormatException message: ")))
-                                       .append(e.getMessage())
-                                       .toString()
+                                    "Unexpected number format exception.  Please report this bug.NumberFormatException message: " + e.getMessage()
                                  );
                               }
 
@@ -926,7 +920,7 @@ public final class Perl5Compiler implements PatternCompiler {
          negFlag[0] = false;
       }
 
-      StringBuffer buf = (StringBuffer)(new Object());
+      StringBuffer buf = new StringBuffer();
 
       try {
          while ((value = this.__input._getValue(pos++)) != ':' && pos < len) {
@@ -984,7 +978,7 @@ public final class Perl5Compiler implements PatternCompiler {
             }
 
             if (value == '}') {
-               StringBuffer buffer = (StringBuffer)(new Object(10));
+               StringBuffer buffer = new StringBuffer(10);
                if (pos == maxOffset) {
                   pos = next;
                }
@@ -1000,9 +994,7 @@ public final class Perl5Compiler implements PatternCompiler {
                   min = Integer.parseInt(buffer.toString());
                } catch (Throwable var20) {
                   throw new MalformedPatternException(
-                     ((StringBuffer)(new Object("Unexpected number format exception.  Please report this bug.NumberFormatException message: ")))
-                        .append(e.getMessage())
-                        .toString()
+                     "Unexpected number format exception.  Please report this bug.NumberFormatException message: " + e.getMessage()
                   );
                }
 
@@ -1014,7 +1006,7 @@ public final class Perl5Compiler implements PatternCompiler {
                }
 
                num = pos;
-               buffer = (StringBuffer)(new Object(10));
+               buffer = new StringBuffer(10);
 
                for (char var24 = this.__input._getValue(num); Character.isDigit(var24); var24 = this.__input._getValue(++num)) {
                   buffer.append(var24);
@@ -1026,9 +1018,7 @@ public final class Perl5Compiler implements PatternCompiler {
                   }
                } catch (Throwable var21) {
                   throw new MalformedPatternException(
-                     ((StringBuffer)(new Object("Unexpected number format exception.  Please report this bug.NumberFormatException message: ")))
-                        .append(e.getMessage())
-                        .toString()
+                     "Unexpected number format exception.  Please report this bug.NumberFormatException message: " + e.getMessage()
                   );
                }
 
@@ -1087,9 +1077,7 @@ public final class Perl5Compiler implements PatternCompiler {
             }
 
             if (max != 0 && max < min) {
-               throw new MalformedPatternException(
-                  ((StringBuffer)(new Object("Invalid interval {"))).append(min).append(",").append(max).append("}").toString()
-               );
+               throw new MalformedPatternException("Invalid interval {" + min + "," + max + "}");
             }
 
             if (this.__program != null) {
@@ -1166,7 +1154,7 @@ public final class Perl5Compiler implements PatternCompiler {
                   this.__modifierFlags[0] = (char)(this.__modifierFlags[0] | posFlags[0]);
                   this.__modifierFlags[0] = (char)(this.__modifierFlags[0] & ~negFlags[0]);
                   if (value != ')') {
-                     throw new MalformedPatternException(((StringBuffer)(new Object("Sequence (?"))).append(value).append("...) not recognized").toString());
+                     throw new MalformedPatternException("Sequence (?" + value + "...) not recognized");
                   }
 
                   this.__getNextChar();
@@ -1274,7 +1262,7 @@ public final class Perl5Compiler implements PatternCompiler {
       this.__program = new char[this.__programSize];
       Perl5Pattern regexp = new Perl5Pattern();
       regexp._program = this.__program;
-      regexp._expression = (String)(new Object(pattern));
+      regexp._expression = new String(pattern);
       this.__input._setOffset(0);
       this.__numParentheses = 1;
       this.__programSize = 0;
@@ -1319,7 +1307,7 @@ public final class Perl5Compiler implements PatternCompiler {
                      doItAgain = false;
                      op = this.__program[first];
                      if (op == 14) {
-                        startString = (String)(new Object(this.__program, OpCode._getOperand(first + 1), this.__program[OpCode._getOperand(first)]));
+                        startString = new String(this.__program, OpCode._getOperand(first + 1), this.__program[OpCode._getOperand(first)]);
                      } else if (OpCode._isInArray(op, OpCode._opLengthOne, 2)) {
                         regexp._startClassOffset = first;
                      } else if (op != 20 && op != 21) {
@@ -1348,8 +1336,8 @@ public final class Perl5Compiler implements PatternCompiler {
                      regexp._anchor |= 4;
                   }
 
-                  StringBuffer lastLongest = (StringBuffer)(new Object());
-                  StringBuffer longest = (StringBuffer)(new Object());
+                  StringBuffer lastLongest = new StringBuffer();
+                  StringBuffer longest = new StringBuffer();
                   int length = 0;
                   minLength = 0;
                   int curBack = 0;
@@ -1380,7 +1368,7 @@ public final class Perl5Compiler implements PatternCompiler {
                                  backmost = back;
                               }
 
-                              lastLongest = (StringBuffer)(new Object());
+                              lastLongest = new StringBuffer();
                               if (op == 17 && OpCode._isInArray(this.__program[OpCode._getNextOperator(var23)], OpCode._opLengthOne, 0)) {
                                  minLength++;
                               } else if (OpCode._opType[op] == '\n'
@@ -1396,7 +1384,7 @@ public final class Perl5Compiler implements PatternCompiler {
                                  backmost = back;
                               }
 
-                              lastLongest = (StringBuffer)(new Object());
+                              lastLongest = new StringBuffer();
                            }
                         } else {
                            first = var23;
@@ -1409,13 +1397,13 @@ public final class Perl5Compiler implements PatternCompiler {
                            minLength += this.__program[OpCode._getOperand(first)];
                            int var27 = this.__program[OpCode._getOperand(first)];
                            if (curBack - back == length) {
-                              lastLongest.append((String)(new Object(this.__program, OpCode._getOperand(first) + 1, var27)));
+                              lastLongest.append(new String(this.__program, OpCode._getOperand(first) + 1, var27));
                               length += var27;
                               curBack += var27;
                               first = OpCode._getNext(this.__program, var23);
                            } else if (var27 >= length + (curBack >= 0 ? 1 : 0)) {
                               length = var27;
-                              lastLongest = (StringBuffer)(new Object((String)(new Object(this.__program, OpCode._getOperand(first) + 1, var27))));
+                              lastLongest = new StringBuffer(new String(this.__program, OpCode._getOperand(first) + 1, var27));
                               back = curBack;
                               curBack += length;
                               first = OpCode._getNext(this.__program, var23);
@@ -1432,7 +1420,7 @@ public final class Perl5Compiler implements PatternCompiler {
                      longest = lastLongest;
                      backmost = back;
                   } else {
-                     new Object();
+                     new StringBuffer();
                   }
 
                   if (longest.length() > 0 && startString == null) {
@@ -1443,7 +1431,7 @@ public final class Perl5Compiler implements PatternCompiler {
 
                      regexp._back = backmost;
                   } else {
-                     longest = null;
+                     Object var24 = null;
                   }
                   break;
                }

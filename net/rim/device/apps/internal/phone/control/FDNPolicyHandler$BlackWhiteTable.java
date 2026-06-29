@@ -22,7 +22,7 @@ class FDNPolicyHandler$BlackWhiteTable {
          if (len > 0) {
             char lastChar = policy.charAt(len - 1);
             if (lastChar != ';') {
-               policy = ((StringBuffer)(new Object())).append(policy.substring(0, len)).append(';').toString();
+               policy = policy.substring(0, len) + ';';
                len++;
             }
          }
@@ -51,12 +51,12 @@ class FDNPolicyHandler$BlackWhiteTable {
          int count = this._patterns.length;
 
          for (int idx = 0; idx < count; idx++) {
-            result = ((StringBuffer)(new Object())).append(result).append(this._patterns[idx].toString()).append(';').toString();
+            result = result + this._patterns[idx].toString() + ';';
          }
       }
 
       if (this._reject) {
-         result = ((StringBuffer)(new Object())).append(result).append('r').toString();
+         result = result + 'r';
       }
 
       return result;

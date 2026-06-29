@@ -11,7 +11,8 @@ import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.api.util.WeakReferenceUtilities;
-import net.rim.device.apps.api.addressbook.AddressCardElement;
+import net.rim.device.apps.api.addressbook.AddressCardModel;
+import net.rim.device.apps.api.addressbook.EmailAddressModel;
 import net.rim.device.apps.api.framework.model.ActionProvider;
 import net.rim.device.apps.api.framework.model.ColumnPaintProvider;
 import net.rim.device.apps.api.framework.model.ColumnPainter;
@@ -111,7 +112,7 @@ public class SMSModel
    public static final int FLAG_USE_SMART_DIALING = 64;
    public static final int FLAG_ERROR_STATUS_OCCURRED = 128;
    public static final int FLAG_NEW = 256;
-   private static WeakReference _messageHeaderDataBufferWR = (WeakReference)(new Object(null));
+   private static WeakReference _messageHeaderDataBufferWR = new WeakReference(null);
    private static final int INVALID_SUBJECT_OFFSET = -1;
    private static final int MAXIMUM_SUBJECT_LENGTH = 35;
 
@@ -154,9 +155,9 @@ public class SMSModel
 
    @Override
    public int match(Object criteria) {
-      if (!(criteria instanceof Object)) {
+      if (!(criteria instanceof SearchCriterion)) {
          SMSPayloadModel var6 = this._payload;
-         SearchCriterion[] crit = (Object[])criteria;
+         SearchCriterion[] crit = (SearchCriterion[])criteria;
          int n = crit.length;
 
          while (--n >= 0) {
@@ -205,7 +206,7 @@ public class SMSModel
                match = this.isDraft();
                break;
             case 24:
-               match = crit.getValue() == this.getUID();
+               match = (Integer)crit.getValue() == this.getUID();
                break;
             case 28:
                match = this.inbound() && !this.opened();
@@ -223,7 +224,7 @@ public class SMSModel
    @Override
    public boolean perform(long actionId, Object context) {
       Object delegateUi = SMSUiRegistry.getRegistry().getCurrentUi();
-      if (delegateUi != null && delegateUi instanceof Object) {
+      if (delegateUi != null && delegateUi instanceof ActionProvider) {
          ContextObject contObj = ContextObject.castOrCreate(context);
          ContextObject.put(contObj, 250, this);
          if (((ActionProvider)delegateUi).perform(actionId, contObj)) {
@@ -319,7 +320,7 @@ public class SMSModel
 
          return false;
       } else {
-         if (context instanceof Object) {
+         if (context instanceof Folder) {
             Folder folder = (Folder)context;
             long folderId = folder.getLUID();
             if (this._folderId != folderId) {
@@ -330,8 +331,8 @@ public class SMSModel
          if (this.inbound() && !this.flagsSet(1)) {
             long addressCardUID = -1;
             Object obj = ContextObject.get(context, 252);
-            if (obj instanceof Object) {
-               addressCardUID = ((AddressCardElement)obj).getUID();
+            if (obj instanceof AddressCardModel) {
+               addressCardUID = ((AddressCardModel)obj).getUID();
             }
 
             incrementCount(true, this.flagsSet(256));
@@ -386,14 +387,14 @@ public class SMSModel
          for (int i = 0; i < addressTotal; i++) {
             RIMModel address = addresses[i];
             ConversionProvider addressConverter = (ConversionProvider)address;
-            contextObject.putIntegerData(address instanceof Object ? 8 : 2);
+            contextObject.putIntegerData(address instanceof EmailAddressModel ? 8 : 2);
             if (!addressConverter.convert(contextObject, syncBuffer)) {
                return false;
             }
          }
 
          RIMModel callbackAddress = this._payload.getCallbackAddress();
-         if (callbackAddress instanceof Object) {
+         if (callbackAddress instanceof ConversionProvider) {
             ConversionProvider addressConverter = (ConversionProvider)callbackAddress;
             contextObject.putIntegerData(6);
             if (!addressConverter.convert(contextObject, syncBuffer)) {
@@ -596,13 +597,13 @@ public class SMSModel
       int flagsToSet, int flagsToClear, int newStatus, int transmissionError, boolean commit, boolean notify, boolean uiInitiated, Object context
    ) {
       if ((flagsToSet & flagsToClear) != 0) {
-         throw new Object("Trying to set and clear the same bit");
+         throw new IllegalArgumentException("Trying to set and clear the same bit");
       }
 
       int causeCode = -1;
       int messageID = 0;
       int datagramID = 0;
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          messageID = ContextObject.getIntegerData(context, 0);
          Integer datagramIDObject = (Integer)ContextObject.get(context, -8210557334250400979L);
          if (datagramIDObject != null) {
@@ -690,7 +691,7 @@ public class SMSModel
                MessageListOptions options = MessageListOptions.getOptions();
                if (options.isKeepSavedMessagesDurationDefinedByItPolicy()) {
                   int durationFromItPolicy = options.getKeepSavedMessagesDuration();
-                  StringBuffer sb = (StringBuffer)(new Object());
+                  StringBuffer sb = new StringBuffer();
                   sb.append(CommonResources.getString(9167));
                   sb.append(" ");
                   if (durationFromItPolicy == -1) {
@@ -983,9 +984,7 @@ public class SMSModel
          this._subjectStringOffset = index;
       }
 
-      return this._subjectEllipsisRequired
-         ? ((StringBuffer)(new Object())).append(subjectText.substring(0, this._subjectStringOffset)).append("...").toString()
-         : subjectText.substring(0, this._subjectStringOffset);
+      return this._subjectEllipsisRequired ? subjectText.substring(0, this._subjectStringOffset) + "..." : subjectText.substring(0, this._subjectStringOffset);
    }
 
    @Override
@@ -1016,7 +1015,7 @@ public class SMSModel
 
       PersistableRIMModel[] addresses = this._payload.getAddresses();
       int total = addresses.length;
-      String[] recipients = new Object[total];
+      String[] recipients = new String[total];
 
       for (int i = 0; i < total; i++) {
          recipients[i] = addresses[i].toString();
@@ -1039,7 +1038,7 @@ public class SMSModel
    public int getKeys(Object context, int[] keyArray, int index, long keyRequested) {
       if (keyRequested == -4145532165335996154L) {
          Object address = this._payload.getFirstAddress();
-         if (address instanceof Object) {
+         if (address instanceof KeyProvider) {
             return ((KeyProvider)address).getKeys(context, keyArray, index, keyRequested);
          }
       }
@@ -1265,7 +1264,7 @@ public class SMSModel
       }
 
       if (ModelViewListenerRegistry.isViewerUp(0, this, this)) {
-         ContextObject c = (ContextObject)(new Object());
+         ContextObject c = new ContextObject();
          c.setFlag(27);
          ModelViewListenerRegistry.notifyOfOpenedModelChange(this, this, c);
       }

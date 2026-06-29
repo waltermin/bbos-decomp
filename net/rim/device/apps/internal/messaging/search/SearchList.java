@@ -27,7 +27,7 @@ public final class SearchList extends KeywordFilteredScreen implements ListField
    protected final boolean doEnter() {
       this.getKeywordFilterList().waitForComplete();
       Object element = this.getSelectedElement();
-      if (!(element instanceof Object)) {
+      if (!(element instanceof RIMModel)) {
          return false;
       }
 
@@ -47,7 +47,7 @@ public final class SearchList extends KeywordFilteredScreen implements ListField
    public final void drawListRow(ListField listField, Graphics graphics, int index, int y, int width) {
       CollectionListField clf = (CollectionListField)listField;
       Object element = clf.getElementAt(index);
-      if (!(element instanceof Object)) {
+      if (!(element instanceof PaintProvider)) {
          graphics.drawText(SearchResources.getString(32), 0, y, 4, width);
       } else {
          PaintProvider paintProvider = (PaintProvider)element;
@@ -88,7 +88,7 @@ public final class SearchList extends KeywordFilteredScreen implements ListField
       int index = this.getListField().getSelectedIndex();
       Verb selectVerb = null;
       Object element = this.getSelectedElement();
-      if (element instanceof Object) {
+      if (element instanceof RIMModel) {
          RIMModel model = (RIMModel)element;
          menu.add(new SearchList$DeleteSearchVerb(this, index, model));
          menu.add(new SearchList$EditSearchVerb(this, model));
@@ -107,7 +107,7 @@ public final class SearchList extends KeywordFilteredScreen implements ListField
          case '\u007f':
             this.getKeywordFilterList().waitForComplete();
             Object element = this.getSelectedElement();
-            if (element instanceof Object) {
+            if (element instanceof RIMModel) {
                RIMModel model = (RIMModel)element;
                Verb v = new SearchList$DeleteSearchVerb(this, this.getListField().getSelectedIndex(), model);
                v.invoke(null);

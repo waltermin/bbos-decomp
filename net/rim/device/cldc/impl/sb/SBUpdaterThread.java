@@ -25,13 +25,13 @@ final class SBUpdaterThread extends Thread {
    private static final int RECEIVED_SECURE_SERVICE_BOOK_PACKET = 1381192528;
 
    public SBUpdaterThread() {
-      this._defaultServiceRecord = (ServiceRecord)(new Object(3));
+      this._defaultServiceRecord = new ServiceRecord(3);
       this._defaultServiceRecord.setCid("SERVICE_BOOK");
       this._defaultServiceRecord.setType(0);
       this._defaultServiceRecord.setEncryptionMode(1);
       this._defaultServiceRecord.setName("SERVICE_BOOK");
-      this._serviceRecordOverride = new Object[1];
-      this._serviceRecordOverride[0] = (ServiceRecord)(new Object(3));
+      this._serviceRecordOverride = new ServiceRecord[1];
+      this._serviceRecordOverride[0] = new ServiceRecord(3);
       this._mySB = ServiceBook.getSB();
       EventLogger.register(-863050508581563378L, "net.rim.sb", 2);
    }
@@ -78,7 +78,7 @@ final class SBUpdaterThread extends Thread {
       String uid = null;
       String keyId = null;
       boolean wasEncrypted = false;
-      if (packetDataBuffer instanceof Object) {
+      if (packetDataBuffer instanceof GMEDatagram) {
          GMEDatagram gmeDatagram = (GMEDatagram)packetDataBuffer;
          uid = gmeDatagram.getGMEAddress().getSrc().address;
          uid = StringUtilities.toLowerCase(uid, 1701707776);
@@ -121,7 +121,7 @@ final class SBUpdaterThread extends Thread {
          address = services[0].getUid();
       }
 
-      this._replyConn = (DatagramConnection)Connector.open(((StringBuffer)(new Object("gme:SERVICE_BOOK/"))).append(address).toString());
+      this._replyConn = (DatagramConnection)Connector.open("gme:SERVICE_BOOK/" + address);
       if (this._replyConn == null) {
          EventLogger.logEvent(-863050508581563378L, 1163220050, 2);
       } else {
@@ -148,7 +148,7 @@ final class SBUpdaterThread extends Thread {
          sr.setUid(uidAlias);
          GMEDatagram replyDatagram = (GMEDatagram)this._replyConn.newDatagram(result, result.length);
          replyDatagram.setServiceRecordOverride(this._serviceRecordOverride);
-         if (this._replyConn instanceof Object) {
+         if (this._replyConn instanceof DatagramConnectionBase) {
             ((DatagramConnectionBase)this._replyConn).allocateDatagramId(replyDatagram);
          }
 
@@ -163,7 +163,7 @@ final class SBUpdaterThread extends Thread {
       }
 
       this._myConn.receive(this._dg);
-      EventLogger.logEvent(-863050508581563378L, 1381516132, !(this._dg instanceof Object) ? 0 : ((GMEDatagram)this._dg).getTransactionId(), 10, 0);
+      EventLogger.logEvent(-863050508581563378L, 1381516132, !(this._dg instanceof GMEDatagram) ? 0 : ((GMEDatagram)this._dg).getTransactionId(), 10, 0);
       return (DataBuffer)this._dg;
    }
 }

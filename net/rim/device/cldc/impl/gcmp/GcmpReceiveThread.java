@@ -20,7 +20,7 @@ final class GcmpReceiveThread extends Thread implements GcmpEvents {
       try {
          this._dgram = (DatagramBase)this._conn.newDatagram(0);
       } catch (Throwable var5) {
-         throw new Object(e.getMessage());
+         throw new RuntimeException(e.getMessage());
       }
    }
 
@@ -82,11 +82,11 @@ final class GcmpReceiveThread extends Thread implements GcmpEvents {
       // 68: astore 1
       // 69: aload 1
       // 6a: dup
-      // 6b: instanceof java/lang/Object
+      // 6b: instanceof net/rim/device/api/io/UdpAddress
       // 6e: ifne 75
       // 71: pop
       // 72: goto 8a
-      // 75: checkcast java/lang/Object
+      // 75: checkcast net/rim/device/api/io/UdpAddress
       // 78: invokevirtual net/rim/device/api/io/UdpAddress.getApn ()Ljava/lang/String;
       // 7b: astore 2
       // 7c: aload 2

@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import javax.microedition.io.HttpConnection;
 import net.rim.device.api.xml.jaxp.RIMWBXMLHandler;
 import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 final class FilteredHttpConnection extends DefaultHandler implements HttpConnection, RIMWBXMLHandler {
@@ -22,7 +23,7 @@ final class FilteredHttpConnection extends DefaultHandler implements HttpConnect
          this._conn = conn;
          this._dataToInsert = dataToInsert;
       } else {
-         throw new Object();
+         throw new NullPointerException();
       }
    }
 
@@ -49,7 +50,7 @@ final class FilteredHttpConnection extends DefaultHandler implements HttpConnect
       // 01c: aload 1
       // 01d: invokevirtual java/io/InputStream.close ()V
       // 020: aload 0
-      // 021: new java/lang/Object
+      // 021: new java/io/ByteArrayInputStream
       // 024: dup
       // 025: aload 0
       // 026: getfield net/rim/device/apps/internal/help/FilteredHttpConnection._data [B
@@ -59,10 +60,10 @@ final class FilteredHttpConnection extends DefaultHandler implements HttpConnect
       // 032: invokevirtual net/rim/device/api/xml/parsers/SAXParserFactory.newSAXParser ()Lnet/rim/device/api/xml/parsers/SAXParser;
       // 035: astore 2
       // 036: aload 2
-      // 037: instanceof java/lang/Object
+      // 037: instanceof net/rim/device/api/xml/jaxp/SAXParserImpl
       // 03a: ifne 040
       // 03d: goto 138
-      // 040: new java/lang/Object
+      // 040: new net/rim/device/api/util/IntHashtable
       // 043: dup
       // 044: bipush 9
       // 046: invokespecial net/rim/device/api/util/IntHashtable.<init> (I)V
@@ -112,7 +113,7 @@ final class FilteredHttpConnection extends DefaultHandler implements HttpConnect
       // 09d: ldc_w "wml"
       // 0a0: invokevirtual net/rim/device/api/util/IntHashtable.put (ILjava/lang/Object;)Ljava/lang/Object;
       // 0a3: pop
-      // 0a4: new java/lang/Object
+      // 0a4: new net/rim/device/api/util/IntHashtable
       // 0a7: dup
       // 0a8: bipush 1
       // 0a9: invokespecial net/rim/device/api/util/IntHashtable.<init> (I)V
@@ -122,7 +123,7 @@ final class FilteredHttpConnection extends DefaultHandler implements HttpConnect
       // 0b1: aload 3
       // 0b2: invokevirtual net/rim/device/api/util/IntHashtable.put (ILjava/lang/Object;)Ljava/lang/Object;
       // 0b5: pop
-      // 0b6: new java/lang/Object
+      // 0b6: new net/rim/device/api/util/IntHashtable
       // 0b9: dup
       // 0ba: bipush 7
       // 0bc: invokespecial net/rim/device/api/util/IntHashtable.<init> (I)V
@@ -162,7 +163,7 @@ final class FilteredHttpConnection extends DefaultHandler implements HttpConnect
       // 107: ldc_w "type"
       // 10a: invokevirtual net/rim/device/api/util/IntHashtable.put (ILjava/lang/Object;)Ljava/lang/Object;
       // 10d: pop
-      // 10e: new java/lang/Object
+      // 10e: new net/rim/device/api/util/IntHashtable
       // 111: dup
       // 112: bipush 1
       // 113: invokespecial net/rim/device/api/util/IntHashtable.<init> (I)V
@@ -173,7 +174,7 @@ final class FilteredHttpConnection extends DefaultHandler implements HttpConnect
       // 11d: invokevirtual net/rim/device/api/util/IntHashtable.put (ILjava/lang/Object;)Ljava/lang/Object;
       // 120: pop
       // 121: aload 2
-      // 122: checkcast java/lang/Object
+      // 122: checkcast net/rim/device/api/xml/jaxp/SAXParserImpl
       // 125: aload 0
       // 126: getfield net/rim/device/apps/internal/help/FilteredHttpConnection._unfilteredByteStream Ljava/io/ByteArrayInputStream;
       // 129: aload 0
@@ -194,7 +195,7 @@ final class FilteredHttpConnection extends DefaultHandler implements HttpConnect
    }
 
    @Override
-   public final void startElement(int elementCode, String uri, String localName, String qName, Attributes attributes) {
+   public final void startElement(int elementCode, String uri, String localName, String qName, Attributes attributes) throws SAXException {
       if (elementCode == 55) {
          byte[] newData = new byte[this._data.length + this._dataToInsert.length];
          int lengthBeforeSelect = this._data.length - this._unfilteredByteStream.available();
@@ -204,7 +205,7 @@ final class FilteredHttpConnection extends DefaultHandler implements HttpConnect
          this._data = newData;
          this._dataToInsert = null;
          this._unfilteredByteStream = null;
-         throw new Object("parse cancelled");
+         throw new SAXException("parse cancelled");
       }
    }
 
@@ -240,12 +241,12 @@ final class FilteredHttpConnection extends DefaultHandler implements HttpConnect
    @Override
    public final InputStream openInputStream() {
       this.initializeFilter();
-      return (InputStream)(new Object(this._data));
+      return new ByteArrayInputStream(this._data);
    }
 
    @Override
    public final DataInputStream openDataInputStream() {
-      return (DataInputStream)(new Object(this.openInputStream()));
+      return new DataInputStream(this.openInputStream());
    }
 
    @Override

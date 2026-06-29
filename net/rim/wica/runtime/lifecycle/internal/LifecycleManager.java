@@ -5,7 +5,7 @@ import java.util.Vector;
 import net.rim.device.api.util.LongHashtable;
 
 final class LifecycleManager {
-   private LongHashtable _applications = (LongHashtable)(new Object(32));
+   private LongHashtable _applications = new LongHashtable(32);
 
    final synchronized WicletImpl getApplication(long id) {
       return (WicletImpl)this._applications.get(id);
@@ -78,7 +78,7 @@ final class LifecycleManager {
    }
 
    private final synchronized Vector getApplications(LifecycleManager$ApplicationBooleanExpression expression) {
-      Vector applications = (Vector)(new Object());
+      Vector applications = new Vector();
       Enumeration e = this._applications.elements();
       WicletImpl application = null;
 

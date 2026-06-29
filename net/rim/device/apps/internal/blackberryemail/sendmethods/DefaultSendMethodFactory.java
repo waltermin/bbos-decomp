@@ -28,11 +28,11 @@ public class DefaultSendMethodFactory implements SendMethodFactory {
          EmailMessageModel emailMessageModel = (EmailMessageModel)model;
          boolean isPIN = emailMessageModel.flagsSet(8192);
          if (isPIN && serviceRecord == null) {
-            return new Object[]{new DefaultPINSendMethod()};
+            return new SendMethod[]{new DefaultPINSendMethod()};
          }
 
          if (!isPIN && serviceRecord != null) {
-            return new Object[]{new DefaultEmailSendMethod(serviceRecord)};
+            return new SendMethod[]{new DefaultEmailSendMethod(serviceRecord)};
          }
       }
 

@@ -44,7 +44,7 @@ public final class WAPPushModelFactory implements Factory {
       // 19: sipush 255
       // 1c: i2l
       // 1d: invokestatic net/rim/device/apps/api/framework/model/ContextObject.get (Ljava/lang/Object;J)Ljava/lang/Object;
-      // 20: checkcast java/lang/Object
+      // 20: checkcast net/rim/device/apps/api/framework/model/SyncBuffer
       // 23: astore 2
       // 24: aload 2
       // 25: ifnull 2f

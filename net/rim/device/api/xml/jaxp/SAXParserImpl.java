@@ -1,5 +1,6 @@
 package net.rim.device.api.xml.jaxp;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.microedition.io.Connector;
@@ -69,7 +70,7 @@ public class SAXParserImpl extends SAXParser {
    @Override
    public void parse(InputStream is, DefaultHandler dh) {
       if (is == null) {
-         throw new Object("InputStream cannot be null");
+         throw new IllegalArgumentException("InputStream cannot be null");
       }
 
       int ch = is.read();
@@ -91,7 +92,7 @@ public class SAXParserImpl extends SAXParser {
    @Override
    public void parse(InputSource is, DefaultHandler dh) {
       if (is == null) {
-         throw new Object("InputStream cannot be null");
+         throw new IllegalArgumentException("InputStream cannot be null");
       }
 
       InputStream byteStream = is.getByteStream();
@@ -104,7 +105,7 @@ public class SAXParserImpl extends SAXParser {
 
    public void parse(InputStream is, DefaultHandler dh, String[] tagTable, String[] attrStartTable, String[] attrTable) {
       if (is == null) {
-         throw new Object("InputStream cannot be null");
+         throw new IllegalArgumentException("InputStream cannot be null");
       }
 
       WBXMLParser wbxml = new WBXMLParser(is);
@@ -116,7 +117,7 @@ public class SAXParserImpl extends SAXParser {
 
    public void parse(InputStream is, DefaultHandler dh, IntHashtable tagTables, IntHashtable attrStartTables, IntHashtable attrTables) {
       if (is == null) {
-         throw new Object("InputStream cannot be null");
+         throw new IllegalArgumentException("InputStream cannot be null");
       }
 
       WBXMLParser wbxml = new WBXMLParser(is);
@@ -128,7 +129,7 @@ public class SAXParserImpl extends SAXParser {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public void parse(String url, DefaultHandler dh, boolean autoCodeBookManagement) {
+   public void parse(String url, DefaultHandler dh, boolean autoCodeBookManagement) throws IOException {
       StreamConnection s = (StreamConnection)Connector.open(url);
       HttpConnection httpConn = (HttpConnection)s;
       httpConn.setRequestMethod("GET");
@@ -137,7 +138,7 @@ public class SAXParserImpl extends SAXParser {
       httpConn.setRequestProperty("X-Rim-UseCodeBook", autoCodeBookManagement ? TRUE : FALSE);
       int status = httpConn.getResponseCode();
       if (status != 200) {
-         throw new Object(((StringBuffer)(new Object("HTTP Error "))).append(status).toString());
+         throw new IOException("HTTP Error " + status);
       }
 
       WBXMLParser wbxml = null;
@@ -172,7 +173,7 @@ public class SAXParserImpl extends SAXParser {
                }
             }
 
-            StringBuffer file = (StringBuffer)(new Object(CB_CACHE_DIR));
+            StringBuffer file = new StringBuffer(CB_CACHE_DIR);
             file.append(StringUtilities.toLowerCase(codeBookHash, 1701707776)).append(".wbxml");
             String fileName = file.toString();
             FileConnection cb = (FileConnection)Connector.open(fileName);
@@ -186,7 +187,7 @@ public class SAXParserImpl extends SAXParser {
                httpConn2.setRequestProperty("X-Rim-UseCodeBook", TRUE);
                int status2;
                if ((status2 = httpConn2.getResponseCode()) != 200) {
-                  throw new Object(((StringBuffer)(new Object("HTTP Error getting codebook: "))).append(status2).toString());
+                  throw new IOException("HTTP Error getting codebook: " + status2);
                }
 
                InputStream cbInputStream = httpConn2.openInputStream();

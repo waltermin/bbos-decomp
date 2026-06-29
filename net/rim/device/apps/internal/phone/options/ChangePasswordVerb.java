@@ -20,7 +20,7 @@ final class ChangePasswordVerb extends Verb implements PhoneEventListener {
 
    @Override
    public final Object invoke(Object parameter) {
-      SimpleInputDialog dlg = (SimpleInputDialog)(new Object(6, null, 4, 4, 0));
+      SimpleInputDialog dlg = new SimpleInputDialog(6, null, 4, 4, 0);
       dlg.setModal(true);
       String old = null;
       String new1 = null;

@@ -2,9 +2,9 @@ package net.rim.device.apps.internal.bis.ui;
 
 import java.util.Hashtable;
 import net.rim.device.api.i18n.MessageFormat;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.EmailAddressEditField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.RadioButtonField;
 import net.rim.device.api.ui.component.RadioButtonGroup;
 import net.rim.device.apps.internal.bis.ApplicationResources;
@@ -46,54 +46,54 @@ public final class HostedAccountEditScreen extends UserSettingsScreen {
    public final void refresh(Hashtable screenParams) {
       Mailbox mailboxToEdit = ClientSessionState.getInstance().getMailboxToModify();
       UserInfo userInfo = ClientSessionState.getInstance().getUserInfo();
-      String title = MessageFormat.format(ApplicationResources.getString(150), new Object[]{mailboxToEdit.getDescription()});
+      String title = MessageFormat.format(ApplicationResources.getString(150), new String[]{mailboxToEdit.getDescription()});
       this.setTitle(title);
       this.addContentField(new HeadingField(ApplicationResources.getString(142)));
       this.addContentLineBreak();
       this.addContentField(new BoldLabelField(ApplicationResources.getString(135)));
-      this._accountNameEdit = (EmailAddressEditField)(new Object(null, mailboxToEdit.getDescription()));
+      this._accountNameEdit = new EmailAddressEditField(null, mailboxToEdit.getDescription());
       this.addContentField(this._accountNameEdit, true);
       this.addContentLineBreak();
       this.addContentField(new BoldLabelField(ApplicationResources.getString(136)));
-      this.addContentField((Field)(new Object(mailboxToEdit.getEmail())));
+      this.addContentField(new LabelField(mailboxToEdit.getEmail()));
       if (userInfo.isChangeReplyToEnabled()) {
          this.addContentLineBreak();
          this.addContentField(new BoldLabelField(ApplicationResources.getString(139)));
-         this._emailAddressEdit = (EmailAddressEditField)(new Object(null, mailboxToEdit.getReplyTo()));
+         this._emailAddressEdit = new EmailAddressEditField(null, mailboxToEdit.getReplyTo());
          this.addContentField(this._emailAddressEdit, true);
       }
 
       this.addContentLineBreak();
       this.addContentField(new BoldLabelField(ApplicationResources.getString(145)));
-      this._yourNameEdit = (BasicEditField)(new Object(null, mailboxToEdit.getFriendlyName()));
+      this._yourNameEdit = new BasicEditField(null, mailboxToEdit.getFriendlyName());
       this.addContentField(this._yourNameEdit, true);
       this.addContentLineBreak();
       this.addContentField(new BoldLabelField(ApplicationResources.getString(143)));
-      this._signatureEdit = (BasicEditField)(new Object(null, mailboxToEdit.getSignature()));
+      this._signatureEdit = new BasicEditField(null, mailboxToEdit.getSignature());
       this.addContentField(this._signatureEdit, true);
       if (userInfo.isAutoBCCEnabled()) {
          this.addContentLineBreak();
          this.addContentField(new BoldLabelField(ApplicationResources.getString(132)));
-         this._autoBCCEdit = (EmailAddressEditField)(new Object(null, mailboxToEdit.getAutoBCC()));
+         this._autoBCCEdit = new EmailAddressEditField(null, mailboxToEdit.getAutoBCC());
          this.addContentField(this._autoBCCEdit, true);
       }
 
       if (userInfo.isAutoForwardEnabled()) {
          this.addContentLineBreak();
          this.addContentField(new BoldLabelField(ApplicationResources.getString(133)));
-         this._autoForwardRadioGroup = (RadioButtonGroup)(new Object());
+         this._autoForwardRadioGroup = new RadioButtonGroup();
          boolean autoForwardAll = mailboxToEdit.getAutoForwardAll();
-         this._allMessagesField = (RadioButtonField)(new Object(ApplicationResources.getString(130), this._autoForwardRadioGroup, autoForwardAll));
-         this._onlyMessagesField = (RadioButtonField)(new Object(ApplicationResources.getString(138), this._autoForwardRadioGroup, !autoForwardAll));
+         this._allMessagesField = new RadioButtonField(ApplicationResources.getString(130), this._autoForwardRadioGroup, autoForwardAll);
+         this._onlyMessagesField = new RadioButtonField(ApplicationResources.getString(138), this._autoForwardRadioGroup, !autoForwardAll);
          this.addContentField(this._allMessagesField);
          this.addContentField(this._onlyMessagesField);
-         this._autoForwardEdit = (EmailAddressEditField)(new Object(null, mailboxToEdit.getAutoForward()));
+         this._autoForwardEdit = new EmailAddressEditField(null, mailboxToEdit.getAutoForward());
          this.addContentField(this._autoForwardEdit, true);
       }
 
       if (userInfo.isAutoAuth()) {
          this.addContentLineBreak();
-         String changePassword = MessageFormat.format(ApplicationResources.getString(269), new Object[]{mailboxToEdit.getDescription()});
+         String changePassword = MessageFormat.format(ApplicationResources.getString(269), new String[]{mailboxToEdit.getDescription()});
          LinkField changePasswordLink = new LinkField(changePassword);
          this.addContentField(changePasswordLink);
          this.attachEventToField(changePasswordLink, new LinkEvent(258, 52));

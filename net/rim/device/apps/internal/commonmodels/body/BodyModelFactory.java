@@ -4,6 +4,7 @@ import java.util.Vector;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.SyncBuffer;
 import net.rim.device.apps.api.framework.registration.RIMModelFactory;
+import net.rim.device.apps.api.framework.verb.RIMModelFactoryCreateVerb;
 import net.rim.device.apps.api.framework.verb.Verb;
 
 class BodyModelFactory extends RIMModelFactory {
@@ -51,7 +52,7 @@ class BodyModelFactory extends RIMModelFactory {
    }
 
    static int getSyncFieldId(Object context) {
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          ContextObject contextObject = (ContextObject)context;
          if (contextObject.getFlag(11)) {
             return 64;
@@ -115,7 +116,7 @@ class BodyModelFactory extends RIMModelFactory {
    @Override
    public Verb[] getVerbs(Object context) {
       return ContextObject.getFlag(context, 11)
-         ? new Object[]{new Object(this, 16865280, -8414468493733347764L, "net.rim.device.apps.internal.resource.Common", 1790)}
+         ? new Verb[]{new RIMModelFactoryCreateVerb(this, 16865280, -8414468493733347764L, "net.rim.device.apps.internal.resource.Common", 1790)}
          : null;
    }
 }

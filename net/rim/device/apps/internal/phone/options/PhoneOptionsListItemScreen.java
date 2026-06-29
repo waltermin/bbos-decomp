@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.phone.options;
 
 import net.rim.device.api.system.Application;
 import net.rim.device.api.system.GlobalEventListener;
+import net.rim.device.api.ui.component.EditField;
 import net.rim.device.apps.api.options.MainScreenOptionsListItem;
 import net.rim.device.apps.api.options.OptionsMainScreen;
 
@@ -40,7 +41,7 @@ class PhoneOptionsListItemScreen extends OptionsMainScreen implements GlobalEven
 
    @Override
    protected boolean invokeAction(int action) {
-      if (this.getLeafFieldWithFocus() instanceof Object) {
+      if (this.getLeafFieldWithFocus() instanceof EditField) {
          switch (action) {
             case 1:
                return true;

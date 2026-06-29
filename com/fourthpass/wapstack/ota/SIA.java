@@ -45,14 +45,14 @@ public final class SIA implements PushEventLogger {
       // Bytecode:
       // 00: new net/rim/device/cldc/io/waphttp/WAPRequestImpl
       // 03: dup
-      // 04: new java/lang/Object
+      // 04: new net/rim/device/cldc/io/utility/URL
       // 07: dup
       // 08: ldc_w "rim://openconnection"
       // 0b: invokespecial net/rim/device/cldc/io/utility/URL.<init> (Ljava/lang/String;)V
       // 0e: aload 1
       // 0f: invokespecial net/rim/device/cldc/io/waphttp/WAPRequestImpl.<init> (Lnet/rim/device/cldc/io/utility/URL;Lnet/rim/device/cldc/io/waphttp/WAPConnectionParams;)V
       // 12: astore 2
-      // 13: new java/lang/Object
+      // 13: new java/lang/StringBuffer
       // 16: dup
       // 17: ldc_w "application/vnd.wap.sic"
       // 1a: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -101,7 +101,7 @@ public final class SIA implements PushEventLogger {
    private final WAPConnectionParams prepareConnectionParams() {
       ServiceBook sb = ServiceBook.getSB();
       ServiceRecord[] records = sb.findRecordsByCid(WAPServiceRecord.SERVICE_CID);
-      WAPConnectionParams params = (WAPConnectionParams)(new Object());
+      WAPConnectionParams params = new WAPConnectionParams();
       byte[] destAddressBytes = this._wapServerAdd.getAddress();
       if (destAddressBytes != null && destAddressBytes.length == 4) {
          int destAddress = (destAddressBytes[0] & 255) << 24 | (destAddressBytes[1] & 255) << 16 | (destAddressBytes[2] & 255) << 8 | destAddressBytes[3] & 255;
@@ -111,7 +111,7 @@ public final class SIA implements PushEventLogger {
             if (hrt != null) {
                HostRoutingInfo hri = hrt.getHris()[0];
                DAC dac = hri.getDac();
-               if (dac instanceof Object) {
+               if (dac instanceof IPv4UdpDAC) {
                   long[] addresses = ((IPv4UdpDAC)dac).getAddresses();
                   if (addresses != null && addresses.length != 0) {
                      for (int j = 0; j < addresses.length; j++) {
@@ -159,7 +159,7 @@ public final class SIA implements PushEventLogger {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private final WSPAddress[] getAddress(byte[] addressData) {
       int pos = 0;
-      Vector store = (Vector)(new Object());
+      Vector store = new Vector();
 
       while (pos < addressData.length) {
          int addrLen = addressData[pos] & 63;

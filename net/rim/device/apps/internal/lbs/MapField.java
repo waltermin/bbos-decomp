@@ -70,7 +70,7 @@ public class MapField extends Manager {
    CurrentLocations _currentLocations = new CurrentLocations(this);
    Location[] _currentPOIs = new Location[0];
    Location[] _currentAds = new Location[0];
-   String[] _currentLegalNotices = new Object[0];
+   String[] _currentLegalNotices = new String[0];
    String _lbsDocSource = null;
    Location _marker = new Location();
    Decision _decisionMarker = new Decision();
@@ -78,7 +78,7 @@ public class MapField extends Manager {
    MapPoint _ptMarkerNew = new MapPoint();
    MapPoint _ptMarkerOld;
    public boolean _showCaption = false;
-   public XYRect _bbox = (XYRect)(new Object());
+   public XYRect _bbox = new XYRect();
    public String _poiKeywords;
    private boolean _paintZoom = false;
    private int _paintZoomPID = -1;
@@ -317,8 +317,8 @@ public class MapField extends Manager {
          msgPrev = LBSResources.getString(409);
       }
 
-      msgNext = MessageFormat.format(msgNext, new Object[]{next});
-      msgPrev = MessageFormat.format(msgPrev, new Object[]{prev});
+      msgNext = MessageFormat.format(msgNext, new String[]{next});
+      msgPrev = MessageFormat.format(msgPrev, new String[]{prev});
       switch (type) {
          case -2:
             break;
@@ -327,7 +327,7 @@ public class MapField extends Manager {
             break;
          case 0:
          default:
-            msg = ((StringBuffer)(new Object())).append(msgPrev).append(" ").append(msgNext).toString();
+            msg = msgPrev + " " + msgNext;
             break;
          case 1:
             msg = msgNext;
@@ -374,11 +374,11 @@ public class MapField extends Manager {
    }
 
    ContextObject createContext() {
-      ContextObject context = (ContextObject)(new Object());
-      ContextObject.put(context, -200747095229876690L, new Object(this._latitude));
-      ContextObject.put(context, 6606581876924152793L, new Object(this._longitude));
-      ContextObject.put(context, 581052036187634982L, new Object(this._zoom));
-      ContextObject.put(context, 8035222542232379495L, new Object(this._rotation));
+      ContextObject context = new ContextObject();
+      ContextObject.put(context, -200747095229876690L, new Integer(this._latitude));
+      ContextObject.put(context, 6606581876924152793L, new Integer(this._longitude));
+      ContextObject.put(context, 581052036187634982L, new Integer(this._zoom));
+      ContextObject.put(context, 8035222542232379495L, new Integer(this._rotation));
       return context;
    }
 
@@ -451,7 +451,7 @@ public class MapField extends Manager {
             this._nextStreet = this._driverAssist.findNextStreet(this._screen._trackUp ? 0 : this._screen._currentBearing);
             if (gpsMode != null) {
                if (this._nextStreet != null && this._nextStreet != "") {
-                  gpsMode.setMessage(((StringBuffer)(new Object("+ "))).append(this._nextStreet).toString(), 2);
+                  gpsMode.setMessage("+ " + this._nextStreet, 2);
                } else if (this._currentStreet != null && this._currentStreet != "") {
                   gpsMode.setMessage(this._currentStreet, 1);
                } else {
@@ -579,7 +579,7 @@ public class MapField extends Manager {
       graphics.fillRect(left + 1, y, width - 2, 3);
       x = left + width + 5;
       graphics.setFont(_labelFont);
-      graphics.drawText(((StringBuffer)(new Object(""))).append(zoom).toString(), x, top);
+      graphics.drawText("" + zoom, x, top);
       x += 5;
       y = top + height - 16;
       double cos = Math.cos(this._latitude / 100000 * 4580687790476533049L);
@@ -605,7 +605,7 @@ public class MapField extends Manager {
          unit = " km";
       }
 
-      graphics.drawText(((StringBuffer)(new Object())).append(distance).append(unit).toString(), x + 1, y - _labelFont.getHeight());
+      graphics.drawText(distance + unit, x + 1, y - _labelFont.getHeight());
       unit = " ft";
       distance = _miValues[zoom];
       if (distance >= 5280) {
@@ -613,7 +613,7 @@ public class MapField extends Manager {
          unit = " mi";
       }
 
-      graphics.drawText(((StringBuffer)(new Object())).append(distance).append(unit).toString(), x + 1, y + 3);
+      graphics.drawText(distance + unit, x + 1, y + 3);
    }
 
    void paintRotation(Graphics graphics) {
@@ -764,7 +764,7 @@ public class MapField extends Manager {
             yOffset = this.getHeight();
          }
 
-         this._toolbarBottomRect = (XYRect)(new Object(this.getWidth() / 2 - 36, yOffset - 8, 72, 36));
+         this._toolbarBottomRect = new XYRect(this.getWidth() / 2 - 36, yOffset - 8, 72, 36);
          graphics.setColor(13882323);
          graphics.fillRoundRect(this.getWidth() / 2 - 36, yOffset - 8, 72, 36, 8, 8);
          graphics.setColor(16777215);
@@ -1554,16 +1554,16 @@ public class MapField extends Manager {
                }
             default:
                byte[] b = request._lastRequest;
-               StringBuffer requestStr = (StringBuffer)(new Object());
+               StringBuffer requestStr = new StringBuffer();
                if (b != null) {
                   label85:
                   try {
                      for (int i = 0; i < b.length; i++) {
-                        String s = ((StringBuffer)(new Object("0"))).append(Integer.toHexString(b[i])).toString();
+                        String s = "0" + Integer.toHexString(b[i]);
                         requestStr.append(s.substring(s.length() - 2, s.length()));
                      }
                   } catch (Throwable var9) {
-                     requestStr.append(((StringBuffer)(new Object("... error in parsing: "))).append(e.getMessage()).toString());
+                     requestStr.append("... error in parsing: " + e.getMessage());
                      break label85;
                   }
                } else {
@@ -1572,27 +1572,26 @@ public class MapField extends Manager {
 
                EventLogger.logEvent(
                   UID,
-                  ((StringBuffer)(new Object("Maplet Request error: ")))
-                     .append(rc)
-                     .append(" zoom: ")
-                     .append(this._zoom)
-                     .append(", lat: ")
-                     .append(this._latitude)
-                     .append(", lon: ")
-                     .append(this._longitude)
-                     .append(", left: ")
-                     .append(this._rect._left)
-                     .append(", top: ")
-                     .append(this._rect._top)
-                     .append(", right: ")
-                     .append(this._rect._right)
-                     .append(", bottom: ")
-                     .append(this._rect._bottom)
-                     .append(", URL: ")
-                     .append(request.getURL())
-                     .append(", request: ")
-                     .append(requestStr.toString())
-                     .toString()
+                  ("Maplet Request error: "
+                        + rc
+                        + " zoom: "
+                        + this._zoom
+                        + ", lat: "
+                        + this._latitude
+                        + ", lon: "
+                        + this._longitude
+                        + ", left: "
+                        + this._rect._left
+                        + ", top: "
+                        + this._rect._top
+                        + ", right: "
+                        + this._rect._right
+                        + ", bottom: "
+                        + this._rect._bottom
+                        + ", URL: "
+                        + request.getURL()
+                        + ", request: "
+                        + requestStr.toString())
                      .getBytes(),
                   2
                );
@@ -1631,9 +1630,9 @@ public class MapField extends Manager {
    public void zoomToFit(XYRect rect) {
       XYRect bbox = null;
       if (rect != null) {
-         bbox = (XYRect)(new Object(rect));
+         bbox = new XYRect(rect);
       } else {
-         bbox = (XYRect)(new Object(this._currentLocations._bbox));
+         bbox = new XYRect(this._currentLocations._bbox);
       }
 
       int zoom = 0;

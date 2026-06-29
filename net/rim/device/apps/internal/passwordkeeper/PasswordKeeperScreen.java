@@ -68,7 +68,7 @@ public final class PasswordKeeperScreen extends KeywordFilteredScreen implements
                   searchPattern = this.getFinderField().getText();
                }
 
-               element = new PasswordKeeperElement(new Object[0], new Object[]{searchPattern == null ? "" : searchPattern, "", "", "", ""});
+               element = new PasswordKeeperElement(new String[0], new String[]{searchPattern == null ? "" : searchPattern, "", "", "", ""});
             }
 
             this.showScreen(element);
@@ -260,7 +260,7 @@ public final class PasswordKeeperScreen extends KeywordFilteredScreen implements
    @Override
    public final void close() {
       DialogWithBackgroundThreadRunnable runnable = new PasswordKeeperThread(false);
-      DialogWithBackgroundThread dialog = (DialogWithBackgroundThread)(new Object());
+      DialogWithBackgroundThread dialog = new DialogWithBackgroundThread();
       dialog.initialize(PasswordKeeper.getString(3010), runnable);
       dialog.run();
       this._collection.removeCollectionListener(this);

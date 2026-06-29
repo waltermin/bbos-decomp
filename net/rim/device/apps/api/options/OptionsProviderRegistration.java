@@ -24,7 +24,7 @@ public class OptionsProviderRegistration {
    }
 
    public static Vector getOptionsProviders() {
-      Vector optionsProviders = (Vector)(new Object());
+      Vector optionsProviders = new Vector();
       synchronized (_optionsProviders) {
          int numProviders = _optionsProviders.size();
 
@@ -43,7 +43,7 @@ public class OptionsProviderRegistration {
          synchronized (registry) {
             _optionsProviders = (Vector)registry.get(-4040876185295916320L);
             if (_optionsProviders == null) {
-               _optionsProviders = (Vector)(new Object());
+               _optionsProviders = new Vector();
                registry.put(-4040876185295916320L, _optionsProviders);
             }
          }

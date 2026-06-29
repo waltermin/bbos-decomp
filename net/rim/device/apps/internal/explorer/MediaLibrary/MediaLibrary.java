@@ -72,21 +72,21 @@ public class MediaLibrary implements MetaDataListener {
 
    void onRingtone(MetaDataFileInfo info) {
       synchronized (this._lock) {
-         String filename = ((StringBuffer)(new Object())).append(info.getPath()).append(info.getFileName()).toString();
+         String filename = info.getPath() + info.getFileName();
          String decodedFilename = URIDecoder.decode(filename, "UTF-8");
          int id = StringUtilities.hashCodeIgnoreCase(decodedFilename);
          Track track = new Track(id, filename);
          Object title = info.getMetaData(1);
          Object length = info.getMetaData(2);
          String temp = null;
-         if (title instanceof Object) {
+         if (title instanceof String) {
             temp = (String)title;
             if (temp.length() > 0) {
                track.setTitle(temp);
             }
          }
 
-         if (length instanceof Object) {
+         if (length instanceof Long) {
             Long len = (Long)length;
             track.setLength(len);
          }
@@ -104,7 +104,7 @@ public class MediaLibrary implements MetaDataListener {
 
    void onTrack(MetaDataFileInfo info) {
       synchronized (this._lock) {
-         String filename = ((StringBuffer)(new Object())).append(info.getPath()).append(info.getFileName()).toString();
+         String filename = info.getPath() + info.getFileName();
          String decodedFilename = URIDecoder.decode(filename, "UTF-8");
          int id = StringUtilities.hashCodeIgnoreCase(decodedFilename);
          Track track = null;
@@ -127,12 +127,12 @@ public class MediaLibrary implements MetaDataListener {
          Object trackNumStr = info.getMetaData(6);
          String temp = null;
          int var25 = -1;
-         if (length instanceof Object) {
+         if (length instanceof Long) {
             Long len = (Long)length;
             track.setLength(len);
          }
 
-         if (titleStr instanceof Object) {
+         if (titleStr instanceof String) {
             temp = (String)titleStr;
             if (temp.length() > 0) {
                track.setTitle(temp);
@@ -200,7 +200,7 @@ public class MediaLibrary implements MetaDataListener {
                album.addGenre(genre);
             }
 
-            if (trackNumStr instanceof Object) {
+            if (trackNumStr instanceof String) {
                temp = (String)trackNumStr;
 
                label136:
@@ -244,12 +244,12 @@ public class MediaLibrary implements MetaDataListener {
 
    void onVoiceNote(MetaDataFileInfo info) {
       synchronized (this._lock) {
-         String filename = ((StringBuffer)(new Object())).append(info.getPath()).append(info.getFileName()).toString();
+         String filename = info.getPath() + info.getFileName();
          String decodedFilename = URIDecoder.decode(filename, "UTF-8");
          int id = StringUtilities.hashCodeIgnoreCase(decodedFilename);
          VoiceNote voicenote = new VoiceNote(id, filename);
          Object length = info.getMetaData(2);
-         if (length instanceof Object) {
+         if (length instanceof Long) {
             Long len = (Long)length;
             voicenote.setLength(len);
          }
@@ -360,7 +360,7 @@ public class MediaLibrary implements MetaDataListener {
 
    private String castOrCreateTitle(Object string) {
       String temp = null;
-      if (string instanceof Object) {
+      if (string instanceof String) {
          temp = (String)string;
          temp = temp.trim();
          if (temp.length() <= 0) {
@@ -384,7 +384,7 @@ public class MediaLibrary implements MetaDataListener {
    private void onRemoveTrack(Object data) {
       synchronized (this._lock) {
          Track track = null;
-         if (!(data instanceof Object)) {
+         if (!(data instanceof String)) {
             if (data instanceof Track) {
                track = (Track)data;
             }

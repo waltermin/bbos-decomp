@@ -76,9 +76,7 @@ public final class ServiceStartup implements SystemListener {
       }
 
       if (this._registeredCriticalServices != 7) {
-         InternalServices.catastrophicFailure(
-            205, ((StringBuffer)(new Object("Unregistered critical services: "))).append(Integer.toHexString(~this._registeredCriticalServices & 7)).toString()
-         );
+         InternalServices.catastrophicFailure(205, "Unregistered critical services: " + Integer.toHexString(~this._registeredCriticalServices & 7));
       }
 
       Proxy.getInstance().removeSystemListener(this);

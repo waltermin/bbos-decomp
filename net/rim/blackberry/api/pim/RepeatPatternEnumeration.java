@@ -1,5 +1,6 @@
 package net.rim.blackberry.api.pim;
 
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.TimeZone;
 import net.rim.device.apps.api.framework.model.Recur;
@@ -20,7 +21,7 @@ final class RepeatPatternEnumeration implements Enumeration {
       this._startDate = startDate;
       this._beginning = beginning;
       this._ending = ending;
-      this._handle = (Recur$Handle)(new Object());
+      this._handle = new Recur$Handle();
       this._count = count;
       this._countDate = findLastCount(this._event, this._startDate, this._count);
    }
@@ -32,7 +33,7 @@ final class RepeatPatternEnumeration implements Enumeration {
       }
 
       boolean next = true;
-      Recur$Handle handle = (Recur$Handle)(new Object());
+      Recur$Handle handle = new Recur$Handle();
       long curDate = 0;
 
       for (int i = 0; i < count; i++) {
@@ -58,7 +59,7 @@ final class RepeatPatternEnumeration implements Enumeration {
       boolean nextElement = false;
       boolean result = false;
       long recurHandle = 0;
-      Recur$Handle h = (Recur$Handle)(new Object());
+      Recur$Handle h = new Recur$Handle();
       if (this._handle._handle == 0) {
          nextElement = this._event.getHandleAfterTime(h, this._beginning - 1, TimeZone.getDefault());
          recurHandle = h._handle;
@@ -98,6 +99,6 @@ final class RepeatPatternEnumeration implements Enumeration {
       return this._ending != 0 && this._event.getStartFromHandle(this._handle._handle, TimeZone.getDefault()) > this._ending
             || this._count != 0 && (this._count <= 0 || evtTime > this._countDate)
          ? null
-         : new Object(evtTime);
+         : new Date(evtTime);
    }
 }

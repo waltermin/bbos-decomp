@@ -17,7 +17,7 @@ public final class GPSMode extends AbstractMode {
    private int _speed;
    private int _bearing;
    private Font _dashboardStreetFont = null;
-   private static final String[] DIRECTION = new Object[]{
+   private static final String[] DIRECTION = new String[]{
       LBSResources.getString(186),
       LBSResources.getString(187),
       LBSResources.getString(188),
@@ -72,7 +72,7 @@ public final class GPSMode extends AbstractMode {
    public final void paintHeader(Graphics g, int w, int h) {
       String speed = null;
       int baseline = this._headerFont.getBaseline();
-      TextMetrics metrics = (TextMetrics)(new Object());
+      TextMetrics metrics = new TextMetrics();
       int above = 0;
       int below = 0;
       int height = 0;
@@ -85,16 +85,12 @@ public final class GPSMode extends AbstractMode {
             }
          case 3:
             if (LBSOptions.getInt(-6817208986109478597L, 2) == 1) {
-               speed = ((StringBuffer)(new Object(""))).append(this._speed).toString();
+               speed = "" + this._speed;
             } else {
-               speed = ((StringBuffer)(new Object(""))).append((int)(this._speed * 62 / 1120403456)).toString();
+               speed = "" + (int)(this._speed * 62 / 1120403456);
             }
 
-            speed = ((StringBuffer)(new Object()))
-               .append(speed)
-               .append(" ")
-               .append(LBSResources.getResourceBundle().getStringArray(136)[LBSOptions.getInt(-6817208986109478597L, 2) - 1])
-               .toString();
+            speed = speed + " " + LBSResources.getResourceBundle().getStringArray(136)[LBSOptions.getInt(-6817208986109478597L, 2) - 1];
          case 0:
             g.setColor(16777215);
             Bitmap img = null;
@@ -111,7 +107,7 @@ public final class GPSMode extends AbstractMode {
             }
 
             int x = w / 2;
-            String lbl = ((StringBuffer)(new Object(" "))).append(this._satCount).toString();
+            String lbl = " " + this._satCount;
             int lblWidth = img.getWidth() + this._headerFont.getAdvance(lbl);
             x -= lblWidth / 2;
             g.drawBitmap(x, 0, img.getWidth(), img.getHeight(), img, 0, 0);

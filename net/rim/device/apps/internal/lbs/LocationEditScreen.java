@@ -149,7 +149,7 @@ final class LocationEditScreen extends MainScreen implements FieldChangeListener
       }
 
       label = this.clipLength(label, 2048);
-      this._labelField = (AutoTextEditField)(new Object(LBSResources.getString(98), label, 2048, 2147483648L));
+      this._labelField = new AutoTextEditField(LBSResources.getString(98), label, 2048, 2147483648L);
       if (this._labelField.getTextLength() > 0) {
          this._labelField.setCursorPosition(this._labelField.getTextLength() - 1);
       } else {
@@ -160,51 +160,51 @@ final class LocationEditScreen extends MainScreen implements FieldChangeListener
       if (!this._isRoute) {
          String description = location._description;
          description = this.clipLength(description, 2048);
-         this._descriptionField = (AutoTextEditField)(new Object(LBSResources.getString(99), description, 2048, 2147483648L));
+         this._descriptionField = new AutoTextEditField(LBSResources.getString(99), description, 2048, 2147483648L);
          this.add(this._descriptionField);
          String address = location._address;
          address = this.clipLength(address, 2048);
-         this._addressField = (AutoTextEditField)(new Object(LBSResources.getString(207), address, 2048, 2147483648L));
+         this._addressField = new AutoTextEditField(LBSResources.getString(207), address, 2048, 2147483648L);
          this.add(this._addressField);
          String city = location._city;
          city = this.clipLength(city, 2048);
-         this._cityField = (AutoTextEditField)(new Object(LBSResources.getString(210), city, 2048, 2147483648L));
+         this._cityField = new AutoTextEditField(LBSResources.getString(210), city, 2048, 2147483648L);
          this.add(this._cityField);
          String region = location._region;
          region = this.clipLength(region, 2048);
-         this._regionField = (AutoTextEditField)(new Object(LBSResources.getString(215), region, 2048, 2147483648L));
+         this._regionField = new AutoTextEditField(LBSResources.getString(215), region, 2048, 2147483648L);
          this.add(this._regionField);
          String country = location._country;
          country = this.clipLength(country, 2048);
-         this._countryField = (AutoTextEditField)(new Object(LBSResources.getString(212), country, 2048, 2147483648L));
+         this._countryField = new AutoTextEditField(LBSResources.getString(212), country, 2048, 2147483648L);
          this.add(this._countryField);
          String postalCode = location._postalCode;
          postalCode = this.clipLength(postalCode, 32);
-         this._postalCodeField = (EditField)(new Object(LBSResources.getString(211), postalCode, 32, 2147483648L));
+         this._postalCodeField = new EditField(LBSResources.getString(211), postalCode, 32, 2147483648L);
          this.add(this._postalCodeField);
          String phone = location._phone;
          phone = this.clipLength(phone, 32);
-         this._phoneField = (EditField)(new Object(LBSResources.getString(208), phone, 32, 2147483648L));
+         this._phoneField = new EditField(LBSResources.getString(208), phone, 32, 2147483648L);
          this._phoneField.setFilter(TextFilter.get(6));
          this.add(this._phoneField);
          String fax = location._fax;
          fax = this.clipLength(fax, 32);
-         this._faxField = (EditField)(new Object(LBSResources.getString(209), fax, 32, 2147483648L));
+         this._faxField = new EditField(LBSResources.getString(209), fax, 32, 2147483648L);
          this._faxField.setFilter(TextFilter.get(6));
          this.add(this._faxField);
          String url = location._url;
          url = this.clipLength(url, 2048);
-         this._urlField = (AutoTextEditField)(new Object(LBSResources.getString(213), url, 2048, 2147483648L));
+         this._urlField = new AutoTextEditField(LBSResources.getString(213), url, 2048, 2147483648L);
          this._urlField.setFilter(TextFilter.get(7));
          this.add(this._urlField);
          String email = location._email;
          email = this.clipLength(email, 2048);
-         this._emailField = (AutoTextEditField)(new Object(LBSResources.getString(214), email, 2048, 2147483648L));
+         this._emailField = new AutoTextEditField(LBSResources.getString(214), email, 2048, 2147483648L);
          this._emailField.setFilter(TextFilter.get(8));
          this.add(this._emailField);
          String categories = location._categories;
          categories = this.clipLength(categories, 2048);
-         this._categoriesField = (AutoTextEditField)(new Object(LBSResources.getString(216), categories, 2048, 2147483648L));
+         this._categoriesField = new AutoTextEditField(LBSResources.getString(216), categories, 2048, 2147483648L);
          this.add(this._categoriesField);
       }
 

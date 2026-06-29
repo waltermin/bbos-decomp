@@ -4,7 +4,7 @@ import net.rim.device.apps.api.setupwizard.Log;
 import net.rim.device.apps.api.setupwizard.LogManager;
 
 public final class LogManagerImpl implements LogManager {
-   private StringBuffer _buffer = (StringBuffer)(new Object());
+   private StringBuffer _buffer = new StringBuffer();
    private static Object _lock = new Object();
    private static final long KEY_NAME = 6452391534420581228L;
 
@@ -33,7 +33,7 @@ public final class LogManagerImpl implements LogManager {
       // 0b: bipush 20
       // 0d: if_icmplt 13
       // 10: goto eb
-      // 13: new java/lang/Object
+      // 13: new java/lang/StringBuffer
       // 16: dup
       // 17: invokespecial java/lang/StringBuffer.<init> ()V
       // 1a: aload 1
@@ -42,7 +42,7 @@ public final class LogManagerImpl implements LogManager {
       // 1f: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 22: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 25: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 28: checkcast java/lang/Object
+      // 28: checkcast javax/microedition/io/file/FileConnection
       // 2b: astore 4
       // 2d: aload 4
       // 2f: ifnonnull 33
@@ -109,7 +109,7 @@ public final class LogManagerImpl implements LogManager {
       // c0: iload 5
       // c2: ifeq c6
       // c5: return
-      // c6: new java/lang/Object
+      // c6: new java/lang/StringBuffer
       // c9: dup
       // ca: ldc_w "SetupWizardUsage-"
       // cd: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V

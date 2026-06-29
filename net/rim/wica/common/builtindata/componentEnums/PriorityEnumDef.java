@@ -13,11 +13,11 @@ public final class PriorityEnumDef extends EnumDefinition {
    public static final String PRIORITY_ENUM_NAME = "PRIORITY";
 
    public PriorityEnumDef() {
-      super._enumNames = new Object[3];
+      super._enumNames = new String[3];
       super._enumNames[0] = "HIGH";
       super._enumNames[1] = "NORMAL";
       super._enumNames[2] = "LOW";
-      super._enumValues = (ToIntHashtable)(new Object(4));
+      super._enumValues = new ToIntHashtable(4);
       super._enumValues.put("HIGH", 0);
       super._enumValues.put("NORMAL", 1);
       super._enumValues.put("LOW", 2);

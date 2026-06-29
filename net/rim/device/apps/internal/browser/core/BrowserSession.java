@@ -30,7 +30,7 @@ public final class BrowserSession {
    private static BrowserSession$ActiveConfigs _activeConfigs;
 
    private final String createHmacKey() {
-      StringBuffer buff = (StringBuffer)(new Object(43));
+      StringBuffer buff = new StringBuffer(43);
       buff.append("20,");
       this._hmacKey = Memory.copyToRAMOnlyBytes(RandomSource.getBytes(20));
 
@@ -53,7 +53,7 @@ public final class BrowserSession {
       if (!PersistentContent.isEncryptionEnabled() && this._config != null && this._config.getPropertyAsIntWithOverride((byte)2) == 2) {
          String key = StringUtilities.toLowerCase(uid, 1701707776);
          if (_activeConfigs._lastHistoryTable == null) {
-            _activeConfigs._lastHistoryTable = (Hashtable)(new Object());
+            _activeConfigs._lastHistoryTable = new Hashtable();
          }
 
          if (this._history == null) {
@@ -240,7 +240,7 @@ public final class BrowserSession {
 
       if (!PersistentContent.isEncryptionEnabled() && this._config != null && this._config.getPropertyAsIntWithOverride((byte)2) == 2) {
          if (_activeConfigs._lastHistoryTable == null) {
-            _activeConfigs._lastHistoryTable = (Hashtable)(new Object(1));
+            _activeConfigs._lastHistoryTable = new Hashtable(1);
          }
 
          _activeConfigs._lastHistoryTable.put(key, this._history);

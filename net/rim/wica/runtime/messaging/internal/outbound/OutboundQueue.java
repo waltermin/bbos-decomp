@@ -33,9 +33,9 @@ public final class OutboundQueue extends SplitQueue {
       this._scheduleLocks[3] = new Object();
 
       try {
-         this._ioURL = (URL)(new Object(this._agURL));
+         this._ioURL = new URL(this._agURL);
       } finally {
-         throw new Object(((StringBuffer)(new Object("Invalid URL "))).append(this._agURL).toString());
+         throw new IllegalArgumentException("Invalid URL " + this._agURL);
       }
    }
 

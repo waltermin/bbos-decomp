@@ -42,7 +42,7 @@ public final class UsernameSetupCommand implements DomainCommand {
          long restStatusCode = callResult.getRESTStatusCode();
          if (restStatusCode != 200) {
             if (callResult.getRESTStatusCode() == 10000) {
-               Hashtable paramsToForward = (Hashtable)(new Object());
+               Hashtable paramsToForward = new Hashtable();
                paramsToForward.put("suggestions", callResult.getSuggestions());
                paramsToForward.put("userName", userName);
                return new DomainCommandResult("suggestions", null, null, paramsToForward);
@@ -52,9 +52,7 @@ public final class UsernameSetupCommand implements DomainCommand {
                return DomainCommand.SESSION_TIMEOUT_RESULT;
             }
 
-            BISEventLogger.logEvent(
-               ((StringBuffer)(new Object("Change Device: Uhandled REST response code: "))).append(callResult.getRESTStatusCode()).toString(), 0
-            );
+            BISEventLogger.logEvent("Change Device: Uhandled REST response code: " + callResult.getRESTStatusCode(), 0);
             commandResultID = "error";
          } else {
             commandResultID = "success";
@@ -71,8 +69,8 @@ public final class UsernameSetupCommand implements DomainCommand {
             } else {
                Mailbox[] arrMailboxes = sessionState.getUserInfo().getMailboxes();
                if (arrMailboxes != null && arrMailboxes.length > 0) {
-                  pendingParams = (Hashtable)(new Object());
-                  Vector mailboxes = (Vector)(new Object());
+                  pendingParams = new Hashtable();
+                  Vector mailboxes = new Vector();
 
                   for (int i = 0; i < arrMailboxes.length; i++) {
                      arrMailboxes[i].setInvalid();

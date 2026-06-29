@@ -58,7 +58,7 @@ public final class EmailOpenVerb extends Verb {
    protected final ContextObject finalizeInvoke(ContextObject contextObject) {
       if (contextObject.getFlag(64)) {
          ShowMessageApp.showMessageApp(-246332839, null);
-         return (ContextObject)(new Object(39));
+         return new ContextObject(39);
       } else {
          return null;
       }

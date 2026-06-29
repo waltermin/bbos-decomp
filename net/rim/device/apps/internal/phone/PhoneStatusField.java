@@ -18,6 +18,7 @@ import net.rim.device.apps.api.phone.VoiceServices;
 import net.rim.device.apps.api.ribbon.indicators.VoicemailIconManager;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
 import net.rim.device.apps.internal.phone.api.PhoneUtilities;
+import net.rim.device.apps.internal.phone.api.WeakPhoneEventListener;
 import net.rim.device.apps.internal.phone.options.CallForwardRibbonIndicator;
 import net.rim.device.apps.internal.phone.options.SSManager;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
@@ -36,11 +37,11 @@ final class PhoneStatusField extends ObjectChoiceField implements RadioStatusLis
       } else {
          int defaultIndex = 0;
          this._lineIds = PhoneUtilities.getAvailableLineIds();
-         String[] choices = new Object[this._lineIds.length];
+         String[] choices = new String[this._lineIds.length];
          if (this._lineIds.length > 1) {
             for (int i = this._lineIds.length - 1; i >= 0; i--) {
                String number = PhoneUtilities.getLineNumber(this._lineIds[i], true);
-               choices[i] = ((StringBuffer)(new Object())).append(PhoneUtilities.getLineDescription(this._lineIds[i])).append(": ").append(number).toString();
+               choices[i] = PhoneUtilities.getLineDescription(this._lineIds[i]) + ": " + number;
                if (this._lineIds[i] == lineId) {
                   defaultIndex = i;
                }
@@ -51,7 +52,7 @@ final class PhoneStatusField extends ObjectChoiceField implements RadioStatusLis
                number = PhoneResources.getString(117);
             }
 
-            choices[0] = ((StringBuffer)(new Object())).append(PhoneResources.getString(168)).append(": ").append(number).toString();
+            choices[0] = PhoneResources.getString(168) + ": " + number;
          }
 
          this.setChoices(choices);
@@ -144,7 +145,7 @@ final class PhoneStatusField extends ObjectChoiceField implements RadioStatusLis
       }
 
       if (this._lineIds.length > 1) {
-         VoiceServices.addPhoneEventListener((PhoneEventListener)(new Object(this)));
+         VoiceServices.addPhoneEventListener(new WeakPhoneEventListener(this));
       }
 
       int fontStyle = PhoneUtilities.smallScreen() ? 0 : 1;

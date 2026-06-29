@@ -42,7 +42,7 @@ class SMILAttachmentBuilder$1 implements MMSPresentationModel {
 
    @Override
    public void copyTo(MMSPresentationModel target) {
-      throw new Object();
+      throw new RuntimeException();
    }
 
    @Override

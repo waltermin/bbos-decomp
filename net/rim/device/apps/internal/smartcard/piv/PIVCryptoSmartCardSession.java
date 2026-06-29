@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.smartcard.piv;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import net.rim.device.api.crypto.CryptoSmartCardKeyStoreData;
 import net.rim.device.api.crypto.CryptoSmartCardSession;
@@ -12,8 +13,12 @@ import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.smartcard.CommandAPDU;
 import net.rim.device.api.smartcard.ResponseAPDU;
 import net.rim.device.api.smartcard.SmartCard;
+import net.rim.device.api.smartcard.SmartCardAccessDeniedException;
+import net.rim.device.api.smartcard.SmartCardException;
 import net.rim.device.api.smartcard.SmartCardID;
+import net.rim.device.api.smartcard.SmartCardLockedException;
 import net.rim.device.api.smartcard.SmartCardReaderSession;
+import net.rim.device.api.smartcard.SmartCardUnsupportedOperationException;
 import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.DataBuffer;
@@ -49,7 +54,7 @@ public class PIVCryptoSmartCardSession extends CryptoSmartCardSession {
    private static final byte RESPONSE_BYTES_AVAILABLE = 97;
    private static final byte COMMAND_COMPLETE = -112;
    private static final byte[] PIV_CARD_APPLICATION_AID = new byte[]{-96, 0, 0, 3, 8, 0, 0, 16, 0};
-   private static CommandAPDU _cmd = (CommandAPDU)(new Object((byte)0, (byte)0, (byte)0, (byte)0));
+   private static CommandAPDU _cmd = new CommandAPDU((byte)0, (byte)0, (byte)0, (byte)0);
    private static final int MAX_LENGTH_ENCODING_BYTES = 4;
    static PIVCryptoSmartCardSession$UIDInfo _uidInfo;
 
@@ -61,34 +66,34 @@ public class PIVCryptoSmartCardSession extends CryptoSmartCardSession {
    }
 
    @Override
-   protected int getMaxLoginAttemptsImpl() {
-      throw new Object();
+   protected int getMaxLoginAttemptsImpl() throws SmartCardUnsupportedOperationException {
+      throw new SmartCardUnsupportedOperationException();
    }
 
    @Override
-   protected int getRemainingLoginAttemptsImpl() {
+   protected int getRemainingLoginAttemptsImpl() throws SmartCardException, SmartCardLockedException {
       ResponseAPDU response = this.pinVerifyHelper(null, true);
       byte sw1 = response.getSW1();
       byte sw2 = response.getSW2();
       if (sw1 == 99) {
          return sw2 & 15;
       } else if (response.checkStatusWords((byte)105, (byte)-125)) {
-         throw new Object();
+         throw new SmartCardLockedException();
       } else {
-         throw new Object();
+         throw new SmartCardException();
       }
    }
 
    @Override
-   protected boolean loginImpl(String password) {
+   protected boolean loginImpl(String password) throws SmartCardAccessDeniedException, SmartCardLockedException {
       if (password != null && password.length() <= 8 && password.length() != 0) {
          ResponseAPDU response = this.pinVerifyHelper(password, false);
          if (response.checkStatusWords((byte)-112, (byte)0)) {
             return true;
          } else if (!response.checkStatusWords((byte)99, (byte)0) && !response.checkStatusWords((byte)105, (byte)-125)) {
-            throw new Object();
+            throw new SmartCardAccessDeniedException();
          } else {
-            throw new Object();
+            throw new SmartCardLockedException();
          }
       } else {
          return false;
@@ -96,10 +101,10 @@ public class PIVCryptoSmartCardSession extends CryptoSmartCardSession {
    }
 
    private ResponseAPDU pinVerifyHelper(String pin, boolean verifyOnly) {
-      CommandAPDU pinVerifyAPDU = (CommandAPDU)(new Object((byte)0, (byte)32, (byte)0, (byte)-128));
+      CommandAPDU pinVerifyAPDU = new CommandAPDU((byte)0, (byte)32, (byte)0, (byte)-128);
       if (!verifyOnly) {
          if (pin == null) {
-            throw new Object("PIN is null");
+            throw new IllegalArgumentException("PIN is null");
          }
 
          byte[] pinBytes = pin.getBytes();
@@ -112,7 +117,7 @@ public class PIVCryptoSmartCardSession extends CryptoSmartCardSession {
          pinVerifyAPDU.setLcData(pinBytes);
       }
 
-      ResponseAPDU response = (ResponseAPDU)(new Object());
+      ResponseAPDU response = new ResponseAPDU();
       this.sendAPDU(pinVerifyAPDU, response);
       return response;
    }
@@ -130,15 +135,15 @@ public class PIVCryptoSmartCardSession extends CryptoSmartCardSession {
       // 06: astore 3
       // 07: aload 3
       // 08: dup
-      // 09: instanceof java/lang/Object
+      // 09: instanceof net/rim/device/api/crypto/RSAPublicKey
       // 0c: ifne 13
       // 0f: pop
       // 10: goto 9e
-      // 13: checkcast java/lang/Object
+      // 13: checkcast net/rim/device/api/crypto/RSAPublicKey
       // 16: astore 4
       // 18: aload 4
       // 1a: invokevirtual net/rim/device/api/crypto/RSAPublicKey.getCryptoSystem ()Lnet/rim/device/api/crypto/CryptoSystem;
-      // 1d: checkcast java/lang/Object
+      // 1d: checkcast net/rim/device/api/crypto/RSACryptoSystem
       // 20: astore 5
       // 22: aload 5
       // 24: invokevirtual net/rim/device/api/crypto/RSACryptoSystem.getModulusLength ()I
@@ -158,7 +163,7 @@ public class PIVCryptoSmartCardSession extends CryptoSmartCardSession {
       // 62: goto 67
       // 65: aconst_null
       // 66: areturn
-      // 67: new java/lang/Object
+      // 67: new net/rim/device/api/crypto/RSACryptoSystem
       // 6a: dup
       // 6b: new net/rim/device/apps/internal/smartcard/piv/PIVRSACryptoToken
       // 6e: dup
@@ -166,7 +171,7 @@ public class PIVCryptoSmartCardSession extends CryptoSmartCardSession {
       // 72: iload 6
       // 74: invokespecial net/rim/device/api/crypto/RSACryptoSystem.<init> (Lnet/rim/device/api/crypto/RSACryptoToken;I)V
       // 77: astore 8
-      // 79: new java/lang/Object
+      // 79: new net/rim/device/api/crypto/RSAPrivateKey
       // 7c: dup
       // 7d: aload 8
       // 7f: new net/rim/device/apps/internal/smartcard/piv/PIVCryptoTokenData
@@ -208,13 +213,13 @@ public class PIVCryptoSmartCardSession extends CryptoSmartCardSession {
    @Override
    protected CryptoSmartCardKeyStoreData[] getKeyStoreDataArrayImpl() {
       this.displayProgressDialog(CryptoCommonResources.getString(0), 5);
-      CryptoSmartCardKeyStoreData[] keyStoreDataArray = new Object[4];
+      CryptoSmartCardKeyStoreData[] keyStoreDataArray = new CryptoSmartCardKeyStoreData[4];
       int offset = 0;
       this.stepProgressDialog(1);
       Certificate cert = this.getCertificate(ID_PIV_AUTHENTICATION_CERT);
       if (cert != null) {
          String label = this.getLabel(cert, 22);
-         keyStoreDataArray[offset++] = (CryptoSmartCardKeyStoreData)(new Object(null, label, this.getPrivateKey(cert, (byte)-102), null, 2, cert, null, null, 0));
+         keyStoreDataArray[offset++] = new CryptoSmartCardKeyStoreData(null, label, this.getPrivateKey(cert, (byte)-102), null, 2, cert, null, null, 0);
       }
 
       this.stepProgressDialog(1);
@@ -224,23 +229,23 @@ public class PIVCryptoSmartCardSession extends CryptoSmartCardSession {
 
       if (this._idCertificate != null) {
          String label = this.getLabel(this._idCertificate, 23);
-         keyStoreDataArray[offset++] = (CryptoSmartCardKeyStoreData)(new Object(
+         keyStoreDataArray[offset++] = new CryptoSmartCardKeyStoreData(
             null, label, this.getPrivateKey(this._idCertificate, (byte)-100), null, 2, this._idCertificate, null, null, 0
-         ));
+         );
       }
 
       this.stepProgressDialog(1);
       cert = this.getCertificate(ID_KEY_MANAGEMENT_CERT);
       if (cert != null) {
          String label = this.getLabel(cert, 24);
-         keyStoreDataArray[offset++] = (CryptoSmartCardKeyStoreData)(new Object(null, label, this.getPrivateKey(cert, (byte)-99), null, 2, cert, null, null, 0));
+         keyStoreDataArray[offset++] = new CryptoSmartCardKeyStoreData(null, label, this.getPrivateKey(cert, (byte)-99), null, 2, cert, null, null, 0);
       }
 
       this.stepProgressDialog(1);
       cert = this.getCertificate(ID_CARD_AUTHENTICATION_CERT);
       if (cert != null) {
          String label = this.getLabel(cert, 25);
-         keyStoreDataArray[offset++] = (CryptoSmartCardKeyStoreData)(new Object(null, label, this.getPrivateKey(cert, (byte)-98), null, 2, cert, null, null, 0));
+         keyStoreDataArray[offset++] = new CryptoSmartCardKeyStoreData(null, label, this.getPrivateKey(cert, (byte)-98), null, 2, cert, null, null, 0);
       }
 
       Array.resize(keyStoreDataArray, offset);
@@ -261,15 +266,15 @@ public class PIVCryptoSmartCardSession extends CryptoSmartCardSession {
       return this.getFile(file, -1);
    }
 
-   private byte[] getFile(byte[] file, int numBytesNeeded) {
+   private byte[] getFile(byte[] file, int numBytesNeeded) throws SmartCardAccessDeniedException {
       if (!this.selectPIVCardApplication()) {
          return null;
       }
 
-      ResponseAPDU response = (ResponseAPDU)(new Object());
+      ResponseAPDU response = new ResponseAPDU();
       byte[] lcData = new byte[]{92, 3};
       Arrays.append(lcData, file);
-      CommandAPDU getDataCmd = (CommandAPDU)(new Object((byte)0, (byte)-53, (byte)63, (byte)-1, lcData, 0));
+      CommandAPDU getDataCmd = new CommandAPDU((byte)0, (byte)-53, (byte)63, (byte)-1, lcData, 0);
       this.sendAPDU(getDataCmd, response);
       byte[] responseBytes = response.getData();
       if (response.getSW1() == 97) {
@@ -280,7 +285,7 @@ public class PIVCryptoSmartCardSession extends CryptoSmartCardSession {
          responseBytes = this.getResponse(responseBytes, response.getSW2(), (byte)0, numBytesNeeded);
       } else if (!response.checkStatusWords((byte)-112, (byte)0)) {
          if (response.checkStatusWords((byte)105, (byte)-126)) {
-            throw new Object();
+            throw new SmartCardAccessDeniedException();
          }
 
          if (response.checkStatusWords((byte)106, (byte)-126)) {
@@ -311,7 +316,7 @@ public class PIVCryptoSmartCardSession extends CryptoSmartCardSession {
             if ((length & 128) != 0) {
                int numLengthOctets = length & 127;
                if (numLengthOctets > 4) {
-                  throw new Object();
+                  throw new RuntimeException();
                }
 
                length = 0;
@@ -327,7 +332,7 @@ public class PIVCryptoSmartCardSession extends CryptoSmartCardSession {
          }
 
          if (offset + length > totalLength) {
-            throw new Object();
+            throw new RuntimeException();
          }
 
          if (tag == tagToFind) {
@@ -375,7 +380,7 @@ public class PIVCryptoSmartCardSession extends CryptoSmartCardSession {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private X509Certificate getCertificate(byte[] file) {
+   private X509Certificate getCertificate(byte[] file) throws SmartCardException {
       byte[] certFile = this.getFile(file);
       if (certFile == null) {
          return null;
@@ -396,22 +401,22 @@ public class PIVCryptoSmartCardSession extends CryptoSmartCardSession {
             var11 = false;
          } finally {
             if (var11) {
-               throw new Object("Unable to decompress certificate");
+               throw new SmartCardException("Unable to decompress certificate");
             }
          }
       }
 
-      InputStream inputStream = (InputStream)(new Object(certificate));
+      InputStream inputStream = new ByteArrayInputStream(certificate);
 
       try {
-         return (X509Certificate)(new Object(inputStream));
+         return new X509Certificate(inputStream);
       } finally {
-         throw new Object("Unable to create certficate");
+         throw new SmartCardException("Unable to create certficate");
       }
    }
 
    private String getLabel(Certificate certificate, int resourceID) {
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       String friendlyName = certificate.getSubjectFriendlyName();
       if (friendlyName != null) {
          int lastIndex = friendlyName.lastIndexOf(46);
@@ -433,19 +438,19 @@ public class PIVCryptoSmartCardSession extends CryptoSmartCardSession {
       return buffer.toString();
    }
 
-   public void signDecrypt(RSACryptoSystem cryptoSystem, PIVCryptoTokenData privateKeyData, byte[] input, int inputOffset, byte[] output, int outputOffset) {
+   public void signDecrypt(RSACryptoSystem cryptoSystem, PIVCryptoTokenData privateKeyData, byte[] input, int inputOffset, byte[] output, int outputOffset) throws SmartCardException {
       if (cryptoSystem != null && privateKeyData != null && input != null && output != null) {
          int modulusLength = cryptoSystem.getModulusLength();
          if (input.length >= inputOffset + modulusLength && output.length >= outputOffset + modulusLength) {
-            ResponseAPDU response = (ResponseAPDU)(new Object());
-            CommandAPDU signAPDU = (CommandAPDU)(new Object((byte)0, (byte)0, (byte)0, (byte)0));
-            DataBuffer innerBuffer = (DataBuffer)(new Object());
+            ResponseAPDU response = new ResponseAPDU();
+            CommandAPDU signAPDU = new CommandAPDU((byte)0, (byte)0, (byte)0, (byte)0);
+            DataBuffer innerBuffer = new DataBuffer();
             innerBuffer.writeByte(-126);
             innerBuffer.writeByte(0);
             innerBuffer.writeByte(-127);
             this.writeLength(innerBuffer, input.length);
             innerBuffer.write(input, inputOffset, input.length);
-            DataBuffer lcData = (DataBuffer)(new Object());
+            DataBuffer lcData = new DataBuffer();
             lcData.writeByte(124);
             this.writeLength(lcData, innerBuffer.getLength());
             lcData.write(innerBuffer.getArray(), innerBuffer.getArrayStart(), innerBuffer.getLength());
@@ -468,12 +473,8 @@ public class PIVCryptoSmartCardSession extends CryptoSmartCardSession {
             byte[] responseData = response.getData();
             if (response.getSW1() != -112) {
                if (response.getSW1() != 97) {
-                  throw new Object(
-                     ((StringBuffer)(new Object("Invalid response code, sw1=")))
-                        .append(Integer.toHexString(response.getSW1() & 255))
-                        .append(" sw2=")
-                        .append(Integer.toHexString(response.getSW2() & 255))
-                        .toString()
+                  throw new SmartCardException(
+                     "Invalid response code, sw1=" + Integer.toHexString(response.getSW1() & 255) + " sw2=" + Integer.toHexString(response.getSW2() & 255)
                   );
                }
 
@@ -485,13 +486,13 @@ public class PIVCryptoSmartCardSession extends CryptoSmartCardSession {
             if (responseData != null && responseData.length > 0) {
                System.arraycopy(responseData, 0, output, outputOffset, responseData.length);
             } else {
-               throw new Object("Not enough response data received from the smart card.");
+               throw new SmartCardException("Not enough response data received from the smart card.");
             }
          } else {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -520,7 +521,7 @@ public class PIVCryptoSmartCardSession extends CryptoSmartCardSession {
          }
       }
 
-      return (SmartCardID)(new Object(idLong, friendlyName, this.getSmartCard()));
+      return new SmartCardID(idLong, friendlyName, this.getSmartCard());
    }
 
    @Override
@@ -528,14 +529,14 @@ public class PIVCryptoSmartCardSession extends CryptoSmartCardSession {
       return null;
    }
 
-   private byte[] getResponse(byte[] initialBytes, byte dataLength, byte classByte, int numBytesNeeded) {
+   private byte[] getResponse(byte[] initialBytes, byte dataLength, byte classByte, int numBytesNeeded) throws SmartCardException {
       byte[] responseData = initialBytes;
       if (responseData == null) {
          responseData = new byte[0];
       }
 
       _cmd.set(classByte, (byte)-64, (byte)0, (byte)0, dataLength & 255);
-      ResponseAPDU response = (ResponseAPDU)(new Object());
+      ResponseAPDU response = new ResponseAPDU();
       this.sendAPDU(_cmd, response);
       byte[] tempResponseData = response.getData();
       if (tempResponseData != null) {
@@ -549,18 +550,18 @@ public class PIVCryptoSmartCardSession extends CryptoSmartCardSession {
             ? responseData
             : this.getResponse(responseData, response.getSW2(), classByte, numBytesNeeded);
       } else {
-         throw new Object();
+         throw new SmartCardException();
       }
    }
 
    private CommandAPDU getSelectFileCommand(byte[] file) {
-      return (CommandAPDU)(new Object((byte)0, (byte)-92, (byte)4, (byte)0, file));
+      return new CommandAPDU((byte)0, (byte)-92, (byte)4, (byte)0, file);
    }
 
    private boolean selectPIVCardApplication() {
       if (!this._pivCardApplicationSelected) {
          try {
-            ResponseAPDU response = (ResponseAPDU)(new Object());
+            ResponseAPDU response = new ResponseAPDU();
             CommandAPDU selectFileAPDU = this.getSelectFileCommand(PIV_CARD_APPLICATION_AID);
             this.sendAPDU(selectFileAPDU, response);
             this._pivCardApplicationSelected = response.checkStatusWords((byte)-112, (byte)0) || response.getSW1() == 97;

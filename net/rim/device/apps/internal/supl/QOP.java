@@ -84,18 +84,18 @@ final class QOP {
 
    final void print() {
       System.out.println("QOP: ");
-      System.out.println(((StringBuffer)(new Object("Optionals: "))).append(this.optionals).toString());
-      System.out.println(((StringBuffer)(new Object("HorAcc: "))).append(this.horAcc).toString());
+      System.out.println("Optionals: " + this.optionals);
+      System.out.println("HorAcc: " + this.horAcc);
       if ((this.optionals & 4) == 4) {
-         System.out.println(((StringBuffer)(new Object("VerAcc: "))).append(this.verAcc).toString());
+         System.out.println("VerAcc: " + this.verAcc);
       }
 
       if ((this.optionals & 2) == 2) {
-         System.out.println(((StringBuffer)(new Object("MaxLocAge: "))).append(this.maxLocAge).toString());
+         System.out.println("MaxLocAge: " + this.maxLocAge);
       }
 
       if ((this.optionals & 1) == 1) {
-         System.out.println(((StringBuffer)(new Object("Delay: "))).append(this.delay).toString());
+         System.out.println("Delay: " + this.delay);
       }
    }
 }

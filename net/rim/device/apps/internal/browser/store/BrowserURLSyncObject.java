@@ -23,12 +23,12 @@ final class BrowserURLSyncObject implements SyncObject, ConversionProvider {
 
    @Override
    public final boolean convert(Object context, Object target) {
-      if (!(target instanceof Object)) {
+      if (!(target instanceof SyncBuffer)) {
          return false;
       }
 
       SyncBuffer syncBuffer = (SyncBuffer)target;
-      DataBuffer dataBuffer = (DataBuffer)(new Object(false));
+      DataBuffer dataBuffer = new DataBuffer(false);
       dataBuffer.setLength(0);
       dataBuffer.writeCompressedInt(BrowserURLCollection.SYNC_VERSION);
 

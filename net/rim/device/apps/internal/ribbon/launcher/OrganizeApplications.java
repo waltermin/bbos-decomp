@@ -5,7 +5,7 @@ import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.i18n.ResourceBundleFamily;
 import net.rim.device.api.system.ApplicationDescriptor;
 import net.rim.device.api.system.EventInjector;
-import net.rim.device.api.system.EventInjector$Event;
+import net.rim.device.api.system.EventInjector$TrackwheelEvent;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FocusChangeListener;
 import net.rim.device.api.ui.Keypad;
@@ -43,7 +43,7 @@ public final class OrganizeApplications extends SaveableMainScreenOptionsListIte
          return null;
       }
 
-      Vector items = (Vector)(new Object());
+      Vector items = new Vector();
       items.addElement(this);
       return items;
    }
@@ -116,7 +116,7 @@ public final class OrganizeApplications extends SaveableMainScreenOptionsListIte
       int key = Keypad.key(keycode);
       switch (key) {
          case 10:
-            EventInjector.invokeEvent((EventInjector$Event)(new Object(516, 0, 0)));
+            EventInjector.invokeEvent(new EventInjector$TrackwheelEvent(516, 0, 0));
             return true;
          case 17:
          case 18:
@@ -183,9 +183,7 @@ public final class OrganizeApplications extends SaveableMainScreenOptionsListIte
          this._selectedApplication = this._iconArea.getSelectedApplication();
          ApplicationDescriptor appDesc = ApplicationDescriptor.currentApplicationDescriptor();
          String name = this._selectedApplication != null ? this._selectedApplication.getUniqueName() : "";
-         boolean currentAppSelected = name.equals(
-            ((StringBuffer)(new Object())).append(appDesc.getModuleName()).append(".").append(appDesc.getName()).toString()
-         );
+         boolean currentAppSelected = name.equals(appDesc.getModuleName() + "." + appDesc.getName());
          if (!this._iconArea.moveApplicationInProgress()) {
             if (this._hierarchyManager.movingIconsAllowed()) {
                verbToMenu.addVerb(new OrganizeApplications$OrganizeApplicationsVerb(this, 614656, 21));

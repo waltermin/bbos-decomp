@@ -20,7 +20,7 @@ public final class ViewCalendarPopupScreen$CalendarFolderController {
       CalendarService calendarService = CalendarServiceManager.getInstance().findCalendarService(this._calendarKey.getCalendarServiceID());
       if (calendarService != null) {
          CalendarFolder calendarFolder = calendarService.getCalendarFolder(this._calendarKey.getCalendarFolderID());
-         this._calendarName = ((StringBuffer)(new Object())).append(calendarService.getServiceName()).append(calendarFolder.getFolderNameSuffix()).toString();
+         this._calendarName = calendarService.getServiceName() + calendarFolder.getFolderNameSuffix();
          this._isVisible = CalendarOptions.getOptions().isShowAppointments(this._calendarKey);
       } else {
          this._calendarName = null;
@@ -36,7 +36,7 @@ public final class ViewCalendarPopupScreen$CalendarFolderController {
    }
 
    public final Field getField(RadioButtonGroup radioGroup) {
-      HorizontalFieldManager line = (HorizontalFieldManager)(new Object());
+      HorizontalFieldManager line = new HorizontalFieldManager();
       line.setTag(ViewCalendarPopupScreen.FOLDER_TEXT_TAG);
       RadioButtonField radioButton = new ViewCalendarPopupScreen$CalendarFolderController$1(this, this._calendarName, radioGroup, false);
       radioButton.setCookie(this);

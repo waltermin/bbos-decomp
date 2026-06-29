@@ -51,7 +51,7 @@ final class DocViewPreviewFieldManager {
                mainHash.remove(keys.nextElement());
             }
 
-            hash = (IntHashtable)(new Object());
+            hash = new IntHashtable();
             mainHash.put(messageID, hash);
          }
 

@@ -1,5 +1,7 @@
 package net.rim.tools.compiler.io;
 
+import java.io.EOFException;
+import java.io.IOException;
 import java.io.InputStream;
 import net.rim.device.api.io.IOUtilities;
 import net.rim.tools.compiler.vm.Constants;
@@ -34,24 +36,24 @@ public final class StructuredInputStream implements Constants {
       return this._offset;
    }
 
-   public final int skipBytes(int n) {
+   public final int skipBytes(int n) throws EOFException {
       int remaining = this._length - this._offset;
       if (remaining < 0) {
-         throw new Object();
+         throw new EOFException();
       }
 
       if (n > remaining) {
-         throw new Object();
+         throw new EOFException();
       }
 
       this._offset += n;
       return n;
    }
 
-   public final int read(byte[] b) {
+   public final int read(byte[] b) throws EOFException {
       int remaining = this._length - this._offset;
       if (remaining < 0) {
-         throw new Object();
+         throw new EOFException();
       }
 
       int length = b.length;
@@ -64,12 +66,12 @@ public final class StructuredInputStream implements Constants {
       return length;
    }
 
-   public final int read() {
+   public final int read() throws EOFException {
       if (this._offset == this._length) {
          this._offset++;
          return -1;
       } else if (this._offset > this._length) {
-         throw new Object();
+         throw new EOFException();
       } else {
          return this._bytes[this._delta + this._offset++];
       }
@@ -118,7 +120,7 @@ public final class StructuredInputStream implements Constants {
       return bytes;
    }
 
-   public static final byte[] readAll(InputStream in, int length, String name) {
+   public static final byte[] readAll(InputStream in, int length, String name) throws IOException {
       byte[] bytes = null;
       if (length == -1) {
          return IOUtilities.streamToBytes(in);
@@ -130,7 +132,7 @@ public final class StructuredInputStream implements Constants {
       while (got < length) {
          int more = in.read(bytes, got, length - got);
          if (more <= 0) {
-            throw new Object(((StringBuffer)(new Object("Unable to read all input from: "))).append(name).toString());
+            throw new IOException("Unable to read all input from: " + name);
          }
 
          got += more;

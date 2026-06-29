@@ -8,7 +8,7 @@ import net.rim.device.api.util.IntIntHashtable;
 import net.rim.device.internal.ui.UiInternal;
 
 public class SetupWizardHotkeys {
-   private static IntIntHashtable _map = (IntIntHashtable)(new Object());
+   private static IntIntHashtable _map = new IntIntHashtable();
    private static ResourceBundle _rb = ResourceBundle.getBundle(894458828807867933L, "net.rim.device.apps.api.setupwizard.SetupWizardAPI");
    private static Locale _locale;
 

@@ -3,6 +3,7 @@ package net.rim.blackberry.api.pdap;
 import javax.microedition.pim.PIMItem;
 import net.rim.device.api.collection.Collection;
 import net.rim.device.api.collection.CollectionListener;
+import net.rim.device.apps.api.addressbook.GroupAddressCardModel;
 
 class PIMListImpl$WrapperListener implements CollectionListener {
    private PIMListListener _listener;
@@ -25,7 +26,7 @@ class PIMListImpl$WrapperListener implements CollectionListener {
 
    @Override
    public void elementAdded(Collection collection, Object element) {
-      if (this._listenForGroupAddressCards || !(element instanceof Object)) {
+      if (this._listenForGroupAddressCards || !(element instanceof GroupAddressCardModel)) {
          PIMItem item = this.this$0.getPIMItemFor(element);
          this._listener.itemAdded(item);
       }
@@ -33,7 +34,7 @@ class PIMListImpl$WrapperListener implements CollectionListener {
 
    @Override
    public void elementUpdated(Collection collection, Object oldElement, Object newElement) {
-      if (this._listenForGroupAddressCards || !(newElement instanceof Object)) {
+      if (this._listenForGroupAddressCards || !(newElement instanceof GroupAddressCardModel)) {
          PIMItem oldItem = this.this$0.getPIMItemFor(oldElement);
          PIMItem newItem = this.this$0.getPIMItemFor(newElement);
          this._listener.itemUpdated(oldItem, newItem);
@@ -42,7 +43,7 @@ class PIMListImpl$WrapperListener implements CollectionListener {
 
    @Override
    public void elementRemoved(Collection collection, Object element) {
-      if (this._listenForGroupAddressCards || !(element instanceof Object)) {
+      if (this._listenForGroupAddressCards || !(element instanceof GroupAddressCardModel)) {
          PIMItem item = this.this$0.getPIMItemFor(element);
          this._listener.itemRemoved(item);
       }

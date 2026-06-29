@@ -16,7 +16,7 @@ public final class QmPopupStatus extends QmThemedPopupScreen {
 
    public QmPopupStatus(String message, Bitmap bitmap) {
       super(new QmPopupStatus$1());
-      this._label = (LabelField)(new Object(message, 51539607552L));
+      this._label = new LabelField(message, 51539607552L);
       if (bitmap != null) {
          this._label.setImage(bitmap);
       }
@@ -33,7 +33,7 @@ public final class QmPopupStatus extends QmThemedPopupScreen {
       UiApplication app = UiApplication.getUiApplication();
       this._popScreenRunnable.init();
       if (app.invokeLater(this._popScreenRunnable, time, false) == -1) {
-         throw new Object();
+         throw new RuntimeException();
       }
 
       this._shown = System.currentTimeMillis();

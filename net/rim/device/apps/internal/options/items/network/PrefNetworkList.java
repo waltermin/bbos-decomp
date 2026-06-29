@@ -11,7 +11,7 @@ final class PrefNetworkList {
       this._netInfos = netInfos;
       this._isListChanged = false;
       if (this._netInfos == null) {
-         this._netInfos = new Object[0];
+         this._netInfos = new NetworkInfo[0];
       }
    }
 
@@ -19,8 +19,8 @@ final class PrefNetworkList {
       int clearFlag = 80;
       int catFlag = NetworkOptionsUtils.clearFlag(255, clearFlag);
       if (this._netInfos == null) {
-         this._netInfos = new Object[1];
-         this._netInfos[0] = (NetworkInfo)(new Object());
+         this._netInfos = new NetworkInfo[1];
+         this._netInfos[0] = new NetworkInfo();
          this._netInfos[0].setName(netInfo.getName());
          this._netInfos[0].setNetworkId(netInfo.getNetworkId());
          this._netInfos[0].setCategory(catFlag | netInfo.getCategory());
@@ -32,9 +32,9 @@ final class PrefNetworkList {
             index = size;
          }
 
-         NetworkInfo[] tempNetInfos = new Object[size + 1];
+         NetworkInfo[] tempNetInfos = new NetworkInfo[size + 1];
          System.arraycopy(this._netInfos, index, tempNetInfos, index + 1, size - index);
-         tempNetInfos[index] = (NetworkInfo)(new Object());
+         tempNetInfos[index] = new NetworkInfo();
          tempNetInfos[index].setName(NetworkOptionsUtils.getPredefinedNetworkName(netInfo.getNetworkId()));
          tempNetInfos[index].setNetworkId(netInfo.getNetworkId());
          tempNetInfos[index].setCategory(catFlag | netInfo.getCategory());
@@ -55,7 +55,7 @@ final class PrefNetworkList {
             index = size - 1;
          }
 
-         NetworkInfo[] tempNetInfos = new Object[size - 1];
+         NetworkInfo[] tempNetInfos = new NetworkInfo[size - 1];
          System.arraycopy(this._netInfos, 0, tempNetInfos, 0, index);
          if (index + 1 < size) {
             System.arraycopy(this._netInfos, index + 1, tempNetInfos, index, size - (index + 1));

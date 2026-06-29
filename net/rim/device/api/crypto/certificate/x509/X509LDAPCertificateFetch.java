@@ -21,15 +21,15 @@ public class X509LDAPCertificateFetch extends LDAPCertificateFetch {
    protected void addAttributesAndFilters(LDAPQuery query, String[] emailAddresses) {
       query.addAttribute(USER_CERT);
       query.addAttribute(USER_CERT_BINARY);
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       int numEmailAddresses = emailAddresses != null ? emailAddresses.length : 0;
       if (numEmailAddresses > 0) {
          buffer.append('(').append('|');
 
          for (int i = 0; i < numEmailAddresses; i++) {
             buffer.append('(').append(MAIL).append('=').append(emailAddresses[i]).append(')');
-            StringBuffer dominoCanonicalNameFilter = (StringBuffer)(new Object());
-            StringBuffer dominoCanonicalNameQuery = (StringBuffer)(new Object());
+            StringBuffer dominoCanonicalNameFilter = new StringBuffer();
+            StringBuffer dominoCanonicalNameQuery = new StringBuffer();
             if (this.parseDominoCanonicalName(emailAddresses[i], dominoCanonicalNameFilter, dominoCanonicalNameQuery)) {
                buffer.append(dominoCanonicalNameFilter.toString());
             }
@@ -59,7 +59,7 @@ public class X509LDAPCertificateFetch extends LDAPCertificateFetch {
       if (StringUtilities.startsWithIgnoreCase(possibleDominoCanonicalName, COMMON_NAME_PREFIX, 1701707776) && possibleDominoCanonicalName.indexOf(47) >= 0) {
          dominoCanonicalNameFilter.setLength(0);
          dominoCanonicalNameQuery.setLength(0);
-         StringTokenizer tokenizer = (StringTokenizer)(new Object(possibleDominoCanonicalName, '/'));
+         StringTokenizer tokenizer = new StringTokenizer(possibleDominoCanonicalName, '/');
 
          while (tokenizer.hasMoreTokens()) {
             String currentToken = StringUtilities.toLowerCase(tokenizer.nextToken(), 1701707776);
@@ -134,7 +134,7 @@ public class X509LDAPCertificateFetch extends LDAPCertificateFetch {
             }
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

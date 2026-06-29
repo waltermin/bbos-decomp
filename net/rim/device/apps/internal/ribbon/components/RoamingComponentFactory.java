@@ -102,8 +102,8 @@ final class RoamingComponentFactory implements Factory, GANStatusListener, Radio
 
    @Override
    public final void test(Object id, Object value) {
-      if (value instanceof Object) {
-         this._iconIndex = value - 1;
+      if (value instanceof Integer) {
+         this._iconIndex = (Integer)value - 1;
       }
 
       this._helper.doUpdates();

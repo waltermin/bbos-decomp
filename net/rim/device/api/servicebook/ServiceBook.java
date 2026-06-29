@@ -5,6 +5,7 @@ import net.rim.device.api.hrt.HostRoutingTable;
 import net.rim.device.api.itpolicy.ITPolicy;
 import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.system.ControlledAccess;
+import net.rim.device.api.system.ControlledAccessException;
 import net.rim.device.api.system.DeviceInfo;
 import net.rim.device.api.system.GlobalEventListener;
 import net.rim.device.api.system.PersistentObject;
@@ -32,7 +33,7 @@ public final class ServiceBook implements Persistable, GlobalEventListener {
    private boolean _serialInjectionInProgress;
    private Hashtable _serviceStatuses;
    private IntIntHashtable _CIDAttributes;
-   Hashtable _serverPINmappings = (Hashtable)(new Object());
+   Hashtable _serverPINmappings = new Hashtable();
    public static final long SB_GUID = -863050508581563378L;
    public static final int DUP_NONE = 0;
    public static final int DUP_REMOVED = 1;
@@ -71,7 +72,7 @@ public final class ServiceBook implements Persistable, GlobalEventListener {
    public static final int RESULT_PACKET_PARSE_ERROR = 9;
    public static final int RESULT_CUSTOM_ERROR = 255;
    public static final byte SERVICE_RECORD_SUMMARY_RECORD = 1;
-   private static DataBuffer _commandPayload = (DataBuffer)(new Object());
+   private static DataBuffer _commandPayload = new DataBuffer();
    private static String _pendingSwitchSourceUID = null;
    private static String _pendingSwitchDestinationUID = null;
    private static long _pendingTimestamp = 0;
@@ -470,8 +471,8 @@ public final class ServiceBook implements Persistable, GlobalEventListener {
 
    public final synchronized byte[] getServiceList() {
       ServiceRecord[] records = this.getRecords();
-      DataBuffer buffer = (DataBuffer)(new Object(true));
-      DataBuffer tempbuffer = (DataBuffer)(new Object(true));
+      DataBuffer buffer = new DataBuffer(true);
+      DataBuffer tempbuffer = new DataBuffer(true);
       buffer.setPosition(0);
 
       for (int i = 0; i < records.length; i++) {
@@ -531,7 +532,7 @@ public final class ServiceBook implements Persistable, GlobalEventListener {
 
                try {
                   var7 = true;
-                  TLEUtilities.parseField((DataBuffer)(new Object(sbInfo, 1, sbInfo.length, true)), parser, sbInfo.length);
+                  TLEUtilities.parseField(new DataBuffer(sbInfo, 1, sbInfo.length, true), parser, sbInfo.length);
                   var7 = false;
                   break;
                } finally {
@@ -578,7 +579,7 @@ public final class ServiceBook implements Persistable, GlobalEventListener {
       //
       // Bytecode:
       // 000: invokestatic net/rim/device/api/servicebook/ServiceBook.assertRRISignature ()V
-      // 003: new java/lang/Object
+      // 003: new net/rim/device/api/util/DataBuffer
       // 006: dup
       // 007: invokespecial net/rim/device/api/util/DataBuffer.<init> ()V
       // 00a: astore 5
@@ -727,7 +728,7 @@ public final class ServiceBook implements Persistable, GlobalEventListener {
       // 154: ifeq 196
       // 157: aload 6
       // 159: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 15e: checkcast java/lang/Object
+      // 15e: checkcast java/lang/String
       // 161: astore 7
       // 163: aload 7
       // 165: ifnull 14d
@@ -735,7 +736,7 @@ public final class ServiceBook implements Persistable, GlobalEventListener {
       // 169: getfield net/rim/device/api/servicebook/ServiceBook._serverPINmappings Ljava/util/Hashtable;
       // 16c: aload 7
       // 16e: invokevirtual java/util/Hashtable.get (Ljava/lang/Object;)Ljava/lang/Object;
-      // 171: checkcast java/lang/Object
+      // 171: checkcast java/lang/Integer
       // 174: astore 8
       // 176: aload 8
       // 178: ifnull 14d
@@ -1196,10 +1197,10 @@ public final class ServiceBook implements Persistable, GlobalEventListener {
                   for (int i = 0; i < 2; i++) {
                      byte stringId = comandData.readByte();
                      if (stringId == 1) {
-                        sourceUID = (String)(new Object(comandData.readByteArray()));
+                        sourceUID = new String(comandData.readByteArray());
                         sourceUID = StringUtilities.toLowerCase(sourceUID, 1701707776);
                      } else if (stringId == 2) {
-                        newUID = (String)(new Object(comandData.readByteArray()));
+                        newUID = new String(comandData.readByteArray());
                         newUID = StringUtilities.toLowerCase(newUID, 1701707776);
                      }
                   }
@@ -1242,7 +1243,7 @@ public final class ServiceBook implements Persistable, GlobalEventListener {
             case 2:
                ack = 128;
                if (comandData.readByte() == 1) {
-                  String serviceToDeleteUID = (String)(new Object(comandData.readByteArray()));
+                  String serviceToDeleteUID = new String(comandData.readByteArray());
                   ServiceRecord[] records = this.findRecordsByUid(serviceToDeleteUID);
                   boolean hasSecureServices = false;
 
@@ -1268,7 +1269,7 @@ public final class ServiceBook implements Persistable, GlobalEventListener {
                byte commandField = comandData.readByte();
                if (commandField == 1) {
                   ack = 192;
-                  serverUID = (String)(new Object(comandData.readByteArray()));
+                  serverUID = new String(comandData.readByteArray());
                   serverUID = StringUtilities.toLowerCase(serverUID, 1701707776);
                   ServiceBook$ServiceStatus serviceStatus = null;
                   if (this._serviceStatuses.containsKey(serverUID)) {
@@ -1282,7 +1283,7 @@ public final class ServiceBook implements Persistable, GlobalEventListener {
                   switch (statusCommandField) {
                      case 3:
                         int length = comandData.readCompressedInt();
-                        DataBuffer statusFieldPayload = (DataBuffer)(new Object());
+                        DataBuffer statusFieldPayload = new DataBuffer();
                         statusFieldPayload.setData(comandData.getArray(), comandData.getArrayPosition(), length, comandData.isBigEndian());
                         comandData.skipBytes(length);
 
@@ -1296,7 +1297,7 @@ public final class ServiceBook implements Persistable, GlobalEventListener {
                                     statusFieldPayload.skipBytes(statusFieldLength);
                                  } else {
                                     if (DeviceInfo.getDeviceId() != lastPIN) {
-                                       this._serverPINmappings.put(serverUID, new Object(lastPIN));
+                                       this._serverPINmappings.put(serverUID, new Integer(lastPIN));
                                     }
 
                                     serviceStatus.setLastPIN(lastPIN);
@@ -1375,8 +1376,8 @@ public final class ServiceBook implements Persistable, GlobalEventListener {
       this._nextRecordId = 0;
       this._records = new ServiceRecord[0];
       this._restrictions = new ServiceBook$SBRestriction[0];
-      this._serviceStatuses = (Hashtable)(new Object());
-      this._CIDAttributes = (IntIntHashtable)(new Object());
+      this._serviceStatuses = new Hashtable();
+      this._CIDAttributes = new IntIntHashtable();
    }
 
    public static final ServiceBook init() {
@@ -1430,7 +1431,7 @@ public final class ServiceBook implements Persistable, GlobalEventListener {
       if (!ControlledAccess.verifyCodeModuleSignature(moduleHandle, 51)
          && ApplicationControl.isExternalConnectionAllowed(null, true) == 1
          && ApplicationControl.isInternalConnectionAllowed(null, true) == 1) {
-         throw new Object();
+         throw new ControlledAccessException();
       }
    }
 }

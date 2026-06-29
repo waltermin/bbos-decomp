@@ -12,7 +12,7 @@ class InsertInternetServiceBook$2 implements InsertInternetServiceBook$Applicati
 
    @Override
    public byte[] get() {
-      DataBuffer db = (DataBuffer)(new Object());
+      DataBuffer db = new DataBuffer();
       db.writeByte(16);
       TLEUtilities.writeIntegerField(db, 240, 3, false);
       byte[] data = new byte[]{0, 0, 0, 2, 0, 0, 0, 2};

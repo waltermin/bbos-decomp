@@ -9,6 +9,6 @@ final class PhoneBackdoorHelpScreen$5 implements Runnable {
 
    @Override
    public final void run() {
-      throw new Object("KA-BOOM! Restart the Voice App");
+      throw new RuntimeException("KA-BOOM! Restart the Voice App");
    }
 }

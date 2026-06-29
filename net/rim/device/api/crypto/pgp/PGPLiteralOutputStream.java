@@ -28,12 +28,12 @@ public class PGPLiteralOutputStream extends PGPOutputStream {
       super(out, tagFormat);
       this._internalStream = super._out.getOutputStream();
       if (time < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       switch (type) {
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          default:
             this._internalStream.write(116);
@@ -66,7 +66,7 @@ public class PGPLiteralOutputStream extends PGPOutputStream {
          this._internalStream.write(b, off, len);
          this._lengthCount += len;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

@@ -16,16 +16,16 @@ public final class CFBDecryptor extends StreamDecryptor {
    public CFBDecryptor(SymmetricKeyEncryptorEngine engine, InitializationVector iv, InputStream input, boolean eightBitCFB) {
       super(input);
       if (engine == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int blockLength = engine.getBlockLength();
       if (iv == null) {
-         iv = (InitializationVector)(new Object(blockLength));
+         iv = new InitializationVector(blockLength);
       }
 
       if (iv.getLength() != blockLength) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._engine = engine;
@@ -38,7 +38,7 @@ public final class CFBDecryptor extends StreamDecryptor {
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object())).append(this._engine.getAlgorithm()).append("/CFB").toString();
+      return this._engine.getAlgorithm() + "/CFB";
    }
 
    public final InitializationVector getIV() {
@@ -69,7 +69,7 @@ public final class CFBDecryptor extends StreamDecryptor {
             dataLength -= xorLength;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -79,19 +79,19 @@ public final class CFBDecryptor extends StreamDecryptor {
       byte[] IV = new byte[]{4, -1, -36, -60, -31, 53, -55, 95};
       int length = PLAIN_TEXT.length;
       byte[] target = new byte[length];
-      ByteArrayInputStream out = (ByteArrayInputStream)(new Object(CIPHER_TEXT));
+      ByteArrayInputStream out = new ByteArrayInputStream(CIPHER_TEXT);
 
       try {
-         CFBDecryptor decryptor = new CFBDecryptor((SymmetricKeyEncryptorEngine)(new Object()), (InitializationVector)(new Object(IV)), out, true);
+         CFBDecryptor decryptor = new CFBDecryptor(new TestEngine(), new InitializationVector(IV), out, true);
          decryptor.read(target, 0, length);
          if (Arrays.equals(target, 0, PLAIN_TEXT, 0, length)) {
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

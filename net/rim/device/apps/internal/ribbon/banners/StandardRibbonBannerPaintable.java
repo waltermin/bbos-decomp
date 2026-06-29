@@ -34,7 +34,7 @@ public final class StandardRibbonBannerPaintable implements BannerField, RibbonC
    private SimpleRibbonComponent _statusField;
    private SimpleRibbonComponent _networkBlock;
    private SimpleRibbonComponent _gpsField;
-   private Vector _listeners = (Vector)(new Object());
+   private Vector _listeners = new Vector();
 
    public StandardRibbonBannerPaintable() {
       FactoryRepository repos = GlobalFactoryRepository.getFactoryRepository(-4018062520840731194L);
@@ -59,7 +59,7 @@ public final class StandardRibbonBannerPaintable implements BannerField, RibbonC
    @Override
    public final void applyTheme() {
       Theme$Writer themeWriter = ThemeManager.getActiveTheme().getWriterInternalDeprecated();
-      Hashtable parms = (Hashtable)(new Object());
+      Hashtable parms = new Hashtable();
       ThemeAttributeSet$Writer attributesWriter = themeWriter.createThemeAttributeSetWriter(null);
       attributesWriter.setFontFamily(FontFamily.FAMILY_SYSTEM);
       attributesWriter.setFontStyle(0);
@@ -140,7 +140,7 @@ public final class StandardRibbonBannerPaintable implements BannerField, RibbonC
 
    @Override
    public final void setChangeListener(RibbonComponent$RibbonComponentChangeListener listener) {
-      this._listeners.addElement(new Object(listener));
+      this._listeners.addElement(new WeakReference(listener));
    }
 
    @Override

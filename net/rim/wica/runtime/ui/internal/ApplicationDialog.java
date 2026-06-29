@@ -4,6 +4,7 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.container.PopupScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.CharacterUtilities;
 import net.rim.wica.runtime.ui.internal.component.ScreenContext;
 
@@ -13,7 +14,7 @@ final class ApplicationDialog extends PopupScreen implements WicaScreen {
    private DialogTitleField _titleField;
 
    ApplicationDialog() {
-      super((Manager)(new Object(2251799813685248L)));
+      super(new VerticalFieldManager(2251799813685248L));
       this.add(this._manager);
    }
 

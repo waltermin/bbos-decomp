@@ -2,11 +2,13 @@ package net.rim.device.cldc.io.ippp;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.microedition.io.SocketConnection;
 import net.rim.device.api.io.ConnectionClosedException;
 import net.rim.device.api.io.DatagramStatusListener;
+import net.rim.device.api.io.IOCancelledException;
 import net.rim.device.api.io.SocketConnectionEnhanced;
 import net.rim.device.api.system.RadioInfo;
 import net.rim.device.api.util.DataBuffer;
@@ -101,13 +103,7 @@ public final class StreamProtocol implements SocketConnection, DatagramStatusLis
                datagramReceived.getArray(),
                datagramReceived.getArrayPosition(),
                datagramReceived.available(),
-               ((StringBuffer)(new Object("IPPP:")))
-                  .append(this._datagramProtocol.getConnectionID())
-                  .append(' ')
-                  .append(this.getGroupUID())
-                  .append(' ')
-                  .append(this.getSpecificUID())
-                  .toString(),
+               "IPPP:" + this._datagramProtocol.getConnectionID() + ' ' + this.getGroupUID() + ' ' + this.getSpecificUID(),
                false
             );
       }
@@ -147,31 +143,31 @@ public final class StreamProtocol implements SocketConnection, DatagramStatusLis
    }
 
    @Override
-   public final OutputStream openOutputStream() {
+   public final OutputStream openOutputStream() throws IOCancelledException {
       if (this._outputStream == null) {
          this._outputStream = new SocketOutputStream(this, this._sendFirstEmptyPacket);
       } else if (this._outputStream.isClosed()) {
-         throw new Object();
+         throw new IOCancelledException();
       }
 
       return this._outputStream;
    }
 
    @Override
-   public final DataInputStream openDataInputStream() {
+   public final DataInputStream openDataInputStream() throws IOException {
       this.checkClosed();
       if (this._dataInputStream == null) {
-         this._dataInputStream = (DataInputStream)(new Object(this.openInputStream()));
+         this._dataInputStream = new DataInputStream(this.openInputStream());
          return this._dataInputStream;
       } else {
-         throw new Object("Stream already open");
+         throw new IOException("Stream already open");
       }
    }
 
    @Override
    public final DataOutputStream openDataOutputStream() {
       if (this._dataOutputStream == null) {
-         this._dataOutputStream = (DataOutputStream)(new Object(this.openOutputStream()));
+         this._dataOutputStream = new DataOutputStream(this.openOutputStream());
       }
 
       return this._dataOutputStream;
@@ -185,7 +181,7 @@ public final class StreamProtocol implements SocketConnection, DatagramStatusLis
    }
 
    @Override
-   public final InputStream openInputStream() {
+   public final InputStream openInputStream() throws IOException, IOCancelledException {
       label31:
       try {
          OutputStream outs = this.openOutputStream();
@@ -198,9 +194,9 @@ public final class StreamProtocol implements SocketConnection, DatagramStatusLis
          this._inputStream = new SocketInputStream(this);
          return this._inputStream;
       } else if (this._inputStream.isClosed()) {
-         throw new Object();
+         throw new IOCancelledException();
       } else {
-         throw new Object("Stream already open");
+         throw new IOException("Stream already open");
       }
    }
 
@@ -213,7 +209,7 @@ public final class StreamProtocol implements SocketConnection, DatagramStatusLis
    @Override
    public final String getLocalAddress() {
       this.checkClosed();
-      return (String)(new Object(RadioInfo.getIPAddress(0)));
+      return new String(RadioInfo.getIPAddress(0));
    }
 
    @Override
@@ -244,7 +240,7 @@ public final class StreamProtocol implements SocketConnection, DatagramStatusLis
       if (option >= 0 && option <= 4) {
          return this._socketOptions[option];
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -254,7 +250,7 @@ public final class StreamProtocol implements SocketConnection, DatagramStatusLis
       if (option >= 0 && option <= 4 && value >= 0) {
          this._socketOptions[option] = value;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -330,13 +326,7 @@ public final class StreamProtocol implements SocketConnection, DatagramStatusLis
                      output,
                      offset,
                      bytesToWrite,
-                     ((StringBuffer)(new Object("IPPP:")))
-                        .append(this._datagramProtocol.getConnectionID())
-                        .append(' ')
-                        .append(this.getGroupUID())
-                        .append(' ')
-                        .append(this.getSpecificUID())
-                        .toString(),
+                     "IPPP:" + this._datagramProtocol.getConnectionID() + ' ' + this.getGroupUID() + ' ' + this.getSpecificUID(),
                      true
                   );
             }
@@ -355,9 +345,9 @@ public final class StreamProtocol implements SocketConnection, DatagramStatusLis
       this._streamProtocolListener = null;
    }
 
-   private final void checkClosed() {
+   private final void checkClosed() throws IOException {
       if (this._isClosed) {
-         throw new Object();
+         throw new IOException();
       }
    }
 }

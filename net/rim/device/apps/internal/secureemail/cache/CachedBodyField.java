@@ -1,9 +1,9 @@
 package net.rim.device.apps.internal.secureemail.cache;
 
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.apps.internal.blackberryemail.resources.EmailResources;
 import net.rim.device.apps.internal.secureemail.CursorProviderActiveRichTextField;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 
 public class CachedBodyField extends CachedField {
    private String _body;
@@ -15,9 +15,9 @@ public class CachedBodyField extends CachedField {
 
    @Override
    public void fillManager(Manager manager, Object context) {
-      manager.add((Field)(new Object(4)));
+      manager.add(new VerticalSpacerField(4));
       manager.add(new CursorProviderActiveRichTextField(this._body));
-      manager.add((Field)(new Object(4)));
+      manager.add(new VerticalSpacerField(4));
    }
 
    @Override

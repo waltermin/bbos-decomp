@@ -11,7 +11,7 @@ class SoftTokensOptionsItem$InstallTokenVerb$1 implements Recognizer {
 
    @Override
    public boolean recognize(Object obj) {
-      if (obj instanceof Object) {
+      if (obj instanceof String) {
          String filename = (String)obj;
          int extPos = filename.lastIndexOf(46);
          if (extPos > 0) {

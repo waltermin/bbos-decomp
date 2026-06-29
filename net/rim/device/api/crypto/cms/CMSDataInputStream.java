@@ -22,7 +22,7 @@ public final class CMSDataInputStream extends CMSInputStream {
       if (buffer != null && offset >= 0 && length >= 0 && buffer.length - length >= offset) {
          return super._input.read(buffer, offset, length);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

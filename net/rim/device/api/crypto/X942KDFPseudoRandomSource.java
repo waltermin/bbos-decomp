@@ -27,14 +27,14 @@ public final class X942KDFPseudoRandomSource extends AbstractPseudoRandomSource 
          partyBInfo,
          suppPrivateInfo,
          suppPublicInfo,
-         (Digest)(new Object())
+         new SHA1Digest()
       );
    }
 
    public X942KDFPseudoRandomSource(
       byte[] sharedSecret, int offset, int length, OID algorithmID, byte[] partyAInfo, byte[] partyBInfo, byte[] suppPrivateInfo, byte[] suppPublicInfo
    ) {
-      this(sharedSecret, offset, length, algorithmID, partyAInfo, partyBInfo, suppPrivateInfo, suppPublicInfo, (Digest)(new Object()));
+      this(sharedSecret, offset, length, algorithmID, partyAInfo, partyBInfo, suppPrivateInfo, suppPublicInfo, new SHA1Digest());
    }
 
    public X942KDFPseudoRandomSource(
@@ -95,7 +95,7 @@ public final class X942KDFPseudoRandomSource extends AbstractPseudoRandomSource 
          this._previousOutputBuffer = new byte[this._outputLength];
          this._counterBuffer = new byte[4];
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -134,7 +134,7 @@ public final class X942KDFPseudoRandomSource extends AbstractPseudoRandomSource 
             }
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -155,17 +155,17 @@ public final class X942KDFPseudoRandomSource extends AbstractPseudoRandomSource 
 
       try {
          X942KDFPseudoRandomSource source = new X942KDFPseudoRandomSource(
-            SelfTestData.RANDOM_DATA, OIDs.getOID(540861300), null, null, null, null, (Digest)(new Object())
+            SelfTestData.RANDOM_DATA, OIDs.getOID(540861300), null, null, null, null, new SHA1Digest()
          );
          byte[] data = source.getBytes(32);
          if (Arrays.equals(data, result)) {
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

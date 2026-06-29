@@ -22,7 +22,7 @@ public final class JavaScriptRegistry {
       if (!ITPolicy.getBoolean(30, 2, false)) {
          String[] types = _debugMode ? JavaScriptEngine.CORE_MIME_TYPES_DEBUG : JavaScriptEngine.CORE_MIME_TYPES;
          if (fullList) {
-            String[] fullTypes = new Object[types.length + 2];
+            String[] fullTypes = new String[types.length + 2];
             System.arraycopy(types, 0, fullTypes, 0, types.length);
             fullTypes[types.length] = "text/javascript";
             fullTypes[types.length + 1] = "text/ecmascript";

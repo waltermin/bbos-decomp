@@ -15,7 +15,7 @@ public final class OFBPseudoRandomSource extends AbstractPseudoRandomSource impl
          this._engine = engine;
          this._blockLength = engine.getBlockLength();
          if (iv.getLength() != this._blockLength) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          this._outputFeedback = new byte[this._blockLength];
@@ -23,13 +23,13 @@ public final class OFBPseudoRandomSource extends AbstractPseudoRandomSource impl
          this._outputFeedbackOffset = 0;
          this._engine.encrypt(this._outputCopy, 0, this._outputFeedback, 0);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object())).append(this._engine.getAlgorithm()).append("/OFB").toString();
+      return this._engine.getAlgorithm() + "/OFB";
    }
 
    @Override
@@ -52,7 +52,7 @@ public final class OFBPseudoRandomSource extends AbstractPseudoRandomSource impl
             }
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -72,17 +72,17 @@ public final class OFBPseudoRandomSource extends AbstractPseudoRandomSource impl
       int length = SelfTestData_PK1.ENCRYPTION_PLAIN_TEXT.length;
 
       try {
-         OFBPseudoRandomSource source = new OFBPseudoRandomSource((SymmetricKeyEncryptorEngine)(new Object()), (InitializationVector)(new Object(IV)));
+         OFBPseudoRandomSource source = new OFBPseudoRandomSource(new TestEngine(), new InitializationVector(IV));
          byte[] cipherText = Arrays.copy(SelfTestData_PK1.ENCRYPTION_PLAIN_TEXT, 0, length);
          source.xorBytes(cipherText, 0, length);
          if (Arrays.equals(cipherText, 0, CIPHER_TEXT, 0, length)) {
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

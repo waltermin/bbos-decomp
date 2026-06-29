@@ -4,14 +4,15 @@ import java.util.Vector;
 import net.rim.device.api.i18n.SimpleDateFormat;
 import net.rim.device.api.lowmemory.LowMemoryManager;
 import net.rim.device.api.system.Memory;
+import net.rim.device.cldc.io.utility.URL;
 
 public class Util {
-   public static final SimpleDateFormat DEFAULT_DATE_FORMATTER = (SimpleDateFormat)(new Object(54));
+   public static final SimpleDateFormat DEFAULT_DATE_FORMATTER = new SimpleDateFormat(54);
    private static Util$ProvisioningLowMemoryListener _lmmListener;
    private static final String URL_PREFIX = "http://";
 
    public static String printBytes(byte[] bytes) {
-      StringBuffer output = (StringBuffer)(new Object());
+      StringBuffer output = new StringBuffer();
       int numBytes = bytes.length;
 
       for (int i = 0; i < numBytes; i++) {
@@ -49,7 +50,7 @@ public class Util {
 
       while ((currentIndex = value.indexOf(delimiter, lastIndex)) != -1) {
          if (strings == null) {
-            strings = (Vector)(new Object());
+            strings = new Vector();
          }
 
          strings.addElement(value.substring(lastIndex, currentIndex));
@@ -57,11 +58,11 @@ public class Util {
       }
 
       if (strings == null) {
-         return new Object[]{value};
+         return new String[]{value};
       }
 
       strings.addElement(value.substring(lastIndex));
-      String[] stringArray = new Object[strings.size()];
+      String[] stringArray = new String[strings.size()];
       strings.copyInto(stringArray);
       return stringArray;
    }
@@ -75,20 +76,20 @@ public class Util {
          char c = valueChars[i];
          if (c == delimiter) {
             if (strings == null) {
-               strings = (Vector)(new Object());
+               strings = new Vector();
             }
 
-            strings.addElement(new Object(valueChars, lastIndex, i - lastIndex));
+            strings.addElement(new String(valueChars, lastIndex, i - lastIndex));
             lastIndex = i + 1;
          }
       }
 
       if (strings == null) {
-         return new Object[]{value};
+         return new String[]{value};
       }
 
-      strings.addElement(new Object(valueChars, lastIndex, valueChars.length - lastIndex));
-      String[] stringArray = new Object[strings.size()];
+      strings.addElement(new String(valueChars, lastIndex, valueChars.length - lastIndex));
+      String[] stringArray = new String[strings.size()];
       strings.copyInto(stringArray);
       return stringArray;
    }
@@ -120,7 +121,7 @@ public class Util {
    public static boolean isValidURL(String url) {
       if (isNonEmptyString(url)) {
          try {
-            new Object(url);
+            new URL(url);
             return true;
          } finally {
             ;
@@ -131,7 +132,7 @@ public class Util {
    }
 
    public static String filterURL(String url) {
-      return isValidURL(url) ? url : ((StringBuffer)(new Object("http://"))).append(url).toString();
+      return isValidURL(url) ? url : "http://" + url;
    }
 
    private static synchronized boolean attemptFlashRecovery(int size) {
@@ -178,7 +179,7 @@ public class Util {
          }
       }
 
-      return (String)(new Object(buffer, 0, newLength));
+      return new String(buffer, 0, newLength);
    }
 
    public static boolean isValidNumber(String value) {

@@ -11,7 +11,7 @@ class EmailHierarchy$SingleMapObjectForCommit implements Persistable {
 
    EmailHierarchy$SingleMapObjectForCommit(EmailHierarchy _1) {
       this.this$0 = _1;
-      this._folderIdToFolderMap = (IntHashtable)(new Object(64));
-      this._folderLuidToFolderMap = (LongHashtable)(new Object(64));
+      this._folderIdToFolderMap = new IntHashtable(64);
+      this._folderLuidToFolderMap = new LongHashtable(64);
    }
 }

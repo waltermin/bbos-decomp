@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.proxyhttp.compression;
 
+import java.io.EOFException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import net.rim.device.api.util.StringUtilities;
@@ -215,10 +216,10 @@ public final class DefaultMessageEncoder implements MessageEncoder {
    }
 
    @Override
-   public final void decodeHeader(InputStream ins, String[] nameValuePair) {
+   public final void decodeHeader(InputStream ins, String[] nameValuePair) throws EOFException {
       int headerToken = ins.read();
       if (headerToken == -1) {
-         throw new Object();
+         throw new EOFException();
       }
 
       if (headerToken >= 128) {

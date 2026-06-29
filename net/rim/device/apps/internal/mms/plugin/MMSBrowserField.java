@@ -31,11 +31,11 @@ final class MMSBrowserField extends VerticalFieldManager {
                builder.inheritDefaultReporting();
                builder.update(ioe);
                MMSMessageModel message = builder.getResult();
-               ContextObject context = new Object();
-               ((ContextObject)context).setFlag(74);
-               ((ContextObject)context).clearFlag(0);
-               ((ContextObject)context).setFlag(9);
-               this.add(new MMSViewField(message, (ContextObject)context));
+               ContextObject context = new ContextObject();
+               context.setFlag(74);
+               context.clearFlag(0);
+               context.setFlag(9);
+               this.add(new MMSViewField(message, context));
                var291 = false;
                break label1488;
             } catch (Throwable var324) {

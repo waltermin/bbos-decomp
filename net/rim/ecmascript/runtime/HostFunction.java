@@ -136,15 +136,6 @@ public class HostFunction extends ESFunction {
 
    @Override
    public String getSource() {
-      return ((StringBuffer)(new Object("function ")))
-         .append(this._name)
-         .append("() { [native code for ")
-         .append(this._class)
-         .append(".")
-         .append(this._name)
-         .append(", arity=")
-         .append(this._expectedNumParms)
-         .append("] }\n")
-         .toString();
+      return "function " + this._name + "() { [native code for " + this._class + "." + this._name + ", arity=" + this._expectedNumParms + "] }\n";
    }
 }

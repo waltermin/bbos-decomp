@@ -15,12 +15,12 @@ public class LengthEncodedValueDataBuffer extends DataBuffer {
          }
 
          if (value < 0) {
-            throw new Object();
+            throw new NumberFormatException();
          } else {
             return value;
          }
       } else {
-         throw new Object();
+         throw new NumberFormatException();
       }
    }
 

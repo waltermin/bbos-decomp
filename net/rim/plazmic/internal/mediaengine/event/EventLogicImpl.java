@@ -4,7 +4,7 @@ import net.rim.device.api.util.LongHashtable;
 import net.rim.plazmic.internal.mediaengine.util.ArrayList;
 
 public class EventLogicImpl implements EventLogic {
-   private LongHashtable _eventMap = (LongHashtable)(new Object());
+   private LongHashtable _eventMap = new LongHashtable();
    private static final int DEFAULT_EVENT_LIST_LENGTH = 3;
    private static final int DEFAULT_EVENT_LIST_INCREMENT = 3;
 
@@ -35,7 +35,7 @@ public class EventLogicImpl implements EventLogic {
 
    @Override
    public void removeEventDependancy(Event triggerEvent, Event resultingEvent) {
-      throw new Object("Not Implemented Yet!");
+      throw new RuntimeException("Not Implemented Yet!");
    }
 
    private void addToEventMap(Event triggerEvent, Object eventList) {

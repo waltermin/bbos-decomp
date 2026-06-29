@@ -125,7 +125,7 @@ public class ESObject {
    }
 
    private void enumerate(Vector v, boolean includePrototype, boolean respectDontEnum) {
-      Hashtable shadowed = (Hashtable)(new Object());
+      Hashtable shadowed = new Hashtable();
 
       for (ESObject obj = this; obj != null; obj = obj._prototype) {
          for (int i = 0; i < obj._numFields; i++) {
@@ -254,7 +254,7 @@ public class ESObject {
       int i = this._numFields++;
       int newLength = this._numFields + this._growthIncrement;
       if (this._propertyNames == null) {
-         this._propertyNames = new Object[newLength];
+         this._propertyNames = new String[newLength];
          this._propertyValues = Misc.newMixedArray(newLength);
          this._propertyAttributes = new byte[newLength];
          if (this._arrayLengthIndex != -1) {

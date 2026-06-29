@@ -7,6 +7,7 @@ import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.ui.component.TreeField;
 import net.rim.device.api.ui.component.TreeFieldCallback;
+import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.messaging.Folder;
 import net.rim.device.apps.api.quickcontact.QuickContactIcons;
 import net.rim.device.apps.internal.browser.page.BrowserPageModel;
@@ -50,7 +51,7 @@ final class BookmarksScreen$BookmarksTreeField extends TreeField {
 
    private final boolean expandNode(Object cookie) {
       boolean expand = cookie instanceof ProvisionedBookmarksFolder && ((ProvisionedBookmarksFolder)cookie).expandByDefault();
-      if (!(cookie instanceof Object)) {
+      if (!(cookie instanceof Folder)) {
          return expand;
       }
 
@@ -102,7 +103,7 @@ final class BookmarksScreen$BookmarksTreeField extends TreeField {
       Object obj = this.this$0.retrievePersistentObject();
       if (obj instanceof BookmarksTreeState) {
          BookmarksTreeState bm = (BookmarksTreeState)obj;
-         if (bm.getSelectedNode() instanceof Object && cookie instanceof Object) {
+         if (bm.getSelectedNode() instanceof Folder && cookie instanceof Folder) {
             if (((Folder)cookie).getLUID() == ((Folder)bm.getSelectedNode()).getLUID()) {
                this.this$0._selectedNode = node;
                return;
@@ -137,14 +138,14 @@ final class BookmarksScreen$BookmarksTreeField extends TreeField {
 
    private final boolean currentBookmarkHasSibling() {
       int currentNode = this.getCurrentNode();
-      if (currentNode > 0 && !(this.getCookie(currentNode) instanceof Object)) {
+      if (currentNode > 0 && !(this.getCookie(currentNode) instanceof Folder)) {
          int siblingNode = this.getNextSibling(currentNode);
          if (siblingNode > 0) {
             return true;
          }
 
          siblingNode = this.getPreviousSibling(currentNode);
-         if (siblingNode > 0 && !(this.getCookie(siblingNode) instanceof Object)) {
+         if (siblingNode > 0 && !(this.getCookie(siblingNode) instanceof Folder)) {
             return true;
          }
       }
@@ -156,7 +157,7 @@ final class BookmarksScreen$BookmarksTreeField extends TreeField {
       int position = -1;
 
       for (int currentNode = this.getCurrentNode();
-         currentNode > 0 && !(this.getCookie(currentNode) instanceof Object);
+         currentNode > 0 && !(this.getCookie(currentNode) instanceof Folder);
          currentNode = this.getPreviousSibling(currentNode)
       ) {
          position++;
@@ -194,7 +195,7 @@ final class BookmarksScreen$BookmarksTreeField extends TreeField {
                      int firstChild = this.getFirstChild(nextNode);
                      if (firstChild <= 0) {
                         firstChild = this.getParent(nextNode);
-                        if (parentNode != firstChild && !(this.getCookie(nextNode) instanceof Object)) {
+                        if (parentNode != firstChild && !(this.getCookie(nextNode) instanceof Folder)) {
                            nextNode = firstChild;
                         }
                         break;
@@ -222,7 +223,7 @@ final class BookmarksScreen$BookmarksTreeField extends TreeField {
          }
 
          Object nextCookie = this.getCookie(nextNode);
-         if (nextCookie instanceof Object) {
+         if (nextCookie instanceof RIMModel) {
             this.setCookie(currentNode, nextCookie);
             this.setCookie(nextNode, this.this$0._bookmarkToMove);
             this.invalidateNode(currentNode);
@@ -255,12 +256,12 @@ final class BookmarksScreen$BookmarksTreeField extends TreeField {
 
             parentNode = nextNode;
             int firstChild = this.getFirstChild(nextNode);
-            if (firstChild > 0 && (amount < 0 || this.getCookie(firstChild) instanceof Object)) {
+            if (firstChild > 0 && (amount < 0 || this.getCookie(firstChild) instanceof Folder)) {
                nextNode = firstChild;
 
                while (true) {
                   int nextSibling = this.getNextSibling(nextNode);
-                  if (nextSibling <= 0 || amount >= 0 && !(this.getCookie(nextSibling) instanceof Object)) {
+                  if (nextSibling <= 0 || amount >= 0 && !(this.getCookie(nextSibling) instanceof Folder)) {
                      currentNode = this.addSiblingNode(nextNode, this.this$0._bookmarkToMove);
                      break;
                   }
@@ -292,7 +293,7 @@ final class BookmarksScreen$BookmarksTreeField extends TreeField {
          super.drawFocus(graphics, on);
       } else {
          int rowHeight = this.getRowHeight();
-         XYRect focus = (XYRect)(new Object());
+         XYRect focus = new XYRect();
          this.getFocusRect(focus);
          int width = Display.getWidth() - focus.x;
          graphics.pushContext(focus.x, focus.y, width, focus.height, 0, 0);
@@ -320,7 +321,7 @@ final class BookmarksScreen$BookmarksTreeField extends TreeField {
    protected final boolean keyChar(char character, int status, int time) {
       if (character == ' ' && this.this$0._bookmarkToMove == null && BookmarksScreen.access$1000(this.this$0).length() == 0) {
          int currentNode = this.getCurrentNode();
-         if (currentNode > 0 && !(this.getCookie(currentNode) instanceof Object)) {
+         if (currentNode > 0 && !(this.getCookie(currentNode) instanceof Folder)) {
             Screen screen = this.getScreen();
             if (screen != null) {
                screen.scroll(512);
@@ -343,7 +344,7 @@ final class BookmarksScreen$BookmarksTreeField extends TreeField {
             }
          } else {
             int currentNode = this.getCurrentNode();
-            if (currentNode > 0 && !(this.getCookie(currentNode) instanceof Object)) {
+            if (currentNode > 0 && !(this.getCookie(currentNode) instanceof Folder)) {
                int parentNode = this.getParent(currentNode);
                if (parentNode > 0) {
                   if (dx < 0) {
@@ -355,7 +356,7 @@ final class BookmarksScreen$BookmarksTreeField extends TreeField {
 
                   while (parentNode > 0) {
                      int nextSibling = this.getNextSibling(parentNode);
-                     if (nextSibling > 0 && this.getCookie(nextSibling) instanceof Object) {
+                     if (nextSibling > 0 && this.getCookie(nextSibling) instanceof Folder) {
                         this.setCurrentNode(nextSibling);
                         this.invalidateNode(currentNode);
                         this.invalidateNode(nextSibling);

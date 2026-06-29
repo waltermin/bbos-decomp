@@ -21,7 +21,7 @@ public final class AddressSelectionContext {
       this._listScreenTitle = listScreenTitle;
       this._pickDialogTitle = pickDialogTitle;
       this._badAddressError = badAddressError;
-      this._recognizers = new Object[]{recognizer};
+      this._recognizers = new Recognizer[]{recognizer};
       if (useOnceVerbs != null) {
          this._useOnceVerbs = useOnceVerbs;
       }

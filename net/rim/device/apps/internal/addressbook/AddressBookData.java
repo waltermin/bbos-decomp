@@ -34,18 +34,18 @@ final class AddressBookData implements Persistable {
    }
 
    final void reset() {
-      this._cards = (SparseList)(new Object());
-      this._uidToIDMap = (BigLongVector)(new Object());
+      this._cards = new SparseList();
+      this._uidToIDMap = new BigLongVector();
       this.resetTables();
       this._tablesValid = true;
       this._contentProtectionQueue = null;
    }
 
    final void resetTables() {
-      this._nodes = (BigIntVector)(new Object());
-      this._leaves = (BigIntVector)(new Object());
-      this._reverseLookupNodes = (BigIntVector)(new Object());
-      this._reverseLookupLeaves = (BigLongVector)(new Object());
+      this._nodes = new BigIntVector();
+      this._leaves = new BigIntVector();
+      this._reverseLookupNodes = new BigIntVector();
+      this._reverseLookupLeaves = new BigLongVector();
    }
 
    final void optimize() {

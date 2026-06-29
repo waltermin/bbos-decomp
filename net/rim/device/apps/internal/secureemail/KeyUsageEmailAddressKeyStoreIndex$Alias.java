@@ -9,7 +9,7 @@ class KeyUsageEmailAddressKeyStoreIndex$Alias {
    private int _hashCode;
 
    public static int computeHashCode(int usage, byte[] emailAddress) {
-      String tempEmail = (String)(new Object(emailAddress));
+      String tempEmail = new String(emailAddress);
       return usage ^ CRC32.update(0, StringUtilities.toLowerCase(tempEmail, 1701707776).getBytes());
    }
 

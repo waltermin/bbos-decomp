@@ -173,7 +173,7 @@ public final class DEntry implements Persistable {
       // 47: astore 2
       // 48: ldc2_w -1037010874164756539
       // 4b: lstore 3
-      // 4c: new java/lang/Object
+      // 4c: new java/lang/StringBuffer
       // 4f: dup
       // 50: invokespecial java/lang/StringBuffer.<init> ()V
       // 53: astore 5
@@ -188,7 +188,7 @@ public final class DEntry implements Persistable {
       // 69: goto 6f
       // 6c: ldc_w "SHAPE_POLYGON."
       // 6f: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
-      // 72: new java/lang/Object
+      // 72: new java/lang/StringBuffer
       // 75: dup
       // 76: ldc_w " x: "
       // 79: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -200,7 +200,7 @@ public final class DEntry implements Persistable {
       // 87: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 8a: pop
       // 8b: aload 5
-      // 8d: new java/lang/Object
+      // 8d: new java/lang/StringBuffer
       // 90: dup
       // 91: ldc_w ", y: "
       // 94: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -234,7 +234,7 @@ public final class DEntry implements Persistable {
       // d1: return
       // d2: astore 2
       // d3: getstatic java/lang/System.out Ljava/io/PrintStream;
-      // d6: new java/lang/Object
+      // d6: new java/lang/StringBuffer
       // d9: dup
       // da: ldc_w "Error in render: "
       // dd: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V

@@ -115,11 +115,11 @@ public final class FavouritesScreen extends FolderList {
 
    private final void moveFavourite() {
       Object item = this.getFocusedItem();
-      if (item instanceof LocationSyncable || item instanceof Object && item != this._root) {
+      if (item instanceof LocationSyncable || item instanceof SimpleFolder && item != this._root) {
          this._favouriteToMove = item;
          this._folderBeforeMove = (SimpleFolder)this.getFolderContainingFocusedItem();
          int currentNode = super._disp.getCurrentNode();
-         if (this._favouriteToMove instanceof Object) {
+         if (this._favouriteToMove instanceof SimpleFolder) {
             int folderIDbeforeMove = super._disp.getParent(currentNode);
             this._folderBeforeMove = (SimpleFolder)((SimpleFolder)this._favouriteToMove).getParentFolder();
             if (this._folderBeforeMove == null) {
@@ -145,7 +145,7 @@ public final class FavouritesScreen extends FolderList {
       int newPosition = this.getCurrentBookmarkPositionInFolder();
       int currentNode = super._disp.getCurrentNode();
       Folder currentFolder = this.getFolderContainingFocusedItem();
-      if (!(this._favouriteToMove instanceof Object)) {
+      if (!(this._favouriteToMove instanceof SimpleFolder)) {
          if (newPosition >= 0) {
             if (!cancel) {
                if (this._folderBeforeMove == currentFolder) {
@@ -184,12 +184,12 @@ public final class FavouritesScreen extends FolderList {
             }
 
             int firstChild = super._disp.getFirstChild(folderIDbeforeMove);
-            if (firstChild > 0 && super._disp.getCookie(firstChild) instanceof Object) {
+            if (firstChild > 0 && super._disp.getCookie(firstChild) instanceof Folder) {
                nextNode = firstChild;
 
                while (true) {
                   int nextSibling = super._disp.getNextSibling(nextNode);
-                  if (nextSibling <= 0 || !(super._disp.getCookie(nextSibling) instanceof Object)) {
+                  if (nextSibling <= 0 || !(super._disp.getCookie(nextSibling) instanceof Folder)) {
                      currentNode = super._disp.addSiblingNode(nextNode, this._favouriteToMove);
                      break;
                   }
@@ -207,7 +207,7 @@ public final class FavouritesScreen extends FolderList {
             newPosition = super._disp.getCurrentNode();
             SimpleFolder parent = (SimpleFolder)super._disp.getCookie(parentNode);
             this._folderBeforeMove.removeSubFolder(moveFolder);
-            Vector folders = (Vector)(new Object());
+            Vector folders = new Vector();
             Enumeration e = parent.getSubFolders();
 
             while (e.hasMoreElements()) {
@@ -264,10 +264,10 @@ public final class FavouritesScreen extends FolderList {
    private final int reAddFolders(SimpleFolder parent, int node) {
       Enumeration e = parent.getSubFolders();
       int nextNode = node;
-      SimpleFolder[] folders = new Object[0];
+      SimpleFolder[] folders = new SimpleFolder[0];
 
       while (e.hasMoreElements()) {
-         Arrays.add(folders, e.nextElement());
+         Arrays.add(folders, (SimpleFolder)e.nextElement());
       }
 
       for (int i = folders.length - 1; i >= 0; i--) {
@@ -329,7 +329,7 @@ public final class FavouritesScreen extends FolderList {
       int position = -1;
 
       for (int currentNode = super._disp.getCurrentNode();
-         currentNode > 0 && !(super._disp.getCookie(currentNode) instanceof Object);
+         currentNode > 0 && !(super._disp.getCookie(currentNode) instanceof Folder);
          currentNode = super._disp.getPreviousSibling(currentNode)
       ) {
          position++;
@@ -340,9 +340,9 @@ public final class FavouritesScreen extends FolderList {
 
    private final void deleteFolder() {
       Object item = this.getFocusedItem();
-      if (item instanceof Object && item != this._root) {
+      if (item instanceof SimpleFolder && item != this._root) {
          SimpleFolder folder = (SimpleFolder)item;
-         if (Dialog.ask(3, MessageFormat.format(LBSResources.getString(308), new Object[]{folder.getFriendlyName()}), 4) == 4) {
+         if (Dialog.ask(3, MessageFormat.format(LBSResources.getString(308), new String[]{folder.getFriendlyName()}), 4) == 4) {
             FavouritesManager.removeFolder(folder);
             this.removeFolder(folder.getLUID());
             FavouritesManager.getInstance()._lastSelectedNode = 0;
@@ -353,7 +353,7 @@ public final class FavouritesScreen extends FolderList {
    private final void addFolder() {
       Object item = this.getFocusedItem();
       SimpleFolder parent = null;
-      if (!(item instanceof Object)) {
+      if (!(item instanceof SimpleFolder)) {
          if (!(item instanceof LocationSyncable)) {
             return;
          }
@@ -383,7 +383,7 @@ public final class FavouritesScreen extends FolderList {
 
    private final void renameFolder() {
       Object item = this.getFocusedItem();
-      if (item instanceof Object && item != this._root) {
+      if (item instanceof SimpleFolder && item != this._root) {
          SimpleFolder folder = (SimpleFolder)item;
          DialogEnterSubFolderName renameFolder = new DialogEnterSubFolderName(folder, folder.getFriendlyName());
          String newName = renameFolder.getName();
@@ -437,7 +437,7 @@ public final class FavouritesScreen extends FolderList {
             this.selectLocation();
             this.close();
             return true;
-         } else if (item instanceof Object) {
+         } else if (item instanceof SimpleFolder) {
             int node = super._disp.getCurrentNode();
             boolean expanded = !super._disp.getExpanded(node);
             super._disp.setExpanded(node, expanded);
@@ -471,7 +471,7 @@ public final class FavouritesScreen extends FolderList {
          case '\u007f':
             if (super._field.getText().equals("")) {
                Object item = this.getFocusedItem();
-               if (item instanceof Object && item != this._root) {
+               if (item instanceof SimpleFolder && item != this._root) {
                   this.deleteFolder();
                   return true;
                }
@@ -506,7 +506,7 @@ public final class FavouritesScreen extends FolderList {
 
    private final void selectFolder() {
       Object focused = this.getFocusedItem();
-      if (focused instanceof Object) {
+      if (focused instanceof Folder) {
          this._selectedFolder = (SimpleFolder)focused;
       } else {
          this._selectedFolder = null;

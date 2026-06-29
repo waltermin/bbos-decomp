@@ -158,7 +158,7 @@ class IconFetcher$Worker extends Thread {
       // 116: getfield net/rim/device/apps/internal/blackberryemail/folder/IconFetcher$Request._iconFileType Ljava/lang/String;
       // 119: invokestatic net/rim/device/apps/internal/blackberryemail/folder/IconFetcher.getIconFilename (IIILjava/lang/String;)Ljava/lang/String;
       // 11c: astore 14
-      // 11e: new java/lang/Object
+      // 11e: new java/lang/StringBuffer
       // 121: dup
       // 122: ldc_w "file://"
       // 125: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -183,7 +183,7 @@ class IconFetcher$Worker extends Thread {
       // 14c: aload 15
       // 14e: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 151: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 154: checkcast java/lang/Object
+      // 154: checkcast javax/microedition/io/file/FileConnection
       // 157: astore 16
       // 159: aload 16
       // 15b: invokeinterface javax/microedition/io/file/FileConnection.exists ()Z 1
@@ -372,7 +372,7 @@ class IconFetcher$Worker extends Thread {
       // 007: astore 8
       // 009: iload 3
       // 00a: lookupswitch 82 2 0 26 2 54
-      // 024: new java/lang/Object
+      // 024: new java/lang/StringBuffer
       // 027: dup
       // 028: invokespecial java/lang/StringBuffer.<init> ()V
       // 02b: aload 1
@@ -383,7 +383,7 @@ class IconFetcher$Worker extends Thread {
       // 038: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 03b: astore 9
       // 03d: goto 075
-      // 040: new java/lang/Object
+      // 040: new java/lang/StringBuffer
       // 043: dup
       // 044: invokespecial java/lang/StringBuffer.<init> ()V
       // 047: aload 1
@@ -394,7 +394,7 @@ class IconFetcher$Worker extends Thread {
       // 054: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 057: astore 9
       // 059: goto 075
-      // 05c: new java/lang/Object
+      // 05c: new java/lang/StringBuffer
       // 05f: dup
       // 060: invokespecial java/lang/StringBuffer.<init> ()V
       // 063: aload 1
@@ -406,9 +406,9 @@ class IconFetcher$Worker extends Thread {
       // 073: astore 9
       // 075: aload 9
       // 077: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 07a: checkcast java/lang/Object
+      // 07a: checkcast javax/microedition/io/HttpConnection
       // 07d: astore 6
-      // 07f: new java/lang/Object
+      // 07f: new java/lang/StringBuffer
       // 082: dup
       // 083: ldc_w "BlackBerry"
       // 086: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V

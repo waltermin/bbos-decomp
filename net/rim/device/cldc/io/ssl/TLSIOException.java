@@ -25,7 +25,7 @@ public class TLSIOException extends CertificateException {
 
    @Override
    public String toString() {
-      StringBuffer buffer = (StringBuffer)(new Object(super.toString()));
+      StringBuffer buffer = new StringBuffer(super.toString());
       if (this._e != null) {
          buffer.append('(');
          buffer.append(this._e.toString());

@@ -68,7 +68,7 @@ public final class SRSelector implements GlobalEventListener {
             return false;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -81,7 +81,7 @@ public final class SRSelector implements GlobalEventListener {
       if (data != null && data.cbIndex != -1) {
          return data.defaultId;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -90,12 +90,12 @@ public final class SRSelector implements GlobalEventListener {
       if (data != null && data.cbIndex != -1) {
          return data.userSet;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    public final synchronized Vector getRegisteredApps() {
-      Vector apps = (Vector)(new Object());
+      Vector apps = new Vector();
 
       for (int i = this._appData.size() - 1; i >= 0; i--) {
          SRSelectorData data = (SRSelectorData)this._appData.elementAt(i);
@@ -362,7 +362,7 @@ public final class SRSelector implements GlobalEventListener {
 
    public SRSelector() {
       if ((this._appData = (Vector)this._persistentAppData.getContents()) == null) {
-         this._appData = (Vector)(new Object());
+         this._appData = new Vector();
          this._persistentAppData.setContents(this._appData, 51);
       }
 
@@ -372,7 +372,7 @@ public final class SRSelector implements GlobalEventListener {
       }
 
       this.commit();
-      this._callbacks = (Vector)(new Object());
+      this._callbacks = new Vector();
       this._sb = ServiceBook.getSB();
    }
 }

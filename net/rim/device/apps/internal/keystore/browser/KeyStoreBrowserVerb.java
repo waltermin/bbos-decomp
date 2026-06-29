@@ -42,7 +42,7 @@ public final class KeyStoreBrowserVerb extends Verb {
       int resourceId;
       switch (this._type) {
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          default:
             resourceId = 6069;
@@ -163,7 +163,7 @@ public final class KeyStoreBrowserVerb extends Verb {
       // 1a: return
       // 1b: invokestatic java/lang/System.currentTimeMillis ()J
       // 1e: lstore 2
-      // 1f: new java/lang/Object
+      // 1f: new net/rim/device/api/crypto/certificate/CertificateStatus
       // 22: dup
       // 23: bipush 0
       // 24: lload 2
@@ -219,7 +219,7 @@ public final class KeyStoreBrowserVerb extends Verb {
       }
 
       String[] allChoices = KeyStoreBrowserResources.getStringArray(6102);
-      String[] choices = new Object[allChoices.length];
+      String[] choices = new String[allChoices.length];
       System.arraycopy(allChoices, 0, choices, 0, allChoices.length);
       boolean isDisabledLowSecurityPolicy = ITPolicy.getBoolean(24, 7, false);
       Certificate certificate = keyStoreData.getCertificate();
@@ -475,7 +475,7 @@ public final class KeyStoreBrowserVerb extends Verb {
    private final void fetchStatus(boolean fetchChainStatus) {
       Certificate[] chain = this._browserData.getBestCertificateChain();
       if (chain != null && chain.length > 0 && this._context != null) {
-         CertificateStatusRequest request = (CertificateStatusRequest)(new Object(chain, fetchChainStatus, this._browserData.getKeyStore(), null, null));
+         CertificateStatusRequest request = new CertificateStatusRequest(chain, fetchChainStatus, this._browserData.getKeyStore(), null, null);
          CertificateStatusProviderFacade.requestCertificateStatus(request, null, true, true);
       } else {
          Dialog.alert(CryptoCommonResources.getString(2));

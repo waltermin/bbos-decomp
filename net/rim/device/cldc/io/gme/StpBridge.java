@@ -4,6 +4,7 @@ import javax.microedition.io.Connector;
 import javax.microedition.io.Datagram;
 import net.rim.device.api.io.DatagramBase;
 import net.rim.device.api.io.DatagramConnectionBase;
+import net.rim.device.api.io.IONotRoutableException;
 import net.rim.device.api.servicebook.ServiceRouting;
 import net.rim.device.api.servicebook.ServiceRoutingListener;
 import net.rim.device.api.servicebook.ServiceRoutingProperties;
@@ -33,12 +34,12 @@ public final class StpBridge extends GmeRouterConnection implements ServiceRouti
    }
 
    @Override
-   public final void send(DatagramBase dg, GMEDatagramInfo di, Datagram superDG) {
+   public final void send(DatagramBase dg, GMEDatagramInfo di, Datagram superDG) throws IONotRoutableException {
       String uid = null;
       GMEAddress gmeAddr = di.address;
       int numAddrs = gmeAddr.getNumTargets();
       if (numAddrs == 0) {
-         throw new Object();
+         throw new IONotRoutableException();
       }
 
       int i = 0;
@@ -51,13 +52,13 @@ public final class StpBridge extends GmeRouterConnection implements ServiceRouti
                if (uid == null) {
                   uid = targ.address;
                } else if (!targ.address.equals(uid)) {
-                  throw new Object();
+                  throw new IONotRoutableException();
                }
             case 0:
                i++;
                break;
             case 2:
-               throw new Object();
+               throw new IONotRoutableException();
          }
       }
 
@@ -67,7 +68,7 @@ public final class StpBridge extends GmeRouterConnection implements ServiceRouti
          di.errorEventCode = -1;
          di.errorEventContext = null;
       } else {
-         throw new Object();
+         throw new IONotRoutableException();
       }
    }
 

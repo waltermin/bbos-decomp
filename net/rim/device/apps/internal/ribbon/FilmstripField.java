@@ -153,8 +153,8 @@ final class FilmstripField extends ButtonField {
 
    public final void loadImages() {
       Bitmap temp = null;
-      this._images = new Object[0];
-      this._names = new Object[0];
+      this._images = new Bitmap[0];
+      this._names = new String[0];
       Theme theme = ThemeManager.getActiveTheme();
       this._iconWidth = theme.getRibbonIconWidth();
       this._iconHeight = theme.getRibbonIconHeight();
@@ -175,7 +175,7 @@ final class FilmstripField extends ButtonField {
 
             while (names.hasMoreElements()) {
                String name = (String)names.nextElement();
-               temp = FolderEntryPointDescriptor.getScaledImage(((StringBuffer)(new Object())).append(this._url).append(name).toString());
+               temp = FolderEntryPointDescriptor.getScaledImage(this._url + name);
                Arrays.add(this._images, temp);
                Arrays.add(this._names, name);
             }

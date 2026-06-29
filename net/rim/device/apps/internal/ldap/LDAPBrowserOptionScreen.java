@@ -23,14 +23,12 @@ final class LDAPBrowserOptionScreen extends AppsMainScreen {
       this.setDefaultClose(false);
       this._optionStore = LDAPBrowserOptionStore.getInstance();
       this._contextString = contextString;
-      String optionsTitle = MessageFormat.format(LDAPBrowser.getString(80), new Object[]{applicationTitle});
+      String optionsTitle = MessageFormat.format(LDAPBrowser.getString(80), new String[]{applicationTitle});
       this.setTitle(optionsTitle);
-      String[] choices = new Object[]{CommonResources.getString(100), CommonResources.getString(101), LDAPBrowser.getString(84)};
-      this._fetchCertStatusField = (ObjectChoiceField)(new Object(LDAPBrowser.getString(82), choices, this._optionStore.getFetchCertStatus(this._contextString)));
+      String[] choices = new String[]{CommonResources.getString(100), CommonResources.getString(101), LDAPBrowser.getString(84)};
+      this._fetchCertStatusField = new ObjectChoiceField(LDAPBrowser.getString(82), choices, this._optionStore.getFetchCertStatus(this._contextString));
       this.add(this._fetchCertStatusField);
-      this._promptForCertLabelField = (BooleanChoiceField)(new Object(
-         LDAPBrowser.getString(93), 0, this._optionStore.getPromptForCertLabel(this._contextString)
-      ));
+      this._promptForCertLabelField = new BooleanChoiceField(LDAPBrowser.getString(93), 0, this._optionStore.getPromptForCertLabel(this._contextString));
       this.add(this._promptForCertLabelField);
    }
 

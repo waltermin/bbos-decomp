@@ -21,7 +21,7 @@ public final class Perl5Matcher implements PatternMatcher {
    private int __lastParen;
    private int[] __beginMatchOffsets;
    private int[] __endMatchOffsets;
-   private Stack __stack = (Stack)(new Object());
+   private Stack __stack = new Stack();
    private Perl5MatchResult __lastMatchResult = null;
    private int __lastMatchInputEndOffset = -100;
    private static final char __EOS = '\uffff';
@@ -174,7 +174,7 @@ public final class Perl5Matcher implements PatternMatcher {
       int maxEndOffs = 0;
       this.__lastMatchResult = new Perl5MatchResult(this.__numParentheses + 1);
       if (this.__endMatchOffsets[0] > this.__originalInput.length) {
-         throw new Object();
+         throw new ArrayIndexOutOfBoundsException();
       }
 
       for (this.__lastMatchResult._matchBeginOffset = this.__beginMatchOffsets[0]; this.__numParentheses >= 0; this.__numParentheses--) {
@@ -196,7 +196,7 @@ public final class Perl5Matcher implements PatternMatcher {
          }
       }
 
-      this.__lastMatchResult._match = (String)(new Object(this.__originalInput, this.__beginMatchOffsets[0], maxEndOffs - this.__beginMatchOffsets[0]));
+      this.__lastMatchResult._match = new String(this.__originalInput, this.__beginMatchOffsets[0], maxEndOffs - this.__beginMatchOffsets[0]);
       this.__originalInput = null;
    }
 

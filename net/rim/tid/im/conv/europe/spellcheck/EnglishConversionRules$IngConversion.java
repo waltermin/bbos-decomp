@@ -9,7 +9,7 @@ class EnglishConversionRules$IngConversion extends EnglishConversionRules$Conver
    public int applyConversion(char[] word, int offset, int len) {
       switch (super._conversionType) {
          case 2:
-            throw new Object();
+            throw new IllegalStateException();
          case 3:
          default:
             return len - 3;
@@ -37,7 +37,7 @@ class EnglishConversionRules$IngConversion extends EnglishConversionRules$Conver
             bounds[0] = offset;
             bounds[1] = len - 4;
          case 2:
-            throw new Object();
+            throw new IllegalStateException();
       }
    }
 

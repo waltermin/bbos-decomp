@@ -18,14 +18,15 @@ import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Manager;
-import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.ButtonField;
-import net.rim.device.api.ui.component.ChoiceField;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.component.Status;
+import net.rim.device.api.ui.component.TextField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.Arrays;
@@ -36,6 +37,7 @@ import net.rim.device.apps.api.iota.IOTAManager;
 import net.rim.device.apps.api.options.SaveableMainScreenOptionsListItem;
 import net.rim.device.apps.api.ribbon.RibbonBanner;
 import net.rim.device.apps.api.ui.CommonResources;
+import net.rim.device.apps.api.ui.VerbMenuItem;
 import net.rim.device.apps.api.utility.framework.VerbToMenu;
 import net.rim.device.apps.internal.options.resources.OptionsResources;
 import net.rim.device.internal.system.DataServices;
@@ -108,7 +110,7 @@ public final class NetworkOptionsItem
       this._rtfOffsets = new int[3];
       this._rtfAttributes = new byte[2];
       this._rtfAttributes[1] = 1;
-      this._rtfFonts = new Object[2];
+      this._rtfFonts = new Font[2];
       this._rtfFonts[1] = Font.getDefault().derive(1);
    }
 
@@ -127,7 +129,7 @@ public final class NetworkOptionsItem
                index = 2;
          }
 
-         this._dataServicesField = (ObjectChoiceField)(new Object(OptionsResources.getString(1991), OptionsResources.getStringArray(1992), index));
+         this._dataServicesField = new ObjectChoiceField(OptionsResources.getString(1991), OptionsResources.getStringArray(1992), index);
       } else {
          this._dataServicesField = null;
       }
@@ -145,11 +147,11 @@ public final class NetworkOptionsItem
             defChoice = 2;
          }
 
-         this._autoSelectHomeNetworkField = (ObjectChoiceField)(new Object(OptionsResources.getString(2066), CommonResources.getStringArray(9174), defChoice));
+         this._autoSelectHomeNetworkField = new ObjectChoiceField(OptionsResources.getString(2066), CommonResources.getStringArray(9174), defChoice);
          this._autoSelectHomeNetworkField.setChangeListener(this);
       }
 
-      this._multiButton = (ButtonField)(new Object(this._rb.getString(1840), 12884967424L));
+      this._multiButton = new ButtonField(this._rb.getString(1840), 12884967424L);
       this._multiButton.setChangeListener(this);
       RibbonBanner rb = RibbonBanner.getInstance();
       if (rb != null) {
@@ -163,7 +165,7 @@ public final class NetworkOptionsItem
          String[] strs = this._rb.getStringArray(2033);
          if (connectionPref.getEditable()) {
             int[] map = connectionPref.getOptions();
-            String[] args = new Object[map.length];
+            String[] args = new String[map.length];
             int initialIndex = -1;
 
             for (int i = 0; i < map.length; i++) {
@@ -174,10 +176,10 @@ public final class NetworkOptionsItem
             }
 
             this._indexToPref = map;
-            this._GANConnectivityPreferenceField = (Field)(new Object(OptionsResources.getString(2034), args, initialIndex));
+            this._GANConnectivityPreferenceField = new ObjectChoiceField(OptionsResources.getString(2034), args, initialIndex);
             this._GANConnectivityPreferenceField.setChangeListener(this);
          } else {
-            this._GANConnectivityPreferenceField = (Field)(new Object(OptionsResources.getString(2034), strs[connectionPref.getPreference()]));
+            this._GANConnectivityPreferenceField = new TextField(OptionsResources.getString(2034), strs[connectionPref.getPreference()]);
             this._GANConnectivityPreferenceField.setEditable(false);
          }
       } else {
@@ -191,7 +193,7 @@ public final class NetworkOptionsItem
       }
 
       String[] strs = this._rb.getStringArray(921);
-      String[] args = new Object[0];
+      String[] args = new String[0];
       int[] map = new int[0];
       int selectionModes = RadioInternal.getAvailableNetworkSelectionModes();
       this.addOption(selectionModes, 1, strs, args, map, 0, 0);
@@ -248,7 +250,7 @@ public final class NetworkOptionsItem
             }
 
             if (!refresh || this._mainScreen == null) {
-               this._selectionModeField = (ObjectChoiceField)(new Object(OptionsResources.getString(1450), args, i));
+               this._selectionModeField = new ObjectChoiceField(OptionsResources.getString(1450), args, i);
                this._selectionModeField.setChangeListener(this);
                return;
             }
@@ -287,12 +289,12 @@ public final class NetworkOptionsItem
    private final void addFields(MainScreen ms) {
       if (this._dataServicesField != null) {
          ms.add(this._dataServicesField);
-         ms.add((Field)(new Object()));
+         ms.add(new SeparatorField());
       }
 
       if (this._GANConnectivityPreferenceField != null) {
          ms.add(this._GANConnectivityPreferenceField);
-         ms.add((Field)(new Object()));
+         ms.add(new SeparatorField());
       }
 
       if (this._activeNetworkField != null) {
@@ -312,9 +314,9 @@ public final class NetworkOptionsItem
       }
 
       if (this._networkListField != null) {
-         this._netListPanel = (VerticalFieldManager)(new Object());
-         this._netListPanel.add((Field)(new Object()));
-         this._netListPanel.add((Field)(new Object(this._rb.getString(922), 12884901952L)));
+         this._netListPanel = new VerticalFieldManager();
+         this._netListPanel.add(new SeparatorField());
+         this._netListPanel.add(new LabelField(this._rb.getString(922), 12884901952L));
          this._netListPanel.add(this._networkListField);
          this.setNetListPanelTraits();
       }
@@ -491,7 +493,7 @@ public final class NetworkOptionsItem
          for (int i = verbs.length - 1; i >= 0; i--) {
             Verb verbToAdd = verbs[i];
             if (verbToAdd != null) {
-               mainScreen.addMenuItem((MenuItem)(new Object(verbToAdd, Integer.MAX_VALUE)));
+               mainScreen.addMenuItem(new VerbMenuItem(verbToAdd, Integer.MAX_VALUE));
             }
          }
       }
@@ -531,7 +533,8 @@ public final class NetworkOptionsItem
 
       if (this._GANConnectivityPreferenceField != null && this._GANConnectivityPreferenceField.isDirty()) {
          try {
-            GANConnectivityPreference.getInstance().setPreference(this._indexToPref[((ChoiceField)this._GANConnectivityPreferenceField).getSelectedIndex()]);
+            GANConnectivityPreference.getInstance()
+               .setPreference(this._indexToPref[((ObjectChoiceField)this._GANConnectivityPreferenceField).getSelectedIndex()]);
          } finally {
             ;
          }
@@ -802,7 +805,7 @@ public final class NetworkOptionsItem
    public final void networkChangeResult(int pendingOperation, int result) {
       if (result != 1) {
          Status.show(OptionsResources.getString(1985));
-         String logString = ((StringBuffer)(new Object("Ntwk chg resp="))).append(result).toString();
+         String logString = "Ntwk chg resp=" + result;
          EventLogger.logEvent(-4272982832973947638L, logString.getBytes(), 0);
       }
 
@@ -821,7 +824,7 @@ public final class NetworkOptionsItem
             this.setMultiButtonVisibility();
             this.setNetListPanelTraits();
             this.moveFocusToCorrectField();
-            Message msg = (Message)(new Object(33, 1587, 1282, 28672, 0));
+            Message msg = new Message(33, 1587, 1282, 28672, 0);
             msg.post();
          case 1592:
             return;
@@ -930,7 +933,7 @@ public final class NetworkOptionsItem
          }
 
          if (_isSynchronousOperation) {
-            Message msg = (Message)(new Object(33, 1587, 1282, 28672, 0));
+            Message msg = new Message(33, 1587, 1282, 28672, 0);
             msg.post();
          }
       }
@@ -989,7 +992,7 @@ public final class NetworkOptionsItem
          }
 
          if (field == this._GANConnectivityPreferenceField) {
-            int selected = this._indexToPref[((ChoiceField)this._GANConnectivityPreferenceField).getSelectedIndex()];
+            int selected = this._indexToPref[((ObjectChoiceField)this._GANConnectivityPreferenceField).getSelectedIndex()];
             if (selected == 2 || selected == 0) {
                Dialog.inform(OptionsResources.getString(2070));
             }

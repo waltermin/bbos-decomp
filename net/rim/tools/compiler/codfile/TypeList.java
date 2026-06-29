@@ -1,5 +1,6 @@
 package net.rim.tools.compiler.codfile;
 
+import java.io.IOException;
 import java.util.Vector;
 import net.rim.tools.compiler.io.StructuredOutputStream;
 
@@ -38,7 +39,7 @@ public final class TypeList extends CodfileItem {
    }
 
    @Override
-   public final void write(StructuredOutputStream out) {
+   public final void write(StructuredOutputStream out) throws IOException {
       this.setOffset(out);
       int num = this.length();
       if (num == 0) {
@@ -82,7 +83,7 @@ public final class TypeList extends CodfileItem {
                   count++;
                } else {
                   if (curr == null) {
-                     throw new Object("null typelist entry");
+                     throw new IOException("null typelist entry");
                   }
 
                   curr.write(out, count);

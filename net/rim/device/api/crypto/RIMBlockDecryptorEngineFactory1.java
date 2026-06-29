@@ -28,7 +28,7 @@ class RIMBlockDecryptorEngineFactory1 extends DecryptorFactory {
          if (nextAlgorithm != null && iv != null) {
             return new CBCDecryptorEngine(DecryptorFactory.getBlockDecryptorEngine(key, nextAlgorithm, null), iv);
          } else {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } else if (baseAlgorithm.equals("RC5")) {
          int blockBitLength = RIMFactoryUtilities.getBlockBitLength(algorithm, 64);
@@ -40,7 +40,7 @@ class RIMBlockDecryptorEngineFactory1 extends DecryptorFactory {
       } else if (algorithm.equals("PKCS1")) {
          return new PKCS1UnformatterEngine((PrivateKeyDecryptorEngine)DecryptorFactory.getBlockDecryptorEngine(key, nextAlgorithm, null));
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

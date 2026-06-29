@@ -9,13 +9,7 @@ final class MemoryCleanerOptionsItem$CleanItemVerb extends OptionsItemVerb {
    private final MemoryCleanerOptionsItem this$0;
 
    MemoryCleanerOptionsItem$CleanItemVerb(MemoryCleanerOptionsItem _1, int item) {
-      super(
-         ((StringBuffer)(new Object()))
-            .append(MemoryCleanerOptionsItem._rb.getString(10))
-            .append(MemoryCleanerOptionsItem.getListenerDescription(_1._listeners[item]))
-            .toString(),
-         10000
-      );
+      super(MemoryCleanerOptionsItem._rb.getString(10) + MemoryCleanerOptionsItem.getListenerDescription(_1._listeners[item]), 10000);
       this.this$0 = _1;
       this._item = item;
    }
@@ -29,7 +23,7 @@ final class MemoryCleanerOptionsItem$CleanItemVerb extends OptionsItemVerb {
          break label17;
       }
 
-      Dialog.inform(MessageFormat.format(MemoryCleanerOptionsItem._rb.getString(15), new Object[]{this.this$0._listeners[this._item].getDescription()}));
+      Dialog.inform(MessageFormat.format(MemoryCleanerOptionsItem._rb.getString(15), new String[]{this.this$0._listeners[this._item].getDescription()}));
       return null;
    }
 }

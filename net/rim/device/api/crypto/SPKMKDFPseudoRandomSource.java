@@ -14,7 +14,7 @@ public final class SPKMKDFPseudoRandomSource extends AbstractPseudoRandomSource 
    private boolean _alreadyRun;
 
    public SPKMKDFPseudoRandomSource(byte[] sharedSecret) {
-      this(sharedSecret, 0, sharedSecret == null ? 0 : sharedSecret.length, false, 0, (Digest)(new Object()));
+      this(sharedSecret, 0, sharedSecret == null ? 0 : sharedSecret.length, false, 0, new SHA1Digest());
    }
 
    public SPKMKDFPseudoRandomSource(byte[] sharedSecret, int offset, int length, boolean confidentiality, int algorithmNumber, Digest digest) {
@@ -33,7 +33,7 @@ public final class SPKMKDFPseudoRandomSource extends AbstractPseudoRandomSource 
          this._previousOutputBuffer = new byte[this._outputLength];
          this._alreadyRun = false;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -46,7 +46,7 @@ public final class SPKMKDFPseudoRandomSource extends AbstractPseudoRandomSource 
    public final void xorBytes(byte[] buffer, int offset, int length) {
       if (buffer != null && offset >= 0 && length >= 0 && buffer.length - length >= offset) {
          if (this._alreadyRun) {
-            throw new Object();
+            throw new IllegalStateException();
          }
 
          int skipAmount = this._outputLength - length % this._outputLength;
@@ -77,7 +77,7 @@ public final class SPKMKDFPseudoRandomSource extends AbstractPseudoRandomSource 
 
          this._alreadyRun = true;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -103,10 +103,10 @@ public final class SPKMKDFPseudoRandomSource extends AbstractPseudoRandomSource 
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

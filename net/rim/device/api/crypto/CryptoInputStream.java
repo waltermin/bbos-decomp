@@ -8,7 +8,7 @@ public class CryptoInputStream extends InputStream {
 
    protected CryptoInputStream(InputStream in) {
       if (in == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._inputStream = in;

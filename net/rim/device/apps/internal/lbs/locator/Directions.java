@@ -44,7 +44,7 @@ public final class Directions implements Request$Listener, ActiveFieldCookie, Ve
    int _endLon;
 
    final String replaceSpecialCharacters(String input) {
-      StringBuffer output = (StringBuffer)(new Object());
+      StringBuffer output = new StringBuffer();
 
       for (int i = 0; i < input.length(); i++) {
          char character = input.charAt(i);
@@ -167,16 +167,16 @@ public final class Directions implements Request$Listener, ActiveFieldCookie, Ve
          int rc = request.getResponseCode();
          if (rc != 0) {
             byte[] b = request._lastRequest;
-            StringBuffer requestStr = (StringBuffer)(new Object());
+            StringBuffer requestStr = new StringBuffer();
             if (b != null) {
                label70:
                try {
                   for (int i = 0; i < b.length; i++) {
-                     String s = ((StringBuffer)(new Object("0"))).append(Integer.toHexString(b[i])).toString();
+                     String s = "0" + Integer.toHexString(b[i]);
                      requestStr.append(s.substring(s.length() - 2, s.length()));
                   }
                } catch (Throwable var11) {
-                  requestStr.append(((StringBuffer)(new Object("... error in parsing: "))).append(e.getMessage()).toString());
+                  requestStr.append("... error in parsing: " + e.getMessage());
                   break label70;
                }
             } else {
@@ -186,14 +186,7 @@ public final class Directions implements Request$Listener, ActiveFieldCookie, Ve
             long UID = -1037010874164756539L;
             EventLogger.logEvent(
                -1037010874164756539L,
-               ((StringBuffer)(new Object("Directions Request error: ")))
-                  .append(request.getResponseCode())
-                  .append(", URL: ")
-                  .append(request.getURL())
-                  .append(", request: ")
-                  .append(requestStr.toString())
-                  .toString()
-                  .getBytes(),
+               ("Directions Request error: " + request.getResponseCode() + ", URL: " + request.getURL() + ", request: " + requestStr.toString()).getBytes(),
                2
             );
             if (rc >= 300) {
@@ -206,7 +199,7 @@ public final class Directions implements Request$Listener, ActiveFieldCookie, Ve
          if (request instanceof DirectionsRequest) {
             this._routeXMLstring = ((DirectionsRequest)request).getRouteXMLstring();
             this._rawXMLData = ((DirectionsRequest)request).getRawXMLData();
-            System.out.println(((StringBuffer)(new Object("_routeXMLstring="))).append(this._routeXMLstring).toString());
+            System.out.println("_routeXMLstring=" + this._routeXMLstring);
             if (this._progressDialog == null) {
                this._responseReceived = true;
                synchronized (this) {
@@ -233,7 +226,7 @@ public final class Directions implements Request$Listener, ActiveFieldCookie, Ve
    private final String searchDirections(SearchAddressModel model) {
       if (this._startLat == Integer.MAX_VALUE || this._startLon == Integer.MAX_VALUE || this._endLat == Integer.MAX_VALUE || this._endLon == Integer.MAX_VALUE) {
          Location location = null;
-         GPSLocationData gpsLocationData = (GPSLocationData)(new Object());
+         GPSLocationData gpsLocationData = new GPSLocationData();
          if (gpsLocationData != null && gpsLocationData.isValid()) {
             location = new Location(gpsLocationData.getLatitudeInt(), gpsLocationData.getLongitudeInt(), 0);
          } else {
@@ -316,13 +309,11 @@ public final class Directions implements Request$Listener, ActiveFieldCookie, Ve
                      }
 
                      String address = this.replaceSpecialCharacters(this._startAddress);
-                     this._routeXMLstring = ((StringBuffer)(new Object()))
-                        .append(this._routeXMLstring.substring(0, index + offset))
-                        .append("address='")
-                        .append(address)
-                        .append("' ")
-                        .append(this._routeXMLstring.substring(index + offset, this._routeXMLstring.length()))
-                        .toString();
+                     this._routeXMLstring = this._routeXMLstring.substring(0, index + offset)
+                        + "address='"
+                        + address
+                        + "' "
+                        + this._routeXMLstring.substring(index + offset, this._routeXMLstring.length());
                      int var15 = 13;
 
                      int lastIndex;
@@ -345,13 +336,11 @@ public final class Directions implements Request$Listener, ActiveFieldCookie, Ve
                         }
 
                         address = this.replaceSpecialCharacters(this._endAddress);
-                        this._routeXMLstring = ((StringBuffer)(new Object()))
-                           .append(this._routeXMLstring.substring(0, lastIndex + var15))
-                           .append("address='")
-                           .append(address)
-                           .append("' ")
-                           .append(this._routeXMLstring.substring(lastIndex + var15, this._routeXMLstring.length()))
-                           .toString();
+                        this._routeXMLstring = this._routeXMLstring.substring(0, lastIndex + var15)
+                           + "address='"
+                           + address
+                           + "' "
+                           + this._routeXMLstring.substring(lastIndex + var15, this._routeXMLstring.length());
                      }
                   }
                }
@@ -372,21 +361,21 @@ public final class Directions implements Request$Listener, ActiveFieldCookie, Ve
                   var8 = false;
                } finally {
                   if (var8) {
-                     EventLogger.logEvent(LBSApplication.UID, ((StringBuffer)(new Object("UnsupportedEncoding: "))).append(encoding).toString().getBytes(), 2);
+                     EventLogger.logEvent(LBSApplication.UID, ("UnsupportedEncoding: " + encoding).getBytes(), 2);
                      this._rawXMLData = this._routeXMLstring.getBytes();
                      break label147;
                   }
                }
             }
 
-            System.out.println(((StringBuffer)(new Object("_routeXMLstring="))).append(this._routeXMLstring).toString());
+            System.out.println("_routeXMLstring=" + this._routeXMLstring);
             return this._routeXMLstring;
       }
    }
 
    private final void coverageErrorMsg() {
       String netType = (RadioInfo.getActiveWAFs() & 4) == 4 ? LBSResources.getString(336) : LBSResources.getString(335);
-      String msg = MessageFormat.format(LBSResources.getString(334), new Object[]{netType});
+      String msg = MessageFormat.format(LBSResources.getString(334), new String[]{netType});
       Dialog.alert(msg);
    }
 

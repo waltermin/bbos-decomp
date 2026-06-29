@@ -1,12 +1,14 @@
 package net.rim.device.api.crypto.certificate.pgp;
 
 import java.io.InputStream;
+import net.rim.device.api.crypto.NoSuchAlgorithmException;
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.CertificateFactory;
+import net.rim.device.api.crypto.certificate.CertificateParsingException;
 
 final class PGPCertificateFactory extends CertificateFactory {
    @Override
-   public final Certificate createCertificate(InputStream param1) {
+   public final Certificate createCertificate(InputStream param1) throws NoSuchAlgorithmException, CertificateParsingException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -33,17 +35,17 @@ final class PGPCertificateFactory extends CertificateFactory {
       // 1c: invokespecial net/rim/device/api/crypto/certificate/pgp/PGPCertificate.<init> (Ljava/io/InputStream;)V
       // 1f: areturn
       // 20: astore 2
-      // 21: new java/lang/Object
+      // 21: new net/rim/device/api/crypto/certificate/CertificateParsingException
       // 24: dup
       // 25: invokespecial net/rim/device/api/crypto/certificate/CertificateParsingException.<init> ()V
       // 28: athrow
       // 29: astore 2
-      // 2a: new java/lang/Object
+      // 2a: new net/rim/device/api/crypto/certificate/CertificateParsingException
       // 2d: dup
       // 2e: invokespecial net/rim/device/api/crypto/certificate/CertificateParsingException.<init> ()V
       // 31: athrow
       // 32: astore 2
-      // 33: new java/lang/Object
+      // 33: new net/rim/device/api/crypto/NoSuchAlgorithmException
       // 36: dup
       // 37: invokespecial net/rim/device/api/crypto/NoSuchAlgorithmException.<init> ()V
       // 3a: athrow
@@ -54,7 +56,7 @@ final class PGPCertificateFactory extends CertificateFactory {
    }
 
    @Override
-   public final Certificate createCertificate(byte[] param1) {
+   public final Certificate createCertificate(byte[] param1) throws NoSuchAlgorithmException, CertificateParsingException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -64,7 +66,7 @@ final class PGPCertificateFactory extends CertificateFactory {
       // Bytecode:
       // 00: new net/rim/device/api/crypto/pgp/PGPArmorDecoder
       // 03: dup
-      // 04: new java/lang/Object
+      // 04: new java/io/ByteArrayInputStream
       // 07: dup
       // 08: aload 1
       // 09: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -84,17 +86,17 @@ final class PGPCertificateFactory extends CertificateFactory {
       // 23: invokespecial net/rim/device/api/crypto/certificate/pgp/PGPCertificate.<init> ([B)V
       // 26: areturn
       // 27: astore 2
-      // 28: new java/lang/Object
+      // 28: new net/rim/device/api/crypto/certificate/CertificateParsingException
       // 2b: dup
       // 2c: invokespecial net/rim/device/api/crypto/certificate/CertificateParsingException.<init> ()V
       // 2f: athrow
       // 30: astore 2
-      // 31: new java/lang/Object
+      // 31: new net/rim/device/api/crypto/certificate/CertificateParsingException
       // 34: dup
       // 35: invokespecial net/rim/device/api/crypto/certificate/CertificateParsingException.<init> ()V
       // 38: athrow
       // 39: astore 2
-      // 3a: new java/lang/Object
+      // 3a: new net/rim/device/api/crypto/NoSuchAlgorithmException
       // 3d: dup
       // 3e: invokespecial net/rim/device/api/crypto/NoSuchAlgorithmException.<init> ()V
       // 41: athrow

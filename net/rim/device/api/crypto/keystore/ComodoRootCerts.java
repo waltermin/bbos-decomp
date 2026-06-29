@@ -4516,7 +4516,7 @@ final class ComodoRootCerts {
       int downloadTime = PersistentInteger.get(id);
       int currentDownloadTime = (int)CodeModuleManager.getModuleDownloadTimestamp(ApplicationDescriptor.currentApplicationDescriptor().getModuleHandle());
       if (downloadTime != currentDownloadTime) {
-         CertificateStatus status = (CertificateStatus)(new Object(0, 1158007107581L, 1158007107581L, 0, 0, -1));
+         CertificateStatus status = new CertificateStatus(0, 1158007107581L, 1158007107581L, 0, 0, -1);
          String x509String = "X509";
          TrustedKeyStore trusted = (TrustedKeyStore)TrustedKeyStore.getInstance();
          DeviceKeyStore device = (DeviceKeyStore)DeviceKeyStore.getInstance();

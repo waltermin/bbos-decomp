@@ -5,6 +5,8 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.XYRect;
+import net.rim.device.api.ui.component.SeparatorField;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.internal.ui.component.Scrollbar;
 
 public class WizardLayoutManager extends Manager {
@@ -14,7 +16,7 @@ public class WizardLayoutManager extends Manager {
    private Field _sideBar;
    private int _sideBarWidth;
    private Scrollbar _scrollbar;
-   private XYRect _paintingRect = (XYRect)(new Object());
+   private XYRect _paintingRect = new XYRect();
    private boolean _isRightToLeft;
 
    public WizardLayoutManager() {
@@ -24,9 +26,9 @@ public class WizardLayoutManager extends Manager {
    public void setScrollbarEnabled(boolean val) {
       if (val) {
          if (this._scrollbar == null) {
-            this._scrollbar = (Scrollbar)(new Object(true));
+            this._scrollbar = new Scrollbar(true);
             this.add(this._scrollbar);
-            if (this._content instanceof Object) {
+            if (this._content instanceof Manager) {
                this._scrollbar.setClient((Manager)this._content);
                return;
             }
@@ -54,9 +56,9 @@ public class WizardLayoutManager extends Manager {
       }
 
       if (header != null) {
-         this._header = (Manager)(new Object());
+         this._header = new VerticalFieldManager();
          this._header.add(header);
-         this._header.add((Field)(new Object()));
+         this._header.add(new SeparatorField());
          this.add(this._header);
       }
    }
@@ -75,7 +77,7 @@ public class WizardLayoutManager extends Manager {
       this._content = content;
       if (this._content != null) {
          this.add(this._content);
-         if (this._scrollbar != null && this._content instanceof Object) {
+         if (this._scrollbar != null && this._content instanceof Manager) {
             this._scrollbar.setClient((Manager)this._content);
          }
       }

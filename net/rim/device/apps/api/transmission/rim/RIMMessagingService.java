@@ -36,7 +36,7 @@ public class RIMMessagingService
    private DefaultSendThread _sender;
    private DefaultReceiveThread _receiver;
    private ServiceRecord _serviceRecord;
-   private ContextObject _statusContext = (ContextObject)(new Object());
+   private ContextObject _statusContext = new ContextObject();
    private static ResourceBundle _resources = ResourceBundle.getBundle(-6786735338084768790L, "net.rim.device.apps.internal.resource.RIMTransmission");
 
    public ServiceRecord[] getAllOutgoingServiceRecords() {
@@ -57,7 +57,7 @@ public class RIMMessagingService
 
    @Override
    public void receivePacket(DataBuffer packetDataBuffer, Object context) {
-      if (!(packetDataBuffer instanceof Object)) {
+      if (!(packetDataBuffer instanceof GMEDatagram)) {
          Firewall.getInstance().incrementBlockedCount((byte)-4);
       } else {
          GMEDatagram gmeDatagram = (GMEDatagram)packetDataBuffer;
@@ -129,7 +129,7 @@ public class RIMMessagingService
 
             transmission.read(packetDataBuffer);
             if (super._tLogger != null) {
-               contextObject.put(-8214296050944071630L, new Object(packetDataBuffer.getLength()));
+               contextObject.put(-8214296050944071630L, new Integer(packetDataBuffer.getLength()));
                contextObject.put(1694473709785469504L, packetDataBuffer.getArray());
             }
 
@@ -229,13 +229,13 @@ public class RIMMessagingService
             ServiceRecord boundServiceRecord = (ServiceRecord)ContextObject.get(packetContext, -6095803566992128485L);
             if (boundServiceRecord == null) {
                if (this._serviceRecord != null) {
-                  address = ((StringBuffer)(new Object("CMIME/"))).append(this._serviceRecord.getUid()).toString();
+                  address = "CMIME/" + this._serviceRecord.getUid();
                   ContextObject.put(packetContext, -5971550291443523639L, address);
                } else {
                   EventLogger.logEvent(super._eventLoggerGUID, 1399742834, 2);
                }
             } else {
-               address = ((StringBuffer)(new Object("CMIME/"))).append(boundServiceRecord.getUid()).toString();
+               address = "CMIME/" + boundServiceRecord.getUid();
                ContextObject.put(packetContext, -5971550291443523639L, address);
             }
          }

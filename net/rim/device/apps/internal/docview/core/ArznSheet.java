@@ -181,7 +181,7 @@ final class ArznSheet extends ArznObject {
             offset += 2;
             String strSheetName = null;
             if (nSheetNameLength > 0) {
-               strSheetName = (String)(new Object(super._ucsParser.readString(false, nSheetNameLength)));
+               strSheetName = new String(super._ucsParser.readString(false, nSheetNameLength));
                offset += nSheetNameLength;
             }
 
@@ -189,7 +189,7 @@ final class ArznSheet extends ArznObject {
                int nUnicodeSheetNameLength = super._ucsParser.readUnsignedShort();
                offset += 2;
                if (nUnicodeSheetNameLength > 0) {
-                  strSheetName = (String)(new Object(super._ucsParser.readString(true, nUnicodeSheetNameLength)));
+                  strSheetName = new String(super._ucsParser.readString(true, nUnicodeSheetNameLength));
                   offset += nUnicodeSheetNameLength;
                }
             }

@@ -56,7 +56,7 @@ final class SMILBrowserField extends VerticalFieldManager {
       // 02d: aload 5
       // 02f: invokevirtual java/lang/String.equals (Ljava/lang/Object;)Z
       // 032: ifeq 047
-      // 035: new java/lang/Object
+      // 035: new net/rim/plazmic/internal/mediaengine/model/smil/v0_0/MMSParser
       // 038: dup
       // 039: invokespecial net/rim/plazmic/internal/mediaengine/model/smil/v0_0/MMSParser.<init> ()V
       // 03c: astore 4
@@ -64,7 +64,7 @@ final class SMILBrowserField extends VerticalFieldManager {
       // 040: bipush 1
       // 041: invokevirtual net/rim/plazmic/internal/mediaengine/model/smil/v0_0/SMILParser.setConfiguration (I)V
       // 044: goto 050
-      // 047: new java/lang/Object
+      // 047: new net/rim/plazmic/internal/mediaengine/model/smil/v0_0/SMILParser
       // 04a: dup
       // 04b: invokespecial net/rim/plazmic/internal/mediaengine/model/smil/v0_0/SMILParser.<init> ()V
       // 04e: astore 4
@@ -81,7 +81,7 @@ final class SMILBrowserField extends VerticalFieldManager {
       // 069: aload 7
       // 06b: invokevirtual org/xml/sax/SAXException.getMessage ()Ljava/lang/String;
       // 06e: invokevirtual java/io/PrintStream.println (Ljava/lang/String;)V
-      // 071: new java/lang/Object
+      // 071: new java/io/IOException
       // 074: dup
       // 075: aload 7
       // 077: invokevirtual org/xml/sax/SAXException.getMessage ()Ljava/lang/String;
@@ -91,7 +91,7 @@ final class SMILBrowserField extends VerticalFieldManager {
       // 080: getstatic java/lang/System.out Ljava/io/PrintStream;
       // 083: ldc_w "Caught ParserConfigException"
       // 086: invokevirtual java/io/PrintStream.println (Ljava/lang/String;)V
-      // 089: new java/lang/Object
+      // 089: new java/io/IOException
       // 08c: dup
       // 08d: aload 7
       // 08f: invokevirtual java/lang/Throwable.getMessage ()Ljava/lang/String;
@@ -107,7 +107,7 @@ final class SMILBrowserField extends VerticalFieldManager {
       // 0a6: getstatic java/lang/System.out Ljava/io/PrintStream;
       // 0a9: ldc_w "Runtime Exception in SMIL parser"
       // 0ac: invokevirtual java/io/PrintStream.println (Ljava/lang/String;)V
-      // 0af: new java/lang/Object
+      // 0af: new java/io/IOException
       // 0b2: dup
       // 0b3: ldc_w "Invalid SMIL attachment."
       // 0b6: invokespecial java/io/IOException.<init> (Ljava/lang/String;)V
@@ -118,16 +118,16 @@ final class SMILBrowserField extends VerticalFieldManager {
       // 0bf: invokevirtual net/rim/plazmic/internal/mediaengine/model/smil/v0_0/SMILModel.getRootLayout ()Lnet/rim/plazmic/internal/mediaengine/model/smil/v0_0/Region;
       // 0c2: invokevirtual net/rim/device/api/ui/Manager.add (Lnet/rim/device/api/ui/Field;)V
       // 0c5: aload 0
-      // 0c6: new java/lang/Object
+      // 0c6: new net/rim/plazmic/internal/mediaengine/model/smil/v0_0/SMILPlayer
       // 0c9: dup
       // 0ca: invokespecial net/rim/plazmic/internal/mediaengine/model/smil/v0_0/SMILPlayer.<init> ()V
       // 0cd: putfield net/rim/plazmic/internal/mediaengine/model/smil/v0_0/plugin/SMILBrowserField._player Lnet/rim/plazmic/internal/mediaengine/model/smil/v0_0/SMILPlayer;
       // 0d0: aload 0
-      // 0d1: new java/lang/Object
+      // 0d1: new net/rim/plazmic/internal/mediaengine/event/EventEngine
       // 0d4: dup
       // 0d5: invokespecial net/rim/plazmic/internal/mediaengine/event/EventEngine.<init> ()V
       // 0d8: putfield net/rim/plazmic/internal/mediaengine/model/smil/v0_0/plugin/SMILBrowserField._engine Lnet/rim/plazmic/internal/mediaengine/event/EventEngine;
-      // 0db: new java/lang/Object
+      // 0db: new net/rim/plazmic/internal/mediaengine/event/EventResolverImpl
       // 0de: dup
       // 0df: invokespecial net/rim/plazmic/internal/mediaengine/event/EventResolverImpl.<init> ()V
       // 0e2: astore 7
@@ -187,7 +187,7 @@ final class SMILBrowserField extends VerticalFieldManager {
       // 162: aload 11
       // 164: invokevirtual net/rim/plazmic/internal/mediaengine/event/EventEngine.releaseEventInstance (Lnet/rim/plazmic/internal/mediaengine/event/Event;)V
       // 167: aload 0
-      // 168: new java/lang/Object
+      // 168: new net/rim/plazmic/internal/mediaengine/model/smil/v0_0/RegionManager
       // 16b: dup
       // 16c: invokespecial net/rim/plazmic/internal/mediaengine/model/smil/v0_0/RegionManager.<init> ()V
       // 16f: putfield net/rim/plazmic/internal/mediaengine/model/smil/v0_0/plugin/SMILBrowserField._regionManager Lnet/rim/plazmic/internal/mediaengine/model/smil/v0_0/RegionManager;
@@ -216,20 +216,20 @@ final class SMILBrowserField extends VerticalFieldManager {
       // 1a4: ifeq 209
       // 1a7: aload 0
       // 1a8: getfield net/rim/plazmic/internal/mediaengine/model/smil/v0_0/plugin/SMILBrowserField._model Lnet/rim/plazmic/internal/mediaengine/model/smil/v0_0/SMILModel;
-      // 1ab: checkcast java/lang/Object
+      // 1ab: checkcast net/rim/plazmic/internal/mediaengine/model/smil/v0_0/MMSModel
       // 1ae: invokevirtual net/rim/plazmic/internal/mediaengine/model/smil/v0_0/MMSModel.getSlideManager ()Lnet/rim/plazmic/internal/mediaengine/model/smil/v0_0/ui/SlideManager;
       // 1b1: astore 12
       // 1b3: aload 12
       // 1b5: aload 0
       // 1b6: getfield net/rim/plazmic/internal/mediaengine/model/smil/v0_0/plugin/SMILBrowserField._player Lnet/rim/plazmic/internal/mediaengine/model/smil/v0_0/SMILPlayer;
       // 1b9: invokevirtual net/rim/plazmic/internal/mediaengine/model/smil/v0_0/ui/SlideManager.setPlayer (Lnet/rim/plazmic/internal/mediaengine/model/smil/v0_0/SMILPlayer;)V
-      // 1bc: new java/lang/Object
+      // 1bc: new net/rim/plazmic/internal/mediaengine/model/smil/v0_0/EventInterceptor
       // 1bf: dup
       // 1c0: aload 0
       // 1c1: getfield net/rim/plazmic/internal/mediaengine/model/smil/v0_0/plugin/SMILBrowserField._regionManager Lnet/rim/plazmic/internal/mediaengine/model/smil/v0_0/RegionManager;
       // 1c4: aload 0
       // 1c5: getfield net/rim/plazmic/internal/mediaengine/model/smil/v0_0/plugin/SMILBrowserField._model Lnet/rim/plazmic/internal/mediaengine/model/smil/v0_0/SMILModel;
-      // 1c8: checkcast java/lang/Object
+      // 1c8: checkcast net/rim/plazmic/internal/mediaengine/model/smil/v0_0/MMSModel
       // 1cb: invokespecial net/rim/plazmic/internal/mediaengine/model/smil/v0_0/EventInterceptor.<init> (Lnet/rim/plazmic/internal/mediaengine/model/smil/v0_0/RegionManager;Lnet/rim/plazmic/internal/mediaengine/model/smil/v0_0/MMSModel;)V
       // 1ce: astore 13
       // 1d0: aload 7
@@ -267,9 +267,9 @@ final class SMILBrowserField extends VerticalFieldManager {
       // 21a: getfield net/rim/plazmic/internal/mediaengine/model/smil/v0_0/plugin/SMILBrowserField._regionManager Lnet/rim/plazmic/internal/mediaengine/model/smil/v0_0/RegionManager;
       // 21d: invokeinterface net/rim/plazmic/internal/mediaengine/service/EventResolver.setEventListener (ILjava/lang/Object;)V 3
       // 222: aload 0
-      // 223: new java/lang/Object
+      // 223: new net/rim/device/apps/api/ui/VerbMenuItem
       // 226: dup
-      // 227: new java/lang/Object
+      // 227: new net/rim/plazmic/internal/mediaengine/model/smil/v0_0/verbs/SMILPauseVerb
       // 22a: dup
       // 22b: aload 0
       // 22c: getfield net/rim/plazmic/internal/mediaengine/model/smil/v0_0/plugin/SMILBrowserField._player Lnet/rim/plazmic/internal/mediaengine/model/smil/v0_0/SMILPlayer;
@@ -278,9 +278,9 @@ final class SMILBrowserField extends VerticalFieldManager {
       // 234: invokespecial net/rim/device/apps/api/ui/VerbMenuItem.<init> (Lnet/rim/device/apps/api/framework/verb/Verb;I)V
       // 237: putfield net/rim/plazmic/internal/mediaengine/model/smil/v0_0/plugin/SMILBrowserField._pauseMenuItem Lnet/rim/device/apps/api/ui/VerbMenuItem;
       // 23a: aload 0
-      // 23b: new java/lang/Object
+      // 23b: new net/rim/device/apps/api/ui/VerbMenuItem
       // 23e: dup
-      // 23f: new java/lang/Object
+      // 23f: new net/rim/plazmic/internal/mediaengine/model/smil/v0_0/verbs/SMILResumeVerb
       // 242: dup
       // 243: aload 0
       // 244: getfield net/rim/plazmic/internal/mediaengine/model/smil/v0_0/plugin/SMILBrowserField._player Lnet/rim/plazmic/internal/mediaengine/model/smil/v0_0/SMILPlayer;
@@ -289,9 +289,9 @@ final class SMILBrowserField extends VerticalFieldManager {
       // 24c: invokespecial net/rim/device/apps/api/ui/VerbMenuItem.<init> (Lnet/rim/device/apps/api/framework/verb/Verb;I)V
       // 24f: putfield net/rim/plazmic/internal/mediaengine/model/smil/v0_0/plugin/SMILBrowserField._resumeMenuItem Lnet/rim/device/apps/api/ui/VerbMenuItem;
       // 252: aload 0
-      // 253: new java/lang/Object
+      // 253: new net/rim/device/apps/api/ui/VerbMenuItem
       // 256: dup
-      // 257: new java/lang/Object
+      // 257: new net/rim/plazmic/internal/mediaengine/model/smil/v0_0/verbs/SMILRestartVerb
       // 25a: dup
       // 25b: aload 0
       // 25c: getfield net/rim/plazmic/internal/mediaengine/model/smil/v0_0/plugin/SMILBrowserField._player Lnet/rim/plazmic/internal/mediaengine/model/smil/v0_0/SMILPlayer;
@@ -340,7 +340,7 @@ final class SMILBrowserField extends VerticalFieldManager {
       // 2b7: aload 14
       // 2b9: athrow
       // 2ba: astore 4
-      // 2bc: new java/lang/Object
+      // 2bc: new net/rim/device/api/browser/field/RenderingException
       // 2bf: dup
       // 2c0: aload 4
       // 2c2: invokevirtual java/lang/Throwable.getMessage ()Ljava/lang/String;
@@ -469,7 +469,7 @@ final class SMILBrowserField extends VerticalFieldManager {
       }
 
       for (Field f = this.getManager(); f != null; f = f.getManager()) {
-         if (f instanceof Object) {
+         if (f instanceof MMSPresentationField) {
             MMSPresentationField mpf = (MMSPresentationField)f;
             if (mpf.hasAttachment("net_rim_Template")) {
                this._isTemplate = 1;

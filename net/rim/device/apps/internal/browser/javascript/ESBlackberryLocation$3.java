@@ -32,7 +32,7 @@ class ESBlackberryLocation$3 extends JavaScriptHostFunction {
       // 1a: invokevirtual net/rim/ecmascript/runtime/HostFunction.getParm (I)J
       // 1d: invokestatic net/rim/ecmascript/runtime/Convert.toInt32 (J)I
       // 20: tableswitch 32 -1 2 81 32 48 65
-      // 40: new java/lang/Object
+      // 40: new javax/microedition/location/Criteria
       // 43: dup
       // 44: invokespecial javax/microedition/location/Criteria.<init> ()V
       // 47: astore 1
@@ -40,7 +40,7 @@ class ESBlackberryLocation$3 extends JavaScriptHostFunction {
       // 49: bipush 1
       // 4a: invokevirtual javax/microedition/location/Criteria.setPreferredPowerConsumption (I)V
       // 4d: goto 73
-      // 50: new java/lang/Object
+      // 50: new javax/microedition/location/Criteria
       // 53: dup
       // 54: invokespecial javax/microedition/location/Criteria.<init> ()V
       // 57: astore 1
@@ -48,7 +48,7 @@ class ESBlackberryLocation$3 extends JavaScriptHostFunction {
       // 59: bipush 2
       // 5b: invokevirtual javax/microedition/location/Criteria.setPreferredPowerConsumption (I)V
       // 5e: goto 73
-      // 61: new java/lang/Object
+      // 61: new javax/microedition/location/Criteria
       // 64: dup
       // 65: invokespecial javax/microedition/location/Criteria.<init> ()V
       // 68: astore 1

@@ -30,8 +30,8 @@ class ProfilesPopupScreen$ProfilesPopupScreenCache implements GlobalEventListene
       }
 
       this._size = profilesSize;
-      this._normalBitmaps = new Object[this._size];
-      this._focusBitmaps = new Object[this._size];
+      this._normalBitmaps = new Bitmap[this._size];
+      this._focusBitmaps = new Bitmap[this._size];
       Theme theme = ThemeManager.getActiveTheme();
 
       for (int i = 0; i < profilesSize; i++) {
@@ -71,9 +71,9 @@ class ProfilesPopupScreen$ProfilesPopupScreenCache implements GlobalEventListene
    }
 
    private Bitmap imageToBitmap(Image image, int width, int height) {
-      Bitmap bitmap = (Bitmap)(new Object(197, width, height));
+      Bitmap bitmap = new Bitmap(197, width, height);
       bitmap.createAlpha(2);
-      Graphics g = (Graphics)(new Object(bitmap));
+      Graphics g = new Graphics(bitmap);
       g.setGlobalAlpha(0);
       g.setBackgroundColor(0);
       g.clear();

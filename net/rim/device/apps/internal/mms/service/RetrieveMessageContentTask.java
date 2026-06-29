@@ -55,15 +55,15 @@ final class RetrieveMessageContentTask implements MMSTask {
          if (MMSClientServiceBook.getRetrievalUrlScheme() == 1) {
             if (url == null || url.length() == 0) {
                String var4 = MMSTransportServiceBook.getMessageUrlPrefix();
-               url = ((StringBuffer)(new Object())).append(var4).append(this._message.getPayload().getAttribute("x-mms-transaction-id")).toString();
-               System.out.println(((StringBuffer)(new Object("empty url mapped to: "))).append(url).toString());
+               url = var4 + this._message.getPayload().getAttribute("x-mms-transaction-id");
+               System.out.println("empty url mapped to: " + url);
             } else if (url.endsWith("=")) {
-               url = ((StringBuffer)(new Object())).append(url).append(this._message.getPayload().getAttribute("x-mms-transaction-id")).toString();
-               System.out.println(((StringBuffer)(new Object("partial url mapped to: "))).append(url).toString());
+               url = url + this._message.getPayload().getAttribute("x-mms-transaction-id");
+               System.out.println("partial url mapped to: " + url);
             }
          }
 
-         url = ((StringBuffer)(new Object())).append(url).append(MMSTransportServiceBook.getMMSCConnectionParameters()).toString();
+         url = url + MMSTransportServiceBook.getMMSCConnectionParameters();
          boolean isDone = this.readContent(url);
          if (!isDone) {
             if (MMSUtilities.isPermanentFailure(this._message)) {
@@ -74,7 +74,7 @@ final class RetrieveMessageContentTask implements MMSTask {
                this._attempts++;
                if (this._attempts < 10) {
                   int delay = this.getRetryDelay();
-                  System.out.println(((StringBuffer)(new Object("MMS Retrieve failed. Retry in "))).append(delay).toString());
+                  System.out.println("MMS Retrieve failed. Retry in " + delay);
                   BackgroundTaskThread.addTask(this, delay);
                   return;
                }
@@ -138,10 +138,10 @@ final class RetrieveMessageContentTask implements MMSTask {
             if (StringUtilities.compareToIgnoreCase(normalizedContentType, "application/vnd.wap.mms-message", 1701707776) != 0) {
                builder.addAttachment("net_rim_RetrieveError", MMSUtilities.getMIMEType(contentType), data, null);
                updatedStatus = 1;
-               System.out.println(((StringBuffer)(new Object("MMS: retrieve failed (contentType="))).append(contentType).append(')').toString());
+               System.out.println("MMS: retrieve failed (contentType=" + contentType + ')');
             } else {
                try {
-                  DataBuffer dataBuffer = (DataBuffer)(new Object(data, 0, data.length, false));
+                  DataBuffer dataBuffer = new DataBuffer(data, 0, data.length, false);
                   MMSProtocolDataUnit pdu = new MMSProtocolDataUnit(dataBuffer);
                   if (MMSOptions.getInstance().getOptionFlag(512)) {
                      pdu.dumpFields();
@@ -214,7 +214,7 @@ final class RetrieveMessageContentTask implements MMSTask {
                   }
                } catch (Throwable var32) {
                   label300: {
-                     if (e instanceof Object) {
+                     if (e instanceof OutOfMemoryError) {
                         throw e;
                      }
 
@@ -237,23 +237,20 @@ final class RetrieveMessageContentTask implements MMSTask {
             return false;
          }
       } catch (Throwable var33) {
-         if (e instanceof Object) {
+         if (e instanceof OutOfMemoryError) {
             MMSServiceUtil.updateMessageStatus(this._message, 1023);
             System.out.println("MMS ReadContent OutOfMemory");
             return false;
-         } else if (e instanceof Object) {
+         } else if (e instanceof WAPIOException) {
             int status = MMSUtilities.hasDataCoverage() ? 1 : 511;
             WAPIOException ioe = (WAPIOException)e;
             MMSServiceUtil.updateMessageStatus(this._message, status, 0, 0, ioe.getError(), ioe.getAdditionalData());
-            System.out
-               .println(
-                  ((StringBuffer)(new Object("MMS ReadContent WAPIOException "))).append(ioe.getError()).append(' ').append(ioe.getAdditionalData()).toString()
-               );
+            System.out.println("MMS ReadContent WAPIOException " + ioe.getError() + ' ' + ioe.getAdditionalData());
             return false;
          } else {
             int status = MMSUtilities.hasDataCoverage() ? 1 : 511;
             MMSServiceUtil.updateMessageStatus(this._message, status);
-            System.out.println(((StringBuffer)(new Object("MMS ReadContent "))).append(e.toString()).toString());
+            System.out.println("MMS ReadContent " + e.toString());
             return false;
          }
       }

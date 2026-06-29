@@ -14,7 +14,7 @@ public final class AccumulatorInputStream extends InputStream implements PipeInp
    private InputConnection _connection;
    private PipeInputStream _in;
    private InputStream _subIn;
-   private Pipe _pipe = (Pipe)(new Object());
+   private Pipe _pipe = new Pipe();
    private IOException _ioException;
 
    public AccumulatorInputStream(InputConnection connection, InputStream in, SessionStats stats, boolean startThread) {

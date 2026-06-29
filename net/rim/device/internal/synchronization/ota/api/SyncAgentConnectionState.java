@@ -31,7 +31,7 @@ final class SyncAgentConnectionState implements Persistable {
          PersistentObject xPersistentObject = PersistentStore.getPersistentObject(-5303286210729691565L);
          _states = (IntHashtable)xPersistentObject.getContents();
          if (_states == null) {
-            _states = (IntHashtable)(new Object());
+            _states = new IntHashtable();
             xPersistentObject.setContents(_states, 51);
             xPersistentObject.commit();
          }
@@ -150,7 +150,7 @@ final class SyncAgentConnectionState implements Persistable {
 
    final synchronized Vector getChangesList() {
       if (this._changesList == null) {
-         this._changesList = (Vector)(new Object(0));
+         this._changesList = new Vector(0);
       }
 
       return this._changesList;

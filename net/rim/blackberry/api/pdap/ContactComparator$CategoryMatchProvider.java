@@ -71,9 +71,8 @@ class ContactComparator$CategoryMatchProvider extends ContactComparator$MatchPro
    private CategoriesModel getCategoriesModel(AddressCardModel addressCard) {
       for (int i = addressCard.size() - 1; i >= 0; i--) {
          Object o = addressCard.getAt(i);
-         if (o instanceof Object) {
-            CategoriesModel categoriesModel = (CategoriesModel)o;
-            return categoriesModel;
+         if (o instanceof CategoriesModel) {
+            return (CategoriesModel)o;
          }
       }
 

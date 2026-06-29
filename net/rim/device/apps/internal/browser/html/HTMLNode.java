@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.browser.html;
 
 import net.rim.device.internal.ui.TextFlowRegion;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -106,7 +107,7 @@ class HTMLNode extends TextFlowRegion implements Node {
       HTMLNode refChild = (HTMLNode)nRefChild;
       int iNewChild = newChild._node;
       if (this._ir != newChild._ir) {
-         throw new Object((short)4, "");
+         throw new DOMException((short)4, "");
       }
 
       this._ir.notReadOnly(this._node);
@@ -122,15 +123,15 @@ class HTMLNode extends TextFlowRegion implements Node {
       }
 
       if (this._ir.isLeaf(this._node) || this._ir.isParentOfOrSelf(iNewChild, this._node)) {
-         throw new Object((short)3, "");
+         throw new DOMException((short)3, "");
       }
 
       if (!this._ir.isParentOf(this._node, iRefChild)) {
-         throw new Object((short)8, "");
+         throw new DOMException((short)8, "");
       }
 
       if (!this._ir.allowsChild(this._node, iNewChild)) {
-         throw new Object((short)3, "");
+         throw new DOMException((short)3, "");
       }
 
       if (this._ir.getNodeType(iNewChild) != 11) {
@@ -158,7 +159,7 @@ class HTMLNode extends TextFlowRegion implements Node {
       int iOldChild = oldChild._node;
       int iNewChild = newChild._node;
       if (this._ir != newChild._ir) {
-         throw new Object((short)4, "");
+         throw new DOMException((short)4, "");
       }
 
       this._ir.notReadOnly(this._node);
@@ -168,15 +169,15 @@ class HTMLNode extends TextFlowRegion implements Node {
       }
 
       if (!this._ir.isParentOf(this._node, iOldChild)) {
-         throw new Object((short)8, "");
+         throw new DOMException((short)8, "");
       }
 
       if (this._ir.isLeaf(this._node) || this._ir.isParentOfOrSelf(iNewChild, this._node)) {
-         throw new Object((short)3, "");
+         throw new DOMException((short)3, "");
       }
 
       if (!this._ir.allowsChild(this._node, iNewChild)) {
-         throw new Object((short)3, "");
+         throw new DOMException((short)3, "");
       }
 
       if (this._ir.getNodeType(iNewChild) != 11) {
@@ -211,7 +212,7 @@ class HTMLNode extends TextFlowRegion implements Node {
       this._ir.notReadOnly(this._node);
       HTMLNode oldChild = (HTMLNode)nOldChild;
       if (!this._ir.isParentOf(this._node, oldChild._node)) {
-         throw new Object((short)8, "");
+         throw new DOMException((short)8, "");
       }
 
       this._ir.removeChild(this._node, oldChild._node);
@@ -223,17 +224,17 @@ class HTMLNode extends TextFlowRegion implements Node {
       HTMLNode newChild = (HTMLNode)nNewChild;
       int iNewChild = newChild._node;
       if (this._ir != newChild._ir) {
-         throw new Object((short)4, "");
+         throw new DOMException((short)4, "");
       }
 
       this._ir.notReadOnly(this._node);
       this._ir.notReadOnly(this._ir.getParent(iNewChild));
       if (!this._ir.allowsChild(this._node, iNewChild)) {
-         throw new Object((short)3, "");
+         throw new DOMException((short)3, "");
       }
 
       if (this._ir.isParentOfOrSelf(iNewChild, this._node)) {
-         throw new Object((short)3, "");
+         throw new DOMException((short)3, "");
       }
 
       if (this._ir.getNodeType(iNewChild) != 11) {

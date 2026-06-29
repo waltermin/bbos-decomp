@@ -94,7 +94,7 @@ public final class Diag extends UiApplication {
          }
 
          ApplicationDescriptor original = ApplicationDescriptor.currentApplicationDescriptor();
-         ApplicationDescriptor descriptor = (ApplicationDescriptor)(new Object(original, DiagnosticResources.getString(0), null));
+         ApplicationDescriptor descriptor = new ApplicationDescriptor(original, DiagnosticResources.getString(0), null);
          ApplicationRegistry.getApplicationRegistry().put(1548127712067364994L, descriptor);
       } else {
          Diag app = getInstance();
@@ -137,7 +137,7 @@ public final class Diag extends UiApplication {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public final void sendReport(int type, String dest, String subject, String body) {
       try {
-         ContextObject contextObject = (ContextObject)(new Object());
+         ContextObject contextObject = new ContextObject();
          contextObject.setFlag(31);
          contextObject.setFlag(85);
          contextObject.setFlag(121);
@@ -152,12 +152,10 @@ public final class Diag extends UiApplication {
                contextObject.setFlag(43);
          }
 
-         EmailMessageModelImpl msg = (EmailMessageModelImpl)(new Object(contextObject));
+         EmailMessageModelImpl msg = new EmailMessageModelImpl(contextObject);
          if (!dest.equals("")) {
-            String[] names = new Object[2];
-            names[0] = dest;
-            names[1] = dest;
-            ContextObject context = (ContextObject)(new Object());
+            String[] names = new String[]{dest, dest};
+            ContextObject context = new ContextObject();
             ContextObject.put(context, 251, names);
             Object recipient = FactoryUtil.createInstance(-2985347935260258684L, context);
             EmailBuilderApi.addRecipient(msg, 0, (RIMModel)recipient);
@@ -174,7 +172,7 @@ public final class Diag extends UiApplication {
    }
 
    public static final void showMessage(String msg) {
-      d = (Dialog)(new Object(0, msg, 0, null, 33554432));
+      d = new Dialog(0, msg, 0, null, 33554432);
       d.setIcon(ThemeManager.getThemeAwareImage("dialog_exclamation"));
       Application.getApplication().invokeLater(new Diag$1());
       Application.getApplication().invokeLater(new Diag$2(), 3000, false);

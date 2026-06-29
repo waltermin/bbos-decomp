@@ -401,19 +401,19 @@ public final class KEACryptoSystem implements CryptoSystem, Persistable {
             byte[] q = this.getQ();
             byte[] g = this.getG();
             if (CryptoByteArrayArithmetic.isZero(p) || CryptoByteArrayArithmetic.isZero(q) || CryptoByteArrayArithmetic.isZero(g)) {
-               throw new Object();
+               throw new InvalidCryptoSystemException();
             }
 
             if ((p[p.length - 1] & 1) == 0 || (q[q.length - 1] & 1) == 0) {
-               throw new Object();
+               throw new InvalidCryptoSystemException();
             }
 
             if (q.length != 20 || (q[0] & 128) == 0) {
-               throw new Object();
+               throw new InvalidCryptoSystemException();
             }
 
             if (CryptoByteArrayArithmetic.isOne(g) || CryptoByteArrayArithmetic.compare(g, p) >= 0) {
-               throw new Object();
+               throw new InvalidCryptoSystemException();
             }
 
             byte[] pMinus1 = new byte[p.length];
@@ -421,13 +421,13 @@ public final class KEACryptoSystem implements CryptoSystem, Persistable {
             CryptoByteArrayArithmetic.decrement(p, p, pMinus1);
             CryptoByteArrayArithmetic.mod(pMinus1, q, result);
             if (!CryptoByteArrayArithmetic.isZero(result)) {
-               throw new Object();
+               throw new InvalidCryptoSystemException();
             }
 
             result = new byte[p.length];
             CryptoByteArrayArithmetic.exponent(g, q, p, result);
             if (!CryptoByteArrayArithmetic.isOne(result)) {
-               throw new Object();
+               throw new InvalidCryptoSystemException();
             }
          } finally {
             break label131;
@@ -450,11 +450,11 @@ public final class KEACryptoSystem implements CryptoSystem, Persistable {
          this._cryptoTokenData = cryptoTokenData;
          this.setHashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
-   private final void initialize(KEACryptoToken cryptoToken, byte[] p, byte[] q, byte[] g, String name) {
+   private final void initialize(KEACryptoToken cryptoToken, byte[] p, byte[] q, byte[] g, String name) throws InvalidCryptoSystemException {
       if (cryptoToken != null && p != null && q != null && g != null) {
          p = CryptoByteArrayArithmetic.trim(p);
          q = CryptoByteArrayArithmetic.trim(q);
@@ -462,10 +462,10 @@ public final class KEACryptoSystem implements CryptoSystem, Persistable {
          if (p.length == 128 && q.length == 20 && g.length == 128) {
             this.initialize(cryptoToken, cryptoToken.getKEACryptoSystemData(p, q, g, name));
          } else {
-            throw new Object();
+            throw new InvalidCryptoSystemException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -475,7 +475,7 @@ public final class KEACryptoSystem implements CryptoSystem, Persistable {
 
    public KEACryptoSystem(KEACryptoToken cryptoToken, byte[] p, byte[] q, byte[] g, String name) {
       if (cryptoToken == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this.initialize(cryptoToken, cryptoToken.getKEACryptoSystemData(p, q, g, name));
@@ -500,21 +500,21 @@ public final class KEACryptoSystem implements CryptoSystem, Persistable {
       // 0d: invokespecial net/rim/device/api/crypto/KEACryptoSystem.initialize (Lnet/rim/device/api/crypto/KEACryptoToken;[B[B[BLjava/lang/String;)V
       // 10: return
       // 11: astore 5
-      // 13: new java/lang/Object
+      // 13: new java/lang/RuntimeException
       // 16: dup
       // 17: aload 5
       // 19: invokevirtual net/rim/device/api/crypto/UnsupportedCryptoSystemException.toString ()Ljava/lang/String;
       // 1c: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 1f: athrow
       // 20: astore 5
-      // 22: new java/lang/Object
+      // 22: new java/lang/RuntimeException
       // 25: dup
       // 26: aload 5
       // 28: invokevirtual net/rim/device/api/crypto/CryptoUnsupportedOperationException.toString ()Ljava/lang/String;
       // 2b: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 2e: athrow
       // 2f: astore 5
-      // 31: new java/lang/Object
+      // 31: new java/lang/RuntimeException
       // 34: dup
       // 35: aload 5
       // 37: invokevirtual net/rim/device/api/crypto/CryptoTokenException.toString ()Ljava/lang/String;
@@ -549,21 +549,21 @@ public final class KEACryptoSystem implements CryptoSystem, Persistable {
       // 09: invokespecial net/rim/device/api/crypto/KEACryptoSystem.initialize (Lnet/rim/device/api/crypto/KEACryptoToken;Ljava/lang/String;)V
       // 0c: return
       // 0d: astore 2
-      // 0e: new java/lang/Object
+      // 0e: new java/lang/RuntimeException
       // 11: dup
       // 12: aload 2
       // 13: invokevirtual net/rim/device/api/crypto/UnsupportedCryptoSystemException.toString ()Ljava/lang/String;
       // 16: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 19: athrow
       // 1a: astore 2
-      // 1b: new java/lang/Object
+      // 1b: new java/lang/RuntimeException
       // 1e: dup
       // 1f: aload 2
       // 20: invokevirtual net/rim/device/api/crypto/CryptoUnsupportedOperationException.toString ()Ljava/lang/String;
       // 23: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 26: athrow
       // 27: astore 2
-      // 28: new java/lang/Object
+      // 28: new java/lang/RuntimeException
       // 2b: dup
       // 2c: aload 2
       // 2d: invokevirtual net/rim/device/api/crypto/CryptoTokenException.toString ()Ljava/lang/String;
@@ -604,7 +604,7 @@ public final class KEACryptoSystem implements CryptoSystem, Persistable {
       byte[] q = null;
       byte[] g = null;
       if (name == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (name.equals("FORTEZZA")) {
@@ -620,7 +620,7 @@ public final class KEACryptoSystem implements CryptoSystem, Persistable {
       try {
          this.initialize(cryptoToken, p, q, g, name);
       } catch (Throwable var8) {
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       }
    }
 

@@ -66,7 +66,7 @@ class LDAPBrowser$LDAPBrowserVerb extends Verb {
    public String toString() {
       switch (this._type) {
          case 0:
-            throw new Object();
+            throw new RuntimeException();
          case 1:
          default:
             return LDAPBrowser.getString(1);

@@ -9,10 +9,10 @@ import net.rim.device.api.ui.theme.ThemeManager;
 import net.rim.device.internal.ui.component.ImageField;
 
 public class DialogWithBackgroundThread {
-   HorizontalFieldManager _hfm = (HorizontalFieldManager)(new Object());
-   PopupScreen _popupScreen = (PopupScreen)(new Object(this._hfm));
-   LabelField _labelField = (LabelField)(new Object("", 51539607552L));
-   ImageField _imageField = (ImageField)(new Object());
+   HorizontalFieldManager _hfm = new HorizontalFieldManager();
+   PopupScreen _popupScreen = new PopupScreen(this._hfm);
+   LabelField _labelField = new LabelField("", 51539607552L);
+   ImageField _imageField = new ImageField();
    DialogWithBackgroundThreadRunnable _dialogWithBackgroundThreadRunnable;
    boolean _displayPopupScreen;
 

@@ -9,7 +9,7 @@ final class RepeatRuleCollection$EndHandler implements LongFieldHandler {
 
    @Override
    public final long getValue(Object item) {
-      return item instanceof Object && ((Recur)item).isFinite() ? ((Recur)item).getEndDate() : 0;
+      return item instanceof Recur && ((Recur)item).isFinite() ? ((Recur)item).getEndDate() : 0;
    }
 
    RepeatRuleCollection$EndHandler(RepeatRuleCollection$1 x0) {

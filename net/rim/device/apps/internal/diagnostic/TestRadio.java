@@ -297,7 +297,7 @@ public final class TestRadio extends Thread implements RadioStatusListener, ICMP
                                                                         if (this.radioState != 0) {
                                                                            if (GPRSInfo.getGPRSState() != 0) {
                                                                               this.screen.state = 1;
-                                                                              this.timer = (Timer)(new Object());
+                                                                              this.timer = new Timer();
                                                                               this.timeoutAction = new TestRadio$timerExpired(this);
                                                                               this.timer.schedule(this.timeoutAction, 15000);
                                                                               this.pdpAct();
@@ -319,7 +319,7 @@ public final class TestRadio extends Thread implements RadioStatusListener, ICMP
                                                                               this.icmpPing();
                                                                            } else {
                                                                               this.screen.state = 1;
-                                                                              this.timer = (Timer)(new Object());
+                                                                              this.timer = new Timer();
                                                                               this.timeoutAction = new TestRadio$timerExpired(this);
                                                                               this.timer.schedule(this.timeoutAction, 20000);
                                                                               this.gprsAtt();
@@ -356,7 +356,7 @@ public final class TestRadio extends Thread implements RadioStatusListener, ICMP
                                                                            }
                                                                         } else {
                                                                            this.screen.state = 1;
-                                                                           this.timer = (Timer)(new Object());
+                                                                           this.timer = new Timer();
                                                                            this.timeoutAction = new TestRadio$timerExpired(this);
                                                                            this.timer.schedule(this.timeoutAction, 30000);
                                                                            this.radioOn();
@@ -407,7 +407,7 @@ public final class TestRadio extends Thread implements RadioStatusListener, ICMP
                                                                         }
                                                                      } else {
                                                                         this.screen.state = 1;
-                                                                        this.timer = (Timer)(new Object());
+                                                                        this.timer = new Timer();
                                                                         this.timeoutAction = new TestRadio$timerExpired(this);
                                                                         if (this.radioState == 0) {
                                                                            this.timer.schedule(this.timeoutAction, 30000);
@@ -551,11 +551,11 @@ public final class TestRadio extends Thread implements RadioStatusListener, ICMP
       try {
          this.icmpPingSentFailed = false;
          this.icmpPingResponse = false;
-         Random _rand = (Random)(new Object());
+         Random _rand = new Random();
          Arrays.fill(this._pingBuffer, (byte)115);
          this._pingBuffer[0] = (byte)(_rand.nextInt() & 0xFF);
          this._pingBuffer[1] = (byte)(_rand.nextInt() & 0xFF);
-         ICMPPacketHeader head = (ICMPPacketHeader)(new Object());
+         ICMPPacketHeader head = new ICMPPacketHeader();
          head.setAccessPointNumber(this._apnId);
          head.setDestinationAddress(RadioInfo.getIPAddress(this._apnId));
          head.setType(8);
@@ -580,7 +580,7 @@ public final class TestRadio extends Thread implements RadioStatusListener, ICMP
             this.screen.report.icmpPing = 0;
             this.screen.icmpPingFinished = true;
          } else {
-            this.timer = (Timer)(new Object());
+            this.timer = new Timer();
             this.timeoutAction = new TestRadio$timerExpired(this);
             this.timer.schedule(this.timeoutAction, 10000);
 

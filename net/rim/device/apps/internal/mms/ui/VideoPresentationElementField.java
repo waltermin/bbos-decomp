@@ -57,7 +57,7 @@ final class VideoPresentationElementField extends HorizontalFieldManager impleme
       // 41: invokestatic net/rim/device/apps/internal/mms/MMSUtilities.getMIMETypeString (I)Ljava/lang/String;
       // 44: astore 7
       // 46: aload 0
-      // 47: new java/lang/Object
+      // 47: new java/io/ByteArrayInputStream
       // 4a: dup
       // 4b: aload 6
       // 4d: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -94,7 +94,7 @@ final class VideoPresentationElementField extends HorizontalFieldManager impleme
       // 96: invokestatic net/rim/device/api/system/Bitmap.getBitmapResource (Ljava/lang/String;)Lnet/rim/device/api/system/Bitmap;
       // 99: astore 7
       // 9b: aload 0
-      // 9c: new java/lang/Object
+      // 9c: new net/rim/device/api/ui/component/BitmapField
       // 9f: dup
       // a0: aload 7
       // a2: invokespecial net/rim/device/api/ui/component/BitmapField.<init> (Lnet/rim/device/api/system/Bitmap;)V

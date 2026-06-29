@@ -111,7 +111,7 @@ public class CodfileVector extends Vector implements Constants {
    public void addItemOffset(CodfileItem item) {
       int offset = item.getOffset();
       if (offset <= 0) {
-         throw new Object("item has no offset");
+         throw new IllegalArgumentException("item has no offset");
       }
 
       int num = this.size();

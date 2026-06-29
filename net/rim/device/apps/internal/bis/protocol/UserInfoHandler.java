@@ -61,7 +61,7 @@ public final class UserInfoHandler extends XMLToObjectHandler implements BISServ
          if (locale != null) {
             userInfo.setLocale(locale);
          } else {
-            BISEventLogger.logEvent(((StringBuffer)(new Object("Unable to find a valid Locale from code: "))).append(language).toString(), 0);
+            BISEventLogger.logEvent("Unable to find a valid Locale from code: " + language, 0);
          }
       }
 

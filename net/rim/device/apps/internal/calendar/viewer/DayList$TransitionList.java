@@ -40,19 +40,19 @@ final class DayList$TransitionList {
       if (index >= 0 && index < this._listData.length) {
          return this._listData[index];
       } else {
-         throw new Object("Watch out for this!");
+         throw new IllegalArgumentException("Watch out for this!");
       }
    }
 
    final Duration getEventAt(int index) {
-      return (Duration)(index >= 0 && index < this._events.size() ? this._events.elementAt(index) : null);
+      return index >= 0 && index < this._events.size() ? (Duration)this._events.elementAt(index) : null;
    }
 
    final boolean canSkipFreeTimeProcessing(Duration event) {
       if (event == null) {
          return true;
       } else {
-         return event.isAllDay() ? !(event instanceof Object) || ((Event)event).getFreeBusy() != 2 : false;
+         return event.isAllDay() ? !(event instanceof Event) || ((Event)event).getFreeBusy() != 2 : false;
       }
    }
 

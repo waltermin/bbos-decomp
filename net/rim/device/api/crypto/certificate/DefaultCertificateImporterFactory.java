@@ -91,7 +91,7 @@ public class DefaultCertificateImporterFactory extends CertificateImporterFactor
          label = importedCertificateData.getLabel();
       }
 
-      this.trustCertificateInternal(certificate, (Boolean)(new Object(privateKey != null)), label, emailAddresses, certificateImporterContext);
+      this.trustCertificateInternal(certificate, new Boolean(privateKey != null), label, emailAddresses, certificateImporterContext);
    }
 
    protected boolean trustCertificateInternal(

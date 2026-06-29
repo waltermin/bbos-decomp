@@ -3,6 +3,8 @@ package net.rim.device.apps.internal.keystore.browser.certificate;
 import net.rim.device.api.crypto.CryptoSystemProperties;
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.CertificateStatusProviderFacade;
+import net.rim.device.api.crypto.certificate.wtls.WTLSCertificate;
+import net.rim.device.api.crypto.certificate.x509.X509Certificate;
 import net.rim.device.api.crypto.keystore.DeviceKeyStore;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.apps.api.utility.framework.VerbToMenu;
@@ -16,7 +18,7 @@ import net.rim.vm.PersistentInteger;
 
 public final class CertificateKeyStoreBrowserContext implements KeyStoreBrowserContext {
    private int certificateFilterId = PersistentInteger.getId(8223641991913099402L, 5);
-   private KeyStoreBrowserVerb _fetchStatusChainVerb = (KeyStoreBrowserVerb)(new Object(5, 1200241));
+   private KeyStoreBrowserVerb _fetchStatusChainVerb = new KeyStoreBrowserVerb(5, 1200241);
    private static final long CERTIFICATE_FILTER_GUID = 8223641991913099402L;
    private static final int[] REVOCATION_REASONS = new int[]{
       0,
@@ -87,7 +89,7 @@ public final class CertificateKeyStoreBrowserContext implements KeyStoreBrowserC
 
    @Override
    public final boolean isCertificateTypeSupported(Certificate certificate) {
-      return certificate instanceof Object || certificate instanceof Object;
+      return certificate instanceof X509Certificate || certificate instanceof WTLSCertificate;
    }
 
    @Override

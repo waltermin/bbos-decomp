@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.browser.pme.form;
 
 import java.io.ByteArrayInputStream;
 import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.FieldForeignObject;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.FontFamily;
 import net.rim.device.api.ui.theme.Theme;
@@ -17,6 +18,7 @@ import net.rim.device.apps.internal.browser.util.ObjectVector;
 import net.rim.plazmic.internal.mediaengine.MediaModel;
 import net.rim.plazmic.internal.mediaengine.ResourceContext;
 import net.rim.plazmic.internal.mediaengine.ResourceProvider;
+import net.rim.plazmic.mediaengine.MediaException;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -59,10 +61,10 @@ public final class PMEFormControlHandler extends DefaultHandler implements Resou
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
    public final Object createResource(String type, Object data, ResourceContext context, Object referrer) {
-      if (data instanceof Object && this.isSupported(type)) {
+      if (data instanceof String && this.isSupported(type)) {
          boolean var12 = false /* VF: Semaphore variable */;
 
-         PMEForm pmeForm;
+         FieldForeignObject var19;
          label110: {
             try {
                try {
@@ -73,13 +75,13 @@ public final class PMEFormControlHandler extends DefaultHandler implements Resou
                      this._parser.setAllowUndefinedNamespaces(true);
                   }
 
-                  ByteArrayInputStream in = (ByteArrayInputStream)(new Object(((String)data).getBytes()));
+                  ByteArrayInputStream in = new ByteArrayInputStream(((String)data).getBytes());
                   this._parser.parse(in, this);
                   this.parseStyle();
                   Object resource = null;
                   if (this._modelId != null && context != null) {
                      Object model = context.get("Media");
-                     if (model instanceof Object) {
+                     if (model instanceof MediaModel) {
                         resource = ((MediaModel)model).getResource(this._modelId);
                      }
                   }
@@ -88,7 +90,7 @@ public final class PMEFormControlHandler extends DefaultHandler implements Resou
                   if (!(resource instanceof PMEForm)) {
                      field = this.createField();
                   } else {
-                     pmeForm = (PMEForm)resource;
+                     PMEForm pmeForm = (PMEForm)resource;
                      if (!(pmeForm.getInitialValue(this._ref) instanceof FormField)) {
                         field = this.createFormControl(pmeForm);
                         if (field instanceof FormField) {
@@ -99,14 +101,14 @@ public final class PMEFormControlHandler extends DefaultHandler implements Resou
 
                   if (field != null) {
                      this.applyStyle(field);
-                     pmeForm = (PMEForm)(new Object(field));
+                     var19 = new FieldForeignObject(field);
                      var12 = false;
                      break label110;
                   }
 
                   var12 = false;
                } catch (Throwable var15) {
-                  throw new Object(-1, e.getMessage(), e);
+                  throw new MediaException(-1, e.getMessage(), e);
                }
             } finally {
                if (var12) {
@@ -119,7 +121,7 @@ public final class PMEFormControlHandler extends DefaultHandler implements Resou
          }
 
          this.clear();
-         return pmeForm;
+         return var19;
       } else {
          return null;
       }
@@ -190,7 +192,7 @@ public final class PMEFormControlHandler extends DefaultHandler implements Resou
 
    private final void parseStyle() {
       if (this._style != null) {
-         StringTokenizer t = (StringTokenizer)(new Object(this._style, " :;"));
+         StringTokenizer t = new StringTokenizer(this._style, " :;");
 
          while (t.hasMoreTokens()) {
             String token = t.nextToken();
@@ -294,17 +296,17 @@ public final class PMEFormControlHandler extends DefaultHandler implements Resou
       if (ch[0] != '\n') {
          if (this._itemCount == 0) {
             if (this._isCookie || this._isText) {
-               this._value = (String)(new Object(ch, start, length));
+               this._value = new String(ch, start, length);
                return;
             }
 
             if (this._isLabel) {
-               this._label = (String)(new Object(ch, start, length));
+               this._label = new String(ch, start, length);
                return;
             }
          } else if (this._isLabel || this._isCookie) {
             ObjectVector v = this._isCookie ? this._cookies : this._options;
-            v.addElement(new Object(ch, start, length));
+            v.addElement(new String(ch, start, length));
          }
       }
    }
@@ -363,8 +365,8 @@ public final class PMEFormControlHandler extends DefaultHandler implements Resou
          }
 
          if ("select1".equals(localName)) {
-            this._options = (ObjectVector)(new Object());
-            this._cookies = (ObjectVector)(new Object());
+            this._options = new ObjectVector();
+            this._cookies = new ObjectVector();
             return;
          }
       }

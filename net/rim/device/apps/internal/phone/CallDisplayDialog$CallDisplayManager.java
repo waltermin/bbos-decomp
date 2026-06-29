@@ -91,7 +91,7 @@ final class CallDisplayDialog$CallDisplayManager extends Manager {
                      pictureHeightAvail -= field.getPreferredHeight() + 4;
                   }
 
-                  if (pictureHeight > pictureHeightAvail && pictureField instanceof Object) {
+                  if (pictureHeight > pictureHeightAvail && pictureField instanceof BitmapField) {
                      Bitmap original = this.this$0._displayPictureModel.getDisplayBitmap();
                      int newWidth = Fixed32.div(pictureWidth, Fixed32.div(Fixed32.toFP(pictureHeight), Fixed32.toFP(pictureHeightAvail)));
                      ((BitmapField)pictureField).setBitmap(ScaleBitmap.scaleBitmap(original, newWidth, pictureHeightAvail));

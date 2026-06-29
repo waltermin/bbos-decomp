@@ -17,7 +17,7 @@ public final class RC2DecryptorEngine implements SymmetricKeyDecryptorEngine {
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object("RC2_"))).append(this.getKeyLength() << 3).toString();
+      return "RC2_" + (this.getKeyLength() << 3);
    }
 
    @Override
@@ -27,7 +27,7 @@ public final class RC2DecryptorEngine implements SymmetricKeyDecryptorEngine {
 
    public RC2DecryptorEngine(RC2Key key) {
       if (key == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._cryptoToken = key.getRC2CryptoToken();

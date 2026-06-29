@@ -35,11 +35,11 @@ final class DeleteVerb extends RibbonBarVerb {
          FolderEntryPointDescriptor desc = (FolderEntryPointDescriptor)folder.getDescriptor();
          String name = desc.get(1, "");
          String description = folder.getDescription(true);
-         String msg = ((StringBuffer)(new Object())).append(CommonResources.getString(1000)).append(" ").append(description).append(" ?").toString();
+         String msg = CommonResources.getString(1000) + " " + description + " ?";
          HierarchyManager hm = HierarchyManager.getInstance();
          ApplicationEntry[] list = hm.getAppsInFolder(name);
          if (list != null && list.length > 0) {
-            msg = ((StringBuffer)(new Object())).append(RibbonResources.getString(168)).append("\n").append(msg).toString();
+            msg = RibbonResources.getString(168) + "\n" + msg;
          }
 
          if (3 == Dialog.ask(2, msg, -1)) {

@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.globalsearch;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.component.CheckboxField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.Arrays;
@@ -10,7 +11,7 @@ import net.rim.device.apps.api.search.Searchable;
 
 final class SearchableCheckboxField extends VerticalFieldManager implements FieldChangeListener {
    private Searchable _searchable;
-   private VerticalFieldManager _vfm = (VerticalFieldManager)(new Object());
+   private VerticalFieldManager _vfm = new VerticalFieldManager();
    private CheckboxField[] _children;
    private CheckboxField _parent;
    private long _id;
@@ -19,18 +20,18 @@ final class SearchableCheckboxField extends VerticalFieldManager implements Fiel
 
    final void populateChildren() {
       if (this._ids != null) {
-         this._children = new Object[this._ids.length];
+         this._children = new CheckboxField[this._ids.length];
          int numIds = this._ids.length;
 
          for (int i = 0; i < numIds; i++) {
-            this._children[i] = (CheckboxField)(new Object(this._searchable.getName(this._ids[i]), false));
-            this._children[i].setCookie(new Object(this._ids[i]));
+            this._children[i] = new CheckboxField(this._searchable.getName(this._ids[i]), false);
+            this._children[i].setCookie(new Long(this._ids[i]));
             this._children[i].setChangeListener(this);
             this._vfm.add(this._children[i]);
          }
 
-         HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object());
-         hfm.add((Field)(new Object("  ")));
+         HorizontalFieldManager hfm = new HorizontalFieldManager();
+         hfm.add(new LabelField("  "));
          hfm.add(this._vfm);
          this.add(hfm);
       }
@@ -120,7 +121,7 @@ final class SearchableCheckboxField extends VerticalFieldManager implements Fiel
       this._searchable = searchable;
       this._id = id;
       this._ids = this._searchable.getSearchableIds(advancedMode);
-      this._parent = (CheckboxField)(new Object(this._searchable.getName(id), this._searchable.isInitiallyEnabled(id)));
+      this._parent = new CheckboxField(this._searchable.getName(id), this._searchable.isInitiallyEnabled(id));
       this._parent.setChangeListener(this);
       this.add(this._parent);
       this.populateChildren();

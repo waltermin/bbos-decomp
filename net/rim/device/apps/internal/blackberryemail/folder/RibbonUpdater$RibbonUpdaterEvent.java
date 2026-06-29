@@ -24,7 +24,7 @@ final class RibbonUpdater$RibbonUpdaterEvent implements Runnable {
    private final void addRibbonEntryPoint() {
       RibbonLauncher ribbon = RibbonLauncher.getInstance();
       if (ribbon != null) {
-         String id = ((StringBuffer)(new Object("net_rim_bb_messaging_app"))).append(this._sr.getId()).toString();
+         String id = "net_rim_bb_messaging_app" + this._sr.getId();
          if (ribbon.getRegisteredAction(id) != null) {
             ribbon.unregisterAction(id);
          }
@@ -35,7 +35,7 @@ final class RibbonUpdater$RibbonUpdaterEvent implements Runnable {
             if (emailHierarchy != null) {
                int moduleHandle = CodeModuleManager.getModuleHandle("net_rim_bb_messaging_app");
                ApplicationDescriptor baseDescriptor = CodeModuleManager.getApplicationDescriptors(moduleHandle)[0];
-               StringBuffer descriptorName = (StringBuffer)(new Object(baseDescriptor.getName()));
+               StringBuffer descriptorName = new StringBuffer(baseDescriptor.getName());
                long emailHierarchyLUID = emailHierarchy.getLUID();
                descriptorName.append(".service.");
                switch (this._sr.getServiceIdentifierType()) {
@@ -53,11 +53,11 @@ final class RibbonUpdater$RibbonUpdaterEvent implements Runnable {
                }
 
                descriptorName.append(emailHierarchyLUID);
-               String[] args = new Object[]{((StringBuffer)(new Object("service="))).append(emailHierarchyLUID).toString()};
-               ApplicationDescriptor newDescriptor = (ApplicationDescriptor)(new Object(
+               String[] args = new String[]{"service=" + emailHierarchyLUID};
+               ApplicationDescriptor newDescriptor = new ApplicationDescriptor(
                   baseDescriptor, descriptorName.toString(), args, baseDescriptor.getIcon(), baseDescriptor.getPosition(), null, 0
-               ));
-               ApplicationEntryPoint newEntryPoint = (ApplicationEntryPoint)(new Object(newDescriptor));
+               );
+               ApplicationEntryPoint newEntryPoint = new ApplicationEntryPoint(newDescriptor);
                RibbonUpdater.updateRibbonEntryPointDescription(ribbon, this._sr, emailHierarchy, newEntryPoint, null);
                ribbon.registerAction(id, newEntryPoint);
                String contentURL = CMIMEUtilities.getEntryPointContentURL(entryPointParameters);
@@ -73,7 +73,7 @@ final class RibbonUpdater$RibbonUpdaterEvent implements Runnable {
    private final void removeRibbonEntryPoint() {
       RibbonLauncher ribbon = RibbonLauncher.getInstance();
       if (ribbon != null) {
-         ribbon.unregisterAction(((StringBuffer)(new Object("net_rim_bb_messaging_app"))).append(this._sr.getId()).toString());
+         ribbon.unregisterAction("net_rim_bb_messaging_app" + this._sr.getId());
          IconFetcher.deleteIcons(this._sr.getUid());
       }
    }

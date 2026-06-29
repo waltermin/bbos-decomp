@@ -64,7 +64,7 @@ public final class SetupWizardScreen extends MainScreen implements GlobalEventLi
 
       FinishWizardPage finishWizardPage = new FinishWizardPage();
       this._allPages.addElement(finishWizardPage);
-      this._controller = (WizardController)(new Object("Root", this._allPages, 0));
+      this._controller = new WizardController("Root", this._allPages, 0);
       this._controller.addWizardControllerListener(this);
       this._controller.setLogManager(this._logManager);
       this._controller.setCompletingWizardPage(finishWizardPage);
@@ -137,7 +137,7 @@ public final class SetupWizardScreen extends MainScreen implements GlobalEventLi
 
    protected final WizardPage loadLastViewedPage() {
       int index = PersistentInteger.get(this._lastViewedPageID);
-      return (WizardPage)(index >= 0 && index < this._allPages.size() ? this._allPages.elementAt(index) : this._controller.getFirstPage());
+      return index >= 0 && index < this._allPages.size() ? (WizardPage)this._allPages.elementAt(index) : this._controller.getFirstPage();
    }
 
    protected final void saveLastViewedPage(WizardPage page) {
@@ -158,7 +158,7 @@ public final class SetupWizardScreen extends MainScreen implements GlobalEventLi
 
    protected final int startWizard(WizardPage page, int context) {
       int result = 2;
-      if (page instanceof Object) {
+      if (page instanceof WizardCategory) {
          if (this._wizardList.getCategoryMode() != 2) {
             return 0;
          }
@@ -235,7 +235,7 @@ public final class SetupWizardScreen extends MainScreen implements GlobalEventLi
    @Override
    public final void openingWizardPage(WizardController sender, WizardPage page, int entranceCommand, int context) {
       this.saveLastViewedPage(page);
-      if (page instanceof Object) {
+      if (page instanceof SavableWizardPage) {
          SavableWizardPage savablePage = (SavableWizardPage)page;
          int[] pageOptions = this._options.getPageOptions(savablePage.getPageKey());
          if (pageOptions.length > 0) {
@@ -243,7 +243,7 @@ public final class SetupWizardScreen extends MainScreen implements GlobalEventLi
          }
       }
 
-      if (page instanceof Object) {
+      if (page instanceof WizardController) {
          WizardController controller = (WizardController)page;
          controller.addWizardControllerListener(this);
       }
@@ -251,7 +251,7 @@ public final class SetupWizardScreen extends MainScreen implements GlobalEventLi
 
    @Override
    public final void closingWizardPage(WizardController sender, WizardPage page, int result, int context) {
-      if (page instanceof Object) {
+      if (page instanceof SavableWizardPage) {
          SavableWizardPage savablePage = (SavableWizardPage)page;
          this._options.setPageOptions(savablePage.getPageKey(), savablePage.getPageOptions());
       }

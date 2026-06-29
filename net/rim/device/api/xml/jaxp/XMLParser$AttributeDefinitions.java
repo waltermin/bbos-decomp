@@ -9,7 +9,7 @@ class XMLParser$AttributeDefinitions {
 
    XMLParser$AttributeDefinitions(XMLParser _1) {
       this.this$0 = _1;
-      this._definitions = (Hashtable)(new Object());
+      this._definitions = new Hashtable();
    }
 
    public void addAttribute(String qName, String localName, String prefixName, String type, boolean isCData, String defaultValue) {

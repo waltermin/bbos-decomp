@@ -54,14 +54,14 @@ public final class Logger {
       Logger logger = getInstance();
       if (logger._loggableFlags.getFlag(type)) {
          EventLogger.logEvent(logger._guid, message.getBytes(), 0);
-         System.out.println(((StringBuffer)(new Object("LBS Logger: "))).append(message).toString());
+         System.out.println("LBS Logger: " + message);
       }
    }
 
    public static final void logError(String message) {
       Logger logger = getInstance();
       EventLogger.logEvent(logger._guid, message.getBytes(), 2);
-      System.out.println(((StringBuffer)(new Object("LBS Logger error: "))).append(message).toString());
+      System.out.println("LBS Logger error: " + message);
    }
 
    public static final boolean openConfigScreen(int backdoorCode) {

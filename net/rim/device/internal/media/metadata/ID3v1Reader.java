@@ -25,10 +25,10 @@ public final class ID3v1Reader {
 
    public static final MetaDataControl readTag(byte[] tag) {
       if (tag.length != 125) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
-      MetaDataControlImpl metaData = (MetaDataControlImpl)(new Object());
+      MetaDataControlImpl metaData = new MetaDataControlImpl();
       String encoding = Helper.getSuggestedEncoding(Locale.getDefault().getCode());
       metaData.put("title", readID3v1Field(tag, 0, 30, encoding));
       metaData.put("author", readID3v1Field(tag, 30, 30, encoding));
@@ -60,7 +60,7 @@ public final class ID3v1Reader {
       String str = null;
       if (byteLength > 0) {
          try {
-            str = ((String)(new Object(tag, offset, byteLength, encoding))).trim();
+            str = new String(tag, offset, byteLength, encoding).trim();
             if (str.length() > 0) {
                return str;
             }
@@ -76,7 +76,7 @@ public final class ID3v1Reader {
       if (genreCode >= 0 && genreCode <= 147) {
          return ResourceBundle.getBundle(7712504258262123478L, "net.rim.device.internal.resource.Genre").getString(genreCode);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

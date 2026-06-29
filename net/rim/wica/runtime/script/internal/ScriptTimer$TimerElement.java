@@ -4,6 +4,7 @@ import net.rim.ecmascript.runtime.CompiledScript;
 import net.rim.ecmascript.runtime.Convert;
 import net.rim.ecmascript.runtime.ESFunction;
 import net.rim.ecmascript.runtime.ESObject;
+import net.rim.ecmascript.runtime.ESString;
 import net.rim.ecmascript.runtime.Value;
 import net.rim.wica.runtime.script.ScriptCompiler;
 
@@ -24,15 +25,15 @@ final class ScriptTimer$TimerElement implements Runnable {
 
       try {
          var6 = true;
-         if (this._action instanceof Object) {
+         if (this._action instanceof ESFunction) {
             this._engine.executeFunction((ESFunction)this._action, null, this._args);
             var6 = false;
-         } else if (this._action instanceof Object) {
+         } else if (this._action instanceof ESString) {
             CompiledScript script = ScriptCompiler.compileScript((String)this._action);
             this._action = script;
             this._engine.executeScript(script);
             var6 = false;
-         } else if (this._action instanceof Object) {
+         } else if (this._action instanceof CompiledScript) {
             this._engine.executeScript((CompiledScript)this._action);
             var6 = false;
          } else {

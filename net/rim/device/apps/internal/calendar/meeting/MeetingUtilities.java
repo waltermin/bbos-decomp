@@ -6,10 +6,13 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.util.FactoryUtil;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
 import net.rim.device.apps.api.addressbook.AddressReference;
+import net.rim.device.apps.api.addressbook.AddressReferenceViewField;
 import net.rim.device.apps.api.addressbook.AddressSelectionContext;
+import net.rim.device.apps.api.addressbook.EmailAddressModel;
 import net.rim.device.apps.api.addressbook.GroupAddressCardModel;
 import net.rim.device.apps.api.calendar.caldb.CalendarService;
 import net.rim.device.apps.api.calendar.modelcontrollerinterface.Attendee;
@@ -23,6 +26,7 @@ import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.model.Recognizer;
 import net.rim.device.apps.api.framework.registration.RecognizerRepository;
 import net.rim.device.apps.api.framework.verb.Verb;
+import net.rim.device.apps.api.ui.LeftRightFieldManager;
 import net.rim.device.apps.internal.blackberryemail.address.UseOnceAddressVerb;
 import net.rim.device.apps.internal.blackberryemail.email.EmailComposeVerb;
 import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
@@ -60,9 +64,9 @@ public final class MeetingUtilities {
 
       String labelString = ResourceBundle.getBundle(8008824311162635875L, "net.rim.device.apps.internal.resource.CalendarOTA").getString(resId);
       Field field = null;
-      if (!(attendee instanceof Object)) {
+      if (!(attendee instanceof AddressReference)) {
          Object address = attendee.getAddress();
-         if (address instanceof Object) {
+         if (address instanceof FieldProvider) {
             FieldProvider fieldProvider = (FieldProvider)address;
             ContextObject newContext = ContextObject.clone(context);
             newContext.setFlag(1, 9);
@@ -73,15 +77,15 @@ public final class MeetingUtilities {
                if (displayableAddress != null && displayableAddress.indexOf("Truncated") >= 0) {
                   ResourceBundle rb = ResourceBundle.getBundle(8008824311162635875L, "net.rim.device.apps.internal.resource.CalendarOTA");
                   String text = rb.getString(503);
-                  return (Field)(new Object(text));
+                  return new LabelField(text);
                }
             }
 
-            field = (Field)(new Object((Field)(new Object(labelString)), addressField));
+            field = new LeftRightFieldManager(new LabelField(labelString), addressField);
          }
       } else {
          AddressReference addressRef = (AddressReference)attendee;
-         field = (Field)(new Object(addressRef, labelString, 8589934592L, context));
+         field = new AddressReferenceViewField(addressRef, labelString, 8589934592L, context);
       }
 
       if (field != null) {
@@ -124,7 +128,7 @@ public final class MeetingUtilities {
       } else {
          int size = manager.getFieldCount();
          String senderAddress = EventUtilities.getEmailAddress(sr);
-         AttendeeUtilities$EmailAddressComparator emailAddressComparator = (AttendeeUtilities$EmailAddressComparator)(new Object());
+         AttendeeUtilities$EmailAddressComparator emailAddressComparator = new AttendeeUtilities$EmailAddressComparator();
 
          for (int i = 0; i < size; i++) {
             Field f = manager.getField(i);
@@ -154,8 +158,8 @@ public final class MeetingUtilities {
       RIMModel newModel = null;
       Verb addressSelectionVerb = AddressBookServices.getAddressSelectionVerb(-2985347935260258684L);
       if (addressSelectionVerb != null) {
-         Verb[] useOnceVerbs = new Object[]{UseOnceAddressVerb.newUseOnceEmailAddressVerb(false)};
-         CompoundRecognizer modelRecognizer = (CompoundRecognizer)(new Object());
+         Verb[] useOnceVerbs = new Verb[]{UseOnceAddressVerb.newUseOnceEmailAddressVerb(false)};
+         CompoundRecognizer modelRecognizer = new CompoundRecognizer();
          Recognizer emailRecognizer = RecognizerRepository.getRecognizers(-2985347935260258684L);
          Recognizer groupRecognizer = RecognizerRepository.getRecognizers(-1326186686655625745L);
          if (emailRecognizer != null) {
@@ -166,13 +170,13 @@ public final class MeetingUtilities {
             modelRecognizer.addRecognizer(groupRecognizer);
          }
 
-         AddressSelectionContext selectionContext = (AddressSelectionContext)(new Object(null, null, null, modelRecognizer, useOnceVerbs));
+         AddressSelectionContext selectionContext = new AddressSelectionContext(null, null, null, modelRecognizer, useOnceVerbs);
          selectionContext.setUseEntryPrefixes(
-            new Object[]{ResourceBundle.getBundle(8008824311162635875L, "net.rim.device.apps.internal.resource.CalendarOTA").getString(900)}
+            new String[]{ResourceBundle.getBundle(8008824311162635875L, "net.rim.device.apps.internal.resource.CalendarOTA").getString(900)}
          );
          newModel = (RIMModel)addressSelectionVerb.invoke(selectionContext);
          if (newModel != null) {
-            if (!(newModel instanceof Object)) {
+            if (!(newModel instanceof GroupAddressCardModel)) {
                Attendee attendee = AttendeeFactory.createAttendee(1, newModel);
                Field field = createAttendeeField(attendee, null);
                if (field != null) {
@@ -191,7 +195,7 @@ public final class MeetingUtilities {
                for (int i = 0; i < gacm.size(); i++) {
                   if (gacm.getAddressModelTypeAt(i) == 0) {
                      RIMModel addressModel = gacm.getAddressModelAt(i);
-                     if (addressModel != null && addressModel instanceof Object) {
+                     if (addressModel != null && addressModel instanceof EmailAddressModel) {
                         Attendee attendee = AttendeeFactory.createAttendee(1, addressModel);
                         Field field = createAttendeeField(attendee, null);
                         if (field != null) {

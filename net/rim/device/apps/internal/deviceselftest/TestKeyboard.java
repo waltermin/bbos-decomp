@@ -10,7 +10,7 @@ final class TestKeyboard extends TestTaskBase implements KeyListener {
 
    TestKeyboard() {
       super.app.addKeyListener(this);
-      this.sb = (StringBuffer)(new Object());
+      this.sb = new StringBuffer();
       this.onRun();
       this.lastStatusKeyTS = 0;
    }

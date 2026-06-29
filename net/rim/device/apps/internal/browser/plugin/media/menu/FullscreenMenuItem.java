@@ -8,7 +8,7 @@ public final class FullscreenMenuItem extends MenuItem {
    private MediaBrowserField _field;
 
    public FullscreenMenuItem(MediaBrowserField field, boolean fullscreen) {
-      super(((StringBuffer)(new Object())).append(fullscreen ? "✓ " : "").append(BrowserResources.getString(890)).toString(), 590855, Integer.MAX_VALUE);
+      super((fullscreen ? "✓ " : "") + BrowserResources.getString(890), 590855, Integer.MAX_VALUE);
       this._field = field;
    }
 

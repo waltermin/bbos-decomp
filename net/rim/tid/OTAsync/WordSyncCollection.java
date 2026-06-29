@@ -34,14 +34,14 @@ public class WordSyncCollection
    SyncConverter,
    OTASyncCapable,
    OTASyncListener {
-   protected CollectionListenerManager _listeners = (CollectionListenerManager)(new Object());
+   protected CollectionListenerManager _listeners = new CollectionListenerManager();
    protected boolean _debugOutputEnabled;
    protected TestListener _testListener;
-   protected IntHashtable _cache = (IntHashtable)(new Object());
+   protected IntHashtable _cache = new IntHashtable();
    protected IntHashtable _elements;
    protected WordSyncCollection$Cleaner _cleaner = new WordSyncCollection$Cleaner(this);
    protected boolean _cacheWasCleaned;
-   protected Hashtable _readers = (Hashtable)(new Object());
+   protected Hashtable _readers = new Hashtable();
    protected boolean _cpLocked;
    protected SLInputMethod _currentIM;
    protected PersistentObject _persistentObject;
@@ -110,7 +110,7 @@ public class WordSyncCollection
 
    protected void cleanCache() {
       if (this._debugOutputEnabled) {
-         System.err.println(((StringBuffer)(new Object("cleanCache: - "))).append(this._cache.size()).toString());
+         System.err.println("cleanCache: - " + this._cache.size());
       }
 
       synchronized (this._cache) {
@@ -143,7 +143,7 @@ public class WordSyncCollection
             }
 
             if (this._debugOutputEnabled) {
-               System.err.println(((StringBuffer)(new Object("update: "))).append(element.toString()).toString());
+               System.err.println("update: " + element.toString());
             }
          }
       }
@@ -241,7 +241,7 @@ public class WordSyncCollection
          }
 
          if (this._debugOutputEnabled) {
-            System.err.println(((StringBuffer)(new Object("fillCache: - "))).append(this._cache.size()).toString());
+            System.err.println("fillCache: - " + this._cache.size());
          }
 
          this._cacheWasCleaned = false;
@@ -415,7 +415,7 @@ public class WordSyncCollection
       }
 
       if (this._debugOutputEnabled) {
-         System.err.println(((StringBuffer)(new Object("getSyncObject: - "))).append(uid).toString());
+         System.err.println("getSyncObject: - " + uid);
       }
 
       if (res == null && this._cacheWasCleaned) {
@@ -426,7 +426,7 @@ public class WordSyncCollection
       }
 
       if (this._debugOutputEnabled && res != null) {
-         System.err.println(((StringBuffer)(new Object("found: "))).append(res.toString()).toString());
+         System.err.println("found: " + res.toString());
       }
 
       return res;
@@ -447,7 +447,7 @@ public class WordSyncCollection
       ConverterUtilities.writeStringSmart(buffer, 1, entry.getRecord());
       ConverterUtilities.convertInt(buffer, 2, entry.getFrequency(), 4);
       if (this._debugOutputEnabled) {
-         System.err.println(((StringBuffer)(new Object("convert to server: - "))).append(entry.toString()).toString());
+         System.err.println("convert to server: - " + entry.toString());
       }
 
       return true;
@@ -471,7 +471,7 @@ public class WordSyncCollection
 
          CustomWordSyncObject res = new CustomWordSyncObject(record, freq);
          if (this._debugOutputEnabled) {
-            System.err.println(((StringBuffer)(new Object("convert from server: - "))).append(res.toString()).toString());
+            System.err.println("convert from server: - " + res.toString());
          }
 
          return res;
@@ -516,14 +516,14 @@ public class WordSyncCollection
                         this._cache.put(cw.getUID(), cw);
                         this._listeners.fireElementAdded(this, cw);
                         if (this._debugOutputEnabled) {
-                           System.err.println(((StringBuffer)(new Object("elementAdded: - "))).append(cw.toString()).toString());
+                           System.err.println("elementAdded: - " + cw.toString());
                         }
                         break;
                      case 2:
                      default:
                         this._listeners.fireElementRemoved(this, cw);
                         if (this._debugOutputEnabled) {
-                           System.err.println(((StringBuffer)(new Object("elementRemoved: - "))).append(cw.toString()).toString());
+                           System.err.println("elementRemoved: - " + cw.toString());
                         }
                         break;
                      case 3:
@@ -531,7 +531,7 @@ public class WordSyncCollection
                         this._listeners.fireElementRemoved(this, cw);
                         this._listeners.fireElementAdded(this, cw);
                         if (this._debugOutputEnabled) {
-                           System.err.println(((StringBuffer)(new Object("elementUpdated: - "))).append(cw.toString()).toString());
+                           System.err.println("elementUpdated: - " + cw.toString());
                         }
                   }
                }
@@ -568,14 +568,7 @@ public class WordSyncCollection
       CustomWordsSyncManager sm = new CustomWordsSyncManager();
       deviceData.getWords(sm);
       if (this._debugOutputEnabled) {
-         System.err
-            .println(
-               ((StringBuffer)(new Object("mergeData - server: ")))
-                  .append(otaData.getDataStorageName())
-                  .append(" device: ")
-                  .append(deviceData.getDataStorageName())
-                  .toString()
-            );
+         System.err.println("mergeData - server: " + otaData.getDataStorageName() + " device: " + deviceData.getDataStorageName());
       }
 
       SyncObject[] words = sm.getSyncObjects();

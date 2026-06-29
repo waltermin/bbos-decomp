@@ -39,7 +39,7 @@ class MMSPresentationField$1 implements Enumeration {
    }
 
    private Vector findValidFields() {
-      Vector fields = (Vector)(new Object());
+      Vector fields = new Vector();
       int count = this.this$0.getFieldCount();
 
       for (int idx = 0; idx < count; idx++) {

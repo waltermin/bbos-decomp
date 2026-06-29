@@ -29,11 +29,11 @@ public class LDAPCertificateFetch {
    }
 
    public Certificate[] fetchCertificates(String emailAddress, CertificateServerInfo[] info) {
-      String[] emailAddresses = new Object[]{emailAddress};
+      String[] emailAddresses = new String[]{emailAddress};
       CertificateUtilities.canonicalizeEmailAddresses(emailAddresses);
       boolean atLeastOneSuccessfulQuery = false;
       this._ldapErrorCode = 0;
-      Certificate[] certificates = new Object[0];
+      Certificate[] certificates = new Certificate[0];
       int numServers = info == null ? 1 : info.length;
 
       for (int i = 0; i < numServers; i++) {
@@ -61,7 +61,7 @@ public class LDAPCertificateFetch {
       Object[] keyIDs = new Object[]{keyID};
       boolean atLeastOneSuccessfulQuery = false;
       this._ldapErrorCode = 0;
-      Certificate[] certificates = new Object[0];
+      Certificate[] certificates = new Certificate[0];
       int numServers = info == null ? 1 : info.length;
 
       for (int i = 0; i < numServers; i++) {
@@ -86,7 +86,7 @@ public class LDAPCertificateFetch {
    }
 
    private LDAPQuery createBaseQuery(CertificateServerInfo info) {
-      LDAPQuery ldapQuery = (LDAPQuery)(new Object(null, KeyStoreOptions.getCertificateServiceUID(), null));
+      LDAPQuery ldapQuery = new LDAPQuery(null, KeyStoreOptions.getCertificateServiceUID(), null);
       if (info != null) {
          ldapQuery.setHost(info.getServer(), info.getPort(), info.getBaseQuery());
          ldapQuery.setAuthType(info.getAuthType());

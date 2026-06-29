@@ -20,13 +20,13 @@ public final class LDAPPasswordCache implements MemoryCleanerListener {
    private LDAPPasswordCache() {
       synchronized (this._persist) {
          if (this._persist.getContents() == null) {
-            this._persist.setContents(new Object(), 4801362);
+            this._persist.setContents(new Hashtable(), 4801362);
             this._persist.commit();
          }
       }
 
       this._mapToUsernames = (Hashtable)this._persist.getContents();
-      this._mapToPasswords = (Hashtable)(new Object());
+      this._mapToPasswords = new Hashtable();
       MemoryCleanerDaemon.addListener(this);
    }
 
@@ -50,7 +50,7 @@ public final class LDAPPasswordCache implements MemoryCleanerListener {
          this._mapToPasswords.put(concat, password);
          this._persist.commit();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -59,7 +59,7 @@ public final class LDAPPasswordCache implements MemoryCleanerListener {
          String concat = StringUtilities.toLowerCase(server.concat(baseQuery), 1701707776);
          return (String)this._mapToUsernames.get(concat);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -68,7 +68,7 @@ public final class LDAPPasswordCache implements MemoryCleanerListener {
          String concat = StringUtilities.toLowerCase(server.concat(baseQuery), 1701707776);
          return (String)this._mapToPasswords.get(concat);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -77,7 +77,7 @@ public final class LDAPPasswordCache implements MemoryCleanerListener {
          String concat = StringUtilities.toLowerCase(server.concat(baseQuery), 1701707776);
          this._mapToPasswords.remove(concat);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

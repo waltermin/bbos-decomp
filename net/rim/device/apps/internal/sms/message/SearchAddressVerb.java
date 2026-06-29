@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.sms.message;
 
 import net.rim.device.api.i18n.ResourceBundleFamily;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.ConversionProvider;
 import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.verb.Verb;
@@ -16,9 +17,9 @@ public final class SearchAddressVerb extends Verb {
 
    @Override
    public final Object invoke(Object context) {
-      String[] names = new Object[2];
+      String[] names = new String[2];
       ConversionProvider converter = (ConversionProvider)this._model;
-      converter.convert(new Object(10), names);
+      converter.convert(new ContextObject(10), names);
       String address = names[1];
       if (address == null || address.length() == 0) {
          address = names[0];

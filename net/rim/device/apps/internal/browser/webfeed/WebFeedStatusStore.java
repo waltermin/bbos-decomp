@@ -31,7 +31,7 @@ public final class WebFeedStatusStore {
 
    public final void setWebFeedGuids(String url, WebFeedItem[] items) {
       if (url != null) {
-         String[] newGuids = new Object[0];
+         String[] newGuids = new String[0];
 
          for (int i = items.length - 1; i >= 0; i--) {
             if (items[i] != null) {

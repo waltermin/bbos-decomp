@@ -6,6 +6,7 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Ui;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 
 public class WizardButtonBar extends HorizontalFieldManager {
@@ -33,7 +34,7 @@ public class WizardButtonBar extends HorizontalFieldManager {
          case 0:
             if (this._buttonsDirection == 549755813888L) {
                this.add(this._cancelButton);
-               this.add((Field)(new Object(" ")));
+               this.add(new LabelField(" "));
                this.add(this._backButton);
                this.add(this._nextButton);
                return;
@@ -41,7 +42,7 @@ public class WizardButtonBar extends HorizontalFieldManager {
 
             this.add(this._nextButton);
             this.add(this._backButton);
-            this.add((Field)(new Object(" ")));
+            this.add(new LabelField(" "));
             this.add(this._cancelButton);
             return;
          case 1:
@@ -52,12 +53,12 @@ public class WizardButtonBar extends HorizontalFieldManager {
             this._nextButton = new WizardButtonBar$WizardButtonField(this, 3);
             if (this._buttonsDirection == 549755813888L) {
                this.add(this._backButton);
-               this.add((Field)(new Object(" ")));
+               this.add(new LabelField(" "));
                this.add(this._nextButton);
                return;
             } else {
                this.add(this._nextButton);
-               this.add((Field)(new Object(" ")));
+               this.add(new LabelField(" "));
                this.add(this._backButton);
             }
          case -1:

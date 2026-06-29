@@ -49,7 +49,7 @@ public final class Ulp {
 
    final void print() {
       System.out.println("ULP Message");
-      System.out.println(((StringBuffer)(new Object("Length: "))).append(this.length).toString());
+      System.out.println("Length: " + this.length);
       this.version.print();
       this.sessionId.print();
       this.ulpMessage.print();

@@ -27,7 +27,7 @@ final class StatusVoiceDataUsage extends StatusListItem {
 
       int bytes = VoiceDataUsage.getDataBytes();
       int deciK = bytes * 10 / 1024;
-      return ((StringBuffer)(new Object(""))).append(deciK / 10).append(".").append(deciK % 10).append("K").toString();
+      return "" + deciK / 10 + "." + deciK % 10 + "K";
    }
 
    private final String voiceString() {
@@ -42,7 +42,7 @@ final class StatusVoiceDataUsage extends StatusListItem {
       int seconds = VoiceDataUsage.getVoiceSeconds();
       int deciMins = seconds * 10 / 60;
       String minutesString = OptionsResources.getString(1942);
-      return ((StringBuffer)(new Object(""))).append(deciMins / 10).append(".").append(deciMins % 10).append(" ").append(minutesString).toString();
+      return "" + deciMins / 10 + "." + deciMins % 10 + " " + minutesString;
    }
 
    private final String itPolicyEnabledString() {
@@ -56,9 +56,9 @@ final class StatusVoiceDataUsage extends StatusListItem {
          limitString = "250K";
       } else {
          String minutesString = OptionsResources.getString(1942);
-         limitString = ((StringBuffer)(new Object("60 "))).append(minutesString).toString();
+         limitString = "60 " + minutesString;
       }
 
-      return ((StringBuffer)(new Object())).append(exceededString).append(" ").append(limitString).toString();
+      return exceededString + " " + limitString;
    }
 }

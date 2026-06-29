@@ -11,7 +11,7 @@ final class FirewallOptionsItem$DefaultPermissionsVerb extends Verb {
 
    @Override
    public final Object invoke(Object parameter) {
-      ApplicationControlInformation aci = (ApplicationControlInformation)(new Object(0));
+      ApplicationControlInformation aci = new ApplicationControlInformation(0);
       aci.open();
       return null;
    }

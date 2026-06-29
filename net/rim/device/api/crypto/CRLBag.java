@@ -22,7 +22,7 @@ public class CRLBag extends SafeBag {
       // 01: getfield net/rim/device/api/crypto/SafeBag._parsed Z
       // 04: ifeq 08
       // 07: return
-      // 08: new java/lang/Object
+      // 08: new net/rim/device/api/crypto/asn1/ASN1InputByteArray
       // 0b: dup
       // 0c: aload 0
       // 0d: getfield net/rim/device/api/crypto/SafeBag._bagData [B
@@ -43,9 +43,9 @@ public class CRLBag extends SafeBag {
       // 2c: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputByteArray.readOctetString ()[B
       // 2f: astore 4
       // 31: aload 0
-      // 32: new java/lang/Object
+      // 32: new net/rim/device/api/crypto/certificate/x509/X509CertificateRevocationList
       // 35: dup
-      // 36: new java/lang/Object
+      // 36: new net/rim/device/api/crypto/asn1/ASN1InputStream
       // 39: dup
       // 3a: aload 4
       // 3c: invokespecial net/rim/device/api/crypto/asn1/ASN1InputStream.<init> ([B)V
@@ -55,7 +55,7 @@ public class CRLBag extends SafeBag {
       // 48: aload 0
       // 49: getfield net/rim/device/api/crypto/SafeBag._bagAttributes [B
       // 4c: ifnull 9f
-      // 4f: new java/lang/Object
+      // 4f: new net/rim/device/api/crypto/asn1/ASN1InputByteArray
       // 52: dup
       // 53: aload 0
       // 54: getfield net/rim/device/api/crypto/SafeBag._bagAttributes [B

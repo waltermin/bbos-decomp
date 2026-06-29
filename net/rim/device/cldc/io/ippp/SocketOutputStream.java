@@ -1,6 +1,7 @@
 package net.rim.device.cldc.io.ippp;
 
 import java.io.OutputStream;
+import net.rim.device.api.io.IOCancelledException;
 import net.rim.device.api.util.DataBuffer;
 
 public class SocketOutputStream extends OutputStream {
@@ -16,12 +17,12 @@ public class SocketOutputStream extends OutputStream {
       if (streamProtocol != null) {
          this._streamProtocol = streamProtocol;
          this._flushLength = streamProtocol.getOutputStreamSize();
-         this._buffer = (DataBuffer)(new Object(this._flushLength, false));
+         this._buffer = new DataBuffer(this._flushLength, false);
          this._bufferLength = 0;
          this._sendFirstEmptyPacket = sendFirstEmptyPacket;
          this._autoFlush = true;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -35,13 +36,13 @@ public class SocketOutputStream extends OutputStream {
    }
 
    @Override
-   public void write(byte[] byteArray, int offset, int length) {
+   public void write(byte[] byteArray, int offset, int length) throws IOCancelledException {
       if (this._isClosed) {
-         throw new Object();
+         throw new IOCancelledException();
       }
 
       if (byteArray == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       synchronized (this._buffer) {
@@ -82,7 +83,7 @@ public class SocketOutputStream extends OutputStream {
       if (byteArray != null) {
          this.write(byteArray, 0, byteArray.length);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

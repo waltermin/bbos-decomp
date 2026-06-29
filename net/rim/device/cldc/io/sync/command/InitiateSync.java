@@ -32,7 +32,7 @@ public final class InitiateSync extends SyncCommand {
 
    public final void addGroupHashValue(SyncAgentGroupOfRecords aSyncAgentGroupOfRecords) {
       if (this._hashes == null) {
-         this._hashes = (Vector)(new Object(0));
+         this._hashes = new Vector(0);
       }
 
       this._hashes.addElement(aSyncAgentGroupOfRecords);

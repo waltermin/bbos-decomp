@@ -2,6 +2,7 @@ package net.rim.device.internal.io.store;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
+import net.rim.device.api.io.file.FileIOException;
 import net.rim.device.api.system.PersistentObject;
 import net.rim.device.api.system.RIMPersistentStore;
 import net.rim.device.api.util.IntEnumeration;
@@ -36,7 +37,7 @@ final class ContentStoreDatabase implements Persistable {
    public ContentStoreDatabase() {
    }
 
-   public final void assertOperation(FolderImpl folder, FileImpl file, int operation) {
+   public final void assertOperation(FolderImpl folder, FileImpl file, int operation) throws FileIOException {
       if (folder == null) {
          folder = file.getFolder();
       }
@@ -45,26 +46,26 @@ final class ContentStoreDatabase implements Persistable {
          case 0:
             int attributes = folder.getAttributes();
             if ((attributes & 2) == 0 || (attributes & 16) != 0) {
-               throw new Object(12);
+               throw new FileIOException(12);
             }
             break;
          case 1:
             int attributesx = folder.getAttributes();
             if ((attributesx & 2) == 0 || (attributesx & 16) != 0) {
-               throw new Object(12);
+               throw new FileIOException(12);
             }
             break;
          case 128:
             int attributesxx = folder.getAttributes();
             if ((attributesxx & 2) == 0 || (attributesxx & 16) != 0) {
-               throw new Object(12);
+               throw new FileIOException(12);
             }
       }
    }
 
    final void clear() {
-      Hashtable protectedFiles = (Hashtable)(new Object(25));
-      Hashtable protectedFolders = (Hashtable)(new Object(5));
+      Hashtable protectedFiles = new Hashtable(25);
+      Hashtable protectedFolders = new Hashtable(5);
       this.getProtectedFilesAndFolders(protectedFiles, protectedFolders);
       this._fileTable = new FileTable();
       this._folderTable = new FolderTable();
@@ -76,7 +77,7 @@ final class ContentStoreDatabase implements Persistable {
    private final void getProtectedFilesAndFolders(Hashtable files, Hashtable folders) {
       FolderTable folderTable = this.getFolderTable();
       if (folderTable != null) {
-         IntHashtable folderList = (IntHashtable)(new Object());
+         IntHashtable folderList = new IntHashtable();
 
          for (int i = 0; i < UID_PROTECTED_DATA.length; i++) {
             FolderImpl folder = folderTable.getFolder(UID_PROTECTED_DATA[i]);

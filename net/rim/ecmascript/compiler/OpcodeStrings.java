@@ -1,7 +1,7 @@
 package net.rim.ecmascript.compiler;
 
 public class OpcodeStrings {
-   private static final String[] _table = new Object[]{
+   private static final String[] _table = new String[]{
       "add",
       "bitand",
       "bitnot",

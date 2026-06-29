@@ -42,7 +42,7 @@ public final class RC5Key implements SymmetricKey, Persistable {
 
    private final void initialize(RC5CryptoToken cryptoToken, int bitLength) {
       if (cryptoToken == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this.initialize(cryptoToken, cryptoToken.createKey(bitLength));
@@ -50,7 +50,7 @@ public final class RC5Key implements SymmetricKey, Persistable {
 
    private final void initialize(RC5CryptoToken cryptoToken, byte[] data, int offset, int bitLength) {
       if (cryptoToken == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this.initialize(cryptoToken, cryptoToken.injectKey(data, offset, bitLength));
@@ -62,7 +62,7 @@ public final class RC5Key implements SymmetricKey, Persistable {
          this._cryptoTokenData = cryptoTokenData;
          this.setHashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -104,7 +104,7 @@ public final class RC5Key implements SymmetricKey, Persistable {
       // 12: isub
       // 13: iload 2
       // 14: if_icmpge 1f
-      // 17: new java/lang/Object
+      // 17: new java/lang/IllegalArgumentException
       // 1a: dup
       // 1b: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 1e: athrow
@@ -116,14 +116,14 @@ public final class RC5Key implements SymmetricKey, Persistable {
       // 26: invokespecial net/rim/device/api/crypto/RC5Key.initialize (Lnet/rim/device/api/crypto/RC5CryptoToken;[BII)V
       // 29: return
       // 2a: astore 4
-      // 2c: new java/lang/Object
+      // 2c: new java/lang/RuntimeException
       // 2f: dup
       // 30: aload 4
       // 32: invokevirtual net/rim/device/api/crypto/CryptoTokenException.toString ()Ljava/lang/String;
       // 35: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 38: athrow
       // 39: astore 4
-      // 3b: new java/lang/Object
+      // 3b: new java/lang/RuntimeException
       // 3e: dup
       // 3f: aload 4
       // 41: invokevirtual net/rim/device/api/crypto/CryptoUnsupportedOperationException.toString ()Ljava/lang/String;
@@ -149,14 +149,14 @@ public final class RC5Key implements SymmetricKey, Persistable {
       // 09: invokespecial net/rim/device/api/crypto/RC5Key.initialize (Lnet/rim/device/api/crypto/RC5CryptoToken;I)V
       // 0c: return
       // 0d: astore 2
-      // 0e: new java/lang/Object
+      // 0e: new java/lang/RuntimeException
       // 11: dup
       // 12: aload 2
       // 13: invokevirtual net/rim/device/api/crypto/CryptoTokenException.toString ()Ljava/lang/String;
       // 16: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 19: athrow
       // 1a: astore 2
-      // 1b: new java/lang/Object
+      // 1b: new java/lang/RuntimeException
       // 1e: dup
       // 1f: aload 2
       // 20: invokevirtual net/rim/device/api/crypto/CryptoUnsupportedOperationException.toString ()Ljava/lang/String;

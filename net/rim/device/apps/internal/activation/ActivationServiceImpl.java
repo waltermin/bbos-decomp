@@ -79,7 +79,7 @@ final class ActivationServiceImpl
    private String _oldKeyId;
    private String _newKeyId;
    private String _activatingUID;
-   private DataBuffer _intDataBuffer = (DataBuffer)(new Object(new byte[4], 0, 4, true));
+   private DataBuffer _intDataBuffer = new DataBuffer(new byte[4], 0, 4, true);
    public static final long ACTIVATION_EVENT = -4731267519193158412L;
    static final long EVENT_LOGGER_GUID = -5915434835955743234L;
    static final long EVENT_LOGGER_DATA_GUID = 1200380696048604626L;
@@ -678,7 +678,7 @@ final class ActivationServiceImpl
 
    final String[] getActivatedSids() {
       long[] sidTable = ActivationService.getActivatedServices();
-      String[] result = new Object[sidTable.length];
+      String[] result = new String[sidTable.length];
 
       for (int i = sidTable.length - 1; i >= 0; i--) {
          result[i] = String.valueOf(sidTable[i]);
@@ -709,7 +709,7 @@ final class ActivationServiceImpl
                this._transmissionService.transmitObject("net.rim.OTAKeyGenProtocol", this._pendingEvent, this, this._transmitTag, null);
                this._pendingEvent = null;
             } catch (Throwable var8) {
-               StringBuffer tempBuffer = (StringBuffer)(new Object());
+               StringBuffer tempBuffer = new StringBuffer();
                tempBuffer.append(StringUtilities.intToString(1397638213));
                tempBuffer.append(":");
                tempBuffer.append(E.toString());
@@ -735,7 +735,7 @@ final class ActivationServiceImpl
    }
 
    final DataBuffer generateCryptoKey(byte keyAlgorithm, byte[] keyId, byte[] keyData) {
-      DataBuffer cryptoKey = (DataBuffer)(new Object());
+      DataBuffer cryptoKey = new DataBuffer();
       cryptoKey.writeByte(keyAlgorithm);
       cryptoKey.write(keyId);
       cryptoKey.writeByte(0);
@@ -785,7 +785,7 @@ final class ActivationServiceImpl
          byte[] bytes = null;
          String emailAddress = null;
          String password = null;
-         DataBuffer buffer = (DataBuffer)(new Object(data, 0, data.length, false));
+         DataBuffer buffer = new DataBuffer(data, 0, data.length, false);
 
          byte fieldID;
          label77:
@@ -798,19 +798,19 @@ final class ActivationServiceImpl
                   default:
                      ServiceBook sb = ServiceBook.getSB();
                      bytes = buffer.readByteArray();
-                     DataBuffer tempBuffer = (DataBuffer)(new Object(bytes, 0, bytes.length, false));
-                     ServiceBookSyncCollection sbs = (ServiceBookSyncCollection)(new Object(sb));
+                     DataBuffer tempBuffer = new DataBuffer(bytes, 0, bytes.length, false);
+                     ServiceBookSyncCollection sbs = new ServiceBookSyncCollection(sb);
                      ServiceRecord sr = (ServiceRecord)sbs.convert(tempBuffer, 1);
                      sr.setType(0);
                      sb.addRecord(sr);
                      break;
                   case 2:
                      bytes = buffer.readByteArray();
-                     emailAddress = (String)(new Object(bytes));
+                     emailAddress = new String(bytes);
                      break;
                   case 3:
                      bytes = buffer.readByteArray();
-                     password = (String)(new Object(bytes));
+                     password = new String(bytes);
                }
             }
          } finally {
@@ -821,7 +821,7 @@ final class ActivationServiceImpl
          data[0] = 0;
          NvStore.writeData(31, data);
          if (emailAddress != null && password != null) {
-            String[] args = new Object[]{emailAddress, password};
+            String[] args = new String[]{emailAddress, password};
             Radio.requestPowerOn();
             Proxy.getInstance().invokeLater(new ActivationServiceImpl$AutoActivate(args), 120000, false);
          }
@@ -877,13 +877,13 @@ final class ActivationServiceImpl
    }
 
    public final void storeDataBeforeDeviceWipe(String email, String password) {
-      DataBuffer buffer = (DataBuffer)(new Object(false));
-      DataBuffer tempBuffer = (DataBuffer)(new Object(false));
+      DataBuffer buffer = new DataBuffer(false);
+      DataBuffer tempBuffer = new DataBuffer(false);
       ServiceBook sb = ServiceBook.getSB();
       ServiceRecord[] records = sb.findRecordsByCid("PROVISIONING");
       if (records != null && records.length > 0) {
          ServiceRecord sr = records[0];
-         ServiceBookSyncCollection sbs = (ServiceBookSyncCollection)(new Object(sb));
+         ServiceBookSyncCollection sbs = new ServiceBookSyncCollection(sb);
          sbs.convertServices(sr, tempBuffer, 1);
          tempBuffer.trim();
          byte[] sbBytes = tempBuffer.toArray();
@@ -921,7 +921,7 @@ final class ActivationServiceImpl
             return;
          }
       } else if (guid == 6213587377148297993L) {
-         if (object0 instanceof Object) {
+         if (object0 instanceof String) {
             String uid = (String)object0;
             OTAKeyGenEvent lastEvent = this.getLastOTAKeyGenEvent();
             if (lastEvent != null
@@ -1004,7 +1004,7 @@ final class ActivationServiceImpl
             }
 
             if ((codeInt & 128) != 0) {
-               StringBuffer tempBuffer = (StringBuffer)(new Object());
+               StringBuffer tempBuffer = new StringBuffer();
                tempBuffer.append(StringUtilities.intToString(1397638213));
                tempBuffer.append(":0x");
                tempBuffer.append(Integer.toHexString(codeInt));
@@ -1081,10 +1081,10 @@ final class ActivationServiceImpl
 
          oldSR = otakeygenSR[0];
          addNewSR = true;
-         otakeygenSR = new Object[]{new Object()};
+         otakeygenSR = new ServiceRecord[]{new ServiceRecord()};
       } else if (otakeygenSR.length == 0) {
          addNewSR = true;
-         otakeygenSR = new Object[]{new Object()};
+         otakeygenSR = new ServiceRecord[]{new ServiceRecord()};
       }
 
       otakeygenSR[0].setType(0);
@@ -1095,7 +1095,7 @@ final class ActivationServiceImpl
       otakeygenSR[0].setCompressionMode(1);
       otakeygenSR[0].setInvisible(true);
       otakeygenSR[0].setRestoreDisabled(true);
-      String[] bbrHosts = new Object[3];
+      String[] bbrHosts = new String[3];
       int[] bbrPorts = new int[3];
       int hostIndex = 0;
       int activationServerIndex = -1;
@@ -1124,7 +1124,7 @@ final class ActivationServiceImpl
 
       if (emailAddress != null) {
          String domainName = emailAddress.substring(emailAddress.indexOf(64) + 1);
-         bbrHosts[hostIndex++] = ((StringBuffer)(new Object("activationBBR."))).append(domainName).toString();
+         bbrHosts[hostIndex++] = "activationBBR." + domainName;
       }
 
       bbrHosts[hostIndex++] = "activationBBR";
@@ -1192,10 +1192,10 @@ final class ActivationServiceImpl
       ServiceBook sb = ServiceBook.getSB();
       ServiceRecord[] activeServiceRecords = sb.findRecordsByType(0);
       if (activeServiceRecords.length <= 0) {
-         return (Object[][])null;
+         return (String[][])null;
       }
 
-      Hashtable ht = (Hashtable)(new Object());
+      Hashtable ht = new Hashtable();
 
       for (int i = 0; i < activeServiceRecords.length; i++) {
          ServiceRecord sr = activeServiceRecords[i];
@@ -1207,7 +1207,7 @@ final class ActivationServiceImpl
          }
       }
 
-      String[][] s = new Object[2][ht.size()];
+      String[][] s = new String[2][ht.size()];
       Enumeration enumeration = ht.elements();
 
       for (int var8 = 0; enumeration.hasMoreElements(); var8++) {
@@ -1335,7 +1335,7 @@ final class ActivationServiceImpl
       if (moduleHandle > 0) {
          ApplicationDescriptor[] activationDescriptors = CodeModuleManager.getApplicationDescriptors(moduleHandle);
          if (activationDescriptors != null && activationDescriptors.length > 0) {
-            this._activationAppEntryPoint = (ApplicationEntryPoint)(new Object(activationDescriptors[0]));
+            this._activationAppEntryPoint = new ApplicationEntryPoint(activationDescriptors[0]);
             this._activationAppEntryPoint.set(9, "net_rim_bb_activation.ActivationApp");
          }
       }
@@ -1375,8 +1375,7 @@ final class ActivationServiceImpl
 
    private final boolean sendOTAKeyGenEvent(OTAKeyGenEvent keyGenEvent, String uid) {
       try {
-         this._transmissionService
-            .setNewSenderConnection((DatagramConnection)Connector.open(((StringBuffer)(new Object("gme:OTAKEYGEN/"))).append(uid).toString()));
+         this._transmissionService.setNewSenderConnection((DatagramConnection)Connector.open("gme:OTAKEYGEN/" + uid));
          this._transmitUID = uid;
          this.createOtaKeyGenSR(uid, keyGenEvent._emailAddress, this._lastActivationServerAddress);
          if (this._timeOutThreadID != -1) {
@@ -1593,7 +1592,7 @@ final class ActivationServiceImpl
       // 167: ifnonnull 16d
       // 16a: bipush 1
       // 16b: istore 4
-      // 16d: new java/lang/Object
+      // 16d: new net/rim/device/internal/crypto/OTAKeyGenCrypto
       // 170: dup
       // 171: invokespecial net/rim/device/internal/crypto/OTAKeyGenCrypto.<init> ()V
       // 174: astore 12
@@ -1694,7 +1693,7 @@ final class ActivationServiceImpl
       // 243: iload 13
       // 245: putfield net/rim/device/apps/internal/activation/OTAKeyGenEvent._keyGenerationType B
       // 248: invokestatic net/rim/device/internal/deviceagent/OutgoingDeviceAgentCollection.getInstance ()Lnet/rim/device/internal/deviceagent/DeviceAgentCollection;
-      // 24b: checkcast java/lang/Object
+      // 24b: checkcast net/rim/device/internal/deviceagent/OutgoingDeviceAgentCollection
       // 24e: astore 14
       // 250: aload 14
       // 252: bipush 6
@@ -1916,7 +1915,7 @@ final class ActivationServiceImpl
       // 098: bipush 0
       // 099: newarray 8
       // 09b: astore 7
-      // 09d: new java/lang/Object
+      // 09d: new net/rim/device/internal/crypto/OTAKeyGenCrypto
       // 0a0: dup
       // 0a1: invokespecial net/rim/device/internal/crypto/OTAKeyGenCrypto.<init> ()V
       // 0a4: astore 8
@@ -2017,7 +2016,7 @@ final class ActivationServiceImpl
       // 16f: aload 0
       // 170: invokespecial net/rim/device/apps/internal/activation/ActivationServiceImpl.updateDeviceCapabilities ()V
       // 173: invokestatic net/rim/device/internal/deviceagent/OutgoingDeviceAgentCollection.getInstance ()Lnet/rim/device/internal/deviceagent/DeviceAgentCollection;
-      // 176: checkcast java/lang/Object
+      // 176: checkcast net/rim/device/internal/deviceagent/OutgoingDeviceAgentCollection
       // 179: astore 13
       // 17b: aload 13
       // 17d: bipush 7
@@ -2146,9 +2145,7 @@ final class ActivationServiceImpl
 
    @Override
    public final SyncCollection[] getCollections() {
-      SyncCollection[] collections = new Object[1];
-      collections[0] = new ActivationServiceImpl$ASCollection();
-      return collections;
+      return new SyncCollection[]{new ActivationServiceImpl$ASCollection()};
    }
 
    static final void register() {

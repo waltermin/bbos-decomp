@@ -25,7 +25,7 @@ import net.rim.tools.compiler.vm.Constants;
 
 public final class InstructionResolver implements Constants {
    private int _newOrdinal;
-   private Vector _parmTypes = (Vector)(new Object());
+   private Vector _parmTypes = new Vector();
    private boolean[] _boundaries;
    private Compiler _compiler;
    private ClassType _classType;
@@ -938,9 +938,7 @@ public final class InstructionResolver implements Constants {
       TypeDescriptor descriptor = new TypeDescriptor(typeName);
       Type type = Type.translateType(this._compiler, descriptor);
       if (descriptor.getCharsRemaining() != 0) {
-         throw new CompileException(
-            this._classType.getFullName(), ((StringBuffer)(new Object("Invalid type descriptor: "))).append(descriptor.getString()).toString()
-         );
+         throw new CompileException(this._classType.getFullName(), "Invalid type descriptor: " + descriptor.getString());
       }
 
       Type resolveType = type;
@@ -954,12 +952,7 @@ public final class InstructionResolver implements Constants {
          classType.setReachable(this._compiler, true);
          classType.resolve(this._compiler);
          if (!classType.isDefined()) {
-            this._compiler
-               .generateWarning(
-                  false,
-                  this._classType.getFullName(),
-                  ((StringBuffer)(new Object("Reference to undefined class: "))).append(classType.getFullName()).toString()
-               );
+            this._compiler.generateWarning(false, this._classType.getFullName(), "Reference to undefined class: " + classType.getFullName());
             this._classType.addModifiers(134217728);
             this._method.addModifiers(134217728);
          }
@@ -973,10 +966,7 @@ public final class InstructionResolver implements Constants {
       classType.setReachable(this._compiler, true);
       classType.resolve(this._compiler);
       if (!classType.isDefined()) {
-         this._compiler
-            .generateWarning(
-               false, this._classType.getFullName(), ((StringBuffer)(new Object("Reference to undefined class: "))).append(classType.getFullName()).toString()
-            );
+         this._compiler.generateWarning(false, this._classType.getFullName(), "Reference to undefined class: " + classType.getFullName());
          this._classType.addModifiers(134217728);
          this._method.addModifiers(134217728);
       }
@@ -1013,7 +1003,7 @@ public final class InstructionResolver implements Constants {
       Field field = classType.findField(this._compiler, fieldName, fieldType, isStatic, true);
       if (field != null) {
          if (!isStatic && field.getOffset() >= 512) {
-            throw new CompileException(classType.getFullName(), ((StringBuffer)(new Object("Field offset too large for: "))).append(field.getName()).toString());
+            throw new CompileException(classType.getFullName(), "Field offset too large for: " + field.getName());
          }
       } else {
          this._method.addModifiers(134217728);
@@ -1026,12 +1016,7 @@ public final class InstructionResolver implements Constants {
          } else {
             field = new Field(fieldName, fieldType, classType, modifiers, offset, null);
             if (classType.isDefined()) {
-               this._compiler
-                  .generateWarning(
-                     false,
-                     classType.getFullName(),
-                     ((StringBuffer)(new Object("No definition found for member: "))).append(fieldType.getFullName()).append(' ').append(fieldName).toString()
-                  );
+               this._compiler.generateWarning(false, classType.getFullName(), "No definition found for member: " + fieldType.getFullName() + ' ' + fieldName);
             }
          }
       }
@@ -1052,10 +1037,7 @@ public final class InstructionResolver implements Constants {
          Type.translateTypes(this._compiler, prototype, this._parmTypes);
          Type type = Type.translateType(this._compiler, prototype);
          if (prototype.getCharsRemaining() != 0) {
-            throw new CompileException(
-               this._classType.getFullName(),
-               ((StringBuffer)(new Object("Invalid type descriptor '"))).append(prototype.getString()).append("' for method: ").append(name).toString()
-            );
+            throw new CompileException(this._classType.getFullName(), "Invalid type descriptor '" + prototype.getString() + "' for method: " + name);
          }
 
          method = classType.findMethod(this._compiler, name, type, this._parmTypes, isStatic, true);
@@ -1082,10 +1064,7 @@ public final class InstructionResolver implements Constants {
             }
 
             if (classType.isDefined()) {
-               this._compiler
-                  .generateWarning(
-                     false, classType.getFullName(), ((StringBuffer)(new Object("No definition found for method: "))).append(method.getName()).toString()
-                  );
+               this._compiler.generateWarning(false, classType.getFullName(), "No definition found for method: " + method.getName());
             }
          }
       }
@@ -1327,7 +1306,7 @@ public final class InstructionResolver implements Constants {
       ClassType classType = cpf.getClassType();
       switch (opcode) {
          case 177:
-            throw new CompileException(this._classType.getFullName(), ((StringBuffer)(new Object("Invalid opcode at offset: "))).append(ip).toString());
+            throw new CompileException(this._classType.getFullName(), "Invalid opcode at offset: " + ip);
          case 178:
          case 179:
             if (field.hasValue() && field.isAnd(33554626)) {
@@ -1374,7 +1353,7 @@ public final class InstructionResolver implements Constants {
       ClassType classType = cpm.getClassType();
       switch (opcode) {
          case 181:
-            throw new CompileException(this._classType.getFullName(), ((StringBuffer)(new Object("Invalid opcode at offset: "))).append(ip).toString());
+            throw new CompileException(this._classType.getFullName(), "Invalid opcode at offset: " + ip);
          case 182:
          default:
             this._block.addInstructionNameAndType(ip, _opcodeMapping[opcode], classType, method);
@@ -1408,7 +1387,7 @@ public final class InstructionResolver implements Constants {
             this._block.addInstructionNameAndType(ip, _opcodeMapping[opcode], classType, method, nargs);
             return;
          default:
-            throw new CompileException(this._classType.getFullName(), ((StringBuffer)(new Object("Invalid opcode at offset: "))).append(ip).toString());
+            throw new CompileException(this._classType.getFullName(), "Invalid opcode at offset: " + ip);
       }
    }
 
@@ -1655,12 +1634,7 @@ public final class InstructionResolver implements Constants {
 
                boolean malformed = operands[1] > operands[2];
                if (malformed) {
-                  this._compiler
-                     .generateWarning(
-                        false,
-                        this._classType.getFullName(),
-                        ((StringBuffer)(new Object("Malformed tableswitch opcode found in: "))).append(this._method.getName()).toString()
-                     );
+                  this._compiler.generateWarning(false, this._classType.getFullName(), "Malformed tableswitch opcode found in: " + this._method.getName());
                }
 
                this._block.addInstructionInts(ip, canBeShort ? 163 : 164, cases, malformed);
@@ -1686,12 +1660,7 @@ public final class InstructionResolver implements Constants {
 
                boolean malformed = num < 0 || num > 4096;
                if (malformed) {
-                  this._compiler
-                     .generateWarning(
-                        false,
-                        this._classType.getFullName(),
-                        ((StringBuffer)(new Object("Malformed lookupswitch opcode found in: "))).append(this._method.getName()).toString()
-                     );
+                  this._compiler.generateWarning(false, this._classType.getFullName(), "Malformed lookupswitch opcode found in: " + this._method.getName());
                }
 
                this._block.addInstructionInts(ip, canBeShort ? 163 : 164, cases, malformed);
@@ -1720,7 +1689,7 @@ public final class InstructionResolver implements Constants {
                return;
             }
             default:
-               throw new CompileException(this._classType.getFullName(), ((StringBuffer)(new Object("Invalid opcode at offset: "))).append(ip).toString());
+               throw new CompileException(this._classType.getFullName(), "Invalid opcode at offset: " + ip);
          }
       }
    }
@@ -1730,7 +1699,7 @@ public final class InstructionResolver implements Constants {
       byte[] data = cpa.getBytes();
       ConstantPoolFieldRef cpf = cpa.getFieldRef();
       if (cpf != null) {
-         this._compiler.checkBinaryForExport(((StringBuffer)(new Object())).append(cpf.getClassName()).append('.').append(cpf.getName()).toString(), data);
+         this._compiler.checkBinaryForExport(cpf.getClassName() + '.' + cpf.getName(), data);
       }
 
       int typeId = cpa.getArrayType();
@@ -1750,22 +1719,13 @@ public final class InstructionResolver implements Constants {
          InstructionStackEntry entry = target.getStackEntry();
          if (entry == null) {
             if (target.getOp() != 0) {
-               throw new CompileException(
-                  this._classType.getFullName(), ((StringBuffer)(new Object("Missing stack map at label: "))).append(target.getIp()).toString()
-               );
+               throw new CompileException(this._classType.getFullName(), "Missing stack map at label: " + target.getIp());
             }
          } else {
             entry.verifyUninitializedOffsets();
             if (target.getOp() == 0) {
                if (Compiler._verbosity >= 2) {
-                  Diagnose.out
-                     .println(
-                        ((StringBuffer)(new Object("Funny Stackmap in: ")))
-                           .append(this._classType.getFullName())
-                           .append(".")
-                           .append(this._method.getName())
-                           .toString()
-                     );
+                  Diagnose.out.println("Funny Stackmap in: " + this._classType.getFullName() + "." + this._method.getName());
                }
 
                this._method.addModifiers(134217728);

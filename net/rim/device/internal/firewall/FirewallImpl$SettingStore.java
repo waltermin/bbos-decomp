@@ -8,11 +8,11 @@ import net.rim.device.internal.system.ITPolicyInternal;
 
 final class FirewallImpl$SettingStore implements Persistable {
    public int _override = 3;
-   public Vector _settings = (Vector)(new Object());
-   public ToIntHashtable _pipeControl = (ToIntHashtable)(new Object());
+   public Vector _settings = new Vector();
+   public ToIntHashtable _pipeControl = new ToIntHashtable();
    public boolean _enabled = ITPolicyInternal.isITPolicyEnabled();
-   public IntHashtable _blockings = (IntHashtable)(new Object());
-   public IntHashtable _droppings = (IntHashtable)(new Object());
+   public IntHashtable _blockings = new IntHashtable();
+   public IntHashtable _droppings = new IntHashtable();
 
    public FirewallImpl$SettingStore() {
    }

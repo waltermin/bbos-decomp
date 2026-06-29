@@ -1,6 +1,7 @@
 package net.rim.blackberry.api.pdap;
 
 import java.util.Enumeration;
+import java.util.NoSuchElementException;
 import javax.microedition.pim.Contact;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.GroupAddressCardModel;
@@ -49,7 +50,7 @@ final class ContactComparator implements Enumeration {
 
       while (this._addressCards.hasMoreElements()) {
          Object nextAddressCard = this._addressCards.nextElement();
-         if (nextAddressCard instanceof Object && (this._searchType & 1) != 0) {
+         if (nextAddressCard instanceof AddressCardModel && (this._searchType & 1) != 0) {
             if (this._matchProvider instanceof ContactComparator$ContactMatchProvider) {
                ContactImpl nextAddress = new ContactImpl(nextAddressCard, this._contactList);
                if (this._matchProvider.matches(nextAddress)) {
@@ -60,7 +61,7 @@ final class ContactComparator implements Enumeration {
                this._nextAddress = new ContactImpl(nextAddressCard, this._contactList);
                return true;
             }
-         } else if (nextAddressCard instanceof Object
+         } else if (nextAddressCard instanceof GroupAddressCardModel
             && (this._searchType & 2) != 0
             && this._matchProvider.comparesGroups()
             && this._matchProvider.matches((GroupAddressCardModel)nextAddressCard)) {
@@ -83,7 +84,7 @@ final class ContactComparator implements Enumeration {
          this._nextAddress = null;
          return obj;
       } else {
-         throw new Object();
+         throw new NoSuchElementException();
       }
    }
 }

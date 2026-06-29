@@ -6,6 +6,7 @@ import net.rim.device.api.system.EventLogger;
 import net.rim.device.api.system.RadioInfo;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.internal.lbs.CheckRadioConnections;
 import net.rim.device.apps.internal.lbs.CheckRadioConnections$Callback;
@@ -62,7 +63,7 @@ public final class POIVerb extends Verb implements Request$Listener, CheckRadioC
          return null;
       }
 
-      SearchPOIDialog poiDialog = new SearchPOIDialog(new Object(), LBSResources.getString(287));
+      SearchPOIDialog poiDialog = new SearchPOIDialog(new ContextObject(), LBSResources.getString(287));
       this._keywords = poiDialog.doModal();
       if (this._keywords != null && this._keywords.length() != 0) {
          this._mapField._poiKeywords = this._keywords;
@@ -148,7 +149,7 @@ public final class POIVerb extends Verb implements Request$Listener, CheckRadioC
             this._requestError = true;
       }
 
-      System.out.println(((StringBuffer)(new Object("_poiXmlString="))).append(this._poiXmlString).toString());
+      System.out.println("_poiXmlString=" + this._poiXmlString);
       return this._poiXmlData;
    }
 
@@ -168,7 +169,7 @@ public final class POIVerb extends Verb implements Request$Listener, CheckRadioC
 
    private final void coverageErrorMsg() {
       String netType = (RadioInfo.getActiveWAFs() & 4) == 4 ? LBSResources.getString(336) : LBSResources.getString(335);
-      String msg = MessageFormat.format(LBSResources.getString(334), new Object[]{netType});
+      String msg = MessageFormat.format(LBSResources.getString(334), new String[]{netType});
       Dialog.alert(msg);
    }
 
@@ -184,16 +185,16 @@ public final class POIVerb extends Verb implements Request$Listener, CheckRadioC
       int rc = request.getResponseCode();
       if (rc != 0) {
          byte[] b = request._lastRequest;
-         StringBuffer requestStr = (StringBuffer)(new Object());
+         StringBuffer requestStr = new StringBuffer();
          if (b != null) {
             label65:
             try {
                for (int i = 0; i < b.length; i++) {
-                  String s = ((StringBuffer)(new Object("0"))).append(Integer.toHexString(b[i])).toString();
+                  String s = "0" + Integer.toHexString(b[i]);
                   requestStr.append(s.substring(s.length() - 2, s.length()));
                }
             } catch (Throwable var11) {
-               requestStr.append(((StringBuffer)(new Object("... error in parsing: "))).append(e.getMessage()).toString());
+               requestStr.append("... error in parsing: " + e.getMessage());
                break label65;
             }
          } else {
@@ -203,14 +204,7 @@ public final class POIVerb extends Verb implements Request$Listener, CheckRadioC
          long UID = -1037010874164756539L;
          EventLogger.logEvent(
             -1037010874164756539L,
-            ((StringBuffer)(new Object("POI Request error: ")))
-               .append(request.getResponseCode())
-               .append(", URL: ")
-               .append(request.getURL())
-               .append(", request: ")
-               .append(requestStr.toString())
-               .toString()
-               .getBytes(),
+            ("POI Request error: " + request.getResponseCode() + ", URL: " + request.getURL() + ", request: " + requestStr.toString()).getBytes(),
             2
          );
          if (rc >= 300) {

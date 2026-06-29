@@ -18,7 +18,7 @@ class ESWindowPrototype$12 extends JavaScriptHostFunction {
       try {
          String message = Convert.toString(this.getParm(0));
          String defaultValue = Convert.toString(this.getParm(1));
-         SimpleOKCancelInputDialog dialog = (SimpleOKCancelInputDialog)(new Object(0, message, 0, 1000000, 134217728));
+         SimpleOKCancelInputDialog dialog = new SimpleOKCancelInputDialog(0, message, 0, 1000000, 134217728);
          dialog.setText(defaultValue);
          BackgroundDialog.show(dialog);
          return dialog.getCloseReason() == -1 ? Value.NULL : Value.makeStringValue(dialog.getText());

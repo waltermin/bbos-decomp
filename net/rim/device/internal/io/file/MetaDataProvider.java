@@ -44,8 +44,8 @@ public class MetaDataProvider {
    static {
       ApplicationRegistry registry = ApplicationRegistry.getApplicationRegistry();
       Object obj = registry.getOrWaitFor(5925472548652966264L);
-      if (!(obj instanceof Object)) {
-         _providers = (Hashtable)(new Object());
+      if (!(obj instanceof Hashtable)) {
+         _providers = new Hashtable();
          _imageProvider = new ImageThumbnailProvider();
          _mediaProvider = new MediaMetaDataProvider();
          _providers.put("image/*", _imageProvider);

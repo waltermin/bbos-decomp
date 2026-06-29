@@ -26,7 +26,7 @@ final class DownloadDescriptorStatusReport extends Thread {
 
    public DownloadDescriptorStatusReport(String url, int statusCode, DownloadDescriptorField listener, String referer) {
       if (url == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       this._url = url;
@@ -78,7 +78,7 @@ final class DownloadDescriptorStatusReport extends Thread {
       // 010: aload 0
       // 011: getfield net/rim/device/apps/internal/browser/dd/DownloadDescriptorStatusReport._url Ljava/lang/String;
       // 014: astore 5
-      // 016: new java/lang/Object
+      // 016: new java/lang/StringBuffer
       // 019: dup
       // 01a: invokespecial java/lang/StringBuffer.<init> ()V
       // 01d: aload 0
@@ -103,7 +103,7 @@ final class DownloadDescriptorStatusReport extends Thread {
       // 04b: bipush 10
       // 04d: if_icmplt 053
       // 050: goto 27e
-      // 053: new java/lang/Object
+      // 053: new net/rim/device/api/io/http/HttpHeaders
       // 056: dup
       // 057: invokespecial net/rim/device/api/io/http/HttpHeaders.<init> ()V
       // 05a: astore 8
@@ -121,7 +121,7 @@ final class DownloadDescriptorStatusReport extends Thread {
       // 073: aload 0
       // 074: getfield net/rim/device/apps/internal/browser/dd/DownloadDescriptorStatusReport._config Lnet/rim/device/apps/internal/browser/options/BrowserConfigRecord;
       // 077: invokestatic net/rim/device/apps/internal/browser/cod/OTAStatusReportSender.addCallingLineID (Lnet/rim/device/api/io/http/HttpHeaders;Lnet/rim/device/apps/internal/browser/options/BrowserConfigRecord;)V
-      // 07a: new java/lang/Object
+      // 07a: new net/rim/device/apps/internal/browser/stack/ModelResult
       // 07d: dup
       // 07e: aload 5
       // 080: bipush 3
@@ -172,7 +172,7 @@ final class DownloadDescriptorStatusReport extends Thread {
       // 0e1: monitorexit
       // 0e2: goto 27e
       // 0e5: aload 0
-      // 0e6: new java/lang/Object
+      // 0e6: new net/rim/device/apps/internal/browser/stack/FetchRequest
       // 0e9: dup
       // 0ea: aload 9
       // 0ec: aload 0
@@ -191,7 +191,7 @@ final class DownloadDescriptorStatusReport extends Thread {
       // 106: aload 0
       // 107: getfield net/rim/device/apps/internal/browser/dd/DownloadDescriptorStatusReport._fetchRequest Lnet/rim/device/apps/internal/browser/stack/FetchRequest;
       // 10a: invokevirtual net/rim/device/apps/internal/browser/stack/RawDataCache.get (Lnet/rim/device/apps/internal/browser/stack/FetchRequest;)Ljavax/microedition/io/InputConnection;
-      // 10d: checkcast java/lang/Object
+      // 10d: checkcast javax/microedition/io/HttpConnection
       // 110: astore 2
       // 111: aload 2
       // 112: ifnonnull 148
@@ -219,7 +219,7 @@ final class DownloadDescriptorStatusReport extends Thread {
       // 149: invokeinterface javax/microedition/io/HttpConnection.getResponseCode ()I 1
       // 14e: istore 1
       // 14f: ldc2_w 1907089860548946979
-      // 152: new java/lang/Object
+      // 152: new java/lang/StringBuffer
       // 155: dup
       // 156: ldc_w "DD nrc "
       // 159: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V

@@ -4,6 +4,7 @@ import com.sun.cldc.io.ConnectionBaseInterface;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.microedition.io.Connection;
@@ -60,23 +61,23 @@ public final class Protocol implements ConnectionBaseInterface, HttpConnection {
 
    @Override
    public final InputStream openInputStream() {
-      return (InputStream)(new Object(this._data));
+      return new ByteArrayInputStream(this._data);
    }
 
    @Override
    public final DataInputStream openDataInputStream() {
-      ByteArrayInputStream is = (ByteArrayInputStream)(new Object(this._data));
-      return (DataInputStream)(new Object(is));
+      ByteArrayInputStream is = new ByteArrayInputStream(this._data);
+      return new DataInputStream(is);
    }
 
    @Override
-   public final OutputStream openOutputStream() {
-      throw new Object("Read only");
+   public final OutputStream openOutputStream() throws IOException {
+      throw new IOException("Read only");
    }
 
    @Override
-   public final DataOutputStream openDataOutputStream() {
-      throw new Object("Read only");
+   public final DataOutputStream openDataOutputStream() throws IOException {
+      throw new IOException("Read only");
    }
 
    @Override
@@ -86,7 +87,7 @@ public final class Protocol implements ConnectionBaseInterface, HttpConnection {
 
    @Override
    public final String getURL() {
-      return ((StringBuffer)(new Object("vsm:"))).append(this._name).toString();
+      return "vsm:" + this._name;
    }
 
    @Override

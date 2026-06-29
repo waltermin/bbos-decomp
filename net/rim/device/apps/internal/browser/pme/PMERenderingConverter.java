@@ -37,7 +37,7 @@ public final class PMERenderingConverter extends BrowserContentProvider {
       String baseUrl = RendererControl.getUrl(inputConnection);
       int flags = providerContext.getFlags() | 1024;
       long fieldStyle = (flags & 16) == 0 ? 3458764513820803072L : 0;
-      BrowserContentBaseImpl browserContent = (BrowserContentBaseImpl)(new Object(baseUrl, null, renderingApplication, renderingOptions, flags));
+      BrowserContentBaseImpl browserContent = new BrowserContentBaseImpl(baseUrl, null, renderingApplication, renderingOptions, flags);
       Field field = null;
       PMEBrowserFieldFactory factory = (PMEBrowserFieldFactory)ApplicationRegistry.getApplicationRegistry().get(-4027123499468556973L);
       if (factory != null) {
@@ -49,7 +49,7 @@ public final class PMERenderingConverter extends BrowserContentProvider {
       }
 
       browserContent.setContent(field);
-      if (field instanceof Object) {
+      if (field instanceof BrowserPageContext) {
          browserContent.setBrowserPageContext((BrowserPageContext)field);
       }
 

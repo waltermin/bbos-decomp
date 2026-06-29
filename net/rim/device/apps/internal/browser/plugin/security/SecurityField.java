@@ -36,21 +36,21 @@ public final class SecurityField extends VerticalIndentFieldManager implements F
             String certificateType = this._certificate.getType();
             RichTextField textField;
             if (StringUtilities.strEqualIgnoreCase(certificateType, "PGP")) {
-               textField = (RichTextField)(new Object(_rb.getString(4)));
+               textField = new RichTextField(_rb.getString(4));
             } else {
-               textField = (RichTextField)(new Object(MessageFormat.format(_rb.getString(6), new Object[]{certificateType})));
+               textField = new RichTextField(MessageFormat.format(_rb.getString(6), new String[]{certificateType}));
             }
 
             this.add(textField);
             this._factory = CertificateSummaryFieldFactory.getCertificateSummaryFieldFactory(this._certificate);
             Field certSummaryField = this._factory.createCertificateSummaryPageField(this._certificate);
             this.add(certSummaryField);
-            HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(12884901888L));
-            this._viewButton = (ButtonField)(new Object(CommonResource.getString(10015), 65536));
+            HorizontalFieldManager hfm = new HorizontalFieldManager(12884901888L);
+            this._viewButton = new ButtonField(CommonResource.getString(10015), 65536);
             this._viewButton.setChangeListener(this);
             hfm.add(this._viewButton);
             if (!this._factory.getKeyStore().isMember(this._certificate)) {
-               this._importButton = (ButtonField)(new Object(_rb.getString(1), 65536));
+               this._importButton = new ButtonField(_rb.getString(1), 65536);
                this._importButton.setChangeListener(this);
                hfm.add(this._importButton);
             }
@@ -60,8 +60,8 @@ public final class SecurityField extends VerticalIndentFieldManager implements F
       }
 
       if (this._certificate == null) {
-         RichTextField textField = (RichTextField)(new Object(_rb.getString(2)));
-         RichTextField textField2 = (RichTextField)(new Object(_rb.getString(3)));
+         RichTextField textField = new RichTextField(_rb.getString(2));
+         RichTextField textField2 = new RichTextField(_rb.getString(3));
          this.add(textField);
          this.add(textField2);
       }

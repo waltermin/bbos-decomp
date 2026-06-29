@@ -17,6 +17,7 @@ import net.rim.device.api.util.DataBuffer;
 import net.rim.device.api.util.Factory;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.api.framework.model.ContextObject;
+import net.rim.device.apps.api.framework.model.PersistableRIMModel;
 import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.registration.ModelViewListenerRegistry;
 import net.rim.device.apps.api.messaging.FolderHierarchies;
@@ -109,7 +110,7 @@ final class EmailTransmissionServiceListener
          }
 
          String errorMessage = null;
-         if (context instanceof Object) {
+         if (context instanceof String) {
             errorMessage = (String)context;
          }
 
@@ -121,7 +122,7 @@ final class EmailTransmissionServiceListener
                if (errorMessage == null) {
                   errorMessage = resendFailedString;
                } else {
-                  errorMessage = ((StringBuffer)(new Object())).append(errorMessage).append(". ").append(resendFailedString).toString();
+                  errorMessage = errorMessage + ". " + resendFailedString;
                }
             }
          }
@@ -287,7 +288,7 @@ final class EmailTransmissionServiceListener
       EmailBuilder.createHeaderForStringPairs(incomingTransmission.getReplyTo(), 5, factory, initialData, message, null);
       String[] sender = incomingTransmission.getSender();
       if (sender != null) {
-         String[][] arrayOfStringPairs = new Object[][]{sender};
+         String[][] arrayOfStringPairs = new String[][]{sender};
          EmailBuilder.createHeaderForStringPairs(arrayOfStringPairs, 4, factory, initialData, message, null);
       } else {
          EventLogger.logEvent(-1237457833540244999L, 542264915, 5);
@@ -299,9 +300,9 @@ final class EmailTransmissionServiceListener
          EventLogger.logEvent(-1237457833540244999L, 542264898, 5);
       } else {
          Object body = null;
-         if (!(obj instanceof Object)) {
+         if (!(obj instanceof String)) {
             body = obj;
-            if (body instanceof Object) {
+            if (body instanceof PersistableRIMModel) {
                message.add(obj);
             } else {
                EventLogger.logEvent(-1237457833540244999L, 542264898, 5);
@@ -349,12 +350,12 @@ final class EmailTransmissionServiceListener
 
       if (serviceRecord == null && parameters != null) {
          DataBuffer dataBuffer = parameters.getDataBuffer();
-         if (dataBuffer instanceof Object) {
+         if (dataBuffer instanceof GMEDatagram) {
             GMEDatagram gmeDatagram = (GMEDatagram)dataBuffer;
             GMEAddress gmeAddress = gmeDatagram.getGMEAddress();
             GMETarget gmeTarget = gmeAddress.getSrc();
             if (gmeTarget != null && gmeTarget.address != null) {
-               serviceRecord = (ServiceRecord)(new Object());
+               serviceRecord = new ServiceRecord();
                serviceRecord.setUid(gmeTarget.address);
             }
          }
@@ -371,14 +372,14 @@ final class EmailTransmissionServiceListener
 
       for (int index = 0; index < attachmentCount; index++) {
          attachment = incomingTransmission.getAttachment(index);
-         if (isPin && attachment instanceof Object) {
+         if (isPin && attachment instanceof String) {
             EmailBuilder.createTextObjectForString((String)attachment, 5987399499453925075L, initialData, message);
          } else {
             if (attachment instanceof CMIMEReferenceIdInterested) {
                ((CMIMEReferenceIdInterested)attachment).setCMIMEReferenceIdentifier(cmimeReferenceId, serviceRecord != null ? serviceRecord.getUserId() : -1);
             }
 
-            if (attachment instanceof Object) {
+            if (attachment instanceof PersistableRIMModel) {
                message.add(attachment);
                actualAttachmentCount++;
             } else {
@@ -433,7 +434,7 @@ final class EmailTransmissionServiceListener
          if (dsnRequest != 0) {
             int cmimeOriginalReferenceId = incomingTransmission.getOriginalReferenceIdentifier();
             if (cmimeOriginalReferenceId != 0) {
-               MessageLookups.put(4530015158237739359L, cmimeReferenceId, new Object(cmimeOriginalReferenceId));
+               MessageLookups.put(4530015158237739359L, cmimeReferenceId, new Integer(cmimeOriginalReferenceId));
             }
 
             if ((dsnRequest & 4) != 0) {
@@ -447,7 +448,7 @@ final class EmailTransmissionServiceListener
                         EmailHeaderModel headerModel = (EmailHeaderModel)model;
                         int headerType = headerModel.getHeaderType();
                         if (headerType == 0 || headerType == 1 || headerType == 2) {
-                           String[] nameStrings = new Object[2];
+                           String[] nameStrings = new String[2];
                            headerModel.extractNames(nameStrings);
                            if (StringUtilities.compareToIgnoreCase(originalRecipient[0][0], nameStrings[0], 1701707776) == 0) {
                               headerModel.setFlags((byte)8);
@@ -504,7 +505,7 @@ final class EmailTransmissionServiceListener
          EventLogger.logEvent(-1237457833540244999L, 1347896389, 5);
          if (!Phone.getInstance().isActive() && eventReferenceObject instanceof EmailMessageModel) {
             _displayedMessage = (EmailMessageModel)eventReferenceObject;
-            ContextObject contextObject = (ContextObject)(new Object(64));
+            ContextObject contextObject = new ContextObject(64);
             ContextObject.put(contextObject, 250, _displayedMessage);
             ShowMessageApp.displayMessage(_displayedMessage, contextObject);
          }
@@ -524,34 +525,34 @@ final class EmailTransmissionServiceListener
          boolean var10000;
          synchronized (FolderHierarchies.getLockObject()) {
             EventLogger.logEvent(-1237457833540244999L, 538989135, 5);
-            if (anObject instanceof Object) {
+            if (anObject instanceof RIMMessagingIncomingMessage) {
                return this.receiveIncomingMessage(service, (RIMMessagingIncomingMessage)anObject, contextObject);
             }
 
-            if (anObject instanceof Object) {
+            if (anObject instanceof RIMMessagingMoreMessage) {
                return this.receiveMoreMessage(service, (RIMMessagingMoreMessage)anObject, contextObject);
             }
 
-            if (anObject instanceof Object) {
+            if (anObject instanceof RIMMessagingMessageError) {
                return this.receiveMessageError(service, (RIMMessagingMessageError)anObject, contextObject);
             }
 
-            if (anObject instanceof Object) {
+            if (anObject instanceof RIMMessagingDeliveryToAddress) {
                return this.receiveDeliveryToAddress(service, (RIMMessagingDeliveryToAddress)anObject, contextObject);
             }
 
-            if (anObject instanceof Object) {
+            if (anObject instanceof RIMMessagingFolderManagement) {
                return OTAMessageSync.getInstance().receiveFolderManagementCommand(service, (RIMMessagingFolderManagement)anObject, contextObject);
             }
 
-            if (anObject instanceof Object) {
+            if (anObject instanceof RIMMessagingIncomingMoreRequest) {
                NativeAttachmentRequest nativeAttachmentRequest = NativeAttachmentRequest.createNativeAttachmentRequest(
                   (RIMMessagingIncomingMoreRequest)anObject, contextObject
                );
                return NativeAttachmentRequestProcessor.getInstance().addRequest(nativeAttachmentRequest);
             }
 
-            if (anObject instanceof Object) {
+            if (anObject instanceof CancelMoreMessagingTransmission) {
                CancelMoreMessagingTransmission tx = (CancelMoreMessagingTransmission)anObject;
                return NativeAttachmentRequestProcessor.getInstance()
                   .cancelRequest(
@@ -559,7 +560,7 @@ final class EmailTransmissionServiceListener
                   );
             }
 
-            if (anObject instanceof Object) {
+            if (anObject instanceof MoreMessageCompleteTransmission) {
                MoreMessageCompleteTransmission tx = (MoreMessageCompleteTransmission)anObject;
                return NativeAttachmentRequestProcessor.getInstance()
                   .moreCompleted(tx.getCMimeRefId(), tx.getContentId(), tx.markMessageComplete(), contextObject);
@@ -619,7 +620,7 @@ final class EmailTransmissionServiceListener
          EmailMessageUtilities.triggerNotifications(messageModel, false, true, 0, null);
       }
 
-      ContextObject contextObject = (ContextObject)(new Object());
+      ContextObject contextObject = new ContextObject();
       if (messageModel.inbound() && EmailMessageUtilities.moreRequestSent(messageModel)) {
          contextObject.setFlag(98);
       }
@@ -644,7 +645,7 @@ final class EmailTransmissionServiceListener
 
       int numRecipients = 0;
       int numDelivered = 0;
-      ContextObject changeContext = (ContextObject)(new Object());
+      ContextObject changeContext = new ContextObject();
       EmailPayloadModel oldPayload = EmailModifier.beginChanges(messageModel, changeContext);
       String[][] addresses = deliveryToAddressTransmission.getAddresses();
       if (addresses == null) {
@@ -657,7 +658,7 @@ final class EmailTransmissionServiceListener
             EmailHeaderModel headerModel = (EmailHeaderModel)model;
             int headerType = headerModel.getHeaderType();
             if (headerType == 0 || headerType == 1 || headerType == 2 || headerType == 5) {
-               String[] nameStrings = new Object[2];
+               String[] nameStrings = new String[2];
                headerModel.extractNames(nameStrings);
                numRecipients++;
                String addressJ = nameStrings[0];

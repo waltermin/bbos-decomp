@@ -25,7 +25,7 @@ public final class TextFlowData {
    private int[] _regionSortedByY;
    private TextFlowRegion[] _regions;
    private short[] _regionFlags;
-   private IntStack _currentRegionStack = (IntStack)(new Object());
+   private IntStack _currentRegionStack = new IntStack();
    private FontCache _fontCache;
    private int _focusRegionCount;
    private int[] _focusRegionStarts;
@@ -38,7 +38,7 @@ public final class TextFlowData {
    private Object[] _outoflineObjects;
    private TextFlowCell[] _textFlowCells;
    private byte[] _outoflineFlags;
-   private IntStack _nesting = (IntStack)(new Object());
+   private IntStack _nesting = new IntStack();
    private int _nextCellId = 1;
    private static final short REGION_INLINE = 64;
    private static final short REGION_OUTOFLINE = 128;
@@ -59,16 +59,16 @@ public final class TextFlowData {
    public static final int DEFAULT_COLOUR = -1;
 
    public TextFlowData() {
-      this._text = (StringBuffer)(new Object());
+      this._text = new StringBuffer();
       this._fontCache = FontCache.getInstance();
       this._regionStartOffsets = new int[256];
       this._regionEndOffsets = new int[256];
       this._regionLengths = new int[256];
       this._regionFlags = new short[256];
-      this._regions = new Object[256];
+      this._regions = new TextFlowRegion[256];
       this._regionCellOOLIndex = new int[256];
       this._regionParentIds = new int[256];
-      this._currentRegionStack = (IntStack)(new Object());
+      this._currentRegionStack = new IntStack();
       this._regionSortedByY = new int[256];
       this._outoflineRegionStarts = new int[0];
       this._outoflineObjects = new Object[0];
@@ -80,7 +80,7 @@ public final class TextFlowData {
    }
 
    public final TextFlowNative getTextFlowNative() {
-      return (TextFlowNative)(new Object(this._text, this._regionStartOffsets, this._regionEndOffsets, this._regions, this._regionFlags, this._regionParentIds));
+      return new TextFlowNative(this._text, this._regionStartOffsets, this._regionEndOffsets, this._regions, this._regionFlags, this._regionParentIds);
    }
 
    public final void setDefaultFont(Font f) {
@@ -411,7 +411,7 @@ public final class TextFlowData {
       this._nesting.push(index);
       TextFlowRegion oldRegion = this._regions[regionIndex];
       this._regionFlags[regionIndex] = 128;
-      this._regions[regionIndex] = (TextFlowRegion)(new Object());
+      this._regions[regionIndex] = new TextFlowRegion();
       this._regions[regionIndex]._obj = cell;
       this._regions[regionIndex].inherit(oldRegion);
       cell.setStartValues();
@@ -830,7 +830,7 @@ public final class TextFlowData {
          maxRegionIndex = Math.max(region, maxRegionIndex);
       }
 
-      return (String)(new Object(chars, 0, count));
+      return new String(chars, 0, count);
    }
 
    public final long getAnchorFromRegionObject(Object obj) {

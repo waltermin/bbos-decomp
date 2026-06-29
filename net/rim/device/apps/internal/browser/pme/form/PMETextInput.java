@@ -18,7 +18,7 @@ public final class PMETextInput extends Manager implements FormField {
       super(style);
       this._rows = rows;
       this._columns = columns;
-      this._edit = (EditField)(new Object(label, initialValue, maxLength, entryStyle));
+      this._edit = new EditField(label, initialValue, maxLength, entryStyle);
       this._initialValue = initialValue;
       this._name = name;
       this.add(this._edit);

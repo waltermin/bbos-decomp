@@ -32,7 +32,7 @@ public class ProxyCertificate implements Certificate {
 
    @Override
    public String getSigAlgName() {
-      throw new Object();
+      throw new RuntimeException();
    }
 
    @Override
@@ -97,7 +97,7 @@ public class ProxyCertificate implements Certificate {
          this._serialNumber = serialNumber;
          this._version = version;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

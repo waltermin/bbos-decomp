@@ -10,6 +10,7 @@ import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.registration.VerbFactory;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.phone.VoiceApplication;
+import net.rim.device.apps.api.quickcontact.QuickContactScreen;
 import net.rim.device.apps.api.ribbon.RibbonLauncher;
 import net.rim.device.apps.internal.phone.api.PhoneUtilities;
 import net.rim.device.apps.internal.phone.api.UnhandledGlobalKeyListenerImpl;
@@ -62,14 +63,14 @@ final class RIMPhone$PhoneUnhandledGlobalKeyListenerImpl extends UnhandledGlobal
       }
 
       if (!this.this$0._app.isForeground() && !ApplicationManager.getApplicationManager().isSystemLocked()) {
-         this.this$0.requestVoiceApplicationForeground(new Object(119));
+         this.this$0.requestVoiceApplicationForeground(new ContextObject(119));
       }
    }
 
    @Override
    protected final void handleSendKeyPressedAndHeld() {
       if (!this.this$0._app.isForeground() && !ApplicationManager.getApplicationManager().isSystemLocked()) {
-         ContextObject context = (ContextObject)(new Object(119));
+         ContextObject context = new ContextObject(119);
          PhoneUtilities.setPrivateFlag(context, 79);
          this.this$0.requestVoiceApplicationForeground(context);
       }
@@ -99,7 +100,7 @@ final class RIMPhone$PhoneUnhandledGlobalKeyListenerImpl extends UnhandledGlobal
             }
 
             Screen activeScreen = this.this$0._app.getActiveScreen();
-            if (activeScreen instanceof Object) {
+            if (activeScreen instanceof QuickContactScreen) {
                this.this$0._app.popScreen(activeScreen);
             }
          }
@@ -109,7 +110,7 @@ final class RIMPhone$PhoneUnhandledGlobalKeyListenerImpl extends UnhandledGlobal
    private final void endCallByUser(LiveCall currentCall) {
       currentCall.endByUser();
       if (!this.this$0._app.isForeground()) {
-         ContextObject context = (ContextObject)(new Object());
+         ContextObject context = new ContextObject();
          PhoneUtilities.setPrivateFlag(context, 71);
          ((VoiceApplication)this.this$0._app).requestForeground(null, context);
       }

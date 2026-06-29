@@ -15,8 +15,10 @@ import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.ChoiceField;
 import net.rim.device.api.ui.component.DateField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.DateTimeUtilities;
 import net.rim.device.apps.api.ui.CommonResources;
@@ -86,13 +88,13 @@ final class DateTimeController implements FieldChangeListener, GlobalEventListen
       }
 
       long currentTime = System.currentTimeMillis();
-      this._dateField = (DateField)(new Object(OptionsResources.getString(501), currentTime, DateFormat.getInstance(40)));
-      this._timeField = (DateField)(new Object(CommonResources.getString(2000), currentTime, DateFormat.getInstance(6)));
-      this._timeZoneField = (ChoiceField)(new Object(CommonResources.getString(2013), this._shortTimeZoneNames));
+      this._dateField = new DateField(OptionsResources.getString(501), currentTime, DateFormat.getInstance(40));
+      this._timeField = new DateField(CommonResources.getString(2000), currentTime, DateFormat.getInstance(6));
+      this._timeZoneField = new ObjectChoiceField(CommonResources.getString(2013), this._shortTimeZoneNames);
       this._timeZoneField.setFont(mainScreen.getFontIfSet());
-      this._timeFormatField = (ObjectChoiceField)(new Object(OptionsResources.getString(502), null));
+      this._timeFormatField = new ObjectChoiceField(OptionsResources.getString(502), null);
       this._timeFormatField.setFont(mainScreen.getFontIfSet());
-      this._timeZoneDescriptionField = (RichTextField)(new Object(null, 36028797019226112L));
+      this._timeZoneDescriptionField = new RichTextField(null, 36028797019226112L);
       if (this._isWizard) {
          int fontSize = Ui.convertSize(7, 3, 0);
          this._timeZoneDescriptionField.setFont(content.getFont().derive(0, fontSize));
@@ -113,7 +115,7 @@ final class DateTimeController implements FieldChangeListener, GlobalEventListen
 
       String[] sourceOptions = OptionsResources.getStringArray(1943);
       if ((!this._networkTimeSupport || !InternalServices.isNetworkTimeValid()) && sourceOptions.length > 2) {
-         String[] tempArray = new Object[sourceOptions.length - 1];
+         String[] tempArray = new String[sourceOptions.length - 1];
          System.arraycopy(sourceOptions, 0, tempArray, 0, sourceOptions.length - 1);
          sourceOptions = tempArray;
       }
@@ -123,7 +125,7 @@ final class DateTimeController implements FieldChangeListener, GlobalEventListen
          this.setTimeSyncSource(index);
       }
 
-      this._timeSyncSourceField = (ObjectChoiceField)(new Object(OptionsResources.getString(1448), sourceOptions, index));
+      this._timeSyncSourceField = new ObjectChoiceField(OptionsResources.getString(1448), sourceOptions, index);
       this.populateTimeFormats();
       int initialTZIndex = this._timeService.getTimeZoneIndex(this._timeService.getDefaultTimeZoneID());
       this._timeZoneField.setSelectedIndex(initialTZIndex);
@@ -140,9 +142,9 @@ final class DateTimeController implements FieldChangeListener, GlobalEventListen
       this._networkDateField = null;
       this._networkTimeField = null;
       if (this._networkTimeSupport && !this._isWizard) {
-         content.add((Field)(new Object()));
+         content.add(new SeparatorField());
          if (!this._networkTimeValid) {
-            content.add((Field)(new Object(OptionsResources.getString(1807), 64)));
+            content.add(new LabelField(OptionsResources.getString(1807), 64));
          } else {
             long networkTime = TimeSync.GetNetworkTime(currentTime);
             if (this._networkTimeZoneSupport) {
@@ -189,27 +191,11 @@ final class DateTimeController implements FieldChangeListener, GlobalEventListen
             "Network UTC", TimeSync.GetNetworkTime(System.currentTimeMillis()), DateFormat.getInstance(6)
          );
          this._rawNetworkTimeField.setTimeZone(TimeZone.getTimeZone(DateTimeUtilities.GMT));
-         this._content.add((Field)(new Object()));
+         this._content.add(new SeparatorField());
          this._content.add(this._rawNetworkTimeField);
          if (this._networkTimeZoneSupport) {
-            this._content
-               .add(
-                  (Field)(new Object(
-                     ((StringBuffer)(new Object("Network TZ Offset:  ")))
-                        .append(this.millisToHourString(InternalServices.getNetworkTimeZoneOffset()))
-                        .append(" hours")
-                        .toString()
-                  ))
-               );
-            this._content
-               .add(
-                  (Field)(new Object(
-                     ((StringBuffer)(new Object("Network DST Offset: ")))
-                        .append(this.millisToMinuteString(InternalServices.getNetworkDSTOffset()))
-                        .append(" minutes")
-                        .toString()
-                  ))
-               );
+            this._content.add(new RichTextField("Network TZ Offset:  " + this.millisToHourString(InternalServices.getNetworkTimeZoneOffset()) + " hours"));
+            this._content.add(new RichTextField("Network DST Offset: " + this.millisToMinuteString(InternalServices.getNetworkDSTOffset()) + " minutes"));
          }
       }
    }

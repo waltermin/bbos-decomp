@@ -1,5 +1,6 @@
 package net.rim.wica.runtime.messaging.internal.notification;
 
+import net.rim.device.api.system.UnsupportedOperationException;
 import net.rim.wica.runtime.metadata.WicletContext;
 import net.rim.wica.runtime.metadata.WicletRuntime;
 import net.rim.wica.runtime.metadata.component.DataCollection;
@@ -23,26 +24,26 @@ public class BackgroundWiclet extends WicletImpl {
 
    @Override
    public ScreenModel getScreenModel(int screenDef) {
-      throw new Object();
+      throw new UnsupportedOperationException();
    }
 
    @Override
    public ScriptCollection getScripts() {
-      throw new Object();
+      throw new UnsupportedOperationException();
    }
 
    @Override
    public StyleCollection getStyles() {
-      throw new Object();
+      throw new UnsupportedOperationException();
    }
 
    @Override
    public ResourceCollection getResources() {
-      throw new Object();
+      throw new UnsupportedOperationException();
    }
 
    @Override
    public void findWhere(LongVector results, DataCollection dataCollection, long[] handles, String expression, ValueResolver resolver) {
-      throw new Object();
+      throw new UnsupportedOperationException();
    }
 }

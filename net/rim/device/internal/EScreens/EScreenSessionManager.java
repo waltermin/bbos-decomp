@@ -12,7 +12,7 @@ import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.container.MainScreen;
 
 public final class EScreenSessionManager extends MainScreen implements ListFieldCallback {
-   private Vector _sessions = (Vector)(new Object());
+   private Vector _sessions = new Vector();
    private Hashtable _registeredTypes;
    private ListField _listField;
    private StringBuffer _strBuf;
@@ -89,13 +89,13 @@ public final class EScreenSessionManager extends MainScreen implements ListField
 
    public EScreenSessionManager(Font font) {
       this.setFont(font);
-      this._strBuf = (StringBuffer)(new Object(32));
-      this._sessions = (Vector)(new Object());
-      this._registeredTypes = (Hashtable)(new Object(8));
+      this._strBuf = new StringBuffer(32);
+      this._sessions = new Vector();
+      this._registeredTypes = new Hashtable(8);
       this.registerSession("Ping", "net.rim.device.internal.EScreens.sessions.PingSession");
       this.registerSession("UDP Blaster", "net.rim.device.internal.EScreens.sessions.UDPBlasterSession");
       this.registerSession("TraceRoute", "net.rim.device.internal.EScreens.sessions.TraceRouteSession");
-      this._listField = (ListField)(new Object());
+      this._listField = new ListField();
       this._listField.setCallback(this);
       this.add(this._listField);
       this.setTitle("Session Manager");
@@ -110,11 +110,7 @@ public final class EScreenSessionManager extends MainScreen implements ListField
 
          while (names.hasMoreElements()) {
             String name = (String)names.nextElement();
-            menu.add(
-               new EScreenSessionManager$MyMenuItem(
-                  this, 4, ((StringBuffer)(new Object("New "))).append(name).append(" Session").toString(), this._registeredTypes.get(name)
-               )
-            );
+            menu.add(new EScreenSessionManager$MyMenuItem(this, 4, "New " + name + " Session", this._registeredTypes.get(name)));
          }
       }
 
@@ -125,8 +121,8 @@ public final class EScreenSessionManager extends MainScreen implements ListField
             menu.add(new EScreenSessionManager$MyMenuItem(this, 2, "Stop Session", session));
          }
 
-         menu.add(new EScreenSessionManager$MyMenuItem(this, 3, "Delete Session", new Object(index)));
-         menu.add(new EScreenSessionManager$MyMenuItem(this, 5, "Details", new Object(index)));
+         menu.add(new EScreenSessionManager$MyMenuItem(this, 3, "Delete Session", new Integer(index)));
+         menu.add(new EScreenSessionManager$MyMenuItem(this, 5, "Details", new Integer(index)));
       }
 
       this.populateMenuFromRepository(menu);

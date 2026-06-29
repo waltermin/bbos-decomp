@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.idlescreen;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.system.ApplicationManager;
@@ -13,6 +14,7 @@ import net.rim.device.api.system.RIMGlobalMessagePoster;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.theme.Theme;
 import net.rim.device.api.ui.theme.ThemeManager;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -134,7 +136,7 @@ final class IdleScreenApplication extends UiApplication {
    }
 
    private static final Field getDefaultField() {
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       context.setPrivateFlag(3089937493992571440L, 1);
       MediaLayout field = MediaLayout.create(
          context,
@@ -160,9 +162,9 @@ final class IdleScreenApplication extends UiApplication {
          }
 
          int valign = image.getHeight() < Display.getHeight() - 38 ? 32 : 40;
-         return (Field)(image.getFrameCount() > 1
+         return image.getFrameCount() > 1
             ? new IdlescreenAnimatedBitmapField(image, valign | 4 | 2305843009213693952L)
-            : new Object(image.getBitmap(), valign | 4 | 2305843009213693952L));
+            : new BitmapField(image.getBitmap(), valign | 4 | 2305843009213693952L);
       } else {
          String rotationString = IdleScreenOptions.getIdleScreenAttribute(2550679879375249665L);
          String topXString = IdleScreenOptions.getIdleScreenAttribute(-7340185234772503578L);
@@ -173,16 +175,16 @@ final class IdleScreenApplication extends UiApplication {
          int topY = topYString == null ? 0 : Integer.parseInt(topYString);
          int screenWidth = Display.getWidth();
          int screenHeight = Display.getHeight();
-         Bitmap newBitmap = (Bitmap)(new Object(screenWidth, screenHeight));
+         Bitmap newBitmap = new Bitmap(screenWidth, screenHeight);
          synchronized (Application.getEventLock()) {
             IdleScreenApplication$ZoomBitmapFieldExt zoom = new IdleScreenApplication$ZoomBitmapFieldExt(image);
             zoom.setScale(scaleFP, topX, topY, rotation);
             zoom.layoutHack(screenWidth, screenHeight);
-            Graphics graphics = (Graphics)(new Object(newBitmap));
+            Graphics graphics = new Graphics(newBitmap);
             zoom.paintHack(graphics);
          }
 
-         return (Field)(new Object(newBitmap, 2305843009213693996L));
+         return new BitmapField(newBitmap, 2305843009213693996L);
       }
    }
 
@@ -203,7 +205,7 @@ final class IdleScreenApplication extends UiApplication {
       }
 
       try {
-         String contentType = (String)(new Object(data, "UTF8"));
+         String contentType = new String(data, "UTF8");
          data = Branding.getData(16897);
          return data == null ? null : createContent(data, contentType, false);
       } finally {
@@ -237,7 +239,7 @@ final class IdleScreenApplication extends UiApplication {
       // 0e: ifne 15
       // 11: ldc_w "/store/appdata/rim/idlescreen/user/idle"
       // 14: astore 1
-      // 15: new java/lang/Object
+      // 15: new java/lang/StringBuffer
       // 18: dup
       // 19: ldc_w "file://"
       // 1c: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -245,7 +247,7 @@ final class IdleScreenApplication extends UiApplication {
       // 20: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 23: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 26: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 29: checkcast java/lang/Object
+      // 29: checkcast javax/microedition/io/file/FileConnection
       // 2c: astore 0
       // 2d: aload 0
       // 2e: invokeinterface javax/microedition/io/file/FileConnection.exists ()Z 1
@@ -327,17 +329,17 @@ final class IdleScreenApplication extends UiApplication {
       // 007: astore 2
       // 008: aload 0
       // 009: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 00c: checkcast java/lang/Object
+      // 00c: checkcast javax/microedition/io/InputConnection
       // 00f: astore 2
       // 010: aconst_null
       // 011: astore 3
       // 012: aload 2
       // 013: dup
-      // 014: instanceof java/lang/Object
+      // 014: instanceof javax/microedition/io/file/FileConnection
       // 017: ifne 01e
       // 01a: pop
       // 01b: goto 050
-      // 01e: checkcast java/lang/Object
+      // 01e: checkcast javax/microedition/io/file/FileConnection
       // 021: astore 4
       // 023: aload 4
       // 025: invokeinterface javax/microedition/io/file/FileConnection.exists ()Z 1
@@ -359,11 +361,11 @@ final class IdleScreenApplication extends UiApplication {
       // 04d: goto 065
       // 050: aload 2
       // 051: dup
-      // 052: instanceof java/lang/Object
+      // 052: instanceof javax/microedition/io/ContentConnection
       // 055: ifne 05c
       // 058: pop
       // 059: goto 065
-      // 05c: checkcast java/lang/Object
+      // 05c: checkcast javax/microedition/io/ContentConnection
       // 05f: invokeinterface javax/microedition/io/ContentConnection.getType ()Ljava/lang/String; 1
       // 064: astore 3
       // 065: aconst_null
@@ -513,8 +515,8 @@ final class IdleScreenApplication extends UiApplication {
       if (contentType == null || data == null) {
          return null;
       } else if (contentType.startsWith("application/x-vnd.rim.pme") || contentType.equals("image/pme")) {
-         InputStream is = (InputStream)(new Object(data));
-         ContextObject context = (ContextObject)(new Object());
+         InputStream is = new ByteArrayInputStream(data);
+         ContextObject context = new ContextObject();
          context.setPrivateFlag(3089937493992571440L, 1);
          MediaLayout field = MediaLayout.create(context, is, contentType, 64424509440L);
          field.setStartDelay(500);

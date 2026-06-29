@@ -2,10 +2,11 @@ package net.rim.device.cldc.io.file;
 
 import com.sun.cldc.io.ConnectionBaseInterface;
 import javax.microedition.io.Connection;
+import net.rim.device.api.io.file.FileIOException;
 import net.rim.device.api.util.StringMatch;
 
 public final class Protocol implements ConnectionBaseInterface {
-   private static StringMatch RELATIVE_PATHS = (StringMatch)(new Object(new String[]{"/../", "/./", "../", "./"}, false, false));
+   private static StringMatch RELATIVE_PATHS = new StringMatch(new String[]{"/../", "/./", "../", "./"}, false, false);
    private static String SLASH_DOT_DOT = "/..";
    private static String SLASH_DOT = "/.";
 
@@ -15,7 +16,7 @@ public final class Protocol implements ConnectionBaseInterface {
    }
 
    @Override
-   public final Connection openPrim(String param1, int param2, boolean param3) {
+   public final Connection openPrim(String param1, int param2, boolean param3) throws FileIOException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -31,7 +32,7 @@ public final class Protocol implements ConnectionBaseInterface {
       // 09: astore 1
       // 0a: aload 1
       // 0b: ifnonnull 19
-      // 0e: new java/lang/Object
+      // 0e: new java/lang/IllegalArgumentException
       // 11: dup
       // 12: ldc_w "Invalid escape sequence, URI must be encoded"
       // 15: invokespecial java/lang/IllegalArgumentException.<init> (Ljava/lang/String;)V
@@ -52,7 +53,7 @@ public final class Protocol implements ConnectionBaseInterface {
       // 35: iload 4
       // 37: bipush -1
       // 39: if_icmpne 47
-      // 3c: new java/lang/Object
+      // 3c: new net/rim/device/api/io/file/FileIOException
       // 3f: dup
       // 40: sipush 1003
       // 43: invokespecial net/rim/device/api/io/file/FileIOException.<init> (I)V
@@ -67,7 +68,7 @@ public final class Protocol implements ConnectionBaseInterface {
       // 53: iload 6
       // 55: bipush -1
       // 57: if_icmpne 79
-      // 5a: new java/lang/Object
+      // 5a: new java/lang/StringBuffer
       // 5d: dup
       // 5e: invokespecial java/lang/StringBuffer.<init> ()V
       // 61: aload 1
@@ -97,7 +98,7 @@ public final class Protocol implements ConnectionBaseInterface {
       // 90: ifnull b6
       // 93: aload 7
       // 95: invokevirtual java/lang/Class.newInstance ()Ljava/lang/Object;
-      // 98: checkcast java/lang/Object
+      // 98: checkcast net/rim/device/internal/io/file/BaseFileConnection
       // 9b: astore 8
       // 9d: aload 8
       // 9f: aload 1
@@ -111,12 +112,12 @@ public final class Protocol implements ConnectionBaseInterface {
       // af: astore 8
       // b1: goto b6
       // b4: astore 8
-      // b6: new java/lang/Object
+      // b6: new net/rim/device/api/io/file/FileIOException
       // b9: dup
       // ba: sipush 1003
       // bd: invokespecial net/rim/device/api/io/file/FileIOException.<init> (I)V
       // c0: athrow
-      // c1: new java/lang/Object
+      // c1: new net/rim/device/api/io/file/FileIOException
       // c4: dup
       // c5: sipush 1003
       // c8: invokespecial net/rim/device/api/io/file/FileIOException.<init> (I)V
@@ -129,9 +130,9 @@ public final class Protocol implements ConnectionBaseInterface {
    private final void verifyPathIsNonRelative(String name) {
       synchronized (RELATIVE_PATHS) {
          if (RELATIVE_PATHS.indexOf(name) != -1) {
-            throw new Object("Relative path");
+            throw new IllegalArgumentException("Relative path");
          } else if (name.endsWith(SLASH_DOT_DOT) || name.endsWith(SLASH_DOT)) {
-            throw new Object("Relative path");
+            throw new IllegalArgumentException("Relative path");
          }
       }
    }

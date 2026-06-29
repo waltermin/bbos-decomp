@@ -45,7 +45,7 @@ public final class AttachAddressCardVerb extends Verb implements ConditionalVerb
          if (istream != null) {
             byte[] data = this.readAll(istream);
             if (data != null) {
-               String name = ((StringBuffer)(new Object())).append(istream.toString()).append(".vcf").toString();
+               String name = istream.toString() + ".vcf";
                int mimeType = 7;
                MMSAttachment attachment = new MMSAttachmentImpl(name, mimeType, data, "utf-8");
                this._presentation.addPresentationElement(attachment, true);
@@ -61,7 +61,7 @@ public final class AttachAddressCardVerb extends Verb implements ConditionalVerb
       if (addressSelectionVerb != null) {
          String title = AddressBookResources.getString(301);
          Recognizer recognizer = RecognizerRepository.getRecognizers(-3124646573404667739L);
-         AddressSelectionContext selectionContext = (AddressSelectionContext)(new Object(null, title, null, recognizer, null));
+         AddressSelectionContext selectionContext = new AddressSelectionContext(null, title, null, recognizer, null);
          return addressSelectionVerb.invoke(selectionContext);
       } else {
          return null;

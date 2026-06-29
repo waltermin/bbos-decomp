@@ -43,7 +43,7 @@ final class CacheOpsScreen extends AppsMainScreen implements IBrowserProperty, F
       RawDataCache rawDataCache = BrowserDaemonRegistry.getInstance().getRawDataCache();
       this.add(new CacheOpsScreen$HackField());
       if (StackManager.getInstance().authExists() || !GeneralProperty.getAuthenticationCredentials().isEmpty()) {
-         this._clearPasswordsButton = (ButtonField)(new Object(BrowserResources.getString(623), 8590000128L));
+         this._clearPasswordsButton = new ButtonField(BrowserResources.getString(623), 8590000128L);
          this._clearPasswordsButton.setChangeListener(this);
          this.add(this._clearPasswordsButton);
       }
@@ -58,41 +58,41 @@ final class CacheOpsScreen extends AppsMainScreen implements IBrowserProperty, F
       VisitedURLStore urlStore = VisitedURLStore.getInstance();
       LongTermHistory longTermHistory = LongTermHistory.getInstance();
       if (history != null && history.getSize() > 1 || urlStore.size() > 0 || longTermHistory.getNumberOfElements() > 0) {
-         this._clearHistoryButton = (ButtonField)(new Object(BrowserResources.getString(669), 8590000128L));
+         this._clearHistoryButton = new ButtonField(BrowserResources.getString(669), 8590000128L);
          this._clearHistoryButton.setChangeListener(this);
          this.add(this._clearHistoryButton);
       }
 
-      this.add((Field)(new Object(BrowserResources.getString(194))));
-      this._shortTermSizeLabel = (LabelField)(new Object("", 8589934592L));
+      this.add(new LabelField(BrowserResources.getString(194)));
+      this._shortTermSizeLabel = new LabelField("", 8589934592L);
       this.add(this._shortTermSizeLabel);
       if (rawDataCache.getShortTermCacheCount() > 0 || this._pageCache != null && this._pageCache.getCount() > 0) {
-         this._clearContentCacheButton = (ButtonField)(new Object(BrowserResources.getString(713), 8590000128L));
+         this._clearContentCacheButton = new ButtonField(BrowserResources.getString(713), 8590000128L);
          this._clearContentCacheButton.setChangeListener(this);
          this.add(this._clearContentCacheButton);
       }
 
-      this.add((Field)(new Object(BrowserResources.getString(454))));
-      this._longTermSizeLabel = (LabelField)(new Object("", 8589934592L));
+      this.add(new LabelField(BrowserResources.getString(454)));
+      this._longTermSizeLabel = new LabelField("", 8589934592L);
       this.add(this._longTermSizeLabel);
       if (rawDataCache.containsPushedContent()) {
-         this._clearPersistentCacheButton = (ButtonField)(new Object(BrowserResources.getString(713), 8590000128L));
+         this._clearPersistentCacheButton = new ButtonField(BrowserResources.getString(713), 8590000128L);
          this._clearPersistentCacheButton.setChangeListener(this);
          this.add(this._clearPersistentCacheButton);
       }
 
       int numCookies = CookieCache.getInstance().getNumUniqueHosts();
-      this.add((Field)(new Object(BrowserResources.getString(210))));
-      this._cookieSizeLabel = (LabelField)(new Object("", 8589934592L));
+      this.add(new LabelField(BrowserResources.getString(210)));
+      this._cookieSizeLabel = new LabelField("", 8589934592L);
       this.add(this._cookieSizeLabel);
       if (numCookies > 0) {
-         this._clearCookiesButton = (ButtonField)(new Object(BrowserResources.getString(713), 8590000128L));
+         this._clearCookiesButton = new ButtonField(BrowserResources.getString(713), 8590000128L);
          this._clearCookiesButton.setChangeListener(this);
          this.add(this._clearCookiesButton);
       }
 
       if (this._clearContentCacheButton != null || this._clearPersistentCacheButton != null) {
-         this._revalidateButton = (ButtonField)(new Object(BrowserResources.getString(746), 8590000128L));
+         this._revalidateButton = new ButtonField(BrowserResources.getString(746), 8590000128L);
          this._revalidateButton.setChangeListener(this);
          this.add(this._revalidateButton);
       }
@@ -102,24 +102,16 @@ final class CacheOpsScreen extends AppsMainScreen implements IBrowserProperty, F
 
    private final void updateSizeLabels() {
       RawDataCache rawDataCache = BrowserDaemonRegistry.getInstance().getRawDataCache();
-      String size = ((StringBuffer)(new Object())).append(BrowserResources.getString(513)).append(' ').toString();
-      this._shortTermSizeLabel
-         .setText(((StringBuffer)(new Object())).append(size).append(formatK(rawDataCache.getShortTermCacheSize(true))).append(' ').toString());
+      String size = BrowserResources.getString(513) + ' ';
+      this._shortTermSizeLabel.setText(size + formatK(rawDataCache.getShortTermCacheSize(true)) + ' ');
       int cookieCount = CookieCache.getInstance().getNumCookies();
       if (cookieCount == 1) {
-         this._cookieSizeLabel.setText(((StringBuffer)(new Object())).append(size).append(BrowserResources.getString(716)).toString());
+         this._cookieSizeLabel.setText(size + BrowserResources.getString(716));
       } else {
-         this._cookieSizeLabel
-            .setText(
-               ((StringBuffer)(new Object()))
-                  .append(size)
-                  .append(MessageFormat.format(BrowserResources.getString(714), new Object[]{Integer.toString(cookieCount)}))
-                  .toString()
-            );
+         this._cookieSizeLabel.setText(size + MessageFormat.format(BrowserResources.getString(714), new String[]{Integer.toString(cookieCount)}));
       }
 
-      this._longTermSizeLabel
-         .setText(((StringBuffer)(new Object())).append(size).append(formatK(rawDataCache.getLongTermCacheSize(false))).append(' ').toString());
+      this._longTermSizeLabel.setText(size + formatK(rawDataCache.getLongTermCacheSize(false)) + ' ');
    }
 
    @Override
@@ -227,7 +219,7 @@ final class CacheOpsScreen extends AppsMainScreen implements IBrowserProperty, F
    private static final String formatK(int number) {
       int k = number / 1024;
       int r = (number - k * 1024) / 100;
-      return ((StringBuffer)(new Object())).append(Integer.toString(k)).append('.').append(Integer.toString(r)).append('K').toString();
+      return Integer.toString(k) + '.' + Integer.toString(r) + 'K';
    }
 
    @Override

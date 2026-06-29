@@ -10,7 +10,7 @@ import net.rim.device.cldc.io.datarecovery.DataRecoveryListener;
 import net.rim.device.internal.system.InternalServices;
 
 public final class WAPConnectionRegistry implements DataRecoveryListener {
-   private Hashtable _connections = (Hashtable)(new Object());
+   private Hashtable _connections = new Hashtable();
    private boolean _connectionAvailable = DataRecovery.getInstance().isConnectionAvailable();
    private boolean _isBlackBerryTrafficInvalid;
    private static final long SINGLETON_REGISTRATION_KEY = -4842606926651938955L;

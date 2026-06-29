@@ -13,7 +13,7 @@ public final class SSLOptionsRegistration {
    }
 
    public static final synchronized void register(boolean deviceTLSExists) {
-      ApplicationRegistry.getApplicationRegistry().replace(1021895513728250690L, new Object(deviceTLSExists));
+      ApplicationRegistry.getApplicationRegistry().replace(1021895513728250690L, new Boolean(deviceTLSExists));
    }
 
    public static final synchronized boolean doesDeviceSideExist() {

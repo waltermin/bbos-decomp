@@ -2,6 +2,7 @@ package net.rim.device.api.crypto.tls.server;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.microedition.io.SecureConnection;
@@ -13,6 +14,7 @@ import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.tls.TLSInputStream;
 import net.rim.device.api.crypto.tls.TLSOutputStream;
 import net.rim.device.api.crypto.tls.tls10.TLSRecordProtocol;
+import net.rim.device.cldc.io.ssl.TLSIOException;
 
 public class TLSServer implements SecureConnection {
    private TLSRecordProtocol _recordProtocol;
@@ -34,7 +36,7 @@ public class TLSServer implements SecureConnection {
             this._recordProtocol.close();
             var5 = false;
          } catch (Throwable var8) {
-            throw new Object(e);
+            throw new TLSIOException(e);
          }
       } finally {
          if (var5) {
@@ -47,13 +49,13 @@ public class TLSServer implements SecureConnection {
 
    @Override
    public DataInputStream openDataInputStream() {
-      return (DataInputStream)(new Object(this.openInputStream()));
+      return new DataInputStream(this.openInputStream());
    }
 
    @Override
    public OutputStream openOutputStream() {
       if (this._outputStream == null) {
-         this._outputStream = (TLSOutputStream)(new Object(this._recordProtocol));
+         this._outputStream = new TLSOutputStream(this._recordProtocol);
       }
 
       return this._outputStream;
@@ -61,67 +63,67 @@ public class TLSServer implements SecureConnection {
 
    @Override
    public DataOutputStream openDataOutputStream() {
-      return (DataOutputStream)(new Object(this.openOutputStream()));
+      return new DataOutputStream(this.openOutputStream());
    }
 
    @Override
    public InputStream openInputStream() {
       if (this._inputStream == null) {
-         this._inputStream = (TLSInputStream)(new Object(this._recordProtocol));
+         this._inputStream = new TLSInputStream(this._recordProtocol);
       }
 
       return this._inputStream;
    }
 
    @Override
-   public void setSocketOption(byte option, int value) {
+   public void setSocketOption(byte option, int value) throws IOException {
       if (this._isClosed) {
-         throw new Object("Connection closed");
+         throw new IOException("Connection closed");
       }
 
       this._subConnection.setSocketOption(option, value);
    }
 
    @Override
-   public int getSocketOption(byte option) {
+   public int getSocketOption(byte option) throws IOException {
       if (this._isClosed) {
-         throw new Object("Connection closed");
+         throw new IOException("Connection closed");
       } else {
          return this._subConnection.getSocketOption(option);
       }
    }
 
    @Override
-   public String getLocalAddress() {
+   public String getLocalAddress() throws IOException {
       if (this._isClosed) {
-         throw new Object("Connection closed");
+         throw new IOException("Connection closed");
       } else {
          return this._subConnection.getLocalAddress();
       }
    }
 
    @Override
-   public int getLocalPort() {
+   public int getLocalPort() throws IOException {
       if (this._isClosed) {
-         throw new Object("Connection closed");
+         throw new IOException("Connection closed");
       } else {
          return this._subConnection.getLocalPort();
       }
    }
 
    @Override
-   public String getAddress() {
+   public String getAddress() throws IOException {
       if (this._isClosed) {
-         throw new Object("Connection closed");
+         throw new IOException("Connection closed");
       } else {
          return this._subConnection.getAddress();
       }
    }
 
    @Override
-   public int getPort() {
+   public int getPort() throws IOException {
       if (this._isClosed) {
-         throw new Object("Connection closed");
+         throw new IOException("Connection closed");
       } else {
          return this._subConnection.getPort();
       }

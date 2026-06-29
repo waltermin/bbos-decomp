@@ -56,7 +56,7 @@ public final class ECDSASignatureSigner implements SignatureSigner {
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object("ECDSA/"))).append(this._digest.getAlgorithm()).toString();
+      return "ECDSA/" + this._digest.getAlgorithm();
    }
 
    public ECDSASignatureSigner(ECPrivateKey key, Digest digest) {
@@ -65,14 +65,14 @@ public final class ECDSASignatureSigner implements SignatureSigner {
          this._digest = digest;
          this._privateKeyLength = key.getECCryptoSystem().getPrivateKeyLength();
          if (digest.getDigestLength() > this._privateKeyLength) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    public ECDSASignatureSigner(ECPrivateKey key) {
-      this(key, (Digest)(new Object()));
+      this(key, new SHA1Digest());
    }
 }

@@ -14,7 +14,7 @@ final class FolderList$SearchEngine {
 
    public FolderList$SearchEngine(FolderList _1) {
       this.this$0 = _1;
-      this._foundWordsSet = (BitSet)(new Object());
+      this._foundWordsSet = new BitSet();
       _1._interrupted = false;
    }
 

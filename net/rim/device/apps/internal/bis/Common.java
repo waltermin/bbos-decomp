@@ -7,7 +7,7 @@ public final class Common {
       String localeCode = locale.getLanguage();
       String country = locale.getCountry();
       if (country != null && !"".equals(country.trim())) {
-         localeCode = ((StringBuffer)(new Object())).append(localeCode).append("_").append(country).toString();
+         localeCode = localeCode + "_" + country;
       }
 
       return localeCode;

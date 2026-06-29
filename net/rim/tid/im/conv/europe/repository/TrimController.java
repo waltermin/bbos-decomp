@@ -50,29 +50,12 @@ public class TrimController {
 
    public void printTrimMessage() {
       if (this._removeIntervalIsSplit) {
-         System.out
-            .println(
-               ((StringBuffer)(new Object("Trimming learning database from time stamps [0..")))
-                  .append(this._outdatedIntervalEnd)
-                  .append("[ and [")
-                  .append(this._leastTimeStamp)
-                  .append("..")
-                  .append("255]")
-                  .toString()
-            );
+         System.out.println("Trimming learning database from time stamps [0.." + this._outdatedIntervalEnd + "[ and [" + this._leastTimeStamp + ".." + "255]");
       } else {
-         System.out
-            .println(
-               ((StringBuffer)(new Object("Trimming learning database from time stamps [")))
-                  .append(this._leastTimeStamp)
-                  .append("..")
-                  .append(this._outdatedIntervalEnd)
-                  .append("[")
-                  .toString()
-            );
+         System.out.println("Trimming learning database from time stamps [" + this._leastTimeStamp + ".." + this._outdatedIntervalEnd + "[");
       }
 
-      System.out.println(((StringBuffer)(new Object("Current time stamp "))).append(this._currentTimeStamp).toString());
+      System.out.println("Current time stamp " + this._currentTimeStamp);
    }
 
    public int getOutdatedIntervalLength() {

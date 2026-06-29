@@ -1,18 +1,19 @@
 package net.rim.device.apps.internal.mms.ui;
 
 import net.rim.device.api.ui.Field;
-import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.FieldProvider;
+import net.rim.device.apps.api.ui.VerbMenuItem;
 import net.rim.device.apps.internal.mms.verbs.ChangeRecipientVerb;
 import net.rim.device.apps.internal.mms.verbs.DeleteRecipientVerb;
 
 final class RecipientField extends HorizontalFieldManager {
    public RecipientField(String label, Object recipient, Object context) {
-      this.add((Field)(new Object(label)));
+      this.add(new LabelField(label));
       Object ctx = ContextObject.clone(context);
       Object obj = ContextObject.get(ctx, 3696141428889703675L);
       if (obj != null) {
@@ -35,7 +36,7 @@ final class RecipientField extends HorizontalFieldManager {
          RecipientFieldManager rlf = (RecipientFieldManager)mgr;
          if (rlf._editable) {
             ChangeRecipientVerb verb = new ChangeRecipientVerb(this, rlf);
-            menu.add((MenuItem)(new Object(verb, 500)));
+            menu.add(new VerbMenuItem(verb, 500));
          }
       }
    }

@@ -113,17 +113,7 @@ class BluetoothProfileManager {
 
    void log(int id) {
       EventLogger.logEvent(this._eventLogGUID, id, 0);
-      System.out
-         .println(
-            ((StringBuffer)(new Object()))
-               .append(this._eventLogTitle)
-               .append(": ")
-               .append((char)(id >> 24 & 0xFF))
-               .append((char)(id >> 16 & 0xFF))
-               .append((char)(id >> 8 & 0xFF))
-               .append((char)(id & 0xFF))
-               .toString()
-         );
+      System.out.println(this._eventLogTitle + ": " + (char)(id >> 24 & 0xFF) + (char)(id >> 16 & 0xFF) + (char)(id >> 8 & 0xFF) + (char)(id & 0xFF));
    }
 
    void logResult(int event, int result) {

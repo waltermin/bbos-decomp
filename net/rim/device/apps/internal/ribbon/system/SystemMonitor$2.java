@@ -12,7 +12,7 @@ final class SystemMonitor$2 implements Runnable {
 
    @Override
    public final void run() {
-      WorldPhoneDisclaimerDialog dialog = (WorldPhoneDisclaimerDialog)(new Object(this.this$0._rbf.getString(167), RadioInternal.getEnabledRadios()));
+      WorldPhoneDisclaimerDialog dialog = new WorldPhoneDisclaimerDialog(this.this$0._rbf.getString(167), RadioInternal.getEnabledRadios());
       dialog.showDialog();
    }
 }

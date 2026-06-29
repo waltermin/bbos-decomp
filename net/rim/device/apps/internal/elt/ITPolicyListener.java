@@ -60,13 +60,12 @@ final class ITPolicyListener implements GlobalEventListener {
          this._hasITPolicyChanged = enabled != data.isEnabledByITPolicy();
          Logger.logEvent(
             this,
-            ((StringBuffer)(new Object("IT_POLICY_CHANGED, ENABLE_ENTERPRISE_TRACKING: ")))
-               .append(enabled)
-               .append(", enabledByITPolicy=")
-               .append(data.isEnabledByITPolicy())
-               .append(", IT Changed: ")
-               .append(this._hasITPolicyChanged)
-               .toString(),
+            "IT_POLICY_CHANGED, ENABLE_ENTERPRISE_TRACKING: "
+               + enabled
+               + ", enabledByITPolicy="
+               + data.isEnabledByITPolicy()
+               + ", IT Changed: "
+               + this._hasITPolicyChanged,
             true
          );
          if (this._hasITPolicyChanged) {
@@ -81,7 +80,7 @@ final class ITPolicyListener implements GlobalEventListener {
                RibbonLauncher.getInstance().launch("net_rim_bb_options_app?net.rim.device.apps.internal.options.items.LocationServicesOptionsItem");
                return;
             } catch (Throwable var12) {
-               Logger.logError(this, ((StringBuffer)(new Object("options app launch error: "))).append(amex).toString());
+               Logger.logError(this, "options app launch error: " + amex);
                return;
             }
          }

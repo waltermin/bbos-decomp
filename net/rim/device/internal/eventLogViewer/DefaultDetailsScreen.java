@@ -11,7 +11,7 @@ final class DefaultDetailsScreen extends BaseDetailsScreen {
 
    @Override
    public final String getEventSummary(int eventHandle) {
-      StringBuffer strBuf = (StringBuffer)(new Object(64));
+      StringBuffer strBuf = new StringBuffer(64);
       byte[] data = EventLog.getData(eventHandle);
       if (data.length == 4) {
          int value = EventLogger.getInt(data);
@@ -37,7 +37,7 @@ final class DefaultDetailsScreen extends BaseDetailsScreen {
 
    @Override
    protected final String getDataFieldString(int eventHandle) {
-      StringBuffer strBuf = (StringBuffer)(new Object(16));
+      StringBuffer strBuf = new StringBuffer(16);
       byte[] data = EventLog.getData(eventHandle);
       if (data.length == 4) {
          int value = EventLogger.getInt(data);

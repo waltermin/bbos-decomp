@@ -10,7 +10,7 @@ final class TLSInitialization$TLSOptionsInitializer implements OptionsProviderRe
 
    @Override
    public final Vector getOptionsItems() {
-      Vector items = (Vector)(new Object());
+      Vector items = new Vector();
       items.addElement(new TLSOptionsItem());
       return items;
    }

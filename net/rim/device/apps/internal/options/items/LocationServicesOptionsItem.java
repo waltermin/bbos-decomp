@@ -19,7 +19,9 @@ import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.ChoiceField;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.location.LocationServicesOptionsProvider;
@@ -59,7 +61,7 @@ public final class LocationServicesOptionsItem extends SaveableMainScreenOptions
          synchronized (Application.getEventLock()) {
             this._vfm.deleteAll();
             if (this.isRefreshRequested()) {
-               this._vfm.add((Field)(new Object(OptionsResources.getString(1908))), INDENT_AMOUNT);
+               this._vfm.add(new LabelField(OptionsResources.getString(1908)), INDENT_AMOUNT);
             } else {
                this._gpsLatitude.setValue(_locInfo.getLatitude());
                this._gpsLongitude.setValue(_locInfo.getLongitude());
@@ -133,7 +135,7 @@ public final class LocationServicesOptionsItem extends SaveableMainScreenOptions
 
    @Override
    public final void fieldChanged(Field field, int context) {
-      if (field instanceof Object && this._choiceMsg != null) {
+      if (field instanceof ObjectChoiceField && this._choiceMsg != null) {
          ChoiceField ocf = (ChoiceField)field;
          int index = ocf.getSelectedIndex();
          String choice = (String)ocf.getChoice(index);
@@ -167,21 +169,20 @@ public final class LocationServicesOptionsItem extends SaveableMainScreenOptions
    }
 
    private final ObjectChoiceField getPrivacyField(int choice) {
-      String[] choices = new Object[]{OptionsResources.getString(1940), OptionsResources.getString(1927), OptionsResources.getString(1928)};
+      String[] choices = new String[]{OptionsResources.getString(1940), OptionsResources.getString(1927), OptionsResources.getString(1928)};
       choice = choice >= 0 && choice <= 2 ? choice : 0;
-      ObjectChoiceField ocf = (ObjectChoiceField)(new Object(OptionsResources.getString(1929), choices, choice));
+      ObjectChoiceField ocf = new ObjectChoiceField(OptionsResources.getString(1929), choices, choice);
       ocf.setChangeListener(this);
       return ocf;
    }
 
    private final ObjectChoiceField getGPSDatasourceField() {
       String gpsDataSource = null;
-      Object var7;
       synchronized (_gpsDataSourceStore) {
-         var7 = _gpsDataSourceStore.getContents();
+         gpsDataSource = (String)_gpsDataSourceStore.getContents();
       }
 
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       if (GPS.isSupportedOnCurrentNetwork()) {
          v.addElement(OptionsResources.getString(1982));
       }
@@ -204,16 +205,16 @@ public final class LocationServicesOptionsItem extends SaveableMainScreenOptions
       }
 
       int selectedIndex = 0;
-      String[] array = new Object[v.size()];
+      String[] array = new String[v.size()];
 
       for (int i = 0; i < v.size(); i++) {
          array[i] = (String)v.elementAt(i);
-         if (var7 != null && array[i].equals(var7)) {
+         if (gpsDataSource != null && array[i].equals(gpsDataSource)) {
             selectedIndex = i;
          }
       }
 
-      this._gpsDataSourceField = (ObjectChoiceField)(new Object(OptionsResources.getString(1983), array, selectedIndex));
+      this._gpsDataSourceField = new ObjectChoiceField(OptionsResources.getString(1983), array, selectedIndex);
       return this._gpsDataSourceField;
    }
 
@@ -231,14 +232,14 @@ public final class LocationServicesOptionsItem extends SaveableMainScreenOptions
          }
 
          if (RadioInfo.getNetworkType() != 4) {
-            this._vfm = (VerticalIndentFieldManager)(new Object());
-            this._gpsLatitude = (PropertyField)(new Object(OptionsResources.getString(1905), _locInfo.getLatitude(), 36028797018963968L));
-            this._gpsLongitude = (PropertyField)(new Object(OptionsResources.getString(1904), _locInfo.getLongitude(), 36028797018963968L));
-            this._lastFixDate = (PropertyField)(new Object(OptionsResources.getString(1909), _locInfo.getLastFixTime(), 36028797018963968L));
-            this._numOfSattelites = (PropertyField)(new Object(OptionsResources.getString(1907), _locInfo.getSattelites(), 36028797018963968L));
-            this._accuracyInMeters = (PropertyField)(new Object(OptionsResources.getString(1906), _locInfo.getAccuracy(), 36028797018963968L));
-            scrn.add((Field)(new Object(OptionsResources.getString(1903))));
-            scrn.add((Field)(new Object()));
+            this._vfm = new VerticalIndentFieldManager();
+            this._gpsLatitude = new PropertyField(OptionsResources.getString(1905), _locInfo.getLatitude(), 36028797018963968L);
+            this._gpsLongitude = new PropertyField(OptionsResources.getString(1904), _locInfo.getLongitude(), 36028797018963968L);
+            this._lastFixDate = new PropertyField(OptionsResources.getString(1909), _locInfo.getLastFixTime(), 36028797018963968L);
+            this._numOfSattelites = new PropertyField(OptionsResources.getString(1907), _locInfo.getSattelites(), 36028797018963968L);
+            this._accuracyInMeters = new PropertyField(OptionsResources.getString(1906), _locInfo.getAccuracy(), 36028797018963968L);
+            scrn.add(new LabelField(OptionsResources.getString(1903)));
+            scrn.add(new SeparatorField());
             scrn.add(this._vfm);
             this._mainScreen = scrn;
             Object var5 = null;
@@ -329,7 +330,7 @@ public final class LocationServicesOptionsItem extends SaveableMainScreenOptions
       this._choiceMsg = this.getGPSChoices();
       String label = OptionsResources.getString(505);
       int initialIndex = GPS.getMode() == 2 ? 0 : 1;
-      this._gpsChoiceField = (ObjectChoiceField)(new Object(label, this._choiceMsg, initialIndex));
+      this._gpsChoiceField = new ObjectChoiceField(label, this._choiceMsg, initialIndex);
       this._gpsChoiceField.setChangeListener(this);
       mainScreen.add(this._gpsChoiceField);
       if ((GPS.isSupportedOnCurrentNetwork() || BluetoothSerialPort.isSupported() && this.isPuckPaired()) && RadioInfo.getNetworkType() != 4) {

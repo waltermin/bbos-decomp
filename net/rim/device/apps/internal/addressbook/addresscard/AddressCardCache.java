@@ -7,8 +7,8 @@ import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.internal.addressbook.resources.AddressBookResources;
 
 final class AddressCardCache implements MemoryCleanerListener {
-   private AddressCardModel[] _keys = new Object[25];
-   private AddressCardModel[] _values = new Object[25];
+   private AddressCardModel[] _keys = new AddressCardModel[25];
+   private AddressCardModel[] _values = new AddressCardModel[25];
    private int[] _touched = new int[25];
    private int _counter;
    private static final long ADDRESS_CARD_CACHE_GUID = 8455120407288834537L;

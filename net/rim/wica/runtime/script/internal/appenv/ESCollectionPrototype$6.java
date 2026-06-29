@@ -26,7 +26,7 @@ class ESCollectionPrototype$6 extends HostFunction {
       } else {
          KeyDataCollection keyedCollection = (KeyDataCollection)collection;
          if (numParams != 0) {
-            EcmaUtilities.throwESError(name, RuntimeResources.getString(76, ((StringBuffer)(new Object())).append(this.getName()).append("()").toString()));
+            EcmaUtilities.throwESError(name, RuntimeResources.getString(76, this.getName() + "()"));
          }
 
          keyedCollection.removeAll();

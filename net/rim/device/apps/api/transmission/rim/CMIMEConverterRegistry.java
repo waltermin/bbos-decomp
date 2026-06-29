@@ -38,7 +38,7 @@ public final class CMIMEConverterRegistry implements CMIMEConstants {
             }
          }
       } else {
-         throw new Object("rank must be between MIN_RANK and MAX_RANK");
+         throw new IllegalArgumentException("rank must be between MIN_RANK and MAX_RANK");
       }
    }
 
@@ -89,8 +89,8 @@ public final class CMIMEConverterRegistry implements CMIMEConstants {
          int size = _converters.size();
 
          for (int j = size - 1; j >= 0; j--) {
-            Converter var9 = _converters.elementAt(j);
-            if (((Converter)var9).canConvert(contentType)) {
+            converter = (Converter)_converters.elementAt(j);
+            if (converter.canConvert(contentType)) {
                int rank = _converterRanks.elementAt(j);
                if (rank > maxRankSoFar) {
                   maxRankSoFar = rank;
@@ -105,7 +105,7 @@ public final class CMIMEConverterRegistry implements CMIMEConstants {
    }
 
    public static final synchronized Enumeration enumerateConverters(String contentType) {
-      Vector results = (Vector)(new Object());
+      Vector results = new Vector();
       int size = _converters.size();
 
       for (int i = size - 1; i >= 0; i--) {

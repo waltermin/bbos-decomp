@@ -14,7 +14,7 @@ final class CustomFocusOrder extends DefaultHandler {
    FocusInteractor _focusInteractor;
    FocusGroup _focusGroup;
    FocusVector _vector = new FocusVector();
-   Stack _stack = (Stack)(new Object());
+   Stack _stack = new Stack();
 
    public final void setModel(ModelInteractorImpl model) {
       throw new RuntimeException("cod2jar: stack: underflow");

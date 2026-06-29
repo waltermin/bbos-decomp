@@ -8,6 +8,7 @@ import net.rim.blackberry.api.blackberrymessenger.SessionListener;
 import net.rim.blackberry.api.blackberrymessenger.SessionSetupListener;
 import net.rim.device.api.system.ApplicationDescriptor;
 import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.IntHashtable;
 import net.rim.device.api.util.ListenerUtilities;
@@ -128,7 +129,7 @@ final class SessionImpl implements Session {
    @Override
    public final void send(Message message) {
       if (this._state != 3) {
-         throw new Object("Session is closed");
+         throw new IllegalStateException("Session is closed");
       }
 
       FileTransferBlob blob = new FileTransferBlob(
@@ -137,7 +138,7 @@ final class SessionImpl implements Session {
       blob.setSessionId(this._id);
       PeerApplication.getInstance();
       PeerApplication.getSession().sendBlob(this._contact, blob);
-      this._messages.put(blob.getId(), new Object(message));
+      this._messages.put(blob.getId(), new WeakReference(message));
    }
 
    @Override
@@ -159,16 +160,16 @@ final class SessionImpl implements Session {
    @Override
    public final void sendRequest(SessionSetupListener listener, ApplicationDescriptor application, String url) {
       if (listener == null) {
-         throw new Object("SessionSetupListener cannot be null");
+         throw new IllegalArgumentException("SessionSetupListener cannot be null");
       }
 
       if (this._state == 2) {
-         throw new Object("Session request already in progress");
+         throw new IllegalStateException("Session request already in progress");
       }
 
       if (application != null) {
          if (application.getModuleHandle() != ApplicationDescriptor.currentApplicationDescriptor().getModuleHandle()) {
-            throw new Object("ApplicationDescriptor must describe the registering application");
+            throw new IllegalArgumentException("ApplicationDescriptor must describe the registering application");
          }
 
          this._setupListener = new SessionImpl$SessionSetupRunnable(listener, application);
@@ -183,17 +184,17 @@ final class SessionImpl implements Session {
             SessionManager.getInstance().sessionRequestSent(this);
             this._state = 2;
          } else {
-            throw new Object("Application must have a name");
+            throw new IllegalArgumentException("Application must have a name");
          }
       } else {
-         throw new Object("applicaiton cannot be null");
+         throw new IllegalArgumentException("applicaiton cannot be null");
       }
    }
 
    @Override
    public final void display(String text, Field field) {
       if (this._state != 3) {
-         throw new Object("Session closed");
+         throw new IllegalStateException("Session closed");
       }
 
       ExternalMessageModelWrapper message = new ExternalMessageModelWrapper(text, field, this._appName);
@@ -202,7 +203,7 @@ final class SessionImpl implements Session {
 
    @Override
    public final void display(String text) {
-      this.display(text, (Field)(new Object(text)));
+      this.display(text, new RichTextField(text));
    }
 
    @Override
@@ -219,16 +220,16 @@ final class SessionImpl implements Session {
    public final void addListener(SessionListener listener, ApplicationDescriptor application) {
       if (application != null) {
          if (application.getModuleHandle() != ApplicationDescriptor.currentApplicationDescriptor().getModuleHandle()) {
-            throw new Object("ApplicationDescriptor must describe the registering application");
+            throw new IllegalArgumentException("ApplicationDescriptor must describe the registering application");
          }
 
          if (listener != null) {
             this._listeners = ListenerUtilities.addListener(this._listeners, new SessionImpl$SessionListenerRunnable(listener, application));
          } else {
-            throw new Object("listener cannot be null");
+            throw new IllegalArgumentException("listener cannot be null");
          }
       } else {
-         throw new Object("applicaiton cannot be null");
+         throw new IllegalArgumentException("applicaiton cannot be null");
       }
    }
 
@@ -245,6 +246,6 @@ final class SessionImpl implements Session {
    SessionImpl(PeerContact contact) {
       this._contact = contact;
       this._state = 1;
-      this._messages = (IntHashtable)(new Object(1));
+      this._messages = new IntHashtable(1);
    }
 }

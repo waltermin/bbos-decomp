@@ -54,7 +54,7 @@ public final class AddressBookOptionsImpl extends OptionsBase implements Address
    public final String getUserDefinedFieldLabel(int i) {
       String label = null;
       if (i < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (i < this._persistedAddressBookOptions._userDefinedFieldLabels.length) {
@@ -62,7 +62,7 @@ public final class AddressBookOptionsImpl extends OptionsBase implements Address
       }
 
       if (label == null) {
-         label = ((StringBuffer)(new Object())).append(AddressBookResources.getString(1200)).append(i + 1).toString();
+         label = AddressBookResources.getString(1200) + (i + 1);
       }
 
       return label;
@@ -71,7 +71,7 @@ public final class AddressBookOptionsImpl extends OptionsBase implements Address
    @Override
    public final void setUserDefinedFieldLabel(int i, String value) {
       if (i < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (i >= this._persistedAddressBookOptions._userDefinedFieldLabels.length) {
@@ -137,7 +137,7 @@ public final class AddressBookOptionsImpl extends OptionsBase implements Address
       if (mode != this._persistedAddressBookOptions._listSeparatorAppearance) {
          switch (mode) {
             case -1:
-               throw new Object();
+               throw new IllegalArgumentException();
             case 0:
             case 1:
             case 2:

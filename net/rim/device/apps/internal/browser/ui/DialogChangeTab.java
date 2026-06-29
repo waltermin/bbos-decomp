@@ -1,7 +1,6 @@
 package net.rim.device.apps.internal.browser.ui;
 
 import net.rim.device.api.system.EncodedImage;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.RichTextField;
@@ -19,22 +18,22 @@ public final class DialogChangeTab extends PopupScreen {
    private static final int ICON_HEIGHT = 16;
 
    public DialogChangeTab() {
-      super((Manager)(new Object()), 0);
+      super(new DialogFieldManager(), 0);
       DialogFieldManager dfm = (DialogFieldManager)this.getDelegate();
-      dfm.setMessage((RichTextField)(new Object(BrowserResources.getString(898), 36028797018963968L)));
+      dfm.setMessage(new RichTextField(BrowserResources.getString(898), 36028797018963968L));
       BrowserScreen browserScreen = BrowserDaemonRegistry.getInstance().getBrowserScreen();
       Image defaultPageImage = BrowserIcons.getIcons().getImage(3);
       int numTabs = browserScreen.getNumberOfTabs();
 
       for (int i = 0; i < numTabs; i++) {
-         HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object());
+         HorizontalFieldManager hfm = new HorizontalFieldManager();
          EncodedImage img = browserScreen.getTabIcon(i);
          if (img != null) {
-            BitmapField bf = (BitmapField)(new Object());
+            BitmapField bf = new BitmapField();
             bf.setImage(img);
             hfm.add(bf);
          } else {
-            ImageField imgField = (ImageField)(new Object());
+            ImageField imgField = new ImageField();
             imgField.setImage(defaultPageImage);
             imgField.setPreferredSize(16, 16);
             hfm.add(imgField);

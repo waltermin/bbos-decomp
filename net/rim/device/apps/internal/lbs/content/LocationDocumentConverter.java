@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.lbs.content;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import net.rim.device.api.util.DataBuffer;
 import org.xml.sax.Attributes;
@@ -41,7 +42,7 @@ public class LocationDocumentConverter extends DefaultHandler {
 
          used++;
          if (used > 4 || used == 4 && (i & 234881024) != 0) {
-            throw new Object();
+            throw new NumberFormatException();
          }
 
          i <<= 7;
@@ -295,7 +296,7 @@ public class LocationDocumentConverter extends DefaultHandler {
          int length = db.readCompressedInt();
 
          try {
-            String value = (String)(new Object(db.getArray(), db.getPosition(), length, "UTF-8"));
+            String value = new String(db.getArray(), db.getPosition(), length, "UTF-8");
             db.skipBytes(length);
             return value;
          } finally {
@@ -499,10 +500,10 @@ public class LocationDocumentConverter extends DefaultHandler {
 
    void parseTLE(Object content) {
       DataBuffer db = null;
-      if (!(content instanceof Object)) {
+      if (!(content instanceof DataBuffer)) {
          if (content instanceof byte[]) {
             byte[] data = (byte[])content;
-            db = (DataBuffer)(new Object(data, 0, data.length, true));
+            db = new DataBuffer(data, 0, data.length, true);
          }
       } else {
          db = (DataBuffer)content;
@@ -516,16 +517,16 @@ public class LocationDocumentConverter extends DefaultHandler {
    void parseXML(Object content) {
       if (content instanceof byte[]) {
          byte[] data = (byte[])content;
-         this.parseXml((InputStream)(new Object(data)));
+         this.parseXml(new ByteArrayInputStream(data));
       }
 
-      if (content instanceof Object) {
+      if (content instanceof InputStream) {
          InputStream stream = (InputStream)content;
          this.parseXml(stream);
       }
 
-      if (content instanceof Object) {
-         InputStream stream = (InputStream)(new Object(((String)content).getBytes()));
+      if (content instanceof String) {
+         InputStream stream = new ByteArrayInputStream(((String)content).getBytes());
          this.parseXml(stream);
       }
    }

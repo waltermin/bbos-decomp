@@ -33,7 +33,7 @@ class PDUPresentationElementField extends VerticalFieldManager implements Presen
 
    @Override
    public void move(boolean mode) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override

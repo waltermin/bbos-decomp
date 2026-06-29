@@ -26,7 +26,7 @@ class MessageServicesCMIMEOptionsProvider implements MessageServicesContentTypeO
 
    @Override
    public Field getField(Object context) {
-      this._fieldManager = (VerticalFieldManager)(new Object());
+      this._fieldManager = new VerticalFieldManager();
       this.createClassificationField(MessagePropertiesDefaults.getInstance());
       return this._fieldManager;
    }
@@ -68,7 +68,7 @@ class MessageServicesCMIMEOptionsProvider implements MessageServicesContentTypeO
       MessageClassificationSelector messageClassificationSelector = MessageClassificationSelector.getInstance();
       MessageClassification[] classifications = messageClassificationSelector.getClassifications(null, this._selectedServiceRecord, null);
       int numClassifications = classifications != null ? classifications.length : 0;
-      this._messageClassificationField = (ObjectChoiceField)(new Object(EmailResources.getString(105), classifications));
+      this._messageClassificationField = new ObjectChoiceField(EmailResources.getString(105), classifications);
       int messageClassificationIndex = messageClassificationSelector.selectDefaultClassification(
          classifications, null, preferredMessageClassificationHash, null, null
       );
@@ -110,7 +110,7 @@ class MessageServicesCMIMEOptionsProvider implements MessageServicesContentTypeO
       SendMethod[] sendMethods = sendMethodSelector.getSendMethods(null, this._selectedServiceRecord, selectedMessageClassification, null);
       int numSendMethods = sendMethods != null ? sendMethods.length : 0;
       Arrays.sort(sendMethods, 0, numSendMethods, _stringComparator);
-      this._messageEncodingField = (ObjectChoiceField)(new Object(EmailResources.getString(106), sendMethods));
+      this._messageEncodingField = new ObjectChoiceField(EmailResources.getString(106), sendMethods);
       int sendMethodIndex = sendMethodSelector.selectDefaultSendMethod(
          sendMethods, null, preferredMessageEncodingUID, preferredMessageEncodingAction, null, null
       );

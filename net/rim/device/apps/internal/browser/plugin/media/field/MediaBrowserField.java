@@ -12,6 +12,7 @@ import javax.microedition.media.control.VolumeControl;
 import javax.microedition.media.protocol.DataSource;
 import net.rim.device.api.browser.field.BrowserContent;
 import net.rim.device.api.browser.field.BrowserContentBaseImpl;
+import net.rim.device.api.browser.field.CancelRequestResource;
 import net.rim.device.api.browser.field.ContentReadEvent;
 import net.rim.device.api.browser.field.Destroyable;
 import net.rim.device.api.browser.field.Event;
@@ -70,8 +71,10 @@ import net.rim.device.apps.internal.browser.stack.RTSPConnection;
 import net.rim.device.apps.internal.browser.util.QuincyUtil;
 import net.rim.device.apps.internal.browser.util.RendererControl;
 import net.rim.device.cldc.util.CalendarExtensions;
+import net.rim.device.internal.io.file.FileHandleProvider;
 import net.rim.device.internal.io.file.FileUtilities;
 import net.rim.device.internal.io.file.MetaDataBookmark;
+import net.rim.device.internal.media.FileDataSource;
 import net.rim.device.internal.media.HTTPBufferingCallback;
 import net.rim.device.internal.media.HTTPBufferingManager;
 import net.rim.device.internal.media.HTTPDataSource;
@@ -233,10 +236,10 @@ public final class MediaBrowserField
          this._focusManager = new CustomFocusOrder();
          this._mediaFieldBar = new MyMediaField(this, 18014398512627712L);
          this._managerBar = new MediaBrowserField$MyMediaManager(this);
-         this._pmePlayerBar = (MediaPlayer)(new Object());
+         this._pmePlayerBar = new MediaPlayer();
          this._pmePlayerBar.setUI(this._mediaFieldBar);
          mediaBar = this._managerBar.createMedia(mediaNameBar);
-         if (!(mediaBar instanceof Object)) {
+         if (!(mediaBar instanceof ModelInteractorImpl)) {
             System.out.println("Warning: Only PME 1.2 is supported");
             return null;
          }
@@ -245,7 +248,7 @@ public final class MediaBrowserField
          this._pmePlayerBar.setMedia(this._modelBar);
          this._pmePlayerBar.setInternalMediaListener(this);
          Object services = this._pmePlayerBar.getServices();
-         if (services instanceof Object) {
+         if (services instanceof MediaServices) {
             MediaServices mediaServices = (MediaServices)services;
             this._focusInteractor = (FocusInteractor)mediaServices.getService("FocusInteractor");
             this._focusInteractor.setDefaultItem(this._modelBar.getHandle("play"));
@@ -408,7 +411,7 @@ public final class MediaBrowserField
    }
 
    public final HTTPBufferingManager getBufferingManager() {
-      return !(this._ds instanceof Object) ? null : ((HTTPDataSource)this._ds).getBufferingManager();
+      return !(this._ds instanceof HTTPDataSource) ? null : ((HTTPDataSource)this._ds).getBufferingManager();
    }
 
    public final BrowserContent getBrowserContent() {
@@ -694,13 +697,13 @@ public final class MediaBrowserField
       // 203: getfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._fullscreenRunnable Lnet/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField$FullscreenRunnable;
       // 206: invokevirtual net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField$FullscreenRunnable.halt ()V
       // 209: aload 3
-      // 20a: instanceof java/lang/Object
+      // 20a: instanceof java/lang/String
       // 20d: ifne 213
       // 210: goto 2c9
       // 213: bipush -1
       // 215: istore 4
       // 217: aload 3
-      // 218: checkcast java/lang/Object
+      // 218: checkcast java/lang/String
       // 21b: invokestatic java/lang/Integer.parseInt (Ljava/lang/String;)I
       // 21e: istore 4
       // 220: goto 226
@@ -774,11 +777,11 @@ public final class MediaBrowserField
       // 2d5: ifeq 335
       // 2d8: aload 3
       // 2d9: dup
-      // 2da: instanceof java/lang/Object
+      // 2da: instanceof java/lang/Long
       // 2dd: ifne 2e4
       // 2e0: pop
       // 2e1: goto 4a6
-      // 2e4: checkcast java/lang/Object
+      // 2e4: checkcast java/lang/Long
       // 2e7: invokevirtual java/lang/Long.longValue ()J
       // 2ea: lstore 4
       // 2ec: lload 4
@@ -822,11 +825,11 @@ public final class MediaBrowserField
       // 33c: ifeq 35d
       // 33f: aload 3
       // 340: dup
-      // 341: instanceof java/lang/Object
+      // 341: instanceof java/lang/Boolean
       // 344: ifne 34b
       // 347: pop
       // 348: goto 4a6
-      // 34b: checkcast java/lang/Object
+      // 34b: checkcast java/lang/Boolean
       // 34e: invokevirtual java/lang/Boolean.booleanValue ()Z
       // 351: istore 4
       // 353: aload 0
@@ -859,11 +862,11 @@ public final class MediaBrowserField
       // 395: return
       // 396: aload 3
       // 397: dup
-      // 398: instanceof java/lang/Object
+      // 398: instanceof java/lang/Long
       // 39b: ifne 3a2
       // 39e: pop
       // 39f: goto 4a6
-      // 3a2: checkcast java/lang/Object
+      // 3a2: checkcast java/lang/Long
       // 3a5: invokevirtual java/lang/Long.longValue ()J
       // 3a8: sipush 1000
       // 3ab: i2l
@@ -896,13 +899,13 @@ public final class MediaBrowserField
       // 3e3: ifne 3e9
       // 3e6: goto 4a6
       // 3e9: aload 3
-      // 3ea: instanceof java/lang/Object
+      // 3ea: instanceof net/rim/device/api/system/Bitmap
       // 3ed: ifne 3f3
       // 3f0: goto 4a6
       // 3f3: aload 0
       // 3f4: getfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._videoPauseBitmap Lnet/rim/device/api/ui/component/BitmapField;
       // 3f7: aload 3
-      // 3f8: checkcast java/lang/Object
+      // 3f8: checkcast net/rim/device/api/system/Bitmap
       // 3fb: invokevirtual net/rim/device/api/ui/component/BitmapField.setBitmap (Lnet/rim/device/api/system/Bitmap;)V
       // 3fe: return
       // 3ff: aload 2
@@ -930,7 +933,7 @@ public final class MediaBrowserField
       // 42c: goto 466
       // 42f: astore 4
       // 431: getstatic java/lang/System.out Ljava/io/PrintStream;
-      // 434: new java/lang/Object
+      // 434: new java/lang/StringBuffer
       // 437: dup
       // 438: ldc_w "media error setting bookmark: "
       // 43b: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -941,7 +944,7 @@ public final class MediaBrowserField
       // 449: goto 466
       // 44c: astore 4
       // 44e: getstatic java/lang/System.out Ljava/io/PrintStream;
-      // 451: new java/lang/Object
+      // 451: new java/lang/StringBuffer
       // 454: dup
       // 455: ldc_w "state error setting bookmark: "
       // 458: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -960,11 +963,11 @@ public final class MediaBrowserField
       // 474: ifeq 4a6
       // 477: aload 3
       // 478: dup
-      // 479: instanceof java/lang/Object
+      // 479: instanceof java/lang/Integer
       // 47c: ifne 483
       // 47f: pop
       // 480: goto 4a6
-      // 483: checkcast java/lang/Object
+      // 483: checkcast java/lang/Integer
       // 486: invokevirtual java/lang/Integer.intValue ()I
       // 489: istore 4
       // 48b: iload 4
@@ -990,9 +993,9 @@ public final class MediaBrowserField
 
    @Override
    public final InputConnection requestResource(String locator) {
-      this._activeResourceRequest = (RequestedResource)(new Object(locator, (HttpHeaders)(new Object()), 65536));
+      this._activeResourceRequest = new RequestedResource(locator, new HttpHeaders(), 65536);
       RenderingApplication app = this._browserContent.getRenderingApplication();
-      return !(app instanceof Object)
+      return !(app instanceof ResourceProvider)
          ? app.getResource(this._activeResourceRequest, null)
          : ((ResourceProvider)app).getInputConnection(this._activeResourceRequest, null);
    }
@@ -1033,8 +1036,8 @@ public final class MediaBrowserField
                long mediaTime = this._player.getMediaTime();
                if (mediaTime != -1) {
                   MetaDataBookmark bookmark;
-                  if (!(bookmarkObject instanceof Object)) {
-                     bookmark = (MetaDataBookmark)(new Object(this._currentUrl));
+                  if (!(bookmarkObject instanceof MetaDataBookmark)) {
+                     bookmark = new MetaDataBookmark(this._currentUrl);
                   } else {
                      bookmark = (MetaDataBookmark)bookmarkObject;
                   }
@@ -1064,7 +1067,7 @@ public final class MediaBrowserField
       MediaRemoteControl.removeListener(this._application, this._myKeyHandler);
       this._audioRouter.setAudioSinkCallback(null);
       if (this._activeResourceRequest != null) {
-         this._browserContent.getRenderingApplication().eventOccurred((Event)(new Object(this, this._activeResourceRequest)));
+         this._browserContent.getRenderingApplication().eventOccurred(new CancelRequestResource(this, this._activeResourceRequest));
       }
 
       if (this._playlistThread != null) {
@@ -1320,7 +1323,7 @@ public final class MediaBrowserField
       // 009: invokespecial net/rim/device/apps/internal/browser/plugin/media/field/TextOverlayFieldManager.<init> ()V
       // 00c: putfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._screenManager Lnet/rim/device/apps/internal/browser/plugin/media/field/TextOverlayFieldManager;
       // 00f: aload 0
-      // 010: new java/lang/Object
+      // 010: new net/rim/device/api/ui/component/BitmapField
       // 013: dup
       // 014: invokespecial net/rim/device/api/ui/component/BitmapField.<init> ()V
       // 017: putfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._videoPauseBitmap Lnet/rim/device/api/ui/component/BitmapField;
@@ -1451,7 +1454,7 @@ public final class MediaBrowserField
       // 0ed: bipush 0
       // 0ee: putfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._destroyableState I
       // 0f1: aload 0
-      // 0f2: new java/lang/Object
+      // 0f2: new java/lang/StringBuffer
       // 0f5: dup
       // 0f6: invokespecial java/lang/StringBuffer.<init> ()V
       // 0f9: putfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._buffer Ljava/lang/StringBuffer;
@@ -1459,16 +1462,16 @@ public final class MediaBrowserField
       // 0fd: ldc_w "GMT"
       // 100: invokestatic java/util/TimeZone.getTimeZone (Ljava/lang/String;)Ljava/util/TimeZone;
       // 103: invokestatic java/util/Calendar.getInstance (Ljava/util/TimeZone;)Ljava/util/Calendar;
-      // 106: checkcast java/lang/Object
+      // 106: checkcast net/rim/device/cldc/util/CalendarExtensions
       // 109: putfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._calendar Lnet/rim/device/cldc/util/CalendarExtensions;
       // 10c: aload 0
-      // 10d: new java/lang/Object
+      // 10d: new net/rim/device/api/i18n/SimpleDateFormat
       // 110: dup
       // 111: ldc_w "m:ss"
       // 114: invokespecial net/rim/device/api/i18n/SimpleDateFormat.<init> (Ljava/lang/String;)V
       // 117: putfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._formatShort Lnet/rim/device/api/i18n/SimpleDateFormat;
       // 11a: aload 0
-      // 11b: new java/lang/Object
+      // 11b: new net/rim/device/api/i18n/SimpleDateFormat
       // 11e: dup
       // 11f: ldc_w "h:mm:ss"
       // 122: invokespecial net/rim/device/api/i18n/SimpleDateFormat.<init> (Ljava/lang/String;)V
@@ -1593,20 +1596,20 @@ public final class MediaBrowserField
       // 228: invokevirtual net/rim/device/api/browser/field/RenderingOptions.getPropertyWithObjectValue (JILjava/lang/Object;)Ljava/lang/Object;
       // 22b: astore 8
       // 22d: aload 8
-      // 22f: instanceof java/lang/Object
+      // 22f: instanceof java/lang/Long
       // 232: ifeq 244
       // 235: aload 0
       // 236: aload 8
-      // 238: checkcast java/lang/Object
+      // 238: checkcast java/lang/Long
       // 23b: invokevirtual java/lang/Long.longValue ()J
       // 23e: putfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._startMediaTime J
       // 241: goto 258
       // 244: aload 8
-      // 246: instanceof java/lang/Object
+      // 246: instanceof net/rim/device/internal/io/file/MetaDataBookmark
       // 249: ifeq 258
       // 24c: aload 0
       // 24d: aload 8
-      // 24f: checkcast java/lang/Object
+      // 24f: checkcast net/rim/device/internal/io/file/MetaDataBookmark
       // 252: invokevirtual net/rim/device/internal/io/file/MetaDataBookmark.getPosition ()J
       // 255: putfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._startMediaTime J
       // 258: aload 0
@@ -1625,7 +1628,7 @@ public final class MediaBrowserField
       // 274: aload 9
       // 276: ifnonnull 28e
       // 279: aload 0
-      // 27a: new java/lang/Object
+      // 27a: new net/rim/device/api/ui/component/RichTextField
       // 27d: dup
       // 27e: sipush 826
       // 281: invokestatic net/rim/device/apps/internal/browser/resources/BrowserResources.getString (I)Ljava/lang/String;
@@ -1635,7 +1638,7 @@ public final class MediaBrowserField
       // 28d: return
       // 28e: aload 0
       // 28f: invokestatic net/rim/vm/Process.currentProcess ()Lnet/rim/vm/Process;
-      // 292: checkcast java/lang/Object
+      // 292: checkcast net/rim/device/api/system/ApplicationProcess
       // 295: putfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._process Lnet/rim/device/api/system/ApplicationProcess;
       // 298: aload 0
       // 299: getfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._process Lnet/rim/device/api/system/ApplicationProcess;
@@ -1806,7 +1809,7 @@ public final class MediaBrowserField
       // 404: aconst_null
       // 405: astore 16
       // 407: aload 1
-      // 408: instanceof java/lang/Object
+      // 408: instanceof javax/microedition/io/file/FileConnection
       // 40b: ifeq 448
       // 40e: bipush 1
       // 40f: istore 12
@@ -1828,18 +1831,18 @@ public final class MediaBrowserField
       // 431: astore 13
       // 433: aload 0
       // 434: aload 1
-      // 435: checkcast java/lang/Object
+      // 435: checkcast javax/microedition/io/file/FileConnection
       // 438: invokeinterface javax/microedition/io/file/FileConnection.getURL ()Ljava/lang/String; 1
       // 43d: bipush 7
       // 43f: invokevirtual java/lang/String.substring (I)Ljava/lang/String;
       // 442: putfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._tuneName Ljava/lang/String;
       // 445: goto 56a
       // 448: aload 1
-      // 449: instanceof java/lang/Object
+      // 449: instanceof javax/microedition/io/ContentConnection
       // 44c: ifne 452
       // 44f: goto 56a
       // 452: aload 1
-      // 453: instanceof java/lang/Object
+      // 453: instanceof javax/microedition/io/HttpConnection
       // 456: ifne 45c
       // 459: goto 564
       // 45c: bipush 0
@@ -1848,16 +1851,16 @@ public final class MediaBrowserField
       // 460: bipush 1
       // 461: putfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._playWhenStreamingReady Z
       // 464: aload 0
-      // 465: new java/lang/Object
+      // 465: new net/rim/device/api/browser/field/ContentReadEvent
       // 468: dup
       // 469: aload 0
       // 46a: getfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._browserContent Lnet/rim/device/api/browser/field/BrowserContentBaseImpl;
       // 46d: invokespecial net/rim/device/api/browser/field/ContentReadEvent.<init> (Ljava/lang/Object;)V
       // 470: putfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._contentReadEvent Lnet/rim/device/api/browser/field/ContentReadEvent;
-      // 473: new java/lang/Object
+      // 473: new net/rim/device/internal/media/HTTPBufferingManager
       // 476: dup
       // 477: aload 1
-      // 478: checkcast java/lang/Object
+      // 478: checkcast javax/microedition/io/HttpConnection
       // 47b: aload 2
       // 47c: aload 0
       // 47d: invokespecial net/rim/device/internal/media/HTTPBufferingManager.<init> (Ljavax/microedition/io/HttpConnection;Ljava/io/InputStream;Lnet/rim/device/internal/media/HTTPBufferingCallback;)V
@@ -1873,11 +1876,11 @@ public final class MediaBrowserField
       // 495: astore 13
       // 497: aload 6
       // 499: dup
-      // 49a: instanceof java/lang/Object
+      // 49a: instanceof net/rim/device/apps/internal/browser/api/SDPRedirectEvent
       // 49d: ifne 4a4
       // 4a0: pop
       // 4a1: goto 56a
-      // 4a4: checkcast java/lang/Object
+      // 4a4: checkcast net/rim/device/apps/internal/browser/api/SDPRedirectEvent
       // 4a7: astore 17
       // 4a9: aload 17
       // 4ab: invokevirtual net/rim/device/apps/internal/browser/api/SDPRedirectEvent.getValueTable ()Lnet/rim/device/api/util/MultiMap;
@@ -1893,7 +1896,7 @@ public final class MediaBrowserField
       // 4c4: ifeq 500
       // 4c7: aload 20
       // 4c9: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 4ce: checkcast java/lang/Object
+      // 4ce: checkcast java/lang/String
       // 4d1: astore 21
       // 4d3: aload 21
       // 4d5: ldc_w "AS:"
@@ -1923,7 +1926,7 @@ public final class MediaBrowserField
       // 511: ifeq 552
       // 514: aload 20
       // 516: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 51b: checkcast java/lang/Object
+      // 51b: checkcast java/lang/String
       // 51e: astore 22
       // 520: aload 22
       // 522: ldc_w "X-filesize:"
@@ -1967,7 +1970,7 @@ public final class MediaBrowserField
       // 575: i2l
       // 576: lcmp
       // 577: ifle 592
-      // 57a: new java/lang/Object
+      // 57a: new net/rim/device/api/browser/field/ContentReadEvent
       // 57d: dup
       // 57e: aload 1
       // 57f: invokespecial net/rim/device/api/browser/field/ContentReadEvent.<init> (Ljava/lang/Object;)V
@@ -1992,7 +1995,7 @@ public final class MediaBrowserField
       // 5a7: bipush 0
       // 5a8: newarray 8
       // 5aa: astore 18
-      // 5ac: new java/lang/Object
+      // 5ac: new java/io/ByteArrayInputStream
       // 5af: dup
       // 5b0: aload 18
       // 5b2: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -2044,27 +2047,27 @@ public final class MediaBrowserField
       // 60f: astore 11
       // 611: aload 11
       // 613: dup
-      // 614: instanceof java/lang/Object
+      // 614: instanceof net/rim/device/apps/internal/browser/page/RenderThread
       // 617: ifne 61e
       // 61a: pop
       // 61b: goto 6b7
-      // 61e: checkcast java/lang/Object
+      // 61e: checkcast net/rim/device/apps/internal/browser/page/RenderThread
       // 621: aconst_null
       // 622: invokevirtual net/rim/device/apps/internal/browser/page/RenderThread.setInput (Ljava/io/InputStream;)V
       // 625: aload 11
-      // 627: checkcast java/lang/Object
+      // 627: checkcast net/rim/device/apps/internal/browser/page/RenderThread
       // 62a: aconst_null
       // 62b: invokevirtual net/rim/device/apps/internal/browser/page/RenderThread.setConnection (Ljavax/microedition/io/Connection;)V
       // 62e: return
       // 62f: astore 11
-      // 631: new java/lang/Object
+      // 631: new net/rim/device/api/browser/field/RenderingException
       // 634: dup
       // 635: aload 11
       // 637: invokevirtual java/lang/Throwable.getMessage ()Ljava/lang/String;
       // 63a: invokespecial net/rim/device/api/browser/field/RenderingException.<init> (Ljava/lang/String;)V
       // 63d: athrow
       // 63e: astore 11
-      // 640: new java/lang/Object
+      // 640: new net/rim/device/api/browser/field/RenderingException
       // 643: dup
       // 644: aload 11
       // 646: invokevirtual java/lang/Throwable.getMessage ()Ljava/lang/String;
@@ -2105,15 +2108,15 @@ public final class MediaBrowserField
       // 695: astore 27
       // 697: aload 27
       // 699: dup
-      // 69a: instanceof java/lang/Object
+      // 69a: instanceof net/rim/device/apps/internal/browser/page/RenderThread
       // 69d: ifne 6a4
       // 6a0: pop
       // 6a1: goto 6b4
-      // 6a4: checkcast java/lang/Object
+      // 6a4: checkcast net/rim/device/apps/internal/browser/page/RenderThread
       // 6a7: aconst_null
       // 6a8: invokevirtual net/rim/device/apps/internal/browser/page/RenderThread.setInput (Ljava/io/InputStream;)V
       // 6ab: aload 27
-      // 6ad: checkcast java/lang/Object
+      // 6ad: checkcast net/rim/device/apps/internal/browser/page/RenderThread
       // 6b0: aconst_null
       // 6b1: invokevirtual net/rim/device/apps/internal/browser/page/RenderThread.setConnection (Ljavax/microedition/io/Connection;)V
       // 6b4: aload 26
@@ -2149,7 +2152,7 @@ public final class MediaBrowserField
    }
 
    private final boolean resetStreamingOnEOM() {
-      if (this._ds instanceof Object) {
+      if (this._ds instanceof HTTPDataSource) {
          HTTPBufferingManager bufferingManager = this.getBufferingManager();
          return bufferingManager == null || !bufferingManager.bufferContainsAllContent();
       } else {
@@ -2200,14 +2203,14 @@ public final class MediaBrowserField
       // 035: invokeinterface javax/microedition/media/Player.realize ()V 1
       // 03a: aload 0
       // 03b: getfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._player Ljavax/microedition/media/Player;
-      // 03e: instanceof java/lang/Object
+      // 03e: instanceof net/rim/device/internal/media/StreamDataControl
       // 041: ifeq 099
       // 044: aload 0
       // 045: getfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._playlist Lnet/rim/device/internal/media/Playlist;
       // 048: ifnull 05d
       // 04b: aload 0
       // 04c: getfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._player Ljavax/microedition/media/Player;
-      // 04f: checkcast java/lang/Object
+      // 04f: checkcast net/rim/device/internal/media/StreamDataControl
       // 052: ldc_w "big_session"
       // 055: getstatic java/lang/Boolean.TRUE Ljava/lang/Boolean;
       // 058: invokeinterface net/rim/device/internal/media/StreamDataControl.setKeyValue (Ljava/lang/String;Ljava/lang/Object;)V 3
@@ -2232,9 +2235,9 @@ public final class MediaBrowserField
       // 081: istore 1
       // 082: aload 0
       // 083: getfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._player Ljavax/microedition/media/Player;
-      // 086: checkcast java/lang/Object
+      // 086: checkcast net/rim/device/internal/media/StreamDataControl
       // 089: ldc_w "audiosource"
-      // 08c: new java/lang/Object
+      // 08c: new java/lang/Integer
       // 08f: dup
       // 090: iload 1
       // 091: invokespecial java/lang/Integer.<init> (I)V
@@ -2243,34 +2246,34 @@ public final class MediaBrowserField
       // 09a: getfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._player Ljavax/microedition/media/Player;
       // 09d: ldc_w "javax.microedition.media.control.MetaDataControl"
       // 0a0: invokeinterface javax/microedition/media/Controllable.getControl (Ljava/lang/String;)Ljavax/microedition/media/Control; 2
-      // 0a5: checkcast java/lang/Object
+      // 0a5: checkcast javax/microedition/media/control/MetaDataControl
       // 0a8: astore 1
       // 0a9: aload 0
       // 0aa: getfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._player Ljavax/microedition/media/Player;
       // 0ad: ldc_w "net.rim.device.api.media.control.BinaryMetaDataControl"
       // 0b0: invokeinterface javax/microedition/media/Controllable.getControl (Ljava/lang/String;)Ljavax/microedition/media/Control; 2
-      // 0b5: checkcast java/lang/Object
+      // 0b5: checkcast net/rim/device/api/media/control/BinaryMetaDataControl
       // 0b8: astore 2
       // 0b9: aload 0
       // 0ba: aload 0
       // 0bb: getfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._player Ljavax/microedition/media/Player;
       // 0be: ldc_w "javax.microedition.media.control.VideoControl"
       // 0c1: invokeinterface javax/microedition/media/Controllable.getControl (Ljava/lang/String;)Ljavax/microedition/media/Control; 2
-      // 0c6: checkcast java/lang/Object
+      // 0c6: checkcast javax/microedition/media/control/VideoControl
       // 0c9: putfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._videoControl Ljavax/microedition/media/control/VideoControl;
       // 0cc: aload 0
       // 0cd: aload 0
       // 0ce: getfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._player Ljavax/microedition/media/Player;
       // 0d1: ldc_w "net.rim.device.api.media.control.AudioPathControl"
       // 0d4: invokeinterface javax/microedition/media/Controllable.getControl (Ljava/lang/String;)Ljavax/microedition/media/Control; 2
-      // 0d9: checkcast java/lang/Object
+      // 0d9: checkcast net/rim/device/api/media/control/AudioPathControl
       // 0dc: putfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._audioPathControl Lnet/rim/device/api/media/control/AudioPathControl;
       // 0df: aload 0
       // 0e0: aload 0
       // 0e1: getfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._player Ljavax/microedition/media/Player;
       // 0e4: ldc_w "javax.microedition.media.control.VolumeControl"
       // 0e7: invokeinterface javax/microedition/media/Controllable.getControl (Ljava/lang/String;)Ljavax/microedition/media/Control; 2
-      // 0ec: checkcast java/lang/Object
+      // 0ec: checkcast javax/microedition/media/control/VolumeControl
       // 0ef: putfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._volumeControl Ljavax/microedition/media/control/VolumeControl;
       // 0f2: aload 0
       // 0f3: getfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._volumeControl Ljavax/microedition/media/control/VolumeControl;
@@ -2433,7 +2436,7 @@ public final class MediaBrowserField
       // 247: getfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._currentUrl Ljava/lang/String;
       // 24a: invokestatic net/rim/device/apps/api/utility/general/URI.getAbsoluteURL (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
       // 24d: astore 5
-      // 24f: new java/lang/Object
+      // 24f: new net/rim/device/api/browser/field/RequestedResource
       // 252: dup
       // 253: aload 5
       // 255: invokespecial net/rim/device/api/browser/field/RequestedResource.<init> (Ljava/lang/String;)V
@@ -2446,11 +2449,11 @@ public final class MediaBrowserField
       // 264: astore 8
       // 266: aload 7
       // 268: dup
-      // 269: instanceof java/lang/Object
+      // 269: instanceof net/rim/device/api/browser/field/ResourceProvider
       // 26c: ifne 273
       // 26f: pop
       // 270: goto 280
-      // 273: checkcast java/lang/Object
+      // 273: checkcast net/rim/device/api/browser/field/ResourceProvider
       // 276: aload 6
       // 278: aconst_null
       // 279: invokeinterface net/rim/device/api/browser/field/ResourceProvider.getInputConnection (Lnet/rim/device/api/browser/field/RequestedResource;Lnet/rim/device/api/browser/field/BrowserContent;)Ljavax/microedition/io/InputConnection; 3
@@ -2617,7 +2620,7 @@ public final class MediaBrowserField
       // 3e0: ifnull 40d
       // 3e3: aload 0
       // 3e4: getfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._browserContent Lnet/rim/device/api/browser/field/BrowserContentBaseImpl;
-      // 3e7: new java/lang/Object
+      // 3e7: new java/lang/StringBuffer
       // 3ea: dup
       // 3eb: invokespecial java/lang/StringBuffer.<init> ()V
       // 3ee: sipush 833
@@ -2658,11 +2661,11 @@ public final class MediaBrowserField
       // 441: aload 0
       // 442: getfield net/rim/device/apps/internal/browser/plugin/media/field/MediaBrowserField._ds Ljavax/microedition/media/protocol/DataSource;
       // 445: dup
-      // 446: instanceof java/lang/Object
+      // 446: instanceof net/rim/device/internal/media/HTTPDataSource
       // 449: ifne 450
       // 44c: pop
       // 44d: goto 458
-      // 450: checkcast java/lang/Object
+      // 450: checkcast net/rim/device/internal/media/HTTPDataSource
       // 453: lload 6
       // 455: invokevirtual net/rim/device/internal/media/HTTPDataSource.setEstimatedTime (J)V
       // 458: aload 0
@@ -2924,7 +2927,7 @@ public final class MediaBrowserField
    }
 
    private final void stopHTTPBuffer() {
-      if (this._ds instanceof Object) {
+      if (this._ds instanceof HTTPDataSource) {
          HTTPBufferingManager bufferingManager = this.getBufferingManager();
          if (bufferingManager != null && !bufferingManager.bufferContainsAllContent()) {
             this._playWhenStreamingReady = false;
@@ -2967,7 +2970,7 @@ public final class MediaBrowserField
       if (this._videoControl != null && this._screenManager != null) {
          int videoWidth = this._screenManager.getWidth();
          int videoHeight = this._screenManager.getHeight();
-         XYRect rect = (XYRect)(new Object(this._screenManager.getExtent()));
+         XYRect rect = new XYRect(this._screenManager.getExtent());
          this._screenManager.getManager().transformToScreen(rect);
          int videoX = rect.x;
          int videoY = rect.y;
@@ -3015,12 +3018,12 @@ public final class MediaBrowserField
 
       ActiveMedia active = ActiveMediaObservable.getActiveMedia();
       if (active != null && active != this.getScreen()) {
-         String logEvent = ((StringBuffer)(new Object("AVM,"))).append(active.toString()).toString();
+         String logEvent = "AVM," + active.toString();
          EventLogger.logEvent(-6484753878348010781L, logEvent.getBytes(), 2);
          return false;
       }
 
-      if (active != null && this._player != null && this._player instanceof Object) {
+      if (active != null && this._player != null && this._player instanceof StreamDataControl) {
          try {
             ((StreamDataControl)this._player).setKeyValue("active_media_source", active);
             return true;
@@ -3033,7 +3036,7 @@ public final class MediaBrowserField
    }
 
    private final boolean restartHTTPBuffering() {
-      if (this._ds instanceof Object) {
+      if (this._ds instanceof HTTPDataSource) {
          HTTPBufferingManager bufferingManager = this.getBufferingManager();
          if (bufferingManager == null) {
             Object lock = Application.getEventLock();
@@ -3076,10 +3079,10 @@ public final class MediaBrowserField
       this._fileBased = fileBased;
       this._currentUrl = currentUrl;
       if (bufferingManager != null) {
-         this._ds = (DataSource)(new Object(this, bufferingManager, currentUrl, contentType));
-      } else if (input instanceof Object) {
-         this._ds = (DataSource)(new Object(input, contentType, size));
-      } else if (!(conn instanceof Object)) {
+         this._ds = new HTTPDataSource(this, bufferingManager, currentUrl, contentType);
+      } else if (input instanceof FileHandleProvider) {
+         this._ds = new FileDataSource(input, contentType, size);
+      } else if (!(conn instanceof RTSPConnection)) {
          this._ds = new MediaDataSource(input, size, contentType);
       } else {
          RTSPConnection rtsp = (RTSPConnection)conn;
@@ -3184,7 +3187,7 @@ public final class MediaBrowserField
       InputConnection inputConnection = this.requestResource(this._currentUrl);
       if (inputConnection != null) {
          boolean fileBased = false;
-         if (inputConnection instanceof Object) {
+         if (inputConnection instanceof FileConnection) {
             fileBased = true;
             if (!((FileConnection)inputConnection).exists()) {
                try {
@@ -3223,7 +3226,7 @@ public final class MediaBrowserField
    private final void setShuffledPlaylistOrder() {
       this._shuffled = true;
       if (this._playlistOrder.length != 0) {
-         Random random = (Random)(new Object(System.currentTimeMillis()));
+         Random random = new Random(System.currentTimeMillis());
          int currentIndex = this._playlistCurrentIndex - 1;
          int numEntries = this._playlistOrder.length;
 
@@ -3258,7 +3261,7 @@ public final class MediaBrowserField
       }
 
       Node node = this._modelBar.getNodeObject(handle);
-      if (!(node instanceof Object)) {
+      if (!(node instanceof ViewportNode)) {
          return false;
       }
 
@@ -3466,7 +3469,7 @@ public final class MediaBrowserField
    private final void destroyDataSource() {
       if (this._ds != null) {
          if (!(this._ds instanceof MediaDataSource)) {
-            if (this._ds instanceof Object) {
+            if (this._ds instanceof HTTPDataSource) {
                this._ds.disconnect();
             } else {
                label30:

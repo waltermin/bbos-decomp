@@ -16,7 +16,7 @@ public class LongTermHistoryNode implements Persistable {
 
    public LongTermHistoryNode(String url, String title, BrowserConfigRecord browserConfig) {
       this._timestamp = System.currentTimeMillis();
-      URI uri = (URI)(new Object(url));
+      URI uri = new URI(url);
       this._domain = encode(uri.getAuthority());
       this._url = encode(url);
       this._title = encode(title);

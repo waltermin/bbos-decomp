@@ -18,7 +18,7 @@ public final class DeleteFilterCommand implements DomainCommand {
       Mailbox mailbox = ClientSessionState.getInstance().getMailboxToModify();
       Filter filter = mailbox.getFilter(filterId);
       if (filter == null) {
-         throw new Object(((StringBuffer)(new Object("Unknown filter specified: "))).append(filterName).toString());
+         throw new IllegalArgumentException("Unknown filter specified: " + filterName);
       }
 
       ClientSessionState.getInstance().setFilterToModify(filter);

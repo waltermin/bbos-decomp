@@ -31,7 +31,7 @@ final class PeerConversation$OpenConversationVerb extends Verb implements Runnab
    }
 
    final void setParameter(Object parameter, boolean focus) {
-      this._context = ContextObject.clone(parameter instanceof Object ? parameter : null);
+      this._context = ContextObject.clone(parameter instanceof ContextObject ? parameter : null);
       if (!focus) {
          this._context.setFlag(26);
       }

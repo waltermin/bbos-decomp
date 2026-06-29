@@ -26,21 +26,21 @@ public final class ReminderModelAbsoluteImpl extends ReminderModelImpl implement
    @Override
    public final Field getField(Object context) {
       String label = CommonResources.getString(9052);
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          ContextObject co = (ContextObject)context;
          if (co.getFlag(1)) {
             label = "";
          }
       }
 
-      DateField reminderDateField = (DateField)(new Object(label, this.getTime(), DateFormat.getInstance(46)));
+      DateField reminderDateField = new DateField(label, this.getTime(), DateFormat.getInstance(46));
       reminderDateField.setTimeZone(TimeZone.getTimeZone(DateTimeUtilities.GMT));
       return reminderDateField;
    }
 
    @Override
    public final boolean grabDataFromField(Field field, Object context) {
-      if (!(field instanceof Object)) {
+      if (!(field instanceof DateField)) {
          return false;
       }
 

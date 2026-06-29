@@ -29,7 +29,7 @@ public final class MatrixDecomposition implements TransformationMatrix {
       this._ty = matrix[position + 5];
       int det = Fixed32.mul(xx, yy) - Fixed32.mul(xy, yx);
       if (det == 0) {
-         throw new Object("cannot decompose matrix with zero determinant");
+         throw new IllegalArgumentException("cannot decompose matrix with zero determinant");
       }
 
       this._theta = Fixed32.atand2(yx, xx);

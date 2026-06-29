@@ -29,7 +29,7 @@ final class ETManager$GPSFixThread extends Thread {
          try {
             this._lock.notify();
          } catch (Throwable var6) {
-            Logger.logError(this, ((StringBuffer)(new Object("stopAttempt exception: "))).append(e).toString());
+            Logger.logError(this, "stopAttempt exception: " + e);
             return;
          }
       }
@@ -45,7 +45,7 @@ final class ETManager$GPSFixThread extends Thread {
       Logger.logEvent(this, "to attempt lock.", false);
       synchronized (this._lock) {
          while (!this._stop) {
-            Logger.logEvent(this, ((StringBuffer)(new Object("lock attempt: "))).append(count).toString(), false);
+            Logger.logEvent(this, "lock attempt: " + count, false);
             if (this._mgr.updateLocation(true, -1) || count++ >= 3) {
                break;
             }
@@ -57,7 +57,7 @@ final class ETManager$GPSFixThread extends Thread {
       }
 
       this._waitingForGPS = false;
-      Logger.logEvent(this, ((StringBuffer)(new Object("final attempts: "))).append(count).append(", stop=").append(this._stop).toString(), false);
+      Logger.logEvent(this, "final attempts: " + count + ", stop=" + this._stop, false);
       if (!this._stop) {
          this._isFinished = true;
 
@@ -67,7 +67,7 @@ final class ETManager$GPSFixThread extends Thread {
                return;
             }
          } catch (Throwable var6) {
-            Logger.logError(this, ((StringBuffer)(new Object("notfy exception: "))).append(e).toString());
+            Logger.logError(this, "notfy exception: " + e);
             return;
          }
       }
@@ -75,14 +75,13 @@ final class ETManager$GPSFixThread extends Thread {
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object("GPSFixThread(")))
-         .append(Integer.toHexString(this.hashCode()))
-         .append("),waitingForGPS=")
-         .append(this._waitingForGPS)
-         .append(",stop=")
-         .append(this._stop)
-         .append(",isFinished=")
-         .append(this._isFinished)
-         .toString();
+      return "GPSFixThread("
+         + Integer.toHexString(this.hashCode())
+         + "),waitingForGPS="
+         + this._waitingForGPS
+         + ",stop="
+         + this._stop
+         + ",isFinished="
+         + this._isFinished;
    }
 }

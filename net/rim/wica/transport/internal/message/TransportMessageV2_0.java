@@ -77,7 +77,7 @@ public class TransportMessageV2_0 implements TransportMessageV2 {
    @Override
    public TransportMessageV2 bundle(TransportMessageV2[] messages) {
       if (messages == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else if (messages.length == 0) {
          return null;
       } else {
@@ -161,7 +161,7 @@ public class TransportMessageV2_0 implements TransportMessageV2 {
       for (int i = this._toBundle.length - 1; i >= 0; i--) {
          next = this._toBundle[i];
          if (next == null) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          if (!(next instanceof TransportMessageV2_0)) {

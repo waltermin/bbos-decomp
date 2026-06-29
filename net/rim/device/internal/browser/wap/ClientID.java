@@ -58,7 +58,7 @@ public final class ClientID {
             case 5:
                if (networkType == 4) {
                   byte[] imsi = CDMAInfo.getIMSI();
-                  StringBuffer buff = (StringBuffer)(new Object());
+                  StringBuffer buff = new StringBuffer();
 
                   for (int i = 0; i < imsi.length; i++) {
                      NumberUtilities.appendNumber(buff, imsi[i], 16);
@@ -76,7 +76,7 @@ public final class ClientID {
 
                int apnId = RadioInfo.getAccessPointNumber(apn);
                byte[] ipv4 = RadioInfo.getIPAddress(apnId);
-               StringBuffer buff = (StringBuffer)(new Object());
+               StringBuffer buff = new StringBuffer();
 
                for (int i = 0; i < ipv4.length; i++) {
                   NumberUtilities.appendNumber(buff, ipv4[i], 10, 3);
@@ -86,7 +86,7 @@ public final class ClientID {
                break;
             case 10:
                if (networkType == 5) {
-                  value = ((StringBuffer)(new Object("0-"))).append(SIMCard.iccidToString(SIMCard.getICCID())).toString();
+                  value = "0-" + SIMCard.iccidToString(SIMCard.getICCID());
                   type = 0;
                }
          }
@@ -97,7 +97,7 @@ public final class ClientID {
       if (value == null) {
          return null;
       } else {
-         return prefixIdType ? ((StringBuffer)(new Object())).append(Integer.toString(type)).append(value).toString() : value;
+         return prefixIdType ? Integer.toString(type) + value : value;
       }
    }
 }

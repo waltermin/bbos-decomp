@@ -4,6 +4,8 @@ import net.rim.device.api.system.BackdoorKeyProcessor;
 import net.rim.device.api.system.RadioInfo;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.options.SaveableMainScreenOptionsListItem;
@@ -35,8 +37,8 @@ final class MMSOptionsScreen extends SaveableMainScreenOptionsListItem {
       int lockedOptions = MMSClientServiceBook.getLockedOptionsFlags();
       int allOptions = 195;
       if ((lockedOptions & allOptions) != allOptions) {
-         mainScreen.add((Field)(new Object()));
-         mainScreen.add((Field)(new Object(MMSResources.getString(29), 36028797018963968L)));
+         mainScreen.add(new SeparatorField());
+         mainScreen.add(new LabelField(MMSResources.getString(29), 36028797018963968L));
          if (!MMSClientServiceBook.isLockedOption(1)) {
             mainScreen.add(new CheckboxOptionField(30, 1, true));
          }
@@ -56,8 +58,8 @@ final class MMSOptionsScreen extends SaveableMainScreenOptionsListItem {
 
       int var10 = 12;
       if ((lockedOptions & var10) != var10) {
-         mainScreen.add((Field)(new Object()));
-         mainScreen.add((Field)(new Object(MMSResources.getString(32), 36028797018963968L)));
+         mainScreen.add(new SeparatorField());
+         mainScreen.add(new LabelField(MMSResources.getString(32), 36028797018963968L));
          if (!MMSClientServiceBook.isLockedOption(4)) {
             mainScreen.add(new CheckboxOptionField(33, 4));
          }
@@ -104,7 +106,7 @@ final class MMSOptionsScreen extends SaveableMainScreenOptionsListItem {
                   MMSOptions options = MMSOptions.getInstance();
                   boolean value = !options.getOptionFlag(256);
                   options.setOptionFlag(256, value);
-                  Dialog.inform(((StringBuffer)(new Object("Dump send/receive bytes = "))).append(value).toString());
+                  Dialog.inform("Dump send/receive bytes = " + value);
                }
                break;
             case 1280264006:
@@ -112,7 +114,7 @@ final class MMSOptionsScreen extends SaveableMainScreenOptionsListItem {
                   MMSOptions options = MMSOptions.getInstance();
                   boolean value = !options.getOptionFlag(512);
                   options.setOptionFlag(512, value);
-                  Dialog.inform(((StringBuffer)(new Object("Dump pdu fields = "))).append(value).toString());
+                  Dialog.inform("Dump pdu fields = " + value);
                }
                break;
             case 1296913219:
@@ -148,8 +150,8 @@ final class MMSOptionsScreen extends SaveableMainScreenOptionsListItem {
    }
 
    private final void addMMSCBasicFields(boolean editable) {
-      this._mainScreen.add((Field)(new Object()));
-      this._mainScreen.add((Field)(new Object("MMSC Access:", 36028797018963968L)));
+      this._mainScreen.add(new SeparatorField());
+      this._mainScreen.add(new LabelField("MMSC Access:", 36028797018963968L));
       String ppgURL = MMSTransportServiceBook.getPPGAddress();
       if (ppgURL != null) {
          Field field = new PPGUrlOptionField(ppgURL);
@@ -197,8 +199,8 @@ final class MMSOptionsScreen extends SaveableMainScreenOptionsListItem {
             this._mainScreen.add(new ApnOptionField(apn));
          }
 
-         this._mainScreen.add((Field)(new Object()));
-         this._mainScreen.add((Field)(new Object("Client Configuration:", 36028797018963968L)));
+         this._mainScreen.add(new SeparatorField());
+         this._mainScreen.add(new LabelField("Client Configuration:", 36028797018963968L));
          this._mainScreen.add(new MMSCVersionOptionField());
          this._mainScreen.add(new UAProfUrlOptionField());
          this._mainScreen.add(new ConnectionTimeoutOptionField());
@@ -218,8 +220,8 @@ final class MMSOptionsScreen extends SaveableMainScreenOptionsListItem {
          int choiceType = 2;
          this._mainScreen.add(new MMSOptionsScreen$3(this, choiceType, prompt, MMSClientServiceBook.getAutoRetrievalMode()));
          this._mainScreen.add(new OneVideoPerMMSOptionField());
-         this._mainScreen.add((Field)(new Object()));
-         this._mainScreen.add((Field)(new Object("Restricted Mode Settings", 36028797018963968L)));
+         this._mainScreen.add(new SeparatorField());
+         this._mainScreen.add(new LabelField("Restricted Mode Settings", 36028797018963968L));
          this._mainScreen.add(new RestrictedSizeModeOptionField());
          this._mainScreen.add(new MaximumMessageSizeOptionField());
          this._mainScreen.add(new RestrictedSendModeOptionField());
@@ -229,12 +231,12 @@ final class MMSOptionsScreen extends SaveableMainScreenOptionsListItem {
          this._mainScreen.add(new MaximumImageWidthOptionField());
          this._mainScreen.add(new MaximumImageHeightOptionField());
          this._mainScreen.add(new AllowImageReductionBeforeSendOptionField());
-         this._mainScreen.add((Field)(new Object()));
-         this._mainScreen.add((Field)(new Object("Voice Note Settings:", 36028797018963968L)));
+         this._mainScreen.add(new SeparatorField());
+         this._mainScreen.add(new LabelField("Voice Note Settings:", 36028797018963968L));
          this._mainScreen.add(new MaximumVoiceNoteRecordTimeOptionField());
          this._mainScreen.add(new MaximumVoiceNoteRecordSizeOptionField());
-         this._mainScreen.add((Field)(new Object()));
-         this._mainScreen.add((Field)(new Object("Default Options:", 36028797018963968L)));
+         this._mainScreen.add(new SeparatorField());
+         this._mainScreen.add(new LabelField("Default Options:", 36028797018963968L));
          prompt = "Multimedia Reception:";
          int var6 = 1;
          this._mainScreen.add(new MMSOptionsScreen$4(this, var6, prompt, MMSClientServiceBook.getDefaultReceptionMode()));
@@ -247,8 +249,8 @@ final class MMSOptionsScreen extends SaveableMainScreenOptionsListItem {
          this._mainScreen.add(new SBCheckboxOptionField("Confirm Read", 128, false));
          this._mainScreen.add(new SBCheckboxOptionField("Reject Anonymous Messages", 4, false));
          this._mainScreen.add(new SBCheckboxOptionField("Reject Advertisements", 8, false));
-         this._mainScreen.add((Field)(new Object()));
-         this._mainScreen.add((Field)(new Object("Locked Options:", 36028797018963968L)));
+         this._mainScreen.add(new SeparatorField());
+         this._mainScreen.add(new LabelField("Locked Options:", 36028797018963968L));
          this._mainScreen.add(new SBLockedCheckboxOptionField("Allow Delivery Confirmation", 1, false));
          this._mainScreen.add(new SBLockedCheckboxOptionField("Allow Read Confirmation", 2, false));
          this._mainScreen.add(new SBLockedCheckboxOptionField("Confirm Delivery", 64, false));
@@ -256,8 +258,8 @@ final class MMSOptionsScreen extends SaveableMainScreenOptionsListItem {
          this._mainScreen.add(new SBLockedCheckboxOptionField("Reject Anonymous Messages", 4, false));
          this._mainScreen.add(new SBLockedCheckboxOptionField("Reject Advertisements", 8, false));
          if (MMSTransportServiceBook.isWAPServiceRecord()) {
-            this._mainScreen.add((Field)(new Object()));
-            this._mainScreen.add((Field)(new Object("WAP Configuration:", 36028797018963968L)));
+            this._mainScreen.add(new SeparatorField());
+            this._mainScreen.add(new LabelField("WAP Configuration:", 36028797018963968L));
             this._mainScreen.add(new MMSCWAPAccessModeField());
             this._mainScreen.add(new MMSCWTLSModeField());
             this._mainScreen.add(new MMSCWTLSClientTypeField());

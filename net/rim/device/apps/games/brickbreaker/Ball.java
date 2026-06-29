@@ -48,10 +48,10 @@ final class Ball {
       this.HALF_SIZE = this.BALL_SIZE >> 1;
       this.BOARD_LEFT = this.HALF_SIZE;
       this.BOARD_TOP = this.HALF_SIZE;
-      this.bubbleTop = (XYRect)(new Object(0, 0, 0, 0));
-      this.bubbleLeft = (XYRect)(new Object(0, 0, 0, 0));
-      this.bubbleRight = (XYRect)(new Object(0, 0, 0, 0));
-      this.result = (XYPoint)(new Object(0, 0));
+      this.bubbleTop = new XYRect(0, 0, 0, 0);
+      this.bubbleLeft = new XYRect(0, 0, 0, 0);
+      this.bubbleRight = new XYRect(0, 0, 0, 0);
+      this.result = new XYPoint(0, 0);
       this.tickPos = 0;
       this._board = b;
       this.bricks = initialBricks;

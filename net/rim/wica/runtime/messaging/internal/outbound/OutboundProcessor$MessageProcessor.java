@@ -64,9 +64,7 @@ final class OutboundProcessor$MessageProcessor extends OutboundProcessor$Interna
             if (m.getAGID() != agIdCache) {
                q = (OutboundQueue)this.this$0._queueTable.get(m.getAGID());
                if (q == null) {
-                  InternalLogger.logWarning(
-                     this.this$0, ((StringBuffer)(new Object("Queue for MDS Services "))).append(m.getAGID()).append(" not found.").toString(), null, m
-                  );
+                  InternalLogger.logWarning(this.this$0, "Queue for MDS Services " + m.getAGID() + " not found.", null, m);
                   continue;
                }
 

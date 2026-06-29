@@ -7,6 +7,8 @@ import java.util.Vector;
 import net.rim.device.api.crypto.CryptoException;
 import net.rim.device.api.crypto.CryptoIOException;
 import net.rim.device.api.crypto.CryptoSystemProperties;
+import net.rim.device.api.crypto.CryptoTokenAccessDeniedException;
+import net.rim.device.api.crypto.CryptoTokenCancelException;
 import net.rim.device.api.crypto.PrivateKey;
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.CertificateChainProperties;
@@ -28,14 +30,18 @@ import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.ConversionProvider;
 import net.rim.device.apps.api.framework.model.RIMModel;
+import net.rim.device.apps.api.messaging.EmailBodyProvider;
 import net.rim.device.apps.api.utility.framework.SubmemberUtilities;
 import net.rim.device.apps.internal.blackberryemail.body.EmailBodyModelImpl;
 import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
 import net.rim.device.apps.internal.blackberryemail.email.EmailPayloadModel;
+import net.rim.device.apps.internal.blackberryemail.email.ProxyModel;
 import net.rim.device.apps.internal.blackberryemail.email.emailsetting.EmailSettingCollectionImpl;
 import net.rim.device.apps.internal.blackberryemail.email.emailsetting.EmailSettingModelImpl;
 import net.rim.device.apps.internal.blackberryemail.header.EmailHeaderModel;
 import net.rim.device.apps.internal.blackberryemail.resources.EmailResources;
+import net.rim.device.apps.internal.blackberryemail.unknown.UnknownMimePartModel;
+import net.rim.device.apps.internal.commonmodels.body.BodyModel;
 import net.rim.device.apps.internal.secureemail.AbortSendSecureEmailException;
 import net.rim.device.apps.internal.secureemail.ContentCiphers;
 import net.rim.device.apps.internal.secureemail.RecipientData;
@@ -74,15 +80,15 @@ public class SecureEmailMessageEncoder implements MessageEncoder {
 
       for (int i = 0; i < numMessageModels; i++) {
          RIMModel currentMessageModel = (RIMModel)message.getAt(i);
-         if (currentMessageModel instanceof Object) {
+         if (currentMessageModel instanceof EmailPayloadModel) {
             EmailPayloadModel emailPayloadModel = (EmailPayloadModel)currentMessageModel;
             int numOriginalMessageModels = emailPayloadModel.size();
 
             for (int j = 0; j < numOriginalMessageModels; j++) {
                Object currentOriginalMessageModel = emailPayloadModel.getAt(j);
-               if ((currentOriginalMessageModel instanceof Object || currentOriginalMessageModel instanceof Object)
-                  && !(currentOriginalMessageModel instanceof Object)
-                  && !(currentOriginalMessageModel instanceof Object)) {
+               if ((currentOriginalMessageModel instanceof ProxyModel || currentOriginalMessageModel instanceof UnknownMimePartModel)
+                  && !(currentOriginalMessageModel instanceof BodyModel)
+                  && !(currentOriginalMessageModel instanceof EmailBodyProvider)) {
                   return true;
                }
             }
@@ -97,14 +103,14 @@ public class SecureEmailMessageEncoder implements MessageEncoder {
 
       for (int i = 0; i < numMessageModels; i++) {
          RIMModel currentMessageModel = (RIMModel)message.getAt(i);
-         if (currentMessageModel instanceof Object) {
+         if (currentMessageModel instanceof EmailPayloadModel) {
             EmailPayloadModel emailPayloadModel = (EmailPayloadModel)currentMessageModel;
             int numOriginalMessageModels = emailPayloadModel.size();
 
             for (int j = 0; j < numOriginalMessageModels; j++) {
                Object currentOriginalMessageModel = emailPayloadModel.getAt(j);
                if (!(currentOriginalMessageModel instanceof SecureEmailBodyModel)) {
-                  if (currentOriginalMessageModel instanceof Object) {
+                  if (currentOriginalMessageModel instanceof EmailBodyModelImpl) {
                      EmailBodyModelImpl bodyModel = (EmailBodyModelImpl)currentOriginalMessageModel;
                      if (bodyModel.isMoreAvailable() || bodyModel.isTruncated()) {
                         return true;
@@ -176,7 +182,7 @@ public class SecureEmailMessageEncoder implements MessageEncoder {
          );
          int bestChainIndex = CertificateChainProperties.selectBestCertificateChain(certificateChainProperties);
          if (!this.isCertificateRecommended(certificate, certificateChains[bestChainIndex], certificateChainProperties[bestChainIndex], encodingActions)) {
-            String[] containerStringLowerSingularArray = new Object[]{this._secureEmailFactory.getPublicKeyContainerString(false, false)};
+            String[] containerStringLowerSingularArray = new String[]{this._secureEmailFactory.getPublicKeyContainerString(false, false)};
             String certificateName = null;
             if (encodingActions == 2) {
                certificateName = MessageFormat.format(SecureEmailResources.getString(173), containerStringLowerSingularArray);
@@ -184,8 +190,8 @@ public class SecureEmailMessageEncoder implements MessageEncoder {
                certificateName = MessageFormat.format(SecureEmailResources.getString(174), containerStringLowerSingularArray);
             }
 
-            String message = MessageFormat.format(SecureEmailResources.getString(175), new Object[]{certificateName, keyStoreData.getLabel()});
-            String[] userOptions = new Object[4];
+            String message = MessageFormat.format(SecureEmailResources.getString(175), new String[]{certificateName, keyStoreData.getLabel()});
+            String[] userOptions = new String[4];
             String[] temp = SecureEmailResources.getStringArray(176);
 
             for (int i = 0; i < 4; i++) {
@@ -193,7 +199,7 @@ public class SecureEmailMessageEncoder implements MessageEncoder {
             }
 
             userOptions[2] = MessageFormat.format(userOptions[2], containerStringLowerSingularArray);
-            SimpleChoiceDialog scd = (SimpleChoiceDialog)(new Object(message, userOptions, 0, null, 134217728));
+            SimpleChoiceDialog scd = new SimpleChoiceDialog(message, userOptions, 0, null, 134217728);
 
             while (true) {
                BackgroundDialog.show(scd);
@@ -229,10 +235,10 @@ public class SecureEmailMessageEncoder implements MessageEncoder {
          return false;
       }
 
-      if (t instanceof Object) {
+      if (t instanceof CryptoIOException) {
          CryptoIOException cioe = (CryptoIOException)t;
          CryptoException ce = cioe.getCryptoException();
-         if (ce instanceof Object || ce instanceof Object) {
+         if (ce instanceof CryptoTokenCancelException || ce instanceof CryptoTokenAccessDeniedException) {
             return false;
          }
 
@@ -240,7 +246,7 @@ public class SecureEmailMessageEncoder implements MessageEncoder {
       }
 
       String throwableString = t.toString();
-      Dialog.alert(((StringBuffer)(new Object())).append(SecureEmailResources.getString(8)).append(" (").append(throwableString).append(")").toString());
+      Dialog.alert(SecureEmailResources.getString(8) + " (" + throwableString + ")");
       EventLogger.logEvent(this._secureEmailFactory.getEventLoggerGUID(), throwableString.getBytes());
       return false;
    }
@@ -264,15 +270,15 @@ public class SecureEmailMessageEncoder implements MessageEncoder {
          this.setGlobalOptionsDefaults(secureEmailOptions);
       }
 
-      ByteArrayOutputStream innermostOutputStream = (ByteArrayOutputStream)(new Object());
+      ByteArrayOutputStream innermostOutputStream = new ByteArrayOutputStream();
       OutputStream outermostOutputStream = this.createOutputStream(innermostOutputStream, secureEmailOptions);
       if (outermostOutputStream == null) {
          throw new AbortSendSecureEmailException();
       }
 
       this.updateSigningAndEncryptingMessage();
-      Vector modelsToEncode = (Vector)(new Object());
-      StringBuffer bufferToEncode = (StringBuffer)(new Object());
+      Vector modelsToEncode = new Vector();
+      StringBuffer bufferToEncode = new StringBuffer();
       String autoSignature = null;
       if (!this._isPINMessage) {
          ServiceRecord serviceRecord = ServiceBook.getSB().getRecordByUidAndCid(this._serviceRecord.getUid(), "SYNC");
@@ -302,13 +308,13 @@ public class SecureEmailMessageEncoder implements MessageEncoder {
       Enumeration modelsToRemove = modelsToEncode.elements();
 
       while (modelsToRemove.hasMoreElements()) {
-         this._message.remove(modelsToRemove.nextElement());
+         this._message.remove((RIMModel)modelsToRemove.nextElement());
       }
    }
 
    protected PrivateKey locateMySigningPrivateKey(KeyStoreData signingKeyStoreData, SecureEmailOptions options, String ticketPrompt) {
       if (signingKeyStoreData == null) {
-         String[] messageFormatArguments = new Object[]{
+         String[] messageFormatArguments = new String[]{
             this._secureEmailFactory.getPublicKeyContainerString(false, false), this._secureEmailFactory.getEncodingString()
          };
          String noSigningString = MessageFormat.format(SecureEmailResources.getString(163), messageFormatArguments);
@@ -407,7 +413,7 @@ public class SecureEmailMessageEncoder implements MessageEncoder {
       }
 
       String[] cipherLabels = ContentCiphers.getDialogLabels();
-      String[] choices = new Object[10];
+      String[] choices = new String[10];
       choices[0] = SecureEmailResources.getStringArray(153)[0];
       int userSelectableContentCiphers = recipientContentCiphers & this._secureEmailUtilities.getITPolicyContentCiphers();
       int choiceIndex = 1;
@@ -422,7 +428,7 @@ public class SecureEmailMessageEncoder implements MessageEncoder {
       Array.resize(choices, choiceIndex);
       String dialogMessage = SecureEmailResources.getString(91);
       if (choiceIndex > 1) {
-         dialogMessage = ((StringBuffer)(new Object())).append(dialogMessage).append(SecureEmailResources.getString(92)).toString();
+         dialogMessage = dialogMessage + SecureEmailResources.getString(92);
       }
 
       int selectedIndex = BackgroundDialog.getChoice(dialogMessage, choices, 0);
@@ -446,10 +452,10 @@ public class SecureEmailMessageEncoder implements MessageEncoder {
 
    protected void addAttachments(MIMEOutputStream outputStream, Object[] attachments) {
       for (Object model : attachments) {
-         if (model instanceof Object) {
+         if (model instanceof ConversionProvider) {
             this._message.remove(model);
             ConversionProvider converter = (ConversionProvider)model;
-            ContextObject contextObject = (ContextObject)(new Object());
+            ContextObject contextObject = new ContextObject();
             contextObject.setFlag(43, 54);
             converter.convert(contextObject, outputStream);
          }
@@ -517,7 +523,7 @@ public class SecureEmailMessageEncoder implements MessageEncoder {
          result = false;
       } else if (this._secureEmailUtilities.isCertificateStale(bestProperties)
          && SecureEmailServerManager.getInstance().getCertificateServers(this._serviceRecord).length == 0) {
-         CertificateStatusRequest request = (CertificateStatusRequest)(new Object(bestChain, true, this._preferredKeyStore, null, null));
+         CertificateStatusRequest request = new CertificateStatusRequest(bestChain, true, this._preferredKeyStore, null, null);
          result = CertificateStatusProvider.requestCertificateStatusInternal(request, null);
       }
 

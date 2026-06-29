@@ -1,5 +1,6 @@
 package net.rim.blackberry.api.mail;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import net.rim.device.apps.api.transmission.rim.CMIMEUtilities;
@@ -24,7 +25,7 @@ public class TextBodyPart extends BodyPart {
 
    @Override
    public InputStream getInputStream() {
-      return (InputStream)(this._body != null ? new Object(this._body.getBytes()) : null);
+      return this._body != null ? new ByteArrayInputStream(this._body.getBytes()) : null;
    }
 
    @Override

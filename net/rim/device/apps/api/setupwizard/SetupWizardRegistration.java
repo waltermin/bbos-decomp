@@ -24,7 +24,7 @@ public class SetupWizardRegistration {
    }
 
    public static Vector getWizardPages() {
-      Vector allWizardPages = (Vector)(new Object());
+      Vector allWizardPages = new Vector();
       synchronized (_wizardProviders) {
          int numProviders = _wizardProviders.size();
 
@@ -43,7 +43,7 @@ public class SetupWizardRegistration {
    }
 
    public static Vector extractWizardCategories(Vector wizardPages) {
-      Vector categories = (Vector)(new Object());
+      Vector categories = new Vector();
       int numProviders = _wizardProviders.size();
 
       for (int i = 0; i < numProviders; i++) {
@@ -64,7 +64,7 @@ public class SetupWizardRegistration {
          synchronized (registry) {
             _wizardProviders = (Vector)registry.get(-6881666848190429556L);
             if (_wizardProviders == null) {
-               _wizardProviders = (Vector)(new Object());
+               _wizardProviders = new Vector();
                registry.put(-6881666848190429556L, _wizardProviders);
             }
          }

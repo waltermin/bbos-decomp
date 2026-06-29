@@ -23,10 +23,10 @@ public class DOWField extends Field implements FieldLabelProvider {
    private int _yPosOfWeekDays = 0;
    private String[] _dowFirstLetter = CommonResources.getStringArray(116);
    private String[] _dowShortForm = CommonResources.getStringArray(9094);
-   private TextRect _label = (TextRect)(new Object(this));
+   private TextRect _label = new TextRect(this);
    private String _labelText;
-   private BitSet _daysOfTheWeek = (BitSet)(new Object(7));
-   private BitSet _requiredDaysOfTheWeek = (BitSet)(new Object(7));
+   private BitSet _daysOfTheWeek = new BitSet(7);
+   private BitSet _requiredDaysOfTheWeek = new BitSet(7);
    private int _dowIndex;
    private char[] _hotKeys = new char[7];
    private int _firstDOWIndex;
@@ -266,13 +266,13 @@ public class DOWField extends Field implements FieldLabelProvider {
 
    @Override
    public void setLabelStringProvider(StringProvider label) {
-      throw new Object("Unsupported API");
+      throw new IllegalStateException("Unsupported API");
    }
 
    @Override
    public String toString() {
       boolean addComma = false;
-      StringBuffer s = (StringBuffer)(new Object());
+      StringBuffer s = new StringBuffer();
 
       for (int i = 0; i < 7; i++) {
          int dowIndex = i + this._firstDOWIndex;
@@ -335,7 +335,7 @@ public class DOWField extends Field implements FieldLabelProvider {
 
    private void calculateWidths() {
       this._greatestWidth = 0;
-      TextMetrics _textMetrics = (TextMetrics)(new Object());
+      TextMetrics _textMetrics = new TextMetrics();
       Font font = this.getFont();
       Font plainFont = font.derive(0);
       Font boldFont = font.derive(1);

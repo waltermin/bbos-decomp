@@ -8,7 +8,7 @@ public class CryptoOutputStream extends OutputStream {
 
    public CryptoOutputStream(OutputStream out) {
       if (out == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._out = out;

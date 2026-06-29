@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.lbs.maplet;
 
 import java.io.DataInputStream;
+import java.io.IOException;
 import net.rim.device.api.math.Fixed32;
 import net.rim.device.api.math.VecMath;
 import net.rim.device.api.synchronization.ConverterUtilities;
@@ -95,7 +96,7 @@ public final class Maplet implements Persistable, SyncObject {
       return null;
    }
 
-   public final int parseMapletFile(DataInputStream istream) {
+   public final int parseMapletFile(DataInputStream istream) throws IOException {
       int count = this.readLayers(istream);
       boolean bad = false;
 
@@ -108,7 +109,7 @@ public final class Maplet implements Persistable, SyncObject {
             int read = 0;
             read = istream.read(header);
             if (read < 12) {
-               throw new Object();
+               throw new IOException();
             }
 
             count += 12;
@@ -314,11 +315,11 @@ public final class Maplet implements Persistable, SyncObject {
       rect._bottom = rect._bottom - bly >> mapletScale;
    }
 
-   private final int readLayers(DataInputStream istream) {
+   private final int readLayers(DataInputStream istream) throws IOException {
       int count = 0;
       int key = readReversedInt(istream);
       if (key != -1582186031) {
-         throw new Object();
+         throw new IOException();
       }
 
       int layerCount = readReversedInt(istream);

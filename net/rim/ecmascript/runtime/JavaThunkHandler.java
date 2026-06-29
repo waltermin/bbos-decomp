@@ -19,9 +19,7 @@ class JavaThunkHandler {
       long funcValue = this._overrides.getField(name);
       ESFunction func = Value.checkIfFunctionValue(funcValue);
       if (func == null) {
-         throw ThrownValue.typeError(
-            Resources.getString(67), ((StringBuffer)(new Object())).append(this._className).append(".").append(name).toString(), Convert.toString(funcValue)
-         );
+         throw ThrownValue.typeError(Resources.getString(67), this._className + "." + name, Convert.toString(funcValue));
       }
 
       long[] funcParms = Misc.newMixedArray(parmTypes.length);
@@ -68,7 +66,7 @@ class JavaThunkHandler {
 
       long result = GlobalObject.getInstance().callFunction(func, thiz, funcParms);
       IntVector javaParms = new IntVector();
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       JavaCallable.convertOneArg(result, returnType, javaParms, v);
       int len = javaParms.size();
       switch (len) {

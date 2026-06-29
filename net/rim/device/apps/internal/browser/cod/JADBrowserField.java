@@ -4,7 +4,7 @@ import java.io.InputStream;
 import net.rim.device.api.applicationcontrol.ApplicationPermissions;
 import net.rim.device.api.applicationcontrol.ApplicationPermissionsManager;
 import net.rim.device.api.browser.field.BrowserContentBaseImpl;
-import net.rim.device.api.browser.field.Event;
+import net.rim.device.api.browser.field.CloseEvent;
 import net.rim.device.api.browser.field.RenderingApplication;
 import net.rim.device.api.i18n.MessageFormat;
 import net.rim.device.api.itpolicy.ITPolicy;
@@ -26,6 +26,7 @@ import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.GaugeField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.PopupScreen;
 import net.rim.device.api.ui.container.VerticalFieldManager;
@@ -80,7 +81,7 @@ final class JADBrowserField extends DescriptorField implements ApplicationDownlo
 
       label170:
       try {
-         browserContent.setTitle(((URI)(new Object(browserContent.getURL()))).getFileName());
+         browserContent.setTitle(new URI(browserContent.getURL()).getFileName());
       } finally {
          break label170;
       }
@@ -110,7 +111,7 @@ final class JADBrowserField extends DescriptorField implements ApplicationDownlo
                midletName = "";
             }
 
-            String[] formatArguments = new Object[]{midletName};
+            String[] formatArguments = new String[]{midletName};
             this._downloadLabel = MessageFormat.format(BrowserResources.getString(682), formatArguments);
             this._installLabel = MessageFormat.format(BrowserResources.getString(707), formatArguments);
          } else {
@@ -128,35 +129,31 @@ final class JADBrowserField extends DescriptorField implements ApplicationDownlo
             this.addDescriptionField((String)jad.get("MIDlet-Description"));
          }
 
-         this.add((Field)(new Object()));
+         this.add(new SeparatorField());
          if (!downloadAllowed) {
-            EditField downloadDisallowedField = (EditField)(new Object(9007199254740992L));
+            EditField downloadDisallowedField = new EditField(9007199254740992L);
             downloadDisallowedField.setText(BrowserResources.getString(anyDownloadsAllowed ? 816 : 726));
             this.add(downloadDisallowedField);
          } else if (missingDependencies != null) {
-            EditField missingDependenciesField = (EditField)(new Object(9007199254740992L));
+            EditField missingDependenciesField = new EditField(9007199254740992L);
             missingDependenciesField.setText(
-               ((StringBuffer)(new Object()))
-                  .append(missingDependencies.indexOf(10) == -1 ? BrowserResources.getString(732) : BrowserResources.getString(731))
-                  .append('\n')
-                  .append(missingDependencies)
-                  .toString()
+               (missingDependencies.indexOf(10) == -1 ? BrowserResources.getString(732) : BrowserResources.getString(731)) + '\n' + missingDependencies
             );
             this.add(missingDependenciesField);
          } else if (!sufficientMemory) {
-            EditField insufficientMemoryField = (EditField)(new Object(9007199254740992L));
+            EditField insufficientMemoryField = new EditField(9007199254740992L);
             insufficientMemoryField.setText(BrowserResources.getString(521));
             this.add(insufficientMemoryField);
          } else {
-            this._permissionsButton = (CheckboxField)(new Object());
+            this._permissionsButton = new CheckboxField();
             this._permissionsButton.setLabel(BrowserResources.getString(880));
             this._permissionsButton.setChecked(false);
             this.add(this._permissionsButton);
-            this._downloadButton = (ButtonField)(new Object(BrowserResources.getString(273), 65536));
+            this._downloadButton = new ButtonField(BrowserResources.getString(273), 65536);
             this._downloadButton.setChangeListener(this);
-            this._cancelButton = (ButtonField)(new Object(CommonResources.getString(9042), 65536));
+            this._cancelButton = new ButtonField(CommonResources.getString(9042), 65536);
             this._cancelButton.setChangeListener(this);
-            HorizontalFieldManager buttonContainer = (HorizontalFieldManager)(new Object(12884901888L));
+            HorizontalFieldManager buttonContainer = new HorizontalFieldManager(12884901888L);
             buttonContainer.add(this._downloadButton);
             buttonContainer.add(this._cancelButton);
             this.add(buttonContainer);
@@ -168,11 +165,11 @@ final class JADBrowserField extends DescriptorField implements ApplicationDownlo
          if (jad != null) {
             String errorDetail = jad.getErrorMessage();
             if (errorDetail != null) {
-               errorMessage = ((StringBuffer)(new Object())).append(errorMessage).append("\n\n").append(errorDetail).toString();
+               errorMessage = errorMessage + "\n\n" + errorDetail;
             }
          }
 
-         EditField invalidJADField = (EditField)(new Object(9007199254740992L));
+         EditField invalidJADField = new EditField(9007199254740992L);
          invalidJADField.setText(errorMessage);
          this.add(invalidJADField);
       }
@@ -187,7 +184,7 @@ final class JADBrowserField extends DescriptorField implements ApplicationDownlo
       int rimCodNumber = 1;
 
       while (true) {
-         String sha1 = (String)this._jad.get(((StringBuffer)(new Object())).append(sha1AttributePrefix).append(rimCodNumber).toString());
+         String sha1 = (String)this._jad.get(sha1AttributePrefix + rimCodNumber);
          if (sha1 == null) {
             return false;
          }
@@ -280,7 +277,7 @@ final class JADBrowserField extends DescriptorField implements ApplicationDownlo
          StringBuffer missingModules = null;
          String module = null;
          int numCods = this._jad.getCodUrlCount();
-         StringTokenizer tokenizer = (StringTokenizer)(new Object(moduleDependencies, ','));
+         StringTokenizer tokenizer = new StringTokenizer(moduleDependencies, ',');
 
          label83:
          while (tokenizer.hasMoreTokens()) {
@@ -335,7 +332,7 @@ final class JADBrowserField extends DescriptorField implements ApplicationDownlo
                }
 
                if (missingModules == null) {
-                  missingModules = (StringBuffer)(new Object(module));
+                  missingModules = new StringBuffer(module);
                } else {
                   missingModules.append('\n');
                   missingModules.append(module);
@@ -404,7 +401,7 @@ final class JADBrowserField extends DescriptorField implements ApplicationDownlo
       if (!this._isDownloading) {
          boolean downloadAuthorized = true;
          if (Security.getInstance().getPasswordRequiredForAppInstall()) {
-            String passwordPrompt = MessageFormat.format(BrowserResources.getString(879), new Object[]{this._jad.get("MIDlet-Name")});
+            String passwordPrompt = MessageFormat.format(BrowserResources.getString(879), new String[]{(String)this._jad.get("MIDlet-Name")});
             downloadAuthorized = SecurityDialog.challengeUser(passwordPrompt, false, true, '\u0000', true);
          }
 
@@ -426,11 +423,11 @@ final class JADBrowserField extends DescriptorField implements ApplicationDownlo
 
             this.delete(this._buttonContainer);
             this.delete(this._permissionsButton);
-            this._statusGauge = (GaugeField)(new Object(null, 0, totalSize, 0, 2));
-            VerticalFieldManager vfm = (VerticalFieldManager)(new Object());
-            vfm.add(this._statusText = (RichTextField)(new Object(this._downloadLabel, 36028797018963968L)));
+            this._statusGauge = new GaugeField(null, 0, totalSize, 0, 2);
+            VerticalFieldManager vfm = new VerticalFieldManager();
+            vfm.add(this._statusText = new RichTextField(this._downloadLabel, 36028797018963968L));
             vfm.add(this._statusGauge);
-            this._statusButton = (ButtonField)(new Object(CommonResources.getString(9042), 12884967424L));
+            this._statusButton = new ButtonField(CommonResources.getString(9042), 12884967424L);
             this._statusButton.setChangeListener(this);
             vfm.add(this._statusButton);
             this._downloadThread = new ApplicationDownloadManager(this._renderingApp, this, this._jad, this._jarStream, null);
@@ -459,7 +456,7 @@ final class JADBrowserField extends DescriptorField implements ApplicationDownlo
    }
 
    private static final void logResult(int statusCode, String errorDetail, boolean rebootRequired) {
-      StringBuffer logMessage = (StringBuffer)(new Object("JAD "));
+      StringBuffer logMessage = new StringBuffer("JAD ");
       logMessage.append(statusCode);
       if (errorDetail != null) {
          logMessage.append(' ');
@@ -500,7 +497,7 @@ final class JADBrowserField extends DescriptorField implements ApplicationDownlo
             applicationManager.runApplication(application);
             goBackInBackground = true;
          } catch (Throwable var12) {
-            RunnableDialog rd = (RunnableDialog)(new Object(ame.getMessage(), 0));
+            RunnableDialog rd = new RunnableDialog(ame.getMessage(), 0);
             this._application.invokeAndWait(rd);
             break label39;
          }
@@ -519,10 +516,10 @@ final class JADBrowserField extends DescriptorField implements ApplicationDownlo
       String label = BrowserResources.getString(648);
       if (existingVersion != null && newVersion != null) {
          String name = (String)this._jad.get("MIDlet-Name");
-         label = MessageFormat.format(BrowserResources.getString(688), new Object[]{name, existingVersion, newVersion});
+         label = MessageFormat.format(BrowserResources.getString(688), new String[]{name, existingVersion, newVersion});
       }
 
-      RunnableDialog rd = (RunnableDialog)(new Object(3, label, null, null, -1));
+      RunnableDialog rd = new RunnableDialog(3, label, null, null, -1);
       this._application.invokeAndWait(rd);
       return rd.getResult() == 4;
    }
@@ -530,7 +527,7 @@ final class JADBrowserField extends DescriptorField implements ApplicationDownlo
    @Override
    public final boolean installUnsigned() {
       String label = BrowserResources.getString(788);
-      RunnableDialog rd = (RunnableDialog)(new Object(3, label, null, null, 4));
+      RunnableDialog rd = new RunnableDialog(3, label, null, null, 4);
       this._application.invokeAndWait(rd);
       return rd.getResult() == 4;
    }
@@ -540,21 +537,21 @@ final class JADBrowserField extends DescriptorField implements ApplicationDownlo
       String label = BrowserResources.getString(814);
       if (newGroupName != null && oldModuleName != null) {
          if (oldGroup == null) {
-            label = MessageFormat.format(BrowserResources.getString(813), new Object[]{newGroupName, oldModuleName});
+            label = MessageFormat.format(BrowserResources.getString(813), new String[]{newGroupName, oldModuleName});
          } else {
-            label = MessageFormat.format(BrowserResources.getString(812), new Object[]{newGroupName, oldModuleName, oldGroup.getFriendlyName()});
+            label = MessageFormat.format(BrowserResources.getString(812), new String[]{newGroupName, oldModuleName, oldGroup.getFriendlyName()});
          }
       }
 
-      RunnableDialog rd = (RunnableDialog)(new Object(3, label, null, null, -1));
+      RunnableDialog rd = new RunnableDialog(3, label, null, null, -1);
       this._application.invokeAndWait(rd);
       return rd.getResult() == 4;
    }
 
    @Override
    public final boolean newerModule(String newGroupName, String oldModuleName, String oldGroupName) {
-      String label = MessageFormat.format(BrowserResources.getString(877), new Object[]{newGroupName, oldModuleName, oldGroupName});
-      RunnableDialog rd = (RunnableDialog)(new Object(3, label, null, null, -1));
+      String label = MessageFormat.format(BrowserResources.getString(877), new String[]{newGroupName, oldModuleName, oldGroupName});
+      RunnableDialog rd = new RunnableDialog(3, label, null, null, -1);
       this._application.invokeAndWait(rd);
       return rd.getResult() == 4;
    }
@@ -562,7 +559,7 @@ final class JADBrowserField extends DescriptorField implements ApplicationDownlo
    @Override
    public final boolean removeRecordStores() {
       String label = BrowserResources.getString(910);
-      RunnableDialog rd = (RunnableDialog)(new Object(3, label, null, null, 4));
+      RunnableDialog rd = new RunnableDialog(3, label, null, null, 4);
       this._application.invokeAndWait(rd);
       return rd.getResult() == -1;
    }
@@ -616,7 +613,7 @@ final class JADBrowserField extends DescriptorField implements ApplicationDownlo
          defaultChoice = 0;
          label = BrowserResources.getString(685);
          icon = ThemeManager.getThemeAwareImage("dialog_exclamation");
-         StringBuffer buffer = (StringBuffer)(new Object());
+         StringBuffer buffer = new StringBuffer();
          buffer.append(otaStatus);
          buffer.append(' ');
          buffer.append(OTAStatusReportSender.getStatusMessage(otaStatus, this._jad != null && this._jad.getCodUrlCount() > 0));
@@ -628,16 +625,16 @@ final class JADBrowserField extends DescriptorField implements ApplicationDownlo
          diagnostic = buffer.toString();
       }
 
-      Dialog dialog = (Dialog)(new Object(label, choices, null, defaultChoice, null, 0));
+      Dialog dialog = new Dialog(label, choices, null, defaultChoice, null, 0);
       dialog.setIcon(icon);
-      RunnableDialog rd = (RunnableDialog)(new Object(dialog));
+      RunnableDialog rd = new RunnableDialog(dialog);
       this._application.invokeAndWait(rd);
       int result = rd.getResult();
       if (otaStatus != 900) {
          if (result == 1) {
             choices = new Object[]{CommonResources.getString(117), CommonResources.getString(1800)};
             int var15 = 0;
-            rd = (RunnableDialog)(new Object(0, diagnostic, choices, null, var15));
+            rd = new RunnableDialog(0, diagnostic, choices, null, var15);
             this._application.invokeAndWait(rd);
             result = rd.getResult();
             if (result == 1) {
@@ -658,7 +655,7 @@ final class JADBrowserField extends DescriptorField implements ApplicationDownlo
    }
 
    private final void goBack(boolean inBackground) {
-      this._renderingApp.eventOccurred((Event)(new Object(this)));
+      this._renderingApp.eventOccurred(new CloseEvent(this));
    }
 
    @Override

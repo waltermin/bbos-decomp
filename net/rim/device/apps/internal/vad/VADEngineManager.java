@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.vad;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Enumeration;
 import net.rim.device.api.collection.Collection;
@@ -98,7 +99,7 @@ final class VADEngineManager
    private int _headsetButtonInvokeLater = -1;
    private MediaStreamingManager$StreamingSession _audioSession;
    private SynthesizerQueueItem _ttsEvents = null;
-   private TTSListener[] _ttsListeners = new Object[0];
+   private TTSListener[] _ttsListeners = new TTSListener[0];
    private boolean _playingTTS;
    private boolean _cancelCurrentTTS;
    boolean _isDialling = false;
@@ -147,7 +148,7 @@ final class VADEngineManager
    private static final int TTS_ACTION_START = 0;
    private static final int TTS_ACTION_DONE = 1;
    private static final int TTS_ACTION_INTERRUPT = 2;
-   private static final String[] LANGUAGE_EXTENSIONS = new Object[]{
+   private static final String[] LANGUAGE_EXTENSIONS = new String[]{
       null,
       "en_US",
       null,
@@ -521,7 +522,7 @@ final class VADEngineManager
             break;
          case 2:
          case 4:
-            listener.notifyTTSEngineListener((TTSEngineEvent)(new Object(1)));
+            listener.notifyTTSEngineListener(new TTSEngineEvent(1));
             break;
          case 3:
          case 7:
@@ -544,7 +545,7 @@ final class VADEngineManager
    public final boolean stopTTSEngine(TTSListener listener) {
       if (this._ttsListeners.length > 1) {
          this.removeTTSListener(listener);
-         listener.notifyTTSEngineListener((TTSEngineEvent)(new Object(2)));
+         listener.notifyTTSEngineListener(new TTSEngineEvent(2));
          return true;
       } else {
          this.stopEngine(false);
@@ -928,8 +929,8 @@ final class VADEngineManager
                VADNatives.operationComplete(0);
                break;
             case 7938:
-               String var40 = object0;
-               int var36 = this.getFileHandle((String)var40);
+               String var40 = (String)object0;
+               int var36 = this.getFileHandle(var40);
                boolean b = false;
                if (var36 != 0) {
                   b = this._files[var36].exists();
@@ -938,8 +939,8 @@ final class VADEngineManager
                VADNatives.operationComplete(b ? 1 : 0);
                break;
             case 7939:
-               String var39 = object0;
-               int var35 = this.getFileHandle((String)var39);
+               String var39 = (String)object0;
+               int var35 = this.getFileHandle(var39);
                if (var35 != 0) {
                   this._files[var35].delete();
                }
@@ -947,8 +948,8 @@ final class VADEngineManager
                VADNatives.operationComplete(0);
                break;
             case 7940:
-               String var38 = object0;
-               int var34 = this.getFileHandle((String)var38);
+               String var38 = (String)object0;
+               int var34 = this.getFileHandle(var38);
                int size = 0;
                if (var34 != 0) {
                   size = this._files[var34].size();
@@ -981,8 +982,8 @@ final class VADEngineManager
                VADNatives.operationComplete(0);
                break;
             case 7945:
-               String fileName = object0;
-               int handle = this.getFileHandle((String)fileName);
+               String fileName = (String)object0;
+               int handle = this.getFileHandle(fileName);
                int location = 0;
                if (handle != 0) {
                   VADFile var10000 = this._files[handle];
@@ -997,7 +998,7 @@ final class VADEngineManager
             case 7952:
                String number = (String)object0;
                String name = (String)object1;
-               ContextObject context = (ContextObject)(new Object());
+               ContextObject context = new ContextObject();
                if (name != null && name.length() != 0) {
                   ContextObject.setFlag(context, 117);
                }
@@ -1050,7 +1051,7 @@ final class VADEngineManager
                }
                break;
             case 7971:
-               this._app.uiUpdate((String)(new Object((byte[])object0, this._encoding)), (byte[][])object1);
+               this._app.uiUpdate(new String((byte[])object0, this._encoding), (byte[][])object1);
                VADNatives.operationComplete(0);
                break;
             case 7984:
@@ -1065,9 +1066,9 @@ final class VADEngineManager
                   switch (LABEL_TYPES[i]) {
                      case 1:
                      case 3:
-                        String x = ((StringBuffer)(new Object())).append(label).append(" 1").toString();
+                        String x = label + " 1";
                         Arrays.add(labels, x.getBytes(this._encoding));
-                        x = ((StringBuffer)(new Object())).append(label).append(" 2").toString();
+                        x = label + " 2";
                         Arrays.add(labels, x.getBytes(this._encoding));
                         break;
                   }
@@ -1104,11 +1105,11 @@ final class VADEngineManager
                      if (obj instanceof byte[]) {
                         names[i] = (byte[])obj;
                      } else {
-                        if (!(obj instanceof Object)) {
-                           throw new Object();
+                        if (!(obj instanceof AddressCardModel)) {
+                           throw new RuntimeException();
                         }
 
-                        byte[] namex = obj.toString().getBytes(this._encoding);
+                        byte[] namex = ((AddressCardModel)obj).toString().getBytes(this._encoding);
                         this._addressBookCards[i + offset] = namex;
                         names[i] = namex;
                      }
@@ -1152,9 +1153,9 @@ final class VADEngineManager
                }
                break;
             case 7994:
-               String name = (String)(new Object((byte[])object0, this._encoding));
+               String name = new String((byte[])object0, this._encoding);
                if (this._addressBook != null && name != null && name.length() != 0) {
-                  StringBuffer sb = (StringBuffer)(new Object(name));
+                  StringBuffer sb = new StringBuffer(name);
                   StringUtilities.convertToOriginal(sb, 0, sb.length());
                   name = sb.toString();
                   Object[] lookup = this._addressBook.lookup(name.toLowerCase(), 6);
@@ -1217,11 +1218,7 @@ final class VADEngineManager
                                        modelType = 3;
                                  }
 
-                                 String glueDefinedLabel = ((StringBuffer)(new Object()))
-                                    .append(companyName)
-                                    .append(' ')
-                                    .append(this.getTypeString(modelType))
-                                    .toString();
+                                 String glueDefinedLabel = companyName + ' ' + this.getTypeString(modelType);
                                  int index = Arrays.getIndex(this._glueDefinedLabels, glueDefinedLabel);
                                  if (index == -1) {
                                     index = this._glueDefinedLabels.length;
@@ -1292,7 +1289,7 @@ final class VADEngineManager
                }
 
                if (dataLength > 1) {
-                  label = ((StringBuffer)(new Object())).append(label).append(" ").append(data1 + 1).toString();
+                  label = label + " " + (data1 + 1);
                }
 
                VADNatives.writeLabelData(subMessage, label.getBytes(this._encoding));
@@ -1349,11 +1346,11 @@ final class VADEngineManager
                      return;
                }
             default:
-               VADEventLog.log(((StringBuffer)(new Object("Unknown event: "))).append(Integer.toHexString(message.getEvent())).toString());
+               VADEventLog.log("Unknown event: " + Integer.toHexString(message.getEvent()));
                return;
          }
       } catch (Throwable var33) {
-         VADEventLog.log(((StringBuffer)(new Object("Message handing error: "))).append(ex).toString());
+         VADEventLog.log("Message handing error: " + ex);
          System.out.println("Stack trace:");
          ex.printStackTrace();
          VADNatives.operationComplete(0);
@@ -1579,12 +1576,12 @@ final class VADEngineManager
 
    private final void sayText(String text) {
       try {
-         text = ((StringBuffer)(new Object())).append(text).append('\u0000').toString();
+         text = text + '\u0000';
          byte[] bytes = text.getBytes(this._encoding);
          this._previousEngineState = this._engineState;
          this._engineState = 4;
          int rc = VADNatives.playTTS(bytes);
-         System.out.println(((StringBuffer)(new Object("VADNatives.playTTS rc="))).append(rc).toString());
+         System.out.println("VADNatives.playTTS rc=" + rc);
          this.checkError("PLAY_TTS", rc);
       } finally {
          return;
@@ -1603,7 +1600,7 @@ final class VADEngineManager
 
    private final void ttsEngineStarted() {
       for (int i = 0; i < this._ttsListeners.length; i++) {
-         this._ttsListeners[i].notifyTTSEngineListener((TTSEngineEvent)(new Object(1)));
+         this._ttsListeners[i].notifyTTSEngineListener(new TTSEngineEvent(1));
       }
    }
 
@@ -1620,7 +1617,7 @@ final class VADEngineManager
 
    private final void ttsEngineStopped() {
       for (int i = 0; i < this._ttsListeners.length; i++) {
-         this._ttsListeners[i].notifyTTSEngineListener((TTSEngineEvent)(new Object(2)));
+         this._ttsListeners[i].notifyTTSEngineListener(new TTSEngineEvent(2));
          this.removeTTSListener(this._ttsListeners[i]);
       }
    }
@@ -1639,10 +1636,10 @@ final class VADEngineManager
          this._encoding = "ISO-8859-1";
       }
 
-      String file = ((StringBuffer)(new Object())).append(VAD_RESOURCE_PREFIX).append(LANGUAGE_EXTENSIONS[language]).toString();
+      String file = VAD_RESOURCE_PREFIX + LANGUAGE_EXTENSIONS[language];
       Resource resource = Resource$Internal.getResourceClass(file);
       if (resource == null) {
-         throw new Object(((StringBuffer)(new Object("Could not load language resources from "))).append(file).toString());
+         throw new RuntimeException("Could not load language resources from " + file);
       }
 
       this._files[1] = new VADResourceFile(this.getResource(resource, "lvr.bin"));
@@ -1653,7 +1650,7 @@ final class VADEngineManager
       this._vstStrings = VSTStrings.loadStrings(b, this._encoding, false);
       if (this._vstStrings == null) {
          if (language == 1) {
-            throw new Object("Language resources are corrupt");
+            throw new RuntimeException("Language resources are corrupt");
          }
 
          this.setLanguage(1);
@@ -1695,7 +1692,7 @@ final class VADEngineManager
          this._addressBook.addCollectionListener(this);
       }
 
-      this._phoneInfo = (VADPhoneInfo)(new Object());
+      this._phoneInfo = new VADPhoneInfo();
       this._syncItem = new VADEngineManager$VADSyncItem(this);
       SyncManager syncManager = SyncManager.getInstance();
       if (syncManager != null) {
@@ -1713,12 +1710,12 @@ final class VADEngineManager
       int offset = 0;
 
       while (true) {
-         byte[] data = resource.getResource(((StringBuffer)(new Object("__"))).append(name).append('@').append(offset).toString());
+         byte[] data = resource.getResource("__" + name + '@' + offset);
          if (data == null) {
             if (offset == 0) {
                data = resource.getResource(name);
                if (data == null) {
-                  throw new Object(((StringBuffer)(new Object("Missing resource "))).append(name).toString());
+                  throw new RuntimeException("Missing resource " + name);
                }
 
                Arrays.add(array, data);
@@ -1806,14 +1803,13 @@ final class VADEngineManager
       int numLanguages = LANGUAGE_EXTENSIONS.length;
 
       for (int i = 0; i < numLanguages; i++) {
-         if (LANGUAGE_EXTENSIONS[i] != null
-            && CodeModuleManager.getModuleHandle(((StringBuffer)(new Object())).append(VAD_RESOURCE_PREFIX).append(LANGUAGE_EXTENSIONS[i]).toString()) != 0) {
+         if (LANGUAGE_EXTENSIONS[i] != null && CodeModuleManager.getModuleHandle(VAD_RESOURCE_PREFIX + LANGUAGE_EXTENSIONS[i]) != 0) {
             Arrays.add(this._availableLanguages, i);
          }
       }
 
       if (this._availableLanguages.length == 0) {
-         throw new Object("No VAD language resources present");
+         throw new RuntimeException("No VAD language resources present");
       }
    }
 
@@ -1829,7 +1825,7 @@ final class VADEngineManager
 
             while (e.hasMoreElements()) {
                Object o = e.nextElement();
-               if (o instanceof Object) {
+               if (o instanceof AddressCardModel) {
                   AddressCardModel card = (AddressCardModel)o;
                   if (card.getNumPhoneNumberModels() != 0) {
                      this._addressBookCards[index++] = card;
@@ -1851,9 +1847,9 @@ final class VADEngineManager
       }
    }
 
-   private final void checkFileHandle(int handle) {
+   private final void checkFileHandle(int handle) throws IOException {
       if (handle < 1 || handle > 12) {
-         throw new Object();
+         throw new IOException();
       }
    }
 
@@ -1863,7 +1859,7 @@ final class VADEngineManager
             this._persistentData._incrementalNameEncodings = new Object[0];
          }
 
-         if (o instanceof Object) {
+         if (o instanceof AddressCardModel) {
             AddressCardModel card = (AddressCardModel)o;
             if (card.getNumPhoneNumberModels() != 0) {
                if (this._persistentData._incrementalNameEncodings.length > 100) {
@@ -1897,7 +1893,7 @@ final class VADEngineManager
          case 4:
             return false;
          default:
-            VADEventLog.log(((StringBuffer)(new Object("Error in "))).append(command).append(": ").append(rc).toString());
+            VADEventLog.log("Error in " + command + ": " + rc);
             return true;
       }
    }
@@ -1971,7 +1967,7 @@ final class VADEngineManager
       } else {
          AudioRouter.getInstance().addSource(1);
          this._engineState = 6;
-         this._glueDefinedLabels = new Object[0];
+         this._glueDefinedLabels = new String[0];
          return 0;
       }
    }

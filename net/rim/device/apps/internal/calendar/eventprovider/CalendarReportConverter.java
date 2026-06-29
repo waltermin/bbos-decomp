@@ -51,7 +51,7 @@ public class CalendarReportConverter implements SyncConverter {
    @Override
    public boolean convert(SyncObject object, DataBuffer buffer, int version) {
       TimeZone tz = TimeZone.getDefault();
-      Recur$Handle handle = (Recur$Handle)(new Object());
+      Recur$Handle handle = new Recur$Handle();
       Object record = object;
       if (!(object instanceof CalendarReportTimeRecord)) {
          if (object instanceof CalendarReportDetailedRecord) {

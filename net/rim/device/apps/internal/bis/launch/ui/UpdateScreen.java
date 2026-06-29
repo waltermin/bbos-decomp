@@ -36,7 +36,7 @@ public final class UpdateScreen extends BaseScreen {
          declineMenuItem = new UpdateScreen$3(this, declineLabel, 1, 1);
       }
 
-      HorizontalFieldManager buttonsFieldManager = (HorizontalFieldManager)(new Object(12884901888L));
+      HorizontalFieldManager buttonsFieldManager = new HorizontalFieldManager(12884901888L);
       ButtonField declineButtonField = this.createButton(declineLabel, null);
       ButtonField updateNowButtonField = this.createButton(acceptLabel, null);
       buttonsFieldManager.add(declineButtonField);
@@ -47,9 +47,9 @@ public final class UpdateScreen extends BaseScreen {
       MenuItem acceptMenuItem = new UpdateScreen$4(this, acceptLabel, 1, 1);
       super._defaultMenuItem = acceptMenuItem;
       if (declineMenuItem != null) {
-         super._menuItems = new Object[]{declineMenuItem, acceptMenuItem};
+         super._menuItems = new MenuItem[]{declineMenuItem, acceptMenuItem};
       } else {
-         super._menuItems = new Object[]{acceptMenuItem};
+         super._menuItems = new MenuItem[]{acceptMenuItem};
       }
 
       this.add(instructionsLabelField);

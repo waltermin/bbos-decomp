@@ -24,7 +24,7 @@ public final class CategoryList extends SimplePersistentEncryptedSyncCollection 
    private IntIntHashtable _oldCategoryIds;
    private PersistentObject _oldCategoryIdsPersistentObject = RIMPersistentStore.getPersistentObject(9169138517289043186L);
    private IntHashtable _categoryHashtable;
-   private SyncCollectionSchema _schema = (SyncCollectionSchema)(new Object());
+   private SyncCollectionSchema _schema = new SyncCollectionSchema();
    private static final long PERSISTED_CATEGORIES = -253933379052014540L;
    private static final long PERSISTED_OLD_CATEGORY_IDS = 9169138517289043186L;
    private static final long CATEGORY_LIST = 7441508056667167330L;
@@ -32,7 +32,7 @@ public final class CategoryList extends SimplePersistentEncryptedSyncCollection 
    private static final int CATEGORIES_INITIAL_SIZE = 16;
    private static int _persistentNextCategoryId = PersistentInteger.getId(7353985417580865631L, 1);
    private static SyncConverter _syncConverter;
-   private static WeakReference _sbWR = (WeakReference)(new Object(null));
+   private static WeakReference _sbWR = new WeakReference(null);
    private static CategoryList _instance;
    private static final int[] KEY_FIELD_IDS = new int[]{1, -804651007, 51, -805044223};
    private static final int DEFAULT_RECORD_TYPE = 1;
@@ -65,13 +65,13 @@ public final class CategoryList extends SimplePersistentEncryptedSyncCollection 
       boolean populateCategoryList = forcePopulate || this._categories == null;
       this.initializeOldCategoryIds(forceNewCategories);
       if (forceNewCategories || this._categories == null) {
-         this._categories = (SimplePersistentSyncCollection$SimpleData)(new Object(16));
+         this._categories = new SimplePersistentSyncCollection$SimpleData(16);
          super._persistentObject.setContents(this._categories, 51);
          this.commit();
       }
 
       this.initList(this._categories._items, 1);
-      this._categoryHashtable = (IntHashtable)(new Object());
+      this._categoryHashtable = new IntHashtable();
       int numCategories = this.size();
 
       for (int i = 0; i < numCategories; i++) {
@@ -87,7 +87,7 @@ public final class CategoryList extends SimplePersistentEncryptedSyncCollection 
    private final void initializeOldCategoryIds(boolean addCurrentCategoryIds) {
       this._oldCategoryIds = (IntIntHashtable)this._oldCategoryIdsPersistentObject.getContents();
       if (this._oldCategoryIds == null) {
-         this._oldCategoryIds = (IntIntHashtable)(new Object());
+         this._oldCategoryIds = new IntIntHashtable();
          this._oldCategoryIdsPersistentObject.setContents(this._oldCategoryIds, 51);
          this._oldCategoryIdsPersistentObject.commit();
       }
@@ -183,7 +183,7 @@ public final class CategoryList extends SimplePersistentEncryptedSyncCollection 
          this.add(category, false);
          return category.getId();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -224,7 +224,7 @@ public final class CategoryList extends SimplePersistentEncryptedSyncCollection 
 
    public final synchronized int getCategoryIds(String categoryNames, int[] categoryIds, boolean addMissingCategories) {
       if (categoryNames != null && categoryIds != null) {
-         StringTokenizer tokenizer = (StringTokenizer)(new Object(categoryNames, ','));
+         StringTokenizer tokenizer = new StringTokenizer(categoryNames, ',');
          Array.resize(categoryIds, tokenizer.countTokens());
          int numCategories = 0;
 
@@ -250,7 +250,7 @@ public final class CategoryList extends SimplePersistentEncryptedSyncCollection 
 
          return numCategories;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -265,7 +265,7 @@ public final class CategoryList extends SimplePersistentEncryptedSyncCollection 
 
    final synchronized String getCategoryNames(int[] categoryIds, boolean forSync) {
       if (categoryIds == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       String categoryNames = null;
@@ -304,7 +304,7 @@ public final class CategoryList extends SimplePersistentEncryptedSyncCollection 
 
    public final synchronized String getCategoryKeys(int[] categoryIds) {
       if (categoryIds == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       StringBuffer _sb = WeakReferenceUtilities.getStringBuffer(_sbWR);

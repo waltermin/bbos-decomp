@@ -11,7 +11,7 @@ class LocationField$LocationActionChoice extends LocationField$LocationChoice {
 
    @Override
    public String toString() {
-      return ((StringBuffer)(new Object())).append(LBSResources.getString(this._id)).append("...").toString();
+      return LBSResources.getString(this._id) + "...";
    }
 
    @Override

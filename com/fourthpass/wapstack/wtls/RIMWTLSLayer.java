@@ -4,6 +4,9 @@ import com.fourthpass.wapstack.IPacketTransiver;
 import com.fourthpass.wapstack.IWapStackLayer;
 import com.fourthpass.wapstack.util.UserDefinedEvent;
 import com.fourthpass.wapstack.wdp.WDPPacket;
+import java.io.IOException;
+import java.io.InterruptedIOException;
+import javax.microedition.io.ConnectionNotFoundException;
 import javax.microedition.io.SecurityInfo;
 import net.rim.device.api.crypto.tls.wtls20.WTLSDataTransport;
 import net.rim.device.api.crypto.tls.wtls20.WTLSLayerConnection;
@@ -139,16 +142,16 @@ public class RIMWTLSLayer implements IWapStackLayer, IPacketTransiver, WTLSDataT
    }
 
    @Override
-   public byte[] read(int timeout) {
+   public byte[] read(int timeout) throws IOException, InterruptedIOException {
       this._transiver.setReceivingTimeout(timeout);
       int recvCount = this._transiver.receive(this._receivePacket);
       if (recvCount == -1 && timeout != 0) {
-         throw new Object("Timeout occurred.");
+         throw new InterruptedIOException("Timeout occurred.");
       }
 
       if (recvCount == -1) {
          if (this._transiver.isClosed()) {
-            throw new Object("connection closed");
+            throw new IOException("connection closed");
          } else {
             return new byte[0];
          }
@@ -192,7 +195,7 @@ public class RIMWTLSLayer implements IWapStackLayer, IPacketTransiver, WTLSDataT
       int ipAddress,
       int ipPort,
       boolean wap20Conformance
-   ) {
+   ) throws ConnectionNotFoundException, TLSException {
       this._submissionLayer = submissionLayer;
       this._transiver = (IPacketTransiver)submissionLayer;
       this._sendPacket = new WDPPacket();
@@ -207,13 +210,13 @@ public class RIMWTLSLayer implements IWapStackLayer, IPacketTransiver, WTLSDataT
       }
 
       if (this._protocol == null) {
-         throw new Object();
+         throw new ConnectionNotFoundException();
       }
 
       try {
          this._protocol.makeConnection(this, apn, address, openwaveMode, clientIdMode, clientIdValue, ipAddress, ipPort, wap20Conformance);
       } catch (Throwable var15) {
-         throw new Object(e);
+         throw new TLSException(e);
       }
    }
 

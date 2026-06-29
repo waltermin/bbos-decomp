@@ -10,6 +10,7 @@ import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.ChoiceField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -22,7 +23,7 @@ import net.rim.device.internal.system.InternalServices;
 
 public final class AlertConfiguration implements PersistableRIMModel, SyncObject, FieldChangeListener, FieldProvider, Copyable {
    private byte[] _settings = new byte[15];
-   private String[] _tuneNames = new Object[2];
+   private String[] _tuneNames = new String[2];
    public static final int NUMBER_OF_SETTINGS_PER_HOLSTER_STATE = 5;
    public static final int NUMBER_OF_SETTING_INDEPENDENT_OF_HOLSTER_STATE = 5;
    public static final int TOTAL_NUMBER_OF_SETTINGS = 15;
@@ -50,7 +51,7 @@ public final class AlertConfiguration implements PersistableRIMModel, SyncObject
          this.initHolsterTune(tuneNameOutOfHolster, false, numberOfSettings);
          this.initHolsterTune(tuneNameInHolster, true, numberOfSettings);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -125,7 +126,7 @@ public final class AlertConfiguration implements PersistableRIMModel, SyncObject
          int fieldCount = manager.getFieldCount();
          if (fieldCount <= 1) {
             Object o = originalField.getCookie();
-            if (o instanceof Object) {
+            if (o instanceof ContextObject) {
                ContextObject co = (ContextObject)o;
                if (ContextObject.getFlag(co, 48)) {
                   sourceId = 3975384895524745189L;
@@ -138,7 +139,7 @@ public final class AlertConfiguration implements PersistableRIMModel, SyncObject
                volumeIndex = fieldWithChanges.getSelectedIndex();
                tuneChoiceField.setVolumeIndex(volumeIndex == 0 ? 1 : volumeIndex);
             } else {
-               volumeIndex = ((ChoiceField)manager.getField(2)).getSelectedIndex();
+               volumeIndex = ((ObjectChoiceField)manager.getField(2)).getSelectedIndex();
             }
 
             if (fieldIndex == 1 && volumeIndex == 0) {
@@ -146,14 +147,14 @@ public final class AlertConfiguration implements PersistableRIMModel, SyncObject
             }
 
             if (fieldCount > 5) {
-               beepsIndex = fieldIndex != 1 ? ((ChoiceField)manager.getField(3)).getSelectedIndex() : 0;
-               vibratesIndex = ((ChoiceField)manager.getField(5)).getSelectedIndex();
+               beepsIndex = fieldIndex != 1 ? ((ObjectChoiceField)manager.getField(3)).getSelectedIndex() : 0;
+               vibratesIndex = ((ObjectChoiceField)manager.getField(5)).getSelectedIndex();
             } else {
-               vibratesIndex = ((ChoiceField)manager.getField(4)).getSelectedIndex();
+               vibratesIndex = ((ObjectChoiceField)manager.getField(4)).getSelectedIndex();
             }
 
             Object cookie = originalField.getCookie();
-            if (cookie instanceof Object) {
+            if (cookie instanceof ContextObject) {
                Object source = ContextObject.get(cookie, 250);
                long id = NotificationsManager.getSourceId(source);
                if (id == 2868625504212929964L || NotificationsManager.getParentSourceID(id) == 2868625504212929964L) {
@@ -177,14 +178,14 @@ public final class AlertConfiguration implements PersistableRIMModel, SyncObject
       ResourceBundle resources = ResourceBundle.getBundle(2384708948246157241L, "net.rim.device.apps.internal.resource.Profiles");
       if (!ContextObject.getFlag(contextObject, 89)) {
          ObjectChoiceField objectChoiceField = null;
-         Manager manager = (Manager)(new Object(1152921504606846976L));
+         Manager manager = new VerticalFieldManager(1152921504606846976L);
          boolean holstered = ContextObject.getFlag(contextObject, 67);
          fieldName = resources.getString(holstered ? 301 : 300);
-         String[] var27 = (Object[])resources.getObject(302);
-         ObjectChoiceField var18 = (Field)(new Object(fieldName, var27, this.getSetting(0, holstered, var27.length)));
-         var18.setChangeListener(this);
-         var18.setCookie(contextObject);
-         manager.add(var18);
+         fieldValues = (String[])resources.getObject(302);
+         field = new ObjectChoiceField(fieldName, fieldValues, this.getSetting(0, holstered, fieldValues.length));
+         field.setChangeListener(this);
+         field.setCookie(contextObject);
+         manager.add(field);
          if (!ContextObject.getFlag(contextObject, 48)) {
             fieldName = resources.getString(310);
             String tuneName = this.getTuneName(holstered);
@@ -200,33 +201,33 @@ public final class AlertConfiguration implements PersistableRIMModel, SyncObject
             }
 
             TuneChoiceField tuneChoiceField = TuneManager.getTuneManager().getTuneChoiceField(fieldName, tuneName, currentTune, false);
-            var18 = tuneChoiceField;
-            manager.add(var18);
+            ObjectChoiceField var19 = tuneChoiceField;
+            manager.add(var19);
             fieldName = resources.getString(320);
-            var27 = (Object[])resources.getObject(321);
-            byte volumeIndex = this.getSetting(2, holstered, var27.length);
-            var18 = (Field)(new Object(fieldName, var27, volumeIndex));
+            fieldValues = (String[])resources.getObject(321);
+            byte volumeIndex = this.getSetting(2, holstered, fieldValues.length);
+            var19 = new ObjectChoiceField(fieldName, fieldValues, volumeIndex);
             tuneChoiceField.setVolumeIndex(volumeIndex);
-            var18.setChangeListener(this);
-            var18.setCookie(contextObject);
-            manager.add(var18);
+            var19.setChangeListener(this);
+            var19.setCookie(contextObject);
+            manager.add(var19);
             Object source = ContextObject.get(contextObject, 250);
             long sourceId = NotificationsManager.getSourceId(source);
             if (sourceId != 2868625504212929964L && NotificationsManager.getParentSourceID(sourceId) != 2868625504212929964L) {
                fieldName = resources.getString(330);
-               var27 = (Object[])resources.getObject(331);
-               var18 = (Field)(new Object(fieldName, var27, this.getSetting(3, holstered, var27.length)));
-               manager.add(var18);
+               fieldValues = (String[])resources.getObject(331);
+               var19 = new ObjectChoiceField(fieldName, fieldValues, this.getSetting(3, holstered, fieldValues.length));
+               manager.add(var19);
             }
 
             fieldName = resources.getString(340);
-            var27 = (Object[])resources.getObject(341);
-            var18 = (Field)(new Object(fieldName, var27, this.getSetting(4, holstered, var27.length)));
-            manager.add(var18);
+            fieldValues = (String[])resources.getObject(341);
+            var19 = new ObjectChoiceField(fieldName, fieldValues, this.getSetting(4, holstered, fieldValues.length));
+            manager.add(var19);
             fieldName = resources.getString(350);
-            var27 = (Object[])resources.getObject(351);
-            var18 = (Field)(new Object(fieldName, var27, this.getSetting(13, holstered, var27.length)));
-            manager.add(var18);
+            fieldValues = (String[])resources.getObject(351);
+            var19 = new ObjectChoiceField(fieldName, fieldValues, this.getSetting(13, holstered, fieldValues.length));
+            manager.add(var19);
          }
 
          manager.setCookie(this);
@@ -236,38 +237,38 @@ public final class AlertConfiguration implements PersistableRIMModel, SyncObject
          if (source != null) {
             Manager manager = null;
             if (supportsEnableBackLight(NotificationsManager.getSourceId(source))) {
-               manager = (Manager)(new Object(1152921504606846976L));
+               manager = new VerticalFieldManager(1152921504606846976L);
                manager.setCookie(this);
                fieldName = resources.getString(229);
-               String[] var32 = (Object[])resources.getObject(230);
-               ObjectChoiceField var24 = new Object(fieldName, var32, this.getHolsterIndependentSetting(12));
-               manager.add((Field)var24);
+               fieldValues = (String[])resources.getObject(230);
+               field = new ObjectChoiceField(fieldName, fieldValues, this.getHolsterIndependentSetting(12));
+               manager.add(field);
             }
 
             if (supportsDoNotDisturb(NotificationsManager.getSourceId(source))) {
                if (manager == null) {
-                  manager = (Manager)(new Object(1152921504606846976L));
+                  manager = new VerticalFieldManager(1152921504606846976L);
                   manager.setCookie(this);
                }
 
                fieldName = resources.getString(360);
-               String[] var33 = (Object[])resources.getObject(361);
-               ObjectChoiceField var25 = new Object(fieldName, var33, this.getHolsterIndependentSetting(11));
-               ((Field)var25).setCookie(this);
-               manager.add((Field)var25);
+               fieldValues = (String[])resources.getObject(361);
+               field = new ObjectChoiceField(fieldName, fieldValues, this.getHolsterIndependentSetting(11));
+               field.setCookie(this);
+               manager.add(field);
             }
 
             if (supportsMuteDuringVoiceCall(NotificationsManager.getSourceId(source))) {
                if (manager == null) {
-                  manager = (Manager)(new Object(1152921504606846976L));
+                  manager = new VerticalFieldManager(1152921504606846976L);
                   manager.setCookie(this);
                }
 
                fieldName = resources.getString(249);
-               String[] var34 = (Object[])resources.getObject(361);
-               ObjectChoiceField var26 = new Object(fieldName, var34, this.getHolsterIndependentSetting(11));
-               ((Field)var26).setCookie(this);
-               manager.add((Field)var26);
+               fieldValues = (String[])resources.getObject(361);
+               field = new ObjectChoiceField(fieldName, fieldValues, this.getHolsterIndependentSetting(11));
+               field.setCookie(this);
+               manager.add(field);
             }
 
             result = manager;
@@ -283,11 +284,11 @@ public final class AlertConfiguration implements PersistableRIMModel, SyncObject
       String outOfHolsterLabel = null;
       String fieldLabel = null;
       ResourceBundle resources = ResourceBundle.getBundle(2384708948246157241L, "net.rim.device.apps.internal.resource.Profiles");
-      if (aField instanceof Object) {
+      if (aField instanceof Manager) {
          Manager manager = (Manager)aField;
          inHolsterLabel = resources.getString(301);
          outOfHolsterLabel = resources.getString(300);
-         fieldLabel = ((ChoiceField)manager.getField(0)).getLabel();
+         fieldLabel = ((ObjectChoiceField)manager.getField(0)).getLabel();
          boolean holstered = false;
          boolean normalSettings = false;
          if (StringUtilities.compareToIgnoreCase(fieldLabel, inHolsterLabel) == 0) {
@@ -317,20 +318,20 @@ public final class AlertConfiguration implements PersistableRIMModel, SyncObject
                }
             }
          } else {
-            this.setSetting(0, (byte)((ChoiceField)manager.getField(0)).getSelectedIndex(), holstered);
+            this.setSetting(0, (byte)((ObjectChoiceField)manager.getField(0)).getSelectedIndex(), holstered);
             if (manager.getFieldCount() > 1) {
                TuneChoiceField tuneChoiceField = (TuneChoiceField)manager.getField(1);
                String tuneName = tuneChoiceField.getSelectedTuneName();
                this.setSetting(1, (byte)tuneChoiceField.getSelectedIndex(), holstered);
                this.setTuneName(tuneName, holstered);
-               this.setSetting(2, (byte)((ChoiceField)manager.getField(2)).getSelectedIndex(), holstered);
+               this.setSetting(2, (byte)((ObjectChoiceField)manager.getField(2)).getSelectedIndex(), holstered);
                if (manager.getFieldCount() > 5) {
-                  this.setSetting(3, (byte)((ChoiceField)manager.getField(3)).getSelectedIndex(), holstered);
-                  this.setSetting(4, (byte)((ChoiceField)manager.getField(4)).getSelectedIndex(), holstered);
-                  this.setSetting(13, (byte)((ChoiceField)manager.getField(5)).getSelectedIndex(), holstered);
+                  this.setSetting(3, (byte)((ObjectChoiceField)manager.getField(3)).getSelectedIndex(), holstered);
+                  this.setSetting(4, (byte)((ObjectChoiceField)manager.getField(4)).getSelectedIndex(), holstered);
+                  this.setSetting(13, (byte)((ObjectChoiceField)manager.getField(5)).getSelectedIndex(), holstered);
                } else {
-                  this.setSetting(4, (byte)((ChoiceField)manager.getField(3)).getSelectedIndex(), holstered);
-                  this.setSetting(13, (byte)((ChoiceField)manager.getField(4)).getSelectedIndex(), holstered);
+                  this.setSetting(4, (byte)((ObjectChoiceField)manager.getField(3)).getSelectedIndex(), holstered);
+                  this.setSetting(13, (byte)((ObjectChoiceField)manager.getField(4)).getSelectedIndex(), holstered);
                }
             }
          }

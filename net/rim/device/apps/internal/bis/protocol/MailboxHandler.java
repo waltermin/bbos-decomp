@@ -69,7 +69,7 @@ public final class MailboxHandler extends XMLToObjectHandler implements BISServi
       mailbox.setSecretQuestion(ArgUtils.getStringValue(elementToValueMap, "secretQuestion"));
       String secretQuestionIdString = ArgUtils.getStringValue(elementToValueMap, "secretQuestionId");
       if (secretQuestionIdString != null) {
-         mailbox.setSecretQuestionId((Integer)(new Object(Integer.parseInt(secretQuestionIdString))));
+         mailbox.setSecretQuestionId(new Integer(Integer.parseInt(secretQuestionIdString)));
       }
 
       mailbox.setSecretAnswer(ArgUtils.getStringValue(elementToValueMap, "secretQuestionAnswer"));

@@ -1,6 +1,8 @@
 package net.rim.device.internal.media;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import javax.microedition.media.MediaException;
 
 class Sequence {
    private MidiModel _model;
@@ -13,14 +15,14 @@ class Sequence {
    public static final int SMPTE_30DROP = 3;
    public static final int SMPTE_30 = 4;
 
-   public Sequence(MidiModel model, byte[] data) {
+   public Sequence(MidiModel model, byte[] data) throws MediaException {
       this._model = model;
       this._data = data;
-      InputStream stream = (InputStream)(new Object(this._data));
+      InputStream stream = new ByteArrayInputStream(this._data);
       MidiInputStream midiStream = new MidiInputStream(this, stream);
       this._header = (HeaderChunk)midiStream.readChunk();
       if (this._header == null) {
-         throw new Object();
+         throw new MediaException();
       }
 
       this._tracks = new TrackChunk[this._header.getNumTracks()];

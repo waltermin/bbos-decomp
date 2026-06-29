@@ -142,7 +142,7 @@ final class Fqdn implements SlpAddress {
    @Override
    public final void decode(Nibbler nib) {
       int length = nib.getBitsLarge(8) + 1;
-      StringBuffer strBuf = (StringBuffer)(new Object());
+      StringBuffer strBuf = new StringBuffer();
 
       for (int i = 0; i < length; i++) {
          strBuf.append(FQDN_ALPHABET[0xFF & nib.getBitsLarge(6)]);
@@ -181,6 +181,6 @@ final class Fqdn implements SlpAddress {
    }
 
    final void print() {
-      System.out.println(((StringBuffer)(new Object("Fqdn: "))).append(this.domainName).toString());
+      System.out.println("Fqdn: " + this.domainName);
    }
 }

@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.phone;
 
 import net.rim.device.api.ui.Field;
-import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.DialogFieldManager;
 import net.rim.device.internal.ui.component.PopupDialog;
@@ -21,9 +21,9 @@ final class NetworkOrStkMsgDlg extends PopupDialog implements Runnable {
    }
 
    NetworkOrStkMsgDlg(String msg1, String msg2, int type, String[] options, int[] closeReasons, boolean closeOnAnyKey) {
-      super((Manager)(new Object()), 33554432);
+      super(new DialogFieldManager(), 33554432);
       DialogFieldManager dfm = (DialogFieldManager)this.getDelegate();
-      dfm.setMessage((RichTextField)(new Object(msg1, 36028797018963968L)));
+      dfm.setMessage(new RichTextField(msg1, 36028797018963968L));
       this._closeReasons = closeReasons;
       this._type = type;
       this._options = options;
@@ -31,7 +31,7 @@ final class NetworkOrStkMsgDlg extends PopupDialog implements Runnable {
       this._msg2 = msg2;
       if (options != null && options.length > 0) {
          for (int i = 0; i < options.length; i++) {
-            dfm.addCustomField((Field)(new Object(options[i], 0)));
+            dfm.addCustomField(new ButtonField(options[i], 0));
          }
       }
    }
@@ -47,7 +47,7 @@ final class NetworkOrStkMsgDlg extends PopupDialog implements Runnable {
 
    private final void acceptInput() {
       Field field = this.getLeafFieldWithFocus();
-      if (field instanceof Object) {
+      if (field instanceof ButtonField) {
          int index = field.getIndex();
          if (this._closeReasons != null && this._closeReasons.length > 0) {
             this.close(this._closeReasons[index]);

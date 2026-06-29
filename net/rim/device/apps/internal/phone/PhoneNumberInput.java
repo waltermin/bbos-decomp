@@ -26,8 +26,10 @@ import net.rim.device.apps.api.framework.model.ContextObjectWR;
 import net.rim.device.apps.api.framework.model.ConversionProvider;
 import net.rim.device.apps.api.framework.model.Recognizer;
 import net.rim.device.apps.api.framework.registration.VerbRepository;
+import net.rim.device.apps.api.framework.verb.ApplicationKeyInvocableVerb;
 import net.rim.device.apps.api.framework.verb.ConditionalVerb;
 import net.rim.device.apps.api.framework.verb.Verb;
+import net.rim.device.apps.api.framework.verb.WrapperVerb;
 import net.rim.device.apps.api.ui.ReturnKeyIcons;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
 import net.rim.device.apps.api.utility.general.Copyable;
@@ -37,6 +39,7 @@ import net.rim.device.apps.internal.phone.api.PhoneLogger;
 import net.rim.device.apps.internal.phone.api.PhoneUtilities;
 import net.rim.device.apps.internal.phone.api.ui.gprs.GSM230Filter;
 import net.rim.device.apps.internal.phone.api.verbs.DialVerb;
+import net.rim.device.apps.internal.phone.api.verbs.SpeedDialVerb;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
 import net.rim.device.internal.system.Security;
 import net.rim.device.internal.ui.IconCollection;
@@ -51,7 +54,7 @@ final class PhoneNumberInput extends BasicEditField implements HolsterListener, 
    private int _fieldState = 0;
    private int _fieldStateChangeLength = -1;
    private PhoneNumberInput$KeyEventInformation _keyEventInfo;
-   private Font[] _inputFonts = new Object[5];
+   private Font[] _inputFonts = new Font[5];
    private int _fontIndex = 0;
    private int[] _lineInfo = new int[1];
    private BasicEditField _source;
@@ -60,7 +63,7 @@ final class PhoneNumberInput extends BasicEditField implements HolsterListener, 
    private boolean _keypadAltMode = false;
    private boolean _resetAltMode = false;
    private int _delayingEchoId = -1;
-   StringBuffer _bufferedString = (StringBuffer)(new Object());
+   StringBuffer _bufferedString = new StringBuffer();
    private Runnable _delayEchoToneRunnable = new PhoneNumberInput$2(this);
    private static final int MAX_INPUT = 80;
    private static final int INPUT_SCREEN_WIDTH = Display.getWidth();
@@ -76,7 +79,7 @@ final class PhoneNumberInput extends BasicEditField implements HolsterListener, 
    static FontFamily _phoneScreenFontFamily;
    private static final int HANDLED = -1;
    private static VerbRepository _rawPhoneNumberRepository = VerbRepository.getVerbRepository(-5389783330697330291L);
-   private static ContextObjectWR _rawPhoneNumberInputContextWR = (ContextObjectWR)(new Object());
+   private static ContextObjectWR _rawPhoneNumberInputContextWR = new ContextObjectWR();
 
    PhoneNumberInput(PhoneInputScreen screen, Application app, BasicEditField source) {
       super(null, null, 80, 0);
@@ -599,7 +602,7 @@ final class PhoneNumberInput extends BasicEditField implements HolsterListener, 
          PhoneUtilities.setLastNumberDialed(number);
          PhoneLogger.log("startcall raw num");
          this._ignoreKeyUp = true;
-         ((DialVerb)(new Object(number, null))).invoke(null);
+         new DialVerb(number, null).invoke(null);
          return true;
       }
    }
@@ -1012,11 +1015,11 @@ final class PhoneNumberInput extends BasicEditField implements HolsterListener, 
 
    final void addToMenu(SystemEnabledMenu menu, int instance, boolean systemLocked, boolean outgoingCallAllowed) {
       if (instance == 0 && !systemLocked && outgoingCallAllowed) {
-         menu.add((Verb)(new Object(null, 6094, 1397760, '\u0000')));
+         menu.add(new SpeedDialVerb(null, 6094, 1397760, '\u0000'));
       }
 
       if (this.isValidInput()) {
-         Verb[] verbs = new Object[0];
+         Verb[] verbs = new Verb[0];
          verbs = _rawPhoneNumberRepository.getVerbs(null);
          ContextObject context = _rawPhoneNumberInputContextWR.getContextObject();
          context.put(253, this.getText());
@@ -1025,41 +1028,41 @@ final class PhoneNumberInput extends BasicEditField implements HolsterListener, 
          PhoneUtilities.setPrivateFlag(context, 75);
          if (!systemLocked && model != null && instance == 0) {
             if (outgoingCallAllowed) {
-               menu.add((Verb)(new Object(model, 6072, 1332244, '\u0000')));
+               menu.add(new SpeedDialVerb(model, 6072, 1332244, '\u0000'));
             }
 
             context.setFlag(34);
             context.putIntegerData(1);
             context.put(254, model);
             model = FactoryUtil.createInstance(3797587162219887872L, context);
-            if (model instanceof Object) {
+            if (model instanceof ConversionProvider) {
                ConversionProvider converter = (ConversionProvider)model;
-               String[] names = new Object[2];
-               converter.convert(new Object(10), names);
+               String[] names = new String[2];
+               converter.convert(new ContextObject(10), names);
                if (names[1] == null || names[1].length() == 0) {
                   Verb addToAddressBookVerb = AddressBookServices.getAddToAddressBookVerb();
                   context.put(254, model);
-                  menu.add((Verb)(new Object(addToAddressBookVerb, context, 16867328)));
+                  menu.add(new WrapperVerb(addToAddressBookVerb, context, 16867328));
                }
             }
          }
 
          Verb defaultVerb = null;
-         Verb[] trimmedVerbs = new Object[0];
+         Verb[] trimmedVerbs = new Verb[0];
          int index = 0;
          Recognizer recognizer = DialVerb.getRecognizer();
 
          for (int i = 0; i < verbs.length; i++) {
             Verb verb = verbs[i];
             if ((!systemLocked || recognizer.recognize(verb))
-               && !(verb instanceof Object)
-               && (!(verb instanceof Object) || ((ConditionalVerb)verb).canInvoke(context))) {
-               if (!(verb instanceof Object)) {
+               && !(verb instanceof ApplicationKeyInvocableVerb)
+               && (!(verb instanceof ConditionalVerb) || ((ConditionalVerb)verb).canInvoke(context))) {
+               if (!(verb instanceof Copyable)) {
                   Array.resize(trimmedVerbs, trimmedVerbs.length + 1);
                   trimmedVerbs[index++] = verb;
                } else {
                   Verb verbCopy = (Verb)((Copyable)verb).copy();
-                  if (verbCopy instanceof Object) {
+                  if (verbCopy instanceof SetParameter) {
                      ((SetParameter)verbCopy).setParameter(context);
                   }
 

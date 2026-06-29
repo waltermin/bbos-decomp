@@ -45,7 +45,7 @@ final class DocViewSoundDisplayField$DocViewInputOutputByteStream extends InputS
    @Override
    public final synchronized int read(byte[] b, int off, int len) {
       if (b == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       if (off >= 0 && off <= b.length && len >= 0 && off + len <= b.length && off + len >= 0) {
@@ -69,7 +69,7 @@ final class DocViewSoundDisplayField$DocViewInputOutputByteStream extends InputS
          this.checkForMore();
          return len;
       } else {
-         throw new Object();
+         throw new IndexOutOfBoundsException();
       }
    }
 
@@ -134,7 +134,7 @@ final class DocViewSoundDisplayField$DocViewInputOutputByteStream extends InputS
             this._sendRunnable = new DocViewSoundDisplayField$DocViewInputOutputByteStream$1(this);
          }
 
-         ((Thread)(new Object(this._sendRunnable))).start();
+         new Thread(this._sendRunnable).start();
       }
    }
 

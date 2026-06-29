@@ -39,7 +39,7 @@ public class RegisterV1_1 implements RegisterV1 {
 
    @Override
    public String getPIN() {
-      return (String)(this._pin == null ? null : new Object(this._pin));
+      return this._pin == null ? null : new String(this._pin);
    }
 
    @Override
@@ -49,7 +49,7 @@ public class RegisterV1_1 implements RegisterV1 {
 
    @Override
    public String getReVersion() {
-      return (String)(this._reVersion == null ? null : new Object(this._reVersion));
+      return this._reVersion == null ? null : new String(this._reVersion);
    }
 
    @Override

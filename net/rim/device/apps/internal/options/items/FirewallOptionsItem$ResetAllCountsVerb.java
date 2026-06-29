@@ -19,7 +19,7 @@ final class FirewallOptionsItem$ResetAllCountsVerb extends Verb {
    public final Object invoke(Object parameter) {
       Firewall.getInstance().resetBlockedCounts();
       Screen s = UiApplication.getUiApplication().getActiveScreen();
-      if (s instanceof Object) {
+      if (s instanceof OptionsMainScreen) {
          OptionsMainScreen oms = (OptionsMainScreen)s;
          oms.deleteAll();
          this.this$0.populateMainScreen(oms);

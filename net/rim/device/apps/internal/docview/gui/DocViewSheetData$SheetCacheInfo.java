@@ -10,7 +10,7 @@ final class DocViewSheetData$SheetCacheInfo {
 
    final void setCellHandler(int row, int column, DocViewSheetData$ArznCellTextHandler textHandler) {
       if (textHandler == null) {
-         throw new Object("Null text handler object.");
+         throw new IllegalArgumentException("Null text handler object.");
       }
 
       this._row = row;

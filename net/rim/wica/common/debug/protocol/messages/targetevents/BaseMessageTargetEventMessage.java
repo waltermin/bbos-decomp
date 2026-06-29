@@ -37,6 +37,6 @@ class BaseMessageTargetEventMessage extends ApplicationTargetEventMessage implem
 
    @Override
    public String toString() {
-      return ((StringBuffer)(new Object("Message target event: messageType = "))).append(this.getType()).toString();
+      return "Message target event: messageType = " + this.getType();
    }
 }

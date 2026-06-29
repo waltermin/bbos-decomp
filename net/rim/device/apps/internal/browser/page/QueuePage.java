@@ -14,6 +14,7 @@ import net.rim.device.apps.internal.browser.core.BrowserDaemonRegistry;
 import net.rim.device.apps.internal.browser.resources.BrowserResources;
 import net.rim.device.apps.internal.browser.stack.FetchRequest;
 import net.rim.device.cldc.io.utility.URIDecoder;
+import net.rim.vm.WeakReference;
 
 public final class QueuePage extends Page implements CollectionListener {
    private String _name;
@@ -23,14 +24,12 @@ public final class QueuePage extends Page implements CollectionListener {
       super(fetchRequest, null, 0);
       RenderingSession renderingSession = BrowserDaemonRegistry.getInstance().getCurrentRenderingSession();
       RenderingOptions renderingOptions = renderingSession.getRenderingOptions();
-      this.setBrowserContent(
-         (BrowserContentImpl)(new Object(null, super._modelResult.getURL(), null, this, renderingOptions, super._modelResult.getNavigation()))
-      );
+      this.setBrowserContent(new BrowserContentImpl(null, super._modelResult.getURL(), null, this, renderingOptions, super._modelResult.getNavigation()));
       this._name = URIDecoder.decode(super._modelResult.getURL(), "iso-8859-1").substring(6);
       if (this._name.length() == 0) {
          this.setTitle(BrowserResources.getString(647));
       } else {
-         String[] title = new Object[]{this._name};
+         String[] title = new String[]{this._name};
          this.setTitle(MessageFormat.format(BrowserResources.getString(638), title));
       }
 
@@ -41,8 +40,8 @@ public final class QueuePage extends Page implements CollectionListener {
       if (this._name.length() == 0) {
          String[] names = BrowserDaemonRegistry.getInstance().getOfflineQueue().getNames();
          if (names.length == 0) {
-            HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(12884901888L));
-            LabelField emptyField = (LabelField)(new Object(BrowserResources.getString(646)));
+            HorizontalFieldManager hfm = new HorizontalFieldManager(12884901888L);
+            LabelField emptyField = new LabelField(BrowserResources.getString(646));
             hfm.add(emptyField);
             this.getBrowserContent().getContentManager().add(hfm);
             return;
@@ -54,14 +53,14 @@ public final class QueuePage extends Page implements CollectionListener {
       } else {
          ReadableList queue = (ReadableList)BrowserDaemonRegistry.getInstance().getOfflineQueue().getQueue(this._name);
          if (queue == null || queue.size() == 0) {
-            HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(12884901888L));
-            LabelField emptyField = (LabelField)(new Object(BrowserResources.getString(639)));
+            HorizontalFieldManager hfm = new HorizontalFieldManager(12884901888L);
+            LabelField emptyField = new LabelField(BrowserResources.getString(639));
             hfm.add(emptyField);
             this.getBrowserContent().getContentManager().add(hfm);
             return;
          }
 
-         this._requestFields = (Vector)(new Object());
+         this._requestFields = new Vector();
          int size = queue.size();
 
          for (int i = 0; i < size; i++) {
@@ -70,7 +69,7 @@ public final class QueuePage extends Page implements CollectionListener {
             this._requestFields.addElement(field);
          }
 
-         ((CollectionEventSource)queue).addCollectionListener(new Object(this));
+         ((CollectionEventSource)queue).addCollectionListener(new WeakReference(this));
       }
    }
 

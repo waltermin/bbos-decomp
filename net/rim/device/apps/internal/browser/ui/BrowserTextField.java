@@ -35,7 +35,7 @@ public class BrowserTextField extends ActiveRichTextField {
    public static final int FONT_LARGE = 2;
    public static final int LINK_COLOR = 4856319;
    public static final int HIGHLIGHT_LINK_COLOR = 16772045;
-   private static ContextObject _browserContextObject = (ContextObject)(new Object(2, 96, 61));
+   private static ContextObject _browserContextObject = new ContextObject(2, 96, 61);
 
    public BrowserTextField(
       BrowserContentImpl browserContent,
@@ -152,7 +152,7 @@ public class BrowserTextField extends ActiveRichTextField {
             return null;
          }
 
-         ContextObject context = (ContextObject)(new Object());
+         ContextObject context = new ContextObject();
          String regionString = this.getRegionURL(region);
          context.put(253, regionString);
          context.put(-442409970680484936L, this._browserContent);
@@ -185,8 +185,8 @@ public class BrowserTextField extends ActiveRichTextField {
          brq.appendFont(fonts[i], foregroundColors != null ? foregroundColors[i] : -1, backgroundColors != null ? backgroundColors[i] : -1);
       }
 
-      StringPatternEnumerator stringEnum = (StringPatternEnumerator)(new Object(text, StringPatternRepository$Internal.getStringPatterns()));
-      StringPattern$Match stringMatch = (StringPattern$Match)(new Object());
+      StringPatternEnumerator stringEnum = new StringPatternEnumerator(text, StringPatternRepository$Internal.getStringPatterns());
+      StringPattern$Match stringMatch = new StringPattern$Match();
       int linkIndex = 0;
       int linksLength = links == null ? 0 : links.length;
       byte[] underlinedAttributes = null;
@@ -256,7 +256,7 @@ public class BrowserTextField extends ActiveRichTextField {
       if (action == 1 && this._browserContent != null && (this._browserContent.getRenderingFlags() & 32) == 0) {
          Verb defaultVerb = this._browserContent.getDefaultVerbUnderCursor();
          if (defaultVerb != null) {
-            defaultVerb.invoke(new Object(61));
+            defaultVerb.invoke(new ContextObject(61));
             return true;
          }
       }

@@ -19,6 +19,7 @@ import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.ui.component.TreeField;
 import net.rim.device.api.ui.component.TreeFieldCallback;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
+import net.rim.device.api.ui.menu.MenuScreen;
 import net.rim.device.api.ui.theme.ThemeAttributeSet;
 import net.rim.device.api.util.IntHashtable;
 import net.rim.device.api.util.ObjectUtilities;
@@ -28,6 +29,7 @@ import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.messaging.MessageIcons;
 import net.rim.device.apps.api.ui.AppsMainScreen;
 import net.rim.device.apps.api.ui.CommonResources;
+import net.rim.device.apps.api.ui.PopupStatus;
 import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
 import net.rim.device.internal.ui.Image;
 import net.rim.device.internal.ui.RichText;
@@ -38,15 +40,15 @@ import net.rim.device.internal.ui.component.SimpleChoiceDialog;
 import net.rim.device.internal.ui.component.SimpleInputDialog;
 
 final class ForwardScreen extends AppsMainScreen implements TreeFieldCallback, MoreNotify, StateChangeNotify, GlobalEventListener {
-   final int _applicationID = ((Random)(new Object())).nextInt();
+   final int _applicationID = new Random().nextInt();
    private Vector _attachmentVector;
    int _messageID;
    private Object _syncObject = new Object();
-   private ImageField _iconField = (ImageField)(new Object(65536));
-   private HorizontalFieldManager _titleManager = (HorizontalFieldManager)(new Object());
+   private ImageField _iconField = new ImageField(65536);
+   private HorizontalFieldManager _titleManager = new HorizontalFieldManager();
    private HorizontalSpacerField _spacerField;
    private int _iconIndex = -1;
-   private IntHashtable _pwdInfoMap = (IntHashtable)(new Object());
+   private IntHashtable _pwdInfoMap = new IntHashtable();
    private MenuItem _retrieveItem;
    private MenuItem _viewItem;
    private MenuItem _playItem;
@@ -88,7 +90,7 @@ final class ForwardScreen extends AppsMainScreen implements TreeFieldCallback, M
 
             for (int j = 0; j <= count; j++) {
                iCurrentSibling = this.addFullContentElement(
-                  (SimpleSortingVector)(attachmentContainer == null ? null : attachmentContainer.elementAt(j)),
+                  attachmentContainer == null ? null : (SimpleSortingVector)attachmentContainer.elementAt(j),
                   i,
                   model.getMorePartID(),
                   model.isArchive() ? persistInstance.getArchiveIndicator(this._messageID, model.getMorePartID(), j) : null,
@@ -415,7 +417,7 @@ final class ForwardScreen extends AppsMainScreen implements TreeFieldCallback, M
          try {
             Screen activeScreen = this.getUiEngine().getActiveScreen();
 
-            while (activeScreen instanceof Object) {
+            while (activeScreen instanceof PopupStatus) {
                activeScreen = activeScreen.getScreenBelow();
             }
 
@@ -478,7 +480,7 @@ final class ForwardScreen extends AppsMainScreen implements TreeFieldCallback, M
    ForwardScreen(Object context, Vector attachmentVector, int iSelectedAttachment) {
       super(299067162755072L);
       this.setContext(ContextObject.castOrCreate(context));
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          this.setContext((ContextObject)context);
       } else {
          this.setHelp("messages_index");
@@ -496,7 +498,7 @@ final class ForwardScreen extends AppsMainScreen implements TreeFieldCallback, M
       this._attachmentsTree.setIndentWidth(8);
       iAttachmentsCount = this.loadTreeElementData(iAttachmentsCount);
       this.add(this._attachmentsTree);
-      String strAttachments = ((StringBuffer)(new Object())).append(_resources.getString(0)).append(": ").append(String.valueOf(iAttachmentsCount)).toString();
+      String strAttachments = _resources.getString(0) + ": " + iAttachmentsCount;
       this._titleManager.add(new DocViewFittingLabelFieldEllipsis(strAttachments));
       this.setTitle(this._titleManager);
       this.createMenuItems();
@@ -505,7 +507,7 @@ final class ForwardScreen extends AppsMainScreen implements TreeFieldCallback, M
 
    private final synchronized void closeForwardScreen() {
       Screen activeScreen = UiApplication.getUiApplication().getActiveScreen();
-      if (activeScreen instanceof Object) {
+      if (activeScreen instanceof MenuScreen) {
          UiApplication.getUiApplication().popScreen(activeScreen);
          activeScreen = UiApplication.getUiApplication().getActiveScreen();
       }
@@ -600,7 +602,7 @@ final class ForwardScreen extends AppsMainScreen implements TreeFieldCallback, M
                   }
 
                   if (this._iconField == null) {
-                     this._iconField = (ImageField)(new Object(65536));
+                     this._iconField = new ImageField(65536);
                   }
 
                   if (synchronize) {
@@ -771,7 +773,7 @@ final class ForwardScreen extends AppsMainScreen implements TreeFieldCallback, M
                   break;
                case 1:
                   String strMessage = _resources.getString(4);
-                  strMessage = ((StringBuffer)(new Object())).append(strMessage).append(' ').append(_resources.getString(5)).toString();
+                  strMessage = strMessage + ' ' + _resources.getString(5);
                   if (SimpleChoiceDialog.askYesNoQuestion(strMessage)) {
                      action = 0;
                   }
@@ -781,11 +783,7 @@ final class ForwardScreen extends AppsMainScreen implements TreeFieldCallback, M
                   break;
                case 3:
                   if (SimpleChoiceDialog.askYesNoQuestion(
-                     ((StringBuffer)(new Object()))
-                        .append(AttachmentViewerFactory.getErrorString(crtElement.getLastServerResponse()))
-                        .append(' ')
-                        .append(_resources.getString(5))
-                        .toString()
+                     AttachmentViewerFactory.getErrorString(crtElement.getLastServerResponse()) + ' ' + _resources.getString(5)
                   )) {
                      action = 1;
                   }
@@ -888,9 +886,7 @@ final class ForwardScreen extends AppsMainScreen implements TreeFieldCallback, M
                   )
                );
                this._appInstance.invokeLater(new ForwardScreen$13(this, retrieveMoreVerb, cloneContext));
-               Status.show(
-                  ((StringBuffer)(new Object())).append(_resources.getString(118)).append(' ').append(crtElement.toString()).append('…').toString(), 2500
-               );
+               Status.show(_resources.getString(118) + ' ' + crtElement.toString() + '…', 2500);
             }
          }
       }
@@ -898,7 +894,7 @@ final class ForwardScreen extends AppsMainScreen implements TreeFieldCallback, M
 
    private final ForwardScreen$PasswordInfo getPwdInfo(int morePartID, String archiveIndicator) {
       Object obj1 = this._pwdInfoMap.get(morePartID);
-      if (obj1 instanceof Object) {
+      if (obj1 instanceof Hashtable) {
          Hashtable hash = (Hashtable)obj1;
          Object obj2 = hash.get(archiveIndicator == null ? "" : archiveIndicator);
          if (obj2 instanceof ForwardScreen$PasswordInfo) {
@@ -915,7 +911,7 @@ final class ForwardScreen extends AppsMainScreen implements TreeFieldCallback, M
    }
 
    private final boolean readPassword(int morePartID, String archiveIndicator) {
-      SimpleInputDialog pwdDlg = (SimpleInputDialog)(new Object(5, CommonResources.getString(2012)));
+      SimpleInputDialog pwdDlg = new SimpleInputDialog(5, CommonResources.getString(2012));
       ForwardScreen$PasswordInfo infoPwd = this.getPwdInfo(morePartID, archiveIndicator);
       if (infoPwd != null && infoPwd._password != null && infoPwd._password.length() > 0) {
          pwdDlg.setText(infoPwd._password);
@@ -931,7 +927,7 @@ final class ForwardScreen extends AppsMainScreen implements TreeFieldCallback, M
 
          Hashtable pwdHash = (Hashtable)this._pwdInfoMap.get(morePartID);
          if (pwdHash == null) {
-            pwdHash = (Hashtable)(new Object());
+            pwdHash = new Hashtable();
             this._pwdInfoMap.put(morePartID, pwdHash);
          }
 

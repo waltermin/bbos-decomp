@@ -19,7 +19,7 @@ public final class Crypto2EncoderInitialization implements Initialization {
          SignatureDecoder.register(new X509_RIM_SignatureDecoder2(), new X509_SignatureDecoder());
          SignatureEncoder.register(new X509_RIM_SignatureEncoder2());
       } finally {
-         throw new Object();
+         throw new RuntimeException();
       }
    }
 }

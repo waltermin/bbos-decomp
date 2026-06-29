@@ -102,17 +102,17 @@ final class MMSMessageActionProvider {
             }
          } else {
             if (actionId == 6760675856762529805L) {
-               if (!(context instanceof Object)) {
-                  throw new Object();
+               if (!(context instanceof Long)) {
+                  throw new IllegalArgumentException();
                }
 
-               message.setFolderId(context);
+               message.setFolderId((Long)context);
                return false;
             }
 
             if (actionId == -8063528366659490440L) {
                if (!(context instanceof MMSPayloadModel)) {
-                  throw new Object();
+                  throw new IllegalArgumentException();
                }
 
                updatePayload(message, (MMSPayloadModel)context);
@@ -121,7 +121,7 @@ final class MMSMessageActionProvider {
 
             if (actionId == -3923698019885371449L) {
                if (!(context instanceof int[])) {
-                  throw new Object();
+                  throw new IllegalArgumentException();
                }
 
                int[] values = (int[])context;
@@ -131,7 +131,7 @@ final class MMSMessageActionProvider {
 
             if (actionId == -8071174053402202672L) {
                if (!(context instanceof MMSProtocolDataUnit)) {
-                  throw new Object();
+                  throw new IllegalArgumentException();
                }
 
                message.addDeliveryReport((MMSProtocolDataUnit)context);
@@ -142,7 +142,7 @@ final class MMSMessageActionProvider {
 
             if (actionId == -1919303899965957599L) {
                if (!(context instanceof MMSProtocolDataUnit)) {
-                  throw new Object();
+                  throw new IllegalArgumentException();
                }
 
                message.addReadReport((MMSProtocolDataUnit)context);
@@ -166,7 +166,7 @@ final class MMSMessageActionProvider {
    }
 
    private static final void initializeMessage(MMSMessageModelImpl message, Object context) {
-      if (context instanceof Object) {
+      if (context instanceof Folder) {
          Folder folder = (Folder)context;
          long folderId = folder.getLUID();
          if (message.getFolderId() != folderId) {

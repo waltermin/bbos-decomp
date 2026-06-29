@@ -16,7 +16,7 @@ public class UnsupportedFieldException extends RuntimeException {
    }
 
    UnsupportedFieldException(int field) {
-      this(((StringBuffer)(new Object("Field "))).append(field).append(" not supported.").toString(), field);
+      this("Field " + field + " not supported.", field);
    }
 
    public int getField() {

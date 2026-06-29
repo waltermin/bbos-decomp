@@ -15,7 +15,7 @@ public final class Crypto1SelfTestModule implements SelfTestModule {
    public final void test(int testIndex) {
       switch (testIndex) {
          case -1:
-            throw new Object();
+            throw new CryptoSelfTestError();
          case 0:
          default:
             FIPS186PseudoRandomSource.selfTest();
@@ -79,7 +79,7 @@ public final class Crypto1SelfTestModule implements SelfTestModule {
    public final String[] getTestNames(boolean startupTests) {
       String[] testNames = CommonResource.getStringArray(10021);
       if (startupTests) {
-         String[] names = new Object[this.getNumTests(true)];
+         String[] names = new String[this.getNumTests(true)];
          System.arraycopy(testNames, 0, names, 0, names.length);
          return names;
       } else {

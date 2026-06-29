@@ -38,7 +38,7 @@ public final class ToDoImpl extends PIMItemImpl implements BlackBerryToDo {
          this._todoList = (ToDoListImpl)todoList;
       }
 
-      if (input instanceof Object) {
+      if (input instanceof TaskModel) {
          this._committedTaskModel = (TaskModel)input;
          this._taskModel = (TaskModel)((EditableProvider)input).makeReadWrite();
       }
@@ -48,7 +48,7 @@ public final class ToDoImpl extends PIMItemImpl implements BlackBerryToDo {
 
    @Override
    public final boolean isInternalModel(Object selected) {
-      return selected instanceof Object;
+      return selected instanceof TaskModel;
    }
 
    @Override
@@ -82,7 +82,7 @@ public final class ToDoImpl extends PIMItemImpl implements BlackBerryToDo {
          case 101:
          case 102:
          case 106:
-            throw new Object(field);
+            throw new UnsupportedFieldException(field);
          case 103:
             if (this._taskModel.hasDueDate()) {
                return 1;
@@ -121,7 +121,7 @@ public final class ToDoImpl extends PIMItemImpl implements BlackBerryToDo {
 
             return 0;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -132,7 +132,7 @@ public final class ToDoImpl extends PIMItemImpl implements BlackBerryToDo {
          case 103:
             return this._taskModel.getDueDate();
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -145,7 +145,7 @@ public final class ToDoImpl extends PIMItemImpl implements BlackBerryToDo {
             this._modified = true;
             return;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -153,9 +153,9 @@ public final class ToDoImpl extends PIMItemImpl implements BlackBerryToDo {
    public final boolean getBoolean(int field, int index) {
       switch (field) {
          case 101:
-            throw new Object(field);
+            throw new UnsupportedFieldException(field);
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -175,7 +175,7 @@ public final class ToDoImpl extends PIMItemImpl implements BlackBerryToDo {
          case 108:
             return String.valueOf(this._taskModel.getUID());
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -191,9 +191,9 @@ public final class ToDoImpl extends PIMItemImpl implements BlackBerryToDo {
             this._taskModel.add(summaryModel);
             break;
          case 108:
-            throw new Object("UID is a read-only field.");
+            throw new IllegalArgumentException("UID is a read-only field.");
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       this._modified = true;
@@ -208,7 +208,7 @@ public final class ToDoImpl extends PIMItemImpl implements BlackBerryToDo {
          case 16777225:
             return this._taskModel.getStatus();
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -219,7 +219,7 @@ public final class ToDoImpl extends PIMItemImpl implements BlackBerryToDo {
       switch (field) {
          case 105:
             if (value < 0 || value > 9) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this._taskModel.setPriority(value);
@@ -227,7 +227,7 @@ public final class ToDoImpl extends PIMItemImpl implements BlackBerryToDo {
          case 16777225:
             switch (value) {
                case 0:
-                  throw new Object();
+                  throw new IllegalArgumentException();
                case 1:
                   this._taskModel.setStatus(0);
                   break label24;
@@ -246,7 +246,7 @@ public final class ToDoImpl extends PIMItemImpl implements BlackBerryToDo {
                   break label24;
             }
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       this._modified = true;
@@ -270,12 +270,12 @@ public final class ToDoImpl extends PIMItemImpl implements BlackBerryToDo {
             this._taskModel.remove(tm);
             break;
          case 108:
-            throw new Object("UID is a read-only field.");
+            throw new IllegalArgumentException("UID is a read-only field.");
          case 16777225:
             this._taskModel.setStatus(0);
             break;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       this._modified = true;
@@ -287,17 +287,17 @@ public final class ToDoImpl extends PIMItemImpl implements BlackBerryToDo {
    }
 
    @Override
-   public final void commit() {
+   public final void commit() throws PIMException {
       if (this._todoList._closed) {
-         throw new Object("ToDo List is closed.", 2);
+         throw new PIMException("ToDo List is closed.", 2);
       }
 
       if (this._mode == 1) {
-         throw new Object();
+         throw new SecurityException();
       }
 
       if (this.isEmpty()) {
-         throw new Object("Cannot commit an empty ToDo");
+         throw new PIMException("Cannot commit an empty ToDo");
       }
 
       TaskCollection _collection = TaskCollectionHolder.getTaskCollection();
@@ -373,7 +373,7 @@ public final class ToDoImpl extends PIMItemImpl implements BlackBerryToDo {
             this._modified = true;
             return;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -383,20 +383,20 @@ public final class ToDoImpl extends PIMItemImpl implements BlackBerryToDo {
       switch (field) {
          case 105:
             if (value < 0 || value > 9) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this._taskModel.setPriority(value);
             break;
          case 16777225:
             if (value < 0 || value > 4) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this._taskModel.setStatus(value);
             break;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       this._modified = true;
@@ -413,9 +413,9 @@ public final class ToDoImpl extends PIMItemImpl implements BlackBerryToDo {
             ((TitleModel)this._taskModel.getTitleModel()).setTitle(value);
             break;
          case 108:
-            throw new Object("UID is a read-only field.");
+            throw new IllegalArgumentException("UID is a read-only field.");
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       this._modified = true;

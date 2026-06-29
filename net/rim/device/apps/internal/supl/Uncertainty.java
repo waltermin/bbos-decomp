@@ -31,11 +31,11 @@ final class Uncertainty {
 
    final void print() {
       System.out.println("Uncertainty: ");
-      System.out.println(((StringBuffer)(new Object("Optionals: "))).append(this.optionals).toString());
-      System.out.println(((StringBuffer)(new Object("UncertSemiMajor: "))).append(this.uncertSemiMajor).toString());
-      System.out.println(((StringBuffer)(new Object("UncertSemiMinor: "))).append(this.uncertSemiMinor).toString());
+      System.out.println("Optionals: " + this.optionals);
+      System.out.println("UncertSemiMajor: " + this.uncertSemiMajor);
+      System.out.println("UncertSemiMinor: " + this.uncertSemiMinor);
       if ((this.optionals & 1) == 1) {
-         System.out.println(((StringBuffer)(new Object("Orientation Maj Axis: "))).append(this.orientationMajorAxis).toString());
+         System.out.println("Orientation Maj Axis: " + this.orientationMajorAxis);
       }
    }
 }

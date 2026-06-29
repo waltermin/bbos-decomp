@@ -1,14 +1,14 @@
 package net.rim.device.apps.internal.lbs.protocol;
 
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.container.PopupScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.ribbon.RibbonLauncher;
 
 final class HelpDialog extends PopupScreen {
    private boolean _connScreenLaunched = false;
 
    HelpDialog() {
-      super((Manager)(new Object()));
+      super(new VerticalFieldManager());
    }
 
    @Override

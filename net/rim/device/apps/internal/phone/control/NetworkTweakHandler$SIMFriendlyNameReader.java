@@ -35,7 +35,7 @@ class NetworkTweakHandler$SIMFriendlyNameReader implements SIMCardStatusListener
    @Override
    public void cardReady() {
       SIMCard.removeListener(Application.getApplication(), this);
-      ((SIMCardEfHandler)(new Object())).startTask(this, false);
+      new SIMCardEfHandler().startTask(this, false);
    }
 
    @Override

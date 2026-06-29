@@ -156,7 +156,7 @@ public final class VolumeIndicator extends Field implements AudioRouterListener 
 
    public VolumeIndicator(boolean small, Screen screen) {
       if (screen != null) {
-         this._screenRef = (WeakReference)(new Object(screen));
+         this._screenRef = new WeakReference(screen);
       }
 
       this._router = AudioRouter.getInstance();

@@ -20,7 +20,7 @@ public final class DocViewSlideshowField extends VerticalFieldManager implements
    private final UiApplication _uiApplication = UiApplication.getUiApplication();
    private DocViewNotify _notifyObject;
    private final DocViewSlideshowField$SlideshowImageField _imgFld;
-   private IntHashtable _renderedImages = (IntHashtable)(new Object());
+   private IntHashtable _renderedImages = new IntHashtable();
    private int _currentIndex = -1;
    private int _imageCount;
    private final DocViewTextDisplayField$DummyBitmapField _dummyFld = new DocViewTextDisplayField$DummyBitmapField();
@@ -49,7 +49,7 @@ public final class DocViewSlideshowField extends VerticalFieldManager implements
    public DocViewSlideshowField(DocViewParser docData, boolean isPresentation) {
       super(3461579263587647488L);
       if (docData == null) {
-         throw new Object("Null DocViewParser object.");
+         throw new IllegalArgumentException("Null DocViewParser object.");
       }
 
       this._docData = docData;
@@ -239,7 +239,7 @@ public final class DocViewSlideshowField extends VerticalFieldManager implements
    private final void goToImpl() {
       if (this._currentIndex >= 0 && this._currentIndex < this._imageCount && this._imageCount > 1) {
          String prompt = this._isPresentation ? _resources.getString(76) : _resources.getString(119);
-         prompt = ((StringBuffer)(new Object())).append(prompt).append(" (1 - ").append(String.valueOf(this._imageCount)).append(")").append(':').toString();
+         prompt = prompt + " (1 - " + this._imageCount + ")" + ':';
          DocViewTextDisplayField$GoToDlg dlg = new DocViewTextDisplayField$GoToDlg(prompt, this._imageCount);
          dlg.show();
          if (dlg.getCloseReason() == 0) {
@@ -287,11 +287,11 @@ public final class DocViewSlideshowField extends VerticalFieldManager implements
       // 14: astore 2
       // 15: aload 2
       // 16: dup
-      // 17: instanceof java/lang/Object
+      // 17: instanceof net/rim/device/api/system/EncodedImage
       // 1a: ifne 21
       // 1d: pop
       // 1e: goto 40
-      // 21: checkcast java/lang/Object
+      // 21: checkcast net/rim/device/api/system/EncodedImage
       // 24: astore 3
       // 25: aload 3
       // 26: invokevirtual net/rim/device/api/system/EncodedImage.getScaleX32 ()I

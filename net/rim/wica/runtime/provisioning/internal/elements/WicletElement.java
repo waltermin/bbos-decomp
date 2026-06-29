@@ -13,7 +13,7 @@ import net.rim.wica.runtime.util.Util;
 import org.xml.sax.Attributes;
 
 public final class WicletElement extends AbstractElement {
-   private Hashtable _dataElements = (Hashtable)(new Object());
+   private Hashtable _dataElements = new Hashtable();
    private Hashtable _dependencyElements;
    private String _description;
    private String _entry;
@@ -25,7 +25,7 @@ public final class WicletElement extends AbstractElement {
    private String _messageDelivery;
    private Hashtable _messageElements;
    private String _persistence;
-   private Hashtable _resourceElements = (Hashtable)(new Object());
+   private Hashtable _resourceElements = new Hashtable();
    private Hashtable _screenElements;
    private Hashtable _scriptElements;
    private Vector _sortedMessages;
@@ -36,14 +36,14 @@ public final class WicletElement extends AbstractElement {
    private String _version;
 
    public WicletElement() {
-      this._enumerationElements = (Hashtable)(new Object());
-      this._globalElements = (Vector)(new Object());
-      this._globalElementsTable = (Hashtable)(new Object());
-      this._dependencyElements = (Hashtable)(new Object());
-      this._messageElements = (Hashtable)(new Object());
-      this._styleElements = (Hashtable)(new Object());
-      this._screenElements = (Hashtable)(new Object());
-      this._scriptElements = (Hashtable)(new Object());
+      this._enumerationElements = new Hashtable();
+      this._globalElements = new Vector();
+      this._globalElementsTable = new Hashtable();
+      this._dependencyElements = new Hashtable();
+      this._messageElements = new Hashtable();
+      this._styleElements = new Hashtable();
+      this._screenElements = new Hashtable();
+      this._scriptElements = new Hashtable();
       this._messageDelivery = "standard";
       this._persistence = "performant";
    }
@@ -250,7 +250,7 @@ public final class WicletElement extends AbstractElement {
 
    @Override
    public final String toString() {
-      StringBuffer buf = (StringBuffer)(new Object(256));
+      StringBuffer buf = new StringBuffer(256);
       buf.append("WicletElement");
       buf.append("[name=");
       buf.append(super._name);
@@ -296,7 +296,7 @@ public final class WicletElement extends AbstractElement {
    }
 
    public final Vector resolvePath(String mapping) {
-      Vector path = (Vector)(new Object());
+      Vector path = new Vector();
       String[] tokens = Util.split(mapping, '.');
       int currentToken = 0;
       String root = tokens[currentToken++];
@@ -358,7 +358,7 @@ public final class WicletElement extends AbstractElement {
 
    private final Vector getMessageElementsInSortedOrder() {
       if (this._sortedMessages == null) {
-         SimpleSortingVector sv = (SimpleSortingVector)(new Object());
+         SimpleSortingVector sv = new SimpleSortingVector();
          sv.setSortComparator(MessageElement.getComparator());
          if (this._messageElements != null) {
             Enumeration enumeration = this._messageElements.elements();

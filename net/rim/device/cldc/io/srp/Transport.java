@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.srp;
 
+import java.io.IOException;
 import java.util.Vector;
 import javax.microedition.io.Datagram;
 import javax.microedition.io.DatagramConnection;
@@ -10,6 +11,7 @@ import net.rim.device.api.io.DatagramBase;
 import net.rim.device.api.io.DatagramConnectionBase;
 import net.rim.device.api.io.DatagramStatusListener;
 import net.rim.device.api.io.DatagramTransportBase;
+import net.rim.device.api.io.IONotRoutableException;
 import net.rim.device.api.servicebook.ServiceRouting;
 import net.rim.device.api.system.EventLogger;
 import net.rim.device.api.system.RealtimeClockListener;
@@ -20,11 +22,11 @@ import net.rim.vm.WeakReference;
 
 public final class Transport extends DatagramTransportBase implements DatagramStatusListener, ConnEvent, RealtimeClockListener, SrpConstants {
    private int _nextDgramId = 0;
-   private IntHashtable _datagrams = (IntHashtable)(new Object());
-   private Vector _confirmationDatagrams = (Vector)(new Object());
-   private IntHashtable _sentDatagrams = (IntHashtable)(new Object());
+   private IntHashtable _datagrams = new IntHashtable();
+   private Vector _confirmationDatagrams = new Vector();
+   private IntHashtable _sentDatagrams = new IntHashtable();
    private Object _lock = new Object();
-   private Vector _sentConfirmationDatagrams = (Vector)(new Object());
+   private Vector _sentConfirmationDatagrams = new Vector();
    private int _timer;
    private SrpConnectionManager _connectionManager;
    private Transport$SrpConnectionThread _eventThread;
@@ -172,9 +174,9 @@ public final class Transport extends DatagramTransportBase implements DatagramSt
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void send(Datagram datagram) {
+   public final void send(Datagram datagram) throws IOException, IONotRoutableException {
       EventLogger.logEvent(super.GUID, 1415082868, 0);
-      boolean internal = datagram instanceof Object;
+      boolean internal = datagram instanceof DatagramBase;
       String address = datagram.getAddress();
       int linkType = -1;
       int connectionType = -1;
@@ -192,12 +194,12 @@ public final class Transport extends DatagramTransportBase implements DatagramSt
       }
 
       if (srpConfiguration == null) {
-         throw new Object();
+         throw new IONotRoutableException();
       }
 
       if (!srpConfiguration.isConnectionActive()) {
          EventLogger.logEvent(super.GUID, 1129214834, 2);
-         throw new Object();
+         throw new IONotRoutableException();
       }
 
       DatagramBase dgram = (DatagramBase)super._subConnection.newDatagram(0);
@@ -222,7 +224,7 @@ public final class Transport extends DatagramTransportBase implements DatagramSt
       } finally {
          if (var14) {
             EventLogger.logEvent(super.GUID, 1413834351, 2);
-            throw new Object();
+            throw new IOException();
          }
       }
 
@@ -278,11 +280,11 @@ public final class Transport extends DatagramTransportBase implements DatagramSt
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   protected final void processReceivedDatagram(Datagram datagram) {
+   protected final void processReceivedDatagram(Datagram datagram) throws IOException {
       EventLogger.logEvent(super.GUID, 1381528436, 0);
       SrpConfiguration srpConfiguration = null;
       Object address = null;
-      if (!(datagram instanceof Object)) {
+      if (!(datagram instanceof DatagramBase)) {
          address = datagram.getAddress();
          srpConfiguration = this._connectionManager.getConnectedSrpConfigurationByAddress(-1, -1, (String)address);
       } else {
@@ -293,7 +295,7 @@ public final class Transport extends DatagramTransportBase implements DatagramSt
 
       if (srpConfiguration == null) {
          EventLogger.logEvent(super.GUID, 1129213298, 2);
-         throw new Object();
+         throw new IOException();
       }
 
       SrpUtils$DatagramInfo info = null;
@@ -317,7 +319,7 @@ public final class Transport extends DatagramTransportBase implements DatagramSt
       } finally {
          if (var7) {
             EventLogger.logEvent(super.GUID, 1380279919, 2);
-            throw new Object();
+            throw new IOException();
          }
       }
 

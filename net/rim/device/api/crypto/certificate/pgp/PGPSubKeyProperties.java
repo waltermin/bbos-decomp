@@ -4,7 +4,7 @@ import net.rim.device.api.crypto.CryptoSystemProperties;
 import net.rim.device.api.crypto.certificate.CertificateProperties;
 
 public final class PGPSubKeyProperties extends CertificateProperties {
-   private static CryptoSystemProperties _defaultCryptoSystemProperties = (CryptoSystemProperties)(new Object());
+   private static CryptoSystemProperties _defaultCryptoSystemProperties = new CryptoSystemProperties();
 
    private PGPSubKeyProperties() {
    }
@@ -186,7 +186,7 @@ public final class PGPSubKeyProperties extends CertificateProperties {
 
          return bestSubKeyIndex;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

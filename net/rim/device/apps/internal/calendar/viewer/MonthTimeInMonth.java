@@ -108,7 +108,7 @@ final class MonthTimeInMonth implements FocusChangeListener {
    }
 
    private final void reloadMonthData(long time) {
-      Vector events = (Vector)(new Object());
+      Vector events = new Vector();
       events.removeAllElements();
       CalendarExtensions calEx = this._sharedCalForMonthLoadsEx;
       Calendar cal = this._sharedCalForMonthLoads;
@@ -180,7 +180,7 @@ final class MonthTimeInMonth implements FocusChangeListener {
       Calendar cal = this._sharedCal;
       Duration dur = (Duration)event;
       DescriptionProvider desc = null;
-      if (event instanceof Object) {
+      if (event instanceof DescriptionProvider) {
          desc = (DescriptionProvider)event;
       }
 

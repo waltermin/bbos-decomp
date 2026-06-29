@@ -91,9 +91,9 @@ public class PhoneNumberTypes {
             }
          }
 
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

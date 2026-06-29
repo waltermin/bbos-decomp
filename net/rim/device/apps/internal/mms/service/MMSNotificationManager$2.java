@@ -13,7 +13,7 @@ class MMSNotificationManager$2 implements Runnable {
 
    @Override
    public void run() {
-      ContextObject notificationContext = (ContextObject)(new Object());
+      ContextObject notificationContext = new ContextObject();
       notificationContext.putIntegerData(0);
       NotificationsManager.cancelImmediateEvent(8609386677418041260L, this.val$model.getUID(), null, notificationContext);
    }

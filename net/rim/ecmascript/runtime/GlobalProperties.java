@@ -62,7 +62,7 @@ class GlobalProperties {
    }
 
    private static JavaPackage addPackages(JavaPackage rootPackage, String prefix, GlobalProperties$PackageTable table) {
-      StringBuffer fullName = (StringBuffer)(new Object(prefix));
+      StringBuffer fullName = new StringBuffer(prefix);
       fullName.append(table.name);
       JavaPackage pakkage = new JavaPackage(fullName.toString());
       if (table.children != null) {
@@ -89,7 +89,7 @@ class GlobalProperties {
 
    static String uriEncode(String s, boolean component) throws ThrownValue {
       int len = s.length();
-      StringBuffer b = (StringBuffer)(new Object());
+      StringBuffer b = new StringBuffer();
 
       for (int k = 0; k < len; k++) {
          char ch = s.charAt(k);
@@ -262,7 +262,7 @@ class GlobalProperties {
 
    static String uriDecode(String s, boolean component) throws ThrownValue {
       int len = s.length();
-      StringBuffer b = (StringBuffer)(new Object());
+      StringBuffer b = new StringBuffer();
       int k = 0;
 
       while (k < len) {

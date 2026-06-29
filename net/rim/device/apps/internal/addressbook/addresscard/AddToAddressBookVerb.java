@@ -27,20 +27,20 @@ final class AddToAddressBookVerb extends Verb {
          if (parameter instanceof CompressedAddressCardModel) {
             newEntry = ((AddressCardModelFactory)ApplicationRegistry.getApplicationRegistry().waitFor(-3124646573404667739L))
                .uncompressCard((CompressedAddressCardModel)parameter);
-         } else if (!(parameter instanceof Object)) {
-            Object editScreen = null;
+         } else if (!(parameter instanceof AddressCardModel)) {
+            RIMModel editScreen = null;
             ContextObject context;
-            if (!(parameter instanceof Object)) {
-               context = (ContextObject)(new Object());
-               if (parameter instanceof Object) {
+            if (!(parameter instanceof ContextObject)) {
+               context = new ContextObject();
+               if (parameter instanceof RIMModel) {
                   ContextObject.put(context, 254, parameter);
-                  editScreen = parameter;
-               } else if (parameter instanceof Object) {
+                  editScreen = (RIMModel)parameter;
+               } else if (parameter instanceof String) {
                   ContextObject.put(context, -4886909117188079897L, parameter);
                }
             } else {
                context = ContextObject.clone(parameter);
-               editScreen = ContextObject.get(context, 254);
+               editScreen = (RIMModel)ContextObject.get(context, 254);
             }
 
             if (editScreen != null) {

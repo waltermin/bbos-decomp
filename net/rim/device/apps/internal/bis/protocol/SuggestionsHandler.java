@@ -9,7 +9,7 @@ import net.rim.device.apps.internal.bis.utils.xml.XMLToObjectHandler;
 
 public final class SuggestionsHandler extends XMLToObjectHandler implements BISServiceConstants {
    private SAXParser _parser;
-   private String[] _suggestions = new Object[3];
+   private String[] _suggestions = new String[3];
    private static final String[] REQUIRED_ELEMENTS = new String[]{"suggestion"};
 
    public SuggestionsHandler() {
@@ -24,7 +24,7 @@ public final class SuggestionsHandler extends XMLToObjectHandler implements BISS
       }
 
       this._parser.parse(istream, this);
-      return (Object[])this.getResult();
+      return (String[])this.getResult();
    }
 
    @Override

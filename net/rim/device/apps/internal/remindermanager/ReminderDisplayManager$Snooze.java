@@ -17,7 +17,7 @@ final class ReminderDisplayManager$Snooze extends Verb {
 
    @Override
    public final Object invoke(Object parameter) {
-      if (parameter instanceof Object) {
+      if (parameter instanceof ReminderElement) {
          ReminderElement element = (ReminderElement)parameter;
          long time = System.currentTimeMillis() + ReminderManager.SNOOZE_CHOICES[this._snoozeChoiceIndex];
          Runnable runnable = new ReminderDisplayManager$ProceedRunnable(element, true, time);
@@ -30,6 +30,6 @@ final class ReminderDisplayManager$Snooze extends Verb {
    @Override
    public final String toString() {
       String snoozeString = ResourceBundle.getBundle(912302513268743237L, "net.rim.device.apps.internal.resource.Calendar").getString(645);
-      return MessageFormat.format(snoozeString, new Object[]{CommonResources.getString(ReminderManager.SNOOZE_CHOICE_STRINGS[this._snoozeChoiceIndex])});
+      return MessageFormat.format(snoozeString, new String[]{CommonResources.getString(ReminderManager.SNOOZE_CHOICE_STRINGS[this._snoozeChoiceIndex])});
    }
 }

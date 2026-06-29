@@ -15,7 +15,7 @@ public final class UrlEntryField extends ComboField {
    public static final int FIELD_CHANGE_ACTION = 132388;
 
    public UrlEntryField(Font font) {
-      ListField listField = (ListField)(new Object());
+      ListField listField = new ListField();
       listField.setFont(font);
       this.setList(listField);
       BasicEditField edit = new BrowserUrlEditField(null, "http://www.", 2048, 2801795200L, "http://www.");
@@ -33,7 +33,7 @@ public final class UrlEntryField extends ComboField {
       super.setText(text);
       Manager manager = this.getManager();
       if (manager != null && manager.isStyle(1125899906842624L)) {
-         XYRect focusRect = (XYRect)(new Object());
+         XYRect focusRect = new XYRect();
          this.getEditable().getFocusRect(focusRect);
          int hScroll = focusRect.x + focusRect.width - manager.getWidth();
          manager.setHorizontalScroll(hScroll < 0 ? 0 : hScroll);

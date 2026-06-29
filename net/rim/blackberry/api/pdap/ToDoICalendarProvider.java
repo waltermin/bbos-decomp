@@ -24,7 +24,7 @@ class ToDoICalendarProvider extends PIMICalendarProvider {
          uid = "0";
       }
 
-      return ((StringBuffer)(new Object())).append(uid).append('-').append(String.valueOf(((Date)(new Object())).getTime())).append("@rim.net").toString();
+      return uid + '-' + new Date().getTime() + "@rim.net";
    }
 
    @Override
@@ -64,6 +64,6 @@ class ToDoICalendarProvider extends PIMICalendarProvider {
 
    @Override
    public Date getDateTimeDueValue() {
-      return (Date)(this._todo.countValues(103) > 0 ? new Object(this._todo.getDate(103, 0)) : null);
+      return this._todo.countValues(103) > 0 ? new Date(this._todo.getDate(103, 0)) : null;
    }
 }

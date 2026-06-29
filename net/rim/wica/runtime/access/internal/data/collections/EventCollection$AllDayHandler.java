@@ -9,7 +9,7 @@ final class EventCollection$AllDayHandler implements BooleanFieldHandler {
 
    @Override
    public final boolean getValue(Object item) {
-      return !(item instanceof Object) ? false : ((Event)item).getAllDayFlag();
+      return !(item instanceof Event) ? false : ((Event)item).getAllDayFlag();
    }
 
    EventCollection$AllDayHandler(EventCollection$1 x0) {

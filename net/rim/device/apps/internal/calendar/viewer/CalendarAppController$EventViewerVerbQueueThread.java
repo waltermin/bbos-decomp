@@ -9,7 +9,7 @@ final class CalendarAppController$EventViewerVerbQueueThread extends Thread {
 
    CalendarAppController$EventViewerVerbQueueThread(CalendarAppController _1) {
       this.this$0 = _1;
-      this._queue = (Vector)(new Object());
+      this._queue = new Vector();
    }
 
    public final void addVerbToQueue(Verb verb, Object parameter) {

@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.sync;
 
+import java.io.IOException;
 import javax.microedition.io.Connection;
 import net.rim.device.api.io.DatagramTransportBase;
 import net.rim.device.api.servicebook.ServiceBook;
@@ -30,9 +31,9 @@ public final class SyncConnection implements Connection {
       return this._transport.isSerialTransportEnabledFor(this._sid);
    }
 
-   public final int send(SyncDatagramBase aSyncDatagram, boolean checkInSyncDatagram) {
+   public final int send(SyncDatagramBase aSyncDatagram, boolean checkInSyncDatagram) throws IOException {
       if (this._closed) {
-         throw new Object();
+         throw new IOException();
       }
 
       long sid = aSyncDatagram.getSid();
@@ -44,7 +45,7 @@ public final class SyncConnection implements Connection {
       if (userId == null) {
          ServiceRecord sr = ServiceBook.getSB().getRecordByCidAndSid("SYNC", this._sid);
          if (sr == null) {
-            throw new Object("Attempt to send data for a service that has no service record.");
+            throw new IOException("Attempt to send data for a service that has no service record.");
          }
 
          userId = String.valueOf(sr.getUserId());
@@ -56,7 +57,7 @@ public final class SyncConnection implements Connection {
 
    public final void setListener(SyncConnectionListener aListener) {
       if (aListener != null) {
-         this._listener = (WeakReference)(new Object(aListener));
+         this._listener = new WeakReference(aListener);
       } else {
          this._listener = null;
       }
@@ -80,7 +81,7 @@ public final class SyncConnection implements Connection {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   SyncConnection(String sidString, DatagramTransportBase aTransport) {
+   SyncConnection(String sidString, DatagramTransportBase aTransport) throws IOException {
       boolean var5 = false /* VF: Semaphore variable */;
 
       try {
@@ -89,7 +90,7 @@ public final class SyncConnection implements Connection {
          var5 = false;
       } finally {
          if (var5) {
-            throw new Object();
+            throw new IOException();
          }
       }
 

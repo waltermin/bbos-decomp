@@ -42,7 +42,7 @@ public final class MediaHubScreen extends AppsMainScreen implements MediaListene
 
    public MediaHubScreen(ContextInfo context) {
       super(0);
-      this._context = (ContextInfo)(context == null ? new Object() : context);
+      this._context = context == null ? new ContextInfo() : context;
       this.initScreen();
       this.setHelp(32247);
    }
@@ -50,9 +50,9 @@ public final class MediaHubScreen extends AppsMainScreen implements MediaListene
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private final void initScreen() {
-      this._mediaField = (MediaField)(new Object(18014398512627712L));
-      this._mediaManager = (MediaManager)(new Object());
-      this._mediaPlayer = (MediaPlayer)(new Object());
+      this._mediaField = new MediaField(18014398512627712L);
+      this._mediaManager = new MediaManager();
+      this._mediaPlayer = new MediaPlayer();
       ThemeAttributeSet svg = ThemeManager.getActiveTheme().getAttributeSet(ThemeUtilities.MEDIA_HUB_TAG);
       String content = null;
       if (svg != null) {
@@ -64,7 +64,7 @@ public final class MediaHubScreen extends AppsMainScreen implements MediaListene
             var6 = true;
             this._mediaPlayer.setUI(this._mediaField);
             Object e = this._mediaManager.createMedia(content);
-            if (e instanceof Object) {
+            if (e instanceof ModelInteractorImpl) {
                this._model = (ModelInteractorImpl)e;
                this._mediaPlayer.setMedia(this._model);
                this._mediaPlayer.setInternalMediaListener(this);

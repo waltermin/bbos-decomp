@@ -9,7 +9,7 @@ final class EventCollection$UIDHandler implements IntFieldHandler {
 
    @Override
    public final int getValue(Object item) {
-      return !(item instanceof Object) ? -1 : ((Event)item).getUID();
+      return !(item instanceof Event) ? -1 : ((Event)item).getUID();
    }
 
    EventCollection$UIDHandler(EventCollection$1 x0) {

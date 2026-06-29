@@ -165,7 +165,7 @@ public final class DirectConnectOptions extends OptionsBase {
       int index;
       switch (serviceId) {
          case 0:
-            throw new Object("Unknown Service ID");
+            throw new RuntimeException("Unknown Service ID");
          case 1:
          default:
             index = 0;
@@ -194,7 +194,7 @@ public final class DirectConnectOptions extends OptionsBase {
    public final int queryService(int serviceId) {
       switch (serviceId) {
          case 0:
-            throw new Object("Unknown Service ID");
+            throw new RuntimeException("Unknown Service ID");
          case 1:
          default:
             return this.getOption(0);

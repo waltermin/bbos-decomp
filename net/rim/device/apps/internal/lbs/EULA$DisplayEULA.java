@@ -2,7 +2,6 @@ package net.rim.device.apps.internal.lbs;
 
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.CheckboxField;
@@ -22,21 +21,21 @@ final class EULA$DisplayEULA extends PopupScreen implements FieldChangeListener 
    private final EULA this$0;
 
    public EULA$DisplayEULA(EULA this$0) {
-      super((Manager)(new Object()));
+      super(new DialogFieldManager());
       this.this$0 = this$0;
       DialogFieldManager mgr = (DialogFieldManager)this.getDelegate();
-      RichTextField eulaText = (RichTextField)(new Object(9007199254740992L));
+      RichTextField eulaText = new RichTextField(9007199254740992L);
       mgr.setMessage(eulaText);
       eulaText.setText(LBSResources.getString(121));
-      VerticalFieldManager vfm = (VerticalFieldManager)(new Object(281474976710656L));
+      VerticalFieldManager vfm = new VerticalFieldManager(281474976710656L);
       mgr.addCustomField(vfm);
-      vfm.add(this._acceptCheckbox = (CheckboxField)(new Object(LBSResources.getString(122), false)));
+      vfm.add(this._acceptCheckbox = new CheckboxField(LBSResources.getString(122), false));
       this._acceptCheckbox.setChangeListener(this);
-      HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(12884901888L));
+      HorizontalFieldManager hfm = new HorizontalFieldManager(12884901888L);
       vfm.add(hfm);
       hfm.add(this._acceptButton = new EULA$DisplayEULA$FocusButton(this, LBSResources.getString(124)));
       this._acceptButton.setChangeListener(this);
-      hfm.add(this._cancelButton = (ButtonField)(new Object(CommonResource.getString(10044))));
+      hfm.add(this._cancelButton = new ButtonField(CommonResource.getString(10044)));
       this._cancelButton.setChangeListener(this);
    }
 

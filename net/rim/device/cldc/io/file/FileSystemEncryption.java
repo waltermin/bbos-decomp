@@ -73,7 +73,7 @@ public final class FileSystemEncryption {
       // 16: return
       // 17: aconst_null
       // 18: astore 4
-      // 1a: new java/lang/Object
+      // 1a: new java/lang/StringBuffer
       // 1d: dup
       // 1e: ldc_w "file:///SDCard"
       // 21: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -81,7 +81,7 @@ public final class FileSystemEncryption {
       // 27: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 2a: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 2d: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 30: checkcast java/lang/Object
+      // 30: checkcast javax/microedition/io/file/FileConnection
       // 33: astore 4
       // 35: aload 4
       // 37: invokeinterface javax/microedition/io/file/FileConnection.exists ()Z 1
@@ -224,15 +224,15 @@ public final class FileSystemEncryption {
          in = conn.openDataInputStream();
          byte[] fileData = IOUtilities.streamToBytes(in);
          MasterKeyFile fr = new MasterKeyFile(conn.lastModified());
-         TLEUtilities.parseBuffer((DataBuffer)(new Object(fileData, 0, fileData.length, true)), fr);
+         TLEUtilities.parseBuffer(new DataBuffer(fileData, 0, fileData.length, true), fr);
          if (fr._cipher == null) {
             EventLogger.logEvent(4782370668738403183L, 1668116070, 5);
-            throw new Object("Ciphering material not found");
+            throw new IOException("Ciphering material not found");
          }
 
          if (fr._salt == null) {
             EventLogger.logEvent(4782370668738403183L, 1936551526, 5);
-            throw new Object("Salt material not found");
+            throw new IOException("Salt material not found");
          }
 
          var4 = fr;
@@ -261,11 +261,11 @@ public final class FileSystemEncryption {
       return var4;
    }
 
-   private static final MasterKeyFile readMasterKey(FileConnection conn, byte[] pwd) {
+   private static final MasterKeyFile readMasterKey(FileConnection conn, byte[] pwd) throws IOException {
       MasterKeyFile fr = getMasterKeyFile(conn);
       if (fr.isDeviceLocked() && !fr.keyFileMatchesDevice()) {
          EventLogger.logEvent(4782370668738403183L, 1819764580, 0);
-         throw new Object("Ciphering material does not match this device");
+         throw new IOException("Ciphering material does not match this device");
       } else {
          RootRegister register = RootRegister.getInstance();
          fr.decryptMasterKey(pwd);
@@ -276,7 +276,7 @@ public final class FileSystemEncryption {
 
    static final byte[] getDeviceKeyHash() {
       KeyProvider keyProvider = RootRegister.getInstance().getKeyProvider();
-      SHA256Digest digest = (SHA256Digest)(new Object());
+      SHA256Digest digest = new SHA256Digest();
       digest.update(keyProvider.getDeviceKey());
       return digest.getDigest();
    }
@@ -285,7 +285,7 @@ public final class FileSystemEncryption {
       throw new RuntimeException("cod2jar: field: unresolved slot");
    }
 
-   static final byte[] getUserKey(byte[] pwd, byte[] salt, int mode) {
+   static final byte[] getUserKey(byte[] pwd, byte[] salt, int mode) throws IOException {
       KeyProvider keyProvider = RootRegister.getInstance().getKeyProvider();
       byte[] userKey;
       if (mode != 2 && mode != 3) {
@@ -294,7 +294,7 @@ public final class FileSystemEncryption {
          } else {
             if (mode != 1) {
                EventLogger.logEvent(4782370668738403183L, 1651272557, 5);
-               throw new Object("Bad lock mode");
+               throw new IOException("Bad lock mode");
             }
 
             userKey = new byte[32];
@@ -309,11 +309,11 @@ public final class FileSystemEncryption {
          if (userKey == null) {
             if (ApplicationManager.getApplicationManager().isSystemLocked()) {
                EventLogger.logEvent(4782370668738403183L, 1718840420, 0);
-               throw new Object("System is locked, trying to access encrypted content");
+               throw new IOException("System is locked, trying to access encrypted content");
             }
 
             EventLogger.logEvent(4782370668738403183L, 1718840939, 5);
-            throw new Object("User key null");
+            throw new IOException("User key null");
          }
       }
 
@@ -332,7 +332,7 @@ public final class FileSystemEncryption {
       FileConnection conn = null;
 
       try {
-         conn = (FileConnection)Connector.open(((StringBuffer)(new Object("file:///SDCard"))).append(KEY_FILE).toString());
+         conn = (FileConnection)Connector.open("file:///SDCard" + KEY_FILE);
          if (conn.exists()) {
             return getMasterKeyFile(conn);
          }
@@ -356,12 +356,12 @@ public final class FileSystemEncryption {
             try {
                var42 = true;
                synchronized (register) {
-                  conn = (FileConnection)Connector.open(((StringBuffer)(new Object("file:///SDCard"))).append(KEY_FILE).toString());
+                  conn = (FileConnection)Connector.open("file:///SDCard" + KEY_FILE);
                   long lastMod = conn.lastModified();
                   byte[] masterKey = register.getCachedMasterKey(lastMod);
                   if (masterKey != null) {
                      if (checkPermissions && !lockTypeSufficient(register.getCachedLockType())) {
-                        throw new Object("Key file insuffient lock access");
+                        throw new IOException("Key file insuffient lock access");
                      }
 
                      EventLogger.logEvent(4782370668738403183L, 1835755107, 5);
@@ -373,7 +373,7 @@ public final class FileSystemEncryption {
                   if (conn.exists()) {
                      MasterKeyFile fr = readMasterKey(conn, null);
                      if (checkPermissions && !lockTypeSufficient(fr._lockType)) {
-                        throw new Object("Key file insuffient lock access");
+                        throw new IOException("Key file insuffient lock access");
                      }
 
                      var52 = fr._masterKey;
@@ -453,7 +453,7 @@ public final class FileSystemEncryption {
       // 06: aload 1
       // 07: athrow
       // 08: astore 1
-      // 09: new java/lang/Object
+      // 09: new java/io/IOException
       // 0c: dup
       // 0d: ldc_w "Failed to read key file"
       // 10: invokespecial java/io/IOException.<init> (Ljava/lang/String;)V

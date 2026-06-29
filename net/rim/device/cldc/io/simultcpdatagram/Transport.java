@@ -1,11 +1,11 @@
 package net.rim.device.cldc.io.simultcpdatagram;
 
+import java.io.IOException;
 import javax.microedition.io.Datagram;
 import net.rim.device.api.io.DatagramAddressBase;
 import net.rim.device.api.io.IOProperties;
 import net.rim.device.api.system.EventLogger;
 import net.rim.device.api.system.RadioInfo;
-import net.rim.device.api.system.RadioPacketHeader;
 import net.rim.device.cldc.io.nativebase.NativeTransport;
 import net.rim.device.cldc.io.simultcp.SimulTcpAddress;
 import net.rim.device.internal.io.tcp.Deque;
@@ -163,7 +163,7 @@ public final class Transport extends NativeTransport implements TCPPacketListene
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void nativeSendSetupHeader(Datagram datagram, IOProperties properties) {
+   public final void nativeSendSetupHeader(Datagram datagram, IOProperties properties) throws IOException {
       TCPPacketHeader header = (TCPPacketHeader)super._txHeader;
       int length = datagram.getLength();
       SimulTcpAddress tcpAddress = (SimulTcpAddress)super._txAddressBase;
@@ -183,7 +183,7 @@ public final class Transport extends NativeTransport implements TCPPacketListene
          } finally {
             if (var11) {
                EventLogger.logEvent(3177555665113652794L, 1413763891, 2);
-               throw new Object();
+               throw new IOException();
             }
          }
 
@@ -205,7 +205,7 @@ public final class Transport extends NativeTransport implements TCPPacketListene
             header._isSimulTcpPacket = true;
          }
       } else {
-         throw new Object("Bad length or address");
+         throw new IllegalArgumentException("Bad length or address");
       }
    }
 
@@ -213,7 +213,7 @@ public final class Transport extends NativeTransport implements TCPPacketListene
    public final void nativeInit() {
       EventLogger.register(super.GUID, super.STR, 2);
       super._networkServiceMask = 4;
-      super._txHeader = (RadioPacketHeader)(new Object());
+      super._txHeader = new TCPPacketHeader();
       super._maxPacketSize = TCPPacketHeader.getMaxPacketSize();
    }
 
@@ -230,7 +230,7 @@ public final class Transport extends NativeTransport implements TCPPacketListene
          return newAddress;
       } catch (Throwable var5) {
          System.out.println(e);
-         throw new Object("Bad address");
+         throw new RuntimeException("Bad address");
       }
    }
 
@@ -255,14 +255,14 @@ public final class Transport extends NativeTransport implements TCPPacketListene
       super.GUID = 3177555665113652794L;
       super.STR = "net.rim.tcpdatagram";
       super.SEND_BACKOFF_DEF = 2000;
-      this.dgPool = (Deque)(new Object());
+      this.dgPool = new Deque();
       int num = 4;
 
       for (int i = 0; i < num; i++) {
          this.dgPool.enqueueHead(new SimulTcpDatagramBase());
       }
 
-      this.tcpDgPropsPool = (Deque)(new Object());
+      this.tcpDgPropsPool = new Deque();
       int var3 = 4;
 
       for (int i = 0; i < var3; i++) {

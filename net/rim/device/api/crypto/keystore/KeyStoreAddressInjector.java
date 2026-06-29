@@ -50,7 +50,7 @@ public final class KeyStoreAddressInjector implements CollectionListener, SyncEv
 
    public final void addKeyStore(KeyStore keyStore) {
       if (keyStore == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       keyStore.addCollectionListener(this);
@@ -67,7 +67,7 @@ public final class KeyStoreAddressInjector implements CollectionListener, SyncEv
       if (!data.isPrivateKeySet()) {
          if (this._syncInProgress) {
             if (this._itemsToProcess == null) {
-               this._itemsToProcess = (Vector)(new Object());
+               this._itemsToProcess = new Vector();
             }
 
             this._itemsToProcess.addElement(data);
@@ -103,7 +103,7 @@ public final class KeyStoreAddressInjector implements CollectionListener, SyncEv
       if (isEndEntity != null && isEndEntity) {
          DistinguishedName distinguishedName = certificate.getSubject();
          if (distinguishedName != null) {
-            String[] emails = (Object[])certificate.getInformation(-7850001002262082664L, null, null);
+            String[] emails = (String[])certificate.getInformation(-7850001002262082664L, null, null);
             if (emails == null) {
                return;
             }
@@ -128,7 +128,7 @@ public final class KeyStoreAddressInjector implements CollectionListener, SyncEv
             if (givenName != null) {
                firstName = givenName;
                if (initial != null) {
-                  firstName = ((StringBuffer)(new Object())).append(firstName).append(" ").append(initial).toString();
+                  firstName = firstName + " " + initial;
                }
             } else if (commonName != null) {
                firstName = commonName;
@@ -162,7 +162,7 @@ public final class KeyStoreAddressInjector implements CollectionListener, SyncEv
    }
 
    private final String copy(String s) {
-      return s == null ? null : new Object(s).toString();
+      return s == null ? null : s;
    }
 
    private final synchronized void addAddressEntry(
@@ -184,7 +184,7 @@ public final class KeyStoreAddressInjector implements CollectionListener, SyncEv
       int numEmailAddresses = emails.length;
 
       for (int i = 0; i < numEmailAddresses; i++) {
-         ContextObject emailContext = (ContextObject)(new Object());
+         ContextObject emailContext = new ContextObject();
          emailContext.put(253, emails[i]);
          Object eam = this._emailAddressFactory.createInstance(emailContext);
          acm.add(eam);
@@ -196,7 +196,7 @@ public final class KeyStoreAddressInjector implements CollectionListener, SyncEv
 
       if (firstName != null || lastName != null) {
          Object pnm = this._personNameFactory.createInstance(null);
-         if (pnm instanceof Object) {
+         if (pnm instanceof PersonNameModel) {
             PersonNameModel personModel = (PersonNameModel)pnm;
             personModel.setFirstName(firstName);
             personModel.setLastName(lastName);
@@ -211,7 +211,7 @@ public final class KeyStoreAddressInjector implements CollectionListener, SyncEv
 
       if (company != null) {
          Object cim = this._companyInfoFactory.createInstance(null);
-         if (cim instanceof Object) {
+         if (cim instanceof CompanyInfoModel) {
             CompanyInfoModel companyModel = (CompanyInfoModel)cim;
             companyModel.setCompanyName(company);
             acm.add(cim);
@@ -226,7 +226,7 @@ public final class KeyStoreAddressInjector implements CollectionListener, SyncEv
 
       if (stateOrProvince != null || country != null || city != null) {
          Object mam = this._addressFactory.createInstance(null);
-         if (mam instanceof Object) {
+         if (mam instanceof MailingAddressModel) {
             MailingAddressModel addressModel = (MailingAddressModel)mam;
             addressModel.setArea(stateOrProvince);
             addressModel.setCity(city);
@@ -236,13 +236,13 @@ public final class KeyStoreAddressInjector implements CollectionListener, SyncEv
       }
 
       if (this._phoneNumberFactory != null && phoneNumber != null) {
-         ContextObject phoneContext = (ContextObject)(new Object());
+         ContextObject phoneContext = new ContextObject();
          phoneContext.put(253, phoneNumber);
          acm.add(this._phoneNumberFactory.createInstance(phoneContext));
       }
 
       try {
-         if (acm instanceof Object) {
+         if (acm instanceof EditableProvider) {
             EditableProvider ep = (EditableProvider)acm;
             Object readOnlyObject = ep.makeReadOnly();
             this._theAddressBook.addAddressCard(readOnlyObject);

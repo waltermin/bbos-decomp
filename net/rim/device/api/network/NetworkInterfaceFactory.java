@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public final class NetworkInterfaceFactory {
-   private Hashtable _managers = (Hashtable)(new Object());
+   private Hashtable _managers = new Hashtable();
    private static final long GUID = -3496055574688251758L;
 
    public static final NetworkInterfaceFactory getInstance() {

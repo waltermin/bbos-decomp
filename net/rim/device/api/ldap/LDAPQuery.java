@@ -4,7 +4,9 @@ import java.util.Enumeration;
 import net.rim.device.api.i18n.MessageFormat;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.ListenerUtilities;
+import net.rim.device.api.util.ObjectEnumerator;
 import net.rim.device.cldc.io.utility.URIEncoder;
+import net.rim.device.cldc.io.utility.URL;
 import net.rim.device.internal.i18n.CommonResource;
 import net.rim.device.internal.ui.component.BackgroundDialog;
 import net.rim.device.internal.ui.component.UsernamePasswordDialog;
@@ -102,14 +104,14 @@ public class LDAPQuery {
       }
 
       this._errorCode = -1;
-      this._attributeList = new Object[0];
-      this._hashedAttributeList = new Object[0];
-      this._filterList = new Object[0];
+      this._attributeList = new String[0];
+      this._hashedAttributeList = new String[0];
+      this._filterList = new String[0];
       if (url != null) {
          try {
-            new Object(url);
+            new URL(url);
          } catch (Throwable var6) {
-            throw new Object(e.toString());
+            throw new IllegalArgumentException(e.toString());
          }
 
          this._finalURL = url;
@@ -144,7 +146,7 @@ public class LDAPQuery {
       if (!this.isRunning() && this._finalURL == null) {
          switch (scope) {
             case -1:
-               throw new Object();
+               throw new IllegalArgumentException();
             case 0:
                this._queryType = "base";
                return;
@@ -182,7 +184,7 @@ public class LDAPQuery {
          return this._finalURL;
       }
 
-      StringBuffer buff = (StringBuffer)(new Object());
+      StringBuffer buff = new StringBuffer();
       if (this._connectionType == 1) {
          buff.append("ldaps://");
       } else {
@@ -257,7 +259,7 @@ public class LDAPQuery {
          }
 
          Array.resize(this._filterList, this._filterList.length + 1);
-         StringBuffer filterString = (StringBuffer)(new Object());
+         StringBuffer filterString = new StringBuffer();
          int split = value.indexOf(59);
          if (split == -1) {
             filterString.append('(').append(oid).append('=');
@@ -281,7 +283,7 @@ public class LDAPQuery {
 
          this._filterList[this._filterList.length - 1] = filterString.toString();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -299,10 +301,10 @@ public class LDAPQuery {
          if (filter.charAt(0) == '(' && filter.charAt(filter.length() - 1) == ')') {
             this._filterList[this._filterList.length - 1] = filter;
          } else {
-            this._filterList[this._filterList.length - 1] = ((StringBuffer)(new Object())).append('(').append(filter).append(')').toString();
+            this._filterList[this._filterList.length - 1] = '(' + filter + ')';
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -312,7 +314,7 @@ public class LDAPQuery {
       }
 
       if (oid == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (oid.indexOf(63) != -1) {
@@ -364,7 +366,7 @@ public class LDAPQuery {
          if (this._userDN == null || this._password == null) {
             String prompt;
             if (this._server != null) {
-               prompt = MessageFormat.format(CommonResource.getString(10028), new Object[]{this._server});
+               prompt = MessageFormat.format(CommonResource.getString(10028), new String[]{this._server});
             } else {
                prompt = CommonResource.getString(10067);
             }
@@ -372,9 +374,9 @@ public class LDAPQuery {
             do {
                UsernamePasswordDialog dialog;
                if (this._userDN != null) {
-                  dialog = (UsernamePasswordDialog)(new Object(prompt, this._userDN, null, null, 1, 134217728));
+                  dialog = new UsernamePasswordDialog(prompt, this._userDN, null, null, 1, 134217728);
                } else {
-                  dialog = (UsernamePasswordDialog)(new Object(prompt, null, null, null, 1, 134217728));
+                  dialog = new UsernamePasswordDialog(prompt, null, null, null, 1, 134217728);
                }
 
                BackgroundDialog.show(dialog);
@@ -424,10 +426,10 @@ public class LDAPQuery {
             }
          }
       } finally {
-         return (Enumeration)(this._impl == null ? new Object(new RIMLDAPEntry[0]) : new Object(this._impl._entries));
+         return this._impl == null ? new ObjectEnumerator(new RIMLDAPEntry[0]) : new ObjectEnumerator(this._impl._entries);
       }
 
-      return (Enumeration)(this._impl == null ? new Object(new RIMLDAPEntry[0]) : new Object(this._impl._entries));
+      return this._impl == null ? new ObjectEnumerator(new RIMLDAPEntry[0]) : new ObjectEnumerator(this._impl._entries);
    }
 
    private void statusUpdate(int status) {

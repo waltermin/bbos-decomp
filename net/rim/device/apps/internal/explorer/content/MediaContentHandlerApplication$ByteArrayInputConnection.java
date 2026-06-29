@@ -20,10 +20,10 @@ final class MediaContentHandlerApplication$ByteArrayInputConnection implements I
 
    @Override
    public final DataInputStream openDataInputStream() {
-      return (DataInputStream)(new Object(this._bytes));
+      return new DataInputStream(this._bytes);
    }
 
    public MediaContentHandlerApplication$ByteArrayInputConnection(byte[] data) {
-      this._bytes = (ByteArrayInputStream)(new Object(data));
+      this._bytes = new ByteArrayInputStream(data);
    }
 }

@@ -29,7 +29,7 @@ public final class TrustCertificatesVerb extends Verb {
          this._description = description;
          this._privateKey = privateKey;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -62,7 +62,7 @@ public final class TrustCertificatesVerb extends Verb {
                }
             }
 
-            PrivateKey[] privateKeys = new Object[certificatesToImport.length];
+            PrivateKey[] privateKeys = new PrivateKey[certificatesToImport.length];
             privateKeys[0] = this._privateKey;
             CertificateImporterFactory.importCertificates(certificatesToImport, privateKeys, null, this._keyStore, ticket);
             privateKey = null;
@@ -81,7 +81,7 @@ public final class TrustCertificatesVerb extends Verb {
          return null;
       }
 
-      Certificate[] certificatesToImport = new Object[numCerts - 1];
+      Certificate[] certificatesToImport = new Certificate[numCerts - 1];
       this._requiresImport = false;
 
       for (int i = this._certificateChain.length - 2; i >= 0; i--) {

@@ -51,7 +51,7 @@ final class PushOptionsItem extends SaveableMainScreenOptionsListItem implements
 
    public PushOptionsItem() {
       super(_rb.getString(1), -1514481539159318190L);
-      ContextObject.put(super._context, 244, new Object(27786));
+      ContextObject.put(super._context, 244, new Integer(27786));
    }
 
    @Override
@@ -60,73 +60,73 @@ final class PushOptionsItem extends SaveableMainScreenOptionsListItem implements
       this._fieldsAdded = false;
       PushOptions options = PushOptions.getOptions();
       boolean mainPushEnabled = options.getEnablePush();
-      this._enablePushField = (CheckboxField)(new Object(_rb.getString(20), mainPushEnabled));
+      this._enablePushField = new CheckboxField(_rb.getString(20), mainPushEnabled);
       this._enablePushField.setChangeListener(this);
       mainScreen.add(this._enablePushField);
       boolean mdsEnabled = options.getMDSEnablePush();
       boolean wapEnabled = options.getWAPEnablePush();
-      this._mdsEnablePushField = (CheckboxField)(new Object(_rb.getString(19), mdsEnabled));
+      this._mdsEnablePushField = new CheckboxField(_rb.getString(19), mdsEnabled);
       this._mdsEnablePushField.setChangeListener(this);
-      this._wapEnablePushField = (CheckboxField)(new Object(_rb.getString(2), wapEnabled));
+      this._wapEnablePushField = new CheckboxField(_rb.getString(2), wapEnabled);
       this._wapEnablePushField.setChangeListener(this);
-      this._siLabelField = (LabelField)(new Object(_rb.getString(33)));
-      this._slLabelField = (LabelField)(new Object(_rb.getString(34)));
-      this._otherLabelField = (LabelField)(new Object(_rb.getString(35)));
-      this._allowOtherApplicationsField = (CheckboxField)(new Object(_rb.getString(5), options.getAllowOtherApplications()));
-      this._acceptSLMdsChoiceField = (ObjectChoiceField)(new Object(_rb.getString(36), _rb.getStringArray(7), options.getAcceptMode(0, 2)));
+      this._siLabelField = new LabelField(_rb.getString(33));
+      this._slLabelField = new LabelField(_rb.getString(34));
+      this._otherLabelField = new LabelField(_rb.getString(35));
+      this._allowOtherApplicationsField = new CheckboxField(_rb.getString(5), options.getAllowOtherApplications());
+      this._acceptSLMdsChoiceField = new ObjectChoiceField(_rb.getString(36), _rb.getStringArray(7), options.getAcceptMode(0, 2));
       this._acceptSLMdsChoiceField.setChangeListener(this);
       int filterMode = options.getFilterMode(0, 2);
       if (filterMode == 2) {
          filterMode--;
       }
 
-      this._filterSLMdsChoiceField = (ObjectChoiceField)(new Object(_rb.getString(22), _rb.getStringArray(26), filterMode));
-      this._acceptSIMdsChoiceField = (ObjectChoiceField)(new Object(_rb.getString(36), _rb.getStringArray(7), options.getAcceptMode(1, 2)));
+      this._filterSLMdsChoiceField = new ObjectChoiceField(_rb.getString(22), _rb.getStringArray(26), filterMode);
+      this._acceptSIMdsChoiceField = new ObjectChoiceField(_rb.getString(36), _rb.getStringArray(7), options.getAcceptMode(1, 2));
       this._acceptSIMdsChoiceField.setChangeListener(this);
       filterMode = options.getFilterMode(1, 2);
       if (filterMode == 2) {
          filterMode--;
       }
 
-      this._filterSIMdsChoiceField = (ObjectChoiceField)(new Object(_rb.getString(22), _rb.getStringArray(26), filterMode));
-      this._acceptOtherMdsChoiceField = (ObjectChoiceField)(new Object(_rb.getString(36), _rb.getStringArray(7), options.getAcceptMode(2, 2)));
+      this._filterSIMdsChoiceField = new ObjectChoiceField(_rb.getString(22), _rb.getStringArray(26), filterMode);
+      this._acceptOtherMdsChoiceField = new ObjectChoiceField(_rb.getString(36), _rb.getStringArray(7), options.getAcceptMode(2, 2));
       this._acceptOtherMdsChoiceField.setChangeListener(this);
       filterMode = options.getFilterMode(2, 2);
       if (filterMode == 2) {
          filterMode--;
       }
 
-      this._filterOtherMdsChoiceField = (ObjectChoiceField)(new Object(_rb.getString(22), _rb.getStringArray(26), filterMode));
-      this._acceptSLSmsChoiceField = (ObjectChoiceField)(new Object(_rb.getString(37), _rb.getStringArray(7), options.getAcceptMode(0, 1)));
+      this._filterOtherMdsChoiceField = new ObjectChoiceField(_rb.getString(22), _rb.getStringArray(26), filterMode);
+      this._acceptSLSmsChoiceField = new ObjectChoiceField(_rb.getString(37), _rb.getStringArray(7), options.getAcceptMode(0, 1));
       this._acceptSLSmsChoiceField.setChangeListener(this);
-      this._filterSLSmsChoiceField = (ObjectChoiceField)(new Object(_rb.getString(23), _rb.getStringArray(21), options.getFilterMode(0, 1)));
+      this._filterSLSmsChoiceField = new ObjectChoiceField(_rb.getString(23), _rb.getStringArray(21), options.getFilterMode(0, 1));
       this._filterSLSmsChoiceField.setChangeListener(this);
-      this._acceptSISmsChoiceField = (ObjectChoiceField)(new Object(_rb.getString(37), _rb.getStringArray(7), options.getAcceptMode(1, 1)));
+      this._acceptSISmsChoiceField = new ObjectChoiceField(_rb.getString(37), _rb.getStringArray(7), options.getAcceptMode(1, 1));
       this._acceptSISmsChoiceField.setChangeListener(this);
-      this._filterSISmsChoiceField = (ObjectChoiceField)(new Object(_rb.getString(23), _rb.getStringArray(21), options.getFilterMode(1, 1)));
+      this._filterSISmsChoiceField = new ObjectChoiceField(_rb.getString(23), _rb.getStringArray(21), options.getFilterMode(1, 1));
       this._filterSISmsChoiceField.setChangeListener(this);
-      this._acceptOtherSmsChoiceField = (ObjectChoiceField)(new Object(_rb.getString(37), _rb.getStringArray(7), options.getAcceptMode(2, 1)));
+      this._acceptOtherSmsChoiceField = new ObjectChoiceField(_rb.getString(37), _rb.getStringArray(7), options.getAcceptMode(2, 1));
       this._acceptOtherSmsChoiceField.setChangeListener(this);
-      this._filterOtherSmsChoiceField = (ObjectChoiceField)(new Object(_rb.getString(23), _rb.getStringArray(21), options.getFilterMode(2, 1)));
+      this._filterOtherSmsChoiceField = new ObjectChoiceField(_rb.getString(23), _rb.getStringArray(21), options.getFilterMode(2, 1));
       this._filterOtherSmsChoiceField.setChangeListener(this);
-      this._filterSLSmsValueField = (EditField)(new Object(_rb.getString(24), options.getFilterValue(0, 1)));
-      this._filterSISmsValueField = (EditField)(new Object(_rb.getString(24), options.getFilterValue(1, 1)));
-      this._filterOtherSmsValueField = (EditField)(new Object(_rb.getString(24), options.getFilterValue(2, 1)));
-      this._acceptSLIpChoiceField = (ObjectChoiceField)(new Object(_rb.getString(38), _rb.getStringArray(7), options.getAcceptMode(0, 0)));
+      this._filterSLSmsValueField = new EditField(_rb.getString(24), options.getFilterValue(0, 1));
+      this._filterSISmsValueField = new EditField(_rb.getString(24), options.getFilterValue(1, 1));
+      this._filterOtherSmsValueField = new EditField(_rb.getString(24), options.getFilterValue(2, 1));
+      this._acceptSLIpChoiceField = new ObjectChoiceField(_rb.getString(38), _rb.getStringArray(7), options.getAcceptMode(0, 0));
       this._acceptSLIpChoiceField.setChangeListener(this);
-      this._filterSLIpChoiceField = (ObjectChoiceField)(new Object(_rb.getString(25), _rb.getStringArray(21), options.getFilterMode(0, 0)));
+      this._filterSLIpChoiceField = new ObjectChoiceField(_rb.getString(25), _rb.getStringArray(21), options.getFilterMode(0, 0));
       this._filterSLIpChoiceField.setChangeListener(this);
-      this._acceptSIIpChoiceField = (ObjectChoiceField)(new Object(_rb.getString(38), _rb.getStringArray(7), options.getAcceptMode(1, 0)));
+      this._acceptSIIpChoiceField = new ObjectChoiceField(_rb.getString(38), _rb.getStringArray(7), options.getAcceptMode(1, 0));
       this._acceptSIIpChoiceField.setChangeListener(this);
-      this._filterSIIpChoiceField = (ObjectChoiceField)(new Object(_rb.getString(25), _rb.getStringArray(21), options.getFilterMode(1, 0)));
+      this._filterSIIpChoiceField = new ObjectChoiceField(_rb.getString(25), _rb.getStringArray(21), options.getFilterMode(1, 0));
       this._filterSIIpChoiceField.setChangeListener(this);
-      this._acceptOtherIpChoiceField = (ObjectChoiceField)(new Object(_rb.getString(38), _rb.getStringArray(7), options.getAcceptMode(2, 0)));
+      this._acceptOtherIpChoiceField = new ObjectChoiceField(_rb.getString(38), _rb.getStringArray(7), options.getAcceptMode(2, 0));
       this._acceptOtherIpChoiceField.setChangeListener(this);
-      this._filterOtherIpChoiceField = (ObjectChoiceField)(new Object(_rb.getString(25), _rb.getStringArray(21), options.getFilterMode(2, 0)));
+      this._filterOtherIpChoiceField = new ObjectChoiceField(_rb.getString(25), _rb.getStringArray(21), options.getFilterMode(2, 0));
       this._filterOtherIpChoiceField.setChangeListener(this);
-      this._filterSLIpValueField = (EditField)(new Object(_rb.getString(24), options.getFilterValue(0, 0)));
-      this._filterSIIpValueField = (EditField)(new Object(_rb.getString(24), options.getFilterValue(1, 0)));
-      this._filterOtherIpValueField = (EditField)(new Object(_rb.getString(24), options.getFilterValue(2, 0)));
+      this._filterSLIpValueField = new EditField(_rb.getString(24), options.getFilterValue(0, 0));
+      this._filterSIIpValueField = new EditField(_rb.getString(24), options.getFilterValue(1, 0));
+      this._filterOtherIpValueField = new EditField(_rb.getString(24), options.getFilterValue(2, 0));
       if (mainPushEnabled) {
          this.addFields();
       }

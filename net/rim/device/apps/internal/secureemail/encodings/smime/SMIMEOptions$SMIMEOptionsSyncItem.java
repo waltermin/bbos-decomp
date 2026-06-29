@@ -1,9 +1,9 @@
 package net.rim.device.apps.internal.secureemail.encodings.smime;
 
 import net.rim.device.api.crypto.certificate.Certificate;
+import net.rim.device.api.crypto.certificate.SerialNumberIssuerKeyStoreIndex;
 import net.rim.device.api.crypto.keystore.DeviceKeyStore;
 import net.rim.device.api.crypto.keystore.KeyStore;
-import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.api.i18n.Locale;
 import net.rim.device.api.synchronization.ConverterUtilities;
 import net.rim.device.api.synchronization.OTASyncCapableSyncItem;
@@ -117,7 +117,7 @@ class SMIMEOptions$SMIMEOptionsSyncItem extends OTASyncCapableSyncItem {
       }
 
       KeyStore keyStore = DeviceKeyStore.getInstance();
-      keyStore.addIndex((KeyStoreIndex)(new Object()));
+      keyStore.addIndex(new SerialNumberIssuerKeyStoreIndex());
       SMIMEOptions.access$1602(this.this$0, this.this$0.findMatchingKeyStoreData(keyStore, this.this$0._signingSerialNumber, this.this$0._signingIssuer));
       SMIMEOptions.access$1802(this.this$0, this.this$0.findMatchingKeyStoreData(keyStore, this.this$0._encryptionSerialNumber, this.this$0._encryptionIssuer));
       if (SMIMEOptions.access$1900(this.this$0) != null) {

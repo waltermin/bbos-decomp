@@ -49,7 +49,7 @@ public class PGPCertificateInfoDialog extends CertificateInfoDialog implements C
 
    @Override
    protected String[] getWarnings(long propertiesSummary) {
-      String[] warnings = new Object[0];
+      String[] warnings = new String[0];
       if ((propertiesSummary & 1024) != 0) {
          Arrays.add(warnings, this._rb.getString(8033));
       }
@@ -85,7 +85,7 @@ public class PGPCertificateInfoDialog extends CertificateInfoDialog implements C
    protected String getKeyUsageString() {
       PGPCertificate pgpCertificate = (PGPCertificate)super._certificate;
       byte[] keyID = pgpCertificate.getKeyID();
-      StringBuffer keyUsageStringBuffer = (StringBuffer)(new Object());
+      StringBuffer keyUsageStringBuffer = new StringBuffer();
 
       for (int i = 0; i < 15; i++) {
          long currentUsage = (long)1 << i;
@@ -129,7 +129,7 @@ public class PGPCertificateInfoDialog extends CertificateInfoDialog implements C
 
       this.addPublicKeyTypeFields();
       int numCertificateChains = super._certificateChains.length;
-      Hashtable buttonsAdded = (Hashtable)(new Object(numCertificateChains));
+      Hashtable buttonsAdded = new Hashtable(numCertificateChains);
 
       for (int i = 0; i < numCertificateChains; i++) {
          Certificate[] currentCertificateChain = super._certificateChains[i];
@@ -138,7 +138,7 @@ public class PGPCertificateInfoDialog extends CertificateInfoDialog implements C
             if (!buttonsAdded.containsKey(currentSignerCertificate) && !super._alreadyViewedCertificates.containsKey(currentSignerCertificate)) {
                buttonsAdded.put(currentSignerCertificate, currentSignerCertificate);
                this.addScrollingLabelAndValue(this._rb.getString(8043), currentSignerCertificate.getSubjectFriendlyName());
-               ButtonField viewCertField = (ButtonField)(new Object(this._rb.getString(8042), 12884901888L));
+               ButtonField viewCertField = new ButtonField(this._rb.getString(8042), 12884901888L);
                viewCertField.setChangeListener(this);
                viewCertField.setCookie(currentSignerCertificate);
                this.addScrollingField(viewCertField);
@@ -152,7 +152,7 @@ public class PGPCertificateInfoDialog extends CertificateInfoDialog implements C
 
       for (int i = 0; i < subKeyIDsLength; i++) {
          this.addScrollingLabelAndValue(this._rb.getString(8028), CertificateUtilities.getHexAsciiString(subKeyIDs[i]));
-         ButtonField viewButton = (ButtonField)(new Object(this._rb.getString(8029), 12884967424L));
+         ButtonField viewButton = new ButtonField(this._rb.getString(8029), 12884967424L);
          viewButton.setCookie(subKeyIDs[i]);
          viewButton.setChangeListener(this);
          this.addScrollingField(viewButton);
@@ -162,10 +162,10 @@ public class PGPCertificateInfoDialog extends CertificateInfoDialog implements C
       int numUserImages = userImages == null ? 0 : userImages.length;
 
       for (int i = 0; i < numUserImages; i++) {
-         LabelField photoLabelField = (LabelField)(new Object(this._rb.getString(8044), 36028797018964032L));
+         LabelField photoLabelField = new LabelField(this._rb.getString(8044), 36028797018964032L);
          photoLabelField.setFont(super._boldFont);
          this.addScrollingField(photoLabelField);
-         BitmapField photoField = (BitmapField)(new Object(userImages[i], 18014411394383872L));
+         BitmapField photoField = new BitmapField(userImages[i], 18014411394383872L);
          this.addScrollingField(photoField);
       }
 
@@ -180,7 +180,7 @@ public class PGPCertificateInfoDialog extends CertificateInfoDialog implements C
          return true;
       } else {
          Object cookie = field.getCookie();
-         if (field instanceof Object && cookie instanceof byte[]) {
+         if (field instanceof ButtonField && cookie instanceof byte[]) {
             byte[] subKeyID = (byte[])cookie;
             PGPSubKeyInfoDialog subKeyDialog = new PGPSubKeyInfoDialog((PGPCertificate)super._certificate, subKeyID, super._cryptoSystemProperties, 134217728);
             BackgroundDialog.show(subKeyDialog);

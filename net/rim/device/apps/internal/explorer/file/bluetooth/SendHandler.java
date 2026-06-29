@@ -51,7 +51,7 @@ public final class SendHandler extends Thread implements DiscoveryListener, Fiel
          if (remoteDevices.length == 0) {
             Status.show(ExplorerResources.getString(18), 2000);
          } else {
-            SimpleChoiceDialog dialog = (SimpleChoiceDialog)(new Object(ExplorerResources.getString(19), remoteDevices, 0, null));
+            SimpleChoiceDialog dialog = new SimpleChoiceDialog(ExplorerResources.getString(19), remoteDevices, 0, null);
             dialog.setModal(true);
             dialog.show();
             if (dialog.getCloseReason() == -1) {
@@ -60,16 +60,16 @@ public final class SendHandler extends Thread implements DiscoveryListener, Fiel
                this._remoteDevice = remoteDevices[dialog.getSelectedIndex()];
                this._serviceRecord = null;
                this._searchObject = new Object();
-               this._vfm = (VerticalFieldManager)(new Object(1152921504606846976L));
-               this._popupScreen = (PopupScreen)(new Object(this._vfm));
-               this._gaugeField = (GaugeField)(new Object("", 0, 100, 0, 4));
-               this._labelField = (LabelField)(new Object(ExplorerResources.getString(20), 12884901952L));
-               this._cancelField = (ButtonField)(new Object(CommonResource.getString(10044), 12884901888L));
+               this._vfm = new VerticalFieldManager(1152921504606846976L);
+               this._popupScreen = new PopupScreen(this._vfm);
+               this._gaugeField = new GaugeField("", 0, 100, 0, 4);
+               this._labelField = new LabelField(ExplorerResources.getString(20), 12884901952L);
+               this._cancelField = new ButtonField(CommonResource.getString(10044), 12884901888L);
                this._cancelField.setChangeListener(this);
                this._statusRunnable = new SetStatusRunnable(this._labelField);
                this._setProgressRunnable = new SetProgressRunnable(this._gaugeField);
-               this._vfm.add((Field)(new Object(ExplorerResources.getString(31), 12884901888L)));
-               this._vfm.add((Field)(new Object("")));
+               this._vfm.add(new LabelField(ExplorerResources.getString(31), 12884901888L));
+               this._vfm.add(new LabelField(""));
                this._vfm.add(this._labelField);
                this._vfm.add(this._gaugeField);
                this._vfm.add(this._cancelField);
@@ -210,7 +210,7 @@ public final class SendHandler extends Thread implements DiscoveryListener, Fiel
       // 021: astore 7
       // 023: aload 7
       // 025: bipush 0
-      // 026: new java/lang/Object
+      // 026: new javax/bluetooth/UUID
       // 029: dup
       // 02a: sipush 4357
       // 02d: i2l
@@ -258,7 +258,7 @@ public final class SendHandler extends Thread implements DiscoveryListener, Fiel
       // 07d: aload 0
       // 07e: getfield net/rim/device/apps/internal/explorer/file/bluetooth/SendHandler._stopped Z
       // 081: ifeq 08c
-      // 084: new java/lang/Object
+      // 084: new java/io/IOException
       // 087: dup
       // 088: invokespecial java/io/IOException.<init> ()V
       // 08b: athrow
@@ -334,7 +334,7 @@ public final class SendHandler extends Thread implements DiscoveryListener, Fiel
       // 12d: aload 0
       // 12e: getfield net/rim/device/apps/internal/explorer/file/bluetooth/SendHandler._file Ljava/lang/String;
       // 131: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 134: checkcast java/lang/Object
+      // 134: checkcast javax/microedition/io/file/FileConnection
       // 137: astore 3
       // 138: bipush 0
       // 139: i2l
@@ -343,11 +343,11 @@ public final class SendHandler extends Thread implements DiscoveryListener, Fiel
       // 13d: istore 11
       // 13f: aload 3
       // 140: dup
-      // 141: instanceof java/lang/Object
+      // 141: instanceof net/rim/device/api/io/file/ExtendedFileConnection
       // 144: ifne 14b
       // 147: pop
       // 148: goto 16f
-      // 14b: checkcast java/lang/Object
+      // 14b: checkcast net/rim/device/api/io/file/ExtendedFileConnection
       // 14e: astore 12
       // 150: aload 12
       // 152: invokeinterface net/rim/device/api/io/file/ExtendedFileConnection.isContentDRMForwardLocked ()Z 1
@@ -376,7 +376,7 @@ public final class SendHandler extends Thread implements DiscoveryListener, Fiel
       // 190: aload 0
       // 191: getfield net/rim/device/apps/internal/explorer/file/bluetooth/SendHandler._url Ljava/lang/String;
       // 194: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 197: checkcast java/lang/Object
+      // 197: checkcast javax/obex/ClientSession
       // 19a: astore 2
       // 19b: aload 0
       // 19c: aload 2
@@ -384,7 +384,7 @@ public final class SendHandler extends Thread implements DiscoveryListener, Fiel
       // 1a0: aload 0
       // 1a1: getfield net/rim/device/apps/internal/explorer/file/bluetooth/SendHandler._stopped Z
       // 1a4: ifeq 1af
-      // 1a7: new java/lang/Object
+      // 1a7: new java/io/IOException
       // 1aa: dup
       // 1ab: invokespecial java/io/IOException.<init> ()V
       // 1ae: athrow
@@ -410,7 +410,7 @@ public final class SendHandler extends Thread implements DiscoveryListener, Fiel
       // 1d9: invokeinterface javax/obex/HeaderSet.setHeader (ILjava/lang/Object;)V 3
       // 1de: aload 12
       // 1e0: sipush 195
-      // 1e3: new java/lang/Object
+      // 1e3: new java/lang/Long
       // 1e6: dup
       // 1e7: lload 9
       // 1e9: invokespecial java/lang/Long.<init> (J)V
@@ -440,7 +440,7 @@ public final class SendHandler extends Thread implements DiscoveryListener, Fiel
       // 223: aload 0
       // 224: getfield net/rim/device/apps/internal/explorer/file/bluetooth/SendHandler._stopped Z
       // 227: ifeq 232
-      // 22a: new java/lang/Object
+      // 22a: new java/io/IOException
       // 22d: dup
       // 22e: invokespecial java/io/IOException.<init> ()V
       // 231: athrow
@@ -451,7 +451,7 @@ public final class SendHandler extends Thread implements DiscoveryListener, Fiel
       // 23b: iload 17
       // 23d: bipush -1
       // 23f: if_icmpne 24a
-      // 242: new java/lang/Object
+      // 242: new java/io/EOFException
       // 245: dup
       // 246: invokespecial java/io/EOFException.<init> ()V
       // 249: athrow

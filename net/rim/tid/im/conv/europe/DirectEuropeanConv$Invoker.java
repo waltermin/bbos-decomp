@@ -39,7 +39,7 @@ class DirectEuropeanConv$Invoker implements Runnable {
    public void init(byte type, int time) {
       if (this._invocationID != -1) {
          this.cancel();
-         System.out.println(((StringBuffer)(new Object("WARNING: invoker init without cancel, type="))).append(type).toString());
+         System.out.println("WARNING: invoker init without cancel, type=" + type);
       } else {
          this._type = type;
          this._timeout = time;

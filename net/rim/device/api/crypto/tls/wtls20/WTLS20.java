@@ -1,7 +1,9 @@
 package net.rim.device.api.crypto.tls.wtls20;
 
+import java.io.IOException;
 import javax.microedition.io.SecurityInfo;
 import net.rim.device.api.crypto.tls.TLSAlertException;
+import net.rim.device.api.system.RadioException;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.cldc.io.ssl.TLSException;
 import net.rim.vm.Array;
@@ -36,10 +38,10 @@ public final class WTLS20 implements WTLSLayerConnection {
          }
 
          this._recordProtocol = new WTLSRecordProtocol(subConnection, apn, name, flags, clientIdMode, clientIdValue, ipAddress, ipPort);
-         this._out = (DataBuffer)(new Object());
-         this._in = (DataBuffer)(new Object());
+         this._out = new DataBuffer();
+         this._in = new DataBuffer();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -51,14 +53,14 @@ public final class WTLS20 implements WTLSLayerConnection {
             this._recordProtocol.write(this._recordProtocol.getApplicationProtocolConstant(), this._out);
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
    public final int read(byte[] buffer, int length) {
       if (buffer == null || length < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (length <= 0) {
@@ -85,10 +87,10 @@ public final class WTLS20 implements WTLSLayerConnection {
    @Override
    public final byte getErrorDescription(TLSException e) {
       if (!(e instanceof TLSAlertException)) {
-         if (e.getException() instanceof Object) {
+         if (e.getException() instanceof IOException) {
             return -1;
          } else {
-            return (byte)(e.getException() instanceof Object ? -3 : -2);
+            return (byte)(e.getException() instanceof RadioException ? -3 : -2);
          }
       } else {
          return ((TLSAlertException)e).getAlertDescription();

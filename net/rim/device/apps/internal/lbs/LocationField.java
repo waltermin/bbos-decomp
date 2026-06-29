@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.lbs;
 
+import javax.microedition.location.Coordinates;
 import net.rim.device.api.collection.ReadableIntMap;
 import net.rim.device.api.gps.GPSRegistry;
 import net.rim.device.api.i18n.SimpleDateFormat;
@@ -7,6 +8,7 @@ import net.rim.device.api.lbs.gps.GPSProvider;
 import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.util.Arrays;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.internal.lbs.model.SearchAddressModel;
 
 final class LocationField extends ObjectChoiceField implements ReadableIntMap {
@@ -20,7 +22,7 @@ final class LocationField extends ObjectChoiceField implements ReadableIntMap {
    private static final int PROPERTY_MAPS_LOCATION_XML = 4;
    private static final int PROPERTY_MAPS_LOCATION_TLE = 5;
    static Location[] _recentLocations;
-   static SimpleDateFormat _timeFormat = (SimpleDateFormat)(new Object("MMM d h:mma"));
+   static SimpleDateFormat _timeFormat = new SimpleDateFormat("MMM d h:mma");
 
    final void add(LocationField$LocationChoice choice) {
       Arrays.add(this._choices, choice);
@@ -97,7 +99,7 @@ final class LocationField extends ObjectChoiceField implements ReadableIntMap {
          default:
             double latitude = location._latitude / 4681608360884174848L;
             double longitude = location._longitude / 4681608360884174848L;
-            return new Object(latitude, longitude, (float)false);
+            return new Coordinates(latitude, longitude, (float)false);
          case 3:
             return Utilities.createLbsUrl(location);
       }
@@ -125,7 +127,7 @@ final class LocationField extends ObjectChoiceField implements ReadableIntMap {
 
    LocationField(Object initialData) {
       super("Location: ", null);
-      if (initialData instanceof Object) {
+      if (initialData instanceof ContextObject) {
       }
 
       this.createChoices();

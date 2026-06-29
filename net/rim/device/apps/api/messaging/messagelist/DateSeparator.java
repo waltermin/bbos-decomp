@@ -4,6 +4,7 @@ import net.rim.device.api.i18n.DateFormat;
 import net.rim.device.api.i18n.Locale;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.accessibility.AccessibleContext;
+import net.rim.device.api.ui.accessibility.AccessibleContextFactory;
 import net.rim.device.api.ui.accessibility.AccessibleContextProxy;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.WeakReferenceUtilities;
@@ -18,7 +19,7 @@ import net.rim.vm.WeakReference;
 public final class DateSeparator implements RIMModel, PaintProvider, KeyProvider, AccessibleContextProxy {
    private long _date;
    private boolean _showArrow;
-   private static WeakReference _stringBufferWR = (WeakReference)(new Object(null));
+   private static WeakReference _stringBufferWR = new WeakReference(null);
    private static DeleteMultipleItemsVerb _deletePriorVerb = new DeleteMultipleItemsVerb(612096, 1, 1100);
    private static RangeActionVerb _markPriorOpenedVerb = new RangeActionVerb(
       611984, -6225946334564270161L, true, 9180, new int[]{1352, 9042, -804651005, 3001, 3006, 3009, -804651005, 3002}, 1, 0, 1300
@@ -108,7 +109,7 @@ public final class DateSeparator implements RIMModel, PaintProvider, KeyProvider
 
    @Override
    public final AccessibleContext getAccessibleContext() {
-      return (AccessibleContext)(new Object(_dateFormat.formatLocal(this._date), 0, 4));
+      return new AccessibleContextFactory(_dateFormat.formatLocal(this._date), 0, 4);
    }
 
    public DateSeparator(long date) {

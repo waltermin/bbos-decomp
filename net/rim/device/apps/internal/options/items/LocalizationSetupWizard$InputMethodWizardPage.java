@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.options.items;
 import net.rim.device.api.i18n.Locale;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.setupwizard.ListWizardPage;
 import net.rim.device.apps.internal.options.resources.OptionsResources;
@@ -23,19 +24,19 @@ final class LocalizationSetupWizard$InputMethodWizardPage extends ListWizardPage
 
    @Override
    protected final void populateFields() {
-      LabelField headerLabel = (LabelField)(new Object(OptionsResources.getString(2102)));
-      LabelField headerLabel2 = (LabelField)(new Object(OptionsResources.getString(2103)));
-      Manager header = (Manager)(new Object());
+      LabelField headerLabel = new LabelField(OptionsResources.getString(2102));
+      LabelField headerLabel2 = new LabelField(OptionsResources.getString(2103));
+      Manager header = new VerticalFieldManager();
       header.setFont(this.getHeaderFont());
       headerLabel.setBorder(0, 0, 5, 0);
       header.add(headerLabel);
       header.add(headerLabel2);
       this.setHeaderField(header);
       int numLocales = this.this$0._inputLocales.length;
-      String[] items = new Object[numLocales];
+      String[] items = new String[numLocales];
 
       for (int i = 0; i < numLocales; i++) {
-         items[i] = ((StringBuffer)(new Object("\u200e"))).append(this.this$0._inputLocales[i].getLocale().getDisplayName()).toString();
+         items[i] = "\u200e" + this.this$0._inputLocales[i].getLocale().getDisplayName();
       }
 
       this.setListItems(items);

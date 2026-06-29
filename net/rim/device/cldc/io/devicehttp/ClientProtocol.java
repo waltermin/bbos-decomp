@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.devicehttp;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -8,7 +9,6 @@ import java.io.OutputStream;
 import java.util.Vector;
 import javax.microedition.io.Connector;
 import javax.microedition.io.SocketConnection;
-import net.rim.device.api.crypto.Digest;
 import net.rim.device.api.crypto.HMAC;
 import net.rim.device.api.crypto.HMACKey;
 import net.rim.device.api.crypto.MD5Digest;
@@ -95,7 +95,7 @@ public class ClientProtocol
       this._statusLine = new StatusLine();
       this._requestLine.setVersion(useHttp11 ? "HTTP/1.1" : "HTTP/1.0");
       this._requestLine.setMethod("GET");
-      StringBuffer temp = (StringBuffer)(new Object());
+      StringBuffer temp = new StringBuffer();
       if (explicitHttpProxy) {
          temp.append(url.toStringWithoutRIMParams());
       } else {
@@ -121,7 +121,7 @@ public class ClientProtocol
          int port = super._url.getPort();
          String scheme = super._url.getScheme();
          if ((port != 80 || !"http".equals(scheme)) && (port != 443 || !"https".equals(scheme))) {
-            tempStr = ((StringBuffer)(new Object())).append(tempStr).append(':').append(port).toString();
+            tempStr = tempStr + ':' + port;
          }
       } else {
          tempStr = "";
@@ -149,7 +149,7 @@ public class ClientProtocol
       }
 
       if (this._outputStream == null) {
-         this._outputStream = (ByteArrayOutputStream)(new Object());
+         this._outputStream = new ByteArrayOutputStream();
       }
 
       return this._outputStream;
@@ -161,7 +161,7 @@ public class ClientProtocol
       this._requestLine.setMethod(method);
       if (method.equals("CONNECT")) {
          this._connectMethod = true;
-         StringBuffer temp = (StringBuffer)(new Object());
+         StringBuffer temp = new StringBuffer();
          String tempStr = super._url.getHost();
          if (tempStr != null) {
             temp.append(tempStr).append(':').append(super._url.getPort());
@@ -182,7 +182,7 @@ public class ClientProtocol
    protected InputStream getInputStream() {
       if (this._httpInputStream == null && this._socketInputStream != null && super._responseHeaders != null) {
          if (this.responseHasNoBody()) {
-            this._httpInputStream = (InputStream)(new Object(new byte[0]));
+            this._httpInputStream = new ByteArrayInputStream(new byte[0]);
          } else {
             String transferEncoding = super._responseHeaders.getPropertyValue("Transfer-Encoding");
             String contentLength = super._responseHeaders.getPropertyValue("Content-Length");
@@ -215,7 +215,7 @@ public class ClientProtocol
       }
    }
 
-   private void reopenLowerConnection() {
+   private void reopenLowerConnection() throws IOException {
       label84:
       try {
          this._socketOutputStream.close();
@@ -240,7 +240,7 @@ public class ClientProtocol
       if (this._originalHost != null) {
          this.setSocketConnection((SocketConnection)Connector.open(this._originalHost, this._originalMode, this._originalTimeouts));
          if (this._socketConnection == null) {
-            throw new Object();
+            throw new IOException();
          }
 
          this._socketOutputStream = this._socketConnection.openOutputStream();
@@ -292,8 +292,8 @@ public class ClientProtocol
       }
 
       this.addProxyAuthHeaders();
-      NoCopyByteArrayOutputStream bytesOut = (NoCopyByteArrayOutputStream)(new Object());
-      DataOutputStream dout = (DataOutputStream)(new Object(bytesOut));
+      NoCopyByteArrayOutputStream bytesOut = new NoCopyByteArrayOutputStream();
+      DataOutputStream dout = new DataOutputStream(bytesOut);
       this._requestLine.writeToStream(dout);
       super._requestHeaders.writeToStream(dout);
       if (data != null) {
@@ -387,7 +387,7 @@ public class ClientProtocol
       // 061: invokevirtual net/rim/device/cldc/io/http/StatusLine.readFromStream (Ljava/io/InputStream;)V
       // 064: aload 0
       // 065: getfield net/rim/device/cldc/io/http/HttpProtocolBase._responseHeaders Lnet/rim/device/api/io/http/HttpHeaders;
-      // 068: new java/lang/Object
+      // 068: new java/io/DataInputStream
       // 06b: dup
       // 06c: aload 0
       // 06d: getfield net/rim/device/cldc/io/devicehttp/ClientProtocol._socketInputStream Ljava/io/InputStream;
@@ -560,7 +560,7 @@ public class ClientProtocol
             boolean keepAlive = (
                   this._httpInputStream instanceof LengthControlledInputStream && ((LengthControlledInputStream)this._httpInputStream).getLength() <= 0
                      || this._httpInputStream instanceof ChunkedInputStream && ((ChunkedInputStream)this._httpInputStream).eof()
-                     || this._httpInputStream instanceof Object && this._httpInputStream.available() <= 0
+                     || this._httpInputStream instanceof ByteArrayInputStream && this._httpInputStream.available() <= 0
                      || this._successfulRequest && this.responseHasNoBody()
                )
                && this.useKeepAlive();
@@ -660,7 +660,7 @@ public class ClientProtocol
    @Override
    public void setSocketOptionEx(short option, long value) {
       if (!(this._socketConnection instanceof SocketConnectionEnhanced)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       ((SocketConnectionEnhanced)this._socketConnection).setSocketOptionEx(option, value);
@@ -669,7 +669,7 @@ public class ClientProtocol
    @Override
    public long getSocketOptionEx(short option) {
       if (!(this._socketConnection instanceof SocketConnectionEnhanced)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SocketConnectionEnhanced)this._socketConnection).getSocketOptionEx(option);
       }
@@ -731,10 +731,10 @@ public class ClientProtocol
             try {
                String requestURI = this._requestLine.getRequestURI();
                if (!requestURI.startsWith("http://")) {
-                  requestURI = ((StringBuffer)(new Object("http://"))).append(requestURI).toString();
+                  requestURI = "http://" + requestURI;
                }
 
-               URL uri = (URL)(new Object(requestURI));
+               URL uri = new URL(requestURI);
                newScheme.setParameter("rimhost", uri.getHost());
                newScheme.setParameter("method", this._requestLine.getMethod());
                if (this._connectMethod) {
@@ -746,13 +746,7 @@ public class ClientProtocol
                      path = "/";
                   }
 
-                  newScheme.setParameter(
-                     "uri",
-                     ((StringBuffer)(new Object()))
-                        .append(path)
-                        .append(query == null ? "" : ((StringBuffer)(new Object())).append('?').append(query).toString())
-                        .toString()
-                  );
+                  newScheme.setParameter("uri", path + (query == null ? "" : '?' + query));
                }
             } finally {
                break label412;
@@ -824,10 +818,10 @@ public class ClientProtocol
                   break;
                case 3:
                   if (RadioInfo.getNetworkType() == 4) {
-                     MD5Digest md5 = (MD5Digest)(new Object());
+                     MD5Digest md5 = new MD5Digest();
                      md5.update(StringUtilities.toUpperCase(Integer.toHexString(CDMAInfo.getESN()), 1701707776).getBytes());
                      md5.update(CDMAInfo.getAKey().getBytes());
-                     StringBuffer buffer = (StringBuffer)(new Object());
+                     StringBuffer buffer = new StringBuffer();
                      byte[] digest = md5.getDigest();
 
                      for (int i = 0; i < digest.length; i++) {
@@ -878,10 +872,10 @@ public class ClientProtocol
                   if (key != null) {
                      label398:
                      try {
-                        HMAC passwordMac = (HMAC)(new Object((HMACKey)(new Object(key.getBytes())), (Digest)(new Object())));
+                        HMAC passwordMac = new HMAC(new HMACKey(key.getBytes()), new MD5Digest());
                         passwordMac.update(Phone.getInstance().getNumber(0).getBytes());
                         passwordMac.update(StringUtilities.toLowerCase(Integer.toHexString(CDMAInfo.getESN()), 1701707776).getBytes());
-                        StringBuffer buffer = (StringBuffer)(new Object());
+                        StringBuffer buffer = new StringBuffer();
                         byte[] digest = passwordMac.getMAC();
 
                         for (int i = 0; i < 6; i++) {

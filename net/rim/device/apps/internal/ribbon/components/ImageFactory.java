@@ -9,7 +9,7 @@ import net.rim.device.apps.api.ribbon.GlobalFactoryRepository;
 
 public final class ImageFactory implements Factory {
    Bitmap _backgroundBitmap;
-   WeakReference[] _listeners = new Object[0];
+   WeakReference[] _listeners = new WeakReference[0];
 
    final void init() {
       FactoryRepository repos = GlobalFactoryRepository.getFactoryRepository(-4018062520840731194L);
@@ -18,7 +18,7 @@ public final class ImageFactory implements Factory {
 
    final void addBackgroundListener(ImageFactory$ImageComponent listener) {
       synchronized (this._listeners) {
-         Arrays.add(this._listeners, new Object(listener));
+         Arrays.add(this._listeners, new WeakReference(listener));
       }
    }
 

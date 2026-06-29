@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.browser.wml;
 
+import java.io.IOException;
 import net.rim.device.apps.internal.browser.stack.WAPInputStream;
 import net.rim.device.cldc.io.utility.URIDecoder;
 import net.rim.device.cldc.io.utility.URIEncoder;
@@ -109,7 +110,7 @@ public final class WMLAttributeReader {
 
    public final String read(WAPInputStream in, WMLContextManager wmlContextManager) {
       int id = 0;
-      StringBuffer str = (StringBuffer)(new Object());
+      StringBuffer str = new StringBuffer();
 
       while (true) {
          in.mark(2);
@@ -242,18 +243,18 @@ public final class WMLAttributeReader {
 
       try {
          var8 = true;
-         retVal = (String)(new Object(this._stringTable, start, length, this._encoding));
+         retVal = new String(this._stringTable, start, length, this._encoding);
          var8 = false;
       } finally {
          if (var8) {
-            return (String)(new Object(this._stringTable, start, length));
+            return new String(this._stringTable, start, length);
          }
       }
 
       return retVal;
    }
 
-   private final int getInlineOffset(WAPInputStream in) {
+   private final int getInlineOffset(WAPInputStream in) throws IOException {
       int count = 0;
 
       int i;
@@ -261,7 +262,7 @@ public final class WMLAttributeReader {
          i = in.read();
          count++;
          if (i == -1) {
-            throw new Object();
+            throw new IOException();
          }
       } while (i != 0);
 

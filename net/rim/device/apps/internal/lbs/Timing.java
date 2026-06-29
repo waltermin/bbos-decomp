@@ -143,9 +143,9 @@ public final class Timing {
                percentage = 0;
             }
 
-            graphics.drawText(((StringBuffer)(new Object())).append(action[i]).append(":").toString(), 50, y);
-            graphics.drawText(((StringBuffer)(new Object(""))).append(time).append(" ms").toString(), 175, y);
-            graphics.drawText(((StringBuffer)(new Object(" ("))).append(percentage).append("%)").toString(), 230, y);
+            graphics.drawText(action[i] + ":", 50, y);
+            graphics.drawText("" + time + " ms", 175, y);
+            graphics.drawText(" (" + percentage + "%)", 230, y);
             y += 15;
          }
 
@@ -162,12 +162,12 @@ public final class Timing {
          }
 
          graphics.drawText("Other:", 50, y);
-         graphics.drawText(((StringBuffer)(new Object(""))).append(other).append(" ms").toString(), 175, y);
-         graphics.drawText(((StringBuffer)(new Object(" ("))).append(percentage).append("%)").toString(), 230, y);
+         graphics.drawText("" + other + " ms", 175, y);
+         graphics.drawText(" (" + percentage + "%)", 230, y);
          y += 15;
          graphics.setColor(16711680);
          graphics.drawText("Total time:", 50, y);
-         graphics.drawText(((StringBuffer)(new Object(""))).append(totalTime).append(" ms").toString(), 175, y);
+         graphics.drawText("" + totalTime + " ms", 175, y);
          graphics.drawText(" (100%)", 230, y);
          graphics.setColor(0);
          graphics.setColor(colour);

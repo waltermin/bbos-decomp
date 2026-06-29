@@ -35,12 +35,12 @@ final class CalendarSearchResultField$SearchResultsVerb extends CalendarViewerVe
          int max = this.this$0._results.size();
 
          for (int i = 0; i < max; i++) {
-            Event var19 = curr;
+            prev = curr;
             curr = (Event)this.this$0._results.getAt(i);
             long currTime = curr.getStartDate(tz);
             if (currTime >= target) {
-               if (currTime >= nextDayStart && var19 != null && ((Event)var19).getStartDate(tz) >= targetDayStart) {
-                  curr = (Event)var19;
+               if (currTime >= nextDayStart && prev != null && prev.getStartDate(tz) >= targetDayStart) {
+                  curr = prev;
                }
                break;
             }

@@ -13,7 +13,7 @@ final class NetworkOptionsItem$UMTS_NetworkModeField implements NetworkOptionsIt
       this.this$0 = _1;
       _1._savedNetMode = RadioInternal.getNetworkMode();
       String[] strs = _1._rb.getStringArray(1970);
-      String[] args = new Object[0];
+      String[] args = new String[0];
       int[] map = new int[0];
       int networkModes = RadioInternal.getAvailableNetworkModes();
       _1.addOption(networkModes, 1, strs, args, map, 0, 0);
@@ -42,7 +42,7 @@ final class NetworkOptionsItem$UMTS_NetworkModeField implements NetworkOptionsIt
             i = umtsIndex;
          }
 
-         this._modeField = (ObjectChoiceField)(new Object(OptionsResources.getString(1969), args, i));
+         this._modeField = new ObjectChoiceField(OptionsResources.getString(1969), args, i);
          _1._indexToNetMode = map;
          this._modeField.setChangeListener(this);
       }

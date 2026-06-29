@@ -6,16 +6,18 @@ import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.CertificateChainProperties;
 import net.rim.device.api.crypto.certificate.CertificateChoiceDialog;
 import net.rim.device.api.crypto.certificate.CertificateChoiceField;
+import net.rim.device.api.crypto.certificate.CertificateKeyStoreIndex;
 import net.rim.device.api.crypto.certificate.CertificateUtilities;
 import net.rim.device.api.crypto.keystore.AssociatedDataKeyStoreIndex;
+import net.rim.device.api.crypto.keystore.CombinedKeyStore;
 import net.rim.device.api.crypto.keystore.DeviceKeyStore;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
-import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.api.crypto.keystore.TrustedKeyStore;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.itpolicy.ITPolicy;
 import net.rim.device.api.system.ApplicationManager;
+import net.rim.device.api.system.UserAuthenticationException;
 import net.rim.device.api.system.UserAuthenticator;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.util.Arrays;
@@ -49,8 +51,8 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       int initialCertIndex = -1;
       int defaultCertIndex = -1;
       int numData = 0;
-      String[] dataLabels = new Object[numData];
-      Certificate[] certificates = new Object[numData];
+      String[] dataLabels = new String[numData];
+      Certificate[] certificates = new Certificate[numData];
       if (allowNoneOption) {
          Array.resize(dataLabels, numData + 1);
          Array.resize(certificates, numData + 1);
@@ -66,7 +68,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
          initialCert = initialSelection.getCertificate();
       }
 
-      AssociatedDataKeyStoreIndex index = (AssociatedDataKeyStoreIndex)(new Object(-4699629744920546763L));
+      AssociatedDataKeyStoreIndex index = new AssociatedDataKeyStoreIndex(-4699629744920546763L);
       keyStore.addIndex(index);
       Enumeration enumeration = keyStore.elements(index.getID());
 
@@ -118,7 +120,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
    }
 
    public CertificateChoiceField getCertificateChoiceField(boolean allowNoneOption, boolean disableNoneIfCertsFound) {
-      CertificateChoiceField certificateChoiceField = (CertificateChoiceField)(new Object(_rb.getString(33), this.getKeyStore(), TrustedKeyStore.getInstance()));
+      CertificateChoiceField certificateChoiceField = new CertificateChoiceField(_rb.getString(33), this.getKeyStore(), TrustedKeyStore.getInstance());
       this.populateCertField(certificateChoiceField, this._authenticationKeyStoreData, this.getKeyStore(), allowNoneOption, disableNoneIfCertsFound);
       return certificateChoiceField;
    }
@@ -158,11 +160,11 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // Bytecode:
       // 00: aload 1
       // 01: dup
-      // 02: instanceof java/lang/Object
+      // 02: instanceof net/rim/device/api/crypto/certificate/CertificateChoiceField
       // 05: ifne 0c
       // 08: pop
       // 09: goto cb
-      // 0c: checkcast java/lang/Object
+      // 0c: checkcast net/rim/device/api/crypto/certificate/CertificateChoiceField
       // 0f: astore 3
       // 10: aload 3
       // 11: invokevirtual net/rim/device/api/crypto/certificate/CertificateChoiceField.getSelectedCertificate ()Lnet/rim/device/api/crypto/certificate/Certificate;
@@ -172,7 +174,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 1b: goto b7
       // 1e: aload 0
       // 1f: invokespecial net/rim/device/api/smartcard/SmartCardUserAuthenticator.getKeyStore ()Lnet/rim/device/api/crypto/keystore/KeyStore;
-      // 22: new java/lang/Object
+      // 22: new net/rim/device/api/crypto/certificate/CertificateKeyStoreIndex
       // 25: dup
       // 26: invokespecial net/rim/device/api/crypto/certificate/CertificateKeyStoreIndex.<init> ()V
       // 29: invokeinterface net/rim/device/api/crypto/keystore/KeyStore.addIndex (Lnet/rim/device/api/crypto/keystore/KeyStoreIndex;)Z 2
@@ -188,7 +190,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 46: ifeq b5
       // 49: aload 5
       // 4b: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 50: checkcast java/lang/Object
+      // 50: checkcast net/rim/device/api/crypto/keystore/KeyStoreData
       // 53: astore 6
       // 55: aload 0
       // 56: invokevirtual net/rim/device/api/smartcard/SmartCardUserAuthenticator.isInitialized ()Z
@@ -259,7 +261,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
    }
 
    @Override
-   public boolean initialize(String param1) {
+   public boolean initialize(String param1) throws UserAuthenticationException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -269,7 +271,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // Bytecode:
       // 000: aload 1
       // 001: ifnonnull 00c
-      // 004: new java/lang/Object
+      // 004: new java/lang/IllegalArgumentException
       // 007: dup
       // 008: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 00b: athrow
@@ -297,7 +299,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 030: aload 3
       // 031: ldc_w -2147483644
       // 034: invokestatic net/rim/device/internal/ui/component/BackgroundDialog.showMessage (Ljava/lang/String;I)V
-      // 037: new java/lang/Object
+      // 037: new net/rim/device/api/system/UserAuthenticationException
       // 03a: dup
       // 03b: invokespecial net/rim/device/api/system/UserAuthenticationException.<init> ()V
       // 03e: athrow
@@ -317,7 +319,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 05a: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 05d: ldc_w -2147483644
       // 060: invokestatic net/rim/device/internal/ui/component/BackgroundDialog.showMessage (Ljava/lang/String;I)V
-      // 063: new java/lang/Object
+      // 063: new net/rim/device/api/system/UserAuthenticationException
       // 066: dup
       // 067: invokespecial net/rim/device/api/system/UserAuthenticationException.<init> ()V
       // 06a: athrow
@@ -332,7 +334,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 07a: aload 3
       // 07b: ldc_w -2147483644
       // 07e: invokestatic net/rim/device/internal/ui/component/BackgroundDialog.showMessage (Ljava/lang/String;I)V
-      // 081: new java/lang/Object
+      // 081: new net/rim/device/api/system/UserAuthenticationException
       // 084: dup
       // 085: invokespecial net/rim/device/api/system/UserAuthenticationException.<init> ()V
       // 088: athrow
@@ -353,7 +355,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 0a6: aload 3
       // 0a7: ldc_w -2147483644
       // 0aa: invokestatic net/rim/device/internal/ui/component/BackgroundDialog.showMessage (Ljava/lang/String;I)V
-      // 0ad: new java/lang/Object
+      // 0ad: new net/rim/device/api/system/UserAuthenticationException
       // 0b0: dup
       // 0b1: invokespecial net/rim/device/api/system/UserAuthenticationException.<init> ()V
       // 0b4: athrow
@@ -369,19 +371,19 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 0c6: aload 3
       // 0c7: ldc_w -2147483644
       // 0ca: invokestatic net/rim/device/internal/ui/component/BackgroundDialog.showMessage (Ljava/lang/String;I)V
-      // 0cd: new java/lang/Object
+      // 0cd: new net/rim/device/api/system/UserAuthenticationException
       // 0d0: dup
       // 0d1: invokespecial net/rim/device/api/system/UserAuthenticationException.<init> ()V
       // 0d4: athrow
       // 0d5: iload 5
       // 0d7: ireturn
       // 0d8: astore 4
-      // 0da: new java/lang/Object
+      // 0da: new net/rim/device/api/system/UserAuthenticationException
       // 0dd: dup
       // 0de: invokespecial net/rim/device/api/system/UserAuthenticationException.<init> ()V
       // 0e1: athrow
       // 0e2: astore 4
-      // 0e4: new java/lang/Object
+      // 0e4: new net/rim/device/api/system/UserAuthenticationException
       // 0e7: dup
       // 0e8: invokespecial net/rim/device/api/system/UserAuthenticationException.<init> ()V
       // 0eb: athrow
@@ -399,7 +401,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 103: aload 3
       // 104: ldc_w -2147483644
       // 107: invokestatic net/rim/device/internal/ui/component/BackgroundDialog.showMessage (Ljava/lang/String;I)V
-      // 10a: new java/lang/Object
+      // 10a: new net/rim/device/api/system/UserAuthenticationException
       // 10d: dup
       // 10e: invokespecial net/rim/device/api/system/UserAuthenticationException.<init> ()V
       // 111: athrow
@@ -413,7 +415,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 120: aload 3
       // 121: ldc_w -2147483644
       // 124: invokestatic net/rim/device/internal/ui/component/BackgroundDialog.showMessage (Ljava/lang/String;I)V
-      // 127: new java/lang/Object
+      // 127: new net/rim/device/api/system/UserAuthenticationException
       // 12a: dup
       // 12b: invokespecial net/rim/device/api/system/UserAuthenticationException.<init> ()V
       // 12e: athrow
@@ -454,7 +456,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       return this.authenticate(password, false, null);
    }
 
-   private boolean authenticate(String param1, boolean param2, String param3) {
+   private boolean authenticate(String param1, boolean param2, String param3) throws UserAuthenticationException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -465,7 +467,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 000: aload 0
       // 001: invokevirtual net/rim/device/api/smartcard/SmartCardUserAuthenticator.isInitialized ()Z
       // 004: ifne 012
-      // 007: new java/lang/Object
+      // 007: new java/lang/RuntimeException
       // 00a: dup
       // 00b: ldc_w "SmartCardUserAuthenticator must be initialized before calling authenticate()"
       // 00e: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
@@ -501,7 +503,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 04a: aload 5
       // 04c: ldc_w -2147483644
       // 04f: invokestatic net/rim/device/internal/ui/component/BackgroundDialog.showMessage (Ljava/lang/String;I)V
-      // 052: new java/lang/Object
+      // 052: new net/rim/device/api/system/UserAuthenticationException
       // 055: dup
       // 056: invokespecial net/rim/device/api/system/UserAuthenticationException.<init> ()V
       // 059: athrow
@@ -522,7 +524,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 07b: aload 5
       // 07d: ldc_w -2147483644
       // 080: invokestatic net/rim/device/internal/ui/component/BackgroundDialog.showMessage (Ljava/lang/String;I)V
-      // 083: new java/lang/Object
+      // 083: new net/rim/device/api/system/UserAuthenticationException
       // 086: dup
       // 087: invokespecial net/rim/device/api/system/UserAuthenticationException.<init> ()V
       // 08a: athrow
@@ -538,19 +540,19 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 09f: aload 5
       // 0a1: ldc_w -2147483644
       // 0a4: invokestatic net/rim/device/internal/ui/component/BackgroundDialog.showMessage (Ljava/lang/String;I)V
-      // 0a7: new java/lang/Object
+      // 0a7: new net/rim/device/api/system/UserAuthenticationException
       // 0aa: dup
       // 0ab: invokespecial net/rim/device/api/system/UserAuthenticationException.<init> ()V
       // 0ae: athrow
       // 0af: iload 7
       // 0b1: ireturn
       // 0b2: astore 6
-      // 0b4: new java/lang/Object
+      // 0b4: new net/rim/device/api/system/UserAuthenticationException
       // 0b7: dup
       // 0b8: invokespecial net/rim/device/api/system/UserAuthenticationException.<init> ()V
       // 0bb: athrow
       // 0bc: astore 6
-      // 0be: new java/lang/Object
+      // 0be: new net/rim/device/api/system/UserAuthenticationException
       // 0c1: dup
       // 0c2: invokespecial net/rim/device/api/system/UserAuthenticationException.<init> ()V
       // 0c5: athrow
@@ -568,7 +570,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 0e1: aload 5
       // 0e3: ldc_w -2147483644
       // 0e6: invokestatic net/rim/device/internal/ui/component/BackgroundDialog.showMessage (Ljava/lang/String;I)V
-      // 0e9: new java/lang/Object
+      // 0e9: new net/rim/device/api/system/UserAuthenticationException
       // 0ec: dup
       // 0ed: invokespecial net/rim/device/api/system/UserAuthenticationException.<init> ()V
       // 0f0: athrow
@@ -586,7 +588,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 10c: aload 5
       // 10e: ldc_w -2147483644
       // 111: invokestatic net/rim/device/internal/ui/component/BackgroundDialog.showMessage (Ljava/lang/String;I)V
-      // 114: new java/lang/Object
+      // 114: new net/rim/device/api/system/UserAuthenticationException
       // 117: dup
       // 118: invokespecial net/rim/device/api/system/UserAuthenticationException.<init> ()V
       // 11b: athrow
@@ -600,7 +602,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 12d: aload 5
       // 12f: ldc_w -2147483644
       // 132: invokestatic net/rim/device/internal/ui/component/BackgroundDialog.showMessage (Ljava/lang/String;I)V
-      // 135: new java/lang/Object
+      // 135: new net/rim/device/api/system/UserAuthenticationException
       // 138: dup
       // 139: invokespecial net/rim/device/api/system/UserAuthenticationException.<init> ()V
       // 13c: athrow
@@ -629,11 +631,11 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
    @Override
    public byte[] getStateData() {
       if (!this.isInitialized()) {
-         throw new Object("SmartCardUserAuthenticator must be initialized before calling getStateData()");
+         throw new RuntimeException("SmartCardUserAuthenticator must be initialized before calling getStateData()");
       }
 
       try {
-         DataBuffer db = (DataBuffer)(new Object());
+         DataBuffer db = new DataBuffer();
          db.writeByte(this._authenticationKeyStoreData == null ? 0 : 1);
          db.writeUTF(this._label);
          db.writeUTF(this._smartCard.getClass().getName());
@@ -641,7 +643,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
          db.writeUTF(this._id.getLabel());
          if (this._authenticationKeyStoreData != null) {
             Certificate cert = this._authenticationKeyStoreData.getCertificate();
-            SHA1Digest digest = (SHA1Digest)(new Object());
+            SHA1Digest digest = new SHA1Digest();
             digest.update(cert.getEncoding());
             byte[] hash = digest.getDigest();
             db.writeInt(hash.length);
@@ -709,11 +711,11 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
          SmartCardUserAuthenticator$ConfigureWorkerThread workerThread;
          do {
             CertificateChoiceField field = this.getCertificateChoiceField(true, true);
-            CertificateChoiceDialog dialog = (CertificateChoiceDialog)(new Object(_rb.getString(37), field, false, true, this.getKeyStore(), 0));
+            CertificateChoiceDialog dialog = new CertificateChoiceDialog(_rb.getString(37), field, false, true, this.getKeyStore(), 0);
             dialog.setCancelAllowed(false);
             dialog.show();
             workerThread = new SmartCardUserAuthenticator$ConfigureWorkerThread(this, field, dialog.getCloseReason());
-            PleaseWaitDialog pleaseWait = (PleaseWaitDialog)(new Object(workerThread));
+            PleaseWaitDialog pleaseWait = new PleaseWaitDialog(workerThread);
             pleaseWait.display();
          } while (!workerThread.getConfigureComplete());
       }
@@ -743,11 +745,11 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 017: astore 1
       // 018: aload 1
       // 019: dup
-      // 01a: instanceof java/lang/Object
+      // 01a: instanceof net/rim/device/api/crypto/CryptoSmartCardSession
       // 01d: ifne 024
       // 020: pop
       // 021: goto 116
-      // 024: checkcast java/lang/Object
+      // 024: checkcast net/rim/device/api/crypto/CryptoSmartCardSession
       // 027: astore 4
       // 029: aload 4
       // 02b: invokevirtual net/rim/device/api/crypto/CryptoSmartCardSession.getKeyStoreDataArray ()[Lnet/rim/device/api/crypto/CryptoSmartCardKeyStoreData;
@@ -806,7 +808,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 0a4: ifeq 0c5
       // 0a7: aload 12
       // 0a9: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 0ae: checkcast java/lang/Object
+      // 0ae: checkcast net/rim/device/api/crypto/keystore/KeyStoreData
       // 0b1: astore 13
       // 0b3: aload 13
       // 0b5: ifnull 09d
@@ -1031,7 +1033,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 01: ifnonnull 06
       // 04: bipush 0
       // 05: ireturn
-      // 06: new java/lang/Object
+      // 06: new net/rim/device/api/util/DataBuffer
       // 09: dup
       // 0a: aload 1
       // 0b: bipush 0
@@ -1057,7 +1059,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 29: invokevirtual net/rim/device/api/util/DataBuffer.readUTF ()Ljava/lang/String;
       // 2c: invokestatic java/lang/Class.forName (Ljava/lang/String;)Ljava/lang/Class;
       // 2f: invokevirtual java/lang/Class.newInstance ()Ljava/lang/Object;
-      // 32: checkcast java/lang/Object
+      // 32: checkcast net/rim/device/api/smartcard/SmartCard
       // 35: putfield net/rim/device/api/smartcard/SmartCardUserAuthenticator._smartCard Lnet/rim/device/api/smartcard/SmartCard;
       // 38: aload 2
       // 39: invokevirtual net/rim/device/api/util/DataBuffer.eof ()Z
@@ -1073,7 +1075,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 4c: invokevirtual net/rim/device/api/util/DataBuffer.readUTF ()Ljava/lang/String;
       // 4f: astore 6
       // 51: aload 0
-      // 52: new java/lang/Object
+      // 52: new net/rim/device/api/smartcard/SmartCardID
       // 55: dup
       // 56: lload 4
       // 58: aload 6
@@ -1182,16 +1184,18 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       try {
          var3 = true;
          if (this._keyStore == null) {
-            KeyStore[] keyStoresToCombine = new Object[]{new SmartCardUserAuthenticator$SmartCardUserAuthenticatorKeyCache(null), DeviceKeyStore.getInstance()};
-            this._keyStore = (KeyStore)(new Object(keyStoresToCombine, 0));
-            this._keyStore.addIndex((KeyStoreIndex)(new Object()));
+            KeyStore[] keyStoresToCombine = new KeyStore[]{
+               new SmartCardUserAuthenticator$SmartCardUserAuthenticatorKeyCache(null), DeviceKeyStore.getInstance()
+            };
+            this._keyStore = new CombinedKeyStore(keyStoresToCombine, 0);
+            this._keyStore.addIndex(new CertificateKeyStoreIndex());
             var3 = false;
          } else {
             var3 = false;
          }
       } finally {
          if (var3) {
-            throw new Object("Unable to register SmartCardUserAuthenticatorKeyCache");
+            throw new RuntimeException("Unable to register SmartCardUserAuthenticatorKeyCache");
          }
       }
 
@@ -1292,9 +1296,9 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 3d: astore 4
       // 3f: goto 44
       // 42: astore 4
-      // 44: new java/lang/Object
+      // 44: new java/lang/IllegalArgumentException
       // 47: dup
-      // 48: new java/lang/Object
+      // 48: new java/lang/StringBuffer
       // 4b: dup
       // 4c: invokespecial java/lang/StringBuffer.<init> ()V
       // 4f: aload 3
@@ -1328,7 +1332,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 011: goto 0a8
       // 014: aload 0
       // 015: invokespecial net/rim/device/api/smartcard/SmartCardUserAuthenticator.getKeyStore ()Lnet/rim/device/api/crypto/keystore/KeyStore;
-      // 018: new java/lang/Object
+      // 018: new net/rim/device/api/crypto/certificate/CertificateHashKeyStoreIndex
       // 01b: dup
       // 01c: invokespecial net/rim/device/api/crypto/certificate/CertificateHashKeyStoreIndex.<init> ()V
       // 01f: invokeinterface net/rim/device/api/crypto/keystore/KeyStore.addIndex (Lnet/rim/device/api/crypto/keystore/KeyStoreIndex;)Z 2
@@ -1358,7 +1362,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 06b: ifeq 08f
       // 06e: aload 4
       // 070: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 075: checkcast java/lang/Object
+      // 075: checkcast net/rim/device/api/crypto/keystore/KeyStoreData
       // 078: astore 5
       // 07a: aload 5
       // 07c: ifnull 064
@@ -1407,22 +1411,22 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 0db: astore 5
       // 0dd: aload 4
       // 0df: dup
-      // 0e0: instanceof java/lang/Object
+      // 0e0: instanceof net/rim/device/api/crypto/RSAPrivateKey
       // 0e3: ifne 0ea
       // 0e6: pop
       // 0e7: goto 12c
-      // 0ea: checkcast java/lang/Object
+      // 0ea: checkcast net/rim/device/api/crypto/RSAPrivateKey
       // 0ed: astore 6
       // 0ef: new net/rim/device/api/smartcard/SmartCardUserAuthenticator$AuthenticatorRSACryptoToken
       // 0f2: dup
       // 0f3: aload 6
       // 0f5: invokevirtual net/rim/device/api/crypto/RSAPrivateKey.getCryptoSystem ()Lnet/rim/device/api/crypto/CryptoSystem;
       // 0f8: invokeinterface net/rim/device/api/crypto/CryptoSystem.getAsymmetricCryptoToken ()Lnet/rim/device/api/crypto/AsymmetricCryptoToken; 1
-      // 0fd: checkcast java/lang/Object
+      // 0fd: checkcast net/rim/device/api/crypto/RSACryptoToken
       // 100: aload 1
       // 101: invokespecial net/rim/device/api/smartcard/SmartCardUserAuthenticator$AuthenticatorRSACryptoToken.<init> (Lnet/rim/device/api/crypto/RSACryptoToken;Lnet/rim/device/api/smartcard/SmartCardSession;)V
       // 104: astore 7
-      // 106: new java/lang/Object
+      // 106: new net/rim/device/api/crypto/RSACryptoSystem
       // 109: dup
       // 10a: aload 7
       // 10c: aload 6
@@ -1430,7 +1434,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 111: invokevirtual net/rim/device/api/crypto/RSACryptoSystem.getBitLength ()I
       // 114: invokespecial net/rim/device/api/crypto/RSACryptoSystem.<init> (Lnet/rim/device/api/crypto/RSACryptoToken;I)V
       // 117: astore 8
-      // 119: new java/lang/Object
+      // 119: new net/rim/device/api/crypto/RSAPrivateKey
       // 11c: dup
       // 11d: aload 8
       // 11f: aload 6
@@ -1440,31 +1444,31 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 129: goto 1db
       // 12c: aload 4
       // 12e: dup
-      // 12f: instanceof java/lang/Object
+      // 12f: instanceof net/rim/device/api/crypto/DSAPrivateKey
       // 132: ifne 139
       // 135: pop
       // 136: goto 17e
-      // 139: checkcast java/lang/Object
+      // 139: checkcast net/rim/device/api/crypto/DSAPrivateKey
       // 13c: astore 6
       // 13e: new net/rim/device/api/smartcard/SmartCardUserAuthenticator$AuthenticatorDSACryptoToken
       // 141: dup
       // 142: aload 6
       // 144: invokevirtual net/rim/device/api/crypto/DSAPrivateKey.getCryptoSystem ()Lnet/rim/device/api/crypto/CryptoSystem;
       // 147: invokeinterface net/rim/device/api/crypto/CryptoSystem.getAsymmetricCryptoToken ()Lnet/rim/device/api/crypto/AsymmetricCryptoToken; 1
-      // 14c: checkcast java/lang/Object
+      // 14c: checkcast net/rim/device/api/crypto/DSACryptoToken
       // 14f: aload 1
       // 150: invokespecial net/rim/device/api/smartcard/SmartCardUserAuthenticator$AuthenticatorDSACryptoToken.<init> (Lnet/rim/device/api/crypto/DSACryptoToken;Lnet/rim/device/api/smartcard/SmartCardSession;)V
       // 153: astore 7
-      // 155: new java/lang/Object
+      // 155: new net/rim/device/api/crypto/DSACryptoSystem
       // 158: dup
       // 159: aload 7
       // 15b: aload 6
       // 15d: invokevirtual net/rim/device/api/crypto/DSAPrivateKey.getCryptoSystem ()Lnet/rim/device/api/crypto/CryptoSystem;
-      // 160: checkcast java/lang/Object
+      // 160: checkcast net/rim/device/api/crypto/DSACryptoSystem
       // 163: invokevirtual net/rim/device/api/crypto/DSACryptoSystem.getCryptoTokenData ()Lnet/rim/device/api/crypto/CryptoTokenCryptoSystemData;
       // 166: invokespecial net/rim/device/api/crypto/DSACryptoSystem.<init> (Lnet/rim/device/api/crypto/DSACryptoToken;Lnet/rim/device/api/crypto/CryptoTokenCryptoSystemData;)V
       // 169: astore 8
-      // 16b: new java/lang/Object
+      // 16b: new net/rim/device/api/crypto/DSAPrivateKey
       // 16e: dup
       // 16f: aload 8
       // 171: aload 6
@@ -1506,7 +1510,7 @@ public class SmartCardUserAuthenticator extends UserAuthenticator implements Rea
       // 1c8: invokespecial net/rim/device/api/crypto/ECPrivateKey.<init> (Lnet/rim/device/api/crypto/ECCryptoSystem;Lnet/rim/device/api/crypto/CryptoTokenPrivateKeyData;)V
       // 1cb: astore 5
       // 1cd: goto 1db
-      // 1d0: new java/lang/Object
+      // 1d0: new net/rim/device/api/smartcard/SmartCardException
       // 1d3: dup
       // 1d4: ldc_w "Unknown private key type"
       // 1d7: invokespecial net/rim/device/api/smartcard/SmartCardException.<init> (Ljava/lang/String;)V

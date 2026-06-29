@@ -15,12 +15,12 @@ final class AddressCardToVCardConverter implements Factory {
       boolean convertForBluetooth = false;
       String[] extensionData = null;
       AddressCardModel model;
-      if (!(context instanceof Object)) {
+      if (!(context instanceof AddressCardModel)) {
          model = (AddressCardModel)ContextObject.get(context, 254);
          outputStream = (OutputStream)ContextObject.get(context, -980891548873596767L);
-         Object i = ContextObject.get(context, -4054673099568009991L);
+         Integer i = (Integer)ContextObject.get(context, -4054673099568009991L);
          convertForBluetooth = ContextObject.getFlag(context, 127);
-         extensionData = (Object[])ContextObject.get(context, 251);
+         extensionData = (String[])ContextObject.get(context, 251);
          if (i != null) {
             attributeMask = i;
          }
@@ -51,7 +51,7 @@ final class AddressCardToVCardConverter implements Factory {
 
    static final void writeVCard(AddressCardModel model, OutputStream out, int version, int attributeMask, boolean convertForBluetooth, String[] extensionData) {
       AddressCardToVCardBuilder builder = new AddressCardToVCardBuilder(model, version, attributeMask, convertForBluetooth, extensionData);
-      VCardWriter writer = (VCardWriter)(new Object(builder, out, "utf-8"));
+      VCardWriter writer = new VCardWriter(builder, out, "utf-8");
       writer.encodeVCard();
    }
 }

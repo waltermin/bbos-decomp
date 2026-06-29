@@ -118,7 +118,7 @@ public final class HistoryNode {
 
       Page p = BrowserDaemonRegistry.getInstance().getCurrentPage();
       Field field = p.getBrowserContent().getDisplayableContent();
-      if (field != null && field instanceof Object) {
+      if (field != null && field instanceof Manager) {
          FrameManager fm = this.getFrameManager((Manager)field);
          if (fm != null) {
             Frame top = fm.getFrame().getTop();
@@ -136,7 +136,7 @@ public final class HistoryNode {
                if (diff1Parent != null) {
                   diff1Parent.removeChild(differentFrame1);
                   if (differentFrame2 != null) {
-                     Frame diff2Frame = (Frame)(new Object(diff1Parent, differentFrame2.getName(), differentFrame2.getUrl(), differentFrame2.getId()));
+                     Frame diff2Frame = new Frame(diff1Parent, differentFrame2.getName(), differentFrame2.getUrl(), differentFrame2.getId());
                      diff1Parent.addFrame(diff2Frame);
                   }
                }
@@ -150,16 +150,16 @@ public final class HistoryNode {
    }
 
    private final FrameManager getFrameManager(Manager manager) {
-      if (!(manager instanceof Object)) {
+      if (!(manager instanceof FrameManager)) {
          int size = manager.getFieldCount();
 
          for (int i = 0; i < size; i++) {
             Field f = manager.getField(i);
-            if (f instanceof Object) {
+            if (f instanceof FrameManager) {
                return (FrameManager)f;
             }
 
-            if (f instanceof Object) {
+            if (f instanceof Manager) {
                return this.getFrameManager((Manager)f);
             }
          }
@@ -190,7 +190,7 @@ public final class HistoryNode {
          }
 
          if (dataBuffer.readBoolean()) {
-            SyncBuffer syncBuffer = (SyncBuffer)(new Object(dataBuffer, 0, 0));
+            SyncBuffer syncBuffer = new SyncBuffer(dataBuffer, 0, 0);
             syncBuffer.skipField();
          }
 

@@ -2,7 +2,9 @@ package net.rim.device.api.crypto.tls.ssl30;
 
 import net.rim.device.api.crypto.tls.AlertProtocolMethods;
 import net.rim.device.api.crypto.tls.SessionResumption;
+import net.rim.device.api.crypto.tls.TLSAlertException;
 import net.rim.device.api.util.DataBuffer;
+import net.rim.device.cldc.io.ssl.TLSException;
 
 public final class SSLAlertProtocol implements AlertProtocolMethods {
    protected SSLRecordProtocol _recordProtocol;
@@ -15,7 +17,7 @@ public final class SSLAlertProtocol implements AlertProtocolMethods {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void processAlertMessage(DataBuffer buffer) {
+   public final void processAlertMessage(DataBuffer buffer) throws TLSException {
       try {
          byte level = buffer.readByte();
          byte description = buffer.readByte();
@@ -25,18 +27,18 @@ public final class SSLAlertProtocol implements AlertProtocolMethods {
          }
 
          if (level == 2 || level == 3) {
-            ((SessionResumption)(new Object())).removeSession(this._recordProtocol.getDomainName(), this._recordProtocol.getProtocol());
-            throw new Object(level, description);
+            new SessionResumption().removeSession(this._recordProtocol.getDomainName(), this._recordProtocol.getProtocol());
+            throw new TLSAlertException(level, description);
          }
       } catch (Throwable var5) {
-         throw new Object(e);
+         throw new TLSException(e);
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void sendAlertMessage(byte alertLevel, byte alertDescription) {
+   public final void sendAlertMessage(byte alertLevel, byte alertDescription) throws TLSException {
       try {
          alertDescription = this.convertAlertDescription(alertDescription);
          if (alertLevel == 3 || alertLevel == 2) {
@@ -46,14 +48,14 @@ public final class SSLAlertProtocol implements AlertProtocolMethods {
          this._recordProtocol.write(21, new byte[]{alertLevel, alertDescription});
          this._recordProtocol.flush();
       } catch (Throwable var5) {
-         throw new Object(e);
+         throw new TLSException(e);
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void sendCloseNotify(boolean session) {
+   public final void sendCloseNotify(boolean session) throws TLSException {
       if (!this._sentCloseNotify) {
          try {
             this._sentCloseNotify = true;
@@ -61,7 +63,7 @@ public final class SSLAlertProtocol implements AlertProtocolMethods {
             this._recordProtocol.flush();
             this._recordProtocol.closeOutput();
          } catch (Throwable var4) {
-            throw new Object(e);
+            throw new TLSException(e);
          }
       }
    }

@@ -7,12 +7,12 @@ class VADResourceFile extends VADDataFile {
 
    @Override
    void write(byte[] data, int offset) {
-      throw new Object("read-only file");
+      throw new RuntimeException("read-only file");
    }
 
    @Override
    void delete() {
-      throw new Object("read-only file");
+      throw new RuntimeException("read-only file");
    }
 
    byte[] getData() {

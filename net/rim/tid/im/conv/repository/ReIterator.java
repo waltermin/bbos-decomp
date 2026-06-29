@@ -492,7 +492,7 @@ public class ReIterator implements PersistentContentListener {
       if (this._foundSubst != null) {
          int indx = this.getCurrentWildcardSubstIndex();
          if (indx == Integer.MAX_VALUE) {
-            throw new Object();
+            throw new RuntimeException();
          }
 
          this._foundSubst.set(indx);

@@ -66,7 +66,7 @@ public class KeypadLayout {
    }
 
    private static String[] initDefault() {
-      String[] adjacentKeys = new Object[256];
+      String[] adjacentKeys = new String[256];
       initAdjacentChars(adjacentKeys, 'a', "qwsz");
       initAdjacentChars(adjacentKeys, 'b', "vghjn");
       initAdjacentChars(adjacentKeys, 'c', "xdfgv");
@@ -101,7 +101,7 @@ public class KeypadLayout {
    }
 
    private static String[] initAzerty(String[] defaults) {
-      String[] adjacentKeys = new Object[256];
+      String[] adjacentKeys = new String[256];
       System.arraycopy(defaults, 0, adjacentKeys, 0, 256);
       initAdjacentChars(adjacentKeys, 'a', "zqs");
       initAdjacentChars(adjacentKeys, 'e', "zsdfr");
@@ -113,7 +113,7 @@ public class KeypadLayout {
    }
 
    private static String[] initQwertz(String[] defaults) {
-      String[] adjacentKeys = new Object[256];
+      String[] adjacentKeys = new String[256];
       System.arraycopy(defaults, 0, adjacentKeys, 0, 256);
       initAdjacentChars(adjacentKeys, 'a', "qwsy");
       initAdjacentChars(adjacentKeys, 'd', "wersfyxc");

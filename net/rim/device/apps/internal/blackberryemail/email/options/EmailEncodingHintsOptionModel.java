@@ -34,14 +34,14 @@ final class EmailEncodingHintsOptionModel implements RIMModel, VerbProvider, Fie
             initialValue = 0;
       }
 
-      String[] choices = new Object[]{
+      String[] choices = new String[]{
          EmailResources.getString(117),
          EmailResources.getString(118),
          EmailResources.getString(119),
          EmailResources.getString(121),
          EmailResources.getString(123)
       };
-      ObjectChoiceField choiceField = (ObjectChoiceField)(new Object(EmailResources.getString(125), choices, initialValue));
+      ObjectChoiceField choiceField = new ObjectChoiceField(EmailResources.getString(125), choices, initialValue);
       choiceField.setCookie(this);
       return choiceField;
    }

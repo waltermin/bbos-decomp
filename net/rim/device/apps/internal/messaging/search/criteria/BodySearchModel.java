@@ -3,7 +3,7 @@ package net.rim.device.apps.internal.messaging.search.criteria;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.AutoTextEditField;
-import net.rim.device.api.ui.component.BasicEditField;
+import net.rim.device.api.ui.component.EditField;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.ConversionProvider;
 import net.rim.device.apps.api.framework.model.FieldProvider;
@@ -27,13 +27,13 @@ public final class BodySearchModel extends TextSearchModel implements Persistabl
          return null;
       }
 
-      AutoTextEditField textField = (AutoTextEditField)(new Object(SearchResources.getString(17), this.getText(), 1000000, 4503601774854144L));
+      AutoTextEditField textField = new AutoTextEditField(SearchResources.getString(17), this.getText(), 1000000, 4503601774854144L);
       RIMModelFactory[] subCriterionFactories = BodySearchModelFactory.getInstance().getSubCriterionFactories();
       if (subCriterionFactories == null) {
          return textField;
       }
 
-      VerticalIndentFieldManager vifm = (VerticalIndentFieldManager)(new Object());
+      VerticalIndentFieldManager vifm = new VerticalIndentFieldManager();
       textField.setCookie(this);
       vifm.add(textField);
       int numSubCriterionFactories = subCriterionFactories.length;
@@ -60,7 +60,7 @@ public final class BodySearchModel extends TextSearchModel implements Persistabl
 
       for (int j = 0; j < numSubCriteria; j++) {
          PersistableRIMModel currentModel = subCriteria[j];
-         if (currentModel instanceof Object) {
+         if (currentModel instanceof FieldProvider) {
             Field field = ((FieldProvider)currentModel).getField(context);
             if (field != null) {
                field.setCookie(currentModel);
@@ -75,11 +75,11 @@ public final class BodySearchModel extends TextSearchModel implements Persistabl
    @Override
    public final boolean grabDataFromField(Field field, Object context) {
       this.setValue(null);
-      if (field instanceof Object) {
-         return this.setValue(((BasicEditField)field).getText());
+      if (field instanceof EditField) {
+         return this.setValue(((EditField)field).getText());
       }
 
-      if (!(field instanceof Object)) {
+      if (!(field instanceof Manager)) {
          return false;
       }
 
@@ -91,7 +91,7 @@ public final class BodySearchModel extends TextSearchModel implements Persistabl
          Field currentField = manager.getField(i);
          Object currentCookie = currentField.getCookie();
          SearchCriterion criterionToGrabData = this.locateCriterionByType(currentCookie);
-         if (criterionToGrabData instanceof Object) {
+         if (criterionToGrabData instanceof FieldProvider) {
             FieldProvider fieldProvider = (FieldProvider)criterionToGrabData;
             atLeastOneFieldGrabbedData |= fieldProvider.grabDataFromField(currentField, context);
          }
@@ -101,7 +101,7 @@ public final class BodySearchModel extends TextSearchModel implements Persistabl
    }
 
    private final SearchCriterion locateCriterionByType(Object criterionToMatch) {
-      if (criterionToMatch instanceof Object) {
+      if (criterionToMatch instanceof SearchCriterion) {
          int typeToMatch = ((SearchCriterion)criterionToMatch).getType();
          if (this.getType() == typeToMatch) {
             return this;
@@ -145,7 +145,7 @@ public final class BodySearchModel extends TextSearchModel implements Persistabl
 
          for (int i = 0; i < numSubCriteria; i++) {
             PersistableRIMModel currentModel = subCriteria[i];
-            if (currentModel instanceof Object) {
+            if (currentModel instanceof ConversionProvider) {
                ((ConversionProvider)currentModel).convert(context, syncBuffer);
             }
          }

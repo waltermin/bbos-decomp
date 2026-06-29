@@ -37,7 +37,7 @@ public class ContainerNodeImpl extends NodeImpl {
 
          NodeImpl.setDirtyBits(firstChild, model, -16777216);
       } else {
-         throw new Object("The node to be inserted already exists in the scene graph or is a TSpan node, or the parent is not a container.");
+         throw new IllegalArgumentException("The node to be inserted already exists in the scene graph or is a TSpan node, or the parent is not a container.");
       }
    }
 
@@ -51,7 +51,7 @@ public class ContainerNodeImpl extends NodeImpl {
 
          NodeImpl.setDirtyBits(lastChild, model, -16777216);
       } else {
-         throw new Object("The node to be inserted already exists in the scene graph or is a TSpan node, or the parent is not a container.");
+         throw new IllegalArgumentException("The node to be inserted already exists in the scene graph or is a TSpan node, or the parent is not a container.");
       }
    }
 

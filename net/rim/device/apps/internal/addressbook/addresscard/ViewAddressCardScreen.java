@@ -3,6 +3,9 @@ package net.rim.device.apps.internal.addressbook.addresscard;
 import net.rim.device.api.system.Display;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Keypad;
+import net.rim.device.api.ui.component.BasicEditField;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.Tag;
@@ -10,6 +13,9 @@ import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.IntHashtable;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
+import net.rim.device.apps.api.addressbook.CompanyInfoModel;
+import net.rim.device.apps.api.addressbook.MailingAddressModel;
+import net.rim.device.apps.api.addressbook.PersonNameModel;
 import net.rim.device.apps.api.addressbook.SelectionListener;
 import net.rim.device.apps.api.framework.model.CompoundRecognizer;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -20,11 +26,12 @@ import net.rim.device.apps.api.framework.registration.RecognizerRepository;
 import net.rim.device.apps.api.framework.registration.VerbFactory;
 import net.rim.device.apps.api.framework.registration.VerbFactoryRepository;
 import net.rim.device.apps.api.framework.registration.VerbRepository;
-import net.rim.device.apps.api.framework.verb.DefaultVerbProvider;
+import net.rim.device.apps.api.framework.verb.LastUsedDefaultVerbProvider;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.quickcontact.QuickContactItem;
 import net.rim.device.apps.api.quickcontact.QuickContactList;
 import net.rim.device.apps.api.quickcontact.QuickContactList$Listener;
+import net.rim.device.apps.api.ui.ExitVerb;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
 import net.rim.device.apps.api.ui.TwoColumnVerticalFieldManager;
 import net.rim.device.apps.api.utility.framework.ControllerUtilities;
@@ -32,6 +39,9 @@ import net.rim.device.apps.api.utility.framework.SubmemberUtilities;
 import net.rim.device.apps.api.utility.viewer.ViewReadableListRIMModel;
 import net.rim.device.apps.internal.addressbook.resources.AddressBookResources;
 import net.rim.device.apps.internal.addressbook.ui.DeleteEntryVerb;
+import net.rim.device.apps.internal.commonmodels.categories.CategoriesModel;
+import net.rim.device.apps.internal.commonmodels.categories.DisplayCategoriesForFieldVerb;
+import net.rim.device.apps.internal.commonmodels.title.TitleModel;
 import net.rim.device.apps.internal.phone.api.verbs.SpeedDialVerb;
 import net.rim.device.apps.internal.phone.model.PhoneNumberModel;
 import net.rim.device.apps.internal.profiles.Overrides;
@@ -47,7 +57,7 @@ final class ViewAddressCardScreen extends ViewReadableListRIMModel implements Qu
    private boolean _resetWhenExposed;
    private Field[] _fieldList;
    boolean _infoVisible;
-   private static IntHashtable _hotkeyToRecognizerTable = (IntHashtable)(new Object());
+   private static IntHashtable _hotkeyToRecognizerTable = new IntHashtable();
    static final long IGNORE_MODEL = -8746885042893430564L;
    private static final int[] _hotkeyResId = new int[]{
       1500,
@@ -179,10 +189,10 @@ final class ViewAddressCardScreen extends ViewReadableListRIMModel implements Qu
       }
 
       this.setModel(model);
-      this.setLeaveScreenVerb((Verb)(new Object(0, null)));
+      this.setLeaveScreenVerb(new ExitVerb(0, null));
       Recognizer r = RecognizerRepository.getRecognizers(5149066071290992769L);
       if (SubmemberUtilities.getFirstSubmember(model, r) == null) {
-         this.setTitle((Field)(new Object(AddressBookResources.getString(402))));
+         this.setTitle(new LabelField(AddressBookResources.getString(402)));
       }
 
       this._selectionListener = (SelectionListener)ContextObject.get(context, 1021178189941494075L);
@@ -202,20 +212,20 @@ final class ViewAddressCardScreen extends ViewReadableListRIMModel implements Qu
             customTuneName = customTuneName.substring(0, dotIndex);
          }
 
-         this.add((Field)(new Object()));
-         this.add((Field)(new Object(AddressBookResources.getString(1734), customTuneName, customTuneName.length(), 27021597764222976L)));
+         this.add(new SeparatorField());
+         this.add(new BasicEditField(AddressBookResources.getString(1734), customTuneName, customTuneName.length(), 27021597764222976L));
       }
    }
 
    @Override
    protected final void organizeFields(Field[] fields, int[] orders) {
       int count = fields.length;
-      this._fieldList = new Object[count];
+      this._fieldList = new Field[count];
       System.arraycopy(fields, 0, this._fieldList, 0, count);
       if (ContextObject.getFlag(super._context, 128)) {
-         TwoColumnVerticalFieldManager commFields = (TwoColumnVerticalFieldManager)(new Object(1152921504606846976L, Display.getWidth() / 2));
-         TwoColumnVerticalFieldManager imFields = (TwoColumnVerticalFieldManager)(new Object(1152921504606846976L, Display.getWidth() / 2));
-         VerticalFieldManager otherVFM = (VerticalFieldManager)(new Object(1152921504606846976L));
+         TwoColumnVerticalFieldManager commFields = new TwoColumnVerticalFieldManager(1152921504606846976L, Display.getWidth() / 2);
+         TwoColumnVerticalFieldManager imFields = new TwoColumnVerticalFieldManager(1152921504606846976L, Display.getWidth() / 2);
+         VerticalFieldManager otherVFM = new VerticalFieldManager(1152921504606846976L);
          Field nameField = null;
          Field companyField = null;
          Field titleField = null;
@@ -229,15 +239,15 @@ final class ViewAddressCardScreen extends ViewReadableListRIMModel implements Qu
                commFields.add(field);
             } else if (orders[i] >= 4100 && orders[i] <= 4200) {
                imFields.add(field);
-            } else if (model instanceof Object) {
+            } else if (model instanceof PersonNameModel) {
                nameField = field;
-            } else if (model instanceof Object) {
+            } else if (model instanceof CompanyInfoModel) {
                companyField = field;
-            } else if (model instanceof Object) {
+            } else if (model instanceof TitleModel) {
                titleField = field;
             } else if (model instanceof DisplayPictureModelImpl) {
                pictureField = field;
-            } else if (model instanceof Object) {
+            } else if (model instanceof MailingAddressModel) {
                fields[dest] = fields[i];
                orders[dest] = orders[i];
                dest++;
@@ -248,8 +258,8 @@ final class ViewAddressCardScreen extends ViewReadableListRIMModel implements Qu
 
          Array.resize(fields, dest);
          Array.resize(orders, dest);
-         HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(1152921504606846976L));
-         VerticalFieldManager vfm = (VerticalFieldManager)(new Object(1152921504606846976L));
+         HorizontalFieldManager hfm = new HorizontalFieldManager(1152921504606846976L);
+         VerticalFieldManager vfm = new VerticalFieldManager(1152921504606846976L);
          if (pictureField != null) {
             pictureField.setTag(Tag.create("addressbook-picture"));
             hfm.add(pictureField);
@@ -310,7 +320,7 @@ final class ViewAddressCardScreen extends ViewReadableListRIMModel implements Qu
          RIMModel focusedModel = null;
          if (focusedField != null) {
             Object cookie = focusedField.getCookie();
-            if (cookie instanceof Object) {
+            if (cookie instanceof RIMModel) {
                focusedModel = (RIMModel)cookie;
             }
          }
@@ -346,7 +356,7 @@ final class ViewAddressCardScreen extends ViewReadableListRIMModel implements Qu
             menu.add(verbRepository.getVerbs(null));
             VerbFactory[] verbFactories = VerbFactoryRepository.getVerbFactories(-6650104226833963074L);
             if (focusedModel != null && verbFactories != null && verbFactories.length > 0) {
-               ContextObject verbFactoryContext = (ContextObject)(new Object(11));
+               ContextObject verbFactoryContext = new ContextObject(11);
                verbFactoryContext.put(252, this._acm);
                verbFactoryContext.put(250, focusedModel);
                if (ContextObject.get(super._context, -4055106280780392421L) != null) {
@@ -358,8 +368,8 @@ final class ViewAddressCardScreen extends ViewReadableListRIMModel implements Qu
                }
             }
 
-            if (this._categoriesField != null && !(this.getModelFieldWithFocus().getCookie() instanceof Object)) {
-               menu.add((Verb)(new Object(this._categoriesField)));
+            if (this._categoriesField != null && !(this.getModelFieldWithFocus().getCookie() instanceof CategoriesModel)) {
+               menu.add(new DisplayCategoriesForFieldVerb(this._categoriesField));
             }
 
             if (ContextObject.getFlag(super._context, 18) && ContextObject.getFlag(super._context, 114)) {
@@ -380,11 +390,11 @@ final class ViewAddressCardScreen extends ViewReadableListRIMModel implements Qu
             menu.setDefault(super._defaultVerb);
          } else {
             if (this._selectionListener != null) {
-               Verb[] verbs = new Object[0];
+               Verb[] verbs = new Verb[0];
                if (focusedModel != null && this._selectionListener.canSelect(focusedModel)) {
-                  super._defaultVerb = this._selectionListener.getVerbs(verbs, focusedModel, new Object(37));
+                  super._defaultVerb = this._selectionListener.getVerbs(verbs, focusedModel, new ContextObject(37));
                } else if (this._selectionListener.canSelect(this._acm)) {
-                  super._defaultVerb = this._selectionListener.getVerbs(verbs, this._acm, new Object(37));
+                  super._defaultVerb = this._selectionListener.getVerbs(verbs, this._acm, new ContextObject(37));
                }
 
                if (verbRecognizer != null) {
@@ -408,9 +418,9 @@ final class ViewAddressCardScreen extends ViewReadableListRIMModel implements Qu
 
             ContextObject.setFlag(super._context, 85, 37, 18);
             ContextObject.setPrivateFlag(super._context, -2774095533296287874L, 0);
-            Verb[] verbs = new Object[0];
+            Verb[] verbs = new Verb[0];
             Verb defaultVerb = null;
-            if (this._acm instanceof Object) {
+            if (this._acm instanceof VerbProvider) {
                VerbProvider verbProvider = (VerbProvider)this._acm;
                defaultVerb = verbProvider.getVerbs(super._context, verbs);
             }
@@ -426,7 +436,7 @@ final class ViewAddressCardScreen extends ViewReadableListRIMModel implements Qu
             }
 
             menu.setDefault(super._defaultVerb);
-            menu.coalesce(-3072555018635390988L, (DefaultVerbProvider)(new Object(this._acm, super._context)));
+            menu.coalesce(-3072555018635390988L, new LastUsedDefaultVerbProvider(this._acm, super._context));
             ContextObject.remove(super._context, -8746885042893430564L);
             if (!originalInViewFlag) {
                ContextObject.clearFlag(super._context, 37);
@@ -502,7 +512,7 @@ final class ViewAddressCardScreen extends ViewReadableListRIMModel implements Qu
       Field focusedField = this.getLeafFieldWithFocus();
       if (focusedField != null) {
          Object cookie = focusedField.getCookie();
-         if (cookie instanceof Object) {
+         if (cookie instanceof PhoneNumberModel) {
             PhoneNumberModel pnm = (PhoneNumberModel)cookie;
             QuickContactList ql = QuickContactList.getInstance();
             if (pnm.canSpeedDial() && ql.getQuickContactKey(pnm) == 0 && ql.getQuickContactItem(keycode) == null) {
@@ -550,9 +560,9 @@ final class ViewAddressCardScreen extends ViewReadableListRIMModel implements Qu
    }
 
    private final void insertInfo() {
-      VerticalFieldManager vfm = (VerticalFieldManager)(new Object());
-      vfm.add((Field)(new Object(((StringBuffer)(new Object("RefId: "))).append(this._acm.getUID()).toString(), 18014398509481984L)));
-      vfm.add((Field)(new Object()));
+      VerticalFieldManager vfm = new VerticalFieldManager();
+      vfm.add(new LabelField("RefId: " + this._acm.getUID(), 18014398509481984L));
+      vfm.add(new SeparatorField());
       this.insert(vfm, 0);
       vfm.setFocus();
       this._infoVisible = true;

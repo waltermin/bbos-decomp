@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.supl;
 
+import java.io.IOException;
 import javax.microedition.io.Connector;
 import javax.microedition.io.SocketConnection;
 import net.rim.device.api.crypto.tls.tls10.TLS10Connection;
@@ -17,9 +18,9 @@ final class SuplSession$TLSReceiveThread extends Thread {
    }
 
    private final void startConnection() {
-      Integer suplPort = (Integer)(new Object(this.this$0.options.getSuplPortNumber()));
+      Integer suplPort = new Integer(this.this$0.options.getSuplPortNumber());
       Fqdn slpAddress = this.this$0.options.getSlpAddress();
-      StringBuffer strBuf = ((StringBuffer)(new Object())).append(slpAddress.domainName).append(":");
+      StringBuffer strBuf = new StringBuffer().append(slpAddress.domainName).append(":");
       strBuf.append(suplPort.toString()).append(";deviceside=true");
       String tmp = SuplHandler.getApn();
       if (tmp != null && tmp != "") {
@@ -37,65 +38,63 @@ final class SuplSession$TLSReceiveThread extends Thread {
       }
 
       tmp = strBuf.toString();
-      System.out.println(((StringBuffer)(new Object("Opening connection to: "))).append(strBuf.toString()).toString());
-      this.this$0.socketConnection = (SocketConnection)Connector.open(
-         ((StringBuffer)(new Object("net.rim.device.cldc.io.socket://"))).append(tmp).toString(), 0, true
-      );
+      System.out.println("Opening connection to: " + strBuf.toString());
+      this.this$0.socketConnection = (SocketConnection)Connector.open("net.rim.device.cldc.io.socket://" + tmp, 0, true);
       this.this$0.socketConnection.setSocketOption((byte)1, 1);
       if (!this.this$0.options.isTLSEnabled()) {
          this.this$0.os = this.this$0.socketConnection.openOutputStream();
          this.this$0.is = this.this$0.socketConnection.openInputStream();
       } else {
-         this.this$0.tlsConnection = (TLS10Connection)(new Object(this.this$0.socketConnection, ((StringBuffer)(new Object("tls://"))).append(tmp).toString()));
+         this.this$0.tlsConnection = new TLS10Connection(this.this$0.socketConnection, "tls://" + tmp);
          this.this$0.os = this.this$0.tlsConnection.openDataOutputStream();
          this.this$0.is = this.this$0.tlsConnection.openDataInputStream();
          if (!this.this$0.tlsConnection.isConnectionEstablished()) {
             System.out.println("TLS Connection not yet established");
          } else {
             System.out.println("TLS Connection open, details:");
-            System.out.println(((StringBuffer)(new Object("Local address: "))).append(this.this$0.tlsConnection.getLocalAddress()).toString());
-            System.out.println(((StringBuffer)(new Object("Local port: "))).append(this.this$0.tlsConnection.getLocalPort()).toString());
-            System.out.println(((StringBuffer)(new Object("Remote address: "))).append(this.this$0.tlsConnection.getAddress()).toString());
-            System.out.println(((StringBuffer)(new Object("Remote port: "))).append(this.this$0.tlsConnection.getPort()).toString());
+            System.out.println("Local address: " + this.this$0.tlsConnection.getLocalAddress());
+            System.out.println("Local port: " + this.this$0.tlsConnection.getLocalPort());
+            System.out.println("Remote address: " + this.this$0.tlsConnection.getAddress());
+            System.out.println("Remote port: " + this.this$0.tlsConnection.getPort());
          }
       }
    }
 
-   final Ulp receiveUlpMsg() {
+   final Ulp receiveUlpMsg() throws IOException {
       byte[] rxBuf = new byte[65535];
       System.out.println("TLS ReceiveTask receiveUlpMsg");
       System.out.println("Blocking on TCP RX(1)");
       int ret = this.this$0.is.read(rxBuf, 0, 2);
       if (ret != 2) {
          if (ret == -1) {
-            throw new Object();
+            throw new IOException();
          }
 
-         System.out.println(((StringBuffer)(new Object("Returned with "))).append(ret).toString());
+         System.out.println("Returned with " + ret);
          return null;
       } else {
-         System.out.println(((StringBuffer)(new Object("rxBuf[0] = "))).append(rxBuf[0]).append(" rxBuf[1] = ").append(rxBuf[1]).toString());
+         System.out.println("rxBuf[0] = " + rxBuf[0] + " rxBuf[1] = " + rxBuf[1]);
          int rxPduLen = (rxBuf[0] & 255) << 8 | rxBuf[1] & 255;
-         System.out.println(((StringBuffer)(new Object("Decoding a received ULP message of length "))).append(rxPduLen).toString());
+         System.out.println("Decoding a received ULP message of length " + rxPduLen);
          if (rxPduLen > 0 && rxPduLen <= 65535) {
             System.out.println("Blocking on TCP RX(2)");
             ret = this.this$0.is.read(rxBuf, 2, rxPduLen - 2);
-            System.out.println(((StringBuffer)(new Object("Rest of ULP message is "))).append(ret).append(" bytes").toString());
+            System.out.println("Rest of ULP message is " + ret + " bytes");
             if (ret != rxPduLen - 2) {
-               throw new Object();
+               throw new IOException();
             }
 
             Ulp rxPdu = new Ulp();
             rxPdu.decode(rxBuf);
 
             for (int i = 0; i < rxPduLen; i++) {
-               System.out.print(((StringBuffer)(new Object())).append(Integer.toHexString(255 & rxBuf[i])).append(" ").toString());
+               System.out.print(Integer.toHexString(255 & rxBuf[i]) + " ");
             }
 
             rxPdu.print();
             return rxPdu;
          } else {
-            throw new Object();
+            throw new IOException();
          }
       }
    }

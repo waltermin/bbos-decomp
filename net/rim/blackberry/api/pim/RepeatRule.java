@@ -112,7 +112,7 @@ public class RepeatRule {
          int pimDIW = this._eventFieldsModel.getDayInWeek();
          if (pimDIW == 0) {
             Calendar cal = Calendar.getInstance();
-            cal.setTime((Date)(new Object(this._eventFieldsModel.getStartDate())));
+            cal.setTime(new Date(this._eventFieldsModel.getStartDate()));
             int dayInWeek = 1 << cal.get(7) - 1;
             if ((dow & dayInWeek) != 0 && (dow & ~dayInWeek) == 0) {
                this.setInt(2, 0);
@@ -174,7 +174,7 @@ public class RepeatRule {
          );
       } catch (PIMException e) {
          System.out.println(e.toString());
-         return ((Vector)(new Object())).elements();
+         return new Vector().elements();
       }
    }
 
@@ -195,7 +195,7 @@ public class RepeatRule {
       switch (field) {
          case -1:
          case 4:
-            throw new Object("Invalid field ID");
+            throw new IllegalArgumentException("Invalid field ID");
          case 0:
          default:
             value = this._eventFieldsModel.getRepeatCount();
@@ -233,11 +233,11 @@ public class RepeatRule {
       switch (field) {
          case -1:
          case 4:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          default:
             if (value < 0) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this._eventFieldsModel.setRepeatCount(value);
@@ -248,10 +248,10 @@ public class RepeatRule {
                return;
             }
 
-            throw new Object();
+            throw new IllegalArgumentException();
          case 2:
             if ((value & -130049) != 0) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this._eventFieldsModel.setDayInWeek(value);
@@ -263,11 +263,11 @@ public class RepeatRule {
                return;
             }
 
-            throw new Object();
+            throw new IllegalArgumentException();
          case 5:
             byte recurFreq = RepeatRuleUtil.freqRepeatToRecur(value);
             if (recurFreq < 0) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this._recur.setRecurType(recurFreq);
@@ -275,7 +275,7 @@ public class RepeatRule {
             return;
          case 6:
             if (value <= 0) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this._recur.setRecurPeriod(value);
@@ -283,14 +283,14 @@ public class RepeatRule {
             return;
          case 7:
             if ((value & -536739841) != 0) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this._eventFieldsModel.setMonth(value);
             return;
          case 8:
             if ((value & -1024) != 0) {
-               throw new Object();
+               throw new IllegalArgumentException();
             } else {
                this._eventFieldsModel.setWeekInMonth(value);
             }
@@ -307,7 +307,7 @@ public class RepeatRule {
 
             return value;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -320,9 +320,9 @@ public class RepeatRule {
                return;
             }
 
-            throw new Object();
+            throw new IllegalArgumentException();
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 

@@ -8,14 +8,17 @@ import net.rim.device.api.ui.component.CollectionListField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.apps.api.addressbook.SelectionListener;
+import net.rim.device.apps.api.addressbook.UseEntryVerb;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.PaintProvider;
 import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.model.VerbProvider;
 import net.rim.device.apps.api.framework.verb.DefaultVerbProvider;
+import net.rim.device.apps.api.framework.verb.LastUsedDefaultVerbProvider;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.KeywordFilteredScreen;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
+import net.rim.device.apps.api.utility.editor.EditorUsingRIMModelFactory;
 import net.rim.device.apps.internal.addressbook.resources.AddressBookResources;
 
 public class SearchViewScreen extends KeywordFilteredScreen implements ListFieldCallback {
@@ -48,11 +51,11 @@ public class SearchViewScreen extends KeywordFilteredScreen implements ListField
       Request r = this._request;
       int included_matches = r.getIncludedMatches();
       int available_matches = r.getAvailableMatches();
-      Object[] title_parms = new Object[]{r._search, new Object(included_matches), null};
+      Object[] title_parms = new Object[]{r._search, new Integer(included_matches), null};
       int title_resId;
       if (included_matches < available_matches) {
          title_resId = 1720;
-         title_parms[2] = new Object(available_matches);
+         title_parms[2] = new Integer(available_matches);
       } else if (included_matches == 1) {
          title_resId = 1724;
       } else {
@@ -67,7 +70,7 @@ public class SearchViewScreen extends KeywordFilteredScreen implements ListField
       CollectionListField collectionListField = (CollectionListField)listField;
       Object element = collectionListField.getElementAt(index);
       if (element != null) {
-         if (element instanceof Object) {
+         if (element instanceof PaintProvider) {
             ((PaintProvider)element).paint(graphics, 0, y, width, 100, this._verbContext);
             return;
          }
@@ -123,7 +126,7 @@ public class SearchViewScreen extends KeywordFilteredScreen implements ListField
             modelUser = ContextObject.get(this._request.getContext(), -6581931217101110672L);
          }
 
-         boolean fromEmailCompose = modelUser instanceof Object;
+         boolean fromEmailCompose = modelUser instanceof EditorUsingRIMModelFactory;
          menu.add(new SearchViewScreen$CancelScreenVerb(this, null));
          Verb continueVerb = null;
          if (element != null) {
@@ -148,9 +151,9 @@ public class SearchViewScreen extends KeywordFilteredScreen implements ListField
          }
 
          menu.add(new RequestVerb(this._request, 414080, 1704, true, null));
-         if (element instanceof Object) {
+         if (element instanceof VerbProvider) {
             VerbProvider vp = (VerbProvider)element;
-            Verb[] tmp = new Object[0];
+            Verb[] tmp = new Verb[0];
             context.setFlag(114);
             Verb tmpDefault = vp.getVerbs(context, tmp);
             context.clearFlag(114);
@@ -161,7 +164,7 @@ public class SearchViewScreen extends KeywordFilteredScreen implements ListField
          }
 
          if (this._selectionListener != null && this._selectionListener.canSelect(element)) {
-            Verb[] verba = new Object[0];
+            Verb[] verba = new Verb[0];
             defaultVerb = this._selectionListener.getVerbs(verba, element, context);
             menu.add(verba);
          }
@@ -176,8 +179,8 @@ public class SearchViewScreen extends KeywordFilteredScreen implements ListField
 
          menu.setDefault(defaultVerb);
          DefaultVerbProvider defaultVerbProvider = null;
-         if (element instanceof Object) {
-            defaultVerbProvider = (DefaultVerbProvider)(new Object((RIMModel)element));
+         if (element instanceof RIMModel) {
+            defaultVerbProvider = new LastUsedDefaultVerbProvider((RIMModel)element);
          }
 
          menu.coalesce(-3072555018635390988L, defaultVerbProvider);
@@ -226,7 +229,7 @@ public class SearchViewScreen extends KeywordFilteredScreen implements ListField
    @Override
    protected void verbInvoked(Verb verb, Object context, Object result) {
       super.verbInvoked(verb, context, result);
-      if (!(verb instanceof Object) && this._selectionListener != null && this._selectionListener.hasSelectedObject()) {
+      if (!(verb instanceof UseEntryVerb) && this._selectionListener != null && this._selectionListener.hasSelectedObject()) {
          this.terminateScreen();
          this.terminateScreen();
       }

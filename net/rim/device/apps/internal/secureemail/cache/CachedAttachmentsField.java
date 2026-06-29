@@ -1,7 +1,8 @@
 package net.rim.device.apps.internal.secureemail.cache;
 
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.FieldProvider;
 import net.rim.device.apps.internal.blackberryemail.resources.EmailResources;
@@ -14,12 +15,12 @@ public class CachedAttachmentsField extends CachedField {
       if (!ContextObject.getFlag(context, 101)) {
          int numAttachments = this._attachments.length;
          if (numAttachments > 0) {
-            StringBuffer buffer = (StringBuffer)(new Object());
+            StringBuffer buffer = new StringBuffer();
             buffer.append('[');
             buffer.append(numAttachments);
             buffer.append(numAttachments > 1 ? EmailResources.getString(141) : EmailResources.getString(140));
             buffer.append(']');
-            manager.add((Field)(new Object(buffer.toString())));
+            manager.add(new RichTextField(buffer.toString()));
          }
       }
    }
@@ -28,12 +29,12 @@ public class CachedAttachmentsField extends CachedField {
       if (!ContextObject.getFlag(context, 101)) {
          int numAttachments = this._attachments.length;
          if (numAttachments > 0) {
-            manager.add((Field)(new Object()));
+            manager.add(new SeparatorField());
          }
 
          for (int i = 0; i < numAttachments; i++) {
             Object var10000 = this._attachments[i];
-            if (this._attachments[i] instanceof Object) {
+            if (this._attachments[i] instanceof FieldProvider) {
                FieldProvider fieldProvider = (FieldProvider)var10000;
                manager.add(fieldProvider.getField(context));
             }

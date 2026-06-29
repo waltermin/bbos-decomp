@@ -2,12 +2,16 @@ package net.rim.device.internal.io.store;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
-import net.rim.device.api.io.ConnectionClosedException;
+import javax.microedition.io.file.ConnectionClosedException;
+import javax.microedition.io.file.IllegalModeException;
+import net.rim.device.api.io.file.FileIOException;
 import net.rim.device.api.system.CodeSigningKey;
 import net.rim.device.api.system.ControlledAccess;
+import net.rim.device.api.system.ControlledAccessException;
 import net.rim.device.api.system.Memory;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.cldc.io.utility.URIDecoder;
@@ -52,7 +56,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
    }
 
    @Override
-   public final void init(String name, int mode, boolean timeouts) {
+   public final void init(String name, int mode, boolean timeouts) throws FileIOException {
       this._accessMode = mode;
       int rootPos = 0;
       if (name.startsWith(SLASH_SLASH_SLASH)) {
@@ -60,7 +64,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
          this._host = "";
       } else {
          if (!StringUtilities.startsWithIgnoreCase(name, SLASH_SLASH_LOCALHOST_SLASH, 1701707776)) {
-            throw new Object(1003);
+            throw new FileIOException(1003);
          }
 
          rootPos = SLASH_SLASH_LOCALHOST_SLASH.length();
@@ -74,18 +78,18 @@ public final class ContentStoreConnection implements BaseFileConnection {
          }
 
          if (!FilenameValidator.validateFilenameAndPath(name)) {
-            throw new Object("invalid character in name");
+            throw new IllegalArgumentException("invalid character in name");
          }
 
          if (name.length() > 256) {
-            throw new Object(13);
+            throw new FileIOException(13);
          }
 
          this._contentStore = ContentStoreImpl.getInstance();
          this._path = name;
          this._opened = true;
       } else {
-         throw new Object(1003);
+         throw new FileIOException(1003);
       }
    }
 
@@ -103,7 +107,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
    @Override
    public final DataInputStream openDataInputStream() {
       int caller = TraceBack.getCallingModule(0);
-      return (DataInputStream)(new Object(this.openInputStreamInternal(caller, false)));
+      return new DataInputStream(this.openInputStreamInternal(caller, false));
    }
 
    @Override
@@ -127,7 +131,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
    @Override
    public final long totalSize() {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertReadPermission();
@@ -137,7 +141,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
    @Override
    public final long availableSize() {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertReadPermission();
@@ -165,7 +169,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
    @Override
    public final long usedSize() {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertReadPermission();
@@ -184,16 +188,16 @@ public final class ContentStoreConnection implements BaseFileConnection {
    }
 
    @Override
-   public final long directorySize(boolean includeSubDirs) {
+   public final long directorySize(boolean includeSubDirs) throws FileIOException {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       } else {
          this.assertReadPermission();
          FSDescriptor fd = this.getFSDescriptor();
          if (fd == null) {
             return -1;
          } else if (!(fd instanceof FolderImpl)) {
-            throw new Object(1002);
+            throw new FileIOException(1002);
          } else {
             return this.directorySizeInternal((FolderImpl)fd, includeSubDirs);
          }
@@ -213,7 +217,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
    @Override
    public final boolean canRead() {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertReadPermission();
@@ -232,7 +236,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
    @Override
    public final boolean canWrite() {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertReadPermission();
@@ -251,7 +255,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
    @Override
    public final boolean isHidden() {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertReadPermission();
@@ -268,19 +272,19 @@ public final class ContentStoreConnection implements BaseFileConnection {
    }
 
    @Override
-   public final void setReadable(boolean readable) {
+   public final void setReadable(boolean readable) throws FileIOException {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertWritePermission();
       FSDescriptor fd = this.getFSDescriptor();
       if (fd == null) {
-         throw new Object(8);
+         throw new FileIOException(8);
       }
 
       if ((fd.getAttributes() & 16) != 0) {
-         throw new Object(12);
+         throw new FileIOException(12);
       }
 
       if (readable) {
@@ -291,19 +295,19 @@ public final class ContentStoreConnection implements BaseFileConnection {
    }
 
    @Override
-   public final void setWritable(boolean writable) {
+   public final void setWritable(boolean writable) throws FileIOException {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertWritePermission();
       FSDescriptor fd = this.getFSDescriptor();
       if (fd == null) {
-         throw new Object(8);
+         throw new FileIOException(8);
       }
 
       if ((fd.getAttributes() & 16) != 0) {
-         throw new Object(12);
+         throw new FileIOException(12);
       }
 
       if (writable) {
@@ -314,15 +318,15 @@ public final class ContentStoreConnection implements BaseFileConnection {
    }
 
    @Override
-   public final void setHidden(boolean hidden) {
+   public final void setHidden(boolean hidden) throws FileIOException {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertWritePermission();
       FSDescriptor fd = this.getFSDescriptor();
       if (fd == null) {
-         throw new Object(8);
+         throw new FileIOException(8);
       }
 
       if (hidden) {
@@ -348,24 +352,24 @@ public final class ContentStoreConnection implements BaseFileConnection {
    }
 
    @Override
-   public final void create() {
+   public final void create() throws IOException, FileIOException {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertWritePermission();
       FSDescriptor fd = this.getFSDescriptor();
       if (fd != null) {
-         throw new Object(7);
+         throw new FileIOException(7);
       }
 
       if (this._path.endsWith(SLASH)) {
-         throw new Object(1006);
+         throw new FileIOException(1006);
       }
 
       FileImpl file = this._contentStore.addFile(this._path, 1);
       if (file == null) {
-         throw new Object("Failed to create file");
+         throw new IOException("Failed to create file");
       }
 
       if (this._controlledAccessOnCreate != null) {
@@ -378,24 +382,24 @@ public final class ContentStoreConnection implements BaseFileConnection {
    }
 
    @Override
-   public final void mkdir() {
+   public final void mkdir() throws IOException, FileIOException {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertWritePermission();
       FSDescriptor fd = this.getFSDescriptor();
       if (fd != null) {
-         throw new Object(15);
+         throw new FileIOException(15);
       }
 
       if (!this._path.endsWith(SLASH)) {
-         throw new Object(1002);
+         throw new FileIOException(1002);
       }
 
       fd = this.getFSDescriptor(this.getPlatformPath());
       if (fd == null) {
-         throw new Object("Parent doesn't exist");
+         throw new IOException("Parent doesn't exist");
       }
 
       this._contentStore.addFolder(this._path);
@@ -404,7 +408,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
    @Override
    public final boolean exists() {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertReadPermission();
@@ -414,7 +418,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
    @Override
    public final boolean isDirectory() {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertReadPermission();
@@ -422,15 +426,15 @@ public final class ContentStoreConnection implements BaseFileConnection {
    }
 
    @Override
-   public final void delete() {
+   public final void delete() throws FileIOException {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertWritePermission();
       FSDescriptor fd = this.getFSDescriptor();
       if (fd == null) {
-         throw new Object(8);
+         throw new FileIOException(8);
       }
 
       if (fd instanceof SymbolicLinkImpl) {
@@ -439,7 +443,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
 
       this.closeStreams();
       if (fd instanceof FolderImpl && this.listInternal((FolderImpl)fd, null, true, false).hasMoreElements()) {
-         throw new Object(17);
+         throw new FileIOException(17);
       }
 
       fd.remove();
@@ -451,44 +455,44 @@ public final class ContentStoreConnection implements BaseFileConnection {
    }
 
    @Override
-   public final void renameEx(String newName) {
-      throw new Object(12);
+   public final void renameEx(String newName) throws FileIOException {
+      throw new FileIOException(12);
    }
 
    @Override
-   public final void rename(String newName) {
+   public final void rename(String newName) throws FileIOException {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       if (newName == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       this.assertWritePermission();
       FSDescriptor fd = this.getFSDescriptor();
       if (fd == null) {
-         throw new Object(8);
+         throw new FileIOException(8);
       }
 
       if (fd instanceof SymbolicLinkImpl) {
-         throw new Object(1007);
+         throw new FileIOException(1007);
       }
 
       newName = URIDecoder.decode(newName, "UTF-8", false);
       if (newName.indexOf(47) != -1) {
-         throw new Object("new name contains path");
+         throw new IllegalArgumentException("new name contains path");
       }
 
       if (!FilenameValidator.validateFilenameAndPath(newName)) {
-         throw new Object(1004);
+         throw new FileIOException(1004);
       }
 
       this.closeStreams();
-      String newPath = ((StringBuffer)(new Object())).append(this.getPlatformPath()).append(newName).toString();
+      String newPath = this.getPlatformPath() + newName;
       FSDescriptor otherFd = this.getFSDescriptor(newPath);
       if (otherFd != null && otherFd != fd) {
-         throw new Object(7);
+         throw new FileIOException(7);
       }
 
       fd.setName(newName);
@@ -496,27 +500,27 @@ public final class ContentStoreConnection implements BaseFileConnection {
    }
 
    @Override
-   public final void truncate(long byteOffset) {
+   public final void truncate(long byteOffset) throws FileIOException {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       if (byteOffset < 0) {
-         throw new Object("offset is negative");
+         throw new IllegalArgumentException("offset is negative");
       }
 
       this.assertWritePermission();
       FSDescriptor fd = this.getFSDescriptor();
       if (fd == null) {
-         throw new Object(8);
+         throw new FileIOException(8);
       }
 
       if (fd instanceof SymbolicLinkImpl) {
-         throw new Object(1007);
+         throw new FileIOException(1007);
       }
 
       if (!(fd instanceof FileImpl)) {
-         throw new Object(1001);
+         throw new FileIOException(1001);
       }
 
       if (this._outputStream != null) {
@@ -532,59 +536,59 @@ public final class ContentStoreConnection implements BaseFileConnection {
    }
 
    @Override
-   public final void setFileConnection(String fileName) {
+   public final void setFileConnection(String fileName) throws IOException, FileIOException {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       FSDescriptor fd = this.getFSDescriptor();
       if (fd == null) {
-         throw new Object(16);
+         throw new FileIOException(16);
       }
 
       if (!(fd instanceof FolderImpl)) {
-         throw new Object("setFileConnection called on a file");
+         throw new IOException("setFileConnection called on a file");
       }
 
       if (!this._path.endsWith(SLASH)) {
-         this._path = ((StringBuffer)(new Object())).append(this._path).append('/').toString();
+         this._path = this._path + '/';
       }
 
       if (fileName == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       if (!fileName.equals(".")) {
          fileName = URIDecoder.decode(fileName, "UTF-8", false);
          if (!FilenameValidator.validateFilenameAndPath(fileName)) {
-            throw new Object(1004);
+            throw new FileIOException(1004);
          }
 
          if (fileName.equals("..")) {
             if (SLASH.equals(this._path)) {
-               throw new Object("cannot access parent of root folder");
+               throw new IOException("cannot access parent of root folder");
             }
 
             this._path = this.getPlatformPath();
          } else {
             int indexOfSlash = fileName.indexOf(47);
             if (indexOfSlash != -1 && indexOfSlash != fileName.length() - 1) {
-               throw new Object("path strucutre contained in fileName");
+               throw new IllegalArgumentException("path strucutre contained in fileName");
             }
 
             boolean isDir = indexOfSlash != -1;
-            String newPath = ((StringBuffer)(new Object())).append(this._path).append(fileName).toString();
+            String newPath = this._path + fileName;
             FSDescriptor fsDescriptor = this.getFSDescriptor(newPath);
             if (fsDescriptor == null) {
-               throw new Object("new path to file not found");
+               throw new IllegalArgumentException("new path to file not found");
             }
 
             if (isDir && !(fsDescriptor instanceof FolderImpl)) {
-               throw new Object("new path is not a directory");
+               throw new IllegalArgumentException("new path is not a directory");
             }
 
             if (newPath.length() > 256) {
-               throw new Object(13);
+               throw new FileIOException(13);
             }
 
             this._path = newPath;
@@ -623,7 +627,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
       }
 
       if (isDir && !path.endsWith(SLASH)) {
-         path = ((StringBuffer)(new Object())).append(path).append('/').toString();
+         path = path + '/';
       }
 
       return path;
@@ -631,21 +635,18 @@ public final class ContentStoreConnection implements BaseFileConnection {
 
    @Override
    public final String getPath() {
-      return ((StringBuffer)(new Object("/store"))).append(this.getPlatformPath()).toString();
+      return "/store" + this.getPlatformPath();
    }
 
    @Override
    public final String getURL() {
-      return ((StringBuffer)(new Object("file://")))
-         .append(this._host)
-         .append(FileUtilities.encodeString(((StringBuffer)(new Object())).append(this.getPath()).append(this.getName()).toString()))
-         .toString();
+      return "file://" + this._host + FileUtilities.encodeString(this.getPath() + this.getName());
    }
 
    @Override
    public final long lastModified() {
       if (!this.isOpen()) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       this.assertReadPermission();
@@ -654,16 +655,16 @@ public final class ContentStoreConnection implements BaseFileConnection {
    }
 
    @Override
-   public final boolean setControlledAccess(CodeSigningKey csk) throws ConnectionClosedException {
+   public final boolean setControlledAccess(CodeSigningKey csk) throws net.rim.device.api.io.ConnectionClosedException, FileIOException {
       this.assertWritePermission();
       if (!this.isOpen()) {
-         throw new ConnectionClosedException();
+         throw new net.rim.device.api.io.ConnectionClosedException();
       } else {
          FSDescriptor fd = this.getFSDescriptor();
          if (fd != null) {
-            throw new Object(7);
+            throw new FileIOException(7);
          } else if (this._path.endsWith(SLASH)) {
-            throw new Object(1006);
+            throw new FileIOException(1006);
          } else if (csk != null && this._controlledAccessOnCreate == null) {
             this._controlledAccessOnCreate = csk;
             return true;
@@ -674,18 +675,18 @@ public final class ContentStoreConnection implements BaseFileConnection {
    }
 
    @Override
-   public final CodeSigningKey getControlledAccess() throws ConnectionClosedException {
+   public final CodeSigningKey getControlledAccess() throws net.rim.device.api.io.ConnectionClosedException, FileIOException {
       this.assertReadPermission();
       if (!this.isOpen()) {
-         throw new ConnectionClosedException();
+         throw new net.rim.device.api.io.ConnectionClosedException();
       }
 
       FSDescriptor fd = this.getFSDescriptor();
       if (!(fd instanceof FileImpl)) {
          if (fd instanceof FolderImpl) {
-            throw new Object(1001);
+            throw new FileIOException(1001);
          } else if (this._path.endsWith(SLASH)) {
-            throw new Object(1006);
+            throw new FileIOException(1006);
          } else {
             return this._controlledAccessOnCreate;
          }
@@ -695,34 +696,34 @@ public final class ContentStoreConnection implements BaseFileConnection {
    }
 
    @Override
-   public final void enableDRMForwardLock() throws ConnectionClosedException {
+   public final void enableDRMForwardLock() throws net.rim.device.api.io.ConnectionClosedException, FileIOException {
       this.assertWritePermission();
       if (!this.isOpen()) {
-         throw new ConnectionClosedException();
+         throw new net.rim.device.api.io.ConnectionClosedException();
       }
 
       FSDescriptor fd = this.getFSDescriptor();
       if (fd != null) {
-         throw new Object(7);
+         throw new FileIOException(7);
       }
 
       this._drmLockedOnCreate = true;
    }
 
    @Override
-   public final boolean isContentDRMForwardLocked() throws ConnectionClosedException {
+   public final boolean isContentDRMForwardLocked() throws net.rim.device.api.io.ConnectionClosedException, FileIOException {
       this.assertReadPermission();
       if (!this.isOpen()) {
-         throw new ConnectionClosedException();
+         throw new net.rim.device.api.io.ConnectionClosedException();
       }
 
       FSDescriptor fd = this.getFSDescriptor();
       if (fd == null) {
-         throw new Object(8);
+         throw new FileIOException(8);
       }
 
       if (!(fd instanceof FileImpl)) {
-         throw new Object(1001);
+         throw new FileIOException(1001);
       }
 
       FileImpl file = (FileImpl)fd;
@@ -741,16 +742,16 @@ public final class ContentStoreConnection implements BaseFileConnection {
    }
 
    @Override
-   public final boolean isContentBuiltIn() throws ConnectionClosedException {
+   public final boolean isContentBuiltIn() throws net.rim.device.api.io.ConnectionClosedException, FileIOException {
       this.assertReadPermission();
       if (!this.isOpen()) {
-         throw new ConnectionClosedException();
+         throw new net.rim.device.api.io.ConnectionClosedException();
       } else {
          FSDescriptor fd = this.getFSDescriptor();
          if (fd == null) {
-            throw new Object(8);
+            throw new FileIOException(8);
          } else if (fd instanceof FolderImpl) {
-            throw new Object(1001);
+            throw new FileIOException(1001);
          } else {
             return fd instanceof SymbolicLinkImpl;
          }
@@ -758,9 +759,9 @@ public final class ContentStoreConnection implements BaseFileConnection {
    }
 
    @Override
-   public final void setAutoEncryptionResolveMode(boolean mode) throws ConnectionClosedException {
+   public final void setAutoEncryptionResolveMode(boolean mode) throws net.rim.device.api.io.ConnectionClosedException {
       if (!this.isOpen()) {
-         throw new ConnectionClosedException();
+         throw new net.rim.device.api.io.ConnectionClosedException();
       }
    }
 
@@ -774,37 +775,37 @@ public final class ContentStoreConnection implements BaseFileConnection {
       );
    }
 
-   private final OutputStream openOutputStreamInternal(long offset, int callerModule) throws ConnectionClosedException {
+   private final OutputStream openOutputStreamInternal(long offset, int callerModule) throws net.rim.device.api.io.ConnectionClosedException, FileIOException {
       this.assertWritePermission();
       if (offset < 0) {
-         throw new Object("offset is negative");
+         throw new IllegalArgumentException("offset is negative");
       }
 
       if (!this.isOpen()) {
-         throw new ConnectionClosedException();
+         throw new net.rim.device.api.io.ConnectionClosedException();
       }
 
       if (this._outputStream != null) {
-         throw new Object(1005);
+         throw new FileIOException(1005);
       }
 
       FSDescriptor fd = this.getFSDescriptor();
       if (fd == null) {
-         throw new Object(8);
+         throw new FileIOException(8);
       }
 
       if (fd instanceof SymbolicLinkImpl) {
-         throw new Object(1007);
+         throw new FileIOException(1007);
       }
 
       if (!(fd instanceof FileImpl)) {
-         throw new Object(1001);
+         throw new FileIOException(1001);
       }
 
       FileImpl file = (FileImpl)fd;
       CodeSigningKey key = file.getCodeSigningKey();
       if (key != null && !ControlledAccess.verifyCodeModuleSignature(callerModule, key)) {
-         throw new Object(key);
+         throw new ControlledAccessException(key);
       }
 
       this._outputStream = new ContentStoreOutputStream(this, file.openOutputStream(offset));
@@ -833,14 +834,14 @@ public final class ContentStoreConnection implements BaseFileConnection {
    private final void assertReadPermission() {
       ApplicationControl.assertFileApiAllowed(true);
       if ((this._accessMode & 1) == 0) {
-         throw new Object("Access mode read required");
+         throw new IllegalModeException("Access mode read required");
       }
    }
 
    private final void assertWritePermission() {
       ApplicationControl.assertFileApiAllowed(true);
       if ((this._accessMode & 2) == 0) {
-         throw new Object("Access mode write required");
+         throw new IllegalModeException("Access mode write required");
       }
    }
 
@@ -885,7 +886,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
       // 2e: invokevirtual java/lang/String.length ()I
       // 31: bipush 1
       // 32: if_icmple 49
-      // 35: new java/lang/Object
+      // 35: new java/lang/StringBuffer
       // 38: dup
       // 39: invokespecial java/lang/StringBuffer.<init> ()V
       // 3c: aload 1
@@ -938,12 +939,12 @@ public final class ContentStoreConnection implements BaseFileConnection {
       return ContentStoreImpl.getInstance().getPicturesQuotaUsed();
    }
 
-   private final long fileSizeInternal(boolean raw) throws ConnectionClosedException {
+   private final long fileSizeInternal(boolean raw) throws net.rim.device.api.io.ConnectionClosedException, FileIOException {
       if (!this.isOpen()) {
          if (raw) {
-            throw new ConnectionClosedException();
+            throw new net.rim.device.api.io.ConnectionClosedException();
          } else {
-            throw new Object();
+            throw new ConnectionClosedException();
          }
       } else {
          this.assertReadPermission();
@@ -953,7 +954,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
          }
 
          if (!(fd instanceof FileImpl)) {
-            throw new Object(1001);
+            throw new FileIOException(1001);
          }
 
          FileImpl file = (FileImpl)fd;
@@ -961,29 +962,29 @@ public final class ContentStoreConnection implements BaseFileConnection {
       }
    }
 
-   private final Enumeration listWithFilter(String filter, boolean includeHidden, boolean returnFileInfo) throws ConnectionClosedException {
+   private final Enumeration listWithFilter(String filter, boolean includeHidden, boolean returnFileInfo) throws net.rim.device.api.io.ConnectionClosedException, FileIOException {
       if (!this.isOpen()) {
          if (returnFileInfo) {
-            throw new ConnectionClosedException();
+            throw new net.rim.device.api.io.ConnectionClosedException();
          } else {
-            throw new Object();
+            throw new ConnectionClosedException();
          }
       } else {
          this.assertReadPermission();
          if (filter == null) {
-            throw new Object();
+            throw new NullPointerException();
          } else {
             filter = URIDecoder.decode(filter, "UTF-8", false);
             if (filter.indexOf(47) != -1) {
-               throw new Object("filter contains path");
+               throw new IllegalArgumentException("filter contains path");
             } else if (!FilenameValidator.validateFilenameAndPath(filter.replace('*', 'a'))) {
-               throw new Object("invalid character in filter");
+               throw new IllegalArgumentException("invalid character in filter");
             } else {
                FSDescriptor fd = this.getFSDescriptor();
                if (fd == null) {
-                  throw new Object(16);
+                  throw new FileIOException(16);
                } else if (!(fd instanceof FolderImpl)) {
-                  throw new Object(1002);
+                  throw new FileIOException(1002);
                } else {
                   return this.listInternal((FolderImpl)fd, filter, includeHidden, returnFileInfo);
                }
@@ -1001,29 +1002,29 @@ public final class ContentStoreConnection implements BaseFileConnection {
       return new ListEnumeration(fileList, filter, returnFileInfo);
    }
 
-   private final InputStream openInputStreamInternal(int codeModuleCaller, boolean raw) throws ConnectionClosedException {
+   private final InputStream openInputStreamInternal(int codeModuleCaller, boolean raw) throws net.rim.device.api.io.ConnectionClosedException, FileIOException {
       this.assertReadPermission();
       if (!this.isOpen()) {
-         throw new ConnectionClosedException();
+         throw new net.rim.device.api.io.ConnectionClosedException();
       }
 
       if (this._inputStream != null) {
-         throw new Object(1005);
+         throw new FileIOException(1005);
       }
 
       FSDescriptor fd = this.getFSDescriptor();
       if (fd == null) {
-         throw new Object(8);
+         throw new FileIOException(8);
       }
 
       if (!(fd instanceof FileImpl)) {
-         throw new Object(1001);
+         throw new FileIOException(1001);
       }
 
       FileImpl file = (FileImpl)fd;
       CodeSigningKey key = file.getCodeSigningKey();
       if (key != null && !ControlledAccess.verifyCodeModuleSignature(codeModuleCaller, key)) {
-         throw new Object(key);
+         throw new ControlledAccessException(key);
       }
 
       this._inputStream = new ContentStoreInputStream(this, raw ? file.openRawInputStream() : file.openInputStream());
@@ -1050,7 +1051,7 @@ public final class ContentStoreConnection implements BaseFileConnection {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

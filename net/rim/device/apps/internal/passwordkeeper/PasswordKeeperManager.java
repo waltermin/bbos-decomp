@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.passwordkeeper;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import net.rim.device.api.crypto.BlockDecryptor;
 import net.rim.device.api.crypto.BlockEncryptor;
 import net.rim.device.api.crypto.BlockFormatterEngine;
@@ -94,7 +94,7 @@ public final class PasswordKeeperManager {
    }
 
    private final byte[] getPasswordHash(byte[] password) {
-      SHA256Digest digest = (SHA256Digest)(new Object());
+      SHA256Digest digest = new SHA256Digest();
       byte[] hash = new byte[digest.getDigestLength()];
       digest.update(password, 0, password.length);
       digest.getDigest(hash, 0);
@@ -102,7 +102,7 @@ public final class PasswordKeeperManager {
    }
 
    private final void setPassword() throws CancelException {
-      PasswordDialog dialog = (PasswordDialog)(new Object(PasswordKeeper.getString(3000), PasswordKeeper.getString(3001)));
+      PasswordDialog dialog = new PasswordDialog(PasswordKeeper.getString(3000), PasswordKeeper.getString(3001));
       dialog.show();
       if (dialog.getCloseReason() == -1) {
          throw new CancelException();
@@ -119,7 +119,7 @@ public final class PasswordKeeperManager {
 
       while (true) {
          counter = options.getCounter();
-         StringBuffer buffer = (StringBuffer)(new Object());
+         StringBuffer buffer = new StringBuffer();
          buffer.append(PasswordKeeper.getString(3032));
          buffer.append('(').append(counter).append('/').append(threshold).append(')');
          if (counter > threshold) {
@@ -131,21 +131,13 @@ public final class PasswordKeeperManager {
 
          PasswordKeeperPasswordDialog dialog;
          if (counter >= threshold) {
-            dialog = new PasswordKeeperPasswordDialog(
-               true, ((StringBuffer)(new Object())).append(PasswordKeeper.getString(3005)).append(buffer.toString()).toString(), false
-            );
+            dialog = new PasswordKeeperPasswordDialog(true, PasswordKeeper.getString(3005) + buffer.toString(), false);
          } else if (counter >= threshold >> 1) {
-            dialog = new PasswordKeeperPasswordDialog(
-               true, ((StringBuffer)(new Object())).append(PasswordKeeper.getString(3004)).append(buffer.toString()).toString(), false
-            );
+            dialog = new PasswordKeeperPasswordDialog(true, PasswordKeeper.getString(3004) + buffer.toString(), false);
          } else if (counter >= 2) {
-            dialog = new PasswordKeeperPasswordDialog(
-               false, ((StringBuffer)(new Object())).append(PasswordKeeper.getString(3004)).append(buffer.toString()).toString(), false
-            );
+            dialog = new PasswordKeeperPasswordDialog(false, PasswordKeeper.getString(3004) + buffer.toString(), false);
          } else {
-            dialog = new PasswordKeeperPasswordDialog(
-               false, ((StringBuffer)(new Object())).append(CommonResources.getString(2012)).append(':').toString(), false
-            );
+            dialog = new PasswordKeeperPasswordDialog(false, CommonResources.getString(2012) + ':', false);
          }
 
          dialog.show();
@@ -173,7 +165,7 @@ public final class PasswordKeeperManager {
    }
 
    public final void changePassword(PasswordKeeperList source) {
-      PasswordDialog dialog = (PasswordDialog)(new Object(PasswordKeeper.getString(3000), PasswordKeeper.getString(3001)));
+      PasswordDialog dialog = new PasswordDialog(PasswordKeeper.getString(3000), PasswordKeeper.getString(3001));
       dialog.show();
       if (dialog.getCloseReason() == -1) {
          Dialog.inform(PasswordKeeper.getString(3007));
@@ -249,7 +241,7 @@ public final class PasswordKeeperManager {
       // 24: astore 5
       // 26: aload 5
       // 28: ifnonnull 77
-      // 2b: new java/lang/Object
+      // 2b: new net/rim/device/api/crypto/PKCS5KDF2PseudoRandomSource
       // 2e: dup
       // 2f: aload 2
       // 30: aload 3
@@ -262,17 +254,17 @@ public final class PasswordKeeperManager {
       // 3e: aload 6
       // 40: aload 7
       // 42: invokevirtual net/rim/device/api/crypto/AbstractPseudoRandomSource.xorBytes ([B)V
-      // 45: new java/lang/Object
+      // 45: new net/rim/device/api/crypto/AESKey
       // 48: dup
       // 49: aload 7
       // 4b: invokespecial net/rim/device/api/crypto/AESKey.<init> ([B)V
       // 4e: astore 8
-      // 50: new java/lang/Object
+      // 50: new net/rim/device/api/crypto/AESDecryptorEngine
       // 53: dup
       // 54: aload 8
       // 56: invokespecial net/rim/device/api/crypto/AESDecryptorEngine.<init> (Lnet/rim/device/api/crypto/AESKey;)V
       // 59: astore 9
-      // 5b: new java/lang/Object
+      // 5b: new net/rim/device/api/crypto/PKCS5UnformatterEngine
       // 5e: dup
       // 5f: aload 9
       // 61: invokespecial net/rim/device/api/crypto/PKCS5UnformatterEngine.<init> (Lnet/rim/device/api/crypto/BlockDecryptorEngine;)V
@@ -302,21 +294,21 @@ public final class PasswordKeeperManager {
    }
 
    private final String decryptOperation(BlockUnformatterEngine engine, byte[] ciphertext) throws DecryptionException {
-      BlockDecryptor decryptor = (BlockDecryptor)(new Object(engine, (InputStream)(new Object(ciphertext))));
+      BlockDecryptor decryptor = new BlockDecryptor(engine, new ByteArrayInputStream(ciphertext));
       byte[] decrypted = new byte[0];
       byte[] temp = new byte[10];
 
       while (true) {
          int read = decryptor.read(temp, 0, 10);
          if (read < 0) {
-            SHA1Digest digest = (SHA1Digest)(new Object());
+            SHA1Digest digest = new SHA1Digest();
             int digestLength = digest.getDigestLength();
             if (decrypted.length < digestLength) {
                throw new DecryptionException();
             } else {
                byte[] newCRC = this.getCRC(decrypted, 0, decrypted.length - digestLength);
                if (Arrays.equals(newCRC, 0, decrypted, decrypted.length - digestLength, digestLength)) {
-                  return (String)(new Object(decrypted, 0, decrypted.length - digestLength, "UTF8"));
+                  return new String(decrypted, 0, decrypted.length - digestLength, "UTF8");
                } else {
                   throw new DecryptionException();
                }
@@ -329,7 +321,7 @@ public final class PasswordKeeperManager {
    }
 
    public final byte[] getCRC(byte[] data, int offset, int length) {
-      SHA1Digest digest = (SHA1Digest)(new Object());
+      SHA1Digest digest = new SHA1Digest();
       digest.update(data, offset, length);
       return digest.getDigest();
    }
@@ -352,7 +344,7 @@ public final class PasswordKeeperManager {
       // 07: dup
       // 08: invokespecial net/rim/device/apps/internal/passwordkeeper/PasswordKeeperLockedException.<init> ()V
       // 0b: athrow
-      // 0c: new java/lang/Object
+      // 0c: new net/rim/device/api/crypto/PKCS5KDF2PseudoRandomSource
       // 0f: dup
       // 10: aload 2
       // 11: aload 3
@@ -365,17 +357,17 @@ public final class PasswordKeeperManager {
       // 1f: aload 4
       // 21: aload 5
       // 23: invokevirtual net/rim/device/api/crypto/AbstractPseudoRandomSource.xorBytes ([B)V
-      // 26: new java/lang/Object
+      // 26: new net/rim/device/api/crypto/AESKey
       // 29: dup
       // 2a: aload 5
       // 2c: invokespecial net/rim/device/api/crypto/AESKey.<init> ([B)V
       // 2f: astore 6
-      // 31: new java/lang/Object
+      // 31: new net/rim/device/api/crypto/AESEncryptorEngine
       // 34: dup
       // 35: aload 6
       // 37: invokespecial net/rim/device/api/crypto/AESEncryptorEngine.<init> (Lnet/rim/device/api/crypto/AESKey;)V
       // 3a: astore 7
-      // 3c: new java/lang/Object
+      // 3c: new net/rim/device/api/crypto/PKCS5FormatterEngine
       // 3f: dup
       // 40: aload 7
       // 42: invokespecial net/rim/device/api/crypto/PKCS5FormatterEngine.<init> (Lnet/rim/device/api/crypto/BlockEncryptorEngine;)V
@@ -388,7 +380,7 @@ public final class PasswordKeeperManager {
       // 4f: astore 4
       // 51: goto 56
       // 54: astore 4
-      // 56: new java/lang/Object
+      // 56: new java/lang/RuntimeException
       // 59: dup
       // 5a: invokespecial java/lang/RuntimeException.<init> ()V
       // 5d: athrow
@@ -397,8 +389,8 @@ public final class PasswordKeeperManager {
    }
 
    private final byte[] encryptOperation(BlockFormatterEngine engine, String plaintext) {
-      ByteArrayOutputStream output = (ByteArrayOutputStream)(new Object());
-      BlockEncryptor encryptor = (BlockEncryptor)(new Object(engine, output));
+      ByteArrayOutputStream output = new ByteArrayOutputStream();
+      BlockEncryptor encryptor = new BlockEncryptor(engine, output);
       byte[] plaintextBytes = plaintext.getBytes("UTF8");
       encryptor.write(plaintextBytes);
       encryptor.write(this.getCRC(plaintextBytes, 0, plaintextBytes.length));

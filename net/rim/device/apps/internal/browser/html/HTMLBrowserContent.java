@@ -6,6 +6,7 @@ import java.util.Vector;
 import javax.microedition.io.HttpConnection;
 import net.rim.device.api.browser.field.BrowserContent;
 import net.rim.device.api.browser.field.BrowserContentChangedEvent;
+import net.rim.device.api.browser.field.CancelRequestResource;
 import net.rim.device.api.browser.field.Event;
 import net.rim.device.api.browser.field.RenderingApplication;
 import net.rim.device.api.browser.field.RenderingOptions;
@@ -37,8 +38,8 @@ final class HTMLBrowserContent extends BrowserContentImpl implements RenderingAp
    private long[] _headingPositions = new long[0];
    private int _headingCount;
    private HTMLDocumentImpl _document;
-   private Vector _inlinedData = (Vector)(new Object(0));
-   private Vector _requestedResources = (Vector)(new Object(0));
+   private Vector _inlinedData = new Vector(0);
+   private Vector _requestedResources = new Vector(0);
    private Frame _frame;
 
    public final Frame getFrame() {
@@ -110,7 +111,7 @@ final class HTMLBrowserContent extends BrowserContentImpl implements RenderingAp
    public final void cancelResourceFromJavascript(RequestedResource resource) {
       this._javascriptCallbacks.remove(resource);
       if (super._renderingApplication != null) {
-         super._renderingApplication.eventOccurred((Event)(new Object(this, resource)));
+         super._renderingApplication.eventOccurred(new CancelRequestResource(this, resource));
       }
    }
 
@@ -369,7 +370,7 @@ final class HTMLBrowserContent extends BrowserContentImpl implements RenderingAp
       int flags
    ) {
       super(renderer, url, null, renderingApplication, renderingOptions, flags);
-      this._javascriptCallbacks = (Hashtable)(new Object(0));
+      this._javascriptCallbacks = new Hashtable(0);
       this._document = new HTMLDocumentImpl(referrer, host, this);
       this._frame = frame;
    }
@@ -384,7 +385,7 @@ final class HTMLBrowserContent extends BrowserContentImpl implements RenderingAp
    @Override
    public final String toString() {
       if (this._inlinedData != null && this._requestedResources != null) {
-         StringBuffer buffer = (StringBuffer)(new Object());
+         StringBuffer buffer = new StringBuffer();
          int size = this._inlinedData.size();
          if ((super._flags & 4096) != 0) {
             buffer.append(" - Cached content - \n");
@@ -439,7 +440,7 @@ final class HTMLBrowserContent extends BrowserContentImpl implements RenderingAp
    @Override
    public final void setContent(Field content) {
       if (!(content instanceof HTMLBrowserField)) {
-         throw new Object("field must be HTMLBrowserField");
+         throw new RuntimeException("field must be HTMLBrowserField");
       }
 
       super.setContent(content);
@@ -451,7 +452,7 @@ final class HTMLBrowserContent extends BrowserContentImpl implements RenderingAp
    public final void setTitle(String title) {
       super.setTitle(title);
       if (super._renderingApplication != null) {
-         BrowserContentChangedEvent event = (BrowserContentChangedEvent)(new Object(this));
+         BrowserContentChangedEvent event = new BrowserContentChangedEvent(this);
          super._renderingApplication.eventOccurred(event);
       }
    }
@@ -460,7 +461,7 @@ final class HTMLBrowserContent extends BrowserContentImpl implements RenderingAp
    public final void setIcon(EncodedImage icon) {
       super.setIcon(icon);
       if (super._renderingApplication != null) {
-         BrowserContentChangedEvent event = (BrowserContentChangedEvent)(new Object(this));
+         BrowserContentChangedEvent event = new BrowserContentChangedEvent(this);
          super._renderingApplication.eventOccurred(event);
       }
    }

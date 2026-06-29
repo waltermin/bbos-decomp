@@ -91,7 +91,7 @@ class DateNavField extends Field {
    private Calendar getScratchCalendar() {
       if (this._scratchCalendar == null) {
          this._scratchCalendar = Calendar.getInstance();
-         this._scratchCalendar.setTime((Date)(new Object(this._selectedTime)));
+         this._scratchCalendar.setTime(new Date(this._selectedTime));
       }
 
       return this._scratchCalendar;
@@ -110,7 +110,7 @@ class DateNavField extends Field {
       }
 
       long dateToGoTo = calEx.getTimeLong();
-      System.out.println(((StringBuffer)(new Object("Date to go to: "))).append(dateToGoTo).toString());
+      System.out.println("Date to go to: " + dateToGoTo);
       this.goToDate(dateToGoTo);
    }
 

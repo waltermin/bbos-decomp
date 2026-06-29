@@ -7,7 +7,7 @@ import net.rim.device.api.ui.XYRect;
 
 public class PageScroller implements IPageScroller {
    private IScrollManager _scrollManager;
-   private Vector _allFocusableFields = (Vector)(new Object());
+   private Vector _allFocusableFields = new Vector();
    private static PageScroller _instance;
 
    public Vector getAllFocusableFields() {
@@ -91,7 +91,7 @@ public class PageScroller implements IPageScroller {
    }
 
    public int getFocusYPosition(Field f, XYRect rect, int top, int bottom, boolean isTopVisibleY) {
-      XYRect frect = (XYRect)(new Object());
+      XYRect frect = new XYRect();
       f.getFocusRect(frect);
       if (isTopVisibleY) {
          return rect.y >= top ? 0 : top - rect.y + frect.height - 1;
@@ -108,7 +108,7 @@ public class PageScroller implements IPageScroller {
       }
 
       if (f instanceof MultiFocusable && rectY2 >= top && rect.y <= bottom) {
-         XYRect frect = (XYRect)(new Object());
+         XYRect frect = new XYRect();
          f.getFocusRect(frect);
          int visibleHeight;
          if (rect.y < top && rectY2 > bottom) {
@@ -131,7 +131,7 @@ public class PageScroller implements IPageScroller {
 
    @Override
    public void scrollPage(int where) {
-      XYRect rect = (XYRect)(new Object());
+      XYRect rect = new XYRect();
       int verticalScroll = this._scrollManager.getVerticalScroll();
       int virtualHeight = this._scrollManager.getVirtualHeight();
       int contentHeight = this._scrollManager.getContentHeight();
@@ -212,7 +212,7 @@ public class PageScroller implements IPageScroller {
       for (int i = 0; i < count; i++) {
          Field f = m.getField(i);
          if (f.isFocusable()) {
-            if (f instanceof Object) {
+            if (f instanceof Manager) {
                this.traverseTree((Manager)f);
             } else {
                this._allFocusableFields.addElement(f);

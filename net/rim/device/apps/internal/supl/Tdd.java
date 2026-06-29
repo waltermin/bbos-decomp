@@ -47,27 +47,27 @@ final class Tdd extends ModeSpecificInfo {
    @Override
    final void print() {
       System.out.println("Tdd: ");
-      System.out.println(((StringBuffer)(new Object("Optionals: "))).append(this.optionals).toString());
-      System.out.println(((StringBuffer)(new Object("Cell Parameters Id: "))).append(this.cellParametersId).toString());
+      System.out.println("Optionals: " + this.optionals);
+      System.out.println("Cell Parameters Id: " + this.cellParametersId);
       if ((this.optionals & 8) == 8) {
-         System.out.println(((StringBuffer)(new Object("Proposed Tgsn: "))).append(this.proposedTgsn).toString());
+         System.out.println("Proposed Tgsn: " + this.proposedTgsn);
       }
 
       if ((this.optionals & 4) == 4) {
-         System.out.println(((StringBuffer)(new Object("Primary CcpchRscp: "))).append(this.primaryCcpchRscp).toString());
+         System.out.println("Primary CcpchRscp: " + this.primaryCcpchRscp);
       }
 
       if ((this.optionals & 2) == 2) {
-         System.out.println(((StringBuffer)(new Object("Path Loss: "))).append(this.pathLoss).toString());
+         System.out.println("Path Loss: " + this.pathLoss);
       }
 
       if ((this.optionals & 1) == 1) {
          System.out.println("Timeslot TSCP List: ");
-         System.out.println(((StringBuffer)(new Object("Num Items: "))).append(this.numTimeslotIscpListItems).toString());
+         System.out.println("Num Items: " + this.numTimeslotIscpListItems);
 
          for (int i = 0; i < this.numTimeslotIscpListItems; i++) {
-            System.out.println(((StringBuffer)(new Object("TS ISCP Item "))).append(i).toString());
-            System.out.println(((StringBuffer)(new Object("Timeslot ISCP: "))).append(this.timeslotIscpList[i]).toString());
+            System.out.println("TS ISCP Item " + i);
+            System.out.println("Timeslot ISCP: " + this.timeslotIscpList[i]);
          }
       }
    }

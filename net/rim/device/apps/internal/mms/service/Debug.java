@@ -5,8 +5,8 @@ final class Debug {
    private static final int BYTES_PER_ROW = 12;
 
    static final void dumpBytes(byte[] data) {
-      StringBuffer bufA = (StringBuffer)(new Object());
-      StringBuffer bufB = (StringBuffer)(new Object());
+      StringBuffer bufA = new StringBuffer();
+      StringBuffer bufB = new StringBuffer();
       String SPACES = "   ";
       String COLON_SPACE = ": ";
       int length = Math.min(data.length, 2048);
@@ -33,9 +33,7 @@ final class Debug {
             }
          }
 
-         print(
-            ((StringBuffer)(new Object())).append(hex(start, 6)).append(COLON_SPACE).append(bufA.toString()).append(SPACES).append(bufB.toString()).toString()
-         );
+         print(hex(start, 6) + COLON_SPACE + bufA.toString() + SPACES + bufB.toString());
       }
    }
 
@@ -47,7 +45,7 @@ final class Debug {
       String str = Integer.toHexString(value);
 
       while (str.length() < digitCount) {
-         str = ((StringBuffer)(new Object())).append('0').append(str).toString();
+         str = '0' + str;
       }
 
       return str;

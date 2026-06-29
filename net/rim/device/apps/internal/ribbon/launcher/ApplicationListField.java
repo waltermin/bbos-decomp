@@ -6,7 +6,7 @@ import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.ui.component.ListField;
 
 final class ApplicationListField extends ListField {
-   private XYRect _focusRect = (XYRect)(new Object());
+   private XYRect _focusRect = new XYRect();
    private int _deltaY;
 
    ApplicationListField(int size, int count) {

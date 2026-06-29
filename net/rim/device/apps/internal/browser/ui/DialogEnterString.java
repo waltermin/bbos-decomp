@@ -19,13 +19,13 @@ public final class DialogEnterString extends Dialog {
    public DialogEnterString(String message, String defaultValue, String buttonLabel, String editFieldLabel) {
       super(message, null, null, 0, null);
       this.setEscapeEnabled(false);
-      this._editString = (EditField)(new Object(editFieldLabel, defaultValue, 1000000, 4503601774854144L));
+      this._editString = new EditField(editFieldLabel, defaultValue, 1000000, 4503601774854144L);
       this.add(this._editString);
-      this._buttonOk = (ButtonField)(new Object(buttonLabel));
+      this._buttonOk = new ButtonField(buttonLabel);
       this._buttonOk.setChangeListener(this);
-      this._buttonCancel = (ButtonField)(new Object(CommonResources.getString(9042)));
+      this._buttonCancel = new ButtonField(CommonResources.getString(9042));
       this._buttonCancel.setChangeListener(this);
-      HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(12884901888L));
+      HorizontalFieldManager hfm = new HorizontalFieldManager(12884901888L);
       hfm.add(this._buttonOk);
       hfm.add(this._buttonCancel);
       this.add(hfm);

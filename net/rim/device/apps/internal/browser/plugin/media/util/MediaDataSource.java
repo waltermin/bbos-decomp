@@ -68,7 +68,7 @@ public final class MediaDataSource extends DataSource implements SourceStream {
 
    @Override
    public final ContentDescriptor getContentDescriptor() {
-      return (ContentDescriptor)(new Object(this._contentType));
+      return new ContentDescriptor(this._contentType);
    }
 
    @Override
@@ -101,13 +101,13 @@ public final class MediaDataSource extends DataSource implements SourceStream {
 
    @Override
    public final SourceStream[] getStreams() {
-      return new Object[]{this};
+      return new SourceStream[]{this};
    }
 
    @Override
    public final Control[] getControls() {
       if (!this._connected) {
-         throw new Object();
+         throw new IllegalStateException();
       } else {
          return null;
       }
@@ -116,7 +116,7 @@ public final class MediaDataSource extends DataSource implements SourceStream {
    @Override
    public final Control getControl(String controlType) {
       if (!this._connected) {
-         throw new Object();
+         throw new IllegalStateException();
       } else {
          return null;
       }

@@ -171,21 +171,21 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
       // 134: aastore
       // 135: areturn
       // 136: astore 1
-      // 137: new java/lang/Object
+      // 137: new java/lang/RuntimeException
       // 13a: dup
       // 13b: aload 1
       // 13c: invokevirtual net/rim/device/api/crypto/CryptoTokenException.toString ()Ljava/lang/String;
       // 13f: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 142: athrow
       // 143: astore 1
-      // 144: new java/lang/Object
+      // 144: new java/lang/RuntimeException
       // 147: dup
       // 148: aload 1
       // 149: invokevirtual net/rim/device/api/crypto/CryptoUnsupportedOperationException.toString ()Ljava/lang/String;
       // 14c: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 14f: athrow
       // 150: astore 1
-      // 151: new java/lang/Object
+      // 151: new java/lang/RuntimeException
       // 154: dup
       // 155: aload 1
       // 156: invokevirtual net/rim/device/api/crypto/UnsupportedCryptoSystemException.toString ()Ljava/lang/String;
@@ -204,7 +204,7 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
    @Override
    public final String getECCryptoSystemName(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareECCryptoToken$ECCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareECCryptoToken$ECCryptoSystemData cryptoSystem = (SoftwareECCryptoToken$ECCryptoSystemData)cryptoTokenData;
@@ -214,7 +214,7 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
    @Override
    public final int getECCryptoSystemBitLength(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareECCryptoToken$ECCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareECCryptoToken$ECCryptoSystemData cryptoSystem = (SoftwareECCryptoToken$ECCryptoSystemData)cryptoTokenData;
@@ -224,7 +224,7 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
    @Override
    public final int getECCryptoSystemFieldLength(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareECCryptoToken$ECCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareECCryptoToken$ECCryptoSystemData cryptoSystem = (SoftwareECCryptoToken$ECCryptoSystemData)cryptoTokenData;
@@ -234,7 +234,7 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
    @Override
    public final byte[] getECCryptoSystemBasePoint(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareECCryptoToken$ECCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareECCryptoToken$ECCryptoSystemData cryptoSystem = (SoftwareECCryptoToken$ECCryptoSystemData)cryptoTokenData;
@@ -244,7 +244,7 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
    @Override
    public final byte[] getECCryptoSystemGroupOrder(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareECCryptoToken$ECCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareECCryptoToken$ECCryptoSystemData cryptoSystem = (SoftwareECCryptoToken$ECCryptoSystemData)cryptoTokenData;
@@ -254,7 +254,7 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
    @Override
    public final byte[] getECCryptoSystemA(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareECCryptoToken$ECCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareECCryptoToken$ECCryptoSystemData cryptoSystem = (SoftwareECCryptoToken$ECCryptoSystemData)cryptoTokenData;
@@ -264,7 +264,7 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
    @Override
    public final byte[] getECCryptoSystemB(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareECCryptoToken$ECCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareECCryptoToken$ECCryptoSystemData cryptoSystem = (SoftwareECCryptoToken$ECCryptoSystemData)cryptoTokenData;
@@ -274,7 +274,7 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
    @Override
    public final byte[] getECCryptoSystemCofactor(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareECCryptoToken$ECCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareECCryptoToken$ECCryptoSystemData cryptoSystem = (SoftwareECCryptoToken$ECCryptoSystemData)cryptoTokenData;
@@ -284,7 +284,7 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
    @Override
    public final byte[] getECCryptoSystemFieldReductor(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareECCryptoToken$ECCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareECCryptoToken$ECCryptoSystemData cryptoSystem = (SoftwareECCryptoToken$ECCryptoSystemData)cryptoTokenData;
@@ -294,7 +294,7 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
    @Override
    public final int getECPublicKeyLength(CryptoTokenCryptoSystemData cryptoTokenData, boolean compress) {
       if (!(cryptoTokenData instanceof SoftwareECCryptoToken$ECCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareECCryptoToken$ECCryptoSystemData cryptoSystem = (SoftwareECCryptoToken$ECCryptoSystemData)cryptoTokenData;
@@ -304,7 +304,7 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
    @Override
    public final int getECPrivateKeyLength(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareECCryptoToken$ECCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareECCryptoToken$ECCryptoSystemData cryptoSystem = (SoftwareECCryptoToken$ECCryptoSystemData)cryptoTokenData;
@@ -312,7 +312,7 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
    }
 
    @Override
-   public final ECKeyPair createECKeyPair(CryptoTokenCryptoSystemData param1) {
+   public final ECKeyPair createECKeyPair(CryptoTokenCryptoSystemData param1) throws CryptoUnsupportedOperationException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -342,7 +342,7 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
       // 24: bipush 1
       // 25: invokestatic net/rim/device/api/crypto/NativeEC.isSupported (Ljava/lang/String;I)Z
       // 28: ifne 33
-      // 2b: new java/lang/Object
+      // 2b: new net/rim/device/api/crypto/CryptoUnsupportedOperationException
       // 2e: dup
       // 2f: invokespecial net/rim/device/api/crypto/CryptoUnsupportedOperationException.<init> ()V
       // 32: athrow
@@ -400,7 +400,7 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
       // 8f: bipush 0
       // 90: invokevirtual net/rim/device/api/crypto/SoftwareECCryptoToken.verifyECDSA (Lnet/rim/device/api/crypto/CryptoTokenCryptoSystemData;Lnet/rim/device/api/crypto/CryptoTokenPublicKeyData;[BII[BI[BI)Z
       // 93: ifne 9e
-      // 96: new java/lang/Object
+      // 96: new net/rim/device/api/crypto/CryptoSelfTestError
       // 99: dup
       // 9a: invokespecial net/rim/device/api/crypto/CryptoSelfTestError.<init> ()V
       // 9d: athrow
@@ -425,20 +425,20 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
       // c3: invokespecial net/rim/device/api/crypto/ECKeyPair.<init> (Lnet/rim/device/api/crypto/ECPublicKey;Lnet/rim/device/api/crypto/ECPrivateKey;)V
       // c6: areturn
       // c7: astore 5
-      // c9: new java/lang/Object
+      // c9: new java/lang/RuntimeException
       // cc: dup
       // cd: aload 5
       // cf: invokevirtual net/rim/device/api/crypto/InvalidKeyException.toString ()Ljava/lang/String;
       // d2: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // d5: athrow
       // d6: astore 5
-      // d8: new java/lang/Object
+      // d8: new java/lang/RuntimeException
       // db: dup
       // dc: aload 5
       // de: invokevirtual net/rim/device/api/crypto/InvalidKeyPairException.toString ()Ljava/lang/String;
       // e1: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // e4: athrow
-      // e5: new java/lang/Object
+      // e5: new java/lang/IllegalArgumentException
       // e8: dup
       // e9: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // ec: athrow
@@ -451,7 +451,7 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
       if (cryptoSystemData instanceof SoftwareECCryptoToken$ECCryptoSystemData) {
          return new SoftwareECCryptoToken$ECPublicKeyData((SoftwareECCryptoToken$ECCryptoSystemData)cryptoSystemData, data);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -460,7 +460,7 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
       if (cryptoSystemData instanceof SoftwareECCryptoToken$ECCryptoSystemData) {
          return new SoftwareECCryptoToken$ECPrivateKeyData((SoftwareECCryptoToken$ECCryptoSystemData)cryptoSystemData, data);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -475,7 +475,7 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
    @Override
    public final byte[] extractECPublicKeyData(CryptoTokenPublicKeyData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareECCryptoToken$ECPublicKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareECCryptoToken$ECPublicKeyData)cryptoTokenData).copyPublicKeyData();
       }
@@ -484,7 +484,7 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
    @Override
    public final byte[] extractECPublicKeyData(CryptoTokenPublicKeyData cryptoTokenData, boolean compress) {
       if (!(cryptoTokenData instanceof SoftwareECCryptoToken$ECPublicKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareECCryptoToken$ECPublicKeyData)cryptoTokenData).copyPublicKeyData(compress);
       }
@@ -493,7 +493,7 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
    @Override
    public final byte[] extractECPublicKeyData(CryptoTokenPrivateKeyData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareECCryptoToken$ECPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareECCryptoToken$ECPrivateKeyData)cryptoTokenData).copyPublicKeyData();
       }
@@ -502,7 +502,7 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
    @Override
    public final byte[] extractECPublicKeyData(CryptoTokenPrivateKeyData cryptoTokenData, boolean compress) {
       if (!(cryptoTokenData instanceof SoftwareECCryptoToken$ECPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareECCryptoToken$ECPrivateKeyData)cryptoTokenData).copyPublicKeyData(compress);
       }
@@ -511,7 +511,7 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
    @Override
    public final byte[] extractECPrivateKeyData(CryptoTokenPrivateKeyData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareECCryptoToken$ECPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareECCryptoToken$ECPrivateKeyData)cryptoTokenData).copyPrivateKeyData();
       }
@@ -523,19 +523,19 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
       CryptoTokenPrivateKeyData cryptoTokenLocalPrivateKeyData,
       byte[] remotePublicKeyData,
       boolean useCofactor
-   ) {
+   ) throws CryptoUnsupportedOperationException {
       if (!(cryptoTokenCryptoSystemData instanceof SoftwareECCryptoToken$ECCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareECCryptoToken$ECCryptoSystemData cryptoSystemData = (SoftwareECCryptoToken$ECCryptoSystemData)cryptoTokenCryptoSystemData;
       if (!(cryptoTokenLocalPrivateKeyData instanceof SoftwareECCryptoToken$ECPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       byte[] localPrivateKeyData = ((SoftwareECCryptoToken$ECPrivateKeyData)cryptoTokenLocalPrivateKeyData).getPrivateKeyData();
       if (!NativeEC.isSupported(cryptoSystemData.getName(), 4)) {
-         throw new Object();
+         throw new CryptoUnsupportedOperationException();
       }
 
       byte[] sharedSecret = new byte[cryptoSystemData.getFieldLength()];
@@ -558,34 +558,34 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
       byte[] remoteStaticPublicKeyData,
       byte[] remoteEphemeralPublicKeyData,
       boolean useCofactor
-   ) {
+   ) throws CryptoUnsupportedOperationException {
       if (!useCofactor) {
-         throw new Object();
+         throw new CryptoUnsupportedOperationException();
       }
 
       if (!(cryptoTokenCryptoSystemData instanceof SoftwareECCryptoToken$ECCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareECCryptoToken$ECCryptoSystemData cryptoSystemData = (SoftwareECCryptoToken$ECCryptoSystemData)cryptoTokenCryptoSystemData;
       if (!(cryptoTokenLocalStaticPrivateKeyData instanceof SoftwareECCryptoToken$ECPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       byte[] localStaticPrivateKeyData = ((SoftwareECCryptoToken$ECPrivateKeyData)cryptoTokenLocalStaticPrivateKeyData).getPrivateKeyData();
       if (!(cryptoTokenLocalEphemeralPrivateKeyData instanceof SoftwareECCryptoToken$ECPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       byte[] localEphemeralPrivateKeyData = ((SoftwareECCryptoToken$ECPrivateKeyData)cryptoTokenLocalEphemeralPrivateKeyData).getPrivateKeyData();
       if (!(cryptoTokenLocalEphemeralPublicKeyData instanceof SoftwareECCryptoToken$ECPublicKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       byte[] localEphemeralPublicKeyData = ((SoftwareECCryptoToken$ECPublicKeyData)cryptoTokenLocalEphemeralPublicKeyData).getPublicKeyData();
       byte[] sharedSecret = new byte[cryptoSystemData.getFieldLength()];
       if (!NativeEC.isSupported(cryptoSystemData.getName(), 4)) {
-         throw new Object();
+         throw new CryptoUnsupportedOperationException();
       }
 
       Certicom.assertAccessAllowed();
@@ -645,19 +645,19 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
       int rOffset,
       byte[] s,
       int sOffset
-   ) {
+   ) throws CryptoUnsupportedOperationException {
       if (!(cryptoTokenCryptoSystemData instanceof SoftwareECCryptoToken$ECCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareECCryptoToken$ECCryptoSystemData cryptoSystemData = (SoftwareECCryptoToken$ECCryptoSystemData)cryptoTokenCryptoSystemData;
       if (!(cryptoTokenPrivateKeyData instanceof SoftwareECCryptoToken$ECPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareECCryptoToken$ECPrivateKeyData privateKeyData = (SoftwareECCryptoToken$ECPrivateKeyData)cryptoTokenPrivateKeyData;
       if (!NativeEC.isSupported(cryptoSystemData.getName(), 4)) {
-         throw new Object();
+         throw new CryptoUnsupportedOperationException();
       }
 
       Certicom.assertAccessAllowed();
@@ -675,19 +675,19 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
       int rOffset,
       byte[] s,
       int sOffset
-   ) {
+   ) throws CryptoUnsupportedOperationException {
       if (!(cryptoTokenCryptoSystemData instanceof SoftwareECCryptoToken$ECCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareECCryptoToken$ECCryptoSystemData cryptoSystemData = (SoftwareECCryptoToken$ECCryptoSystemData)cryptoTokenCryptoSystemData;
       if (!(cryptoTokenPublicKeyData instanceof SoftwareECCryptoToken$ECPublicKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareECCryptoToken$ECPublicKeyData publicKeyData = (SoftwareECCryptoToken$ECPublicKeyData)cryptoTokenPublicKeyData;
       if (!NativeEC.isSupported(cryptoSystemData.getName(), 2)) {
-         throw new Object();
+         throw new CryptoUnsupportedOperationException();
       }
 
       Certicom.assertAccessAllowed();
@@ -705,19 +705,19 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
       int rOffset,
       byte[] s,
       int sOffset
-   ) {
+   ) throws CryptoUnsupportedOperationException {
       if (!(cryptoTokenCryptoSystemData instanceof SoftwareECCryptoToken$ECCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareECCryptoToken$ECCryptoSystemData cryptoSystemData = (SoftwareECCryptoToken$ECCryptoSystemData)cryptoTokenCryptoSystemData;
       if (!(cryptoTokenPrivateKeyData instanceof SoftwareECCryptoToken$ECPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareECCryptoToken$ECPrivateKeyData privateKeyData = (SoftwareECCryptoToken$ECPrivateKeyData)cryptoTokenPrivateKeyData;
       if (!NativeEC.isSupported(cryptoSystemData.getName(), 4)) {
-         throw new Object();
+         throw new CryptoUnsupportedOperationException();
       }
 
       Certicom.assertAccessAllowed();
@@ -735,19 +735,19 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
       int rOffset,
       byte[] s,
       int sOffset
-   ) {
+   ) throws CryptoUnsupportedOperationException {
       if (!(cryptoTokenCryptoSystemData instanceof SoftwareECCryptoToken$ECCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareECCryptoToken$ECCryptoSystemData cryptoSystemData = (SoftwareECCryptoToken$ECCryptoSystemData)cryptoTokenCryptoSystemData;
       if (!(cryptoTokenPublicKeyData instanceof SoftwareECCryptoToken$ECPublicKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareECCryptoToken$ECPublicKeyData publicKeyData = (SoftwareECCryptoToken$ECPublicKeyData)cryptoTokenPublicKeyData;
       if (!NativeEC.isSupported(cryptoSystemData.getName(), 2)) {
-         throw new Object();
+         throw new CryptoUnsupportedOperationException();
       }
 
       Certicom.assertAccessAllowed();
@@ -887,7 +887,7 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
       // 0ac: invokevirtual net/rim/device/api/crypto/SoftwareECCryptoToken$ECCryptoSystemData.getPrivateKeyLength ()I
       // 0af: newarray 8
       // 0b1: astore 6
-      // 0b3: new java/lang/Object
+      // 0b3: new net/rim/device/api/crypto/SHA1Digest
       // 0b6: dup
       // 0b7: invokespecial net/rim/device/api/crypto/SHA1Digest.<init> ()V
       // 0ba: astore 7
@@ -937,7 +937,7 @@ final class SoftwareECCryptoToken extends ECCryptoToken implements Persistable {
       // 10c: astore 1
       // 10d: goto 111
       // 110: astore 1
-      // 111: new java/lang/Object
+      // 111: new net/rim/device/api/crypto/CryptoSelfTestError
       // 114: dup
       // 115: invokespecial net/rim/device/api/crypto/CryptoSelfTestError.<init> ()V
       // 118: athrow

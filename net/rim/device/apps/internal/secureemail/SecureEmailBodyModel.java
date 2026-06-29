@@ -5,6 +5,7 @@ import net.rim.device.api.crypto.HashCodeCalculator;
 import net.rim.device.api.i18n.MessageFormat;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.system.PersistentContent;
+import net.rim.device.api.system.UnsupportedOperationException;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.util.Arrays;
@@ -55,10 +56,10 @@ public class SecureEmailBodyModel
    }
 
    public Hashtable getSecurityEncodingParameters() {
-      Hashtable securityEncodingParameterTable = (Hashtable)(new Object());
+      Hashtable securityEncodingParameterTable = new Hashtable();
       if (this._securityEncodingParameters != null && this._securityEncodingParameters.length != 0) {
-         String securityEncodingParametersString = (String)(new Object(this._securityEncodingParameters));
-         StringTokenizer stringTokenizer = (StringTokenizer)(new Object(securityEncodingParametersString, ','));
+         String securityEncodingParametersString = new String(this._securityEncodingParameters);
+         StringTokenizer stringTokenizer = new StringTokenizer(securityEncodingParametersString, ',');
 
          while (stringTokenizer.hasMoreTokens()) {
             String typeValuePair = stringTokenizer.nextToken();
@@ -136,7 +137,7 @@ public class SecureEmailBodyModel
    public void paint(ColumnPainter painter, Object context) {
       EmailMessageModel message = (EmailMessageModel)ContextObject.get(context, 246);
       if (painter.isColumnEmpty(4)) {
-         String stringToPaint = MessageFormat.format(SecureEmailResources.getString(28), new Object[]{this.getEncodingString()});
+         String stringToPaint = MessageFormat.format(SecureEmailResources.getString(28), new String[]{this.getEncodingString()});
          painter.drawText(4, stringToPaint, false);
       }
 
@@ -160,9 +161,9 @@ public class SecureEmailBodyModel
    public Object clone(Object context) {
       boolean editable = ContextObject.getFlag(context, 0);
       if (editable) {
-         StringBuffer buffer = (StringBuffer)(new Object());
+         StringBuffer buffer = new StringBuffer();
          this.getDecodedBodyStringBuffer(buffer, context, true);
-         return FactoryUtil.createInstance(5987399499453925075L, buffer.toString());
+         return (BodyModel)FactoryUtil.createInstance(5987399499453925075L, buffer.toString());
       } else {
          return this.cloneImpl(context);
       }
@@ -183,7 +184,7 @@ public class SecureEmailBodyModel
       //
       // Bytecode:
       // 00: aload 1
-      // 01: checkcast java/lang/Object
+      // 01: checkcast net/rim/device/apps/api/search/SearchCriterion
       // 04: astore 2
       // 05: aload 2
       // 06: invokeinterface net/rim/device/apps/api/search/SearchCriterion.getType ()I 1
@@ -194,11 +195,11 @@ public class SecureEmailBodyModel
       // 28: astore 3
       // 29: aload 2
       // 2a: dup
-      // 2b: instanceof java/lang/Object
+      // 2b: instanceof net/rim/device/apps/api/search/criteria/TextSearchModel
       // 2e: ifne 35
       // 31: pop
       // 32: goto 85
-      // 35: checkcast java/lang/Object
+      // 35: checkcast net/rim/device/apps/api/search/criteria/TextSearchModel
       // 38: astore 4
       // 3a: aload 4
       // 3c: invokevirtual net/rim/device/apps/api/search/criteria/TextSearchModel.getSubCriteria ()[Lnet/rim/device/apps/api/framework/model/PersistableRIMModel;
@@ -216,7 +217,7 @@ public class SecureEmailBodyModel
       // 55: aload 5
       // 57: iload 7
       // 59: aaload
-      // 5a: checkcast java/lang/Object
+      // 5a: checkcast net/rim/device/apps/api/search/SearchCriterion
       // 5d: astore 8
       // 5f: aload 8
       // 61: invokeinterface net/rim/device/apps/api/search/SearchCriterion.getType ()I 1
@@ -234,7 +235,7 @@ public class SecureEmailBodyModel
       // 7c: goto 85
       // 7f: iinc 7 1
       // 82: goto 4e
-      // 85: new java/lang/Object
+      // 85: new java/lang/StringBuffer
       // 88: dup
       // 89: invokespecial java/lang/StringBuffer.<init> ()V
       // 8c: astore 4
@@ -254,7 +255,7 @@ public class SecureEmailBodyModel
       // a6: invokespecial net/rim/device/apps/internal/secureemail/SecureEmailBodyModel.getDecodedBodyStringBufferWithExceptions (Ljava/lang/StringBuffer;Ljava/lang/Object;Z)V
       // a9: aload 2
       // aa: invokeinterface net/rim/device/apps/api/search/SearchCriterion.getValue ()Ljava/lang/Object; 1
-      // af: checkcast java/lang/Object
+      // af: checkcast net/rim/device/api/util/StringMatch
       // b2: astore 6
       // b4: aload 6
       // b6: aload 4
@@ -331,12 +332,12 @@ public class SecureEmailBodyModel
 
    @Override
    public Object getTextEncoding() {
-      throw new Object();
+      throw new UnsupportedOperationException();
    }
 
    @Override
    public void setTextEncoding(Object textEncoding) {
-      throw new Object();
+      throw new UnsupportedOperationException();
    }
 
    @Override
@@ -348,7 +349,7 @@ public class SecureEmailBodyModel
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:174)
       //
       // Bytecode:
-      // 00: new java/lang/Object
+      // 00: new java/lang/StringBuffer
       // 03: dup
       // 04: invokespecial java/lang/StringBuffer.<init> ()V
       // 07: astore 1
@@ -370,7 +371,7 @@ public class SecureEmailBodyModel
 
    @Override
    public void setText(String text) {
-      throw new Object();
+      throw new UnsupportedOperationException();
    }
 
    @Override
@@ -420,7 +421,7 @@ public class SecureEmailBodyModel
          secureEmailProcessor.run(true);
          return secureEmailMessageManager;
       } else {
-         String decodingMessage = MessageFormat.format(SecureEmailResources.getString(29), new Object[]{this.getEncodingString()});
+         String decodingMessage = MessageFormat.format(SecureEmailResources.getString(29), new String[]{this.getEncodingString()});
          ProcessingField processingField = new ProcessingField(decodingMessage);
          secureEmailMessageManager.add(processingField);
          secureEmailProcessor.run(false);
@@ -440,8 +441,8 @@ public class SecureEmailBodyModel
 
    @Override
    public boolean convert(Object context, Object target) {
-      if (!(target instanceof Object)) {
-         if (target instanceof Object && ContextObject.getFlag(context, 70)) {
+      if (!(target instanceof RIMMessagingOutgoingMessage)) {
+         if (target instanceof StringBuffer && ContextObject.getFlag(context, 70)) {
             StringBuffer stringBuffer = (StringBuffer)target;
             this.getDecodedBodyStringBuffer(stringBuffer, context, true);
             return true;
@@ -450,11 +451,11 @@ public class SecureEmailBodyModel
          RIMMessagingOutgoingMessage outgoingTransmission = (RIMMessagingOutgoingMessage)target;
          byte[] encodedBytes = this.getBytes();
          if (encodedBytes != null) {
-            Parameters parameters = (Parameters)(new Object((DataBuffer)(new Object()), 1, 5));
+            Parameters parameters = new Parameters(new DataBuffer(), 1, 5);
             parameters.add((byte)-11, this._securityEncoding);
 
             try {
-               String encodedBytesAsString = (String)(new Object(encodedBytes, this.getTextCharset()));
+               String encodedBytesAsString = new String(encodedBytes, this.getTextCharset());
                outgoingTransmission.setText(encodedBytesAsString, parameters, this.getTextOutgoingMIMEType());
                return true;
             } finally {
@@ -468,7 +469,7 @@ public class SecureEmailBodyModel
 
    @Override
    public void receiveMore(Object context, Object moreObject) {
-      if (moreObject instanceof Object) {
+      if (moreObject instanceof RIMMessagingMoreMessage) {
          RIMMessagingMoreMessage incomingTransmission = (RIMMessagingMoreMessage)moreObject;
          int existingLengthOnDevice = this.getLengthOnDevice();
          byte[] rawByteArray = incomingTransmission.getRawBytes();
@@ -537,12 +538,12 @@ public class SecureEmailBodyModel
       this.setBytes(properlyEncodedByteArray);
       this.setLengthOnDevice(rawByteArray.length);
       this._hashCode = HashCodeCalculator.getCRC32(properlyEncodedByteArray);
-      if (parametersObject instanceof Object) {
+      if (parametersObject instanceof Parameters) {
          Parameters parameters = (Parameters)parametersObject;
          byte[] securityEncoding = parameters.getFirst((byte)-11);
          byte[] securityEncodingParameters = parameters.getFirst((byte)-5);
          if (securityEncoding == null) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          int securityEncodingBaseLength = Arrays.getIndex(securityEncoding, (byte)59);
@@ -565,7 +566,7 @@ public class SecureEmailBodyModel
    }
 
    private int matchEncodingAction(SearchCriterion searchCriterion) {
-      int allowedEncodingActions = searchCriterion.getValue();
+      int allowedEncodingActions = (Integer)searchCriterion.getValue();
       int encodingAction = this.getEncodingAction();
       return (encodingAction & ~allowedEncodingActions) != 0 ? 0 : 1;
    }

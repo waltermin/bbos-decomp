@@ -22,7 +22,7 @@ public class PKCS8ShroudedKeyBag extends KeyBag {
       // 001: getfield net/rim/device/api/crypto/SafeBag._parsed Z
       // 004: ifeq 008
       // 007: return
-      // 008: new java/lang/Object
+      // 008: new net/rim/device/api/crypto/asn1/ASN1InputByteArray
       // 00b: dup
       // 00c: aload 0
       // 00d: getfield net/rim/device/api/crypto/SafeBag._bagData [B
@@ -93,7 +93,7 @@ public class PKCS8ShroudedKeyBag extends KeyBag {
       // 098: iload 13
       // 09a: bipush 2
       // 09c: if_icmpne 0ba
-      // 09f: new java/lang/Object
+      // 09f: new net/rim/device/internal/ui/component/PasswordDialog
       // 0a2: dup
       // 0a3: getstatic net/rim/device/api/crypto/PKCS8ShroudedKeyBag._rb Lnet/rim/device/api/i18n/ResourceBundle;
       // 0a6: sipush 6046
@@ -104,7 +104,7 @@ public class PKCS8ShroudedKeyBag extends KeyBag {
       // 0b2: invokespecial net/rim/device/internal/ui/component/PasswordDialog.<init> (Ljava/lang/String;ZII)V
       // 0b5: astore 9
       // 0b7: goto 0d2
-      // 0ba: new java/lang/Object
+      // 0ba: new net/rim/device/internal/ui/component/PasswordDialog
       // 0bd: dup
       // 0be: getstatic net/rim/device/api/crypto/PKCS8ShroudedKeyBag._rb Lnet/rim/device/api/i18n/ResourceBundle;
       // 0c1: sipush 6047
@@ -182,9 +182,9 @@ public class PKCS8ShroudedKeyBag extends KeyBag {
       // 151: bipush 1
       // 152: invokespecial net/rim/device/api/crypto/PKCS12KDFPseudoRandomSource.<init> ([B[BIB)V
       // 155: astore 7
-      // 157: new java/lang/Object
+      // 157: new net/rim/device/api/crypto/ARC4PseudoRandomSource
       // 15a: dup
-      // 15b: new java/lang/Object
+      // 15b: new net/rim/device/api/crypto/ARC4Key
       // 15e: dup
       // 15f: aload 7
       // 161: bipush 16
@@ -192,10 +192,10 @@ public class PKCS8ShroudedKeyBag extends KeyBag {
       // 166: invokespecial net/rim/device/api/crypto/ARC4Key.<init> ([B)V
       // 169: invokespecial net/rim/device/api/crypto/ARC4PseudoRandomSource.<init> (Lnet/rim/device/api/crypto/ARC4Key;)V
       // 16c: astore 17
-      // 16e: new java/lang/Object
+      // 16e: new net/rim/device/api/crypto/PRNGDecryptor
       // 171: dup
       // 172: aload 17
-      // 174: new java/lang/Object
+      // 174: new java/io/ByteArrayInputStream
       // 177: dup
       // 178: aload 5
       // 17a: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -221,9 +221,9 @@ public class PKCS8ShroudedKeyBag extends KeyBag {
       // 1a6: bipush 1
       // 1a7: invokespecial net/rim/device/api/crypto/PKCS12KDFPseudoRandomSource.<init> ([B[BIB)V
       // 1aa: astore 7
-      // 1ac: new java/lang/Object
+      // 1ac: new net/rim/device/api/crypto/ARC4PseudoRandomSource
       // 1af: dup
-      // 1b0: new java/lang/Object
+      // 1b0: new net/rim/device/api/crypto/ARC4Key
       // 1b3: dup
       // 1b4: aload 7
       // 1b6: bipush 5
@@ -231,10 +231,10 @@ public class PKCS8ShroudedKeyBag extends KeyBag {
       // 1bb: invokespecial net/rim/device/api/crypto/ARC4Key.<init> ([B)V
       // 1be: invokespecial net/rim/device/api/crypto/ARC4PseudoRandomSource.<init> (Lnet/rim/device/api/crypto/ARC4Key;)V
       // 1c1: astore 17
-      // 1c3: new java/lang/Object
+      // 1c3: new net/rim/device/api/crypto/PRNGDecryptor
       // 1c6: dup
       // 1c7: aload 17
-      // 1c9: new java/lang/Object
+      // 1c9: new java/io/ByteArrayInputStream
       // 1cc: dup
       // 1cd: aload 5
       // 1cf: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -268,26 +268,26 @@ public class PKCS8ShroudedKeyBag extends KeyBag {
       // 20a: bipush 2
       // 20c: invokespecial net/rim/device/api/crypto/PKCS12KDFPseudoRandomSource.<init> ([B[BIB)V
       // 20f: astore 8
-      // 211: new java/lang/Object
+      // 211: new net/rim/device/api/crypto/TripleDESKey
       // 214: dup
       // 215: aload 7
       // 217: bipush 24
       // 219: invokevirtual net/rim/device/api/crypto/AbstractPseudoRandomSource.getBytes (I)[B
       // 21c: invokespecial net/rim/device/api/crypto/TripleDESKey.<init> ([B)V
       // 21f: astore 14
-      // 221: new java/lang/Object
+      // 221: new net/rim/device/api/crypto/InitializationVector
       // 224: dup
       // 225: aload 8
       // 227: bipush 8
       // 229: invokevirtual net/rim/device/api/crypto/AbstractPseudoRandomSource.getBytes (I)[B
       // 22c: invokespecial net/rim/device/api/crypto/InitializationVector.<init> ([B)V
       // 22f: astore 16
-      // 231: new java/lang/Object
+      // 231: new net/rim/device/api/crypto/CBCDecryptorEngine
       // 234: dup
-      // 235: new java/lang/Object
+      // 235: new net/rim/device/api/crypto/TripleDESDecryptorEngine
       // 238: dup
       // 239: aload 14
-      // 23b: checkcast java/lang/Object
+      // 23b: checkcast net/rim/device/api/crypto/TripleDESKey
       // 23e: invokespecial net/rim/device/api/crypto/TripleDESDecryptorEngine.<init> (Lnet/rim/device/api/crypto/TripleDESKey;)V
       // 241: aload 16
       // 243: invokespecial net/rim/device/api/crypto/CBCDecryptorEngine.<init> (Lnet/rim/device/api/crypto/BlockDecryptorEngine;Lnet/rim/device/api/crypto/InitializationVector;)V
@@ -314,26 +314,26 @@ public class PKCS8ShroudedKeyBag extends KeyBag {
       // 270: bipush 2
       // 272: invokespecial net/rim/device/api/crypto/PKCS12KDFPseudoRandomSource.<init> ([B[BIB)V
       // 275: astore 8
-      // 277: new java/lang/Object
+      // 277: new net/rim/device/api/crypto/TripleDESKey
       // 27a: dup
       // 27b: aload 7
       // 27d: bipush 16
       // 27f: invokevirtual net/rim/device/api/crypto/AbstractPseudoRandomSource.getBytes (I)[B
       // 282: invokespecial net/rim/device/api/crypto/TripleDESKey.<init> ([B)V
       // 285: astore 14
-      // 287: new java/lang/Object
+      // 287: new net/rim/device/api/crypto/InitializationVector
       // 28a: dup
       // 28b: aload 8
       // 28d: bipush 8
       // 28f: invokevirtual net/rim/device/api/crypto/AbstractPseudoRandomSource.getBytes (I)[B
       // 292: invokespecial net/rim/device/api/crypto/InitializationVector.<init> ([B)V
       // 295: astore 16
-      // 297: new java/lang/Object
+      // 297: new net/rim/device/api/crypto/CBCDecryptorEngine
       // 29a: dup
-      // 29b: new java/lang/Object
+      // 29b: new net/rim/device/api/crypto/TripleDESDecryptorEngine
       // 29e: dup
       // 29f: aload 14
-      // 2a1: checkcast java/lang/Object
+      // 2a1: checkcast net/rim/device/api/crypto/TripleDESKey
       // 2a4: invokespecial net/rim/device/api/crypto/TripleDESDecryptorEngine.<init> (Lnet/rim/device/api/crypto/TripleDESKey;)V
       // 2a7: aload 16
       // 2a9: invokespecial net/rim/device/api/crypto/CBCDecryptorEngine.<init> (Lnet/rim/device/api/crypto/BlockDecryptorEngine;Lnet/rim/device/api/crypto/InitializationVector;)V
@@ -367,14 +367,14 @@ public class PKCS8ShroudedKeyBag extends KeyBag {
       // 2e5: invokevirtual net/rim/device/api/crypto/AbstractPseudoRandomSource.getBytes (I)[B
       // 2e8: invokespecial net/rim/device/api/crypto/RC2Key.<init> ([B)V
       // 2eb: astore 14
-      // 2ed: new java/lang/Object
+      // 2ed: new net/rim/device/api/crypto/InitializationVector
       // 2f0: dup
       // 2f1: aload 8
       // 2f3: bipush 8
       // 2f5: invokevirtual net/rim/device/api/crypto/AbstractPseudoRandomSource.getBytes (I)[B
       // 2f8: invokespecial net/rim/device/api/crypto/InitializationVector.<init> ([B)V
       // 2fb: astore 16
-      // 2fd: new java/lang/Object
+      // 2fd: new net/rim/device/api/crypto/CBCDecryptorEngine
       // 300: dup
       // 301: new net/rim/device/api/crypto/RC2DecryptorEngine
       // 304: dup
@@ -413,14 +413,14 @@ public class PKCS8ShroudedKeyBag extends KeyBag {
       // 34b: invokevirtual net/rim/device/api/crypto/AbstractPseudoRandomSource.getBytes (I)[B
       // 34e: invokespecial net/rim/device/api/crypto/RC2Key.<init> ([B)V
       // 351: astore 14
-      // 353: new java/lang/Object
+      // 353: new net/rim/device/api/crypto/InitializationVector
       // 356: dup
       // 357: aload 8
       // 359: bipush 8
       // 35b: invokevirtual net/rim/device/api/crypto/AbstractPseudoRandomSource.getBytes (I)[B
       // 35e: invokespecial net/rim/device/api/crypto/InitializationVector.<init> ([B)V
       // 361: astore 16
-      // 363: new java/lang/Object
+      // 363: new net/rim/device/api/crypto/CBCDecryptorEngine
       // 366: dup
       // 367: new net/rim/device/api/crypto/RC2DecryptorEngine
       // 36a: dup
@@ -432,13 +432,13 @@ public class PKCS8ShroudedKeyBag extends KeyBag {
       // 378: astore 15
       // 37a: goto 37e
       // 37d: return
-      // 37e: new java/lang/Object
+      // 37e: new net/rim/device/api/crypto/BlockDecryptor
       // 381: dup
-      // 382: new java/lang/Object
+      // 382: new net/rim/device/api/crypto/PKCS5UnformatterEngine
       // 385: dup
       // 386: aload 15
       // 388: invokespecial net/rim/device/api/crypto/PKCS5UnformatterEngine.<init> (Lnet/rim/device/api/crypto/BlockDecryptorEngine;)V
-      // 38b: new java/lang/Object
+      // 38b: new java/io/ByteArrayInputStream
       // 38e: dup
       // 38f: aload 5
       // 391: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -461,7 +461,7 @@ public class PKCS8ShroudedKeyBag extends KeyBag {
       // 3b8: aload 0
       // 3b9: getfield net/rim/device/api/crypto/SafeBag._bagAttributes [B
       // 3bc: ifnull 413
-      // 3bf: new java/lang/Object
+      // 3bf: new net/rim/device/api/crypto/asn1/ASN1InputByteArray
       // 3c2: dup
       // 3c3: aload 0
       // 3c4: getfield net/rim/device/api/crypto/SafeBag._bagAttributes [B

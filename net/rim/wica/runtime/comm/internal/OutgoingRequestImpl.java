@@ -98,7 +98,7 @@ public final class OutgoingRequestImpl extends AbstractRequestResponse implement
       if (method != null && (method.equals("GET") || method.equals("POST"))) {
          this._requestMethod = method;
       } else {
-         throw new Object(((StringBuffer)(new Object("Invalid request method "))).append(method).toString());
+         throw new IllegalArgumentException("Invalid request method " + method);
       }
    }
 

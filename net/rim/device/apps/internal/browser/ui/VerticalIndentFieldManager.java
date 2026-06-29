@@ -73,7 +73,7 @@ public class VerticalIndentFieldManager extends VerticalFieldManager {
          field = this.getField(index);
          widthAvailable = width - widthDeducted - indentAmount;
          this.layoutChild(field, widthAvailable, heightAvailable - heightAdded);
-         if (!(field instanceof Object)) {
+         if (!(field instanceof Manager)) {
             fieldWidth = field.getWidth();
             fieldHeight = field.getHeight();
          } else {

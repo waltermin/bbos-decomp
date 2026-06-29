@@ -60,7 +60,7 @@ final class ConstructedOctetStringInputStream extends SharedInputStream {
          System.arraycopy(buffer, 0, b, off, position);
          return position;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -83,7 +83,7 @@ final class ConstructedOctetStringInputStream extends SharedInputStream {
          this._currentInputStream.setCurrentPosition(currentPosition);
          return available;
       } catch (ASN1EncodingException e) {
-         throw new Object();
+         throw new RuntimeException();
       }
    }
 
@@ -141,7 +141,7 @@ final class ConstructedOctetStringInputStream extends SharedInputStream {
       if ((this._field.getTag() & 32) != 0) {
          this._currentInputStream = new ConstructedOctetStringInputStream(fieldInputStream);
       } else {
-         this._currentInputStream = (SharedInputStream)(new Object(fieldInputStream));
+         this._currentInputStream = new SharedInputStream(fieldInputStream);
          this._currentInputStream.setLength(this._field.getValueLength());
       }
    }

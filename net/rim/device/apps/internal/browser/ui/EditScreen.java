@@ -2,10 +2,10 @@ package net.rim.device.apps.internal.browser.ui;
 
 import net.rim.device.api.system.Display;
 import net.rim.device.api.ui.Field;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.XYRect;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.Tag;
 
 final class EditScreen extends Screen {
@@ -22,11 +22,11 @@ final class EditScreen extends Screen {
    }
 
    public EditScreen(Field source, Field editor, long style) {
-      super((Manager)(new Object(style)), style);
+      super(new VerticalFieldManager(style), style);
       this.setTag(TAG);
       this._source = source;
       this._editor = editor;
-      this._rect = (XYRect)(new Object());
+      this._rect = new XYRect();
       this.getDelegate().add(this._editor);
    }
 

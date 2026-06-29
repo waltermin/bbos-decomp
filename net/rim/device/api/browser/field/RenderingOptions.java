@@ -5,7 +5,7 @@ import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.util.LongHashtable;
 
 public final class RenderingOptions {
-   private LongHashtable _guidTable = (LongHashtable)(new Object());
+   private LongHashtable _guidTable = new LongHashtable();
    public static final int VALUE_THRESHOLD = 32000;
    public static final long CORE_OPTIONS_GUID = 4550690918222697397L;
    public static final long IMAGE_OPTIONS_GUID = -2413443615265356506L;
@@ -173,13 +173,13 @@ public final class RenderingOptions {
          return null;
       }
 
-      if (!(object instanceof Object)) {
+      if (!(object instanceof String)) {
          if (guid == 4550690918222697397L) {
             switch (propertyId) {
                case 15:
                case 24:
                   object = PersistentContent.decodeString(object);
-                  if (object instanceof Object) {
+                  if (object instanceof String) {
                      return (String)object;
                   }
             }

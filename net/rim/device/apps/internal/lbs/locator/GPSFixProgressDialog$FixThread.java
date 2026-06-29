@@ -17,7 +17,7 @@ public final class GPSFixProgressDialog$FixThread implements Runnable {
    }
 
    public final void start() {
-      ((Thread)(new Object(this))).start();
+      new Thread(this).start();
    }
 
    @Override

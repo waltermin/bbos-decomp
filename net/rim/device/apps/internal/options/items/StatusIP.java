@@ -37,7 +37,7 @@ public final class StatusIP extends StatusListItem {
          ip = RadioInfo.getIPAddress(apn);
       }
 
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
       IPEditField.appendIpAddr(sb, ip);
       return sb.toString();
    }

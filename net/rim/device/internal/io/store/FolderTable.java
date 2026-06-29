@@ -1,6 +1,8 @@
 package net.rim.device.internal.io.store;
 
+import java.io.IOException;
 import java.util.Enumeration;
+import net.rim.device.api.io.file.FileIOException;
 import net.rim.device.api.lowmemory.LowMemoryManager;
 import net.rim.device.api.util.Comparator;
 import net.rim.device.api.util.IntHashtable;
@@ -22,14 +24,14 @@ final class FolderTable implements Persistable {
    FolderTable() {
       this._rows = new FolderImpl[1];
       this._rows[0] = new FolderImpl(0, 0, 2065, "", 0);
-      this._indexes[0] = new Object();
+      this._indexes[0] = new MultiMap();
    }
 
    public final boolean add(FolderImpl parent, String name, int attributes, boolean verify) {
       return this.add(parent, name, attributes, verify, 0);
    }
 
-   public final boolean add(FolderImpl parent, String name, int attributes, boolean verify, int uid) {
+   public final boolean add(FolderImpl parent, String name, int attributes, boolean verify, int uid) throws IOException {
       int parentId = parent.getId();
       if (parentId >= 0 && parentId < this._rows.length && this._rows[parentId] != null) {
          FolderImpl folder = this.getFolder(parent, name);
@@ -38,7 +40,7 @@ final class FolderTable implements Persistable {
          }
 
          if (ContentStoreDatabase.getInstance().getFileTable().get(parent, name) != null) {
-            throw new Object(((StringBuffer)(new Object("Already exists: "))).append(name).toString());
+            throw new IOException("Already exists: " + name);
          }
 
          if (verify) {
@@ -70,7 +72,7 @@ final class FolderTable implements Persistable {
          this.commit();
          return true;
       } else {
-         throw new Object("Invalid parent");
+         throw new IllegalArgumentException("Invalid parent");
       }
    }
 
@@ -80,17 +82,17 @@ final class FolderTable implements Persistable {
 
    public final boolean add(String pathAndFilename, int attributes, boolean verify, int uid) {
       if (pathAndFilename.charAt(pathAndFilename.length() - 1) != '/') {
-         throw new Object("folders must end in '/'");
+         throw new IllegalArgumentException("folders must end in '/'");
       }
 
       int pathend = pathAndFilename.length() - 2;
       pathend = pathAndFilename.lastIndexOf(47, pathend);
       if (pathend < 0) {
-         throw new Object("requires path");
+         throw new IllegalArgumentException("requires path");
       }
 
       if (uid != 0 && this.getFolder(uid) != null) {
-         throw new Object("Duplicate UID");
+         throw new IllegalArgumentException("Duplicate UID");
       }
 
       String parentPath = pathAndFilename.substring(0, pathend + 1);
@@ -104,29 +106,29 @@ final class FolderTable implements Persistable {
       return this.add(parent, name, attributes, verify, uid);
    }
 
-   public final void assertOperation(FolderImpl folder, int operation) {
+   public final void assertOperation(FolderImpl folder, int operation) throws IOException {
       try {
          switch (operation) {
             case 0:
                int attributes = folder.getAttributes();
                if ((attributes & 4098) == 0 || (attributes & 16) != 0) {
-                  throw new Object(12);
+                  throw new FileIOException(12);
                }
                break;
             case 1:
                int attributesx = folder.getAttributes();
                if ((attributesx & 4098) == 0 || (attributesx & 16) != 0) {
-                  throw new Object(12);
+                  throw new FileIOException(12);
                }
                break;
             case 128:
                int attributesxx = folder.getAttributes();
                if ((attributesxx & 4098) == 0 || (attributesxx & 16) != 0) {
-                  throw new Object(12);
+                  throw new FileIOException(12);
                }
          }
       } finally {
-         throw new Object(((StringBuffer)(new Object("Invalid folder id: "))).append(folder.getId()).toString());
+         throw new IOException("Invalid folder id: " + folder.getId());
       }
    }
 
@@ -155,14 +157,14 @@ final class FolderTable implements Persistable {
    }
 
    final void getDescendantIds(IntHashtable descendants, FolderImpl folder) {
-      IntStack stack = (IntStack)(new Object());
+      IntStack stack = new IntStack();
       descendants.put(folder.getId(), folder);
       stack.push(folder.getId());
       int count = this._rows.length;
 
       while (!stack.isEmpty()) {
          if (count-- < 0) {
-            throw new Object();
+            throw new IllegalStateException();
          }
 
          int id = stack.pop();
@@ -198,13 +200,13 @@ final class FolderTable implements Persistable {
             pos2 = path.indexOf(47, pos1);
             if (pos2 == -1) {
                if (pos1 != path.length()) {
-                  throw new Object("Path must start and end with a '/'.");
+                  throw new IllegalArgumentException("Path must start and end with a '/'.");
                }
                break;
             }
 
             if (pos2 == pos1) {
-               throw new Object("Bad pathname.");
+               throw new IllegalArgumentException("Bad pathname.");
             }
 
             folder = this.getFolder(folder, path.substring(pos1, pos2));
@@ -300,7 +302,7 @@ final class FolderTable implements Persistable {
       switch (action) {
          case 129:
             if (((MultiMap)this._indexes[0]).containsKey(folder)) {
-               throw new Object();
+               throw new IllegalStateException();
             } else {
                ((MultiMap)this._indexes[0]).removeValue(folder.getFolder(), folder);
                this._dead++;

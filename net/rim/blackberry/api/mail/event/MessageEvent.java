@@ -71,6 +71,6 @@ public class MessageEvent extends MailEvent {
 
    @Override
    public String toString() {
-      return ((StringBuffer)(new Object("MessageEvent: "))).append(this._type).toString();
+      return "MessageEvent: " + this._type;
    }
 }

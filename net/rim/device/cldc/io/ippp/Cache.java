@@ -40,7 +40,7 @@ public class Cache {
       if (this._mapOfPortToQueue.containsKey(port)) {
          pendingQueues = (Vector)this._mapOfPortToQueue.get(port);
       } else {
-         pendingQueues = (Vector)(new Object(this._maxPending));
+         pendingQueues = new Vector(this._maxPending);
       }
 
       if (pendingQueues.size() >= this._maxPending) {
@@ -78,7 +78,7 @@ public class Cache {
       if (this._mapOfPortToQueue.containsKey(destPort)) {
          pendingQueues = (Vector)this._mapOfPortToQueue.get(destPort);
       } else {
-         pendingQueues = (Vector)(new Object(this._maxPending));
+         pendingQueues = new Vector(this._maxPending);
       }
 
       if (pendingQueues.size() >= this._maxPending) {
@@ -94,7 +94,7 @@ public class Cache {
       if (queue != null) {
          return this.contains(queue.getConnectionID());
       } else {
-         throw new Object("queue is null");
+         throw new IllegalArgumentException("queue is null");
       }
    }
 
@@ -185,7 +185,7 @@ public class Cache {
    }
 
    public synchronized void clear() {
-      this._mapOfPortToQueue = (IntHashtable)(new Object());
-      this._mapOfConnectionIDToQueue = (IntHashtable)(new Object());
+      this._mapOfPortToQueue = new IntHashtable();
+      this._mapOfConnectionIDToQueue = new IntHashtable();
    }
 }

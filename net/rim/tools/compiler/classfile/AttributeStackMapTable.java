@@ -1,11 +1,12 @@
 package net.rim.tools.compiler.classfile;
 
+import java.io.IOException;
 import net.rim.tools.compiler.io.StructuredInputStream;
 
 public final class AttributeStackMapTable extends Attribute {
    private AttributeStackMap[] _stackMaps;
 
-   public AttributeStackMapTable(StructuredInputStream in, ConstantPool constantPool, int iName, String name) {
+   public AttributeStackMapTable(StructuredInputStream in, ConstantPool constantPool, int iName, String name) throws IOException {
       super(in, iName, name);
       int offset = in.getOffset();
       int num = in.readUnsignedShort();
@@ -15,7 +16,7 @@ public final class AttributeStackMapTable extends Attribute {
          for (int i = 0; i < num; i++) {
             AttributeStackMap stackMap = new AttributeStackMap(in, constantPool);
             if (i > 0 && stackMap.getCodeOffset() <= this._stackMaps[i - 1].getCodeOffset()) {
-               throw new Object("incorrect stack map table ordering");
+               throw new IOException("incorrect stack map table ordering");
             }
 
             this._stackMaps[i] = stackMap;
@@ -23,7 +24,7 @@ public final class AttributeStackMapTable extends Attribute {
       }
 
       if (offset + super._length != in.getOffset()) {
-         throw new Object("incorrect stack map table attribute length");
+         throw new IOException("incorrect stack map table attribute length");
       }
    }
 

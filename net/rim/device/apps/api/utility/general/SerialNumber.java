@@ -51,13 +51,13 @@ public final class SerialNumber {
 
    public static final String getDecimalSerialNumber() {
       if (RadioInfo.getNetworkType() != 4) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       int sn = CDMAInfo.getESN();
       int firstPart = sn >> 24 & 0xFF;
       int secondPart = sn & 16777215;
-      StringBuffer esnStringBuffer = (StringBuffer)(new Object());
+      StringBuffer esnStringBuffer = new StringBuffer();
       String firstPartString = String.valueOf(firstPart);
       String secondPartString = String.valueOf(secondPart);
       padESN(esnStringBuffer, 3 - firstPartString.length());
@@ -69,13 +69,13 @@ public final class SerialNumber {
 
    public static final String getDecimalSerialNumber(int waf) {
       if (waf != 2) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       int sn = CDMAInfo.getESN();
       int firstPart = sn >> 24 & 0xFF;
       int secondPart = sn & 16777215;
-      StringBuffer esnStringBuffer = (StringBuffer)(new Object());
+      StringBuffer esnStringBuffer = new StringBuffer();
       String firstPartString = String.valueOf(firstPart);
       String secondPartString = String.valueOf(secondPart);
       padESN(esnStringBuffer, 3 - firstPartString.length());

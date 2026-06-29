@@ -49,7 +49,7 @@ final class SSQueryVerb extends Verb implements PhoneControlListener, Runnable {
       try {
          var4 = true;
          Phone.getInstance().querySSOption(this._queryType);
-         Out.p(((StringBuffer)(new Object("SSQryScrn.query("))).append(this._queryType).append(')').toString());
+         Out.p("SSQryScrn.query(" + this._queryType + ')');
          var4 = false;
       } finally {
          if (var4) {
@@ -105,7 +105,7 @@ final class SSQueryVerb extends Verb implements PhoneControlListener, Runnable {
             boolean active = (x & 2) != 0;
             if (this._listener != null) {
                this._listener.queryFinished(provisioned, active);
-               Out.p(((StringBuffer)(new Object("SSQryScrn.queried("))).append(provisioned).append(',').append(active).append(')').toString());
+               Out.p("SSQryScrn.queried(" + provisioned + ',' + active + ')');
                var13 = false;
             } else {
                var13 = false;

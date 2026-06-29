@@ -31,7 +31,7 @@ final class VADApplication$ChoiceListField extends ObjectListField {
       String text = this.get(listField, index).toString();
       int style = (int)(this.getStyle() & 71);
       int fudge = listField.adjustRowHeight(graphics.getFont(), index, text);
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
       sb.append(index + 1);
       sb.append('.');
       graphics.drawText(sb, 0, Integer.MAX_VALUE, 0, y + fudge, style, width);

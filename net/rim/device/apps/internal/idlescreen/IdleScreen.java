@@ -79,7 +79,7 @@ final class IdleScreen extends FullScreen implements HolsterListener, Runnable, 
    public final boolean stylusTap(int x, int y, int status, int time) {
       this.hide();
       Application hook = this._application.getHook();
-      if (hook instanceof Object) {
+      if (hook instanceof StylusListener) {
          StylusListener stylusListener = (StylusListener)hook;
          int finalX = x;
          int finalY = y;
@@ -103,7 +103,7 @@ final class IdleScreen extends FullScreen implements HolsterListener, Runnable, 
    public final boolean trackwheelClick(int status, int time) {
       this.hide();
       Application hook = this._application.getHook();
-      if (hook instanceof Object) {
+      if (hook instanceof TrackwheelListener) {
          TrackwheelListener trackwheelListener = (TrackwheelListener)hook;
          int finalStatus = status;
          int finalTime = time;
@@ -125,7 +125,7 @@ final class IdleScreen extends FullScreen implements HolsterListener, Runnable, 
    public final boolean trackwheelRoll(int amount, int status, int time) {
       this.hide();
       Application hook = this._application.getHook();
-      if (hook instanceof Object) {
+      if (hook instanceof TrackwheelListener) {
          TrackwheelListener trackwheelListener = (TrackwheelListener)hook;
          int finalAmount = amount;
          int finalStatus = status;
@@ -153,7 +153,7 @@ final class IdleScreen extends FullScreen implements HolsterListener, Runnable, 
    public final boolean keyChar(char key, int status, int time) {
       this.hide();
       Application hook = this._application.getHook();
-      if (hook instanceof Object) {
+      if (hook instanceof KeyListener) {
          KeyListener keyListener = (KeyListener)hook;
          char finalKey = key;
          int finalStatus = status;

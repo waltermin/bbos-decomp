@@ -44,21 +44,21 @@ final class SoftwareKEACryptoToken extends KEACryptoToken implements Persistable
       // 24: aastore
       // 25: areturn
       // 26: astore 1
-      // 27: new java/lang/Object
+      // 27: new java/lang/RuntimeException
       // 2a: dup
       // 2b: aload 1
       // 2c: invokevirtual net/rim/device/api/crypto/CryptoTokenException.toString ()Ljava/lang/String;
       // 2f: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 32: athrow
       // 33: astore 1
-      // 34: new java/lang/Object
+      // 34: new java/lang/RuntimeException
       // 37: dup
       // 38: aload 1
       // 39: invokevirtual net/rim/device/api/crypto/CryptoUnsupportedOperationException.toString ()Ljava/lang/String;
       // 3c: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 3f: athrow
       // 40: astore 1
-      // 41: new java/lang/Object
+      // 41: new java/lang/RuntimeException
       // 44: dup
       // 45: aload 1
       // 46: invokevirtual net/rim/device/api/crypto/UnsupportedCryptoSystemException.toString ()Ljava/lang/String;
@@ -77,7 +77,7 @@ final class SoftwareKEACryptoToken extends KEACryptoToken implements Persistable
    @Override
    public final int getKEACryptoSystemBitLength(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareKEACryptoToken$KEACryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareKEACryptoToken$KEACryptoSystemData cryptoSystem = (SoftwareKEACryptoToken$KEACryptoSystemData)cryptoTokenData;
@@ -87,7 +87,7 @@ final class SoftwareKEACryptoToken extends KEACryptoToken implements Persistable
    @Override
    public final String getKEACryptoSystemName(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareKEACryptoToken$KEACryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareKEACryptoToken$KEACryptoSystemData cryptoSystem = (SoftwareKEACryptoToken$KEACryptoSystemData)cryptoTokenData;
@@ -97,7 +97,7 @@ final class SoftwareKEACryptoToken extends KEACryptoToken implements Persistable
    @Override
    public final byte[] getKEACryptoSystemP(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareKEACryptoToken$KEACryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareKEACryptoToken$KEACryptoSystemData cryptoSystem = (SoftwareKEACryptoToken$KEACryptoSystemData)cryptoTokenData;
@@ -107,7 +107,7 @@ final class SoftwareKEACryptoToken extends KEACryptoToken implements Persistable
    @Override
    public final byte[] getKEACryptoSystemQ(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareKEACryptoToken$KEACryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareKEACryptoToken$KEACryptoSystemData cryptoSystem = (SoftwareKEACryptoToken$KEACryptoSystemData)cryptoTokenData;
@@ -117,7 +117,7 @@ final class SoftwareKEACryptoToken extends KEACryptoToken implements Persistable
    @Override
    public final byte[] getKEACryptoSystemG(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareKEACryptoToken$KEACryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareKEACryptoToken$KEACryptoSystemData cryptoSystem = (SoftwareKEACryptoToken$KEACryptoSystemData)cryptoTokenData;
@@ -127,7 +127,7 @@ final class SoftwareKEACryptoToken extends KEACryptoToken implements Persistable
    @Override
    public final int getKEAPublicKeyLength(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareKEACryptoToken$KEACryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareKEACryptoToken$KEACryptoSystemData cryptoSystem = (SoftwareKEACryptoToken$KEACryptoSystemData)cryptoTokenData;
@@ -137,7 +137,7 @@ final class SoftwareKEACryptoToken extends KEACryptoToken implements Persistable
    @Override
    public final int getKEAPrivateKeyLength(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareKEACryptoToken$KEACryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareKEACryptoToken$KEACryptoSystemData cryptoSystem = (SoftwareKEACryptoToken$KEACryptoSystemData)cryptoTokenData;
@@ -147,7 +147,7 @@ final class SoftwareKEACryptoToken extends KEACryptoToken implements Persistable
    @Override
    public final byte[] extractKEAPublicKeyData(CryptoTokenPublicKeyData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareKEACryptoToken$KEAPublicKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareKEACryptoToken$KEAPublicKeyData)cryptoTokenData).getPublicKeyData();
       }
@@ -156,7 +156,7 @@ final class SoftwareKEACryptoToken extends KEACryptoToken implements Persistable
    @Override
    public final byte[] extractKEAPublicKeyData(CryptoTokenPrivateKeyData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareKEACryptoToken$KEAPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareKEACryptoToken$KEAPrivateKeyData)cryptoTokenData).getPublicKeyData();
       }
@@ -165,7 +165,7 @@ final class SoftwareKEACryptoToken extends KEACryptoToken implements Persistable
    @Override
    public final byte[] extractKEAPrivateKeyData(CryptoTokenPrivateKeyData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareKEACryptoToken$KEAPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareKEACryptoToken$KEAPrivateKeyData)cryptoTokenData).getPrivateKeyData();
       }
@@ -210,7 +210,7 @@ final class SoftwareKEACryptoToken extends KEACryptoToken implements Persistable
    }
 
    @Override
-   public final KEAKeyPair createKEAKeyPair(CryptoTokenCryptoSystemData param1) {
+   public final KEAKeyPair createKEAKeyPair(CryptoTokenCryptoSystemData param1) throws CryptoUnsupportedOperationException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -251,7 +251,7 @@ final class SoftwareKEACryptoToken extends KEACryptoToken implements Persistable
       // 03b: bipush 1
       // 03c: invokestatic net/rim/device/api/crypto/NativeDL.isSupported ([B[B[BII)Z
       // 03f: ifne 04a
-      // 042: new java/lang/Object
+      // 042: new net/rim/device/api/crypto/CryptoUnsupportedOperationException
       // 045: dup
       // 046: invokespecial net/rim/device/api/crypto/CryptoUnsupportedOperationException.<init> ()V
       // 049: athrow
@@ -319,7 +319,7 @@ final class SoftwareKEACryptoToken extends KEACryptoToken implements Persistable
       // 0be: aload 14
       // 0c0: invokestatic net/rim/device/api/util/Arrays.equals ([B[B)Z
       // 0c3: ifne 0ce
-      // 0c6: new java/lang/Object
+      // 0c6: new net/rim/device/api/crypto/CryptoSelfTestError
       // 0c9: dup
       // 0ca: invokespecial net/rim/device/api/crypto/CryptoSelfTestError.<init> ()V
       // 0cd: athrow
@@ -344,27 +344,27 @@ final class SoftwareKEACryptoToken extends KEACryptoToken implements Persistable
       // 0f3: invokespecial net/rim/device/api/crypto/KEAKeyPair.<init> (Lnet/rim/device/api/crypto/KEAPublicKey;Lnet/rim/device/api/crypto/KEAPrivateKey;)V
       // 0f6: areturn
       // 0f7: astore 8
-      // 0f9: new java/lang/Object
+      // 0f9: new java/lang/RuntimeException
       // 0fc: dup
       // 0fd: aload 8
       // 0ff: invokevirtual net/rim/device/api/crypto/InvalidKeyException.toString ()Ljava/lang/String;
       // 102: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 105: athrow
       // 106: astore 8
-      // 108: new java/lang/Object
+      // 108: new java/lang/RuntimeException
       // 10b: dup
       // 10c: aload 8
       // 10e: invokevirtual net/rim/device/api/crypto/InvalidKeyPairException.toString ()Ljava/lang/String;
       // 111: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 114: athrow
       // 115: astore 8
-      // 117: new java/lang/Object
+      // 117: new java/lang/RuntimeException
       // 11a: dup
       // 11b: aload 8
       // 11d: invokevirtual net/rim/device/api/crypto/CryptoTokenException.toString ()Ljava/lang/String;
       // 120: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 123: athrow
-      // 124: new java/lang/Object
+      // 124: new java/lang/IllegalArgumentException
       // 127: dup
       // 128: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 12b: athrow
@@ -378,7 +378,7 @@ final class SoftwareKEACryptoToken extends KEACryptoToken implements Persistable
       if (cryptoSystemData instanceof SoftwareKEACryptoToken$KEACryptoSystemData) {
          return new SoftwareKEACryptoToken$KEAPublicKeyData((SoftwareKEACryptoToken$KEACryptoSystemData)cryptoSystemData, data);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -387,7 +387,7 @@ final class SoftwareKEACryptoToken extends KEACryptoToken implements Persistable
       if (cryptoSystemData instanceof SoftwareKEACryptoToken$KEACryptoSystemData) {
          return new SoftwareKEACryptoToken$KEAPrivateKeyData((SoftwareKEACryptoToken$KEACryptoSystemData)cryptoSystemData, data);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -406,27 +406,27 @@ final class SoftwareKEACryptoToken extends KEACryptoToken implements Persistable
       CryptoTokenPrivateKeyData cryptoTokenLocalEphemeralPrivateKeyData,
       byte[] remoteStaticPublicKeyData,
       byte[] remoteEphemeralPublicKeyData
-   ) {
+   ) throws CryptoUnsupportedOperationException, InvalidKeyException {
       if (cryptoTokenCryptoSystemData == null
          || cryptoTokenLocalStaticPrivateKeyData == null
          || cryptoTokenLocalEphemeralPrivateKeyData == null
          || remoteStaticPublicKeyData == null
          || remoteEphemeralPublicKeyData == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (!(cryptoTokenCryptoSystemData instanceof SoftwareKEACryptoToken$KEACryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareKEACryptoToken$KEACryptoSystemData cryptoSystemData = (SoftwareKEACryptoToken$KEACryptoSystemData)cryptoTokenCryptoSystemData;
       if (!(cryptoTokenLocalStaticPrivateKeyData instanceof SoftwareKEACryptoToken$KEAPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       byte[] localStaticPrivateKeyData = ((SoftwareKEACryptoToken$KEAPrivateKeyData)cryptoTokenLocalStaticPrivateKeyData).getPrivateKeyData();
       if (!(cryptoTokenLocalEphemeralPrivateKeyData instanceof SoftwareKEACryptoToken$KEAPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       byte[] localEphemeralPrivateKeyData = ((SoftwareKEACryptoToken$KEAPrivateKeyData)cryptoTokenLocalEphemeralPrivateKeyData).getPrivateKeyData();
@@ -435,7 +435,7 @@ final class SoftwareKEACryptoToken extends KEACryptoToken implements Persistable
       byte[] q = cryptoSystemData.getQ();
       byte[] g = cryptoSystemData.getG();
       if (!NativeDL.isSupported(p, q, g, cryptoSystemData.getPrivateKeyLength(), 4)) {
-         throw new Object();
+         throw new CryptoUnsupportedOperationException();
       }
 
       byte[] t = new byte[publicKeyLength];
@@ -446,7 +446,7 @@ final class SoftwareKEACryptoToken extends KEACryptoToken implements Persistable
       byte[] w = new byte[publicKeyLength];
       CryptoByteArrayArithmetic.add(t, u, p, w);
       if (CryptoByteArrayArithmetic.isZero(w)) {
-         throw new Object();
+         throw new InvalidKeyException();
       }
 
       for (int i = 0; i < 10; i++) {
@@ -487,10 +487,10 @@ final class SoftwareKEACryptoToken extends KEACryptoToken implements Persistable
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

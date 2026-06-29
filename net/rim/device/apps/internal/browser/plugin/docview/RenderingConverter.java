@@ -72,7 +72,7 @@ public class RenderingConverter extends BrowserContentProvider {
       if (parseNotify._fld != null) {
          RenderingOptions renderingOptions = providerContext.getRenderingSession().getRenderingOptions();
          int flags = providerContext.getFlags();
-         VerticalFieldManager mainManager = (VerticalFieldManager)(new Object(3459045988797251584L));
+         VerticalFieldManager mainManager = new VerticalFieldManager(3459045988797251584L);
          mainManager.add(parseNotify._fld);
          if (moreNotify != null) {
             UCSPluginNotify notify = moreNotify;

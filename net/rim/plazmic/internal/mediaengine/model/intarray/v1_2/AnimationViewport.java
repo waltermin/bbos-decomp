@@ -6,6 +6,7 @@ import net.rim.device.api.ui.XYRect;
 import net.rim.plazmic.internal.mediaengine.MediaFactory;
 import net.rim.plazmic.internal.mediaengine.MediaServices;
 import net.rim.plazmic.internal.mediaengine.service.MediaViewport;
+import net.rim.plazmic.internal.mediaengine.ui.ForeignObject;
 import net.rim.plazmic.internal.mediaengine.ui.LayoutManager;
 import net.rim.plazmic.internal.mediaengine.ui.MEGraphics2dContext;
 import net.rim.plazmic.internal.mediaengine.ui.PME12Graphics;
@@ -189,13 +190,13 @@ public final class AnimationViewport implements MediaViewport, Pannable, Zoomabl
          this._baseContext.setWidth(fpWidth, 0);
          this._baseContext.setHeight(fpHeight, 0);
          if (this._dirtyRect == null) {
-            this._dirtyRect = (XYRect)(new Object(0, 0, width, height));
+            this._dirtyRect = new XYRect(0, 0, width, height);
          } else {
             this._dirtyRect.set(0, 0, width, height);
          }
 
          if (this._paintClip == null) {
-            this._paintClip = (XYRect)(new Object(0, 0, width, height));
+            this._paintClip = new XYRect(0, 0, width, height);
          } else {
             this._paintClip.set(0, 0, fpWidth, fpHeight);
          }
@@ -205,7 +206,7 @@ public final class AnimationViewport implements MediaViewport, Pannable, Zoomabl
 
       this.calculateVirtualExtent();
       if (this._baseClip == null) {
-         this._baseClip = (XYRect)(new Object(0, 0, Fixed32.toInt(this._virtualWidth), Fixed32.toInt(this._virtualHeight)));
+         this._baseClip = new XYRect(0, 0, Fixed32.toInt(this._virtualWidth), Fixed32.toInt(this._virtualHeight));
       } else {
          this._baseClip.set(0, 0, Fixed32.toInt(this._virtualWidth), Fixed32.toInt(this._virtualHeight));
       }
@@ -1133,10 +1134,10 @@ public final class AnimationViewport implements MediaViewport, Pannable, Zoomabl
       this.resetZoomPan();
       this._platform.setIdentity(this._alignmentMatrix, 0);
       this._platform.setIdentity(this._rootSVGMatrix, 0);
-      this._dirtyRect = (XYRect)(new Object());
-      this._oldDirtyRect = (XYRect)(new Object());
-      this._paintClip = (XYRect)(new Object());
-      this._baseClip = (XYRect)(new Object());
+      this._dirtyRect = new XYRect();
+      this._oldDirtyRect = new XYRect();
+      this._paintClip = new XYRect();
+      this._baseClip = new XYRect();
    }
 
    private final int addRenderLeaf(LeafNode leafNode) {
@@ -1149,7 +1150,7 @@ public final class AnimationViewport implements MediaViewport, Pannable, Zoomabl
             if (leafNode instanceof LeafNodeImage) {
                int imageIdx = this._model._nodes[leafNode._visualNodeIdx + 29];
                Object image = this._model._images[imageIdx];
-               if (image instanceof Object) {
+               if (image instanceof ForeignObject) {
                   this._staticBufferLeafIdxComputed = true;
                   return retIdx;
                }
@@ -1258,7 +1259,7 @@ public final class AnimationViewport implements MediaViewport, Pannable, Zoomabl
             this._meGraphic.popContext();
             return;
          default:
-            System.err.println(((StringBuffer)(new Object("AnimationViewport.render(): Unsupported node type: "))).append(ctx._type).toString());
+            System.err.println("AnimationViewport.render(): Unsupported node type: " + ctx._type);
       }
    }
 
@@ -1338,7 +1339,7 @@ public final class AnimationViewport implements MediaViewport, Pannable, Zoomabl
                      this.updateText(idx, ctx, contextIndex, null, false, doRender);
                      break;
                   default:
-                     System.err.println(((StringBuffer)(new Object("AnimationViewport.render(): Unsupported node type: "))).append(type).toString());
+                     System.err.println("AnimationViewport.render(): Unsupported node type: " + type);
                }
             }
 
@@ -1484,7 +1485,7 @@ public final class AnimationViewport implements MediaViewport, Pannable, Zoomabl
       if (leafNode._isForeignObject && (!leafNode._renderToBuffer || bRenderBuffer)) {
          int imageIdx = this._model._nodes[idx + 29];
          Object fo = this._model._images[imageIdx];
-         if (fo instanceof Object) {
+         if (fo instanceof LayoutManager) {
             ((LayoutManager)fo).layout();
          }
       }

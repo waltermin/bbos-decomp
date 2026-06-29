@@ -16,7 +16,7 @@ final class ConfirmCloseBrowserRunnable implements Runnable {
    @Override
    public final void run() {
       if (this._confirm && GeneralProperty.getCurrentPropertyAsBoolean(0)) {
-         Dialog dialog = (Dialog)(new Object(3, BrowserResources.getString(430), 0, Bitmap.getPredefinedBitmap(1), 0));
+         Dialog dialog = new Dialog(3, BrowserResources.getString(430), 0, Bitmap.getPredefinedBitmap(1), 0);
          if (dialog.doModal() != 4) {
             this._close = false;
          }

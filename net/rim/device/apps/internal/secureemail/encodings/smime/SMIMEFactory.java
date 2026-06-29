@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.secureemail.encodings.smime;
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.CertificateSummaryDataSyncCollection;
 import net.rim.device.api.crypto.certificate.CertificateSummaryDataSyncModelFactory;
+import net.rim.device.api.crypto.certificate.x509.X509CertificateSummaryDataSyncModelFactory;
 import net.rim.device.api.crypto.keystore.DeviceKeyStore;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.memorycleaner.MemoryCleanerManager;
@@ -21,6 +22,7 @@ import net.rim.device.apps.api.transmission.rim.sendmethods.SendMethod;
 import net.rim.device.apps.api.utility.serialization.Converter;
 import net.rim.device.apps.internal.api.crypto.CryptoCommonResources;
 import net.rim.device.apps.internal.api.crypto.certificate.CertificateConverter;
+import net.rim.device.apps.internal.keystore.browser.certificate.X509WTLSCertificateAttachmentModelFactory;
 import net.rim.device.apps.internal.secureemail.SecureEmailBodyModel;
 import net.rim.device.apps.internal.secureemail.SecureEmailCryptoSystemProperties;
 import net.rim.device.apps.internal.secureemail.SecureEmailFactory;
@@ -79,7 +81,7 @@ public final class SMIMEFactory extends SecureEmailFactory {
    @Override
    public final void performRegistration() {
       super.performRegistration();
-      RIMModelFactory certificateAttachmentModelFactory = (RIMModelFactory)(new Object());
+      RIMModelFactory certificateAttachmentModelFactory = new X509WTLSCertificateAttachmentModelFactory();
       RIMModelFactoryRepository.addFactory(2497613418300956405L, certificateAttachmentModelFactory);
       RIMModelFactoryRepository.addFactory(3893959701496671961L, certificateAttachmentModelFactory);
       RIMModelFactory emsEmailHeaderModelFactory = new EMSEmailHeaderModelFactory();
@@ -88,7 +90,7 @@ public final class SMIMEFactory extends SecureEmailFactory {
       CMIMEConverterRegistry.addConverter(certificateConverter, 4);
       certificateConverter = new PKCS12CertificateKeyConverter();
       CMIMEConverterRegistry.addConverter(certificateConverter, 5);
-      CertificateSummaryDataSyncModelFactory.register((CertificateSummaryDataSyncModelFactory)(new Object()));
+      CertificateSummaryDataSyncModelFactory.register(new X509CertificateSummaryDataSyncModelFactory());
       CertificateSummaryDataSyncCollection.getInstance().registerKeyStore(this.getPreferredKeyStore());
    }
 
@@ -170,7 +172,7 @@ public final class SMIMEFactory extends SecureEmailFactory {
       if (secureEmailBodyModel instanceof SMIMEBodyModel) {
          return new SMIMEProcessor((SMIMEBodyModel)secureEmailBodyModel, target, allowUI, context);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

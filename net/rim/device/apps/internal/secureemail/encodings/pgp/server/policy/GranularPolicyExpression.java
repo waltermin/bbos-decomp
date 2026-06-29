@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.secureemail.encodings.pgp.server.policy;
 import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.api.util.StringMatch;
 import net.rim.device.api.util.StringUtilities;
+import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.transmission.rim.CMIMEUtilities;
 import net.rim.device.apps.api.utility.framework.SubmemberUtilities;
 import net.rim.device.apps.internal.api.crypto.certificate.CertificateAttachmentModel;
@@ -130,7 +131,7 @@ class GranularPolicyExpression extends GranularPolicyElement implements Granular
          case 21:
          case 22:
          case 26:
-            this.logWarning(((StringBuffer)(new Object("condition="))).append(this._condition).append(" not applicable").toString());
+            this.logWarning("condition=" + this._condition + " not applicable");
             return false;
          case 0:
          default:
@@ -143,7 +144,7 @@ class GranularPolicyExpression extends GranularPolicyElement implements Granular
          case 20:
          case 23:
          case 24:
-            this.logWarning(((StringBuffer)(new Object("condition="))).append(this._condition).append(" not implemented").toString());
+            this.logWarning("condition=" + this._condition + " not implemented");
             return false;
          case 3: {
             String senderAddress = CMIMEUtilities.getEmailAddress(serviceRecord);
@@ -209,13 +210,11 @@ class GranularPolicyExpression extends GranularPolicyElement implements Granular
                   return this.evaluateEmailHeaderModelExpression(emailMessageModel, new GranularPolicyExpression$EmailHeaderModelRecognizer(2));
                }
 
-               this.logWarning(
-                  ((StringBuffer)(new Object("condition="))).append(this._condition).append(" (").append(this._lhs).append(") not implemented").toString()
-               );
+               this.logWarning("condition=" + this._condition + " (" + this._lhs + ") not implemented");
                return false;
             }
 
-            throw new Object();
+            throw new IllegalArgumentException();
          case 7:
             String messageSubject = emailMessageModel.getSubject();
             return this.evaluateStringMatchOperator(messageSubject);
@@ -238,21 +237,19 @@ class GranularPolicyExpression extends GranularPolicyElement implements Granular
                Object currentAttachment = attachments[i];
                String currentFilename = null;
                String currentFileType = null;
-               if (currentAttachment instanceof Object) {
-                  String xRIMDeviceString = ((StringBuffer)(new Object("Application/X-rimdeviceAddress Book:")))
-                     .append(currentAttachment.toString())
-                     .toString();
+               if (currentAttachment instanceof AddressCardModel) {
+                  String xRIMDeviceString = "Application/X-rimdeviceAddress Book:" + currentAttachment.toString();
                   currentFilename = xRIMDeviceString;
                   currentFileType = xRIMDeviceString;
-               } else if (!(currentAttachment instanceof Object)) {
-                  if (currentAttachment instanceof Object) {
+               } else if (!(currentAttachment instanceof CertificateAttachmentModel)) {
+                  if (currentAttachment instanceof CertificateServersAttachmentModel) {
                      CertificateServersAttachmentModel certificateServersAttachmentModel = (CertificateServersAttachmentModel)currentAttachment;
                      currentFilename = certificateServersAttachmentModel.getFilename();
                      currentFileType = SendCertificateServerVerb.TYPE_APPLICATION_CERTIFICATE_SERVERS;
                   }
                } else {
                   CertificateAttachmentModel certificateAttachmentModel = (CertificateAttachmentModel)currentAttachment;
-                  currentFilename = (String)(new Object(certificateAttachmentModel.getNameBytes()));
+                  currentFilename = new String(certificateAttachmentModel.getNameBytes());
                   currentFileType = certificateAttachmentModel.getOutgoingMIMEContentType();
                }
 
@@ -283,7 +280,7 @@ class GranularPolicyExpression extends GranularPolicyElement implements Granular
    private String extractDomain(String emailAddress) {
       int atIndex = emailAddress.indexOf(64);
       if (atIndex < 0) {
-         this.logWarning(((StringBuffer)(new Object())).append(emailAddress).append(": no @").toString());
+         this.logWarning(emailAddress + ": no @");
          return emailAddress;
       } else {
          return emailAddress.substring(atIndex + 1);
@@ -317,13 +314,13 @@ class GranularPolicyExpression extends GranularPolicyElement implements Granular
       if (this._rhs != null && this._rhs.length() != 0) {
          switch (this._operator) {
             case 99:
-               this.logWarning(((StringBuffer)(new Object("operator="))).append(this._operator).append(" not a string match operator").toString());
+               this.logWarning("operator=" + this._operator + " not a string match operator");
                return false;
             case 100:
             default:
                return StringUtilities.strEqualIgnoreCase(stringToMatch, this._rhs);
             case 101:
-               if (((StringMatch)(new Object(this._rhs, false))).indexOf(stringToMatch) >= 0) {
+               if (new StringMatch(this._rhs, false).indexOf(stringToMatch) >= 0) {
                   return true;
                }
 
@@ -336,7 +333,7 @@ class GranularPolicyExpression extends GranularPolicyElement implements Granular
             case 104:
                if (stringToMatch != null) {
                   try {
-                     return ((RegExp)(new Object(this._rhs, true))).match(stringToMatch, 0) != null;
+                     return new RegExp(this._rhs, true).match(stringToMatch, 0) != null;
                   } finally {
                      return false;
                   }
@@ -344,11 +341,11 @@ class GranularPolicyExpression extends GranularPolicyElement implements Granular
 
                return false;
             case 105:
-               this.logWarning(((StringBuffer)(new Object("operator="))).append(this._operator).append(" not implemented").toString());
+               this.logWarning("operator=" + this._operator + " not implemented");
                return false;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -377,17 +374,17 @@ class GranularPolicyExpression extends GranularPolicyElement implements Granular
 
                return false;
             default:
-               this.logWarning(((StringBuffer)(new Object("operator="))).append(this._operator).append(" not a numeric range operator").toString());
+               this.logWarning("operator=" + this._operator + " not a numeric range operator");
                return false;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
    public String getDebugPrintInfo() {
-      StringBuffer info = (StringBuffer)(new Object());
+      StringBuffer info = new StringBuffer();
       info.append("Expression");
       if (this._lhs != null) {
          info.append(", lhs=\"").append(this._lhs).append("\"");

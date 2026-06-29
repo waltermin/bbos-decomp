@@ -1,10 +1,12 @@
 package net.rim.device.api.browser.util;
 
+import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.microedition.io.HttpConnection;
+import net.rim.device.api.io.IOCancelledException;
 import net.rim.device.api.io.http.HttpDateParser;
 import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.api.io.http.HttpProtocolConstants;
@@ -204,9 +206,9 @@ public final class StaticHttpConnection implements HttpConnection, HttpProtocolC
    }
 
    @Override
-   public final InputStream openInputStream() {
+   public final InputStream openInputStream() throws IOCancelledException {
       if (this._closed) {
-         throw new Object();
+         throw new IOCancelledException();
       } else {
          return this._inputStream;
       }
@@ -215,7 +217,7 @@ public final class StaticHttpConnection implements HttpConnection, HttpProtocolC
    @Override
    public final DataInputStream openDataInputStream() {
       InputStream in = this.openInputStream();
-      return (DataInputStream)(!(in instanceof Object) ? new Object(in) : in);
+      return !(in instanceof DataInputStream) ? new DataInputStream(in) : (DataInputStream)in;
    }
 
    @Override
@@ -235,12 +237,12 @@ public final class StaticHttpConnection implements HttpConnection, HttpProtocolC
    }
 
    public StaticHttpConnection(String url, byte[] data, HttpHeaders responseHeaders) {
-      this._inputStream = (InputStream)(new Object(data));
+      this._inputStream = new ByteArrayInputStream(data);
       this._responseHeaders = responseHeaders;
       this._url = url;
 
       try {
-         this._decodedUrl = (URI)(new Object(this._url));
+         this._decodedUrl = new URI(this._url);
       } finally {
          return;
       }

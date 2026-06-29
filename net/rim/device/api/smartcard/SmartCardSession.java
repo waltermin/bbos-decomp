@@ -46,7 +46,7 @@ public class SmartCardSession {
 
    protected SmartCardSession(SmartCard smartCard, SmartCardReaderSession readerSession) {
       if (readerSession == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._smartCard = smartCard;
@@ -185,7 +185,7 @@ public class SmartCardSession {
    private boolean allowCachedPassword(int operation) {
       switch (operation) {
          case -2:
-            throw new Object();
+            throw new IllegalArgumentException();
          case -1:
             return false;
          case 0:
@@ -217,7 +217,9 @@ public class SmartCardSession {
 
       if (this._loggedIn) {
          if (this._usedCachedPassword && !this.allowCachedPassword(operation)) {
-            throw new Object("Already logged in with a cached password but operation requires explicit password entry. Please close the session and try again");
+            throw new IllegalStateException(
+               "Already logged in with a cached password but operation requires explicit password entry. Please close the session and try again"
+            );
          } else {
             return true;
          }
@@ -227,7 +229,7 @@ public class SmartCardSession {
          }
 
          if (password == null) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          try {
@@ -272,7 +274,9 @@ public class SmartCardSession {
 
       if (this._loggedIn) {
          if (this._usedCachedPassword && !this.allowCachedPassword(operation)) {
-            throw new Object("Already logged in with a cached password but operation requires explicit password entry. Please close the session and try again");
+            throw new IllegalStateException(
+               "Already logged in with a cached password but operation requires explicit password entry. Please close the session and try again"
+            );
          }
       } else if (!this.cachedLogin(operation)) {
          while (true) {
@@ -312,7 +316,7 @@ public class SmartCardSession {
    }
 
    private RichTextField getPromptField(String accessReason, String smartCardLabel) throws SmartCardLockedException {
-      StringBuffer promptMessage = (StringBuffer)(new Object(MessageFormat.format(_rb.getString(16), new Object[]{smartCardLabel})));
+      StringBuffer promptMessage = new StringBuffer(MessageFormat.format(_rb.getString(16), new String[]{smartCardLabel}));
       if (accessReason != null) {
          promptMessage.append(accessReason);
       }
@@ -331,7 +335,7 @@ public class SmartCardSession {
                promptMessage.append(_rb.getString(17));
             } else {
                promptMessage.append(
-                  MessageFormat.format(_rb.getString(18), new Object[]{Integer.toString(passwordAttempt), Integer.toString(maxLoginAttempts)})
+                  MessageFormat.format(_rb.getString(18), new String[]{Integer.toString(passwordAttempt), Integer.toString(maxLoginAttempts)})
                );
             }
          }

@@ -32,7 +32,7 @@ class RemoteThemeAttributeSetWriter {
 
    public void startElement(String element) {
       if (this.isOpen()) {
-         throw new Object("startElement called on already opened element");
+         throw new IllegalStateException("startElement called on already opened element");
       }
 
       this._stockWriter = this._themeWriter.createThemeAttributeSetWriter(element, this._resourceFetcher);
@@ -141,7 +141,7 @@ class RemoteThemeAttributeSetWriter {
 
    private void checkState() {
       if (!this.isOpen()) {
-         throw new Object("element not open (call startElement first)");
+         throw new IllegalStateException("element not open (call startElement first)");
       }
    }
 

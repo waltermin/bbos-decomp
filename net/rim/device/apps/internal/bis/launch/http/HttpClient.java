@@ -20,7 +20,7 @@ public final class HttpClient {
    private static final String XML_ACCEPT = "text/xml, text/*";
    private static final String XML_CONTENT_TYPE = "text/xml; charset=utf-8";
    private static final int MOP_UNAUTHORIZED_STATUS = 401;
-   private static Hashtable _defaultRequestProperties = (Hashtable)(new Object());
+   private static Hashtable _defaultRequestProperties = new Hashtable();
 
    public HttpClient() {
    }
@@ -51,7 +51,7 @@ public final class HttpClient {
          try {
             var28 = true;
             var25 = true;
-            conn = (HttpConnection)Connector.open(((StringBuffer)(new Object())).append(url).append(this.getConnectionParams()).toString());
+            conn = (HttpConnection)Connector.open(url + this.getConnectionParams());
             if (this._listener != null) {
                this._listener.connectionEstablished(true);
             }
@@ -122,7 +122,7 @@ public final class HttpClient {
                      }
                   }
                } else {
-                  ByteArrayOutputStream baos = (ByteArrayOutputStream)(new Object());
+                  ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
                   int ch;
                   for (int bytesread = 0; (ch = is.read()) != -1; bytesread++) {
@@ -142,13 +142,13 @@ public final class HttpClient {
 
                String retryAfterValue = conn.getHeaderField("Retry-After");
                if (retryAfterValue != null) {
-                  responsePropertiesMap = (Hashtable)(new Object());
+                  responsePropertiesMap = new Hashtable();
                   responsePropertiesMap.put("Retry-After", retryAfterValue);
                }
 
                if (responseProperties != null && responseProperties.length > 0) {
                   if (responsePropertiesMap == null) {
-                     responsePropertiesMap = (Hashtable)(new Object());
+                     responsePropertiesMap = new Hashtable();
                   }
 
                   int numResponseProperties = responseProperties.length;
@@ -171,7 +171,7 @@ public final class HttpClient {
                   this._listener.connectionEstablished(false);
                }
 
-               throw new Object();
+               throw new IllegalArgumentException();
             }
          }
       } finally {
@@ -269,7 +269,7 @@ public final class HttpClient {
       String url, String requestMethod, Hashtable requestProperties, byte[] requestPayload, String[] responseProperties, boolean handleRedirects
    ) {
       if (requestProperties == null) {
-         requestProperties = (Hashtable)(new Object());
+         requestProperties = new Hashtable();
       }
 
       if (requestPayload != null) {
@@ -283,19 +283,19 @@ public final class HttpClient {
    private final String getConnectionParams() {
       String connectionParams = "";
       if (this._connectionUID != null) {
-         String connectUIDParam = ((StringBuffer)(new Object(";connectionuid="))).append(this._connectionUID).toString();
+         String connectUIDParam = ";connectionuid=" + this._connectionUID;
          if (this._useWapGateway) {
-            connectionParams = ((StringBuffer)(new Object())).append(connectionParams).append(";WAPGatewayIP=").append(connectUIDParam).toString();
+            connectionParams = connectionParams + ";WAPGatewayIP=" + connectUIDParam;
          } else {
-            connectionParams = ((StringBuffer)(new Object())).append(connectionParams).append(connectUIDParam).toString();
+            connectionParams = connectionParams + connectUIDParam;
          }
       }
 
       if (this._connectTimeout > 0) {
-         connectionParams = ((StringBuffer)(new Object())).append(connectionParams).append(";connectiontimeout=").append(this._connectTimeout).toString();
+         connectionParams = connectionParams + ";connectiontimeout=" + this._connectTimeout;
       }
 
-      return ((StringBuffer)(new Object())).append(connectionParams).append(";deviceside=false").toString();
+      return connectionParams + ";deviceside=false";
    }
 
    public final void clearCookie() {
@@ -315,6 +315,6 @@ public final class HttpClient {
       _defaultRequestProperties.put("Cache-Control", "no-cache");
       _defaultRequestProperties.put("Pragma", "no-cache");
       _defaultRequestProperties.put("Connection", "Keep-Alive");
-      _defaultRequestProperties.put("User-Agent", ((StringBuffer)(new Object("BISClient/"))).append(appVersion).toString());
+      _defaultRequestProperties.put("User-Agent", "BISClient/" + appVersion);
    }
 }

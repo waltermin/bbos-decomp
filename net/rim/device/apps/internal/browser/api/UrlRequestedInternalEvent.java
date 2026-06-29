@@ -1,6 +1,6 @@
 package net.rim.device.apps.internal.browser.api;
 
-import net.rim.device.api.browser.field.Event;
+import net.rim.device.api.browser.field.ErrorEvent;
 import net.rim.device.api.browser.field.RenderingApplication;
 import net.rim.device.api.browser.field.RenderingOptions;
 import net.rim.device.api.browser.field.UrlRequestedEvent;
@@ -85,7 +85,7 @@ public final class UrlRequestedInternalEvent extends UrlRequestedEvent {
          RenderingOptions renderingOptions = browserContent.getRenderingOptions();
          if (!JavaScriptRegistry.isInstalled() || renderingOptions == null) {
             if (renderingApplication != null) {
-               renderingApplication.eventOccurred((Event)(new Object(browserContent, BrowserResources.getString(545))));
+               renderingApplication.eventOccurred(new ErrorEvent(browserContent, BrowserResources.getString(545)));
             }
 
             return true;
@@ -105,11 +105,11 @@ public final class UrlRequestedInternalEvent extends UrlRequestedEvent {
                      return true;
                   }
 
-                  renderingApplication.eventOccurred((Event)(new Object(browserContent, BrowserResources.getString(632))));
+                  renderingApplication.eventOccurred(new ErrorEvent(browserContent, BrowserResources.getString(632)));
                   return true;
                }
 
-               renderingApplication.eventOccurred((Event)(new Object(browserContent, BrowserResources.getString(632))));
+               renderingApplication.eventOccurred(new ErrorEvent(browserContent, BrowserResources.getString(632)));
             }
 
             return true;

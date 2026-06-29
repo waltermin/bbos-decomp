@@ -151,7 +151,7 @@ public class PersistenceListener implements PersistentContentListener, Serviceab
 
    public void created(long handle) {
       if (this._transactionStarted && !this._handles.containsKey(handle)) {
-         IntVector fields = (IntVector)(new Object());
+         IntVector fields = new IntVector();
          this._handles.put(handle, fields);
          this._transactionHandles.put(handle, 4294967296L);
       }
@@ -161,7 +161,7 @@ public class PersistenceListener implements PersistentContentListener, Serviceab
       if (this._transactionStarted) {
          IntVector fields = (IntVector)this._handles.get(handle);
          if (fields == null) {
-            fields = (IntVector)(new Object());
+            fields = new IntVector();
             this._handles.put(handle, fields);
             this.addFieldEntry(handle, fields, field);
             return;
@@ -225,17 +225,17 @@ public class PersistenceListener implements PersistentContentListener, Serviceab
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private void start() {
       try {
-         this._handles = (LongHashtable)(new Object());
-         this._cmpHandlers = (IntHashtable)(new Object());
-         this._defToMaxHandle = (IntIntHashtable)(new Object());
-         this._cmpLevelKeyless = (LongHashtable)(new Object());
+         this._handles = new LongHashtable();
+         this._cmpHandlers = new IntHashtable();
+         this._defToMaxHandle = new IntIntHashtable();
+         this._cmpLevelKeyless = new LongHashtable();
          this._transactionHandles = new LongLongHashtable();
-         this._refIndex = (LongHashtable)(new Object());
+         this._refIndex = new LongHashtable();
          this._refFields = new LongVector();
          this._defs = this._app.getDefinitions().getDataDefs();
          this.preventHandleConflict();
       } catch (Throwable var3) {
-         Logger.log(this.toString(), ((StringBuffer)(new Object("Intent list start failed: "))).append(t.toString()).toString(), 2);
+         Logger.log(this.toString(), "Intent list start failed: " + t.toString(), 2);
          return;
       }
    }
@@ -324,7 +324,7 @@ public class PersistenceListener implements PersistentContentListener, Serviceab
                Object data = this._app.getData(parentDef);
                IntVector indicies = (IntVector)this._refIndex.get(handle);
                if (indicies == null) {
-                  indicies = (IntVector)(new Object());
+                  indicies = new IntVector();
                   this._refIndex.put(handle, indicies);
                }
 
@@ -446,7 +446,7 @@ public class PersistenceListener implements PersistentContentListener, Serviceab
                }
                break label174;
             } catch (Throwable var10) {
-               Logger.log(this.toString(), ((StringBuffer)(new Object("Data merge failed: "))).append(t.toString()).toString(), 2);
+               Logger.log(this.toString(), "Data merge failed: " + t.toString(), 2);
                if (transactions != null) {
                   if (transactionId != -1) {
                      transactions.undo(false, transactionId, true);
@@ -527,7 +527,7 @@ public class PersistenceListener implements PersistentContentListener, Serviceab
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

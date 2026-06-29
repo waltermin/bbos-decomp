@@ -1,5 +1,6 @@
 package net.rim.wica.runtime.security.internal;
 
+import java.io.IOException;
 import net.rim.device.api.itpolicy.ITPolicy;
 import net.rim.wica.runtime.event.EventService;
 import net.rim.wica.runtime.logging.Logger;
@@ -98,9 +99,9 @@ public final class SecurityServiceImpl implements SecurityService, Serviceable, 
 
    @Override
    public final void registrationFailed(HandshakeException e) {
-      Logger.log(((StringBuffer)(new Object("SHR- "))).append(e.getCause()).toString());
+      Logger.log("SHR- " + e.getCause());
       HandshakeInfo params = e.getHandshakeInfo();
-      if (params.getSecurityVersion() > 1 && e.getCause() instanceof Object && "Hello".equals(e.getMessage())) {
+      if (params.getSecurityVersion() > 1 && e.getCause() instanceof IOException && "Hello".equals(e.getMessage())) {
          params.setSecurityVersion(1);
 
          try {
@@ -124,7 +125,7 @@ public final class SecurityServiceImpl implements SecurityService, Serviceable, 
 
    @Override
    public final void unregistrationFailed(HandshakeException e) {
-      Logger.log(((StringBuffer)(new Object("SHU- "))).append(e.getCause()).toString());
+      Logger.log("SHU- " + e.getCause());
       this._eventService.dispatchEvent(this, 406, e);
       this._keyProvider.cacheSecurityInfo(e.getHandshakeInfo().getAGId());
       this._sequenceProvider.remove(e.getHandshakeInfo().getAGId());
@@ -151,7 +152,7 @@ public final class SecurityServiceImpl implements SecurityService, Serviceable, 
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

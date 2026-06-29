@@ -25,7 +25,7 @@ final class MapsOptionsScreen$MapsServiceRecord {
          name = object.toString();
          cid = ((MapsOptionsScreen$MapsServiceRecord)object)._sr.getCid();
       } else {
-         if (!(object instanceof Object)) {
+         if (!(object instanceof ServiceRecord)) {
             return super.equals(object);
          }
 

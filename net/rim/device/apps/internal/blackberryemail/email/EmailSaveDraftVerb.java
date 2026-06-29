@@ -23,7 +23,7 @@ final class EmailSaveDraftVerb extends Verb {
       EmailMessageModelImpl message = (EmailMessageModelImpl)this._screen.getModel(false);
       Object o = ContextObject.get(context, 32241034113959076L);
       if (!(o instanceof TransitoryMessagePropertiesModel)) {
-         throw new Object("EmailSaveDraftVerb");
+         throw new RuntimeException("EmailSaveDraftVerb");
       }
 
       TransitoryMessagePropertiesModel tmpm = (TransitoryMessagePropertiesModel)o;
@@ -46,7 +46,6 @@ final class EmailSaveDraftVerb extends Verb {
          ShowMessageApp.showMessageApp();
       }
 
-      ContextObject invokeContextObject = (ContextObject)(new Object(39));
-      return invokeContextObject;
+      return new ContextObject(39);
    }
 }

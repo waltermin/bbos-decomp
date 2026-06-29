@@ -101,7 +101,7 @@ public class URI {
 
    public String getAbsoluteURL() {
       if (this._absoluteURL == null) {
-         StringBuffer buffer = (StringBuffer)(new Object());
+         StringBuffer buffer = new StringBuffer();
          if (this._scheme != null && this._scheme.length() != 0) {
             buffer.append(this._scheme);
             buffer.append(':');
@@ -289,12 +289,9 @@ public class URI {
          } else {
             int fileStartIndex = this._path.lastIndexOf(47);
             if (fileStartIndex == -1) {
-               this._path = ((StringBuffer)(new Object("/"))).append(url.substring(authorityEndIndex, pathEndIndex)).toString();
+               this._path = "/" + url.substring(authorityEndIndex, pathEndIndex);
             } else {
-               this._path = ((StringBuffer)(new Object()))
-                  .append(this._path.substring(0, fileStartIndex + 1))
-                  .append(url.substring(authorityEndIndex, pathEndIndex))
-                  .toString();
+               this._path = this._path.substring(0, fileStartIndex + 1) + url.substring(authorityEndIndex, pathEndIndex);
             }
          }
 
@@ -337,7 +334,7 @@ public class URI {
                   index = this._path.indexOf("%2E", index);
                   if (index == -1) {
                      for (int var36 = this._path.indexOf(SLASH_DOT_SLASH); var36 != -1; var36 = this._path.indexOf(SLASH_DOT_SLASH)) {
-                        StringBuffer str = (StringBuffer)(new Object(this._path.substring(0, var36 + 1)));
+                        StringBuffer str = new StringBuffer(this._path.substring(0, var36 + 1));
                         str.append(this._path.substring(var36 + 3));
                         this._path = str.toString();
                      }
@@ -353,7 +350,7 @@ public class URI {
                            break;
                         }
 
-                        StringBuffer str = (StringBuffer)(new Object());
+                        StringBuffer str = new StringBuffer();
                         str.append(this._path.substring(0, start + 1));
                         str.append(this._path.substring(var37 + 4));
                         this._path = str.toString();
@@ -378,15 +375,11 @@ public class URI {
                      break label622;
                   }
 
-                  this._path = ((StringBuffer)(new Object()))
-                     .append(this._path.substring(0, index))
-                     .append('.')
-                     .append(this._path.substring(index + 3))
-                     .toString();
+                  this._path = this._path.substring(0, index) + '.' + this._path.substring(index + 3);
                }
             }
 
-            this._path = ((StringBuffer)(new Object())).append(this._path.substring(0, index)).append('.').append(this._path.substring(index + 3)).toString();
+            this._path = this._path.substring(0, index) + '.' + this._path.substring(index + 3);
          }
       }
 

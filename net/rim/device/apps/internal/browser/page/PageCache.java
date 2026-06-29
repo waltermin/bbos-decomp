@@ -12,8 +12,8 @@ public final class PageCache {
 
    public PageCache(int size) {
       this._maxSize = size;
-      this._contents = (Hashtable)(new Object(this._maxSize));
-      this._keys = (Vector)(new Object(this._maxSize));
+      this._contents = new Hashtable(this._maxSize);
+      this._keys = new Vector(this._maxSize);
    }
 
    public final synchronized void destroy(boolean markAsReachable) {
@@ -26,7 +26,7 @@ public final class PageCache {
 
       if (markAsReachable) {
          LowMemoryManager.markAsRecoverable(this._contents);
-         this._contents = (Hashtable)(new Object(this._maxSize));
+         this._contents = new Hashtable(this._maxSize);
       } else {
          this._contents.clear();
       }

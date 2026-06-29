@@ -2,10 +2,13 @@ package net.rim.device.apps.internal.browser.debug;
 
 import net.rim.blackberry.api.mail.Address;
 import net.rim.blackberry.api.mail.Message;
+import net.rim.blackberry.api.mail.PINAddress;
 import net.rim.blackberry.api.mail.Transport;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.apps.api.addressbook.AddressSelectionContext;
+import net.rim.device.apps.api.addressbook.EmailAddressModel;
 import net.rim.device.apps.api.addressbook.FriendlyNameAddressModel;
+import net.rim.device.apps.api.addressbook.PINAddressModel;
 import net.rim.device.apps.api.framework.model.Recognizer;
 import net.rim.device.apps.api.framework.registration.RecognizerRepository;
 import net.rim.device.apps.api.framework.registration.VerbRepository;
@@ -50,16 +53,18 @@ final class DebugInfoSendVerb extends Verb {
          Verb useOnceEmailVerb = UseOnceAddressVerb.newUseOnceEmailAddressVerb(false);
          Verb useOncePinVerb = UseOnceAddressVerb.newUseOncePINAddressVerb(null);
          if (CMIMEUtilities.canSendEmail()) {
-            recognizers = new Object[]{RecognizerRepository.getRecognizers(-2985347935260258684L), RecognizerRepository.getRecognizers(4246852237058296601L)};
-            prefixes = new Object[]{emailPrefix, pinPrefix};
-            useOnceVerbs = new Object[]{useOnceEmailVerb, useOncePinVerb};
+            recognizers = new Recognizer[]{
+               RecognizerRepository.getRecognizers(-2985347935260258684L), RecognizerRepository.getRecognizers(4246852237058296601L)
+            };
+            prefixes = new String[]{emailPrefix, pinPrefix};
+            useOnceVerbs = new Verb[]{useOnceEmailVerb, useOncePinVerb};
          } else {
-            recognizers = new Object[]{RecognizerRepository.getRecognizers(4246852237058296601L)};
-            prefixes = new Object[]{pinPrefix};
-            useOnceVerbs = new Object[]{useOncePinVerb};
+            recognizers = new Recognizer[]{RecognizerRepository.getRecognizers(4246852237058296601L)};
+            prefixes = new String[]{pinPrefix};
+            useOnceVerbs = new Verb[]{useOncePinVerb};
          }
 
-         AddressSelectionContext selectionContext = (AddressSelectionContext)(new Object(null, EmailResources.getString(94), null, recognizers, useOnceVerbs));
+         AddressSelectionContext selectionContext = new AddressSelectionContext(null, EmailResources.getString(94), null, recognizers, useOnceVerbs);
          selectionContext.setUseEntryPrefixes(prefixes);
          Object addressModel = verbs[0].invoke(selectionContext);
          Address address = null;
@@ -67,13 +72,13 @@ final class DebugInfoSendVerb extends Verb {
 
          try {
             var30 = true;
-            if (addressModel instanceof Object) {
+            if (addressModel instanceof EmailAddressModel) {
                FriendlyNameAddressModel model = (FriendlyNameAddressModel)addressModel;
-               address = (Address)(new Object(model.getAddress(), model.getFriendlyName()));
+               address = new Address(model.getAddress(), model.getFriendlyName());
                var30 = false;
-            } else if (addressModel instanceof Object) {
+            } else if (addressModel instanceof PINAddressModel) {
                FriendlyNameAddressModel model = (FriendlyNameAddressModel)addressModel;
-               address = (Address)(new Object(model.getAddress(), model.getFriendlyName()));
+               address = new PINAddress(model.getAddress(), model.getFriendlyName());
                var30 = false;
             } else {
                var30 = false;
@@ -93,22 +98,22 @@ final class DebugInfoSendVerb extends Verb {
 
          try {
             var27 = true;
-            DialogEnterString var38 = new Object("Enter subject line", this._subject, "Ok");
-            if (((Dialog)var38).doModal() == -1) {
+            DialogEnterString var38 = new DialogEnterString("Enter subject line", this._subject, "Ok");
+            if (var38.doModal() == -1) {
                return null;
             }
 
-            String subject = ((DialogEnterString)var38).getResult();
+            String subject = var38.getResult();
             if (subject == null) {
                subject = "";
             }
 
             for (int i = 1; i <= parts; i++) {
-               Message message = (Message)(new Object());
-               message.addRecipients(0, new Object[]{address});
+               Message message = new Message();
+               message.addRecipients(0, new Address[]{address});
                String subjectText = subject;
                if (parts > 1) {
-                  subjectText = ((StringBuffer)(new Object())).append(subjectText).append(" ").append(i).append('/').append(parts).toString();
+                  subjectText = subjectText + " " + i + '/' + parts;
                }
 
                message.setSubject(subjectText);

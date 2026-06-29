@@ -12,12 +12,12 @@ public final class PSSSignatureVerifier implements SignatureVerifier {
    private static final long ID_TEST_VERIFIER_PSS = 7436046114253033322L;
 
    public PSSSignatureVerifier(RSAPublicKey key, byte[] signature, int signatureOffset) {
-      this(key, (Digest)(new Object()), signature, signatureOffset);
+      this(key, new SHA1Digest(), signature, signatureOffset);
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public PSSSignatureVerifier(RSAPublicKey key, Digest digest, byte[] signature, int signatureOffset) {
+   public PSSSignatureVerifier(RSAPublicKey key, Digest digest, byte[] signature, int signatureOffset) throws InvalidSignatureEncodingException {
       if (key != null && digest != null && signature != null && signatureOffset >= 0) {
          this._key = key;
          this._length = key.getRSACryptoSystem().getModulusLength();
@@ -30,7 +30,7 @@ public final class PSSSignatureVerifier implements SignatureVerifier {
             var7 = false;
          } finally {
             if (var7) {
-               throw new Object();
+               throw new RuntimeException();
             }
          }
 
@@ -38,16 +38,16 @@ public final class PSSSignatureVerifier implements SignatureVerifier {
             this._signature = new byte[this._length];
             System.arraycopy(signature, signatureOffset, this._signature, 0, this._length);
          } else {
-            throw new Object();
+            throw new InvalidSignatureEncodingException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object("RSA_PSS/"))).append(this._digest.getAlgorithm()).toString();
+      return "RSA_PSS/" + this._digest.getAlgorithm();
    }
 
    @Override
@@ -73,7 +73,7 @@ public final class PSSSignatureVerifier implements SignatureVerifier {
       int encodedMessageOffset = this._length;
       if (encodedMessage[--encodedMessageOffset] == -68 && (encodedMessage[0] & 128) == 0) {
          encodedMessageOffset -= digestLength;
-         PseudoRandomSource mgf = (PseudoRandomSource)(new Object(encodedMessage, encodedMessageOffset, digestLength, this._digest2));
+         PseudoRandomSource mgf = new PKCS1MGF1PseudoRandomSource(encodedMessage, encodedMessageOffset, digestLength, this._digest2);
          mgf.xorBytes(encodedMessage, 0, encodedMessageOffset);
          this._digest2.reset();
          byte mask = -128;
@@ -112,18 +112,18 @@ public final class PSSSignatureVerifier implements SignatureVerifier {
 
    public static final void selfTest() {
       try {
-         RSACryptoSystem cryptoSystemRSA = (RSACryptoSystem)(new Object(1024));
-         RSAPublicKey pubKey = (RSAPublicKey)(new Object(cryptoSystemRSA, SelfTestData_PK1.RSA_E, SelfTestData_PK1.RSA_N));
+         RSACryptoSystem cryptoSystemRSA = new RSACryptoSystem(1024);
+         RSAPublicKey pubKey = new RSAPublicKey(cryptoSystemRSA, SelfTestData_PK1.RSA_E, SelfTestData_PK1.RSA_N);
          PSSSignatureVerifier verifier = new PSSSignatureVerifier(pubKey, SelfTestData_PK2.SIGNATURE_PSS_RSA, 0);
          verifier.update(SelfTestData_PK1.PLAIN_TEXT_PKCS1_RSA);
          if (verifier.verify()) {
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

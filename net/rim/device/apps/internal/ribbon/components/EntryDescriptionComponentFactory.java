@@ -8,7 +8,7 @@ import net.rim.device.apps.internal.ribbon.launcher.HierarchyManager;
 
 final class EntryDescriptionComponentFactory implements Factory {
    private EntryComponentFactoryHelper _helper = new EntryComponentFactoryHelper();
-   private GlobalListenerFactoryHelper _globalEventHelper = (GlobalListenerFactoryHelper)(new Object());
+   private GlobalListenerFactoryHelper _globalEventHelper = new GlobalListenerFactoryHelper();
 
    final void init() {
       HierarchyManager.getInstance().addEntryChangeListener(this._helper);

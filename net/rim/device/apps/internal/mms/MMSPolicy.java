@@ -6,7 +6,7 @@ import net.rim.device.api.system.GlobalEventListener;
 import net.rim.device.internal.proxy.Proxy;
 
 public final class MMSPolicy implements GlobalEventListener {
-   private Vector _listeners = (Vector)(new Object());
+   private Vector _listeners = new Vector();
    private boolean _isRegistered = MMSUtilities.isITPolicyEnabled();
    private static MMSPolicy _instance;
 

@@ -119,7 +119,7 @@ final class AgendaField extends AgendaFieldBase {
    private final Vector loadAgendaNonUIWork(long loadTime) {
       int numBefore = 16;
       int numOnOrAfter = 16;
-      Vector events = (Vector)(new Object());
+      Vector events = new Vector();
       TimeBasedCollection tbc = TimeBasedCollection.getInstance();
       long[] result = tbc.getElementsStartingAround(loadTime - 1, numBefore, numOnOrAfter, super._tz, events);
       super._moreEvents = (int)result[2];

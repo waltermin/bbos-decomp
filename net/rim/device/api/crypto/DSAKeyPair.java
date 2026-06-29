@@ -5,7 +5,7 @@ import net.rim.device.api.util.Persistable;
 public final class DSAKeyPair extends KeyPair implements Persistable {
    public DSAKeyPair(DSACryptoSystem cryptoSystem) {
       if (cryptoSystem == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       KeyPair keypair = cryptoSystem.createDSAKeyPair();

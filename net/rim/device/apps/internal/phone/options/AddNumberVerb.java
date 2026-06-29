@@ -4,7 +4,7 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.Dialog;
-import net.rim.device.api.ui.text.TextFilter;
+import net.rim.device.api.ui.text.PhoneTextFilter;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.internal.phone.api.PhoneUtilities;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
@@ -36,8 +36,8 @@ final class AddNumberVerb extends Verb {
       SimpleInputDialog dlg = new AddNumberVerb$1(this, 7, PhoneResources.getString(224));
       BasicEditField editField = dlg.getEditField();
       int filterFlags = PhoneUtilities.cdmaWAFActive() ? 0 : 384;
-      editField.setFilter((TextFilter)(new Object(filterFlags)));
-      if (invoke instanceof Object) {
+      editField.setFilter(new PhoneTextFilter(filterFlags));
+      if (invoke instanceof String) {
          dlg.setText((String)invoke);
       }
 

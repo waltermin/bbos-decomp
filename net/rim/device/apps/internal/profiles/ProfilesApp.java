@@ -6,7 +6,6 @@ import net.rim.device.api.system.Application;
 import net.rim.device.api.system.ApplicationDescriptor;
 import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.system.EventLogger;
-import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.api.ui.theme.ThemeManager;
@@ -39,14 +38,14 @@ final class ProfilesApp extends UiApplication {
 
             ProfilesApp$HomeScreenUpdater updater = new ProfilesApp$HomeScreenUpdater(profiles);
             proxy.addGlobalEventListener(updater);
-            NotificationsEngineImpl notificationsEngine = (NotificationsEngineImpl)(new Object());
+            NotificationsEngineImpl notificationsEngine = new NotificationsEngineImpl();
             registry.put(6720217471165517311L, notificationsEngine);
             proxy.startThread(notificationsEngine);
             proxy.addHolsterListener(notificationsEngine);
             AlertEngine alertEngine = AlertEngine.getInstance();
             proxy.addAlertListener(alertEngine);
             proxy.startThread(alertEngine);
-            AlertConsequence consequence = (AlertConsequence)(new Object(alertEngine));
+            AlertConsequence consequence = new AlertConsequence(alertEngine);
             registry.put(-2870941457036655797L, consequence);
             NotificationsManager.registerConsequence(-2870941457036655797L, consequence);
             EventLogger.register(6982943375119825480L, "profiles", 2);
@@ -65,7 +64,7 @@ final class ProfilesApp extends UiApplication {
          Application.getApplication().requestBackground();
          ProfilesPopupScreen.show(true, false);
       } else {
-         UiApplication.getUiApplication().pushScreen((Screen)(new Object(true)));
+         UiApplication.getUiApplication().pushScreen(new ProfilesScreen(true));
       }
    }
 }

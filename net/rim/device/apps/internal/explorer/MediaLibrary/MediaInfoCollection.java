@@ -6,15 +6,16 @@ import net.rim.device.api.collection.ReadableList;
 import net.rim.device.api.collection.WritableSet;
 import net.rim.device.api.collection.util.CollectionListenerManager;
 import net.rim.device.api.collection.util.KeywordFilterList;
-import net.rim.device.api.collection.util.KeywordIndexerHelper;
+import net.rim.device.api.collection.util.PrefixKeywordFilterList;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.Comparator;
+import net.rim.device.apps.api.framework.model.RIMModelOrderHelper;
 import net.rim.device.apps.internal.explorer.MediaLibrary.util.StringComparator;
 import net.rim.vm.Array;
 
 public class MediaInfoCollection implements ReadableList, WritableSet, CollectionEventSource, FilterStatusListener {
    private Object[] _objects = new Object[0];
-   private CollectionListenerManager _listenerManager = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _listenerManager = new CollectionListenerManager();
    private KeywordFilterList _keywordlist;
    private boolean _insertSorted = true;
    private Comparator _comparator = StringComparator.getInstance();
@@ -25,13 +26,13 @@ public class MediaInfoCollection implements ReadableList, WritableSet, Collectio
 
    public KeywordFilterList getKeywordFilterListInstance(Comparator comparator) {
       Comparator compare = comparator == null ? this._comparator : comparator;
-      return (KeywordFilterList)(new Object(this, (KeywordIndexerHelper)(new Object(compare, null)), false));
+      return new PrefixKeywordFilterList(this, new RIMModelOrderHelper(compare, null), false);
    }
 
    public void addCriteria(KeywordFilterList list, String[] criteria) {
       list = list == null ? this._keywordlist : list;
       if (criteria != null && criteria.length != 0) {
-         StringBuffer sb = (StringBuffer)(new Object());
+         StringBuffer sb = new StringBuffer();
          if (criteria.length > 1) {
             for (int i = 0; i < criteria.length - 1; i++) {
                sb.append(criteria[i]);
@@ -233,10 +234,10 @@ public class MediaInfoCollection implements ReadableList, WritableSet, Collectio
 
    public MediaInfoCollection(Comparator comparator) {
       this._comparator = comparator;
-      this._keywordlist = (KeywordFilterList)(new Object(this, (KeywordIndexerHelper)(new Object(comparator, null)), false));
+      this._keywordlist = new PrefixKeywordFilterList(this, new RIMModelOrderHelper(comparator, null), false);
    }
 
    public MediaInfoCollection() {
-      this._keywordlist = (KeywordFilterList)(new Object(this, (KeywordIndexerHelper)(new Object(this._comparator, null)), false));
+      this._keywordlist = new PrefixKeywordFilterList(this, new RIMModelOrderHelper(this._comparator, null), false);
    }
 }

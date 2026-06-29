@@ -11,6 +11,6 @@ final class SystemOnOffManager$1 implements Runnable {
 
    @Override
    public final void run() {
-      ((SelfTests)(new Object(true))).start();
+      new SelfTests(true).start();
    }
 }

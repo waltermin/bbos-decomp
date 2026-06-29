@@ -13,7 +13,7 @@ public final class WSP_RedirectPDU extends WSP_PDU {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public final WSPAddress[] getRedirectAddress() {
       int pos = 3;
-      Vector store = (Vector)(new Object());
+      Vector store = new Vector();
 
       while (pos < super._PDU.length) {
          int addrLen = super._PDU[pos] & 63;

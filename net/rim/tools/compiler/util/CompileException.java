@@ -31,7 +31,7 @@ public class CompileException extends Exception {
 
    @Override
    public String toString() {
-      StringBuffer buf = (StringBuffer)(new Object());
+      StringBuffer buf = new StringBuffer();
       if (this._fileName != null) {
          buf.append(this._fileName).append(": ");
       }

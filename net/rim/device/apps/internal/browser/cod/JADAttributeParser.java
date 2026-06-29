@@ -126,12 +126,12 @@ final class JADAttributeParser extends Hashtable implements Persistable {
             max256CharsButAllowEmpty = true;
          } else if (name.startsWith("RIM-COD-URL")) {
             valueType = 2;
-            name = ((StringBuffer)(new Object("RIM-COD-URL"))).append(originalName.substring(SizeOfRIM_COD_URL, name.length())).toString();
+            name = "RIM-COD-URL" + originalName.substring(SizeOfRIM_COD_URL, name.length());
             required = (byte)(required | 8);
             this._codUrlCount++;
          } else if (name.startsWith("RIM-COD-Size")) {
             valueType = 3;
-            name = ((StringBuffer)(new Object("RIM-COD-Size"))).append(originalName.substring(12, name.length())).toString();
+            name = "RIM-COD-Size" + originalName.substring(12, name.length());
             required = (byte)(required | 16);
          }
 
@@ -142,7 +142,7 @@ final class JADAttributeParser extends Hashtable implements Persistable {
             value = jadString;
             jadString = "";
          } else {
-            StringBuffer assembleValue = (StringBuffer)(new Object());
+            StringBuffer assembleValue = new StringBuffer();
 
             label391:
             try {
@@ -273,7 +273,7 @@ final class JADAttributeParser extends Hashtable implements Persistable {
       i = 1;
 
       while (true) {
-         String attribute = ((StringBuffer)(new Object("MIDlet-"))).append(i).toString();
+         String attribute = "MIDlet-" + i;
          String midlet = (String)this.get(attribute);
          if (midlet == null) {
             this._isValid = this.extractURLs();
@@ -378,7 +378,7 @@ final class JADAttributeParser extends Hashtable implements Persistable {
          int min = 0;
          int ucount = 0;
          Enumeration keys = this.keys();
-         this._codURLs = new Object[this._codUrlCount];
+         this._codURLs = new String[this._codUrlCount];
          this._codSizes = new int[this._codUrlCount];
 
          while (keys.hasMoreElements()) {
@@ -392,7 +392,7 @@ final class JADAttributeParser extends Hashtable implements Persistable {
                   minCodfileName = codfileName;
                }
 
-               String sizeKey = ((StringBuffer)(new Object("RIM-COD-Size"))).append(key.substring(SizeOfRIM_COD_URL, key.length())).toString();
+               String sizeKey = "RIM-COD-Size" + key.substring(SizeOfRIM_COD_URL, key.length());
                String codSize = (String)this.get(sizeKey);
                if (codSize == null) {
                   this._errorMessage = MessageFormat.format(BrowserResources.getString(766), new Object[]{sizeKey});
@@ -569,10 +569,10 @@ final class JADAttributeParser extends Hashtable implements Persistable {
    }
 
    private final String[] getEnumerableProperties(String prefix) {
-      StringBuffer sb = (StringBuffer)(new Object(prefix));
+      StringBuffer sb = new StringBuffer(prefix);
       sb.append('n');
       int charindex = sb.length() - 1;
-      String[] keys = new Object[0];
+      String[] keys = new String[0];
       int i = 1;
 
       while (true) {
@@ -590,8 +590,8 @@ final class JADAttributeParser extends Hashtable implements Persistable {
    }
 
    private final int validateMicroEditionAttribute(String systemProperty, String attribute) {
-      Hashtable jadHash = (Hashtable)(new Object());
-      Hashtable systemHash = (Hashtable)(new Object());
+      Hashtable jadHash = new Hashtable();
+      Hashtable systemHash = new Hashtable();
 
       int blank;
       do {
@@ -673,7 +673,7 @@ final class JADAttributeParser extends Hashtable implements Persistable {
       int n = 1;
 
       while (true) {
-         Vector certs = (Vector)(new Object());
+         Vector certs = new Vector();
          int m = 1;
 
          while (true) {
@@ -691,10 +691,10 @@ final class JADAttributeParser extends Hashtable implements Persistable {
                   return;
                }
 
-               String[] strCerts = new Object[m];
+               String[] strCerts = new String[m];
                certs.copyInto(strCerts);
-               value = MIDletSecurity.checkJADCertChain(strCerts);
-               if (value == 0) {
+               int status = MIDletSecurity.checkJADCertChain(strCerts);
+               if (status == 0) {
                   this._certChainStatus = 0;
                   return;
                }

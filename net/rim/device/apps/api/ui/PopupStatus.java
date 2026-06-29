@@ -1,12 +1,12 @@
 package net.rim.device.apps.api.ui;
 
 import net.rim.device.api.system.Bitmap;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.container.PopupScreen;
 import net.rim.device.api.ui.container.VerticalFieldManager;
+import net.rim.device.internal.ui.VerticalFieldManager3;
 
 public class PopupStatus extends PopupScreen {
    private PopupStatus$PopScreenRunnable _popScreenRunnable = new PopupStatus$PopScreenRunnable(this);
@@ -17,8 +17,8 @@ public class PopupStatus extends PopupScreen {
    private static final int MIN_DISMISS_TIME = 1000;
 
    public PopupStatus(String message, Bitmap bitmap) {
-      super((Manager)(new Object()));
-      this._label = (LabelField)(new Object(message, 51539607552L));
+      super(new VerticalFieldManager3());
+      this._label = new LabelField(message, 51539607552L);
       if (bitmap != null) {
          this._label.setImage(bitmap);
       }
@@ -35,7 +35,7 @@ public class PopupStatus extends PopupScreen {
       UiApplication app = UiApplication.getUiApplication();
       this._popScreenRunnable.init();
       if (app.invokeLater(this._popScreenRunnable, time, false) == -1) {
-         throw new Object();
+         throw new RuntimeException();
       }
 
       this._shown = System.currentTimeMillis();

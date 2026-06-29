@@ -96,7 +96,7 @@ public final class CameraMain extends UiApplication implements FileSystemListene
       boolean isSelected = this._options.getMemoryType() == 1;
       if (!isFlagged && isMounted) {
          if (!isSelected && this._mediaDialog == null) {
-            this._mediaDialog = (Dialog)(new Object(3, _rb.getString(26), 4, null, 0));
+            this._mediaDialog = new Dialog(3, _rb.getString(26), 4, null, 0);
             this._mediaDialog.setIcon(ThemeManager.getThemeAwareImage("dialog_question"));
             this._mediaDialog.setEscapeEnabled(true);
             this._mediaDialog.setDialogClosedListener(this);

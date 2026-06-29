@@ -16,7 +16,7 @@ public class LongLongHashtable implements Persistable {
 
    public LongLongHashtable(int initialCapacity) {
       if (initialCapacity < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (initialCapacity < 1) {

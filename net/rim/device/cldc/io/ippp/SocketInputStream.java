@@ -3,6 +3,7 @@ package net.rim.device.cldc.io.ippp;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import net.rim.device.api.io.ConnectionClosedException;
+import net.rim.device.api.io.IOCancelledException;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.vm.Array;
 
@@ -15,14 +16,14 @@ public class SocketInputStream extends InputStream {
    private static final byte[] zeroLengthByteArray = new byte[0];
 
    public SocketInputStream(StreamProtocol streamProtocol) {
-      this._in = (ByteArrayInputStream)(new Object(zeroLengthByteArray));
+      this._in = new ByteArrayInputStream(zeroLengthByteArray);
       this._streamProtocol = streamProtocol;
    }
 
    @Override
-   public int read() {
+   public int read() throws IOCancelledException {
       if (this._isClosed) {
-         throw new Object();
+         throw new IOCancelledException();
       }
 
       int c = -1;
@@ -41,9 +42,9 @@ public class SocketInputStream extends InputStream {
    }
 
    @Override
-   public int read(byte[] b, int off, int len) {
+   public int read(byte[] b, int off, int len) throws IOCancelledException {
       if (this._isClosed) {
-         throw new Object();
+         throw new IOCancelledException();
       }
 
       int bytesLeftToRead = len;
@@ -86,9 +87,9 @@ public class SocketInputStream extends InputStream {
    }
 
    @Override
-   public int available() {
+   public int available() throws IOCancelledException {
       if (this._isClosed) {
-         throw new Object();
+         throw new IOCancelledException();
       } else {
          return this._in.available();
       }
@@ -101,7 +102,7 @@ public class SocketInputStream extends InputStream {
    @Override
    public void mark(int size) {
       if (size > 0) {
-         this._markedIn = new Object[1];
+         this._markedIn = new ByteArrayInputStream[1];
          this._markedIn[0] = this._in;
          this._in.mark(size);
          this._marking = true;
@@ -114,7 +115,7 @@ public class SocketInputStream extends InputStream {
    @Override
    public void reset() {
       if (this._markedIn != null) {
-         this._in = (ByteArrayInputStream)(new Object(zeroLengthByteArray));
+         this._in = new ByteArrayInputStream(zeroLengthByteArray);
       }
 
       this._marking = false;
@@ -143,7 +144,7 @@ public class SocketInputStream extends InputStream {
             nextBuffer = this._streamProtocol.getMoreInput();
          } while (nextBuffer == null || nextBuffer.available() <= 0);
 
-         this._in = (ByteArrayInputStream)(new Object(nextBuffer.getArray(), nextBuffer.getArrayPosition(), nextBuffer.available()));
+         this._in = new ByteArrayInputStream(nextBuffer.getArray(), nextBuffer.getArrayPosition(), nextBuffer.available());
          if (this._markedIn != null) {
             this._in.mark(Integer.MAX_VALUE);
             Array.resize(this._markedIn, this._markedIn.length + 1);
@@ -156,9 +157,9 @@ public class SocketInputStream extends InputStream {
       return new SocketPipeInputStream(this, ykEncoded, ykMixedEncoded);
    }
 
-   DataBuffer getMoreInput() {
+   DataBuffer getMoreInput() throws IOCancelledException {
       if (this._isClosed) {
-         throw new Object();
+         throw new IOCancelledException();
       } else {
          return this._streamProtocol.getMoreInput();
       }

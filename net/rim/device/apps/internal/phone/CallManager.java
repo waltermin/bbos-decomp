@@ -23,7 +23,7 @@ import net.rim.device.apps.internal.phone.options.PhoneOptions;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
 
 public final class CallManager implements PhoneEventListener {
-   private Vector _currentCallsCache = (Vector)(new Object(2));
+   private Vector _currentCallsCache = new Vector(2);
    private Object[] _listeners;
    private LiveCall _currentCall;
    private Application _app;
@@ -106,7 +106,7 @@ public final class CallManager implements PhoneEventListener {
    }
 
    private final Vector getCallCacheCopy() {
-      Vector copy = (Vector)(new Object(2));
+      Vector copy = new Vector(2);
       synchronized (this.getCallCacheLock()) {
          int size = this.getNumCalls();
 
@@ -230,7 +230,7 @@ public final class CallManager implements PhoneEventListener {
             currentCall = activeCall != null ? activeCall : heldCall;
          }
 
-         return (LiveCall)(currentCall == null && size > 0 ? this._currentCallsCache.elementAt(0) : currentCall);
+         return currentCall == null && size > 0 ? (LiveCall)this._currentCallsCache.elementAt(0) : currentCall;
       } finally {
          ;
       }
@@ -333,9 +333,9 @@ public final class CallManager implements PhoneEventListener {
             }
 
             if (connectedNumber != null && connectedNumber.length() > 0 && (this._currentCall.isRedirected(connectedNumber) || debugRedirectedNumber)) {
-               Out.p(((StringBuffer)(new Object("PHONE-redirection("))).append(connectedNumber).append(')').toString());
+               Out.p("PHONE-redirection(" + connectedNumber + ')');
                this._currentCall.setRedirected(connectedNumber);
-               ContextObject contextObject = (ContextObject)(new Object());
+               ContextObject contextObject = new ContextObject();
                PhoneUtilities.setPrivateFlag(contextObject, 57);
                VoiceServices.broadcastEvent(2220, callId, contextObject);
             }
@@ -507,7 +507,7 @@ public final class CallManager implements PhoneEventListener {
 
    private final LiveCall createCall(int callId, boolean incoming, int flags, CallerIDInfo callerIDInfo, Object context) {
       byte type = (byte)(incoming ? 0 : 1);
-      PhoneCallInitialData data = (PhoneCallInitialData)(new Object(callId, type, flags, callerIDInfo, context));
+      PhoneCallInitialData data = new PhoneCallInitialData(callId, type, flags, callerIDInfo, context);
       return LiveCallFactoryRegistry.getRegistry().createLiveCall(data, context);
    }
 
@@ -515,30 +515,29 @@ public final class CallManager implements PhoneEventListener {
       LiveCall call = null;
       String calledNumber = null;
       if (this.findCallByCallId(callId) == null) {
-         if (!(context instanceof Object)) {
+         if (!(context instanceof LiveCall)) {
             call = (LiveCall)ContextObject.get(context, -6075010664073451177L);
             if (call == null) {
                CallerIDInfo callerIDInfo = null;
                ContextObject callCreationContext = ContextObject.castOrCreate(context);
-               Object var12;
-               if (context instanceof Object) {
+               if (context instanceof String) {
                   callerIDInfo = PhoneUtilities.createCallerIDInfo(context);
-                  var12 = context;
-               } else if (context instanceof Object) {
+                  calledNumber = (String)context;
+               } else if (context instanceof ContextObject) {
                   callerIDInfo = (CallerIDInfo)ContextObject.get(context, 5898398779440734986L);
-                  var12 = ContextObject.get(context, 247);
+                  calledNumber = (String)ContextObject.get(context, 247);
                } else {
-                  var12 = VoiceServices.getCallPhoneNumber(callId);
-                  if (var12 != null) {
-                     callerIDInfo = PhoneUtilities.createCallerIDInfo(var12);
+                  calledNumber = VoiceServices.getCallPhoneNumber(callId);
+                  if (calledNumber != null) {
+                     callerIDInfo = PhoneUtilities.createCallerIDInfo(calledNumber);
                   } else {
                      callerIDInfo = PhoneUtilities.getCallDisplayInfo(callId, 24, context);
                   }
                }
 
                if (callerIDInfo != null) {
-                  if (var12 != null && ((String)var12).length() > 0) {
-                     PhoneNumberConverter.convertForTransmission((StringBuffer)(new Object()), ((String)var12).toCharArray(), callCreationContext);
+                  if (calledNumber != null && calledNumber.length() > 0) {
+                     PhoneNumberConverter.convertForTransmission(new StringBuffer(), calledNumber.toCharArray(), callCreationContext);
                   }
 
                   String friendlyName = callerIDInfo.getFriendlyName();
@@ -660,8 +659,8 @@ public final class CallManager implements PhoneEventListener {
 
    private final void handleCallStarted(int callId, Object context) {
       LiveCall newCall = null;
-      if (!(context instanceof Object)) {
-         if (context instanceof Object) {
+      if (!(context instanceof LiveCall)) {
+         if (context instanceof ContextObject) {
             newCall = (LiveCall)ContextObject.get(context, -6075010664073451177L);
          }
       } else {
@@ -694,35 +693,35 @@ public final class CallManager implements PhoneEventListener {
       String logString = null;
       switch (eventId) {
          case 1000:
-            System.out.println(((StringBuffer)(new Object("EV_CALL_INCOMING("))).append(callId).append(')').toString());
+            System.out.println("EV_CALL_INCOMING(" + callId + ')');
             this.phonePulseOn();
             return;
          case 1001:
-            logString = ((StringBuffer)(new Object("EV_CALL_CONNECTED("))).append(callId).append(")").toString();
+            logString = "EV_CALL_CONNECTED(" + callId + ")";
             System.out.println(logString);
             PhoneLogger.log(logString);
             this.handleCallConnected(callId);
             return;
          case 1002:
-            logString = ((StringBuffer)(new Object("EV_CALL_DISCONNECTED("))).append(callId).append(")").toString();
+            logString = "EV_CALL_DISCONNECTED(" + callId + ")";
             System.out.println(logString);
             PhoneLogger.log(logString);
             this.handleCallDisconnected(callId);
             return;
          case 1003:
-            System.out.println(((StringBuffer)(new Object("EV_CALL_HELD("))).append(callId).append(')').toString());
+            System.out.println("EV_CALL_HELD(" + callId + ')');
             return;
          case 1004:
-            System.out.println(((StringBuffer)(new Object("EV_CALL_RESUMED("))).append(callId).append(')').toString());
+            System.out.println("EV_CALL_RESUMED(" + callId + ')');
             this.handleCallResumed(callId, context);
             return;
          case 1005:
-            System.out.println(((StringBuffer)(new Object("EV_CALL_WAITING("))).append(callId).append(')').toString());
+            System.out.println("EV_CALL_WAITING(" + callId + ')');
             return;
          case 1006:
-            if (context instanceof Object) {
-               int reason = context;
-               logString = ((StringBuffer)(new Object("EV_CALL_FAILED("))).append(callId).append(",").append(reason).append(")").toString();
+            if (context instanceof Integer) {
+               int reason = (Integer)context;
+               logString = "EV_CALL_FAILED(" + callId + "," + reason + ")";
                System.out.println(logString);
                PhoneLogger.log(logString);
                this.handleCallFailed(callId, reason, context);
@@ -730,31 +729,23 @@ public final class CallManager implements PhoneEventListener {
             }
             break;
          case 1007:
-            System.out.println(((StringBuffer)(new Object("EV_CALL_ADDED("))).append(callId).append(')').toString());
+            System.out.println("EV_CALL_ADDED(" + callId + ')');
             this.handleCallAddedToConference(callId);
             return;
          case 1008:
-            System.out.println(((StringBuffer)(new Object("EV_CALL_REMOVED("))).append(callId).append(')').toString());
+            System.out.println("EV_CALL_REMOVED(" + callId + ')');
             this.handleCallRemovedFromConference(callId);
             return;
          case 1009:
-            if (context instanceof Object) {
-               int manipulateFailedReason = context;
+            if (context instanceof Integer) {
+               int manipulateFailedReason = (Integer)context;
                this.handleCallManipulateFailed(manipulateFailedReason);
-               System.out
-                  .println(
-                     ((StringBuffer)(new Object("EV_CALL_MANIPULATE_FAILED(")))
-                        .append(callId)
-                        .append(',')
-                        .append(manipulateFailedReason)
-                        .append(')')
-                        .toString()
-                  );
+               System.out.println("EV_CALL_MANIPULATE_FAILED(" + callId + ',' + manipulateFailedReason + ')');
                return;
             }
             break;
          case 1100:
-            System.out.println(((StringBuffer)(new Object("EV_CALL_INITIATED("))).append(callId).append(')').toString());
+            System.out.println("EV_CALL_INITIATED(" + callId + ')');
             int theCallId = callId;
             Object theContext = context;
             synchronized (this._app.getAppEventLock()) {
@@ -767,7 +758,7 @@ public final class CallManager implements PhoneEventListener {
             this.handleCallStarted(callId, context);
             return;
          case 1110:
-            System.out.println(((StringBuffer)(new Object("EV_CALL_ANSWERED("))).append(callId).append(')').toString());
+            System.out.println("EV_CALL_ANSWERED(" + callId + ')');
             return;
          case 1140:
             this.handleAnswerCallAborted(callId, context);
@@ -782,16 +773,16 @@ public final class CallManager implements PhoneEventListener {
             System.out.println("EV_CALL_FLASH_BY_USER");
             return;
          case 150060:
-            if (context instanceof Object) {
-               boolean state = context;
-               System.out.println(((StringBuffer)(new Object("EV_PRIVACY_STATE_CHANGE("))).append(callId).append(", ").append(state).append(')').toString());
+            if (context instanceof Boolean) {
+               boolean state = (Boolean)context;
+               System.out.println("EV_PRIVACY_STATE_CHANGE(" + callId + ", " + state + ')');
                return;
             }
             break;
          case 150070:
-            if (context instanceof Object) {
-               int status = context;
-               System.out.println(((StringBuffer)(new Object("EV_OTA_STATUS_CHANGE("))).append(callId).append(", ").append(status).append(')').toString());
+            if (context instanceof Integer) {
+               int status = (Integer)context;
+               System.out.println("EV_OTA_STATUS_CHANGE(" + callId + ", " + status + ')');
                this.handleOTAStatusChange(callId, status);
                return;
             }

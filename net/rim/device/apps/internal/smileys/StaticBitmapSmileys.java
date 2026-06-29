@@ -11,8 +11,8 @@ public class StaticBitmapSmileys extends EmoticonStringPattern {
    private Bitmap _bitmap;
    private int _size;
    private int[][] _layouts = new int[0][];
-   private String[] _text = new Object[0];
-   private String[] _searchText = new Object[0];
+   private String[] _text = new String[0];
+   private String[] _searchText = new String[0];
    private int[] _searchIds = new int[0];
    static ReverseTextComparator _comparator = new ReverseTextComparator();
    private static short[] _skipJump;

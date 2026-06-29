@@ -16,6 +16,7 @@ import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.system.PersistentObject;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectListField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.DateTimeUtilities;
@@ -41,6 +42,7 @@ import net.rim.device.apps.api.framework.model.SyncBuffer;
 import net.rim.device.apps.api.framework.model.VerbProvider;
 import net.rim.device.apps.api.framework.model.VisibilityControl;
 import net.rim.device.apps.api.framework.registration.VerbRepository;
+import net.rim.device.apps.api.framework.verb.ApplicationKeyInvocableVerb;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.messaging.Folder;
 import net.rim.device.apps.api.messaging.util.MessagingUtil;
@@ -58,6 +60,7 @@ import net.rim.device.apps.internal.phone.resource.PhoneResources;
 import net.rim.device.cldc.util.CalendarExtensions;
 import net.rim.device.internal.i18n.CommonResource;
 import net.rim.device.internal.ui.IconCollection;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 import net.rim.vm.Array;
 import net.rim.vm.WeakReference;
 
@@ -90,8 +93,8 @@ public class PhoneCallModelImpl
    private int _lineId = 1;
    public static final long SUBCLASS_FACTORIES = 1796461360838668029L;
    private static final byte[] phoneCallRecordId = new byte[]{112};
-   private static ContextObjectWR _phoneCallSyncContextWR = (ContextObjectWR)(new Object(20, 19));
-   private static WeakReference _dateTimeBufferWR = (WeakReference)(new Object(null));
+   private static ContextObjectWR _phoneCallSyncContextWR = new ContextObjectWR(20, 19);
+   private static WeakReference _dateTimeBufferWR = new WeakReference(null);
    private static DateFormat _dateTimeFormatDateOnly;
    private static DateFormat _dateTimeFormatTimeOnly;
    private static DateFormat _dateTimeFormatDateAndTime;
@@ -104,42 +107,42 @@ public class PhoneCallModelImpl
    static final int DATE_ONLY = 16;
    static final int DATE_EXTRA_SHORT = 32;
    static int[] _hints = new int[0];
-   private static WeakReference _emailBodyTextBufferWR = (WeakReference)(new Object(null));
+   private static WeakReference _emailBodyTextBufferWR = new WeakReference(null);
 
    @Override
    public int paint(Graphics graphics, int x, int y, int width, int height, Object context) {
       RIMModel submemberModel = null;
       if (ContextObject.getFlag(context, 58)) {
-         RIMModel var11 = this.getCallerIDInfo();
-         if (var11 instanceof Object) {
-            PaintProvider paintProvider = (PaintProvider)var11;
+         submemberModel = this.getCallerIDInfo();
+         if (submemberModel instanceof PaintProvider) {
+            PaintProvider paintProvider = (PaintProvider)submemberModel;
             paintProvider.paint(graphics, x, y, width, height, context);
          }
       } else if (ContextObject.getFlag(context, 34)) {
-         String typeString = MessageFormat.format(PhoneResources.getString(253), new Object[]{this.getTypeString()});
+         String typeString = MessageFormat.format(PhoneResources.getString(253), new String[]{this.getTypeString()});
          graphics.drawText(typeString, x, y, 64, width);
       } else if (ContextObject.getFlag(context, 47)) {
-         RIMModel var12 = this._payload.getAt(0);
-         if (var12 instanceof Object) {
-            PaintProvider paintProvider = (PaintProvider)var12;
+         submemberModel = (RIMModel)this._payload.getAt(0);
+         if (submemberModel instanceof PaintProvider) {
+            PaintProvider paintProvider = (PaintProvider)submemberModel;
             paintProvider.paint(graphics, x, y, width, height, context);
          }
       } else if (ContextObject.getFlag(context, 27)) {
          int flags = 0;
          if (this._type == 5 || this._type == 6) {
-            StringBuffer buf = (StringBuffer)(new Object());
+            StringBuffer buf = new StringBuffer();
             buf.append(PhoneResources.getString(6020));
             buf.append(this._payload.getElapsedTime());
             graphics.drawText(buf, 0, buf.length(), x, y, flags, width);
          } else if (this._payload.getElapsedTime() != 0) {
-            RIMModel var13 = this._payload.getAt(1);
-            if (var13 instanceof Object) {
-               PaintProvider paintProvider = (PaintProvider)var13;
+            submemberModel = (RIMModel)this._payload.getAt(1);
+            if (submemberModel instanceof PaintProvider) {
+               PaintProvider paintProvider = (PaintProvider)submemberModel;
                paintProvider.paint(graphics, x, y, width, height, context);
             }
          } else {
             StringBuffer buf;
-            buf = (StringBuffer)(new Object());
+            buf = new StringBuffer();
             label44:
             switch (this._type) {
                case 0:
@@ -162,9 +165,9 @@ public class PhoneCallModelImpl
             if (buf.length() > 0) {
                graphics.drawText(buf, 0, buf.length(), x, y, flags, width);
             } else {
-               RIMModel var14 = this._payload.getAt(1);
-               if (var14 instanceof Object) {
-                  PaintProvider paintProvider = (PaintProvider)var14;
+               submemberModel = (RIMModel)this._payload.getAt(1);
+               if (submemberModel instanceof PaintProvider) {
+                  PaintProvider paintProvider = (PaintProvider)submemberModel;
                   paintProvider.paint(graphics, x, y, width, height, context);
                }
             }
@@ -193,7 +196,7 @@ public class PhoneCallModelImpl
 
          if (this.isConferenceCallLog()) {
             Field focusedField = (Field)ContextObject.get(ctxt, 6780852635736686874L);
-            if (focusedField instanceof Object) {
+            if (focusedField instanceof ObjectListField) {
                ObjectListField listField = (ObjectListField)focusedField;
                Object callerId = listField.get(listField, listField.getSelectedIndex());
                if (callerId instanceof CallerIDInfo) {
@@ -244,7 +247,7 @@ public class PhoneCallModelImpl
 
                   PhoneUtilities.setPrivateFlag(context, 70);
                   PhoneUtilities.setPrivateFlag(context, 15);
-                  Verb[] cidiVerbs = new Object[0];
+                  Verb[] cidiVerbs = new Verb[0];
                   cidi.getVerbs(context, cidiVerbs);
                   Recognizer dialVerbRecognizer = DialVerb.getRecognizer();
 
@@ -255,7 +258,7 @@ public class PhoneCallModelImpl
                         verbs[verbs.length - 1] = new PhoneCallModelImpl$DialMarkOpenWrapperVerb(this, v);
                      }
 
-                     if (context.getFlag(102) && v instanceof Object) {
+                     if (context.getFlag(102) && v instanceof ApplicationKeyInvocableVerb) {
                         Array.resize(verbs, verbs.length + 1);
                         verbs[verbs.length - 1] = v;
                      }
@@ -298,7 +301,7 @@ public class PhoneCallModelImpl
                }
             } else {
                Field focusedField = (Field)ContextObject.get(ctxt, 6780852635736686874L);
-               if (focusedField instanceof Object) {
+               if (focusedField instanceof ObjectListField) {
                   ObjectListField listField = (ObjectListField)focusedField;
                   Object callerId = listField.get(listField, listField.getSelectedIndex());
                   if (callerId instanceof CallerIDInfo) {
@@ -315,10 +318,10 @@ public class PhoneCallModelImpl
 
    @Override
    public int match(Object searchCriteria) {
-      if (!(searchCriteria instanceof Object)) {
-         Object[] var6 = null;
-         if (searchCriteria instanceof Object[]) {
-            var6 = (Object[])searchCriteria;
+      if (!(searchCriteria instanceof SearchCriterion)) {
+         SearchCriterion[] var6 = null;
+         if (searchCriteria instanceof SearchCriterion[]) {
+            var6 = (SearchCriterion[])searchCriteria;
          }
 
          return var6 != null ? Match.match(this, this, var6, _hints) : -1;
@@ -369,7 +372,7 @@ public class PhoneCallModelImpl
                match = this.isDirectConnectType();
                break;
             case 24:
-               match = criterion.getValue() == this.getUID();
+               match = (Integer)criterion.getValue() == this.getUID();
                break;
             case 28:
                match = this.isIncoming() && !this.isDirectConnectType() && this.isUnopened();
@@ -431,7 +434,7 @@ public class PhoneCallModelImpl
    public boolean convert(Object context, Object target) {
       RIMModel submemberModel = null;
       StringBuffer buf = null;
-      StringBuffer tempBuffer = (StringBuffer)(new Object());
+      StringBuffer tempBuffer = new StringBuffer();
       if (ContextObject.getFlag(context, 20) && ContextObject.getFlag(context, 19)) {
          SyncBuffer syncBuffer = (SyncBuffer)target;
          syncBuffer.addBytes(1, phoneCallRecordId);
@@ -445,7 +448,7 @@ public class PhoneCallModelImpl
          return syncBuffer.addSubmembers(this, _phoneCallSyncContextWR.getContextObject());
       }
 
-      if (!(target instanceof Object)) {
+      if (!(target instanceof StringBuffer)) {
          return false;
       }
 
@@ -454,18 +457,18 @@ public class PhoneCallModelImpl
       String line_nl = "------------------\n";
       buf.append('\n');
       buf.append(line_nl);
-      RIMModel var11 = this._payload.getAt(0);
-      if (var11 instanceof Object) {
-         ConversionProvider conversionProvider = (ConversionProvider)var11;
+      submemberModel = (RIMModel)this._payload.getAt(0);
+      if (submemberModel instanceof ConversionProvider) {
+         ConversionProvider conversionProvider = (ConversionProvider)submemberModel;
          if (conversionProvider.convert(context, tempBuffer)) {
             buf.append(tempBuffer);
             buf.append('\n');
          }
       }
 
-      var11 = this._payload.getAt(1);
-      if (var11 instanceof Object) {
-         ConversionProvider conversionProvider = (ConversionProvider)var11;
+      submemberModel = (RIMModel)this._payload.getAt(1);
+      if (submemberModel instanceof ConversionProvider) {
+         ConversionProvider conversionProvider = (ConversionProvider)submemberModel;
          if (conversionProvider.convert(context, tempBuffer)) {
             buf.append(tempBuffer);
             buf.append('\n');
@@ -475,15 +478,15 @@ public class PhoneCallModelImpl
       int size = this.size();
 
       for (int i = 3; i < size; i++) {
-         var11 = this._payload.getAt(i);
+         submemberModel = (RIMModel)this._payload.getAt(i);
          ContextObject contextObject = ContextObject.clone(context);
          contextObject.setFlag(4);
-         if (var11 == null) {
+         if (submemberModel == null) {
             break;
          }
 
-         if (var11 instanceof Object) {
-            ConversionProvider conversionProvider = (ConversionProvider)var11;
+         if (submemberModel instanceof ConversionProvider) {
+            ConversionProvider conversionProvider = (ConversionProvider)submemberModel;
             if (conversionProvider.convert(contextObject, tempBuffer)) {
                buf.append(tempBuffer);
                buf.append('\n');
@@ -491,9 +494,9 @@ public class PhoneCallModelImpl
          }
       }
 
-      var11 = this._payload.getAt(2);
-      if (var11 instanceof Object) {
-         ConversionProvider conversionProvider = (ConversionProvider)var11;
+      submemberModel = (RIMModel)this._payload.getAt(2);
+      if (submemberModel instanceof ConversionProvider) {
+         ConversionProvider conversionProvider = (ConversionProvider)submemberModel;
          if (conversionProvider.convert(context, tempBuffer)) {
             buf.append(line_nl);
             buf.append(tempBuffer);
@@ -654,7 +657,7 @@ public class PhoneCallModelImpl
    }
 
    StringBuffer getDurationString(boolean includeLabel) {
-      StringBuffer buf = (StringBuffer)(new Object());
+      StringBuffer buf = new StringBuffer();
       if (includeLabel) {
          buf.append(CommonResources.getString(2003));
       }
@@ -704,7 +707,7 @@ public class PhoneCallModelImpl
    }
 
    Object getStatusString() {
-      StringBuffer buf = (StringBuffer)(new Object());
+      StringBuffer buf = new StringBuffer();
       if (this._type == 5 || this._type == 6) {
          buf.append(PhoneResources.getString(6020));
          buf.append(this._payload.getElapsedTime());
@@ -798,7 +801,7 @@ public class PhoneCallModelImpl
    @Override
    public Object getDefault(Object current, Object context) {
       RIMModel callerIDInfo = this.getCallerIDInfo();
-      if (!(callerIDInfo instanceof Object)) {
+      if (!(callerIDInfo instanceof DefaultProvider)) {
          return null;
       }
 
@@ -844,7 +847,7 @@ public class PhoneCallModelImpl
       if (!contextObject.getFlag(58)) {
          if (contextObject.getFlag(35) && this.canHaveNotes()) {
             RIMModel memoModel = (RIMModel)this._payload.getAt(2);
-            if (memoModel instanceof Object) {
+            if (memoModel instanceof FieldProvider) {
                FieldProvider fieldProvider = (FieldProvider)memoModel;
                return fieldProvider.getField(context);
             }
@@ -852,7 +855,7 @@ public class PhoneCallModelImpl
 
          return null;
       } else {
-         VerticalFieldManager callerIDsManager = (VerticalFieldManager)(new Object());
+         VerticalFieldManager callerIDsManager = new VerticalFieldManager();
          int size = this.size();
          if (this._type == 4) {
             ContextObject.setFlag(context, 80);
@@ -875,8 +878,8 @@ public class PhoneCallModelImpl
          boolean clearedCompanyInfoFlag = false;
          if (participantCount > 1 && ContextObject.getFlag(context, 24)) {
             String heading = PhoneResources.getString(174);
-            callerIDsManager.add((Field)(new Object(heading)));
-            callerIDsManager.add((Field)(new Object(2)));
+            callerIDsManager.add(new LabelField(heading));
+            callerIDsManager.add(new VerticalSpacerField(2));
             contextObject.clearFlag(118);
             clearedCompanyInfoFlag = true;
          }
@@ -899,7 +902,7 @@ public class PhoneCallModelImpl
                }
             }
 
-            ObjectListField callerIDListField = (ObjectListField)(new Object(2305843009213693960L));
+            ObjectListField callerIDListField = new ObjectListField(2305843009213693960L);
             callerIDListField.set(callerIDs);
             callerIDsManager.add(callerIDListField);
          }
@@ -1112,7 +1115,7 @@ public class PhoneCallModelImpl
 
    @Override
    public boolean checkCrypt(boolean compress, boolean encrypt) {
-      if (this._payload instanceof Object) {
+      if (this._payload instanceof EncryptableProvider) {
          EncryptableProvider encryptable = this._payload;
          if (!encryptable.checkCrypt(compress, encrypt)) {
             return false;
@@ -1124,7 +1127,7 @@ public class PhoneCallModelImpl
 
    @Override
    public Object reCrypt(boolean compress, boolean encrypt) {
-      if (this._payload instanceof Object) {
+      if (this._payload instanceof EncryptableProvider) {
          EncryptableProvider encryptable = this._payload;
          Object newPayload = encryptable.reCrypt(compress, encrypt);
          if (newPayload != null) {
@@ -1230,7 +1233,7 @@ public class PhoneCallModelImpl
 
    private Verb getCallerIDVerbs(CallerIDInfo cidi, Verb[] verbs, Object context) {
       if (cidi != null) {
-         Verb[] cidiVerbs = new Object[0];
+         Verb[] cidiVerbs = new Verb[0];
          Verb defaultVerb = cidi.getVerbs(context, cidiVerbs);
          if (cidiVerbs.length > 0) {
             int origCount = verbs.length;
@@ -1248,7 +1251,7 @@ public class PhoneCallModelImpl
       _dateTimeFormatDateOnly = DateFormat.getInstance(56);
       _dateTimeFormatTimeOnly = DateFormat.getInstance(7);
       _dateTimeFormatDateAndTime = DateFormat.getInstance(63);
-      _dateTimeFormatShortDate = (SimpleDateFormat)(new Object(PhoneResources.getString(6329)));
+      _dateTimeFormatShortDate = new SimpleDateFormat(PhoneResources.getString(6329));
    }
 
    private void forwardCallLog() {
@@ -1256,7 +1259,7 @@ public class PhoneCallModelImpl
       Verb[] composeVerbs = verbRepository.getVerbs(-2985347935260258684L);
       if (composeVerbs != null && composeVerbs.length > 0) {
          StringBuffer _emailBodyTextBuffer = WeakReferenceUtilities.getStringBuffer(_emailBodyTextBufferWR);
-         ContextObject contextObject = (ContextObject)(new Object(43, 24));
+         ContextObject contextObject = new ContextObject(43, 24);
          if (this.convert(contextObject, _emailBodyTextBuffer)) {
             contextObject.clearFlag(43);
             contextObject.put(-1188330299125235844L, PhoneResources.getString(135));

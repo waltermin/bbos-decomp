@@ -178,14 +178,7 @@ class MediaStreamingManagerImpl$StreamingSessionImpl$ReadThread extends Thread {
                this.notifyDone(callback);
             }
          } else if (this._state != 0) {
-            System.out
-               .println(
-                  ((StringBuffer)(new Object("AUDIOMANAGER: Stream ")))
-                     .append(this.this$1._session)
-                     .append(" callback==null and state==")
-                     .append(this._state)
-                     .toString()
-               );
+            System.out.println("AUDIOMANAGER: Stream " + this.this$1._session + " callback==null and state==" + this._state);
             this._state = 0;
          }
 
@@ -202,7 +195,7 @@ class MediaStreamingManagerImpl$StreamingSessionImpl$ReadThread extends Thread {
    public void sendRecordingDone(int streamingDoneReason, int headerLength) {
       synchronized (this._lock) {
          if (!this.this$1._recording) {
-            throw new Object("sendRecordingDone: not recording");
+            throw new IllegalStateException("sendRecordingDone: not recording");
          }
 
          if (this._state != 0 && this._state != 4) {
@@ -212,7 +205,7 @@ class MediaStreamingManagerImpl$StreamingSessionImpl$ReadThread extends Thread {
             this._headerLength = headerLength;
             this._lock.notify();
          } else {
-            throw new Object("sendStreamingDone: STATE_UNINITIALIZED");
+            throw new IllegalStateException("sendStreamingDone: STATE_UNINITIALIZED");
          }
       }
    }
@@ -220,7 +213,7 @@ class MediaStreamingManagerImpl$StreamingSessionImpl$ReadThread extends Thread {
    public void sendSourceEnded() {
       synchronized (this._lock) {
          if (this._sourceEnded) {
-            throw new Object("sendSourceEnded: sendSourceEnded already ended");
+            throw new IllegalStateException("sendSourceEnded: sendSourceEnded already ended");
          }
 
          this._sourceEnded = true;
@@ -230,7 +223,7 @@ class MediaStreamingManagerImpl$StreamingSessionImpl$ReadThread extends Thread {
    public void sendStreamingDone(int streamingDoneReason) {
       synchronized (this._lock) {
          if (this.this$1._recording) {
-            throw new Object("sendStreamingDone: recording");
+            throw new IllegalStateException("sendStreamingDone: recording");
          }
 
          this._state = 4;

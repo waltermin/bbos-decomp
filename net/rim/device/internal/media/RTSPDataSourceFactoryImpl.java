@@ -26,7 +26,7 @@ final class RTSPDataSourceFactoryImpl extends RTSPDataSourceFactory {
       }
 
       try {
-         URL url = (URL)(new Object(locator));
+         URL url = new URL(locator);
          String urlToOpen = url.toStringWithoutRIMParams();
          URLParameters params = url.getRIMParameters();
          String apn = null;
@@ -39,7 +39,7 @@ final class RTSPDataSourceFactoryImpl extends RTSPDataSourceFactory {
                ServiceBook sb = ServiceBook.getSB();
                ServiceRecord rec = sb.getRecordByUidAndCid(connectionUid, WPTCPServiceRecord.SERVICE_CID);
                if (rec == null) {
-                  throw new Object("Could not find record");
+                  throw new IllegalArgumentException("Could not find record");
                }
 
                WPTCPServiceRecord record = WPTCPServiceRecord.getRecord(rec);
@@ -81,9 +81,9 @@ final class RTSPDataSourceFactoryImpl extends RTSPDataSourceFactory {
             }
          }
 
-         return (RTSPDataSource)(new Object(urlToOpen, userAgent, apn, apnUsername, apnPassword));
+         return new RTSPDataSource(urlToOpen, userAgent, apn, apnUsername, apnPassword);
       } finally {
-         throw new Object("Bad locator");
+         throw new IllegalArgumentException("Bad locator");
       }
    }
 }

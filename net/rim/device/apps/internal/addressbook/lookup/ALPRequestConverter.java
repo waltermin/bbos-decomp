@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.addressbook.lookup;
 import net.rim.device.api.synchronization.ConverterUtilities;
 import net.rim.device.apps.api.transmission.rim.CMIMEUtilities;
 import net.rim.device.apps.api.utility.serialization.BaseConverter;
+import net.rim.device.apps.api.utility.serialization.SerializationException;
 
 final class ALPRequestConverter extends BaseConverter {
    @Override
@@ -29,9 +30,9 @@ final class ALPRequestConverter extends BaseConverter {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final byte[] convert(Object inputObject, Object contextObject) {
+   public final byte[] convert(Object inputObject, Object contextObject) throws SerializationException {
       if (!(inputObject instanceof Request)) {
-         throw new Object();
+         throw new SerializationException();
       }
 
       Request request = (Request)inputObject;
@@ -103,7 +104,7 @@ final class ALPRequestConverter extends BaseConverter {
          dataBuffer.writeByte(0);
          return dataBuffer.toArray();
       } else {
-         throw new Object("ALP search string is invalid");
+         throw new SerializationException("ALP search string is invalid");
       }
    }
 }

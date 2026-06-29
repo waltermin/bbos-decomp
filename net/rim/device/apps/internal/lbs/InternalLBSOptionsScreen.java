@@ -8,6 +8,7 @@ import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.CheckboxField;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.apps.api.ui.PopupStatus;
@@ -27,54 +28,47 @@ final class InternalLBSOptionsScreen extends MainScreen implements FieldChangeLi
    InternalLBSOptionsScreen() {
       super(65536);
       this.setTitle("Internal LBS Options");
-      this.add((Field)(new Object("Maps version: ", LBSOptions.getString(7544824750646866888L, "unknown"), 1000000, 9007199254740992L)));
-      this._lbsServerField = (BasicEditField)(new Object(117440512));
+      this.add(new BasicEditField("Maps version: ", LBSOptions.getString(7544824750646866888L, "unknown"), 1000000, 9007199254740992L));
+      this._lbsServerField = new BasicEditField(117440512);
       this._lbsServerField.setText(LBSOptions.getURL(-7064416726417485961L));
       this._lbsServerField.setLabel("Map Server: ");
       this.add(this._lbsServerField);
       this._lbsServerField.setChangeListener(this);
-      this.add((Field)(new Object(((StringBuffer)(new Object("Current Maplet Version: "))).append(LBSOptions.getInt(3743068244816784828L, 1)).toString())));
-      this._locatorServerField = (BasicEditField)(new Object(117440512));
+      this.add(new LabelField("Current Maplet Version: " + LBSOptions.getInt(3743068244816784828L, 1)));
+      this._locatorServerField = new BasicEditField(117440512);
       this._locatorServerField.setText(LBSOptions.getURL(6933732722635403673L));
       this._locatorServerField.setLabel("Locator Server: ");
       this.add(this._locatorServerField);
       this._locatorServerField.setChangeListener(this);
-      this._directionsServerField = (BasicEditField)(new Object(117440512));
+      this._directionsServerField = new BasicEditField(117440512);
       this._directionsServerField.setText(LBSOptions.getURL(-254277793043409026L));
       this._directionsServerField.setLabel("Directions Server: ");
       this.add(this._directionsServerField);
       this._directionsServerField.setChangeListener(this);
-      this._poiServerField = (BasicEditField)(new Object(117440512));
+      this._poiServerField = new BasicEditField(117440512);
       this._poiServerField.setText(LBSOptions.getURL(3589376987760903020L));
       this._poiServerField.setLabel("POI Server: ");
       this.add(this._poiServerField);
       this._poiServerField.setChangeListener(this);
-      this._useCustomULRs = (CheckboxField)(new Object("Use Custom URL's", LBSOptions.getBoolean(-6271428560607580713L, false)));
+      this._useCustomULRs = new CheckboxField("Use Custom URL's", LBSOptions.getBoolean(-6271428560607580713L, false));
       this.add(this._useCustomULRs);
       if (!InternalServices.isDeviceSecure()) {
-         this._useBISRadio = (CheckboxField)(new Object("Use BIS for Radio", LBSOptions.getBoolean(2585038783968687563L, true)));
+         this._useBISRadio = new CheckboxField("Use BIS for Radio", LBSOptions.getBoolean(2585038783968687563L, true));
          this.add(this._useBISRadio);
       }
 
       if (!InternalServices.isDeviceSecure()) {
-         this._useBISWiFi = (CheckboxField)(new Object("Use BIS for WiFi", LBSOptions.getBoolean(-6773447903022085068L, false)));
+         this._useBISWiFi = new CheckboxField("Use BIS for WiFi", LBSOptions.getBoolean(-6773447903022085068L, false));
          this.add(this._useBISWiFi);
       }
 
-      this._wipePersist = (ButtonField)(new Object("Clear Maps Persistence", 12884901888L));
+      this._wipePersist = new ButtonField("Clear Maps Persistence", 12884901888L);
       this.add(this._wipePersist);
       this._wipePersist.setChangeListener(this);
       if (!InternalServices.isDeviceSecure()) {
          String appURL = LBSOptions.getString(-9040565055715388692L, "http://maps.blackberry.com");
          boolean isDefaultURL = "http://maps.blackberry.com".equals(appURL);
-         this.add(
-            (Field)(new Object(
-               ((StringBuffer)(new Object("App Update URL ("))).append(isDefaultURL ? "default" : "provided").append("): ").toString(),
-               appURL,
-               1000000,
-               9007199254740992L
-            ))
-         );
+         this.add(new BasicEditField("App Update URL (" + (isDefaultURL ? "default" : "provided") + "): ", appURL, 1000000, 9007199254740992L));
       }
    }
 
@@ -156,7 +150,7 @@ final class InternalLBSOptionsScreen extends MainScreen implements FieldChangeLi
             System.exit(0);
             return;
          }
-      } else if (field instanceof Object && !this._useCustomULRs.getChecked()) {
+      } else if (field instanceof BasicEditField && !this._useCustomULRs.getChecked()) {
          this._useCustomULRs.setChecked(true);
          this._useCustomULRs.setDirty(true);
       }

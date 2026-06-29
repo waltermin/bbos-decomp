@@ -44,7 +44,7 @@ public class EmailComposeComboField$EmailComposeEditable extends AddressBookComb
       if (this.getInputContext().getActiveInputMethodID() == 512) {
          StringBuffer keys = event.getOriginatingKeys();
          if (this.getText().length() == 0 && keys != null && keys.length() > 0) {
-            this._imTranslatedBuffer = (StringBuffer)(new Object());
+            this._imTranslatedBuffer = new StringBuffer();
             this._imCommittedCount = 0;
          }
 
@@ -73,7 +73,7 @@ public class EmailComposeComboField$EmailComposeEditable extends AddressBookComb
    @Override
    protected void notifyTextChanged(FormatParams aParams, boolean isInsertionOrDeletion) {
       if (this._translatedBuffer == null) {
-         this._translatedBuffer = (StringBuffer)(new Object());
+         this._translatedBuffer = new StringBuffer();
       }
 
       super.notifyTextChanged(aParams, isInsertionOrDeletion);

@@ -168,11 +168,11 @@ public final class HttpConnectionManager implements GlobalEventListener, Connect
             this._processTable.put(pid, pc);
          }
 
-         pc._inUseConnections.addElement(new Object(socketConnection));
+         pc._inUseConnections.addElement(new WeakReference(socketConnection));
       }
 
       try {
-         return socketConnection instanceof Object
+         return socketConnection instanceof SecureConnection
             ? new net.rim.device.cldc.io.devicehttps.ClientProtocol(
                host, url, (SecureConnection)socketConnection, in, out, explicitProxy, useHttp11, mode, timeouts, true, record, true
             )
@@ -316,7 +316,7 @@ public final class HttpConnectionManager implements GlobalEventListener, Connect
 
    private HttpConnectionManager() {
       EventLogger.register(711994783830004691L, "net.rim.http", 2);
-      this._processTable = (IntHashtable)(new Object());
+      this._processTable = new IntHashtable();
       this._cleanupSync = new Object();
       Proxy.getInstance().addGlobalEventListener(this);
    }

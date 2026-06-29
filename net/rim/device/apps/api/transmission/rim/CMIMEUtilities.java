@@ -29,7 +29,7 @@ public final class CMIMEUtilities implements CMIMEConstants {
          byte[] parametersAsBytes = parseApplicationDataForParameter(sr.getApplicationData(), (byte)-128);
          if (parametersAsBytes != null) {
             try {
-               DataBuffer buffer = (DataBuffer)(new Object());
+               DataBuffer buffer = new DataBuffer();
                buffer.setData(parametersAsBytes, 0, parametersAsBytes.length);
                Parameters parameters = new Parameters(2, 4);
                parameters.read(buffer, (byte)0);
@@ -195,7 +195,7 @@ public final class CMIMEUtilities implements CMIMEConstants {
    private static final byte[] parseApplicationDataForParameter(byte[] applicationDataByteArray, byte parameterToFetchAgainst) {
       if (applicationDataByteArray != null && applicationDataByteArray.length > 0) {
          try {
-            DataBuffer buffer = (DataBuffer)(new Object());
+            DataBuffer buffer = new DataBuffer();
             buffer.setData(applicationDataByteArray, 0, applicationDataByteArray.length);
             buffer.readUnsignedByte();
             Parameters parameters = new Parameters(12, 4);
@@ -256,12 +256,12 @@ public final class CMIMEUtilities implements CMIMEConstants {
                try {
                   var15 = true;
                   encodingByte = (byte)(encodingByte & -129);
-                  DataBuffer stringLength = new Object();
-                  ((DataBuffer)stringLength).setData(byteArray, var19, length - var19);
-                  CMIMEParameters futureDataParams = new CMIMEParameters((DataBuffer)stringLength, 2, 2);
+                  DataBuffer stringLength = new DataBuffer();
+                  stringLength.setData(byteArray, var19, length - var19);
+                  CMIMEParameters futureDataParams = new CMIMEParameters(stringLength, 2, 2);
                   firstDataByte = var19 = futureDataParams.read((byte)0);
-                  if (((DataBuffer)stringLength).getArrayPosition() > var19) {
-                     var19 += ((DataBuffer)stringLength).getArrayStart();
+                  if (stringLength.getArrayPosition() > var19) {
+                     var19 += stringLength.getArrayStart();
                      firstDataByte = var19;
                   }
 
@@ -289,18 +289,18 @@ public final class CMIMEUtilities implements CMIMEConstants {
          }
 
          try {
-            String wholeAddress = (String)(new Object(byteArray, firstDataByte, length - firstDataByte, encString));
+            String wholeAddress = new String(byteArray, firstDataByte, length - firstDataByte, encString);
             if (wholeAddress != null && wholeAddress.length() > 0) {
                int stringLength = wholeAddress.length();
                offset = wholeAddress.indexOf(0);
                if (offset == -1) {
-                  address = new Object[]{wholeAddress};
+                  address = new String[]{wholeAddress};
                } else {
                   if (offset != 0 && offset != stringLength - 1 || stringLength <= 1) {
-                     return new Object[]{wholeAddress.substring(0, offset), wholeAddress.substring(offset + 1, stringLength)};
+                     return new String[]{wholeAddress.substring(0, offset), wholeAddress.substring(offset + 1, stringLength)};
                   }
 
-                  address = new Object[1];
+                  address = new String[1];
                   if (offset == 0) {
                      address[0] = wholeAddress.substring(1, stringLength);
                   } else {
@@ -322,10 +322,10 @@ public final class CMIMEUtilities implements CMIMEConstants {
    }
 
    public static final String[][] decodeAddresses(byte[][] byteArrays, boolean isUnicodeEnabled) {
-      String[][] addresses = (Object[][])null;
+      String[][] addresses = (String[][])null;
       if (byteArrays != null) {
          int length = byteArrays.length;
-         addresses = new Object[length][];
+         addresses = new String[length][];
 
          for (int count = 0; count < length; count++) {
             addresses[count] = decodeAddress(byteArrays[count], isUnicodeEnabled);
@@ -409,7 +409,7 @@ public final class CMIMEUtilities implements CMIMEConstants {
                   encodingByte = (byte)(encodingByte & -129);
                   String encodingName = getEncoding(encodingByte);
                   if (encodingName != null && encodingName.length() > 0) {
-                     DataBuffer dataBuffer = (DataBuffer)(new Object());
+                     DataBuffer dataBuffer = new DataBuffer();
                      offset++;
                      length--;
                      int var17 = 0;
@@ -443,9 +443,9 @@ public final class CMIMEUtilities implements CMIMEConstants {
          }
 
          try {
-            return new Object(byteArray, offset + i, length - i, enc);
+            return new String(byteArray, offset + i, length - i, enc);
          } finally {
-            return new Object(byteArray, offset + i, length - i);
+            return new String(byteArray, offset + i, length - i);
          }
       } else {
          return "";
@@ -465,7 +465,7 @@ public final class CMIMEUtilities implements CMIMEConstants {
          byte curEnc = resolveEncoding(parseToGetData ? getServerEncoding(aApplicationData) : aApplicationData);
          if (curEnc != -1) {
             curEnc = (byte)(curEnc & (byte)(~HINTS));
-            return ((StringBuffer)(new Object("text/plain;charset="))).append(getEncoding(curEnc)).toString();
+            return "text/plain;charset=" + getEncoding(curEnc);
          }
       }
 
@@ -477,7 +477,7 @@ public final class CMIMEUtilities implements CMIMEConstants {
          encoding = (byte)(encoding & (byte)(~HINTS));
          String encodingName = getEncoding(encoding);
          if (encodingName != null && encodingName.length() > 0) {
-            return ((StringBuffer)(new Object("text/plain;charset="))).append(encodingName).toString();
+            return "text/plain;charset=" + encodingName;
          }
       }
 
@@ -528,14 +528,14 @@ public final class CMIMEUtilities implements CMIMEConstants {
             }
          }
 
-         Parameters p = new Parameters((DataBuffer)(new Object()), 1, 1);
+         Parameters p = new Parameters(new DataBuffer(), 1, 1);
          if (isEncoded) {
             p.add((byte)-6, encByte, fileNameBytes);
          } else {
             p.add((byte)-14, fileNameBytes);
          }
 
-         DataBuffer db = (DataBuffer)(new Object());
+         DataBuffer db = new DataBuffer();
          db.writeByte(1);
          if (isEncoded) {
             db.writeByte(129);

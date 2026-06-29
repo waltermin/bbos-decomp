@@ -6,9 +6,9 @@ import net.rim.device.api.util.IntVector;
 import net.rim.device.api.util.StringUtilities;
 
 public final class ContactKeywordsData implements GTPatriciaTreeData {
-   private IntVector _nodes = (IntVector)(new Object());
-   private IntVector _leaves = (IntVector)(new Object());
-   private SparseList _contactMap = (SparseList)(new Object());
+   private IntVector _nodes = new IntVector();
+   private IntVector _leaves = new IntVector();
+   private SparseList _contactMap = new SparseList();
    private static final int BIT_NUMBER_MASK = 65535;
    private static final int BIT_NUMBER_SHIFT = 16;
    private static final int LEFT_SIZE_MASK = 65535;

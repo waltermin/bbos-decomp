@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.browser.javascript;
 
 import net.rim.device.api.browser.field.BrowserContent;
-import net.rim.device.api.browser.field.Event;
+import net.rim.device.api.browser.field.FullWindowEvent;
 import net.rim.device.api.browser.field.RenderingApplication;
 import net.rim.device.api.i18n.MessageFormat;
 import net.rim.device.api.util.StringUtilities;
@@ -25,7 +25,7 @@ class ESWindowPrototype$11 extends JavaScriptHostFunction {
    public long run() {
       ESObject thiz = this.getThis();
       ESObject windowObj = thiz;
-      if (thiz instanceof Object) {
+      if (thiz instanceof GlobalObject) {
          windowObj = ((GlobalObject)thiz).getRedirectionObject();
       }
 
@@ -48,14 +48,14 @@ class ESWindowPrototype$11 extends JavaScriptHostFunction {
                         }
                      }
 
-                     if (BackgroundDialog.getChoice(MessageFormat.format(BrowserResources.getString(631), new Object[]{url}), choices, 1) == 0) {
+                     if (BackgroundDialog.getChoice(MessageFormat.format(BrowserResources.getString(631), new String[]{url}), choices, 1) == 0) {
                         window._scriptEngine.setSuppressPopups(true);
                         window._location.loadPage(url, window._scriptEngine.getClickID());
                         if (fullWindow) {
                            BrowserContent content = JavaScriptEngine.getInstance()._browserContent;
                            RenderingApplication renderingApplication = content.getRenderingApplication();
                            if (renderingApplication != null) {
-                              renderingApplication.eventOccurred((Event)(new Object(content)));
+                              renderingApplication.eventOccurred(new FullWindowEvent(content));
                            }
                         }
 

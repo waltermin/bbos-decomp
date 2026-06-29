@@ -44,7 +44,7 @@ public final class KeyStoreManager {
    }
 
    public final synchronized void register(KeyStore keyStore) {
-      WeakReference weakReference = (WeakReference)(new Object(keyStore));
+      WeakReference weakReference = new WeakReference(keyStore);
       if (this._keyStores != null) {
          int length = this._keyStores.length;
 
@@ -69,7 +69,7 @@ public final class KeyStoreManager {
          Array.resize(this._keyStores, length + 1);
          this._keyStores[length] = weakReference;
       } else {
-         this._keyStores = new Object[]{weakReference};
+         this._keyStores = new WeakReference[]{weakReference};
       }
    }
 
@@ -94,7 +94,7 @@ public final class KeyStoreManager {
       // 14: aload 6
       // 16: instanceof net/rim/device/api/crypto/keystore/PersistableRIMKeyStoreFactory
       // 19: ifne 48
-      // 1c: new java/lang/Object
+      // 1c: new java/lang/IllegalArgumentException
       // 1f: dup
       // 20: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 23: athrow
@@ -124,7 +124,7 @@ public final class KeyStoreManager {
       // 54: aload 7
       // 56: lload 2
       // 57: invokevirtual net/rim/device/api/util/LongHashtable.get (J)Ljava/lang/Object;
-      // 5a: checkcast java/lang/Object
+      // 5a: checkcast net/rim/device/api/system/CodeSigningKey
       // 5d: astore 8
       // 5f: aload 8
       // 61: ifnonnull 75
@@ -142,7 +142,7 @@ public final class KeyStoreManager {
       // 7c: aload 4
       // 7e: invokevirtual net/rim/device/api/system/CodeSigningKey.equals (Ljava/lang/Object;)Z
       // 81: ifne 8c
-      // 84: new java/lang/Object
+      // 84: new net/rim/device/api/system/ControlledAccessException
       // 87: dup
       // 88: invokespecial net/rim/device/api/system/ControlledAccessException.<init> ()V
       // 8b: athrow
@@ -151,7 +151,7 @@ public final class KeyStoreManager {
       // 91: aload 8
       // 93: invokestatic net/rim/device/api/system/ControlledAccess.verifyCodeModuleSignature (ILnet/rim/device/api/system/CodeSigningKey;)Z
       // 96: ifne a1
-      // 99: new java/lang/Object
+      // 99: new net/rim/device/api/system/ControlledAccessException
       // 9c: dup
       // 9d: invokespecial net/rim/device/api/system/ControlledAccessException.<init> ()V
       // a0: athrow
@@ -221,7 +221,7 @@ public final class KeyStoreManager {
       // 14: ifeq 54
       // 17: aload 3
       // 18: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 1d: checkcast java/lang/Object
+      // 1d: checkcast java/lang/String
       // 20: invokestatic java/lang/Class.forName (Ljava/lang/String;)Ljava/lang/Class;
       // 23: invokevirtual java/lang/Class.newInstance ()Ljava/lang/Object;
       // 26: astore 4

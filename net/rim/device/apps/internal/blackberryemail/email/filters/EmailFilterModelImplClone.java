@@ -25,7 +25,7 @@ public class EmailFilterModelImplClone extends EmailFilterModelImpl {
       super._uid = m._uid;
       synchronized (m._fields) {
          int size = m._fields.size();
-         super._fields = (Vector)(new Object(size));
+         super._fields = new Vector(size);
 
          for (int i = 0; i < size; i++) {
             Object obj = m._fields.elementAt(i);

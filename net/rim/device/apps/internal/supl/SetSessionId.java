@@ -96,7 +96,7 @@ final class SetSessionId {
 
    final void print() {
       System.out.println("SetSessionId: ");
-      System.out.println(((StringBuffer)(new Object("SessionId: "))).append(this.sessionId).toString());
+      System.out.println("SessionId: " + this.sessionId);
       System.out.println("SetId: ");
       if (!(this.setId instanceof Imsi)) {
          if (!(this.setId instanceof Msisdn)) {

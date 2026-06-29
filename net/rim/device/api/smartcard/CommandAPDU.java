@@ -38,7 +38,7 @@ public class CommandAPDU {
    }
 
    public CommandAPDU(byte[] apduBytes) {
-      this((DataBuffer)(new Object(apduBytes, 0, apduBytes.length, true)));
+      this(new DataBuffer(apduBytes, 0, apduBytes.length, true));
    }
 
    // $VF: Could not inline inconsistent finally blocks
@@ -47,9 +47,7 @@ public class CommandAPDU {
       try {
          int bytesAvailable = apduBuffer.available();
          if (bytesAvailable == 0) {
-            throw new SmartCardInvalidAPDUException(
-               ((StringBuffer)(new Object("Invalid command APDU length. Length = "))).append(apduBuffer.available()).toString()
-            );
+            throw new SmartCardInvalidAPDUException("Invalid command APDU length. Length = " + apduBuffer.available());
          }
 
          this._apduHeaderLength = 0;
@@ -191,7 +189,7 @@ public class CommandAPDU {
 
    public void setLcData(byte[] LcData) {
       if (LcData == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this.setLcData(LcData, 0, LcData.length);
@@ -202,13 +200,13 @@ public class CommandAPDU {
          this._data = Arrays.copy(LcData, offset, length);
          this._Lc = length;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    public void appendLcData(byte[] moreLcData) {
       if (moreLcData == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this.appendLcData(moreLcData, 0, moreLcData.length);
@@ -216,7 +214,7 @@ public class CommandAPDU {
 
    public void appendLcData(byte[] moreLcData, int offset, int length) {
       if (moreLcData == null || offset + length > moreLcData.length || offset < 0 || length <= 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (this._data == null) {
@@ -334,7 +332,7 @@ public class CommandAPDU {
    @Override
    public String toString() {
       byte[] apdu = this.getAPDU();
-      StringBuffer data = (StringBuffer)(new Object());
+      StringBuffer data = new StringBuffer();
       if (apdu != null) {
          int length = apdu.length;
 

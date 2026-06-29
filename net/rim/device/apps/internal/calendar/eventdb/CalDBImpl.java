@@ -6,7 +6,7 @@ import java.util.Hashtable;
 import java.util.TimeZone;
 import java.util.Vector;
 import net.rim.device.api.collection.CollectionListener;
-import net.rim.device.api.collection.LongKeyProviderAdaptor;
+import net.rim.device.api.collection.LongKeyProviderAdaptorComparator;
 import net.rim.device.api.collection.ReadableList;
 import net.rim.device.api.collection.util.CollectionListenerManager;
 import net.rim.device.api.collection.util.LongHashtableCollection;
@@ -20,13 +20,13 @@ import net.rim.device.api.system.PersistentObject;
 import net.rim.device.api.system.PersistentStore;
 import net.rim.device.api.system.RIMPersistentStore;
 import net.rim.device.api.util.Arrays;
-import net.rim.device.api.util.Comparator;
 import net.rim.device.api.util.DateTimeUtilities;
 import net.rim.device.api.util.IntHashtable;
 import net.rim.device.api.util.LongEnumeration;
 import net.rim.device.api.util.LongHashtable;
 import net.rim.device.api.util.SimpleSortingVector;
 import net.rim.device.apps.api.calendar.caldb.CalDB;
+import net.rim.device.apps.api.calendar.caldb.CalendarLongKeyAdaptor;
 import net.rim.device.apps.api.calendar.caldb.CalendarService;
 import net.rim.device.apps.api.calendar.caldb.CalendarServiceManager;
 import net.rim.device.apps.api.calendar.controller.Duration;
@@ -45,29 +45,30 @@ import net.rim.device.cldc.util.CalendarExtensions;
 import net.rim.vm.Array;
 import net.rim.vm.DirtyBits;
 import net.rim.vm.Memory;
+import net.rim.vm.WeakReference;
 
 class CalDBImpl implements CalDB {
    private PersistentObject _calData;
    private CalDBImpl$CalendarData _cal;
    private OTACalendarSyncDataManager _otaSyncDataManager;
-   private CollectionListenerManager _notifierExternal = (CollectionListenerManager)(new Object());
-   private CollectionListenerManager _notifierSort = (CollectionListenerManager)(new Object());
-   private CollectionListenerManager _notifierLowPriorityListeners = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _notifierExternal = new CollectionListenerManager();
+   private CollectionListenerManager _notifierSort = new CollectionListenerManager();
+   private CollectionListenerManager _notifierLowPriorityListeners = new CollectionListenerManager();
    private boolean _notificationsSuspended;
    private CalDBImpl$CalDBLongSortedReadableList _nonRecurringStartTimeSort = new CalDBImpl$CalDBLongSortedReadableList(
-      (LongKeyProviderAdaptor)(new Object(-7347526267900023482L)), true, false
+      new CalendarLongKeyAdaptor(-7347526267900023482L), true, false
    );
    private CalDBImpl$CalDBLongSortedReadableList _recurringStartTimeSort = new CalDBImpl$CalDBLongSortedReadableList(
-      (LongKeyProviderAdaptor)(new Object(-7347526267900023482L)), false, true
+      new CalendarLongKeyAdaptor(-7347526267900023482L), false, true
    );
    private CalDBImpl$CalDBLongSortedReadableList _endTimeSort = new CalDBImpl$CalDBLongSortedReadableList(
-      (LongKeyProviderAdaptor)(new Object(-104331952420113366L)), true, true
+      new CalendarLongKeyAdaptor(-104331952420113366L), true, true
    );
    private CalDBImpl$CalDBLongSortedReadableList _durationSort = new CalDBImpl$CalDBLongSortedReadableList(
-      (LongKeyProviderAdaptor)(new Object(-1863931878973078146L)), true, true
+      new CalendarLongKeyAdaptor(-1863931878973078146L), true, true
    );
    private LongThresholdList _sharedThresh = new LongThresholdList();
-   private LongHashtable _sharedLongHash = (LongHashtable)(new Object());
+   private LongHashtable _sharedLongHash = new LongHashtable();
    private RecurCache _recurCache;
    private CalDBImpl$SetOfEvents _setOfEvents = new CalDBImpl$SetOfEvents();
    private Calendar _cachedCalendar = Calendar.getInstance();
@@ -90,7 +91,7 @@ class CalDBImpl implements CalDB {
       synchronized (this._calData) {
          if (this._calData.getContents() == null) {
             this._cal = new CalDBImpl$CalendarData();
-            this._cal._calElements = (LongHashtableCollection)(new Object());
+            this._cal._calElements = new LongHashtableCollection();
             this._calData.setContents(this._cal, 51, false);
             this._calData.commit();
          }
@@ -99,7 +100,7 @@ class CalDBImpl implements CalDB {
       this._cal = (CalDBImpl$CalendarData)this._calData.getContents();
       synchronized (this.getLockObject()) {
          this._eventsSortedByStartDate = new CalDBImpl$CalendarBigSortedReadableList(
-            this, (Comparator)(new Object((LongKeyProviderAdaptor)(new Object(-7347526267900023482L))))
+            this, new LongKeyProviderAdaptorComparator(new CalendarLongKeyAdaptor(-7347526267900023482L))
          );
       }
 
@@ -256,7 +257,7 @@ class CalDBImpl implements CalDB {
 
       while (allPossible.hasMoreElements()) {
          Object calObject = allPossible.nextElement();
-         if (calObject instanceof Object) {
+         if (calObject instanceof DurationParts) {
             DurationParts partsController = (DurationParts)calObject;
             if (partsController.hasParts()) {
                UniqueIDProvider uidp = (UniqueIDProvider)calObject;
@@ -415,8 +416,8 @@ class CalDBImpl implements CalDB {
          int recurringIndex = 0;
          int recurType = 0;
          long closest = -1;
-         Hashtable recurrences = (Hashtable)(new Object(numRecurring));
-         IntHashtable candidates = (IntHashtable)(new Object());
+         Hashtable recurrences = new Hashtable(numRecurring);
+         IntHashtable candidates = new IntHashtable();
          long[] timeDelta = new long[]{
             -1L,
             -1L,
@@ -712,7 +713,7 @@ class CalDBImpl implements CalDB {
       if (listenerToAdd instanceof CalDBImpl$CalendarBigSortedReadableList) {
          this._notifierSort.addCollectionListener(listenerToAdd);
       } else {
-         this._notifierExternal.addCollectionListener(new Object(listenerToAdd));
+         this._notifierExternal.addCollectionListener(new WeakReference(listenerToAdd));
       }
    }
 
@@ -806,7 +807,7 @@ class CalDBImpl implements CalDB {
          byte[] hashData = EventUtilities.getHashData((Event)elementToAdd);
          byte[] oldHashData = null;
          if (syncData == null) {
-            syncData = (OTASyncData)(new Object(0, 1));
+            syncData = new OTASyncData(0, 1);
             this._otaSyncDataManager.add(event, syncData);
          }
 
@@ -826,7 +827,7 @@ class CalDBImpl implements CalDB {
          }
 
          synchronized (this.getLockObject()) {
-            if (elementToAdd instanceof Object) {
+            if (elementToAdd instanceof EncryptableProvider) {
                EncryptableProvider ep = (EncryptableProvider)elementToAdd;
                ep.reCrypt(true, true);
             }
@@ -1017,7 +1018,7 @@ class CalDBImpl implements CalDB {
 
                long key = keys.nextElement();
                Object event = calElements.get(key);
-               if (event instanceof Object) {
+               if (event instanceof EncryptableProvider) {
                   EncryptableProvider encryptable = (EncryptableProvider)event;
                   if (!encryptable.checkCrypt(true, true)) {
                      recrypt = true;

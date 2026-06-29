@@ -1,6 +1,7 @@
 package net.rim.blackberry.api.mail;
 
 import net.rim.device.apps.api.framework.registration.RIMModelFactory;
+import net.rim.device.apps.internal.blackberryemail.email.ProxyModel;
 
 final class MailApiAttachmentViewerModelFactory extends RIMModelFactory {
    @Override
@@ -10,7 +11,7 @@ final class MailApiAttachmentViewerModelFactory extends RIMModelFactory {
       synchronized (store) {
          int handle = store.add(maavm);
          store.removeWeakRef(handle);
-         return new Object(store.getId(), handle);
+         return new ProxyModel(store.getId(), handle);
       }
    }
 

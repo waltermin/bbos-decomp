@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.mms.model;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Vector;
 import net.rim.device.api.synchronization.ConverterUtilities;
@@ -21,7 +21,7 @@ public final class MMSSyncConverter implements SyncConverter {
    private static final int LAST_VERSION_SUPPORTED = 1;
    private static Factory _phoneNumberFactory;
    private static Factory _emailAddressFactory;
-   private static ContextObject _context = (ContextObject)(new Object());
+   private static ContextObject _context = new ContextObject();
    private static final int MESSAGE_FLAGS = 1;
    private static final int FOLDER_ID = 2;
    private static final int STATUS = 3;
@@ -63,7 +63,7 @@ public final class MMSSyncConverter implements SyncConverter {
 
       MMSMessageModelImpl message = (MMSMessageModelImpl)object;
       MMSPayloadModelImpl payload = (MMSPayloadModelImpl)message.getPayload();
-      SyncBuffer syncBuffer = (SyncBuffer)(new Object(buffer, version, 0));
+      SyncBuffer syncBuffer = new SyncBuffer(buffer, version, 0);
       syncBuffer.addInt(1, message.getFlags(), 4);
       syncBuffer.addLong(2, message.getFolderId());
       syncBuffer.addInt(3, message.getStatus(), 4);
@@ -126,7 +126,7 @@ public final class MMSSyncConverter implements SyncConverter {
          long readDate = -1;
          int deliveryStatus = -1;
          int readStatus = -1;
-         SyncBuffer syncBuffer = (SyncBuffer)(new Object(dataBuffer, version, uid));
+         SyncBuffer syncBuffer = new SyncBuffer(dataBuffer, version, uid);
 
          try {
             while (!syncBuffer.isEmpty()) {
@@ -272,7 +272,7 @@ public final class MMSSyncConverter implements SyncConverter {
 
    private static final byte[] readAttachmentBytes(SyncBuffer syncBuffer, boolean isStream) {
       if (isStream) {
-         ByteArrayOutputStream oStream = (ByteArrayOutputStream)(new Object());
+         ByteArrayOutputStream oStream = new ByteArrayOutputStream();
          ConverterUtilities.readByteStream(syncBuffer.getDataBuffer(), true, oStream);
          return oStream.toByteArray();
       } else {
@@ -283,7 +283,7 @@ public final class MMSSyncConverter implements SyncConverter {
    private static final void writeAttachmentBytes(SyncBuffer syncBuffer, byte[] data) {
       int len = data.length;
       if (len > 32767) {
-         ConverterUtilities.writeByteStream(syncBuffer.getDataBuffer(), 105, (InputStream)(new Object(data)), len);
+         ConverterUtilities.writeByteStream(syncBuffer.getDataBuffer(), 105, new ByteArrayInputStream(data), len);
       } else {
          syncBuffer.addBytes(104, data);
       }
@@ -295,7 +295,7 @@ public final class MMSSyncConverter implements SyncConverter {
    }
 
    private static final RIMModel readLegacyPhoneNumberModel(SyncBuffer syncBuffer) {
-      ContextObject legacyContext = (ContextObject)(new Object(19, 55));
+      ContextObject legacyContext = new ContextObject(19, 55);
       legacyContext.put(255, syncBuffer);
       return (RIMModel)_phoneNumberFactory.createInstance(legacyContext);
    }

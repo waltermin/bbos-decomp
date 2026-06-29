@@ -103,12 +103,12 @@ public final class PrefNetworkListOptions extends AppsMainScreen implements Move
                UiApplication.getUiApplication().popScreen(this);
             }
          } else {
-            NetworkInfo[] netInfos = new Object[0];
+            NetworkInfo[] netInfos = new NetworkInfo[0];
             this._maxListSize = 6;
             this._netList.setList(netInfos);
 
             for (int i = 0; i < 4; i++) {
-               NetworkInfo netInfo = (NetworkInfo)(new Object());
+               NetworkInfo netInfo = new NetworkInfo();
                netInfo.setMcc(1911);
                netInfo.setMnc(512 + i + 1);
                this._netList.add(i, netInfo);
@@ -163,7 +163,7 @@ public final class PrefNetworkListOptions extends AppsMainScreen implements Move
          name = OptionsResources.getString(1885);
       }
 
-      String str = ((StringBuffer)(new Object())).append(vIndex + 1).append('.').append(' ').append(name).toString();
+      String str = "" + (vIndex + 1) + '.' + ' ' + name;
       int widthDrawn = graphics.drawText(str, 0, y, 70, width);
       int valueWidth = listField.getFont().getBounds(idStr);
       int drawStyle = 5;
@@ -248,7 +248,7 @@ public final class PrefNetworkListOptions extends AppsMainScreen implements Move
    }
 
    private final void showSimError(int failureCode) {
-      StringBuffer errStr = (StringBuffer)(new Object(OptionsResources.getString(1888)));
+      StringBuffer errStr = new StringBuffer(OptionsResources.getString(1888));
       if (this.isValidSIMInserted()) {
          switch (failureCode) {
             case 2:
@@ -391,7 +391,7 @@ public final class PrefNetworkListOptions extends AppsMainScreen implements Move
          String platformStr = DeviceInfo.getPlatformVersion();
          int ver = 0;
          if (platformStr != null && platformStr.length() > 3 && Character.isDigit(platformStr.charAt(0)) && Character.isDigit(platformStr.charAt(0))) {
-            ver = Integer.parseInt(((StringBuffer)(new Object())).append(platformStr.charAt(0)).append(platformStr.charAt(2)).toString());
+            ver = Integer.parseInt("" + platformStr.charAt(0) + platformStr.charAt(2));
          }
 
          if (ver == 0 || ver >= 18) {

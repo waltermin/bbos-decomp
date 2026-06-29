@@ -62,7 +62,7 @@ final class Alarm$AlarmTrigger
 
       ResourceBundle rb = ResourceBundle.getBundle(7243473093845420851L, "net.rim.device.apps.internal.resource.Alarm");
       Calendar alarmTime = DateTimeUtilities.getNextDate(options.getAlarmTime());
-      String title = MessageFormat.format(rb.getString(12), new Object[]{DateFormat.getInstance(6).format(alarmTime)});
+      String title = MessageFormat.format(rb.getString(12), new String[]{DateFormat.getInstance(6).format(alarmTime)});
       String[] choices = null;
       int[] values = null;
       this.addSystemListener(this);
@@ -71,7 +71,6 @@ final class Alarm$AlarmTrigger
       this.addStylusListener(this);
       this.addKeyListener(this);
       int snoozeIndex = options.getSnooze();
-      Object[] var9;
       if (snoozeIndex != 0) {
          String snoozeTime = null;
          if (snoozeIndex == 1) {
@@ -82,19 +81,19 @@ final class Alarm$AlarmTrigger
             snoozeTime = rb.getString(9);
          }
 
-         var9 = new Object[]{MessageFormat.format(rb.getString(31), new Object[]{snoozeTime}), rb.getString(32)};
+         choices = new String[]{MessageFormat.format(rb.getString(31), new String[]{snoozeTime}), rb.getString(32)};
          values = new int[]{0, 1, -805044216, 67108864, 1953066601, -805044215, 1816200448, 7172705};
       } else {
-         var9 = new Object[]{rb.getString(32)};
+         choices = new String[]{rb.getString(32)};
          values = new int[]{0, -805044216, 0, 0};
       }
 
       EncodedImage image = ThemeManager.getActiveTheme().getImage("net_rim_alarm_reminder");
-      this._dialog = (Dialog)(new Object(title, var9, values, 0, null, 0));
+      this._dialog = new Dialog(title, choices, values, 0, null, 0);
       this._dialog.setIcon(image);
       this._dialog.setDialogClosedListener(this);
       this.pushGlobalScreen(this._dialog, -2147483645, 2);
-      ((Thread)(new Object(this))).start();
+      new Thread(this).start();
       this._alarmTriggerStartTime = System.currentTimeMillis();
    }
 
@@ -119,9 +118,7 @@ final class Alarm$AlarmTrigger
       }
 
       synchronized (this) {
-         EventLogger.logEvent(
-            27450565375971827L, ((StringBuffer)(new Object("Alarm triggered at "))).append(System.currentTimeMillis()).toString().getBytes(), 0
-         );
+         EventLogger.logEvent(27450565375971827L, ("Alarm triggered at " + System.currentTimeMillis()).getBytes(), 0);
 
          while (!this._alarmCompleted) {
             Backlight.enable(true, UiSettings.getBacklightTimeout());
@@ -203,7 +200,7 @@ final class Alarm$AlarmTrigger
 
    @Override
    public final void powerOff() {
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       context.setFlag(39);
       this._alarmCompleted = true;
       NotificationsManager.cancelImmediateEvent(2469778178827742799L, 0, null, context);
@@ -231,7 +228,7 @@ final class Alarm$AlarmTrigger
          Backlight.setTimeout(5);
       }
 
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       context.setFlag(39);
       this._alertEngineForTrigger.stopAlert(2469778178827742799L);
       if (AlarmOptions.getOptions().getSnooze() != 0 && choice == 0) {
@@ -241,9 +238,7 @@ final class Alarm$AlarmTrigger
          AlarmManager.getInstance().setSavedAlarmTime(System.currentTimeMillis() + this.getSnoozeTime());
       } else {
          Alarm.setAlarm(false);
-         EventLogger.logEvent(
-            27450565375971827L, ((StringBuffer)(new Object("Alarm dismissed at "))).append(System.currentTimeMillis()).toString().getBytes(), 0
-         );
+         EventLogger.logEvent(27450565375971827L, ("Alarm dismissed at " + System.currentTimeMillis()).getBytes(), 0);
       }
 
       synchronized (this) {

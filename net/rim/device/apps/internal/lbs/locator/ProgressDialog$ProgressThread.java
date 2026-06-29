@@ -27,7 +27,7 @@ public final class ProgressDialog$ProgressThread implements Runnable {
    public final void start() {
       this._stop = false;
       this._counter = this._min;
-      ((Thread)(new Object(this))).start();
+      new Thread(this).start();
    }
 
    public final void stopProgress() {

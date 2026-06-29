@@ -50,7 +50,7 @@ public final class PGPSignedInputStream extends PGPInputStream {
       }
 
       this._signatureVerified = new boolean[numSignaturePackets];
-      this._signatureException = new Object[numSignaturePackets];
+      this._signatureException = new Exception[numSignaturePackets];
    }
 
    private final int getSignerIndex(byte[] signerKeyID) throws PGPVerificationException {
@@ -85,8 +85,8 @@ public final class PGPSignedInputStream extends PGPInputStream {
       int signerIndex = this.getSignerIndex(signerKeyID);
       if (!this._signatureVerified[signerIndex]) {
          Exception lastException = this._signatureException[signerIndex];
-         if (!(lastException instanceof Object)) {
-            if (!(lastException instanceof Object)) {
+         if (!(lastException instanceof CryptoTokenException)) {
+            if (!(lastException instanceof CryptoUnsupportedOperationException)) {
                Certificate certificate = this.getSignerCertificate(signerKeyID);
                if (certificate == null) {
                   throw new PGPNoKeyFoundException();
@@ -94,10 +94,10 @@ public final class PGPSignedInputStream extends PGPInputStream {
 
                this.verify(signerKeyID, certificate);
             } else {
-               throw (Object)lastException;
+               throw (CryptoUnsupportedOperationException)lastException;
             }
          } else {
-            throw (Object)lastException;
+            throw (CryptoTokenException)lastException;
          }
       }
    }
@@ -142,12 +142,12 @@ public final class PGPSignedInputStream extends PGPInputStream {
       // 03c: aconst_null
       // 03d: astore 11
       // 03f: aload 6
-      // 041: instanceof java/lang/Object
+      // 041: instanceof net/rim/device/api/crypto/DSAPublicKey
       // 044: ifeq 082
-      // 047: new java/lang/Object
+      // 047: new net/rim/device/api/crypto/DSASignatureVerifier
       // 04a: dup
       // 04b: aload 6
-      // 04d: checkcast java/lang/Object
+      // 04d: checkcast net/rim/device/api/crypto/DSAPublicKey
       // 050: aload 8
       // 052: aload 4
       // 054: invokevirtual net/rim/device/internal/crypto/pgp/PGPSignaturePacket.getEphemeralKey ()[B
@@ -157,10 +157,10 @@ public final class PGPSignedInputStream extends PGPInputStream {
       // 05d: bipush 0
       // 05e: invokespecial net/rim/device/api/crypto/DSASignatureVerifier.<init> (Lnet/rim/device/api/crypto/DSAPublicKey;Lnet/rim/device/api/crypto/Digest;[BI[BI)V
       // 061: astore 10
-      // 063: new java/lang/Object
+      // 063: new net/rim/device/api/crypto/DSASignatureVerifier
       // 066: dup
       // 067: aload 6
-      // 069: checkcast java/lang/Object
+      // 069: checkcast net/rim/device/api/crypto/DSAPublicKey
       // 06c: aload 9
       // 06e: aload 4
       // 070: invokevirtual net/rim/device/internal/crypto/pgp/PGPSignaturePacket.getEphemeralKey ()[B
@@ -172,22 +172,22 @@ public final class PGPSignedInputStream extends PGPInputStream {
       // 07d: astore 11
       // 07f: goto 0e7
       // 082: aload 6
-      // 084: instanceof java/lang/Object
+      // 084: instanceof net/rim/device/api/crypto/RSAPublicKey
       // 087: ifeq 0b9
-      // 08a: new java/lang/Object
+      // 08a: new net/rim/device/api/crypto/PKCS1SignatureVerifier
       // 08d: dup
       // 08e: aload 6
-      // 090: checkcast java/lang/Object
+      // 090: checkcast net/rim/device/api/crypto/RSAPublicKey
       // 093: aload 8
       // 095: aload 4
       // 097: invokevirtual net/rim/device/internal/crypto/pgp/PGPSignaturePacket.getSignature ()[B
       // 09a: bipush 0
       // 09b: invokespecial net/rim/device/api/crypto/PKCS1SignatureVerifier.<init> (Lnet/rim/device/api/crypto/RSAPublicKey;Lnet/rim/device/api/crypto/Digest;[BI)V
       // 09e: astore 10
-      // 0a0: new java/lang/Object
+      // 0a0: new net/rim/device/api/crypto/PKCS1SignatureVerifier
       // 0a3: dup
       // 0a4: aload 6
-      // 0a6: checkcast java/lang/Object
+      // 0a6: checkcast net/rim/device/api/crypto/RSAPublicKey
       // 0a9: aload 9
       // 0ab: aload 4
       // 0ad: invokevirtual net/rim/device/internal/crypto/pgp/PGPSignaturePacket.getSignature ()[B
@@ -202,9 +202,9 @@ public final class PGPSignedInputStream extends PGPInputStream {
       // 0c5: goto 0cb
       // 0c8: ldc_w "Key ID not found"
       // 0cb: astore 12
-      // 0cd: new java/lang/Object
+      // 0cd: new net/rim/device/api/crypto/CryptoUnsupportedOperationException
       // 0d0: dup
-      // 0d1: new java/lang/Object
+      // 0d1: new java/lang/StringBuffer
       // 0d4: dup
       // 0d5: ldc_w "Pub:"
       // 0d8: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -441,7 +441,7 @@ public final class PGPSignedInputStream extends PGPInputStream {
       // Bytecode:
       // 000: aload 1
       // 001: ifnonnull 00c
-      // 004: new java/lang/Object
+      // 004: new java/lang/IllegalArgumentException
       // 007: dup
       // 008: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 00b: athrow
@@ -509,7 +509,7 @@ public final class PGPSignedInputStream extends PGPInputStream {
       // 07d: aload 2
       // 07e: ifnull 09b
       // 081: aload 0
-      // 082: new java/lang/Object
+      // 082: new java/io/ByteArrayInputStream
       // 085: dup
       // 086: aload 2
       // 087: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -521,7 +521,7 @@ public final class PGPSignedInputStream extends PGPInputStream {
       // 095: putfield net/rim/device/api/crypto/pgp/PGPInputStream._input Ljava/io/InputStream;
       // 098: goto 0aa
       // 09b: aload 0
-      // 09c: new java/lang/Object
+      // 09c: new java/io/ByteArrayInputStream
       // 09f: dup
       // 0a0: aload 0
       // 0a1: getfield net/rim/device/api/crypto/pgp/PGPSignedInputStream._dataBuffer [B
@@ -531,7 +531,7 @@ public final class PGPSignedInputStream extends PGPInputStream {
       // 0ab: getfield net/rim/device/api/crypto/pgp/PGPInputStream._input Ljava/io/InputStream;
       // 0ae: ifnonnull 108
       // 0b1: aload 0
-      // 0b2: new java/lang/Object
+      // 0b2: new java/io/ByteArrayInputStream
       // 0b5: dup
       // 0b6: aload 0
       // 0b7: getfield net/rim/device/api/crypto/pgp/PGPSignedInputStream._dataBuffer [B
@@ -540,7 +540,7 @@ public final class PGPSignedInputStream extends PGPInputStream {
       // 0c0: return
       // 0c1: astore 4
       // 0c3: aload 0
-      // 0c4: new java/lang/Object
+      // 0c4: new java/io/ByteArrayInputStream
       // 0c7: dup
       // 0c8: aload 0
       // 0c9: getfield net/rim/device/api/crypto/pgp/PGPSignedInputStream._dataBuffer [B
@@ -549,7 +549,7 @@ public final class PGPSignedInputStream extends PGPInputStream {
       // 0d2: return
       // 0d3: astore 4
       // 0d5: aload 0
-      // 0d6: new java/lang/Object
+      // 0d6: new java/io/ByteArrayInputStream
       // 0d9: dup
       // 0da: aload 0
       // 0db: getfield net/rim/device/api/crypto/pgp/PGPSignedInputStream._dataBuffer [B
@@ -558,7 +558,7 @@ public final class PGPSignedInputStream extends PGPInputStream {
       // 0e4: return
       // 0e5: astore 4
       // 0e7: aload 0
-      // 0e8: new java/lang/Object
+      // 0e8: new java/io/ByteArrayInputStream
       // 0eb: dup
       // 0ec: aload 0
       // 0ed: getfield net/rim/device/api/crypto/pgp/PGPSignedInputStream._dataBuffer [B
@@ -567,7 +567,7 @@ public final class PGPSignedInputStream extends PGPInputStream {
       // 0f6: return
       // 0f7: astore 4
       // 0f9: aload 0
-      // 0fa: new java/lang/Object
+      // 0fa: new java/io/ByteArrayInputStream
       // 0fd: dup
       // 0fe: aload 0
       // 0ff: getfield net/rim/device/api/crypto/pgp/PGPSignedInputStream._dataBuffer [B
@@ -585,7 +585,7 @@ public final class PGPSignedInputStream extends PGPInputStream {
       if (b != null && off >= 0 && len >= 0 && b.length - len >= off) {
          return super._input.read(b, off, len);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -650,7 +650,7 @@ public final class PGPSignedInputStream extends PGPInputStream {
 
          return arrayAllSpaces(result) ? new byte[0] : result;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -699,7 +699,7 @@ public final class PGPSignedInputStream extends PGPInputStream {
 
          return result;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

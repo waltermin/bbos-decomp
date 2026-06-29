@@ -49,7 +49,7 @@ public final class FrameManager extends VerticalFieldManager implements Destroya
 
       for (int i = 0; i < fieldCount; i++) {
          field = manager.getField(i);
-         if (field instanceof Object) {
+         if (field instanceof Manager) {
             frameManager = find(name, (Manager)field);
             if (frameManager != null) {
                return frameManager;
@@ -64,7 +64,7 @@ public final class FrameManager extends VerticalFieldManager implements Destroya
    public final void destroy() {
       for (int i = this.getFieldCount() - 1; i >= 0; i--) {
          Field field = this.getField(i);
-         if (field instanceof Object) {
+         if (field instanceof Destroyable) {
             ((Destroyable)field).destroy();
          }
       }
@@ -74,7 +74,7 @@ public final class FrameManager extends VerticalFieldManager implements Destroya
    public final void setDestroyMethod(int method) {
       for (int i = this.getFieldCount() - 1; i >= 0; i--) {
          Field field = this.getField(i);
-         if (field instanceof Object) {
+         if (field instanceof Destroyable) {
             ((Destroyable)field).setDestroyMethod(method);
          }
       }

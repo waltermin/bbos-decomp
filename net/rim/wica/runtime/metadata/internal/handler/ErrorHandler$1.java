@@ -14,7 +14,7 @@ class ErrorHandler$1 implements Runnable {
 
    @Override
    public void run() {
-      StringBuffer message = (StringBuffer)(new Object(this.val$error.getDescription()));
+      StringBuffer message = new StringBuffer(this.val$error.getDescription());
       message.append("\nError Code: ");
       message.append(this.val$error.getCode());
       message.append("\nDetails: ");

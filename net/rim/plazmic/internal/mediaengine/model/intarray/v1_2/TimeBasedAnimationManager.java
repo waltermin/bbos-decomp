@@ -708,7 +708,7 @@ public class TimeBasedAnimationManager {
    private void getMatrixValues(int targetAttributeType, int[] matrixArray, int matrixIndex, int[] values) {
       this._matrixDecomp = this._platform.createTransformationMatrix(matrixArray, matrixIndex);
       if (this._matrixDecomp == null) {
-         throw new Object("Failed to decompose transformation matrix");
+         throw new NullPointerException("Failed to decompose transformation matrix");
       }
 
       switch (targetAttributeType) {

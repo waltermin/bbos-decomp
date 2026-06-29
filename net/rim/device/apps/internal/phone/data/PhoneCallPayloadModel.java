@@ -10,6 +10,7 @@ import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.EditableProvider;
 import net.rim.device.apps.api.framework.model.EncryptableProvider;
 import net.rim.device.apps.api.framework.model.PersistableRIMModel;
+import net.rim.device.apps.internal.commonmodels.body.BodyModel;
 import net.rim.device.apps.internal.phone.api.PhoneCallInitialData;
 
 public class PhoneCallPayloadModel implements PersistableRIMModel, EditableProvider, ReadableList, WritableSet, EncryptableProvider {
@@ -29,12 +30,12 @@ public class PhoneCallPayloadModel implements PersistableRIMModel, EditableProvi
    public PhoneCallPayloadModel() {
       this._timeStamp = 0;
       this._elapsedTime = 0;
-      this._submembers = (Vector)(new Object(2));
+      this._submembers = new Vector(2);
    }
 
    public PhoneCallPayloadModel(PhoneCallInitialData data) {
       this._timeStamp = data._timestamp;
-      this._submembers = (Vector)(new Object());
+      this._submembers = new Vector();
       this.createMemo(data._context);
       if (data._callerIDInfo != null) {
          this.addCallerIDInfo(data._callerIDInfo);
@@ -112,7 +113,7 @@ public class PhoneCallPayloadModel implements PersistableRIMModel, EditableProvi
    }
 
    private boolean isMemoObject(Object o) {
-      return o instanceof Object;
+      return o instanceof BodyModel;
    }
 
    private TimeModel getTimeModel(long time, int format) {
@@ -226,7 +227,7 @@ public class PhoneCallPayloadModel implements PersistableRIMModel, EditableProvi
 
       for (int i = 0; i < numSubmembers; i++) {
          Object object = this._submembers.elementAt(i);
-         if (object instanceof Object) {
+         if (object instanceof EncryptableProvider) {
             EncryptableProvider encryptable = (EncryptableProvider)object;
             if (!encryptable.checkCrypt(compress, encrypt)) {
                return false;
@@ -244,7 +245,7 @@ public class PhoneCallPayloadModel implements PersistableRIMModel, EditableProvi
 
       for (int i = 0; i < numSubmembers; i++) {
          Object object = newModel._submembers.elementAt(i);
-         if (object instanceof Object) {
+         if (object instanceof EncryptableProvider) {
             EncryptableProvider encryptable = (EncryptableProvider)object;
             Object newObject = encryptable.reCrypt(compress, encrypt);
             if (newObject != null) {

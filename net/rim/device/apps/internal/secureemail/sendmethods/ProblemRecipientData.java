@@ -56,7 +56,7 @@ public class ProblemRecipientData {
 
    public void addRecipient(Object recipient) {
       if (this._problemRecipients == null) {
-         this._problemRecipients = (Vector)(new Object());
+         this._problemRecipients = new Vector();
       }
 
       this._problemRecipients.addElement(recipient);
@@ -90,14 +90,14 @@ public class ProblemRecipientData {
       }
 
       if (this._problemRecipients != null) {
-         StringBuffer buffer = (StringBuffer)(new Object(this._warningMessage));
+         StringBuffer buffer = new StringBuffer(this._warningMessage);
          this.formatRecipientList(this._problemRecipients, buffer);
          this._warningMessage = buffer.toString();
       }
 
       RichTextField warningMessageField = RichTextFieldUtilities.getBoldFormattedRichTextField(this._warningMessage, 36028797018963968L);
       String[] userOptionLabels = this.getUserOptionStringArray();
-      String[] choices = new Object[10];
+      String[] choices = new String[10];
       int choiceIndex = 0;
 
       for (int i = 0; i < 10; i++) {
@@ -108,7 +108,7 @@ public class ProblemRecipientData {
       }
 
       Array.resize(choices, choiceIndex);
-      SimpleChoiceDialog scd = (SimpleChoiceDialog)(new Object(warningMessageField, choices, 0, null, 134217728));
+      SimpleChoiceDialog scd = new SimpleChoiceDialog(warningMessageField, choices, 0, null, 134217728);
       scd.setCancelAllowed(true);
       BackgroundDialog.show(scd);
       if (scd.getCloseReason() == -1) {
@@ -188,7 +188,7 @@ public class ProblemRecipientData {
       while (enumeration.hasMoreElements()) {
          buffer.append(SecureEmailResources.getString(168));
          Object o = enumeration.nextElement();
-         if (o instanceof Object) {
+         if (o instanceof String) {
             buffer.append((String)o);
          } else if (o instanceof RecipientData) {
             RecipientData currentRecipientData = (RecipientData)o;
@@ -199,10 +199,10 @@ public class ProblemRecipientData {
                   break;
                case 1:
                default:
-                  currentRecipientDataString = MessageFormat.format(SecureEmailResources.getString(169), new Object[]{currentRecipientData.getName()});
+                  currentRecipientDataString = MessageFormat.format(SecureEmailResources.getString(169), new String[]{currentRecipientData.getName()});
                   break;
                case 2:
-                  currentRecipientDataString = MessageFormat.format(SecureEmailResources.getString(170), new Object[]{currentRecipientData.getName()});
+                  currentRecipientDataString = MessageFormat.format(SecureEmailResources.getString(170), new String[]{currentRecipientData.getName()});
             }
 
             buffer.append(currentRecipientDataString);
@@ -211,12 +211,12 @@ public class ProblemRecipientData {
    }
 
    protected void manualFetchCertificates(Vector recipientsToFetch) {
-      StringBuffer emailsToFetch = (StringBuffer)(new Object());
+      StringBuffer emailsToFetch = new StringBuffer();
       Enumeration enumeration = recipientsToFetch.elements();
 
       while (enumeration.hasMoreElements()) {
          Object o = enumeration.nextElement();
-         if (o instanceof Object) {
+         if (o instanceof String) {
             String string = (String)o;
             if (emailsToFetch.length() > 0) {
                emailsToFetch.append(';');
@@ -238,7 +238,7 @@ public class ProblemRecipientData {
          }
       }
 
-      LDAPBrowser browser = (LDAPBrowser)(new Object(this._secureEmailFactory.getLDAPBrowserContextString(), null, null, null, emailsToFetch.toString()));
+      LDAPBrowser browser = new LDAPBrowser(this._secureEmailFactory.getLDAPBrowserContextString(), null, null, null, emailsToFetch.toString());
       browser.open(true);
    }
 
@@ -252,9 +252,9 @@ public class ProblemRecipientData {
          for (int i = 0; i < selectedCertificates.length; i++) {
             Certificate[] certificateChain = selectedCertificates[i].getCertificateChain();
             boolean extendedCheckingAvailable = CertificateStatusProvider.queryStatusAvailability(certificateChain, true);
-            CertificateStatusRequest request = (CertificateStatusRequest)(new Object(
+            CertificateStatusRequest request = new CertificateStatusRequest(
                certificateChain, extendedCheckingAvailable, this._secureEmailFactory.getPreferredKeyStore(), null, null
-            ));
+            );
             CertificateStatusProvider.requestCertificateStatus(request, null, true, true);
          }
       }
@@ -262,16 +262,16 @@ public class ProblemRecipientData {
 
    private String[] getUserOptionStringArray() {
       if (this._userOptionStringArray == null) {
-         this._userOptionStringArray = new Object[10];
+         this._userOptionStringArray = new String[10];
          String[] temp = SecureEmailResources.getStringArray(153);
 
          for (int i = 0; i < 10; i++) {
             this._userOptionStringArray[i] = temp[i];
          }
 
-         String[] containerStringLowerPluralArray = new Object[]{this._secureEmailFactory.getPublicKeyContainerString(false, true)};
+         String[] containerStringLowerPluralArray = new String[]{this._secureEmailFactory.getPublicKeyContainerString(false, true)};
          this._userOptionStringArray[8] = MessageFormat.format(this._userOptionStringArray[8], containerStringLowerPluralArray);
-         this._userOptionStringArray[9] = MessageFormat.format(this._userOptionStringArray[9], new Object[]{this._secureEmailFactory.getEncodingString()});
+         this._userOptionStringArray[9] = MessageFormat.format(this._userOptionStringArray[9], new String[]{this._secureEmailFactory.getEncodingString()});
       }
 
       return this._userOptionStringArray;

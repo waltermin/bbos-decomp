@@ -31,7 +31,7 @@ public final class DomainUtilities {
    }
 
    private static final Vector tokenizeString(String inputString, char tokenSeparator) {
-      Vector tokenizedVector = (Vector)(new Object());
+      Vector tokenizedVector = new Vector();
       int tokenizeIndex = 0;
 
       while (inputString.length() > 0 && tokenizeIndex >= 0) {

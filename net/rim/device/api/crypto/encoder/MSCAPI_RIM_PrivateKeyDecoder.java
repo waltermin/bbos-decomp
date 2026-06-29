@@ -3,9 +3,14 @@ package net.rim.device.api.crypto.encoder;
 import java.io.InputStream;
 import net.rim.device.api.crypto.CryptoUtilities;
 import net.rim.device.api.crypto.DHCryptoSystem;
+import net.rim.device.api.crypto.DHPrivateKey;
 import net.rim.device.api.crypto.DSACryptoSystem;
+import net.rim.device.api.crypto.DSAPrivateKey;
+import net.rim.device.api.crypto.InvalidKeyEncodingException;
+import net.rim.device.api.crypto.NoSuchAlgorithmException;
 import net.rim.device.api.crypto.PrivateKey;
 import net.rim.device.api.crypto.RSACryptoSystem;
+import net.rim.device.api.crypto.RSAPrivateKey;
 import net.rim.device.api.util.Arrays;
 import net.rim.vm.Array;
 
@@ -14,14 +19,14 @@ final class MSCAPI_RIM_PrivateKeyDecoder extends MSCAPI_PrivateKeyDecoder {
    private static final byte[] DH2 = new byte[]{0, 68, 72, 50};
 
    @Override
-   public final PrivateKey decodeKey(InputStream input, String algorithm) {
+   public final PrivateKey decodeKey(InputStream input, String algorithm) throws InvalidKeyEncodingException, NoSuchAlgorithmException {
       switch (algorithm.charAt(0)) {
          case '1':
             byte[] header = CryptoUtilities.readByteArrayFromInputStream(input, 4);
             boolean version3 = true;
             if (!Arrays.equals(header, "DSS4".getBytes())) {
                if (!Arrays.equals(header, "DSS2".getBytes())) {
-                  throw new Object();
+                  throw new InvalidKeyEncodingException();
                }
 
                version3 = false;
@@ -54,13 +59,13 @@ final class MSCAPI_RIM_PrivateKeyDecoder extends MSCAPI_PrivateKeyDecoder {
             CryptoUtilities.flipArray(p);
             CryptoUtilities.flipArray(g);
             CryptoUtilities.flipArray(q);
-            DSACryptoSystem cryptoSystem = (DSACryptoSystem)(new Object(p, q, g));
-            return (PrivateKey)(new Object(cryptoSystem, CryptoUtilities.flipArray(x)));
+            DSACryptoSystem cryptoSystem = new DSACryptoSystem(p, q, g);
+            return new DSAPrivateKey(cryptoSystem, CryptoUtilities.flipArray(x));
          case '2':
             CryptoUtilities.verifyKeyBytes(input, 82, 83, 65, 50);
             int bitlen = CryptoUtilities.readIntegerLittleEndian(input);
             int bytelen = (bitlen + 7) / 8;
-            RSACryptoSystem cryptoSystem = (RSACryptoSystem)(new Object(bytelen * 8));
+            RSACryptoSystem cryptoSystem = new RSACryptoSystem(bytelen * 8);
             byte[] e = CryptoUtilities.readInteger4BigEndianAsByteArray(input);
             int i = 4;
 
@@ -83,13 +88,13 @@ final class MSCAPI_RIM_PrivateKeyDecoder extends MSCAPI_PrivateKeyDecoder {
             CryptoUtilities.flipArray(q);
             CryptoUtilities.flipArray(qInvModP);
             CryptoUtilities.flipArray(d);
-            return (PrivateKey)(new Object(cryptoSystem, e, d, n, p, q, dModPm1, dModQm1, qInvModP));
+            return new RSAPrivateKey(cryptoSystem, e, d, n, p, q, dModPm1, dModQm1, qInvModP);
          case '5':
             byte[] header = CryptoUtilities.readByteArrayFromInputStream(input, 4);
             boolean version3 = true;
             if (!Arrays.equals(header, DH4)) {
                if (!Arrays.equals(header, DH2)) {
-                  throw new Object();
+                  throw new InvalidKeyEncodingException();
                }
 
                version3 = false;
@@ -118,17 +123,17 @@ final class MSCAPI_RIM_PrivateKeyDecoder extends MSCAPI_PrivateKeyDecoder {
             if (bitlenQ == 0) {
                CryptoUtilities.flipArray(p);
                CryptoUtilities.flipArray(g);
-               cryptoSystem = (DHCryptoSystem)(new Object(p, g));
+               cryptoSystem = new DHCryptoSystem(p, g);
             } else {
                CryptoUtilities.flipArray(p);
                CryptoUtilities.flipArray(g);
                CryptoUtilities.flipArray(q);
-               cryptoSystem = (DHCryptoSystem)(new Object(p, q, g));
+               cryptoSystem = new DHCryptoSystem(p, q, g);
             }
 
-            return (PrivateKey)(new Object(cryptoSystem, CryptoUtilities.flipArray(x)));
+            return new DHPrivateKey(cryptoSystem, CryptoUtilities.flipArray(x));
          default:
-            throw new Object(algorithm);
+            throw new NoSuchAlgorithmException(algorithm);
       }
    }
 

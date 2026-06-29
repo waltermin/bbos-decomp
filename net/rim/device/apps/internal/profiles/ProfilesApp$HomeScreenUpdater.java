@@ -13,7 +13,7 @@ final class ProfilesApp$HomeScreenUpdater implements GlobalEventListener {
    private static final String PROFILE_APP_IDENTIFIER = "net.rim.ProfileHomeScreenApp";
 
    final void updateHomeScreen(Profile activeProfile) {
-      ApplicationDescriptor descriptor = (ApplicationDescriptor)(new Object(
+      ApplicationDescriptor descriptor = new ApplicationDescriptor(
          this._baseDescriptor,
          activeProfile.getIconBaseName(),
          null,
@@ -22,10 +22,10 @@ final class ProfilesApp$HomeScreenUpdater implements GlobalEventListener {
          "net.rim.device.apps.internal.resource.Profiles",
          0,
          this._baseDescriptor.getFlags()
-      ));
-      ApplicationEntryPoint entryPoint = (ApplicationEntryPoint)(new Object(descriptor));
+      );
+      ApplicationEntryPoint entryPoint = new ApplicationEntryPoint(descriptor);
       entryPoint.set(9, "net_rim_bb_profiles_app.Profiles");
-      entryPoint.set(3, ((StringBuffer)(new Object())).append(this.getBaseTitle()).append(" (").append(activeProfile.getName()).append(')').toString());
+      entryPoint.set(3, this.getBaseTitle() + " (" + activeProfile.getName() + ')');
       RibbonLauncher launcher = RibbonLauncher.getInstance();
       if (launcher != null) {
          launcher.registerAction("net.rim.ProfileHomeScreenApp", entryPoint);
@@ -56,8 +56,8 @@ final class ProfilesApp$HomeScreenUpdater implements GlobalEventListener {
    ProfilesApp$HomeScreenUpdater(Profiles profileManager) {
       this._profileManager = profileManager;
       ApplicationDescriptor base = ApplicationDescriptor.currentApplicationDescriptor();
-      this._baseDescriptor = (ApplicationDescriptor)(new Object(base, base.getName(), null, null, base.getPosition(), null, 0, base.getFlags()));
-      ApplicationEntryPoint entryPoint = (ApplicationEntryPoint)(new Object(this._baseDescriptor));
+      this._baseDescriptor = new ApplicationDescriptor(base, base.getName(), null, null, base.getPosition(), null, 0, base.getFlags());
+      ApplicationEntryPoint entryPoint = new ApplicationEntryPoint(this._baseDescriptor);
       entryPoint.set(9, "net_rim_bb_profiles_app.Profiles");
       RibbonLauncher launcher = RibbonLauncher.getInstance();
       if (launcher != null) {

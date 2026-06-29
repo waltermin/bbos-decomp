@@ -8,6 +8,7 @@ import net.rim.device.api.ui.FieldLabelProvider;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.accessibility.AccessibleContext;
+import net.rim.device.api.ui.accessibility.AccessibleContextFactory;
 import net.rim.device.api.ui.accessibility.AccessibleContextProxy;
 import net.rim.device.api.ui.component.ActiveFieldCookie;
 import net.rim.device.api.ui.component.CookieProvider;
@@ -56,7 +57,7 @@ final class EmailAddressModelImpl
 
    @Override
    public final String getURL() {
-      return ((StringBuffer)(new Object("mailto:"))).append(this.getAddress()).toString();
+      return "mailto:" + this.getAddress();
    }
 
    @Override
@@ -115,12 +116,12 @@ final class EmailAddressModelImpl
 
    @Override
    public final void setLabelStringProvider(StringProvider label) {
-      throw new Object("Unsupported API");
+      throw new IllegalStateException("Unsupported API");
    }
 
    @Override
    public final boolean grabDataFromField(Field field, Object context) {
-      if (!(field instanceof Object)) {
+      if (!(field instanceof EmailAddressEditField)) {
          return false;
       }
 
@@ -233,7 +234,7 @@ final class EmailAddressModelImpl
          _accessibleName = this.getAddress();
       }
 
-      return (AccessibleContext)(new Object(_accessibleName));
+      return new AccessibleContextFactory(_accessibleName);
    }
 
    private final void setData(String data) {
@@ -258,11 +259,11 @@ final class EmailAddressModelImpl
 
    public EmailAddressModelImpl(Object initialData) {
       String data = null;
-      if (!(initialData instanceof Object)) {
+      if (!(initialData instanceof String)) {
          if (initialData != null) {
             ContextObject contextObject = ContextObject.verifyNonNull(initialData);
             Object test = contextObject.get(254);
-            if (test instanceof Object) {
+            if (test instanceof EmailAddressModel) {
                EmailAddressModelImpl model = (EmailAddressModelImpl)test;
                data = model.getData();
                this._isFreeForm = model.isFreeForm();

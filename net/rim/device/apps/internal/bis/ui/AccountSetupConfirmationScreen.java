@@ -2,7 +2,7 @@ package net.rim.device.apps.internal.bis.ui;
 
 import java.util.Hashtable;
 import net.rim.device.api.system.Application;
-import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.apps.internal.bis.ApplicationResources;
 import net.rim.device.apps.internal.bis.BISClient;
 import net.rim.device.apps.internal.bis.api.ui.BoldLabelField;
@@ -21,7 +21,7 @@ public final class AccountSetupConfirmationScreen extends UserSettingsScreen {
    public final void refresh(Hashtable screenParams) {
       this.setTitle(ApplicationResources.getString(1));
       String email = ClientSessionState.getInstance().getIntegrationEmail();
-      this.addContentField((Field)(new Object(ApplicationResources.getString(18))));
+      this.addContentField(new LabelField(ApplicationResources.getString(18)));
       this.addContentLineBreak();
       this.addContentField(new BoldLabelField(email));
       this.addContentLineBreak();
@@ -47,7 +47,7 @@ public final class AccountSetupConfirmationScreen extends UserSettingsScreen {
          this.attachEventToField(nextButton, nextEvent);
          this.setDefaultEvent(nextEvent);
       } else {
-         this.addContentField((Field)(new Object(ApplicationResources.getString(63))));
+         this.addContentField(new LabelField(ApplicationResources.getString(63)));
          Button okButton = new Button(ApplicationResources.getString(39));
          this.addButtonBarButtons(new Button[]{okButton}, false);
          LinkEvent okEvent = new LinkEvent(39, 7);

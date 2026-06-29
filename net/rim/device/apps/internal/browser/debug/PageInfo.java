@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.browser.debug;
 
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Screen;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.apps.internal.browser.core.BrowserDaemonRegistry;
@@ -32,9 +32,9 @@ final class PageInfo implements DebugListItem {
    @Override
    public final Screen getScreen() {
       MainScreen screen = new PageInfo$PageInfoScreen(this);
-      screen.setTitle((Field)(new Object("Page Info")));
+      screen.setTitle(new LabelField("Page Info"));
       if (this._data != null) {
-         RichTextField field = (RichTextField)(new Object(this._data));
+         RichTextField field = new RichTextField(this._data);
          screen.add(field);
       }
 

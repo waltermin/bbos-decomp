@@ -6,6 +6,7 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FocusChangeListener;
 import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.api.setupwizard.SetupWizardOrdering;
 import net.rim.device.apps.api.setupwizard.WizardDialog;
@@ -76,11 +77,11 @@ final class SureTypeWizardProvider extends HelpWizardProvider implements FocusCh
    private final Field findEditField(Manager startingManager) {
       for (int i = 0; i <= startingManager.getFieldCount() - 1; i++) {
          Field field = startingManager.getField(i);
-         if (field instanceof Object) {
+         if (field instanceof BasicEditField) {
             return field;
          }
 
-         if (field instanceof Object) {
+         if (field instanceof Manager) {
             field = this.findEditField((Manager)field);
             if (field != null) {
                return field;

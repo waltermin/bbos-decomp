@@ -32,11 +32,11 @@ public class PlainTextServiceProvider extends UIComponentServiceProvider {
          label26:
          try {
             var9 = true;
-            text = (String)(new Object(data, encoding));
+            text = new String(data, encoding);
             var9 = false;
          } finally {
             if (var9) {
-               System.out.println(((StringBuffer)(new Object("Unsupported charset encoding: "))).append(encoding).toString());
+               System.out.println("Unsupported charset encoding: " + encoding);
                text = StringUtilities.decodeBOM(data, 0, data.length);
                break label26;
             }

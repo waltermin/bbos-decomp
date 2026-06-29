@@ -30,7 +30,7 @@ class CallerIDInfoFactory extends RIMModelFactory {
 
          Object modelData = ContextObject.get(initialData, 254);
          AbstractPhoneNumberModel phoneNumberModel;
-         if (!(modelData instanceof Object)) {
+         if (!(modelData instanceof AbstractPhoneNumberModel)) {
             if (syncBuffer.getFieldType() == 15) {
                if (DirectConnect.isSupported()) {
                   phoneNumberModel = (AbstractPhoneNumberModel)FactoryUtil.createInstance(532879436795165891L, initialData);
@@ -60,8 +60,8 @@ class CallerIDInfoFactory extends RIMModelFactory {
             if (firstName != null) {
                fullName = firstName;
                if (lastName != null) {
-                  fullName = ((StringBuffer)(new Object())).append(fullName).append(' ').toString();
-                  fullName = ((StringBuffer)(new Object())).append(fullName).append(lastName).toString();
+                  fullName = fullName + ' ';
+                  fullName = fullName + lastName;
                }
 
                model.setFriendlyName(fullName);
@@ -100,7 +100,7 @@ class CallerIDInfoFactory extends RIMModelFactory {
             }
 
             Object callID = ContextObject.get(initialData, 253);
-            if (callID instanceof Object) {
+            if (callID instanceof String) {
                String str = (String)callID;
                if (str.length() > 0) {
                   model.setFriendlyName(str);

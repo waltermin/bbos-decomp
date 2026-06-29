@@ -34,7 +34,7 @@ public final class SMSOpenVerb extends Verb {
    protected final ContextObject finalizeInvoke(ContextObject contextObject) {
       if (contextObject.getFlag(64)) {
          MessagingUtil.showMessageAppServiceView("SMSFolder");
-         return (ContextObject)(new Object(39));
+         return new ContextObject(39);
       } else {
          return null;
       }

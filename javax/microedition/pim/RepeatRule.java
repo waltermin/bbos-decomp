@@ -18,7 +18,7 @@ public class RepeatRule {
    private int _weekInMonth;
    private int _dayInMonth;
    private int _dayInYear;
-   Vector _exDates = (Vector)(new Object());
+   Vector _exDates = new Vector();
    public static final int COUNT = 32;
    public static final int DAY_IN_MONTH = 1;
    public static final int DAY_IN_WEEK = 2;
@@ -67,7 +67,7 @@ public class RepeatRule {
 
    public Enumeration dates(long startDate, long subsetBeginning, long subsetEnding) {
       if (subsetBeginning > subsetEnding) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       try {
@@ -77,19 +77,19 @@ public class RepeatRule {
          return new RepeatPatternEnumeration(((EventImpl)event).getRimEvent(), startDate, subsetBeginning, subsetEnding, this._count);
       } catch (PIMException e) {
          System.out.println(e.toString());
-         return ((Vector)(new Object())).elements();
+         return new Vector().elements();
       }
    }
 
    public void addExceptDate(long date) {
-      Date newdate = (Date)(new Object(date));
+      Date newdate = new Date(date);
       if (!this._exDates.contains(newdate)) {
          this._exDates.addElement(newdate);
       }
    }
 
    public void removeExceptDate(long date) {
-      this._exDates.removeElement(new Object(date));
+      this._exDates.removeElement(new Date(date));
    }
 
    public Enumeration getExceptDates() {
@@ -124,7 +124,7 @@ public class RepeatRule {
             value = this._interval;
             break;
          default:
-            throw new Object("Invalid field ID");
+            throw new IllegalArgumentException("Invalid field ID");
       }
 
       if (value <= 0) {
@@ -138,7 +138,7 @@ public class RepeatRule {
       switch (field) {
          case 0:
             if (value < 0) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this._frequency = value;
@@ -149,10 +149,10 @@ public class RepeatRule {
                return;
             }
 
-            throw new Object();
+            throw new IllegalArgumentException();
          case 2:
             if ((value & -130049) != 0) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this._dayInWeek = value;
@@ -163,37 +163,37 @@ public class RepeatRule {
                return;
             }
 
-            throw new Object();
+            throw new IllegalArgumentException();
          case 8:
             if ((value & -536739841) != 0) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this._month = value;
             return;
          case 16:
             if ((value & -1024) != 0) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this._weekInMonth = value;
             return;
          case 32:
             if (value < 0) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this._count = value;
             return;
          case 128:
             if (value <= 0) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this._interval = value;
             return;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -207,7 +207,7 @@ public class RepeatRule {
 
             return value;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -219,9 +219,9 @@ public class RepeatRule {
                return;
             }
 
-            throw new Object();
+            throw new IllegalArgumentException();
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -298,7 +298,7 @@ public class RepeatRule {
                   }
                   break;
                case 64:
-                  if (!RepeatRuleUtil.areDatesOnSameDay((Date)(new Object(rr.getDate(field))), (Date)(new Object(this.getDate(field))))) {
+                  if (!RepeatRuleUtil.areDatesOnSameDay(new Date(rr.getDate(field)), new Date(this.getDate(field)))) {
                      return false;
                   }
             }

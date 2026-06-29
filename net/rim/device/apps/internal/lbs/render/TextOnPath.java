@@ -2353,7 +2353,7 @@ public final class TextOnPath {
    static final int _charRange = 91;
    static int _rotatedHeight = _rotatedFontBitmap.getHeight();
    static int _rotatedWidth = _rotatedFontBitmap.getWidth();
-   static XYPoint _point = (XYPoint)(new Object());
+   static XYPoint _point = new XYPoint();
    static int _lastRotation;
    private static final int PIX_ABOVE_PATH = 0;
    static final boolean DEBUG = false;

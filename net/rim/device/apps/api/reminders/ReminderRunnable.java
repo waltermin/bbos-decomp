@@ -24,6 +24,6 @@ public final class ReminderRunnable extends Thread {
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object("REMINDER:"))).append(this._reminderTime).toString();
+      return "REMINDER:" + this._reminderTime;
    }
 }

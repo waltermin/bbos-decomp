@@ -56,7 +56,7 @@ public final class ECNRSignatureSigner implements SignatureSigner {
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object("ECNR/"))).append(this._digest.getAlgorithm()).toString();
+      return "ECNR/" + this._digest.getAlgorithm();
    }
 
    public ECNRSignatureSigner(ECPrivateKey key, Digest digest) {
@@ -65,14 +65,14 @@ public final class ECNRSignatureSigner implements SignatureSigner {
          this._digest = digest;
          this._privateKeyLength = key.getECCryptoSystem().getPrivateKeyLength();
          if (digest.getDigestLength() > this._privateKeyLength) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    public ECNRSignatureSigner(ECPrivateKey key) {
-      this(key, (Digest)(new Object()));
+      this(key, new SHA1Digest());
    }
 }

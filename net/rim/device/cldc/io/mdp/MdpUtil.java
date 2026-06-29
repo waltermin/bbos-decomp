@@ -248,7 +248,7 @@ public final class MdpUtil implements MdpConstants {
    public static final DatagramConnection makeNativeConnection() {
       switch (RadioInfo.getNetworkType()) {
          case 2:
-            throw new Object("Unsupported network");
+            throw new RuntimeException("Unsupported network");
          case 3:
          case 4:
          case 5:

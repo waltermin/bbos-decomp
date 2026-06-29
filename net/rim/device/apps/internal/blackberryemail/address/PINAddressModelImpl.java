@@ -110,12 +110,12 @@ final class PINAddressModelImpl
 
    @Override
    public final void setLabelStringProvider(StringProvider label) {
-      throw new Object("Unsupported API");
+      throw new IllegalStateException("Unsupported API");
    }
 
    @Override
    public final boolean grabDataFromField(Field field, Object context) {
-      if (field instanceof Object) {
+      if (field instanceof EditField) {
          EditField editField = (EditField)field;
          String address = editField.getText().trim();
          if (address.length() == 8) {
@@ -133,7 +133,7 @@ final class PINAddressModelImpl
 
    @Override
    public final boolean validate(Field field, Object context) {
-      if (field instanceof Object) {
+      if (field instanceof EditField) {
          EditField editField = (EditField)field;
          int length = editField.getText().length();
          if (length == 0 || length == 8) {
@@ -258,11 +258,11 @@ final class PINAddressModelImpl
 
    PINAddressModelImpl(Object initialData) {
       String data = null;
-      if (!(initialData instanceof Object)) {
+      if (!(initialData instanceof String)) {
          if (initialData != null) {
             ContextObject contextObject = ContextObject.verifyNonNull(initialData);
             Object test = contextObject.get(254);
-            if (test instanceof Object) {
+            if (test instanceof PINAddressModel) {
                PINAddressModelImpl model = (PINAddressModelImpl)test;
                data = model.getData();
                this._isFreeForm = model.isFreeForm();

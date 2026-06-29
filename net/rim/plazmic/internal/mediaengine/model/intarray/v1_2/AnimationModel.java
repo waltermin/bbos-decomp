@@ -176,7 +176,7 @@ public class AnimationModel implements MediaModel, ForeignObjectPeer, MediaServi
             }
          }
       } else {
-         throw new Object("There are no focusable items in the model.");
+         throw new IllegalStateException("There are no focusable items in the model.");
       }
    }
 
@@ -325,7 +325,7 @@ public class AnimationModel implements MediaModel, ForeignObjectPeer, MediaServi
    void setId(int nodeHandle, String id) {
       if (this._handlesWithId == null) {
          this._handlesWithId = new int[]{nodeHandle};
-         this._ids = new Object[]{id};
+         this._ids = new String[]{id};
       } else {
          int i;
          for (i = this._handlesWithId.length - 1; i >= 0; i--) {
@@ -361,8 +361,8 @@ public class AnimationModel implements MediaModel, ForeignObjectPeer, MediaServi
 
    int addFontFamily(String fontFamily) {
       if (this._platformFontFamilyStrings == null) {
-         this._platformFontFamilyStrings = new Object[]{fontFamily};
-         this._fontFamilyStrings = new Object[]{fontFamily};
+         this._platformFontFamilyStrings = new String[]{fontFamily};
+         this._fontFamilyStrings = new String[]{fontFamily};
          return 0;
       } else {
          int length = this._platformFontFamilyStrings.length;
@@ -648,7 +648,7 @@ public class AnimationModel implements MediaModel, ForeignObjectPeer, MediaServi
    int addForeignObject(ForeignObject object) {
       int index;
       if (this._foreignObjects == null) {
-         this._foreignObjects = new Object[1];
+         this._foreignObjects = new ForeignObject[1];
          index = 0;
       } else if (this._freelists[0] != null && this._freelists[0].length > 0) {
          int length = this._freelists[0].length;
@@ -686,7 +686,7 @@ public class AnimationModel implements MediaModel, ForeignObjectPeer, MediaServi
    int addCustomMessage(String message) {
       int index;
       if (this._customMessages == null) {
-         this._customMessages = new Object[1];
+         this._customMessages = new String[1];
          index = 0;
       } else if (this._freelists[1] != null && this._freelists[1].length > 0) {
          int length = this._freelists[1].length;
@@ -886,7 +886,7 @@ public class AnimationModel implements MediaModel, ForeignObjectPeer, MediaServi
    @Override
    public String[] getExternalResources(int category) {
       int size = this.getExternalResourcesCount(category);
-      String[] result = new Object[size];
+      String[] result = new String[size];
       if (size > 0) {
          int offset = 0;
          if ((category & 4) != 0 && this._mediaObjectURL != null) {

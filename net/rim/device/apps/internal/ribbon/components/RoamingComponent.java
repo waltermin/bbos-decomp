@@ -114,9 +114,9 @@ final class RoamingComponent
          this._fczAlways = true;
       }
 
-      if (context instanceof Object) {
+      if (context instanceof StringProps) {
          this._context = (StringProps)context;
-         if (context instanceof Object) {
+         if (context instanceof PropsChangeEventSubscription) {
             PropsChangeEventSubscription subscription = (PropsChangeEventSubscription)context;
             subscription.addPropsChangeListener(this);
          }

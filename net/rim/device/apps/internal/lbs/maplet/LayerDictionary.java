@@ -8,13 +8,13 @@ import net.rim.device.api.util.IntHashtable;
 import net.rim.vm.Array;
 
 public final class LayerDictionary {
-   IntHashtable _styles = (IntHashtable)(new Object());
+   IntHashtable _styles = new IntHashtable();
    int[] _zorder = new int[0];
    StyleSet[] _stylesInZOrder = new StyleSet[0];
-   IntHashtable _drawCache = (IntHashtable)(new Object());
-   IntHashtable _polyCache = (IntHashtable)(new Object());
-   IntHashtable _labelCache = (IntHashtable)(new Object());
-   IntHashtable _visibleCache = (IntHashtable)(new Object());
+   IntHashtable _drawCache = new IntHashtable();
+   IntHashtable _polyCache = new IntHashtable();
+   IntHashtable _labelCache = new IntHashtable();
+   IntHashtable _visibleCache = new IntHashtable();
    public static final int BACKGROUND_PHASE = 0;
    public static final int FOREGROUND_PHASE = 1;
    public static final int LID_ROOT = 56832;

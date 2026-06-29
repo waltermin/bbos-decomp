@@ -26,7 +26,7 @@ class FromContact implements PersistableRIMModel, EncryptableProvider {
       try {
          return PersistentContent.decodeString(this._nameEncoding);
       } finally {
-         return ((StringBuffer)(new Object("<Content Protection is enabled for "))).append(this).append(" getName() >").toString();
+         return "<Content Protection is enabled for " + this + " getName() >";
       }
    }
 
@@ -34,7 +34,7 @@ class FromContact implements PersistableRIMModel, EncryptableProvider {
       try {
          return PersistentContent.decodeString(this._contactInfoEncoding);
       } finally {
-         return ((StringBuffer)(new Object("<Content Protection is enabled for "))).append(this).append(" getContactInfo() >").toString();
+         return "<Content Protection is enabled for " + this + " getContactInfo() >";
       }
    }
 

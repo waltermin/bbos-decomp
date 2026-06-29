@@ -15,6 +15,6 @@ final class PhoneNumberInput$1 implements Runnable {
    @Override
    public final void run() {
       PhoneLogger.log("startcall gsm230");
-      ((DialVerb)(new Object(this.val$number, null))).invoke(null);
+      new DialVerb(this.val$number, null).invoke(null);
    }
 }

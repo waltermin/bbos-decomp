@@ -14,11 +14,11 @@ import net.rim.device.internal.proxy.Proxy;
 import net.rim.vm.WeakReference;
 
 public final class RibbonUpdater {
-   private LongHashtable _unreadCounts = (LongHashtable)(new Object(2));
+   private LongHashtable _unreadCounts = new LongHashtable(2);
    private static final long INSTANCE_GUID = 483921869676550299L;
    private static final String MESSAGING_MODULE_NAME = "net_rim_bb_messaging_app";
    private static RibbonUpdater _instance;
-   private static WeakReference _stringBufferWR = (WeakReference)(new Object(null));
+   private static WeakReference _stringBufferWR = new WeakReference(null);
    private static final MessageListOptions _messageListOptions;
    private static final UnreadCountManager$CountOptions _countOptions;
 
@@ -186,7 +186,7 @@ public final class RibbonUpdater {
    ) {
       String id = null;
       if (entryPoint == null) {
-         id = ((StringBuffer)(new Object("net_rim_bb_messaging_app"))).append(sr.getId()).toString();
+         id = "net_rim_bb_messaging_app" + sr.getId();
          entryPoint = (ApplicationEntryPoint)ribbon.getRegisteredAction(id);
          if (entryPoint == null) {
             return;
@@ -225,7 +225,7 @@ public final class RibbonUpdater {
          if (this.displayNewMessageIcon(unreadCount)) {
             entryPoint.set(2, "new");
          } else {
-            entryPoint.set(2, (String)((Object)null));
+            entryPoint.set(2, (String)null);
          }
       }
 

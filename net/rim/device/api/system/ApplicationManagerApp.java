@@ -11,7 +11,7 @@ final class ApplicationManagerApp {
       String oom = "Application Manager threw Out of Memory";
 
       try {
-         new Object();
+         new ApplicationManagerImpl();
       } catch (Throwable var9) {
          Throwable ex = var9;
 
@@ -21,7 +21,7 @@ final class ApplicationManagerApp {
                msg = ex.toString();
             }
 
-            InternalServices.catastrophicFailure(200, ((StringBuffer)(new Object("Application Manager threw "))).append(msg).toString());
+            InternalServices.catastrophicFailure(200, "Application Manager threw " + msg);
             return;
          } finally {
             InternalServices.catastrophicFailure(200, oom);

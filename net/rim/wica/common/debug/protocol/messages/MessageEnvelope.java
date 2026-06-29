@@ -28,15 +28,13 @@ final class MessageEnvelope extends AbstractSerializableMessage implements IMess
    public final void deserializeHeader(IInputByteStreamAdapter stream) throws ByteStreamBadOnDeserialize {
       int magic = stream.readInt();
       if (!this.isMagic(magic)) {
-         throw new ByteStreamBadOnDeserialize(((StringBuffer)(new Object("Wrong magic number: "))).append(magic).toString());
+         throw new ByteStreamBadOnDeserialize("Wrong magic number: " + magic);
       }
 
       this._size = stream.readInt();
       this._check = stream.readInt();
       if (!this.isCheckOk()) {
-         throw new ByteStreamBadOnDeserialize(
-            ((StringBuffer)(new Object("Quick checksum failed.  Got: "))).append(this._check).append(" Expected: ").append(this.calculateCheck()).toString()
-         );
+         throw new ByteStreamBadOnDeserialize("Quick checksum failed.  Got: " + this._check + " Expected: " + this.calculateCheck());
       }
 
       this._messageSet = stream.readInt();
@@ -91,7 +89,7 @@ final class MessageEnvelope extends AbstractSerializableMessage implements IMess
 
    public final void setBody(int numBytes, byte[] buffer) {
       if (numBytes > buffer.length) {
-         throw new Object(((StringBuffer)(new Object("numBytes is: "))).append(numBytes).append(" but buffer length is: ").append(buffer.length).toString());
+         throw new ArrayIndexOutOfBoundsException("numBytes is: " + numBytes + " but buffer length is: " + buffer.length);
       }
 
       this._body = buffer;
@@ -105,7 +103,7 @@ final class MessageEnvelope extends AbstractSerializableMessage implements IMess
 
    private final void setMessageSet(int messageSet) {
       if (messageSet > 3) {
-         throw new Object(((StringBuffer)(new Object("Attempt to set messageSet to: "))).append(messageSet).append(" max is ").append(3).toString());
+         throw new IllegalArgumentException("Attempt to set messageSet to: " + messageSet + " max is " + 3);
       }
 
       this._messageSet = messageSet;
@@ -147,20 +145,19 @@ final class MessageEnvelope extends AbstractSerializableMessage implements IMess
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object("Size: ")))
-         .append(this._size)
-         .append(", Magic Ok: ")
-         .append(this.isMagic(12246278))
-         .append(", Check Ok: ")
-         .append(this.isCheckOk())
-         .append(", Set: ")
-         .append(IMessageEnvelope.MESSAGE_SET_NAMES[this._messageSet])
-         .append(", Type: ")
-         .append(this._messageType)
-         .append(", Session Id: ")
-         .append(this._sessionId)
-         .append(", Message Id: ")
-         .append(this._messageId)
-         .toString();
+      return "Size: "
+         + this._size
+         + ", Magic Ok: "
+         + this.isMagic(12246278)
+         + ", Check Ok: "
+         + this.isCheckOk()
+         + ", Set: "
+         + IMessageEnvelope.MESSAGE_SET_NAMES[this._messageSet]
+         + ", Type: "
+         + this._messageType
+         + ", Session Id: "
+         + this._sessionId
+         + ", Message Id: "
+         + this._messageId;
    }
 }

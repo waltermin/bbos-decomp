@@ -32,7 +32,7 @@ public final class Status extends SyncCommand {
 
    public final void addCmdErrorCode(int cmdId, int anErrorCode) {
       if (this._cmdIdToErrorCodeMap == null) {
-         this._cmdIdToErrorCodeMap = (IntIntHashtable)(new Object());
+         this._cmdIdToErrorCodeMap = new IntIntHashtable();
       }
 
       this._cmdIdToErrorCodeMap.put(cmdId, anErrorCode);
@@ -40,7 +40,7 @@ public final class Status extends SyncCommand {
 
    public final void addDatagramErrorCode(int aDatagramSequence, int anErrorCode) {
       if (this._datagramSequenceToErrorCodeMap == null) {
-         this._datagramSequenceToErrorCodeMap = (IntIntHashtable)(new Object());
+         this._datagramSequenceToErrorCodeMap = new IntIntHashtable();
       }
 
       if (anErrorCode == 402 && !this._invalidDatagramFlag) {
@@ -52,7 +52,7 @@ public final class Status extends SyncCommand {
 
    public final void addPendingOperations(int aCmdId, int ops) {
       if (this._pendingOperationsMap == null) {
-         this._pendingOperationsMap = (IntIntHashtable)(new Object());
+         this._pendingOperationsMap = new IntIntHashtable();
       }
 
       this._pendingOperationsMap.put(aCmdId, ops);

@@ -14,7 +14,7 @@ public final class PGPLiteralInputStream extends PGPInputStream {
          this._type = 0;
       } else {
          if (firstByte != 98) {
-            throw new PGPEncodingException(((StringBuffer)(new Object("Lit:"))).append(firstByte).toString());
+            throw new PGPEncodingException("Lit:" + firstByte);
          }
 
          this._type = 1;
@@ -25,7 +25,7 @@ public final class PGPLiteralInputStream extends PGPInputStream {
       byte[] stringAsBytes = new byte[length];
       super._input.read(stringAsBytes);
       if (length != 0) {
-         this._filename = (String)(new Object(stringAsBytes));
+         this._filename = new String(stringAsBytes);
       }
 
       this._date = (super._input.read() & 255) << 24;
@@ -39,7 +39,7 @@ public final class PGPLiteralInputStream extends PGPInputStream {
       if (b != null && off >= 0 && len >= 0 && b.length - len >= off) {
          return super._input.read(b, off, len);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

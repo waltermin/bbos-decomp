@@ -4,10 +4,11 @@ import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Graphics;
+import net.rim.device.api.ui.component.ActiveAutoTextEditField;
+import net.rim.device.api.ui.component.ActiveRichTextField;
 import net.rim.device.api.ui.component.AutoTextEditField;
 import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.RichTextField;
-import net.rim.device.api.ui.component.TextField;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.api.util.StringMatch;
 import net.rim.device.api.util.StringUtilities;
@@ -81,16 +82,16 @@ public class BodyModelImpl
    @Override
    public boolean convert(Object context, Object target) {
       String text = this.getText();
-      if (target instanceof Object && text != null && text.length() > 0) {
+      if (target instanceof OutgoingMessage && text != null && text.length() > 0) {
          OutgoingMessage outgoingTransmission = (OutgoingMessage)target;
          outgoingTransmission.setTextAndType(text, context);
          return true;
       }
 
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          ContextObject contextObject = (ContextObject)context;
          if (contextObject.getFlag(11) && contextObject.getFlag(43) && contextObject.getFlag(54)) {
-            if (target instanceof Object) {
+            if (target instanceof StringBuffer) {
                StringBuffer stringBuffer = (StringBuffer)target;
                if (text != null) {
                   stringBuffer.append("\rNotes:");
@@ -109,7 +110,7 @@ public class BodyModelImpl
                return true;
             }
          } else if (!contextObject.getFlag(19)) {
-            if (contextObject.getFlag(24) && target instanceof Object && text != null && text.length() > 0) {
+            if (contextObject.getFlag(24) && target instanceof StringBuffer && text != null && text.length() > 0) {
                StringBuffer buf = (StringBuffer)target;
                buf.setLength(0);
                buf.append(text);
@@ -199,7 +200,7 @@ public class BodyModelImpl
 
       Field field;
       if (!editable) {
-         field = (Field)(new Object(bodyText));
+         field = new ActiveRichTextField(bodyText);
       } else {
          int length = 1000000;
          if (memoPadApp) {
@@ -214,9 +215,9 @@ public class BodyModelImpl
          }
 
          if (ContextObject.getFlag(context, 120)) {
-            field = (Field)(new Object(label, bodyText, length, 4503599627374592L));
+            field = new AutoTextEditField(label, bodyText, length, 4503599627374592L);
          } else {
-            field = (Field)(new Object(label, bodyText, length, 4503599627374592L));
+            field = new ActiveAutoTextEditField(label, bodyText, length, 4503599627374592L);
          }
       }
 
@@ -226,13 +227,13 @@ public class BodyModelImpl
          field.setTag(Tag.create("message-body"));
       }
 
-      if (!(field instanceof Object)) {
-         if (field instanceof Object) {
+      if (!(field instanceof RichTextField)) {
+         if (field instanceof BasicEditField) {
             BasicEditField edit = (BasicEditField)field;
             edit.setAdjustAlignments(emailApp && !edit.isEditable());
          }
       } else {
-         ((TextField)field).setAdjustAlignments(emailApp);
+         ((RichTextField)field).setAdjustAlignments(emailApp);
       }
 
       field.setEditable(editable);
@@ -253,17 +254,17 @@ public class BodyModelImpl
    public boolean grabDataFromField(Field field, Object context) {
       String fieldText = null;
       boolean isEditable = field.isEditable();
-      if (field instanceof Object && isEditable) {
+      if (field instanceof AutoTextEditField && isEditable) {
          AutoTextEditField editField = (AutoTextEditField)field;
          fieldText = editField.getText();
          this.setText(fieldText);
-         if (context instanceof Object) {
+         if (context instanceof ContextObject) {
             int hanStyle = editField.getFont().getStyle() & 7168;
             if (hanStyle != 0) {
-               ContextObject.put(context, 77, editField.getFont());
+               ContextObject.put((ContextObject)context, 77, editField.getFont());
             }
          }
-      } else if (field instanceof Object && !isEditable) {
+      } else if (field instanceof RichTextField && !isEditable) {
          RichTextField textField = (RichTextField)field;
          fieldText = textField.getText();
          this.setText(fieldText);
@@ -279,7 +280,7 @@ public class BodyModelImpl
 
    @Override
    public int getOrder(Object context) {
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          ContextObject contextObject = (ContextObject)context;
          if (contextObject.getFlag(11)) {
             if (contextObject.getFlag(0)) {
@@ -347,7 +348,7 @@ public class BodyModelImpl
          }
 
          int count = Math.min(s.length(), maxChar);
-         StringBuffer buff = (StringBuffer)(new Object(s.substring(0, count)));
+         StringBuffer buff = new StringBuffer(s.substring(0, count));
          return buff.toString();
       } finally {
          ;
@@ -356,7 +357,7 @@ public class BodyModelImpl
 
    public BodyModelImpl(Object initialData) {
       String text = null;
-      if (!(initialData instanceof Object)) {
+      if (!(initialData instanceof String)) {
          if (initialData != null) {
             ContextObject contextObject = ContextObject.verifyNonNull(initialData);
             text = (String)contextObject.get(-8478555129720928586L);

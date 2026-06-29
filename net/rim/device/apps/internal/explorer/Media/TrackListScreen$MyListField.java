@@ -7,7 +7,7 @@ import net.rim.device.api.ui.component.KeywordFilterCollectionListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 
 final class TrackListScreen$MyListField extends KeywordFilterCollectionListField {
-   private XYRect _focus = (XYRect)(new Object());
+   private XYRect _focus = new XYRect();
    private boolean _moveMode;
 
    TrackListScreen$MyListField(ReadableList list, ListFieldCallback listCallback) {

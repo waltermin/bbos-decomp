@@ -18,7 +18,7 @@ public final class StatusMACAddress extends StatusListItem {
          case 1:
             this._macType = 1;
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 

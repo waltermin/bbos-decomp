@@ -50,7 +50,7 @@ final class ActivationTransmissionService extends AbstractTransmissionService im
    @Override
    public final void receivePacket(DataBuffer packetDataBuffer, Object contextObject) {
       GMEDatagram gmeDatagram = null;
-      if (!(packetDataBuffer instanceof Object)) {
+      if (!(packetDataBuffer instanceof GMEDatagram)) {
          Firewall.getInstance().incrementBlockedCount((byte)-4);
          this.logEvent(1380144725, 2, packetDataBuffer.getArray());
       } else {

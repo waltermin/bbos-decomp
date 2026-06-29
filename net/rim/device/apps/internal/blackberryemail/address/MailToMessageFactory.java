@@ -22,8 +22,8 @@ final class MailToMessageFactory implements Factory {
          return null;
       }
 
-      if (!(initialData instanceof Object)) {
-         if (!(initialData instanceof Object)) {
+      if (!(initialData instanceof ActiveFieldContext)) {
+         if (!(initialData instanceof ContextObject)) {
             data = initialData.toString();
          } else {
             ContextObject context = (ContextObject)initialData;
@@ -34,8 +34,8 @@ final class MailToMessageFactory implements Factory {
          data = afc.getData();
       }
 
-      RIMModel[] toArray = new Object[0];
-      RIMModel[] ccArray = new Object[0];
+      RIMModel[] toArray = new RIMModel[0];
+      RIMModel[] ccArray = new RIMModel[0];
       String subject = null;
       String body = null;
       int startIndex = 0;
@@ -54,7 +54,7 @@ final class MailToMessageFactory implements Factory {
       }
 
       if (endIndex != data.length()) {
-         StringTokenizer parameters = (StringTokenizer)(new Object(data.substring(endIndex + 1, data.length()), '&'));
+         StringTokenizer parameters = new StringTokenizer(data.substring(endIndex + 1, data.length()), '&');
          String parameter = null;
          String lowerCase = null;
 
@@ -73,7 +73,7 @@ final class MailToMessageFactory implements Factory {
                   if (body == null) {
                      body = parameter.substring(5);
                   } else {
-                     body = body.concat(((StringBuffer)(new Object("\n"))).append(parameter.substring(5)).toString());
+                     body = body.concat("\n" + parameter.substring(5));
                   }
                }
             }
@@ -84,9 +84,9 @@ final class MailToMessageFactory implements Factory {
    }
 
    private final void addAddresses(RIMModel[] addressArray, String newAddress) {
-      StringTokenizer tokenizer = (StringTokenizer)(new Object(newAddress, ','));
+      StringTokenizer tokenizer = new StringTokenizer(newAddress, ',');
       int len = addressArray.length;
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
 
       while (tokenizer.hasMoreTokens()) {
          Array.resize(addressArray, len + 1);

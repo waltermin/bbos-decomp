@@ -2,6 +2,7 @@ package net.rim.device.cldc.io.btgoep;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.obex.HeaderSet;
@@ -53,17 +54,17 @@ class OBEXSession$OperationImpl implements Operation {
    public void sendHeaders(HeaderSet headers) {
       synchronized (this.this$0) {
          if (headers == null) {
-            throw new Object();
+            throw new NullPointerException();
          }
 
          if (!this._isClosed && (this._out == null || !this._out.isClosed())) {
             if (headers instanceof HeaderSetImpl) {
                this._headersToSend = (HeaderSetImpl)headers;
             } else {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
          } else {
-            throw new Object("Operation is closed");
+            throw new IOException("Operation is closed");
          }
       }
    }
@@ -119,46 +120,46 @@ class OBEXSession$OperationImpl implements Operation {
    public InputStream openInputStream() {
       synchronized (this.this$0) {
          if (this._isClosed) {
-            throw new Object("Operation is closed");
+            throw new IOException("Operation is closed");
          } else if (this._in == null) {
             this._in = new OBEXSession$OperationImpl$OperationInputStream(this);
             return this._in;
          } else {
-            throw new Object("Already open");
+            throw new IOException("Already open");
          }
       }
    }
 
    @Override
    public DataInputStream openDataInputStream() {
-      return (DataInputStream)(new Object(this.openInputStream()));
+      return new DataInputStream(this.openInputStream());
    }
 
    @Override
    public OutputStream openOutputStream() {
       synchronized (this.this$0) {
          if (this._isClosed) {
-            throw new Object("Operation is closed");
+            throw new IOException("Operation is closed");
          } else if (this._out == null) {
             this._sendEndOfBody = true;
             this._out = new OBEXSession$OperationImpl$OperationOutputStream(this);
             return this._out;
          } else {
-            throw new Object("Already open");
+            throw new IOException("Already open");
          }
       }
    }
 
    @Override
    public DataOutputStream openDataOutputStream() {
-      return (DataOutputStream)(new Object(this.openOutputStream()));
+      return new DataOutputStream(this.openOutputStream());
    }
 
    @Override
    public HeaderSet getReceivedHeaders() {
       synchronized (this.this$0) {
          if (this._isClosed) {
-            throw new Object("Operation is closed");
+            throw new IOException("Operation is closed");
          }
 
          if (this._receivedHeaders == null) {

@@ -14,7 +14,7 @@ class JADBrowserField$1 extends PopupScreen {
    @Override
    public void onDisplay() {
       super.onDisplay();
-      ((Thread)(new Object(this.this$0._downloadThread))).start();
+      new Thread(this.this$0._downloadThread).start();
       this.this$0._statusButton.setFocus();
    }
 

@@ -1,5 +1,6 @@
 package net.rim.wica.runtime.messaging.internal.util;
 
+import java.util.NoSuchElementException;
 import net.rim.wica.runtime.util.LinkedQueue$Iterator;
 import net.rim.wica.runtime.util.LinkedQueue$LinkedNode;
 
@@ -16,7 +17,7 @@ public class SplitQueue$SplitIterator extends LinkedQueue$Iterator {
    @Override
    public void remove() {
       if (!super._goodState) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       SplitQueue.access$006(this.this$0);
@@ -36,7 +37,7 @@ public class SplitQueue$SplitIterator extends LinkedQueue$Iterator {
    @Override
    public void removeNext() {
       if (!this.hasNext()) {
-         throw new Object();
+         throw new NoSuchElementException();
       }
 
       SplitQueue.access$406(this.this$0);

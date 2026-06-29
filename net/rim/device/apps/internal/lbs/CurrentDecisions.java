@@ -11,7 +11,7 @@ final class CurrentDecisions {
    int _focus;
    int _count;
    Decision[] _decisions = new Decision[0];
-   XYRect _bbox = (XYRect)(new Object());
+   XYRect _bbox = new XYRect();
    MapField _mapField;
    boolean _startModified = false;
 
@@ -30,7 +30,7 @@ final class CurrentDecisions {
 
    public final void add(Decision decision) {
       this._count++;
-      decision._label = ((StringBuffer)(new Object())).append(this._count).append(". ").append(decision._label).toString();
+      decision._label = this._count + ". " + decision._label;
       decision._number = this._count;
       Arrays.add(this._decisions, decision);
       this._bbox.union(decision._longitude, decision._latitude, 1, 1);
@@ -72,19 +72,13 @@ final class CurrentDecisions {
          }
 
          if (start._name.length() == 0) {
-            start._caption = ((StringBuffer)(new Object("1. "))).append(MessageFormat.format(LBSResources.getString(266), new Object[]{direction})).toString();
+            start._caption = "1. " + MessageFormat.format(LBSResources.getString(266), new String[]{direction});
          } else {
-            start._caption = ((StringBuffer)(new Object("1. ")))
-               .append(MessageFormat.format(LBSResources.getString(267), new Object[]{direction, start._name}))
-               .toString();
+            start._caption = "1. " + MessageFormat.format(LBSResources.getString(267), new String[]{direction, start._name});
          }
 
          float numKilometres = start._distance / 1148846080;
-         start._caption = ((StringBuffer)(new Object()))
-            .append(start._caption)
-            .append(" ")
-            .append(MessageFormat.format(LBSResources.getString(199), new Object[]{Distance.formatDistance(numKilometres)}))
-            .toString();
+         start._caption = start._caption + " " + MessageFormat.format(LBSResources.getString(199), new String[]{Distance.formatDistance(numKilometres)});
          start._label = start._caption;
       }
    }

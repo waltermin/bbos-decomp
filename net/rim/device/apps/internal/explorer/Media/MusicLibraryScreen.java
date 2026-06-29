@@ -34,7 +34,7 @@ public final class MusicLibraryScreen extends MediaLibraryScreen implements Coll
 
    @Override
    protected final String[] getItems() {
-      String[] items = new Object[0];
+      String[] items = new String[0];
       Arrays.append(items, ExplorerResources.getStringArray(135));
       this.item = items[4];
       return items;
@@ -51,9 +51,9 @@ public final class MusicLibraryScreen extends MediaLibraryScreen implements Coll
          return true;
       }
 
-      ContextInfo contextInfo = (ContextInfo)(new Object(super._context.getType() | 1));
+      ContextInfo contextInfo = new ContextInfo(super._context.getType() | 1);
       TrackListScreen screen = new TrackListScreen(contextInfo);
-      StringBuffer buffer = (StringBuffer)(new Object(1));
+      StringBuffer buffer = new StringBuffer(1);
       buffer.append(CharacterUtilities.toUpperCase(c));
       screen.setText(buffer.toString());
       UiApplication.getUiApplication().pushScreen(screen);
@@ -130,13 +130,13 @@ public final class MusicLibraryScreen extends MediaLibraryScreen implements Coll
    private final void shuffleAllSongs() {
       MediaInfoCollection collection = MediaLibrary.getInstance().getTrackCollection();
       if (collection.size() != 0) {
-         M3UPlaylist playlist = (M3UPlaylist)(new Object());
+         M3UPlaylist playlist = new M3UPlaylist();
          MediaInfo media = null;
          int size = collection.size();
 
          for (int i = 0; i < size; i++) {
-            MediaInfo var14 = collection.getAt(i);
-            playlist.addUrl(((MediaInfo)var14).getLocation(), ((MediaInfo)var14).getName(), -1);
+            media = (MediaInfo)collection.getAt(i);
+            playlist.addUrl(media.getLocation(), media.getName(), -1);
          }
 
          boolean var11 = false /* VF: Semaphore variable */;
@@ -145,7 +145,7 @@ public final class MusicLibraryScreen extends MediaLibraryScreen implements Coll
             var11 = true;
             InputConnection var15 = playlist.openConnection("/");
             MediaOptionsRegistry.getInstance().setBoolean(-2846908971875712627L, true);
-            ContextObject context = new Object();
+            ContextObject context = new ContextObject();
             ContextObject.put(context, -1477447097671931650L, this);
             MediaLauncher.launch(var15, context);
             synchronized (this) {

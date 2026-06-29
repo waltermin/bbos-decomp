@@ -15,7 +15,7 @@ public class ILingDataLoader {
 
    protected void registerData() {
       String module = ApplicationDescriptor.currentApplicationDescriptor().getModuleName();
-      StringBuffer message = (StringBuffer)(new Object());
+      StringBuffer message = new StringBuffer();
 
       for (int i = 0; i < this._resNames.length; i++) {
          byte[][] data = this.loadRes(module, this._resNames[i]);
@@ -23,7 +23,7 @@ public class ILingDataLoader {
             message.setLength(0);
             this.composeDiagnosticMessage(message, module, this._resNames[i], this._locales[i]);
             LingDataRegistry.registerLingData(
-               this._locales[i].getCode(), (LinguisticData)(new Object(module, this._types[i], this._versions[i], data, message.toString(), module))
+               this._locales[i].getCode(), new LinguisticData(module, this._types[i], this._versions[i], data, message.toString(), module)
             );
          }
       }
@@ -55,7 +55,7 @@ public class ILingDataLoader {
       for (int i = 0; i < names.length; i++) {
          result[i] = resource.getResource(names[i]);
          if (result[i] == null) {
-            System.out.println(((StringBuffer)(new Object("WARNING: can't load "))).append(names[i]).append(" from ").append(module).toString());
+            System.out.println("WARNING: can't load " + names[i] + " from " + module);
             return (byte[][])null;
          }
       }

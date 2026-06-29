@@ -5,8 +5,8 @@ import net.rim.device.internal.vad.VADParameters;
 import net.rim.vm.Persistable;
 
 final class VADPersistentData implements Persistable {
-   VADParameters _parameters = (VADParameters)(new Object());
-   IntHashtable _fileData = (IntHashtable)(new Object());
+   VADParameters _parameters = new VADParameters();
+   IntHashtable _fileData = new IntHashtable();
    Object[] _incrementalNameEncodings;
    boolean _rebuildAddressBook;
    boolean _rebuildAddressBookScheduled;

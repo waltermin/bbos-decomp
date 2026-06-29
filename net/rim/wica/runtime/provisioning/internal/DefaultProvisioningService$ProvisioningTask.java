@@ -1,6 +1,6 @@
 package net.rim.wica.runtime.provisioning.internal;
 
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -95,10 +95,7 @@ class DefaultProvisioningService$ProvisioningTask implements ResponseListener, R
    @Override
    public void run() {
       if (this.this$0._lifecycleService.hasWiclet(this.getApplicationId())) {
-         this.this$0
-            .fireProvisioningEvent(
-               this, 3, 195, ((StringBuffer)(new Object("Application ID:"))).append(this.getApplicationId()).append(" already installed").toString()
-            );
+         this.this$0.fireProvisioningEvent(this, 3, 195, "Application ID:" + this.getApplicationId() + " already installed");
       } else {
          this.this$0.fireProvisioningEvent(this, 1, 1);
          OutgoingRequest request = null;
@@ -114,13 +111,7 @@ class DefaultProvisioningService$ProvisioningTask implements ResponseListener, R
                var19 = false;
             } finally {
                if (var19) {
-                  this.this$0
-                     .fireProvisioningEvent(
-                        this,
-                        3,
-                        192,
-                        ((StringBuffer)(new Object("Application could not be downloaded, invalid URL: "))).append(this.getPackageLocation()).toString()
-                     );
+                  this.this$0.fireProvisioningEvent(this, 3, 192, "Application could not be downloaded, invalid URL: " + this.getPackageLocation());
                   return;
                }
             }
@@ -151,7 +142,7 @@ class DefaultProvisioningService$ProvisioningTask implements ResponseListener, R
                } else if (this._response.getResponseCode() == 603) {
                   this.this$0.fireProvisioningEvent(this, 3, 901, RuntimeResources.getString(148));
                } else {
-                  String errorMsg = RuntimeResources.getString(110, new Object[]{request.getUrl(), new Object(this._response.getResponseCode())});
+                  String errorMsg = RuntimeResources.getString(110, new Object[]{request.getUrl(), new Integer(this._response.getResponseCode())});
                   this.this$0.fireProvisioningEvent(this, 3, 954, errorMsg);
                }
             } else if (expired) {
@@ -204,7 +195,7 @@ class DefaultProvisioningService$ProvisioningTask implements ResponseListener, R
 
    @Override
    public String toString() {
-      StringBuffer sb = (StringBuffer)(new Object(64));
+      StringBuffer sb = new StringBuffer(64);
       sb.append("[ProvisioningTask[packageURL=").append(this.getPackageLocation()).append(']');
       return sb.toString();
    }
@@ -219,7 +210,7 @@ class DefaultProvisioningService$ProvisioningTask implements ResponseListener, R
 
       d.setEntityResolver(new DefaultProvisioningService$ExternalEntityResolver(appPackage, language));
       d = recipe.prepare(d);
-      d.parse((InputStream)(new Object(wicletData)));
+      d.parse(new ByteArrayInputStream(wicletData));
       return (WicletElement)d.getRoot();
    }
 
@@ -251,9 +242,7 @@ class DefaultProvisioningService$ProvisioningTask implements ResponseListener, R
       String entry = wiclet.getEntry();
       info.setEntryPoint(entry == null ? -1 : this.this$0._uniqueCodeGenerator.generateCode(entry));
       info.setIconUri(wiclet.getIcon());
-      info.setHoverIcon(
-         wiclet.getHoverIcon() != null ? ((StringBuffer)(new Object())).append(wiclet.getUri()).append("/").append(wiclet.getHoverIcon()).toString() : null
-      );
+      info.setHoverIcon(wiclet.getHoverIcon() != null ? wiclet.getUri() + "/" + wiclet.getHoverIcon() : null);
       String msgDelivery = wiclet.getMessageDelivery();
       int msgDeliveryMode = 0;
       if (msgDelivery.equalsIgnoreCase("bestEffort")) {
@@ -274,7 +263,7 @@ class DefaultProvisioningService$ProvisioningTask implements ResponseListener, R
    private Resource[] getImmediateResources(WicletElement wiclet) {
       Hashtable resources = wiclet.getResourceElements();
       Enumeration resEnum = resources.elements();
-      Vector immediateResources = (Vector)(new Object());
+      Vector immediateResources = new Vector();
       Resource[] ires = new Resource[0];
 
       while (resEnum.hasMoreElements()) {
@@ -562,7 +551,7 @@ class DefaultProvisioningService$ProvisioningTask implements ResponseListener, R
       // 1cb: aload 0
       // 1cc: getfield net/rim/wica/runtime/provisioning/internal/DefaultProvisioningService$ProvisioningTask.this$0 Lnet/rim/wica/runtime/provisioning/internal/DefaultProvisioningService;
       // 1cf: aload 0
-      // 1d0: new java/lang/Object
+      // 1d0: new java/lang/Long
       // 1d3: dup
       // 1d4: aload 0
       // 1d5: getfield net/rim/wica/runtime/provisioning/internal/DefaultProvisioningService$ProvisioningTask._upgradedWicletId J
@@ -689,7 +678,7 @@ class DefaultProvisioningService$ProvisioningTask implements ResponseListener, R
       // 18: aload 2
       // 19: areturn
       // 1a: astore 3
-      // 1b: new java/lang/Object
+      // 1b: new java/lang/StringBuffer
       // 1e: dup
       // 1f: ldc_w "Invalid or damaged application package: "
       // 22: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -709,7 +698,7 @@ class DefaultProvisioningService$ProvisioningTask implements ResponseListener, R
       // 41: aload 2
       // 42: areturn
       // 43: astore 3
-      // 44: new java/lang/Object
+      // 44: new java/lang/StringBuffer
       // 47: dup
       // 48: ldc_w "Unable to compile script code from application package: "
       // 4b: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V

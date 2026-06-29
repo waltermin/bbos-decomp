@@ -9,6 +9,7 @@ import net.rim.device.api.ui.FontFamily;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.component.ChoiceField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.MainScreen;
@@ -138,13 +139,13 @@ final class ScreenKeyboardController implements FieldChangeListener {
       }
 
       this._filterSize = initialFont.getHeight(4194307);
-      this._fontFamilyField = (ChoiceField)(new Object(OptionsResources.getString(1102), this._fontFamilies, initialFont.getFontFamily()));
+      this._fontFamilyField = new ObjectChoiceField(OptionsResources.getString(1102), this._fontFamilies, initialFont.getFontFamily());
       this._fontFamilyField.setFont(mainScreen.getFontIfSet());
-      this._fontSizeField = (ObjectChoiceField)(new Object(OptionsResources.getString(1103), null, 0, 134217728));
+      this._fontSizeField = new ObjectChoiceField(OptionsResources.getString(1103), null, 0, 134217728);
       this._fontSizeField.setFont(mainScreen.getFontIfSet());
       this._isScalable = false;
       this.populateFontSizes();
-      this._fontStyleField = (ChoiceField)(new Object(OptionsResources.getString(1424), OptionsResources.getStringArray(1425)));
+      this._fontStyleField = new ObjectChoiceField(OptionsResources.getString(1424), OptionsResources.getStringArray(1425));
       this._fontStyleField.setFont(mainScreen.getFontIfSet());
       int index = 0;
       switch (initialFont.getStyle() & 0xFF) {
@@ -182,22 +183,22 @@ final class ScreenKeyboardController implements FieldChangeListener {
             currAntialias = 1;
       }
 
-      this._fontAntialiasField = (ChoiceField)(new Object(OptionsResources.getString(1458), tAA));
+      this._fontAntialiasField = new ObjectChoiceField(OptionsResources.getString(1458), tAA);
       this._fontAntialiasField.setFont(mainScreen.getFontIfSet());
       this._fontAntialiasField.setSelectedIndex(currAntialias);
-      this._fontSampleField = (RichTextField)(new Object(36028797018963968L));
+      this._fontSampleField = new RichTextField(36028797018963968L);
       this._fontSampleField.setText(OptionsResources.getString(1465));
       this._fontSampleField.setFont(initialFont);
       content.add(this._fontFamilyField);
       content.add(this._fontSizeField);
-      tmpA = (Object[])(new Object());
-      tmpA.add(this._fontStyleField);
-      tmpA.add(this._fontAntialiasField);
-      tmpA.setBorder(0, 0, 5, 0);
-      content.add(tmpA);
-      this._fontSettings = tmpA;
+      VerticalFieldManager fontSettings = new VerticalFieldManager();
+      fontSettings.add(this._fontStyleField);
+      fontSettings.add(this._fontAntialiasField);
+      fontSettings.setBorder(0, 0, 5, 0);
+      content.add(fontSettings);
+      this._fontSettings = fontSettings;
       if (this._isWizard) {
-         content.add((Field)(new Object(OptionsResources.getString(2114))));
+         content.add(new LabelField(OptionsResources.getString(2114)));
          this._fontSampleField.setBorder(0, 10, 0, 10);
       }
 
@@ -224,7 +225,7 @@ final class ScreenKeyboardController implements FieldChangeListener {
          int size = 0;
          int index = this._fontSizeField.getSelectedIndex();
          if (index >= 0) {
-            size = this._fontSizeField.getChoice(index);
+            size = (Integer)this._fontSizeField.getChoice(index);
          }
 
          if (size < 8) {
@@ -265,14 +266,9 @@ final class ScreenKeyboardController implements FieldChangeListener {
          wrongAntialiasingChosen = this._fontAntialiasField.getSelectedIndex() != antialiasMode;
          wrongStyleChosen = this._fontStyleField.getSelectedIndex() != style;
          if (wrongSizeChosen) {
-            dialogString = ((StringBuffer)(new Object()))
-               .append(dialogString)
-               .append(OptionsResources.getString(2067))
-               .append(recommendedSize)
-               .append(OptionsResources.getString(2068))
-               .toString();
+            dialogString = dialogString + OptionsResources.getString(2067) + recommendedSize + OptionsResources.getString(2068);
          } else {
-            dialogString = ((StringBuffer)(new Object())).append(dialogString).append(OptionsResources.getString(2069)).toString();
+            dialogString = dialogString + OptionsResources.getString(2069);
          }
 
          if ((wrongSizeChosen || wrongAntialiasingChosen || wrongStyleChosen) && WizardDialog.ask(3, dialogString, false) == 4) {
@@ -338,20 +334,20 @@ final class ScreenKeyboardController implements FieldChangeListener {
          if (this._isScalable) {
             int[] fontSizes = FONT_SIZES;
             numFontSizes = fontSizes.length;
-            ptFontSizes = new Object[numFontSizes];
+            ptFontSizes = new Integer[numFontSizes];
             this._cptFontSizes = new int[numFontSizes];
 
             for (int i = 0; i < numFontSizes; i++) {
                int ptSize = fontSizes[i];
                if (!this._isJapanese || ptSize == currentSize || ptSize == 8 || 10 <= ptSize && ptSize <= 13) {
-                  ptFontSizes[out] = (Integer)(new Object(ptSize));
+                  ptFontSizes[out] = new Integer(ptSize);
                   this._cptFontSizes[out++] = Ui.convertSize(ptSize, 3, 4194307);
                }
             }
          } else {
             int[] fontSizes = fontFamily.getHeights();
             numFontSizes = fontSizes.length;
-            ptFontSizes = new Object[numFontSizes];
+            ptFontSizes = new Integer[numFontSizes];
             this._cptFontSizes = new int[numFontSizes];
             out = 0;
 
@@ -367,14 +363,14 @@ final class ScreenKeyboardController implements FieldChangeListener {
                      out--;
                   }
 
-                  ptFontSizes[out] = (Integer)(new Object(ptSize));
+                  ptFontSizes[out] = new Integer(ptSize);
                   this._cptFontSizes[out++] = cptSize;
                }
             }
          }
 
          if (out == 0) {
-            ptFontSizes[out] = (Integer)(new Object(10));
+            ptFontSizes[out] = new Integer(10);
             this._cptFontSizes[out++] = 1000;
          }
 

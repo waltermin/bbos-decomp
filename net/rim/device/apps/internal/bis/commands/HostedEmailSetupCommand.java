@@ -34,7 +34,7 @@ public final class HostedEmailSetupCommand implements DomainCommand {
       sessionState.setIntegrationEmail(hostedMailUserName);
 
       try {
-         String[] bbmailSuggestions = new Object[3];
+         String[] bbmailSuggestions = new String[3];
          RestClient$AddMailboxCallResult callResult = restClient.addHostedAccount(
             configRecord.getBrandName(), userName, hostedMailUserName, password, secretQuestion, secretQuestionId, secretAnswer, bbmailSuggestions
          );
@@ -52,9 +52,7 @@ public final class HostedEmailSetupCommand implements DomainCommand {
                return DomainCommand.SESSION_TIMEOUT_RESULT;
             }
 
-            BISEventLogger.logEvent(
-               ((StringBuffer)(new Object("Hosted Mail Setup: Unhandled REST response code: "))).append(callResult.getRESTStatusCode()).toString(), 0
-            );
+            BISEventLogger.logEvent("Hosted Mail Setup: Unhandled REST response code: " + callResult.getRESTStatusCode(), 0);
             commandResultID = "error";
             commandResultErrorMsg = ApplicationResources.getString(174);
          }

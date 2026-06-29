@@ -14,7 +14,7 @@ final class BluetoothPowerAction extends Action {
    BluetoothPowerAction() {
       super(null, "net_rim_Bluetooth", 231);
       ApplicationDescriptor original = ApplicationDescriptor.currentApplicationDescriptor();
-      this._descriptor = (ApplicationDescriptor)(new Object(original, new String[]{"btonoff"}));
+      this._descriptor = new ApplicationDescriptor(original, new String[]{"btonoff"});
    }
 
    @Override

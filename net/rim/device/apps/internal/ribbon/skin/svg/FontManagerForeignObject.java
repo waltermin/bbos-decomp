@@ -24,7 +24,7 @@ class FontManagerForeignObject extends DefaultHandler implements MediaService, G
    private String[] _origFontFamilies;
    private int[] _origFontWeights;
    private ModelInteractorImpl _model;
-   private static TextGraphics _textGraphics = (TextGraphics)(new Object("BBMillbank", 10));
+   private static TextGraphics _textGraphics = new TextGraphics("BBMillbank", 10);
 
    FontManagerForeignObject(String param1, SAXParser param2) {
       // $VF: Couldn't be decompiled
@@ -53,7 +53,7 @@ class FontManagerForeignObject extends DefaultHandler implements MediaService, G
       // 1d: newarray 10
       // 1f: putfield net/rim/device/apps/internal/ribbon/skin/svg/FontManagerForeignObject._origFontWeights [I
       // 22: aload 2
-      // 23: new java/lang/Object
+      // 23: new java/io/ByteArrayInputStream
       // 26: dup
       // 27: aload 1
       // 28: ldc_w "UTF8"
@@ -130,7 +130,7 @@ class FontManagerForeignObject extends DefaultHandler implements MediaService, G
    public void startElement(String uri, String localName, String qName, Attributes attributes) {
       if (localName.equalsIgnoreCase("items")) {
          String ids = attributes.getValue("ids");
-         StringTokenizer tokenizer = (StringTokenizer)(new Object(ids, ';'));
+         StringTokenizer tokenizer = new StringTokenizer(ids, ';');
 
          while (tokenizer.hasMoreTokens()) {
             Arrays.add(this._nodeIds, tokenizer.nextToken().trim());
@@ -141,7 +141,7 @@ class FontManagerForeignObject extends DefaultHandler implements MediaService, G
    @Override
    public void setMedia(Object media) {
       if (media != this._model) {
-         if (media instanceof Object) {
+         if (media instanceof ModelInteractorImpl) {
             this._model = (ModelInteractorImpl)media;
             if (this._model == null || this._nodeIds == null) {
                return;

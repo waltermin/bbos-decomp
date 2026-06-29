@@ -40,7 +40,7 @@ final class NotificationsEngineImpl$Event {
 
    final boolean belongsToApplication(long appId) {
       boolean result = appId == this._appId;
-      if (!result && this._eventReference instanceof Object) {
+      if (!result && this._eventReference instanceof ProfileIDProvider) {
          result = appId == ((ProfileIDProvider)this._eventReference).getProfileID();
       }
 

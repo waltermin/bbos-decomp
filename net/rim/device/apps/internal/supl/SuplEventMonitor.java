@@ -6,7 +6,7 @@ public final class SuplEventMonitor {
    private static CyclicQueue _queue;
 
    SuplEventMonitor() {
-      _queue = (CyclicQueue)(new Object());
+      _queue = new CyclicQueue();
    }
 
    public final synchronized SuplEvent getEvent() {

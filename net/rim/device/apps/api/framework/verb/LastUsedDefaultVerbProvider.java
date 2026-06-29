@@ -23,7 +23,7 @@ public class LastUsedDefaultVerbProvider implements DefaultVerbProvider {
       Verb defaultVerb = null;
       if (verbs != null && verbs.length > 1 && this._model instanceof DefaultProvider) {
          DefaultProvider defaultProvider = (DefaultProvider)this._model;
-         this._context.put(6609423255094033855L, new Object(verbs[0].getVerbGroupId()));
+         this._context.put(6609423255094033855L, new Integer(verbs[0].getVerbGroupId()));
          this._context.put(666175809445784644L, verbs);
          defaultVerb = (Verb)defaultProvider.getDefault(null, this._context);
          this._context.remove(666175809445784644L);

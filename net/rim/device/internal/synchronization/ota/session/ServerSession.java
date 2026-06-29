@@ -61,7 +61,7 @@ public final class ServerSession extends Session {
       super(aSessionManager, aSessionId, aChangeListId);
       this.setType(aSessionType);
       this._incrementExpectedChangeListId = true;
-      this._commandIdToErrorCodeMap = (IntIntHashtable)(new Object());
+      this._commandIdToErrorCodeMap = new IntIntHashtable();
       this._sessionStatusErrorCode = 200;
       this._numberOfSyncDatagramsYetToBeReceived = -1;
       this._serviceUid = aSessionManager.getServiceUid();
@@ -70,8 +70,8 @@ public final class ServerSession extends Session {
       this._userId = aSessionManager.getUserId();
       this._configuration = ServicesConfigurationManager.getSingletonInstance().getConfiguration(this._sid);
       this._cpTicketHolder = cpTicketHolder;
-      this._syncAgentConnectionList = (Vector)(new Object(0));
-      this._listOfFragmentedRecords = (IntHashtable)(new Object(0));
+      this._syncAgentConnectionList = new Vector(0);
+      this._listOfFragmentedRecords = new IntHashtable(0);
    }
 
    public final void checkForDuplicatedAdds(boolean value) {
@@ -209,13 +209,11 @@ public final class ServerSession extends Session {
                                  }
                                  break label271;
                               } catch (Throwable var23) {
-                                 if (t instanceof Object) {
+                                 if (t instanceof OutOfMemoryError) {
                                     xCommandErrorCode = 413;
                                     var15 = false;
                                  } else {
-                                    String errorMessage = ((StringBuffer)(new Object("ServerSession.onDatagramReceived() threw an unexpected exception: ")))
-                                       .append(t.getMessage())
-                                       .toString();
+                                    String errorMessage = "ServerSession.onDatagramReceived() threw an unexpected exception: " + t.getMessage();
                                     Logger.logErrorMessage(errorMessage);
                                     xCommandErrorCode = 411;
                                     var15 = false;
@@ -238,7 +236,7 @@ public final class ServerSession extends Session {
 
                   if (xCommandErrorCode != 200) {
                      if (this._commandIdToErrorCodeMap == null) {
-                        this._commandIdToErrorCodeMap = (IntIntHashtable)(new Object());
+                        this._commandIdToErrorCodeMap = new IntIntHashtable();
                      }
 
                      if (xCommandErrorCode == 417) {
@@ -462,7 +460,7 @@ public final class ServerSession extends Session {
       try {
          SyncAgent xSyncAgent = SyncAgent.getSingletonInstance();
          byte[] xConfigChanges = aUpdateSyncConfiguration.getConfiguration();
-         DataBuffer xConfigChangesBuffer = (DataBuffer)(new Object(xConfigChanges, 0, xConfigChanges.length, true));
+         DataBuffer xConfigChangesBuffer = new DataBuffer(xConfigChanges, 0, xConfigChanges.length, true);
          if (this._currentDataSourceId == 10827) {
             boolean xUserWasEnabled = this._configuration.isUserEnabled();
             this._configuration.parse(xConfigChangesBuffer);

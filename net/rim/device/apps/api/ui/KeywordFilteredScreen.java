@@ -30,7 +30,7 @@ public class KeywordFilteredScreen extends AppsMainScreen {
    public KeywordFilteredScreen(
       String titleString, String findLabel, KeywordFilterList list, ListFieldCallback listCallback, boolean showCaretOnEmptySearch, Object context
    ) {
-      this(titleString, findLabel, (KeywordFilterCollectionListField)(new Object(list, listCallback)), showCaretOnEmptySearch, context);
+      this(titleString, findLabel, new KeywordFilterCollectionListField(list, listCallback), showCaretOnEmptySearch, context);
    }
 
    protected KeywordFilteredScreen(
@@ -48,13 +48,13 @@ public class KeywordFilteredScreen extends AppsMainScreen {
       long complementarySearchFieldStyle
    ) {
       super(17592186044416L);
-      this._finder = (KeywordFilteredListFinder)(new Object(titleString, findLabel, showCaretOnEmptySearch, complementarySearchFieldStyle));
+      this._finder = new KeywordFilteredListFinder(titleString, findLabel, showCaretOnEmptySearch, complementarySearchFieldStyle);
       Object obj = ContextObject.get(context, -7261227923983886841L);
-      if (!(obj instanceof Object)) {
+      if (!(obj instanceof Field)) {
          this.setTitleField(this._finder);
       } else {
          Field titleField = (Field)obj;
-         VerticalFieldManager vfm = (VerticalFieldManager)(new Object(1152921504606846976L));
+         VerticalFieldManager vfm = new VerticalFieldManager(1152921504606846976L);
          this.setBanner(titleField);
          vfm.add(this._finder);
          this.setTitleField(vfm);

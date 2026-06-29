@@ -2,6 +2,7 @@ package net.rim.device.internal.io.store;
 
 import java.io.InputStream;
 import net.rim.device.api.crypto.RandomSource;
+import net.rim.device.api.io.DRMIOException;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.CRC32;
 import net.rim.device.api.util.DataBuffer;
@@ -32,14 +33,14 @@ public final class ContentStoreEncryption {
       byte[] deviceKey = DRMServices.getDeviceKey();
       byte[] simKey = DRMServices.getSubscriberKey();
       byte[] sk = RandomSource.getBytes(16);
-      DataBuffer db = (DataBuffer)(new Object());
+      DataBuffer db = new DataBuffer();
 
       try {
          db.write(DRM_HEADER.getBytes());
          db.writeByte(1);
          db.writeByte(1);
          int crc = CRC32.update(-1, sk);
-         DataBuffer temp = (DataBuffer)(new Object());
+         DataBuffer temp = new DataBuffer();
          temp.writeByte(2);
          temp.writeByte(1);
          temp.writeByte(5);
@@ -66,7 +67,7 @@ public final class ContentStoreEncryption {
          if (calculateLength) {
             length = EncryptionUtilities.getCiphertextLength(length);
             db.writeCompressedInt(length);
-            return new Object(db.getLength() + length);
+            return new Integer(db.getLength() + length);
          }
 
          data = new byte[256];
@@ -94,8 +95,8 @@ public final class ContentStoreEncryption {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public static final byte[] decrypt(byte[] drmbuffer) {
-      DataBuffer db = (DataBuffer)(new Object(drmbuffer, 0, drmbuffer.length, true));
+   public static final byte[] decrypt(byte[] drmbuffer) throws DRMIOException {
+      DataBuffer db = new DataBuffer(drmbuffer, 0, drmbuffer.length, true);
       db.rewind();
       byte[] temp = new byte[256];
       int headerLength = DRM_HEADER.length();
@@ -109,20 +110,20 @@ public final class ContentStoreEncryption {
          try {
             var15 = true;
             if (db.readByte() != 1) {
-               throw new Object("ContentStore: DRM version mismatch, expecting 1");
+               throw new IllegalStateException("ContentStore: DRM version mismatch, expecting 1");
             }
 
             while (db.available() > 0) {
                switch (db.readByte()) {
                   case 0:
-                     throw new Object("ContentStore: error parsing DRM buffer");
+                     throw new IllegalStateException("ContentStore: error parsing DRM buffer");
                   case 1:
                   default:
                      db.readCompressedInt();
                      break;
                   case 2:
                      if (db.readByte() != 1) {
-                        throw new Object("ContentStore: DRM unsupported algorithm");
+                        throw new IllegalStateException("ContentStore: DRM unsupported algorithm");
                      }
                      break;
                   case 3: {
@@ -152,7 +153,7 @@ public final class ContentStoreEncryption {
             var15 = false;
          } finally {
             if (var15) {
-               throw new Object("ContentStore: error parsing DRM buffer");
+               throw new IllegalStateException("ContentStore: error parsing DRM buffer");
             }
          }
 
@@ -160,7 +161,7 @@ public final class ContentStoreEncryption {
          if (sk == null) {
             sk = decryptSessionKey(DRMServices.getDeviceKey(), devicecipher, crc);
             if (sk == null) {
-               throw new Object("ContentStore: unable to decrypt data! no matching key found");
+               throw new DRMIOException("ContentStore: unable to decrypt data! no matching key found");
             }
          }
 
@@ -171,7 +172,7 @@ public final class ContentStoreEncryption {
             Array.resize(plaintext, plaintextlength);
             return plaintext;
          } finally {
-            throw new Object("ContentStore: failed to decrypt data!");
+            throw new IllegalArgumentException("ContentStore: failed to decrypt data!");
          }
       } else {
          return drmbuffer;

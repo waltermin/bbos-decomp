@@ -77,21 +77,21 @@ class MessengerMessageImpl implements MessengerMessage, FieldProvider {
    }
 
    MessengerMessageImpl(MessengerContact contact) {
-      this._serialized = (IntHashtable)(new Object());
+      this._serialized = new IntHashtable();
       if (contact != null) {
          this._contact = contact;
-         this._serialized.put(1, new Object(this._contact.getContactId()));
+         this._serialized.put(1, new Integer(this._contact.getContactId()));
       }
 
       this._time = System.currentTimeMillis();
-      this._serialized.put(3, new Object(this._time));
+      this._serialized.put(3, new Long(this._time));
    }
 
    static MessengerMessageImpl deserialize(IntHashtable data, PeerContactListCollection contactList) {
       MessengerMessageImpl message = null;
       Object obj = data.get(0);
-      if (obj instanceof Object) {
-         int type = obj;
+      if (obj instanceof Integer) {
+         int type = (Integer)obj;
          switch (type) {
             case -1:
                break;
@@ -126,14 +126,14 @@ class MessengerMessageImpl implements MessengerMessage, FieldProvider {
    MessengerMessageImpl(IntHashtable message, PeerContactListCollection contactList) {
       this._serialized = message;
       Object idHash = message.get(1);
-      if (idHash instanceof Object) {
-         this._contact = contactList.findContactByHashId(idHash);
+      if (idHash instanceof Integer) {
+         this._contact = contactList.findContactByHashId((Integer)idHash);
       }
 
-      this._time = message.get(3);
+      this._time = (Long)message.get(3);
       Object system = message.get(2);
-      if (system instanceof Object) {
-         this._isSystem = system;
+      if (system instanceof Boolean) {
+         this._isSystem = (Boolean)system;
       }
    }
 }

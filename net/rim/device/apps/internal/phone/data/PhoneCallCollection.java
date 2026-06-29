@@ -46,7 +46,7 @@ final class PhoneCallCollection
    private PersistedSortedCollection _missedCallFolderData;
    private PersistedSortedCollection _dcCallFolderData;
    private PersistedSortedCollection _dcAlertFolderData;
-   private RIMModelSyncConverter _syncConverter = (RIMModelSyncConverter)(new Object(20, -5829986326706945081L));
+   private RIMModelSyncConverter _syncConverter = new RIMModelSyncConverter(20, -5829986326706945081L);
    private SyncCollectionSchema _schema;
    static final int SYNC_TYPE_PHONE = 0;
    static final int SYNC_TYPE_GENERAL = 1;
@@ -133,7 +133,7 @@ final class PhoneCallCollection
 
    @Override
    public final SyncObject[] getSyncObjects() {
-      SyncObject[] objects = new Object[0];
+      SyncObject[] objects = new SyncObject[0];
       synchronized (this) {
          int missedCallCount = this._missedCallFolderData.size();
          int defaultCallCount = this._defaultFolderData.size();
@@ -145,28 +145,28 @@ final class PhoneCallCollection
 
          for (int i = 0; i < missedCallCount; i++) {
             Object o = this._missedCallFolderData.getAt(i);
-            if (o instanceof Object) {
+            if (o instanceof SyncObject) {
                objects[dest++] = (SyncObject)o;
             }
          }
 
          for (int var13 = 0; var13 < defaultCallCount; var13++) {
             Object o = this._defaultFolderData.getAt(var13);
-            if (o instanceof Object) {
+            if (o instanceof SyncObject) {
                objects[dest++] = (SyncObject)o;
             }
          }
 
          for (int var14 = 0; var14 < dcCallCount; var14++) {
             Object o = this._dcCallFolderData.getAt(var14);
-            if (o instanceof Object) {
+            if (o instanceof SyncObject) {
                objects[dest++] = (SyncObject)o;
             }
          }
 
          for (int var15 = 0; var15 < dcAlertCount; var15++) {
             Object o = this._dcAlertFolderData.getAt(var15);
-            if (o instanceof Object) {
+            if (o instanceof SyncObject) {
                objects[dest++] = (SyncObject)o;
             }
          }
@@ -304,7 +304,7 @@ final class PhoneCallCollection
          }
       }
 
-      this._schema = (SyncCollectionSchema)(new Object());
+      this._schema = new SyncCollectionSchema();
       this._schema.setDefaultRecordType(1);
       this._schema.setKeyFieldIds(1, KEY_FIELD_IDS);
    }
@@ -372,7 +372,7 @@ final class PhoneCallCollection
    private final SyncObject getSyncObject(PersistedSortedCollection coll, int uid) {
       for (int i = coll.size() - 1; i >= 0; i--) {
          Object elem = coll.getAt(i);
-         if (elem instanceof Object) {
+         if (elem instanceof SyncObject) {
             SyncObject so = (SyncObject)elem;
             if (so.getUID() == uid) {
                return so;

@@ -33,7 +33,7 @@ final class MediaMetaDataProvider extends MetaDataProvider {
       // 018: aload 8
       // 01a: ldc_w "javax.microedition.media.control.MetaDataControl"
       // 01d: invokeinterface javax/microedition/media/Controllable.getControl (Ljava/lang/String;)Ljavax/microedition/media/Control; 2
-      // 022: checkcast java/lang/Object
+      // 022: checkcast javax/microedition/media/control/MetaDataControl
       // 025: astore 10
       // 027: aload 7
       // 029: ifnonnull 033
@@ -52,7 +52,7 @@ final class MediaMetaDataProvider extends MetaDataProvider {
       // 046: istore 9
       // 048: aload 7
       // 04a: bipush 2
-      // 04c: new java/lang/Object
+      // 04c: new java/lang/Long
       // 04f: dup
       // 050: lload 11
       // 052: invokespecial java/lang/Long.<init> (J)V

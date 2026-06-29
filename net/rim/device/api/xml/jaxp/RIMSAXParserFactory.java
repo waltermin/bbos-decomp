@@ -3,6 +3,7 @@ package net.rim.device.api.xml.jaxp;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import org.xml.sax.SAXNotRecognizedException;
 
 public class RIMSAXParserFactory extends SAXParserFactory {
    private boolean _namespaces = false;
@@ -52,7 +53,7 @@ public class RIMSAXParserFactory extends SAXParserFactory {
    }
 
    @Override
-   public void setFeature(String name, boolean value) {
+   public void setFeature(String name, boolean value) throws SAXNotRecognizedException {
       if (name.startsWith("http://xml.org/sax/features/")) {
          String feature = name.substring(28);
          if (feature.equals("namespaces")) {
@@ -63,12 +64,12 @@ public class RIMSAXParserFactory extends SAXParserFactory {
             this._prefixes = value;
          }
       } else {
-         throw new Object(name);
+         throw new SAXNotRecognizedException(name);
       }
    }
 
    @Override
-   public boolean getFeature(String name) {
+   public boolean getFeature(String name) throws SAXNotRecognizedException {
       if (name.startsWith("http://xml.org/sax/features/")) {
          String feature = name.substring(28);
          if (feature.equals("namespaces")) {
@@ -80,6 +81,6 @@ public class RIMSAXParserFactory extends SAXParserFactory {
          }
       }
 
-      throw new Object(name);
+      throw new SAXNotRecognizedException(name);
    }
 }

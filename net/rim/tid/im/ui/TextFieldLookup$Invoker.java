@@ -13,7 +13,7 @@ class TextFieldLookup$Invoker implements Runnable {
    TextFieldLookup$Invoker(TextFieldLookup _1) {
       this.this$0 = _1;
       this._id = -1;
-      this._applicationWR = (WeakReference)(new Object(null));
+      this._applicationWR = new WeakReference(null);
    }
 
    public void start() {

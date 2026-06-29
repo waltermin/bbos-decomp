@@ -61,7 +61,7 @@ public final class IntDAC extends DAC implements Persistable {
 
       int numAddrs = b.readUnsignedByte();
       if (numAddrs * 4 != length - 1) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int[] addrs = new int[numAddrs];
@@ -96,7 +96,7 @@ public final class IntDAC extends DAC implements Persistable {
    }
 
    public final String addr2String(int addr) {
-      StringBuffer strBuf = (StringBuffer)(new Object(16));
+      StringBuffer strBuf = new StringBuffer(16);
       NumberUtilities.appendNumber(strBuf, addr, this._radix);
       return strBuf.toString();
    }
@@ -138,6 +138,6 @@ public final class IntDAC extends DAC implements Persistable {
 
    @Override
    public final int rcvdFromAddress(DatagramAddressBase addr) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 }

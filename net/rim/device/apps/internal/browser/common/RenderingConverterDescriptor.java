@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.browser.common;
 import net.rim.device.api.browser.field.RenderingOptions;
 import net.rim.device.api.browser.plugin.BrowserContentProvider;
 import net.rim.device.api.i18n.MessageFormat;
+import net.rim.device.api.system.ControlledAccessException;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.api.utility.serialization.Converter;
 import net.rim.device.apps.api.utility.serialization.ConverterDescriptor;
@@ -25,7 +26,7 @@ public final class RenderingConverterDescriptor implements ConverterDescriptor, 
          String[] acceptData = provider.getSupportedMimeTypes();
          if (acceptData != null) {
             int length = acceptData.length;
-            String[] typesToRegister = new Object[length];
+            String[] typesToRegister = new String[length];
 
             for (int index = 0; index < length; index++) {
                String item = acceptData[index];
@@ -33,9 +34,9 @@ public final class RenderingConverterDescriptor implements ConverterDescriptor, 
                item = StringUtilities.toLowerCase(indexOfSemiColon == -1 ? item : item.substring(0, indexOfSemiColon), 1701707776);
                Converter converter = SerializationManager.getConverter(item, "net.rim.device.apps.internal.rendering");
                if (converter != null) {
-                  String[] str = new Object[]{item};
+                  String[] str = new String[]{item};
                   String message = MessageFormat.format(BrowserResources.getString(806), str);
-                  throw new Object(message);
+                  throw new ControlledAccessException(message);
                }
 
                typesToRegister[index] = item;
@@ -89,7 +90,7 @@ public final class RenderingConverterDescriptor implements ConverterDescriptor, 
 
    @Override
    public final String[] getAccept(Object context) {
-      return context instanceof Object
+      return context instanceof RenderingOptions
          ? this._converter.getBrowserContentConverter().getAccept((RenderingOptions)context)
          : this._converter.getBrowserContentConverter().getAccept(null);
    }

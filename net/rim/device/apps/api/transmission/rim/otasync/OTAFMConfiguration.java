@@ -7,6 +7,7 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.component.ChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.Persistable;
 import net.rim.device.apps.api.messaging.messagelist.MessageListOptions;
@@ -257,8 +258,8 @@ public final class OTAFMConfiguration implements Persistable {
    public final Field getEditableField(ServiceRecord serviceRecord) {
       ResourceBundle commonResources = ResourceBundle.getBundle(-8414468493733347764L, "net.rim.device.apps.internal.resource.Common");
       ResourceBundle messageResources = ResourceBundle.getBundle(1758158344049992104L, "net.rim.device.apps.internal.resource.Message");
-      String[] offOnOptions = new Object[]{commonResources.getString(107), commonResources.getString(106)};
-      VerticalFieldManager vfm = (VerticalFieldManager)(new Object());
+      String[] offOnOptions = new String[]{commonResources.getString(107), commonResources.getString(106)};
+      VerticalFieldManager vfm = new VerticalFieldManager();
       OTAFMConfigurationManager configManager = OTAFMConfigurationManager$Instance.getInstance();
       boolean disabledConfiguration = getDisabledConfiguration() == this;
       boolean wirelessDeletesAllowed = !disabledConfiguration && configManager.wirelessDeletesAllowed(serviceRecord);
@@ -266,7 +267,7 @@ public final class OTAFMConfiguration implements Persistable {
       boolean serialSyncAllowed = serialSyncAllowed(serviceRecord);
       ChoiceField deleteOnField = null;
       if (serialSyncAllowed || wirelessDeletesAllowed) {
-         String[] deleteOnOptions = new Object[]{messageResources.getString(25), messageResources.getString(166), messageResources.getString(171)};
+         String[] deleteOnOptions = new String[]{messageResources.getString(25), messageResources.getString(166), messageResources.getString(171)};
          switch (CMIMEUtilities.getDeleteOnLocation(serviceRecord)) {
             case 0:
             default:
@@ -290,7 +291,7 @@ public final class OTAFMConfiguration implements Persistable {
       }
 
       if (wirelessDeletesAllowed || wirelessFilingAllowed) {
-         String[] conflictOptions = new Object[]{messageResources.getString(158), messageResources.getString(167)};
+         String[] conflictOptions = new String[]{messageResources.getString(158), messageResources.getString(167)};
          vfm.add(new ObjectChoiceFieldWithId(3, messageResources.getString(162), conflictOptions, this._userConflicts));
       }
 
@@ -300,14 +301,14 @@ public final class OTAFMConfiguration implements Persistable {
          wirelessDeletesField.setChangeListener(listener);
       }
 
-      vfm.add((Field)(new Object()));
+      vfm.add(new SeparatorField());
       return vfm;
    }
 
    public final boolean grabDataFromField(Field field, ServiceRecord serviceRecord) {
       boolean changesMade = false;
       boolean isDisabledConfiguration = getDisabledConfiguration() == this;
-      if (field instanceof Object) {
+      if (field instanceof VerticalFieldManager) {
          VerticalFieldManager vfm = (VerticalFieldManager)field;
          int count = vfm.getFieldCount();
 

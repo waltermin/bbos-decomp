@@ -17,17 +17,17 @@ final class LocalizationSetupWizard$LanguageWizardPage extends ListWizardPage {
 
    @Override
    protected final void populateFields() {
-      this._headerLabel = (RichTextField)(new Object(36028797018963968L));
+      this._headerLabel = new RichTextField(36028797018963968L);
       this._headerLabel.setFont(this.getHeaderFont());
       this._headerLabel.setText(OptionsResources.getString(2100));
       this.setHeaderField(this._headerLabel);
       Locale currentLocale = Locale.getDefaultForSystem();
       int numLocales = this.this$0._displayableLocales.length;
-      String[] items = new Object[numLocales];
+      String[] items = new String[numLocales];
       int selectedIndex = 0;
 
       for (int i = 0; i < numLocales; i++) {
-         items[i] = ((StringBuffer)(new Object("\u200e"))).append(this.this$0._displayableLocales[i].getLocale().getDisplayName()).toString();
+         items[i] = "\u200e" + this.this$0._displayableLocales[i].getLocale().getDisplayName();
          if (currentLocale.equals(this.this$0._displayableLocales[i].getLocale())) {
             selectedIndex = i;
          }
@@ -69,7 +69,7 @@ final class LocalizationSetupWizard$LanguageWizardPage extends ListWizardPage {
    protected final void selectedIndexChanged(int index) {
       Locale locale = this.this$0._displayableLocales[index].getLocale();
       String lang = locale.getDisplayName();
-      this.log(((StringBuffer)(new Object("Changing Language: "))).append(lang).toString());
+      this.log("Changing Language: " + lang);
       Locale.setDefaultForSystem(locale);
       this.getWizardTitleBar().setLabel(OptionsResources.getString(1803));
       this._headerLabel.setText(OptionsResources.getString(2100));

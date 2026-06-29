@@ -1,8 +1,9 @@
 package net.rim.device.apps.internal.options.items;
 
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.setupwizard.BasicWizardPage;
 import net.rim.device.apps.api.setupwizard.SetupWizardOrdering;
@@ -23,14 +24,14 @@ public final class OwnerSetupWizard extends BasicWizardPage {
 
    @Override
    protected final void populateContent(AppsMainScreen screen, Manager content) {
-      Manager header = (Manager)(new Object());
+      Manager header = new VerticalFieldManager();
       header.setFont(this.getHeaderFont());
-      LabelField label = (LabelField)(new Object(OptionsResources.getString(2105)));
+      LabelField label = new LabelField(OptionsResources.getString(2105));
       label.setBorder(0, 0, 5, 0);
       header.add(label);
-      header.add((Field)(new Object(OptionsResources.getString(2106))));
+      header.add(new LabelField(OptionsResources.getString(2106)));
       content.add(header);
-      content.add((Field)(new Object()));
+      content.add(new SeparatorField());
       this._controller.populateMainScreen(screen, content);
    }
 

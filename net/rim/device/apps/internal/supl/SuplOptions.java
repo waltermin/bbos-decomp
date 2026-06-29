@@ -35,21 +35,20 @@ public final class SuplOptions {
          try {
             byte[] imsi = new byte[8];
             imsi = SIMCardInfo.getIMSI();
-            Integer mccInt = (Integer)(new Object(SIMCard.getMCCFromIMSI(imsi)));
-            Integer mncInt = (Integer)(new Object(SIMCard.getMNCFromIMSI(imsi)));
+            Integer mccInt = new Integer(SIMCard.getMCCFromIMSI(imsi));
+            Integer mncInt = new Integer(SIMCard.getMNCFromIMSI(imsi));
             String mccStr = mccInt.toString();
             String mncStr = mncInt.toString();
 
             while (mncStr.length() < 3) {
-               mncStr = ((StringBuffer)(new Object("0"))).append(mncStr).toString();
+               mncStr = "0" + mncStr;
             }
 
             while (mccStr.length() < 3) {
-               mccStr = ((StringBuffer)(new Object("0"))).append(mccStr).toString();
+               mccStr = "0" + mccStr;
             }
 
-            this.slpAddress
-               .setDomainName(((StringBuffer)(new Object("h-slp.mnc"))).append(mncStr).append(".mcc").append(mccStr).append(".pub.3gppnetwork.org").toString());
+            this.slpAddress.setDomainName("h-slp.mnc" + mncStr + ".mcc" + mccStr + ".pub.3gppnetwork.org");
             Fqdn fqdn = this.slpAddress;
             fqdn.print();
          } finally {
@@ -89,14 +88,14 @@ public final class SuplOptions {
 
       URL url;
       try {
-         url = (URL)(new Object(connectionPrefix));
+         url = new URL(connectionPrefix);
       } finally {
          ;
       }
 
-      System.out.println(((StringBuffer)(new Object("SUPL SLP Scheme: "))).append(url.getScheme()).toString());
-      System.out.println(((StringBuffer)(new Object("SUPL SLP Host: "))).append(url.getHost()).toString());
-      System.out.println(((StringBuffer)(new Object("SUPL SLP Port: "))).append(url.getPort()).toString());
+      System.out.println("SUPL SLP Scheme: " + url.getScheme());
+      System.out.println("SUPL SLP Host: " + url.getHost());
+      System.out.println("SUPL SLP Port: " + url.getPort());
       this.TLSEnabled = url.getScheme().equals("tls");
       this.setSlpAddress(url.getHost());
       this.suplPortNumber = url.getPort();

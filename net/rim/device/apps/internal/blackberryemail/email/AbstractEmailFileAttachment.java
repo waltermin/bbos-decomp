@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.blackberryemail.email;
 
 import javax.microedition.io.Connector;
 import javax.microedition.io.InputConnection;
+import javax.microedition.io.file.FileConnection;
 import net.rim.device.api.io.MIMETypeAssociations;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.AutoTextEditField;
@@ -97,7 +98,7 @@ public class AbstractEmailFileAttachment
 
    public InputConnection getInputConnection() {
       try {
-         return (InputConnection)Connector.open(this.getFile());
+         return (FileConnection)Connector.open(this.getFile());
       } finally {
          ;
       }
@@ -141,11 +142,11 @@ public class AbstractEmailFileAttachment
 
    @Override
    public Field getField(Object context) {
-      HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object());
-      ImageField iconField = (ImageField)(new Object(65536));
+      HorizontalFieldManager hfm = new HorizontalFieldManager();
+      ImageField iconField = new ImageField(65536);
       iconField.setImage(FileIcon.getFileIconImage(this.getContentType()));
       hfm.add(iconField);
-      AutoTextEditField field = (AutoTextEditField)(new Object(null, this.getDisplayName()));
+      AutoTextEditField field = new AutoTextEditField(null, this.getDisplayName());
       field.setEditable(false);
       hfm.add(field);
       hfm.setEditable(false);

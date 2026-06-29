@@ -9,7 +9,7 @@ class GranularPolicy$XMLToGranularPolicyHandler extends DefaultHandler {
 
    private GranularPolicy$XMLToGranularPolicyHandler(GranularPolicy granularPolicy) {
       this._currentElement = granularPolicy;
-      this._characterAccumulator = (StringBuffer)(new Object());
+      this._characterAccumulator = new StringBuffer();
    }
 
    @Override

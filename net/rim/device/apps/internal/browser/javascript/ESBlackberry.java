@@ -15,7 +15,7 @@ final class ESBlackberry extends ESObject {
    }
 
    private final long getNetworkType() {
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       int wafs = RadioInfo.getSupportedWAFs();
       if ((wafs & 1) != 0) {
          buffer.append("3GPP");

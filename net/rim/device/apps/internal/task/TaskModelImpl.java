@@ -48,6 +48,8 @@ import net.rim.device.apps.api.ui.VariableRowHeightProxy;
 import net.rim.device.apps.internal.calendar.eventprovider.CalendarIcons;
 import net.rim.device.apps.internal.commonmodels.body.BodyModel;
 import net.rim.device.apps.internal.commonmodels.categories.CategoriesModel;
+import net.rim.device.apps.internal.commonmodels.title.TitleModel;
+import net.rim.device.apps.internal.commonmodels.title.TitleModelImpl;
 import net.rim.device.apps.internal.task.resources.TaskResources;
 import net.rim.device.cldc.util.CalendarExtensions;
 import net.rim.device.internal.ui.IconCollection;
@@ -73,7 +75,7 @@ final class TaskModelImpl
    private Object[] _subModels = new Object[0];
    int _uid = TaskCollectionImpl.getInstance().generateUniqueID();
    private static Recognizer _titleModelRecognizer = RecognizerRepository.getRecognizers(-4904857078378172834L);
-   private static ContextObjectWR _taskSyncContextWR = (ContextObjectWR)(new Object(28, 19));
+   private static ContextObjectWR _taskSyncContextWR = new ContextObjectWR(28, 19);
    private static final int ICON_COUNT = 5;
    private static final int MAX_TASK_NOTES_LENGTH = 4096;
    private static IconCollection STATUS_ICONS = IconCollection.get("net_rim_Task_Status", 5);
@@ -104,7 +106,7 @@ final class TaskModelImpl
          g.setFont(font.derive(1));
       }
 
-      if (titleModel instanceof Object) {
+      if (titleModel instanceof PaintProvider) {
          PaintProvider paintProvider = (PaintProvider)titleModel;
          xoffset += paintProvider.paint(g, x + xoffset, y, width - xoffset, height, context);
       }
@@ -132,19 +134,19 @@ final class TaskModelImpl
       }
 
       if (!ContextObject.getFlag(contextObject, 36)) {
-         ForwardAsVerb forwardAsVerb = (ForwardAsVerb)(new Object(this));
+         ForwardAsVerb forwardAsVerb = new ForwardAsVerb(this);
          if (forwardAsVerb.canInvoke(null)) {
             Array.resize(verbs, verbs.length + 1);
             verbs[verbs.length - 1] = forwardAsVerb;
          }
       }
 
-      Verb[] subProviderVerbs = new Object[0];
+      Verb[] subProviderVerbs = new Verb[0];
 
       for (int i = this._subModels.length - 1; i >= 0; i--) {
          Object o = this._subModels[i];
          Verb result = null;
-         if (o instanceof Object) {
+         if (o instanceof VerbProvider) {
             VerbProvider vp = (VerbProvider)o;
             Array.resize(subProviderVerbs, 0);
             result = vp.getVerbs(contextObject, subProviderVerbs);
@@ -173,8 +175,8 @@ final class TaskModelImpl
 
    @Override
    public final int match(Object criteria) {
-      if (!(criteria instanceof Object)) {
-         return Match.match(this, this, (Object[])criteria, _hints);
+      if (!(criteria instanceof SearchCriterion)) {
+         return Match.match(this, this, (SearchCriterion[])criteria, _hints);
       } else {
          SearchCriterion crit = (SearchCriterion)criteria;
          if (crit.getType() == 24) {
@@ -195,7 +197,7 @@ final class TaskModelImpl
       Calendar cal = Calendar.getInstance();
       TimeZone tz = cal.getTimeZone();
       DateFormat timeFormat = DateFormat.getInstance(7);
-      StringBuffer b = (StringBuffer)(new Object());
+      StringBuffer b = new StringBuffer();
       b.setLength(0);
       b.append(TaskResources.getString(32));
       b.append(' ');
@@ -223,7 +225,7 @@ final class TaskModelImpl
 
       while (fieldCount > 0) {
          Object o = this.getAt(--fieldCount);
-         if (o instanceof Object) {
+         if (o instanceof CloneProvider) {
             taskModel.add(((CloneProvider)o).clone(context));
          }
       }
@@ -235,7 +237,7 @@ final class TaskModelImpl
    public final Object invokeHotkey(Object context, int hotkeyID) {
       Object retVal = null;
       if (hotkeyID == 127 || Keypad.getAltedChar((char)hotkeyID) == 127) {
-         Object verbContext = new Object();
+         Object verbContext = new ContextObject();
          retVal = new DeleteTaskVerb(this).invoke(verbContext);
          if (ContextObject.getPrivateFlag(verbContext, -3866311304884942232L, 1)) {
             RIMGlobalMessagePoster.postGlobalEvent(5483692278053761660L, 0, 0, null, null);
@@ -246,7 +248,7 @@ final class TaskModelImpl
    }
 
    protected final String getSummary() {
-      StringBuffer b = (StringBuffer)(new Object());
+      StringBuffer b = new StringBuffer();
       b.setLength(0);
       b.append(TaskResources.getString(21));
       b.append(':');
@@ -281,7 +283,7 @@ final class TaskModelImpl
       if (recurInfo != null && recurInfo.getRecurType() != 0) {
          ContextObject co = null;
          if (TaskUtilities.getCICALConfiguration().isInfiniteRecurrenceAllowed()) {
-            co = (ContextObject)(new Object(65));
+            co = new ContextObject(65);
          }
 
          return (TaskModelImpl)this.clone(co);
@@ -324,7 +326,7 @@ final class TaskModelImpl
          byte[] bytes = notes.getBytes();
          if (bytes.length > 4096) {
             Array.resize(bytes, 4096);
-            notes = (String)(new Object(bytes));
+            notes = new String(bytes);
          }
       }
 
@@ -383,8 +385,8 @@ final class TaskModelImpl
    public final RIMModel getTitleModel() {
       for (int i = this._subModels.length - 1; i >= 0; i--) {
          Object o = this._subModels[i];
-         if (o instanceof Object) {
-            return (RIMModel)o;
+         if (o instanceof TitleModel) {
+            return (TitleModel)o;
          }
       }
 
@@ -395,7 +397,7 @@ final class TaskModelImpl
    public final CategoriesModel getCategoriesModel() {
       for (int i = this._subModels.length - 1; i >= 0; i--) {
          Object o = this._subModels[i];
-         if (o instanceof Object) {
+         if (o instanceof CategoriesModel) {
             return (CategoriesModel)o;
          }
       }
@@ -470,7 +472,7 @@ final class TaskModelImpl
 
    @Override
    public final boolean contains(Object element) {
-      return element instanceof Object || Arrays.contains(this._subModels, element);
+      return element instanceof TaskModel || Arrays.contains(this._subModels, element);
    }
 
    @Override
@@ -512,7 +514,7 @@ final class TaskModelImpl
 
       for (int i = 0; i < count; i++) {
          Object element = fields[i];
-         if (element instanceof Object) {
+         if (element instanceof KeyProvider) {
             KeyProvider keyProvider = (KeyProvider)element;
             keyCount += keyProvider.getKeys(context, keyArray, index + keyCount, keyRequested);
          }
@@ -537,7 +539,7 @@ final class TaskModelImpl
 
       for (int i = 0; i < numSubmembers; i++) {
          Object object = this._subModels[i];
-         if (object instanceof Object) {
+         if (object instanceof EncryptableProvider) {
             EncryptableProvider encryptable = (EncryptableProvider)object;
             if (!encryptable.checkCrypt(compress, encrypt)) {
                return false;
@@ -555,7 +557,7 @@ final class TaskModelImpl
 
       for (int i = 0; i < numSubmembers; i++) {
          Object object = newModel._subModels[i];
-         if (object instanceof Object) {
+         if (object instanceof EncryptableProvider) {
             EncryptableProvider encryptable = (EncryptableProvider)object;
             Object newObject = encryptable.reCrypt(compress, encrypt);
             if (newObject != null) {
@@ -662,7 +664,7 @@ final class TaskModelImpl
       }
 
       ReminderModel reminder = this.getReminderData();
-      if (reminder instanceof Object) {
+      if (reminder instanceof DescriptionProvider) {
          numIconsAdded += ((DescriptionProvider)reminder).getIconsForField(field, icons, indices);
       }
 
@@ -732,14 +734,14 @@ final class TaskModelImpl
 
    @Override
    public final String getBody() {
-      TextScrapeVisitor tsv = (TextScrapeVisitor)(new Object());
+      TextScrapeVisitor tsv = new TextScrapeVisitor();
       Field field = null;
-      ContextObject context = (ContextObject)(new Object(28, 0));
+      ContextObject context = new ContextObject(28, 0);
       int total = this._subModels.length;
 
       for (int i = 0; i < total; i++) {
          Object o = this._subModels[i];
-         if (o instanceof Object && !(o instanceof Object)) {
+         if (o instanceof FieldProvider && !(o instanceof TitleModelImpl)) {
             field = ((FieldProvider)o).getField(context);
             if (field != null) {
                field.acceptVisitor(tsv);
@@ -782,7 +784,7 @@ final class TaskModelImpl
    private final BodyModel getNotesModel() {
       for (int i = this._subModels.length - 1; i >= 0; i--) {
          Object o = this._subModels[i];
-         if (o instanceof Object) {
+         if (o instanceof BodyModel) {
             return (BodyModel)o;
          }
       }

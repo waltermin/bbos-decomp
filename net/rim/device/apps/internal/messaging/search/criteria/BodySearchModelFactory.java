@@ -112,7 +112,7 @@ public final class BodySearchModelFactory extends RIMModelFactory {
 
    public final synchronized void registerSubCriterionFactory(RIMModelFactory factory) {
       if (this._subCriterionFactories == null) {
-         this._subCriterionFactories = new Object[]{factory};
+         this._subCriterionFactories = new RIMModelFactory[]{factory};
       } else {
          Arrays.add(this._subCriterionFactories, factory);
       }

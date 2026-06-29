@@ -6,7 +6,7 @@ class NodeDot extends NodeUnary {
    NodeDot(Function f, Node lhs, String qualifier, String name, boolean isAttribute) {
       super(lhs);
       if (qualifier != null) {
-         StringBuffer b = (StringBuffer)(new Object());
+         StringBuffer b = new StringBuffer();
          b.append((char)(isAttribute ? '1' : '0'));
          b.append((char)(48 + qualifier.length()));
          b.append((char)(48 + name.length()));
@@ -14,7 +14,7 @@ class NodeDot extends NodeUnary {
          b.append(name);
          name = b.toString();
       } else if (isAttribute) {
-         name = ((StringBuffer)(new Object("@"))).append(name).toString();
+         name = "@" + name;
       }
 
       this._name = f.addId(name);

@@ -23,7 +23,7 @@ class OTABaseListener implements TransmissionServiceListener {
       }
 
       Object tmpObj = calendar.get(event.getLUID());
-      if (tmpObj instanceof Object) {
+      if (tmpObj instanceof Event) {
          Event existingEvent = (Event)tmpObj;
          OTASyncData existingSyncData = this._otaSyncDataManager.get(existingEvent);
          if (syncData == null || existingSyncData == null) {

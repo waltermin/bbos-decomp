@@ -1,5 +1,6 @@
 package net.rim.wica.runtime.util;
 
+import java.util.NoSuchElementException;
 import net.rim.device.api.util.Persistable;
 import net.rim.vm.Array;
 
@@ -10,7 +11,7 @@ public class DoubleVector implements Persistable {
 
    public DoubleVector(int initialCapacity, int capacityIncrement) {
       if (initialCapacity < 0) {
-         throw new Object(((StringBuffer)(new Object("Illegal Capacity: "))).append(initialCapacity).toString());
+         throw new IllegalArgumentException("Illegal Capacity: " + initialCapacity);
       }
 
       this._elementData = new double[initialCapacity];
@@ -105,7 +106,7 @@ public class DoubleVector implements Persistable {
 
    public int lastIndexOf(double elem, int index) {
       if (index >= this._elementCount) {
-         throw new Object(((StringBuffer)(new Object())).append(index).append(" >= ").append(this._elementCount).toString());
+         throw new ArrayIndexOutOfBoundsException(index + " >= " + this._elementCount);
       }
 
       for (int i = index; i >= 0; i--) {
@@ -121,7 +122,7 @@ public class DoubleVector implements Persistable {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public double elementAt(int index) {
       if (index >= this._elementCount) {
-         throw new Object(((StringBuffer)(new Object())).append(index).append(" >= ").append(this._elementCount).toString());
+         throw new ArrayIndexOutOfBoundsException(index + " >= " + this._elementCount);
       }
 
       boolean var4 = false /* VF: Semaphore variable */;
@@ -133,7 +134,7 @@ public class DoubleVector implements Persistable {
          var4 = false;
       } finally {
          if (var4) {
-            throw new Object(((StringBuffer)(new Object())).append(index).append(" < 0").toString());
+            throw new ArrayIndexOutOfBoundsException(index + " < 0");
          }
       }
 
@@ -142,7 +143,7 @@ public class DoubleVector implements Persistable {
 
    public double firstElement() {
       if (this._elementCount == 0) {
-         throw new Object();
+         throw new NoSuchElementException();
       } else {
          return this._elementData[0];
       }
@@ -150,7 +151,7 @@ public class DoubleVector implements Persistable {
 
    public double lastElement() {
       if (this._elementCount == 0) {
-         throw new Object();
+         throw new NoSuchElementException();
       } else {
          return this._elementData[this._elementCount - 1];
       }
@@ -158,7 +159,7 @@ public class DoubleVector implements Persistable {
 
    public void setElementAt(double obj, int index) {
       if (index >= this._elementCount) {
-         throw new Object(((StringBuffer)(new Object())).append(index).append(" >= ").append(this._elementCount).toString());
+         throw new ArrayIndexOutOfBoundsException(index + " >= " + this._elementCount);
       }
 
       this._elementData[index] = obj;
@@ -166,11 +167,11 @@ public class DoubleVector implements Persistable {
 
    public void removeElementAt(int index) {
       if (index >= this._elementCount) {
-         throw new Object(((StringBuffer)(new Object())).append(index).append(" >= ").append(this._elementCount).toString());
+         throw new ArrayIndexOutOfBoundsException(index + " >= " + this._elementCount);
       }
 
       if (index < 0) {
-         throw new Object(index);
+         throw new ArrayIndexOutOfBoundsException(index);
       }
 
       int j = this._elementCount - index - 1;
@@ -184,7 +185,7 @@ public class DoubleVector implements Persistable {
    public void insertElementAt(double obj, int index) {
       int newcount = this._elementCount + 1;
       if (index >= newcount) {
-         throw new Object(((StringBuffer)(new Object())).append(index).append(" > ").append(this._elementCount).toString());
+         throw new ArrayIndexOutOfBoundsException(index + " > " + this._elementCount);
       }
 
       if (newcount > this._elementData.length) {

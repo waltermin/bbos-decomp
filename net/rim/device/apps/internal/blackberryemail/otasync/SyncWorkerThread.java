@@ -47,8 +47,8 @@ final class SyncWorkerThread extends Thread {
 
    SyncWorkerThread(OTAMessageSync messageSync) {
       this._otaMessageSync = messageSync;
-      this._workQueue = (Vector)(new Object());
-      this._workUnitPool = (Vector)(new Object());
+      this._workQueue = new Vector();
+      this._workUnitPool = new Vector();
       int newPriority = this.getPriority() - 2;
       if (newPriority < 1) {
          newPriority = 1;
@@ -118,22 +118,22 @@ final class SyncWorkerThread extends Thread {
       // 088: aload 0
       // 089: aload 1
       // 08a: getfield net/rim/device/apps/internal/blackberryemail/otasync/WorkUnit._parmO1 Ljava/lang/Object;
-      // 08d: checkcast java/lang/Object
+      // 08d: checkcast net/rim/device/api/servicebook/ServiceRecord
       // 090: invokespecial net/rim/device/apps/internal/blackberryemail/otasync/SyncWorkerThread.doSendConfigurationQuery (Lnet/rim/device/api/servicebook/ServiceRecord;)V
       // 093: goto 108
       // 096: aload 0
       // 097: aload 1
       // 098: getfield net/rim/device/apps/internal/blackberryemail/otasync/WorkUnit._parmO1 Ljava/lang/Object;
-      // 09b: checkcast java/lang/Object
+      // 09b: checkcast net/rim/device/api/servicebook/ServiceRecord
       // 09e: aload 1
       // 09f: getfield net/rim/device/apps/internal/blackberryemail/otasync/WorkUnit._parmO2 Ljava/lang/Object;
-      // 0a2: checkcast java/lang/Object
+      // 0a2: checkcast net/rim/device/apps/api/transmission/rim/otasync/OTAFMConfiguration
       // 0a5: invokespecial net/rim/device/apps/internal/blackberryemail/otasync/SyncWorkerThread.doSendConfiguration (Lnet/rim/device/api/servicebook/ServiceRecord;Lnet/rim/device/apps/api/transmission/rim/otasync/OTAFMConfiguration;)V
       // 0a8: goto 108
       // 0ab: aload 0
       // 0ac: aload 1
       // 0ad: getfield net/rim/device/apps/internal/blackberryemail/otasync/WorkUnit._parmO1 Ljava/lang/Object;
-      // 0b0: checkcast java/lang/Object
+      // 0b0: checkcast net/rim/device/api/servicebook/ServiceRecord
       // 0b3: invokespecial net/rim/device/apps/internal/blackberryemail/otasync/SyncWorkerThread.doSendMessageList (Lnet/rim/device/api/servicebook/ServiceRecord;)V
       // 0b6: goto 108
       // 0b9: aload 0
@@ -147,7 +147,7 @@ final class SyncWorkerThread extends Thread {
       // 0cb: aload 0
       // 0cc: aload 1
       // 0cd: getfield net/rim/device/apps/internal/blackberryemail/otasync/WorkUnit._parmO1 Ljava/lang/Object;
-      // 0d0: checkcast java/lang/Object
+      // 0d0: checkcast net/rim/device/api/servicebook/ServiceRecord
       // 0d3: aload 1
       // 0d4: getfield net/rim/device/apps/internal/blackberryemail/otasync/WorkUnit._parmB1 Z
       // 0d7: invokespecial net/rim/device/apps/internal/blackberryemail/otasync/SyncWorkerThread.doFlushTransmitBuffer (Lnet/rim/device/api/servicebook/ServiceRecord;Z)V
@@ -155,7 +155,7 @@ final class SyncWorkerThread extends Thread {
       // 0dd: aload 0
       // 0de: aload 1
       // 0df: getfield net/rim/device/apps/internal/blackberryemail/otasync/WorkUnit._parmO1 Ljava/lang/Object;
-      // 0e2: checkcast java/lang/Object
+      // 0e2: checkcast net/rim/device/api/servicebook/ServiceRecord
       // 0e5: invokespecial net/rim/device/apps/internal/blackberryemail/otasync/SyncWorkerThread.doSendFolderListRequest (Lnet/rim/device/api/servicebook/ServiceRecord;)V
       // 0e8: goto 108
       // 0eb: aload 0
@@ -310,7 +310,7 @@ final class SyncWorkerThread extends Thread {
                this.sendConfigurationQuery(serviceRecord);
                break;
             case 2:
-               configuration = (OTAFMConfiguration)(new Object());
+               configuration = new OTAFMConfiguration();
                configuration.setServerSupport(true, true, true, true, true);
                this._configManager.updateConfiguration(serviceRecord, configuration, true);
                break;

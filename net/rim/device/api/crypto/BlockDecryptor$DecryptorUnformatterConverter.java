@@ -6,7 +6,7 @@ class BlockDecryptor$DecryptorUnformatterConverter implements BlockUnformatterEn
 
    public BlockDecryptor$DecryptorUnformatterConverter(BlockDecryptorEngine decryptorEngine) {
       if (decryptorEngine == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._decryptorEngine = decryptorEngine;

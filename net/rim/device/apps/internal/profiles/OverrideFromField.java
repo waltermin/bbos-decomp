@@ -21,11 +21,11 @@ class OverrideFromField extends FlowFieldManager implements VerbProvider {
       this._override = override;
       ResourceBundle resources = ResourceBundle.getBundle(2384708948246157241L, "net.rim.device.apps.internal.resource.Profiles");
       this._fromContacts = new FromContact[0];
-      this.add((Field)(new Object(resources.getString(242), 36028797018963968L)));
+      this.add(new LabelField(resources.getString(242), 36028797018963968L));
       if (override.isFromAddressBook()) {
-         this.add((Field)(new Object("", 45035996340813824L)));
+         this.add(new RichTextField("", 45035996340813824L));
       } else {
-         this.add((Field)(new Object("", 27021597764222976L)));
+         this.add(new RichTextField("", 27021597764222976L));
       }
 
       for (FromContact fromContact : this._override.getFromContacts()) {
@@ -62,7 +62,7 @@ class OverrideFromField extends FlowFieldManager implements VerbProvider {
 
             if (addressValid) {
                Object ac = AddressBookServices.getAddressCard(fromContact._addressCardUID);
-               if (!(ac instanceof Object)) {
+               if (!(ac instanceof AddressCardModel)) {
                   addressValid = false;
                } else {
                   name = ac.toString();
@@ -73,15 +73,15 @@ class OverrideFromField extends FlowFieldManager implements VerbProvider {
          if (addressValid) {
             if (this.getFieldCount() == 2) {
                this.deleteRange(1, 1);
-               this.add((Field)(new Object("", 45035996340813824L)));
+               this.add(new RichTextField("", 45035996340813824L));
             } else {
-               this.add((Field)(new Object("; ", 36028797018963968L)));
+               this.add(new LabelField("; ", 36028797018963968L));
             }
 
             if (nonFocusable) {
-               lf = (LabelField)(new Object(name, 36028797018963968L));
+               lf = new LabelField(name, 36028797018963968L);
             } else {
-               lf = (LabelField)(new Object(name, 18014398509481984L));
+               lf = new LabelField(name, 18014398509481984L);
             }
 
             lf.setCookie(fromContact);
@@ -147,7 +147,7 @@ class OverrideFromField extends FlowFieldManager implements VerbProvider {
             if (index == 2) {
                if (this.getFieldCount() == 3) {
                   this.deleteRange(1, 2);
-                  RichTextField rtf = (RichTextField)(new Object("", 27021597764222976L));
+                  RichTextField rtf = new RichTextField("", 27021597764222976L);
                   this.add(rtf);
                   rtf.setFocus();
                } else {

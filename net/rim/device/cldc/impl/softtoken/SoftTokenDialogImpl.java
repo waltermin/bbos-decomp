@@ -4,7 +4,7 @@ import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
-import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.EditField;
@@ -12,6 +12,7 @@ import net.rim.device.api.ui.component.GaugeField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.ui.component.PasswordEditField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.cldc.impl.api.SoftToken;
 import net.rim.device.cldc.impl.api.SoftTokenDialog;
@@ -48,20 +49,20 @@ public class SoftTokenDialogImpl extends SoftTokenDialog implements FieldChangeL
    private static final int GENERATE_PASSCODE_INDEX = 3;
    private static final int GENERATE_NEXT_PASSCODE_INDEX = 4;
    private static final int GENERATE_NEXT_NEXT_PASSCODE_INDEX = 5;
-   private static String[] _passcodeUseChoices = new Object[]{
+   private static String[] _passcodeUseChoices = new String[]{
       _rb.getString(4), _rb.getString(5), _rb.getString(6), _rb.getString(1), _rb.getString(2), _rb.getString(3)
    };
-   private static String[] _tokencodeUseChoices = new Object[]{_rb.getString(4), _rb.getString(5), _rb.getString(6)};
+   private static String[] _tokencodeUseChoices = new String[]{_rb.getString(4), _rb.getString(5), _rb.getString(6)};
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public SoftTokenDialogImpl(String serialNum, String prompt, boolean showPromptResponseField, boolean showUsernameField, String username) {
-      super((Manager)(new Object(1153220571769602048L)));
+      super(new VerticalIndentFieldManager(1153220571769602048L));
       VerticalIndentFieldManager vifm = (VerticalIndentFieldManager)this.getDelegate();
       this._constructionTime = System.currentTimeMillis();
       this._eventLock = Application.getApplication();
-      if (this._eventLock instanceof Object) {
-         this._eventLock = ((Application)this._eventLock).getAppEventLock();
+      if (this._eventLock instanceof UiApplication) {
+         this._eventLock = ((UiApplication)this._eventLock).getAppEventLock();
       } else {
          Proxy.getInstance();
          this._eventLock = Application.getEventLock();
@@ -69,7 +70,7 @@ public class SoftTokenDialogImpl extends SoftTokenDialog implements FieldChangeL
 
       this._tokenManager = (SoftTokenManagerImpl)SoftTokenManager.getInstance();
       this._softToken = (SoftTokenImpl)this._tokenManager.getSoftToken(serialNum);
-      this._rimSecurIDLib = (RimSecurIDLib)(new Object());
+      this._rimSecurIDLib = new RimSecurIDLib();
       if (this._softToken != null) {
          boolean var10 = false /* VF: Semaphore variable */;
 
@@ -90,52 +91,52 @@ public class SoftTokenDialogImpl extends SoftTokenDialog implements FieldChangeL
       if (this._softToken != null) {
          this._promptField = RichTextFieldUtilities.getBoldFormattedRichTextField(prompt, 45035996273704960L);
          vifm.add(this._promptField);
-         vifm.add((Field)(new Object()));
-         this._usernameField = (EditField)(new Object(CommonResource.getString(10026), username, 255, 4503599627370496L));
+         vifm.add(new SeparatorField());
+         this._usernameField = new EditField(CommonResource.getString(10026), username, 255, 4503599627370496L);
          if (showUsernameField) {
             vifm.add(this._usernameField);
          }
 
-         this._promptResponseField = (EditField)(new Object(_rb.getString(18), null, 255, 4503599627370496L));
+         this._promptResponseField = new EditField(_rb.getString(18), null, 255, 4503599627370496L);
          if (showPromptResponseField) {
             vifm.add(this._promptResponseField);
-            vifm.add((Field)(new Object()));
+            vifm.add(new SeparatorField());
          }
 
          String PIN = this._softToken.getPIN();
-         this._pinField = (PasswordEditField)(new Object(_rb.getString(8), this._softToken.getPIN(), 8, 16777216));
+         this._pinField = new PasswordEditField(_rb.getString(8), this._softToken.getPIN(), 8, 16777216);
          this._pinField.setChangeListener(this);
          vifm.add(this._pinField);
-         vifm.add((Field)(new Object()));
-         this._currentCodeField = (BasicEditField)(new Object(_rb.getString(15), null, 16, 9007199254740992L));
+         vifm.add(new SeparatorField());
+         this._currentCodeField = new BasicEditField(_rb.getString(15), null, 16, 9007199254740992L);
          if (PIN.length() == 0) {
             String[] useChoices = _tokencodeUseChoices;
-            this._typeChoiceField = (ObjectChoiceField)(new Object(_rb.getString(16), useChoices, 0));
+            this._typeChoiceField = new ObjectChoiceField(_rb.getString(16), useChoices, 0);
          } else {
             String[] useChoices = _passcodeUseChoices;
-            this._typeChoiceField = (ObjectChoiceField)(new Object(_rb.getString(16), useChoices, 3));
+            this._typeChoiceField = new ObjectChoiceField(_rb.getString(16), useChoices, 3);
          }
 
          this._typeChoiceField.setChangeListener(this);
          vifm.add(this._currentCodeField);
          vifm.add(this._typeChoiceField);
          this.updateCurrentCode();
-         this._gaugeField = (GaugeField)(new Object(null, 0, 9, 9, 36028797018963970L));
+         this._gaugeField = new GaugeField(null, 0, 9, 9, 36028797018963970L);
          vifm.add(this._gaugeField);
          this._gaugeUpdateThread = new SoftTokenDialogImpl$GaugeUpdateThread(this);
          this._gaugeUpdateThread.start();
          if (showPromptResponseField) {
-            this._useCurrentCodeButton = (ButtonField)(new Object(_rb.getString(17)));
+            this._useCurrentCodeButton = new ButtonField(_rb.getString(17));
             this._useCurrentCodeButton.setChangeListener(this);
             vifm.add(this._useCurrentCodeButton);
          }
 
-         vifm.add((Field)(new Object()));
-         HorizontalFieldManager buttonManager = (HorizontalFieldManager)(new Object(12884901888L));
-         this._okButton = (ButtonField)(new Object(CommonResource.getString(100)));
+         vifm.add(new SeparatorField());
+         HorizontalFieldManager buttonManager = new HorizontalFieldManager(12884901888L);
+         this._okButton = new ButtonField(CommonResource.getString(100));
          this._okButton.setChangeListener(this);
          buttonManager.add(this._okButton);
-         this._cancelButton = (ButtonField)(new Object(CommonResource.getString(10005)));
+         this._cancelButton = new ButtonField(CommonResource.getString(10005));
          this._cancelButton.setChangeListener(this);
          buttonManager.add(this._cancelButton);
          vifm.add(buttonManager);
@@ -403,8 +404,8 @@ public class SoftTokenDialogImpl extends SoftTokenDialog implements FieldChangeL
                   }
                } else if (field == this._useCurrentCodeButton) {
                   this._promptResponseField.setText(this._currentCodeField.getText());
-               } else if (field instanceof Object) {
-                  field = ((Manager)field).getFieldWithFocus();
+               } else if (field instanceof HorizontalFieldManager) {
+                  field = ((HorizontalFieldManager)field).getFieldWithFocus();
                   if (field == this._okButton) {
                      this.doOkButton();
                   } else if (field == this._cancelButton) {

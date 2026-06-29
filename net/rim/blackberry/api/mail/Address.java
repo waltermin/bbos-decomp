@@ -11,12 +11,12 @@ public class Address {
    public static String HTTP_ADDR = "http";
    public static String WAP_ADDR = "wap";
    public static String FTP_ADDR = "ftp";
-   private static EmailAddressTextFilter _filter = (EmailAddressTextFilter)(new Object());
+   private static EmailAddressTextFilter _filter = new EmailAddressTextFilter();
 
    public Address(String addr, String name) throws AddressException {
       AbstractStringWrapper asw = AbstractStringWrapper.createInstance(addr);
       if (!_filter.validate(asw)) {
-         throw new AddressException(((StringBuffer)(new Object())).append(addr).append(" is an invalid email address").toString());
+         throw new AddressException(addr + " is an invalid email address");
       }
 
       this._type = EMAIL_ADDR;
@@ -75,6 +75,6 @@ public class Address {
 
    @Override
    public String toString() {
-      return ((StringBuffer)(new Object())).append(this._type).append(':').append(this._addr).toString();
+      return this._type + ':' + this._addr;
    }
 }

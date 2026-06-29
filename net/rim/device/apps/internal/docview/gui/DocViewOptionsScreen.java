@@ -11,6 +11,7 @@ import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.component.ChoiceField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.ObjectUtilities;
@@ -31,7 +32,7 @@ final class DocViewOptionsScreen extends SaveableMainScreenOptionsListItem imple
    private Integer[] _fontSizes;
    private int[] _fontSizes_cptd;
    private boolean _isScalable;
-   private FontFamily[] _fontFamilies = new Object[0];
+   private FontFamily[] _fontFamilies = new FontFamily[0];
    private DocViewOptions _docViewOptions = DocViewOptions.getOptions();
    private byte _optionsType = -1;
    private static final byte STYLE_UPDATED = 0;
@@ -61,9 +62,9 @@ final class DocViewOptionsScreen extends SaveableMainScreenOptionsListItem imple
             break;
          case 0:
          default:
-            this._cacheSize = (ObjectChoiceField)(new Object(
+            this._cacheSize = new ObjectChoiceField(
                _resources.getString(56), _resources.getStringArray(57), Arrays.getIndex(DocViewOptions.CACHE_SIZES, this._docViewOptions.getMaxCacheSize())
-            ));
+            );
             mainScreen.add(this._cacheSize);
             break;
          case 1:
@@ -75,11 +76,9 @@ final class DocViewOptionsScreen extends SaveableMainScreenOptionsListItem imple
             );
             break;
          case 2:
-            this._outlineCells = (BooleanChoiceField)(new Object(_resources.getString(24), 0, this._docViewOptions.isOutlineCells()));
-            this._sheetColumnWidth = (ObjectChoiceField)(new Object(
-               _resources.getString(20), _resources.getStringArray(25), this._docViewOptions.getSheetColumnWidth()
-            ));
-            this._showLabels = (BooleanChoiceField)(new Object(_resources.getString(21), 0, this._docViewOptions.isShowLabels()));
+            this._outlineCells = new BooleanChoiceField(_resources.getString(24), 0, this._docViewOptions.isOutlineCells());
+            this._sheetColumnWidth = new ObjectChoiceField(_resources.getString(20), _resources.getStringArray(25), this._docViewOptions.getSheetColumnWidth());
+            this._showLabels = new BooleanChoiceField(_resources.getString(21), 0, this._docViewOptions.isShowLabels());
             this.createFontControls(
                this._docViewOptions.getSheetFontName(),
                this._docViewOptions.getSheetFontSize(),
@@ -89,11 +88,11 @@ final class DocViewOptionsScreen extends SaveableMainScreenOptionsListItem imple
             mainScreen.add(this._outlineCells);
             mainScreen.add(this._sheetColumnWidth);
             mainScreen.add(this._showLabels);
-            mainScreen.add((Field)(new Object()));
+            mainScreen.add(new SeparatorField());
       }
 
       if (this._optionsType == 1 || this._optionsType == 2) {
-         this._fontSampleField = (RichTextField)(new Object(36028797018963968L));
+         this._fontSampleField = new RichTextField(36028797018963968L);
          this._fontSampleField.setText(_optionsResources.getString(1465));
          mainScreen.add(this._fontFamilyField);
          if (this._optionsType == 1) {
@@ -170,12 +169,12 @@ final class DocViewOptionsScreen extends SaveableMainScreenOptionsListItem imple
          ffIndex = 0;
       }
 
-      this._fontFamilyField = (ObjectChoiceField)(new Object(_resources.getString(52), this._fontFamilies, ffIndex));
+      this._fontFamilyField = new ObjectChoiceField(_resources.getString(52), this._fontFamilies, ffIndex);
       this._fontFamilyField.setChangeListener(this);
-      this._fontSizeField = (ObjectChoiceField)(new Object(_resources.getString(22), null));
+      this._fontSizeField = new ObjectChoiceField(_resources.getString(22), null);
       this._isScalable = false;
       this.populateFontSizes(ffIndex, initialFontHeight);
-      this._fontStyleField = (ObjectChoiceField)(new Object(_optionsResources.getString(1424), _optionsResources.getStringArray(1425)));
+      this._fontStyleField = new ObjectChoiceField(_optionsResources.getString(1424), _optionsResources.getStringArray(1425));
       int index = 0;
       switch (initialStyle & 0xFF) {
          case 1:
@@ -192,7 +191,7 @@ final class DocViewOptionsScreen extends SaveableMainScreenOptionsListItem imple
       }
 
       this._fontStyleField.setSelectedIndex(index);
-      this._useOriginalFont = (BooleanChoiceField)(new Object(_resources.getString(81), 0, useOriginalFont));
+      this._useOriginalFont = new BooleanChoiceField(_resources.getString(81), 0, useOriginalFont);
       this._useOriginalFont.setChangeListener(this);
       this._fontStyleField.setChangeListener(this);
       this._fontSizeField.setChangeListener(this);
@@ -243,10 +242,10 @@ final class DocViewOptionsScreen extends SaveableMainScreenOptionsListItem imple
          }
 
          int initialFontHeightIndex = 0;
-         this._fontSizes = new Object[numFontSizes];
+         this._fontSizes = new Integer[numFontSizes];
 
          for (int i = 0; i < numFontSizes; i++) {
-            this._fontSizes[i] = (Integer)(new Object(fontSizes_ptd[i]));
+            this._fontSizes[i] = new Integer(fontSizes_ptd[i]);
             if (initialFontHeight == fontSizes_cptd[i]) {
                initialFontHeightIndex = i;
             }
@@ -287,23 +286,23 @@ final class DocViewOptionsScreen extends SaveableMainScreenOptionsListItem imple
    public final void fieldChanged(Field field, int context) {
       Field original = field.getOriginal();
       if (ObjectUtilities.objEqual(original, this._fontFamilyField)) {
-         if (field instanceof Object) {
+         if (field instanceof ChoiceField) {
             this.populateFontSizes(((ChoiceField)field).getSelectedIndex(), this._fontSizes_cptd[this._fontSizeField.getSelectedIndex()]);
             this.updateChoiceOptions(((ChoiceField)field).getSelectedIndex());
             this.updateFont((byte)2, ((ChoiceField)field).getSelectedIndex());
             return;
          }
       } else if (ObjectUtilities.objEqual(original, this._fontSizeField)) {
-         if (field instanceof Object) {
+         if (field instanceof ChoiceField) {
             this.updateFont((byte)1, ((ChoiceField)field).getSelectedIndex());
             return;
          }
       } else if (ObjectUtilities.objEqual(original, this._fontStyleField)) {
-         if (field instanceof Object) {
+         if (field instanceof ChoiceField) {
             this.updateFont((byte)0, ((ChoiceField)field).getSelectedIndex());
             return;
          }
-      } else if (ObjectUtilities.objEqual(original, this._useOriginalFont) && field instanceof Object) {
+      } else if (ObjectUtilities.objEqual(original, this._useOriginalFont) && field instanceof ChoiceField) {
          boolean useOriginalFont = ((ChoiceField)field).getSelectedIndex() == 0;
          if (useOriginalFont) {
             if (this._optionsType == 1) {

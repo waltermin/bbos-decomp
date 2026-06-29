@@ -16,7 +16,7 @@ public final class EScreenException extends RuntimeException {
 
    @Override
    public final String toString() {
-      StringBuffer strBuf = (StringBuffer)(new Object());
+      StringBuffer strBuf = new StringBuffer();
       String message = this.getMessage();
       strBuf.append(this.getClass().getName());
       if (message != null) {
@@ -32,7 +32,7 @@ public final class EScreenException extends RuntimeException {
    private final String translateErrorCode(int code) {
       switch (code) {
          case -7:
-            return ((StringBuffer)(new Object(" EScreen error: "))).append(code).toString();
+            return " EScreen error: " + code;
          case -6:
             return " Bad user data";
          case -5:

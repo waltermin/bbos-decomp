@@ -18,7 +18,7 @@ public class AddressBookReader extends WordLearningReader {
       } else {
          super._sizeLimit = 20480;
          super._data = this.createLearningWordlist();
-         data = (LearningData)(new Object(super._data));
+         data = new LearningData(super._data);
          LearningDataManager.setLearningData(super._currentLearnName, data, true);
       }
 

@@ -1,11 +1,13 @@
 package net.rim.device.cldc.io.gme;
 
+import java.io.IOException;
 import javax.microedition.io.Connector;
-import javax.microedition.io.Datagram;
 import net.rim.device.api.crypto.BBRClientAuth;
 import net.rim.device.api.io.DatagramBase;
 import net.rim.device.api.io.DatagramConnectionBase;
 import net.rim.device.api.io.DatagramStatusListener;
+import net.rim.device.api.io.IOFormatException;
+import net.rim.device.api.io.IONotRoutableException;
 import net.rim.device.api.servicebook.ServiceRouting;
 import net.rim.device.api.servicebook.ServiceRoutingProperties;
 import net.rim.device.api.system.DeviceInfo;
@@ -41,10 +43,10 @@ final class AuthThread extends Thread implements DatagramStatusListener {
    static final int STATE_AUTH_FAILED = 3;
    static final int STATE_AUTH_TIMEOUT = 4;
 
-   public AuthThread(String service, int serviceCapabilities, String connection, int routingHandle) {
+   public AuthThread(String service, int serviceCapabilities, String connection, int routingHandle) throws IONotRoutableException {
       boolean runAuth = (serviceCapabilities & 2) == 2;
       if (runAuth && CryptoBlock.getSymmetricKey(service) == null) {
-         throw new Object();
+         throw new IONotRoutableException();
       }
 
       label85:
@@ -212,14 +214,14 @@ final class AuthThread extends Thread implements DatagramStatusListener {
       // 053: aload 0
       // 054: invokevirtual net/rim/device/cldc/io/gme/AuthThread.shutdown ()V
       // 057: return
-      // 058: new java/lang/Object
+      // 058: new net/rim/device/api/crypto/BBRClientAuth
       // 05b: dup
       // 05c: aload 0
       // 05d: getfield net/rim/device/cldc/io/gme/AuthThread._service Ljava/lang/String;
       // 060: invokestatic net/rim/device/internal/crypto/CryptoBlock.getSymmetricKey (Ljava/lang/String;)[B
       // 063: invokespecial net/rim/device/api/crypto/BBRClientAuth.<init> ([B)V
       // 066: astore 1
-      // 067: new java/lang/Object
+      // 067: new java/util/Random
       // 06a: dup
       // 06b: invokespecial java/util/Random.<init> ()V
       // 06e: invokevirtual java/util/Random.nextInt ()I
@@ -295,7 +297,7 @@ final class AuthThread extends Thread implements DatagramStatusListener {
       // 0f5: goto 156
       // 0f8: astore 1
       // 0f9: ldc2_w 1866032962523356178
-      // 0fc: new java/lang/Object
+      // 0fc: new java/lang/StringBuffer
       // 0ff: dup
       // 100: ldc_w "AUnr-"
       // 103: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -317,7 +319,7 @@ final class AuthThread extends Thread implements DatagramStatusListener {
       // 125: ldc_w ""
       // 128: astore 2
       // 129: ldc2_w 1866032962523356178
-      // 12c: new java/lang/Object
+      // 12c: new java/lang/StringBuffer
       // 12f: dup
       // 130: ldc_w "AUnrE "
       // 133: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -378,12 +380,12 @@ final class AuthThread extends Thread implements DatagramStatusListener {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private final void sendCommit(BBRClientAuth auth, int sessionId) {
+   private final void sendCommit(BBRClientAuth auth, int sessionId) throws IOException {
       String key = CryptoBlock.getKeyIDForUID(this._service);
       if (key != null && key.length() > 0) {
          DatagramBase dgram = (DatagramBase)this.getConnection().newDatagram();
          this._gme.allocateDatagramId(dgram);
-         DataBuffer buf = (DataBuffer)(new Object());
+         DataBuffer buf = new DataBuffer();
          buf.writeByte(1);
          TLEUtilities.writeIntegerField(buf, 1, sessionId, true);
          TLEUtilities.writeDataField(buf, 2, key.getBytes());
@@ -446,7 +448,7 @@ final class AuthThread extends Thread implements DatagramStatusListener {
                   case 1:
                   default:
                      EventLogger.logEvent(1866032962523356178L, 1096117601, 3);
-                     throw new Object("Connection refused");
+                     throw new IOException("Connection refused");
                   case 2:
                      EventLogger.logEvent(1866032962523356178L, 1096118884, 3);
                }
@@ -476,7 +478,7 @@ final class AuthThread extends Thread implements DatagramStatusListener {
             this._backoff = 0;
          }
       } else {
-         throw new Object();
+         throw new IOException();
       }
    }
 
@@ -488,17 +490,17 @@ final class AuthThread extends Thread implements DatagramStatusListener {
       do {
          info = null;
          buf = null;
-         var5 = this.getConnection().newDatagram();
-         this.getConnection().receive((Datagram)var5);
-         info = readGmeData((DataBuffer)var5);
+         dgram = (DatagramBase)this.getConnection().newDatagram();
+         this.getConnection().receive(dgram);
+         info = readGmeData(dgram);
          if (info == null) {
             EventLogger.logEvent(1866032962523356178L, 1096118386, 3);
          }
       } while ((buf = this.getDataIfAddressed(info, sessionId)) == null);
 
-      this.getConnection().datagramProcessed(((DatagramBase)var5).getDatagramId());
+      this.getConnection().datagramProcessed(dgram.getDatagramId());
       if (buf.readByte() != 2) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       while (!buf.eof()) {
@@ -509,12 +511,12 @@ final class AuthThread extends Thread implements DatagramStatusListener {
             case 1:
             default:
                if (TLEUtilities.readIntegerField(buf, 1) != sessionId) {
-                  throw new Object();
+                  throw new IllegalArgumentException();
                }
                break;
             case 2:
                if (!Arrays.equals(CryptoBlock.getKeyIDForUID(this._service).getBytes(), TLEUtilities.readDataField(buf, 2))) {
-                  throw new Object();
+                  throw new IllegalArgumentException();
                }
                break;
             case 3:
@@ -533,7 +535,7 @@ final class AuthThread extends Thread implements DatagramStatusListener {
    private final void sendProof(BBRClientAuth auth, int sessionId) {
       DatagramBase dgram = (DatagramBase)this.getConnection().newDatagram();
       this._gme.allocateDatagramId(dgram);
-      DataBuffer buf = (DataBuffer)(new Object());
+      DataBuffer buf = new DataBuffer();
       buf.writeByte(3);
       TLEUtilities.writeIntegerField(buf, 1, sessionId, true);
       TLEUtilities.writeDataField(buf, 5, auth.getYD(this._RB, this._eD));
@@ -557,24 +559,24 @@ final class AuthThread extends Thread implements DatagramStatusListener {
       do {
          info = null;
          buf = null;
-         var5 = this.getConnection().newDatagram();
-         this.getConnection().receive((Datagram)var5);
-         info = readGmeData((DataBuffer)var5);
+         dgram = (DatagramBase)this.getConnection().newDatagram();
+         this.getConnection().receive(dgram);
+         info = readGmeData(dgram);
          if (info == null) {
             EventLogger.logEvent(1866032962523356178L, 1096118386, 3);
          }
       } while ((buf = this.getDataIfAddressed(info, sessionId)) == null);
 
-      this.getConnection().datagramProcessed(((DatagramBase)var5).getDatagramId());
+      this.getConnection().datagramProcessed(dgram.getDatagramId());
       if (buf.readByte() != 4) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       while (!buf.eof()) {
          switch (TLEUtilities.getType(buf)) {
             case 1:
                if (TLEUtilities.readIntegerField(buf, 1) != sessionId) {
-                  throw new Object();
+                  throw new IllegalArgumentException();
                }
                break;
             case 5:
@@ -591,7 +593,7 @@ final class AuthThread extends Thread implements DatagramStatusListener {
    private final void sendAbort(int sessionId, int reasonCode, boolean useTemporaryDatagram) {
       DatagramBase dgram = (DatagramBase)this.getConnection().newDatagram();
       this._gme.allocateDatagramId(dgram);
-      DataBuffer buf = (DataBuffer)(new Object());
+      DataBuffer buf = new DataBuffer();
       buf.writeByte(9);
       TLEUtilities.writeIntegerField(buf, 1, sessionId, true);
       TLEUtilities.writeIntegerField(buf, 8, reasonCode, true);
@@ -625,11 +627,11 @@ final class AuthThread extends Thread implements DatagramStatusListener {
       buf.write(data, 0, length);
    }
 
-   private static final AuthThread$GmeInfo readGmeData(DataBuffer buf) {
+   private static final AuthThread$GmeInfo readGmeData(DataBuffer buf) throws IOFormatException {
       AuthThread$GmeInfo info = new AuthThread$GmeInfo();
       info.version = buf.readByte();
       if ((info.version & 240) != 32) {
-         throw new Object();
+         throw new IOFormatException();
       }
 
       int type;
@@ -651,7 +653,7 @@ final class AuthThread extends Thread implements DatagramStatusListener {
       }
 
       if (buf.readUnsignedByte() != 0) {
-         throw new Object();
+         throw new IOFormatException();
       }
 
       info.transactionId = buf.readInt();
@@ -699,7 +701,7 @@ final class AuthThread extends Thread implements DatagramStatusListener {
       // 01: aload 1
       // 02: invokespecial net/rim/device/cldc/io/gme/AuthThread.isAddressed (Lnet/rim/device/cldc/io/gme/AuthThread$GmeInfo;)Z
       // 05: ifeq 8c
-      // 08: new java/lang/Object
+      // 08: new net/rim/device/api/util/DataBuffer
       // 0b: dup
       // 0c: aload 1
       // 0d: getfield net/rim/device/cldc/io/gme/AuthThread$GmeInfo.data [B

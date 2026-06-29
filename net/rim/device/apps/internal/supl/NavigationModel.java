@@ -60,16 +60,16 @@ final class NavigationModel {
 
    final void print() {
       System.out.println("Navigation Model: ");
-      System.out.println(((StringBuffer)(new Object("Optionals: "))).append(this.optionals).toString());
-      System.out.println(((StringBuffer)(new Object("GPS Week: "))).append(this.gpsWeek).toString());
-      System.out.println(((StringBuffer)(new Object("GPS Toe: "))).append(this.gpsToe).toString());
-      System.out.println(((StringBuffer)(new Object("Nsat: "))).append(this.nSat).toString());
-      System.out.println(((StringBuffer)(new Object("Toe Limit: "))).append(this.toeLimit).toString());
+      System.out.println("Optionals: " + this.optionals);
+      System.out.println("GPS Week: " + this.gpsWeek);
+      System.out.println("GPS Toe: " + this.gpsToe);
+      System.out.println("Nsat: " + this.nSat);
+      System.out.println("Toe Limit: " + this.toeLimit);
       if ((this.optionals & 1) == 1) {
-         System.out.println(((StringBuffer)(new Object("Num Satellites: "))).append(this.nSat).toString());
+         System.out.println("Num Satellites: " + this.nSat);
 
          for (int i = 0; i < this.nSat; i++) {
-            System.out.println(((StringBuffer)(new Object("Sat Element "))).append(i).toString());
+            System.out.println("Sat Element " + i);
             this.satInfo[i].print();
          }
       }

@@ -24,7 +24,7 @@ class SimplePrefixTable$SimplePrefixTableWord {
       int substShift = this.this$0.iReader.getSubstShift();
       String alphabet = this.this$0.iReader.getAlphabet();
       Reader$SubstitutionTable substTable = this.this$0.iReader.getSubstitutionTable();
-      StringBuffer buf = (StringBuffer)(new Object());
+      StringBuffer buf = new StringBuffer();
 
       for (int i = 0; i < this.length(); i++) {
          int coded = this.codedCharAt(i);

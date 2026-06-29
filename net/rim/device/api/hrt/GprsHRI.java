@@ -1,6 +1,7 @@
 package net.rim.device.api.hrt;
 
 import net.rim.device.api.io.DatagramAddressBase;
+import net.rim.device.api.io.UdpAddress;
 import net.rim.device.api.system.GPRSQOSInfo;
 import net.rim.device.api.system.QOSInfo;
 import net.rim.device.api.util.DataBuffer;
@@ -12,14 +13,14 @@ public final class GprsHRI extends HostRoutingInfo implements Persistable {
 
    public GprsHRI() {
       super._dac = new IPv4UdpDAC(16, 20);
-      this._qos = (GPRSQOSInfo)(new Object());
+      this._qos = new GPRSQOSInfo();
       this.setArt(7);
       this.setPte(1);
    }
 
    private GprsHRI(GprsHRI hri) {
       super(hri);
-      this._qos = (GPRSQOSInfo)(new Object(hri._qos));
+      this._qos = new GPRSQOSInfo(hri._qos);
    }
 
    @Override
@@ -47,7 +48,7 @@ public final class GprsHRI extends HostRoutingInfo implements Persistable {
       if (d instanceof IPv4UdpDAC) {
          super.setDac(d);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -57,15 +58,15 @@ public final class GprsHRI extends HostRoutingInfo implements Persistable {
    }
 
    public final QOSInfo getQos() {
-      return (QOSInfo)(new Object(this._qos));
+      return new GPRSQOSInfo(this._qos);
    }
 
    public final void setQos(QOSInfo qos) {
-      if (qos instanceof Object) {
-         this._qos = (GPRSQOSInfo)(new Object((GPRSQOSInfo)qos));
+      if (qos instanceof GPRSQOSInfo) {
+         this._qos = new GPRSQOSInfo((GPRSQOSInfo)qos);
          super._dirty = true;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -78,12 +79,10 @@ public final class GprsHRI extends HostRoutingInfo implements Persistable {
             return true;
          case 19:
             if (length != 5) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
-            GPRSQOSInfo qos = (GPRSQOSInfo)(new Object(
-               b.readUnsignedByte(), b.readUnsignedByte(), b.readUnsignedByte(), b.readUnsignedByte(), b.readUnsignedByte()
-            ));
+            GPRSQOSInfo qos = new GPRSQOSInfo(b.readUnsignedByte(), b.readUnsignedByte(), b.readUnsignedByte(), b.readUnsignedByte(), b.readUnsignedByte());
             this._qos = qos;
             return true;
          case 34:
@@ -112,7 +111,7 @@ public final class GprsHRI extends HostRoutingInfo implements Persistable {
       }
 
       long addr = addrs[index];
-      return (DatagramAddressBase)(new Object(IPv4UdpDAC.addr2IpAddress(addr), IPv4UdpDAC.addr2DstPort(addr), IPv4UdpDAC.addr2SrcPort(addr), super._apn, 2));
+      return new UdpAddress(IPv4UdpDAC.addr2IpAddress(addr), IPv4UdpDAC.addr2DstPort(addr), IPv4UdpDAC.addr2SrcPort(addr), super._apn, 2);
    }
 
    @Override

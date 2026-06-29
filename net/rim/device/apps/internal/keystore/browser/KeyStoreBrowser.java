@@ -8,13 +8,13 @@ import net.rim.device.apps.api.options.OptionsProviderRegistration;
 import net.rim.device.apps.api.options.OptionsProviderRegistration$OptionsProvider;
 
 public final class KeyStoreBrowser implements OptionsProviderRegistration$OptionsProvider {
-   private Hashtable _registeredContexts = (Hashtable)(new Object());
+   private Hashtable _registeredContexts = new Hashtable();
    private static final long OPTIONS_KEY_STORE_DISPLAY = -4706105373277579899L;
 
    public final void register(String name, KeyStoreBrowserContext context) {
       this.verifyName(name);
       if (context == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (!this._registeredContexts.containsKey(name)) {
@@ -30,7 +30,7 @@ public final class KeyStoreBrowser implements OptionsProviderRegistration$Option
    public final void show(String browserContext, Object displayContext) {
       KeyStoreBrowserContext context = this.getContext(browserContext);
       if (context == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       KeyStoreBrowserOptionsItem item = new KeyStoreBrowserOptionsItem(context, displayContext);
@@ -39,7 +39,7 @@ public final class KeyStoreBrowser implements OptionsProviderRegistration$Option
 
    @Override
    public final Vector getOptionsItems() {
-      Vector items = (Vector)(new Object());
+      Vector items = new Vector();
       Enumeration enumeration = this._registeredContexts.elements();
 
       while (enumeration.hasMoreElements()) {
@@ -52,7 +52,7 @@ public final class KeyStoreBrowser implements OptionsProviderRegistration$Option
 
    private final void verifyName(String name) {
       if (name == null || name.length() <= 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

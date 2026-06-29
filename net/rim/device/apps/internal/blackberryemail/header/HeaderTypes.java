@@ -10,8 +10,8 @@ public class HeaderTypes {
    public static final int SENDER = 4;
    public static final int REPLY_TO = 5;
    public static final int ORIGINAL_RECIPIENT = 6;
-   public static final Integer[] _typesAsInteger = new Object[]{
-      new Object(0), new Object(1), new Object(2), new Object(3), new Object(4), new Object(5), new Object(6)
+   public static final Integer[] _typesAsInteger = new Integer[]{
+      new Integer(0), new Integer(1), new Integer(2), new Integer(3), new Integer(4), new Integer(5), new Integer(6)
    };
 
    public static String getStringForHeaderType(int headerType) {

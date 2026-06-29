@@ -1,5 +1,7 @@
 package net.rim.device.api.crypto.asn1;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -21,10 +23,10 @@ public class ASN1InputStream {
 
    public ASN1InputStream(InputStream inputStream) {
       if (inputStream == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
-      if (inputStream instanceof Object) {
+      if (inputStream instanceof SharedInputStream) {
          this._sharedStream = (SharedInputStream)inputStream;
       } else {
          this._sharedStream = SharedInputStream.getSharedInputStream(inputStream);
@@ -36,7 +38,7 @@ public class ASN1InputStream {
 
    ASN1InputStream(SharedInputStream inputStream, ASN1Field creator) {
       if (inputStream == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._sharedStream = SharedInputStream.getSharedInputStream(inputStream);
@@ -45,11 +47,11 @@ public class ASN1InputStream {
    }
 
    public ASN1InputStream(byte[] data) {
-      this((InputStream)(data == null ? null : new Object(data)));
+      this(data == null ? null : new ByteArrayInputStream(data));
    }
 
    public ASN1InputStream(byte[] data, int offset, int length) {
-      this((InputStream)(data == null ? null : new Object(data, offset, length)));
+      this(data == null ? null : new ByteArrayInputStream(data, offset, length));
    }
 
    public boolean isNextTagUniversal() {
@@ -465,17 +467,14 @@ public class ASN1InputStream {
          ASN1InputStream recurse = new ASN1InputStream(value);
 
          while (!recurse.endOfStream()) {
-            returnValue = ((StringBuffer)(new Object()))
-               .append(returnValue)
-               .append(recurse.readString(3, baseTag, 0, useDefault, defaultValue, baseTag, recursionLevel + 1))
-               .toString();
+            returnValue = returnValue + recurse.readString(3, baseTag, 0, useDefault, defaultValue, baseTag, recursionLevel + 1);
          }
 
          return returnValue;
       } else {
          switch (baseTag) {
             case 12:
-               return (String)(new Object(value, "UTF8"));
+               return new String(value, "UTF8");
             case 30:
                char[] data = new char[value.length >> 1];
 
@@ -483,9 +482,9 @@ public class ASN1InputStream {
                   data[i] = (char)(value[2 * i] << 8 | value[2 * i + 1]);
                }
 
-               return (String)(new Object(data));
+               return new String(data);
             default:
-               return (String)(new Object(value));
+               return new String(value);
          }
       }
    }
@@ -513,7 +512,7 @@ public class ASN1InputStream {
    private InputStream readOctetString(int tagging, int tag, int clsFlags, boolean useDefault, byte[] defaultValue) {
       ASN1Field field = this.checkStreamTag(tagging, clsFlags, tag, 4, useDefault);
       if (field == null) {
-         return (InputStream)(new Object(defaultValue));
+         return new ByteArrayInputStream(defaultValue);
       }
 
       this._lastFieldRead = field;
@@ -522,7 +521,7 @@ public class ASN1InputStream {
          return new ConstructedOctetStringInputStream(fieldInputStream);
       }
 
-      SharedInputStream octetStringInputStream = (SharedInputStream)(new Object(fieldInputStream));
+      SharedInputStream octetStringInputStream = new SharedInputStream(fieldInputStream);
       octetStringInputStream.setLength(field.getValueLength());
       return octetStringInputStream;
    }
@@ -896,7 +895,7 @@ public class ASN1InputStream {
       return data == -1;
    }
 
-   private int peekNextByte() {
+   private int peekNextByte() throws IOException {
       try {
          if (this.endOfStream()) {
             return -1;
@@ -905,7 +904,7 @@ public class ASN1InputStream {
          this._sharedStream.setCurrentPosition(this._lastFieldRead.getEndPosition());
          return this._sharedStream.peek();
       } catch (ASN1EncodingException e) {
-         throw new Object();
+         throw new IOException();
       }
    }
 

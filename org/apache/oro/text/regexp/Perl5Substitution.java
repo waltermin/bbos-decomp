@@ -126,7 +126,7 @@ public class Perl5Substitution extends StringSubstitution {
    }
 
    String _finalInterpolatedSub(MatchResult result) {
-      StringBuffer buffer = (StringBuffer)(new Object(10));
+      StringBuffer buffer = new StringBuffer(10);
       this._calcSub(buffer, result);
       return buffer.toString();
    }

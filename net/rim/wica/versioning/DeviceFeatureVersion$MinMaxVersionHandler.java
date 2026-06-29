@@ -14,7 +14,7 @@ public class DeviceFeatureVersion$MinMaxVersionHandler extends DeviceFeatureVers
 
    @Override
    public String serialize() {
-      return ((StringBuffer)(new Object())).append(super.serialize()).append(this._minVersion).append(":").append(this._maxVersion).toString();
+      return super.serialize() + this._minVersion + ":" + this._maxVersion;
    }
 
    @Override

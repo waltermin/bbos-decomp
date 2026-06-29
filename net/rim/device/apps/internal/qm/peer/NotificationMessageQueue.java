@@ -10,7 +10,7 @@ import net.rim.device.apps.internal.qm.peer.common.NotificationMessage;
 import net.rim.device.apps.internal.qm.peer.common.TypingNotificationMessage;
 
 public final class NotificationMessageQueue {
-   private Vector _messages = (Vector)(new Object());
+   private Vector _messages = new Vector();
    private int _next = 0;
    private boolean _dormant;
    private static final long NOTIFICATION_MESSAGE_QUEUE = -8276972507418970457L;

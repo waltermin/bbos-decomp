@@ -11,7 +11,7 @@ public final class VideoCameraApplicationVerb extends Verb {
 
    @Override
    public final Object invoke(Object parameter) {
-      if (parameter instanceof Object) {
+      if (parameter instanceof ContextObject) {
          ShowVideoCameraApp.setVideoCameraContext((ContextObject)parameter);
       }
 

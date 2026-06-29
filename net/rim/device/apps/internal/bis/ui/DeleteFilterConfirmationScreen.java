@@ -2,7 +2,7 @@ package net.rim.device.apps.internal.bis.ui;
 
 import java.util.Hashtable;
 import net.rim.device.api.i18n.MessageFormat;
-import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.apps.internal.bis.ApplicationResources;
 import net.rim.device.apps.internal.bis.api.ui.BasicScreen;
 import net.rim.device.apps.internal.bis.api.ui.Button;
@@ -18,8 +18,8 @@ public final class DeleteFilterConfirmationScreen extends BasicScreen {
       Filter filter = ClientSessionState.getInstance().getFilterToModify();
       Mailbox mailboxToDelete = ClientSessionState.getInstance().getMailboxToModify();
       this.setTitle(ApplicationResources.getString(5));
-      String deleteConfirmText = MessageFormat.format(ApplicationResources.getString(296), new Object[]{filter.getName()});
-      this.addContentField((Field)(new Object(deleteConfirmText)));
+      String deleteConfirmText = MessageFormat.format(ApplicationResources.getString(296), new String[]{filter.getName()});
+      this.addContentField(new LabelField(deleteConfirmText));
       Button noButton = new Button(ApplicationResources.getString(31));
       Button yesButton = new Button(ApplicationResources.getString(32));
       this.addButtonBarButtons(new Button[]{noButton, yesButton}, false, 1);

@@ -243,7 +243,7 @@ final class MMSProtocolDataUnitWriter {
    public final void copyContent(MMSAttachment pdu) {
       this.writeByte(132);
       byte[] data = pdu.getData();
-      DataBuffer dataBuffer = (DataBuffer)(new Object(data, 0, data.length, false));
+      DataBuffer dataBuffer = new DataBuffer(data, 0, data.length, false);
       MMSProtocolDataUnit.skipToContent(dataBuffer);
       byte[] buf = new byte[8000];
 
@@ -263,7 +263,7 @@ final class MMSProtocolDataUnitWriter {
 
    public final void beginContent(int attachmentCount, String attachmentName, String attachmentType) {
       this.writeByte(132);
-      String content_id = ((StringBuffer)(new Object("<"))).append(attachmentName).append(">").toString();
+      String content_id = "<" + attachmentName + ">";
       int length = 2 + attachmentType.length() + 1 + 1 + content_id.length() + 1;
       if (length < 31) {
          this.writeByte(length);
@@ -320,7 +320,7 @@ final class MMSProtocolDataUnitWriter {
          boolean writeExtraWSPHeader = attachment instanceof ExtraWSPHeaderAttachment;
          int extraWSPHeaderLength = 0;
          byte[] extraWSPHeaderData = null;
-         String content_id = ((StringBuffer)(new Object("\"<"))).append(name).append(">").toString();
+         String content_id = "\"<" + name + ">";
          String typeString = null;
          if (type > 127) {
             typeString = MMSUtilities.getMIMETypeString(type);
@@ -389,7 +389,7 @@ final class MMSProtocolDataUnitWriter {
       try {
          byte[] data = value.getBytes("us-ascii");
          if (data != null) {
-            String str2 = (String)(new Object(data, charset));
+            String str2 = new String(data, charset);
             if (value.equals(str2)) {
                return this.writeString(data);
             }

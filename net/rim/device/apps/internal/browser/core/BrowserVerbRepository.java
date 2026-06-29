@@ -4,6 +4,7 @@ import net.rim.device.api.i18n.ResourceBundleFamily;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.apps.api.framework.verb.Verb;
+import net.rim.device.apps.api.ui.VerbMenuItem;
 import net.rim.device.apps.internal.browser.bookmark.AddBookmarkVerb;
 import net.rim.device.apps.internal.browser.bookmark.BookmarksVerb;
 import net.rim.device.apps.internal.browser.options.OptionsVerb;
@@ -137,7 +138,7 @@ public final class BrowserVerbRepository {
                continue;
             }
 
-            MenuItem item = (MenuItem)(new Object(verb, priority));
+            MenuItem item = new VerbMenuItem(verb, priority);
             menu.add(item);
             if (menu.getDefault() == null) {
                menu.setDefault(item);

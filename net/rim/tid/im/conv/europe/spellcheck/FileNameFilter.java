@@ -40,7 +40,7 @@ public class FileNameFilter implements ITextFilter {
       "xml",
       "zip"
    };
-   private static final Hashtable extTable = (Hashtable)(new Object());
+   private static final Hashtable extTable = new Hashtable();
 
    @Override
    public int filter(StringBufferGap text, int inStart, int end, boolean backwards) {

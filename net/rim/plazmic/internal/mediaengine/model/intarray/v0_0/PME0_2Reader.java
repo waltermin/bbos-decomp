@@ -1,9 +1,11 @@
 package net.rim.plazmic.internal.mediaengine.model.intarray.v0_0;
 
+import java.io.IOException;
 import net.rim.plazmic.internal.mediaengine.MediaFactory;
 import net.rim.plazmic.internal.mediaengine.ResourceContext;
 import net.rim.plazmic.internal.mediaengine.ResourceProvider;
 import net.rim.plazmic.internal.mediaengine.ui.ForeignObject;
+import net.rim.plazmic.mediaengine.MediaException;
 
 public class PME0_2Reader implements ResourceProvider {
    protected AnimationModel model;
@@ -37,21 +39,21 @@ public class PME0_2Reader implements ResourceProvider {
    private byte[] data;
    private String encoding;
 
-   protected final String readUTF() {
+   protected final String readUTF() throws MediaException {
       if (this.data.length - this.offset < 2) {
-         throw new Object(4);
+         throw new MediaException(4);
       }
 
       int ch1 = this.data[this.offset++];
       int ch2 = this.data[this.offset++];
       int utflen = (ch1 << 8) + (ch2 << 0);
       if (this.data.length - this.offset < utflen) {
-         throw new Object(4);
+         throw new MediaException(4);
       }
 
       int dataOffset = this.offset;
       this.offset += utflen;
-      StringBuffer str = (StringBuffer)(new Object(utflen));
+      StringBuffer str = new StringBuffer(utflen);
       int count = 0;
 
       while (count < utflen) {
@@ -62,7 +64,7 @@ public class PME0_2Reader implements ResourceProvider {
             case 9:
             case 10:
             case 11:
-               throw new Object(4);
+               throw new MediaException(4);
             case 0:
             case 1:
             case 2:
@@ -79,12 +81,12 @@ public class PME0_2Reader implements ResourceProvider {
             case 13:
                count += 2;
                if (count > utflen) {
-                  throw new Object(4);
+                  throw new MediaException(4);
                }
 
                int char2 = this.data[dataOffset + count - 1];
                if ((char2 & 192) != 128) {
-                  throw new Object(4);
+                  throw new MediaException(4);
                }
 
                str.append((char)((c & 31) << 6 | char2 & 63));
@@ -92,25 +94,25 @@ public class PME0_2Reader implements ResourceProvider {
             case 14:
                count += 3;
                if (count > utflen) {
-                  throw new Object(4);
+                  throw new MediaException(4);
                }
 
                int char2 = this.data[dataOffset + count - 2];
                int char3 = this.data[dataOffset + count - 1];
                if ((char2 & 192) != 128 || (char3 & 192) != 128) {
-                  throw new Object(4);
+                  throw new MediaException(4);
                }
 
                str.append((char)((c & 15) << 12 | (char2 & 63) << 6 | (char3 & 63) << 0));
          }
       }
 
-      return (String)(new Object(str));
+      return new String(str);
    }
 
-   protected final int readInt() {
+   protected final int readInt() throws IOException {
       if (this.data.length - this.offset < 4) {
-         throw new Object();
+         throw new IOException();
       }
 
       int ch1 = this.data[this.offset++];
@@ -354,14 +356,14 @@ public class PME0_2Reader implements ResourceProvider {
       this.realRefIndex++;
    }
 
-   protected String readString() {
+   protected String readString() throws MediaException {
       if (this.data.length - this.offset < 2) {
-         throw new Object(4);
+         throw new MediaException(4);
       }
 
       int length = this.readData(1);
       if (this.data.length - this.offset < length) {
-         throw new Object(4);
+         throw new MediaException(4);
       }
 
       String result = MediaFactory.getPlatform().createString(this.data, this.offset, length, this.encoding);
@@ -423,15 +425,15 @@ public class PME0_2Reader implements ResourceProvider {
       return result;
    }
 
-   protected void validateChecksum() {
+   protected void validateChecksum() throws MediaException {
       int checksum = this.readData(7);
       this.checksum -= checksum;
       if (checksum != this.checksum) {
-         throw new Object(10);
+         throw new MediaException(10);
       }
    }
 
-   protected int readHeader(byte[] data, int offset) {
+   protected int readHeader(byte[] data, int offset) throws MediaException {
       int version = -1;
       int headerEnding = -1;
 
@@ -439,22 +441,22 @@ public class PME0_2Reader implements ResourceProvider {
          this.data = data;
          this.offset = offset;
          if (this.readInt() != -749712059) {
-            throw new Object(3);
+            throw new MediaException(3);
          }
 
          version = this.readInt();
          if (version >>> 8 > 512) {
-            throw new Object(1, ((StringBuffer)(new Object())).append((version & 0xFF0000) >>> 16).append(".").append(version >>> 8).toString());
+            throw new MediaException(1, ((version & 0xFF0000) >>> 16) + "." + (version >>> 8));
          }
 
          if ((version & 0xFF0000) >>> 16 < 2) {
-            throw new Object(2, ((StringBuffer)(new Object())).append((version & 0xFF0000) >>> 16).append(".").append(version >>> 8).toString());
+            throw new MediaException(2, ((version & 0xFF0000) >>> 16) + "." + (version >>> 8));
          }
 
          headerEnding = this.readInt();
          return headerEnding != 218767370 ? version : version;
       } finally {
-         throw new Object(4);
+         throw new MediaException(4);
       }
    }
 
@@ -471,7 +473,7 @@ public class PME0_2Reader implements ResourceProvider {
             object = this.read(data, ((AnimationModel)data).getRawData(), 0, true, context);
          } else if (data instanceof byte[]) {
             object = this.read(null, (byte[])data, 0, false, context);
-            if (referrer instanceof Object) {
+            if (referrer instanceof ResourceProvider) {
                this.getExternalResources((ResourceProvider)referrer, object);
             }
          }
@@ -530,7 +532,7 @@ public class PME0_2Reader implements ResourceProvider {
       // 51: goto c5
       // 54: astore 7
       // 56: ldc2_w -7509200465648525729
-      // 59: new java/lang/Object
+      // 59: new java/lang/StringBuffer
       // 5c: dup
       // 5d: ldc_w "PME02: Failed to load: "
       // 60: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -554,7 +556,7 @@ public class PME0_2Reader implements ResourceProvider {
       // 8c: iload 6
       // 8e: aconst_null
       // 8f: aastore
-      // 90: new java/lang/Object
+      // 90: new java/lang/StringBuffer
       // 93: dup
       // 94: invokespecial java/lang/StringBuffer.<init> ()V
       // 97: aload 3
@@ -565,7 +567,7 @@ public class PME0_2Reader implements ResourceProvider {
       // a1: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // a4: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // a7: putfield net/rim/plazmic/internal/mediaengine/model/intarray/v0_0/AnimationModel.missingURLs Ljava/lang/String;
-      // aa: new java/lang/Object
+      // aa: new java/lang/StringBuffer
       // ad: dup
       // ae: invokespecial java/lang/StringBuffer.<init> ()V
       // b1: aload 3
@@ -597,7 +599,7 @@ public class PME0_2Reader implements ResourceProvider {
             int imgIndex = nodes[nodeIndex + 4];
             if (objects[imgIndex] != null) {
                Object obj = objects[imgIndex];
-               if (obj instanceof Object) {
+               if (obj instanceof ForeignObject) {
                   if (peer == null) {
                      peer = new AnimationPeer();
                      peer.setModel(model);
@@ -757,7 +759,7 @@ public class PME0_2Reader implements ResourceProvider {
          this.model.externalResources = null;
       } else {
          if (this.model.externalResources == null || this.model.externalResources.length != numMedia) {
-            this.model.externalResources = new Object[numMedia];
+            this.model.externalResources = new String[numMedia];
          }
 
          for (int i = 0; i < numMedia; i++) {

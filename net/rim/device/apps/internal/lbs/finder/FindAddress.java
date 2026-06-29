@@ -60,7 +60,7 @@ public final class FindAddress extends Verb implements Request$Listener, CheckRa
          FindAddressDialog find = new FindAddressDialog(this._title, this._direction);
          find.setModel(parameter);
          model = find.get();
-      } else if (parameter instanceof Object) {
+      } else if (parameter instanceof MailingAddressModel) {
          model = (MailingAddressModel)parameter;
       }
 
@@ -79,9 +79,9 @@ public final class FindAddress extends Verb implements Request$Listener, CheckRa
          } else {
             int y = p._y != 8999999 ? p._y : p._y + 1;
             int x = p._x != 17999999 ? p._x : p._x + 1;
-            String label = ((StringBuffer)(new Object())).append(y / 4681608360884174848L).append(", ").append(x / 4681608360884174848L).toString();
+            String label = y / 4681608360884174848L + ", " + x / 4681608360884174848L;
             if (this._latOutRange || this._longOutRange) {
-               label = ((StringBuffer)(new Object())).append((int)(y / 4681608360884174848L)).append(", ").append((int)(x / 4681608360884174848L)).toString();
+               label = (int)(y / 4681608360884174848L) + ", " + (int)(x / 4681608360884174848L);
             }
 
             location = new Location(y, x, 4, label);
@@ -139,18 +139,12 @@ public final class FindAddress extends Verb implements Request$Listener, CheckRa
             int indexStart = location._label.indexOf("(");
             int indexEnd = location._label.indexOf(")");
             if (indexStart != -1 && indexEnd != -1) {
-               location._label = ((StringBuffer)(new Object()))
-                  .append(location._label.substring(0, indexStart))
-                  .append(location._label.substring(indexEnd + 1, location._label.length()))
-                  .toString();
+               location._label = location._label.substring(0, indexStart) + location._label.substring(indexEnd + 1, location._label.length());
             }
 
             int index = location._label.indexOf(" ,");
             if (index != -1) {
-               location._label = ((StringBuffer)(new Object()))
-                  .append(location._label.substring(0, index))
-                  .append(location._label.substring(index + 1, location._label.length()))
-                  .toString();
+               location._label = location._label.substring(0, index) + location._label.substring(index + 1, location._label.length());
             }
          }
       }
@@ -196,7 +190,7 @@ public final class FindAddress extends Verb implements Request$Listener, CheckRa
    private final void invokeAndWait(int msgId) {
       if (msgId == 334) {
          String netType = (RadioInfo.getActiveWAFs() & 4) == 4 ? LBSResources.getString(336) : LBSResources.getString(335);
-         String msg = MessageFormat.format(LBSResources.getString(334), new Object[]{netType});
+         String msg = MessageFormat.format(LBSResources.getString(334), new String[]{netType});
          UiApplication.getUiApplication().invokeAndWait(new MessageRunnable(msg));
       } else {
          UiApplication.getUiApplication().invokeAndWait(new MessageRunnable(LBSResources.getString(msgId)));
@@ -211,7 +205,7 @@ public final class FindAddress extends Verb implements Request$Listener, CheckRa
          this._cancelled = true;
       } else {
          if (!this._cancelled) {
-            System.out.println(((StringBuffer)(new Object("Response code="))).append(request.getResponseCode()).toString());
+            System.out.println("Response code=" + request.getResponseCode());
             boolean logError = false;
             int responseCode = request.getResponseCode();
             if (this._progressDialog != null) {
@@ -293,17 +287,17 @@ public final class FindAddress extends Verb implements Request$Listener, CheckRa
 
             if (logError) {
                try {
-                  StringBuffer requestStr = (StringBuffer)(new Object());
+                  StringBuffer requestStr = new StringBuffer();
                   byte[] b = request._lastRequest;
                   if (b != null) {
                      label119:
                      try {
                         for (int i = 0; i < b.length; i++) {
-                           String s = ((StringBuffer)(new Object("0"))).append(Integer.toHexString(b[i])).toString();
+                           String s = "0" + Integer.toHexString(b[i]);
                            requestStr.append(s.substring(s.length() - 2, s.length()));
                         }
                      } catch (Throwable var12) {
-                        requestStr.append(((StringBuffer)(new Object("... error in parsing: "))).append(e.getMessage()).toString());
+                        requestStr.append("... error in parsing: " + e.getMessage());
                         break label119;
                      }
                   } else {
@@ -312,14 +306,7 @@ public final class FindAddress extends Verb implements Request$Listener, CheckRa
 
                   EventLogger.logEvent(
                      LBSApplication.UID,
-                     ((StringBuffer)(new Object("Search Request error: ")))
-                        .append(responseCode)
-                        .append(", URL: ")
-                        .append(request.getURL())
-                        .append(", request: ")
-                        .append(requestStr.toString())
-                        .toString()
-                        .getBytes(),
+                     ("Search Request error: " + responseCode + ", URL: " + request.getURL() + ", request: " + requestStr.toString()).getBytes(),
                      2
                   );
                   return;

@@ -16,7 +16,7 @@ public class VariableHeightCollectionListField extends VariableHeightListField i
    private VariableHeightCollectionListField$UpdaterRunnable _updaterRunnable;
    private VariableHeightCollectionListField$SetFocusedElementRunnable _focusedElementRunnable;
    protected ReadableList _list;
-   private WeakReference _collectionListener = (WeakReference)(new Object(this));
+   private WeakReference _collectionListener = new WeakReference(this);
    private Object _elementWithFocus;
    private int _extraRowCount;
 
@@ -101,12 +101,12 @@ public class VariableHeightCollectionListField extends VariableHeightListField i
 
    public void setList(ReadableList newList) {
       if (newList != this._list) {
-         if (this._list instanceof Object) {
+         if (this._list instanceof CollectionEventSource) {
             ((CollectionEventSource)this._list).removeCollectionListener(this._collectionListener);
          }
 
          this._list = newList;
-         if (this._list instanceof Object) {
+         if (this._list instanceof CollectionEventSource) {
             ((CollectionEventSource)this._list).addCollectionListener(this._collectionListener);
          }
 

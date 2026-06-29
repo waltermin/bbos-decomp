@@ -37,8 +37,8 @@ final class PeerMessageReceipts implements DatagramStatusListener {
 
    final void hitch(Object contacts, DataBuffer db) {
       if (!(contacts instanceof PeerContact)) {
-         if (contacts instanceof Object[]) {
-            String id = (String)((Object[])contacts)[0];
+         if (contacts instanceof String[]) {
+            String id = ((String[])contacts)[0];
             PeerConversation conversation = PeerApplication.getInstance().getConvByContactId(id);
             if (conversation != null) {
                PeerMessageReceipts$ThreadState state = (PeerMessageReceipts$ThreadState)conversation.getThreadState();

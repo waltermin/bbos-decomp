@@ -114,14 +114,14 @@ public class RecurImpl implements Recur, Persistable, FieldProvider, CloneProvid
    @Override
    public void addModificationValue(int modifierID, Recur$Modifier modifier) {
       Vector vectorOfMods = null;
-      Recur$Modifier modToAdd = (Recur$Modifier)(new Object());
+      Recur$Modifier modToAdd = new Recur$Modifier();
       if (this._modifiers == null) {
-         this._modifiers = (IntHashtable)(new Object());
+         this._modifiers = new IntHashtable();
       }
 
       vectorOfMods = (Vector)this._modifiers.get(modifierID);
       if (vectorOfMods == null) {
-         vectorOfMods = (Vector)(new Object());
+         vectorOfMods = new Vector();
          this._modifiers.put(modifierID, vectorOfMods);
       }
 
@@ -137,8 +137,8 @@ public class RecurImpl implements Recur, Persistable, FieldProvider, CloneProvid
          return 0;
       }
 
-      Vector var3 = this._modifiers.get(modifierID);
-      return var3 == null ? 0 : ((Vector)var3).size();
+      vectorOfMods = (Vector)this._modifiers.get(modifierID);
+      return vectorOfMods == null ? 0 : vectorOfMods.size();
    }
 
    @Override
@@ -148,8 +148,8 @@ public class RecurImpl implements Recur, Persistable, FieldProvider, CloneProvid
          return false;
       }
 
-      Vector var4 = this._modifiers.get(modifierID);
-      return var4 != null && offset < ((Vector)var4).size();
+      vectorOfMods = (Vector)this._modifiers.get(modifierID);
+      return vectorOfMods != null && offset < vectorOfMods.size();
    }
 
    @Override
@@ -443,7 +443,7 @@ public class RecurImpl implements Recur, Persistable, FieldProvider, CloneProvid
    @Override
    public Field getField(Object context) {
       ContextObject co = null;
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          co = (ContextObject)context;
       }
 
@@ -467,7 +467,7 @@ public class RecurImpl implements Recur, Persistable, FieldProvider, CloneProvid
    }
 
    private Object copy(RecurImpl copy) {
-      Recur$Modifier mod = (Recur$Modifier)(new Object());
+      Recur$Modifier mod = new Recur$Modifier();
       RecurImpl temp;
       if (copy == null) {
          temp = new RecurImpl();
@@ -480,7 +480,7 @@ public class RecurImpl implements Recur, Persistable, FieldProvider, CloneProvid
       temp._period = copy._period;
       temp._finite = copy._finite;
       temp._end = copy._end;
-      temp._modifiers = (IntHashtable)(new Object());
+      temp._modifiers = new IntHashtable();
 
       for (int j = 1; j <= 3; j++) {
          int numMods = copy.numModifierValues(j);

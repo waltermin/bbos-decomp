@@ -8,7 +8,7 @@ import net.rim.device.apps.internal.options.items.SecurityOptionsItem;
 import net.rim.device.internal.i18n.CollatorImpl;
 
 final class OptionsApp$OptionsItemComparator implements Comparator {
-   CollatorImpl _collator = (CollatorImpl)(new Object());
+   CollatorImpl _collator = new CollatorImpl();
 
    public OptionsApp$OptionsItemComparator() {
    }
@@ -23,9 +23,9 @@ final class OptionsApp$OptionsItemComparator implements Comparator {
          return 1;
       }
 
-      if (o1 instanceof Object) {
+      if (o1 instanceof KeyProvider) {
          KeyProvider kp1 = (KeyProvider)o1;
-         if (o2 instanceof Object) {
+         if (o2 instanceof KeyProvider) {
             KeyProvider kp2 = (KeyProvider)o2;
             String s1 = KeyUtilities.getStringKey(kp1);
             String s2 = KeyUtilities.getStringKey(kp2);

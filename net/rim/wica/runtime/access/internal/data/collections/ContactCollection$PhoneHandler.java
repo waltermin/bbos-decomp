@@ -13,13 +13,13 @@ final class ContactCollection$PhoneHandler implements ObjectFieldHandler {
 
    @Override
    public final Object getValue(Object item) {
-      if (item instanceof Object) {
+      if (item instanceof AddressCardModel) {
          AddressCardModel model = (AddressCardModel)item;
          int size = model.size();
 
          for (int i = 0; i < size; i++) {
             Object subModel = model.getAt(i);
-            if (subModel instanceof Object && ((PhoneNumberModel)subModel).getType() == this._phoneType) {
+            if (subModel instanceof PhoneNumberModel && ((PhoneNumberModel)subModel).getType() == this._phoneType) {
                return ((PhoneNumberModel)subModel).getDisplayablePhoneNumber();
             }
          }

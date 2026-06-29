@@ -78,7 +78,7 @@ final class OneWayPagerAddressModelImpl
 
    @Override
    public final boolean grabDataFromField(Field field, Object context) {
-      if (!(field instanceof Object)) {
+      if (!(field instanceof EditField)) {
          return false;
       }
 
@@ -95,7 +95,7 @@ final class OneWayPagerAddressModelImpl
 
    @Override
    public final void setFreeForm(boolean isFreeForm) {
-      throw new Object("Called setFreeForm on a OneWayPagerAddressModelImpl");
+      throw new IllegalStateException("Called setFreeForm on a OneWayPagerAddressModelImpl");
    }
 
    @Override
@@ -156,11 +156,11 @@ final class OneWayPagerAddressModelImpl
 
    public OneWayPagerAddressModelImpl(Object initialData) {
       String data = null;
-      if (!(initialData instanceof Object)) {
+      if (!(initialData instanceof String)) {
          if (initialData != null) {
             ContextObject contextObject = ContextObject.verifyNonNull(initialData);
             Object test = contextObject.get(254);
-            if (test instanceof Object) {
+            if (test instanceof OneWayPagerAddressModel) {
                OneWayPagerAddressModelImpl model = (OneWayPagerAddressModelImpl)test;
                data = model.getData();
             } else {

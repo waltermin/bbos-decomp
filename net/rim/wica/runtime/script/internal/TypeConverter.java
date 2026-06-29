@@ -2,7 +2,6 @@ package net.rim.wica.runtime.script.internal;
 
 import net.rim.ecmascript.runtime.Convert;
 import net.rim.ecmascript.runtime.ESDate;
-import net.rim.ecmascript.runtime.ESObject;
 import net.rim.ecmascript.runtime.Value;
 import net.rim.wica.runtime.metadata.component.DataCollection;
 import net.rim.wica.runtime.metadata.component.KeyDataCollection;
@@ -24,37 +23,37 @@ public final class TypeConverter {
       long value = Value.DEFAULT;
       switch (type) {
          case 0:
-            value = obj == null ? Value.FALSE : Value.makeBooleanValue(obj);
+            value = obj == null ? Value.FALSE : Value.makeBooleanValue((Boolean)obj);
             break;
          case 1:
-            value = obj == null ? Value.ZERO : Value.makeIntegerValue(obj);
+            value = obj == null ? Value.ZERO : Value.makeIntegerValue((Integer)obj);
             break;
          case 2:
-            value = obj == null ? Value.ZERO : Value.makeDoubleValue(obj);
+            value = obj == null ? Value.ZERO : Value.makeDoubleValue((Double)obj);
             break;
          case 3:
             value = obj == null ? Value.NULL : Value.makeStringValue((String)obj);
             break;
          case 4:
-            value = obj == null ? Value.NULL : Value.makeObjectValue((ESObject)(new Object(((Long)obj).longValue())));
+            value = obj == null ? Value.NULL : Value.makeObjectValue(new ESDate(((Long)obj).longValue()));
             break;
          case 5:
             int enumType = (int)(valueType >>> 32);
-            int enumValue = obj;
+            int enumValue = (Integer)obj;
             value = obj == null ? Value.NULL : this._context.createEnumValue(enumValue, enumType);
             break;
          case 6:
             if (obj == null) {
                value = Value.NULL;
             } else {
-               long dataValue = obj;
+               long dataValue = (Long)obj;
                value = this._context.createDataInstance(this._context.getWiclet().getDataCollection((int)(dataValue >>> 32)), dataValue);
             }
             break;
          case 8:
-            if (!(obj instanceof Object)) {
-               if (!(obj instanceof Object)) {
-                  if (!(obj instanceof Object)) {
+            if (!(obj instanceof Long)) {
+               if (!(obj instanceof Integer)) {
+                  if (!(obj instanceof Double)) {
                      value = Value.ZERO;
                   } else {
                      value = Value.makeLongValue((long)((Double)obj).doubleValue());
@@ -63,7 +62,7 @@ public final class TypeConverter {
                   value = Value.makeLongValue(((Integer)obj).intValue());
                }
             } else {
-               value = Value.makeLongValue(obj);
+               value = Value.makeLongValue((Long)obj);
             }
             break;
          case 32768:
@@ -123,24 +122,24 @@ public final class TypeConverter {
                obj = Convert.toBoolean(value) ? Boolean.TRUE : Boolean.FALSE;
                break;
             case 1:
-               obj = new Object(Convert.toInt32(value));
+               obj = new Integer(Convert.toInt32(value));
                break;
             case 2:
-               obj = new Object(Convert.toDouble(value));
+               obj = new Double(Convert.toDouble(value));
                break;
             case 3:
                obj = Convert.toString(value);
                break;
             case 4:
                Object dateObj = Convert.toObject(value);
-               if (dateObj instanceof Object) {
-                  obj = new Object((long)((ESDate)dateObj).getValue());
+               if (dateObj instanceof ESDate) {
+                  obj = new Long((long)((ESDate)dateObj).getValue());
                }
                break;
             case 5:
                Object enumObj = Convert.toObject(value);
                if (enumObj instanceof ESEnum) {
-                  obj = new Object(((ESEnum)enumObj).getValue());
+                  obj = new Integer(((ESEnum)enumObj).getValue());
                }
                break;
             case 6:
@@ -155,7 +154,7 @@ public final class TypeConverter {
                }
                break;
             case 8:
-               obj = new Object((long)Convert.toDouble(value));
+               obj = new Long((long)Convert.toDouble(value));
          }
       } finally {
          ;

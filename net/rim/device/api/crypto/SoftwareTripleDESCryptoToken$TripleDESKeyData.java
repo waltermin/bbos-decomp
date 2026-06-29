@@ -21,7 +21,7 @@ final class SoftwareTripleDESCryptoToken$TripleDESKeyData implements CryptoToken
 
    SoftwareTripleDESCryptoToken$TripleDESKeyData(byte[] data, int offset) {
       if (data == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int length = data.length - offset;
@@ -31,7 +31,7 @@ final class SoftwareTripleDESCryptoToken$TripleDESKeyData implements CryptoToken
             System.arraycopy(data, offset, this._data, 0, 24);
          } else {
             if (length != 16) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             System.arraycopy(data, offset, this._data, 0, 16);
@@ -44,7 +44,7 @@ final class SoftwareTripleDESCryptoToken$TripleDESKeyData implements CryptoToken
          PersistentContent.markAsPlaintext(data);
          this.setHashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

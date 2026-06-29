@@ -13,7 +13,7 @@ public class OTASyncDataManager {
       synchronized (persistentObject) {
          this._data = (IntHashtable)persistentObject.getContents();
          if (this._data == null) {
-            this._data = (IntHashtable)(new Object(50));
+            this._data = new IntHashtable(50);
             persistentObject.setContents(this._data, 51);
             persistentObject.commit();
          }

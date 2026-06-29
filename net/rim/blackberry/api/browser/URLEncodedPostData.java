@@ -1,7 +1,6 @@
 package net.rim.blackberry.api.browser;
 
 import com.sun.cldc.i18n.Helper;
-import net.rim.device.apps.internal.browser.stack.FormData;
 import net.rim.device.apps.internal.browser.stack.URLEncodedFormData;
 
 public final class URLEncodedPostData extends PostData {
@@ -9,19 +8,19 @@ public final class URLEncodedPostData extends PostData {
    public static final String DEFAULT_CHARSET = "iso-8859-1";
 
    private final void init() {
-      this._buffer = (StringBuffer)(new Object());
+      this._buffer = new StringBuffer();
       this.setData(this._buffer);
    }
 
    public URLEncodedPostData(String charset, boolean useWAPConventions) {
       charset = this.checkCharset(charset);
-      super._formData = (FormData)(new Object(charset, useWAPConventions));
+      super._formData = new URLEncodedFormData(charset, useWAPConventions);
       this.init();
    }
 
    public URLEncodedPostData(String charset, String urlEncodedFormData) {
       charset = this.checkCharset(charset);
-      super._formData = (FormData)(new Object(charset, urlEncodedFormData));
+      super._formData = new URLEncodedFormData(charset, urlEncodedFormData);
       this.init();
    }
 
@@ -46,11 +45,11 @@ public final class URLEncodedPostData extends PostData {
 
    @Override
    public final void setData(Object data) {
-      if (!(data instanceof Object)) {
+      if (!(data instanceof String)) {
          this._buffer = (StringBuffer)data;
       } else {
          String s = (String)data;
-         this._buffer = (StringBuffer)(new Object(s));
+         this._buffer = new StringBuffer(s);
       }
 
       ((URLEncodedFormData)super._formData).setData(data);
@@ -63,7 +62,7 @@ public final class URLEncodedPostData extends PostData {
 
    @Override
    public final String toString() {
-      return super._formData.toString();
+      return ((URLEncodedFormData)super._formData).toString();
    }
 
    @Override

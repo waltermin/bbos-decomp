@@ -8,7 +8,7 @@ public final class ConferencePhoneCallLog extends CallLog {
    private static final int CONFERENCE_CALL = 4;
 
    public ConferencePhoneCallLog(Date date, int callDuration, int callStatus, PhoneCallLogID caller1, PhoneCallLogID caller2, String notes) {
-      super(date, 4, callDuration, callStatus, (Vector)(new Object()), notes);
+      super(date, 4, callDuration, callStatus, new Vector(), notes);
       super._participants.addElement(caller1);
       super._participants.addElement(caller2);
    }
@@ -24,7 +24,7 @@ public final class ConferencePhoneCallLog extends CallLog {
       if (index >= 0 && index < super._participants.size()) {
          return (PhoneCallLogID)super._participants.elementAt(index);
       } else {
-         throw new Object(index);
+         throw new ArrayIndexOutOfBoundsException(index);
       }
    }
 
@@ -32,7 +32,7 @@ public final class ConferencePhoneCallLog extends CallLog {
       if (index >= 0 && index < super._participants.size()) {
          super._participants.setElementAt(participant, index);
       } else {
-         throw new Object(index);
+         throw new ArrayIndexOutOfBoundsException(index);
       }
    }
 
@@ -45,7 +45,7 @@ public final class ConferencePhoneCallLog extends CallLog {
          if (index >= 0 && index < super._participants.size()) {
             super._participants.removeElementAt(index);
          } else {
-            throw new Object(index);
+            throw new ArrayIndexOutOfBoundsException(index);
          }
       }
    }

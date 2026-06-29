@@ -34,7 +34,7 @@ public final class SyncAgentStatisticsCollector {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private final IntHashtable performIntegerityCheck(IntHashtable statistics) {
       if (statistics == null) {
-         return (IntHashtable)(new Object(50));
+         return new IntHashtable(50);
       }
 
       int[] xKeys = new int[statistics.size()];

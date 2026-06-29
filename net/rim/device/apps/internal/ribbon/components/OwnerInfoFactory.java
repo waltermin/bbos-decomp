@@ -7,7 +7,7 @@ import net.rim.device.apps.api.ribbon.FactoryRepository;
 import net.rim.device.apps.api.ribbon.GlobalFactoryRepository;
 
 final class OwnerInfoFactory implements Factory, GlobalEventListener {
-   private GlobalListenerFactoryHelper _helper = (GlobalListenerFactoryHelper)(new Object());
+   private GlobalListenerFactoryHelper _helper = new GlobalListenerFactoryHelper();
 
    final void init() {
       Application app = Application.getApplication();

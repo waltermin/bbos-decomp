@@ -1,6 +1,9 @@
 package net.rim.device.apps.internal.api.serialformats;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Calendar;
 import java.util.Date;
@@ -35,9 +38,9 @@ final class TokenParser {
 
    TokenParser(InputStream in, String encoding) {
       if (encoding.length() == 0) {
-         this._in = (Reader)(new Object(in, "UTF8"));
+         this._in = new InputStreamReader(in, "UTF8");
       } else {
-         this._in = (Reader)(new Object(in, encoding));
+         this._in = new InputStreamReader(in, encoding);
       }
    }
 
@@ -208,10 +211,10 @@ final class TokenParser {
          }
       } while (state != 1000);
 
-      return (String)(new Object(this._buffer, 0, length));
+      return new String(this._buffer, 0, length);
    }
 
-   final String nextProperty() {
+   final String nextProperty() throws IOException {
       int length = 0;
       int periodPosition = 0;
       this._isLineBreak = false;
@@ -220,7 +223,7 @@ final class TokenParser {
          int b = this._in.read();
          this._previousCharacter = b;
          if (b < 0) {
-            throw new Object();
+            throw new IOException();
          }
 
          if (b != 9 && b != 32) {
@@ -241,10 +244,10 @@ final class TokenParser {
          }
       }
 
-      return StringUtilities.toUpperCase((String)(new Object(this._buffer, periodPosition, length - periodPosition)), 1701707776);
+      return StringUtilities.toUpperCase(new String(this._buffer, periodPosition, length - periodPosition), 1701707776);
    }
 
-   final String getCommonOneLine(int additionalStopSign) {
+   final String getCommonOneLine(int additionalStopSign) throws IOException {
       int length = 0;
       int charLength = 0;
       int state = 1;
@@ -253,7 +256,7 @@ final class TokenParser {
          int b = this._in.read();
          this._previousCharacter = b;
          if (b < 0) {
-            throw new Object();
+            throw new IOException();
          }
 
          this.addToBuffer(b, length);
@@ -318,7 +321,7 @@ final class TokenParser {
          }
       } while (state != 1000);
 
-      return (String)(new Object(this._buffer, 0, length));
+      return new String(this._buffer, 0, length);
    }
 
    final Date getDateTime() {
@@ -352,7 +355,7 @@ final class TokenParser {
                   calendar = null;
                   state = 5;
                } else if (length == 4) {
-                  String str = (String)(new Object(this._buffer, 0, 4));
+                  String str = new String(this._buffer, 0, 4);
                   int year = Integer.parseInt(str, 10);
                   calendar.set(1, year);
                   length = 0;
@@ -373,8 +376,8 @@ final class TokenParser {
                } else if (b == 45) {
                   length = 0;
                } else if (length == 2) {
-                  String var10 = new Object(this._buffer, 0, 2);
-                  int month = Integer.parseInt((String)var10, 10);
+                  String var10 = new String(this._buffer, 0, 2);
+                  int month = Integer.parseInt(var10, 10);
                   calendar.set(2, month - 1);
                   length = 0;
                   state = 3;
@@ -394,8 +397,8 @@ final class TokenParser {
                } else if (b == 45) {
                   length = 0;
                } else if (length == 2) {
-                  String var9 = new Object(this._buffer, 0, 2);
-                  int day = Integer.parseInt((String)var9, 10);
+                  String var9 = new String(this._buffer, 0, 2);
+                  int day = Integer.parseInt(var9, 10);
                   calendar.set(5, day);
                   length = 0;
                   state = 4;
@@ -439,8 +442,8 @@ final class TokenParser {
                break;
             case 7:
                if (length == 2) {
-                  String var8 = new Object(this._buffer, 0, 2);
-                  int hour = Integer.parseInt((String)var8, 10);
+                  String var8 = new String(this._buffer, 0, 2);
+                  int hour = Integer.parseInt(var8, 10);
                   calendar.set(11, hour);
                   length = 0;
                   state = 8;
@@ -450,8 +453,8 @@ final class TokenParser {
                if (b == 58) {
                   length = 0;
                } else if (length == 2) {
-                  String var7 = new Object(this._buffer, 0, 2);
-                  int minute = Integer.parseInt((String)var7, 10);
+                  String var7 = new String(this._buffer, 0, 2);
+                  int minute = Integer.parseInt(var7, 10);
                   calendar.set(12, minute);
                   length = 0;
                   state = 9;
@@ -477,8 +480,8 @@ final class TokenParser {
                break;
             case 10:
                if (length == 2) {
-                  String str = new Object(this._buffer, 0, 2);
-                  int second = Integer.parseInt((String)str, 10);
+                  String str = new String(this._buffer, 0, 2);
+                  int second = Integer.parseInt(str, 10);
                   calendar.set(13, second);
                   length = 0;
                   state = 11;
@@ -592,12 +595,12 @@ final class TokenParser {
    final boolean isLeadingString(String text) {
       this.readChars(text.length());
       this._in.reset();
-      return text.compareTo((String)(new Object(this._buffer, 0, text.length()))) == 0;
+      return text.compareTo(new String(this._buffer, 0, text.length())) == 0;
    }
 
    final boolean readIfLeadingString(String text) {
       this.readChars(text.length());
-      if (text.compareTo((String)(new Object(this._buffer, 0, text.length()))) == 0) {
+      if (text.compareTo(new String(this._buffer, 0, text.length())) == 0) {
          this._in.mark(0);
          this._in.reset();
          return true;
@@ -1044,7 +1047,7 @@ final class TokenParser {
          }
       } while (state != 1000);
 
-      Base64InputStream base64In = (Base64InputStream)(new Object((InputStream)(new Object(this._buffer, 0, length))));
+      Base64InputStream base64In = new Base64InputStream(new ByteArrayInputStream(this._buffer, 0, length));
       length = 0;
 
       while (true) {

@@ -2,7 +2,7 @@ package com.fourthpass.wapstack.wsp;
 
 import com.fourthpass.wapstack.util.Utils;
 import com.fourthpass.wapstack.util.VarLengthInt;
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 import net.rim.device.api.io.Base64InputStream;
 import net.rim.device.api.io.http.HttpDateParser;
 import net.rim.device.api.util.StringTokenizer;
@@ -494,7 +494,7 @@ public final class WSPHeaderEncoder {
 
    @Override
    public final String toString() {
-      return (String)(new Object(this._encodedHeaders, 0, this._encodedLength));
+      return new String(this._encodedHeaders, 0, this._encodedLength);
    }
 
    private final void ensureCapacity(int size) {
@@ -815,9 +815,7 @@ public final class WSPHeaderEncoder {
 
       int numDec = decimalPart.length();
       numDec = numDec > 3 ? 3 : numDec;
-      int encodedVal = Integer.valueOf(
-         ((StringBuffer)(new Object())).append(qValue.substring(0, indx)).append(qValue.substring(indx + 1, indx + 1 + numDec)).toString()
-      );
+      int encodedVal = Integer.valueOf(qValue.substring(0, indx) + qValue.substring(indx + 1, indx + 1 + numDec));
       switch (numDec) {
          case 0:
             break;
@@ -836,7 +834,7 @@ public final class WSPHeaderEncoder {
    }
 
    private final void writeMediaRange(String val, byte whichBuffer) {
-      StringTokenizer st = (StringTokenizer)(new Object(val, ";", false));
+      StringTokenizer st = new StringTokenizer(val, ";", false);
       String media = st.nextToken();
       byte mediaType = getContentTypeAssignedNumber(media);
       if (mediaType > 52) {
@@ -864,7 +862,7 @@ public final class WSPHeaderEncoder {
       if (assNum <= 52) {
          label42:
          try {
-            val = new Object(assNum).toString();
+            val = new Byte(assNum).toString();
          } finally {
             break label42;
          }
@@ -920,7 +918,7 @@ public final class WSPHeaderEncoder {
    }
 
    private final void handleHeaderAccept(String value) {
-      StringTokenizer st = (StringTokenizer)(new Object(value, ",", false));
+      StringTokenizer st = new StringTokenizer(value, ",", false);
       int numTokens = st.countTokens();
 
       for (int i = 0; i < numTokens; i++) {
@@ -941,7 +939,7 @@ public final class WSPHeaderEncoder {
    }
 
    private final void handleHeaderAcceptCharset(String value) {
-      StringTokenizer st = (StringTokenizer)(new Object(value, ",", false));
+      StringTokenizer st = new StringTokenizer(value, ",", false);
       int numTokens = st.countTokens();
       if (numTokens != 0) {
          for (int i = 0; i < numTokens; i++) {
@@ -993,7 +991,7 @@ public final class WSPHeaderEncoder {
    }
 
    private final void handleHeaderAcceptEncoding(String value) {
-      StringTokenizer st = (StringTokenizer)(new Object(value, ",", false));
+      StringTokenizer st = new StringTokenizer(value, ",", false);
       int numTokens = st.countTokens();
       if (numTokens == 0) {
          this.writeShortIntegerValue((byte)2, (byte)1);
@@ -1008,7 +1006,7 @@ public final class WSPHeaderEncoder {
 
    private final void handleHeaderAcceptLanguage(String value) {
       int index = -1;
-      StringTokenizer st = (StringTokenizer)(new Object(value, ",", false));
+      StringTokenizer st = new StringTokenizer(value, ",", false);
       int numTokens = st.countTokens();
       if (numTokens != 0) {
          for (int i = 0; i < numTokens; i++) {
@@ -1067,7 +1065,7 @@ public final class WSPHeaderEncoder {
    }
 
    private final void handleHeaderAcceptRanges(String value) {
-      StringTokenizer st = (StringTokenizer)(new Object(value, ",", false));
+      StringTokenizer st = new StringTokenizer(value, ",", false);
       int numTokens = st.countTokens();
 
       for (int i = 0; i < numTokens; i++) {
@@ -1089,7 +1087,7 @@ public final class WSPHeaderEncoder {
    }
 
    private final void handleHeaderAllow(String value) {
-      StringTokenizer st = (StringTokenizer)(new Object(value, ",", false));
+      StringTokenizer st = new StringTokenizer(value, ",", false);
       int numTokens = st.countTokens();
       if (numTokens != 0) {
          for (int i = 0; i < numTokens; i++) {
@@ -1110,7 +1108,7 @@ public final class WSPHeaderEncoder {
             String val = value.substring(0, index);
             this.writeTokenText(val, (byte)0);
             val = value.substring(index + 1);
-            StringTokenizer st = (StringTokenizer)(new Object(val, ";,", false));
+            StringTokenizer st = new StringTokenizer(val, ";,", false);
 
             while (st.hasMoreTokens()) {
                val = st.nextToken();
@@ -1127,12 +1125,12 @@ public final class WSPHeaderEncoder {
          if (index1 == -1) {
             label62:
             try {
-               Base64InputStream b64is = (Base64InputStream)(new Object((InputStream)(new Object(value.substring(index + 1).getBytes()))));
+               Base64InputStream b64is = new Base64InputStream(new ByteArrayInputStream(value.substring(index + 1).getBytes()));
                byte[] out = new byte[length - index];
                int read = b64is.read(out);
                b64is.close();
                if (read > 0) {
-                  value = (String)(new Object(out, 0, read));
+                  value = new String(out, 0, read);
                   index = -1;
                }
 
@@ -1258,7 +1256,7 @@ public final class WSPHeaderEncoder {
    }
 
    private final void handleHeaderConnection(String value) {
-      StringTokenizer st = (StringTokenizer)(new Object(value, ",", false));
+      StringTokenizer st = new StringTokenizer(value, ",", false);
       int numTokens = st.countTokens();
       if (numTokens != 0) {
          for (int i = 0; i < numTokens; i++) {
@@ -1280,7 +1278,7 @@ public final class WSPHeaderEncoder {
    }
 
    private final void handleHeaderContentEncoding(String value) {
-      StringTokenizer st = (StringTokenizer)(new Object(value, ",", false));
+      StringTokenizer st = new StringTokenizer(value, ",", false);
       int numTokens = st.countTokens();
       if (numTokens == 0) {
          this.writeShortIntegerValue((byte)11, (byte)1);
@@ -1294,7 +1292,7 @@ public final class WSPHeaderEncoder {
    }
 
    private final void handleHeaderContentLanguage(String value) {
-      StringTokenizer st = (StringTokenizer)(new Object(value, ",", false));
+      StringTokenizer st = new StringTokenizer(value, ",", false);
       int numTokens = st.countTokens();
       if (numTokens != 0) {
          for (int i = 0; i < numTokens; i++) {
@@ -1334,7 +1332,7 @@ public final class WSPHeaderEncoder {
    }
 
    private final void handleHeaderContentType(String value, boolean writeField) {
-      StringTokenizer st = (StringTokenizer)(new Object(value, ",", false));
+      StringTokenizer st = new StringTokenizer(value, ",", false);
 
       while (st.hasMoreTokens()) {
          if (writeField) {
@@ -1342,7 +1340,7 @@ public final class WSPHeaderEncoder {
          }
 
          String val = st.nextToken().trim();
-         StringTokenizer st2 = (StringTokenizer)(new Object(val, ";", false));
+         StringTokenizer st2 = new StringTokenizer(val, ";", false);
          String contentTypeVal = st2.nextToken().trim();
          byte assNum = getContentTypeAssignedNumber(contentTypeVal);
          if (st2.countTokens() > 0) {
@@ -1442,7 +1440,7 @@ public final class WSPHeaderEncoder {
       } else {
          index = value.indexOf(32);
          this.writeTextString(value.substring(0, index), (byte)0);
-         StringTokenizer str = (StringTokenizer)(new Object(value.substring(index + 1).trim(), ",", false));
+         StringTokenizer str = new StringTokenizer(value.substring(index + 1).trim(), ",", false);
          String param = str.nextToken();
          index = param.indexOf("=");
          this.writeTextString(param.substring(index + 1), (byte)0);
@@ -1607,13 +1605,13 @@ public final class WSPHeaderEncoder {
    }
 
    private final void handleHeaderSetCookie(String value) {
-      StringTokenizer cookies = (StringTokenizer)(new Object(value, ",", false));
+      StringTokenizer cookies = new StringTokenizer(value, ",", false);
 
       while (cookies.hasMoreTokens()) {
          this.writeShortIntegerValue((byte)65, (byte)1);
          String cookie = cookies.nextToken();
          this._tempBufLen = 0;
-         StringTokenizer str = (StringTokenizer)(new Object(cookie, ";", false));
+         StringTokenizer str = new StringTokenizer(cookie, ";", false);
          if (str == null) {
             return;
          }

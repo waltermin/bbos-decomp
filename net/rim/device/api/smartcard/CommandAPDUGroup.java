@@ -25,7 +25,7 @@ public class CommandAPDUGroup {
          this._commandAPDUs = commandAPDUs;
          this._numAPDUs = numAPDUs;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -37,7 +37,7 @@ public class CommandAPDUGroup {
       if (index >= 0 && index <= this._numAPDUs) {
          return this._commandAPDUs[index];
       } else {
-         throw new Object();
+         throw new ArrayIndexOutOfBoundsException();
       }
    }
 }

@@ -42,28 +42,28 @@ public final class CryptoIcons {
    }
 
    public static final ImageField getLargeImageField(int index) {
-      ImageField imageField = (ImageField)(new Object());
+      ImageField imageField = new ImageField();
       imageField.setImage(getImage(index));
       imageField.setPreferredSize(26, 20);
       return imageField;
    }
 
    public static final ImageField getLargeImageField(Image image, long style) {
-      ImageField imageField = (ImageField)(new Object(style));
+      ImageField imageField = new ImageField(style);
       imageField.setImage(image);
       imageField.setPreferredSize(26, 20);
       return imageField;
    }
 
    public static final ImageField getSmallImageField(int index) {
-      ImageField imageField = (ImageField)(new Object());
+      ImageField imageField = new ImageField();
       imageField.setImage(getImage(index));
       imageField.setPreferredSize(20, 15);
       return imageField;
    }
 
    public static final ImageField getSmallImageField(Image image, long style) {
-      ImageField imageField = (ImageField)(new Object(style));
+      ImageField imageField = new ImageField(style);
       imageField.setImage(image);
       imageField.setPreferredSize(20, 15);
       return imageField;

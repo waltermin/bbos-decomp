@@ -29,10 +29,6 @@ final class ApplicationUpgradedTargetEventMessage extends ApplicationTargetEvent
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object("Application upgraded event: old app id = ")))
-         .append(this.getApplicationId())
-         .append(", new app id = ")
-         .append(this.getNewApplicationId())
-         .toString();
+      return "Application upgraded event: old app id = " + this.getApplicationId() + ", new app id = " + this.getNewApplicationId();
    }
 }

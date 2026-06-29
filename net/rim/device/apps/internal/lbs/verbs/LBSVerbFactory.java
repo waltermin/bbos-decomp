@@ -47,23 +47,23 @@ public final class LBSVerbFactory implements VerbFactory {
          ViewAddressVerb verb = null;
          if (ContextObject.getFlag(context, 11)) {
             Object focusedModel = ContextObject.get(context, 250);
-            if (focusedModel instanceof Object) {
+            if (focusedModel instanceof MailingAddressModel) {
                MailingAddressModel address = (MailingAddressModel)focusedModel;
                Object addressCard = ContextObject.get(context, 252);
                verb = new ViewAddressVerb(1131008, 31);
                verb.setParameter(context);
-               return new Object[]{verb};
+               return new Verb[]{verb};
             }
          }
 
          Object entry = ContextObject.get(context, 252);
-         if (entry != null && entry instanceof Object) {
+         if (entry != null && entry instanceof AddressCardModel) {
             AddressCardModel model = (AddressCardModel)entry;
-            Verb[] verbs = new Object[0];
+            Verb[] verbs = new Verb[0];
 
             for (int i = model.size() - 1; i >= 0; i--) {
                Object o = model.getAt(i);
-               if (o instanceof Object) {
+               if (o instanceof MailingAddressModel) {
                   ContextObject verbContext = ContextObject.clone(context);
                   ContextObject.put(verbContext, 250, o);
                   verb = new ViewAddressVerb(1131008, 31);

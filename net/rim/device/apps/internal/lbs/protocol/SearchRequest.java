@@ -124,22 +124,14 @@ public final class SearchRequest extends Request {
    public final boolean writeRequest(DataBuffer db) {
       int length = 0;
       String address = this.getFromAddressLine(this._model);
-      String and = ((StringBuffer)(new Object(" "))).append(LBSResources.getString(226)).append(" ").toString();
+      String and = " " + LBSResources.getString(226) + " ";
       int ix = address.indexOf(and);
       if (ix > 0) {
-         address = ((StringBuffer)(new Object()))
-            .append(address.substring(0, ix))
-            .append(" & ")
-            .append(address.substring(ix + and.length(), address.length()))
-            .toString();
+         address = address.substring(0, ix) + " & " + address.substring(ix + and.length(), address.length());
       } else {
          ix = address.indexOf(and.toUpperCase());
          if (ix > 0) {
-            address = ((StringBuffer)(new Object()))
-               .append(address.substring(0, ix))
-               .append(" & ")
-               .append(address.substring(ix + and.length(), address.length()))
-               .toString();
+            address = address.substring(0, ix) + " & " + address.substring(ix + and.length(), address.length());
          }
       }
 
@@ -183,7 +175,7 @@ public final class SearchRequest extends Request {
          LBSOptions.setInt(8640332184073563572L, LBSOptions._dataCount);
          DataBuffer db = null;
          if (data != null) {
-            db = (DataBuffer)(new Object(data, 0, data.length, true));
+            db = new DataBuffer(data, 0, data.length, true);
          }
 
          int length = db.readInt();
@@ -215,11 +207,7 @@ public final class SearchRequest extends Request {
 
       for (int offset = locationName.indexOf(","); offset != -1; offset = locationName.indexOf(",", offset + 1)) {
          if (!locationName.substring(offset + 1, offset + 2).equals(" ")) {
-            locationName = ((StringBuffer)(new Object()))
-               .append(locationName.substring(0, offset + 1))
-               .append(" ")
-               .append(locationName.substring(offset + 1, locationName.length()))
-               .toString();
+            locationName = locationName.substring(0, offset + 1) + " " + locationName.substring(offset + 1, locationName.length());
          }
       }
 
@@ -249,7 +237,7 @@ public final class SearchRequest extends Request {
          data[i] = db.readByte();
       }
 
-      return (String)(new Object(data));
+      return new String(data);
    }
 
    public final Location[] getResults() {

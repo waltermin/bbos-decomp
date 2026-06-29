@@ -26,8 +26,8 @@ final class WicletCheckboxField extends CheckboxField implements View, FieldChan
       if (value == null) {
          this.setChecked(false);
          model.initializeToEmpty(false);
-      } else if (!(value instanceof Object)) {
-         this.setChecked(value);
+      } else if (!(value instanceof Vector)) {
+         this.setChecked((Boolean)value);
       } else {
          Boolean rowValue = (Boolean)((Vector)value).elementAt(row);
          this.setChecked(rowValue);
@@ -104,8 +104,8 @@ final class WicletCheckboxField extends CheckboxField implements View, FieldChan
       if (value == null) {
          this.setChecked(false);
          this._model.initializeToEmpty(false);
-      } else if (!(value instanceof Object)) {
-         this.setChecked(value);
+      } else if (!(value instanceof Vector)) {
+         this.setChecked((Boolean)value);
       } else {
          Boolean rowValue = (Boolean)((Vector)value).elementAt(row);
          this.setChecked(rowValue);

@@ -33,7 +33,7 @@ public class AbstractProxyModelStore implements ProxyModelStore, Persistable, Co
    }
 
    protected void collectionEvent(Collection collection, Object element, int delta) {
-      if (element instanceof Object) {
+      if (element instanceof ReadableList) {
          ReadableList l = (ReadableList)element;
          int size = l.size();
 
@@ -108,7 +108,7 @@ public class AbstractProxyModelStore implements ProxyModelStore, Persistable, Co
             }
          }
 
-         throw new Object("AbstractProxyModelStore: add() - illegal state!");
+         throw new IllegalStateException("AbstractProxyModelStore: add() - illegal state!");
       } else {
          this._data.put(++this._index, o);
          this._refCounts.put(this._index, 0);
@@ -119,8 +119,8 @@ public class AbstractProxyModelStore implements ProxyModelStore, Persistable, Co
    protected AbstractProxyModelStore(long rootId) {
       ProxyModelStoreManager.getInstance().register(rootId, this);
       this._rootId = rootId;
-      this._data = (IntHashtable)(new Object());
-      this._refCounts = (IntIntHashtable)(new Object());
+      this._data = new IntHashtable();
+      this._refCounts = new IntIntHashtable();
       this._index = -1;
    }
 }

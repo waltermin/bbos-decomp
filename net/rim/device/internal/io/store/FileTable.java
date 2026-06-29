@@ -4,6 +4,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 import net.rim.device.api.io.IOUtilities;
+import net.rim.device.api.io.file.FileIOException;
 import net.rim.device.api.lowmemory.LowMemoryManager;
 import net.rim.device.api.system.CodeModuleManager;
 import net.rim.device.api.system.EventLogger;
@@ -31,7 +32,7 @@ final class FileTable implements Persistable {
    }
 
    FileTable() {
-      this._indexes[0] = new Object();
+      this._indexes[0] = new Hashtable();
    }
 
    final void init(Hashtable files) {
@@ -52,14 +53,14 @@ final class FileTable implements Persistable {
       }
    }
 
-   final void addInternal(FileImpl file, boolean isSystem) {
+   final void addInternal(FileImpl file, boolean isSystem) throws FileIOException {
       if (!isSystem) {
          this.getFolderTable().assertOperation(file.getFolder(), 0);
       }
 
       FolderImpl folder = ContentStoreDatabase.getInstance().getFolderTable().getFolder(file.getFolder(), file.getName());
       if (folder != null && folder.isAlive()) {
-         throw new Object(7);
+         throw new FileIOException(7);
       }
 
       FileImpl old = this.get(file.getFolder(), file.getBindName());
@@ -164,10 +165,10 @@ final class FileTable implements Persistable {
       FolderImpl[] rootFolderArray = criteria.getRootFolders();
       Hashtable rootFolders = null;
       if (rootFolderArray == null) {
-         rootFolders = (Hashtable)(new Object(1));
+         rootFolders = new Hashtable(1);
          rootFolders.put(ContentStoreDatabase.getInstance().getFolderTable().getFolder("/"), rootFolders);
       } else {
-         rootFolders = (Hashtable)(new Object(rootFolderArray.length));
+         rootFolders = new Hashtable(rootFolderArray.length);
 
          for (int index = rootFolderArray.length - 1; index >= 0; index--) {
             if (rootFolderArray[index] != null) {
@@ -199,7 +200,7 @@ final class FileTable implements Persistable {
       int attrOn = criteria.getAttributesOn();
       int drmAttrOff = criteria.getDrmAttributesOff();
       int drmAttrOn = criteria.getDrmAttributesOn();
-      IntHashtable folderList = (IntHashtable)(new Object());
+      IntHashtable folderList = new IntHashtable();
       if (rootFolderArray != null) {
          if (searchSubFolders) {
             for (int index = rootFolderArray.length - 1; index >= 0; index--) {
@@ -408,7 +409,7 @@ final class FileTable implements Persistable {
                   if (endIndex > 0 && link.startsWith(_preloadedCodPrefix)) {
                      String moduleName = link.substring(0, endIndex + 1);
                      if (CodeModuleManager.getModuleHandle(moduleName) == 0) {
-                        String msg = ((StringBuffer)(new Object("removing empty link: "))).append(link).toString();
+                        String msg = "removing empty link: " + link;
                         EventLogger.logEvent(-7509200465648525729L, msg.toString().getBytes(), 0);
                         symLink.remove();
                      }
@@ -477,7 +478,7 @@ final class FileTable implements Persistable {
       synchronized (_picturesPersist) {
          _picturesAllFiles = (Vector)_picturesPersist.getContents();
          if (_picturesAllFiles == null) {
-            _picturesAllFiles = (Vector)(new Object());
+            _picturesAllFiles = new Vector();
             _picturesPersist.setContents(_picturesAllFiles, 51, false);
             _picturesPersist.setReservedMemorySize((int)FileSystemOptions.getPicturesReservedSize());
             _picturesPersist.commit();

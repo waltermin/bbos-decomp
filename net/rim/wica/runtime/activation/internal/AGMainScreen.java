@@ -1,7 +1,6 @@
 package net.rim.wica.runtime.activation.internal;
 
 import net.rim.device.api.servicebook.ServiceRecord;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.BasicEditField;
@@ -10,7 +9,10 @@ import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
+import net.rim.device.apps.api.ui.LeftRightFieldManager;
 import net.rim.wica.runtime.logging.Logger;
 import net.rim.wica.runtime.management.AGInfo;
 import net.rim.wica.runtime.management.RuntimeInfo;
@@ -99,8 +101,8 @@ final class AGMainScreen extends MainScreen {
    }
 
    private final void addStatusFields() {
-      this._statusLabel = (LabelField)(new Object("", 9007207844675584L));
-      this.add((Field)(new Object((Field)(new Object(RuntimeResources.getString(43))), this._statusLabel)));
+      this._statusLabel = new LabelField("", 9007207844675584L);
+      this.add(new LeftRightFieldManager(new LabelField(RuntimeResources.getString(43)), this._statusLabel));
    }
 
    private final void updateStatusFields() {
@@ -129,21 +131,21 @@ final class AGMainScreen extends MainScreen {
 
    private final void addCurrentServerFields() {
       AGInfo serverInfo = this.getActiveServerInfo();
-      this.add((Field)(new Object()));
-      this.add((Field)(new Object(RuntimeResources.getString(129))));
+      this.add(new SeparatorField());
+      this.add(new LabelField(RuntimeResources.getString(129)));
       String transportName = "";
       ServiceRecord transportRecord = serverInfo == null ? null : this._activationService.getTransportRecord(serverInfo.getIPPP_UID());
       if (transportRecord != null) {
          transportName = transportRecord.getName();
       }
 
-      this.add((Field)(new Object((Field)(new Object(RuntimeResources.getString(45))), (Field)(new Object(transportName, 9007207844675584L)))));
-      this.add((Field)(new Object(RuntimeResources.getString(149))));
-      this.add((Field)(new Object(serverInfo == null ? "" : serverInfo.getAgRegURL())));
+      this.add(new LeftRightFieldManager(new LabelField(RuntimeResources.getString(45)), new LabelField(transportName, 9007207844675584L)));
+      this.add(new LabelField(RuntimeResources.getString(149)));
+      this.add(new LabelField(serverInfo == null ? "" : serverInfo.getAgRegURL()));
    }
 
    private final void addEditingFields() {
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this._transportChoiceField = this.createTransportChoiceField();
       this.add(this._transportChoiceField);
       String url = null;
@@ -152,8 +154,8 @@ final class AGMainScreen extends MainScreen {
          url = serverInfo.getAgRegURL();
       }
 
-      this.add((Field)(new Object(RuntimeResources.getString(37))));
-      this._urlEditField = (BasicEditField)(new Object("", url, 400, 11928600576L));
+      this.add(new LabelField(RuntimeResources.getString(37)));
+      this._urlEditField = new BasicEditField("", url, 400, 11928600576L);
       this.add(this._urlEditField);
       this._urlEditField.setFocus();
    }
@@ -161,7 +163,7 @@ final class AGMainScreen extends MainScreen {
    private final ObjectChoiceField createTransportChoiceField() {
       this._records = this._activationService.getTransportRecords();
       ServiceRecord defaultTransport = this.getDefaultTransport();
-      String[] names = new Object[this._records.length];
+      String[] names = new String[this._records.length];
       int defaultSelection = 0;
 
       for (int i = this._records.length - 1; i >= 0; i--) {
@@ -173,7 +175,7 @@ final class AGMainScreen extends MainScreen {
          names[i] = record.getName();
       }
 
-      return (ObjectChoiceField)(new Object(RuntimeResources.getString(45), names, defaultSelection));
+      return new ObjectChoiceField(RuntimeResources.getString(45), names, defaultSelection);
    }
 
    private final AGInfo getActiveServerInfo() {
@@ -192,7 +194,7 @@ final class AGMainScreen extends MainScreen {
    private final String getActivationUrl() {
       String url = this._urlEditField.getText().trim().toLowerCase();
       if (!url.startsWith("http://") && !url.startsWith("https://")) {
-         StringBuffer result = (StringBuffer)(new Object("http://"));
+         StringBuffer result = new StringBuffer("http://");
          String host = this._urlEditField.getText();
          result.append(host);
          result.append(':');
@@ -205,9 +207,9 @@ final class AGMainScreen extends MainScreen {
    }
 
    private final void addProgress() {
-      this._statusManager = (Manager)(new Object());
-      this._statusManager.add((Field)(new Object(RuntimeResources.getString(34), 36028797018963968L)));
-      this._statusManager.add((Field)(new Object(null, 0, 6, 0, 4)));
+      this._statusManager = new VerticalFieldManager();
+      this._statusManager.add(new RichTextField(RuntimeResources.getString(34), 36028797018963968L));
+      this._statusManager.add(new GaugeField(null, 0, 6, 0, 4));
       this.add(this._statusManager);
    }
 
@@ -223,7 +225,7 @@ final class AGMainScreen extends MainScreen {
       try {
          statusBar.setValue(value);
       } finally {
-         Logger.log(((StringBuffer)(new Object("MDS Activation error: invalid progress value - "))).append(String.valueOf(value)).toString(), 2);
+         Logger.log("MDS Activation error: invalid progress value - " + String.valueOf(value), 2);
          statusBar.setValue(0);
          return;
       }

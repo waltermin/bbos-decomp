@@ -11,7 +11,7 @@ public final class SearchUtility {
       int start = addressWhole.lastIndexOf(44) + 2;
       int end = addressWhole.length();
       if (start < end) {
-         String[] address = new Object[4];
+         String[] address = new String[4];
 
          for (int i = 3; start > -1 && i > -1; i--) {
             address[i] = addressWhole.substring(start, end);

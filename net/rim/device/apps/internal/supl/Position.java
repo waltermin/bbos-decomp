@@ -37,7 +37,7 @@ final class Position {
 
    final void print() {
       System.out.println("Position: ");
-      System.out.println(((StringBuffer)(new Object("Optionals: "))).append(this.optionals).toString());
+      System.out.println("Optionals: " + this.optionals);
       this.utcTime.print();
       this.posEst.print();
       if ((this.optionals & 1) == 1) {

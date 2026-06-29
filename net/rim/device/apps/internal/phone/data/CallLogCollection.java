@@ -320,7 +320,7 @@ public final class CallLogCollection implements PhoneListItems, CollectionListen
             CallLogCollection$Listener listener = null;
             Object o = listeners[i];
             if (!(o instanceof CallLogCollection$Listener)) {
-               if (o instanceof Object) {
+               if (o instanceof WeakReference) {
                   WeakReference wr = (WeakReference)o;
                   Object ref = wr.get();
                   if (ref == null) {
@@ -347,7 +347,7 @@ public final class CallLogCollection implements PhoneListItems, CollectionListen
    private CallLogCollection() {
       AddressBook ab = AddressBookServices.getAddressBook(true);
       if (ab != null) {
-         ab.addCollectionListener(new Object(this));
+         ab.addCollectionListener(new WeakReference(this));
       }
 
       PersistentContent.addWeakListener(this);

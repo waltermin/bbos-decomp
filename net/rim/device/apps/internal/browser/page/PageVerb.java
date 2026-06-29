@@ -6,6 +6,7 @@ import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.apps.internal.browser.api.PreviewViewable;
 import net.rim.device.apps.internal.browser.core.BrowserDaemonRegistry;
 import net.rim.device.apps.internal.browser.core.BrowserHotkeys;
 import net.rim.device.apps.internal.browser.core.BrowserImpl;
@@ -35,8 +36,8 @@ public final class PageVerb extends BrowserVerb {
       switch (super._rbKey) {
          case 9:
             boolean confirm = false;
-            if (context instanceof Object) {
-               confirm = context;
+            if (context instanceof Boolean) {
+               confirm = (Boolean)context;
             }
 
             BrowserDaemonRegistry.getInstance().closeBrowser(confirm);
@@ -98,7 +99,7 @@ public final class PageVerb extends BrowserVerb {
                BrowserContent content = page.getBrowserContent();
                if (content != null) {
                   Field field = content.getDisplayableContent();
-                  if (field instanceof Object) {
+                  if (field instanceof BrowserTextFlowManager) {
                      BrowserTextFlowManager tfm = (BrowserTextFlowManager)field;
                      if (tfm.getWideViewMode()) {
                         tfm.adjustZoom(Integer.MAX_VALUE);
@@ -193,8 +194,8 @@ public final class PageVerb extends BrowserVerb {
          case 905:
             try {
                Object content = BrowserDaemonRegistry.getInstance().getCurrentPage().getContentManager();
-               if (content instanceof Object) {
-                  if (!(content instanceof Object)) {
+               if (content instanceof PreviewViewable) {
+                  if (!(content instanceof BrowserTextFlowManager)) {
                      return true;
                   }
 
@@ -273,7 +274,7 @@ public final class PageVerb extends BrowserVerb {
                   if (oldRequestHeaders != null) {
                      String contentType = oldRequestHeaders.getPropertyValue("Content-Type");
                      if (contentType != null) {
-                        requestHeaders = (HttpHeaders)(new Object());
+                        requestHeaders = new HttpHeaders();
                         requestHeaders.setProperty("Content-Type", contentType);
                      }
                   }

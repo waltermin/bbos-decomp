@@ -28,10 +28,10 @@ class ActionHandler implements MediaListener {
 
       String nodeID = data.getId(nodeHandle);
       if (nodeID == null) {
-         throw new Object("No ID found for node handle");
+         throw new NullPointerException("No ID found for node handle");
       }
 
-      if (!(customNode instanceof Object)) {
+      if (!(customNode instanceof MediaListener)) {
          this._model.notify(data._nodes[nodeHandle + 10], nodeHandle, nodeID);
       } else {
          ((MediaListener)customNode).mediaEvent(this._model, data._nodes[nodeHandle + 10], nodeHandle, nodeID);

@@ -2,6 +2,7 @@ package net.rim.device.cldc.io.http;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import javax.microedition.io.ServerSocketConnection;
 import javax.microedition.io.SocketConnection;
 import javax.microedition.io.StreamConnection;
@@ -24,7 +25,7 @@ public class HttpServerSocketConnectionBase implements ServerSocketConnection {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public StreamConnection acceptAndOpen() {
+   public StreamConnection acceptAndOpen() throws IOException {
       boolean reused = false;
       SocketConnection socket = null;
       DataInputStream in = null;
@@ -93,7 +94,7 @@ public class HttpServerSocketConnectionBase implements ServerSocketConnection {
       if (!reused) {
          socket = (SocketConnection)this._serverConnection.acceptAndOpen();
          if (socket == null) {
-            throw new Object();
+            throw new IOException();
          }
 
          in = socket.openDataInputStream();
@@ -101,7 +102,7 @@ public class HttpServerSocketConnectionBase implements ServerSocketConnection {
       }
 
       if (socket == null) {
-         throw new Object();
+         throw new IOException();
       }
 
       HttpServerProtocolBase serverBase = new HttpServerProtocolBase(this._url, this, socket, in, out);
@@ -141,18 +142,18 @@ public class HttpServerSocketConnectionBase implements ServerSocketConnection {
                   break label581;
                }
 
-               socket = null;
-               in = null;
-               out = null;
+               SocketConnection var91 = null;
+               DataInputStream var93 = null;
+               DataOutputStream var95 = null;
                HttpServerProtocolBase var97 = null;
-               socket = (SocketConnection)this._serverConnection.acceptAndOpen();
-               if (socket == null) {
-                  throw new Object();
+               var91 = (SocketConnection)this._serverConnection.acceptAndOpen();
+               if (var91 == null) {
+                  throw new IOException();
                }
 
-               in = socket.openDataInputStream();
-               out = socket.openDataOutputStream();
-               var97 = new HttpServerProtocolBase(this._url, this, socket, in, out);
+               var93 = var91.openDataInputStream();
+               var95 = var91.openDataOutputStream();
+               var97 = new HttpServerProtocolBase(this._url, this, var91, var93, var95);
                return var97;
             }
          }
@@ -163,9 +164,9 @@ public class HttpServerSocketConnectionBase implements ServerSocketConnection {
 
    void addAcceptCandidate(StreamConnection socket, DataInputStream in, DataOutputStream out) {
       synchronized (this) {
-         Arrays.add(this._sockets, new Object(socket));
-         Arrays.add(this._socketIns, new Object(in));
-         Arrays.add(this._socketOuts, new Object(out));
+         Arrays.add(this._sockets, new WeakReference(socket));
+         Arrays.add(this._socketIns, new WeakReference(in));
+         Arrays.add(this._socketOuts, new WeakReference(out));
       }
    }
 
@@ -182,8 +183,8 @@ public class HttpServerSocketConnectionBase implements ServerSocketConnection {
    public HttpServerSocketConnectionBase(URL url, ServerSocketConnection serverConnection) {
       this._serverConnection = serverConnection;
       this._url = url;
-      this._sockets = new Object[0];
-      this._socketIns = new Object[0];
-      this._socketOuts = new Object[0];
+      this._sockets = new WeakReference[0];
+      this._socketIns = new WeakReference[0];
+      this._socketOuts = new WeakReference[0];
    }
 }

@@ -13,8 +13,8 @@ public class ResourceIds {
    static String[] requiredIds = new String[]{"_midletName", "_version", "_vendor"};
    static String[] manifestVersion = new String[]{"Manifest-Version"};
    static String[] manifestVersionIds = new String[]{"_manifestVersion"};
-   static String[] manifestRequired = new Object[]{midletProfile, midletConfiguration};
-   static String[][] manifestRequiredAllowed = new Object[][]{{"MIDP-1.0", "MIDP-2.0"}, {"CLDC-1.0", "CLDC-1.1"}};
+   static String[] manifestRequired = new String[]{midletProfile, midletConfiguration};
+   static String[][] manifestRequiredAllowed = new String[][]{{"MIDP-1.0", "MIDP-2.0"}, {"CLDC-1.0", "CLDC-1.1"}};
    static String[] manifestRequiredIds = new String[]{"_midletProfile", "_midletConfiguration"};
    static String[] jadRequired = new String[]{"MIDlet-Jar-URL", "MIDlet-Jar-Size"};
    static String[] jadRequiredIds = new String[]{"_url", "_midletJarSize"};
@@ -26,7 +26,7 @@ public class ResourceIds {
    static String[] ordinalPrefix = new String[]{
       "MIDlet-", "RIM-MIDlet-Icon-Count-", "RIM-MIDlet-Flags-", "RIM-MIDlet-Position-", "RIM-MIDlet-NameResourceBundle-", "RIM-MIDlet-NameResourceId-"
    };
-   static String[] ordinalPrefixIds = new Object[]{null, null, "_appFlags", "_appPosition", "_appNameResourceBundles", "_appNameResourceIds"};
+   static String[] ordinalPrefixIds = new String[]{null, null, "_appFlags", "_appPosition", "_appNameResourceBundles", "_appNameResourceIds"};
    static String[] ams = new String[]{
       "RIM-COD-URL", "RIM-COD-Size", "RIM-COD-Creation-Time", "RIM-COD-Module-Name", "RIM-COD-Module-Dependencies", "RIM-COD-SHA1"
    };
@@ -81,7 +81,7 @@ public class ResourceIds {
    }
 
    static String getMIDletCertificateTag(int n, int m) {
-      StringBuffer buff = (StringBuffer)(new Object(48));
+      StringBuffer buff = new StringBuffer(48);
       buff.append("MIDlet-Certificate-");
       buff.append(n);
       buff.append('-');
@@ -91,7 +91,7 @@ public class ResourceIds {
 
    static {
       int num = required.length + manifestVersion.length + manifestRequired.length + jadRequired.length + optional.length + required.length;
-      _resourceIds = (Hashtable)(new Object(num * 2));
+      _resourceIds = new Hashtable(num * 2);
       num = required.length;
 
       for (int i = 0; i < num; i++) {

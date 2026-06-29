@@ -34,6 +34,7 @@ import net.rim.device.apps.api.addressbook.AddressCardElement;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.AddressReverseLookupResolver;
 import net.rim.device.apps.api.addressbook.CompanyInfoModel;
+import net.rim.device.apps.api.addressbook.GroupAddressCardModel;
 import net.rim.device.apps.api.addressbook.PersonNameModel;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.EditableProvider;
@@ -75,7 +76,7 @@ public final class AddressBookCollection
    private boolean _inSerialSyncOperation;
    private boolean _inOTASyncOperation;
    private boolean _fireResetAfterSync;
-   private CollectionListenerManager _listenerManager = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _listenerManager = new CollectionListenerManager();
    private AddressBookCollection$KeywordPatriciaTreeData _keywordTreeData;
    private PatriciaTree _keywordTree;
    private long _sortOrder;
@@ -94,10 +95,10 @@ public final class AddressBookCollection
    private int _cacheInternalID = -1;
    private String _cacheString = null;
    private int[] _cacheOffsets = new int[4];
-   private String[] _tmpKeywords = new Object[0];
-   private String[] _tmpKeywordsSL = new Object[0];
-   private String[] _tmpKeywordsSL2 = new Object[0];
-   private WeakReference _tmpBufferWR = (WeakReference)(new Object(null));
+   private String[] _tmpKeywords = new String[0];
+   private String[] _tmpKeywordsSL = new String[0];
+   private String[] _tmpKeywordsSL2 = new String[0];
+   private WeakReference _tmpBufferWR = new WeakReference(null);
    private int[] _tmpOffsets = new int[0];
    private int[] _tmpKeys = new int[0];
    private Object _contentProtectionTicket;
@@ -128,7 +129,7 @@ public final class AddressBookCollection
    private static final int KEY_OFFSET_MASK_SHORT = 127;
    private static final int KEY_OFFSET_MASK_LONG = 16383;
    private static final int KEY_LENGTH_MASK = 127;
-   private static WeakReference _keyContextWR = (WeakReference)(new Object(null));
+   private static WeakReference _keyContextWR = new WeakReference(null);
    private static final int PERSISTENT_GC_THRESHOLD = 300;
 
    final PatriciaTree getKeywordTree() {
@@ -178,7 +179,7 @@ public final class AddressBookCollection
          }
 
          if (dataValid) {
-            BitSet ids = (BitSet)(new Object());
+            BitSet ids = new BitSet();
             BigIntVector leaves = this._data.getLeaves();
 
             for (int i = leaves.size() - 1; i >= 0; i--) {
@@ -193,7 +194,7 @@ public final class AddressBookCollection
                for (int i = 0; i < 32768 && cardCount > 0 && bitCount > 0; i++) {
                   if (cards.get(i) != null) {
                      if (!ids.isSet(i)) {
-                        System.out.println(((StringBuffer)(new Object("Found card at "))).append(i).append(" that has no keyword data").toString());
+                        System.out.println("Found card at " + i + " that has no keyword data");
                         break;
                      }
 
@@ -202,7 +203,7 @@ public final class AddressBookCollection
 
                   if (ids.isSet(i)) {
                      if (cards.get(i) == null) {
-                        System.out.println(((StringBuffer)(new Object("Internal ID "))).append(i).append(" doesn't correspond to a card").toString());
+                        System.out.println("Internal ID " + i + " doesn't correspond to a card");
                         break;
                      }
 
@@ -383,8 +384,8 @@ public final class AddressBookCollection
                   return null;
                }
 
-               String[] searchKeys = new Object[10];
-               String[] stringKeys = new Object[10];
+               String[] searchKeys = new String[10];
+               String[] stringKeys = new String[10];
                int searchKeyCount = getReverseLookupKeys(address, searchKeys);
                int firstIndex = result._offset;
 
@@ -442,8 +443,8 @@ public final class AddressBookCollection
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public final synchronized void update(Object oldCard, Object newCard) {
-      if (!(newCard instanceof Object)) {
-         throw new Object();
+      if (!(newCard instanceof AddressCardElement)) {
+         throw new IllegalArgumentException();
       }
 
       int internalID = this.getInternalID(oldCard);
@@ -583,14 +584,14 @@ public final class AddressBookCollection
 
    @Override
    public final synchronized SyncObject[] getSyncObjects() {
-      SyncObject[] objects = new Object[0];
+      SyncObject[] objects = new SyncObject[0];
       int count = this.size();
       int dest = 0;
       Array.resize(objects, count);
 
       for (int i = 0; i < count; i++) {
          Object o = this.getAt(i);
-         if (o instanceof Object) {
+         if (o instanceof SyncObject) {
             objects[dest++] = (SyncObject)o;
          }
       }
@@ -605,7 +606,7 @@ public final class AddressBookCollection
       int internalID = this._data.getInternalID(uid);
       if (internalID != -1) {
          Object object = this._data.getElement(internalID);
-         if (object instanceof Object) {
+         if (object instanceof SyncObject) {
             syncObject = (SyncObject)object;
          }
       }
@@ -651,7 +652,7 @@ public final class AddressBookCollection
    @Override
    public final SyncConverter getSyncConverter() {
       if (_syncConverter == null) {
-         _syncConverter = (RIMModelSyncConverter)(new Object(18, -7921492803965144520L));
+         _syncConverter = new RIMModelSyncConverter(18, -7921492803965144520L);
       }
 
       return _syncConverter;
@@ -799,8 +800,8 @@ public final class AddressBookCollection
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
    public final synchronized void add(Object element) {
-      if (!(element instanceof Object)) {
-         throw new Object();
+      if (!(element instanceof AddressCardElement)) {
+         throw new IllegalArgumentException();
       }
 
       element = this.ensureGrouped(element);
@@ -864,7 +865,7 @@ public final class AddressBookCollection
 
    private final int getInternalID(Object object) {
       int internalID = -1;
-      if (object instanceof Object) {
+      if (object instanceof AddressCardElement) {
          AddressCardElement element = (AddressCardElement)object;
          int uid = element.getUID();
          internalID = this._data.getInternalID(uid);
@@ -919,7 +920,7 @@ public final class AddressBookCollection
          int count = this.size();
          this._cardsBySortOrder = new Object[count];
          this._IDsBySortOrder = new int[count];
-         this._internalIDToOrderIndex = (IntIntHashtable)(new Object(count / 3 * 4 + 12));
+         this._internalIDToOrderIndex = new IntIntHashtable(count / 3 * 4 + 12);
          int keyID = this.getKeyIDFromSortOrder(this._sortOrder);
          int index = count;
          BigIntVector leaves = this._data.getLeaves();
@@ -976,11 +977,11 @@ public final class AddressBookCollection
    }
 
    private final Object ensureGrouped(Object object) {
-      if (object instanceof Object && !(object instanceof Object)) {
+      if (object instanceof EditableProvider && !(object instanceof GroupAddressCardModel)) {
          EditableProvider provider = (EditableProvider)object;
          if (!provider.isReadOnly()) {
             try {
-               throw new Object("Ungrouped object inserted into addressbook");
+               throw new RuntimeException("Ungrouped object inserted into addressbook");
             } finally {
                if (!this._readOnlyExceptionThrown) {
                   QuincyManager.sendJavaLogworthy("AddressBook:ReadOnlyInsert");
@@ -1017,7 +1018,7 @@ public final class AddressBookCollection
    private final StringBuffer getStringBuffer() {
       StringBuffer stringBuffer = (StringBuffer)this._tmpBufferWR.get();
       if (stringBuffer == null) {
-         stringBuffer = (StringBuffer)(new Object());
+         stringBuffer = new StringBuffer();
          this._tmpBufferWR.set(stringBuffer);
       }
 
@@ -1068,10 +1069,7 @@ public final class AddressBookCollection
       StringUtilities.convertToOriginal(tmpBuffer, convertOriginalOffset, tmpBuffer.length() - convertOriginalOffset);
       String result = tmpBuffer.toString();
       if (convertOriginalOffset != 0) {
-         result = ((StringBuffer)(new Object()))
-            .append(result.substring(0, convertOriginalOffset))
-            .append(StringUtilities.toLowerCase(result.substring(convertOriginalOffset), 1701707776))
-            .toString();
+         result = result.substring(0, convertOriginalOffset) + StringUtilities.toLowerCase(result.substring(convertOriginalOffset), 1701707776);
       } else {
          result = StringUtilities.toLowerCase(result, 1701707776);
       }
@@ -1106,11 +1104,11 @@ public final class AddressBookCollection
    private static final int createPatriciaKey(int internalID, int offset, int length, int keyID) {
       if (keyID != 0) {
          if ((offset & 3) != 0) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          if ((length & 3) != 0) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          if (isKeyOffsetTooLarge(offset)) {
@@ -1249,7 +1247,7 @@ public final class AddressBookCollection
    }
 
    private final Vector getWords(String word, boolean isForRemove) {
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       if (word != null) {
          word = word.trim();
          if (word.length() < 10) {
@@ -1323,7 +1321,7 @@ public final class AddressBookCollection
                   this._customWordRepository.addWords(stringBuffer);
                }
 
-               if (!(obj instanceof Object)) {
+               if (!(obj instanceof AddressCardModel)) {
                   var8 = false;
                   return;
                }
@@ -1346,29 +1344,29 @@ public final class AddressBookCollection
 
    private final void addYOMIWordPairs(AddressCardModel addressCard) {
       if (this._customYOMIWordRepository != null) {
-         if (addressCard instanceof Object) {
+         if (addressCard instanceof CompanyInfoModel) {
             CompanyInfoModel cim = (CompanyInfoModel)addressCard;
             String name = cim.getCompanyName();
             String yomi = cim.getCompanyNameYOMI();
             if (name != null && yomi != null) {
-               JapaneseCustomWord customWord = (JapaneseCustomWord)(new Object(yomi, name, 1));
+               JapaneseCustomWord customWord = new JapaneseCustomWord(yomi, name, 1);
                this._customYOMIWordRepository.addWords(customWord);
             }
          }
 
-         if (addressCard instanceof Object) {
+         if (addressCard instanceof PersonNameModel) {
             PersonNameModel pnm = (PersonNameModel)addressCard;
             String firstName = pnm.getFirstName();
             String firstNameYOMI = pnm.getFirstNameYOMI();
             String lastName = pnm.getLastName();
             String lastNameYOMI = pnm.getLastNameYOMI();
             if (firstName != null && firstNameYOMI != null) {
-               JapaneseCustomWord customWord = (JapaneseCustomWord)(new Object(firstNameYOMI, firstName, 1));
+               JapaneseCustomWord customWord = new JapaneseCustomWord(firstNameYOMI, firstName, 1);
                this._customYOMIWordRepository.addWords(customWord);
             }
 
             if (lastName != null && lastNameYOMI != null) {
-               JapaneseCustomWord customWord = (JapaneseCustomWord)(new Object(lastNameYOMI, lastName, 1));
+               JapaneseCustomWord customWord = new JapaneseCustomWord(lastNameYOMI, lastName, 1);
                this._customYOMIWordRepository.addWords(customWord);
             }
          }
@@ -1377,29 +1375,29 @@ public final class AddressBookCollection
 
    private final void removeYOMIWordPairs(AddressCardModel addressCard) {
       if (this._customYOMIWordRepository != null) {
-         if (addressCard instanceof Object) {
+         if (addressCard instanceof CompanyInfoModel) {
             CompanyInfoModel cim = (CompanyInfoModel)addressCard;
             String name = cim.getCompanyName();
             String yomi = cim.getCompanyNameYOMI();
             if (name != null && yomi != null) {
-               JapaneseCustomWord customWord = (JapaneseCustomWord)(new Object(yomi, name, 1));
+               JapaneseCustomWord customWord = new JapaneseCustomWord(yomi, name, 1);
                this._customYOMIWordRepository.removeWords(customWord);
             }
          }
 
-         if (addressCard instanceof Object) {
+         if (addressCard instanceof PersonNameModel) {
             PersonNameModel pnm = (PersonNameModel)addressCard;
             String firstName = pnm.getFirstName();
             String firstNameYOMI = pnm.getFirstNameYOMI();
             String lastName = pnm.getLastName();
             String lastNameYOMI = pnm.getLastNameYOMI();
             if (firstName != null && firstNameYOMI != null) {
-               JapaneseCustomWord customWord = (JapaneseCustomWord)(new Object(firstNameYOMI, firstName, 1));
+               JapaneseCustomWord customWord = new JapaneseCustomWord(firstNameYOMI, firstName, 1);
                this._customYOMIWordRepository.removeWords(customWord);
             }
 
             if (lastName != null && lastNameYOMI != null) {
-               JapaneseCustomWord customWord = (JapaneseCustomWord)(new Object(lastNameYOMI, lastName, 1));
+               JapaneseCustomWord customWord = new JapaneseCustomWord(lastNameYOMI, lastName, 1);
                this._customYOMIWordRepository.removeWords(customWord);
             }
          }
@@ -1419,7 +1417,7 @@ public final class AddressBookCollection
                try {
                   var8 = true;
                   this._customWordRepository.removeWords(stringBuffer);
-                  if (addressCard instanceof Object) {
+                  if (addressCard instanceof AddressCardModel) {
                      this.removeYOMIWordPairs((AddressCardModel)addressCard);
                      var8 = false;
                   } else {
@@ -1441,14 +1439,14 @@ public final class AddressBookCollection
    }
 
    private final boolean extractWords(Object addressCard, StringBuffer stringBuffer, boolean isForRemove) {
-      if (!(addressCard instanceof Object)) {
+      if (!(addressCard instanceof KeyProvider)) {
          return false;
       }
 
       Array.resize(this._tmpKeywordsSL, 0);
       int count = ((KeyProvider)addressCard).getKeys(null, this._tmpKeywordsSL, 0, -6544199576583918792L);
       int len = this._tmpKeywordsSL.length;
-      String[] keywords = new Object[len];
+      String[] keywords = new String[len];
 
       for (int i = 0; i < len; i++) {
          if (this._tmpKeywordsSL[i] != null) {
@@ -1473,7 +1471,7 @@ public final class AddressBookCollection
    }
 
    private final boolean containsKeyword(Object addressCard, String keyword) {
-      if (addressCard instanceof Object) {
+      if (addressCard instanceof KeyProvider) {
          Array.resize(this._tmpKeywordsSL2, 0);
          int count = ((KeyProvider)addressCard).getKeys(null, this._tmpKeywordsSL2, 0, -6544199576583918792L);
 
@@ -1497,12 +1495,12 @@ public final class AddressBookCollection
 
    private final void reloadCustomWordRepository() {
       if (this._useCustomWordRepository) {
-         ((Thread)(new Object(new AddressBookCollection$1(this)))).start();
+         new Thread(new AddressBookCollection$1(this)).start();
       }
    }
 
    private final void addKeywords(int internalID, Object card) {
-      if (card instanceof Object) {
+      if (card instanceof KeyProvider) {
          synchronized (this) {
             this.fetchAndCacheKeywords(internalID, card);
             if (this._cacheString.trim().length() == 0) {
@@ -1525,7 +1523,7 @@ public final class AddressBookCollection
    }
 
    private final void removeKeywords(int internalID, Object card) {
-      if (card instanceof Object) {
+      if (card instanceof KeyProvider) {
          synchronized (this) {
             this.fetchAndCacheKeywords(internalID, card);
             int count = this.computeKeys(internalID, this._cacheString, this._cacheOffsets, this._tmpKeys);
@@ -1605,8 +1603,8 @@ public final class AddressBookCollection
 
    private static final int getReverseLookupKeys(Object element, String[] keys) {
       int keyCount = 0;
-      if (!(element instanceof Object)) {
-         if (element instanceof Object) {
+      if (!(element instanceof KeyProvider)) {
+         if (element instanceof String) {
             keys[0] = (String)element;
             keyCount = 1;
          }
@@ -1636,7 +1634,7 @@ public final class AddressBookCollection
 
       ContextObject keyContext = (ContextObject)_keyContextWR.get();
       if (keyContext == null) {
-         keyContext = (ContextObject)(new Object());
+         keyContext = new ContextObject();
          _keyContextWR.set(keyContext);
       }
 
@@ -1680,11 +1678,11 @@ public final class AddressBookCollection
 
       this.setSortOrder(this._options.getSortOrder());
       this._keywordTreeData = new AddressBookCollection$KeywordPatriciaTreeData(this, null);
-      this._keywordTree = (PatriciaTree)(new Object(this._keywordTreeData));
-      this._externalResolversBefore = new Object[0];
-      this._externalResolversAfter = new Object[0];
+      this._keywordTree = new PatriciaTree(this._keywordTreeData);
+      this._externalResolversBefore = new AddressReverseLookupResolver[0];
+      this._externalResolversAfter = new AddressReverseLookupResolver[0];
       this._reverseLookupTreeData = new AddressBookCollection$ReverseLookupPatriciaTreeData(this, null);
-      this._reverseLookupTree = (LongPatriciaTree)(new Object(this._reverseLookupTreeData));
+      this._reverseLookupTree = new LongPatriciaTree(this._reverseLookupTreeData);
       this._contentProtectionTicket = this._contentProtectionTicket;
       this.initializeCustomWordRepository();
       Proxy.getInstance().addGlobalEventListener(this);

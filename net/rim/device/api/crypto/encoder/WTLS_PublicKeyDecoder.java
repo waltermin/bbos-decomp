@@ -8,7 +8,7 @@ public class WTLS_PublicKeyDecoder extends PublicKeyDecoder {
    @Override
    public PublicKey decodeKey(InputStream encodedKey, CryptoSystem cryptoSystem, String keyAlgorithm) {
       if (encodedKey == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       String publicKeyType = String.valueOf(encodedKey.read() & 0xFF);

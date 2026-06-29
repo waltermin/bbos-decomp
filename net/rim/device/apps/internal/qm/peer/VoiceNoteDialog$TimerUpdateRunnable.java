@@ -17,6 +17,6 @@ final class VoiceNoteDialog$TimerUpdateRunnable implements Runnable {
          percent = VoiceNoteDialog.access$500(this.this$0).getPercentFull(time);
       }
 
-      VoiceNoteDialog.access$100(this.this$0).setText(((StringBuffer)(new Object())).append(Integer.toString(percent)).append(" %").toString());
+      VoiceNoteDialog.access$100(this.this$0).setText(Integer.toString(percent) + " %");
    }
 }

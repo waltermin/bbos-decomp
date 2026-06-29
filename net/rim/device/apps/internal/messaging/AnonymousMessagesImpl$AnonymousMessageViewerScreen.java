@@ -7,7 +7,9 @@ import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.ActiveRichTextField;
 import net.rim.device.api.ui.component.DateField;
+import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.apps.api.framework.hotkeys.HotKeyCheck;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -35,26 +37,26 @@ final class AnonymousMessagesImpl$AnonymousMessageViewerScreen extends ModelScre
    public final void setModel(AnonymousMessagesImpl$AnonymousMessageModel message) {
       super.setModel(message);
       this._message = message;
-      Manager header = (Manager)(new Object());
+      Manager header = new VerticalFieldManager();
       header.setTag(Tag.create("email-subject-area"));
-      Field f = (Field)(new Object(MessageResources.getString(80), MessageResources.getString(this._message._opened ? 84 : 83), 1000000, 9007199254740992L));
+      Field f = new EditField(MessageResources.getString(80), MessageResources.getString(this._message._opened ? 84 : 83), 1000000, 9007199254740992L);
       f.setTag(Tag.create("email-header-text"));
       Manager statusHeader = null;
-      statusHeader = (Manager)(new Object());
+      statusHeader = new VerticalFieldManager();
       statusHeader.setTag(Tag.create("email-header-area"));
       statusHeader.add(f);
-      DateField date = (DateField)(new Object(null, this._message._payload._time, 1161928703861588022L));
+      DateField date = new DateField(null, this._message._payload._time, 1161928703861588022L);
       date.setTag(Tag.create("email-timestamp-text"));
       String sender = this._message._payload._sender;
       if (sender != null) {
-         f = (Field)(new Object(MessageResources.getString(81), sender, 1000000, 9007199254740992L));
+         f = new EditField(MessageResources.getString(81), sender, 1000000, 9007199254740992L);
          f.setTag(Tag.create("email-header-text"));
          header.add(f);
          this._fieldToGetFocus = header;
       }
 
       String body = this._message._payload._body;
-      f = (Field)(new Object(null, this._message._payload._subject, 1000000, 9007199254740992L));
+      f = new EditField(null, this._message._payload._subject, 1000000, 9007199254740992L);
       f.setTag(Tag.create("email-subject-text"));
       if (this._fieldToGetFocus == null) {
          this._fieldToGetFocus = header;
@@ -64,7 +66,7 @@ final class AnonymousMessagesImpl$AnonymousMessageViewerScreen extends ModelScre
       header.add(date);
       this.add(statusHeader);
       this.add(header);
-      this._bodyField = (ActiveRichTextField)(new Object(body));
+      this._bodyField = new ActiveRichTextField(body);
       this._bodyField.setAdjustAlignments(true);
       this._bodyField.setTag(Tag.create("email-body-area"));
       this.add(this._bodyField);
@@ -104,7 +106,7 @@ final class AnonymousMessagesImpl$AnonymousMessageViewerScreen extends ModelScre
    protected final void makeMenu(SystemEnabledMenu menu, int instance) {
       super.makeMenu(menu, instance);
       if (instance == 65536) {
-         DeleteSingleItemVerb deleteSingleItemVerb = (DeleteSingleItemVerb)(new Object(611472, 1000));
+         DeleteSingleItemVerb deleteSingleItemVerb = new DeleteSingleItemVerb(611472, 1000);
          deleteSingleItemVerb.setParameters(this._message, ContextObject.castOrCreate(super._context));
          menu.add(deleteSingleItemVerb);
       }
@@ -149,25 +151,27 @@ final class AnonymousMessagesImpl$AnonymousMessageViewerScreen extends ModelScre
                   return true;
                } else {
                   switch (key) {
-                     case '\n':
-                        hotkey = (status & 1) == 0 ? 512 : 256;
-                        this.scroll((int)hotkey);
+                     case '\n': {
+                        int direction = (status & 1) == 0 ? 512 : 256;
+                        this.scroll(direction);
                         return true;
-                     case ' ':
-                        hotkey = (status & 2) == 0 ? 512 : 256;
-                        this.scroll((int)hotkey);
+                     }
+                     case ' ': {
+                        int direction = (status & 2) == 0 ? 512 : 256;
+                        this.scroll(direction);
                         return true;
+                     }
                      default:
                         if (InternalServices.isReducedFormFactor() && (status & 1) == 0) {
-                           hotkey = 256;
+                           int directionx = 256;
                            switch (Keypad.key(keycode)) {
                               case 66:
                                  return this.dispatchTrackwheelEvent(519, 1, 0, time);
                               case 71:
                               case 77:
-                                 hotkey = 512;
+                                 directionx = 512;
                               case 85:
-                                 this.scroll((int)hotkey);
+                                 this.scroll(directionx);
                                  return true;
                               case 84:
                                  return this.dispatchTrackwheelEvent(519, -1, 0, time);
@@ -188,7 +192,7 @@ final class AnonymousMessagesImpl$AnonymousMessageViewerScreen extends ModelScre
                return true;
          }
       } else {
-         DeleteSingleItemVerb verb = (DeleteSingleItemVerb)(new Object(611472, 1000));
+         DeleteSingleItemVerb verb = new DeleteSingleItemVerb(611472, 1000);
          verb.setParameters(this._message, super._context);
          Object _returnValue = verb.invoke(null);
          if (ContextObject.getFlag(_returnValue, 39)) {

@@ -1,7 +1,10 @@
 package net.rim.device.apps.internal.options.items;
 
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.NullField;
+import net.rim.device.api.ui.component.SeparatorField;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.setupwizard.BasicWizardPage;
 import net.rim.device.apps.api.setupwizard.SetupWizardOrdering;
@@ -23,12 +26,12 @@ public final class FontsSetupWizard extends BasicWizardPage {
 
    @Override
    protected final void populateContent(AppsMainScreen screen, Manager content) {
-      content.add((Field)(new Object(18014398509481984L)));
-      Manager header = (Manager)(new Object());
+      content.add(new NullField(18014398509481984L));
+      Manager header = new VerticalFieldManager();
       header.setFont(this.getHeaderFont());
-      header.add((Field)(new Object(OptionsResources.getString(2113))));
+      header.add(new LabelField(OptionsResources.getString(2113)));
       content.add(header);
-      content.add((Field)(new Object()));
+      content.add(new SeparatorField());
       this._controller.populateMainScreen(screen, content);
    }
 

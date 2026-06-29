@@ -24,7 +24,7 @@ public final class PlaylistField extends VerticalFieldManager implements ListFie
    public PlaylistField(Playlist playlist) {
       super(281474976710656L);
       this._playlist = playlist;
-      this._list = (ListField)(new Object(this._playlist.getNumberOfItems(), 3458764513820540928L));
+      this._list = new ListField(this._playlist.getNumberOfItems(), 3458764513820540928L);
       this._list.setCallback(this);
       this._list.setSearchable(false);
       this._list.setTag(TAG);
@@ -71,7 +71,7 @@ public final class PlaylistField extends VerticalFieldManager implements ListFie
       }
 
       title = URIDecoder.decode(title, "UTF-8", false);
-      title = ((StringBuffer)(new Object())).append(Integer.toString(index + 1)).append(". ").append(title).toString();
+      title = Integer.toString(index + 1) + ". " + title;
       graphics.drawText(title, 0, y, 64, width);
    }
 

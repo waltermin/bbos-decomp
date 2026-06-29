@@ -14,6 +14,10 @@ import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.CheckboxField;
+import net.rim.device.api.ui.component.EditField;
+import net.rim.device.api.ui.component.PasswordEditField;
+import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.CharacterUtilities;
@@ -23,6 +27,7 @@ import net.rim.device.internal.system.Security;
 import net.rim.device.internal.system.USBPasswordRedirectManager;
 import net.rim.device.internal.system.USBPortInternal$Internal;
 import net.rim.device.internal.ui.component.PopupDialog;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 import net.rim.device.internal.ui.container.FrameLayout;
 import net.rim.tid.awt.im.InputContext;
 import net.rim.tid.im.layout.SLKeyLayout;
@@ -61,18 +66,18 @@ class UserAuthenticatorPasswordDialog extends PopupDialog implements FieldChange
          return new int[0];
       }
 
-      Vector selectedChannels = (Vector)(new Object());
+      Vector selectedChannels = new Vector();
 
       for (int i = 0; i < this._uSBChannels.size(); i++) {
          if (((CheckboxField)this._uSBChoices.elementAt(i)).getChecked()) {
             selectedChannels.addElement(this._uSBChannels.elementAt(i));
          } else {
-            this._redirectManager.allowChannel(this._uSBChannels.elementAt(i), false);
+            this._redirectManager.allowChannel((Integer)this._uSBChannels.elementAt(i), false);
             boolean var5 = false /* VF: Semaphore variable */;
 
             try {
                var5 = true;
-               this._redirectManager.addToDisallowedChannels(USBPortInternal$Internal.getChannelName(this._uSBChannels.elementAt(i)));
+               this._redirectManager.addToDisallowedChannels(USBPortInternal$Internal.getChannelName((Integer)this._uSBChannels.elementAt(i)));
                var5 = false;
             } finally {
                if (var5) {
@@ -86,7 +91,7 @@ class UserAuthenticatorPasswordDialog extends PopupDialog implements FieldChange
       int[] selectedChannelsInt = new int[selectedChannels.size()];
 
       for (int i = 0; i < selectedChannels.size(); i++) {
-         selectedChannelsInt[i] = selectedChannels.elementAt(i);
+         selectedChannelsInt[i] = (Integer)selectedChannels.elementAt(i);
       }
 
       return selectedChannelsInt;
@@ -97,7 +102,7 @@ class UserAuthenticatorPasswordDialog extends PopupDialog implements FieldChange
          return null;
       }
 
-      BasicEditField editField = (BasicEditField)(new Object(45035996273704960L));
+      BasicEditField editField = new EditField(45035996273704960L);
       int length = as.length();
 
       for (int i = 0; i < length; i++) {
@@ -160,11 +165,11 @@ class UserAuthenticatorPasswordDialog extends PopupDialog implements FieldChange
 
    private void updateStatusField() {
       if (this._numericEntryMode) {
-         if (this._isPendingUSBConnection && this.getLeafFieldWithFocus() instanceof Object) {
+         if (this._isPendingUSBConnection && this.getLeafFieldWithFocus() instanceof CheckboxField) {
             this._showStatusField = false;
             this._showAlphaNumericIndicator = false;
             this._statusFieldVFM.deleteAll();
-            this._statusFieldVFM.add((Field)(new Object(this._statusFieldHeight)));
+            this._statusFieldVFM.add(new VerticalSpacerField(this._statusFieldHeight));
          } else {
             BasicEditField fieldWithFocus = (BasicEditField)this.getLeafFieldWithFocus();
             boolean showStatusField = false;
@@ -193,7 +198,7 @@ class UserAuthenticatorPasswordDialog extends PopupDialog implements FieldChange
                   this._statusFieldVFM.add(editField);
                   this._statusFieldHeight = this._statusFieldVFM.getHeight();
                } else {
-                  this._statusFieldVFM.add((Field)(new Object(this._statusFieldHeight)));
+                  this._statusFieldVFM.add(new VerticalSpacerField(this._statusFieldHeight));
                }
             }
          }
@@ -209,7 +214,7 @@ class UserAuthenticatorPasswordDialog extends PopupDialog implements FieldChange
          bitmap = Bitmap.getBitmapResource("alphanumericinput.gif");
       }
 
-      BitmapField bitmapField = (BitmapField)(new Object(bitmap, 51539607552L));
+      BitmapField bitmapField = new BitmapField(bitmap, 51539607552L);
       UserAuthenticatorPasswordDialog$WidthRestrictedHorizontalFieldManager wrHFM = new UserAuthenticatorPasswordDialog$WidthRestrictedHorizontalFieldManager(
          bitmapField.getPreferredWidth()
       );
@@ -230,7 +235,7 @@ class UserAuthenticatorPasswordDialog extends PopupDialog implements FieldChange
 
    private boolean navigationMovement(int dy, int status) {
       if ((status & 257) == 0) {
-         if (this._isPendingUSBConnection && this.getLeafFieldWithFocus() instanceof Object) {
+         if (this._isPendingUSBConnection && this.getLeafFieldWithFocus() instanceof CheckboxField) {
             CheckboxField checkboxField = (CheckboxField)this.getLeafFieldWithFocus();
             if (dy > 0 && this._uSBChoices.indexOf(checkboxField) == this._uSBChoices.size() - 1) {
                this.setFocus(this._devicePasswordField);
@@ -259,7 +264,7 @@ class UserAuthenticatorPasswordDialog extends PopupDialog implements FieldChange
             this._showStatusField = false;
             this._showAlphaNumericIndicator = false;
             this._statusFieldVFM.deleteAll();
-            this._statusFieldVFM.add((Field)(new Object(this._statusFieldHeight)));
+            this._statusFieldVFM.add(new VerticalSpacerField(this._statusFieldHeight));
          }
       }
 
@@ -288,14 +293,12 @@ class UserAuthenticatorPasswordDialog extends PopupDialog implements FieldChange
 
    private FrameLayout createAuthenticatorPasswordField() {
       if (this._revealAuthenticatorPassword) {
-         this._authenticatorPasswordField = (BasicEditField)(new Object(
-            null, null, 1000000, (this._numericAuthenticatorPassword ? 16777216 : 1073741824) | 2147483648L
-         ));
+         this._authenticatorPasswordField = new BasicEditField(null, null, 1000000, (this._numericAuthenticatorPassword ? 16777216 : 1073741824) | 2147483648L);
       } else {
-         this._authenticatorPasswordField = (BasicEditField)(new Object(null, null, 1000000, this._numericAuthenticatorPassword ? 16777216 : 0));
+         this._authenticatorPasswordField = new PasswordEditField(null, null, 1000000, this._numericAuthenticatorPassword ? 16777216 : 0);
       }
 
-      FrameLayout layout = (FrameLayout)(new Object(1));
+      FrameLayout layout = new FrameLayout(1);
       layout.add(this._authenticatorPasswordField);
       return layout;
    }
@@ -315,12 +318,12 @@ class UserAuthenticatorPasswordDialog extends PopupDialog implements FieldChange
 
    private FrameLayout createDevicePasswordField() {
       if (this._revealDevicePassword) {
-         this._devicePasswordField = (BasicEditField)(new Object(null, null, 32, (this._numericDevicePassword ? 16777216 : 1073741824) | 2147483648L));
+         this._devicePasswordField = new BasicEditField(null, null, 32, (this._numericDevicePassword ? 16777216 : 1073741824) | 2147483648L);
       } else {
-         this._devicePasswordField = (BasicEditField)(new Object(null, null, 32, this._numericDevicePassword ? 16777216 : 0));
+         this._devicePasswordField = new PasswordEditField(null, null, 32, this._numericDevicePassword ? 16777216 : 0);
       }
 
-      FrameLayout layout = (FrameLayout)(new Object(1));
+      FrameLayout layout = new FrameLayout(1);
       layout.add(this._devicePasswordField);
       return layout;
    }
@@ -352,7 +355,7 @@ class UserAuthenticatorPasswordDialog extends PopupDialog implements FieldChange
 
          UiApplication.getUiApplication()
             .publicProcessMessage(
-               (Message)(new Object(
+               new Message(
                   2,
                   513,
                   this._initialCharacter,
@@ -361,7 +364,7 @@ class UserAuthenticatorPasswordDialog extends PopupDialog implements FieldChange
                      Keypad.status(SLKeyLayout.convertModifiersToStatus(initialModifier))
                   ),
                   (int)System.currentTimeMillis()
-               ))
+               )
             );
          this._initialCharacter = 0;
       }
@@ -373,7 +376,7 @@ class UserAuthenticatorPasswordDialog extends PopupDialog implements FieldChange
          return true;
       }
 
-      if (this._isPendingUSBConnection && this.getLeafFieldWithFocus() instanceof Object) {
+      if (this._isPendingUSBConnection && this.getLeafFieldWithFocus() instanceof CheckboxField) {
          if (((CheckboxField)this.getLeafFieldWithFocus()).getChecked()) {
             ((CheckboxField)this.getLeafFieldWithFocus()).setChecked(false);
             return true;
@@ -482,7 +485,7 @@ class UserAuthenticatorPasswordDialog extends PopupDialog implements FieldChange
       boolean autoFillAuthenticator,
       boolean isPendingUSBConnection
    ) {
-      super((Manager)(new Object(1152921504606846976L)));
+      super(new VerticalFieldManager(1152921504606846976L));
       this._revealDevicePassword = revealDevicePassword;
       this._revealAuthenticatorPassword = revealAuthenticatorPassword;
       Security security = Security.getInstance();
@@ -490,11 +493,11 @@ class UserAuthenticatorPasswordDialog extends PopupDialog implements FieldChange
       boolean numericAuthenticatorPasswordEntryMode = security.isSmartPasswordEntryEnabledOnUserAuthenticatorPassword();
       this._numericEntryMode = numericHandheldPasswordEntryMode || numericAuthenticatorPasswordEntryMode;
       if (this._numericEntryMode) {
-         VerticalFieldManager tempVfm = (VerticalFieldManager)(new Object(562949953421312L));
-         tempVfm.add((Field)(new Object()));
+         VerticalFieldManager tempVfm = new VerticalFieldManager(562949953421312L);
+         tempVfm.add(new SeparatorField());
          tempVfm.add(this.getTextPictureField(_rb.getString(753), Bitmap.getBitmapResource("alphanumericinput.gif")));
          this._statusFieldHeight = tempVfm.getPreferredHeight();
-         this._nonScrollingRegion = (VerticalFieldManager)(new Object(1152921504606846976L));
+         this._nonScrollingRegion = new VerticalFieldManager(1152921504606846976L);
       }
 
       this._scrollingRegion = new UserAuthenticatorPasswordDialog$HeightRestrictedVerticalFieldManager(1153220571769602048L, this._statusFieldHeight);
@@ -506,10 +509,10 @@ class UserAuthenticatorPasswordDialog extends PopupDialog implements FieldChange
 
       this._isPendingUSBConnection = isPendingUSBConnection;
       if (this._isPendingUSBConnection) {
-         this._scrollingRegion.add((Field)(new Object(CommonResource.getString(10180), 36028797018963968L)));
+         this._scrollingRegion.add(new RichTextField(CommonResource.getString(10180), 36028797018963968L));
          this._redirectManager = USBPasswordRedirectManager.getInstance();
          this._uSBChannels = this._redirectManager.getAllChannels();
-         this._uSBChoices = (Vector)(new Object());
+         this._uSBChoices = new Vector();
          boolean var15 = false /* VF: Semaphore variable */;
 
          label91:
@@ -517,14 +520,14 @@ class UserAuthenticatorPasswordDialog extends PopupDialog implements FieldChange
             var15 = true;
 
             for (int layout = 0; layout < this._uSBChannels.size(); layout++) {
-               String usbPeripheralName = USBPortInternal$Internal.getChannelName(this._uSBChannels.elementAt(layout));
+               String usbPeripheralName = USBPortInternal$Internal.getChannelName((Integer)this._uSBChannels.elementAt(layout));
                if (usbPeripheralName.equals("RIM Bypass")) {
                   usbPeripheralName = CommonResource.getString(10183);
                } else if (usbPeripheralName.equals("RIM Desktop")) {
                   usbPeripheralName = CommonResource.getString(10181);
                }
 
-               CheckboxField checkboxField = (CheckboxField)(new Object(usbPeripheralName, true));
+               CheckboxField checkboxField = new CheckboxField(usbPeripheralName, true);
                this._scrollingRegion.add(checkboxField);
                this._uSBChoices.addElement(checkboxField);
             }
@@ -538,9 +541,9 @@ class UserAuthenticatorPasswordDialog extends PopupDialog implements FieldChange
          }
       }
 
-      this._scrollingRegion.add((Field)(new Object(devicePasswordLabel, 36028797018963968L)));
+      this._scrollingRegion.add(new RichTextField(devicePasswordLabel, 36028797018963968L));
       if (this._numericEntryMode) {
-         this._deviceHFM = (HorizontalFieldManager)(new Object());
+         this._deviceHFM = new HorizontalFieldManager();
          this._scrollingRegion.add(this._deviceHFM);
          this._numericDevicePassword = numericHandheldPasswordEntryMode;
          this.resetDevicePasswordField(false);
@@ -549,18 +552,18 @@ class UserAuthenticatorPasswordDialog extends PopupDialog implements FieldChange
          this._scrollingRegion.add(layout);
       }
 
-      this._scrollingRegion.add((Field)(new Object(authenticatorPasswordLabel, 36028797018963968L)));
+      this._scrollingRegion.add(new RichTextField(authenticatorPasswordLabel, 36028797018963968L));
       if (autoFillAuthenticator) {
          this._devicePasswordField.setChangeListener(this);
       }
 
       if (this._numericEntryMode) {
-         this._authenticatorHFM = (HorizontalFieldManager)(new Object());
+         this._authenticatorHFM = new HorizontalFieldManager();
          this._scrollingRegion.add(this._authenticatorHFM);
          this._numericAuthenticatorPassword = numericAuthenticatorPasswordEntryMode;
          this.resetAuthenticatorPasswordField(false);
-         this._nonScrollingRegion.add((Field)(new Object()));
-         this._statusFieldVFM = (VerticalFieldManager)(new Object(562949953421312L));
+         this._nonScrollingRegion.add(new SeparatorField());
+         this._statusFieldVFM = new VerticalFieldManager(562949953421312L);
          this._nonScrollingRegion.add(this._statusFieldVFM);
       } else {
          FrameLayout layout = this.createAuthenticatorPasswordField();

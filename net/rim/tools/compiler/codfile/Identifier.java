@@ -40,7 +40,7 @@ public final class Identifier extends CodfileData {
    @Override
    public final boolean equals(Object o) {
       if (!(o instanceof Identifier)) {
-         if (!(o instanceof Object)) {
+         if (!(o instanceof String)) {
             return false;
          }
 

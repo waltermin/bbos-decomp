@@ -217,7 +217,7 @@ public class ProvisioningHelper {
             return parseDoubleArray(defaultValues);
          case 3:
          default:
-            String[] sArray = new Object[defaultValues.size()];
+            String[] sArray = new String[defaultValues.size()];
             defaultValues.copyInto(sArray);
             return sArray;
          case 4:
@@ -392,7 +392,7 @@ public class ProvisioningHelper {
       // 009: iload 2
       // 00a: bipush -1
       // 00c: if_icmpne 017
-      // 00f: new java/lang/Object
+      // 00f: new java/util/Date
       // 012: dup
       // 013: invokespecial java/util/Date.<init> ()V
       // 016: areturn
@@ -412,7 +412,7 @@ public class ProvisioningHelper {
       // 02c: iload 4
       // 02e: bipush -1
       // 030: if_icmpne 03b
-      // 033: new java/lang/Object
+      // 033: new java/util/Date
       // 036: dup
       // 037: invokespecial java/util/Date.<init> ()V
       // 03a: areturn
@@ -434,7 +434,7 @@ public class ProvisioningHelper {
       // 055: iload 6
       // 057: bipush -1
       // 059: if_icmpne 064
-      // 05c: new java/lang/Object
+      // 05c: new java/util/Date
       // 05f: dup
       // 060: invokespecial java/util/Date.<init> ()V
       // 063: areturn
@@ -456,7 +456,7 @@ public class ProvisioningHelper {
       // 07f: iload 8
       // 081: bipush -1
       // 083: if_icmpne 08e
-      // 086: new java/lang/Object
+      // 086: new java/util/Date
       // 089: dup
       // 08a: invokespecial java/util/Date.<init> ()V
       // 08d: areturn
@@ -478,7 +478,7 @@ public class ProvisioningHelper {
       // 0a9: iload 10
       // 0ab: bipush -1
       // 0ad: if_icmpne 0b8
-      // 0b0: new java/lang/Object
+      // 0b0: new java/util/Date
       // 0b3: dup
       // 0b4: invokespecial java/util/Date.<init> ()V
       // 0b7: areturn
@@ -500,7 +500,7 @@ public class ProvisioningHelper {
       // 0d3: iload 12
       // 0d5: bipush -1
       // 0d7: if_icmpne 0e2
-      // 0da: new java/lang/Object
+      // 0da: new java/util/Date
       // 0dd: dup
       // 0de: invokespecial java/util/Date.<init> ()V
       // 0e1: areturn
@@ -512,7 +512,7 @@ public class ProvisioningHelper {
       // 0e9: invokevirtual java/lang/String.substring (II)Ljava/lang/String;
       // 0ec: invokestatic java/lang/Integer.parseInt (Ljava/lang/String;)I
       // 0ef: istore 13
-      // 0f1: new java/lang/Object
+      // 0f1: new java/lang/StringBuffer
       // 0f4: dup
       // 0f5: ldc_w "GMT"
       // 0f8: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -558,12 +558,12 @@ public class ProvisioningHelper {
       // 145: invokevirtual java/util/Calendar.set (II)V
       // 148: goto 15d
       // 14b: astore 2
-      // 14c: new java/lang/Object
+      // 14c: new java/util/Date
       // 14f: dup
       // 150: invokespecial java/util/Date.<init> ()V
       // 153: areturn
       // 154: astore 2
-      // 155: new java/lang/Object
+      // 155: new java/util/Date
       // 158: dup
       // 159: invokespecial java/util/Date.<init> ()V
       // 15c: areturn

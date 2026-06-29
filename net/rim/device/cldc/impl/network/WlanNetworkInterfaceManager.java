@@ -135,8 +135,8 @@ final class WlanNetworkInterfaceManager extends NetworkInterfaceManager implemen
                var8 = true;
                int e = RadioInfo.getAccessPointNumber(WLAN.WLAN_PSEUDO_APN);
                if (!RadioInfo.isPDPContextActive(e)) {
-                  TunnelWorker tw = (TunnelWorker)(new Object());
-                  t = tw.open((TunnelConfig)(new Object(WLAN.WLAN_PSEUDO_APN, "net.rim.wlaniface", null, null, null, tw)));
+                  TunnelWorker tw = new TunnelWorker();
+                  t = tw.open(new TunnelConfig(WLAN.WLAN_PSEUDO_APN, "net.rim.wlaniface", null, null, null, tw));
                }
 
                addr = RadioInfo.getIPAddress(e);

@@ -434,7 +434,7 @@ public final class Fixed32 {
       } else if (n == 0) {
          return 0;
       } else {
-         throw new Object("Sqrt of neg");
+         throw new IllegalArgumentException("Sqrt of neg");
       }
    }
 

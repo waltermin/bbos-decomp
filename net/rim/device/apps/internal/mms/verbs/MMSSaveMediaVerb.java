@@ -1,6 +1,6 @@
 package net.rim.device.apps.internal.mms.verbs;
 
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 import net.rim.device.api.io.MIMETypeAssociations;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.apps.api.framework.file.ExplorerServices;
@@ -67,7 +67,7 @@ public class MMSSaveMediaVerb extends Verb {
       byte[] attachmentData = attachment.getData();
       String mimeTypeString = MMSUtilities.getMIMETypeString(attachment.getType());
       if (mimeTypeString != null && !mimeTypeString.equals(MIMETypeAssociations.getMIMEType(attachmentName))) {
-         StringBuffer buf = (StringBuffer)(new Object(attachmentName));
+         StringBuffer buf = new StringBuffer(attachmentName);
          buf.append(".");
          buf.append(MIMETypeAssociations.getExtensionFromMIMEType(mimeTypeString));
          attachmentName = buf.toString();
@@ -77,13 +77,13 @@ public class MMSSaveMediaVerb extends Verb {
          if (mimeTypeString != null && mimeTypeString.toLowerCase().equals("audio/amr")) {
             String path = FileUtilities.getDefaultPathForMIMEType(mimeTypeString);
             ExplorerServices.saveInputStream(
-               path, attachmentName, (InputStream)(new Object(attachmentData)), MIMETypeAssociations.getMediaType(attachmentName), true, false, drmProtected
+               path, attachmentName, new ByteArrayInputStream(attachmentData), MIMETypeAssociations.getMediaType(attachmentName), true, false, drmProtected
             );
             return;
          }
 
          ExplorerServices.saveInputStream(
-            attachmentName, (InputStream)(new Object(attachmentData)), MIMETypeAssociations.getMediaType(attachmentName), true, false, drmProtected
+            attachmentName, new ByteArrayInputStream(attachmentData), MIMETypeAssociations.getMediaType(attachmentName), true, false, drmProtected
          );
       }
    }

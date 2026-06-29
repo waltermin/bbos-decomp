@@ -75,12 +75,12 @@ public final class DialVerb
 
    @Override
    public final void setParameter(Object parameter) {
-      if (!(parameter instanceof Object)) {
-         if (parameter instanceof Object) {
+      if (!(parameter instanceof ContextObject)) {
+         if (parameter instanceof PhoneNumberModel) {
             this._phoneNumber = parameter;
          } else {
-            if (!(parameter instanceof Object)) {
-               throw new Object();
+            if (!(parameter instanceof String)) {
+               throw new IllegalArgumentException();
             }
 
             this._phoneNumber = parameter;
@@ -103,7 +103,7 @@ public final class DialVerb
             this._sourceCallerIDInfo = contextObject.get(5898398779440734986L);
             if (this._sourceCallerIDInfo != null) {
                this._friendlyName = ((CallerIDInfo)this._sourceCallerIDInfo).getFriendlyName();
-            } else if (this._phoneNumber instanceof Object) {
+            } else if (this._phoneNumber instanceof VerbDescriptionProvider) {
                VerbDescriptionProvider verbDescriptionProvider = (VerbDescriptionProvider)this._phoneNumber;
                this._friendlyName = verbDescriptionProvider.getVerbDescription(contextObject);
             }
@@ -119,8 +119,8 @@ public final class DialVerb
       this._callLogInMsgList = PhoneUtilities.getPrivateFlag(parameter, 70);
       this._canCoalesce = !PhoneUtilities.getPrivateFlag(parameter, 74);
       Object ordering = ContextObject.get(parameter, -6956199554576980056L);
-      if (ordering instanceof Object) {
-         super._ordering = ordering;
+      if (ordering instanceof Integer) {
+         super._ordering = (Integer)ordering;
       }
 
       if (ContextObject.getFlag(parameter, 83)) {
@@ -191,9 +191,9 @@ public final class DialVerb
 
    final boolean confirm() {
       String confirmationAddressOrNumber = this._confirmationAddressInfo != null ? this._confirmationAddressInfo.toString() : this._phoneNumber.toString();
-      String message = MessageFormat.format(PhoneResources.getString(136), new Object[]{confirmationAddressOrNumber});
-      String[] choices = (Object[])PhoneResources.getObject(3040);
-      Dialog askDialog = (Dialog)(new Object(message, choices, null, 0, null, 0));
+      String message = MessageFormat.format(PhoneResources.getString(136), new String[]{confirmationAddressOrNumber});
+      String[] choices = (String[])PhoneResources.getObject(3040);
+      Dialog askDialog = new Dialog(message, choices, null, 0, null, 0);
       askDialog.setIcon(ThemeManager.getThemeAwareImage("dialog_question"));
       if (Application.isEventDispatchThread()) {
          return askDialog.doModal() == 0;
@@ -243,7 +243,7 @@ public final class DialVerb
 
    public static final boolean startThreeWayCall(LiveCall call, String phoneNumber, ContextObject context, ContextObject connectionParameters) {
       if (confirmThreeWayCall(call) && call.isActive()) {
-         StringBuffer phoneNumberBuf = (StringBuffer)(new Object());
+         StringBuffer phoneNumberBuf = new StringBuffer();
          PhoneNumberConverter.convertForTransmission(phoneNumberBuf, phoneNumber.toCharArray(), context);
          if (!PhoneUtilities.singleFlash3WC()) {
             VoiceServices.flash(null);
@@ -263,7 +263,7 @@ public final class DialVerb
       }
 
       if (this._phoneNumber == null) {
-         if (context instanceof Object) {
+         if (context instanceof String) {
             this._phoneNumber = context;
          } else {
             this._phoneNumber = ContextObject.get(context, 247);
@@ -271,7 +271,7 @@ public final class DialVerb
       }
 
       if (this._phoneNumber == null) {
-         throw new Object("phone number is null");
+         throw new IllegalArgumentException("phone number is null");
       }
 
       if (this._invokedFromHyperlink || this._useSmartDialing || this._simPhoneBookInvoked) {
@@ -310,7 +310,7 @@ public final class DialVerb
          Backlight.enable(true);
       }
 
-      ContextObject resultContext = (ContextObject)(new Object());
+      ContextObject resultContext = new ContextObject();
       if (PhoneUtilities.cdmaTypeNetwork() && VoiceServices.isPhoneActive()) {
          LiveCall call = (LiveCall)VoiceServices.getVoiceApplication().getCurrentCall();
          if (call == null || call.getStatus() != 1) {
@@ -362,17 +362,17 @@ public final class DialVerb
 
       if (this._rawNumberOnly && this._phoneNumber != null) {
          String displayString;
-         if (!(this._phoneNumber instanceof Object)) {
+         if (!(this._phoneNumber instanceof AbstractPhoneNumberModel)) {
             displayString = this._phoneNumber.toString();
          } else {
             displayString = ((AbstractPhoneNumberModel)this._phoneNumber).getDisplayablePhoneNumber();
          }
 
-         return ((StringBuffer)(new Object())).append(PhoneResources.getString(411)).append(displayString).toString();
+         return PhoneResources.getString(411) + displayString;
       } else {
          String address = null;
          ContextObject contextObject = ContextObject.castOrCreate(this._context);
-         StringBuffer buf = (StringBuffer)(new Object());
+         StringBuffer buf = new StringBuffer();
          boolean addressOnly = contextObject.getFlag(51);
          if (this._sourceCallerIDInfo != null && !this._callLogInMsgList && this._sourceCallerIDInfo instanceof CallerIDInfo) {
             CallerIDInfo cidi = (CallerIDInfo)this._sourceCallerIDInfo;
@@ -388,8 +388,8 @@ public final class DialVerb
          }
 
          if (address == null) {
-            if (!(this._phoneNumber instanceof Object)) {
-               if (this._phoneNumber instanceof Object) {
+            if (!(this._phoneNumber instanceof VerbDescriptionProvider)) {
+               if (this._phoneNumber instanceof String) {
                   address = (String)this._phoneNumber;
                }
             } else {
@@ -432,8 +432,8 @@ public final class DialVerb
 
          if (address != null) {
             buf.append(address);
-            if (PhoneUtilities.getDebugFlag(3149033938084553376L) && this._phoneNumber instanceof Object && this._addressBookEntry != null) {
-               buf.append(((StringBuffer)(new Object(" ("))).append(((PhoneNumberModel)this._phoneNumber).getValue()).append(')').toString());
+            if (PhoneUtilities.getDebugFlag(3149033938084553376L) && this._phoneNumber instanceof PhoneNumberModel && this._addressBookEntry != null) {
+               buf.append(" (" + ((PhoneNumberModel)this._phoneNumber).getValue() + ')');
             }
          }
 
@@ -445,7 +445,7 @@ public final class DialVerb
    public DialVerb(Object phoneNumber, Object identity, int ordering, String description) {
       super(ordering);
       this._phoneNumber = phoneNumber;
-      if (identity instanceof Object) {
+      if (identity instanceof PersistableRIMModel) {
          this._addressBookEntry = (PersistableRIMModel)identity;
       }
 
@@ -459,7 +459,7 @@ public final class DialVerb
 
    @Override
    public final int getOrdering() {
-      if (this._phoneNumber instanceof Object) {
+      if (this._phoneNumber instanceof PhoneNumberModel) {
          if (this._insideAddressCard) {
             return 1196288;
          }

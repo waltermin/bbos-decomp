@@ -20,6 +20,7 @@ import net.rim.device.apps.api.messaging.MessageFilter;
 import net.rim.device.apps.internal.blackberryemail.folder.EmailFolder;
 import net.rim.device.apps.internal.blackberryemail.folder.EmailHierarchy;
 import net.rim.vm.Array;
+import net.rim.vm.WeakReference;
 
 final class PINMessageSync
    extends MessageSync
@@ -30,7 +31,7 @@ final class PINMessageSync
    OTASyncPriorityProvider,
    OTASyncDefaultProvider,
    OTASyncEventOptimizationProvider {
-   private CollectionListenerManager _listeners = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _listeners = new CollectionListenerManager();
    private static final String SYNC_COLLECTION_NAME = "PIN Messages";
    private static final long PIN_MESSAGES_BACKUP_MERGE_ID = -8297684192922704087L;
 
@@ -127,16 +128,16 @@ final class PINMessageSync
       FolderMerge.registerMergedFolder(-8297684192922704087L, anonymousEmailHierarchy.getFiledFolder());
       FolderMerge.registerMergedFolder(-8297684192922704087L, anonymousEmailHierarchy.getOrphanedSavedFolder());
       ReadableList messages = (ReadableList)FolderMerge.getMergeCollection(-8297684192922704087L);
-      MessageFilter filter = (MessageFilter)(new Object(messages, (byte)2));
-      ((CollectionEventSource)messages).addCollectionListener(new Object(filter));
-      messages = filter;
-      int numMessages = messages.size();
-      SyncObject[] syncObjects = new Object[numMessages];
+      MessageFilter filter = new MessageFilter(messages, (byte)2);
+      ((CollectionEventSource)messages).addCollectionListener(new WeakReference(filter));
+      ReadableList var9 = filter;
+      int numMessages = var9.size();
+      SyncObject[] syncObjects = new SyncObject[numMessages];
       LowMemoryManager.poll();
       synchronized (FolderHierarchies.getLockObject()) {
-         numMessages = messages.size();
+         numMessages = var9.size();
          Array.resize(syncObjects, numMessages);
-         messages.getAt(0, numMessages, syncObjects, 0);
+         var9.getAt(0, numMessages, syncObjects, 0);
       }
 
       FolderMerge.deregisterMergedFolder(-8297684192922704087L, anonymousEmailHierarchy.getUnfiledFolder());

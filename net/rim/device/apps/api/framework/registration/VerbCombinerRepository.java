@@ -22,7 +22,7 @@ public class VerbCombinerRepository {
 
    public static void addCombiner(long collectionId, VerbCombiner combiner) {
       if (combiner == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       VerbCombiner[] combiners;

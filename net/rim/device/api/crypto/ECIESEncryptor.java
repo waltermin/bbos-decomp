@@ -27,7 +27,7 @@ public final class ECIESEncryptor extends StreamEncryptor {
       Digest kdfDigest,
       boolean useCofactor
    ) {
-      super((OutputStream)(new Object()));
+      super(new NoCopyByteArrayOutputStream());
       this._outputStream = out;
       if (out != null && recipientPublicKey != null) {
          if (macAlgorithm == null) {
@@ -62,19 +62,19 @@ public final class ECIESEncryptor extends StreamEncryptor {
          ECKeyPair ephemeral = new ECKeyPair(recipientPublicKey.getECCryptoSystem());
          byte[] sharedSecret = ECDHKeyAgreement.generateSharedSecret(ephemeral.getECPrivateKey(), recipientPublicKey, useCofactor);
          if (kdfDigest == null) {
-            kdfDigest = (Digest)(new Object());
+            kdfDigest = new SHA1Digest();
          }
 
          this._source = new X963KDFPseudoRandomSource(sharedSecret, additionalKDFInfo, kdfDigest);
          this._outputStream.write(ephemeral.getECPublicKey().getPublicKeyData());
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object("ECIES/"))).append(this._macAlgorithm).toString();
+      return "ECIES/" + this._macAlgorithm;
    }
 
    @Override
@@ -85,7 +85,7 @@ public final class ECIESEncryptor extends StreamEncryptor {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void close() {
+   public final void close() throws CryptoIOException {
       try {
          NoCopyByteArrayOutputStream out = (NoCopyByteArrayOutputStream)super._out;
          byte[] data = out.getByteArray();
@@ -104,7 +104,7 @@ public final class ECIESEncryptor extends StreamEncryptor {
          super.close();
          super._out = this._outputStream;
       } catch (Throwable var8) {
-         throw new Object(e);
+         throw new CryptoIOException(e);
       }
    }
 
@@ -267,7 +267,7 @@ public final class ECIESEncryptor extends StreamEncryptor {
       // 0de: bipush 21
       // 0e0: bastore
       // 0e1: astore 5
-      // 0e3: new java/lang/Object
+      // 0e3: new java/io/ByteArrayOutputStream
       // 0e6: dup
       // 0e7: invokespecial java/io/ByteArrayOutputStream.<init> ()V
       // 0ea: astore 6
@@ -292,7 +292,7 @@ public final class ECIESEncryptor extends StreamEncryptor {
       // 110: aload 6
       // 112: invokevirtual java/io/ByteArrayOutputStream.toByteArray ()[B
       // 115: astore 8
-      // 117: new java/lang/Object
+      // 117: new java/io/ByteArrayInputStream
       // 11a: dup
       // 11b: aload 8
       // 11d: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -339,7 +339,7 @@ public final class ECIESEncryptor extends StreamEncryptor {
       // 170: astore 1
       // 171: goto 175
       // 174: astore 1
-      // 175: new java/lang/Object
+      // 175: new net/rim/device/api/crypto/CryptoSelfTestError
       // 178: dup
       // 179: invokespecial net/rim/device/api/crypto/CryptoSelfTestError.<init> ()V
       // 17c: athrow

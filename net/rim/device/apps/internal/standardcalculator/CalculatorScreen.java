@@ -95,7 +95,7 @@ final class CalculatorScreen extends AppsMainScreen implements MenuHandler {
       super(562949953421312L);
       this.setHelp("calculator");
       this.setTag(TAG);
-      VerticalFieldManager vfm = (VerticalFieldManager)(new Object());
+      VerticalFieldManager vfm = new VerticalFieldManager();
       vfm.setTag(TAG);
       vfm.setId("calculator");
       vfm.add(this._calculatorUI);
@@ -123,11 +123,11 @@ final class CalculatorScreen extends AppsMainScreen implements MenuHandler {
       DeciFloat displayFP = new DeciFloat(this._calculatorUI.getText());
       DeciFloat clipBoardFP = new DeciFloat(Clipboard.getClipboard().toString().trim());
       if (!displayFP.isZero()) {
-         menu.add((MenuItem)(new Object(this, CalculatorUI._commonResources, 3, 196672, 200)));
+         menu.add(new MenuItemCallback(this, CalculatorUI._commonResources, 3, 196672, 200));
       }
 
       if (!clipBoardFP.isZero()) {
-         menu.add((MenuItem)(new Object(this, CalculatorUI._commonResources, 6, 196704, 400)));
+         menu.add(new MenuItemCallback(this, CalculatorUI._commonResources, 6, 196704, 400));
       }
 
       if (this._calculatorUI._displayFP == null || !this._calculatorUI._displayFP.isInvalid()) {
@@ -162,7 +162,7 @@ final class CalculatorScreen extends AppsMainScreen implements MenuHandler {
    }
 
    private final void menuConversion(int[] options) {
-      Menu submenu = (Menu)(new Object());
+      Menu submenu = new Menu();
       MenuItemCallback.add(submenu, this, CalculatorUI._resources, options, 0, 0);
       submenu.show();
    }

@@ -278,7 +278,7 @@ public class MediaRecorderScreen extends MainScreen implements MediaListener, Sc
    @Override
    public Object getHint() {
       if (this._hint != null && this._model == this._modelControl && !this.isObscured()) {
-         LabelField hint = (LabelField)(new Object(this._hint, 51539607616L));
+         LabelField hint = new LabelField(this._hint, 51539607616L);
          hint.setTag(ThemeUtilities.TAG_RECORDER_HINT);
          this._hint = null;
          return hint;
@@ -326,7 +326,7 @@ public class MediaRecorderScreen extends MainScreen implements MediaListener, Sc
       }
 
       Object services = this._pmePlayer.getServices();
-      if (services instanceof Object) {
+      if (services instanceof MediaServices) {
          MediaServices mediaServices = (MediaServices)services;
          FocusInteractor focus = (FocusInteractor)mediaServices.getService("FocusInteractor");
          focus.setFocusToItem(this._model.getHandle(nodeName));
@@ -350,9 +350,9 @@ public class MediaRecorderScreen extends MainScreen implements MediaListener, Sc
       this.getMainManager().setTag(ThemeUtilities.TAG_RECORDER_SCREEN);
       this._banner = RibbonBanner.getInstance().getStatusBanner(null, 3);
       this._banner.setTag(ThemeUtilities.TAG_RECORDER_BANNER);
-      this._mediaField = (MediaField)(new Object(18014411397529600L));
-      this._manager = (MediaManager)(new Object());
-      this._pmePlayer = (MediaPlayer)(new Object());
+      this._mediaField = new MediaField(18014411397529600L);
+      this._manager = new MediaManager();
+      this._pmePlayer = new MediaPlayer();
       this._pmePlayer.setUI(this._mediaField);
       this._pmePlayer.setInternalMediaListener(this);
 
@@ -378,9 +378,9 @@ public class MediaRecorderScreen extends MainScreen implements MediaListener, Sc
 
    @Override
    public Menu getMenu(int instance) {
-      ContextObject menuContext = (ContextObject)(new Object());
-      menuContext.put(244, new Object(32247));
-      SystemEnabledMenu menu = (SystemEnabledMenu)(new Object(menuContext, null));
+      ContextObject menuContext = new ContextObject();
+      menuContext.put(244, new Integer(32247));
+      SystemEnabledMenu menu = new SystemEnabledMenu(menuContext, null);
       Menu.setTargetScreen(this);
       menu.setInstance(instance);
       this.makeMenuWithContext(menu, instance);

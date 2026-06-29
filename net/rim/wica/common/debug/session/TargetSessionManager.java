@@ -21,7 +21,7 @@ public final class TargetSessionManager extends AbstractSessionManager implement
 
    public final void init(IInputByteStreamAdapter inStream, IOutputByteStreamAdapter outStream) {
       if (super._initHasBeenCalled) {
-         throw new Object("init() should only be called once; to reuse, call reinit().");
+         throw new IllegalStateException("init() should only be called once; to reuse, call reinit().");
       }
 
       super._inStream = inStream;
@@ -38,7 +38,7 @@ public final class TargetSessionManager extends AbstractSessionManager implement
       try {
          super._fsm.eventConnected();
       } catch (ProtocolStateMachine$InvalidStateException e) {
-         throw new Object("FSM should be in valid state for connect.");
+         throw new IllegalStateException("FSM should be in valid state for connect.");
       }
    }
 
@@ -86,7 +86,7 @@ public final class TargetSessionManager extends AbstractSessionManager implement
    public final void sendTargetEventMessage(int messageType, ITargetEventMessage messageBody) {
       byte[] serializedBody = ByteStreamUtil.serialize(messageBody);
       if (serializedBody == null) {
-         throw new Object("messageBody");
+         throw new IllegalArgumentException("messageBody");
       }
 
       IMessageEnvelope message = MessageFactory.createTargetEventMessage(messageType, serializedBody);
@@ -101,7 +101,7 @@ public final class TargetSessionManager extends AbstractSessionManager implement
    public final void sendResponseMessage(int messageType, int messageId, IResponseMessage messageBody) {
       byte[] serialMessage = ByteStreamUtil.serialize(messageBody);
       if (serialMessage == null) {
-         throw new Object("messageBody");
+         throw new IllegalArgumentException("messageBody");
       }
 
       IMessageEnvelope message = MessageFactory.createResponseMessage(messageType, serialMessage);

@@ -14,7 +14,7 @@ public class AbstractMessageWriter {
    }
 
    protected AbstractMessageWriter(OutputStream out) {
-      this._dout = (DataOutputStream)(new Object(out));
+      this._dout = new DataOutputStream(out);
    }
 
    protected byte[] getHeader() {
@@ -30,15 +30,15 @@ public class AbstractMessageWriter {
    }
 
    protected final void writeMessage(byte message, float param) {
-      this.writeMessage(message, new Object(param));
+      this.writeMessage(message, new Float(param));
    }
 
    protected final void writeMessage(byte message, int param) {
-      this.writeMessage(message, new Object(param));
+      this.writeMessage(message, new Integer(param));
    }
 
    protected final void writeMessage(byte message, long param) {
-      this.writeMessage(message, new Object(param));
+      this.writeMessage(message, new Long(param));
    }
 
    protected final void writeMessage(byte message, Object param1) {
@@ -117,26 +117,26 @@ public class AbstractMessageWriter {
 
    public void writeObject(Object obj) {
       DataOutput dout = this.getDataOutputStream();
-      if (obj instanceof Object) {
-         dout.writeBoolean(obj);
-      } else if (obj instanceof Object) {
-         dout.writeByte(obj);
-      } else if (obj instanceof Object) {
-         dout.writeShort(obj);
-      } else if (obj instanceof Object) {
-         dout.writeInt(obj);
-      } else if (obj instanceof Object) {
-         dout.writeLong(obj);
-      } else if (obj instanceof Object) {
-         dout.writeFloat(obj);
-      } else if (obj instanceof Object) {
-         dout.writeDouble(obj);
-      } else if (obj instanceof Object) {
+      if (obj instanceof Boolean) {
+         dout.writeBoolean((Boolean)obj);
+      } else if (obj instanceof Byte) {
+         dout.writeByte((Byte)obj);
+      } else if (obj instanceof Short) {
+         dout.writeShort((Short)obj);
+      } else if (obj instanceof Integer) {
+         dout.writeInt((Integer)obj);
+      } else if (obj instanceof Long) {
+         dout.writeLong((Long)obj);
+      } else if (obj instanceof Float) {
+         dout.writeFloat((Float)obj);
+      } else if (obj instanceof Double) {
+         dout.writeDouble((Double)obj);
+      } else if (obj instanceof String) {
          this.writeString((String)obj);
-      } else if (obj instanceof Object[]) {
-         this.writeStringArray((Object[])obj);
+      } else if (obj instanceof String[]) {
+         this.writeStringArray((String[])obj);
       } else {
-         throw new Object(((StringBuffer)(new Object("object type not supported: "))).append(obj.toString()).toString());
+         throw new IllegalArgumentException("object type not supported: " + obj.toString());
       }
    }
 }

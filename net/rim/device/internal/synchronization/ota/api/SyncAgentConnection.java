@@ -30,7 +30,7 @@ public final class SyncAgentConnection implements OTASyncPriorityProvider {
    private boolean _closed;
    private DataSourceDatabase _dataSourceDatabase;
    private int _retryCount = 0;
-   private static final IOException ClosedConnectionIOException = (IOException)(new Object("Closed"));
+   private static final IOException ClosedConnectionIOException = new IOException("Closed");
    private static final int MAX_RETRY = 10;
 
    public final Configuration getConfiguration() {
@@ -117,7 +117,7 @@ public final class SyncAgentConnection implements OTASyncPriorityProvider {
       synchronized (SyncAgentConnections.getLock()) {
          synchronized (this._syncAgentConnectionState) {
             if (aSyncAgentConnectionListener != null) {
-               this._wRef_SyncAgentConnectionListener = (WeakReference)(new Object(aSyncAgentConnectionListener));
+               this._wRef_SyncAgentConnectionListener = new WeakReference(aSyncAgentConnectionListener);
                if (!SyncAgentConnections.isConnectionRegistered(this._syncAgentUrl)) {
                   SyncAgentConnections.registerConnection(this);
                }
@@ -267,25 +267,14 @@ public final class SyncAgentConnection implements OTASyncPriorityProvider {
 
                   this._syncAgentStatistics.incrementNumberOfFailedOperations();
                   this._syncAgentStatistics.setRemovedDueToFailure(true);
-                  String xMsg = ((StringBuffer)(new Object()))
-                     .append(this._syncAgentUrl.getDatabaseName())
-                     .append(',')
-                     .append("RTR")
-                     .append(',')
-                     .append("SUSP")
-                     .append(',')
-                     .toString();
+                  String xMsg = this._syncAgentUrl.getDatabaseName() + ',' + "RTR" + ',' + "SUSP" + ',';
                   if (!(xChange instanceof SyncApplicationRecordChange)) {
                      if (xChangeStatus.isContextual()) {
-                        Logger.logOperationError(0, 0, ((StringBuffer)(new Object())).append(xMsg).append("CNTX").toString());
+                        Logger.logOperationError(0, 0, xMsg + "CNTX");
                      }
                   } else {
                      SyncApplicationRecordChange xRecordChange = (SyncApplicationRecordChange)xChange;
-                     Logger.logOperationError(
-                        xChange.getOperation(),
-                        xRecordChange.getRecordUid(),
-                        ((StringBuffer)(new Object())).append(xMsg).append(StringUtilities.removeChars("OP=", "=")).toString()
-                     );
+                     Logger.logOperationError(xChange.getOperation(), xRecordChange.getRecordUid(), xMsg + StringUtilities.removeChars("OP=", "="));
                   }
                }
 
@@ -305,20 +294,17 @@ public final class SyncAgentConnection implements OTASyncPriorityProvider {
             case 67:
                if (!this.isDisabled() && anObject instanceof SyncApplicationChangeStatus) {
                   this._syncAgentConnectionState.setDisabled(true);
-                  Logger.logAddingRemovingConnection(
-                     false, 0, 0, ((StringBuffer)(new Object())).append(this._syncAgentUrl.getDatabaseName()).append(',').append("RTR").toString(), true
-                  );
+                  Logger.logAddingRemovingConnection(false, 0, 0, this._syncAgentUrl.getDatabaseName() + ',' + "RTR", true);
                   this.close(false);
                }
 
                return 200;
             default:
                if (this.isClosed() || this.isDisabled()) {
-                  String errorMessage = ((StringBuffer)(new Object("SyncAgentConnection.onSessionEvent(): The connection is not ready for sync. isClosed()=")))
-                     .append(this.isClosed())
-                     .append(" isDisabled()=")
-                     .append(this.isDisabled())
-                     .toString();
+                  String errorMessage = "SyncAgentConnection.onSessionEvent(): The connection is not ready for sync. isClosed()="
+                     + this.isClosed()
+                     + " isDisabled()="
+                     + this.isDisabled();
                   Logger.logErrorMessage(errorMessage);
                   return 412;
                }
@@ -378,16 +364,14 @@ public final class SyncAgentConnection implements OTASyncPriorityProvider {
                         return 200;
                      }
                   } catch (Throwable var20) {
-                     String errorMessage = ((StringBuffer)(new Object("SyncAgentConnection.handleConflicts() threw an IOException: ")))
-                        .append(e.toString())
-                        .toString();
+                     String errorMessage = "SyncAgentConnection.handleConflicts() threw an IOException: " + e.toString();
                      Logger.logOperationError(eventId, 0, errorMessage);
                      return 411;
                   }
                }
          }
       } catch (Throwable var21) {
-         String errorMessage = ((StringBuffer)(new Object("SyncAgentConnection.onSessionEvent() threw an exception: "))).append(t.toString()).toString();
+         String errorMessage = "SyncAgentConnection.onSessionEvent() threw an exception: " + t.toString();
          Logger.logOperationError(eventId, 0, errorMessage);
          return 411;
       }
@@ -779,9 +763,9 @@ public final class SyncAgentConnection implements OTASyncPriorityProvider {
       }
    }
 
-   public SyncAgentConnection(SyncAgentUrl aSyncAgentUrl, int aPriority, SyncCollectionSchema aSyncCollectionSchema, int appModualHandle, int aDependencyLevel) {
+   public SyncAgentConnection(SyncAgentUrl aSyncAgentUrl, int aPriority, SyncCollectionSchema aSyncCollectionSchema, int appModualHandle, int aDependencyLevel) throws IOException {
       if (aPriority > 10 || aPriority < 1) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (aDependencyLevel <= 255 && aDependencyLevel >= 1) {
@@ -789,14 +773,14 @@ public final class SyncAgentConnection implements OTASyncPriorityProvider {
          long sid = this._syncAgentUrl.getSid();
          this._sessionManager = SessionManager.getSessionManagerFor(sid);
          if (this._sessionManager == null) {
-            throw new Object();
+            throw new IOException();
          }
 
          this._priority = (byte)aPriority;
          this._dependencyLevel = (byte)(aDependencyLevel + -128);
          this._configuration = ServicesConfigurationManager.getSingletonInstance().getConfiguration(sid);
          if (!this._configuration.isUserPreferenceToSyncSet()) {
-            throw new Object();
+            throw new IOException();
          }
 
          String xDataSourceName = this._syncAgentUrl.getDataSourceName();
@@ -830,10 +814,10 @@ public final class SyncAgentConnection implements OTASyncPriorityProvider {
             }
          } else {
             SyncAgentStatisticsCollector.purgeSyncAgentStatisticsFor(aSyncAgentUrl);
-            throw new Object();
+            throw new IOException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

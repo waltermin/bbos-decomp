@@ -20,7 +20,7 @@ public final class Crypto {
          CryptoIOException e;
          try {
             try {
-               ByteArrayOutputStream output = (ByteArrayOutputStream)(new Object());
+               ByteArrayOutputStream output = new ByteArrayOutputStream();
                EncryptorOutputStream eos = EncryptorFactory.getEncryptorOutputStream(key, output, algorithm, iv);
                eos.write(plaintext, offset, length);
                eos.close();
@@ -29,12 +29,12 @@ public final class Crypto {
                e = var10;
             }
          } catch (Throwable var11) {
-            throw new Object(e.toString());
+            throw new RuntimeException(e.toString());
          }
 
          throw e.getCryptoException();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -45,7 +45,7 @@ public final class Crypto {
          CryptoIOException e;
          try {
             try {
-               ByteArrayInputStream input = (ByteArrayInputStream)(new Object(ciphertext, offset, length));
+               ByteArrayInputStream input = new ByteArrayInputStream(ciphertext, offset, length);
                DecryptorInputStream dis = DecryptorFactory.getDecryptorInputStream(key, input, algorithm, iv);
                byte[] buffer = new byte[length];
                int plaintextLength = dis.read(buffer);
@@ -55,12 +55,12 @@ public final class Crypto {
                e = var12;
             }
          } catch (Throwable var13) {
-            throw new Object(e.toString());
+            throw new RuntimeException(e.toString());
          }
 
          throw e.getCryptoException();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -82,7 +82,7 @@ public final class Crypto {
       if (mac != null && macOffset >= 0 && macLength >= 0 && mac.length - macLength >= macOffset) {
          return Arrays.equals(getMAC(data, dataOffset, dataLength, key, algorithm), 0, mac, macOffset, macLength);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -104,10 +104,10 @@ public final class Crypto {
 
    public static final byte[] getPRNG(byte[] seed, int seedOffset, int seedLength, int outputLength) {
       try {
-         PseudoRandomSource prng = (PseudoRandomSource)(new Object(seed, seedOffset, seedLength));
+         PseudoRandomSource prng = new FIPS186PseudoRandomSource(seed, seedOffset, seedLength);
          return prng.getBytes(outputLength);
       } finally {
-         throw new Object();
+         throw new RuntimeException();
       }
    }
 }

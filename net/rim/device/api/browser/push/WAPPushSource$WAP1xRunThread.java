@@ -54,7 +54,7 @@ final class WAPPushSource$WAP1xRunThread extends Thread {
       // 03f: athrow
       // 040: aload 0
       // 041: getfield net/rim/device/api/browser/push/WAPPushSource$WAP1xRunThread.this$0 Lnet/rim/device/api/browser/push/WAPPushSource;
-      // 044: new java/lang/Object
+      // 044: new java/lang/StringBuffer
       // 047: dup
       // 048: ldc_w "waphttp://:"
       // 04b: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -69,7 +69,7 @@ final class WAPPushSource$WAP1xRunThread extends Thread {
       // 062: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 065: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 068: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 06b: checkcast java/lang/Object
+      // 06b: checkcast javax/microedition/io/ServerSocketConnection
       // 06e: putfield net/rim/device/api/browser/push/WAPPushSource._notifier Ljavax/microedition/io/ServerSocketConnection;
       // 071: aload 0
       // 072: getfield net/rim/device/api/browser/push/WAPPushSource$WAP1xRunThread.this$0 Lnet/rim/device/api/browser/push/WAPPushSource;
@@ -80,7 +80,7 @@ final class WAPPushSource$WAP1xRunThread extends Thread {
       // 07f: getfield net/rim/device/api/browser/push/WAPPushSource$WAP1xRunThread.this$0 Lnet/rim/device/api/browser/push/WAPPushSource;
       // 082: getfield net/rim/device/api/browser/push/WAPPushSource._notifier Ljavax/microedition/io/ServerSocketConnection;
       // 085: invokeinterface javax/microedition/io/StreamConnectionNotifier.acceptAndOpen ()Ljavax/microedition/io/StreamConnection; 1
-      // 08a: checkcast java/lang/Object
+      // 08a: checkcast net/rim/device/api/io/http/HttpServerConnection
       // 08d: astore 1
       // 08e: aload 1
       // 08f: ifnonnull 0bd
@@ -103,7 +103,7 @@ final class WAPPushSource$WAP1xRunThread extends Thread {
       // 0b8: aconst_null
       // 0b9: putfield net/rim/device/api/browser/push/WAPPushSource._notifier Ljavax/microedition/io/ServerSocketConnection;
       // 0bc: return
-      // 0bd: new java/lang/Object
+      // 0bd: new net/rim/device/api/io/http/HttpHeaders
       // 0c0: dup
       // 0c1: invokespecial net/rim/device/api/io/http/HttpHeaders.<init> ()V
       // 0c4: astore 2
@@ -131,7 +131,7 @@ final class WAPPushSource$WAP1xRunThread extends Thread {
       // 0f1: aload 2
       // 0f2: aload 1
       // 0f3: invokeinterface javax/microedition/io/InputConnection.openDataInputStream ()Ljava/io/DataInputStream; 1
-      // 0f8: checkcast java/lang/Object
+      // 0f8: checkcast net/rim/device/api/io/http/PushInputStream
       // 0fb: invokeinterface net/rim/device/api/browser/push/Pushlet.messageReceived (Lnet/rim/device/api/io/http/HttpHeaders;Lnet/rim/device/api/io/http/PushInputStream;)V 3
       // 100: aload 1
       // 101: invokeinterface javax/microedition/io/Connection.close ()V 1
@@ -140,7 +140,7 @@ final class WAPPushSource$WAP1xRunThread extends Thread {
       // 108: goto 071
       // 10b: astore 4
       // 10d: ldc2_w -1133226195824034738
-      // 110: new java/lang/Object
+      // 110: new java/lang/StringBuffer
       // 113: dup
       // 114: ldc_w "PPce\n"
       // 117: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -271,7 +271,7 @@ final class WAPPushSource$WAP1xRunThread extends Thread {
       // 216: aload 7
       // 218: athrow
       // 219: ldc2_w -1133226195824034738
-      // 21c: new java/lang/Object
+      // 21c: new java/lang/StringBuffer
       // 21f: dup
       // 220: ldc_w "PPex\n"
       // 223: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V

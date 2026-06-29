@@ -1,5 +1,6 @@
 package net.rim.wica.runtime.util.zip;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 public class ZipFile {
@@ -60,7 +61,7 @@ public class ZipFile {
    }
 
    static String extractString(byte[] bytes, int offset, int length) {
-      StringBuffer buff = (StringBuffer)(new Object(length));
+      StringBuffer buff = new StringBuffer(length);
 
       for (int i = 0; i < length; i++) {
          buff.append((char)bytes[offset + i]);
@@ -71,11 +72,11 @@ public class ZipFile {
 
    private void checkClosed() {
       if (this._entries == null) {
-         throw new Object("The ZIP file is closed.");
+         throw new IllegalStateException("The ZIP file is closed.");
       }
    }
 
-   private void init(String name, byte[] bytes) {
+   private void init(String name, byte[] bytes) throws IOException {
       this._name = name;
       int length = bytes.length;
       int numEntries = 0;
@@ -93,7 +94,7 @@ public class ZipFile {
       }
 
       if (offset <= 0) {
-         throw new Object(((StringBuffer)(new Object("Cannot locate central directory: "))).append(this._name).toString());
+         throw new IOException("Cannot locate central directory: " + this._name);
       }
 
       this._entries = new ZipEntry[numEntries];

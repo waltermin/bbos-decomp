@@ -10,6 +10,7 @@ import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.ui.text.TextFilter;
 import net.rim.device.apps.api.ui.AppsMainScreen;
@@ -78,7 +79,7 @@ public final class PrefNetworkItemOptions extends AppsMainScreen implements List
       }
 
       if (this._origNetInfo == null) {
-         this._origNetInfo = (NetworkInfo)(new Object());
+         this._origNetInfo = new NetworkInfo();
          if ((this._type == 2 || this._type == 3) && this._netList != null && this._netList.getItem(this._origPriority) != null) {
             this.copyNetworkInfo(this._origNetInfo, this._netList.getItem(this._origPriority));
          } else {
@@ -91,7 +92,7 @@ public final class PrefNetworkItemOptions extends AppsMainScreen implements List
       }
 
       if (this._netInfo == null) {
-         this._netInfo = (NetworkInfo)(new Object());
+         this._netInfo = new NetworkInfo();
          this.copyNetworkInfo(this._netInfo, this._origNetInfo);
       }
 
@@ -107,26 +108,26 @@ public final class PrefNetworkItemOptions extends AppsMainScreen implements List
       }
 
       value = Integer.toString(priority + 1);
-      this._priorityField = (EditField)(new Object(this.getLabel(OptionsResources.getString(1876)), value, maxPriotityChars, style));
+      this._priorityField = new EditField(this.getLabel(OptionsResources.getString(1876)), value, maxPriotityChars, style);
       this._priorityField.setFilter(TextFilter.get(1));
       int netId = this._netInfo != null ? this._netInfo.getNetworkId() : 0;
       value = netId != 0 ? NetworkOptionsUtils.mobileCodeToString(this._netInfo.getMcc()) : null;
-      this._netMccField = (EditField)(new Object(this.getLabel(OptionsResources.getString(1883)), value, 3, style));
+      this._netMccField = new EditField(this.getLabel(OptionsResources.getString(1883)), value, 3, style);
       this._netMccField.setFilter(TextFilter.get(1));
       value = netId != 0 ? NetworkOptionsUtils.mobileCodeToString(this._netInfo.getMnc()) : null;
-      this._netMncField = (EditField)(new Object(this.getLabel(OptionsResources.getString(1884)), value, 3, style));
+      this._netMncField = new EditField(this.getLabel(OptionsResources.getString(1884)), value, 3, style);
       this._netMncField.setFilter(TextFilter.get(1));
-      this._netNameField = (RichTextField)(new Object(45036004863639552L));
+      this._netNameField = new RichTextField(45036004863639552L);
       this.add(this._priorityField);
       this.add(this._netMccField);
       this.add(this._netMncField);
       this._netMccField.setChangeListener(this);
       this._netMncField.setChangeListener(this);
       if (NetworkOptionsUtils.is3GSupported()) {
-         String[] choices = new Object[]{OptionsResources.getStringArray(1970)[1], OptionsResources.getStringArray(1970)[0]};
+         String[] choices = new String[]{OptionsResources.getStringArray(1970)[1], OptionsResources.getStringArray(1970)[0]};
          int initialIndex = this._netInfo != null && (this._netInfo.getCategory() & 64) != 0 ? 1 : 0;
-         this._net3GField = (ObjectChoiceField)(new Object(OptionsResources.getString(1972), choices, initialIndex, style));
-         this.add((Field)(new Object()));
+         this._net3GField = new ObjectChoiceField(OptionsResources.getString(1972), choices, initialIndex, style);
+         this.add(new SeparatorField());
          this.add(this._net3GField);
          this._net3GField.setChangeListener(this);
       }
@@ -199,7 +200,7 @@ public final class PrefNetworkItemOptions extends AppsMainScreen implements List
    }
 
    private final String getString(String label, String value) {
-      StringBuffer strBuf = (StringBuffer)(new Object());
+      StringBuffer strBuf = new StringBuffer();
       strBuf.append(label);
       strBuf.append(": ");
       strBuf.append(value);
@@ -207,7 +208,7 @@ public final class PrefNetworkItemOptions extends AppsMainScreen implements List
    }
 
    private final String getLabel(String label) {
-      return ((StringBuffer)(new Object())).append(label).append(":").append(" ").toString();
+      return label + ":" + " ";
    }
 
    private final void copyNetworkInfo(NetworkInfo toNetInfo, NetworkInfo fromNetInfo) {

@@ -1,5 +1,6 @@
 package net.rim.device.apps.api.framework.model;
 
+import java.io.EOFException;
 import java.util.Calendar;
 import java.util.TimeZone;
 import net.rim.device.api.collection.ReadableList;
@@ -176,11 +177,11 @@ public class SyncBuffer {
       return this.getBytes(type, consumed);
    }
 
-   public byte[] getBytes(int type, boolean consumed) {
+   public byte[] getBytes(int type, boolean consumed) throws EOFException {
       if (ConverterUtilities.findType(this._dataBuffer, type, false)) {
          return ConverterUtilities.readByteArray(this._dataBuffer, consumed);
       } else {
-         throw new Object();
+         throw new EOFException();
       }
    }
 
@@ -193,11 +194,11 @@ public class SyncBuffer {
       return this.getInt(type, consumed);
    }
 
-   public int getInt(int type, boolean consumed) {
+   public int getInt(int type, boolean consumed) throws EOFException {
       if (ConverterUtilities.findType(this._dataBuffer, type, false)) {
          return ConverterUtilities.readInt(this._dataBuffer, consumed);
       } else {
-         throw new Object();
+         throw new EOFException();
       }
    }
 
@@ -205,11 +206,11 @@ public class SyncBuffer {
       return ConverterUtilities.readInt(this._dataBuffer);
    }
 
-   public long getLong(int type, boolean consumed) {
+   public long getLong(int type, boolean consumed) throws EOFException {
       if (ConverterUtilities.findType(this._dataBuffer, type, false)) {
          return ConverterUtilities.readLong(this._dataBuffer, consumed);
       } else {
-         throw new Object();
+         throw new EOFException();
       }
    }
 
@@ -222,19 +223,19 @@ public class SyncBuffer {
       return this.getDateGMT(type, consumed);
    }
 
-   public long getDateGMT(int type, boolean consumed) {
+   public long getDateGMT(int type, boolean consumed) throws EOFException {
       if (ConverterUtilities.findType(this._dataBuffer, type, false)) {
          return ConverterUtilities.getDateGMT(this._dataBuffer, consumed);
       } else {
-         throw new Object();
+         throw new EOFException();
       }
    }
 
-   public long getDateTime(int type, boolean consumed) {
+   public long getDateTime(int type, boolean consumed) throws EOFException {
       if (ConverterUtilities.findType(this._dataBuffer, type, false)) {
          return ConverterUtilities.getDateTime(this._dataBuffer, consumed);
       } else {
-         throw new Object();
+         throw new EOFException();
       }
    }
 

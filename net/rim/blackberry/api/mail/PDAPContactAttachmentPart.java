@@ -6,6 +6,7 @@ import javax.microedition.pim.PIM;
 import javax.microedition.pim.PIMException;
 import net.rim.blackberry.api.pdap.ContactImpl;
 import net.rim.blackberry.api.pdap.ContactListImpl;
+import net.rim.device.apps.api.addressbook.AddressCardModel;
 
 public class PDAPContactAttachmentPart extends AbstractContactAttachmentPart {
    protected static ContactListImpl _contactList;
@@ -23,7 +24,7 @@ public class PDAPContactAttachmentPart extends AbstractContactAttachmentPart {
    @Override
    protected byte[] getVCardForm() {
       if (super._vcardForm == null) {
-         ByteArrayOutputStream baos = (ByteArrayOutputStream)(new Object());
+         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
          try {
             String[] dataFormats = PIM.getInstance().supportedSerialFormats(1);
@@ -43,7 +44,7 @@ public class PDAPContactAttachmentPart extends AbstractContactAttachmentPart {
 
    @Override
    public void setContent(Object content) {
-      if (content instanceof Object) {
+      if (content instanceof AddressCardModel) {
          super._data = new ContactImpl(content, _contactList);
       } else {
          if (content instanceof Contact) {
@@ -56,7 +57,7 @@ public class PDAPContactAttachmentPart extends AbstractContactAttachmentPart {
       try {
          _contactList = (ContactListImpl)PIM.getInstance().openPIMList(1, 3);
       } catch (PIMException e) {
-         throw new Object(e.toString());
+         throw new Error(e.toString());
       }
    }
 }

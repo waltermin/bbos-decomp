@@ -4,7 +4,7 @@ import java.util.Hashtable;
 import net.rim.device.api.system.ApplicationRegistry;
 
 final class SmartCardCache implements ReaderStatusListener {
-   private Hashtable _hashtable = (Hashtable)(new Object());
+   private Hashtable _hashtable = new Hashtable();
    private SmartCardCache$Data _emptyData = new SmartCardCache$Data(null);
    private static final long ID = -5307011363447012213L;
    private static SmartCardCache _instance;
@@ -88,7 +88,7 @@ final class SmartCardCache implements ReaderStatusListener {
 
    private final boolean checkReader(SmartCardReader reader) {
       if (reader == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (!reader.isInsertionRemovalDetectable()) {

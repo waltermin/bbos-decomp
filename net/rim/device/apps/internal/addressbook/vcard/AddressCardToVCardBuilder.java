@@ -8,6 +8,7 @@ import net.rim.device.apps.api.addressbook.DisplayPictureModel;
 import net.rim.device.apps.api.addressbook.EmailAddressModel;
 import net.rim.device.apps.api.addressbook.MailingAddressModel;
 import net.rim.device.apps.api.addressbook.PersonNameModel;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.Recognizer;
 import net.rim.device.apps.api.framework.registration.RecognizerRepository;
 import net.rim.device.apps.internal.api.serialformats.VCardProvider;
@@ -17,11 +18,11 @@ import net.rim.device.apps.internal.phone.model.PhoneNumberModel;
 
 final class AddressCardToVCardBuilder implements VCardProvider {
    private AddressCardModel _addressCard;
-   private MailingAddressModel[] _addresses = new Object[0];
+   private MailingAddressModel[] _addresses = new MailingAddressModel[0];
    private int _currentAddressIndex;
-   private PhoneNumberModel[] _phoneNumbers = new Object[0];
+   private PhoneNumberModel[] _phoneNumbers = new PhoneNumberModel[0];
    private int _currentPhoneIndex;
-   private EmailAddressModel[] _emailAddresses = new Object[0];
+   private EmailAddressModel[] _emailAddresses = new EmailAddressModel[0];
    private int _currentEmailIndex;
    private PersonNameModel _pnm;
    private int _version;
@@ -45,11 +46,11 @@ final class AddressCardToVCardBuilder implements VCardProvider {
 
       for (int idx = 0; idx < count; idx++) {
          Object obj = this._addressCard.getAt(idx);
-         if (obj instanceof Object && allowMailingAddresses) {
+         if (obj instanceof MailingAddressModel && allowMailingAddresses) {
             Arrays.add(this._addresses, obj);
-         } else if (obj instanceof Object && allowPhoneNumbers) {
+         } else if (obj instanceof PhoneNumberModel && allowPhoneNumbers) {
             Arrays.add(this._phoneNumbers, obj);
-         } else if (obj instanceof Object && allowEmailAddresses) {
+         } else if (obj instanceof EmailAddressModel && allowEmailAddresses) {
             Arrays.add(this._emailAddresses, obj);
          }
       }
@@ -206,7 +207,7 @@ final class AddressCardToVCardBuilder implements VCardProvider {
          return null;
       }
 
-      DisplayPictureModel picture = this._addressCard.getContactPicture(new Object(11));
+      DisplayPictureModel picture = this._addressCard.getContactPicture(new ContextObject(11));
       return picture == null ? null : picture.getDisplayPicture();
    }
 

@@ -12,10 +12,10 @@ import net.rim.device.apps.internal.blackberryemail.folder.EmailFolder;
 import net.rim.device.apps.internal.blackberryemail.folder.EmailHierarchy;
 
 public class Store extends Service {
-   Vector _listeners = (Vector)(new Object());
+   Vector _listeners = new Vector();
    EmailHierarchy _emailHierarchy;
-   Hashtable _nameToFolderCache = (Hashtable)(new Object());
-   LongHashtable _idToFolderCache = (LongHashtable)(new Object());
+   Hashtable _nameToFolderCache = new Hashtable();
+   LongHashtable _idToFolderCache = new LongHashtable();
    Folder _draftFolder;
    Folder _anonymousDraftFolder;
 
@@ -24,7 +24,7 @@ public class Store extends Service {
 
    public Folder[] list(int type) {
       Folder[] list = this.list();
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       if (type != 4 && type != 3) {
          list(list, type, v);
       } else {
@@ -38,7 +38,7 @@ public class Store extends Service {
    }
 
    static Folder[] list(Folder[] list, int type) {
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       list(list, type, v);
       list = new Folder[v.size()];
       v.copyInto(list);
@@ -60,7 +60,7 @@ public class Store extends Service {
       if (f == null) {
          EmailFolder ef = EmailHierarchy.getEmailFolder(folderId);
          if (ef == null) {
-            throw new FolderNotFoundException(((StringBuffer)(new Object("<id="))).append(folderId).toString(), "Unknown folder id");
+            throw new FolderNotFoundException("<id=" + folderId, "Unknown folder id");
          }
 
          f = new Folder(ef);
@@ -78,7 +78,7 @@ public class Store extends Service {
       int index = name.indexOf(rootsep);
       if (index == -1) {
          String serviceName = this._emailHierarchy.getFriendlyName();
-         name = ((StringBuffer)(new Object())).append(serviceName).append(rootsep).append(name).toString();
+         name = serviceName + rootsep + name;
       }
 
       Folder f = this.checkCache(name);
@@ -132,7 +132,7 @@ public class Store extends Service {
 
    public Folder[] findFolder(String substring) {
       substring = substring.toLowerCase();
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       Folder[] list = this.list();
       findFolder(v, list, substring);
       list = new Folder[v.size()];
@@ -184,7 +184,7 @@ public class Store extends Service {
       if (eh.containsSubFolders()) {
          EmailFolder f = null;
          Enumeration e = eh.getSubFolders();
-         Vector v = (Vector)(new Object());
+         Vector v = new Vector();
 
          while (e.hasMoreElements()) {
             f = (EmailFolder)e.nextElement();
@@ -250,7 +250,7 @@ public class Store extends Service {
 
    public void addStoreListener(StoreListener l) {
       if (l == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       ListenerManager lm = ListenerManager.getInstance();
@@ -286,7 +286,7 @@ public class Store extends Service {
 
    public static Message getMessage(int id) {
       Object o = MessageLookups.get(-4420850319371185992L, id);
-      if (!(o instanceof Object)) {
+      if (!(o instanceof EmailMessageModel)) {
          return null;
       }
 
@@ -296,7 +296,7 @@ public class Store extends Service {
 
    public void addSendListener(SendListener listener) {
       if (listener == null) {
-         throw new Object("SendListener is null");
+         throw new NullPointerException("SendListener is null");
       }
 
       ListenerManager lm = ListenerManager.getInstance();

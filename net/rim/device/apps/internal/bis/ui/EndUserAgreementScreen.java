@@ -28,9 +28,9 @@ public final class EndUserAgreementScreen extends BasicScreen {
    @Override
    public final void refresh(Hashtable screenParams) {
       this.setTitle(ApplicationResources.getString(45));
-      this._viewUserAgreementGroup = (RadioButtonGroup)(new Object());
-      this._viewYesButton = (RadioButtonField)(new Object(ApplicationResources.getString(32), this._viewUserAgreementGroup, false));
-      this._viewNoButton = (RadioButtonField)(new Object(ApplicationResources.getString(31), this._viewUserAgreementGroup, true));
+      this._viewUserAgreementGroup = new RadioButtonGroup();
+      this._viewYesButton = new RadioButtonField(ApplicationResources.getString(32), this._viewUserAgreementGroup, false);
+      this._viewNoButton = new RadioButtonField(ApplicationResources.getString(31), this._viewUserAgreementGroup, true);
       this._viewUserAgreementGroup.setChangeListener(new EndUserAgreementScreen$ViewUserAgreementListener(this, null));
       this._closeButton = new Button(ApplicationResources.getString(69));
       this._agreeButton = new Button(ApplicationResources.getString(70));
@@ -40,7 +40,7 @@ public final class EndUserAgreementScreen extends BasicScreen {
       this.addContentField(new FormattedTextField(ApplicationResources.getString(72)));
       LinkField viewEUALink = new LinkField(ApplicationResources.getString(73));
       this.addContentField(viewEUALink);
-      LabelField readEUA = (LabelField)(new Object(ApplicationResources.getString(223)));
+      LabelField readEUA = new LabelField(ApplicationResources.getString(223));
       readEUA.setMargin(10, 0, 0, 0);
       this.addContentField(readEUA);
       this.addContentField(this._viewYesButton);

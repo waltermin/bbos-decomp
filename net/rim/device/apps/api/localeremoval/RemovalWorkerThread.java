@@ -70,8 +70,8 @@ class RemovalWorkerThread extends Thread {
       int[] allHandles = CodeModuleManager.getModuleHandles();
       int[] deleteHandles = new int[0];
       Locale moduleLocale = null;
-      Hashtable modulesToRemove = (Hashtable)(new Object());
-      Hashtable helpModulesToKeep = (Hashtable)(new Object());
+      Hashtable modulesToRemove = new Hashtable();
+      Hashtable helpModulesToKeep = new Hashtable();
       Object someObject = new Object();
       if (localesToRemove == null) {
          return new int[0];
@@ -190,9 +190,9 @@ class RemovalWorkerThread extends Thread {
       String variant = null;
 
       try {
-         String temp = (String)(new Object(byteArray, 0, byteArray.length, "UTF-8"));
+         String temp = new String(byteArray, 0, byteArray.length, "UTF-8");
          temp = StringUtilities.removeLineBreaksInString(temp.trim());
-         StringTokenizer localeTokenizer = (StringTokenizer)(new Object(temp, "_", false));
+         StringTokenizer localeTokenizer = new StringTokenizer(temp, "_", false);
          if (localeTokenizer.hasMoreTokens()) {
             language = localeTokenizer.nextToken();
             if (localeTokenizer.hasMoreTokens()) {

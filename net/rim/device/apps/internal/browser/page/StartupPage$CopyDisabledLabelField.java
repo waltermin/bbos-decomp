@@ -50,8 +50,8 @@ class StartupPage$CopyDisabledLabelField extends LabelField {
    private void doAction() {
       if (!(this._cookie instanceof PageModel)) {
          if (!(this._cookie instanceof LongTermHistoryNode)) {
-            if (this._cookie instanceof Object) {
-               switch (this._cookie) {
+            if (this._cookie instanceof Integer) {
+               switch ((Integer)this._cookie) {
                   case -1:
                      break;
                   case 0:

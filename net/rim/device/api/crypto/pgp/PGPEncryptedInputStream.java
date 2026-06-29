@@ -3,6 +3,7 @@ package net.rim.device.api.crypto.pgp;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Vector;
+import net.rim.device.api.crypto.CryptoUnsupportedOperationException;
 import net.rim.device.api.crypto.SymmetricKey;
 import net.rim.device.api.crypto.certificate.pgp.PGPCertificate;
 import net.rim.device.api.crypto.certificate.pgp.PGPKeyIDKeyStoreIndex;
@@ -18,7 +19,7 @@ public final class PGPEncryptedInputStream extends PGPInputStream {
    private boolean _mdcPacket;
    private boolean _displayUI;
 
-   PGPEncryptedInputStream(InputStream param1, KeyStore param2, Vector param3, boolean param4, boolean param5) throws PGPEncodingException, PGPException, PGPNoKeyFoundException {
+   PGPEncryptedInputStream(InputStream param1, KeyStore param2, Vector param3, boolean param4, boolean param5) throws CryptoUnsupportedOperationException, PGPEncodingException, PGPException, PGPNoKeyFoundException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -47,7 +48,7 @@ public final class PGPEncryptedInputStream extends PGPInputStream {
       // 022: if_icmpeq 03f
       // 025: new net/rim/device/api/crypto/pgp/PGPEncodingException
       // 028: dup
-      // 029: new java/lang/Object
+      // 029: new java/lang/StringBuffer
       // 02c: dup
       // 02d: ldc_w "Ver:"
       // 030: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -139,7 +140,7 @@ public final class PGPEncryptedInputStream extends PGPInputStream {
       // 0e8: goto 108
       // 0eb: new net/rim/device/api/crypto/pgp/PGPEncodingException
       // 0ee: dup
-      // 0ef: new java/lang/Object
+      // 0ef: new java/lang/StringBuffer
       // 0f2: dup
       // 0f3: ldc_w "Tag:"
       // 0f6: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -155,7 +156,7 @@ public final class PGPEncryptedInputStream extends PGPInputStream {
       // 10f: aload 0
       // 110: getfield net/rim/device/api/crypto/pgp/PGPEncryptedInputStream._symmetricKey Lnet/rim/device/api/crypto/SymmetricKey;
       // 113: invokestatic net/rim/device/api/crypto/EncryptorFactory.getBlockEncryptorEngine (Lnet/rim/device/api/crypto/Key;)Lnet/rim/device/api/crypto/BlockEncryptorEngine;
-      // 116: checkcast java/lang/Object
+      // 116: checkcast net/rim/device/api/crypto/SymmetricKeyEncryptorEngine
       // 119: astore 15
       // 11b: new net/rim/device/api/crypto/pgp/PGPCFBDecryptor
       // 11e: dup
@@ -200,9 +201,9 @@ public final class PGPEncryptedInputStream extends PGPInputStream {
       // 171: getfield net/rim/device/api/crypto/pgp/PGPEncryptedInputStream._symmetricKey Lnet/rim/device/api/crypto/SymmetricKey;
       // 174: ifnonnull 1f0
       // 177: aload 11
-      // 179: instanceof java/lang/Object
+      // 179: instanceof net/rim/device/api/crypto/NoSuchAlgorithmException
       // 17c: ifeq 18c
-      // 17f: new java/lang/Object
+      // 17f: new net/rim/device/api/crypto/CryptoUnsupportedOperationException
       // 182: dup
       // 183: aload 11
       // 185: invokevirtual net/rim/device/api/crypto/CryptoException.toString ()Ljava/lang/String;
@@ -219,7 +220,7 @@ public final class PGPEncryptedInputStream extends PGPInputStream {
       // 19e: aload 8
       // 1a0: arraylength
       // 1a1: ifle 1e8
-      // 1a4: new java/lang/Object
+      // 1a4: new java/lang/StringBuffer
       // 1a7: dup
       // 1a8: aload 8
       // 1aa: bipush 0

@@ -24,7 +24,7 @@ public class TemplateComposeVerb extends MMSComposeVerb {
    }
 
    public TemplateComposeVerb() {
-      this._fileSelector = (FileSelector)(new Object("/store/samples/mms/pictures/", 0, _templateRecognizer));
+      this._fileSelector = new FileSelector("/store/samples/mms/pictures/", 0, _templateRecognizer);
    }
 
    @Override
@@ -75,7 +75,7 @@ public class TemplateComposeVerb extends MMSComposeVerb {
       // 007: ldc_w "/store/samples/mms/templates/"
       // 00a: invokestatic net/rim/device/internal/io/file/FileUtilities.makeFileURL (Ljava/lang/String;)Ljava/lang/String;
       // 00d: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 010: checkcast java/lang/Object
+      // 010: checkcast javax/microedition/io/file/FileConnection
       // 013: astore 2
       // 014: aload 2
       // 015: invokeinterface javax/microedition/io/file/FileConnection.exists ()Z 1
@@ -138,7 +138,7 @@ public class TemplateComposeVerb extends MMSComposeVerb {
       // 090: aconst_null
       // 091: astore 2
       // 092: aload 3
-      // 093: new java/lang/Object
+      // 093: new java/lang/StringBuffer
       // 096: dup
       // 097: ldc_w "/store/samples/mms/templates/"
       // 09a: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -169,12 +169,12 @@ public class TemplateComposeVerb extends MMSComposeVerb {
       // 0d6: astore 3
       // 0d7: aload 3
       // 0d8: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 0db: checkcast java/lang/Object
+      // 0db: checkcast javax/microedition/io/file/FileConnection
       // 0de: astore 2
       // 0df: aload 2
       // 0e0: invokeinterface javax/microedition/io/file/FileConnection.canRead ()Z 1
       // 0e5: ifeq 136
-      // 0e8: new java/lang/Object
+      // 0e8: new java/lang/String
       // 0eb: dup
       // 0ec: aload 3
       // 0ed: invokevirtual java/lang/String.getBytes ()[B

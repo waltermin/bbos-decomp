@@ -3,15 +3,15 @@ package net.rim.device.apps.internal.secureemail.cache;
 import java.util.Enumeration;
 import java.util.Vector;
 import net.rim.device.api.servicebook.ServiceRecord;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
 import net.rim.device.apps.internal.secureemail.SecureEmailMessageBlockManager;
 
 public class CachedManager extends CachedField {
-   private Vector _cachedFields = (Vector)(new Object());
-   private Vector _cachedHeaderFields = (Vector)(new Object());
-   private Vector _cachedFooterFields = (Vector)(new Object());
+   private Vector _cachedFields = new Vector();
+   private Vector _cachedHeaderFields = new Vector();
+   private Vector _cachedFooterFields = new Vector();
 
    protected Manager createManager(Object context) {
       return new SecureEmailMessageBlockManager(1152921504606846976L);
@@ -21,7 +21,7 @@ public class CachedManager extends CachedField {
    public void fillManager(Manager manager, Object context) {
       Manager subManager = this.createManager(context);
       if (!this.endsWithSeparator(manager)) {
-         subManager.add((Field)(new Object()));
+         subManager.add(new SeparatorField());
       }
 
       this.fillManagerHeader(subManager, context);

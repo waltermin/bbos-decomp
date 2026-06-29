@@ -16,23 +16,23 @@ public final class PhoneArguments extends ApplicationArguments {
    public PhoneArguments(String actionArg, String dialStringArg, boolean smartDialing) {
       if (actionArg.equals("call") && dialStringArg != null && dialStringArg.length() > 0) {
          if (smartDialing) {
-            super._args = new Object[3];
+            super._args = new String[3];
          } else {
-            super._args = new Object[2];
+            super._args = new String[2];
          }
 
          super._args[0] = actionArg;
          if (dialStringArg.equals("voicemail")) {
             super._args[1] = dialStringArg;
          } else {
-            super._args[1] = ((StringBuffer)(new Object("number="))).append(dialStringArg).toString();
+            super._args[1] = "number=" + dialStringArg;
          }
 
          if (smartDialing) {
             super._args[2] = "smartdial";
          }
       } else {
-         throw new Object("Invalid argument");
+         throw new IllegalArgumentException("Invalid argument");
       }
    }
 }

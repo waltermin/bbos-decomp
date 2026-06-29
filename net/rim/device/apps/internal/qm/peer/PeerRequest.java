@@ -24,10 +24,10 @@ class PeerRequest implements Request {
       this._hashId = replyTo.toUpperCase().hashCode();
       this._name = PersistentContent.encode(Utils.resolveName(replyTo), true, true);
       this._body = PersistentContent.encode(body == null ? "" : body, true, true);
-      this._persistentData = (IntHashtable)(new Object(6));
+      this._persistentData = new IntHashtable(6);
       this._persistentData.put(9, "1.1.0");
-      this._persistentData.put(1, new Object(type));
-      this._persistentData.put(8, new Object(this._hashId));
+      this._persistentData.put(1, new Integer(type));
+      this._persistentData.put(8, new Integer(this._hashId));
       this._persistentData.put(5, this._name);
       this._persistentData.put(6, this._body);
       if (inviteData != null) {
@@ -37,7 +37,7 @@ class PeerRequest implements Request {
 
    PeerRequest(IntHashtable initialData) {
       this._persistentData = initialData;
-      this._hashId = this._persistentData.get(8);
+      this._hashId = (Integer)this._persistentData.get(8);
       this._name = this._persistentData.get(5);
       this._body = this._persistentData.get(6);
    }

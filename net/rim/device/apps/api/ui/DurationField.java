@@ -17,12 +17,12 @@ import net.rim.device.internal.i18n.CommonResource;
 import net.rim.device.internal.system.InternalServices;
 
 public class DurationField extends Field {
-   private TextRect _labelTextRect = (TextRect)(new Object(this, 70));
+   private TextRect _labelTextRect = new TextRect(this, 70);
    private long _duration;
    private int _currentUnit;
    private int _smallestUnitsDisplayed;
    private int _largestUnitsDisplayed;
-   private StringBuffer _fieldText = (StringBuffer)(new Object());
+   private StringBuffer _fieldText = new StringBuffer();
    private boolean _calculatedDataSet;
    private int _widthOfDurationString;
    private int _widthToCursor;

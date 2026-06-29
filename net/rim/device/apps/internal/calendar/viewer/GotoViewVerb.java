@@ -17,7 +17,7 @@ final class GotoViewVerb extends CalendarViewerVerb {
    @Override
    public final Object invoke(Object parameter) {
       boolean returnToMonthView = false;
-      if (parameter instanceof Object) {
+      if (parameter instanceof ContextObject) {
          returnToMonthView = ((ContextObject)parameter).getFlag(87);
       }
 

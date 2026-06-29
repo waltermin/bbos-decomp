@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.secureemail.encodings.pgp;
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.CertificateSummaryDataSyncCollection;
 import net.rim.device.api.crypto.certificate.CertificateSummaryDataSyncModelFactory;
+import net.rim.device.api.crypto.certificate.pgp.PGPCertificateSummaryDataSyncModelFactory;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.PGPKeyStore;
 import net.rim.device.api.memorycleaner.MemoryCleanerManager;
@@ -19,6 +20,7 @@ import net.rim.device.apps.api.framework.registration.RIMModelFactoryRepository;
 import net.rim.device.apps.api.transmission.rim.sendmethods.SendMethod;
 import net.rim.device.apps.api.utility.serialization.Converter;
 import net.rim.device.apps.internal.api.crypto.CryptoCommonResources;
+import net.rim.device.apps.internal.keystore.browser.pgp.PGPKeyAttachmentModelFactory;
 import net.rim.device.apps.internal.keystore.browser.pgp.PGPKeyStoreBrowser;
 import net.rim.device.apps.internal.secureemail.SecureEmailBodyModel;
 import net.rim.device.apps.internal.secureemail.SecureEmailCryptoSystemProperties;
@@ -93,11 +95,11 @@ public final class PGPFactory extends SecureEmailFactory {
    @Override
    public final void performRegistration() {
       super.performRegistration();
-      RIMModelFactory pgpKeyAttachmentModelFactory = (RIMModelFactory)(new Object());
+      RIMModelFactory pgpKeyAttachmentModelFactory = new PGPKeyAttachmentModelFactory();
       RIMModelFactoryRepository.addFactory(2497613418300956405L, pgpKeyAttachmentModelFactory);
       RIMModelFactoryRepository.addFactory(3893959701496671961L, pgpKeyAttachmentModelFactory);
       PGPKeyStoreBrowser.register(this._pgpCryptoSystemProperties);
-      CertificateSummaryDataSyncModelFactory.register((CertificateSummaryDataSyncModelFactory)(new Object()));
+      CertificateSummaryDataSyncModelFactory.register(new PGPCertificateSummaryDataSyncModelFactory());
       CertificateSummaryDataSyncCollection.getInstance().registerKeyStore(this.getPreferredKeyStore());
    }
 
@@ -159,7 +161,7 @@ public final class PGPFactory extends SecureEmailFactory {
       if (secureEmailBodyModel instanceof PGPBodyModel) {
          return new PGPProcessor((PGPBodyModel)secureEmailBodyModel, target, allowUI, context);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

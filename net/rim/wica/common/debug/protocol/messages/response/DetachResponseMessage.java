@@ -26,6 +26,6 @@ public final class DetachResponseMessage extends AbstractResponseMessage impleme
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object("Detach response: sessionId="))).append(this._sessionId).toString();
+      return "Detach response: sessionId=" + this._sessionId;
    }
 }

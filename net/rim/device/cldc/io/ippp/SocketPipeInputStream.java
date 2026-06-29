@@ -2,6 +2,7 @@ package net.rim.device.cldc.io.ippp;
 
 import java.io.IOException;
 import java.io.InputStream;
+import net.rim.device.api.io.IOCancelledException;
 import net.rim.device.cldc.io.utility.SessionStats;
 import net.rim.device.internal.browser.util.Pipe;
 import net.rim.device.internal.browser.util.PipeContext;
@@ -11,8 +12,8 @@ import net.rim.device.internal.browser.util.PipePtr;
 import net.rim.device.internal.compress.YKDecode;
 
 public class SocketPipeInputStream extends InputStream implements PipeInput {
-   private SessionStats _stats = (SessionStats)(new Object());
-   private Pipe _pipe = (Pipe)(new Object());
+   private SessionStats _stats = new SessionStats();
+   private Pipe _pipe = new Pipe();
    private PipeInputStream _in = this._pipe.getInputStream();
    private Object _syncObject = new Object();
    private IOException _socketBaseException;
@@ -50,36 +51,36 @@ public class SocketPipeInputStream extends InputStream implements PipeInput {
    }
 
    @Override
-   public int readByteArray(PipePtr ptr, int length) {
+   public int readByteArray(PipePtr ptr, int length) throws IOCancelledException {
       if (this._isClosed) {
-         throw new Object();
+         throw new IOCancelledException();
       } else {
          return this._in.readByteArray(ptr, length);
       }
    }
 
    @Override
-   public void skipInlineString() {
+   public void skipInlineString() throws IOCancelledException {
       if (this._isClosed) {
-         throw new Object();
+         throw new IOCancelledException();
       }
 
       this._in.skipInlineString();
    }
 
    @Override
-   public String readInlineString(String encoding) {
+   public String readInlineString(String encoding) throws IOCancelledException {
       if (this._isClosed) {
-         throw new Object();
+         throw new IOCancelledException();
       } else {
          return this._in.readInlineString(encoding);
       }
    }
 
    @Override
-   public int readCompressedInt() {
+   public int readCompressedInt() throws IOCancelledException {
       if (this._isClosed) {
-         throw new Object();
+         throw new IOCancelledException();
       } else {
          return this._in.readCompressedInt();
       }
@@ -101,9 +102,9 @@ public class SocketPipeInputStream extends InputStream implements PipeInput {
    }
 
    @Override
-   public int read(byte[] b, int off, int len) throws IOException {
+   public int read(byte[] b, int off, int len) throws IOException, IOCancelledException {
       if (this._isClosed) {
-         throw new Object();
+         throw new IOCancelledException();
       } else {
          int value = this._in.read(b, off, len);
          if (this._socketBaseException != null) {
@@ -115,18 +116,18 @@ public class SocketPipeInputStream extends InputStream implements PipeInput {
    }
 
    @Override
-   public int available() {
+   public int available() throws IOCancelledException {
       if (this._isClosed) {
-         throw new Object();
+         throw new IOCancelledException();
       } else {
          return this._in.available();
       }
    }
 
    @Override
-   public int read() throws IOException {
+   public int read() throws IOException, IOCancelledException {
       if (this._isClosed) {
-         throw new Object();
+         throw new IOCancelledException();
       } else {
          int value = this._in.read();
          if (this._socketBaseException != null) {
@@ -151,7 +152,7 @@ public class SocketPipeInputStream extends InputStream implements PipeInput {
    public SocketPipeInputStream(SocketInputStream socketIn, boolean ykEncoded, boolean ykMixedEncoded) {
       this._socketIn = socketIn;
       if (ykEncoded || ykMixedEncoded) {
-         this._ykDecoder = (YKDecode)(new Object(ykMixedEncoded));
+         this._ykDecoder = new YKDecode(ykMixedEncoded);
       }
 
       boolean success = false;

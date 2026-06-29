@@ -25,7 +25,7 @@ final class AltitudeInfo {
    final void print() {
       System.out.println("Altitude Info: ");
       this.altitudeDirection.print();
-      System.out.println(((StringBuffer)(new Object("Altitude: "))).append(this.altitude).toString());
-      System.out.println(((StringBuffer)(new Object("Altitude Uncertainty: "))).append(this.altUncert).toString());
+      System.out.println("Altitude: " + this.altitude);
+      System.out.println("Altitude Uncertainty: " + this.altUncert);
    }
 }

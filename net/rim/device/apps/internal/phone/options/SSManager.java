@@ -71,7 +71,7 @@ public final class SSManager {
    }
 
    public static final String getCallBarringPasswordFromUser(String prompt) {
-      SimpleInputDialog dlg = (SimpleInputDialog)(new Object(6, prompt, 4, 4, 0));
+      SimpleInputDialog dlg = new SimpleInputDialog(6, prompt, 4, 4, 0);
       dlg.setModal(true);
       dlg.show();
       return dlg.getText().trim();
@@ -103,7 +103,7 @@ public final class SSManager {
 
    public static final boolean isCallForwardUnconditionalActive(int line) {
       boolean isActive = getInstance()._messageHandler.isCallForwardUnconditionalActive(line);
-      System.out.println(((StringBuffer)(new Object("SSMgr CFU = "))).append(isActive).toString());
+      System.out.println("SSMgr CFU = " + isActive);
       return isActive;
    }
 

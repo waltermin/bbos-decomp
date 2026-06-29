@@ -36,7 +36,7 @@ public class Renderer {
          this._encoding = RendererControl.getCharacterEncoding(this._inputConnection);
          this._flags = flags;
       } else {
-         throw new Object("Connection and rendering options cannot be null");
+         throw new IllegalArgumentException("Connection and rendering options cannot be null");
       }
    }
 
@@ -123,7 +123,7 @@ public class Renderer {
       // 004: ifnonnull 009
       // 007: aconst_null
       // 008: areturn
-      // 009: new java/lang/Object
+      // 009: new net/rim/device/api/browser/field/RequestedResource
       // 00c: dup
       // 00d: aload 1
       // 00e: aconst_null
@@ -136,11 +136,11 @@ public class Renderer {
       // 01b: aload 0
       // 01c: getfield net/rim/device/apps/internal/browser/page/Renderer._renderingApplication Lnet/rim/device/api/browser/field/RenderingApplication;
       // 01f: dup
-      // 020: instanceof java/lang/Object
+      // 020: instanceof net/rim/device/api/browser/field/ResourceProvider
       // 023: ifne 02a
       // 026: pop
       // 027: goto 03b
-      // 02a: checkcast java/lang/Object
+      // 02a: checkcast net/rim/device/api/browser/field/ResourceProvider
       // 02d: aload 5
       // 02f: aload 4
       // 031: invokeinterface net/rim/device/api/browser/field/ResourceProvider.getInputConnection (Lnet/rim/device/api/browser/field/RequestedResource;Lnet/rim/device/api/browser/field/BrowserContent;)Ljavax/microedition/io/InputConnection; 3
@@ -165,11 +165,11 @@ public class Renderer {
       // 05e: lstore 9
       // 060: aload 6
       // 062: dup
-      // 063: instanceof java/lang/Object
+      // 063: instanceof javax/microedition/io/HttpConnection
       // 066: ifne 06d
       // 069: pop
       // 06a: goto 077
-      // 06d: checkcast java/lang/Object
+      // 06d: checkcast javax/microedition/io/HttpConnection
       // 070: invokeinterface javax/microedition/io/ContentConnection.getLength ()J 1
       // 075: lstore 9
       // 077: aload 6
@@ -185,14 +185,14 @@ public class Renderer {
       // 08a: lcmp
       // 08b: ifle 0e7
       // 08e: aload 7
-      // 090: instanceof java/lang/Object
+      // 090: instanceof net/rim/device/internal/browser/util/PipeInput
       // 093: ifeq 0e7
-      // 096: new java/lang/Object
+      // 096: new net/rim/device/internal/browser/util/PipePtr
       // 099: dup
       // 09a: invokespecial net/rim/device/internal/browser/util/PipePtr.<init> ()V
       // 09d: astore 13
       // 09f: aload 7
-      // 0a1: checkcast java/lang/Object
+      // 0a1: checkcast net/rim/device/internal/browser/util/PipeInput
       // 0a4: aload 13
       // 0a6: lload 9
       // 0a8: l2i
@@ -268,11 +268,11 @@ public class Renderer {
       // 148: astore 14
       // 14a: aload 6
       // 14c: dup
-      // 14d: instanceof java/lang/Object
+      // 14d: instanceof javax/microedition/io/HttpConnection
       // 150: ifne 157
       // 153: pop
       // 154: goto 164
-      // 157: checkcast java/lang/Object
+      // 157: checkcast javax/microedition/io/HttpConnection
       // 15a: ldc_w "x-rim-image-original-size"
       // 15d: invokeinterface javax/microedition/io/HttpConnection.getHeaderField (Ljava/lang/String;)Ljava/lang/String; 2
       // 162: astore 14

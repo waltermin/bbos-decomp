@@ -55,10 +55,10 @@ final class RibbonOptions$RibbonOptionsSyncItem extends OTASyncCapableSyncItem i
                      break;
                   case 3:
                      char[][] properties = ConverterUtilities.readCharArrayArray(buffer, false);
-                     imageProperties = new Object[properties.length];
+                     imageProperties = new String[properties.length];
 
                      for (int i = 0; i < properties.length; i++) {
-                        imageProperties[i] = (String)(new Object(properties[i]));
+                        imageProperties[i] = new String(properties[i]);
                      }
 
                      image._properties = imageProperties;
@@ -240,7 +240,7 @@ final class RibbonOptions$RibbonOptionsSyncItem extends OTASyncCapableSyncItem i
       // 0fe: ldc_w "/home"
       // 101: invokevirtual java/lang/String.startsWith (Ljava/lang/String;)Z
       // 104: ifeq 11b
-      // 107: new java/lang/Object
+      // 107: new java/lang/StringBuffer
       // 10a: dup
       // 10b: ldc_w "/store"
       // 10e: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -278,7 +278,7 @@ final class RibbonOptions$RibbonOptionsSyncItem extends OTASyncCapableSyncItem i
       // 152: if_icmpge 16c
       // 155: aload 10
       // 157: iload 13
-      // 159: new java/lang/Object
+      // 159: new java/lang/String
       // 15c: dup
       // 15d: aload 12
       // 15f: iload 13
@@ -364,7 +364,7 @@ final class RibbonOptions$RibbonOptionsSyncItem extends OTASyncCapableSyncItem i
    @Override
    public final boolean getSyncData(DataBuffer buffer, int version) {
       RibbonOptions options = RibbonOptions.getOptions();
-      DataBuffer tmpBuffer = (DataBuffer)(new Object());
+      DataBuffer tmpBuffer = new DataBuffer();
       tmpBuffer.setBigEndian(buffer.isBigEndian());
       tmpBuffer.writeBoolean(options.getShowHiddenApps());
       tmpBuffer.writeByte(3);

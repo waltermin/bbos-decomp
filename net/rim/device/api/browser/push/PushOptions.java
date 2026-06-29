@@ -213,7 +213,7 @@ public final class PushOptions extends OptionsBase {
       }
 
       bString = bString.trim();
-      StringTokenizer tokenizer = (StringTokenizer)(new Object(aString, ','));
+      StringTokenizer tokenizer = new StringTokenizer(aString, ',');
 
       while (tokenizer.hasMoreTokens()) {
          String token = tokenizer.nextToken().trim();
@@ -222,7 +222,7 @@ public final class PushOptions extends OptionsBase {
          }
       }
 
-      return ((StringBuffer)(new Object())).append(aString).append(',').append(bString).toString();
+      return aString + ',' + bString;
    }
 
    final void addFilters(WAPPushSource source) {

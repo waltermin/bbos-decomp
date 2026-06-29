@@ -9,7 +9,7 @@ public final class PKCS5FormatterEngine implements BlockFormatterEngine {
 
    public PKCS5FormatterEngine(BlockEncryptorEngine encryptorEngine) {
       if (encryptorEngine == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._encryptorEngine = encryptorEngine;
@@ -18,7 +18,7 @@ public final class PKCS5FormatterEngine implements BlockFormatterEngine {
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object())).append(this._encryptorEngine.getAlgorithm()).append("/PKCS5").toString();
+      return this._encryptorEngine.getAlgorithm() + "/PKCS5";
    }
 
    @Override
@@ -41,7 +41,7 @@ public final class PKCS5FormatterEngine implements BlockFormatterEngine {
             || output == null
             || outputOffset < 0
             || output.length - this._blockLength < outputOffset) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          if (inputLength > this._blockLength) {
@@ -85,10 +85,10 @@ public final class PKCS5FormatterEngine implements BlockFormatterEngine {
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

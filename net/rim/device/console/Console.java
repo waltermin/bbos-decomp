@@ -138,7 +138,7 @@ public final class Console extends UiApplication implements KeyListener, ListFie
       } else {
          if (guid == 7563637690172082503L) {
             if (this._appSwitchScreen == null) {
-               this._appSwitchScreen = (ApplicationSwitcher)(new Object(this._appSwitchEnd, 0));
+               this._appSwitchScreen = new ApplicationSwitcher(this._appSwitchEnd, 0);
                return;
             }
 
@@ -146,7 +146,7 @@ public final class Console extends UiApplication implements KeyListener, ListFie
             return;
          }
 
-         if (guid == 9056933960126321432L && object0 instanceof Object) {
+         if (guid == 9056933960126321432L && object0 instanceof String) {
             TraceBackDialog.show(this, (String)object0, object1);
          }
       }
@@ -168,7 +168,7 @@ public final class Console extends UiApplication implements KeyListener, ListFie
       }
 
       this._listField.setSize(this._listItems.size());
-      this._mainTitleField.setText(((StringBuffer)(new Object("BlackBerry Platform "))).append(DeviceInfo.getPlatformVersion()).toString());
+      this._mainTitleField.setText("BlackBerry Platform " + DeviceInfo.getPlatformVersion());
    }
 
    private Console() {
@@ -178,14 +178,14 @@ public final class Console extends UiApplication implements KeyListener, ListFie
 
       this._appManager = ApplicationManager.getApplicationManager();
       if (!((ApplicationManagerInternal)this._appManager).setConsoleProcess()) {
-         throw new Object();
+         throw new RuntimeException();
       }
 
       this._screen = new Console$ConsoleScreen(this);
-      this._mainTitleField = (LabelField)(new Object(null, 1152921504606846976L));
+      this._mainTitleField = new LabelField(null, 1152921504606846976L);
       this._screen.setTitle(this._mainTitleField);
-      this._listItems = (Vector)(new Object());
-      this._listField = (ListField)(new Object());
+      this._listItems = new Vector();
+      this._listField = new ListField();
       this._listField.setSearchable(false);
       this._listField.setCallback(this);
       this._screen.add(this._listField);

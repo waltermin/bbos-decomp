@@ -7,6 +7,7 @@ import net.rim.device.api.crypto.certificate.CertificateChainProperties;
 import net.rim.device.api.crypto.certificate.CertificateExtension;
 import net.rim.device.api.crypto.certificate.CertificateUtilities;
 import net.rim.device.api.crypto.certificate.LDAPCertificateFetch;
+import net.rim.device.api.crypto.certificate.x509.X509LDAPCertificateFetch;
 import net.rim.device.api.crypto.cms.CMSAttribute;
 import net.rim.device.api.crypto.cms.CMSEntityIdentifier;
 import net.rim.device.api.crypto.cms.CMSSignedDataInputStream;
@@ -93,7 +94,7 @@ public final class SMIMEUtilities extends SecureEmailUtilities {
          case 256:
             return 109;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -102,7 +103,7 @@ public final class SMIMEUtilities extends SecureEmailUtilities {
       switch (constant) {
          case 99:
          case 107:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 100:
             return 32;
          case 101:
@@ -143,7 +144,7 @@ public final class SMIMEUtilities extends SecureEmailUtilities {
       CertificateExtension extension = certificate.getExtension(OIDs.getOID(545531452));
       if (extension != null) {
          try {
-            ASN1InputByteArray data = (ASN1InputByteArray)(new Object(extension.getValue()));
+            ASN1InputByteArray data = new ASN1InputByteArray(extension.getValue());
             flags = this.readCapabilitiesFlags(data);
             return this.createContentCipherBitField(flags);
          } finally {
@@ -189,7 +190,7 @@ public final class SMIMEUtilities extends SecureEmailUtilities {
          for (int i = 0; i < signers.length; i++) {
             CMSAttribute attribute = input.getSignerAttribute(OIDs.getOID(545531452), signers[i]);
             if (attribute != null) {
-               ASN1InputByteArray attributeStream = (ASN1InputByteArray)(new Object(attribute.getValue()));
+               ASN1InputByteArray attributeStream = new ASN1InputByteArray(attribute.getValue());
                attributeStream.readSet();
                flags = this.readCapabilitiesFlags(attributeStream);
             }
@@ -220,7 +221,7 @@ public final class SMIMEUtilities extends SecureEmailUtilities {
       // 0f: astore 5
       // 11: aload 5
       // 13: ifnull 5d
-      // 16: new java/lang/Object
+      // 16: new net/rim/device/api/crypto/asn1/ASN1InputByteArray
       // 19: dup
       // 1a: aload 5
       // 1c: invokevirtual net/rim/device/api/crypto/cms/CMSAttribute.getValue ()[B
@@ -244,7 +245,7 @@ public final class SMIMEUtilities extends SecureEmailUtilities {
       // 48: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputByteArray.readGeneralizedTime ()J
       // 4b: lstore 3
       // 4c: goto 5d
-      // 4f: new java/lang/Object
+      // 4f: new net/rim/device/api/crypto/asn1/ASN1EncodingException
       // 52: dup
       // 53: invokespecial net/rim/device/api/crypto/asn1/ASN1EncodingException.<init> ()V
       // 56: athrow
@@ -259,8 +260,8 @@ public final class SMIMEUtilities extends SecureEmailUtilities {
    }
 
    public static final void addSignedDateAttribute(CMSSigner signer) {
-      ASN1OutputStream dateStream = (ASN1OutputStream)(new Object());
-      ASN1OutputStream attributeStream = (ASN1OutputStream)(new Object());
+      ASN1OutputStream dateStream = new ASN1OutputStream();
+      ASN1OutputStream attributeStream = new ASN1OutputStream();
 
       label20:
       try {
@@ -271,7 +272,7 @@ public final class SMIMEUtilities extends SecureEmailUtilities {
       }
 
       byte[] value = attributeStream.toByteArray();
-      CMSAttribute attribute = (CMSAttribute)(new Object(OIDs.getOID(542910012), value, true));
+      CMSAttribute attribute = new CMSAttribute(OIDs.getOID(542910012), value, true);
       signer.addAttribute(attribute);
    }
 
@@ -318,7 +319,7 @@ public final class SMIMEUtilities extends SecureEmailUtilities {
       // 01: sipush 246
       // 04: i2l
       // 05: invokestatic net/rim/device/apps/api/framework/model/ContextObject.get (Ljava/lang/Object;J)Ljava/lang/Object;
-      // 08: checkcast java/lang/Object
+      // 08: checkcast net/rim/device/apps/internal/blackberryemail/email/EmailMessageModel
       // 0b: astore 3
       // 0c: aload 3
       // 0d: ifnull 5d
@@ -364,7 +365,7 @@ public final class SMIMEUtilities extends SecureEmailUtilities {
 
    @Override
    public final LDAPCertificateFetch getLDAPCertificateFetch() {
-      return (LDAPCertificateFetch)(new Object());
+      return new X509LDAPCertificateFetch();
    }
 
    @Override

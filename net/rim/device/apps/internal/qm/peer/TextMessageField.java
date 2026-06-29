@@ -18,11 +18,11 @@ final class TextMessageField extends MessageField {
    private int _cachedWidth = -1;
    private int _cachedHeight = -1;
    private TextMessageField$UnreachableTimer _unreachableTimer = new TextMessageField$UnreachableTimer(this, null);
-   public static final String _buzzString = ((StringBuffer)(new Object())).append(QmResources.getString(9)).append('\u200b').toString();
+   public static final String _buzzString = QmResources.getString(9) + '\u200b';
    private static final String _buzzStringInternal = QmResources.getString(9);
-   private static StringPattern[] _smileys = new Object[]{Smileys.getSmileyFacility()};
-   private static StringPatternContainer _patterns = (StringPatternContainer)(new Object(_smileys));
-   private static StringBuffer _sBuffer = (StringBuffer)(new Object());
+   private static StringPattern[] _smileys = new StringPattern[]{Smileys.getSmileyFacility()};
+   private static StringPatternContainer _patterns = new StringPatternContainer(_smileys);
+   private static StringBuffer _sBuffer = new StringBuffer();
    private static QMTimer _timer = new QMTimer();
 
    public TextMessageField(TextMessage message) {
@@ -36,7 +36,7 @@ final class TextMessageField extends MessageField {
       this.setCookie(this._message);
       String name = this.formatDisplayName(message.getSender());
       this._namelength = name != null ? name.length() : 0;
-      ActiveRichTextField editField = (ActiveRichTextField)(new Object(null, null, null, null, null, null, 0, _patterns));
+      ActiveRichTextField editField = new ActiveRichTextField(null, null, null, null, null, null, 0, _patterns);
       this.setText(editField, this._message.getText(), name);
       this.add(editField);
       this._locked = PeerApplication.isDeviceLocked();
@@ -100,14 +100,14 @@ final class TextMessageField extends MessageField {
             _buzzString,
             new int[]{0, _buzzString.length()},
             new byte[]{0},
-            new Object[]{this.getFont().derive(1)},
+            new Font[]{this.getFont().derive(1)},
             new int[]{16711680, -804651007, 32768, -804651007},
             null
          );
       } else if (name != null && name.length() != 0) {
-         editField.setText(name, text, new Object[]{Font.getDefault(), null}, new int[]{getDisplayNameColor(this._message), -1});
+         editField.setText(name, text, new Font[]{Font.getDefault(), null}, new int[]{getDisplayNameColor(this._message), -1});
       } else {
-         editField.setText(text, new int[]{0, text.length()}, new byte[]{0}, new Object[]{this.getFont().derive(1)}, new int[]{40960, -804651005, 1, 2}, null);
+         editField.setText(text, new int[]{0, text.length()}, new byte[]{0}, new Font[]{this.getFont().derive(1)}, new int[]{40960, -804651005, 1, 2}, null);
       }
    }
 
@@ -151,7 +151,7 @@ final class TextMessageField extends MessageField {
       }
 
       MessengerContact obj = this._message.getRecipient();
-      if (obj instanceof Object) {
+      if (obj instanceof MessengerContact) {
          PeerContact contact = (PeerContact)obj;
          if (contact.isAvailable() && (contact.isUnreachable() || contact.isBusy())) {
             contact.setPresenceStatus(16384);
@@ -182,7 +182,7 @@ final class TextMessageField extends MessageField {
 
          for (int index = 0; index < size; index++) {
             Object f = this.getField(index);
-            if (f instanceof Object) {
+            if (f instanceof ActiveRichTextField) {
                field = (ActiveRichTextField)f;
                text = cookie.getText();
             }

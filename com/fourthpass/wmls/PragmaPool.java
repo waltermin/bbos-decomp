@@ -3,14 +3,14 @@ package com.fourthpass.wmls;
 final class PragmaPool {
    private Pragma[] pragma;
 
-   PragmaPool(WMLInputStream stream) {
+   PragmaPool(WMLInputStream stream) throws Exception {
       int count = stream.readMBInt();
       this.pragma = new Pragma[count];
 
       for (int i = 0; i < count; i++) {
          int j = stream.readUInt8();
          if (j < 0 || j > 3) {
-            throw new Object("Incorrect Compiled Code");
+            throw new Exception("Incorrect Compiled Code");
          }
 
          this.pragma[i] = new Pragma(stream, j);

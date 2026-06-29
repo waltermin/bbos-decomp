@@ -19,17 +19,17 @@ import net.rim.device.internal.io.file.MetaDataFile;
 import net.rim.vm.DebugSupport;
 
 public final class FileIndexServiceImpl extends FileIndexService implements FileSystemJournalListener, FileSystemListener {
-   private StringCaseInsensitiveHashtable _mediaFolderList = (StringCaseInsensitiveHashtable)(new Object());
+   private StringCaseInsensitiveHashtable _mediaFolderList = new StringCaseInsensitiveHashtable();
    private long _myLastUSN;
    private FileScanner _scanner;
    private StringToIntCaseInsensitiveHashtable _preCreatedMediaFolders;
-   private String[] _hiddenFolders = new Object[0];
+   private String[] _hiddenFolders = new String[0];
    private int _scanInProgress;
    private static final String[] ExcludedAudioMIMETypes = new String[]{"audio/x-gsm"};
 
    FileIndexServiceImpl() {
       this._scanner = new FileScanner(this);
-      StringToIntCaseInsensitiveHashtable preCreatedMediaFolders = (StringToIntCaseInsensitiveHashtable)(new Object(8));
+      StringToIntCaseInsensitiveHashtable preCreatedMediaFolders = new StringToIntCaseInsensitiveHashtable(8);
       int mediaType = 4;
 
       while (--mediaType > 0) {
@@ -62,8 +62,7 @@ public final class FileIndexServiceImpl extends FileIndexService implements File
 
          while (roots.hasMoreElements()) {
             String rootFolderName = (String)roots.nextElement();
-            this._scanner
-               .addFolderPath(FileUtilities.makeFileURL(FileUtilities.encodeString(((StringBuffer)(new Object("/"))).append(rootFolderName).toString())));
+            this._scanner.addFolderPath(FileUtilities.makeFileURL(FileUtilities.encodeString("/" + rootFolderName)));
          }
       }
 
@@ -90,7 +89,7 @@ public final class FileIndexServiceImpl extends FileIndexService implements File
       // 02: aload 1
       // 03: bipush 1
       // 04: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;I)Ljavax/microedition/io/Connection;
-      // 07: checkcast java/lang/Object
+      // 07: checkcast javax/microedition/io/file/FileConnection
       // 0a: astore 2
       // 0b: aload 2
       // 0c: ifnull 65
@@ -106,11 +105,11 @@ public final class FileIndexServiceImpl extends FileIndexService implements File
       // 22: invokespecial net/rim/apps/internal/explorer/IndexService/FileIndexServiceImpl.removeHiddenFolder (Ljava/lang/String;)V
       // 25: aload 2
       // 26: dup
-      // 27: instanceof java/lang/Object
+      // 27: instanceof net/rim/device/api/io/file/ExtendedFileConnection
       // 2a: ifne 31
       // 2d: pop
       // 2e: goto 4e
-      // 31: checkcast java/lang/Object
+      // 31: checkcast net/rim/device/api/io/file/ExtendedFileConnection
       // 34: ldc_w "*"
       // 37: bipush 1
       // 38: invokeinterface net/rim/device/api/io/file/ExtendedFileConnection.listWithDetails (Ljava/lang/String;Z)Ljava/util/Enumeration; 3
@@ -204,7 +203,7 @@ public final class FileIndexServiceImpl extends FileIndexService implements File
 
       this.notifyMetaDataListeners(2, folderURL, fileName, null);
       if (this.haveFilteredFileListener(mediaType)) {
-         this.notifyFilteredFileListeners(5, mediaType, ((StringBuffer)(new Object())).append(folderURL).append(fileName).toString());
+         this.notifyFilteredFileListeners(5, mediaType, folderURL + fileName);
       }
    }
 
@@ -220,7 +219,7 @@ public final class FileIndexServiceImpl extends FileIndexService implements File
       // 01: astore 2
       // 02: aload 1
       // 03: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 06: checkcast java/lang/Object
+      // 06: checkcast javax/microedition/io/file/FileConnection
       // 09: astore 2
       // 0a: aload 2
       // 0b: invokeinterface javax/microedition/io/file/FileConnection.isHidden ()Z 1
@@ -238,11 +237,11 @@ public final class FileIndexServiceImpl extends FileIndexService implements File
       // 23: pop
       // 24: aload 2
       // 25: dup
-      // 26: instanceof java/lang/Object
+      // 26: instanceof net/rim/device/api/io/file/ExtendedFileConnection
       // 29: ifne 30
       // 2c: pop
       // 2d: goto 40
-      // 30: checkcast java/lang/Object
+      // 30: checkcast net/rim/device/api/io/file/ExtendedFileConnection
       // 33: invokeinterface net/rim/device/api/io/file/ExtendedFileConnection.isContentBuiltIn ()Z 1
       // 38: ifeq 40
       // 3b: aload 0
@@ -322,8 +321,8 @@ public final class FileIndexServiceImpl extends FileIndexService implements File
             Object element = files.nextElement();
             String fileName;
             boolean isDirectory;
-            if (!(element instanceof Object)) {
-               if (!(element instanceof Object)) {
+            if (!(element instanceof FileInfo)) {
+               if (!(element instanceof String)) {
                   continue;
                }
 
@@ -335,26 +334,26 @@ public final class FileIndexServiceImpl extends FileIndexService implements File
                int attributes = info.getAttributes();
                isDirectory = (attributes & 16) != 0;
                if (isDirectory && !fileName.endsWith("/")) {
-                  fileName = ((StringBuffer)(new Object())).append(fileName).append('/').toString();
+                  fileName = fileName + '/';
                }
 
                if ((attributes & 8) != 0) {
                   if (isDirectory) {
-                     this.addHiddenFolder(((StringBuffer)(new Object())).append(folderURL).append(fileName).toString());
+                     this.addHiddenFolder(folderURL + fileName);
                   }
                   continue;
                }
             }
 
             if (isDirectory) {
-               this._scanner.addFolderPath(((StringBuffer)(new Object())).append(folderURL).append(fileName).toString());
+               this._scanner.addFolderPath(folderURL + fileName);
             } else {
                int mediaType = MIMETypeAssociations.getMediaType(fileName);
                if (isMetaDataSupportedForMediaType(mediaType, fileName)) {
                   counts = this.incrementMediaCount(folderURL, folderURL.length(), mediaType, 1, counts);
                   this._scanner.addFilePath(mediaType, folderURL, fileName);
                } else if (this.haveFilteredFileListener(mediaType)) {
-                  this.notifyFilteredFileListeners(5, mediaType, ((StringBuffer)(new Object())).append(folderURL).append(fileName).toString());
+                  this.notifyFilteredFileListeners(5, mediaType, folderURL + fileName);
                }
             }
          }
@@ -376,8 +375,8 @@ public final class FileIndexServiceImpl extends FileIndexService implements File
          while (files.hasMoreElements()) {
             Object element = files.nextElement();
             String fileName;
-            if (!(element instanceof Object)) {
-               if (!(element instanceof Object)) {
+            if (!(element instanceof FileInfo)) {
+               if (!(element instanceof String)) {
                   continue;
                }
 
@@ -512,7 +511,7 @@ public final class FileIndexServiceImpl extends FileIndexService implements File
    @Override
    protected final boolean isPrecreatedFolder(String folder) {
       if (!folder.endsWith("/")) {
-         folder = ((StringBuffer)(new Object())).append(folder).append("/").toString();
+         folder = folder + "/";
       }
 
       String folderURL = FileUtilities.makeFileURL(folder);
@@ -605,7 +604,7 @@ public final class FileIndexServiceImpl extends FileIndexService implements File
       // 0b: astore 2
       // 0c: aload 1
       // 0d: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 10: checkcast java/lang/Object
+      // 10: checkcast javax/microedition/io/file/FileConnection
       // 13: astore 2
       // 14: aload 2
       // 15: invokeinterface javax/microedition/io/file/FileConnection.isHidden ()Z 1
@@ -799,11 +798,11 @@ public final class FileIndexServiceImpl extends FileIndexService implements File
                this._scanInProgress++;
             }
 
-            this._scanner.addFolderPath(((StringBuffer)(new Object("/"))).append(rootName).toString());
+            this._scanner.addFolderPath("/" + rootName);
             this._scanner.scanComplete();
             return;
          case 1:
-            this._scanner.removeFolderPath(((StringBuffer)(new Object("/"))).append(rootName).toString());
+            this._scanner.removeFolderPath("/" + rootName);
          case -1:
       }
    }

@@ -1,8 +1,9 @@
 package net.rim.device.api.crypto.tls.tls10;
 
 import net.rim.device.api.crypto.AbstractPseudoRandomSource;
-import net.rim.device.api.crypto.Digest;
+import net.rim.device.api.crypto.MD5Digest;
 import net.rim.device.api.crypto.PseudoRandomSource;
+import net.rim.device.api.crypto.SHA1Digest;
 
 public final class TLSPRF extends AbstractPseudoRandomSource implements PseudoRandomSource {
    private TLSP_hash P_MD5;
@@ -17,8 +18,8 @@ public final class TLSPRF extends AbstractPseudoRandomSource implements PseudoRa
       byte[] labelSeed = new byte[label.length + seed.length];
       System.arraycopy(label, 0, labelSeed, 0, label.length);
       System.arraycopy(seed, 0, labelSeed, label.length, seed.length);
-      this.P_MD5 = (TLSP_hash)(new Object((Digest)(new Object()), secret, 0, secretLength, labelSeed));
-      this.P_SHA1 = (TLSP_hash)(new Object((Digest)(new Object()), secret, secret.length - secretLength, secretLength, labelSeed));
+      this.P_MD5 = new TLSP_hash(new MD5Digest(), secret, 0, secretLength, labelSeed);
+      this.P_SHA1 = new TLSP_hash(new SHA1Digest(), secret, secret.length - secretLength, secretLength, labelSeed);
    }
 
    @Override
@@ -45,7 +46,7 @@ public final class TLSPRF extends AbstractPseudoRandomSource implements PseudoRa
          this.xorBytes(output);
          System.arraycopy(output, 0, buffer, offset, length);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -60,7 +61,7 @@ public final class TLSPRF extends AbstractPseudoRandomSource implements PseudoRa
          this.P_MD5.xorBytes(buffer, offset, length);
          this.P_SHA1.xorBytes(buffer, offset, length);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

@@ -21,15 +21,7 @@ class SoftTokensOptionsItem$OpenTokenVerb extends Verb {
       int selectedIndex = this.this$0._tokenListField.getSelectedIndex();
       if (selectedIndex < this.this$0._tokenList.size() && this.this$0._tokenList.size() > 0) {
          SoftToken token = (SoftToken)this.this$0._tokenList.elementAt(selectedIndex);
-         this.this$0
-            ._softTokenMgr
-            .showDialog(
-               token.getSerialNum(),
-               ((StringBuffer)(new Object())).append(this.this$0.getString(18)).append(token.getSerialNum()).toString(),
-               false,
-               false,
-               null
-            );
+         this.this$0._softTokenMgr.showDialog(token.getSerialNum(), this.this$0.getString(18) + token.getSerialNum(), false, false, null);
       }
 
       return null;

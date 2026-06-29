@@ -6,6 +6,7 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.ActiveAutoTextEditField;
+import net.rim.device.api.ui.component.AutoTextEditField;
 import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.PasswordEditField;
@@ -50,7 +51,7 @@ public final class PasswordKeeperElementScreen extends AppsMainScreen {
       this.setDefaultClose(false);
       this._screen = screen;
       this._element = element;
-      this._vifm = (VerticalIndentFieldManager)(new Object(1153220571769602048L));
+      this._vifm = new VerticalIndentFieldManager(1153220571769602048L);
       this.addFields();
    }
 
@@ -78,24 +79,24 @@ public final class PasswordKeeperElementScreen extends AppsMainScreen {
             website = this._element.getField(3);
             notes = this._element.getField(4);
          } catch (DecryptionException e) {
-            throw new Object();
+            throw new RuntimeException();
          } catch (PasswordKeeperLockedException e) {
-            throw new Object();
+            throw new RuntimeException();
          }
       }
 
       if (PasswordKeeperUtilities.isAvailable(title)) {
-         StringBuffer buffer = (StringBuffer)(new Object());
+         StringBuffer buffer = new StringBuffer();
          buffer.append(CommonResource.getString(16)).append(':').append(' ').append(title);
          this.setTitle(buffer.toString());
       } else {
          this.setTitle(PasswordKeeper.getString(3016));
       }
 
-      RichTextField titleLabel = (RichTextField)(new Object(PasswordKeeper.getString(2000), 45035996273704960L));
+      RichTextField titleLabel = new RichTextField(PasswordKeeper.getString(2000), 45035996273704960L);
       titleLabel.setFont(this._boldFont);
       this._vifm.add(titleLabel);
-      this._titleField = (Field)(new Object(null, title, 1000000, 16384));
+      this._titleField = new AutoTextEditField(null, title, 1000000, 16384);
       this._vifm.add(this._titleField);
       this._usernameLabelField = this.getReadOnlyField(1, usernameLabel);
       this._usernameLabelField.setFont(this._boldFont);
@@ -240,35 +241,35 @@ public final class PasswordKeeperElementScreen extends AppsMainScreen {
       String websiteLabel = this._websiteLabelField.getText();
       String notesLabel = this._notesLabelField.getText();
       String[] labels = this.buildUniqueLabels(usernameLabel, passwordLabel, websiteLabel, notesLabel);
-      String title = ((BasicEditField)this._titleField).getText();
-      String username = ((BasicEditField)this._usernameField).getText();
+      String title = ((AutoTextEditField)this._titleField).getText();
+      String username = ((AutoTextEditField)this._usernameField).getText();
       String password = null;
-      if (!(this._passwordField instanceof Object)) {
-         password = ((BasicEditField)this._passwordField).getText();
+      if (!(this._passwordField instanceof PasswordEditField)) {
+         password = ((AutoTextEditField)this._passwordField).getText();
       } else {
          password = ((PasswordEditField)this._passwordField).getText();
       }
 
-      String website = ((BasicEditField)this._websiteField).getText();
-      String notes = ((BasicEditField)this._notesField).getText();
-      String[] fields = new Object[]{title, username, password, website, notes};
+      String website = ((AutoTextEditField)this._websiteField).getText();
+      String notes = ((AutoTextEditField)this._notesField).getText();
+      String[] fields = new String[]{title, username, password, website, notes};
       return new PasswordKeeperElement(labels, fields);
    }
 
    private final String[] buildUniqueLabels(String usernameLabel, String passwordLabel, String websiteLabel, String notesLabel) {
-      String[] labels = new Object[4];
-      labels[0] = usernameLabel.equals(PasswordKeeper.getString(2001)) ? null : usernameLabel;
-      labels[1] = passwordLabel.equals(PasswordKeeper.getString(2002)) ? null : passwordLabel;
-      labels[2] = websiteLabel.equals(PasswordKeeper.getString(3031)) ? null : websiteLabel;
-      labels[3] = notesLabel.equals(PasswordKeeper.getString(2003)) ? null : notesLabel;
-      return labels;
+      return new String[]{
+         usernameLabel.equals(PasswordKeeper.getString(2001)) ? null : usernameLabel,
+         passwordLabel.equals(PasswordKeeper.getString(2002)) ? null : passwordLabel,
+         websiteLabel.equals(PasswordKeeper.getString(3031)) ? null : websiteLabel,
+         notesLabel.equals(PasswordKeeper.getString(2003)) ? null : notesLabel
+      };
    }
 
    private final RichTextField getReadOnlyField(int fieldType, String fieldString) {
       if (!PasswordKeeperUtilities.isAvailable(fieldString)) {
          switch (fieldType) {
             case 0:
-               throw new Object();
+               throw new IllegalArgumentException();
             case 1:
             default:
                fieldString = PasswordKeeper.getString(2001);
@@ -284,32 +285,32 @@ public final class PasswordKeeperElementScreen extends AppsMainScreen {
          }
       }
 
-      return (RichTextField)(new Object(fieldString, 45035996273704960L));
+      return new RichTextField(fieldString, 45035996273704960L);
    }
 
    private final Field getAppropriateField(int fieldType, String fieldString) {
       switch (fieldType) {
          case 0:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 1:
          default:
-            return (Field)(new Object(null, fieldString, 1000000, 540672));
+            return new AutoTextEditField(null, fieldString, 1000000, 540672);
          case 2:
             if (PasswordKeeperOptions.getOptions().getShowPassword()) {
-               return (Field)(new Object(null, fieldString, 32, 2202781892608L));
+               return new AutoTextEditField(null, fieldString, 32, 2202781892608L);
             }
 
-            return (Field)(new Object(null, fieldString, 32, 2199560142848L));
+            return new PasswordEditField(null, fieldString, 32, 2199560142848L);
          case 3:
             if (PasswordKeeperUtilities.isAvailable(fieldString)) {
-               return (Field)(new Object(null, fieldString, 1000000, 117981184));
+               return new ActiveAutoTextEditField(null, fieldString, 1000000, 117981184);
             }
 
-            ActiveAutoTextEditField tempField = (ActiveAutoTextEditField)(new Object(null, HTTP_STRING, 1000000, 117981184));
+            ActiveAutoTextEditField tempField = new ActiveAutoTextEditField(null, HTTP_STRING, 1000000, 117981184);
             tempField.setCursorPosition(HTTP_STRING.length());
             return tempField;
          case 4:
-            return (Field)(new Object(null, fieldString, 1000000, 16384));
+            return new ActiveAutoTextEditField(null, fieldString, 1000000, 16384);
       }
    }
 
@@ -327,27 +328,27 @@ public final class PasswordKeeperElementScreen extends AppsMainScreen {
       int index = title.indexOf(10);
       if (index != -1) {
          titleField.setText(title.substring(0, index));
-         usernameField.setText(((StringBuffer)(new Object())).append(title.substring(index + 1, title.length())).append(username).toString());
+         usernameField.setText(title.substring(index + 1, title.length()) + username);
          username = usernameField.getText();
       }
 
       index = username.indexOf(10);
       if (index != -1) {
          usernameField.setText(username.substring(0, index));
-         passwordField.setText(((StringBuffer)(new Object())).append(username.substring(index + 1, username.length())).append(password).toString());
+         passwordField.setText(username.substring(index + 1, username.length()) + password);
          password = passwordField.getText();
       }
 
       index = password.indexOf(10);
       if (index != -1) {
          passwordField.setText(password.substring(0, index));
-         websiteField.setText(((StringBuffer)(new Object())).append(password.substring(index + 1, password.length())).append(website).toString());
+         websiteField.setText(password.substring(index + 1, password.length()) + website);
       }
 
       index = website.indexOf(10);
       if (index != -1) {
          websiteField.setText(website.substring(0, index));
-         notesField.setText(((StringBuffer)(new Object())).append(website.substring(index + 1, website.length())).append(notes).toString());
+         notesField.setText(website.substring(index + 1, website.length()) + notes);
       }
    }
 
@@ -408,12 +409,12 @@ public final class PasswordKeeperElementScreen extends AppsMainScreen {
             || (!options.getSymbol() || !symbol) && (options.getSymbol() || symbol)
       );
 
-      if (!(this._passwordField instanceof Object)) {
-         if (this._passwordField instanceof Object) {
-            ((BasicEditField)this._passwordField).setText((String)(new Object(password)));
+      if (!(this._passwordField instanceof PasswordEditField)) {
+         if (this._passwordField instanceof AutoTextEditField) {
+            ((AutoTextEditField)this._passwordField).setText(new String(password));
          }
       } else {
-         ((PasswordEditField)this._passwordField).setText((String)(new Object(password)));
+         ((PasswordEditField)this._passwordField).setText(new String(password));
       }
 
       this._passwordField.setDirty(true);
@@ -425,7 +426,7 @@ public final class PasswordKeeperElementScreen extends AppsMainScreen {
 
    private final void doSave() {
       if (this.changed()) {
-         String title = ((BasicEditField)this._titleField).getText();
+         String title = ((AutoTextEditField)this._titleField).getText();
          if (title == null || title.length() <= 0) {
             Dialog.inform(PasswordKeeper.getString(3028));
             return;
@@ -456,7 +457,7 @@ public final class PasswordKeeperElementScreen extends AppsMainScreen {
          var6 = 2;
       } else {
          if (focusField != this._notesField) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          var6 = 3;
@@ -480,7 +481,7 @@ public final class PasswordKeeperElementScreen extends AppsMainScreen {
             existingLabel = this._notesLabelField.getText();
       }
 
-      SimpleOKCancelInputDialog editFieldDialog = (SimpleOKCancelInputDialog)(new Object(0, PasswordKeeper.getString(3040)));
+      SimpleOKCancelInputDialog editFieldDialog = new SimpleOKCancelInputDialog(0, PasswordKeeper.getString(3040));
       editFieldDialog.setText(existingLabel);
       editFieldDialog.show();
       if (editFieldDialog.getCloseReason() != -1) {

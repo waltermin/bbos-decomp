@@ -11,7 +11,7 @@ public class BoundedLinkedQueue {
 
    public BoundedLinkedQueue(int capacity) {
       if (capacity <= 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this.capacity_ = capacity;
@@ -40,7 +40,7 @@ public class BoundedLinkedQueue {
 
    public void setCapacity(int newCapacity) {
       if (newCapacity <= 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       synchronized (this.putGuard_) {
@@ -159,7 +159,7 @@ public class BoundedLinkedQueue {
 
    public void put(Object x) {
       if (x == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       synchronized (this.putGuard_) {
@@ -185,7 +185,7 @@ public class BoundedLinkedQueue {
 
    public boolean offer(Object x, long msecs) {
       if (x == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       synchronized (this.putGuard_) {

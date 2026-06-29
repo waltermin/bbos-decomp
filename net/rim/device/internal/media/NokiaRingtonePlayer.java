@@ -2,6 +2,7 @@ package net.rim.device.internal.media;
 
 import java.io.DataInputStream;
 import java.io.InputStream;
+import javax.microedition.media.MediaException;
 
 class NokiaRingtonePlayer extends TunePlayer {
    private int _cachedByte;
@@ -235,11 +236,11 @@ class NokiaRingtonePlayer extends TunePlayer {
    }
 
    @Override
-   public void read(InputStream stream) {
-      this._din = (DataInputStream)(new Object(stream));
+   public void read(InputStream stream) throws MediaException {
+      this._din = new DataInputStream(stream);
       this._containsErrors = this.compile();
       if (this.getBuzzerTune().length == 0) {
-         throw new Object();
+         throw new MediaException();
       }
    }
 
@@ -301,7 +302,7 @@ class NokiaRingtonePlayer extends TunePlayer {
 
          return byteToReturn >> 8 - numBits;
       } else {
-         throw new Object();
+         throw new IllegalStateException();
       }
    }
 
@@ -314,7 +315,7 @@ class NokiaRingtonePlayer extends TunePlayer {
          stringData[i] = (byte)this.readBits(8);
       }
 
-      return (String)(new Object(stringData));
+      return new String(stringData);
    }
 
    private boolean compile() {

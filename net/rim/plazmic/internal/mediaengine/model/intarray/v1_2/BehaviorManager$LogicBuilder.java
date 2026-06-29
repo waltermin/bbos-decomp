@@ -3,6 +3,7 @@ package net.rim.plazmic.internal.mediaengine.model.intarray.v1_2;
 import net.rim.plazmic.internal.mediaengine.MediaFactory;
 import net.rim.plazmic.internal.mediaengine.event.Event;
 import net.rim.plazmic.internal.mediaengine.event.EventLogic;
+import net.rim.plazmic.internal.mediaengine.event.MEEventLogicImpl;
 import net.rim.plazmic.internal.mediaengine.util.Platform;
 
 class BehaviorManager$LogicBuilder {
@@ -16,12 +17,12 @@ class BehaviorManager$LogicBuilder {
       this._data = data;
       if (this._data._behaviorsRoot != -1) {
          if (this._data._logic == null) {
-            this._data._logic = (EventLogic)(new Object());
+            this._data._logic = new MEEventLogicImpl();
          }
 
          result = this._logic = this._data._logic;
-         this._cause = (Event)(new Object());
-         this._effect = (Event)(new Object());
+         this._cause = new Event();
+         this._effect = new Event();
          this.buildEventLogic(this._data._behaviorsRoot);
          this._cause = null;
          this._effect = null;

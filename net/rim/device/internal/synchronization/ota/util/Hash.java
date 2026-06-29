@@ -1,6 +1,7 @@
 package net.rim.device.internal.synchronization.ota.util;
 
 import net.rim.device.api.crypto.AbstractDigest;
+import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.util.Arrays;
 
 public final class Hash {
@@ -10,7 +11,7 @@ public final class Hash {
    private static final byte LONGHASH = 7;
 
    public static final short bytesToShort(byte[] data) {
-      return (short)core((AbstractDigest)(new Object()), null, data, 0, data == null ? 0 : data.length, (byte)1);
+      return (short)core(new SHA1Digest(), null, data, 0, data == null ? 0 : data.length, (byte)1);
    }
 
    public static final short bytesToShort(AbstractDigest digest, byte[] digestBuffer, byte[] data) {
@@ -22,7 +23,7 @@ public final class Hash {
    }
 
    public static final int bytesToInt(byte[] data) {
-      return (int)core((AbstractDigest)(new Object()), null, data, 0, data == null ? 0 : data.length, (byte)3);
+      return (int)core(new SHA1Digest(), null, data, 0, data == null ? 0 : data.length, (byte)3);
    }
 
    public static final int bytesToInt(AbstractDigest digest, byte[] digestBuffer, byte[] data) {
@@ -34,7 +35,7 @@ public final class Hash {
    }
 
    public static final long bytesToLong(byte[] data) {
-      return core((AbstractDigest)(new Object()), null, data, 0, data == null ? 0 : data.length, (byte)7);
+      return core(new SHA1Digest(), null, data, 0, data == null ? 0 : data.length, (byte)7);
    }
 
    public static final long bytesToLong(AbstractDigest digest, byte[] digestBuffer, byte[] data) {

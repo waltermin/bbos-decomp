@@ -5,12 +5,12 @@ import net.rim.device.api.servicebook.ServiceBook;
 import net.rim.device.api.servicebook.ServiceBookSyncCollection;
 import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.api.system.GlobalEventListener;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.component.Menu;
@@ -38,13 +38,13 @@ public final class SBAppContents extends MainScreen implements ListFieldCallback
 
    public SBAppContents(ServiceBook sb, int viewMode) {
       this._sb = sb;
-      this._list = (ListField)(new Object(0));
+      this._list = new ListField(0);
       this._list.setCallback(this);
       this._list.setEmptyString(SBAppResources.getResourceBundle(), 50, 4);
       this._viewMode = viewMode;
-      this._records = new Object[DISPLAY_TYPES.length][];
+      this._records = new ServiceRecord[DISPLAY_TYPES.length][];
       this._icons = IconCollection.get("net_rim_ServiceBook", DISPLAY_TYPES.length);
-      this.setTitle((Field)(new Object(SBAppResources.getString(1))));
+      this.setTitle(new LabelField(SBAppResources.getString(1)));
       this.add(this._list);
    }
 
@@ -281,9 +281,7 @@ public final class SBAppContents extends MainScreen implements ListFieldCallback
          }
       }
 
-      graphics.drawText(
-         ((StringBuffer)(new Object())).append(name).append(" [").append(cid).append(']').toString(), iconWidth + 1, y, 64, width - (iconWidth + 1)
-      );
+      graphics.drawText(name + " [" + cid + ']', iconWidth + 1, y, 64, width - (iconWidth + 1));
       graphics.setFont(baseFont);
    }
 

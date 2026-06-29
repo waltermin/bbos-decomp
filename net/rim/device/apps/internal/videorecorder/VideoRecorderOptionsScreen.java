@@ -6,6 +6,7 @@ import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.apps.api.framework.file.FilenameEditField;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -22,7 +23,7 @@ final class VideoRecorderOptionsScreen extends SaveableMainScreenOptionsListItem
 
    private VideoRecorderOptionsScreen() {
       super(VideoRecorderResources.getString(5));
-      ContextObject.put(super._context, 244, new Object(244387));
+      ContextObject.put(super._context, 244, new Integer(244387));
    }
 
    @Override
@@ -51,18 +52,18 @@ final class VideoRecorderOptionsScreen extends SaveableMainScreenOptionsListItem
       }
 
       this._startingFlashMode = this._options.getFlashModeIndex();
-      this._flashMode = (ObjectChoiceField)(new Object(VideoRecorderResources.getString(8), VideoRecorderResources.getStringArray(9), this._startingFlashMode));
+      this._flashMode = new ObjectChoiceField(VideoRecorderResources.getString(8), VideoRecorderResources.getStringArray(9), this._startingFlashMode);
       screen.add(this._flashMode);
-      this._colourEffect = (ObjectChoiceField)(new Object(
+      this._colourEffect = new ObjectChoiceField(
          VideoRecorderResources.getString(14), VideoRecorderResources.getStringArray(15), this._options.getColourEffectIndex()
-      ));
+      );
       screen.add(this._colourEffect);
-      this._videoFormat = (ObjectChoiceField)(new Object(VideoRecorderResources.getString(12), this.getImageSizeChoices(), this._options.getVideoFormatIndex()));
+      this._videoFormat = new ObjectChoiceField(VideoRecorderResources.getString(12), this.getImageSizeChoices(), this._options.getVideoFormatIndex());
       screen.add(this._videoFormat);
-      screen.add((Field)(new Object()));
-      this._folder = (FilenameEditField)(new Object(this._options.getDestinationFolder(), null, 3, 134217728, true));
+      screen.add(new SeparatorField());
+      this._folder = new FilenameEditField(this._options.getDestinationFolder(), null, 3, 134217728, true);
       this._folder.getFileSelector().setSelectFolder(true);
-      LabelField folderLabel = (LabelField)(new Object(VideoRecorderResources.getString(18)));
+      LabelField folderLabel = new LabelField(VideoRecorderResources.getString(18));
       folderLabel.setTag(ThemeUtilities.TAG_RECORDER_SELECTABLE_TEXT);
       screen.add(folderLabel);
       screen.add(this._folder);
@@ -71,7 +72,7 @@ final class VideoRecorderOptionsScreen extends SaveableMainScreenOptionsListItem
 
       while (--i >= 0) {
          Field field = screen.getField(i);
-         if (!(field instanceof Object)) {
+         if (!(field instanceof LabelField)) {
             field.setTag(ThemeUtilities.TAG_RECORDER_SELECTABLE_TEXT);
          }
       }
@@ -79,19 +80,12 @@ final class VideoRecorderOptionsScreen extends SaveableMainScreenOptionsListItem
 
    private final String[] getImageSizeChoices() {
       String[] choices = VideoRecorderResources.getStringArray(13);
-      String[] labels = new Object[choices.length];
+      String[] labels = new String[choices.length];
       int i = choices.length;
 
       while (--i >= 0) {
          int[] imageSize = this._options.getVideoFormat(i);
-         labels[i] = ((StringBuffer)(new Object()))
-            .append(choices[i])
-            .append(" (")
-            .append(imageSize[0])
-            .append(" x ")
-            .append(imageSize[1])
-            .append(")")
-            .toString();
+         labels[i] = choices[i] + " (" + imageSize[0] + " x " + imageSize[1] + ")";
       }
 
       return labels;

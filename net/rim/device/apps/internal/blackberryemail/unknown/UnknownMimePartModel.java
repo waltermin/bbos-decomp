@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.blackberryemail.unknown;
 import net.rim.device.api.synchronization.ConverterUtilities;
 import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.DataBuffer;
@@ -82,16 +83,16 @@ public class UnknownMimePartModel implements PersistableRIMModel, ConversionProv
       }
 
       try {
-         return (String)(new Object(nameBytes, 0, nameBytes.length, "windows-1252\r"));
+         return new String(nameBytes, 0, nameBytes.length, "windows-1252\r");
       } finally {
-         name = (String)(new Object(nameBytes, 0, nameBytes.length));
+         name = new String(nameBytes, 0, nameBytes.length);
          return name;
       }
    }
 
    @Override
    public boolean convert(Object context, Object target) {
-      if (!(target instanceof Object)) {
+      if (!(target instanceof RIMMessagingOutgoingMessage)) {
          if (ContextObject.getFlag(context, 43) && ContextObject.getFlag(context, 19)) {
             int fieldType = this._isHidden ? 24 : 22;
             byte[] name = this.getNameBytes();
@@ -116,8 +117,8 @@ public class UnknownMimePartModel implements PersistableRIMModel, ConversionProv
 
             System.arraycopy(UNKNOWN_ATTACHMENT_TRAILER, 0, result, namelen + 10, UNKNOWN_ATTACHMENT_TRAILER_LENGTH);
             int oldLength = result.length;
-            DataBuffer buffer = (DataBuffer)(new Object());
-            CMIMEParameters parameters = (CMIMEParameters)(new Object(buffer, 2, 5));
+            DataBuffer buffer = new DataBuffer();
+            CMIMEParameters parameters = new CMIMEParameters(buffer, 2, 5);
             this.writeCMIMEParameters(parameters);
             buffer.writeByte(0);
             if (this._dataEncoding != null) {
@@ -296,7 +297,7 @@ public class UnknownMimePartModel implements PersistableRIMModel, ConversionProv
    public Field getField(Object context) {
       String name = this.getFilename();
       if (name != null && name.length() > 0) {
-         StringBuffer buffer = (StringBuffer)(new Object());
+         StringBuffer buffer = new StringBuffer();
          String rimPrefix = "x-rimdevice";
          if (StringUtilities.startsWithIgnoreCase(name, rimPrefix, 1701707776)) {
             buffer.append(name.substring(rimPrefix.length()));
@@ -318,11 +319,11 @@ public class UnknownMimePartModel implements PersistableRIMModel, ConversionProv
             buffer.append(')');
          }
 
-         HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object());
-         ImageField iconField = (ImageField)(new Object(65536));
+         HorizontalFieldManager hfm = new HorizontalFieldManager();
+         ImageField iconField = new ImageField(65536);
          iconField.setImage(FileIcon.getFileIconImage(this.getContentType()));
          hfm.add(iconField);
-         Field descriptionField = (Field)(new Object(buffer.toString()));
+         Field descriptionField = new RichTextField(buffer.toString());
          descriptionField.setEditable(false);
          hfm.add(descriptionField);
          hfm.setCookie(this);
@@ -349,7 +350,7 @@ public class UnknownMimePartModel implements PersistableRIMModel, ConversionProv
 
    @Override
    public void receiveMore(Object context, Object moreObject) {
-      if (moreObject instanceof Object) {
+      if (moreObject instanceof RIMMessagingMoreMessage) {
          RIMMessagingMoreMessage incomingTransmission = (RIMMessagingMoreMessage)moreObject;
          byte[] moreData = incomingTransmission.getRawBytes();
          this._dataEncoding = PersistentContent.encodeAndAppend(moreData, this._dataEncoding);
@@ -382,7 +383,7 @@ public class UnknownMimePartModel implements PersistableRIMModel, ConversionProv
       }
 
       Object parametersObject = contextObject.get(-7353832199068708928L);
-      if (parametersObject instanceof Object) {
+      if (parametersObject instanceof Parameters) {
          Parameters parameters = (Parameters)parametersObject;
          byte[] contentBytes = parameters.getFirst((byte)-13);
          if (contentBytes != null) {

@@ -33,7 +33,7 @@ public class UnreadCount$NewAndUnreadCount extends UnreadCount {
          if (this._newCount < 0) {
             label41:
             try {
-               throw new Object(((StringBuffer)(new Object("New count is invalid: "))).append(this._newCount).toString());
+               throw new Throwable("New count is invalid: " + this._newCount);
             } finally {
                this._newCount = 0;
                break label41;
@@ -63,13 +63,13 @@ public class UnreadCount$NewAndUnreadCount extends UnreadCount {
          }
 
          if (this._newCount <= 0) {
-            super._action.set(2, (String)((Object)null));
+            super._action.set(2, (String)null);
          }
       }
    }
 
    public void updateActionState() {
-      super._action.set(2, (String)(this._newCount > 0 ? "new" : (Object)null));
+      super._action.set(2, this._newCount > 0 ? "new" : (String)null);
    }
 
    @Override

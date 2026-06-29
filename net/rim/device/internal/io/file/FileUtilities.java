@@ -7,6 +7,7 @@ import javax.microedition.io.file.FileConnection;
 import javax.microedition.io.file.FileSystemRegistry;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.io.MIMETypeAssociations;
+import net.rim.device.api.io.file.FileIOException;
 import net.rim.device.api.system.EncodedImage;
 import net.rim.device.api.util.CharacterUtilities;
 import net.rim.device.api.util.NumberUtilities;
@@ -68,7 +69,7 @@ public final class FileUtilities {
       // 01: astore 1
       // 02: aload 0
       // 03: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 06: checkcast java/lang/Object
+      // 06: checkcast javax/microedition/io/file/FileConnection
       // 09: astore 1
       // 0a: aload 1
       // 0b: invokeinterface javax/microedition/io/file/FileConnection.exists ()Z 1
@@ -84,7 +85,7 @@ public final class FileUtilities {
       // 23: bipush 1
       // 24: invokevirtual java/lang/String.indexOf (II)I
       // 27: if_icmpeq 56
-      // 2a: new java/lang/Object
+      // 2a: new java/lang/StringBuffer
       // 2d: dup
       // 2e: invokespecial java/lang/StringBuffer.<init> ()V
       // 31: getstatic net/rim/device/internal/io/file/FileUtilities.FILE_COLON_SLASH_SLASH Ljava/lang/String;
@@ -192,7 +193,7 @@ public final class FileUtilities {
       // 01: astore 1
       // 02: aload 0
       // 03: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 06: checkcast java/lang/Object
+      // 06: checkcast javax/microedition/io/file/FileConnection
       // 09: astore 1
       // 0a: aload 1
       // 0b: invokeinterface javax/microedition/io/file/FileConnection.exists ()Z 1
@@ -287,14 +288,14 @@ public final class FileUtilities {
       // 008: aload 0
       // 009: invokestatic net/rim/device/internal/io/file/FileUtilities.isDirectory (Ljava/lang/String;)Z
       // 00c: ifeq 017
-      // 00f: new java/lang/Object
+      // 00f: new java/lang/IllegalArgumentException
       // 012: dup
       // 013: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 016: athrow
       // 017: aload 1
       // 018: invokestatic net/rim/device/internal/io/file/FileUtilities.isDirectory (Ljava/lang/String;)Z
       // 01b: ifeq 034
-      // 01e: new java/lang/Object
+      // 01e: new java/lang/StringBuffer
       // 021: dup
       // 022: invokespecial java/lang/StringBuffer.<init> ()V
       // 025: aload 1
@@ -323,7 +324,7 @@ public final class FileUtilities {
       // 04c: istore 11
       // 04e: aload 0
       // 04f: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 052: checkcast java/lang/Object
+      // 052: checkcast javax/microedition/io/file/FileConnection
       // 055: astore 5
       // 057: iload 4
       // 059: ifeq 071
@@ -358,7 +359,7 @@ public final class FileUtilities {
       // 09f: ifne 0a5
       // 0a2: goto 168
       // 0a5: aload 5
-      // 0a7: instanceof java/lang/Object
+      // 0a7: instanceof net/rim/device/internal/io/file/BaseFileConnection
       // 0aa: ifne 0b0
       // 0ad: goto 168
       // 0b0: aload 12
@@ -368,7 +369,7 @@ public final class FileUtilities {
       // 0b9: ifne 0bf
       // 0bc: goto 168
       // 0bf: aload 5
-      // 0c1: checkcast java/lang/Object
+      // 0c1: checkcast net/rim/device/internal/io/file/BaseFileConnection
       // 0c4: astore 14
       // 0c6: aload 14
       // 0c8: invokeinterface net/rim/device/internal/io/file/BaseFileConnection.getSupportFlags ()I 1
@@ -501,7 +502,7 @@ public final class FileUtilities {
       // 214: return
       // 215: aload 1
       // 216: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 219: checkcast java/lang/Object
+      // 219: checkcast javax/microedition/io/file/FileConnection
       // 21c: astore 6
       // 21e: aload 5
       // 220: invokeinterface javax/microedition/io/file/FileConnection.fileSize ()J 1
@@ -510,16 +511,16 @@ public final class FileUtilities {
       // 229: aload 6
       // 22b: invokestatic net/rim/device/internal/io/file/FileUtilities.checkSpaceAvailable (JLjavax/microedition/io/file/FileConnection;)V
       // 22e: aload 5
-      // 230: instanceof java/lang/Object
+      // 230: instanceof net/rim/device/api/io/file/ExtendedFileConnection
       // 233: ifeq 26c
       // 236: aload 6
-      // 238: instanceof java/lang/Object
+      // 238: instanceof net/rim/device/api/io/file/ExtendedFileConnection
       // 23b: ifeq 26c
       // 23e: aload 5
-      // 240: checkcast java/lang/Object
+      // 240: checkcast net/rim/device/api/io/file/ExtendedFileConnection
       // 243: astore 16
       // 245: aload 6
-      // 247: checkcast java/lang/Object
+      // 247: checkcast net/rim/device/api/io/file/ExtendedFileConnection
       // 24a: astore 17
       // 24c: aload 16
       // 24e: invokeinterface net/rim/device/api/io/file/ExtendedFileConnection.isContentDRMForwardLocked ()Z 1
@@ -831,7 +832,7 @@ public final class FileUtilities {
          prefix = "";
       }
 
-      return ((StringBuffer)(new Object())).append(prefix).append(URIDecoder.decode(fileURL.substring(startIndex), "UTF-8", false)).toString();
+      return prefix + URIDecoder.decode(fileURL.substring(startIndex), "UTF-8", false);
    }
 
    public static final String getDisplayBaseName(String pathURL) {
@@ -875,13 +876,13 @@ public final class FileUtilities {
       return URIDecoder.decode(path.substring(startIndex, endIndex), "UTF-8", false);
    }
 
-   public static final void checkSpaceAvailable(long newSize, FileConnection fc) {
+   public static final void checkSpaceAvailable(long newSize, FileConnection fc) throws FileIOException {
       if (newSize >= fc.availableSize()) {
-         throw new Object(9);
+         throw new FileIOException(9);
       }
 
       if (fc.getPath().startsWith(FILE_SYSTEM_STORE_ROOT_STR) && newSize > FileSystemOptions.getContentStoreMaxFileSize()) {
-         throw new Object(1008);
+         throw new FileIOException(1008);
       }
    }
 
@@ -910,7 +911,7 @@ public final class FileUtilities {
       // 00a: istore 7
       // 00c: aload 1
       // 00d: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 010: checkcast java/lang/Object
+      // 010: checkcast javax/microedition/io/file/FileConnection
       // 013: astore 5
       // 015: aload 0
       // 016: invokevirtual java/io/InputStream.available ()I
@@ -930,11 +931,11 @@ public final class FileUtilities {
       // 039: ifeq 062
       // 03c: aload 5
       // 03e: dup
-      // 03f: instanceof java/lang/Object
+      // 03f: instanceof net/rim/device/api/io/file/ExtendedFileConnection
       // 042: ifne 049
       // 045: pop
       // 046: goto 062
-      // 049: checkcast java/lang/Object
+      // 049: checkcast net/rim/device/api/io/file/ExtendedFileConnection
       // 04c: astore 9
       // 04e: aload 9
       // 050: bipush 51
@@ -1084,7 +1085,7 @@ public final class FileUtilities {
       // 05: astore 3
       // 06: aload 0
       // 07: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 0a: checkcast java/lang/Object
+      // 0a: checkcast javax/microedition/io/file/FileConnection
       // 0d: astore 1
       // 0e: aload 1
       // 0f: invokeinterface javax/microedition/io/file/FileConnection.fileSize ()J 1
@@ -1294,7 +1295,7 @@ public final class FileUtilities {
             while (elements.hasMoreElements() && isEmpty) {
                String file = (String)elements.nextElement();
                if (deleteAllFiles) {
-                  delete(((StringBuffer)(new Object())).append(fullyQualifiedName).append(file).toString(), true);
+                  delete(fullyQualifiedName + file, true);
                } else if (file.equals(MetaDataFile.THUMBS_DB_FILE)) {
                   thumbsDBPresent = true;
                } else {
@@ -1303,7 +1304,7 @@ public final class FileUtilities {
             }
 
             if (!deleteAllFiles && isEmpty && thumbsDBPresent) {
-               delete(((StringBuffer)(new Object())).append(fullyQualifiedName).append(MetaDataFile.THUMBS_DB_FILE).toString(), true);
+               delete(fullyQualifiedName + MetaDataFile.THUMBS_DB_FILE, true);
             }
 
             if (!conn.canWrite()) {
@@ -1375,7 +1376,7 @@ public final class FileUtilities {
          }
 
          if (!filename.startsWith(FILE_COLON_SLASH_SLASH)) {
-            filename = ((StringBuffer)(new Object())).append(FILE_COLON_SLASH_SLASH).append(filename).toString();
+            filename = FILE_COLON_SLASH_SLASH + filename;
          }
       }
 
@@ -1396,8 +1397,7 @@ public final class FileUtilities {
    }
 
    public static final boolean isRemovable(String path) {
-      return path.startsWith(FILE_SYSTEM_SDCARD_ROOT_STR)
-         || path.startsWith(((StringBuffer)(new Object())).append(FILE_COLON_SLASH_SLASH).append(FILE_SYSTEM_SDCARD_ROOT_STR).toString());
+      return path.startsWith(FILE_SYSTEM_SDCARD_ROOT_STR) || path.startsWith(FILE_COLON_SLASH_SLASH + FILE_SYSTEM_SDCARD_ROOT_STR);
    }
 
    public static final String getDirectoryName(String path) {
@@ -1408,7 +1408,7 @@ public final class FileUtilities {
    }
 
    public static final String makeFileURL(String path, String filename) {
-      StringBuffer fileURL = (StringBuffer)(new Object());
+      StringBuffer fileURL = new StringBuffer();
       if (!path.startsWith(FILE_COLON_SLASH_SLASH)) {
          fileURL.append(FILE_COLON_SLASH_SLASH);
       }
@@ -1417,7 +1417,7 @@ public final class FileUtilities {
    }
 
    public static final String makeFileURL(String file) {
-      return !file.startsWith(FILE_COLON_SLASH_SLASH) ? ((StringBuffer)(new Object())).append(FILE_COLON_SLASH_SLASH).append(file).toString() : file;
+      return !file.startsWith(FILE_COLON_SLASH_SLASH) ? FILE_COLON_SLASH_SLASH + file : file;
    }
 
    public static final boolean filenamesMatch(String str1, String str2) {
@@ -1430,7 +1430,7 @@ public final class FileUtilities {
 
    public static final String makeValidFilename(String name) {
       if (name != null && !FilenameValidator.validateFilenameAndPath(name)) {
-         StringBuffer sbuf = (StringBuffer)(new Object(name));
+         StringBuffer sbuf = new StringBuffer(name);
          int size = name.length();
 
          for (int i = 0; i < size; i++) {
@@ -1474,7 +1474,7 @@ public final class FileUtilities {
             default:
                if (('0' > character || character > '9') && ('A' > character || character > 'Z') && ('a' > character || character > 'z')) {
                   if (output == null) {
-                     output = (StringBuffer)(new Object(length + 16));
+                     output = new StringBuffer(length + 16);
                      StringUtilities.append(output, name, 0, i);
                   }
 
@@ -1496,7 +1496,7 @@ public final class FileUtilities {
    }
 
    public static final String sizeToString(long size, int decimalPlaces) {
-      StringBuffer fileSizeStr = (StringBuffer)(new Object());
+      StringBuffer fileSizeStr = new StringBuffer();
       int sizeIndex = MULTIPLIER.length - 1;
 
       while (size < MULTIPLIER[sizeIndex] && sizeIndex != 0) {
@@ -1580,7 +1580,7 @@ public final class FileUtilities {
       // 17: ireturn
       // 18: aconst_null
       // 19: astore 1
-      // 1a: new java/lang/Object
+      // 1a: new java/lang/StringBuffer
       // 1d: dup
       // 1e: invokespecial java/lang/StringBuffer.<init> ()V
       // 21: getstatic net/rim/device/internal/io/file/FileUtilities.FILE_COLON_SLASH_SLASH Ljava/lang/String;
@@ -1589,7 +1589,7 @@ public final class FileUtilities {
       // 2a: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 2d: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 30: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 33: checkcast java/lang/Object
+      // 33: checkcast javax/microedition/io/file/FileConnection
       // 36: astore 1
       // 37: aload 1
       // 38: invokeinterface javax/microedition/io/file/FileConnection.availableSize ()J 1
@@ -1632,7 +1632,7 @@ public final class FileUtilities {
       // 86: astore 5
       // 88: aload 4
       // 8a: athrow
-      // 8b: new java/lang/Object
+      // 8b: new java/lang/StringBuffer
       // 8e: dup
       // 8f: invokespecial java/lang/StringBuffer.<init> ()V
       // 92: getstatic net/rim/device/internal/io/file/FileUtilities.FILE_COLON_SLASH_SLASH Ljava/lang/String;
@@ -1641,7 +1641,7 @@ public final class FileUtilities {
       // 9b: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 9e: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // a1: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // a4: checkcast java/lang/Object
+      // a4: checkcast javax/microedition/io/file/FileConnection
       // a7: astore 1
       // a8: aload 1
       // a9: invokeinterface javax/microedition/io/file/FileConnection.availableSize ()J 1
@@ -1765,7 +1765,7 @@ public final class FileUtilities {
       // 05: astore 3
       // 06: aload 0
       // 07: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 0a: checkcast java/lang/Object
+      // 0a: checkcast javax/microedition/io/file/FileConnection
       // 0d: astore 1
       // 0e: aload 1
       // 0f: invokeinterface javax/microedition/io/file/FileConnection.canRead ()Z 1
@@ -1852,7 +1852,7 @@ public final class FileUtilities {
       // 01: astore 2
       // 02: aload 0
       // 03: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 06: checkcast java/lang/Object
+      // 06: checkcast javax/microedition/io/file/FileConnection
       // 09: astore 2
       // 0a: aload 2
       // 0b: invokeinterface javax/microedition/io/file/FileConnection.exists ()Z 1

@@ -16,7 +16,7 @@ public final class SimpleTcpDataBlock implements TcpDataBlock, TcpConstants {
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object("("))).append(this._leftEdge).append(", ").append(this._rightEdge).append(")").toString();
+      return "(" + this._leftEdge + ", " + this._rightEdge + ")";
    }
 
    @Override

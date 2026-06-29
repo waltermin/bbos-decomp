@@ -25,8 +25,8 @@ public final class MEGraphics2dContext {
    int _objectOpacity = 255;
    int _primitiveOpacity = Integer.MAX_VALUE;
    XYRect _clipRect;
-   XYRect _computedClip = (XYRect)(new Object());
-   XYRect _computedIntersectClip = (XYRect)(new Object());
+   XYRect _computedClip = new XYRect();
+   XYRect _computedIntersectClip = new XYRect();
    int _clipXUnit;
    int _clipYUnit;
    int _clipWidthUnit;
@@ -73,10 +73,10 @@ public final class MEGraphics2dContext {
    private int _dirtyBits;
    private int _dirtyOR;
    boolean _dirtyORValid = false;
-   public XYRect _boundingBox = (XYRect)(new Object());
-   public XYRect _boundingBoxTransformed = (XYRect)(new Object());
-   public XYRect _dirtyRect = (XYRect)(new Object());
-   public XYRect _dirtyRectTransformed = (XYRect)(new Object());
+   public XYRect _boundingBox = new XYRect();
+   public XYRect _boundingBoxTransformed = new XYRect();
+   public XYRect _dirtyRect = new XYRect();
+   public XYRect _dirtyRectTransformed = new XYRect();
    public int _idx;
    public int _type;
    public Object _image;
@@ -295,7 +295,7 @@ public final class MEGraphics2dContext {
 
    public final void setFillTextureDimensions(int x, int y, int width, int height) {
       if (this._fillTextureDimensions == null) {
-         this._fillTextureDimensions = (XYRect)(new Object(x, y, width, height));
+         this._fillTextureDimensions = new XYRect(x, y, width, height);
       } else {
          this._fillTextureDimensions.x = x;
          this._fillTextureDimensions.y = y;
@@ -512,7 +512,7 @@ public final class MEGraphics2dContext {
 
    public final void setClip(int x, int xUnit, int y, int yUnit, int width, int widthUnit, int height, int heightUnit) {
       if (this._clipRect == null) {
-         this._clipRect = (XYRect)(new Object(x, y, width, height));
+         this._clipRect = new XYRect(x, y, width, height);
       }
 
       this._clipRect.x = x;

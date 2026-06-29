@@ -3,7 +3,7 @@ package net.rim.wica.runtime.util;
 import java.util.Vector;
 
 public class ThreadSafeQueue {
-   protected Vector queue = (Vector)(new Object());
+   protected Vector queue = new Vector();
 
    public void add(Object item) {
       synchronized (this.queue) {

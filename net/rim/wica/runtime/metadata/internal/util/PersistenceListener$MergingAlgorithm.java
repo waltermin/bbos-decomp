@@ -151,7 +151,7 @@ final class PersistenceListener$MergingAlgorithm {
                this.mergeDataArrayField(srcDC, dstDC, srcHandle, dstHandle, field, persistableParent, true);
                break;
             default:
-               throw new Object("Not recognized type");
+               throw new RuntimeException("Not recognized type");
          }
       }
    }
@@ -216,7 +216,7 @@ final class PersistenceListener$MergingAlgorithm {
                   this.mergeDataArrayField(srcGlobals, dstGlobals, field, true);
                   break;
                default:
-                  throw new Object("Unrecognized field type");
+                  throw new RuntimeException("Unrecognized field type");
             }
          }
       }
@@ -379,7 +379,7 @@ final class PersistenceListener$MergingAlgorithm {
    private final void loadCollections() {
       WicletStore store = this.this$0._app.getContext().getWicletStore();
       IntEnumeration e = this.this$0._cmpHandlers.keys();
-      IntVector switchToShallow = (IntVector)(new Object());
+      IntVector switchToShallow = new IntVector();
       boolean loadGlobals = false;
 
       while (e.hasMoreElements()) {

@@ -1,14 +1,15 @@
 package net.rim.device.internal.eventLogViewer;
 
-import net.rim.device.api.i18n.DateFormat;
 import net.rim.device.api.i18n.ResourceBundle;
+import net.rim.device.api.i18n.SimpleDateFormat;
 import net.rim.device.api.system.Clipboard;
 import net.rim.device.api.system.EventLogger;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.DateField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.NumberUtilities;
 import net.rim.device.internal.system.InternalServices;
@@ -27,22 +28,22 @@ class BaseDetailsScreen extends MainScreen {
       super(299067162755072L);
       this._contents = contents;
       ResourceBundle b = this._contents._rb;
-      this._name = (PropertyField)(new Object(b.getString(14), null));
+      this._name = new PropertyField(b.getString(14), null);
       this.add(this._name);
-      this._severity = (PropertyField)(new Object(b.getString(16), null));
+      this._severity = new PropertyField(b.getString(16), null);
       this.add(this._severity);
-      this._guid = (PropertyField)(new Object(b.getString(12), null));
+      this._guid = new PropertyField(b.getString(12), null);
       this.add(this._guid);
-      this._time = (DateField)(new Object(b.getString(13), 0, (DateFormat)(new Object(b.getString(41)))));
+      this._time = new DateField(b.getString(13), 0, new SimpleDateFormat(b.getString(41)));
       this._time.setEditable(false);
       this.add(this._time);
-      this.add((Field)(new Object()));
-      this._data = (RichTextField)(new Object(null));
+      this.add(new SeparatorField());
+      this._data = new RichTextField(null);
       this.add(this._data);
    }
 
    private void copyEventData2Clipboard() {
-      StringBuffer strBuf = (StringBuffer)(new Object(64));
+      StringBuffer strBuf = new StringBuffer(64);
       strBuf.append(this._name.getName());
       strBuf.append(' ');
       strBuf.append(this._name.getValue());
@@ -83,7 +84,7 @@ class BaseDetailsScreen extends MainScreen {
    }
 
    private String getGuidFieldString(int eventHandle) {
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
       NumberUtilities.appendNumber(sb, EventLog.getGUID(eventHandle), 16);
       return sb.toString();
    }
@@ -138,6 +139,6 @@ class BaseDetailsScreen extends MainScreen {
 
    @Override
    public void setTitle(String title) {
-      this.setTitle((Field)(new Object(title)));
+      this.setTitle(new LabelField(title));
    }
 }

@@ -32,7 +32,7 @@ public class MemoVerbs {
          Verb[] verbs = memoVerbs.getVerbs(null);
          if (verbs != null && verbs.length > 0) {
             Verb var10000 = verbs[0];
-            if (!(verbs[0] instanceof Object)) {
+            if (!(verbs[0] instanceof Copyable)) {
                return verbs[0];
             }
 

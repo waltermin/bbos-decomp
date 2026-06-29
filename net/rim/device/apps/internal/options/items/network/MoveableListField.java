@@ -17,7 +17,7 @@ final class MoveableListField extends ListField implements ListFieldCallback {
    private boolean _moving;
    private int _movingStartIndex;
    private int _movingCurIndex;
-   private XYRect _focus = (XYRect)(new Object());
+   private XYRect _focus = new XYRect();
    private MoveableListFieldCallback _realCallback;
    Image _imageUpDown = IconCollection.get("net_rim_options_MoveUpDown", 1).getImage(0);
    Tag tagMove = Tag.create("list-move");

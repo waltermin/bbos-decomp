@@ -8,6 +8,6 @@ public final class CompilerException extends Exception {
    public final String toString() {
       String s = "Script Compiler Error";
       String message = this.getMessage();
-      return message != null ? ((StringBuffer)(new Object())).append(s).append(": ").append(message).toString() : s;
+      return message != null ? s + ": " + message : s;
    }
 }

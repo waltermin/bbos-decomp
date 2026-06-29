@@ -9,7 +9,7 @@ class SMSEditorScreen$LeaveSpaceManager extends VerticalFieldManager {
 
    @Override
    protected void sublayout(int width, int height) {
-      StringBuffer buf = (StringBuffer)(new Object());
+      StringBuffer buf = new StringBuffer();
       Font currentFont = this.getFont();
       int widestValue = 0;
 

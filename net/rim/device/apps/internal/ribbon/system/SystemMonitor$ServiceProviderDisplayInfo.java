@@ -25,7 +25,7 @@ final class SystemMonitor$ServiceProviderDisplayInfo implements SIMCardEfTask {
          this._buffer = new byte[this.this$0._efHandler.getFileSize()];
          int code = efHandler.readRequest(0, this._buffer);
          if (code == 0) {
-            DataBuffer db = (DataBuffer)(new Object(this._buffer, 0, this._buffer.length, true));
+            DataBuffer db = new DataBuffer(this._buffer, 0, this._buffer.length, true);
             int length = this._buffer.length;
             int plmnIndex = 0;
 

@@ -2,7 +2,7 @@ package net.rim.device.apps.internal.bis.ui;
 
 import java.util.Hashtable;
 import net.rim.device.api.i18n.MessageFormat;
-import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.apps.internal.bis.ApplicationResources;
 import net.rim.device.apps.internal.bis.api.ui.Button;
 import net.rim.device.apps.internal.bis.api.ui.FormattedTextField;
@@ -21,11 +21,11 @@ public final class AccountServicesConfirmationScreen extends UserSettingsScreen 
       this.addContentField(new FormattedTextField(this.getString(321, new Object[]{email})));
       this.addContentLineBreak();
       if (ClientSessionState.getInstance().getSynchAddressBook()) {
-         this.addContentField((Field)(new Object(ApplicationResources.getString(322))));
+         this.addContentField(new LabelField(ApplicationResources.getString(322)));
       }
 
       if (ClientSessionState.getInstance().getSynchCalendar()) {
-         this.addContentField((Field)(new Object(ApplicationResources.getString(323))));
+         this.addContentField(new LabelField(ApplicationResources.getString(323)));
       }
 
       this.addContentLineBreak();

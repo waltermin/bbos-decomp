@@ -9,7 +9,7 @@ public class PhoneticReplacements {
    private int iStart;
    private int iEnd;
    private int iCurrentDataId;
-   private SLCurrentVariant iResult = (SLCurrentVariant)(new Object());
+   private SLCurrentVariant iResult = new SLCurrentVariant();
    private int iMaxGrowSize = -1;
 
    public PhoneticReplacements() {

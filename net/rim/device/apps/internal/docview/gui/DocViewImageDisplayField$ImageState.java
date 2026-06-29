@@ -66,13 +66,13 @@ public final class DocViewImageDisplayField$ImageState {
    private static final DocViewParsingData getImageData(DocViewImageDisplayField$EnlargeInfo enlargeObj, XYRect enlargeArea) {
       DocViewParsingData parsingData = null;
       if (enlargeObj != null) {
-         DocViewParser imageParser = (DocViewParser)(new Object(false));
+         DocViewParser imageParser = new DocViewParser(false);
          enlargeObj.parseImageData(enlargeArea, imageParser);
          if (imageParser.getLastParsingStatus() == 0) {
             parsingData = imageParser.getParsingData();
          }
 
-         imageParser = null;
+         Object var4 = null;
       }
 
       return parsingData;

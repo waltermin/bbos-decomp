@@ -45,9 +45,9 @@ final class SearchViewScreen$SimpleViewVerb extends Verb {
                } else if (!ignore_duplicates) {
                   int prompt_resId = 1711;
                   String prompt_resStr = AddressBookResources.getString(prompt_resId);
-                  String[] prompt_parms = new Object[]{duplicates[0].toString()};
+                  String[] prompt_parms = new String[]{duplicates[0].toString()};
                   String prompt = MessageFormat.format(prompt_resStr, prompt_parms);
-                  String[] choices = new Object[]{
+                  String[] choices = new String[]{
                      AddressBookResources.getString(1712),
                      AddressBookResources.getString(1713),
                      AddressBookResources.getString(1714),
@@ -71,7 +71,7 @@ final class SearchViewScreen$SimpleViewVerb extends Verb {
                      1950971155,
                      1979777083
                   };
-                  Dialog dlg = (Dialog)(new Object(prompt, choices, values, 1712, Bitmap.getPredefinedBitmap(1)));
+                  Dialog dlg = new Dialog(prompt, choices, values, 1712, Bitmap.getPredefinedBitmap(1));
                   dlg.setEscapeEnabled(true);
                   dlg.doModal();
                   switch (dlg.getSelectedValue()) {

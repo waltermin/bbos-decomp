@@ -1,6 +1,7 @@
 package net.rim.device.api.browser.push;
 
 import com.sun.cldc.i18n.Helper;
+import java.io.IOException;
 import javax.microedition.io.ServerSocketConnection;
 import javax.microedition.io.SocketConnection;
 import net.rim.device.api.crypto.SHA1Digest;
@@ -192,7 +193,7 @@ public final class WAPPushSource extends PushSource implements PushEventLogger {
          case 17:
             return this._ppgAddress;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -202,7 +203,7 @@ public final class WAPPushSource extends PushSource implements PushEventLogger {
             this._ppgAddress = value;
             return;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -223,10 +224,10 @@ public final class WAPPushSource extends PushSource implements PushEventLogger {
       int retryMode,
       int retryCount,
       int threadPoolSize
-   ) {
+   ) throws IOException {
       byte[] encodedData = null;
-      DataBuffer tmpDataBuffer = (DataBuffer)(new Object());
-      SyncBuffer tmpSyncBuffer = (SyncBuffer)(new Object(tmpDataBuffer, 0, 0));
+      DataBuffer tmpDataBuffer = new DataBuffer();
+      SyncBuffer tmpSyncBuffer = new SyncBuffer(tmpDataBuffer, 0, 0);
       tmpDataBuffer.writeByte(1);
       tmpSyncBuffer.addInt(1, type, 1);
       if (slFilterMode >= 0 && slFilterMode <= 2 && slFilter != null) {
@@ -282,9 +283,7 @@ public final class WAPPushSource extends PushSource implements PushEventLogger {
 
       encodedData = tmpDataBuffer.toArray();
       if (encodedData.length > 1023) {
-         throw new Object(
-            ((StringBuffer)(new Object("Encoded WAPPush ServiceBook data ("))).append(encodedData.length).append(" bytes) exceeds 1023 bytes").toString()
-         );
+         throw new IOException("Encoded WAPPush ServiceBook data (" + encodedData.length + " bytes) exceeds 1023 bytes");
       } else {
          return encodedData;
       }
@@ -320,7 +319,7 @@ public final class WAPPushSource extends PushSource implements PushEventLogger {
       HostRoutingTable hrt = record.getAttachedHrt();
       if (hrt != null) {
          HostRoutingInfo hri = hrt.getHris()[0];
-         if (hri instanceof Object) {
+         if (hri instanceof GprsHRI) {
             GprsHRI gHri = (GprsHRI)hri;
             apn = gHri.getApn();
             apnUsername = gHri.getApnUsername();
@@ -328,7 +327,7 @@ public final class WAPPushSource extends PushSource implements PushEventLogger {
          }
 
          DAC dac = hri.getDac();
-         if (!(dac instanceof Object)) {
+         if (!(dac instanceof IPv4UdpDAC)) {
             return null;
          }
 
@@ -344,8 +343,8 @@ public final class WAPPushSource extends PushSource implements PushEventLogger {
          uid = record.getUid();
          cid = record.getCid();
          byte[] data = record.getApplicationData();
-         DataBuffer tmpDataBuffer = (DataBuffer)(new Object(data, 0, data.length, true));
-         SyncBuffer tmpSyncBuffer = (SyncBuffer)(new Object(tmpDataBuffer, 0, 0));
+         DataBuffer tmpDataBuffer = new DataBuffer(data, 0, data.length, true);
+         SyncBuffer tmpSyncBuffer = new SyncBuffer(tmpDataBuffer, 0, 0);
          tmpDataBuffer.readByte();
 
          while (!tmpSyncBuffer.isEmpty()) {
@@ -513,7 +512,7 @@ public final class WAPPushSource extends PushSource implements PushEventLogger {
       synchronized (this) {
          switch (this._type) {
             case 5:
-               throw new Object();
+               throw new IllegalArgumentException();
             case 6:
                rt = new WAPPushSource$WAP1xRunThread(this, "sms");
                break;
@@ -551,7 +550,7 @@ public final class WAPPushSource extends PushSource implements PushEventLogger {
             this.notifyAll();
          }
       } catch (Throwable var9) {
-         EventLogger.logEvent(-1133226195824034738L, ((StringBuffer)(new Object("PPex\n"))).append(ioe.toString()).toString().getBytes(), 0);
+         EventLogger.logEvent(-1133226195824034738L, ("PPex\n" + ioe.toString()).getBytes(), 0);
          return;
       }
    }
@@ -574,9 +573,9 @@ public final class WAPPushSource extends PushSource implements PushEventLogger {
    }
 
    private static final String[] getCPIValues() {
-      String[] values = new Object[CPI_VALUES.length];
+      String[] values = new String[CPI_VALUES.length];
       String[] encodings = Helper.getSupportedEncodings();
-      StringBuffer buf = (StringBuffer)(new Object(encodings[0]));
+      StringBuffer buf = new StringBuffer(encodings[0]);
 
       for (int i = 1; i < encodings.length; i++) {
          buf.append(',');
@@ -592,7 +591,7 @@ public final class WAPPushSource extends PushSource implements PushEventLogger {
    }
 
    private static final String getCPIHash(String[] values) {
-      SHA1Digest digest = (SHA1Digest)(new Object());
+      SHA1Digest digest = new SHA1Digest();
 
       for (int i = 0; i < CPI_VALUES.length; i++) {
          if (values[i] != null) {

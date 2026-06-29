@@ -22,7 +22,7 @@ public final class SearchCollection extends SimplePersistentEncryptedSyncCollect
    SearchCollection(MessageSearchImpl search) {
       super(new FilterComparator(), 7820085525428081380L);
       this._search = search;
-      this._schema = (SyncCollectionSchema)(new Object());
+      this._schema = new SyncCollectionSchema();
       this._schema.setDefaultRecordType(1);
       this._schema.setKeyFieldIds(1, KEY_FIELD_IDS);
       this.commonCtorEpilogue();

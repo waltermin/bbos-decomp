@@ -35,21 +35,21 @@ final class SoftwareDSACryptoToken extends DSACryptoToken implements Persistable
       // 13: aastore
       // 14: areturn
       // 15: astore 1
-      // 16: new java/lang/Object
+      // 16: new java/lang/RuntimeException
       // 19: dup
       // 1a: aload 1
       // 1b: invokevirtual net/rim/device/api/crypto/CryptoTokenException.toString ()Ljava/lang/String;
       // 1e: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 21: athrow
       // 22: astore 1
-      // 23: new java/lang/Object
+      // 23: new java/lang/RuntimeException
       // 26: dup
       // 27: aload 1
       // 28: invokevirtual net/rim/device/api/crypto/CryptoUnsupportedOperationException.toString ()Ljava/lang/String;
       // 2b: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 2e: athrow
       // 2f: astore 1
-      // 30: new java/lang/Object
+      // 30: new java/lang/RuntimeException
       // 33: dup
       // 34: aload 1
       // 35: invokevirtual net/rim/device/api/crypto/UnsupportedCryptoSystemException.toString ()Ljava/lang/String;
@@ -68,7 +68,7 @@ final class SoftwareDSACryptoToken extends DSACryptoToken implements Persistable
    @Override
    public final int getDSACryptoSystemBitLength(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareDSACryptoToken$DSACryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareDSACryptoToken$DSACryptoSystemData cryptoSystem = (SoftwareDSACryptoToken$DSACryptoSystemData)cryptoTokenData;
@@ -78,7 +78,7 @@ final class SoftwareDSACryptoToken extends DSACryptoToken implements Persistable
    @Override
    public final String getDSACryptoSystemName(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareDSACryptoToken$DSACryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareDSACryptoToken$DSACryptoSystemData cryptoSystem = (SoftwareDSACryptoToken$DSACryptoSystemData)cryptoTokenData;
@@ -88,7 +88,7 @@ final class SoftwareDSACryptoToken extends DSACryptoToken implements Persistable
    @Override
    public final byte[] getDSACryptoSystemP(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareDSACryptoToken$DSACryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareDSACryptoToken$DSACryptoSystemData cryptoSystem = (SoftwareDSACryptoToken$DSACryptoSystemData)cryptoTokenData;
@@ -98,7 +98,7 @@ final class SoftwareDSACryptoToken extends DSACryptoToken implements Persistable
    @Override
    public final byte[] getDSACryptoSystemQ(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareDSACryptoToken$DSACryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareDSACryptoToken$DSACryptoSystemData cryptoSystem = (SoftwareDSACryptoToken$DSACryptoSystemData)cryptoTokenData;
@@ -108,7 +108,7 @@ final class SoftwareDSACryptoToken extends DSACryptoToken implements Persistable
    @Override
    public final byte[] getDSACryptoSystemG(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareDSACryptoToken$DSACryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareDSACryptoToken$DSACryptoSystemData cryptoSystem = (SoftwareDSACryptoToken$DSACryptoSystemData)cryptoTokenData;
@@ -118,7 +118,7 @@ final class SoftwareDSACryptoToken extends DSACryptoToken implements Persistable
    @Override
    public final int getDSAPublicKeyLength(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareDSACryptoToken$DSACryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareDSACryptoToken$DSACryptoSystemData cryptoSystem = (SoftwareDSACryptoToken$DSACryptoSystemData)cryptoTokenData;
@@ -128,7 +128,7 @@ final class SoftwareDSACryptoToken extends DSACryptoToken implements Persistable
    @Override
    public final int getDSAPrivateKeyLength(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareDSACryptoToken$DSACryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareDSACryptoToken$DSACryptoSystemData cryptoSystem = (SoftwareDSACryptoToken$DSACryptoSystemData)cryptoTokenData;
@@ -138,7 +138,7 @@ final class SoftwareDSACryptoToken extends DSACryptoToken implements Persistable
    @Override
    public final byte[] extractDSAPublicKeyData(CryptoTokenPublicKeyData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareDSACryptoToken$DSAPublicKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareDSACryptoToken$DSAPublicKeyData)cryptoTokenData).copyPublicKeyData();
       }
@@ -147,7 +147,7 @@ final class SoftwareDSACryptoToken extends DSACryptoToken implements Persistable
    @Override
    public final byte[] extractDSAPublicKeyData(CryptoTokenPrivateKeyData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareDSACryptoToken$DSAPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareDSACryptoToken$DSAPrivateKeyData)cryptoTokenData).copyPublicKeyData();
       }
@@ -156,7 +156,7 @@ final class SoftwareDSACryptoToken extends DSACryptoToken implements Persistable
    @Override
    public final byte[] extractDSAPrivateKeyData(CryptoTokenPrivateKeyData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareDSACryptoToken$DSAPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareDSACryptoToken$DSAPrivateKeyData)cryptoTokenData).copyPrivateKeyData();
       }
@@ -165,14 +165,14 @@ final class SoftwareDSACryptoToken extends DSACryptoToken implements Persistable
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final DSAKeyPair createDSAKeyPair(CryptoTokenCryptoSystemData cryptoTokenData) {
+   public final DSAKeyPair createDSAKeyPair(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
       if (!(cryptoTokenData instanceof SoftwareDSACryptoToken$DSACryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareDSACryptoToken$DSACryptoSystemData cryptoSystemData = (SoftwareDSACryptoToken$DSACryptoSystemData)cryptoTokenData;
       if (!NativeDL.isSupported(cryptoSystemData.getP(), cryptoSystemData.getQ(), cryptoSystemData.getG(), cryptoSystemData.getPrivateKeyLength(), 1)) {
-         throw new Object();
+         throw new CryptoUnsupportedOperationException();
       }
 
       byte[] publicKeyBytes = new byte[cryptoSystemData.getPublicKeyLength()];
@@ -190,7 +190,7 @@ final class SoftwareDSACryptoToken extends DSACryptoToken implements Persistable
             byte[] s = new byte[cryptoSystemData.getPrivateKeyLength()];
             this.signDSA(cryptoSystemData, privateKeyData, digest, 0, digest.length, r, 0, s, 0);
             if (!this.verifyDSA(cryptoSystemData, publicKeyData, digest, 0, digest.length, r, 0, s, 0)) {
-               throw new Object();
+               throw new CryptoSelfTestError();
             }
 
             DSACryptoSystem cryptoSystem = new DSACryptoSystem(this, cryptoSystemData);
@@ -199,10 +199,10 @@ final class SoftwareDSACryptoToken extends DSACryptoToken implements Persistable
             e = var13;
          }
       } catch (Throwable var14) {
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       }
 
-      throw new Object(e.toString());
+      throw new RuntimeException(e.toString());
    }
 
    @Override
@@ -248,7 +248,7 @@ final class SoftwareDSACryptoToken extends DSACryptoToken implements Persistable
       if (cryptoSystemData instanceof SoftwareDSACryptoToken$DSACryptoSystemData) {
          return new SoftwareDSACryptoToken$DSAPublicKeyData((SoftwareDSACryptoToken$DSACryptoSystemData)cryptoSystemData, data);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -257,7 +257,7 @@ final class SoftwareDSACryptoToken extends DSACryptoToken implements Persistable
       if (cryptoSystemData instanceof SoftwareDSACryptoToken$DSACryptoSystemData) {
          return new SoftwareDSACryptoToken$DSAPrivateKeyData((SoftwareDSACryptoToken$DSACryptoSystemData)cryptoSystemData, data);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -280,19 +280,19 @@ final class SoftwareDSACryptoToken extends DSACryptoToken implements Persistable
       int rOffset,
       byte[] s,
       int sOffset
-   ) {
+   ) throws CryptoUnsupportedOperationException {
       if (!(cryptoTokenCryptoSystemData instanceof SoftwareDSACryptoToken$DSACryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareDSACryptoToken$DSACryptoSystemData cryptoSystemData = (SoftwareDSACryptoToken$DSACryptoSystemData)cryptoTokenCryptoSystemData;
       if (!(cryptoTokenPrivateKeyData instanceof SoftwareDSACryptoToken$DSAPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       byte[] privateKeyData = ((SoftwareDSACryptoToken$DSAPrivateKeyData)cryptoTokenPrivateKeyData).getPrivateKeyData();
       if (!NativeDL.isSupported(cryptoSystemData.getP(), cryptoSystemData.getQ(), cryptoSystemData.getG(), cryptoSystemData.getPrivateKeyLength(), 4)) {
-         throw new Object();
+         throw new CryptoUnsupportedOperationException();
       }
 
       Certicom.assertAccessAllowed();
@@ -310,20 +310,20 @@ final class SoftwareDSACryptoToken extends DSACryptoToken implements Persistable
       int rOffset,
       byte[] s,
       int sOffset
-   ) {
+   ) throws CryptoUnsupportedOperationException {
       if (!(cryptoTokenCryptoSystemData instanceof SoftwareDSACryptoToken$DSACryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareDSACryptoToken$DSACryptoSystemData cryptoSystemData = (SoftwareDSACryptoToken$DSACryptoSystemData)cryptoTokenCryptoSystemData;
       if (!(cryptoTokenPublicKeyData instanceof SoftwareDSACryptoToken$DSAPublicKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareDSACryptoToken$DSAPublicKeyData publicKeyData = (SoftwareDSACryptoToken$DSAPublicKeyData)cryptoTokenPublicKeyData;
       byte[] q = cryptoSystemData.getQ();
       if (!NativeDL.isSupported(cryptoSystemData.getP(), q, cryptoSystemData.getG(), cryptoSystemData.getPrivateKeyLength(), 2)) {
-         throw new Object();
+         throw new CryptoUnsupportedOperationException();
       }
 
       Certicom.assertAccessAllowed();
@@ -970,7 +970,7 @@ final class SoftwareDSACryptoToken extends DSACryptoToken implements Persistable
       // 3a1: aload 1
       // 3a2: invokespecial net/rim/device/api/crypto/SoftwareDSACryptoToken$DSAPublicKeyData.<init> (Lnet/rim/device/api/crypto/SoftwareDSACryptoToken$DSACryptoSystemData;[B)V
       // 3a5: astore 5
-      // 3a7: new java/lang/Object
+      // 3a7: new net/rim/device/api/crypto/SHA1Digest
       // 3aa: dup
       // 3ab: invokespecial net/rim/device/api/crypto/SHA1Digest.<init> ()V
       // 3ae: astore 6
@@ -1030,7 +1030,7 @@ final class SoftwareDSACryptoToken extends DSACryptoToken implements Persistable
       // 415: astore 2
       // 416: goto 41a
       // 419: astore 2
-      // 41a: new java/lang/Object
+      // 41a: new net/rim/device/api/crypto/CryptoSelfTestError
       // 41d: dup
       // 41e: invokespecial net/rim/device/api/crypto/CryptoSelfTestError.<init> ()V
       // 421: athrow

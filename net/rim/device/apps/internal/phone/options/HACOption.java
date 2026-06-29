@@ -11,7 +11,7 @@ import net.rim.vm.Array;
 
 public final class HACOption extends VoiceOptionsListItem {
    private ObjectChoiceField _hacChoiceField;
-   private String[] _HACoptionsArray = new Object[1];
+   private String[] _HACoptionsArray = new String[1];
    private int _previousChoice;
    static final int OFF = 0;
    static final int TELECOIL = 1;
@@ -39,7 +39,7 @@ public final class HACOption extends VoiceOptionsListItem {
    protected final void populateMainScreen(MainScreen screen) {
       HACRibbonIndicator.getInstance().updateIndicator();
       int initialChoiceIndex = AudioInternal.getHACMode() ? 1 : 0;
-      this._hacChoiceField = (ObjectChoiceField)(new Object(PhoneResources.getString(6280), this._HACoptionsArray, initialChoiceIndex));
+      this._hacChoiceField = new ObjectChoiceField(PhoneResources.getString(6280), this._HACoptionsArray, initialChoiceIndex);
       this._previousChoice = initialChoiceIndex;
       screen.add(this._hacChoiceField);
    }

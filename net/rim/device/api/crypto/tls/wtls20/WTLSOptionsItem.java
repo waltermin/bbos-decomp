@@ -17,18 +17,16 @@ public final class WTLSOptionsItem extends SaveableMainScreenOptionsListItem {
 
    public WTLSOptionsItem() {
       super(_rb.getFamily(), 8, 5294015899860238835L);
-      ContextObject.put(super._context, 244, new Object(32785));
+      ContextObject.put(super._context, 244, new Integer(32785));
       this._optionStore = WTLSOptionStore.getOptions();
    }
 
    @Override
    protected final void populateMainScreen(MainScreen mainScreen) {
-      this._encryptionStrengthField = (BooleanChoiceField)(new Object(
-         _rb.getString(10), _rb.getStringArray(16), this._optionStore.allowExportCipherSuites(), 268435456
-      ));
+      this._encryptionStrengthField = new BooleanChoiceField(_rb.getString(10), _rb.getStringArray(16), this._optionStore.allowExportCipherSuites(), 268435456);
       this._encryptionStrengthField.setEditable(ITPolicy.getInteger(29, 1, 2) == 2);
       mainScreen.add(this._encryptionStrengthField);
-      this._promptForServerTrustField = (BooleanChoiceField)(new Object(_rb.getString(11), 0, this._optionStore.getDisplayServerCertificateWarnings()));
+      this._promptForServerTrustField = new BooleanChoiceField(_rb.getString(11), 0, this._optionStore.getDisplayServerCertificateWarnings());
       mainScreen.add(this._promptForServerTrustField);
    }
 

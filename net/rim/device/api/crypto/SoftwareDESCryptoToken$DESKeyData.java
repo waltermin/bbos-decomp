@@ -26,7 +26,7 @@ final class SoftwareDESCryptoToken$DESKeyData implements CryptoTokenSymmetricKey
          PersistentContent.markAsPlaintext(data);
          this.setHashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

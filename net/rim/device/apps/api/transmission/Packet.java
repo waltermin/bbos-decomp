@@ -42,12 +42,12 @@ public class Packet {
    }
 
    private static Object copyContextObject(Object context) {
-      if (!(context instanceof Object)) {
+      if (!(context instanceof ContextObject)) {
          return context;
       }
 
       ContextObject oldContext = (ContextObject)context;
-      ContextObject newContext = (ContextObject)(new Object());
+      ContextObject newContext = new ContextObject();
       copyItem(oldContext, newContext, -5971550291443523639L);
       copyItem(oldContext, newContext, -7981905408958106750L);
       copyItem(oldContext, newContext, -6095803566992128485L);

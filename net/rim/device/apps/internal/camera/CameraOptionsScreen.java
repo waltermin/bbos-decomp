@@ -8,6 +8,7 @@ import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.apps.api.framework.file.FilenameEditField;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -33,7 +34,7 @@ final class CameraOptionsScreen extends SaveableMainScreenOptionsListItem implem
 
    private CameraOptionsScreen() {
       super(CameraMain._rb.getString(2));
-      ContextObject.put(super._context, 244, new Object(244387));
+      ContextObject.put(super._context, 244, new Integer(244387));
       this._rb = ResourceBundle.getBundle(7839140414916824787L, "net.rim.device.apps.internal.camera.Camera");
    }
 
@@ -72,7 +73,7 @@ final class CameraOptionsScreen extends SaveableMainScreenOptionsListItem implem
       }
 
       this._startingFlashMode = this._cameraOptions.getFlashModeIndex();
-      this._flashMode = (ObjectChoiceField)(new Object(this._rb.getString(13), this._rb.getStringArray(14), this._startingFlashMode));
+      this._flashMode = new ObjectChoiceField(this._rb.getString(13), this._rb.getStringArray(14), this._startingFlashMode);
       screen.add(this._flashMode);
       int[] wbOptionTable = this._cameraOptions.getWhiteBalanceTable();
       int count = 0;
@@ -83,7 +84,7 @@ final class CameraOptionsScreen extends SaveableMainScreenOptionsListItem implem
          }
       }
 
-      this._rWbOptions = new Object[count];
+      this._rWbOptions = new String[count];
       this._wbOptions = this._rb.getStringArray(16);
       count = 0;
 
@@ -103,28 +104,28 @@ final class CameraOptionsScreen extends SaveableMainScreenOptionsListItem implem
          }
       }
 
-      this._whiteBalance = (ObjectChoiceField)(new Object(this._rb.getString(15), this._rWbOptions, rWbIndex));
+      this._whiteBalance = new ObjectChoiceField(this._rb.getString(15), this._rWbOptions, rWbIndex);
       screen.add(this._whiteBalance);
-      this._imageSize = (ObjectChoiceField)(new Object(this._rb.getString(7), this.getImageSizeChoices(), this._cameraOptions.getImageSizeIndex()));
+      this._imageSize = new ObjectChoiceField(this._rb.getString(7), this.getImageSizeChoices(), this._cameraOptions.getImageSizeIndex());
       screen.add(this._imageSize);
       String[] choices = this._rb.getStringArray(8);
-      String[] rChoices = new Object[choices.length];
+      String[] rChoices = new String[choices.length];
 
       for (int i = rChoices.length; i > 0; i--) {
          rChoices[i - 1] = choices[choices.length - i];
       }
 
-      this._imageQuality = (ObjectChoiceField)(new Object(this._rb.getString(9), rChoices, rChoices.length - this._cameraOptions.getImageQualityIndex() - 1));
+      this._imageQuality = new ObjectChoiceField(this._rb.getString(9), rChoices, rChoices.length - this._cameraOptions.getImageQualityIndex() - 1);
       screen.add(this._imageQuality);
       if (CameraOptions.isViewfinderModeValid(1)) {
-         this._viewfinderMode = (ObjectChoiceField)(new Object(this._rb.getString(36), this._rb.getStringArray(37), this._cameraOptions.getViewfinderMode()));
+         this._viewfinderMode = new ObjectChoiceField(this._rb.getString(36), this._rb.getStringArray(37), this._cameraOptions.getViewfinderMode());
          screen.add(this._viewfinderMode);
       }
 
       int colourEffects = Camera.getColourEffects();
       if (colourEffects != 0) {
          String[] allChoices = this._rb.getStringArray(35);
-         String[] supportedChoices = new Object[allChoices.length];
+         String[] supportedChoices = new String[allChoices.length];
          int current = this._cameraOptions.getColourEffectIndex();
          int selected = 0;
          count = 0;
@@ -140,18 +141,18 @@ final class CameraOptionsScreen extends SaveableMainScreenOptionsListItem implem
          }
 
          Array.resize(supportedChoices, count);
-         this._colourEffect = (ObjectChoiceField)(new Object(this._rb.getString(34), supportedChoices, selected));
+         this._colourEffect = new ObjectChoiceField(this._rb.getString(34), supportedChoices, selected);
          screen.add(this._colourEffect);
       }
 
-      screen.add((Field)(new Object()));
-      this._memorySetting = (ObjectChoiceField)(new Object(
+      screen.add(new SeparatorField());
+      this._memorySetting = new ObjectChoiceField(
          this._rb.getString(4), this._rb.getStringArray(5), this._cameraOptions.getMemoryType(), CameraMain.isMediaCardPresent() ? 0 : 9007199254740992L
-      ));
+      );
       screen.add(this._memorySetting);
-      this._folder = (FilenameEditField)(new Object(this._cameraOptions.getDestinationFolder(), null, 1, 134217728, true));
+      this._folder = new FilenameEditField(this._cameraOptions.getDestinationFolder(), null, 1, 134217728, true);
       this._folder.getFileSelector().setSelectFolder(true);
-      LabelField folderLabel = (LabelField)(new Object(this._rb.getString(3)));
+      LabelField folderLabel = new LabelField(this._rb.getString(3));
       folderLabel.setTag(ThemeUtilities.TAG_CAMERA_SELECTABLE_TEXT);
       screen.add(folderLabel);
       screen.add(this._folder);
@@ -161,7 +162,7 @@ final class CameraOptionsScreen extends SaveableMainScreenOptionsListItem implem
 
       while (--i >= 0) {
          Field field = screen.getField(i);
-         if (!(field instanceof Object)) {
+         if (!(field instanceof LabelField)) {
             field.setTag(ThemeUtilities.TAG_CAMERA_SELECTABLE_TEXT);
          }
       }
@@ -169,8 +170,8 @@ final class CameraOptionsScreen extends SaveableMainScreenOptionsListItem implem
 
    private final String[] getImageSizeChoices() {
       String[] choices = this._rb.getStringArray(46);
-      String[] args = new Object[2];
-      String[] labels = new Object[choices.length];
+      String[] args = new String[2];
+      String[] labels = new String[choices.length];
 
       for (int i = choices.length; --i >= 0; labels[i] = MessageFormat.format(choices[i], args)) {
          int[] imageSize = this._cameraOptions.getImageSize(i);
@@ -236,7 +237,7 @@ final class CameraOptionsScreen extends SaveableMainScreenOptionsListItem implem
             return super.openDevelopmentBackdoor(backdoorCode);
          case 1162628935:
          default:
-            PopupStatus.show(((StringBuffer)(new Object("Event Log ="))).append(this._cameraOptions.toggleDevOption(4)).toString(), 3000);
+            PopupStatus.show("Event Log =" + this._cameraOptions.toggleDevOption(4), 3000);
             return true;
       }
    }

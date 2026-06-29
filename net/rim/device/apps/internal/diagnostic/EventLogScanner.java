@@ -112,7 +112,7 @@ final class EventLogScanner extends Thread {
          return false;
       }
 
-      String tmpStr = (String)(new Object(EventLog.getData(this.eventHandles[i])));
+      String tmpStr = new String(EventLog.getData(this.eventHandles[i]));
       System.out.println(tmpStr);
 
       for (int j = 0; j < this.targetStr.length; j++) {
@@ -144,7 +144,7 @@ final class EventLogScanner extends Thread {
       // 13: ifne 18
       // 16: bipush 0
       // 17: ireturn
-      // 18: new java/lang/Object
+      // 18: new java/lang/String
       // 1b: dup
       // 1c: aload 0
       // 1d: getfield net/rim/device/apps/internal/diagnostic/EventLogScanner.eventHandles [I

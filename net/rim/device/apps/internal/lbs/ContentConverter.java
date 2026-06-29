@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.lbs;
 import java.io.InputStream;
 import javax.microedition.io.HttpConnection;
 import net.rim.device.api.browser.field.BrowserContent;
+import net.rim.device.api.browser.field.RenderingException;
 import net.rim.device.api.browser.field.RenderingOptions;
 import net.rim.device.api.browser.plugin.BrowserContentProvider;
 import net.rim.device.api.browser.plugin.BrowserContentProviderContext;
@@ -36,9 +37,9 @@ public final class ContentConverter extends BrowserContentProvider implements Br
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final BrowserContent getBrowserContent(BrowserContentProviderContext context) {
+   public final BrowserContent getBrowserContent(BrowserContentProviderContext context) throws RenderingException {
       if (context == null) {
-         throw new Object("No Context is passed into Provider");
+         throw new RenderingException("No Context is passed into Provider");
       }
 
       try {

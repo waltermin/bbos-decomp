@@ -26,7 +26,7 @@ class PKCS1v2SignaturesFacadeImpl extends PKCS1v2SignaturesFacade {
          var7 = false;
       } finally {
          if (var7) {
-            throw new Object();
+            throw new RuntimeException();
          }
       }
 

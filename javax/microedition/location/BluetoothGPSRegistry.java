@@ -406,7 +406,7 @@ class BluetoothGPSRegistry implements BluetoothSerialPortListener {
             this._status = 0;
          }
       } catch (Throwable var10) {
-         throw new Object(ex.getMessage());
+         throw new RuntimeException(ex.getMessage());
       }
    }
 
@@ -428,7 +428,7 @@ class BluetoothGPSRegistry implements BluetoothSerialPortListener {
    }
 
    private BluetoothGPSRegistry() {
-      this._processes = (IntVector)(new Object());
+      this._processes = new IntVector();
       this._lastLocation = new Location();
       this._lastCoord = new QualifiedCoordinates((double)0L, (double)0L, (float)2143289344, (float)2143289344, (float)2143289344);
       this._lastLocation.setCoordinates(this._lastCoord);
@@ -470,7 +470,7 @@ class BluetoothGPSRegistry implements BluetoothSerialPortListener {
       for (int index = offset; index < end; index++) {
          int digit = buffer[index] - 48;
          if (digit < 0 || 9 < digit) {
-            throw new Object();
+            throw new NumberFormatException();
          }
 
          value = 10 * value + digit;

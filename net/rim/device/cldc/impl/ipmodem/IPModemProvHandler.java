@@ -1,5 +1,6 @@
 package net.rim.device.cldc.impl.ipmodem;
 
+import java.io.IOException;
 import net.rim.device.api.itpolicy.ITPolicy;
 import net.rim.device.api.system.EventLogger;
 import net.rim.device.api.system.GlobalEventListener;
@@ -43,7 +44,7 @@ final class IPModemProvHandler implements ProvisioningHandler, GlobalEventListen
          if (chunks.containsKey(3)) {
             db.setPosition(chunks.get(3));
             if (db.readCompressedInt() != 1) {
-               throw new Object();
+               throw new IOException();
             }
 
             this._isIPModemProvisioned = db.readByte() == 1;

@@ -7,13 +7,13 @@ import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Keypad;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.ui.component.CollectionListField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.container.PopupScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.api.ui.theme.Theme;
 import net.rim.device.api.ui.theme.ThemeAttributeSet;
@@ -42,7 +42,7 @@ public class ProfilesPopupScreen extends PopupScreen implements ListFieldCallbac
    private static ProfilesPopupScreen$ProfilesPopupScreenCache _cache;
 
    public ProfilesPopupScreen(boolean exitWhenDismissed, boolean acceptsForeground) {
-      super((Manager)(new Object(299067162755072L)), 0);
+      super(new VerticalFieldManager(299067162755072L), 0);
       this.setTag(TAG_PROFILES_MENU);
       this.setId("homescreen");
       this._res = ResourceBundle.getBundle(2384708948246157241L, "net.rim.device.apps.internal.resource.Profiles");
@@ -52,7 +52,7 @@ public class ProfilesPopupScreen extends PopupScreen implements ListFieldCallbac
       this._acceptsForeground = acceptsForeground;
       this._profiles = Profiles.getInstance();
       if (this._list == null) {
-         this._list = (CollectionListField)(new Object(this._profiles, this));
+         this._list = new CollectionListField(this._profiles, this);
          this._list.setExtraRowCount(1);
          this._list.setSelectedIndex(this._profiles.getIndex(this._profiles.getEnabled()));
          this._list.setExtraRowAtBottom(true);

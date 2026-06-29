@@ -5,6 +5,7 @@ import net.rim.device.api.browser.field.RenderingOptions;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.internal.browser.core.BrowserDaemonRegistry;
 import net.rim.device.apps.internal.browser.page.BrowserContentImpl;
@@ -18,7 +19,7 @@ public final class DownloadPage extends Page {
 
    public DownloadPage(RenderingOptions renderingOptions) {
       super(new FetchRequest(new ModelResult(DOWNLOADS_URL, 0, null), null, 0), null, 0);
-      this.setBrowserContent((BrowserContentImpl)(new Object(null, DOWNLOADS_URL, (Manager)(new Object(3459045988797251584L)), this, renderingOptions, 0)));
+      this.setBrowserContent(new BrowserContentImpl(null, DOWNLOADS_URL, new VerticalFieldManager(3459045988797251584L), this, renderingOptions, 0));
       Manager mgr = this.getBrowserContent().getContentManager();
       Vector items = BrowserDaemonRegistry.getInstance().getActiveDownloads();
 

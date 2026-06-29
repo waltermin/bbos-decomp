@@ -9,12 +9,8 @@ import net.rim.device.api.ui.Graphics;
 public final class Dashboard extends Field {
    private boolean _titleVisible = true;
    private AbstractMode _mode;
-   private Bitmap _backgroundBlank = Bitmap.getBitmapResource(
-      ((StringBuffer)(new Object("images/lbs_dashboard_blank_"))).append(Display.getWidth()).append(".png").toString()
-   );
-   private Bitmap _background = Bitmap.getBitmapResource(
-      ((StringBuffer)(new Object("images/lbs_dashboard_"))).append(Display.getWidth()).append(".png").toString()
-   );
+   private Bitmap _backgroundBlank = Bitmap.getBitmapResource("images/lbs_dashboard_blank_" + Display.getWidth() + ".png");
+   private Bitmap _background = Bitmap.getBitmapResource("images/lbs_dashboard_" + Display.getWidth() + ".png");
    private static final int TITLE_HEIGHT = 16;
 
    public Dashboard() {

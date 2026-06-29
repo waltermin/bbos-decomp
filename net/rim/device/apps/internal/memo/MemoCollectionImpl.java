@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.memo;
 
 import net.rim.device.api.collection.util.KeywordFilterList;
-import net.rim.device.api.collection.util.KeywordIndexerHelper;
+import net.rim.device.api.collection.util.PrefixKeywordFilterList;
 import net.rim.device.api.i18n.Locale;
 import net.rim.device.api.synchronization.OTASyncCapable;
 import net.rim.device.api.synchronization.OTASyncPriorityProvider;
@@ -15,6 +15,7 @@ import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.ContextObjectWR;
 import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.model.RIMModelFactoryCache;
+import net.rim.device.apps.api.framework.model.RIMModelOrderHelper;
 import net.rim.device.apps.api.framework.model.SyncBuffer;
 import net.rim.device.apps.api.framework.registration.RIMModelFactory;
 import net.rim.device.apps.api.memo.MemoCollection;
@@ -29,8 +30,8 @@ final class MemoCollectionImpl extends SimplePersistentEncryptedSyncCollection i
    private static final int MEMO_INITIAL_SIZE = 16;
    private static final long MEMO_DATA_NAME = -1744790729544506738L;
    private static final long MEMO_COLLECTION_ID = -5965364677584041048L;
-   private static ContextObjectWR _encodeContextWR = (ContextObjectWR)(new Object(8, 35, 19));
-   private static ContextObjectWR _decodeContextWR = (ContextObjectWR)(new Object(8, 35, 19));
+   private static ContextObjectWR _encodeContextWR = new ContextObjectWR(8, 35, 19);
+   private static ContextObjectWR _decodeContextWR = new ContextObjectWR(8, 35, 19);
    private static RIMModelFactory[] _factoryCache = RIMModelFactoryCache.allocate();
 
    private MemoCollectionImpl() {
@@ -41,7 +42,7 @@ final class MemoCollectionImpl extends SimplePersistentEncryptedSyncCollection i
 
    private final synchronized void initialize() {
       if (this._data == null) {
-         this._data = (SimplePersistentSyncCollection$SimpleData)(new Object(16));
+         this._data = new SimplePersistentSyncCollection$SimpleData(16);
          super._persistentObject.setContents(this._data, 51);
          this.commit();
       }
@@ -79,9 +80,7 @@ final class MemoCollectionImpl extends SimplePersistentEncryptedSyncCollection i
 
    final KeywordFilterList getKeywordList() {
       if (this._keywordList == null) {
-         this._keywordList = (KeywordFilterList)(new Object(
-            this, (KeywordIndexerHelper)(new Object(new MemoCollectionImpl$MemoComparator(), (ContextObject)(new Object(35)))), false
-         ));
+         this._keywordList = new PrefixKeywordFilterList(this, new RIMModelOrderHelper(new MemoCollectionImpl$MemoComparator(), new ContextObject(35)), false);
       }
 
       return this._keywordList;
@@ -159,8 +158,8 @@ final class MemoCollectionImpl extends SimplePersistentEncryptedSyncCollection i
 
    @Override
    public final boolean convert(SyncObject object, DataBuffer buffer, int version) {
-      if (object instanceof Object) {
-         SyncBuffer syncBuffer = (SyncBuffer)(new Object(buffer, version, object.getUID()));
+      if (object instanceof RIMModel) {
+         SyncBuffer syncBuffer = new SyncBuffer(buffer, version, object.getUID());
          return syncBuffer.addModel((RIMModel)object, _encodeContextWR.getContextObject());
       } else {
          return false;
@@ -193,7 +192,7 @@ final class MemoCollectionImpl extends SimplePersistentEncryptedSyncCollection i
       // 0f: iload 3
       // 10: invokespecial net/rim/device/apps/internal/memo/MemoModelImpl.<init> (I)V
       // 13: astore 4
-      // 15: new java/lang/Object
+      // 15: new net/rim/device/apps/api/framework/model/SyncBuffer
       // 18: dup
       // 19: aload 1
       // 1a: iload 2

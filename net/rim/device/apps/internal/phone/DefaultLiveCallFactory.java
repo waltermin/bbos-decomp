@@ -19,14 +19,14 @@ final class DefaultLiveCallFactory implements LiveCallFactory {
    public final LiveCall createInstance(PhoneCallInitialData initialData, Object context) {
       PhoneCallInitialData data = null;
       LiveCall instance = null;
-      if (initialData instanceof Object) {
+      if (initialData instanceof PhoneCallInitialData) {
          data = initialData;
-      } else if (context instanceof Object) {
+      } else if (context instanceof ContextObject) {
          data = (PhoneCallInitialData)ContextObject.get(context, -702275867225586088L);
       }
 
       if (data == null) {
-         return new StandardCall((PhoneCallInitialData)(new Object(0, (byte)1, 0, null, null)), context);
+         return new StandardCall(new PhoneCallInitialData(0, (byte)1, 0, null, null), context);
       }
 
       if (PhoneUtilities.cdmaTypeNetwork()) {

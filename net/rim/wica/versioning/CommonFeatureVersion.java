@@ -24,12 +24,12 @@ public class CommonFeatureVersion {
    }
 
    public String serialize() {
-      return ((StringBuffer)(new Object())).append(this._name).append("=").toString();
+      return this._name + "=";
    }
 
    public static Vector tokenize(byte[] in) {
-      Vector vec = (Vector)(new Object());
-      String inStr = (String)(new Object(in));
+      Vector vec = new Vector();
+      String inStr = new String(in);
       int ind1 = 0;
 
       for (int ind2 = inStr.indexOf(";"); ind2 > 0 && ind2 > ind1; ind2 = inStr.substring(ind1).indexOf(";") + ind1) {

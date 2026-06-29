@@ -50,23 +50,23 @@ public final class BrowserFolders {
       }
 
       if (bookmarksFolder == null) {
-         bookmarksFolder = (SimpleFolder)(new Object(
+         bookmarksFolder = new SimpleFolder(
             BROWSER_FAMILY, BROWSER_BOOKMARKS_FOLDER_ID, BrowserResources.getString(144), BROWSER_FOLDER_COLLECTION_CLASS, bookmarksHierarchy, 1
-         ));
+         );
          bookmarksHierarchy.putFolder(bookmarksFolder);
       }
 
       if (wapBookmarksFolder == null) {
-         wapBookmarksFolder = (SimpleFolder)(new Object(
+         wapBookmarksFolder = new SimpleFolder(
             BROWSER_FAMILY, BROWSER_WAP_BOOKMARKS_FOLDER_ID, BrowserResources.getString(570), BROWSER_FOLDER_COLLECTION_CLASS, bookmarksFolder, 1
-         ));
+         );
          bookmarksFolder.putFolder(wapBookmarksFolder);
       }
 
       if (mdsBookmarksFolder == null) {
-         mdsBookmarksFolder = (SimpleFolder)(new Object(
+         mdsBookmarksFolder = new SimpleFolder(
             BROWSER_FAMILY, BROWSER_MDS_BOOKMARKS_FOLDER_ID, BrowserResources.getString(568), BROWSER_FOLDER_COLLECTION_CLASS, bookmarksFolder, 1
-         ));
+         );
          bookmarksFolder.putFolder(mdsBookmarksFolder);
       }
 
@@ -79,23 +79,23 @@ public final class BrowserFolders {
       }
 
       if (messagesFolder == null) {
-         messagesFolder = (SimpleFolder)(new Object(
+         messagesFolder = new SimpleFolder(
             BROWSER_FAMILY, BROWSER_MESSAGES_FOLDER_ID, BrowserResources.getResourceBundle(), 123, BROWSER_FOLDER_COLLECTION_CLASS, messagesHierarchy, 1
-         ));
+         );
          messagesHierarchy.putFolder(messagesFolder);
       }
 
       if (wappushFolder == null) {
-         wappushFolder = (SimpleFolder)(new Object(
+         wappushFolder = new SimpleFolder(
             BROWSER_FAMILY, BROWSER_WAPPUSH_FOLDER_ID, BrowserResources.getResourceBundle(), 586, BROWSER_FOLDER_COLLECTION_CLASS, messagesHierarchy, 1
-         ));
+         );
          messagesHierarchy.putFolder(wappushFolder);
       }
 
       if (offlineQueuesFolder == null) {
-         offlineQueuesFolder = (SimpleFolder)(new Object(
+         offlineQueuesFolder = new SimpleFolder(
             BROWSER_FAMILY, BROWSER_OFFLINE_QUEUES_FOLDER_ID, BrowserResources.getString(705), BROWSER_FOLDER_COLLECTION_CLASS, messagesHierarchy
-         ));
+         );
          messagesHierarchy.putFolder(offlineQueuesFolder);
       }
 
@@ -106,9 +106,9 @@ public final class BrowserFolders {
       }
 
       if (channelsFolder == null) {
-         channelsFolder = (SimpleFolder)(new Object(
+         channelsFolder = new SimpleFolder(
             BROWSER_FAMILY, BROWSER_CHANNELS_FOLDER_ID, BrowserResources.getString(307), BROWSER_FOLDER_COLLECTION_CLASS, channelsHierarchy, 1
-         ));
+         );
          channelsHierarchy.putFolder(channelsFolder);
       }
 
@@ -200,7 +200,7 @@ public final class BrowserFolders {
                      if (subFolderId != BROWSER_WAP_BOOKMARKS_FOLDER_ID && subFolderId != BROWSER_MDS_BOOKMARKS_FOLDER_ID) {
                         String subFolderName = subFolder.getFriendlyName();
                         String subFolderParentName = bookmarksFolder.getFriendlyName();
-                        String subFolderFullName = ((StringBuffer)(new Object())).append(subFolderParentName).append(subFolderName).toString();
+                        String subFolderFullName = subFolderParentName + subFolderName;
                         if (subFolderId == makeLUID(subFolderFullName.hashCode())) {
                            continue;
                         }
@@ -214,12 +214,12 @@ public final class BrowserFolders {
                   }
 
                   if (pre360) {
-                     wapBookmarksFolder = (SimpleFolder)(new Object(
+                     wapBookmarksFolder = new SimpleFolder(
                         BROWSER_FAMILY, BROWSER_WAP_BOOKMARKS_FOLDER_ID, BrowserResources.getString(570), BROWSER_FOLDER_COLLECTION_CLASS, bookmarksFolder, 1
-                     ));
-                     mdsBookmarksFolder = (SimpleFolder)(new Object(
+                     );
+                     mdsBookmarksFolder = new SimpleFolder(
                         BROWSER_FAMILY, BROWSER_MDS_BOOKMARKS_FOLDER_ID, BrowserResources.getString(568), BROWSER_FOLDER_COLLECTION_CLASS, bookmarksFolder, 1
-                     ));
+                     );
                      copyFolderContents(bookmarksFolder, wapBookmarksFolder);
                      copyFolderContents(bookmarksFolder, mdsBookmarksFolder);
                      deleteFolderContents(bookmarksFolder, false);
@@ -227,26 +227,26 @@ public final class BrowserFolders {
                      bookmarksFolder.putFolder(mdsBookmarksFolder);
                   } else {
                      if (wapBookmarksFolder == null) {
-                        wapBookmarksFolder = (SimpleFolder)(new Object(
+                        wapBookmarksFolder = new SimpleFolder(
                            BROWSER_FAMILY,
                            BROWSER_WAP_BOOKMARKS_FOLDER_ID,
                            BrowserResources.getString(570),
                            BROWSER_FOLDER_COLLECTION_CLASS,
                            bookmarksFolder,
                            1
-                        ));
+                        );
                         bookmarksFolder.putFolder(wapBookmarksFolder);
                      }
 
                      if (mdsBookmarksFolder == null) {
-                        mdsBookmarksFolder = (SimpleFolder)(new Object(
+                        mdsBookmarksFolder = new SimpleFolder(
                            BROWSER_FAMILY,
                            BROWSER_MDS_BOOKMARKS_FOLDER_ID,
                            BrowserResources.getString(568),
                            BROWSER_FOLDER_COLLECTION_CLASS,
                            bookmarksFolder,
                            1
-                        ));
+                        );
                         bookmarksFolder.putFolder(mdsBookmarksFolder);
                      }
 
@@ -261,7 +261,7 @@ public final class BrowserFolders {
                         } else if (subFolderId != BROWSER_WAP_BOOKMARKS_FOLDER_ID && subFolderId != BROWSER_MDS_BOOKMARKS_FOLDER_ID) {
                            String subFolderName = subFolder.getFriendlyName();
                            String subFolderParentName = bookmarksFolder.getFriendlyName();
-                           String subFolderFullName = ((StringBuffer)(new Object())).append(subFolderParentName).append(subFolderName).toString();
+                           String subFolderFullName = subFolderParentName + subFolderName;
                            if (subFolderId != makeLUID(subFolderFullName.hashCode())) {
                               copyFolderContents(subFolder, wapBookmarksFolder);
                               deleteFolder(subFolder);
@@ -294,7 +294,7 @@ public final class BrowserFolders {
 
          if (newSubFolder == null) {
             long newSubFolderId = makeUniqueLUID(destFolder);
-            newSubFolder = (SimpleFolder)(new Object(BROWSER_FAMILY, newSubFolderId, newSubFolderName, BROWSER_FOLDER_COLLECTION_CLASS, destFolder, 1));
+            newSubFolder = new SimpleFolder(BROWSER_FAMILY, newSubFolderId, newSubFolderName, BROWSER_FOLDER_COLLECTION_CLASS, destFolder, 1);
             destFolder.putFolder(newSubFolder);
          }
 

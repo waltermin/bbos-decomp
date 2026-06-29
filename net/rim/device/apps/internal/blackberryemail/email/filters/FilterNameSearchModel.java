@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.blackberryemail.email.filters;
 
 import net.rim.device.api.ui.component.EditField;
 import net.rim.device.apps.api.addressbook.AddressBookNameSearch;
+import net.rim.device.apps.api.addressbook.SelectNameVerb;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.PersistableRIMModel;
 import net.rim.device.apps.api.framework.verb.Verb;
@@ -37,13 +38,13 @@ public final class FilterNameSearchModel extends AddressBookNameSearch implement
          return null;
       } else {
          Object whichField = ContextObject.get(context, 9045827404276417370L);
-         if (!(whichField instanceof Object)) {
+         if (!(whichField instanceof EditField)) {
             Array.resize(verbs, 0);
             return null;
          } else {
             EditField nameField = (EditField)whichField;
             Array.resize(verbs, 1);
-            verbs[0] = (Verb)(new Object(nameField));
+            verbs[0] = new SelectNameVerb(nameField);
             return nameField.isMuddy() && nameField.getTextLength() != 0 ? null : verbs[0];
          }
       }

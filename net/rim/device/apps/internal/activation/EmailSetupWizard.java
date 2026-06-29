@@ -24,7 +24,7 @@ public final class EmailSetupWizard extends WizardController {
 
    public EmailSetupWizard() {
       super(_resources, 160, 300, SetupWizardOrdering.EMAIL_SETUP_CATEGORY, 3);
-      Vector pages = (Vector)(new Object(3));
+      Vector pages = new Vector(3);
       pages.addElement(new EmailSetupWizard$EmailSetupPage(this));
       pages.addElement(new EmailSetupWizard$BisConfirmPage(this));
       pages.addElement(new EmailSetupWizard$BesConfirmPage(this));

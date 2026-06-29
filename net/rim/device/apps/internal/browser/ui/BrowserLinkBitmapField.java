@@ -85,9 +85,9 @@ public class BrowserLinkBitmapField extends BrowserBitmapField implements Cookie
             this._cookieID = 5019899335844518230L;
          }
 
-         ContextObject context = (ContextObject)(new Object());
+         ContextObject context = new ContextObject();
          if (linkElement != null || super._element != null) {
-            Vector linkVector = (Vector)(new Object(4));
+            Vector linkVector = new Vector(4);
             linkVector.addElement(href);
             linkVector.addElement(null);
             linkVector.addElement(linkElement);
@@ -107,13 +107,13 @@ public class BrowserLinkBitmapField extends BrowserBitmapField implements Cookie
    protected void makeContextMenu(ContextMenu contextMenu) {
       super.makeContextMenu(contextMenu);
       if (this.getManager().getLeafFieldWithFocus() == this) {
-         Verb[] verbs = new Object[0];
+         Verb[] verbs = new Verb[0];
          Verb defaultVerb = CookieProviderUtilities.getFocusVerbs(this, null, verbs);
          int count = verbs.length;
 
          for (int idx = 0; idx < count; idx++) {
             int priority = verbs[idx] == defaultVerb ? 10 : Integer.MAX_VALUE;
-            VerbMenuItem menuItem = (VerbMenuItem)(new Object(null, verbs[idx].getOrdering(), priority, verbs[idx], new Object(61)));
+            VerbMenuItem menuItem = new VerbMenuItem(null, verbs[idx].getOrdering(), priority, verbs[idx], new ContextObject(61));
             contextMenu.addItem(menuItem);
             if (verbs[idx] == defaultVerb) {
                contextMenu.setDefaultItem(menuItem);

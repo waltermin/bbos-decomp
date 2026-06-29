@@ -20,13 +20,13 @@ public final class CMSEntityIdentifier {
          this._serialNumber = serialNumber;
          this._issuer = issuer;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    CMSEntityIdentifier(byte[] subjectKeyIdentifier) {
       if (subjectKeyIdentifier == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._subjectKeyIdentifier = subjectKeyIdentifier;

@@ -19,7 +19,7 @@ import net.rim.vm.Array;
 public class MultiServiceManager implements GlobalEventListener {
    private Hashtable _serviceStore;
    private PersistentObject _persistentServiceStore;
-   private Hashtable _serviceFactories = (Hashtable)(new Object());
+   private Hashtable _serviceFactories = new Hashtable();
    protected static final long ID = 5421400767263226689L;
    protected static final long PERSISTANT_STORE_ID = 6664804295181405943L;
    protected static final long PERSISTANT_EXPIRED_STORE_ID = 3614653646137588814L;
@@ -31,7 +31,7 @@ public class MultiServiceManager implements GlobalEventListener {
    public synchronized ServiceIdentifier[] getAllServices(String CID) {
       ServiceIdentifier[] result = new ServiceIdentifier[0];
       Object o = this._serviceStore.get(CID);
-      if (o instanceof Object) {
+      if (o instanceof LongHashtable) {
          LongHashtable ht = (LongHashtable)o;
          if (ht.size() > 0) {
             result = new ServiceIdentifier[ht.size()];
@@ -62,7 +62,7 @@ public class MultiServiceManager implements GlobalEventListener {
       ServiceIdentifier oldServiceSetByUser = null;
       synchronized (this._serviceStore) {
          Object o = this._serviceStore.get(CID);
-         if (o instanceof Object) {
+         if (o instanceof LongHashtable) {
             LongHashtable ht = (LongHashtable)o;
             if (ht.containsKey(service.getUniqueServiceID())) {
                service.setDefaultService(true);
@@ -96,7 +96,7 @@ public class MultiServiceManager implements GlobalEventListener {
    public synchronized ServiceIdentifier getDefaultService(String CID) {
       Object o = this._serviceStore.get(CID);
       ServiceIdentifier result = null;
-      if (o instanceof Object) {
+      if (o instanceof LongHashtable) {
          LongHashtable ht = (LongHashtable)o;
          Object userSetDefaultService = ht.get(4251133684997842836L);
          if (userSetDefaultService instanceof ServiceIdentifier) {
@@ -115,7 +115,7 @@ public class MultiServiceManager implements GlobalEventListener {
    public ServiceIdentifier findServiceByID(String CID, long serviceID) {
       Object o = this._serviceStore.get(CID);
       ServiceIdentifier result = null;
-      if (o instanceof Object) {
+      if (o instanceof LongHashtable) {
          LongHashtable ht = (LongHashtable)o;
          result = (ServiceIdentifier)ht.get(serviceID);
       }
@@ -132,7 +132,7 @@ public class MultiServiceManager implements GlobalEventListener {
       if (serviceFactory != null) {
          this._serviceFactories.put(CID, serviceFactory);
          if (!this._serviceStore.containsKey(CID)) {
-            this._serviceStore.put(CID, new Object());
+            this._serviceStore.put(CID, new LongHashtable());
             this.reloadFromExistingServices(CID);
             this.fixUpDefaultService(CID);
          }
@@ -158,7 +158,7 @@ public class MultiServiceManager implements GlobalEventListener {
    }
 
    public synchronized ServiceRecord[] getAllServiceRecords(String cid) {
-      ServiceRecord[] records = new Object[0];
+      ServiceRecord[] records = new ServiceRecord[0];
       ServiceBook sb = ServiceBook.getSB();
 
       for (ServiceRecord sr : sb.findRecordsByType(0)) {
@@ -174,7 +174,7 @@ public class MultiServiceManager implements GlobalEventListener {
 
    @Override
    public synchronized void eventOccurred(long guid, int data0, int data1, Object object0, Object object1) {
-      if ((guid == -4220058463650496006L || guid == 8288627527798139133L || guid == 2522898683889177438L) && object0 instanceof Object) {
+      if ((guid == -4220058463650496006L || guid == 8288627527798139133L || guid == 2522898683889177438L) && object0 instanceof ServiceRecord) {
          ServiceRecord sr = (ServiceRecord)object0;
          String cid = sr != null && sr.getCid() != null ? sr.getCid() : null;
          if (cid != null && this._serviceFactories.containsKey(cid)) {
@@ -198,7 +198,7 @@ public class MultiServiceManager implements GlobalEventListener {
       }
 
       if (this._serviceStore == null) {
-         this._serviceStore = (Hashtable)(new Object());
+         this._serviceStore = new Hashtable();
          this._persistentServiceStore.setContents(this._serviceStore, 51);
          this._persistentServiceStore.commit();
       }
@@ -226,7 +226,7 @@ public class MultiServiceManager implements GlobalEventListener {
       ServiceIdentifier service = null;
       ServiceIdentifier currentDefaultService = null;
       Object o = this._serviceStore.get(CID);
-      if (o instanceof Object) {
+      if (o instanceof LongHashtable) {
          LongHashtable ht = (LongHashtable)o;
          Object userSetDefaultService = ht.get(4251133684997842836L);
          if (userSetDefaultService instanceof ServiceIdentifier) {
@@ -253,7 +253,7 @@ public class MultiServiceManager implements GlobalEventListener {
                      return;
                   }
 
-                  if (firstInsecure == null || !(firstInsecure.getServiceKey() instanceof Object)) {
+                  if (firstInsecure == null || !(firstInsecure.getServiceKey() instanceof ServiceRecord)) {
                      firstInsecure = var12;
                   }
                }
@@ -281,7 +281,7 @@ public class MultiServiceManager implements GlobalEventListener {
             long currentServiceID = keys.nextElement();
             ServiceIdentifier serviceIdentifier = (ServiceIdentifier)serviceTable.get(currentServiceID);
             Object o = serviceIdentifier.getServiceKey();
-            if (o instanceof Object) {
+            if (o instanceof ServiceRecord) {
                ServiceRecord currentServiceRecord = (ServiceRecord)o;
                String cidOfNewServiceRecord = newServiceRecord.getCid() != null ? newServiceRecord.getCid() : null;
                if (cidOfNewServiceRecord != null
@@ -382,9 +382,9 @@ public class MultiServiceManager implements GlobalEventListener {
                   if (o instanceof ServiceIdentifier) {
                      ServiceIdentifier service = (ServiceIdentifier)o;
                      Object serviceKey = service.getServiceKey();
-                     if (serviceKey instanceof Object) {
+                     if (serviceKey instanceof ServiceRecord) {
                         ServiceRecord sr1 = (ServiceRecord)serviceKey;
-                        if (key instanceof Object) {
+                        if (key instanceof ServiceRecord) {
                            ServiceRecord sr2 = (ServiceRecord)key;
                            if (sr2.isDuplicate(sr1, serviceRecordType, null, null, null, null, -1)) {
                               result = o;

@@ -18,7 +18,7 @@ final class RibbonLauncherApp extends UiApplication {
          SystemActions.invoke(args);
       } else {
          if (!((ApplicationManagerInternal)ApplicationManager.getApplicationManager()).setConsoleProcess()) {
-            throw new Object("Console already set");
+            throw new RuntimeException("Console already set");
          }
 
          RibbonLauncherApp app = new RibbonLauncherApp();

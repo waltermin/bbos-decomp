@@ -8,7 +8,7 @@ public final class PRNGDecryptor extends StreamDecryptor {
    public PRNGDecryptor(PseudoRandomSource keystream, InputStream input) {
       super(input);
       if (keystream == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._keystream = keystream;

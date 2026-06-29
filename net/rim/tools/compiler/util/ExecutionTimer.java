@@ -21,7 +21,7 @@ public final class ExecutionTimer {
       int duration = (int)this._time;
       int seconds = duration / 1000;
       int millis = duration % 1000;
-      StringBuffer buf = ((StringBuffer)(new Object(this._name.length() + 11))).append(this._name).append('(').append(seconds).append('.');
+      StringBuffer buf = new StringBuffer(this._name.length() + 11).append(this._name).append('(').append(seconds).append('.');
       if (millis < 100) {
          buf.append('0');
          if (millis < 10) {

@@ -11,13 +11,15 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.Locator;
+import org.xml.sax.SAXNotRecognizedException;
+import org.xml.sax.SAXNotSupportedException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class XMLParser extends SAXParser implements Locator, XMLReader {
    XMLParser$InputReader _in;
-   private DefaultHandler _defaultHandler = (DefaultHandler)(new Object());
+   private DefaultHandler _defaultHandler = new DefaultHandler();
    private ContentHandler _contentHandler = this._defaultHandler;
    private DTDHandler _dtdHandler = this._defaultHandler;
    private ErrorHandler _errorHandler = this._defaultHandler;
@@ -31,7 +33,7 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
    private Hashtable _nameSpaceLookup;
    private Hashtable _attributeDeclarations;
    private String _defaultURI = "";
-   private String _undefinedURI = (String)(new Object());
+   private String _undefinedURI = new String();
    private boolean _allowUndefinedNamespaces;
    private boolean _isNamespaceAware = true;
    private String XMLNS = "xmlns";
@@ -100,7 +102,7 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
       "standalone"
    };
    final SAXAttributesImpl _nullAttributes = new SAXAttributesImpl();
-   private Hashtable _duplicateAttributeCheck = (Hashtable)(new Object());
+   private Hashtable _duplicateAttributeCheck = new Hashtable();
    private boolean _havePeek;
    private int _peek;
    static String XMLURL = "http://www.w3.org/XML/1998/namespace";
@@ -2172,7 +2174,7 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
    }
 
    void illegalCharacter(int ch) {
-      this.fatalError("Invalid character '%1' encountered.", ((StringBuffer)(new Object("&#x"))).append(Integer.toHexString(ch)).toString());
+      this.fatalError("Invalid character '%1' encountered.", "&#x" + Integer.toHexString(ch));
    }
 
    void fatalError(String error, String parm) {
@@ -2181,11 +2183,11 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
          this.fatalError(error);
       }
 
-      this.fatalError(((StringBuffer)(new Object())).append(error.substring(0, index)).append(parm).append(error.substring(index + 2)).toString());
+      this.fatalError(error.substring(0, index) + parm + error.substring(index + 2));
    }
 
    void fatalError(String msg) throws SAXParseException {
-      SAXParseException x = (SAXParseException)(new Object(msg, this));
+      SAXParseException x = new SAXParseException(msg, this);
       this._errorHandler.fatalError(x);
       throw x;
    }
@@ -2196,11 +2198,11 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
          this.nonFatalError(error);
       }
 
-      this.nonFatalError(((StringBuffer)(new Object())).append(error.substring(0, index)).append(parm).append(error.substring(index + 2)).toString());
+      this.nonFatalError(error.substring(0, index) + parm + error.substring(index + 2));
    }
 
    void nonFatalError(String msg) {
-      this._errorHandler.error((SAXParseException)(new Object(msg, this)));
+      this._errorHandler.error(new SAXParseException(msg, this));
    }
 
    void warning(String error, String parm) {
@@ -2209,11 +2211,11 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
          this.warning(error);
       }
 
-      this.warning(((StringBuffer)(new Object())).append(error.substring(0, index)).append(parm).append(error.substring(index + 2)).toString());
+      this.warning(error.substring(0, index) + parm + error.substring(index + 2));
    }
 
    void warning(String msg) {
-      this._errorHandler.warning((SAXParseException)(new Object(msg, this)));
+      this._errorHandler.warning(new SAXParseException(msg, this));
    }
 
    int kwLookup() {
@@ -2368,7 +2370,7 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
    }
 
    private String nameToString() {
-      return (String)(new Object(this._nameBuffer, 0, this._nameLength));
+      return new String(this._nameBuffer, 0, this._nameLength);
    }
 
    private void lastReadInputMustBeTokenStartInput() {
@@ -2426,7 +2428,7 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
                      if (reader != null) {
                         inStream = new XMLParser$ReaderReader(this, reader);
                         if (this._pushedBackFirstChar != -1) {
-                           new XMLParser$PushBackReader(this, ((StringBuffer)(new Object(""))).append(this._pushedBackFirstChar).toString());
+                           new XMLParser$PushBackReader(this, "" + this._pushedBackFirstChar);
                            this._pushedBackFirstChar = -1;
                         }
                      } else if (byteStream == null) {
@@ -2593,7 +2595,7 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
                                     }
 
                                     if (this._havePeek) {
-                                       new XMLParser$PushBackReader(this, ((StringBuffer)(new Object(""))).append((char)this._peek).toString());
+                                       new XMLParser$PushBackReader(this, "" + (char)this._peek);
                                        this._havePeek = false;
                                     }
 
@@ -2674,7 +2676,7 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
 
    @Override
    public void parse(InputStream is, DefaultHandler handler) {
-      this.parse((InputSource)(new Object(is)), handler);
+      this.parse(new InputSource(is), handler);
    }
 
    @Override
@@ -2697,20 +2699,20 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
       this.initNameBuffers();
       this.pushExternalParsedEntity(null, false, is.getPublicId(), is.getSystemId(), is);
       this._foundToBeStandalone = true;
-      this._parameterEntities = (Hashtable)(new Object());
-      this._entitiesDeclaredInExternalSubset = (Hashtable)(new Object());
-      this._internalEntities = (Hashtable)(new Object());
-      this._externalEntities = (Hashtable)(new Object());
-      this._externalParameterEntities = (Hashtable)(new Object());
+      this._parameterEntities = new Hashtable();
+      this._entitiesDeclaredInExternalSubset = new Hashtable();
+      this._internalEntities = new Hashtable();
+      this._externalEntities = new Hashtable();
+      this._externalParameterEntities = new Hashtable();
       this._internalEntities.put("lt", "&#60;");
       this._internalEntities.put("gt", "&#62;");
       this._internalEntities.put("amp", "&#38;");
       this._internalEntities.put("apos", "&#39;");
       this._internalEntities.put("quot", "&#34;");
-      this._nameSpaceLookup = (Hashtable)(new Object());
+      this._nameSpaceLookup = new Hashtable();
       this._nameSpaceLookup.put("", "");
       this._nameSpaceLookup.put(XML, XMLURL);
-      this._attributeDeclarations = (Hashtable)(new Object());
+      this._attributeDeclarations = new Hashtable();
       this._contentHandler.setDocumentLocator(this);
       this._contentHandler.startDocument();
       this._parsing = true;
@@ -3149,7 +3151,7 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
 
    private void expect(char ch) {
       if (this.read() != ch) {
-         this.fatalError("Expecting '%1'.", ((StringBuffer)(new Object(""))).append(ch).toString());
+         this.fatalError("Expecting '%1'.", "" + ch);
       }
    }
 
@@ -3236,10 +3238,10 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
          this.advance();
          this.addToName(58);
          int localStart = this._nameLength;
-         this._prefixName = (String)(new Object(this._nameBuffer, 0, localStart - 1));
+         this._prefixName = new String(this._nameBuffer, 0, localStart - 1);
          this.reqNCName();
          if (parse) {
-            this._localName = (String)(new Object(this._nameBuffer, localStart, this._nameLength - localStart));
+            this._localName = new String(this._nameBuffer, localStart, this._nameLength - localStart);
             this._qName = this.nameToString();
             this._uri = (String)this._nameSpaceLookup.get(this._prefixName);
             if (this._uri == null && !this._prefixName.equals(this.XMLNS)) {
@@ -4209,7 +4211,7 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
          return;
       }
 
-      this.fatalError("Invalid character reference '%1'.", ((StringBuffer)(new Object("&#x"))).append(Integer.toHexString(ch)).toString());
+      this.fatalError("Invalid character reference '%1'.", "&#x" + Integer.toHexString(ch));
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
@@ -4738,7 +4740,7 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
 
             if (this.peek() == 91) {
                this.advance();
-               this._dtdBody = (StringBuffer)(new Object());
+               this._dtdBody = new StringBuffer();
 
                label120:
                while (true) {
@@ -5049,7 +5051,7 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
       }
 
       if (savedNameSpaces == null) {
-         savedNameSpaces = (Hashtable)(new Object());
+         savedNameSpaces = new Hashtable();
       }
 
       savedNameSpaces.put(ns, oldUri);
@@ -5422,16 +5424,16 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
       return curr == null ? -1 : curr.getColumnNumber();
    }
 
-   private String getId(String uriStart, String name) {
+   private String getId(String uriStart, String name) throws SAXNotRecognizedException {
       if (!name.startsWith(uriStart)) {
-         throw new Object();
+         throw new SAXNotRecognizedException();
       } else {
          return name.substring(uriStart.length());
       }
    }
 
    @Override
-   public boolean getFeature(String name) {
+   public boolean getFeature(String name) throws SAXNotRecognizedException, SAXNotSupportedException {
       name = this.getId("http://xml.org/sax/features/", name);
       if (name.equals("external-general-entities")) {
          return true;
@@ -5443,7 +5445,7 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
 
       if (name.equals("is-standalone")) {
          if (!this._parsing) {
-            throw new Object();
+            throw new SAXNotSupportedException();
          } else {
             return this._standalone;
          }
@@ -5472,62 +5474,62 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
       } else if (name.equals("xml-1.1")) {
          return false;
       } else {
-         throw new Object();
+         throw new SAXNotRecognizedException();
       }
    }
 
    @Override
-   public void setFeature(String name, boolean value) {
+   public void setFeature(String name, boolean value) throws SAXNotRecognizedException, SAXNotSupportedException {
       name = this.getId("http://xml.org/sax/features/", name);
       if (name.equals("external-general-entities")) {
-         throw new Object();
+         throw new SAXNotSupportedException();
       } else if (name.equals("external-parameter-entities")) {
-         throw new Object();
+         throw new SAXNotSupportedException();
       } else if (name.equals("is-standalone")) {
-         throw new Object();
+         throw new SAXNotSupportedException();
       } else if (name.equals("lexical-handler/parameter-entities")) {
-         throw new Object();
+         throw new SAXNotSupportedException();
       } else if (name.equals("namespaces")) {
-         throw new Object();
+         throw new SAXNotSupportedException();
       } else if (name.equals("namespace-prefixes")) {
-         throw new Object();
+         throw new SAXNotSupportedException();
       } else if (name.equals("resolve-dtd-uris")) {
-         throw new Object();
+         throw new SAXNotSupportedException();
       } else if (name.equals("string-interning")) {
-         throw new Object();
+         throw new SAXNotSupportedException();
       } else if (name.equals("unicode-normalization-checking")) {
-         throw new Object();
+         throw new SAXNotSupportedException();
       } else if (name.equals("use-attributes2")) {
-         throw new Object();
+         throw new SAXNotSupportedException();
       } else if (name.equals("use-locator2")) {
-         throw new Object();
+         throw new SAXNotSupportedException();
       } else if (name.equals("use-entity-resolver2")) {
-         throw new Object();
+         throw new SAXNotSupportedException();
       } else if (name.equals("validation")) {
-         throw new Object();
+         throw new SAXNotSupportedException();
       } else if (name.equals("xmlns-uris")) {
-         throw new Object();
+         throw new SAXNotSupportedException();
       } else if (name.equals("xml-1.1")) {
-         throw new Object();
+         throw new SAXNotSupportedException();
       } else {
-         throw new Object();
+         throw new SAXNotRecognizedException();
       }
    }
 
-   private void getSetProperty(String name) {
+   private void getSetProperty(String name) throws SAXNotRecognizedException, SAXNotSupportedException {
       name = this.getId("http://xml.org/sax/properties/", name);
       if (name.equals("declaration-handler")) {
-         throw new Object();
+         throw new SAXNotSupportedException();
       } else if (name.equals("document-xml-version")) {
-         throw new Object();
+         throw new SAXNotSupportedException();
       } else if (name.equals("dom-node")) {
-         throw new Object();
+         throw new SAXNotSupportedException();
       } else if (name.equals("lexical-handler")) {
-         throw new Object();
+         throw new SAXNotSupportedException();
       } else if (name.equals("xml-string")) {
-         throw new Object();
+         throw new SAXNotSupportedException();
       } else {
-         throw new Object();
+         throw new SAXNotRecognizedException();
       }
    }
 
@@ -5545,7 +5547,7 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
    @Override
    public void setEntityResolver(EntityResolver resolver) {
       if (resolver == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       this._entityResolver = resolver;
@@ -5559,7 +5561,7 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
    @Override
    public void setDTDHandler(DTDHandler handler) {
       if (handler == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       this._dtdHandler = handler;
@@ -5573,7 +5575,7 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
    @Override
    public void setContentHandler(ContentHandler handler) {
       if (handler == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       this._contentHandler = handler;
@@ -5587,7 +5589,7 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
    @Override
    public void setErrorHandler(ErrorHandler handler) {
       if (handler == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       this._errorHandler = handler;
@@ -5605,6 +5607,6 @@ public class XMLParser extends SAXParser implements Locator, XMLReader {
 
    @Override
    public void parse(String systemId) {
-      this.parse((InputSource)(new Object(systemId)));
+      this.parse(new InputSource(systemId));
    }
 }

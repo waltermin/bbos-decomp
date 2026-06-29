@@ -7,8 +7,8 @@ import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Font;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.AutoTextEditField;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.CheckboxField;
 import net.rim.device.api.ui.component.DateField;
@@ -33,11 +33,13 @@ import net.rim.device.apps.internal.browser.resources.BrowserResources;
 import net.rim.device.apps.internal.browser.stack.ModelResult;
 import net.rim.device.apps.internal.browser.stack.RawDataCache;
 import net.rim.device.apps.internal.browser.store.BrowserFolders;
+import net.rim.device.apps.internal.browser.ui.BrowserCheckboxField;
 import net.rim.device.apps.internal.browser.ui.BrowserChoiceField;
 import net.rim.device.apps.internal.browser.ui.BrowserUrlEditField;
 import net.rim.device.apps.internal.browser.util.FontCache;
 import net.rim.device.cldc.util.CalendarExtensions;
 import net.rim.device.internal.i18n.CommonResource;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 
 public final class DialogAddBookmark extends PopupScreen implements FieldChangeListener {
    private EditField _editTitle;
@@ -64,7 +66,7 @@ public final class DialogAddBookmark extends PopupScreen implements FieldChangeL
    }
 
    private DialogAddBookmark(Page page, String url, String title, Folder folder, boolean urlEditable, String configUID) {
-      super((Manager)(new Object(1153220571769602048L)), 196608);
+      super(new VerticalFieldManager(1153220571769602048L), 196608);
       VerticalFieldManager localVfm = (VerticalFieldManager)this.getDelegate();
       this._page = page;
       title = title == null ? "" : title;
@@ -106,46 +108,46 @@ public final class DialogAddBookmark extends PopupScreen implements FieldChangeL
          }
       }
 
-      this._makeAvailableOffline = (CheckboxField)(new Object(BrowserResources.getString(300), true));
+      this._makeAvailableOffline = new BrowserCheckboxField(BrowserResources.getString(300), true);
       String folderName = this._selectedFolder.getFriendlyName();
       int fontHeight = Font.getDefault().getHeight();
-      RichTextField titleField = (RichTextField)(new Object(BrowserResources.getString(109), 36028797018963968L));
+      RichTextField titleField = new RichTextField(BrowserResources.getString(109), 36028797018963968L);
       titleField.setFont(FontCache.getInstance().getFont(null, 1, fontHeight));
       localVfm.add(titleField);
-      localVfm.add((Field)(new Object(fontHeight >> 1)));
-      this._editTitle = (EditField)(new Object(CommonResources.getString(2002), title, 1000000, 2147483648L));
+      localVfm.add(new VerticalSpacerField(fontHeight >> 1));
+      this._editTitle = new AutoTextEditField(CommonResources.getString(2002), title, 1000000, 2147483648L);
       localVfm.add(this._editTitle);
-      localVfm.add((Field)(new Object(fontHeight >> 1)));
+      localVfm.add(new VerticalSpacerField(fontHeight >> 1));
       this._editUrl = new BrowserUrlEditField(BrowserResources.getString(277), url, Integer.MAX_VALUE, 2264924160L, url);
       if (urlEditable) {
          localVfm.add(this._editUrl);
          this._editUrl.setCursorPosition(url.length());
-         localVfm.add((Field)(new Object(fontHeight >> 1)));
+         localVfm.add(new VerticalSpacerField(fontHeight >> 1));
       }
 
-      this._folderNameField = (ObjectChoiceField)(new Object(BrowserResources.getString(297), new Object[]{folderName}, 0, 9007199254740992L));
+      this._folderNameField = new ObjectChoiceField(BrowserResources.getString(297), new String[]{folderName}, 0, 9007199254740992L);
       localVfm.add(this._folderNameField);
-      localVfm.add((Field)(new Object(fontHeight >> 1)));
+      localVfm.add(new VerticalSpacerField(fontHeight >> 1));
       ModelResult modelResult = this._page != null ? this._page.getModelResult() : null;
       if (this._page != null && modelResult != null && modelResult.getCacheResult() != null) {
          localVfm.add(this._makeAvailableOffline);
       }
 
-      this._updateIntervalField = (ObjectChoiceField)(new Object(BrowserResources.getString(759), BrowserResources.getStringArray(757)));
+      this._updateIntervalField = new ObjectChoiceField(BrowserResources.getString(759), BrowserResources.getStringArray(757));
       if (!PersistentContent.isEncryptionEnabled() && !ITPolicy.getBoolean(30, 11, false)) {
          this._updateIntervalField.setChangeListener(this);
          localVfm.add(this._updateIntervalField);
       }
 
-      this._startTimeField = (DateField)(new Object(BrowserResources.getString(758), 28800000, 32));
+      this._startTimeField = new DateField(BrowserResources.getString(758), 28800000, 32);
       this._startTimeField.setTimeZone(TimeZone.getTimeZone(DateTimeUtilities.GMT));
       this._browserChoiceField = new BrowserChoiceField(BrowserResources.getString(819), bookmarkConfigUID);
       localVfm.add(this._browserChoiceField);
-      this._buttonAdd = (ButtonField)(new Object(CommonResources.getString(9045), 98304));
-      this._buttonCancel = (ButtonField)(new Object(CommonResource.getString(19), 98304));
+      this._buttonAdd = new ButtonField(CommonResources.getString(9045), 98304);
+      this._buttonCancel = new ButtonField(CommonResource.getString(19), 98304);
       this._buttonAdd.setChangeListener(this);
       this._buttonCancel.setChangeListener(this);
-      FlowFieldManager fmgr = (FlowFieldManager)(new Object(12884901888L));
+      FlowFieldManager fmgr = new FlowFieldManager(12884901888L);
       fmgr.add(this._buttonAdd);
       fmgr.add(this._buttonCancel);
       localVfm.add(fmgr);

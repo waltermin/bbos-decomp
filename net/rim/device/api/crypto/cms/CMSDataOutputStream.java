@@ -11,7 +11,7 @@ public final class CMSDataOutputStream extends CMSOutputStream {
    public CMSDataOutputStream(OutputStream out, boolean outer) {
       super(out, 10, true, outer);
       if (outer) {
-         this._buffer = (ByteArrayOutputStream)(new Object());
+         this._buffer = new ByteArrayOutputStream();
       } else {
          this._buffer = null;
       }
@@ -20,7 +20,7 @@ public final class CMSDataOutputStream extends CMSOutputStream {
    @Override
    public final void write(byte[] data, int offset, int length) {
       if (data == null || offset < 0 || length < 0 || data.length - length < offset) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (super._outer) {
@@ -34,8 +34,8 @@ public final class CMSDataOutputStream extends CMSOutputStream {
    public final void close() {
       if (super._outer) {
          this._buffer.close();
-         ASN1OutputStream output = (ASN1OutputStream)(new Object(super._out));
-         ASN1OutputStream contentInfo = (ASN1OutputStream)(new Object());
+         ASN1OutputStream output = new ASN1OutputStream(super._out);
+         ASN1OutputStream contentInfo = new ASN1OutputStream();
          contentInfo.writeOID(OIDs.getOID(541859388));
          contentInfo.writeOctetString(this._buffer.toByteArray(), 1, 0);
          output.writeSequence(contentInfo);

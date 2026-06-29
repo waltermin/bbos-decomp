@@ -1,5 +1,6 @@
 package net.rim.plazmic.internal.mediaengine.io;
 
+import java.io.IOException;
 import net.rim.plazmic.mediaengine.MediaException;
 
 public class PMEVersionReader implements FormatVersionReader {
@@ -7,9 +8,9 @@ public class PMEVersionReader implements FormatVersionReader {
    private int offset = 0;
    public static final int PME_START_HEADER = -749712059;
 
-   protected final int readInt() {
+   protected final int readInt() throws IOException {
       if (this.data.length - this.offset < 4) {
-         throw new Object();
+         throw new IOException();
       }
 
       int ch1 = this.data[this.offset++];
@@ -47,14 +48,6 @@ public class PMEVersionReader implements FormatVersionReader {
          byte[] var13 = null;
       }
 
-      return ((StringBuffer)(new Object()))
-         .append((version & 0xFF000000) >>> 24)
-         .append('.')
-         .append((version & 0xFF0000) >>> 16)
-         .append('.')
-         .append((version & 0xFF00) >>> 8)
-         .append('.')
-         .append(version & 0xFF)
-         .toString();
+      return "" + ((version & 0xFF000000) >>> 24) + '.' + ((version & 0xFF0000) >>> 16) + '.' + ((version & 0xFF00) >>> 8) + '.' + (version & 0xFF);
    }
 }

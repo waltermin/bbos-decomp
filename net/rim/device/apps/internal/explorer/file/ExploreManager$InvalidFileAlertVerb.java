@@ -13,7 +13,7 @@ final class ExploreManager$InvalidFileAlertVerb extends Verb {
 
    @Override
    public final Object invoke(Object parameter) {
-      Dialog.alert(((StringBuffer)(new Object())).append(ExplorerResources.getString(113)).append(this._fileError).toString());
+      Dialog.alert(ExplorerResources.getString(113) + this._fileError);
       return null;
    }
 }

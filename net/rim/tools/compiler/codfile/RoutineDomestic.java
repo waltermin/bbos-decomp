@@ -1,5 +1,6 @@
 package net.rim.tools.compiler.codfile;
 
+import java.io.IOException;
 import net.rim.tools.compiler.io.StructuredOutputStream;
 
 public final class RoutineDomestic extends Routine {
@@ -25,8 +26,8 @@ public final class RoutineDomestic extends Routine {
    }
 
    @Override
-   public final void write(StructuredOutputStream out) {
-      throw new Object("unable to write domestic routine");
+   public final void write(StructuredOutputStream out) throws IOException {
+      throw new IOException("unable to write domestic routine");
    }
 
    @Override

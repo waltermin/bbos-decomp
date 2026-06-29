@@ -26,7 +26,7 @@ class MediaLayout$3 implements Runnable {
          try {
             RibbonLauncher.getInstance().launch(finalUrl);
          } finally {
-            System.err.println(((StringBuffer)(new Object("Could not launch "))).append(finalUrl).toString());
+            System.err.println("Could not launch " + finalUrl);
             return;
          }
       }

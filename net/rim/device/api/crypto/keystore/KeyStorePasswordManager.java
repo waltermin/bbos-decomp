@@ -125,25 +125,25 @@ public final class KeyStorePasswordManager {
    }
 
    public final synchronized void changePassword() throws KeyStoreCancelException {
-      String fullPrompt = ((StringBuffer)(new Object())).append(KeyStoreResources.getString(2008)).append(KeyStoreResources.getString(7016)).toString();
+      String fullPrompt = KeyStoreResources.getString(2008) + KeyStoreResources.getString(7016);
       byte[] oldPasswordBytes = KeyStoreUtilitiesInternal.getCurrentKeyStorePassword(fullPrompt, true, true);
       String newPasswordPrompt = KeyStoreResources.getString(1003);
       String confirmPasswordPrompt = KeyStoreResources.getString(1004);
       String passwordPatternMask = ITPolicy.getString(24, 73);
       if (passwordPatternMask != null) {
-         StringBuffer sb = (StringBuffer)(new Object(2 + passwordPatternMask.length() + 1));
+         StringBuffer sb = new StringBuffer(2 + passwordPatternMask.length() + 1);
          sb.append(' ');
          sb.append('(');
          sb.append(passwordPatternMask);
          sb.append(')');
          String suffix = sb.toString();
-         newPasswordPrompt = ((StringBuffer)(new Object())).append(newPasswordPrompt).append(suffix).toString();
-         confirmPasswordPrompt = ((StringBuffer)(new Object())).append(confirmPasswordPrompt).append(suffix).toString();
+         newPasswordPrompt = newPasswordPrompt + suffix;
+         confirmPasswordPrompt = confirmPasswordPrompt + suffix;
       }
 
       byte[] newPasswordBytes;
       do {
-         PasswordDialog dialog = (PasswordDialog)(new Object(newPasswordPrompt, confirmPasswordPrompt, 32, 134217728));
+         PasswordDialog dialog = new PasswordDialog(newPasswordPrompt, confirmPasswordPrompt, 32, 134217728);
          BackgroundDialog.show(dialog);
          if (dialog.getCloseReason() == -1) {
             throw new KeyStoreCancelException();
@@ -152,7 +152,7 @@ public final class KeyStorePasswordManager {
          newPasswordBytes = dialog.getPassword();
       } while (!this.isPasswordValid(newPasswordBytes) || !this.isHistoryValid(newPasswordBytes));
 
-      new Object(newPasswordBytes);
+      new String(newPasswordBytes);
       this.saveNewPassword(oldPasswordBytes, newPasswordBytes);
    }
 
@@ -164,7 +164,7 @@ public final class KeyStorePasswordManager {
       label27: {
          try {
             var5 = true;
-            this._passwordHashtable = (IntHashtable)(new Object());
+            this._passwordHashtable = new IntHashtable();
             KeyStoreManager.getInstance().changePassword();
             var5 = false;
             break label27;
@@ -199,7 +199,7 @@ public final class KeyStorePasswordManager {
          try {
             var15 = true;
             if (this._passwordHashtable == null) {
-               this._passwordHashtable = (IntHashtable)(new Object());
+               this._passwordHashtable = new IntHashtable();
                setHashTable = true;
             }
 
@@ -209,10 +209,7 @@ public final class KeyStorePasswordManager {
                try {
                   currentPasswordBytes = (byte[])this._passwordHashtable.get(currentPasswordVersion);
                   if (currentPasswordBytes == null) {
-                     String fullPrompt = ((StringBuffer)(new Object()))
-                        .append(KeyStoreResources.getString(2008))
-                        .append(KeyStoreResources.getString(7019))
-                        .toString();
+                     String fullPrompt = KeyStoreResources.getString(2008) + KeyStoreResources.getString(7019);
                      currentPasswordBytes = KeyStoreUtilitiesInternal.getCurrentKeyStorePassword(fullPrompt, true, false);
                      currentPasswordVersion = this._helper.getPasswordVersion();
                      this._passwordHashtable.put(currentPasswordVersion, currentPasswordBytes);
@@ -267,8 +264,8 @@ public final class KeyStorePasswordManager {
             return this.getLowSecurityPassword();
          }
 
-         String message = MessageFormat.format(KeyStoreResources.getString(6088), new Object[]{KeyStoreUtilitiesInternal.getDate(passwordVersion)});
-         PasswordDialog dialog = (PasswordDialog)(new Object(message, false, 32, 134217728));
+         String message = MessageFormat.format(KeyStoreResources.getString(6088), new String[]{KeyStoreUtilitiesInternal.getDate(passwordVersion)});
+         PasswordDialog dialog = new PasswordDialog(message, false, 32, 134217728);
          BackgroundDialog.show(dialog);
          if (dialog.getCloseReason() == -1) {
             throw new KeyStoreCancelException();
@@ -309,7 +306,7 @@ public final class KeyStorePasswordManager {
          fullPromptPattern = fullPromptPattern.concat(additionalPrompt);
       }
 
-      String fullPrompt = MessageFormat.format(fullPromptPattern, new Object[]{keyStore.getName()});
+      String fullPrompt = MessageFormat.format(fullPromptPattern, new String[]{keyStore.getName()});
       byte[] password = KeyStoreUtilitiesInternal.getCurrentKeyStorePassword(fullPrompt, true, false);
       return this.createTicket(this._helper.getHash(), password);
    }
@@ -332,7 +329,7 @@ public final class KeyStorePasswordManager {
             fullPromptPattern = fullPromptPattern.concat(additionalPrompt);
          }
 
-         String fullPrompt = MessageFormat.format(fullPromptPattern, new Object[]{keyStoreData.getLabel()});
+         String fullPrompt = MessageFormat.format(fullPromptPattern, new String[]{keyStoreData.getLabel()});
          byte[] password = KeyStoreUtilitiesInternal.getCurrentKeyStorePassword(fullPrompt, securityLevel == 2, false);
          return this.createTicket(this._helper.getHash(), password);
       } else {
@@ -341,7 +338,7 @@ public final class KeyStorePasswordManager {
    }
 
    public final KeyStorePasswordTicket getTicket() {
-      return this.getTicket((String)((Object)null));
+      return this.getTicket((String)null);
    }
 
    public final KeyStorePasswordTicket getTicket(String additionalPrompt) {
@@ -372,19 +369,19 @@ public final class KeyStorePasswordManager {
       String confirmPasswordPrompt = KeyStoreResources.getString(1004);
       String passwordPatternMask = ITPolicy.getString(24, 73);
       if (passwordPatternMask != null) {
-         StringBuffer sb = (StringBuffer)(new Object(2 + passwordPatternMask.length() + 1));
+         StringBuffer sb = new StringBuffer(2 + passwordPatternMask.length() + 1);
          sb.append(' ');
          sb.append('(');
          sb.append(passwordPatternMask);
          sb.append(')');
          String suffix = sb.toString();
-         newPasswordPrompt = ((StringBuffer)(new Object())).append(newPasswordPrompt).append(suffix).toString();
-         confirmPasswordPrompt = ((StringBuffer)(new Object())).append(confirmPasswordPrompt).append(suffix).toString();
+         newPasswordPrompt = newPasswordPrompt + suffix;
+         confirmPasswordPrompt = confirmPasswordPrompt + suffix;
       }
 
       byte[] password;
       do {
-         PasswordDialog dialog = (PasswordDialog)(new Object(newPasswordPrompt, confirmPasswordPrompt, 32, 134217728));
+         PasswordDialog dialog = new PasswordDialog(newPasswordPrompt, confirmPasswordPrompt, 32, 134217728);
          BackgroundDialog.show(dialog);
          if (dialog.getCloseReason() == -1) {
             throw new KeyStoreCancelException();
@@ -408,7 +405,7 @@ public final class KeyStorePasswordManager {
 
    private final boolean isPasswordValid(byte[] password) {
       Security security = Security.getInstance();
-      String passwordString = (String)(new Object(password));
+      String passwordString = new String(password);
       int returnCode = security.isPasswordValid(passwordString);
       switch (returnCode) {
          case -1:
@@ -482,7 +479,7 @@ public final class KeyStorePasswordManager {
 
          try {
             var9 = true;
-            this._passwordHashtable = (IntHashtable)(new Object());
+            this._passwordHashtable = new IntHashtable();
             this._passwordHashtable.put(oldPasswordVersion, oldPassword);
             this._passwordHashtable.put(this._helper.getPasswordVersion(), newPassword);
             KeyStoreManager.getInstance().changePassword();
@@ -532,10 +529,7 @@ public final class KeyStorePasswordManager {
 
             while (true) {
                try {
-                  String fullPrompt = ((StringBuffer)(new Object()))
-                     .append(KeyStoreResources.getString(2008))
-                     .append(KeyStoreResources.getString(7020))
-                     .toString();
+                  String fullPrompt = KeyStoreResources.getString(2008) + KeyStoreResources.getString(7020);
                   byte[] currentPassword = KeyStoreUtilitiesInternal.getCurrentKeyStorePassword(fullPrompt, true, false);
                   if (!this.isPasswordValid(currentPassword)) {
                      this.changePassword();
@@ -584,11 +578,11 @@ public final class KeyStorePasswordManager {
       // 1c: isub
       // 1d: iload 5
       // 1f: if_icmpge 2a
-      // 22: new java/lang/Object
+      // 22: new java/lang/IllegalArgumentException
       // 25: dup
       // 26: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 29: athrow
-      // 2a: new java/lang/Object
+      // 2a: new net/rim/device/api/crypto/SHA1Digest
       // 2d: dup
       // 2e: invokespecial net/rim/device/api/crypto/SHA1Digest.<init> ()V
       // 31: astore 7
@@ -633,7 +627,7 @@ public final class KeyStorePasswordManager {
       // 84: aload 12
       // 86: invokespecial net/rim/device/api/crypto/PKCS5FormatterEngine.<init> (Lnet/rim/device/api/crypto/BlockEncryptorEngine;)V
       // 89: astore 13
-      // 8b: new java/lang/Object
+      // 8b: new java/io/ByteArrayOutputStream
       // 8e: dup
       // 8f: invokespecial java/io/ByteArrayOutputStream.<init> ()V
       // 92: astore 14
@@ -670,14 +664,14 @@ public final class KeyStorePasswordManager {
       // d3: invokestatic net/rim/device/api/crypto/keystore/KeyStoreUtilitiesInternal.encode ([B[B[BII)[B
       // d6: areturn
       // d7: astore 7
-      // d9: new java/lang/Object
+      // d9: new java/lang/RuntimeException
       // dc: dup
       // dd: aload 7
       // df: invokevirtual net/rim/device/api/crypto/CryptoException.toString ()Ljava/lang/String;
       // e2: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // e5: athrow
       // e6: astore 7
-      // e8: new java/lang/Object
+      // e8: new java/lang/RuntimeException
       // eb: dup
       // ec: aload 7
       // ee: invokevirtual java/io/IOException.toString ()Ljava/lang/String;
@@ -711,7 +705,7 @@ public final class KeyStorePasswordManager {
       // 017: isub
       // 018: iload 3
       // 019: if_icmpge 024
-      // 01c: new java/lang/Object
+      // 01c: new java/lang/IllegalArgumentException
       // 01f: dup
       // 020: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 023: athrow
@@ -761,7 +755,7 @@ public final class KeyStorePasswordManager {
       // 07e: aload 11
       // 080: arraylength
       // 081: istore 12
-      // 083: new java/lang/Object
+      // 083: new java/io/ByteArrayInputStream
       // 086: dup
       // 087: aload 11
       // 089: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -795,7 +789,7 @@ public final class KeyStorePasswordManager {
       // 0c4: aload 15
       // 0c6: iload 16
       // 0c8: invokestatic net/rim/vm/Array.resize (Ljava/lang/Object;I)V
-      // 0cb: new java/lang/Object
+      // 0cb: new net/rim/device/api/crypto/SHA1Digest
       // 0ce: dup
       // 0cf: invokespecial net/rim/device/api/crypto/SHA1Digest.<init> ()V
       // 0d2: astore 18
@@ -839,7 +833,7 @@ public final class KeyStorePasswordManager {
       // 120: dup
       // 121: invokespecial net/rim/device/api/crypto/keystore/KeyStoreDecodeException.<init> ()V
       // 124: athrow
-      // 125: new java/lang/Object
+      // 125: new java/lang/RuntimeException
       // 128: dup
       // 129: invokespecial java/lang/RuntimeException.<init> ()V
       // 12c: athrow
@@ -849,7 +843,7 @@ public final class KeyStorePasswordManager {
       // 133: invokespecial net/rim/device/api/crypto/keystore/KeyStoreDecodeException.<init> ()V
       // 136: athrow
       // 137: astore 5
-      // 139: new java/lang/Object
+      // 139: new java/lang/RuntimeException
       // 13c: dup
       // 13d: aload 5
       // 13f: invokevirtual java/io/IOException.toString ()Ljava/lang/String;

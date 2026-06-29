@@ -18,13 +18,13 @@ final class DocViewPackageManager$EmailViewerScreenVerbFactory implements VerbFa
       if (ContextObject.getFlag(context, 43) && emailMessageModel != null) {
          Object selectedItem = ContextObject.get(context, 250);
          if (selectedItem instanceof DocViewAttachmentViewerModel) {
-            return new Object[]{new OpenAttachmentVerb(emailMessageModel, (DocViewAttachmentViewerModel)selectedItem)};
+            return new Verb[]{new OpenAttachmentVerb(emailMessageModel, (DocViewAttachmentViewerModel)selectedItem)};
          }
 
-         if (selectedItem instanceof Object) {
+         if (selectedItem instanceof ProxyModel) {
             Object item = ((ProxyModel)selectedItem).getObject();
             if (item instanceof DocViewAttachmentViewerModel) {
-               return new Object[]{new OpenAttachmentVerb(emailMessageModel, (DocViewAttachmentViewerModel)item)};
+               return new Verb[]{new OpenAttachmentVerb(emailMessageModel, (DocViewAttachmentViewerModel)item)};
             }
          }
 
@@ -32,12 +32,12 @@ final class DocViewPackageManager$EmailViewerScreenVerbFactory implements VerbFa
 
          for (int i = payload.size() - 1; i >= 0; i--) {
             Object item = payload.getAt(i);
-            if (item instanceof Object) {
+            if (item instanceof ProxyModel) {
                item = ((ProxyModel)item).getObject();
             }
 
             if (item instanceof DocViewAttachmentViewerModel) {
-               return new Object[]{new OpenAttachmentVerb(emailMessageModel, null)};
+               return new Verb[]{new OpenAttachmentVerb(emailMessageModel, null)};
             }
          }
 

@@ -4,7 +4,7 @@ import java.util.Vector;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public final class AttachmentHandlerManager {
-   private Vector _handlers = (Vector)(new Object(5));
+   private Vector _handlers = new Vector(5);
    private static final long ATTACHMENT_HANDLER_MANAGER_ID = -7872671635551831164L;
 
    private AttachmentHandlerManager() {
@@ -32,7 +32,7 @@ public final class AttachmentHandlerManager {
 
    public final void addAttachmentHandler(AttachmentHandler ah) {
       if (ah == null) {
-         throw new Object("AttachmentHandler cannot be null");
+         throw new NullPointerException("AttachmentHandler cannot be null");
       }
 
       if (!this._handlers.contains(ah)) {

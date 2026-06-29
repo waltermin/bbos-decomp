@@ -28,12 +28,12 @@ public class NativeAttachmentVerb extends Verb implements EmailEditorScreen$Atta
    public NativeAttachmentVerb(EmailEditorScreen emailEditorScreen, ServiceRecord serviceRecord, boolean compressImage) {
       super(16864032, EmailResources.getResourceBundle(), 102);
       if (emailEditorScreen == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._emailEditorScreen = emailEditorScreen;
       if (serviceRecord != null) {
-         this._serviceRecordReference = (WeakReference)(new Object(serviceRecord));
+         this._serviceRecordReference = new WeakReference(serviceRecord);
       }
 
       this._compressImage = compressImage;
@@ -46,7 +46,7 @@ public class NativeAttachmentVerb extends Verb implements EmailEditorScreen$Atta
             EventLogger.logEvent(-1237457833540244999L, 2, 5);
             return null;
          } else {
-            ServiceRecord serviceRecord = (ServiceRecord)(this._serviceRecordReference != null ? this._serviceRecordReference.get() : null);
+            ServiceRecord serviceRecord = this._serviceRecordReference != null ? (ServiceRecord)this._serviceRecordReference.get() : null;
             if (serviceRecord == null && !this._compressImage) {
                EventLogger.logEvent(-1237457833540244999L, 1, 5);
                return null;
@@ -64,8 +64,8 @@ public class NativeAttachmentVerb extends Verb implements EmailEditorScreen$Atta
    }
 
    private Object createCompressedAttachment(Object context) {
-      ContextObject ctx = (ContextObject)(new Object(39));
-      FileSelector fileSelector = (FileSelector)(new Object(null, ctx, 1, null));
+      ContextObject ctx = new ContextObject(39);
+      FileSelector fileSelector = new FileSelector(null, ctx, 1, null);
       fileSelector.onlySelectForwardUnlocked();
       fileSelector.setMediaType(1);
       String selectedFilePath = fileSelector.selectFile(null);

@@ -13,6 +13,8 @@ import net.rim.device.api.ui.component.CheckboxField;
 import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.NumericChoiceField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.text.TextFilter;
@@ -29,6 +31,7 @@ import net.rim.device.apps.internal.browser.resources.BrowserResources;
 import net.rim.device.apps.internal.browser.ui.BrowserChoiceField;
 import net.rim.device.apps.internal.browser.verbs.SavePropertyVerb;
 import net.rim.device.cldc.io.ippp.IPPPTransportBase;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 import net.rim.vm.Array;
 
 public final class BrowserConfigProperty extends BrowserProperty {
@@ -122,22 +125,22 @@ public final class BrowserConfigProperty extends BrowserProperty {
          currentBrowserConfigUID = session.getConfig().getUid();
       }
 
-      this._overriddenSet = (BitSet)(new Object());
+      this._overriddenSet = new BitSet();
       if (currentBrowserConfigUID == null) {
          this._hrt = null;
-         screen.add((Field)(new Object(BrowserResources.getString(233))));
+         screen.add(new RichTextField(BrowserResources.getString(233)));
          return screen;
       } else {
          this._config = BrowserConfigRecord.getDecodedConfig(currentBrowserConfigUID, -1, null);
          if (this._config == null) {
             this._hrt = null;
-            screen.add((Field)(new Object(BrowserResources.getString(201))));
+            screen.add(new RichTextField(BrowserResources.getString(201)));
             return screen;
          } else {
             this._browserChoiceField = new BrowserChoiceField(BrowserResources.getString(819), currentBrowserConfigUID);
             this._browserChoiceField.setChangeListener(this);
             screen.add(this._browserChoiceField);
-            screen.add((Field)(new Object()));
+            screen.add(new SeparatorField());
             this._browserConfigSubScreen = this.getBrowserConfigSubScreen();
             screen.add(this._browserConfigSubScreen);
             this._browserConfigSubScreen.setFocus();
@@ -221,7 +224,7 @@ public final class BrowserConfigProperty extends BrowserProperty {
 
    private final VerticalFieldManager getBrowserConfigSubScreen() {
       boolean otherFieldsEditable = this.canEditOtherFields();
-      VerticalFieldManager screen = (VerticalFieldManager)(new Object());
+      VerticalFieldManager screen = new VerticalFieldManager();
       int fontHeight = Font.getDefault().getHeight();
       int configType = this._config.getPropertyAsInt(12);
       boolean mdsConfig = configType == 1 || configType == 4;
@@ -230,7 +233,7 @@ public final class BrowserConfigProperty extends BrowserProperty {
          this._overriddenSet.set(0);
       }
 
-      this._homePageUrlField = (EditField)(new Object(BrowserResources.getString(185), homePageUrl, 1000000, 117440512));
+      this._homePageUrlField = new EditField(BrowserResources.getString(185), homePageUrl, 1000000, 117440512);
       if (!this.canEditUrlField()) {
          this._homePageUrlField.setEditable(false);
       }
@@ -247,21 +250,19 @@ public final class BrowserConfigProperty extends BrowserProperty {
          this._overriddenSet.set(1);
       }
 
-      this._showImagesField = (ObjectChoiceField)(new Object(BrowserResources.getString(596), BrowserResources.getStringArray(529), showImages));
+      this._showImagesField = new ObjectChoiceField(BrowserResources.getString(596), BrowserResources.getStringArray(529), showImages);
       int showImagePlaceholders = this._config.getPropertyAsIntWithOverride((byte)19);
       if (showImagePlaceholders != -1 && showImagePlaceholders != this._config.getPropertyAsInt(19)) {
          this._overriddenSet.set(2);
       }
 
-      this._showImagePlaceholdersField = (ObjectChoiceField)(new Object(
-         BrowserResources.getString(295), CommonResources.getYesNoArray(1), showImagePlaceholders
-      ));
+      this._showImagePlaceholdersField = new ObjectChoiceField(BrowserResources.getString(295), CommonResources.getYesNoArray(1), showImagePlaceholders);
       int contentMode = this._config.getContentModeWithOverride();
       if (contentMode != -1 && contentMode != this._config.getPropertyAsInt(10)) {
          this._overriddenSet.set(3);
       }
 
-      this._defaultContentModeField = (ObjectChoiceField)(new Object(BrowserResources.getString(398), BrowserResources.getStringArray(594), contentMode));
+      this._defaultContentModeField = new ObjectChoiceField(BrowserResources.getString(398), BrowserResources.getStringArray(594), contentMode);
       if (this._config.getPropertyAsInt(9) != -1) {
          this._defaultContentModeField.setEditable(false);
       }
@@ -271,7 +272,7 @@ public final class BrowserConfigProperty extends BrowserProperty {
          this._overriddenSet.set(4);
       }
 
-      this._defaultEmulationModeField = (ObjectChoiceField)(new Object(BrowserResources.getString(420), BrowserResources.getStringArray(591), emulationMode - 1));
+      this._defaultEmulationModeField = new ObjectChoiceField(BrowserResources.getString(420), BrowserResources.getStringArray(591), emulationMode - 1);
       if (super._restrictedAccess && !otherFieldsEditable && !mdsConfig) {
          this._defaultEmulationModeField.setEditable(false);
       }
@@ -281,52 +282,46 @@ public final class BrowserConfigProperty extends BrowserProperty {
          this._overriddenSet.set(13);
       }
 
-      this._configValuesEditableField = (ObjectChoiceField)(new Object(
-         BrowserResources.getString(203), BrowserResources.getStringArray(489), configValuesEditable
-      ));
+      this._configValuesEditableField = new ObjectChoiceField(BrowserResources.getString(203), BrowserResources.getStringArray(489), configValuesEditable);
       if (!otherFieldsEditable) {
          this._configValuesEditableField.setEditable(false);
       }
 
-      this._ribbonTitleField = (EditField)(new Object(BrowserResources.getString(440), this._config.getPropertyAsString(11)));
+      this._ribbonTitleField = new EditField(BrowserResources.getString(440), this._config.getPropertyAsString(11));
       if (!otherFieldsEditable) {
          this._ribbonTitleField.setEditable(false);
       }
 
-      this._ribbonPositionField = (EditField)(new Object(BrowserResources.getString(654), String.valueOf(this._config.getPropertyAsInt(25))));
+      this._ribbonPositionField = new EditField(BrowserResources.getString(654), String.valueOf(this._config.getPropertyAsInt(25)));
       this._ribbonPositionField.setFilter(TextFilter.get(1));
       if (!otherFieldsEditable) {
          this._ribbonPositionField.setEditable(false);
       }
 
-      this._configTypeField = (ObjectChoiceField)(new Object(
-         BrowserResources.getString(450), BrowserResources.getStringArray(531), this._config.getPropertyAsInt(12)
-      ));
+      this._configTypeField = new ObjectChoiceField(BrowserResources.getString(450), BrowserResources.getStringArray(531), this._config.getPropertyAsInt(12));
       if (!otherFieldsEditable) {
          this._configTypeField.setEditable(false);
       }
 
-      this._autoStartField = (ObjectChoiceField)(new Object(
-         BrowserResources.getString(544), CommonResources.getYesNoArray(1), this._config.getPropertyAsInt(20)
-      ));
+      this._autoStartField = new ObjectChoiceField(BrowserResources.getString(544), CommonResources.getYesNoArray(1), this._config.getPropertyAsInt(20));
       if (!otherFieldsEditable) {
          this._autoStartField.setEditable(false);
       }
 
-      this._sendPhoneNumberField = (ObjectChoiceField)(new Object(
+      this._sendPhoneNumberField = new ObjectChoiceField(
          BrowserResources.getString(636), BrowserResources.getStringArray(637), this._config.getPropertyAsInt(23)
-      ));
+      );
       if (!otherFieldsEditable) {
          this._sendPhoneNumberField.setEditable(false);
       }
 
-      this._brandingIconField = (EditField)(new Object(BrowserResources.getString(561), String.valueOf(this._config.getPropertyAsInt(21))));
+      this._brandingIconField = new EditField(BrowserResources.getString(561), String.valueOf(this._config.getPropertyAsInt(21)));
       this._brandingIconField.setFilter(TextFilter.get(5));
       if (!otherFieldsEditable) {
          this._brandingIconField.setEditable(false);
       }
 
-      this._vendorIdField = (EditField)(new Object(BrowserResources.getString(564), this._config.getPropertyAsString(22)));
+      this._vendorIdField = new EditField(BrowserResources.getString(564), this._config.getPropertyAsString(22));
       if (!otherFieldsEditable) {
          this._vendorIdField.setEditable(false);
       }
@@ -336,145 +331,145 @@ public final class BrowserConfigProperty extends BrowserProperty {
          this._overriddenSet.set(14);
       }
 
-      this._startupPageField = (ObjectChoiceField)(new Object(BrowserResources.getString(195), BrowserResources.getStringArray(592), startupPage));
+      this._startupPageField = new ObjectChoiceField(BrowserResources.getString(195), BrowserResources.getStringArray(592), startupPage);
       if (!this.canEditUrlField() || this._config.getPropertyAsInt(7) != 0) {
          this._startupPageField.setEditable(false);
       }
 
       String transportCID = this._config.getPropertyAsString(3);
-      this._transportServiceCIDField = (EditField)(new Object(BrowserResources.getString(198), transportCID));
+      this._transportServiceCIDField = new EditField(BrowserResources.getString(198), transportCID);
       if (!otherFieldsEditable) {
          this._transportServiceCIDField.setEditable(false);
       }
 
-      this._transportServiceUIDField = (EditField)(new Object(BrowserResources.getString(199), this._config.getPropertyAsString(4)));
+      this._transportServiceUIDField = new EditField(BrowserResources.getString(199), this._config.getPropertyAsString(4));
       if (!otherFieldsEditable) {
          this._transportServiceUIDField.setEditable(false);
       }
 
-      this._timeoutField = (EditField)(new Object(BrowserResources.getString(202), String.valueOf(this._config.getPropertyAsInt(6))));
+      this._timeoutField = new EditField(BrowserResources.getString(202), String.valueOf(this._config.getPropertyAsInt(6)));
       this._timeoutField.setFilter(TextFilter.get(1));
       if (!otherFieldsEditable) {
          this._timeoutField.setEditable(false);
       }
 
-      this._constrainedNavigationField = (ObjectChoiceField)(new Object(
+      this._constrainedNavigationField = new ObjectChoiceField(
          BrowserResources.getString(427), new String[]{"No", "Restricted", "Locked Down"}, this._config.getPropertyAsInt(7)
-      ));
+      );
       if (!otherFieldsEditable) {
          this._constrainedNavigationField.setEditable(false);
       }
 
-      this._constrainedContentModeField = (ObjectChoiceField)(new Object(
+      this._constrainedContentModeField = new ObjectChoiceField(
          BrowserResources.getString(443), BrowserResources.getStringArray(488), this._config.getPropertyAsInt(9) + 1
-      ));
+      );
       if (!otherFieldsEditable) {
          this._constrainedContentModeField.setEditable(false);
       }
 
-      this._httpsEncryptionField = (ObjectChoiceField)(new Object(
+      this._httpsEncryptionField = new ObjectChoiceField(
          BrowserResources.getString(666), BrowserResources.getStringArray(667), this._config.getPropertyAsInt(26)
-      ));
+      );
       if (!otherFieldsEditable) {
          this._httpsEncryptionField.setEditable(false);
       }
 
-      this._constrainedSavingField = (ObjectChoiceField)(new Object(
+      this._constrainedSavingField = new ObjectChoiceField(
          "Constrained Saving:", new String[]{"None", "Images", "Sounds", "Images and Sounds"}, MathUtilities.clamp(0, this._config.getPropertyAsInt(27), 3)
-      ));
+      );
       if (!otherFieldsEditable) {
          this._constrainedSavingField.setEditable(false);
       }
 
-      this._provisionedBookmarksInteractionField = (ObjectChoiceField)(new Object(
+      this._provisionedBookmarksInteractionField = new ObjectChoiceField(
          "Show Provisioned Bookmarks:",
          new String[]{"Always", "Only if no others", "Only in this browser"},
          MathUtilities.clamp(0, this._config.getPropertyAsInt(32), 2)
-      ));
+      );
       if (!otherFieldsEditable) {
          this._provisionedBookmarksInteractionField.setEditable(false);
       }
 
-      this._provisionedBookmarksExpandFolderField = (ObjectChoiceField)(new Object(
+      this._provisionedBookmarksExpandFolderField = new ObjectChoiceField(
          "Expand Provisioned Bookmarks Folder:",
          new String[]{"Always", "Never", "Only in this browser"},
          MathUtilities.clamp(0, this._config.getPropertyAsInt(57), 2)
-      ));
+      );
       if (!otherFieldsEditable) {
          this._provisionedBookmarksExpandFolderField.setEditable(false);
       }
 
-      this._appDownloadModuleNameField = (EditField)(new Object("App Download module name:", this._config.getPropertyAsString(28)));
+      this._appDownloadModuleNameField = new EditField("App Download module name:", this._config.getPropertyAsString(28));
       if (!otherFieldsEditable) {
          this._appDownloadModuleNameField.setEditable(false);
       }
 
-      this._appDownloadModuleVersionField = (EditField)(new Object("App Download module version:", this._config.getPropertyAsString(49)));
+      this._appDownloadModuleVersionField = new EditField("App Download module version:", this._config.getPropertyAsString(49));
       if (!otherFieldsEditable) {
          this._appDownloadModuleVersionField.setEditable(false);
       }
 
-      this._iconUrlField = (EditField)(new Object("Icon Url:", this._config.getPropertyAsString(29)));
+      this._iconUrlField = new EditField("Icon Url:", this._config.getPropertyAsString(29));
       if (!otherFieldsEditable) {
          this._iconUrlField.setEditable(false);
       }
 
-      this._ribbonIconTypeField = (EditField)(new Object("Home Screen Icon Type: ", this._config.getPropertyAsString(54)));
+      this._ribbonIconTypeField = new EditField("Home Screen Icon Type: ", this._config.getPropertyAsString(54));
       if (!otherFieldsEditable) {
          this._ribbonIconTypeField.setEditable(false);
       }
 
-      this._useSeparateIconField = (CheckboxField)(new Object("Use Separate Icon", this._config.getPropertyAsBoolean(55)));
+      this._useSeparateIconField = new CheckboxField("Use Separate Icon", this._config.getPropertyAsBoolean(55));
       if (!otherFieldsEditable) {
          this._useSeparateIconField.setEditable(false);
       }
 
-      this._domainsField = (EditField)(new Object("Domains: ", this._config.getPropertyAsString(56)));
+      this._domainsField = new EditField("Domains: ", this._config.getPropertyAsString(56));
       if (!otherFieldsEditable) {
          this._domainsField.setEditable(false);
       }
 
-      this._rimBrandedField = (CheckboxField)(new Object("RIM Branded", this._config.getPropertyAsBoolean(51)));
+      this._rimBrandedField = new CheckboxField("RIM Branded", this._config.getPropertyAsBoolean(51));
       if (!otherFieldsEditable) {
          this._rimBrandedField.setEditable(false);
       }
 
-      this._sendProfileDiffsField = (CheckboxField)(new Object("Send Profile Diffs", this._config.getPropertyAsBoolean(52)));
+      this._sendProfileDiffsField = new CheckboxField("Send Profile Diffs", this._config.getPropertyAsBoolean(52));
       if (!otherFieldsEditable) {
          this._sendProfileDiffsField.setEditable(false);
       }
 
-      this._localizedStringsField = (EditField)(new Object("Localized strings: ", this._config.getPropertyAsString(41)));
+      this._localizedStringsField = new EditField("Localized strings: ", this._config.getPropertyAsString(41));
       if (!otherFieldsEditable) {
          this._localizedStringsField.setEditable(false);
       }
 
-      this._bookmarksFolderNameField = (EditField)(new Object("Bookmarks Folder Name: ", this._config.getPropertyAsString(42)));
+      this._bookmarksFolderNameField = new EditField("Bookmarks Folder Name: ", this._config.getPropertyAsString(42));
       if (!otherFieldsEditable) {
          this._bookmarksFolderNameField.setEditable(false);
       }
 
-      this._helpLinksField = (EditField)(new Object("Help Links: ", this._config.getPropertyAsString(44)));
+      this._helpLinksField = new EditField("Help Links: ", this._config.getPropertyAsString(44));
       if (!otherFieldsEditable) {
          this._helpLinksField.setEditable(false);
       }
 
-      this._helpGroupLabelField = (EditField)(new Object("Help Group Label: ", this._config.getPropertyAsString(45)));
+      this._helpGroupLabelField = new EditField("Help Group Label: ", this._config.getPropertyAsString(45));
       if (!otherFieldsEditable) {
          this._helpGroupLabelField.setEditable(false);
       }
 
-      this._moreImagesUrlField = (EditField)(new Object("Download Images URL: ", this._config.getPropertyAsString(46), 1000000, 117440512));
+      this._moreImagesUrlField = new EditField("Download Images URL: ", this._config.getPropertyAsString(46), 1000000, 117440512);
       if (!otherFieldsEditable) {
          this._moreImagesUrlField.setEditable(false);
       }
 
-      this._moreTunesUrlField = (EditField)(new Object("Download Tunes URL: ", this._config.getPropertyAsString(48), 1000000, 117440512));
+      this._moreTunesUrlField = new EditField("Download Tunes URL: ", this._config.getPropertyAsString(48), 1000000, 117440512);
       if (!otherFieldsEditable) {
          this._moreTunesUrlField.setEditable(false);
       }
 
-      this._moreThemesUrlField = (EditField)(new Object("Download Themes URL: ", this._config.getPropertyAsString(47), 1000000, 117440512));
+      this._moreThemesUrlField = new EditField("Download Themes URL: ", this._config.getPropertyAsString(47), 1000000, 117440512);
       if (!otherFieldsEditable) {
          this._moreThemesUrlField.setEditable(false);
       }
@@ -484,59 +479,59 @@ public final class BrowserConfigProperty extends BrowserProperty {
          this._overriddenSet.set(5);
       }
 
-      this._javascriptEnabledField = (CheckboxField)(new Object(BrowserResources.getString(621), value));
+      this._javascriptEnabledField = new CheckboxField(BrowserResources.getString(621), value);
       value = this._config.getPropertyAsBooleanWithOverride((byte)39);
       if (value != this._config.getPropertyAsBoolean(39)) {
          this._overriddenSet.set(6);
       }
 
-      this._allowPopupsEnabledField = (CheckboxField)(new Object(BrowserResources.getString(634), value));
+      this._allowPopupsEnabledField = new CheckboxField(BrowserResources.getString(634), value);
       value = this._config.getPropertyAsBoolean(53);
-      this._promptEnabledJavascriptField = (CheckboxField)(new Object(BrowserResources.getString(754), value));
+      this._promptEnabledJavascriptField = new CheckboxField(BrowserResources.getString(754), value);
       value = this._config.getPropertyAsBooleanWithOverride((byte)33);
       if (value != this._config.getPropertyAsBoolean(33)) {
          this._overriddenSet.set(9);
       }
 
-      this._enableCssField = (CheckboxField)(new Object(BrowserResources.getString(673), value));
+      this._enableCssField = new CheckboxField(BrowserResources.getString(673), value);
       value = this._config.getPropertyAsInt(58) != 0;
-      this._javascriptWatchdogEnabledField = (CheckboxField)(new Object(BrowserResources.getString(902), value));
+      this._javascriptWatchdogEnabledField = new CheckboxField(BrowserResources.getString(902), value);
       value = this._config.getPropertyAsBooleanWithOverride((byte)35);
       if (value != this._config.getPropertyAsBoolean(35)) {
          this._overriddenSet.set(11);
       }
 
-      this._foregroundBackgroundColorField = (CheckboxField)(new Object(BrowserResources.getString(659), value));
+      this._foregroundBackgroundColorField = new CheckboxField(BrowserResources.getString(659), value);
       value = this._config.getPropertyAsBooleanWithOverride((byte)40);
       if (value != this._config.getPropertyAsBoolean(40)) {
          this._overriddenSet.set(7);
       }
 
-      this._backgroundImagesField = (CheckboxField)(new Object(BrowserResources.getString(660), value));
+      this._backgroundImagesField = new CheckboxField(BrowserResources.getString(660), value);
       value = this._config.getPropertyAsBooleanWithOverride((byte)36);
       if (value != this._config.getPropertyAsBoolean(36)) {
          this._overriddenSet.set(8);
       }
 
-      this._useHtmlTablesField = (CheckboxField)(new Object(BrowserResources.getString(668), value));
+      this._useHtmlTablesField = new CheckboxField(BrowserResources.getString(668), value);
       value = this._config.getPropertyAsBooleanWithOverride((byte)37);
       if (value != this._config.getPropertyAsBoolean(37)) {
          this._overriddenSet.set(10);
       }
 
-      this._enableEmbeddedRichContentField = (CheckboxField)(new Object(BrowserResources.getString(679), value));
+      this._enableEmbeddedRichContentField = new CheckboxField(BrowserResources.getString(679), value);
       value = this._config.getPropertyAsBooleanWithOverride((byte)43);
       if (value != this._config.getPropertyAsBoolean(43)) {
          this._overriddenSet.set(12);
       }
 
-      this._enableBSMField = (CheckboxField)(new Object(BrowserResources.getString(697), value));
-      this._uaprofURIField = (EditField)(new Object("UAProf URI: ", this._config.getPropertyAsString(8)));
+      this._enableBSMField = new CheckboxField(BrowserResources.getString(697), value);
+      this._uaprofURIField = new EditField("UAProf URI: ", this._config.getPropertyAsString(8));
       if (!otherFieldsEditable) {
          this._uaprofURIField.setEditable(false);
       }
 
-      this._interactivePingPacketTimer = (NumericChoiceField)(new Object("Interactive Ping Timer", 0, 600000, 1000));
+      this._interactivePingPacketTimer = new NumericChoiceField("Interactive Ping Timer", 0, 600000, 1000);
       this._interactivePingPacketTimer.setSelectedValue(IPPPTransportBase.getTransportInteractivePingPacketTimeout());
       ServiceRecord sr = BrowserConfigRecord.getTransportServiceRecord(this._config.getPropertyAsString(3), this._config.getPropertyAsString(4));
       this._hrt = sr != null ? sr.getAttachedHrt() : null;
@@ -575,15 +570,15 @@ public final class BrowserConfigProperty extends BrowserProperty {
          screen.add(this._startupPageField);
       }
 
-      screen.add((Field)(new Object(fontHeight >> 1)));
+      screen.add(new VerticalSpacerField(fontHeight >> 1));
       screen.add(this._homePageUrlField);
       if (this._useCurrentAsHomePageField != null) {
          screen.add(this._useCurrentAsHomePageField);
       }
 
-      screen.add((Field)(new Object()));
+      screen.add(new SeparatorField());
       if (!super._restrictedAccess) {
-         screen.add((Field)(new Object(fontHeight >> 1)));
+         screen.add(new VerticalSpacerField(fontHeight >> 1));
          screen.add(this._configValuesEditableField);
          screen.add(this._ribbonTitleField);
          screen.add(this._ribbonPositionField);
@@ -624,7 +619,7 @@ public final class BrowserConfigProperty extends BrowserProperty {
          screen.add(this._provisionedBookmarksInteractionField);
          screen.add(this._provisionedBookmarksExpandFolderField);
          screen.add(this._interactivePingPacketTimer);
-         screen.add((Field)(new Object()));
+         screen.add(new SeparatorField());
       }
 
       this._transportConfigProperty = TransportConfigProperty.getInstance(

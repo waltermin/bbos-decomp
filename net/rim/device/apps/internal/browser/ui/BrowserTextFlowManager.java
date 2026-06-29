@@ -10,6 +10,7 @@ import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.ScrollChangeListener;
 import net.rim.device.api.ui.component.CookieProvider;
+import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.theme.Theme$Writer;
 import net.rim.device.api.ui.theme.ThemeAttributeSet;
@@ -29,7 +30,7 @@ public class BrowserTextFlowManager extends TextFlowManager implements CookiePro
    private ScrollChangeListener _elevator;
    private BrowserContentImpl _currentBrowserContent;
    private boolean _layoutActive = true;
-   private static ContextObject _browserContextObject = (ContextObject)(new Object(2, 96, 61));
+   private static ContextObject _browserContextObject = new ContextObject(2, 96, 61);
 
    protected Object getContextMenuContext() {
       return _browserContextObject;
@@ -50,9 +51,9 @@ public class BrowserTextFlowManager extends TextFlowManager implements CookiePro
          label55:
          try {
             Object focusCookie = this.getFocusCookie();
-            if (focusCookie instanceof Object) {
+            if (focusCookie instanceof String) {
                String url = (String)focusCookie;
-               ContextObject context = (ContextObject)(new Object());
+               ContextObject context = new ContextObject();
                ContextObject.put(context, 253, url);
                ContextObject.put(context, -442409970680484936L, this._currentBrowserContent);
                return FactoryUtil.createInstance(cookieID, context);
@@ -60,8 +61,8 @@ public class BrowserTextFlowManager extends TextFlowManager implements CookiePro
 
             if (this._currentBrowserContent != null && focusCookie instanceof HTMLElement) {
                String url = ((HTMLElement)focusCookie).getAttribute("href");
-               ContextObject context = (ContextObject)(new Object());
-               Vector vector = (Vector)(new Object(3));
+               ContextObject context = new ContextObject();
+               Vector vector = new Vector(3);
                vector.addElement(url);
                vector.addElement(null);
                vector.addElement(focusCookie);
@@ -89,7 +90,7 @@ public class BrowserTextFlowManager extends TextFlowManager implements CookiePro
    protected boolean trackwheelRoll(int amount, int status, int time) {
       if (!this.isPositioningOrSelecting() && (status & 1) != 0 && (this.getStyle() & 1125899906842624L) == 0) {
          Field aField = this.getLeafFieldWithFocus();
-         if (aField == null || !(aField instanceof Object) && !aField.isSelecting()) {
+         if (aField == null || !(aField instanceof EditField) && !aField.isSelecting()) {
             Screen screen = this.getScreen();
             if (screen != null) {
                if (amount > 0) {
@@ -161,7 +162,7 @@ public class BrowserTextFlowManager extends TextFlowManager implements CookiePro
          }
 
          if (this.getFocusCookie() != null) {
-            Verb[] verbs = new Object[0];
+            Verb[] verbs = new Verb[0];
             Verb defaultVerb = CookieProviderUtilities.getFocusVerbs(this, this.getContextMenuContext(), verbs);
             int count = verbs.length;
             ContextMenu cmenu = ContextMenu.getInstance();
@@ -169,7 +170,7 @@ public class BrowserTextFlowManager extends TextFlowManager implements CookiePro
 
             for (int index = 0; index < count; index++) {
                int priority = verbs[index] == defaultVerb ? 10 : Integer.MAX_VALUE;
-               VerbMenuItem menuItem = (VerbMenuItem)(new Object(null, verbs[index].getOrdering(), priority, verbs[index], this.getContextMenuContext()));
+               VerbMenuItem menuItem = new VerbMenuItem(null, verbs[index].getOrdering(), priority, verbs[index], this.getContextMenuContext());
                cmenu.addItem(menuItem);
                if (verbs[index] == defaultVerb) {
                   cmenu.setDefaultItem(menuItem);

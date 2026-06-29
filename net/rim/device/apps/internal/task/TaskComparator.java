@@ -4,7 +4,7 @@ import net.rim.device.api.util.Comparator;
 import net.rim.device.internal.i18n.CollatorImpl;
 
 final class TaskComparator implements Comparator {
-   private CollatorImpl _collator = (CollatorImpl)(new Object());
+   private CollatorImpl _collator = new CollatorImpl();
    int _defaultSort = -1;
    static final int SUBJECT_SORT = 0;
    static final int PRIORITY_SORT = 1;

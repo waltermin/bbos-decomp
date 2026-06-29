@@ -1,8 +1,10 @@
 package net.rim.device.internal.media;
 
+import java.io.IOException;
 import java.io.InputStream;
 import javax.microedition.media.Control;
 import javax.microedition.media.Manager;
+import javax.microedition.media.MediaException;
 import javax.microedition.media.Player;
 import javax.microedition.media.PlayerListener;
 import javax.microedition.media.TimeBase;
@@ -10,7 +12,6 @@ import javax.microedition.media.protocol.SourceStream;
 import net.rim.device.api.util.ListenerUtilities;
 import net.rim.plazmic.internal.mediaengine.MediaModel;
 import net.rim.plazmic.internal.mediaengine.util.MEUtilities;
-import net.rim.plazmic.mediaengine.MediaException;
 import net.rim.plazmic.mediaengine.MediaManager;
 
 class MEPlayer implements Player, StreamDataControl {
@@ -63,7 +64,7 @@ class MEPlayer implements Player, StreamDataControl {
    @Override
    public void deallocate() {
       if (this._state == 0) {
-         throw new Object("Player is CLOSED");
+         throw new IllegalStateException("Player is CLOSED");
       }
 
       if (this._state == 400) {
@@ -87,14 +88,14 @@ class MEPlayer implements Player, StreamDataControl {
          MediaModel media = MEUtilities.getMediaModel(this._player.getMedia());
          return media != null ? media.getContentType() : "";
       } else {
-         throw new Object("Player is CLOSED");
+         throw new IllegalStateException("Player is CLOSED");
       }
    }
 
    @Override
    public Control getControl(String controlType) {
       if (this._state == 100) {
-         throw new Object("Player is Unrealized");
+         throw new IllegalStateException("Player is Unrealized");
       } else if (controlType.equals("GUIControl")) {
          return this._guiControl;
       } else {
@@ -105,7 +106,7 @@ class MEPlayer implements Player, StreamDataControl {
    @Override
    public Control[] getControls() {
       if (this._state == 100) {
-         throw new Object("Player is Unrealized");
+         throw new IllegalStateException("Player is Unrealized");
       } else {
          return this._controls;
       }
@@ -114,7 +115,7 @@ class MEPlayer implements Player, StreamDataControl {
    @Override
    public long getDuration() {
       if (this._state == 0) {
-         throw new Object("Player is CLOSED");
+         throw new IllegalStateException("Player is CLOSED");
       } else {
          return -1;
       }
@@ -125,7 +126,7 @@ class MEPlayer implements Player, StreamDataControl {
       if (this._state != 100 && this._state != 0) {
          return this._player.getMediaTime() * 1000;
       } else {
-         throw new Object("Player is Unrealized");
+         throw new IllegalStateException("Player is Unrealized");
       }
    }
 
@@ -137,7 +138,7 @@ class MEPlayer implements Player, StreamDataControl {
    @Override
    public TimeBase getTimeBase() {
       if (this._state == 100) {
-         throw new Object("Player is Unrealized");
+         throw new IllegalStateException("Player is Unrealized");
       } else {
          return Manager.getSystemTimeBase();
       }
@@ -146,36 +147,36 @@ class MEPlayer implements Player, StreamDataControl {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public void prefetch() {
+   public void prefetch() throws MediaException {
       if (this._state == 0) {
-         throw new Object("Player is CLOSED");
+         throw new IllegalStateException("Player is CLOSED");
       }
 
       if (this._state != 300 && this._state != 400) {
          label58:
          if (this._url != null) {
-            MediaException e;
+            net.rim.plazmic.mediaengine.MediaException e;
             try {
                try {
                   this._player.setMedia(this._manager.createMedia(this._url));
                   break label58;
-               } catch (MediaException var6) {
+               } catch (net.rim.plazmic.mediaengine.MediaException var6) {
                   e = var6;
                }
             } catch (Throwable var7) {
-               throw new Object(((StringBuffer)(new Object("Invalid URL - "))).append(e.getMessage()).toString());
+               throw new MediaException("Invalid URL - " + e.getMessage());
             }
 
-            throw new Object(e.getMessage());
+            throw new MediaException(e.getMessage());
          } else {
             try {
                this._player.setMedia(this._manager.createResource(this._askingType, this._inputStream, null, null));
-            } catch (MediaException e) {
-               if (e.getData() instanceof Object) {
-                  throw new Object(((StringBuffer)(new Object("Invalid input stream or content type - "))).append(e.getMessage()).toString());
+            } catch (net.rim.plazmic.mediaengine.MediaException e) {
+               if (e.getData() instanceof IOException) {
+                  throw new MediaException("Invalid input stream or content type - " + e.getMessage());
                }
 
-               throw new Object(e.getMessage());
+               throw new MediaException(e.getMessage());
             }
          }
 
@@ -186,7 +187,7 @@ class MEPlayer implements Player, StreamDataControl {
    @Override
    public void realize() {
       if (this._state == 0) {
-         throw new Object("Player is CLOSED");
+         throw new IllegalStateException("Player is CLOSED");
       }
 
       this.prefetch();
@@ -195,14 +196,14 @@ class MEPlayer implements Player, StreamDataControl {
    @Override
    public void setTimeBase(TimeBase master) {
       if (this._state == 100) {
-         throw new Object("Player is Unrealized");
+         throw new IllegalStateException("Player is Unrealized");
       }
    }
 
    @Override
-   public void start() {
+   public void start() throws MediaException {
       if (this._state == 0) {
-         throw new Object("Player is CLOSED");
+         throw new IllegalStateException("Player is CLOSED");
       }
 
       if (this._state != 100 && this._state != 200) {
@@ -215,8 +216,8 @@ class MEPlayer implements Player, StreamDataControl {
 
       try {
          this._player.start();
-      } catch (MediaException e) {
-         throw new Object(e.getMessage());
+      } catch (net.rim.plazmic.mediaengine.MediaException e) {
+         throw new MediaException(e.getMessage());
       }
 
       this.notifyListeners("started");
@@ -226,7 +227,7 @@ class MEPlayer implements Player, StreamDataControl {
    @Override
    public void stop() {
       if (this._state == 0) {
-         throw new Object("Player is CLOSED");
+         throw new IllegalStateException("Player is CLOSED");
       }
 
       this._player.stop();
@@ -239,7 +240,7 @@ class MEPlayer implements Player, StreamDataControl {
    }
 
    @Override
-   public long setMediaTime(long now) {
+   public long setMediaTime(long now) throws MediaException {
       if (this._state != 100 && this._state != 0) {
          if (now < 0) {
             now = 0;
@@ -247,13 +248,13 @@ class MEPlayer implements Player, StreamDataControl {
 
          try {
             this._player.setMediaTime(now / 1000);
-         } catch (MediaException e) {
-            throw new Object(e.getMessage());
+         } catch (net.rim.plazmic.mediaengine.MediaException e) {
+            throw new MediaException(e.getMessage());
          }
 
          return this._player.getMediaTime() * 1000;
       } else {
-         throw new Object("Player is CLOSED");
+         throw new IllegalStateException("Player is CLOSED");
       }
    }
 
@@ -269,12 +270,12 @@ class MEPlayer implements Player, StreamDataControl {
       } else if (key.equals("mimetype")) {
          return this._askingType;
       } else {
-         throw new Object("Invalid Key");
+         throw new IllegalArgumentException("Invalid Key");
       }
    }
 
    @Override
-   public Object getKeyValueObject(String key) {
+   public Object getKeyValueObject(String key) throws MediaException {
       if (key.equals("locator")) {
          return this._url;
       } else if (key.equals("sourcestreams")) {
@@ -282,24 +283,24 @@ class MEPlayer implements Player, StreamDataControl {
       } else if (key.equals("mimetype")) {
          return this._askingType;
       } else {
-         throw new Object("Invalid Key");
+         throw new MediaException("Invalid Key");
       }
    }
 
    @Override
-   public void setKeyValue(String key, Object value) {
+   public void setKeyValue(String key, Object value) throws MediaException {
       if (value == null) {
-         throw new Object("Invalid Key");
+         throw new MediaException("Invalid Key");
       }
 
       if (key.equals("locator")) {
          this.setSource((String)value);
       } else if (key.equals("sourcestreams")) {
-         this.setSource((Object[])value);
+         this.setSource((SourceStream[])value);
       } else if (key.equals("mimetype")) {
          this.setMimeType((String)value);
       } else {
-         throw new Object("Invalid Key");
+         throw new MediaException("Invalid Key");
       }
    }
 
@@ -307,9 +308,9 @@ class MEPlayer implements Player, StreamDataControl {
       this._manager = new MediaManager();
       this._manager.setProperty("Timeout", "2000");
       this._manager.setProperty("Retry", "2000");
-      this._guiControl = (Control)(new Object(this._player.getUI()));
+      this._guiControl = new GUIControlImpl(this._player.getUI());
       this._dataControl = this;
-      this._controls = new Object[2];
+      this._controls = new Control[2];
       this._controls[0] = this._guiControl;
       this._controls[1] = this._dataControl;
    }
@@ -321,7 +322,7 @@ class MEPlayer implements Player, StreamDataControl {
 
    private void setSource(SourceStream[] sources) {
       this._sourceStreams = sources;
-      this._inputStream = (InputStream)(new Object(this._sourceStreams[0]));
+      this._inputStream = new DataSourceInputStream(this._sourceStreams[0]);
       this._state = 100;
    }
 

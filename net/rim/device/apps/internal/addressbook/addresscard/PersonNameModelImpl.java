@@ -4,8 +4,10 @@ import net.rim.device.api.i18n.Locale;
 import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
-import net.rim.device.api.ui.component.BasicEditField;
+import net.rim.device.api.ui.component.AutoTextEditField;
 import net.rim.device.api.ui.component.EditField;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.StringMatch;
 import net.rim.device.api.util.StringUtilities;
@@ -41,7 +43,7 @@ final class PersonNameModelImpl
    private Object _lastNameYOMIEncoding;
    private Object _yomiKeywordsEncoding;
    private Object _salutationEncoding;
-   private static WeakReference _paintBufferWR = (WeakReference)(new Object(null));
+   private static WeakReference _paintBufferWR = new WeakReference(null);
 
    @Override
    public final int paint(Graphics g, int x, int y, int width, int height, Object context) {
@@ -62,10 +64,10 @@ final class PersonNameModelImpl
       }
 
       Object[] values = (Object[])crit.getValue();
-      String[] testWords = (Object[])values[2];
+      String[] testWords = (String[])values[2];
 
       for (int i = testWords.length - 1; i >= 0; i--) {
-         StringMatch stringMatch = (StringMatch)(new Object(testWords[i], false, false));
+         StringMatch stringMatch = new StringMatch(testWords[i], false, false);
          String strToMatch = this.getFirstName();
          if (strToMatch == null || stringMatch.indexOf(strToMatch) < 0) {
             strToMatch = this.getLastName();
@@ -145,7 +147,7 @@ final class PersonNameModelImpl
             String firstNameYOMI = this.getFirstNameYOMI();
             String lastNameYOMI = this.getLastNameYOMI();
             if (firstNameYOMI != null || lastNameYOMI != null) {
-               StringBuffer yomiBuffer = (StringBuffer)(new Object());
+               StringBuffer yomiBuffer = new StringBuffer();
                yomiBuffer.append(name);
                yomiBuffer.append(" (");
                if (Locale.getSystemNameOrder() == 1 && lastNameYOMI != null) {
@@ -167,9 +169,9 @@ final class PersonNameModelImpl
 
          Field field;
          if (ContextObject.getFlag(context, 106)) {
-            field = (Field)(new Object(name, flags));
+            field = new LabelField(name, flags);
          } else {
-            field = (Field)(new Object(name, flags | 67108864));
+            field = new RichTextField(name, flags | 67108864);
          }
 
          field.setCookie(this);
@@ -180,7 +182,7 @@ final class PersonNameModelImpl
             name = "";
          }
 
-         return (Field)(new Object(AddressBookResources.getString(105), name, 6156, 2199023255552L));
+         return new AutoTextEditField(AddressBookResources.getString(105), name, 6156, 2199023255552L);
       } else {
          FirstNameFocuser vField = new FirstNameFocuser(1152921504606846976L);
          String s = lastName;
@@ -202,7 +204,7 @@ final class PersonNameModelImpl
             s = "";
          }
 
-         EditField salutationField = (EditField)(new Object(AddressBookResources.getString(106), s, 2048, 4505800798109696L));
+         EditField salutationField = new AutoTextEditField(AddressBookResources.getString(106), s, 2048, 4505800798109696L);
          YomiField firstNameYOMIField = null;
          YomiField lastNameYOMIField = null;
          String firstNameYOMI = this.getFirstNameYOMI();
@@ -263,7 +265,7 @@ final class PersonNameModelImpl
 
    @Override
    public final boolean grabDataFromField(Field field, Object context) {
-      if (field instanceof Object) {
+      if (field instanceof VerticalFieldManager) {
          VerticalFieldManager vfm = (VerticalFieldManager)field;
          int fieldCount = vfm.getFieldCount();
          if (fieldCount == 3 || fieldCount == 5) {
@@ -292,17 +294,17 @@ final class PersonNameModelImpl
                }
             }
 
-            String salutation = ((BasicEditField)vfm.getField(0)).getText().trim();
-            String firstName = ((BasicEditField)vfm.getField(firstNameIndex)).getText();
+            String salutation = ((EditField)vfm.getField(0)).getText().trim();
+            String firstName = ((EditField)vfm.getField(firstNameIndex)).getText();
             if (firstName.startsWith("  ")) {
-               firstName = ((StringBuffer)(new Object(" "))).append(firstName.trim()).toString();
+               firstName = " " + firstName.trim();
             }
 
-            String lastName = ((BasicEditField)vfm.getField(lastNameIndex)).getText().trim();
+            String lastName = ((EditField)vfm.getField(lastNameIndex)).getText().trim();
             this.setNames(salutation, firstName, lastName);
             if (fieldCount == 5) {
-               String firstNameYOMI = ((BasicEditField)vfm.getField(firstNameYOMIIndex)).getText().trim();
-               String lastNameYOMI = ((BasicEditField)vfm.getField(lastNameYOMIIndex)).getText().trim();
+               String firstNameYOMI = ((EditField)vfm.getField(firstNameYOMIIndex)).getText().trim();
+               String lastNameYOMI = ((EditField)vfm.getField(lastNameYOMIIndex)).getText().trim();
                this.setFullNameYOMI(firstNameYOMI, lastNameYOMI);
             }
 
@@ -319,7 +321,7 @@ final class PersonNameModelImpl
 
    @Override
    public final boolean validate(Field field, Object context) {
-      if (field instanceof Object) {
+      if (field instanceof VerticalFieldManager) {
          VerticalFieldManager vfm = (VerticalFieldManager)field;
          int fieldCount = vfm.getFieldCount();
          int lastNameIndex = 2;
@@ -329,8 +331,8 @@ final class PersonNameModelImpl
 
          if (fieldCount == 3 || fieldCount == 5) {
             if (ContextObject.getFlag(context, 95)) {
-               String firstName = ((BasicEditField)vfm.getField(1)).getText().trim();
-               String lastName = ((BasicEditField)vfm.getField(lastNameIndex)).getText().trim();
+               String firstName = ((EditField)vfm.getField(1)).getText().trim();
+               String lastName = ((EditField)vfm.getField(lastNameIndex)).getText().trim();
                if (firstName.length() == 0 && lastName.length() == 0) {
                   return false;
                }
@@ -500,7 +502,7 @@ final class PersonNameModelImpl
       int flags = ContextObject.getFlag(context, 17) ? 64 : 0;
       Object sortOrderObject = ContextObject.get(context, 614335798810617774L);
       long sortOrder;
-      if (!(sortOrderObject instanceof Object)) {
+      if (!(sortOrderObject instanceof Long)) {
          switch (Locale.getSystemNameOrder()) {
             case 1:
                sortOrder = -227891759293611117L;
@@ -509,7 +511,7 @@ final class PersonNameModelImpl
                sortOrder = 1232448844688687736L;
          }
       } else {
-         sortOrder = sortOrderObject;
+         sortOrder = (Long)sortOrderObject;
       }
 
       String firstNameSeparator = Locale.getPersonalNamesSeparator(0);
@@ -616,7 +618,7 @@ final class PersonNameModelImpl
    private final int getDisplayOrder(Object context) {
       Object locale = ContextObject.get(context, 1387359264132630355L);
       int localeCode;
-      if (!(locale instanceof Object)) {
+      if (!(locale instanceof Locale)) {
          localeCode = Locale.getDefaultForSystem().getCode();
       } else {
          localeCode = ((Locale)locale).getCode();
@@ -637,7 +639,7 @@ final class PersonNameModelImpl
          return true;
       }
 
-      if (!(o instanceof Object)) {
+      if (!(o instanceof PersonNameModel)) {
          return false;
       }
 
@@ -655,12 +657,12 @@ final class PersonNameModelImpl
       ContextObject contextObject = ContextObject.verifyNonNull(initialData);
       Object test = contextObject.get(251);
       if (test != null) {
-         String[] stringPair = (Object[])test;
+         String[] stringPair = (String[])test;
          this.setNames(null, stringPair[0], stringPair[1]);
       } else {
          test = contextObject.get(3129577024825566583L);
          if (test != null) {
-            String[] stringArray = (Object[])test;
+            String[] stringArray = (String[])test;
             this.setNames(stringArray[0], stringArray[1], stringArray[2]);
          } else {
             test = contextObject.get(253);

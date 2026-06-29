@@ -15,19 +15,22 @@ import net.rim.device.api.util.IntIntHashtable;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.api.calendar.caldb.CalendarService;
 import net.rim.device.apps.api.calendar.caldb.CalendarServiceManager;
+import net.rim.device.apps.api.calendar.modelcontrollerinterface.Event;
 import net.rim.device.apps.api.calendar.modelcontrollerinterface.EventUtilities;
 import net.rim.device.apps.api.calendar.ota.CICALConfiguration;
 import net.rim.device.apps.api.calendar.ota.CICALEventLogger;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.service.ServiceIdentifier;
+import net.rim.device.apps.api.transmission.TransmissionException;
 import net.rim.device.apps.api.transmission.TransmissionServiceManager;
+import net.rim.device.apps.api.utility.serialization.SerializationException;
 import net.rim.device.internal.synchronization.ota.api.SyncAgentStatistics;
 import net.rim.device.internal.synchronization.ota.api.SyncAgentStatisticsCollector;
 import net.rim.device.internal.synchronization.ota.api.SyncAgentUrl;
 import net.rim.vm.PersistentInteger;
 
 public class CICALSlowSyncConverter extends CICALBaseConverter implements ServiceRoutingListener2 {
-   ContextObject _slowSyncContext = (ContextObject)(new Object());
+   ContextObject _slowSyncContext = new ContextObject();
    private boolean _needToAttemptSlowSync;
    private boolean _userInitiated;
    private long _syncStartDate = -1;
@@ -53,7 +56,7 @@ public class CICALSlowSyncConverter extends CICALBaseConverter implements Servic
    static final int SLOW_SYNC_TIMEOUT = 3600000;
    private static final long SINGLETON_ID = 2920655573871026586L;
    public static final int PACKET_EVENT_THRESHOLD = 500;
-   private static IntIntHashtable _previousSessions = (IntIntHashtable)(new Object());
+   private static IntIntHashtable _previousSessions = new IntIntHashtable();
    private static final byte[] SLOW_SYNC_COMPONENT_HEADER = new byte[]{16, 1, 1, 5};
 
    CICALSlowSyncConverter() {
@@ -95,7 +98,7 @@ public class CICALSlowSyncConverter extends CICALBaseConverter implements Servic
       }
 
       CICALSlowSyncEvent slowSyncEvent = (CICALSlowSyncEvent)inputObject;
-      DataBuffer dataBuffer = (DataBuffer)(new Object());
+      DataBuffer dataBuffer = new DataBuffer();
       dataBuffer.writeByte(slowSyncEvent.getType());
       dataBuffer.write(SLOW_SYNC_COMPONENT_HEADER);
       byte[] contextObjectBytes = slowSyncEvent.convert(contextObject);
@@ -112,7 +115,7 @@ public class CICALSlowSyncConverter extends CICALBaseConverter implements Servic
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
    public Object convert(byte[] inputBytes, Object contextObject) {
-      DataBuffer data = (DataBuffer)(new Object(inputBytes, 0, inputBytes.length, true));
+      DataBuffer data = new DataBuffer(inputBytes, 0, inputBytes.length, true);
       CalendarService calendarService = null;
 
       try {
@@ -126,7 +129,7 @@ public class CICALSlowSyncConverter extends CICALBaseConverter implements Servic
          boolean sessionIdFound = false;
          byte command = data.readByte();
          if (data.readByte() != 16) {
-            throw new Object("Wrong version number");
+            throw new SerializationException("Wrong version number");
          }
 
          byte componentId = data.readByte();
@@ -135,17 +138,17 @@ public class CICALSlowSyncConverter extends CICALBaseConverter implements Servic
          }
 
          if (componentId != 1) {
-            throw new Object("Expecting component ID");
+            throw new SerializationException("Expecting component ID");
          }
 
          byte byteData = 0;
          int intData = data.readCompressedInt();
          if (intData != 1) {
-            throw new Object("Expecting length of 1");
+            throw new SerializationException("Expecting length of 1");
          }
 
          if (data.readByte() != 5) {
-            throw new Object("Wrong component type");
+            throw new SerializationException("Wrong component type");
          }
 
          CICALSlowSyncEvent event = null;
@@ -179,7 +182,7 @@ public class CICALSlowSyncConverter extends CICALBaseConverter implements Servic
                      case 76:
                         intData = data.readCompressedInt();
                         if (intData != 4) {
-                           throw new Object("Expecting 4");
+                           throw new SerializationException("Expecting 4");
                         }
 
                         intData = data.readInt();
@@ -191,11 +194,8 @@ public class CICALSlowSyncConverter extends CICALBaseConverter implements Servic
                            case 64:
                            case 83:
                               if (command == 31) {
-                                 System.out
-                                    .println(
-                                       ((StringBuffer)(new Object("Server is requesting "))).append(intData).append(" events for sync from device.").toString()
-                                    );
-                                 CICALEventLogger.logEvent(((StringBuffer)(new Object("RSTS"))).append(intData).toString(), 0);
+                                 System.out.println("Server is requesting " + intData + " events for sync from device.");
+                                 CICALEventLogger.logEvent("RSTS" + intData, 0);
                               }
 
                               outgoingEventCount = intData;
@@ -204,14 +204,13 @@ public class CICALSlowSyncConverter extends CICALBaseConverter implements Servic
                               if (intData != this.getCurrentSlowSyncSessionID(calendarService) && command != 33) {
                                  System.out
                                     .println(
-                                       ((StringBuffer)(new Object("Server for service[")))
-                                          .append(calendarService)
-                                          .append("] is requesting records with an invalid session id. (Current=")
-                                          .append(this.getCurrentSlowSyncSessionID(calendarService))
-                                          .append("Requested = ")
-                                          .append(intData)
-                                          .append(")")
-                                          .toString()
+                                       "Server for service["
+                                          + calendarService
+                                          + "] is requesting records with an invalid session id. (Current="
+                                          + this.getCurrentSlowSyncSessionID(calendarService)
+                                          + "Requested = "
+                                          + intData
+                                          + ")"
                                     );
                                  this.abortSlowSync(calendarService, intData, (byte)4, false);
                                  return null;
@@ -225,11 +224,8 @@ public class CICALSlowSyncConverter extends CICALBaseConverter implements Servic
                               continue;
                            case 74:
                               if (command == 31) {
-                                 System.out
-                                    .println(
-                                       ((StringBuffer)(new Object("Server will be sending "))).append(intData).append(" events to the device.").toString()
-                                    );
-                                 CICALEventLogger.logEvent(((StringBuffer)(new Object("RSFS"))).append(intData).toString(), 0);
+                                 System.out.println("Server will be sending " + intData + " events to the device.");
+                                 CICALEventLogger.logEvent("RSFS" + intData, 0);
                               }
 
                               incomingEventCount = intData;
@@ -242,7 +238,7 @@ public class CICALSlowSyncConverter extends CICALBaseConverter implements Servic
                      case 73:
                         intData = data.readCompressedInt();
                         if (intData != 1) {
-                           throw new Object("Expecting 4");
+                           throw new SerializationException("Expecting 4");
                         }
 
                         byteData = data.readByte();
@@ -263,14 +259,8 @@ public class CICALSlowSyncConverter extends CICALBaseConverter implements Servic
                   }
 
                   if (trueRequestedAmount != event.getOutgoingRecordCount()) {
-                     System.out
-                        .println(
-                           ((StringBuffer)(new Object("Server is really requesting only ")))
-                              .append(trueRequestedAmount)
-                              .append(" for this request.")
-                              .toString()
-                        );
-                     CICALEventLogger.logEvent(((StringBuffer)(new Object("RSRS"))).append(trueRequestedAmount).toString(), 0);
+                     System.out.println("Server is really requesting only " + trueRequestedAmount + " for this request.");
+                     CICALEventLogger.logEvent("RSRS" + trueRequestedAmount, 0);
                   }
 
                   this._totalEvents = this._incomingEventCount + this._outgoingEventCount;
@@ -281,7 +271,7 @@ public class CICALSlowSyncConverter extends CICALBaseConverter implements Servic
                   }
 
                   if (!this._userInitiated) {
-                     this._currentSlowSyncProcess = (SyncAgentUrl)(new Object(sid, datasourceName, "Calendar", true));
+                     this._currentSlowSyncProcess = new SyncAgentUrl(sid, datasourceName, "Calendar", true);
                      SyncAgentStatistics stats = SyncAgentStatisticsCollector.getSyncAgentStatisticsFor(this._currentSlowSyncProcess, false);
                      stats.setRemainingNumberOfOperations(this._totalEvents, this.getCurrentSlowSyncSessionID(calendarService));
                   }
@@ -309,10 +299,10 @@ public class CICALSlowSyncConverter extends CICALBaseConverter implements Servic
             this.abortSlowSync(calendarService, this.getCurrentSlowSyncSessionID(calendarService), (byte)7, false);
          }
 
-         if (!(e instanceof Object)) {
+         if (!(e instanceof SerializationException)) {
             return null;
          } else {
-            throw (Object)e;
+            throw (SerializationException)e;
          }
       }
    }
@@ -332,7 +322,7 @@ public class CICALSlowSyncConverter extends CICALBaseConverter implements Servic
          Long lastActivity = (Long)_lastActivityStore.getContents();
          return lastActivity;
       } else {
-         Long lastActivity = (Long)(new Object(-1));
+         Long lastActivity = new Long(-1);
          _lastActivityStore.setContents(lastActivity, 51);
          _lastActivityStore.commit();
          EventLogger.logEvent(-256469206327664059L, 1279349317, 0);
@@ -345,7 +335,7 @@ public class CICALSlowSyncConverter extends CICALBaseConverter implements Servic
    }
 
    private synchronized void setLastSlowSyncActivity(long time) {
-      Long lastActivity = (Long)(new Object(time));
+      Long lastActivity = new Long(time);
       _lastActivityStore.setContents(lastActivity, 51);
       _lastActivityStore.commit();
    }
@@ -356,7 +346,7 @@ public class CICALSlowSyncConverter extends CICALBaseConverter implements Servic
          Long lastService = (Long)_lastServiceStore.getContents();
          return lastService;
       } else {
-         Long lastService = (Long)(new Object(-1));
+         Long lastService = new Long(-1);
          _lastServiceStore.setContents(lastService, 51);
          _lastServiceStore.commit();
          EventLogger.logEvent(-256469206327664059L, 1280528965, 0);
@@ -365,7 +355,7 @@ public class CICALSlowSyncConverter extends CICALBaseConverter implements Servic
    }
 
    private synchronized void setLastSlowSyncService(long serviceID) {
-      Long lastService = (Long)(new Object(serviceID));
+      Long lastService = new Long(serviceID);
       _lastServiceStore.setContents(lastService, 51);
       _lastServiceStore.commit();
    }
@@ -394,7 +384,7 @@ public class CICALSlowSyncConverter extends CICALBaseConverter implements Servic
          }
 
          String type = "net.rim.RIMCalendarSlowSync";
-         if (event instanceof Object) {
+         if (event instanceof Event) {
             type = "net.rim.RIMCalendarApptUpdate";
          }
 
@@ -405,7 +395,7 @@ public class CICALSlowSyncConverter extends CICALBaseConverter implements Servic
          otaCalendarTransmissionService.transmitObject(type, event, this._slowSyncContext);
          ContextObject.remove(this._slowSyncContext, 6741741218837016896L);
       } catch (Throwable var9) {
-         if (e instanceof Object) {
+         if (e instanceof TransmissionException) {
             CICALEventLogger.logEvent(1398363181, 2);
             return;
          }
@@ -706,7 +696,7 @@ public class CICALSlowSyncConverter extends CICALBaseConverter implements Servic
    ) {
       this._needToAttemptSlowSync = false;
       String catalystGUIDString = Long.toString(catalystGUID);
-      CICALEventLogger.logEvent(((StringBuffer)(new Object("1398362705="))).append(catalystGUIDString).toString(), 0);
+      CICALEventLogger.logEvent("1398362705=" + catalystGUIDString, 0);
       CICALSlowSyncConverter slowSyncConverter = getInstance();
       if (slowSyncConverter != null && !slowSyncConverter.isSlowSyncInProgress(calendarService)) {
          CICALConfiguration configuration = calendarService.getCICALConfiguration();

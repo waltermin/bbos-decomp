@@ -28,10 +28,10 @@ final class FirstNameEditField extends PersonalNameField {
             if (index != -1) {
                if (index != firstNameLength - 1) {
                   lastName = firstName.substring(index + 1).trim();
-                  lastName = ((StringBuffer)(new Object())).append(Character.toUpperCase(lastName.charAt(0))).append(lastName.substring(1)).toString();
+                  lastName = Character.toUpperCase(lastName.charAt(0)) + lastName.substring(1);
                }
 
-               firstName = ((StringBuffer)(new Object())).append(Character.toUpperCase(firstName.charAt(0))).append(firstName.substring(1, index)).toString();
+               firstName = Character.toUpperCase(firstName.charAt(0)) + firstName.substring(1, index);
                if (flip) {
                   String temp = firstName;
                   firstName = lastName;

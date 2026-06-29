@@ -1,6 +1,7 @@
 package net.rim.device.apps.api.utility.editor;
 
 import java.util.Enumeration;
+import java.util.NoSuchElementException;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.apps.api.framework.model.FieldProvider;
@@ -40,7 +41,7 @@ public class EditorUsingRIMModelFactory$EditorFieldEnumerator implements Enumera
                return field;
             }
 
-            if (field instanceof Object) {
+            if (field instanceof Manager) {
                this._manager = (Manager)field;
                this._index = 0;
             } else if (!proceedToNextElement) {
@@ -54,7 +55,7 @@ public class EditorUsingRIMModelFactory$EditorFieldEnumerator implements Enumera
    public Object nextElement() {
       Object element = this.getNextElement(true);
       if (element == null) {
-         throw new Object();
+         throw new NoSuchElementException();
       } else {
          return element;
       }

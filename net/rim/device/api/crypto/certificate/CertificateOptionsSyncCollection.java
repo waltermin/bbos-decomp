@@ -9,7 +9,7 @@ import net.rim.device.api.synchronization.SyncObject;
 import net.rim.device.internal.synchronization.MinimalSyncCollection;
 
 final class CertificateOptionsSyncCollection implements SyncCollection, CollectionEventSource, MinimalSyncCollection {
-   private CollectionListenerManager _collectionListenerManager = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _collectionListenerManager = new CollectionListenerManager();
    private static CertificateOptionsSyncConverter _converter = new CertificateOptionsSyncConverter();
 
    public final void fireElementRemoved(Object element) {

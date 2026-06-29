@@ -4,23 +4,26 @@ import net.rim.device.api.itpolicy.ITPolicy;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.component.EditField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.MathUtilities;
 import net.rim.device.apps.api.framework.model.ContextObject;
-import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.options.SaveableMainScreenOptionsListItem;
 import net.rim.device.apps.api.ui.BooleanChoiceField;
 import net.rim.device.apps.api.ui.SecurityDialog;
 import net.rim.device.apps.api.utility.framework.VerbToMenu;
 import net.rim.device.apps.internal.commonmodels.categories.CategoriesModel;
+import net.rim.device.apps.internal.commonmodels.categories.DisplayCategoriesForFieldVerb;
 import net.rim.device.internal.bluetooth.BluetoothA2DP;
 import net.rim.device.internal.bluetooth.BluetoothAVRCP;
 import net.rim.device.internal.bluetooth.BluetoothDeviceManager;
 import net.rim.device.internal.bluetooth.BluetoothME;
 import net.rim.device.internal.bluetooth.HandsfreeGateway;
 import net.rim.device.internal.bluetooth.HeadsetGateway;
+import net.rim.device.internal.ui.component.PropertyField;
 
 final class BluetoothOptionsScreen extends SaveableMainScreenOptionsListItem implements FieldChangeListener {
    private BluetoothDeviceManagerImpl _btManager = (BluetoothDeviceManagerImpl)BluetoothDeviceManager.getInstance();
@@ -41,37 +44,27 @@ final class BluetoothOptionsScreen extends SaveableMainScreenOptionsListItem imp
 
    @Override
    protected final void populateMainScreen(MainScreen mainScreen) {
-      this._localNameField = (EditField)(new Object(BluetoothMainScreen.getString(1), this._btManager.getLocalName(), 64, 0));
+      this._localNameField = new EditField(BluetoothMainScreen.getString(1), this._btManager.getLocalName(), 64, 0);
       mainScreen.add(this._localNameField);
-      this._discoverableField = (BooleanChoiceField)(new Object(
-         ((StringBuffer)(new Object())).append(BluetoothMainScreen.getString(3)).append(':').toString(), 0, this._btManager.isDiscoverable(), 268435456
-      ));
+      this._discoverableField = new BooleanChoiceField(BluetoothMainScreen.getString(3) + ':', 0, this._btManager.isDiscoverable(), 268435456);
       this._discoverableField.setEditable(!ITPolicy.getBoolean(34, 6, false));
       mainScreen.add(this._discoverableField);
       String[] allChoices = BluetoothMainScreen.getStringArray(55);
       int numChoices = allChoices.length;
       this._minAllowOutgoingCallsChoice = MathUtilities.clamp(0, ITPolicy.getInteger(34, 7, 0), numChoices - 1);
       numChoices -= this._minAllowOutgoingCallsChoice;
-      String[] choices = new Object[numChoices];
+      String[] choices = new String[numChoices];
       System.arraycopy(allChoices, this._minAllowOutgoingCallsChoice, choices, 0, numChoices);
-      this._allowOutgoingCallsField = (ObjectChoiceField)(new Object(
-         ((StringBuffer)(new Object())).append(BluetoothMainScreen.getString(54)).append(':').toString(),
-         choices,
-         this._btManager.getAllowOutgoingCalls() - this._minAllowOutgoingCallsChoice,
-         268435456
-      ));
+      this._allowOutgoingCallsField = new ObjectChoiceField(
+         BluetoothMainScreen.getString(54) + ':', choices, this._btManager.getAllowOutgoingCalls() - this._minAllowOutgoingCallsChoice, 268435456
+      );
       mainScreen.add(this._allowOutgoingCallsField);
       int mode = this._btManager.getAddressBookTransferMode();
-      this._addressBookTransferField = (ObjectChoiceField)(new Object(
-         ((StringBuffer)(new Object())).append(BluetoothMainScreen.getString(52)).append(':').toString(),
-         BluetoothMainScreen.getStringArray(76),
-         mode,
-         268435456
-      ));
+      this._addressBookTransferField = new ObjectChoiceField(BluetoothMainScreen.getString(52) + ':', BluetoothMainScreen.getStringArray(76), mode, 268435456);
       this._addressBookTransferField.setEditable(!ITPolicy.getBoolean(34, 8, false));
       mainScreen.add(this._addressBookTransferField);
       this._addressBookTransferField.setChangeListener(this);
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       context.setFlag(0);
       context.put(3986845832244503196L, BluetoothMainScreen.getString(75));
       this._addressBookCategoriesField = this._btManager.getAddressBookCategories().getField(context);
@@ -79,25 +72,23 @@ final class BluetoothOptionsScreen extends SaveableMainScreenOptionsListItem imp
          mainScreen.add(this._addressBookCategoriesField);
       }
 
-      this._ledField = (BooleanChoiceField)(new Object(
-         ((StringBuffer)(new Object())).append(BluetoothMainScreen.getString(56)).append(':').toString(), 1, this._btManager.isLEDIndicatorEnabled(), 268435456
-      ));
+      this._ledField = new BooleanChoiceField(BluetoothMainScreen.getString(56) + ':', 1, this._btManager.isLEDIndicatorEnabled(), 268435456);
       this._ledField.setEditable(!ITPolicy.getBoolean(34, 15, false));
       mainScreen.add(this._ledField);
       mode = this._btManager.getSecurityMode();
-      this._securityModeField = (ObjectChoiceField)(new Object(BluetoothMainScreen.getString(93), BluetoothMainScreen.getStringArray(94), mode, 268435456));
+      this._securityModeField = new ObjectChoiceField(BluetoothMainScreen.getString(93), BluetoothMainScreen.getStringArray(94), mode, 268435456);
       this._securityModeField.setEditable(!ITPolicy.getBoolean(34, 13, false));
       mainScreen.add(this._securityModeField);
-      this._connectOnPowerUpField = (BooleanChoiceField)(new Object(BluetoothMainScreen.getString(95), 0, this._btManager.isConnectOnPowerUpEnabled()));
+      this._connectOnPowerUpField = new BooleanChoiceField(BluetoothMainScreen.getString(95), 0, this._btManager.isConnectOnPowerUpEnabled());
       mainScreen.add(this._connectOnPowerUpField);
       byte[] addr = BluetoothME.getLocalDeviceAddress();
       if (addr != null) {
-         mainScreen.add((Field)(new Object()));
-         mainScreen.add((Field)(new Object(BluetoothMainScreen.getString(77), BluetoothME.deviceAddressToString(addr, true), 36028797018963968L)));
+         mainScreen.add(new SeparatorField());
+         mainScreen.add(new PropertyField(BluetoothMainScreen.getString(77), BluetoothME.deviceAddressToString(addr, true), 36028797018963968L));
       }
 
-      mainScreen.add((Field)(new Object()));
-      mainScreen.add((Field)(new Object(BluetoothMainScreen.getString(34))));
+      mainScreen.add(new SeparatorField());
+      mainScreen.add(new LabelField(BluetoothMainScreen.getString(34)));
       if (HeadsetGateway.isEnabled()) {
          this.addServiceLabel(mainScreen, 37);
       }
@@ -128,7 +119,7 @@ final class BluetoothOptionsScreen extends SaveableMainScreenOptionsListItem imp
    }
 
    private final void addServiceLabel(MainScreen mainScreen, int rc) {
-      mainScreen.add((Field)(new Object(((StringBuffer)(new Object("  "))).append(BluetoothMainScreen.getString(rc)).toString(), 1170935903116329024L)));
+      mainScreen.add(new LabelField("  " + BluetoothMainScreen.getString(rc), 1170935903116329024L));
    }
 
    @Override
@@ -159,7 +150,7 @@ final class BluetoothOptionsScreen extends SaveableMainScreenOptionsListItem imp
    @Override
    protected final void addScreenVerbs(VerbToMenu verbToMenu, int instance) {
       if (super._mainScreen.getFieldWithFocus() == this._addressBookCategoriesField) {
-         verbToMenu.addVerb((Verb)(new Object(this._addressBookCategoriesField)));
+         verbToMenu.addVerb(new DisplayCategoriesForFieldVerb(this._addressBookCategoriesField));
       }
 
       super.addScreenVerbs(verbToMenu, instance);

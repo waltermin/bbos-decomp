@@ -4,8 +4,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.Vector;
+import net.rim.device.api.crypto.CryptoIOException;
 import net.rim.device.api.crypto.Digest;
 import net.rim.device.api.crypto.DigestFactory;
+import net.rim.device.api.crypto.DigestOutputStream;
+import net.rim.device.api.crypto.SignatureSignerOutputStream;
 import net.rim.device.api.crypto.asn1.ASN1OutputStream;
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.DistinguishedName;
@@ -38,8 +41,8 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
    public CMSSignedDataOutputStream(OutputStream out, int contentType, boolean dataOut, boolean outer, boolean writeCerts, boolean usePKCS7Format) {
       super(out, contentType, dataOut, outer);
       this._writeCerts = writeCerts;
-      this._signers = (Vector)(new Object());
-      this._bufferOut = (ByteArrayOutputStream)(new Object());
+      this._signers = new Vector();
+      this._bufferOut = new ByteArrayOutputStream();
       this._usePKCS7Format = usePKCS7Format;
    }
 
@@ -49,17 +52,17 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
 
    public final void addSigner(CMSSigner signer) {
       if (this._noMoreAdds) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       this._signers.addElement(signer);
       Digest digest = DigestFactory.getInstance(signer.getSigner().getDigestAlgorithm());
       signer.setDigest(digest);
       if (this._outFilter == null) {
-         this._outFilter = (OutputStream)(new Object(digest, (OutputStream)(new Object(signer.getSigner(), this._bufferOut))));
+         this._outFilter = new DigestOutputStream(digest, new SignatureSignerOutputStream(signer.getSigner(), this._bufferOut));
       } else {
-         this._outFilter = (OutputStream)(new Object(signer.getSigner(), this._outFilter));
-         this._outFilter = (OutputStream)(new Object(digest, (OutputStream)(new Object(signer.getSigner(), this._outFilter))));
+         this._outFilter = new SignatureSignerOutputStream(signer.getSigner(), this._outFilter);
+         this._outFilter = new DigestOutputStream(digest, new SignatureSignerOutputStream(signer.getSigner(), this._outFilter));
       }
    }
 
@@ -71,7 +74,7 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       if (certificates != null) {
          int certificatesLength = certificates.length;
          if (this._certs == null) {
-            this._certs = new Object[certificates.length];
+            this._certs = new Certificate[certificates.length];
             this._writeCertsShorthand = new boolean[certificates.length];
             System.arraycopy(certificates, 0, this._certs, 0, certificates.length);
 
@@ -95,7 +98,7 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       if (!super._contentType.equals(OIDs.getOID(-1721363152)) && receiptRequest != null) {
          this._receiptRequest = receiptRequest;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -113,12 +116,12 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
             this._outFilter.write(data, offset, length);
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
-   public final void close() {
+   public final void close() throws CryptoIOException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -129,13 +132,13 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 000: aload 0
       // 001: bipush 1
       // 002: putfield net/rim/device/api/crypto/cms/CMSSignedDataOutputStream._noMoreAdds Z
-      // 005: new java/lang/Object
+      // 005: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 008: dup
       // 009: aload 0
       // 00a: getfield net/rim/device/api/crypto/cms/CMSOutputStream._out Ljava/io/OutputStream;
       // 00d: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> (Ljava/io/OutputStream;)V
       // 010: astore 1
-      // 011: new java/lang/Object
+      // 011: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 014: dup
       // 015: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 018: astore 2
@@ -159,7 +162,7 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 03f: getfield net/rim/device/api/crypto/cms/CMSSignedDataOutputStream._signers Ljava/util/Vector;
       // 042: invokevirtual java/util/Vector.elements ()Ljava/util/Enumeration;
       // 045: astore 3
-      // 046: new java/lang/Object
+      // 046: new java/util/Hashtable
       // 049: dup
       // 04a: invokespecial java/util/Hashtable.<init> ()V
       // 04d: astore 4
@@ -192,7 +195,7 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 093: invokevirtual java/util/Hashtable.put (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
       // 096: pop
       // 097: goto 04f
-      // 09a: new java/lang/Object
+      // 09a: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 09d: dup
       // 09e: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 0a1: astore 5
@@ -204,9 +207,9 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 0b1: ifeq 0e5
       // 0b4: aload 6
       // 0b6: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 0bb: checkcast java/lang/Object
+      // 0bb: checkcast java/lang/String
       // 0be: astore 7
-      // 0c0: new java/lang/Object
+      // 0c0: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 0c3: dup
       // 0c4: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 0c7: astore 8
@@ -233,7 +236,7 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 0f9: aload 0
       // 0fa: getfield net/rim/device/api/crypto/cms/CMSSignedDataOutputStream._bufferOut Ljava/io/ByteArrayOutputStream;
       // 0fd: invokevirtual java/io/ByteArrayOutputStream.close ()V
-      // 100: new java/lang/Object
+      // 100: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 103: dup
       // 104: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 107: astore 7
@@ -256,7 +259,7 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 130: invokevirtual net/rim/device/api/crypto/oid/OID.equals (Ljava/lang/Object;)Z
       // 133: ifeq 139
       // 136: goto 1c6
-      // 139: new java/lang/Object
+      // 139: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 13c: dup
       // 13d: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 140: astore 8
@@ -328,11 +331,11 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 1db: getfield net/rim/device/api/crypto/cms/CMSSignedDataOutputStream._writeCerts Z
       // 1de: ifne 1e4
       // 1e1: goto 459
-      // 1e4: new java/lang/Object
+      // 1e4: new java/util/Hashtable
       // 1e7: dup
       // 1e8: invokespecial java/util/Hashtable.<init> ()V
       // 1eb: astore 8
-      // 1ed: new java/lang/Object
+      // 1ed: new java/util/Hashtable
       // 1f0: dup
       // 1f1: invokespecial java/util/Hashtable.<init> ()V
       // 1f4: astore 9
@@ -424,7 +427,7 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 2a8: pop
       // 2a9: iinc 14 1
       // 2ac: goto 277
-      // 2af: new java/lang/Object
+      // 2af: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 2b2: dup
       // 2b3: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 2b6: astore 11
@@ -437,7 +440,7 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 2c9: goto 424
       // 2cc: aload 12
       // 2ce: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 2d3: checkcast java/lang/Object
+      // 2d3: checkcast net/rim/device/api/crypto/certificate/Certificate
       // 2d6: astore 13
       // 2d8: aload 8
       // 2da: aload 13
@@ -447,14 +450,14 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 2e4: aload 13
       // 2e6: invokevirtual java/util/Hashtable.remove (Ljava/lang/Object;)Ljava/lang/Object;
       // 2e9: pop
-      // 2ea: new java/lang/Object
+      // 2ea: new java/io/ByteArrayOutputStream
       // 2ed: dup
       // 2ee: invokespecial java/io/ByteArrayOutputStream.<init> ()V
       // 2f1: astore 14
       // 2f3: bipush 4
       // 2f5: newarray 8
       // 2f7: astore 15
-      // 2f9: new java/lang/Object
+      // 2f9: new net/rim/device/api/crypto/SHA1Digest
       // 2fc: dup
       // 2fd: invokespecial net/rim/device/api/crypto/SHA1Digest.<init> ()V
       // 300: astore 16
@@ -527,11 +530,11 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 37a: invokevirtual java/io/OutputStream.write ([B)V
       // 37d: aload 13
       // 37f: dup
-      // 380: instanceof java/lang/Object
+      // 380: instanceof net/rim/device/api/crypto/certificate/x509/X509Certificate
       // 383: ifne 38a
       // 386: pop
       // 387: goto 3a7
-      // 38a: checkcast java/lang/Object
+      // 38a: checkcast net/rim/device/api/crypto/certificate/x509/X509Certificate
       // 38d: astore 20
       // 38f: aload 20
       // 391: invokevirtual net/rim/device/api/crypto/certificate/x509/X509Certificate.getSignedSerialNumber ()Lnet/rim/device/api/crypto/asn1/ASN1SignedByteArray;
@@ -616,7 +619,7 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 432: ifeq 450
       // 435: aload 13
       // 437: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 43c: checkcast java/lang/Object
+      // 43c: checkcast net/rim/device/api/crypto/certificate/Certificate
       // 43f: astore 14
       // 441: aload 11
       // 443: aload 14
@@ -632,7 +635,7 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 45a: getfield net/rim/device/api/crypto/cms/CMSSignedDataOutputStream._signers Ljava/util/Vector;
       // 45d: invokevirtual java/util/Vector.elements ()Ljava/util/Enumeration;
       // 460: astore 8
-      // 462: new java/lang/Object
+      // 462: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 465: dup
       // 466: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 469: astore 9
@@ -644,7 +647,7 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 47a: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
       // 47f: checkcast net/rim/device/api/crypto/cms/CMSSigner
       // 482: astore 10
-      // 484: new java/lang/Object
+      // 484: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 487: dup
       // 488: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 48b: astore 11
@@ -656,7 +659,7 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 496: aload 10
       // 498: invokevirtual net/rim/device/api/crypto/cms/CMSSigner.getCertificate ()Lnet/rim/device/api/crypto/certificate/Certificate;
       // 49b: invokespecial net/rim/device/api/crypto/cms/CMSSignedDataOutputStream.writeIssuerAndSerialNumber (Lnet/rim/device/api/crypto/asn1/ASN1OutputStream;Lnet/rim/device/api/crypto/certificate/Certificate;)V
-      // 49e: new java/lang/Object
+      // 49e: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 4a1: dup
       // 4a2: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 4a5: astore 12
@@ -736,11 +739,11 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 560: pop
       // 561: iload 14
       // 563: ifne 5a1
-      // 566: new java/lang/Object
+      // 566: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 569: dup
       // 56a: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 56d: astore 17
-      // 56f: new java/lang/Object
+      // 56f: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 572: dup
       // 573: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 576: astore 18
@@ -792,7 +795,7 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 5e0: aload 10
       // 5e2: invokevirtual net/rim/device/api/crypto/cms/CMSSigner.getSignedAttributes ()Ljava/util/Enumeration;
       // 5e5: astore 17
-      // 5e7: new java/lang/Object
+      // 5e7: new java/util/Vector
       // 5ea: dup
       // 5eb: invokespecial java/util/Vector.<init> ()V
       // 5ee: astore 18
@@ -839,7 +842,7 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 651: iload 21
       // 653: invokevirtual java/util/Vector.insertElementAt (Ljava/lang/Object;I)V
       // 656: goto 5f0
-      // 659: new java/lang/Object
+      // 659: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 65c: dup
       // 65d: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 660: astore 19
@@ -856,7 +859,7 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 677: invokevirtual java/util/Vector.elementAt (I)Ljava/lang/Object;
       // 67a: checkcast net/rim/device/api/crypto/cms/CMSAttribute
       // 67d: astore 22
-      // 67f: new java/lang/Object
+      // 67f: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 682: dup
       // 683: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 686: astore 23
@@ -881,11 +884,11 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 6b4: bipush 2
       // 6b6: bipush 0
       // 6b7: invokevirtual net/rim/device/api/crypto/asn1/ASN1OutputStream.writeSet (Lnet/rim/device/api/crypto/asn1/ASN1OutputStream;II)V
-      // 6ba: new java/lang/Object
+      // 6ba: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 6bd: dup
       // 6be: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 6c1: astore 22
-      // 6c3: new java/lang/Object
+      // 6c3: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 6c6: dup
       // 6c7: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 6ca: astore 23
@@ -916,7 +919,7 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 709: aload 11
       // 70b: aload 27
       // 70d: invokevirtual net/rim/device/api/crypto/asn1/ASN1OutputStream.writeRawByteArray ([B)V
-      // 710: new java/lang/Object
+      // 710: new net/rim/device/api/crypto/asn1/ASN1InputByteArray
       // 713: dup
       // 714: aload 27
       // 716: invokespecial net/rim/device/api/crypto/asn1/ASN1InputByteArray.<init> ([B)V
@@ -930,7 +933,7 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 728: getfield net/rim/device/api/crypto/cms/CMSSignedDataOutputStream._receiptRequest Lnet/rim/device/api/crypto/cms/CMSReceiptRequest;
       // 72b: ifnonnull 731
       // 72e: goto 7f6
-      // 731: new java/lang/Object
+      // 731: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 734: dup
       // 735: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 738: astore 30
@@ -949,7 +952,7 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 755: aload 30
       // 757: aload 29
       // 759: invokevirtual net/rim/device/api/crypto/asn1/ASN1OutputStream.writeRawByteArray ([B)V
-      // 75c: new java/lang/Object
+      // 75c: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 75f: dup
       // 760: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 763: astore 31
@@ -1004,13 +1007,13 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 7da: aastore
       // 7db: goto 7f6
       // 7de: astore 26
-      // 7e0: new java/lang/Object
+      // 7e0: new net/rim/device/api/crypto/CryptoIOException
       // 7e3: dup
       // 7e4: aload 26
       // 7e6: invokespecial net/rim/device/api/crypto/CryptoIOException.<init> (Lnet/rim/device/api/crypto/CryptoException;)V
       // 7e9: athrow
       // 7ea: astore 26
-      // 7ec: new java/lang/Object
+      // 7ec: new net/rim/device/api/crypto/CryptoIOException
       // 7ef: dup
       // 7f0: aload 26
       // 7f2: invokespecial net/rim/device/api/crypto/CryptoIOException.<init> (Lnet/rim/device/api/crypto/CryptoException;)V
@@ -1021,7 +1024,7 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 7fd: aload 26
       // 7ff: invokeinterface java/util/Enumeration.hasMoreElements ()Z 1
       // 804: ifeq 857
-      // 807: new java/lang/Object
+      // 807: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 80a: dup
       // 80b: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 80e: astore 27
@@ -1032,7 +1035,7 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 81c: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
       // 821: checkcast net/rim/device/api/crypto/cms/CMSAttribute
       // 824: astore 28
-      // 826: new java/lang/Object
+      // 826: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 829: dup
       // 82a: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 82d: astore 29
@@ -1063,7 +1066,7 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 867: aload 0
       // 868: getfield net/rim/device/api/crypto/cms/CMSOutputStream._outer Z
       // 86b: ifeq 893
-      // 86e: new java/lang/Object
+      // 86e: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 871: dup
       // 872: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 875: astore 10
@@ -1088,7 +1091,7 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
       // 89c: invokevirtual java/io/OutputStream.close ()V
       // 89f: return
       // 8a0: astore 1
-      // 8a1: new java/lang/Object
+      // 8a1: new net/rim/device/api/crypto/CryptoIOException
       // 8a4: dup
       // 8a5: aload 1
       // 8a6: invokespecial net/rim/device/api/crypto/CryptoIOException.<init> (Lnet/rim/device/api/crypto/CryptoException;)V
@@ -1099,23 +1102,23 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
    }
 
    private final void writeIssuerAndSerialNumber(ASN1OutputStream asn1Stream, Certificate certificate) {
-      ASN1OutputStream issuerAndSerialNumber = (ASN1OutputStream)(new Object());
-      if (!(certificate instanceof Object)) {
+      ASN1OutputStream issuerAndSerialNumber = new ASN1OutputStream();
+      if (!(certificate instanceof X509Certificate)) {
          DistinguishedName issuerDN = certificate.getIssuer();
          Enumeration oids = issuerDN.getOIDs();
-         Object issuer = new Object();
+         ASN1OutputStream issuer = new ASN1OutputStream();
 
          while (oids.hasMoreElements()) {
-            ASN1OutputStream relativeDistinguishedName = (ASN1OutputStream)(new Object());
-            ASN1OutputStream attribute = (ASN1OutputStream)(new Object());
+            ASN1OutputStream relativeDistinguishedName = new ASN1OutputStream();
+            ASN1OutputStream attribute = new ASN1OutputStream();
             OID oid = (OID)oids.nextElement();
             attribute.writeOID(oid);
             attribute.writeUTF8String(issuerDN.getString(oid));
             relativeDistinguishedName.writeSequence(attribute);
-            ((ASN1OutputStream)issuer).writeSet(relativeDistinguishedName);
+            issuer.writeSet(relativeDistinguishedName);
          }
 
-         issuerAndSerialNumber.writeSequence((ASN1OutputStream)issuer);
+         issuerAndSerialNumber.writeSequence(issuer);
          issuerAndSerialNumber.writeInteger(certificate.getSerialNumber());
       } else {
          X509Certificate x509Certificate = (X509Certificate)certificate;
@@ -1127,8 +1130,8 @@ public final class CMSSignedDataOutputStream extends CMSOutputStream {
    }
 
    private final ASN1OutputStream writeHashSequence(byte[] information) {
-      ASN1OutputStream hashSequence = (ASN1OutputStream)(new Object());
-      ASN1OutputStream hashValue = (ASN1OutputStream)(new Object());
+      ASN1OutputStream hashSequence = new ASN1OutputStream();
+      ASN1OutputStream hashValue = new ASN1OutputStream();
       hashValue.writeOctetString(information);
       hashSequence.writeSet(hashValue);
       return hashSequence;

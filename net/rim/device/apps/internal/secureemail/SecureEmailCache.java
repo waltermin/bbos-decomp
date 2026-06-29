@@ -19,23 +19,23 @@ import net.rim.device.apps.internal.secureemail.cache.CachedMessageStatusData;
 import net.rim.device.apps.internal.secureemail.cache.CachedOpenedMessageData;
 
 public class SecureEmailCache {
-   private LRUCache _messageCache = (LRUCache)(new Object());
-   private LRUCache _messageStatusCache = (LRUCache)(new Object());
-   private LRUCache _contextCache = (LRUCache)(new Object());
-   private LRUCache _openedMessageCache = (LRUCache)(new Object());
+   private LRUCache _messageCache = new LRUCache();
+   private LRUCache _messageStatusCache = new LRUCache();
+   private LRUCache _contextCache = new LRUCache();
+   private LRUCache _openedMessageCache = new LRUCache();
    private SecureEmailLookupFailureCache _autoFetchStatusFailureCache = new SecureEmailLookupFailureCache(3600000);
    private long _lastGlobalAutoFetchStatusFailure = -1;
    private Hashtable _certServerFetchInfo;
    private SecureEmailListener _secureEmailListener = SecureEmailListener.getInstance();
    private static int ldapServer = 1;
-   public static CertificateServerInfo _defaultServer = (CertificateServerInfo)(new Object("", 1, "default Server", "", 0));
+   public static CertificateServerInfo _defaultServer = new CertificateServerInfo("", 1, "default Server", "", 0);
    private static final long TIME_BETWEEN_FAILED_AUTO_FETCHES = 3600000L;
    private static final long ID_LOCK = -2405970696515239737L;
    private static final long ID = 6573482441497432665L;
 
    private SecureEmailCache() {
       CertificateServers certificateServers = CertificateServers.getInstance();
-      this._certServerFetchInfo = (Hashtable)(new Object(certificateServers.getServerSize(ldapServer)));
+      this._certServerFetchInfo = new Hashtable(certificateServers.getServerSize(ldapServer));
       this._certServerFetchInfo.put(_defaultServer, new SecureEmailCache$CertificateServerFetchInformation(null));
    }
 

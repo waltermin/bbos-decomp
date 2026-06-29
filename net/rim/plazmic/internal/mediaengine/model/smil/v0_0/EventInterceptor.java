@@ -1,5 +1,6 @@
 package net.rim.plazmic.internal.mediaengine.model.smil.v0_0;
 
+import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.timing.Par;
 import net.rim.plazmic.internal.mediaengine.model.smil.v0_0.timing.TimingObject;
 import net.rim.plazmic.mediaengine.MediaListener;
 
@@ -16,7 +17,7 @@ public class EventInterceptor implements MediaListener {
    public void mediaEvent(Object sender, int type, int id, Object event) {
       if (type == 1) {
          TimingObject timingObject = this._model.getTimingObject(id);
-         if (timingObject instanceof Object) {
+         if (timingObject instanceof Par) {
             this._model.getSlideManager().setFocusToSlide(id);
          }
       }

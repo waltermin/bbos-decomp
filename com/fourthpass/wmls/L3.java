@@ -5,10 +5,10 @@ import net.rim.device.apps.api.utility.general.URI;
 
 public final class L3 extends Lib {
    @Override
-   public final Value invoke(int func, Interpreter$Engine engine) {
+   public final Value invoke(int func, Interpreter$Engine engine) throws Exception {
       switch (func) {
          case -1:
-            throw new Object("Invalid Function Id");
+            throw new Exception("Invalid Function Id");
          case 0:
          default:
             return isValid(engine.popStack());
@@ -240,7 +240,7 @@ public final class L3 extends Lib {
       }
 
       String path_param = surl.substring(0, i);
-      StringBuffer buff = (StringBuffer)(new Object());
+      StringBuffer buff = new StringBuffer();
 
       while (start < limit && (start = path_param.indexOf(47, start)) != -1) {
          i = path_param.indexOf(59, start);
@@ -371,15 +371,15 @@ public final class L3 extends Lib {
       }
 
       if (eurl.length() == 0) {
-         return new StringValue(((StringBuffer)(new Object())).append(burl).append('/').toString());
+         return new StringValue(burl + '/');
       }
 
       if (eurl.charAt(0) == '/') {
-         return new StringValue(((StringBuffer)(new Object())).append(burl).append(eurl).toString());
+         return new StringValue(burl + eurl);
       }
 
       try {
-         return new StringValue(((URI)(new Object(eurl.toString(), burl.toString()))).getAbsoluteURL());
+         return new StringValue(new URI(eurl.toString(), burl.toString()).getAbsoluteURL());
       } finally {
          ;
       }
@@ -396,7 +396,7 @@ public final class L3 extends Lib {
       }
 
       String str = string.toString();
-      StringBuffer buff = (StringBuffer)(new Object());
+      StringBuffer buff = new StringBuffer();
 
       for (int i = 0; i < str.length(); i++) {
          char next = str.charAt(i);
@@ -426,7 +426,7 @@ public final class L3 extends Lib {
       }
 
       String str = string.toString();
-      StringBuffer buff = (StringBuffer)(new Object());
+      StringBuffer buff = new StringBuffer();
 
       for (int i = 0; i < str.length(); i++) {
          char c = str.charAt(i);

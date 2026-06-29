@@ -265,7 +265,7 @@ public final class TypeSearchModel implements PersistableRIMModel, SearchCriteri
 
    @Override
    public final Field getField(Object context) {
-      Field f = (Field)(new Object(SearchResources.getString(45), this.makeChoices(), SearchResources.getString(_indexToResourceIdMap[this._index])));
+      Field f = new ObjectChoiceField(SearchResources.getString(45), this.makeChoices(), SearchResources.getString(_indexToResourceIdMap[this._index]));
       _oldChangeListener = f.getChangeListener();
       switch (this._index) {
          case 2:

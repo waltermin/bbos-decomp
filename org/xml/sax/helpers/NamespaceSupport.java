@@ -1,5 +1,6 @@
 package org.xml.sax.helpers;
 
+import java.util.EmptyStackException;
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -10,7 +11,7 @@ public class NamespaceSupport {
    private boolean namespaceDeclUris;
    public static final String XMLNS = "http://www.w3.org/XML/1998/namespace";
    public static final String NSDECL = "http://www.w3.org/xmlns/2000/";
-   private static final Enumeration EMPTY_ENUMERATION = ((Vector)(new Object())).elements();
+   private static final Enumeration EMPTY_ENUMERATION = new Vector().elements();
 
    public NamespaceSupport() {
       this.reset();
@@ -49,7 +50,7 @@ public class NamespaceSupport {
       this.contexts[this.contextPos].clear();
       this.contextPos--;
       if (this.contextPos < 0) {
-         throw new Object();
+         throw new EmptyStackException();
       }
 
       this.currentContext = this.contexts[this.contextPos];
@@ -89,7 +90,7 @@ public class NamespaceSupport {
    }
 
    public Enumeration getPrefixes(String uri) {
-      Vector prefixes = (Vector)(new Object());
+      Vector prefixes = new Vector();
       Enumeration allPrefixes = this.getPrefixes();
 
       while (allPrefixes.hasMoreElements()) {
@@ -108,7 +109,7 @@ public class NamespaceSupport {
 
    public void setNamespaceDeclUris(boolean value) {
       if (this.contextPos != 0) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       if (value != this.namespaceDeclUris) {

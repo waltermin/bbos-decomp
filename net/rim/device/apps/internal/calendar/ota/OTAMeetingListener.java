@@ -62,7 +62,7 @@ class OTAMeetingListener extends OTABaseListener implements OTACalendarConstants
 
    @Override
    public boolean receiveObject(TransmissionService service, Object anObject, Object contextObject) {
-      if (!(anObject instanceof Object)) {
+      if (!(anObject instanceof RIMMessagingIncomingMessage)) {
          return false;
       }
 
@@ -168,7 +168,7 @@ class OTAMeetingListener extends OTABaseListener implements OTACalendarConstants
 
          OTASyncData syncData = super._otaSyncDataManager.get(meeting);
          if (syncData == null) {
-            syncData = (OTASyncData)(new Object(0, 1));
+            syncData = new OTASyncData(0, 1);
          }
 
          synchronized (calendar.getLockObject()) {
@@ -232,7 +232,7 @@ class OTAMeetingListener extends OTABaseListener implements OTACalendarConstants
          RecurUtilities.ensureMarkedAsExclusion(calendar, realEvent);
          changesMade = true;
          if (syncData == null) {
-            syncData = (OTASyncData)(new Object(0, 1));
+            syncData = new OTASyncData(0, 1);
          }
       }
 

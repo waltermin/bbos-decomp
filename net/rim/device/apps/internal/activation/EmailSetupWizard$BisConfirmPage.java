@@ -1,9 +1,9 @@
 package net.rim.device.apps.internal.activation;
 
 import net.rim.device.api.system.ApplicationManager;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Trackball;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.apps.api.browser.BrowserServices;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.setupwizard.BasicWizardPage;
@@ -27,9 +27,9 @@ final class EmailSetupWizard$BisConfirmPage extends BasicWizardPage {
 
    @Override
    protected final void populateContent(AppsMainScreen mainScreen, Manager content) {
-      WizardLayoutManager layoutManager = (WizardLayoutManager)(new Object());
+      WizardLayoutManager layoutManager = new WizardLayoutManager();
       layoutManager.setScrollbarEnabled(true);
-      ScrollingVerticalFieldManager scrollingContent = (ScrollingVerticalFieldManager)(new Object(0));
+      ScrollingVerticalFieldManager scrollingContent = new ScrollingVerticalFieldManager(0);
       boolean thickclient = BISClientInvoke.canBeInvoked();
       int resId;
       if (Trackball.isSupported()) {
@@ -38,7 +38,7 @@ final class EmailSetupWizard$BisConfirmPage extends BasicWizardPage {
          resId = thickclient ? 178 : 162;
       }
 
-      scrollingContent.add((Field)(new Object(EmailSetupWizard._resources.getString(resId))));
+      scrollingContent.add(new LabelField(EmailSetupWizard._resources.getString(resId)));
       layoutManager.setContent(scrollingContent);
       content.add(layoutManager);
    }

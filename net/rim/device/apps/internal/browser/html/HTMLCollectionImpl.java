@@ -109,7 +109,7 @@ public final class HTMLCollectionImpl implements HTMLCollection, NodeList, HTMLO
 
    public HTMLCollectionImpl() {
       this._elements = new HTMLElement[0];
-      this._names = new Object[0];
+      this._names = new String[0];
    }
 
    private final void checkDuplicateNames(String name) {

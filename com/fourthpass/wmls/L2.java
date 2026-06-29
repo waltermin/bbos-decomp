@@ -4,10 +4,10 @@ import java.util.Vector;
 
 final class L2 extends Lib {
    @Override
-   public final Value invoke(int func, Interpreter$Engine engine) {
+   public final Value invoke(int func, Interpreter$Engine engine) throws Exception {
       switch (func) {
          case -1:
-            throw new Object("Invalid Function Id");
+            throw new Exception("Invalid Function Id");
          case 0:
          default:
             return length(engine.popStack());
@@ -86,7 +86,7 @@ final class L2 extends Lib {
             }
          }
 
-         return new StringValue((String)(new Object(ac)));
+         return new StringValue(new String(ac));
       } else {
          return Value.INVALID;
       }
@@ -162,18 +162,18 @@ final class L2 extends Lib {
          }
 
          String s2 = ((StringValue)newSubString).getString();
-         Vector vector = (Vector)(new Object());
+         Vector vector = new Vector();
          int k = 0;
          int l = 0;
 
          while (true) {
             int j = s.indexOf(s1, l);
             if (j == -1) {
-               StringBuffer stringbuffer = (StringBuffer)(new Object(s.length()));
+               StringBuffer stringbuffer = new StringBuffer(s.length());
                int i1 = 0;
 
                for (int j1 = 0; j1 < s.length(); j1++) {
-                  if (i1 < k && j1 == vector.elementAt(i1)) {
+                  if (i1 < k && j1 == (Integer)vector.elementAt(i1)) {
                      j1 += i - 1;
                      i1++;
                      stringbuffer.append(s2);
@@ -186,7 +186,7 @@ final class L2 extends Lib {
             }
 
             k++;
-            vector.addElement(new Object(j));
+            vector.addElement(new Integer(j));
             l = j + 1;
          }
       } else {
@@ -275,17 +275,17 @@ final class L2 extends Lib {
          if (k == i - 1) {
             for (int l = 0; l < j - 1; l++) {
                if (l != 0) {
-                  s2 = ((StringBuffer)(new Object())).append(s2).append(s1.substring(0, 1)).toString();
+                  s2 = s2 + s1.substring(0, 1);
                }
 
-               s2 = ((StringBuffer)(new Object())).append(s2).append(as[l]).toString();
+               s2 = s2 + as[l];
             }
          } else {
             for (int i1 = 0; i1 < j; i1++) {
                if (i1 != k) {
-                  s2 = ((StringBuffer)(new Object())).append(s2).append(as[i1]).toString();
+                  s2 = s2 + as[i1];
                   if (i1 + 1 < j) {
-                     s2 = ((StringBuffer)(new Object())).append(s2).append(s1.substring(0, 1)).toString();
+                     s2 = s2 + s1.substring(0, 1);
                   }
                }
             }
@@ -330,13 +330,13 @@ final class L2 extends Lib {
 
          for (int l = 0; l < j; l++) {
             if (l == k) {
-               s3 = ((StringBuffer)(new Object())).append(s3).append(s2).toString();
+               s3 = s3 + s2;
             } else {
-               s3 = ((StringBuffer)(new Object())).append(s3).append(as[l]).toString();
+               s3 = s3 + as[l];
             }
 
             if (l + 1 < j) {
-               s3 = ((StringBuffer)(new Object())).append(s3).append(s1.substring(0, 1)).toString();
+               s3 = s3 + s1.substring(0, 1);
             }
          }
 
@@ -376,18 +376,18 @@ final class L2 extends Lib {
          k = k >= 0 ? k : 0;
          String s3 = "";
          if (k >= i) {
-            s3 = ((StringBuffer)(new Object())).append(s).append(s2.substring(0, 1)).append(s1).toString();
+            s3 = s + s2.substring(0, 1) + s1;
          } else if (k == 0) {
-            s3 = ((StringBuffer)(new Object())).append(s1).append(s2.substring(0, 1)).append(s).toString();
+            s3 = s1 + s2.substring(0, 1) + s;
          } else {
             for (int l = 0; l < j; l++) {
                if (l == k) {
-                  s3 = ((StringBuffer)(new Object())).append(s3).append(s1).append(s2.substring(0, 1)).toString();
+                  s3 = s3 + s1 + s2.substring(0, 1);
                }
 
-               s3 = ((StringBuffer)(new Object())).append(s3).append(as[l]).toString();
+               s3 = s3 + as[l];
                if (l + 1 < j) {
-                  s3 = ((StringBuffer)(new Object())).append(s3).append(s2.substring(0, 1)).toString();
+                  s3 = s3 + s2.substring(0, 1);
                }
             }
          }
@@ -405,7 +405,7 @@ final class L2 extends Lib {
       }
 
       String s = ((StringValue)string).getString();
-      StringBuffer stringbuffer = (StringBuffer)(new Object(s.length()));
+      StringBuffer stringbuffer = new StringBuffer(s.length());
       boolean flag = false;
 
       for (int i = 0; i < s.length(); i++) {
@@ -490,7 +490,7 @@ final class L2 extends Lib {
          return as;
       }
 
-      String[] as1 = new Object[i];
+      String[] as1 = new String[i];
       char c = s1.charAt(0);
       int j = s.length();
       int k = 0;

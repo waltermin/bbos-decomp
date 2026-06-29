@@ -15,14 +15,8 @@ final class Game$6 extends MenuItem {
 
    @Override
    public final void run() {
-      String msg = ((StringBuffer)(new Object()))
-         .append(Game._resources.getString(2))
-         .append("\n")
-         .append(Game._resources.getString(41))
-         .append("\n")
-         .append(Game._resources.getString(52))
-         .toString();
-      Dialog d = (Dialog)(new Object(msg, CommonResource.getStringArray(10004), null, 0, Bitmap.getBitmapResource("logo.png"), 0));
+      String msg = Game._resources.getString(2) + "\n" + Game._resources.getString(41) + "\n" + Game._resources.getString(52);
+      Dialog d = new Dialog(msg, CommonResource.getStringArray(10004), null, 0, Bitmap.getBitmapResource("logo.png"), 0);
       d.doModal();
    }
 }

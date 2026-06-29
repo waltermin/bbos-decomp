@@ -18,7 +18,7 @@ final class PhoneNumberKeywordFinder extends KeywordFilteredListFinder {
    PhoneAppScreen _pas;
    KeywordFilterList _filterList = null;
    KeywordFilterCollectionListField _list = null;
-   String[][] _variants = new Object[0][];
+   String[][] _variants = new String[0][];
 
    public PhoneNumberKeywordFinder(PhoneAppScreen pas) {
       super("", CommonResources.getString(700), false, 8192);
@@ -38,7 +38,7 @@ final class PhoneNumberKeywordFinder extends KeywordFilteredListFinder {
    @Override
    public final String getText() {
       String text = super.getText();
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
       boolean makeUpperCase = true;
 
       for (int i = 0; i < text.length(); i++) {
@@ -106,17 +106,17 @@ final class PhoneNumberKeywordFinder extends KeywordFilteredListFinder {
                }
 
                if (this.validAltChar(altKey) && key != altKey) {
-                  newVariant = new Object[lastVariant.length * 2];
+                  newVariant = new String[lastVariant.length * 2];
 
                   for (int i = 0; i < lastVariant.length; i++) {
-                     newVariant[i] = ((StringBuffer)(new Object())).append(lastVariant[i]).append(key).toString();
-                     newVariant[lastVariant.length + i] = ((StringBuffer)(new Object())).append(lastVariant[i]).append(altKey).toString();
+                     newVariant[i] = lastVariant[i] + key;
+                     newVariant[lastVariant.length + i] = lastVariant[i] + altKey;
                   }
                } else {
-                  newVariant = new Object[lastVariant.length];
+                  newVariant = new String[lastVariant.length];
 
                   for (int i = 0; i < lastVariant.length; i++) {
-                     newVariant[i] = ((StringBuffer)(new Object())).append(lastVariant[i]).append(key).toString();
+                     newVariant[i] = lastVariant[i] + key;
                   }
                }
             }
@@ -125,7 +125,7 @@ final class PhoneNumberKeywordFinder extends KeywordFilteredListFinder {
                if (newVariant.length > 1) {
                   KeywordSearcher searcher = this._filterList.getSearcher();
                   BitSet results = searcher.searchPrefixes(newVariant);
-                  String[] trimmedVariant = new Object[0];
+                  String[] trimmedVariant = new String[0];
 
                   for (int i = 0; i < newVariant.length; i++) {
                      if (results.isSet(i)) {

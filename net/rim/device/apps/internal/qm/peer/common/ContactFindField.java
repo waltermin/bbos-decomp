@@ -23,7 +23,7 @@ public final class ContactFindField extends BasicEditField {
       super(1188950302162698240L);
       this._findString = findLabel != null ? findLabel : CommonResources.getString(700);
       this._baseText = text == null ? this._findString : text;
-      this._focusRect = (XYRect)(new Object());
+      this._focusRect = new XYRect();
       this._showCaretOnEmptySearch = StringUtilities.strEqual(this._baseText, this._findString) ? true : showCaretOnEmptySearch;
       this._drawFocusIndicator = showCaretOnEmptySearch;
       super.setLabel(this._baseText);

@@ -19,7 +19,7 @@ final class MediaLoader$StringComparator implements Comparator {
 
    @Override
    public final int compare(Object o1, Object o2) {
-      return ((CollatorImpl)(new Object())).compare((String)o1, (String)o2);
+      return new CollatorImpl().compare((String)o1, (String)o2);
    }
 
    @Override

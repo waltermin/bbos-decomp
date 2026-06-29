@@ -1,5 +1,6 @@
 package net.rim.tools.compiler.codfile;
 
+import java.io.IOException;
 import net.rim.tools.compiler.analysis.InstructionTarget;
 import net.rim.tools.compiler.exec.MyArrays;
 import net.rim.tools.compiler.io.StructuredOutputStream;
@@ -16,12 +17,12 @@ public final class Code extends CodfileItem implements Constants {
    private short _numReferences;
    private Object[] _references;
 
-   private final int getTarget(CodfileLabel label, StructuredOutputStream out) {
+   private final int getTarget(CodfileLabel label, StructuredOutputStream out) throws IOException {
       int target = super._offset + label.getOffset() - out.getOffset();
       if (target >= -32768 && target < 32768) {
          return target;
       } else {
-         throw new Object("branch target out of range");
+         throw new IOException("branch target out of range");
       }
    }
 
@@ -617,7 +618,7 @@ public final class Code extends CodfileItem implements Constants {
 
    public final void addOpcode(int opcode, long op) {
       this._opcodes[this._numOpcodes] = (byte)opcode;
-      this._referenceIndex[this._numOpcodes] = this.addReference(new Object(op));
+      this._referenceIndex[this._numOpcodes] = this.addReference(new Long(op));
       this._numOpcodes++;
    }
 

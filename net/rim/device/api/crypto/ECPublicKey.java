@@ -28,7 +28,7 @@ public final class ECPublicKey implements PublicKey, ECKey, Persistable {
    }
 
    @Override
-   public final void verify() {
+   public final void verify() throws InvalidKeyException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -57,7 +57,7 @@ public final class ECPublicKey implements PublicKey, ECKey, Persistable {
       // 20: aload 2
       // 21: invokestatic net/rim/device/api/crypto/NativeEC.verifyPublicKey (Ljava/lang/String;[B)Z
       // 24: ifne 2f
-      // 27: new java/lang/Object
+      // 27: new net/rim/device/api/crypto/InvalidKeyException
       // 2a: dup
       // 2b: invokespecial net/rim/device/api/crypto/InvalidKeyException.<init> ()V
       // 2e: athrow
@@ -95,7 +95,7 @@ public final class ECPublicKey implements PublicKey, ECKey, Persistable {
       // 67: aload 7
       // 69: invokestatic net/rim/device/api/crypto/CryptoByteArrayArithmetic.compare ([B[B)I
       // 6c: iflt 77
-      // 6f: new java/lang/Object
+      // 6f: new net/rim/device/api/crypto/InvalidKeyException
       // 72: dup
       // 73: invokespecial net/rim/device/api/crypto/InvalidKeyException.<init> ()V
       // 76: athrow
@@ -105,19 +105,19 @@ public final class ECPublicKey implements PublicKey, ECKey, Persistable {
       // 7e: aload 7
       // 80: invokestatic net/rim/device/api/crypto/CryptoByteArrayArithmetic.compare ([B[B)I
       // 83: iflt a9
-      // 86: new java/lang/Object
+      // 86: new net/rim/device/api/crypto/InvalidKeyException
       // 89: dup
       // 8a: invokespecial net/rim/device/api/crypto/InvalidKeyException.<init> ()V
       // 8d: athrow
       // 8e: astore 2
-      // 8f: new java/lang/Object
+      // 8f: new net/rim/device/api/crypto/InvalidKeyException
       // 92: dup
       // 93: aload 2
       // 94: invokevirtual net/rim/device/api/crypto/CryptoTokenException.toString ()Ljava/lang/String;
       // 97: invokespecial net/rim/device/api/crypto/InvalidKeyException.<init> (Ljava/lang/String;)V
       // 9a: athrow
       // 9b: astore 2
-      // 9c: new java/lang/Object
+      // 9c: new net/rim/device/api/crypto/InvalidKeyException
       // 9f: dup
       // a0: aload 2
       // a1: invokevirtual net/rim/device/api/crypto/InvalidCryptoSystemException.toString ()Ljava/lang/String;
@@ -167,20 +167,20 @@ public final class ECPublicKey implements PublicKey, ECKey, Persistable {
          ECCryptoToken cryptoToken = (ECCryptoToken)cryptoSystem.getAsymmetricCryptoToken();
          this.initialize(cryptoSystem, cryptoToken, cryptoTokenData);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
-   public ECPublicKey(ECCryptoSystem cryptoSystem, byte[] data) {
+   public ECPublicKey(ECCryptoSystem cryptoSystem, byte[] data) throws InvalidKeyException {
       if (cryptoSystem != null && data != null) {
          if (data.length > cryptoSystem.getPublicKeyLength(false)) {
-            throw new Object();
+            throw new InvalidKeyException();
          }
 
          ECCryptoToken cryptoToken = (ECCryptoToken)cryptoSystem.getAsymmetricCryptoToken();
          this.initialize(cryptoSystem, cryptoToken, cryptoToken.injectECPublicKey(cryptoSystem.getCryptoTokenData(), data));
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

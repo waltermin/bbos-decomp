@@ -1,14 +1,16 @@
 package net.rim.device.apps.internal.browser.drm;
 
+import java.io.ByteArrayInputStream;
 import java.io.DataInput;
 import java.io.DataInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import javax.microedition.io.ContentConnection;
 import javax.microedition.io.HttpConnection;
 import javax.microedition.io.InputConnection;
 import net.rim.device.api.browser.field.BrowserContent;
 import net.rim.device.api.browser.field.ContentReadEvent;
-import net.rim.device.api.browser.field.Event;
+import net.rim.device.api.browser.field.RedirectEvent;
 import net.rim.device.api.browser.field.RenderingApplication;
 import net.rim.device.api.browser.field.RenderingOptions;
 import net.rim.device.api.browser.field.RenderingSession;
@@ -24,6 +26,7 @@ import net.rim.device.apps.api.utility.serialization.Converter;
 import net.rim.device.apps.internal.browser.cod.JADConverterDescriptor;
 import net.rim.device.apps.internal.browser.common.BrowserConverterDescriptor;
 import net.rim.device.apps.internal.browser.page.Page;
+import net.rim.device.apps.internal.browser.page.PageConverterWrapper;
 import net.rim.device.apps.internal.browser.plugin.media.MediaRenderingConverter;
 import net.rim.device.apps.internal.browser.stack.CacheResult;
 import net.rim.device.apps.internal.browser.stack.CachedHttpConnection;
@@ -65,13 +68,13 @@ public final class DRMMessageConverter extends BrowserContentProvider {
 
          inputStream = RendererControl.getInputStreamFromContentEncoding(inputConnection, inputStream, true);
          int expectedDataLength = -1;
-         if (inputConnection instanceof Object) {
+         if (inputConnection instanceof ContentConnection) {
             ContentConnection contentConnection = (ContentConnection)inputConnection;
             expectedDataLength = (int)contentConnection.getLength();
          }
 
-         if (!(inputStream instanceof Object)) {
-            inputStream = (InputStream)(new Object(inputStream));
+         if (!(inputStream instanceof CountedInputStream)) {
+            inputStream = new CountedInputStream(inputStream);
          }
 
          int boundaryState = 1;
@@ -88,8 +91,8 @@ public final class DRMMessageConverter extends BrowserContentProvider {
                }
             } else if (b == 10) {
                if (boundaryState >= 4) {
-                  HttpHeaders headerTable = (HttpHeaders)(new Object());
-                  headerTable.readFromStream((DataInputStream)(new Object(inputStream)));
+                  HttpHeaders headerTable = new HttpHeaders();
+                  headerTable.readFromStream(new DataInputStream(inputStream));
                   String contentType = headerTable.getPropertyValue("Content-Type");
                   if (contentType == null) {
                      contentType = "text/plain";
@@ -98,7 +101,7 @@ public final class DRMMessageConverter extends BrowserContentProvider {
 
                   ContentReadEvent contentReadEvent = null;
                   if (expectedDataLength > 0) {
-                     contentReadEvent = (ContentReadEvent)(new Object(inputConnection));
+                     contentReadEvent = new ContentReadEvent(inputConnection);
                      contentReadEvent.setItemsToReadInBytes(true);
                      contentReadEvent.setItemsToRead(expectedDataLength);
                      expectedDataLength -= ((CountedInputStream)inputStream).getCompressedBytesRead();
@@ -106,7 +109,7 @@ public final class DRMMessageConverter extends BrowserContentProvider {
 
                   byte[] actualContent = RendererControl.readBytesFromInputStream(inputStream, contentReadEvent, renderingApplication, expectedDataLength);
                   if (actualContent == null) {
-                     throw new Object();
+                     throw new IOException();
                   }
 
                   for (int i = actualContent.length - 6; i >= 0; i--) {
@@ -140,7 +143,7 @@ public final class DRMMessageConverter extends BrowserContentProvider {
                   }
 
                   int responseCode = 200;
-                  if (inputConnection instanceof Object) {
+                  if (inputConnection instanceof HttpConnection) {
                      HttpConnection httpConnection = (HttpConnection)inputConnection;
                      responseCode = httpConnection.getResponseCode();
                      if (renderingOptions != null && renderingOptions.getPropertyWithBooleanValue(4550690918222697397L, 49, false)) {
@@ -161,11 +164,11 @@ public final class DRMMessageConverter extends BrowserContentProvider {
                   }
 
                   headerTable.setProperty("Content-Length", String.valueOf(actualContent.length));
-                  CacheResult cacheResult = (CacheResult)(new Object(url, actualContent, headerTable, responseCode));
-                  CachedHttpConnection conn = (CachedHttpConnection)(new Object(url, null, (InputStream)(new Object(actualContent)), cacheResult, null));
+                  CacheResult cacheResult = new CacheResult(url, actualContent, headerTable, responseCode);
+                  CachedHttpConnection conn = new CachedHttpConnection(url, null, new ByteArrayInputStream(actualContent), cacheResult, null);
                   flags |= 2048;
                   if (savedFileURL != null) {
-                     renderingApplication.eventOccurred((Event)(new Object(conn, savedFileURL, providerContext.getEvent(), 3)));
+                     renderingApplication.eventOccurred(new RedirectEvent(conn, savedFileURL, providerContext.getEvent(), 3));
                      return null;
                   }
 
@@ -174,14 +177,14 @@ public final class DRMMessageConverter extends BrowserContentProvider {
                   if (midletTypes != null) {
                      for (int i = midletTypes.length - 1; i >= 0; i--) {
                         if (contentTypeWithoutParameters.equalsIgnoreCase(midletTypes[i])) {
-                           ModelResult modelResult = (ModelResult)(new Object(url, flags, null));
-                           FetchRequest fetchRequest = (FetchRequest)(new Object(modelResult));
+                           ModelResult modelResult = new ModelResult(url, flags, null);
+                           FetchRequest fetchRequest = new FetchRequest(modelResult);
                            modelResult.setCacheResult(cacheResult);
                            Converter converter = BrowserConverterDescriptor.getConverter(contentType);
                            if (converter != null) {
                               try {
-                                 Object page = converter.convert((DataInput)((Object)null), new Object(fetchRequest, conn.openInputStream(), conn));
-                                 if (page instanceof Object) {
+                                 Object page = converter.convert((DataInput)null, new PageConverterWrapper(fetchRequest, conn.openInputStream(), conn));
+                                 if (page instanceof Page) {
                                     return ((Page)page).getBrowserContent();
                                  }
                               } finally {

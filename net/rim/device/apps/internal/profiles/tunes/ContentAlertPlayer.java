@@ -1,7 +1,9 @@
 package net.rim.device.apps.internal.profiles.tunes;
 
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import javax.microedition.media.Manager;
+import javax.microedition.media.MediaException;
 import javax.microedition.media.Player;
 import javax.microedition.media.control.VolumeControl;
 import net.rim.device.api.io.MIMETypeAssociations;
@@ -23,14 +25,12 @@ final class ContentAlertPlayer implements AlertPlayer {
       this._contentType = contentType;
    }
 
-   ContentAlertPlayer(String fileName) {
+   ContentAlertPlayer(String fileName) throws IOException {
       this._contentType = MIMETypeAssociations.getMIMEType(fileName);
       this._tuneLocation = FileUtilities.makeFileURL(fileName);
       if (!FileUtilities.checkFileExists(this._tuneLocation)) {
-         EventLogger.logEvent(
-            6982943375119825480L, ((StringBuffer)(new Object("ContentAlertPlayer: "))).append(fileName).append(" does not exist.").toString().getBytes(), 5
-         );
-         throw new Object();
+         EventLogger.logEvent(6982943375119825480L, ("ContentAlertPlayer: " + fileName + " does not exist.").getBytes(), 5);
+         throw new IOException();
       }
    }
 
@@ -43,14 +43,14 @@ final class ContentAlertPlayer implements AlertPlayer {
                if (this._data == null) {
                   this._player = Manager.createPlayer(this._tuneLocation);
                } else {
-                  this._player = Manager.createPlayer((InputStream)(new Object(this._data)), this._contentType);
+                  this._player = Manager.createPlayer(new ByteArrayInputStream(this._data), this._contentType);
                }
 
                if (this._player != null) {
                   this._player.addPlayerListener(AlertEngine.getInstance());
-                  if (this._player instanceof Object) {
-                     ((StreamDataControl)this._player).setKeyValue("interrupt_on_user_input", new Object(interruptible));
-                     ((StreamDataControl)this._player).setKeyValue("audiosource", new Object(6));
+                  if (this._player instanceof StreamDataControl) {
+                     ((StreamDataControl)this._player).setKeyValue("interrupt_on_user_input", new Integer(interruptible));
+                     ((StreamDataControl)this._player).setKeyValue("audiosource", new Integer(6));
                   }
 
                   this._player.realize();
@@ -59,13 +59,7 @@ final class ContentAlertPlayer implements AlertPlayer {
             } catch (Throwable var7) {
                this._initialized = true;
                this.resetPlayer();
-               throw new Object(
-                  ((StringBuffer)(new Object("ContentAlertPlayer: initializePlayer ")))
-                     .append(this._tuneLocation)
-                     .append(" - ")
-                     .append(e.toString())
-                     .toString()
-               );
+               throw new MediaException("ContentAlertPlayer: initializePlayer " + this._tuneLocation + " - " + e.toString());
             }
          }
       }
@@ -81,9 +75,7 @@ final class ContentAlertPlayer implements AlertPlayer {
                this._player.start();
             } catch (Throwable var7) {
                this.resetPlayer();
-               throw new Object(
-                  ((StringBuffer)(new Object("ContentAlertPlayer: startPlayer "))).append(this._tuneLocation).append(" - ").append(e.toString()).toString()
-               );
+               throw new MediaException("ContentAlertPlayer: startPlayer " + this._tuneLocation + " - " + e.toString());
             }
          }
       }
@@ -94,9 +86,7 @@ final class ContentAlertPlayer implements AlertPlayer {
       if (vc != null) {
          vc.setLevel(volume);
       } else {
-         EventLogger.logEvent(
-            6982943375119825480L, ((StringBuffer)(new Object("ContentAlertPlayer: can't setVolume for "))).append(this._tuneLocation).toString().getBytes(), 2
-         );
+         EventLogger.logEvent(6982943375119825480L, ("ContentAlertPlayer: can't setVolume for " + this._tuneLocation).getBytes(), 2);
       }
    }
 

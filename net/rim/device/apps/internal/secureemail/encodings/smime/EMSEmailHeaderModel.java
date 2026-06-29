@@ -17,7 +17,7 @@ import net.rim.device.apps.internal.blackberryemail.header.EmailHeaderModel;
 import net.rim.vm.Array;
 
 public class EMSEmailHeaderModel extends EmailHeaderModel implements PersistableRIMModel, EncryptableProvider {
-   private EmailHeaderModel[] _innerEmailHeaderModels = new Object[0];
+   private EmailHeaderModel[] _innerEmailHeaderModels = new EmailHeaderModel[0];
    static final byte EMS_ADDRESS = 1;
    static final byte TO_ADDRESS = 2;
    static final byte CC_ADDRESS = 3;
@@ -58,7 +58,7 @@ public class EMSEmailHeaderModel extends EmailHeaderModel implements Persistable
          return false;
       }
 
-      EmailHeaderModel[] innerEmailHeaderModelsCopy = new Object[numInnerHeaderModels];
+      EmailHeaderModel[] innerEmailHeaderModelsCopy = new EmailHeaderModel[numInnerHeaderModels];
       System.arraycopy(this._innerEmailHeaderModels, 0, innerEmailHeaderModelsCopy, 0, numInnerHeaderModels);
 
       for (int i = 0; i < numInnerHeaderModels; i++) {
@@ -92,7 +92,7 @@ public class EMSEmailHeaderModel extends EmailHeaderModel implements Persistable
    private String getEmailAddressLowerCase(EmailHeaderModel emailHeaderModel) {
       String newEmailAddress = null;
       RIMModel insideModel = emailHeaderModel.getInsideModel();
-      if (insideModel instanceof Object) {
+      if (insideModel instanceof FriendlyNameAddressModel) {
          newEmailAddress = ((FriendlyNameAddressModel)insideModel).getAddress();
          if (newEmailAddress != null) {
             newEmailAddress = StringUtilities.toLowerCase(newEmailAddress, 1701707776);
@@ -123,7 +123,7 @@ public class EMSEmailHeaderModel extends EmailHeaderModel implements Persistable
    @Override
    public Field getField(Object context) {
       int numInnerModels = this._innerEmailHeaderModels.length;
-      Field[] innerFields = new Object[numInnerModels];
+      Field[] innerFields = new Field[numInnerModels];
       int[] innerFieldOrders = new int[numInnerModels];
       int innerFieldCount = 0;
 
@@ -139,7 +139,7 @@ public class EMSEmailHeaderModel extends EmailHeaderModel implements Persistable
       Array.resize(innerFields, innerFieldCount);
       Array.resize(innerFieldOrders, innerFieldCount);
       Arrays.sort(innerFieldOrders, 0, innerFieldCount, innerFields);
-      VerticalFieldManager vfm = (VerticalFieldManager)(new Object(1152921504606846976L));
+      VerticalFieldManager vfm = new VerticalFieldManager(1152921504606846976L);
 
       for (int i = 0; i < innerFieldCount; i++) {
          vfm.add(innerFields[i]);
@@ -160,9 +160,9 @@ public class EMSEmailHeaderModel extends EmailHeaderModel implements Persistable
    @Override
    public boolean convert(Object context, Object target) {
       if (ContextObject.getFlag(context, 43) && ContextObject.getFlag(context, 19)) {
-         DataBuffer allData = (DataBuffer)(new Object());
-         DataBuffer currentAddressData = (DataBuffer)(new Object());
-         String[] stringPair = new Object[2];
+         DataBuffer allData = new DataBuffer();
+         DataBuffer currentAddressData = new DataBuffer();
+         String[] stringPair = new String[2];
          this.convert(null, stringPair);
          this.writeStringPair(allData, currentAddressData, (byte)1, stringPair);
          int numInnerModels = this._innerEmailHeaderModels.length;
@@ -188,7 +188,7 @@ public class EMSEmailHeaderModel extends EmailHeaderModel implements Persistable
 
          ((SyncBuffer)target).addBytes(71, allData.toArray());
          return true;
-      } else if (target instanceof Object && ContextObject.getFlag(context, 70)) {
+      } else if (target instanceof StringBuffer && ContextObject.getFlag(context, 70)) {
          int numInnerModels = this._innerEmailHeaderModels.length;
 
          for (int i = 0; i < numInnerModels; i++) {
@@ -196,13 +196,13 @@ public class EMSEmailHeaderModel extends EmailHeaderModel implements Persistable
          }
 
          return true;
-      } else if (target instanceof Object[] && ContextObject.getFlag(context, 124)) {
-         String[] conversionResult = (Object[])target;
+      } else if (target instanceof String[] && ContextObject.getFlag(context, 124)) {
+         String[] conversionResult = (String[])target;
          Array.resize(conversionResult, 0);
          int numInnerModels = this._innerEmailHeaderModels.length;
 
          for (int i = 0; i < numInnerModels; i++) {
-            String[] currentAddressAndName = new Object[2];
+            String[] currentAddressAndName = new String[2];
             this._innerEmailHeaderModels[i].convert(context, currentAddressAndName);
             int oldConversionResultLength = conversionResult.length;
             Array.resize(target, oldConversionResultLength + currentAddressAndName.length);

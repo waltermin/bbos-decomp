@@ -1,6 +1,5 @@
 package net.rim.device.apps.internal.sms;
 
-import net.rim.device.api.collection.Collection;
 import net.rim.device.api.collection.CollectionEventSource;
 import net.rim.device.api.collection.IntRangedActionTarget;
 import net.rim.device.api.collection.LongKeyProviderAdaptor;
@@ -11,7 +10,9 @@ import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.system.PersistentContentListener;
 import net.rim.device.api.system.SIMCard;
 import net.rim.device.api.util.LongHashtable;
+import net.rim.device.apps.api.addressbook.EmailAddressModel;
 import net.rim.device.apps.api.framework.model.KeyProvider;
+import net.rim.device.apps.api.messaging.DateSortKeyProviderIndirection;
 import net.rim.device.apps.api.messaging.Folder;
 import net.rim.device.apps.api.messaging.FolderHierarchies;
 import net.rim.device.apps.api.messaging.FolderMerge;
@@ -29,7 +30,7 @@ public final class Storage implements PersistentContentListener {
    public static final long SMS_OUTBOX = -8580923390364260649L;
    public static final long SMS_ORPHANED_SAVED_ITEMS = -4468584479793228955L;
    public static final long SMS_FAMILY = -6498019436237624557L;
-   private static LongKeyProviderAdaptor _longKeyProviderAdaptor = (LongKeyProviderAdaptor)(new Object());
+   private static LongKeyProviderAdaptor _longKeyProviderAdaptor = new DateSortKeyProviderIndirection();
    private static int[] _addressKeys = new int[1];
    private static final long MESSAGE_THREADS_LUID = 8379405910859600340L;
    private static final long MESSAGE_THREAD_HASH = -7647744941858359268L;
@@ -82,7 +83,7 @@ public final class Storage implements PersistentContentListener {
          RadioInternal.smsCountUpdated(inboxItems.size());
          FolderMerge.registerMergedFolder(7509894771240321003L, outboxFolder);
          outboxFolder.initializeOnSystemStart();
-         purgeManager.addCollection((Collection)outboxFolder.getContainedItems());
+         purgeManager.addCollection((ReadableList)outboxFolder.getContainedItems());
          FolderMerge.registerMergedFolder(6368823655991217730L, orphanedSavedItemsFolder);
          FolderMerge.registerMergedFolder(7509894771240321003L, orphanedSavedItemsFolder);
          orphanedSavedItemsFolder.initializeOnSystemStart();
@@ -151,7 +152,7 @@ public final class Storage implements PersistentContentListener {
    }
 
    private static final SimpleFolder createFolder(SimpleFolder hierarchy, long folderId, int folderName, int flags) {
-      SimpleFolder folder = (SimpleFolder)(new Object(
+      SimpleFolder folder = new SimpleFolder(
          -6498019436237624557L,
          folderId,
          SMSResources.getResourceBundle(),
@@ -159,7 +160,7 @@ public final class Storage implements PersistentContentListener {
          "net.rim.device.apps.api.messaging.util.PersistedSortedCollection",
          hierarchy,
          flags
-      ));
+      );
       hierarchy.putFolder(folder);
       return folder;
    }
@@ -255,7 +256,7 @@ public final class Storage implements PersistentContentListener {
 
    static final long getAddressHash(Object threadAddress) {
       int hash;
-      if (threadAddress instanceof Object && threadAddress instanceof Object) {
+      if (threadAddress instanceof EmailAddressModel && threadAddress instanceof KeyProvider) {
          KeyProvider keyProvider = (KeyProvider)threadAddress;
          synchronized (_addressKeys) {
             keyProvider.getKeys(null, _addressKeys, 0, -4145532165335996154L);

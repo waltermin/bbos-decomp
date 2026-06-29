@@ -1,10 +1,12 @@
 package net.rim.device.apps.internal.mms.ui;
 
+import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.microedition.io.HttpConnection;
+import net.rim.device.api.io.IOCancelledException;
 import net.rim.device.api.io.http.HttpDateParser;
 import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.api.io.http.HttpProtocolConstants;
@@ -180,13 +182,13 @@ final class AttachmentHttpConnection implements HttpConnection, HttpProtocolCons
    }
 
    @Override
-   public final InputStream openInputStream() {
+   public final InputStream openInputStream() throws IOCancelledException {
       if (this._closed) {
-         throw new Object();
+         throw new IOCancelledException();
       }
 
       if (this._inputStream == null) {
-         this._inputStream = (InputStream)(new Object(this._attachment.getData()));
+         this._inputStream = new ByteArrayInputStream(this._attachment.getData());
       }
 
       return this._inputStream;
@@ -195,7 +197,7 @@ final class AttachmentHttpConnection implements HttpConnection, HttpProtocolCons
    @Override
    public final DataInputStream openDataInputStream() {
       InputStream in = this.openInputStream();
-      return (DataInputStream)(!(in instanceof Object) ? new Object(in) : in);
+      return !(in instanceof DataInputStream) ? new DataInputStream(in) : (DataInputStream)in;
    }
 
    @Override

@@ -13,7 +13,7 @@ public final class HTMLContext implements IBrowserContext, Persistable {
    private static final int VERSION = 1;
 
    HTMLContext() {
-      this._nameToValue = (Hashtable)(new Object());
+      this._nameToValue = new Hashtable();
    }
 
    private HTMLContext(Hashtable ht) {
@@ -32,7 +32,7 @@ public final class HTMLContext implements IBrowserContext, Persistable {
 
    @Override
    public final String toString() {
-      StringBuffer buff = (StringBuffer)(new Object());
+      StringBuffer buff = new StringBuffer();
       Enumeration e = this._nameToValue.keys();
 
       while (e.hasMoreElements()) {
@@ -63,7 +63,7 @@ public final class HTMLContext implements IBrowserContext, Persistable {
 
    @Override
    public final boolean serialize(SyncBuffer syncBuffer) {
-      DataBuffer dataBuffer = (DataBuffer)(new Object(false));
+      DataBuffer dataBuffer = new DataBuffer(false);
       dataBuffer.writeCompressedInt(1);
       dataBuffer.writeCompressedInt(this._nameToValue.size());
       Enumeration e = this._nameToValue.keys();
@@ -101,7 +101,7 @@ public final class HTMLContext implements IBrowserContext, Persistable {
 
       try {
          int numContextEntries = dataBuffer.readCompressedInt();
-         nameToValue = (Hashtable)(new Object());
+         nameToValue = new Hashtable();
 
          for (int i = 0; i < numContextEntries; i++) {
             String key = dataBuffer.readUTF();

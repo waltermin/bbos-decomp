@@ -74,7 +74,7 @@ class PhoneCallModelFactory extends RIMModelFactory {
 
             if (model.size() > 2) {
                Object obj = model.getAt(2);
-               if (_bodyModelFactory instanceof Object && !((Recognizer)_bodyModelFactory).recognize(obj)) {
+               if (_bodyModelFactory instanceof Recognizer && !((Recognizer)_bodyModelFactory).recognize(obj)) {
                   obj = _bodyModelFactory.createInstance(initialData);
                   model.add(obj);
                }

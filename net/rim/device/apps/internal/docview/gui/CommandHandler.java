@@ -87,7 +87,7 @@ public final class CommandHandler {
 
    private static final CommandHandler$EncodeVal encodeForXMLString(String candidateString) {
       int iStringSize = candidateString.length();
-      StringBuffer retValue = (StringBuffer)(new Object(iStringSize + 64));
+      StringBuffer retValue = new StringBuffer(iStringSize + 64);
       boolean isUnicodeChar = false;
       boolean isNormalChar = false;
 
@@ -127,7 +127,7 @@ public final class CommandHandler {
 
       if (isUnicodeChar) {
          int iCrtSize = retValue.length();
-         StringBuffer processString = (StringBuffer)(new Object());
+         StringBuffer processString = new StringBuffer();
 
          for (int i = 0; i < iCrtSize; i++) {
             char ch = retValue.charAt(i);
@@ -155,7 +155,7 @@ public final class CommandHandler {
 
    private static final String decodeFromXMLString(String candidateString, int unicodeVersion) {
       if (unicodeVersion != 0 && unicodeVersion != 1 && unicodeVersion != 2) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       String retValue = candidateString;
@@ -170,7 +170,7 @@ public final class CommandHandler {
       if (unicodeVersion == 1) {
          int groups = retValue.length() / 4;
          int incompleteGroups = retValue.length() % 4 == 2 ? 1 : 0;
-         StringBuffer value = (StringBuffer)(new Object());
+         StringBuffer value = new StringBuffer();
          byte[] bytes = retValue.getBytes();
 
          for (int i = 0; i < groups + incompleteGroups; i++) {
@@ -189,7 +189,7 @@ public final class CommandHandler {
          if (unicodeVersion == 2) {
             int unicodeCharStart = retValue.indexOf("&#x");
             if (unicodeCharStart != -1) {
-               StringBuffer processBuffer = (StringBuffer)(new Object(retValue));
+               StringBuffer processBuffer = new StringBuffer(retValue);
 
                while (unicodeCharStart != -1) {
                   byte[] bytes = retValue.getBytes();
@@ -203,7 +203,7 @@ public final class CommandHandler {
                   unicodeCharStart = retValue.indexOf("&#x", unicodeCharStart + 1);
                }
 
-               processBuffer = null;
+               Object var16 = null;
             }
          }
 
@@ -212,26 +212,18 @@ public final class CommandHandler {
    }
 
    static final String getStringRect(XYRect rect) {
-      return ((StringBuffer)(new Object()))
-         .append(String.valueOf(rect.x))
-         .append("x")
-         .append(String.valueOf(rect.y))
-         .append("x")
-         .append(String.valueOf(rect.width))
-         .append("x")
-         .append(String.valueOf(rect.height))
-         .toString();
+      return rect.x + "x" + rect.y + "x" + rect.width + "x" + rect.height;
    }
 
    static final String readTagValue(String xmlString, String tag) {
-      String strTag = ((StringBuffer)(new Object("<"))).append(tag).append(">").toString();
+      String strTag = "<" + tag + ">";
       int cmdStart = xmlString.indexOf(strTag);
       if (cmdStart != -1) {
-         int cmdEnd = xmlString.indexOf(((StringBuffer)(new Object("</"))).append(tag).append(">").toString());
+         int cmdEnd = xmlString.indexOf("</" + tag + ">");
          if (cmdEnd > cmdStart + strTag.length()) {
             return xmlString.substring(cmdStart + strTag.length(), cmdEnd);
          } else {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } else {
          return null;
@@ -239,32 +231,14 @@ public final class CommandHandler {
    }
 
    private static final String getStringAudioFormat(int serverCodec) {
-      StringBuffer audioFormat = (StringBuffer)(new Object(String.valueOf(serverCodec)));
+      StringBuffer audioFormat = new StringBuffer(String.valueOf(serverCodec));
       switch (serverCodec) {
          case 0:
          case 49:
-            audioFormat.append(
-               ((StringBuffer)(new Object("x")))
-                  .append(String.valueOf(1))
-                  .append("x")
-                  .append(String.valueOf(8000))
-                  .append("x")
-                  .append(String.valueOf(0))
-                  .toString()
-            );
+            audioFormat.append("x" + String.valueOf(1) + "x" + 8000 + "x" + 0);
             break;
          case 85:
-            audioFormat.append(
-               ((StringBuffer)(new Object("x")))
-                  .append(String.valueOf(1))
-                  .append("x")
-                  .append(String.valueOf(16000))
-                  .append("x")
-                  .append(String.valueOf(0))
-                  .append("x")
-                  .append(String.valueOf(16000))
-                  .toString()
-            );
+            audioFormat.append("x" + String.valueOf(1) + "x" + 16000 + "x" + 0 + "x" + 16000);
       }
 
       return audioFormat.toString();
@@ -283,12 +257,12 @@ public final class CommandHandler {
                      response.setParam(_responseTags[i], value);
                   }
                } else {
-                  String strTag = ((StringBuffer)(new Object("<"))).append(_responseTags[i]).toString();
+                  String strTag = "<" + _responseTags[i];
                   int cmdStart = responseString.indexOf(strTag);
                   if (cmdStart != -1) {
-                     int cmdEnd = responseString.indexOf(((StringBuffer)(new Object("</"))).append(_responseTags[i]).append(">").toString());
+                     int cmdEnd = responseString.indexOf("</" + _responseTags[i] + ">");
                      if (cmdEnd <= cmdStart + strTag.length()) {
-                        throw new Object();
+                        throw new IllegalArgumentException();
                      }
 
                      int cmdStartEnd = responseString.indexOf(62, cmdStart);
@@ -304,12 +278,12 @@ public final class CommandHandler {
                   }
                }
             } else {
-               String strTag = ((StringBuffer)(new Object("<"))).append(_responseTags[i]).toString();
+               String strTag = "<" + _responseTags[i];
                int cmdStart = responseString.indexOf(strTag);
                if (cmdStart != -1) {
-                  int cmdEnd = responseString.indexOf(((StringBuffer)(new Object("</"))).append(_responseTags[i]).append(">").toString());
+                  int cmdEnd = responseString.indexOf("</" + _responseTags[i] + ">");
                   if (cmdEnd <= cmdStart + strTag.length()) {
-                     throw new Object();
+                     throw new IllegalArgumentException();
                   }
 
                   int cmdStartEnd = responseString.indexOf(62, cmdStart);
@@ -320,7 +294,7 @@ public final class CommandHandler {
                }
             }
          } else {
-            String strTag = ((StringBuffer)(new Object("<"))).append(_responseTags[i]).append(' ').toString();
+            String strTag = "<" + _responseTags[i] + ' ';
             int cmdStart = responseString.indexOf(strTag);
             if (cmdStart == -1) {
                String value = readTagValue(responseString, _responseTags[i]);
@@ -333,9 +307,9 @@ public final class CommandHandler {
             }
 
             if (cmdStart != -1) {
-               int cmdEnd = responseString.indexOf(((StringBuffer)(new Object("</"))).append(_responseTags[i]).append(">").toString());
+               int cmdEnd = responseString.indexOf("</" + _responseTags[i] + ">");
                if (cmdEnd <= cmdStart + strTag.length()) {
-                  throw new Object();
+                  throw new IllegalArgumentException();
                }
 
                int cmdStartEnd = responseString.indexOf(62, cmdStart);
@@ -364,10 +338,10 @@ public final class CommandHandler {
    }
 
    public static final IntHashtable decodeArchiveContents(byte[] data) {
-      String responseData = (String)(new Object(data));
+      String responseData = new String(data);
       String nestedTagString = "<NN>";
       String nestedEndTagString = "</NN>";
-      IntHashtable retHash = (IntHashtable)(new Object());
+      IntHashtable retHash = new IntHashtable();
       IntVector nestedStartIndex = null;
       IntVector nestedEndIndex = null;
       int nestedStart = responseData.indexOf(nestedTagString);
@@ -395,11 +369,11 @@ public final class CommandHandler {
          }
 
          if (nestedStartIndex == null) {
-            nestedStartIndex = (IntVector)(new Object());
+            nestedStartIndex = new IntVector();
          }
 
          if (nestedEndIndex == null) {
-            nestedEndIndex = (IntVector)(new Object());
+            nestedEndIndex = new IntVector();
          }
 
          nestedStartIndex.addElement(nestedStart);
@@ -442,7 +416,7 @@ public final class CommandHandler {
       if (startOffset != null && endOffset != null) {
          int regions = startOffset.size();
          if (endOffset.size() != regions) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          for (int i = 0; i < regions; i++) {
@@ -466,7 +440,7 @@ public final class CommandHandler {
       if (startOffset != null && endOffset != null) {
          int regions = startOffset.size();
          if (endOffset.size() != regions) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          for (int i = 0; i < regions; i++) {
@@ -487,7 +461,7 @@ public final class CommandHandler {
 
    private static final String getAttributeValue(String tagString, String XMLAttribute) {
       String retValue = null;
-      String lookForAttr = ((StringBuffer)(new Object())).append(XMLAttribute).append('=').append("\"").toString();
+      String lookForAttr = XMLAttribute + '=' + "\"";
       int findAttrStart = tagString.indexOf(lookForAttr);
       if (findAttrStart != -1) {
          int findAttrEnd = tagString.indexOf("\"", findAttrStart + lookForAttr.length());
@@ -505,7 +479,7 @@ public final class CommandHandler {
          return inputString;
       }
 
-      StringBuffer retValue = (StringBuffer)(new Object(inputString.length()));
+      StringBuffer retValue = new StringBuffer(inputString.length());
 
       int prevStart;
       for (prevStart = 0; crtStart != -1; crtStart = inputString.indexOf(pattern, prevStart)) {
@@ -541,11 +515,11 @@ public final class CommandHandler {
          buffer.append('<');
          buffer.append(strCode);
          if (val._unicodeType != 0) {
-            buffer.append(((StringBuffer)(new Object(" U=\""))).append(String.valueOf(val._unicodeType)).append('"').toString());
+            buffer.append(" U=\"" + String.valueOf(val._unicodeType) + '"');
          }
 
          if (searchCode != 0) {
-            buffer.append(((StringBuffer)(new Object(" F=\""))).append(String.valueOf(searchCode)).append('"').toString());
+            buffer.append(" F=\"" + String.valueOf(searchCode) + '"');
          }
 
          if (addMultipleRenderRequest) {
@@ -577,9 +551,9 @@ public final class CommandHandler {
 
    private static final String getXMLCharValue(char chInputChar) {
       String retValue = "";
-      retValue = ((StringBuffer)(new Object())).append(retValue).append(Integer.toHexString(chInputChar >>> '\f')).toString();
-      retValue = ((StringBuffer)(new Object())).append(retValue).append(Integer.toHexString(chInputChar >>> '\b' & 15)).toString();
-      retValue = ((StringBuffer)(new Object())).append(retValue).append(Integer.toHexString(chInputChar >>> 4 & 15)).toString();
-      return ((StringBuffer)(new Object())).append(retValue).append(Integer.toHexString(chInputChar & 15)).toString();
+      retValue = retValue + Integer.toHexString(chInputChar >>> '\f');
+      retValue = retValue + Integer.toHexString(chInputChar >>> '\b' & 15);
+      retValue = retValue + Integer.toHexString(chInputChar >>> 4 & 15);
+      return retValue + Integer.toHexString(chInputChar & 15);
    }
 }

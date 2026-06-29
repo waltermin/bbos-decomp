@@ -7,7 +7,7 @@ public final class TripleDESEncryptorEngine implements SymmetricKeyEncryptorEngi
 
    public TripleDESEncryptorEngine(TripleDESKey key) {
       if (key == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._cryptoToken = key.getTripleDESCryptoToken();

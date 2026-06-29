@@ -6,7 +6,7 @@ import net.rim.device.apps.api.options.OptionsProviderRegistration$OptionsProvid
 final class MapsOptionsScreen$MapsOptionsProvider implements OptionsProviderRegistration$OptionsProvider {
    @Override
    public final Vector getOptionsItems() {
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       v.addElement(new MapsOptionsScreen());
       return v;
    }

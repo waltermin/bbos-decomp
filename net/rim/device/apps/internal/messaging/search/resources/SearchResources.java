@@ -5,9 +5,7 @@ import net.rim.device.api.i18n.ResourceBundleFamily;
 import net.rim.vm.WeakReference;
 
 public final class SearchResources {
-   private static WeakReference _refFamily = (WeakReference)(new Object(
-      ResourceBundle.getBundle(570792712302434978L, "net.rim.device.apps.internal.resource.Search")
-   ));
+   private static WeakReference _refFamily = new WeakReference(ResourceBundle.getBundle(570792712302434978L, "net.rim.device.apps.internal.resource.Search"));
 
    public static final String getString(int id) {
       return getBundle().getString(id);
@@ -17,7 +15,7 @@ public final class SearchResources {
       ResourceBundleFamily family = (ResourceBundleFamily)_refFamily.get();
       if (family == null) {
          family = ResourceBundle.getBundle(570792712302434978L, "net.rim.device.apps.internal.resource.Search");
-         _refFamily = (WeakReference)(new Object(family));
+         _refFamily = new WeakReference(family);
       }
 
       return family;

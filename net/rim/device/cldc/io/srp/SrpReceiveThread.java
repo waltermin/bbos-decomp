@@ -1,5 +1,7 @@
 package net.rim.device.cldc.io.srp;
 
+import net.rim.device.api.io.DatagramTransportBase;
+
 final class SrpReceiveThread extends Thread {
    private boolean _isTransport;
    private Object _connectionObj;
@@ -7,7 +9,7 @@ final class SrpReceiveThread extends Thread {
 
    SrpReceiveThread(Object connection, SrpBridgeConnection subConnection) {
       this._connectionObj = connection;
-      this._isTransport = connection instanceof Object;
+      this._isTransport = connection instanceof DatagramTransportBase;
       this._connection = subConnection;
    }
 
@@ -36,13 +38,13 @@ final class SrpReceiveThread extends Thread {
       // 17: ifeq 28
       // 1a: aload 0
       // 1b: getfield net/rim/device/cldc/io/srp/SrpReceiveThread._connectionObj Ljava/lang/Object;
-      // 1e: checkcast java/lang/Object
+      // 1e: checkcast net/rim/device/api/io/DatagramTransportBase
       // 21: aload 1
       // 22: invokevirtual net/rim/device/api/io/DatagramTransportBase.superProcessReceivedDatagram (Ljavax/microedition/io/Datagram;)V
       // 25: goto 33
       // 28: aload 0
       // 29: getfield net/rim/device/cldc/io/srp/SrpReceiveThread._connectionObj Ljava/lang/Object;
-      // 2c: checkcast java/lang/Object
+      // 2c: checkcast net/rim/device/api/io/DatagramConnectionBase
       // 2f: aload 1
       // 30: invokevirtual net/rim/device/api/io/DatagramConnectionBase.processReceivedDatagram (Ljavax/microedition/io/Datagram;)V
       // 33: aconst_null

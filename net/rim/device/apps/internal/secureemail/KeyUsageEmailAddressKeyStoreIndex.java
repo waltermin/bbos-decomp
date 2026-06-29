@@ -44,13 +44,13 @@ public class KeyUsageEmailAddressKeyStoreIndex implements KeyStoreIndex {
 
                try {
                   var11 = true;
-                  ASN1InputByteArray sign = new Object(extendedKeyUsageExtensionValue);
-                  ((ASN1InputByteArray)sign).readSequence();
+                  ASN1InputByteArray sign = new ASN1InputByteArray(extendedKeyUsageExtensionValue);
+                  sign.readSequence();
                   boolean encrypt = false;
-                  int i = ((ASN1InputByteArray)sign).getEndPosition();
+                  int i = sign.getEndPosition();
 
-                  while (((ASN1InputByteArray)sign).getStartPosition() < i) {
-                     OID oid = ((ASN1InputByteArray)sign).readOID();
+                  while (sign.getStartPosition() < i) {
+                     OID oid = sign.readOID();
                      if (oid.equals(OIDs.getOID(-477712248))) {
                         encrypt = true;
                         break;
@@ -95,7 +95,7 @@ public class KeyUsageEmailAddressKeyStoreIndex implements KeyStoreIndex {
    @Override
    public int getHash(Object target) {
       if (!(target instanceof KeyUsageEmailAddressKeyStoreIndex$Alias)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       KeyUsageEmailAddressKeyStoreIndex$Alias a = (KeyUsageEmailAddressKeyStoreIndex$Alias)target;
@@ -105,7 +105,7 @@ public class KeyUsageEmailAddressKeyStoreIndex implements KeyStoreIndex {
    @Override
    public boolean matches(KeyStoreData data, Object target) {
       if (!(target instanceof KeyUsageEmailAddressKeyStoreIndex$Alias)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       KeyUsageEmailAddressKeyStoreIndex$Alias a = (KeyUsageEmailAddressKeyStoreIndex$Alias)target;
@@ -123,7 +123,7 @@ public class KeyUsageEmailAddressKeyStoreIndex implements KeyStoreIndex {
       boolean encrypt = certificate.queryKeyUsage(4) != 0 || certificate.queryKeyUsage(16) != 0;
       switch (a._usage) {
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          default:
             if (!sign) {

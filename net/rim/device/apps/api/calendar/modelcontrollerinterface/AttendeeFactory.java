@@ -19,7 +19,7 @@ public class AttendeeFactory {
    }
 
    public static Attendee createAttendeeFromRFC822(int type, String address, Object context) {
-      String[] names = new Object[]{null, null};
+      String[] names = new String[]{null, null};
       int i = address.indexOf(0);
       if (i != -1) {
          names[0] = address.substring(0, i);

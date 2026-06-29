@@ -31,7 +31,7 @@ import net.rim.tid.awt.im.InputContext;
 final class OptionsApp$DefaultDeviceOptionsProvider implements OptionsProviderRegistration$OptionsProvider {
    @Override
    public final Vector getOptionsItems() {
-      Vector optionsItems = (Vector)(new Object());
+      Vector optionsItems = new Vector();
       optionsItems.addElement(new AboutOptionsItem());
       optionsItems.addElement(new ApplicationOptionsItem());
       optionsItems.addElement(new AutoOnOffOptionsItem());

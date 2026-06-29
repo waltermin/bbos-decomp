@@ -39,7 +39,7 @@ final class WicletDurationEditField extends BaseDurationField implements View, F
 
    @Override
    public final void fieldChanged(Field field, int context) {
-      this._model.setValue(new Object(this.getDuration()), true);
+      this._model.setValue(new Long(this.getDuration()), true);
    }
 
    @Override
@@ -120,14 +120,14 @@ final class WicletDurationEditField extends BaseDurationField implements View, F
       Object value = this._model.getValue();
       long duration = 0;
       if (value == null) {
-         this._model.initializeToEmpty(new Object(duration));
-      } else if (!(value instanceof Object)) {
+         this._model.initializeToEmpty(new Long(duration));
+      } else if (!(value instanceof Vector)) {
          if (!(value instanceof LongVector)) {
-            if (!(value instanceof Object)) {
-               if (value instanceof Object) {
+            if (!(value instanceof IntVector)) {
+               if (value instanceof String) {
                   duration = this.parseDuration((String)value);
-               } else if (!(value instanceof Object)) {
-                  duration = value;
+               } else if (!(value instanceof Integer)) {
+                  duration = (Long)value;
                } else {
                   duration = ((Integer)value).intValue();
                }

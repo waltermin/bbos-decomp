@@ -2,7 +2,9 @@ package net.rim.device.apps.internal.ribbon.skin.svg;
 
 import net.rim.device.api.collection.Collection;
 import net.rim.device.api.collection.ReadableList;
+import net.rim.device.apps.api.framework.model.ActionProvider;
 import net.rim.device.apps.api.framework.model.ContextObject;
+import net.rim.device.apps.api.framework.model.VisibilityControl;
 import net.rim.device.apps.api.messaging.FolderHierarchies;
 import net.rim.device.apps.api.messaging.MessageFilter;
 
@@ -23,7 +25,7 @@ public class NewMessageFilter extends MessageFilter {
 
    @Override
    protected boolean passes(Object message) {
-      return message instanceof Object && message instanceof Object ? super.passes(message) : false;
+      return message instanceof VisibilityControl && message instanceof ActionProvider ? super.passes(message) : false;
    }
 
    private synchronized void removeOldItemsFromSubSet() {

@@ -147,7 +147,7 @@ public final class CertificateUtilities {
 
          throw new CertificateInvalidException();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -190,7 +190,7 @@ public final class CertificateUtilities {
             return name;
          }
 
-         StringBuffer buffer = (StringBuffer)(new Object());
+         StringBuffer buffer = new StringBuffer();
          String givenName = distinguishedName.getString(OIDs.getOID(-1250500949));
          if (givenName != null) {
             buffer.append(givenName);
@@ -304,7 +304,7 @@ public final class CertificateUtilities {
          digest.update(certificate.getEncoding());
          return getHexAsciiString(digest.getDigest());
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -314,7 +314,7 @@ public final class CertificateUtilities {
 
    public static final String getHexAsciiString(byte[] data, int offset, int length) {
       if (data == null || offset < 0 || length < 0 || data.length - length < offset) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (data.length != 0 && length != 0) {
@@ -339,7 +339,7 @@ public final class CertificateUtilities {
             hexBuffer[hexIndex++] = 32;
          }
 
-         return (String)(new Object(hexBuffer));
+         return new String(hexBuffer);
       } else {
          return "";
       }
@@ -458,14 +458,14 @@ public final class CertificateUtilities {
 
          return enum1.hasMoreElements() != !enum2.hasMoreElements();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    public static final AssociatedData[] getEmailAssociatedDataArray(Certificate certificate) {
       AssociatedData[] associatedData = null;
       if (certificate != null) {
-         String[] addresses = (Object[])certificate.getInformation(-7850001002262082664L, null, null);
+         String[] addresses = (String[])certificate.getInformation(-7850001002262082664L, null, null);
          if (addresses != null) {
             int numAddresses = addresses.length;
             associatedData = new AssociatedData[numAddresses];
@@ -482,7 +482,7 @@ public final class CertificateUtilities {
    public static final String getX509WTLSSummaryText(Certificate certificate) {
       DistinguishedName subject = certificate.getSubject();
       DistinguishedName issuer = certificate.getIssuer();
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       buffer.append(CertificateResources.getString(3));
       buffer.append(' ');
       buffer.append(getFriendlyName(subject));
@@ -500,7 +500,7 @@ public final class CertificateUtilities {
 
    public static final javax.microedition.pki.Certificate convertCertificate(Certificate certificate) {
       if (certificate == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       Certificate cert = certificate;
@@ -517,7 +517,7 @@ public final class CertificateUtilities {
       // Bytecode:
       // 000: aload 1
       // 001: ifnonnull 00c
-      // 004: new java/lang/Object
+      // 004: new java/lang/IllegalArgumentException
       // 007: dup
       // 008: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 00b: athrow
@@ -536,7 +536,7 @@ public final class CertificateUtilities {
       // 026: arraylength
       // 027: invokestatic net/rim/device/api/util/Arrays.equals ([BI[BII)Z
       // 02a: ifeq 07a
-      // 02d: new java/lang/Object
+      // 02d: new java/lang/String
       // 030: dup
       // 031: aload 1
       // 032: invokespecial java/lang/String.<init> ([B)V
@@ -560,9 +560,9 @@ public final class CertificateUtilities {
       // 059: isub
       // 05a: istore 4
       // 05c: ldc_w "X509"
-      // 05f: new java/lang/Object
+      // 05f: new net/rim/device/api/io/Base64InputStream
       // 062: dup
-      // 063: new java/lang/Object
+      // 063: new java/io/ByteArrayInputStream
       // 066: dup
       // 067: aload 1
       // 068: iload 3
@@ -582,9 +582,9 @@ public final class CertificateUtilities {
       // 083: goto 087
       // 086: astore 2
       // 087: ldc_w "X509"
-      // 08a: new java/lang/Object
+      // 08a: new net/rim/device/api/io/Base64InputStream
       // 08d: dup
-      // 08e: new java/lang/Object
+      // 08e: new java/io/ByteArrayInputStream
       // 091: dup
       // 092: aload 1
       // 093: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -609,7 +609,7 @@ public final class CertificateUtilities {
       // 0bc: arraylength
       // 0bd: invokestatic net/rim/device/api/util/Arrays.equals ([BI[BII)Z
       // 0c0: ifeq 106
-      // 0c3: new java/lang/Object
+      // 0c3: new java/lang/String
       // 0c6: dup
       // 0c7: aload 1
       // 0c8: invokespecial java/lang/String.<init> ([B)V
@@ -633,7 +633,7 @@ public final class CertificateUtilities {
       // 0ef: isub
       // 0f0: istore 4
       // 0f2: ldc_w "PGP"
-      // 0f5: new java/lang/Object
+      // 0f5: new java/io/ByteArrayInputStream
       // 0f8: dup
       // 0f9: aload 1
       // 0fa: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -650,9 +650,9 @@ public final class CertificateUtilities {
       // 10f: goto 113
       // 112: astore 2
       // 113: ldc_w "PGP"
-      // 116: new java/lang/Object
+      // 116: new net/rim/device/api/io/Base64InputStream
       // 119: dup
-      // 11a: new java/lang/Object
+      // 11a: new java/io/ByteArrayInputStream
       // 11d: dup
       // 11e: aload 1
       // 11f: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -677,7 +677,7 @@ public final class CertificateUtilities {
       // 148: arraylength
       // 149: invokestatic net/rim/device/api/util/Arrays.equals ([BI[BII)Z
       // 14c: ifeq 189
-      // 14f: new java/lang/Object
+      // 14f: new java/lang/String
       // 152: dup
       // 153: aload 1
       // 154: invokespecial java/lang/String.<init> ([B)V
@@ -694,9 +694,9 @@ public final class CertificateUtilities {
       // 168: isub
       // 169: istore 4
       // 16b: ldc_w "WTLS"
-      // 16e: new java/lang/Object
+      // 16e: new net/rim/device/api/io/Base64InputStream
       // 171: dup
-      // 172: new java/lang/Object
+      // 172: new java/io/ByteArrayInputStream
       // 175: dup
       // 176: aload 1
       // 177: iload 3
@@ -716,9 +716,9 @@ public final class CertificateUtilities {
       // 192: goto 196
       // 195: astore 2
       // 196: ldc_w "WTLS"
-      // 199: new java/lang/Object
+      // 199: new net/rim/device/api/io/Base64InputStream
       // 19c: dup
-      // 19d: new java/lang/Object
+      // 19d: new java/io/ByteArrayInputStream
       // 1a0: dup
       // 1a1: aload 1
       // 1a2: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -753,10 +753,10 @@ public final class CertificateUtilities {
 
    public static final String formatDistinguishedName(DistinguishedName dn, char separator) {
       if (dn == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
-      StringBuffer dnStringBuf = (StringBuffer)(new Object(dn.toString()));
+      StringBuffer dnStringBuf = new StringBuffer(dn.toString());
       int length = dnStringBuf.length();
       int replaceIndex = -1;
 
@@ -781,10 +781,7 @@ public final class CertificateUtilities {
          for (String currentEmailAddress : emailAddresses) {
             int atIndex = currentEmailAddress.indexOf(64);
             if (atIndex >= 0) {
-               String canonicalizedEmailAddress = ((StringBuffer)(new Object()))
-                  .append(currentEmailAddress.substring(0, atIndex + 1))
-                  .append(canonicalDomainName)
-                  .toString();
+               String canonicalizedEmailAddress = currentEmailAddress.substring(0, atIndex + 1) + canonicalDomainName;
                if (!containsStringIgnoreCase(emailAddresses, canonicalizedEmailAddress)) {
                   Arrays.add(emailAddresses, canonicalizedEmailAddress);
                }

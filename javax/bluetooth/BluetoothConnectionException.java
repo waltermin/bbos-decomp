@@ -26,7 +26,7 @@ public class BluetoothConnectionException extends IOException {
       switch (error) {
          case 0:
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 1:
          case 2:
          case 3:

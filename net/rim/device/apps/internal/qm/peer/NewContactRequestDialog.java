@@ -2,11 +2,11 @@ package net.rim.device.apps.internal.qm.peer;
 
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.FlowFieldManager;
 import net.rim.device.api.ui.container.PopupScreen;
 import net.rim.device.api.ui.container.VerticalFieldManager;
@@ -22,37 +22,35 @@ final class NewContactRequestDialog extends PopupScreen implements FieldChangeLi
    private boolean _result;
 
    NewContactRequestDialog(PeerRequest request) {
-      super((Manager)(new Object(562949953421312L)));
+      super(new VerticalFieldManager(562949953421312L));
       this._request = request;
       this.createDialog();
    }
 
    private final void createDialog() {
-      LabelField label = (LabelField)(new Object(PeerResources.getString(1000)));
-      RichTextField from = (RichTextField)(new Object(
-         ((StringBuffer)(new Object())).append(PeerResources.getString(889)).append(" ").append(this._request.getName()).toString(), 9007199254740992L
-      ));
-      RichTextField rtf = (RichTextField)(new Object(this._request.getBody(), 9007199254740992L));
-      VerticalFieldManager vfm = (VerticalFieldManager)(new Object(299067162755072L));
+      LabelField label = new LabelField(PeerResources.getString(1000));
+      RichTextField from = new RichTextField(PeerResources.getString(889) + " " + this._request.getName(), 9007199254740992L);
+      RichTextField rtf = new RichTextField(this._request.getBody(), 9007199254740992L);
+      VerticalFieldManager vfm = new VerticalFieldManager(299067162755072L);
       vfm.add(from);
-      vfm.add((Field)(new Object()));
+      vfm.add(new SeparatorField());
       vfm.add(rtf);
       FixedHeightManager fhm = new FixedHeightManager(vfm, 4);
-      FlowFieldManager ffm = (FlowFieldManager)(new Object(12884901888L));
-      this._cancelButton = (ButtonField)(new Object(CommonResources.getString(9042)));
+      FlowFieldManager ffm = new FlowFieldManager(12884901888L);
+      this._cancelButton = new ButtonField(CommonResources.getString(9042));
       this._cancelButton.setChangeListener(this);
-      this._removeButton = (ButtonField)(new Object(PeerResources.getString(905)));
+      this._removeButton = new ButtonField(PeerResources.getString(905));
       this._removeButton.setChangeListener(this);
-      this._declineButton = (ButtonField)(new Object(PeerResources.getString(903)));
+      this._declineButton = new ButtonField(PeerResources.getString(903));
       this._declineButton.setChangeListener(this);
-      this._acceptButton = (ButtonField)(new Object(PeerResources.getString(894)));
+      this._acceptButton = new ButtonField(PeerResources.getString(894));
       this._acceptButton.setChangeListener(this);
       ffm.add(this._acceptButton);
       ffm.add(this._declineButton);
       ffm.add(this._removeButton);
       ffm.add(this._cancelButton);
       this.add(label);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.add(fhm);
       this.add(ffm);
       this._acceptButton.setFocus();

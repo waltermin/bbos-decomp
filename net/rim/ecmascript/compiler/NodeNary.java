@@ -3,7 +3,7 @@ package net.rim.ecmascript.compiler;
 import java.util.Vector;
 
 class NodeNary extends Node {
-   protected Vector _children = (Vector)(new Object());
+   protected Vector _children = new Vector();
 
    void addExpr(Node n) {
       this._children.addElement(n);

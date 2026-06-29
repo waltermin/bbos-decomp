@@ -22,7 +22,7 @@ public final class EngScreenApp extends UiApplication {
       } else {
          ApplicationDescriptor appDescrip = ApplicationDescriptor.currentApplicationDescriptor();
          ((ApplicationManagerInternal)ApplicationManager.getApplicationManager())
-            .setEngScreenDescriptor((ApplicationDescriptor)(new Object(appDescrip, new String[]{"Execute"})));
+            .setEngScreenDescriptor(new ApplicationDescriptor(appDescrip, new String[]{"Execute"}));
          if (InternalServices.isDeviceSecure() && RadioInfo.areWAFsSupported(2) && Branding.getData(16) != null) {
             RadioInternal.setup(7, 4915);
             return;
@@ -65,7 +65,7 @@ public final class EngScreenApp extends UiApplication {
       // 0f: ifnull 34
       // 12: aload 2
       // 13: invokevirtual java/lang/Class.newInstance ()Ljava/lang/Object;
-      // 16: checkcast java/lang/Object
+      // 16: checkcast net/rim/device/internal/EScreens/EScreenRoot
       // 19: astore 3
       // 1a: aload 3
       // 1b: iload 1

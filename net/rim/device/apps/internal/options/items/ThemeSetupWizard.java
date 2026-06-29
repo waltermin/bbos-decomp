@@ -6,7 +6,6 @@ import net.rim.device.api.system.Application;
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.system.Display;
 import net.rim.device.api.system.EncodedImage;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Ui;
@@ -14,6 +13,7 @@ import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.RadioButtonField;
 import net.rim.device.api.ui.component.Status;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.ThemeManager;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.setupwizard.BasicWizardPage$WizardVerb;
@@ -44,14 +44,14 @@ public final class ThemeSetupWizard extends ListWizardPage {
 
    public ThemeSetupWizard() {
       super(OptionsResources.getResourceBundle(), 1439, 200, SetupWizardOrdering.THEME_CATEGORY, 131072);
-      this._emptyThumbnail = (Bitmap)(new Object(_thumbWidth, _thumbHeight));
+      this._emptyThumbnail = new Bitmap(_thumbWidth, _thumbHeight);
    }
 
    @Override
    protected final void initialize() {
       super.initialize();
       if (this._thumbCache == null) {
-         this._thumbCache = (Hashtable)(new Object());
+         this._thumbCache = new Hashtable();
       }
    }
 
@@ -73,12 +73,12 @@ public final class ThemeSetupWizard extends ListWizardPage {
 
    @Override
    protected final void populateFields() {
-      this._header = (Manager)(new Object());
+      this._header = new VerticalFieldManager();
       this._header.setFont(this.getHeaderFont());
-      LabelField label = (LabelField)(new Object(OptionsResources.getString(2107)));
+      LabelField label = new LabelField(OptionsResources.getString(2107));
       label.setBorder(0, 0, label.getFont().getHeight() >> 1, 0);
       this._header.add(label);
-      this._header.add((Field)(new Object(OptionsResources.getString(2108))));
+      this._header.add(new LabelField(OptionsResources.getString(2108)));
       this.setHeaderField(this._header);
       this.populateItemList();
       this._pendingThemeChange = false;
@@ -94,7 +94,7 @@ public final class ThemeSetupWizard extends ListWizardPage {
       this._themesPreLoaded = false;
       int numThemes = this._themeNames.length;
       int indexOffset = this._hideNone ? 1 : 0;
-      String[] displayNames = new Object[numThemes - indexOffset];
+      String[] displayNames = new String[numThemes - indexOffset];
       if (!this._hideNone) {
          displayNames[0] = OptionsResources.getString(1473);
       }
@@ -108,7 +108,7 @@ public final class ThemeSetupWizard extends ListWizardPage {
       Application.getApplication().invokeLater(new ThemeSetupWizard$1(this));
       this._currentPreviewIndex = this._originalThemeIndex;
       Bitmap previewBitmap = this.getPreviewBitmap(this._originalThemeIndex);
-      this._previewField = (BitmapField)(new Object(previewBitmap));
+      this._previewField = new BitmapField(previewBitmap);
       this.setSideBar(this._previewField, previewBitmap.getWidth());
    }
 
@@ -139,7 +139,7 @@ public final class ThemeSetupWizard extends ListWizardPage {
    private final void setNewTheme(int uiIndex) {
       int rawIndex = this.fixIndex(uiIndex);
       String name = this._themeNames[rawIndex];
-      this.log(((StringBuffer)(new Object("Changing Themes: "))).append(name).toString());
+      this.log("Changing Themes: " + name);
       if (ThemeManager.isActivatable(name)) {
          Status.show(OptionsResources.getString(2109), Bitmap.getPredefinedBitmap(0), 2000, 0, false, false, 50);
          this._newThemeName = name;
@@ -172,7 +172,7 @@ public final class ThemeSetupWizard extends ListWizardPage {
 
    @Override
    public final boolean confirm(Verb verb, Object context) {
-      if (verb instanceof Object && ((BasicWizardPage$WizardVerb)verb).canAutoSave()) {
+      if (verb instanceof BasicWizardPage$WizardVerb && ((BasicWizardPage$WizardVerb)verb).canAutoSave()) {
          return true;
       }
 
@@ -182,7 +182,7 @@ public final class ThemeSetupWizard extends ListWizardPage {
 
    protected final void revertTheme() {
       if (this._originalThemeName != null && this._newThemeName != null && !this._newThemeName.equals(this._originalThemeName)) {
-         this.log(((StringBuffer)(new Object("Reverting theme: "))).append(this._originalThemeName).toString());
+         this.log("Reverting theme: " + this._originalThemeName);
          this._newThemeName = null;
          this._revertingTheme = true;
          Status.show(OptionsResources.getString(2110));
@@ -321,8 +321,8 @@ public final class ThemeSetupWizard extends ListWizardPage {
             EncodedImage image = EncodedImage.createEncodedImage(data, 0, -1);
             int scale = Math.max(image.getWidth() / _thumbWidth, 1);
             image.setScale(scale);
-            Bitmap bitmap = (Bitmap)(new Object(_thumbWidth, _thumbHeight));
-            Graphics graphics = (Graphics)(new Object(bitmap));
+            Bitmap bitmap = new Bitmap(_thumbWidth, _thumbHeight);
+            Graphics graphics = new Graphics(bitmap);
             graphics.drawImage(0, 0, _thumbWidth, _thumbHeight, image, 0, 0, 0);
             return bitmap;
          }

@@ -23,7 +23,7 @@ public final class CryptoIndicatorImages {
    }
 
    public static final ImageField getImageField(int index) {
-      ImageField imageField = (ImageField)(new Object());
+      ImageField imageField = new ImageField();
       imageField.setImage(getImage(index));
       return imageField;
    }

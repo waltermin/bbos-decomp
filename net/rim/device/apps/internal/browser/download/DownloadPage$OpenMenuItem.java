@@ -1,6 +1,6 @@
 package net.rim.device.apps.internal.browser.download;
 
-import net.rim.device.api.browser.field.Event;
+import net.rim.device.api.browser.field.UrlRequestedEvent;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.internal.i18n.CommonResource;
 
@@ -16,6 +16,6 @@ class DownloadPage$OpenMenuItem extends MenuItem {
 
    @Override
    public void run() {
-      this.this$0.eventOccurred((Event)(new Object(this, this._url, null, null, false, 0)));
+      this.this$0.eventOccurred(new UrlRequestedEvent(this, this._url, null, null, false, 0));
    }
 }

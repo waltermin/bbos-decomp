@@ -44,8 +44,8 @@ public final class WSPHeaders {
 
    public final HttpHeaders getHeaders() {
       if (this._headers == null) {
-         this._headers = (HttpHeaders)(new Object());
-         WSPHeaderDecoder oldHeaderDecoder = (WSPHeaderDecoder)(new Object(this._headers));
+         this._headers = new HttpHeaders();
+         WSPHeaderDecoder oldHeaderDecoder = new WSPHeaderDecoder(this._headers);
          oldHeaderDecoder.decode(this._attrList, false);
       }
 

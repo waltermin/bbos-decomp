@@ -5,10 +5,11 @@ import net.rim.device.api.system.Application;
 import net.rim.device.api.system.RIMGlobalMessagePoster;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Keypad;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.RadioButtonField;
 import net.rim.device.api.ui.component.RadioButtonGroup;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.PopupScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.apps.api.calendar.caldb.CalendarKey;
 import net.rim.device.apps.api.calendar.caldb.CalendarOptions;
@@ -16,7 +17,7 @@ import net.rim.device.apps.api.calendar.caldb.CalendarService;
 import net.rim.device.apps.api.calendar.caldb.CalendarServiceManager;
 
 final class ViewCalendarPopupScreen extends PopupScreen {
-   private RadioButtonGroup _radioGroup = (RadioButtonGroup)(new Object());
+   private RadioButtonGroup _radioGroup = new RadioButtonGroup();
    private ViewCalendarPopupScreen$CalendarFolderController[] _folders;
    private boolean _isAllSelected = false;
    private RadioButtonField _viewAllField;
@@ -25,10 +26,10 @@ final class ViewCalendarPopupScreen extends PopupScreen {
    private static final Tag FOLDER_TEXT_TAG = Tag.create("view-calendars-folder-text");
 
    public ViewCalendarPopupScreen(CalendarKey[] folderKeys) {
-      super((Manager)(new Object(299067162755072L)), 0);
+      super(new VerticalFieldManager(299067162755072L), 0);
       this.getDelegate().setTag(TAG);
-      this.add(this._viewAllField = (RadioButtonField)(new Object(this._rb.getString(654), this._radioGroup, true)));
-      this.add((Field)(new Object()));
+      this.add(this._viewAllField = new RadioButtonField(this._rb.getString(654), this._radioGroup, true));
+      this.add(new SeparatorField());
       int numFolders = folderKeys.length;
       this._folders = new ViewCalendarPopupScreen$CalendarFolderController[numFolders];
 
@@ -75,7 +76,7 @@ final class ViewCalendarPopupScreen extends PopupScreen {
 
    protected final void activateSelection() {
       Field focusField = this.getLeafFieldWithFocus();
-      if (focusField instanceof Object) {
+      if (focusField instanceof RadioButtonField) {
          ((RadioButtonField)focusField).setSelected(true);
          this.activateService((ViewCalendarPopupScreen$CalendarFolderController)focusField.getCookie());
          this.delayedClose();

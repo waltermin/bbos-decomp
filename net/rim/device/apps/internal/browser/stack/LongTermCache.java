@@ -74,8 +74,8 @@ final class LongTermCache extends LongHashtable {
 
    static {
       Object contents = _persistentObject.getContents();
-      if (!(contents instanceof Object)) {
-         _persistedHashtable = (LongHashtable)(new Object());
+      if (!(contents instanceof LongHashtable)) {
+         _persistedHashtable = new LongHashtable();
          _persistentObject.setContents(_persistedHashtable, 51);
          _persistentObject.commit();
       } else {

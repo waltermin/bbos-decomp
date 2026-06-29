@@ -48,7 +48,7 @@ final class GhostMessageSync extends EmailSyncState implements SyncCollection, S
    @Override
    public final SyncObject[] getSyncObjects() {
       int num = EmailHierarchy.getEmailHierarchyCount();
-      SyncObject[] objects = new Object[500 * num];
+      SyncObject[] objects = new SyncObject[500 * num];
       int sofar = 0;
 
       for (int i = 0; i < num; i++) {

@@ -49,7 +49,7 @@ public class PageConverter extends BaseConverter {
       FetchRequest fetchRequest = wrapper.getFetchRequest();
       ModelResult modelResult = fetchRequest.getModelResult();
       String url = null;
-      if (!(inputConnection instanceof Object)) {
+      if (!(inputConnection instanceof HttpConnection)) {
          url = modelResult.getURL();
       } else {
          url = ((HttpConnection)inputConnection).getURL();
@@ -92,8 +92,8 @@ public class PageConverter extends BaseConverter {
          }
 
          BrowserContentImpl field = null;
-         if (!(browserContent instanceof Object)) {
-            field = (BrowserContentImpl)(new Object(browserContent));
+         if (!(browserContent instanceof BrowserContentImpl)) {
+            field = new BrowserContentWrapper(browserContent);
          } else {
             field = (BrowserContentImpl)browserContent;
          }

@@ -2,6 +2,8 @@ package net.rim.device.api.crypto.encoder;
 
 import net.rim.device.api.crypto.Digest;
 import net.rim.device.api.crypto.DigestFactory;
+import net.rim.device.api.crypto.InvalidSignatureEncodingException;
+import net.rim.device.api.crypto.NoSuchAlgorithmException;
 import net.rim.device.api.crypto.asn1.ASN1InputByteArray;
 import net.rim.device.api.crypto.oid.OID;
 import net.rim.device.api.crypto.oid.OIDs;
@@ -11,7 +13,7 @@ final class X509_RIM_SignatureDecoder3 extends X509_SignatureDecoder {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   protected final DecodedSignature decodeSignature(ASN1InputByteArray parameters, byte[] encodedSignature, String signatureAlgorithm, String digestAlgorithm) {
+   protected final DecodedSignature decodeSignature(ASN1InputByteArray parameters, byte[] encodedSignature, String signatureAlgorithm, String digestAlgorithm) throws InvalidSignatureEncodingException, NoSuchAlgorithmException {
       boolean var10 = false /* VF: Semaphore variable */;
 
       try {
@@ -22,7 +24,7 @@ final class X509_RIM_SignatureDecoder3 extends X509_SignatureDecoder {
             }
 
             Digest digest = DigestFactory.getInstance(digestAlgorithm);
-            ASN1InputByteArray asn1Stream = (ASN1InputByteArray)(new Object(encodedSignature));
+            ASN1InputByteArray asn1Stream = new ASN1InputByteArray(encodedSignature);
             asn1Stream.readSequence();
             byte[] _r = asn1Stream.readIntegerAsByteArray();
             byte[] _s = asn1Stream.readIntegerAsByteArray();
@@ -39,7 +41,7 @@ final class X509_RIM_SignatureDecoder3 extends X509_SignatureDecoder {
             }
 
             if (hashName == null) {
-               throw new Object();
+               throw new InvalidSignatureEncodingException();
             }
 
             Digest digest = DigestFactory.getInstance(hashName);
@@ -50,11 +52,11 @@ final class X509_RIM_SignatureDecoder3 extends X509_SignatureDecoder {
          var10 = false;
       } finally {
          if (var10) {
-            throw new Object();
+            throw new InvalidSignatureEncodingException();
          }
       }
 
-      throw new Object(signatureAlgorithm);
+      throw new NoSuchAlgorithmException(signatureAlgorithm);
    }
 
    @Override

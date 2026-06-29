@@ -9,6 +9,7 @@ import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.Comparator;
 import net.rim.device.apps.api.addressbook.AddressSelectionContext;
 import net.rim.device.apps.api.addressbook.SelectionListener;
+import net.rim.device.apps.api.addressbook.UseEntryVerb;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.DefaultProvider;
 import net.rim.device.apps.api.framework.model.Recognizer;
@@ -28,7 +29,7 @@ final class AddressSelectionVerb extends Verb implements SelectionListener, Copy
 
    protected final Object pickFromList(AddressSelectionContext context, Object model, Object[] members) {
       int count = members.length;
-      String[] values = new Object[count];
+      String[] values = new String[count];
       ContextObject contextObject = ContextObject.castOrCreate(context.getContext());
       boolean oldAddressOnly = contextObject.getFlag(51);
       contextObject.setFlag(51);
@@ -37,7 +38,7 @@ final class AddressSelectionVerb extends Verb implements SelectionListener, Copy
 
       for (int i = 0; i < count; i++) {
          Object member = members[i];
-         if (member instanceof Object) {
+         if (member instanceof VerbDescriptionProvider) {
             VerbDescriptionProvider provider = (VerbDescriptionProvider)member;
             values[i] = provider.getVerbDescription(contextObject);
          }
@@ -65,7 +66,7 @@ final class AddressSelectionVerb extends Verb implements SelectionListener, Copy
       Arrays.sort(values, 0, count, members, this._toStringComparator);
       int defaultIndex = 0;
       DefaultProvider defaultProvider = null;
-      if (this._rootObject instanceof Object) {
+      if (this._rootObject instanceof DefaultProvider) {
          defaultProvider = (DefaultProvider)this._rootObject;
          Object defaultEntry = defaultProvider.getDefault(null, contextObject);
 
@@ -187,10 +188,10 @@ final class AddressSelectionVerb extends Verb implements SelectionListener, Copy
                useEntryPrefix = useEntryPrefixes[i];
             }
 
-            Verb var12 = new Object(this, i, selectedElement, useEntryPrefix, trackwheelclickContext);
+            Verb var12 = new UseEntryVerb(this, i, selectedElement, useEntryPrefix, trackwheelclickContext);
             Arrays.add(verbs, var12);
             if (defaultVerb == null || i == preferredDefaultIndex) {
-               defaultVerb = (Verb)var12;
+               defaultVerb = var12;
             }
          }
       }
@@ -232,15 +233,15 @@ final class AddressSelectionVerb extends Verb implements SelectionListener, Copy
 
    @Override
    public final Object invoke(Object parameter) {
-      if (!(parameter instanceof Object)) {
-         throw new Object();
+      if (!(parameter instanceof AddressSelectionContext)) {
+         throw new IllegalArgumentException();
       }
 
       this._context = (AddressSelectionContext)parameter;
       this._context.setSelectedSource(null);
       this._recognizers = this._context.getRecognizers();
       if (this._recognizers == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       Object originalContext = this._context.getContext();
@@ -267,7 +268,7 @@ final class AddressSelectionVerb extends Verb implements SelectionListener, Copy
 
    private final Object[] getSubmembers(Object object, Recognizer recognizer) {
       Object[] members = null;
-      if (object instanceof Object) {
+      if (object instanceof ReadableList) {
          ReadableList model = (ReadableList)object;
          members = SubmemberUtilities.getSubmembers(model, recognizer);
       }

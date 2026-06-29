@@ -13,7 +13,7 @@ import net.rim.device.internal.applicationcontrol.ApplicationControl;
 import net.rim.device.internal.i18n.CommonResource;
 
 public final class ApplicationMenuItemRepository {
-   private LongHashtable _applicationSpecificProcessing = (LongHashtable)(new Object());
+   private LongHashtable _applicationSpecificProcessing = new LongHashtable();
    private static final long ID = 504808597225456274L;
    public static final long MENUITEM_EMAIL_VIEW = -6481681929958323011L;
    public static final long MENUITEM_EMAIL_EDIT = 5244072729690617291L;
@@ -372,7 +372,7 @@ public final class ApplicationMenuItemRepository {
                item.setInternalCookie(spv);
                vr.register(spv, id);
             } else if (application != null) {
-               if (context == null || context instanceof Object) {
+               if (context == null || context instanceof String) {
                   VerbRepository vr = VerbRepository.getVerbRepository(id);
                   SdkProxyMimeTypeVerb spmtv = new SdkProxyMimeTypeVerb(item, id, application, (String)context);
                   item.setInternalCookie(spmtv);

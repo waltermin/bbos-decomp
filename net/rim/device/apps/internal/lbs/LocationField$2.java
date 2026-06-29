@@ -15,7 +15,7 @@ final class LocationField$2 extends LocationField$LocationActionChoice {
    public final void onSelect() {
       Location location = FindLocationScreen.getGPSLocation();
       if (location != null) {
-         location._label = ((StringBuffer)(new Object("Here @ "))).append(LocationField._timeFormat.format(Calendar.getInstance())).toString();
+         location._label = "Here @ " + LocationField._timeFormat.format(Calendar.getInstance());
       }
 
       this.this$0.selectLocation(location);

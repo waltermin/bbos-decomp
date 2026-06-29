@@ -12,8 +12,8 @@ import net.rim.device.apps.api.ui.SystemEnabledMenu;
 import net.rim.device.apps.internal.browser.core.BrowserHotkeys;
 
 public final class DebugViewerScreen extends AppsMainScreen {
-   private VerticalFieldManager _vfm = (VerticalFieldManager)(new Object());
-   private RichTextField _textField = (RichTextField)(new Object());
+   private VerticalFieldManager _vfm = new VerticalFieldManager();
+   private RichTextField _textField = new RichTextField();
    private boolean _isPacketLog;
    private boolean _fullDetails;
    private int _nextMode = 1;
@@ -31,7 +31,7 @@ public final class DebugViewerScreen extends AppsMainScreen {
       this._isPacketLog = isPacketLog;
       this._fullDetails = fullDetails;
       this._title = title;
-      LabelField titleField = (LabelField)(new Object(title));
+      LabelField titleField = new LabelField(title);
       titleField.setFont(Font.getDefault().derive(1));
       this.setTitle(titleField);
       this._vfm.add(this._textField);
@@ -54,7 +54,7 @@ public final class DebugViewerScreen extends AppsMainScreen {
             menu.add(new DumpVerb(this._text, this._url));
          }
 
-         menu.add(new DebugInfoSendVerb(this._text, this._url == null ? this._title : ((StringBuffer)(new Object("Source: "))).append(this._url).toString()));
+         menu.add(new DebugInfoSendVerb(this._text, this._url == null ? this._title : "Source: " + this._url));
       }
 
       if (this._isPacketLog) {
@@ -93,7 +93,7 @@ public final class DebugViewerScreen extends AppsMainScreen {
          }
 
          Field fieldWithFocus = this.getLeafFieldWithFocus();
-         if (!(fieldWithFocus instanceof Object)) {
+         if (!(fieldWithFocus instanceof RichTextField)) {
             this.scroll(direction);
             return true;
          }

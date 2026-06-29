@@ -6,7 +6,6 @@ import net.rim.device.api.crypto.certificate.CertificateServerInfo;
 import net.rim.device.api.crypto.certificate.CertificateServers;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.system.Display;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
@@ -15,6 +14,7 @@ import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.VerbProvider;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.internal.resource.crypto.CryptoIcons;
+import net.rim.device.internal.ui.component.HorizontalSpacerField;
 import net.rim.vm.Array;
 
 public class CertificateServersAttachmentField extends HorizontalFieldManager implements ListFieldCallback, VerbProvider, CollectionListener {
@@ -29,8 +29,8 @@ public class CertificateServersAttachmentField extends HorizontalFieldManager im
       this._attachmentModel = attachmentModel;
       this._servers = CertificateServers.getInstance();
       this.add(CryptoIcons.getLargeImageField(this._attachmentModel.getImage(), 0));
-      this.add((Field)(new Object(3)));
-      this._listField = (ListField)(new Object(1, 51539607552L));
+      this.add(new HorizontalSpacerField(3));
+      this._listField = new ListField(1, 51539607552L);
       this._listField.setCookie(this);
       this._listField.setCallback(this);
       this.add(this._listField);

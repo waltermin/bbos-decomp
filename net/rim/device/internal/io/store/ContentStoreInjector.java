@@ -31,11 +31,7 @@ public final class ContentStoreInjector {
             return;
          }
       } else {
-         String logData = ((StringBuffer)(new Object("ContentStoreInjector - not injecting due to destLink: ")))
-            .append(destLink)
-            .append(" or srcLink: ")
-            .append(srcLink)
-            .toString();
+         String logData = "ContentStoreInjector - not injecting due to destLink: " + destLink + " or srcLink: " + srcLink;
          EventLogger.logEvent(-7509200465648525729L, logData.getBytes(), 0);
       }
    }

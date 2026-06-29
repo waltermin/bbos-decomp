@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.options.items.network;
 
 import net.rim.device.api.collection.util.KeywordFilterList;
-import net.rim.device.api.collection.util.KeywordIndexerHelper;
+import net.rim.device.api.collection.util.PrefixKeywordFilterList;
 import net.rim.device.api.collection.util.SortedReadableList;
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.ui.Graphics;
@@ -10,6 +10,7 @@ import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.apps.api.framework.model.ContextObject;
+import net.rim.device.apps.api.framework.model.RIMModelOrderHelper;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.ExitVerb;
 import net.rim.device.apps.api.ui.KeywordFilteredScreen;
@@ -61,8 +62,7 @@ public final class PrefNetworkSelectOption extends KeywordFilteredScreen impleme
    @Override
    public final Object get(ListField listField, int index) {
       CollectionListField clf = (CollectionListField)listField;
-      NetworkInfo item = (NetworkInfo)clf.getElementAt(index);
-      return item;
+      return (NetworkInfo)clf.getElementAt(index);
    }
 
    @Override
@@ -183,7 +183,7 @@ public final class PrefNetworkSelectOption extends KeywordFilteredScreen impleme
       this._netList = netList;
       this._priority = priority;
       this._listField = this.getListField();
-      this._listItems = (SortedReadableList)(new Object(new PrefNetworkSelectOption$PrefNetworkListItemComparator()));
+      this._listItems = new SortedReadableList(new PrefNetworkSelectOption$PrefNetworkListItemComparator());
       if (this._netList == null) {
          this._netList = new PrefNetworkList(null);
       }
@@ -196,9 +196,9 @@ public final class PrefNetworkSelectOption extends KeywordFilteredScreen impleme
 
       this.buildList();
       this.refresh();
-      KeywordFilterList keywordFilterList = (KeywordFilterList)(new Object(
-         this._listItems, (KeywordIndexerHelper)(new Object(new PrefNetworkSelectOption$PrefNetworkListItemComparator(), (ContextObject)(new Object()))), false
-      ));
+      KeywordFilterList keywordFilterList = new PrefixKeywordFilterList(
+         this._listItems, new RIMModelOrderHelper(new PrefNetworkSelectOption$PrefNetworkListItemComparator(), new ContextObject()), false
+      );
       this.setListCallback(this);
       this.setList(keywordFilterList);
       if (!this.getListField().isEmpty()) {

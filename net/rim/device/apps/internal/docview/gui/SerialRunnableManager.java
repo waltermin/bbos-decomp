@@ -3,7 +3,7 @@ package net.rim.device.apps.internal.docview.gui;
 import net.rim.vm.Array;
 
 final class SerialRunnableManager extends Thread {
-   private Runnable[] _list = new Object[4];
+   private Runnable[] _list = new Runnable[4];
    private int _headIndex;
    private int _tailIndex;
    private static SerialRunnableManager _runThread;

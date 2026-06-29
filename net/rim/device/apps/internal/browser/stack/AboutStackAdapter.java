@@ -39,7 +39,7 @@ public final class AboutStackAdapter implements NetworkPageFetcher {
       // 011: aload 4
       // 013: invokevirtual net/rim/device/apps/internal/browser/stack/CacheResult.getURLWithoutFragment ()Ljava/lang/String;
       // 016: astore 7
-      // 018: new java/lang/Object
+      // 018: new net/rim/device/api/io/http/HttpHeaders
       // 01b: dup
       // 01c: invokespecial net/rim/device/api/io/http/HttpHeaders.<init> ()V
       // 01f: astore 8
@@ -55,7 +55,7 @@ public final class AboutStackAdapter implements NetworkPageFetcher {
       // 03a: invokestatic net/rim/device/apps/internal/browser/core/BrowserDaemonRegistry.getInstance ()Lnet/rim/device/apps/internal/browser/core/BrowserImpl;
       // 03d: invokevirtual net/rim/device/apps/internal/browser/core/BrowserImpl.getRawDataCache ()Lnet/rim/device/apps/internal/browser/stack/RawDataCache;
       // 040: astore 9
-      // 042: new java/lang/Object
+      // 042: new java/lang/StringBuffer
       // 045: dup
       // 046: ldc_w "<html xmlns=\"http://www.w3.org/1999/xhtml\">"
       // 049: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -109,7 +109,7 @@ public final class AboutStackAdapter implements NetworkPageFetcher {
       // 0b3: ldc_w "</tr></table></body></html>"
       // 0b6: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 0b9: pop
-      // 0ba: new java/lang/Object
+      // 0ba: new net/rim/device/api/browser/util/StaticHttpConnection
       // 0bd: dup
       // 0be: aload 7
       // 0c0: aload 10
@@ -120,7 +120,7 @@ public final class AboutStackAdapter implements NetworkPageFetcher {
       // 0cd: invokespecial net/rim/device/api/browser/util/StaticHttpConnection.<init> (Ljava/lang/String;[BLnet/rim/device/api/io/http/HttpHeaders;)V
       // 0d0: astore 5
       // 0d2: goto 0dd
-      // 0d5: new java/lang/Object
+      // 0d5: new java/io/IOException
       // 0d8: dup
       // 0d9: invokespecial java/io/IOException.<init> ()V
       // 0dc: athrow
@@ -160,7 +160,7 @@ public final class AboutStackAdapter implements NetworkPageFetcher {
       // 127: aload 4
       // 129: sipush 400
       // 12c: invokevirtual net/rim/device/apps/internal/browser/stack/CacheResult.setStatus (I)V
-      // 12f: new java/lang/Object
+      // 12f: new net/rim/device/cldc/io/utility/MalformedURLException
       // 132: dup
       // 133: invokespecial net/rim/device/cldc/io/utility/MalformedURLException.<init> ()V
       // 136: athrow

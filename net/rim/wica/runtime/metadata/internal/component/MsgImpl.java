@@ -1,5 +1,6 @@
 package net.rim.wica.runtime.metadata.internal.component;
 
+import net.rim.device.api.system.UnsupportedOperationException;
 import net.rim.wica.runtime.metadata.component.Msg;
 import net.rim.wica.runtime.metadata.internal.WicletEx;
 import net.rim.wica.runtime.metadata.internal.def.MsgDefAccess;
@@ -56,7 +57,7 @@ public class MsgImpl extends ComponentImpl implements Msg {
       if (this._msgHandler != null) {
          this._msgHandler.postMsg(this, null);
       } else {
-         throw new Object();
+         throw new UnsupportedOperationException();
       }
    }
 
@@ -65,7 +66,7 @@ public class MsgImpl extends ComponentImpl implements Msg {
       if (this._msgHandler != null) {
          this._msgHandler.postMsg(this, destination);
       } else {
-         throw new Object();
+         throw new UnsupportedOperationException();
       }
    }
 
@@ -75,7 +76,7 @@ public class MsgImpl extends ComponentImpl implements Msg {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

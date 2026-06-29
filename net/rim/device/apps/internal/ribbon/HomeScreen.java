@@ -23,7 +23,7 @@ import net.rim.device.apps.internal.ribbon.launcher.FolderEntryPointDescriptor;
 
 final class HomeScreen extends Screen {
    private RibbonLauncherImpl _ribbonBarImpl;
-   private ContextObject _contextObject = (ContextObject)(new Object());
+   private ContextObject _contextObject = new ContextObject();
    private boolean _ignoreKeyUp = true;
    private static Tag TAG = Tag.create("homescreen");
 
@@ -62,7 +62,7 @@ final class HomeScreen extends Screen {
 
    @Override
    public final Menu getMenu(int instance) {
-      SystemEnabledMenu menu = (SystemEnabledMenu)(new Object(this._contextObject, null));
+      SystemEnabledMenu menu = new SystemEnabledMenu(this._contextObject, null);
       this.makeMenuWithContext(menu, instance);
       this.makeMenu(menu, instance);
       menu.promoteVerbs();
@@ -175,11 +175,11 @@ final class HomeScreen extends Screen {
          VerbFactory[] verbFactories = VerbFactoryRepository.getVerbFactories(-4612983506188396850L);
          if (verbFactories != null && selectedApplication != null) {
             EntryPointDescriptor entry = selectedApplication.getDescriptor();
-            if (entry instanceof Object) {
+            if (entry instanceof ObjectProps) {
                ObjectProps oprops = (ObjectProps)entry;
                Object o = oprops.get(-8880124975077471920L, (Object)null);
                ApplicationDescriptor applicationDescriptor = null;
-               if (o instanceof Object) {
+               if (o instanceof ApplicationDescriptor) {
                   applicationDescriptor = (ApplicationDescriptor)o;
                }
 
@@ -249,7 +249,7 @@ final class HomeScreen extends Screen {
          Field field = this.getLeafFieldWithFocus();
          if (field != null) {
             Object obj = RibbonLauncherImpl._instanceImpl._applicationIconArea;
-            if (obj instanceof Object) {
+            if (obj instanceof FlowFieldManager) {
                FlowFieldManager mgr = (FlowFieldManager)obj;
                if (dy != 0) {
                   retVal |= mgr.nextFocus(dy, true) == -1;

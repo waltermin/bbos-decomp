@@ -26,6 +26,6 @@ public final class HandshakeRequestMessage extends AbstractRequestMessage implem
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object("Handshake request:  pattern="))).append(this._handshakePattern).toString();
+      return "Handshake request:  pattern=" + this._handshakePattern;
    }
 }

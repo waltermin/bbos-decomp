@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.bluetooth;
 
+import java.io.IOException;
 import javax.bluetooth.DataElement;
 import javax.bluetooth.UUID;
 import net.rim.device.api.util.DataBuffer;
@@ -15,12 +16,12 @@ final class DataElementUtilities {
       return read(buf, true);
    }
 
-   private static final DataElement read(DataBuffer buf, boolean create) {
+   private static final DataElement read(DataBuffer buf, boolean create) throws IOException {
       int dataType = buf.readUnsignedByte();
       int length;
       switch (dataType & 7) {
          case -1:
-            throw new Object("Bad DESD");
+            throw new IOException("Bad DESD");
          case 0:
          default:
             length = dataType == 0 ? 0 : 1;
@@ -99,7 +100,7 @@ final class DataElementUtilities {
                         length--;
                      }
 
-                     return new DataElement(dataType, new Object(var14, 0, length, "UTF8"));
+                     return new DataElement(dataType, new String(var14, 0, length, "UTF8"));
                   } finally {
                      ;
                   }
@@ -110,7 +111,7 @@ final class DataElementUtilities {
                   buf.read(datax, 0, length);
 
                   try {
-                     DataBuffer buf1 = (DataBuffer)(new Object(datax, 0, length, true));
+                     DataBuffer buf1 = new DataBuffer(datax, 0, length, true);
 
                      while (!buf1.eof()) {
                         dataElement.addElement(read(buf1));
@@ -122,15 +123,15 @@ final class DataElementUtilities {
                      return null;
                   }
                default:
-                  throw new Object();
+                  throw new ClassCastException();
             }
       }
    }
 
-   public static final int readDET_SEQ(DataBuffer buf) {
+   public static final int readDET_SEQ(DataBuffer buf) throws IOException {
       switch (buf.readUnsignedByte()) {
          case 52:
-            throw new Object();
+            throw new IOException();
          case 53:
          default:
             return buf.readUnsignedByte();
@@ -271,7 +272,7 @@ final class DataElementUtilities {
       // 15d: return
       // 15e: aload 0
       // 15f: invokevirtual javax/bluetooth/DataElement.getValue ()Ljava/lang/Object;
-      // 162: checkcast java/lang/Object
+      // 162: checkcast java/lang/String
       // 165: astore 7
       // 167: ldc_w "ENCODING:"
       // 16a: astore 8
@@ -378,9 +379,9 @@ final class DataElementUtilities {
       // 23e: return
       // 23f: aload 0
       // 240: invokevirtual javax/bluetooth/DataElement.getValue ()Ljava/lang/Object;
-      // 243: checkcast java/lang/Object
+      // 243: checkcast java/util/Enumeration
       // 246: astore 8
-      // 248: new java/lang/Object
+      // 248: new net/rim/device/api/util/DataBuffer
       // 24b: dup
       // 24c: invokespecial net/rim/device/api/util/DataBuffer.<init> ()V
       // 24f: astore 9
@@ -407,7 +408,7 @@ final class DataElementUtilities {
       // 283: iload 4
       // 285: invokevirtual net/rim/device/api/util/DataBuffer.write (Lnet/rim/device/api/util/DataBuffer;I)V
       // 288: return
-      // 289: new java/lang/Object
+      // 289: new java/lang/ClassCastException
       // 28c: dup
       // 28d: invokespecial java/lang/ClassCastException.<init> ()V
       // 290: athrow

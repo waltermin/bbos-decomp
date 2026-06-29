@@ -25,9 +25,9 @@ public final class PingSession extends EScreenSession implements ICMPPacketListe
    private int _curTotalTime;
    private int _pingsSent;
    private short _pingId;
-   private EditField _numPingField = (EditField)(new Object("Pings to send: ", "5", Integer.MAX_VALUE, 16777216));
-   private EditField _pingSizeField = (EditField)(new Object("Ping size/start ping size: ", "2", Integer.MAX_VALUE, 16777216));
-   private EditField _timeoutField = (EditField)(new Object("Delay between pings (in secs): ", "3", Integer.MAX_VALUE, 16777216));
+   private EditField _numPingField = new EditField("Pings to send: ", "5", Integer.MAX_VALUE, 16777216);
+   private EditField _pingSizeField = new EditField("Ping size/start ping size: ", "2", Integer.MAX_VALUE, 16777216);
+   private EditField _timeoutField = new EditField("Delay between pings (in secs): ", "3", Integer.MAX_VALUE, 16777216);
    private ObjectChoiceField _incrementalPingsField;
    private static final int PING_HEADER_SIZE = 4;
    public static final int MIN_PING_SIZE = 1;
@@ -57,7 +57,7 @@ public final class PingSession extends EScreenSession implements ICMPPacketListe
    private static final String[] INCREMENTAL_PINGS_FIELD_STRINGS = new String[]{"Disabled", "Enabled"};
 
    public PingSession() {
-      this._incrementalPingsField = (ObjectChoiceField)(new Object("Incremental Ping Session: ", INCREMENTAL_PINGS_FIELD_STRINGS));
+      this._incrementalPingsField = new ObjectChoiceField("Incremental Ping Session: ", INCREMENTAL_PINGS_FIELD_STRINGS);
    }
 
    @Override
@@ -132,7 +132,7 @@ public final class PingSession extends EScreenSession implements ICMPPacketListe
       this.setCounter(8, this._pingSize - (this._incrementalPingsField.getSelectedIndex() == 1 ? 1 : 0));
       byte[] buffer = new byte[this._pingSize + 4];
       Arrays.fill(buffer, (byte)112);
-      this._payload = (DataBuffer)(new Object(buffer, 0, buffer.length, true));
+      this._payload = new DataBuffer(buffer, 0, buffer.length, true);
       this._pingId = (short)(EScreenSession._rand.nextInt() & 65535);
       this._payload.writeShort(this._pingId);
       Application.getApplication().addRadioListener(this);
@@ -261,12 +261,12 @@ public final class PingSession extends EScreenSession implements ICMPPacketListe
 
          try {
             var7 = true;
-            DataBuffer e = new Object(data, 0, data.length, true);
-            if (!this.isFromDestination(header.getSourceAddress()) || ((DataBuffer)e).readShort() != this._pingId) {
+            DataBuffer e = new DataBuffer(data, 0, data.length, true);
+            if (!this.isFromDestination(header.getSourceAddress()) || e.readShort() != this._pingId) {
                return;
             }
 
-            int temp = ((DataBuffer)e).readShort();
+            int temp = e.readShort();
             if (temp < this._pingsSent) {
                return;
             }
@@ -281,7 +281,7 @@ public final class PingSession extends EScreenSession implements ICMPPacketListe
                return;
             }
 
-            this.setResult(this._pingsSent, ((StringBuffer)(new Object("Success! "))).append(time).toString(), 2);
+            this.setResult(this._pingsSent, "Success! " + time, 2);
             this.checkTimeCounters(time);
             var7 = false;
          } finally {

@@ -167,7 +167,7 @@ public final class DTMFEchoField extends BasicEditField {
 
          char keyChar = Keypad.map(keycode);
          if (keyChar == '#' || Keypad.getAltedChar(keyChar) == '#') {
-            String dtmfTones = ((StringBuffer)(new Object())).append(this.getDTMFString()).append('#').toString();
+            String dtmfTones = this.getDTMFString() + '#';
             int len = dtmfTones.length();
             boolean matched = GSM230Filter.getCode(dtmfTones) != -1;
             if (!matched && len > 5) {

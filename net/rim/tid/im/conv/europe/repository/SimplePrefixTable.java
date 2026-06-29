@@ -18,7 +18,7 @@ public class SimplePrefixTable extends PrefixTable {
    private int iNextFreq;
    private int iFreqStep;
    private boolean iFreqIteratorStarted;
-   private ExtendedCurrentVariant _extTempVariant = (ExtendedCurrentVariant)(new Object());
+   private ExtendedCurrentVariant _extTempVariant = new ExtendedCurrentVariant();
 
    public SimplePrefixTable(int aLevel, Reader aReader) {
       super(aLevel, aReader);

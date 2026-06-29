@@ -35,7 +35,7 @@ final class SplashScreen implements Runnable {
          if (bitmap != null) {
             Memory.supressHourglass(true);
             this._screen = new DisplayableSplashScreen();
-            this._bitmapField = (BitmapField)(new Object(bitmap, 2305843009213693988L));
+            this._bitmapField = new BitmapField(bitmap, 2305843009213693988L);
             this._screen.add(this._bitmapField);
             this._app.pushGlobalScreen(this._screen, -2147483642, 2);
             return true;

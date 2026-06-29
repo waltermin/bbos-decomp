@@ -22,7 +22,7 @@ class EmailMessageModelImpl$ScheduledResend extends TimerTask implements Persist
             PersistentContent.addListener(this);
          } else {
             EmailMessageModelImpl.access$008(this.this$0);
-            ContextObject invokeContext = (ContextObject)(new Object(121));
+            ContextObject invokeContext = new ContextObject(121);
             new EmailResendVerb(this._message).invoke(invokeContext);
          }
       }

@@ -57,14 +57,14 @@ public final class SoapMessageDecoder extends DefaultHandler {
          var5 = false;
       } finally {
          if (var5) {
-            throw new Object("Unable to instantiate SAX parser.");
+            throw new RuntimeException("Unable to instantiate SAX parser.");
          }
       }
 
-      this._charData = (StringBuffer)(new Object());
-      this._objectGraphStack = (Stack)(new Object());
-      this._typeStack = (Stack)(new Object());
-      this._stateStack = (IntStack)(new Object(5));
+      this._charData = new StringBuffer();
+      this._objectGraphStack = new Stack();
+      this._typeStack = new Stack();
+      this._stateStack = new IntStack(5);
       this._compress = compress;
       this._codebook = codebook;
    }
@@ -136,7 +136,7 @@ public final class SoapMessageDecoder extends DefaultHandler {
       // 080: invokevirtual net/rim/device/api/util/IntStack.push (I)I
       // 083: pop
       // 084: aload 0
-      // 085: new java/lang/Object
+      // 085: new java/lang/StringBuffer
       // 088: dup
       // 089: ldc_w "Unexpected Exception: "
       // 08c: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -241,7 +241,7 @@ public final class SoapMessageDecoder extends DefaultHandler {
          }
 
          if (this._isNillable) {
-            this.generateError(((StringBuffer)(new Object("Nillable element contains value: "))).append(this._tagName).toString());
+            this.generateError("Nillable element contains value: " + this._tagName);
          }
 
          String nilAttribute = attributes.getValue("http://www.w3.org/2001/XMLSchema-instance", "nil");
@@ -458,9 +458,9 @@ public final class SoapMessageDecoder extends DefaultHandler {
          for (int i = 0; i < length; i++) {
             if (complexType.elements[i].isArray) {
                Element element = complexType.elements[i];
-               Vector vect = (Vector)(new Object());
-               vect.addElement(new Object(element.contentType.value));
-               vect.addElement(new Object(element.isNillable));
+               Vector vect = new Vector();
+               vect.addElement(new Integer(element.contentType.value));
+               vect.addElement(new Boolean(element.isNillable));
                ogTemplate[i] = vect;
             }
          }
@@ -474,9 +474,9 @@ public final class SoapMessageDecoder extends DefaultHandler {
 
    private final void graphTemplateForSimple(Element element) {
       if (this._objectGraphStack.isEmpty() && !this._isNillable && element.isArray) {
-         Vector vect = (Vector)(new Object());
-         vect.addElement(new Object(element.contentType.value));
-         vect.addElement(new Object(element.isNillable));
+         Vector vect = new Vector();
+         vect.addElement(new Integer(element.contentType.value));
+         vect.addElement(new Boolean(element.isNillable));
          this._objectGraphStack.push(vect);
       }
 
@@ -494,13 +494,7 @@ public final class SoapMessageDecoder extends DefaultHandler {
 
    private final void handleEnvelopeAndBody(String URI, String startOrEnd) {
       if (this._tagName.toLowerCase().equals("envelope") && !URI.equals("http://schemas.xmlsoap.org/soap/envelope/")) {
-         this.generateError(
-            ((StringBuffer)(new Object("Invalid URI from server: ")))
-               .append(URI)
-               .append(", expected: ")
-               .append("http://schemas.xmlsoap.org/soap/envelope/")
-               .toString()
-         );
+         this.generateError("Invalid URI from server: " + URI + ", expected: " + "http://schemas.xmlsoap.org/soap/envelope/");
       }
 
       if (startOrEnd.equals("start")) {
@@ -581,20 +575,14 @@ public final class SoapMessageDecoder extends DefaultHandler {
 
       String detailMessage;
       if (fault[2] == null) {
-         detailMessage = ((StringBuffer)(new Object("\nfaultcode:   "))).append(faultCode).append("\nfaultstring: ").append((String)fault[1]).toString();
+         detailMessage = "\nfaultcode:   " + faultCode + "\nfaultstring: " + (String)fault[1];
       } else {
-         detailMessage = ((StringBuffer)(new Object("\nfaultcode:   ")))
-            .append(faultCode)
-            .append("\nfaultstring: ")
-            .append((String)fault[1])
-            .append("\nfaultfactor: ")
-            .append((String)fault[2])
-            .toString();
+         detailMessage = "\nfaultcode:   " + faultCode + "\nfaultstring: " + (String)fault[1] + "\nfaultfactor: " + (String)fault[2];
       }
 
       if (this._faultDetailName == null) {
          if (fault[3] != null) {
-            detailMessage = ((StringBuffer)(new Object())).append(detailMessage).append("\ndetail:      ").append((String)fault[3]).toString();
+            detailMessage = detailMessage + "\ndetail:      " + (String)fault[3];
          }
 
          throw new JAXRPCException(new ServerException(detailMessage));
@@ -610,7 +598,7 @@ public final class SoapMessageDecoder extends DefaultHandler {
 
          for (int i = 0; i < length; i++) {
             Object var10000 = objectArray[i];
-            if (!(objectArray[i] instanceof Object)) {
+            if (!(objectArray[i] instanceof Vector)) {
                if (objectArray[i] instanceof Object[]) {
                   objectArray[i] = this.decodeObjectGraph(objectArray[i]);
                } else if (objectArray[i] == NIL) {
@@ -621,7 +609,7 @@ public final class SoapMessageDecoder extends DefaultHandler {
                objectArray[i] = this.decodeVector(vect);
             }
          }
-      } else if (objectGraph instanceof Object) {
+      } else if (objectGraph instanceof Vector) {
          objectGraph = this.decodeVector((Vector)objectGraph);
       }
 
@@ -630,8 +618,8 @@ public final class SoapMessageDecoder extends DefaultHandler {
 
    private final Object decodeVector(Vector typedVect) {
       Vector vect = typedVect;
-      int typeValue = vect.elementAt(0);
-      boolean isNillable = vect.elementAt(1);
+      int typeValue = (Integer)vect.elementAt(0);
+      boolean isNillable = (Boolean)vect.elementAt(1);
       vect.removeElementAt(0);
       vect.removeElementAt(0);
       int n = vect.size();
@@ -643,7 +631,7 @@ public final class SoapMessageDecoder extends DefaultHandler {
          case 0:
          default:
             if (isNillable) {
-               Boolean[] arrayPS = new Object[n];
+               Boolean[] arrayPS = new Boolean[n];
 
                for (int j = n - 1; j >= 0; j--) {
                   Object obj = vect.elementAt(j);
@@ -658,13 +646,13 @@ public final class SoapMessageDecoder extends DefaultHandler {
             boolean[] arrayPS = new boolean[n];
 
             for (int j = n - 1; j >= 0; j--) {
-               arrayPS[j] = vect.elementAt(j);
+               arrayPS[j] = (Boolean)vect.elementAt(j);
             }
 
             return arrayPS;
          case 1:
             if (isNillable) {
-               Byte[] arrayPS = new Object[n];
+               Byte[] arrayPS = new Byte[n];
 
                for (int j = n - 1; j >= 0; j--) {
                   Object obj = vect.elementAt(j);
@@ -679,13 +667,13 @@ public final class SoapMessageDecoder extends DefaultHandler {
             byte[] arrayPS = new byte[n];
 
             for (int j = n - 1; j >= 0; j--) {
-               arrayPS[j] = vect.elementAt(j);
+               arrayPS[j] = (Byte)vect.elementAt(j);
             }
 
             return arrayPS;
          case 2:
             if (isNillable) {
-               Short[] arrayPS = new Object[n];
+               Short[] arrayPS = new Short[n];
 
                for (int j = n - 1; j >= 0; j--) {
                   Object obj = vect.elementAt(j);
@@ -700,13 +688,13 @@ public final class SoapMessageDecoder extends DefaultHandler {
             short[] arrayPS = new short[n];
 
             for (int j = n - 1; j >= 0; j--) {
-               arrayPS[j] = vect.elementAt(j);
+               arrayPS[j] = (Short)vect.elementAt(j);
             }
 
             return arrayPS;
          case 3:
             if (isNillable) {
-               Integer[] arrayPS = new Object[n];
+               Integer[] arrayPS = new Integer[n];
 
                for (int j = n - 1; j >= 0; j--) {
                   Object obj = vect.elementAt(j);
@@ -721,13 +709,13 @@ public final class SoapMessageDecoder extends DefaultHandler {
             int[] arrayPS = new int[n];
 
             for (int j = n - 1; j >= 0; j--) {
-               arrayPS[j] = vect.elementAt(j);
+               arrayPS[j] = (Integer)vect.elementAt(j);
             }
 
             return arrayPS;
          case 4:
             if (isNillable) {
-               Long[] arrayPS = new Object[n];
+               Long[] arrayPS = new Long[n];
 
                for (int j = n - 1; j >= 0; j--) {
                   Object obj = vect.elementAt(j);
@@ -742,13 +730,13 @@ public final class SoapMessageDecoder extends DefaultHandler {
             long[] arrayPS = new long[n];
 
             for (int j = n - 1; j >= 0; j--) {
-               arrayPS[j] = vect.elementAt(j);
+               arrayPS[j] = (Long)vect.elementAt(j);
             }
 
             return arrayPS;
          case 5:
             if (isNillable) {
-               Float[] arrayPS = new Object[n];
+               Float[] arrayPS = new Float[n];
 
                for (int j = n - 1; j >= 0; j--) {
                   Object obj = vect.elementAt(j);
@@ -763,13 +751,13 @@ public final class SoapMessageDecoder extends DefaultHandler {
             float[] arrayPS = new float[n];
 
             for (int j = n - 1; j >= 0; j--) {
-               arrayPS[j] = vect.elementAt(j);
+               arrayPS[j] = (Float)vect.elementAt(j);
             }
 
             return arrayPS;
          case 6:
             if (isNillable) {
-               Double[] arrayPS = new Object[n];
+               Double[] arrayPS = new Double[n];
 
                for (int j = n - 1; j >= 0; j--) {
                   Object obj = vect.elementAt(j);
@@ -784,7 +772,7 @@ public final class SoapMessageDecoder extends DefaultHandler {
             double[] arrayPS = new double[n];
 
             for (int j = n - 1; j >= 0; j--) {
-               arrayPS[j] = vect.elementAt(j);
+               arrayPS[j] = (Double)vect.elementAt(j);
             }
 
             return arrayPS;
@@ -811,83 +799,83 @@ public final class SoapMessageDecoder extends DefaultHandler {
       switch (valueType) {
          case -1:
             this._stateStack.push(4);
-            this._errorMessage = ((StringBuffer)(new Object("Expected Java object wrapper for a primitive type, received: "))).append(simpleValue).toString();
+            this._errorMessage = "Expected Java object wrapper for a primitive type, received: " + simpleValue;
             throw new JAXRPCException(this._errorMessage);
          case 0:
          default:
             simpleValue = simpleValue.toLowerCase();
             if (simpleValue.equals("true") || simpleValue.equals("1")) {
-               return new Object(true);
+               return new Boolean(true);
             } else if (simpleValue.equals("false") || simpleValue.equals("0")) {
-               return new Object(false);
+               return new Boolean(false);
             } else {
-               this.generateError(((StringBuffer)(new Object("Expected Boolean, received "))).append(simpleValue).toString());
+               this.generateError("Expected Boolean, received " + simpleValue);
             }
          case 1:
             label388:
             try {
-               return new Object(Byte.parseByte(simpleValue));
+               return new Byte(Byte.parseByte(simpleValue));
             } finally {
-               this.generateError(((StringBuffer)(new Object("Expected Byte, received "))).append(simpleValue).toString());
+               this.generateError("Expected Byte, received " + simpleValue);
                break label388;
             }
          case 2:
             label386:
             try {
-               return new Object(Short.parseShort(simpleValue));
+               return new Short(Short.parseShort(simpleValue));
             } finally {
-               this.generateError(((StringBuffer)(new Object("Expected Short, received "))).append(simpleValue).toString());
+               this.generateError("Expected Short, received " + simpleValue);
                break label386;
             }
          case 3:
             label384:
             try {
-               return new Object(Integer.parseInt(simpleValue));
+               return new Integer(Integer.parseInt(simpleValue));
             } finally {
-               this.generateError(((StringBuffer)(new Object("Expected Integer, received "))).append(simpleValue).toString());
+               this.generateError("Expected Integer, received " + simpleValue);
                break label384;
             }
          case 4:
             label382:
             try {
-               return new Object(Long.parseLong(simpleValue));
+               return new Long(Long.parseLong(simpleValue));
             } finally {
-               this.generateError(((StringBuffer)(new Object("Expected Long, received "))).append(simpleValue).toString());
+               this.generateError("Expected Long, received " + simpleValue);
                break label382;
             }
          case 5:
             label380:
             try {
                if (simpleValue.equals("INF")) {
-                  return new Object((float)2139095040);
+                  return new Float((float)2139095040);
                } else if (simpleValue.equals("-INF")) {
-                  return new Object((float)-8388608);
+                  return new Float((float)-8388608);
                } else {
                   if (simpleValue.equals("NaN")) {
-                     return new Object((float)2143289344);
+                     return new Float((float)2143289344);
                   }
 
                   return Float.valueOf(simpleValue);
                }
             } finally {
-               this.generateError(((StringBuffer)(new Object("Expected Float, received "))).append(simpleValue).toString());
+               this.generateError("Expected Float, received " + simpleValue);
                break label380;
             }
          case 6:
             try {
                if (simpleValue.equals("INF")) {
-                  return new Object((double)9218868437227405312L);
+                  return new Double((double)9218868437227405312L);
                } else if (simpleValue.equals("-INF")) {
-                  return new Object((double)-4503599627370496L);
+                  return new Double((double)-4503599627370496L);
                } else {
                   if (simpleValue.equals("NaN")) {
-                     return new Object((double)9221120237041090560L);
+                     return new Double((double)9221120237041090560L);
                   }
 
                   return Double.valueOf(simpleValue);
                }
             } finally {
-               this.generateError(((StringBuffer)(new Object("Expected Double, received "))).append(simpleValue).toString());
+               this.generateError("Expected Double, received " + simpleValue);
                return simpleValue;
             }
          case 7:
@@ -903,22 +891,12 @@ public final class SoapMessageDecoder extends DefaultHandler {
 
    private final void checkElementMatching(Element element, String URI, String name) {
       if (!name.equals(element.name.getLocalPart())) {
-         this.generateError(
-            ((StringBuffer)(new Object("Invalid local name from server: "))).append(name).append(", expected: ").append(element.name.getLocalPart()).toString()
-         );
+         this.generateError("Invalid local name from server: " + name + ", expected: " + element.name.getLocalPart());
       } else if (!URI.equals(element.name.getNamespaceURI())) {
-         this.generateError(
-            ((StringBuffer)(new Object("Invalid Namespace URI from server: ")))
-               .append(URI)
-               .append(", expected: ")
-               .append(element.name.getNamespaceURI())
-               .append(" for element: ")
-               .append(name)
-               .toString()
-         );
+         this.generateError("Invalid Namespace URI from server: " + URI + ", expected: " + element.name.getNamespaceURI() + " for element: " + name);
       } else {
          if (this._isNillable && !element.isNillable) {
-            this.generateError(((StringBuffer)(new Object("Nillable mismatch from server for: "))).append(name).toString());
+            this.generateError("Nillable mismatch from server for: " + name);
          }
       }
    }
@@ -940,7 +918,7 @@ public final class SoapMessageDecoder extends DefaultHandler {
    private final void generateError(String errorMessage) {
       this._stateStack.push(4);
       this._errorMessage = errorMessage;
-      throw new Object(this._errorMessage);
+      throw new RuntimeException(this._errorMessage);
    }
 
    private static final boolean isRightElement(QName qname, String URI, String name) {

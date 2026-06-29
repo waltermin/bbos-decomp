@@ -2,13 +2,13 @@ package net.rim.device.apps.internal.phone.api.ui;
 
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.ui.Field;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.PopupScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.phone.PhoneEventListener;
 import net.rim.device.apps.api.phone.VoiceServices;
 import net.rim.device.apps.internal.phone.api.PhoneUtilities;
@@ -98,14 +98,14 @@ public class PhoneEventListenerStatusDialog extends PopupScreen implements Phone
    }
 
    public PhoneEventListenerStatusDialog(String title, boolean modal, boolean closeButton, int timeoutInSeconds) {
-      super((Manager)(new Object()), 0);
+      super(new VerticalFieldManager(), 0);
       this._app = UiApplication.getUiApplication();
       this._modal = modal;
       this._timeout = timeoutInSeconds * 1000;
-      this._iconField = (BitmapField)(new Object(Bitmap.getPredefinedBitmap(3)));
+      this._iconField = new BitmapField(Bitmap.getPredefinedBitmap(3));
       this._iconField.setPadding(0, 3, 0, 0);
-      this._statusField = (RichTextField)(new Object(title, 36028797018964032L));
-      HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(1152921504606846976L));
+      this._statusField = new RichTextField(title, 36028797018964032L);
+      HorizontalFieldManager hfm = new HorizontalFieldManager(1152921504606846976L);
       hfm.add(this._iconField);
       hfm.add(this._statusField);
       this.add(hfm);

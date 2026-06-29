@@ -19,7 +19,7 @@ public final class CommonResources {
    }
 
    public static final String[] getYesNoArray(int yesIndex) {
-      String[] yes_no = new Object[2];
+      String[] yes_no = new String[2];
       yesIndex &= 1;
       yes_no[yesIndex] = getString(100);
       yes_no[yesIndex ^ 1] = getString(101);

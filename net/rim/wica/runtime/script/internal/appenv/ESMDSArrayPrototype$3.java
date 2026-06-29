@@ -28,18 +28,14 @@ class ESMDSArrayPrototype$3 extends HostFunction {
       ESMDSArray thiz = (ESMDSArray)this.getThis();
       Object value = thiz.getValue();
       if (numParams <= 0) {
-         EcmaUtilities.throwESError(
-            thiz.getId(), RuntimeResources.getString(73, ((StringBuffer)(new Object())).append(thiz.getObjectClass()).append(".push()").toString())
-         );
+         EcmaUtilities.throwESError(thiz.getId(), RuntimeResources.getString(73, thiz.getObjectClass() + ".push()"));
       } else {
          if (thiz.getType() == 32774 && thiz.getCollection() == null) {
             Object esObject = Value.getType(this.getParm(0)) == 6 ? Value.getObjectValue(this.getParm(0)) : null;
             if (esObject instanceof ESData) {
                thiz.setCollection(((ESData)esObject).getCollection());
             } else {
-               EcmaUtilities.throwESError(
-                  thiz.getId(), RuntimeResources.getString(75, ((StringBuffer)(new Object())).append(thiz.getObjectClass()).append(".push()").toString())
-               );
+               EcmaUtilities.throwESError(thiz.getId(), RuntimeResources.getString(75, thiz.getObjectClass() + ".push()"));
             }
          }
 

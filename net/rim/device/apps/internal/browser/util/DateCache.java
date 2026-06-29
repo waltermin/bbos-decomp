@@ -14,7 +14,7 @@ public final class DateCache implements MemoryCleanerListener {
    private static final int CACHE_SIZE = 10;
 
    private DateCache() {
-      this._cacheKey = new Object[10];
+      this._cacheKey = new String[10];
       MemoryCleanerDaemon.addWeakListener(this, false);
    }
 

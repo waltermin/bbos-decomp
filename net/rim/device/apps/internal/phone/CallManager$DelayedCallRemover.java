@@ -22,7 +22,7 @@ final class CallManager$DelayedCallRemover implements Runnable {
 
    public CallManager$DelayedCallRemover(CallManager _1, int callId, int failureReason, int doneEventID) {
       this.this$0 = _1;
-      this._callRef = (WeakReference)(new Object(_1.findCallByCallId(callId)));
+      this._callRef = new WeakReference(_1.findCallByCallId(callId));
       this._callId = callId;
       this._doneEventID = doneEventID;
       this._failureReason = failureReason;
@@ -43,7 +43,7 @@ final class CallManager$DelayedCallRemover implements Runnable {
 
    public final synchronized void removeNow() {
       if (!this._removed) {
-         System.out.println(((StringBuffer)(new Object("CallManager removing "))).append(this._callId).toString());
+         System.out.println("CallManager removing " + this._callId);
          LiveCall call = (LiveCall)this._callRef.get();
          if (call != null) {
             LiveCall foundCall = this.this$0.findCallByCallId(this._callId);

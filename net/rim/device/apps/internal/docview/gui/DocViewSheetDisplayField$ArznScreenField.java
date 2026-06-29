@@ -174,7 +174,7 @@ final class DocViewSheetDisplayField$ArznScreenField extends CustomListField imp
       if (bDisplayHeaders) {
          if (this.getSelectedRow() != 0 && this.getSelectedColumn() != 0) {
             this.this$0._selectedCellDisplayValue.append(this.getColName(this.getSelectedColumn() - 1));
-            this.this$0._selectedCellDisplayValue.append(((StringBuffer)(new Object())).append(this.getRowName(this.getSelectedRow())).append(": ").toString());
+            this.this$0._selectedCellDisplayValue.append(this.getRowName(this.getSelectedRow()) + ": ");
 
             try {
                retValue = this.this$0._selectedCellDisplayValue.length();
@@ -189,9 +189,7 @@ final class DocViewSheetDisplayField$ArznScreenField extends CustomListField imp
          }
       } else if (super._nTotalRows != 0 && super._nTotalCols != 0) {
          this.this$0._selectedCellDisplayValue.append(this.getColName(this.getSelectedColumn()));
-         this.this$0
-            ._selectedCellDisplayValue
-            .append(((StringBuffer)(new Object())).append(this.getRowName(this.getSelectedRow() + 1)).append(": ").toString());
+         this.this$0._selectedCellDisplayValue.append(this.getRowName(this.getSelectedRow() + 1) + ": ");
 
          try {
             retValue = this.this$0._selectedCellDisplayValue.length();
@@ -230,15 +228,15 @@ final class DocViewSheetDisplayField$ArznScreenField extends CustomListField imp
       Object cookie = null;
       if (this.selectedCellHasData(true)) {
          String strText = this.getSelectedCellValue();
-         StringPatternEnumerator patternEnum = (StringPatternEnumerator)(new Object(strText, this.this$0._patterns));
+         StringPatternEnumerator patternEnum = new StringPatternEnumerator(strText, this.this$0._patterns);
          if (patternEnum.hasMoreMatches()) {
             if (this.this$0._match == null) {
-               this.this$0._match = (StringPattern$Match)(new Object());
+               this.this$0._match = new StringPattern$Match();
             }
 
             patternEnum.nextMatch(this.this$0._match);
             if (this.this$0._invokeContext == null) {
-               this.this$0._invokeContext = (ContextObject)(new Object());
+               this.this$0._invokeContext = new ContextObject();
             }
 
             this.this$0._invokeContext.put(253, strText.substring(this.this$0._match.beginIndex, this.this$0._match.endIndex));
@@ -254,7 +252,7 @@ final class DocViewSheetDisplayField$ArznScreenField extends CustomListField imp
    }
 
    private final void reFitSheet() {
-      IntVector columnIndividualFitVector = (IntVector)(new Object());
+      IntVector columnIndividualFitVector = new IntVector();
       DocViewOptions options = DocViewOptions.getOptions();
       if (options.getSheetColumnWidth() != 3) {
          int cols = this.getColCount();
@@ -281,7 +279,7 @@ final class DocViewSheetDisplayField$ArznScreenField extends CustomListField imp
          }
       }
 
-      columnIndividualFitVector = null;
+      IntVector var6 = null;
    }
 
    @Override
@@ -424,13 +422,13 @@ final class DocViewSheetDisplayField$ArznScreenField extends CustomListField imp
    @Override
    protected final void makeContextMenu(ContextMenu contextMenu) {
       super.makeContextMenu(contextMenu);
-      Verb[] verbs = new Object[0];
+      Verb[] verbs = new Verb[0];
       Verb defaultVerb = CookieProviderUtilities.getFocusVerbs(this, null, verbs);
       int count = verbs.length;
 
       for (int idx = 0; idx < count; idx++) {
          int priority = verbs[idx] == defaultVerb ? 10 : Integer.MAX_VALUE;
-         VerbMenuItem menuItem = (VerbMenuItem)(new Object(verbs[idx], priority));
+         VerbMenuItem menuItem = new VerbMenuItem(verbs[idx], priority);
          contextMenu.addItem(menuItem);
       }
    }

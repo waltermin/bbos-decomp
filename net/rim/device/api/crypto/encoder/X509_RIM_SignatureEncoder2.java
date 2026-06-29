@@ -17,8 +17,8 @@ final class X509_RIM_SignatureEncoder2 extends SignatureEncoder {
       try {
          var10 = true;
          ASN1OutputStream e = new ASN1OutputStream();
-         if (!(signer instanceof Object)) {
-            if (signer instanceof Object) {
+         if (!(signer instanceof DSASignatureSigner)) {
+            if (signer instanceof PKCS1SignatureSigner) {
                PKCS1SignatureSigner rsaSigner = (PKCS1SignatureSigner)signer;
                byte[] data = new byte[rsaSigner.getLength()];
                rsaSigner.sign(data, 0);
@@ -27,7 +27,7 @@ final class X509_RIM_SignatureEncoder2 extends SignatureEncoder {
                ASN1OutputStream asn1Stream = new ASN1OutputStream();
                asn1Stream.writeSequence(e);
                asn1Stream.writeBitString(data);
-               return (EncodedSignature)(new Object(asn1Stream.toByteArray(), "X509"));
+               return new EncodedSignature(asn1Stream.toByteArray(), "X509");
             }
 
             var10 = false;
@@ -46,18 +46,18 @@ final class X509_RIM_SignatureEncoder2 extends SignatureEncoder {
                ASN1OutputStream tempStream = new ASN1OutputStream();
                tempStream.writeSequence(DSASigSequence);
                asn1Stream.writeBitString(tempStream.toByteArray());
-               return (EncodedSignature)(new Object(asn1Stream.toByteArray(), "X509"));
+               return new EncodedSignature(asn1Stream.toByteArray(), "X509");
             }
 
             var10 = false;
          }
       } finally {
          if (var10) {
-            throw new Object();
+            throw new RuntimeException();
          }
       }
 
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override

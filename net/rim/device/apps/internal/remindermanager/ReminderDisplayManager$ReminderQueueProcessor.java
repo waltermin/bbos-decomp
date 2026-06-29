@@ -91,12 +91,12 @@ final class ReminderDisplayManager$ReminderQueueProcessor extends Thread impleme
 
             try {
                ReminderManager.logEvent(1380273989, 2);
-               if (!(t instanceof Object)) {
+               if (!(t instanceof OutOfMemoryError)) {
                   QuincyManager.sendJavaLogworthy("ReminderQueueProcessor");
                }
 
-               ContextObject contextObject = (ContextObject)(new Object());
-               ContextObject.put(contextObject, -442409970680484936L, new Object(-7539463754156969819L));
+               ContextObject contextObject = new ContextObject();
+               ContextObject.put(contextObject, -442409970680484936L, new Long(-7539463754156969819L));
                if (this.this$0._reminderBeingHandled != null && reminderProvider != null) {
                   NotificationsManager.cancelAllDeferredEvents(
                      reminderProvider.getProfileID(this.this$0._reminderBeingHandled.getReminderID()), 1, contextObject

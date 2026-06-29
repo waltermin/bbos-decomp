@@ -11,7 +11,7 @@ public final class CSSBinaryParser implements CSSParser {
    private String _url;
    private int _token;
    private String _stringTable;
-   private Vector _freeList = (Vector)(new Object());
+   private Vector _freeList = new Vector();
    private int[][] _currentSelector = new int[5][];
    public static final byte VERSION = 1;
    private static final byte IMPORT = 1;
@@ -22,7 +22,7 @@ public final class CSSBinaryParser implements CSSParser {
    private static final int MAX_SIZE = 15;
    private static final byte SIZE_MASK = 120;
    private static final byte SIZE_BIT = -128;
-   private static final String[] DEFAULT_MEDIA_LIST = new Object[0];
+   private static final String[] DEFAULT_MEDIA_LIST = new String[0];
 
    public CSSBinaryParser(DocumentHandler handler, String url) {
       this._handler = handler;
@@ -54,7 +54,7 @@ public final class CSSBinaryParser implements CSSParser {
       // 04: ifnonnull 08
       // 07: return
       // 08: aload 0
-      // 09: new java/lang/Object
+      // 09: new net/rim/device/api/util/DataBuffer
       // 0c: dup
       // 0d: aload 1
       // 0e: bipush 0
@@ -72,7 +72,7 @@ public final class CSSBinaryParser implements CSSParser {
       // 24: invokevirtual net/rim/device/api/util/DataBuffer.readCompressedInt ()I
       // 27: pop
       // 28: aload 0
-      // 29: new java/lang/Object
+      // 29: new java/lang/String
       // 2c: dup
       // 2d: aload 0
       // 2e: getfield net/rim/device/apps/internal/browser/css/CSSBinaryParser._in Lnet/rim/device/api/util/DataBuffer;

@@ -4,6 +4,7 @@ import java.util.Calendar;
 import net.rim.device.api.i18n.DateFormat;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.i18n.ResourceBundleFamily;
+import net.rim.device.api.i18n.SimpleDateFormat;
 import net.rim.device.api.system.EventLogger;
 import net.rim.device.api.system.PersistentObject;
 import net.rim.device.api.system.RIMPersistentStore;
@@ -27,7 +28,7 @@ import net.rim.vm.TraceBack;
 
 public final class EventLoggerContents extends MainScreen implements ListFieldCallback {
    final ResourceBundleFamily _rb = ResourceBundle.getBundle(-1347895411836898368L, "net.rim.device.internal.resource.EventLogger");
-   private DateFormat _dtFormater = (DateFormat)(new Object(this._rb.getString(40)));
+   private DateFormat _dtFormater = new SimpleDateFormat(this._rb.getString(40));
    private Calendar _calendar = Calendar.getInstance();
    private int _displayMode = 0;
    private PersistentObject _filterPersist;
@@ -36,7 +37,7 @@ public final class EventLoggerContents extends MainScreen implements ListFieldCa
    private int[] _filteredEventHandles;
    private int[] _eventHandleIndicies;
    private ListField _list;
-   private StringBuffer _strBuf = (StringBuffer)(new Object());
+   private StringBuffer _strBuf = new StringBuffer();
    private LabelField _title;
    private DefaultDetailsScreen _defViewer = new DefaultDetailsScreen(this);
    private ExceptionDetailsScreen _exViewer = new ExceptionDetailsScreen(this);
@@ -139,8 +140,8 @@ public final class EventLoggerContents extends MainScreen implements ListFieldCa
    private final void filter(boolean keepIndex) {
       int oldEventHandle = -1;
       int newIndex = -1;
-      IntVector iVector = (IntVector)(new Object(this._eventHandles.length));
-      IntVector indexVector = (IntVector)(new Object(this._eventHandles.length));
+      IntVector iVector = new IntVector(this._eventHandles.length);
+      IntVector indexVector = new IntVector(this._eventHandles.length);
       if (keepIndex && this._filteredEventHandles.length != 0) {
          oldEventHandle = this._filteredEventHandles[this.listIndex2FilteredIndex(this._list.getSelectedIndex())];
       }
@@ -220,7 +221,7 @@ public final class EventLoggerContents extends MainScreen implements ListFieldCa
       boolean dirty = false;
       this._filterPersist = RIMPersistentStore.getPersistentObject(-8838774854340583164L);
       if ((this._filters = (LongIntHashtable)this._filterPersist.getContents()) == null) {
-         this._filters = (LongIntHashtable)(new Object());
+         this._filters = new LongIntHashtable();
          this._filterPersist.setContents(this._filters, 51);
          dirty = true;
       }
@@ -438,7 +439,7 @@ public final class EventLoggerContents extends MainScreen implements ListFieldCa
    }
 
    private final void setTitle() {
-      StringBuffer buf = (StringBuffer)(new Object(80));
+      StringBuffer buf = new StringBuffer(80);
       buf.append(this._rb.getString(11));
       buf.append(' ');
       buf.append('(');
@@ -475,10 +476,10 @@ public final class EventLoggerContents extends MainScreen implements ListFieldCa
 
    public EventLoggerContents() {
       super(299067162755072L);
-      this._list = (ListField)(new Object());
+      this._list = new ListField();
       this._list.setCallback(this);
       this.add(this._list);
-      this._title = (LabelField)(new Object(this._rb.getString(11)));
+      this._title = new LabelField(this._rb.getString(11));
       this.setTitle(this._title);
       this.initFilters();
       this.setTitle();

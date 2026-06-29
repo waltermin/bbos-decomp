@@ -6,6 +6,7 @@ import java.io.InputStream;
 import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.api.io.http.PushInputStream;
 import net.rim.device.api.util.IntStack;
+import net.rim.device.apps.api.utility.serialization.SerializationException;
 import net.rim.device.apps.internal.browser.options.BrowserConfigRecord;
 import net.rim.device.apps.internal.browser.stack.HeaderParser;
 import net.rim.device.apps.internal.browser.stack.WAPInputStream;
@@ -21,7 +22,7 @@ final class SLCModelFactory {
    public static final int HREF_HTTPS_WWW = 12;
    public static final int SL = 5;
 
-   public static final SLCModel createSLCModel(DataInputStream inStream, HttpHeaders headers) {
+   public static final SLCModel createSLCModel(DataInputStream inStream, HttpHeaders headers) throws SerializationException {
       try {
          String preferredConfigUid = null;
          int preferredConfigType = 0;
@@ -31,7 +32,7 @@ final class SLCModelFactory {
             parentStream = ((PushTextDataInputStream)inStream).getRawContentStream();
          }
 
-         if (parentStream instanceof Object) {
+         if (parentStream instanceof PushInputStream) {
             PushInputStream pis = (PushInputStream)parentStream;
             if (pis.getConnectionType() == 3) {
                preferredConfigUid = BrowserConfigRecord.mapTransportUIDToConfigUID("IPPP", pis.getSource());
@@ -45,8 +46,8 @@ final class SLCModelFactory {
          }
 
          SLCModel model = new SLCModel(preferredConfigUid, preferredConfigType, preferredTransportCid);
-         WAPInputStream in = (WAPInputStream)(new Object(inStream));
-         IntStack tagStack = (IntStack)(new Object());
+         WAPInputStream in = new WAPInputStream(inStream);
+         IntStack tagStack = new IntStack();
          in.read();
          int publicIdentifierId = in.readMBInt();
          if (publicIdentifierId == 0) {
@@ -87,7 +88,7 @@ final class SLCModelFactory {
             }
          }
       } finally {
-         throw new Object();
+         throw new SerializationException();
       }
    }
 

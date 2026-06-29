@@ -27,9 +27,7 @@ class ESMDSArrayPrototype$2 extends HostFunction {
       Object value = thiz.getValue();
       int numParams = this.getNumParms();
       if (numParams <= 0) {
-         EcmaUtilities.throwESError(
-            thiz.getId(), RuntimeResources.getString(73, ((StringBuffer)(new Object())).append(thiz.getObjectClass()).append(".remove()").toString())
-         );
+         EcmaUtilities.throwESError(thiz.getId(), RuntimeResources.getString(73, thiz.getObjectClass() + ".remove()"));
       } else {
          for (int i = 0; i < numParams; i++) {
             switch (thiz.getType()) {

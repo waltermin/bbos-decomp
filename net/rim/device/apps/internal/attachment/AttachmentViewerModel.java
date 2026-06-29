@@ -19,7 +19,7 @@ public class AttachmentViewerModel extends UnknownMimePartModel implements Persi
       super(initialData);
       ContextObject contextObject = ContextObject.castOrCreate(initialData);
       Object parametersObject = contextObject.get(-7353832199068708928L);
-      if (parametersObject instanceof Object) {
+      if (parametersObject instanceof Parameters) {
          Parameters parameters = (Parameters)parametersObject;
          this._conversionsAvailable = parameters.get((byte)-10);
       }
@@ -48,7 +48,7 @@ public class AttachmentViewerModel extends UnknownMimePartModel implements Persi
          return -1;
       }
 
-      String[] stringConversionsAvailable = new Object[conversionsAvailable.length];
+      String[] stringConversionsAvailable = new String[conversionsAvailable.length];
 
       for (int i = 0; i < conversionsAvailable.length; i++) {
          stringConversionsAvailable[i] = CMIMEContentType.getFullType(conversionsAvailable[i]);

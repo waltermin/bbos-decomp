@@ -17,7 +17,7 @@ public final class FixedHeightManager extends Manager {
    public FixedHeightManager(Field field, int size) {
       super(0);
       this._field = field;
-      this._vfm = (VerticalFieldManager)(new Object(1153220571769602048L));
+      this._vfm = new VerticalFieldManager(1153220571769602048L);
       this._vfm.add(this._field);
       this.add(this._vfm);
       this._height = Display.getHeight() * size / 10;
@@ -25,7 +25,7 @@ public final class FixedHeightManager extends Manager {
 
    public FixedHeightManager(int size) {
       super(0);
-      this._vfm = (VerticalFieldManager)(new Object(1153220571769602048L));
+      this._vfm = new VerticalFieldManager(1153220571769602048L);
       this.add(this._vfm);
       this._height = Display.getHeight() * size / 10;
    }

@@ -57,7 +57,7 @@ public class AddressBookComboField$AddressBookCallback implements ListFieldCallb
       if (addressCard.getCompanyInfo() != null) {
          String companyString = addressCard.getCompanyInfo().toString();
          if (companyString != null && companyString.length() > 0) {
-            return ((StringBuffer)(new Object())).append(rep).append(", ").append(companyString).toString();
+            return rep + ", " + companyString;
          }
       }
 

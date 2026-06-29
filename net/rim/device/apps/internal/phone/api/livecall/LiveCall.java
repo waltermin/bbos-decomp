@@ -166,7 +166,7 @@ public class LiveCall
    }
 
    public void endByUser(Object context) {
-      PhoneLogger.log(((StringBuffer)(new Object("endcallbyuser "))).append(this._callId).toString());
+      PhoneLogger.log("endcallbyuser " + this._callId);
       Out.p(1128352844, 1162757205, this._callId);
       this.setFlag(65536);
       this.end(context);
@@ -256,7 +256,7 @@ public class LiveCall
       if (connectedNumber != null && connectedNumber.length() > 0 && this._transmittedPhoneNumber != null && this._transmittedPhoneNumber.length() > 0) {
          Object num1 = PhoneUtilities.createNumberModel(this._transmittedPhoneNumber);
          Object num2 = PhoneUtilities.createNumberModel(connectedNumber);
-         if (num1 instanceof Object) {
+         if (num1 instanceof AbstractPhoneNumberModel) {
             if (!((AbstractPhoneNumberModel)num1).equals(num2, false)) {
                return true;
             }
@@ -568,8 +568,8 @@ public class LiveCall
       this.setFlag(4194304);
       this._dtmfQueue.abort();
       if (this.isOutgoing() || this.getFlag(2)) {
-         if (context instanceof Object) {
-            this._errorCode = context;
+         if (context instanceof Integer) {
+            this._errorCode = (Integer)context;
             if (this._errorCode != 28) {
                if (this.shouldPlayCallFailedErrorTune(this._errorCode)) {
                   PhoneUtilities.playInCallTune(1, FAIL_TUNE_VOLUME, true);
@@ -625,7 +625,7 @@ public class LiveCall
 
    protected Field getCallerIDField(Object context) {
       CallerIDInfo model = (CallerIDInfo)this.getDisplayCallerIDInfo();
-      if (!(model instanceof Object)) {
+      if (!(model instanceof FieldProvider)) {
          return null;
       }
 
@@ -792,7 +792,7 @@ public class LiveCall
       }
 
       RIMModel phoneCall = (RIMModel)this.getPhoneCall();
-      if (!(phoneCall instanceof Object)) {
+      if (!(phoneCall instanceof FieldProvider)) {
          return null;
       }
 
@@ -802,7 +802,7 @@ public class LiveCall
 
    @Override
    public boolean grabDataFromField(Field field, Object context) {
-      if (!(this._phoneCallModel instanceof Object)) {
+      if (!(this._phoneCallModel instanceof FieldProvider)) {
          return true;
       }
 
@@ -903,8 +903,8 @@ public class LiveCall
             this.onFlashByUser(context);
             return;
          case 150060:
-            if (this.matchCallId(callId) && context instanceof Object) {
-               this.onPrivacyStateChange(context);
+            if (this.matchCallId(callId) && context instanceof Boolean) {
+               this.onPrivacyStateChange((Boolean)context);
                return;
             }
       }
@@ -916,9 +916,9 @@ public class LiveCall
    }
 
    private Verb getInHolsterDefaultVerb(Object context, Verb[] verbs) {
-      Object integer = ContextObject.get(context, -2949044237254437889L);
-      if (integer instanceof Object) {
-         int inHolsterEvent = integer;
+      Object integer = (Integer)ContextObject.get(context, -2949044237254437889L);
+      if (integer instanceof Integer) {
+         int inHolsterEvent = (Integer)integer;
          switch (inHolsterEvent) {
             case 1:
             case 4:
@@ -1059,7 +1059,7 @@ public class LiveCall
    }
 
    private void stopListeningForEvents() {
-      Out.p(((StringBuffer)(new Object("PHONE: callId "))).append(this._callId).append(" stops listening.").toString());
+      Out.p("PHONE: callId " + this._callId + " stops listening.");
       this.stopListeningForPhoneEvents();
       this.stopListeningForAddressBookUpdates();
    }
@@ -1292,7 +1292,7 @@ public class LiveCall
                   this._transmittedPhoneNumber = PhoneResources.getString(117);
                } else {
                   Object number = cidi.getNumber();
-                  if (number instanceof Object) {
+                  if (number instanceof PhoneNumberModel) {
                      this._transmittedPhoneNumber = ((PhoneNumberModel)number).getValue();
                   }
                }

@@ -65,7 +65,7 @@ final class ViewfinderField extends Field implements ActiveMedia {
          ActiveMediaObservable.setInactive(this);
          return isJpeg;
       } else {
-         throw new Object("Viewfinder not started");
+         throw new IllegalStateException("Viewfinder not started");
       }
    }
 
@@ -159,7 +159,7 @@ final class ViewfinderField extends Field implements ActiveMedia {
          }
       } else {
          if (this._vfPauseBitmap == null || this._vfPauseBitmap.getHeight() != this._vfHeight || this._vfPauseBitmap.getWidth() != this._vfWidth) {
-            this._vfPauseBitmap = (Bitmap)(new Object(197, this._vfWidth, this._vfHeight));
+            this._vfPauseBitmap = new Bitmap(197, this._vfWidth, this._vfHeight);
          }
 
          Camera.pauseViewfinder(this._vfPauseBitmap);

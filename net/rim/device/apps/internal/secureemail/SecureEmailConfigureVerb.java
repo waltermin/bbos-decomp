@@ -9,7 +9,7 @@ public class SecureEmailConfigureVerb extends Verb {
 
    public SecureEmailConfigureVerb(SecureEmailFactory factory) {
       super(332384);
-      this._description = MessageFormat.format(SecureEmailResources.getString(31), new Object[]{factory.getEncodingString()});
+      this._description = MessageFormat.format(SecureEmailResources.getString(31), new String[]{factory.getEncodingString()});
       this._factory = factory;
    }
 

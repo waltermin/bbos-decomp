@@ -1,5 +1,7 @@
 package net.rim.device.internal.media.metadata;
 
+import java.io.EOFException;
+import java.io.IOException;
 import java.io.InputStream;
 import javax.microedition.media.control.MetaDataControl;
 import net.rim.device.api.media.MetaDataObject;
@@ -55,7 +57,7 @@ public final class MP4Info {
       // try (0 -> 7): 10 null
    }
 
-   private final boolean readAtom(InputStream is, int atomLength, int atom, boolean atomIsMetaDataKey) {
+   private final boolean readAtom(InputStream is, int atomLength, int atom, boolean atomIsMetaDataKey) throws EOFException {
       int childAtomLength = 0;
 
       while (atomLength > 0) {
@@ -71,7 +73,7 @@ public final class MP4Info {
          atomLength -= 4;
          if (childAtomLength > atomLength) {
             if (atomIsMetaDataKey && childAtom == 1684108385) {
-               throw new Object();
+               throw new EOFException();
             }
 
             childAtomLength = atomLength;
@@ -85,7 +87,7 @@ public final class MP4Info {
                childAtomLength -= 8;
                atomLength -= 8;
                if (this._metaData == null) {
-                  this._metaData = (MetaDataControlImpl)(new Object());
+                  this._metaData = new MetaDataControlImpl();
                }
 
                label319:
@@ -101,7 +103,7 @@ public final class MP4Info {
                            if (firstNumber == 0) {
                               firstNumber = is.read();
                               if (firstNumber == -1) {
-                                 throw new Object();
+                                 throw new EOFException();
                               }
                            } else {
                               if (secondNumber != 0) {
@@ -111,7 +113,7 @@ public final class MP4Info {
 
                               secondNumber = is.read();
                               if (secondNumber == -1) {
-                                 throw new Object();
+                                 throw new EOFException();
                               }
                            }
 
@@ -129,13 +131,7 @@ public final class MP4Info {
                                  break label319;
                               }
                            default:
-                              this._metaData
-                                 .put(
-                                    key,
-                                    secondNumber != 0
-                                       ? ((StringBuffer)(new Object())).append(String.valueOf(firstNumber)).append('/').append(secondNumber).toString()
-                                       : String.valueOf(firstNumber)
-                                 );
+                              this._metaData.put(key, secondNumber != 0 ? String.valueOf(firstNumber) + '/' + secondNumber : String.valueOf(firstNumber));
                         }
                      }
                      break;
@@ -143,11 +139,11 @@ public final class MP4Info {
                      if (childAtomLength < 131072) {
                         byte[] data = new byte[childAtomLength];
                         if (readArray(is, data, 0, data.length) != childAtomLength) {
-                           throw new Object();
+                           throw new EOFException();
                         }
 
                         try {
-                           this._metaData.put(key, (String)(new Object(data, "utf-8")));
+                           this._metaData.put(key, new String(data, "utf-8"));
                         } finally {
                            break;
                         }
@@ -160,10 +156,10 @@ public final class MP4Info {
                      if (childAtomLength < 524288) {
                         byte[] data = new byte[childAtomLength];
                         if (readArray(is, data, 0, data.length) != childAtomLength) {
-                           throw new Object();
+                           throw new EOFException();
                         }
 
-                        MetaDataObject coverArt = (MetaDataObject)(new Object());
+                        MetaDataObject coverArt = new MetaDataObject();
                         coverArt.setData(data);
                         coverArt.setMIMEType(flags == 14 ? "image/png" : "image/jpeg");
                         coverArt.setPictureType(3);
@@ -210,11 +206,11 @@ public final class MP4Info {
       return true;
    }
 
-   private final void readMVHD(InputStream is, int atomLength) {
+   private final void readMVHD(InputStream is, int atomLength) throws EOFException {
       if (atomLength >= 20) {
          int version = is.read();
          if (version < 0) {
-            throw new Object();
+            throw new EOFException();
          }
 
          atomLength--;
@@ -298,13 +294,13 @@ public final class MP4Info {
       return bytesRead;
    }
 
-   private static final int readInt(InputStream is) {
+   private static final int readInt(InputStream is) throws EOFException {
       int b1 = is.read();
       int b2 = is.read();
       int b3 = is.read();
       int b4 = is.read();
       if ((b1 | b2 | b3 | b4) < 0) {
-         throw new Object();
+         throw new EOFException();
       } else {
          return b1 << 24 | b2 << 16 | b3 << 8 | b4;
       }
@@ -314,11 +310,11 @@ public final class MP4Info {
       return ((long)readInt(is) << 32) + (readInt(is) & 4294967295L);
    }
 
-   private static final void skipFully(InputStream is, int numBytes) {
+   private static final void skipFully(InputStream is, int numBytes) throws IOException {
       while (numBytes > 0) {
          int skipped = (int)is.skip(numBytes);
          if (skipped <= 0) {
-            throw new Object();
+            throw new IOException();
          }
 
          numBytes -= skipped;

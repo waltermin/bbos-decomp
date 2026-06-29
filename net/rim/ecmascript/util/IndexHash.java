@@ -5,9 +5,9 @@ import java.util.Vector;
 import net.rim.device.api.util.ToIntHashtable;
 
 public class IndexHash {
-   private Vector _v = (Vector)(new Object());
+   private Vector _v = new Vector();
    private int _index = 0;
-   private ToIntHashtable _h = (ToIntHashtable)(new Object());
+   private ToIntHashtable _h = new ToIntHashtable();
 
    public int size() {
       return this._v.size();

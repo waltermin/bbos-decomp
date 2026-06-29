@@ -15,7 +15,7 @@ public class VideoCollection extends MediaInfoCollection implements MetaDataList
 
    @Override
    public void metaDataAdded(MetaDataFileInfo info) {
-      String pathURL = ((StringBuffer)(new Object())).append(info.getPath()).append(info.getFileName()).toString();
+      String pathURL = info.getPath() + info.getFileName();
       String decodedURL = URIDecoder.decode(pathURL, "UTF-8");
       int id = StringUtilities.hashCodeIgnoreCase(decodedURL);
       synchronized (this._library.getLock()) {
@@ -33,8 +33,8 @@ public class VideoCollection extends MediaInfoCollection implements MetaDataList
          }
 
          Object bookmark = info.getMetaData(7);
-         if (bookmark instanceof Object) {
-            video.setBookmark(bookmark);
+         if (bookmark instanceof Long) {
+            video.setBookmark((Long)bookmark);
          }
       }
    }

@@ -2,6 +2,7 @@ package net.rim.device.cldc.io.http;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import net.rim.device.api.io.http.HttpProtocolConstants;
 
 public final class RequestLine implements HttpProtocolConstants {
@@ -16,7 +17,7 @@ public final class RequestLine implements HttpProtocolConstants {
       this.readFromStream(dins);
    }
 
-   public final void setMethod(String method) {
+   public final void setMethod(String method) throws IOException {
       if (!method.equals("OPTIONS")
          && !method.equals("GET")
          && !method.equals("POST")
@@ -25,7 +26,7 @@ public final class RequestLine implements HttpProtocolConstants {
          && !method.equals("TRACE")
          && !method.equals("DELETE")
          && !method.equals("CONNECT")) {
-         throw new Object("The specified HTTP method is not supported.");
+         throw new IOException("The specified HTTP method is not supported.");
       }
 
       this._method = method;
@@ -51,7 +52,7 @@ public final class RequestLine implements HttpProtocolConstants {
       return this._version;
    }
 
-   public final void readFromStream(DataInputStream dins) {
+   public final void readFromStream(DataInputStream dins) throws IOException {
       String lineString = Utilities.receiveLine(dins, true);
       String[] line = Utilities.processTransmissionLine(lineString);
       if (line[0] != null && line[1] != null && line[0].length() != 0 && line[1].length() != 0) {
@@ -64,7 +65,7 @@ public final class RequestLine implements HttpProtocolConstants {
             this.setVersion(line[1]);
          }
       } else {
-         throw new Object(((StringBuffer)(new Object("Request line is invalid ["))).append(lineString).append(']').toString());
+         throw new IOException("Request line is invalid [" + lineString + ']');
       }
    }
 
@@ -75,7 +76,7 @@ public final class RequestLine implements HttpProtocolConstants {
 
    @Override
    public final String toString() {
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       buffer.append(this.getMethod());
       buffer.append(" ");
       if (this.getRequestURI() != null && this.getRequestURI().length() != 0) {

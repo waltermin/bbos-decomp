@@ -23,7 +23,7 @@ public class IssuerKeyStoreIndex implements KeyStoreIndex {
       if (target instanceof DistinguishedName) {
          return target.hashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

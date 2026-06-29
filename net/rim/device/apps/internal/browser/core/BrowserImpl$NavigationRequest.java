@@ -42,11 +42,11 @@ final class BrowserImpl$NavigationRequest implements Runnable {
       // 057: aload 0
       // 058: getfield net/rim/device/apps/internal/browser/core/BrowserImpl$NavigationRequest._context Ljava/lang/Object;
       // 05b: dup
-      // 05c: instanceof java/lang/Object
+      // 05c: instanceof java/lang/Integer
       // 05f: ifne 066
       // 062: pop
       // 063: goto 06f
-      // 066: checkcast java/lang/Object
+      // 066: checkcast java/lang/Integer
       // 069: invokevirtual java/lang/Integer.intValue ()I
       // 06c: goto 070
       // 06f: bipush 0
@@ -155,11 +155,11 @@ final class BrowserImpl$NavigationRequest implements Runnable {
       // 14c: aload 0
       // 14d: getfield net/rim/device/apps/internal/browser/core/BrowserImpl$NavigationRequest._context Ljava/lang/Object;
       // 150: dup
-      // 151: instanceof java/lang/Object
+      // 151: instanceof net/rim/device/apps/api/framework/verb/Verb
       // 154: ifne 15b
       // 157: pop
       // 158: goto 41b
-      // 15b: checkcast java/lang/Object
+      // 15b: checkcast net/rim/device/apps/api/framework/verb/Verb
       // 15e: astore 2
       // 15f: aload 0
       // 160: getfield net/rim/device/apps/internal/browser/core/BrowserImpl$NavigationRequest.this$0 Lnet/rim/device/apps/internal/browser/core/BrowserImpl;
@@ -224,11 +224,11 @@ final class BrowserImpl$NavigationRequest implements Runnable {
       // 1df: aload 0
       // 1e0: getfield net/rim/device/apps/internal/browser/core/BrowserImpl$NavigationRequest._context Ljava/lang/Object;
       // 1e3: dup
-      // 1e4: instanceof java/lang/Object
+      // 1e4: instanceof java/lang/Boolean
       // 1e7: ifne 1ee
       // 1ea: pop
       // 1eb: goto 1f7
-      // 1ee: checkcast java/lang/Object
+      // 1ee: checkcast java/lang/Boolean
       // 1f1: invokevirtual java/lang/Boolean.booleanValue ()Z
       // 1f4: goto 1f8
       // 1f7: bipush 0
@@ -251,11 +251,11 @@ final class BrowserImpl$NavigationRequest implements Runnable {
       // 222: astore 4
       // 224: aload 4
       // 226: dup
-      // 227: instanceof java/lang/Object
+      // 227: instanceof net/rim/device/apps/internal/browser/ui/TextFlowManager
       // 22a: ifne 231
       // 22d: pop
       // 22e: goto 263
-      // 231: checkcast java/lang/Object
+      // 231: checkcast net/rim/device/apps/internal/browser/ui/TextFlowManager
       // 234: astore 5
       // 236: aload 5
       // 238: invokevirtual net/rim/device/apps/internal/browser/ui/TextFlowManager.canZoomOut ()Z
@@ -320,11 +320,11 @@ final class BrowserImpl$NavigationRequest implements Runnable {
       // 2bc: aload 0
       // 2bd: getfield net/rim/device/apps/internal/browser/core/BrowserImpl$NavigationRequest._context Ljava/lang/Object;
       // 2c0: dup
-      // 2c1: instanceof java/lang/Object
+      // 2c1: instanceof java/lang/Boolean
       // 2c4: ifne 2cb
       // 2c7: pop
       // 2c8: goto 2d4
-      // 2cb: checkcast java/lang/Object
+      // 2cb: checkcast java/lang/Boolean
       // 2ce: invokevirtual java/lang/Boolean.booleanValue ()Z
       // 2d1: goto 2d5
       // 2d4: bipush 0
@@ -380,7 +380,7 @@ final class BrowserImpl$NavigationRequest implements Runnable {
       // 347: athrow
       // 348: aload 0
       // 349: getfield net/rim/device/apps/internal/browser/core/BrowserImpl$NavigationRequest._context Ljava/lang/Object;
-      // 34c: instanceof java/lang/Object
+      // 34c: instanceof java/lang/Integer
       // 34f: ifne 355
       // 352: goto 41b
       // 355: aload 0
@@ -388,7 +388,7 @@ final class BrowserImpl$NavigationRequest implements Runnable {
       // 359: invokevirtual net/rim/device/apps/internal/browser/core/BrowserImpl.getBrowserLock ()V
       // 35c: aload 0
       // 35d: getfield net/rim/device/apps/internal/browser/core/BrowserImpl$NavigationRequest._context Ljava/lang/Object;
-      // 360: checkcast java/lang/Object
+      // 360: checkcast java/lang/Integer
       // 363: invokevirtual java/lang/Integer.intValue ()I
       // 366: lookupswitch 79 4 1 62 6 42 7 52 9 72
       // 390: aload 0
@@ -440,11 +440,11 @@ final class BrowserImpl$NavigationRequest implements Runnable {
       // 3fa: aload 0
       // 3fb: getfield net/rim/device/apps/internal/browser/core/BrowserImpl$NavigationRequest._context Ljava/lang/Object;
       // 3fe: dup
-      // 3ff: instanceof java/lang/Object
+      // 3ff: instanceof java/lang/Runnable
       // 402: ifne 409
       // 405: pop
       // 406: goto 41b
-      // 409: checkcast java/lang/Object
+      // 409: checkcast java/lang/Runnable
       // 40c: invokeinterface java/lang/Runnable.run ()V 1
       // 411: return
       // 412: astore 1

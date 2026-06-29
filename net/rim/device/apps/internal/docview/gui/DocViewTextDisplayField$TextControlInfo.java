@@ -40,23 +40,23 @@ final class DocViewTextDisplayField$TextControlInfo {
 
    DocViewTextDisplayField$TextControlInfo(DocViewTextDisplayField _1, int startBlockIndex, int initialInsertIndex, boolean fullDocumentState) {
       this.this$0 = _1;
-      this._blocksInfo = (Vector)(new Object());
+      this._blocksInfo = new Vector();
       this._initialInsertIndex = -1;
       this._ctrlOffsets = new int[0];
       this._ctrlAttributes = new byte[0];
       this._foreColors = new int[0];
       this._bgColors = new int[0];
-      this._fontSizes = (IntIntHashtable)(new Object(32));
-      this._fontStyles = (IntIntHashtable)(new Object(32));
-      this._attrHashArray = (IntIntHashtable)(new Object(64));
+      this._fontSizes = new IntIntHashtable(32);
+      this._fontStyles = new IntIntHashtable(32);
+      this._attrHashArray = new IntIntHashtable(64);
       this._linksDirty = true;
       this._linksRefreshRunnable = new DocViewTextDisplayField$TextControlInfo$1(this);
       if (initialInsertIndex < 0) {
-         throw new Object("Invalid field insert index.");
+         throw new IllegalArgumentException("Invalid field insert index.");
       }
 
       if (startBlockIndex < 0) {
-         throw new Object("Invalid start block index.");
+         throw new IllegalArgumentException("Invalid start block index.");
       }
 
       this._beginBlockIndex = this._endBlockIndex = startBlockIndex;
@@ -299,7 +299,7 @@ final class DocViewTextDisplayField$TextControlInfo {
                                  hyperlinkLength -= this._ctrlOffsets[k + 1] - this._ctrlOffsets[k];
                                  if (createCookies) {
                                     if (this._cookies == null) {
-                                       this._cookies = (IntHashtable)(new Object(32));
+                                       this._cookies = new IntHashtable(32);
                                     }
 
                                     if (!this._cookies.containsKey(k)) {
@@ -355,7 +355,7 @@ final class DocViewTextDisplayField$TextControlInfo {
                for (int j = currentStartOffset; j < offsetSize - 1; j++) {
                   if (this._ctrlOffsets[j] == crtTrackChangeStartIdx) {
                      if (this._cookies == null) {
-                        this._cookies = (IntHashtable)(new Object(32));
+                        this._cookies = new IntHashtable(32);
                      }
 
                      if (!this._cookies.containsKey(j)) {
@@ -441,7 +441,7 @@ final class DocViewTextDisplayField$TextControlInfo {
                int bookmarkTarget = bookmarkMap.get(bookmarkID);
                if (bookmarkTarget >= formattingOffset && bookmarkTarget <= nNewStringLength + formattingOffset) {
                   if (this._bookmarkHash == null) {
-                     this._bookmarkHash = (IntIntHashtable)(new Object());
+                     this._bookmarkHash = new IntIntHashtable();
                   }
 
                   if (!this._bookmarkHash.containsKey(bookmarkID)) {
@@ -456,7 +456,7 @@ final class DocViewTextDisplayField$TextControlInfo {
 
                      this._bookmarkHash.put(bookmarkID, bookmarkTarget - formattingOffset + nCrtTextLength);
                      if (newBookmarks == null) {
-                        newBookmarks = (IntVector)(new Object());
+                        newBookmarks = new IntVector();
                      }
 
                      newBookmarks.addElement(bookmarkID);
@@ -475,7 +475,7 @@ final class DocViewTextDisplayField$TextControlInfo {
                this.this$0._bookmarkInfoMap.put(newBookmarks.elementAt(i), this);
             }
 
-            newBookmarks = null;
+            IntVector var23 = null;
          }
 
          int linkCount = links != null ? links.length : 0;

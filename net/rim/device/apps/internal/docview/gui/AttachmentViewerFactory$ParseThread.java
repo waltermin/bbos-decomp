@@ -29,11 +29,11 @@ final class AttachmentViewerFactory$ParseThread extends Thread {
       if (this._data instanceof byte[]) {
          this._progressThread.waitForContinueSignal(6000);
          this._coreData.parseDocument((byte[])this._data, true, this._currentBlockIndex, this._pausable, this._currentBlockIndex == this._totalBlockCount - 1);
-      } else if (this._data instanceof Object) {
+      } else if (this._data instanceof InputStream) {
          this._progressThread.waitForContinueSignal(6000);
          this._coreData.parseDocument((InputStream)this._data, this._pausable);
       } else {
-         if (this._data instanceof Object) {
+         if (this._data instanceof Vector) {
             boolean continueParse = true;
             Vector ucsDataVector = (Vector)this._data;
             int size = ucsDataVector.size();

@@ -4,8 +4,8 @@ import java.util.Vector;
 
 final class SetVar {
    private WMLContextManager _contextManager;
-   private Vector _names = (Vector)(new Object());
-   private Vector _values = (Vector)(new Object());
+   private Vector _names = new Vector();
+   private Vector _values = new Vector();
 
    SetVar(WMLContextManager contextManager) {
       this._contextManager = contextManager;
@@ -19,8 +19,8 @@ final class SetVar {
    }
 
    final void invoke() {
-      Vector tmpNames = (Vector)(new Object());
-      Vector tmpValues = (Vector)(new Object());
+      Vector tmpNames = new Vector();
+      Vector tmpValues = new Vector();
 
       for (int i = 0; i < this._names.size(); i++) {
          tmpNames.addElement(((WMLVariable)this._names.elementAt(i)).getName());

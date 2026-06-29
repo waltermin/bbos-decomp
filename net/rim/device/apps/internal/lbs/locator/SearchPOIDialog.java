@@ -5,7 +5,6 @@ import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.FontRegistry;
 import net.rim.device.api.ui.Graphics;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.EditField;
@@ -13,8 +12,11 @@ import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.PopupScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.internal.lbs.resources.LBSResources;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 
 public final class SearchPOIDialog extends PopupScreen implements ListFieldCallback, FieldChangeListener {
    private SearchPOIHistoryDataHandler _dataHandler;
@@ -26,10 +28,10 @@ public final class SearchPOIDialog extends PopupScreen implements ListFieldCallb
    private LabelField _titleField;
 
    public SearchPOIDialog(Object context, String title) {
-      super((Manager)(new Object(1153220571769602048L)), 196608);
+      super(new VerticalFieldManager(1153220571769602048L), 196608);
       this.applyTheme();
       this.addTitle(title);
-      this._keywordsField = (EditField)(new Object("", "", 256, 2147483648L));
+      this._keywordsField = new EditField("", "", 256, 2147483648L);
       if (this._keywordsField.getTextLength() > 0) {
          this._keywordsField.setCursorPosition(this._keywordsField.getTextLength() - 1);
       } else {
@@ -39,10 +41,10 @@ public final class SearchPOIDialog extends PopupScreen implements ListFieldCallb
       this.add(this._keywordsField);
       this._dataHandler = SearchPOIHistoryDataHandler.getInstance();
       if (this._dataHandler.getItemCount() > 0) {
-         this.add((Field)(new Object(65536)));
+         this.add(new SeparatorField(65536));
          int fontHeight = Font.getDefault().getHeight();
-         this.add((Field)(new Object(fontHeight >> 1)));
-         this._list = (ListField)(new Object(this._dataHandler.getItemCount()));
+         this.add(new VerticalSpacerField(fontHeight >> 1));
+         this._list = new ListField(this._dataHandler.getItemCount());
          this._list.setCallback(this);
          this._listManager = new RigidManager(100, Math.min(3, this._dataHandler.getItemCount()), 299067162755072L, this._list.getFont());
          this._listManager.add(this._list);
@@ -54,7 +56,7 @@ public final class SearchPOIDialog extends PopupScreen implements ListFieldCallb
 
    private final void addTitle(String title) {
       if (title != null && title.length() > 0) {
-         this._titleField = (LabelField)(new Object(((StringBuffer)(new Object())).append(title).append(":").toString()));
+         this._titleField = new LabelField(title + ":");
          this._titleField.setFont(Font.getDefault().derive(1));
          RigidManager rigidManager = new RigidManager(100, 1, 299067162755072L, this._titleField.getFont());
          rigidManager.add(this._titleField);

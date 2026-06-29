@@ -17,7 +17,7 @@ final class QuotedPrintableInputStream extends InputStream {
 
    public QuotedPrintableInputStream(InputStream input) {
       if (input == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._input = input;
@@ -118,7 +118,7 @@ final class QuotedPrintableInputStream extends InputStream {
 
          return lenRead == 0 && length != 0 ? -1 : lenRead;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

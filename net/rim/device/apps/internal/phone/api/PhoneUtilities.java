@@ -21,9 +21,11 @@ import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.FactoryUtil;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
+import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.AddressSelectionContext;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.ConversionProvider;
+import net.rim.device.apps.api.framework.model.PersistableRIMModel;
 import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.registration.RecognizerRepository;
 import net.rim.device.apps.api.framework.verb.Verb;
@@ -36,6 +38,7 @@ import net.rim.device.apps.internal.phone.api.verbs.UseOncePhoneNumberVerb;
 import net.rim.device.apps.internal.phone.data.CallerIDInfo;
 import net.rim.device.apps.internal.phone.model.AbstractPhoneNumberModel;
 import net.rim.device.apps.internal.phone.model.PhoneNumberConverter;
+import net.rim.device.apps.internal.phone.model.PhoneNumberModel;
 import net.rim.device.apps.internal.phone.model.PhoneNumberServices;
 import net.rim.device.apps.internal.phone.options.CallTunes;
 import net.rim.device.apps.internal.phone.options.PhoneOptions;
@@ -151,11 +154,11 @@ public final class PhoneUtilities {
    }
 
    public static final boolean getPrivateFlag(Object context, int flag) {
-      return !(context instanceof Object) ? false : ((ContextObject)context).getPrivateFlag(4936088360624690805L, flag);
+      return !(context instanceof ContextObject) ? false : ((ContextObject)context).getPrivateFlag(4936088360624690805L, flag);
    }
 
    public static final void setPrivateFlag(Object context, int flag) {
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          ((ContextObject)context).setPrivateFlag(4936088360624690805L, flag);
       }
    }
@@ -169,13 +172,13 @@ public final class PhoneUtilities {
    }
 
    public static final void clearPrivateFlag(Object context, int flag) {
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          ((ContextObject)context).clearPrivateFlag(4936088360624690805L, flag);
       }
    }
 
    public static final ContextObject getPrivateContextObject(int privateContextFlag) {
-      ContextObject co = (ContextObject)(new Object());
+      ContextObject co = new ContextObject();
       co.setPrivateFlag(4936088360624690805L, privateContextFlag);
       return co;
    }
@@ -232,11 +235,11 @@ public final class PhoneUtilities {
       // 4d: astore 5
       // 4f: aload 5
       // 51: dup
-      // 52: instanceof java/lang/Object
+      // 52: instanceof net/rim/device/apps/internal/phone/model/AbstractPhoneNumberModel
       // 55: ifne 5c
       // 58: pop
       // 59: goto 71
-      // 5c: checkcast java/lang/Object
+      // 5c: checkcast net/rim/device/apps/internal/phone/model/AbstractPhoneNumberModel
       // 5f: astore 6
       // 61: aload 6
       // 63: aload 0
@@ -259,13 +262,13 @@ public final class PhoneUtilities {
 
    public static final Object getCallConnectionParameters(Object phoneNumber, Object addressCard, Object sourceCallerIDInfo, int preferredLine, Object context) {
       ContextObject connectionParameters = ContextObject.clone(context);
-      ContextObject tempContext = (ContextObject)(new Object());
+      ContextObject tempContext = new ContextObject();
       RIMModel numberModel = createNumberModel(phoneNumber);
       RIMModel voicemailNumberModel = null;
       boolean usingVoicemailRedirection = false;
       if (!getPrivateFlag(context, 7)) {
          voicemailNumberModel = getVoicemailRedirectionNumber(numberModel, tempContext);
-         if (voicemailNumberModel instanceof Object) {
+         if (voicemailNumberModel instanceof RIMModel) {
             numberModel = voicemailNumberModel;
             usingVoicemailRedirection = true;
          }
@@ -292,8 +295,8 @@ public final class PhoneUtilities {
       }
 
       String numberToConnect = null;
-      StringBuffer buffer = (StringBuffer)(new Object());
-      if (numberModel instanceof Object) {
+      StringBuffer buffer = new StringBuffer();
+      if (numberModel instanceof ConversionProvider) {
          ConversionProvider conversionProvider = (ConversionProvider)numberModel;
          tempContext.reset();
          tempContext.setFlag(21);
@@ -311,11 +314,11 @@ public final class PhoneUtilities {
                return null;
             }
 
-            System.out.println(((StringBuffer)(new Object("PHONE: connecting "))).append(numberToConnect).toString());
+            System.out.println("PHONE: connecting " + numberToConnect);
          }
       }
 
-      if (numberModel instanceof Object) {
+      if (numberModel instanceof AbstractPhoneNumberModel) {
          String numberRequested = ((AbstractPhoneNumberModel)numberModel).getValue();
          connectionParameters.put(-799495460678763170L, numberRequested);
       }
@@ -372,7 +375,7 @@ public final class PhoneUtilities {
    public static final Object getCallAnsweringParameters(int callId, RIMModel callerIDInfo, Object context) {
       ContextObject connectionParameters = PhoneContexts.CONNECTION_CONTEXT_WR.getContextObject();
       connectionParameters.reset();
-      if (callerIDInfo instanceof Object) {
+      if (callerIDInfo instanceof RIMModel) {
          connectionParameters.put(5898398779440734986L, callerIDInfo);
       }
 
@@ -396,18 +399,18 @@ public final class PhoneUtilities {
    }
 
    public static final RIMModel createNumberModel(Object number) {
-      ContextObject tempContext = (ContextObject)(new Object());
+      ContextObject tempContext = new ContextObject();
       tempContext.reset();
       if (number == null) {
          return null;
       }
 
       long contextId;
-      if (number instanceof Object) {
+      if (number instanceof String) {
          contextId = 253;
       } else {
-         if (!(number instanceof Object)) {
-            throw new Object();
+         if (!(number instanceof RIMModel)) {
+            throw new IllegalArgumentException();
          }
 
          contextId = 254;
@@ -416,7 +419,7 @@ public final class PhoneUtilities {
       tempContext.put(contextId, number);
       RIMModel numberModel = (RIMModel)FactoryUtil.createInstance(3797587162219887872L, tempContext);
       if (numberModel == null) {
-         throw new Object();
+         throw new RuntimeException();
       } else {
          return numberModel;
       }
@@ -424,10 +427,10 @@ public final class PhoneUtilities {
 
    public static final CallerIDInfo createCallerIDInfo(Object number) {
       RIMModel phoneNumberModel = null;
-      if (number instanceof Object) {
+      if (number instanceof String) {
          phoneNumberModel = createNumberModel(number);
       } else {
-         if (!(number instanceof Object)) {
+         if (!(number instanceof RIMModel)) {
             return null;
          }
 
@@ -438,7 +441,7 @@ public final class PhoneUtilities {
    }
 
    public static final CallerIDInfo createCallerIDInfo(RIMModel numberModel, int callTypeFlag, int callId, Object context) {
-      ContextObject tempContext = (ContextObject)(new Object());
+      ContextObject tempContext = new ContextObject();
       tempContext.setPrivateFlag(4936088360624690805L, callTypeFlag);
       String friendlyName = (String)ContextObject.get(context, -4886909117188079897L);
       int clipMode = 0;
@@ -480,7 +483,7 @@ public final class PhoneUtilities {
 
       CallerIDInfo callerIDInfo = (CallerIDInfo)FactoryUtil.createInstance(2629643229137268956L, tempContext);
       if (callerIDInfo == null) {
-         throw new Object();
+         throw new RuntimeException();
       } else {
          return callerIDInfo;
       }
@@ -488,7 +491,7 @@ public final class PhoneUtilities {
 
    public static final RIMModel createPhoneCallModel(Object initialData) {
       Object o = FactoryUtil.createInstance(4846413703361859244L, initialData);
-      return (RIMModel)(!(o instanceof Object) ? null : o);
+      return !(o instanceof RIMModel) ? null : (RIMModel)o;
    }
 
    public static final void rejectCall(int callId) {
@@ -519,8 +522,8 @@ public final class PhoneUtilities {
 
    public static final boolean isEmergencyNumber(Object phoneNumber) {
       String number;
-      if (!(phoneNumber instanceof Object)) {
-         if (!(phoneNumber instanceof Object)) {
+      if (!(phoneNumber instanceof String)) {
+         if (!(phoneNumber instanceof AbstractPhoneNumberModel)) {
             return false;
          }
 
@@ -751,7 +754,7 @@ public final class PhoneUtilities {
    public static final void toggleBooleanDebugFlag(long flag, String description) {
       boolean set = toggleBooleanDebugFlag(flag);
       if (description != null) {
-         Dialog.inform(((StringBuffer)(new Object())).append(description).append(set).toString());
+         Dialog.inform(description + set);
       }
    }
 
@@ -808,15 +811,13 @@ public final class PhoneUtilities {
          return null;
       }
 
-      Verb[] useOnceVerbs = new Object[]{new UseOncePhoneNumberVerb()};
+      Verb[] useOnceVerbs = new Verb[]{new UseOncePhoneNumberVerb()};
       if (findLabel == null) {
          findLabel = PhoneResources.getString(6033);
       }
 
       String pickNumberString = PhoneResources.getString(116);
-      selectionContext = (AddressSelectionContext)(new Object(
-         findLabel, pickNumberString, null, RecognizerRepository.getRecognizers(3797587162219887872L), useOnceVerbs
-      ));
+      selectionContext = new AddressSelectionContext(findLabel, pickNumberString, null, RecognizerRepository.getRecognizers(3797587162219887872L), useOnceVerbs);
       ContextObject tmpContext = PhoneContexts.CONNECTION_CONTEXT_WR.getContextObject();
       tmpContext.reset();
       tmpContext.setFlag(42, 34, 119);
@@ -824,7 +825,7 @@ public final class PhoneUtilities {
          tmpContext.setFlag(14);
       }
 
-      tmpContext.put(6609423255094033855L, new Object(1187214));
+      tmpContext.put(6609423255094033855L, new Integer(1187214));
       if (titleField != null) {
          tmpContext.put(-7261227923983886841L, titleField);
       }
@@ -835,25 +836,25 @@ public final class PhoneUtilities {
 
       selectionContext.setContext(tmpContext);
       if (selectAddressMenuItemText != null) {
-         selectionContext.setUseEntryPrefixes(new Object[]{selectAddressMenuItemText});
+         selectionContext.setUseEntryPrefixes(new String[]{selectAddressMenuItemText});
       } else if (is3WC) {
-         selectionContext.setUseEntryPrefixes(new Object[]{PhoneResources.getString(6318)});
+         selectionContext.setUseEntryPrefixes(new String[]{PhoneResources.getString(6318)});
       } else {
-         selectionContext.setUseEntryPrefixes(new Object[]{PhoneResources.getString(139)});
+         selectionContext.setUseEntryPrefixes(new String[]{PhoneResources.getString(139)});
       }
 
       selectionContext.setFindLabel(findLabel);
-      Object phoneNumber = addressSelectionVerb.invoke(selectionContext);
+      Object phoneNumber = (PersistableRIMModel)addressSelectionVerb.invoke(selectionContext);
       Object address = null;
-      if (phoneNumber instanceof Object) {
+      if (phoneNumber instanceof PhoneNumberModel) {
          if (selectionContext != null) {
             Object addr = selectionContext.getSelectedSource();
-            if (addr instanceof Object) {
+            if (addr instanceof AddressCardModel) {
                address = addr;
             }
          }
 
-         ContextObject addressContext = (ContextObject)(new Object());
+         ContextObject addressContext = new ContextObject();
          addressContext.put(247, phoneNumber);
          if (address != null) {
             addressContext.put(252, address);
@@ -992,7 +993,7 @@ public final class PhoneUtilities {
    }
 
    public static final void visitObject(Object o, Visitor visitor) {
-      if (o instanceof Object) {
+      if (o instanceof ReadableList) {
          ReadableList list = (ReadableList)o;
          int size = list.size();
 
@@ -1005,7 +1006,7 @@ public final class PhoneUtilities {
    }
 
    public static final void updateFont(Field field, Font font) {
-      if (!(field instanceof Object)) {
+      if (!(field instanceof Manager)) {
          if (field != null) {
             field.setFont(font);
          }
@@ -1048,7 +1049,7 @@ public final class PhoneUtilities {
    public static final ButtonField getCloseButton() {
       int closeId = 9;
       String closeString = CommonResource.getString(closeId);
-      return (ButtonField)(new Object(closeString, 0));
+      return new ButtonField(closeString, 0);
    }
 
    public static final int getArrayIndex(String testNumber, String[] numberList) {
@@ -1073,7 +1074,7 @@ public final class PhoneUtilities {
    }
 
    public static final void performLongRunningOperationWithStatus(Runnable runnable, String statusText) {
-      Dialog status = (Dialog)(new Object(statusText, null, null, 0, Bitmap.getPredefinedBitmap(3), 33554432));
+      Dialog status = new Dialog(statusText, null, null, 0, Bitmap.getPredefinedBitmap(3), 33554432);
       status.show(10);
       Runnable _runnable = runnable;
       Thread thread = new PhoneUtilities$1(_runnable, status);
@@ -1140,7 +1141,7 @@ public final class PhoneUtilities {
 
    public static final String[] getAllLineNumbers() {
       int[] id = getAllLineIds();
-      String[] returnNumbers = new Object[id.length];
+      String[] returnNumbers = new String[id.length];
 
       for (int index = returnNumbers.length - 1; index >= 0; index--) {
          returnNumbers[index] = getLineNumber(id[index], false);
@@ -1268,7 +1269,7 @@ public final class PhoneUtilities {
       // 1f: anewarray 3534
       // 22: dup
       // 23: bipush 0
-      // 24: new java/lang/Object
+      // 24: new java/lang/StringBuffer
       // 27: dup
       // 28: ldc_w ""
       // 2b: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -1292,7 +1293,7 @@ public final class PhoneUtilities {
       // 4f: anewarray 3576
       // 52: dup
       // 53: bipush 0
-      // 54: new java/lang/Object
+      // 54: new java/lang/StringBuffer
       // 57: dup
       // 58: ldc_w ""
       // 5b: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -1316,7 +1317,7 @@ public final class PhoneUtilities {
       // 7f: anewarray 3618
       // 82: dup
       // 83: bipush 0
-      // 84: new java/lang/Object
+      // 84: new java/lang/StringBuffer
       // 87: dup
       // 88: ldc_w ""
       // 8b: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -1358,8 +1359,7 @@ public final class PhoneUtilities {
    }
 
    public static final String[] splitNumberAtFirstSpecialCharacter(String originalNumber) {
-      String[] numbers = new Object[2];
-      numbers[0] = originalNumber;
+      String[] numbers = new String[]{originalNumber, null};
       if (originalNumber != null) {
          char dudChar = ' ';
          originalNumber = originalNumber.replace(dudChar, ',');

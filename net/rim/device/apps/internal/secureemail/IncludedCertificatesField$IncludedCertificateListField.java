@@ -8,11 +8,12 @@ import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.TrustedKeyStore;
 import net.rim.device.api.i18n.MessageFormat;
 import net.rim.device.api.ui.ContextMenu;
-import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.VerbMenuItem;
 import net.rim.device.apps.internal.api.crypto.CryptoCommonResources;
 import net.rim.device.apps.internal.api.crypto.certificate.CertificateListField;
 import net.rim.device.apps.internal.api.crypto.verb.DisplayCertificateVerb;
+import net.rim.device.apps.internal.api.crypto.verb.ImportCertificatesVerb;
+import net.rim.device.apps.internal.api.crypto.verb.TrustCertificatesVerb;
 
 class IncludedCertificatesField$IncludedCertificateListField extends CertificateListField implements CursorProviderField {
    private final IncludedCertificatesField this$0;
@@ -45,7 +46,7 @@ class IncludedCertificatesField$IncludedCertificateListField extends Certificate
          if (importCertificateMenuItem == null) {
             certificateChain = CertificateUtilities.buildCertificateChain(certificateToImport, this.this$0._certificates, keyStore);
             int chainLength = certificateChain.length;
-            PrivateKey[] privateKeyChain = new Object[chainLength];
+            PrivateKey[] privateKeyChain = new PrivateKey[chainLength];
 
             for (int i = 0; i < chainLength; i++) {
                Certificate currentCertificate = certificateChain[i];
@@ -58,11 +59,11 @@ class IncludedCertificatesField$IncludedCertificateListField extends Certificate
                }
             }
 
-            String[] containerStringUpperSingularArray = new Object[]{this.this$0._secureEmailFactory.getPublicKeyContainerString(true, false)};
+            String[] containerStringUpperSingularArray = new String[]{this.this$0._secureEmailFactory.getPublicKeyContainerString(true, false)};
             String importCertificateVerbDescription = MessageFormat.format(CryptoCommonResources.getString(21), containerStringUpperSingularArray);
-            importCertificateMenuItem = (VerbMenuItem)(new Object(
-               (Verb)(new Object(importCertificateVerbDescription, certificateChain, privateKeyChain, keyStore)), 10
-            ));
+            importCertificateMenuItem = new VerbMenuItem(
+               new ImportCertificatesVerb(importCertificateVerbDescription, certificateChain, privateKeyChain, keyStore), 10
+            );
             this.this$0._importCertificateMenuItems[index] = importCertificateMenuItem;
          }
 
@@ -76,11 +77,11 @@ class IncludedCertificatesField$IncludedCertificateListField extends Certificate
             certificateChain = CertificateUtilities.buildCertificateChain(certificateToImport, this.this$0._certificates, keyStore);
          }
 
-         String[] containerStringUpperSingularArray = new Object[]{this.this$0._secureEmailFactory.getPublicKeyContainerString(true, false)};
+         String[] containerStringUpperSingularArray = new String[]{this.this$0._secureEmailFactory.getPublicKeyContainerString(true, false)};
          String trustCertificateVerbDescription = MessageFormat.format(CryptoCommonResources.getString(30), containerStringUpperSingularArray);
          long properties = CertificateChainProperties.getCertificateChainProperties(certificateChain, trustedKeyStore, System.currentTimeMillis());
          if (trustedKeyStore.isAllowed(certificateChain[0]) && (properties & 8) != 0) {
-            VerbMenuItem certToTrustVerb = (VerbMenuItem)(new Object((Verb)(new Object(trustCertificateVerbDescription, certificateChain, keyStore)), 10));
+            VerbMenuItem certToTrustVerb = new VerbMenuItem(new TrustCertificatesVerb(trustCertificateVerbDescription, certificateChain, keyStore), 10);
             contextMenu.addItem(certToTrustVerb);
          }
       }
@@ -107,7 +108,7 @@ class IncludedCertificatesField$IncludedCertificateListField extends Certificate
       if (pos >= 0 && pos < this.getCursorCount(context)) {
          this.setSelectedIndex(pos);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

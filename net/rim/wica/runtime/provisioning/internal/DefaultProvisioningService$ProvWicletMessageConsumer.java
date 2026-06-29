@@ -81,7 +81,7 @@ final class DefaultProvisioningService$ProvWicletMessageConsumer implements Mess
       // 068: aconst_null
       // 069: invokevirtual net/rim/wica/runtime/provisioning/internal/DefaultProvisioningService.installApplication (Lnet/rim/wica/runtime/provisioning/DeploymentDescriptor;Ljava/lang/String;JIZZZ[Lnet/rim/wica/runtime/persistence/CollectionSyncModel;)V
       // 06c: goto 1bd
-      // 06f: new java/lang/Object
+      // 06f: new java/lang/StringBuffer
       // 072: dup
       // 073: ldc_w "Could not deserialize "
       // 076: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -132,7 +132,7 @@ final class DefaultProvisioningService$ProvWicletMessageConsumer implements Mess
       // 0cf: aconst_null
       // 0d0: invokevirtual net/rim/wica/runtime/provisioning/internal/DefaultProvisioningService.installApplication (Lnet/rim/wica/runtime/provisioning/DeploymentDescriptor;Ljava/lang/String;JIZZZ[Lnet/rim/wica/runtime/persistence/CollectionSyncModel;)V
       // 0d3: goto 1bd
-      // 0d6: new java/lang/Object
+      // 0d6: new java/lang/StringBuffer
       // 0d9: dup
       // 0da: ldc_w "Could not deserialize "
       // 0dd: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -181,7 +181,7 @@ final class DefaultProvisioningService$ProvWicletMessageConsumer implements Mess
       // 133: aconst_null
       // 134: invokevirtual net/rim/wica/runtime/provisioning/internal/DefaultProvisioningService.installApplication (Lnet/rim/wica/runtime/provisioning/DeploymentDescriptor;Ljava/lang/String;JIZZZ[Lnet/rim/wica/runtime/persistence/CollectionSyncModel;)V
       // 137: goto 17f
-      // 13a: new java/lang/Object
+      // 13a: new java/lang/StringBuffer
       // 13d: dup
       // 13e: ldc_w "Could not deserialize "
       // 141: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V

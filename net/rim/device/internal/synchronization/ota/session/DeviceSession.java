@@ -1,5 +1,6 @@
 package net.rim.device.internal.synchronization.ota.session;
 
+import java.io.IOException;
 import java.util.Vector;
 import net.rim.device.api.servicebook.ServiceIdentifier;
 import net.rim.device.api.util.IntEnumeration;
@@ -66,12 +67,12 @@ final class DeviceSession extends Session {
       this._userId = aSessionManager.getUserId();
       this._configuration = this._servicesConfigurationManager.getConfiguration(this._sid);
       this._referenceGenerator = ReferenceGenerator.getSingletonInstance();
-      this._refIdToSyncAgentConnectionMap = (IntHashtable)(new Object());
-      this._contextRefIdToSyncAgentConnectionMap = (IntHashtable)(new Object());
-      this._commandIdToRefIdToMap = (IntIntHashtable)(new Object());
+      this._refIdToSyncAgentConnectionMap = new IntHashtable();
+      this._contextRefIdToSyncAgentConnectionMap = new IntHashtable();
+      this._commandIdToRefIdToMap = new IntIntHashtable();
       this._incrementChangeListId = true;
       this._syncAgentConnections = syncAgentConnections;
-      this._listOfDatagramsToSend = (Vector)(new Object(0));
+      this._listOfDatagramsToSend = new Vector(0);
    }
 
    private final void cleanReferences() {
@@ -329,10 +330,10 @@ final class DeviceSession extends Session {
       this._commandIdToRefIdToMap.put(xAbsoluteCommandId, xRefId);
    }
 
-   private final void sendPendingChanges() {
+   private final void sendPendingChanges() throws IOException {
       Vector xDataSourceNames = this._configuration.getDataSourceNames();
       if (xDataSourceNames.isEmpty()) {
-         throw new Object();
+         throw new IOException();
       }
 
       int xDataSourceNamesListSize = xDataSourceNames.size();
@@ -715,7 +716,7 @@ final class DeviceSession extends Session {
       }
    }
 
-   private final int execute(GetRecordsHashes aGetRecordHashes) {
+   private final int execute(GetRecordsHashes aGetRecordHashes) throws IOException {
       int xReturnCode = 200;
       IntVector xListOfGroupIds = aGetRecordHashes.getGroupsIds();
       if (!xListOfGroupIds.isEmpty()) {
@@ -783,7 +784,7 @@ final class DeviceSession extends Session {
          }
 
          if (xRecordsHashes == null) {
-            throw new Object();
+            throw new IOException();
          }
 
          if (xSyncDatagram != null) {
@@ -806,7 +807,7 @@ final class DeviceSession extends Session {
    }
 
    private final void handleDeviceChangesSessionStatus(Status aStatus) {
-      IntHashtable xIgnoredRefIds = (IntHashtable)(new Object(0));
+      IntHashtable xIgnoredRefIds = new IntHashtable(0);
       int xEventId = -1;
       int xErrorCode = -1;
       String nullObj = "";
@@ -898,7 +899,7 @@ final class DeviceSession extends Session {
          }
 
          if (var16 < 0 || xErrorCode < 0) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          xSyncApplicationChangeStatus.setRefId(xRefId);

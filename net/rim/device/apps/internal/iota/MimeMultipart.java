@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.iota;
 
 import java.io.DataInputStream;
+import java.io.EOFException;
 import java.io.InputStream;
 import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.api.util.NumberUtilities;
@@ -23,10 +24,10 @@ public final class MimeMultipart {
    private static final byte LF = 10;
    private static final byte HYPHEN = 45;
 
-   public MimeMultipart(InputStream is, String contentType) {
+   public MimeMultipart(InputStream is, String contentType) throws EOFException {
       String boundary = null;
       String start = null;
-      StringTokenizer tokenizer = (StringTokenizer)(new Object(contentType, ';'));
+      StringTokenizer tokenizer = new StringTokenizer(contentType, ';');
       if (tokenizer.hasMoreTokens()) {
          tokenizer.nextToken();
          String boundaryParameterName = "boundary";
@@ -47,7 +48,7 @@ public final class MimeMultipart {
       }
 
       if (boundary == null) {
-         throw new Object("Content-Type is missing boundary");
+         throw new IllegalArgumentException("Content-Type is missing boundary");
       }
 
       int boundaryLength = boundary.length();
@@ -61,14 +62,14 @@ public final class MimeMultipart {
          if (readNewByte) {
             currentByte = is.read();
             if (currentByte == -1) {
-               throw new Object();
+               throw new EOFException();
             }
          }
 
          readNewByte = true;
          switch (boundaryState) {
             case -1:
-               throw new Object();
+               throw new IllegalStateException();
             case 0:
             default:
                if (currentByte == 13) {
@@ -150,8 +151,8 @@ public final class MimeMultipart {
                break;
             case 7:
                if (currentByte == 10) {
-                  HttpHeaders headers = (HttpHeaders)(new Object());
-                  headers.readFromStream((DataInputStream)(new Object(is)));
+                  HttpHeaders headers = new HttpHeaders();
+                  headers.readFromStream(new DataInputStream(is));
                   bodyPart = new BodyPart(headers);
                   if (this._bodyParts == null) {
                      this._bodyParts = new BodyPart[1];
@@ -199,7 +200,7 @@ public final class MimeMultipart {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public static final String cidURLtoContentID(String cidURL) {
-      StringBuffer buffer = (StringBuffer)(new Object(cidURL.length()));
+      StringBuffer buffer = new StringBuffer(cidURL.length());
       buffer.append('<');
       int urlLength = cidURL.length();
 

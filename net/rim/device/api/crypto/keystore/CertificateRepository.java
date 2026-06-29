@@ -11,7 +11,7 @@ import net.rim.vm.Array;
 
 final class CertificateRepository implements Persistable {
    private Object[] _certificates = new Object[0];
-   private String[] _types = new Object[0];
+   private String[] _types = new String[0];
    private int[] _sequences = new int[0];
    private static final long CERTIFICATE_REPOSITORY = -775587297036677177L;
    private static final long IDLE_THRESHOLD = 10L;
@@ -81,7 +81,7 @@ final class CertificateRepository implements Persistable {
          _persist.commit();
          return ((long)sequence << 32) + position;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

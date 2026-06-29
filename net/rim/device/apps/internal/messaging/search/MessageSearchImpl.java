@@ -3,7 +3,7 @@ package net.rim.device.apps.internal.messaging.search;
 import java.util.Hashtable;
 import net.rim.device.api.collection.WritableSet;
 import net.rim.device.api.collection.util.KeywordFilterList;
-import net.rim.device.api.collection.util.KeywordIndexerHelper;
+import net.rim.device.api.collection.util.PrefixKeywordFilterList;
 import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.system.DirectConnect;
 import net.rim.device.api.system.MMS;
@@ -14,6 +14,7 @@ import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.FactoryUtil;
 import net.rim.device.apps.api.framework.hotkeys.HotKeys;
 import net.rim.device.apps.api.framework.model.ContextObject;
+import net.rim.device.apps.api.framework.model.RIMModelOrderHelper;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.messaging.Folder;
 import net.rim.device.apps.api.messaging.search.MessageSearch;
@@ -56,7 +57,7 @@ public final class MessageSearchImpl extends MessageSearch {
          }
       }
 
-      this._currentSearch = (WeakReference)(new Object(src));
+      this._currentSearch = new WeakReference(src);
    }
 
    public final long getCollectionId() {
@@ -70,9 +71,7 @@ public final class MessageSearchImpl extends MessageSearch {
 
    final KeywordFilterList getKeywordList() {
       if (this._keyList == null) {
-         this._keyList = (KeywordFilterList)(new Object(
-            this.getCollection(), (KeywordIndexerHelper)(new Object(new FilterComparator(), (ContextObject)(new Object(56))))
-         ));
+         this._keyList = new PrefixKeywordFilterList(this.getCollection(), new RIMModelOrderHelper(new FilterComparator(), new ContextObject(56)));
       }
 
       return this._keyList;
@@ -293,7 +292,7 @@ public final class MessageSearchImpl extends MessageSearch {
 
    final void repairPrecannedSearches() {
       boolean isReducedFormFactor = InternalServices.isReducedFormFactor();
-      Hashtable resourceTable = (Hashtable)(new Object());
+      Hashtable resourceTable = new Hashtable();
       int[][] resources = new int[][]{
          {33, 34, -804651006, 35, 36, -804650998, 46, 47},
          {51, 52, -804651006, 53, 54, -804519934, -1466262987, 980431202},
@@ -382,7 +381,7 @@ public final class MessageSearchImpl extends MessageSearch {
 
    private static final void hotKeyProblem(char c, int found) {
       try {
-         throw new Object(((StringBuffer)(new Object("Search hot key: '"))).append(c).append("' (").append(found).append(')').toString());
+         throw new RuntimeException("Search hot key: '" + c + "' (" + found + ')');
       } finally {
          return;
       }
@@ -437,7 +436,7 @@ public final class MessageSearchImpl extends MessageSearch {
                System.arraycopy(this._keyChoices, found, this._keyChoices, found + 1, amtToCopy);
             }
 
-            this._keyChoices[found] = new Object(c);
+            this._keyChoices[found] = new Character(c);
             if (!HotKeys.unregisterHotKey(7, Character.toUpperCase(c)) && logErrors) {
                hotKeyProblem(c, 1000);
                return;
@@ -463,7 +462,7 @@ public final class MessageSearchImpl extends MessageSearch {
                char c = (char)(97 + i);
                StringBuffer complementaryChars = layout.getComplementaryChars(c, 0);
                if (complementaryChars == null || complementaryChars.charAt(0) == c) {
-                  Arrays.add(this._keyChoices, new Object(c));
+                  Arrays.add(this._keyChoices, new Character(c));
                }
             }
          }

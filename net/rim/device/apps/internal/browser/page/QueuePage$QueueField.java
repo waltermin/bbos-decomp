@@ -16,14 +16,14 @@ final class QueuePage$QueueField extends LabelField {
    @Override
    protected final void makeContextMenu(ContextMenu contextMenu, int instance) {
       super.makeContextMenu(contextMenu, instance);
-      VerbMenuItem menuItem = (VerbMenuItem)(new Object(new FollowLinkVerb(((StringBuffer)(new Object("queue:"))).append(this._queue).toString()), 1));
+      VerbMenuItem menuItem = new VerbMenuItem(new FollowLinkVerb("queue:" + this._queue), 1);
       contextMenu.addItem(menuItem);
    }
 
    @Override
    protected final boolean keyChar(char key, int status, int time) {
       if (key == '\n') {
-         new FollowLinkVerb(((StringBuffer)(new Object("queue:"))).append(this._queue).toString()).invoke(null);
+         new FollowLinkVerb("queue:" + this._queue).invoke(null);
          return true;
       } else {
          return super.keyChar(key, status, time);

@@ -33,8 +33,8 @@ public class EventModelFactory extends RIMModelFactory {
             break label35;
          }
       } else {
-         if (initialData instanceof Object) {
-            ContextObject.put(initialData, -4054673099568009991L, new Object(this._type));
+         if (initialData instanceof ContextObject) {
+            ContextObject.put(initialData, -4054673099568009991L, new Integer(this._type));
          }
 
          model = new EventModelImpl(initialData);
@@ -75,7 +75,7 @@ public class EventModelFactory extends RIMModelFactory {
    }
 
    public static String longToString(long date) {
-      StringBuffer sb = (StringBuffer)(new Object(10));
+      StringBuffer sb = new StringBuffer(10);
       if (date != -1) {
          Calendar cal = Calendar.getInstance();
          cal.setTimeZone(TimeZone.getTimeZone(DateTimeUtilities.GMT));

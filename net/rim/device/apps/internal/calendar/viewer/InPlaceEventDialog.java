@@ -3,7 +3,6 @@ package net.rim.device.apps.internal.calendar.viewer;
 import java.util.Calendar;
 import net.rim.device.api.i18n.DateFormat;
 import net.rim.device.api.ui.Graphics;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.Trackball;
 import net.rim.device.api.ui.UiApplication;
@@ -18,13 +17,13 @@ final class InPlaceEventDialog extends Screen {
    private HorizontalFieldManager _hfm;
    private InPlaceEventDialog$StartAndDurationField _startDur = new InPlaceEventDialog$StartAndDurationField();
    private InPlaceEventDialog$InPlaceEventDialogVerticalFieldManager _vfm = new InPlaceEventDialog$InPlaceEventDialogVerticalFieldManager(1152921504606846976L);
-   private VerticalFieldManager _vfmEdit = (VerticalFieldManager)(new Object(1153202979583557632L));
-   private AutoTextEditField _edit = (AutoTextEditField)(new Object(null, null));
-   private LabelField _label = (LabelField)(new Object(null, 1152921504606846976L));
+   private VerticalFieldManager _vfmEdit = new VerticalFieldManager(1153202979583557632L);
+   private AutoTextEditField _edit = new AutoTextEditField(null, null);
+   private LabelField _label = new LabelField(null, 1152921504606846976L);
    private Calendar _cal = Calendar.getInstance();
    private CalendarExtensions _calEx = (CalendarExtensions)this._cal;
    private DateFormat _df = DateFormat.getInstance(48);
-   private StringBuffer _otherDateString = (StringBuffer)(new Object());
+   private StringBuffer _otherDateString = new StringBuffer();
    private boolean _userCancelled = true;
    private int _xTopLeft;
    private int _yTopLeft;
@@ -38,7 +37,7 @@ final class InPlaceEventDialog extends Screen {
    private static final int DURATION_BOUNDARY = 7200000;
 
    public InPlaceEventDialog(int xTopLeft, int yTopLeft) {
-      super((Manager)(new Object(0)));
+      super(new HorizontalFieldManager(0));
       this._xTopLeft = xTopLeft;
       this._yTopLeft = yTopLeft;
       this._hfm = (HorizontalFieldManager)this.getDelegate();

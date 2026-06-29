@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.blackberryemail.email;
 
+import java.io.IOException;
 import javax.microedition.io.Connector;
 import javax.microedition.io.file.FileConnection;
 import net.rim.device.api.io.MIMETypeAssociations;
@@ -49,7 +50,7 @@ public class NativeAttachmentRequestProcessor$Helper {
       return createAttachment(serviceRecord, getLargeAttachmentSizes(getNativeAttachments(messageModel)), filePath);
    }
 
-   public static LargeAttachmentModel createAttachment(ServiceRecord serviceRecord, long[] existingTotalAttachmentSizes, String filePath) {
+   public static LargeAttachmentModel createAttachment(ServiceRecord serviceRecord, long[] existingTotalAttachmentSizes, String filePath) throws IOException {
       if (serviceRecord != null && filePath != null) {
          FileConnection fc = (FileConnection)Connector.open(FileUtilities.makeFileURL(filePath));
          if (!fc.exists() || fc.isDirectory()) {
@@ -58,7 +59,7 @@ public class NativeAttachmentRequestProcessor$Helper {
          }
 
          if (!fc.canRead()) {
-            throw new Object("Can not read the file...");
+            throw new IOException("Can not read the file...");
          }
 
          long currentSelectionSize = fc.fileSize();
@@ -140,9 +141,7 @@ public class NativeAttachmentRequestProcessor$Helper {
 
    public static String getUnknownFileName(String mimeType) {
       String ext = MIMETypeAssociations.getExtensionFromMIMEType(mimeType);
-      return ext == null
-         ? EmailResources.getString(73)
-         : ((StringBuffer)(new Object())).append(EmailResources.getString(73)).append(".").append(ext).toString();
+      return ext == null ? EmailResources.getString(73) : EmailResources.getString(73) + "." + ext;
    }
 
    public static String getUnknownMimeType() {
@@ -159,7 +158,7 @@ public class NativeAttachmentRequestProcessor$Helper {
    }
 
    public static String getFilePath() {
-      FileSelector fileSelector = (FileSelector)(new Object(null));
+      FileSelector fileSelector = new FileSelector(null);
       fileSelector.onlySelectForwardUnlocked();
       return fileSelector.selectFile(null);
    }
@@ -261,7 +260,7 @@ public class NativeAttachmentRequestProcessor$Helper {
    public static void transmitMessageMoreCancel(
       TransmissionService transmissionService, int refId, ServiceRecord serviceRecord, byte errorCode, byte[] errorMsg, int contentPartId
    ) {
-      CancelMoreMessagingTransmission cancelTx = (CancelMoreMessagingTransmission)(new Object(contentPartId, refId, errorCode, errorMsg));
+      CancelMoreMessagingTransmission cancelTx = new CancelMoreMessagingTransmission(contentPartId, refId, errorCode, errorMsg);
       ContextObject contextObject = ContextObject.castOrCreate(null);
       contextObject.put(-6095803566992128485L, serviceRecord);
 

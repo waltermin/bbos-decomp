@@ -4,6 +4,7 @@ import net.rim.device.api.i18n.ResourceBundleFamily;
 import net.rim.device.api.system.RIMGlobalMessagePoster;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.theme.ThemeManager;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.internal.options.resources.OptionsResources;
 import net.rim.device.internal.i18n.CommonResource;
@@ -32,7 +33,7 @@ final class ThemeOptionsScreen$ThemeVerb extends Verb {
          case 16865360:
             if (ThemeManager.isActivatable(this._name)) {
                ThemeManager.setActiveTheme(this._name);
-               return new Object(39);
+               return new ContextObject(39);
             }
             break;
          case 33554432:

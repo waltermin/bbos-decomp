@@ -15,13 +15,7 @@ final class PlayerVerbManager implements VerbFactory {
 
    @Override
    public final Verb[] getVerbs(Object context) {
-      if (ContextObject.getFlag(context, 90) && this._app != null && !this._app.isForeground()) {
-         Verb[] verbs = new Object[1];
-         verbs[0] = new NowPlayingVerb(this._app);
-         return verbs;
-      } else {
-         return null;
-      }
+      return ContextObject.getFlag(context, 90) && this._app != null && !this._app.isForeground() ? new Verb[]{new NowPlayingVerb(this._app)} : null;
    }
 
    final void deRegister() {

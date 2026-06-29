@@ -24,9 +24,6 @@ public final class PushFile extends Model {
 
    @Override
    final String getProperties() {
-      return ((StringBuffer)(new Object()))
-         .append(this.toPropertyString("sessionName", this._sessionName))
-         .append(this.toPropertyString("fileName", this._fileName))
-         .toString();
+      return this.toPropertyString("sessionName", this._sessionName) + this.toPropertyString("fileName", this._fileName);
    }
 }

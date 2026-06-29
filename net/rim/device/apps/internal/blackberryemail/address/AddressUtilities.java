@@ -9,12 +9,12 @@ import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.EmailAddressEditField;
 import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.FlowFieldManager;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.api.util.Factory;
-import net.rim.device.api.util.LongHashtable;
 import net.rim.device.api.util.StringMatch;
 import net.rim.device.api.util.WeakReferenceUtilities;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
@@ -29,11 +29,14 @@ import net.rim.device.apps.api.framework.model.VerbProvider;
 import net.rim.device.apps.api.framework.registration.VerbFactory;
 import net.rim.device.apps.api.framework.registration.VerbFactoryRepository;
 import net.rim.device.apps.api.framework.registration.VerbRepository;
+import net.rim.device.apps.api.framework.verb.ToggleQualifiedFriendlyVerb;
 import net.rim.device.apps.api.framework.verb.Verb;
+import net.rim.device.apps.api.framework.verb.WrapperVerb;
 import net.rim.device.apps.api.messaging.implus.IMPlusServiceModel;
 import net.rim.device.apps.api.search.SearchCriterion;
 import net.rim.device.apps.api.transmission.rim.CMIMEUtilities;
 import net.rim.device.apps.api.ui.CommonResources;
+import net.rim.device.apps.api.ui.LeftRightFieldManager;
 import net.rim.device.apps.api.ui.ToggleableField;
 import net.rim.device.apps.api.ui.VariableRowHeightProxy;
 import net.rim.device.apps.internal.blackberryemail.resources.EmailResources;
@@ -44,9 +47,9 @@ import net.rim.vm.WeakReference;
 public final class AddressUtilities {
    public static final long SOURCE_ADDRESS_CARD = -570873356703084835L;
    private static final int MESSAGE_ADDRESS_DATA_SIZE = 8;
-   private static ContextObjectWR _friendlyContextWR = (ContextObjectWR)(new Object(10));
-   private static String[] _nameStrings = new Object[2];
-   private static WeakReference _smsAddressDataBufferWR = (WeakReference)(new Object(null));
+   private static ContextObjectWR _friendlyContextWR = new ContextObjectWR(10);
+   private static String[] _nameStrings = new String[2];
+   private static WeakReference _smsAddressDataBufferWR = new WeakReference(null);
 
    private AddressUtilities() {
    }
@@ -54,7 +57,7 @@ public final class AddressUtilities {
    static final String initializeData(ContextObject contextObject) {
       Object test = contextObject.get(251);
       if (test != null) {
-         String[] stringPair = (Object[])test;
+         String[] stringPair = (String[])test;
          String address = CMIMEUtilities.getAddressPart(stringPair);
          String friendlyName = CMIMEUtilities.getFriendlyPart(stringPair);
          return initializeData(address, friendlyName);
@@ -76,7 +79,7 @@ public final class AddressUtilities {
             String data = null;
             return data;
          } else {
-            StringBuffer buff = (StringBuffer)(new Object(friendlyName.length() + 1));
+            StringBuffer buff = new StringBuffer(friendlyName.length() + 1);
             buff.append('\u0000').append(friendlyName);
             String data = buff.toString();
             return data;
@@ -85,7 +88,7 @@ public final class AddressUtilities {
          String data = address;
          return data;
       } else {
-         StringBuffer buff = (StringBuffer)(new Object(address.length() + friendlyName.length() + 1));
+         StringBuffer buff = new StringBuffer(address.length() + friendlyName.length() + 1);
          buff.append(address).append('\u0000').append(friendlyName);
          return buff.toString();
       }
@@ -117,7 +120,7 @@ public final class AddressUtilities {
          return data;
       }
 
-      StringBuffer result = (StringBuffer)(new Object());
+      StringBuffer result = new StringBuffer();
       result.append(data.substring(0, friendlyNameIndex));
       result.append('\u0000');
       result.append(data.substring(lastNameIndex).trim());
@@ -167,7 +170,7 @@ public final class AddressUtilities {
 
    static final RIMModel getAddressBookEntry(RIMModel address) {
       Object object = AddressBookServices.reverseLookup(address);
-      if (!(object instanceof Object)) {
+      if (!(object instanceof RIMModel)) {
          object = null;
       }
 
@@ -175,8 +178,8 @@ public final class AddressUtilities {
    }
 
    static final RIMModel getAddressBookEntry(RIMModel address, Object context) {
-      Object object = ContextObject.get(context, 252);
-      return (RIMModel)(!(object instanceof Object) ? getAddressBookEntry(address) : object);
+      Object object = (RIMModel)ContextObject.get(context, 252);
+      return !(object instanceof RIMModel) ? getAddressBookEntry(address) : (RIMModel)object;
    }
 
    static final Field getField(int type, int labelResourceId, RIMModel model, String data, Object context) {
@@ -193,7 +196,7 @@ public final class AddressUtilities {
       if (ContextObject.getFlag(context, 0)) {
          switch (type) {
             case 1:
-               EmailAddressEditField emailField = (EmailAddressEditField)(new Object(label, addr, 2048));
+               EmailAddressEditField emailField = new EmailAddressEditField(label, addr, 2048);
                emailField.setFilter(new CustomEmailAddressFilter());
                fieldToReturn = emailField;
                break;
@@ -202,7 +205,7 @@ public final class AddressUtilities {
                   addr = addr.substring(0, 8);
                }
 
-               EditField editField = (EditField)(new Object(label, addr, 8, 150994944));
+               EditField editField = new EditField(label, addr, 8, 150994944);
                fieldToReturn = editField;
          }
       } else {
@@ -210,7 +213,7 @@ public final class AddressUtilities {
          Field qualified = null;
          if (ContextObject.getFlag(context, 9)) {
             RIMModel address = getAddressBookEntry(model, context);
-            if (address instanceof Object) {
+            if (address instanceof FieldProvider) {
                FieldProvider fieldProvider = (FieldProvider)address;
                boolean oldValue = ContextObject.getFlag(context, 51);
                boolean oldSingleValue = ContextObject.getFlag(context, 106);
@@ -236,12 +239,12 @@ public final class AddressUtilities {
 
             String fn = getFriendlyName(data);
             if (friendly == null && fn != null) {
-               friendly = (Field)(new Object(fn, 18014398509481984L));
+               friendly = new LabelField(fn, 18014398509481984L);
             }
 
             if (label.length() > 0 && friendly != null && ContextObject.getFlag(context, 55)) {
-               HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object());
-               hfm.add((Field)(new Object(label)));
+               HorizontalFieldManager hfm = new HorizontalFieldManager();
+               hfm.add(new LabelField(label));
                hfm.add(friendly);
                friendly = hfm;
             }
@@ -255,13 +258,13 @@ public final class AddressUtilities {
          }
 
          if (labelFlag) {
-            Field leftField = (Field)(new Object(label));
-            Field rightField = (Field)(new Object(valueText, 18014398509481984L));
+            Field leftField = new LabelField(label);
+            Field rightField = new RichTextField(valueText, 18014398509481984L);
             Manager manager;
             if (ContextObject.getFlag(context, 128)) {
-               manager = (Manager)(new Object(leftField, rightField));
+               manager = new LeftRightFieldManager(leftField, rightField);
             } else {
-               manager = (Manager)(new Object());
+               manager = new HorizontalFieldManager();
                manager.add(leftField);
                manager.add(rightField);
             }
@@ -274,12 +277,12 @@ public final class AddressUtilities {
                style |= 67108864;
             }
 
-            qualified = (Field)(new Object(valueText, style));
+            qualified = new RichTextField(valueText, style);
          }
 
          qualified.setCookie(model);
          if (friendly != null) {
-            fieldToReturn = (Field)(new Object(friendly, qualified));
+            fieldToReturn = new ToggleableField(friendly, qualified);
             friendly.setCookie(model);
             fieldToReturn.setCookie(model);
          } else {
@@ -288,7 +291,7 @@ public final class AddressUtilities {
       }
 
       if (!labelFlag && isMultiSendMethodCapable) {
-         StringBuffer postfixBuffer = (StringBuffer)(new Object());
+         StringBuffer postfixBuffer = new StringBuffer();
          postfixBuffer.append(' ');
          postfixBuffer.append('(');
          switch (type) {
@@ -300,8 +303,8 @@ public final class AddressUtilities {
          }
 
          postfixBuffer.append(')');
-         FlowFieldManager ffm = (FlowFieldManager)(new Object(fieldToReturn.getStyle()));
-         LabelField postfixLabel = (LabelField)(new Object(postfixBuffer.toString(), 36028797018963968L));
+         FlowFieldManager ffm = new FlowFieldManager(fieldToReturn.getStyle());
+         LabelField postfixLabel = new LabelField(postfixBuffer.toString(), 36028797018963968L);
          ffm.add(fieldToReturn);
          ffm.setCookie(fieldToReturn.getCookie());
          ffm.add(postfixLabel);
@@ -313,7 +316,7 @@ public final class AddressUtilities {
 
    static final int paint(RIMModel model, String data, Graphics g, int x, int y, int width, int height, Object context) {
       RIMModel addressBookEntry = getAddressBookEntry(model);
-      if (!(addressBookEntry instanceof Object)) {
+      if (!(addressBookEntry instanceof PaintProvider)) {
          if (data != null) {
             int friendlyNameIndex = data.indexOf(0);
             int textStyle = ContextObject.getFlag(context, 17) ? 64 : 0;
@@ -346,11 +349,11 @@ public final class AddressUtilities {
       boolean hyperlink = ContextObject.getFlag(context, 83);
       boolean composeOnly = ContextObject.getFlag(context, 44);
       if (hyperlink || !editable && !picking) {
-         RIMModel var20 = AddressBookServices.reverseLookup(model);
-         if (var20 != null && !hyperlink && !composeOnly && !ContextObject.getFlag(context, 11)) {
+         addressCard = (RIMModel)AddressBookServices.reverseLookup(model);
+         if (addressCard != null && !hyperlink && !composeOnly && !ContextObject.getFlag(context, 11)) {
             ContextObject contextObject = ContextObject.clone(context);
             ContextObject.setFlag(contextObject, 44);
-            ((VerbProvider)var20).getVerbs(contextObject, verbs);
+            ((VerbProvider)addressCard).getVerbs(contextObject, verbs);
          } else {
             VerbRepository verbRepository = VerbRepository.getVerbRepository(-7881764549058890736L);
             Verb[] composeVerbs = verbRepository.getVerbs(objectType);
@@ -379,11 +382,11 @@ public final class AddressUtilities {
             VerbFactory[] verbFactories = VerbFactoryRepository.getVerbFactories(-7881764549058890736L);
             if (verbFactories != null && verbFactories.length > 0) {
                Object newContext = null;
-               if (!(context instanceof Object)) {
+               if (!(context instanceof ContextObject)) {
                   newContext = context;
                } else {
                   newContext = ((ContextObject)context).clone();
-                  ((LongHashtable)newContext).put(245, model);
+                  ((ContextObject)newContext).put(245, model);
                }
 
                for (int i = 0; i < verbFactories.length; i++) {
@@ -405,10 +408,10 @@ public final class AddressUtilities {
 
          if (ContextObject.getFlag(context, 2) && !ContextObject.getFlag(context, 54)) {
             int index = verbs.length;
-            if (var20 != null) {
+            if (addressCard != null) {
                if (!ContextObject.getFlag(context, 18) && !ContextObject.getFlag(context, 11)) {
                   Array.resize(verbs, index + 1);
-                  verbs[index++] = new ViewAddressVerb(var20);
+                  verbs[index++] = new ViewAddressVerb(addressCard);
                }
             } else {
                Verb addToABVerb = AddressBookServices.getAddToAddressBookVerb();
@@ -416,13 +419,13 @@ public final class AddressUtilities {
                if (addToABVerb != null) {
                   RIMModel tmpModel = headerAddressCard;
                   if (tmpModel == null) {
-                     ContextObject addressCreationContext = (ContextObject)(new Object());
+                     ContextObject addressCreationContext = new ContextObject();
                      addressCreationContext.put(254, model);
                      tmpModel = (RIMModel)((Factory)ApplicationRegistry.getApplicationRegistry().waitFor(objectType)).createInstance(addressCreationContext);
                   }
 
                   Array.resize(verbs, index + 1);
-                  verbs[index++] = (Verb)(new Object(addToABVerb, tmpModel, 16867328));
+                  verbs[index++] = new WrapperVerb(addToABVerb, tmpModel, 16867328);
                }
             }
          }
@@ -430,12 +433,12 @@ public final class AddressUtilities {
 
       if (!ContextObject.getFlag(context, 44)) {
          Field uiField = (Field)ContextObject.get(context, 9045827404276417370L);
-         if (uiField != null && uiField.getManager() instanceof Object) {
+         if (uiField != null && uiField.getManager() instanceof ToggleableField) {
             ToggleableField toggleField = (ToggleableField)uiField.getManager();
             int length = verbs.length;
             Array.resize(verbs, length + 1);
             int resId = toggleField.isFriendlyVisible() ? 1650 : 1700;
-            verbs[length] = (Verb)(new Object(toggleField, CommonResources.getResourceBundle(), resId));
+            verbs[length] = new ToggleQualifiedFriendlyVerb(toggleField, CommonResources.getResourceBundle(), resId);
          }
       }
 
@@ -481,7 +484,7 @@ public final class AddressUtilities {
          return true;
       } else {
          if (ContextObject.getFlag(context, 11) && ContextObject.getFlag(context, 43) && ContextObject.getFlag(context, 54)) {
-            if (target instanceof Object) {
+            if (target instanceof StringBuffer) {
                StringBuffer stringBuffer = (StringBuffer)target;
                if (address != null) {
                   stringBuffer.append(addressFieldName).append(address);
@@ -489,8 +492,8 @@ public final class AddressUtilities {
 
                return true;
             }
-         } else if (ContextObject.getFlag(context, 10) && target instanceof Object[]) {
-            String[] names = (Object[])target;
+         } else if (ContextObject.getFlag(context, 10) && target instanceof String[]) {
+            String[] names = (String[])target;
             if (names.length == 2) {
                getAddressAndFriendlyName(model, data, names, false);
                return true;
@@ -516,9 +519,7 @@ public final class AddressUtilities {
                   encoding = "windows-1252\r";
                }
 
-               StringBuffer wholeAddress = (StringBuffer)(new Object(
-                  (fn != null ? fn.length() : 0) + (address != null ? address.length() : 0) + (isEncoded ? 1 : 2)
-               ));
+               StringBuffer wholeAddress = new StringBuffer((fn != null ? fn.length() : 0) + (address != null ? address.length() : 0) + (isEncoded ? 1 : 2));
                if (fn != null) {
                   wholeAddress.append(fn);
                }
@@ -616,14 +617,14 @@ public final class AddressUtilities {
             }
 
             if (ContextObject.getFlag(context, 55)) {
-               if (ContextObject.getFlag(context, 21) && target instanceof Object) {
+               if (ContextObject.getFlag(context, 21) && target instanceof StringBuffer) {
                   StringBuffer sb = (StringBuffer)target;
                   sb.setLength(0);
                   sb.append(address);
                   return true;
                }
 
-               if (ContextObject.getFlag(context, 19) && target instanceof Object) {
+               if (ContextObject.getFlag(context, 19) && target instanceof SyncBuffer) {
                   SyncBuffer syncBuffer = (SyncBuffer)target;
                   DataBuffer smsAddressDataBuffer = WeakReferenceUtilities.getDataBuffer(_smsAddressDataBufferWR, false);
                   smsAddressDataBuffer.setLength(0);
@@ -657,7 +658,7 @@ public final class AddressUtilities {
 
          if (!modelCheckedAlready) {
             RIMModel addressBookEntry = getAddressBookEntry(model);
-            if (addressBookEntry instanceof Object) {
+            if (addressBookEntry instanceof ConversionProvider) {
                ConversionProvider converter = (ConversionProvider)addressBookEntry;
                if (converter.convert(_friendlyContextWR.getContextObject(), names)) {
                   return;
@@ -678,7 +679,7 @@ public final class AddressUtilities {
       }
 
       Object[] values = (Object[])crit.getValue();
-      String[] testWords = (Object[])values[2];
+      String[] testWords = (String[])values[2];
       String nameStrings0;
       String nameStrings1;
       synchronized (_nameStrings) {
@@ -690,7 +691,7 @@ public final class AddressUtilities {
       }
 
       for (int i = testWords.length - 1; i >= 0; i--) {
-         StringMatch stringMatch = (StringMatch)(new Object(testWords[i], false, false));
+         StringMatch stringMatch = new StringMatch(testWords[i], false, false);
          if ((nameStrings1 == null || stringMatch.indexOf(nameStrings1) < 0) && (nameStrings0 == null || stringMatch.indexOf(nameStrings0) < 0)) {
             return 0;
          }
@@ -708,7 +709,7 @@ public final class AddressUtilities {
 
          Object originalAddressCard = ContextObject.get(context, -4055106280780392421L);
          RIMModel addressBookEntry;
-         if (!(originalAddressCard instanceof Object)) {
+         if (!(originalAddressCard instanceof RIMModel)) {
             addressBookEntry = getAddressBookEntry(model, context);
          } else {
             addressBookEntry = (RIMModel)originalAddressCard;

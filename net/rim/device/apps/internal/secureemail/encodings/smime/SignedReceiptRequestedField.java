@@ -2,7 +2,6 @@ package net.rim.device.apps.internal.secureemail.encodings.smime;
 
 import net.rim.device.api.crypto.cms.CMSSignedDataInputStream;
 import net.rim.device.api.ui.ContextMenu;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
@@ -10,10 +9,12 @@ import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.ui.VerbMenuItem;
 import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
 import net.rim.device.apps.internal.secureemail.ContextMenuDelegate;
+import net.rim.device.apps.internal.secureemail.ContextMenuProxyImageField;
 import net.rim.device.apps.internal.secureemail.MessageClosedListener;
 import net.rim.device.apps.internal.secureemail.SecureEmailListener;
 import net.rim.device.internal.resource.crypto.CryptoIcons;
 import net.rim.device.internal.ui.Image;
+import net.rim.device.internal.ui.component.HorizontalSpacerField;
 import net.rim.device.internal.ui.component.ImageField;
 
 public final class SignedReceiptRequestedField extends HorizontalFieldManager implements ContextMenuDelegate, MessageClosedListener {
@@ -36,9 +37,9 @@ public final class SignedReceiptRequestedField extends HorizontalFieldManager im
    public final void makeDelegateContextMenu(ContextMenu contextMenu) {
       if (!this._signedReceiptSent && this._inbound) {
          if (this._sendSignedReceiptVerb == null) {
-            this._sendSignedReceiptVerb = (VerbMenuItem)(new Object(
+            this._sendSignedReceiptVerb = new VerbMenuItem(
                new SignedReceiptRequestedField$SendSignedReceiptVerb(this, this._signedStream, this._messageModel), 10
-            ));
+            );
          }
 
          contextMenu.addItem(this._sendSignedReceiptVerb);
@@ -83,11 +84,11 @@ public final class SignedReceiptRequestedField extends HorizontalFieldManager im
          this._signedReceiptSent = this._messageModel.flagsSet(16384);
       }
 
-      ImageField imageField = (ImageField)(new Object(this, this.getImage(), 18014450049155072L));
+      ImageField imageField = new ContextMenuProxyImageField(this, this.getImage(), 18014450049155072L);
       imageField.setPreferredSize(26, 20);
       this.add(imageField);
-      this.add((Field)(new Object(3)));
-      this._richTextField = (RichTextField)(new Object(this.getText(), 36028848558571520L));
+      this.add(new HorizontalSpacerField(3));
+      this._richTextField = new RichTextField(this.getText(), 36028848558571520L);
       this.add(this._richTextField);
    }
 }

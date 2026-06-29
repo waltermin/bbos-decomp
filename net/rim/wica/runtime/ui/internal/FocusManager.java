@@ -78,7 +78,7 @@ public final class FocusManager extends VerticalFieldManager {
       if (this._focusHolder.isFocusable()) {
          this._focusHolder.setFocus();
       } else {
-         throw new Object("Attempted to focus the null field when it is non-focusable!");
+         throw new IllegalStateException("Attempted to focus the null field when it is non-focusable!");
       }
    }
 

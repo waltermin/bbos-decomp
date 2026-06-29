@@ -27,7 +27,7 @@ public final class UAProf {
             default:
                byte[] brandingUAProfBytes = Branding.getData(17152);
                if (brandingUAProfBytes != null) {
-                  brandingUAProf = (String)(new Object(brandingUAProfBytes));
+                  brandingUAProf = new String(brandingUAProfBytes);
                }
          }
       }
@@ -36,7 +36,7 @@ public final class UAProf {
          return getFormattedUAProfURI(brandingUAProf);
       }
 
-      StringBuffer result = (StringBuffer)(new Object("http://www.blackberry.net/go/mobile/profiles/uaprof/"));
+      StringBuffer result = new StringBuffer("http://www.blackberry.net/go/mobile/profiles/uaprof/");
       URIEncoder.encode(result, DeviceInfo.getDeviceName(), "iso-8859-1", true);
       result.append('/');
       result.append(UserAgent.getBrowserVersion());

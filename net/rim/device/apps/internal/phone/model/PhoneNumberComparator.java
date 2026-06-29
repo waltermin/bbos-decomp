@@ -8,10 +8,10 @@ public final class PhoneNumberComparator {
    private String _originalA;
    private String _originalB;
    private boolean _isConvertedA;
-   private StringBuffer _numberA = (StringBuffer)(new Object());
-   private StringBuffer _numberB = (StringBuffer)(new Object());
-   private StringBuffer _dtmfA = (StringBuffer)(new Object());
-   private StringBuffer _dtmfB = (StringBuffer)(new Object());
+   private StringBuffer _numberA = new StringBuffer();
+   private StringBuffer _numberB = new StringBuffer();
+   private StringBuffer _dtmfA = new StringBuffer();
+   private StringBuffer _dtmfB = new StringBuffer();
    private int _nnl = Math.max(7, SmartDialingOptions.getOptions().getNationalPhoneNumberLength());
    private int _comparisonFlags;
    private static final int A_SUBSET_OF_B = 1;
@@ -184,7 +184,7 @@ public final class PhoneNumberComparator {
       ApplicationRegistry reg = ApplicationRegistry.getApplicationRegistry();
       _comparatorWR = (WeakReference)reg.get(-8445063537528043454L);
       if (_comparatorWR == null) {
-         _comparatorWR = (WeakReference)(new Object(null));
+         _comparatorWR = new WeakReference(null);
 
          label21:
          try {

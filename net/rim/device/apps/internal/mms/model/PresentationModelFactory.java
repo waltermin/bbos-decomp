@@ -10,7 +10,7 @@ public final class PresentationModelFactory {
    public static final MMSPresentationModel createInstance(int type) {
       switch (type) {
          case 65535:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 65536:
          default:
             return new DraftPresentationModel();
@@ -27,7 +27,7 @@ public final class PresentationModelFactory {
          case 65536:
             return new DraftPresentationModel(attachment);
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 

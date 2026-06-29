@@ -14,7 +14,7 @@ final class TitleFieldFactory$TitleField extends StringRibbonComponent {
 
    @Override
    public final void initialize(Hashtable params, Object context) {
-      if (context instanceof Object) {
+      if (context instanceof StringProps) {
          this._context = (StringProps)context;
       }
 

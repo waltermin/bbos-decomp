@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.sync;
 
+import java.io.IOException;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.internal.synchronization.ota.util.TypeLengthEncoding;
 
@@ -152,7 +153,7 @@ public final class SyncDatagram extends SyncDatagramBase {
    @Override
    public final void writeTo(DataBuffer dout) {
       if (this._sessionId == 0) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       dout.writeByte(this.getProtocolVersion());
@@ -192,7 +193,7 @@ public final class SyncDatagram extends SyncDatagramBase {
    }
 
    @Override
-   public final void readFrom(DataBuffer din) {
+   public final void readFrom(DataBuffer din) throws IOException {
       boolean xEndOfHeaderFound = false;
 
       while (!xEndOfHeaderFound) {
@@ -235,7 +236,7 @@ public final class SyncDatagram extends SyncDatagramBase {
       }
 
       if (!xEndOfHeaderFound) {
-         throw new Object();
+         throw new IOException();
       }
 
       this._commandsDataBuffer = din;

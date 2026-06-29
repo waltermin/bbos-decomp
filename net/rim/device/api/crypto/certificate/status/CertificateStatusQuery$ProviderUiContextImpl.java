@@ -28,7 +28,7 @@ class CertificateStatusQuery$ProviderUiContextImpl implements ProviderUiContext 
          BackgroundDialog.show(dialog);
          return dialog.getCloseReason();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

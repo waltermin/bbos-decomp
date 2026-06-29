@@ -5,6 +5,8 @@ import net.rim.device.api.crypto.certificate.CertificateChainProperties;
 import net.rim.device.api.crypto.certificate.CertificateUtilities;
 import net.rim.device.api.crypto.certificate.LDAPCertificateFetch;
 import net.rim.device.api.crypto.certificate.pgp.PGPCertificate;
+import net.rim.device.api.crypto.certificate.pgp.PGPKeyIDKeyStoreIndex;
+import net.rim.device.api.crypto.certificate.pgp.PGPLDAPCertificateFetch;
 import net.rim.device.api.crypto.certificate.pgp.PGPSubKeyProperties;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.KeyStoreIndex;
@@ -16,7 +18,7 @@ import net.rim.device.internal.system.FIPSPolicy;
 
 public final class PGPUtilities extends SecureEmailUtilities {
    private KeyStore _pgpKeyStore = PGPKeyStore.getInstance();
-   private KeyStoreIndex _pgpKeyIDKeyStoreIndex = (KeyStoreIndex)(new Object());
+   private KeyStoreIndex _pgpKeyIDKeyStoreIndex = new PGPKeyIDKeyStoreIndex();
 
    PGPUtilities() {
    }
@@ -59,7 +61,7 @@ public final class PGPUtilities extends SecureEmailUtilities {
          case 32:
             return 2;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -70,7 +72,7 @@ public final class PGPUtilities extends SecureEmailUtilities {
          case 4:
          case 5:
          case 6:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 2:
             return 32;
          case 3:
@@ -117,7 +119,7 @@ public final class PGPUtilities extends SecureEmailUtilities {
 
    @Override
    public final LDAPCertificateFetch getLDAPCertificateFetch() {
-      return (LDAPCertificateFetch)(new Object());
+      return new PGPLDAPCertificateFetch();
    }
 
    @Override

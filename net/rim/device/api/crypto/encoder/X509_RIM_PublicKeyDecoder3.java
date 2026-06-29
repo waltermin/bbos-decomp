@@ -1,12 +1,13 @@
 package net.rim.device.api.crypto.encoder;
 
 import net.rim.device.api.crypto.CryptoSystem;
+import net.rim.device.api.crypto.InvalidKeyEncodingException;
 import net.rim.device.api.crypto.PublicKey;
 import net.rim.device.api.crypto.asn1.ASN1InputByteArray;
 
 final class X509_RIM_PublicKeyDecoder3 extends X509_PublicKeyDecoder {
    @Override
-   public final PublicKey decodeKey(ASN1InputByteArray param1, String param2, byte[] param3, CryptoSystem param4) {
+   public final PublicKey decodeKey(ASN1InputByteArray param1, String param2, byte[] param3, CryptoSystem param4) throws InvalidKeyEncodingException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -35,7 +36,7 @@ final class X509_RIM_PublicKeyDecoder3 extends X509_PublicKeyDecoder {
       // 028: astore 8
       // 02a: aload 8
       // 02c: ifnonnull 037
-      // 02f: new java/lang/Object
+      // 02f: new net/rim/device/api/crypto/InvalidCryptoSystemException
       // 032: dup
       // 033: invokespecial net/rim/device/api/crypto/InvalidCryptoSystemException.<init> ()V
       // 036: athrow
@@ -57,11 +58,11 @@ final class X509_RIM_PublicKeyDecoder3 extends X509_PublicKeyDecoder {
       // 059: checkcast net/rim/device/api/crypto/ECCryptoSystem
       // 05c: astore 5
       // 05e: goto 071
-      // 061: new java/lang/Object
+      // 061: new net/rim/device/api/crypto/InvalidCryptoSystemException
       // 064: dup
       // 065: invokespecial net/rim/device/api/crypto/InvalidCryptoSystemException.<init> ()V
       // 068: athrow
-      // 069: new java/lang/Object
+      // 069: new net/rim/device/api/crypto/CryptoUnsupportedOperationException
       // 06c: dup
       // 06d: invokespecial net/rim/device/api/crypto/CryptoUnsupportedOperationException.<init> ()V
       // 070: athrow
@@ -85,14 +86,14 @@ final class X509_RIM_PublicKeyDecoder3 extends X509_PublicKeyDecoder {
       // 096: checkcast net/rim/device/api/crypto/KEACryptoSystem
       // 099: astore 5
       // 09b: goto 0a6
-      // 09e: new java/lang/Object
+      // 09e: new net/rim/device/api/crypto/InvalidCryptoSystemException
       // 0a1: dup
       // 0a2: invokespecial net/rim/device/api/crypto/InvalidCryptoSystemException.<init> ()V
       // 0a5: athrow
       // 0a6: aload 1
       // 0a7: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputByteArray.readOctetString ()[B
       // 0aa: astore 6
-      // 0ac: new java/lang/Object
+      // 0ac: new net/rim/device/api/crypto/asn1/ASN1OutputStream
       // 0af: dup
       // 0b0: invokespecial net/rim/device/api/crypto/asn1/ASN1OutputStream.<init> ()V
       // 0b3: astore 7
@@ -111,7 +112,7 @@ final class X509_RIM_PublicKeyDecoder3 extends X509_PublicKeyDecoder {
       // 0d3: aload 7
       // 0d5: invokevirtual net/rim/device/api/crypto/asn1/ASN1OutputStream.toByteArray ()[B
       // 0d8: astore 8
-      // 0da: new java/lang/Object
+      // 0da: new net/rim/device/api/crypto/SHA1Digest
       // 0dd: dup
       // 0de: invokespecial net/rim/device/api/crypto/SHA1Digest.<init> ()V
       // 0e1: astore 9
@@ -144,7 +145,7 @@ final class X509_RIM_PublicKeyDecoder3 extends X509_PublicKeyDecoder {
       // 115: baload
       // 116: ixor
       // 117: if_icmpeq 122
-      // 11a: new java/lang/Object
+      // 11a: new net/rim/device/api/crypto/InvalidKeyEncodingException
       // 11d: dup
       // 11e: invokespecial net/rim/device/api/crypto/InvalidKeyEncodingException.<init> ()V
       // 121: athrow
@@ -162,7 +163,7 @@ final class X509_RIM_PublicKeyDecoder3 extends X509_PublicKeyDecoder {
       // 13a: astore 5
       // 13c: goto 141
       // 13f: astore 5
-      // 141: new java/lang/Object
+      // 141: new net/rim/device/api/crypto/InvalidKeyEncodingException
       // 144: dup
       // 145: invokespecial net/rim/device/api/crypto/InvalidKeyEncodingException.<init> ()V
       // 148: athrow

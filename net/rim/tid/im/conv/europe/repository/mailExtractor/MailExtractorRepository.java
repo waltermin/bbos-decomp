@@ -13,9 +13,9 @@ import net.rim.tid.im.conv.repository.ReIterator;
 import net.rim.tid.im.conv.repository.ResultContainer;
 
 public final class MailExtractorRepository extends IRepository implements CustomWordsRepository {
-   private Vector _readers = (Vector)(new Object());
-   private ResultContainer _resContainer = (ResultContainer)(new Object());
-   private SLCurrentVariant _addVariant = (SLCurrentVariant)(new Object());
+   private Vector _readers = new Vector();
+   private ResultContainer _resContainer = new ResultContainer();
+   private SLCurrentVariant _addVariant = new SLCurrentVariant();
    WordLearningReader _extractedWordsReader;
    WordLearningReader _learningWordsReader;
    WordLearningReader _emailAndUrlWordsReader;
@@ -108,7 +108,7 @@ public final class MailExtractorRepository extends IRepository implements Custom
 
    @Override
    public final synchronized int containsWord(char[] word, int length) {
-      String check = (String)(new Object(word, 0, length));
+      String check = new String(word, 0, length);
       if (this._extractedWordsReader != null && this._extractedWordsReader.contains(check)) {
          return 2;
       }

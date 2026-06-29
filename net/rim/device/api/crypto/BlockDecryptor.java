@@ -19,7 +19,7 @@ public class BlockDecryptor extends DecryptorInputStream {
    public BlockDecryptor(BlockUnformatterEngine unformatterEngine, InputStream in) {
       super(in);
       if (unformatterEngine == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._unformatterEngine = unformatterEngine;
@@ -75,11 +75,11 @@ public class BlockDecryptor extends DecryptorInputStream {
    @Override
    public int read(byte[] buffer, int bufferOffset, int bufferLength) throws IOException {
       if (buffer == null || bufferOffset < 0 || bufferLength < 0 || buffer.length - bufferLength < bufferOffset) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (this._closed) {
-         throw new Object();
+         throw new IOException();
       }
 
       if (this._lastException != null) {

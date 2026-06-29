@@ -55,7 +55,7 @@ final class PushAddressBookVerb extends Verb implements DiscoveryListener, Runna
    @Override
    public final void servicesDiscovered(int transID, ServiceRecord[] servRecord) {
       if (transID == this._transactionID) {
-         System.out.println(((StringBuffer)(new Object("servicesDiscovered: "))).append(transID).append(',').append(servRecord).toString());
+         System.out.println("servicesDiscovered: " + transID + ',' + servRecord);
          this._serviceRecord = servRecord[0];
       }
    }
@@ -63,14 +63,14 @@ final class PushAddressBookVerb extends Verb implements DiscoveryListener, Runna
    @Override
    public final void serviceSearchCompleted(int transID, int respCode) {
       if (transID == this._transactionID) {
-         System.out.println(((StringBuffer)(new Object("serviceSearchCompleted: "))).append(transID).append(',').append(respCode).toString());
+         System.out.println("serviceSearchCompleted: " + transID + ',' + respCode);
          if (this._serviceRecord == null) {
             this._device.notifyOperationComplete(BluetoothMainScreen.getString(70));
             return;
          }
 
          this._url = this._serviceRecord.getConnectionURL(0, false);
-         ((Thread)(new Object(this))).start();
+         new Thread(this).start();
       }
    }
 
@@ -95,7 +95,7 @@ final class PushAddressBookVerb extends Verb implements DiscoveryListener, Runna
                try {
                   var105 = true;
                   ApplicationRegistry ex = ApplicationRegistry.getApplicationRegistry();
-                  Factory converter = ex.get(-5888220356524146836L);
+                  Factory converter = (Factory)ex.get(-5888220356524146836L);
                   BluetoothDeviceManagerImpl btManager = (BluetoothDeviceManagerImpl)BluetoothDeviceManager.getInstance();
                   AddressCardModel[] cards = btManager.getAddressCards(false);
                   int count = 0;
@@ -113,14 +113,14 @@ final class PushAddressBookVerb extends Verb implements DiscoveryListener, Runna
                      this._device.notifyOperationStart(BluetoothMainScreen.getString(71));
                   }
 
-                  ContextObject context = (ContextObject)(new Object());
+                  ContextObject context = new ContextObject();
                   StupidCLDCByteArrayOutputStream vCardStream = new StupidCLDCByteArrayOutputStream();
                   context.put(-980891548873596767L, vCardStream);
                   context.setFlag(127);
 
                   for (int i = 0; i < count; i++) {
                      context.put(254, cards[i]);
-                     ((Factory)converter).createInstance(context);
+                     converter.createInstance(context);
                   }
 
                   this._device.notifyOperationStart(BluetoothMainScreen.getString(66));
@@ -128,7 +128,7 @@ final class PushAddressBookVerb extends Verb implements DiscoveryListener, Runna
                   cs.connect(null);
                   HeaderSet hs = cs.createHeaderSet();
                   hs.setHeader(1, "Phonebook.vcf");
-                  hs.setHeader(195, new Object(vCardStream.size()));
+                  hs.setHeader(195, new Long(vCardStream.size()));
                   Operation op = cs.put(hs);
                   OutputStream out = op.openOutputStream();
                   vCardStream.writeTo(out);

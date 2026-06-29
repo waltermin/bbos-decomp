@@ -57,7 +57,7 @@ class EmailFilterModelImpl
    public static final int FORWARD_LEVEL1_NOTIFICATION = 2;
    public static final int FORWARD_HEADER_ONLY = 4;
    private static Recognizer _titleModelRecognizer = RecognizerRepository.getRecognizers(-4904857078378172834L);
-   private static ContextObjectWR _filterSyncContextWR = (ContextObjectWR)(new Object(33, 19));
+   private static ContextObjectWR _filterSyncContextWR = new ContextObjectWR(33, 19);
 
    @Override
    public int paint(Graphics g, int x, int y, int width, int height, Object context) {
@@ -70,12 +70,12 @@ class EmailFilterModelImpl
          return null;
       }
 
-      Verb[] newVerbs = new Object[0];
+      Verb[] newVerbs = new Verb[0];
       Array.resize(verbs, 0);
 
       for (int i = 0; i < this.size(); i++) {
          Object itemField = this.getAt(i);
-         if (itemField instanceof Object) {
+         if (itemField instanceof VerbProvider) {
             VerbProvider verbProvider = (VerbProvider)itemField;
             verbProvider.getVerbs(context, newVerbs);
             int newCount = newVerbs.length;
@@ -181,7 +181,7 @@ class EmailFilterModelImpl
 
    @Override
    public int getKeys(Object context, Object[] keyArray, int index, long keyRequested) {
-      return !(this._filterName instanceof Object) ? 0 : ((KeyProvider)this._filterName).getKeys(context, keyArray, index, keyRequested);
+      return !(this._filterName instanceof KeyProvider) ? 0 : ((KeyProvider)this._filterName).getKeys(context, keyArray, index, keyRequested);
    }
 
    @Override
@@ -212,7 +212,7 @@ class EmailFilterModelImpl
 
    @Override
    public boolean checkCrypt(boolean compress, boolean encrypt) {
-      if (this._filterName instanceof Object && !((EncryptableProvider)this._filterName).checkCrypt(compress, encrypt)) {
+      if (this._filterName instanceof EncryptableProvider && !((EncryptableProvider)this._filterName).checkCrypt(compress, encrypt)) {
          return false;
       }
 
@@ -220,7 +220,7 @@ class EmailFilterModelImpl
 
       for (int i = 0; i < numSubmembers; i++) {
          Object object = this._fields.elementAt(i);
-         if (object instanceof Object) {
+         if (object instanceof EncryptableProvider) {
             EncryptableProvider encryptable = (EncryptableProvider)object;
             if (!encryptable.checkCrypt(compress, encrypt)) {
                return false;
@@ -234,7 +234,7 @@ class EmailFilterModelImpl
    @Override
    public Object reCrypt(boolean compress, boolean encrypt) {
       EmailFilterModelImpl newModel = (EmailFilterModelImpl)this.makeReadWrite();
-      if (newModel._filterName instanceof Object) {
+      if (newModel._filterName instanceof EncryptableProvider) {
          TitleModel newTitleModel = (TitleModel)((EncryptableProvider)newModel._filterName).reCrypt(compress, encrypt);
          if (newTitleModel != null) {
             newModel._filterName = newTitleModel;
@@ -245,7 +245,7 @@ class EmailFilterModelImpl
 
       for (int i = 0; i < numSubmembers; i++) {
          Object object = newModel._fields.elementAt(i);
-         if (object instanceof Object) {
+         if (object instanceof EncryptableProvider) {
             EncryptableProvider encryptable = (EncryptableProvider)object;
             Object newObject = encryptable.reCrypt(compress, encrypt);
             if (newObject != null) {
@@ -283,18 +283,18 @@ class EmailFilterModelImpl
    }
 
    EmailFilterModelImpl() {
-      this._fields = (Vector)(new Object());
+      this._fields = new Vector();
    }
 
    EmailFilterModelImpl(Object initialData, int type) {
       this();
-      if (initialData instanceof Object) {
+      if (initialData instanceof String) {
          this._userId = (String)initialData;
       } else if (initialData instanceof EmailMessageModel) {
          EmailMessageModel m = (EmailMessageModel)initialData;
          ServiceRecord sr = m.getServiceRecordForMessage();
          if (sr == null) {
-            throw new Object("No service record for message.");
+            throw new IllegalArgumentException("No service record for message.");
          }
 
          this._userId = String.valueOf(sr.getUserId());

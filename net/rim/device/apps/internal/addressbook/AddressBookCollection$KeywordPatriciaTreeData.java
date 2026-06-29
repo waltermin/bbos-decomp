@@ -92,7 +92,7 @@ final class AddressBookCollection$KeywordPatriciaTreeData implements PatriciaTre
 
    @Override
    public final void recordFound(Object result, int offset, int length) {
-      if (!(result instanceof Object)) {
+      if (!(result instanceof PatriciaKeywordSearchResult)) {
          if (result instanceof AddressBookCollection$LeafRange) {
             AddressBookCollection$LeafRange leafRange = (AddressBookCollection$LeafRange)result;
             leafRange._offset = offset;
@@ -144,7 +144,7 @@ final class AddressBookCollection$KeywordPatriciaTreeData implements PatriciaTre
       int length = AddressBookCollection.getLengthFromKey(id, string.length() - offset);
       int keyID = AddressBookCollection.getKeyIDFromKey(id);
       string = string.substring(offset, offset + length);
-      System.out.println(((StringBuffer)(new Object(""))).append(keyID).append("   ").append(string).toString());
+      System.out.println("" + keyID + "   " + string);
    }
 
    AddressBookCollection$KeywordPatriciaTreeData(AddressBookCollection x0, AddressBookCollection$1 x1) {

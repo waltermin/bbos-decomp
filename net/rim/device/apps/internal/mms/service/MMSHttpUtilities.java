@@ -48,7 +48,7 @@ final class MMSHttpUtilities {
       while (true) {
          int count = inputstream.read(buf);
          if (count < 0) {
-            System.out.println(((StringBuffer)(new Object("MMS readAll "))).append(data.length).append(" bytes.").toString());
+            System.out.println("MMS readAll " + data.length + " bytes.");
             return;
          }
 
@@ -73,7 +73,7 @@ final class MMSHttpUtilities {
    }
 
    static final HttpHeaders getStandardSendHeaders(int contentLength) {
-      HttpHeaders headers = (HttpHeaders)(new Object());
+      HttpHeaders headers = new HttpHeaders();
       headers.setProperty("User-Agent", getUserAgentName());
       headers.setProperty("profile", getUAProfUrl());
       headers.setProperty("content-type", "application/vnd.wap.mms-message");
@@ -84,7 +84,7 @@ final class MMSHttpUtilities {
    }
 
    static final HttpHeaders getStandardRequestHeaders() {
-      HttpHeaders headers = (HttpHeaders)(new Object());
+      HttpHeaders headers = new HttpHeaders();
       headers.setProperty("User-Agent", getUserAgentName());
       headers.setProperty("Accept", getAcceptTypes());
       headers.setProperty("Accept-Charset", AcceptValueProviderRegistry.getAcceptCharsetValues());
@@ -130,7 +130,7 @@ final class MMSHttpUtilities {
          return null;
       }
 
-      StringBuffer acceptList = (StringBuffer)(new Object(1000));
+      StringBuffer acceptList = new StringBuffer(1000);
       int pos = 0;
 
       for (int next = allTypes.indexOf(44, pos); next >= 0; next = allTypes.indexOf(44, pos)) {
@@ -149,7 +149,7 @@ final class MMSHttpUtilities {
    }
 
    private static final String getAcceptTypes() {
-      StringBuffer acceptTypes = (StringBuffer)(new Object());
+      StringBuffer acceptTypes = new StringBuffer();
       String acceptList = buildAcceptList(RenderingSession.getNewInstance().getAcceptTypes());
       acceptTypes.append(acceptList);
       acceptTypes.append(",application/vnd.wap.coc");
@@ -224,7 +224,7 @@ final class MMSHttpUtilities {
             return str;
          }
 
-         str = ((StringBuffer)(new Object())).append(str.substring(0, index)).append(replace).append(str.substring(index + find.length())).toString();
+         str = str.substring(0, index) + replace + str.substring(index + find.length());
       }
    }
 

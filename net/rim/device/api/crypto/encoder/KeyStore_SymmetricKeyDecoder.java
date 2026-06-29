@@ -9,10 +9,10 @@ public class KeyStore_SymmetricKeyDecoder extends SymmetricKeyDecoder {
    @Override
    protected SymmetricKey decodeKey(InputStream encodedKey, String keyAlgorithm) throws InvalidKeyEncodingException {
       if (encodedKey == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
-      DataInputStream input = (DataInputStream)(new Object(encodedKey));
+      DataInputStream input = new DataInputStream(encodedKey);
       if (input.readInt() != 0) {
          throw new InvalidKeyEncodingException();
       }
@@ -27,7 +27,7 @@ public class KeyStore_SymmetricKeyDecoder extends SymmetricKeyDecoder {
    }
 
    protected SymmetricKey decodeKey(DataInputStream input, String algorithm) {
-      throw new Object();
+      throw new RuntimeException();
    }
 
    @Override

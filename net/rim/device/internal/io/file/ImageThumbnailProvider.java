@@ -6,9 +6,9 @@ import net.rim.device.api.system.EncodedImage;
 import net.rim.device.api.ui.Graphics;
 
 final class ImageThumbnailProvider extends MetaDataProvider {
-   private Bitmap _bmp = (Bitmap)(new Object(112, 84));
+   private Bitmap _bmp = new Bitmap(112, 84);
    private Bitmap _artBmp;
-   private Graphics _offscreen = (Graphics)(new Object(this._bmp));
+   private Graphics _offscreen = new Graphics(this._bmp);
    private Graphics _artOffscreen;
 
    public ImageThumbnailProvider() {
@@ -33,7 +33,7 @@ final class ImageThumbnailProvider extends MetaDataProvider {
       // 000: aload 2
       // 001: ifnull 007
       // 004: goto 0df
-      // 007: new java/lang/Object
+      // 007: new java/lang/StringBuffer
       // 00a: dup
       // 00b: invokespecial java/lang/StringBuffer.<init> ()V
       // 00e: aload 1
@@ -182,14 +182,14 @@ final class ImageThumbnailProvider extends MetaDataProvider {
       // 140: getfield net/rim/device/internal/io/file/ImageThumbnailProvider._artBmp Lnet/rim/device/api/system/Bitmap;
       // 143: ifnonnull 164
       // 146: aload 0
-      // 147: new java/lang/Object
+      // 147: new net/rim/device/api/system/Bitmap
       // 14a: dup
       // 14b: iload 4
       // 14d: iload 5
       // 14f: invokespecial net/rim/device/api/system/Bitmap.<init> (II)V
       // 152: putfield net/rim/device/internal/io/file/ImageThumbnailProvider._artBmp Lnet/rim/device/api/system/Bitmap;
       // 155: aload 0
-      // 156: new java/lang/Object
+      // 156: new net/rim/device/api/ui/Graphics
       // 159: dup
       // 15a: aload 0
       // 15b: getfield net/rim/device/internal/io/file/ImageThumbnailProvider._artBmp Lnet/rim/device/api/system/Bitmap;

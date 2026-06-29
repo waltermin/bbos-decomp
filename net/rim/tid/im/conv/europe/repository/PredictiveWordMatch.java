@@ -14,9 +14,9 @@ public class PredictiveWordMatch implements RegularExpression {
    int len;
    int maxEditDistance;
    boolean matchPrefix;
-   private Stack iterators = (Stack)(new Object());
-   private Stack strIterators = (Stack)(new Object());
-   private Stack alphaIterators = (Stack)(new Object());
+   private Stack iterators = new Stack();
+   private Stack strIterators = new Stack();
+   private Stack alphaIterators = new Stack();
    private String _alphabet;
    private byte _alphabetLength;
 
@@ -129,7 +129,7 @@ public class PredictiveWordMatch implements RegularExpression {
 
          return iter;
       } else {
-         return this.getAcceptableChars(state, (String)((Object)null));
+         return this.getAcceptableChars(state, (String)null);
       }
    }
 

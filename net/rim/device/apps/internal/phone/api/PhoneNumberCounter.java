@@ -1,5 +1,7 @@
 package net.rim.device.apps.internal.phone.api;
 
+import net.rim.device.apps.internal.phone.model.AbstractPhoneNumberModel;
+
 final class PhoneNumberCounter implements Visitor {
    private int _count;
 
@@ -13,7 +15,7 @@ final class PhoneNumberCounter implements Visitor {
 
    @Override
    public final boolean visit(Object o) {
-      if (o instanceof Object) {
+      if (o instanceof AbstractPhoneNumberModel) {
          this._count++;
       }
 

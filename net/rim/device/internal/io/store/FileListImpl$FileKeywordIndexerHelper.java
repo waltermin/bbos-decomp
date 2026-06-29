@@ -6,7 +6,7 @@ import net.rim.device.api.util.WeakReferenceUtilities;
 import net.rim.vm.WeakReference;
 
 class FileListImpl$FileKeywordIndexerHelper implements KeywordIndexerHelper {
-   private WeakReference _wordsWR = (WeakReference)(new Object(null));
+   private WeakReference _wordsWR = new WeakReference(null);
 
    @Override
    public int getKeywords(Object element, String[] keywords) {

@@ -18,7 +18,7 @@ class ViewByLUID$CalendarEventListScreen extends FullScreen implements ListField
    ViewByLUID$CalendarEventListScreen(Event[] events) {
       super(281474976907264L);
       this._events = events;
-      this._listField = (ListField)(new Object(this._events.length));
+      this._listField = new ListField(this._events.length);
       this._listField.setCallback(this);
       this.add(this._listField);
    }
@@ -28,7 +28,7 @@ class ViewByLUID$CalendarEventListScreen extends FullScreen implements ListField
       super.makeMenu(menu, instance);
       VerbToMenu verbToMenu = VerbToMenuFactory.createInstance();
       EventImpl e = (EventImpl)this._events[this._listField.getSelectedIndex()];
-      Verb[] verbs = new Object[0];
+      Verb[] verbs = new Verb[0];
       e.getVerbs(null, verbs);
       verbToMenu.addVerbs(verbs);
       verbToMenu.getMenu(menu, null, null);

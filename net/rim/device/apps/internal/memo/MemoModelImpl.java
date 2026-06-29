@@ -5,6 +5,7 @@ import net.rim.device.api.synchronization.SyncObject;
 import net.rim.device.api.system.ObjectGroup;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.accessibility.AccessibleContext;
+import net.rim.device.api.ui.accessibility.AccessibleContextFactory;
 import net.rim.device.api.ui.accessibility.AccessibleContextProxy;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -50,14 +51,14 @@ final class MemoModelImpl
    private Object[] _fields = new Object[0];
    int _uid;
    private static final int MAX_MEMO_NOTES_LENGTH = 8192;
-   private static ContextObjectWR _memoSyncContextWR = (ContextObjectWR)(new Object(8, 35, 19));
+   private static ContextObjectWR _memoSyncContextWR = new ContextObjectWR(8, 35, 19);
    private static final byte[] MEMO_ID = new byte[]{109};
    private static Recognizer _titleModelRecognizer = RecognizerRepository.getRecognizers(-4904857078378172834L);
    private static int[] _hints = new int[0];
 
    @Override
    public final int paint(Graphics g, int x, int y, int width, int height, Object context) {
-      return !(this._subjectModel instanceof Object) ? 0 : ((PaintProvider)this._subjectModel).paint(g, x, y, width, height, context);
+      return !(this._subjectModel instanceof PaintProvider) ? 0 : ((PaintProvider)this._subjectModel).paint(g, x, y, width, height, context);
    }
 
    @Override
@@ -66,7 +67,7 @@ final class MemoModelImpl
          return null;
       }
 
-      ForwardAsVerb forwardAsVerb = (ForwardAsVerb)(new Object(this));
+      ForwardAsVerb forwardAsVerb = new ForwardAsVerb(this);
       if (forwardAsVerb.canInvoke(null)) {
          Array.resize(verbs, 1);
          verbs[0] = forwardAsVerb;
@@ -74,11 +75,11 @@ final class MemoModelImpl
          Array.resize(verbs, 0);
       }
 
-      Verb[] newVerbs = new Object[0];
+      Verb[] newVerbs = new Verb[0];
 
       for (int i = this.size() - 1; i >= 0; i--) {
          Object field = this.getAt(i);
-         if (field instanceof Object) {
+         if (field instanceof VerbProvider) {
             ((VerbProvider)field).getVerbs(context, newVerbs);
             if (newVerbs.length > 0) {
                int base = verbs.length;
@@ -93,8 +94,8 @@ final class MemoModelImpl
 
    @Override
    public final int match(Object criteria) {
-      if (!(criteria instanceof Object)) {
-         return Match.match(this, this, (Object[])criteria, _hints);
+      if (!(criteria instanceof SearchCriterion)) {
+         return Match.match(this, this, (SearchCriterion[])criteria, _hints);
       } else {
          SearchCriterion crit = (SearchCriterion)criteria;
          if (crit.getType() == 24) {
@@ -132,7 +133,7 @@ final class MemoModelImpl
 
    @Override
    public final void add(Object element) {
-      if (_titleModelRecognizer.recognize(element) && element instanceof Object) {
+      if (_titleModelRecognizer.recognize(element) && element instanceof PersistableRIMModel) {
          this._subjectModel = (PersistableRIMModel)element;
       }
 
@@ -171,7 +172,7 @@ final class MemoModelImpl
 
       for (int i = 0; i < numFields; i++) {
          Object field = this.getAt(i);
-         if (field instanceof Object) {
+         if (field instanceof KeyProvider) {
             numKeys += ((KeyProvider)field).getKeys(context, keyArray, index + numKeys, keyRequested);
          }
       }
@@ -193,7 +194,7 @@ final class MemoModelImpl
    public final CategoriesModel getCategoriesModel() {
       for (int i = this._fields.length - 1; i >= 0; i--) {
          Object o = this._fields[i];
-         if (o instanceof Object) {
+         if (o instanceof CategoriesModel) {
             return (CategoriesModel)o;
          }
       }
@@ -234,7 +235,7 @@ final class MemoModelImpl
    public final TitleModel getTitleModel() {
       for (int i = this._fields.length - 1; i >= 0; i--) {
          Object o = this._fields[i];
-         if (o instanceof Object) {
+         if (o instanceof TitleModel) {
             return (TitleModel)o;
          }
       }
@@ -266,7 +267,7 @@ final class MemoModelImpl
    public final String getBody() {
       for (int i = this.size() - 1; i > -1; i--) {
          RIMModel model = (RIMModel)this.getAt(i);
-         if (model instanceof Object) {
+         if (model instanceof BodyModel) {
             return ((BodyModel)model).getText();
          }
       }
@@ -302,7 +303,7 @@ final class MemoModelImpl
    public final boolean checkCrypt(boolean compress, boolean encrypt) {
       for (int i = this.size() - 1; i >= 0; i--) {
          Object field = this.getAt(i);
-         if (field instanceof Object && !((EncryptableProvider)field).checkCrypt(compress, encrypt)) {
+         if (field instanceof EncryptableProvider && !((EncryptableProvider)field).checkCrypt(compress, encrypt)) {
             return false;
          }
       }
@@ -319,7 +320,7 @@ final class MemoModelImpl
 
       for (int i = newModel.size() - 1; i >= 0; i--) {
          Object field = newModel.getAt(i);
-         if (field instanceof Object) {
+         if (field instanceof EncryptableProvider) {
             Object newField = ((EncryptableProvider)field).reCrypt(compress, encrypt);
             if (newField != null) {
                newModel._fields[i] = newField;
@@ -335,7 +336,7 @@ final class MemoModelImpl
    public final BodyModel getNotesModel() {
       for (int i = this._fields.length - 1; i >= 0; i--) {
          Object o = this._fields[i];
-         if (o instanceof Object) {
+         if (o instanceof BodyModel) {
             return (BodyModel)o;
          }
       }
@@ -345,7 +346,7 @@ final class MemoModelImpl
 
    @Override
    public final AccessibleContext getAccessibleContext() {
-      return (AccessibleContext)(new Object(this._fields[0].toString(), 0, 4));
+      return new AccessibleContextFactory(this._fields[0].toString(), 0, 4);
    }
 
    MemoModelImpl() {

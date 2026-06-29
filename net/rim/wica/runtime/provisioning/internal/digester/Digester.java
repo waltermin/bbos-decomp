@@ -12,6 +12,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -32,9 +33,9 @@ public class Digester extends DefaultHandler {
 
    public Digester() {
       this._bodyTexts = new PeekableStack();
-      this._rules = (Hashtable)(new Object());
+      this._rules = new Hashtable();
       this._stack = new PeekableStack();
-      this._bodyText = (StringBuffer)(new Object());
+      this._bodyText = new StringBuffer();
    }
 
    public Digester(CodeBook codebook) {
@@ -61,7 +62,7 @@ public class Digester extends DefaultHandler {
    public void addRule(String pattern, Rule rule) {
       Vector list = (Vector)this._rules.get(pattern);
       if (list == null) {
-         list = (Vector)(new Object(4));
+         list = new Vector(4);
          this._rules.put(pattern, list);
       }
 
@@ -84,7 +85,7 @@ public class Digester extends DefaultHandler {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public void endDocument() {
+   public void endDocument() throws SAXException {
       if (this.getCount() > 1) {
       }
 
@@ -106,7 +107,7 @@ public class Digester extends DefaultHandler {
             try {
                r.finish();
             } catch (Throwable var9) {
-               throw new Object(e.getMessage());
+               throw new SAXException(e.getMessage());
             }
          }
       }
@@ -117,7 +118,7 @@ public class Digester extends DefaultHandler {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public void endElement(String namespaceURI, String localName, String qName) {
+   public void endElement(String namespaceURI, String localName, String qName) throws SAXException {
       Vector vRules = this.getRules(this._match);
       if (vRules != null) {
          String lBodyText = this._bodyText.toString();
@@ -130,7 +131,7 @@ public class Digester extends DefaultHandler {
             try {
                r.body(lBodyText);
             } catch (Throwable var15) {
-               throw new Object(e.getMessage());
+               throw new SAXException(e.getMessage());
             }
          }
       }
@@ -145,7 +146,7 @@ public class Digester extends DefaultHandler {
             try {
                r.end();
             } catch (Throwable var14) {
-               throw new Object(e.getMessage());
+               throw new SAXException(e.getMessage());
             }
          }
       }
@@ -208,7 +209,7 @@ public class Digester extends DefaultHandler {
 
    public Object parse(InputStream input) {
       if (this.hasCodeBook()) {
-         WBXMLParser binaryParser = (WBXMLParser)(new Object(input));
+         WBXMLParser binaryParser = new WBXMLParser(input);
          binaryParser.setTagTable(0, this._codebook.getTags());
          binaryParser.setAttrStartTable(0, this._codebook.getAttribs());
          binaryParser.setAttrValueTable(0, this._codebook.getValues());
@@ -267,11 +268,11 @@ public class Digester extends DefaultHandler {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public void startElement(String namespaceURI, String localName, String qName, Attributes list) {
+   public void startElement(String namespaceURI, String localName, String qName, Attributes list) throws SAXException {
       this._bodyTexts.push(this._bodyText);
       this._bodyText.setLength(0);
       if (this._match.length() > 0) {
-         this._match = ((StringBuffer)(new Object())).append(this._match).append("/").append(localName).toString();
+         this._match = this._match + "/" + localName;
       } else {
          this._match = localName;
       }
@@ -287,7 +288,7 @@ public class Digester extends DefaultHandler {
             try {
                r.begin(list);
             } catch (Throwable var11) {
-               throw new Object(e.getMessage());
+               throw new SAXException(e.getMessage());
             }
          }
       }
@@ -295,7 +296,7 @@ public class Digester extends DefaultHandler {
 
    @Override
    public String toString() {
-      StringBuffer buf = (StringBuffer)(new Object(this.getClass().getName()));
+      StringBuffer buf = new StringBuffer(this.getClass().getName());
       if (!this._stack.isEmpty()) {
          buf.append("[stack=").append(this._stack.peek().toString()).append(']');
       }

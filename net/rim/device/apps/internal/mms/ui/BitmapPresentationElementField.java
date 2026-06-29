@@ -5,7 +5,6 @@ import net.rim.device.api.system.Display;
 import net.rim.device.api.system.EncodedImage;
 import net.rim.device.api.ui.ContextMenu;
 import net.rim.device.api.ui.Graphics;
-import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.apps.api.ui.MIMEContentAnimatedBitmapField;
 import net.rim.device.apps.api.ui.VerbMenuItem;
@@ -122,8 +121,8 @@ final class BitmapPresentationElementField extends MIMEContentAnimatedBitmapFiel
       int scale = image.getScale();
       int scaledWidth = image.getWidth() / scale;
       int scaledHeight = image.getHeight() / scale;
-      Bitmap scaledBitmap = (Bitmap)(new Object(scaledWidth, scaledHeight));
-      Graphics scaledGraphics = (Graphics)(new Object(scaledBitmap));
+      Bitmap scaledBitmap = new Bitmap(scaledWidth, scaledHeight);
+      Graphics scaledGraphics = new Graphics(scaledBitmap);
       scaledGraphics.drawImage(0, 0, scaledWidth, scaledHeight, image, 0, 0, 0);
       return scaledBitmap;
    }
@@ -137,14 +136,14 @@ final class BitmapPresentationElementField extends MIMEContentAnimatedBitmapFiel
       super.makeContextMenu(contextMenu);
       EncodedImage image = this._image;
       if (image != null) {
-         SaveImageVerb verb = (SaveImageVerb)(new Object(this._attachment.getName(), image, this.isProtected()));
-         VerbMenuItem verbMenuItem = (VerbMenuItem)(new Object(null, verb.getOrdering(), 500, verb, null));
+         SaveImageVerb verb = new SaveImageVerb(this._attachment.getName(), image, this.isProtected());
+         VerbMenuItem verbMenuItem = new VerbMenuItem(null, verb.getOrdering(), 500, verb, null);
          contextMenu.addItem(verbMenuItem);
          contextMenu.setDefaultItem(verbMenuItem);
       }
 
       if (this.isEditable()) {
-         contextMenu.addItem((MenuItem)(new Object(new DeleteFieldVerb(this), 1)));
+         contextMenu.addItem(new VerbMenuItem(new DeleteFieldVerb(this), 1));
       }
    }
 

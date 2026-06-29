@@ -24,7 +24,7 @@ public class SubjectKeyIdentifierKeyStoreIndex implements KeyStoreIndex {
    @Override
    public int getHash(Object target) {
       if (!(target instanceof byte[])) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return HashCodeCalculator.getCRC32((byte[])target);
       }

@@ -41,7 +41,7 @@ public class SpellCheckAction implements InvokableAction {
             break;
          case 7:
             IComponent comp = InputContext.getInstance().getInputComponent();
-            if (comp instanceof Object) {
+            if (comp instanceof Field) {
                continueSpellCheck((Field)comp);
                return;
             }
@@ -49,7 +49,7 @@ public class SpellCheckAction implements InvokableAction {
          case 8:
          default:
             IComponent compx = InputContext.getInstance().getInputComponent();
-            if (compx instanceof Object) {
+            if (compx instanceof Field) {
                stopSpellCheck((Field)compx);
                return;
             }

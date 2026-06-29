@@ -105,7 +105,7 @@ public final class FolderModel implements PersistableRIMModel, SearchCriterion, 
 
    @Override
    public final Object getValue() {
-      return new Object(this._folderId);
+      return new Long(this._folderId);
    }
 
    FolderModel() {

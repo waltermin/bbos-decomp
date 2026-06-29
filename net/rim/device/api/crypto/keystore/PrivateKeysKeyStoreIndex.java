@@ -25,7 +25,7 @@ public class PrivateKeysKeyStoreIndex implements KeyStoreIndex {
          }
       }
 
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override

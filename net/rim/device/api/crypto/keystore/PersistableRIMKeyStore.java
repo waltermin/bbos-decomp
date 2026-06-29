@@ -3,6 +3,7 @@ package net.rim.device.api.crypto.keystore;
 import java.util.Enumeration;
 import java.util.Vector;
 import net.rim.device.api.system.CodeSigningKey;
+import net.rim.device.api.system.ControlledAccess;
 import net.rim.device.api.system.PersistentObject;
 import net.rim.device.api.system.RIMPersistentStore;
 
@@ -22,7 +23,7 @@ public class PersistableRIMKeyStore extends RIMKeyStore {
       PersistentObject persist = RIMPersistentStore.getPersistentObject(id);
       synchronized (persist) {
          if (persist.getContents() == null) {
-            persist.setContents(new Object(new Object(), key));
+            persist.setContents(new ControlledAccess(new Vector(), key));
             persist.commit();
          }
 

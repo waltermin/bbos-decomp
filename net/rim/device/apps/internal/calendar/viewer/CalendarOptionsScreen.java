@@ -13,7 +13,9 @@ import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.ui.component.ObjectListField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.api.util.DateTimeUtilities;
 import net.rim.device.apps.api.calendar.caldb.CalendarOptions;
@@ -60,26 +62,24 @@ final class CalendarOptionsScreen extends SaveableMainScreenOptionsListItem impl
 
    @Override
    protected final void populateMainScreen(MainScreen screen) {
-      this._startDOW = (ObjectChoiceField)(new Object(CalendarApp._rb.getString(361), getDaysOfWeek(this._cal), this._calendarOptions.getFirstDayOfWeek() - 1));
-      this._start = (DateField)(new Object(CalendarApp._rb.getString(362), 0, 32));
+      this._startDOW = new ObjectChoiceField(CalendarApp._rb.getString(361), getDaysOfWeek(this._cal), this._calendarOptions.getFirstDayOfWeek() - 1);
+      this._start = new DateField(CalendarApp._rb.getString(362), 0, 32);
       this._start.setMinuteIncrements(1800000);
       this._start.setTimeZone(_gmtTZ);
       this._start.setDate(this._calendarOptions.getDayStart());
       this._start.setFocusListener(this);
-      this._end = (DateField)(new Object(CalendarApp._rb.getString(363), 0, 32));
+      this._end = new DateField(CalendarApp._rb.getString(363), 0, 32);
       this._end.setMinuteIncrements(1800000);
       this._end.setTimeZone(_gmtTZ);
       this._end.setDate(this._calendarOptions.getDayEnd());
       this._end.setFocusListener(this);
-      this._reminderByDefault = (TimeChoiceField)(new Object(
-         CalendarApp._rb.getString(364), CalendarOptions.REMINDER_CHOICES, this._calendarOptions.getReminderMillis()
-      ));
+      this._reminderByDefault = new TimeChoiceField(CalendarApp._rb.getString(364), CalendarOptions.REMINDER_CHOICES, this._calendarOptions.getReminderMillis());
       ReminderManager reminderManager = ReminderManager.getInstance();
       if (reminderManager != null) {
          this._snooze = reminderManager.getSnoozeOptionsField(this._calendarOptions.getSnoozeMillis());
       }
 
-      this._initialView = (ObjectChoiceField)(new Object(CalendarApp._rb.getString(365), VIEWS, 0));
+      this._initialView = new ObjectChoiceField(CalendarApp._rb.getString(365), VIEWS, 0);
       int initialView = this._calendarOptions.getInitialView();
 
       for (int i = 0; i < VIEWS.length; i++) {
@@ -89,11 +89,11 @@ final class CalendarOptionsScreen extends SaveableMainScreenOptionsListItem impl
          }
       }
 
-      this._deleteConfirm = (ObjectChoiceField)(new Object(CommonResources.getString(2008), CommonResources.getYesNoArray(0)));
+      this._deleteConfirm = new ObjectChoiceField(CommonResources.getString(2008), CommonResources.getYesNoArray(0));
       this._deleteConfirm.setSelectedIndex(this._calendarOptions.getConfirmDelete() ? 0 : 1);
-      this._keystrokesTriggerQuickInput = (ObjectChoiceField)(new Object(CalendarApp._rb.getString(366), CommonResources.getYesNoArray(0)));
+      this._keystrokesTriggerQuickInput = new ObjectChoiceField(CalendarApp._rb.getString(366), CommonResources.getYesNoArray(0));
       this._keystrokesTriggerQuickInput.setSelectedIndex(this._calendarOptions.isQuickInputTriggeredByKeystrokes() ? 0 : 1);
-      this._tasksInView = (ObjectChoiceField)(new Object(CalendarApp._rb.getString(633), CommonResources.getYesNoArray(0)));
+      this._tasksInView = new ObjectChoiceField(CalendarApp._rb.getString(633), CommonResources.getYesNoArray(0));
       this._tasksInView.setSelectedIndex(this._calendarOptions.isTasksIntegratedIntoViews() ? 0 : 1);
       Manager section = this.createSection(CalendarApp._rb.getString(656), screen);
       section.add(this._startDOW);
@@ -101,9 +101,9 @@ final class CalendarOptionsScreen extends SaveableMainScreenOptionsListItem impl
       section.add(this._end);
       section = this.createSection(CommonResources.getString(9178), screen);
       section.add(this._initialView);
-      this._useLegacyAgendaView = (BooleanChoiceField)(new Object(CalendarApp._rb.getString(13), 0, !this._calendarOptions.useLegacyAgendaView()));
+      this._useLegacyAgendaView = new BooleanChoiceField(CalendarApp._rb.getString(13), 0, !this._calendarOptions.useLegacyAgendaView());
       section.add(this._useLegacyAgendaView);
-      this._showEndTime = (BooleanChoiceField)(new Object(CalendarApp._rb.getString(646), 0, this._calendarOptions.showEndTime()));
+      this._showEndTime = new BooleanChoiceField(CalendarApp._rb.getString(646), 0, this._calendarOptions.showEndTime());
       section.add(this._showEndTime);
       section = this.createSection(CommonResources.getString(9179), screen);
       if (this._snooze != null) {
@@ -113,10 +113,10 @@ final class CalendarOptionsScreen extends SaveableMainScreenOptionsListItem impl
       section.add(this._reminderByDefault);
       section.add(this._keystrokesTriggerQuickInput);
       int numDurations = CalendarOptions.KEEP_APPOINTMENTS_DURATION_CHOICES.length;
-      String[] durations = new Object[numDurations];
+      String[] durations = new String[numDurations];
       short currentDuration = this._calendarOptions.getKeepAppointmentsDuration();
       int initialIndex = 0;
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
 
       for (int i = 0; i < numDurations; i++) {
          short duration = CalendarOptions.KEEP_APPOINTMENTS_DURATION_CHOICES[i];
@@ -135,22 +135,22 @@ final class CalendarOptionsScreen extends SaveableMainScreenOptionsListItem impl
          }
       }
 
-      this._keepAppointmentsDuration = (ObjectChoiceField)(new Object(CalendarApp._rb.getString(624), durations, initialIndex));
+      this._keepAppointmentsDuration = new ObjectChoiceField(CalendarApp._rb.getString(624), durations, initialIndex);
       section.add(this._deleteConfirm);
       section.add(this._keepAppointmentsDuration);
       section.add(this._tasksInView);
    }
 
    protected final Manager createSection(String title, Manager parent) {
-      Manager section = (Manager)(new Object(1153484454560268288L));
+      Manager section = new VerticalFieldManager(1153484454560268288L);
       section.setTag(OPTIONS_SECTION_AREA_TAG);
       if (title != null) {
-         LabelField titleField = (LabelField)(new Object(title, 1152921504606846976L));
+         LabelField titleField = new LabelField(title, 1152921504606846976L);
          titleField.setTag(OPTIONS_SECTION_HEADER_TAG);
          section.add(titleField);
       }
 
-      section.add((Field)(new Object()));
+      section.add(new SeparatorField());
       parent.add(section);
       return section;
    }
@@ -204,8 +204,8 @@ final class CalendarOptionsScreen extends SaveableMainScreenOptionsListItem impl
       CalendarExtensions calEx = (CalendarExtensions)cal;
       calEx.setTimeLong(0);
       calEx.add(5, 1 - cal.get(7));
-      SimpleDateFormat dowFormatter = (SimpleDateFormat)(new Object("E"));
-      String[] dows = new Object[7];
+      SimpleDateFormat dowFormatter = new SimpleDateFormat("E");
+      String[] dows = new String[7];
 
       for (int i = 0; i < 7; i++) {
          dows[i] = dowFormatter.format(cal);
@@ -262,7 +262,7 @@ final class CalendarOptionsScreen extends SaveableMainScreenOptionsListItem impl
       super.keyChar(key, status, time);
       if (key == ' ') {
          Field f = UiApplication.getUiApplication().getActiveScreen().getLeafFieldWithFocus();
-         if (f instanceof Object) {
+         if (f instanceof ObjectListField) {
             ObjectListField olf = (ObjectListField)f;
             int i = olf.getSelectedIndex();
             String text = (String)olf.get(olf, i);

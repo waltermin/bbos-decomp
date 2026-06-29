@@ -25,7 +25,7 @@ public final class ScriptEngineImpl implements ScriptEngineInternal, Serviceable
    private WicaAppContext _context = new WicaAppContext(this);
    private WicletRuntime _runtime;
    private ScriptCollection _collection;
-   private Hashtable _lookupTable = (Hashtable)(new Object(32));
+   private Hashtable _lookupTable = new Hashtable(32);
    private ScriptTimer _timer = new ScriptTimer(this);
    private ScriptEngineImpl$ScriptWatchdog _watchdog;
    private ScriptMonitor _monitor;
@@ -48,7 +48,7 @@ public final class ScriptEngineImpl implements ScriptEngineInternal, Serviceable
    }
 
    private final boolean executeFunction(String name, long[] parms) {
-      name = GlobalObject.stringIntern((String)(ObjectGroup.isInGroup(name) ? new Object(name) : name));
+      name = GlobalObject.stringIntern(ObjectGroup.isInGroup(name) ? new String(name) : name);
       ESFunction function = Value.checkIfFunctionValue(this._globalObject.getField(name));
       return this.executeFunction(function, null, parms);
    }
@@ -348,7 +348,7 @@ public final class ScriptEngineImpl implements ScriptEngineInternal, Serviceable
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

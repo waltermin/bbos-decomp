@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.browser.html;
 
 import net.rim.device.apps.internal.browser.markup.HTMLBinaryConstantsTagProvider;
 import org.w3c.dom.Attr;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -81,21 +82,18 @@ class HTMLGenericElement extends HTMLNode implements HTMLElement, HTMLBinaryCons
    public Attr setAttributeNode(Attr newAttr) {
       HTMLNode attrNode = (HTMLNode)newAttr;
       if (super._ir != attrNode._ir) {
-         throw new Object((short)4, "");
+         throw new DOMException((short)4, "");
+      } else {
+         super._ir.notReadOnly(super._node);
+         Node parent = super._ir.getNode(super._ir.getParent(attrNode._node));
+         if (parent == this) {
+            return newAttr;
+         } else if (parent != null) {
+            throw new DOMException((short)10, "");
+         } else {
+            return (Attr)super._ir.getNode(super._ir.setAttributeNode(super._node, attrNode._node));
+         }
       }
-
-      super._ir.notReadOnly(super._node);
-      Node parent = super._ir.getNode(super._ir.getParent(attrNode._node));
-      if (parent == this) {
-         return newAttr;
-      }
-
-      if (parent != null) {
-         throw new Object((short)10, "");
-      }
-
-      Attr rc = (Attr)super._ir.getNode(super._ir.setAttributeNode(super._node, attrNode._node));
-      return rc;
    }
 
    @Override
@@ -103,11 +101,10 @@ class HTMLGenericElement extends HTMLNode implements HTMLElement, HTMLBinaryCons
       super._ir.notReadOnly(super._node);
       int iAttr = ((HTMLNode)oldAttr)._node;
       if (super._ir.getParent(iAttr) != super._node) {
-         throw new Object((short)8, "");
+         throw new DOMException((short)8, "");
+      } else {
+         return (Attr)super._ir.getNode(super._ir.removeAttributeNode(super._node, ((HTMLNode)oldAttr)._node));
       }
-
-      Attr rc = (Attr)super._ir.getNode(super._ir.removeAttributeNode(super._node, ((HTMLNode)oldAttr)._node));
-      return rc;
    }
 
    @Override
@@ -222,8 +219,8 @@ class HTMLGenericElement extends HTMLNode implements HTMLElement, HTMLBinaryCons
    @Override
    public Node setNamedItem(Node arg) {
       super._ir.notReadOnly(super._node);
-      if (!(arg instanceof Object)) {
-         throw new Object((short)3, "");
+      if (!(arg instanceof Attr)) {
+         throw new DOMException((short)3, "");
       } else {
          return this.setAttributeNode((Attr)arg);
       }
@@ -234,7 +231,7 @@ class HTMLGenericElement extends HTMLNode implements HTMLElement, HTMLBinaryCons
       super._ir.notReadOnly(super._node);
       int removed = super._ir.removeAttribute(super._node, name);
       if (removed == 0) {
-         throw new Object((short)8, "");
+         throw new DOMException((short)8, "");
       } else {
          return super._ir.getNode(removed);
       }
@@ -270,8 +267,8 @@ class HTMLGenericElement extends HTMLNode implements HTMLElement, HTMLBinaryCons
    @Override
    public Node setNamedItemNS(Node arg) {
       super._ir.notReadOnly(super._node);
-      if (!(arg instanceof Object)) {
-         throw new Object((short)3, "");
+      if (!(arg instanceof Attr)) {
+         throw new DOMException((short)3, "");
       } else {
          return this.setAttributeNodeNS((Attr)arg);
       }
@@ -282,7 +279,7 @@ class HTMLGenericElement extends HTMLNode implements HTMLElement, HTMLBinaryCons
       super._ir.notReadOnly(super._node);
       int removed = super._ir.removeAttributeNS(super._node, namespaceURI, localName);
       if (removed == 0) {
-         throw new Object((short)8, "");
+         throw new DOMException((short)8, "");
       } else {
          return super._ir.getNode(removed);
       }

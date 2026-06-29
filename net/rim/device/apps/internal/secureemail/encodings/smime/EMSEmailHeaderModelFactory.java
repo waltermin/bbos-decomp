@@ -36,20 +36,20 @@ class EMSEmailHeaderModelFactory extends RIMModelFactory {
       // 019: sipush 255
       // 01c: i2l
       // 01d: invokestatic net/rim/device/apps/api/framework/model/ContextObject.get (Ljava/lang/Object;J)Ljava/lang/Object;
-      // 020: checkcast java/lang/Object
+      // 020: checkcast net/rim/device/apps/api/framework/model/SyncBuffer
       // 023: astore 2
-      // 024: new java/lang/Object
+      // 024: new net/rim/device/api/util/DataBuffer
       // 027: dup
       // 028: invokespecial net/rim/device/api/util/DataBuffer.<init> ()V
       // 02b: astore 3
-      // 02c: new java/lang/Object
+      // 02c: new net/rim/device/api/util/DataBuffer
       // 02f: dup
       // 030: invokespecial net/rim/device/api/util/DataBuffer.<init> ()V
       // 033: astore 4
       // 035: bipush 2
       // 037: anewarray 81
       // 03a: astore 5
-      // 03c: new java/lang/Object
+      // 03c: new net/rim/device/apps/api/framework/model/ContextObject
       // 03f: dup
       // 040: invokespecial net/rim/device/apps/api/framework/model/ContextObject.<init> ()V
       // 043: astore 6
@@ -123,7 +123,7 @@ class EMSEmailHeaderModelFactory extends RIMModelFactory {
       // 0e7: ldc2_w -8034039608019345282
       // 0ea: aload 6
       // 0ec: invokestatic net/rim/device/api/util/FactoryUtil.createInstance (JLjava/lang/Object;)Ljava/lang/Object;
-      // 0ef: checkcast java/lang/Object
+      // 0ef: checkcast net/rim/device/apps/internal/blackberryemail/header/EmailHeaderModel
       // 0f2: astore 10
       // 0f4: aload 10
       // 0f6: ifnull 078

@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.browser.sdp;
 
 import net.rim.device.api.browser.field.BrowserContent;
+import net.rim.device.api.browser.field.RenderingException;
 import net.rim.device.api.browser.field.RenderingOptions;
 import net.rim.device.api.browser.plugin.BrowserContentProvider;
 import net.rim.device.api.browser.plugin.BrowserContentProviderContext;
@@ -19,7 +20,7 @@ public final class SDPRenderingConverter extends BrowserContentProvider {
    }
 
    @Override
-   public final BrowserContent getBrowserContent(BrowserContentProviderContext param1) {
+   public final BrowserContent getBrowserContent(BrowserContentProviderContext param1) throws RenderingException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.IndexOutOfBoundsException: Index 2 out of bounds for length 1
@@ -44,25 +45,25 @@ public final class SDPRenderingConverter extends BrowserContentProvider {
       // 00d: astore 3
       // 00e: aload 3
       // 00f: ifnonnull 01a
-      // 012: new java/lang/Object
+      // 012: new net/rim/device/api/browser/field/RenderingException
       // 015: dup
       // 016: invokespecial net/rim/device/api/browser/field/RenderingException.<init> ()V
       // 019: athrow
-      // 01a: new java/lang/Object
+      // 01a: new net/rim/device/api/io/LineReader
       // 01d: dup
       // 01e: aload 3
       // 01f: invokespecial net/rim/device/api/io/LineReader.<init> (Ljava/io/InputStream;)V
       // 022: astore 4
       // 024: ldc_w "UTF-8"
       // 027: astore 5
-      // 029: new java/lang/Object
+      // 029: new net/rim/device/api/util/MultiMap
       // 02c: dup
       // 02d: invokespecial net/rim/device/api/util/MultiMap.<init> ()V
       // 030: astore 6
       // 032: aload 4
       // 034: invokevirtual net/rim/device/api/io/LineReader.readLine ()[B
       // 037: astore 7
-      // 039: new java/lang/Object
+      // 039: new java/lang/String
       // 03c: dup
       // 03d: aload 7
       // 03f: aload 5
@@ -82,7 +83,7 @@ public final class SDPRenderingConverter extends BrowserContentProvider {
       // 060: iload 9
       // 062: bipush -1
       // 064: if_icmpne 06f
-      // 067: new java/lang/Object
+      // 067: new net/rim/device/api/browser/field/RenderingException
       // 06a: dup
       // 06b: invokespecial net/rim/device/api/browser/field/RenderingException.<init> ()V
       // 06e: athrow
@@ -126,7 +127,7 @@ public final class SDPRenderingConverter extends BrowserContentProvider {
       // 0be: ifeq 10c
       // 0c1: aload 9
       // 0c3: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 0c8: checkcast java/lang/Object
+      // 0c8: checkcast java/lang/String
       // 0cb: astore 10
       // 0cd: aload 10
       // 0cf: ifnull 0eb
@@ -166,7 +167,7 @@ public final class SDPRenderingConverter extends BrowserContentProvider {
       // 127: ifeq 13f
       // 12a: aload 10
       // 12c: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 131: checkcast java/lang/Object
+      // 131: checkcast java/lang/String
       // 134: astore 11
       // 136: aload 11
       // 138: ifnull 13f
@@ -180,7 +181,7 @@ public final class SDPRenderingConverter extends BrowserContentProvider {
       // 14a: ifnull 167
       // 14d: aload 1
       // 14e: invokevirtual net/rim/device/api/browser/plugin/BrowserContentProviderContext.getRenderingApplication ()Lnet/rim/device/api/browser/field/RenderingApplication;
-      // 151: new java/lang/Object
+      // 151: new net/rim/device/apps/internal/browser/api/SDPRedirectEvent
       // 154: dup
       // 155: aload 2
       // 156: aload 7
@@ -217,7 +218,7 @@ public final class SDPRenderingConverter extends BrowserContentProvider {
       // 199: astore 13
       // 19b: aload 12
       // 19d: athrow
-      // 19e: new java/lang/Object
+      // 19e: new net/rim/device/api/browser/field/RenderingException
       // 1a1: dup
       // 1a2: invokespecial net/rim/device/api/browser/field/RenderingException.<init> ()V
       // 1a5: athrow

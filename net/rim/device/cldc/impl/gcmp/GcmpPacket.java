@@ -196,7 +196,7 @@ public final class GcmpPacket {
                case 64:
                   this.mask |= 32;
                   if (length >= 0 && length <= 127) {
-                     this.apn = (String)(new Object(buf.getArray(), buf.getArrayPosition(), length));
+                     this.apn = new String(buf.getArray(), buf.getArrayPosition(), length);
                   } else {
                      EventLogger.logEvent(-1673931206114386243L, 1195594289, 3);
                   }

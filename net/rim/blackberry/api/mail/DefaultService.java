@@ -68,7 +68,7 @@ final class DefaultService extends Store {
       try {
          return getInstance();
       } catch (NoSuchServiceException e) {
-         throw new Object("Default service does not exist!");
+         throw new IllegalStateException("Default service does not exist!");
       }
    }
 

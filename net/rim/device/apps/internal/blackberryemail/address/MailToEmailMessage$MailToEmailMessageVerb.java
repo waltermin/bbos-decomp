@@ -23,11 +23,9 @@ class MailToEmailMessage$MailToEmailMessageVerb extends ShowMessageAppVerb {
    @Override
    public String toString() {
       if (this.this$0._toArray.length > 0) {
-         return ((StringBuffer)(new Object())).append(EmailResources.getString(44)).append(" ").append(this.this$0._toArray[0]).toString();
+         return EmailResources.getString(44) + " " + this.this$0._toArray[0];
       } else {
-         return this.this$0._ccArray.length > 0
-            ? ((StringBuffer)(new Object())).append(EmailResources.getString(44)).append(" ").append(this.this$0._ccArray[0]).toString()
-            : EmailResources.getString(5);
+         return this.this$0._ccArray.length > 0 ? EmailResources.getString(44) + " " + this.this$0._ccArray[0] : EmailResources.getString(5);
       }
    }
 
@@ -59,7 +57,7 @@ class MailToEmailMessage$MailToEmailMessageVerb extends ShowMessageAppVerb {
          EmailBuilderApi.addMessageBody(emm, URIDecoder.decode(this.this$0._body, "utf-8", false));
       }
 
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       context.setFlag(0);
       return EmailComposeVerb.showEditorScreen(context, parameter, emm);
    }

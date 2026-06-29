@@ -10,6 +10,7 @@ import net.rim.device.apps.api.framework.model.ConversionProvider;
 import net.rim.device.apps.api.transmission.Parameters;
 import net.rim.device.apps.api.transmission.rim.CMIMEContentType;
 import net.rim.device.apps.api.utility.serialization.BaseConverter;
+import net.rim.device.apps.api.utility.serialization.SerializationException;
 import net.rim.device.internal.i18n.UnicodeServiceRegistry;
 
 final class AddressCardConverter extends BaseConverter {
@@ -20,14 +21,14 @@ final class AddressCardConverter extends BaseConverter {
 
    @Override
    public final boolean canConvert(Object parameters) {
-      if (parameters instanceof Object) {
+      if (parameters instanceof String) {
          String string = (String)parameters;
          if (StringUtilities.startsWithIgnoreCase(string, "application/x-rimdeviceaddress book") || string.equals(ADDRESS_BOOK_ABBREVIATED_MIME_TYPE)) {
             return true;
          }
       }
 
-      if (!(parameters instanceof Object)) {
+      if (!(parameters instanceof Parameters)) {
          return false;
       }
 
@@ -39,11 +40,11 @@ final class AddressCardConverter extends BaseConverter {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final Object convert(byte[] inputBytes, Object context) {
-      ContextObject contextObject = (ContextObject)(new Object(11, 43, 54));
+   public final Object convert(byte[] inputBytes, Object context) throws SerializationException {
+      ContextObject contextObject = new ContextObject(11, 43, 54);
       int length = inputBytes.length;
       if (length < 5) {
-         throw new Object();
+         throw new SerializationException();
       }
 
       if (inputBytes[length - 5] == 13 && inputBytes[length - 4] == 13) {
@@ -52,7 +53,7 @@ final class AddressCardConverter extends BaseConverter {
          length -= 3;
       }
 
-      Vector strings = (Vector)(new Object());
+      Vector strings = new Vector();
       int startOfLabel = 0;
       int endOfLabel = 0;
       int startOfValue = 0;
@@ -84,17 +85,17 @@ final class AddressCardConverter extends BaseConverter {
                      label250:
                      try {
                         var22 = true;
-                        value = (String)(new Object(inputBytes, startOfValue, i - startOfValue, encoding));
+                        value = new String(inputBytes, startOfValue, i - startOfValue, encoding);
                         var22 = false;
                      } finally {
                         if (var22) {
-                           value = (String)(new Object(inputBytes, startOfValue, i - startOfValue));
+                           value = new String(inputBytes, startOfValue, i - startOfValue);
                            break label250;
                         }
                      }
 
-                     String var37 = ((StringBuffer)(new Object())).append(previous).append('\n').append(value).toString();
-                     strings.setElementAt(var37, strings.size() - 1);
+                     previous = previous + '\n' + value;
+                     strings.setElementAt(previous, strings.size() - 1);
                      startOfLabel = i + 1;
                      startOfValue = 0;
                   } else {
@@ -113,20 +114,20 @@ final class AddressCardConverter extends BaseConverter {
                         label238:
                         try {
                            var19 = true;
-                           var32 = new Object(inputBytes, startOfLabel, labelLen, encoding);
-                           var35 = new Object(inputBytes, startOfValue, i - startOfValue, encoding);
+                           label = new String(inputBytes, startOfLabel, labelLen, encoding);
+                           value = new String(inputBytes, startOfValue, i - startOfValue, encoding);
                            var19 = false;
                         } finally {
                            if (var19) {
-                              var32 = new Object(inputBytes, startOfLabel, labelLen);
-                              var35 = new Object(inputBytes, startOfValue, i - startOfValue);
+                              label = new String(inputBytes, startOfLabel, labelLen);
+                              value = new String(inputBytes, startOfValue, i - startOfValue);
                               break label238;
                            }
                         }
 
-                        if (var32 != null && var35 != null) {
-                           strings.addElement(var32);
-                           strings.addElement(var35);
+                        if (label != null && value != null) {
+                           strings.addElement(label);
+                           strings.addElement(value);
                         }
                      }
 
@@ -165,7 +166,7 @@ final class AddressCardConverter extends BaseConverter {
       contextObject.put(249, strings);
       Object result = FactoryUtil.createInstance(-3124646573404667739L, contextObject);
       if (result == null) {
-         throw new Object();
+         throw new SerializationException();
       }
 
       AddressCardUtilities.createGroup((AddressCardModel)result);
@@ -173,17 +174,17 @@ final class AddressCardConverter extends BaseConverter {
    }
 
    @Override
-   public final byte[] convert(Object inputObject, Object context) {
-      if (inputObject instanceof Object && inputObject instanceof Object) {
+   public final byte[] convert(Object inputObject, Object context) throws SerializationException {
+      if (inputObject instanceof AddressCardModel && inputObject instanceof ConversionProvider) {
          ConversionProvider converter = (ConversionProvider)inputObject;
-         ContextObject contextObject = (ContextObject)(new Object(11, 43, 54));
-         StringBuffer stringBuffer = (StringBuffer)(new Object());
+         ContextObject contextObject = new ContextObject(11, 43, 54);
+         StringBuffer stringBuffer = new StringBuffer();
          if (converter.convert(contextObject, stringBuffer)) {
             return convertAddressCardAttachment(stringBuffer.toString());
          }
       }
 
-      throw new Object();
+      throw new SerializationException();
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
@@ -209,7 +210,7 @@ final class AddressCardConverter extends BaseConverter {
          int startOfValue = 0;
          int length = data.length();
          int i = 0;
-         Vector strings = (Vector)(new Object());
+         Vector strings = new Vector();
 
          while (i < length) {
             switch (data.charAt(i)) {
@@ -274,12 +275,12 @@ final class AddressCardConverter extends BaseConverter {
                trailer = data.substring(startOfLabel, data.length());
             } else {
                String previous = (String)strings.elementAt(strings.size() - 1);
-               String var35 = ((StringBuffer)(new Object())).append(previous).append(data.substring(startOfLabel, data.length())).toString();
-               strings.setElementAt(var35, strings.size() - 1);
+               previous = previous + data.substring(startOfLabel, data.length());
+               strings.setElementAt(previous, strings.size() - 1);
             }
          }
 
-         StringBuffer sb = (StringBuffer)(new Object(length));
+         StringBuffer sb = new StringBuffer(length);
          String errValue = "Unsupported Encoding";
          String uTag = "u_";
          String label = null;

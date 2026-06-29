@@ -530,7 +530,7 @@ public final class Utilities {
       String categories,
       String rating
    ) {
-      StringBuffer url = (StringBuffer)(new Object());
+      StringBuffer url = new StringBuffer();
       synchronized (url) {
          url.append("http://maps.BlackBerry.com?lat=");
          appendDegrees(url, latitude / 4681608360884174848L);
@@ -538,7 +538,7 @@ public final class Utilities {
          appendDegrees(url, longitude / 4681608360884174848L);
          url.append("&z=");
          url.append(zoom);
-         StringBuffer temp = (StringBuffer)(new Object());
+         StringBuffer temp = new StringBuffer();
          if (label != null && !label.equals("")) {
             URIEncoder.encode(temp, label, "UTF-8", true);
             url.append("&label=").append(temp);
@@ -626,13 +626,13 @@ public final class Utilities {
    public static final String createDirectionsUrl(
       String startAddress, int startLatitude, int startLongitude, String endAddress, int endLatitude, int endLongitude
    ) {
-      StringBuffer url = (StringBuffer)(new Object());
+      StringBuffer url = new StringBuffer();
       synchronized (url) {
          url.append("http://maps.BlackBerry.com?startLat=");
          appendDegrees(url, startLatitude / 4681608360884174848L);
          url.append("&startLon=");
          appendDegrees(url, startLongitude / 4681608360884174848L);
-         StringBuffer temp = (StringBuffer)(new Object());
+         StringBuffer temp = new StringBuffer();
          if (startAddress != null && startAddress.length() > 0) {
             URIEncoder.encode(temp, startAddress, "UTF-8", true);
             url.append("&startAddress=").append(temp);
@@ -744,7 +744,7 @@ public final class Utilities {
       int screenHeight,
       boolean draw
    ) {
-      XYRect rect = (XYRect)(new Object());
+      XYRect rect = new XYRect();
       String labelRemaining = label.trim();
       int labelLength = font.getAdvance(labelRemaining);
       int labelHeight = font.getHeight() * textHeightCorrection / 100;
@@ -793,7 +793,7 @@ public final class Utilities {
 
          Word word = new Word(font, labelRemaining.substring(0, endIndex), space);
          if (lastWord != null) {
-            word._text = ((StringBuffer)(new Object())).append(lastWord._text).append(" ").append(word._text).toString();
+            word._text = lastWord._text + " " + word._text;
             word._length = font.getAdvance(word._text);
             lastWord = null;
          } else if (word._text.equalsIgnoreCase("Mc")
@@ -817,9 +817,9 @@ public final class Utilities {
 
       Word word = new Word(font, labelRemaining.trim(), space);
       if (lastWord != null) {
-         word._text = ((StringBuffer)(new Object())).append(lastWord._text).append(" ").append(word._text).toString();
+         word._text = lastWord._text + " " + word._text;
          word._length = font.getAdvance(word._text);
-         lastWord = null;
+         Word var32 = null;
       }
 
       longestWord = Math.max(word._length, longestWord);

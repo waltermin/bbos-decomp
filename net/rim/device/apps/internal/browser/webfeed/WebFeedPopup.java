@@ -1,13 +1,13 @@
 package net.rim.device.apps.internal.browser.webfeed;
 
 import net.rim.device.api.system.Display;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.container.FlowFieldManager;
 import net.rim.device.api.ui.theme.Tag;
-import net.rim.device.internal.ui.Border;
+import net.rim.device.internal.ui.BorderSimple;
 
 final class WebFeedPopup extends Screen {
    private RichTextField _text;
@@ -19,10 +19,10 @@ final class WebFeedPopup extends Screen {
    private static final Tag TAG = Tag.create("webfeedtooltip");
 
    public WebFeedPopup() {
-      super((Manager)(new Object()));
+      super(new FlowFieldManager());
       this.setTag(TAG);
-      this.setBorder((Border)(new Object(1, 1, 1, 1)));
-      this._text = (RichTextField)(new Object("", 36028797018963968L));
+      this.setBorder(new BorderSimple(1, 1, 1, 1));
+      this._text = new RichTextField("", 36028797018963968L);
       this.getDelegate().add(this._text);
       this._listener = new WebFeedPopup$Listener(this);
    }

@@ -7,14 +7,14 @@ import org.xml.sax.helpers.DefaultHandler;
 
 class XMLHashtable$XMLToHashtableHandler extends DefaultHandler {
    private XMLHashtable _hashtable;
-   private StringBuffer _path = (StringBuffer)(new Object(64));
+   private StringBuffer _path = new StringBuffer(64);
    private boolean _includeNamespaces;
    private boolean _includeExplicitPath;
-   private Vector _values = (Vector)(new Object(20));
+   private Vector _values = new Vector(20);
    private int _top = -1;
    private String _prefix;
    private int _prefixLength;
-   private static IntHashtable _integers = (IntHashtable)(new Object());
+   private static IntHashtable _integers = new IntHashtable();
 
    private XMLHashtable$XMLToHashtableHandler(XMLHashtable hashtable, boolean includeNamespaces, boolean includeExplicitPath, String prefix) {
       this._hashtable = hashtable;
@@ -28,13 +28,13 @@ class XMLHashtable$XMLToHashtableHandler extends DefaultHandler {
       Object current = this._hashtable.get(key);
       if (current == null) {
          this._hashtable.put(key, value);
-      } else if (current instanceof Object) {
-         String[] newStrings = new Object[]{current, value};
+      } else if (current instanceof String) {
+         String[] newStrings = new String[]{(String)current, value};
          this._hashtable.put(key, newStrings);
       } else {
-         String[] oldStrings = (Object[])current;
+         String[] oldStrings = (String[])current;
          int oldStringsLength = oldStrings.length;
-         String[] newStrings = new Object[oldStringsLength + 1];
+         String[] newStrings = new String[oldStringsLength + 1];
          System.arraycopy(oldStrings, 0, newStrings, 0, oldStringsLength);
          newStrings[oldStringsLength] = value;
          this._hashtable.put(key, newStrings);
@@ -47,7 +47,7 @@ class XMLHashtable$XMLToHashtableHandler extends DefaultHandler {
          return i;
       }
 
-      i = (Integer)(new Object(n));
+      i = new Integer(n);
       _integers.put(n, i);
       return i;
    }
@@ -89,7 +89,7 @@ class XMLHashtable$XMLToHashtableHandler extends DefaultHandler {
          }
 
          if (++this._top >= this._values.size()) {
-            this._values.addElement(new Object(10));
+            this._values.addElement(new StringBuffer(10));
          }
 
          int numAttributes = attributes.getLength();

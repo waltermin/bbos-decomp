@@ -19,12 +19,12 @@ class ThemeManifest {
 
    public ThemeManifest(InputStream is) {
       String description11 = null;
-      LineReader lr = (LineReader)(new Object(is));
+      LineReader lr = new LineReader(is);
       String line = null;
 
       label72:
       try {
-         line = (String)(new Object(lr.readLine()));
+         line = new String(lr.readLine());
       } finally {
          break label72;
       }
@@ -48,7 +48,7 @@ class ThemeManifest {
             break;
          }
 
-         line = (String)(new Object(lr.readLine()));
+         line = new String(lr.readLine());
       }
 
       if (this._description == null) {

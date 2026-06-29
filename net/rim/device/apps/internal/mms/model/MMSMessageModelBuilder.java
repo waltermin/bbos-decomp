@@ -53,7 +53,7 @@ public final class MMSMessageModelBuilder {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
       this._phoneNumberFactory = (Factory)ar.waitFor(3797587162219887872L);
       this._emailAddressFactory = (Factory)ar.waitFor(-2985347935260258684L);
-      this._context = (ContextObject)(new Object());
+      this._context = new ContextObject();
    }
 
    public final MMSMessageModel getResult() {
@@ -207,7 +207,7 @@ public final class MMSMessageModelBuilder {
 
       for (int idx = 0; idx < count; idx++) {
          Object element = addressList.elementAt(idx);
-         if (!(element instanceof Object)) {
+         if (!(element instanceof String)) {
             this.addRecipient((RIMModel)element);
          } else {
             String str = (String)element;
@@ -233,7 +233,7 @@ public final class MMSMessageModelBuilder {
 
       for (int idx = 0; idx < count; idx++) {
          Object element = addressList.elementAt(idx);
-         if (!(element instanceof Object)) {
+         if (!(element instanceof String)) {
             this.addCcRecipient((RIMModel)element);
          } else {
             String str = (String)element;
@@ -259,7 +259,7 @@ public final class MMSMessageModelBuilder {
 
       for (int idx = 0; idx < count; idx++) {
          Object element = addressList.elementAt(idx);
-         if (!(element instanceof Object)) {
+         if (!(element instanceof String)) {
             this.addBccRecipient((RIMModel)element);
          } else {
             String str = (String)element;
@@ -275,7 +275,7 @@ public final class MMSMessageModelBuilder {
             if (number != null && number.length() > 0) {
                this._context.put(253, number);
                PhoneNumberModel self = (PhoneNumberModel)this._phoneNumberFactory.createInstance(this._context);
-               PhoneNumberComparator comparator = (PhoneNumberComparator)(new Object(self));
+               PhoneNumberComparator comparator = new PhoneNumberComparator(self);
                this.removeSelfFromAddressList(this._payload.getRecipients(), comparator);
                this.removeSelfFromAddressList(this._payload.getCcRecipients(), comparator);
                this.removeSelfFromAddressList(this._payload.getBccRecipients(), comparator);
@@ -291,7 +291,7 @@ public final class MMSMessageModelBuilder {
       if (list != null) {
          for (int idx = list.size() - 1; idx >= 0; idx--) {
             Object recipient = list.elementAt(idx);
-            if (recipient instanceof Object) {
+            if (recipient instanceof PhoneNumberModel) {
                comparator.compare((PhoneNumberModel)recipient);
                if (comparator.isSubsetMatch()) {
                   list.removeElementAt(idx);
@@ -302,7 +302,7 @@ public final class MMSMessageModelBuilder {
    }
 
    private final RIMModel copyAddress(Object address) {
-      return (RIMModel)(!(address instanceof Object) ? address : ((Copyable)address).copy());
+      return !(address instanceof Copyable) ? (RIMModel)address : (RIMModel)((Copyable)address).copy();
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
@@ -376,13 +376,13 @@ public final class MMSMessageModelBuilder {
             String friendlyName = str.substring(0, leftAngleBraceIndex).trim();
             String emailAddress = str.substring(leftAngleBraceIndex + 1, rightAngleBraceIndex).trim();
             if (friendlyName.length() == 0) {
-               return new Object[]{emailAddress};
+               return new String[]{emailAddress};
             }
 
-            return new Object[]{emailAddress, friendlyName};
+            return new String[]{emailAddress, friendlyName};
          }
       }
 
-      return new Object[]{str};
+      return new String[]{str};
    }
 }

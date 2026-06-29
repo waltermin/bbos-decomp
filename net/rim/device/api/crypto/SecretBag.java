@@ -11,9 +11,9 @@ public class SecretBag extends SafeBag {
    protected void parse() throws PKCS12ParsingException {
       if (!super._parsed) {
          try {
-            new Object(super._bagData);
+            new ASN1InputByteArray(super._bagData);
             if (super._bagAttributes != null) {
-               ASN1InputByteArray keyBagAttributes = (ASN1InputByteArray)(new Object(super._bagAttributes));
+               ASN1InputByteArray keyBagAttributes = new ASN1InputByteArray(super._bagAttributes);
 
                for (int next = keyBagAttributes.peekNextTag(); next != -1; next = keyBagAttributes.peekNextTag()) {
                   if (next != 16) {

@@ -6,7 +6,7 @@ import java.io.DataOutput;
 public final class LengthEncoding {
    public static final int getLengthEncodingOf(int length) {
       if (length < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else if (length < 128) {
          return 1;
       } else if (length < 16384) {

@@ -4,7 +4,6 @@ import net.rim.device.api.collection.ReadableList;
 import net.rim.device.api.i18n.MessageFormat;
 import net.rim.device.api.lbs.gps.GPSDevice;
 import net.rim.device.api.lbs.gps.GPSProvider;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.FontRegistry;
 import net.rim.device.api.ui.Graphics;
@@ -13,6 +12,7 @@ import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
@@ -21,6 +21,7 @@ import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.AddressSelectionContext;
+import net.rim.device.apps.api.addressbook.MailingAddressModel;
 import net.rim.device.apps.api.framework.model.Recognizer;
 import net.rim.device.apps.api.framework.registration.RecognizerRepository;
 import net.rim.device.apps.api.framework.registration.VerbRepository;
@@ -173,12 +174,10 @@ public final class DirectionsChoiceScreen extends MainScreen implements ListFiel
          location._address = ((AddressCardModel)this._addressModel).getName().toString();
          String addressLine = this._address.getAddressLine1();
          String cityLine = this._address.getCity();
-         location._address = ((StringBuffer)(new Object()))
-            .append(location._address)
-            .append(this._addressLoc)
-            .append(addressLine != null && !addressLine.equals("") ? ((StringBuffer)(new Object(", "))).append(addressLine).toString() : "")
-            .append(cityLine != null && !cityLine.equals("") ? ((StringBuffer)(new Object(", "))).append(cityLine).toString() : "")
-            .toString();
+         location._address = location._address
+            + this._addressLoc
+            + (addressLine != null && !addressLine.equals("") ? ", " + addressLine : "")
+            + (cityLine != null && !cityLine.equals("") ? ", " + cityLine : "");
          location._label = location._address;
          this._location[this._pointNum] = location;
          return true;
@@ -190,11 +189,11 @@ public final class DirectionsChoiceScreen extends MainScreen implements ListFiel
    }
 
    final boolean getUserEnteredAddress() {
-      String title = ((StringBuffer)(new Object())).append(LBSResources.getString(104)).append(": ").toString();
+      String title = LBSResources.getString(104) + ": ";
       if (this._pointNum == 0) {
-         title = ((StringBuffer)(new Object())).append(title).append(LBSResources.getString(302)).toString();
+         title = title + LBSResources.getString(302);
       } else {
-         title = ((StringBuffer)(new Object())).append(title).append(LBSResources.getString(303)).toString();
+         title = title + LBSResources.getString(303);
       }
 
       FindAddress find = new FindAddress(LBSResources.getString(325), true);
@@ -245,14 +244,7 @@ public final class DirectionsChoiceScreen extends MainScreen implements ListFiel
       FinderHistory.getInstance().add(loc);
       this._location[this._pointNum] = loc;
       String label = loc._label != null ? loc._label : "";
-      loc._address = ((StringBuffer)(new Object()))
-         .append(label)
-         .append(
-            loc._address != null && !loc._address.equals("") && !label.equals(loc._address)
-               ? ((StringBuffer)(new Object(", "))).append(loc._address).toString()
-               : ""
-         )
-         .toString();
+      loc._address = label + (loc._address != null && !loc._address.equals("") && !label.equals(loc._address) ? ", " + loc._address : "");
       this._searchHistoryList.update();
    }
 
@@ -380,7 +372,7 @@ public final class DirectionsChoiceScreen extends MainScreen implements ListFiel
    public final void drawListRow(ListField listField, Graphics graphics, int index, int y, int width) {
       if (graphics != null && this._field != null) {
          String text = (String)this.get(listField, index);
-         graphics.drawText(((StringBuffer)(new Object("    "))).append(text).toString(), 0, y, 64);
+         graphics.drawText("    " + text, 0, y, 64);
       }
    }
 
@@ -426,7 +418,7 @@ public final class DirectionsChoiceScreen extends MainScreen implements ListFiel
 
    @Override
    protected final boolean navigationClick(int status, int time) {
-      if (this.getLeafFieldWithFocus() instanceof Object) {
+      if (this.getLeafFieldWithFocus() instanceof BasicEditField) {
          this.onMenu(0);
          return true;
       }
@@ -446,19 +438,19 @@ public final class DirectionsChoiceScreen extends MainScreen implements ListFiel
    private final boolean getFromAddressBook() {
       VerbRepository repo = VerbRepository.getVerbRepository(-1789952090272871921L);
       Verb[] items = repo.getVerbs(-1789952090272871921L);
-      Recognizer[] recognizers = new Object[]{RecognizerRepository.getRecognizers(-3124646573404667739L)};
-      AddressSelectionContext asc = (AddressSelectionContext)(new Object(
+      Recognizer[] recognizers = new Recognizer[]{RecognizerRepository.getRecognizers(-3124646573404667739L)};
+      AddressSelectionContext asc = new AddressSelectionContext(
          LBSResources.getString(21), LBSResources.getString(22), LBSResources.getString(23), recognizers, null
-      ));
+      );
       Object addressModel = items[0].invoke(asc);
       MailingAddressModelImpl[] mailingAddressModel = null;
-      if (addressModel instanceof Object) {
-         mailingAddressModel = new Object[0];
+      if (addressModel instanceof ReadableList) {
+         mailingAddressModel = new MailingAddressModelImpl[0];
          ReadableList list = (ReadableList)addressModel;
 
          for (int i = 0; i < list.size(); i++) {
             Object o = list.getAt(i);
-            if (o instanceof Object) {
+            if (o instanceof MailingAddressModel) {
                Array.resize(mailingAddressModel, mailingAddressModel.length + 1);
                mailingAddressModel[mailingAddressModel.length - 1] = (MailingAddressModelImpl)o;
             }
@@ -483,22 +475,12 @@ public final class DirectionsChoiceScreen extends MainScreen implements ListFiel
       } else {
          String address1 = mailingAddressModel[0].getAddressLine1();
          String city = mailingAddressModel[0].getCity();
-         String work = ((StringBuffer)(new Object()))
-            .append(LBSResources.getString(34))
-            .append(": ")
-            .append(address1 != null && !address1.equals("") ? ((StringBuffer)(new Object())).append(address1).append(", ").toString() : "")
-            .append(city != null ? city : "")
-            .toString();
+         String work = LBSResources.getString(34) + ": " + (address1 != null && !address1.equals("") ? address1 + ", " : "") + (city != null ? city : "");
          address1 = mailingAddressModel[1].getAddressLine1();
          city = mailingAddressModel[1].getCity();
-         String home = ((StringBuffer)(new Object()))
-            .append(LBSResources.getString(33))
-            .append(": ")
-            .append(address1 != null && !address1.equals("") ? ((StringBuffer)(new Object())).append(address1).append(", ").toString() : "")
-            .append(city != null ? city : "")
-            .toString();
-         String[] choices = mailingAddressModel[0].getType() == 1 ? new Object[]{home, work} : new Object[]{work, home};
-         String title = MessageFormat.format(LBSResources.getString(278), new Object[]{((AddressCardModel)addressModel).getName().toString()});
+         String home = LBSResources.getString(33) + ": " + (address1 != null && !address1.equals("") ? address1 + ", " : "") + (city != null ? city : "");
+         String[] choices = mailingAddressModel[0].getType() == 1 ? new String[]{home, work} : new String[]{work, home};
+         String title = MessageFormat.format(LBSResources.getString(278), new String[]{((AddressCardModel)addressModel).getName().toString()});
          DirectionsChoiceScreen$AddressChoiceDialog d = new DirectionsChoiceScreen$AddressChoiceDialog(
             title, choices, new int[]{0, 1, 51, -805040680, 1196314761, 169478669, 218103808, 1380206665}, 0
          );
@@ -509,10 +491,7 @@ public final class DirectionsChoiceScreen extends MainScreen implements ListFiel
          }
 
          address = mailingAddressModel[choice];
-         addressLoc = ((StringBuffer)(new Object(" (")))
-            .append(address.getType() == 1 ? LBSResources.getString(33) : LBSResources.getString(34))
-            .append(")")
-            .toString();
+         addressLoc = " (" + (address.getType() == 1 ? LBSResources.getString(33) : LBSResources.getString(34)) + ")";
       }
 
       FindAddress find = new FindAddress(LBSResources.getString(325), true);
@@ -688,51 +667,51 @@ public final class DirectionsChoiceScreen extends MainScreen implements ListFiel
    }
 
    private final void populateFields() {
-      this.setTitle((Field)(new Object(LBSResources.getString(319))));
+      this.setTitle(new LabelField(LBSResources.getString(319)));
       int position = 0;
       if (this._pointNum == 0) {
-         this._labelInstruction = (LabelField)(new Object(MessageFormat.format(LBSResources.getString(302), new String[]{""})));
+         this._labelInstruction = new LabelField(MessageFormat.format(LBSResources.getString(302), new String[]{""}));
          this._labelInstruction.setFont(Font.getDefault().derive(1));
          this.insert(this._labelInstruction, position++);
-         this._space = (VerticalSpacerField)(new Object(5));
+         this._space = new VerticalSpacerField(5);
          this.insert(this._space, position++);
       } else if (this._pointNum != 1) {
          if (this._startSelectedIndex == 0 && this._showWhereAmI) {
-            this._labelFrom = (LabelField)(new Object(MessageFormat.format(LBSResources.getString(291), new Object[]{LBSResources.getString(416)})));
+            this._labelFrom = new LabelField(MessageFormat.format(LBSResources.getString(291), new String[]{LBSResources.getString(416)}));
          } else {
-            this._labelFrom = (LabelField)(new Object(MessageFormat.format(LBSResources.getString(291), new Object[]{this._location[0]._label})));
+            this._labelFrom = new LabelField(MessageFormat.format(LBSResources.getString(291), new String[]{this._location[0]._label}));
          }
 
          this.insert(this._labelFrom, position++);
          if (this._startSelectedIndex == 0) {
-            this._labelTo = (LabelField)(new Object(MessageFormat.format(LBSResources.getString(292), new Object[]{this._location[1]._label})));
+            this._labelTo = new LabelField(MessageFormat.format(LBSResources.getString(292), new String[]{this._location[1]._label}));
          } else if (this._selectedIndex == 0 && this._showWhereAmI) {
-            this._labelTo = (LabelField)(new Object(MessageFormat.format(LBSResources.getString(292), new Object[]{LBSResources.getString(416)})));
+            this._labelTo = new LabelField(MessageFormat.format(LBSResources.getString(292), new String[]{LBSResources.getString(416)}));
          } else {
-            this._labelTo = (LabelField)(new Object(MessageFormat.format(LBSResources.getString(292), new Object[]{this._location[1]._label})));
+            this._labelTo = new LabelField(MessageFormat.format(LBSResources.getString(292), new String[]{this._location[1]._label}));
          }
 
          this.insert(this._labelTo, position++);
-         this._separator = (SeparatorField)(new Object(65536));
-         this._space = (VerticalSpacerField)(new Object(10));
+         this._separator = new SeparatorField(65536);
+         this._space = new VerticalSpacerField(10);
          this.insert(this._separator, position++);
          this.insert(this._space, position++);
       } else {
          if (this._selectedIndex == 0 && this._showWhereAmI) {
-            this._labelFrom = (LabelField)(new Object(MessageFormat.format(LBSResources.getString(291), new Object[]{LBSResources.getString(416)})));
+            this._labelFrom = new LabelField(MessageFormat.format(LBSResources.getString(291), new String[]{LBSResources.getString(416)}));
          } else {
-            this._labelFrom = (LabelField)(new Object(MessageFormat.format(LBSResources.getString(291), new Object[]{this._location[0]._label})));
+            this._labelFrom = new LabelField(MessageFormat.format(LBSResources.getString(291), new String[]{this._location[0]._label}));
          }
 
          this.insert(this._labelFrom, position++);
-         this._separator = (SeparatorField)(new Object(65536));
-         this._space = (VerticalSpacerField)(new Object(5));
+         this._separator = new SeparatorField(65536);
+         this._space = new VerticalSpacerField(5);
          this.insert(this._separator, position++);
          this.insert(this._space, position++);
-         this._labelInstruction = (LabelField)(new Object(MessageFormat.format(LBSResources.getString(303), new String[]{""})));
+         this._labelInstruction = new LabelField(MessageFormat.format(LBSResources.getString(303), new String[]{""}));
          this._labelInstruction.setFont(Font.getDefault().derive(1));
          this.insert(this._labelInstruction, position++);
-         this.insert((Field)(new Object(5)), position++);
+         this.insert(new VerticalSpacerField(5), position++);
       }
 
       int numLines = 4;
@@ -752,7 +731,7 @@ public final class DirectionsChoiceScreen extends MainScreen implements ListFiel
          numLines--;
       }
 
-      this._list = (ListField)(new Object(numLines));
+      this._list = new ListField(numLines);
       this._list.setCallback(this);
       this._list.setSelectedIndex(0);
       this.insert(this._list, position++);
@@ -791,7 +770,7 @@ public final class DirectionsChoiceScreen extends MainScreen implements ListFiel
       this._showFavorite = FavouritesManager.hasFavourites();
       this._searchHistoryList = new SearchableHistoryList(this);
       this.populateFields();
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.add(this._searchHistoryList);
    }
 

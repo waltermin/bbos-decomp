@@ -131,13 +131,13 @@ class DocViewRichTextField extends ActiveRichTextField {
             }
 
             if (strRegionCookie == null || embTextInfo._linkTargetString.indexOf(strRegionCookie) == -1) {
-               Verb[] verbs = new Object[0];
+               Verb[] verbs = new Verb[0];
                Verb defaultVerb = CookieProviderUtilities.getFocusVerbs(embTextInfo, null, verbs);
                int count = verbs.length;
 
                for (int idx = 0; idx < count; idx++) {
                   int priority = verbs[idx] == defaultVerb ? 10 : Integer.MAX_VALUE;
-                  VerbMenuItem menuItem = (VerbMenuItem)(new Object(verbs[idx], priority));
+                  VerbMenuItem menuItem = new VerbMenuItem(verbs[idx], priority);
                   contextMenu.addItem(menuItem);
                   if (verbs[idx] == defaultVerb) {
                      defaultItem = menuItem;

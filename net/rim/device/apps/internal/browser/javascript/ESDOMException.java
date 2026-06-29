@@ -12,10 +12,10 @@ final class ESDOMException extends ESObject {
    }
 
    static final ThrownValue createThrownValue(int code) {
-      return (ThrownValue)(new Object(Value.makeObjectValue(new ESDOMException(code))));
+      return new ThrownValue(Value.makeObjectValue(new ESDOMException(code)));
    }
 
    static final ThrownValue createThrownValue(DOMException e) {
-      return (ThrownValue)(new Object(Value.makeObjectValue(new ESDOMException(e.code))));
+      return new ThrownValue(Value.makeObjectValue(new ESDOMException(e.code)));
    }
 }

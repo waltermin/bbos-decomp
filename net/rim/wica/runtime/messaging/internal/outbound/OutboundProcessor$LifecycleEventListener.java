@@ -34,12 +34,7 @@ final class OutboundProcessor$LifecycleEventListener implements EventListener {
             Wiclet w = e.getWiclet();
             OutboundQueueConnectionImpl wInfo = (OutboundQueueConnectionImpl)this.this$0._queueConnTable.remove(e.getInstalledWicletId());
             if (wInfo == null) {
-               Logger.log(
-                  this.toString(),
-                  ((StringBuffer)(new Object("Application to upgrade, ID = "))).append(e.getInstalledWicletId()).append(", not found.").toString(),
-                  2,
-                  201
-               );
+               Logger.log(this.toString(), "Application to upgrade, ID = " + e.getInstalledWicletId() + ", not found.", 2, 201);
             }
 
             if (!e.isMsgCompatible() && wInfo != null) {
@@ -56,12 +51,7 @@ final class OutboundProcessor$LifecycleEventListener implements EventListener {
                WicletUninstalledEvent e = (WicletUninstalledEvent)data;
                OutboundQueueConnectionImpl wInfo = (OutboundQueueConnectionImpl)this.this$0._queueConnTable.remove(e.getWicletId());
                if (wInfo == null) {
-                  Logger.log(
-                     this.toString(),
-                     ((StringBuffer)(new Object("Application to delete, ID = "))).append(e.getWicletId()).append(", not found.").toString(),
-                     2,
-                     202
-                  );
+                  Logger.log(this.toString(), "Application to delete, ID = " + e.getWicletId() + ", not found.", 2, 202);
                } else {
                   wInfo.setUninstallMode(e.isGraceful());
                   this.this$0._gcProcessor.scheduleTask(wInfo);
@@ -72,7 +62,7 @@ final class OutboundProcessor$LifecycleEventListener implements EventListener {
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object())).append(this.this$0.toString()).append("#LifecycleEventListener").toString();
+      return this.this$0.toString() + "#LifecycleEventListener";
    }
 
    OutboundProcessor$LifecycleEventListener(OutboundProcessor x0, OutboundProcessor$1 x1) {

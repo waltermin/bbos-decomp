@@ -6,7 +6,7 @@ import net.rim.device.internal.ui.TextFlowNative$Lines;
 import net.rim.vm.Array;
 
 public final class TextFlowLayout {
-   private TextFlowNative$Lines _lines = (TextFlowNative$Lines)(new Object());
+   private TextFlowNative$Lines _lines = new TextFlowNative$Lines();
    private int[] _lineCellStart = new int[0];
    private int[] _lineCellEnd = new int[0];
    private TextFlowNative _textFlowNative;

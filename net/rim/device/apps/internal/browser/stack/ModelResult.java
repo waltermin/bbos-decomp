@@ -161,7 +161,7 @@ public final class ModelResult implements Persistable, EncryptableProvider {
    public final ModelResult clone() {
       HttpHeaders newRequestHeaders = null;
       if (this._requestHeaders != null) {
-         newRequestHeaders = (HttpHeaders)(new Object());
+         newRequestHeaders = new HttpHeaders();
          int size = this._requestHeaders.size();
 
          for (int i = 0; i < size; i++) {

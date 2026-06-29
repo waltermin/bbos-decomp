@@ -2,6 +2,7 @@ package net.rim.device.api.xml.jaxp;
 
 import net.rim.device.api.util.IntVector;
 import net.rim.device.api.util.ToIntHashtable;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
@@ -28,12 +29,12 @@ class DOMDocumentTypeImpl$NamedNodeMapShim implements NamedNodeMap {
 
    @Override
    public Node setNamedItem(Node arg) {
-      throw new Object((short)7, "");
+      throw new DOMException((short)7, "");
    }
 
    @Override
    public Node removeNamedItem(String name) {
-      throw new Object((short)7, "");
+      throw new DOMException((short)7, "");
    }
 
    @Override
@@ -52,11 +53,11 @@ class DOMDocumentTypeImpl$NamedNodeMapShim implements NamedNodeMap {
 
    @Override
    public Node setNamedItemNS(Node arg) {
-      throw new Object((short)7, "");
+      throw new DOMException((short)7, "");
    }
 
    @Override
    public Node removeNamedItemNS(String namespaceURI, String localName) {
-      throw new Object((short)7, "");
+      throw new DOMException((short)7, "");
    }
 }

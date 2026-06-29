@@ -14,7 +14,7 @@ class SpellCheckInputMethodVariant$DispatchEventHandlerImpl implements SpellChec
       caret += amount;
       if (caret >= this.this$0._bounds.start) {
          if (caret <= this.this$0._bounds.end) {
-            if (this.this$0._currentComponent != null && this.this$0._currentComponent instanceof Object) {
+            if (this.this$0._currentComponent != null && this.this$0._currentComponent instanceof TextField) {
                TextField field = (TextField)this.this$0._currentComponent;
                int labelLength = field.getLabelLength();
                if (caret >= labelLength && caret <= field.getTextLength() + labelLength) {
@@ -65,8 +65,8 @@ class SpellCheckInputMethodVariant$DispatchEventHandlerImpl implements SpellChec
    @Override
    public void handleEvent(Event event) {
       this.this$0._cancelDelay = true;
-      if (!(event instanceof Object)) {
-         if (!(event instanceof Object)) {
+      if (!(event instanceof KeyEvent)) {
+         if (!(event instanceof FocusEvent)) {
             this.handleOtherEvent(event);
          } else {
             FocusEvent focusEvent = (FocusEvent)event;

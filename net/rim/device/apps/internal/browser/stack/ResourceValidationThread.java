@@ -10,9 +10,9 @@ import net.rim.device.apps.internal.browser.options.BrowserConfigRecord;
 import net.rim.device.internal.browser.util.Pipe;
 
 public final class ResourceValidationThread extends Thread {
-   private Vector _fetchItems = (Vector)(new Object());
-   private Vector _validateItems = (Vector)(new Object());
-   private Vector _bookmarkItems = (Vector)(new Object());
+   private Vector _fetchItems = new Vector();
+   private Vector _validateItems = new Vector();
+   private Vector _bookmarkItems = new Vector();
    private RawDataCache _cache;
    private BrowserConfigRecord _config;
    private boolean _running = true;
@@ -115,14 +115,14 @@ public final class ResourceValidationThread extends Thread {
       // 051: astore 6
       // 053: aload 5
       // 055: dup
-      // 056: instanceof java/lang/Object
+      // 056: instanceof net/rim/device/api/util/LongIntHashtable
       // 059: ifne 060
       // 05c: pop
       // 05d: goto 068
-      // 060: checkcast java/lang/Object
+      // 060: checkcast net/rim/device/api/util/LongIntHashtable
       // 063: astore 6
       // 065: goto 071
-      // 068: new java/lang/Object
+      // 068: new net/rim/device/api/util/LongIntHashtable
       // 06b: dup
       // 06c: invokespecial net/rim/device/api/util/LongIntHashtable.<init> ()V
       // 06f: astore 6
@@ -353,7 +353,7 @@ public final class ResourceValidationThread extends Thread {
       // 281: athrow
       // 282: aload 4
       // 284: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 289: checkcast java/lang/Object
+      // 289: checkcast java/lang/String
       // 28c: astore 5
       // 28e: new net/rim/device/apps/internal/browser/stack/ModelResult
       // 291: dup

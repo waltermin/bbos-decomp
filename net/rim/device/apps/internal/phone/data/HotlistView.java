@@ -35,7 +35,7 @@ public final class HotlistView extends PhoneListView implements ListFieldCallbac
    protected final void loadItems() {
       this._hotlist = Hotlist.getInstance();
       if (this._hotlist == null) {
-         throw new Object("Not hotlist instance.");
+         throw new RuntimeException("Not hotlist instance.");
       }
 
       this._hotlist.setListener(this);

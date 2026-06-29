@@ -41,7 +41,7 @@ public class CancelMoreMessagingTransmission extends RIMMessagingTransmission {
    }
 
    private byte[] createErrorData(byte errorCode, byte[] description) {
-      DataBuffer errorDb = (DataBuffer)(new Object(true));
+      DataBuffer errorDb = new DataBuffer(true);
       errorDb.writeByte(errorCode);
       errorDb.writeByteArray(description);
       return errorDb.getArray();
@@ -55,16 +55,16 @@ public class CancelMoreMessagingTransmission extends RIMMessagingTransmission {
 
          try {
             var4 = true;
-            DataBuffer e = new Object();
-            ((DataBuffer)e).setData(data, 0, data.length);
-            ((DataBuffer)e).readCompressedInt();
-            this._errorCode = ((DataBuffer)e).readByte();
-            if (((DataBuffer)e).readCompressedInt() <= 0) {
+            DataBuffer e = new DataBuffer();
+            e.setData(data, 0, data.length);
+            e.readCompressedInt();
+            this._errorCode = e.readByte();
+            if (e.readCompressedInt() <= 0) {
                this._errorDescription = "".getBytes();
                return;
             }
 
-            this._errorDescription = ((DataBuffer)e).readByteArray();
+            this._errorDescription = e.readByteArray();
             var4 = false;
          } finally {
             if (var4) {
@@ -96,7 +96,7 @@ public class CancelMoreMessagingTransmission extends RIMMessagingTransmission {
 
    @Override
    public DataBuffer write() {
-      DataBuffer result = (DataBuffer)(new Object(true));
+      DataBuffer result = new DataBuffer(true);
       result.writeByte(8);
       result.writeByte(1);
       result.writeCompressedInt(4);

@@ -14,7 +14,7 @@ import net.rim.device.api.util.DataBuffer;
 
 public final class PasswordKeeperSync implements SyncCollection, SyncConverter, OTASyncCapable, CollectionEventSource {
    private PasswordKeeperList _source;
-   private CollectionListenerManager _collectionListenerManager = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _collectionListenerManager = new CollectionListenerManager();
    private SyncCollectionSchema _schema;
    private static final int TITLE = 1;
    private static final int USERNAME = 2;
@@ -108,7 +108,7 @@ public final class PasswordKeeperSync implements SyncCollection, SyncConverter, 
    @Override
    public final SyncObject[] getSyncObjects() {
       int size = this._source.size();
-      SyncObject[] array = new Object[size];
+      SyncObject[] array = new SyncObject[size];
 
       for (int i = 0; i < size; i++) {
          array[i] = (SyncObject)this._source.getAt(i);
@@ -323,7 +323,7 @@ public final class PasswordKeeperSync implements SyncCollection, SyncConverter, 
    public PasswordKeeperSync() {
       this._source = new PasswordKeeperList();
       PasswordKeeperOptions options = PasswordKeeperOptions.getOptions();
-      this._schema = (SyncCollectionSchema)(new Object());
+      this._schema = new SyncCollectionSchema();
       this._schema.setDefaultRecordType(1);
       this._schema.setKeyFieldIds(1, KEY_FIELD_IDS);
       SyncManager manager = SyncManager.getInstance();

@@ -27,19 +27,19 @@ public class EventContainer implements Persistable, SyncCollection, SyncConverte
    }
 
    public boolean contains(int uid) {
-      return this._fieldsModels == null ? false : this._fieldsModels.containsKey(new Object(uid));
+      return this._fieldsModels == null ? false : this._fieldsModels.containsKey(new Integer(uid));
    }
 
    public void removeSyncObject(int uid) {
       if (this._fieldsModels != null) {
-         Integer key = (Integer)(new Object(uid));
+         Integer key = new Integer(uid);
          this._fieldsModels.remove(key);
       }
    }
 
    public EventFieldsModel getEventFieldsModel(int uid) {
       if (this._fieldsModels != null) {
-         Integer key = (Integer)(new Object(uid));
+         Integer key = new Integer(uid);
          return (EventFieldsModel)this._fieldsModels.get(key);
       } else {
          return null;
@@ -55,12 +55,12 @@ public class EventContainer implements Persistable, SyncCollection, SyncConverte
    @Override
    public SyncObject[] getSyncObjects() {
       if (this._fieldsModels == null) {
-         return new Object[0];
+         return new SyncObject[0];
       }
 
       int length = this._fieldsModels.size();
       int index = 0;
-      SyncObject[] result = new Object[length];
+      SyncObject[] result = new SyncObject[length];
       Enumeration enumeration = this._fieldsModels.elements();
 
       while (enumeration.hasMoreElements()) {
@@ -145,7 +145,7 @@ public class EventContainer implements Persistable, SyncCollection, SyncConverte
       }
 
       EventFieldsModel model = (EventFieldsModel)object;
-      DataBuffer dataBuffer = (DataBuffer)(new Object(buffer.isBigEndian()));
+      DataBuffer dataBuffer = new DataBuffer(buffer.isBigEndian());
       dataBuffer.writeInt(-12975410);
       dataBuffer.writeByteArray(model.getData());
       dataBuffer.writeByte(0);
@@ -182,7 +182,7 @@ public class EventContainer implements Persistable, SyncCollection, SyncConverte
       if (this._fieldsModels == null) {
          return false;
       } else {
-         Integer key = (Integer)(new Object(object.getUID()));
+         Integer key = new Integer(object.getUID());
          if (this._fieldsModels.containsKey(key)) {
             this._fieldsModels.remove(key);
             return true;
@@ -203,7 +203,7 @@ public class EventContainer implements Persistable, SyncCollection, SyncConverte
             return false;
          } else {
             int keyInt = oldObject.getUID();
-            Integer key = (Integer)(new Object(keyInt));
+            Integer key = new Integer(keyInt);
             if (this._fieldsModels.containsKey(key) && newModel.getUID() == keyInt) {
                newModel.setDirty(false);
                this._fieldsModels.put(key, newModel);
@@ -224,10 +224,10 @@ public class EventContainer implements Persistable, SyncCollection, SyncConverte
 
       model = (EventFieldsModel)object;
       if (this._fieldsModels == null) {
-         this._fieldsModels = (Hashtable)(new Object());
+         this._fieldsModels = new Hashtable();
       }
 
-      Integer key = (Integer)(new Object(object.getUID()));
+      Integer key = new Integer(object.getUID());
       if (this._fieldsModels.containsKey(key)) {
          return false;
       }

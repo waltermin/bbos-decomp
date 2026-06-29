@@ -13,7 +13,7 @@ class ProxyTLSOptionsProvider$AddHostVerb extends OptionsItemVerb {
 
    @Override
    public Object invoke(Object parameter) {
-      SimpleOKCancelInputDialog dialog = (SimpleOKCancelInputDialog)(new Object(9, ProxyTLSOptionsProvider._rb.getString(40), 0, 1000000, 0));
+      SimpleOKCancelInputDialog dialog = new SimpleOKCancelInputDialog(9, ProxyTLSOptionsProvider._rb.getString(40), 0, 1000000, 0);
       dialog.show();
       if (dialog.getCloseReason() == -1) {
          return null;

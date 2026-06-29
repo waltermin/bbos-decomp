@@ -32,7 +32,7 @@ public final class WSP_ReplyPDU extends WSP_PDU {
       // 16: iload 8
       // 18: bipush -1
       // 1a: if_icmpne 28
-      // 1d: new java/lang/Object
+      // 1d: new java/lang/IllegalArgumentException
       // 20: dup
       // 21: ldc_w "Null data"
       // 24: invokespecial java/lang/IllegalArgumentException.<init> (Ljava/lang/String;)V

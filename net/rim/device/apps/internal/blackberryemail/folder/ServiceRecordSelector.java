@@ -42,7 +42,7 @@ public class ServiceRecordSelector {
    public ServiceRecord[] getServiceRecords(EmailMessageModel emailMessageModel, Object context) {
       ServiceRecord imPlusServiceRecord = this.getIMPlusServiceRecord(emailMessageModel, context);
       if (imPlusServiceRecord != null) {
-         return new Object[]{imPlusServiceRecord};
+         return new ServiceRecord[]{imPlusServiceRecord};
       }
 
       boolean isPin = emailMessageModel.flagsSet(8192);
@@ -57,7 +57,7 @@ public class ServiceRecordSelector {
       if (!newMessage && !forwardMessage) {
          ServiceRecord serviceRecord = EmailMessageUtilities.getServiceRecordForMessage(emailMessageModel);
          if (serviceRecord != null) {
-            return new Object[]{serviceRecord};
+            return new ServiceRecord[]{serviceRecord};
          }
 
          EmailHierarchy hierarchyAlreadyAssigned = EmailHierarchy.getEmailHierarchyForFolder(emailMessageModel.getFolderId());
@@ -74,7 +74,7 @@ public class ServiceRecordSelector {
             serviceRecord = EmailMessageUtilities.getServiceRecordForMessage((EmailMessageModel)originalMessage);
          }
 
-         return serviceRecord != null ? new Object[]{serviceRecord} : null;
+         return serviceRecord != null ? new ServiceRecord[]{serviceRecord} : null;
       } else {
          return this.getAllOutgoingServiceRecords();
       }
@@ -82,13 +82,13 @@ public class ServiceRecordSelector {
 
    private ServiceRecord[] getAllOutgoingServiceRecords() {
       TransmissionService transmissionService = TransmissionServiceManager.get(8399767144006445082L);
-      if (!(transmissionService instanceof Object)) {
+      if (!(transmissionService instanceof RIMMessagingService)) {
          return null;
       }
 
       ServiceRecord[] allOutgoingServiceRecords = ((RIMMessagingService)transmissionService).getAllOutgoingServiceRecords();
       int numOutgoingServiceRecords = allOutgoingServiceRecords != null ? allOutgoingServiceRecords.length : 0;
-      ServiceRecord[] allowedServiceRecords = new Object[numOutgoingServiceRecords];
+      ServiceRecord[] allowedServiceRecords = new ServiceRecord[numOutgoingServiceRecords];
       System.arraycopy(allOutgoingServiceRecords, 0, allowedServiceRecords, 0, numOutgoingServiceRecords);
       return allowedServiceRecords;
    }
@@ -177,7 +177,7 @@ public class ServiceRecordSelector {
 
    private int getBoundServiceRecord(ServiceRecord[] serviceRecords, Object context) {
       Object boundServiceRecord = ContextObject.get(context, -6095803566992128485L);
-      if (!(boundServiceRecord instanceof Object)) {
+      if (!(boundServiceRecord instanceof ServiceRecord)) {
          return -1;
       }
 
@@ -215,7 +215,7 @@ public class ServiceRecordSelector {
       }
 
       TransmissionService transmissionService = TransmissionServiceManager.get(8399767144006445082L);
-      if (!(transmissionService instanceof Object)) {
+      if (!(transmissionService instanceof RIMMessagingService)) {
          return -1;
       }
 

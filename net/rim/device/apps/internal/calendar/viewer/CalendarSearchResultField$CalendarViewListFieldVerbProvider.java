@@ -49,7 +49,7 @@ final class CalendarSearchResultField$CalendarViewListFieldVerbProvider extends 
 
          if (lowerCase != rb.getString(341).charAt(0) && (key != ' ' || (status & 2) == 0)) {
             if (lowerCase != rb.getString(340).charAt(0) && (key != ' ' || (status & 2) != 0)) {
-               return !(selectedObject instanceof Object) ? true : ((HotKeyProvider)selectedObject).invokeHotkey(null, key) != null;
+               return !(selectedObject instanceof HotKeyProvider) ? true : ((HotKeyProvider)selectedObject).invokeHotkey(null, key) != null;
             }
 
             CalendarSearchResultField$SearchResultsVerb nextVerb = new CalendarSearchResultField$SearchResultsVerb(this.this$0, 321, 479504, 349, 2);
@@ -81,16 +81,16 @@ final class CalendarSearchResultField$CalendarViewListFieldVerbProvider extends 
    public final Verb getVerbs(Object context, Verb[] verbs) {
       Verb defaultVerb = null;
       Object selectedObject = this.getSelectedObject();
-      if (selectedObject instanceof Object) {
+      if (selectedObject instanceof VerbProvider) {
          defaultVerb = ((VerbProvider)selectedObject).getVerbs(context, verbs);
       }
 
       if (verbs == null) {
-         verbs = new Object[0];
+         verbs = new Verb[0];
       }
 
       CalOptionCache.setTimeWithFocus(this.this$0.getSelectedStartTime());
-      NewEventVerb newEventVerb = (NewEventVerb)(new Object());
+      NewEventVerb newEventVerb = new NewEventVerb();
       Arrays.add(verbs, newEventVerb);
       if (defaultVerb == null) {
          defaultVerb = newEventVerb;

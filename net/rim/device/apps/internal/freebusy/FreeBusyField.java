@@ -12,6 +12,7 @@ import net.rim.device.api.ui.theme.ThemeManager;
 import net.rim.device.apps.api.calendar.caldb.CalendarOptions;
 import net.rim.device.apps.api.calendar.modelcontrollerinterface.Attendee;
 import net.rim.device.cldc.util.CalendarExtensions;
+import net.rim.device.cldc.util.GregorianCalendar;
 
 class FreeBusyField extends Field {
    private Theme _theme = ThemeManager.getActiveTheme();
@@ -34,7 +35,7 @@ class FreeBusyField extends Field {
    private int _dayStart = 32400000;
    private int _dayEnd = 6120000;
    private Calendar _cal = Calendar.getInstance();
-   private CalendarExtensions _calEx = (CalendarExtensions)(new Object());
+   private CalendarExtensions _calEx = new GregorianCalendar();
    private AttendeeList _attendeeList;
    private Date _originalMeetingStartDate;
    private Date _originalMeetingEndDate;
@@ -56,9 +57,9 @@ class FreeBusyField extends Field {
       super(18014398509481984L);
       this._callback = callback;
       this._attendeeList = new AttendeeList(attendees);
-      this._originalMeetingStartDate = (Date)(new Object(meetingStartDate));
-      this._originalMeetingEndDate = (Date)(new Object(meetingEndDate));
-      this._highlightedDate = (Date)(new Object(meetingStartDate));
+      this._originalMeetingStartDate = new Date(meetingStartDate);
+      this._originalMeetingEndDate = new Date(meetingEndDate);
+      this._highlightedDate = new Date(meetingStartDate);
       this._numberOfAttendees = this._attendeeList.size();
       this._timeIntervals = new TimeIntervalColumn[24];
       this._timeIntervalsPrevious = new TimeIntervalColumn[24];
@@ -84,7 +85,7 @@ class FreeBusyField extends Field {
       day.set(14, 0);
       this._calEx.setTimeLong(day.getTime().getTime());
       Calendar intervalTime = Calendar.getInstance();
-      intervalTime.setTime((Date)(new Object(this._calEx.getTimeLong())));
+      intervalTime.setTime(new Date(this._calEx.getTimeLong()));
 
       for (int i = 0; i < 24; i++) {
          intervalTime.set(11, i);
@@ -92,7 +93,7 @@ class FreeBusyField extends Field {
       }
 
       this._calEx.roll(5, -1);
-      intervalTime.setTime((Date)(new Object(this._calEx.getTimeLong())));
+      intervalTime.setTime(new Date(this._calEx.getTimeLong()));
 
       for (int i = 0; i < 24; i++) {
          intervalTime.set(11, i);
@@ -100,7 +101,7 @@ class FreeBusyField extends Field {
       }
 
       this._calEx.roll(5, 2);
-      intervalTime.setTime((Date)(new Object(this._calEx.getTimeLong())));
+      intervalTime.setTime(new Date(this._calEx.getTimeLong()));
 
       for (int i = 0; i < 24; i++) {
          intervalTime.set(11, i);
@@ -109,7 +110,7 @@ class FreeBusyField extends Field {
 
       this._calEx.roll(5, -1);
       Calendar meetingStartCalendar = Calendar.getInstance();
-      meetingStartCalendar.setTime((Date)(new Object(this._highlightedDate.getTime())));
+      meetingStartCalendar.setTime(new Date(this._highlightedDate.getTime()));
       this._timeIntervalFocus = meetingStartCalendar.get(11);
       this._timeIntervalStart = this._timeIntervalFocus - 1;
       this._timeIntervalEnd = this._timeIntervalStart + 4 - 1;
@@ -118,7 +119,7 @@ class FreeBusyField extends Field {
    }
 
    public void setHighlightedDate(long newDate) {
-      this._highlightedDate = (Date)(new Object(newDate));
+      this._highlightedDate = new Date(newDate);
       this.focusOnHighlightedDate();
       this.updateHeaderDate(newDate);
    }
@@ -161,7 +162,7 @@ class FreeBusyField extends Field {
       graphics.setColor(0);
       graphics.drawRect(0, rowIndex * this._pixelsPerRowHeight, this._pixelsPerAttendeeColumn, this._pixelsPerRowHeight);
       graphics.drawText("All Attendees", 0, rowIndex * this._pixelsPerRowHeight, 4, this._pixelsPerAttendeeColumn);
-      System.out.println(((StringBuffer)(new Object("Painting Number of attendees: "))).append(this._numberOfAttendees).toString());
+      System.out.println("Painting Number of attendees: " + this._numberOfAttendees);
       rowIndex++;
 
       for (int i = this._attendeeStart; i <= this._attendeeEnd; i++) {
@@ -329,7 +330,7 @@ class FreeBusyField extends Field {
                amountRemaining = 0;
                this.invalidate();
             } else {
-               System.out.println(((StringBuffer)(new Object())).append(amountRemaining).append(" scroll left over").toString());
+               System.out.println(amountRemaining + " scroll left over");
             }
          } else if (amount < 0) {
             System.out.println("Scrolling up");
@@ -343,7 +344,7 @@ class FreeBusyField extends Field {
                amountRemaining = 0;
                this.invalidate();
             } else {
-               System.out.println(((StringBuffer)(new Object())).append(amountRemaining).append(" scroll left over").toString());
+               System.out.println(amountRemaining + " scroll left over");
             }
          }
 
@@ -406,7 +407,7 @@ class FreeBusyField extends Field {
 
       for (int i = 0; i < 24; i++) {
          Calendar intervalTime = Calendar.getInstance();
-         intervalTime.setTime((Date)(new Object(date)));
+         intervalTime.setTime(new Date(date));
          intervalTime.set(11, i);
          timeInterval[i] = new TimeIntervalColumn(intervalTime.getTime().getTime(), i, this._numberOfAttendees);
       }

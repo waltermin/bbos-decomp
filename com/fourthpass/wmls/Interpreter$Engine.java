@@ -12,11 +12,11 @@ final class Interpreter$Engine implements InstructionSet {
 
    Interpreter$Engine(Interpreter _1) {
       this.this$0 = _1;
-      this._callStack = (Stack)(new Object());
+      this._callStack = new Stack();
       this._operandStack = new OperandStack();
    }
 
-   public final void interpret() {
+   public final void interpret() throws Exception {
       this._ip = 0;
       this._done = false;
       int param = 0;
@@ -493,7 +493,7 @@ final class Interpreter$Engine implements InstructionSet {
                this._ip++;
                break;
             default:
-               throw new Object("Bad Instruction Set.");
+               throw new Exception("Bad Instruction Set.");
          }
       }
 
@@ -528,9 +528,9 @@ final class Interpreter$Engine implements InstructionSet {
       }
    }
 
-   private final void callFunction(WMLScript script, int index) {
+   private final void callFunction(WMLScript script, int index) throws Exception {
       if (this._callStack.size() > 200) {
-         throw new Object("Stack overflow");
+         throw new Exception("Stack overflow");
       }
 
       if (this._currentFunctionCall != null) {
@@ -557,7 +557,7 @@ final class Interpreter$Engine implements InstructionSet {
       //
       // Bytecode:
       // 000: iload 3
-      // 001: anewarray 4167
+      // 001: anewarray 4173
       // 004: astore 4
       // 006: iload 3
       // 007: bipush 1
@@ -591,7 +591,7 @@ final class Interpreter$Engine implements InstructionSet {
       // 043: astore 7
       // 045: aconst_null
       // 046: astore 8
-      // 048: new java/lang/Object
+      // 048: new net/rim/device/apps/api/utility/general/URI
       // 04b: dup
       // 04c: aload 1
       // 04d: aload 7
@@ -632,14 +632,14 @@ final class Interpreter$Engine implements InstructionSet {
       // 0a2: aload 11
       // 0a4: athrow
       // 0a5: return
-      // 0a6: new java/lang/Object
+      // 0a6: new net/rim/device/api/io/http/HttpHeaders
       // 0a9: dup
       // 0aa: invokespecial net/rim/device/api/io/http/HttpHeaders.<init> ()V
       // 0ad: astore 9
       // 0af: aload 9
       // 0b1: aload 7
       // 0b3: invokestatic net/rim/device/apps/internal/browser/common/RenderingUtilities.setReferrer (Lnet/rim/device/api/io/http/HttpHeaders;Ljava/lang/String;)V
-      // 0b6: new java/lang/Object
+      // 0b6: new net/rim/device/api/browser/field/RequestedResource
       // 0b9: dup
       // 0ba: aload 8
       // 0bc: invokevirtual net/rim/device/apps/api/utility/general/URI.getAbsoluteURL ()Ljava/lang/String;
@@ -735,7 +735,7 @@ final class Interpreter$Engine implements InstructionSet {
       // 199: aload 15
       // 19b: athrow
       // 19c: return
-      // 19d: new java/lang/Object
+      // 19d: new net/rim/device/apps/api/utility/general/URI
       // 1a0: dup
       // 1a1: aload 7
       // 1a3: aload 7

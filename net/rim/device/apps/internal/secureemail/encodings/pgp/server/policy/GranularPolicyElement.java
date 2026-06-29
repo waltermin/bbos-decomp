@@ -18,7 +18,7 @@ class GranularPolicyElement {
    protected GranularPolicyElement(String xmlTag, GranularPolicyElement parentElement) {
       this._xmlTag = xmlTag;
       this._parentElement = parentElement;
-      this._childElements = (SimpleSortingVector)(new Object());
+      this._childElements = new SimpleSortingVector();
       this._childElements.setSortComparator(new GranularPolicyElement$GranularPolicyComparator(null));
       this._childElements.setSort(true);
    }
@@ -82,7 +82,7 @@ class GranularPolicyElement {
    }
 
    protected void logWarning(String warningString) {
-      String eventLoggerString = ((StringBuffer)(new Object("UGPW: "))).append(warningString).toString();
+      String eventLoggerString = "UGPW: " + warningString;
       EventLogger.logEvent(234044482576569793L, eventLoggerString.getBytes());
       System.out.println(warningString);
    }

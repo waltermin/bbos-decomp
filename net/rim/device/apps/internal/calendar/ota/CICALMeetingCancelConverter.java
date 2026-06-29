@@ -5,6 +5,7 @@ import net.rim.device.apps.api.calendar.caldb.CalendarService;
 import net.rim.device.apps.api.calendar.caldb.CalendarServiceManager;
 import net.rim.device.apps.api.calendar.modelcontrollerinterface.Event;
 import net.rim.device.apps.api.calendar.modelcontrollerinterface.EventUtilities;
+import net.rim.device.apps.api.utility.serialization.SerializationException;
 
 class CICALMeetingCancelConverter extends CICALBaseConverter {
    private static final byte[] MEETING_CANCEL_FROM_PAGER_HEADER = new byte[]{20, 16, 1, 1, 1};
@@ -15,13 +16,13 @@ class CICALMeetingCancelConverter extends CICALBaseConverter {
    }
 
    @Override
-   public byte[] convert(Object inputObject, Object contextObject) {
-      if (!(inputObject instanceof Object)) {
-         throw new Object("Unknown object type");
+   public byte[] convert(Object inputObject, Object contextObject) throws SerializationException {
+      if (!(inputObject instanceof Event)) {
+         throw new SerializationException("Unknown object type");
       }
 
       Event event = (Event)inputObject;
-      DataBuffer dataBuffer = (DataBuffer)(new Object(true));
+      DataBuffer dataBuffer = new DataBuffer(true);
       CalendarService calendarService = CalendarServiceManager.getInstance().findCalendarService(event);
       dataBuffer.write(MEETING_CANCEL_FROM_PAGER_HEADER);
       this.convertEventHeader(calendarService, event, dataBuffer, contextObject);
@@ -30,9 +31,9 @@ class CICALMeetingCancelConverter extends CICALBaseConverter {
       return dataBuffer.toArray();
    }
 
-   private void convertEventDates(CalendarService calendarService, Object inputObject, DataBuffer dataBuffer, Object context) {
-      if (!(inputObject instanceof Object)) {
-         throw new Object("Unknown object type");
+   private void convertEventDates(CalendarService calendarService, Object inputObject, DataBuffer dataBuffer, Object context) throws SerializationException {
+      if (!(inputObject instanceof Event)) {
+         throw new SerializationException("Unknown object type");
       }
 
       Event event = (Event)inputObject;

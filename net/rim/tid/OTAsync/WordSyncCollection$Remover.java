@@ -31,7 +31,7 @@ class WordSyncCollection$Remover implements Runnable {
             }
 
             if (this.this$0._debugOutputEnabled) {
-               System.err.println(((StringBuffer)(new Object("Word is removed: "))).append(so.toString()).toString());
+               System.err.println("Word is removed: " + so.toString());
             }
          }
       }

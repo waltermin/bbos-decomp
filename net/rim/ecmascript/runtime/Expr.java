@@ -22,7 +22,7 @@ public class Expr extends Convert {
 
       String sx = Convert.toString(x);
       String sy = Convert.toString(y);
-      StringBuffer buff = (StringBuffer)(new Object(sx.length() + sy.length()));
+      StringBuffer buff = new StringBuffer(sx.length() + sy.length());
       buff.append(sx);
       buff.append(sy);
       return Value.makeStringValue(buff.toString());

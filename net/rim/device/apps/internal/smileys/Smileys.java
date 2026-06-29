@@ -16,7 +16,7 @@ public class Smileys {
       if (_smileys == null) {
          ApplicationRegistry registry = ApplicationRegistry.getApplicationRegistry();
          Object obj = registry.get(EmoticonStringPattern.SYSTEM_DEFAULT_KEY);
-         if (!(obj instanceof Object)) {
+         if (!(obj instanceof EmoticonStringPattern)) {
             StaticBitmapSmileys smileys = new StaticBitmapSmileys();
             smileys.setImageData(Resource.getResourceClass().getResource("smileys.png"));
             smileys.add(":)", 0);

@@ -21,7 +21,7 @@ public final class ASN1InputByteArray {
          this._startPosition = offset;
          this._endPosition = offset;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -44,7 +44,7 @@ public final class ASN1InputByteArray {
             this._endPosition = this._startPosition;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -55,7 +55,7 @@ public final class ASN1InputByteArray {
             this._endPosition = this._startPosition;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -499,10 +499,7 @@ public final class ASN1InputByteArray {
             int endOffset = this._endPosition;
 
             while (this._startPosition < endOffset) {
-               returnValue = ((StringBuffer)(new Object()))
-                  .append(returnValue)
-                  .append(this.readString(3, baseTag, clsFlags, defaultValue, useDefault, baseTag, recursionLevel + 1))
-                  .toString();
+               returnValue = returnValue + this.readString(3, baseTag, clsFlags, defaultValue, useDefault, baseTag, recursionLevel + 1);
             }
 
             this._startPosition = endOffset;
@@ -515,9 +512,9 @@ public final class ASN1InputByteArray {
                   }
 
                   this._startPosition = this._endPosition;
-                  return (String)(new Object(this._buffer, offset, length, "UTF8"));
+                  return new String(this._buffer, offset, length, "UTF8");
                } finally {
-                  throw new Object();
+                  throw new RuntimeException();
                }
             } else {
                if (this._buffer.length - length < offset) {
@@ -525,7 +522,7 @@ public final class ASN1InputByteArray {
                }
 
                this._startPosition = this._endPosition;
-               return (String)(new Object(this._buffer, offset, length));
+               return new String(this._buffer, offset, length);
             }
          } else {
             char[] data = new char[length >> 1];
@@ -537,7 +534,7 @@ public final class ASN1InputByteArray {
             }
 
             this._startPosition = this._endPosition;
-            return (String)(new Object(data));
+            return new String(data);
          }
       } finally {
          throw new ASN1EncodingException();

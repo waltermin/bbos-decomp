@@ -136,30 +136,30 @@ public final class ConfigScreen extends MainScreen implements FieldChangeListene
 
    ConfigScreen() {
       this.setupMenuItems();
-      this._title = (LabelField)(new Object(DeviceSelfTestResources.getString(6), 1152921504606846976L));
+      this._title = new LabelField(DeviceSelfTestResources.getString(6), 1152921504606846976L);
       this.setTitle(this._title);
-      this._prompt = (LabelField)(new Object(DeviceSelfTestResources.getString(6), 1152921504606846976L));
-      this._inputCheckBox = (CheckboxField)(new Object(DeviceSelfTestResources.getString(7), false));
-      this._miscCheckBox = (CheckboxField)(new Object(DeviceSelfTestResources.getString(9), false));
-      this._handsetAudioCheckBox = (CheckboxField)(new Object(DeviceSelfTestResources.getString(8), false));
-      this._headsetAudioCheckBox = (CheckboxField)(new Object(DeviceSelfTestResources.getString(23), false));
-      this._rfCheckBox = (CheckboxField)(new Object(DeviceSelfTestResources.getString(10), false));
+      this._prompt = new LabelField(DeviceSelfTestResources.getString(6), 1152921504606846976L);
+      this._inputCheckBox = new CheckboxField(DeviceSelfTestResources.getString(7), false);
+      this._miscCheckBox = new CheckboxField(DeviceSelfTestResources.getString(9), false);
+      this._handsetAudioCheckBox = new CheckboxField(DeviceSelfTestResources.getString(8), false);
+      this._headsetAudioCheckBox = new CheckboxField(DeviceSelfTestResources.getString(23), false);
+      this._rfCheckBox = new CheckboxField(DeviceSelfTestResources.getString(10), false);
       this.add(this._inputCheckBox);
       this.add(this._miscCheckBox);
       this.add(this._handsetAudioCheckBox);
       this.add(this._headsetAudioCheckBox);
       if (BluetoothME.isSupported()) {
-         this._bluetoothAudioCheckBox = (CheckboxField)(new Object(DeviceSelfTestResources.getString(24), false));
+         this._bluetoothAudioCheckBox = new CheckboxField(DeviceSelfTestResources.getString(24), false);
          this.add(this._bluetoothAudioCheckBox);
       }
 
       this.add(this._rfCheckBox);
       if (GPS.isSupported()) {
-         this._gpsCheckBox = (CheckboxField)(new Object(DeviceSelfTestResources.getString(105), false));
+         this._gpsCheckBox = new CheckboxField(DeviceSelfTestResources.getString(105), false);
          this.add(this._gpsCheckBox);
       }
 
-      this._runButtonField = (ButtonField)(new Object(DeviceSelfTestResources.getString(125), 65536));
+      this._runButtonField = new ButtonField(DeviceSelfTestResources.getString(125), 65536);
       this._runButtonField.setChangeListener(this);
       this.add(this._runButtonField);
    }

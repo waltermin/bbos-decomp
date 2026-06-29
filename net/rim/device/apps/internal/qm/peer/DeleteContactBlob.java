@@ -13,7 +13,7 @@ final class DeleteContactBlob extends PeerDataBlob {
 
    @Override
    public final void pickle(DataBuffer db) {
-      DataBuffer db2 = (DataBuffer)(new Object());
+      DataBuffer db2 = new DataBuffer();
       this.appendDataBuffer(db, db2);
    }
 

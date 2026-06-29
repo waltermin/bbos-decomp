@@ -26,7 +26,7 @@ public class KeyDataCollectionImpl extends DataCollectionImpl implements KeyData
    @Override
    public long create(Object pKey) {
       if (pKey == null) {
-         throw new Object("Null PK");
+         throw new IllegalArgumentException("Null PK");
       }
 
       long handle = this.find(pKey);
@@ -54,7 +54,7 @@ public class KeyDataCollectionImpl extends DataCollectionImpl implements KeyData
          }
 
          if (!(pKey instanceof CompositeKey)) {
-            throw new Object("Incompatible key type");
+            throw new IllegalArgumentException("Incompatible key type");
          }
 
          CompositeKey key = (CompositeKey)pKey;
@@ -75,7 +75,7 @@ public class KeyDataCollectionImpl extends DataCollectionImpl implements KeyData
    @Override
    public long find(Object pKey) {
       if (pKey == null) {
-         throw new Object("Null PK");
+         throw new IllegalArgumentException("Null PK");
       }
 
       int handle = this._keyTable.get(pKey);

@@ -1,12 +1,13 @@
 package net.rim.device.apps.internal.deviceselftest;
 
+import java.util.Date;
 import java.util.Vector;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 
 final class TestMainScreen$ReportListCallback implements ListFieldCallback {
-   private Vector reports = (Vector)(new Object());
+   private Vector reports = new Vector();
 
    public final int size() {
       return this.reports.size();
@@ -40,8 +41,8 @@ final class TestMainScreen$ReportListCallback implements ListFieldCallback {
       if (index < this.reports.size()) {
          String text = "Report @";
          Report temp = (Report)this.reports.elementAt(this.reports.size() - 1 - index);
-         String str = new Object(temp.timeStamp).toString();
-         text = ((StringBuffer)(new Object())).append(text).append(str.substring(0, 20)).toString();
+         String str = new Date(temp.timeStamp).toString();
+         text = text + str.substring(0, 20);
          graphics.drawText(text, 0, y, 0, width);
       }
    }

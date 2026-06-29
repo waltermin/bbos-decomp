@@ -56,10 +56,8 @@ public final class MMSReplyVerb extends AbstractComposeVerb {
 
       builder.addRecipient(originalPayload.getSender());
       String subject = originalPayload.getAttribute("subject");
-      builder.setSubject(
-         ((StringBuffer)(new Object())).append(EmailResources.getString(60)).append(' ').append(AbstractComposeVerb.trimSubject(subject)).toString()
-      );
-      String textAttachmentName = ((StringBuffer)(new Object(""))).append(System.currentTimeMillis()).append(".txt").toString();
+      builder.setSubject(EmailResources.getString(60) + ' ' + AbstractComposeVerb.trimSubject(subject));
+      String textAttachmentName = "" + System.currentTimeMillis() + ".txt";
       int textAttachmentType = 3;
       MMSPresentationModel newPresentation = PresentationModelFactory.createInstance(65536);
       newPresentation.addPresentationElement(textAttachmentName, textAttachmentType, true);
@@ -76,7 +74,7 @@ public final class MMSReplyVerb extends AbstractComposeVerb {
    }
 
    private static final String getInitialReplyText(MMSMessageModel message) {
-      StringBuffer buf = (StringBuffer)(new Object());
+      StringBuffer buf = new StringBuffer();
       buf.append("\n");
       MMSPayloadModel payload = message.getPayload();
       buf.append(MMSResources.getString(113));

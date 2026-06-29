@@ -32,7 +32,7 @@ public class CertificateHarvesterManager {
       CertificateHarvester newHarvester, TransitoryMessagePropertiesModel messagePropertiesModel, Object context
    ) {
       if (this._activeCertificateHarvesters == null) {
-         throw new Object("CertificateHarvesterManager already terminated");
+         throw new IllegalStateException("CertificateHarvesterManager already terminated");
       }
 
       int newHarvesterPriority = newHarvester.getPriority();
@@ -82,7 +82,7 @@ public class CertificateHarvesterManager {
             while (e.hasMoreElements()) {
                Field field = (Field)e.nextElement();
                Object cookie = field.getCookie();
-               if (cookie instanceof Object) {
+               if (cookie instanceof EmailHeaderModel) {
                   newHarvester.recipientAdded((EmailHeaderModel)cookie, context);
                }
             }

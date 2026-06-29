@@ -230,10 +230,10 @@ public class AccentGrouping implements AlphabetChangeListener {
             61675587
       }
    };
-   private StringBuffer _tempCompleteAccBuffer = (StringBuffer)(new Object());
-   private StringBuffer _tempExtendedAccBuffer = (StringBuffer)(new Object());
+   private StringBuffer _tempCompleteAccBuffer = new StringBuffer();
+   private StringBuffer _tempExtendedAccBuffer = new StringBuffer();
    private StringBuffer _getAccentsTempBuffer;
-   private String[] _getAccentsReturnContainer = new Object[2];
+   private String[] _getAccentsReturnContainer = new String[2];
    private static final int GROWTH_STEP = 10;
    static int[] BASE_CHARS = new int[]{
       97,
@@ -384,7 +384,7 @@ public class AccentGrouping implements AlphabetChangeListener {
       "&\u0006",
       "&\u0006"
    };
-   static IntIntHashtable _accentedUnaccentedMap = (IntIntHashtable)(new Object());
+   static IntIntHashtable _accentedUnaccentedMap = new IntIntHashtable();
    static String FINAL_FORMS;
 
    public void setRepository(IAlphabetRepository aRepository, Locale aLocale) {
@@ -393,8 +393,8 @@ public class AccentGrouping implements AlphabetChangeListener {
       if (this._locale != aLocale) {
          if (this._buttonKeys == null) {
             this._buttonKeys = new int[10];
-            this._completeAccentedChars = new Object[10];
-            this._extendedAccentedChars = new Object[10];
+            this._completeAccentedChars = new String[10];
+            this._extendedAccentedChars = new String[10];
          }
 
          this.reset();
@@ -467,7 +467,7 @@ public class AccentGrouping implements AlphabetChangeListener {
 
    public String getAccents(char aChar) {
       if (this._getAccentsTempBuffer == null) {
-         this._getAccentsTempBuffer = (StringBuffer)(new Object(1));
+         this._getAccentsTempBuffer = new StringBuffer(1);
       } else {
          this._getAccentsTempBuffer.setLength(0);
       }

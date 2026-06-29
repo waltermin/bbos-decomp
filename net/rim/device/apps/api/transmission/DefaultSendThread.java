@@ -12,9 +12,9 @@ import net.rim.vm.Process;
 
 public class DefaultSendThread extends BaseConnectionThread implements PacketSender {
    private TransmissionStatusListener _defaultListener;
-   private IntHashtable _listenersByPacketTag = (IntHashtable)(new Object());
+   private IntHashtable _listenersByPacketTag = new IntHashtable();
    private TransmissionService _service;
-   private IntIntHashtable _dgId2ListenerTag = (IntIntHashtable)(new Object());
+   private IntIntHashtable _dgId2ListenerTag = new IntIntHashtable();
    private boolean _stopAsSoonAsPossible;
    private TrafficLogger _tLogger;
    private DatagramBase _currentDatagram;
@@ -42,7 +42,7 @@ public class DefaultSendThread extends BaseConnectionThread implements PacketSen
          }
       }
 
-      if (datagramToCancel != null && super._connection instanceof Object) {
+      if (datagramToCancel != null && super._connection instanceof DatagramConnectionBase) {
          try {
             ((DatagramConnectionBase)super._connection).cancel(datagramToCancel);
          } finally {
@@ -71,7 +71,7 @@ public class DefaultSendThread extends BaseConnectionThread implements PacketSen
    public void transmitPacket(Packet aPacket, Object contextObject) {
       if (this._tLogger != null) {
          Object obj = aPacket.getContextObject();
-         if (obj instanceof Object) {
+         if (obj instanceof ContextObject) {
             ContextObject co = (ContextObject)obj;
             co.put(-6151522474633543992L, Process.currentProcess().getModuleName());
          }
@@ -127,7 +127,7 @@ public class DefaultSendThread extends BaseConnectionThread implements PacketSen
       if (aDatagramConnection != null) {
          super._connection = aDatagramConnection;
          EventLogger.logEvent(super._eventLoggerGUID, 1129530708, 5);
-         if (super._connection instanceof Object) {
+         if (super._connection instanceof DatagramConnectionBase) {
             ((DatagramConnectionBase)super._connection).setDatagramStatusListener(this);
             return;
          }

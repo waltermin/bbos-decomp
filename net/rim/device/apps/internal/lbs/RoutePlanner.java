@@ -36,7 +36,7 @@ public final class RoutePlanner {
             }
          } else {
             Location locationStart = null;
-            GPSLocationData gpsLocationData = (GPSLocationData)(new Object());
+            GPSLocationData gpsLocationData = new GPSLocationData();
             if (gpsLocationData != null && gpsLocationData.isValid()) {
                locationStart = new Location(gpsLocationData.getLatitudeInt(), gpsLocationData.getLongitudeInt(), this._mapField.getZoom());
             } else {

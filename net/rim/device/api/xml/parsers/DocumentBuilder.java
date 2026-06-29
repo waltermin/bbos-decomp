@@ -13,19 +13,19 @@ public class DocumentBuilder {
 
    public Document parse(InputStream is) {
       if (is == null) {
-         throw new Object("null InputStream");
+         throw new IllegalArgumentException("null InputStream");
       }
 
-      InputSource in = (InputSource)(new Object(is));
+      InputSource in = new InputSource(is);
       return this.parse(in);
    }
 
    public Document parse(InputStream is, String systemId) {
       if (is == null) {
-         throw new Object("null InputStream");
+         throw new IllegalArgumentException("null InputStream");
       }
 
-      InputSource in = (InputSource)(new Object(is));
+      InputSource in = new InputSource(is);
       in.setSystemId(systemId);
       return this.parse(in);
    }

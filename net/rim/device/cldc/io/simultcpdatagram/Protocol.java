@@ -1,5 +1,7 @@
 package net.rim.device.cldc.io.simultcpdatagram;
 
+import java.io.IOException;
+import java.io.InterruptedIOException;
 import javax.microedition.io.Connection;
 import net.rim.device.api.io.DatagramBase;
 import net.rim.device.api.system.RadioInfo;
@@ -42,9 +44,9 @@ public final class Protocol extends NativeConnectionBase {
    }
 
    @Override
-   public final DatagramBase receiveDatagramBase() {
+   public final DatagramBase receiveDatagramBase() throws IOException {
       if (!super._isActive) {
-         throw new Object();
+         throw new IOException();
       }
 
       DatagramBase receivedDatagram = null;
@@ -59,10 +61,10 @@ public final class Protocol extends NativeConnectionBase {
 
             if (super._datagrams.isEmpty()) {
                if (super._isActive) {
-                  throw new Object();
+                  throw new InterruptedIOException();
                }
 
-               throw new Object();
+               throw new IOException();
             }
          }
 

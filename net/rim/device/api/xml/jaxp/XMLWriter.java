@@ -5,6 +5,7 @@ import java.util.Vector;
 import org.xml.sax.Attributes;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class XMLWriter extends DefaultHandler implements RIMExtendedHandler {
@@ -135,7 +136,7 @@ public class XMLWriter extends DefaultHandler implements RIMExtendedHandler {
 
    private void quote(String s) {
       int length = s.length();
-      StringBuffer b = (StringBuffer)(new Object());
+      StringBuffer b = new StringBuffer();
       b.append('"');
 
       for (int i = 0; i < length; i++) {
@@ -179,7 +180,7 @@ public class XMLWriter extends DefaultHandler implements RIMExtendedHandler {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public void endDTD(String name, String publicId, String systemId, String body) {
+   public void endDTD(String name, String publicId, String systemId, String body) throws SAXException {
       this._supressOutput--;
 
       try {
@@ -202,14 +203,14 @@ public class XMLWriter extends DefaultHandler implements RIMExtendedHandler {
          this.print("]>");
          this.forcePrintln();
       } catch (Throwable var7) {
-         throw new Object(ioe.getMessage());
+         throw new SAXException(ioe.getMessage());
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public void comment(char[] text, int offset, int length) {
+   public void comment(char[] text, int offset, int length) throws SAXException {
       try {
          this.println();
          this.print("<!--");
@@ -217,27 +218,27 @@ public class XMLWriter extends DefaultHandler implements RIMExtendedHandler {
          this.print("-->");
          this.println();
       } catch (Throwable var6) {
-         throw new Object(ioe.getMessage());
+         throw new SAXException(ioe.getMessage());
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public void cdataSection(char[] text, int offset, int length) {
+   public void cdataSection(char[] text, int offset, int length) throws SAXException {
       try {
          this.print("<![CDATA[");
          this.write(text, offset, length);
          this.print("]]>");
       } catch (Throwable var6) {
-         throw new Object(ioe.getMessage());
+         throw new SAXException(ioe.getMessage());
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public void startEntityReference(String name, String publicId, String systemId) {
+   public void startEntityReference(String name, String publicId, String systemId) throws SAXException {
       if (!this._expandingEntities) {
          try {
             this.print('&');
@@ -245,7 +246,7 @@ public class XMLWriter extends DefaultHandler implements RIMExtendedHandler {
             this.print(';');
             this._supressOutput++;
          } catch (Throwable var6) {
-            throw new Object(ioe.getMessage());
+            throw new SAXException(ioe.getMessage());
          }
       }
    }
@@ -268,23 +269,23 @@ public class XMLWriter extends DefaultHandler implements RIMExtendedHandler {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public void characters(char[] ch, int start, int length) {
+   public void characters(char[] ch, int start, int length) throws SAXException {
       try {
          this.writeEscaped(ch, start, length);
       } catch (Throwable var6) {
-         throw new Object(ioe.getMessage());
+         throw new SAXException(ioe.getMessage());
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public void ignorableWhitespace(char[] ch, int start, int length) {
+   public void ignorableWhitespace(char[] ch, int start, int length) throws SAXException {
       if (this._outputStyle == 2) {
          try {
             this.writeEscaped(ch, start, length);
          } catch (Throwable var6) {
-            throw new Object(ioe.getMessage());
+            throw new SAXException(ioe.getMessage());
          }
       }
    }
@@ -292,7 +293,7 @@ public class XMLWriter extends DefaultHandler implements RIMExtendedHandler {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public void processingInstruction(String target, String data) {
+   public void processingInstruction(String target, String data) throws SAXException {
       try {
          this.println();
          this.print("<?");
@@ -302,31 +303,31 @@ public class XMLWriter extends DefaultHandler implements RIMExtendedHandler {
          this.print("?>");
          this.println();
       } catch (Throwable var5) {
-         throw new Object(ioe.getMessage());
+         throw new SAXException(ioe.getMessage());
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public void startDocument() {
+   public void startDocument() throws SAXException {
       try {
          this.print("<?xml version=\"1.0\"?>");
          this.forcePrintln();
       } catch (Throwable var3) {
-         throw new Object(ioe.getMessage());
+         throw new SAXException(ioe.getMessage());
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public void endDocument() {
+   public void endDocument() throws SAXException {
       try {
          this.forcePrintln();
          this._out.flush();
       } catch (Throwable var3) {
-         throw new Object(ioe.getMessage());
+         throw new SAXException(ioe.getMessage());
       }
    }
 
@@ -342,7 +343,7 @@ public class XMLWriter extends DefaultHandler implements RIMExtendedHandler {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private void element(String eUri, String localName, String qName, Attributes attributes, boolean hasContent) {
+   private void element(String eUri, String localName, String qName, Attributes attributes, boolean hasContent) throws SAXException {
       try {
          this.println();
          this.print("<");
@@ -391,14 +392,14 @@ public class XMLWriter extends DefaultHandler implements RIMExtendedHandler {
          this.print(">");
          this.println();
       } catch (Throwable var11) {
-         throw new Object(ioe.getMessage());
+         throw new SAXException(ioe.getMessage());
       }
    }
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public void endElement(String uri, String localName, String qName) {
+   public void endElement(String uri, String localName, String qName) throws SAXException {
       try {
          this.println();
          this.print("</");
@@ -406,7 +407,7 @@ public class XMLWriter extends DefaultHandler implements RIMExtendedHandler {
          this.print(">");
          this.println();
       } catch (Throwable var6) {
-         throw new Object(ioe.getMessage());
+         throw new SAXException(ioe.getMessage());
       }
    }
 
@@ -414,7 +415,7 @@ public class XMLWriter extends DefaultHandler implements RIMExtendedHandler {
    public void startPrefixMapping(String prefix, String uri) {
       if (!prefix.equals(XMLParser.XML) || !uri.equals(XMLParser.XMLURL)) {
          if (this._pendingNamespaces == null) {
-            this._pendingNamespaces = (Vector)(new Object());
+            this._pendingNamespaces = new Vector();
          }
 
          this._pendingNamespaces.addElement(prefix);

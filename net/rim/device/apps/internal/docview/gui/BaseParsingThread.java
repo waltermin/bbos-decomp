@@ -12,12 +12,12 @@ class BaseParsingThread implements Runnable {
          this._consecutiveBlockCount = consecutiveBlockCount;
          this._notifyObj = notifyObj;
       } else {
-         throw new Object("Illegal values for parsing parameters");
+         throw new IllegalArgumentException("Illegal values for parsing parameters");
       }
    }
 
    void doStart() {
-      ((Thread)(new Object(this))).start();
+      new Thread(this).start();
    }
 
    protected final synchronized void notifyWaitingThreads() {

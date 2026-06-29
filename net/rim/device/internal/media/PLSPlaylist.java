@@ -11,7 +11,7 @@ public final class PLSPlaylist extends Playlist {
    }
 
    PLSPlaylist(Reader contentReader) {
-      this._table = (Hashtable)(new Object());
+      this._table = new Hashtable();
       String line = this.receiveLine(contentReader);
       if (line != null && !line.equals("[playlist]")) {
          while (true) {
@@ -32,7 +32,7 @@ public final class PLSPlaylist extends Playlist {
 
    @Override
    public final String getUrl(int index) {
-      String url = (String)this._table.get(((StringBuffer)(new Object("File"))).append(index + 1).toString());
+      String url = (String)this._table.get("File" + (index + 1));
       if (url != null) {
          url = url.replace('\\', '/');
       }
@@ -42,12 +42,12 @@ public final class PLSPlaylist extends Playlist {
 
    @Override
    public final String getTitle(int index) {
-      return (String)this._table.get(((StringBuffer)(new Object("Title"))).append(index + 1).toString());
+      return (String)this._table.get("Title" + (index + 1));
    }
 
    @Override
    public final int getLength(int index) {
-      String value = (String)this._table.get(((StringBuffer)(new Object("Length"))).append(index + 1).toString());
+      String value = (String)this._table.get("Length" + (index + 1));
       if (value == null) {
          return -1;
       }

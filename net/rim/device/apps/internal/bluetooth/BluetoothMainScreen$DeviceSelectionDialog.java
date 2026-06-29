@@ -1,9 +1,8 @@
 package net.rim.device.apps.internal.bluetooth;
 
 import java.util.Vector;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
-import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.component.RichTextField;
@@ -11,6 +10,7 @@ import net.rim.device.api.ui.container.DialogFieldManager;
 import net.rim.device.api.ui.container.PopupScreen;
 import net.rim.device.apps.api.ui.CommonResources;
 import net.rim.device.internal.ui.component.ImageField;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 
 final class BluetoothMainScreen$DeviceSelectionDialog extends PopupScreen implements ListFieldCallback {
    private Vector _devices;
@@ -87,21 +87,21 @@ final class BluetoothMainScreen$DeviceSelectionDialog extends PopupScreen implem
    }
 
    BluetoothMainScreen$DeviceSelectionDialog(BluetoothMainScreen _1, Vector devices) {
-      super((Manager)(new Object()));
+      super(new DialogFieldManager());
       this.this$0 = _1;
       this._selectedIndex = -1;
       DialogFieldManager dfm = (DialogFieldManager)this.getDelegate();
-      dfm.setMessage((RichTextField)(new Object(BluetoothMainScreen.getString(6), 36028797018963968L)));
-      ImageField imageField = (ImageField)(new Object());
+      dfm.setMessage(new RichTextField(BluetoothMainScreen.getString(6), 36028797018963968L));
+      ImageField imageField = new ImageField();
       imageField.setImage(_1._btManager.getDialogImage());
       dfm.setIcon(imageField);
-      this._listField = (ListField)(new Object());
+      this._listField = new ListField();
       this._listField.setCallback(this);
       dfm.addCustomField(this._listField);
-      dfm.addCustomField((Field)(new Object(5)));
+      dfm.addCustomField(new VerticalSpacerField(5));
       this._devices = devices;
       this._listField.setSize(devices.size());
-      dfm.addCustomField((Field)(new Object(CommonResources.getString(9042), 12884901888L)));
+      dfm.addCustomField(new ButtonField(CommonResources.getString(9042), 12884901888L));
    }
 
    @Override

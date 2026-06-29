@@ -15,7 +15,7 @@ final class DocViewTextDisplayField$EmbeddedStatusField extends LabelField {
    DocViewTextDisplayField$EmbeddedStatusField(String title, int type, String domID, Font font, Field previewField, boolean isDummy) {
       super(title, 1170935916001230916L);
       if (title == null) {
-         throw new Object("Null embedded object name not allowed.");
+         throw new IllegalArgumentException("Null embedded object name not allowed.");
       }
 
       this._previewField = previewField;
@@ -28,7 +28,7 @@ final class DocViewTextDisplayField$EmbeddedStatusField extends LabelField {
 
    @Override
    protected final void drawFocus(Graphics graphics, boolean on) {
-      XYRect tmp = (XYRect)(new Object());
+      XYRect tmp = new XYRect();
       this.getFocusRect(tmp);
       if (Graphics.isColor()) {
          graphics.invert(tmp.x + 1, tmp.y + 1, tmp.width - 1, tmp.height - 1);

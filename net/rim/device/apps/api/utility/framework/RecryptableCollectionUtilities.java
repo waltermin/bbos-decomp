@@ -58,7 +58,7 @@ public final class RecryptableCollectionUtilities {
             }
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

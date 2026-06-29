@@ -1,6 +1,7 @@
 package net.rim.device.api.crypto;
 
 import net.rim.device.api.system.ControlledAccess;
+import net.rim.device.api.system.ControlledAccessException;
 import net.rim.vm.TraceBack;
 
 final class RIMSignatureSignerFactory1 extends SignatureSignerFactory {
@@ -31,13 +32,13 @@ final class RIMSignatureSignerFactory1 extends SignatureSignerFactory {
       } else if (signatureAlgorithm.equals("Null")) {
          return new NullSignatureSigner();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    private static final void verifyCaller() {
       if (!ControlledAccess.verifyCodeModuleSignature(TraceBack.getCallingModule(2), 4408146)) {
-         throw new Object();
+         throw new ControlledAccessException();
       }
    }
 }

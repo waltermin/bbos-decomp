@@ -19,7 +19,7 @@ import net.rim.vm.Memory;
 final class RibbonDescriptionField extends Field implements MemoryCleanerListener {
    private boolean _compressedBanners;
    private String _text;
-   TextMetrics bounds = (TextMetrics)(new Object());
+   TextMetrics bounds = new TextMetrics();
    private Font _font;
    private Tag _backgroundTag = Tag.create("homescreen-description");
    private ThemeAttributeSet _backgroundTas;
@@ -100,15 +100,15 @@ final class RibbonDescriptionField extends Field implements MemoryCleanerListene
          this._screenBackground = screenBackground;
          int cx = this.getWidth();
          int cy = this.getHeight();
-         Bitmap backgroundBitmap = (Bitmap)(new Object(cx, cy));
-         Graphics bgGraphics = (Graphics)(new Object(backgroundBitmap));
+         Bitmap backgroundBitmap = new Bitmap(cx, cy);
+         Graphics bgGraphics = new Graphics(backgroundBitmap);
          int top = this.getTop() + this.getManager().getTop();
          if (screenBackground != null) {
             bgGraphics.drawBitmap(0, 0, cx, cy, screenBackground, 0, top);
          }
 
          Background background = this._backgroundTas.getBackground();
-         background.draw(bgGraphics, (XYRect)(new Object(0, 0, cx, cy)));
+         background.draw(bgGraphics, new XYRect(0, 0, cx, cy));
          this.getThemeAttributeSet().getWriterInternal().setBackgroundImage(backgroundBitmap);
          this.invalidate();
       }

@@ -1,5 +1,6 @@
 package net.rim.device.api.crypto.pgp;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Vector;
 import net.rim.device.api.crypto.keystore.KeyStore;
@@ -17,7 +18,7 @@ public class PGPInputStream extends InputStream {
 
    protected PGPInputStream(InputStream input, KeyStore keyStore) {
       if (input == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._input = input;
@@ -33,7 +34,7 @@ public class PGPInputStream extends InputStream {
    public static PGPInputStream getPGPInputStream(InputStream input, KeyStore keyStore, boolean displayUI) {
       try {
          SharedInputStream sharedInput;
-         if (!(input instanceof Object)) {
+         if (!(input instanceof SharedInputStream)) {
             sharedInput = SharedInputStream.getSharedInputStream(input);
          } else {
             sharedInput = (SharedInputStream)input;
@@ -51,7 +52,7 @@ public class PGPInputStream extends InputStream {
 
             InputStream packetInput;
             if (encoding != null) {
-               packetInput = (InputStream)(new Object(encoding));
+               packetInput = new ByteArrayInputStream(encoding);
             } else {
                packetInput = sharedInput.readInputStream();
                ((SharedInputStream)packetInput).setLength(length);
@@ -74,7 +75,7 @@ public class PGPInputStream extends InputStream {
             }
 
             if (tag == 1 || tag == 3 || tag == 9 || tag == 18) {
-               Vector keyPackets = (Vector)(new Object());
+               Vector keyPackets = new Vector();
 
                while (tag != 9 && tag != 18) {
                   if (encoding == null) {
@@ -86,7 +87,7 @@ public class PGPInputStream extends InputStream {
                      keyPackets.addElement(new PGPPublicKeyEncryptedSessionKeyPacket(tag, encoding));
                   } else {
                      if (tag != 3) {
-                        throw new PGPEncodingException(((StringBuffer)(new Object("Tag:"))).append(tag).toString());
+                        throw new PGPEncodingException("Tag:" + tag);
                      }
 
                      keyPackets.addElement(new PGPSymmetricKeyEncryptedSessionKeyPacket(tag, encoding));
@@ -101,7 +102,7 @@ public class PGPInputStream extends InputStream {
                }
 
                if (encoding != null) {
-                  packetInput = (InputStream)(new Object(encoding));
+                  packetInput = new ByteArrayInputStream(encoding);
                } else {
                   packetInput = sharedInput.readInputStream();
                   ((SharedInputStream)packetInput).setLength(length);
@@ -112,7 +113,7 @@ public class PGPInputStream extends InputStream {
             }
 
             if (tag == 2) {
-               Vector signaturePackets = (Vector)(new Object());
+               Vector signaturePackets = new Vector();
                int currentPosition = sharedInput.getCurrentPosition();
 
                while (tag == 2) {
@@ -138,7 +139,7 @@ public class PGPInputStream extends InputStream {
                   } finally {
                      if (var47) {
                         sharedInput.setCurrentPosition(currentPosition);
-                        return new PGPSignedInputStream((InputStream)(new Object(new byte[0])), keyStore, signaturePackets, null, true, true);
+                        return new PGPSignedInputStream(new ByteArrayInputStream(new byte[0]), keyStore, signaturePackets, null, true, true);
                      }
                   }
 
@@ -160,7 +161,7 @@ public class PGPInputStream extends InputStream {
             }
 
             if (tag == 4) {
-               Vector signaturePackets = (Vector)(new Object());
+               Vector signaturePackets = new Vector();
                int currentPosition = sharedInput.getCurrentPosition();
 
                while (tag == 4) {
@@ -236,7 +237,7 @@ public class PGPInputStream extends InputStream {
                }
 
                if (message == null) {
-                  return new PGPSignedInputStream((InputStream)(new Object(new byte[0])), keyStore, signaturePackets, null, true, displayUI);
+                  return new PGPSignedInputStream(new ByteArrayInputStream(new byte[0]), keyStore, signaturePackets, null, true, displayUI);
                }
 
                return new PGPSignedInputStream(message, keyStore, signaturePackets, mess, false, displayUI);

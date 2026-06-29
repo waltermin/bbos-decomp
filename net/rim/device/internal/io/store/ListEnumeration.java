@@ -1,6 +1,7 @@
 package net.rim.device.internal.io.store;
 
 import java.util.Enumeration;
+import net.rim.device.api.io.FileInfo;
 import net.rim.device.api.util.CharacterUtilities;
 
 final class ListEnumeration implements Enumeration {
@@ -20,7 +21,7 @@ final class ListEnumeration implements Enumeration {
       FSDescriptor fd = (FSDescriptor)this._list.getAt(this._index);
       this._index++;
       if (!this._returnFileInfo) {
-         return fd instanceof FolderImpl ? ((StringBuffer)(new Object())).append(fd.getName()).append("/").toString() : fd.getName();
+         return fd instanceof FolderImpl ? fd.getName() + "/" : fd.getName();
       }
 
       int attrib = 0;
@@ -55,10 +56,10 @@ final class ListEnumeration implements Enumeration {
             modTime = file.getTimeModify();
          }
       } finally {
-         return new Object(fd.getName(), fileSize, modTime, attrib);
+         return new FileInfo(fd.getName(), fileSize, modTime, attrib);
       }
 
-      return new Object(fd.getName(), fileSize, modTime, attrib);
+      return new FileInfo(fd.getName(), fileSize, modTime, attrib);
    }
 
    @Override

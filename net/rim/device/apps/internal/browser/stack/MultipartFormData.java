@@ -20,12 +20,12 @@ public final class MultipartFormData extends FormData implements Persistable {
          this._charset = "iso-8859-1";
       }
 
-      this._boundary = ((StringBuffer)(new Object("------------"))).append(System.currentTimeMillis()).toString();
+      this._boundary = "------------" + System.currentTimeMillis();
    }
 
    public MultipartFormData(byte[] multipartData) {
       this._dataEncoding = PersistentContent.encode(multipartData, true, true);
-      StringBuffer boundaryBuffer = (StringBuffer)(new Object());
+      StringBuffer boundaryBuffer = new StringBuffer();
       int maxBoundaryEnd = multipartData.length - 4;
 
       for (int i = 2; i < maxBoundaryEnd; i++) {
@@ -42,7 +42,7 @@ public final class MultipartFormData extends FormData implements Persistable {
 
    @Override
    public final String getContentType() {
-      return ((StringBuffer)(new Object("multipart/form-data; boundary="))).append(this._boundary).toString();
+      return "multipart/form-data; boundary=" + this._boundary;
    }
 
    @Override
@@ -67,11 +67,7 @@ public final class MultipartFormData extends FormData implements Persistable {
    public final void append(Object outputStream, String name, String value) {
       if (name != null && name.length() > 0) {
          this.append(
-            outputStream,
-            name,
-            this.stringToBytes(normalizeNewlines(value)),
-            this._useWAPConventions ? ((StringBuffer)(new Object("text/plain; charset="))).append(this._charset).toString() : null,
-            null
+            outputStream, name, this.stringToBytes(normalizeNewlines(value)), this._useWAPConventions ? "text/plain; charset=" + this._charset : null, null
          );
       }
    }
@@ -117,7 +113,7 @@ public final class MultipartFormData extends FormData implements Persistable {
 
    private static final String normalizeNewlines(String str) {
       if (str != null && (str.indexOf(13) != -1 || str.indexOf(10) != -1)) {
-         StringBuffer buffer = (StringBuffer)(new Object());
+         StringBuffer buffer = new StringBuffer();
          int length = str.length();
 
          for (int i = 0; i < length; i++) {
@@ -144,7 +140,7 @@ public final class MultipartFormData extends FormData implements Persistable {
 
    @Override
    public final void setData(Object data) {
-      if (!(data instanceof Object)) {
+      if (!(data instanceof ByteArrayOutputStream)) {
          this._dataEncoding = PersistentContent.encode((byte[])data, true, true);
       } else {
          ByteArrayOutputStream baos = (ByteArrayOutputStream)data;

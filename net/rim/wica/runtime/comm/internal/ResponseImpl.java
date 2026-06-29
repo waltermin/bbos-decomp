@@ -72,7 +72,7 @@ public final class ResponseImpl extends AbstractRequestResponse implements Respo
 
    @Override
    public final String toString() {
-      StringBuffer buf = (StringBuffer)(new Object(128));
+      StringBuffer buf = new StringBuffer(128);
       buf.append("Response[statusCode=").append(this._statusCode);
       if (this.hasData()) {
          buf.append(",dataSize=").append(this.getData().length);

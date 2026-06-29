@@ -29,7 +29,7 @@ public class ExplorerServices {
    public static final int VIEW_MEDIA_MUSIC = 131;
    public static final int VIEW_MEDIA_VOICE_NOTES = 132;
    private static final int TOTAL_VIEW_MEDIA = 5;
-   private static String[] _lastUsedFolder = new Object[8];
+   private static String[] _lastUsedFolder = new String[8];
 
    private ExplorerServices() {
    }
@@ -65,12 +65,12 @@ public class ExplorerServices {
 
    public static Verb getBrowseVerb(String defaultPath, int view, VerbProvider verbProvider) {
       VerbFactory[] verbFactories = VerbFactoryRepository.getVerbFactories(-2843135760572915788L);
-      ContextObject ctx = (ContextObject)(new Object(45));
+      ContextObject ctx = new ContextObject(45);
       if ((0 > view || view >= 6) && (128 > view || view >= 133)) {
          view = 0;
       }
 
-      ContextObject.put(ctx, 3941043584844673548L, new Object(view));
+      ContextObject.put(ctx, 3941043584844673548L, new Integer(view));
       if (defaultPath != null) {
          ctx.put(2765042845091913199L, defaultPath);
       }
@@ -96,7 +96,7 @@ public class ExplorerServices {
 
    public static Verb getRenameVerb(String defaultPath, VerbProvider verbProvider) {
       VerbFactory[] verbFactories = VerbFactoryRepository.getVerbFactories(-2843135760572915788L);
-      ContextObject ctx = (ContextObject)(new Object());
+      ContextObject ctx = new ContextObject();
       if (defaultPath != null) {
          ctx.put(2765042845091913199L, defaultPath);
       }
@@ -121,7 +121,7 @@ public class ExplorerServices {
    }
 
    public static Verb getSaveInputStreamVerb(String defaultFilename, int mediaType, boolean confirmName, boolean overwrite) {
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       if (defaultFilename != null) {
          context.put(2765042845091913199L, defaultFilename);
       }
@@ -200,7 +200,7 @@ public class ExplorerServices {
             }
 
             msg = errStr;
-            if (ioe instanceof Object && ((FileIOException)ioe).getErrorCode() == 7) {
+            if (ioe instanceof FileIOException && ((FileIOException)ioe).getErrorCode() == 7) {
                overwrite = true;
                okButtonLabel = rb.getString(99);
             } else {

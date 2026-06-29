@@ -12,7 +12,7 @@ final class EmailViewerScreen$EmailViewerScreenTransitoryEmailMessageModel$Email
    @Override
    protected final String getString(RIMModel model) {
       EmailMessageModel message = (EmailMessageModel)model;
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       boolean isPINMessage = message.flagsSet(8192);
       if (isPINMessage) {
          buffer.append(EmailResources.getString(147));
@@ -26,7 +26,7 @@ final class EmailViewerScreen$EmailViewerScreenTransitoryEmailMessageModel$Email
       }
 
       BodyModel bodyModel = message.getBodyModel();
-      if (bodyModel instanceof Object) {
+      if (bodyModel instanceof EncodingProvider) {
          EncodingProvider encodingProvider = (EncodingProvider)bodyModel;
          if (encodingProvider.getEncodingUID() == 182808770805039415L) {
             boolean isCorporatePIN = isPINMessage && message.flagsSet(32768) && !message.flagsSet(1048576);

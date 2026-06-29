@@ -3,7 +3,7 @@ package net.rim.device.internal.media;
 import java.util.Vector;
 
 class TrackChunk extends MidiChunk {
-   private Vector _events = (Vector)(new Object());
+   private Vector _events = new Vector();
    private int _offset;
    private boolean _containsNoteOn;
    private long _lastEventTime;

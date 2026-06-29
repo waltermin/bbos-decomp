@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.browser.page;
 
+import javax.microedition.pki.Certificate;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.cldc.io.ssl.CertificateDisplayDialog;
 
@@ -13,7 +14,7 @@ class DialogShowInfo$2 extends MenuItem {
 
    @Override
    public void run() {
-      CertificateDisplayDialog dialog = (CertificateDisplayDialog)(new Object(new Object[]{this.this$0._javaCertificate}, 0));
+      CertificateDisplayDialog dialog = new CertificateDisplayDialog(new Certificate[]{this.this$0._javaCertificate}, 0);
       dialog.show();
    }
 }

@@ -20,7 +20,7 @@ public final class Logger {
             }
 
             EventLogger.logEvent(2424575107343457299L, xMessageString.getBytes(), logLevel);
-            if (EventLogger.getMinimumLevel() >= 5 && message instanceof Object) {
+            if (EventLogger.getMinimumLevel() >= 5 && message instanceof Throwable) {
                Throwable t = (Throwable)message;
                t.printStackTrace();
                return;
@@ -81,7 +81,7 @@ public final class Logger {
       xLogMessage.append(',').append("MSG=").append(aMsg);
       log(xLogMessage, 2);
       checkInReusableStringBuffer(xReusableStringBuffer);
-      if (EventLogger.getMinimumLevel() >= 5 && aMsg instanceof Object) {
+      if (EventLogger.getMinimumLevel() >= 5 && aMsg instanceof Throwable) {
          Throwable t = (Throwable)aMsg;
          t.printStackTrace();
       }
@@ -105,7 +105,7 @@ public final class Logger {
    }
 
    public static final void logCPTicket(boolean enter) {
-      log(((StringBuffer)(new Object("AG,"))).append((char)(enter ? '+' : '-')).append("CPT").toString(), 0);
+      log("AG," + (enter ? 43 : 45) + "CPT", 0);
    }
 
    public static final void logStartEndSession(
@@ -146,7 +146,7 @@ public final class Logger {
       xLogMessage.append(',').append("MSG=").append(aMsg);
       log(xLogMessage, 2);
       checkInReusableStringBuffer(xReusableStringBuffer);
-      if (EventLogger.getMinimumLevel() >= 5 && aMsg instanceof Object) {
+      if (EventLogger.getMinimumLevel() >= 5 && aMsg instanceof Throwable) {
          Throwable t = (Throwable)aMsg;
          t.printStackTrace();
       }
@@ -176,7 +176,7 @@ public final class Logger {
       xLogMessage.append(',').append("MSG=").append(aMessage);
       log(xLogMessage, 2);
       checkInReusableStringBuffer(xReusableStringBuffer);
-      if (EventLogger.getMinimumLevel() >= 5 && aMessage instanceof Object) {
+      if (EventLogger.getMinimumLevel() >= 5 && aMessage instanceof Throwable) {
          Throwable t = (Throwable)aMessage;
          t.printStackTrace();
       }

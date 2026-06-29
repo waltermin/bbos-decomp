@@ -32,8 +32,8 @@ public final class EmailFilterCollectionImpl
    SyncConverter {
    private SimplePersistentSyncCollection$SimpleData _data = (SimplePersistentSyncCollection$SimpleData)this._persistentObject.getContents();
    private String _userId;
-   private static ContextObjectWR _encodeContextWR = (ContextObjectWR)(new Object(33, 33, 19));
-   private static ContextObjectWR _decodeContextWR = (ContextObjectWR)(new Object(33, 33, 19));
+   private static ContextObjectWR _encodeContextWR = new ContextObjectWR(33, 33, 19);
+   private static ContextObjectWR _decodeContextWR = new ContextObjectWR(33, 33, 19);
    private static final int FILTER_INITIAL_SIZE = 16;
    private static final String FILTER_DATA_NAME_STR = "net.rim.device.apps.internal.blackberryemail.email.filters.FILTER_DATA_NAME.";
    private static long FILTER_DATA_NAME;
@@ -49,7 +49,7 @@ public final class EmailFilterCollectionImpl
 
    private final synchronized void initialize() {
       if (this._data == null) {
-         this._data = (SimplePersistentSyncCollection$SimpleData)(new Object(16));
+         this._data = new SimplePersistentSyncCollection$SimpleData(16);
          super._persistentObject.setContents(this._data, 51);
          this.commit();
       }
@@ -60,23 +60,13 @@ public final class EmailFilterCollectionImpl
    public static final EmailFilterCollectionImpl getInstance(String userId) {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
       EmailFilterCollectionImpl collection = (EmailFilterCollectionImpl)ar.getOrWaitFor(
-         Hash.bytesToLong(
-            ((StringBuffer)(new Object("net.rim.device.apps.internal.blackberryemail.email.filters.EMAIL_FILTER_COLLECTION_ID.")))
-               .append(userId)
-               .toString()
-               .getBytes()
-         )
+         Hash.bytesToLong(("net.rim.device.apps.internal.blackberryemail.email.filters.EMAIL_FILTER_COLLECTION_ID." + userId).getBytes())
       );
       if (collection == null) {
          EMAIL_FILTER_COLLECTION_ID = Hash.bytesToLong(
-            ((StringBuffer)(new Object("net.rim.device.apps.internal.blackberryemail.email.filters.EMAIL_FILTER_COLLECTION_ID.")))
-               .append(userId)
-               .toString()
-               .getBytes()
+            ("net.rim.device.apps.internal.blackberryemail.email.filters.EMAIL_FILTER_COLLECTION_ID." + userId).getBytes()
          );
-         FILTER_DATA_NAME = Hash.bytesToLong(
-            ((StringBuffer)(new Object("net.rim.device.apps.internal.blackberryemail.email.filters.FILTER_DATA_NAME."))).append(userId).toString().getBytes()
-         );
+         FILTER_DATA_NAME = Hash.bytesToLong(("net.rim.device.apps.internal.blackberryemail.email.filters.FILTER_DATA_NAME." + userId).getBytes());
          collection = new EmailFilterCollectionImpl(userId);
          ar.put(EMAIL_FILTER_COLLECTION_ID, collection);
       }
@@ -91,7 +81,7 @@ public final class EmailFilterCollectionImpl
 
    @Override
    public final String getSyncName() {
-      return ((StringBuffer)(new Object("Email Filters - "))).append(this._userId).toString();
+      return "Email Filters - " + this._userId;
    }
 
    @Override
@@ -132,8 +122,8 @@ public final class EmailFilterCollectionImpl
 
    @Override
    public final boolean convert(SyncObject object, DataBuffer buffer, int version) {
-      if (object instanceof Object) {
-         SyncBuffer syncBuffer = (SyncBuffer)(new Object(buffer, version, 0));
+      if (object instanceof RIMModel) {
+         SyncBuffer syncBuffer = new SyncBuffer(buffer, version, 0);
          RIMModel model = (RIMModel)object;
          return syncBuffer.addModel(model, _encodeContextWR.getContextObject());
       } else {
@@ -143,7 +133,7 @@ public final class EmailFilterCollectionImpl
 
    @Override
    public final SyncObject convert(DataBuffer dataBuffer, int version, int uid) {
-      SyncBuffer syncBuffer = (SyncBuffer)(new Object(dataBuffer, version, uid));
+      SyncBuffer syncBuffer = new SyncBuffer(dataBuffer, version, uid);
       ContextObject decodeContext = _decodeContextWR.getContextObject();
       synchronized (decodeContext) {
          decodeContext.put(255, syncBuffer);

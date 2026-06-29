@@ -4,7 +4,7 @@ import java.util.Hashtable;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public final class XMLConverterRegistry {
-   private Hashtable _contentTypes = (Hashtable)(new Object());
+   private Hashtable _contentTypes = new Hashtable();
    private static final long APP_REGISTRY_KEY = 3348499767394966251L;
 
    private XMLConverterRegistry() {
@@ -29,6 +29,6 @@ public final class XMLConverterRegistry {
    }
 
    public final String getContentType(String type) {
-      return (String)(type == null ? null : this._contentTypes.get(type));
+      return type == null ? null : (String)this._contentTypes.get(type);
    }
 }

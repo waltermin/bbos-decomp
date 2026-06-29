@@ -80,12 +80,12 @@ final class FileMessageVerb$FileTheMessageVerb extends SelectFolderVerb implemen
    private final void moveTheMessage(RIMModel model, Folder destinationFolder, Object context) {
       synchronized (this.this$0._fileMessageContext) {
          this.this$0._fileMessageContext.put(-1219344331000926502L, destinationFolder);
-         if (model instanceof Object) {
+         if (model instanceof ActionProvider) {
             ActionProvider actionProvider = (ActionProvider)model;
             actionProvider.perform(1092577344890817449L, this.this$0._fileMessageContext);
          }
 
-         if (model instanceof Object) {
+         if (model instanceof DefaultProvider) {
             DefaultProvider defaultProvider = (DefaultProvider)model;
             defaultProvider.updateDefault(destinationFolder, this.this$0._fileMessageContext);
          }

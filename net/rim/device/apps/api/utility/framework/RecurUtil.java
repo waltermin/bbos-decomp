@@ -275,7 +275,7 @@ public final class RecurUtil {
       ResourceBundle rb = ResourceBundle.getBundle(-8414468493733347764L, "net.rim.device.apps.internal.resource.Common");
       String[] choiceArray = rb.getStringArray(9078);
       if (!isNeverOptionAllowed) {
-         String[] tempArray = new Object[choiceArray.length - 1];
+         String[] tempArray = new String[choiceArray.length - 1];
          System.arraycopy(choiceArray, 1, tempArray, 0, choiceArray.length - 1);
          choiceArray = tempArray;
       }
@@ -366,16 +366,16 @@ public final class RecurUtil {
          recurDesc.append(rb.getString(9080));
       } else {
          if (_mf == null) {
-            _mf = (MessageFormat)(new Object(rb.getString(9191)));
+            _mf = new MessageFormat(rb.getString(9191));
             _mfParms = new Object[4];
-            _occursEveryClause = (MessageFormat)(new Object(rb.getString(9182)));
-            _occursEveryPluralClause = (MessageFormat)(new Object(rb.getString(9183)));
+            _occursEveryClause = new MessageFormat(rb.getString(9182));
+            _occursEveryPluralClause = new MessageFormat(rb.getString(9183));
             _occursEveryParams = new Object[2];
-            _untilClause = (MessageFormat)(new Object(rb.getString(9184)));
-            _dowClause = (MessageFormat)(new Object(rb.getString(9185)));
-            _dowClausePlural = (MessageFormat)(new Object(rb.getString(9186)));
-            _monthClause = (MessageFormat)(new Object(rb.getString(9189)));
-            _monthClausePlural = (MessageFormat)(new Object(rb.getString(9190)));
+            _untilClause = new MessageFormat(rb.getString(9184));
+            _dowClause = new MessageFormat(rb.getString(9185));
+            _dowClausePlural = new MessageFormat(rb.getString(9186));
+            _monthClause = new MessageFormat(rb.getString(9189));
+            _monthClausePlural = new MessageFormat(rb.getString(9190));
          }
 
          Object[] mfParms = _mfParms;
@@ -642,7 +642,7 @@ public final class RecurUtil {
             buffer.writeByte(recurInfo.getFirstDayOfWeek() - 1);
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

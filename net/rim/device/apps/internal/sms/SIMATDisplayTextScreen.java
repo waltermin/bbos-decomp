@@ -20,7 +20,7 @@ final class SIMATDisplayTextScreen extends SIMATPopupScreen {
          this._popScreenRunnable = new SIMATDisplayTextScreen$PopScreenRunnable(this, null);
          int _scheduledAppID = Application.getApplication().invokeLater(this._popScreenRunnable, 10000, false);
          if (_scheduledAppID == -1) {
-            throw new Object("No timer available for toolkit display text pop screen runnable.");
+            throw new RuntimeException("No timer available for toolkit display text pop screen runnable.");
          }
       } else {
          this._scheduledAppID = -1;

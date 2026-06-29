@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.browser.html;
 
+import java.io.ByteArrayOutputStream;
 import net.rim.device.api.browser.field.RenderingApplication;
 import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.api.system.Application;
@@ -26,7 +27,7 @@ final class HTMLForm extends HTMLGenericElement implements HTMLFormElement {
    public final void setOfflineParameter(String key, String value) {
       if (key != null && value != null) {
          if (this._offlineParameters == null) {
-            this._offlineParameters = (HttpHeaders)(new Object());
+            this._offlineParameters = new HttpHeaders();
          }
 
          this._offlineParameters.setProperty(key, value);
@@ -71,7 +72,7 @@ final class HTMLForm extends HTMLGenericElement implements HTMLFormElement {
          action = action.substring(0, fragment);
       }
 
-      StringBuffer buffer = (StringBuffer)(new Object(action));
+      StringBuffer buffer = new StringBuffer(action);
       int query = action.indexOf(63);
       if (query != -1) {
          buffer.setLength(query);
@@ -102,10 +103,10 @@ final class HTMLForm extends HTMLGenericElement implements HTMLFormElement {
       int enctype = StringUtilities.strEqualIgnoreCase(this.getEnctype(), "multipart/form-data", 1701707776) ? 1 : 0;
       if (enctype == 1) {
          formData = new MultipartFormData(this._charset, false);
-         buffer = new Object();
+         buffer = new ByteArrayOutputStream();
       } else {
          formData = new URLEncodedFormData(this._charset, false);
-         buffer = new Object();
+         buffer = new StringBuffer();
       }
 
       int length = this._elements.getLength();
@@ -194,10 +195,10 @@ final class HTMLForm extends HTMLGenericElement implements HTMLFormElement {
          int enctype = isPost && StringUtilities.strEqualIgnoreCase(this.getEnctype(), "multipart/form-data", 1701707776) ? 1 : 0;
          if (enctype == 1) {
             formData = new MultipartFormData(this._charset, false);
-            buffer = new Object();
+            buffer = new ByteArrayOutputStream();
          } else {
             formData = new URLEncodedFormData(this._charset, false);
-            StringBuffer stringBuffer = (StringBuffer)(new Object());
+            StringBuffer stringBuffer = new StringBuffer();
             if (!isPost) {
                int fragment = action.indexOf(35);
                if (fragment != -1) {
@@ -223,7 +224,7 @@ final class HTMLForm extends HTMLGenericElement implements HTMLFormElement {
 
          String url = null;
          byte[] postData = null;
-         HttpHeaders requestHeaders = (HttpHeaders)(new Object());
+         HttpHeaders requestHeaders = new HttpHeaders();
          if (!isPost) {
             if (fragmentToAppend != null) {
                ((StringBuffer)buffer).append(fragmentToAppend);

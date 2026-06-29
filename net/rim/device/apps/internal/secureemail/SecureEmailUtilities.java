@@ -7,11 +7,15 @@ import net.rim.device.api.collection.ReadableList;
 import net.rim.device.api.crypto.AsymmetricCryptoToken;
 import net.rim.device.api.crypto.CryptoIOException;
 import net.rim.device.api.crypto.CryptoSystem;
+import net.rim.device.api.crypto.CryptoTokenCancelException;
 import net.rim.device.api.crypto.certificate.Certificate;
+import net.rim.device.api.crypto.certificate.CertificateKeyStoreIndex;
 import net.rim.device.api.crypto.certificate.CertificateUtilities;
 import net.rim.device.api.crypto.certificate.LDAPCertificateFetch;
+import net.rim.device.api.crypto.certificate.x509.X509Certificate;
 import net.rim.device.api.crypto.certificate.x509.X509DistinguishedName;
 import net.rim.device.api.crypto.keystore.KeyStore;
+import net.rim.device.api.crypto.keystore.KeyStoreCancelException;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
 import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.api.i18n.MessageFormat;
@@ -35,7 +39,9 @@ import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.model.Recognizer;
 import net.rim.device.apps.api.framework.registration.RecognizerRepository;
 import net.rim.device.apps.api.utility.framework.SubmemberUtilities;
+import net.rim.device.apps.internal.addressbook.lookup.RequestModel;
 import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
+import net.rim.device.apps.internal.blackberryemail.email.EmailPayloadModel;
 import net.rim.device.apps.internal.blackberryemail.header.EmailHeaderModel;
 import net.rim.device.apps.internal.blackberryemail.header.HeaderTypes;
 import net.rim.device.apps.internal.commonmodels.body.BodyModel;
@@ -191,9 +197,9 @@ public class SecureEmailUtilities {
    }
 
    static EmailMessageModel getParentModel(RIMModel childModel, Object context) {
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          Object parentModel = ContextObject.get(context, 246);
-         if (parentModel instanceof Object) {
+         if (parentModel instanceof EmailMessageModel) {
             EmailMessageModel emailMessageModel = (EmailMessageModel)parentModel;
             int numModels = emailMessageModel.size();
 
@@ -210,11 +216,11 @@ public class SecureEmailUtilities {
    }
 
    public static String[] getEmailAddresses(Certificate cert) {
-      return cert != null ? (Object[])cert.getInformation(-7850001002262082664L, null, null) : null;
+      return cert != null ? (String[])cert.getInformation(-7850001002262082664L, null, null) : null;
    }
 
    public static boolean isForwardReplyMessage(Object context) {
-      if (!(context instanceof Object)) {
+      if (!(context instanceof ContextObject)) {
          return false;
       }
 
@@ -231,16 +237,16 @@ public class SecureEmailUtilities {
 
       for (int i = 0; i < numModels; i++) {
          RIMModel currentModel = (RIMModel)message.getAt(i);
-         if (!(currentModel instanceof Object)) {
-            if (currentModel instanceof Object) {
+         if (!(currentModel instanceof BodyModel)) {
+            if (currentModel instanceof EmailPayloadModel) {
                ConversionProvider cp = (ConversionProvider)currentModel;
-               originalMessage = (StringBuffer)(new Object());
+               originalMessage = new StringBuffer();
                cp.convert(context, originalMessage);
                modelsToEncode.addElement(currentModel);
             }
          } else {
             BodyModel bmi = (BodyModel)currentModel;
-            currentMessage = (StringBuffer)(new Object());
+            currentMessage = new StringBuffer();
             currentMessage.append(bmi.getText());
             modelsToEncode.addElement(currentModel);
          }
@@ -261,9 +267,9 @@ public class SecureEmailUtilities {
    }
 
    public static String[] getEmailAddressesFromPIN(EmailHeaderModel emailHeaderModel) {
-      String[] emailAddresses = new Object[0];
+      String[] emailAddresses = new String[0];
       PersistableRIMModel addressBookEntry = emailHeaderModel.getAddressBookEntry();
-      if (addressBookEntry instanceof Object) {
+      if (addressBookEntry instanceof AddressCardModel) {
          addEmailAddressesFromAddressCard((AddressCardModel)addressBookEntry, emailAddresses);
       }
 
@@ -308,7 +314,7 @@ public class SecureEmailUtilities {
       X509DistinguishedName dominoAddressDN = DominoAddressUtilities.createDominoAddressDN(senderAddress);
       return dominoAddressDN != null
          ? verifySenderDominoAddress(senderCertificate, dominoAddressDN)
-         : verifySenderEmailAddress(senderCertificate, new Object[]{senderAddress});
+         : verifySenderEmailAddress(senderCertificate, new String[]{senderAddress});
    }
 
    public static boolean verifySenderEmailAddress(Certificate senderCertificate, String[] senderEmailAddresses) {
@@ -333,15 +339,15 @@ public class SecureEmailUtilities {
    }
 
    public static boolean verifySenderDominoAddress(Certificate senderCertificate, X509DistinguishedName senderDominoAddress) {
-      return !(senderCertificate instanceof Object)
+      return !(senderCertificate instanceof X509Certificate)
          ? false
          : DominoAddressUtilities.dominoAddressDNMatchesX509DN(senderDominoAddress, (X509DistinguishedName)senderCertificate.getSubject());
    }
 
    public static String[] convertPINToEmailAddress(String sendersPIN) {
       Factory pinAddressFactory = (Factory)ApplicationRegistry.getApplicationRegistry().waitFor(4246852237058296601L);
-      String[] senderEmailAddresses = new Object[0];
-      ContextObject pinCreationContext = (ContextObject)(new Object());
+      String[] senderEmailAddresses = new String[0];
+      ContextObject pinCreationContext = new ContextObject();
       pinCreationContext.put(253, sendersPIN);
       Object pinAddressModel = pinAddressFactory.createInstance(pinCreationContext);
       Object[] addressCardModels = AddressBookServices.reverseLookup(pinAddressModel, null);
@@ -358,17 +364,17 @@ public class SecureEmailUtilities {
    public static RecipientData[] getRecipientData(EmailHeaderModel emailHeaderModel, boolean isPINMessage) {
       Object insideModel = null;
       String groupName = null;
-      if (emailHeaderModel instanceof Object) {
+      if (emailHeaderModel instanceof AddressReference) {
          AddressReference ar = emailHeaderModel;
          insideModel = ar.getInsideModel();
-         if (insideModel instanceof Object) {
+         if (insideModel instanceof GroupAddressCardModel) {
             GroupAddressCardModel groupModel = (GroupAddressCardModel)insideModel;
             groupName = groupModel.getName();
          }
       }
 
-      if (!emailHeaderModel.isBlank() && !emailHeaderModel.isUnresolved() && !(insideModel instanceof Object)) {
-         String[] addressAndName = new Object[2];
+      if (!emailHeaderModel.isBlank() && !emailHeaderModel.isUnresolved() && !(insideModel instanceof RequestModel)) {
+         String[] addressAndName = new String[2];
          if (!emailHeaderModel.convert(null, addressAndName)) {
             return null;
          }
@@ -376,12 +382,12 @@ public class SecureEmailUtilities {
          RecipientData[] result = new RecipientData[0];
 
          for (int i = 0; i + 1 < addressAndName.length; i += 2) {
-            StringBuffer friendlyName = (StringBuffer)(new Object(addressAndName[i + 1] == null ? addressAndName[i] : addressAndName[i + 1]));
+            StringBuffer friendlyName = new StringBuffer(addressAndName[i + 1] == null ? addressAndName[i] : addressAndName[i + 1]);
             if (groupName != null) {
-               friendlyName.append(MessageFormat.format(SecureEmailResources.getString(147), new Object[]{groupName}));
+               friendlyName.append(MessageFormat.format(SecureEmailResources.getString(147), new String[]{groupName}));
             }
 
-            String[] emailAddresses = isPINMessage ? getEmailAddressesFromPIN(emailHeaderModel) : new Object[]{addressAndName[i]};
+            String[] emailAddresses = isPINMessage ? getEmailAddressesFromPIN(emailHeaderModel) : new String[]{addressAndName[i]};
             Array.resize(result, result.length + 1);
             result[result.length - 1] = new RecipientData(friendlyName.toString(), 0, emailAddresses, emailHeaderModel);
          }
@@ -403,8 +409,8 @@ public class SecureEmailUtilities {
    public void addAlwaysBCCEmailAddress(EmailMessageModel message, String serviceUID) {
       String alwaysBCCEmailAddress = this.getAlwaysBCCEmailAddress(serviceUID);
       if (alwaysBCCEmailAddress != null && alwaysBCCEmailAddress.length() > 0) {
-         String[] alwaysBCCArray = new Object[]{alwaysBCCEmailAddress, alwaysBCCEmailAddress};
-         ContextObject co = (ContextObject)(new Object());
+         String[] alwaysBCCArray = new String[]{alwaysBCCEmailAddress, alwaysBCCEmailAddress};
+         ContextObject co = new ContextObject();
          co.put(-4054673099568009991L, HeaderTypes._typesAsInteger[2]);
          co.put(251, alwaysBCCArray);
          RIMModel newHeader = (RIMModel)FactoryUtil.createInstance(-8034039608019345282L, co);
@@ -412,7 +418,7 @@ public class SecureEmailUtilities {
 
          for (int j = 0; j < numModels; j++) {
             Object submember = message.getAt(j);
-            if (submember instanceof Object) {
+            if (submember instanceof EmailHeaderModel) {
                EmailHeaderModel ehm = (EmailHeaderModel)submember;
                if (ehm.getHeaderType() == 2 && ehm.equals(newHeader)) {
                   return;
@@ -433,7 +439,7 @@ public class SecureEmailUtilities {
             return true;
          }
 
-         if (currentSubmember instanceof Object && messageContainsBody((ReadableList)currentSubmember, body)) {
+         if (currentSubmember instanceof EmailPayloadModel && messageContainsBody((EmailPayloadModel)currentSubmember, body)) {
             return true;
          }
       }
@@ -519,8 +525,8 @@ public class SecureEmailUtilities {
                int numEmailAddresses = emailAddresses.length;
 
                for (int i = 0; i < numEmailAddresses; i++) {
-                  String currentEmailAddress = (String)(new Object(emailAddresses[i]));
-                  if (this.checkForMatch(addressFragments, new Object[]{currentEmailAddress})) {
+                  String currentEmailAddress = new String(emailAddresses[i]);
+                  if (this.checkForMatch(addressFragments, new String[]{currentEmailAddress})) {
                      this.addLocalKeyStoreData(currentEmailAddress, localKeyStoreData, data);
                      continue label48;
                   }
@@ -583,11 +589,11 @@ public class SecureEmailUtilities {
 
    public String getSender(EmailMessageModel message) {
       int numModels = message.size();
-      String[] senderAddressAndName = new Object[2];
+      String[] senderAddressAndName = new String[2];
 
       for (int j = 0; j < numModels; j++) {
          Object submember = message.getAt(j);
-         if (submember instanceof Object) {
+         if (submember instanceof EmailHeaderModel) {
             EmailHeaderModel emailHeaderModel = (EmailHeaderModel)submember;
             if (emailHeaderModel.getHeaderType() == 3 || emailHeaderModel.getHeaderType() == 4) {
                ConversionProvider converter = emailHeaderModel;
@@ -601,13 +607,14 @@ public class SecureEmailUtilities {
    }
 
    public static String getLabelOrFriendlyName(Certificate certificate, KeyStore keyStore) {
-      keyStore.addIndex((KeyStoreIndex)(new Object()));
+      keyStore.addIndex(new CertificateKeyStoreIndex());
       Enumeration enumeration = keyStore.elements(-2038609988711824737L, certificate);
       return enumeration.hasMoreElements() ? ((KeyStoreData)enumeration.nextElement()).getLabel() : certificate.getSubjectFriendlyName();
    }
 
    public static boolean isCancelException(Exception e) {
-      return e instanceof Object || e instanceof Object && ((CryptoIOException)e).getCryptoException() instanceof Object;
+      return e instanceof KeyStoreCancelException
+         || e instanceof CryptoIOException && ((CryptoIOException)e).getCryptoException() instanceof CryptoTokenCancelException;
    }
 
    public static Object[] extractSecureEmailAttachments(EmailMessageModel emailMessageModel) {

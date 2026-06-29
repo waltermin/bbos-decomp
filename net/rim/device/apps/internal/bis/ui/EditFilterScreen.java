@@ -19,7 +19,7 @@ public final class EditFilterScreen extends AbstractFilterScreen {
       Mailbox mailbox = ClientSessionState.getInstance().getMailboxToModify();
       this._filter = ClientSessionState.getInstance().getFilterToModify();
       this.setFilterId(this._filter.getId());
-      String title = MessageFormat.format(ApplicationResources.getString(150), new Object[]{this._filter.getName()});
+      String title = MessageFormat.format(ApplicationResources.getString(150), new String[]{this._filter.getName()});
       this.setTitle(title);
       this.addHeaderInfo(this._filter.getName(), mailbox.getEmail());
       this.addFilterOperator(mailbox, this._filter.getOperator());

@@ -7,6 +7,7 @@ import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.ui.component.TreeField;
 import net.rim.device.api.ui.component.TreeFieldCallback;
+import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.messaging.Folder;
 import net.rim.device.apps.api.quickcontact.QuickContactIcons;
 import net.rim.device.internal.ui.IconCollection;
@@ -42,7 +43,7 @@ final class FavouritesScreen$FavouritesTreeField extends TreeField {
 
    private final boolean expandNode(Object cookie) {
       boolean expand = true;
-      if (!(cookie instanceof Object)) {
+      if (!(cookie instanceof Folder)) {
          return expand;
       }
 
@@ -110,7 +111,7 @@ final class FavouritesScreen$FavouritesTreeField extends TreeField {
                      int firstChild = this.getFirstChild(nextNode);
                      if (firstChild <= 0) {
                         firstChild = this.getParent(nextNode);
-                        if (parentNode != firstChild && !(this.getCookie(nextNode) instanceof Object)) {
+                        if (parentNode != firstChild && !(this.getCookie(nextNode) instanceof Folder)) {
                            nextNode = firstChild;
                         }
                         break;
@@ -138,7 +139,7 @@ final class FavouritesScreen$FavouritesTreeField extends TreeField {
          }
 
          Object nextCookie = this.getCookie(nextNode);
-         if (nextCookie instanceof Object) {
+         if (nextCookie instanceof RIMModel) {
             this.setCookie(currentNode, nextCookie);
             this.setCookie(nextNode, this.this$0._favouriteToMove);
             this.invalidateNode(currentNode);
@@ -152,12 +153,12 @@ final class FavouritesScreen$FavouritesTreeField extends TreeField {
 
             parentNode = nextNode;
             int firstChild = this.getFirstChild(nextNode);
-            if (firstChild > 0 && (amount < 0 || this.getCookie(firstChild) instanceof Object)) {
+            if (firstChild > 0 && (amount < 0 || this.getCookie(firstChild) instanceof Folder)) {
                nextNode = firstChild;
 
                while (true) {
                   int nextSibling = this.getNextSibling(nextNode);
-                  if (nextSibling <= 0 || amount >= 0 && !(this.getCookie(nextSibling) instanceof Object)) {
+                  if (nextSibling <= 0 || amount >= 0 && !(this.getCookie(nextSibling) instanceof Folder)) {
                      currentNode = this.addSiblingNode(nextNode, this.this$0._favouriteToMove);
                      break;
                   }
@@ -189,7 +190,7 @@ final class FavouritesScreen$FavouritesTreeField extends TreeField {
          super.drawFocus(graphics, on);
       } else {
          int rowHeight = this.getRowHeight();
-         XYRect focus = (XYRect)(new Object());
+         XYRect focus = new XYRect();
          this.getFocusRect(focus);
          int width = Display.getWidth() - focus.x;
          graphics.pushContext(focus.x, focus.y, width, focus.height, 0, 0);
@@ -224,7 +225,7 @@ final class FavouritesScreen$FavouritesTreeField extends TreeField {
             }
          } else {
             int currentNode = this.getCurrentNode();
-            if (currentNode > 0 && !(this.getCookie(currentNode) instanceof Object)) {
+            if (currentNode > 0 && !(this.getCookie(currentNode) instanceof Folder)) {
                int parentNode = this.getParent(currentNode);
                if (parentNode > 0) {
                   if (dx < 0) {
@@ -236,7 +237,7 @@ final class FavouritesScreen$FavouritesTreeField extends TreeField {
 
                   while (parentNode > 0) {
                      int nextSibling = this.getNextSibling(parentNode);
-                     if (nextSibling > 0 && this.getCookie(nextSibling) instanceof Object) {
+                     if (nextSibling > 0 && this.getCookie(nextSibling) instanceof Folder) {
                         this.setCurrentNode(nextSibling);
                         this.invalidateNode(currentNode);
                         this.invalidateNode(nextSibling);

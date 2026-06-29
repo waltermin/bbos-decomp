@@ -5,6 +5,7 @@ import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Graphics;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.framework.model.EncryptableProvider;
@@ -30,7 +31,7 @@ public final class CallLogItem implements PhoneListItem, EncryptableProvider {
 
    final void setCallLog(PhoneCallModelImpl callLog) {
       if (callLog == null) {
-         throw new Object("CLI.setCallLog() => callLog == null");
+         throw new IllegalArgumentException("CLI.setCallLog() => callLog == null");
       }
 
       this._callLog = callLog;
@@ -195,16 +196,16 @@ public final class CallLogItem implements PhoneListItem, EncryptableProvider {
 
       StringBuffer dateTime = this._callLog.getDateTimeString(2);
       StringBuffer duration = this._callLog.getDurationString(false);
-      HorizontalFieldManager hfm1 = (HorizontalFieldManager)(new Object());
-      hfm1.add((Field)(new Object(name, 64)));
+      HorizontalFieldManager hfm1 = new HorizontalFieldManager();
+      hfm1.add(new LabelField(name, 64));
       if (number != null) {
-         hfm1.add((Field)(new Object(number, 69)));
+         hfm1.add(new LabelField(number, 69));
       }
 
-      HorizontalFieldManager hfm2 = (HorizontalFieldManager)(new Object());
-      hfm2.add((Field)(new Object(dateTime)));
-      hfm2.add((Field)(new Object(duration, 5)));
-      VerticalFieldManager vfm = (VerticalFieldManager)(new Object());
+      HorizontalFieldManager hfm2 = new HorizontalFieldManager();
+      hfm2.add(new LabelField(dateTime));
+      hfm2.add(new LabelField(duration, 5));
+      VerticalFieldManager vfm = new VerticalFieldManager();
       vfm.add(hfm1);
       vfm.add(hfm2);
       return vfm;
@@ -221,7 +222,7 @@ public final class CallLogItem implements PhoneListItem, EncryptableProvider {
       CallerIDInfo cidi = this._callLog.getCallerIDInfo();
       if (!cidi.isSpecial() && !cidi.isUnknownNumber() && !cidi.isPrivateNumber()) {
          Object num = cidi.getNumber();
-         return !(num instanceof Object) ? false : ((AbstractPhoneNumberModel)num).canSpeedDial();
+         return !(num instanceof AbstractPhoneNumberModel) ? false : ((AbstractPhoneNumberModel)num).canSpeedDial();
       } else {
          return false;
       }
@@ -342,7 +343,7 @@ public final class CallLogItem implements PhoneListItem, EncryptableProvider {
          }
       }
 
-      StringBuffer testString = (StringBuffer)(new Object());
+      StringBuffer testString = new StringBuffer();
       testString.append(largest[1]);
       testString.append(largest[9]);
       testString.append('/');

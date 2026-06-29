@@ -4,6 +4,7 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.component.CheckboxField;
 import net.rim.device.api.ui.component.EditField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.ui.component.PasswordEditField;
 import net.rim.device.api.ui.component.Status;
@@ -52,11 +53,11 @@ public final class WAPTransportConfigProperty extends TransportConfigProperty im
       }
 
       if (!super._restrictedAccess) {
-         screen.add((Field)(new Object("")));
-         screen.add((Field)(new Object(BrowserResources.getString(527))));
+         screen.add(new LabelField(""));
+         screen.add(new LabelField(BrowserResources.getString(527)));
       }
 
-      this._sessionResumeField = (CheckboxField)(new Object(BrowserResources.getString(535), record.getSessionResume() == 1));
+      this._sessionResumeField = new CheckboxField(BrowserResources.getString(535), record.getSessionResume() == 1);
       if (!editable) {
          this._sessionResumeField.setEditable(false);
       }
@@ -65,7 +66,7 @@ public final class WAPTransportConfigProperty extends TransportConfigProperty im
          screen.add(this._sessionResumeField);
       }
 
-      this._secureAccessField = (CheckboxField)(new Object(BrowserResources.getString(290), record.getSecureAccess() == 1));
+      this._secureAccessField = new CheckboxField(BrowserResources.getString(290), record.getSecureAccess() == 1);
       if (!editable) {
          this._secureAccessField.setEditable(false);
       }
@@ -86,26 +87,20 @@ public final class WAPTransportConfigProperty extends TransportConfigProperty im
             authPasswordValue = "";
          }
 
-         this._authUsernameField = (EditField)(new Object(
-            ((StringBuffer)(new Object())).append(BrowserResources.getString(437)).append(' ').toString(), authUsernameValue
-         ));
-         this._authPasswordField = (PasswordEditField)(new Object(
-            ((StringBuffer)(new Object())).append(BrowserResources.getString(438)).append(' ').toString(), authPasswordValue
-         ));
+         this._authUsernameField = new EditField(BrowserResources.getString(437) + ' ', authUsernameValue);
+         this._authPasswordField = new PasswordEditField(BrowserResources.getString(438) + ' ', authPasswordValue);
          this._authPasswordField.setAllowUnicodeInput(true);
          if (!editable) {
             this._authUsernameField.setEditable(false);
             this._authPasswordField.setEditable(false);
          }
 
-         screen.add((Field)(new Object("")));
+         screen.add(new LabelField(""));
          screen.add(this._authUsernameField);
          screen.add(this._authPasswordField);
       }
 
-      this._mmscUrlField = (EditField)(new Object(
-         ((StringBuffer)(new Object())).append(BrowserResources.getString(694)).append(' ').toString(), record.getMMSCUrl()
-      ));
+      this._mmscUrlField = new EditField(BrowserResources.getString(694) + ' ', record.getMMSCUrl());
       if (!editable) {
          this._mmscUrlField.setEditable(false);
       }
@@ -114,17 +109,17 @@ public final class WAPTransportConfigProperty extends TransportConfigProperty im
          screen.add(this._mmscUrlField);
       }
 
-      this._wtlsModeField = (ObjectChoiceField)(new Object(BrowserResources.getString(457), BrowserResources.getStringArray(528), record.getWtlsModeValue()));
+      this._wtlsModeField = new ObjectChoiceField(BrowserResources.getString(457), BrowserResources.getStringArray(528), record.getWtlsModeValue());
       if (!editable) {
          this._wtlsModeField.setEditable(false);
       }
 
       if (!super._restrictedAccess && record.getSecureAccess() == 1) {
-         screen.add((Field)(new Object("")));
+         screen.add(new LabelField(""));
          screen.add(this._wtlsModeField);
       }
 
-      this._wap20ConformanceField = (CheckboxField)(new Object(BrowserResources.getString(649), record.getWAP20Conformance() == 1));
+      this._wap20ConformanceField = new CheckboxField(BrowserResources.getString(649), record.getWAP20Conformance() == 1);
       if (!editable) {
          this._wap20ConformanceField.setEditable(false);
       }
@@ -133,9 +128,9 @@ public final class WAPTransportConfigProperty extends TransportConfigProperty im
          screen.add(this._wap20ConformanceField);
       }
 
-      this._wtlsClientIdTypeField = (ObjectChoiceField)(new Object(
+      this._wtlsClientIdTypeField = new ObjectChoiceField(
          BrowserResources.getString(491), BrowserResources.getStringArray(593), record.getWtlsClientIdType() + 1
-      ));
+      );
       if (!editable) {
          this._wtlsClientIdTypeField.setEditable(false);
       }
@@ -144,7 +139,7 @@ public final class WAPTransportConfigProperty extends TransportConfigProperty im
          screen.add(this._wtlsClientIdTypeField);
       }
 
-      this._wtlsClientIdValueField = (EditField)(new Object(BrowserResources.getString(492), record.getWtlsClientIdValue()));
+      this._wtlsClientIdValueField = new EditField(BrowserResources.getString(492), record.getWtlsClientIdValue());
       if (!editable) {
          this._wtlsClientIdValueField.setEditable(false);
       }

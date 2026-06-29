@@ -39,9 +39,7 @@ final class BluetoothSetupAction extends Action {
       }
 
       ApplicationDescriptor original = ApplicationDescriptor.currentApplicationDescriptor();
-      this._descriptor = (ApplicationDescriptor)(new Object(
-         original, "setup", new String[]{"btsetup"}, icon, -1, "net.rim.device.apps.internal.resource.Bluetooth", 73
-      ));
+      this._descriptor = new ApplicationDescriptor(original, "setup", new String[]{"btsetup"}, icon, -1, "net.rim.device.apps.internal.resource.Bluetooth", 73);
    }
 
    @Override

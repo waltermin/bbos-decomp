@@ -98,7 +98,7 @@ public final class RibbonManagerThread extends RunnableThread implements Provisi
    }
 
    final void removeFromRibbon(ServiceRecord serviceRecord) {
-      EventLogger.logEvent(1907089860548946979L, ((StringBuffer)(new Object("RMrr \nUID: "))).append(serviceRecord.getUid()).toString().getBytes(), 5);
+      EventLogger.logEvent(1907089860548946979L, ("RMrr \nUID: " + serviceRecord.getUid()).getBytes(), 5);
       this.addToQueue(new RibbonManagerThread$RibbonEvent(this, 2, serviceRecord.getId(), false, null));
       if (this._browserAvailable) {
          boolean browserAvailable = BrowserConfigRecord.getValidBrowserConfigRecords().length > 0;
@@ -136,10 +136,8 @@ public final class RibbonManagerThread extends RunnableThread implements Provisi
       synchronized (this._ribbonSyncObject) {
          RibbonLauncher ribbon = RibbonLauncher.getInstance();
          if (ribbon != null) {
-            String id = ((StringBuffer)(new Object("net_rim_bb_browser_daemon"))).append(sr.getId()).toString();
-            EventLogger.logEvent(
-               1907089860548946979L, ((StringBuffer)(new Object("RMai \nUID: "))).append(sr.getUid()).append(" ID: ").append(id).toString().getBytes(), 5
-            );
+            String id = "net_rim_bb_browser_daemon" + sr.getId();
+            EventLogger.logEvent(1907089860548946979L, ("RMai \nUID: " + sr.getUid() + " ID: " + id).getBytes(), 5);
             if (ribbon.getRegisteredAction(id) != null) {
                if (!refresh) {
                   return;
@@ -160,7 +158,7 @@ public final class RibbonManagerThread extends RunnableThread implements Provisi
                      int newFlags = browserDescriptors[0].getFlags() ^ 4;
                      boolean useSeparateIcon = rec.getPropertyAsBoolean(55);
                      if (useSeparateIcon) {
-                        String[] args = new Object[]{"activate", sr.getUid()};
+                        String[] args = new String[]{"activate", sr.getUid()};
                         Bitmap iconCustom = null;
                         if (!Graphics.isColor()) {
                            byte[] iconFromServiceBook = (byte[])rec.getPropertyAsObject(14);
@@ -279,7 +277,7 @@ public final class RibbonManagerThread extends RunnableThread implements Provisi
                                     }
 
                                     if (requestIcon) {
-                                       HttpHeaders requestHeaders = (HttpHeaders)(new Object());
+                                       HttpHeaders requestHeaders = new HttpHeaders();
                                        requestHeaders.setProperty("Accept", ImageRenderingConverter.getAcceptString());
                                        RenderingUtilities.setTranscodeHeader(requestHeaders, false);
                                        RenderingSession renderingSession = RenderingSessionImpl.getNewInstance();
@@ -300,47 +298,43 @@ public final class RibbonManagerThread extends RunnableThread implements Provisi
 
                         String tempType = rec.getPropertyAsString(54);
                         if (tempType != null && tempType.length() > 0) {
-                           type = ((StringBuffer)(new Object())).append(tempType).append(".").toString();
+                           type = tempType + ".";
                         }
 
-                        ApplicationDescriptor newDescriptor = (ApplicationDescriptor)(new Object(
+                        ApplicationDescriptor newDescriptor = new ApplicationDescriptor(
                            browserDescriptors[0],
-                           ((StringBuffer)(new Object())).append(type).append(sr.getUid()).toString(),
+                           type + sr.getUid(),
                            args,
                            iconDefault,
                            position,
                            "net.rim.device.apps.internal.browser.options.BrowserConfigRecord.BUNDLE_ID",
                            rec.getResourceID(11),
                            newFlags
-                        ));
-                        ApplicationEntryPoint newEntryPoint = (ApplicationEntryPoint)(new Object(newDescriptor));
+                        );
+                        ApplicationEntryPoint newEntryPoint = new ApplicationEntryPoint(newDescriptor);
                         if (iconCustom != null) {
                            newEntryPoint.set(4, iconCustom);
                         }
 
-                        EventLogger.logEvent(
-                           1907089860548946979L,
-                           ((StringBuffer)(new Object("RMas \nUID: "))).append(sr.getUid()).append(" ID: ").append(id).toString().getBytes(),
-                           5
-                        );
+                        EventLogger.logEvent(1907089860548946979L, ("RMas \nUID: " + sr.getUid() + " ID: " + id).getBytes(), 5);
                         ribbon.registerAction(id, newEntryPoint);
                      }
 
                      if (Graphics.isColor() && ribbon.getRegisteredAction("net_rim_bb_browser_daemondefault") == null) {
-                        String[] defaultArgs = new Object[]{"activate", null};
-                        ApplicationDescriptor defaultDescriptor = (ApplicationDescriptor)(new Object(
+                        String[] defaultArgs = new String[]{"activate", null};
+                        ApplicationDescriptor defaultDescriptor = new ApplicationDescriptor(
                            browserDescriptors[0], "default", defaultArgs, null, -1, null, -1, newFlags
-                        ));
-                        ApplicationEntryPoint defaultEntryPoint = (ApplicationEntryPoint)(new Object(defaultDescriptor));
+                        );
+                        ApplicationEntryPoint defaultEntryPoint = new ApplicationEntryPoint(defaultDescriptor);
                         ribbon.registerAction("net_rim_bb_browser_daemondefault", defaultEntryPoint);
                      }
 
                      if (!useSeparateIcon && ribbon.getRegisteredAction("net_rim_bb_browser_daemonsingle") == null) {
-                        String[] defaultArgs = new Object[]{"activate", null};
-                        ApplicationDescriptor defaultDescriptor = (ApplicationDescriptor)(new Object(
+                        String[] defaultArgs = new String[]{"activate", null};
+                        ApplicationDescriptor defaultDescriptor = new ApplicationDescriptor(
                            browserDescriptors[0], "single", defaultArgs, null, 50, null, -1, newFlags
-                        ));
-                        ApplicationEntryPoint defaultEntryPoint = (ApplicationEntryPoint)(new Object(defaultDescriptor));
+                        );
+                        ApplicationEntryPoint defaultEntryPoint = new ApplicationEntryPoint(defaultDescriptor);
                         ribbon.registerAction("net_rim_bb_browser_daemonsingle", defaultEntryPoint);
                      }
                   }
@@ -382,7 +376,7 @@ public final class RibbonManagerThread extends RunnableThread implements Provisi
 
    final void removeIconFromRibbon(int srId) {
       synchronized (this._ribbonSyncObject) {
-         String id = ((StringBuffer)(new Object("net_rim_bb_browser_daemon"))).append(srId).toString();
+         String id = "net_rim_bb_browser_daemon" + srId;
          RibbonLauncher ribbon = RibbonLauncher.getInstance();
          if (ribbon != null) {
             ribbon.unregisterAction(id);
@@ -503,9 +497,7 @@ public final class RibbonManagerThread extends RunnableThread implements Provisi
       if (sr != null) {
          ServiceBook sb = ServiceBook.getSB();
          String cid = sr.getCid();
-         EventLogger.logEvent(
-            1907089860548946979L, ((StringBuffer)(new Object("RMsb \nCID: "))).append(cid).append(" UID: ").append(sr.getUid()).toString().getBytes(), 5
-         );
+         EventLogger.logEvent(1907089860548946979L, ("RMsb \nCID: " + cid + " UID: " + sr.getUid()).getBytes(), 5);
          if (!StringUtilities.strEqualIgnoreCase(cid, BrowserConfigRecord.SERVICE_CID, 1701707776)) {
             if (StringUtilities.strEqualIgnoreCase(cid, WAPServiceRecord.SERVICE_CID, 1701707776)
                || StringUtilities.strEqualIgnoreCase(cid, BrowserConfigRecord.IPPP_SERVICE_CID, 1701707776)
@@ -526,23 +518,10 @@ public final class RibbonManagerThread extends RunnableThread implements Provisi
                         && transportUid != null
                         && StringUtilities.strEqualIgnoreCase(cid, transportCid, 1701707776)
                         && StringUtilities.strEqualIgnoreCase(uid, transportUid, 1701707776)) {
-                        EventLogger.logEvent(
-                           1907089860548946979L,
-                           ((StringBuffer)(new Object("RMcf \nCCID: ")))
-                              .append(configSr.getCid())
-                              .append(" CUID: ")
-                              .append(configSr.getUid())
-                              .toString()
-                              .getBytes(),
-                           5
-                        );
+                        EventLogger.logEvent(1907089860548946979L, ("RMcf \nCCID: " + configSr.getCid() + " CUID: " + configSr.getUid()).getBytes(), 5);
                         int configType = rec.getPropertyAsInt(12);
                         if (configType == 0 && !WAPConnectionRegistry.isWAPInstalled()) {
-                           EventLogger.logEvent(
-                              1907089860548946979L,
-                              ((StringBuffer)(new Object("RMwn \nTCID: "))).append(transportCid).append(" TUID: ").append(transportUid).toString().getBytes(),
-                              5
-                           );
+                           EventLogger.logEvent(1907089860548946979L, ("RMwn \nTCID: " + transportCid + " TUID: " + transportUid).getBytes(), 5);
                            return;
                         }
 
@@ -592,11 +571,7 @@ public final class RibbonManagerThread extends RunnableThread implements Provisi
 
             String transportCid = rec.getPropertyAsString(3);
             String transportUid = rec.getPropertyAsString(4);
-            EventLogger.logEvent(
-               1907089860548946979L,
-               ((StringBuffer)(new Object("RMbc \nTCID: "))).append(transportCid).append(" TUID: ").append(transportUid).toString().getBytes(),
-               5
-            );
+            EventLogger.logEvent(1907089860548946979L, ("RMbc \nTCID: " + transportCid + " TUID: " + transportUid).getBytes(), 5);
             ServiceRecord transportSr = BrowserConfigRecord.getTransportServiceRecord(transportCid, transportUid);
             if (transportSr == null) {
                if (refresh) {
@@ -606,19 +581,11 @@ public final class RibbonManagerThread extends RunnableThread implements Provisi
             } else {
                int configType = rec.getPropertyAsInt(12);
                if (configType == 0 && !WAPConnectionRegistry.isWAPInstalled()) {
-                  EventLogger.logEvent(
-                     1907089860548946979L,
-                     ((StringBuffer)(new Object("RMwn \nTCID: "))).append(transportCid).append(" TUID: ").append(transportUid).toString().getBytes(),
-                     5
-                  );
+                  EventLogger.logEvent(1907089860548946979L, ("RMwn \nTCID: " + transportCid + " TUID: " + transportUid).getBytes(), 5);
                   return;
                }
 
-               EventLogger.logEvent(
-                  1907089860548946979L,
-                  ((StringBuffer)(new Object("RMtf \nTCID: "))).append(transportCid).append(" TUID: ").append(transportUid).toString().getBytes(),
-                  5
-               );
+               EventLogger.logEvent(1907089860548946979L, ("RMtf \nTCID: " + transportCid + " TUID: " + transportUid).getBytes(), 5);
                if (rec.isITEnabled()) {
                   if (configType == 6) {
                      String moduleName = rec.getPropertyAsString(28);
@@ -912,7 +879,7 @@ public final class RibbonManagerThread extends RunnableThread implements Provisi
                   return;
                }
             } else {
-               ServiceRecord sr = (ServiceRecord)(new Object());
+               ServiceRecord sr = new ServiceRecord();
                sr.setType(0);
                sr.setName(transportName);
                sr.setUid(transportUid);
@@ -1051,7 +1018,7 @@ public final class RibbonManagerThread extends RunnableThread implements Provisi
       this._lastItPolicyAppDownloadEnabledValue = itPolicyAppDownloadEnabledCurrentValue;
       if (validateChannels) {
          EventLogger.logEvent(1907089860548946979L, 1128822369);
-         ((Thread)(new Object(new Channels()))).start();
+         new Thread(new Channels()).start();
       }
 
       this._browserAvailable = BrowserConfigRecord.getValidBrowserConfigRecords().length > 0;
@@ -1118,7 +1085,7 @@ public final class RibbonManagerThread extends RunnableThread implements Provisi
             chars[i] = db.readByte();
          }
 
-         String url = (String)(new Object(chars));
+         String url = new String(chars);
          long registrationType = 0;
          switch (type) {
             case 3:
@@ -1334,7 +1301,7 @@ public final class RibbonManagerThread extends RunnableThread implements Provisi
    }
 
    private final void addToRibbon(BrowserConfigRecord browserRecord, ServiceRecord serviceRecord, boolean refresh) {
-      EventLogger.logEvent(1907089860548946979L, ((StringBuffer)(new Object("RMar \nUID: "))).append(serviceRecord.getUid()).toString().getBytes(), 5);
+      EventLogger.logEvent(1907089860548946979L, ("RMar \nUID: " + serviceRecord.getUid()).getBytes(), 5);
       this.addToQueue(new RibbonManagerThread$RibbonEvent(this, 1, 0, refresh, serviceRecord));
       if (!this._browserAvailable) {
          this._browserAvailable = true;
@@ -1408,8 +1375,8 @@ public final class RibbonManagerThread extends RunnableThread implements Provisi
          return 0;
       }
 
-      StringTokenizer tokens1 = (StringTokenizer)(new Object(version1, '.'));
-      StringTokenizer tokens2 = (StringTokenizer)(new Object(version2, '.'));
+      StringTokenizer tokens1 = new StringTokenizer(version1, '.');
+      StringTokenizer tokens2 = new StringTokenizer(version2, '.');
       int count = Math.max(tokens1.countTokens(), tokens2.countTokens());
       int[] components1 = new int[count];
       int[] components2 = new int[count];
@@ -1451,7 +1418,7 @@ public final class RibbonManagerThread extends RunnableThread implements Provisi
          if (record != null) {
             int configId = record.getId();
             ApplicationEntryPoint point = null;
-            point = (ApplicationEntryPoint)ribbon.getRegisteredAction(((StringBuffer)(new Object("net_rim_bb_browser_daemon"))).append(configId).toString());
+            point = (ApplicationEntryPoint)ribbon.getRegisteredAction("net_rim_bb_browser_daemon" + configId);
             if (point != null) {
                point.set(8, CharacterUtilities.toLowerCase(hotkey, 1701707776));
             }
@@ -1503,7 +1470,7 @@ public final class RibbonManagerThread extends RunnableThread implements Provisi
 
    RibbonManagerThread(BrowserImpl browserImpl) {
       this._browserImpl = browserImpl;
-      this._autoStartBrowserConfigs = (Vector)(new Object(0, 1));
+      this._autoStartBrowserConfigs = new Vector(0, 1);
       this._lastItPolicyWAPEnabledValue = ITPolicy.getBoolean(19, true);
       this._lastItPolicyPrivateMDSEnabledValue = ITPolicy.getBoolean(2, true);
       this._lastItPolicyPublicMDSEnabledValue = ITPolicy.getBoolean(30, 3, true);

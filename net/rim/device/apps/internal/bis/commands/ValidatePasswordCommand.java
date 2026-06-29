@@ -35,7 +35,7 @@ public final class ValidatePasswordCommand implements DomainCommand {
       String commandResultErrorMsg = null;
       String commandResultStatusMsg = null;
       String newPassword = (String)params.get("password");
-      Hashtable idToPassword = (Hashtable)(new Object());
+      Hashtable idToPassword = new Hashtable();
       idToPassword.put(mailboxToValidate.getSrcMboxID(), newPassword);
 
       try {
@@ -54,7 +54,7 @@ public final class ValidatePasswordCommand implements DomainCommand {
             ClientSessionState.getInstance().getUserInfo().removeMailbox(origMailbox);
             ClientSessionState.getInstance().getUserInfo().addMailbox(mailboxToValidate);
          } else if (restStatusCode == 200 && callResult.getFailedMboxes().length == 1) {
-            commandResultErrorMsg = MessageFormat.format(ApplicationResources.getString(228), new Object[]{mailboxToValidate.getDescription()});
+            commandResultErrorMsg = MessageFormat.format(ApplicationResources.getString(228), new String[]{mailboxToValidate.getDescription()});
             commandResultID = "validationFailed";
             ForgotHostedPasswordCommand.handleAttempts(params, mailboxToValidate, restClient, configRecord);
          } else {
@@ -62,9 +62,7 @@ public final class ValidatePasswordCommand implements DomainCommand {
                return DomainCommand.SESSION_TIMEOUT_RESULT;
             }
 
-            BISEventLogger.logEvent(
-               ((StringBuffer)(new Object("Change Device: Uhandled REST response code: "))).append(callResult.getRESTStatusCode()).toString(), 0
-            );
+            BISEventLogger.logEvent("Change Device: Uhandled REST response code: " + callResult.getRESTStatusCode(), 0);
             commandResultID = "error";
          }
       } catch (Throwable var17) {

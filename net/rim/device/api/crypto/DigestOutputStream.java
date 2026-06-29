@@ -9,7 +9,7 @@ public class DigestOutputStream extends CryptoOutputStream {
    public DigestOutputStream(Digest digest, OutputStream out) {
       super(out == null ? new CryptoDummyOutputStream() : out);
       if (digest == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._digest = digest;
@@ -33,7 +33,7 @@ public class DigestOutputStream extends CryptoOutputStream {
 
          super._out.write(buffer, offset, length);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

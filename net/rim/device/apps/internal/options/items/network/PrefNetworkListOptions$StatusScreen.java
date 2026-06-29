@@ -1,10 +1,10 @@
 package net.rim.device.apps.internal.options.items.network;
 
 import net.rim.device.api.system.Bitmap;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.PopupScreen;
 
 public final class PrefNetworkListOptions$StatusScreen extends PopupScreen {
@@ -16,10 +16,10 @@ public final class PrefNetworkListOptions$StatusScreen extends PopupScreen {
    private static final long DEFAULT_TIMEOUT = 5000L;
 
    public PrefNetworkListOptions$StatusScreen() {
-      super((Manager)(new Object()), 0);
+      super(new HorizontalFieldManager(), 0);
       this._app = UiApplication.getUiApplication();
-      this._statusField = (LabelField)(new Object());
-      this._iconField = (BitmapField)(new Object(Bitmap.getPredefinedBitmap(3)));
+      this._statusField = new LabelField();
+      this._iconField = new BitmapField(Bitmap.getPredefinedBitmap(3));
       this._iconField.setPadding(0, 3, 0, 0);
       this.add(this._iconField);
       this.add(this._statusField);

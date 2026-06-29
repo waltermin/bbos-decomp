@@ -7,6 +7,7 @@ import net.rim.device.api.collection.CollectionListener;
 import net.rim.device.api.crypto.RandomSource;
 import net.rim.device.api.itpolicy.ITPolicy;
 import net.rim.device.api.lowmemory.LowMemoryManager;
+import net.rim.device.api.synchronization.SyncItem;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.system.GlobalEventListener;
@@ -50,7 +51,7 @@ final class PeerApplication
    private PeerConversationsFolder _folder;
    private ContactsScreen _contactsScreen;
    private QmRenderScreen _renderScreen;
-   private IntHashtable _conversationScreens = (IntHashtable)(new Object());
+   private IntHashtable _conversationScreens = new IntHashtable();
    private UiApplication _uiApplication;
    private DisplayNameDialog _displayNameDialog;
    private boolean _registered;
@@ -535,7 +536,7 @@ final class PeerApplication
 
    @Override
    public final void elementUpdated(Collection collection, Object oldElement, Object newElement) {
-      if (collection == null && newElement instanceof Object) {
+      if (collection == null && newElement instanceof SyncItem) {
          int size = this._conversations.size();
 
          for (int index = 0; index < size; index++) {

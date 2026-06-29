@@ -27,7 +27,7 @@ final class BoundedFileItemQueue {
    public final synchronized FileItemField removeElement() {
       int bottom = this._bottom;
       if (this._top == bottom) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       FileItemField fileItem = this._items[bottom];

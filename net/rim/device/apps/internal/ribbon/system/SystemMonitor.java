@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.ribbon.system;
 
 import net.rim.device.api.collection.ReadableLongMap;
+import net.rim.device.api.hrt.GprsHRI;
 import net.rim.device.api.hrt.HRUtils;
 import net.rim.device.api.hrt.HostRoutingInfo;
 import net.rim.device.api.i18n.ResourceBundle;
@@ -316,7 +317,7 @@ public final class SystemMonitor
       this.loadSPDI();
       this.updateONSActiveNetwork(RadioInfo.getNetworkService());
       if (RibbonApi._logONSState && this._oplData != null) {
-         StringBuffer sb = (StringBuffer)(new Object());
+         StringBuffer sb = new StringBuffer();
          System.out.println("OPL Data:");
 
          for (int i = 0; i < this._oplData.length; i++) {
@@ -350,7 +351,7 @@ public final class SystemMonitor
 
          if (this._spnString != null) {
             if (RibbonApi._logONSState) {
-               System.out.println(((StringBuffer)(new Object("loaded SPN: "))).append(this._spnString).toString());
+               System.out.println("loaded SPN: " + this._spnString);
             }
 
             this._spnString = this._spnString.trim();
@@ -363,7 +364,7 @@ public final class SystemMonitor
          this._cphsOnLongString = this.getSIMString(51, 0);
          if (RibbonApi._logONSState) {
             if (this._cphsOnLongString != null) {
-               System.out.println(((StringBuffer)(new Object("loaded cphson: "))).append(this._cphsOnLongString).toString());
+               System.out.println("loaded cphson: " + this._cphsOnLongString);
             } else {
                System.out.println("cphson not loaded.");
             }
@@ -374,7 +375,7 @@ public final class SystemMonitor
          this._cphsOnsShortString = this.getSIMString(55, 0);
          if (RibbonApi._logONSState) {
             if (this._cphsOnsShortString != null) {
-               System.out.println(((StringBuffer)(new Object("loaded cphsons: "))).append(this._cphsOnsShortString).toString());
+               System.out.println("loaded cphsons: " + this._cphsOnsShortString);
                return;
             }
 
@@ -573,18 +574,18 @@ public final class SystemMonitor
       if (eonsString != null) {
          ons = eonsString;
          if (RibbonApi._logONSState) {
-            System.out.println(((StringBuffer)(new Object("spec. net eons: "))).append(eonsString).toString());
+            System.out.println("spec. net eons: " + eonsString);
          }
       } else if (homeNetwork) {
          if (this._spnString != null) {
             ons = this._spnString;
             if (RibbonApi._logONSState) {
-               System.out.println(((StringBuffer)(new Object("spec. net spn: "))).append(this._spnString).toString());
+               System.out.println("spec. net spn: " + this._spnString);
             }
          } else if (this._cphsOnLongString != null) {
             ons = this._cphsOnLongString;
             if (RibbonApi._logONSState) {
-               System.out.println(((StringBuffer)(new Object("spec. net cphson: "))).append(this._cphsOnLongString).toString());
+               System.out.println("spec. net cphson: " + this._cphsOnLongString);
             }
          }
       }
@@ -658,17 +659,8 @@ public final class SystemMonitor
             GPRSInfo$GPRSCellInfo cInfo = GPRSInfo.getCellInfo();
             int lac = cInfo.getLAC();
             if (RibbonApi._logONSState) {
-               System.out
-                  .println(
-                     ((StringBuffer)(new Object("mcc: ")))
-                        .append(Integer.toHexString(mcc))
-                        .append(" mnc: ")
-                        .append(Integer.toHexString(mnc))
-                        .append(" lac: ")
-                        .append(lac)
-                        .toString()
-                  );
-               System.out.println(((StringBuffer)(new Object("category: "))).append(var23).append(" networkService: ").append(networkService).toString());
+               System.out.println("mcc: " + Integer.toHexString(mcc) + " mnc: " + Integer.toHexString(mnc) + " lac: " + lac);
+               System.out.println("category: " + var23 + " networkService: " + networkService);
             }
 
             if ((networkService & 2) == 0 && (networkService & 4) == 0) {
@@ -687,24 +679,24 @@ public final class SystemMonitor
                Object ons = null;
                int onsRenderMode = this.getONSRenderMode();
                if (RibbonApi._logONSState) {
-                  System.out.println(((StringBuffer)(new Object("ons mode: "))).append(onsRenderMode).toString());
+                  System.out.println("ons mode: " + onsRenderMode);
                   if (eonsString != null) {
-                     System.out.println(((StringBuffer)(new Object("eons: "))).append(eonsString).toString());
+                     System.out.println("eons: " + eonsString);
                   }
 
                   if (this._spnString != null) {
-                     System.out.println(((StringBuffer)(new Object("spn: "))).append(this._spnString).toString());
+                     System.out.println("spn: " + this._spnString);
                   }
 
                   if (this._cphsOnLongString != null) {
-                     System.out.println(((StringBuffer)(new Object("cphs_on: "))).append(this._cphsOnLongString).toString());
+                     System.out.println("cphs_on: " + this._cphsOnLongString);
                   }
 
                   if (this._cphsOnsShortString != null) {
-                     System.out.println(((StringBuffer)(new Object("cphs_ons: "))).append(this._cphsOnsShortString).toString());
+                     System.out.println("cphs_ons: " + this._cphsOnsShortString);
                   }
 
-                  System.out.println(((StringBuffer)(new Object("roaming: "))).append(roaming).toString());
+                  System.out.println("roaming: " + roaming);
                }
 
                String longNetworkString = null;
@@ -712,14 +704,14 @@ public final class SystemMonitor
                if (this._NITZNetworkName.longNameIsValid(var21)) {
                   longNetworkString = this._NITZNetworkName.getLongName(var22);
                   if (RibbonApi._logONSState) {
-                     System.out.println(((StringBuffer)(new Object("Long NITZ: "))).append(longNetworkString).toString());
+                     System.out.println("Long NITZ: " + longNetworkString);
                   }
                }
 
                if (this._NITZNetworkName.shortNameIsValid(var21)) {
                   String tempName = this._NITZNetworkName.getShortName(var22);
                   if (RibbonApi._logONSState) {
-                     System.out.println(((StringBuffer)(new Object("Short NITZ: "))).append(tempName).toString());
+                     System.out.println("Short NITZ: " + tempName);
                   }
 
                   if (longNetworkString == null) {
@@ -732,7 +724,7 @@ public final class SystemMonitor
                if (longNetworkString == null) {
                   longNetworkString = this.getLongNetworkString(networkService);
                   if (RibbonApi._logONSState) {
-                     System.out.println(((StringBuffer)(new Object("SE13: "))).append(longNetworkString).toString());
+                     System.out.println("SE13: " + longNetworkString);
                   }
                }
 
@@ -743,7 +735,7 @@ public final class SystemMonitor
                      if (eonsString != null) {
                         ons = eonsString;
                         if (RibbonApi._logONSState) {
-                           System.out.println(((StringBuffer)(new Object("displayEONS: "))).append(ons).toString());
+                           System.out.println("displayEONS: " + ons);
                         }
                      } else if (roaming) {
                         ons = longNetworkString;
@@ -753,7 +745,7 @@ public final class SystemMonitor
 
                         if (RibbonApi._logONSState) {
                            System.out.println("roaming: true");
-                           System.out.println(((StringBuffer)(new Object("networkName: "))).append(ons).toString());
+                           System.out.println("networkName: " + ons);
                         }
                      } else if (this._spnString != null) {
                         ons = this._spnString;
@@ -778,7 +770,7 @@ public final class SystemMonitor
                      if (eonsString != null) {
                         ons = eonsString;
                         if (RibbonApi._logONSState) {
-                           System.out.println(((StringBuffer)(new Object("displayEONS: "))).append(ons).toString());
+                           System.out.println("displayEONS: " + ons);
                         }
                      } else if (this._spnString == null) {
                         if (this._cphsOnLongString != null && !roaming) {
@@ -792,7 +784,7 @@ public final class SystemMonitor
                      } else {
                         byte spnDisplay = this.getSPNDisplayCode();
                         if (RibbonApi._logONSState) {
-                           System.out.println(((StringBuffer)(new Object("spn_display: "))).append(spnDisplay).toString());
+                           System.out.println("spn_display: " + spnDisplay);
                         }
 
                         switch (spnDisplay & 3) {
@@ -801,13 +793,9 @@ public final class SystemMonitor
                            case 0:
                            default:
                               if (roaming) {
-                                 ons = this.addONSString(
-                                    ons, ((StringBuffer)(new Object())).append(longNetworkString).append(" ").append(this._spnString).toString()
-                                 );
+                                 ons = this.addONSString(ons, longNetworkString + " " + this._spnString);
                                  if (shortNetworkString != null) {
-                                    ons = this.addONSString(
-                                       ons, ((StringBuffer)(new Object())).append(shortNetworkString).append(" ").append(this._spnString).toString()
-                                    );
+                                    ons = this.addONSString(ons, shortNetworkString + " " + this._spnString);
                                  }
 
                                  ons = this.addONSString(ons, longNetworkString);
@@ -820,13 +808,9 @@ public final class SystemMonitor
                               break label464;
                            case 1:
                               if (roaming) {
-                                 ons = this.addONSString(
-                                    ons, ((StringBuffer)(new Object())).append(longNetworkString).append(" ").append(this._spnString).toString()
-                                 );
+                                 ons = this.addONSString(ons, longNetworkString + " " + this._spnString);
                                  if (shortNetworkString != null) {
-                                    ons = this.addONSString(
-                                       ons, ((StringBuffer)(new Object())).append(shortNetworkString).append(" ").append(this._spnString).toString()
-                                    );
+                                    ons = this.addONSString(ons, shortNetworkString + " " + this._spnString);
                                  }
 
                                  ons = this.addONSString(ons, longNetworkString);
@@ -834,24 +818,16 @@ public final class SystemMonitor
                                     ons = this.addONSString(ons, shortNetworkString);
                                  }
                               } else if (this._cphsOnLongString != null) {
-                                 ons = this.addONSString(
-                                    ons, ((StringBuffer)(new Object())).append(this._cphsOnLongString).append(" ").append(this._spnString).toString()
-                                 );
+                                 ons = this.addONSString(ons, this._cphsOnLongString + " " + this._spnString);
                                  if (this._cphsOnsShortString != null) {
-                                    ons = this.addONSString(
-                                       ons, ((StringBuffer)(new Object())).append(this._cphsOnsShortString).append(" ").append(this._spnString).toString()
-                                    );
+                                    ons = this.addONSString(ons, this._cphsOnsShortString + " " + this._spnString);
                                  }
 
                                  ons = this.addONSString(ons, this._spnString);
                               } else {
-                                 ons = this.addONSString(
-                                    ons, ((StringBuffer)(new Object())).append(longNetworkString).append(" ").append(this._spnString).toString()
-                                 );
+                                 ons = this.addONSString(ons, longNetworkString + " " + this._spnString);
                                  if (shortNetworkString != null) {
-                                    ons = this.addONSString(
-                                       ons, ((StringBuffer)(new Object())).append(shortNetworkString).append(" ").append(this._spnString).toString()
-                                    );
+                                    ons = this.addONSString(ons, shortNetworkString + " " + this._spnString);
                                  }
 
                                  ons = this.addONSString(ons, this._spnString);
@@ -877,24 +853,16 @@ public final class SystemMonitor
                                     ons = this.addONSString(ons, shortNetworkString);
                                  }
                               } else if (this._cphsOnLongString != null) {
-                                 ons = this.addONSString(
-                                    ons, ((StringBuffer)(new Object())).append(this._cphsOnLongString).append(" ").append(this._spnString).toString()
-                                 );
+                                 ons = this.addONSString(ons, this._cphsOnLongString + " " + this._spnString);
                                  if (this._cphsOnsShortString != null) {
-                                    ons = this.addONSString(
-                                       ons, ((StringBuffer)(new Object())).append(this._cphsOnsShortString).append(" ").append(this._spnString).toString()
-                                    );
+                                    ons = this.addONSString(ons, this._cphsOnsShortString + " " + this._spnString);
                                  }
 
                                  ons = this.addONSString(ons, this._spnString);
                               } else {
-                                 ons = this.addONSString(
-                                    ons, ((StringBuffer)(new Object())).append(longNetworkString).append(" ").append(this._spnString).toString()
-                                 );
+                                 ons = this.addONSString(ons, longNetworkString + " " + this._spnString);
                                  if (shortNetworkString != null) {
-                                    ons = this.addONSString(
-                                       ons, ((StringBuffer)(new Object())).append(shortNetworkString).append(" ").append(this._spnString).toString()
-                                    );
+                                    ons = this.addONSString(ons, shortNetworkString + " " + this._spnString);
                                  }
 
                                  ons = this.addONSString(ons, this._spnString);
@@ -915,20 +883,16 @@ public final class SystemMonitor
                      if (eonsString != null) {
                         ons = eonsString;
                         if (RibbonApi._logONSState) {
-                           System.out.println(((StringBuffer)(new Object("displayEONS: "))).append(ons).toString());
+                           System.out.println("displayEONS: " + ons);
                         }
                      } else if (roaming && !this.isNetIdInSpdiList(var21)) {
                         if ((spnDisplayCode & 2) == 0 && this._spnString != null) {
                            if (StringUtilities.compareToIgnoreCase(longNetworkString, this._spnString) != 0) {
-                              ons = this.addONSString(
-                                 ons, ((StringBuffer)(new Object())).append(longNetworkString).append(" ").append(this._spnString).toString()
-                              );
+                              ons = this.addONSString(ons, longNetworkString + " " + this._spnString);
                            }
 
                            if (StringUtilities.compareToIgnoreCase(shortNetworkString, this._spnString) != 0) {
-                              ons = this.addONSString(
-                                 ons, ((StringBuffer)(new Object())).append(shortNetworkString).append(" ").append(this._spnString).toString()
-                              );
+                              ons = this.addONSString(ons, shortNetworkString + " " + this._spnString);
                            }
                         }
 
@@ -938,11 +902,11 @@ public final class SystemMonitor
                         String spnStr = this._spnString == null ? "" : this._spnString;
                         if ((spnDisplayCode & 1) != 0) {
                            if (StringUtilities.compareToIgnoreCase(longNetworkString, spnStr) != 0) {
-                              ons = this.addONSString(ons, ((StringBuffer)(new Object())).append(longNetworkString).append(" ").append(spnStr).toString());
+                              ons = this.addONSString(ons, longNetworkString + " " + spnStr);
                            }
 
                            if (StringUtilities.compareToIgnoreCase(shortNetworkString, spnStr) != 0) {
-                              ons = this.addONSString(ons, ((StringBuffer)(new Object())).append(shortNetworkString).append(" ").append(spnStr).toString());
+                              ons = this.addONSString(ons, shortNetworkString + " " + spnStr);
                            }
                         }
 
@@ -951,15 +915,15 @@ public final class SystemMonitor
                }
 
                if (ons == null || ons.equals("")) {
-                  ons = ((StringBuffer)(new Object())).append(Integer.toHexString(mcc)).append("-").append(Integer.toHexString(mnc)).toString();
+                  ons = Integer.toHexString(mcc) + "-" + Integer.toHexString(mnc);
                }
 
                if (RibbonApi._logONSState) {
                   System.out.println("One of:");
-                  if (ons instanceof Object) {
+                  if (ons instanceof String) {
                      System.out.println((String)ons);
-                  } else if (ons instanceof Object[]) {
-                     String[] strings = (Object[])ons;
+                  } else if (ons instanceof String[]) {
+                     String[] strings = (String[])ons;
 
                      for (int i = 0; i < strings.length; i++) {
                         System.out.println(strings[i]);
@@ -983,7 +947,7 @@ public final class SystemMonitor
                if (info != null && info._serviceZoneName != null && info._serviceZoneName.length() > 0) {
                   wifiConnectionStr = info._serviceZoneName;
                   if (RibbonApi._logONSState) {
-                     System.out.println(((StringBuffer)(new Object("WiFi UMA SZN: "))).append(wifiConnectionStr).toString());
+                     System.out.println("WiFi UMA SZN: " + wifiConnectionStr);
                   }
                }
             }
@@ -995,14 +959,14 @@ public final class SystemMonitor
                   if (profileName != null && profileName.length() > 0) {
                      wifiConnectionStr = profileName;
                      if (RibbonApi._logONSState) {
-                        System.out.println(((StringBuffer)(new Object("WiFi profile name: "))).append(wifiConnectionStr).toString());
+                        System.out.println("WiFi profile name: " + wifiConnectionStr);
                      }
                   } else {
                      String ssid = system.getActiveProfileSSID();
                      if (ssid != null && ssid.length() > 0) {
                         wifiConnectionStr = ssid;
                         if (RibbonApi._logONSState) {
-                           System.out.println(((StringBuffer)(new Object("WiFi ssid: "))).append(wifiConnectionStr).toString());
+                           System.out.println("WiFi ssid: " + wifiConnectionStr);
                         }
                      }
                   }
@@ -1038,11 +1002,11 @@ public final class SystemMonitor
       }
 
       if (newString != null && newString.length() != 0) {
-         if (ons instanceof Object) {
-            ons = new Object[]{ons};
+         if (ons instanceof String) {
+            ons = new String[]{(String)ons};
          }
 
-         String[] strings = (Object[])ons;
+         String[] strings = (String[])ons;
          Arrays.add(strings, newString);
          return strings;
       } else {
@@ -1062,12 +1026,12 @@ public final class SystemMonitor
             stringData = "";
          }
 
-         if (stringData instanceof Object) {
-            stringData = new Object[]{stringData};
+         if (stringData instanceof String) {
+            stringData = new String[]{(String)stringData};
          }
 
-         StringBuffer sb = (StringBuffer)(new Object());
-         String[] strings = (Object[])stringData;
+         StringBuffer sb = new StringBuffer();
+         String[] strings = (String[])stringData;
 
          for (int i = strings.length - 1; i >= 0; i--) {
             sb.append(strings[i]);
@@ -1094,9 +1058,9 @@ public final class SystemMonitor
          int networkIndex = RadioInfo.getCurrentNetworkIndex();
          String ons = RadioInfo.getNetworkName(networkIndex);
          if (RibbonApi._logONSState) {
-            System.out.println(((StringBuffer)(new Object("Network count: "))).append(networkCount).toString());
-            System.out.println(((StringBuffer)(new Object("SE13 index: "))).append(networkIndex).toString());
-            System.out.println(((StringBuffer)(new Object("SE13 name: "))).append(ons).toString());
+            System.out.println("Network count: " + networkCount);
+            System.out.println("SE13 index: " + networkIndex);
+            System.out.println("SE13 name: " + ons);
          }
 
          return ons;
@@ -1137,7 +1101,7 @@ public final class SystemMonitor
             }
 
             if (record._showMCCInitials && mccName != null) {
-               ons = ((StringBuffer)(new Object())).append(ons).append(" ").append(mccName).toString();
+               ons = ons + " " + mccName;
             }
 
             return ons;
@@ -1165,7 +1129,7 @@ public final class SystemMonitor
       }
 
       if (RibbonApi._logONSState) {
-         System.out.println(((StringBuffer)(new Object("Bad "))).append(file).append(" data").toString());
+         System.out.println("Bad " + file + " data");
       }
 
       return null;
@@ -1194,7 +1158,7 @@ public final class SystemMonitor
       }
 
       try {
-         return (String)(new Object(data, offset, i - offset, "SMS"));
+         return new String(data, offset, i - offset, "SMS");
       } finally {
          ;
       }
@@ -1208,7 +1172,7 @@ public final class SystemMonitor
       }
 
       try {
-         return (String)(new Object(data, offset, i - offset, "UCS2"));
+         return new String(data, offset, i - offset, "UCS2");
       } finally {
          ;
       }
@@ -1250,7 +1214,7 @@ public final class SystemMonitor
       }
 
       try {
-         return (String)(new Object(SIMdata, 0, byteCount, "SMS"));
+         return new String(SIMdata, 0, byteCount, "SMS");
       } finally {
          ;
       }
@@ -1263,8 +1227,8 @@ public final class SystemMonitor
          hri = HRUtils.getRegistrationHRT().getActiveHri();
       }
 
-      if (hri instanceof Object) {
-         apn = ((HostRoutingInfo)hri).getApn();
+      if (hri instanceof GprsHRI) {
+         apn = ((GprsHRI)hri).getApn();
       }
 
       return apn;
@@ -1632,7 +1596,7 @@ public final class SystemMonitor
             }
 
             if (RibbonApi._logONSState) {
-               System.out.println(((StringBuffer)(new Object("efInfo("))).append(id).append("): ").append(code).toString());
+               System.out.println("efInfo(" + id + "): " + code);
             }
 
             this.simCachePopulated();
@@ -1674,7 +1638,7 @@ public final class SystemMonitor
       }
 
       if (code != 0 && RibbonApi._logONSState) {
-         System.out.println(((StringBuffer)(new Object("efRead("))).append(id).append(":").append(recordNumber).append("): ").append(code).toString());
+         System.out.println("efRead(" + id + ":" + recordNumber + "): " + code);
       }
    }
 
@@ -1754,7 +1718,7 @@ public final class SystemMonitor
    public final void cardReady() {
       this._onsRenderMode = -1;
       this.setSimStatus(-1);
-      ((Thread)(new Object(new SystemMonitor$1(this)))).start();
+      new Thread(new SystemMonitor$1(this)).start();
       if (WorldPhoneDisclaimerDialog.isDisclaimerNeeded() && CDMA_GSM_WORLD_PHONE) {
          UiApplication.getUiApplication().invokeLater(new SystemMonitor$2(this));
       }
@@ -1771,7 +1735,7 @@ public final class SystemMonitor
    private final void loadSPDI() {
       if (SIMServiceTable.isServiceEnabled(49)) {
          if (this._efHandler == null) {
-            this._efHandler = (SIMCardEfHandler)(new Object(this));
+            this._efHandler = new SIMCardEfHandler(this);
          }
 
          if (!this._efHandler.isRunning()) {
@@ -1818,13 +1782,13 @@ public final class SystemMonitor
             return;
          }
       } else {
-         if (oldName instanceof Object && name instanceof Object && oldName.equals(name)) {
+         if (oldName instanceof String && name instanceof String && ((String)oldName).equals((String)name)) {
             return;
          }
 
-         if (oldName instanceof Object[] && name instanceof Object[]) {
-            String[] oldNames = (Object[])oldName;
-            String[] names = (Object[])name;
+         if (oldName instanceof String[] && name instanceof String[]) {
+            String[] oldNames = (String[])oldName;
+            String[] names = (String[])name;
             if (oldNames.length == names.length) {
                int i = oldNames.length - 1;
 
@@ -1846,8 +1810,8 @@ public final class SystemMonitor
    @Override
    public final String getOperatorName() {
       Object names = this._networkProps.get(-7219683504990287771L);
-      if (names instanceof Object[]) {
-         names = ((Object[])names)[0];
+      if (names instanceof String[]) {
+         names = ((String[])names)[0];
       }
 
       return (String)names;

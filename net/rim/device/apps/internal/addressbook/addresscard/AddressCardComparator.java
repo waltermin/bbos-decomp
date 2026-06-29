@@ -8,7 +8,7 @@ import net.rim.device.internal.i18n.CollatorImpl;
 public final class AddressCardComparator {
    private static AddressCardKeys _card1Keys = new AddressCardKeys();
    private static AddressCardKeys _card2Keys = new AddressCardKeys();
-   private static CollatorImpl _collator = (CollatorImpl)(new Object());
+   private static CollatorImpl _collator = new CollatorImpl();
 
    private AddressCardComparator() {
    }

@@ -27,7 +27,7 @@ final class RibbonScreenManager extends Manager {
    private int _chooserOffset = -1;
    private int _chooserHeight = -1;
    private int _backgroundColour = 0;
-   private WeakReference _refBackgroundBitmap = (WeakReference)(new Object(null));
+   private WeakReference _refBackgroundBitmap = new WeakReference(null);
    private boolean _compressedBanners;
    private Field[] _fieldInfo;
    private Hashtable[] _layoutArgs;
@@ -57,10 +57,10 @@ final class RibbonScreenManager extends Manager {
       this.deleteAll();
       this._layoutArgs = layout;
       this._fieldInfo = fields;
-      this._titleAreaField = (VerticalFieldManager)(new Object());
-      this._topAreaField = (VerticalFieldManager)(new Object());
+      this._titleAreaField = new VerticalFieldManager();
+      this._topAreaField = new VerticalFieldManager();
       this._iconAreaField = null;
-      this._bottomAreaField = (VerticalFieldManager)(new Object());
+      this._bottomAreaField = new VerticalFieldManager();
 
       for (int i = 0; i < layout.length; i++) {
          Hashtable args = this._layoutArgs[i];
@@ -126,7 +126,7 @@ final class RibbonScreenManager extends Manager {
          int height = bitmap.getHeight();
          Bitmap newBitmap = this._backgroundBitmap;
          if (newBitmap == null || newBitmap.getWidth() != screenWidth || newBitmap.getHeight() != screenHeight) {
-            newBitmap = (Bitmap)(new Object(screenWidth, screenHeight));
+            newBitmap = new Bitmap(screenWidth, screenHeight);
          }
 
          Theme theme = ThemeManager.getActiveTheme();
@@ -137,7 +137,7 @@ final class RibbonScreenManager extends Manager {
             || chooserOffset != this._chooserOffset
             || chooserHeight != this._chooserHeight
             || backgroundColour != this._backgroundColour) {
-            Graphics graphics = (Graphics)(new Object(newBitmap));
+            Graphics graphics = new Graphics(newBitmap);
             if (baseAttributes != null) {
                graphics.setColor(baseAttributes.getColor(0));
                graphics.fillRect(0, 0, screenWidth, screenHeight);
@@ -169,7 +169,7 @@ final class RibbonScreenManager extends Manager {
             this._chooserOffset = chooserOffset;
             this._chooserHeight = chooserHeight;
             this._backgroundColour = backgroundColour;
-            this._refBackgroundBitmap = (WeakReference)(new Object(bitmap));
+            this._refBackgroundBitmap = new WeakReference(bitmap);
          }
 
          bitmap = newBitmap;

@@ -82,7 +82,7 @@ final class SignalLevelField extends StringRibbonComponent implements RibbonComp
          super._height = collection.getHeight(Integer.MAX_VALUE, Integer.MAX_VALUE);
          return collection;
       } else {
-         collection = (IconCollection)(new Object(9, 1));
+         collection = new IconCollection(9, 1);
          int ext = name.indexOf(46);
          if (ext != -1) {
             name = name.substring(0, ext);
@@ -90,13 +90,13 @@ final class SignalLevelField extends StringRibbonComponent implements RibbonComp
 
          EncodedImage image = ThemeManager.getActiveTheme().getImage(name, true);
          if (image == null) {
-            throw new Object(((StringBuffer)(new Object("Image not found: "))).append(name).toString());
+            throw new NullPointerException("Image not found: " + name);
          }
 
          super._width = image.getWidth() / 9;
          super._height = image.getHeight();
          if (image.getWidth() != super._width * 9) {
-            throw new Object(((StringBuffer)(new Object("Image is the wrong size: "))).append(name).toString());
+            throw new IllegalArgumentException("Image is the wrong size: " + name);
          }
 
          collection.addImage(image, super._width, super._height, true);

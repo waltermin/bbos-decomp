@@ -28,7 +28,7 @@ final class OpenAttachmentVerb extends Verb {
 
    @Override
    public final Object invoke(Object context) {
-      Vector attachments = (Vector)(new Object());
+      Vector attachments = new Vector();
       int selectedAttachmentIndex = -1;
       EmailPayloadModel payload = this._emailMessageModel.getPayload();
       int payloadSize = payload.size();
@@ -36,7 +36,7 @@ final class OpenAttachmentVerb extends Verb {
 
       for (int i = 0; i < payloadSize; i++) {
          Object item = payload.getAt(i);
-         if (item instanceof Object) {
+         if (item instanceof ProxyModel) {
             item = ((ProxyModel)item).getObject();
          }
 

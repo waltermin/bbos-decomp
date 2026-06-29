@@ -10,7 +10,7 @@ import net.rim.device.apps.internal.bis.utils.xml.XMLToObjectHandler;
 
 final class SecretQuestionsHandler extends XMLToObjectHandler implements BISServiceConstants {
    private SAXParser _parser;
-   private static final String[] REQUIRED_ELEMENTS = new Object[0];
+   private static final String[] REQUIRED_ELEMENTS = new String[0];
 
    public SecretQuestionsHandler() {
       super("secretQuestions", REQUIRED_ELEMENTS, true);

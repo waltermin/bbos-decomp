@@ -5,6 +5,7 @@ import net.rim.device.api.browser.field.BrowserContent;
 import net.rim.device.api.browser.field.Event;
 import net.rim.device.api.browser.field.RenderingApplication;
 import net.rim.device.api.browser.field.RequestedResource;
+import net.rim.device.api.browser.field.UrlRequestedEvent;
 import net.rim.device.api.io.MIMETypeAssociations;
 import net.rim.device.api.ui.ContextMenu;
 import net.rim.device.api.ui.Field;
@@ -17,6 +18,7 @@ import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.api.ui.CommonResources;
 import net.rim.device.apps.api.ui.CookieProviderUtilities;
+import net.rim.device.apps.api.ui.VerbMenuItem;
 import net.rim.device.apps.api.utility.serialization.SerializationManager;
 import net.rim.device.apps.internal.browser.model.HTTPAddressModel;
 import net.rim.device.apps.internal.browser.page.BrowserContentImpl;
@@ -25,13 +27,14 @@ import net.rim.device.apps.internal.browser.ui.BrowserTextFlowManager;
 import net.rim.device.apps.internal.browser.verbs.FollowLinkVerb;
 import net.rim.device.internal.io.file.FileUtilities;
 import net.rim.device.internal.ui.Border;
+import net.rim.device.internal.ui.BorderRounded;
 
 final class WebFeedItemManager extends VerticalFieldManager implements RenderingApplication {
    private BrowserContent _descriptionContent;
    private WebFeedItem _item;
    private WebFeedField _parent;
    private boolean _keyHandledInRepeat;
-   private static final Border SOLID_BORDER = (Border)(new Object(2, 2, 2, 2, 0));
+   private static final Border SOLID_BORDER = new BorderRounded(2, 2, 2, 2, 0);
 
    public WebFeedItemManager(WebFeedField parent, WebFeedItem item) {
       this._parent = parent;
@@ -92,7 +95,7 @@ final class WebFeedItemManager extends VerticalFieldManager implements Rendering
    }
 
    private final MenuItem[] makeMenuInternal() {
-      MenuItem[] items = new Object[0];
+      MenuItem[] items = new MenuItem[0];
       Field field = this.getScreen().getLeafFieldWithFocus();
       field.getCookie();
       MenuItem toggleDescriptionMenuItem = null;
@@ -106,19 +109,19 @@ final class WebFeedItemManager extends VerticalFieldManager implements Rendering
       }
 
       if (this.isDescriptionOpen() && this.isOnLink()) {
-         BrowserContentImpl bci = (BrowserContentImpl)(this._parent.getBrowserContent() instanceof Object ? this._parent.getBrowserContent() : null);
+         BrowserContentImpl bci = this._parent.getBrowserContent() instanceof BrowserContentImpl ? (BrowserContentImpl)this._parent.getBrowserContent() : null;
          if (bci != null) {
             Object model = null;
             Field fieldWithFocus = bci.getDisplayableContent().getLeafFieldWithFocus();
             Manager manager = fieldWithFocus.getManager();
-            if (manager instanceof Object) {
+            if (manager instanceof BrowserTextFlowManager) {
                BrowserTextFlowManager tfm = (BrowserTextFlowManager)manager;
                model = CookieProviderUtilities.getDefaultCookie(tfm.getCookieWithFocus());
-               if (model instanceof Object) {
+               if (model instanceof HTTPAddressModel) {
                   HTTPAddressModel addressModel = (HTTPAddressModel)model;
                   String url = addressModel.getURL();
-                  FollowLinkVerb verb = (FollowLinkVerb)(new Object(url, false, null));
-                  Arrays.add(items, new Object(verb, 0));
+                  FollowLinkVerb verb = new FollowLinkVerb(url, false, null);
+                  Arrays.add(items, new VerbMenuItem(verb, 0));
                }
             }
          }
@@ -145,7 +148,7 @@ final class WebFeedItemManager extends VerticalFieldManager implements Rendering
 
    private final boolean isOnLink() {
       if (this.isDescriptionOpen()) {
-         BrowserContentImpl bci = (BrowserContentImpl)(this._parent.getBrowserContent() instanceof Object ? this._parent.getBrowserContent() : null);
+         BrowserContentImpl bci = this._parent.getBrowserContent() instanceof BrowserContentImpl ? (BrowserContentImpl)this._parent.getBrowserContent() : null;
          if (bci == null) {
             return false;
          }
@@ -153,10 +156,10 @@ final class WebFeedItemManager extends VerticalFieldManager implements Rendering
          Object model = null;
          Field fieldWithFocus = bci.getDisplayableContent().getLeafFieldWithFocus();
          Manager manager = fieldWithFocus.getManager();
-         if (manager instanceof Object) {
+         if (manager instanceof BrowserTextFlowManager) {
             BrowserTextFlowManager tfm = (BrowserTextFlowManager)manager;
             model = CookieProviderUtilities.getDefaultCookie(tfm.getCookieWithFocus());
-            if (model instanceof Object) {
+            if (model instanceof HTTPAddressModel) {
                HTTPAddressModel addressModel = (HTTPAddressModel)model;
                String url = addressModel.getURL();
                if (url != null && url.length() > 0) {
@@ -176,7 +179,7 @@ final class WebFeedItemManager extends VerticalFieldManager implements Rendering
    }
 
    private static final String getLabel(String mimeType, int size) {
-      StringBuffer label = (StringBuffer)(new Object());
+      StringBuffer label = new StringBuffer();
       if (mimeType != null && mimeType.length() > 5) {
          switch (mimeType.charAt(0)) {
             case 'A':
@@ -230,7 +233,7 @@ final class WebFeedItemManager extends VerticalFieldManager implements Rendering
       // 00c: getfield net/rim/device/apps/internal/browser/webfeed/WebFeedItemManager._descriptionContent Lnet/rim/device/api/browser/field/BrowserContent;
       // 00f: ifnull 015
       // 012: goto 130
-      // 015: new java/lang/Object
+      // 015: new net/rim/device/api/io/http/HttpHeaders
       // 018: dup
       // 019: invokespecial net/rim/device/api/io/http/HttpHeaders.<init> ()V
       // 01c: astore 1
@@ -242,7 +245,7 @@ final class WebFeedItemManager extends VerticalFieldManager implements Rendering
       // 028: getfield net/rim/device/apps/internal/browser/webfeed/WebFeedItemManager._parent Lnet/rim/device/apps/internal/browser/webfeed/WebFeedField;
       // 02b: invokevirtual net/rim/device/apps/internal/browser/webfeed/WebFeedField.getBrowserContent ()Lnet/rim/device/api/browser/field/BrowserContent;
       // 02e: astore 2
-      // 02f: new java/lang/Object
+      // 02f: new net/rim/device/api/browser/util/StaticHttpConnection
       // 032: dup
       // 033: aload 0
       // 034: getfield net/rim/device/apps/internal/browser/webfeed/WebFeedItemManager._item Lnet/rim/device/apps/internal/browser/webfeed/WebFeedItem;
@@ -329,11 +332,11 @@ final class WebFeedItemManager extends VerticalFieldManager implements Rendering
       // 0eb: aload 0
       // 0ec: getfield net/rim/device/apps/internal/browser/webfeed/WebFeedItemManager._descriptionContent Lnet/rim/device/api/browser/field/BrowserContent;
       // 0ef: dup
-      // 0f0: instanceof java/lang/Object
+      // 0f0: instanceof net/rim/device/apps/internal/browser/page/BrowserContentImpl
       // 0f3: ifne 0fa
       // 0f6: pop
       // 0f7: goto 103
-      // 0fa: checkcast java/lang/Object
+      // 0fa: checkcast net/rim/device/apps/internal/browser/page/BrowserContentImpl
       // 0fd: ldc_w "_top"
       // 100: invokevirtual net/rim/device/apps/internal/browser/page/BrowserContentImpl.setBaseTarget (Ljava/lang/String;)V
       // 103: aload 0
@@ -384,7 +387,7 @@ final class WebFeedItemManager extends VerticalFieldManager implements Rendering
             this._keyHandledInRepeat = true;
             String link = this._item.getLink();
             if (link != null) {
-               this._parent.getBrowserContent().getRenderingApplication().eventOccurred((Event)(new Object(this, link, null, null, false, 0)));
+               this._parent.getBrowserContent().getRenderingApplication().eventOccurred(new UrlRequestedEvent(this, link, null, null, false, 0));
             }
          }
 

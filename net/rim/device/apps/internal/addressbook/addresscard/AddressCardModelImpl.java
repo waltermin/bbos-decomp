@@ -20,11 +20,11 @@ import net.rim.device.api.util.DataBuffer;
 import net.rim.device.api.util.Factory;
 import net.rim.device.api.util.WeakReferenceUtilities;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
-import net.rim.device.apps.api.addressbook.AddressCardElement;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.AddressMatch;
 import net.rim.device.apps.api.addressbook.CompanyInfoModel;
 import net.rim.device.apps.api.addressbook.DisplayPictureModel;
+import net.rim.device.apps.api.addressbook.EmailAddressModel;
 import net.rim.device.apps.api.addressbook.EventModel;
 import net.rim.device.apps.api.addressbook.PersonNameModel;
 import net.rim.device.apps.api.framework.model.CloneProvider;
@@ -49,15 +49,17 @@ import net.rim.device.apps.api.framework.registration.MIMEContentVerbRepository;
 import net.rim.device.apps.api.framework.registration.RecognizerRepository;
 import net.rim.device.apps.api.framework.verb.ConditionalVerb;
 import net.rim.device.apps.api.framework.verb.Verb;
+import net.rim.device.apps.api.framework.verb.WrapperVerb;
 import net.rim.device.apps.api.search.Match;
 import net.rim.device.apps.api.search.SearchCriterion;
 import net.rim.device.apps.api.transmission.rim.CMIMEParameters;
 import net.rim.device.apps.api.transmission.rim.ContentPartIDGenerator;
-import net.rim.device.apps.api.transmission.rim.RIMMessagingMessage;
+import net.rim.device.apps.api.transmission.rim.RIMMessagingOutgoingMessage;
 import net.rim.device.apps.api.utility.general.Copyable;
 import net.rim.device.apps.api.utility.general.SetParameter;
 import net.rim.device.apps.internal.addressbook.lookup.Request;
 import net.rim.device.apps.internal.addressbook.resources.AddressBookResources;
+import net.rim.device.apps.internal.messaging.search.ActivityLogVerb;
 import net.rim.vm.Array;
 import net.rim.vm.WeakReference;
 
@@ -84,9 +86,9 @@ public final class AddressCardModelImpl
    private static final int QUICK_COMPANY_INDEX = 1;
    private static int[] _hints = new int[0];
    static final String COMMA_SPACE = ", ";
-   static ContextObjectWR _addressBookSyncContextWR = (ContextObjectWR)(new Object(11, 19, 57));
-   private static ContextObjectWR _attachmentContextWR = (ContextObjectWR)(new Object(11, 43, 54));
-   private static WeakReference _attachmentStringBufferWR = (WeakReference)(new Object(null));
+   static ContextObjectWR _addressBookSyncContextWR = new ContextObjectWR(11, 19, 57);
+   private static ContextObjectWR _attachmentContextWR = new ContextObjectWR(11, 43, 54);
+   private static WeakReference _attachmentStringBufferWR = new WeakReference(null);
 
    @Override
    public final int paint(Graphics g, int x, int y, int width, int height, Object context) {
@@ -98,15 +100,15 @@ public final class AddressCardModelImpl
       long sortOrder = 0;
       Object sortOrderObject = ContextObject.get(context, 614335798810617774L);
       int xoffset = 0;
-      if (sortOrderObject instanceof Object) {
-         sortOrder = sortOrderObject;
+      if (sortOrderObject instanceof Long) {
+         sortOrder = (Long)sortOrderObject;
       }
 
       PersonNameModel pnm = this.getName();
       CompanyInfoModel cim = this.getCompanyInfo();
       if (!ContextObject.getFlag(context, 128)) {
          if (sortOrder == -4388042602796535003L) {
-            if (cim instanceof Object && cim.getCompanyName() != null) {
+            if (cim instanceof PaintProvider && cim.getCompanyName() != null) {
                PaintProvider painter = (PaintProvider)cim;
                xoffset = painter.paint(g, x, y, width, height, context);
                if (!fullPaint) {
@@ -118,12 +120,12 @@ public final class AddressCardModelImpl
                }
             }
 
-            if (pnm instanceof Object) {
+            if (pnm instanceof PaintProvider) {
                PaintProvider painter = (PaintProvider)pnm;
                xoffset += painter.paint(g, x + xoffset, y, width - xoffset, height, context);
             }
          } else {
-            if (pnm instanceof Object) {
+            if (pnm instanceof PaintProvider) {
                PaintProvider painter = (PaintProvider)pnm;
                xoffset = painter.paint(g, x, y, width, height, context);
                if (!fullPaint || !ContextObject.getFlag(context, 4)) {
@@ -135,7 +137,7 @@ public final class AddressCardModelImpl
                }
             }
 
-            if (cim instanceof Object) {
+            if (cim instanceof PaintProvider) {
                PaintProvider painter = (PaintProvider)cim;
                xoffset += painter.paint(g, x + xoffset, y, width - xoffset, height, context);
             }
@@ -154,15 +156,15 @@ public final class AddressCardModelImpl
             listField.setThemeAttributesSpecial(tas1, g);
          }
 
-         if (pnm == null && cim instanceof Object) {
+         if (pnm == null && cim instanceof PaintProvider) {
             ((PaintProvider)cim).paint(g, x, y, width, height, context);
-         } else if (!(pnm instanceof Object)) {
+         } else if (!(pnm instanceof PaintProvider)) {
             g.drawText(AddressBookResources.getString(1730), x, y, 0, width);
          } else {
             ((PaintProvider)pnm).paint(g, x, y, width, height, context);
          }
 
-         if (pnm != null && cim instanceof Object) {
+         if (pnm != null && cim instanceof PaintProvider) {
             int fontHeight = g.getFont().getHeight();
             if (tas2 != null) {
                listField.setThemeAttributesSpecial(tas2, g);
@@ -260,7 +262,7 @@ public final class AddressCardModelImpl
 
       newContext.setFlag(11);
       newContext.put(252, originalModel);
-      Verb[] newVerbs = new Object[0];
+      Verb[] newVerbs = new Verb[0];
       Object ignoreModel = newContext.get(-8746885042893430564L);
       Recognizer verbRecognizer = (Recognizer)ContextObject.get(context, -409744358660961448L);
       int lastVerbGroupId = LastUsedHintManager.getLastHintType(this._uid);
@@ -268,12 +270,12 @@ public final class AddressCardModelImpl
 
       for (int i = 0; i < count; i++) {
          Object itemField = this.getAt(i);
-         if (itemField instanceof Object) {
+         if (itemField instanceof RIMModel) {
             RIMModel itemModel = (RIMModel)itemField;
             if (itemModel != ignoreModel) {
                Array.resize(newVerbs, 0);
                Verb tmpDefaultVerb = null;
-               if (itemModel instanceof Object) {
+               if (itemModel instanceof VerbProvider) {
                   VerbProvider verbProvider = (VerbProvider)itemModel;
                   tmpDefaultVerb = verbProvider.getVerbs(newContext, newVerbs);
                }
@@ -312,8 +314,8 @@ public final class AddressCardModelImpl
 
    @Override
    public final int match(Object criteria) {
-      if (!(criteria instanceof Object)) {
-         return Match.match(this, this, (Object[])criteria, _hints);
+      if (!(criteria instanceof SearchCriterion)) {
+         return Match.match(this, this, (SearchCriterion[])criteria, _hints);
       }
 
       SearchCriterion crit = (SearchCriterion)criteria;
@@ -321,7 +323,7 @@ public final class AddressCardModelImpl
          case 5:
             return AddressMatch.match(this, crit);
          case 24:
-            if (crit.getValue() == this.getUID()) {
+            if ((Integer)crit.getValue() == this.getUID()) {
                return 1;
             }
 
@@ -348,14 +350,14 @@ public final class AddressCardModelImpl
          while (--j >= 0) {
             Object myField = this._fields[j];
             if (myField.getClass() == otherField.getClass()) {
-               if (myField instanceof Object) {
+               if (myField instanceof EmailAddressModel) {
                   if (myField.equals(otherField) || emailAddrCount >= 3) {
                      continue label38;
                   }
 
                   emailAddrCount++;
                } else {
-                  if (!(myField instanceof Object)) {
+                  if (!(myField instanceof FieldLabelProvider)) {
                      continue label38;
                   }
 
@@ -376,7 +378,7 @@ public final class AddressCardModelImpl
          || ContextObject.getFlag(context, 53)
          || ContextObject.getFlag(context, 29)
          || ContextObject.getFlag(context, 30);
-      if (ContextObject.getFlag(context, 43) && ContextObject.getFlag(context, 70) && !reply && target instanceof Object) {
+      if (ContextObject.getFlag(context, 43) && ContextObject.getFlag(context, 70) && !reply && target instanceof StringBuffer) {
          Object newTarget = ContextObject.get(context, 4465382771624174900L);
          if (newTarget != null) {
             target = newTarget;
@@ -388,7 +390,8 @@ public final class AddressCardModelImpl
          return syncBuffer.addSubmembers(this, _addressBookSyncContextWR.getContextObject());
       }
 
-      if (target instanceof Object || target instanceof Object && ContextObject.getFlag(context, 54) && ContextObject.getFlag(context, 43)) {
+      if (target instanceof RIMMessagingOutgoingMessage
+         || target instanceof MIMEOutputStream && ContextObject.getFlag(context, 54) && ContextObject.getFlag(context, 43)) {
          StringBuffer attachmentStringBuffer = WeakReferenceUtilities.getStringBuffer(_attachmentStringBufferWR);
          attachmentStringBuffer.setLength(0);
          if (!this.convert(_attachmentContextWR.getContextObject(), attachmentStringBuffer)) {
@@ -400,40 +403,39 @@ public final class AddressCardModelImpl
             return false;
          }
 
-         String mimeType = ((StringBuffer)(new Object()))
-            .append(AddressCardConverter.CASE_SENSITIVE_OUTBOUND_ADDRESS_BOOK_MIME_TYPE)
-            .append(':')
-            .append(this.toString())
-            .toString();
-         if (target instanceof Object) {
+         String mimeType = AddressCardConverter.CASE_SENSITIVE_OUTBOUND_ADDRESS_BOOK_MIME_TYPE + ':' + this.toString();
+         if (target instanceof RIMMessagingOutgoingMessage) {
             ContextObject contextObject = (ContextObject)context;
             ContentPartIDGenerator contentPartIDGenerator = (ContentPartIDGenerator)contextObject.get(-1943436819741481055L);
-            CMIMEParameters parameters = (CMIMEParameters)(new Object((DataBuffer)(new Object()), 2, 2));
+            CMIMEParameters parameters = new CMIMEParameters(new DataBuffer(), 2, 2);
             parameters.addCMIMEInteger((byte)-15, contentPartIDGenerator.generateContentPartID());
-            ((RIMMessagingMessage)target).addAttachment(data, parameters, mimeType);
+            ((RIMMessagingOutgoingMessage)target).addAttachment(data, parameters, mimeType);
             return true;
          }
 
          MIMEOutputStream mime = ((MIMEOutputStream)target).getPartOutputStream(false, "base64");
          mime.setContentType(mimeType);
          mime.addContentTypeParameter("name", mimeType);
-         mime.addHeaderField(((StringBuffer)(new Object("Content-Disposition: attachment:\r\n\tfilename="))).append(mimeType).toString());
+         mime.addHeaderField("Content-Disposition: attachment:\r\n\tfilename=" + mimeType);
 
          try {
-            Base64OutputStream base64 = (Base64OutputStream)(new Object(mime));
+            Base64OutputStream base64 = new Base64OutputStream(mime);
             base64.write(data);
             base64.close();
             return true;
          } finally {
             ;
          }
-      } else if (ContextObject.getFlag(context, 11) && ContextObject.getFlag(context, 43) && ContextObject.getFlag(context, 54) && target instanceof Object) {
+      } else if (ContextObject.getFlag(context, 11)
+         && ContextObject.getFlag(context, 43)
+         && ContextObject.getFlag(context, 54)
+         && target instanceof StringBuffer) {
          StringBuffer stringBuffer = (StringBuffer)target;
          int numFields = this.size();
 
          for (int i = 0; i < numFields; i++) {
             Object element = this.getAt(i);
-            if (element instanceof Object) {
+            if (element instanceof ConversionProvider) {
                ConversionProvider converter = (ConversionProvider)element;
                converter.convert(context, stringBuffer);
             }
@@ -447,18 +449,18 @@ public final class AddressCardModelImpl
          if (ContextObject.getFlag(context, 10)) {
             RIMModel name = this.getName();
             RIMModel company = this.getCompanyInfo();
-            if (name instanceof Object) {
+            if (name instanceof ConversionProvider) {
                ConversionProvider conversionProvider = (ConversionProvider)name;
                return conversionProvider.convert(context, target);
             }
 
-            if (company instanceof Object) {
+            if (company instanceof ConversionProvider) {
                ConversionProvider conversionProvider = (ConversionProvider)company;
                return conversionProvider.convert(context, target);
             }
 
-            if (name == null && company == null && target instanceof Object[]) {
-               String[] names = (Object[])target;
+            if (name == null && company == null && target instanceof String[]) {
+               String[] names = (String[])target;
                if (names.length > 1) {
                   names[1] = AddressBookResources.getString(1730);
                   return false;
@@ -527,7 +529,7 @@ public final class AddressCardModelImpl
          Arrays.removeAt(this._fields, index);
          if (index == 0) {
             int count = this._fields.length;
-            if (count > 1 && this._fields[0] instanceof Object) {
+            if (count > 1 && this._fields[0] instanceof CompanyInfoModel) {
                Object tmp = this._fields[0];
                this._fields[0] = this._fields[1];
                this._fields[1] = tmp;
@@ -545,7 +547,7 @@ public final class AddressCardModelImpl
    public final PersonNameModel getName() {
       if (0 < this._fields.length) {
          Object f = this._fields[0];
-         if (f instanceof Object) {
+         if (f instanceof PersonNameModel) {
             return (PersonNameModel)f;
          }
       }
@@ -563,7 +565,7 @@ public final class AddressCardModelImpl
 
       if (index < len) {
          Object f = this._fields[index];
-         if (f instanceof Object) {
+         if (f instanceof CompanyInfoModel) {
             return (CompanyInfoModel)f;
          }
       }
@@ -575,7 +577,7 @@ public final class AddressCardModelImpl
    public final DisplayPictureModel getContactPicture(Object context) {
       for (int index = 0; index < this._fields.length; index++) {
          Object f = this._fields[index];
-         if (f instanceof Object) {
+         if (f instanceof DisplayPictureModel) {
             return (DisplayPictureModel)f;
          }
       }
@@ -644,19 +646,19 @@ public final class AddressCardModelImpl
 
       if (pnmKey != 1232448844688687736L && pnmKey != -227891759293611117L) {
          if (keyRequested == -4388042602796535003L) {
-            if (cim instanceof Object) {
+            if (cim instanceof KeyProvider) {
                KeyProvider keyProvider = (KeyProvider)cim;
                keyCount = keyProvider.getKeys(context, keyArray, index, keyRequested);
             }
 
-            if (pnm instanceof Object) {
+            if (pnm instanceof KeyProvider) {
                KeyProvider keyProvider = (KeyProvider)pnm;
                keyCount += keyProvider.getKeys(context, keyArray, index + keyCount, -227891759293611117L);
             }
 
             ignorePersonCompany = true;
          } else if (keyRequested == -6544199576583918793L || keyRequested == -6544199576583918792L) {
-            if (!(pnm instanceof Object)) {
+            if (!(pnm instanceof KeyProvider)) {
                if (keyArray.length < index + 3) {
                   Array.resize(keyArray, index + 3);
                }
@@ -670,7 +672,7 @@ public final class AddressCardModelImpl
                keyCount = keyProvider.getKeys(context, keyArray, index, -6544199576583918793L);
             }
 
-            if (!(cim instanceof Object)) {
+            if (!(cim instanceof KeyProvider)) {
                if (keyArray.length < index + keyCount + 1) {
                   Array.resize(keyArray, index + keyCount + 1);
                }
@@ -695,7 +697,7 @@ public final class AddressCardModelImpl
             }
          }
       } else {
-         if (pnm instanceof Object) {
+         if (pnm instanceof KeyProvider) {
             KeyProvider keyProvider = (KeyProvider)pnm;
             keyCount = keyProvider.getKeys(context, keyArray, index, keyRequested);
             if (keyCount != 0 && pnmKey != keyRequested) {
@@ -703,7 +705,7 @@ public final class AddressCardModelImpl
             }
          }
 
-         if (cim instanceof Object) {
+         if (cim instanceof KeyProvider) {
             KeyProvider keyProvider = (KeyProvider)cim;
             keyCount += keyProvider.getKeys(context, keyArray, index + keyCount, pnmKey);
          }
@@ -719,7 +721,7 @@ public final class AddressCardModelImpl
 
       for (int i = 0; i < count; i++) {
          Object member = this.getAt(i);
-         if ((!ignorePersonCompany || member != pnm && member != cim) && member instanceof Object) {
+         if ((!ignorePersonCompany || member != pnm && member != cim) && member instanceof KeyProvider) {
             KeyProvider keyProvider = (KeyProvider)member;
             keyCount += keyProvider.getKeys(context, keyArray, index + keyCount, keyRequested);
          }
@@ -735,7 +737,7 @@ public final class AddressCardModelImpl
 
       for (int i = 0; i < acmSize; i++) {
          Object member = this.getAt(i);
-         if (member instanceof Object) {
+         if (member instanceof KeyProvider) {
             KeyProvider keyProvider = (KeyProvider)member;
             count += keyProvider.getKeys(context, keyArray, index + count, keyRequested);
          }
@@ -751,7 +753,7 @@ public final class AddressCardModelImpl
 
       for (int i = 0; i < acmSize; i++) {
          Object member = this.getAt(i);
-         if (member instanceof Object) {
+         if (member instanceof KeyProvider) {
             KeyProvider keyProvider = (KeyProvider)member;
             count += keyProvider.getKeys(context, keyArray, index + count, keyRequested);
          }
@@ -766,8 +768,8 @@ public final class AddressCardModelImpl
          Arrays.add(this._fields, member);
          int len = this._fields.length;
          if (len != 1) {
-            if (member instanceof Object) {
-               if (this._fields[0] instanceof Object) {
+            if (member instanceof PersonNameModel) {
+               if (this._fields[0] instanceof PersonNameModel) {
                   this._fields[0] = member;
                   Arrays.removeAt(this._fields, len - 1);
                   return;
@@ -776,20 +778,20 @@ public final class AddressCardModelImpl
                Object atCompanySlot = this._fields[1];
                System.arraycopy(this._fields, 0, this._fields, 1, len - 1 - 0);
                this._fields[0] = member;
-               if (atCompanySlot instanceof Object) {
+               if (atCompanySlot instanceof CompanyInfoModel) {
                   Object tmp = this._fields[1];
                   this._fields[1] = atCompanySlot;
                   this._fields[2] = tmp;
                   return;
                }
-            } else if (member instanceof Object) {
-               if (this._fields[0] instanceof Object) {
+            } else if (member instanceof CompanyInfoModel) {
+               if (this._fields[0] instanceof CompanyInfoModel) {
                   this._fields[0] = member;
                   Arrays.removeAt(this._fields, len - 1);
                   return;
                }
 
-               if (!(this._fields[1] instanceof Object)) {
+               if (!(this._fields[1] instanceof CompanyInfoModel)) {
                   System.arraycopy(this._fields, 1, this._fields, 2, len - 1 - 1);
                   this._fields[1] = member;
                   return;
@@ -802,7 +804,7 @@ public final class AddressCardModelImpl
                }
             } else if (len == 2) {
                Object tmp = this._fields[0];
-               if (tmp instanceof Object) {
+               if (tmp instanceof CompanyInfoModel) {
                   this._fields[0] = this._fields[1];
                   this._fields[1] = tmp;
                }
@@ -846,8 +848,8 @@ public final class AddressCardModelImpl
    @Override
    public final Object getDefault(Object current, Object context) {
       Object verbGroupIdObject = ContextObject.get(context, 6609423255094033855L);
-      if (verbGroupIdObject instanceof Object) {
-         int verbGroupId = verbGroupIdObject;
+      if (verbGroupIdObject instanceof Integer) {
+         int verbGroupId = (Integer)verbGroupIdObject;
          Object focusedModel = ContextObject.get(context, -8746885042893430564L);
          if (AddressCardUtilities.isApplicable(verbGroupId, focusedModel)) {
             return null;
@@ -876,7 +878,7 @@ public final class AddressCardModelImpl
          }
 
          if (model != null) {
-            Verb[] verbs = (Object[])ContextObject.get(context, 666175809445784644L);
+            Verb[] verbs = (Verb[])ContextObject.get(context, 666175809445784644L);
             if (verbs != null && verbs.length > 0) {
                for (int i = verbs.length - 1; i >= 0; i--) {
                   Verb verb = verbs[i];
@@ -896,8 +898,8 @@ public final class AddressCardModelImpl
    @Override
    public final Object updateDefault(Object newdefault, Object context) {
       Object verbGroupIdObject = ContextObject.get(context, 6609423255094033855L);
-      if (verbGroupIdObject instanceof Object) {
-         int verbGroupId = verbGroupIdObject;
+      if (verbGroupIdObject instanceof Integer) {
+         int verbGroupId = (Integer)verbGroupIdObject;
          int index = this.getIndex(newdefault);
          if (index != -1) {
             LastUsedHintManager.put(this._uid, verbGroupId, index, verbGroupId != 1187214);
@@ -918,7 +920,7 @@ public final class AddressCardModelImpl
 
       for (int i = 0; i < numSubmembers; i++) {
          Object object = this._fields[i];
-         if (object instanceof Object) {
+         if (object instanceof EncryptableProvider) {
             EncryptableProvider encryptable = (EncryptableProvider)object;
             if (!encryptable.checkCrypt(compress, encrypt)) {
                return false;
@@ -936,7 +938,7 @@ public final class AddressCardModelImpl
 
       for (int i = 0; i < numSubmembers; i++) {
          Object object = newModel._fields[i];
-         if (object instanceof Object) {
+         if (object instanceof EncryptableProvider) {
             EncryptableProvider encryptable = (EncryptableProvider)object;
             Object newObject = encryptable.reCrypt(compress, encrypt);
             if (newObject != null) {
@@ -1002,16 +1004,16 @@ public final class AddressCardModelImpl
                context = ContextObject.clone(context);
                context.put(-4241241545455759532L, mimeType);
                context.put(5473606008898265655L, istream);
-               context.put(-4886909117188079897L, ((StringBuffer)(new Object())).append(istream.toString()).append(".vcf").toString());
+               context.put(-4886909117188079897L, istream.toString() + ".vcf");
 
                for (int idx = vcardVerbs.length - 1; idx >= 0; idx--) {
                   Verb verb = vcardVerbs[idx];
-                  if (!(verb instanceof Object) || ((ConditionalVerb)verb).canInvoke(context)) {
-                     if (verb instanceof Object) {
+                  if (!(verb instanceof ConditionalVerb) || ((ConditionalVerb)verb).canInvoke(context)) {
+                     if (verb instanceof Copyable) {
                         verb = (Verb)((Copyable)verb).copy();
                      }
 
-                     verb = (Verb)(new Object(verb, context, verb.getOrdering()));
+                     verb = new WrapperVerb(verb, context, verb.getOrdering());
                      int len = verbs.length;
                      Array.resize(verbs, len + 1);
                      verbs[len] = verb;
@@ -1024,8 +1026,8 @@ public final class AddressCardModelImpl
 
    private final void addActivityLogVerb(Verb[] verbs) {
       if (this._showActivityLog && !ApplicationManager.getApplicationManager().isSystemLocked() && this.isValid()) {
-         Verb activityLogVerb = (Verb)(new Object());
-         if (activityLogVerb instanceof Object) {
+         Verb activityLogVerb = new ActivityLogVerb();
+         if (activityLogVerb instanceof SetParameter) {
             ((SetParameter)activityLogVerb).setParameter(this.toString());
             Arrays.add(verbs, activityLogVerb);
          }
@@ -1034,12 +1036,12 @@ public final class AddressCardModelImpl
 
    @Override
    public final boolean equals(Object o) {
-      return this == o ? true : o instanceof Object && ((AddressCardElement)o).getUID() == this._uid;
+      return this == o ? true : o instanceof AddressCardModel && ((AddressCardModel)o).getUID() == this._uid;
    }
 
    AddressCardModelImpl(Object initialData) {
       this();
-      if (!(initialData instanceof Object)) {
+      if (!(initialData instanceof AddressCardModel)) {
          if (initialData != null) {
             ContextObject contextObject = ContextObject.verifyNonNull(initialData);
             if (contextObject.get(253) != null) {

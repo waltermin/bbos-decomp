@@ -9,7 +9,7 @@ public class Slide extends Manager {
    private int _slideStyle;
    private Field _imageComponent;
    private ActiveRichTextFieldWrapper _textComponent;
-   private Region _imageRegion = (Region)(new Object(163624922399113216L));
+   private Region _imageRegion = new Region(163624922399113216L);
    private Region _textRegion;
    public static final int DEFAULT_STYLE = 0;
    public static final int MISSING_IMG_STYLE = 1;
@@ -19,7 +19,7 @@ public class Slide extends Manager {
       this._imageRegion.setBackgroundColor(imageRegionBackgroundColor);
       this._imageRegion.setFit(4);
       this.add(this._imageRegion);
-      this._textRegion = (Region)(new Object(163624922399113216L));
+      this._textRegion = new Region(163624922399113216L);
       this._textRegion.setFit(8);
       this._textRegion.setBackgroundColor(textRegionBackgroundColor);
       this.add(this._textRegion);
@@ -79,7 +79,7 @@ public class Slide extends Manager {
       int imageWidth = 0;
       int imageHeight = 0;
       if (this._imageComponent != null) {
-         if (!(this._imageComponent instanceof Object)) {
+         if (!(this._imageComponent instanceof ScalableBitmapField)) {
             imageWidth = this._imageComponent.getPreferredWidth();
             imageHeight = this._imageComponent.getPreferredHeight();
          } else {

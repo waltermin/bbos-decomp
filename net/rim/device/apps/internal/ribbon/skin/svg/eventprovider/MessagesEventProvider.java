@@ -14,7 +14,7 @@ class MessagesEventProvider extends CountEventProvider {
 
    static void initialize() {
       _ucHelper = new UnreadCountListenerHelper();
-      _events = (ToIntHashtable)(new Object(10));
+      _events = new ToIntHashtable(10);
       _events.put("new_email", 0);
       _events.put("no_new_email", 0);
       _events.put("new_email_visible", 0);

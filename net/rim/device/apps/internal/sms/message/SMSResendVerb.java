@@ -47,6 +47,6 @@ public class SMSResendVerb extends Verb {
 
    protected ContextObject finalizeInvoke() {
       MessagingUtil.showMessageAppServiceView("SMSFolder");
-      return (ContextObject)(new Object(39));
+      return new ContextObject(39);
    }
 }

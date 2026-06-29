@@ -15,7 +15,7 @@ public final class DevicePassword extends Password {
 
    public final boolean setPassword(String password) {
       if (this.isPasswordEnabled()) {
-         throw new Object("Device Password is already set");
+         throw new RuntimeException("Device Password is already set");
       }
 
       try {

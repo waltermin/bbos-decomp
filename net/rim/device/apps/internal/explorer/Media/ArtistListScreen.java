@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.explorer.Media;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.KeywordFilterCollectionListField;
+import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.apps.internal.explorer.Media.verbs.SelectMediaVerb;
 import net.rim.device.apps.internal.explorer.MediaLibrary.Artist;
@@ -51,7 +52,7 @@ public final class ArtistListScreen extends MediaListScreen {
       if (type != 2) {
          Genre genre = (Genre)super._contextInfo.getData(8);
          if (genre != null) {
-            String[] keywords = new Object[0];
+            String[] keywords = new String[0];
             switch (type) {
                case 10:
                   Arrays.append(keywords, genre.getPrefixedKeywords());
@@ -98,7 +99,7 @@ public final class ArtistListScreen extends MediaListScreen {
    @Override
    protected final void invoke() {
       Field field = this.getLeafFieldWithFocus();
-      if (field instanceof Object) {
+      if (field instanceof ListField) {
          Artist artist = (Artist)this.getSelectedObject();
          Genre genre = (Genre)super._contextInfo.getData(8);
          SelectionListener listener = this.getSelectionListener();

@@ -127,7 +127,7 @@ public final class TransmissionStatus {
       if (message == null) {
          if (_statusToResourceIdMap == null) {
             _rb = ResourceBundle.getBundle(7150616992537201530L, "net.rim.device.apps.internal.resource.TransmissionStatus");
-            _statusToResourceIdMap = (IntIntHashtable)(new Object());
+            _statusToResourceIdMap = new IntIntHashtable();
             int count = _statusToResourceIdMapInitData.length;
 
             for (int i = 0; i < count; i += 2) {

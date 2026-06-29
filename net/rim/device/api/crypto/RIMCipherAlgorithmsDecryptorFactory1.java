@@ -11,13 +11,13 @@ final class RIMCipherAlgorithmsDecryptorFactory1 extends DecryptorFactory {
    }
 
    @Override
-   protected final Object create(String algorithm, String nextAlgorithm, Key key, InputStream stream, InitializationVector iv) {
+   protected final Object create(String algorithm, String nextAlgorithm, Key key, InputStream stream, InitializationVector iv) throws NoSuchAlgorithmException {
       if (algorithm.equals("ARC4") || algorithm.equals("RC4")) {
          return new ARC4PseudoRandomSource((ARC4Key)key);
       } else if (algorithm.equals("PKCS5")) {
          return new PKCS5UnformatterEngine(DecryptorFactory.getBlockDecryptorEngine(key, nextAlgorithm, iv));
       } else {
-         throw new Object(algorithm);
+         throw new NoSuchAlgorithmException(algorithm);
       }
    }
 }

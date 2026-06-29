@@ -28,7 +28,7 @@ final class SMILRenderingConverter extends BrowserContentProvider {
       RenderingOptions renderingOptions = providerContext.getRenderingSession().getRenderingOptions();
       HttpConnection httpConnection = providerContext.getHttpConnection();
       int flags = providerContext.getFlags();
-      BrowserContentBaseImpl browserContent = (BrowserContentBaseImpl)(new Object(httpConnection.getURL(), null, renderingApplication, renderingOptions, flags));
+      BrowserContentBaseImpl browserContent = new BrowserContentBaseImpl(httpConnection.getURL(), null, renderingApplication, renderingOptions, flags);
       Field field = new SMILBrowserField(browserContent, httpConnection);
       browserContent.setContent(field);
       return browserContent;

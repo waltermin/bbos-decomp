@@ -23,8 +23,6 @@ final class LocationEditDialog$1 extends LBSMenuItem {
          this.this$0._folder = FavouritesManager.getRootFolder();
       }
 
-      this.this$0
-         ._folderField
-         .setText(((StringBuffer)(new Object())).append(LBSResources.getString(315)).append(' ').append(this.this$0._folder.getFriendlyName()).toString());
+      this.this$0._folderField.setText(LBSResources.getString(315) + ' ' + this.this$0._folder.getFriendlyName());
    }
 }

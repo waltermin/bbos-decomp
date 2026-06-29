@@ -278,7 +278,7 @@ final class TaskCollectionImpl
 
    private final synchronized void initialize() {
       if (this._data == null) {
-         this._data = (SimplePersistentSyncCollection$SimpleData)(new Object(16));
+         this._data = new SimplePersistentSyncCollection$SimpleData(16);
          super._persistentObject.setContents(this._data, 51);
          this.commit();
       }
@@ -347,7 +347,7 @@ final class TaskCollectionImpl
    @Override
    public final synchronized SyncConverter getSyncConverter() {
       if (_syncConverter == null) {
-         _syncConverter = (RIMModelSyncConverter)(new Object(28, -8250775496544885030L));
+         _syncConverter = new RIMModelSyncConverter(28, -8250775496544885030L);
       }
 
       return _syncConverter;

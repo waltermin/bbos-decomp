@@ -7,6 +7,7 @@ import net.rim.device.api.system.KeyListener;
 import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.menu.MenuScreen;
 import net.rim.device.apps.api.framework.model.ActionProvider;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.vm.Process;
@@ -48,14 +49,14 @@ final class PlayerApplication extends UiApplication implements GlobalEventListen
    @Override
    public final void eventOccurred(long guid, int data0, int data1, Object object0, Object object1) {
       if (guid == -2364922203810937362L) {
-         if (object0 instanceof Object) {
+         if (object0 instanceof InputConnection) {
             InputConnection connection = (InputConnection)object0;
             this.invoke(connection, object1);
          }
 
          this._exitOnEscape = ContextObject.getFlag(object1, 39) && !ContextObject.getFlag(object1, 40);
          Object waitingScreen = ContextObject.get(object1, -1477447097671931650L);
-         if (waitingScreen instanceof Object) {
+         if (waitingScreen instanceof ActionProvider) {
             this._actionProvider = (ActionProvider)waitingScreen;
          }
 
@@ -95,7 +96,7 @@ final class PlayerApplication extends UiApplication implements GlobalEventListen
       boolean isEnd = Keypad.key(keycode) == 18;
       if ((isEscape || isEnd) && this._exitOnEscape) {
          Screen screen = this.getActiveScreen();
-         if (!(screen instanceof Object)) {
+         if (!(screen instanceof MenuScreen)) {
             new PlayerApplication$2(this, screen).start();
             return !isEnd;
          } else {

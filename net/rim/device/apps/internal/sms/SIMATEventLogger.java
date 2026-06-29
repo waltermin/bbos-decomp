@@ -25,12 +25,12 @@ final class SIMATEventLogger implements SIMATEventViewerEvents {
    }
 
    public static final synchronized void log(int eventCode, Exception e) {
-      String data = ((StringBuffer)(new Object())).append(getString(eventCode)).append(": ").append(e.toString()).toString();
+      String data = getString(eventCode) + ": " + e.toString();
       EventLogger.logEvent(-1591633741170059587L, data.getBytes(), 2);
    }
 
    private static final String getString(int eventCode) {
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
       switch (eventCode) {
          case -1:
             sb.append("UnknownSIMATEventCode:");

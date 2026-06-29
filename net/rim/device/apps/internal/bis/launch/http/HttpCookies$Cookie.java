@@ -19,6 +19,6 @@ final class HttpCookies$Cookie {
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object())).append(this.name).append("=").append(this.value).toString();
+      return this.name + "=" + this.value;
    }
 }

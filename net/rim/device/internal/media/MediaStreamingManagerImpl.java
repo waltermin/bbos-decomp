@@ -54,7 +54,7 @@ public class MediaStreamingManagerImpl extends MediaStreamingManager {
          Audio.addListener(Proxy.getInstance(), this._listener);
          Proxy.getInstance().addGlobalEventListener(this._listener);
       } else {
-         throw new Object("Number of stream sessions, buffers and channels do not match!");
+         throw new IllegalStateException("Number of stream sessions, buffers and channels do not match!");
       }
    }
 

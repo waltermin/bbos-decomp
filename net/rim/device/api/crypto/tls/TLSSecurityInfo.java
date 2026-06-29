@@ -23,7 +23,7 @@ public class TLSSecurityInfo implements SecurityInfo {
       } else if (this._remoteVersion == 769) {
          return "3.1";
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -34,13 +34,13 @@ public class TLSSecurityInfo implements SecurityInfo {
       } else if (this._remoteVersion == 769) {
          return "TLS";
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
    public String getCipherSuite() {
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       switch (this._cipherSuite) {
          case 0:
          case 28:

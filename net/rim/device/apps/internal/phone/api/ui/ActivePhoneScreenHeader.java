@@ -64,13 +64,13 @@ public final class ActivePhoneScreenHeader extends Manager {
       if (space != -1 && PhoneUtilities.smallMonoScreen()) {
          String line1 = labelString.substring(0, space);
          String line2 = labelString.substring(space + 1, labelString.length());
-         VerticalFieldManager vfm = (VerticalFieldManager)(new Object());
-         vfm.add((Field)(new Object(line1)));
-         vfm.add((Field)(new Object(line2)));
+         VerticalFieldManager vfm = new VerticalFieldManager();
+         vfm.add(new LabelField(line1));
+         vfm.add(new LabelField(line2));
          PhoneUtilities.updateFont(vfm, Font.getDefault().derive(0, 10, 3));
          return vfm;
       } else {
-         LabelField dcLabel = (LabelField)(new Object(labelString, 1152921504606846976L));
+         LabelField dcLabel = new LabelField(labelString, 1152921504606846976L);
          dcLabel.setFont(Font.getDefault().derive(0, 10, 3));
          return dcLabel;
       }
@@ -181,7 +181,7 @@ public final class ActivePhoneScreenHeader extends Manager {
                return;
             }
 
-            if (field instanceof Object) {
+            if (field instanceof LabelField) {
                ((LabelField)field).setText(this.getDirectConnectLabel());
             }
          }

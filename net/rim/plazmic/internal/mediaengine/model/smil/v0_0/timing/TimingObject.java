@@ -45,7 +45,7 @@ public class TimingObject {
 
    public void setDur(long dur) {
       if (dur < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._dur = dur;
@@ -62,7 +62,7 @@ public class TimingObject {
    public void setFill(int fill) {
       switch (fill) {
          case 0:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 1:
          case 2:
          default:

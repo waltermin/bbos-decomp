@@ -23,7 +23,7 @@ public class SMSComposeVerb extends ShowMessageAppVerb implements SetParameter, 
 
    @Override
    public void setParameter(Object context) {
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          this._context = (ContextObject)context;
          if (ContextObject.getFlag(context, 7)) {
             super._ordering = 327984;
@@ -36,7 +36,7 @@ public class SMSComposeVerb extends ShowMessageAppVerb implements SetParameter, 
             this._useSmartDialing = true;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -61,8 +61,8 @@ public class SMSComposeVerb extends ShowMessageAppVerb implements SetParameter, 
 
       if (model != null) {
          String description = null;
-         if (model instanceof Object) {
-            if (context instanceof Object && this._addressCard != null) {
+         if (model instanceof VerbDescriptionProvider) {
+            if (context instanceof ContextObject && this._addressCard != null) {
                ContextObject.put(context, 252, this._addressCard);
             }
 
@@ -72,7 +72,7 @@ public class SMSComposeVerb extends ShowMessageAppVerb implements SetParameter, 
          }
 
          if (!ContextObject.getFlag(context, 51) && !ContextObject.getFlag(context, 63)) {
-            StringBuffer sb = (StringBuffer)(new Object(SMSResources.getString(192)));
+            StringBuffer sb = new StringBuffer(SMSResources.getString(192));
             sb.append(' ');
             sb.append(description);
             description = sb.toString();

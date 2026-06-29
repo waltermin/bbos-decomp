@@ -43,10 +43,10 @@ public final class WMLAnchorVerb extends TaskContainer {
    public final Object invoke(Object context) {
       if (this._verb != null) {
          if (context == null) {
-            context = new Object();
+            context = new ContextObject();
          }
 
-         Verb[] verbArray = new Object[]{this._verb};
+         Verb[] verbArray = new Verb[]{this._verb};
          ContextObject.put(context, 666175809445784644L, verbArray);
       }
 
@@ -110,7 +110,7 @@ public final class WMLAnchorVerb extends TaskContainer {
          return title;
       }
 
-      StringBuffer temp = (StringBuffer)(new Object(title));
+      StringBuffer temp = new StringBuffer(title);
       temp.append(" (");
       temp.append(BrowserResources.getString(100));
       temp.append(')');

@@ -2,14 +2,18 @@ package net.rim.device.cldc.io.simultcp;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InterruptedIOException;
 import java.io.OutputStream;
 import javax.microedition.io.Connection;
 import javax.microedition.io.Datagram;
 import javax.microedition.io.SocketConnection;
 import net.rim.device.api.io.ConnectionCloseListener;
 import net.rim.device.api.io.ConnectionCloseProvider;
+import net.rim.device.api.io.ConnectionClosedException;
 import net.rim.device.api.io.DatagramAddressBase;
+import net.rim.device.api.io.IOCancelledException;
 import net.rim.device.api.io.SocketConnectionEnhanced;
 import net.rim.device.api.system.ControlledAccess;
 import net.rim.device.api.system.EventLogger;
@@ -67,13 +71,13 @@ public final class Protocol
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final Connection openPrim(String name, int mode, boolean timeouts) {
+   public final Connection openPrim(String name, int mode, boolean timeouts) throws IOException {
       if ((mode & 3) != mode) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       try {
-         String[] args = new Object[3];
+         String[] args = new String[3];
          this._connectTimeout = StreamDatagramAddressBase.retrieveSettings(name, args);
          int sessionTimeout = StreamDatagramAddressBase.retrieveSessionTimeout(name);
          String n = StringUtilities.toLowerCase(name, 1701707776);
@@ -94,7 +98,7 @@ public final class Protocol
          try {
             if (super._myAddress.isListenAddress()) {
                if (!TunnelCredentialsProvider.getInstance().isIncomingSocketsAllowed()) {
-                  throw new Object("Tcp ServerSocketsConnections not allowed");
+                  throw new IOException("Tcp ServerSocketsConnections not allowed");
                }
 
                try {
@@ -130,10 +134,10 @@ public final class Protocol
             }
 
             if (!TunnelCredentialsProvider.getInstance().isOutgoingSocketsAllowed()) {
-               throw new Object("Tcp SocketConnections not allowed");
+               throw new IOException("Tcp SocketConnections not allowed");
             }
          } catch (Throwable var40) {
-            throw new Object(e.toString());
+            throw new IllegalArgumentException(e.toString());
          }
 
          super.openPrim(name, mode, timeouts);
@@ -156,7 +160,7 @@ public final class Protocol
             if (var21) {
                EventLogger.logEvent(447071754022829032L, 1413696867, 0);
                TcpUtils.logConnectionDatabase();
-               throw new Object("Max connections opened.");
+               throw new IOException("Max connections opened.");
             }
          }
 
@@ -177,23 +181,23 @@ public final class Protocol
             SimulTcpProcess.getInstance().startThread(this.sendThread);
             return this;
          } else {
-            throw new Object("Unable to open connection");
+            throw new IOException("Unable to open connection");
          }
       } catch (Throwable var41) {
          this.nullConnection();
-         if (!(e instanceof Object)) {
-            throw new Object(e.getMessage());
+         if (!(e instanceof IOException)) {
+            throw new IOException(e.getMessage());
          } else {
-            throw (Object)e;
+            throw (IOException)e;
          }
       }
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public final Connection spawnNewConnectionForServerSocket(SimulTcpDatagramBase simulTcpDatagram, int mode, boolean timeouts) {
+   public final Connection spawnNewConnectionForServerSocket(SimulTcpDatagramBase simulTcpDatagram, int mode, boolean timeouts) throws IOException {
       super._isListenConnection = false;
-      String[] args = new Object[3];
+      String[] args = new String[3];
       boolean var7 = false /* VF: Semaphore variable */;
 
       try {
@@ -202,7 +206,7 @@ public final class Protocol
          var7 = false;
       } finally {
          if (var7) {
-            throw new Object("Malformed Address");
+            throw new IOException("Malformed Address");
          }
       }
 
@@ -234,17 +238,17 @@ public final class Protocol
       return this;
    }
 
-   public final void postAccept(int mode, boolean timeouts, int socketID) {
+   public final void postAccept(int mode, boolean timeouts, int socketID) throws IOException {
       this.socketID = socketID;
       int port;
       if ((port = RadioInternal.simulTCPCommand(10, socketID, 0, 0, 0)) < 0) {
-         throw new Object("Invalid port");
+         throw new IOException("Invalid port");
       }
 
       ((SimulTcpAddress)super._myAddress).setPort(port);
       int ipAddressAsInt;
       if ((ipAddressAsInt = RadioInternal.simulTCPCommand(8, socketID, 0, 0, 0)) < 0) {
-         throw new Object("Invalid ip");
+         throw new IOException("Invalid ip");
       }
 
       ((SimulTcpAddress)super._myAddress).setIpAddressAsInt(ipAddressAsInt);
@@ -392,9 +396,9 @@ public final class Protocol
       return super._myAddress == null ? false : super._myAddress.equals(address);
    }
 
-   final void addToOutputBuffer(byte[] output, int offset, int length) {
+   final void addToOutputBuffer(byte[] output, int offset, int length) throws IOException, ConnectionClosedException {
       if (this.throwIOException) {
-         throw new Object();
+         throw new IOException();
       }
 
       this.writeInProgress = true;
@@ -419,21 +423,21 @@ public final class Protocol
          }
 
          if (super._abortWasCalled) {
-            throw new Object();
+            throw new ConnectionClosedException();
          }
 
          if (this.throwIOException) {
             this.abort();
-            throw new Object();
+            throw new IOException();
          }
       } else {
-         throw new Object("OutputStream closed");
+         throw new IOException("OutputStream closed");
       }
    }
 
-   final int readFromInputBuffer(byte[] input, int offset, int length) {
+   final int readFromInputBuffer(byte[] input, int offset, int length) throws IOException {
       if (this.throwIOException) {
-         throw new Object("Connection aborted");
+         throw new IOException("Connection aborted");
       }
 
       this.readInProgress = true;
@@ -485,7 +489,7 @@ public final class Protocol
                            long timeBefore = System.currentTimeMillis();
                            this.receiveLock.wait(this._readTimeout);
                            if (this._readTimeout != 0 && timeBefore + this._readTimeout <= System.currentTimeMillis()) {
-                              throw new Object();
+                              throw new InterruptedIOException();
                            }
                         } finally {
                            break label163;
@@ -493,11 +497,11 @@ public final class Protocol
 
                         if (!this.WinsockBufferEmpty) {
                            if (this.closeInputCalled && this.receiveBuffer.getLength() < length) {
-                              throw new Object();
+                              throw new IOCancelledException();
                            }
 
                            if (super._abortWasCalled) {
-                              throw new Object();
+                              throw new ConnectionClosedException();
                            }
                            continue;
                         }
@@ -691,11 +695,11 @@ public final class Protocol
          try {
             apnNumber = RadioInfo.getAccessPointNumber(super._myAddress.getApnName(), 0, super._myAddress.getApnName().length());
          } catch (Throwable var14) {
-            throw new Object(e.getMessage());
+            throw new IOException(e.getMessage());
          }
 
          if (RadioInternal.simulTCPCommand(13, this.socketID, super._myAddress.getIpAddress(), super._myAddress.getDestPort(), apnNumber) != 0) {
-            throw new Object("Unable to open connection");
+            throw new IOException("Unable to open connection");
          }
 
          boolean var10 = false /* VF: Semaphore variable */;
@@ -732,9 +736,9 @@ public final class Protocol
       }
    }
 
-   public final int available() {
+   public final int available() throws ConnectionClosedException {
       if (this.closeCalled || this.receiveBuffer == null) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       if (this.userBytesToRead > 0) {
@@ -783,31 +787,31 @@ public final class Protocol
    }
 
    @Override
-   public final String getLocalAddress() {
+   public final String getLocalAddress() throws IOException {
       this.checkIfConnectionIsClosedClosingOrAborted();
       if (super._myAddress == null) {
-         throw new Object();
+         throw new IOException();
       } else {
          return StreamDatagramAddressBase.getLocalAddressInternal(super._myAddress.getApnName());
       }
    }
 
    @Override
-   public final int getPort() {
+   public final int getPort() throws IOException {
       this.checkIfConnectionIsClosedClosingOrAborted();
       int port = -1;
       if (this.socketID != -1 && (port = RadioInternal.simulTCPCommand(10, this.socketID, 0, 0, 0)) != -1) {
          return port;
       } else {
-         throw new Object();
+         throw new IOException();
       }
    }
 
    @Override
-   public final int getLocalPort() {
+   public final int getLocalPort() throws ConnectionClosedException {
       this.checkIfConnectionIsClosedClosingOrAborted();
       if (super._currentTcpState == 2) {
-         throw new Object();
+         throw new ConnectionClosedException();
       } else {
          return this.getLocalPortInternal();
       }
@@ -819,24 +823,24 @@ public final class Protocol
    }
 
    @Override
-   public final void setSocketOption(byte option, int value) {
+   public final void setSocketOption(byte option, int value) throws IOException, ConnectionClosedException {
       this.checkIfConnectionIsClosedClosingOrAborted();
       if (value < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (option != 0) {
          switch (option) {
             case 0:
-               throw new Object();
+               throw new IllegalArgumentException();
             case 1:
             default:
                if (value < 0) {
-                  throw new Object();
+                  throw new IllegalArgumentException();
                }
 
                if (this._sendThreadTerminated) {
-                  throw new Object();
+                  throw new ConnectionClosedException();
                }
 
                this.sendThread.setLingerPeriod(value);
@@ -847,32 +851,32 @@ public final class Protocol
                }
 
                if (this.socketID == -1 || RadioInternal.simulTCPCommand(6, this.socketID, 2, value, 0) == -1) {
-                  throw new Object();
+                  throw new IOException();
                }
                break;
             case 3:
                if (value < 0) {
-                  throw new Object();
+                  throw new IllegalArgumentException();
                }
 
                if (this.socketID == -1 || RadioInternal.simulTCPCommand(6, this.socketID, 3, value, 0) == -1) {
-                  throw new Object();
+                  throw new IOException();
                }
                break;
             case 4:
                if (value < 0) {
-                  throw new Object();
+                  throw new IllegalArgumentException();
                }
 
                if (this.socketID == -1 || RadioInternal.simulTCPCommand(6, this.socketID, 4, value, 0) == -1) {
-                  throw new Object();
+                  throw new IOException();
                }
          }
       }
    }
 
    @Override
-   public final int getSocketOption(byte option) {
+   public final int getSocketOption(byte option) throws IOException {
       this.checkIfConnectionIsClosedClosingOrAborted();
       if (option == 0) {
          return -1;
@@ -880,11 +884,11 @@ public final class Protocol
 
       switch (option) {
          case 0:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 1:
          default:
             if (this._sendThreadTerminated) {
-               throw new Object();
+               throw new IOException();
             }
 
             return (int)this.sendThread.getLingerPeriod();
@@ -894,20 +898,20 @@ public final class Protocol
                return tempx;
             }
 
-            throw new Object();
+            throw new IOException();
          case 3:
             int var4 = -1;
             if (this.socketID != -1 && (var4 = RadioInternal.simulTCPCommand(7, this.socketID, 3, 0, 0)) != -1) {
                return var4;
             }
 
-            throw new Object();
+            throw new IOException();
          case 4:
             int temp = -1;
             if (this.socketID != -1 && (temp = RadioInternal.simulTCPCommand(7, this.socketID, 4, 0, 0)) != -1) {
                return temp;
             } else {
-               throw new Object();
+               throw new IOException();
             }
       }
    }
@@ -929,35 +933,35 @@ public final class Protocol
    }
 
    @Override
-   public final InputStream openInputStream() {
+   public final InputStream openInputStream() throws IOException {
       if (!this.closeCalled
          && super._inStream != null
          && !((SimulTcpInputStream)super._inStream).isClosed()
          && (!this.WinsockBufferEmpty || this.receiveBuffer.getLength() != 0)) {
          if (this.inStreamCreated) {
-            throw new Object("Input stream already open");
+            throw new IOException("Input stream already open");
          }
 
          this.inStreamCreated = true;
          return super._inStream;
       } else {
-         throw new Object(StreamDatagramConnectionBase.STR_STREAM_IS_ALREADY_CLOSED);
+         throw new IOException(StreamDatagramConnectionBase.STR_STREAM_IS_ALREADY_CLOSED);
       }
    }
 
    @Override
    public final DataInputStream openDataInputStream() {
-      return (DataInputStream)(new Object(this.openInputStream()));
+      return new DataInputStream(this.openInputStream());
    }
 
    @Override
-   public final OutputStream openOutputStream() {
+   public final OutputStream openOutputStream() throws IOException {
       if (this.closeCalled || super._outStream == null || ((SimulTcpOutputStream)super._outStream).isClosed() || this._sendThreadTerminated) {
-         throw new Object(StreamDatagramConnectionBase.STR_STREAM_IS_ALREADY_CLOSED);
+         throw new IOException(StreamDatagramConnectionBase.STR_STREAM_IS_ALREADY_CLOSED);
       }
 
       if (this.outStreamCreated) {
-         throw new Object("Stream already open");
+         throw new IllegalArgumentException("Stream already open");
       }
 
       this.outStreamCreated = true;
@@ -966,13 +970,13 @@ public final class Protocol
 
    @Override
    public final DataOutputStream openDataOutputStream() {
-      return (DataOutputStream)(new Object(this.openOutputStream()));
+      return new DataOutputStream(this.openOutputStream());
    }
 
    @Override
-   protected final void checkIfConnectionIsClosedClosingOrAborted() {
+   protected final void checkIfConnectionIsClosedClosingOrAborted() throws ConnectionClosedException {
       if (this.closeCalled || this.socketID == -1 || super._currentTcpState == 0) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
    }
 

@@ -212,7 +212,7 @@ public final class VCardWriter extends TokenWriter implements VCardDefine {
          this.addPropertyTag("END:VCARD");
          this.addLineBreak();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -299,7 +299,7 @@ public final class VCardWriter extends TokenWriter implements VCardDefine {
       if (this._version != 1) {
          int classid = this._vCard.getClassId();
          if (classid != 0) {
-            String str = ((StringBuffer)(new Object("CLASS:"))).append(getString(64205144, classid)).toString();
+            String str = "CLASS:" + getString(64205144, classid);
             this.addPropertyTag(str);
             this.addLineBreak();
          }
@@ -393,8 +393,8 @@ public final class VCardWriter extends TokenWriter implements VCardDefine {
       if (date != null) {
          Calendar calendar = Calendar.getInstance();
          calendar.setTime(date);
-         SimpleDateFormat sdf = (SimpleDateFormat)(new Object("yyyy-MM-dd'T'hh:mm:ss'Z'"));
-         StringBuffer dateSB = (StringBuffer)(new Object());
+         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'");
+         StringBuffer dateSB = new StringBuffer();
          sdf.format(calendar, dateSB, null);
          this.addProperty(typeStr, dateSB.toString());
       }
@@ -428,7 +428,7 @@ public final class VCardWriter extends TokenWriter implements VCardDefine {
       if (imageData != null) {
          this.addPropertyTag(typeStr);
          if (type != 0) {
-            String str = ((StringBuffer)(new Object())).append(getString(property, type)).append(";").toString();
+            String str = getString(property, type) + ";";
             this.addString(str);
          }
 
@@ -457,7 +457,7 @@ public final class VCardWriter extends TokenWriter implements VCardDefine {
       if (keyData != null) {
          int type = this._vCard.getKeyType();
          int value = this._vCard.getKeyValue();
-         StringBuffer typeStr = (StringBuffer)(new Object());
+         StringBuffer typeStr = new StringBuffer();
          if (value == 0) {
             if (type == 0) {
                typeStr.append("KEY:");
@@ -723,11 +723,11 @@ public final class VCardWriter extends TokenWriter implements VCardDefine {
 
    private final void buildEXTENSION() {
       if (this._vCard.hasExtension()) {
-         StringBuffer name = (StringBuffer)(new Object("X-"));
+         StringBuffer name = new StringBuffer("X-");
          name.append(this._vCard.getExtensionName(1));
          String content = this._vCard.getExtensionData(1);
          if (name.length() == 2 || content == null) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          name.append(':');
@@ -740,7 +740,7 @@ public final class VCardWriter extends TokenWriter implements VCardDefine {
          }
 
          while (this._vCard.hasNextExtension()) {
-            name = (StringBuffer)(new Object("X-"));
+            name = new StringBuffer("X-");
             name.append(this._vCard.getExtensionName(2));
             content = this._vCard.getExtensionData(2);
             name.append(':');

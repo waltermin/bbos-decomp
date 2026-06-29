@@ -32,7 +32,7 @@ final class DownloadHandler extends XMLToObjectHandler implements BISServiceCons
       digest = digest.trim();
       int digestStringLength = digest.length();
       if (digestStringLength != expectedDigestBytes << 1) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       byte[] sha256DigestBytes = new byte[expectedDigestBytes];
@@ -47,7 +47,7 @@ final class DownloadHandler extends XMLToObjectHandler implements BISServiceCons
 
          return sha256DigestBytes;
       } finally {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

@@ -31,7 +31,7 @@ public final class MMSChangeStatusVerb extends Verb {
          MessageListOptions options = MessageListOptions.getOptions();
          if (options.isKeepSavedMessagesDurationDefinedByItPolicy()) {
             int durationFromItPolicy = options.getKeepSavedMessagesDuration();
-            StringBuffer sb = (StringBuffer)(new Object());
+            StringBuffer sb = new StringBuffer();
             sb.append(CommonResources.getString(9167));
             sb.append(" ");
             if (durationFromItPolicy == -1) {

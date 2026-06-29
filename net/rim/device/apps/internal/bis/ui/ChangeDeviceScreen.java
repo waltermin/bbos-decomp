@@ -27,7 +27,7 @@ public final class ChangeDeviceScreen extends UserSettingsScreen {
       this.setTitle(ApplicationResources.getString(4));
       this.addContentField(new BoldLabelField(ApplicationResources.getString(26)));
       String currentPIN = ClientSessionState.getInstance().getUserInfo().getPIN();
-      this._pinEdit = (BasicEditField)(new Object(null, currentPIN));
+      this._pinEdit = new BasicEditField(null, currentPIN);
       this.addContentField(this._pinEdit, true);
       String hardwareIDType = null;
       if (RadioInfo.getNetworkType() == 4) {
@@ -36,9 +36,9 @@ public final class ChangeDeviceScreen extends UserSettingsScreen {
          hardwareIDType = ApplicationResources.getString(201);
       }
 
-      String imeiEsnLabel = MessageFormat.format(ApplicationResources.getString(27), new Object[]{hardwareIDType});
+      String imeiEsnLabel = MessageFormat.format(ApplicationResources.getString(27), new String[]{hardwareIDType});
       this.addContentField(new BoldLabelField(imeiEsnLabel));
-      this._imeiEdit = (BasicEditField)(new Object(null, null));
+      this._imeiEdit = new BasicEditField(null, null);
       this.addContentField(this._imeiEdit, true);
       Button cancelButton = new Button(ApplicationResources.getString(28));
       Button saveButton = new Button(ApplicationResources.getString(29));
@@ -72,7 +72,7 @@ public final class ChangeDeviceScreen extends UserSettingsScreen {
          hardwareIDType = ApplicationResources.getString(201);
       }
 
-      String imeiEsnMissingMessage = MessageFormat.format(ApplicationResources.getString(200), new Object[]{hardwareIDType});
+      String imeiEsnMissingMessage = MessageFormat.format(ApplicationResources.getString(200), new String[]{hardwareIDType});
       this.setError(imeiEsnMissingMessage);
       return false;
    }

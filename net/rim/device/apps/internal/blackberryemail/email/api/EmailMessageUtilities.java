@@ -21,7 +21,7 @@ import net.rim.device.internal.proxy.Proxy;
 
 public final class EmailMessageUtilities {
    public static final byte CMIME_ATTACHMENT_DATA = 1;
-   private static ContextObject _immediateContext = (ContextObject)(new Object());
+   private static ContextObject _immediateContext = new ContextObject();
    private static ContextObject _immediateContextForLevel1 = ContextObject.clone(_immediateContext);
    private static Proxy _proxy = Proxy.getInstance();
    private static EmailMessageUtilities$CancelImmediateEvent _cancelImmediateEvent = new EmailMessageUtilities$CancelImmediateEvent();
@@ -48,7 +48,7 @@ public final class EmailMessageUtilities {
    }
 
    private static final ContextObject getDeferredNotificationsContext(EmailMessageModel model, boolean receivingMore, long viewedId, Object context) {
-      ContextObject deferredContext = (ContextObject)(new Object());
+      ContextObject deferredContext = new ContextObject();
       deferredContext.setFlag(65);
       if (treatAsLevel1(model)) {
          deferredContext.setFlag(68);
@@ -74,7 +74,7 @@ public final class EmailMessageUtilities {
       AddressReference ar = model.getSenderInfo();
       if (ar != null) {
          int addresscardUID = (int)ar.getAddressBookEntryLUID();
-         ContextObject.put(immediateContext, -7004855975111283545L, new Object(addresscardUID));
+         ContextObject.put(immediateContext, -7004855975111283545L, new Integer(addresscardUID));
          NewMessageEventManager.addFlag(1, addresscardUID);
       }
 
@@ -203,7 +203,7 @@ public final class EmailMessageUtilities {
       }
 
       address = address.trim();
-      EmailAddressTextFilter textFilter = (EmailAddressTextFilter)(new Object());
+      EmailAddressTextFilter textFilter = new EmailAddressTextFilter();
       boolean valid = true;
       int i = 0;
 

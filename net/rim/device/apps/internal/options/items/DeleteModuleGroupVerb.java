@@ -34,10 +34,10 @@ final class DeleteModuleGroupVerb extends Verb {
    public final Object invoke(Object parameter) {
       CodeModuleGroup[] allGroups = CodeModuleGroupManager.loadAll();
       if (allGroups == null) {
-         allGroups = new Object[0];
+         allGroups = new CodeModuleGroup[0];
       }
 
-      Vector groupsToDelete = (Vector)(new Object());
+      Vector groupsToDelete = new Vector();
       int[] handles = getModuleHandles(this._cmg, allGroups);
       groupsToDelete.addElement(new GroupHolder(this._cmg, handles));
       getDependencies(groupsToDelete, this._cmg.getName(), allGroups);
@@ -55,7 +55,7 @@ final class DeleteModuleGroupVerb extends Verb {
 
          for (int j = moduleHandles.length - 1; j >= 0; j--) {
             if (ApplicationControl.isRequiredApp(moduleHandles[j])) {
-               Dialog.alert(MessageFormat.format(OptionsResources.getString(1490), new Object[]{this._cmg.getFriendlyName()}));
+               Dialog.alert(MessageFormat.format(OptionsResources.getString(1490), new String[]{this._cmg.getFriendlyName()}));
                return null;
             }
          }
@@ -77,7 +77,7 @@ final class DeleteModuleGroupVerb extends Verb {
             String moduleName = CodeModuleManager.getModuleName(moduleHandles[0]);
             String confirm = MIDletApplication.getAppProperty(moduleName, "MIDlet-Delete-Confirm", false);
             ApplicationDescriptor[] ads = CodeModuleManager.getApplicationDescriptors(moduleHandles[0]);
-            StringBuffer sb = (StringBuffer)(new Object(OptionsResources.getString(1923)));
+            StringBuffer sb = new StringBuffer(OptionsResources.getString(1923));
             if (confirm != null) {
                sb.append(' ');
                sb.append(confirm);
@@ -113,8 +113,7 @@ final class DeleteModuleGroupVerb extends Verb {
             if (attributeDividerIndex != -1) {
                String midletName = groupName.substring(0, attributeDividerIndex);
                String midletVendor = groupName.substring(attributeDividerIndex + 1, groupName.length());
-               ((RecordStoreManagerProxy)ApplicationRegistry.getApplicationRegistry()
-                  .waitFor(6635119920104263588L))
+               ((RecordStoreManagerProxy)ApplicationRegistry.getApplicationRegistry().waitFor(6635119920104263588L))
                   .deleteRecordStores(midletName, midletVendor);
             }
          } else {

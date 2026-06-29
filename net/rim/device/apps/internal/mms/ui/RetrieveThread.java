@@ -20,10 +20,10 @@ class RetrieveThread implements Runnable {
    public void run() {
       boolean var4 = false /* VF: Semaphore variable */;
 
-      Object conn;
+      HttpConnection conn;
       try {
          var4 = true;
-         conn = Connector.open(this._resource.getUrl());
+         conn = (HttpConnection)Connector.open(this._resource.getUrl());
          var4 = false;
       } finally {
          if (var4) {
@@ -31,7 +31,7 @@ class RetrieveThread implements Runnable {
          }
       }
 
-      this._resource.setHttpConnection((HttpConnection)conn);
+      this._resource.setHttpConnection(conn);
       this._browserContent.resourceReady(this._resource);
    }
 }

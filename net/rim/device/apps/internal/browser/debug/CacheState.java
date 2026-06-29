@@ -7,6 +7,7 @@ import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.container.MainScreen;
@@ -103,9 +104,9 @@ class CacheState implements DebugListItem, ListFieldCallback, KeyListener {
    @Override
    public Screen getScreen() {
       MainScreen screen = new CacheState$MyMainScreen(this);
-      screen.setTitle((Field)(new Object(BrowserResources.getString(this._titleId))));
+      screen.setTitle(new LabelField(BrowserResources.getString(this._titleId)));
       screen.addKeyListener(this);
-      this._fields = (ListField)(new Object(0));
+      this._fields = new ListField(0);
       this.refreshOptions();
       this._fields.setCallback(this);
       screen.add(this._fields);
@@ -120,7 +121,7 @@ class CacheState implements DebugListItem, ListFieldCallback, KeyListener {
    private void handleSave() {
       Screen s = UiApplication.getUiApplication().getActiveScreen();
       Field fieldWithFocus = s.getLeafFieldWithFocus();
-      if (fieldWithFocus instanceof Object) {
+      if (fieldWithFocus instanceof ListField) {
          int index = ((ListField)fieldWithFocus).getSelectedIndex();
          DebugListItem property = this.get(index);
          if (property != null) {
@@ -132,7 +133,7 @@ class CacheState implements DebugListItem, ListFieldCallback, KeyListener {
    private void handleSelection() {
       Screen s = UiApplication.getUiApplication().getActiveScreen();
       Field fieldWithFocus = s.getLeafFieldWithFocus();
-      if (fieldWithFocus instanceof Object) {
+      if (fieldWithFocus instanceof ListField) {
          int index = ((ListField)fieldWithFocus).getSelectedIndex();
          DebugListItem property = this.get(index);
          if (property != null) {
@@ -152,7 +153,7 @@ class CacheState implements DebugListItem, ListFieldCallback, KeyListener {
    private void handleDelete() {
       Screen s = UiApplication.getUiApplication().getActiveScreen();
       Field fieldWithFocus = s.getLeafFieldWithFocus();
-      if (fieldWithFocus instanceof Object) {
+      if (fieldWithFocus instanceof ListField) {
          int index = ((ListField)fieldWithFocus).getSelectedIndex();
          DebugListItem property = this.get(index);
          if (property != null) {
@@ -164,7 +165,7 @@ class CacheState implements DebugListItem, ListFieldCallback, KeyListener {
    private void handleExpire() {
       Screen s = UiApplication.getUiApplication().getActiveScreen();
       Field fieldWithFocus = s.getLeafFieldWithFocus();
-      if (fieldWithFocus instanceof Object) {
+      if (fieldWithFocus instanceof ListField) {
          int index = ((ListField)fieldWithFocus).getSelectedIndex();
          DebugListItem property = this.get(index);
          if (property != null) {

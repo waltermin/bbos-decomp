@@ -466,26 +466,26 @@ public final class AlertConsequence implements Consequence, SyncConverter {
                         byte[] tuneNameBytes = new byte[anEOFException];
                         aDataBuffer.read(tuneNameBytes);
                         if (!fqnOutOfHolsterProvided) {
-                           tuneNameOutOfHolster = (String)(new Object(tuneNameBytes));
+                           tuneNameOutOfHolster = new String(tuneNameBytes);
                         }
                         break;
                      case 10:
                         byte[] var22 = new byte[anEOFException];
                         aDataBuffer.read(var22);
                         if (!fqnInHolsterProvided) {
-                           tuneNameInHolster = (String)(new Object(var22));
+                           tuneNameInHolster = new String(var22);
                         }
                         break;
                      case 13:
                         byte[] var21 = new byte[anEOFException];
                         aDataBuffer.read(var21);
-                        tuneNameOutOfHolster = (String)(new Object(var21));
+                        tuneNameOutOfHolster = new String(var21);
                         fqnOutOfHolsterProvided = true;
                         break;
                      case 14:
                         byte[] tuneManager = new byte[anEOFException];
                         aDataBuffer.read(tuneManager);
-                        tuneNameInHolster = (String)(new Object(tuneManager));
+                        tuneNameInHolster = new String(tuneManager);
                         fqnInHolsterProvided = true;
                   }
                }

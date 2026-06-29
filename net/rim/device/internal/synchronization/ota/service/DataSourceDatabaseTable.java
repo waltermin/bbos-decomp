@@ -89,13 +89,13 @@ public final class DataSourceDatabaseTable implements Persistable, TLESerializab
    }
 
    public static final DataSourceDatabaseTable create(byte[] bytes) {
-      DataBuffer xDataBuffer = (DataBuffer)(new Object(bytes, 0, bytes.length, true));
+      DataBuffer xDataBuffer = new DataBuffer(bytes, 0, bytes.length, true);
       return create(xDataBuffer);
    }
 
    @Override
    public final String toString() {
-      StringBuffer xSb = (StringBuffer)(new Object());
+      StringBuffer xSb = new StringBuffer();
       xSb.append("[ Table ]").append('\n');
       xSb.append("ID= ").append(this._id).append('\n');
       xSb.append("Default=").append(this.isDefault()).append('\n');

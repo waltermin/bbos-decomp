@@ -36,7 +36,7 @@ public final class EScreenVMProcesses extends MainScreen implements Comparator, 
 
    public EScreenVMProcesses(Font font) {
       this.setFont(font);
-      this._list = (ListField)(new Object());
+      this._list = new ListField();
       this._list.setSize(0);
       this._list.setCallback(this);
       this.add(this._list);
@@ -63,7 +63,7 @@ public final class EScreenVMProcesses extends MainScreen implements Comparator, 
 
       this._processes = new EScreenVMProcesses$EScreenProcess[numProcesses + 1];
       this._processes[numProcesses] = new EScreenVMProcesses$EScreenProcess(this, null);
-      this._recentTimeWindow = Process.getRecentCPUTime((Process)((Object)null));
+      this._recentTimeWindow = Process.getRecentCPUTime((Process)null);
       this._totalUtilizedTime = 0;
 
       for (int i = numProcesses - 1; i >= 0; i--) {

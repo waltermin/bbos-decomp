@@ -37,7 +37,7 @@ public class MessageListColumnPainter extends ColumnPainter {
    private VariableHeightListField _listField;
    private int _y;
    private int _height;
-   private ContextObject _cachedContext = (ContextObject)(new Object());
+   private ContextObject _cachedContext = new ContextObject();
    private int _themeGeneration;
    private ThemeAttributeSet _themeAttributesHeader;
    private ThemeAttributeSet _themeAttributesLine1;
@@ -46,7 +46,7 @@ public class MessageListColumnPainter extends ColumnPainter {
    private ThemeAttributeSet _themeAttributesLine2Level1;
    private boolean _disableEllipses = false;
    private short _listSeparatorAppearance;
-   private static WeakReference _bufferWR = (WeakReference)(new Object(null));
+   private static WeakReference _bufferWR = new WeakReference(null);
    private static DateFormat _timeColumnFormat = DateFormat.getInstance(7);
    private static int _currentTimeFormat = DateTimeFormatOptions.getTimeFormat();
    private static int _cachedLocaleCode;
@@ -100,7 +100,7 @@ public class MessageListColumnPainter extends ColumnPainter {
 
    public int getRowHeight(Object model) {
       int height = this._fontHeight + (this.isLineSeparatorsMode() ? 1 : 0);
-      if (model instanceof Object) {
+      if (model instanceof ColumnPaintProvider) {
          height *= this._linesPerEntry;
       }
 
@@ -163,13 +163,13 @@ public class MessageListColumnPainter extends ColumnPainter {
       listField.setThemeAttributesSpecialClear(true);
       int linePadding = this.isLineSeparatorsMode() ? 1 : 0;
       int lineHeight = this._height + linePadding;
-      if (!(model instanceof Object)) {
+      if (!(model instanceof ColumnPaintProvider)) {
          if (model instanceof DateSeparator) {
             graphics.pushRegion(0, y, width, lineHeight, 0, 0);
             listField.setThemeAttributesSpecial(this._themeAttributesHeader, graphics);
             PaintProvider paintProvider = (PaintProvider)model;
             paintProvider.paint(graphics, 0, 0, width, lineHeight, this._cachedContext);
-         } else if (model instanceof Object) {
+         } else if (model instanceof PaintProvider) {
             graphics.pushRegion(0, y, width, lineHeight, 0, 0);
             this.setThemeAttributesForLine(listField, graphics, 0);
             listField.setThemeAttributesSpecialClear(false);
@@ -379,7 +379,7 @@ public class MessageListColumnPainter extends ColumnPainter {
                this.setThemeAttributesForLine(this._listField, this._graphics, 0);
             }
 
-            if (model instanceof Object) {
+            if (model instanceof PaintProvider) {
                PaintProvider paintProvider = (PaintProvider)model;
                ContextObject contextObject = ContextObject.castOrCreate(context);
                boolean originalEllipsis = ContextObject.getFlag(contextObject, 17);

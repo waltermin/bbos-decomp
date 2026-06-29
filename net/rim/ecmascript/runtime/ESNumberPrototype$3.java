@@ -32,7 +32,7 @@ class ESNumberPrototype$3 extends HostFunction {
          throw ThrownValue.rangeError(Resources.getString(34), Integer.toString(f), "toFixed");
       }
 
-      StringBuffer b = (StringBuffer)(new Object());
+      StringBuffer b = new StringBuffer();
       ParsedDouble fd = new ParsedDouble(d);
       if (fd.isNegative) {
          b.append('-');

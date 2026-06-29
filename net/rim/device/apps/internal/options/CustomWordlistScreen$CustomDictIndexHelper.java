@@ -11,11 +11,11 @@ final class CustomWordlistScreen$CustomDictIndexHelper implements KeywordIndexer
 
    @Override
    public final int getKeywords(Object element, String[] keywords) {
-      if (element instanceof Object) {
+      if (element instanceof String) {
          keywords[0] = (String)element;
          Array.resize(keywords, 1);
          return 1;
-      } else if (element instanceof Object) {
+      } else if (element instanceof JapaneseCustomWord) {
          Array.resize(keywords, 2);
          keywords[0] = ((JapaneseCustomWord)element).getReading();
          keywords[1] = ((JapaneseCustomWord)element).getCandidate();
@@ -29,8 +29,8 @@ final class CustomWordlistScreen$CustomDictIndexHelper implements KeywordIndexer
    public final boolean checkForMatch(Object element, String[] words) {
       if (words.length != 1) {
          return false;
-      } else if (!(element instanceof Object)) {
-         return !(element instanceof Object)
+      } else if (!(element instanceof String)) {
+         return !(element instanceof JapaneseCustomWord)
             ? false
             : Utils.startsWithIgnoreCase(((JapaneseCustomWord)element).getReading(), words[0])
                | Utils.startsWithIgnoreCase(((JapaneseCustomWord)element).getCandidate(), words[0]);

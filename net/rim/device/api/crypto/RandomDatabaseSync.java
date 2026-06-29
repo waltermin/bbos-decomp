@@ -47,7 +47,7 @@ final class RandomDatabaseSync implements SyncCollection, SyncConverter, AlwaysS
 
    @Override
    public final SyncObject[] getSyncObjects() {
-      return new Object[]{new RandomDatabaseSync$RandomSync()};
+      return new SyncObject[]{new RandomDatabaseSync$RandomSync()};
    }
 
    @Override

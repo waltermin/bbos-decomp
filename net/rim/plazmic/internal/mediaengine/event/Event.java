@@ -34,14 +34,6 @@ public class Event {
 
    @Override
    public String toString() {
-      return ((StringBuffer)(new Object("Time: ")))
-         .append(this._time)
-         .append(" Event: ")
-         .append(this._event)
-         .append(" Param: ")
-         .append(this._eventParam)
-         .append(" Id: ")
-         .append(this._uid)
-         .toString();
+      return "Time: " + this._time + " Event: " + this._event + " Param: " + this._eventParam + " Id: " + this._uid;
    }
 }

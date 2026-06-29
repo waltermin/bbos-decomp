@@ -2,6 +2,8 @@ package net.rim.device.apps.internal.browser.debug;
 
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Screen;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.apps.api.ui.CommonResources;
 import net.rim.device.apps.internal.browser.cookie.Cookie;
@@ -35,9 +37,9 @@ final class CookieDetail implements DebugListItem {
 
    @Override
    public final Screen getScreen() {
-      MainScreen screen = (MainScreen)(new Object());
-      screen.setTitle((Field)(new Object(BrowserResources.getString(376))));
-      StringBuffer info = (StringBuffer)(new Object());
+      MainScreen screen = new MainScreen();
+      screen.setTitle(new LabelField(BrowserResources.getString(376)));
+      StringBuffer info = new StringBuffer();
       this.append(info, BrowserResources.getString(400), this._cookie.getRequestHost());
       this.append(info, BrowserResources.getString(401), this._cookie.getRequestURI());
       String cookieName = this._cookie.getName();
@@ -51,25 +53,19 @@ final class CookieDetail implements DebugListItem {
       long timestamp = this._cookie.getMaxAge();
       if (timestamp > 0) {
          DebugListItem.GMT_CAL.setTimeLong(this._cookie.getTimeCreated() + timestamp);
-         String str = ((StringBuffer)(new Object()))
-            .append(DebugListItem.DATE_FORMAT.format(DebugListItem.GMT_CAL, (StringBuffer)(new Object()), null))
-            .append(" GMT")
-            .toString();
+         String str = DebugListItem.DATE_FORMAT.format(DebugListItem.GMT_CAL, new StringBuffer(), null) + " GMT";
          this.append(info, BrowserResources.getString(408), str);
       }
 
       timestamp = this._cookie.getTimeCreated();
       if (timestamp > 0) {
          DebugListItem.GMT_CAL.setTimeLong(timestamp);
-         String str = ((StringBuffer)(new Object()))
-            .append(DebugListItem.DATE_FORMAT.format(DebugListItem.GMT_CAL, (StringBuffer)(new Object()), null))
-            .append(" GMT")
-            .toString();
+         String str = DebugListItem.DATE_FORMAT.format(DebugListItem.GMT_CAL, new StringBuffer(), null) + " GMT";
          this.append(info, BrowserResources.getString(373), str);
       }
 
-      info.append(((StringBuffer)(new Object())).append(BrowserResources.getString(410)).append(this._cookie.isSecure()).toString());
-      Field field = (Field)(new Object(info.toString()));
+      info.append(BrowserResources.getString(410) + this._cookie.isSecure());
+      Field field = new RichTextField(info.toString());
       screen.add(field);
       return screen;
    }

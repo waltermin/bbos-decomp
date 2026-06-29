@@ -17,7 +17,7 @@ final class PasswordWizard$PasswordRunnable$GlobalStatusListener implements Popu
          System.exit(0);
       }
 
-      PasswordWizard$WorkerThread thread = new PasswordWizard$WorkerThread((String)(new Object(password)));
+      PasswordWizard$WorkerThread thread = new PasswordWizard$WorkerThread(new String(password));
       thread.start();
    }
 }

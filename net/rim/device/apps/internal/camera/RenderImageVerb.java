@@ -19,19 +19,19 @@ public final class RenderImageVerb extends Verb {
    @Override
    public final Object invoke(Object parameter) {
       String fileURL = null;
-      if (parameter instanceof Object) {
+      if (parameter instanceof ContextObject) {
          fileURL = (String)ContextObject.get(parameter, 2765042845091913199L);
-      } else if (!(parameter instanceof Object)) {
+      } else if (!(parameter instanceof String)) {
          fileURL = this._filename;
       } else {
          fileURL = (String)parameter;
       }
 
       if (fileURL != null) {
-         ContextObject context = (ContextObject)(new Object(45));
+         ContextObject context = new ContextObject(45);
          context.put(2765042845091913199L, fileURL);
          context.putIntegerData(1);
-         context.put(-8073278814961745892L, new Object(5));
+         context.put(-8073278814961745892L, new Integer(5));
          Verb browseVerb = ExplorerServices.getBrowseVerb(fileURL, 1, null);
          browseVerb.invoke(context);
       }

@@ -74,7 +74,7 @@ class TestSpeaker extends TestTaskBase implements KeyListener {
       // 033: getfield net/rim/device/apps/internal/deviceselftest/TestSpeaker.p Ljavax/microedition/media/Player;
       // 036: ldc_w "net.rim.device.api.media.control.AudioPathControl"
       // 039: invokeinterface javax/microedition/media/Controllable.getControl (Ljava/lang/String;)Ljavax/microedition/media/Control; 2
-      // 03e: checkcast java/lang/Object
+      // 03e: checkcast net/rim/device/api/media/control/AudioPathControl
       // 041: putfield net/rim/device/apps/internal/deviceselftest/TestSpeaker.apc Lnet/rim/device/api/media/control/AudioPathControl;
       // 044: aload 0
       // 045: getfield net/rim/device/apps/internal/deviceselftest/TestSpeaker.speakerType I

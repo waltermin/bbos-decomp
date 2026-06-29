@@ -7,7 +7,7 @@ final class MediaBrowserField$MyXMLHandler extends DefaultHandler {
 
    @Override
    public final void characters(char[] ch, int start, int length) {
-      this._parsedString = (String)(new Object(ch, start, length));
+      this._parsedString = new String(ch, start, length);
    }
 
    public final String getParsedString() {

@@ -24,20 +24,20 @@ import net.rim.vm.Array;
 public class TextFieldLookup extends Lookup implements ISLVariantsObserver, TextInputDialog {
    protected int _currentVariantIndex;
    protected SLVariants _currentVariant;
-   protected XYRect _bounds = (XYRect)(new Object());
+   protected XYRect _bounds = new XYRect();
    protected boolean _needBoundsCalc;
-   private XYRect _composedBounds = (XYRect)(new Object());
+   private XYRect _composedBounds = new XYRect();
    private SLCurrentVariant _current = new SLCurrentVariant();
-   private StringBuffer _candidatesBuffer = (StringBuffer)(new Object());
+   private StringBuffer _candidatesBuffer = new StringBuffer();
    private int[] _variantPositions;
    private int _variantCount;
    protected boolean _isVisible;
-   private NullField _nullField = (NullField)(new Object(18014398509481984L));
+   private NullField _nullField = new NullField(18014398509481984L);
    private TextFieldLookup$LookupTextField _candidates = new TextFieldLookup$LookupTextField(9007199254740992L);
-   private AttributedString _candidatesAttributedString = (AttributedString)(new Object());
+   private AttributedString _candidatesAttributedString = new AttributedString();
    private AttributedString$Iterator _candidatesAttributedStringIterator = this._candidatesAttributedString.getIterator();
    private int _maxLookupWidth;
-   private FontMetrics _fm = (FontMetrics)(new Object());
+   private FontMetrics _fm = new FontMetrics();
    private boolean _modelChanged;
    private VerticalFieldManager _vfm;
    private TextFieldLookup$Invoker _viewUpdateInvoker = new TextFieldLookup$Invoker(this);
@@ -243,7 +243,7 @@ public class TextFieldLookup extends Lookup implements ISLVariantsObserver, Text
             this._currentVariantIndex = index;
          } else {
             if (index >= this._variantCount) {
-               System.err.println(((StringBuffer)(new Object("Lookup index "))).append(index).append(" >= count ").append(this._variantCount).toString());
+               System.err.println("Lookup index " + index + " >= count " + this._variantCount);
                return;
             }
 

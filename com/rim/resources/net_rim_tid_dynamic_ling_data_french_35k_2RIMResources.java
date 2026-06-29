@@ -4,7 +4,7 @@ import java.util.Hashtable;
 import net.rim.device.resources.Resource;
 
 public final class net_rim_tid_dynamic_ling_data_french_35k_2RIMResources extends Resource {
-   public static Hashtable _resources = (Hashtable)(new Object(14));
+   public static Hashtable _resources = new Hashtable(14);
    public static Hashtable _properties;
    public static byte[] _appFlags = new byte[]{-29};
    public static byte[] _appCount = new byte[]{0};

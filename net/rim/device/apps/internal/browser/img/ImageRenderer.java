@@ -93,11 +93,11 @@ final class ImageRenderer extends Renderer {
       // 018: aload 0
       // 019: getfield net/rim/device/apps/internal/browser/page/Renderer._inputConnection Ljavax/microedition/io/InputConnection;
       // 01c: dup
-      // 01d: instanceof java/lang/Object
+      // 01d: instanceof javax/microedition/io/HttpConnection
       // 020: ifne 027
       // 023: pop
       // 024: goto 069
-      // 027: checkcast java/lang/Object
+      // 027: checkcast javax/microedition/io/HttpConnection
       // 02a: astore 8
       // 02c: aload 8
       // 02e: ldc_w "x-rim-image-original-size"
@@ -127,11 +127,11 @@ final class ImageRenderer extends Renderer {
       // 069: aload 0
       // 06a: getfield net/rim/device/apps/internal/browser/page/Renderer._inputConnection Ljavax/microedition/io/InputConnection;
       // 06d: dup
-      // 06e: instanceof java/lang/Object
+      // 06e: instanceof javax/microedition/io/file/FileConnection
       // 071: ifne 078
       // 074: pop
       // 075: goto 0b1
-      // 078: checkcast java/lang/Object
+      // 078: checkcast javax/microedition/io/file/FileConnection
       // 07b: invokeinterface javax/microedition/io/file/FileConnection.getURL ()Ljava/lang/String; 1
       // 080: bipush 7
       // 082: invokevirtual java/lang/String.substring (I)Ljava/lang/String;
@@ -139,11 +139,11 @@ final class ImageRenderer extends Renderer {
       // 087: aload 0
       // 088: getfield net/rim/device/apps/internal/browser/page/Renderer._inputConnection Ljavax/microedition/io/InputConnection;
       // 08b: dup
-      // 08c: instanceof java/lang/Object
+      // 08c: instanceof net/rim/device/api/io/file/ExtendedFileConnection
       // 08f: ifne 096
       // 092: pop
       // 093: goto 0b1
-      // 096: checkcast java/lang/Object
+      // 096: checkcast net/rim/device/api/io/file/ExtendedFileConnection
       // 099: astore 8
       // 09b: aload 8
       // 09d: invokeinterface net/rim/device/api/io/file/ExtendedFileConnection.isContentDRMForwardLocked ()Z 1
@@ -158,7 +158,7 @@ final class ImageRenderer extends Renderer {
       // 0b2: astore 8
       // 0b4: iload 3
       // 0b5: ifle 0d1
-      // 0b8: new java/lang/Object
+      // 0b8: new net/rim/device/api/browser/field/ContentReadEvent
       // 0bb: dup
       // 0bc: aload 0
       // 0bd: getfield net/rim/device/apps/internal/browser/page/Renderer._inputConnection Ljavax/microedition/io/InputConnection;
@@ -218,7 +218,7 @@ final class ImageRenderer extends Renderer {
       // 131: aload 0
       // 132: getfield net/rim/device/apps/internal/browser/img/ImageRenderer._baseUrl Ljava/lang/String;
       // 135: ifnull 14e
-      // 138: new java/lang/Object
+      // 138: new net/rim/device/apps/api/framework/model/ContextObject
       // 13b: dup
       // 13c: invokespecial net/rim/device/apps/api/framework/model/ContextObject.<init> ()V
       // 13f: astore 5

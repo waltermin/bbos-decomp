@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.browser.javascript;
 
 import net.rim.device.api.browser.field.BrowserContent;
-import net.rim.device.api.browser.field.Event;
+import net.rim.device.api.browser.field.CloseEvent;
 import net.rim.device.api.browser.field.RenderingApplication;
 import net.rim.ecmascript.runtime.Value;
 
@@ -18,7 +18,7 @@ class ESWindowPrototype$7 extends JavaScriptHostFunction {
       BrowserContent content = JavaScriptEngine.getInstance()._browserContent;
       RenderingApplication renderingApplication = content.getRenderingApplication();
       if (renderingApplication != null) {
-         renderingApplication.eventOccurred((Event)(new Object(content)));
+         renderingApplication.eventOccurred(new CloseEvent(content));
       }
 
       return Value.NULL;

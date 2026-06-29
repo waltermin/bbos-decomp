@@ -16,7 +16,7 @@ final class DialVerbChooser extends PopupVerbWrapper {
          return (DialVerb)verb;
       }
 
-      while (verb instanceof Object) {
+      while (verb instanceof WrapperVerb) {
          verb = ((WrapperVerb)verb).getInnerVerb();
          if (verb instanceof DialVerb) {
             return (DialVerb)verb;

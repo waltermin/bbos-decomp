@@ -16,7 +16,7 @@ public class DataException extends Exception {
 
    @Override
    public String toString() {
-      return ((StringBuffer)(new Object("Error Code: "))).append(String.valueOf(this._errorCode)).append(" ").append(super.toString()).toString();
+      return "Error Code: " + String.valueOf(this._errorCode) + " " + super.toString();
    }
 
    public int getErrorCode() {

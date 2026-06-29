@@ -14,6 +14,8 @@ import net.rim.device.api.collection.CollectionEventSource;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.util.Arrays;
+import net.rim.device.api.util.EmptyEnumeration;
+import net.rim.device.api.util.ObjectEnumerator;
 import net.rim.device.apps.api.calendar.modelcontrollerinterface.RecurUtilities;
 import net.rim.device.apps.api.framework.model.Recur$Handle;
 import net.rim.device.apps.api.ui.CommonResources;
@@ -64,7 +66,7 @@ public final class EventListImpl extends PIMListImpl implements EventList {
          case 105:
             return false;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -96,7 +98,7 @@ public final class EventListImpl extends PIMListImpl implements EventList {
          case 20000929:
             return _resources.getString(6);
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -121,7 +123,7 @@ public final class EventListImpl extends PIMListImpl implements EventList {
          case 20000928:
             return 1;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -166,22 +168,22 @@ public final class EventListImpl extends PIMListImpl implements EventList {
       }
 
       if (super._mode == 2) {
-         throw new Object(WRITEONLY_MESSAGE);
+         throw new SecurityException(WRITEONLY_MESSAGE);
       }
 
       if (searchType != 0 && searchType != 1 && searchType != 2) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (startDate > endDate) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       TimeZone tz = TimeZone.getDefault();
       Object[] tmpCalEvents = new Object[EventStatics._cal.size()];
       EventStatics._cal.getElements(tmpCalEvents);
       int asize = tmpCalEvents.length;
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
 
       for (int i = 0; i < asize; i++) {
          net.rim.device.apps.api.calendar.modelcontrollerinterface.Event e = (net.rim.device.apps.api.calendar.modelcontrollerinterface.Event)tmpCalEvents[i];
@@ -192,7 +194,7 @@ public final class EventListImpl extends PIMListImpl implements EventList {
             v.addElement(e1);
          } else if (!initialEventOnly && e.isRecurring()) {
             boolean handleFound = false;
-            Recur$Handle handle = (Recur$Handle)(new Object());
+            Recur$Handle handle = new Recur$Handle();
             switch (searchType) {
                case -1:
                   break;
@@ -219,13 +221,13 @@ public final class EventListImpl extends PIMListImpl implements EventList {
       Object[] _calEvents = new Object[v.size()];
       v.copyInto(_calEvents);
       Arrays.sort(_calEvents, __evComparator);
-      return (Enumeration)(new Object(_calEvents));
+      return new ObjectEnumerator(_calEvents);
    }
 
    @Override
    public final Event importEvent(Event element) {
       if (element == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       Event newEvent = this.createEvent();
@@ -267,11 +269,11 @@ public final class EventListImpl extends PIMListImpl implements EventList {
       }
 
       if (super._mode == 1) {
-         throw new Object(READONLY_MESSAGE);
+         throw new SecurityException(READONLY_MESSAGE);
       }
 
       if (element == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       if (!(element instanceof EventImpl)) {
@@ -297,7 +299,7 @@ public final class EventListImpl extends PIMListImpl implements EventList {
       }
 
       if (super._mode == 2) {
-         throw new Object(WRITEONLY_MESSAGE);
+         throw new SecurityException(WRITEONLY_MESSAGE);
       }
 
       Object[] _calEvents = new Object[EventStatics._cal.size()];
@@ -309,7 +311,7 @@ public final class EventListImpl extends PIMListImpl implements EventList {
          _calEvents[i] = e1;
       }
 
-      return (Enumeration)(new Object(_calEvents));
+      return new ObjectEnumerator(_calEvents);
    }
 
    @Override
@@ -319,19 +321,19 @@ public final class EventListImpl extends PIMListImpl implements EventList {
       }
 
       if (super._mode == 2) {
-         throw new Object(WRITEONLY_MESSAGE);
+         throw new SecurityException(WRITEONLY_MESSAGE);
       }
 
       if (matching == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       if (!(matching instanceof Event)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       Event matchingEvent = (Event)matching;
-      Object v = new Object();
+      Vector v = new Vector();
       Object[] tmpCalEvents = new Object[EventStatics._cal.size()];
       EventStatics._cal.getElements(tmpCalEvents);
       int asize = tmpCalEvents.length;
@@ -340,13 +342,13 @@ public final class EventListImpl extends PIMListImpl implements EventList {
          net.rim.device.apps.api.calendar.modelcontrollerinterface.Event e = (net.rim.device.apps.api.calendar.modelcontrollerinterface.Event)tmpCalEvents[_calEvents];
          EventImpl e1 = new EventImpl(super._mode, e, this);
          if (__evComparator.matches(matchingEvent, e1)) {
-            ((Vector)v).addElement(e1);
+            v.addElement(e1);
          }
       }
 
-      Object[] _calEvents = new Object[((Vector)v).size()];
-      ((Vector)v).copyInto(_calEvents);
-      return (Enumeration)(new Object(_calEvents));
+      Object[] _calEvents = new Object[v.size()];
+      v.copyInto(_calEvents);
+      return new ObjectEnumerator(_calEvents);
    }
 
    @Override
@@ -356,14 +358,14 @@ public final class EventListImpl extends PIMListImpl implements EventList {
       }
 
       if (super._mode == 2) {
-         throw new Object(WRITEONLY_MESSAGE);
+         throw new SecurityException(WRITEONLY_MESSAGE);
       }
 
       if (matching == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       Object[] tmpCalEvents = new Object[EventStatics._cal.size()];
       EventStatics._cal.getElements(tmpCalEvents);
       int asize = tmpCalEvents.length;
@@ -384,7 +386,7 @@ public final class EventListImpl extends PIMListImpl implements EventList {
 
       Object[] _calEvents = new Object[v.size()];
       v.copyInto(_calEvents);
-      return (Enumeration)(new Object(_calEvents));
+      return new ObjectEnumerator(_calEvents);
    }
 
    @Override
@@ -485,7 +487,7 @@ public final class EventListImpl extends PIMListImpl implements EventList {
    public final int[] getSupportedRepeatRuleFields(int frequency) {
       switch (frequency) {
          case 15:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 16:
             return new int[0];
          case 17:
@@ -509,13 +511,13 @@ public final class EventListImpl extends PIMListImpl implements EventList {
 
    @Override
    public final String[] getCategories() {
-      return new Object[0];
+      return new String[0];
    }
 
    @Override
    public final boolean isCategory(String category) {
       if (category == null) {
-         throw new Object();
+         throw new NullPointerException();
       } else {
          return false;
       }
@@ -524,7 +526,7 @@ public final class EventListImpl extends PIMListImpl implements EventList {
    @Override
    public final void addCategory(String category) throws PIMException {
       if (category == null) {
-         throw new Object();
+         throw new NullPointerException();
       } else {
          throw new PIMException(NO_CATEGORIES_MESSAGE, 0);
       }
@@ -533,7 +535,7 @@ public final class EventListImpl extends PIMListImpl implements EventList {
    @Override
    public final void deleteCategory(String category, boolean deleteUnassignedItems) throws PIMException {
       if (category == null) {
-         throw new Object();
+         throw new NullPointerException();
       } else {
          throw new PIMException(NO_CATEGORIES_MESSAGE, 0);
       }
@@ -549,20 +551,20 @@ public final class EventListImpl extends PIMListImpl implements EventList {
       if (currentCategory != null && newCategory != null) {
          throw new PIMException(NO_CATEGORIES_MESSAGE, 0);
       } else {
-         throw new Object();
+         throw new NullPointerException();
       }
    }
 
    @Override
    protected final Enumeration getItemsInCategory(String category) {
-      return (Enumeration)(category != null && category != PIMList.UNCATEGORIZED ? new Object() : this.items());
+      return category != null && category != PIMList.UNCATEGORIZED ? new EmptyEnumeration() : this.items();
    }
 
    static {
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
       _actualListeners = (Hashtable)ar.getOrWaitFor(7918772433172892313L);
       if (_actualListeners == null) {
-         _actualListeners = (Hashtable)(new Object());
+         _actualListeners = new Hashtable();
          ar.put(7918772433172892313L, _actualListeners);
       }
 

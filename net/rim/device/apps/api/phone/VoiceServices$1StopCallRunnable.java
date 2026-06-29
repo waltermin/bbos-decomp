@@ -17,9 +17,9 @@ class VoiceServices$1StopCallRunnable implements Runnable {
    public void run() {
       try {
          VoiceServices._phone.stopCall(this._callId);
-         System.out.println(((StringBuffer)(new Object("Phone.stopCall "))).append(this._callId).append(" successful.").toString());
+         System.out.println("Phone.stopCall " + this._callId + " successful.");
       } finally {
-         System.out.println(((StringBuffer)(new Object("Phone.stopCall "))).append(this._callId).append(" failed.").toString());
+         System.out.println("Phone.stopCall " + this._callId + " failed.");
          if (this._timeRemaining > 0 && RadioInfo.getNetworkType() == 5) {
             VoiceServices.getUiApplication().invokeLater(this, this._retryInterval, false);
             this._timeRemaining = this._timeRemaining - this._retryInterval;

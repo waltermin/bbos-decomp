@@ -14,11 +14,12 @@ import net.rim.device.api.system.WLAN;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Keypad;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.CheckboxField;
 import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.ui.container.PopupScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.apps.api.phone.PhoneEventListener;
 import net.rim.device.apps.api.phone.VoiceServices;
@@ -131,7 +132,7 @@ public final class ConnectionsPopupScreen extends PopupScreen implements Runnabl
                }
             } else {
                Object o = ApplicationRegistry.getApplicationRegistry().get(-6196519223735961895L);
-               if (o instanceof Object) {
+               if (o instanceof SetParameter) {
                   ((SetParameter)o).setParameter(this);
 
                   label102:
@@ -364,7 +365,7 @@ public final class ConnectionsPopupScreen extends PopupScreen implements Runnabl
    }
 
    public ConnectionsPopupScreen() {
-      super((Manager)(new Object(299067162755072L)));
+      super(new VerticalFieldManager(299067162755072L));
       _restoreStateHandle = PersistentInteger.getId(-8312528208360996369L, 0);
       if (WLAN.isWLANAllowed()) {
          this._wifiEnabled = true;
@@ -377,25 +378,25 @@ public final class ConnectionsPopupScreen extends PopupScreen implements Runnabl
       this._indicatorOff = indicatorIcons.getImage(0);
       this._indicatorNotConnected = indicatorIcons.getImage(1);
       this._indicatorConnected = indicatorIcons.getImage(2);
-      this._wirelessIndicator = (ImageField)(new Object(8589934597L));
-      this._wifiIndicator = (ImageField)(new Object(8589934597L));
-      this._bluetoothIndicator = (ImageField)(new Object(8589934597L));
-      this._globalToggleLabel = (LabelField)(new Object("", 1170935903116328960L));
-      this._wirelessToggle = (CheckboxField)(new Object(this._rbf.getString(2), false, 18014398509481984L));
-      this._wirelessStatus = (LabelField)(new Object("", 64));
+      this._wirelessIndicator = new ImageField(8589934597L);
+      this._wifiIndicator = new ImageField(8589934597L);
+      this._bluetoothIndicator = new ImageField(8589934597L);
+      this._globalToggleLabel = new LabelField("", 1170935903116328960L);
+      this._wirelessToggle = new CheckboxField(this._rbf.getString(2), false, 18014398509481984L);
+      this._wirelessStatus = new LabelField("", 64);
       this._wirelessStatus.setId("manage-connections");
       this._wirelessStatus.setTag(STATUS_TAG);
       if (this._wifiEnabled) {
-         this._wifiToggle = (CheckboxField)(new Object(this._rbf.getString(3), false, 18014398509481984L));
+         this._wifiToggle = new CheckboxField(this._rbf.getString(3), false, 18014398509481984L);
          this._wifiToggle.setChecked(WLAN.isRadioOn());
          this._wifiToggle.setChangeListener(this);
-         this._wifiStatus = (LabelField)(new Object("", 64));
+         this._wifiStatus = new LabelField("", 64);
          this._wifiStatus.setId("manage-connections");
          this._wifiStatus.setTag(STATUS_TAG);
       }
 
-      this._bluetoothToggle = (CheckboxField)(new Object(this._rbf.getString(34), false, 18014398509481984L));
-      this._bluetoothStatus = (LabelField)(new Object("", 64));
+      this._bluetoothToggle = new CheckboxField(this._rbf.getString(34), false, 18014398509481984L);
+      this._bluetoothStatus = new LabelField("", 64);
       this._bluetoothStatus.setId("manage-connections");
       this._bluetoothStatus.setTag(STATUS_TAG);
       boolean wirelessOn = (RadioInternal.getActiveRadios() & ManageConnectionsApp.CELL_RADIOS) != 0;
@@ -408,7 +409,7 @@ public final class ConnectionsPopupScreen extends PopupScreen implements Runnabl
       this.updateGlobalToggle();
       this.add(this._globalToggleLabel);
       this.TOGGLE_ALL_IDX = this.getFieldCount() - 1;
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       MyHorizontalFieldManager hm = new MyHorizontalFieldManager(this._wirelessToggle, this._wirelessStatus, this._wirelessIndicator);
       this.add(hm);
       if (this._wifiEnabled) {
@@ -421,35 +422,35 @@ public final class ConnectionsPopupScreen extends PopupScreen implements Runnabl
          this.add(hm);
       }
 
-      this.add((Field)(new Object()));
-      this.add((Field)(new Object(this._rbf.getString(24), 1170935903116328960L)));
+      this.add(new SeparatorField());
+      this.add(new LabelField(this._rbf.getString(24), 1170935903116328960L));
       this.SERVICES_STATUS_IDX = this.getFieldCount() - 1;
       if (this._wifiEnabled) {
-         this.add((Field)(new Object(this._rbf.getString(25), 1170935903116328960L)));
+         this.add(new LabelField(this._rbf.getString(25), 1170935903116328960L));
          this.SETUP_WIFI_IDX = this.getFieldCount() - 1;
       } else {
          this.SETUP_WIFI_IDX = -1;
       }
 
       if (this._bluetoothEnabled) {
-         this.add((Field)(new Object(this._rbf.getString(37), 1170935903116328960L)));
+         this.add(new LabelField(this._rbf.getString(37), 1170935903116328960L));
          this.SETUP_BLUETOOTH_IDX = this.getFieldCount() - 1;
       } else {
          this.SETUP_BLUETOOTH_IDX = -1;
       }
 
-      this.add((Field)(new Object()));
-      this.add((Field)(new Object(this._rbf.getString(26), 1170935903116328960L)));
+      this.add(new SeparatorField());
+      this.add(new LabelField(this._rbf.getString(26), 1170935903116328960L));
       this.WIRELESS_OPTIONS_IDX = this.getFieldCount() - 1;
       if (this._wifiEnabled) {
-         this.add((Field)(new Object(this._rbf.getString(27), 1170935903116328960L)));
+         this.add(new LabelField(this._rbf.getString(27), 1170935903116328960L));
          this.WIFI_OPTIONS_IDX = this.getFieldCount() - 1;
       } else {
          this.WIFI_OPTIONS_IDX = -1;
       }
 
       if (this._bluetoothEnabled) {
-         this.add((Field)(new Object(this._rbf.getString(28), 1170935903116328960L)));
+         this.add(new LabelField(this._rbf.getString(28), 1170935903116328960L));
          this.BLUETOOTH_OPTIONS_IDX = this.getFieldCount() - 1;
       } else {
          this.BLUETOOTH_OPTIONS_IDX = -1;

@@ -31,7 +31,7 @@ public class REVersionUtils {
    }
 
    public static byte[] getDeviceVersions() {
-      Vector vec = (Vector)(new Object());
+      Vector vec = new Vector();
       DeviceFeatureVersion$Handler ver = DeviceFeatureVersion.createHandler("Discovery", "1.1.0", "1.2.0");
       vec.addElement(ver);
       ver = DeviceFeatureVersion.createHandler("Provisioning", "1.1.0", "1.1.0");

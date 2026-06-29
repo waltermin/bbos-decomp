@@ -188,7 +188,7 @@ public final class DSACryptoSystem implements CryptoSystem {
          this._cryptoTokenData = cryptoTokenData;
          this.setHashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -203,7 +203,7 @@ public final class DSACryptoSystem implements CryptoSystem {
             throw new InvalidCryptoSystemException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -234,14 +234,14 @@ public final class DSACryptoSystem implements CryptoSystem {
       // 0d: invokespecial net/rim/device/api/crypto/DSACryptoSystem.initialize (Lnet/rim/device/api/crypto/DSACryptoToken;[B[B[BLjava/lang/String;)V
       // 10: return
       // 11: astore 5
-      // 13: new java/lang/Object
+      // 13: new java/lang/RuntimeException
       // 16: dup
       // 17: aload 5
       // 19: invokevirtual net/rim/device/api/crypto/CryptoUnsupportedOperationException.toString ()Ljava/lang/String;
       // 1c: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 1f: athrow
       // 20: astore 5
-      // 22: new java/lang/Object
+      // 22: new java/lang/RuntimeException
       // 25: dup
       // 26: aload 5
       // 28: invokevirtual net/rim/device/api/crypto/CryptoTokenException.toString ()Ljava/lang/String;
@@ -275,21 +275,21 @@ public final class DSACryptoSystem implements CryptoSystem {
       // 09: invokespecial net/rim/device/api/crypto/DSACryptoSystem.initialize (Lnet/rim/device/api/crypto/DSACryptoToken;Ljava/lang/String;)V
       // 0c: return
       // 0d: astore 2
-      // 0e: new java/lang/Object
+      // 0e: new java/lang/RuntimeException
       // 11: dup
       // 12: aload 2
       // 13: invokevirtual net/rim/device/api/crypto/CryptoTokenException.toString ()Ljava/lang/String;
       // 16: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 19: athrow
       // 1a: astore 2
-      // 1b: new java/lang/Object
+      // 1b: new java/lang/RuntimeException
       // 1e: dup
       // 1f: aload 2
       // 20: invokevirtual net/rim/device/api/crypto/CryptoUnsupportedOperationException.toString ()Ljava/lang/String;
       // 23: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 26: athrow
       // 27: astore 2
-      // 28: new java/lang/Object
+      // 28: new java/lang/RuntimeException
       // 2b: dup
       // 2c: aload 2
       // 2d: invokevirtual net/rim/device/api/crypto/UnsupportedCryptoSystemException.toString ()Ljava/lang/String;
@@ -328,7 +328,7 @@ public final class DSACryptoSystem implements CryptoSystem {
       byte[] q = null;
       byte[] g = null;
       if (name == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (name.equals("SUN512")) {
@@ -348,7 +348,7 @@ public final class DSACryptoSystem implements CryptoSystem {
       try {
          this.initialize(cryptoToken, p, q, g, name);
       } catch (InvalidCryptoSystemException e) {
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       }
    }
 

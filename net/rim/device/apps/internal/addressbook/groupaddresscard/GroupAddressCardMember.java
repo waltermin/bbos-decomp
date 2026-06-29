@@ -35,11 +35,11 @@ final class GroupAddressCardMember implements Persistable, Copyable {
 
       int total = acm.size();
       int localIndex = 0;
-      ContextObject context = (ContextObject)(new Object(18));
+      ContextObject context = new ContextObject(18);
 
       for (int i = 0; i < total; i++) {
          Object o = acm.getAt(i);
-         if (o instanceof Object) {
+         if (o instanceof SyncFieldIDProvider) {
             int localId = ((SyncFieldIDProvider)o).getSyncFieldId(context);
             if (localId == this._addressCardSyncFieldId) {
                if (localId != 1 || this._index == localIndex) {
@@ -55,7 +55,7 @@ final class GroupAddressCardMember implements Persistable, Copyable {
    }
 
    public static final Object[] getGroupAddressableRIMModels(Object object, byte type) {
-      if (!(object instanceof Object)) {
+      if (!(object instanceof ReadableList)) {
          return null;
       }
 

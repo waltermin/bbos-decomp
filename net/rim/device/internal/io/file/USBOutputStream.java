@@ -41,7 +41,7 @@ final class USBOutputStream extends OutputStream {
          while (bytes > 0) {
             int bytesRead = in.read(this._buffer, 0, Math.min((int)bytes, this._conn._writeBufferSize));
             if (bytesRead == -1) {
-               throw new Object();
+               throw new IOException();
             }
 
             this.writeInternal(this._buffer, 0, bytesRead);

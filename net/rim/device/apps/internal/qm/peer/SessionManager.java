@@ -12,9 +12,9 @@ import net.rim.device.api.util.IntEnumeration;
 import net.rim.device.api.util.IntHashtable;
 
 final class SessionManager {
-   private IntHashtable _pendingSessionRequests = (IntHashtable)(new Object(1));
-   private IntHashtable _currentSessions = (IntHashtable)(new Object(1));
-   private Hashtable _localRequestListeners = (Hashtable)(new Object(1));
+   private IntHashtable _pendingSessionRequests = new IntHashtable(1);
+   private IntHashtable _currentSessions = new IntHashtable(1);
+   private Hashtable _localRequestListeners = new Hashtable(1);
    private static final long GUID = -7605572761419464897L;
    private static SessionManager _instance;
 
@@ -32,7 +32,7 @@ final class SessionManager {
    }
 
    final void sessionRequestSent(SessionImpl session) {
-      this._pendingSessionRequests.put(session.getId(), new Object(session));
+      this._pendingSessionRequests.put(session.getId(), new WeakReference(session));
    }
 
    final void messageReceived(int id, Message message) {
@@ -48,16 +48,13 @@ final class SessionManager {
          SessionImpl session = new SessionImpl(contact, id);
          session.setApplicationName(application);
          session.onRequest();
-         this._pendingSessionRequests.put(id, new Object(session));
+         this._pendingSessionRequests.put(id, new WeakReference(session));
       } else {
          String message;
          if (url != null && url.length() > 0) {
-            message = ((StringBuffer)(new Object("You've received an invitation that has no handler associated with it. Please visit ")))
-               .append(url)
-               .append(" to download the necessary applications.")
-               .toString();
+            message = "You've received an invitation that has no handler associated with it. Please visit " + url + " to download the necessary applications.";
          } else {
-            message = MessageFormat.format(PeerResources.getString(2027), new Object[]{application});
+            message = MessageFormat.format(PeerResources.getString(2027), new String[]{application});
          }
 
          PeerApplication.getInstance().newObject(contact, new SessionManager$NoApplicationMessage(message));
@@ -83,7 +80,7 @@ final class SessionManager {
          }
 
          this._pendingSessionRequests.remove(id);
-         this._currentSessions.put(id, new Object(session));
+         this._currentSessions.put(id, new WeakReference(session));
       }
    }
 
@@ -126,11 +123,11 @@ final class SessionManager {
    final void addRequestListener(SessionRequestListener listener, ApplicationDescriptor application) {
       String name = application.getName();
       if (name == null || name.length() == 0) {
-         throw new Object("Invalid application name");
+         throw new IllegalArgumentException("Invalid application name");
       }
 
       if (this._localRequestListeners.containsKey(name)) {
-         throw new Object("An application with the same name is already registered for incoming Sessions");
+         throw new IllegalArgumentException("An application with the same name is already registered for incoming Sessions");
       }
 
       this._localRequestListeners.put(name, new SessionManager$LocalRequestAcceptNotifier(listener, application));

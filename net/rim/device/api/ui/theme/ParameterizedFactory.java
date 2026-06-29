@@ -1,5 +1,6 @@
 package net.rim.device.api.ui.theme;
 
+import java.io.IOException;
 import java.util.Hashtable;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.system.Application;
@@ -13,6 +14,7 @@ import net.rim.device.apps.api.ribbon.ApplicationHierarchy;
 import net.rim.device.apps.api.ribbon.ApplicationHierarchyProvider;
 import net.rim.device.apps.api.ribbon.ApplicationProperties;
 import net.rim.device.internal.ui.Border;
+import net.rim.device.internal.ui.BorderBitmap;
 import net.rim.device.resources.Resource;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -247,7 +249,7 @@ class ParameterizedFactory extends Theme$Factory implements ApplicationHierarchy
       this._appHierarchyInfo = this.getParentHierarchy();
       this._dialogFontChanged = false;
       this._listHighlightColorChanged = false;
-      this._effectedAttributeList = (Hashtable)(new Object(5));
+      this._effectedAttributeList = new Hashtable(5);
       this._pass = null;
       this._isAppIconSizeSet = false;
    }
@@ -271,7 +273,7 @@ class ParameterizedFactory extends Theme$Factory implements ApplicationHierarchy
       ApplicationHierarchy parentHierarchy = null;
 
       for (Theme$Factory parentThemeFactory = getParentFactory(this); parentThemeFactory != null; parentThemeFactory = getParentFactory(parentThemeFactory)) {
-         if (parentThemeFactory instanceof Object) {
+         if (parentThemeFactory instanceof ApplicationHierarchyProvider) {
             return ((ApplicationHierarchyProvider)parentThemeFactory).getApplicationHierarchyInfo();
          }
       }
@@ -412,18 +414,18 @@ class ParameterizedFactory extends Theme$Factory implements ApplicationHierarchy
    }
 
    public static Integer getAlternateBaseFirstRedundant(Element elem) {
-      return (Integer)(elem.hasAttribute("alternateBaseFirstRedundant") ? new Object(DOMSupport.getInt(elem, "alternateBaseFirstRedundant")) : null);
+      return elem.hasAttribute("alternateBaseFirstRedundant") ? new Integer(DOMSupport.getInt(elem, "alternateBaseFirstRedundant")) : null;
    }
 
    public static Integer getAlternateBaseSearchSleep(Element elem) {
-      return (Integer)(elem.hasAttribute("alternateBaseSearchSleep") ? new Object(DOMSupport.getInt(elem, "alternateBaseSearchSleep")) : null);
+      return elem.hasAttribute("alternateBaseSearchSleep") ? new Integer(DOMSupport.getInt(elem, "alternateBaseSearchSleep")) : null;
    }
 
    private void visitRoot(Element elem, RemoteThemeAttributeSetWriter remoteWriter) {
       NodeList childNodes = elem.getChildNodes();
 
       for (int i = 0; i < childNodes.getLength(); i++) {
-         if (childNodes.item(i) instanceof Object) {
+         if (childNodes.item(i) instanceof Element) {
             Element child = (Element)childNodes.item(i);
             String tagName = child.getTagName();
             if ("MenuTheme".equals(tagName)) {
@@ -766,7 +768,7 @@ class ParameterizedFactory extends Theme$Factory implements ApplicationHierarchy
          int color = DOMSupport.getColor((Element)childNodes.item(i), "color");
          remoteWriter.setColor(3, color);
          remoteWriter.setColor(5, color);
-         this._effectedAttributeList.put("DateSeparatorHighlightForeground", childNodes.item(i));
+         this._effectedAttributeList.put("DateSeparatorHighlightForeground", (Element)childNodes.item(i));
          this._listHighlightColorChanged = true;
       }
 
@@ -934,7 +936,7 @@ class ParameterizedFactory extends Theme$Factory implements ApplicationHierarchy
       }
    }
 
-   private void visitVerticalListTheme(Element elem, RemoteThemeAttributeSetWriter remoteWriter) {
+   private void visitVerticalListTheme(Element elem, RemoteThemeAttributeSetWriter remoteWriter) throws IOException {
       NodeList childNodes = elem.getChildNodes();
       int i = -1;
       int iNormalText = DOMSupport.indexOfElement("VerticalListNormalText", childNodes, 0);
@@ -945,13 +947,11 @@ class ParameterizedFactory extends Theme$Factory implements ApplicationHierarchy
          if (elem.hasAttribute("rowHeight")) {
             rowHeight = DOMSupport.getInt(elem, "rowHeight");
             if (rowHeight <= 0) {
-               throw new Object("rowHeight must be greater than 0");
+               throw new IOException("rowHeight must be greater than 0");
             }
          }
 
-         remoteWriter.setLayoutParameters(
-            new Object[]{"Banner?align=title", ((StringBuffer)(new Object("AppChooser.VerticalAppChooser?chooser&rowHeight="))).append(rowHeight).toString()}
-         );
+         remoteWriter.setLayoutParameters(new String[]{"Banner?align=title", "AppChooser.VerticalAppChooser?chooser&rowHeight=" + rowHeight});
       }
 
       if ((i = DOMSupport.indexOfElement("VerticalListBackground", childNodes, i + 1)) != -1 && this._pass == WRITE_ATTRIBUTES) {
@@ -1316,7 +1316,7 @@ class ParameterizedFactory extends Theme$Factory implements ApplicationHierarchy
 
          for (int i = 0; i < numChildren; i++) {
             Node n = childNodes.item(i);
-            if (n instanceof Object && "Folder".equals(n.getNodeName())) {
+            if (n instanceof Element && "Folder".equals(n.getNodeName())) {
                this.visitFolder((Element)n, null, 1);
             }
          }
@@ -1339,7 +1339,7 @@ class ParameterizedFactory extends Theme$Factory implements ApplicationHierarchy
          properties.setVisible(true);
          properties.setFolderName(parent.getName());
          properties.setPosition(DOMSupport.getInt(elem, "position"));
-         folder = (ApplicationFolder)(new Object(folderName, this._themeModuleName, folderId++));
+         folder = new ApplicationFolder(folderName, this._themeModuleName, folderId++);
          this._appHierarchyInfo.addFolder(folder);
       } else {
          folder = this._appHierarchyInfo.getRootFolder();
@@ -1352,7 +1352,7 @@ class ParameterizedFactory extends Theme$Factory implements ApplicationHierarchy
 
       for (int i = 0; i < numChildren; i++) {
          Node n = childNodes.item(i);
-         if (n instanceof Object) {
+         if (n instanceof Element) {
             if ("Folder".equals(n.getNodeName())) {
                folderId = this.visitFolder((Element)n, folder, folderId);
             } else if ("Application".equals(n.getNodeName())) {
@@ -1366,7 +1366,7 @@ class ParameterizedFactory extends Theme$Factory implements ApplicationHierarchy
 
    private static String removeControlCharacters(String string) {
       if (string.indexOf(32) != -1 || string.indexOf(818) != -1) {
-         StringBuffer buffer = (StringBuffer)(new Object());
+         StringBuffer buffer = new StringBuffer();
          int length = string.length();
 
          for (int i = 0; i < length; i++) {
@@ -1449,7 +1449,7 @@ class ParameterizedFactory extends Theme$Factory implements ApplicationHierarchy
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private static void setFont(Node parent, RemoteThemeAttributeSetWriter remoteWriter) {
+   private static void setFont(Node parent, RemoteThemeAttributeSetWriter remoteWriter) throws IOException {
       Element fontDef = DOMSupport.getFirstChildNamed("Font", parent);
       if (fontDef.hasAttribute("name")) {
          remoteWriter.setFontFamily(fontDef.getAttribute("name"));
@@ -1468,7 +1468,7 @@ class ParameterizedFactory extends Theme$Factory implements ApplicationHierarchy
          try {
             remoteWriter.setFontSize(Integer.parseInt(fontSize), units);
          } catch (Throwable var7) {
-            throw new Object(nfe.getMessage());
+            throw new IOException(nfe.getMessage());
          }
       }
 
@@ -1483,7 +1483,7 @@ class ParameterizedFactory extends Theme$Factory implements ApplicationHierarchy
             styleNum = 2;
          } else {
             if (!"bold-italic".equals(fontStyle)) {
-               throw new Object(((StringBuffer)(new Object("invalid font style "))).append(fontStyle).toString());
+               throw new IOException("invalid font style " + fontStyle);
             }
 
             styleNum = 3;
@@ -1499,7 +1499,7 @@ class ParameterizedFactory extends Theme$Factory implements ApplicationHierarchy
          } else if (antiAlias.equals("false")) {
             remoteWriter.setFontAntialiasMode(1);
          } else {
-            throw new Object(((StringBuffer)(new Object("invalid antiAlias mode "))).append(antiAlias).toString());
+            throw new IOException("invalid antiAlias mode " + antiAlias);
          }
       }
    }
@@ -1533,9 +1533,9 @@ class ParameterizedFactory extends Theme$Factory implements ApplicationHierarchy
       int rightCorners,
       int bottomCorners,
       int leftCorners
-   ) {
+   ) throws IOException {
       if (top > 30 || right > 30 || bottom > 30 || left > 30 || topCorners > 30 || rightCorners > 30 || bottomCorners > 30 || leftCorners > 30) {
-         throw new Object("Border Definition exceeds maximum value of: 30");
+         throw new IOException("Border Definition exceeds maximum value of: 30");
       }
 
       if (themeWriter.getBorder(name) == null) {
@@ -1543,7 +1543,7 @@ class ParameterizedFactory extends Theme$Factory implements ApplicationHierarchy
          if (imageBytes != null) {
             EncodedImage image = EncodedImage.createEncodedImage(imageBytes, 0, imageBytes.length);
             Bitmap bitmap = image.getBitmap();
-            Border border = (Border)(new Object(top, right, bottom, left, bitmap, topCorners, rightCorners, bottomCorners, leftCorners));
+            Border border = new BorderBitmap(top, right, bottom, left, bitmap, topCorners, rightCorners, bottomCorners, leftCorners);
             themeWriter.putBorder(name, border);
          }
       }

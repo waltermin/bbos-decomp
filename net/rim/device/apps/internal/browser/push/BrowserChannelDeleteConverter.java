@@ -5,6 +5,7 @@ import java.io.InputStream;
 import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.api.system.EventLogger;
 import net.rim.device.apps.api.utility.serialization.BaseConverter;
+import net.rim.device.apps.api.utility.serialization.SerializationException;
 
 final class BrowserChannelDeleteConverter extends BaseConverter {
    private static final String PUSH_CHANNEL_ID_KEY = "X-Rim-Push-Channel-Id";
@@ -15,21 +16,21 @@ final class BrowserChannelDeleteConverter extends BaseConverter {
    }
 
    @Override
-   public final Object convert(DataInput inputStreamObj, Object headersObj) {
-      if (headersObj instanceof Object && inputStreamObj instanceof Object) {
+   public final Object convert(DataInput inputStreamObj, Object headersObj) throws SerializationException {
+      if (headersObj instanceof HttpHeaders && inputStreamObj instanceof InputStream) {
          InputStream inputStream = (InputStream)inputStreamObj;
          HttpHeaders headers = (HttpHeaders)headersObj;
          EventLogger.logEvent(1907089860548946979L, 1347445604, 5);
          String id = headers.getPropertyValue("X-Rim-Push-Channel-Id");
          if (id == null) {
             EventLogger.logEvent(1907089860548946979L, 1347450217, 3);
-            throw new Object();
+            throw new SerializationException();
          } else {
             BrowserPushUtilities.readContent(inputStream);
             return new BrowserChannelDeleteModel(id);
          }
       } else {
-         throw new Object();
+         throw new SerializationException();
       }
    }
 }

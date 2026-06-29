@@ -32,7 +32,7 @@ public class Message {
 
    public void setContentType(String contentType) {
       if (contentType == null) {
-         throw new Object("contentType==null");
+         throw new NullPointerException("contentType==null");
       }
 
       this._contentType = contentType;
@@ -44,11 +44,11 @@ public class Message {
 
    public void setData(byte[] data) {
       if (data == null) {
-         throw new Object("data==null");
+         throw new NullPointerException("data==null");
       }
 
       if (data.length > 15360) {
-         throw new Object("Data size cannot exceed 15 kB");
+         throw new IllegalArgumentException("Data size cannot exceed 15 kB");
       }
 
       this._data = data;

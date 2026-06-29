@@ -23,7 +23,7 @@ public final class TaskApp extends UiApplication {
          PackageManager.registerOnceOnSystemStart();
          ReminderManager rm = ReminderManager.getInstance();
          if (rm == null) {
-            throw new Object("Task:RM");
+            throw new RuntimeException("Task:RM");
          }
 
          TaskCollectionImpl taskCollection = TaskCollectionImpl.getInstance();

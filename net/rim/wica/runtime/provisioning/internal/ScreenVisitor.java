@@ -45,10 +45,10 @@ public final class ScreenVisitor extends DefinitionVisitorAdapter {
    private UniqueCodeGenerator _uniqueCodeGenerator;
    private int _globalDefId;
    private WicletElement _wiclet;
-   private ToIntHashtable _paramsAndLocalsPos = (ToIntHashtable)(new Object());
-   private Hashtable _paramsAndLocals = (Hashtable)(new Object());
+   private ToIntHashtable _paramsAndLocalsPos = new ToIntHashtable();
+   private Hashtable _paramsAndLocals = new Hashtable();
    private int _screenOffset;
-   private ToIntHashtable _childrenArrays = (ToIntHashtable)(new Object());
+   private ToIntHashtable _childrenArrays = new ToIntHashtable();
    private ScreenVisitor$ReferenceUtil _refUtil = new ScreenVisitor$ReferenceUtil(this, null);
    private boolean _inReferenceContainer;
    private DataElement _referenceContainerContext;
@@ -384,7 +384,7 @@ public final class ScreenVisitor extends DefinitionVisitorAdapter {
          return this._uiDefs._objectData.size() - 1;
       }
 
-      Vector vector = (Vector)(new Object());
+      Vector vector = new Vector();
       int len = expr.length();
       int lastPos = 0;
 
@@ -393,13 +393,13 @@ public final class ScreenVisitor extends DefinitionVisitorAdapter {
 
          while (lastPos < len) {
             int indexOfNextAt = this.blindIndexOf(expr, lastPos, '@');
-            sub = ((StringBuffer)(new Object())).append(sub).append(expr.substring(lastPos, indexOfNextAt)).toString();
+            sub = sub + expr.substring(lastPos, indexOfNextAt);
             lastPos = indexOfNextAt == len ? indexOfNextAt : indexOfNextAt + 1;
             if (lastPos >= len || expr.charAt(lastPos) != '@') {
                break;
             }
 
-            sub = ((StringBuffer)(new Object())).append(sub).append('@').toString();
+            sub = sub + '@';
             lastPos++;
          }
 
@@ -414,7 +414,7 @@ public final class ScreenVisitor extends DefinitionVisitorAdapter {
                char refCh = expr.charAt(lastPos);
                if (refCh == '[') {
                   if (lastPos == len - 1 || (lastPos = this.blindIndexOf(expr, lastPos + 1, ']') + 1) > len) {
-                     throw new Object("Encountered where filter without closing ]");
+                     throw new RuntimeException("Encountered where filter without closing ]");
                   }
                   continue;
                }
@@ -618,7 +618,7 @@ public final class ScreenVisitor extends DefinitionVisitorAdapter {
       int x;
       int y;
       if (placement != null) {
-         StringTokenizer tokenizer = (StringTokenizer)(new Object(element.getPlacement(), ' '));
+         StringTokenizer tokenizer = new StringTokenizer(element.getPlacement(), ' ');
          String sub = tokenizer.nextToken();
          x = sub != null && sub.length() != 0 ? Integer.parseInt(sub) : -1;
          sub = tokenizer.nextToken();
@@ -761,7 +761,7 @@ public final class ScreenVisitor extends DefinitionVisitorAdapter {
    private final int encodeMapping(String reference) {
       if (reference != null && !this._inReferenceContainer) {
          Vector objectData = this._uiDefs._objectData;
-         IntVector vector = (IntVector)(new Object());
+         IntVector vector = new IntVector();
          this._refUtil.breakDownReferenceCommon(reference, vector, null);
          int[] array = new int[vector.size()];
          vector.copyInto(array);

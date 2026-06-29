@@ -63,6 +63,6 @@ class CertificateUtilities$1 implements javax.microedition.pki.Certificate {
          i++;
       }
 
-      return (String)(new Object(printable));
+      return new String(printable);
    }
 }

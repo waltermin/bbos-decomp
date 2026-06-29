@@ -136,7 +136,7 @@ class OTAUpgradeControl$CUSafe {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    static boolean writeByteStream(DataBuffer buff, int type, byte[] value) {
-      ByteArrayInputStream bais = (ByteArrayInputStream)(new Object(value));
+      ByteArrayInputStream bais = new ByteArrayInputStream(value);
       boolean var9 = false /* VF: Semaphore variable */;
       boolean var12 = false /* VF: Semaphore variable */;
 

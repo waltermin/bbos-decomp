@@ -36,8 +36,8 @@ public class KeyUsagePrivateKeysKeyStoreIndex implements KeyStoreIndex {
 
    @Override
    public int getHash(Object target) {
-      if (target instanceof Object) {
-         int value = target;
+      if (target instanceof Integer) {
+         int value = (Integer)target;
          switch (value) {
             case -1:
                break;
@@ -49,17 +49,17 @@ public class KeyUsagePrivateKeysKeyStoreIndex implements KeyStoreIndex {
          }
       }
 
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public boolean matches(KeyStoreData data, Object target) {
-      if (data.isPrivateKeySet() && target instanceof Object) {
+      if (data.isPrivateKeySet() && target instanceof Integer) {
          Certificate certificate = data.getCertificate();
          if (certificate != null) {
             boolean sign = certificate.queryKeyUsage(1) != 0;
             boolean encrypt = certificate.queryKeyUsage(4) != 0 || certificate.queryKeyUsage(16) != 0;
-            switch (target) {
+            switch ((Integer)target) {
                case -1:
                   break;
                case 0:

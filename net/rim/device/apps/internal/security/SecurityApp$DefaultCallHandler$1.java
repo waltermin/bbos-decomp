@@ -14,7 +14,7 @@ final class SecurityApp$DefaultCallHandler$1 extends Dialog {
 
    @Override
    protected final void onHotkeySelected(char key) {
-      String logString = ((StringBuffer)(new Object("dlg hk slctd "))).append(key).toString();
+      String logString = "dlg hk slctd " + key;
       EventLogger.logEvent(-1148210079122251014L, logString.getBytes(), 0);
    }
 }

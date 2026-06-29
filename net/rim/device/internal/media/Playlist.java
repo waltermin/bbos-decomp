@@ -38,7 +38,7 @@ public class Playlist {
 
    public String receiveLine(Reader contentReader) {
       boolean anythingRead = false;
-      StringBuffer result = (StringBuffer)(new Object());
+      StringBuffer result = new StringBuffer();
 
       try {
          boolean shouldContinue = true;

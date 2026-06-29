@@ -57,42 +57,42 @@ public final class ExplorerOptionsListItem
       }
 
       this.addHeading(164, screen);
-      this._contentStoreSize = (ObjectChoiceField)(new Object(
+      this._contentStoreSize = new ObjectChoiceField(
          ExplorerResources.getString(101), ExplorerResources.getStringArray(104), getDeviceIndex(FileSystemOptions.getContentStoreTotalSize())
-      ));
+      );
       screen.add(this._contentStoreSize);
       this.addHeading(165, screen);
-      this._filelistSortProperty = (ObjectChoiceField)(new Object(
+      this._filelistSortProperty = new ObjectChoiceField(
          ExplorerResources.getString(107), ExplorerResources.getStringArray(106), this._options.getFilelistSortProperty()
-      ));
+      );
       screen.add(this._filelistSortProperty);
-      this._numberOfColumns = (NumericChoiceField)(new Object(
+      this._numberOfColumns = new NumericChoiceField(
          ExplorerResources.getString(96),
          MIN_NUMBER_OF_COLUMNS,
          ExplorerOptions.MAX_NUMBER_OF_COLUMNS,
          1,
          this._options.getNumberOfColumns() - MIN_NUMBER_OF_COLUMNS
-      ));
+      );
       screen.add(this._numberOfColumns);
-      this._slideShowDisplayTimeField = (NumericChoiceField)(new Object(ExplorerResources.getString(87), 1, 15, 1, this._options.getSlideShowDisplayTime() - 1));
+      this._slideShowDisplayTimeField = new NumericChoiceField(ExplorerResources.getString(87), 1, 15, 1, this._options.getSlideShowDisplayTime() - 1);
       screen.add(this._slideShowDisplayTimeField);
-      this._picturesReservedSize = (ObjectChoiceField)(new Object(
+      this._picturesReservedSize = new ObjectChoiceField(
          ExplorerResources.getString(102), ExplorerResources.getStringArray(103), getReservedIndex(FileSystemOptions.getPicturesReservedSize())
-      ));
+      );
       if (InternalServices.isDeviceCapable(21)) {
          screen.add(this._picturesReservedSize);
       }
 
       this.addHeading(173, screen);
-      this._autoBacklighting = (ObjectChoiceField)(new Object(
+      this._autoBacklighting = new ObjectChoiceField(
          ExplorerResources.getString(190), ExplorerResources.getStringArray(191), MediaOptionsRegistry.getInstance().getBoolean(-1314075862077144981L) ? 0 : 1
-      ));
+      );
       screen.add(this._autoBacklighting);
       if (AudioRouter.getInstance().isVolumeBoostModeSupported()) {
          this._originalVolumeBoostSetting = MediaOptionsRegistry.getInstance().getBoolean(2886183832722201160L);
-         this._volumeBoostMode = (ObjectChoiceField)(new Object(
+         this._volumeBoostMode = new ObjectChoiceField(
             ExplorerResources.getString(171), ExplorerResources.getStringArray(172), this._originalVolumeBoostSetting ? 0 : 1
-         ));
+         );
          this._volumeBoostMode.setChangeListener(this);
          MediaOptionsRegistry.getInstance().addOptionsRegistryChangeListener(this);
          screen.addScreenUiEngineAttachedListener(this);
@@ -103,7 +103,7 @@ public final class ExplorerOptionsListItem
 
       while (--i >= 0) {
          Field field = screen.getField(i);
-         if (!(field instanceof Object)) {
+         if (!(field instanceof LabelField)) {
             field.setTag(ThemeUtilities.SELECTABLE_TEXT_TAG);
          }
       }
@@ -114,7 +114,7 @@ public final class ExplorerOptionsListItem
          screen.add(new SpacerField());
       }
 
-      LabelField label = (LabelField)(new Object(ExplorerResources.getString(id)));
+      LabelField label = new LabelField(ExplorerResources.getString(id));
       label.setTag(ThemeUtilities.HEADING_TEXT_TAG);
       screen.add(label);
       screen.add(new MySeparatorField());

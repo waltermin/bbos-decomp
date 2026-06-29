@@ -115,7 +115,7 @@ public class SLCurrentVariant implements ISecureInputMethodBuffer {
 
    @Override
    public boolean equals(Object aObj) {
-      if (!(aObj instanceof Object)) {
+      if (!(aObj instanceof String)) {
          return false;
       }
 
@@ -203,12 +203,12 @@ public class SLCurrentVariant implements ISecureInputMethodBuffer {
 
    @Override
    public String toString() {
-      return (String)(new Object(this._variants, this._offset, this._length));
+      return new String(this._variants, this._offset, this._length);
    }
 
    public final boolean matchCase(boolean[] matrix, int len) {
       if (len > this._length) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       for (int i = 0; i < len; i++) {
@@ -241,13 +241,13 @@ public class SLCurrentVariant implements ISecureInputMethodBuffer {
       if (index >= 0 && index < this._length) {
          return this._variants[this._offset + index];
       } else {
-         throw new Object(index);
+         throw new ArrayIndexOutOfBoundsException(index);
       }
    }
 
    public final char lastChar() {
       if (this._length == 0) {
-         throw new Object(-1);
+         throw new ArrayIndexOutOfBoundsException(-1);
       } else {
          return this._variants[this._offset + this._length - 1];
       }

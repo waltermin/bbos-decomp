@@ -10,6 +10,6 @@ public final class DuplicateException extends CompileException {
 
    @Override
    public final String getMessage() {
-      return ((StringBuffer)(new Object("Duplicate definition for '"))).append(super._word).append("' found in: ").append(this._where).toString();
+      return "Duplicate definition for '" + super._word + "' found in: " + this._where;
    }
 }

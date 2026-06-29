@@ -1,5 +1,6 @@
 package net.rim.device.api.io.http;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -95,7 +96,7 @@ public final class HttpDateParser {
       // 7b: i2l
       // 7c: lreturn
       // 7d: aload 1
-      // 7e: checkcast java/lang/Object
+      // 7e: checkcast net/rim/device/cldc/util/CalendarExtensions
       // 81: invokeinterface net/rim/device/cldc/util/CalendarExtensions.getTimeLong ()J 1
       // 86: lreturn
       // try (11 -> 24): 63 null
@@ -128,7 +129,7 @@ public final class HttpDateParser {
       calendar.set(1, readDigits(dateString, index, 4));
    }
 
-   private static final void readMonth(String dateString, int index, Calendar calendar) {
+   private static final void readMonth(String dateString, int index, Calendar calendar) throws IOException {
       int month = 0;
 
       while (month < 12 && !dateString.regionMatches(true, index, _months[month], 0, 3)) {
@@ -136,13 +137,13 @@ public final class HttpDateParser {
       }
 
       if (month >= 12) {
-         throw new Object("No valid month was specified");
+         throw new IOException("No valid month was specified");
       }
 
       calendar.set(2, month);
    }
 
-   private static final void readTime(String dateString, int index, Calendar calendar) {
+   private static final void readTime(String dateString, int index, Calendar calendar) throws IOException {
       if (dateString.charAt(index + 2) == ':' && dateString.charAt(index + 5) == ':') {
          int hour = readDigits(dateString, index, 2);
          int minutes = readDigits(dateString, index + 3, 2);
@@ -152,10 +153,10 @@ public final class HttpDateParser {
             calendar.set(12, minutes);
             calendar.set(13, seconds);
          } else {
-            throw new Object("The time was not specified correctly");
+            throw new IOException("The time was not specified correctly");
          }
       } else {
-         throw new Object("The time was not specified correctly");
+         throw new IOException("The time was not specified correctly");
       }
    }
 
@@ -349,7 +350,7 @@ public final class HttpDateParser {
 
             int year = NumberUtilities.parseInt(date, trimHead(date, position, dateLength), yearEndIndex, 10);
             if (year < 100) {
-               calendar.setTime((Date)(new Object()));
+               calendar.setTime(new Date());
                int defaultCenturyStartYear = calendar.get(1) - 80;
                int twoDigitDefaultCenturyStartYear = defaultCenturyStartYear % 100;
                year += defaultCenturyStartYear / 100 * 100 + (year < twoDigitDefaultCenturyStartYear ? 100 : 0);

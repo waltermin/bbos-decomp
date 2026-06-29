@@ -5,11 +5,11 @@ import net.rim.device.api.system.DeviceInfo;
 import net.rim.device.api.system.GlobalEventListener;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Keypad;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiEngine;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.phone.PhoneEventListener;
 import net.rim.device.apps.api.phone.VoiceApplication;
@@ -22,6 +22,7 @@ import net.rim.device.apps.internal.phone.api.PhoneUtilities;
 import net.rim.device.apps.internal.phone.api.ui.PhoneAwareScreen;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
 import net.rim.device.internal.ui.component.PopupDialog;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 
 final class MissedCallPopup extends PopupDialog implements PhoneEventListener, GlobalEventListener {
    private int _missedCallCount;
@@ -33,23 +34,23 @@ final class MissedCallPopup extends PopupDialog implements PhoneEventListener, G
    private MissedCallIndicator _mci;
 
    MissedCallPopup(MissedCallIndicator mci) {
-      super((Manager)(new Object(1153220571769602048L)), 33554432);
+      super(new VerticalFieldManager(1153220571769602048L), 33554432);
       this.setStatusPriority(-1073741814);
       this._mci = mci;
       this._missedCallCount = 1;
-      this.add(this._missedCallField = (RichTextField)(new Object(this.getMissedCallText(), 36028797018963968L)));
+      this.add(this._missedCallField = new RichTextField(this.getMissedCallText(), 36028797018963968L));
       VoicemailIconManager vmailIconMgr = VoicemailIconManager.getInstance();
       if (vmailIconMgr.isIndicatorOn()) {
          int count = vmailIconMgr.getVoicemailCount();
-         this._newVoicemailField = (RichTextField)(new Object(this.getNewVoicemailText(count), 36028797018963968L));
-         this.add((Field)(new Object(4)));
+         this._newVoicemailField = new RichTextField(this.getNewVoicemailText(count), 36028797018963968L);
+         this.add(new VerticalSpacerField(4));
          this.add(this._newVoicemailField);
       }
 
-      this.add((Field)(new Object(8)));
-      ButtonContainer buttons = (ButtonContainer)(new Object());
+      this.add(new VerticalSpacerField(8));
+      ButtonContainer buttons = new ButtonContainer();
       String view = PhoneResources.getString(6256);
-      this._viewMissedCallsButton = (ButtonField)(new Object(view, 0));
+      this._viewMissedCallsButton = new ButtonField(view, 0);
       this._closeButton = PhoneUtilities.getCloseButton();
       buttons.addButton(this._viewMissedCallsButton);
       buttons.addButton(this._closeButton);
@@ -140,7 +141,7 @@ final class MissedCallPopup extends PopupDialog implements PhoneEventListener, G
                return;
             }
 
-            ContextObject context = (ContextObject)(new Object());
+            ContextObject context = new ContextObject();
             PhoneUtilities.setPrivateFlag(context, 72);
             VoiceServices.getVoiceApplication().requestForeground(null, context);
             voiceApp.requestForeground(null, context);
@@ -168,15 +169,13 @@ final class MissedCallPopup extends PopupDialog implements PhoneEventListener, G
 
    private final String getMissedCallText() {
       return this._missedCallCount > 1
-         ? MessageFormat.format(PhoneResources.getString(6252), new Object[]{((StringBuffer)(new Object(""))).append(this._missedCallCount).toString()})
+         ? MessageFormat.format(PhoneResources.getString(6252), new String[]{"" + this._missedCallCount})
          : PhoneResources.getString(6251);
    }
 
    private final String getNewVoicemailText(int count) {
       if (count > 0) {
-         return count == 1
-            ? PhoneResources.getString(6255)
-            : MessageFormat.format(PhoneResources.getString(6253), new Object[]{((StringBuffer)(new Object(""))).append(count).toString()});
+         return count == 1 ? PhoneResources.getString(6255) : MessageFormat.format(PhoneResources.getString(6253), new String[]{"" + count});
       } else {
          return PhoneResources.getString(6254);
       }
@@ -218,7 +217,7 @@ final class MissedCallPopup extends PopupDialog implements PhoneEventListener, G
             int count = mgr.getVoicemailCount();
             String text = this.getNewVoicemailText(count);
             if (this._newVoicemailField == null) {
-               this._newVoicemailField = (RichTextField)(new Object(text, 36028797018963968L));
+               this._newVoicemailField = new RichTextField(text, 36028797018963968L);
                int index = this._missedCallField.getIndex();
                this.insert(this._newVoicemailField, index + 1);
                return;

@@ -38,7 +38,7 @@ final class GranularPolicyAction$TransientEncryptToElement extends GranularPolic
          } else {
             GranularPolicyAction$TransientOtherKeyElement transientOtherKeyElement = (GranularPolicyAction$TransientOtherKeyElement)childElement;
             if (this._otherKey_data_value == null) {
-               this._otherKey_data_value = new Object[0];
+               this._otherKey_data_value = new String[0];
             }
 
             Arrays.add(this._otherKey_data_value, transientOtherKeyElement._data_value);

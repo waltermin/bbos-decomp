@@ -133,7 +133,7 @@ final class CalendarOptions$CalendarOptionsSyncItem extends OTASyncCapableSyncIt
                      wirelessSync = ConverterUtilities.readInt(buffer) != 0 ? Boolean.TRUE : Boolean.FALSE;
                      break;
                   case 4:
-                     colour = (Integer)(new Object(ConverterUtilities.readInt(buffer)));
+                     colour = new Integer(ConverterUtilities.readInt(buffer));
                      break;
                   case 5:
                      displayReminders = ConverterUtilities.readInt(buffer) != 0 ? Boolean.TRUE : Boolean.FALSE;
@@ -167,7 +167,7 @@ final class CalendarOptions$CalendarOptionsSyncItem extends OTASyncCapableSyncIt
       CalendarOptions options = CalendarOptions.getOptions();
       Hashtable properties = options.getCalendarPropertyTable();
       Enumeration propertyKeys = properties.keys();
-      DataBuffer tempBuffer = (DataBuffer)(new Object(buffer.isBigEndian()));
+      DataBuffer tempBuffer = new DataBuffer(buffer.isBigEndian());
       tempBuffer.writeInt(options.getFirstDayOfWeekOption() - 1);
       tempBuffer.writeShort(options.getDayStart() / 60000);
       tempBuffer.writeShort(options.getDayEnd() / 60000);

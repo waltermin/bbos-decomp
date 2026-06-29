@@ -29,9 +29,9 @@ final class SecurityApp$OwnerInfoManager extends Manager implements SecurityReso
          this._drawInfo = false;
       }
 
-      this._fieldOwnerName = (RichTextField)(new Object(ownerName, 36028797086072832L));
+      this._fieldOwnerName = new RichTextField(ownerName, 36028797086072832L);
       this.add(this._fieldOwnerName);
-      this._fieldOwnerInfo = (RichTextField)(new Object(ownerInfo, 36028797018963968L));
+      this._fieldOwnerInfo = new RichTextField(ownerInfo, 36028797018963968L);
       this.add(this._fieldOwnerInfo);
    }
 

@@ -9,7 +9,7 @@ final class ProxySecureConnection$ProxyOutputStream extends OutputStream {
    public ProxySecureConnection$ProxyOutputStream(ProxySecureConnection _1, OutputStream output) {
       this.this$0 = _1;
       _1._output = output;
-      _1._buffer = (DataBuffer)(new Object());
+      _1._buffer = new DataBuffer();
    }
 
    @Override

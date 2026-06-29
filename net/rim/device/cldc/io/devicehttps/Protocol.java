@@ -2,6 +2,7 @@ package net.rim.device.cldc.io.devicehttps;
 
 import com.sun.cldc.io.ConnectionBaseInterface;
 import javax.microedition.io.Connection;
+import javax.microedition.io.ConnectionNotFoundException;
 import javax.microedition.io.Connector;
 import javax.microedition.io.SecureConnection;
 import net.rim.device.api.hrt.GprsHRI;
@@ -32,13 +33,13 @@ public final class Protocol implements ConnectionBaseInterface {
 
    @Override
    public final Connection openPrim(String name, int mode, boolean timeouts) {
-      URL url = (URL)(new Object("https", name));
+      URL url = new URL("https", name);
       boolean connectionNotifier = url.getHost() == null && url.getPath() == null;
       return connectionNotifier ? this.doConnectionNotify(url, mode, timeouts) : this.doConnection(url, mode, timeouts);
    }
 
-   private final Connection doConnection(URL url, int mode, boolean timeouts) {
-      StringBuffer urlToOpen = (StringBuffer)(new Object("devicessl://"));
+   private final Connection doConnection(URL url, int mode, boolean timeouts) throws ConnectionNotFoundException {
+      StringBuffer urlToOpen = new StringBuffer("devicessl://");
       String hostName = url.getHost();
       int port = url.getPort();
       if (port == 0) {
@@ -171,13 +172,13 @@ public final class Protocol implements ConnectionBaseInterface {
             );
          }
       } finally {
-         throw new Object();
+         throw new ConnectionNotFoundException();
       }
 
-      throw new Object();
+      throw new ConnectionNotFoundException();
    }
 
-   private final Connection doConnectionNotify(URL param1, int param2, boolean param3) {
+   private final Connection doConnectionNotify(URL param1, int param2, boolean param3) throws ConnectionNotFoundException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -185,7 +186,7 @@ public final class Protocol implements ConnectionBaseInterface {
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:174)
       //
       // Bytecode:
-      // 000: new java/lang/Object
+      // 000: new java/lang/StringBuffer
       // 003: dup
       // 004: ldc_w "socket://"
       // 007: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -333,7 +334,7 @@ public final class Protocol implements ConnectionBaseInterface {
       // 14d: iload 2
       // 14e: iload 3
       // 14f: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;IZ)Ljavax/microedition/io/Connection;
-      // 152: checkcast java/lang/Object
+      // 152: checkcast javax/microedition/io/ServerSocketConnection
       // 155: astore 13
       // 157: aload 13
       // 159: ifnull 193
@@ -360,7 +361,7 @@ public final class Protocol implements ConnectionBaseInterface {
       // 189: invokeinterface javax/microedition/io/Connection.close ()V 1
       // 18e: goto 193
       // 191: astore 13
-      // 193: new java/lang/Object
+      // 193: new javax/microedition/io/ConnectionNotFoundException
       // 196: dup
       // 197: invokespecial javax/microedition/io/ConnectionNotFoundException.<init> ()V
       // 19a: athrow

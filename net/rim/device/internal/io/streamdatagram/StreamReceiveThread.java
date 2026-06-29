@@ -9,10 +9,10 @@ final class StreamReceiveThread extends Thread {
 
    StreamReceiveThread(StreamDatagramTransportBase transport, DatagramConnectionBase subConnection) {
       this._transport = transport;
-      if (subConnection instanceof Object) {
+      if (subConnection instanceof NativeConnectionBase) {
          this._connection = (NativeConnectionBase)subConnection;
       } else {
-         throw new Object();
+         throw new RuntimeException();
       }
    }
 

@@ -37,7 +37,7 @@ public final class MMSForwardVerb extends AbstractComposeVerb {
    @Override
    public final void setParameter(Object parameter) {
       super._address = null;
-      if (parameter instanceof Object) {
+      if (parameter instanceof MessagePartsProvider) {
          this._originalMessage = (MessagePartsProvider)parameter;
       } else {
          super.setParameter(parameter);
@@ -75,22 +75,22 @@ public final class MMSForwardVerb extends AbstractComposeVerb {
       String subject = this._originalMessage.getSubject();
       if (!(this._originalMessage instanceof MMSMessageModel)) {
          MMSPresentationModel newMessage = PresentationModelFactory.createInstance(65536);
-         Object bodyText = new Object();
+         StringBuffer bodyText = new StringBuffer();
          String sourceName = this._originalMessage.getName();
          if (sourceName != null && sourceName.length() > 0) {
             sourceName = StringUtilities.removeChars(sourceName, "̲");
-            ((StringBuffer)bodyText).append('\n');
-            ((StringBuffer)bodyText).append(((StringBuffer)(new Object("------ "))).append(sourceName).append(" ------").toString());
+            bodyText.append('\n');
+            bodyText.append("------ " + sourceName + " ------");
          }
 
          String fwdBody = this._originalMessage.getBody();
          if (fwdBody != null) {
-            ((StringBuffer)bodyText).append('\n');
-            ((StringBuffer)bodyText).append(fwdBody);
+            bodyText.append('\n');
+            bodyText.append(fwdBody);
          }
 
          String bodyAttachmentName = "body.txt";
-         builder.addAttachment(bodyAttachmentName, 3, ((StringBuffer)bodyText).toString());
+         builder.addAttachment(bodyAttachmentName, 3, bodyText.toString());
          newMessage.addPresentationElement(bodyAttachmentName, 3, true);
          builder.addAttachment(newMessage);
       } else {
@@ -123,9 +123,7 @@ public final class MMSForwardVerb extends AbstractComposeVerb {
       }
 
       if (subject != null) {
-         builder.setSubject(
-            ((StringBuffer)(new Object())).append(EmailResources.getString(59)).append(' ').append(AbstractComposeVerb.trimSubject(subject)).toString()
-         );
+         builder.setSubject(EmailResources.getString(59) + ' ' + AbstractComposeVerb.trimSubject(subject));
       }
 
       if (priority != null) {

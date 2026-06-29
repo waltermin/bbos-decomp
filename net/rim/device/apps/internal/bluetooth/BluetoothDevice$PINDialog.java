@@ -59,7 +59,7 @@ final class BluetoothDevice$PINDialog extends SimplePasswordDialog {
       } else {
          int id = this._numeric ? 7 : 69;
          String deviceName = this.this$0.toString();
-         prompt = MessageFormat.format(BluetoothMainScreen.getString(id), new Object[]{deviceName});
+         prompt = MessageFormat.format(BluetoothMainScreen.getString(id), new String[]{deviceName});
       }
 
       this.setPrompt(prompt);

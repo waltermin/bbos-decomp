@@ -170,7 +170,7 @@ public class SimplePersistentSyncCollection
       this._inSyncTransaction = true;
       if (!this._syncRemoveAllDone) {
          this._maximumUpdatesAllowed = limitUpdateCacheSize ? this.size() : -1;
-         this._updateCache = (BigVector)(new Object());
+         this._updateCache = new BigVector();
       }
    }
 
@@ -192,7 +192,7 @@ public class SimplePersistentSyncCollection
 
    @Override
    public SyncObject[] getSyncObjects() {
-      SyncObject[] objects = new Object[0];
+      SyncObject[] objects = new SyncObject[0];
       synchronized (this) {
          int count = this.size();
          int dest = 0;
@@ -200,7 +200,7 @@ public class SimplePersistentSyncCollection
 
          for (int i = 0; i < count; i++) {
             Object o = this.getAt(i);
-            if (o instanceof Object) {
+            if (o instanceof SyncObject) {
                SyncObject syncObj = (SyncObject)o;
                objects[dest++] = syncObj;
             }
@@ -270,7 +270,7 @@ public class SimplePersistentSyncCollection
 
          for (int i = 0; i < count; i++) {
             Object o = this.getAt(i);
-            if (o instanceof Object) {
+            if (o instanceof SyncObject) {
                int uid = ((SyncObject)o).getUID();
                if (key == uid) {
                   return o;

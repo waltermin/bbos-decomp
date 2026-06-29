@@ -4,6 +4,7 @@ import javax.microedition.io.Connector;
 import javax.microedition.io.Datagram;
 import net.rim.device.api.io.DatagramBase;
 import net.rim.device.api.io.DatagramConnectionBase;
+import net.rim.device.api.io.IONotRoutableException;
 import net.rim.device.api.servicebook.ServiceRouting;
 import net.rim.device.api.servicebook.ServiceRoutingListener;
 import net.rim.device.api.servicebook.ServiceRoutingProperties;
@@ -23,16 +24,11 @@ public final class SrpBridge extends GmeRouterConnection implements ServiceRouti
    private static final int CAPABILITIES = 3;
 
    protected SrpBridge(Transport transport, boolean wifiLink) {
-      super(
-         transport,
-         (DatagramConnectionBase)Connector.open(
-            ((StringBuffer)(new Object())).append(SCHEME).append("//;connectiontype=router;interface=").append(wifiLink ? "wifi" : "cellular").toString()
-         )
-      );
+      super(transport, (DatagramConnectionBase)Connector.open(SCHEME + "//;connectiontype=router;interface=" + (wifiLink ? "wifi" : "cellular")));
       super._subConnection.setDatagramStatusListener(transport);
       this._dataServices = DataServices.getInstance();
       this._serviceRouting = ServiceRouting.getInstance();
-      this._connectionParameters = ((StringBuffer)(new Object(";connectiontype=router;interface="))).append(wifiLink ? "wifi" : "cellular").toString();
+      this._connectionParameters = ";connectiontype=router;interface=" + (wifiLink ? "wifi" : "cellular");
       if (wifiLink) {
          this._routingHandle = this._serviceRouting.addInterface(new ServiceRoutingProperties(ServiceRoutingProperties.SRP_WI_FI, 3, 1146, 1, 2, 3));
          this._linkType = 0;
@@ -52,9 +48,9 @@ public final class SrpBridge extends GmeRouterConnection implements ServiceRouti
    }
 
    @Override
-   public final void send(DatagramBase dg, GMEDatagramInfo di, Datagram superDG) {
+   public final void send(DatagramBase dg, GMEDatagramInfo di, Datagram superDG) throws IONotRoutableException {
       if (!this._dataServices.isDataServicesEnabled(this._linkType == 0 ? 2 : 1, 2)) {
-         throw new Object();
+         throw new IONotRoutableException();
       }
 
       String uid = null;
@@ -63,7 +59,7 @@ public final class SrpBridge extends GmeRouterConnection implements ServiceRouti
       boolean pickAny = false;
       if (numAddrs == 0) {
          if (di.cmdByte != 10) {
-            throw new Object();
+            throw new IONotRoutableException();
          }
 
          uid = SNTP;
@@ -79,13 +75,13 @@ public final class SrpBridge extends GmeRouterConnection implements ServiceRouti
                   if (uid == null) {
                      uid = targ.address;
                   } else if (!targ.address.equals(uid)) {
-                     throw new Object();
+                     throw new IONotRoutableException();
                   }
                case 0:
                   i++;
                   break;
                case 2:
-                  throw new Object();
+                  throw new IONotRoutableException();
             }
          }
       }
@@ -97,7 +93,7 @@ public final class SrpBridge extends GmeRouterConnection implements ServiceRouti
          di.errorEventCode = -1;
          di.errorEventContext = null;
       } else {
-         throw new Object();
+         throw new IONotRoutableException();
       }
    }
 
@@ -120,26 +116,14 @@ public final class SrpBridge extends GmeRouterConnection implements ServiceRouti
       if (!serviceState && SrpUtils.getInstance().getServiceState(service)) {
          super._transport
             ._serviceAuthentication
-            .startService(
-               service,
-               SrpUtils.getInstance().getCapabilities(service),
-               ((StringBuffer)(new Object())).append(SCHEME).append("//").append(service).append(this._connectionParameters).toString(),
-               this._routingHandle
-            );
+            .startService(service, SrpUtils.getInstance().getCapabilities(service), SCHEME + "//" + service + this._connectionParameters, this._routingHandle);
       }
    }
 
    @Override
    public final void srpServiceStateChanged(String service, int capabilities, boolean serviceState) {
       if (serviceState) {
-         super._transport
-            ._serviceAuthentication
-            .startService(
-               service,
-               capabilities,
-               ((StringBuffer)(new Object())).append(SCHEME).append("//").append(service).append(this._connectionParameters).toString(),
-               this._routingHandle
-            );
+         super._transport._serviceAuthentication.startService(service, capabilities, SCHEME + "//" + service + this._connectionParameters, this._routingHandle);
       } else {
          super._transport._serviceAuthentication.stopService(service, this._routingHandle);
          this._serviceRouting.setServiceState(service, 0, this._routingHandle, false, false);

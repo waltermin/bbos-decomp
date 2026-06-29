@@ -218,7 +218,7 @@ public final class SBSerialUpdaterThread extends Thread {
       // 158: aload 5
       // 15a: arraylength
       // 15b: ifle 1ae
-      // 15e: new java/lang/Object
+      // 15e: new net/rim/device/api/util/DataBuffer
       // 161: dup
       // 162: aload 5
       // 164: bipush 0

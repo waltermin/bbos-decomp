@@ -19,7 +19,7 @@ public final class RibbonIconField extends ApplicationIconField {
    private static Bitmap _movingFocusBitmap;
    private static boolean _useMovingFocus;
    private static boolean _isMovingFocusAFolder;
-   private static XYRect _rect = (XYRect)(new Object());
+   private static XYRect _rect = new XYRect();
 
    public RibbonIconField(ApplicationEntry applicationEntry) {
       super(applicationEntry.getUniqueName(), applicationEntry.getState());
@@ -90,9 +90,9 @@ public final class RibbonIconField extends ApplicationIconField {
       if (field != null) {
          int w = field.getPreferredWidth();
          int h = field.getPreferredHeight();
-         Bitmap topBitmap = (Bitmap)(new Object(w, h));
+         Bitmap topBitmap = new Bitmap(w, h);
          topBitmap.createAlpha(2);
-         Graphics g = (Graphics)(new Object(topBitmap));
+         Graphics g = new Graphics(topBitmap);
          g.setGlobalAlpha(0);
          g.clear();
          g.setGlobalAlpha(255);

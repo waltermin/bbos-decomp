@@ -12,7 +12,7 @@ import net.rim.vm.Array;
 
 public final class DataSourceDatabaseFields implements Persistable, TLESerializableObject {
    private Object[] _fields = new Object[0];
-   private IntVector _orderedFields = (IntVector)(new Object());
+   private IntVector _orderedFields = new IntVector();
    private int[] _keyFields = new int[0];
    private int _flags;
    public static final byte FIELDTYPE_OPAQUE = 0;
@@ -176,15 +176,15 @@ public final class DataSourceDatabaseFields implements Persistable, TLESerializa
       this();
 
       try {
-         this.readFrom((DataBuffer)(new Object(encodedBytes, 0, encodedBytes.length, true)));
+         this.readFrom(new DataBuffer(encodedBytes, 0, encodedBytes.length, true));
       } catch (Throwable var4) {
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       }
    }
 
    @Override
    public final String toString() {
-      StringBuffer xSb = (StringBuffer)(new Object());
+      StringBuffer xSb = new StringBuffer();
       int xSize = this._orderedFields.size();
 
       for (int xIndex = 0; xIndex < xSize; xIndex++) {

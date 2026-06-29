@@ -21,21 +21,21 @@ class HorizontalLayout extends AbstractForeignObject implements LayoutManager {
 
       try {
          var5 = true;
-         String e = params.get("width");
+         String e = (String)params.get("width");
          if (e != null) {
-            this._width = Integer.parseInt((String)e);
+            this._width = Integer.parseInt(e);
          }
 
-         e = params.get("align");
+         e = (String)params.get("align");
          if (e != null) {
-            if (((String)e).equals("left")) {
+            if (e.equals("left")) {
                this._align = 0;
                var5 = false;
-            } else if (((String)e).equals("center")) {
+            } else if (e.equals("center")) {
                this._align = 1;
                var5 = false;
             } else {
-               if (((String)e).equals("right")) {
+               if (e.equals("right")) {
                   this._align = 2;
                   return;
                }

@@ -11,7 +11,7 @@ final class CalculatorUI$MemoryLabelField extends LabelField {
       if (text.length() == 0) {
          super.setText(text);
       } else {
-         super.setText(((StringBuffer)(new Object("M="))).append(text).toString());
+         super.setText("M=" + text);
       }
    }
 }

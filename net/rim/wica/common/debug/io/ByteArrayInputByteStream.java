@@ -6,7 +6,7 @@ public final class ByteArrayInputByteStream extends AbstractInputByteStreamAdapt
    ByteArrayInputStream _byteArrayStream;
 
    public ByteArrayInputByteStream(byte[] bytes) {
-      this._byteArrayStream = (ByteArrayInputStream)(new Object(bytes));
+      this._byteArrayStream = new ByteArrayInputStream(bytes);
       this.init(this._byteArrayStream);
    }
 }

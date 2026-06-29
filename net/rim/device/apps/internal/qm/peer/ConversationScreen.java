@@ -10,7 +10,7 @@ import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.TextChangeListener;
 import net.rim.device.api.ui.UiApplication;
-import net.rim.device.api.ui.component.TextField;
+import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.apps.api.framework.hotkeys.HotKeyCheck;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -150,7 +150,7 @@ final class ConversationScreen extends QmMainScreen implements CollectionListene
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:185)
       //
       // Bytecode:
-      // 000: new java/lang/Object
+      // 000: new net/rim/device/apps/api/framework/file/FileSelector
       // 003: dup
       // 004: ldc_w "/store/"
       // 007: invokespecial net/rim/device/apps/api/framework/file/FileSelector.<init> (Ljava/lang/String;)V
@@ -186,15 +186,15 @@ final class ConversationScreen extends QmMainScreen implements CollectionListene
       // 045: aload 2
       // 046: invokestatic net/rim/device/internal/io/file/FileUtilities.makeFileURL (Ljava/lang/String;)Ljava/lang/String;
       // 049: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 04c: checkcast java/lang/Object
+      // 04c: checkcast javax/microedition/io/file/FileConnection
       // 04f: astore 4
       // 051: aload 4
       // 053: dup
-      // 054: instanceof java/lang/Object
+      // 054: instanceof net/rim/device/api/io/file/ExtendedFileConnection
       // 057: ifne 05e
       // 05a: pop
       // 05b: goto 088
-      // 05e: checkcast java/lang/Object
+      // 05e: checkcast net/rim/device/api/io/file/ExtendedFileConnection
       // 061: invokeinterface net/rim/device/api/io/file/ExtendedFileConnection.isContentDRMForwardLocked ()Z 1
       // 066: ifeq 088
       // 069: aload 5
@@ -361,7 +361,7 @@ final class ConversationScreen extends QmMainScreen implements CollectionListene
       this._messageList = new MessageList(conversation);
       this._clientManager.add(this._messageList);
       this._replyField = new NewMessageField();
-      ((TextField)this._replyField.getEditField()).addTextChangeListener(this);
+      ((EditField)this._replyField.getEditField()).addTextChangeListener(this);
       this._clientManager.add(this._replyField);
       this.add(this._clientManager);
       this._context = context;
@@ -370,7 +370,7 @@ final class ConversationScreen extends QmMainScreen implements CollectionListene
       }
 
       this._typingTimer = new TypingTimer(this._conversation);
-      WeakReference collectionListener = (WeakReference)(new Object(this));
+      WeakReference collectionListener = new WeakReference(this);
       this._application.getContactListCollection().addCollectionListener(collectionListener);
       this._conversation.addCollectionListener(collectionListener);
    }
@@ -379,7 +379,8 @@ final class ConversationScreen extends QmMainScreen implements CollectionListene
       if (message == null) {
          this.handleNotificationMessageDefault();
       } else {
-         if (!this.onNewNotificationMessage(message) && message instanceof Object || this._notificationField != null && !this._notificationField.isFocus()) {
+         if (!this.onNewNotificationMessage(message) && message instanceof FieldProvider
+            || this._notificationField != null && !this._notificationField.isFocus()) {
             Field newNotifField = ((FieldProvider)message).getField(null);
             if (!this.areNotificationFieldsEqual(newNotifField)) {
                if (this._notificationField != null) {
@@ -416,7 +417,7 @@ final class ConversationScreen extends QmMainScreen implements CollectionListene
             }
 
             MenuItem defaultMenuItem = fieldWithFocus.getContextMenu().getDefaultItem();
-            if (defaultMenuItem instanceof Object) {
+            if (defaultMenuItem instanceof VerbMenuItem) {
                ((VerbMenuItem)defaultMenuItem).getVerb().invoke(this._context);
                return true;
             }
@@ -503,7 +504,7 @@ final class ConversationScreen extends QmMainScreen implements CollectionListene
          if (contact != null) {
             Object item = Utils.getAddressCard(contact.getOriginalContactInfo());
             if (item != null) {
-               ContextObject resultContext = (ContextObject)(new Object(73));
+               ContextObject resultContext = new ContextObject(73);
                resultContext.put(252, item);
                if (ControllerUtilities.invokeSendKeyVerb(item, resultContext)) {
                   ret = true;

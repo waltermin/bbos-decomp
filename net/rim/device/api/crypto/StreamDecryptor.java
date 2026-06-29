@@ -23,7 +23,7 @@ public class StreamDecryptor extends DecryptorInputStream {
             throw new CryptoIOException(e);
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

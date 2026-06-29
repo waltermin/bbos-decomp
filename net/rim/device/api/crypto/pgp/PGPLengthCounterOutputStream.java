@@ -8,7 +8,7 @@ class PGPLengthCounterOutputStream extends OutputStream {
 
    public PGPLengthCounterOutputStream(OutputStream output) {
       if (output == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._output = output;
@@ -24,7 +24,7 @@ class PGPLengthCounterOutputStream extends OutputStream {
    @Override
    public void write(byte[] b) {
       if (b == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this.write(b, 0, b.length);
@@ -36,7 +36,7 @@ class PGPLengthCounterOutputStream extends OutputStream {
          this._amountWritten += len;
          this._output.write(b, off, len);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

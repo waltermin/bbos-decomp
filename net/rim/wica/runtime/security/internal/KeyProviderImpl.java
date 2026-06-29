@@ -224,8 +224,8 @@ final class KeyProviderImpl implements KeyProvider, PersistentContentListener {
    }
 
    private final void saveRecoveryInfo(long agId) {
-      DataBuffer regDataBuffer = (DataBuffer)(new Object());
-      DataBuffer resetDataBuffer = (DataBuffer)(new Object());
+      DataBuffer regDataBuffer = new DataBuffer();
+      DataBuffer resetDataBuffer = new DataBuffer();
       resetDataBuffer.writeByte(1);
       regDataBuffer.writeByte(1);
       int length = this._recoveryInfo.size();
@@ -268,7 +268,7 @@ final class KeyProviderImpl implements KeyProvider, PersistentContentListener {
    }
 
    private final void recryptRecoveryRegKeys() {
-      DataBuffer regDataBuffer = (DataBuffer)(new Object());
+      DataBuffer regDataBuffer = new DataBuffer();
       regDataBuffer.writeByte(1);
       int length = this._recoveryInfo.size();
       regDataBuffer.writeCompressedInt(length);
@@ -295,15 +295,15 @@ final class KeyProviderImpl implements KeyProvider, PersistentContentListener {
    }
 
    private final void loadRecoveryKeys() {
-      this._recoveryKeys = (LongHashtable)(new Object());
+      this._recoveryKeys = new LongHashtable();
       this._recoveryInfo = new LongVector();
 
       try {
          byte[] b = this._persistenceService.loadRecoveryResetKeys();
          if (b != null) {
-            DataBuffer resetDataBuffer = (DataBuffer)(new Object(b, 0, b.length, true));
+            DataBuffer resetDataBuffer = new DataBuffer(b, 0, b.length, true);
             b = this._persistenceService.loadRecoveryRegKeys();
-            DataBuffer regDataBuffer = (DataBuffer)(b != null ? new Object(b, 0, b.length, true) : null);
+            DataBuffer regDataBuffer = b != null ? new DataBuffer(b, 0, b.length, true) : null;
             if (resetDataBuffer.readByte() == 1) {
                int length = resetDataBuffer.readCompressedInt();
                if (regDataBuffer != null) {
@@ -322,7 +322,7 @@ final class KeyProviderImpl implements KeyProvider, PersistentContentListener {
                   keys[2] = encodedKey.length == 0 ? null : this._securityProvider.decodeKey(KeyType.AES, encodedKey);
                   if (regDataBuffer != null) {
                      if (regDataBuffer.readCompressedLong() != id) {
-                        throw new Object("Incorrect id");
+                        throw new RuntimeException("Incorrect id");
                      }
 
                      encodedKey = regDataBuffer.readByteArray();
@@ -348,8 +348,8 @@ final class KeyProviderImpl implements KeyProvider, PersistentContentListener {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private final void loadAllKeys() {
-      this._activeKeys = (LongHashtable)(new Object());
-      this._publicAGKeys = (LongHashtable)(new Object());
+      this._activeKeys = new LongHashtable();
+      this._publicAGKeys = new LongHashtable();
       this.loadRecoveryKeys();
       boolean var23 = false /* VF: Semaphore variable */;
 
@@ -493,8 +493,8 @@ final class KeyProviderImpl implements KeyProvider, PersistentContentListener {
          return new byte[0];
       }
 
-      ByteArrayOutputStream out = (ByteArrayOutputStream)(new Object());
-      DataOutputStream dataStream = (DataOutputStream)(new Object(out));
+      ByteArrayOutputStream out = new ByteArrayOutputStream();
+      DataOutputStream dataStream = new DataOutputStream(out);
       dataStream.writeByte(1);
       dataStream.writeInt(keys.size());
       LongEnumeration i = keys.keys();
@@ -528,8 +528,8 @@ final class KeyProviderImpl implements KeyProvider, PersistentContentListener {
 
    private final void createKeys(byte[] store, LongHashtable keys, int index, int size, KeyType keyType, boolean isProtected) {
       if (store != null && store.length > 0) {
-         ByteArrayInputStream in = (ByteArrayInputStream)(new Object(store));
-         DataInputStream dataStream = (DataInputStream)(new Object(in));
+         ByteArrayInputStream in = new ByteArrayInputStream(store);
+         DataInputStream dataStream = new DataInputStream(in);
          byte[] encodedKey = null;
          if (dataStream.readByte() == 1) {
             int count = dataStream.readInt();

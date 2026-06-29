@@ -7,6 +7,7 @@ import net.rim.device.apps.internal.browser.markup.HTMLUtilities;
 import org.w3c.dom.Attr;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Comment;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.DocumentType;
@@ -296,7 +297,7 @@ final class HTMLDocumentImpl extends HTMLNode implements HTMLDocument {
    public final void setCookie(String cookie) {
       RenderingApplication app = this._peer.getRenderingApplication();
       if (cookie != null && app != null) {
-         SetHttpCookieEvent event = (SetHttpCookieEvent)(new Object(this._peer, this.getURL(), cookie));
+         SetHttpCookieEvent event = new SetHttpCookieEvent(this._peer, this.getURL(), cookie);
          app.eventOccurred(event);
       }
    }
@@ -357,12 +358,12 @@ final class HTMLDocumentImpl extends HTMLNode implements HTMLDocument {
 
    @Override
    public final CDATASection createCDATASection(String data) {
-      throw new Object((short)9, null);
+      throw new DOMException((short)9, null);
    }
 
    @Override
    public final ProcessingInstruction createProcessingInstruction(String target, String data) {
-      throw new Object((short)9, null);
+      throw new DOMException((short)9, null);
    }
 
    @Override
@@ -392,7 +393,7 @@ final class HTMLDocumentImpl extends HTMLNode implements HTMLDocument {
 
    @Override
    public final Node importNode(Node importedNode, boolean deep) {
-      throw new Object((short)9, null);
+      throw new DOMException((short)9, null);
    }
 
    @Override

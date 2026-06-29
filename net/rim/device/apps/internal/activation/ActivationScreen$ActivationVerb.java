@@ -71,7 +71,7 @@ final class ActivationScreen$ActivationVerb extends Verb implements Runnable {
       this.this$0._app.setCurrentState(1);
       ((ActivationServiceImpl)ActivationService.getInstance()).iconRefresh();
       ActivationScreen$StartActivationRunnable startActRunnable = new ActivationScreen$StartActivationRunnable(this.this$0, waitingForConnection);
-      this.this$0._connWaiterThread = (Thread)(new Object(startActRunnable));
+      this.this$0._connWaiterThread = new Thread(startActRunnable);
       this.this$0._connWaiterThread.start();
       return null;
    }

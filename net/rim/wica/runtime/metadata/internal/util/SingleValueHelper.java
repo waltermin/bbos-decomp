@@ -1,5 +1,6 @@
 package net.rim.wica.runtime.metadata.internal.util;
 
+import java.util.Date;
 import net.rim.wica.runtime.metadata.Wiclet;
 import net.rim.wica.runtime.metadata.component.KeyDataCollection;
 import net.rim.wica.runtime.metadata.component.ui.UIComponent;
@@ -10,14 +11,14 @@ public final class SingleValueHelper {
    public static final Object resolveInValue(UIComponent cmp, Object inValue, int valueType) {
       if (inValue == null) {
          return null;
-      } else if (inValue instanceof Object) {
+      } else if (inValue instanceof String) {
          return inValue;
       } else if (inValue instanceof int[]) {
          return resolveInValue(cmp, (int[])inValue, valueType);
       } else if (inValue instanceof Object[]) {
          return resolveInValue(cmp, (Object[])inValue);
       } else {
-         throw new Object("Invalid inValue.");
+         throw new IllegalArgumentException("Invalid inValue.");
       }
    }
 
@@ -30,12 +31,12 @@ public final class SingleValueHelper {
       }
 
       if ((resultType & 32768) != 0) {
-         throw new Object("Array can not be specified for resolution by SingleValueHelper");
+         throw new RuntimeException("Array can not be specified for resolution by SingleValueHelper");
       }
 
       int depth = array[index++];
       if (array[index] == -1 && array[index + 1] == -1) {
-         throw new Object("Repetition can not be specified for resolution by SingleValueHelper");
+         throw new RuntimeException("Repetition can not be specified for resolution by SingleValueHelper");
       }
 
       WicletEx wiclet = (WicletEx)cmp.getScreen().getWiclet();
@@ -57,7 +58,7 @@ public final class SingleValueHelper {
    }
 
    public static final Object resolveInValue(UIComponent cmp, Object[] array) {
-      StringBuffer val = (StringBuffer)(new Object());
+      StringBuffer val = new StringBuffer();
       int size = array.length;
 
       for (int i = 0; i < size; i++) {
@@ -79,25 +80,25 @@ public final class SingleValueHelper {
       switch (toType) {
          case 1:
          case 5:
-            result = new Object(0);
+            result = new Integer(0);
          case 0:
          case 7:
             return result;
          case 2:
-            return new Object((double)0L);
+            return new Double((double)0L);
          case 3:
          default:
             return "";
          case 4:
          case 6:
          case 8:
-            return new Object(0);
+            return new Long(0);
       }
    }
 
    public static final Object convertValue(Wiclet wiclet, long toType, long fromType, Object value, int depth) {
       if ((int)(toType & 4294967295L) != 6) {
-         if (value instanceof Object) {
+         if (value instanceof String) {
             return parseString(wiclet, toType, (String)value);
          }
 
@@ -106,12 +107,12 @@ public final class SingleValueHelper {
                case 3:
                   return value.toString();
                case 4:
-                  return Util.DEFAULT_DATE_FORMATTER.format(new Object(value));
+                  return Util.DEFAULT_DATE_FORMATTER.format(new Date((Long)value));
                case 5:
                default:
                   int enumType = (int)(fromType >> 32);
                   String[] enumValues = wiclet.getEnums().getEnum(enumType);
-                  int index = value;
+                  int index = (Integer)value;
                   return enumValues != null && enumValues.length > 0 && index >= 0 && index < enumValues.length ? enumValues[index] : null;
             }
          } else {
@@ -133,7 +134,7 @@ public final class SingleValueHelper {
                value = baseCreateValue((int)toType & 32767);
             }
 
-            return new Object(kdc.create(value));
+            return new Long(kdc.create(value));
          } else {
             return value;
          }
@@ -164,13 +165,13 @@ public final class SingleValueHelper {
       // 06: tableswitch 54 -1 8 191 80 56 100 54 161 132 191 191 68
       // 3c: aload 3
       // 3d: areturn
-      // 3e: new java/lang/Object
+      // 3e: new java/lang/Integer
       // 41: dup
       // 42: aload 3
       // 43: invokestatic net/rim/wica/runtime/util/Util.convertStringToInt (Ljava/lang/String;)I
       // 46: invokespecial java/lang/Integer.<init> (I)V
       // 49: areturn
-      // 4a: new java/lang/Object
+      // 4a: new java/lang/Long
       // 4d: dup
       // 4e: aload 3
       // 4f: invokestatic net/rim/wica/runtime/util/Util.convertStringToLong (Ljava/lang/String;)J
@@ -184,7 +185,7 @@ public final class SingleValueHelper {
       // 63: goto 69
       // 66: getstatic java/lang/Boolean.FALSE Ljava/lang/Boolean;
       // 69: areturn
-      // 6a: new java/lang/Object
+      // 6a: new java/lang/Double
       // 6d: dup
       // 6e: aload 3
       // 6f: invokevirtual java/lang/String.trim ()Ljava/lang/String;
@@ -203,7 +204,7 @@ public final class SingleValueHelper {
       // 8d: lushr
       // 8e: l2i
       // 8f: istore 4
-      // 91: new java/lang/Object
+      // 91: new java/lang/Integer
       // 94: dup
       // 95: aload 0
       // 96: invokeinterface net/rim/wica/runtime/metadata/Wiclet.getEnums ()Lnet/rim/wica/common/metadata/component/EnumCollection; 1
@@ -212,7 +213,7 @@ public final class SingleValueHelper {
       // 9e: invokeinterface net/rim/wica/common/metadata/component/EnumCollection.getEnumValueAsInt (ILjava/lang/String;)I 3
       // a3: invokespecial java/lang/Integer.<init> (I)V
       // a6: areturn
-      // a7: new java/lang/Object
+      // a7: new java/lang/Long
       // aa: dup
       // ab: aload 3
       // ac: invokevirtual java/lang/String.trim ()Ljava/lang/String;
@@ -226,7 +227,7 @@ public final class SingleValueHelper {
       // be: invokestatic net/rim/device/api/io/http/HttpDateParser.parse (Ljava/lang/String;)J
       // c1: invokespecial java/lang/Long.<init> (J)V
       // c4: areturn
-      // c5: new java/lang/Object
+      // c5: new java/lang/RuntimeException
       // c8: dup
       // c9: ldc_w "Not recognized type"
       // cc: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V

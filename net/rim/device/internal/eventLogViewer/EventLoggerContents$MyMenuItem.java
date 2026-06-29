@@ -59,7 +59,7 @@ final class EventLoggerContents$MyMenuItem extends MenuItem {
                index = this.this$0.listIndex2FilteredIndex(this.this$0._list.getSelectedIndex());
             }
 
-            StringBuffer strBuf = (StringBuffer)(new Object(128));
+            StringBuffer strBuf = new StringBuffer(128);
             Calendar curCal = Calendar.getInstance();
             ((CalendarExtensions)curCal).setTimeLong(EventLog.getTime(handles[index]));
             int startIndex = this.this$0.findDateBoundaryIndex(handles, index, curCal, -1);

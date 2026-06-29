@@ -26,8 +26,7 @@ final class OptionsScreen$MyMenuItem extends MenuItem {
             if (Dialog.ask(2, text) == 3) {
                MapletCache.getInstance().clear();
                if (OptionsScreen._currentCacheSize != null) {
-                  OptionsScreen._currentCacheSize
-                     .setText(((StringBuffer)(new Object("Cache Size: "))).append(MapletCache.getSyncCollectionSize() / 1024).append(" kB").toString());
+                  OptionsScreen._currentCacheSize.setText("Cache Size: " + MapletCache.getSyncCollectionSize() / 1024 + " kB");
                }
             }
 

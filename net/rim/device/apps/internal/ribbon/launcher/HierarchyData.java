@@ -12,7 +12,7 @@ import net.rim.device.apps.api.ribbon.ApplicationProperties;
 
 final class HierarchyData implements Persistable {
    private String[] _folders;
-   private Hashtable _properties = (Hashtable)(new Object());
+   private Hashtable _properties = new Hashtable();
    private String[] _deletedThemeFolders;
    private boolean _disableHotKeys;
    private static final int END_OF_DATA = 0;
@@ -22,8 +22,8 @@ final class HierarchyData implements Persistable {
    private static final int DELETED_THEME_FOLDER = 4;
 
    HierarchyData() {
-      this._folders = new Object[0];
-      this._deletedThemeFolders = new Object[0];
+      this._folders = new String[0];
+      this._deletedThemeFolders = new String[0];
    }
 
    final boolean getDisableHotKeys() {
@@ -50,7 +50,7 @@ final class HierarchyData implements Persistable {
    }
 
    final synchronized void clearFolders() {
-      this._folders = new Object[0];
+      this._folders = new String[0];
    }
 
    final String[] getFolders() {
@@ -108,8 +108,8 @@ final class HierarchyData implements Persistable {
          this._properties.clear();
          String name = null;
          String folder = null;
-         this._folders = new Object[0];
-         this._deletedThemeFolders = new Object[0];
+         this._folders = new String[0];
+         this._deletedThemeFolders = new String[0];
 
          while (!buffer.eof()) {
             switch (ConverterUtilities.getType(buffer, true)) {

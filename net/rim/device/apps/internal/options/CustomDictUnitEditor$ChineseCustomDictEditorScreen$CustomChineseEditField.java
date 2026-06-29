@@ -17,7 +17,7 @@ class CustomDictUnitEditor$ChineseCustomDictEditorScreen$CustomChineseEditField 
    public CustomDictUnitEditor$ChineseCustomDictEditorScreen$CustomChineseEditField(CustomDictUnitEditor$ChineseCustomDictEditorScreen _1, long style) {
       super(null, null, 1000000, style);
       this.this$1 = _1;
-      this._pinInfoFR = (Vector)(new Object(6));
+      this._pinInfoFR = new Vector(6);
    }
 
    public Vector getPinInfoFR() {
@@ -27,11 +27,11 @@ class CustomDictUnitEditor$ChineseCustomDictEditorScreen$CustomChineseEditField 
    @Override
    public int inputMethodTextChanged(InputMethodEvent event) {
       if (InputContext.getInstance().getActiveInputMethodID() == 16384 && event.getCommittedCharacterCount() > 0) {
-         PinInfo curPin = (PinInfo)(new Object());
+         PinInfo curPin = new PinInfo();
          this.this$1._controlObject.actionPerformed(137, curPin);
 
          for (int i = 0; i < curPin.length(); i++) {
-            PinInfo curPins = (PinInfo)(new Object());
+            PinInfo curPins = new PinInfo();
             curPins.setSingle(curPin, curPin.length() - 1 - i);
             if (this.getCaretPosition() >= this.getComposedTextStart() && this.getCaretPosition() <= this.getComposedTextEnd()) {
                this._pinInfoFR.insertElementAt(curPins, this.getComposedTextStart());
@@ -107,7 +107,7 @@ class CustomDictUnitEditor$ChineseCustomDictEditorScreen$CustomChineseEditField 
 
    @Override
    public void dispatchEvent(Event rEvent) {
-      if (!(rEvent instanceof Object)) {
+      if (!(rEvent instanceof KeyEvent)) {
          super.dispatchEvent(rEvent);
       } else {
          KeyEvent event = (KeyEvent)rEvent;

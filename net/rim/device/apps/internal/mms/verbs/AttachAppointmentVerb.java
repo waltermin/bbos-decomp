@@ -32,8 +32,7 @@ public final class AttachAppointmentVerb extends Verb implements ConditionalVerb
          sendVCalVerb.setPresentationModel(this._presentation);
       }
 
-      String[] args = new Object[1];
-      args[0] = "closeable";
+      String[] args = new String[]{"closeable"};
       CalendarProxy.startCalendar(args);
       return null;
    }

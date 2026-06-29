@@ -2,11 +2,12 @@ package net.rim.device.apps.internal.mms.ui;
 
 import net.rim.device.api.ui.ContextMenu;
 import net.rim.device.api.ui.Field;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.apps.api.ribbon.RibbonBanner;
+import net.rim.device.apps.api.ui.VerbMenuItem;
 import net.rim.device.apps.internal.mms.api.AttachmentDataProvider;
 import net.rim.device.apps.internal.mms.api.MMSAttachment;
 import net.rim.device.internal.ui.component.PopupDialog;
@@ -21,7 +22,7 @@ class VideoPresentationElementField$MMSMediaPlayerDialog extends PopupDialog {
    public VideoPresentationElementField$MMSMediaPlayerDialog(
       MMSAttachment attachment, boolean isEditable, AttachmentDataProvider attachmentProvider, boolean isForwardLocked
    ) {
-      super((Manager)(new Object()));
+      super(new VerticalFieldManager());
       this.setBorder(0, 0, 0, 0);
       this.setMargin(0, 0, 0, 0);
       this.setPadding(0, 0, 0, 0);
@@ -56,7 +57,7 @@ class VideoPresentationElementField$MMSMediaPlayerDialog extends PopupDialog {
 
    @Override
    public Menu getMenu(int instance) {
-      Menu menu = (Menu)(new Object(65536));
+      Menu menu = new Menu(65536);
       Menu.setTargetScreen(this);
       menu.setInstance(instance);
       this.makeMenu(menu, instance);
@@ -66,7 +67,7 @@ class VideoPresentationElementField$MMSMediaPlayerDialog extends PopupDialog {
    @Override
    protected void makeMenu(Menu menu, int instance) {
       VideoPresentationElementField$MMSCloseVerb cv = new VideoPresentationElementField$MMSCloseVerb(this);
-      MenuItem mi = (MenuItem)(new Object(cv, 0));
+      MenuItem mi = new VerbMenuItem(cv, 0);
       menu.add(mi);
    }
 }

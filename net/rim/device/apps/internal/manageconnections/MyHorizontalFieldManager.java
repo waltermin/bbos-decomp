@@ -22,7 +22,7 @@ final class MyHorizontalFieldManager extends HorizontalFieldManager {
          this.add(status);
          this.add(indicator);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -52,7 +52,7 @@ final class MyHorizontalFieldManager extends HorizontalFieldManager {
          String statusString = this._status.getText();
          int minimalStatusWidth;
          if (statusString.length() > 4) {
-            StringBuffer buffer = (StringBuffer)(new Object(statusString.substring(0, 4)));
+            StringBuffer buffer = new StringBuffer(statusString.substring(0, 4));
             buffer.append('…');
             minimalStatusWidth = font.measureText(buffer, 0, buffer.length(), null, Ui.getTmpTextMetrics());
          } else {

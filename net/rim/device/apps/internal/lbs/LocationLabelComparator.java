@@ -6,7 +6,7 @@ import net.rim.device.api.util.StringUtilities;
 final class LocationLabelComparator implements Comparator {
    final String getLabel(Object object) {
       if (!(object instanceof LocationSyncable)) {
-         return (String)(object != null ? object : "");
+         return object != null ? (String)object : "";
       }
 
       LocationSyncable locationSyncObject = (LocationSyncable)object;

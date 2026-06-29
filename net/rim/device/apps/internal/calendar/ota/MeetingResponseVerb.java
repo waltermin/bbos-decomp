@@ -14,6 +14,7 @@ import net.rim.device.apps.api.calendar.modelcontrollerinterface.MeetingInfo;
 import net.rim.device.apps.api.calendar.modelcontrollerinterface.RecurUtilities;
 import net.rim.device.apps.api.calendar.ota.CICALConfiguration;
 import net.rim.device.apps.api.calendar.ota.OTACalendarSyncDataManager;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.sync.Checksumable;
@@ -64,9 +65,9 @@ final class MeetingResponseVerb extends Verb {
          return originalEvent;
       }
 
-      if (originalEvent instanceof Object) {
+      if (originalEvent instanceof Checksumable) {
          Checksumable originalChecksumable = (Checksumable)originalEvent;
-         if (actualEvent instanceof Object) {
+         if (actualEvent instanceof Checksumable) {
             Checksumable actualChecksumable = (Checksumable)actualEvent;
             long originalChecksum = originalChecksumable.getChecksum(null);
             long actualChecksum = actualChecksumable.getChecksum(null);
@@ -262,7 +263,7 @@ final class MeetingResponseVerb extends Verb {
          case 2:
          case 4:
             this.sendResponse(null);
-            return new Object(39);
+            return new ContextObject(39);
          case 1:
          default:
             title = resources.getString(400);
@@ -277,7 +278,7 @@ final class MeetingResponseVerb extends Verb {
       String comments = MeetingCommentsScreen.showScreen(title);
       if (comments != null) {
          this.sendResponse(comments);
-         return new Object(39);
+         return new ContextObject(39);
       } else {
          return null;
       }

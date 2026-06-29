@@ -115,7 +115,7 @@ public final class ShowSearchModel implements PersistableRIMModel, SearchCriteri
          SearchResources.getString(42),
          SearchResources.getString(69)
       };
-      return (Field)(new Object(SearchResources.getString(28), choices, choices[this._index]));
+      return new ObjectChoiceField(SearchResources.getString(28), choices, choices[this._index]);
    }
 
    ShowSearchModel() {

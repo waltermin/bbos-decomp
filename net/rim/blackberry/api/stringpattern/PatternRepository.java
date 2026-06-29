@@ -22,7 +22,7 @@ public final class PatternRepository {
          if (menuItems != null && menuItems.length != 0) {
             for (int i = 0; i < menuItems.length; i++) {
                if (menuItems[i] == null) {
-                  throw new Object("menuItems cannot contain null entries");
+                  throw new IllegalArgumentException("menuItems cannot contain null entries");
                }
 
                String itemName = null;
@@ -34,12 +34,12 @@ public final class PatternRepository {
                   var8 = false;
                } finally {
                   if (var8) {
-                     throw new Object("menuItem.toString() throws an exception");
+                     throw new IllegalArgumentException("menuItem.toString() throws an exception");
                   }
                }
 
                if (itemName == null || itemName.length() == 0) {
-                  throw new Object("All toString() methods for ApplicationMenuItems must be non-null and must have length > 0");
+                  throw new IllegalArgumentException("All toString() methods for ApplicationMenuItems must be non-null and must have length > 0");
                }
             }
 
@@ -47,7 +47,7 @@ public final class PatternRepository {
             ExternalStringPatternImpl sp;
             switch (patternType) {
                case -1:
-                  throw new Object("Invalid patternType");
+                  throw new IllegalArgumentException("Invalid patternType");
                case 0:
                default:
                   sp = new ExactMatchStringPatternImpl(pattern, factory.getNewID());
@@ -59,10 +59,10 @@ public final class PatternRepository {
             factory.addCookie(sp.getID(), new ExternalActiveFieldCookie(menuItems, application));
             StringPatternRepository.addPattern(sp);
          } else {
-            throw new Object("menuItems cannot be null or zero-length");
+            throw new IllegalArgumentException("menuItems cannot be null or zero-length");
          }
       } else {
-         throw new Object("pattern cannot be null or zero-length");
+         throw new IllegalArgumentException("pattern cannot be null or zero-length");
       }
    }
 
@@ -79,15 +79,15 @@ public final class PatternRepository {
 
    private static final void checkApplication(ApplicationDescriptor application) {
       if (application == null) {
-         throw new Object("application is null");
+         throw new IllegalArgumentException("application is null");
       }
 
       if (application.getModuleHandle() != ApplicationDescriptor.currentApplicationDescriptor().getModuleHandle()) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (ControlledAccess.verifyRRISignature(application.getModuleHandle()) && !ControlledAccess.verifyRRISignatures(true)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

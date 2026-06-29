@@ -71,7 +71,7 @@ final class UpdateStatusHandler extends XMLToObjectHandler {
       digest = digest.trim();
       int digestStringLength = digest.length();
       if (digestStringLength != expectedDigestBytes << 1) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       byte[] sha256DigestBytes = new byte[expectedDigestBytes];
@@ -86,7 +86,7 @@ final class UpdateStatusHandler extends XMLToObjectHandler {
 
          return sha256DigestBytes;
       } finally {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

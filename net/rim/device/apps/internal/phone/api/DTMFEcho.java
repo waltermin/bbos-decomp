@@ -150,7 +150,7 @@ public final class DTMFEcho extends Thread {
 
    private final synchronized void internalAppendTones(String tones) {
       if (this._toneBuffer == null) {
-         this._toneBuffer = (StringBuffer)(new Object());
+         this._toneBuffer = new StringBuffer();
       }
 
       this._toneBuffer.append(tones);

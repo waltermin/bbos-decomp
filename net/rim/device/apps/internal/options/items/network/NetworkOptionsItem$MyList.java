@@ -45,12 +45,12 @@ final class NetworkOptionsItem$MyList extends ListField {
       super.makeContextMenu(cm, instance);
       if (RadioInfo.getState() == 1 && this.this$0.canUserSelectNetwork() && this.getSize() != 0) {
          Verb v = new NetworkOptionsItem$MyVerb(this.this$0, 911, 16785665);
-         VerbMenuItem vmi = (VerbMenuItem)(new Object(v, 100));
+         VerbMenuItem vmi = new VerbMenuItem(v, 100);
          cm.addItem(vmi);
          cm.setDefault(0);
          if (PrefNetworkListOptions.isFeatureSupported()) {
             v = new NetworkOptionsItem$MyVerb(this.this$0, 1910, 16785669);
-            vmi = (VerbMenuItem)(new Object(v, 110));
+            vmi = new VerbMenuItem(v, 110);
             cm.addItem(vmi);
          }
       }

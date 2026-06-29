@@ -4,7 +4,7 @@ import java.util.Vector;
 
 public class Worker {
    private WorkerThread _thread;
-   private Vector _queue = (Vector)(new Object(4));
+   private Vector _queue = new Vector(4);
 
    public Worker() {
       this._thread = new WorkerThread(this._queue);

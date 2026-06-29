@@ -4,13 +4,13 @@ import net.rim.device.api.util.Persistable;
 import net.rim.vm.Array;
 
 class StringLookupTable$StringBundle implements Persistable {
-   private String[] _strings = new Object[0];
+   private String[] _strings = new String[0];
    public static final int STRINGS_PER_BUNDLE = 64;
 
    synchronized int addString(String string) {
       int length = this._strings.length;
       if (length >= 64) {
-         throw new Object();
+         throw new ArrayIndexOutOfBoundsException();
       }
 
       Array.resize(this._strings, length + 1);

@@ -204,7 +204,7 @@ public class WordLearningComplexPrefixTable extends LearningComplexPrefixTable {
    @Override
    public void getExactMatch(int aTableStart, int aTableEnd, Vector aEntries, char[] aBuffer) {
       this.fillWord(aTableStart, aTableEnd, aBuffer);
-      aEntries.addElement(new Object(aBuffer, 0, super._prefixLength));
+      aEntries.addElement(new String(aBuffer, 0, super._prefixLength));
    }
 
    @Override

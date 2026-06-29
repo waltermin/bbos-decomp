@@ -12,7 +12,7 @@ public class CalendarReportDetailedRecord implements SyncObject {
 
    @Override
    public int getUID() {
-      if (!(this._o instanceof Object)) {
+      if (!(this._o instanceof SyncObject)) {
          if (!(this._o instanceof EventPart)) {
             return 0;
          }

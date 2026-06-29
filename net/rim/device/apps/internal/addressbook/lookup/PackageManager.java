@@ -34,7 +34,7 @@ public final class PackageManager {
             oac.addDeviceCapabilities((byte)10, UnicodeServiceUtilities.getSupportedEncodings());
          }
       } finally {
-         throw new Object();
+         throw new RuntimeException();
       }
    }
 }

@@ -10,7 +10,7 @@ class DatakeyFile {
 
    public DatakeyFile(DatakeyFileHeader fileHeader, byte[] fileContents) {
       if (fileHeader == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._fileHeader = fileHeader;

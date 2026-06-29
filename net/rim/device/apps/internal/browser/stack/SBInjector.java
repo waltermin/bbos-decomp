@@ -1,10 +1,12 @@
 package net.rim.device.apps.internal.browser.stack;
 
 import net.rim.device.api.browser.push.WAPPushSource;
+import net.rim.device.api.hrt.CdmaHRI;
 import net.rim.device.api.hrt.GprsHRI;
 import net.rim.device.api.hrt.HostRoutingInfo;
 import net.rim.device.api.hrt.HostRoutingTable;
 import net.rim.device.api.hrt.IPv4UdpDAC;
+import net.rim.device.api.hrt.IdenHRI;
 import net.rim.device.api.servicebook.ServiceBook;
 import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.api.system.DeviceInfo;
@@ -52,9 +54,7 @@ public final class SBInjector {
             ip = "10.1.20.203";
          }
 
-         injectIPPPServiceBook(
-            ((StringBuffer)(new Object())).append(ip).append(":19781:19780").toString(), "rim.net.gprs", "mknowles", "MDS Transport (Sim)", uid, 2, null
-         );
+         injectIPPPServiceBook(ip + ":19781:19780", "rim.net.gprs", "mknowles", "MDS Transport (Sim)", uid, 2, null);
          BrowserConfigRecord tempRecordx = BrowserConfigRecord.getNewConfig(BrowserConfigRecord.IPPP_SERVICE_CID, uid, 1);
          tempRecordx.setPropertyAsString(1, "http://mknowles/wmldata/menu.wml");
          tempRecordx.setPropertyAsString(11, "Intranet");
@@ -69,7 +69,7 @@ public final class SBInjector {
          }
 
          boolean isSim = DeviceInfo.isSimulator();
-         WPTCPServiceRecord rec = (WPTCPServiceRecord)(new Object());
+         WPTCPServiceRecord rec = new WPTCPServiceRecord();
          if (isSim) {
             rec.setProperty(1, "browserportal:3128");
             rec.setProperty(8, "browserportal:3128");
@@ -101,7 +101,7 @@ public final class SBInjector {
 
    public static final void injectTCPBrowser() {
       try {
-         WPTCPServiceRecord record = (WPTCPServiceRecord)(new Object());
+         WPTCPServiceRecord record = new WPTCPServiceRecord();
          record.setProperty(3, true);
          record.setProperty(2, true);
          injectTCPServiceBook(null, null, null, null, "tcp", "TCP/IP Transport", "S TCP-T", record.getEncodedData());
@@ -115,7 +115,7 @@ public final class SBInjector {
 
    public static final void injectWLANTCPBrowser() {
       try {
-         WPTCPServiceRecord record = (WPTCPServiceRecord)(new Object());
+         WPTCPServiceRecord record = new WPTCPServiceRecord();
          record.setProperty(3, true);
          record.setProperty(2, true);
          record.setProperty(19, "wifi");
@@ -123,7 +123,7 @@ public final class SBInjector {
          BrowserConfigRecord tempRecord = BrowserConfigRecord.getNewConfig(BrowserConfigRecord.TCP_SERVICE_CID, "S TCP-WiFi", 3);
          tempRecord.setPropertyAsString(1, "http://mobile.blackberry.com");
          tempRecord.setProvisionedBookmarks(
-            new Object[]{BrowserConfigRecord.encodeBookmark("http://www.blackberry.com/select/wifiloginsuccess/", BrowserResources.getString(874))}
+            new String[]{BrowserConfigRecord.encodeBookmark("http://www.blackberry.com/select/wifiloginsuccess/", BrowserResources.getString(874))}
          );
          tempRecord.setPropertyAsString(24, BrowserResources.getString(873));
          tempRecord.setPropertyAsString(54, "wlan");
@@ -155,22 +155,14 @@ public final class SBInjector {
       try {
          String[] bookmarks = null;
          if (injectBookmarks) {
-            bookmarks = new Object[40];
+            bookmarks = new String[40];
             int bookmarkCount = 0;
 
             for (int i = 1; i < 4; i++) {
-               bookmarks[bookmarkCount++] = BrowserConfigRecord.encodeBookmark(
-                  "http://mobile.yahoo.com/home", ((StringBuffer)(new Object("Mobile Yahoo"))).append(i).toString()
-               );
-               bookmarks[bookmarkCount++] = BrowserConfigRecord.encodeBookmark(
-                  "http://www.google.com", ((StringBuffer)(new Object("Search - Google"))).append(i).toString()
-               );
-               bookmarks[bookmarkCount++] = BrowserConfigRecord.encodeBookmark(
-                  "http://www.dictionary.com/wml", ((StringBuffer)(new Object("Dictionary.com"))).append(i).toString()
-               );
-               bookmarks[bookmarkCount++] = BrowserConfigRecord.encodeBookmark(
-                  "http://mobile.globeandmail.com", ((StringBuffer)(new Object("Globe and Mail"))).append(i).toString()
-               );
+               bookmarks[bookmarkCount++] = BrowserConfigRecord.encodeBookmark("http://mobile.yahoo.com/home", "Mobile Yahoo" + i);
+               bookmarks[bookmarkCount++] = BrowserConfigRecord.encodeBookmark("http://www.google.com", "Search - Google" + i);
+               bookmarks[bookmarkCount++] = BrowserConfigRecord.encodeBookmark("http://www.dictionary.com/wml", "Dictionary.com" + i);
+               bookmarks[bookmarkCount++] = BrowserConfigRecord.encodeBookmark("http://mobile.globeandmail.com", "Globe and Mail" + i);
             }
 
             bookmarks[bookmarkCount++] = BrowserConfigRecord.encodeBookmark("", "Empty URL");
@@ -190,7 +182,7 @@ public final class SBInjector {
 
          BrowserConfigRecord tempRecord = BrowserConfigRecord.getNewConfig(WAPServiceRecord.SERVICE_CID, "SV 50009", 0);
          tempRecord.setPropertyAsString(1, "http://mknowles/wmldata/menu.wml");
-         tempRecord.setPropertyAsString(11, ((StringBuffer)(new Object("WAP (Insecure-Bookmarks) "))).append(injectBookmarks).toString());
+         tempRecord.setPropertyAsString(11, "WAP (Insecure-Bookmarks) " + injectBookmarks);
          tempRecord.setProvisionedBookmarks(bookmarks);
          injectBrowserConfigServiceBook(
             "WAP Browser Config - Insecure Bookmarks (Sim)", "S 50010", "Connection to WAP Gateway", tempRecord.getEncodedData(), true
@@ -339,7 +331,7 @@ public final class SBInjector {
       String httpProxy
    ) {
       try {
-         WPTCPServiceRecord record = (WPTCPServiceRecord)(new Object());
+         WPTCPServiceRecord record = new WPTCPServiceRecord();
          record.setProperty(1, httpProxy);
          record.setProperty(8, httpProxy);
          record.setProperty(2, true);
@@ -432,21 +424,21 @@ public final class SBInjector {
       if (overwrite || sr == null) {
          HostRoutingTable hrt = null;
          if (hostIP != null) {
-            hrt = (HostRoutingTable)(new Object());
+            hrt = new HostRoutingTable();
             HostRoutingInfo hri = null;
             int wafs = RadioInfo.getSupportedWAFs();
             if ((wafs & 2) != 0) {
-               hri = (HostRoutingInfo)(new Object());
+               hri = new CdmaHRI();
                hri.setNpc((long)64);
             } else if ((wafs & 1) != 0) {
-               GprsHRI gHri = (GprsHRI)(new Object());
+               GprsHRI gHri = new GprsHRI();
                hri = gHri;
                gHri.setApn(apn);
                gHri.setApnUsername(apnUsername);
                gHri.setApnPassword(apnPassword);
                hri.setNpc((long)48);
             } else {
-               hri = (HostRoutingInfo)(new Object());
+               hri = new IdenHRI();
                hri.setNpc((long)80);
             }
 
@@ -460,7 +452,7 @@ public final class SBInjector {
             hrt.commit();
          }
 
-         ServiceRecord rec = (ServiceRecord)(new Object());
+         ServiceRecord rec = new ServiceRecord();
          rec.setType(sbType);
          rec.setName(sbName);
          rec.setUid(sbUid);

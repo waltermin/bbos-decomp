@@ -1,6 +1,6 @@
 package net.rim.device.apps.internal.file;
 
-import net.rim.device.api.crypto.AbstractPseudoRandomSource;
+import net.rim.device.api.crypto.PKCS5KDF2PseudoRandomSource;
 import net.rim.device.api.crypto.RandomSource;
 import net.rim.device.api.itpolicy.ITPolicy;
 import net.rim.device.cldc.io.file.FileSystemEncryption;
@@ -26,7 +26,7 @@ public final class FileSystemKeyProvider implements KeyProvider, DevicePasswordL
    public final byte[] getUserKey(byte[] password, byte[] salt) {
       if (password != null && salt != null) {
          try {
-            return ((AbstractPseudoRandomSource)(new Object(password, salt, 3))).getBytes(32);
+            return new PKCS5KDF2PseudoRandomSource(password, salt, 3).getBytes(32);
          } finally {
             ;
          }

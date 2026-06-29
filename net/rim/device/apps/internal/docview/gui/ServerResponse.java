@@ -91,7 +91,7 @@ public final class ServerResponse {
                }
             } else {
                if (paramName.compareTo("IRD") == 0) {
-                  StringTokenizer tokenizer = (StringTokenizer)(new Object(value, 'x'));
+                  StringTokenizer tokenizer = new StringTokenizer(value, 'x');
                   int[] dims = new int[4];
                   dims[0] = dims[1] = -1;
                   dims[2] = dims[3] = 0;
@@ -106,10 +106,10 @@ public final class ServerResponse {
                   }
 
                   if (dims[0] != -1 && dims[1] != -1 && dims[2] != 0 && dims[3] != 0) {
-                     this._areaToEnlarge = (XYRect)(new Object(dims[0], dims[1], dims[2], dims[3]));
+                     this._areaToEnlarge = new XYRect(dims[0], dims[1], dims[2], dims[3]);
                   }
 
-                  tokenizer = null;
+                  StringTokenizer var12 = null;
                   dims = null;
                   return;
                }
@@ -135,10 +135,10 @@ public final class ServerResponse {
                }
 
                if (paramName.compareTo("SArDOMIDs") == 0) {
-                  StringTokenizer tokenizer = (StringTokenizer)(new Object(value, ','));
+                  StringTokenizer tokenizer = new StringTokenizer(value, ',');
                   int count = tokenizer.countTokens();
                   if (count > 0) {
-                     this._arbDOMIDStartArray = new Object[count];
+                     this._arbDOMIDStartArray = new String[count];
                      int index = 0;
 
                      while (tokenizer.hasMoreTokens()) {

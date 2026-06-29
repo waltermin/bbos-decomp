@@ -131,7 +131,7 @@ final class ApplicationList$ApplicationListLoader implements ProgressRunnable {
                      currGroup, !ApplicationControl.differsFromUserDefaults(currGroup.getHandle())
                   );
                   Arrays.insertAt(this._groupListItems, dependency, index);
-                  this._appList.getIndentTable().put(dependency, new Object(indentLevel));
+                  this._appList.getIndentTable().put(dependency, new Integer(indentLevel));
                   CodeModuleGroup var11 = null;
                   index = this.addDependencies(allGroups, index, indentLevel + 1);
                }

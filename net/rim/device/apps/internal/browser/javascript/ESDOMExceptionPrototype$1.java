@@ -15,9 +15,7 @@ class ESDOMExceptionPrototype$1 extends JavaScriptHostFunction {
    public long run() {
       int code = Convert.toInt32(((ESDOMException)this.getThis()).getField(Names.code));
       return code >= 1 && code <= ESDOMExceptionPrototype.ERRORS.length
-         ? Value.makeStringValue(
-            ((StringBuffer)(new Object())).append(Names.DOMException).append(": ").append(ESDOMExceptionPrototype.ERRORS[code - 1]).toString()
-         )
+         ? Value.makeStringValue(Names.DOMException + ": " + ESDOMExceptionPrototype.ERRORS[code - 1])
          : Value.makeStringValue(Names.DOMException);
    }
 }

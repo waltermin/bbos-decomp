@@ -32,7 +32,7 @@ final class SecurityApp$MyDialog extends Dialog {
 
    @Override
    protected final void onHotkeySelected(char key) {
-      String logString = ((StringBuffer)(new Object("dlg hk slctd "))).append(key).toString();
+      String logString = "dlg hk slctd " + key;
       EventLogger.logEvent(-1148210079122251014L, logString.getBytes(), 0);
    }
 
@@ -83,7 +83,7 @@ final class SecurityApp$MyDialog extends Dialog {
 
    @Override
    public final boolean openProductionBackdoor(int backdoorCode) {
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
       switch (backdoorCode) {
          case 1398032195:
             Memory.secureThoroughGC();
@@ -93,12 +93,7 @@ final class SecurityApp$MyDialog extends Dialog {
             } else {
                int contentProtectionStrength = ITPolicy.getInteger(24, 18, -1);
                if (contentProtectionStrength != -1) {
-                  sb.append(
-                     ((StringBuffer)(new Object("Content Protection Strength IT Policy Setting is ")))
-                        .append(contentProtectionStrength)
-                        .append(".\n")
-                        .toString()
-                  );
+                  sb.append("Content Protection Strength IT Policy Setting is " + contentProtectionStrength + ".\n");
                }
 
                if (PersistentContent.isCompressionEnabled()) {
@@ -121,14 +116,7 @@ final class SecurityApp$MyDialog extends Dialog {
             int numPlaintext = Memory.numPlaintext() - Memory.numPlaintextSpecial();
             if (numPlaintext != 0) {
                int numPersistentPlaintext = Memory.numPersistentPlaintext();
-               sb.append(
-                  ((StringBuffer)(new Object("Found ")))
-                     .append(numPlaintext)
-                     .append(" plaintext objects (")
-                     .append(numPersistentPlaintext)
-                     .append(" are persisted).")
-                     .toString()
-               );
+               sb.append("Found " + numPlaintext + " plaintext objects (" + numPersistentPlaintext + " are persisted).");
             } else {
                sb.append("Did not find any plaintext objects.");
             }

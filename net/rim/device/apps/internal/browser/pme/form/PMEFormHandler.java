@@ -1,10 +1,12 @@
 package net.rim.device.apps.internal.browser.pme.form;
 
+import java.io.ByteArrayInputStream;
 import net.rim.device.api.browser.field.BrowserContent;
 import net.rim.device.api.xml.parsers.SAXParser;
 import net.rim.device.api.xml.parsers.SAXParserFactory;
 import net.rim.plazmic.internal.mediaengine.ResourceContext;
 import net.rim.plazmic.internal.mediaengine.ResourceProvider;
+import net.rim.plazmic.mediaengine.MediaException;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -26,7 +28,7 @@ public final class PMEFormHandler extends DefaultHandler implements ResourceProv
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
    public final Object createResource(String type, Object data, ResourceContext context, Object referrer) {
-      if (data instanceof Object && "pme://xforms".equals(type)) {
+      if (data instanceof String && "pme://xforms".equals(type)) {
          boolean var10 = false /* VF: Semaphore variable */;
 
          SAXParserFactory parserFactory;
@@ -48,12 +50,12 @@ public final class PMEFormHandler extends DefaultHandler implements ResourceProv
                   }
 
                   this._form = new PMEForm((BrowserContent)context.get("BrowserContent"));
-                  parserFactory = (SAXParserFactory)(new Object(((String)data).getBytes()));
-                  this._parser.parse(parserFactory, this);
+                  ByteArrayInputStream in = new ByteArrayInputStream(((String)data).getBytes());
+                  this._parser.parse(in, this);
                   var6 = this._form;
                   var10 = false;
                } catch (Throwable var13) {
-                  throw new Object(-1, e.getMessage(), e);
+                  throw new MediaException(-1, e.getMessage(), e);
                }
             } finally {
                if (var10) {
@@ -80,7 +82,7 @@ public final class PMEFormHandler extends DefaultHandler implements ResourceProv
    @Override
    public final void characters(char[] ch, int start, int length) {
       if (this._isInInstance && ch[0] != '\n' && this._currentControl != null) {
-         this._form.addControl(this._currentControl, (String)(new Object(ch, start, length)));
+         this._form.addControl(this._currentControl, new String(ch, start, length));
       }
    }
 

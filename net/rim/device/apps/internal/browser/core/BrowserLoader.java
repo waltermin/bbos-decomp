@@ -1,7 +1,6 @@
 package net.rim.device.apps.internal.browser.core;
 
 import net.rim.device.api.browser.plugin.BrowserContentProviderRegistry;
-import net.rim.device.api.system.Application;
 import net.rim.device.apps.internal.browser.dd.DownloadDescriptorConverter;
 import net.rim.device.apps.internal.browser.drm.DRMMessageConverter;
 import net.rim.device.apps.internal.browser.plugin.media.MediaRenderingConverter;
@@ -53,7 +52,7 @@ final class BrowserLoader {
       } else {
          Thread.currentThread().setPriority(8);
          Process.currentProcess().setThreadLimit(20);
-         ((Application)(new Object())).enterEventDispatcher();
+         new BrowserImpl().enterEventDispatcher();
       }
    }
 }

@@ -9,7 +9,9 @@ import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.ChoiceField;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.ui.component.ObjectListField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.Tag;
@@ -30,6 +32,7 @@ import net.rim.device.apps.api.utility.framework.VerbToMenu;
 import net.rim.device.apps.internal.calendar.eventprovider.ViewByLUID;
 import net.rim.device.apps.internal.calendar.sync.CalendarSupportCollection;
 import net.rim.device.internal.ui.component.ColorChoiceField;
+import net.rim.device.internal.ui.component.ColorChoiceField$NamedColor;
 
 final class CalendarOptionsEntryScreen extends MainScreenOptionsListItem implements CalendarOptionsPropertiesScreen$ChangeListener {
    private CalendarOptions _calendarOptions = CalendarOptions.getOptions();
@@ -48,36 +51,36 @@ final class CalendarOptionsEntryScreen extends MainScreenOptionsListItem impleme
 
    @Override
    protected final void populateMainScreen(MainScreen screen) {
-      Manager section = (Manager)(new Object(562949953421312L));
+      Manager section = new VerticalFieldManager(562949953421312L);
       screen.add(section);
       section.setTag(OPTIONS_SECTION_AREA_TAG);
       this._generalOptionsField = new CalendarOptionsEntryScreen$1(this, CalendarApp._rb.getString(662), 1170935903116328960L);
       section.add(this._generalOptionsField);
       section = this.createSection(CalendarApp._rb.getString(663), screen);
       this.addCalendarFields(section);
-      this._reminderLogManager = (VerticalFieldManager)(new Object());
-      this._configSettingsManager = (VerticalFieldManager)(new Object());
+      this._reminderLogManager = new VerticalFieldManager();
+      this._configSettingsManager = new VerticalFieldManager();
       screen.add(this._configSettingsManager);
       screen.add(this._reminderLogManager);
-      this._reminderStatusLog = (ObjectListField)(new Object(6));
+      this._reminderStatusLog = new ObjectListField(6);
    }
 
    protected final Manager createSection(String title, Manager parent) {
-      Manager section = (Manager)(new Object(1153484454560268288L));
+      Manager section = new VerticalFieldManager(1153484454560268288L);
       section.setTag(OPTIONS_SECTION_AREA_TAG);
       if (title != null) {
-         LabelField titleField = (LabelField)(new Object(title, 1152921504606846976L));
+         LabelField titleField = new LabelField(title, 1152921504606846976L);
          titleField.setFont(titleField.getFont().derive(1));
          section.add(titleField);
       }
 
-      section.add((Field)(new Object()));
+      section.add(new SeparatorField());
       parent.add(section);
       return section;
    }
 
    protected final void addCalendarFields(Manager section) {
-      this._numberOfEntriesFieldManager = (VerticalFieldManager)(new Object());
+      this._numberOfEntriesFieldManager = new VerticalFieldManager();
       section.add(this._numberOfEntriesFieldManager);
       ServiceIdentifier[] services = CalendarServiceManager.getInstance().getCalendarServices(true, true);
 
@@ -89,9 +92,9 @@ final class CalendarOptionsEntryScreen extends MainScreenOptionsListItem impleme
 
             while (folders.hasMoreElements()) {
                CalendarFolder folder = (CalendarFolder)folders.nextElement();
-               CalendarKey key = (CalendarKey)(new Object(service.getUniqueServiceID(), folder.getFolderID()));
+               CalendarKey key = new CalendarKey(service.getUniqueServiceID(), folder.getFolderID());
                CalendarOptionsEntryScreen$CalendarFolderField dbEntriesField = new CalendarOptionsEntryScreen$CalendarFolderField(
-                  ((StringBuffer)(new Object())).append(service.getServiceName()).append(folder.getFolderNameSuffix()).toString(), "", key
+                  service.getServiceName() + folder.getFolderNameSuffix(), "", key
                );
                dbEntriesField.setCookie(key);
                this._numberOfEntriesFieldManager.add(dbEntriesField);
@@ -111,7 +114,7 @@ final class CalendarOptionsEntryScreen extends MainScreenOptionsListItem impleme
 
          if (fieldWithFocus instanceof CalendarOptionsEntryScreen$CalendarFolderField) {
             Object cookie = fieldWithFocus.getCookie();
-            if (cookie instanceof Object) {
+            if (cookie instanceof CalendarKey) {
                CalendarKey calendarKey = (CalendarKey)cookie;
                if (CalendarServiceManager.getInstance().findCalendarService(calendarKey.getCalendarServiceID()) != null) {
                   CalendarOptionsPropertiesScreen.showEditPropertiesScreen(calendarKey, this);
@@ -180,13 +183,7 @@ final class CalendarOptionsEntryScreen extends MainScreenOptionsListItem impleme
             break;
          case 1297045061:
             CalendarService defaultCalendarService = CalendarServiceManager.getInstance().getDefaultCalendarService();
-            int result = Dialog.ask(
-               3,
-               ((StringBuffer)(new Object("Move all appointments in base system calendar to ")))
-                  .append(defaultCalendarService.getServiceName())
-                  .append("?")
-                  .toString()
-            );
+            int result = Dialog.ask(3, "Move all appointments in base system calendar to " + defaultCalendarService.getServiceName() + "?");
             if (result == 4) {
                defaultCalendarService.purgeFromBaseSystemCalendarService();
                Dialog.alert("All appointments moved.");
@@ -202,7 +199,7 @@ final class CalendarOptionsEntryScreen extends MainScreenOptionsListItem impleme
             }
             break;
          case 1381188948:
-            CalendarKey[] wipedKeys = new Object[0];
+            CalendarKey[] wipedKeys = new CalendarKey[0];
             String message = null;
             String serviceName = null;
             ServiceIdentifier[] services = CalendarServiceManager.getInstance().getCalendarServices(true);
@@ -210,13 +207,13 @@ final class CalendarOptionsEntryScreen extends MainScreenOptionsListItem impleme
             for (int i = 0; i < services.length; i++) {
                CalendarService calendarService = (CalendarService)services[i];
                if (calendarService != null) {
-                  CalendarKey key = (CalendarKey)(new Object(calendarService.getUniqueServiceID(), calendarService.getUniqueServiceID()));
+                  CalendarKey key = new CalendarKey(calendarService.getUniqueServiceID(), calendarService.getUniqueServiceID());
                   CalDB calDB = calendarService.getCalendarDatabase();
                   if (calendarService.isSystemDefault()) {
                      calDB.removeAll();
                   } else {
                      CICALConfiguration cicalConfig = calendarService.getCICALConfiguration();
-                     if (calendarService.getServiceKey() instanceof Object) {
+                     if (calendarService.getServiceKey() instanceof ServiceRecord) {
                         ServiceRecord sr = (ServiceRecord)calendarService.getServiceKey();
                         serviceName = sr.getName();
                      } else {
@@ -224,22 +221,22 @@ final class CalendarOptionsEntryScreen extends MainScreenOptionsListItem impleme
                      }
 
                      if (cicalConfig != null && cicalConfig.isOTACalendarEnabled()) {
-                        message = MessageFormat.format(CalendarApp._rb.getString(14), new Object[]{serviceName});
+                        message = MessageFormat.format(CalendarApp._rb.getString(14), new String[]{serviceName});
                         int result = Dialog.ask(3, message);
                         if (result == 4) {
                            cicalConfig.suspendOutboundOTATraffic(true);
                            calDB.removeAll();
                            cicalConfig.suspendOutboundOTATraffic(false);
                            Arrays.add(wipedKeys, key);
-                           message = MessageFormat.format(CalendarApp._rb.getString(15), new Object[]{serviceName});
+                           message = MessageFormat.format(CalendarApp._rb.getString(15), new String[]{serviceName});
                            Dialog.alert(message);
                         }
                      } else {
-                        message = MessageFormat.format(CalendarApp._rb.getString(16), new Object[]{serviceName});
+                        message = MessageFormat.format(CalendarApp._rb.getString(16), new String[]{serviceName});
                         int result = Dialog.ask(3, message);
                         if (result == 4) {
                            calDB.removeAll();
-                           message = MessageFormat.format(CalendarApp._rb.getString(651), new Object[]{serviceName});
+                           message = MessageFormat.format(CalendarApp._rb.getString(651), new String[]{serviceName});
                            Dialog.alert(message);
                         }
                      }
@@ -259,7 +256,7 @@ final class CalendarOptionsEntryScreen extends MainScreenOptionsListItem impleme
             break;
          case 1397904204:
             this._reminderLogManager.deleteAll();
-            this._reminderLogManager.add((Field)(new Object()));
+            this._reminderLogManager.add(new SeparatorField());
             ReminderManager rm = ReminderManager.getInstance();
             if (rm != null) {
                this._reminderStatusLog.set(rm.getReminderLog());
@@ -316,16 +313,16 @@ final class CalendarOptionsEntryScreen extends MainScreenOptionsListItem impleme
                   initialIndex = 0;
                }
 
-               this._colorModeField = (ChoiceField)(new Object("Color Mode:", choices, initialIndex));
+               this._colorModeField = new ObjectChoiceField("Color Mode:", choices, initialIndex);
                this._reminderLogManager.add(this._colorModeField);
             }
 
             if (this._calendarPrivateColourField == null) {
-               this._calendarPrivateColourField = (ColorChoiceField)(new Object());
+               this._calendarPrivateColourField = new ColorChoiceField();
                this._calendarPrivateColourField.setLabel("Private Appointments Colour: ");
                this._calendarPrivateColourField.setChoices(ColorChoiceField._defaultColors);
                int colour = this._calendarOptions.getPrivateAppointmentsColour();
-               this._calendarPrivateColourField.setSelectedIndex(new Object(colour, -1));
+               this._calendarPrivateColourField.setSelectedIndex(new ColorChoiceField$NamedColor(colour, -1));
                this._reminderLogManager.add(this._calendarPrivateColourField);
             }
 

@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.explorer.Media;
 
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.apps.api.framework.file.FileSelectionFilter;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.internal.explorer.MediaLibrary.ContextInfo;
 import net.rim.device.apps.internal.explorer.file.ExploreManager;
@@ -18,8 +19,8 @@ final class PictureLibraryScreen extends MediaLibraryScreen {
 
    @Override
    protected final void initialize() {
-      this._context = (ContextObject)(new Object());
-      ContextObject.put(this._context, -1002650280265073678L, new Object(1, 2048));
+      this._context = new ContextObject();
+      ContextObject.put(this._context, -1002650280265073678L, new FileSelectionFilter(1, 2048));
       this._folderListener = new MediaFolderListener(super.ITEMS[0], 1, this._context);
    }
 

@@ -49,7 +49,7 @@ public class FileMessageVerb extends Verb {
 
    private FolderProvider getFirstFolderProvider() {
       if (this._selectedItems == null) {
-         return (FolderProvider)(!(this._model instanceof Object) ? null : this._model);
+         return !(this._model instanceof FolderProvider) ? null : (FolderProvider)this._model;
       }
 
       int numberOfItems = this._selectedItems.length;
@@ -57,7 +57,7 @@ public class FileMessageVerb extends Verb {
       for (int i = 0; i < numberOfItems; i++) {
          try {
             RIMModel model = this._selectedItems[i];
-            if (model instanceof Object) {
+            if (model instanceof FolderProvider) {
                return (FolderProvider)model;
             }
          } finally {
@@ -109,7 +109,7 @@ public class FileMessageVerb extends Verb {
    private Folder getDefaultFolder(RIMModel model) {
       FolderProvider fp = (FolderProvider)model;
       Folder folder = FolderHierarchies.getFolder(fp.getFolderId());
-      if (fp instanceof Object) {
+      if (fp instanceof DefaultProvider) {
          folder = (Folder)((DefaultProvider)fp).getDefault(folder, this._fileMessageContext);
       }
 

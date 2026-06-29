@@ -30,7 +30,7 @@ public class ReminderManager implements GlobalEventListener {
    private ReminderManager$ReminderScanner _reminderScanner;
    private ReminderManager$ReminderChangeNotificationThread _changeNotifier;
    private boolean _reminderScanningEnabled = true;
-   private ContextObject _contextObject = (ContextObject)(new Object());
+   private ContextObject _contextObject = new ContextObject();
    static final long REMINDER_LOG = 3627893931035587831L;
    public static final long ID = -7539463754156969819L;
    private static final int ACTION_SCAN_ALL = 0;
@@ -174,7 +174,7 @@ public class ReminderManager implements GlobalEventListener {
       }
 
       EventLogger.register(3172337241449866705L, "net.rim.reminders", 2);
-      ContextObject.put(this._contextObject, -442409970680484936L, new Object(-7539463754156969819L));
+      ContextObject.put(this._contextObject, -442409970680484936L, new Long(-7539463754156969819L));
       app.addGlobalEventListener(this);
       this._reminderScanner = new ReminderManager$ReminderScanner(this);
       this._changeNotifier = new ReminderManager$ReminderChangeNotificationThread();
@@ -183,7 +183,7 @@ public class ReminderManager implements GlobalEventListener {
    }
 
    public TimeChoiceField getSnoozeOptionsField(long snoozeMillis) {
-      return (TimeChoiceField)(new Object(CommonResources.getString(9062), SNOOZE_CHOICES, snoozeMillis));
+      return new TimeChoiceField(CommonResources.getString(9062), SNOOZE_CHOICES, snoozeMillis);
    }
 
    void setNewAlarm(Reminder reminder, ReminderProvider reminderProvider) {

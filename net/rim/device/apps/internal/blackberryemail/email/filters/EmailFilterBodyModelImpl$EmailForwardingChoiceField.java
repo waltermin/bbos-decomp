@@ -26,30 +26,30 @@ class EmailFilterBodyModelImpl$EmailForwardingChoiceField extends ObjectChoiceFi
 
    private void init() {
       this._forwardChoices = new Object[]{EmailResources.getString(178), CommonResources.getString(9149)};
-      this._forward = (CheckboxField)(new Object(EmailResources.getString(179), this.this$0.forwardFlagsSet(2)));
-      this._forwardHeader = (CheckboxField)(new Object(EmailResources.getString(180), this.this$0.forwardFlagsSet(4)));
-      this._sep = (SeparatorField)(new Object());
+      this._forward = new CheckboxField(EmailResources.getString(179), this.this$0.forwardFlagsSet(2));
+      this._forwardHeader = new CheckboxField(EmailResources.getString(180), this.this$0.forwardFlagsSet(4));
+      this._sep = new SeparatorField();
       if (this.this$0._action == 0) {
-         this._fcf = (ObjectChoiceField)(new Object(EmailResources.getString(181), this._forwardChoices, 0));
+         this._fcf = new ObjectChoiceField(EmailResources.getString(181), this._forwardChoices, 0);
          this._vfm.add(this._fcf);
       } else {
-         this._fcf = (ObjectChoiceField)(new Object(EmailResources.getString(181), this._forwardChoices, this.this$0.forwardFlagsSet(1) ? 1 : 0));
+         this._fcf = new ObjectChoiceField(EmailResources.getString(181), this._forwardChoices, this.this$0.forwardFlagsSet(1) ? 1 : 0);
          this._vfm.add(this._fcf);
          if (!this.this$0.forwardFlagsSet(0)) {
-            this._vfm.add((Field)(new Object()));
+            this._vfm.add(new SeparatorField());
             this._vfm.add(this._forward);
             this._vfm.add(this._forwardHeader);
          }
       }
 
       this._fcf.setChangeListener(this);
-      this._vfm.add((Field)(new Object()));
+      this._vfm.add(new SeparatorField());
       this._vfm.add(this._sep);
    }
 
    @Override
    public void fieldChanged(Field field, int context) {
-      if (field instanceof Object) {
+      if (field instanceof ObjectChoiceField) {
          ObjectChoiceField ocf = (ObjectChoiceField)field;
          this._vfm.delete(this._sep);
          if (ocf.getSelectedIndex() == 0) {

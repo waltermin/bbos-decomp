@@ -1,7 +1,8 @@
 package net.rim.device.apps.internal.phone.options;
 
 import net.rim.device.api.i18n.ResourceBundleFamily;
-import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.options.SaveableMainScreenOptionsListItem;
@@ -25,7 +26,7 @@ class VoiceOptionsListItem extends SaveableMainScreenOptionsListItem {
    @Override
    public boolean trackwheelClick(int status, int time) {
       boolean removeObjects = false;
-      if (super._context instanceof Object && this._screenPopper != null) {
+      if (super._context instanceof ContextObject && this._screenPopper != null) {
          ContextObject.put(super._context, -116504832846522962L, this._screenPopper);
          ContextObject.put(super._context, -1540107978048774676L, this);
          removeObjects = true;
@@ -62,17 +63,8 @@ class VoiceOptionsListItem extends SaveableMainScreenOptionsListItem {
    @Override
    protected void populateMainScreen(MainScreen mainScreen) {
       if (PhoneUtilities.getAllLineIds().length > 1) {
-         mainScreen.add(
-            (Field)(new Object(
-               ((StringBuffer)(new Object()))
-                  .append(PhoneUtilities.getLineDescription())
-                  .append(" (")
-                  .append(PhoneUtilities.getDevicePhoneNumber())
-                  .append(")")
-                  .toString()
-            ))
-         );
-         mainScreen.add((Field)(new Object()));
+         mainScreen.add(new LabelField(PhoneUtilities.getLineDescription() + " (" + PhoneUtilities.getDevicePhoneNumber() + ")"));
+         mainScreen.add(new SeparatorField());
       }
    }
 }

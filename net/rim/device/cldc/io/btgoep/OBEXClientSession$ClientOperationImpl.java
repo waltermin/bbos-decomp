@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.btgoep;
 
+import java.io.IOException;
 import net.rim.device.api.util.DataBuffer;
 
 class OBEXClientSession$ClientOperationImpl extends OBEXSession$OperationImpl {
@@ -11,8 +12,8 @@ class OBEXClientSession$ClientOperationImpl extends OBEXSession$OperationImpl {
    public OBEXClientSession$ClientOperationImpl(OBEXClientSession _1, boolean isPut, HeaderSetImpl headersToSend) {
       super(_1);
       this.this$0 = _1;
-      super._receiveBuffer = (DataBuffer)(new Object());
-      super._sendBuffer = (DataBuffer)(new Object());
+      super._receiveBuffer = new DataBuffer();
+      super._sendBuffer = new DataBuffer();
       this._isPut = isPut;
       super._headersToSend = headersToSend;
    }
@@ -147,7 +148,7 @@ class OBEXClientSession$ClientOperationImpl extends OBEXSession$OperationImpl {
             this._abort = true;
             this.close();
          } else {
-            throw new Object("Operation is closed");
+            throw new IOException("Operation is closed");
          }
       }
    }
@@ -164,7 +165,7 @@ class OBEXClientSession$ClientOperationImpl extends OBEXSession$OperationImpl {
          }
 
          if (this._isClosed) {
-            throw new Object("Operation is closed");
+            throw new IOException("Operation is closed");
          }
 
          if (super._receivedHeaders == null) {

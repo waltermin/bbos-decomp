@@ -48,8 +48,8 @@ public final class PasswordValidationScreen extends UserSettingsScreen {
       String[] saveParamNames = null;
       String[] linkParamNames = null;
       if (this._pendingParams != null) {
-         saveParamNames = new Object[this._pendingParams.size() + 1];
-         linkParamNames = new Object[this._pendingParams.size()];
+         saveParamNames = new String[this._pendingParams.size() + 1];
+         linkParamNames = new String[this._pendingParams.size()];
          Enumeration keys = this._pendingParams.keys();
 
          int curIndex;
@@ -62,7 +62,7 @@ public final class PasswordValidationScreen extends UserSettingsScreen {
          saveParamNames[curIndex] = "password";
       } else {
          saveParamNames = new String[]{"password"};
-         linkParamNames = new Object[0];
+         linkParamNames = new String[0];
       }
 
       Mailbox mailboxToValidate = null;
@@ -80,14 +80,14 @@ public final class PasswordValidationScreen extends UserSettingsScreen {
          BISEventLogger.logEvent("No mailbox found to validate", 0);
       }
 
-      String title = MessageFormat.format(ApplicationResources.getString(226), new Object[]{mailboxToValidate.getDescription()});
+      String title = MessageFormat.format(ApplicationResources.getString(226), new String[]{mailboxToValidate.getDescription()});
       this.setTitle(title);
-      String topText = MessageFormat.format(ApplicationResources.getString(225), new Object[]{mailboxToValidate.getDescription()});
-      LabelField topLabel = (LabelField)(new Object(topText));
+      String topText = MessageFormat.format(ApplicationResources.getString(225), new String[]{mailboxToValidate.getDescription()});
+      LabelField topLabel = new LabelField(topText);
       topLabel.setMargin(0, 0, 10, 0);
       this.addContentField(topLabel);
-      String accountText = MessageFormat.format(ApplicationResources.getString(227), new Object[]{mailboxToValidate.getDescription()});
-      LabelField accountLabel = (LabelField)(new Object(accountText));
+      String accountText = MessageFormat.format(ApplicationResources.getString(227), new String[]{mailboxToValidate.getDescription()});
+      LabelField accountLabel = new LabelField(accountText);
       this.addContentField(accountLabel);
       if (mailboxToValidate.getHosted() && mailboxToValidate.hasSecretQuestion()) {
          LinkField forgotPasswordLinkField = new LinkField(ApplicationResources.getString(79));
@@ -95,7 +95,7 @@ public final class PasswordValidationScreen extends UserSettingsScreen {
          this.attachEventToField(forgotPasswordLinkField, new CommandEvent(247, 34, linkParamNames));
       }
 
-      this._passwordEdit = (PasswordEditField)(new Object(null, ""));
+      this._passwordEdit = new PasswordEditField(null, "");
       this.addContentField(this._passwordEdit, true);
       this._save = new Button(ApplicationResources.getString(39));
       if (allowCancel) {

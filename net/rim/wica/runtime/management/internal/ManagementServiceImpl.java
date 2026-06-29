@@ -54,9 +54,9 @@ public class ManagementServiceImpl
    private int[] _messages = new int[]{5, 6, 3, 9, 0, -804651006, 300, 302, 51, -804651000, 100, 107, 109, 110, 111, 112, 500, 1000, -804651006, 105};
    private ServiceProvider _provider;
    private RuntimeInfo _runtimeInfo;
-   private Timer _timer = (Timer)(new Object());
+   private Timer _timer = new Timer();
    private ManagementServiceImpl$InCoverageTimer _waitForPoliciesTask;
-   private LongHashtable _keyRefreshRegistry = (LongHashtable)(new Object(1));
+   private LongHashtable _keyRefreshRegistry = new LongHashtable(1);
    private PersistenceService _persistenceService;
    private SecurityService _securityService;
    private EventService _eventService;
@@ -176,7 +176,7 @@ public class ManagementServiceImpl
                         }
                      } catch (Throwable var10) {
                         this.cancelRegistration();
-                        Logger.log(((StringBuffer)(new Object("Exception while processing policies: "))).append(e.toString()).toString());
+                        Logger.log("Exception while processing policies: " + e.toString());
                         return returnMessage;
                      }
                   }
@@ -209,7 +209,7 @@ public class ManagementServiceImpl
                }
             } catch (Throwable var6) {
                this.cancelRegistration();
-               Logger.log(((StringBuffer)(new Object("Security handshake error: "))).append(e.toString()).toString());
+               Logger.log("Security handshake error: " + e.toString());
                return;
             }
          }
@@ -221,7 +221,7 @@ public class ManagementServiceImpl
    }
 
    private Message getREStatusMessage(long agID, boolean isLowMemoryAlert) {
-      Logger.log(((StringBuffer)(new Object("M RESt "))).append(agID).toString());
+      Logger.log("M RESt " + agID);
       Message statusMessage = this._msgService.createMessageInstance();
       statusMessage.setAGID(agID);
       statusMessage.setMessageCode(4);
@@ -326,7 +326,7 @@ public class ManagementServiceImpl
          HandshakeInfo info = new HandshakeInfo(this.getSecurityAGURL(ag.getAgRegURL()), DeviceInfo.getDeviceId(), ag.getAgID(), ag.getSecurityVersion());
          this._securityService.unregister(info);
       } catch (Throwable var4) {
-         Logger.log(((StringBuffer)(new Object("Unregistration error: "))).append(e.toString()).toString());
+         Logger.log("Unregistration error: " + e.toString());
          return;
       }
    }
@@ -390,7 +390,7 @@ public class ManagementServiceImpl
             status = true;
          } catch (Throwable var9) {
             this.cancelRegistration();
-            Logger.log(((StringBuffer)(new Object("Security handshake error: "))).append(e.toString()).toString());
+            Logger.log("Security handshake error: " + e.toString());
             return status;
          }
 
@@ -447,7 +447,7 @@ public class ManagementServiceImpl
       label51:
       try {
          this._runtimeInfo.setDeviceId(info.getDeviceId());
-         this._eventService.dispatchEvent(this, 104, new Object(info.getDeviceId()));
+         this._eventService.dispatchEvent(this, 104, new Long(info.getDeviceId()));
          if (this._runtimeInfo.getDoingRegistration()) {
             AGInfo currentInfo = this._runtimeInfo.getNewAGInfo();
             currentInfo.setAgID(info.getAGId());
@@ -490,7 +490,7 @@ public class ManagementServiceImpl
          this.sendREStatusMessage(this._runtimeInfo.getDefaultAGInfo().getAgID());
       } catch (Throwable var6) {
          this.cancelRegistration();
-         Logger.log(((StringBuffer)(new Object("Error on handshake completion: "))).append(e.toString()).toString());
+         Logger.log("Error on handshake completion: " + e.toString());
          break label51;
       }
 
@@ -571,7 +571,7 @@ public class ManagementServiceImpl
    }
 
    private String getSecurityAGURL(String agUrl) {
-      return ((StringBuffer)(new Object())).append(agUrl).append("/DeviceInitListener").toString();
+      return agUrl + "/DeviceInitListener";
    }
 
    @Override
@@ -810,17 +810,7 @@ public class ManagementServiceImpl
             this.validateCurrentTransport();
          }
       } else {
-         Logger.log(
-            this.toString(),
-            ((StringBuffer)(new Object("REMOVED MDS_SR, SR_ID=")))
-               .append(sr.getId())
-               .append(" SR_Name=\"")
-               .append(sr.getName())
-               .append("\" SR_UID=")
-               .append(sr.getUid())
-               .toString(),
-            4
-         );
+         Logger.log(this.toString(), "REMOVED MDS_SR, SR_ID=" + sr.getId() + " SR_Name=\"" + sr.getName() + "\" SR_UID=" + sr.getUid(), 4);
       }
    }
 
@@ -846,13 +836,7 @@ public class ManagementServiceImpl
                   if (activatedWithSB) {
                      Logger.log(
                         this.toString(),
-                        ((StringBuffer)(new Object("Deactivating, UPDATED MDS_SR (empty URL), SR_ID=")))
-                           .append(sr.getId())
-                           .append(" SR_Name=\"")
-                           .append(sr.getName())
-                           .append("\" SR_UID=")
-                           .append(sr.getUid())
-                           .toString(),
+                        "Deactivating, UPDATED MDS_SR (empty URL), SR_ID=" + sr.getId() + " SR_Name=\"" + sr.getName() + "\" SR_UID=" + sr.getUid(),
                         4
                      );
                      this.unregister();
@@ -869,19 +853,18 @@ public class ManagementServiceImpl
                      this._runtimeInfo.setDefaultAGInfo(agInfo);
                      Logger.log(
                         this.toString(),
-                        ((StringBuffer)(new Object("Reactivation due to UPDATED MDS SR, SR_ID=")))
-                           .append(sr.getId())
-                           .append(" SR_Name=\"")
-                           .append(sr.getName())
-                           .append("\" SR_UID=")
-                           .append(sr.getUid())
-                           .append("  : registrationURL=")
-                           .append(agInfo.getAgRegURL())
-                           .append(",compactURL=")
-                           .append(agInfo.getAgCompactMsgURL())
-                           .append(",IPPP=")
-                           .append(agInfo.getIPPP_UID())
-                           .toString(),
+                        "Reactivation due to UPDATED MDS SR, SR_ID="
+                           + sr.getId()
+                           + " SR_Name=\""
+                           + sr.getName()
+                           + "\" SR_UID="
+                           + sr.getUid()
+                           + "  : registrationURL="
+                           + agInfo.getAgRegURL()
+                           + ",compactURL="
+                           + agInfo.getAgCompactMsgURL()
+                           + ",IPPP="
+                           + agInfo.getIPPP_UID(),
                         4
                      );
                      this.reactivate();
@@ -896,19 +879,18 @@ public class ManagementServiceImpl
                } else {
                   Logger.log(
                      this.toString(),
-                     ((StringBuffer)(new Object("Activating due to UPDATED MDS SR, SR_ID=")))
-                        .append(sr.getId())
-                        .append(" SR_Name=\"")
-                        .append(sr.getName())
-                        .append("\" SR_UID=")
-                        .append(sr.getUid())
-                        .append("  : registrationURL=")
-                        .append(agInfo.getAgRegURL())
-                        .append(",compactURL=")
-                        .append(agInfo.getAgCompactMsgURL())
-                        .append(",IPPP=")
-                        .append(agInfo.getIPPP_UID())
-                        .toString(),
+                     "Activating due to UPDATED MDS SR, SR_ID="
+                        + sr.getId()
+                        + " SR_Name=\""
+                        + sr.getName()
+                        + "\" SR_UID="
+                        + sr.getUid()
+                        + "  : registrationURL="
+                        + agInfo.getAgRegURL()
+                        + ",compactURL="
+                        + agInfo.getAgCompactMsgURL()
+                        + ",IPPP="
+                        + agInfo.getIPPP_UID(),
                      4
                   );
                   this.register(agInfo);
@@ -917,7 +899,7 @@ public class ManagementServiceImpl
          }
 
          if (this.validateCurrentTransport() && this._runtimeInfo.isRegistered()) {
-            Logger.log(((StringBuffer)(new Object("M Enable - Transport Found: "))).append(this.getIPPPUid()).toString());
+            Logger.log("M Enable - Transport Found: " + this.getIPPPUid());
             this._eventService.dispatchEvent(112, null);
             return;
          }
@@ -968,7 +950,7 @@ public class ManagementServiceImpl
       String transportUid = this.getIPPPUid();
       if (transportUid != null) {
          if (this._runtimeInfo.isRegistered() && ServiceBook.getSB().getRecordByUidAndCid(transportUid, "IPPP") == null) {
-            Logger.log(((StringBuffer)(new Object("M Disable - Transport Not Found: "))).append(transportUid).toString());
+            Logger.log("M Disable - Transport Not Found: " + transportUid);
             this._eventService.dispatchEvent(111, null);
             return result;
          }
@@ -982,7 +964,7 @@ public class ManagementServiceImpl
    private void validateTransportRecord(ServiceRecord sr) {
       String transportUid = this.getIPPPUid();
       if (transportUid != null && transportUid.equalsIgnoreCase(sr.getUid())) {
-         Logger.log(((StringBuffer)(new Object("M Enable - Transport Found: "))).append(transportUid).toString());
+         Logger.log("M Enable - Transport Found: " + transportUid);
          this._eventService.dispatchEvent(112, null);
       }
    }
@@ -1006,13 +988,7 @@ public class ManagementServiceImpl
                || !this.disallowPublicActivation() && (!this._runtimeInfo.isRegistered() || !this._runtimeInfo.getDefaultAGInfo().isCorporate())) {
                Logger.log("M NSB");
                Logger.log(
-                  ((StringBuffer)(new Object("MDSS service record:\nCorporate: ")))
-                     .append(agInfo.isCorporate())
-                     .append("\nURL: ")
-                     .append(agInfo.getAgRegURL())
-                     .append("\nTransportUID: ")
-                     .append(agInfo.getIPPP_UID())
-                     .toString()
+                  "MDSS service record:\nCorporate: " + agInfo.isCorporate() + "\nURL: " + agInfo.getAgRegURL() + "\nTransportUID: " + agInfo.getIPPP_UID()
                );
                this.register(agInfo);
                ServiceBook sb = ServiceBook.getSB();
@@ -1049,7 +1025,7 @@ public class ManagementServiceImpl
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

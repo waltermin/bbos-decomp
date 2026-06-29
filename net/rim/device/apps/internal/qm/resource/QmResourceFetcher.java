@@ -59,7 +59,7 @@ public class QmResourceFetcher {
       // 11: aload 0
       // 12: iload 1
       // 13: invokespecial net/rim/device/apps/internal/qm/resource/QmResourceFetcher.getObject (I)Ljava/lang/Object;
-      // 16: checkcast java/lang/Object
+      // 16: checkcast java/lang/String
       // 19: areturn
       // 1a: astore 2
       // 1b: aconst_null

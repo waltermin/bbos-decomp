@@ -15,14 +15,14 @@ import net.rim.device.internal.browser.util.PipeOutputStream;
 import net.rim.device.internal.browser.util.TimeLogger;
 
 final class WTP_TCL2_Initiator extends WTP_Transaction_Initiator {
-   private Pipe _pipe = (Pipe)(new Object());
+   private Pipe _pipe = new Pipe();
    private PipeOutputStream _pipeOutputResult;
    private int _maxSeqNumber = -1;
    private int _startGroupSeqNum;
    private int _numOfMissingPackets = -1;
    private int _lastMissingPacketSeqNum = -1;
    private Pipe _sendPipe;
-   private BitSet _psnSentAcks = (BitSet)(new Object(256));
+   private BitSet _psnSentAcks = new BitSet(256);
    private int _numSendPackets;
    private int _lastSendPacketNumber;
    private static final int SEND_PACKET_GROUP_SIZE = 5;
@@ -44,7 +44,7 @@ final class WTP_TCL2_Initiator extends WTP_Transaction_Initiator {
          int length = userData.length;
          if (length > 1400) {
             this._numSendPackets = 0;
-            this._sendPipe = (Pipe)(new Object());
+            this._sendPipe = new Pipe();
 
             for (int offset = 0; offset < length; offset += 1400) {
                this._sendPipe.write(userData, offset, Math.min(1400, length - offset), this._numSendPackets++);
@@ -356,8 +356,8 @@ final class WTP_TCL2_Initiator extends WTP_Transaction_Initiator {
       }
 
       byte[] result = null;
-      ByteArrayOutputStream bos = (ByteArrayOutputStream)(new Object(end - start));
-      DataOutputStream dos = (DataOutputStream)(new Object(bos));
+      ByteArrayOutputStream bos = new ByteArrayOutputStream(end - start);
+      DataOutputStream dos = new DataOutputStream(bos);
 
       try {
          for (int i = start; i <= end; i++) {

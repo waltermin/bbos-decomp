@@ -26,7 +26,7 @@ public class BrowserSession {
    public void displayPage(String url, String referrer, HttpHeaders requestHeaders, PostData postData) {
       BrowserImpl browser = BrowserDaemonRegistry.getInstance();
       if (requestHeaders == null) {
-         requestHeaders = (HttpHeaders)(new Object());
+         requestHeaders = new HttpHeaders();
       }
 
       RenderingUtilities.setReferrer(requestHeaders, referrer);
@@ -37,14 +37,14 @@ public class BrowserSession {
          }
       }
 
-      ModelResult mr = (ModelResult)(new Object(url, 8195, requestHeaders));
+      ModelResult mr = new ModelResult(url, 8195, requestHeaders);
       if (postData != null) {
          mr.setPostData(postData.getBytes());
       }
 
       BrowserConfigRecord bcr = BrowserConfigRecord.getDecodedConfig(this._connectionUid, BrowserConfigRecord.INVALID_VALUE, null);
       this.firewallCheck(bcr, url);
-      FetchRequest internalRequest = (FetchRequest)(new Object(mr, bcr));
+      FetchRequest internalRequest = new FetchRequest(mr, bcr);
       browser.initiateFetchRequest(internalRequest);
    }
 
@@ -59,7 +59,7 @@ public class BrowserSession {
       if (!ControlledAccess.verifyRRISignatures(true)) {
          boolean internal = this.isInternalConnection(cid, bcr);
          if (!Firewall.getInstance().allowConnection(protocol, url, internal)) {
-            throw new Object("Permission Denied: The Firewall has forbidden this operation as it indicates a possible security violation");
+            throw new SecurityException("Permission Denied: The Firewall has forbidden this operation as it indicates a possible security violation");
          }
       }
    }
@@ -80,7 +80,7 @@ public class BrowserSession {
    public void displayPage(String url) {
       BrowserImpl browser = BrowserDaemonRegistry.getInstance();
       BrowserConfigRecord bcr = BrowserConfigRecord.getDecodedConfig(this._connectionUid, BrowserConfigRecord.INVALID_VALUE, null);
-      FetchRequest internalRequest = (FetchRequest)(new Object((ModelResult)(new Object(url, 8195, null)), bcr));
+      FetchRequest internalRequest = new FetchRequest(new ModelResult(url, 8195, null), bcr);
       browser.initiateFetchRequest(internalRequest);
       browser.activateBrowser(this._connectionUid);
    }

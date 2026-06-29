@@ -4,15 +4,15 @@ public final class RSADecryptorEngine implements PrivateKeyDecryptorEngine {
    private RSAPrivateKey _key;
    private RSACryptoToken _cryptoToken;
 
-   public RSADecryptorEngine(RSAPrivateKey key) {
+   public RSADecryptorEngine(RSAPrivateKey key) throws CryptoUnsupportedOperationException {
       if (key != null && (key.getCryptoSystem().getBitLength() & 7) == 0) {
          this._key = key;
          this._cryptoToken = this._key.getRSACryptoToken();
          if (!this._cryptoToken.isSupportedDecryptRSA(this._key.getRSACryptoSystem(), this._key.getCryptoTokenData())) {
-            throw new Object();
+            throw new CryptoUnsupportedOperationException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -36,7 +36,7 @@ public final class RSADecryptorEngine implements PrivateKeyDecryptorEngine {
          && ciphertext.length > ciphertextOffset) {
          this._cryptoToken.decryptRSA(this._key.getRSACryptoSystem(), this._key.getCryptoTokenData(), ciphertext, ciphertextOffset, plaintext, plaintextOffset);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

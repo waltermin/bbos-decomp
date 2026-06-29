@@ -33,7 +33,7 @@ public final class FullImageVerb extends Verb {
 
       RenderingApplication renderingApplication = this._browserContent.getRenderingApplication();
       if (renderingApplication != null) {
-         HttpHeaders requestHeaders = (HttpHeaders)(new Object());
+         HttpHeaders requestHeaders = new HttpHeaders();
          RenderingUtilities.setTranscodeHeader(requestHeaders, false);
          RenderingUtilities.setReferrer(requestHeaders, this._browserContent.getURL());
          int flags = this._browserContent.getSharedFlags() | 1;

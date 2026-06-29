@@ -4,7 +4,7 @@ import net.rim.device.api.util.Comparator;
 import net.rim.device.internal.i18n.CollatorImpl;
 
 final class MemoCollectionImpl$MemoComparator implements Comparator {
-   private static CollatorImpl _collator = (CollatorImpl)(new Object());
+   private static CollatorImpl _collator = new CollatorImpl();
 
    @Override
    public final int compare(Object o1, Object o2) {

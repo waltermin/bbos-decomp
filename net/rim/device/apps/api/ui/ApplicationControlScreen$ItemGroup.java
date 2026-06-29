@@ -184,7 +184,7 @@ final class ApplicationControlScreen$ItemGroup extends VerticalIndentFieldManage
    public ApplicationControlScreen$ItemGroup(ApplicationControlScreen _1, String name, String helpCardId) {
       super(281474976710656L);
       this.this$0 = _1;
-      this._items = (Vector)(new Object());
+      this._items = new Vector();
       this._label = name;
       this._helpCardId = helpCardId;
       this._group = new ApplicationControlScreen$ItemField(name, ApplicationControlScreen.ALLOW_DENY);
@@ -193,11 +193,11 @@ final class ApplicationControlScreen$ItemGroup extends VerticalIndentFieldManage
       int size = f.getHeight() - 3;
       this._indent = size + 3;
       this._expanded = false;
-      this._icon = (ImageField)(new Object(51539607552L));
+      this._icon = new ImageField(51539607552L);
       this._icon.setPreferredSize(size, size);
       this._icon.setImage(SystemIcon.COLLECTION.getImage(6));
-      this._sf = (SeparatorField)(new Object());
-      this._hfm = (HorizontalFieldManager)(new Object());
+      this._sf = new SeparatorField();
+      this._hfm = new HorizontalFieldManager();
       this._hfm.add(this._icon);
       this._hfm.add(this._group);
       this.add(this._hfm);

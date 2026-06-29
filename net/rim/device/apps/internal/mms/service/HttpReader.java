@@ -40,7 +40,7 @@ final class HttpReader {
    public final int read() {
       HttpConnection connection = null;
       InputStream inputstream = null;
-      System.out.println(((StringBuffer)(new Object("MMS retrieve: "))).append(this._url).toString());
+      System.out.println("MMS retrieve: " + this._url);
       boolean var34 = false /* VF: Semaphore variable */;
 
       int var40;
@@ -51,7 +51,7 @@ final class HttpReader {
          inputstream = connection.openInputStream();
          String contentEncoding = connection.getHeaderField("Content-Encoding");
          inputstream = RendererControl.getInputStreamFromContentEncoding(contentEncoding, inputstream);
-         this._responseHeaders = (HttpHeaders)(new Object());
+         this._responseHeaders = new HttpHeaders();
          int index = 0;
 
          for (String key = connection.getHeaderFieldKey(index); key != null; key = connection.getHeaderFieldKey(++index)) {

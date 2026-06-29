@@ -6,6 +6,7 @@ import net.rim.device.api.browser.field.BrowserContent;
 import net.rim.device.api.browser.field.BrowserContentBaseImpl;
 import net.rim.device.api.browser.field.Event;
 import net.rim.device.api.browser.field.RenderingApplication;
+import net.rim.device.api.browser.field.RenderingException;
 import net.rim.device.api.browser.field.RenderingOptions;
 import net.rim.device.api.browser.field.RenderingSession;
 import net.rim.device.api.browser.plugin.BrowserContentProvider;
@@ -39,7 +40,7 @@ public final class MediaRenderingConverter extends BrowserContentProvider implem
    }
 
    @Override
-   public final BrowserContent getBrowserContent(BrowserContentProviderContext providerContext) {
+   public final BrowserContent getBrowserContent(BrowserContentProviderContext providerContext) throws RenderingException {
       RenderingApplication renderingApplication = providerContext.getRenderingApplication();
       RenderingSession renderingSession = providerContext.getRenderingSession();
       InputConnection inputConnection = providerContext.getInputConnection();
@@ -54,13 +55,13 @@ public final class MediaRenderingConverter extends BrowserContentProvider implem
             embedded = true;
          }
 
-         BrowserContentBaseImpl browserContent = (BrowserContentBaseImpl)(new Object(baseUrl, null, renderingApplication, renderingOptions, flags));
+         BrowserContentBaseImpl browserContent = new BrowserContentBaseImpl(baseUrl, null, renderingApplication, renderingOptions, flags);
          MediaBrowserField field = new MediaBrowserField(inputConnection, in, baseUrl, browserContent, embedded, event);
          browserContent.setContent(field);
          browserContent.setBrowserPageContext(field);
          return browserContent;
       } else {
-         throw new Object();
+         throw new RenderingException();
       }
    }
 

@@ -7,7 +7,7 @@ public class WTLS_SignatureDecoder extends SignatureDecoder {
    @Override
    protected DecodedSignature decodeSignature(InputStream encodedSignature, String signatureAlgorithm, String digestAlgorithm) throws InvalidSignatureEncodingException {
       if (encodedSignature == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       try {
@@ -22,7 +22,7 @@ public class WTLS_SignatureDecoder extends SignatureDecoder {
    }
 
    protected DecodedSignature decodeSignature(byte[] encodedSignature, String signatureAlgorithm, String digestAlgorithm) {
-      throw new Object();
+      throw new RuntimeException();
    }
 
    @Override

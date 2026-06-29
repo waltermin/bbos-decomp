@@ -11,7 +11,7 @@ public final class SimpleResponseHandler extends DefaultHandler {
    @Override
    public final void characters(char[] ch, int start, int length) {
       if (this._foundResponseTag) {
-         this._response = (String)(ch != null && ch.length > 0 ? new Object(ch, start, length) : null);
+         this._response = ch != null && ch.length > 0 ? new String(ch, start, length) : null;
       }
    }
 

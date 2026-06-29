@@ -17,8 +17,8 @@ final class AudioRouterVerbFactory implements VerbFactory {
 
    @Override
    public final Verb[] getVerbs(Object context) {
-      Verb[] verbs = new Object[0];
-      if (context instanceof Object) {
+      Verb[] verbs = new Verb[0];
+      if (context instanceof AudioPathControl) {
          AudioPathControl control = (AudioPathControl)context;
          if (control.canSwitchToPath(3)) {
             Arrays.add(verbs, new SendToHeadsetVerb(control));

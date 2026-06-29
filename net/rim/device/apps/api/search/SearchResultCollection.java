@@ -16,6 +16,7 @@ import net.rim.device.api.collection.util.ReadableListUtil;
 import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.system.PersistentContentListener;
 import net.rim.device.api.util.Comparator;
+import net.rim.device.api.util.InvertedOrderComparator;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.EncryptableProvider;
 import net.rim.device.apps.api.framework.model.MatchProvider;
@@ -39,7 +40,7 @@ public class SearchResultCollection
    private boolean _ascendingSource;
    private boolean _reverseResults;
    private BigVector _results;
-   private CollectionListenerManager _collectionListenerManager = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _collectionListenerManager = new CollectionListenerManager();
    private Vector _pendingQueue;
    private Vector _pendingDecryptionQueue;
    private int _initialSizeOfSourceCollection;
@@ -171,7 +172,7 @@ public class SearchResultCollection
 
    @Override
    public void suspendNotification(Object context) {
-      if (this._source instanceof Object) {
+      if (this._source instanceof NotificationSuspension) {
          ((NotificationSuspension)this._source).suspendNotification(context);
       }
 
@@ -183,7 +184,7 @@ public class SearchResultCollection
 
    @Override
    public void resumeNotification(Object context) {
-      if (this._source instanceof Object) {
+      if (this._source instanceof NotificationSuspension) {
          ((NotificationSuspension)this._source).resumeNotification(context);
       }
    }
@@ -286,7 +287,7 @@ public class SearchResultCollection
       Collection collection = this._source;
       Object ticket = PersistentContent.getTicket();
       if (ticket != null) {
-         if (collection instanceof Object) {
+         if (collection instanceof ReadableList) {
             ReadableList records = (ReadableList)collection;
             int initialNumberToVisitBeforeNotification = 32;
             int numberToVisitBeforeNotification = initialNumberToVisitBeforeNotification;
@@ -321,7 +322,7 @@ public class SearchResultCollection
                   ;
                }
 
-               if (currentElement instanceof Object) {
+               if (currentElement instanceof MatchProvider) {
                   if (((MatchProvider)currentElement).match(this._criteria) == 1) {
                      numAdded++;
                      lastElementAdded = currentElement;
@@ -415,7 +416,7 @@ public class SearchResultCollection
 
    private void cleanup() {
       synchronized (CollectionLock.getGlobalLock()) {
-         this._results = (BigVector)(new Object());
+         this._results = new BigVector();
          this.resetPendingQueue();
          this.resetPendingDecryptionQueue();
       }
@@ -423,7 +424,7 @@ public class SearchResultCollection
 
    private static void logAssertionFailure(int code, int i) {
       try {
-         throw new Object(((StringBuffer)(new Object("SRC Assertion("))).append(code).append("): ").append(i).toString());
+         throw new RuntimeException("SRC Assertion(" + code + "): " + i);
       } finally {
          QuincyManager.sendJavaLogworthy("Search:SRC");
          return;
@@ -448,7 +449,7 @@ public class SearchResultCollection
 
    private void fireProgressUpdated() {
       Object progressListener = this._progressListener;
-      if (progressListener instanceof Object) {
+      if (progressListener instanceof WeakReference) {
          progressListener = ((WeakReference)progressListener).get();
       }
 
@@ -463,7 +464,7 @@ public class SearchResultCollection
 
    private void resetPendingDecryptionQueue() {
       if (this._pendingDecryptionQueue == null) {
-         this._pendingDecryptionQueue = (Vector)(new Object());
+         this._pendingDecryptionQueue = new Vector();
       } else {
          this._pendingDecryptionQueue.setSize(0);
       }
@@ -483,7 +484,7 @@ public class SearchResultCollection
 
    private void resetResults() {
       if (this._results == null) {
-         this._results = (BigVector)(new Object(this._initialSizeOfSourceCollection));
+         this._results = new BigVector(this._initialSizeOfSourceCollection);
       } else {
          this._results.removeAll();
       }
@@ -507,14 +508,14 @@ public class SearchResultCollection
 
    public SearchResultCollection(SearchCriterion[] criteria, Comparator comparator, boolean ascendingSource, boolean reverseResults) {
       if (comparator == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._criteria = criteria;
       this._ascendingSource = ascendingSource;
       this._reverseResults = reverseResults;
       if (reverseResults) {
-         comparator = (Comparator)(new Object(comparator));
+         comparator = new InvertedOrderComparator(comparator);
       }
 
       this._comparator = comparator;
@@ -598,7 +599,7 @@ public class SearchResultCollection
    }
 
    private boolean elementMatches(Object element) {
-      return !(element instanceof Object) ? false : ((MatchProvider)element).match(this._criteria) == 1;
+      return !(element instanceof MatchProvider) ? false : ((MatchProvider)element).match(this._criteria) == 1;
    }
 
    private boolean removeElement(Object o) {
@@ -607,7 +608,7 @@ public class SearchResultCollection
 
    private void resetPendingQueue() {
       if (this._pendingQueue == null) {
-         this._pendingQueue = (Vector)(new Object());
+         this._pendingQueue = new Vector();
       } else {
          this._pendingQueue.setSize(0);
       }
@@ -651,7 +652,7 @@ public class SearchResultCollection
    }
 
    private synchronized void startSearchThread() {
-      this.setSearchThread((Thread)(new Object(this)));
+      this.setSearchThread(new Thread(this));
       this._pendingSearchThreadCount++;
       this._searchThread.start();
    }
@@ -698,7 +699,7 @@ public class SearchResultCollection
    private void reCrypt() {
       for (int i = this._criteria.length - 1; i >= 0; i--) {
          SearchCriterion var10000 = this._criteria[i];
-         if (this._criteria[i] instanceof Object) {
+         if (this._criteria[i] instanceof EncryptableProvider) {
             ((EncryptableProvider)var10000).reCrypt(true, true);
          }
       }

@@ -10,34 +10,34 @@ public class SignatureSignerFactory {
    protected SignatureSignerFactory() {
    }
 
-   public static SignatureSigner getInstance(PrivateKey key, String algorithm) {
+   public static SignatureSigner getInstance(PrivateKey key, String algorithm) throws NoSuchAlgorithmException {
       if (key == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (algorithm == null) {
          algorithm = key.getAlgorithm();
       } else if (algorithm.charAt(0) == '/') {
-         algorithm = ((StringBuffer)(new Object())).append(key.getAlgorithm()).append(algorithm).toString();
+         algorithm = key.getAlgorithm() + algorithm;
       }
 
       String signatureAlgorithm = RIMFactoryUtilities.getLeftMostSubAlgorithm(algorithm);
       String digestAlgorithm = RIMFactoryUtilities.stripLeftMostSubAlgorithm(algorithm);
       SignatureSignerFactory factory = (SignatureSignerFactory)_hashtable.get(signatureAlgorithm);
       if (factory == null) {
-         throw new Object(algorithm);
+         throw new NoSuchAlgorithmException(algorithm);
       }
 
       try {
          return factory.createSignatureSigner(signatureAlgorithm, digestAlgorithm, key);
       } finally {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    public static void register(SignatureSignerFactory factory) {
       if (factory == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       String[] algorithms = factory.getFactoryAlgorithms();

@@ -33,7 +33,7 @@ class ZoomAndPanVerb extends Verb implements PMEPlugginResource {
    @Override
    public Object invoke(Object context) {
       if (_zpScreen == null) {
-         MediaManager manager = (MediaManager)(new Object());
+         MediaManager manager = new MediaManager();
          Object overlaySkin = null;
 
          try {

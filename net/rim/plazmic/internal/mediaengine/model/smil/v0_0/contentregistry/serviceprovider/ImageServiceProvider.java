@@ -1,5 +1,6 @@
 package net.rim.plazmic.internal.mediaengine.model.smil.v0_0.contentregistry.serviceprovider;
 
+import java.io.IOException;
 import java.io.InputStream;
 import javax.microedition.io.HttpConnection;
 import net.rim.device.api.system.EncodedImage;
@@ -17,14 +18,14 @@ public class ImageServiceProvider extends UIComponentServiceProvider {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public void createServices(InputStream is, String type, HttpConnection conn) {
+   public void createServices(InputStream is, String type, HttpConnection conn) throws IOException {
       byte[] data = this.bufferData(is).toByteArray();
       EncodedImage image = null;
 
       try {
          image = EncodedImage.createEncodedImage(data, 0, data.length);
       } catch (Throwable var8) {
-         throw new Object(iae.getMessage());
+         throw new IOException(iae.getMessage());
       }
 
       this.setDrmStatus(conn);

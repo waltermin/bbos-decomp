@@ -20,7 +20,7 @@ public final class AddBookmarkVerb extends BrowserVerb {
    @Override
    public final Object invoke(Object context) {
       ContextObject contextObject = null;
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          contextObject = (ContextObject)context;
       }
 
@@ -31,22 +31,22 @@ public final class AddBookmarkVerb extends BrowserVerb {
       String configUid = null;
       if (contextObject != null) {
          Object object = ContextObject.get(contextObject, -1219344331000926502L);
-         if (object instanceof Object) {
+         if (object instanceof Folder) {
             folder = (Folder)object;
          }
 
          object = ContextObject.get(contextObject, -7261227923983886841L);
-         if (object instanceof Object) {
+         if (object instanceof String) {
             title = (String)object;
          }
 
          object = ContextObject.get(contextObject, 253);
-         if (object instanceof Object) {
+         if (object instanceof String) {
             url = (String)object;
          }
 
          object = ContextObject.get(contextObject, 867508017068302662L);
-         if (object instanceof Object) {
+         if (object instanceof String) {
             configUid = (String)object;
          }
 

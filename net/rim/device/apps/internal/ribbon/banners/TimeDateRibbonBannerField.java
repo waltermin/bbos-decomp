@@ -40,7 +40,7 @@ final class TimeDateRibbonBannerField implements BannerField, RibbonComponent$Ri
    @Override
    public final void applyTheme() {
       Theme$Writer themeWriter = ThemeManager.getActiveTheme().getWriterInternalDeprecated();
-      Hashtable parms = (Hashtable)(new Object());
+      Hashtable parms = new Hashtable();
       if (this._timeField != null) {
          ThemeAttributeSet$Writer attributesWriter = themeWriter.createThemeAttributeSetWriter(null);
          attributesWriter.setFontFamily("LargeTimerFont");

@@ -53,7 +53,7 @@ final class AddressBookSearchResultField extends CollectionListField implements 
    @Override
    public final Verb getVerbs(Object context, Verb[] verbs) {
       Object selectedElement = this.getSelectedElement();
-      if (!(selectedElement instanceof Object)) {
+      if (!(selectedElement instanceof VerbProvider)) {
          return null;
       }
 

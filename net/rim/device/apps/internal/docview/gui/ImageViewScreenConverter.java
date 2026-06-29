@@ -12,6 +12,6 @@ final class ImageViewScreenConverter extends BaseConverter {
 
    @Override
    public final Object convert(DataInput aDataInput, Object contextObject) {
-      return !(contextObject instanceof Object) ? null : new DocViewImageDisplayScreen((IntHashtable)contextObject);
+      return !(contextObject instanceof IntHashtable) ? null : new DocViewImageDisplayScreen((IntHashtable)contextObject);
    }
 }

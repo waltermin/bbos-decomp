@@ -90,7 +90,7 @@ public class AttributesImpl implements Attributes {
       this.clear();
       this.length = atts.getLength();
       if (this.length > 0) {
-         this.data = new Object[this.length * 5];
+         this.data = new String[this.length * 5];
 
          for (int i = 0; i < this.length; i++) {
             this.data[i * 5] = atts.getURI(i);
@@ -246,7 +246,7 @@ public class AttributesImpl implements Attributes {
             max *= 2;
          }
 
-         String[] newData = new Object[max];
+         String[] newData = new String[max];
          if (this.length > 0) {
             System.arraycopy(this.data, 0, newData, 0, this.length * 5);
          }
@@ -256,7 +256,7 @@ public class AttributesImpl implements Attributes {
    }
 
    private void badIndex(int index) {
-      String msg = ((StringBuffer)(new Object("Attempt to modify attribute at illegal index: "))).append(index).toString();
-      throw new Object(msg);
+      String msg = "Attempt to modify attribute at illegal index: " + index;
+      throw new ArrayIndexOutOfBoundsException(msg);
    }
 }

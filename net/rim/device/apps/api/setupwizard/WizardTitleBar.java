@@ -19,8 +19,8 @@ public class WizardTitleBar extends VerticalFieldManager {
    private static final int TITLEBAR_ALT_FONT_SIZE_PT = 8;
 
    public WizardTitleBar(String label) {
-      this._label = (LabelField)(new Object(label, 64));
-      this._buffer = (StringBuffer)(new Object());
+      this._label = new LabelField(label, 64);
+      this._buffer = new StringBuffer();
       this.add(this._label);
       this.add(this._progressBar);
    }
@@ -36,7 +36,7 @@ public class WizardTitleBar extends VerticalFieldManager {
             break;
          case 0:
          default:
-            this._buffer.append(MessageFormat.format(SetupWizardAPIResources.getString(15), new Object[]{Integer.toString(current), Integer.toString(max)}));
+            this._buffer.append(MessageFormat.format(SetupWizardAPIResources.getString(15), new String[]{Integer.toString(current), Integer.toString(max)}));
             break;
          case 1:
             if (max > 0) {

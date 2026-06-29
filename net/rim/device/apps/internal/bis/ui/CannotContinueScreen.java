@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.bis.ui;
 
 import java.util.Hashtable;
-import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.apps.internal.bis.ApplicationResources;
 import net.rim.device.apps.internal.bis.api.ui.BasicScreen;
 import net.rim.device.apps.internal.bis.api.ui.Button;
@@ -11,7 +11,7 @@ public final class CannotContinueScreen extends BasicScreen {
    @Override
    public final void refresh(Hashtable screenParams) {
       this.setTitle(ApplicationResources.getString(58));
-      this.addContentField((Field)(new Object(ApplicationResources.getString(59))));
+      this.addContentField(new LabelField(ApplicationResources.getString(59)));
       Button okButton = new Button(ApplicationResources.getString(39));
       this.addButtonBarButtons(new Button[]{okButton}, false);
       CloseEvent okEvent = new CloseEvent(39);

@@ -72,7 +72,7 @@ class HTMLInput extends HTMLGenericElement implements HTMLInputElement, Secondar
    public void setUid(int id) {
       String name = this.getName();
       if (name != null) {
-         this._uid = ((StringBuffer)(new Object())).append(name).append(id).toString();
+         this._uid = name + id;
       } else {
          this._uid = Integer.toString(id);
       }
@@ -510,18 +510,18 @@ class HTMLInput extends HTMLGenericElement implements HTMLInputElement, Secondar
       // 182: aload 16
       // 184: invokestatic net/rim/device/internal/io/file/FileUtilities.makeFileURL (Ljava/lang/String;)Ljava/lang/String;
       // 187: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 18a: checkcast java/lang/Object
+      // 18a: checkcast javax/microedition/io/file/FileConnection
       // 18d: astore 19
       // 18f: aload 19
       // 191: invokeinterface javax/microedition/io/file/FileConnection.exists ()Z 1
       // 196: ifeq 1ca
       // 199: aload 19
       // 19b: dup
-      // 19c: instanceof java/lang/Object
+      // 19c: instanceof net/rim/device/api/io/file/ExtendedFileConnection
       // 19f: ifne 1a6
       // 1a2: pop
       // 1a3: goto 1c1
-      // 1a6: checkcast java/lang/Object
+      // 1a6: checkcast net/rim/device/api/io/file/ExtendedFileConnection
       // 1a9: astore 21
       // 1ab: aload 21
       // 1ad: invokeinterface net/rim/device/api/io/file/ExtendedFileConnection.isContentDRMForwardLocked ()Z 1
@@ -626,7 +626,7 @@ class HTMLInput extends HTMLGenericElement implements HTMLInputElement, Secondar
       // 2a4: ifne 2ad
       // 2a7: ldc_w "x"
       // 2aa: goto 2c1
-      // 2ad: new java/lang/Object
+      // 2ad: new java/lang/StringBuffer
       // 2b0: dup
       // 2b1: invokespecial java/lang/StringBuffer.<init> ()V
       // 2b4: aload 3
@@ -645,7 +645,7 @@ class HTMLInput extends HTMLGenericElement implements HTMLInputElement, Secondar
       // 2d1: ifne 2da
       // 2d4: ldc_w "y"
       // 2d7: goto 2ee
-      // 2da: new java/lang/Object
+      // 2da: new java/lang/StringBuffer
       // 2dd: dup
       // 2de: invokespecial java/lang/StringBuffer.<init> ()V
       // 2e1: aload 3
@@ -1038,7 +1038,7 @@ class HTMLInput extends HTMLGenericElement implements HTMLInputElement, Secondar
 
    @Override
    public void setReplaceTag(int value) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override

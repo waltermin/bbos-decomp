@@ -57,7 +57,7 @@ public final class WorldPhoneDisclaimerDialog implements DialogClosedListener {
    }
 
    public WorldPhoneDisclaimerDialog(String msg, int previousMode) {
-      this._disclaimerDialog = (Dialog)(new Object(3, msg, 4, Bitmap.getPredefinedBitmap(1), 0));
+      this._disclaimerDialog = new Dialog(3, msg, 4, Bitmap.getPredefinedBitmap(1), 0);
       this._disclaimerDialog.setEscapeEnabled(true);
       this._previousMode = previousMode;
       this._disclaimerDialog.setDialogClosedListener(this);

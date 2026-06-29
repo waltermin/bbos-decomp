@@ -16,11 +16,11 @@ public class SpellCheckWordMatch implements RegularExpression {
    private int[] starts;
    private boolean isCaseSensitive;
    private boolean checkShared;
-   private Stack iterators = (Stack)(new Object());
+   private Stack iterators = new Stack();
 
    public SpellCheckWordMatch(boolean isCaseSensitive, boolean checkShared) {
       if (isCaseSensitive && checkShared) {
-         throw new Object();
+         throw new UnsupportedOperationException();
       }
 
       this.isCaseSensitive = isCaseSensitive;
@@ -182,6 +182,6 @@ public class SpellCheckWordMatch implements RegularExpression {
 
    @Override
    public RegularExpression$SimpleCharacterIterator getAcceptableChars(RegularExpressionState state, LearningGlobalAlphabet charsStr) {
-      return this.getAcceptableChars(state, (String)((Object)null));
+      return this.getAcceptableChars(state, (String)null);
    }
 }

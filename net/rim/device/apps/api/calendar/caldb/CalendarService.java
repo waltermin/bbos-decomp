@@ -28,7 +28,7 @@ public class CalendarService extends ServiceIdentifier implements Persistable {
    CalendarService(Object key) {
       super(key);
       this.updateCICALConfiguration(key);
-      if (key instanceof Object) {
+      if (key instanceof String) {
          String keyString = (String)key;
          if (keyString.equals("Base System Calendar")) {
             this.setSystemDefault(true);
@@ -39,8 +39,8 @@ public class CalendarService extends ServiceIdentifier implements Persistable {
    }
 
    private void updateCICALConfiguration(Object key) {
-      if (key instanceof Object) {
-         this.setCICALConfiguration(CICALConfiguration.initialize(key, 1));
+      if (key instanceof ServiceRecord) {
+         this.setCICALConfiguration(CICALConfiguration.initialize((ServiceRecord)key, 1));
       } else {
          this.setCICALConfiguration(CICALConfiguration.initialize(null, 3));
       }
@@ -68,7 +68,7 @@ public class CalendarService extends ServiceIdentifier implements Persistable {
    public ServiceRecord getServiceRecord() {
       Object o = this.getServiceKey();
       ServiceRecord result = null;
-      if (o instanceof Object) {
+      if (o instanceof ServiceRecord) {
          result = (ServiceRecord)o;
       }
 
@@ -113,7 +113,7 @@ public class CalendarService extends ServiceIdentifier implements Persistable {
    }
 
    private void loadCalendarFolders() {
-      this._calendarFolders = (LongHashtable)(new Object(1));
+      this._calendarFolders = new LongHashtable(1);
       CalendarFolder folder = new CalendarFolder(super._uniqueServiceId);
       this._primaryCalendarFolderID = super._uniqueServiceId;
       this._calendarFolders.put(super._uniqueServiceId, folder);
@@ -148,7 +148,7 @@ public class CalendarService extends ServiceIdentifier implements Persistable {
 
    public void purgeToBaseSystemCalendarService() {
       if (!this.isSystemDefault()) {
-         ((Thread)(new Object(new CalendarService$BulkMoveRunnable(this, (CalDB)this.getCalendarDatabase())))).start();
+         new Thread(new CalendarService$BulkMoveRunnable(this, (CalDB)this.getCalendarDatabase())).start();
       }
    }
 

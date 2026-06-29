@@ -18,7 +18,7 @@ final class PhoneInfoOption$CopyableNumberField extends RichTextField {
 
    @Override
    protected final void drawFocus(Graphics graphics, boolean on) {
-      XYRect rect = (XYRect)(new Object());
+      XYRect rect = new XYRect();
       this.getFocusRect(rect);
       this.highlightSelectedArea(graphics, on, 0, this.getTextLength());
       this.drawHighlightRegion(graphics, 1, on, rect.x, rect.y, rect.width, rect.height);

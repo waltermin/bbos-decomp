@@ -11,6 +11,9 @@ import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.messaging.FolderHierarchies;
 import net.rim.device.apps.api.messaging.messagelist.DeleteSingleItemVerb;
 import net.rim.device.apps.api.messaging.messagelist.MessageListOptions;
+import net.rim.device.apps.api.messaging.util.AnonymousMessage;
+import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
+import net.rim.device.apps.internal.phone.data.PhoneCallModelImpl;
 import net.rim.device.apps.internal.ribbon.skin.svg.NewMessageFilter;
 import net.rim.plazmic.internal.mediaengine.model.intarray.v1_2.ModelInteractorImpl;
 
@@ -19,20 +22,20 @@ class EmailHandler extends Handler implements GlobalEventListener, VerbFactory {
    private boolean _includeSMSMMS;
    protected int _unreadCountId;
    protected String _hotspotType;
-   ActionProvider[] _msgs = new Object[this.MaxEntries];
+   ActionProvider[] _msgs = new ActionProvider[this.MaxEntries];
    ModelColumnPainter[] _painter = new ModelColumnPainter[this.MaxEntries];
-   DeleteSingleItemVerb _deleteVerb = (DeleteSingleItemVerb)(new Object(611472, 1000));
-   Verb[] _verbArray = new Object[]{this._deleteVerb};
+   DeleteSingleItemVerb _deleteVerb = new DeleteSingleItemVerb(611472, 1000);
+   Verb[] _verbArray = new Verb[]{this._deleteVerb};
    private static final int NUM_ENTRIES_PER_LOG = 3;
 
    protected boolean isItemValid(Object item) {
-      return this._includeSMSMMS || item instanceof Object || item instanceof Object || item instanceof Object;
+      return this._includeSMSMMS || item instanceof EmailMessageModel || item instanceof PhoneCallModelImpl || item instanceof AnonymousMessage;
    }
 
    protected void clearFields() {
       for (int i = 0; i < super.MaxEntries; i++) {
          this._msgs[i] = null;
-         this.setDisplayable(((StringBuffer)(new Object())).append(this._hotspotType).append((char)(i + 49)).append("hotspot").toString(), false);
+         this.setDisplayable(this._hotspotType + (char)(i + 49) + "hotspot", false);
       }
 
       if (super._nodes != null) {
@@ -120,7 +123,7 @@ class EmailHandler extends Handler implements GlobalEventListener, VerbFactory {
                      continue;
                   }
 
-                  if (this.isItemValid(item) && item instanceof Object) {
+                  if (this.isItemValid(item) && item instanceof ColumnPaintProvider) {
                      this._msgs[paintedItems] = (ActionProvider)item;
                      ColumnPaintProvider cpp = (ColumnPaintProvider)item;
                      if (this._painter[paintedItems] == null) {
@@ -131,7 +134,7 @@ class EmailHandler extends Handler implements GlobalEventListener, VerbFactory {
 
                      this._painter[paintedItems].clear();
                      cpp.paint(this._painter[paintedItems], null);
-                     this.setDisplayable(((StringBuffer)(new Object())).append(this._hotspotType).append(paintedItems + 1).append("hotspot").toString(), true);
+                     this.setDisplayable(this._hotspotType + (paintedItems + 1) + "hotspot", true);
                      paintedItems++;
                   }
                }

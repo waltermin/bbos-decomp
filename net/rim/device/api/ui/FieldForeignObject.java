@@ -23,7 +23,7 @@ public class FieldForeignObject extends AbstractForeignObject implements FieldCh
 
    public void setChangeListener(FieldChangeListener listener) {
       if (listener != null && this._changeListener != null) {
-         throw new Object("Multiple change listeners not allowed.");
+         throw new IllegalStateException("Multiple change listeners not allowed.");
       }
 
       this._changeListener = listener;
@@ -31,7 +31,7 @@ public class FieldForeignObject extends AbstractForeignObject implements FieldCh
 
    public void setFocusListener(FocusChangeListener listener) {
       if (listener != null && this._focusListener != null) {
-         throw new Object("Multiple focus listeners not allowed.");
+         throw new IllegalStateException("Multiple focus listeners not allowed.");
       }
 
       this._focusListener = listener;

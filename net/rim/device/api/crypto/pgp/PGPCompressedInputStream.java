@@ -1,6 +1,8 @@
 package net.rim.device.api.crypto.pgp;
 
 import java.io.InputStream;
+import net.rim.device.api.compress.ZLibInputStream;
+import net.rim.device.api.crypto.CryptoUnsupportedOperationException;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.io.SharedInputStream;
 
@@ -15,7 +17,7 @@ public final class PGPCompressedInputStream extends PGPInputStream {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   PGPCompressedInputStream(InputStream input, KeyStore keyStore, boolean displayUI) throws PGPEncodingException {
+   PGPCompressedInputStream(InputStream input, KeyStore keyStore, boolean displayUI) throws CryptoUnsupportedOperationException, PGPEncodingException {
       super(input, keyStore);
 
       try {
@@ -27,16 +29,16 @@ public final class PGPCompressedInputStream extends PGPInputStream {
       this._displayUI = displayUI;
       switch (this._compressionAlgorithm) {
          case -1:
-            throw new Object(((StringBuffer)(new Object("Comp:"))).append(this._compressionAlgorithm).toString());
+            throw new CryptoUnsupportedOperationException("Comp:" + this._compressionAlgorithm);
          case 0:
          default:
             this._compressedStream = SharedInputStream.getSharedInputStream(input);
             break;
          case 1:
-            this._compressedStream = SharedInputStream.getSharedInputStream((InputStream)(new Object(input, true)));
+            this._compressedStream = SharedInputStream.getSharedInputStream(new ZLibInputStream(input, true));
             break;
          case 2:
-            this._compressedStream = SharedInputStream.getSharedInputStream((InputStream)(new Object(input, false)));
+            this._compressedStream = SharedInputStream.getSharedInputStream(new ZLibInputStream(input, false));
       }
 
       this.getNextStream();
@@ -65,7 +67,7 @@ public final class PGPCompressedInputStream extends PGPInputStream {
       } else if (buffer != null && offset >= 0 && length >= 0 && buffer.length - length >= offset) {
          return super._input.read(buffer, offset, length);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

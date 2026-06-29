@@ -5,7 +5,7 @@ import net.rim.device.api.util.WeakReferenceUtilities;
 import net.rim.vm.WeakReference;
 
 public class PhoneNumberUtilities {
-   private static WeakReference _workBufferWR = (WeakReference)(new Object(null));
+   private static WeakReference _workBufferWR = new WeakReference(null);
 
    public static String cleanPhoneNumber(String original) {
       if (original == null) {

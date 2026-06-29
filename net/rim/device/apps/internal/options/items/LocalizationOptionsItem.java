@@ -7,6 +7,8 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.ChoiceField;
+import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
 import net.rim.device.apps.api.framework.model.ActionProvider;
@@ -45,9 +47,9 @@ public final class LocalizationOptionsItem extends SaveableMainScreenOptionsList
    @Override
    protected final void populateMainScreen(MainScreen mainScreen) {
       InputContext.getInstance().setIMSwitchEnabled(false);
-      this._localeField = (ChoiceField)(new Object(OptionsResources.getString(1801), this._displayableLocales, 0));
-      this._inputLocaleField = (ChoiceField)(new Object(OptionsResources.getString(1476), this._inputLocales, 0));
-      this._orderField = (ChoiceField)(new Object(OptionsResources.getString(1481), this._displayableOrders, 0));
+      this._localeField = new ObjectChoiceField(OptionsResources.getString(1801), this._displayableLocales, 0);
+      this._inputLocaleField = new ObjectChoiceField(OptionsResources.getString(1476), this._inputLocales, 0);
+      this._orderField = new ObjectChoiceField(OptionsResources.getString(1481), this._displayableOrders, 0);
       boolean addAltEnterShortcutPromtField = false;
       if (Utils.getAvailableInputLocales(true).length > 1) {
          String[] choices = CommonResources.getYesNoArray(0);
@@ -66,10 +68,10 @@ public final class LocalizationOptionsItem extends SaveableMainScreenOptionsList
                ind = 2;
          }
 
-         this._AltEnterShortcutField = (ChoiceField)(new Object(OptionsResources.getString(1987), choices, ind == 2 ? 1 : 0));
+         this._AltEnterShortcutField = new ObjectChoiceField(OptionsResources.getString(1987), choices, ind == 2 ? 1 : 0);
          this._AltEnterShortcutField.setChangeListener(this);
          addAltEnterShortcutPromtField = ind != 2;
-         this._AltEnterShortcutPromptField = (ChoiceField)(new Object(OptionsResources.getString(1989), choices, addAltEnterShortcutPromtField ? ind : 0));
+         this._AltEnterShortcutPromptField = new ObjectChoiceField(OptionsResources.getString(1989), choices, addAltEnterShortcutPromtField ? ind : 0);
          this._AltEnterShortcutPromptField.setChangeListener(this);
       }
 
@@ -115,20 +117,20 @@ public final class LocalizationOptionsItem extends SaveableMainScreenOptionsList
       mainScreen.add(this._inputLocaleField);
       this._vadLanguageSetting = VADLanguageSetting.getInstance();
       if (this._vadLanguageSetting != null) {
-         this._vadLocaleField = (ChoiceField)(new Object(OptionsResources.getString(2027), this._vadLanguageSetting.getSupportedLanguages()));
+         this._vadLocaleField = new ObjectChoiceField(OptionsResources.getString(2027), this._vadLanguageSetting.getSupportedLanguages());
          this._vadLocaleField.setSelectedIndex(this._vadLanguageSetting.getLanguageIndex());
          mainScreen.add(this._vadLocaleField);
       }
 
       mainScreen.add(this._orderField);
       if (this._AltEnterShortcutField != null) {
-         mainScreen.add((Field)(new Object(8388608)));
+         mainScreen.add(new SeparatorField(8388608));
          mainScreen.add(this._AltEnterShortcutField);
          if (addAltEnterShortcutPromtField) {
             mainScreen.add(this._AltEnterShortcutPromptField);
          }
 
-         mainScreen.add((Field)(new Object(8388608)));
+         mainScreen.add(new SeparatorField(8388608));
       }
 
       this._inputLocaleField.setChangeListener(this);
@@ -247,7 +249,7 @@ public final class LocalizationOptionsItem extends SaveableMainScreenOptionsList
          label102:
          try {
             if (messageCoding != -1) {
-               SMSParameters smsp = (SMSParameters)(new Object());
+               SMSParameters smsp = new SMSParameters();
                RadioInternal.getDefaultSMSParameters(smsp);
                if (originalSMSCoding == -1) {
                   originalSMSCoding = smsp.getMessageCoding();
@@ -343,12 +345,12 @@ public final class LocalizationOptionsItem extends SaveableMainScreenOptionsList
 
       long id = ic.getActiveInputMethodID();
       if ((id & 4608) != 0) {
-         this._inputMethodOptionsButton = (ButtonField)(new Object(OptionsResources.getString(1852), 65536));
+         this._inputMethodOptionsButton = new ButtonField(OptionsResources.getString(1852), 65536);
          mainScreen.add(this._inputMethodOptionsButton);
          this._inputMethodOptionsButton.setChangeListener(this);
       } else {
          if (id == 128 || id == 256 || id == 32 || id == 16 || id == 8 || id == 1024 || id == 16384) {
-            this._inputMethodOptionsButton = (ButtonField)(new Object(OptionsResources.getString(1808), 12884967424L));
+            this._inputMethodOptionsButton = new ButtonField(OptionsResources.getString(1808), 12884967424L);
             mainScreen.insert(this._inputMethodOptionsButton, this._inputLocaleField.getIndex() + 1);
             this._inputMethodOptionsButton.setChangeListener(this);
          }

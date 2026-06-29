@@ -35,11 +35,11 @@ public class ThemeEventLogger {
    }
 
    void unexpectedGeneralFailure(Exception e) {
-      this.error(((StringBuffer)(new Object("Gen failure "))).append(e).toString());
+      this.error("Gen failure " + e);
    }
 
    void unexpectedReadFailure(IOException ioe) {
-      this.error(((StringBuffer)(new Object("Read failure "))).append(ioe.getMessage()).toString());
+      this.error("Read failure " + ioe.getMessage());
    }
 
    void namePrefixMatch(String moduleName) {
@@ -87,35 +87,35 @@ public class ThemeEventLogger {
    }
 
    public void descriptorNotFound(String moduleName, String themeName) {
-      this.warning(getModuleString(moduleName, ((StringBuffer)(new Object("Cannot find descriptor "))).append(themeName).toString()));
+      this.warning(getModuleString(moduleName, "Cannot find descriptor " + themeName));
    }
 
    public void candidateParentNotRegistered(String moduleName, String candidateParent) {
-      this.warning(getModuleString(moduleName, ((StringBuffer)(new Object("Parent not registered "))).append(candidateParent).toString()));
+      this.warning(getModuleString(moduleName, "Parent not registered " + candidateParent));
    }
 
    public void candidateParentThirdParty(String moduleName, String candidateParent) {
-      this.warning(getModuleString(moduleName, ((StringBuffer)(new Object("Parent is third-party "))).append(candidateParent).toString()));
+      this.warning(getModuleString(moduleName, "Parent is third-party " + candidateParent));
    }
 
    public void candidateParentNotActivatable(String moduleName, String candidateParent) {
-      this.warning(getModuleString(moduleName, ((StringBuffer)(new Object("Parent not activatable "))).append(candidateParent).toString()));
+      this.warning(getModuleString(moduleName, "Parent not activatable " + candidateParent));
    }
 
    public void themeNameMapped(String moduleName, String fromName, String toName) {
-      this.info(getModuleString(moduleName, ((StringBuffer)(new Object("Mapped from "))).append(fromName).append(" to ").append(toName).toString()));
+      this.info(getModuleString(moduleName, "Mapped from " + fromName + " to " + toName));
    }
 
    public void activationWarning(String moduleName, Exception e) {
-      this.warning(getModuleString(moduleName, ((StringBuffer)(new Object("Activation warning: "))).append(e).toString()));
+      this.warning(getModuleString(moduleName, "Activation warning: " + e));
    }
 
    public void unknownActivationWarning(String moduleName, Exception e) {
-      this.warning(getModuleString(moduleName, ((StringBuffer)(new Object("Unknown activation warning: "))).append(e).toString()));
+      this.warning(getModuleString(moduleName, "Unknown activation warning: " + e));
    }
 
    private static String getModuleString(String moduleName, String s) {
-      return ((StringBuffer)(new Object())).append('(').append(Main.getThemeModuleNameProper(moduleName)).append(')').append(s).toString();
+      return '(' + Main.getThemeModuleNameProper(moduleName) + ')' + s;
    }
 
    private void info(String s) {

@@ -8,13 +8,13 @@ import net.rim.device.api.lbs.gps.GPSDevice;
 import net.rim.device.api.lbs.gps.GPSProvider;
 import net.rim.device.api.synchronization.SyncManager;
 import net.rim.device.api.system.EventLogger;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.CheckboxField;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.apps.api.ui.BooleanChoiceField;
@@ -49,10 +49,10 @@ final class OptionsScreen extends MainScreen {
       this.setTitle(_resources, 9);
       this._mapScreen = mapscreen;
       if (GPSProvider.isGPSSupported()) {
-         this._gpsSettingField = (LabelField)(new Object(_resources.getString(405), 4294967296L));
+         this._gpsSettingField = new LabelField(_resources.getString(405), 4294967296L);
          this.add(this._gpsSettingField);
-         this._gpsDevices = (ObjectChoiceField)(new Object());
-         this._gpsDevices.setLabel(((StringBuffer)(new Object("  "))).append(_resources.getString(328)).toString());
+         this._gpsDevices = new ObjectChoiceField();
+         this._gpsDevices.setLabel("  " + _resources.getString(328));
          boolean var7 = false /* VF: Semaphore variable */;
 
          label49:
@@ -70,53 +70,47 @@ final class OptionsScreen extends MainScreen {
          this.add(this._gpsDevices);
       }
 
-      this._batteryBacklightLevel = (ObjectChoiceField)(new Object());
-      this._batteryBacklightLevel.setLabel(((StringBuffer)(new Object("  "))).append(_resources.getString(410)).toString());
+      this._batteryBacklightLevel = new ObjectChoiceField();
+      this._batteryBacklightLevel.setLabel("  " + _resources.getString(410));
       this.setBatteryLevels();
       this.add(this._batteryBacklightLevel);
-      this.emmptyLine = (LabelField)(new Object(" ", 4294967296L));
+      this.emmptyLine = new LabelField(" ", 4294967296L);
       this.add(this.emmptyLine);
-      this._measurements = (ObjectChoiceField)(new Object());
+      this._measurements = new ObjectChoiceField();
       this._measurements.setLabel(_resources.getString(130));
       this.setMeasurementValues();
       this.add(this._measurements);
       int ix = LBSOptions.getInt(827298922757617815L, 0);
       this._batteryBacklightLevel.setSelectedIndex(ix);
-      this._hideTitlebar = (ObjectChoiceField)(new Object());
+      this._hideTitlebar = new ObjectChoiceField();
       this._hideTitlebar.setLabel(_resources.getString(406));
       this.setHideTitlebar();
       this.add(this._hideTitlebar);
-      this._allowWirelessSync = (BooleanChoiceField)(new Object(CommonResources.getString(9117), 0, LBSOptions.getBoolean(-843435249973501170L, true)));
+      this._allowWirelessSync = new BooleanChoiceField(CommonResources.getString(9117), 0, LBSOptions.getBoolean(-843435249973501170L, true));
       if (SyncManager.getInstance().isOTASyncAvailable(LBSOptions.getInstance(), false)) {
          this.add(this._allowWirelessSync);
       }
 
       this._mapOptions = new MapsOptionsScreen();
       this._mapOptions.populateMainScreen(this);
-      this.emmptyLine = (LabelField)(new Object(" ", 4294967296L));
+      this.emmptyLine = new LabelField(" ", 4294967296L);
       this.add(this.emmptyLine);
-      this._downloadedDataField = (LabelField)(new Object(_resources.getString(195), 4294967296L));
-      this._downloadedDataSize = (LabelField)(new Object(
-         ((StringBuffer)(new Object()))
-            .append(_resources.getString(407))
-            .append(" ")
-            .append(LBSOptions.getInt(8640332184073563572L, 0))
-            .append(_resources.getString(196))
-            .toString(),
-         8589934592L
-      ));
+      this._downloadedDataField = new LabelField(_resources.getString(195), 4294967296L);
+      this._downloadedDataSize = new LabelField(
+         _resources.getString(407) + " " + LBSOptions.getInt(8640332184073563572L, 0) + _resources.getString(196), 8589934592L
+      );
       this.add(this._downloadedDataField);
       this.add(this._downloadedDataSize);
       _deviceSetBeforeBluetoothOptions = null;
       if (LBSOptions.TOGGLE_LAYERS) {
-         this.add((Field)(new Object()));
-         this.add((Field)(new Object("Select Layers to display")));
+         this.add(new SeparatorField());
+         this.add(new LabelField("Select Layers to display"));
          LayerOptions layerOps = LayerOptions.getInstance();
          String[] list = layerOps.getLayerGroupNames();
-         this._visibleLayerGroups = new Object[list.length];
+         this._visibleLayerGroups = new CheckboxField[list.length];
 
          for (int i = 0; i < list.length; i++) {
-            this.add(this._visibleLayerGroups[i] = (CheckboxField)(new Object(list[i].toString(), layerOps.isGroupVisible(i))));
+            this.add(this._visibleLayerGroups[i] = new CheckboxField(list[i].toString(), layerOps.isGroupVisible(i)));
          }
       }
    }
@@ -134,29 +128,21 @@ final class OptionsScreen extends MainScreen {
    }
 
    private final void setMeasurementValues() {
-      String[] choices = new Object[2];
-      choices[0] = _resources.getString(131);
-      choices[1] = _resources.getString(132);
+      String[] choices = new String[]{_resources.getString(131), _resources.getString(132)};
       this._measurements.setChoices(choices);
       int ix = LBSOptions.getInt(-6817208986109478597L, 2) - 1;
       this._measurements.setSelectedIndex(ix);
    }
 
    private final void setBatteryLevels() {
-      String[] choices = new Object[4];
-      choices[0] = _resources.getString(411);
-      choices[1] = _resources.getString(412);
-      choices[2] = _resources.getString(413);
-      choices[3] = _resources.getString(414);
+      String[] choices = new String[]{_resources.getString(411), _resources.getString(412), _resources.getString(413), _resources.getString(414)};
       this._batteryBacklightLevel.setChoices(choices);
       int ix = LBSOptions.getInt(827298922757617815L, 0);
       this._batteryBacklightLevel.setSelectedIndex(ix);
    }
 
    private final void setHideTitlebar() {
-      String[] choices = new Object[2];
-      choices[0] = _resources.getString(398);
-      choices[1] = _resources.getString(399);
+      String[] choices = new String[]{_resources.getString(398), _resources.getString(399)};
       this._hideTitlebar.setChoices(choices);
       boolean bHideTitlebar = LBSOptions.getBoolean(5204834541750260038L, true);
       if (bHideTitlebar) {
@@ -222,14 +208,7 @@ final class OptionsScreen extends MainScreen {
       int downloaded = LBSOptions.getInt(8640332184073563572L, 0);
       if (this._downloadedDataSize != null) {
          this._downloadedDataSize
-            .setText(
-               ((StringBuffer)(new Object()))
-                  .append(_resources.getString(407))
-                  .append(" ")
-                  .append((int)(downloaded / 1149239296 * 1092616192) / 1092616192)
-                  .append(_resources.getString(196))
-                  .toString()
-            );
+            .setText(_resources.getString(407) + " " + (int)(downloaded / 1149239296 * 1092616192) / 1092616192 + _resources.getString(196));
       } else {
          EventLogger.logEvent(LBSApplication.UID, "data size field is null".getBytes(), 0);
       }
@@ -282,7 +261,7 @@ final class OptionsScreen extends MainScreen {
          if (this._gpsDevices.isDirty() && !currentDevice.equals(device)) {
             int deviceState = currentDevice.getDeviceState();
             if (deviceState == 2 || deviceState == 1 || deviceState == 8) {
-               String message = MessageFormat.format(LBSResources.getString(67), new Object[]{currentDevice.toString()});
+               String message = MessageFormat.format(LBSResources.getString(67), new String[]{currentDevice.toString()});
                Dialog.alert(message);
                this._mapScreen.stopTracking();
             }

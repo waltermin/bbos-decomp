@@ -18,6 +18,7 @@ import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.component.TextField;
 import net.rim.device.api.util.MathUtilities;
 import net.rim.device.api.util.StringMatch;
 import net.rim.device.apps.internal.browser.html.HTMLTextAreaField;
@@ -155,7 +156,7 @@ public class TextFlowManager extends Manager {
       super(validateStyle(style));
       this._currentZoomValue = ZOOM_VALUES[0];
       this._maxZoomValue = ZOOM_VALUES[ZOOM_VALUES.length - 1];
-      this._borderPaint = (XYRect)(new Object());
+      this._borderPaint = new XYRect();
       this._painter = new TextFlowCell$Painter();
       this._leftObjects = new TextFlowCell$ExtentStack();
       this._rightObjects = new TextFlowCell$ExtentStack();
@@ -163,7 +164,7 @@ public class TextFlowManager extends Manager {
       this._rightObjects2 = new TextFlowCell$ExtentStack();
       this._selectionCellBegin = Integer.MAX_VALUE;
       this._selectionCellEnd = Integer.MAX_VALUE;
-      this._cellStack = (Stack)(new Object());
+      this._cellStack = new Stack();
       this._focusField = new TextFlowManager$FocusField(this);
       this._visibleAmount = Font.getDefault().getHeight();
       this._layoutActive = true;
@@ -178,11 +179,11 @@ public class TextFlowManager extends Manager {
       this._narrowViewItem = new TextFlowManager$TextFlowMenuItem(this, 854, 139266, 560);
       this._pendingFocusIndex = -1;
       this._rollAmount = Integer.MAX_VALUE;
-      this._rect = (XYRect)(new Object());
-      this._visibleRect = (XYRect)(new Object());
+      this._rect = new XYRect();
+      this._visibleRect = new XYRect();
       this._setScroll = Integer.MAX_VALUE;
       this._currentScroll = 0;
-      this._cursorFocusRect = (XYRect)(new Object());
+      this._cursorFocusRect = new XYRect();
       this._scrollAmount = Font.getDefault().getHeight() * (Trackball.isSupported() ? 1 : 2);
       this._hoverRunnable = new TextFlowManager$HoverRunnable(this);
       this._hoverRunnableId = -1;
@@ -300,7 +301,7 @@ public class TextFlowManager extends Manager {
 
       for (int i = mgr.getFieldCount() - 1; i >= 0; i--) {
          Field f = mgr.getField(i);
-         if (f instanceof Object) {
+         if (f instanceof Manager) {
             topMost = this.recursiveSetWideViewMode((Manager)f, value);
          }
       }
@@ -498,7 +499,7 @@ public class TextFlowManager extends Manager {
       } else {
          if (_oneDNavigationMode && (status & 536870912) != 0 && dx != 0 && dy == 0) {
             Field f = this.getLeafFieldWithFocus();
-            if (!(f instanceof Object)) {
+            if (!(f instanceof TextField)) {
                Screen screen = this.getScreen();
                if (screen != null) {
                   screen.scroll(dx > 0 ? 512 : 256);
@@ -929,12 +930,12 @@ public class TextFlowManager extends Manager {
 
    private int findFirstNonNullField(int low, int mid, int high) {
       int offset = mid;
-      if (this._textFlowData.getRegionObject(offset) instanceof Object) {
+      if (this._textFlowData.getRegionObject(offset) instanceof Field) {
          return offset;
       }
 
       while (low < offset) {
-         if (this._textFlowData.getRegionObject(--offset) instanceof Object) {
+         if (this._textFlowData.getRegionObject(--offset) instanceof Field) {
             return offset;
          }
       }
@@ -942,7 +943,7 @@ public class TextFlowManager extends Manager {
       offset = mid;
 
       while (offset < high) {
-         if (this._textFlowData.getRegionObject(++offset) instanceof Object) {
+         if (this._textFlowData.getRegionObject(++offset) instanceof Field) {
             return offset;
          }
       }
@@ -1380,7 +1381,7 @@ public class TextFlowManager extends Manager {
          regionObj = this._textFlowData.getRegionObject(regionIndex + 1);
       }
 
-      return (Field)(regionObj != null && regionObj instanceof Object ? regionObj : this._focusField);
+      return regionObj != null && regionObj instanceof Field ? (Field)regionObj : this._focusField;
    }
 
    private void getFocusRectFromIndex(int focusIndex, XYRect rect) {
@@ -2097,8 +2098,8 @@ public class TextFlowManager extends Manager {
          int fieldTop = field.getTop();
          int fieldLeft = field.getLeft();
          if (this._scalingBitmap == null || this._scalingBitmap.getWidth() < fieldWidth || this._scalingBitmap.getHeight() < fieldHeight) {
-            this._scalingBitmap = (Bitmap)(new Object(Math.max(fieldWidth, Display.getWidth()), Math.max(fieldHeight, 40)));
-            this._scalingGraphics = (Graphics)(new Object(this._scalingBitmap));
+            this._scalingBitmap = new Bitmap(Math.max(fieldWidth, Display.getWidth()), Math.max(fieldHeight, 40));
+            this._scalingGraphics = new Graphics(this._scalingBitmap);
             this._tempx = new int[4];
             this._tempy = new int[4];
          }

@@ -9,7 +9,7 @@ final class DomainOverrides$DomainOverride {
    private String _authority;
    private String _path;
 
-   public DomainOverrides$DomainOverride(String configUID, int configType, String authority, String path) {
+   public DomainOverrides$DomainOverride(String configUID, int configType, String authority, String path) throws Exception {
       String domainName = authority;
       if (authority.startsWith(".")) {
          domainName = authority.substring(1);
@@ -21,7 +21,7 @@ final class DomainOverrides$DomainOverride {
          this._authority = StringUtilities.toLowerCase(authority, 1701707776);
          this._path = path;
       } else {
-         throw new Object();
+         throw new Exception();
       }
    }
 

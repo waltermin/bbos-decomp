@@ -20,7 +20,7 @@ public class ResourceContext {
 
    public void set(Object key, Object value) {
       if (this._table == null) {
-         this._table = (Hashtable)(new Object());
+         this._table = new Hashtable();
       }
 
       this._table.put(key, value);

@@ -10,13 +10,7 @@ public class ElementReference {
 
    public ElementReference(AbstractElement elementSource, String targetName) {
       if (elementSource == null || targetName == null) {
-         new Object(
-            ((StringBuffer)(new Object("ElementReference cannot be created with element=")))
-               .append(elementSource)
-               .append(" with name ")
-               .append(targetName)
-               .toString()
-         );
+         new NullPointerException("ElementReference cannot be created with element=" + elementSource + " with name " + targetName);
       }
 
       this._elementSource = elementSource;
@@ -43,7 +37,7 @@ public class ElementReference {
 
    @Override
    public String toString() {
-      StringBuffer buf = (StringBuffer)(new Object(ProvisioningHelper.getClassName(this)));
+      StringBuffer buf = new StringBuffer(ProvisioningHelper.getClassName(this));
       buf.append("[targetName=");
       buf.append(this._targetName);
       buf.append(']');

@@ -17,7 +17,7 @@ class TimeModel implements RIMModel, PaintProvider, ConversionProvider {
    private int _format;
    public static final int TIMESTAMP_FORMAT = 1;
    public static final int DURATION_FORMAT = 2;
-   private static WeakReference _bufferWR = (WeakReference)(new Object(null));
+   private static WeakReference _bufferWR = new WeakReference(null);
 
    @Override
    public int paint(Graphics g, int x, int y, int width, int height, Object context) {
@@ -62,7 +62,7 @@ class TimeModel implements RIMModel, PaintProvider, ConversionProvider {
          return true;
       }
 
-      if (!ContextObject.getFlag(context, 19) && target instanceof Object) {
+      if (!ContextObject.getFlag(context, 19) && target instanceof StringBuffer) {
          StringBuffer result = (StringBuffer)target;
          result.setLength(0);
          StringBuffer _buffer = WeakReferenceUtilities.getStringBuffer(_bufferWR);

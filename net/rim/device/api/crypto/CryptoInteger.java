@@ -15,7 +15,7 @@ public class CryptoInteger {
 
    public CryptoInteger(int value) {
       if (value < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._value = this.intToByteArray(value);
@@ -32,13 +32,13 @@ public class CryptoInteger {
          System.arraycopy(value, offset, this._value, 0, length);
          this._flags = 0;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    public CryptoInteger(String value) {
       if (value == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int length = value.length();
@@ -54,7 +54,7 @@ public class CryptoInteger {
                c = (char)(c - '7');
             } else {
                if (c < 'a' || c > 'f') {
-                  throw new Object();
+                  throw new IllegalArgumentException();
                }
 
                c = (char)(c - 'W');
@@ -66,13 +66,13 @@ public class CryptoInteger {
 
          this._flags = 0;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    public CryptoInteger(CryptoInteger other) {
       if (other == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._value = Arrays.copy(other._value);
@@ -94,7 +94,7 @@ public class CryptoInteger {
       try {
          return CryptoByteArrayArithmetic.compare(this._value, other._value);
       } finally {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -122,7 +122,7 @@ public class CryptoInteger {
             }
          }
       } finally {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -132,7 +132,7 @@ public class CryptoInteger {
 
    public void increment(CryptoInteger a, CryptoInteger modulus) {
       if (a == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._flags = 0;
@@ -161,7 +161,7 @@ public class CryptoInteger {
 
    public void decrement(CryptoInteger a, CryptoInteger modulus) {
       if (a == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._flags = 0;
@@ -207,7 +207,7 @@ public class CryptoInteger {
          byte[] value = new byte[modulus._value.length - modulus._offset];
          return new CryptoInteger(value);
       } finally {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -216,7 +216,7 @@ public class CryptoInteger {
          a.updateOffset();
          return this.oneParamHelper(modulus);
       } finally {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -335,7 +335,7 @@ public class CryptoInteger {
          );
          return new CryptoInteger(value);
       } finally {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -380,7 +380,7 @@ public class CryptoInteger {
 
    public byte[] toByteArray(int length) {
       if (length < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          byte[] value = new byte[length];
          int diffLength = length - this._value.length;
@@ -397,7 +397,7 @@ public class CryptoInteger {
    @Override
    public String toString() {
       this.updateOffset();
-      StringBuffer sb = (StringBuffer)(new Object(this._value.length - this._offset << 1));
+      StringBuffer sb = new StringBuffer(this._value.length - this._offset << 1);
 
       for (int i = this._offset; i < this._value.length; i++) {
          sb.append(NumberUtilities.intToHexDigit(this._value[i] >> 4));
@@ -409,10 +409,10 @@ public class CryptoInteger {
 
    public String toString(int numberOfBytes) {
       if (numberOfBytes < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
-      StringBuffer sb = (StringBuffer)(new Object(numberOfBytes << 1));
+      StringBuffer sb = new StringBuffer(numberOfBytes << 1);
 
       while (numberOfBytes > this._value.length) {
          sb.append("00");

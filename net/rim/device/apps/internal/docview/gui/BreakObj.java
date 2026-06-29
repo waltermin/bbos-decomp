@@ -5,7 +5,7 @@ class BreakObj {
 
    protected BreakObj(int charOffset) {
       if (charOffset < 0) {
-         throw new Object("Negative character offset.");
+         throw new IllegalArgumentException("Negative character offset.");
       }
 
       this._charOffset = charOffset;

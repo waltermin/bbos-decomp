@@ -66,7 +66,7 @@ public final class Transport extends StreamDatagramTransportBase implements Simu
       }
 
       if (props.controlCode == 7) {
-         throw new Object("Simultcp: passToListeners: fledge-Java mismatch");
+         throw new RuntimeException("Simultcp: passToListeners: fledge-Java mismatch");
       } else {
          return false;
       }

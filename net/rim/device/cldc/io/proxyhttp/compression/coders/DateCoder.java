@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.proxyhttp.compression.coders;
 
+import java.io.EOFException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Calendar;
@@ -11,7 +12,7 @@ import net.rim.device.api.io.http.HttpDateParser;
 import net.rim.device.api.system.ApplicationRegistry;
 
 public final class DateCoder implements Coder {
-   private static SimpleDateFormat _dateFormat = (SimpleDateFormat)(new Object("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.get(1701707776)));
+   private static SimpleDateFormat _dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.get(1701707776));
    private static final long ID = -325877882800875996L;
 
    public static final DateCoder getInstance() {
@@ -36,10 +37,10 @@ public final class DateCoder implements Coder {
    }
 
    @Override
-   public final String decode(InputStream ins) {
+   public final String decode(InputStream ins) throws EOFException {
       int firstByte = ins.read();
       if (firstByte == -1) {
-         throw new Object();
+         throw new EOFException();
       }
 
       long value = 0;
@@ -54,7 +55,7 @@ public final class DateCoder implements Coder {
             value <<= 8;
             nextByte = ins.read();
             if (nextByte == -1) {
-               throw new Object();
+               throw new EOFException();
             }
 
             value += nextByte;
@@ -73,7 +74,7 @@ public final class DateCoder implements Coder {
 
    private static final String decodeDate(long dateValue) {
       synchronized (_dateFormat) {
-         Date date = (Date)(new Object(dateValue));
+         Date date = new Date(dateValue);
          Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
          calendar.setTime(date);
          return _dateFormat.format(calendar);

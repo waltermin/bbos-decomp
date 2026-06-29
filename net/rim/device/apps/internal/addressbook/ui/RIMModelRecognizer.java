@@ -1,7 +1,9 @@
 package net.rim.device.apps.internal.addressbook.ui;
 
+import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.framework.model.Recognizer;
 import net.rim.device.apps.api.framework.registration.RecognizerRepository;
+import net.rim.device.apps.internal.addressbook.lookup.RequestModel;
 
 final class RIMModelRecognizer implements Recognizer {
    @Override
@@ -10,7 +12,7 @@ final class RIMModelRecognizer implements Recognizer {
       if (groupRecognizer != null && groupRecognizer.recognize(object)) {
          return false;
       } else {
-         return object instanceof Object ? false : object instanceof Object;
+         return object instanceof RequestModel ? false : object instanceof AddressCardModel;
       }
    }
 }

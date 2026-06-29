@@ -26,7 +26,7 @@ class PIMPresentationElementField$PIMField extends SelfDrawingListField {
 
    @Override
    public void drawListRow(ListField listField, Graphics graphics, int index, int y, int width) {
-      if (!(this._pimObject instanceof Object)) {
+      if (!(this._pimObject instanceof PaintProvider)) {
          String var7 = this._unsupportedLabel;
          graphics.drawText(var7, 0, y);
       } else {
@@ -43,10 +43,10 @@ class PIMPresentationElementField$PIMField extends SelfDrawingListField {
    @Override
    protected void makeContextMenu(ContextMenu contextMenu) {
       super.makeContextMenu(contextMenu);
-      if (this._pimObject instanceof Object) {
+      if (this._pimObject instanceof VerbProvider) {
          VerbProvider verbProvider = (VerbProvider)this._pimObject;
-         ContextObject context = (ContextObject)(new Object(45, 54));
-         Verb[] verbs = new Object[0];
+         ContextObject context = new ContextObject(45, 54);
+         Verb[] verbs = new Verb[0];
          Verb defaultVerb = verbProvider.getVerbs(context, verbs);
          if (verbs != null) {
             for (int idx = 0; idx < verbs.length; idx++) {
@@ -58,7 +58,7 @@ class PIMPresentationElementField$PIMField extends SelfDrawingListField {
                   priority = 15;
                }
 
-               VerbMenuItem verbMenuItem = (VerbMenuItem)(new Object(null, verb.getOrdering(), priority, verb, null));
+               VerbMenuItem verbMenuItem = new VerbMenuItem(null, verb.getOrdering(), priority, verb, null);
                contextMenu.addItem(verbMenuItem);
                if (verb == defaultVerb) {
                   contextMenu.setDefaultItem(verbMenuItem);
@@ -67,7 +67,7 @@ class PIMPresentationElementField$PIMField extends SelfDrawingListField {
          }
 
          if (this._deleteVerb != null) {
-            VerbMenuItem verbMenuItem = (VerbMenuItem)(new Object(null, this._deleteVerb.getOrdering(), 15, this._deleteVerb, null));
+            VerbMenuItem verbMenuItem = new VerbMenuItem(null, this._deleteVerb.getOrdering(), 15, this._deleteVerb, null);
             contextMenu.addItem(verbMenuItem);
          }
       }

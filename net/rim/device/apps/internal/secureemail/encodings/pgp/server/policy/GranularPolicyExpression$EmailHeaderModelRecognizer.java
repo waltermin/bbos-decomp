@@ -12,7 +12,7 @@ class GranularPolicyExpression$EmailHeaderModelRecognizer implements Recognizer 
 
    @Override
    public boolean recognize(Object o) {
-      if (!(o instanceof Object)) {
+      if (!(o instanceof EmailHeaderModel)) {
          return false;
       }
 

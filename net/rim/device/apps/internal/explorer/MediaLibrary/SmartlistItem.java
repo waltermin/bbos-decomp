@@ -1,6 +1,7 @@
 package net.rim.device.apps.internal.explorer.MediaLibrary;
 
 import java.io.DataOutputStream;
+import java.io.IOException;
 import javax.microedition.io.Connector;
 import javax.microedition.io.StreamConnection;
 import javax.microedition.io.file.FileConnection;
@@ -23,9 +24,9 @@ public final class SmartlistItem implements MediaInfo, KeyProvider, PaintProvide
    String _location;
    String[] _keywords;
    String[] _prefixedKeywords;
-   String[] _artists = new Object[0];
-   String[] _albums = new Object[0];
-   String[] _genres = new Object[0];
+   String[] _artists = new String[0];
+   String[] _albums = new String[0];
+   String[] _genres = new String[0];
    String _unknown;
    private static Bitmap _image = Bitmap.getBitmapResource("lightbulbsmall.png");
    private static final int VERSION = 1;
@@ -79,7 +80,7 @@ public final class SmartlistItem implements MediaInfo, KeyProvider, PaintProvide
       // 1c: aload 0
       // 1d: invokevirtual net/rim/device/apps/internal/explorer/MediaLibrary/SmartlistItem.getLocation ()Ljava/lang/String;
       // 20: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 23: checkcast java/lang/Object
+      // 23: checkcast javax/microedition/io/StreamConnection
       // 26: astore 1
       // 27: aload 1
       // 28: invokeinterface javax/microedition/io/InputConnection.openDataInputStream ()Ljava/io/DataInputStream; 1
@@ -88,7 +89,7 @@ public final class SmartlistItem implements MediaInfo, KeyProvider, PaintProvide
       // 2f: invokevirtual java/io/DataInputStream.readByte ()B
       // 32: bipush 1
       // 33: if_icmpeq 41
-      // 36: new java/lang/Object
+      // 36: new java/io/IOException
       // 39: dup
       // 3a: ldc_w "version of playlist file is unsupported"
       // 3d: invokespecial java/io/IOException.<init> (Ljava/lang/String;)V
@@ -117,7 +118,7 @@ public final class SmartlistItem implements MediaInfo, KeyProvider, PaintProvide
       // 91: invokevirtual java/io/DataInputStream.readFully ([B)V
       // 94: aload 0
       // 95: iload 5
-      // 97: new java/lang/Object
+      // 97: new java/lang/String
       // 9a: dup
       // 9b: aload 4
       // 9d: ldc_w "UTF-8"
@@ -247,7 +248,7 @@ public final class SmartlistItem implements MediaInfo, KeyProvider, PaintProvide
       MediaInfoCollection tracks = new MediaInfoCollection();
       MediaInfoCollection trackc = MediaLibrary.getInstance().getTrackCollection();
       KeywordFilterList list = trackc.getKeywordFilterList();
-      String[] criteria = new Object[0];
+      String[] criteria = new String[0];
       String temp = null;
       int id = 0;
       if (this._artists.length == 0 && this._albums.length == 0 && this._genres.length == 0) {
@@ -333,7 +334,7 @@ public final class SmartlistItem implements MediaInfo, KeyProvider, PaintProvide
       }
 
       trackc.addCriteria(null, null);
-      System.out.println(((StringBuffer)(new Object("Creating playlist took: "))).append(System.currentTimeMillis() - mills).append("ms").toString());
+      System.out.println("Creating playlist took: " + (System.currentTimeMillis() - mills) + "ms");
       return tracks;
    }
 
@@ -347,9 +348,9 @@ public final class SmartlistItem implements MediaInfo, KeyProvider, PaintProvide
       try {
          try {
             var21 = true;
-            StreamConnection ioe = Connector.open(this.getLocation(), 3);
-            if (!(ioe instanceof Object)) {
-               throw new Object(((StringBuffer)(new Object("Smartlist "))).append(this.getName()).append(" cannot be saved").toString());
+            StreamConnection ioe = (StreamConnection)Connector.open(this.getLocation(), 3);
+            if (!(ioe instanceof FileConnection)) {
+               throw new IOException("Smartlist " + this.getName() + " cannot be saved");
             }
 
             fc = (FileConnection)ioe;
@@ -499,7 +500,7 @@ public final class SmartlistItem implements MediaInfo, KeyProvider, PaintProvide
       if (name != null) {
          this._name = name.trim();
          this._keywords = StringUtilities.stringToKeywords(this._name);
-         this._prefixedKeywords = new Object[1];
+         this._prefixedKeywords = new String[1];
          this._prefixedKeywords[0] = FilterConstants.SMARTLIST_PREFIX;
          Arrays.append(this._keywords, this._prefixedKeywords);
       }

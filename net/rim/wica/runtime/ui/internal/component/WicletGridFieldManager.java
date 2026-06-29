@@ -51,7 +51,7 @@ final class WicletGridFieldManager extends Manager implements View {
       this._maxX++;
       this._maxY++;
       this._heights = new int[this._maxY];
-      this._grid = new Object[this._maxX][this._maxY];
+      this._grid = new Field[this._maxX][this._maxY];
 
       for (int var10 = 0; var10 < numFields; var10++) {
          Field field = this.getField(var10);
@@ -67,7 +67,7 @@ final class WicletGridFieldManager extends Manager implements View {
    }
 
    private final void resetArrays() {
-      this._grid = (Object[][])null;
+      this._grid = (Field[][])null;
       this._heights = null;
    }
 

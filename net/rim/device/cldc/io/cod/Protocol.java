@@ -3,11 +3,13 @@ package net.rim.device.cldc.io.cod;
 import com.sun.cldc.io.ConnectionBaseInterface;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
 import javax.microedition.io.Connection;
 import javax.microedition.io.HttpConnection;
+import net.rim.device.api.compress.GZIPInputStream;
 import net.rim.device.api.io.MIMETypeAssociations;
 import net.rim.device.api.system.CodeModuleManager;
 import net.rim.device.api.system.ControlledAccess;
@@ -38,18 +40,18 @@ public final class Protocol implements ConnectionBaseInterface, HttpConnection {
       }
 
       this._name = name;
-      StringTokenizer tokenizer = (StringTokenizer)(new Object(name, "/"));
+      StringTokenizer tokenizer = new StringTokenizer(name, "/");
       String module = tokenizer.nextToken();
       this._file = tokenizer.nextToken(";?#");
       if (module == null || this._file == null || this._file.equals("/")) {
          this._responseCode = 404;
-         this._pipe = (Pipe)(new Object(new byte[0], 0, false));
+         this._pipe = new Pipe(new byte[0], 0, false);
          return this;
       }
 
       if (module == null) {
          this._type = "text/html";
-         StringBuffer page = (StringBuffer)(new Object("<html><body>"));
+         StringBuffer page = new StringBuffer("<html><body>");
          int[] handles = CodeModuleManager.getModuleHandles();
          int count = handles.length;
 
@@ -60,7 +62,7 @@ public final class Protocol implements ConnectionBaseInterface, HttpConnection {
 
          page.append("</body></html>");
          byte[] data = page.toString().getBytes();
-         this._pipe = (Pipe)(new Object(data, data.length, false));
+         this._pipe = new Pipe(data, data.length, false);
          return this;
       } else if (this._file != null && !this._file.equals("/")) {
          if (this._file.startsWith("/")) {
@@ -71,20 +73,20 @@ public final class Protocol implements ConnectionBaseInterface, HttpConnection {
          if (resource != null) {
             byte[][] data = this.getResourceSegments(module, this._file);
             if (data == null) {
-               data = this.getResourceSegments(module, ((StringBuffer)(new Object())).append(this._file).append(".gz").toString());
+               data = this.getResourceSegments(module, this._file + ".gz");
                this._gzipped = data != null;
             }
 
             if (data != null) {
-               this._pipe = (Pipe)(new Object(data, false));
+               this._pipe = new Pipe(data, false);
             } else {
                byte[] singleArrayData = resource.getResource(this._file);
                if (singleArrayData != null) {
-                  this._pipe = (Pipe)(new Object(singleArrayData, singleArrayData.length, false));
+                  this._pipe = new Pipe(singleArrayData, singleArrayData.length, false);
                } else {
-                  singleArrayData = resource.getResource(((StringBuffer)(new Object())).append(this._file).append(".gz").toString());
+                  singleArrayData = resource.getResource(this._file + ".gz");
                   if (singleArrayData != null) {
-                     this._pipe = (Pipe)(new Object(singleArrayData, singleArrayData.length, false));
+                     this._pipe = new Pipe(singleArrayData, singleArrayData.length, false);
                      this._gzipped = true;
                   }
                }
@@ -93,7 +95,7 @@ public final class Protocol implements ConnectionBaseInterface, HttpConnection {
 
          if (this._pipe == null) {
             this._responseCode = 404;
-            this._pipe = (Pipe)(new Object(new byte[0], 0, false));
+            this._pipe = new Pipe(new byte[0], 0, false);
             return this;
          } else {
             int dot = this._file.lastIndexOf(46);
@@ -108,7 +110,7 @@ public final class Protocol implements ConnectionBaseInterface, HttpConnection {
          }
       } else {
          this._type = "text/html";
-         StringBuffer page = (StringBuffer)(new Object("<html><body>"));
+         StringBuffer page = new StringBuffer("<html><body>");
          Resource resources = Resource$Internal.getResourceClass(module);
          Enumeration enumeration = resources.getResourceKeys();
          if (enumeration != null) {
@@ -126,7 +128,7 @@ public final class Protocol implements ConnectionBaseInterface, HttpConnection {
 
          page.append("</body></html>");
          byte[] data = page.toString().getBytes();
-         this._pipe = (Pipe)(new Object(data, data.length, false));
+         this._pipe = new Pipe(data, data.length, false);
          return this;
       }
    }
@@ -149,22 +151,22 @@ public final class Protocol implements ConnectionBaseInterface, HttpConnection {
    @Override
    public final InputStream openInputStream() {
       InputStream is = this._pipe.getInputStream();
-      return (InputStream)(this._gzipped ? new Object(is) : is);
+      return this._gzipped ? new GZIPInputStream(is) : is;
    }
 
    @Override
    public final DataInputStream openDataInputStream() {
-      return (DataInputStream)(new Object(this.openInputStream()));
+      return new DataInputStream(this.openInputStream());
    }
 
    @Override
-   public final OutputStream openOutputStream() {
-      throw new Object("Read only");
+   public final OutputStream openOutputStream() throws IOException {
+      throw new IOException("Read only");
    }
 
    @Override
-   public final DataOutputStream openDataOutputStream() {
-      throw new Object("Read only");
+   public final DataOutputStream openDataOutputStream() throws IOException {
+      throw new IOException("Read only");
    }
 
    @Override
@@ -174,7 +176,7 @@ public final class Protocol implements ConnectionBaseInterface, HttpConnection {
 
    @Override
    public final String getURL() {
-      return ((StringBuffer)(new Object("cod:"))).append(this._name).toString();
+      return "cod:" + this._name;
    }
 
    @Override
@@ -280,7 +282,7 @@ public final class Protocol implements ConnectionBaseInterface, HttpConnection {
       int moduleHandle = CodeModuleManager.getModuleHandle(module);
       byte[][] result = new byte[0][];
       int offset = 0;
-      StringBuffer nameBuffer = (StringBuffer)(new Object());
+      StringBuffer nameBuffer = new StringBuffer();
 
       while (true) {
          nameBuffer.setLength(0);

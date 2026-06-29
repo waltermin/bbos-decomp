@@ -9,7 +9,7 @@ import org.xml.sax.Attributes;
 public final class MessageElement extends AbstractElement {
    private AlertElement _alert;
    private int _messageCode;
-   private Vector _fields = (Vector)(new Object());
+   private Vector _fields = new Vector();
    private MessageElementReference _prototype;
    private ScriptElementReference _script;
    private boolean _secure;
@@ -125,7 +125,7 @@ public final class MessageElement extends AbstractElement {
 
    @Override
    public final String toString() {
-      StringBuffer buf = (StringBuffer)(new Object(120));
+      StringBuffer buf = new StringBuffer(120);
       buf.append("MessageElement[name=")
          .append(super._name)
          .append(",prototype=")
@@ -154,7 +154,7 @@ public final class MessageElement extends AbstractElement {
    }
 
    private final Vector getPrototypeFieldElementHierarchy() {
-      Vector fieldHierarchy = (Vector)(new Object());
+      Vector fieldHierarchy = new Vector();
       this.buildFieldHierarchy(fieldHierarchy, this);
       return fieldHierarchy;
    }

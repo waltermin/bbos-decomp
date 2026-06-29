@@ -16,7 +16,7 @@ class BookmarksScreen$MyIconCollection extends IconCollection {
 
    public void addImage(EncodedImage image) {
       if (this._images == null) {
-         this._images = new Object[0];
+         this._images = new EncodedImage[0];
       }
 
       Arrays.add(this._images, image);

@@ -5,7 +5,7 @@ import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.ui.container.InPlaceScreen;
 
 final class DurationField$DurationInPlaceScreen extends InPlaceScreen {
-   private XYRect _rect = (XYRect)(new Object());
+   private XYRect _rect = new XYRect();
 
    public DurationField$DurationInPlaceScreen(DurationField original, DurationField fake, long style) {
       super(original, fake, style | 1);

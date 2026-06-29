@@ -1,12 +1,13 @@
 package net.rim.device.apps.internal.keystore.browser.certificate;
 
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 import java.io.OutputStream;
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.CertificateFactory;
 import net.rim.device.api.crypto.certificate.CertificateUtilities;
 import net.rim.device.api.crypto.keystore.DeviceKeyStore;
 import net.rim.device.api.crypto.keystore.KeyStore;
+import net.rim.device.api.io.Base64InputStream;
 import net.rim.device.api.io.Base64OutputStream;
 import net.rim.device.apps.internal.api.crypto.CryptoCommonResources;
 import net.rim.device.apps.internal.api.crypto.certificate.CertificateAttachmentModel;
@@ -49,7 +50,7 @@ public class X509WTLSCertificateAttachmentModel extends CertificateAttachmentMod
    public void parseCertificatesAndPrivateKeys() {
       Certificate[] certificates = null;
       if (!this.isMoreAvailable()) {
-         String fileName = (String)(new Object(this.getNameBytes()));
+         String fileName = new String(this.getNameBytes());
          if (isCertificateFormat(fileName)) {
             certificates = this.getStandardCertificates();
             this._fileName = fileName;
@@ -64,7 +65,7 @@ public class X509WTLSCertificateAttachmentModel extends CertificateAttachmentMod
 
    public Certificate[] getStandardCertificates() {
       Certificate cert = CertificateUtilities.readCertificateFile(null, this.getData());
-      return cert != null ? new Object[]{cert} : null;
+      return cert != null ? new Certificate[]{cert} : null;
    }
 
    private Certificate[] getEntrustKeyCertificates() {
@@ -75,9 +76,9 @@ public class X509WTLSCertificateAttachmentModel extends CertificateAttachmentMod
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:174)
       //
       // Bytecode:
-      // 000: new java/lang/Object
+      // 000: new net/rim/device/api/io/LineReader
       // 003: dup
-      // 004: new java/lang/Object
+      // 004: new java/io/ByteArrayInputStream
       // 007: dup
       // 008: aload 0
       // 009: invokevirtual net/rim/device/apps/internal/api/crypto/certificate/CertificateAttachmentModel.getData ()[B
@@ -218,7 +219,7 @@ public class X509WTLSCertificateAttachmentModel extends CertificateAttachmentMod
 
    private void appendCertificate(Certificate[] certificates, byte[] newCertificate) {
       try {
-         Certificate certificate = CertificateFactory.getInstance("X509", (InputStream)(new Object((InputStream)(new Object(newCertificate)))));
+         Certificate certificate = CertificateFactory.getInstance("X509", new Base64InputStream(new ByteArrayInputStream(newCertificate)));
          Array.resize(certificates, certificates.length + 1);
          certificates[certificates.length - 1] = certificate;
       } finally {
@@ -239,7 +240,7 @@ public class X509WTLSCertificateAttachmentModel extends CertificateAttachmentMod
    @Override
    protected boolean writeToOutputStream(OutputStream outputStream) {
       try {
-         Base64OutputStream base64 = (Base64OutputStream)(new Object(outputStream, true, true));
+         Base64OutputStream base64 = new Base64OutputStream(outputStream, true, true);
          base64.write(this.getData());
          base64.close();
          return true;

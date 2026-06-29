@@ -52,22 +52,22 @@ final class PartInfo implements Persistable, BackupProvider, RestoreProvider {
    @Override
    public final void retrieveData(DataBuffer buffer, int versionID) {
       if (ConverterUtilities.getType(buffer) != 6) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._state = (byte)ConverterUtilities.readInt(buffer);
       if (ConverterUtilities.getType(buffer) != 7) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._startBlockIndex = ConverterUtilities.readInt(buffer);
       if (ConverterUtilities.getType(buffer) != 8) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._chunkHint = ConverterUtilities.readInt(buffer);
       if (ConverterUtilities.getType(buffer) != 9) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._error = (short)ConverterUtilities.readInt(buffer);
@@ -80,7 +80,7 @@ final class PartInfo implements Persistable, BackupProvider, RestoreProvider {
       }
 
       if (ConverterUtilities.getType(buffer) != 12) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._pendingTimestamp = ConverterUtilities.readLong(buffer);

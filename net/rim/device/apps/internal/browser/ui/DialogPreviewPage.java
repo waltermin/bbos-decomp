@@ -4,7 +4,6 @@ import net.rim.device.api.browser.field.BrowserContent;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Keypad;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.ScreenStyleHack;
 import net.rim.device.api.ui.Trackball;
 import net.rim.device.api.ui.UiApplication;
@@ -12,12 +11,13 @@ import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.ui.container.PopupScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.apps.internal.browser.core.BrowserDaemonRegistry;
 import net.rim.device.apps.internal.browser.page.Page;
 import net.rim.device.apps.internal.browser.resources.BrowserResources;
 import net.rim.device.internal.system.InternalServices;
-import net.rim.device.internal.ui.Border;
+import net.rim.device.internal.ui.BorderSimple;
 import net.rim.device.internal.ui.UiInternal;
 import net.rim.tid.im.layout.SLKeyLayout;
 
@@ -39,22 +39,22 @@ public final class DialogPreviewPage extends PopupScreen {
    }
 
    private DialogPreviewPage() {
-      super((Manager)(new Object(1407374883553280L)), 68719673344L);
+      super(new VerticalFieldManager(1407374883553280L), 68719673344L);
       this.setTag(TAG);
       Page page = BrowserDaemonRegistry.getInstance().getCurrentPage();
       if (page == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       BrowserContent content = page.getBrowserContent();
       if (content == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._client = content.getDisplayableContent();
       this._previewMgr = new PreviewManager(this._client);
       this.getDelegate().add(this._previewMgr);
-      this.getDelegate().setBorder((Border)(new Object(2, 2, 2, 2)));
+      this.getDelegate().setBorder(new BorderSimple(2, 2, 2, 2));
       ScreenStyleHack.setStyleSystem(this, 68719476736L, 0);
    }
 

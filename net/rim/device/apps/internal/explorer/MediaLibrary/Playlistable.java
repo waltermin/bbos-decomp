@@ -12,7 +12,7 @@ public class Playlistable implements MediaInfo, PaintProvider, KeyProvider, Verb
 
    @Override
    public int paint(Graphics graphics, int x, int y, int width, int height, Object context) {
-      if (this._media instanceof Object) {
+      if (this._media instanceof PaintProvider) {
          ((PaintProvider)this._media).paint(graphics, x, y, width, height, context);
       }
 
@@ -21,7 +21,7 @@ public class Playlistable implements MediaInfo, PaintProvider, KeyProvider, Verb
 
    @Override
    public Verb getVerbs(Object context, Verb[] verbs) {
-      return !(this._media instanceof Object) ? null : ((VerbProvider)this._media).getVerbs(context, verbs);
+      return !(this._media instanceof VerbProvider) ? null : ((VerbProvider)this._media).getVerbs(context, verbs);
    }
 
    void setPlaylistIndex(int index) {
@@ -68,7 +68,7 @@ public class Playlistable implements MediaInfo, PaintProvider, KeyProvider, Verb
 
    @Override
    public int getKeys(Object context, Object[] keyArray, int index, long keyRequested) {
-      return !(this._media instanceof Object) ? 0 : ((KeyProvider)this._media).getKeys(context, keyArray, index, keyRequested);
+      return !(this._media instanceof KeyProvider) ? 0 : ((KeyProvider)this._media).getKeys(context, keyArray, index, keyRequested);
    }
 
    @Override

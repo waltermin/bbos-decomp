@@ -1,5 +1,6 @@
 package net.rim.device.internal.media.metadata;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import net.rim.device.api.compress.ZLibInputStream;
 import net.rim.device.api.system.EncodedImage;
@@ -41,7 +42,7 @@ final class PNGMetadataExtractor extends MetaDataControlImpl {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public PNGMetadataExtractor(EncodedImage encImage, int modifyDataFlags) {
-      if (encImage instanceof Object) {
+      if (encImage instanceof PNGEncodedImage) {
          PNGEncodedImage pngEncImg = (PNGEncodedImage)encImage;
          this._imageBytes = pngEncImg.getData();
          this._signature = this.extractPNGSignature();
@@ -55,12 +56,7 @@ final class PNGMetadataExtractor extends MetaDataControlImpl {
             try {
                var9 = true;
                byte[] chunkBytes = this.getNextPNGChunk();
-               chunkType = ((StringBuffer)(new Object()))
-                  .append(String.valueOf((char)chunkBytes[4]))
-                  .append(String.valueOf((char)chunkBytes[5]))
-                  .append(String.valueOf((char)chunkBytes[6]))
-                  .append(String.valueOf((char)chunkBytes[7]))
-                  .toString();
+               chunkType = (char)chunkBytes[4] + String.valueOf((char)chunkBytes[5]) + (char)chunkBytes[6] + (char)chunkBytes[7];
                if (chunkType.equals(TAG_tEXt)) {
                   String[] tEXtPair = this.extracttEXt(chunkBytes, TAG_tEXt);
                   if ((modifyDataFlags & 1) == 0) {
@@ -124,13 +120,13 @@ final class PNGMetadataExtractor extends MetaDataControlImpl {
 
       int zw;
       for (zw = 8; (chunkBytes[zw] & 255) != 0; zw++) {
-         keyword = ((StringBuffer)(new Object())).append(keyword).append((char)chunkBytes[zw]).toString();
+         keyword = keyword + (char)chunkBytes[zw];
       }
 
       zw++;
       if (textType.equals(TAG_tEXt)) {
          for (int i = zw; i < chunkLength + 8; i++) {
-            value = ((StringBuffer)(new Object())).append(value).append((char)chunkBytes[i]).toString();
+            value = value + (char)chunkBytes[i];
          }
       } else if (!textType.equals(TAG_zTXt)) {
          if (textType.equals(TAG_iTXt)) {
@@ -140,14 +136,14 @@ final class PNGMetadataExtractor extends MetaDataControlImpl {
             }
 
             if ((chunkBytes[++zw] & 255) != 0) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             zw++;
             String languageTag = "";
 
             while ((chunkBytes[zw] & 255) != 0) {
-               languageTag = ((StringBuffer)(new Object())).append(languageTag).append((char)chunkBytes[zw]).toString();
+               languageTag = languageTag + (char)chunkBytes[zw];
                zw++;
             }
 
@@ -155,17 +151,17 @@ final class PNGMetadataExtractor extends MetaDataControlImpl {
                String translatedKeyword = "";
 
                while ((chunkBytes[zw] & 255) != 0) {
-                  translatedKeyword = ((StringBuffer)(new Object())).append(translatedKeyword).append((char)chunkBytes[zw]).toString();
+                  translatedKeyword = translatedKeyword + (char)chunkBytes[zw];
                   zw++;
                }
 
-               value = ((StringBuffer)(new Object())).append(value).append("(").append(translatedKeyword).append(") ").toString();
+               value = value + "(" + translatedKeyword + ") ";
                zw++;
             }
 
             if (isCompressed) {
-               InputStream inStream = (InputStream)(new Object(chunkBytes, zw, chunkLength + 9));
-               ZLibInputStream zInStream = (ZLibInputStream)(new Object(inStream));
+               InputStream inStream = new ByteArrayInputStream(chunkBytes, zw, chunkLength + 9);
+               ZLibInputStream zInStream = new ZLibInputStream(inStream);
 
                try {
                   byte[] decompData = new byte[chunkLength * 3];
@@ -173,24 +169,24 @@ final class PNGMetadataExtractor extends MetaDataControlImpl {
                   zInStream.close();
 
                   for (int i = 0; i < numOfBytes; i++) {
-                     value = ((StringBuffer)(new Object())).append(value).append((char)decompData[i]).toString();
+                     value = value + (char)decompData[i];
                   }
                } finally {
                   ;
                }
             } else {
                for (int i = zw; i < chunkLength + 8; i++) {
-                  value = ((StringBuffer)(new Object())).append(value).append((char)chunkBytes[i]).toString();
+                  value = value + (char)chunkBytes[i];
                }
             }
          }
       } else {
          if ((chunkBytes[zw] & 255) != 0) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
-         InputStream inStream = (InputStream)(new Object(chunkBytes, ++zw, chunkLength + 9));
-         ZLibInputStream zInStream = (ZLibInputStream)(new Object(inStream));
+         InputStream inStream = new ByteArrayInputStream(chunkBytes, ++zw, chunkLength + 9);
+         ZLibInputStream zInStream = new ZLibInputStream(inStream);
 
          try {
             byte[] decompData = new byte[chunkLength * 3];
@@ -198,17 +194,14 @@ final class PNGMetadataExtractor extends MetaDataControlImpl {
             zInStream.close();
 
             for (int i = 0; i < numOfBytes; i++) {
-               value = ((StringBuffer)(new Object())).append(value).append((char)decompData[i]).toString();
+               value = value + (char)decompData[i];
             }
          } finally {
             ;
          }
       }
 
-      String[] textPair = new Object[2];
-      textPair[0] = keyword;
-      textPair[1] = value;
-      return textPair;
+      return new String[]{keyword, value};
    }
 
    private final void setText(String keyword, String value) {
@@ -247,23 +240,21 @@ final class PNGMetadataExtractor extends MetaDataControlImpl {
             arrySignature[i] = this._imageBytes[i];
          }
 
-         return ((StringBuffer)(new Object()))
-            .append(arrySignature[0])
-            .append(" ")
-            .append(arrySignature[1])
-            .append(" ")
-            .append(arrySignature[2])
-            .append(" ")
-            .append(arrySignature[3])
-            .append(" ")
-            .append(arrySignature[4])
-            .append(" ")
-            .append(arrySignature[5])
-            .append(" ")
-            .append(arrySignature[6])
-            .append(" ")
-            .append(arrySignature[7])
-            .toString();
+         return arrySignature[0]
+            + " "
+            + arrySignature[1]
+            + " "
+            + arrySignature[2]
+            + " "
+            + arrySignature[3]
+            + " "
+            + arrySignature[4]
+            + " "
+            + arrySignature[5]
+            + " "
+            + arrySignature[6]
+            + " "
+            + arrySignature[7];
       } finally {
          System.err.println("Invalid PNG file");
          return signature;

@@ -38,7 +38,7 @@ final class ProviderDataSet implements ProviderRequestData, ProviderResponseData
 
    public final void unSerialize(DataInputStream in) throws ResponseParsingException {
       if (in == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._provider = CertificateStatusProvider.getProvider(in.readLong());
@@ -63,7 +63,7 @@ final class ProviderDataSet implements ProviderRequestData, ProviderResponseData
 
    public final void serialize(DataOutputStream out) {
       if (out == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       out.writeLong(this._provider.getProviderId());
@@ -95,7 +95,7 @@ final class ProviderDataSet implements ProviderRequestData, ProviderResponseData
 
    @Override
    public final Enumeration getCertificates() {
-      Vector certs = (Vector)(new Object());
+      Vector certs = new Vector();
       IntEnumeration enumeration = this._certFields.keys();
 
       while (enumeration.hasMoreElements()) {
@@ -116,7 +116,7 @@ final class ProviderDataSet implements ProviderRequestData, ProviderResponseData
          }
       }
 
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
@@ -183,7 +183,7 @@ final class ProviderDataSet implements ProviderRequestData, ProviderResponseData
       this._provider = provider;
       this._certificates = certificates;
       this._globalFields = new TaggedDataSet(compressionTable);
-      this._certFields = (IntHashtable)(new Object());
+      this._certFields = new IntHashtable();
       this._contextObject = null;
    }
 }

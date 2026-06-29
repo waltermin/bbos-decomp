@@ -13,7 +13,7 @@ final class DocViewImageDisplayField$EnlargeInfo {
          this._cropRect = cropRect;
          this._enlargeAreaBlockCount = totalBlockCount;
       } else {
-         throw new Object("Invalid args");
+         throw new IllegalArgumentException("Invalid args");
       }
    }
 
@@ -27,7 +27,7 @@ final class DocViewImageDisplayField$EnlargeInfo {
       }
 
       if (this._enlargeAreaData == null) {
-         this._enlargeAreaData = (IntHashtable)(new Object(1));
+         this._enlargeAreaData = new IntHashtable(1);
       }
 
       if (!this._enlargeAreaData.containsKey(currentBlockIndex)) {

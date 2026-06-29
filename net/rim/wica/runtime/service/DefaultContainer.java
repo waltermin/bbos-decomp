@@ -5,8 +5,8 @@ import java.util.Vector;
 
 public class DefaultContainer implements Container {
    private ServiceProvider _parentProvider;
-   private Hashtable _componentTable = (Hashtable)(new Object());
-   private Vector _components = (Vector)(new Object());
+   private Hashtable _componentTable = new Hashtable();
+   private Vector _components = new Vector();
    static Class class$net$rim$wica$runtime$service$Container;
 
    public DefaultContainer() {
@@ -35,7 +35,7 @@ public class DefaultContainer implements Container {
    @Override
    public void registerComponent(Class componentInterface, ComponentAdapter adapter, boolean promote) {
       if (componentInterface == null) {
-         throw new Object("componentInterface cannot be null");
+         throw new NullPointerException("componentInterface cannot be null");
       }
 
       if (promote && this._parentProvider != null) {
@@ -52,9 +52,7 @@ public class DefaultContainer implements Container {
 
       String name = componentInterface.getName();
       if (this._componentTable.containsKey(name)) {
-         throw new Object(
-            ((StringBuffer)(new Object("The component "))).append(componentInterface.getName()).append("already exists in the container").toString()
-         );
+         throw new IllegalArgumentException("The component " + componentInterface.getName() + "already exists in the container");
       }
 
       ((DefaultComponentAdapter)adapter).setContainer(this);
@@ -65,14 +63,12 @@ public class DefaultContainer implements Container {
    @Override
    public void registerComponent(Class componentInterface, Object componentImpl) {
       if (componentInterface == null) {
-         throw new Object("componentInterface cannot be null");
+         throw new NullPointerException("componentInterface cannot be null");
       }
 
       String name = componentInterface.getName();
       if (this._componentTable.containsKey(name)) {
-         throw new Object(
-            ((StringBuffer)(new Object("The component "))).append(componentInterface.getName()).append("already exists in the container").toString()
-         );
+         throw new IllegalArgumentException("The component " + componentInterface.getName() + "already exists in the container");
       }
 
       this._components.addElement(componentImpl);
@@ -106,7 +102,7 @@ public class DefaultContainer implements Container {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

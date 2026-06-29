@@ -34,7 +34,7 @@ final class IOTAPushlet implements Pushlet {
          if (converter != null) {
             try {
                Object result = converter.convert(data, headers);
-               if (result instanceof Object) {
+               if (result instanceof WAPPushModel) {
                   WAPPushModel wapPushModel = (WAPPushModel)result;
                   String url = wapPushModel.getURL();
                   if (url != null) {

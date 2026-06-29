@@ -16,7 +16,7 @@ public class SafeContentsBag extends SafeBag {
             PKCS12SafeContents safeContents = new PKCS12SafeContents(super._bagData, super._parent);
             this._safeBags = (SafeBag[])safeContents.getChildrenContentInfos();
             if (super._bagAttributes != null) {
-               ASN1InputByteArray keyBagAttributes = (ASN1InputByteArray)(new Object(super._bagAttributes));
+               ASN1InputByteArray keyBagAttributes = new ASN1InputByteArray(super._bagAttributes);
 
                for (int next = keyBagAttributes.peekNextTag(); next != -1; next = keyBagAttributes.peekNextTag()) {
                   if (next != 16) {

@@ -72,13 +72,13 @@ class CICALMeetingEmailer implements CICALConstants {
       message.setType((byte)1);
       RIMModel organizerAddress = (RIMModel)attachment.getSender().getAddress();
       EmailBuilderApi.addRecipient(message, 0, organizerAddress);
-      if (originalEmail instanceof Object) {
+      if (originalEmail instanceof EmailMessageModel) {
          EmailBuilderApi.addOriginalMessageReferenceIdentifierStub(message, ((EmailMessageModel)originalEmail).getCMIMEReferenceIdentifier());
       }
 
       ResourceBundle resources = ResourceBundle.getBundle(8008824311162635875L, "net.rim.device.apps.internal.resource.CalendarOTA");
-      StringBuffer bodyText = (StringBuffer)(new Object());
-      StringBuffer subjectText = (StringBuffer)(new Object());
+      StringBuffer bodyText = new StringBuffer();
+      StringBuffer subjectText = new StringBuffer();
       switch (answer) {
          case 1:
             break;
@@ -104,8 +104,8 @@ class CICALMeetingEmailer implements CICALConstants {
       }
 
       EmailBuilderApi.addMessageBody(message, bodyText.toString());
-      ContextObject contextObject = (ContextObject)(new Object(12));
-      contextObject.put(7849556394715590464L, new Object(answer));
+      ContextObject contextObject = new ContextObject(12);
+      contextObject.put(7849556394715590464L, new Integer(answer));
       if (comment != null) {
          contextObject.put(8925131257384216348L, comment);
       }
@@ -122,16 +122,16 @@ class CICALMeetingEmailer implements CICALConstants {
    }
 
    static void removeFromMessageList(RIMModel message) {
-      if (message instanceof Object) {
+      if (message instanceof ActionProvider) {
          ActionProvider actionProvider = (ActionProvider)message;
-         ContextObject context = (ContextObject)(new Object());
+         ContextObject context = new ContextObject();
          ContextObject.put(context, 2164559162753216116L, Boolean.TRUE);
          actionProvider.perform(6780594967363292755L, context);
       }
    }
 
    static void markAsOpened(RIMModel message) {
-      if (message instanceof Object) {
+      if (message instanceof ActionProvider) {
          ActionProvider actionProvider = (ActionProvider)message;
          actionProvider.perform(5803508244060051872L, null);
       }
@@ -160,7 +160,7 @@ class CICALMeetingEmailer implements CICALConstants {
             }
          }
 
-         StringBuffer subjectBuffer = (StringBuffer)(new Object(""));
+         StringBuffer subjectBuffer = new StringBuffer("");
          String subject = event.getSubject();
          if (subject == null || subject.length() == 0) {
             subject = ResourceBundle.getBundle(8008824311162635875L, "net.rim.device.apps.internal.resource.CalendarOTA").getString(200);
@@ -175,9 +175,9 @@ class CICALMeetingEmailer implements CICALConstants {
 
          subjectBuffer.append(subject);
          EmailBuilderApi.addSubjectLine(message, subjectBuffer.toString());
-         ContextObject contextObject = (ContextObject)(new Object());
+         ContextObject contextObject = new ContextObject();
          String bodyText = null;
-         if (event instanceof Object) {
+         if (event instanceof DescriptionProvider) {
             DescriptionProvider descriptionProvider = event;
             bodyText = descriptionProvider.getStringForField(1589658722817992360L);
          }
@@ -217,9 +217,9 @@ class CICALMeetingEmailer implements CICALConstants {
             }
          }
 
-         StringBuffer subjectBuffer = (StringBuffer)(new Object(
+         StringBuffer subjectBuffer = new StringBuffer(
             ResourceBundle.getBundle(8008824311162635875L, "net.rim.device.apps.internal.resource.CalendarOTA").getString(106)
-         ));
+         );
          String subject = event.getSubject();
          if (subject != null) {
             subjectBuffer.append(subject);
@@ -227,7 +227,7 @@ class CICALMeetingEmailer implements CICALConstants {
 
          EmailBuilderApi.addSubjectLine(message, subjectBuffer.toString());
          String bodyText = null;
-         if (event instanceof Object) {
+         if (event instanceof DescriptionProvider) {
             DescriptionProvider descriptionProvider = event;
             bodyText = descriptionProvider.getStringForField(1589658722817992360L);
          }

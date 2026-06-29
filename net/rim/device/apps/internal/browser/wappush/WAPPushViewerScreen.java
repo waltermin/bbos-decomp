@@ -4,8 +4,8 @@ import net.rim.device.api.system.GlobalEventListener;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.util.ListenerUtilities;
-import net.rim.device.api.util.LongHashtable;
 import net.rim.device.apps.api.framework.hotkeys.HotKeyCheck;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.registration.VerbFactory;
@@ -77,8 +77,8 @@ public final class WAPPushViewerScreen extends ModelScreen implements GlobalEven
          contextObject.put(-442409970680484936L, this);
       }
 
-      this.setTitle((Field)(new Object(BrowserPushResources.getString(12))));
-      StringBuffer textBuffer = (StringBuffer)(new Object());
+      this.setTitle(new LabelField(BrowserPushResources.getString(12)));
+      StringBuffer textBuffer = new StringBuffer();
       if (message.getConnectionType() == 1) {
          textBuffer.append(BrowserPushResources.getString(46));
          textBuffer.append(' ');
@@ -131,7 +131,7 @@ public final class WAPPushViewerScreen extends ModelScreen implements GlobalEven
 
       menu.add(this._followLinkVerb);
       defaultVerb = this._followLinkVerb;
-      VerbFactory outerVerbFactory = (VerbFactory)((LongHashtable)super._context).get(-2846768035584909703L);
+      VerbFactory outerVerbFactory = (VerbFactory)((ContextObject)super._context).get(-2846768035584909703L);
       menu.add(outerVerbFactory.getVerbs(null));
       VerbRepository verbRepository = VerbRepository.getVerbRepository(3433073725342984424L);
       menu.add(verbRepository.getVerbs(null));
@@ -185,7 +185,7 @@ public final class WAPPushViewerScreen extends ModelScreen implements GlobalEven
                return true;
          }
       } else {
-         DeleteSingleItemVerb deleteVerb = (DeleteSingleItemVerb)(new Object(611472, 1000));
+         DeleteSingleItemVerb deleteVerb = new DeleteSingleItemVerb(611472, 1000);
          deleteVerb.setParameters(super._model, super._context);
          super._returnValue = deleteVerb.invoke(null);
          if (ContextObject.getFlag(super._returnValue, 39)) {

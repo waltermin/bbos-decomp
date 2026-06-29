@@ -2,6 +2,7 @@ package net.rim.device.apps.api.search.criteria;
 
 import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.util.Arrays;
+import net.rim.device.api.util.StringMatch;
 import net.rim.device.apps.api.framework.model.EncryptableProvider;
 import net.rim.device.apps.api.framework.model.PersistableRIMModel;
 import net.rim.device.apps.api.search.SearchCriterion;
@@ -11,7 +12,7 @@ public class TextSearchModel implements PersistableRIMModel, SearchCriterion, En
    private Object _textEncoding;
    private PersistableRIMModel[] _subCriteria;
    private boolean _matchAllPatterns = true;
-   private static WeakReference _valueWR = (WeakReference)(new Object(null));
+   private static WeakReference _valueWR = new WeakReference(null);
    private static TextSearchModel _valueModel;
 
    public void setMatchAllPatterns(boolean matchAllPatterns) {
@@ -43,7 +44,7 @@ public class TextSearchModel implements PersistableRIMModel, SearchCriterion, En
 
    public synchronized void addSubCriterion(PersistableRIMModel searchCriterion) {
       if (this._subCriteria == null) {
-         this._subCriteria = new Object[]{searchCriterion};
+         this._subCriteria = new PersistableRIMModel[]{searchCriterion};
       } else {
          Arrays.add(this._subCriteria, searchCriterion);
       }
@@ -81,7 +82,7 @@ public class TextSearchModel implements PersistableRIMModel, SearchCriterion, En
       }
 
       String text = model.getText();
-      value = new Object(text, false, true, model._matchAllPatterns);
+      value = new StringMatch(text, false, true, model._matchAllPatterns);
       _valueWR.set(value);
       _valueModel = model;
       return value;

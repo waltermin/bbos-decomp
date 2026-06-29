@@ -44,21 +44,21 @@ public class PopupVerbWrapperSelectionDialog extends Dialog implements HintPolli
    public Object getHint() {
       if (this._showHint) {
          Field field = this.getLeafFieldWithFocus();
-         if (field instanceof Object) {
+         if (field instanceof ButtonField) {
             ButtonField button = (ButtonField)field;
             int numPixels = button.getFont().getAdvance(button.getLabel());
             if (numPixels > button.getContentWidth()) {
                String buttonString = button.getLabel();
                int separator = buttonString.indexOf(58);
                if (separator != -1) {
-                  VerticalFieldManager vfm = (VerticalFieldManager)(new Object());
+                  VerticalFieldManager vfm = new VerticalFieldManager();
                   vfm.setFont(Font.getDefault());
-                  vfm.add((Field)(new Object(buttonString.substring(0, separator))));
-                  vfm.add((Field)(new Object(buttonString.substring(separator + 2), 64)));
+                  vfm.add(new LabelField(buttonString.substring(0, separator)));
+                  vfm.add(new LabelField(buttonString.substring(separator + 2), 64));
                   return vfm;
                }
 
-               LabelField hintLabel = (LabelField)(new Object(buttonString, 64));
+               LabelField hintLabel = new LabelField(buttonString, 64);
                hintLabel.setFont(Font.getDefault());
                return hintLabel;
             }

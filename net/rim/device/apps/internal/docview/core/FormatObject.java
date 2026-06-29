@@ -3,10 +3,10 @@ package net.rim.device.apps.internal.docview.core;
 import net.rim.device.api.util.IntIntHashtable;
 
 final class FormatObject {
-   private IntIntHashtable _fontStyleHash = (IntIntHashtable)(new Object());
-   private IntIntHashtable _foreColorHash = (IntIntHashtable)(new Object());
-   private IntIntHashtable _bgColorHash = (IntIntHashtable)(new Object());
-   private IntIntHashtable _fontSizeHash = (IntIntHashtable)(new Object());
+   private IntIntHashtable _fontStyleHash = new IntIntHashtable();
+   private IntIntHashtable _foreColorHash = new IntIntHashtable();
+   private IntIntHashtable _bgColorHash = new IntIntHashtable();
+   private IntIntHashtable _fontSizeHash = new IntIntHashtable();
 
    final int getCurrentInfo(int key, int tag) {
       IntIntHashtable hash = this.getCorrectHashtable(tag);
@@ -52,7 +52,7 @@ final class FormatObject {
    private final IntIntHashtable getCorrectHashtable(int tag) {
       switch (tag) {
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          default:
             return this._fontStyleHash;

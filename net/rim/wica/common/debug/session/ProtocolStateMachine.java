@@ -48,9 +48,7 @@ public final class ProtocolStateMachine {
       if (this._curState == 0) {
          this.setState(1);
       } else {
-         throw new ProtocolStateMachine$InvalidStateException(
-            ((StringBuffer)(new Object("Connection event not valid from state: "))).append(this._curState).toString()
-         );
+         throw new ProtocolStateMachine$InvalidStateException("Connection event not valid from state: " + this._curState);
       }
    }
 
@@ -58,9 +56,7 @@ public final class ProtocolStateMachine {
       if (this._curState == 1) {
          this.setState(2);
       } else {
-         throw new ProtocolStateMachine$InvalidStateException(
-            ((StringBuffer)(new Object("Handshake event not valid from state: "))).append(this._curState).toString()
-         );
+         throw new ProtocolStateMachine$InvalidStateException("Handshake event not valid from state: " + this._curState);
       }
    }
 
@@ -70,18 +66,14 @@ public final class ProtocolStateMachine {
             this.setState(3);
             return;
          default:
-            throw new ProtocolStateMachine$InvalidStateException(
-               ((StringBuffer)(new Object("Session initializatin not valid from state: "))).append(this._curState).toString()
-            );
+            throw new ProtocolStateMachine$InvalidStateException("Session initializatin not valid from state: " + this._curState);
       }
    }
 
    public final synchronized void eventDetached() throws ProtocolStateMachine$InvalidStateException {
       switch (this._curState) {
          case 0:
-            throw new ProtocolStateMachine$InvalidStateException(
-               ((StringBuffer)(new Object("Session initializatin not valid from state: "))).append(this._curState).toString()
-            );
+            throw new ProtocolStateMachine$InvalidStateException("Session initializatin not valid from state: " + this._curState);
          default:
             this.setState(4);
       }

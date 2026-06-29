@@ -10,7 +10,7 @@ final class IdleScreenApplication$MyRealtimeClockListener implements RealtimeClo
    final void start() {
       Proxy proxy = Proxy.getInstance();
       if (proxy == null) {
-         throw new Object();
+         throw new RuntimeException();
       }
 
       proxy.addRealtimeClockListener(this);
@@ -19,7 +19,7 @@ final class IdleScreenApplication$MyRealtimeClockListener implements RealtimeClo
    final void stop() {
       Proxy proxy = Proxy.getInstance();
       if (proxy == null) {
-         throw new Object();
+         throw new RuntimeException();
       }
 
       proxy.removeRealtimeClockListener(this);

@@ -1,11 +1,13 @@
 package net.rim.device.apps.internal.activation;
 
+import java.io.IOException;
 import net.rim.device.api.system.EventLogger;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.apps.api.transmission.TransmissionServiceManager;
 import net.rim.device.apps.api.utility.serialization.BaseConverter;
 import net.rim.device.apps.api.utility.serialization.Converter;
 import net.rim.device.apps.api.utility.serialization.ConverterDescriptor;
+import net.rim.device.apps.api.utility.serialization.SerializationException;
 import net.rim.vm.Array;
 
 final class OTAKeyGenProtocolConverter extends BaseConverter implements ConverterDescriptor {
@@ -22,7 +24,7 @@ final class OTAKeyGenProtocolConverter extends BaseConverter implements Converte
                Array.resize(bytes, length - 1);
             }
 
-            return (String)(new Object(bytes));
+            return new String(bytes);
          } finally {
             ;
          }
@@ -74,8 +76,8 @@ final class OTAKeyGenProtocolConverter extends BaseConverter implements Converte
    }
 
    @Override
-   public final Object convert(byte[] inputBytes, Object contextObject) {
-      DataBuffer dataBuffer = (DataBuffer)(new Object(inputBytes, 0, inputBytes.length, true));
+   public final Object convert(byte[] inputBytes, Object contextObject) throws SerializationException {
+      DataBuffer dataBuffer = new DataBuffer(inputBytes, 0, inputBytes.length, true);
       OTAKeyGenEvent event = null;
 
       try {
@@ -91,7 +93,7 @@ final class OTAKeyGenProtocolConverter extends BaseConverter implements Converte
          switch (command) {
             case 1:
                logEvent(1431194446, 2, command);
-               throw new Object();
+               throw new IOException();
             case 2:
             default:
                while (!dataBuffer.eof()) {
@@ -104,7 +106,7 @@ final class OTAKeyGenProtocolConverter extends BaseConverter implements Converte
                      case 6:
                      case 7:
                         logEvent(1431194438, 2, fieldId);
-                        throw new Object();
+                        throw new IOException();
                      case 1:
                      default:
                         buffer = new byte[fieldLength];
@@ -118,7 +120,7 @@ final class OTAKeyGenProtocolConverter extends BaseConverter implements Converte
                         break;
                      case 3:
                         if (fieldLength != 1) {
-                           throw new Object();
+                           throw new IOException();
                         }
 
                         event._encryptionAlgorithm = dataBuffer.readByte();
@@ -152,7 +154,7 @@ final class OTAKeyGenProtocolConverter extends BaseConverter implements Converte
                         break;
                      default:
                         logEvent(1431194438, 2, var14);
-                        throw new Object();
+                        throw new IOException();
                   }
                }
                break;
@@ -179,7 +181,7 @@ final class OTAKeyGenProtocolConverter extends BaseConverter implements Converte
          return event;
       } finally {
          event._abortReason = 1;
-         throw new Object("Malformed OTAKEYGEN packet.");
+         throw new SerializationException("Malformed OTAKEYGEN packet.");
       }
    }
 
@@ -190,12 +192,12 @@ final class OTAKeyGenProtocolConverter extends BaseConverter implements Converte
       }
 
       OTAKeyGenEvent event = (OTAKeyGenEvent)inputObject;
-      DataBuffer dataBuffer = (DataBuffer)(new Object());
+      DataBuffer dataBuffer = new DataBuffer();
       dataBuffer.writeByte(event._keyGenerationType);
       dataBuffer.writeByte(16);
       dataBuffer.writeInt(event._transactionId);
       dataBuffer.writeByte(event._command);
-      DataBuffer payload = (DataBuffer)(new Object());
+      DataBuffer payload = new DataBuffer();
       if (event._command == 1) {
          this.writeBinaryField(payload, 1, event._deviceAuthenticationPublicKey);
          if (event._keyGenerationType == 1 || event._keyGenerationType == 2) {

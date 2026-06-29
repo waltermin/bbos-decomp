@@ -55,7 +55,7 @@ final class VerifyHashBlob extends PeerDataBlob {
 
    @Override
    public final void pickle(DataBuffer db) {
-      DataBuffer db2 = (DataBuffer)(new Object());
+      DataBuffer db2 = new DataBuffer();
       ConverterUtilities.writeInt(db2, 1, this._request ? 1 : 0);
       this.addStringToDataBuffer(db2, 2, this._message);
       this.addStringToDataBuffer(db2, 3, this._hash);

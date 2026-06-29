@@ -213,7 +213,7 @@ final class AfterDialToneHandler implements PopupDialogClosedListener, PhoneEven
    @Override
    public final void run() {
       int seconds = this._timeToPause;
-      String statusString = MessageFormat.format(PhoneResources.getString(128), new Object[]{((StringBuffer)(new Object(""))).append(seconds).toString()});
+      String statusString = MessageFormat.format(PhoneResources.getString(128), new String[]{"" + seconds});
       this.getPauseStatusDialog().display(statusString, seconds * 1000);
    }
 

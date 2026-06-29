@@ -8,6 +8,7 @@ import net.rim.device.api.servicebook.selector.SRSelector;
 import net.rim.device.api.servicebook.selector.SRSelectorApp;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.MainScreen;
@@ -22,6 +23,7 @@ import net.rim.device.apps.api.options.SaveableMainScreenOptionsListItem;
 import net.rim.device.apps.api.transmission.rim.RIMMessagingService;
 import net.rim.device.apps.api.transmission.rim.options.MessageServicesContentTypeOptionsProvider;
 import net.rim.device.apps.api.utility.framework.FieldUtility;
+import net.rim.device.internal.ui.component.HorizontalSpacerField;
 import net.rim.vm.Array;
 
 public final class DefaultServicesOptionsItem extends SaveableMainScreenOptionsListItem implements FieldChangeListener {
@@ -55,7 +57,7 @@ public final class DefaultServicesOptionsItem extends SaveableMainScreenOptionsL
    @Override
    public final void fieldChanged(Field field, int context) {
       Object fieldCookie = field.getCookie();
-      if (fieldCookie instanceof Object) {
+      if (fieldCookie instanceof SRSelectorApp) {
          SRSelectorApp srsApp = (SRSelectorApp)fieldCookie;
          String contentType = StringUtilities.toUpperCase(srsApp.getCid(), 1701707776);
          MessageServicesContentTypeOptionsProvider[] optionsProviders = (MessageServicesContentTypeOptionsProvider[])this._contentTypeOptionsProviderHashtable
@@ -72,15 +74,15 @@ public final class DefaultServicesOptionsItem extends SaveableMainScreenOptionsL
    protected final void populateMainScreen(MainScreen mainScreen) {
       this.populateServices();
       Vector srsAppVector = _srs.getRegisteredApps();
-      SRSelectorApp[] srsApps = new Object[srsAppVector.size()];
+      SRSelectorApp[] srsApps = new SRSelectorApp[srsAppVector.size()];
       srsAppVector.copyInto(srsApps);
       Arrays.sort(srsApps, new DefaultServicesOptionsItem$SRSelectorAppComparator());
-      this._defaultServicesFields = new Object[srsApps.length];
+      this._defaultServicesFields = new ObjectChoiceField[srsApps.length];
       this._defaultServicesFieldCount = 0;
-      this._contentTypeOptionsProviderFields = new Object[0];
-      this._contentTypeOptionsProviderHashtable = (Hashtable)(new Object());
+      this._contentTypeOptionsProviderFields = new Field[0];
+      this._contentTypeOptionsProviderHashtable = new Hashtable();
       if (srsApps.length == 0) {
-         mainScreen.add((Field)(new Object(RIMMessagingService.getResourceString(5), 12884901888L)));
+         mainScreen.add(new LabelField(RIMMessagingService.getResourceString(5), 12884901888L));
       } else {
          for (int i = 0; i < srsApps.length; i++) {
             this.addDefaultServiceField(mainScreen, srsApps[i]);
@@ -90,16 +92,16 @@ public final class DefaultServicesOptionsItem extends SaveableMainScreenOptionsL
 
    private final void addDefaultServiceField(MainScreen mainScreen, SRSelectorApp srsApp) {
       String contentType = StringUtilities.toUpperCase(srsApp.getCid(), 1701707776);
-      String[] services = (Object[])this._allServices.get(contentType);
+      String[] services = (String[])this._allServices.get(contentType);
       if (services != null) {
-         StringBuffer labelBuffer = (StringBuffer)(new Object(srsApp.getName()));
+         StringBuffer labelBuffer = new StringBuffer(srsApp.getName());
          labelBuffer.append(' ');
          labelBuffer.append('(');
          labelBuffer.append(contentType);
          labelBuffer.append(')');
          labelBuffer.append(':');
          labelBuffer.append(' ');
-         ObjectChoiceField field = (ObjectChoiceField)(new Object(labelBuffer.toString(), services));
+         ObjectChoiceField field = new ObjectChoiceField(labelBuffer.toString(), services);
          field.setCookie(srsApp);
          this.setDefaultService(field);
          this._defaultServicesFields[this._defaultServicesFieldCount++] = field;
@@ -108,7 +110,7 @@ public final class DefaultServicesOptionsItem extends SaveableMainScreenOptionsL
          RIMModelFactory[] factories = RIMModelFactoryRepository.getModelFactories(-1203249910507515082L);
          int numFactories = factories != null ? factories.length : 0;
          MessageServicesContentTypeOptionsProvider[] optionsProviders = new MessageServicesContentTypeOptionsProvider[0];
-         ContextObject optionsCreationContext = (ContextObject)(new Object());
+         ContextObject optionsCreationContext = new ContextObject();
          ContextObject.put(optionsCreationContext, 253, contentType);
          ContextObject.put(optionsCreationContext, 250, selectedServiceRecord);
 
@@ -123,7 +125,7 @@ public final class DefaultServicesOptionsItem extends SaveableMainScreenOptionsL
          this._contentTypeOptionsProviderHashtable.put(contentType, optionsProviders);
          int numOptionsProviders = optionsProviders.length;
          if (numOptionsProviders > 0) {
-            VerticalFieldManager subFieldManager = (VerticalFieldManager)(new Object());
+            VerticalFieldManager subFieldManager = new VerticalFieldManager();
             Vector fields = FieldUtility.sortFieldsByOrder(optionsProviders, null);
             int numFields = fields.size();
 
@@ -133,8 +135,8 @@ public final class DefaultServicesOptionsItem extends SaveableMainScreenOptionsL
                Arrays.add(this._contentTypeOptionsProviderFields, currentSubField);
             }
 
-            HorizontalFieldManager indentManager = (HorizontalFieldManager)(new Object());
-            indentManager.add((Field)(new Object(12)));
+            HorizontalFieldManager indentManager = new HorizontalFieldManager();
+            indentManager.add(new HorizontalSpacerField(12));
             indentManager.add(subFieldManager);
             mainScreen.add(indentManager);
             field.setChangeListener(this);
@@ -154,7 +156,7 @@ public final class DefaultServicesOptionsItem extends SaveableMainScreenOptionsL
       }
 
       if (this._allServices == null) {
-         this._allServices = (Hashtable)(new Object());
+         this._allServices = new Hashtable();
       }
    }
 
@@ -162,7 +164,7 @@ public final class DefaultServicesOptionsItem extends SaveableMainScreenOptionsL
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private final void setDefaultService(ObjectChoiceField field) {
       SRSelectorApp srsApp = (SRSelectorApp)field.getCookie();
-      String[] services = (Object[])this._allServices.get(StringUtilities.toUpperCase(srsApp.getCid(), 1701707776));
+      String[] services = (String[])this._allServices.get(StringUtilities.toUpperCase(srsApp.getCid(), 1701707776));
       ServiceRecord defaultService = null;
       boolean var7 = false /* VF: Semaphore variable */;
 
@@ -190,9 +192,9 @@ public final class DefaultServicesOptionsItem extends SaveableMainScreenOptionsL
 
       for (ServiceRecord sr : _sb.findRecordsByType(0)) {
          String contentType = StringUtilities.toUpperCase(sr.getCid(), 1701707776);
-         String[] choices = (Object[])this._allServices.get(contentType);
+         String[] choices = (String[])this._allServices.get(contentType);
          if (choices == null) {
-            choices = new Object[0];
+            choices = new String[0];
             this._allServices.put(contentType, choices);
          }
 

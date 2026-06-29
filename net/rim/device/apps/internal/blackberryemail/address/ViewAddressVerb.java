@@ -15,10 +15,10 @@ final class ViewAddressVerb extends Verb {
 
    @Override
    public final Object invoke(Object parameter) {
-      ContextObject context = (ContextObject)(new Object());
-      Verb[] verbs = new Object[0];
+      ContextObject context = new ContextObject();
+      Verb[] verbs = new Verb[0];
       context.setFlag(45, 18);
-      if (this._addressToView instanceof Object) {
+      if (this._addressToView instanceof VerbProvider) {
          VerbProvider verbProvider = (VerbProvider)this._addressToView;
          verbProvider.getVerbs(context, verbs);
       }

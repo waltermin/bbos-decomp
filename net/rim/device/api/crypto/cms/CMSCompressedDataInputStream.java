@@ -1,6 +1,8 @@
 package net.rim.device.api.crypto.cms;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import net.rim.device.api.compress.ZLibInputStream;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.oid.OID;
 import net.rim.device.api.crypto.oid.OIDs;
@@ -34,7 +36,7 @@ public final class CMSCompressedDataInputStream extends CMSInputStream {
       // 0a: aload 0
       // 0b: iload 4
       // 0d: putfield net/rim/device/api/crypto/cms/CMSCompressedDataInputStream._displayUI Z
-      // 10: new java/lang/Object
+      // 10: new net/rim/device/api/crypto/asn1/ASN1InputStream
       // 13: dup
       // 14: aload 0
       // 15: getfield net/rim/device/api/crypto/cms/CMSInputStream._input Ljava/io/InputStream;
@@ -104,7 +106,7 @@ public final class CMSCompressedDataInputStream extends CMSInputStream {
          if (!(super._data instanceof CMSEnvelopedDataInputStream)) {
             if (!(super._data instanceof CMSCompressedDataInputStream)) {
                if (super._data != null && this._dataBuffer != null && this._compressionType.equals(OIDs.getOID(-1721348808))) {
-                  super._data = (InputStream)(new Object((InputStream)(new Object(this._dataBuffer))));
+                  super._data = new ZLibInputStream(new ByteArrayInputStream(this._dataBuffer));
                }
             } else {
                ((CMSCompressedDataInputStream)super._data).continueInitialization(this._keyStore, displayUI);
@@ -130,7 +132,7 @@ public final class CMSCompressedDataInputStream extends CMSInputStream {
    @Override
    public final int read(byte[] buffer, int offset, int length) {
       if (buffer == null || offset < 0 || length < 0 || buffer.length - length < offset) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return super._data == null ? -1 : super._data.read(buffer, offset, length);
       }
@@ -157,13 +159,13 @@ public final class CMSCompressedDataInputStream extends CMSInputStream {
          throw new CMSNoSuchAlgorithmException();
       }
 
-      InputStream decoded = new Object(data);
+      InputStream decoded = new ZLibInputStream(data);
       if (super._contentType.equals(OIDs.getOID(542121532))) {
-         super._data = new CMSSignedDataInputStream((InputStream)decoded, this._keyStore, twoStage, this._displayUI);
+         super._data = new CMSSignedDataInputStream(decoded, this._keyStore, twoStage, this._displayUI);
       } else if (super._contentType.equals(OIDs.getOID(542383676))) {
-         super._data = new CMSEnvelopedDataInputStream((InputStream)decoded, this._keyStore, null, twoStage, this._displayUI);
+         super._data = new CMSEnvelopedDataInputStream(decoded, this._keyStore, null, twoStage, this._displayUI);
       } else if (super._contentType.equals(OIDs.getOID(-1721352904))) {
-         super._data = new CMSCompressedDataInputStream((InputStream)decoded, this._keyStore, twoStage, this._displayUI);
+         super._data = new CMSCompressedDataInputStream(decoded, this._keyStore, twoStage, this._displayUI);
       } else {
          int offset = 0;
          this._dataBuffer = new byte[100];
@@ -187,7 +189,7 @@ public final class CMSCompressedDataInputStream extends CMSInputStream {
          }
 
          if (this._compressionType.equals(OIDs.getOID(-1721348808))) {
-            super._data = (InputStream)(new Object((InputStream)(new Object(this._dataBuffer))));
+            super._data = new ZLibInputStream(new ByteArrayInputStream(this._dataBuffer));
          }
       }
 

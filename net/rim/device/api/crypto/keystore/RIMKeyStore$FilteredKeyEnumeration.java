@@ -1,6 +1,7 @@
 package net.rim.device.api.crypto.keystore;
 
 import java.util.Enumeration;
+import java.util.NoSuchElementException;
 
 final class RIMKeyStore$FilteredKeyEnumeration implements Enumeration {
    private KeyStoreIndex _index;
@@ -23,7 +24,7 @@ final class RIMKeyStore$FilteredKeyEnumeration implements Enumeration {
    @Override
    public final Object nextElement() {
       if (this._next == null) {
-         throw new Object();
+         throw new NoSuchElementException();
       }
 
       Object o = this._next;

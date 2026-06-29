@@ -1,6 +1,7 @@
 package net.rim.device.api.crypto.encoder;
 
 import java.io.InputStream;
+import net.rim.device.api.crypto.InvalidSignatureEncodingException;
 import net.rim.device.api.crypto.RIMFactoryUtilities;
 import net.rim.device.api.crypto.asn1.ASN1EncodingException;
 import net.rim.device.api.crypto.asn1.ASN1InputByteArray;
@@ -10,9 +11,9 @@ import net.rim.device.api.crypto.oid.OIDs;
 
 public class X509_SignatureDecoder extends SignatureDecoder {
    @Override
-   protected DecodedSignature decodeSignature(InputStream encodedSignature, String signatureAlgorithm, String digestAlgorithm) {
+   protected DecodedSignature decodeSignature(InputStream encodedSignature, String signatureAlgorithm, String digestAlgorithm) throws InvalidSignatureEncodingException {
       if (encodedSignature == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       try {
@@ -26,7 +27,7 @@ public class X509_SignatureDecoder extends SignatureDecoder {
          }
 
          if (encodedSignatureAlgorithm == null) {
-            throw new Object();
+            throw new InvalidSignatureEncodingException();
          }
 
          String encodedDigestAlgorithm = RIMFactoryUtilities.stripLeftMostSubAlgorithm(encodedSignatureAlgorithm);
@@ -40,14 +41,14 @@ public class X509_SignatureDecoder extends SignatureDecoder {
          return decoder.decodeSignature(realStream, encodedSignatureArray, encodedSignatureAlgorithm, encodedDigestAlgorithm);
       } catch (ASN1EncodingException var13) {
       } finally {
-         throw new Object();
+         throw new InvalidSignatureEncodingException();
       }
 
-      throw new Object();
+      throw new InvalidSignatureEncodingException();
    }
 
    protected DecodedSignature decodeSignature(ASN1InputByteArray parameters, byte[] encodedSignature, String signatureAlgorithm, String digestAlgorithm) {
-      throw new Object();
+      throw new RuntimeException();
    }
 
    @Override

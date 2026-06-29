@@ -6,7 +6,7 @@ import net.rim.device.apps.api.phone.PhoneEventListener;
 import net.rim.device.apps.api.phone.VoiceServices;
 
 final class PhoneApiListener implements PhoneEventListener {
-   private Vector _listeners = (Vector)(new Object());
+   private Vector _listeners = new Vector();
    private int _initCallID = -1;
    private static final long ID = 5619741197140605979L;
    private static final int CALL_ADDED = 0;
@@ -64,8 +64,8 @@ final class PhoneApiListener implements PhoneEventListener {
                   pl.callWaiting(callId);
                   break;
                case 1006:
-                  if (context instanceof Object) {
-                     int reason = context;
+                  if (context instanceof Integer) {
+                     int reason = (Integer)context;
                      pl.callFailed(callId, reason);
                   }
 

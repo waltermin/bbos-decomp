@@ -1,5 +1,6 @@
 package net.rim.tools.compiler.classfile;
 
+import java.io.IOException;
 import net.rim.tools.compiler.io.StructuredInputStream;
 
 public final class AttributeCode extends Attribute {
@@ -9,7 +10,7 @@ public final class AttributeCode extends Attribute {
    private ClassfileExceptionHandler[] _handlers;
    private AttributeList _attributes;
 
-   public AttributeCode(StructuredInputStream in, ConstantPool constantPool, int iName, String name) {
+   public AttributeCode(StructuredInputStream in, ConstantPool constantPool, int iName, String name) throws IOException {
       super(in, iName, name);
       int offset = in.getOffset();
       this._maxStack = in.readUnsignedShort();
@@ -31,7 +32,7 @@ public final class AttributeCode extends Attribute {
 
       this._attributes = new AttributeList(in, constantPool, 4, false);
       if (offset + super._length != in.getOffset()) {
-         throw new Object("incorrect code attribute length");
+         throw new IOException("incorrect code attribute length");
       }
    }
 

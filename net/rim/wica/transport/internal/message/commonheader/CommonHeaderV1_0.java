@@ -26,7 +26,7 @@ public class CommonHeaderV1_0 extends CommonHeaderV1_Base implements CommonHeade
 
    public void setDeliveryMode(int deliveryMode) {
       if (deliveryMode != 0 && deliveryMode != 1 && deliveryMode != 2) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._deliveryMode = deliveryMode;

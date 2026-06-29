@@ -26,7 +26,7 @@ public final class FinderHistory implements SyncConverter, ReadableList, Collect
    private String[] _searchLabelsUC;
    private PersistentObject _historyPersistence;
    private Comparator _sorter = new FinderHistory$HistorySortComparator(null);
-   private CollectionListenerManager _listenerManager = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _listenerManager = new CollectionListenerManager();
    private boolean _isSorted = false;
    private static final int MAX_SEARCH_HISTORY = 100;
    private static final long GUID = -849624327864935062L;
@@ -86,7 +86,7 @@ public final class FinderHistory implements SyncConverter, ReadableList, Collect
          Array.resize(this._pastSearches, this._pastSearches.length + 1);
       }
 
-      DataBuffer db = (DataBuffer)(new Object());
+      DataBuffer db = new DataBuffer();
       LocationDocumentConverter.writeLocation(
          db,
          item._longitude,
@@ -272,7 +272,7 @@ public final class FinderHistory implements SyncConverter, ReadableList, Collect
 
    public final synchronized int[] match(String pattern) {
       LocationPersistObject[] searchables = this._isSorted ? this._pastSearchesSorted : this._pastSearches;
-      this._searchLabelsUC = new Object[searchables.length];
+      this._searchLabelsUC = new String[searchables.length];
 
       for (int i = 0; i < this._searchLabelsUC.length; i++) {
          this._searchLabelsUC[i] = searchables[i]._label.toUpperCase();
@@ -287,7 +287,7 @@ public final class FinderHistory implements SyncConverter, ReadableList, Collect
 
       if (!pattern.equals("")) {
          i = 0;
-         String entirePattern = ((StringBuffer)(new Object())).append(pattern.toUpperCase()).append(' ').toString();
+         String entirePattern = pattern.toUpperCase() + ' ';
          int wordIxStart = 0;
          int wordIxEnd = entirePattern.indexOf(32);
 

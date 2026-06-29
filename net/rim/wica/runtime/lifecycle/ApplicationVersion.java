@@ -9,7 +9,7 @@ public final class ApplicationVersion {
    private static final char DELIMETER = '.';
 
    public ApplicationVersion(String version) {
-      StringTokenizer st = (StringTokenizer)(new Object(version, '.'));
+      StringTokenizer st = new StringTokenizer(version, '.');
       this._dataVersion = Integer.parseInt(st.nextToken());
       this._messageVersion = Integer.parseInt(st.nextToken());
       this._featureVersion = Integer.parseInt(st.nextToken());

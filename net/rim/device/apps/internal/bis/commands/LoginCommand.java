@@ -26,7 +26,7 @@ public class LoginCommand implements DomainCommand {
       String brandName = configRecord.getBrandName();
       String userName = (String)params.get("userName");
       String password = (String)params.get("password");
-      boolean rememberCredentials = "true".equals(params.get("rememberCredentials"));
+      boolean rememberCredentials = "true".equals((String)params.get("rememberCredentials"));
       return login(brandName, userName, password, rememberCredentials, false);
    }
 
@@ -67,9 +67,7 @@ public class LoginCommand implements DomainCommand {
          } else if (loginCallResult.getRESTStatusCode() == 10007) {
             result = new DomainCommandResult(failedResult, ApplicationResources.getString(218), null);
          } else if (!"tmobile".equalsIgnoreCase(brandName)) {
-            BISEventLogger.logEvent(
-               ((StringBuffer)(new Object("Login: Unhandled REST response code: "))).append(loginCallResult.getRESTStatusCode()).toString(), 0
-            );
+            BISEventLogger.logEvent("Login: Unhandled REST response code: " + loginCallResult.getRESTStatusCode(), 0);
          } else if (loginCallResult.getRESTStatusCode() == 10003) {
             result = new DomainCommandResult("tmobileAccountSuspended", ApplicationResources.getString(221), null);
             createSession = false;
@@ -80,9 +78,7 @@ public class LoginCommand implements DomainCommand {
             result = new DomainCommandResult("tmobileDeviceInUse", ApplicationResources.getString(109), null);
             createSession = false;
          } else {
-            BISEventLogger.logEvent(
-               ((StringBuffer)(new Object("TMobile Login: Unhandled REST response code: "))).append(loginCallResult.getRESTStatusCode()).toString(), 0
-            );
+            BISEventLogger.logEvent("TMobile Login: Unhandled REST response code: " + loginCallResult.getRESTStatusCode(), 0);
             result = new DomainCommandResult("error", null, null);
          }
 
@@ -148,9 +144,7 @@ public class LoginCommand implements DomainCommand {
             return true;
          }
       } else {
-         BISEventLogger.logEvent(
-            ((StringBuffer)(new Object("Create Session (Login): Unhandled REST response code: "))).append(userInfoCallResult.getRESTStatusCode()).toString(), 0
-         );
+         BISEventLogger.logEvent("Create Session (Login): Unhandled REST response code: " + userInfoCallResult.getRESTStatusCode(), 0);
          return false;
       }
    }
@@ -170,9 +164,7 @@ public class LoginCommand implements DomainCommand {
          withCustom[questions.length] = new SecretQuestion(-1, ApplicationResources.getString(255));
          return withCustom;
       } else {
-         BISEventLogger.logEvent(
-            ((StringBuffer)(new Object("Get Secret Questions: Unhandled REST response code: "))).append(questionsCallResult.getRESTStatusCode()).toString(), 0
-         );
+         BISEventLogger.logEvent("Get Secret Questions: Unhandled REST response code: " + questionsCallResult.getRESTStatusCode(), 0);
          return null;
       }
    }

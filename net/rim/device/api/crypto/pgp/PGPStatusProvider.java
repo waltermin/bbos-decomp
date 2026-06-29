@@ -7,6 +7,7 @@ import java.io.DataOutputStream;
 import java.util.Enumeration;
 import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.crypto.certificate.Certificate;
+import net.rim.device.api.crypto.certificate.CertificateKeyStoreIndex;
 import net.rim.device.api.crypto.certificate.CertificateServerInfo;
 import net.rim.device.api.crypto.certificate.CertificateServers;
 import net.rim.device.api.crypto.certificate.CertificateStatus;
@@ -15,9 +16,9 @@ import net.rim.device.api.crypto.certificate.status.CertificateStatusProvider;
 import net.rim.device.api.crypto.certificate.status.ProviderRequestData;
 import net.rim.device.api.crypto.certificate.status.ProviderResponseData;
 import net.rim.device.api.crypto.certificate.status.ProviderUiContext;
+import net.rim.device.api.crypto.certificate.status.StatusProviderException;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
-import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.api.crypto.keystore.PGPKeyStore;
 
 public class PGPStatusProvider extends CertificateStatusProvider {
@@ -44,7 +45,7 @@ public class PGPStatusProvider extends CertificateStatusProvider {
 
       if (extendedChecking) {
          KeyStore keyStore = PGPKeyStore.getInstance();
-         keyStore.addIndex((KeyStoreIndex)(new Object()));
+         keyStore.addIndex(new CertificateKeyStoreIndex());
          Enumeration keyStoreEnumeration = keyStore.elements(-2038609988711824737L, certChain[0]);
 
          while (keyStoreEnumeration.hasMoreElements()) {
@@ -59,13 +60,13 @@ public class PGPStatusProvider extends CertificateStatusProvider {
    }
 
    @Override
-   protected void encodeRequest(Certificate[] certChain, boolean extendedChecking, ProviderRequestData request, KeyStore keyStore, ProviderUiContext uiContext) {
+   protected void encodeRequest(Certificate[] certChain, boolean extendedChecking, ProviderRequestData request, KeyStore keyStore, ProviderUiContext uiContext) throws StatusProviderException {
       request.addGlobalField(1, this.getResponderURLs(certChain));
       int length = certChain.length;
 
       for (int i = 0; i < length; i++) {
          if (!(certChain[i] instanceof PGPCertificate)) {
-            throw new Object();
+            throw new StatusProviderException();
          }
 
          PGPCertificate certificate = (PGPCertificate)certChain[i];
@@ -132,7 +133,7 @@ public class PGPStatusProvider extends CertificateStatusProvider {
       // 072: invokestatic net/rim/device/api/crypto/keystore/TrustedKeyStore.getInstance ()Lnet/rim/device/api/crypto/keystore/KeyStore;
       // 075: astore 11
       // 077: aload 11
-      // 079: new java/lang/Object
+      // 079: new net/rim/device/api/crypto/certificate/CertificateKeyStoreIndex
       // 07c: dup
       // 07d: invokespecial net/rim/device/api/crypto/certificate/CertificateKeyStoreIndex.<init> ()V
       // 080: invokeinterface net/rim/device/api/crypto/keystore/KeyStore.addIndex (Lnet/rim/device/api/crypto/keystore/KeyStoreIndex;)Z 2
@@ -155,7 +156,7 @@ public class PGPStatusProvider extends CertificateStatusProvider {
       // 0ac: goto 008
       // 0af: aload 15
       // 0b1: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 0b6: checkcast java/lang/Object
+      // 0b6: checkcast net/rim/device/api/crypto/keystore/KeyStoreData
       // 0b9: astore 16
       // 0bb: aload 16
       // 0bd: invokeinterface net/rim/device/api/crypto/keystore/KeyStoreData.isPrivateKeySet ()Z 1
@@ -183,7 +184,7 @@ public class PGPStatusProvider extends CertificateStatusProvider {
       // 0fe: ifeq 15e
       // 101: aload 19
       // 103: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 108: checkcast java/lang/Object
+      // 108: checkcast net/rim/device/api/crypto/keystore/KeyStoreData
       // 10b: astore 20
       // 10d: aload 13
       // 10f: ifnonnull 138
@@ -191,7 +192,7 @@ public class PGPStatusProvider extends CertificateStatusProvider {
       // 114: sipush 8030
       // 117: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 11a: bipush 1
-      // 11b: anewarray 372
+      // 11b: anewarray 375
       // 11e: dup
       // 11f: bipush 0
       // 120: aload 16
@@ -224,7 +225,7 @@ public class PGPStatusProvider extends CertificateStatusProvider {
       // 165: sipush 8030
       // 168: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 16b: bipush 1
-      // 16c: anewarray 422
+      // 16c: anewarray 425
       // 16f: dup
       // 170: bipush 0
       // 171: aload 16
@@ -279,28 +280,28 @@ public class PGPStatusProvider extends CertificateStatusProvider {
       // try (29 -> 181): 185 null
    }
 
-   private CertificateStatus getStatus(byte[] statusEncoding) {
+   private CertificateStatus getStatus(byte[] statusEncoding) throws StatusProviderException {
       if (statusEncoding != null && statusEncoding.length > 0) {
          try {
-            ByteArrayInputStream input = (ByteArrayInputStream)(new Object(statusEncoding));
-            DataInputStream dataIn = (DataInputStream)(new Object(input));
+            ByteArrayInputStream input = new ByteArrayInputStream(statusEncoding);
+            DataInputStream dataIn = new DataInputStream(input);
             int status = dataIn.readInt();
             long creationTime = dataIn.readLong();
-            return (CertificateStatus)(status == 1
-               ? new Object(status, System.currentTimeMillis(), creationTime, -1, creationTime, 0)
-               : new Object(status, System.currentTimeMillis(), creationTime, -1, -1));
+            return status == 1
+               ? new CertificateStatus(status, System.currentTimeMillis(), creationTime, -1, creationTime, 0)
+               : new CertificateStatus(status, System.currentTimeMillis(), creationTime, -1, -1);
          } finally {
-            throw new Object();
+            throw new StatusProviderException();
          }
       } else {
-         throw new Object();
+         throw new StatusProviderException();
       }
    }
 
    private byte[] getResponderURLs(Certificate[] certChain) {
       try {
-         ByteArrayOutputStream output = (ByteArrayOutputStream)(new Object());
-         DataOutputStream dataOut = (DataOutputStream)(new Object(output));
+         ByteArrayOutputStream output = new ByteArrayOutputStream();
+         DataOutputStream dataOut = new DataOutputStream(output);
          CertificateServers servers = CertificateServers.getInstance();
          dataOut.writeInt(servers.getServerSize(1));
          Enumeration ldapServers = servers.getServers(1);
@@ -313,12 +314,12 @@ public class PGPStatusProvider extends CertificateStatusProvider {
          output.close();
          return output.toByteArray();
       } finally {
-         throw new Object();
+         throw new RuntimeException();
       }
    }
 
    private String getURL(CertificateServerInfo serverInfo, boolean stopAfterPort) {
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       buffer.append("ldap://");
       buffer.append(serverInfo.getServer()).append(':');
       buffer.append(serverInfo.getPort()).append('/');
@@ -330,7 +331,7 @@ public class PGPStatusProvider extends CertificateStatusProvider {
    }
 
    private byte[] computeHash(Certificate certificate) {
-      SHA1Digest digest = (SHA1Digest)(new Object());
+      SHA1Digest digest = new SHA1Digest();
       digest.update(certificate.getEncoding());
       return digest.getDigest();
    }

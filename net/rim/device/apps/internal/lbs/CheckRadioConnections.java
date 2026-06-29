@@ -36,10 +36,10 @@ public final class CheckRadioConnections implements CoverageStatusListener {
          if (RadioInfo.getActiveWAFs() == 0) {
             String netType = RadioInfo.areWAFsSupported(4) ? "" : LBSResources.getString(335);
             if ((DeviceInfo.getBatteryStatus() & 16384) != 0) {
-               this._radioErrorMsg = MessageFormat.format(LBSResources.getString(333), new Object[]{netType});
+               this._radioErrorMsg = MessageFormat.format(LBSResources.getString(333), new String[]{netType});
                UiApplication.getUiApplication().invokeLater(new CheckRadioConnections$MessageRunnable(this, this._radioErrorMsg, 0));
             } else {
-               this._radioErrorMsg = MessageFormat.format(LBSResources.getString(332), new Object[]{netType});
+               this._radioErrorMsg = MessageFormat.format(LBSResources.getString(332), new String[]{netType});
                UiApplication.getUiApplication().invokeLater(new CheckRadioConnections$MessageRunnable(this, this._radioErrorMsg, 1));
             }
          } else {
@@ -60,7 +60,7 @@ public final class CheckRadioConnections implements CoverageStatusListener {
       } else if (this.isOutofCoverage()) {
          CoverageInfo.addListener(this);
          String netType = (RadioInfo.getActiveWAFs() & 4) == 4 ? LBSResources.getString(336) : LBSResources.getString(335);
-         this._coverageErrorMsg = MessageFormat.format(LBSResources.getString(334), new Object[]{netType});
+         this._coverageErrorMsg = MessageFormat.format(LBSResources.getString(334), new String[]{netType});
          if (!requestComplete) {
             UiApplication.getUiApplication().invokeLater(new CheckRadioConnections$MessageRunnable(this, this._coverageErrorMsg, 0));
          }

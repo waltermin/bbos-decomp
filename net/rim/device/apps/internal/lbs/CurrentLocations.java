@@ -7,9 +7,10 @@ import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.apps.internal.lbs.maplet.MapRect;
 import net.rim.vm.Array;
+import net.rim.vm.WeakReference;
 
 final class CurrentLocations implements CollectionListener {
-   XYRect _bbox = (XYRect)(new Object());
+   XYRect _bbox = new XYRect();
    MapField _mapField = null;
    Location _routeLocation = null;
    Location[] _locations = new Location[0];
@@ -22,7 +23,7 @@ final class CurrentLocations implements CollectionListener {
 
    public CurrentLocations(MapField mapField) {
       this._mapField = mapField;
-      LocationDocumentCollection.getInstance().addCollectionListener(new Object(this));
+      LocationDocumentCollection.getInstance().addCollectionListener(new WeakReference(this));
    }
 
    final Location getFocus() {
@@ -100,7 +101,7 @@ final class CurrentLocations implements CollectionListener {
       this._locations = new Location[0];
       this._mapField._currentPOIs = new Location[0];
       this._mapField._currentAds = new Location[0];
-      this._mapField._currentLegalNotices = new Object[0];
+      this._mapField._currentLegalNotices = new String[0];
       this._focus = 0;
       this._count = 0;
       this._bbox.x = 0;

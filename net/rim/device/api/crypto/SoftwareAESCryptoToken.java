@@ -32,7 +32,7 @@ final class SoftwareAESCryptoToken extends AESCryptoToken implements Persistable
    @Override
    public final CryptoTokenCipherContext initializeEncrypt(CryptoTokenSymmetricKeyData data, int blockLength) {
       if (!(data instanceof SoftwareAESCryptoToken$AESKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareAESCryptoToken$AESKeyData key = (SoftwareAESCryptoToken$AESKeyData)data;
@@ -42,7 +42,7 @@ final class SoftwareAESCryptoToken extends AESCryptoToken implements Persistable
    @Override
    public final CryptoTokenCipherContext initializeEncrypt(CryptoTokenSymmetricKeyData data, int blockLength, boolean isInECMMode) {
       if (!(data instanceof SoftwareAESCryptoToken$AESKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareAESCryptoToken$AESKeyData key = (SoftwareAESCryptoToken$AESKeyData)data;
@@ -52,7 +52,7 @@ final class SoftwareAESCryptoToken extends AESCryptoToken implements Persistable
    @Override
    public final void encrypt(CryptoTokenCipherContext context, byte[] plaintext, int plaintextOffset, byte[] ciphertext, int ciphertextOffset) {
       if (!(context instanceof SoftwareAESCryptoToken$AESCipherContext)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       ((SoftwareAESCryptoToken$AESCipherContext)context).getNativeBlockCipher().crypt(plaintext, plaintextOffset, ciphertext, ciphertextOffset);
@@ -61,7 +61,7 @@ final class SoftwareAESCryptoToken extends AESCryptoToken implements Persistable
    @Override
    public final CryptoTokenCipherContext initializeDecrypt(CryptoTokenSymmetricKeyData data, int blockLength) {
       if (!(data instanceof SoftwareAESCryptoToken$AESKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareAESCryptoToken$AESKeyData key = (SoftwareAESCryptoToken$AESKeyData)data;
@@ -71,7 +71,7 @@ final class SoftwareAESCryptoToken extends AESCryptoToken implements Persistable
    @Override
    public final CryptoTokenCipherContext initializeDecrypt(CryptoTokenSymmetricKeyData data, int blockLength, boolean isInECMMode) {
       if (!(data instanceof SoftwareAESCryptoToken$AESKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareAESCryptoToken$AESKeyData key = (SoftwareAESCryptoToken$AESKeyData)data;
@@ -81,7 +81,7 @@ final class SoftwareAESCryptoToken extends AESCryptoToken implements Persistable
    @Override
    public final void decrypt(CryptoTokenCipherContext context, byte[] ciphertext, int ciphertextOffset, byte[] plaintext, int plaintextOffset) {
       if (!(context instanceof SoftwareAESCryptoToken$AESCipherContext)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       ((SoftwareAESCryptoToken$AESCipherContext)context).getNativeBlockCipher().crypt(ciphertext, ciphertextOffset, plaintext, plaintextOffset);
@@ -90,7 +90,7 @@ final class SoftwareAESCryptoToken extends AESCryptoToken implements Persistable
    @Override
    public final int extractKeyDataLength(CryptoTokenSymmetricKeyData data) {
       if (!(data instanceof SoftwareAESCryptoToken$AESKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareAESCryptoToken$AESKeyData)data).getLength();
       }
@@ -99,7 +99,7 @@ final class SoftwareAESCryptoToken extends AESCryptoToken implements Persistable
    @Override
    public final byte[] extractKeyData(CryptoTokenSymmetricKeyData data) {
       if (!(data instanceof SoftwareAESCryptoToken$AESKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareAESCryptoToken$AESKeyData)data).getData();
       }
@@ -136,7 +136,7 @@ final class SoftwareAESCryptoToken extends AESCryptoToken implements Persistable
       }
 
       if (!Arrays.equals(targetNoECM, 0, targetECM, 0, length)) {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
       targetNoECM = new byte[length];
@@ -155,7 +155,7 @@ final class SoftwareAESCryptoToken extends AESCryptoToken implements Persistable
       }
 
       if (!Arrays.equals(targetNoECM, 0, targetECM, 0, length)) {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
    }
 

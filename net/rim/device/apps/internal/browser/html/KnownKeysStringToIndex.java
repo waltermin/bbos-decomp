@@ -6,9 +6,9 @@ import net.rim.device.api.util.ToIntHashtable;
 import net.rim.device.apps.internal.browser.markup.HTMLUtilities;
 
 class KnownKeysStringToIndex {
-   private Vector _v = (Vector)(new Object());
+   private Vector _v = new Vector();
    private int _index = 512;
-   private ToIntHashtable _h = (ToIntHashtable)(new Object());
+   private ToIntHashtable _h = new ToIntHashtable();
    static final int ID_INDEX = -4;
    static final int NAME_INDEX = -3;
    public static final int EMPTY_STR = -2;

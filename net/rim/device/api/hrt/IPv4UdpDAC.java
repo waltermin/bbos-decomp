@@ -89,8 +89,8 @@ public final class IPv4UdpDAC extends DAC implements Persistable {
 
    @Override
    public final int rcvdFromAddress(DatagramAddressBase addr) {
-      if (!(addr instanceof Object)) {
-         throw new Object();
+      if (!(addr instanceof UdpAddress)) {
+         throw new IllegalArgumentException();
       }
 
       UdpAddress udpAddress = (UdpAddress)addr;
@@ -113,14 +113,14 @@ public final class IPv4UdpDAC extends DAC implements Persistable {
 
       int numAddrs = b.readUnsignedByte();
       if (numAddrs * 4 != length - 1) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       long[] addrs = this.getAddresses();
       if (addrs == null) {
          addrs = new long[numAddrs];
       } else if (addrs.length != numAddrs) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       for (int i = 0; i < numAddrs; i++) {
@@ -194,15 +194,15 @@ public final class IPv4UdpDAC extends DAC implements Persistable {
                continue;
             }
 
-            throw new Object();
+            throw new NumberFormatException();
          }
 
-         throw new Object();
+         throw new NumberFormatException();
       }
 
       nextIndex = str.indexOf(58, index);
       if (nextIndex == -1) {
-         throw new Object();
+         throw new NumberFormatException();
       }
 
       int i = Integer.parseInt(str.substring(index, nextIndex), 10);
@@ -228,7 +228,7 @@ public final class IPv4UdpDAC extends DAC implements Persistable {
    }
 
    public static final String addr2String(long addr) {
-      StringBuffer strBuf = (StringBuffer)(new Object(15));
+      StringBuffer strBuf = new StringBuffer(15);
 
       int shift;
       for (shift = 56; shift > 32; shift -= 8) {

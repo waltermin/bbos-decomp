@@ -7,7 +7,7 @@ import net.rim.vm.Array;
 import net.rim.vm.WeakReference;
 
 final class BannerManager implements Runnable, RibbonComponent$RibbonComponentChangeListener {
-   private WeakReference[] _apps = new Object[0];
+   private WeakReference[] _apps = new WeakReference[0];
    private Object[] _bannerArrays = new Object[0];
    private boolean[] _updatesPending = new boolean[0];
    private Object[] _appBannerRefs = new Object[0];
@@ -20,16 +20,16 @@ final class BannerManager implements Runnable, RibbonComponent$RibbonComponentCh
          appPosition = this.addApp(app);
       }
 
-      WeakReference[] banners = (Object[])this._bannerArrays[appPosition];
+      WeakReference[] banners = (WeakReference[])this._bannerArrays[appPosition];
       Array.resize(banners, banners.length + 1);
-      banners[banners.length - 1] = (WeakReference)(new Object(banner));
+      banners[banners.length - 1] = new WeakReference(banner);
    }
 
    final synchronized void unregisterBanner(BannerField banner) {
       int appMax = this._apps.length;
 
       for (int i = 0; i < appMax; i++) {
-         WeakReference[] banners = (Object[])this._bannerArrays[i];
+         WeakReference[] banners = (WeakReference[])this._bannerArrays[i];
          int bannerMax = banners.length;
 
          for (int j = 0; j < bannerMax; j++) {
@@ -74,7 +74,7 @@ final class BannerManager implements Runnable, RibbonComponent$RibbonComponentCh
             System.arraycopy(this._appBannerRefs, srcO, this._appBannerRefs, i, count);
             appMax--;
          } else {
-            WeakReference[] banners = (Object[])this._bannerArrays[i];
+            WeakReference[] banners = (WeakReference[])this._bannerArrays[i];
             int bannerMax = banners.length;
 
             for (int j = 0; j < bannerMax; j++) {
@@ -120,7 +120,7 @@ final class BannerManager implements Runnable, RibbonComponent$RibbonComponentCh
          for (int i = 0; i < max; i++) {
             if (app == this._apps[i].get()) {
                this._updatesPending[i] = false;
-               banners = (Object[])this._bannerArrays[i];
+               banners = (WeakReference[])this._bannerArrays[i];
                appBanners = (BannerField[])this._appBannerRefs[i];
                break;
             }
@@ -181,9 +181,9 @@ final class BannerManager implements Runnable, RibbonComponent$RibbonComponentCh
       int newlength = this._apps.length + 1;
       int length = this._apps.length;
       Array.resize(this._apps, newlength);
-      this._apps[length] = (WeakReference)(new Object(app));
+      this._apps[length] = new WeakReference(app);
       Array.resize(this._bannerArrays, newlength);
-      this._bannerArrays[length] = new Object[0];
+      this._bannerArrays[length] = new WeakReference[0];
       Array.resize(this._updatesPending, newlength);
       this._updatesPending[length] = false;
       Array.resize(this._appBannerRefs, newlength);

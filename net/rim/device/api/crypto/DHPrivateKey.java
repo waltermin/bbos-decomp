@@ -36,11 +36,11 @@ public final class DHPrivateKey implements PrivateKey, DHKey, Persistable {
             byte[] q = cs.getQ();
             byte[] x = this.getPrivateKeyData();
             if (CryptoByteArrayArithmetic.isZero(x)) {
-               throw new Object();
+               throw new InvalidKeyException();
             }
 
             if (q != null && CryptoByteArrayArithmetic.compare(x, q) >= 0) {
-               throw new Object();
+               throw new InvalidKeyException();
             }
          } finally {
             break label55;
@@ -81,22 +81,22 @@ public final class DHPrivateKey implements PrivateKey, DHKey, Persistable {
          DHCryptoToken cryptoToken = (DHCryptoToken)cryptoSystem.getAsymmetricCryptoToken();
          this.initialize(cryptoSystem, cryptoToken, cryptoTokenData);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
-   public DHPrivateKey(DHCryptoSystem cryptoSystem, byte[] data) {
+   public DHPrivateKey(DHCryptoSystem cryptoSystem, byte[] data) throws InvalidKeyException {
       if (cryptoSystem != null && data != null) {
          data = CryptoByteArrayArithmetic.trim(data);
          int maxPrivateKeyLength = cryptoSystem.getPrivateKeyLength();
          if (data.length > maxPrivateKeyLength) {
-            throw new Object();
+            throw new InvalidKeyException();
          }
 
          DHCryptoToken cryptoToken = (DHCryptoToken)cryptoSystem.getAsymmetricCryptoToken();
          this.initialize(cryptoSystem, cryptoToken, cryptoToken.injectDHPrivateKey(cryptoSystem.getCryptoTokenData(), data));
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

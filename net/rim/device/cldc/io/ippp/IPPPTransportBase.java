@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.ippp;
 
+import java.io.IOException;
 import javax.microedition.io.Connector;
 import javax.microedition.io.Datagram;
 import javax.microedition.io.DatagramConnection;
@@ -44,12 +45,12 @@ public class IPPPTransportBase extends DatagramTransportBase implements Datagram
       return this._sysCheckTimeout;
    }
 
-   void sendSysCheck(String groupUID, String specificUID) {
+   void sendSysCheck(String groupUID, String specificUID) throws IOException {
       if (groupUID == null) {
-         throw new Object("Could not find a service book entry for IPPP");
+         throw new IOException("Could not find a service book entry for IPPP");
       }
 
-      StringBuffer address = (StringBuffer)(new Object());
+      StringBuffer address = new StringBuffer();
       address.append("IPPP/").append(groupUID);
       if (specificUID != null) {
          address.append('(').append(specificUID).append(')');
@@ -175,7 +176,7 @@ public class IPPPTransportBase extends DatagramTransportBase implements Datagram
 
    public IPPPTransportBase() {
       EventLogger.register(6406224406390975741L, "net.rim.ippp", 2);
-      this._gmeDatagramTable = (IntHashtable)(new Object());
+      this._gmeDatagramTable = new IntHashtable();
 
       label20:
       try {
@@ -189,16 +190,16 @@ public class IPPPTransportBase extends DatagramTransportBase implements Datagram
    }
 
    @Override
-   public void send(Datagram datagram) {
+   public void send(Datagram datagram) throws IOException {
       EventLogger.logEvent(6406224406390975741L, 1415082868, datagram.getLength(), 10, 0);
       IPPPDatagramBase ipppDatagram = (IPPPDatagramBase)datagram;
       GMEDatagram txGmeDatagram = (GMEDatagram)super._subConnection.newDatagram(super._subConnection.getNominalLength());
       String groupUID = ipppDatagram.getGroupUID();
       if (groupUID == null) {
-         throw new Object("Could not find a service book entry for IPPP");
+         throw new IOException("Could not find a service book entry for IPPP");
       }
 
-      StringBuffer address = (StringBuffer)(new Object());
+      StringBuffer address = new StringBuffer();
       address.append("IPPP/").append(groupUID);
       String specificUID = ipppDatagram.getSpecificUID();
       if (specificUID != null) {
@@ -210,7 +211,7 @@ public class IPPPTransportBase extends DatagramTransportBase implements Datagram
       txGmeDatagram.setLength(txGmeDatagram.getPosition());
       txGmeDatagram.setDatagramId(ipppDatagram.getDatagramId());
       txGmeDatagram.setDatagramStatusListener(this);
-      this._gmeDatagramTable.put(txGmeDatagram.getDatagramId(), new Object[]{txGmeDatagram, new Object(ipppDatagram.getDatagramStatusListener())});
+      this._gmeDatagramTable.put(txGmeDatagram.getDatagramId(), new Object[]{txGmeDatagram, new WeakReference(ipppDatagram.getDatagramStatusListener())});
       this.addSendRequest(super._subConnection, txGmeDatagram);
       EventLogger.logEvent(6406224406390975741L, 1417169218, 5);
    }
@@ -268,7 +269,7 @@ public class IPPPTransportBase extends DatagramTransportBase implements Datagram
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

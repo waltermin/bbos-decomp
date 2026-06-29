@@ -32,7 +32,7 @@ import net.rim.device.apps.api.messaging.resources.MessageResources;
 import net.rim.device.apps.api.messaging.search.MessageSearch;
 import net.rim.device.apps.api.messaging.util.AnonymousMessages;
 import net.rim.device.apps.api.messaging.util.DraftSaveable;
-import net.rim.device.apps.api.ribbon.EntryPointDescriptor;
+import net.rim.device.apps.api.ribbon.ApplicationEntryPoint;
 import net.rim.device.apps.api.ribbon.RibbonLauncher;
 import net.rim.device.apps.api.ribbon.indicators.UnreadCountManager;
 import net.rim.device.apps.api.ui.DialogWithBackgroundThread;
@@ -40,6 +40,7 @@ import net.rim.device.apps.api.utility.editor.EditorUsingRIMModelFactory;
 import net.rim.device.internal.proxy.Proxy;
 import net.rim.device.internal.system.InternalServices;
 import net.rim.device.internal.system.Security;
+import net.rim.vm.WeakReference;
 
 public final class MessagingApp extends UiApplication implements GlobalEventListener {
    private MessageEntryPoint _entry;
@@ -50,7 +51,7 @@ public final class MessagingApp extends UiApplication implements GlobalEventList
    private MessageListUI _previouslyVisibleMessageListUI;
    private int _previouslyVisibleScreenType;
    private boolean _resetScreenType;
-   private LongHashtable _serviceMessageListUIs = (LongHashtable)(new Object(2));
+   private LongHashtable _serviceMessageListUIs = new LongHashtable(2);
    private long _currentlyVisibleServiceID;
    private static final int SET_FILTER_SLOW_THRESHOLD = 1500;
 
@@ -101,7 +102,7 @@ public final class MessagingApp extends UiApplication implements GlobalEventList
             if (ad != null) {
                RibbonLauncher rl = RibbonLauncher.getInstance();
                if (rl != null) {
-                  rl.registerAction("SearchMessages", (EntryPointDescriptor)(new Object(ad)));
+                  rl.registerAction("SearchMessages", new ApplicationEntryPoint(ad));
                   return;
                }
             }
@@ -127,9 +128,7 @@ public final class MessagingApp extends UiApplication implements GlobalEventList
                try {
                   if (brandingMessageFrom != null && brandingMessageSubject != null && brandingMessageBody != null) {
                      AnonymousMessages.createAnonymousMessage(
-                        (String)(new Object(brandingMessageFrom, encoding)),
-                        (String)(new Object(brandingMessageSubject, encoding)),
-                        (String)(new Object(brandingMessageBody, encoding))
+                        new String(brandingMessageFrom, encoding), new String(brandingMessageSubject, encoding), new String(brandingMessageBody, encoding)
                      );
                   }
                } finally {
@@ -164,9 +163,9 @@ public final class MessagingApp extends UiApplication implements GlobalEventList
       UnreadCountManager.setAction(1, mainview);
       UnreadCountManager.setAction(2, mainview);
       MessageListOptions.getOptions().applyOptions(mainview);
-      this._savedMessageListUI = (MessageListUI)(new Object(MessageResources.getString(50), null, 2));
+      this._savedMessageListUI = new MessageListUI(MessageResources.getString(50), null, 2);
       this._savedMessageListUI.loadFrom(FolderMerge.getMergeCollection(6368823655991217730L));
-      this._mainMessageCentreMessageListUI = (MessageListUI)(new Object(null, null, 2));
+      this._mainMessageCentreMessageListUI = new MessageListUI(null, null, 2);
       this._mainMessageCentreMessageListUI.loadFrom(this.wrapWithFilter(MessageListOptions.getOptions().getMessageCollection()));
       this.addGlobalEventListener(this);
       this.enableKeyUpEvents(true);
@@ -193,7 +192,7 @@ public final class MessagingApp extends UiApplication implements GlobalEventList
    public final void eventOccurred(long guid, int data0, int data1, Object object0, Object object1) {
       if (guid != 4609271590317602928L) {
          if (guid == -7912584003624203437L) {
-            if (object1 instanceof Object) {
+            if (object1 instanceof MessageEntryPoint) {
                this._entry = (MessageEntryPoint)object1;
             } else {
                this._entry = null;
@@ -209,8 +208,8 @@ public final class MessagingApp extends UiApplication implements GlobalEventList
             this._savedMessageListUI.setTitle(MessageResources.getString(50));
          } else {
             if (guid != -8639396151207124460L) {
-               if (guid == -3632668756051372542L && object0 instanceof Object) {
-                  long serviceID = object0;
+               if (guid == -3632668756051372542L && object0 instanceof Long) {
+                  long serviceID = (Long)object0;
                   if (serviceID != -7118119043524803584L && serviceID != -942103673428357213L && serviceID != -4696470826620059293L) {
                      MessageListUI msgList = (MessageListUI)this._serviceMessageListUIs.get(serviceID);
                      if (msgList != null) {
@@ -221,8 +220,8 @@ public final class MessagingApp extends UiApplication implements GlobalEventList
                      }
                   }
                }
-            } else if (object0 instanceof Object) {
-               long serviceID = object0;
+            } else if (object0 instanceof Long) {
+               long serviceID = (Long)object0;
                if (serviceID == -942103673428357213L || serviceID == -7118119043524803584L || serviceID == -4696470826620059293L) {
                   int pid = Proxy.getInstance().getProcessId();
                   RIMGlobalMessagePoster.postGlobalEvent(pid, -8639396151207124460L, 0, 0, null, null);
@@ -233,9 +232,9 @@ public final class MessagingApp extends UiApplication implements GlobalEventList
                int titleID = getMessageListTitleID(serviceID);
                if (titleID != -1) {
                   msgListTitle = MessageResources.getString(titleID);
-                  MessageEntryPoint mep = MessageEntryPoint.findEntry(((StringBuffer)(new Object("service="))).append(serviceID).toString());
+                  MessageEntryPoint mep = MessageEntryPoint.findEntry("service=" + serviceID);
                   if (mep != null) {
-                     mep.set(3, (Integer)(new Object(titleID)));
+                     mep.set(3, new Integer(titleID));
                   }
                } else {
                   Folder hierarchy = FolderHierarchies.getFolderHierarchy(serviceID);
@@ -289,7 +288,7 @@ public final class MessagingApp extends UiApplication implements GlobalEventList
 
    private final MessageListUI getTopMessageListUI() {
       for (Screen screen = this.getActiveScreen(); screen != null; screen = screen.getScreenBelow()) {
-         if (screen instanceof Object) {
+         if (screen instanceof MessageListUI) {
             return (MessageListUI)screen;
          }
       }
@@ -310,12 +309,12 @@ public final class MessagingApp extends UiApplication implements GlobalEventList
    private final void checkAndSaveEmails() {
       Screen currentScreen = this.getActiveScreen();
 
-      while (!(currentScreen instanceof Object)) {
+      while (!(currentScreen instanceof MessageListUI)) {
          if (currentScreen == null) {
             return;
          }
 
-         if (!(currentScreen instanceof Object)) {
+         if (!(currentScreen instanceof DraftSaveable)) {
             currentScreen = currentScreen.getScreenBelow();
          } else {
             ((DraftSaveable)currentScreen).draftSaveOnClose();
@@ -338,7 +337,7 @@ public final class MessagingApp extends UiApplication implements GlobalEventList
       }
 
       MessageListUI searchUI = null;
-      if (objectParameter instanceof Object) {
+      if (objectParameter instanceof MessageListUI) {
          searchUI = (MessageListUI)objectParameter;
       }
 
@@ -362,9 +361,9 @@ public final class MessagingApp extends UiApplication implements GlobalEventList
          long serviceID = 0;
          String friendlyName = null;
          MessageListUI serviceMessageListUI = null;
-         if ((screenType == 830104111 || screenType == 1064620590) && objectParameter instanceof Object) {
+         if ((screenType == 830104111 || screenType == 1064620590) && objectParameter instanceof String) {
             serviceID = Long.parseLong((String)objectParameter);
-            MessageEntryPoint entry = MessageEntryPoint.findEntry(((StringBuffer)(new Object("service="))).append(serviceID).toString());
+            MessageEntryPoint entry = MessageEntryPoint.findEntry("service=" + serviceID);
             if (entry != null) {
                friendlyName = entry.get(3, "");
             }
@@ -395,7 +394,7 @@ public final class MessagingApp extends UiApplication implements GlobalEventList
 
                   this._savedMessageListUI.setExitAction(exitAction);
                   this._currentlyVisibleMessageListUI = this._savedMessageListUI;
-                  this._savedMessageListUI.run(new Object(3, 52));
+                  this._savedMessageListUI.run(new ContextObject(3, 52));
                   break;
                case -1588283800:
                case 2076204577:
@@ -434,12 +433,12 @@ public final class MessagingApp extends UiApplication implements GlobalEventList
                         searchUI.setExitAction(exitAction);
                      }
 
-                     searchUI.run(new Object(3, 22));
+                     searchUI.run(new ContextObject(3, 22));
                   }
                   break;
                case -1001931407:
                   MessageSearch searchInterface = MessageSearch.getInstance();
-                  if (searchInterface != null && objectParameter instanceof Object) {
+                  if (searchInterface != null && objectParameter instanceof String) {
                      searchInterface.runSearch((String)objectParameter, true);
                      this._currentlyVisibleScreenType = 0;
                   }
@@ -451,7 +450,7 @@ public final class MessagingApp extends UiApplication implements GlobalEventList
 
                   this._previouslyVisibleMessageListUI = null;
                   this._currentlyVisibleMessageListUI = this._mainMessageCentreMessageListUI;
-                  this._mainMessageCentreMessageListUI.run(new Object(3));
+                  this._mainMessageCentreMessageListUI.run(new ContextObject(3));
                   break;
                case 830104111:
                case 1064620590:
@@ -476,7 +475,7 @@ public final class MessagingApp extends UiApplication implements GlobalEventList
                         messagesCollection = MessageListOptions.getOptions().getMessageCollection(serviceID);
                      }
 
-                     serviceMessageListUI = (MessageListUI)(new Object(friendlyName, null, 2));
+                     serviceMessageListUI = new MessageListUI(friendlyName, null, 2);
                      serviceMessageListUI.loadFrom(this.wrapWithFilter(messagesCollection));
                      this._serviceMessageListUIs.put(serviceID, serviceMessageListUI);
                   }
@@ -489,11 +488,11 @@ public final class MessagingApp extends UiApplication implements GlobalEventList
                   }
 
                   serviceMessageListUI.setExitAction(exitAction);
-                  ContextObject context = (ContextObject)(new Object(3));
+                  ContextObject context = new ContextObject(3);
                   if (serviceID != -7118119043524803584L && serviceID != -942103673428357213L && serviceID != -4696470826620059293L) {
-                     context.put(-953487338188658393L, new Object(serviceID));
+                     context.put(-953487338188658393L, new Long(serviceID));
                   } else {
-                     context.put(8505215491443778230L, new Object(serviceID));
+                     context.put(8505215491443778230L, new Long(serviceID));
                   }
 
                   serviceMessageListUI.run(context);
@@ -541,8 +540,8 @@ public final class MessagingApp extends UiApplication implements GlobalEventList
 
    private final Collection wrapWithFilter(Collection messages) {
       if (MessageListOptions.getOptions().getFlag(512)) {
-         MessageFilter filter = (MessageFilter)(new Object((ReadableList)messages, (byte)1));
-         ((CollectionEventSource)messages).addCollectionListener(new Object(filter));
+         MessageFilter filter = new MessageFilter((ReadableList)messages, (byte)1);
+         ((CollectionEventSource)messages).addCollectionListener(new WeakReference(filter));
          int unfilteredSize = ((ReadableList)messages).size();
          if (unfilteredSize > 1500) {
             this.setFilterWithProgress(filter);
@@ -555,7 +554,7 @@ public final class MessagingApp extends UiApplication implements GlobalEventList
    }
 
    private final void setFilterWithProgress(MessageFilter filter) {
-      DialogWithBackgroundThread dialog = (DialogWithBackgroundThread)(new Object());
+      DialogWithBackgroundThread dialog = new DialogWithBackgroundThread();
       SetFilterRunnable activity = new SetFilterRunnable(filter);
       String progressTitle = MessageResources.getString(202);
       dialog.initialize(progressTitle, activity);

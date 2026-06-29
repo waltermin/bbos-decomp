@@ -11,8 +11,8 @@ final class SimpleMsgDataBlob extends PeerDataBlob {
    private String _msg;
    private String _conversationId;
    private String _from;
-   private Vector _contacts = (Vector)(new Object(1));
-   private Vector _contactNames = (Vector)(new Object(1));
+   private Vector _contacts = new Vector(1);
+   private Vector _contactNames = new Vector(1);
    private String _contactsStr;
    private boolean _system;
    private static final int MSG_ID = 1;
@@ -21,7 +21,7 @@ final class SimpleMsgDataBlob extends PeerDataBlob {
    private static final int FROM = 4;
    private static final int CONTACT_STR = 5;
    private static final int SYSTEM = 8;
-   private static final StringBuffer _sb = (StringBuffer)(new Object());
+   private static final StringBuffer _sb = new StringBuffer();
 
    public SimpleMsgDataBlob() {
       this(0, null);
@@ -63,7 +63,7 @@ final class SimpleMsgDataBlob extends PeerDataBlob {
    private final void unpackContacts() {
       this._contacts.removeAllElements();
       this._contactNames.removeAllElements();
-      StringTokenizer st = (StringTokenizer)(new Object(this._contactsStr, ','));
+      StringTokenizer st = new StringTokenizer(this._contactsStr, ',');
 
       while (st.hasMoreTokens()) {
          String s = st.nextToken();
@@ -107,7 +107,7 @@ final class SimpleMsgDataBlob extends PeerDataBlob {
 
    @Override
    public final void pickle(DataBuffer db) {
-      DataBuffer db2 = (DataBuffer)(new Object());
+      DataBuffer db2 = new DataBuffer();
       ConverterUtilities.writeInt(db2, 1, this._msgId);
       this.addStringToDataBuffer(db2, 3, this._conversationId);
       this.addStringToDataBuffer(db2, 4, this._from);

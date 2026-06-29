@@ -5,12 +5,15 @@ import javax.microedition.pim.PIM;
 import net.rim.blackberry.api.blackberrymessenger.MessengerContact;
 import net.rim.blackberry.api.blackberrymessenger.Session;
 import net.rim.blackberry.api.pdap.BlackBerryContact;
+import net.rim.blackberry.api.pdap.ContactImpl;
 import net.rim.blackberry.api.pdap.ContactListImpl;
 import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.system.PersistentObject;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Graphics;
+import net.rim.device.api.ui.component.ActiveRichTextField;
+import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.util.AbstractString;
 import net.rim.device.api.util.AbstractStringWrapper;
 import net.rim.device.api.util.Arrays;
@@ -33,7 +36,7 @@ public final class PeerContact extends ContactStatus implements Contact, Messeng
    private Object _keyEncoding;
    private Object _originalContactInfoEncoding;
    private byte[] _privateKey;
-   private Vector _contactLists = (Vector)(new Object());
+   private Vector _contactLists = new Vector();
    private int _refCount;
    private boolean _filtered;
    private Object _keywords;
@@ -54,7 +57,7 @@ public final class PeerContact extends ContactStatus implements Contact, Messeng
    static final int REFERENCE_COUNT = 19;
    private static final char PLACEHOLDER = '￼';
    static EmoticonStringPattern _smileyFacility = Smileys.getSmileyFacility();
-   private static StringBuffer _buffer = (StringBuffer)(new Object());
+   private static StringBuffer _buffer = new StringBuffer();
 
    final IntHashtable getPersistentData() {
       return super._persistentData;
@@ -175,7 +178,7 @@ public final class PeerContact extends ContactStatus implements Contact, Messeng
 
    final void setIdInternal(int hashId, Object idEncoding) {
       this._idHash = hashId;
-      super._persistentData.put(17, new Object(hashId));
+      super._persistentData.put(17, new Integer(hashId));
       this._idEncoding = idEncoding;
       super._persistentData.put(1, this._idEncoding);
       this.commit();
@@ -256,7 +259,7 @@ public final class PeerContact extends ContactStatus implements Contact, Messeng
 
    final void setCookie(int cookie) {
       this._cookie = cookie;
-      super._persistentData.put(18, new Object(this._cookie));
+      super._persistentData.put(18, new Integer(this._cookie));
       this.commit();
    }
 
@@ -266,13 +269,13 @@ public final class PeerContact extends ContactStatus implements Contact, Messeng
 
    final void incrRefCount() {
       this._refCount++;
-      super._persistentData.put(19, new Object(this._refCount));
+      super._persistentData.put(19, new Integer(this._refCount));
       this.commit();
    }
 
    final void decrRefCount() {
       this._refCount--;
-      super._persistentData.put(19, new Object(this._refCount));
+      super._persistentData.put(19, new Integer(this._refCount));
       this.commit();
    }
 
@@ -282,7 +285,7 @@ public final class PeerContact extends ContactStatus implements Contact, Messeng
 
    public final Field[] getUserInfoFields() {
       int index = 0;
-      Field[] fields = new Object[8];
+      Field[] fields = new Field[8];
       index = this.setNickName(fields, index);
       index = this.setName(fields, index);
       index = this.setInfo(fields, index);
@@ -298,7 +301,7 @@ public final class PeerContact extends ContactStatus implements Contact, Messeng
          if (rimContact != null) {
             try {
                ContactListImpl contactList = (ContactListImpl)PIM.getInstance().openPIMList(1, 3);
-               return (BlackBerryContact)(new Object(rimContact, contactList));
+               return new ContactImpl(rimContact, contactList);
             } finally {
                return null;
             }
@@ -403,7 +406,7 @@ public final class PeerContact extends ContactStatus implements Contact, Messeng
          _buffer.append(PeerResources.getString(0));
          _buffer.append(' ');
          _buffer.append(PersistentContent.decodeString(this._displayNameEncoding));
-         fields[index++] = (Field)(new Object(_buffer.toString()));
+         fields[index++] = new RichTextField(_buffer.toString());
       }
 
       return index;
@@ -417,7 +420,7 @@ public final class PeerContact extends ContactStatus implements Contact, Messeng
             _buffer.append(PeerResources.getString(1));
             _buffer.append(' ');
             _buffer.append(overrideDispName);
-            fields[index++] = (Field)(new Object(_buffer.toString()));
+            fields[index++] = new RichTextField(_buffer.toString());
          }
       }
 
@@ -429,14 +432,14 @@ public final class PeerContact extends ContactStatus implements Contact, Messeng
       _buffer.append(PeerResources.getString(2));
       _buffer.append(' ');
       _buffer.append(this.getOriginalContactInfo());
-      fields[index++] = (Field)(new Object(_buffer.toString()));
+      fields[index++] = new ActiveRichTextField(_buffer.toString());
       String status = super.toString();
       if (status != null) {
          _buffer.setLength(0);
          _buffer.append(PeerResources.getString(3));
          _buffer.append(' ');
          _buffer.append(status);
-         fields[index++] = (Field)(new Object(_buffer.toString()));
+         fields[index++] = new RichTextField(_buffer.toString());
       }
 
       return index;
@@ -449,14 +452,14 @@ public final class PeerContact extends ContactStatus implements Contact, Messeng
          _buffer.append(PeerResources.getString(4));
          _buffer.append(' ');
          _buffer.append(customStatusMessage);
-         fields[index++] = (Field)(new Object(_buffer.toString()));
+         fields[index++] = new RichTextField(_buffer.toString());
       }
 
       return index;
    }
 
    PeerContact() {
-      super._persistentData = (IntHashtable)(new Object());
+      super._persistentData = new IntHashtable();
       this.resetKeywords();
    }
 
@@ -571,18 +574,18 @@ public final class PeerContact extends ContactStatus implements Contact, Messeng
       }
 
       obj = contactData.get(18);
-      if (obj instanceof Object) {
-         this._cookie = obj;
+      if (obj instanceof Integer) {
+         this._cookie = (Integer)obj;
       }
 
       obj = contactData.get(19);
-      if (obj instanceof Object) {
-         this._refCount = obj;
+      if (obj instanceof Integer) {
+         this._refCount = (Integer)obj;
       }
 
       obj = contactData.get(17);
-      if (obj instanceof Object) {
-         this._idHash = obj;
+      if (obj instanceof Integer) {
+         this._idHash = (Integer)obj;
       }
    }
 
@@ -597,7 +600,7 @@ public final class PeerContact extends ContactStatus implements Contact, Messeng
          String text = this.getDisplayName();
          if (text != null) {
             char[] text2 = new char[text.length()];
-            StringPattern$Match match = (StringPattern$Match)(new Object());
+            StringPattern$Match match = new StringPattern$Match();
             match.endIndex = 0;
             int pos = 0;
             int length = text.length();
@@ -624,7 +627,7 @@ public final class PeerContact extends ContactStatus implements Contact, Messeng
             }
 
             Array.resize(text2, dstIndex);
-            this._displayNameSmileys = (String)(new Object(text2));
+            this._displayNameSmileys = new String(text2);
          }
       }
    }

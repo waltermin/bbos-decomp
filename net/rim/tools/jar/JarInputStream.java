@@ -1,5 +1,6 @@
 package net.rim.tools.jar;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 public class JarInputStream extends InputStream {
@@ -10,11 +11,11 @@ public class JarInputStream extends InputStream {
    private static byte[] _four = new byte[4];
    private static byte[] _two = new byte[2];
 
-   public JarInputStream(InputStream inputStream, boolean verify) {
+   public JarInputStream(InputStream inputStream, boolean verify) throws IOException {
       this._inputStream = inputStream;
       int signature = readInt(this._inputStream);
       if (signature != 67324752) {
-         throw new Object(((StringBuffer)(new Object("bad local file header signature: 0x"))).append(Integer.toHexString(signature)).toString());
+         throw new IOException("bad local file header signature: 0x" + Integer.toHexString(signature));
       }
 
       this._firstEntry = new JarEntry(this._inputStream);
@@ -37,7 +38,7 @@ public class JarInputStream extends InputStream {
       synchronized (_two) {
          byte[] bytes = _two;
          if (in.read(bytes, 0, bytes.length) != bytes.length) {
-            throw new Object("unable to read short");
+            throw new IOException("unable to read short");
          } else {
             return (bytes[0] & 0xFF | (bytes[1] & 0xFF) << 8) & 65535;
          }
@@ -48,16 +49,16 @@ public class JarInputStream extends InputStream {
       synchronized (_four) {
          byte[] bytes = _four;
          if (in.read(bytes, 0, bytes.length) != bytes.length) {
-            throw new Object("unable to read int");
+            throw new IOException("unable to read int");
          } else {
             return bytes[0] & 0xFF | (bytes[1] & 0xFF) << 8 | (bytes[2] & 0xFF) << 16 | bytes[3] << 24;
          }
       }
    }
 
-   public JarEntry getNextJarEntry() {
+   public JarEntry getNextJarEntry() throws IOException {
       if (this._inputStream == null) {
-         throw new Object("stream closed");
+         throw new IOException("stream closed");
       }
 
       JarEntry jarEntry = null;
@@ -69,7 +70,7 @@ public class JarInputStream extends InputStream {
          if (signature == 67324752) {
             jarEntry = new JarEntry(this._inputStream);
          } else if (signature != 33639248) {
-            throw new Object(((StringBuffer)(new Object("bad central file header signature: 0x"))).append(Integer.toHexString(signature)).toString());
+            throw new IOException("bad central file header signature: 0x" + Integer.toHexString(signature));
          }
       }
 
@@ -86,18 +87,18 @@ public class JarInputStream extends InputStream {
    }
 
    @Override
-   public int read() {
+   public int read() throws IOException {
       if (this._entryStream == null) {
-         throw new Object("stream closed");
+         throw new IOException("stream closed");
       } else {
          return this._entryStream.read();
       }
    }
 
    @Override
-   public int read(byte[] buffer, int offset, int length) {
+   public int read(byte[] buffer, int offset, int length) throws IOException {
       if (this._entryStream == null) {
-         throw new Object("stream closed");
+         throw new IOException("stream closed");
       } else {
          return this._entryStream.read(buffer, offset, length);
       }

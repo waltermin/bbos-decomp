@@ -10,7 +10,6 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.FontFamily;
 import net.rim.device.api.ui.Keypad;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.Trackball;
@@ -18,6 +17,7 @@ import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.PopupScreen;
 import net.rim.device.api.ui.container.VerticalFieldManager;
@@ -39,6 +39,7 @@ import net.rim.device.apps.internal.phone.data.CallerIDInfo;
 import net.rim.device.apps.internal.phone.model.AbstractPhoneNumberModel;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
 import net.rim.device.internal.ui.UiSettings;
+import net.rim.device.internal.ui.component.HorizontalSpacerField;
 import net.rim.vm.Array;
 
 public final class CallDisplayDialog extends PopupScreen {
@@ -58,7 +59,7 @@ public final class CallDisplayDialog extends PopupScreen {
    private AnswerCallVerb _sendKeyVerb;
    private Verb[] _menuVerbs;
    private CallDisplayDialog$CallDisplayManager _callDisplayManager = new CallDisplayDialog$CallDisplayManager(this);
-   private VerticalFieldManager _callerIDContainer = (VerticalFieldManager)(new Object());
+   private VerticalFieldManager _callerIDContainer = new VerticalFieldManager();
    private CallerIDProvider _callerIDProvider;
    private String _customTitle;
    private String _customName;
@@ -85,7 +86,7 @@ public final class CallDisplayDialog extends PopupScreen {
    public CallDisplayDialog(
       int callId, boolean waiting, CallerIDInfo callerIDInfo, String title, Verb[] verbs, UiApplication app, CallDisplayListener listener, Object context
    ) {
-      super((Manager)(new Object()), 65536);
+      super(new VerticalFieldManager(), 65536);
       this.setId("calldisplay");
       boolean var34 = false /* VF: Semaphore variable */;
 
@@ -128,7 +129,7 @@ public final class CallDisplayDialog extends PopupScreen {
       this._listener = listener;
       this.add(this._callDisplayManager);
       this.assignVerbs(verbs);
-      if (callerIDInfo instanceof Object) {
+      if (callerIDInfo instanceof CallerIDProvider) {
          this._callerIDProvider = callerIDInfo;
       }
 
@@ -139,17 +140,17 @@ public final class CallDisplayDialog extends PopupScreen {
          title = this._customTitle;
       }
 
-      LabelField altLineField = (LabelField)(new Object());
+      LabelField altLineField = new LabelField();
       altLineField.setFont(this._defaultFont);
       if (PhoneUtilities.getAllLineIds().length > 1) {
          altLineField.setText(PhoneUtilities.getLineDescription(PhoneUtilities.getCurrentLineId(callId)));
       }
 
-      HorizontalFieldManager titleField = (HorizontalFieldManager)(new Object());
-      LabelField titleLabelField = (LabelField)(new Object(title));
+      HorizontalFieldManager titleField = new HorizontalFieldManager();
+      LabelField titleLabelField = new LabelField(title);
       titleLabelField.setFont(this._titleFont);
       this.sizeFontToFitScreen(titleLabelField, title, this._titleFont);
-      titleField.add((Field)(new Object((_baseDialogWidth >> 1) - (titleLabelField.getPreferredWidth() >> 1))));
+      titleField.add(new HorizontalSpacerField((_baseDialogWidth >> 1) - (titleLabelField.getPreferredWidth() >> 1)));
       titleField.add(titleLabelField);
       ContextObject.setFlag(this._context, 58, 26);
       Object number = this._callerIDProvider.getNumber();
@@ -161,7 +162,7 @@ public final class CallDisplayDialog extends PopupScreen {
             if (this._displayPictureModel != null) {
                Bitmap picture = this._displayPictureModel.getDisplayBitmap();
                if (picture != null) {
-                  pictureField = (Field)(new Object(picture));
+                  pictureField = new BitmapField(picture);
                }
             }
 
@@ -176,10 +177,10 @@ public final class CallDisplayDialog extends PopupScreen {
          answerIgnoreBackgroundBitmap = PhoneResources.getBitmap("AnswerIgnoreBanner320.png");
       }
 
-      BitmapField answerIgnoreBackgroundField = (BitmapField)(new Object(answerIgnoreBackgroundBitmap));
-      LabelField answerLabelField = (LabelField)(new Object(PhoneResources.getString(480)));
-      LabelField ignoreLabelField = (LabelField)(new Object(PhoneResources.getString(482)));
-      HorizontalFieldManager answerIgnoreTextField = (HorizontalFieldManager)(new Object(1152921504606846976L));
+      BitmapField answerIgnoreBackgroundField = new BitmapField(answerIgnoreBackgroundBitmap);
+      LabelField answerLabelField = new LabelField(PhoneResources.getString(480));
+      LabelField ignoreLabelField = new LabelField(PhoneResources.getString(482));
+      HorizontalFieldManager answerIgnoreTextField = new HorizontalFieldManager(1152921504606846976L);
       boolean showMore = false;
       if (this._menuVerbs.length > 2 && Trackball.isSupported()) {
          showMore = true;
@@ -195,7 +196,7 @@ public final class CallDisplayDialog extends PopupScreen {
          answerLabelField.setFont(bannerFont);
          ignoreLabelField.setFont(bannerFont);
          if (showMore) {
-            moreLabelField = (LabelField)(new Object(PhoneResources.getString(6320)));
+            moreLabelField = new LabelField(PhoneResources.getString(6320));
             moreLabelField.setFont(bannerFont);
             space1 = (_baseDialogWidth >> 1) - answerLabelField.getPreferredWidth() - (moreLabelField.getPreferredWidth() >> 1);
             space2 = (_baseDialogWidth >> 1) - ignoreLabelField.getPreferredWidth() - (moreLabelField.getPreferredWidth() >> 1);
@@ -206,11 +207,11 @@ public final class CallDisplayDialog extends PopupScreen {
 
       answerIgnoreTextField.add(answerLabelField);
       if (showMore) {
-         answerIgnoreTextField.add((Field)(new Object(space1)));
+         answerIgnoreTextField.add(new HorizontalSpacerField(space1));
          answerIgnoreTextField.add(moreLabelField);
-         answerIgnoreTextField.add((Field)(new Object(space2)));
+         answerIgnoreTextField.add(new HorizontalSpacerField(space2));
       } else {
-         answerIgnoreTextField.add((Field)(new Object(space1)));
+         answerIgnoreTextField.add(new HorizontalSpacerField(space1));
       }
 
       answerIgnoreTextField.add(ignoreLabelField);
@@ -222,26 +223,26 @@ public final class CallDisplayDialog extends PopupScreen {
          answerIconBitmap = PhoneResources.getBitmap("net_rim_Phone-Send.png");
       }
 
-      BitmapField answerIconField = (BitmapField)(new Object(answerIconBitmap, 51539607552L));
+      BitmapField answerIconField = new BitmapField(answerIconBitmap, 51539607552L);
       Bitmap ignoreIconBitmap = PhoneResources.getBitmap("net_rim_Phone-End.png");
-      BitmapField ignoreIconField = (BitmapField)(new Object(ignoreIconBitmap, 51539607552L));
-      HorizontalFieldManager answerIgnoreIconsField = (HorizontalFieldManager)(new Object(1152921504606846976L));
+      BitmapField ignoreIconField = new BitmapField(ignoreIconBitmap, 51539607552L);
+      HorizontalFieldManager answerIgnoreIconsField = new HorizontalFieldManager(1152921504606846976L);
       answerIgnoreIconsField.add(answerIconField);
       if (!showMore) {
-         answerIgnoreIconsField.add((Field)(new Object(_baseDialogWidth - answerIconField.getPreferredWidth() - ignoreIconField.getPreferredWidth() - 4)));
+         answerIgnoreIconsField.add(new HorizontalSpacerField(_baseDialogWidth - answerIconField.getPreferredWidth() - ignoreIconField.getPreferredWidth() - 4));
       } else {
          Bitmap moreIconBitmap = PhoneResources.getBitmap("net_rim_Phone-More.png");
-         BitmapField moreIconField = (BitmapField)(new Object(moreIconBitmap, 51539607552L));
+         BitmapField moreIconField = new BitmapField(moreIconBitmap, 51539607552L);
          int space = (_baseDialogWidth >> 1) - answerIconField.getPreferredWidth() - (moreIconField.getPreferredWidth() >> 1) - 2;
-         answerIgnoreIconsField.add((Field)(new Object(space)));
+         answerIgnoreIconsField.add(new HorizontalSpacerField(space));
          answerIgnoreIconsField.add(moreIconField);
          space = (_baseDialogWidth >> 1) - ignoreIconField.getPreferredWidth() - (moreIconField.getPreferredWidth() >> 1) - 2;
-         answerIgnoreIconsField.add((Field)(new Object(space)));
+         answerIgnoreIconsField.add(new HorizontalSpacerField(space));
       }
 
       answerIgnoreIconsField.add(ignoreIconField);
       this._callDisplayManager.add(altLineField);
-      this._callDisplayManager.add((Field)(new Object()));
+      this._callDisplayManager.add(new SeparatorField());
       this._callDisplayManager.add(titleField);
       this._callDisplayManager.add(answerIgnoreBackgroundField);
       this._callDisplayManager.add(answerIgnoreIconsField);
@@ -267,7 +268,7 @@ public final class CallDisplayDialog extends PopupScreen {
       super.onMenuDismissed(menu);
       if (menu != null) {
          MenuItem mi = menu.getCurrentMenuItem();
-         if (mi instanceof Object) {
+         if (mi instanceof VerbMenuItem) {
             VerbMenuItem vmi = (VerbMenuItem)mi;
             Verb verb = vmi.getVerb();
             _lastSelectedItem = verb.toString();
@@ -282,7 +283,7 @@ public final class CallDisplayDialog extends PopupScreen {
       int len = this._menuVerbs.length;
 
       for (int i = 0; i < len; i++) {
-         MenuItem mi = (MenuItem)(new Object(this._menuVerbs[i], i));
+         MenuItem mi = new VerbMenuItem(this._menuVerbs[i], i);
          if (this._menuVerbs[i] == this._sendKeyVerb) {
             mi.setIcon(PhoneResources.getImage(15));
             if (defaultItem == null) {
@@ -352,8 +353,8 @@ public final class CallDisplayDialog extends PopupScreen {
       if (_screenWidth == 240) {
          this._callerIDContainer.add(callerIDField);
       } else {
-         HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(1152921504606846976L));
-         hfm.add((Field)(new Object(6)));
+         HorizontalFieldManager hfm = new HorizontalFieldManager(1152921504606846976L);
+         hfm.add(new HorizontalSpacerField(6));
          hfm.add(callerIDField);
          this._callerIDContainer.add(hfm);
       }
@@ -400,7 +401,7 @@ public final class CallDisplayDialog extends PopupScreen {
       if (this._displayPictureModel != null) {
          Bitmap icon = this._displayPictureModel.getDisplayIcon();
          if (icon != null) {
-            iconField = (Field)(new Object(icon));
+            iconField = new BitmapField(icon);
          }
 
          if (this._displayPictureModel.getDisplayBitmap() != null) {
@@ -417,20 +418,20 @@ public final class CallDisplayDialog extends PopupScreen {
 
       if (cidi.isPrivateNumber()) {
          stringToFitOnScreen = PhoneResources.getString(156);
-         field = (Field)(new Object(stringToFitOnScreen, fieldStyle));
+         field = new LabelField(stringToFitOnScreen, fieldStyle);
       } else if (cidi.isUnknownNumber()) {
          stringToFitOnScreen = PhoneResources.getString(117);
-         field = (Field)(new Object(stringToFitOnScreen, fieldStyle));
+         field = new LabelField(stringToFitOnScreen, fieldStyle);
       } else if (cidiNumber != null && cidiNumber.toString().length() == 0) {
          stringToFitOnScreen = PhoneResources.getString(117);
-         field = (Field)(new Object(stringToFitOnScreen, fieldStyle));
+         field = new LabelField(stringToFitOnScreen, fieldStyle);
       }
 
       if (field != null && stringToFitOnScreen != null) {
          String friendlyNameString = VoiceServices.getCallName(this._callId, false);
          if (friendlyNameString != null && friendlyNameString.length() > 0) {
-            VerticalFieldManager vfm = (VerticalFieldManager)(new Object());
-            Field nameField = (Field)(new Object(friendlyNameString, fieldStyle));
+            VerticalFieldManager vfm = new VerticalFieldManager();
+            Field nameField = new LabelField(friendlyNameString, fieldStyle);
             this._longestCallerIDString = PhoneUtilities.getLongestString(friendlyNameString, stringToFitOnScreen);
             nameField.setFont(this._defaultFont);
             field.setFont(this._defaultFont);
@@ -496,7 +497,7 @@ public final class CallDisplayDialog extends PopupScreen {
                if (type != 0) {
                   String desc = cidi.getDisplayableString(6);
                   if (desc != null && desc.length() > 0) {
-                     var32 = ((StringBuffer)(new Object())).append(var32).append(" (").append(desc).append(")").toString();
+                     var32 = var32 + " (" + desc + ")";
                   }
                }
             }
@@ -509,11 +510,11 @@ public final class CallDisplayDialog extends PopupScreen {
                var32 = this._customNumber;
             }
 
-            VerticalFieldManager vfm = (VerticalFieldManager)(new Object());
+            VerticalFieldManager vfm = new VerticalFieldManager();
             if (var29 != null) {
-               Field nameField = (Field)(new Object(var29, fieldStyle));
+               Field nameField = new LabelField(var29, fieldStyle);
                if (iconField != null) {
-                  HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object());
+                  HorizontalFieldManager hfm = new HorizontalFieldManager();
                   hfm.add(iconField);
                   hfm.add(nameField);
                   vfm.add(hfm);
@@ -523,38 +524,38 @@ public final class CallDisplayDialog extends PopupScreen {
             }
 
             if (var32 != null) {
-               vfm.add((Field)(new Object(var32, fieldStyle)));
+               vfm.add(new LabelField(var32, fieldStyle));
             }
 
             this._longestCallerIDString = PhoneUtilities.getLongestString(var29, var32);
             if (company != null && !var29.equals(company)) {
-               vfm.add((Field)(new Object(company, fieldStyle)));
+               vfm.add(new LabelField(company, fieldStyle));
                this._longestCallerIDString = PhoneUtilities.getLongestString(this._longestCallerIDString, company);
             }
 
             field = vfm;
          } else if (this._customName == null) {
             number = cidiNumber.toString();
-            field = (Field)(new Object(number, fieldStyle));
+            field = new LabelField(number, fieldStyle);
             this._longestCallerIDString = number;
          } else if (this._customNumber != null) {
-            VerticalFieldManager vfm = (VerticalFieldManager)(new Object());
-            vfm.add((Field)(new Object(this._customName, fieldStyle)));
-            vfm.add((Field)(new Object(this._customNumber, fieldStyle)));
+            VerticalFieldManager vfm = new VerticalFieldManager();
+            vfm.add(new LabelField(this._customName, fieldStyle));
+            vfm.add(new LabelField(this._customNumber, fieldStyle));
             this._longestCallerIDString = PhoneUtilities.getLongestString(name, number);
             if (company != null && !name.equals(company)) {
-               vfm.add((Field)(new Object(company, fieldStyle)));
+               vfm.add(new LabelField(company, fieldStyle));
                this._longestCallerIDString = PhoneUtilities.getLongestString(this._longestCallerIDString, company);
             }
 
             field = vfm;
          } else if (company == null) {
-            field = (Field)(new Object(this._customName, fieldStyle));
+            field = new LabelField(this._customName, fieldStyle);
             this._longestCallerIDString = this._customName;
          } else {
-            VerticalFieldManager vfm = (VerticalFieldManager)(new Object());
-            vfm.add((Field)(new Object(this._customName, fieldStyle)));
-            vfm.add((Field)(new Object(company, fieldStyle)));
+            VerticalFieldManager vfm = new VerticalFieldManager();
+            vfm.add(new LabelField(this._customName, fieldStyle));
+            vfm.add(new LabelField(company, fieldStyle));
             this._longestCallerIDString = PhoneUtilities.getLongestString(this._customName, company);
             field = vfm;
          }
@@ -590,17 +591,17 @@ public final class CallDisplayDialog extends PopupScreen {
       int[] verbAnsweringOptions = new int[verbs.length - 1];
       int answeringOptionsCount = 0;
       int menuVerbIndex = 0;
-      this._menuVerbs = new Object[verbs.length];
+      this._menuVerbs = new Verb[verbs.length];
 
       for (int i = 0; i < verbs.length; i++) {
          Verb verb = verbs[i];
          this._menuVerbs[menuVerbIndex++] = verb;
          if (verb != null) {
-            if (verb instanceof Object) {
+            if (verb instanceof IgnoreCallVerb) {
                if (this._ignoreCallVerb == null) {
                   this._ignoreCallVerb = (IgnoreCallVerb)verb;
                }
-            } else if (verb instanceof Object) {
+            } else if (verb instanceof AnswerCallVerb) {
                AnswerCallVerb acv = (AnswerCallVerb)verb;
                int answeringOption = acv.getAnsweringOption();
                verbAnsweringOptions[answeringOptionsCount++] = answeringOption;
@@ -728,7 +729,7 @@ public final class CallDisplayDialog extends PopupScreen {
          Field selectedButton = this.getLeafFieldWithFocus();
          if (selectedButton != null) {
             Object cookie = selectedButton.getCookie();
-            if (cookie instanceof Object) {
+            if (cookie instanceof Verb) {
                if (cookie != this._ignoreCallVerb) {
                   ((VoiceApp)this._app).preCallAnswer();
                }

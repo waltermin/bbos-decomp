@@ -65,7 +65,7 @@ final class DebugHandler implements Debugger, EventListener, IRequestMessageHand
             : class$net$rim$wica$runtime$lifecycle$LifecycleService
       );
       ApplicationRegistry.getApplicationRegistry().put(-8317686990539473415L, this);
-      this._eventListeners = (LongHashtable)(new Object(5));
+      this._eventListeners = new LongHashtable(5);
    }
 
    final synchronized void setAttached(boolean attached, TargetSessionManager manager) {
@@ -108,13 +108,13 @@ final class DebugHandler implements Debugger, EventListener, IRequestMessageHand
             this._manager.sendTargetEventMessage(1, messageBody);
             return;
          case 802:
-            applicationId = ((WicletContext)data).getId();
+            applicationId = ((Wiclet)data).getId();
             this.addAppEventListener(applicationId);
             messageBody = TargetEventMessageFactory.createApplicationTargetEventMessage(applicationId);
             this._manager.sendTargetEventMessage(3, messageBody);
             return;
          case 803:
-            applicationId = ((WicletContext)data).getId();
+            applicationId = ((Wiclet)data).getId();
             this.removeAppEventListener(applicationId);
             messageBody = TargetEventMessageFactory.createApplicationTargetEventMessage(applicationId);
             this._manager.sendTargetEventMessage(4, messageBody);
@@ -224,7 +224,7 @@ final class DebugHandler implements Debugger, EventListener, IRequestMessageHand
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

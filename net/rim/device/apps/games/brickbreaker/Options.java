@@ -51,8 +51,8 @@ public final class Options implements HighScoreServerListener, BrickBreakerResRe
    }
 
    public final byte[] toBytes() {
-      ByteArrayOutputStream o = (ByteArrayOutputStream)(new Object());
-      DataOutputStream out = (DataOutputStream)(new Object(o));
+      ByteArrayOutputStream o = new ByteArrayOutputStream();
+      DataOutputStream out = new DataOutputStream(o);
 
       try {
          out.writeInt(this.highScore);
@@ -82,8 +82,8 @@ public final class Options implements HighScoreServerListener, BrickBreakerResRe
 
    public final void createFromBytes(byte[] input) {
       if (input != null) {
-         ByteArrayInputStream i = (ByteArrayInputStream)(new Object(input));
-         DataInputStream in = (DataInputStream)(new Object(i));
+         ByteArrayInputStream i = new ByteArrayInputStream(input);
+         DataInputStream in = new DataInputStream(i);
 
          label44:
          try {
@@ -161,12 +161,10 @@ public final class Options implements HighScoreServerListener, BrickBreakerResRe
    }
 
    public final void sendScore(boolean ask) {
-      EditField user = (EditField)(new Object(
-         ((StringBuffer)(new Object())).append(_resources.getString(46)).append(" : ").toString(), "", 24, 4503601774854144L
-      ));
+      EditField user = new EditField(_resources.getString(46) + " : ", "", 24, 4503601774854144L);
       user.setFilter(new HighScoreTextFilter());
       user.setAllowUnicodeInput(false);
-      PasswordEditField pass = (PasswordEditField)(new Object(_resources.getString(47), "", 24, 4503601774854144L));
+      PasswordEditField pass = new PasswordEditField(_resources.getString(47), "", 24, 4503601774854144L);
       pass.setFilter(new HighScoreTextFilter());
       pass.setAllowUnicodeInput(false);
       loadUsernamePassword(user, pass);
@@ -175,7 +173,7 @@ public final class Options implements HighScoreServerListener, BrickBreakerResRe
          this.save();
          int r = 4;
          if (ask) {
-            Dialog diag = (Dialog)(new Object(3, _resources.getString(50), 0, null, 0));
+            Dialog diag = new Dialog(3, _resources.getString(50), 0, null, 0);
             diag.add(user);
             diag.add(pass);
             r = diag.doModal();
@@ -197,9 +195,7 @@ public final class Options implements HighScoreServerListener, BrickBreakerResRe
             }
 
             while (pass.getText().length() < 6 || !HighScoreTextFilter.validate(pass.getText())) {
-               Options$StringPopup pwdPopup = new Options$StringPopup(
-                  ((StringBuffer)(new Object())).append(_resources.getString(54)).append(":").toString(), true
-               );
+               Options$StringPopup pwdPopup = new Options$StringPopup(_resources.getString(54) + ":", true);
                r = pwdPopup.doModal();
                if (r == -1) {
                   return;

@@ -2,6 +2,7 @@ package net.rim.device.cldc.io.ssl;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.microedition.io.Connector;
@@ -50,9 +51,9 @@ public final class ProxySecureConnection implements SecureConnection {
    }
 
    @Override
-   public final OutputStream openOutputStream() {
+   public final OutputStream openOutputStream() throws IOException {
       if (this._isClosed) {
-         throw new Object("Connection closed");
+         throw new IOException("Connection closed");
       }
 
       OutputStream outputStream = this._subConnection.openOutputStream();
@@ -60,29 +61,29 @@ public final class ProxySecureConnection implements SecureConnection {
    }
 
    @Override
-   public final DataInputStream openDataInputStream() {
+   public final DataInputStream openDataInputStream() throws IOException {
       if (this._isClosed) {
-         throw new Object("Connection closed");
+         throw new IOException("Connection closed");
       }
 
       InputStream inputStream = this._subConnection.openInputStream();
-      return (DataInputStream)(new Object(new ProxySecureConnection$ProxyInputStream(this, inputStream)));
+      return new DataInputStream(new ProxySecureConnection$ProxyInputStream(this, inputStream));
    }
 
    @Override
-   public final DataOutputStream openDataOutputStream() {
+   public final DataOutputStream openDataOutputStream() throws IOException {
       if (this._isClosed) {
-         throw new Object("Connection closed");
+         throw new IOException("Connection closed");
       }
 
       OutputStream outputStream = this._subConnection.openOutputStream();
-      return (DataOutputStream)(new Object(new ProxySecureConnection$ProxyOutputStream(this, outputStream)));
+      return new DataOutputStream(new ProxySecureConnection$ProxyOutputStream(this, outputStream));
    }
 
    @Override
-   public final InputStream openInputStream() {
+   public final InputStream openInputStream() throws IOException {
       if (this._isClosed) {
-         throw new Object("Connection closed");
+         throw new IOException("Connection closed");
       }
 
       InputStream inputStream = this._subConnection.openInputStream();
@@ -90,54 +91,54 @@ public final class ProxySecureConnection implements SecureConnection {
    }
 
    @Override
-   public final void setSocketOption(byte option, int value) {
+   public final void setSocketOption(byte option, int value) throws IOException {
       if (this._isClosed) {
-         throw new Object("Connection closed");
+         throw new IOException("Connection closed");
       }
 
       this._subConnection.setSocketOption(option, value);
    }
 
    @Override
-   public final int getSocketOption(byte option) {
+   public final int getSocketOption(byte option) throws IOException {
       if (this._isClosed) {
-         throw new Object("Connection closed");
+         throw new IOException("Connection closed");
       } else {
          return this._subConnection.getSocketOption(option);
       }
    }
 
    @Override
-   public final String getLocalAddress() {
+   public final String getLocalAddress() throws IOException {
       if (this._isClosed) {
-         throw new Object("Connection closed");
+         throw new IOException("Connection closed");
       } else {
          return this._subConnection.getLocalAddress();
       }
    }
 
    @Override
-   public final int getLocalPort() {
+   public final int getLocalPort() throws IOException {
       if (this._isClosed) {
-         throw new Object("Connection closed");
+         throw new IOException("Connection closed");
       } else {
          return this._subConnection.getLocalPort();
       }
    }
 
    @Override
-   public final String getAddress() {
+   public final String getAddress() throws IOException {
       if (this._isClosed) {
-         throw new Object("Connection closed");
+         throw new IOException("Connection closed");
       } else {
          return this._subConnection.getAddress();
       }
    }
 
    @Override
-   public final int getPort() {
+   public final int getPort() throws IOException {
       if (this._isClosed) {
-         throw new Object("Connection closed");
+         throw new IOException("Connection closed");
       } else {
          return this._subConnection.getPort();
       }
@@ -149,9 +150,7 @@ public final class ProxySecureConnection implements SecureConnection {
    }
 
    public ProxySecureConnection(String name, int mode, boolean timeouts, boolean trustAll) {
-      this._subConnection = (SocketConnection)Connector.open(
-         ((StringBuffer)(new Object("socket:"))).append(name).append(";ConnectionHandler=tls").toString(), mode, timeouts
-      );
+      this._subConnection = (SocketConnection)Connector.open("socket:" + name + ";ConnectionHandler=tls", mode, timeouts);
       this._name = name;
       this._mode = mode;
       this._timeouts = timeouts;
@@ -159,7 +158,7 @@ public final class ProxySecureConnection implements SecureConnection {
    }
 
    private final void processTLSRequest(boolean trustAll) {
-      URL url = (URL)(new Object("ssl", this._name));
+      URL url = new URL("ssl", this._name);
       String hostName = url.getHost();
       DataOutputStream tempOut = this._subConnection.openDataOutputStream();
       tempOut.writeByte(0);
@@ -179,23 +178,21 @@ public final class ProxySecureConnection implements SecureConnection {
             String otherSSLError = e.getMessage();
             throw new TLSIOException(new TLSException(e));
          case 125:
-            String var11 = MessageFormat.format(_rb.getString(18), new Object[]{e.getMessage()});
+            String var11 = MessageFormat.format(_rb.getString(18), new String[]{e.getMessage()});
             String[] ok = CommonResource.getStringArray(10004);
-            String[] choices = new Object[]{ok[0], _rb.getString(15)};
-            SimpleChoiceDialog dialog = (SimpleChoiceDialog)(new Object(var11, choices, 0, Bitmap.getPredefinedBitmap(0), 134217728));
+            String[] choices = new String[]{ok[0], _rb.getString(15)};
+            SimpleChoiceDialog dialog = new SimpleChoiceDialog(var11, choices, 0, Bitmap.getPredefinedBitmap(0), 134217728);
             BackgroundDialog.show(dialog);
             int selection = dialog.getSelectedIndex();
             if (selection == 1) {
                if (SSLOptionsRegistration.doesDeviceSideExist()) {
-                  var11 = MessageFormat.format(_rb.getString(9), new Object[]{_rb.getString(14)});
+                  var11 = MessageFormat.format(_rb.getString(9), new String[]{_rb.getString(14)});
                } else {
                   var11 = MessageFormat.format(_rb.getString(9), new String[]{""});
                }
 
-               RichTextField field = (RichTextField)(new Object(var11, 27021597764222976L));
-               SimpleChoiceDialog infoDialog = (SimpleChoiceDialog)(new Object(
-                  field, CommonResource.getStringArray(10004), 0, Bitmap.getPredefinedBitmap(0), 134217728
-               ));
+               RichTextField field = new RichTextField(var11, 27021597764222976L);
+               SimpleChoiceDialog infoDialog = new SimpleChoiceDialog(field, CommonResource.getStringArray(10004), 0, Bitmap.getPredefinedBitmap(0), 134217728);
                field.setFocus();
                BackgroundDialog.show(infoDialog);
             }
@@ -241,7 +238,7 @@ public final class ProxySecureConnection implements SecureConnection {
    private static final void addAsTrusted(String name) {
       try {
          TLSOptionStore optionStore = TLSOptionStore.getOptions();
-         URL url = (URL)(new Object(name));
+         URL url = new URL(name);
          optionStore.addTrustedHost(url.getHost());
       } finally {
          return;
@@ -321,15 +318,13 @@ public final class ProxySecureConnection implements SecureConnection {
          this._output.close();
       }
 
-      this._subConnection = (SocketConnection)Connector.open(
-         ((StringBuffer)(new Object("socket:"))).append(this._name).append(";ConnectionHandler=tls").toString(), this._mode, this._timeouts
-      );
+      this._subConnection = (SocketConnection)Connector.open("socket:" + this._name + ";ConnectionHandler=tls", this._mode, this._timeouts);
       byte[] request = this._buffer.getArray();
       this.processTLSRequest(true);
       this._output = this._subConnection.openOutputStream();
       this._output.write(request);
       this._output.flush();
-      this._buffer = (DataBuffer)(new Object());
+      this._buffer = new DataBuffer();
       this._input = this._subConnection.openInputStream();
    }
 }

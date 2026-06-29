@@ -3,12 +3,14 @@ package net.rim.device.api.crypto.tls.ssl30;
 import net.rim.device.api.crypto.DHCryptoSystem;
 import net.rim.device.api.crypto.DHKeyPair;
 import net.rim.device.api.crypto.DHPublicKey;
+import net.rim.device.api.crypto.DSAPublicKey;
 import net.rim.device.api.crypto.HMACKey;
 import net.rim.device.api.crypto.InitializationVector;
 import net.rim.device.api.crypto.KeyPair;
 import net.rim.device.api.crypto.MD5Digest;
 import net.rim.device.api.crypto.PrivateKey;
 import net.rim.device.api.crypto.PublicKey;
+import net.rim.device.api.crypto.RSAPublicKey;
 import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.crypto.SymmetricKey;
 import net.rim.device.api.crypto.SymmetricKeyFactory;
@@ -34,10 +36,12 @@ import net.rim.device.api.i18n.MessageFormat;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.itpolicy.ITPolicy;
 import net.rim.device.api.system.ControlledAccess;
+import net.rim.device.api.system.ControlledAccessException;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.cldc.io.ssl.SSLConnectionOptions;
+import net.rim.device.cldc.io.ssl.TLSException;
 import net.rim.device.cldc.io.ssl.TLSOptionStore;
 import net.rim.device.internal.ui.component.BackgroundDialog;
 import net.rim.device.internal.ui.component.SimpleChoiceDialog;
@@ -45,13 +49,13 @@ import net.rim.vm.Array;
 import net.rim.vm.TraceBack;
 
 public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecordProtocolConstants {
-   protected SHA1Digest _clientSHAHash = (SHA1Digest)(new Object());
-   protected MD5Digest _clientMD5Hash = (MD5Digest)(new Object());
-   protected SHA1Digest _serverSHAHash = (SHA1Digest)(new Object());
-   protected MD5Digest _serverMD5Hash = (MD5Digest)(new Object());
-   protected SHA1Digest _verifySHAHash = (SHA1Digest)(new Object());
-   protected MD5Digest _verifyMD5Hash = (MD5Digest)(new Object());
-   protected DataBuffer _dataBuffer = (DataBuffer)(new Object());
+   protected SHA1Digest _clientSHAHash = new SHA1Digest();
+   protected MD5Digest _clientMD5Hash = new MD5Digest();
+   protected SHA1Digest _serverSHAHash = new SHA1Digest();
+   protected MD5Digest _serverMD5Hash = new MD5Digest();
+   protected SHA1Digest _verifySHAHash = new SHA1Digest();
+   protected MD5Digest _verifyMD5Hash = new MD5Digest();
+   protected DataBuffer _dataBuffer = new DataBuffer();
    protected PublicKey _publicKey;
    protected PrivateKey _privateKey;
    protected KeyPair _keyPair;
@@ -84,7 +88,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
    }
 
    @Override
-   public void helloRequest(DataBuffer param1) {
+   public void helloRequest(DataBuffer param1) throws TLSException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -117,13 +121,13 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 2e: invokevirtual net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol.connect ()V
       // 31: return
       // 32: astore 2
-      // 33: new java/lang/Object
+      // 33: new net/rim/device/cldc/io/ssl/TLSException
       // 36: dup
       // 37: aload 2
       // 38: invokespecial net/rim/device/cldc/io/ssl/TLSException.<init> (Ljava/lang/Exception;)V
       // 3b: athrow
       // 3c: astore 2
-      // 3d: new java/lang/Object
+      // 3d: new net/rim/device/cldc/io/ssl/TLSException
       // 40: dup
       // 41: aload 2
       // 42: invokespecial net/rim/device/cldc/io/ssl/TLSException.<init> (Ljava/lang/Exception;)V
@@ -133,7 +137,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
    }
 
    @Override
-   public void clientHello() {
+   public void clientHello() throws TLSException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -141,7 +145,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:174)
       //
       // Bytecode:
-      // 000: new java/lang/Object
+      // 000: new net/rim/device/api/util/DataBuffer
       // 003: dup
       // 004: invokespecial net/rim/device/api/util/DataBuffer.<init> ()V
       // 007: astore 1
@@ -177,7 +181,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 040: invokevirtual net/rim/device/cldc/io/ssl/TLSOptionStore.getSessionResumption ()Z
       // 043: ifne 049
       // 046: goto 0e8
-      // 049: new java/lang/Object
+      // 049: new net/rim/device/api/crypto/tls/SessionResumption
       // 04c: dup
       // 04d: invokespecial net/rim/device/api/crypto/tls/SessionResumption.<init> ()V
       // 050: astore 5
@@ -298,7 +302,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 13a: bipush 3
       // 13c: bipush 50
       // 13e: invokeinterface net/rim/device/api/crypto/tls/AlertProtocolMethods.sendAlertMessage (BB)V 3
-      // 143: new java/lang/Object
+      // 143: new net/rim/device/cldc/io/ssl/TLSException
       // 146: dup
       // 147: aload 1
       // 148: invokespecial net/rim/device/cldc/io/ssl/TLSException.<init> (Ljava/lang/Exception;)V
@@ -309,7 +313,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 151: bipush 3
       // 153: bipush 50
       // 155: invokeinterface net/rim/device/api/crypto/tls/AlertProtocolMethods.sendAlertMessage (BB)V 3
-      // 15a: new java/lang/Object
+      // 15a: new net/rim/device/cldc/io/ssl/TLSException
       // 15d: dup
       // 15e: aload 1
       // 15f: invokespecial net/rim/device/cldc/io/ssl/TLSException.<init> (Ljava/lang/Exception;)V
@@ -553,7 +557,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 4f: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._recordProtocol Lnet/rim/device/api/crypto/tls/ssl30/SSLRecordProtocol;
       // 52: invokestatic net/rim/device/api/crypto/tls/ssl30/SSLHandshakeUtilities.verifyCertificateCapabilities (Lnet/rim/device/api/crypto/certificate/x509/X509Certificate;Lnet/rim/device/cldc/io/ssl/SSLConnectionOptions;Lnet/rim/device/api/crypto/tls/ssl30/SSLRecordProtocol;)V
       // 55: bipush 0
-      // 56: anewarray 1320
+      // 56: anewarray 1326
       // 59: astore 6
       // 5b: aload 1
       // 5c: invokevirtual net/rim/device/api/util/DataBuffer.eof ()Z
@@ -640,7 +644,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
             if (commonName == null) {
                certificateDomainNames = certificate.getSubjectAltNameStrings(12);
             } else {
-               certificateDomainNames = new Object[]{commonName};
+               certificateDomainNames = new String[]{commonName};
             }
 
             if (certificateDomainNames != null && certificateDomainNames.length != 0) {
@@ -671,9 +675,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
                      TLSUtilities.sendAlertAndThrowException(this._alertProtocol, (byte)42);
                   }
 
-                  StringBuffer wrongDomainMessageBuffer = (StringBuffer)(new Object(
-                     MessageFormat.format(_rb.getString(5), new Object[]{recordProtocolRemoteHostName})
-                  ));
+                  StringBuffer wrongDomainMessageBuffer = new StringBuffer(MessageFormat.format(_rb.getString(5), new String[]{recordProtocolRemoteHostName}));
 
                   for (int i = 0; i < numCertificateDomainNames; i++) {
                      wrongDomainMessageBuffer.append(_rb.getString(57));
@@ -708,7 +710,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
                }
 
                while (true) {
-                  String noDomainMessage = MessageFormat.format(_rb.getString(1), new Object[]{recordProtocolRemoteHostName});
+                  String noDomainMessage = MessageFormat.format(_rb.getString(1), new String[]{recordProtocolRemoteHostName});
                   int noDomainChoice = BackgroundDialog.getChoice(noDomainMessage, _rb.getStringArray(17), 1);
                   switch (noDomainChoice) {
                      case -1:
@@ -844,9 +846,9 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
          while (true) {
             SimpleChoiceDialog dialog;
             if (showDontAskAgain) {
-               dialog = (SimpleChoiceDialog)(new Object(_rb.getString(15), _rb.getStringArray(23), 0, null, 134217728));
+               dialog = new SimpleChoiceDialog(_rb.getString(15), _rb.getStringArray(23), 0, null, 134217728);
             } else {
-               dialog = (SimpleChoiceDialog)(new Object(_rb.getString(15), _rb.getStringArray(20), 0, null, 134217728));
+               dialog = new SimpleChoiceDialog(_rb.getString(15), _rb.getStringArray(20), 0, null, 134217728);
             }
 
             BackgroundDialog.show(dialog);
@@ -873,17 +875,17 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
                      for (int e = 0; e < bestCertificateChain.length; e++) {
                         PublicKey publicKey = bestCertificateChain[e].getPublicKey();
                         int keySize = publicKey.getCryptoSystem().getBitLength();
-                        if (publicKey instanceof Object) {
+                        if (publicKey instanceof RSAPublicKey) {
                            if (keySize < options.getMinimumStrongRSAKeySize()) {
                               options.setMinimumStrongRSAKeySize(keySize);
                            }
-                        } else if (publicKey instanceof Object) {
+                        } else if (publicKey instanceof DHPublicKey) {
                            if (keySize < options.getMinimumStrongDHKeySize()) {
                               options.setMinimumStrongDHKeySize(keySize);
                            }
                         } else {
-                           if (!(publicKey instanceof Object)) {
-                              throw new Object();
+                           if (!(publicKey instanceof DSAPublicKey)) {
+                              throw new IllegalArgumentException();
                            }
 
                            if (keySize < options.getMinimumStrongDSAKeySize()) {
@@ -904,7 +906,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
             }
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -956,7 +958,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 05d: goto 453
       // 060: aload 0
       // 061: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._publicKey Lnet/rim/device/api/crypto/PublicKey;
-      // 064: instanceof java/lang/Object
+      // 064: instanceof net/rim/device/api/crypto/RSAPublicKey
       // 067: ifne 073
       // 06a: aload 0
       // 06b: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._alertProtocol Lnet/rim/device/api/crypto/tls/AlertProtocolMethods;
@@ -964,7 +966,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 070: invokestatic net/rim/device/api/crypto/tls/TLSUtilities.sendAlertAndThrowException (Lnet/rim/device/api/crypto/tls/AlertProtocolMethods;B)V
       // 073: aload 0
       // 074: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._publicKey Lnet/rim/device/api/crypto/PublicKey;
-      // 077: checkcast java/lang/Object
+      // 077: checkcast net/rim/device/api/crypto/RSAPublicKey
       // 07a: astore 4
       // 07c: aload 4
       // 07e: invokevirtual net/rim/device/api/crypto/RSAPublicKey.getCryptoSystem ()Lnet/rim/device/api/crypto/CryptoSystem;
@@ -1020,7 +1022,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 0e6: dup
       // 0e7: invokespecial net/rim/device/api/crypto/tls/ssl30/SSLDigest.<init> ()V
       // 0ea: astore 13
-      // 0ec: new java/lang/Object
+      // 0ec: new net/rim/device/api/crypto/PKCS1SignatureVerifier
       // 0ef: dup
       // 0f0: aload 4
       // 0f2: aload 13
@@ -1085,9 +1087,9 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 16d: aload 15
       // 16f: astore 7
       // 171: aload 0
-      // 172: new java/lang/Object
+      // 172: new net/rim/device/api/crypto/RSAPublicKey
       // 175: dup
-      // 176: new java/lang/Object
+      // 176: new net/rim/device/api/crypto/RSACryptoSystem
       // 179: dup
       // 17a: aload 7
       // 17c: arraylength
@@ -1175,7 +1177,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 21e: if_icmpne 23d
       // 221: aload 0
       // 222: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._publicKey Lnet/rim/device/api/crypto/PublicKey;
-      // 225: instanceof java/lang/Object
+      // 225: instanceof net/rim/device/api/crypto/DSAPublicKey
       // 228: ifne 234
       // 22b: aload 0
       // 22c: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._alertProtocol Lnet/rim/device/api/crypto/tls/AlertProtocolMethods;
@@ -1183,7 +1185,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 231: invokestatic net/rim/device/api/crypto/tls/TLSUtilities.sendAlertAndThrowException (Lnet/rim/device/api/crypto/tls/AlertProtocolMethods;B)V
       // 234: aload 0
       // 235: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._publicKey Lnet/rim/device/api/crypto/PublicKey;
-      // 238: checkcast java/lang/Object
+      // 238: checkcast net/rim/device/api/crypto/DSAPublicKey
       // 23b: astore 13
       // 23d: aload 1
       // 23e: invokevirtual net/rim/device/api/util/DataBuffer.readUnsignedByte ()I
@@ -1246,7 +1248,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 2af: aload 17
       // 2b1: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputByteArray.readIntegerAsByteArray ()[B
       // 2b4: astore 19
-      // 2b6: new java/lang/Object
+      // 2b6: new net/rim/device/api/crypto/DSASignatureVerifier
       // 2b9: dup
       // 2ba: aload 13
       // 2bc: aload 18
@@ -1310,7 +1312,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 341: goto 3f3
       // 344: aload 0
       // 345: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._publicKey Lnet/rim/device/api/crypto/PublicKey;
-      // 348: instanceof java/lang/Object
+      // 348: instanceof net/rim/device/api/crypto/RSAPublicKey
       // 34b: ifne 357
       // 34e: aload 0
       // 34f: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._alertProtocol Lnet/rim/device/api/crypto/tls/AlertProtocolMethods;
@@ -1318,7 +1320,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 354: invokestatic net/rim/device/api/crypto/tls/TLSUtilities.sendAlertAndThrowException (Lnet/rim/device/api/crypto/tls/AlertProtocolMethods;B)V
       // 357: aload 0
       // 358: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._publicKey Lnet/rim/device/api/crypto/PublicKey;
-      // 35b: checkcast java/lang/Object
+      // 35b: checkcast net/rim/device/api/crypto/RSAPublicKey
       // 35e: astore 13
       // 360: aload 1
       // 361: invokevirtual net/rim/device/api/util/DataBuffer.readUnsignedShort ()I
@@ -1333,7 +1335,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 375: dup
       // 376: invokespecial net/rim/device/api/crypto/tls/ssl30/SSLDigest.<init> ()V
       // 379: astore 16
-      // 37b: new java/lang/Object
+      // 37b: new net/rim/device/api/crypto/PKCS1SignatureVerifier
       // 37e: dup
       // 37f: aload 13
       // 381: aload 16
@@ -1386,9 +1388,9 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 3ee: bipush 51
       // 3f0: invokestatic net/rim/device/api/crypto/tls/TLSUtilities.sendAlertAndThrowException (Lnet/rim/device/api/crypto/tls/AlertProtocolMethods;B)V
       // 3f3: aload 0
-      // 3f4: new java/lang/Object
+      // 3f4: new net/rim/device/api/crypto/DHPublicKey
       // 3f7: dup
-      // 3f8: new java/lang/Object
+      // 3f8: new net/rim/device/api/crypto/DHCryptoSystem
       // 3fb: dup
       // 3fc: aload 6
       // 3fe: aload 9
@@ -1455,7 +1457,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
             this._types = new byte[buffer.readUnsignedByte()];
             buffer.readFully(this._types);
             int dnLength = buffer.readUnsignedShort();
-            this._dn = new Object[0];
+            this._dn = new DistinguishedName[0];
 
             while (dnLength > 0) {
                int length = buffer.readUnsignedShort();
@@ -1496,7 +1498,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // Bytecode:
       // 000: invokestatic net/rim/device/cldc/io/ssl/TLSOptionStore.getOptions ()Lnet/rim/device/cldc/io/ssl/TLSOptionStore;
       // 003: astore 1
-      // 004: new java/lang/Object
+      // 004: new net/rim/device/api/util/DataBuffer
       // 007: dup
       // 008: invokespecial net/rim/device/api/util/DataBuffer.<init> ()V
       // 00b: astore 2
@@ -1540,7 +1542,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 05c: astore 5
       // 05e: aconst_null
       // 05f: astore 6
-      // 061: new java/lang/Object
+      // 061: new net/rim/device/cldc/io/utility/URL
       // 064: dup
       // 065: aload 0
       // 066: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._recordProtocol Lnet/rim/device/api/crypto/tls/ssl30/SSLRecordProtocol;
@@ -1656,7 +1658,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 17b: bipush 1
       // 17c: istore 8
       // 17e: aload 7
-      // 180: new java/lang/Object
+      // 180: new net/rim/device/api/crypto/keystore/PrivateKeysKeyStoreIndex
       // 183: dup
       // 184: invokespecial net/rim/device/api/crypto/keystore/PrivateKeysKeyStoreIndex.<init> ()V
       // 187: invokeinterface net/rim/device/api/crypto/keystore/KeyStore.addIndex (Lnet/rim/device/api/crypto/keystore/KeyStoreIndex;)Z 2
@@ -1666,16 +1668,16 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 192: invokeinterface net/rim/device/api/crypto/keystore/KeyStore.elements (J)Ljava/util/Enumeration; 3
       // 197: astore 12
       // 199: bipush 0
-      // 19a: anewarray 3942
+      // 19a: anewarray 3948
       // 19d: astore 13
       // 19f: bipush 0
-      // 1a0: anewarray 3944
+      // 1a0: anewarray 3950
       // 1a3: astore 14
       // 1a5: bipush 0
-      // 1a6: anewarray 3946
+      // 1a6: anewarray 3952
       // 1a9: astore 15
       // 1ab: bipush 0
-      // 1ac: multianewarray 3948 1
+      // 1ac: multianewarray 3954 1
       // 1b0: astore 16
       // 1b2: bipush 0
       // 1b3: istore 17
@@ -1685,7 +1687,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 1bf: goto 262
       // 1c2: aload 12
       // 1c4: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 1c9: checkcast java/lang/Object
+      // 1c9: checkcast net/rim/device/api/crypto/keystore/KeyStoreData
       // 1cc: astore 11
       // 1ce: aload 11
       // 1d0: invokeinterface net/rim/device/api/crypto/keystore/KeyStoreData.isPrivateKeySet ()Z 1
@@ -1842,7 +1844,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 316: bipush 22
       // 318: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 31b: bipush 1
-      // 31c: anewarray 4168
+      // 31c: anewarray 4174
       // 31f: dup
       // 320: bipush 0
       // 321: aload 0
@@ -1874,7 +1876,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 35e: bipush 22
       // 360: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 363: bipush 1
-      // 364: anewarray 4230
+      // 364: anewarray 4236
       // 367: dup
       // 368: bipush 0
       // 369: aload 0
@@ -1976,7 +1978,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
    @Override
    public void clientKeyExchange() {
       try {
-         DataBuffer buffer = (DataBuffer)(new Object());
+         DataBuffer buffer = new DataBuffer();
          buffer.write(16);
          TLSUtilities.writeIntegerThreeBytes(buffer, 0);
          ConnectionState connectionState = (ConnectionState)this._recordProtocol.getPendingWrite();
@@ -2005,7 +2007,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
                         break;
                      }
 
-                     if (!(this._publicKey instanceof Object)) {
+                     if (!(this._publicKey instanceof DHPublicKey)) {
                         TLSUtilities.sendAlertAndThrowException(this._alertProtocol, (byte)47);
                      }
 
@@ -2019,14 +2021,14 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
                      buffer.write(publicKeyData);
                      this._keyPair = keyPair;
                   } else {
-                     if (!(this._publicKey instanceof Object)) {
+                     if (!(this._publicKey instanceof DHPublicKey)) {
                         TLSUtilities.sendAlertAndThrowException(this._alertProtocol, (byte)47);
                      }
 
                      DHPublicKey publicKey = (DHPublicKey)this._publicKey;
                      DHCryptoSystem system = (DHCryptoSystem)publicKey.getCryptoSystem();
-                     DHCryptoSystem newSystem = (DHCryptoSystem)(new Object(system.getP(), system.getG()));
-                     DHKeyPair keyPair = (DHKeyPair)(new Object(newSystem));
+                     DHCryptoSystem newSystem = new DHCryptoSystem(system.getP(), system.getG());
+                     DHKeyPair keyPair = new DHKeyPair(newSystem);
                      byte[] publicKeyData = ((DHPublicKey)keyPair.getPublicKey()).getPublicKeyData();
                      TLSUtilities.writeIntegerTwoBytes(buffer, publicKeyData.length);
                      buffer.write(publicKeyData);
@@ -2067,7 +2069,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:174)
       //
       // Bytecode:
-      // 000: new java/lang/Object
+      // 000: new net/rim/device/api/util/DataBuffer
       // 003: dup
       // 004: invokespecial net/rim/device/api/util/DataBuffer.<init> ()V
       // 007: astore 1
@@ -2079,7 +2081,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 010: invokestatic net/rim/device/api/crypto/tls/TLSUtilities.writeIntegerThreeBytes (Lnet/rim/device/api/util/DataBuffer;I)V
       // 013: aload 0
       // 014: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._privateKey Lnet/rim/device/api/crypto/PrivateKey;
-      // 017: instanceof java/lang/Object
+      // 017: instanceof net/rim/device/api/crypto/RSAPrivateKey
       // 01a: ifne 020
       // 01d: goto 0fe
       // 020: bipush 48
@@ -2103,7 +2105,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 042: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._verifyMD5Hash Lnet/rim/device/api/crypto/MD5Digest;
       // 045: aload 2
       // 046: invokevirtual net/rim/device/api/crypto/AbstractDigest.update ([B)V
-      // 049: new java/lang/Object
+      // 049: new net/rim/device/api/crypto/MD5Digest
       // 04c: dup
       // 04d: invokespecial net/rim/device/api/crypto/MD5Digest.<init> ()V
       // 050: astore 4
@@ -2140,7 +2142,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 08f: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._verifySHAHash Lnet/rim/device/api/crypto/SHA1Digest;
       // 092: aload 2
       // 093: invokevirtual net/rim/device/api/crypto/AbstractDigest.update ([B)V
-      // 096: new java/lang/Object
+      // 096: new net/rim/device/api/crypto/SHA1Digest
       // 099: dup
       // 09a: invokespecial net/rim/device/api/crypto/SHA1Digest.<init> ()V
       // 09d: astore 5
@@ -2162,11 +2164,11 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 0c0: aload 5
       // 0c2: invokespecial net/rim/device/api/crypto/tls/ssl30/SSLDigest.<init> (Lnet/rim/device/api/crypto/MD5Digest;Lnet/rim/device/api/crypto/SHA1Digest;)V
       // 0c5: astore 6
-      // 0c7: new java/lang/Object
+      // 0c7: new net/rim/device/api/crypto/PKCS1SignatureSigner
       // 0ca: dup
       // 0cb: aload 0
       // 0cc: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._privateKey Lnet/rim/device/api/crypto/PrivateKey;
-      // 0cf: checkcast java/lang/Object
+      // 0cf: checkcast net/rim/device/api/crypto/RSAPrivateKey
       // 0d2: aload 6
       // 0d4: bipush 0
       // 0d5: invokespecial net/rim/device/api/crypto/PKCS1SignatureSigner.<init> (Lnet/rim/device/api/crypto/RSAPrivateKey;Lnet/rim/device/api/crypto/Digest;Z)V
@@ -2190,7 +2192,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 0fb: goto 1d6
       // 0fe: aload 0
       // 0ff: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._privateKey Lnet/rim/device/api/crypto/PrivateKey;
-      // 102: instanceof java/lang/Object
+      // 102: instanceof net/rim/device/api/crypto/DSAPrivateKey
       // 105: ifne 10b
       // 108: goto 1cd
       // 10b: bipush 40
@@ -2214,7 +2216,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 12d: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._verifySHAHash Lnet/rim/device/api/crypto/SHA1Digest;
       // 130: aload 2
       // 131: invokevirtual net/rim/device/api/crypto/AbstractDigest.update ([B)V
-      // 134: new java/lang/Object
+      // 134: new net/rim/device/api/crypto/SHA1Digest
       // 137: dup
       // 138: invokespecial net/rim/device/api/crypto/SHA1Digest.<init> ()V
       // 13b: astore 4
@@ -2230,11 +2232,11 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 14f: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._verifySHAHash Lnet/rim/device/api/crypto/SHA1Digest;
       // 152: invokevirtual net/rim/device/api/crypto/AbstractDigest.getDigest ()[B
       // 155: invokevirtual net/rim/device/api/crypto/AbstractDigest.update ([B)V
-      // 158: new java/lang/Object
+      // 158: new net/rim/device/api/crypto/DSASignatureSigner
       // 15b: dup
       // 15c: aload 0
       // 15d: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._privateKey Lnet/rim/device/api/crypto/PrivateKey;
-      // 160: checkcast java/lang/Object
+      // 160: checkcast net/rim/device/api/crypto/DSAPrivateKey
       // 163: aload 4
       // 165: invokespecial net/rim/device/api/crypto/DSASignatureSigner.<init> (Lnet/rim/device/api/crypto/DSAPrivateKey;Lnet/rim/device/api/crypto/Digest;)V
       // 168: astore 5
@@ -2360,7 +2362,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
          var14 = true;
          if (buffer != null) {
             System.out.println("SSL:<-F");
-            MD5Digest outerMD5 = (MD5Digest)(new Object());
+            MD5Digest outerMD5 = new MD5Digest();
             byte[] pad1 = new byte[48];
             byte[] pad2 = new byte[48];
             Arrays.fill(pad1, (byte)54);
@@ -2372,7 +2374,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
             md5.update(pad1);
             outerMD5.update(md5.getDigest());
             byte[] ourMD5 = outerMD5.getDigest();
-            SHA1Digest outerSHA = (SHA1Digest)(new Object());
+            SHA1Digest outerSHA = new SHA1Digest();
             pad1 = new byte[40];
             pad2 = new byte[40];
             Arrays.fill(pad1, (byte)54);
@@ -2395,10 +2397,10 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
 
             var14 = false;
          } else {
-            buffer = (DataBuffer)(new Object());
+            buffer = new DataBuffer();
             buffer.write(20);
             TLSUtilities.writeIntegerThreeBytes(buffer, 0);
-            MD5Digest outerMD5 = (MD5Digest)(new Object());
+            MD5Digest outerMD5 = new MD5Digest();
             byte[] pad1 = new byte[48];
             byte[] pad2 = new byte[48];
             Arrays.fill(pad1, (byte)54);
@@ -2411,7 +2413,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
             outerMD5.update(md5.getDigest());
             byte[] outputBytes = outerMD5.getDigest();
             buffer.write(outputBytes);
-            SHA1Digest outerSHA = (SHA1Digest)(new Object());
+            SHA1Digest outerSHA = new SHA1Digest();
             pad1 = new byte[40];
             pad2 = new byte[40];
             Arrays.fill(pad1, (byte)54);
@@ -2442,63 +2444,59 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
          ConnectionState read = (ConnectionState)this._recordProtocol.getPendingRead();
          ConnectionState write = (ConnectionState)this._recordProtocol.getPendingWrite();
          SSLPRF prf = new SSLPRF(masterSecret, serverRandom, clientRandom);
-         HMACKey writeHMACKey = (HMACKey)(new Object(prf.getBytes(write.getHashSize())));
-         HMACKey readHMACKey = (HMACKey)(new Object(prf.getBytes(read.getHashSize())));
+         HMACKey writeHMACKey = new HMACKey(prf.getBytes(write.getHashSize()));
+         HMACKey readHMACKey = new HMACKey(prf.getBytes(read.getHashSize()));
          byte[] writeKeyData = new byte[write.getKeySize()];
          SymmetricKey writeKey = TLSUtilities.getKey(write, prf, writeKeyData, true);
          byte[] readKeyData = new byte[read.getKeySize()];
          SymmetricKey readKey = TLSUtilities.getKey(read, prf, readKeyData, true);
          InitializationVector writeIV = null;
          if (write.getCipherType() == 2) {
-            writeIV = (InitializationVector)(new Object(prf.getBytes(write.getIVSize())));
+            writeIV = new InitializationVector(prf.getBytes(write.getIVSize()));
          }
 
          InitializationVector readIV = null;
          if (read.getCipherType() == 2) {
-            readIV = (InitializationVector)(new Object(prf.getBytes(read.getIVSize())));
+            readIV = new InitializationVector(prf.getBytes(read.getIVSize()));
          }
 
          if (write.getIsExportable()) {
-            MD5Digest exportClientWriteKey = (MD5Digest)(new Object());
+            MD5Digest exportClientWriteKey = new MD5Digest();
             exportClientWriteKey.update(writeKeyData);
             exportClientWriteKey.update(clientRandom);
             exportClientWriteKey.update(serverRandom);
             byte[] temp = new byte[16];
             exportClientWriteKey.getDigest(temp, 0);
             int keyLength = write.getKeyMaterialLength();
-            writeKey = SymmetricKeyFactory.getInstance(
-               ((StringBuffer)(new Object())).append(write.getBulkCipherAlgorithm()).append('_').append(keyLength << 3).toString(), temp, 0, keyLength
-            );
+            writeKey = SymmetricKeyFactory.getInstance(write.getBulkCipherAlgorithm() + '_' + (keyLength << 3), temp, 0, keyLength);
             if (write.getCipherType() == 2) {
-               MD5Digest exportClientIV = (MD5Digest)(new Object());
+               MD5Digest exportClientIV = new MD5Digest();
                exportClientIV.update(clientRandom);
                exportClientIV.update(serverRandom);
                exportClientIV.getDigest(temp, 0);
-               writeIV = (InitializationVector)(new Object(temp, 0, write.getIVSize()));
+               writeIV = new InitializationVector(temp, 0, write.getIVSize());
             }
          }
 
          if (read.getIsExportable()) {
-            MD5Digest exportServerWriteKey = (MD5Digest)(new Object());
+            MD5Digest exportServerWriteKey = new MD5Digest();
             exportServerWriteKey.update(readKeyData);
             exportServerWriteKey.update(serverRandom);
             exportServerWriteKey.update(clientRandom);
             byte[] temp = new byte[16];
             exportServerWriteKey.getDigest(temp, 0);
             int keyLength = read.getKeyMaterialLength();
-            readKey = SymmetricKeyFactory.getInstance(
-               ((StringBuffer)(new Object())).append(read.getBulkCipherAlgorithm()).append('_').append(keyLength << 3).toString(), temp, 0, keyLength
-            );
+            readKey = SymmetricKeyFactory.getInstance(read.getBulkCipherAlgorithm() + '_' + (keyLength << 3), temp, 0, keyLength);
             if (read.getCipherType() == 2) {
-               MD5Digest exportServerIV = (MD5Digest)(new Object());
+               MD5Digest exportServerIV = new MD5Digest();
                exportServerIV.update(serverRandom);
                exportServerIV.update(clientRandom);
                exportServerIV.getDigest(temp, 0);
-               readIV = (InitializationVector)(new Object(temp, 0, read.getIVSize()));
+               readIV = new InitializationVector(temp, 0, read.getIVSize());
             }
          }
 
-         return (KeyMaterial)(new Object(writeKey, readKey, writeHMACKey, readHMACKey, writeIV, readIV));
+         return new KeyMaterial(writeKey, readKey, writeHMACKey, readHMACKey, writeIV, readIV);
       } finally {
          TLSUtilities.sendAlertAndThrowException(this._alertProtocol, (byte)51);
          return null;
@@ -2515,22 +2513,22 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // Bytecode:
       // 00: aload 0
       // 01: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._publicKey Lnet/rim/device/api/crypto/PublicKey;
-      // 04: instanceof java/lang/Object
+      // 04: instanceof net/rim/device/api/crypto/RSAPublicKey
       // 07: ifeq 8c
-      // 0a: new java/lang/Object
+      // 0a: new net/rim/device/api/crypto/RSAEncryptorEngine
       // 0d: dup
       // 0e: aload 0
       // 0f: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._publicKey Lnet/rim/device/api/crypto/PublicKey;
-      // 12: checkcast java/lang/Object
+      // 12: checkcast net/rim/device/api/crypto/RSAPublicKey
       // 15: invokespecial net/rim/device/api/crypto/RSAEncryptorEngine.<init> (Lnet/rim/device/api/crypto/RSAPublicKey;)V
       // 18: astore 1
-      // 19: new java/lang/Object
+      // 19: new java/io/ByteArrayOutputStream
       // 1c: dup
       // 1d: invokespecial java/io/ByteArrayOutputStream.<init> ()V
       // 20: astore 2
-      // 21: new java/lang/Object
+      // 21: new net/rim/device/api/crypto/BlockEncryptor
       // 24: dup
-      // 25: new java/lang/Object
+      // 25: new net/rim/device/api/crypto/PKCS1FormatterEngine
       // 28: dup
       // 29: aload 1
       // 2a: invokespecial net/rim/device/api/crypto/PKCS1FormatterEngine.<init> (Lnet/rim/device/api/crypto/PublicKeyEncryptorEngine;)V
@@ -2588,11 +2586,11 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // 8b: areturn
       // 8c: aload 0
       // 8d: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._publicKey Lnet/rim/device/api/crypto/PublicKey;
-      // 90: instanceof java/lang/Object
+      // 90: instanceof net/rim/device/api/crypto/DHPublicKey
       // 93: ifeq bf
       // 96: aload 0
       // 97: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._keyPair Lnet/rim/device/api/crypto/KeyPair;
-      // 9a: instanceof java/lang/Object
+      // 9a: instanceof net/rim/device/api/crypto/DHKeyPair
       // 9d: ifne a9
       // a0: aload 0
       // a1: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._alertProtocol Lnet/rim/device/api/crypto/tls/AlertProtocolMethods;
@@ -2601,10 +2599,10 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       // a9: aload 0
       // aa: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._keyPair Lnet/rim/device/api/crypto/KeyPair;
       // ad: invokevirtual net/rim/device/api/crypto/KeyPair.getPrivateKey ()Lnet/rim/device/api/crypto/PrivateKey;
-      // b0: checkcast java/lang/Object
+      // b0: checkcast net/rim/device/api/crypto/DHPrivateKey
       // b3: aload 0
       // b4: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._publicKey Lnet/rim/device/api/crypto/PublicKey;
-      // b7: checkcast java/lang/Object
+      // b7: checkcast net/rim/device/api/crypto/DHPublicKey
       // ba: bipush 0
       // bb: invokestatic net/rim/device/api/crypto/DHKeyAgreement.generateSharedSecret (Lnet/rim/device/api/crypto/DHPrivateKey;Lnet/rim/device/api/crypto/DHPublicKey;Z)[B
       // be: areturn
@@ -2642,7 +2640,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       try {
          return new SSLPRF(preMasterSecret, clientRandom, serverRandom).getBytes(48);
       } catch (Throwable var6) {
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       }
    }
 
@@ -2690,7 +2688,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       this.clientHello();
 
       do {
-         DataBuffer[] buffer = new Object[1];
+         DataBuffer[] buffer = new DataBuffer[1];
          int type = this.read(buffer);
          switch (type) {
             case 2:
@@ -2733,10 +2731,10 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
          this.finished(null);
       }
 
-      DataBuffer[] var6 = new Object[1];
+      DataBuffer[] var6 = new DataBuffer[1];
       int type = this.read(var6);
       if (type == 20) {
-         this.finished((DataBuffer)var6[0]);
+         this.finished(var6[0]);
       } else {
          TLSUtilities.sendAlertAndThrowException(this._alertProtocol, (byte)10);
       }
@@ -2747,7 +2745,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       }
 
       if (!this._resumption) {
-         SessionResumption resumption = (SessionResumption)(new Object());
+         SessionResumption resumption = new SessionResumption();
          resumption.addSession(
             this._recordProtocol.getDomainName(),
             this._recordProtocol.getProtocol(),
@@ -2833,7 +2831,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
       }
 
       int type = this._dataBuffer.readUnsignedByte();
-      buffer[0] = (DataBuffer)(new Object(this._dataBuffer, TLSUtilities.readIntegerThreeBytes(this._dataBuffer)));
+      buffer[0] = new DataBuffer(this._dataBuffer, TLSUtilities.readIntegerThreeBytes(this._dataBuffer));
       return type;
    }
 
@@ -2868,7 +2866,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
             || !StringUtilities.strEqual(callingClasses[2].getName(), "net.rim.device.api.crypto.tls.ssl30.SSL30Connection")
                && !StringUtilities.strEqual(callingClasses[2].getName(), "net.rim.device.api.crypto.tls.tls10.TLS10Connection")
             || !StringUtilities.strEqual(callingClasses[3].getName(), "net.rim.device.apps.internal.options.items.GetSecurityKeyThread")) {
-            throw new Object();
+            throw new ControlledAccessException();
          }
       }
 
@@ -2886,7 +2884,7 @@ public class SSLHandshakeProtocol extends HandshakeProtocol implements SSLRecord
             || !StringUtilities.strEqual(callingClasses[5].getName(), "net.rim.device.cldc.io.srp.SrpConfiguration")
             || !StringUtilities.strEqual(callingClasses[6].getName(), "net.rim.device.cldc.io.srp.SrpSession")
             || !StringUtilities.strEqual(callingClasses[7].getName(), "net.rim.device.cldc.io.srp.SrpSession")) {
-            throw new Object();
+            throw new ControlledAccessException();
          }
       }
 

@@ -256,7 +256,7 @@ public final class LayerOptions {
    }
 
    public final String[] getLayerGroupNames() {
-      String[] names = new Object[this._layerGroups.length];
+      String[] names = new String[this._layerGroups.length];
 
       for (int i = 0; i < names.length; i++) {
          names[i] = this._layerGroups[i].toString();

@@ -43,7 +43,7 @@ final class SystemMessageHandler implements MessageConsumer {
       try {
          this._messagingService.sendMessage(message);
       } catch (Throwable var18) {
-         Logger.log(((StringBuffer)(new Object("Error encountered while sending Lifecycle status message:\n"))).append(e).toString());
+         Logger.log("Error encountered while sending Lifecycle status message:\n" + e);
          return;
       }
    }
@@ -87,7 +87,7 @@ final class SystemMessageHandler implements MessageConsumer {
    }
 
    private final void logMessageException(MessageException exception, int messageCode) {
-      StringBuffer buffer = (StringBuffer)(new Object("System Message Processing Error\n"));
+      StringBuffer buffer = new StringBuffer("System Message Processing Error\n");
       buffer.append("Message code: ");
       buffer.append(messageCode);
       buffer.append('\n');
@@ -175,7 +175,7 @@ final class SystemMessageHandler implements MessageConsumer {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

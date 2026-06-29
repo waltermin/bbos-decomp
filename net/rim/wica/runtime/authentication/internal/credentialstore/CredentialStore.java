@@ -43,8 +43,8 @@ public class CredentialStore implements PersistentContentListener, EventListener
             : class$net$rim$wica$runtime$event$EventService
       );
       eventService.addListener(new int[]{803, 805, 51, -804991603, 67324752, 10, 1645346816, 14051}, this);
-      this._credentials = (Hashtable)(new Object());
-      this._locks = (LongHashtable)(new Object());
+      this._credentials = new Hashtable();
+      this._locks = new LongHashtable();
       PersistentContent.addListener(this);
    }
 
@@ -100,7 +100,7 @@ public class CredentialStore implements PersistentContentListener, EventListener
             lock.release();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -183,7 +183,7 @@ public class CredentialStore implements PersistentContentListener, EventListener
    public void clearCredentials(long wicletId, boolean clearPersisted) {
       Lock lock = this.getLock(wicletId);
       lock.acquire();
-      Vector toRemove = (Vector)(new Object(4));
+      Vector toRemove = new Vector(4);
       synchronized (this._credentials) {
          Enumeration keys = this._credentials.keys();
          Enumeration elements = this._credentials.elements();
@@ -255,7 +255,7 @@ public class CredentialStore implements PersistentContentListener, EventListener
    }
 
    private String getKey(long wicletId, String url) {
-      return ((StringBuffer)(new Object(url))).append(wicletId).toString();
+      return url + wicletId;
    }
 
    private Lock getLock(long wicletId) {
@@ -301,7 +301,7 @@ public class CredentialStore implements PersistentContentListener, EventListener
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

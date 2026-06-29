@@ -11,34 +11,34 @@ final class RIMCipherAlgorithmsEncryptorFactory3 extends EncryptorFactory {
    }
 
    @Override
-   protected final Object create(String algorithm, String nextAlgorithm, Key key, OutputStream stream, InitializationVector iv) {
+   protected final Object create(String algorithm, String nextAlgorithm, Key key, OutputStream stream, InitializationVector iv) throws NoSuchAlgorithmException {
       if (algorithm.equals("CFB")) {
          if (iv == null) {
-            throw new Object();
+            throw new IllegalArgumentException();
          } else {
             return new CFBEncryptor((SymmetricKeyEncryptorEngine)EncryptorFactory.getBlockEncryptorEngine(key, nextAlgorithm, null), iv, stream, false);
          }
       } else if (algorithm.equals("CFB8")) {
          if (iv == null) {
-            throw new Object();
+            throw new IllegalArgumentException();
          } else {
             return new CFBEncryptor((SymmetricKeyEncryptorEngine)EncryptorFactory.getBlockEncryptorEngine(key, nextAlgorithm, null), iv, stream, true);
          }
       } else if (algorithm.equals("OFB")) {
          if (iv == null) {
-            throw new Object();
+            throw new IllegalArgumentException();
          } else {
             return new OFBPseudoRandomSource((SymmetricKeyEncryptorEngine)EncryptorFactory.getBlockEncryptorEngine(key, nextAlgorithm, null), iv);
          }
       } else if (algorithm.equals("CTR")) {
          if (iv == null) {
-            throw new Object();
+            throw new IllegalArgumentException();
          } else {
             return new CTRPseudoRandomSource((SymmetricKeyEncryptorEngine)EncryptorFactory.getBlockEncryptorEngine(key, nextAlgorithm, null), iv);
          }
       } else {
          if (!algorithm.startsWith("ECIES") && !algorithm.equals("EC")) {
-            throw new Object(algorithm);
+            throw new NoSuchAlgorithmException(algorithm);
          }
 
          nextAlgorithm = RIMFactoryUtilities.stripBaseAlgorithm(algorithm);

@@ -35,7 +35,7 @@ final class NetworkOptionsUtils {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public static final NetworkInfo[] getAvailableNetworks() {
       int size = RadioInfo.getNumberOfNetworks();
-      NetworkInfo[] infos = new Object[size];
+      NetworkInfo[] infos = new NetworkInfo[size];
       int i = 0;
 
       while (true) {
@@ -48,7 +48,7 @@ final class NetworkOptionsUtils {
                break;
             }
 
-            infos[i] = (NetworkInfo)(new Object());
+            infos[i] = new NetworkInfo();
             infos[i].setName(getAvailableNetworkName(i));
             infos[i].setNetworkId(RadioInfo.getNetworkId(i));
             infos[i].setCategory(RadioInternal.getNetworkCategory(i));
@@ -126,7 +126,7 @@ final class NetworkOptionsUtils {
          if ((activeWAFs & 1) != 0) {
             label195:
             try {
-               StringBuffer strBuf = (StringBuffer)(new Object(32));
+               StringBuffer strBuf = new StringBuffer(32);
                NumberUtilities.appendNumber(strBuf, netId & 65535, 16);
                strBuf.append('-');
                NumberUtilities.appendNumber(strBuf, netId >> 16 & 65535, 16);
@@ -172,7 +172,7 @@ final class NetworkOptionsUtils {
 
    public static final String buildNetIdString(NetworkInfo netInfo) {
       if (netInfo != null) {
-         StringBuffer idStr = (StringBuffer)(new Object());
+         StringBuffer idStr = new StringBuffer();
          if (is3GSupported()) {
             int cat = netInfo.getCategory();
             if ((cat & 64) != 0) {

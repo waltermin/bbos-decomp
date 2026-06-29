@@ -24,8 +24,8 @@ public final class DocViewParsingData implements ArznParseCallback {
    private DocViewSheetData[] _aDocSheets = new DocViewSheetData[0];
    private DocViewImageData[] _imageVector = new DocViewImageData[0];
    private DocViewAudioData[] _audioVector = new DocViewAudioData[0];
-   private String[] _SummaryDOMIDArray = new Object[0];
-   private IntVector _chunkHintArray = (IntVector)(new Object());
+   private String[] _SummaryDOMIDArray = new String[0];
+   private IntVector _chunkHintArray = new IntVector();
    private IntHashtable _docInfoHash;
    private IntIntHashtable _fontSizesHash;
    private int _defaultFontSize;
@@ -60,13 +60,7 @@ public final class DocViewParsingData implements ArznParseCallback {
          imgData.endParsing();
          String name = imgData.toString();
          if (name == null || name.length() == 0) {
-            imgData.setName(
-               ((StringBuffer)(new Object()))
-                  .append(ResourceBundle.getBundle(-4603212010799374808L, "net.rim.device.apps.internal.resource.DocView").getString(44))
-                  .append(' ')
-                  .append(String.valueOf(i + 1))
-                  .toString()
-            );
+            imgData.setName(ResourceBundle.getBundle(-4603212010799374808L, "net.rim.device.apps.internal.resource.DocView").getString(44) + ' ' + (i + 1));
          }
       }
 
@@ -573,7 +567,7 @@ public final class DocViewParsingData implements ArznParseCallback {
    public final void addFontSizes(short[] parseFontSizes) {
       if (parseFontSizes != null && parseFontSizes.length > 0) {
          int[] fontSizes = new int[parseFontSizes.length + 1];
-         IntIntHashtable addedHash = (IntIntHashtable)(new Object(fontSizes.length));
+         IntIntHashtable addedHash = new IntIntHashtable(fontSizes.length);
 
          for (int i = 0; i < fontSizes.length; i++) {
             int twips = i < parseFontSizes.length ? Math.abs(parseFontSizes[i]) : Math.abs(-240);
@@ -584,7 +578,7 @@ public final class DocViewParsingData implements ArznParseCallback {
          }
 
          Array.resize(fontSizes, addedHash.size());
-         addedHash = null;
+         IntIntHashtable var7 = null;
          Arrays.sort(fontSizes, 0, fontSizes.length);
          this._fontSizesHash = AttachmentViewerFactory.processFontSizes(fontSizes);
          int[] var6 = null;
@@ -628,20 +622,13 @@ public final class DocViewParsingData implements ArznParseCallback {
    @Override
    public final void addDocInfoValue(int docInfoID, String value) {
       if (this._docInfoHash == null) {
-         this._docInfoHash = (IntHashtable)(new Object());
+         this._docInfoHash = new IntHashtable();
       }
 
       switch (docInfoID) {
          case 40:
             this._docInfoHash
-               .put(
-                  docInfoID,
-                  ((StringBuffer)(new Object()))
-                     .append(value)
-                     .append(' ')
-                     .append(ResourceBundle.getBundle(-4603212010799374808L, "net.rim.device.apps.internal.resource.DocView").getString(49))
-                     .toString()
-               );
+               .put(docInfoID, value + ' ' + ResourceBundle.getBundle(-4603212010799374808L, "net.rim.device.apps.internal.resource.DocView").getString(49));
             return;
          case 45:
          case 46:
@@ -649,14 +636,7 @@ public final class DocViewParsingData implements ArznParseCallback {
             return;
          case 78:
             this._docInfoHash
-               .put(
-                  docInfoID,
-                  ((StringBuffer)(new Object()))
-                     .append(value)
-                     .append(' ')
-                     .append(ResourceBundle.getBundle(-4603212010799374808L, "net.rim.device.apps.internal.resource.DocView").getString(99))
-                     .toString()
-               );
+               .put(docInfoID, value + ' ' + ResourceBundle.getBundle(-4603212010799374808L, "net.rim.device.apps.internal.resource.DocView").getString(99));
             return;
          default:
             this._docInfoHash.put(docInfoID, value);

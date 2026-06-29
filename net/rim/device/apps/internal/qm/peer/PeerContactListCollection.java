@@ -35,7 +35,7 @@ public final class PeerContactListCollection implements CollectionEventSource, C
    PeerContactListCollection$SearcherThread _searcher;
    static final int CONTACT_LISTS = 1;
    static final int NEW_REQUESTS = 2;
-   static IntHashtable _pendingContacts = (IntHashtable)(new Object());
+   static IntHashtable _pendingContacts = new IntHashtable();
    static Comparator _contactsSorter = new PeerContactListCollection$1();
    static Comparator _requestsSorter = new PeerContactListCollection$2();
    static Comparator _contactListsSorter = new PeerContactListCollection$3();
@@ -71,7 +71,7 @@ public final class PeerContactListCollection implements CollectionEventSource, C
       if (this._persistentContactLists != null) {
          this.reloadContacts();
       } else {
-         this._persistentContactLists = (BigVector)(new Object());
+         this._persistentContactLists = new BigVector();
          PeerData.addContactListCollectionData(id, this._persistentContactLists);
          this._defaultContactList = this.addContactList(PeerResources.getString(40));
       }
@@ -89,13 +89,13 @@ public final class PeerContactListCollection implements CollectionEventSource, C
    final PeerContact restoreContact(IntHashtable data, PeerContactList list) {
       int hash = 0;
       Object obj = data.get(17);
-      if (!(obj instanceof Object)) {
+      if (!(obj instanceof Integer)) {
          if (!PeerEntry.getInstance().isDeviceLocked()) {
             hash = PersistentContent.decode(data.get(1)).hashCode();
-            data.put(17, new Object(hash));
+            data.put(17, new Integer(hash));
          }
       } else {
-         hash = obj;
+         hash = (Integer)obj;
       }
 
       PeerContact contact = hash != 0 ? this.findContactByHashId(hash) : null;
@@ -270,7 +270,7 @@ public final class PeerContactListCollection implements CollectionEventSource, C
 
       for (int i = this._persistentContactLists.size() - 1; i >= 0; i--) {
          Object obj = ((IntHashtable)this._persistentContactLists.elementAt(i)).get(3);
-         if (obj instanceof Object && hash == obj) {
+         if (obj instanceof Integer && hash == (Integer)obj) {
             this._persistentContactLists.removeElementAt(i);
          }
       }
@@ -301,7 +301,7 @@ public final class PeerContactListCollection implements CollectionEventSource, C
 
    final synchronized PeerContact[] getContacts(int id) {
       int size = this._contacts.size();
-      Vector contacts = (Vector)(new Object());
+      Vector contacts = new Vector();
 
       for (int i = 0; i < size; i++) {
          PeerContact current = (PeerContact)this._contacts.getAt(i);
@@ -316,7 +316,7 @@ public final class PeerContactListCollection implements CollectionEventSource, C
    }
 
    final PeerContact[] getInvitationChoices(PeerConversation conversation, String myHashId) {
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       synchronized (this._contacts) {
          for (int i = 0; i < this.getContactsCount(); i++) {
             PeerContact c = (PeerContact)this.getContactAt(i);
@@ -408,7 +408,7 @@ public final class PeerContactListCollection implements CollectionEventSource, C
             }
          }
       } else {
-         this._persistedNewRequests = (Vector)(new Object());
+         this._persistedNewRequests = new Vector();
          PeerData.saveRequests(this._persistedNewRequests);
       }
    }
@@ -563,7 +563,7 @@ public final class PeerContactListCollection implements CollectionEventSource, C
       PeerRequest result = null;
       IntHashtable data = (IntHashtable)this._persistedNewRequests.elementAt(index);
       Object obj = data.get(9);
-      if (obj instanceof Object && obj.equals("1.1.0")) {
+      if (obj instanceof String && ((String)obj).equals("1.1.0")) {
          switch (data.get(1)) {
             case 1:
                break;
@@ -585,7 +585,7 @@ public final class PeerContactListCollection implements CollectionEventSource, C
             this._contactKeywords.removeKeywords(contact);
             this._contactKeywords.remove(contact);
          } else {
-            String error = ((StringBuffer)(new Object("Contact list error detected on deleting contact "))).append(contact.getId()).toString();
+            String error = "Contact list error detected on deleting contact " + contact.getId();
             EventLogger.logEvent(-9029900896793868512L, error.getBytes(), 3);
          }
       }
@@ -640,15 +640,15 @@ public final class PeerContactListCollection implements CollectionEventSource, C
    }
 
    public PeerContactListCollection() {
-      this._collectionListenerManager = (CollectionListenerManager)(new Object());
-      this._groupId2Group = (IntHashtable)(new Object());
-      this._contactLists = (SimpleSortingVector)(new Object());
+      this._collectionListenerManager = new CollectionListenerManager();
+      this._groupId2Group = new IntHashtable();
+      this._contactLists = new SimpleSortingVector();
       this._contactLists.setSortComparator(_contactListsSorter);
       this._contactLists.setSort(true);
-      this._contacts = (SimpleSortingVector)(new Object());
+      this._contacts = new SimpleSortingVector();
       this._contacts.setSortComparator(_contactsSorter);
       this._contacts.setSort(true);
-      this._newRequests = (SimpleSortingVector)(new Object());
+      this._newRequests = new SimpleSortingVector();
       this._newRequests.setSortComparator(_requestsSorter);
       this._newRequests.setSort(true);
       this._contactKeywordsData = new ContactKeywordsData();

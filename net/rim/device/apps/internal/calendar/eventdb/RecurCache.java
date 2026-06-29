@@ -8,7 +8,7 @@ import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.vm.Array;
 
 class RecurCache {
-   private LongHashtable _cacheEntries = (LongHashtable)(new Object());
+   private LongHashtable _cacheEntries = new LongHashtable();
    private RecurCache$BuildCacheHelper _buildCacheHelper = new RecurCache$BuildCacheHelper();
 
    void getOccurrencesIn(long start, long duration, TimeZone tz, DurationParts root, long UID, Object[] occurrences) {
@@ -63,7 +63,7 @@ class RecurCache {
                if (startIndex <= endIndex && startIndex >= 0 && startIndex < numOccurrences && endIndex >= 0 && endIndex < numOccurrences) {
                   if (lookEarlier) {
                      RIMModel po = (RIMModel)root.getPrev(occurrencesToExamine[startIndex]);
-                     if (po instanceof Object) {
+                     if (po instanceof Duration) {
                         Duration poDuration = (Duration)po;
                         long startOfEvent = poDuration.getStart(tz);
                         long endOfEvent = startOfEvent + poDuration.getDuration(tz);
@@ -86,7 +86,7 @@ class RecurCache {
 
                   if (lookLater) {
                      RIMModel po = (RIMModel)root.getNext(occurrencesToExamine[endIndex]);
-                     if (po instanceof Object) {
+                     if (po instanceof Duration) {
                         Duration poDuration = (Duration)po;
                         long startOfEvent = poDuration.getStart(tz);
 
@@ -120,7 +120,7 @@ class RecurCache {
    }
 
    void clearAll() {
-      this._cacheEntries = (LongHashtable)(new Object());
+      this._cacheEntries = new LongHashtable();
    }
 
    private RecurCache$CacheEntry buildCache(long start, long duration, TimeZone tz, DurationParts root, long UID) {

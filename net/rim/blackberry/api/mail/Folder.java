@@ -45,7 +45,7 @@ public class Folder {
    private static final String DEFAULT_INBOX_NAME = "inbox";
    static final String DEFAULT_OUTBOX_FOLDER_NAME = "outbox";
    static final String DEFAULT_SENT_FOLDER_NAME = "sent items";
-   private static ContextObject _fileMessageContext = (ContextObject)(new Object());
+   private static ContextObject _fileMessageContext = new ContextObject();
 
    Folder(Folder folder, EmailFolder f) {
       this(folder.getStore(), f);
@@ -75,9 +75,9 @@ public class Folder {
 
    private void commonInit(Store store, EmailFolder f) {
       this._store = store;
-      this._fListeners = (Vector)(new Object());
+      this._fListeners = new Vector();
       if (f == null) {
-         throw new Object("unreachable!");
+         throw new IllegalStateException("unreachable!");
       }
 
       this._emailFolder = f;
@@ -88,7 +88,7 @@ public class Folder {
    }
 
    public String getFullName() {
-      StringBuffer fullName = (StringBuffer)(new Object());
+      StringBuffer fullName = new StringBuffer();
       String storeName = this._emailFolder.getEmailHierarchy().getFriendlyName();
       fullName.append(storeName);
       fullName.append(':');
@@ -112,7 +112,7 @@ public class Folder {
    public Folder getParent() {
       if (this._parent == null) {
          net.rim.device.apps.api.messaging.Folder parent = this._emailFolder.getParentFolder();
-         if (parent instanceof Object) {
+         if (parent instanceof EmailFolder) {
             EmailFolder ef = (EmailFolder)parent;
             this._parent = new Folder(ef);
          }
@@ -122,7 +122,7 @@ public class Folder {
    }
 
    public Folder[] list() {
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       Enumeration e = this._emailFolder.getSubFolders();
 
       while (e.hasMoreElements()) {
@@ -153,12 +153,12 @@ public class Folder {
 
    public Folder getFolder(String name) throws FolderNotFoundException {
       if (name.indexOf(58) != -1) {
-         throw new Object("Absolute folder names are not supported for Folder.getFolder()");
+         throw new IllegalArgumentException("Absolute folder names are not supported for Folder.getFolder()");
       }
 
       char sep = getSeparator();
       if (name.charAt(name.length() - 1) == sep) {
-         throw new FolderNotFoundException(name, ((StringBuffer)(new Object("Last character should not be "))).append(sep).toString());
+         throw new FolderNotFoundException(name, "Last character should not be " + sep);
       }
 
       int sep1 = -1;
@@ -193,7 +193,7 @@ public class Folder {
          long luid = this._emailFolder.getLUID();
          ReadableList filed = (ReadableList)EmailHierarchy.getStorageCollection(luid, true);
          ReadableList unfiled = (ReadableList)EmailHierarchy.getStorageCollection(luid, false);
-         Vector v = (Vector)(new Object(10));
+         Vector v = new Vector(10);
          this.extractMatchingMessages(luid, filed, v);
          this.extractMatchingMessages(luid, unfiled, v);
          Message[] array = new Message[v.size()];
@@ -205,7 +205,7 @@ public class Folder {
    }
 
    public Message[] getDraftMessages(Message[] array) {
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
 
       for (int i = 0; i < array.length; i++) {
          if (array[i].getStatus() == Integer.MAX_VALUE) {
@@ -257,12 +257,12 @@ public class Folder {
                synchronized (_fileMessageContext) {
                   _fileMessageContext.put(-1219344331000926502L, this._emailFolder);
                   EmailMessageModel emm = msg.getEmailMessageModel();
-                  if (emm instanceof Object) {
+                  if (emm instanceof ActionProvider) {
                      ActionProvider actionProvider = (ActionProvider)emm;
                      actionProvider.perform(1092577344890817449L, _fileMessageContext);
                   }
 
-                  if (emm instanceof Object) {
+                  if (emm instanceof DefaultProvider) {
                      DefaultProvider defaultProvider = (DefaultProvider)emm;
                      defaultProvider.updateDefault(this._emailFolder, _fileMessageContext);
                   }
@@ -295,7 +295,7 @@ public class Folder {
       }
 
       ActionProvider ap = (ActionProvider)em;
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       ap.perform(6780594967363292755L, context);
       return true;
    }

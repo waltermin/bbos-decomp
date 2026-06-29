@@ -8,8 +8,8 @@ import net.rim.vm.WeakReference;
 
 public class RIMModelOrderHelper implements KeywordIndexerHelper, Comparator {
    private ContextObject _context;
-   private WeakReference _keys1WR = (WeakReference)(new Object(null));
-   private WeakReference _wordsWR = (WeakReference)(new Object(null));
+   private WeakReference _keys1WR = new WeakReference(null);
+   private WeakReference _wordsWR = new WeakReference(null);
    private Comparator _comparator;
 
    public RIMModelOrderHelper(Comparator comparator, ContextObject context) {

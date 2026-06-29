@@ -150,7 +150,7 @@ final class ServiceSyncInfo implements Persistable {
          return null;
       }
 
-      RIMMessagingFolderManagement packet = (RIMMessagingFolderManagement)(new Object(this.size()));
+      RIMMessagingFolderManagement packet = new RIMMessagingFolderManagement(this.size());
       boolean[] processed = new boolean[this._readStatusChanges.length];
       int deletedCount = this._deletedMessages.length;
 

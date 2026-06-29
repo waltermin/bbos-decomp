@@ -101,7 +101,7 @@ public class SmartCardReaderSession {
          this._callBackThread.go(function);
          function.checkException();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -119,7 +119,7 @@ public class SmartCardReaderSession {
          this._callBackThread.go(function);
          function.checkException();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -187,7 +187,7 @@ public class SmartCardReaderSession {
    }
 
    private void waitForSmartCardInsertion() {
-      SmartCardPromptDialog.promptUserToInsertSmartCard(_rb.getString(5), new Object[]{this._reader.getLabel()}, this._reader);
+      SmartCardPromptDialog.promptUserToInsertSmartCard(_rb.getString(5), new String[]{this._reader.getLabel()}, this._reader);
    }
 
    public final AnswerToReset getAnswerToReset() {

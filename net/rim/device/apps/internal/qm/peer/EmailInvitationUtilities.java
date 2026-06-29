@@ -26,18 +26,16 @@ final class EmailInvitationUtilities {
 
    public static final void sendEmailMessage(String to, String subject, String body, EmailInvitation invite, boolean show, boolean includeInvite) {
       boolean isPin = invite.isPin();
-      ContextObject contextObject = (ContextObject)(new Object());
+      ContextObject contextObject = new ContextObject();
       contextObject.setFlag(31);
       contextObject.setFlag(85);
       if (invite.isPin()) {
          contextObject.setFlag(94);
       }
 
-      EmailMessageModelImpl msg = (EmailMessageModelImpl)(new Object(contextObject));
-      String[] names = new Object[2];
-      names[0] = to;
-      names[1] = to;
-      ContextObject context = (ContextObject)(new Object());
+      EmailMessageModelImpl msg = new EmailMessageModelImpl(contextObject);
+      String[] names = new String[]{to, to};
+      ContextObject context = new ContextObject();
       ContextObject.put(context, 251, names);
       Object recipient = FactoryUtil.createInstance(-2985347935260258684L, context);
       EmailBuilderApi.addRecipient(msg, 0, (RIMModel)recipient);
@@ -45,22 +43,22 @@ final class EmailInvitationUtilities {
       if (includeInvite) {
          byte[] data = invite.pickle(body);
          char[] encoded = Utils.encodeBase64(data, 0, data.length);
-         body = ((StringBuffer)(new Object())).append(body).append("\n\n\n").toString();
+         body = body + "\n\n\n";
          if (invite._backwards) {
-            body = ((StringBuffer)(new Object())).append(body).append("-------AM-------").toString();
+            body = body + "-------AM-------";
          } else {
-            body = ((StringBuffer)(new Object())).append(body).append("-------o-------").toString();
+            body = body + "-------o-------";
          }
 
-         body = ((StringBuffer)(new Object())).append(body).append('\n').toString();
-         String encodedtext = (String)(new Object(encoded));
-         body = ((StringBuffer)(new Object())).append(body).append(encodedtext.length()).toString();
-         body = ((StringBuffer)(new Object())).append(body).append(':').toString();
-         body = ((StringBuffer)(new Object())).append(body).append(encodedtext).toString();
-         body = ((StringBuffer)(new Object())).append(body).append("\n\n").toString();
+         body = body + '\n';
+         String encodedtext = new String(encoded);
+         body = body + encodedtext.length();
+         body = body + ':';
+         body = body + encodedtext;
+         body = body + "\n\n";
       }
 
-      body = ((StringBuffer)(new Object("-----￼----\n"))).append(body).toString();
+      body = "-----￼----\n" + body;
       EmailBuilderApi.addMessageBody(msg, body);
       msg.setType((byte)32);
       RIMMessagingService service = (RIMMessagingService)TransmissionServiceManager.get(8399767144006445082L);
@@ -68,7 +66,7 @@ final class EmailInvitationUtilities {
          ServiceRecord sr = service.getOutgoingServiceRecord();
          if (sr != null || isPin) {
             context.reset();
-            EmailSendUtility.sendMessage(msg, sr, new Object());
+            EmailSendUtility.sendMessage(msg, sr, new ContextObject());
             if (!show) {
                EmailHierarchy.removeMessage(msg, msg.getFolderId());
             }

@@ -7,7 +7,7 @@ public class CodfileVectorHash extends CodfileVector {
 
    public CodfileVectorHash(int initialCapacity) {
       super(1, false);
-      this._table = (Hashtable)(new Object(initialCapacity));
+      this._table = new Hashtable(initialCapacity);
    }
 
    public CodfileItem get(Object obj) {

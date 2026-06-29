@@ -19,7 +19,7 @@ public class ApplicationHierarchy implements Persistable {
       this._movingIconsAllowed = true;
       this._hidingIconsAllowed = true;
       this._folders = new ApplicationFolder[0];
-      this._properties = (Hashtable)(new Object());
+      this._properties = new Hashtable();
       this._modules = new ModuleApplication[0];
       ApplicationFolder rootFolder = new ApplicationFolder("", null, 0);
       this.addFolder(rootFolder);

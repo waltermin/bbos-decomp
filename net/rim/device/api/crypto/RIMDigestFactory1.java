@@ -7,7 +7,7 @@ final class RIMDigestFactory1 extends DigestFactory {
    }
 
    @Override
-   protected final Digest create(String algorithm) {
+   protected final Digest create(String algorithm) throws NoSuchAlgorithmException {
       if (algorithm.equals("SHA224")) {
          return new SHA224Digest();
       } else if (algorithm.equals("SHA384")) {
@@ -15,7 +15,7 @@ final class RIMDigestFactory1 extends DigestFactory {
       } else if (algorithm.equals("Null")) {
          return new NullDigest();
       } else {
-         throw new Object(algorithm);
+         throw new NoSuchAlgorithmException(algorithm);
       }
    }
 }

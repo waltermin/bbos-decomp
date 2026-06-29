@@ -74,7 +74,7 @@ final class BluetoothDeviceData implements Persistable {
       // 003: dup
       // 004: invokespecial net/rim/device/apps/internal/bluetooth/BluetoothDeviceData.<init> ()V
       // 007: astore 2
-      // 008: new java/lang/Object
+      // 008: new net/rim/device/api/util/DataBuffer
       // 00b: dup
       // 00c: aload 0
       // 00d: bipush 0
@@ -208,7 +208,7 @@ final class BluetoothDeviceData implements Persistable {
    }
 
    final byte[] serialize(boolean bigEndian) {
-      DataBuffer buffer = (DataBuffer)(new Object(bigEndian));
+      DataBuffer buffer = new DataBuffer(bigEndian);
       ConverterUtilities.writeByteArray(buffer, 0, this._address);
       if (this._name != null) {
          ConverterUtilities.writeString(buffer, 1, this._name);

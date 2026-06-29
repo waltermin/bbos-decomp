@@ -4,15 +4,15 @@ public final class RSAEncryptorEngine implements PublicKeyEncryptorEngine {
    private RSAPublicKey _key;
    private RSACryptoToken _cryptoToken;
 
-   public RSAEncryptorEngine(RSAPublicKey key) {
+   public RSAEncryptorEngine(RSAPublicKey key) throws CryptoUnsupportedOperationException {
       if (key != null && (key.getCryptoSystem().getBitLength() & 7) == 0) {
          this._key = key;
          this._cryptoToken = this._key.getRSACryptoToken();
          if (!this._cryptoToken.isSupportedEncryptRSA(this._key.getRSACryptoSystem(), this._key.getCryptoTokenData())) {
-            throw new Object();
+            throw new CryptoUnsupportedOperationException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -29,7 +29,7 @@ public final class RSAEncryptorEngine implements PublicKeyEncryptorEngine {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void encrypt(byte[] plaintext, int plaintextOffset, byte[] ciphertext, int ciphertextOffset) {
+   public final void encrypt(byte[] plaintext, int plaintextOffset, byte[] ciphertext, int ciphertextOffset) throws CryptoTokenException {
       if (plaintext != null
          && plaintextOffset >= 0
          && plaintext.length > plaintextOffset
@@ -39,16 +39,16 @@ public final class RSAEncryptorEngine implements PublicKeyEncryptorEngine {
          try {
             byte[] n = this._key.getN();
             if (CryptoByteArrayArithmetic.compare(plaintext, plaintextOffset, n.length, n, 0, n.length) >= 0) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this._cryptoToken
                .encryptRSA(this._key.getRSACryptoSystem(), this._key.getCryptoTokenData(), plaintext, plaintextOffset, ciphertext, ciphertextOffset);
          } catch (Throwable var7) {
-            throw new Object(e.toString());
+            throw new CryptoTokenException(e.toString());
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

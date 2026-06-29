@@ -1,27 +1,28 @@
 package net.rim.device.apps.internal.phone.model;
 
-import net.rim.device.api.ui.Field;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.component.EditField;
-import net.rim.device.api.ui.text.TextFilter;
+import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.container.VerticalFieldManager;
+import net.rim.device.api.ui.text.NumericTextFilter;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
 import net.rim.device.internal.ui.component.PopupDialog;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 
 public class PhoneNumberConverter$GetAreaCodeDialog extends PopupDialog {
    private EditField _areaCodeField;
    private int _closeReason = -1;
 
    public PhoneNumberConverter$GetAreaCodeDialog(String areaCode) {
-      super((Manager)(new Object(1153202979583557632L)));
+      super(new VerticalFieldManager(1153202979583557632L));
       this.setModal(true);
-      this._areaCodeField = (EditField)(new Object(((StringBuffer)(new Object())).append(PhoneResources.getString(6315)).append(" ").toString(), "", 3, 0));
+      this._areaCodeField = new EditField(PhoneResources.getString(6315) + " ", "", 3, 0);
       this._areaCodeField.setText(areaCode);
-      this._areaCodeField.setFilter((TextFilter)(new Object()));
-      this.add((Field)(new Object(PhoneResources.getString(6316), 36028797018963968L)));
-      this.add((Field)(new Object(4)));
+      this._areaCodeField.setFilter(new NumericTextFilter());
+      this.add(new RichTextField(PhoneResources.getString(6316), 36028797018963968L));
+      this.add(new VerticalSpacerField(4));
       this.add(this._areaCodeField);
-      this.add((Field)(new Object(4)));
+      this.add(new VerticalSpacerField(4));
    }
 
    @Override

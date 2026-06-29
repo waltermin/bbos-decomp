@@ -86,7 +86,7 @@ final class DocViewAttachmentViewerModel extends AttachmentViewerModel implement
          }
 
          Object o = ContextObject.get(context, -7450314121582082994L);
-         if (o instanceof Object) {
+         if (o instanceof EmailMessageModel) {
             EmailMessageModel emailMessageModel = (EmailMessageModel)o;
             DocViewAttachmentPersist.getInstance().onMessageDeleted(emailMessageModel.getUID());
             DocViewAttachmentPersist.commitChanges();
@@ -159,7 +159,7 @@ final class DocViewAttachmentViewerModel extends AttachmentViewerModel implement
          embeddedDomID = customProcessResponse(dataId, response._arbDOMIDStartArray, embeddedDomID, response);
          Object emailMsgModel = MessageLookups.get(-4420850319371185992L, messageID);
          EmailMessageModel messageModel = null;
-         if (emailMsgModel instanceof Object) {
+         if (emailMsgModel instanceof EmailMessageModel) {
             messageModel = (EmailMessageModel)emailMsgModel;
          }
 
@@ -171,7 +171,7 @@ final class DocViewAttachmentViewerModel extends AttachmentViewerModel implement
                ServerResponse responseFinal = response;
                String embeddedDomIDFinal = embeddedDomID;
                Object contextFinal = context;
-               Timer timerFinal = (Timer)(new Object());
+               Timer timerFinal = new Timer();
                timerFinal.scheduleAtFixedRate(
                   new DocViewAttachmentViewerModel$1(this, embeddedDomIDFinal, pageDomID, messageID, partID, responseFinal, contextFinal, moreData, timerFinal),
                   2000,
@@ -507,7 +507,7 @@ final class DocViewAttachmentViewerModel extends AttachmentViewerModel implement
       if (response._pageDomIDs != null
          && (response._docID._partIndex != 999 || response._docID._partIndex == 999 && response._crtBlockIndex == 0)
          && this.canHaveFollowUpRequest(response)) {
-         StringTokenizer tokenizer = (StringTokenizer)(new Object(response._pageDomIDs, ','));
+         StringTokenizer tokenizer = new StringTokenizer(response._pageDomIDs, ',');
          int count = tokenizer.countTokens();
          if (count > 0) {
             String pageDomID = tokenizer.nextToken();
@@ -565,18 +565,16 @@ final class DocViewAttachmentViewerModel extends AttachmentViewerModel implement
       String renderDomID = AttachmentViewerFactory.constructCustomDomIDStringEx(embeddedDomID, pageDomID, "RenderDomID");
       DocViewAttachmentPersist persistInstance = DocViewAttachmentPersist.getInstance();
       if (persistInstance.isObjectChunkAvailable(messageID, partID, archiveIndicator, renderDomID, 0)) {
-         String[] sameDomID = new Object[1];
-         sameDomID[0] = renderDomID;
-         return sameDomID;
+         return new String[]{renderDomID};
       }
 
-      String[] atoms = new Object[0];
+      String[] atoms = new String[0];
       if (embeddedDomID != null) {
-         Arrays.add(atoms, ((StringBuffer)(new Object())).append(embeddedDomID).append("/").toString());
+         Arrays.add(atoms, embeddedDomID + "/");
       }
 
       Arrays.add(atoms, "/RenderDomID");
-      Arrays.add(atoms, ((StringBuffer)(new Object())).append(pageDomID).append(',').toString());
+      Arrays.add(atoms, pageDomID + ',');
       String[] matchDomIDs = persistInstance.getMatchingAvailableEmbeddedDomIDs(messageID, partID, archiveIndicator, atoms);
       String[] var10 = null;
       return matchDomIDs;
@@ -739,7 +737,7 @@ final class DocViewAttachmentViewerModel extends AttachmentViewerModel implement
          int trueLength = -1;
 
          try {
-            trueLength = Integer.parseInt(CommandHandler.readTagValue((String)(new Object(this.getData())), "SIZE"));
+            trueLength = Integer.parseInt(CommandHandler.readTagValue(new String(this.getData()), "SIZE"));
             if (trueLength > 0) {
                this.setTrueLength(trueLength);
                return;
@@ -808,12 +806,12 @@ final class DocViewAttachmentViewerModel extends AttachmentViewerModel implement
       // 03c: invokevirtual net/rim/device/apps/internal/docview/gui/DocViewParser.parseDocument ([BZIZZ)V
       // 03f: goto 0a5
       // 042: aload 6
-      // 044: instanceof java/lang/Object
+      // 044: instanceof java/util/Vector
       // 047: ifeq 0a5
       // 04a: bipush 1
       // 04b: istore 8
       // 04d: aload 6
-      // 04f: checkcast java/lang/Object
+      // 04f: checkcast java/util/Vector
       // 052: astore 9
       // 054: aload 9
       // 056: invokevirtual java/util/Vector.size ()I
@@ -967,7 +965,7 @@ final class DocViewAttachmentViewerModel extends AttachmentViewerModel implement
             if (rPageDomIDs != null) {
                String strRenderDomIDs = DocViewUtilities.readString(rPageDomIDs, 0, false);
                if (strRenderDomIDs != null) {
-                  StringTokenizer tokenizer = (StringTokenizer)(new Object(strRenderDomIDs, ','));
+                  StringTokenizer tokenizer = new StringTokenizer(strRenderDomIDs, ',');
                   int count = tokenizer.countTokens();
                   if (count > 0) {
                      String pageDomID = tokenizer.nextToken();
@@ -1006,17 +1004,17 @@ final class DocViewAttachmentViewerModel extends AttachmentViewerModel implement
       Field attachmentField = super.getField(context);
       if (!this.isArchive() && attachmentField != null && AttachmentViewerFactory.isAttachmentViewingEnabled()) {
          Object selectedItem = ContextObject.get(context, 246);
-         if (!(selectedItem instanceof Object)) {
+         if (!(selectedItem instanceof EmailMessageModel)) {
             selectedItem = ContextObject.get(context, 250);
          }
 
-         if (selectedItem instanceof Object) {
+         if (selectedItem instanceof EmailMessageModel) {
             EmailMessageModel emailModel = (EmailMessageModel)selectedItem;
             int messageID = emailModel.getCMIMEReferenceIdentifier();
             int morePartID = this.getMorePartID();
             DocViewPreviewFieldManager mgr = DocViewPreviewFieldManager.getInstance();
             Object cachedObj = mgr.getObject(messageID, morePartID);
-            if (cachedObj != null && cachedObj instanceof Object) {
+            if (cachedObj != null && cachedObj instanceof Manager) {
                Manager fldMgr = (Manager)cachedObj;
 
                label81:

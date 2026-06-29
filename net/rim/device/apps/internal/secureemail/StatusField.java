@@ -2,9 +2,9 @@ package net.rim.device.apps.internal.secureemail;
 
 import net.rim.device.api.system.Application;
 import net.rim.device.api.ui.ContextMenu;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.internal.ui.Image;
 import net.rim.device.internal.ui.component.ImageField;
 
@@ -60,7 +60,7 @@ public class StatusField extends CursorProviderVerticalIndentFieldManager implem
       this._showShortForm = showShortForm;
       this._imageAndTextManager = new CursorProviderHorizontalFieldManager();
       this._imageField = new ContextMenuProxyImageField(this, null, 18014450049155072L);
-      this._textField = (RichTextField)(new Object(36028848558571520L));
+      this._textField = new RichTextField(36028848558571520L);
       this.updateFields();
    }
 
@@ -87,7 +87,7 @@ public class StatusField extends CursorProviderVerticalIndentFieldManager implem
             this._imageAndTextManager.add(new StatusField$BlankField(3, twoLinesOfTextHeight));
             this._imageAndTextManager.add(this._textField);
             this.add(this._imageAndTextManager);
-            this.add((Field)(new Object()));
+            this.add(new SeparatorField());
          }
       }
    }

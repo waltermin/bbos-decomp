@@ -36,17 +36,17 @@ public class PKCS12CertificateKeyAttachmentModel extends CertificateAttachmentMo
       Certificate[] certificates = null;
       PrivateKey[] keys = null;
       if (!this.isMoreAvailable()) {
-         String fileName = (String)(new Object(this.getNameBytes()));
+         String fileName = new String(this.getNameBytes());
          if (isCertificateFileName(fileName)) {
             label35:
             try {
                byte[] data = this.getData();
-               PKCS12 p12 = (PKCS12)(new Object(data));
+               PKCS12 p12 = new PKCS12(data);
                pairs = PKCS12Utilities.getAllCertificateKeyPairs(p12);
                if (pairs != null) {
                   int size = pairs.length;
-                  certificates = new Object[size];
-                  keys = new Object[size];
+                  certificates = new Certificate[size];
+                  keys = new PrivateKey[size];
 
                   for (int i = 0; i < size; i++) {
                      certificates[i] = pairs[i].getCertificate();
@@ -76,7 +76,7 @@ public class PKCS12CertificateKeyAttachmentModel extends CertificateAttachmentMo
    @Override
    protected boolean writeToOutputStream(OutputStream outputStream) {
       try {
-         Base64OutputStream base64 = (Base64OutputStream)(new Object(outputStream, true, true));
+         Base64OutputStream base64 = new Base64OutputStream(outputStream, true, true);
          base64.write(this.getData());
          base64.close();
          return true;

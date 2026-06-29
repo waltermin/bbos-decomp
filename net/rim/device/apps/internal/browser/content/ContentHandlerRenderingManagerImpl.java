@@ -21,7 +21,7 @@ public final class ContentHandlerRenderingManagerImpl extends ContentHandlerRend
       try {
          registry.register(new ContentHandlerRenderingConverter(type));
       } finally {
-         System.out.println(((StringBuffer)(new Object("Could not register content handler type "))).append(type).toString());
+         System.out.println("Could not register content handler type " + type);
          return;
       }
    }

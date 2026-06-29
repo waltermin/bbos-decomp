@@ -12,6 +12,7 @@ import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.UiEngine;
 import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.ui.component.TextInputDialog;
+import net.rim.device.api.ui.component.TextInputObscuringScreen;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.api.ui.theme.ThemeAttributeSet;
 import net.rim.device.api.util.ByteVector;
@@ -25,16 +26,16 @@ import net.rim.tid.itie.EventHandler;
 
 public class LookupImpl2 extends Lookup implements ISLVariantsObserver, TextInputDialog {
    private Font _auxilaryElementsFont;
-   private XYRect _bounds = (XYRect)(new Object());
+   private XYRect _bounds = new XYRect();
    private SLCurrentVariant _current = new SLCurrentVariant();
    protected SLVariants _currentVariant;
    private ByteVector _frameOffsets;
    private ByteVector _frameArrows;
-   private ByteVector _indexesOfFramesWithOneVariant = (ByteVector)(new Object(1));
-   private IntVector _variantsLengths = (IntVector)(new Object(10, 3));
+   private ByteVector _indexesOfFramesWithOneVariant = new ByteVector(1);
+   private IntVector _variantsLengths = new IntVector(10, 3);
    private String[] _numbers;
    private StringBuffer _infoString;
-   private TextMetrics _textMetrics = (TextMetrics)(new Object());
+   private TextMetrics _textMetrics = new TextMetrics();
    protected int _currentIndex;
    private int _firstItem = -1;
    private int _lastItem = -1;
@@ -212,21 +213,21 @@ public class LookupImpl2 extends Lookup implements ISLVariantsObserver, TextInpu
 
    @Override
    public void init(SLInputMethod im, Locale locale, int aType) {
-      this._frameOffsets = (ByteVector)(new Object(10, 2));
+      this._frameOffsets = new ByteVector(10, 2);
       this._type = (byte)aType;
       switch (this._type & 3) {
          case -1:
             break;
          case 0:
-            this._frameArrows = (ByteVector)(new Object(10, 2));
+            this._frameArrows = new ByteVector(10, 2);
             break;
          case 1:
          default:
-            this._infoString = (StringBuffer)(new Object(5));
+            this._infoString = new StringBuffer(5);
       }
 
       if ((this._type & 8) != 0) {
-         this._numbers = new Object[10];
+         this._numbers = new String[10];
 
          for (int i = 0; i < 10; i++) {
             this._numbers[i] = String.valueOf(i + 1);
@@ -383,7 +384,7 @@ public class LookupImpl2 extends Lookup implements ISLVariantsObserver, TextInpu
             }
             break;
          case 35:
-            if (aParameter != null && aParameter instanceof Object) {
+            if (aParameter != null && aParameter instanceof Integer) {
                int temp = ((Integer)aParameter).byteValue();
                if (temp >= 1 && temp <= this._lastItem - this._firstItem) {
                   temp += this._firstItem - 1;
@@ -421,7 +422,7 @@ public class LookupImpl2 extends Lookup implements ISLVariantsObserver, TextInpu
 
    @Override
    protected void onObscured() {
-      if (Ui.getUiEngine().getActiveScreen() instanceof Object) {
+      if (Ui.getUiEngine().getActiveScreen() instanceof TextInputObscuringScreen) {
          this.setVisible(false);
          this.setVisible(true);
       }
@@ -494,7 +495,7 @@ public class LookupImpl2 extends Lookup implements ISLVariantsObserver, TextInpu
 
    private String formLongVariant(Font aFont) {
       this._currentVariant.getVariantAt(this._firstItem, this._current);
-      StringBuffer buffer = (StringBuffer)(new Object(" ..."));
+      StringBuffer buffer = new StringBuffer(" ...");
       if ((this._type & 8) != 0) {
          buffer.insert(0, "1");
       }

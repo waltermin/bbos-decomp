@@ -1,5 +1,6 @@
 package net.rim.wica.runtime.metadata.util;
 
+import java.util.Date;
 import java.util.Vector;
 import net.rim.device.api.util.IntVector;
 import net.rim.wica.common.metadata.component.ComponentDef;
@@ -11,13 +12,13 @@ import net.rim.wica.runtime.util.LongVector;
 
 public final class SerializationUtilities {
    public static final String serializeObject(String name, Wiclet definition, DataCollection collection, long handle) {
-      StringBuffer b = (StringBuffer)(new Object());
+      StringBuffer b = new StringBuffer();
       serializeObject(b, name, definition, collection, handle);
       return b.toString();
    }
 
    public static final String serializeCollection(String name, Wiclet definition, KeyDataCollection collection) {
-      StringBuffer b = (StringBuffer)(new Object());
+      StringBuffer b = new StringBuffer();
       b.append("<collection");
       if (name != null) {
          b.append(" name=\"");
@@ -310,7 +311,7 @@ public final class SerializationUtilities {
    }
 
    private static final void writeDateValue(StringBuffer buffer, long date) {
-      buffer.append(new Object(date));
+      buffer.append(new Date(date));
    }
 
    private static final void writeEscaped(StringBuffer buffer, String text) {

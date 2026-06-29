@@ -12,17 +12,17 @@ class AddressBookComboField$SureTypeVariants {
 
    public AddressBookComboField$SureTypeVariants(AddressBookComboField _1) {
       this.this$0 = _1;
-      this._variantSet = new Object[0][];
+      this._variantSet = new String[0][];
       this._text = "";
-      this._cache = new Object[1][][];
+      this._cache = new String[1][][];
       this._ignoreVariants = false;
-      this._cache[0] = new Object[0][];
+      this._cache[0] = new String[0][];
    }
 
    public void ignoreVariants() {
       this._ignoreVariants = true;
-      this._variantSet = new Object[1][1];
-      this._cache = (Object[][][])null;
+      this._variantSet = new String[1][1];
+      this._cache = (String[][][])null;
    }
 
    public void update(String text) {
@@ -35,7 +35,7 @@ class AddressBookComboField$SureTypeVariants {
             this._variantSet = cachedVariants;
          } else {
             SLControlObject controlObject = (SLControlObject)this.this$0.getInputContext().getInputMethodControlObject();
-            String[][] varsContainer = new Object[1][];
+            String[][] varsContainer = new String[1][];
             controlObject.actionPerformed(107, varsContainer);
             String[] variants = varsContainer[0];
             String[] components = this.makeComponents(text);
@@ -56,7 +56,7 @@ class AddressBookComboField$SureTypeVariants {
    }
 
    private String[] makeComponents(String text) {
-      StringBuffer[] components = new Object[0];
+      StringBuffer[] components = new StringBuffer[0];
       int count = 0;
       boolean findNonSpace = true;
 
@@ -66,7 +66,7 @@ class AddressBookComboField$SureTypeVariants {
          if (findNonSpace) {
             if (!isSpace) {
                Array.resize(components, ++count);
-               components[count - 1] = (StringBuffer)(new Object());
+               components[count - 1] = new StringBuffer();
                components[count - 1].append(ch);
                findNonSpace = false;
             }
@@ -77,7 +77,7 @@ class AddressBookComboField$SureTypeVariants {
          }
       }
 
-      String[] strComponents = new Object[components.length];
+      String[] strComponents = new String[components.length];
 
       for (int i = 0; i < strComponents.length; i++) {
          strComponents[i] = components[i].toString();
@@ -89,7 +89,7 @@ class AddressBookComboField$SureTypeVariants {
    private void overlayComponents(String[] components) {
       for (int i = 0; i < components.length; i++) {
          if (this._variantSet[i] == null) {
-            this._variantSet[i] = new Object[1];
+            this._variantSet[i] = new String[1];
             this._variantSet[i][0] = components[i];
          }
       }
@@ -120,12 +120,12 @@ class AddressBookComboField$SureTypeVariants {
 
    private String[][] getCachedVariants() {
       if (this._cache == null) {
-         return (Object[][])null;
+         return (String[][])null;
       }
 
       int index = this._text.length();
       if (this._cache.length < index + 1) {
-         return (Object[][])null;
+         return (String[][])null;
       }
 
       Array.resize(this._cache, index + 1);
@@ -134,18 +134,18 @@ class AddressBookComboField$SureTypeVariants {
 
    private String[][] copy(String[][] varSet) {
       if (varSet == null) {
-         return (Object[][])null;
+         return (String[][])null;
       }
 
       int vsLength = varSet.length;
-      String[][] copy = new Object[vsLength][];
+      String[][] copy = new String[vsLength][];
 
       for (int i = 0; i < vsLength; i++) {
          if (varSet[i] == null) {
             copy[i] = null;
          } else {
             int subLength = varSet[i].length;
-            copy[i] = new Object[subLength];
+            copy[i] = new String[subLength];
 
             for (int j = 0; j < subLength; j++) {
                copy[i][j] = varSet[i][j];

@@ -4,6 +4,7 @@ import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.apps.api.calendar.caldb.CalDB;
 import net.rim.device.apps.api.calendar.caldb.CalendarService;
+import net.rim.device.apps.api.calendar.modelcontrollerinterface.Event;
 import net.rim.device.apps.api.calendar.modelcontrollerinterface.EventUtilities;
 import net.rim.device.apps.api.calendar.ota.CICALEventLogger;
 
@@ -26,7 +27,7 @@ class CICALSlowSyncConverter$EventSenderThread extends Thread {
          ticket.hashCode();
          byte[] temp = this._request.getCommandData();
          if (temp != null) {
-            DataBuffer eventBuffer = (DataBuffer)(new Object(temp, 0, temp.length, true));
+            DataBuffer eventBuffer = new DataBuffer(temp, 0, temp.length, true);
             CalDB cal = calendarService.getCalendarDatabase();
 
             while (true) {
@@ -45,7 +46,7 @@ class CICALSlowSyncConverter$EventSenderThread extends Thread {
                      case 2:
                         int uid = eventBuffer.readInt();
                         Object o = cal.get(EventUtilities.makeLUID(uid));
-                        if (o instanceof Object) {
+                        if (o instanceof Event) {
                            this.this$0.transmitCICALEvent(calendarService, o);
                         }
 

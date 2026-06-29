@@ -8,6 +8,7 @@ import net.rim.device.api.servicebook.ServiceBook;
 import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.api.system.EventLogger;
 import net.rim.device.api.system.PersistentObject;
+import net.rim.device.api.util.ObjectEnumerator;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.messaging.FilingTarget;
 import net.rim.device.apps.api.messaging.Folder;
@@ -60,7 +61,7 @@ public class EmailFolder implements Folder, FilingTarget, EmailFolderBase, Email
 
       if (exceptionToLog != null) {
          try {
-            throw new Object(exceptionToLog);
+            throw new Throwable(exceptionToLog);
          } finally {
             QuincyManager.sendJavaLogworthy("EmailFolder:FolderCycle");
             return false;
@@ -136,7 +137,7 @@ public class EmailFolder implements Folder, FilingTarget, EmailFolderBase, Email
 
       if (folder._sibling != null) {
          try {
-            throw new Object("Sibling should have been null");
+            throw new RuntimeException("Sibling should have been null");
          } finally {
             folder._sibling = null;
             return;
@@ -219,7 +220,7 @@ public class EmailFolder implements Folder, FilingTarget, EmailFolderBase, Email
 
    @Override
    public void removeMessagesFromSubtree(boolean includeThis) {
-      ContextObject context = (ContextObject)(new Object(111));
+      ContextObject context = new ContextObject(111);
       this.removeMessagesFromSubtree(includeThis, context);
    }
 
@@ -336,7 +337,7 @@ public class EmailFolder implements Folder, FilingTarget, EmailFolderBase, Email
          children[i++] = curr;
       }
 
-      return (Enumeration)(new Object(children));
+      return new ObjectEnumerator(children);
    }
 
    @Override

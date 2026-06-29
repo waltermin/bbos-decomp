@@ -11,7 +11,7 @@ final class SmartCardInitialization$SmartCardOptionsInitializer implements Optio
    @Override
    public final Vector getOptionsItems() {
       if (SmartCardReaderFactory.getNumSmartCardReaders() > 0) {
-         Vector items = (Vector)(new Object());
+         Vector items = new Vector();
          items.addElement(new SmartCardOptionsItem());
          return items;
       } else {

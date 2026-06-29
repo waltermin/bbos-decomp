@@ -20,7 +20,7 @@ final class TextFlowCell$Painter {
    private TextFlowLayout _textFlowLayout;
    private TextFlowCell _currentCell;
    private Graphics _graphics;
-   private TextGraphics _textGraphics = (TextGraphics)(new Object(Font.getDefault()));
+   private TextGraphics _textGraphics = new TextGraphics(Font.getDefault());
    private TextFlowRegion _textRegion;
    private Font _managerFont;
    private int _lineNumber;

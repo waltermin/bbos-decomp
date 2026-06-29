@@ -11,9 +11,9 @@ import net.rim.device.apps.internal.qm.peer.common.HintPopup;
 import net.rim.device.apps.internal.qm.resource.QmResources;
 
 class MessageField extends HorizontalFieldManager implements HintPollingThread$HintProvider {
-   private static SimpleDateFormat _dowFormat = (SimpleDateFormat)(new Object("E"));
-   private static SimpleDateFormat _timeFormat = (SimpleDateFormat)(new Object(7));
-   private static SimpleDateFormat _dateFormat = (SimpleDateFormat)(new Object(56));
+   private static SimpleDateFormat _dowFormat = new SimpleDateFormat("E");
+   private static SimpleDateFormat _timeFormat = new SimpleDateFormat(7);
+   private static SimpleDateFormat _dateFormat = new SimpleDateFormat(56);
    private static final int HINT_OVERLAP = 2;
 
    MessageField() {

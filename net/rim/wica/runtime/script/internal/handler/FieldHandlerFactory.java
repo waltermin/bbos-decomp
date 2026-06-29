@@ -4,7 +4,7 @@ import net.rim.device.api.util.IntHashtable;
 import net.rim.wica.runtime.script.internal.WicaAppContext;
 
 public final class FieldHandlerFactory {
-   private static IntHashtable _handlers = (IntHashtable)(new Object());
+   private static IntHashtable _handlers = new IntHashtable();
    private static WicaAppContext _context;
 
    public static final PropertyHandler getHandler(int type) {

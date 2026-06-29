@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.addressbook.addresscard;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.system.EncodedImage;
@@ -12,7 +13,6 @@ import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.FactoryUtil;
-import net.rim.device.api.util.LongHashtable;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.AddressSelectionContext;
@@ -46,7 +46,7 @@ public final class DisplayPictureVerb extends Verb {
    public DisplayPictureVerb(int type, int menuOrdering) {
       super(menuOrdering);
       this._type = type;
-      this._fileSelector = (FileSelector)(new Object(_lastUsedFolder, new Object(39), 1, null));
+      this._fileSelector = new FileSelector(_lastUsedFolder, new ContextObject(39), 1, null);
       this._fileSelector.setSampleFolder("/store/samples/contacts/");
    }
 
@@ -75,19 +75,19 @@ public final class DisplayPictureVerb extends Verb {
       EncodedImage image = null;
       byte[] imageData = null;
       ContextObject context = null;
-      if (parameter instanceof Object) {
-         ContextObject var10 = parameter;
-         this._addressCard = (AddressCardModel)((LongHashtable)var10).get(3696141428889703675L);
+      if (parameter instanceof ContextObject) {
+         context = (ContextObject)parameter;
+         this._addressCard = (AddressCardModel)context.get(3696141428889703675L);
          if (this._addressCard instanceof CompressedAddressCardModel) {
             this._addressCard = AddressCardCache.resolve((CompressedAddressCardModel)this._addressCard);
          }
 
-         Object object = ((LongHashtable)var10).get(2765042845091913199L);
-         if (!(object instanceof Object)) {
-            imageData = (byte[])((LongHashtable)var10).get(8849067667159082262L);
+         Object object = context.get(2765042845091913199L);
+         if (!(object instanceof String)) {
+            imageData = (byte[])context.get(8849067667159082262L);
          } else {
             String filename = (String)object;
-            filename = ((StringBuffer)(new Object("file://"))).append(filename).toString();
+            filename = "file://" + filename;
             image = FileUtilities.getEncodedImage(filename);
             if (image != null) {
                imageData = image.getData();
@@ -148,7 +148,7 @@ public final class DisplayPictureVerb extends Verb {
       Verb addressSelectionVerb = AddressBookServices.getAddressSelectionVerb(0);
       if (addressSelectionVerb != null) {
          Recognizer recognizer = RecognizerRepository.getRecognizers(-3124646573404667739L);
-         AddressSelectionContext selectionContext = (AddressSelectionContext)(new Object(AddressBookResources.getString(903), "", null, recognizer, null));
+         AddressSelectionContext selectionContext = new AddressSelectionContext(AddressBookResources.getString(903), "", null, recognizer, null);
          this._addressCard = (AddressCardModel)addressSelectionVerb.invoke(selectionContext);
          if (this._addressCard instanceof CompressedAddressCardModel) {
             this._addressCard = AddressCardCache.resolve((CompressedAddressCardModel)this._addressCard);
@@ -165,7 +165,7 @@ public final class DisplayPictureVerb extends Verb {
          if (displayPictureModel.getDisplayPicture() != null && this._addressCard != null) {
             this._addressCard = AddressCardUtilities.expandGroup(this._addressCard);
             Bitmap originalBitmap = null;
-            DisplayPictureModel oldImage = this._addressCard.getContactPicture(new Object(11));
+            DisplayPictureModel oldImage = this._addressCard.getContactPicture(new ContextObject(11));
             if (oldImage != null) {
                originalBitmap = oldImage.getDisplayBitmap();
             }
@@ -176,7 +176,7 @@ public final class DisplayPictureVerb extends Verb {
                newEntry.add(displayPictureModel);
                updateAddress = true;
             } else {
-               Dialog d = (Dialog)(new Object(3, AddressBookResources.getString(907), -1, originalBitmap, 0));
+               Dialog d = new Dialog(3, AddressBookResources.getString(907), -1, originalBitmap, 0);
                int response = d.doModal();
                if (response == 4) {
                   newEntry.remove(oldImage);
@@ -186,8 +186,8 @@ public final class DisplayPictureVerb extends Verb {
             }
 
             if (updateAddress) {
-               AddressCardModel var9 = ((AddressCardModelImpl)newEntry).makeReadOnly();
-               BlackBerryAddressBook.getAddressBook().forceUpdateAddressCard(this._addressCard, var9);
+               newEntry = (AddressCardModel)((AddressCardModelImpl)newEntry).makeReadOnly();
+               BlackBerryAddressBook.getAddressBook().forceUpdateAddressCard(this._addressCard, newEntry);
                Dialog.alert(AddressBookResources.getString(908));
             }
          }
@@ -202,22 +202,22 @@ public final class DisplayPictureVerb extends Verb {
             String firstName = name.getFirstName();
             String lastName = name.getLastName();
             if (firstName != null) {
-               defaultFilename = ((StringBuffer)(new Object())).append(defaultFilename).append(firstName).toString();
+               defaultFilename = defaultFilename + firstName;
             }
 
             if (lastName != null) {
-               defaultFilename = ((StringBuffer)(new Object())).append(defaultFilename).append(lastName).toString();
+               defaultFilename = defaultFilename + lastName;
             }
          } else {
             CompanyInfoModel company = this._addressCard.getCompanyInfo();
             if (company != null) {
-               defaultFilename = ((StringBuffer)(new Object())).append(defaultFilename).append(company.getCompanyName()).toString();
+               defaultFilename = defaultFilename + company.getCompanyName();
             }
          }
       }
 
       if (defaultFilename == null) {
-         defaultFilename = ((StringBuffer)(new Object("IMG"))).append(this._addressCard.getUID()).toString();
+         defaultFilename = "IMG" + this._addressCard.getUID();
       }
 
       return FileUtilities.makeValidFilename(defaultFilename);
@@ -237,10 +237,10 @@ public final class DisplayPictureVerb extends Verb {
 
    private final void setBitmapField(EncodedImage image) {
       Screen screen = Ui.getUiEngine().getActiveScreen();
-      if (screen instanceof Object) {
+      if (screen instanceof EditorUsingRIMModelFactory) {
          EditorUsingRIMModelFactory editScreen = (EditorUsingRIMModelFactory)screen;
          Field field = editScreen.findField(new DisplayPictureModelFactory());
-         if (field instanceof Object) {
+         if (field instanceof VerticalFieldManager) {
             VerticalFieldManager vfm = (VerticalFieldManager)field;
             field = vfm.getField(1);
             if (field instanceof AddressBitmapField) {
@@ -257,7 +257,7 @@ public final class DisplayPictureVerb extends Verb {
          return null;
       }
 
-      ZoomImageCropper zis = (ZoomImageCropper)(new Object(image, 72, 96, 1));
+      ZoomImageCropper zis = new ZoomImageCropper(image, 72, 96, 1);
       UiApplication.getUiApplication().pushModalScreen(zis);
       if (zis.isCancelled()) {
          return null;
@@ -278,10 +278,10 @@ public final class DisplayPictureVerb extends Verb {
       if (image != null && image.getData() != null) {
          String defaultFilename = this.getDefaultFilename();
          if (image.getImageType() == 3) {
-            defaultFilename = ((StringBuffer)(new Object())).append(defaultFilename).append(".jpg").toString();
+            defaultFilename = defaultFilename + ".jpg";
          }
 
-         InputStream input = (InputStream)(new Object(image.getData(), image.getOffset(), image.getLength()));
+         InputStream input = new ByteArrayInputStream(image.getData(), image.getOffset(), image.getLength());
          if (input != null) {
             String filename = ExplorerServices.saveInputStream(defaultFilename, input, 1, true, false);
             if (filename != null) {

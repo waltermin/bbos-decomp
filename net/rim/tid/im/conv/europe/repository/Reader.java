@@ -27,10 +27,10 @@ public class Reader implements ReaderConstants {
    private int iBiGrammOffsetsStart;
    private ContinuousByteArray iWordsDefinitionTables;
    String iAlphabet;
-   IntIntHashtable iAlphabetLookup = (IntIntHashtable)(new Object());
+   IntIntHashtable iAlphabetLookup = new IntIntHashtable();
    private String iBiGramAlphabet;
    private int iBiGramAlphabetLen;
-   private IntIntHashtable iBiGramAlphabetLookup = (IntIntHashtable)(new Object());
+   private IntIntHashtable iBiGramAlphabetLookup = new IntIntHashtable();
    private String iName = "";
    Reader$SubstitutionTable iSubstTable;
    int iSubstShift = 0;
@@ -40,12 +40,12 @@ public class Reader implements ReaderConstants {
    private boolean iIsComplex;
    private int _ID;
    private ReIterator iReIterator;
-   private WeakReference _tempBufferWR = (WeakReference)(new Object(null));
-   private WeakReference _wordBufferWR = (WeakReference)(new Object(null));
+   private WeakReference _tempBufferWR = new WeakReference(null);
+   private WeakReference _wordBufferWR = new WeakReference(null);
    private char[] iCaseCorrectionBuffer;
    ComplexPrefixTable[] iComplexPrefixTables;
    private SimplePrefixTable iSimplePrefixTable = new SimplePrefixTable(0, this);
-   private ExtendedCurrentVariant _tempInsWord = (ExtendedCurrentVariant)(new Object());
+   private ExtendedCurrentVariant _tempInsWord = new ExtendedCurrentVariant();
    byte _caseControlCount;
    public byte CAPITAL_PAIR_BYTE;
    private Reader$EditDistanceFrequencyModifier _spellCheckFrequencyModifier;
@@ -87,7 +87,7 @@ public class Reader implements ReaderConstants {
       this.iBiGrammOffsets = aReader.iBiGrammOffsets;
       this.iName = aReader.iName;
       this.iIncludeFrequency = aReader.iIncludeFrequency;
-      this.iReIterator = (ReIterator)(new Object(this.iHeader.iMaxLevel + 1));
+      this.iReIterator = new ReIterator(this.iHeader.iMaxLevel + 1);
       int len = this.getLongestWordLength();
       this.iCaseCorrectionBuffer = new char[len];
       this.iComplexPrefixTables = new ComplexPrefixTable[this.iHeader.iMaxLevel];
@@ -100,7 +100,7 @@ public class Reader implements ReaderConstants {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public boolean load(byte[][] aData) {
-      ContinuousInputStream bais = (ContinuousInputStream)(new Object(aData));
+      ContinuousInputStream bais = new ContinuousInputStream(aData);
 
       try {
          this.readStream(bais);
@@ -114,10 +114,7 @@ public class Reader implements ReaderConstants {
 
    public int loadLinguisticData(LinguisticData aData) {
       if (!this.load(aData.getData())) {
-         System.out
-            .println(
-               ((StringBuffer)(new Object("WARNING "))).append(aData.getDiagnosticMessage()).append(" in class ").append(this.getClass().getName()).toString()
-            );
+         System.out.println("WARNING " + aData.getDiagnosticMessage() + " in class " + this.getClass().getName());
          return 2;
       } else {
          this._ID = aData.getID();
@@ -150,20 +147,11 @@ public class Reader implements ReaderConstants {
          : 0;
    }
 
-   private void init() {
+   private void init() throws Exception {
       this.iHeader = new Reader$Header();
       this.iHeader.read(this.iDis);
       if (this.iHeader.version_major != 1) {
-         throw new Object(
-            ((StringBuffer)(new Object("Incorrect wordlist version ")))
-               .append(this.iHeader.version_major)
-               .append('.')
-               .append(this.iHeader.version_minor)
-               .append(" . Must be ")
-               .append(1)
-               .append(".x .")
-               .toString()
-         );
+         throw new Exception("Incorrect wordlist version " + this.iHeader.version_major + '.' + this.iHeader.version_minor + " . Must be " + 1 + ".x .");
       }
 
       if (this.iHeader.iLocale != null) {
@@ -174,7 +162,7 @@ public class Reader implements ReaderConstants {
 
       this.iIncludeFrequency = (this.iHeader.type & 1) == 1;
       if (this.iReIterator == null) {
-         this.iReIterator = (ReIterator)(new Object(this.iHeader.iMaxLevel + 1));
+         this.iReIterator = new ReIterator(this.iHeader.iMaxLevel + 1);
       } else {
          this.iReIterator.setMaxStackSize(this.iHeader.iMaxLevel + 1);
       }
@@ -226,7 +214,7 @@ public class Reader implements ReaderConstants {
          long start = System.currentTimeMillis();
          this.getSpellCheckPredictions(aPrefix, aRes);
          long end = System.currentTimeMillis();
-         System.out.println(((StringBuffer)(new Object("Time to get variants: "))).append(end - start).toString());
+         System.out.println("Time to get variants: " + (end - start));
       } else {
          char[] orig_prefix = null;
          int len = 0;
@@ -287,7 +275,7 @@ public class Reader implements ReaderConstants {
    private void readAlphabet(DataInputStream ds) {
       int totalAlph = ds.readByte();
       this.iBiGramAlphabetLen = ds.readByte();
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
 
       for (char i = 0; i < this._caseControlCount; i++) {
          sb.append(i);
@@ -314,7 +302,7 @@ public class Reader implements ReaderConstants {
 
    private void readName(DataInputStream aDis) {
       int length = aDis.readShort();
-      StringBuffer nm = (StringBuffer)(new Object());
+      StringBuffer nm = new StringBuffer();
 
       for (int i = 0; i < length; i++) {
          nm.append(aDis.readChar());
@@ -366,7 +354,7 @@ public class Reader implements ReaderConstants {
 
    private void readStream(ContinuousInputStream stream) {
       this.iBa = stream.getAllData();
-      this.iDis = (DataInputStream)(new Object(stream));
+      this.iDis = new DataInputStream(stream);
       this.iDis.mark(this.iDis.available());
    }
 

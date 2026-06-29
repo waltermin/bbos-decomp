@@ -14,8 +14,8 @@ class InsertInternetServiceBook$3 implements InsertInternetServiceBook$Applicati
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
    public byte[] get() {
-      ByteArrayOutputStream bout = (ByteArrayOutputStream)(new Object());
-      DataOutputStream dout = (DataOutputStream)(new Object(bout));
+      ByteArrayOutputStream bout = new ByteArrayOutputStream();
+      DataOutputStream dout = new DataOutputStream(bout);
 
       try {
          dout.writeShort(4);

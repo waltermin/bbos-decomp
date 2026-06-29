@@ -22,7 +22,7 @@ import net.rim.plazmic.internal.mediaengine.model.intarray.v1_2.ModelInteractorI
 import net.rim.plazmic.internal.mediaengine.model.intarray.v1_2.ViewportNodeImpl;
 
 public class ForeignObjectLoader implements ResourceProvider {
-   private Hashtable _parameters = (Hashtable)(new Object());
+   private Hashtable _parameters = new Hashtable();
    private ComponentLinkForeignObject[] _links = new ComponentLinkForeignObject[0];
    Object _context;
    CustomFocusOrder _customFocusOrder;
@@ -85,7 +85,7 @@ public class ForeignObjectLoader implements ResourceProvider {
          }
 
          Factory factory = null;
-         if (this._context != null && this._context instanceof Object) {
+         if (this._context != null && this._context instanceof FactoryRepository) {
             FactoryRepository repos = GlobalFactoryRepository.getFactoryRepository(-4018062520840731194L);
             factory = repos.getFactory(name);
          }
@@ -104,14 +104,14 @@ public class ForeignObjectLoader implements ResourceProvider {
          String target = (String)this._parameters.get("target");
          ModelInteractorImpl mi = (ModelInteractorImpl)context.get("Media");
          if (target != null && mi != null) {
-            if (component instanceof Object) {
+            if (component instanceof ImageProviderRibbonComponent) {
                ImageRibbonComponentLink newComponent = new ImageRibbonComponentLink((ImageProviderRibbonComponent)component, mi, target);
                Arrays.add(this._links, newComponent);
                newComponent.setChangeListener(this._changeListener);
                return newComponent;
             }
 
-            if (component instanceof Object) {
+            if (component instanceof TextProviderRibbonComponent) {
                TextRibbonComponentLink newComponent = new TextRibbonComponentLink((TextProviderRibbonComponent)component, mi, target);
                Arrays.add(this._links, newComponent);
                newComponent.setChangeListener(this._changeListener);
@@ -120,7 +120,7 @@ public class ForeignObjectLoader implements ResourceProvider {
          }
 
          SimpleRibbonComponentForeignObject componentToReturn = null;
-         if (component instanceof Object) {
+         if (component instanceof SimpleRibbonComponent) {
             componentToReturn = new SimpleRibbonComponentForeignObject((SimpleRibbonComponent)component);
             componentToReturn.setChangeListener(this._changeListener);
          }
@@ -198,12 +198,12 @@ public class ForeignObjectLoader implements ResourceProvider {
          }
       }
 
-      if (component instanceof Object) {
+      if (component instanceof RibbonComponentInitializer) {
          RibbonComponentInitializer init = (RibbonComponentInitializer)component;
          init.initialize(this._parameters, this._context);
       }
 
-      if (component instanceof Object) {
+      if (component instanceof SimpleRibbonComponent) {
          SimpleRibbonComponent simpleComponent = (SimpleRibbonComponent)component;
          simpleComponent.setDimensionsAvailable(width, height);
       }

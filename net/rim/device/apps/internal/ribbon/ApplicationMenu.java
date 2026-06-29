@@ -21,6 +21,7 @@ import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.FlowFieldManager;
 import net.rim.device.api.ui.container.PopupScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.api.ui.theme.ThemeAttributeSet;
 import net.rim.device.api.ui.theme.ThemeManager;
@@ -51,7 +52,7 @@ public final class ApplicationMenu extends PopupScreen implements Runnable {
    private ResourceBundleFamily _rbf;
    private RibbonDescriptionField _descriptionField;
    private FocusChangeListener _descriptionFocusListener;
-   private ContextObject _contextObject = (ContextObject)(new Object());
+   private ContextObject _contextObject = new ContextObject();
    private int _menuType = 0;
    private static final long SKINNED_APPLICATION_MENU_GUID = 1619104265458180924L;
    private static final long BACKGROUND_BITMAP_GUID = 3396006904009726662L;
@@ -119,11 +120,11 @@ public final class ApplicationMenu extends PopupScreen implements Runnable {
          VerbFactory[] verbFactories = VerbFactoryRepository.getVerbFactories(-4612983506188396850L);
          if (verbFactories != null && selectedApplication != null) {
             EntryPointDescriptor entry = selectedApplication.getDescriptor();
-            if (entry instanceof Object) {
+            if (entry instanceof ObjectProps) {
                ObjectProps oprops = (ObjectProps)entry;
                Object o = oprops.get(-8880124975077471920L, (Object)null);
                ApplicationDescriptor applicationDescriptor = null;
-               if (o instanceof Object) {
+               if (o instanceof ApplicationDescriptor) {
                   applicationDescriptor = (ApplicationDescriptor)o;
                }
 
@@ -369,8 +370,7 @@ public final class ApplicationMenu extends PopupScreen implements Runnable {
             mgr.delete(appArea);
          }
       } catch (Throwable var7) {
-         System.out
-            .println(((StringBuffer)(new Object("Exception removing the Field from the manager in Appplication Menu : "))).append(any.toString()).toString());
+         System.out.println("Exception removing the Field from the manager in Appplication Menu : " + any.toString());
          break label23;
       }
 
@@ -378,7 +378,7 @@ public final class ApplicationMenu extends PopupScreen implements Runnable {
       this._iconArea = (ApplicationLauncherField)appArea;
       this.setTag(tag);
       this._organizeApplications = new ApplicationMenu$1(this, this._rbf.getString(149), 1152921504606846976L);
-      this._separator = (SeparatorField)(new Object());
+      this._separator = new SeparatorField();
    }
 
    private final boolean onOrganizeApplications() {
@@ -568,7 +568,7 @@ public final class ApplicationMenu extends PopupScreen implements Runnable {
 
    @Override
    public final Menu getMenu(int instance) {
-      SystemEnabledMenu menu = (SystemEnabledMenu)(new Object(this._contextObject, null));
+      SystemEnabledMenu menu = new SystemEnabledMenu(this._contextObject, null);
       menu.setAlignment(4294967296L, 34359738368L);
       this.makeMenuWithContext(menu, instance);
       this.makeMenu(menu, instance);
@@ -582,22 +582,22 @@ public final class ApplicationMenu extends PopupScreen implements Runnable {
       ApplicationMenuAction.register(ribbonLauncher, b);
       if (b) {
          if (menuType == 0) {
-            _instance = new ApplicationMenu((Manager)(new Object(18313465672237056L)), appArea, menuType);
+            _instance = new ApplicationMenu(new VerticalFieldManager(18313465672237056L), appArea, menuType);
             _instance.add(appArea);
             appArea.invalidate();
             return;
          }
 
          RibbonScreenManager rsm = new RibbonScreenManager(false);
-         Hashtable[] layoutArgs = new Object[2];
+         Hashtable[] layoutArgs = new Hashtable[2];
          _instance = new ApplicationMenu(rsm, appArea, menuType);
          _instance._descriptionField = descriptionField;
          _instance._descriptionFocusListener = (FocusChangeListener)ribbonLauncher;
-         layoutArgs[0] = (Hashtable)(new Object());
+         layoutArgs[0] = new Hashtable();
          layoutArgs[0].put("chooser", "");
-         layoutArgs[1] = (Hashtable)(new Object());
+         layoutArgs[1] = new Hashtable();
          layoutArgs[1].put("align", "bottom");
-         Field[] layoutFields = new Object[]{appArea, descriptionField};
+         Field[] layoutFields = new Field[]{appArea, descriptionField};
          rsm.setHomeScreenContents(layoutArgs, layoutFields);
       }
    }
@@ -625,7 +625,7 @@ public final class ApplicationMenu extends PopupScreen implements Runnable {
          Field field = this.getLeafFieldWithFocus();
          if (field != null) {
             Object obj = RibbonLauncherImpl._instanceImpl._applicationIconArea;
-            if (obj instanceof Object) {
+            if (obj instanceof FlowFieldManager) {
                FlowFieldManager mgr = (FlowFieldManager)obj;
                if (dy != 0) {
                   retVal |= mgr.nextFocus(dy, true) == -1;

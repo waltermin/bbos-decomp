@@ -4,7 +4,7 @@ import java.util.Hashtable;
 import net.rim.device.resources.Resource;
 
 public final class net_rim_tid_dynamic_transcoding_data_CP1251RIMResources extends Resource {
-   public static Hashtable _resources = (Hashtable)(new Object(6));
+   public static Hashtable _resources = new Hashtable(6);
    public static Hashtable _properties;
    public static byte[] _appCount = new byte[]{1};
    public static byte[] _resourceExtensions = new byte[]{46, 99, 100, 98, 102, 10};

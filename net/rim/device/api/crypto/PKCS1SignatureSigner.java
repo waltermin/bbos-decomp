@@ -14,13 +14,13 @@ public final class PKCS1SignatureSigner implements SignatureSigner {
    private static boolean _selfTest;
    private static final long ID_TEST_SIGNER_PKCS1 = 2943045568920207055L;
 
-   public final void sign(byte[] signature, int signatureOffset) {
+   public final void sign(byte[] signature, int signatureOffset) throws CryptoUnsupportedOperationException {
       if (signature != null && signatureOffset >= 0 && signatureOffset <= signature.length - this._length) {
          byte[] encodedMessage = new byte[this._length];
          byte[] digestData;
          if (this._useASN1) {
             if (!PKCS1v2SignaturesFacade.available()) {
-               throw new Object();
+               throw new CryptoUnsupportedOperationException();
             }
 
             digestData = PKCS1v2SignaturesFacade.sign(this._digestOid, this._digest);
@@ -45,7 +45,7 @@ public final class PKCS1SignatureSigner implements SignatureSigner {
             selfTest(this._key, signature, signatureOffset, encodedMessage);
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -80,21 +80,21 @@ public final class PKCS1SignatureSigner implements SignatureSigner {
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object("RSA_PKCS1_V"))).append(this._useASN1 ? "20/" : "15/").append(this._digest.getAlgorithm()).toString();
+      return "RSA_PKCS1_V" + (this._useASN1 ? "20/" : "15/") + this._digest.getAlgorithm();
    }
 
-   public PKCS1SignatureSigner(RSAPrivateKey key, Digest digest, boolean useASN1) {
+   public PKCS1SignatureSigner(RSAPrivateKey key, Digest digest, boolean useASN1) throws CryptoUnsupportedOperationException {
       if (key == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._key = key;
       this._length = key.getRSACryptoSystem().getModulusLength();
       if (digest == null) {
          if (useASN1) {
-            digest = (Digest)(new Object());
+            digest = new SHA1Digest();
          } else {
-            digest = (Digest)(new Object());
+            digest = new MD5Digest();
          }
       } else if (digest instanceof NullDigest) {
          useASN1 = false;
@@ -105,7 +105,7 @@ public final class PKCS1SignatureSigner implements SignatureSigner {
       if (this._useASN1) {
          this._digestOid = OIDs.getAssociatedOID(3134008036018563479L, digest.getAlgorithm());
          if (this._digestOid == null || !PKCS1v2SignaturesFacade.available()) {
-            throw new Object();
+            throw new CryptoUnsupportedOperationException();
          }
       }
    }
@@ -140,7 +140,7 @@ public final class PKCS1SignatureSigner implements SignatureSigner {
             RSACryptoToken rsaToken = privKey.getRSACryptoToken();
             rsaToken.verifyRSA(pubKey.getRSACryptoSystem(), pubKey.getCryptoTokenData(), signature, offset, messageToVerify, 0);
             if (!Arrays.equals(messageToVerify, 0, encodedMessage, 0, encodedMessage.length)) {
-               throw new Object();
+               throw new CryptoSelfTestError();
             }
          } else {
             RSACryptoSystem cryptoSystemRSA = new RSACryptoSystem(1024);
@@ -156,19 +156,19 @@ public final class PKCS1SignatureSigner implements SignatureSigner {
                Arrays.copy(SelfTestData_PK1.RSA_QINVMODP)
             );
             RSAPublicKey pubKey = new RSAPublicKey(cryptoSystemRSA, SelfTestData_PK1.RSA_E, SelfTestData_PK1.RSA_N);
-            PKCS1SignatureSigner signer = new PKCS1SignatureSigner(privKey, (Digest)(new Object()), false);
+            PKCS1SignatureSigner signer = new PKCS1SignatureSigner(privKey, new SHA1Digest(), false);
             byte[] messageToVerify = new byte[signer.getLength()];
             signer.update(SelfTestData_PK1.PLAIN_TEXT_PKCS1_RSA);
             signer.sign(messageToVerify, 0);
             PKCS1SignatureVerifier verifier = new PKCS1SignatureVerifier(pubKey, messageToVerify, 0);
             verifier.update(SelfTestData_PK1.PLAIN_TEXT_PKCS1_RSA);
             if (!verifier.verify()) {
-               throw new Object();
+               throw new CryptoSelfTestError();
             }
          }
       } finally {
          _selfTest = true;
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
    }
 

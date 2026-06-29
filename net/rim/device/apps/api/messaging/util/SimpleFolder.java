@@ -9,6 +9,7 @@ import net.rim.device.api.i18n.ResourceBundleFamily;
 import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.system.PersistentObject;
 import net.rim.device.api.system.RIMPersistentStore;
+import net.rim.device.api.util.ObjectEnumerator;
 import net.rim.device.api.util.Persistable;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.messaging.DateSortKeyProviderIndirection;
@@ -154,7 +155,7 @@ public class SimpleFolder implements Folder, Persistable {
          int length = this._subFolders.length;
          Object[] objects = new Object[length];
          System.arraycopy(this._subFolders, 0, objects, 0, length);
-         return (Enumeration)(new Object(objects));
+         return new ObjectEnumerator(objects);
       }
    }
 

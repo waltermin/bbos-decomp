@@ -3,7 +3,7 @@ package net.rim.wica.versioning;
 import java.util.Hashtable;
 
 public class DeviceFeatureVersion {
-   static Hashtable deviceFeatureVersionHandlers = (Hashtable)(new Object());
+   static Hashtable deviceFeatureVersionHandlers = new Hashtable();
 
    public static String getHandlerName(String featureName) {
       return (String)deviceFeatureVersionHandlers.get(featureName);

@@ -1,14 +1,15 @@
 package net.rim.device.apps.internal.iota;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
+import net.rim.device.api.io.Base64InputStream;
 import net.rim.device.api.io.IOUtilities;
 import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.api.util.StringUtilities;
 
 public final class BodyPart {
    private HttpHeaders _headers;
-   private ByteArrayOutputStream _byteStream = (ByteArrayOutputStream)(new Object());
+   private ByteArrayOutputStream _byteStream = new ByteArrayOutputStream();
 
    BodyPart(HttpHeaders headers) {
       this._headers = headers;
@@ -24,7 +25,7 @@ public final class BodyPart {
          String contentTransferEncoding = this._headers.getPropertyValue("content-transfer-encoding");
          if (contentTransferEncoding != null && StringUtilities.strEqualIgnoreCase(contentTransferEncoding, "base64", 1701707776)) {
             try {
-               return IOUtilities.streamToBytes((InputStream)(new Object((InputStream)(new Object(bytes)))));
+               return IOUtilities.streamToBytes(new Base64InputStream(new ByteArrayInputStream(bytes)));
             } finally {
                return bytes;
             }

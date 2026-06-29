@@ -71,16 +71,16 @@ public class WizardController implements WizardPage, ValidationProvider {
 
    protected void setPages(Vector pages) {
       int numPages = pages.size();
-      this._pages = (SimpleSortingVector)(new Object());
+      this._pages = new SimpleSortingVector();
       this._pages.setSort(false);
       this._pages.setSortComparator(this._wizardComparator);
-      this._visiblePages = (Vector)(new Object(numPages));
+      this._visiblePages = new Vector(numPages);
       this._totalPageCount = 0;
       ContextObject context = OptionsContext.getContextObject();
 
       for (int i = 0; i < numPages; i++) {
          WizardPage page = (WizardPage)pages.elementAt(i);
-         if (page != null && (!(page instanceof Object) || ((ValidationProvider)page).isValid(context))) {
+         if (page != null && (!(page instanceof ValidationProvider) || ((ValidationProvider)page).isValid(context))) {
             this._totalPageCount = this._totalPageCount + page.getPageCount();
             this._pages.addElement(page);
          }
@@ -102,7 +102,7 @@ public class WizardController implements WizardPage, ValidationProvider {
    protected void log(int event, WizardPage page, int command, boolean isExplicitCommand, long time_ms) {
       if (this._log != null) {
          if (this._buffer == null) {
-            this._buffer = (StringBuffer)(new Object());
+            this._buffer = new StringBuffer();
          }
 
          this._buffer.setLength(0);

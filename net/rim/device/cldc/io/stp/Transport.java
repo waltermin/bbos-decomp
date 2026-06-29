@@ -1,16 +1,21 @@
 package net.rim.device.cldc.io.stp;
 
+import java.io.IOException;
 import java.util.Random;
 import java.util.Vector;
 import javax.microedition.io.Connector;
 import javax.microedition.io.Datagram;
-import javax.microedition.io.DatagramConnection;
 import net.rim.device.api.io.ConnEvent;
 import net.rim.device.api.io.DatagramAddressBase;
 import net.rim.device.api.io.DatagramBase;
+import net.rim.device.api.io.DatagramConnectionBase;
 import net.rim.device.api.io.DatagramStatusListener;
 import net.rim.device.api.io.DatagramTransportBase;
+import net.rim.device.api.io.IOCancelledException;
+import net.rim.device.api.io.IOFormatException;
+import net.rim.device.api.io.IONotRoutableException;
 import net.rim.device.api.io.IOProperties;
+import net.rim.device.api.io.IORefusedException;
 import net.rim.device.api.system.EventLogger;
 import net.rim.device.api.system.RealtimeClockListener;
 import net.rim.device.api.util.IntHashtable;
@@ -46,13 +51,13 @@ public final class Transport extends DatagramTransportBase implements LstpListen
 
    @Override
    public final void init() {
-      super.init((DatagramConnection)Connector.open("lstp:GME Data"));
+      super.init((DatagramConnectionBase)Connector.open("lstp:GME Data"));
       EventLogger.register(1679319515711487829L, "net.rim.stp", 2);
-      this._nextDgramId = (((Random)(new Object())).nextInt() & 1073741823) + 256;
+      this._nextDgramId = (new Random().nextInt() & 1073741823) + 256;
       this._maxPacketLength = StpUtil.getMaximumLength(super._subConnection.getMaximumLength());
       this._txPacket = (DatagramBase)super._subConnection.newDatagram(null, 0, 0, null);
-      this._inboundDatagrams = (IntHashtable)(new Object(8));
-      this._inboundTimes = (Vector)(new Object(8));
+      this._inboundDatagrams = new IntHashtable(8);
+      this._inboundTimes = new Vector(8);
       LstpUtil.getInstance().addListener(this);
       ProtocolDaemon.getInstance().addRealtimeClockListener(this);
       EventLogger.logEvent(1679319515711487829L, 1229878386, 0);
@@ -95,12 +100,12 @@ public final class Transport extends DatagramTransportBase implements LstpListen
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final void send(Datagram datagram, DatagramAddressBase addressBase, IOProperties properties, DatagramStatusListener listener, int dgramId) {
+   public final void send(Datagram datagram, DatagramAddressBase addressBase, IOProperties properties, DatagramStatusListener listener, int dgramId) throws IOException, IOCancelledException, IOFormatException, IONotRoutableException, IORefusedException {
       EventLogger.logEvent(1679319515711487829L, 1415082868, 4);
       if (datagram.getLength() > this._maxPacketLength) {
          EventLogger.logEvent(1679319515711487829L, 1413834351, 2);
          this.xmitDgslEvent(listener, dgramId, 12674, null);
-         throw new Object();
+         throw new IOFormatException();
       }
 
       int tag = dgramId != 0 ? dgramId : this.getNextDatagramId(null);
@@ -146,7 +151,7 @@ public final class Transport extends DatagramTransportBase implements LstpListen
          case -1:
             EventLogger.logEvent(1679319515711487829L, 1415083119, 2);
             this.xmitDgslEvent(listener, dgramId, 12933, null);
-            throw new Object();
+            throw new IOException();
          case 6:
             EventLogger.logEvent(1679319515711487829L, 1415082867, 4);
             this.xmitDgslEvent(listener, dgramId, 0, null);
@@ -154,19 +159,19 @@ public final class Transport extends DatagramTransportBase implements LstpListen
          case 129:
             EventLogger.logEvent(1679319515711487829L, 1415078753, 3);
             this.xmitDgslEvent(listener, dgramId, 129, null);
-            throw new Object();
+            throw new IOCancelledException();
          case 8337:
             EventLogger.logEvent(1679319515711487829L, 1413837414, 2);
             this.xmitDgslEvent(listener, dgramId, 8337, null);
-            throw new Object();
+            throw new IORefusedException();
          case 8577:
             EventLogger.logEvent(1679319515711487829L, 1415081586, 5);
             this.xmitDgslEvent(listener, dgramId, 1, null);
-            throw new Object();
+            throw new IONotRoutableException();
          default:
             EventLogger.logEvent(1679319515711487829L, 1413834337, 2);
             this.xmitDgslEvent(listener, dgramId, 8579, null);
-            throw new Object();
+            throw new IOException();
       }
    }
 
@@ -185,7 +190,7 @@ public final class Transport extends DatagramTransportBase implements LstpListen
    protected final void processReceivedDatagram(Datagram datagram) {
       EventLogger.logEvent(1679319515711487829L, 1381528436, 4);
       DatagramAddressBase addressBase = null;
-      if (datagram instanceof Object) {
+      if (datagram instanceof DatagramBase) {
          addressBase = ((DatagramBase)datagram).getAddressBase();
       }
 

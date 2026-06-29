@@ -27,6 +27,6 @@ class ApplicationTargetEventMessage implements IApplicationTargetEventMessage {
 
    @Override
    public String toString() {
-      return ((StringBuffer)(new Object("Application target event: appId = "))).append(this.getApplicationId()).toString();
+      return "Application target event: appId = " + this.getApplicationId();
    }
 }

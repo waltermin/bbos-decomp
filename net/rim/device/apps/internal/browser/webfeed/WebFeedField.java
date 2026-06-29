@@ -5,6 +5,7 @@ import java.util.TimeZone;
 import net.rim.device.api.browser.field.BrowserContent;
 import net.rim.device.api.browser.field.RenderingSession;
 import net.rim.device.api.i18n.DateFormat;
+import net.rim.device.api.i18n.SimpleDateFormat;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.ui.DrawTextParam;
 import net.rim.device.api.ui.Field;
@@ -26,8 +27,8 @@ final class WebFeedField extends VerticalFieldManager implements Runnable {
    private long[] _times;
    private Calendar _renderedCalendar;
    private TimeZone _timeZone;
-   private DateFormat _dateFormat = (DateFormat)(new Object(40));
-   private DateFormat _timeFormat = (DateFormat)(new Object(7));
+   private DateFormat _dateFormat = new SimpleDateFormat(40);
+   private DateFormat _timeFormat = new SimpleDateFormat(7);
    TextGraphics _tg;
    int _timeWidth;
    private int _tooltipTimerId = -1;
@@ -41,7 +42,7 @@ final class WebFeedField extends VerticalFieldManager implements Runnable {
       this._renderingSession = renderingSession;
       this._items = new WebFeedItem[0];
       this._times = new long[0];
-      this._tg = (TextGraphics)(new Object(Font.getDefault()));
+      this._tg = new TextGraphics(Font.getDefault());
       DrawTextParam param = Ui.getTmpDrawTextParam();
       this._tg.setStyle(1);
       this._timeWidth = this._tg.measureText("88:88p ", 0, 7, param, null);

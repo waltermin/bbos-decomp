@@ -2,6 +2,7 @@ package net.rim.device.api.io.http;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -41,7 +42,7 @@ public final class HttpHeaders implements HttpProtocolConstants, Persistable {
 
    public final Vector getPropertyValues(String key) {
       int position = -1;
-      Vector items = (Vector)(new Object());
+      Vector items = new Vector();
 
       while ((position = this.searchForPropertyIndex(position + 1, key)) != -1) {
          items.addElement(this.getPropertyValue(position));
@@ -51,11 +52,11 @@ public final class HttpHeaders implements HttpProtocolConstants, Persistable {
    }
 
    public final String getPropertyValue(int position) {
-      return (String)(position > -1 && position < this._properties.size() ? this._properties.elementAt(position) : null);
+      return position > -1 && position < this._properties.size() ? (String)this._properties.elementAt(position) : null;
    }
 
    public final String getPropertyKey(int position) {
-      return (String)(position > -1 && position < this._propertyKeys.size() ? this._propertyKeys.elementAt(position) : null);
+      return position > -1 && position < this._propertyKeys.size() ? (String)this._propertyKeys.elementAt(position) : null;
    }
 
    public final int size() {
@@ -63,8 +64,8 @@ public final class HttpHeaders implements HttpProtocolConstants, Persistable {
    }
 
    public final void reset() {
-      this._properties = (ContentProtectedVector)(new Object(false));
-      this._propertyKeys = (Vector)(new Object());
+      this._properties = new ContentProtectedVector(false);
+      this._propertyKeys = new Vector();
    }
 
    private final int searchForPropertyIndex(int startPosition, String key) {
@@ -81,7 +82,7 @@ public final class HttpHeaders implements HttpProtocolConstants, Persistable {
 
    public final void setProperty(String key, String value) {
       if (key == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int position = this.searchForPropertyIndex(0, key);
@@ -95,7 +96,7 @@ public final class HttpHeaders implements HttpProtocolConstants, Persistable {
 
    public final void addProperty(String key, String value) {
       if (key == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._propertyKeys.addElement(key);
@@ -140,7 +141,7 @@ public final class HttpHeaders implements HttpProtocolConstants, Persistable {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public final void readFromStream(DataInputStream aDataInputStream) {
+   public final void readFromStream(DataInputStream aDataInputStream) throws IOException {
       String line = null;
 
       while ((line = Utilities.receiveLine(aDataInputStream)) != null) {
@@ -155,7 +156,7 @@ public final class HttpHeaders implements HttpProtocolConstants, Persistable {
                this._properties.addElement(line.substring(indexOfColon + 1).trim());
             }
          } catch (Throwable var5) {
-            throw new Object(e.toString());
+            throw new IOException(e.toString());
          }
       }
    }
@@ -176,11 +177,11 @@ public final class HttpHeaders implements HttpProtocolConstants, Persistable {
    }
 
    public final Hashtable toHashtable() {
-      Hashtable output = (Hashtable)(new Object());
+      Hashtable output = new Hashtable();
       int count = this._properties.size();
 
       for (int i = 0; i < count; i++) {
-         output.put(StringUtilities.toLowerCase((String)this._propertyKeys.elementAt(i), 1701707776), this._properties.elementAt(i));
+         output.put(StringUtilities.toLowerCase((String)this._propertyKeys.elementAt(i), 1701707776), (String)this._properties.elementAt(i));
       }
 
       return output;
@@ -209,7 +210,7 @@ public final class HttpHeaders implements HttpProtocolConstants, Persistable {
    }
 
    public final synchronized HttpHeaders cloneHeaders() {
-      ContentProtectedVector propertiesClone = (ContentProtectedVector)(new Object(this._properties.size(), 1, false));
+      ContentProtectedVector propertiesClone = new ContentProtectedVector(this._properties.size(), 1, false);
       Enumeration elements = this._properties.elements();
 
       while (elements.hasMoreElements()) {

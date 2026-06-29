@@ -46,7 +46,7 @@ public class OTACalendarTransmissionService extends AbstractTransmissionService 
    public synchronized boolean hasSlowSyncOccurredForService(CalendarService calendarService) {
       ServiceRecord serviceRecord = null;
       Object o = calendarService.getServiceKey();
-      if (o instanceof Object) {
+      if (o instanceof ServiceRecord) {
          serviceRecord = (ServiceRecord)o;
          CICALConfiguration configuration = calendarService.getCICALConfiguration();
          if (configuration != null) {
@@ -98,7 +98,7 @@ public class OTACalendarTransmissionService extends AbstractTransmissionService 
          cicalConfiguration = calendarService.getCICALConfiguration();
       }
 
-      if (anObject instanceof Object && calendarService == null) {
+      if (anObject instanceof ServiceObject && calendarService == null) {
          ServiceObject serviceObject = (ServiceObject)anObject;
          calendarService = (CalendarService)serviceObject.getServiceIdentifier();
       }
@@ -110,7 +110,7 @@ public class OTACalendarTransmissionService extends AbstractTransmissionService 
       if (cicalConfiguration != null
          && (cicalConfiguration.isSendSyncEnabled() || anObject instanceof CICALConfigConverter$OTAConfigEvent && cicalConfiguration.isOTAConfigSupported())) {
          boolean slowSyncUpdate = false;
-         if (contextObject instanceof Object) {
+         if (contextObject instanceof ContextObject) {
             ContextObject co = (ContextObject)contextObject;
             if (co.getPrivateFlag(-1677359872409272575L, 1)) {
                slowSyncUpdate = true;
@@ -157,8 +157,8 @@ public class OTACalendarTransmissionService extends AbstractTransmissionService 
          CICALEventLogger.logEvent(1230262348, 3);
       } else {
          ServiceRecord boundServiceRecord = null;
-         ServiceRecord var23 = ContextObject.get(contextObject, -6095803566992128485L);
-         CalendarService calendarService = CalendarServiceManager.getInstance().findCalendarServiceByKey(var23);
+         boundServiceRecord = (ServiceRecord)ContextObject.get(contextObject, -6095803566992128485L);
+         CalendarService calendarService = CalendarServiceManager.getInstance().findCalendarServiceByKey(boundServiceRecord);
          CICALConfiguration cicalConfiguration = calendarService.getCICALConfiguration();
          byte[] packet = new byte[packetDataBuffer.getLength() - packetDataBuffer.getPosition()];
          boolean var20 = false /* VF: Semaphore variable */;
@@ -206,9 +206,9 @@ public class OTACalendarTransmissionService extends AbstractTransmissionService 
             }
 
             Object convertContext = this.getContext();
-            if (convertContext instanceof Object) {
-               if (var23 != null) {
-                  ContextObject.put(convertContext, -6095803566992128485L, var23);
+            if (convertContext instanceof ContextObject) {
+               if (boundServiceRecord != null) {
+                  ContextObject.put(convertContext, -6095803566992128485L, boundServiceRecord);
                }
 
                ContextObject.put(convertContext, 6741741218837016896L, calendarService);
@@ -225,7 +225,7 @@ public class OTACalendarTransmissionService extends AbstractTransmissionService 
                   var17 = true;
                   Object e = converter.convert(packet, convertContext);
                   if (super._tLogger != null) {
-                     ContextObject.put(convertContext, -8214296050944071630L, new Object(packet.length));
+                     ContextObject.put(convertContext, -8214296050944071630L, new Integer(packet.length));
                      ContextObject.put(convertContext, 1694473709785469504L, packet);
                   }
 
@@ -263,10 +263,10 @@ public class OTACalendarTransmissionService extends AbstractTransmissionService 
    @Override
    protected ServiceRecord initServiceRecord() {
       ServiceRecord result = null;
-      if (super._serviceIdentifier != null && super._serviceIdentifier instanceof Object) {
+      if (super._serviceIdentifier != null && super._serviceIdentifier instanceof CalendarService) {
          CalendarService calendarService = (CalendarService)super._serviceIdentifier;
          Object key = calendarService.getServiceKey();
-         if (key instanceof Object) {
+         if (key instanceof ServiceRecord) {
             result = (ServiceRecord)key;
          }
       }
@@ -282,9 +282,9 @@ public class OTACalendarTransmissionService extends AbstractTransmissionService 
    @Override
    protected DatagramConnection createConnection(ServiceRecord serviceRecord) {
       if (serviceRecord == null) {
-         throw new Object("Null Service Record");
+         throw new IllegalArgumentException("Null Service Record");
       } else {
-         return (DatagramConnection)Connector.open(((StringBuffer)(new Object("gme:CICAL/"))).append(serviceRecord.getUid()).toString());
+         return (DatagramConnection)Connector.open("gme:CICAL/" + serviceRecord.getUid());
       }
    }
 
@@ -324,9 +324,9 @@ public class OTACalendarTransmissionService extends AbstractTransmissionService 
          CICALEventLogger.logEvent(1230262348, 3);
       } else {
          Object ticket = PersistentContent.getTicket();
-         if (ticket == null && anObject instanceof Object) {
+         if (ticket == null && anObject instanceof Event) {
             try {
-               throw new Object();
+               throw new Throwable();
             } finally {
                ;
             }
@@ -343,7 +343,7 @@ public class OTACalendarTransmissionService extends AbstractTransmissionService 
 
    @Override
    public int getTransmissionStatusForObject(Object o) {
-      if (!(o instanceof Object)) {
+      if (!(o instanceof Event)) {
          return super.getTransmissionStatusForObject(o);
       }
 
@@ -356,12 +356,12 @@ public class OTACalendarTransmissionService extends AbstractTransmissionService 
       PersistentObject persistentObject = RIMPersistentStore.getPersistentObject(-2174959204821111592L);
       this._slowSyncTrackingTable = (IntIntHashtable)persistentObject.getContents();
       if (this._slowSyncTrackingTable == null) {
-         this._slowSyncTrackingTable = (IntIntHashtable)(new Object(1));
+         this._slowSyncTrackingTable = new IntIntHashtable(1);
          persistentObject.setContents(this._slowSyncTrackingTable, 51);
          persistentObject.commit();
       }
 
-      this._context = (ContextObject)(new Object());
+      this._context = new ContextObject();
    }
 
    @Override
@@ -457,7 +457,7 @@ public class OTACalendarTransmissionService extends AbstractTransmissionService 
    @Override
    protected void transmitPacket(Packet packet, Object contextUsedToFindConverterAndSend) {
       boolean trackPacket = !this._context.getPrivateFlag(-1677359872409272575L, 1);
-      if (contextUsedToFindConverterAndSend instanceof Object) {
+      if (contextUsedToFindConverterAndSend instanceof ContextObject) {
          ContextObject co = (ContextObject)contextUsedToFindConverterAndSend;
          if (co.getPrivateFlag(-1677359872409272575L, 1)) {
             trackPacket = false;

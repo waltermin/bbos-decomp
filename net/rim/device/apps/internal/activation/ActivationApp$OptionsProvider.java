@@ -16,7 +16,7 @@ final class ActivationApp$OptionsProvider extends OptionsListItem implements Opt
 
    @Override
    public final Vector getOptionsItems() {
-      Vector items = (Vector)(new Object());
+      Vector items = new Vector();
       items.addElement(this);
       return items;
    }

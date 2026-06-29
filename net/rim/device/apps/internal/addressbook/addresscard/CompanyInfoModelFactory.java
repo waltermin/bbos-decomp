@@ -9,7 +9,7 @@ import net.rim.device.apps.api.framework.registration.RIMModelFactory;
 final class CompanyInfoModelFactory extends RIMModelFactory {
    @Override
    public final boolean recognize(Object object) {
-      if (object instanceof Object) {
+      if (object instanceof CompanyInfoModel) {
          return true;
       }
 

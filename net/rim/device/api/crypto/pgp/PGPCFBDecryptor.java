@@ -1,6 +1,8 @@
 package net.rim.device.api.crypto.pgp;
 
+import java.io.EOFException;
 import java.io.InputStream;
+import net.rim.device.api.crypto.CryptoTokenException;
 import net.rim.device.api.crypto.StreamDecryptor;
 import net.rim.device.api.crypto.SymmetricKeyEncryptorEngine;
 import net.rim.device.api.util.Arrays;
@@ -16,7 +18,7 @@ public final class PGPCFBDecryptor extends StreamDecryptor {
       this(engine, input, false);
    }
 
-   public PGPCFBDecryptor(SymmetricKeyEncryptorEngine engine, InputStream input, boolean dontPerformResync) {
+   public PGPCFBDecryptor(SymmetricKeyEncryptorEngine engine, InputStream input, boolean dontPerformResync) throws EOFException, CryptoTokenException {
       super(input);
       if (engine != null && engine.getBlockLength() >= 1) {
          this._engine = engine;
@@ -30,7 +32,7 @@ public final class PGPCFBDecryptor extends StreamDecryptor {
          byte[] randomDataCipherText = new byte[randomDataLength];
          int randomDataReadLength = super._inputStream.read(randomDataCipherText);
          if (randomDataReadLength < randomDataLength) {
-            throw new Object();
+            throw new EOFException();
          }
 
          this._engine.encrypt(this._CFBRegister, 0, this._encryptedCFBRegister, 0);
@@ -44,7 +46,7 @@ public final class PGPCFBDecryptor extends StreamDecryptor {
          randomDataPlainText[blockLength] = (byte)(this._encryptedCFBRegister[0] ^ randomDataCipherText[blockLength]);
          randomDataPlainText[blockLength + 1] = (byte)(this._encryptedCFBRegister[1] ^ randomDataCipherText[blockLength + 1]);
          if (!Arrays.equals(randomDataPlainText, blockLength - 2, randomDataPlainText, blockLength, 2)) {
-            throw new Object();
+            throw new CryptoTokenException();
          }
 
          if (!dontPerformResync) {
@@ -55,13 +57,13 @@ public final class PGPCFBDecryptor extends StreamDecryptor {
             this._encryptedCFBRegisterOffset = 2;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object())).append(this._engine.getAlgorithm()).append("/PGP/CFB").toString();
+      return this._engine.getAlgorithm() + "/PGP/CFB";
    }
 
    @Override
@@ -83,7 +85,7 @@ public final class PGPCFBDecryptor extends StreamDecryptor {
             dataLength -= xorLength;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

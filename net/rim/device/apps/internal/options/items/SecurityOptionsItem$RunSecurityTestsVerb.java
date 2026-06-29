@@ -11,7 +11,7 @@ public final class SecurityOptionsItem$RunSecurityTestsVerb extends Verb {
 
    @Override
    public final Object invoke(Object parameter) {
-      SelfTests selfTests = (SelfTests)(new Object(false));
+      SelfTests selfTests = new SelfTests(false);
       selfTests.start();
       return null;
    }

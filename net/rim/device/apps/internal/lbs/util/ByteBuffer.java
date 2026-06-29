@@ -44,7 +44,7 @@ public final class ByteBuffer {
 
    public final void setLength(int newLength) {
       if (newLength < 0) {
-         throw new Object(newLength);
+         throw new StringIndexOutOfBoundsException(newLength);
       }
 
       if (newLength > this.capacity()) {
@@ -109,7 +109,7 @@ public final class ByteBuffer {
          System.arraycopy(str, 0, this._buffer, offset, len);
          return this;
       } else {
-         throw new Object();
+         throw new StringIndexOutOfBoundsException();
       }
    }
 
@@ -125,6 +125,6 @@ public final class ByteBuffer {
 
    @Override
    public final String toString() {
-      return (String)(this._count == 0 ? "" : new Object(this._buffer, 0, this._count));
+      return this._count == 0 ? "" : new String(this._buffer, 0, this._count);
    }
 }

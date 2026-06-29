@@ -2443,7 +2443,7 @@ public final class JavaByteCodes implements Constants {
    private final int translateTypeEnum(int type) {
       switch (type) {
          case 3:
-            Diagnose.out.println(((StringBuffer)(new Object("Warning!: Bad type for newarray opcode: 0x"))).append(Integer.toHexString(type)).toString());
+            Diagnose.out.println("Warning!: Bad type for newarray opcode: 0x" + Integer.toHexString(type));
             return 10;
          case 4:
          default:
@@ -2785,7 +2785,7 @@ public final class JavaByteCodes implements Constants {
          }
 
          if (arrayType == 14) {
-            this._arrayStringValues = new Object[arraySize];
+            this._arrayStringValues = new String[arraySize];
 
             for (int i = arraySize - 1; i >= 0; i--) {
                this._arrayStringValues[i] = ((ConstantPoolString)this._constantPool.getEntry((int)arrayData[i])).getString();
@@ -2819,7 +2819,7 @@ public final class JavaByteCodes implements Constants {
                case -3:
                   break;
                case -2:
-                  throw new CompileException(((StringBuffer)(new Object("Bad opcode: 0x"))).append(Integer.toHexString(this._opcode)).toString());
+                  throw new CompileException("Bad opcode: 0x" + Integer.toHexString(this._opcode));
                case -1:
                default:
                   switch (this._opcode) {
@@ -2906,9 +2906,7 @@ public final class JavaByteCodes implements Constants {
                               ops[1] = this.unsignedConst(2);
                               break;
                            default:
-                              throw new CompileException(
-                                 ((StringBuffer)(new Object("Bad opcode suffix of wide opcode: 0x"))).append(Integer.toHexString(this._opcode)).toString()
-                              );
+                              throw new CompileException("Bad opcode suffix of wide opcode: 0x" + Integer.toHexString(this._opcode));
                         }
 
                         this.classify(ip, this._opcode, ops);

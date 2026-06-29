@@ -21,10 +21,7 @@ public class ChCustomWordsSyncCollection extends WordSyncCollection {
    private static final long CLOCKS_COUNT_PERSISTENCE_ID = -6401963580920179664L;
    private static final String LEARNING_READER_NAME = "net.rim.tid.im.conv.zh.repository.SlChLearningWriter";
    private static final String BIGRAMS_READER_NAME = "net.rim.tid.im.conv.zh.learning.SlChLearningBigramsWordlist";
-   private static final String CURRENT_LOCALE = ((StringBuffer)(new Object("__")))
-      .append(Locale.get(2053636096).getLanguage())
-      .append("_CN_Pinyin_")
-      .toString();
+   private static final String CURRENT_LOCALE = "__" + Locale.get(2053636096).getLanguage() + "_CN_Pinyin_";
    private static ChCustomWordsSyncCollection _instance;
 
    private ChCustomWordsSyncCollection(String syncName) {
@@ -78,16 +75,14 @@ public class ChCustomWordsSyncCollection extends WordSyncCollection {
             OTASyncableCustomWordsProvider writer = this.getReader(cw.getKey());
             if (writer != null) {
                if (super._debugOutputEnabled) {
-                  System.err.println(((StringBuffer)(new Object("addSyncObject: "))).append(cw.toString()).toString());
+                  System.err.println("addSyncObject: " + cw.toString());
                }
 
                int res = writer.addWord(cw.getWord(), cw.getFrequency());
                if (res != 0) {
                   Proxy.getInstance().invokeLater(new WordSyncCollection$RecordRemover(this, this, cw));
                   long LOGWORTHY_REPORT_REQUEST = 2888237357036234703L;
-                  RIMGlobalMessagePoster.postGlobalEvent(
-                     LOGWORTHY_REPORT_REQUEST, 0, 0, ((StringBuffer)(new Object("TID-OTA:"))).append(cw.getRecord()).append("-").append(res).toString(), null
-                  );
+                  RIMGlobalMessagePoster.postGlobalEvent(LOGWORTHY_REPORT_REQUEST, 0, 0, "TID-OTA:" + cw.getRecord() + "-" + res, null);
                   return ret;
                }
 
@@ -127,7 +122,7 @@ public class ChCustomWordsSyncCollection extends WordSyncCollection {
          }
 
          if (record != null) {
-            return new CustomWordSyncObject((String)(new Object(record)), freq);
+            return new CustomWordSyncObject(new String(record), freq);
          }
       } finally {
          return null;
@@ -157,7 +152,7 @@ public class ChCustomWordsSyncCollection extends WordSyncCollection {
       PersistentObject persistentObject = RIMPersistentStore.getPersistentObject(6205514177874464825L);
       synchronized (persistentObject) {
          if (persistentObject.getContents() == null) {
-            persistentObject.setContents(new Object(), 51);
+            persistentObject.setContents(new IntHashtable(), 51);
             persistentObject.commit();
          }
       }

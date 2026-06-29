@@ -11,8 +11,8 @@ public class FontAccentsUtil {
          return 0;
       }
 
-      TextMetrics tm = (TextMetrics)(new Object());
-      DrawTextParam dtp = (DrawTextParam)(new Object(width));
+      TextMetrics tm = new TextMetrics();
+      DrawTextParam dtp = new DrawTextParam(width);
       dtp.iTruncateWithEllipsis = 2;
       font.measureText(text, 0, text.length(), dtp, tm);
       int extraHeight = font.getBaseline() + tm.iBoundsTlY;

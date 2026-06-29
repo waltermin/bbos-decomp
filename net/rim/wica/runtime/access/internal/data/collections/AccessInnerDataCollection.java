@@ -8,7 +8,7 @@ import net.rim.wica.runtime.metadata.internal.WicletEx;
 import net.rim.wica.runtime.metadata.internal.component.KeylessDataCollection;
 
 class AccessInnerDataCollection extends KeylessDataCollection implements BuiltinCollection {
-   protected IntHashtable _owners = (IntHashtable)(new Object());
+   protected IntHashtable _owners = new IntHashtable();
    protected IntVector _modifiedItems;
    protected IntVector _loadedItems;
    protected IntHashtable _intFieldHandlers;
@@ -208,12 +208,12 @@ class AccessInnerDataCollection extends KeylessDataCollection implements Builtin
 
       switch (this.getDef().getFieldType(field)) {
          case 0:
-            return new Object(this.getBooleanFieldValue(dataHandle, field));
+            return new Boolean(this.getBooleanFieldValue(dataHandle, field));
          case 1:
          case 5:
-            return new Object(this.getIntFieldValue(dataHandle, field));
+            return new Integer(this.getIntFieldValue(dataHandle, field));
          case 2:
-            return new Object(this.getDoubleFieldValue(dataHandle, field));
+            return new Double(this.getDoubleFieldValue(dataHandle, field));
          case 3:
          case 32768:
          case 32769:
@@ -226,11 +226,11 @@ class AccessInnerDataCollection extends KeylessDataCollection implements Builtin
             return this.getObjectFieldValue(dataHandle, field);
          case 4:
          case 8:
-            return new Object(this.getLongFieldValue(dataHandle, field));
+            return new Long(this.getLongFieldValue(dataHandle, field));
          case 6:
-            return new Object(this.getReferenceField(dataHandle, field));
+            return new Long(this.getReferenceField(dataHandle, field));
          default:
-            throw new Object("Not recognized field type.");
+            throw new RuntimeException("Not recognized field type.");
       }
    }
 
@@ -261,7 +261,7 @@ class AccessInnerDataCollection extends KeylessDataCollection implements Builtin
    }
 
    private void resetCache() {
-      this._modifiedItems = (IntVector)(new Object(10, 5));
-      this._loadedItems = (IntVector)(new Object(10, 5));
+      this._modifiedItems = new IntVector(10, 5);
+      this._loadedItems = new IntVector(10, 5);
    }
 }

@@ -11,6 +11,7 @@ import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectListField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.verb.Verb;
@@ -39,40 +40,40 @@ final class SmartCardOptionsItem extends SaveableMainScreenOptionsListItem imple
       Font font = Font.getDefault();
       Font boldFont = font.derive(font.getStyle() | 1);
       SmartCardOptions options = SmartCardOptions.getInstance();
-      this._allowLockOnCardRemovalField = (BooleanChoiceField)(new Object(_rb.getString(25), 2, options.getAllowLockOnCardRemoval(), 268435456));
+      this._allowLockOnCardRemovalField = new BooleanChoiceField(_rb.getString(25), 2, options.getAllowLockOnCardRemoval(), 268435456);
       this._allowLockOnCardRemovalField.setEditable(!ITPolicy.getBoolean(24, 1, false));
       this._allowLockOnCardRemovalField.setChangeListener(this);
       mainScreen.add(this._allowLockOnCardRemovalField);
-      this._allowPINCachingField = (BooleanChoiceField)(new Object(_rb.getString(26), 2, options.getAllowPINCaching(), 268435456));
+      this._allowPINCachingField = new BooleanChoiceField(_rb.getString(26), 2, options.getAllowPINCaching(), 268435456);
       this._allowPINCachingField.setEditable(ITPolicy.getBoolean(24, 50, false));
       mainScreen.add(this._allowPINCachingField);
       if (LED.isPolychromatic()) {
-         this._enableLEDFlashingOnOpenSessionField = (BooleanChoiceField)(new Object(_rb.getString(32), 2, options.getEnableLEDFlashingOnOpenSession()));
+         this._enableLEDFlashingOnOpenSessionField = new BooleanChoiceField(_rb.getString(32), 2, options.getEnableLEDFlashingOnOpenSession());
          mainScreen.add(this._enableLEDFlashingOnOpenSessionField);
       }
 
       SmartCardReader[] registeredReaders = SmartCardReaderFactory.getReaders();
       if (registeredReaders != null) {
-         mainScreen.add((Field)(new Object()));
-         LabelField labelField = (LabelField)(new Object(_rb.getString(27)));
+         mainScreen.add(new SeparatorField());
+         LabelField labelField = new LabelField(_rb.getString(27));
          labelField.setFont(boldFont);
          mainScreen.add(labelField);
-         this._registeredReadersListField = (ObjectListField)(new Object());
+         this._registeredReadersListField = new ObjectListField();
          this._registeredReadersListField.set(registeredReaders);
-         VerticalIndentFieldManager vfm = (VerticalIndentFieldManager)(new Object());
+         VerticalIndentFieldManager vfm = new VerticalIndentFieldManager();
          vfm.add(this._registeredReadersListField, 6);
          mainScreen.add(vfm);
       }
 
       SmartCard[] registeredCards = SmartCardFactory.getSmartCards();
       if (registeredCards != null) {
-         mainScreen.add((Field)(new Object()));
-         LabelField labelField = (LabelField)(new Object(_rb.getString(28)));
+         mainScreen.add(new SeparatorField());
+         LabelField labelField = new LabelField(_rb.getString(28));
          labelField.setFont(boldFont);
          mainScreen.add(labelField);
-         this._registeredCardsListField = (ObjectListField)(new Object());
+         this._registeredCardsListField = new ObjectListField();
          this._registeredCardsListField.set(registeredCards);
-         VerticalIndentFieldManager vfm = (VerticalIndentFieldManager)(new Object());
+         VerticalIndentFieldManager vfm = new VerticalIndentFieldManager();
          vfm.add(this._registeredCardsListField, 6);
          mainScreen.add(vfm);
       }

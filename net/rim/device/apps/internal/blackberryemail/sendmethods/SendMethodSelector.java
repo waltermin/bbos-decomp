@@ -16,7 +16,7 @@ import net.rim.device.apps.internal.blackberryemail.email.recipientcache.Recipie
 import net.rim.device.apps.internal.blackberryemail.properties.MessagePropertiesDefaults;
 
 public class SendMethodSelector {
-   private SendMethodFactory[] _registeredFactories = new Object[0];
+   private SendMethodFactory[] _registeredFactories = new SendMethodFactory[0];
    private SendMethodSelector$EmailBodyProviderRecognizer _emailBodyProviderRecognizer = new SendMethodSelector$EmailBodyProviderRecognizer(null);
    private static final long ID = -7659632296316850234L;
    private static SendMethodSelector _instance;
@@ -70,7 +70,7 @@ public class SendMethodSelector {
    public synchronized SendMethod[] getSendMethods(
       EmailMessageModel emailMessageModel, ServiceRecord serviceRecord, MessageClassification classification, Object context
    ) {
-      SendMethod[] sendMethods = new Object[0];
+      SendMethod[] sendMethods = new SendMethod[0];
       int numSecureEncodingsUsed = 0;
       int minimumEncodingActions = classification != null ? classification.getMinimumEncodingActions() : 0;
       int numSendMethodFactories = this._registeredFactories.length;
@@ -186,7 +186,7 @@ public class SendMethodSelector {
       if (originalItem instanceof EmailMessageModel) {
          EmailMessageModel originalMessage = (EmailMessageModel)originalItem;
          Object obj = SubmemberUtilities.getFirstSubmember(originalMessage, this._emailBodyProviderRecognizer);
-         if (obj instanceof Object) {
+         if (obj instanceof EncodingProvider) {
             EncodingProvider encodingProvider = (EncodingProvider)obj;
             long originalItemEncodingUID = encodingProvider.getEncodingUID();
             int originalItemEncodingAction = encodingProvider.getEncodingAction();

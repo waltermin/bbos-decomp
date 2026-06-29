@@ -3,7 +3,6 @@ package net.rim.device.apps.internal.keystore.browser;
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
@@ -41,24 +40,24 @@ public class SimpleOKCancelChoiceDialog extends PopupDialog implements FieldChan
    }
 
    public SimpleOKCancelChoiceDialog(RichTextField message, String choiceLabel, Object[] choices, int defaultChoice, Bitmap bitmap, long style) {
-      super((Manager)(new Object(281474976710656L)), style);
+      super(new DialogFieldManager(281474976710656L), style);
       if (choices == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._dfm = (DialogFieldManager)this.getDelegate();
       this._dfm.setMessage(message);
-      this._choiceField = (ObjectChoiceField)(new Object(choiceLabel, choices, defaultChoice));
+      this._choiceField = new ObjectChoiceField(choiceLabel, choices, defaultChoice);
       this._dfm.addCustomField(this._choiceField);
       if (bitmap != null) {
-         this._dfm.setIcon((BitmapField)(new Object(bitmap, 32)));
+         this._dfm.setIcon(new BitmapField(bitmap, 32));
       }
 
-      this._okButton = (ButtonField)(new Object(CommonResource.getString(100)));
+      this._okButton = new ButtonField(CommonResource.getString(100));
       this._okButton.setChangeListener(this);
-      this._cancelButton = (ButtonField)(new Object(CommonResource.getString(10005)));
+      this._cancelButton = new ButtonField(CommonResource.getString(10005));
       this._cancelButton.setChangeListener(this);
-      HorizontalFieldManager buttonManager = (HorizontalFieldManager)(new Object(12884901888L));
+      HorizontalFieldManager buttonManager = new HorizontalFieldManager(12884901888L);
       buttonManager.add(this._okButton);
       buttonManager.add(this._cancelButton);
       this._dfm.addCustomField(buttonManager);
@@ -84,11 +83,11 @@ public class SimpleOKCancelChoiceDialog extends PopupDialog implements FieldChan
    @Override
    public boolean onMenu(int instance) {
       Field field = this.getLeafFieldWithFocus();
-      return field instanceof Object ? super.onMenu(instance) : false;
+      return field instanceof ObjectChoiceField ? super.onMenu(instance) : false;
    }
 
    public SimpleOKCancelChoiceDialog(String message, String choiceLabel, Object[] choices, int defaultChoice, Bitmap bitmap, long style) {
-      this((RichTextField)(new Object(message, 67108864)), choiceLabel, choices, defaultChoice, bitmap, style);
+      this(new RichTextField(message, 67108864), choiceLabel, choices, defaultChoice, bitmap, style);
    }
 
    @Override

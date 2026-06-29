@@ -26,7 +26,7 @@ public final class ECPrivateKey implements PrivateKey, ECKey, Persistable {
    }
 
    @Override
-   public final void verify() {
+   public final void verify() throws InvalidKeyException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -52,7 +52,7 @@ public final class ECPrivateKey implements PrivateKey, ECKey, Persistable {
       // 1b: aload 3
       // 1c: invokestatic net/rim/device/api/crypto/CryptoByteArrayArithmetic.isZero ([B)Z
       // 1f: ifeq 2a
-      // 22: new java/lang/Object
+      // 22: new net/rim/device/api/crypto/InvalidKeyException
       // 25: dup
       // 26: invokespecial net/rim/device/api/crypto/InvalidKeyException.<init> ()V
       // 29: athrow
@@ -60,19 +60,19 @@ public final class ECPrivateKey implements PrivateKey, ECKey, Persistable {
       // 2b: arraylength
       // 2c: iload 2
       // 2d: if_icmple 53
-      // 30: new java/lang/Object
+      // 30: new net/rim/device/api/crypto/InvalidKeyException
       // 33: dup
       // 34: invokespecial net/rim/device/api/crypto/InvalidKeyException.<init> ()V
       // 37: athrow
       // 38: astore 2
-      // 39: new java/lang/Object
+      // 39: new net/rim/device/api/crypto/InvalidKeyException
       // 3c: dup
       // 3d: aload 2
       // 3e: invokevirtual net/rim/device/api/crypto/CryptoTokenException.toString ()Ljava/lang/String;
       // 41: invokespecial net/rim/device/api/crypto/InvalidKeyException.<init> (Ljava/lang/String;)V
       // 44: athrow
       // 45: astore 2
-      // 46: new java/lang/Object
+      // 46: new net/rim/device/api/crypto/InvalidKeyException
       // 49: dup
       // 4a: aload 2
       // 4b: invokevirtual net/rim/device/api/crypto/InvalidCryptoSystemException.toString ()Ljava/lang/String;
@@ -118,21 +118,21 @@ public final class ECPrivateKey implements PrivateKey, ECKey, Persistable {
          ECCryptoToken cryptoToken = (ECCryptoToken)cryptoSystem.getAsymmetricCryptoToken();
          this.initialize(cryptoSystem, cryptoToken, cryptoTokenData);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
-   public ECPrivateKey(ECCryptoSystem cryptoSystem, byte[] data) {
+   public ECPrivateKey(ECCryptoSystem cryptoSystem, byte[] data) throws InvalidKeyException {
       if (cryptoSystem != null && data != null) {
          data = CryptoByteArrayArithmetic.trim(data);
          if (data.length > cryptoSystem.getPrivateKeyLength()) {
-            throw new Object();
+            throw new InvalidKeyException();
          }
 
          ECCryptoToken cryptoToken = (ECCryptoToken)cryptoSystem.getAsymmetricCryptoToken();
          this.initialize(cryptoSystem, cryptoToken, cryptoToken.injectECPrivateKey(cryptoSystem.getCryptoTokenData(), data));
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

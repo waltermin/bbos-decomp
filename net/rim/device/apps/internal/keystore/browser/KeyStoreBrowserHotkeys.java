@@ -10,7 +10,7 @@ import net.rim.device.internal.ui.UiInternal;
 
 public class KeyStoreBrowserHotkeys {
    private static ResourceBundle _rb = ResourceBundle.getBundle(1882520843275877681L, "net.rim.device.apps.internal.resource.crypto.KeyStoreBrowser");
-   private static IntIntHashtable _map = (IntIntHashtable)(new Object());
+   private static IntIntHashtable _map = new IntIntHashtable();
    private static Locale _locale;
 
    private static void add(int id) {

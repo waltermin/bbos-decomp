@@ -6,6 +6,7 @@ import net.rim.device.api.system.RadioInfo;
 import net.rim.device.api.system.SMSPacketHeader;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
@@ -20,6 +21,7 @@ import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.model.Recognizer;
 import net.rim.device.apps.api.framework.model.VerbProvider;
 import net.rim.device.apps.api.framework.registration.RecognizerRepository;
+import net.rim.device.apps.api.framework.verb.PopupVerbWrapper;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.messaging.messagelist.ForwardAsVerb;
 import net.rim.device.apps.api.messaging.resources.MessageResources;
@@ -41,7 +43,7 @@ public class SMSMessageModel extends SMSModel implements PersistableRIMModel {
    @Override
    public Verb getVerbs(Object context, Verb[] verbs) {
       Object delegateUi = SMSUiRegistry.getRegistry().getCurrentUi();
-      if (delegateUi != null && delegateUi instanceof Object) {
+      if (delegateUi != null && delegateUi instanceof VerbProvider) {
          ContextObject contObj = ContextObject.castOrCreate(context);
          ContextObject.put(contObj, 250, this);
          return ((VerbProvider)delegateUi).getVerbs(contObj, verbs);
@@ -85,7 +87,7 @@ public class SMSMessageModel extends SMSModel implements PersistableRIMModel {
             SMSForwardVerb verb = new SMSForwardVerb();
             verb.setParameter(this);
             verbs[numberOfVerbsAdded++] = verb;
-            ForwardAsVerb forwardAsVerb = (ForwardAsVerb)(new Object(this));
+            ForwardAsVerb forwardAsVerb = new ForwardAsVerb(this);
             if (forwardAsVerb.canInvoke(null)) {
                verbs[numberOfVerbsAdded++] = forwardAsVerb;
             }
@@ -107,23 +109,23 @@ public class SMSMessageModel extends SMSModel implements PersistableRIMModel {
    @Override
    public Field getField(Object context) {
       Object delegateUi = SMSUiRegistry.getRegistry().getCurrentUi();
-      if (delegateUi != null && delegateUi instanceof Object) {
+      if (delegateUi != null && delegateUi instanceof FieldProvider) {
          ContextObject contObj = ContextObject.castOrCreate(context);
          ContextObject.put(contObj, 250, this);
          return ((FieldProvider)delegateUi).getField(contObj);
       }
 
-      VerticalFieldManager vfm = (VerticalFieldManager)(new Object(1152921504606846976L));
+      VerticalFieldManager vfm = new VerticalFieldManager(1152921504606846976L);
       if (ContextObject.getFlag(context, 54)) {
-         vfm.add((Field)(new Object("")));
-         vfm.add((Field)(new Object()));
+         vfm.add(new LabelField(""));
+         vfm.add(new SeparatorField());
       }
 
-      StringBuffer stringBuffer = (StringBuffer)(new Object());
+      StringBuffer stringBuffer = new StringBuffer();
       stringBuffer.append(super._payload.getPriorityChar());
       stringBuffer.append(' ');
       DateFormat.getInstance(53).formatLocal(stringBuffer, super._payload.getDisplayDate());
-      LabelField timeLabel = (LabelField)(new Object(stringBuffer.toString(), 18014398509481984L));
+      LabelField timeLabel = new LabelField(stringBuffer.toString(), 18014398509481984L);
       vfm.add(timeLabel);
       int rc = 0;
       switch (super._payload.getByteField(6)) {
@@ -138,22 +140,22 @@ public class SMSMessageModel extends SMSModel implements PersistableRIMModel {
       }
 
       if (rc != 0) {
-         vfm.add((Field)(new Object(((StringBuffer)(new Object())).append(SMSResources.getString(430)).append(SMSResources.getString(rc)).toString())));
+         vfm.add(new LabelField(SMSResources.getString(430) + SMSResources.getString(rc)));
       }
 
       if (super._payload.isReplyRequested()) {
-         vfm.add((Field)(new Object(SMSResources.getString(412))));
+         vfm.add(new LabelField(SMSResources.getString(412)));
       }
 
       RIMModel callbackAddress = super._payload.getCallbackAddress();
-      if (callbackAddress instanceof Object) {
+      if (callbackAddress instanceof FieldProvider) {
          FieldProvider fieldProvider = (FieldProvider)callbackAddress;
          ContextObject addressContextObject = ContextObject.clone(context);
          addressContextObject.setFlag(9);
          addressContextObject.setFlag(1);
          addressContextObject.clearFlag(0);
-         HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object());
-         hfm.add((Field)(new Object(SMSResources.getString(330))));
+         HorizontalFieldManager hfm = new HorizontalFieldManager();
+         hfm.add(new LabelField(SMSResources.getString(330)));
          Field f = fieldProvider.getField(addressContextObject);
          if (f != null) {
             hfm.add(f);
@@ -212,7 +214,7 @@ public class SMSMessageModel extends SMSModel implements PersistableRIMModel {
    @Override
    public Object invokeHotkey(Object context, int hotkeyID) {
       Object delegateUi = SMSUiRegistry.getRegistry().getCurrentUi();
-      if (delegateUi != null && delegateUi instanceof Object) {
+      if (delegateUi != null && delegateUi instanceof HotKeyProvider) {
          ContextObject contObj = ContextObject.castOrCreate(context);
          ContextObject.put(contObj, 250, this);
          return ((HotKeyProvider)delegateUi).invokeHotkey(contObj, hotkeyID);
@@ -271,7 +273,7 @@ public class SMSMessageModel extends SMSModel implements PersistableRIMModel {
          return true;
       }
 
-      StringBuffer strbuf = (StringBuffer)(new Object());
+      StringBuffer strbuf = new StringBuffer();
 
       for (int i = addresses.length - 1; i > -1; i--) {
          RIMModel address = addresses[i];
@@ -279,7 +281,7 @@ public class SMSMessageModel extends SMSModel implements PersistableRIMModel {
          boolean sms = ContextObject.getFlag(context, 55);
          ContextObject.setFlag(context, 21);
          ContextObject.setFlag(context, 55);
-         if (address instanceof Object) {
+         if (address instanceof ConversionProvider) {
             ConversionProvider conversionProvider = (ConversionProvider)address;
             conversionProvider.convert(context, strbuf);
          }
@@ -319,33 +321,33 @@ public class SMSMessageModel extends SMSModel implements PersistableRIMModel {
       Verb[] useOnceVerbs;
       Recognizer recognizer;
       if (!SMSService.isEmailAddressAsSMSAddressSupported()) {
-         useOnceVerbs = new Object[]{new UseOnceSMSAddressVerb()};
+         useOnceVerbs = new Verb[]{new UseOnceSMSAddressVerb()};
          recognizer = RecognizerRepository.getRecognizers(3797587162219887872L);
       } else {
-         Verb[] wrappedVerbs = new Object[]{new UseOnceSMSAddressVerb(null, 0), new UseOnceSMSAddressVerb(null, 1)};
-         useOnceVerbs = new Object[]{
-            new Object(
+         Verb[] wrappedVerbs = new Verb[]{new UseOnceSMSAddressVerb(null, 0), new UseOnceSMSAddressVerb(null, 1)};
+         useOnceVerbs = new Verb[]{
+            new PopupVerbWrapper(
                SMSResources.getString(190),
                SMSResources.getString(415),
                wrappedVerbs[0].getOrdering(),
                wrappedVerbs,
-               new Object[]{SMSResources.getString(418), SMSResources.getString(414)},
+               new String[]{SMSResources.getString(418), SMSResources.getString(414)},
                wrappedVerbs[0]
             )
          };
-         CompoundRecognizer compoundRecognizer = (CompoundRecognizer)(new Object());
+         CompoundRecognizer compoundRecognizer = new CompoundRecognizer();
          compoundRecognizer.addRecognizer(RecognizerRepository.getRecognizers(3797587162219887872L));
          compoundRecognizer.addRecognizer(RecognizerRepository.getRecognizers(-2985347935260258684L));
          recognizer = compoundRecognizer;
       }
 
       String findLabel = SMSResources.getString(378);
-      AddressSelectionContext selectionContext = (AddressSelectionContext)(new Object(findLabel, SMSResources.getString(180), null, recognizer, useOnceVerbs));
-      ContextObject phoneNumberSelectionContext = (ContextObject)(new Object());
+      AddressSelectionContext selectionContext = new AddressSelectionContext(findLabel, SMSResources.getString(180), null, recognizer, useOnceVerbs);
+      ContextObject phoneNumberSelectionContext = new ContextObject();
       phoneNumberSelectionContext.setFlag(42, 34);
-      phoneNumberSelectionContext.put(6609423255094033855L, new Object(15307058));
+      phoneNumberSelectionContext.put(6609423255094033855L, new Integer(15307058));
       selectionContext.setContext(phoneNumberSelectionContext);
-      selectionContext.setUseEntryPrefixes(new Object[]{SMSResources.getString(610)});
+      selectionContext.setUseEntryPrefixes(new String[]{SMSResources.getString(610)});
       return selectionContext;
    }
 

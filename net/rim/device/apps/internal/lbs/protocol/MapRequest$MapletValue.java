@@ -19,7 +19,7 @@ final class MapRequest$MapletValue {
 
    @Override
    public final String toString() {
-      StringBuffer buf = (StringBuffer)(new Object());
+      StringBuffer buf = new StringBuffer();
       buf.append(this._x);
       buf.append(", ");
       buf.append(this._y);

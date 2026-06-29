@@ -29,7 +29,7 @@ public final class AccountSetupCommand implements DomainCommand {
       RestClient restClient = (RestClient)ObjectRegistry.getInstance().find("restClient");
 
       try {
-         String[] userNameSuggestions = new Object[3];
+         String[] userNameSuggestions = new String[3];
          String pin = DeviceIDs.getInstance().getPIN();
          String imei = DeviceIDs.getInstance().getIMEIESN();
          Locale locale = ClientPersistentState.getInstance().getLocale();
@@ -53,9 +53,7 @@ public final class AccountSetupCommand implements DomainCommand {
                return new DomainCommandResult("deviceInUse", ApplicationResources.getString(109), null);
             }
 
-            BISEventLogger.logEvent(
-               ((StringBuffer)(new Object("Account Setup: Unhandled REST response code: "))).append(callResult.getRESTStatusCode()).toString(), 0
-            );
+            BISEventLogger.logEvent("Account Setup: Unhandled REST response code: " + callResult.getRESTStatusCode(), 0);
             return new DomainCommandResult("error", null, null);
          }
 

@@ -30,7 +30,7 @@ public class StatusTextField extends LabelField {
    private void refreshText() {
       String statusString = this._model.getStatusString(this._index);
       if (statusString != null) {
-         this.setText(((StringBuffer)(new Object(" - "))).append(statusString).toString());
+         this.setText(" - " + statusString);
       } else {
          this.setText(null);
       }

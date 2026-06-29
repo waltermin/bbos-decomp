@@ -1,5 +1,6 @@
 package net.rim.wica.runtime.lifecycle.internal;
 
+import java.util.Date;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.ui.component.Dialog;
@@ -55,7 +56,7 @@ final class LifecycleDialogManager implements DialogClosedListener {
          message = RuntimeResources.getString(19, name);
          actions[1] = new DefaultAction(RuntimeResources.getString(2));
       } else {
-         message = RuntimeResources.getString(11, new Object[]{name, new Object(task.getExpiryDate()).toString()});
+         message = RuntimeResources.getString(11, new Object[]{name, new Date(task.getExpiryDate()).toString()});
          actions[1] = new StartApplicationAction();
       }
 
@@ -94,7 +95,7 @@ final class LifecycleDialogManager implements DialogClosedListener {
    private final void displayDialog(Object cookie, String message, Bitmap icon, Action[] actions, int initialChoice, String detailMessage) {
       String displayedMessage = message;
       if (detailMessage != null) {
-         StringBuffer b = (StringBuffer)(new Object(message));
+         StringBuffer b = new StringBuffer(message);
          b.append(' ');
          b.append(detailMessage);
          displayedMessage = b.toString();

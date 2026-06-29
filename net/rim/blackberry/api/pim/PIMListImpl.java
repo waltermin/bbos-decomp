@@ -4,16 +4,17 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 import net.rim.device.api.collection.CollectionEventSource;
+import net.rim.device.api.util.EmptyEnumeration;
 
 class PIMListImpl implements BlackBerryPIMList {
    boolean _closed;
    int _mode;
-   private Vector _listeners = (Vector)(new Object());
+   private Vector _listeners = new Vector();
    private static String NO_CATEGORIES_MESSAGE = "Categories are not supported.";
    private static String LIST_CLOSED_MESSAGE = "PIM List is closed.";
    private static String WRITEONLY_MESSAGE = "PIM List is write-only.";
    protected static String NOT_FOUND_MESSAGE = "PIMItem not found.";
-   private static Hashtable _actualListeners = (Hashtable)(new Object());
+   private static Hashtable _actualListeners = new Hashtable();
 
    protected boolean verifyField(int _1) {
       throw null;
@@ -29,7 +30,7 @@ class PIMListImpl implements BlackBerryPIMList {
 
    @Override
    public String[] getCategories() {
-      return new Object[0];
+      return new String[0];
    }
 
    @Override
@@ -64,9 +65,9 @@ class PIMListImpl implements BlackBerryPIMList {
       } else if (this._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       } else if (this._mode == 2) {
-         throw new Object(WRITEONLY_MESSAGE);
+         throw new SecurityException(WRITEONLY_MESSAGE);
       } else {
-         return (Enumeration)(new Object());
+         return new EmptyEnumeration();
       }
    }
 
@@ -127,7 +128,7 @@ class PIMListImpl implements BlackBerryPIMList {
 
    @Override
    public String getArrayElementLabel(int stringArrayField, int arrayElement) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
@@ -135,7 +136,7 @@ class PIMListImpl implements BlackBerryPIMList {
       if (attribute == 0) {
          return "";
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -150,7 +151,7 @@ class PIMListImpl implements BlackBerryPIMList {
 
    @Override
    public int stringArraySize(int stringArrayField) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override

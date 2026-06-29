@@ -18,7 +18,7 @@ final class Game$2 extends MenuItem {
    @Override
    public final void run() {
       String msg = Game._resources.getString(64);
-      Dialog d = (Dialog)(new Object(msg, CommonResource.getStringArray(10012), null, 0, null, 0));
+      Dialog d = new Dialog(msg, CommonResource.getStringArray(10012), null, 0, null, 0);
       d.setIcon(ImageBitmap.create(this.this$0.BMP_WIN));
       int response = d.doModal();
       if (response == 0) {

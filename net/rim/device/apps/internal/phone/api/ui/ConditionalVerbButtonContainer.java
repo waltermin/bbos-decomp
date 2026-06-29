@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.phone.api.ui;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.component.ButtonField;
+import net.rim.device.apps.api.framework.verb.ApplicationKeyInvocableVerb;
 import net.rim.device.apps.api.framework.verb.ConditionalVerb;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.ButtonContainer;
@@ -23,16 +24,16 @@ public final class ConditionalVerbButtonContainer extends ButtonContainer {
       this._paddingRight = right;
       this._paddingBottom = bottom;
       this._paddingLeft = left;
-      this._buttons = new Object[0];
+      this._buttons = new ButtonField[0];
    }
 
    public final void setActions(Verb[] actions) {
       this.deleteAllButtons();
-      this._buttons = new Object[0];
+      this._buttons = new ButtonField[0];
 
       for (int i = 0; i < actions.length; i++) {
          Verb verb = actions[i];
-         if (!(verb instanceof Object) && verb instanceof Object) {
+         if (!(verb instanceof ApplicationKeyInvocableVerb) && verb instanceof ConditionalVerb) {
             int index = this._buttons.length;
             Array.resize(this._buttons, index + 1);
             this._buttons[index] = this.createButton(verb);
@@ -46,8 +47,8 @@ public final class ConditionalVerbButtonContainer extends ButtonContainer {
 
    private final ButtonField createButton(Verb verb) {
       String label = verb.toString().trim();
-      ButtonField button = (ButtonField)(new Object(label));
-      if (verb instanceof Object) {
+      ButtonField button = new ButtonField(label);
+      if (verb instanceof Copyable) {
          button.setCookie(((Copyable)verb).copy());
       } else {
          button.setCookie(verb);
@@ -85,9 +86,9 @@ public final class ConditionalVerbButtonContainer extends ButtonContainer {
       Field field = this.getLeafFieldWithFocus();
       if (field != null) {
          Object cookie = field.getCookie();
-         if (cookie instanceof Object) {
+         if (cookie instanceof Verb) {
             Verb verb = (Verb)cookie;
-            if (verb instanceof Object) {
+            if (verb instanceof SetParameter) {
                ((SetParameter)verb).setParameter(context);
             }
 

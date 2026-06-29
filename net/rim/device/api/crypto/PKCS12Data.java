@@ -15,7 +15,7 @@ public class PKCS12Data extends PKCS12ContentInfo {
    public void parse() throws PKCS12ParsingException {
       if (!super._parsed) {
          try {
-            ASN1InputByteArray dataStream = (ASN1InputByteArray)(new Object(super._buffer));
+            ASN1InputByteArray dataStream = new ASN1InputByteArray(super._buffer);
             int next = dataStream.peekNextTag();
             if (next != 16) {
                throw new PKCS12ParsingException();
@@ -28,7 +28,7 @@ public class PKCS12Data extends PKCS12ContentInfo {
                this._content = SafeBag.getSafeBag(content, this);
                super._parsed = true;
             } else {
-               ASN1InputByteArray array = (ASN1InputByteArray)(new Object(content));
+               ASN1InputByteArray array = new ASN1InputByteArray(content);
                array.readSequence();
                OID oid = array.readOID();
                if (!oid.equals(OIDs.getOID(541859388)) && !oid.equals(OIDs.getOID(543170108)) && !oid.equals(OIDs.getOID(542383676))) {

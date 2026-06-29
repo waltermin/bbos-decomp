@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.messaging.search;
 
 import net.rim.device.api.collection.Collection;
-import net.rim.device.api.collection.LongKeyProviderAdaptor;
+import net.rim.device.api.collection.LongKeyProviderAdaptorComparator;
 import net.rim.device.api.collection.ReadableList;
 import net.rim.device.api.collection.WritableSet;
 import net.rim.device.api.collection.util.ReadableListUtil;
@@ -11,7 +11,6 @@ import net.rim.device.api.system.ObjectGroup;
 import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
-import net.rim.device.api.util.Comparator;
 import net.rim.device.api.util.FactoryUtil;
 import net.rim.device.apps.api.addressbook.AddressCardElement;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -26,6 +25,7 @@ import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.model.Recognizer;
 import net.rim.device.apps.api.framework.model.SyncBuffer;
 import net.rim.device.apps.api.framework.registration.RIMModelFactory;
+import net.rim.device.apps.api.messaging.DateSortKeyProviderIndirection;
 import net.rim.device.apps.api.messaging.Folder;
 import net.rim.device.apps.api.messaging.FolderHierarchies;
 import net.rim.device.apps.api.messaging.FolderMerge;
@@ -59,20 +59,20 @@ public final class FilterModel
    protected TitleModelImpl _titleModel;
    protected Object[] _criteria = new Object[0];
    private static final long CONTROLLER_ID = -106390034967358858L;
-   private static ContextObjectWR _filterSyncContextWR = (ContextObjectWR)(new Object(22, 19));
+   private static ContextObjectWR _filterSyncContextWR = new ContextObjectWR(22, 19);
    static final byte[] _filterIdData = new byte[]{102};
 
    @Override
    public final int paint(Graphics g, int x, int y, int width, int height, Object context) {
       int xoffset = 0;
       RIMModel title = this._titleModel;
-      if (title instanceof Object) {
+      if (title instanceof PaintProvider) {
          PaintProvider paintProvider = (PaintProvider)title;
          xoffset = paintProvider.paint(g, x, y, width, height, context);
       }
 
       RIMModel shortCut = this._shortCutKey;
-      if (shortCut instanceof Object) {
+      if (shortCut instanceof PaintProvider) {
          PaintProvider paintProvider = (PaintProvider)shortCut;
          xoffset += paintProvider.paint(g, x + xoffset, y, width - xoffset, height, context);
       }
@@ -100,7 +100,7 @@ public final class FilterModel
       Recognizer showRecognizer = ShowSearchModelFactory.getInstance();
       Recognizer nameRecognizer = NameSearchModelFactory.getInstance();
       Recognizer folderRecognizer = FolderModelFactory.getInstance();
-      SearchCriterion[] criteria = new Object[0];
+      SearchCriterion[] criteria = new SearchCriterion[0];
       int numSubmembers = filterModel.size();
       long mergeToSearch = 7509894771240321003L;
       boolean sourceIsFiltered = false;
@@ -132,7 +132,7 @@ public final class FilterModel
             if (folderRecognizer.recognize(thisCriterion)) {
                FolderModel fm = (FolderModel)thisCriterion;
                fm.establishValue();
-               long folderLUID = thisCriterion.getValue();
+               long folderLUID = (Long)thisCriterion.getValue();
                Folder f = null;
                if (folderLUID != 0) {
                   f = FolderHierarchies.getFolder(folderLUID);
@@ -188,9 +188,9 @@ public final class FilterModel
 
       Object messageListSource;
       if (sourceIsFiltered) {
-         SearchResultCollection collection = (SearchResultCollection)(new Object(
-            criteria, (Comparator)(new Object((LongKeyProviderAdaptor)(new Object()))), true, true
-         ));
+         SearchResultCollection collection = new SearchResultCollection(
+            criteria, new LongKeyProviderAdaptorComparator(new DateSortKeyProviderIndirection()), true, true
+         );
          collection.loadFrom(source);
          messageListSource = collection;
          MessageSearchImpl s = (MessageSearchImpl)MessageSearch.getInstance();
@@ -204,7 +204,7 @@ public final class FilterModel
 
          for (int ixx = 0; ixx < records.size(); ixx++) {
             RIMModel m = (RIMModel)records.getAt(ixx);
-            if (m instanceof Object) {
+            if (m instanceof MatchProvider) {
                MatchProvider mp = (MatchProvider)m;
                if (mp.match(criteria) == 1) {
                   return m;
@@ -225,11 +225,11 @@ public final class FilterModel
          }
 
          String in_progress = CommonResources.getString(9139);
-         MessageListUI listUI = (MessageListUI)(new Object(title, in_progress, fromRibbon ? 4 : 3));
+         MessageListUI listUI = new MessageListUI(title, in_progress, fromRibbon ? 4 : 3);
          listUI.loadFrom(messageListSource);
          if (ContextObject.getFlag(context, 11)) {
             Object obj = ContextObject.get(context, 252);
-            if (obj instanceof Object) {
+            if (obj instanceof AddressCardElement) {
                AddressCardElement addressCard = (AddressCardElement)obj;
                listUI.setAddressCardUID(addressCard.getUID());
             }
@@ -252,7 +252,7 @@ public final class FilterModel
 
    protected final void addShortCutKey(char shortCutKey) {
       RIMModelFactory keyFactory = ShortCutKeyModelFactory.getInstance();
-      Character key = (Character)(new Object(Character.toLowerCase(shortCutKey)));
+      Character key = new Character(Character.toLowerCase(shortCutKey));
       ShortCutKeyModel keyModel = (ShortCutKeyModel)keyFactory.createInstance(key);
       this._shortCutKey = keyModel;
    }
@@ -287,7 +287,7 @@ public final class FilterModel
    }
 
    public final boolean grabDataFromField(Field field, Object context) {
-      throw new Object("Shouldn't have been called");
+      throw new RuntimeException("Shouldn't have been called");
    }
 
    final void setUID(int uid) {
@@ -314,7 +314,7 @@ public final class FilterModel
       int keyCount = 0;
       if (ContextObject.getFlag(context, 56)) {
          RIMModel title = this._titleModel;
-         if (title instanceof Object) {
+         if (title instanceof KeyProvider) {
             KeyProvider keyProvider = (KeyProvider)title;
             return keyProvider.getKeys(context, keyArray, index + keyCount, keyRequested);
          }
@@ -349,10 +349,10 @@ public final class FilterModel
    @Override
    public final void add(Object member) {
       if (ObjectGroup.isInGroup(member)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
-      if (!(member instanceof Object)) {
+      if (!(member instanceof TitleModelImpl)) {
          if (!(member instanceof ShortCutKeyModel)) {
             int var4 = this._criteria.length;
             Array.resize(this._criteria, var4 + 1);
@@ -398,7 +398,7 @@ public final class FilterModel
 
       for (int i = 0; i < this._criteria.length; i++) {
          Object obj = this._criteria[i];
-         if (obj instanceof Object) {
+         if (obj instanceof EncryptableProvider) {
             EncryptableProvider encryptable = (EncryptableProvider)obj;
             if (!encryptable.checkCrypt(compress, encrypt)) {
                return false;
@@ -418,7 +418,7 @@ public final class FilterModel
 
       for (int i = 0; i < this._criteria.length; i++) {
          Object obj = newModel._criteria[i];
-         if (obj instanceof Object) {
+         if (obj instanceof EncryptableProvider) {
             EncryptableProvider encryptable = (EncryptableProvider)obj;
             obj = encryptable.reCrypt(compress, encrypt);
             if (obj != null) {

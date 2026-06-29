@@ -12,7 +12,7 @@ import net.rim.device.apps.internal.browser.page.BrowserPageModel;
 
 final class BrowserRepositoryConverter implements SyncConverter {
    public static final int VERSION_SUPPORTED = 1;
-   private static ContextObjectWR _convertContextWR = (ContextObjectWR)(new Object(19, 61));
+   private static ContextObjectWR _convertContextWR = new ContextObjectWR(19, 61);
 
    @Override
    public final boolean convert(SyncObject object, DataBuffer buffer, int version) {
@@ -22,7 +22,7 @@ final class BrowserRepositoryConverter implements SyncConverter {
 
       BrowserPageModel model = (BrowserPageModel)object;
       ConversionProvider converter = model;
-      SyncBuffer syncBuffer = (SyncBuffer)(new Object(buffer, version, model.getUID()));
+      SyncBuffer syncBuffer = new SyncBuffer(buffer, version, model.getUID());
       return converter.convert(_convertContextWR.getContextObject(), syncBuffer);
    }
 
@@ -32,7 +32,7 @@ final class BrowserRepositoryConverter implements SyncConverter {
          return null;
       }
 
-      SyncBuffer syncBuffer = (SyncBuffer)(new Object(dataBuffer, version, uid));
+      SyncBuffer syncBuffer = new SyncBuffer(dataBuffer, version, uid);
       ContextObject convertContext = _convertContextWR.getContextObject();
       convertContext.put(255, syncBuffer);
       BrowserPageModel model = (BrowserPageModel)FactoryUtil.createInstance(8419621845400492256L, convertContext);

@@ -20,7 +20,7 @@ public class PublicKeyEncoder {
 
    public static EncodedKey encode(PublicKey key, String encodingAlgorithm, long flags) {
       if (key == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       PublicKeyEncoder encoder = getEncoder(encodingAlgorithm, key.getAlgorithm());
@@ -39,7 +39,7 @@ public class PublicKeyEncoder {
       if (encodingAlgorithm != null && keyAlgorithm != null) {
          return (PublicKeyEncoder)Utility.getCoder(_encoderHashtable, encodingAlgorithm, keyAlgorithm);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

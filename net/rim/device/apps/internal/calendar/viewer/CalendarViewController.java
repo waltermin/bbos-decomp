@@ -46,7 +46,7 @@ class CalendarViewController
    private CalendarApp _calendarUIApplication;
    private PreListenerScreen _screen = new PreListenerScreen(this);
    private CalendarViewController$CalendarViewHeader _header;
-   private SeparatorField _headerSep = (SeparatorField)(new Object());
+   private SeparatorField _headerSep = new SeparatorField();
    private Calendar _cal = Calendar.getInstance();
    private CalendarExtensions _calEx = (CalendarExtensions)this._cal;
    private DateTimeMonitor _dateMon;
@@ -54,10 +54,10 @@ class CalendarViewController
    private int _previousView = -1;
    private boolean _returnToPreviousView = false;
    protected boolean _disableSimpleNav;
-   private ContextObject _contextObject = (ContextObject)(new Object());
-   private StringBuffer _tempBuffer = (StringBuffer)(new Object());
+   private ContextObject _contextObject = new ContextObject();
+   private StringBuffer _tempBuffer = new StringBuffer();
    private CalendarViewController$LoadCalendarViewThread _threadedViewLoader = new CalendarViewController$LoadCalendarViewThread(this);
-   private FontMetrics _fontMetrics = (FontMetrics)(new Object());
+   private FontMetrics _fontMetrics = new FontMetrics();
    private int _dismissRequests = 0;
    private int _dialogRequestCount = 0;
    protected static final byte PASSED = 0;
@@ -275,7 +275,7 @@ class CalendarViewController
 
    protected boolean passKeyToSelectedObject(char key) {
       RIMModel calElement = (RIMModel)this.getSelectedObject();
-      if (!(calElement instanceof Object)) {
+      if (!(calElement instanceof HotKeyProvider)) {
          return false;
       }
 
@@ -300,7 +300,7 @@ class CalendarViewController
 
    protected boolean onHotKeyAction(Verb action, long lastTimeViewed) {
       if (action != null) {
-         ContextObject contextObject = (ContextObject)(new Object());
+         ContextObject contextObject = new ContextObject();
          Object selected = this.getSelectedObject();
          if (selected != null) {
             contextObject.put(3696141428889703675L, selected);

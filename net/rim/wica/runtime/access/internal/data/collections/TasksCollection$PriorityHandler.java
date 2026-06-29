@@ -1,6 +1,6 @@
 package net.rim.wica.runtime.access.internal.data.collections;
 
-import javax.microedition.pim.PIMItem;
+import javax.microedition.pim.ToDo;
 import net.rim.wica.runtime.access.internal.data.enumeration.TaskPriorityEnumConverter;
 import net.rim.wica.runtime.access.internal.data.handlers.IntFieldHandler;
 
@@ -10,9 +10,9 @@ final class TasksCollection$PriorityHandler implements IntFieldHandler {
 
    @Override
    public final int getValue(Object item) {
-      if (item instanceof Object) {
+      if (item instanceof ToDo) {
          try {
-            return TaskPriorityEnumConverter.deviceToCommon(((PIMItem)item).getInt(105, 0));
+            return TaskPriorityEnumConverter.deviceToCommon(((ToDo)item).getInt(105, 0));
          } finally {
             return -1;
          }

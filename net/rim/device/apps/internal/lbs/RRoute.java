@@ -13,10 +13,10 @@ import net.rim.device.apps.internal.lbs.maplet.MapPoint;
 final class RRoute {
    Coordinates _coord;
    RouteCallback _callback = new RouteCallback(this);
-   private DataBuffer _db = (DataBuffer)(new Object());
+   private DataBuffer _db = new DataBuffer();
    int _rootElementMarker;
    IntArray _path = new IntArray();
-   Coordinates[] _coordc = new Object[0];
+   Coordinates[] _coordc = new Coordinates[0];
    boolean _includeAltitude = true;
    IntArray _altitudes;
    boolean _includeTime = true;
@@ -76,7 +76,7 @@ final class RRoute {
       int lon = gpsLocationData.getLongitudeInt();
       int dy = lat - (int)this._coord.getLatitude();
       int dx = lon - (int)this._coord.getLongitude();
-      Coordinates tmpCoord = (Coordinates)(new Object(lat, lon, (float)false));
+      Coordinates tmpCoord = new Coordinates(lat, lon, (float)false);
       if (Math.abs(dx) + Math.abs(dy) >= 10) {
          this._path.add(dx);
          this._path.add(dy);

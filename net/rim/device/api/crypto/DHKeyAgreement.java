@@ -14,7 +14,7 @@ public final class DHKeyAgreement {
                .generateDHSharedSecret(cryptoSystem.getCryptoTokenData(), localPrivateKey.getCryptoTokenData(), remotePublicKey.getPublicKeyData(), useCofactor);
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

@@ -9,7 +9,7 @@ final class EmailCollection$UIDHandler implements IntFieldHandler {
 
    @Override
    public final int getValue(Object item) {
-      return !(item instanceof Object) ? -1 : ((EmailMessageModel)item).getCMIMEReferenceIdentifier();
+      return !(item instanceof EmailMessageModel) ? -1 : ((EmailMessageModel)item).getCMIMEReferenceIdentifier();
    }
 
    EmailCollection$UIDHandler(EmailCollection$1 x0) {

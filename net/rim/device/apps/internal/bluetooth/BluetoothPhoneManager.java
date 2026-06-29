@@ -815,7 +815,7 @@ final class BluetoothPhoneManager
          }
 
          char[] bytes;
-         if (!(obj instanceof Object)) {
+         if (!(obj instanceof String)) {
             String number = (String)ContextObject.get(obj, 247);
             if (number == null) {
                return false;
@@ -833,13 +833,13 @@ final class BluetoothPhoneManager
             }
          }
 
-         StringBuffer sb = (StringBuffer)(new Object());
-         StringBuffer dtmf = (StringBuffer)(new Object());
+         StringBuffer sb = new StringBuffer();
+         StringBuffer dtmf = new StringBuffer();
          PhoneNumberConverter.convertForTransmission(sb, dtmf, bytes, true, false, false, false, false);
          String var14 = sb.toString();
-         if (obj instanceof Object) {
+         if (obj instanceof String) {
             obj = sb.append(dtmf).toString();
-         } else if (obj instanceof Object && dtmf.length() > 0) {
+         } else if (obj instanceof ContextObject && dtmf.length() > 0) {
             ContextObject.put(obj, 247, sb.append(dtmf).toString());
          }
 
@@ -1718,7 +1718,7 @@ final class BluetoothPhoneManager
       this._lastLowBattery = (bstat & -1878999040) != 0;
       this._lastCharging = (bstat & 1) != 0;
       this._lastRoaming = (service & 8) != 0;
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
       sb.append("+CIND: ");
       sb.append(this._lastService ? 1 : 0);
       sb.append(',');
@@ -1783,7 +1783,7 @@ final class BluetoothPhoneManager
          this.sendError(4);
       } else {
          data = data.substring(3);
-         Object sb = new Object();
+         StringBuffer sb = new StringBuffer();
          if (data.startsWith("CPBS=?")) {
             this.sendRawData(RESPONSE_CPBS);
             this.sendOK();
@@ -1836,10 +1836,10 @@ final class BluetoothPhoneManager
                   pb = "RC";
             }
 
-            ((StringBuffer)sb).append("+CPBS: \"");
-            ((StringBuffer)sb).append(pb);
-            ((StringBuffer)sb).append('"');
-            this.sendRawData((StringBuffer)sb);
+            sb.append("+CPBS: \"");
+            sb.append(pb);
+            sb.append('"');
+            this.sendRawData(sb);
             this.sendOK();
          } else if (data.startsWith("CPBR=?")) {
             if (this._addressBookCards == null) {
@@ -1850,15 +1850,15 @@ final class BluetoothPhoneManager
                this.sendError(3);
             } else {
                int length = this._addressBookCards.length;
-               ((StringBuffer)sb).append("+CPBR: (");
-               ((StringBuffer)sb).append(length == 0 ? 0 : 1);
-               ((StringBuffer)sb).append('-');
-               ((StringBuffer)sb).append(length);
-               ((StringBuffer)sb).append("),");
-               ((StringBuffer)sb).append(40);
-               ((StringBuffer)sb).append(',');
-               ((StringBuffer)sb).append(24);
-               this.sendRawData((StringBuffer)sb);
+               sb.append("+CPBR: (");
+               sb.append(length == 0 ? 0 : 1);
+               sb.append('-');
+               sb.append(length);
+               sb.append("),");
+               sb.append(40);
+               sb.append(',');
+               sb.append(24);
+               this.sendRawData(sb);
                this.sendOK();
             }
          } else {
@@ -1921,10 +1921,10 @@ final class BluetoothPhoneManager
                         s = "UCS-2";
                   }
 
-                  ((StringBuffer)sb).append("+CSCS: \"");
-                  ((StringBuffer)sb).append(s);
-                  ((StringBuffer)sb).append('"');
-                  this.sendRawData((StringBuffer)sb);
+                  sb.append("+CSCS: \"");
+                  sb.append(s);
+                  sb.append('"');
+                  this.sendRawData(sb);
                   this.sendOK();
                   return;
                }
@@ -1935,8 +1935,8 @@ final class BluetoothPhoneManager
                }
 
                if (data.startsWith("CGMI")) {
-                  ((StringBuffer)sb).append("Research In Motion");
-                  this.sendRawData((StringBuffer)sb);
+                  sb.append("Research In Motion");
+                  this.sendRawData(sb);
                   this.sendOK();
                   return;
                }
@@ -1947,9 +1947,9 @@ final class BluetoothPhoneManager
                }
 
                if (data.startsWith("CGMM")) {
-                  ((StringBuffer)sb).append("BlackBerry ");
-                  ((StringBuffer)sb).append(DeviceInfo.getDeviceName());
-                  this.sendRawData((StringBuffer)sb);
+                  sb.append("BlackBerry ");
+                  sb.append(DeviceInfo.getDeviceName());
+                  this.sendRawData(sb);
                   this.sendOK();
                   return;
                }
@@ -1965,8 +1965,8 @@ final class BluetoothPhoneManager
                      return;
                   }
 
-                  ((StringBuffer)sb).append(GPRSInfo.imeiToString(GPRSInfo.getIMEI(), false));
-                  this.sendRawData((StringBuffer)sb);
+                  sb.append(GPRSInfo.imeiToString(GPRSInfo.getIMEI(), false));
+                  this.sendRawData(sb);
                   this.sendOK();
                   return;
                }
@@ -1987,14 +1987,14 @@ final class BluetoothPhoneManager
                      name = RadioInfo.getCurrentNetworkName();
                   }
 
-                  ((StringBuffer)sb).append("+COPS: 0");
+                  sb.append("+COPS: 0");
                   if (name != null) {
-                     ((StringBuffer)sb).append(",0,\"");
-                     ((StringBuffer)sb).append(name);
-                     ((StringBuffer)sb).append('"');
+                     sb.append(",0,\"");
+                     sb.append(name);
+                     sb.append('"');
                   }
 
-                  this.sendRawData((StringBuffer)sb);
+                  this.sendRawData(sb);
                   this.sendOK();
                   return;
                }
@@ -2010,12 +2010,12 @@ final class BluetoothPhoneManager
                   }
 
                   if (phoneNumber != null) {
-                     ((StringBuffer)sb).append("+CNUM: ,\"");
-                     ((StringBuffer)sb).append(phoneNumber);
-                     ((StringBuffer)sb).append("\",");
-                     ((StringBuffer)sb).append(this.getNumberType(phoneNumber));
-                     ((StringBuffer)sb).append(",,4");
-                     this.sendRawData((StringBuffer)sb);
+                     sb.append("+CNUM: ,\"");
+                     sb.append(phoneNumber);
+                     sb.append("\",");
+                     sb.append(this.getNumberType(phoneNumber));
+                     sb.append(",,4");
+                     this.sendRawData(sb);
                   }
 
                   this.sendOK();
@@ -2092,7 +2092,7 @@ final class BluetoothPhoneManager
                   }
                }
 
-               System.out.println(((StringBuffer)(new Object("Unknown AT data: "))).append(data).toString());
+               System.out.println("Unknown AT data: " + data);
                this.sendError(4);
             } else {
                if (this._addressBookCards == null) {
@@ -2187,7 +2187,7 @@ final class BluetoothPhoneManager
                continue;
             }
 
-            StringBuffer sb = (StringBuffer)(new Object());
+            StringBuffer sb = new StringBuffer();
             sb.append("+CLCC: ");
             sb.append(i + 1);
             sb.append(',');
@@ -2235,14 +2235,14 @@ final class BluetoothPhoneManager
          this.snapshotCallHistory();
       }
 
-      System.out.println(((StringBuffer)(new Object("snap: "))).append(System.currentTimeMillis() - startTime).toString());
+      System.out.println("snap: " + (System.currentTimeMillis() - startTime));
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private final void snapshotCallHistory() {
-      this._addressBookCards = new Object[10];
-      this._addressBookNumbers = new Object[10];
+      this._addressBookCards = new AddressCardModel[10];
+      this._addressBookNumbers = new PhoneNumberModel[10];
       if (super._btManager.getAddressBookTransferMode() != 0) {
          if (this._currentPhonebook != 1) {
             SimpleFolder phoneFolder;
@@ -2261,8 +2261,8 @@ final class BluetoothPhoneManager
 
                try {
                   var13 = true;
-                  PhoneCallModelImpl call = collection.getAt(i);
-                  if (((PhoneCallModelImpl)call).isIncoming()) {
+                  PhoneCallModelImpl call = (PhoneCallModelImpl)collection.getAt(i);
+                  if (call.isIncoming()) {
                      if (this._currentPhonebook == 2) {
                         var13 = false;
                         continue;
@@ -2272,7 +2272,7 @@ final class BluetoothPhoneManager
                      continue;
                   }
 
-                  CallerIDInfo clid = ((PhoneCallModelImpl)call).getCallerIDInfo();
+                  CallerIDInfo clid = call.getCallerIDInfo();
                   Object o = clid.getAddress();
                   if (!clid.isPrivateNumber()) {
                      if (clid.isUnknownNumber()) {
@@ -2280,12 +2280,12 @@ final class BluetoothPhoneManager
                      } else {
                         PersistableRIMModel number = clid.getNumber();
                         if (number != null) {
-                           if (!(number instanceof Object)) {
+                           if (!(number instanceof PhoneNumberModel)) {
                               var13 = false;
                            } else {
                               PhoneNumberModel phoneNumber = (PhoneNumberModel)number;
                               AddressCardModel card;
-                              if (!(o instanceof Object)) {
+                              if (!(o instanceof AddressCardModel)) {
                                  card = this.createAddressCard();
                                  card.add(phoneNumber);
                               } else {
@@ -2326,8 +2326,8 @@ final class BluetoothPhoneManager
    private final void dumpAddressBookSnapshot(int start, int end) {
       this._sniffModeDesired = false;
       super._device.updateSniffMode();
-      DataBuffer entry = (DataBuffer)(new Object());
-      DataBuffer name = (DataBuffer)(new Object());
+      DataBuffer entry = new DataBuffer();
+      DataBuffer name = new DataBuffer();
       byte[] firstNameData = null;
       byte[] lastNameData = null;
       int numEntries = this._addressBookCards.length;
@@ -2343,7 +2343,7 @@ final class BluetoothPhoneManager
          }
       }
 
-      ContextObject context = (ContextObject)(new Object(117));
+      ContextObject context = new ContextObject(117);
       ContextObject.setPrivateFlag(context, 4936088360624690805L, 68);
 
       int i;
@@ -2509,7 +2509,7 @@ final class BluetoothPhoneManager
 
    private final void sendError(int cmeError) {
       if (this._extendedErrors) {
-         StringBuffer sb = (StringBuffer)(new Object());
+         StringBuffer sb = new StringBuffer();
          sb.append("+CME ERROR: ");
          sb.append(cmeError);
          this.sendRawData(sb);
@@ -2526,7 +2526,7 @@ final class BluetoothPhoneManager
 
    private final void sendRawData(String data) {
       if (StringUtilities.getCharacterSize(data) == 2) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       for (int i = 0; i < 10; i++) {
@@ -2624,7 +2624,7 @@ final class BluetoothPhoneManager
 
    @Override
    public final void headsetUnknownATData(String data) {
-      System.out.println(((StringBuffer)(new Object("Unknown AT data: "))).append(data).toString());
+      System.out.println("Unknown AT data: " + data);
       HeadsetGateway.sendError();
    }
 
@@ -2889,7 +2889,7 @@ final class BluetoothPhoneManager
                CallInfo info = new CallInfo(callID);
                info._outgoing = true;
                info._status = 1;
-               if (object0 instanceof Object) {
+               if (object0 instanceof String) {
                   info._number = (String)object0;
                }
 
@@ -2939,8 +2939,8 @@ final class BluetoothPhoneManager
 
    @Override
    public final synchronized Verb[] getVerbs(Object context) {
-      Verb[] verbs = new Object[0];
-      if (BluetoothME.isPowerOn() && context instanceof Object) {
+      Verb[] verbs = new Verb[0];
+      if (BluetoothME.isPowerOn() && context instanceof AudioPathControl) {
          AudioPathControl control = (AudioPathControl)context;
          if (control.canSwitchToPath(2)) {
             if (super._state == 2) {

@@ -12,6 +12,7 @@ import net.rim.device.api.crypto.keystore.CertificateStatusManagerTicket;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
 import net.rim.device.api.crypto.keystore.KeyStoreTicket;
+import net.rim.device.api.crypto.keystore.RIMKeyStoreData;
 import net.rim.device.api.crypto.keystore.TrustedKeyStore;
 import net.rim.device.api.memorycleaner.MemoryCleanerDaemon;
 import net.rim.device.api.memorycleaner.MemoryCleanerListener;
@@ -39,6 +40,7 @@ import net.rim.device.apps.internal.api.crypto.verb.DisplayCertificateChainVerb;
 import net.rim.device.apps.internal.api.crypto.verb.DisplayCertificateVerb;
 import net.rim.device.internal.resource.crypto.CryptoIndicatorImages;
 import net.rim.vm.Array;
+import net.rim.vm.WeakReference;
 
 final class KeyStoreBrowserOptionsItem extends MainScreenOptionsListItem implements CollectionListener, MemoryCleanerListener, Comparator {
    private KeyStore _keyStore;
@@ -92,14 +94,14 @@ final class KeyStoreBrowserOptionsItem extends MainScreenOptionsListItem impleme
    private static final boolean DEBUG = false;
 
    public KeyStoreBrowserOptionsItem(KeyStoreBrowserContext browserContext, Object displayContext) {
-      super(browserContext.getKeyStoreBrowserName(), new Object(0, 2), 5294015899860238835L);
+      super(browserContext.getKeyStoreBrowserName(), new ContextObject(0, 2), 5294015899860238835L);
       this._browserContext = browserContext;
       this._displayContext = displayContext;
       this._keyStore = browserContext.getKeyStore();
       this._trustedKeyStore = (TrustedKeyStore)TrustedKeyStore.getInstance();
       this._certificateStatusManager = CertificateStatusManager.getInstance();
       this._cryptoSystemProperties = this._browserContext.getCryptoSystemProperties();
-      this._keyStoreItems = (Vector)(new Object());
+      this._keyStoreItems = new Vector();
       this._displayedIndices = new int[0];
       this._keyStoreItemsSyncObject = new Object();
       this._epochSyncObject = new Object();
@@ -111,8 +113,8 @@ final class KeyStoreBrowserOptionsItem extends MainScreenOptionsListItem impleme
       this._showRootsVerb = new KeyStoreBrowserOptionsItem$ShowHideCertsVerb(this, 3, 1143040);
       this._showEndEntityVerb = new KeyStoreBrowserOptionsItem$ShowHideCertsVerb(this, 4, 1142912);
       this._showAllVerb = new KeyStoreBrowserOptionsItem$ShowHideCertsVerb(this, 5, 1142864);
-      this._displayCertificateVerb = (DisplayCertificateVerb)(new Object(CommonResources.getString(9046)));
-      this._displayCertificateChainVerb = (DisplayCertificateChainVerb)(new Object(KeyStoreBrowserResources.getResourceBundle(), 6042));
+      this._displayCertificateVerb = new DisplayCertificateVerb(CommonResources.getString(9046));
+      this._displayCertificateChainVerb = new DisplayCertificateChainVerb(KeyStoreBrowserResources.getResourceBundle(), 6042);
       this._trustVerb = new MoveTrustVerb();
       this._distrustVerb = new MoveTrustVerb();
       CertificateAttachmentModelFactory attachmentFactory = this._browserContext.getCertificateAttachmentModelFactory();
@@ -145,9 +147,9 @@ final class KeyStoreBrowserOptionsItem extends MainScreenOptionsListItem impleme
    protected final void openImpl() {
       this._app = UiApplication.getUiApplication();
       this._showType = this._browserContext.getCertificateFilter();
-      this._certificateStatusManager.addCollectionListener(new Object(this));
-      this._keyStore.addCollectionListener(new Object(this));
-      this._trustedKeyStore.addCollectionListener(new Object(this));
+      this._certificateStatusManager.addCollectionListener(new WeakReference(this));
+      this._keyStore.addCollectionListener(new WeakReference(this));
+      this._trustedKeyStore.addCollectionListener(new WeakReference(this));
       MemoryCleanerDaemon.addWeakListener(this, false);
    }
 
@@ -175,7 +177,7 @@ final class KeyStoreBrowserOptionsItem extends MainScreenOptionsListItem impleme
    protected final void populateMainScreen(MainScreen mainScreen) {
       int height = CryptoIndicatorImages.getImageHeight();
       height = Math.max(height, Font.getDefault().getHeight()) + 1;
-      this._listField = (ListField)(new Object(0, 2));
+      this._listField = new ListField(0, 2);
       this._listField.setCallback(this._listFieldCallBack);
       this._listField.setEmptyString(KeyStoreBrowserResources.getResourceBundle(), 6015, 4);
       this._listField.setRowHeight(height);
@@ -208,7 +210,7 @@ final class KeyStoreBrowserOptionsItem extends MainScreenOptionsListItem impleme
 
    private final void displayCertProperty(KeyStoreBrowserData data, int property) {
       if (data != null) {
-         StringBuffer text = (StringBuffer)(new Object());
+         StringBuffer text = new StringBuffer();
          switch (property) {
             case -1:
                int level = data.getKeyStoreData().getSecurityLevel();
@@ -255,12 +257,12 @@ final class KeyStoreBrowserOptionsItem extends MainScreenOptionsListItem impleme
    }
 
    private final void getEmailAddressVerbs(VerbToMenu verbToMenu, String emailAddress) {
-      ContextObject emailContext = (ContextObject)(new Object(44));
+      ContextObject emailContext = new ContextObject(44);
       emailContext.put(253, emailAddress);
       Object eam = this._emailAddressFactory.createInstance(emailContext);
-      if (eam instanceof Object) {
+      if (eam instanceof VerbProvider) {
          VerbProvider verbProvider = (VerbProvider)eam;
-         Verb[] verbs = new Object[0];
+         Verb[] verbs = new Verb[0];
          verbProvider.getVerbs(emailContext, verbs);
          verbToMenu.addVerbs(verbs);
       }
@@ -336,7 +338,7 @@ final class KeyStoreBrowserOptionsItem extends MainScreenOptionsListItem impleme
       if (selectedDatas != null && selectedDatas.length != 0) {
          KeyStoreBrowserData selectedData = selectedDatas[0];
          boolean multipleSelected = selectedDatas.length > 1;
-         KeyStoreData[] selectedKeyStoreDatas = new Object[selectedDatas.length];
+         KeyStoreData[] selectedKeyStoreDatas = new KeyStoreData[selectedDatas.length];
 
          for (int i = 0; i < selectedDatas.length; i++) {
             selectedKeyStoreDatas[i] = selectedDatas[i].getKeyStoreData();
@@ -380,14 +382,14 @@ final class KeyStoreBrowserOptionsItem extends MainScreenOptionsListItem impleme
          if (!multipleSelected) {
             this._changeLabelVerb.initialize(selectedData, this);
             verbToMenu.addVerb(this._changeLabelVerb);
-            if (selectedData.isPrivateKeySet() && selectedKeyStoreDatas[0] instanceof Object && selectedKeyStoreDatas[0].getPasswordVersion() != -1) {
+            if (selectedData.isPrivateKeySet() && selectedKeyStoreDatas[0] instanceof RIMKeyStoreData && selectedKeyStoreDatas[0].getPasswordVersion() != -1) {
                this._changeSecurityLevelVerb.initialize(selectedData, this);
                verbToMenu.addVerb(this._changeSecurityLevelVerb);
             }
          }
 
          Certificate _certificate = selectedData.getCertificate();
-         boolean _isEndEntity = _certificate.getInformation(-7341435958452683242L, null, Boolean.FALSE);
+         boolean _isEndEntity = (Boolean)_certificate.getInformation(-7341435958452683242L, null, Boolean.FALSE);
          if (!multipleSelected && _isEndEntity && !selectedData.isPrivateKeySet()) {
             this._associateAddressesVerb.initialize(selectedData, this);
             verbToMenu.addVerb(this._associateAddressesVerb);

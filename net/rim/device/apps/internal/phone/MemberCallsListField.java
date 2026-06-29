@@ -31,7 +31,7 @@ final class MemberCallsListField extends SelfDrawingListField {
          int size = this._calls.size();
          if (index <= size) {
             Object callerID = ((LiveCall)this._calls.elementAt(index)).getDisplayCallerIDInfo();
-            if (callerID instanceof Object) {
+            if (callerID instanceof CallerIDInfo) {
                CallerIDInfo cidi = (CallerIDInfo)callerID;
                String cidiString = cidi.getDisplayString();
                graphics.drawText(cidiString, 0, y, 64, width);

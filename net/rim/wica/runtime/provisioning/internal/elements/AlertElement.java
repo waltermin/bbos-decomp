@@ -42,7 +42,7 @@ public final class AlertElement extends AbstractElement {
    @Override
    public final String toString() {
       String className = ProvisioningHelper.getClassName(this);
-      StringBuffer buf = (StringBuffer)(new Object(64));
+      StringBuffer buf = new StringBuffer(64);
       buf.append(className);
       buf.append("[dialogText=");
       buf.append(this._dialogText);

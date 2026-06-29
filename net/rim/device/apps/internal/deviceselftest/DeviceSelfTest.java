@@ -91,9 +91,9 @@ public final class DeviceSelfTest extends UiApplication {
       // 2a: aload 0
       // 2b: getfield net/rim/device/apps/internal/deviceselftest/DeviceSelfTest.currentTestIndex I
       // 2e: invokevirtual java/util/Vector.elementAt (I)Ljava/lang/Object;
-      // 31: checkcast java/lang/Object
+      // 31: checkcast java/lang/String
       // 34: astore 1
-      // 35: new java/lang/Object
+      // 35: new java/lang/StringBuffer
       // 38: dup
       // 39: ldc_w "net.rim.device.apps.internal.deviceselftest."
       // 3c: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -133,7 +133,7 @@ public final class DeviceSelfTest extends UiApplication {
    }
 
    DeviceSelfTest() {
-      this.taskList = (Vector)(new Object());
+      this.taskList = new Vector();
       this.persistReport = PersistentStore.getPersistentObject(7975587778218477079L);
       this.loadReports();
       this.currentTestIndex = -1;

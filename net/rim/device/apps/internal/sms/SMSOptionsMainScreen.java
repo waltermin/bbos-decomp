@@ -13,6 +13,7 @@ import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.NumericChoiceField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.apps.api.ui.AppsMainScreen;
@@ -172,7 +173,7 @@ class SMSOptionsMainScreen extends AppsMainScreen implements FieldChangeListener
       }
 
       this.setFlag(16384, false);
-      SMSParameters smsp = (SMSParameters)(new Object());
+      SMSParameters smsp = new SMSParameters();
 
       label485:
       try {
@@ -263,27 +264,27 @@ class SMSOptionsMainScreen extends AppsMainScreen implements FieldChangeListener
             priorityIndex = 0;
       }
 
-      this._disableAutoTextField = (BooleanChoiceField)(new Object(SMSResources.getString(386), 0, SMSOptions.getDisableAutoText()));
+      this._disableAutoTextField = new BooleanChoiceField(SMSResources.getString(386), 0, SMSOptions.getDisableAutoText());
       if (this.getFlag(8192)) {
          this.add(this._disableAutoTextField);
       }
 
-      this._storeOnSimField = (BooleanChoiceField)(new Object(SMSResources.getString(530), 0, SMSOptions.getStoreOnSIM()));
+      this._storeOnSimField = new BooleanChoiceField(SMSResources.getString(530), 0, SMSOptions.getStoreOnSIM());
       if (this.getFlag(2048)) {
          this.add(this._storeOnSimField);
       }
 
-      this._deliveryReportsField = (BooleanChoiceField)(new Object(SMSResources.getString(520), 1, SMSOptions.getDeliveryReports()));
+      this._deliveryReportsField = new BooleanChoiceField(SMSResources.getString(520), 1, SMSOptions.getDeliveryReports());
       if (this.getFlag(1024)) {
          this.add(this._deliveryReportsField);
       }
 
-      this._multipleRecipientsField = (BooleanChoiceField)(new Object(SMSResources.getString(419), 1, SMSOptions.getMultipleRecipients()));
+      this._multipleRecipientsField = new BooleanChoiceField(SMSResources.getString(419), 1, SMSOptions.getMultipleRecipients());
       if (this.getFlag(256)) {
          this.add(this._multipleRecipientsField);
       }
 
-      String[] validityPeriodChoices = new Object[]{
+      String[] validityPeriodChoices = new String[]{
          SMSResources.getString(460),
          SMSResources.getString(461),
          SMSResources.getString(462),
@@ -297,12 +298,12 @@ class SMSOptionsMainScreen extends AppsMainScreen implements FieldChangeListener
          SMSResources.getString(470)
       };
       int valPeriodIndex = this.getValidityPeriodIndex(smsp.getValidityPeriod());
-      this._validityPeriodField = (ObjectChoiceField)(new Object(SMSResources.getString(480), validityPeriodChoices, valPeriodIndex, 134217728));
+      this._validityPeriodField = new ObjectChoiceField(SMSResources.getString(480), validityPeriodChoices, valPeriodIndex, 134217728);
       if (this.getFlag(64)) {
          this.add(this._validityPeriodField);
       }
 
-      String[] deliveryPeriodChoices = new Object[]{
+      String[] deliveryPeriodChoices = new String[]{
          SMSResources.getString(371),
          SMSResources.getString(460),
          SMSResources.getString(461),
@@ -316,48 +317,48 @@ class SMSOptionsMainScreen extends AppsMainScreen implements FieldChangeListener
          SMSResources.getString(469)
       };
       int delPeriodIndex = this.getDeliveryPeriodIndex(smsp.getDeliveryPeriod());
-      this._deliveryPeriodField = (ObjectChoiceField)(new Object(SMSResources.getString(490), deliveryPeriodChoices, delPeriodIndex));
+      this._deliveryPeriodField = new ObjectChoiceField(SMSResources.getString(490), deliveryPeriodChoices, delPeriodIndex);
       if (this.getFlag(128)) {
          this.add(this._deliveryPeriodField);
       }
 
-      String[] sentAsChoices = new Object[]{
+      String[] sentAsChoices = new String[]{
          SMSResources.getString(340), SMSResources.getString(341), SMSResources.getString(342), SMSResources.getString(343), SMSResources.getString(344)
       };
-      this._sentAsField = (ObjectChoiceField)(new Object(SMSResources.getString(350), sentAsChoices, sentAsIndex));
+      this._sentAsField = new ObjectChoiceField(SMSResources.getString(350), sentAsChoices, sentAsIndex);
       if (this.getFlag(4)) {
          this.add(this._sentAsField);
       }
 
       if ((RadioInfo.getSupportedWAFs() & 2) != 0) {
-         String[] messageCodingChoices = new Object[]{SMSResources.getString(363), SMSResources.getString(364)};
-         this._messageCodingField = (ObjectChoiceField)(new Object(SMSResources.getString(370), messageCodingChoices, msgCodingIndex));
+         String[] messageCodingChoices = new String[]{SMSResources.getString(363), SMSResources.getString(364)};
+         this._messageCodingField = new ObjectChoiceField(SMSResources.getString(370), messageCodingChoices, msgCodingIndex);
       } else {
-         String[] messageCodingChoices = new Object[]{SMSResources.getString(360), SMSResources.getString(362)};
+         String[] messageCodingChoices = new String[]{SMSResources.getString(360), SMSResources.getString(362)};
          if (msgCodingIndex == 2) {
             Arrays.add(messageCodingChoices, SMSResources.getString(361));
          }
 
-         this._messageCodingField = (ObjectChoiceField)(new Object(SMSResources.getString(370), messageCodingChoices, msgCodingIndex));
+         this._messageCodingField = new ObjectChoiceField(SMSResources.getString(370), messageCodingChoices, msgCodingIndex);
       }
 
       if (this.getFlag(8)) {
          this.add(this._messageCodingField);
       }
 
-      String[] messageClassChoices = new Object[]{
+      String[] messageClassChoices = new String[]{
          SMSResources.getString(380), SMSResources.getString(381), SMSResources.getString(382), SMSResources.getString(383), SMSResources.getString(384)
       };
-      this._messageClassField = (ObjectChoiceField)(new Object(SMSResources.getString(390), messageClassChoices, msgClassIndex));
-      String[] priorityChoices = new Object[]{SMSResources.getString(420), SMSResources.getString(422)};
-      this._priorityField = (ObjectChoiceField)(new Object(SMSResources.getString(430), priorityChoices, priorityIndex));
+      this._messageClassField = new ObjectChoiceField(SMSResources.getString(390), messageClassChoices, msgClassIndex);
+      String[] priorityChoices = new String[]{SMSResources.getString(420), SMSResources.getString(422)};
+      this._priorityField = new ObjectChoiceField(SMSResources.getString(430), priorityChoices, priorityIndex);
       if (this.getFlag(32)) {
          this.add(this._priorityField);
       }
 
-      this._numPreviousItemsField = (NumericChoiceField)(new Object(SMSResources.getString(310), 0, 50, 1, SMSOptions.getNumPreviousItems()));
+      this._numPreviousItemsField = new NumericChoiceField(SMSResources.getString(310), 0, 50, 1, SMSOptions.getNumPreviousItems());
       int filterType = 12;
-      this._serviceCenterField = (PhoneNumberEditField)(new Object(SMSResources.getString(320), null, 20, filterType));
+      this._serviceCenterField = new PhoneNumberEditField(SMSResources.getString(320), null, 20, filterType);
 
       label462:
       try {
@@ -370,7 +371,7 @@ class SMSOptionsMainScreen extends AppsMainScreen implements FieldChangeListener
          this.add(this._serviceCenterField);
       }
 
-      this._callbackNumberField = (PhoneNumberEditField)(new Object(SMSResources.getString(330), null, 20, filterType));
+      this._callbackNumberField = new PhoneNumberEditField(SMSResources.getString(330), null, 20, filterType);
 
       label456:
       try {
@@ -384,14 +385,14 @@ class SMSOptionsMainScreen extends AppsMainScreen implements FieldChangeListener
       }
 
       int routeIndex = this.routeToChoiceIndex(SMSOptions.getRoute());
-      String[] routeObjectChoices = new Object[RouteChoices.length];
+      String[] routeObjectChoices = new String[RouteChoices.length];
       int i = RouteChoices.length;
 
       while (--i >= 0) {
          routeObjectChoices[i] = SMSResources.getString(RouteChoices[i]);
       }
 
-      this._routeField = (ObjectChoiceField)(new Object(SMSResources.getString(510), routeObjectChoices, routeIndex));
+      this._routeField = new ObjectChoiceField(SMSResources.getString(510), routeObjectChoices, routeIndex);
       if (this.getFlag(512)) {
          this.add(this._routeField);
       }
@@ -399,18 +400,18 @@ class SMSOptionsMainScreen extends AppsMainScreen implements FieldChangeListener
       SMSUiRegistry registry = SMSUiRegistry.getRegistry();
       Vector delegates = registry.getUiDelegates();
       if (delegates != null && delegates.size() > 0) {
-         String[] userInterface = new Object[delegates.size() + 1];
+         String[] userInterface = new String[delegates.size() + 1];
          int index = 0;
 
          for (userInterface[index++] = SMSResources.getString(403); index <= delegates.size(); index++) {
             userInterface[index] = delegates.elementAt(index - 1).toString();
          }
 
-         this._userInterfaceField = (ObjectChoiceField)(new Object(SMSResources.getString(752), userInterface, SMSOptions.getPresetUiId()));
+         this._userInterfaceField = new ObjectChoiceField(SMSResources.getString(752), userInterface, SMSOptions.getPresetUiId());
          this.add(this._userInterfaceField);
          this._userInterfaceField.setChangeListener(this);
-         String[] messageListUi = new Object[]{SMSResources.getString(406), SMSResources.getString(407)};
-         this._messageListUiField = (ObjectChoiceField)(new Object(SMSResources.getString(405), messageListUi, SMSOptions.getMessageListUiId()));
+         String[] messageListUi = new String[]{SMSResources.getString(406), SMSResources.getString(407)};
+         this._messageListUiField = new ObjectChoiceField(SMSResources.getString(405), messageListUi, SMSOptions.getMessageListUiId());
          if (SMSUiRegistry.getRegistry().getCurrentUi() != null) {
             this.add(this._messageListUiField);
          }
@@ -518,7 +519,7 @@ class SMSOptionsMainScreen extends AppsMainScreen implements FieldChangeListener
          default:
             if (!this.getFlag(16384)) {
                this.setFlag(16384, true);
-               this.add((Field)(new Object()));
+               this.add(new SeparatorField());
                if (!this.getFlag(2048)) {
                   this.add(this._storeOnSimField);
                }
@@ -624,7 +625,7 @@ class SMSOptionsMainScreen extends AppsMainScreen implements FieldChangeListener
          }
       }
 
-      SMSParameters smsp = (SMSParameters)(new Object());
+      SMSParameters smsp = new SMSParameters();
 
       label153:
       try {

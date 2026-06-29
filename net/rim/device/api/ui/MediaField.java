@@ -29,8 +29,8 @@ public class MediaField extends Manager implements BasicService, MediaListener, 
    protected MediaPlayer _player;
    protected boolean _playerStop;
    private boolean _inScrollMode;
-   private XYRect _rect = (XYRect)(new Object());
-   private XYRect _virtExtent = (XYRect)(new Object(0, 0, -1, -1));
+   private XYRect _rect = new XYRect();
+   private XYRect _virtExtent = new XYRect(0, 0, -1, -1);
    private Hashtable _mapFieldToFO;
    private int _preferredWidth = -1;
    private int _preferredHeight = -1;
@@ -56,7 +56,7 @@ public class MediaField extends Manager implements BasicService, MediaListener, 
 
    public void setPreferredWidth(int width) {
       if ((this.getStyle() & 8388608) != 8388608) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       this._preferredWidth = width;
@@ -65,7 +65,7 @@ public class MediaField extends Manager implements BasicService, MediaListener, 
 
    public void setPreferredHeight(int height) {
       if ((this.getStyle() & 16777216) != 16777216) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       this._preferredHeight = height;
@@ -75,7 +75,7 @@ public class MediaField extends Manager implements BasicService, MediaListener, 
    public void setPreferredExtent(int width, int height) {
       long bothPreferred = 25165824;
       if ((this.getStyle() & bothPreferred) != bothPreferred) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       this._preferredWidth = width;
@@ -132,7 +132,7 @@ public class MediaField extends Manager implements BasicService, MediaListener, 
          for (int i = 0; i < foreignObjects.length; i++) {
             if (foreignObjects[i] != null && foreignObjects[i].getInstance() != null) {
                Object f = foreignObjects[i].getInstance();
-               if (f instanceof Object && !this._mapFieldToFO.containsKey(f)) {
+               if (f instanceof Field && !this._mapFieldToFO.containsKey(f)) {
                   Field fi = (Field)f;
                   this._mapFieldToFO.put(fi, foreignObjects[i]);
                   if (fi.getManager() != this) {
@@ -437,7 +437,7 @@ public class MediaField extends Manager implements BasicService, MediaListener, 
                   remaining = 0;
                }
 
-               if (remaining != amount && !(focusField instanceof Object)) {
+               if (remaining != amount && !(focusField instanceof Manager)) {
                   focusField.focusChangeNotify(2);
                }
 
@@ -703,14 +703,14 @@ public class MediaField extends Manager implements BasicService, MediaListener, 
    public MediaField(long style, long contentStyle) {
       super(style | 144115188075855872L);
       if (!this.validateStyle(style)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this.updateViewportManager(contentStyle);
       this._controller = new MediaController(style & 18014398512889856L);
       this.add(this._controller);
       this._inScrollMode = false;
-      this._mapFieldToFO = (Hashtable)(new Object());
+      this._mapFieldToFO = new Hashtable();
       this.setFocusListener(new MediaField$MFFocusChangeListener(this));
    }
 

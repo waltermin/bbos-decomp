@@ -40,11 +40,11 @@ public final class BrowserDaemonRegistry
    ServiceRoutingListener2 {
    private BrowserImpl _instance;
    private Vector _plugInOptions;
-   private WeakReference[] _browserStateListeners = new Object[0];
-   private WeakReference[] _folderEventListeners = new Object[0];
-   private WeakReference[] _urlCollectionListeners = new Object[0];
-   private WeakReference[] _configListeners = new Object[0];
-   private WeakReference[] _registrationListeners = new Object[0];
+   private WeakReference[] _browserStateListeners = new WeakReference[0];
+   private WeakReference[] _folderEventListeners = new WeakReference[0];
+   private WeakReference[] _urlCollectionListeners = new WeakReference[0];
+   private WeakReference[] _configListeners = new WeakReference[0];
+   private WeakReference[] _registrationListeners = new WeakReference[0];
 
    public final void mobilityManagementEvent(int eventCode, int cause) {
    }
@@ -216,7 +216,7 @@ public final class BrowserDaemonRegistry
          }
 
          Array.resize(this._registrationListeners, this._registrationListeners.length + 1);
-         this._registrationListeners[this._registrationListeners.length - 1] = (WeakReference)(new Object(l));
+         this._registrationListeners[this._registrationListeners.length - 1] = new WeakReference(l);
       }
    }
 
@@ -260,7 +260,7 @@ public final class BrowserDaemonRegistry
    }
 
    private BrowserDaemonRegistry(BrowserImpl instance) {
-      this._plugInOptions = (Vector)(new Object());
+      this._plugInOptions = new Vector();
       this._instance = instance;
    }
 
@@ -275,7 +275,7 @@ public final class BrowserDaemonRegistry
          }
 
          Array.resize(registry._urlCollectionListeners, registry._urlCollectionListeners.length + 1);
-         registry._urlCollectionListeners[registry._urlCollectionListeners.length - 1] = (WeakReference)(new Object(urlCollectionListener));
+         registry._urlCollectionListeners[registry._urlCollectionListeners.length - 1] = new WeakReference(urlCollectionListener);
       }
    }
 
@@ -429,7 +429,7 @@ public final class BrowserDaemonRegistry
          }
 
          Array.resize(registry._browserStateListeners, registry._browserStateListeners.length + 1);
-         registry._browserStateListeners[registry._browserStateListeners.length - 1] = (WeakReference)(new Object(listener));
+         registry._browserStateListeners[registry._browserStateListeners.length - 1] = new WeakReference(listener);
       }
    }
 
@@ -504,7 +504,7 @@ public final class BrowserDaemonRegistry
          }
 
          Array.resize(registry._folderEventListeners, registry._folderEventListeners.length + 1);
-         registry._folderEventListeners[registry._folderEventListeners.length - 1] = (WeakReference)(new Object(listener));
+         registry._folderEventListeners[registry._folderEventListeners.length - 1] = new WeakReference(listener);
       }
    }
 
@@ -532,7 +532,7 @@ public final class BrowserDaemonRegistry
          }
 
          Array.resize(registry._configListeners, registry._configListeners.length + 1);
-         registry._configListeners[registry._configListeners.length - 1] = (WeakReference)(new Object(listener));
+         registry._configListeners[registry._configListeners.length - 1] = new WeakReference(listener);
       }
    }
 

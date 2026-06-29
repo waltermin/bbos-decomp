@@ -3,6 +3,7 @@ package net.rim.device.apps.api.utility.editor;
 import java.util.Hashtable;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.IntHashtable;
 import net.rim.device.apps.api.framework.model.FieldOrders;
@@ -12,8 +13,8 @@ public class OrderedFieldScreen implements FieldOrders {
    private int[] _orderValues = new int[0];
    private int _sepInterval;
    private EditorUsingRIMModelFactory _owner;
-   private IntHashtable _managers = (IntHashtable)(new Object());
-   private Hashtable _managerFieldOrders = (Hashtable)(new Object());
+   private IntHashtable _managers = new IntHashtable();
+   private Hashtable _managerFieldOrders = new Hashtable();
    public static final int NO_SEPARATORS = -1;
    private static final int SEP = -1;
 
@@ -45,11 +46,11 @@ public class OrderedFieldScreen implements FieldOrders {
    private void insertSeparator(int order, int position) {
       if (order != 5600) {
          if (position < 0) {
-            this._owner.add((Field)(new Object()));
+            this._owner.add(new SeparatorField());
             return;
          }
 
-         this._owner.insert((Field)(new Object()), position);
+         this._owner.insert(new SeparatorField(), position);
       }
    }
 

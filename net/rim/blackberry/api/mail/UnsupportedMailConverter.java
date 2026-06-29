@@ -15,24 +15,24 @@ class UnsupportedMailConverter implements MailConverter {
 
    @Override
    public boolean canConvert(Object o) {
-      if (o instanceof Object) {
+      if (o instanceof ProxyModel) {
          ProxyModel pm = (ProxyModel)o;
          o = pm.getObject();
       }
 
-      return o instanceof Object;
+      return o instanceof UnknownMimePartModel;
    }
 
    @Override
    public Object convert(Object o, Object context) {
-      if (o instanceof Object) {
+      if (o instanceof ProxyModel) {
          ProxyModel pm = (ProxyModel)o;
          o = pm.getObject();
       }
 
       if (context instanceof Multipart) {
          Multipart parent = (Multipart)context;
-         if (o instanceof Object) {
+         if (o instanceof UnknownMimePartModel) {
             UnknownMimePartModel umpm = (UnknownMimePartModel)o;
             return this.createWrapper(umpm, parent);
          }

@@ -225,7 +225,7 @@ public final class PGPArmorDecoder extends InputStream {
 
    private final void validateIndex(Object[] array, int index) {
       if (index < 0 || index >= array.length) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -233,7 +233,7 @@ public final class PGPArmorDecoder extends InputStream {
       int numPrivateKeys = this._privateKeys.length;
       int numCertificates = this._certificates.length;
       if (numPrivateKeys != numCertificates) {
-         throw new Object();
+         throw new RuntimeException();
       }
 
       int numDuplicateCertificates = 0;

@@ -16,16 +16,12 @@ public final class ReportOptionField extends VerticalFieldManager {
       this._deliveryReport = deliveryReport;
       this._readReport = readReport;
       if (!MMSClientServiceBook.isLockedOption(64)) {
-         this._delivery = (BooleanChoiceField)(new Object(
-            ((StringBuffer)(new Object())).append(MMSResources.getString(71)).append(": ").toString(), 0, MMSUtilities.parseInt(deliveryReport, 129) == 128
-         ));
+         this._delivery = new BooleanChoiceField(MMSResources.getString(71) + ": ", 0, MMSUtilities.parseInt(deliveryReport, 129) == 128);
          this.add(this._delivery);
       }
 
       if (!MMSClientServiceBook.isLockedOption(128)) {
-         this._read = (BooleanChoiceField)(new Object(
-            ((StringBuffer)(new Object())).append(MMSResources.getString(72)).append(": ").toString(), 0, MMSUtilities.parseInt(readReport, 129) == 128
-         ));
+         this._read = new BooleanChoiceField(MMSResources.getString(72) + ": ", 0, MMSUtilities.parseInt(readReport, 129) == 128);
          this.add(this._read);
       }
    }

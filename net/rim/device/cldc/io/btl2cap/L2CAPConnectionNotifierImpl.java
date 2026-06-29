@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.btl2cap;
 
+import java.io.InterruptedIOException;
 import javax.bluetooth.BluetoothConnectionException;
 import javax.bluetooth.L2CAPConnection;
 import javax.bluetooth.L2CAPConnectionNotifier;
@@ -48,7 +49,7 @@ public class L2CAPConnectionNotifierImpl implements L2CAPConnectionNotifier, Blu
    @Override
    public int getServiceRecordHandle() {
       if (this._closed) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return this._serviceRecordHandle;
       }
@@ -57,7 +58,7 @@ public class L2CAPConnectionNotifierImpl implements L2CAPConnectionNotifier, Blu
    @Override
    public int getPSM() {
       if (this._closed) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return this._connection.getPSM();
       }
@@ -65,7 +66,7 @@ public class L2CAPConnectionNotifierImpl implements L2CAPConnectionNotifier, Blu
 
    @Override
    public int getRFCOMMChannel() {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
@@ -79,7 +80,7 @@ public class L2CAPConnectionNotifierImpl implements L2CAPConnectionNotifier, Blu
    public L2CAPConnection acceptAndOpen() {
       synchronized (this._semaphore) {
          if (this._closed) {
-            throw new Object("Connection closed");
+            throw new InterruptedIOException("Connection closed");
          }
 
          if (this._serviceRecordHandle == -1) {
@@ -125,7 +126,7 @@ public class L2CAPConnectionNotifierImpl implements L2CAPConnectionNotifier, Blu
          }
 
          if (this._closed) {
-            throw new Object("Connection closed");
+            throw new InterruptedIOException("Connection closed");
          }
 
          this._connectionInUse = true;
@@ -136,7 +137,7 @@ public class L2CAPConnectionNotifierImpl implements L2CAPConnectionNotifier, Blu
    @Override
    public LocalServiceRecord getServiceRecord() {
       if (this._closed) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return this._serviceRecord;
       }

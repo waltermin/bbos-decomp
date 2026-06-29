@@ -2,7 +2,9 @@ package net.rim.device.apps.internal.messaging.search.criteria;
 
 import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.AutoTextEditField;
 import net.rim.device.api.ui.component.EditField;
+import net.rim.device.api.util.StringMatch;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.ConversionProvider;
 import net.rim.device.apps.api.framework.model.EncryptableProvider;
@@ -15,7 +17,7 @@ import net.rim.vm.WeakReference;
 
 public final class SubjectSearchModel implements PersistableRIMModel, SearchCriterion, FieldProvider, ConversionProvider, EncryptableProvider {
    private Object _subjectEncoding;
-   private static WeakReference _valueWR = (WeakReference)(new Object(null));
+   private static WeakReference _valueWR = new WeakReference(null);
    private static SubjectSearchModel _valueModel;
 
    public final boolean setValue(String subject) {
@@ -36,18 +38,15 @@ public final class SubjectSearchModel implements PersistableRIMModel, SearchCrit
 
    @Override
    public final Field getField(Object context) {
-      if (!ContextObject.getFlag(context, 0)) {
-         return null;
-      }
-
-      Field field = (Field)(new Object(SearchResources.getString(29), PersistentContent.decodeString(this._subjectEncoding), 1000000, 4503601774854144L));
-      return field;
+      return !ContextObject.getFlag(context, 0)
+         ? null
+         : new AutoTextEditField(SearchResources.getString(29), PersistentContent.decodeString(this._subjectEncoding), 1000000, 4503601774854144L);
    }
 
    @Override
    public final boolean grabDataFromField(Field field, Object context) {
       this.setValue(null);
-      if (!(field instanceof Object)) {
+      if (!(field instanceof EditField)) {
          return false;
       }
 
@@ -114,7 +113,7 @@ public final class SubjectSearchModel implements PersistableRIMModel, SearchCrit
       }
 
       String subject = PersistentContent.decodeString(model._subjectEncoding);
-      value = new Object(subject, false);
+      value = new StringMatch(subject, false);
       _valueWR.set(value);
       _valueModel = model;
       return value;

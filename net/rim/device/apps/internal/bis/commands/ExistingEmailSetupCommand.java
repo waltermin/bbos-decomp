@@ -23,7 +23,7 @@ public final class ExistingEmailSetupCommand implements DomainCommand {
       String reentered = ArgUtils.getStringValue(params, "reentered");
       String aolTermsAccepted = ArgUtils.getStringValue(params, "aolTermsAccepted");
       boolean credentialsReentered = "true".equals(reentered);
-      Boolean aolIntegrationPermitted = (Boolean)(aolTermsAccepted == null ? null : new Object("true".equals(aolTermsAccepted)));
+      Boolean aolIntegrationPermitted = aolTermsAccepted == null ? null : new Boolean("true".equals(aolTermsAccepted));
       String commandResultID = null;
       String commandResultErrorMsg = null;
       String commandResultStatusMsg = null;
@@ -53,9 +53,7 @@ public final class ExistingEmailSetupCommand implements DomainCommand {
                   return DomainCommand.SESSION_TIMEOUT_RESULT;
                }
 
-               BISEventLogger.logEvent(
-                  ((StringBuffer)(new Object("Existing Mail Setup: Unhandled REST response code: "))).append(callResult.getRESTStatusCode()).toString(), 0
-               );
+               BISEventLogger.logEvent("Existing Mail Setup: Unhandled REST response code: " + callResult.getRESTStatusCode(), 0);
                commandResultID = "failed";
                commandResultErrorMsg = ApplicationResources.getString(192);
             }

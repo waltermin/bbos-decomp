@@ -2,9 +2,9 @@ package net.rim.device.apps.internal.bis.ui;
 
 import java.util.Hashtable;
 import net.rim.device.api.i18n.MessageFormat;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.EmailAddressEditField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.PasswordEditField;
 import net.rim.device.apps.internal.bis.ApplicationResources;
 import net.rim.device.apps.internal.bis.api.ui.BoldLabelField;
@@ -16,6 +16,7 @@ import net.rim.device.apps.internal.bis.event.CloseEvent;
 import net.rim.device.apps.internal.bis.event.CommandEvent;
 import net.rim.device.apps.internal.bis.session.ClientSessionState;
 import net.rim.device.apps.internal.bis.utils.InputValidationUtils;
+import net.rim.device.cldc.io.utility.URL;
 
 public final class AddExchangeEmail extends UserSettingsScreen {
    private BasicEditField _owaURLEdit;
@@ -38,25 +39,25 @@ public final class AddExchangeEmail extends UserSettingsScreen {
       this.setTitle(ApplicationResources.getString(50));
       this.addContentField(new BoldLabelField(ApplicationResources.getString(41)));
       String sessionSimpleEmail = ClientSessionState.getInstance().getIntegrationEmail();
-      String acctConfigDescriptionText = MessageFormat.format(ApplicationResources.getString(42), new Object[]{sessionSimpleEmail});
-      this.addContentField((Field)(new Object(acctConfigDescriptionText)));
+      String acctConfigDescriptionText = MessageFormat.format(ApplicationResources.getString(42), new String[]{sessionSimpleEmail});
+      this.addContentField(new LabelField(acctConfigDescriptionText));
       this.addContentField(new BoldLabelField(ApplicationResources.getString(51)));
-      this._owaURLEdit = (BasicEditField)(new Object());
+      this._owaURLEdit = new BasicEditField();
       this.addContentField(this._owaURLEdit, true);
       this.addContentField(new InputHintLabelField(ApplicationResources.getString(53)));
       this.addContentField(new BoldLabelField(ApplicationResources.getString(13)));
-      this._userNameEdit = (BasicEditField)(new Object());
+      this._userNameEdit = new BasicEditField();
       this.addContentField(this._userNameEdit, true);
       this.addContentField(new InputHintLabelField(ApplicationResources.getString(54)));
       this.addContentField(new BoldLabelField(ApplicationResources.getString(14)));
-      this._passwordEdit = (PasswordEditField)(new Object());
+      this._passwordEdit = new PasswordEditField();
       this.addContentField(this._passwordEdit, true);
       this.addContentField(new InputHintLabelField(ApplicationResources.getString(55)));
       this.addContentField(new BoldLabelField(ApplicationResources.getString(43)));
-      this._emailAddressEdit = (EmailAddressEditField)(new Object(null, null));
+      this._emailAddressEdit = new EmailAddressEditField(null, null);
       this.addContentField(this._emailAddressEdit, true);
       this.addContentField(new BoldLabelField(ApplicationResources.getString(52)));
-      this._mailboxNameEdit = (BasicEditField)(new Object());
+      this._mailboxNameEdit = new BasicEditField();
       this.addContentField(this._mailboxNameEdit, true);
       Button closeButton = new Button(ApplicationResources.getString(15));
       Button backButton = new Button(ApplicationResources.getString(16));
@@ -93,7 +94,7 @@ public final class AddExchangeEmail extends UserSettingsScreen {
 
          try {
             var8 = true;
-            new Object(server);
+            new URL(server);
             var8 = false;
          } finally {
             if (var8) {

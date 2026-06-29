@@ -33,8 +33,8 @@ public class ResultContainer implements PersistentContentListener {
    protected int _minWordLength = 0;
    protected int _maxWordLength = Integer.MAX_VALUE;
    protected int _minFrequency = Integer.MAX_VALUE;
-   private SLTextDataContainer _dataContainer = (SLTextDataContainer)(new Object());
-   private SLTextDataContainer _additionalDataContainer = (SLTextDataContainer)(new Object());
+   private SLTextDataContainer _dataContainer = new SLTextDataContainer();
+   private SLTextDataContainer _additionalDataContainer = new SLTextDataContainer();
    protected ExtendedCurrentVariant _insertedWord = new ExtendedCurrentVariant();
    protected SLCurrentVariant _suffix;
    private boolean _isValidOrder = true;
@@ -142,7 +142,7 @@ public class ResultContainer implements PersistentContentListener {
          this._toDelete[index] = true;
          this._hasDeleteMarks = true;
       } else {
-         throw new Object();
+         throw new ArrayIndexOutOfBoundsException();
       }
    }
 
@@ -252,7 +252,7 @@ public class ResultContainer implements PersistentContentListener {
 
    public synchronized void addFrequencyModifier(int index, int modifier) {
       if (index >= this._variantsCount) {
-         throw new Object(index);
+         throw new ArrayIndexOutOfBoundsException(index);
       }
 
       if (!this._offsetsComputed) {
@@ -265,7 +265,7 @@ public class ResultContainer implements PersistentContentListener {
 
    public synchronized void addFrequencyModifierIgnoreOrder(int index, int modifier) {
       if (index >= this._variantsCount) {
-         throw new Object(index);
+         throw new ArrayIndexOutOfBoundsException(index);
       }
 
       if (!this._offsetsComputed) {
@@ -278,7 +278,7 @@ public class ResultContainer implements PersistentContentListener {
 
    public synchronized void setVariantAt(int index, SLCurrentVariant variant) {
       if (index >= this._variantsCount) {
-         throw new Object(index);
+         throw new ArrayIndexOutOfBoundsException(index);
       }
 
       if (!this._offsetsComputed) {
@@ -287,7 +287,7 @@ public class ResultContainer implements PersistentContentListener {
 
       int idx = this._order[index];
       if (this._lengths[idx] != variant._length) {
-         throw new Object(((StringBuffer)(new Object(""))).append(this._lengths[idx]).append(" != ").append(variant._length).toString());
+         throw new IllegalArgumentException("" + this._lengths[idx] + " != " + variant._length);
       }
 
       System.arraycopy(variant._variants, variant._offset, this._words, this._offsets[idx], this._lengths[idx]);
@@ -295,7 +295,7 @@ public class ResultContainer implements PersistentContentListener {
 
    public synchronized void removeFrequencyModifier(int index, int modifier) {
       if (index >= this._variantsCount) {
-         throw new Object(index);
+         throw new ArrayIndexOutOfBoundsException(index);
       }
 
       if (!this._offsetsComputed) {
@@ -713,7 +713,7 @@ public class ResultContainer implements PersistentContentListener {
       }
 
       if (old_order == -1) {
-         throw new Object("");
+         throw new IllegalStateException("");
       }
 
       int new_order = old_order;

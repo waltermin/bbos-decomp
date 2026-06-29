@@ -1,9 +1,11 @@
 package net.rim.device.internal.io.store;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.microedition.io.Connector;
 import javax.microedition.io.HttpConnection;
+import net.rim.device.api.io.file.FileIOException;
 import net.rim.device.api.util.Persistable;
 
 final class SymbolicLinkImpl extends FileImpl implements Persistable {
@@ -20,34 +22,34 @@ final class SymbolicLinkImpl extends FileImpl implements Persistable {
       this._linkType = -1;
    }
 
-   private final FileImpl getFilePrivate() {
+   private final FileImpl getFilePrivate() throws IOException, FileIOException {
       ContentStoreImpl store = ContentStoreImpl.getInstance();
       String absLinkName = this._linkName;
       if (absLinkName != null && absLinkName.length() > 0 && absLinkName.charAt(0) != '/') {
-         absLinkName = ((StringBuffer)(new Object())).append(this.getFolder().getPath()).append(absLinkName).toString();
+         absLinkName = this.getFolder().getPath() + absLinkName;
       }
 
       switch (this._linkType) {
          case -2:
-            throw new Object(((StringBuffer)(new Object("Unrecognised link type: "))).append(this._linkType).toString());
+            throw new IOException("Unrecognised link type: " + this._linkType);
          case -1:
          default:
             FileImpl file = store.get(absLinkName);
             this._linkType = 0;
             if (file == null) {
-               throw new Object(8);
+               throw new FileIOException(8);
             }
 
             return file;
          case 0:
             FileImpl file = store.get(absLinkName);
             if (file == null) {
-               throw new Object(8);
+               throw new FileIOException(8);
             }
 
             return file;
          case 1:
-            throw new Object("getFilePrivate() should never be called on a URL-type link");
+            throw new IOException("getFilePrivate() should never be called on a URL-type link");
       }
    }
 
@@ -115,22 +117,22 @@ final class SymbolicLinkImpl extends FileImpl implements Persistable {
    }
 
    @Override
-   public final OutputStream openOutputStream(long offset) {
+   public final OutputStream openOutputStream(long offset) throws IOException {
       if (this._linkType == 0) {
          return this.getFilePrivate().openOutputStream(offset);
       } else if (this._linkType != -1) {
-         throw new Object("Cannot openOutputStream on an URL");
+         throw new IOException("Cannot openOutputStream on an URL");
       } else {
          return null;
       }
    }
 
    @Override
-   public final void setContent(Object object) {
+   public final void setContent(Object object) throws IOException {
       if (this._linkType == 0) {
          this.getFilePrivate().setContent(object);
       } else {
-         throw new Object("Cannot setContent on an URL");
+         throw new IOException("Cannot setContent on an URL");
       }
    }
 

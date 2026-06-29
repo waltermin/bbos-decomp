@@ -15,12 +15,12 @@ import net.rim.device.apps.api.addressbook.AddressBookServices;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.DisplayPictureModel;
 import net.rim.device.apps.api.addressbook.EmailAddressModel;
-import net.rim.device.apps.api.addressbook.FriendlyNameAddressModel;
 import net.rim.device.apps.api.addressbook.GroupAddressCardModel;
 import net.rim.device.apps.api.framework.model.AddressVerifier;
 import net.rim.device.apps.api.framework.model.AddressVerifierAwareField;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.RIMModel;
+import net.rim.device.apps.api.ui.ToggleableField;
 import net.rim.device.apps.api.utility.framework.ControllerUtilities;
 import net.rim.device.apps.internal.blackberryemail.email.ThemeUtilities;
 
@@ -57,16 +57,16 @@ final class EmailHeaderEditField extends HorizontalFieldManager implements Addre
          return true;
       }
 
-      if (this._addressModel instanceof Object) {
-         return this._addressVerifier.isAddressTrusted(((FriendlyNameAddressModel)this._addressModel).getAddress(), null);
+      if (this._addressModel instanceof EmailAddressModel) {
+         return this._addressVerifier.isAddressTrusted(((EmailAddressModel)this._addressModel).getAddress(), null);
       }
 
-      if (this._addressModel instanceof Object) {
+      if (this._addressModel instanceof GroupAddressCardModel) {
          GroupAddressCardModel groupAddressCard = (GroupAddressCardModel)this._addressModel;
 
          for (int i = groupAddressCard.size() - 1; i >= 0; i--) {
             RIMModel addressModel = groupAddressCard.getAddressModelAt(i);
-            if (addressModel instanceof Object && !this._addressVerifier.isAddressTrusted(((FriendlyNameAddressModel)addressModel).getAddress(), null)) {
+            if (addressModel instanceof EmailAddressModel && !this._addressVerifier.isAddressTrusted(((EmailAddressModel)addressModel).getAddress(), null)) {
                return false;
             }
          }
@@ -79,7 +79,7 @@ final class EmailHeaderEditField extends HorizontalFieldManager implements Addre
    public final void verifyAddress(Object context) {
       if (!this.isAddressTrusted()) {
          if (this._addressTrustIndicatorField == null) {
-            BitmapField iconField = (BitmapField)(new Object(UNTRUSTED_ADDRESS_BITMAP));
+            BitmapField iconField = new BitmapField(UNTRUSTED_ADDRESS_BITMAP);
             iconField.setSpace(1, 0);
             this._addressTrustIndicatorField = iconField;
             this.insert(this._addressTrustIndicatorField, 0);
@@ -98,18 +98,18 @@ final class EmailHeaderEditField extends HorizontalFieldManager implements Addre
          Field leafField = this.getLeafFieldWithFocus();
          if (leafField != null && leafField.isFocus()) {
             if (this._tooltipField == null) {
-               if (!(this._insideField instanceof Object)) {
+               if (!(this._insideField instanceof ToggleableField)) {
                   return;
                }
 
-               if (!(this._addressModel instanceof Object)) {
+               if (!(this._addressModel instanceof EmailAddressModel)) {
                   return;
                }
 
                EmailAddressModel addressModel = (EmailAddressModel)this._addressModel;
                Object addressCardObj = AddressBookServices.reverseLookup(addressModel);
                AddressCardModel addressCard = null;
-               if (addressCardObj instanceof Object) {
+               if (addressCardObj instanceof AddressCardModel) {
                   addressCard = (AddressCardModel)addressCardObj;
                }
 
@@ -118,7 +118,7 @@ final class EmailHeaderEditField extends HorizontalFieldManager implements Addre
                if (addressCard != null) {
                   name = addressCard.getName().toString();
                } else {
-                  name = ((FriendlyNameAddressModel)this._addressModel).getFriendlyName();
+                  name = ((EmailAddressModel)this._addressModel).getFriendlyName();
                }
 
                Field photoField = null;
@@ -155,7 +155,7 @@ final class EmailHeaderEditField extends HorizontalFieldManager implements Addre
          int scale = Fixed32.toFP(2);
          byte[] imageData = pictureModel.getDisplayPicture();
          if (imageData != null) {
-            field = (BitmapField)(new Object(null, 36028797018963968L));
+            field = new BitmapField(null, 36028797018963968L);
             EncodedImage image = EncodedImage.createEncodedImage(imageData, 0, imageData.length);
             image = image.scaleImage32(scale, scale);
             field.setImage(image);

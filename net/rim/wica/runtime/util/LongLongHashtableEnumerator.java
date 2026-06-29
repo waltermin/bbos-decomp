@@ -1,5 +1,6 @@
 package net.rim.wica.runtime.util;
 
+import java.util.NoSuchElementException;
 import net.rim.device.api.util.LongEnumeration;
 
 class LongLongHashtableEnumerator implements LongEnumeration {
@@ -37,7 +38,7 @@ class LongLongHashtableEnumerator implements LongEnumeration {
       if (this.getNextElement()) {
          return this._table[this._index++];
       } else {
-         throw new Object();
+         throw new NoSuchElementException();
       }
    }
 }

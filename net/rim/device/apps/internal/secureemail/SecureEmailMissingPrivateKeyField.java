@@ -22,7 +22,7 @@ public class SecureEmailMissingPrivateKeyField extends StatusField implements Co
 
    @Override
    public String getText() {
-      return MessageFormat.format(SecureEmailResources.getString(161), new Object[]{this._secureEmailFactory.getEncodingString()});
+      return MessageFormat.format(SecureEmailResources.getString(161), new String[]{this._secureEmailFactory.getEncodingString()});
    }
 
    @Override

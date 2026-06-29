@@ -7,6 +7,7 @@ import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.ui.accessibility.AccessibleContext;
+import net.rim.device.api.ui.accessibility.AccessibleContextFactory;
 import net.rim.device.api.ui.theme.ThemeAttributeSet;
 import net.rim.device.api.ui.theme.ThemeManager;
 import net.rim.device.apps.api.calendar.caldb.CalendarOptions;
@@ -143,9 +144,9 @@ final class DayController$DayViewNavField extends Field {
          case 0:
             int currentDOW = (this._firstDOW - 1 + this._focusIndex) % 7;
             String currentCharacter = this._dow[currentDOW];
-            return (AccessibleContext)(new Object(currentCharacter, 28, 4, this));
+            return new AccessibleContextFactory(currentCharacter, 28, 4, this);
          default:
-            return (AccessibleContext)(new Object("", 28, 4, this));
+            return new AccessibleContextFactory("", 28, 4, this);
       }
    }
 
@@ -168,7 +169,7 @@ final class DayController$DayViewNavField extends Field {
       }
 
       if (Ui.isTTSEnabled()) {
-         super.accessibleEventOccurred(6, new Object(1), new Object(2), this);
+         super.accessibleEventOccurred(6, new Integer(1), new Integer(2), this);
       }
 
       return unusedScroll;
@@ -186,7 +187,7 @@ final class DayController$DayViewNavField extends Field {
       }
 
       if (Ui.isTTSEnabled()) {
-         super.accessibleEventOccurred(6, new Object(1), new Object(2), this);
+         super.accessibleEventOccurred(6, new Integer(1), new Integer(2), this);
       }
    }
 

@@ -7,18 +7,18 @@ final class NameTable {
 
    NameTable(WMLInputStream stream) {
       int functionCount = stream.readUInt8();
-      this._names = (Hashtable)(new Object(functionCount));
+      this._names = new Hashtable(functionCount);
 
       for (int i = 0; i < functionCount; i++) {
          FunctionName fname = new FunctionName(stream);
-         this._names.put(fname.toString(), new Object(fname.getIndex()));
+         this._names.put(fname.toString(), new Integer(fname.getIndex()));
       }
    }
 
-   final int getIndex(String s) {
+   final int getIndex(String s) throws Exception {
       Integer integer = (Integer)this._names.get(s);
       if (integer == null) {
-         throw new Object();
+         throw new Exception();
       } else {
          return integer;
       }

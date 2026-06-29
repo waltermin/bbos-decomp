@@ -173,16 +173,16 @@ class SignedReceiptHelper$DoSigningWork extends PleaseWaitWorkerThread {
       // 105: iload 4
       // 107: if_icmplt 10d
       // 10a: goto 28f
-      // 10d: new java/lang/Object
+      // 10d: new java/io/ByteArrayOutputStream
       // 110: dup
       // 111: invokespecial java/io/ByteArrayOutputStream.<init> ()V
       // 114: astore 17
-      // 116: new java/lang/Object
+      // 116: new net/rim/device/api/io/Base64OutputStream
       // 119: dup
       // 11a: aload 17
       // 11c: invokespecial net/rim/device/api/io/Base64OutputStream.<init> (Ljava/io/OutputStream;)V
       // 11f: astore 18
-      // 121: new java/lang/Object
+      // 121: new net/rim/device/api/crypto/cms/CMSSignedDataOutputStream
       // 124: dup
       // 125: aload 18
       // 127: bipush 14
@@ -191,7 +191,7 @@ class SignedReceiptHelper$DoSigningWork extends PleaseWaitWorkerThread {
       // 12b: iload 14
       // 12d: invokespecial net/rim/device/api/crypto/cms/CMSSignedDataOutputStream.<init> (Ljava/io/OutputStream;IZZZ)V
       // 130: astore 19
-      // 132: new java/lang/Object
+      // 132: new net/rim/device/api/crypto/cms/CMSSigner
       // 135: dup
       // 136: aload 15
       // 138: aload 10
@@ -232,7 +232,7 @@ class SignedReceiptHelper$DoSigningWork extends PleaseWaitWorkerThread {
       // 182: ldc2_w -6822293833372928884
       // 185: aconst_null
       // 186: invokestatic net/rim/device/api/util/FactoryUtil.createInstance (JLjava/lang/Object;)Ljava/lang/Object;
-      // 189: checkcast java/lang/Object
+      // 189: checkcast net/rim/device/apps/internal/blackberryemail/email/EmailMessageModel
       // 18c: astore 23
       // 18e: iload 3
       // 18f: ifeq 19c
@@ -242,7 +242,7 @@ class SignedReceiptHelper$DoSigningWork extends PleaseWaitWorkerThread {
       // 19c: bipush 2
       // 19e: anewarray 391
       // 1a1: astore 24
-      // 1a3: new java/lang/Object
+      // 1a3: new java/lang/StringBuffer
       // 1a6: dup
       // 1a7: sipush 2073
       // 1aa: invokestatic net/rim/device/apps/internal/secureemail/encodings/smime/SMIMEResources.getString (I)Ljava/lang/String;
@@ -262,11 +262,11 @@ class SignedReceiptHelper$DoSigningWork extends PleaseWaitWorkerThread {
       // 1cc: astore 28
       // 1ce: aload 28
       // 1d0: dup
-      // 1d1: instanceof java/lang/Object
+      // 1d1: instanceof net/rim/device/apps/internal/blackberryemail/header/EmailHeaderModel
       // 1d4: ifne 1db
       // 1d7: pop
       // 1d8: goto 200
-      // 1db: checkcast java/lang/Object
+      // 1db: checkcast net/rim/device/apps/internal/blackberryemail/header/EmailHeaderModel
       // 1de: astore 29
       // 1e0: aload 29
       // 1e2: invokevirtual net/rim/device/apps/internal/blackberryemail/header/EmailHeaderModel.getHeaderType ()I
@@ -283,7 +283,7 @@ class SignedReceiptHelper$DoSigningWork extends PleaseWaitWorkerThread {
       // 1fc: pop
       // 1fd: goto 213
       // 200: aload 28
-      // 202: instanceof java/lang/Object
+      // 202: instanceof net/rim/device/apps/internal/blackberryemail/header/SubjectModel
       // 205: ifeq 213
       // 208: aload 25
       // 20a: aload 28
@@ -292,7 +292,7 @@ class SignedReceiptHelper$DoSigningWork extends PleaseWaitWorkerThread {
       // 212: pop
       // 213: iinc 27 1
       // 216: goto 1bd
-      // 219: new java/lang/Object
+      // 219: new net/rim/device/apps/api/framework/model/ContextObject
       // 21c: dup
       // 21d: invokespecial net/rim/device/apps/api/framework/model/ContextObject.<init> ()V
       // 220: astore 27
@@ -305,7 +305,7 @@ class SignedReceiptHelper$DoSigningWork extends PleaseWaitWorkerThread {
       // 22e: ldc2_w -2985347935260258684
       // 231: aload 27
       // 233: invokestatic net/rim/device/api/util/FactoryUtil.createInstance (JLjava/lang/Object;)Ljava/lang/Object;
-      // 236: checkcast java/lang/Object
+      // 236: checkcast net/rim/device/apps/api/framework/model/RIMModel
       // 239: astore 28
       // 23b: aload 23
       // 23d: aload 25

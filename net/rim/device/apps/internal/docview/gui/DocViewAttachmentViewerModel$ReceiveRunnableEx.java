@@ -27,7 +27,7 @@ final class DocViewAttachmentViewerModel$ReceiveRunnableEx implements Runnable {
    public final void run() {
       this.this$0.processReceiveMoreImpl(this._context, this._response, this._data, this._messageID, this._partID, false);
       Object obj = MessageLookups.get(-4420850319371185992L, this._messageID);
-      if (obj instanceof Object) {
+      if (obj instanceof EmailMessageModel) {
          EmailMessageModel message = (EmailMessageModel)obj;
          if (ModelViewListenerRegistry.isViewerUp(0, message, null)) {
             ModelViewListenerRegistry.notifyOfOpenedModelChange(message, message, this._context);

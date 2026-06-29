@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.docview.gui;
 
+import java.io.InputStream;
 import java.util.Vector;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.itpolicy.ITPolicy;
@@ -113,7 +114,7 @@ final class AttachmentViewerFactory {
       if (resId != -1) {
          String retValue = resources.getString(resId);
          if (retValue != null && retValue.length() > 0) {
-            return ((StringBuffer)(new Object())).append(retValue).append(": ").toString();
+            return retValue + ": ";
          }
       }
 
@@ -128,7 +129,7 @@ final class AttachmentViewerFactory {
       if (inputDocInfoValue != null) {
          int stringLength = inputDocInfoValue.length();
          if (stringLength > 0) {
-            IntVector colonIndices = (IntVector)(new Object());
+            IntVector colonIndices = new IntVector();
             int colonSearchIndex = inputDocInfoValue.indexOf(58);
             boolean firstOcc = true;
 
@@ -158,17 +159,17 @@ final class AttachmentViewerFactory {
 
             int size = colonIndices.size();
             if (size <= 0) {
-               colonIndices = null;
+               IntVector var9 = null;
                return inputDocInfoValue;
             }
 
-            StringBuffer tempBuffer = (StringBuffer)(new Object(inputDocInfoValue));
+            StringBuffer tempBuffer = new StringBuffer(inputDocInfoValue);
 
             for (int i = size - 1; i >= 0; i--) {
                tempBuffer.insert(colonIndices.elementAt(i), 0);
             }
 
-            colonIndices = null;
+            IntVector var8 = null;
             return tempBuffer.toString();
          }
       }
@@ -293,10 +294,10 @@ final class AttachmentViewerFactory {
    static final IntIntHashtable processFontSizes(int[] fontSizes) {
       int length = fontSizes.length;
       if (length == 0) {
-         throw new Object("Invalid fonts sizes length.");
+         throw new IllegalArgumentException("Invalid fonts sizes length.");
       }
 
-      IntIntHashtable retValue = (IntIntHashtable)(new Object(length));
+      IntIntHashtable retValue = new IntIntHashtable(length);
       if (length == 1) {
          retValue.put(fontSizes[0], Ui.convertSize(8, 3, 4194307));
          return retValue;
@@ -426,7 +427,7 @@ final class AttachmentViewerFactory {
             }
 
             if (docData == null) {
-               docData = new Object(ebIdx - startBlockIndex + 1);
+               docData = new Vector(ebIdx - startBlockIndex + 1);
             }
 
             ((Vector)docData).addElement(chunkData);
@@ -459,19 +460,11 @@ final class AttachmentViewerFactory {
    }
 
    static final String constructCustomDomIDString(String embeddedDomID, String customInfoString) {
-      return ((StringBuffer)(new Object()))
-         .append(embeddedDomID != null ? ((StringBuffer)(new Object())).append(embeddedDomID).append("/").toString() : "")
-         .append(customInfoString)
-         .toString();
+      return (embeddedDomID != null ? embeddedDomID + "/" : "") + customInfoString;
    }
 
    static final String constructCustomDomIDStringEx(String embeddedDomID, String arbDomID, String customInfoString) {
-      return ((StringBuffer)(new Object()))
-         .append(embeddedDomID != null ? ((StringBuffer)(new Object())).append(embeddedDomID).append("/").toString() : "")
-         .append(arbDomID)
-         .append("/")
-         .append(customInfoString)
-         .toString();
+      return (embeddedDomID != null ? embeddedDomID + "/" : "") + arbDomID + "/" + customInfoString;
    }
 
    static final int getEndBlockIndexWithArbDomID(
@@ -694,9 +687,9 @@ final class AttachmentViewerFactory {
       byte presentationValue
    ) {
       int consecutiveBlocksCount = 0;
-      if (!(docData instanceof byte[]) && !(docData instanceof Object)) {
-         if (!(docData instanceof Object)) {
-            throw new Object("Unsupported input parameter for UCS data.");
+      if (!(docData instanceof byte[]) && !(docData instanceof InputStream)) {
+         if (!(docData instanceof Vector)) {
+            throw new IllegalArgumentException("Unsupported input parameter for UCS data.");
          }
 
          consecutiveBlocksCount = ((Vector)docData).size();
@@ -753,7 +746,7 @@ final class AttachmentViewerFactory {
       boolean isSpecificBgDisplay
    ) {
       if (_paramsHash == null) {
-         _paramsHash = (IntHashtable)(new Object(24));
+         _paramsHash = new IntHashtable(24);
       }
 
       if (coreData != null) {
@@ -764,22 +757,22 @@ final class AttachmentViewerFactory {
          _paramsHash.put(4, context);
       }
 
-      _paramsHash.put(5, new Object(currentBlockIndex));
-      _paramsHash.put(0, new Object(isEmbScreen));
-      _paramsHash.put(7, new Object(morePartID));
-      _paramsHash.put(1, new Object(style));
-      _paramsHash.put(8, new Object(flags));
+      _paramsHash.put(5, new Integer(currentBlockIndex));
+      _paramsHash.put(0, new Boolean(isEmbScreen));
+      _paramsHash.put(7, new Integer(morePartID));
+      _paramsHash.put(1, new Long(style));
+      _paramsHash.put(8, new Short(flags));
       if (titleString != null) {
          _paramsHash.put(2, titleString);
       }
 
-      _paramsHash.put(6, new Object(totalBlocks));
-      _paramsHash.put(9, new Object(themeBgColor));
-      _paramsHash.put(11, new Object(themeForeColor));
-      _paramsHash.put(10, new Object(imageFlipValue));
-      _paramsHash.put(12, new Object(applicationID));
-      _paramsHash.put(13, new Object(presentationValue));
-      _paramsHash.put(14, new Object(isSpecificBgDisplay));
+      _paramsHash.put(6, new Integer(totalBlocks));
+      _paramsHash.put(9, new Integer(themeBgColor));
+      _paramsHash.put(11, new Integer(themeForeColor));
+      _paramsHash.put(10, new Integer(imageFlipValue));
+      _paramsHash.put(12, new Integer(applicationID));
+      _paramsHash.put(13, new Byte(presentationValue));
+      _paramsHash.put(14, new Boolean(isSpecificBgDisplay));
    }
 
    static final DocViewDisplayScreen getDisplayScreen(
@@ -936,7 +929,7 @@ final class AttachmentViewerFactory {
       // 137: ldc_w "imgfield"
       // 13a: invokestatic net/rim/device/apps/api/utility/serialization/SerializationManager.getConverter (Ljava/lang/String;Ljava/lang/Object;)Lnet/rim/device/apps/api/utility/serialization/Converter;
       // 13d: aconst_null
-      // 13e: checkcast java/lang/Object
+      // 13e: checkcast java/io/DataInput
       // 141: getstatic net/rim/device/apps/internal/docview/gui/AttachmentViewerFactory._paramsHash Lnet/rim/device/api/util/IntHashtable;
       // 144: invokeinterface net/rim/device/apps/api/utility/serialization/Converter.convert (Ljava/io/DataInput;Ljava/lang/Object;)Ljava/lang/Object; 3
       // 149: checkcast net/rim/device/apps/internal/docview/gui/DocViewDisplayScreen
@@ -1088,7 +1081,7 @@ final class AttachmentViewerFactory {
                return 0;
             }
          } else {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } else {
          return 0;

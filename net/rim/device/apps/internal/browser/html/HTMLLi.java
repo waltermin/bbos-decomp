@@ -90,7 +90,7 @@ final class HTMLLi extends HTMLGenericElement implements HTMLLIElement, Secondar
 
    @Override
    public final void setReplaceTag(int value) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override

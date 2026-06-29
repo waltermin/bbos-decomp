@@ -74,7 +74,7 @@ public class RegExp {
 
       MatchResult match = _matcher.getMatch();
       int numGroups = match.groups();
-      String[] groups = new Object[numGroups];
+      String[] groups = new String[numGroups];
 
       for (int i = 0; i < numGroups; i++) {
          int start = match.beginOffset(i);

@@ -40,7 +40,7 @@ final class ActivationScreen$StartActivationRunnable implements Runnable, Servic
          if (this.this$0._app.getCurrentState() == 1) {
             if (serviceRouting.isServiceCapable(8, email, -1)) {
                if (this._waitingForServiceConnection) {
-                  this.this$0._statusInformation.append(((StringBuffer)(new Object())).append('\n').append(ActivationApp._resources.getString(173)).toString());
+                  this.this$0._statusInformation.append('\n' + ActivationApp._resources.getString(173));
                   this.this$0.updateStatus();
                }
 

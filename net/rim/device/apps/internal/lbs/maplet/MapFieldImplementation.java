@@ -96,7 +96,7 @@ public final class MapFieldImplementation implements MapField$Implementation, Re
                }
             default:
                byte[] b = request._lastRequest;
-               StringBuffer requestStr = (StringBuffer)(new Object());
+               StringBuffer requestStr = new StringBuffer();
                if (b == null) {
                   requestStr.append("<empty>");
                   return canContinue;
@@ -104,12 +104,12 @@ public final class MapFieldImplementation implements MapField$Implementation, Re
 
                try {
                   for (int i = 0; i < b.length; i++) {
-                     String s = ((StringBuffer)(new Object("0"))).append(Integer.toHexString(b[i])).toString();
+                     String s = "0" + Integer.toHexString(b[i]);
                      requestStr.append(s.substring(s.length() - 2, s.length()));
                   }
                   break;
                } catch (Throwable var9) {
-                  requestStr.append(((StringBuffer)(new Object("... error in parsing: "))).append(e.getMessage()).toString());
+                  requestStr.append("... error in parsing: " + e.getMessage());
                   return canContinue;
                }
             case 5:

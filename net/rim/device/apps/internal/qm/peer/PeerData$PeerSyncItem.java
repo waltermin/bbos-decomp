@@ -74,7 +74,7 @@ public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
          this.onAuditData(key, buffer);
       } else {
          if (key == -222541206799519196L) {
-            ConverterUtilities.writeInt(buffer, 11, PeerData.access$200().get(-222541206799519196L));
+            ConverterUtilities.writeInt(buffer, 11, (Integer)PeerData.access$200().get(-222541206799519196L));
          }
       }
    }
@@ -87,10 +87,10 @@ public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
    }
 
    private final byte[] serializePeerContacListCollection(long key, boolean bigEndian) {
-      DataBuffer buffer = (DataBuffer)(new Object(bigEndian));
+      DataBuffer buffer = new DataBuffer(bigEndian);
       ConverterUtilities.writeLong(buffer, 7, key);
       Object value = PeerData.access$200().get(key);
-      if (!(value instanceof Object)) {
+      if (!(value instanceof BigVector)) {
          return null;
       }
 
@@ -105,7 +105,7 @@ public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
    }
 
    private final byte[] serializePeerContactList(IntHashtable pcl, boolean bigEndian) {
-      DataBuffer buffer = (DataBuffer)(new Object(bigEndian));
+      DataBuffer buffer = new DataBuffer(bigEndian);
       IntEnumeration keys = pcl.keys();
 
       while (keys.hasMoreElements()) {
@@ -130,14 +130,14 @@ public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
 
    private final void onPeerContactListHashId(IntHashtable pcl, DataBuffer buffer) {
       Object obj = pcl.get(3);
-      if (obj instanceof Object) {
-         ConverterUtilities.writeInt(buffer, 3, obj);
+      if (obj instanceof Integer) {
+         ConverterUtilities.writeInt(buffer, 3, (Integer)obj);
       }
    }
 
    private final void onPeerContactListContactsId(IntHashtable pcl, DataBuffer buffer, boolean bigEndian) {
       Object obj = pcl.get(5);
-      if (obj instanceof Object) {
+      if (obj instanceof Vector) {
          Vector pcs = (Vector)obj;
          int size = pcs.size();
 
@@ -148,7 +148,7 @@ public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
    }
 
    private final byte[] serializePeerContact(IntHashtable pc, boolean bigEndian) {
-      DataBuffer buffer = (DataBuffer)(new Object(bigEndian));
+      DataBuffer buffer = new DataBuffer(bigEndian);
       IntEnumeration keys = pc.keys();
 
       while (keys.hasMoreElements()) {
@@ -171,7 +171,7 @@ public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
             ConverterUtilities.writeString(buffer, key, PersistentContent.decodeString(pc.get(key)));
             return;
          case 4:
-            ConverterUtilities.writeInt(buffer, 4, pc.get(4));
+            ConverterUtilities.writeInt(buffer, 4, (Integer)pc.get(4));
             return;
          case 8:
             ConverterUtilities.writeByteArray(buffer, 8, (byte[])pc.get(8));
@@ -249,7 +249,7 @@ public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
 
    private final void onTypePeerContactListCollection(DataBuffer buffer) {
       byte[] b = ConverterUtilities.readByteArray(buffer);
-      BigVector pclc = (BigVector)(new Object());
+      BigVector pclc = new BigVector();
       this.deserializePeerContactListCollection(b, buffer.isBigEndian(), pclc);
       PeerData.access$200().put(5587026183716775221L, pclc);
    }
@@ -269,11 +269,11 @@ public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
 
    private final void onTypeFlagsKey(DataBuffer buffer) {
       int flags = ConverterUtilities.readInt(buffer);
-      PeerData.access$200().put(-222541206799519196L, new Object(flags));
+      PeerData.access$200().put(-222541206799519196L, new Integer(flags));
    }
 
    private final void deserializePeerContactListCollection(byte[] buf, boolean bigEndian, BigVector pclc) {
-      DataBuffer buffer = (DataBuffer)(new Object(buf, 0, buf.length, bigEndian));
+      DataBuffer buffer = new DataBuffer(buf, 0, buf.length, bigEndian);
 
       try {
          while (true) {
@@ -308,16 +308,16 @@ public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
          default:
             long key = ConverterUtilities.readLong(buffer);
             if (key != 5587026183716775221L) {
-               System.out.println(((StringBuffer)(new Object("BBM: Wrong DEFAULT_CONTACT_LIST_COLLECTION key - "))).append(Long.toString(key, 16)).toString());
+               System.out.println("BBM: Wrong DEFAULT_CONTACT_LIST_COLLECTION key - " + Long.toString(key, 16));
                return;
             }
       }
    }
 
    private final IntHashtable deserializePeerContactList(byte[] buf, boolean bigEndian) {
-      DataBuffer buffer = (DataBuffer)(new Object(buf, 0, buf.length, bigEndian));
-      IntHashtable pcl = (IntHashtable)(new Object());
-      Vector pcs = (Vector)(new Object());
+      DataBuffer buffer = new DataBuffer(buf, 0, buf.length, bigEndian);
+      IntHashtable pcl = new IntHashtable();
+      Vector pcs = new Vector();
       pcl.put(5, pcs);
 
       try {
@@ -342,7 +342,7 @@ public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
             pcl.put(1, ConverterUtilities.readString(buffer));
             return;
          case 3:
-            pcl.put(3, new Object(ConverterUtilities.readInt(buffer)));
+            pcl.put(3, new Integer(ConverterUtilities.readInt(buffer)));
             return;
          case 5:
             byte[] b = ConverterUtilities.readByteArray(buffer);
@@ -358,8 +358,8 @@ public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
    }
 
    private final IntHashtable deserializePeerContact(byte[] buf, boolean bigEndian) {
-      DataBuffer buffer = (DataBuffer)(new Object(buf, 0, buf.length, bigEndian));
-      IntHashtable pc = (IntHashtable)(new Object());
+      DataBuffer buffer = new DataBuffer(buf, 0, buf.length, bigEndian);
+      IntHashtable pc = new IntHashtable();
 
       try {
          while (true) {
@@ -393,7 +393,7 @@ public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
             pc.put(type, PersistentContent.encode(ConverterUtilities.readString(buffer), true, true));
             return;
          case 4:
-            pc.put(4, new Object(ConverterUtilities.readInt(buffer)));
+            pc.put(4, new Integer(ConverterUtilities.readInt(buffer)));
             return;
          case 8:
             pc.put(8, ConverterUtilities.readByteArray(buffer));
@@ -403,11 +403,11 @@ public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
    private final byte[] serializeRequests(boolean bigEndian) {
       Vector requests = (Vector)PeerData.access$200().get(293351436076650281L);
       if (requests != null && requests.size() > 0) {
-         DataBuffer buffer = (DataBuffer)(new Object(bigEndian));
+         DataBuffer buffer = new DataBuffer(bigEndian);
 
          for (int i = 0; i < requests.size(); i++) {
             IntHashtable request = (IntHashtable)requests.elementAt(i);
-            int keys = request.get(1);
+            int keys = (Integer)request.get(1);
             switch (keys) {
                case 1:
                   break;
@@ -427,8 +427,8 @@ public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
    }
 
    private final Vector deseralizeRequests(byte[] buf, boolean bigEndian) {
-      DataBuffer buffer = (DataBuffer)(new Object(buf, 0, buf.length, bigEndian));
-      Vector requests = (Vector)(new Object());
+      DataBuffer buffer = new DataBuffer(buf, 0, buf.length, bigEndian);
+      Vector requests = new Vector();
 
       try {
          while (true) {
@@ -470,12 +470,12 @@ public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
 
    private final byte[] serializeWrongPasscodeRequest(IntHashtable request, boolean bigEndian) {
       IntEnumeration keys = request.keys();
-      DataBuffer buffer = (DataBuffer)(new Object(bigEndian));
+      DataBuffer buffer = new DataBuffer(bigEndian);
 
       while (keys.hasMoreElements()) {
          switch (keys.nextElement()) {
             case 1:
-               ConverterUtilities.writeInt(buffer, 1, request.get(1));
+               ConverterUtilities.writeInt(buffer, 1, (Integer)request.get(1));
                break;
             case 5:
                ConverterUtilities.writeString(buffer, 5, PersistentContent.decodeString(request.get(5)));
@@ -489,8 +489,8 @@ public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
    }
 
    private final IntHashtable deserializeWrongPasscodeRequest(byte[] buf, boolean bigEndian) {
-      DataBuffer buffer = (DataBuffer)(new Object(buf, 0, buf.length, bigEndian));
-      IntHashtable data = (IntHashtable)(new Object());
+      DataBuffer buffer = new DataBuffer(buf, 0, buf.length, bigEndian);
+      IntHashtable data = new IntHashtable();
 
       try {
          while (true) {
@@ -511,7 +511,7 @@ public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
    private final void processTypeDesWrongPasscodeRequest(int type, DataBuffer buffer, IntHashtable data, boolean bigEndian) {
       switch (type) {
          case 1:
-            data.put(1, new Object(ConverterUtilities.readInt(buffer)));
+            data.put(1, new Integer(ConverterUtilities.readInt(buffer)));
             return;
          case 5:
             data.put(5, ConverterUtilities.readByteArray(buffer));
@@ -525,13 +525,13 @@ public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
    }
 
    private final byte[] serializeNewContactRequest(IntHashtable request, boolean bigEndian) {
-      DataBuffer buffer = (DataBuffer)(new Object(bigEndian));
+      DataBuffer buffer = new DataBuffer(bigEndian);
       IntEnumeration keys = request.keys();
 
       while (keys.hasMoreElements()) {
          switch (keys.nextElement()) {
             case 1:
-               ConverterUtilities.writeInt(buffer, 1, request.get(1));
+               ConverterUtilities.writeInt(buffer, 1, (Integer)request.get(1));
                break;
             case 5:
                ConverterUtilities.writeString(buffer, 5, PersistentContent.decodeString(request.get(5)));
@@ -551,8 +551,8 @@ public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
    }
 
    private final IntHashtable deserializeNewContactRequest(byte[] buf, boolean bigEndian) {
-      DataBuffer buffer = (DataBuffer)(new Object(buf, 0, buf.length, bigEndian));
-      IntHashtable data = (IntHashtable)(new Object());
+      DataBuffer buffer = new DataBuffer(buf, 0, buf.length, bigEndian);
+      IntHashtable data = new IntHashtable();
 
       try {
          while (true) {
@@ -573,7 +573,7 @@ public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
    private final void processTypeDesNewContactRequest(int type, DataBuffer buffer, IntHashtable data, boolean bigEndian) {
       switch (type) {
          case 1:
-            data.put(1, new Object(ConverterUtilities.readInt(buffer)));
+            data.put(1, new Integer(ConverterUtilities.readInt(buffer)));
             return;
          case 5:
             data.put(5, ConverterUtilities.readByteArray(buffer));
@@ -594,7 +594,7 @@ public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
    }
 
    private final byte[] serializeEmailInvitation(IntHashtable invite, boolean bigEndian) {
-      DataBuffer buffer = (DataBuffer)(new Object(bigEndian));
+      DataBuffer buffer = new DataBuffer(bigEndian);
       IntEnumeration keys = invite.keys();
 
       while (keys.hasMoreElements()) {
@@ -607,15 +607,15 @@ public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
    private final void processKeySerEmailInvitation(int key, DataBuffer buffer, IntHashtable invite, boolean bigEndian) {
       switch (key) {
          case 1:
-            int stage = invite.get(1);
+            int stage = (Integer)invite.get(1);
             ConverterUtilities.writeInt(buffer, 1, stage);
             return;
          case 2:
-            int cookie = invite.get(2);
+            int cookie = (Integer)invite.get(2);
             ConverterUtilities.writeInt(buffer, 2, cookie);
             return;
          case 3:
-            int flag = invite.get(3);
+            int flag = (Integer)invite.get(3);
             ConverterUtilities.writeInt(buffer, 3, flag);
             return;
          case 4:
@@ -634,21 +634,21 @@ public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
             ConverterUtilities.writeString(buffer, 8, PersistentContent.decodeString(invite.get(8)));
             return;
          case 39:
-            int inboundflag = invite.get(39);
+            int inboundflag = (Integer)invite.get(39);
             ConverterUtilities.writeInt(buffer, 39, inboundflag);
             return;
          case 40:
             ConverterUtilities.writeString(buffer, 40, PersistentContent.decodeString(invite.get(40)));
             return;
          case 41:
-            int isPin = invite.get(41);
+            int isPin = (Integer)invite.get(41);
             ConverterUtilities.writeInt(buffer, 41, isPin);
       }
    }
 
    private final IntHashtable deserializeEmailInvitation(byte[] buf, boolean bigEndian) {
-      DataBuffer buffer = (DataBuffer)(new Object(buf, 0, buf.length, bigEndian));
-      IntHashtable data = (IntHashtable)(new Object());
+      DataBuffer buffer = new DataBuffer(buf, 0, buf.length, bigEndian);
+      IntHashtable data = new IntHashtable();
 
       try {
          while (true) {
@@ -669,13 +669,13 @@ public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
    private final void processTypeDesEmailInvitation(int type, DataBuffer buffer, IntHashtable data, boolean bigEndian) {
       switch (type) {
          case 1:
-            data.put(1, new Object(ConverterUtilities.readInt(buffer)));
+            data.put(1, new Integer(ConverterUtilities.readInt(buffer)));
             return;
          case 2:
-            data.put(2, new Object(ConverterUtilities.readInt(buffer)));
+            data.put(2, new Integer(ConverterUtilities.readInt(buffer)));
             return;
          case 3:
-            data.put(3, new Object(ConverterUtilities.readInt(buffer)));
+            data.put(3, new Integer(ConverterUtilities.readInt(buffer)));
             return;
          case 4:
             data.put(4, ConverterUtilities.readByteArray(buffer));
@@ -693,13 +693,13 @@ public final class PeerData$PeerSyncItem extends OTASyncCapableSyncItem {
             data.put(8, ConverterUtilities.readByteArray(buffer));
             return;
          case 39:
-            data.put(39, new Object(ConverterUtilities.readInt(buffer)));
+            data.put(39, new Integer(ConverterUtilities.readInt(buffer)));
             return;
          case 40:
             data.put(40, ConverterUtilities.readByteArray(buffer));
             return;
          case 41:
-            data.put(41, new Object(ConverterUtilities.readInt(buffer)));
+            data.put(41, new Integer(ConverterUtilities.readInt(buffer)));
             return;
          default:
             ConverterUtilities.skipField(buffer);

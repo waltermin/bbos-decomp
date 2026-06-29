@@ -20,6 +20,7 @@ import net.rim.ecmascript.runtime.CompiledScript;
 import net.rim.ecmascript.runtime.ESFunction;
 import net.rim.ecmascript.runtime.ESObject;
 import net.rim.ecmascript.runtime.GlobalObject;
+import net.rim.ecmascript.runtime.ThrownValue;
 import net.rim.ecmascript.runtime.Value;
 import net.rim.ecmascript.util.Misc;
 import net.rim.vm.ThreadSpecificData;
@@ -122,31 +123,18 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
    ESBlackberry _blackberry;
    RenderingOptions _renderingOptions;
    private static String SPECIAL_METHOD = "RIMInternalBrowserJSFunction";
-   static String[] CORE_MIME_TYPES_DEBUG = new Object[]{
-      ((StringBuffer)(new Object("application/vnd.rim.jscriptc;v=")))
-         .append(Compiler.getMajorVersion())
-         .append('-')
-         .append(Compiler.getMinorVersion())
-         .append("-0")
-         .toString(),
-      "application/x-javascript"
+   static String[] CORE_MIME_TYPES_DEBUG = new String[]{
+      "application/vnd.rim.jscriptc;v=" + Compiler.getMajorVersion() + '-' + Compiler.getMinorVersion() + "-0", "application/x-javascript"
    };
-   static String[] CORE_MIME_TYPES = new Object[]{
-      ((StringBuffer)(new Object("application/vnd.rim.jscriptc;v=")))
-         .append(Compiler.getMajorVersion())
-         .append('-')
-         .append(Compiler.getMinorVersion())
-         .append('-')
-         .append(8)
-         .toString(),
-      "application/x-javascript"
+   static String[] CORE_MIME_TYPES = new String[]{
+      "application/vnd.rim.jscriptc;v=" + Compiler.getMajorVersion() + '-' + Compiler.getMinorVersion() + '-' + 8, "application/x-javascript"
    };
    private static boolean DEBUG = DeviceInfo.isSimulator();
    private static final int MAX_CACHE_SIZE = 50;
    private static int _cacheSize = 0;
    private static int[] _verifiedScriptsCache = new int[50];
    private static byte[][] _verifiedScriptsHash = new byte[50][];
-   private static SHA1Digest _verifyHash = (SHA1Digest)(new Object());
+   private static SHA1Digest _verifyHash = new SHA1Digest();
 
    final ESWindow getCurrentWindow() {
       return this._window;
@@ -392,8 +380,8 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
    public final synchronized void openPrintStream() {
       if (this._javascriptEnabled) {
          try {
-            this._bytesOut = (ByteArrayOutputStream)(new Object());
-            this._outputWriter = (OutputStreamWriter)(new Object(this._bytesOut, "utf-8"));
+            this._bytesOut = new ByteArrayOutputStream();
+            this._outputWriter = new OutputStreamWriter(this._bytesOut, "utf-8");
          } finally {
             this._bytesOut = null;
             return;
@@ -416,7 +404,7 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
          return Value.NULL;
       }
 
-      if (objList instanceof Object) {
+      if (objList instanceof Node) {
          return this.lookupElementToESObjectLong((Node)objList);
       }
 
@@ -470,10 +458,10 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
       }
 
       if (this._compileBuffer == null) {
-         this._compileBuffer = (StringBuffer)(new Object());
+         this._compileBuffer = new StringBuffer();
       }
 
-      String functionName = Misc.stringIntern(((StringBuffer)(new Object())).append(SPECIAL_METHOD).append(this._functionCount).toString());
+      String functionName = Misc.stringIntern(SPECIAL_METHOD + this._functionCount);
       this._functionCount++;
       this._compileBuffer.append("function ").append(functionName).append("() {\nwith(this) {\n").append(action).append("\n}\n}\n");
       this._actionsToFunctions.put(action, functionName);
@@ -538,20 +526,20 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
       // 051: aconst_null
       // 052: astore 8
       // 054: aload 2
-      // 055: instanceof java/lang/Object
+      // 055: instanceof java/lang/String
       // 058: ifne 05e
       // 05b: goto 149
       // 05e: aload 0
       // 05f: getfield net/rim/device/apps/internal/browser/javascript/JavaScriptEngine._actionsToFunctions Ljava/util/Hashtable;
       // 062: aload 2
       // 063: invokevirtual java/util/Hashtable.get (Ljava/lang/Object;)Ljava/lang/Object;
-      // 066: checkcast java/lang/Object
+      // 066: checkcast java/lang/String
       // 069: astore 8
       // 06b: aload 8
       // 06d: ifnonnull 07a
       // 070: aload 0
       // 071: aload 2
-      // 072: checkcast java/lang/Object
+      // 072: checkcast java/lang/String
       // 075: invokevirtual net/rim/device/apps/internal/browser/javascript/JavaScriptEngine.addFunction (Ljava/lang/String;)Ljava/lang/String;
       // 078: astore 8
       // 07a: aload 0
@@ -560,7 +548,7 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
       // 081: goto 149
       // 084: aconst_null
       // 085: astore 9
-      // 087: new java/lang/Object
+      // 087: new net/rim/ecmascript/compiler/Compiler
       // 08a: dup
       // 08b: aload 0
       // 08c: getfield net/rim/device/apps/internal/browser/javascript/JavaScriptEngine._compileBuffer Ljava/lang/StringBuffer;
@@ -578,7 +566,7 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
       // 0a8: getstatic net/rim/device/apps/internal/browser/javascript/JavaScriptEngine.DEBUG Z
       // 0ab: ifeq 0c9
       // 0ae: getstatic java/lang/System.out Ljava/io/PrintStream;
-      // 0b1: new java/lang/Object
+      // 0b1: new java/lang/StringBuffer
       // 0b4: dup
       // 0b5: ldc_w "CompileError in ExecuteMethod "
       // 0b8: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -589,7 +577,7 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
       // 0c6: invokevirtual java/io/PrintStream.println (Ljava/lang/String;)V
       // 0c9: aload 0
       // 0ca: invokespecial net/rim/device/apps/internal/browser/javascript/JavaScriptEngine.handleQuincy ()V
-      // 0cd: new java/lang/Object
+      // 0cd: new java/lang/IllegalArgumentException
       // 0d0: dup
       // 0d1: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 0d4: athrow
@@ -606,7 +594,7 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
       // 0ec: getstatic net/rim/device/apps/internal/browser/javascript/JavaScriptEngine.DEBUG Z
       // 0ef: ifeq 10d
       // 0f2: getstatic java/lang/System.out Ljava/io/PrintStream;
-      // 0f5: new java/lang/Object
+      // 0f5: new java/lang/StringBuffer
       // 0f8: dup
       // 0f9: ldc_w "ThrownValue in ExecuteMethod "
       // 0fc: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -616,7 +604,7 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
       // 107: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 10a: invokevirtual java/io/PrintStream.println (Ljava/lang/String;)V
       // 10d: ldc2_w 1907089860548946979
-      // 110: new java/lang/Object
+      // 110: new java/lang/StringBuffer
       // 113: dup
       // 114: ldc_w "Unsupported JavaScript Report: "
       // 117: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -630,7 +618,7 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
       // 12c: pop
       // 12d: aload 0
       // 12e: invokespecial net/rim/device/apps/internal/browser/javascript/JavaScriptEngine.handleQuincy ()V
-      // 131: new java/lang/Object
+      // 131: new java/lang/IllegalArgumentException
       // 134: dup
       // 135: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 138: athrow
@@ -638,7 +626,7 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
       // 13b: aload 0
       // 13c: aload 10
       // 13e: invokespecial net/rim/device/apps/internal/browser/javascript/JavaScriptEngine.handleQuincy (Ljava/lang/Throwable;)V
-      // 141: new java/lang/Object
+      // 141: new java/lang/IllegalArgumentException
       // 144: dup
       // 145: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 148: athrow
@@ -648,11 +636,11 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
       // 14e: astore 9
       // 150: aload 2
       // 151: dup
-      // 152: instanceof java/lang/Object
+      // 152: instanceof net/rim/ecmascript/runtime/ESFunction
       // 155: ifne 15c
       // 158: pop
       // 159: goto 164
-      // 15c: checkcast java/lang/Object
+      // 15c: checkcast net/rim/ecmascript/runtime/ESFunction
       // 15f: astore 9
       // 161: goto 177
       // 164: aload 8
@@ -669,11 +657,11 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
       // 17f: aconst_null
       // 180: astore 10
       // 182: aload 1
-      // 183: instanceof java/lang/Object
+      // 183: instanceof org/w3c/dom/Element
       // 186: ifeq 193
       // 189: aload 0
       // 18a: aload 1
-      // 18b: checkcast java/lang/Object
+      // 18b: checkcast org/w3c/dom/Element
       // 18e: invokevirtual net/rim/device/apps/internal/browser/javascript/JavaScriptEngine.lookupElementToESObject (Lorg/w3c/dom/Node;)Lnet/rim/ecmascript/runtime/ESObject;
       // 191: astore 10
       // 193: aload 10
@@ -733,7 +721,7 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
       // 203: getstatic net/rim/device/apps/internal/browser/javascript/JavaScriptEngine.DEBUG Z
       // 206: ifeq 224
       // 209: getstatic java/lang/System.out Ljava/io/PrintStream;
-      // 20c: new java/lang/Object
+      // 20c: new java/lang/StringBuffer
       // 20f: dup
       // 210: ldc_w "ThrownValue in ExecuteMethod "
       // 213: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -743,7 +731,7 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
       // 21e: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 221: invokevirtual java/io/PrintStream.println (Ljava/lang/String;)V
       // 224: ldc2_w 1907089860548946979
-      // 227: new java/lang/Object
+      // 227: new java/lang/StringBuffer
       // 22a: dup
       // 22b: ldc_w "Unsupported JavaScript Report: "
       // 22e: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -757,7 +745,7 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
       // 243: pop
       // 244: aload 0
       // 245: invokespecial net/rim/device/apps/internal/browser/javascript/JavaScriptEngine.handleQuincy ()V
-      // 248: new java/lang/Object
+      // 248: new java/lang/IllegalArgumentException
       // 24b: dup
       // 24c: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 24f: athrow
@@ -765,7 +753,7 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
       // 252: aload 0
       // 253: aload 9
       // 255: invokespecial net/rim/device/apps/internal/browser/javascript/JavaScriptEngine.handleQuincy (Ljava/lang/Throwable;)V
-      // 258: new java/lang/Object
+      // 258: new java/lang/IllegalArgumentException
       // 25b: dup
       // 25c: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 25f: athrow
@@ -828,7 +816,7 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   final ESFunction getHostFunction(String action) {
+   final ESFunction getHostFunction(String action) throws ThrownValue {
       String functionStr = (String)this._actionsToFunctions.get(action);
       if (functionStr == null) {
          functionStr = this.addFunction(action);
@@ -840,13 +828,13 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
 
          try {
             var6 = true;
-            Compiler ce = new Object(this._compileBuffer.toString());
-            script = ((Compiler)ce).compile();
+            Compiler ce = new Compiler(this._compileBuffer.toString());
+            script = ce.compile();
             this._compileBuffer = null;
             var6 = false;
          } finally {
             if (var6) {
-               throw new Object(Value.NULL);
+               throw new ThrownValue(Value.NULL);
             }
          }
 
@@ -974,7 +962,7 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
       // 0d9: astore 8
       // 0db: aconst_null
       // 0dc: astore 5
-      // 0de: new java/lang/Object
+      // 0de: new net/rim/ecmascript/compiler/Compiler
       // 0e1: dup
       // 0e2: aload 1
       // 0e3: iload 4
@@ -991,7 +979,7 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
       // 0ff: aload 1
       // 100: invokevirtual java/io/PrintStream.println (Ljava/lang/String;)V
       // 103: getstatic java/lang/System.out Ljava/io/PrintStream;
-      // 106: new java/lang/Object
+      // 106: new java/lang/StringBuffer
       // 109: dup
       // 10a: ldc_w "CompileError in ExecuteScript "
       // 10d: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -1002,7 +990,7 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
       // 11b: invokevirtual java/io/PrintStream.println (Ljava/lang/String;)V
       // 11e: aload 0
       // 11f: invokespecial net/rim/device/apps/internal/browser/javascript/JavaScriptEngine.handleQuincy ()V
-      // 122: new java/lang/Object
+      // 122: new java/lang/IllegalArgumentException
       // 125: dup
       // 126: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 129: athrow
@@ -1035,7 +1023,7 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
       // 162: getstatic net/rim/device/apps/internal/browser/javascript/JavaScriptEngine.DEBUG Z
       // 165: ifeq 183
       // 168: getstatic java/lang/System.out Ljava/io/PrintStream;
-      // 16b: new java/lang/Object
+      // 16b: new java/lang/StringBuffer
       // 16e: dup
       // 16f: ldc_w "ThrownValue in ExecuteScript "
       // 172: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -1045,7 +1033,7 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
       // 17d: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 180: invokevirtual java/io/PrintStream.println (Ljava/lang/String;)V
       // 183: ldc2_w 1907089860548946979
-      // 186: new java/lang/Object
+      // 186: new java/lang/StringBuffer
       // 189: dup
       // 18a: ldc_w "Unsupported JavaScript Report: "
       // 18d: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -1059,7 +1047,7 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
       // 1a2: pop
       // 1a3: aload 0
       // 1a4: invokespecial net/rim/device/apps/internal/browser/javascript/JavaScriptEngine.handleQuincy ()V
-      // 1a7: new java/lang/Object
+      // 1a7: new java/lang/IllegalArgumentException
       // 1aa: dup
       // 1ab: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 1ae: athrow
@@ -1067,7 +1055,7 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
       // 1b1: aload 0
       // 1b2: aload 6
       // 1b4: invokespecial net/rim/device/apps/internal/browser/javascript/JavaScriptEngine.handleQuincy (Ljava/lang/Throwable;)V
-      // 1b7: new java/lang/Object
+      // 1b7: new java/lang/IllegalArgumentException
       // 1ba: dup
       // 1bb: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 1be: athrow
@@ -1273,8 +1261,8 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
                      }
 
                      this._watchDogTimeout = this._renderingOptions.getPropertyWithIntValue(4550690918222697397L, 46, 0);
-                     this._actionsToFunctions = (Hashtable)(new Object());
-                     this._esObjectTable = (Hashtable)(new Object());
+                     this._actionsToFunctions = new Hashtable();
+                     this._esObjectTable = new Hashtable();
                      GlobalObject.disableLiveConnect();
                      this._globalObject = GlobalObject.newInstance();
                      this._globalObject.setAllowDelayedCompilation(true);
@@ -1352,7 +1340,7 @@ public final class JavaScriptEngine implements JavaScriptInterpreter {
    }
 
    public static final long makeStringValue(Object str) {
-      return !(str instanceof Object) ? Value.makeStringValue("") : Value.makeStringValue((String)str);
+      return !(str instanceof String) ? Value.makeStringValue("") : Value.makeStringValue((String)str);
    }
 
    private final void handleQuincy(Throwable t) {

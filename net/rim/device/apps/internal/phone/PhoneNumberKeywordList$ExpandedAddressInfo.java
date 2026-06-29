@@ -10,7 +10,7 @@ import net.rim.vm.Array;
 
 final class PhoneNumberKeywordList$ExpandedAddressInfo {
    private AddressCardModel _addressCard;
-   private PhoneNumberModel[] _phoneNumbers = new Object[0];
+   private PhoneNumberModel[] _phoneNumbers = new PhoneNumberModel[0];
    private int _indexSelected;
    private boolean _showNumbers;
 
@@ -23,7 +23,7 @@ final class PhoneNumberKeywordList$ExpandedAddressInfo {
 
       for (int i = 0; i < size; i++) {
          Object o = this._addressCard.getAt(i);
-         if (o instanceof Object) {
+         if (o instanceof PhoneNumberModel) {
             PhoneNumberModel pnm = (PhoneNumberModel)o;
             Array.resize(this._phoneNumbers, this._phoneNumbers.length + 1);
             if (hasFax) {
@@ -78,16 +78,6 @@ final class PhoneNumberKeywordList$ExpandedAddressInfo {
          width -= imageWidth;
       }
 
-      graphics.drawText(
-         ((StringBuffer)(new Object()))
-            .append(typeString)
-            .append(": ")
-            .append(PhoneNumberServices.convertForDisplayWithExtension(numberString, false))
-            .toString(),
-         10,
-         y,
-         64,
-         width - 10
-      );
+      graphics.drawText(typeString + ": " + PhoneNumberServices.convertForDisplayWithExtension(numberString, false), 10, y, 64, width - 10);
    }
 }

@@ -3,10 +3,10 @@ package net.rim.device.apps.api.phone;
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.system.SIMCard;
 import net.rim.device.api.system.SIMCardEFListener;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.PopupScreen;
 import net.rim.device.apps.api.ui.CommonResources;
 import net.rim.vm.Array;
@@ -29,13 +29,13 @@ public final class SIMPhoneNumberWriter extends PopupScreen implements SIMCardEF
    private static final long DEFAULT_TIMEOUT = 20000L;
 
    private SIMPhoneNumberWriter(String phoneNumber, String phoneNumberDescription, int structure, int id, int record, boolean show) {
-      super((Manager)(new Object()), 0);
+      super(new HorizontalFieldManager(), 0);
       this._app = UiApplication.getUiApplication();
       this._phoneNumber = phoneNumber;
       this._phoneNumberDescription = phoneNumberDescription;
       String title = CommonResources.getString(9162);
-      this._statusField = (LabelField)(new Object(title, 64));
-      this._iconField = (BitmapField)(new Object(Bitmap.getPredefinedBitmap(3)));
+      this._statusField = new LabelField(title, 64);
+      this._iconField = new BitmapField(Bitmap.getPredefinedBitmap(3));
       this._iconField.setPadding(0, 3, 0, 0);
       this.add(this._iconField);
       this.add(this._statusField);

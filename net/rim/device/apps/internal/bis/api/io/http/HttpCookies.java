@@ -6,10 +6,10 @@ import net.rim.device.api.util.Comparator;
 import net.rim.device.api.util.StringTokenizer;
 
 public final class HttpCookies {
-   Vector cookies = (Vector)(new Object());
+   Vector cookies = new Vector();
 
    public final String getCookieHeader() {
-      String[] cookiesArray = new Object[this.cookies.size()];
+      String[] cookiesArray = new String[this.cookies.size()];
 
       for (int i = 0; i < this.cookies.size(); i++) {
          cookiesArray[i] = this.cookies.elementAt(i).toString();
@@ -21,10 +21,10 @@ public final class HttpCookies {
 
       for (int i = 0; i < cookiesArray.length; i++) {
          if (i > 0) {
-            cookieHeader = ((StringBuffer)(new Object())).append(cookieHeader).append(", ").toString();
+            cookieHeader = cookieHeader + ", ";
          }
 
-         cookieHeader = ((StringBuffer)(new Object())).append(cookieHeader).append(cookiesArray[i]).toString();
+         cookieHeader = cookieHeader + cookiesArray[i];
       }
 
       return cookieHeader;
@@ -35,7 +35,7 @@ public final class HttpCookies {
    }
 
    public final void parseSetCookieHeader(String setCookieString) {
-      StringTokenizer tokenizer = (StringTokenizer)(new Object(setCookieString, ";,"));
+      StringTokenizer tokenizer = new StringTokenizer(setCookieString, ";,");
 
       while (tokenizer.hasMoreTokens()) {
          String token = tokenizer.nextToken().trim();

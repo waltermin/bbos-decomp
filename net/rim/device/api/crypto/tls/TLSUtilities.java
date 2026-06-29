@@ -6,6 +6,7 @@ import net.rim.device.api.crypto.SymmetricKeyFactory;
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.api.util.StringUtilities;
+import net.rim.device.cldc.io.ssl.TLSCancelException;
 import net.rim.vm.Array;
 
 public final class TLSUtilities {
@@ -58,9 +59,7 @@ public final class TLSUtilities {
          keyLength = state.getKeyMaterialLength();
       }
 
-      return SymmetricKeyFactory.getInstance(
-         ((StringBuffer)(new Object())).append(state.getBulkCipherAlgorithm()).append('_').append(keyLength << 3).toString(), keyData, 0, keyData.length
-      );
+      return SymmetricKeyFactory.getInstance(state.getBulkCipherAlgorithm() + '_' + (keyLength << 3), keyData, 0, keyData.length);
    }
 
    public static final int readIntegerThreeBytes(DataBuffer buffer) {
@@ -87,9 +86,9 @@ public final class TLSUtilities {
       throw new TLSAlertException((byte)3, description);
    }
 
-   public static final void sendAlertAndCancel(AlertProtocolMethods alertProtocol, byte description) {
+   public static final void sendAlertAndCancel(AlertProtocolMethods alertProtocol, byte description) throws TLSCancelException {
       alertProtocol.sendAlertMessage((byte)3, description);
-      throw new Object(new TLSAlertException((byte)3, description));
+      throw new TLSCancelException(new TLSAlertException((byte)3, description));
    }
 
    public static final void printCertificate(Certificate certificate) {

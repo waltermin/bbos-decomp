@@ -13,18 +13,18 @@ public final class MemoArguments extends ApplicationArguments {
 
    public MemoArguments(String arg) {
       if (arg != null && arg.equals("new")) {
-         super._args = new Object[]{arg};
+         super._args = new String[]{arg};
       } else {
-         throw new Object("Invalid argument specified");
+         throw new IllegalArgumentException("Invalid argument specified");
       }
    }
 
    public MemoArguments(String arg, BlackBerryMemo memo) {
       if (arg == null || !arg.equals("new") && !arg.equals("view") && !arg.equals("edit")) {
-         throw new Object("Invalid argument specified");
+         throw new IllegalArgumentException("Invalid argument specified");
       }
 
-      super._args = new Object[]{arg};
+      super._args = new String[]{arg};
       this._memo = memo;
    }
 

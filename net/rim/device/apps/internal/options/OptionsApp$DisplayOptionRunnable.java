@@ -7,7 +7,7 @@ final class OptionsApp$DisplayOptionRunnable implements Runnable {
    private ApplicationDescriptor _descrip;
 
    public OptionsApp$DisplayOptionRunnable(ApplicationDescriptor d, String id) {
-      this._descrip = (ApplicationDescriptor)(new Object(d, new Object[]{id}));
+      this._descrip = new ApplicationDescriptor(d, new String[]{id});
    }
 
    @Override

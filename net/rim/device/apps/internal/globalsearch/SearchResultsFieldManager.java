@@ -9,9 +9,11 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.WeakReferenceUtilities;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.FieldProvider;
 import net.rim.device.apps.api.search.SearchResultCollection;
 import net.rim.device.apps.api.search.Searchable;
@@ -27,23 +29,23 @@ final class SearchResultsFieldManager extends VerticalFieldManager implements Co
    private SearchResultCollection _collection;
    private String _label;
    private LabelField _nodeField;
-   private ImageField _expansionIcon = (ImageField)(new Object());
+   private ImageField _expansionIcon = new ImageField();
    private Field _resultsField;
    private Field _separatorField;
    private Field _emptyLabelField;
    private Image _treePlus = SystemIcon.COLLECTION.getImage(6);
    private Image _treeMinus = SystemIcon.COLLECTION.getImage(5);
-   private HorizontalFieldManager _hfm = (HorizontalFieldManager)(new Object(1152921504606846976L));
-   private WeakReference _nodeFieldLabelWR = (WeakReference)(new Object(null));
+   private HorizontalFieldManager _hfm = new HorizontalFieldManager(1152921504606846976L);
+   private WeakReference _nodeFieldLabelWR = new WeakReference(null);
    private Application _application = Application.getApplication();
    private SearchResultsFieldManager$UpdateNodeFieldRunnable _updateNodeFieldRunnable = new SearchResultsFieldManager$UpdateNodeFieldRunnable(this, null);
-   private InvokeLaterRunnable _invokeLaterRunnable = (InvokeLaterRunnable)(new Object());
+   private InvokeLaterRunnable _invokeLaterRunnable = new InvokeLaterRunnable();
 
    SearchResultsFieldManager(Searchable searchable, long id, SearchResultCollection collection, boolean displayIcon) {
       super(0);
       this._label = searchable.getName(id);
       this._collection = collection;
-      this._collection.addCollectionListener(new Object(this));
+      this._collection.addCollectionListener(new WeakReference(this));
       this._nodeField = new SearchResultsFieldManager$LabelFieldWithoutClipboard(this._label);
       this._nodeField.setFont(this.getFont().derive(1));
       this.updateNodeField();
@@ -57,12 +59,12 @@ final class SearchResultsFieldManager extends VerticalFieldManager implements Co
       this._hfm.add(this._expansionIcon);
       this._hfm.add(this._nodeField);
       this.add(this._hfm);
-      if (collection instanceof Object) {
-         this._resultsField = ((FieldProvider)collection).getField(new Object(78));
+      if (collection instanceof FieldProvider) {
+         this._resultsField = ((FieldProvider)collection).getField(new ContextObject(78));
       }
 
-      this._separatorField = (Field)(new Object());
-      this._emptyLabelField = (Field)(new Object(null));
+      this._separatorField = new SeparatorField();
+      this._emptyLabelField = new LabelField(null);
    }
 
    final boolean getExpanded() {
@@ -78,7 +80,7 @@ final class SearchResultsFieldManager extends VerticalFieldManager implements Co
          this.add(this._resultsField);
          this.add(this._separatorField);
          this.add(this._emptyLabelField);
-         if (this._firstExpansion && this._resultsField instanceof Object) {
+         if (this._firstExpansion && this._resultsField instanceof ListField) {
             ListField listField = (ListField)this._resultsField;
             this._firstExpansion = false;
             listField.setSelectedIndex(0);

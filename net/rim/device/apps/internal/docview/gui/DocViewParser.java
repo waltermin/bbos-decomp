@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.docview.gui;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import net.rim.device.apps.internal.docview.core.DocViewCore;
 import net.rim.device.apps.internal.docview.core.DocViewInputStream;
@@ -25,7 +26,7 @@ public final class DocViewParser {
    }
 
    public final synchronized void parseDocument(byte[] ucsData, boolean newDocument, int chunkIndex, boolean pausable, boolean isLastChunk) {
-      this.parseDocument(new DocViewInputStreamImpl((InputStream)(new Object(ucsData))), newDocument, chunkIndex, pausable, true);
+      this.parseDocument(new DocViewInputStreamImpl(new ByteArrayInputStream(ucsData)), newDocument, chunkIndex, pausable, true);
    }
 
    private final void parseDocument(DocViewInputStream data, boolean newDocument, int chunkIndex, boolean pausable, boolean isLastChunk) {

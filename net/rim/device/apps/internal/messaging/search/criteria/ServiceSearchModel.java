@@ -49,7 +49,7 @@ public final class ServiceSearchModel implements PersistableRIMModel, SearchCrit
          }
       }
 
-      return (Field)(new Object(SearchResources.getString(68), serviceChoices, selectedServiceIndex));
+      return new ObjectChoiceField(SearchResources.getString(68), serviceChoices, selectedServiceIndex);
    }
 
    @Override

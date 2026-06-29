@@ -1,5 +1,6 @@
 package net.rim.device.cldc.io.tcp;
 
+import java.io.IOException;
 import javax.microedition.io.Connection;
 import javax.microedition.io.StreamConnection;
 import net.rim.device.api.system.ControlledAccess;
@@ -22,7 +23,7 @@ final class TcpServerSocketConnection extends StreamDatagramServerSocketConnecti
    }
 
    @Override
-   protected final void openPrimChores() {
+   protected final void openPrimChores() throws IOException {
       try {
          int localPort = TcpUtils.addToTcpConnectionDatabase(this, (TcpConnectionIdentifier)super._myAddress);
          if (super._myAddress.getLocalPort() != localPort) {
@@ -31,7 +32,7 @@ final class TcpServerSocketConnection extends StreamDatagramServerSocketConnecti
       } finally {
          EventLogger.logEvent(447071754022829032L, 1413696867, 0);
          TcpUtils.logConnectionDatabase();
-         throw new Object("Max connections opened.");
+         throw new IOException("Max connections opened.");
       }
    }
 
@@ -63,7 +64,7 @@ final class TcpServerSocketConnection extends StreamDatagramServerSocketConnecti
          synchronized (super._backlogWaitObj) {
             if (this.isConnectionWaiting(myPort)) {
                if (!ControlledAccess.verifyCodeModuleSignature(TraceBack.getCallingModule(0), 51) && !Firewall.getInstance().allowConnection("tcp", "", false)) {
-                  throw new Object("Permission denied");
+                  throw new IOException("Permission denied");
                }
 
                Object temp;
@@ -81,7 +82,7 @@ final class TcpServerSocketConnection extends StreamDatagramServerSocketConnecti
          }
       }
 
-      throw new Object();
+      throw new RuntimeException();
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
@@ -172,7 +173,7 @@ final class TcpServerSocketConnection extends StreamDatagramServerSocketConnecti
 
          if (!contains) {
             super._tcpConnectionBacklog.addElement(streamConnection);
-            super._transport.addConnection((WeakReference)(new Object(streamConnection)));
+            super._transport.addConnection(new WeakReference(streamConnection));
          }
 
          super._backlogWaitObj.notifyAll();

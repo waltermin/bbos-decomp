@@ -9,6 +9,7 @@ import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.verb.Verb;
@@ -26,7 +27,7 @@ final class CallLogItemScreen extends AppsMainScreen implements EditNotesVerb$Ca
    private CallHistoryField _historyField;
    private RichTextField _notesField;
    private CallSummaryInfo _callSummaryInfo;
-   private Verb[] _verbCache = new Object[0];
+   private Verb[] _verbCache = new Verb[0];
    private static final int NUM_SEPARATORS = 4;
    private static final int SEPARATOR_HEIGHT = 3;
    static final int MENU_EDIT_NOTES = 1332224;
@@ -65,15 +66,13 @@ final class CallLogItemScreen extends AppsMainScreen implements EditNotesVerb$Ca
    private final void populate() {
       int heightAvailable = Display.getHeight() - 12 - 4;
       int numLines = 0;
-      LabelField titleField = (LabelField)(new Object(PhoneResources.getResourceBundle(), 6284));
+      LabelField titleField = new LabelField(PhoneResources.getResourceBundle(), 6284);
       this.setTitle(titleField);
       numLines++;
-      String totalCalls = MessageFormat.format(
-         PhoneResources.getString(6249), new Object[]{((StringBuffer)(new Object(""))).append(this._callLogItem.getHistoryItemCount()).toString()}
-      );
-      this._totalCallsField = (VerticalFieldManager)(new Object());
-      this._totalCallsField.add((Field)(new Object()));
-      this._totalCallsField.add((Field)(new Object(totalCalls)));
+      String totalCalls = MessageFormat.format(PhoneResources.getString(6249), new String[]{"" + this._callLogItem.getHistoryItemCount()});
+      this._totalCallsField = new VerticalFieldManager();
+      this._totalCallsField.add(new SeparatorField());
+      this._totalCallsField.add(new LabelField(totalCalls));
       this.setStatus(this._totalCallsField);
       numLines++;
       PhoneCallModelImpl primaryCallLog = this._callLogItem.getCallLog();
@@ -82,15 +81,13 @@ final class CallLogItemScreen extends AppsMainScreen implements EditNotesVerb$Ca
       numLines += this._callSummaryField.getNumLines();
       int historyItemCount = this._callLogItem.getHistoryItemCount();
       if (historyItemCount > 1) {
-         this.add((Field)(new Object()));
+         this.add(new SeparatorField());
          this._historyField = new CallHistoryField(this._callLogItem, this._callSummaryInfo, this);
          this.add(this._historyField);
          numLines += 2;
       } else if (historyItemCount == 1) {
-         this.add(
-            (Field)(new Object(((StringBuffer)(new Object())).append(PhoneResources.getString(162)).append(primaryCallLog.getDateTimeString(4)).toString()))
-         );
-         this.add((Field)(new Object()));
+         this.add(new LabelField(PhoneResources.getString(162) + primaryCallLog.getDateTimeString(4)));
+         this.add(new SeparatorField());
          this.addNotesField(null);
          numLines += 2;
       }
@@ -116,8 +113,8 @@ final class CallLogItemScreen extends AppsMainScreen implements EditNotesVerb$Ca
 
       if (!PhoneUtilities.isEmptyString(notes)) {
          long flags = 2306142076376449024L;
-         VerticalFieldManager vfm = (VerticalFieldManager)(new Object(flags));
-         this._notesField = (RichTextField)(new Object(notes, 9007199254740992L));
+         VerticalFieldManager vfm = new VerticalFieldManager(flags);
+         this._notesField = new RichTextField(notes, 9007199254740992L);
          vfm.add(this._notesField);
          this.add(vfm);
       }
@@ -164,7 +161,7 @@ final class CallLogItemScreen extends AppsMainScreen implements EditNotesVerb$Ca
       Array.resize(this._verbCache, 0);
       PhoneCallModelImpl currCallLog = this.getCurrentCallLog();
       if (currCallLog != null) {
-         ContextObject context = (ContextObject)(new Object(2));
+         ContextObject context = new ContextObject(2);
          PhoneUtilities.setPrivateFlag(context, 38);
          PhoneUtilities.setPrivateFlag(context, 74);
          PhoneUtilities.setPrivateFlag(context, 72);
@@ -195,8 +192,8 @@ final class CallLogItemScreen extends AppsMainScreen implements EditNotesVerb$Ca
       PhoneCallModelImpl call = this.getCurrentCallLog();
       if (call != null) {
          CallerIDInfo cidi = (CallerIDInfo)call.getCallerIDInfo();
-         ContextObject sendContext = (ContextObject)(new Object(119));
-         Verb[] verbs = new Object[0];
+         ContextObject sendContext = new ContextObject(119);
+         Verb[] verbs = new Verb[0];
          Verb sendKeyVerb = cidi.getVerbs(sendContext, verbs);
          if (sendKeyVerb != null) {
             Object result = sendKeyVerb.invoke(null);

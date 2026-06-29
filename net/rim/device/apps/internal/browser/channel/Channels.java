@@ -257,8 +257,8 @@ public final class Channels implements Runnable {
       0,
       0
    };
-   private static final Bitmap DEFAULT_READ_ICON = (Bitmap)(new Object(1, 28, 28, DEFAULT_READ_ICON_DATA));
-   private static final Bitmap DEFAULT_UNREAD_ICON = (Bitmap)(new Object(1, 28, 28, DEFAULT_UNREAD_ICON_DATA));
+   private static final Bitmap DEFAULT_READ_ICON = new Bitmap(1, 28, 28, DEFAULT_READ_ICON_DATA);
+   private static final Bitmap DEFAULT_UNREAD_ICON = new Bitmap(1, 28, 28, DEFAULT_UNREAD_ICON_DATA);
 
    @Override
    public final void run() {
@@ -351,15 +351,15 @@ public final class Channels implements Runnable {
          customIcon = readIcon;
       }
 
-      String id = (String)(new Object(channel.getID().toCharArray()));
+      String id = new String(channel.getID().toCharArray());
       int nameResourceId = id.hashCode();
       int moduleHandle = CodeModuleManager.getModuleHandle("net_rim_bb_browser_daemon");
       if (moduleHandle > 0) {
          ApplicationDescriptor[] browserDescriptors = CodeModuleManager.getApplicationDescriptors(moduleHandle);
-         String[] args = new Object[]{"channel", id};
+         String[] args = new String[]{"channel", id};
          int newFlags = browserDescriptors[0].getFlags() & -5;
-         String ribbonID = ((StringBuffer)(new Object("channel."))).append(id).toString();
-         ApplicationDescriptor newDescriptor = (ApplicationDescriptor)(new Object(
+         String ribbonID = "channel." + id;
+         ApplicationDescriptor newDescriptor = new ApplicationDescriptor(
             browserDescriptors[0],
             ribbonID,
             args,
@@ -368,7 +368,7 @@ public final class Channels implements Runnable {
             "net.rim.device.apps.internal.browser.core.Channels",
             nameResourceId,
             newFlags
-         ));
+         );
          ChannelApplicationEntryPoint newEntryPoint = new ChannelApplicationEntryPoint(newDescriptor, channel);
          if (customIcon != null) {
             newEntryPoint.set(4, customIcon);
@@ -395,7 +395,7 @@ public final class Channels implements Runnable {
    public static final void removeChannelFromRibbon(ChannelModel channel) {
       RibbonLauncher ribbon = RibbonLauncher.getInstance();
       if (ribbon != null) {
-         String ribbonID = ((StringBuffer)(new Object("channel."))).append(channel.getID()).toString();
+         String ribbonID = "channel." + channel.getID();
          if (ribbon.getRegisteredAction(ribbonID) != null) {
             ribbon.unregisterAction(ribbonID);
          }
@@ -434,7 +434,7 @@ public final class Channels implements Runnable {
       RenderingSession renderingSession = RenderingSessionImpl.getNewInstance();
       RenderingOptions renderingOptions = renderingSession.getRenderingOptions();
       browserImpl.setRenderingOptions(renderingOptions, browserConfigRecord);
-      HttpHeaders requestHeaders = (HttpHeaders)(new Object());
+      HttpHeaders requestHeaders = new HttpHeaders();
       browserImpl.addStandardRequestHeaders(requestHeaders, renderingSession);
       ModelResult modelResult = new ModelResult(channel.getDeleteURL(), 5, requestHeaders);
       modelResult.setConfigUID(configUID);
@@ -485,30 +485,18 @@ public final class Channels implements Runnable {
    }
 
    public static final void channelProperties(ChannelModel channel) {
-      String[] choice = new Object[]{CommonResources.getString(117)};
+      String[] choice = new String[]{CommonResources.getString(117)};
       String title = CommonResources.getString(2006);
       String description = BrowserResources.getString(514);
       String url = BrowserResources.getString(277);
       String id = BrowserResources.getString(348);
-      Dialog channelDialog = (Dialog)(new Object(
-         ((StringBuffer)(new Object()))
-            .append(title)
-            .append(channel.getTitle())
-            .append("\n\n")
-            .append(description)
-            .append(channel.getDescription())
-            .append("\n\n")
-            .append(url)
-            .append(channel.getURL())
-            .append("\n\n")
-            .append(id)
-            .append(channel.getID())
-            .toString(),
+      Dialog channelDialog = new Dialog(
+         title + channel.getTitle() + "\n\n" + description + channel.getDescription() + "\n\n" + url + channel.getURL() + "\n\n" + id + channel.getID(),
          choice,
          null,
          0,
          null
-      ));
+      );
       channelDialog.doModal();
    }
 

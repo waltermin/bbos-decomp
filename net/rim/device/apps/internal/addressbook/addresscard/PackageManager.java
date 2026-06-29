@@ -29,7 +29,7 @@ public final class PackageManager {
       ar.put(-2467076596918202204L, factory);
       RIMModelFactoryRepository.addFactory(-5785746452676094833L, factory);
       RecognizerRepository.registerRecognizer(-2467076596918202204L, factory);
-      factory = (RIMModelFactory)(new Object());
+      factory = new WebPageAddressModelFactory();
       ar.put(-2606680735022884905L, factory);
       RIMModelFactoryRepository.addFactory(-5785746452676094833L, factory);
       RecognizerRepository.registerRecognizer(-2606680735022884905L, factory);

@@ -9,7 +9,7 @@ import net.rim.device.apps.internal.secureemail.server.SecureEmailCertificateSer
 import net.rim.device.apps.internal.secureemail.server.SecureEmailServerCertificateHarvester;
 
 public class PGPUniversalServerCertificateHarvester extends SecureEmailServerCertificateHarvester {
-   private Hashtable _fetchedADKs = (Hashtable)(new Object());
+   private Hashtable _fetchedADKs = new Hashtable();
 
    public PGPUniversalServerCertificateHarvester(SecureEmailCertificateServer[] secureEmailCertificateServers, int encodingActions) {
       super(secureEmailCertificateServers, encodingActions);
@@ -24,7 +24,7 @@ public class PGPUniversalServerCertificateHarvester extends SecureEmailServerCer
    private void harvestADKS(RecipientData$CertificateDetails[] certificateDetails) {
       for (int i = 0; i < certificateDetails.length; i++) {
          Certificate certificate = certificateDetails[i].getCertificate();
-         if (certificate instanceof Object) {
+         if (certificate instanceof PGPCertificate) {
             byte[][] adkFingerprints = ((PGPCertificate)certificate).getADKFingerprints();
             if (adkFingerprints == null) {
                return;
@@ -38,7 +38,7 @@ public class PGPUniversalServerCertificateHarvester extends SecureEmailServerCer
                if (this._fetchedADKs.containsKey(currentADKFingerprint)) {
                   currADKData = (RecipientData)this._fetchedADKs.get(currentADKFingerprint);
                } else {
-                  currADKData = (RecipientData)(new Object(null, 3, currentKeyID, null));
+                  currADKData = new RecipientData(null, 3, currentKeyID, null);
                   this.harvestCertificates(currADKData, false);
                   this._fetchedADKs.put(currentADKFingerprint, currADKData);
                }

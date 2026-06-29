@@ -9,7 +9,6 @@ import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
 import net.rim.device.api.i18n.MessageFormat;
 import net.rim.device.api.system.Application;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.util.FactoryUtil;
@@ -17,8 +16,13 @@ import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.VerbProvider;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.internal.api.crypto.CryptoCommonResources;
+import net.rim.device.apps.internal.api.crypto.verb.DisplayCertificateVerb;
+import net.rim.device.apps.internal.api.crypto.verb.ImportCertificatesVerb;
+import net.rim.device.apps.internal.api.crypto.verb.TrustCertificatesVerb;
 import net.rim.device.internal.resource.crypto.CryptoIcons;
+import net.rim.device.internal.ui.component.HorizontalSpacerField;
 import net.rim.vm.Array;
+import net.rim.vm.WeakReference;
 
 class CertificateAttachmentField extends HorizontalFieldManager implements VerbProvider, CollectionListener {
    private CertificateAttachmentModel _certificateAttachmentModel;
@@ -29,13 +33,13 @@ class CertificateAttachmentField extends HorizontalFieldManager implements VerbP
       this._certificateAttachmentModel = attachmentModel;
       Certificate[] certificates = attachmentModel.getCertificates();
       this.add(CryptoIcons.getLargeImageField(this._certificateAttachmentModel.getImage(), 0));
-      this.add((Field)(new Object(3)));
+      this.add(new HorizontalSpacerField(3));
       int numRows = certificates == null ? 1 : certificates.length;
       this._listField = new CertificateAttachmentField$AttachedCertificateListField(this, numRows);
       this._listField.setCookie(this);
       this.add(this._listField);
       this._displayApp = Application.getApplication();
-      this._certificateAttachmentModel.getPreferredKeyStore().addCollectionListener(new Object(this));
+      this._certificateAttachmentModel.getPreferredKeyStore().addCollectionListener(new WeakReference(this));
    }
 
    @Override
@@ -55,34 +59,34 @@ class CertificateAttachmentField extends HorizontalFieldManager implements VerbP
             try {
                if (certificate != null) {
                   KeyStore keyStore = this._certificateAttachmentModel.getPreferredKeyStore();
-                  String[] containerStringUpperSingularArray = new Object[]{this._certificateAttachmentModel.getPublicKeyContainerString(true, false)};
+                  String[] containerStringUpperSingularArray = new String[]{this._certificateAttachmentModel.getPublicKeyContainerString(true, false)};
                   String displayCertificateVerbDescription = MessageFormat.format(CryptoCommonResources.getString(20), containerStringUpperSingularArray);
-                  defaultVerb = (Verb)(new Object(displayCertificateVerbDescription, certificate, keyStore));
+                  defaultVerb = new DisplayCertificateVerb(displayCertificateVerbDescription, certificate, keyStore);
                   Array.resize(verbs, verbs.length + 1);
                   verbs[verbs.length - 1] = defaultVerb;
                   if (this._certificateAttachmentModel.showImportVerb(selectedIndex)) {
                      String importCertificateVerbDescription = MessageFormat.format(CryptoCommonResources.getString(21), containerStringUpperSingularArray);
                      Array.resize(verbs, verbs.length + 1);
-                     verbs[verbs.length - 1] = (Verb)(new Object(
-                        importCertificateVerbDescription, new Object[]{certificate}, new Object[]{privateKey}, keyStore
-                     ));
+                     verbs[verbs.length - 1] = new ImportCertificatesVerb(
+                        importCertificateVerbDescription, new Certificate[]{certificate}, new PrivateKey[]{privateKey}, keyStore
+                     );
                   }
 
                   Certificate[] certificateChain = CertificateUtilities.buildCertificateChain(certificate, keyStore);
                   if (this._certificateAttachmentModel.showTrustVerb(certificateChain, privateKey, keyStore)) {
                      String trustCertificateVerbDescription = MessageFormat.format(CryptoCommonResources.getString(30), containerStringUpperSingularArray);
                      Array.resize(verbs, verbs.length + 1);
-                     verbs[verbs.length - 1] = (Verb)(new Object(trustCertificateVerbDescription, certificateChain, privateKey, keyStore));
+                     verbs[verbs.length - 1] = new TrustCertificatesVerb(trustCertificateVerbDescription, certificateChain, privateKey, keyStore);
                   }
 
-                  String[] addresses = (Object[])certificate.getInformation(-7850001002262082664L, null, null);
+                  String[] addresses = (String[])certificate.getInformation(-7850001002262082664L, null, null);
                   if (addresses != null && addresses.length > 0) {
-                     ContextObject emailContext = (ContextObject)(new Object(44));
+                     ContextObject emailContext = new ContextObject(44);
                      emailContext.put(253, addresses[0]);
                      Object obj = FactoryUtil.createInstance(-2985347935260258684L, emailContext);
-                     if (obj instanceof Object) {
+                     if (obj instanceof VerbProvider) {
                         VerbProvider verbProvider = (VerbProvider)obj;
-                        Verb[] emailVerbs = new Object[0];
+                        Verb[] emailVerbs = new Verb[0];
                         verbProvider.getVerbs(emailContext, emailVerbs);
                         if (emailVerbs.length > 0) {
                            int oldNumVerbs = verbs.length;

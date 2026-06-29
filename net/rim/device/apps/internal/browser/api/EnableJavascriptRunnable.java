@@ -21,7 +21,7 @@ final class EnableJavascriptRunnable implements Runnable {
       }
 
       if (renderingOptions == null || renderingOptions.getPropertyWithBooleanValue(4550690918222697397L, 37, true)) {
-         Dialog dialog = (Dialog)(new Object(3, BrowserResources.getString(755), 0, null, 0));
+         Dialog dialog = new Dialog(3, BrowserResources.getString(755), 0, null, 0);
          this._result = dialog.doModal();
       }
    }

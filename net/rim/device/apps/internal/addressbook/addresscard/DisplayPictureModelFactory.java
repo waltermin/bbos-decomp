@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.addressbook.addresscard;
 
 import java.util.Vector;
 import net.rim.device.api.io.Base64InputStream;
+import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.SyncBuffer;
 import net.rim.device.apps.api.framework.registration.RIMModelFactory;
@@ -34,7 +35,7 @@ final class DisplayPictureModelFactory extends RIMModelFactory implements VerbFa
             Vector data = (Vector)ContextObject.get(initialData, 249);
             if (data != null && data.size() >= 1) {
                Object element = data.elementAt(1);
-               if (element instanceof Object) {
+               if (element instanceof String) {
                   try {
                      initialData = Base64InputStream.decode((String)element);
                   } finally {
@@ -76,9 +77,9 @@ final class DisplayPictureModelFactory extends RIMModelFactory implements VerbFa
 
    @Override
    public final Verb[] getVerbs(Object context) {
-      Verb[] verbs = new Object[0];
+      Verb[] verbs = new Verb[0];
       Object selectedElement = ContextObject.get(context, 252);
-      if (selectedElement instanceof Object) {
+      if (selectedElement instanceof AddressCardModel) {
          Array.resize(verbs, 1);
          verbs[0] = new DisplayPictureVerb(3, 16864581);
          return verbs;

@@ -12,7 +12,7 @@ public final class WMLAnchoredBitmapField extends BrowserLinkBitmapField {
    }
 
    public WMLAnchoredBitmapField(BrowserContentImpl browserField, Bitmap bitmap, String imageUrl, long style, WMLAnchorVerb anchorVerb) {
-      super(browserField, bitmap, imageUrl, style, (String)((Object)null), null);
+      super(browserField, bitmap, imageUrl, style, (String)null, null);
       this._anchorVerb = anchorVerb;
    }
 

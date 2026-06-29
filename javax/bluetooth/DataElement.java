@@ -31,16 +31,16 @@ public class DataElement {
             return;
          case 48:
          case 56:
-            this._value = new Object();
+            this._value = new Vector();
             return;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
    public DataElement(boolean bool) {
       this._type = 40;
-      this._value = new Object(bool);
+      this._value = new Boolean(bool);
    }
 
    public DataElement(int valueType, long value) {
@@ -54,7 +54,7 @@ public class DataElement {
          case 13:
          case 14:
          case 15:
-            throw new Object("Illegal valueType");
+            throw new IllegalArgumentException("Illegal valueType");
          case 8:
          default:
             high = 255;
@@ -83,9 +83,9 @@ public class DataElement {
 
       if (!checkValue || value >= low && value <= high) {
          this._type = valueType;
-         this._value = new Object(value);
+         this._value = new Long(value);
       } else {
-         throw new Object("Illegal value");
+         throw new IllegalArgumentException("Illegal value");
       }
    }
 
@@ -97,7 +97,7 @@ public class DataElement {
 
    public void addElement(DataElement elem) {
       if (elem == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       switch (this._type) {
@@ -107,13 +107,13 @@ public class DataElement {
             v.addElement(elem);
             return;
          default:
-            throw new Object();
+            throw new ClassCastException();
       }
    }
 
    public void insertElementAt(DataElement elem, int index) {
       if (elem == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       switch (this._type) {
@@ -123,7 +123,7 @@ public class DataElement {
             v.insertElementAt(elem, index);
             return;
          default:
-            throw new Object();
+            throw new ClassCastException();
       }
    }
 
@@ -134,13 +134,13 @@ public class DataElement {
             Vector v = (Vector)this._value;
             return v.size();
          default:
-            throw new Object();
+            throw new ClassCastException();
       }
    }
 
    public boolean removeElement(DataElement elem) {
       if (elem == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       switch (this._type) {
@@ -149,7 +149,7 @@ public class DataElement {
             Vector v = (Vector)this._value;
             return v.removeElement(elem);
          default:
-            throw new Object();
+            throw new ClassCastException();
       }
    }
 
@@ -165,7 +165,7 @@ public class DataElement {
          case 13:
          case 14:
          case 15:
-            throw new Object();
+            throw new ClassCastException();
          case 8:
          case 9:
          case 10:
@@ -184,7 +184,7 @@ public class DataElement {
          Boolean b = (Boolean)this._value;
          return b;
       } else {
-         throw new Object();
+         throw new ClassCastException();
       }
    }
 
@@ -203,13 +203,13 @@ public class DataElement {
             Vector v = (Vector)this._value;
             return v.elements();
          default:
-            throw new Object();
+            throw new ClassCastException();
       }
    }
 
    private void validate(int valueType, Object value) {
       if (value == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       switch (valueType) {
@@ -229,12 +229,12 @@ public class DataElement {
             break;
          case 32:
          case 64:
-            if (value instanceof Object) {
+            if (value instanceof String) {
                return;
             }
       }
 
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    private void checkByteArrayLength(Object value, int length) {
@@ -245,6 +245,6 @@ public class DataElement {
          }
       }
 
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 }

@@ -17,7 +17,6 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.MediaField;
-import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.ScreenUiEngineAttachedListener;
 import net.rim.device.api.ui.UiApplication;
@@ -35,6 +34,7 @@ import net.rim.device.apps.api.options.OptionsChangeListener;
 import net.rim.device.apps.api.ribbon.RibbonBanner;
 import net.rim.device.apps.api.ui.CommonResources;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
+import net.rim.device.apps.api.ui.VerbMenuItem;
 import net.rim.device.cldc.util.CalendarExtensions;
 import net.rim.device.cldc.util.TimeService;
 import net.rim.device.internal.camera.Camera;
@@ -146,7 +146,7 @@ final class CameraScreen extends MainScreen implements MediaListener, OptionsCha
          this._context = ContextObject.clone(parameter);
          this._path = (String)ContextObject.get(this._context, 2765042845091913199L);
          Object screen = ContextObject.get(this._context, -1477447097671931650L);
-         if (screen instanceof Object) {
+         if (screen instanceof Screen) {
             ((Screen)screen).addScreenUiEngineAttachedListener(this);
          }
 
@@ -265,9 +265,9 @@ final class CameraScreen extends MainScreen implements MediaListener, OptionsCha
 
    @Override
    public final Menu getMenu(int instance) {
-      ContextObject menuContext = (ContextObject)(new Object());
-      menuContext.put(244, new Object(244387));
-      SystemEnabledMenu menu = (SystemEnabledMenu)(new Object(menuContext, null));
+      ContextObject menuContext = new ContextObject();
+      menuContext.put(244, new Integer(244387));
+      SystemEnabledMenu menu = new SystemEnabledMenu(menuContext, null);
       Menu.setTargetScreen(this);
       menu.setInstance(instance);
       this.makeMenuWithContext(menu, instance);
@@ -281,10 +281,10 @@ final class CameraScreen extends MainScreen implements MediaListener, OptionsCha
       }
 
       Verb browseVerb = ExplorerServices.getBrowseVerb(this.getPath(false), 128, null);
-      menu.add((MenuItem)(new Object(CameraMain._rb.getString(24), 591106, 0, browseVerb, null)));
-      menu.add((MenuItem)(new Object(this._optionsVerb, Integer.MAX_VALUE)));
+      menu.add(new VerbMenuItem(CameraMain._rb.getString(24), 591106, 0, browseVerb, null));
+      menu.add(new VerbMenuItem(this._optionsVerb, Integer.MAX_VALUE));
       if (CameraOptions.isViewfinderModeValid(1)) {
-         menu.add((MenuItem)(new Object(new CameraScreen$FullscreenVerb(this), Integer.MAX_VALUE)));
+         menu.add(new VerbMenuItem(new CameraScreen$FullscreenVerb(this), Integer.MAX_VALUE));
       }
 
       if (this._context == null) {
@@ -292,7 +292,7 @@ final class CameraScreen extends MainScreen implements MediaListener, OptionsCha
          if (verbs != null) {
             for (int i = 0; i < verbs.length; i++) {
                CameraScreen$InvokeAndExitWrapperVerb verb = new CameraScreen$InvokeAndExitWrapperVerb(this, verbs[i]);
-               menu.add((MenuItem)(new Object(null, verb.getOrdering(), Integer.MAX_VALUE, verb, null)));
+               menu.add(new VerbMenuItem(null, verb.getOrdering(), Integer.MAX_VALUE, verb, null));
             }
          }
       }
@@ -351,7 +351,7 @@ final class CameraScreen extends MainScreen implements MediaListener, OptionsCha
    }
 
    private final String getPictureFilename(int pictureCounter) {
-      return ((StringBuffer)(new Object("IMG"))).append(NumberUtilities.toString(pictureCounter, 10, PICTURE_COUNTER_STRING_LENGTH)).append(".jpg").toString();
+      return "IMG" + NumberUtilities.toString(pictureCounter, 10, PICTURE_COUNTER_STRING_LENGTH) + ".jpg";
    }
 
    private final String getPath(boolean displayMessage) {
@@ -396,7 +396,7 @@ final class CameraScreen extends MainScreen implements MediaListener, OptionsCha
 
       this._calendar.setTimeLong(System.currentTimeMillis());
       if (log) {
-         System.out.println(((StringBuffer)(new Object("Take picture "))).append(this.getTimestamp()).toString());
+         System.out.println("Take picture " + this.getTimestamp());
       }
 
       Application.getApplication().invokeLater(this._saveLater);
@@ -411,7 +411,7 @@ final class CameraScreen extends MainScreen implements MediaListener, OptionsCha
 
             this._preview.displayMessage(CameraMain._rb.getString(30));
             if (log) {
-               System.out.println(((StringBuffer)(new Object("get preview "))).append(this.getTimestamp()).toString());
+               System.out.println("get preview " + this.getTimestamp());
             }
 
             UiApplication.getUiApplication().pushScreen(this._preview);
@@ -570,11 +570,11 @@ final class CameraScreen extends MainScreen implements MediaListener, OptionsCha
 
    private final void createZoomStrings() {
       int[] zoomLevels = this._viewfinder.getZoomLevels();
-      this._zoomStrings = new Object[zoomLevels.length];
+      this._zoomStrings = new String[zoomLevels.length];
       int one2one = zoomLevels[0];
 
       for (int i = 0; i < zoomLevels.length; i++) {
-         this._zoomStrings[i] = ((StringBuffer)(new Object())).append((zoomLevels[i] + one2one / 2) / one2one).append("x").toString();
+         this._zoomStrings[i] = (zoomLevels[i] + one2one / 2) / one2one + "x";
       }
    }
 
@@ -606,9 +606,9 @@ final class CameraScreen extends MainScreen implements MediaListener, OptionsCha
          }
       }
 
-      this._mediaField = (MediaField)(new Object(18014398512627712L));
-      this._manager = (MediaManager)(new Object());
-      this._pmePlayer = (MediaPlayer)(new Object());
+      this._mediaField = new MediaField(18014398512627712L);
+      this._manager = new MediaManager();
+      this._pmePlayer = new MediaPlayer();
       this._pmePlayer.setUI(this._mediaField);
 
       label59:
@@ -642,8 +642,8 @@ final class CameraScreen extends MainScreen implements MediaListener, OptionsCha
       this._preview = new CameraPreviewScreen();
       this.setZoomMode(true);
       this._calendar = (CalendarExtensions)Calendar.getInstance();
-      this._dateFormat = (SimpleDateFormat)(new Object("yyyy:MM:dd HH:mm:ss"));
-      this._modelName = ((StringBuffer)(new Object())).append(CommonResources.getString(9101)).append(" ").append(DeviceInfo.getDeviceName()).toString();
+      this._dateFormat = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
+      this._modelName = CommonResources.getString(9101) + " " + DeviceInfo.getDeviceName();
       this.setSize(this._options.getImageSize(), this._options.getImageQuality());
       this.setColourEffect(this._options.getColourEffect());
       int desiredThumbnailWidth = MetaDataFile.getDesiredThumbnailWidth();
@@ -655,15 +655,15 @@ final class CameraScreen extends MainScreen implements MediaListener, OptionsCha
          resizedThumbnailHeight = desiredThumbnailWidth * 3 / 4;
       }
 
-      this._thumbnailBitmap = (Bitmap)(new Object(197, resizedThumbnailWidth, resizedThumbnailHeight));
-      this._graphics = (Graphics)(new Object(this._thumbnailBitmap));
+      this._thumbnailBitmap = new Bitmap(197, resizedThumbnailWidth, resizedThumbnailHeight);
+      this._graphics = new Graphics(this._thumbnailBitmap);
       if ((Camera.getFeatures(0) & 256) != 0) {
          this.setManualFrequencyBanding();
       }
    }
 
    private final byte[] fetchJpegData() {
-      String dateString = this._dateFormat.format((Calendar)this._calendar, (StringBuffer)(new Object(19)), null).toString();
+      String dateString = this._dateFormat.format((Calendar)this._calendar, new StringBuffer(19), null).toString();
       return Camera.getPicture(dateString, this._modelName);
    }
 
@@ -684,36 +684,34 @@ final class CameraScreen extends MainScreen implements MediaListener, OptionsCha
 
          for (int i = this.timeIndex; i > 0; i--) {
             this.timeStamps[i] = this.timeStamps[i] - this.timeStamps[i - 1];
-            logEntry = ((StringBuffer)(new Object(" "))).append(this.timeStamps[i]).append(logEntry).toString();
+            logEntry = " " + this.timeStamps[i] + logEntry;
          }
 
-         logEntry = ((StringBuffer)(new Object()))
-            .append(totalTime)
-            .append(" =")
-            .append(logEntry)
-            .append(" S")
-            .append(this._options.getImageSizeIndex())
-            .append(" Q")
-            .append(this._options.getImageQualityIndex())
-            .append(" F")
-            .append(this._flashMode)
-            .append(" M")
-            .append(this._options.getMemoryType())
-            .append(" Z")
-            .append(this._viewfinder.getZoomIndex())
-            .append(" V")
-            .append(this._viewfinderMode)
-            .append(" C")
-            .append(this._options.getColourEffect())
-            .append(" N")
-            .append(this._nightMode)
-            .append(" ")
-            .append(imageSize / 1000)
-            .append("k #")
-            .append(this._cameraData._pictureCounter)
-            .append(" ")
-            .append(this._cameraData._avgImageSizeFactor[this._options.getImageQualityIndex()])
-            .toString();
+         logEntry = totalTime
+            + " ="
+            + logEntry
+            + " S"
+            + this._options.getImageSizeIndex()
+            + " Q"
+            + this._options.getImageQualityIndex()
+            + " F"
+            + this._flashMode
+            + " M"
+            + this._options.getMemoryType()
+            + " Z"
+            + this._viewfinder.getZoomIndex()
+            + " V"
+            + this._viewfinderMode
+            + " C"
+            + this._options.getColourEffect()
+            + " N"
+            + this._nightMode
+            + " "
+            + imageSize / 1000
+            + "k #"
+            + this._cameraData._pictureCounter
+            + " "
+            + this._cameraData._avgImageSizeFactor[this._options.getImageQualityIndex()];
          EventLogger.logEvent(-2562843282228934904L, logEntry.getBytes());
          System.out.println(logEntry);
       }

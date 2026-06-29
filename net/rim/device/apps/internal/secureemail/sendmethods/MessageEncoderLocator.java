@@ -66,7 +66,7 @@ public class MessageEncoderLocator {
       int[] encodingActions = getEncodingActions(
          emailMessageModel, selectedSendMethod.getServiceRecord(), messageRecipientData, secureEmailPolicyServers, selectedEncodingAction
       );
-      Certificate[] additionalCertificates = new Object[0];
+      Certificate[] additionalCertificates = new Certificate[0];
       MessageEncoderProvider messageEncoderProvider = locateMessageEncoderProvider_UserSelectedEncoding(
          emailMessageModel, messageRecipientData, additionalCertificates, selectedEncodingUID, encodingActions, noviceMode, context
       );
@@ -244,7 +244,7 @@ public class MessageEncoderLocator {
 
       Certificate senderEncryptionCertificate = preferredMessageEncoderProvider.obtainSenderEncryptionCertificate(emailMessageModel);
       if (senderEncryptionCertificate == null) {
-         String[] containerStringLowerSingularArray = new Object[]{preferredSecureEmailFactory.getPublicKeyContainerString(false, false)};
+         String[] containerStringLowerSingularArray = new String[]{preferredSecureEmailFactory.getPublicKeyContainerString(false, false)};
          String noEncryptionString = MessageFormat.format(SecureEmailResources.getString(93), containerStringLowerSingularArray);
          int noEncryptionCertOptions = 117;
          if (SubmemberUtilities.getFirstSubmember(emailMessageModel, preferredSecureEmailFactory.getOptionsRecognizer()) == null) {
@@ -345,8 +345,8 @@ public class MessageEncoderLocator {
       }
 
       SecureEmailFactory secureEmailFactory = selectedMessageEncoderProvider.getSecureEmailFactory();
-      String[] labels = new Object[numAllowedCertificates];
-      Certificate[] certificates = new Object[numAllowedCertificates];
+      String[] labels = new String[numAllowedCertificates];
+      Certificate[] certificates = new Certificate[numAllowedCertificates];
 
       for (int i = 0; i < numAllowedCertificates; i++) {
          labels[i] = allowedCertificates[i].getCertificateLabel();
@@ -354,7 +354,7 @@ public class MessageEncoderLocator {
       }
 
       while (true) {
-         String selectCertificatesPrompt = MessageFormat.format(SecureEmailResources.getString(105), new Object[]{recipientNames});
+         String selectCertificatesPrompt = MessageFormat.format(SecureEmailResources.getString(105), new String[]{recipientNames});
          int[] selections = CertificateUtilities.selectCertificates(
             RichTextFieldUtilities.getBoldFormattedRichTextField(selectCertificatesPrompt),
             labels,
@@ -379,9 +379,7 @@ public class MessageEncoderLocator {
             return selectedCertificates;
          }
 
-         SimpleChoiceDialog dialog = (SimpleChoiceDialog)(new Object(
-            SecureEmailResources.getString(104), CommonResource.getStringArray(10004), 0, null, 134217728
-         ));
+         SimpleChoiceDialog dialog = new SimpleChoiceDialog(SecureEmailResources.getString(104), CommonResource.getStringArray(10004), 0, null, 134217728);
          BackgroundDialog.show(dialog);
       }
    }
@@ -417,8 +415,8 @@ public class MessageEncoderLocator {
 
    private static ProblemRecipientData[] createProblemRecipientData(MessageEncoderProvider selectedMessageEncoderProvider) {
       SecureEmailFactory secureEmailFactory = selectedMessageEncoderProvider.getSecureEmailFactory();
-      String[] containerStringLowerSingularArray = new Object[]{secureEmailFactory.getPublicKeyContainerString(false, false)};
-      String[] containerChainStringLowerSingularArray = new Object[]{secureEmailFactory.getPublicKeyContainerChainString(false)};
+      String[] containerStringLowerSingularArray = new String[]{secureEmailFactory.getPublicKeyContainerString(false, false)};
+      String[] containerChainStringLowerSingularArray = new String[]{secureEmailFactory.getPublicKeyContainerChainString(false)};
       ProblemRecipientData[] problemRecipientDataArray = new ProblemRecipientData[8];
       String noCertsString = MessageFormat.format(SecureEmailResources.getString(96), containerStringLowerSingularArray);
       int noCertsUserOptions = 371;

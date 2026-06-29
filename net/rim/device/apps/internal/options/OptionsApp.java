@@ -41,7 +41,7 @@ public final class OptionsApp extends UiApplication implements GlobalEventListen
    private LongHashtable _groups;
    private boolean _isSureType;
    private static OptionsApp _app;
-   private static Object _context = new Object(3);
+   private static Object _context = new ContextObject(3);
    private static final long SELECTED_INDEX_ID_KEY = -7960768038040625127L;
    private static final long DATE_TIME_OPTIONS_SCREEN_KEY = 6173420044896290124L;
    public static final long NETWORK_OPTIONS_SCREEN_KEY = -908968825740058750L;
@@ -54,7 +54,7 @@ public final class OptionsApp extends UiApplication implements GlobalEventListen
             initializeOptionsApp();
             initializeOptionsShortcuts();
             System.exit(0);
-         } else if (args[0] instanceof Object) {
+         } else if (args[0] instanceof String) {
             className = args[0];
          }
       }
@@ -97,7 +97,7 @@ public final class OptionsApp extends UiApplication implements GlobalEventListen
          ApplicationDescriptor currentAppDescriptor = ApplicationDescriptor.currentApplicationDescriptor();
          if (CodeModuleManager.getModuleHandle("net_rim_bb_options_app") != 0) {
             if (Display.isColor()) {
-               ApplicationDescriptor newDescriptor = (ApplicationDescriptor)(new Object(
+               ApplicationDescriptor newDescriptor = new ApplicationDescriptor(
                   currentAppDescriptor,
                   "ScreenKeyboard",
                   new String[]{"net.rim.device.apps.internal.options.items.ScreenKeyboardOptionsItem"},
@@ -105,11 +105,11 @@ public final class OptionsApp extends UiApplication implements GlobalEventListen
                   200,
                   "net.rim.device.apps.internal.resource.Options",
                   1100
-               ));
-               ApplicationEntryPoint newEntryPoint = (ApplicationEntryPoint)(new Object(newDescriptor));
+               );
+               ApplicationEntryPoint newEntryPoint = new ApplicationEntryPoint(newDescriptor);
                ribbon.registerAction("net_rim_bb_options_app.ScreenKeyboard", newEntryPoint);
                if (RadioInfo.areWAFsSupported(-5)) {
-                  newDescriptor = (ApplicationDescriptor)(new Object(
+                  newDescriptor = new ApplicationDescriptor(
                      currentAppDescriptor,
                      "Network",
                      new String[]{"net.rim.device.apps.internal.options.items.network.NetworkOptionsItem"},
@@ -117,14 +117,14 @@ public final class OptionsApp extends UiApplication implements GlobalEventListen
                      200,
                      "net.rim.device.apps.internal.resource.Options",
                      900
-                  ));
-                  newEntryPoint = (ApplicationEntryPoint)(new Object(newDescriptor));
+                  );
+                  newEntryPoint = new ApplicationEntryPoint(newDescriptor);
                   ribbon.registerAction("net_rim_bb_options_app.Network", newEntryPoint);
                }
 
                boolean isSureType = InputContext.getInstance().getActiveInputMethodID() == 4096;
                if (CodeModuleManager.getModuleHandle("net_rim_bb_options_fastEuropean") > 0 && isSureType) {
-                  newDescriptor = (ApplicationDescriptor)(new Object(
+                  newDescriptor = new ApplicationDescriptor(
                      currentAppDescriptor,
                      "CustomWordlist",
                      new String[]{"net.rim.device.apps.internal.options.items.FastEuropean.FastEuropeanOptionsItem"},
@@ -132,15 +132,15 @@ public final class OptionsApp extends UiApplication implements GlobalEventListen
                      200,
                      "net.rim.device.apps.internal.resource.Options",
                      1491
-                  ));
-                  newEntryPoint = (ApplicationEntryPoint)(new Object(newDescriptor));
+                  );
+                  newEntryPoint = new ApplicationEntryPoint(newDescriptor);
                   ribbon.registerAction("net_rim_bb_options_app.CustomWordlist", newEntryPoint);
                }
 
                boolean disabledByITPolicy = ITPolicy.getBoolean(34, 1, false);
                boolean isBluetoothCapable = InternalServices.isDeviceCapable(8);
                if (CodeModuleManager.getModuleHandle("net_rim_bluetooth") > 0 & !disabledByITPolicy & isBluetoothCapable) {
-                  newDescriptor = (ApplicationDescriptor)(new Object(
+                  newDescriptor = new ApplicationDescriptor(
                      currentAppDescriptor,
                      "BluetoothConfig",
                      new String[]{"net.rim.device.apps.internal.bluetooth.BluetoothMainScreen"},
@@ -148,8 +148,8 @@ public final class OptionsApp extends UiApplication implements GlobalEventListen
                      200,
                      "net.rim.device.apps.internal.resource.Options",
                      1968
-                  ));
-                  newEntryPoint = (ApplicationEntryPoint)(new Object(newDescriptor));
+                  );
+                  newEntryPoint = new ApplicationEntryPoint(newDescriptor);
                   ribbon.registerAction("net_rim_bb_options_app.BluetoothConfig", newEntryPoint);
                }
             }
@@ -174,14 +174,14 @@ public final class OptionsApp extends UiApplication implements GlobalEventListen
    private final OptionsApp$OptionGroup getGroup(long groupId) {
       OptionsApp$OptionGroup group = (OptionsApp$OptionGroup)this._groups.get(groupId);
       if (group == null) {
-         throw new Object(((StringBuffer)(new Object("OptionsApp: Illegal group id: "))).append(groupId).toString());
+         throw new IllegalStateException("OptionsApp: Illegal group id: " + groupId);
       } else {
          return group;
       }
    }
 
    private final void initializeOptionGroups() {
-      this._groups = (LongHashtable)(new Object(3));
+      this._groups = new LongHashtable(3);
       this._groups.put(1888231790844671165L, new OptionsApp$OptionGroup(1888231790844671165L, -1, true));
       this._groups.put(-1514481539159318190L, new OptionsApp$OptionGroup(-1514481539159318190L, 1954, false));
       this._groups.put(5294015899860238835L, new OptionsApp$OptionGroup(5294015899860238835L, 1955, false));
@@ -214,9 +214,9 @@ public final class OptionsApp extends UiApplication implements GlobalEventListen
             if (optionsItems != null) {
                for (int j = optionsItems.size() - 1; j >= 0; j--) {
                   Object item = optionsItems.elementAt(j);
-                  if (!(item instanceof Object) || ((ValidationProvider)item).isValid(context)) {
+                  if (!(item instanceof ValidationProvider) || ((ValidationProvider)item).isValid(context)) {
                      long groupId = 1888231790844671165L;
-                     if (item instanceof Object) {
+                     if (item instanceof OptionsListItem) {
                         groupId = ((OptionsListItem)item).getGroupId();
                      }
 
@@ -306,7 +306,7 @@ public final class OptionsApp extends UiApplication implements GlobalEventListen
    }
 
    private static final boolean openItem(Object item, Object context) {
-      if (!(item instanceof Object)) {
+      if (!(item instanceof ActionProvider)) {
          return false;
       }
 

@@ -10,7 +10,7 @@ final class ControlMappingResolver$KeyGenerator {
    }
 
    public final String getKey(int elementCount) {
-      this._strBuf = (StringBuffer)(new Object());
+      this._strBuf = new StringBuffer();
 
       for (this._mappingIndex = 0; this._mappingIndex < elementCount; this._mappingIndex++) {
          this._strBuf.append(this._mapping[this._mappingIndex]).append('.');

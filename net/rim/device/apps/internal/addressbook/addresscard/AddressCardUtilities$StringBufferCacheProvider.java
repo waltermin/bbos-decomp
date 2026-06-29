@@ -4,7 +4,7 @@ import net.rim.device.api.util.WeakReferenceUtilities;
 import net.rim.vm.WeakReference;
 
 final class AddressCardUtilities$StringBufferCacheProvider {
-   private WeakReference _cache = (WeakReference)(new Object(null));
+   private WeakReference _cache = new WeakReference(null);
 
    private AddressCardUtilities$StringBufferCacheProvider() {
    }

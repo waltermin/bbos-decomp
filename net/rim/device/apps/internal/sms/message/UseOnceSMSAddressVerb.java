@@ -33,7 +33,7 @@ final class UseOnceSMSAddressVerb extends Verb {
    public final Object invoke(Object param) {
       String initialValue = (String)ContextObject.get(param, 253);
       Object result = null;
-      ContextObject context = (ContextObject)(new Object(55));
+      ContextObject context = new ContextObject(55);
       switch (this._type) {
          case -1:
             break;

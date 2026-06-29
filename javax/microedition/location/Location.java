@@ -89,7 +89,7 @@ public class Location {
          return String.valueOf(this._satellites);
       }
 
-      StringBuffer info = (StringBuffer)(new Object());
+      StringBuffer info = new StringBuffer();
       if (!mimetype.equals("application/X-jsr179-location-nmea")) {
          if (!mimetype.equals("application/X-jsr179-location-lif")) {
             if (mimetype.equals("text/plain")) {

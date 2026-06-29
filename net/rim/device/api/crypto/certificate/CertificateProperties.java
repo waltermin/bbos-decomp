@@ -131,7 +131,7 @@ public class CertificateProperties {
          returnValues[1] = -1;
          return returnValues;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

@@ -37,7 +37,7 @@ public class LearningGlobalAlphabet implements ReaderConstants {
          data[i] = aDos.readChar();
       }
 
-      this._alphabet = (String)(new Object(data));
+      this._alphabet = new String(data);
       this._updatedLen = len;
       this.fireAlphabetChangedEvent();
    }
@@ -103,7 +103,7 @@ public class LearningGlobalAlphabet implements ReaderConstants {
                return -1;
             }
 
-            this._alphabet = ((StringBuffer)(new Object())).append(this._alphabet).append(ch).toString();
+            this._alphabet = this._alphabet + ch;
          }
 
          aEncodedWord[aOffset + encoded_len++] = (byte)pos;
@@ -160,7 +160,7 @@ public class LearningGlobalAlphabet implements ReaderConstants {
                return -1;
             }
 
-            this._alphabet = ((StringBuffer)(new Object())).append(this._alphabet).append(ch).toString();
+            this._alphabet = this._alphabet + ch;
          }
 
          aEncodedWord[aOffset + encoded_len++] = (byte)pos;
@@ -236,7 +236,7 @@ public class LearningGlobalAlphabet implements ReaderConstants {
          this._listener1 = l;
       } else {
          if (!this._overrideListenersMode && this._listener2 != null && l != this._listener2) {
-            throw new Object("Only two alphabet change listeners are supported!");
+            throw new IllegalStateException("Only two alphabet change listeners are supported!");
          }
 
          this._listener2 = l;

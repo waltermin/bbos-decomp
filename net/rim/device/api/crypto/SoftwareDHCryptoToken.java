@@ -37,21 +37,21 @@ final class SoftwareDHCryptoToken extends DHCryptoToken implements Persistable {
       // 15: aastore
       // 16: areturn
       // 17: astore 1
-      // 18: new java/lang/Object
+      // 18: new java/lang/RuntimeException
       // 1b: dup
       // 1c: aload 1
       // 1d: invokevirtual net/rim/device/api/crypto/CryptoTokenException.toString ()Ljava/lang/String;
       // 20: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 23: athrow
       // 24: astore 1
-      // 25: new java/lang/Object
+      // 25: new java/lang/RuntimeException
       // 28: dup
       // 29: aload 1
       // 2a: invokevirtual net/rim/device/api/crypto/CryptoUnsupportedOperationException.toString ()Ljava/lang/String;
       // 2d: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 30: athrow
       // 31: astore 1
-      // 32: new java/lang/Object
+      // 32: new java/lang/RuntimeException
       // 35: dup
       // 36: aload 1
       // 37: invokevirtual net/rim/device/api/crypto/UnsupportedCryptoSystemException.toString ()Ljava/lang/String;
@@ -70,7 +70,7 @@ final class SoftwareDHCryptoToken extends DHCryptoToken implements Persistable {
    @Override
    public final int getDHCryptoSystemBitLength(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareDHCryptoToken$DHCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareDHCryptoToken$DHCryptoSystemData cryptoSystem = (SoftwareDHCryptoToken$DHCryptoSystemData)cryptoTokenData;
@@ -80,7 +80,7 @@ final class SoftwareDHCryptoToken extends DHCryptoToken implements Persistable {
    @Override
    public final String getDHCryptoSystemName(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareDHCryptoToken$DHCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareDHCryptoToken$DHCryptoSystemData cryptoSystem = (SoftwareDHCryptoToken$DHCryptoSystemData)cryptoTokenData;
@@ -90,7 +90,7 @@ final class SoftwareDHCryptoToken extends DHCryptoToken implements Persistable {
    @Override
    public final byte[] getDHCryptoSystemP(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareDHCryptoToken$DHCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareDHCryptoToken$DHCryptoSystemData cryptoSystem = (SoftwareDHCryptoToken$DHCryptoSystemData)cryptoTokenData;
@@ -100,7 +100,7 @@ final class SoftwareDHCryptoToken extends DHCryptoToken implements Persistable {
    @Override
    public final byte[] getDHCryptoSystemQ(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareDHCryptoToken$DHCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareDHCryptoToken$DHCryptoSystemData cryptoSystem = (SoftwareDHCryptoToken$DHCryptoSystemData)cryptoTokenData;
@@ -110,7 +110,7 @@ final class SoftwareDHCryptoToken extends DHCryptoToken implements Persistable {
    @Override
    public final byte[] getDHCryptoSystemG(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareDHCryptoToken$DHCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareDHCryptoToken$DHCryptoSystemData cryptoSystem = (SoftwareDHCryptoToken$DHCryptoSystemData)cryptoTokenData;
@@ -120,7 +120,7 @@ final class SoftwareDHCryptoToken extends DHCryptoToken implements Persistable {
    @Override
    public final int getDHPublicKeyLength(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareDHCryptoToken$DHCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareDHCryptoToken$DHCryptoSystemData cryptoSystem = (SoftwareDHCryptoToken$DHCryptoSystemData)cryptoTokenData;
@@ -130,7 +130,7 @@ final class SoftwareDHCryptoToken extends DHCryptoToken implements Persistable {
    @Override
    public final int getDHPrivateKeyLength(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareDHCryptoToken$DHCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareDHCryptoToken$DHCryptoSystemData cryptoSystem = (SoftwareDHCryptoToken$DHCryptoSystemData)cryptoTokenData;
@@ -140,7 +140,7 @@ final class SoftwareDHCryptoToken extends DHCryptoToken implements Persistable {
    @Override
    public final int getDHPrivateKeyMinRandomBits(CryptoTokenCryptoSystemData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareDHCryptoToken$DHCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareDHCryptoToken$DHCryptoSystemData cryptoSystem = (SoftwareDHCryptoToken$DHCryptoSystemData)cryptoTokenData;
@@ -150,9 +150,9 @@ final class SoftwareDHCryptoToken extends DHCryptoToken implements Persistable {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final DHKeyPair createDHKeyPair(CryptoTokenCryptoSystemData cryptoTokenData) {
+   public final DHKeyPair createDHKeyPair(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
       if (!(cryptoTokenData instanceof SoftwareDHCryptoToken$DHCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareDHCryptoToken$DHCryptoSystemData cryptoSystemData = (SoftwareDHCryptoToken$DHCryptoSystemData)cryptoTokenData;
@@ -162,7 +162,7 @@ final class SoftwareDHCryptoToken extends DHCryptoToken implements Persistable {
       byte[] Q = cryptoSystemData.getQ();
       byte[] G = cryptoSystemData.getG();
       if (!NativeDL.isSupported(P, Q, G, cryptoSystemData.getPrivateKeyLength(), 1)) {
-         throw new Object();
+         throw new CryptoUnsupportedOperationException();
       }
 
       Certicom.assertAccessAllowed();
@@ -181,7 +181,7 @@ final class SoftwareDHCryptoToken extends DHCryptoToken implements Persistable {
             byte[] sharedSecret1 = this.generateDHSharedSecret(cryptoSystemData, privateKeyData, testPublicKeyBytes, false);
             byte[] sharedSecret2 = this.generateDHSharedSecret(cryptoSystemData, testPrivateKeyData, publicKeyBytes, false);
             if (!Arrays.equals(sharedSecret1, sharedSecret2)) {
-               throw new Object();
+               throw new CryptoSelfTestError();
             }
 
             DHCryptoSystem cryptoSystem = new DHCryptoSystem(this, cryptoSystemData);
@@ -190,10 +190,10 @@ final class SoftwareDHCryptoToken extends DHCryptoToken implements Persistable {
             e = var18;
          }
       } catch (Throwable var19) {
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       }
 
-      throw new Object(e.toString());
+      throw new RuntimeException(e.toString());
    }
 
    @Override
@@ -239,7 +239,7 @@ final class SoftwareDHCryptoToken extends DHCryptoToken implements Persistable {
       if (cryptoSystemData instanceof SoftwareDHCryptoToken$DHCryptoSystemData) {
          return new SoftwareDHCryptoToken$DHPublicKeyData((SoftwareDHCryptoToken$DHCryptoSystemData)cryptoSystemData, data);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -248,7 +248,7 @@ final class SoftwareDHCryptoToken extends DHCryptoToken implements Persistable {
       if (cryptoSystemData instanceof SoftwareDHCryptoToken$DHCryptoSystemData) {
          return new SoftwareDHCryptoToken$DHPrivateKeyData((SoftwareDHCryptoToken$DHCryptoSystemData)cryptoSystemData, data);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -263,7 +263,7 @@ final class SoftwareDHCryptoToken extends DHCryptoToken implements Persistable {
    @Override
    public final byte[] extractDHPublicKeyData(CryptoTokenPublicKeyData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareDHCryptoToken$DHPublicKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareDHCryptoToken$DHPublicKeyData)cryptoTokenData).copyPublicKeyData();
       }
@@ -272,7 +272,7 @@ final class SoftwareDHCryptoToken extends DHCryptoToken implements Persistable {
    @Override
    public final byte[] extractDHPublicKeyData(CryptoTokenPrivateKeyData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareDHCryptoToken$DHPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareDHCryptoToken$DHPrivateKeyData)cryptoTokenData).copyPublicKeyData();
       }
@@ -281,7 +281,7 @@ final class SoftwareDHCryptoToken extends DHCryptoToken implements Persistable {
    @Override
    public final byte[] extractDHPrivateKeyData(CryptoTokenPrivateKeyData cryptoTokenData) {
       if (!(cryptoTokenData instanceof SoftwareDHCryptoToken$DHPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return ((SoftwareDHCryptoToken$DHPrivateKeyData)cryptoTokenData).copyPrivateKeyData();
       }
@@ -293,23 +293,23 @@ final class SoftwareDHCryptoToken extends DHCryptoToken implements Persistable {
       CryptoTokenPrivateKeyData cryptoTokenLocalPrivateKeyData,
       byte[] remotePublicKeyData,
       boolean useCofactor
-   ) {
+   ) throws CryptoUnsupportedOperationException {
       if (useCofactor) {
-         throw new Object();
+         throw new CryptoUnsupportedOperationException();
       }
 
       if (!(cryptoTokenCryptoSystemData instanceof SoftwareDHCryptoToken$DHCryptoSystemData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareDHCryptoToken$DHCryptoSystemData cryptoSystemData = (SoftwareDHCryptoToken$DHCryptoSystemData)cryptoTokenCryptoSystemData;
       if (!(cryptoTokenLocalPrivateKeyData instanceof SoftwareDHCryptoToken$DHPrivateKeyData)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       SoftwareDHCryptoToken$DHPrivateKeyData localPrivateKeyData = (SoftwareDHCryptoToken$DHPrivateKeyData)cryptoTokenLocalPrivateKeyData;
       if (!NativeDL.isSupported(cryptoSystemData.getP(), cryptoSystemData.getQ(), cryptoSystemData.getG(), cryptoSystemData.getPrivateKeyLength(), 4)) {
-         throw new Object();
+         throw new CryptoUnsupportedOperationException();
       }
 
       byte[] sharedSecret = new byte[cryptoSystemData.getPublicKeyLength()];
@@ -546,10 +546,10 @@ final class SoftwareDHCryptoToken extends DHCryptoToken implements Persistable {
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

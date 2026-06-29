@@ -7,6 +7,7 @@ import net.rim.device.api.collection.CollectionEventSource;
 import net.rim.device.api.collection.CollectionListener;
 import net.rim.device.api.collection.CollectionListenerWithHint;
 import net.rim.device.api.collection.LongKeyProviderAdaptor;
+import net.rim.device.api.collection.LongKeyProviderAdaptorComparator;
 import net.rim.device.api.collection.NotificationSuspension;
 import net.rim.device.api.collection.OrderedList;
 import net.rim.device.api.collection.ReadableList;
@@ -30,10 +31,10 @@ public class MergedCollection
    CollectionListenerWithHint {
    private BigVector _messages;
    private boolean _initialMergePerformed;
-   private CollectionListenerManager _collectionListenerManager = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _collectionListenerManager = new CollectionListenerManager();
    private boolean _inReset;
    private boolean _resetNeeded;
-   private Vector _sources = (Vector)(new Object());
+   private Vector _sources = new Vector();
    private LongKeyProviderAdaptor _longKeyProviderAdaptor;
    private Comparator _comparator;
    private MergedCollection$Merger _merger = new MergedCollection$Merger(this);
@@ -45,7 +46,7 @@ public class MergedCollection
    protected void assertHaveFolderLock() {
       if (!Monitor.monitorOwned(FolderHierarchies.getLockObject())) {
          try {
-            throw new Object("MergedCollection modified outside of FolderHierarchies lock.");
+            throw new Throwable("MergedCollection modified outside of FolderHierarchies lock.");
          } finally {
             return;
          }
@@ -58,7 +59,7 @@ public class MergedCollection
    }
 
    protected void logUnsortedSource(ReadableList source, Object sourceObject, long date, long priorDate) {
-      StringBuffer sb = (StringBuffer)(new Object("Unsorted Source:"));
+      StringBuffer sb = new StringBuffer("Unsorted Source:");
       sb.append(source.getClass().getName());
       sb.append(", Item=");
       sb.append(sourceObject.getClass().getName());
@@ -72,14 +73,14 @@ public class MergedCollection
    @Override
    public void addSource(Object source) {
       synchronized (FolderHierarchies.getLockObject()) {
-         if (!(source instanceof Object)) {
-            throw new Object();
+         if (!(source instanceof ReadableList)) {
+            throw new IllegalArgumentException();
          }
 
          boolean mergeRequired = false;
          if (this._sources.indexOf(source) == -1) {
             this._sources.addElement(source);
-            if (source instanceof Object) {
+            if (source instanceof CollectionEventSource) {
                ((CollectionEventSource)source).addCollectionListener(this);
             }
 
@@ -100,7 +101,7 @@ public class MergedCollection
          int index = this._sources.indexOf(source);
          if (index != -1) {
             this._sources.removeElementAt(index);
-            if (source instanceof Object) {
+            if (source instanceof CollectionEventSource) {
                ((CollectionEventSource)source).removeCollectionListener(this);
             }
 
@@ -219,7 +220,7 @@ public class MergedCollection
       this.assertHaveFolderLock();
       if (!this.deferredResetWillHandleThisChange(false, null)) {
          if (!this._messages.updateElement(this._comparator, oldElement, newElement)) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          this._collectionListenerManager.fireElementUpdated(this, oldElement, newElement);
@@ -244,7 +245,7 @@ public class MergedCollection
 
       for (int i = 0; i < sourceCount; i++) {
          Collection collection = (Collection)this._sources.elementAt(i);
-         if (collection instanceof Object) {
+         if (collection instanceof NotificationSuspension) {
             ((NotificationSuspension)collection).resumeNotification(context);
          }
       }
@@ -263,7 +264,7 @@ public class MergedCollection
 
          for (int i = 0; i < sourceCount; i++) {
             Collection collection = (Collection)this._sources.elementAt(i);
-            if (collection instanceof Object) {
+            if (collection instanceof NotificationSuspension) {
                ((NotificationSuspension)collection).suspendNotification(context);
             }
          }
@@ -360,7 +361,7 @@ public class MergedCollection
    }
 
    private void loadMessagesFromSources() {
-      this._messages = (BigVector)(new Object());
+      this._messages = new BigVector();
       this._merger.mergeSources();
       this._initialMergePerformed = true;
       this._resetNeeded = false;
@@ -379,7 +380,7 @@ public class MergedCollection
                list.removeElementAt(num);
             } else if (collection._resetNeeded) {
                collection._resetNeeded = false;
-               if (collection instanceof Object) {
+               if (collection instanceof CollectionListenerWithHint) {
                   collection.reset(null, hint);
                } else {
                   collection.reset(null);
@@ -390,9 +391,9 @@ public class MergedCollection
    }
 
    public MergedCollection(LongKeyProviderAdaptor longKeyProviderAdaptor) {
-      _mergedCollectionList.addElement(new Object(this));
+      _mergedCollectionList.addElement(new WeakReference(this));
       this._longKeyProviderAdaptor = longKeyProviderAdaptor;
-      this._comparator = (Comparator)(new Object(this._longKeyProviderAdaptor));
+      this._comparator = new LongKeyProviderAdaptorComparator(this._longKeyProviderAdaptor);
    }
 
    static {

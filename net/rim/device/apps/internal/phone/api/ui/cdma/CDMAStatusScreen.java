@@ -6,9 +6,9 @@ import net.rim.device.api.system.ApplicationDescriptor;
 import net.rim.device.api.system.CDMAInfo;
 import net.rim.device.api.system.DeviceInfo;
 import net.rim.device.api.system.RadioInfo;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.EditField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectListField;
 import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.MainScreen;
@@ -18,38 +18,36 @@ import net.rim.device.internal.system.RadioInternal;
 import net.rim.device.internal.ui.component.IPEditField;
 
 public final class CDMAStatusScreen extends MainScreen {
-   private EditField _phoneNumber = (EditField)(new Object("Phone Number: ", "", 40, 9007199254740992L));
-   private EditField _deviceESNhex = (EditField)(new Object("Device ESNhex: ", "", 40, 9007199254740992L));
-   private EditField _deviceESNdec = (EditField)(new Object("Device ESNdec: ", "", 40, 9007199254740992L));
-   private EditField _BBPIN = (EditField)(new Object("Device BBPIN: ", "", 40, 9007199254740992L));
-   private ObjectListField _languageList = (ObjectListField)(new Object());
-   private EditField _deviceSWVersion = (EditField)(new Object("Device Software Version: ", "", 40, 9007199254740992L));
-   private EditField _model = (EditField)(new Object("Model: ", "", 40, 9007199254740992L));
-   private EditField _HWVersion = (EditField)(new Object("H/W Version: ", "", 40, 9007199254740992L));
-   private EditField _PRLVersion = (EditField)(new Object("PRL Version: ", "", 40, 9007199254740992L));
-   private EditField _currentSID = (EditField)(new Object("Current SID: ", "", 40, 9007199254740992L));
-   private EditField _homeSID = (EditField)(new Object("HomeSID/HomeNID: ", "", 40, 9007199254740992L));
-   private EditField _blackBerryHomeSID = (EditField)(new Object("BlackBerry HomeSID: ", "", 40, 9007199254740992L));
-   private EditField _network = (EditField)(new Object("Network Scan Mode: ", "", 40, 9007199254740992L));
-   private EditField _bandClass = (EditField)(new Object("Band Class: ", "", 40, 9007199254740992L));
-   private EditField _CDMAChannel = (EditField)(new Object("CDMA Channel: ", "", 40, 9007199254740992L));
-   private EditField _IPAddress = (EditField)(new Object("IP Address: ", "", 40, 9007199254740992L));
-   private EditField _browserVersion = (EditField)(new Object("Browser Version: ", "", 40, 9007199254740992L));
-   private EditField _battery = (EditField)(new Object("Battery: ", "", 40, 9007199254740992L));
-   private RichTextField _language = (RichTextField)(new Object("Language List: "));
-   private RichTextField _technology = (RichTextField)(new Object("Technology: dual-band CDMA 1x"));
-   private RichTextField _enhancedRoamingIndicator = (RichTextField)(new Object("ERI Version: not supported"));
-   private RichTextField _deviceCapability = (RichTextField)(new Object(
-      ((StringBuffer)(new Object("Device Capabilities: "))).append(this.getDeviceCapabilities()).toString()
-   ));
-   private RichTextField _BREW = (RichTextField)(new Object("BREW: not supported"));
+   private EditField _phoneNumber = new EditField("Phone Number: ", "", 40, 9007199254740992L);
+   private EditField _deviceESNhex = new EditField("Device ESNhex: ", "", 40, 9007199254740992L);
+   private EditField _deviceESNdec = new EditField("Device ESNdec: ", "", 40, 9007199254740992L);
+   private EditField _BBPIN = new EditField("Device BBPIN: ", "", 40, 9007199254740992L);
+   private ObjectListField _languageList = new ObjectListField();
+   private EditField _deviceSWVersion = new EditField("Device Software Version: ", "", 40, 9007199254740992L);
+   private EditField _model = new EditField("Model: ", "", 40, 9007199254740992L);
+   private EditField _HWVersion = new EditField("H/W Version: ", "", 40, 9007199254740992L);
+   private EditField _PRLVersion = new EditField("PRL Version: ", "", 40, 9007199254740992L);
+   private EditField _currentSID = new EditField("Current SID: ", "", 40, 9007199254740992L);
+   private EditField _homeSID = new EditField("HomeSID/HomeNID: ", "", 40, 9007199254740992L);
+   private EditField _blackBerryHomeSID = new EditField("BlackBerry HomeSID: ", "", 40, 9007199254740992L);
+   private EditField _network = new EditField("Network Scan Mode: ", "", 40, 9007199254740992L);
+   private EditField _bandClass = new EditField("Band Class: ", "", 40, 9007199254740992L);
+   private EditField _CDMAChannel = new EditField("CDMA Channel: ", "", 40, 9007199254740992L);
+   private EditField _IPAddress = new EditField("IP Address: ", "", 40, 9007199254740992L);
+   private EditField _browserVersion = new EditField("Browser Version: ", "", 40, 9007199254740992L);
+   private EditField _battery = new EditField("Battery: ", "", 40, 9007199254740992L);
+   private RichTextField _language = new RichTextField("Language List: ");
+   private RichTextField _technology = new RichTextField("Technology: dual-band CDMA 1x");
+   private RichTextField _enhancedRoamingIndicator = new RichTextField("ERI Version: not supported");
+   private RichTextField _deviceCapability = new RichTextField("Device Capabilities: " + this.getDeviceCapabilities());
+   private RichTextField _BREW = new RichTextField("BREW: not supported");
 
    public CDMAStatusScreen() {
       this.init();
    }
 
    protected final void init() {
-      this.setTitle((Field)(new Object("Status")));
+      this.setTitle(new LabelField("Status"));
       this.add(this._phoneNumber);
       this.add(this._deviceESNhex);
       this.add(this._deviceESNdec);
@@ -79,10 +77,10 @@ public final class CDMAStatusScreen extends MainScreen {
       this._BBPIN.setText(this.getPIN());
       Locale[] locale = Locale.getAvailableLocales();
       int size = locale.length;
-      String[] languageName = new Object[size - 1];
+      String[] languageName = new String[size - 1];
 
       for (int i = 1; i < size; i++) {
-         languageName[i - 1] = ((StringBuffer)(new Object("     "))).append(locale[i].getDisplayName()).toString();
+         languageName[i - 1] = "     " + locale[i].getDisplayName();
       }
 
       this._languageList.set(languageName);
@@ -104,7 +102,7 @@ public final class CDMAStatusScreen extends MainScreen {
    public final String getDeviceCapabilities() {
       String ret = "SMS, Packet DATA, VOICE capable";
       if (GPS.isSupported()) {
-         ret = ((StringBuffer)(new Object())).append(ret).append(", GPS enabled").toString();
+         ret = ret + ", GPS enabled";
       }
 
       return ret;
@@ -149,7 +147,7 @@ public final class CDMAStatusScreen extends MainScreen {
    public final String getHomeSID() {
       short[] sid = CDMAInfo.getHomeSystemSIDs();
       short[] nid = CDMAInfo.getHomeSystemNIDs();
-      return ((StringBuffer)(new Object())).append(Integer.toString(sid[0] & 32767)).append(", ").append(Integer.toString(nid[0] & 65535)).toString();
+      return Integer.toString(sid[0] & 32767) + ", " + Integer.toString(nid[0] & 65535);
    }
 
    public final String getBlackBerryHomeSID() {
@@ -199,7 +197,7 @@ public final class CDMAStatusScreen extends MainScreen {
          ip = RadioInfo.getIPAddress(apn);
       }
 
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
       IPEditField.appendIpAddr(sb, ip);
       return sb.toString();
    }
@@ -213,7 +211,7 @@ public final class CDMAStatusScreen extends MainScreen {
          level = 0;
       }
 
-      return ((StringBuffer)(new Object())).append(String.valueOf(level)).append('%').toString();
+      return String.valueOf(level) + '%';
    }
 
    @Override

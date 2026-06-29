@@ -19,6 +19,6 @@ final class CameraScreen$FullscreenVerb extends Verb {
    @Override
    public final String toString() {
       String s = super.toString();
-      return this.this$0._viewfinderMode == 1 ? ((StringBuffer)(new Object())).append('✓').append(s).toString() : s;
+      return this.this$0._viewfinderMode == 1 ? '✓' + s : s;
    }
 }

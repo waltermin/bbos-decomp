@@ -1,18 +1,20 @@
 package net.rim.device.apps.api.ui;
 
 import net.rim.device.api.crypto.Digest;
+import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.i18n.Locale;
 import net.rim.device.api.i18n.MessageFormat;
 import net.rim.device.api.itpolicy.ITPolicy;
 import net.rim.device.api.system.Backlight;
 import net.rim.device.api.system.Bitmap;
+import net.rim.device.api.system.UserAuthenticationException;
 import net.rim.device.api.system.UserAuthenticator;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Keypad;
-import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.PasswordEditField;
+import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.CRC32;
 import net.rim.device.api.util.CharacterUtilities;
@@ -21,6 +23,7 @@ import net.rim.device.apps.api.framework.verb.WipeHandheldVerb;
 import net.rim.device.internal.system.FIPSPolicy;
 import net.rim.device.internal.system.NvStore;
 import net.rim.device.internal.system.Security;
+import net.rim.device.internal.system.Security$NoAccessUserAuthenticator;
 import net.rim.device.internal.system.USBPasswordRedirectManager;
 import net.rim.device.internal.ui.UiInternal;
 import net.rim.device.internal.ui.UiSettings;
@@ -34,7 +37,7 @@ import net.rim.vm.Array;
 public final class SecurityDialog {
    private static final int PASSWORD_INVALID = -1;
    private static Security _security = Security.getInstance();
-   private static SimplePasswordDialog _passwordDialog = (SimplePasswordDialog)(new Object(null, 1, 32, false, 0));
+   private static SimplePasswordDialog _passwordDialog = new SimplePasswordDialog(null, 1, 32, false, 0);
    private static UserAuthenticatorPasswordDialog _userAuthenticatorPasswordDialog;
    private static SecurityDialog$USBPasswordRedirectDialog _uSBPasswordRedirectDialog;
    private static String _knownPassword = "blackberry";
@@ -66,7 +69,7 @@ public final class SecurityDialog {
       }
 
       SecurityDialog$GetAuthenticatorThread getAuthenticatorThread = new SecurityDialog$GetAuthenticatorThread(itAdminEnforced);
-      PleaseWaitDialog pleaseWait = (PleaseWaitDialog)(new Object(getAuthenticatorThread));
+      PleaseWaitDialog pleaseWait = new PleaseWaitDialog(getAuthenticatorThread);
       pleaseWait.display();
       userAuthenticator = getAuthenticatorThread.getUserAuthenticator();
       if (userAuthenticator == null) {
@@ -75,7 +78,7 @@ public final class SecurityDialog {
       }
 
       while (true) {
-         StringBuffer passwordPromptMessage = (StringBuffer)(new Object());
+         StringBuffer passwordPromptMessage = new StringBuffer();
          if (itAdminEnforced) {
             passwordPromptMessage.append(CommonResources.getString(9130));
          } else {
@@ -108,12 +111,12 @@ public final class SecurityDialog {
             }
          } else {
             SecurityDialog$ChallengeUser challenge = new SecurityDialog$ChallengeUser(_userAuthenticatorPassword, userAuthenticator);
-            pleaseWait = (PleaseWaitDialog)(new Object(CommonResources.getString(9031), challenge));
+            pleaseWait = new PleaseWaitDialog(CommonResources.getString(9031), challenge);
             pleaseWait.display();
             _passwordDialog.setText("");
             _userAuthenticatorPassword = null;
             Throwable throwable = pleaseWait.getThrowable();
-            if (throwable instanceof Object) {
+            if (throwable instanceof UserAuthenticationException) {
                if (!itAdminEnforced) {
                   return false;
                }
@@ -136,7 +139,7 @@ public final class SecurityDialog {
    ) {
       _validationStatus = -1;
       if (blankScreen) {
-         UiApplication.getUiApplication().pushScreen((Screen)(new Object()));
+         UiApplication.getUiApplication().pushScreen(new MainScreen());
       }
 
       if (prompt == null) {
@@ -158,7 +161,7 @@ public final class SecurityDialog {
          }
 
          SecurityDialog$ChallengeUser challenge = new SecurityDialog$ChallengeUser(_currentPassword, null, _userAuthenticatorPassword);
-         PleaseWaitDialog pleaseWait = (PleaseWaitDialog)(new Object(pleaseWaitMessage, challenge));
+         PleaseWaitDialog pleaseWait = new PleaseWaitDialog(pleaseWaitMessage, challenge);
          pleaseWait.display();
          return cleanup(blankScreen, challenge.getResult());
       } else if (changePassword || _security.verifyPasswordPattern(_currentPassword) != 0 || _security.isPasswordValid(_currentPassword) != 0) {
@@ -190,10 +193,10 @@ public final class SecurityDialog {
             }
 
             SecurityDialog$ChallengeUser challenge = new SecurityDialog$ChallengeUser(_currentPassword, _newPassword, _userAuthenticatorPassword);
-            PleaseWaitDialog pleaseWait = (PleaseWaitDialog)(new Object(pleaseWaitMessage, challenge));
+            PleaseWaitDialog pleaseWait = new PleaseWaitDialog(pleaseWaitMessage, challenge);
             pleaseWait.display();
             Throwable throwable = pleaseWait.getThrowable();
-            if (throwable instanceof Object) {
+            if (throwable instanceof UserAuthenticationException) {
                if (allowClose) {
                   return cleanup(blankScreen, false);
                }
@@ -240,10 +243,10 @@ public final class SecurityDialog {
          authenticator = null;
       }
 
-      if (authenticator != null && authenticator instanceof Object) {
-         SimpleChoiceDialog dialog = (SimpleChoiceDialog)(new Object(
-            CommonResources.getString(9146), new Object[]{CommonResources.getString(9042), WipeHandheldVerb.getDisplayString()}, 0, null
-         ));
+      if (authenticator != null && authenticator instanceof Security$NoAccessUserAuthenticator) {
+         SimpleChoiceDialog dialog = new SimpleChoiceDialog(
+            CommonResources.getString(9146), new String[]{CommonResources.getString(9042), WipeHandheldVerb.getDisplayString()}, 0, null
+         );
          dialog.show();
          if (dialog.getCloseReason() != -1 && dialog.getSelectedIndex() != 0) {
             WipeHandheldVerb wipeVerb = new WipeHandheldVerb(0);
@@ -312,7 +315,7 @@ public final class SecurityDialog {
          }
 
          boolean revealDevicePassword = devicePasswordAttempt > _security.getRevealPasswordAttempts(devicePasswordMaxAttempts);
-         StringBuffer deviceAttemptsBuffer = (StringBuffer)(new Object());
+         StringBuffer deviceAttemptsBuffer = new StringBuffer();
          if (devicePasswordAttempt > 1 || authenticatorPasswordAttempt > 1) {
             createAttemptsBuffer(deviceAttemptsBuffer, devicePasswordAttempt, devicePasswordMaxAttempts);
          }
@@ -326,7 +329,7 @@ public final class SecurityDialog {
             }
 
             _passwordDialog.setRevealPassword(revealDevicePassword);
-            _passwordDialog.show(((StringBuffer)(new Object())).append(prompt).append(deviceAttemptsBuffer).toString());
+            _passwordDialog.show(prompt + deviceAttemptsBuffer);
             if (_passwordDialog.getCloseReason() == -1) {
                return false;
             }
@@ -350,7 +353,7 @@ public final class SecurityDialog {
 
             _currentPassword = _uSBPasswordRedirectDialog.getText();
          } else {
-            StringBuffer authenticatorAttemptsBuffer = (StringBuffer)(new Object());
+            StringBuffer authenticatorAttemptsBuffer = new StringBuffer();
             if (authenticatorPasswordMaxAttempts != Integer.MAX_VALUE
                && authenticationPasswordAttemptsSupported
                && (devicePasswordAttempt > 1 || authenticatorPasswordAttempt > 1)) {
@@ -361,9 +364,9 @@ public final class SecurityDialog {
             boolean revealAuthenticatorPassword = authenticationPasswordAttemptsSupported
                && authenticatorPasswordAttempt > _security.getRevealPasswordAttempts(authenticatorPasswordMaxAttempts);
             _userAuthenticatorPasswordDialog = new UserAuthenticatorPasswordDialog(
-               ((StringBuffer)(new Object())).append(CommonResources.getString(9089)).append(deviceAttemptsBuffer).toString(),
+               CommonResources.getString(9089) + deviceAttemptsBuffer,
                revealDevicePassword,
-               ((StringBuffer)(new Object())).append(CommonResources.getString(9090)).append(authenticatorAttemptsBuffer).toString(),
+               CommonResources.getString(9090) + authenticatorAttemptsBuffer,
                revealAuthenticatorPassword,
                _security.getAutoFillUserAuthenticatorPasswordField(),
                isPendingUSBConnection
@@ -403,10 +406,10 @@ public final class SecurityDialog {
             challenge = new SecurityDialog$ChallengeUser(_currentPassword, _userAuthenticatorPassword);
          }
 
-         PleaseWaitDialog pleaseWait = (PleaseWaitDialog)(new Object(pleaseWaitMessage, challenge));
+         PleaseWaitDialog pleaseWait = new PleaseWaitDialog(pleaseWaitMessage, challenge);
          pleaseWait.display();
          Throwable throwable = pleaseWait.getThrowable();
-         if (throwable instanceof Object) {
+         if (throwable instanceof UserAuthenticationException) {
             return false;
          }
 
@@ -416,17 +419,13 @@ public final class SecurityDialog {
 
          String notification = CommonResources.getString(6006);
          Field f = _passwordDialog.getEditField();
-         if (f instanceof Object) {
+         if (f instanceof PasswordEditField) {
             PasswordEditField pef = (PasswordEditField)f;
             if (pef.isUnicodeInputAllowed()) {
                Locale[] locales = Locale.getAvailableInputLocales();
                if (checkInputLocales(locales)) {
                   locales = getFilteredInputLocales(locales);
-                  int index = Dialog.ask(
-                     ((StringBuffer)(new Object())).append(notification).append("\n").append(CommonResources.getString(9161)).toString(),
-                     Utils.getInputLocalesDisplayNames(locales),
-                     0
-                  );
+                  int index = Dialog.ask(notification + "\n" + CommonResources.getString(9161), Utils.getInputLocalesDisplayNames(locales), 0);
                   if (index != -1) {
                      Locale.setDefaultInputForSystem(locales[index]);
                   }
@@ -456,7 +455,7 @@ public final class SecurityDialog {
    private static final Locale[] getFilteredInputLocales(Locale[] src) {
       InputContext ic = InputContext.getInstance();
       boolean isMultitapMode = ic.getActiveInputMethodID() == 4096;
-      Locale[] res = new Object[src.length];
+      Locale[] res = new Locale[src.length];
       int count = 0;
 
       for (int i = 0; i < src.length; i++) {
@@ -498,7 +497,7 @@ public final class SecurityDialog {
       String label = CommonResources.getString(2010);
       String mask = ITPolicy.getString(24, 73);
       if (mask != null) {
-         StringBuffer sb = (StringBuffer)(new Object(label.length() + 2 + mask.length() + 1));
+         StringBuffer sb = new StringBuffer(label.length() + 2 + mask.length() + 1);
          sb.append(label);
          sb.append(' ');
          sb.append('(');
@@ -594,7 +593,7 @@ public final class SecurityDialog {
       SecurityDialog$EnhancedPasswordDialog dialog = new SecurityDialog$EnhancedPasswordDialog(prompt, true, null);
       dialog.show();
       int result = dialog.getChoice();
-      return result == 1 ? false : StringUtilities.compareToIgnoreCase(_knownPassword, (String)(new Object(dialog.getPassword())), 1701707776) == 0;
+      return result == 1 ? false : StringUtilities.compareToIgnoreCase(_knownPassword, new String(dialog.getPassword()), 1701707776) == 0;
    }
 
    public static final synchronized boolean otaChangePassword(String otaPwd) {
@@ -611,10 +610,10 @@ public final class SecurityDialog {
          }
 
          boolean revealDevicePassword = devicePasswordAttempt > _security.getRevealPasswordAttempts(devicePasswordMaxAttempts);
-         StringBuffer deviceAttemptsBuffer = (StringBuffer)(new Object());
+         StringBuffer deviceAttemptsBuffer = new StringBuffer();
          createAttemptsBuffer(deviceAttemptsBuffer, devicePasswordAttempt, devicePasswordMaxAttempts);
          deviceAttemptsBuffer.append(": ");
-         String prompt = ((StringBuffer)(new Object())).append(CommonResources.getString(9114)).append(deviceAttemptsBuffer.toString()).toString();
+         String prompt = CommonResources.getString(9114) + deviceAttemptsBuffer.toString();
          SecurityDialog$EnhancedPasswordDialog dialog = new SecurityDialog$EnhancedPasswordDialog(
             prompt, revealDevicePassword, new Object[]{WipeHandheldVerb.getDisplayString()}
          );
@@ -631,7 +630,7 @@ public final class SecurityDialog {
                   byte[] oldPassword = dialog.getPassword();
                   String password;
                   if (oldPassword != null && oldPassword.length != 0) {
-                     password = (String)(new Object(oldPassword));
+                     password = new String(oldPassword);
                   } else {
                      password = null;
                   }
@@ -661,12 +660,12 @@ public final class SecurityDialog {
    }
 
    private static final void statusAlert(String message) {
-      Dialog dialog = (Dialog)(new Object(0, message, 0, Bitmap.getPredefinedBitmap(0), 33554432));
+      Dialog dialog = new Dialog(0, message, 0, Bitmap.getPredefinedBitmap(0), 33554432);
       UiApplication.getUiApplication().pushGlobalScreen(dialog, -1073741823, 2);
    }
 
    private static final byte[] calculateNewHash(String pswd) {
-      Digest digest = (Digest)(new Object());
+      Digest digest = new SHA1Digest();
       digest.update(pswd.getBytes());
       return Arrays.copy(digest.getDigest(), 0, 4);
    }

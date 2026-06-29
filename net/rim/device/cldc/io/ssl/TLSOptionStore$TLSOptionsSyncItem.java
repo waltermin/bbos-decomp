@@ -73,7 +73,7 @@ class TLSOptionStore$TLSOptionsSyncItem extends OTASyncCapableSyncItem {
 
    @Override
    public synchronized boolean setSyncData(DataBuffer buffer, int version) {
-      this.this$0._trustedHosts = (Vector)(new Object());
+      this.this$0._trustedHosts = new Vector();
 
       label121:
       try {

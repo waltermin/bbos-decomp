@@ -25,7 +25,7 @@ public final class DomainNameDAC extends DAC implements Persistable {
    public final DAC clone() {
       DomainNameDAC d = new DomainNameDAC();
       if (this._hosts != null) {
-         d._hosts = new Object[this._hosts.length];
+         d._hosts = new String[this._hosts.length];
 
          for (int i = this._hosts.length - 1; i >= 0; i--) {
             d._hosts[i] = this._hosts[i];
@@ -65,10 +65,10 @@ public final class DomainNameDAC extends DAC implements Persistable {
 
    public final String[] getAddresses() {
       if (this._hosts != null) {
-         String[] addrs = new Object[this._hosts.length];
+         String[] addrs = new String[this._hosts.length];
 
          for (int i = this._hosts.length - 1; i >= 0; i--) {
-            StringBuffer strBuf = (StringBuffer)(new Object());
+            StringBuffer strBuf = new StringBuffer();
             strBuf.append(this._hosts[i]);
             if (this._dstPorts[i] >= 0) {
                strBuf.append(':');
@@ -120,8 +120,8 @@ public final class DomainNameDAC extends DAC implements Persistable {
 
    @Override
    public final int rcvdFromAddress(DatagramAddressBase addr) {
-      if (!(addr instanceof Object)) {
-         throw new Object();
+      if (!(addr instanceof UdpAddress)) {
+         throw new IllegalArgumentException();
       }
 
       UdpAddress udpAddress = (UdpAddress)addr;
@@ -156,7 +156,7 @@ public final class DomainNameDAC extends DAC implements Persistable {
    }
 
    public static final String[] getDalHosts(String dal) {
-      String[] dalHosts = new Object[0];
+      String[] dalHosts = new String[0];
       if (dal != null) {
          int idx = 0;
 
@@ -261,7 +261,7 @@ public final class DomainNameDAC extends DAC implements Persistable {
    }
 
    public static final String ipAddr2String(int ipAddr) {
-      StringBuffer strBuf = (StringBuffer)(new Object(15));
+      StringBuffer strBuf = new StringBuffer(15);
 
       int shift;
       for (shift = 24; shift > 0; shift -= 8) {

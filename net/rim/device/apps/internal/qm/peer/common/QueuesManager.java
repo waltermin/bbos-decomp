@@ -4,7 +4,7 @@ import java.util.Hashtable;
 import net.rim.device.api.system.Application;
 
 public final class QueuesManager {
-   Hashtable _queueRunners = (Hashtable)(new Object());
+   Hashtable _queueRunners = new Hashtable();
 
    public final void postInvokeLater(Application application, Runnable runnable) {
       Object obj = this._queueRunners.get(application);

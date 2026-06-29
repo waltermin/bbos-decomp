@@ -131,17 +131,17 @@ class ResizableTextArray {
 
    String makeString(int handle) {
       this.expandText(handle, Integer.MAX_VALUE);
-      return (String)(new Object(this._expandedText, 0, this._expandedTextLength));
+      return new String(this._expandedText, 0, this._expandedTextLength);
    }
 
    String makeString(int handle, int length) {
       this.expandText(handle, length);
-      return (String)(new Object(this._expandedText, 0, length));
+      return new String(this._expandedText, 0, length);
    }
 
    String makeSubstring(int handle, int offset, int count) {
       this.expandText(handle, count + offset);
-      return (String)(new Object(this._expandedText, offset, count));
+      return new String(this._expandedText, offset, count);
    }
 
    char[] getExpandedTextArray() {

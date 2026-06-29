@@ -4,7 +4,7 @@ import java.util.Hashtable;
 import net.rim.device.resources.Resource;
 
 public final class net_rim_theme_bbdimension_l_320x240_bRIMResources extends Resource {
-   public static Hashtable _resources = (Hashtable)(new Object(65));
+   public static Hashtable _resources = new Hashtable(65);
    public static Hashtable _properties;
    public static byte[] _appCount = new byte[]{1};
    public static byte[] _resourceExtensions = new byte[]{46, 112, 110, 103, 10, 46, 112, 109, 101, 10, 46, 99, 114, 98, 10};

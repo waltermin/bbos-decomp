@@ -9,7 +9,7 @@ import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.CommonResources;
 
 public class YesNoField extends VerticalFieldManager {
-   private RadioButtonGroup _radioGroup = (RadioButtonGroup)(new Object());
+   private RadioButtonGroup _radioGroup = new RadioButtonGroup();
    private RadioButtonField _yesButton;
    private RadioButtonField _noButton;
    private Verb _activationVerb;

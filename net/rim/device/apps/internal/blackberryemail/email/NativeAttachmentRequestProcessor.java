@@ -13,8 +13,8 @@ import net.rim.device.apps.api.transmission.TransmissionServiceManager;
 
 public class NativeAttachmentRequestProcessor {
    private NativeAttachmentRequestProcessor$Worker _worker = new NativeAttachmentRequestProcessor$Worker(this, null);
-   private Vector _requests = (Vector)(new Object());
-   private Vector _processedRequests = (Vector)(new Object());
+   private Vector _requests = new Vector();
+   private Vector _processedRequests = new Vector();
    private NativeAttachmentRequest _currentRequest;
    private TransmissionService _transmissionService = TransmissionServiceManager.get(8399767144006445082L);
    private ContextObject _transmissionContextObject = ContextObject.castOrCreate(null);
@@ -257,7 +257,7 @@ public class NativeAttachmentRequestProcessor {
       } else {
          synchronized (this._worker) {
             if (!this._worker.isRunning()) {
-               Thread thread = (Thread)(new Object(this._worker));
+               Thread thread = new Thread(this._worker);
                thread.start();
             } else {
                this._worker.notifyAll();

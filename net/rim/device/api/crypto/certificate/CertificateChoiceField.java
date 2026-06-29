@@ -28,7 +28,7 @@ public class CertificateChoiceField extends ChoiceField {
       this._keyStore = keyStore;
       this._trustedKeyStore = trustedKeyStore;
       this._cryptoSystemProperties = cryptoSystemProperties;
-      this._certificateChangeOptionChoiceFieldWR = (WeakReference)(new Object(null));
+      this._certificateChangeOptionChoiceFieldWR = new WeakReference(null);
       this._app = Application.getApplication();
    }
 
@@ -44,7 +44,7 @@ public class CertificateChoiceField extends ChoiceField {
       } else if (index >= 0 && index < this._certificates.length) {
          return this._labels[index];
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

@@ -10,8 +10,8 @@ final class NetworkOptionsItem$ActiveNetworkField extends HorizontalFieldManager
 
    public NetworkOptionsItem$ActiveNetworkField(NetworkOptionsItem _1) {
       this.this$0 = _1;
-      this.add((Field)(new Object(((StringBuffer)(new Object())).append(_1._rb.getString(900)).append(": ").toString())));
-      this._valueField = (LabelField)(new Object(null, 18014398509481984L));
+      this.add(new LabelField(_1._rb.getString(900) + ": "));
+      this._valueField = new LabelField(null, 18014398509481984L);
       this.add(this._valueField);
    }
 

@@ -5,8 +5,9 @@ import net.rim.device.api.crypto.keystore.KeyStoreResources;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.ButtonField;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.ui.CommonResources;
@@ -27,38 +28,38 @@ public class CertificateChoiceDialog extends PopupDialog implements FieldChangeL
    public CertificateChoiceDialog(
       String message, CertificateChoiceField choiceField, boolean showCancelButton, boolean importSmartCardCertsButton, KeyStore keyStore, long style
    ) {
-      super((Manager)(new Object(281474976710656L)), style);
+      super(new VerticalFieldManager(281474976710656L), style);
       this._keyStore = keyStore;
       this.initialize(message, choiceField, showCancelButton, importSmartCardCertsButton);
    }
 
    private void initialize(String message, CertificateChoiceField choiceField, boolean showCancelButton, boolean importSmartCardCertsButton) {
       this._vfm = (VerticalFieldManager)this.getDelegate();
-      this._vfm.add((Field)(new Object(message)));
-      this._vfm.add((Field)(new Object()));
+      this._vfm.add(new LabelField(message));
+      this._vfm.add(new SeparatorField());
       this._certificateChoiceField = choiceField;
       this._vfm.add(this._certificateChoiceField);
-      this._displayCertButton = (ButtonField)(new Object(KeyStoreResources.getString(14)));
+      this._displayCertButton = new ButtonField(KeyStoreResources.getString(14));
       this._displayCertButton.setChangeListener(this);
-      HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(8589934592L));
+      HorizontalFieldManager hfm = new HorizontalFieldManager(8589934592L);
       hfm.add(this._displayCertButton);
       this._vfm.add(hfm);
-      this._vfm.add((Field)(new Object()));
-      this._buttonManager = (HorizontalFieldManager)(new Object(12884901888L));
-      this._okButton = (ButtonField)(new Object(CommonResources.getString(117)));
+      this._vfm.add(new SeparatorField());
+      this._buttonManager = new HorizontalFieldManager(12884901888L);
+      this._okButton = new ButtonField(CommonResources.getString(117));
       this._okButton.setChangeListener(this);
       this._buttonManager.add(this._okButton);
       if (showCancelButton) {
-         this._cancelButton = (ButtonField)(new Object(CommonResources.getString(9042)));
+         this._cancelButton = new ButtonField(CommonResources.getString(9042));
          this._cancelButton.setChangeListener(this);
          this._buttonManager.add(this._cancelButton);
       }
 
       this._vfm.add(this._buttonManager);
       if (importSmartCardCertsButton) {
-         this._importSmartCardCertsButton = (ButtonField)(new Object(_smartCardRB.getString(31)));
+         this._importSmartCardCertsButton = new ButtonField(_smartCardRB.getString(31));
          this._importSmartCardCertsButton.setChangeListener(this);
-         hfm = (HorizontalFieldManager)(new Object(12884901888L));
+         hfm = new HorizontalFieldManager(12884901888L);
          hfm.add(this._importSmartCardCertsButton);
          this._vfm.add(hfm);
       }

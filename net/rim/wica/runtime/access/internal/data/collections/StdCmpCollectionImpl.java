@@ -31,10 +31,10 @@ class StdCmpCollectionImpl extends DataCollectionImpl implements KeyDataCollecti
    static Class class$net$rim$wica$runtime$event$EventService;
 
    protected void initCache() {
-      this._modifiedItems = (IntVector)(new Object(10, 5));
-      this._createdItems = (IntVector)(new Object(10, 5));
-      this._deletedItems = (IntVector)(new Object(10, 5));
-      this._loadedItems = (IntVector)(new Object(10, 5));
+      this._modifiedItems = new IntVector(10, 5);
+      this._createdItems = new IntVector(10, 5);
+      this._deletedItems = new IntVector(10, 5);
+      this._loadedItems = new IntVector(10, 5);
    }
 
    protected boolean isFieldWriteable(long dataHandle, int field) {
@@ -79,7 +79,7 @@ class StdCmpCollectionImpl extends DataCollectionImpl implements KeyDataCollecti
    public long find(Object pkey) {
       if (this.verifyAccessGranted() && pkey != null) {
          this.initMappings();
-         int keyValue = pkey;
+         int keyValue = (Integer)pkey;
          return this._handles.contains(keyValue) ? (long)super._defs.getId() << 32 | 4294967295L & keyValue : -1;
       } else {
          return -1;
@@ -154,7 +154,7 @@ class StdCmpCollectionImpl extends DataCollectionImpl implements KeyDataCollecti
    public void initHandles() {
       this._handles = this.uidsInExternalDB();
       if (this._handles == null) {
-         this._handles = (IntVector)(new Object(0));
+         this._handles = new IntVector(0);
       }
    }
 
@@ -204,10 +204,10 @@ class StdCmpCollectionImpl extends DataCollectionImpl implements KeyDataCollecti
    @Override
    public void resetCache() {
       this.resetInternalCache();
-      this._modifiedItems = (IntVector)(new Object(10, 5));
-      this._createdItems = (IntVector)(new Object(10, 5));
-      this._deletedItems = (IntVector)(new Object(10, 5));
-      this._loadedItems = (IntVector)(new Object(10, 5));
+      this._modifiedItems = new IntVector(10, 5);
+      this._createdItems = new IntVector(10, 5);
+      this._deletedItems = new IntVector(10, 5);
+      this._loadedItems = new IntVector(10, 5);
    }
 
    @Override
@@ -462,7 +462,7 @@ class StdCmpCollectionImpl extends DataCollectionImpl implements KeyDataCollecti
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 

@@ -11,6 +11,7 @@ import net.rim.device.api.itpolicy.ITPolicy;
 import net.rim.device.api.system.Branding;
 import net.rim.device.api.system.CodeModuleManager;
 import net.rim.device.api.system.ControlledAccess;
+import net.rim.device.api.system.ControlledAccessException;
 import net.rim.device.api.system.DeviceInfo;
 import net.rim.device.api.system.PersistentObject;
 import net.rim.device.api.system.PersistentStore;
@@ -35,7 +36,7 @@ public class LocationProvider {
    static final int DEFAULT_GETLOCATION_TIMEOUT = 900;
    static int PROXIMITY_LISTENER_INTERVAL = 20;
    static final Location INVALID_LOCATION = new Location();
-   private static MultiMap _proximityMap = (MultiMap)(new Object());
+   private static MultiMap _proximityMap = new MultiMap();
    static boolean _proximityListenerRunning;
    static LocationProvider$ProximityThread _proximityThread;
    static LocationProvider _locationProvider;
@@ -56,15 +57,15 @@ public class LocationProvider {
       }
 
       if (GPS.getMode() != 2) {
-         throw new Object("Permission denied");
+         throw new SecurityException("Permission denied");
       }
 
       if (!ControlledAccess.verifyCodeModuleSignature(handle, 51) && !GPSFirewall.getInstance().allowAccess(permission)) {
-         throw new Object("Permission denied");
+         throw new SecurityException("Permission denied");
       }
 
       if (ITPolicy.getBoolean(24, 52, false)) {
-         throw new Object(_rb.getString(11));
+         throw new ControlledAccessException(_rb.getString(11));
       }
    }
 
@@ -95,7 +96,7 @@ public class LocationProvider {
       }
 
       if (gpsSource != null && !gpsSource.equals(GPS.GPS_SOURCE_DEVICE) || !GPS.isSupportedOnCurrentNetwork() && !DeviceInfo.isSimulator()) {
-         Vector bluetoothDevices = (Vector)(new Object());
+         Vector bluetoothDevices = new Vector();
          if (BluetoothSerialPort.isSupported()) {
             BluetoothSerialPortInfo[] portInfo = BluetoothSerialPort.getSerialPortInfo();
             if (portInfo != null) {
@@ -264,9 +265,7 @@ public class LocationProvider {
             power = 3;
       }
 
-      return (GPS$AppCriteria)(new Object(
-         crit.getPreferredResponseTime(), crit.getVerticalAccuracy(), crit.getHorizontalAccuracy(), crit.isAllowedToCost(), power
-      ));
+      return new GPS$AppCriteria(crit.getPreferredResponseTime(), crit.getVerticalAccuracy(), crit.getHorizontalAccuracy(), crit.isAllowedToCost(), power);
    }
 
    public Location getLocation(int _1) {
@@ -289,15 +288,15 @@ public class LocationProvider {
    public static void addProximityListener(ProximityListener listener, Coordinates coordinates, float proximityRadius) {
       checkSecurity(TraceBack.getCallingModule(0), "lapi_proximitylistener");
       if (proximityRadius <= 0 || Float.isNaN(proximityRadius)) {
-         throw new Object("Illegal value of proximity radius");
+         throw new IllegalArgumentException("Illegal value of proximity radius");
       }
 
       if (listener == null) {
-         throw new Object("ProximityListener is null");
+         throw new NullPointerException("ProximityListener is null");
       }
 
       if (coordinates == null) {
-         throw new Object("Coordinates is null");
+         throw new NullPointerException("Coordinates is null");
       }
 
       if (GPS.isSupportedOnCurrentNetwork() || BluetoothSerialPort.isSupported()) {

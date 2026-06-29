@@ -66,7 +66,7 @@ public final class InetAddress {
       }
 
       if (this._netAdd != null && this._netAdd.length == 4) {
-         StringBuffer buffer = (StringBuffer)(new Object());
+         StringBuffer buffer = new StringBuffer();
          buffer.append(this._netAdd[0] & 255)
             .append('.')
             .append(this._netAdd[1] & 255)

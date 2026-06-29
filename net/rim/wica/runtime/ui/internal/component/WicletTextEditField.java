@@ -8,7 +8,10 @@ import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.ui.component.BasicEditField;
+import net.rim.device.api.ui.text.EmailAddressTextFilter;
+import net.rim.device.api.ui.text.PhoneTextFilter;
 import net.rim.device.api.ui.text.TextFilter;
+import net.rim.device.api.ui.text.URLTextFilter;
 import net.rim.device.api.ui.theme.ThemeAttributeSet;
 import net.rim.wica.runtime.metadata.component.ui.UIComponent;
 import net.rim.wica.runtime.metadata.component.ui.control.EditControl;
@@ -249,7 +252,7 @@ final class WicletTextEditField extends Manager implements FieldChangeListener, 
       String text = null;
       Object value = model.getValue();
       if (value != null) {
-         if (!(value instanceof Object)) {
+         if (!(value instanceof Vector)) {
             text = value.toString();
          } else {
             text = ((Vector)value).elementAt(row).toString();
@@ -279,17 +282,17 @@ final class WicletTextEditField extends Manager implements FieldChangeListener, 
                break;
             case 6:
             default:
-               this._edit = createBasicEditField(fieldStyle, (TextFilter)(new Object()));
+               this._edit = createBasicEditField(fieldStyle, new URLTextFilter());
                break;
             case 7:
                this._edit = new WicletTextEditField$PasswordEditFieldMF(null, text, 1000000, fieldStyle);
                break;
             case 8:
-               this._edit = createBasicEditField(fieldStyle | 8192 | 1073741824, (TextFilter)(new Object()));
+               this._edit = createBasicEditField(fieldStyle | 8192 | 1073741824, new PhoneTextFilter());
                break;
             case 9:
                if ((fieldStyle & 36028797018963968L) != 0) {
-                  this._edit = createBasicEditField(fieldStyle, (TextFilter)(new Object()));
+                  this._edit = createBasicEditField(fieldStyle, new EmailAddressTextFilter());
                } else {
                   this._edit = new WicletTextEditField$EmailAddressEditFieldMF(null, text, 1000000);
                }

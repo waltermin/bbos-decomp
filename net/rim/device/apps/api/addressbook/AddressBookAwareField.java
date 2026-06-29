@@ -6,6 +6,7 @@ import net.rim.device.api.system.Application;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.RIMModel;
+import net.rim.vm.WeakReference;
 
 public class AddressBookAwareField extends VerticalFieldManager implements CollectionListener, Runnable {
    private Application _app;
@@ -37,7 +38,7 @@ public class AddressBookAwareField extends VerticalFieldManager implements Colle
          }
 
          if (ContextObject.getFlag(context, 9)) {
-            ab.addCollectionListener(new Object(this));
+            ab.addCollectionListener(new WeakReference(this));
          }
       }
 

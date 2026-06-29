@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.microedition.io.ContentConnection;
+import net.rim.device.api.io.IOCancelledException;
 
 final class DocViewSoundDisplayField$DocViewInputConnection implements ContentConnection {
    private boolean _closed;
@@ -51,9 +52,9 @@ final class DocViewSoundDisplayField$DocViewInputConnection implements ContentCo
    }
 
    @Override
-   public final InputStream openInputStream() {
+   public final InputStream openInputStream() throws IOCancelledException {
       if (this._closed) {
-         throw new Object();
+         throw new IOCancelledException();
       } else {
          return this._inputStream;
       }
@@ -62,7 +63,7 @@ final class DocViewSoundDisplayField$DocViewInputConnection implements ContentCo
    @Override
    public final DataInputStream openDataInputStream() {
       InputStream in = this.openInputStream();
-      return (DataInputStream)(!(in instanceof Object) ? new Object(in) : in);
+      return !(in instanceof DataInputStream) ? new DataInputStream(in) : (DataInputStream)in;
    }
 
    DocViewSoundDisplayField$DocViewInputConnection(DocViewSoundDisplayField _1, byte[] initialData, int totalLength) {

@@ -14,75 +14,75 @@ public class DSACryptoToken implements AsymmetricCryptoToken {
       return false;
    }
 
-   public int getDSACryptoSystemBitLength(CryptoTokenCryptoSystemData cryptoTokenData) {
-      throw new Object();
+   public int getDSACryptoSystemBitLength(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public String getDSACryptoSystemName(CryptoTokenCryptoSystemData cryptoTokenData) {
-      throw new Object();
+   public String getDSACryptoSystemName(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public byte[] getDSACryptoSystemP(CryptoTokenCryptoSystemData cryptoTokenData) {
-      throw new Object();
+   public byte[] getDSACryptoSystemP(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public byte[] getDSACryptoSystemQ(CryptoTokenCryptoSystemData cryptoTokenData) {
-      throw new Object();
+   public byte[] getDSACryptoSystemQ(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public byte[] getDSACryptoSystemG(CryptoTokenCryptoSystemData cryptoTokenData) {
-      throw new Object();
+   public byte[] getDSACryptoSystemG(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public int getDSAPublicKeyLength(CryptoTokenCryptoSystemData cryptoTokenData) {
-      throw new Object();
+   public int getDSAPublicKeyLength(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public int getDSAPrivateKeyLength(CryptoTokenCryptoSystemData cryptoTokenData) {
-      throw new Object();
+   public int getDSAPrivateKeyLength(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public byte[] extractDSAPublicKeyData(CryptoTokenPublicKeyData cryptoTokenData) {
-      throw new Object();
+   public byte[] extractDSAPublicKeyData(CryptoTokenPublicKeyData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public byte[] extractDSAPublicKeyData(CryptoTokenPrivateKeyData cryptoTokenData) {
-      throw new Object();
+   public byte[] extractDSAPublicKeyData(CryptoTokenPrivateKeyData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public byte[] extractDSAPrivateKeyData(CryptoTokenPrivateKeyData cryptoTokenData) {
-      throw new Object();
+   public byte[] extractDSAPrivateKeyData(CryptoTokenPrivateKeyData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public CryptoTokenCryptoSystemData getDSACryptoSystemData(byte[] p, byte[] q, byte[] g, String name) {
-      throw new Object();
+   public CryptoTokenCryptoSystemData getDSACryptoSystemData(byte[] p, byte[] q, byte[] g, String name) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
    public void verifyDSACryptoSystemData(CryptoTokenCryptoSystemData cryptoSystemData) {
    }
 
-   public DSACryptoSystem[] getSuggestedDSACryptoSystems() {
-      throw new Object();
+   public DSACryptoSystem[] getSuggestedDSACryptoSystems() throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public DSAKeyPair createDSAKeyPair(CryptoTokenCryptoSystemData cryptoTokenData) {
-      throw new Object();
+   public DSAKeyPair createDSAKeyPair(CryptoTokenCryptoSystemData cryptoTokenData) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public CryptoTokenPublicKeyData injectDSAPublicKey(CryptoTokenCryptoSystemData cryptoSystemData, byte[] data) {
-      throw new Object();
+   public CryptoTokenPublicKeyData injectDSAPublicKey(CryptoTokenCryptoSystemData cryptoSystemData, byte[] data) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public CryptoTokenPrivateKeyData injectDSAPrivateKey(CryptoTokenCryptoSystemData cryptoSystemData, byte[] data) {
-      throw new Object();
+   public CryptoTokenPrivateKeyData injectDSAPrivateKey(CryptoTokenCryptoSystemData cryptoSystemData, byte[] data) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public void deleteDSAPublicKey(CryptoTokenPublicKeyData data) {
-      throw new Object();
+   public void deleteDSAPublicKey(CryptoTokenPublicKeyData data) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public void deleteDSAPrivateKey(CryptoTokenPrivateKeyData data) {
-      throw new Object();
+   public void deleteDSAPrivateKey(CryptoTokenPrivateKeyData data) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
    public void signDSA(
@@ -95,8 +95,8 @@ public class DSACryptoToken implements AsymmetricCryptoToken {
       int rOffset,
       byte[] s,
       int sOffset
-   ) {
-      throw new Object();
+   ) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
    public void signDSA(
@@ -110,8 +110,8 @@ public class DSACryptoToken implements AsymmetricCryptoToken {
       byte[] s,
       int sOffset,
       Object context
-   ) {
-      throw new Object();
+   ) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
    public boolean verifyDSA(
@@ -124,8 +124,8 @@ public class DSACryptoToken implements AsymmetricCryptoToken {
       int rOffset,
       byte[] s,
       int sOffset
-   ) {
-      throw new Object();
+   ) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
    @Override

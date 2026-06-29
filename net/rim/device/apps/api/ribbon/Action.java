@@ -92,7 +92,7 @@ public class Action implements EntryPointDescriptor, IntegerProps, StringProps, 
       try {
          ApplicationManager.getApplicationManager().runApplication(this._applicationDescriptor);
       } catch (Throwable var3) {
-         throw new Object(e.getMessage());
+         throw new RuntimeException(e.getMessage());
       }
    }
 
@@ -133,6 +133,6 @@ public class Action implements EntryPointDescriptor, IntegerProps, StringProps, 
    public Action(ApplicationDescriptor applicationDescriptor, String entryName, int ribbonPosition) {
       this._applicationDescriptor = applicationDescriptor;
       this._entryName = entryName;
-      this._ribbonPosition = (Integer)(new Object(ribbonPosition));
+      this._ribbonPosition = new Integer(ribbonPosition);
    }
 }

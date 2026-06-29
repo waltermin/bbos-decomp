@@ -2244,7 +2244,7 @@ final class RSARootCertificates {
       int downloadTime = PersistentInteger.get(id);
       int currentDownloadTime = (int)CodeModuleManager.getModuleDownloadTimestamp(ApplicationDescriptor.currentApplicationDescriptor().getModuleHandle());
       if (downloadTime != currentDownloadTime) {
-         CertificateStatus status = (CertificateStatus)(new Object(0, 1007118671960L, 1007118671960L, 0, 0, -1));
+         CertificateStatus status = new CertificateStatus(0, 1007118671960L, 1007118671960L, 0, 0, -1);
          TrustedKeyStore trusted = (TrustedKeyStore)TrustedKeyStore.getInstance();
          DeviceKeyStore device = (DeviceKeyStore)DeviceKeyStore.getInstance();
          KeyStoreUtilitiesInternal.addRootCertificate(trusted, device, "RSA Root CA", RSA_ROOT_CA, "X509", status);

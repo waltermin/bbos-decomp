@@ -12,7 +12,7 @@ import net.rim.device.api.util.Persistable;
 import net.rim.vm.Array;
 
 final class AutoTextDatabase implements Persistable {
-   private IntHashtable _autoTextTables = (IntHashtable)(new Object());
+   private IntHashtable _autoTextTables = new IntHashtable();
 
    final void clear() {
       this._autoTextTables.clear();
@@ -54,7 +54,7 @@ final class AutoTextDatabase implements Persistable {
 
       Hashtable result = (Hashtable)this._autoTextTables.get(localeCode);
       if (result == null) {
-         result = (Hashtable)(new Object());
+         result = new Hashtable();
          this._autoTextTables.put(localeCode, result);
       }
 
@@ -102,17 +102,17 @@ final class AutoTextDatabase implements Persistable {
    private static final Hashtable load(int localeCode) {
       String[] entries = getStringTable(localeCode);
       if (entries == null) {
-         return (Hashtable)(new Object());
+         return new Hashtable();
       }
 
       int n = entries.length;
-      Hashtable hashtable = (Hashtable)(new Object(n * 3 >> 1));
+      Hashtable hashtable = new Hashtable(n * 3 >> 1);
 
       for (int i = n - 1; i >= 0; i--) {
          int flags = 0;
          String entryString = entries[i];
          if (entryString.charAt(1) != ' ') {
-            System.out.println(((StringBuffer)(new Object("Invalid AutoText entry: "))).append(entryString).toString());
+            System.out.println("Invalid AutoText entry: " + entryString);
          } else {
             boolean valid = true;
             switch (entryString.charAt(0)) {
@@ -123,7 +123,7 @@ final class AutoTextDatabase implements Persistable {
                   flags = 1;
                   break;
                default:
-                  System.out.println(((StringBuffer)(new Object("Invalid AutoText entry: "))).append(entryString).toString());
+                  System.out.println("Invalid AutoText entry: " + entryString);
                   valid = false;
             }
 
@@ -134,7 +134,7 @@ final class AutoTextDatabase implements Persistable {
                   endOfFind = entryString.indexOf(32, endOfFind);
                   if (endOfFind == -1) {
                      valid = false;
-                     System.out.println(((StringBuffer)(new Object("Invalid AutoText entry: "))).append(entryString).toString());
+                     System.out.println("Invalid AutoText entry: " + entryString);
                      break;
                   }
                } while (entryString.charAt(endOfFind - 1) == '\\');
@@ -163,13 +163,13 @@ final class AutoTextDatabase implements Persistable {
          return null;
       }
 
-      String[] entries = (Object[])bundle.getObject(1, false);
+      String[] entries = (String[])bundle.getObject(1, false);
       if (entries == null) {
          return null;
       }
 
       if (DirectConnect.isSupported()) {
-         String[] dcEntries = (Object[])bundle.getObject(17, false);
+         String[] dcEntries = (String[])bundle.getObject(17, false);
          if (dcEntries != null && dcEntries.length > 0) {
             int oldLen = entries.length;
             Array.resize(entries, oldLen + dcEntries.length);

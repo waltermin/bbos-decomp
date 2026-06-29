@@ -30,6 +30,6 @@ class DOMNodeListImpl implements NodeList {
    }
 
    DOMNodeListImpl() {
-      this((Vector)(new Object()));
+      this(new Vector());
    }
 }

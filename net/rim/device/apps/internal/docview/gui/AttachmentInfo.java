@@ -14,9 +14,9 @@ import net.rim.vm.Array;
 import net.rim.vm.Persistable;
 
 final class AttachmentInfo implements Persistable, BackupProvider, RestoreProvider {
-   IntHashtable _attachmentHash = (IntHashtable)(new Object());
-   private Hashtable _blockCountHash = (Hashtable)(new Object());
-   private Hashtable _attachmentDataChunks = (Hashtable)(new Object());
+   IntHashtable _attachmentHash = new IntHashtable();
+   private Hashtable _blockCountHash = new Hashtable();
+   private Hashtable _attachmentDataChunks = new Hashtable();
    private String _archiveIndicator;
    private byte _type = -1;
    private byte _subtype = -1;
@@ -126,13 +126,13 @@ final class AttachmentInfo implements Persistable, BackupProvider, RestoreProvid
 
    final void setTotalBlockCount(String domID, int blockCount, boolean overwrite) {
       if (overwrite || this.getTotalBlockCount(domID) <= 0) {
-         this._blockCountHash.put(domID == null ? "" : domID, new Object(blockCount));
+         this._blockCountHash.put(domID == null ? "" : domID, new Integer(blockCount));
       }
    }
 
    final int getTotalBlockCount(String domID) {
       try {
-         return this._blockCountHash.get(domID == null ? "" : domID);
+         return (Integer)this._blockCountHash.get(domID == null ? "" : domID);
       } finally {
          ;
       }
@@ -142,7 +142,7 @@ final class AttachmentInfo implements Persistable, BackupProvider, RestoreProvid
       if (this._archiveIndicator == null) {
          return archiveString == null;
       } else {
-         return archiveString == null ? false : this._archiveIndicator.endsWith(((StringBuffer)(new Object())).append('|').append(archiveString).toString());
+         return archiveString == null ? false : this._archiveIndicator.endsWith('|' + archiveString);
       }
    }
 
@@ -178,7 +178,7 @@ final class AttachmentInfo implements Persistable, BackupProvider, RestoreProvid
 
             if (addDomID) {
                if (matchArray == null) {
-                  matchArray = new Object[0];
+                  matchArray = new String[0];
                }
 
                Arrays.add(matchArray, domID);
@@ -230,15 +230,15 @@ final class AttachmentInfo implements Persistable, BackupProvider, RestoreProvid
    @Override
    public final void retrieveData(DataBuffer buffer, int versionID) {
       if (ConverterUtilities.getType(buffer) == 2) {
-         this._blockCountHash.put("", new Object(ConverterUtilities.readInt(buffer)));
+         this._blockCountHash.put("", new Integer(ConverterUtilities.readInt(buffer)));
       } else if (ConverterUtilities.getType(buffer, true) == 17) {
          while (ConverterUtilities.getType(buffer, true) == 17) {
             String domId = ConverterUtilities.readString(buffer);
             if (ConverterUtilities.getType(buffer) != 2) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
-            this._blockCountHash.put(domId, new Object(ConverterUtilities.readInt(buffer)));
+            this._blockCountHash.put(domId, new Integer(ConverterUtilities.readInt(buffer)));
          }
       }
 
@@ -253,7 +253,7 @@ final class AttachmentInfo implements Persistable, BackupProvider, RestoreProvid
                if (ConverterUtilities.getType(buffer) == 3) {
                   int chunkIndex = ConverterUtilities.readInt(buffer);
                   if (ConverterUtilities.getType(buffer) != 4) {
-                     throw new Object();
+                     throw new IllegalArgumentException();
                   }
 
                   byte[] tsArray = ConverterUtilities.readByteArray(buffer);
@@ -287,7 +287,7 @@ final class AttachmentInfo implements Persistable, BackupProvider, RestoreProvid
       while (domIdEnumeration.hasMoreElements()) {
          String domID = (String)domIdEnumeration.nextElement();
          ConverterUtilities.writeStringSmart(buffer, 17, domID);
-         ConverterUtilities.writeInt(buffer, 2, this._blockCountHash.get(domID));
+         ConverterUtilities.writeInt(buffer, 2, (Integer)this._blockCountHash.get(domID));
       }
 
       if (this._archiveIndicator != null) {
@@ -302,7 +302,7 @@ final class AttachmentInfo implements Persistable, BackupProvider, RestoreProvid
       }
 
       int totalAvailableChunks = 100;
-      Hashtable chunkIndexHash = (Hashtable)(new Object());
+      Hashtable chunkIndexHash = new Hashtable();
       if (totalAvailableChunks > 0) {
          if (this._attachmentDataChunks.containsKey("")) {
             IntHashtable chunkData = (IntHashtable)this._attachmentDataChunks.get("");
@@ -310,7 +310,7 @@ final class AttachmentInfo implements Persistable, BackupProvider, RestoreProvid
                int chunksNo = Math.min(chunkData.size(), totalAvailableChunks);
                if (chunksNo > 0) {
                   ConverterUtilities.writeStringSmart(buffer, 16, "");
-                  IntVector chkIndexVector = (IntVector)(new Object());
+                  IntVector chkIndexVector = new IntVector();
                   chunkIndexHash.put("", chkIndexVector);
 
                   for (IntEnumeration chunkEnumeration = chunkData.keys(); chunkEnumeration.hasMoreElements() && chunksNo > 0; totalAvailableChunks--) {
@@ -334,7 +334,7 @@ final class AttachmentInfo implements Persistable, BackupProvider, RestoreProvid
                   int chunksNo = Math.min(chunkData.size(), totalAvailableChunks);
                   if (chunksNo > 0) {
                      ConverterUtilities.writeStringSmart(buffer, 16, domID);
-                     IntVector chkIndexVector = (IntVector)(new Object());
+                     IntVector chkIndexVector = new IntVector();
                      chunkIndexHash.put(domID, chkIndexVector);
 
                      for (IntEnumeration chunkEnumeration = chunkData.keys(); chunkEnumeration.hasMoreElements() && chunksNo > 0; totalAvailableChunks--) {
@@ -369,7 +369,7 @@ final class AttachmentInfo implements Persistable, BackupProvider, RestoreProvid
          part.serializeData(buffer, partBlockPresentInBackup ? 1 : 0);
       }
 
-      chunkIndexHash = null;
+      Hashtable var17 = null;
    }
 
    private static final byte[] decompressData(byte[] compressedData) {
@@ -396,7 +396,7 @@ final class AttachmentInfo implements Persistable, BackupProvider, RestoreProvid
       while (ConverterUtilities.getType(buffer) == 3) {
          int chunkIndex = ConverterUtilities.readInt(buffer);
          if (ConverterUtilities.getType(buffer) != 4) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          chunkMap.put(chunkIndex, ConverterUtilities.readByteArray(buffer));
@@ -450,7 +450,7 @@ final class AttachmentInfo implements Persistable, BackupProvider, RestoreProvid
       String realDomID = domID == null ? "" : domID;
       IntHashtable hashTbl = (IntHashtable)this._attachmentDataChunks.get(realDomID);
       if (createHash && hashTbl == null) {
-         hashTbl = (IntHashtable)(new Object());
+         hashTbl = new IntHashtable();
          this._attachmentDataChunks.put(realDomID, hashTbl);
       }
 

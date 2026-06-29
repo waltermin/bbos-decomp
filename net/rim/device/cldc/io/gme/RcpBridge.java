@@ -5,6 +5,7 @@ import javax.microedition.io.Datagram;
 import net.rim.device.api.hrt.HostRoutingTable;
 import net.rim.device.api.io.DatagramBase;
 import net.rim.device.api.io.DatagramConnectionBase;
+import net.rim.device.api.io.IONotRoutableException;
 import net.rim.device.api.servicebook.ServiceRouting;
 import net.rim.device.api.servicebook.ServiceRoutingProperties;
 import net.rim.device.cldc.io.srp.SrpListener;
@@ -22,12 +23,7 @@ public final class RcpBridge extends GmeRouterConnection implements SrpListener 
    private static final int CAPABILITIES = 63;
 
    protected RcpBridge(Transport transport, boolean wifiLink) {
-      super(
-         transport,
-         (DatagramConnectionBase)Connector.open(
-            ((StringBuffer)(new Object())).append(SCHEME).append("//;connectiontype=relay;interface=").append(wifiLink ? "wifi" : "cellular").toString()
-         )
-      );
+      super(transport, (DatagramConnectionBase)Connector.open(SCHEME + "//;connectiontype=relay;interface=" + (wifiLink ? "wifi" : "cellular")));
       this._dataServices = DataServices.getInstance();
       this._serviceRouting = ServiceRouting.getInstance();
       super._subConnection.setDatagramStatusListener(transport);
@@ -52,13 +48,13 @@ public final class RcpBridge extends GmeRouterConnection implements SrpListener 
    }
 
    @Override
-   public final void send(DatagramBase dg, GMEDatagramInfo di, Datagram superDG) {
+   public final void send(DatagramBase dg, GMEDatagramInfo di, Datagram superDG) throws IONotRoutableException {
       if (!this._dataServices.isDataServicesEnabled(this._linkType == 0 ? 2 : 1, 1)) {
-         throw new Object();
+         throw new IONotRoutableException();
       }
 
       if (!this._serviceRouting.isServiceRoutable(null, this._routingHandle)) {
-         throw new Object();
+         throw new IONotRoutableException();
       }
 
       dg.setAddressBase(super._subConnection.newDatagramAddressBase(EMPTY, false));

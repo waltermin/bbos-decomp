@@ -8,7 +8,7 @@ public final class P1363KDF1PseudoRandomSource extends AbstractPseudoRandomSourc
    private int _outputOffset;
 
    public P1363KDF1PseudoRandomSource(byte[] sharedSecret, int offset, int length, byte[] optionalParameters) {
-      this(sharedSecret, offset, length, optionalParameters, (Digest)(new Object()));
+      this(sharedSecret, offset, length, optionalParameters, new SHA1Digest());
    }
 
    public P1363KDF1PseudoRandomSource(byte[] sharedSecret, int offset, int length, byte[] optionalParameters, Digest digest) {
@@ -23,7 +23,7 @@ public final class P1363KDF1PseudoRandomSource extends AbstractPseudoRandomSourc
          this._outputBuffer = digest.getDigest();
          this._outputOffset = 0;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -35,11 +35,11 @@ public final class P1363KDF1PseudoRandomSource extends AbstractPseudoRandomSourc
    @Override
    public final void xorBytes(byte[] buffer, int offset, int length) {
       if (buffer == null || offset < 0 || length < 0 || buffer.length - length < offset) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (this._outputOffset + length > this._outputBuffer.length) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       while (length-- > 0) {
@@ -68,10 +68,10 @@ public final class P1363KDF1PseudoRandomSource extends AbstractPseudoRandomSourc
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

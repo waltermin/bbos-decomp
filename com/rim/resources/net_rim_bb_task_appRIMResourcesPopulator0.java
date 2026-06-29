@@ -4,7 +4,7 @@ import java.util.Hashtable;
 
 final class net_rim_bb_task_appRIMResourcesPopulator0 {
    static final void populate(Hashtable localZero) {
-      Object var1 = new byte[]{
+      byte[] var1 = new byte[]{
          71,
          73,
          70,
@@ -568,8 +568,8 @@ final class net_rim_bb_task_appRIMResourcesPopulator0 {
          59
       };
       localZero.put("net_rim_Task_Status-icons8x8.gif", var1);
-      var1 = new Object(0);
-      localZero.put("icon28.gif", var1);
-      localZero.put("resources/icon28.gif", var1);
+      Integer var6 = new Integer(0);
+      localZero.put("icon28.gif", var6);
+      localZero.put("resources/icon28.gif", var6);
    }
 }

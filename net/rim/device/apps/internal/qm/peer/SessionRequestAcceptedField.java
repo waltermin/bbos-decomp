@@ -21,7 +21,7 @@ final class SessionRequestAcceptedField extends SessionInfoField implements Fiel
    @Override
    protected final void addFields() {
       super.addFields();
-      this._end = (ButtonField)(new Object("End Session", 12884967424L));
+      this._end = new ButtonField("End Session", 12884967424L);
       this._end.setChangeListener(this);
       this.add(this._end);
    }

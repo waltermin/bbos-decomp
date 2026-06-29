@@ -6,7 +6,7 @@ import net.rim.tid.io.ContinuousInputStream;
 
 public class DataManager {
    private IResourceSpec iDefaultSpec;
-   private Vector iSpecList = (Vector)(new Object());
+   private Vector iSpecList = new Vector();
    private static DataManager iInstance;
 
    private DataManager() {

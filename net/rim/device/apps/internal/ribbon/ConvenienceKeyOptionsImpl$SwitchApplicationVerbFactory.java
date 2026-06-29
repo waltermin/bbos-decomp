@@ -16,6 +16,6 @@ final class ConvenienceKeyOptionsImpl$SwitchApplicationVerbFactory implements Ve
    @Override
    public final Verb[] getVerbs(Object context) {
       ApplicationManager appManager = ApplicationManager.getApplicationManager();
-      return !appManager.isSystemLocked() && !this.this$0.isApplicationSwitcherOnConvenienceKey() ? new Object[]{this._verb} : null;
+      return !appManager.isSystemLocked() && !this.this$0.isApplicationSwitcherOnConvenienceKey() ? new Verb[]{this._verb} : null;
    }
 }

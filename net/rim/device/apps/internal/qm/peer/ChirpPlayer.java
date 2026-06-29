@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.qm.peer;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import javax.microedition.media.Manager;
 import javax.microedition.media.Player;
@@ -18,7 +19,7 @@ final class ChirpPlayer extends Thread implements PlayerListener {
    public final void run() {
       try {
          byte[] buffer = Resource.getResourceClass().getResource("Floor_Control.wav");
-         InputStream is = (InputStream)(new Object(buffer));
+         InputStream is = new ByteArrayInputStream(buffer);
          this._player = Manager.createPlayer(is, "audio/x-wav");
          this._player.addPlayerListener(this);
          this._player.start();

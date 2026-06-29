@@ -223,7 +223,7 @@ public final class ICalendarWriter extends TokenWriter implements ICalendarDefin
    private final void buildBeginEndCalendarComponent(boolean isBegin) {
       int type = this._iCalendar.getCalendarComponent();
       if (this._iCalendar.isValidCalendarComponent(type)) {
-         StringBuffer begin = (StringBuffer)(new Object(isBegin ? "BEGIN:" : "END:"));
+         StringBuffer begin = new StringBuffer(isBegin ? "BEGIN:" : "END:");
          begin.append(getCalendarComponent(type));
          this.addPropertyTag(begin.toString());
          this.addLineBreak();
@@ -274,7 +274,7 @@ public final class ICalendarWriter extends TokenWriter implements ICalendarDefin
             serialVersion = "2.0";
          }
 
-         StringBuffer version = (StringBuffer)(new Object("VERSION:"));
+         StringBuffer version = new StringBuffer("VERSION:");
          version.append(serialVersion);
          this.addPropertyTag(version.toString());
          this.addLineBreak();
@@ -300,7 +300,7 @@ public final class ICalendarWriter extends TokenWriter implements ICalendarDefin
             return;
          }
 
-         StringBuffer description = (StringBuffer)(new Object("DESCRIPTION;"));
+         StringBuffer description = new StringBuffer("DESCRIPTION;");
          if (!this._iCalendar.isEmptyString(paramValue)) {
             description.append(getParam(type));
             description.append(paramValue);
@@ -322,7 +322,7 @@ public final class ICalendarWriter extends TokenWriter implements ICalendarDefin
             return;
          }
 
-         StringBuffer location = (StringBuffer)(new Object("LOCATION;"));
+         StringBuffer location = new StringBuffer("LOCATION;");
          location.append(getParam(type));
          location.append(paramValue);
          this.addPropertyTag(location.toString());
@@ -349,7 +349,7 @@ public final class ICalendarWriter extends TokenWriter implements ICalendarDefin
             return;
          }
 
-         StringBuffer summary = (StringBuffer)(new Object("SUMMARY;"));
+         StringBuffer summary = new StringBuffer("SUMMARY;");
          summary.append(getParam(type));
          summary.append(paramValue);
          this.addPropertyTag(summary.toString());
@@ -388,7 +388,7 @@ public final class ICalendarWriter extends TokenWriter implements ICalendarDefin
                return;
             }
 
-            StringBuffer dtend = (StringBuffer)(new Object("DTEND;VALUE="));
+            StringBuffer dtend = new StringBuffer("DTEND;VALUE=");
             dtend.append(getValue(paramType));
             this.addPropertyTag(dtend.toString());
             this.addString(dateTimeString);
@@ -409,7 +409,7 @@ public final class ICalendarWriter extends TokenWriter implements ICalendarDefin
 
       if (originalDate != null) {
          if (this._iCalendar.getDateTimeStartValue() != null && originalDate.getTime() < this._iCalendar.getDateTimeStartValue().getTime()) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          dateTimeString = this.convertDateToString(originalDate, true);
@@ -419,7 +419,7 @@ public final class ICalendarWriter extends TokenWriter implements ICalendarDefin
                return;
             }
 
-            StringBuffer due = (StringBuffer)(new Object("DUE;VALUE="));
+            StringBuffer due = new StringBuffer("DUE;VALUE=");
             due.append(getValue(paramType));
             this.addPropertyTag(due.toString());
             this.addString(dateTimeString);
@@ -446,7 +446,7 @@ public final class ICalendarWriter extends TokenWriter implements ICalendarDefin
                return;
             }
 
-            StringBuffer dtstart = (StringBuffer)(new Object("DTSTART;VALUE="));
+            StringBuffer dtstart = new StringBuffer("DTSTART;VALUE=");
             dtstart.append(getValue(paramType));
             this.addPropertyTag(dtstart.toString());
             this.addString(dateTimeString);
@@ -464,8 +464,8 @@ public final class ICalendarWriter extends TokenWriter implements ICalendarDefin
       }
 
       calendar.setTime(originalDate);
-      SimpleDateFormat sdf = (SimpleDateFormat)(new Object("yyyyMMdd'T'HHmmss'Z'"));
-      StringBuffer dateSB = (StringBuffer)(new Object());
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd'T'HHmmss'Z'");
+      StringBuffer dateSB = new StringBuffer();
       sdf.format(calendar, dateSB, null);
       return dateSB.toString();
    }
@@ -483,7 +483,7 @@ public final class ICalendarWriter extends TokenWriter implements ICalendarDefin
 
    private final void buildDTSTAMP() {
       if (this._version.equals("VCALENDAR/2.0")) {
-         String value = this.convertDateToString((Date)(new Object()), true);
+         String value = this.convertDateToString(new Date(), true);
          this.addProperty("DTSTAMP:", value);
       }
    }
@@ -510,7 +510,7 @@ public final class ICalendarWriter extends TokenWriter implements ICalendarDefin
          paramType = -1773854324;
       }
 
-      StringBuffer exDateTimeString = (StringBuffer)(new Object());
+      StringBuffer exDateTimeString = new StringBuffer();
       if (originalDate != null) {
          int len = this._iCalendar.getExceptionDateLength();
 
@@ -519,7 +519,7 @@ public final class ICalendarWriter extends TokenWriter implements ICalendarDefin
             if (dateTimeString != null) {
                if (type != 0 && !isVersion1) {
                   if (i == 0) {
-                     StringBuffer propertyTag = (StringBuffer)(new Object("EXDATE;VALUE="));
+                     StringBuffer propertyTag = new StringBuffer("EXDATE;VALUE=");
                      String paramTypeString = getValue(paramType);
                      propertyTag.append(paramTypeString);
                      this.addPropertyTag(propertyTag.toString());
@@ -589,7 +589,7 @@ public final class ICalendarWriter extends TokenWriter implements ICalendarDefin
 
       String rruleStr = getRecurType(var11);
       int interval = this._iCalendar.getInterval();
-      rruleStr = ((StringBuffer)(new Object())).append(rruleStr).append(String.valueOf(interval)).toString();
+      rruleStr = rruleStr + String.valueOf(interval);
       switch (var11) {
          case 60:
             break;
@@ -599,7 +599,7 @@ public final class ICalendarWriter extends TokenWriter implements ICalendarDefin
             int length = this._iCalendar.getByDayLength();
 
             for (int i = 0; i < length; i++) {
-               rruleStr = ((StringBuffer)(new Object())).append(rruleStr).append(" ").append(getWeekDay(days[i])).toString();
+               rruleStr = rruleStr + " " + getWeekDay(days[i]);
             }
             break;
          case 62:
@@ -615,11 +615,11 @@ public final class ICalendarWriter extends TokenWriter implements ICalendarDefin
                }
 
                if (lastPos != thisPos) {
-                  rruleStr = ((StringBuffer)(new Object())).append(rruleStr).append(" ").append(this.toVCalPos(thisPos)).toString();
+                  rruleStr = rruleStr + " " + this.toVCalPos(thisPos);
                   lastPos = thisPos;
                }
 
-               rruleStr = ((StringBuffer)(new Object())).append(rruleStr).append(" ").append(getWeekDay(days[i])).toString();
+               rruleStr = rruleStr + " " + getWeekDay(days[i]);
             }
             break;
          case 63:
@@ -630,7 +630,7 @@ public final class ICalendarWriter extends TokenWriter implements ICalendarDefin
             }
 
             for (int i = 0; i < length; i++) {
-               rruleStr = ((StringBuffer)(new Object())).append(rruleStr).append(" ").append(this.toVCalDayInMonth(days[i])).toString();
+               rruleStr = rruleStr + " " + this.toVCalDayInMonth(days[i]);
             }
             break;
          case 64:
@@ -638,7 +638,7 @@ public final class ICalendarWriter extends TokenWriter implements ICalendarDefin
             int length = this._iCalendar.getByMonthLength();
 
             for (int i = 0; i < length; i++) {
-               rruleStr = ((StringBuffer)(new Object())).append(rruleStr).append(" ").append(String.valueOf(months[i])).toString();
+               rruleStr = rruleStr + " " + months[i];
             }
             break;
          case 65:
@@ -646,19 +646,19 @@ public final class ICalendarWriter extends TokenWriter implements ICalendarDefin
             int length = this._iCalendar.getByYearDayLength();
 
             for (int i = 0; i < length; i++) {
-               rruleStr = ((StringBuffer)(new Object())).append(rruleStr).append(" ").append(String.valueOf(dayInYear[i])).toString();
+               rruleStr = rruleStr + " " + dayInYear[i];
             }
       }
 
       if (this._iCalendar.isCountSpecified()) {
          int count = this._iCalendar.getCount();
-         rruleStr = ((StringBuffer)(new Object())).append(rruleStr).append(" #").append(String.valueOf(count)).toString();
+         rruleStr = rruleStr + " #" + count;
       }
 
       if (this._iCalendar.isUntilSpecified()) {
          Date end = this._iCalendar.getUntil();
          if (end != null) {
-            rruleStr = ((StringBuffer)(new Object())).append(rruleStr).append(" ").append(this.convertDateToString(end, true)).toString();
+            rruleStr = rruleStr + " " + this.convertDateToString(end, true);
          }
       }
 
@@ -666,19 +666,17 @@ public final class ICalendarWriter extends TokenWriter implements ICalendarDefin
    }
 
    private final String toVCalDayInMonth(int day) {
-      return day < 0 ? ((StringBuffer)(new Object())).append(String.valueOf(-day)).append("-").toString() : String.valueOf(day);
+      return day < 0 ? -day + "-" : String.valueOf(day);
    }
 
    private final String toVCalPos(int pos) {
-      return pos < 0
-         ? ((StringBuffer)(new Object())).append(String.valueOf(-pos)).append("-").toString()
-         : ((StringBuffer)(new Object())).append(String.valueOf(pos)).append("+").toString();
+      return pos < 0 ? -pos + "-" : pos + "+";
    }
 
    private final void buildICalRRULE() {
       int freq = this._iCalendar.getFreq();
       if (freq != -746168210) {
-         this._rrulePropertyTag = (StringBuffer)(new Object("RRULE:FREQ="));
+         this._rrulePropertyTag = new StringBuffer("RRULE:FREQ=");
          this._rrulePropertyTag.append(getFreq(freq));
          this.buildUntilCountInterval();
          switch (freq) {
@@ -852,7 +850,7 @@ public final class ICalendarWriter extends TokenWriter implements ICalendarDefin
       if (actionValue != 0) {
          this.addProperty("ACTION:", getAction(actionValue));
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -865,7 +863,7 @@ public final class ICalendarWriter extends TokenWriter implements ICalendarDefin
          offset = -1 * offset;
       }
 
-      this.addString(((StringBuffer)(new Object("PT"))).append(offset).append("M").toString());
+      this.addString("PT" + offset + "M");
       this.addLineBreak();
    }
 
@@ -879,7 +877,7 @@ public final class ICalendarWriter extends TokenWriter implements ICalendarDefin
             return;
          }
 
-         StringBuffer description = (StringBuffer)(new Object("DESCRIPTION;"));
+         StringBuffer description = new StringBuffer("DESCRIPTION;");
          if (!this._iCalendar.isEmptyString(paramValue)) {
             description.append(getParam(type));
             description.append(paramValue);
@@ -899,7 +897,7 @@ public final class ICalendarWriter extends TokenWriter implements ICalendarDefin
             description = "";
          }
 
-         StringBuffer dalarm = (StringBuffer)(new Object(this.convertDateToString(triggerDate, true)));
+         StringBuffer dalarm = new StringBuffer(this.convertDateToString(triggerDate, true));
          dalarm.append(";PT5M;1;");
          dalarm.append(description);
          this.addPropertyTag("DALARM:");

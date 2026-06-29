@@ -3,7 +3,9 @@ package net.rim.device.apps.internal.secureemail.cache;
 import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 
 public class CachedField {
    protected EmailMessageModel _emailMessageModel;
@@ -34,11 +36,11 @@ public class CachedField {
    }
 
    public boolean endsWithSeparator(Field field) {
-      if (field instanceof Object) {
+      if (field instanceof SeparatorField) {
          return true;
       }
 
-      if (field instanceof Object) {
+      if (field instanceof Manager) {
          Manager manager = (Manager)field;
          int numFields = manager.getFieldCount();
          if (numFields == 0) {
@@ -49,7 +51,7 @@ public class CachedField {
             return true;
          }
 
-         if (numFields > 1 && manager.getField(numFields - 1) instanceof Object && this.endsWithSeparator(manager.getField(numFields - 2))) {
+         if (numFields > 1 && manager.getField(numFields - 1) instanceof VerticalSpacerField && this.endsWithSeparator(manager.getField(numFields - 2))) {
             return true;
          }
       }

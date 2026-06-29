@@ -13,7 +13,7 @@ public final class AESEncryptorEngine implements SymmetricKeyEncryptorEngine {
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object("AES_"))).append(this._keyLength << 3).append('_').append(this._blockLength << 3).toString();
+      return "AES_" + (this._keyLength << 3) + '_' + (this._blockLength << 3);
    }
 
    @Override
@@ -37,7 +37,7 @@ public final class AESEncryptorEngine implements SymmetricKeyEncryptorEngine {
          this._blockLength = blockLength;
          this._keyLength = key.getLength();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -48,7 +48,7 @@ public final class AESEncryptorEngine implements SymmetricKeyEncryptorEngine {
          this._blockLength = blockLength;
          this._keyLength = key.getLength();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

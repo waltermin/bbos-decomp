@@ -26,9 +26,9 @@ public final class AddressBookSetupScreen extends UserSettingsScreen {
       String email = ClientSessionState.getInstance().getIntegrationEmail();
       this.addContentField(new FormattedTextField(this.getString(318, new Object[]{email})));
       this.addContentLineBreak();
-      this._synchAddressBookGroup = (RadioButtonGroup)(new Object());
-      RadioButtonField yesField = (RadioButtonField)(new Object(ApplicationResources.getString(32), this._synchAddressBookGroup, true));
-      RadioButtonField noField = (RadioButtonField)(new Object(ApplicationResources.getString(31), this._synchAddressBookGroup, false));
+      this._synchAddressBookGroup = new RadioButtonGroup();
+      RadioButtonField yesField = new RadioButtonField(ApplicationResources.getString(32), this._synchAddressBookGroup, true);
+      RadioButtonField noField = new RadioButtonField(ApplicationResources.getString(31), this._synchAddressBookGroup, false);
       this.addContentField(yesField);
       this.addContentField(noField);
       this.addContentLineBreak();

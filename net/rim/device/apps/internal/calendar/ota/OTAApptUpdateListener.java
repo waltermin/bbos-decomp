@@ -24,7 +24,7 @@ public class OTAApptUpdateListener extends OTABaseListener {
 
    @Override
    public boolean receiveObject(TransmissionService service, Object anObject, Object contextObject) {
-      if (!(anObject instanceof Object)) {
+      if (!(anObject instanceof Event)) {
          return false;
       }
 

@@ -29,7 +29,7 @@ class SpellCheckInputMethodVariant$SureTypeLookupModeEventHandler extends SpellC
                this.this$0._misspelledWord.append(this.this$0._variants.getOriginal());
                this.this$0._variants.setVariantIndex(-1);
                this.this$0.sendCommittedComposed(true);
-               if (this.this$0._currentComponent != null && this.this$0._currentComponent instanceof Object) {
+               if (this.this$0._currentComponent != null && this.this$0._currentComponent instanceof TextField) {
                   TextField field = (TextField)this.this$0._currentComponent;
                   int labelLength = field.getLabelLength();
                   if (caret >= labelLength && caret <= field.getTextLength() + labelLength) {
@@ -37,7 +37,7 @@ class SpellCheckInputMethodVariant$SureTypeLookupModeEventHandler extends SpellC
                   }
                }
 
-               KeyEvent ke = (KeyEvent)(new Object(this.this$0._currentComponent, 516, 0, 0, 0, '\u0000', -1));
+               KeyEvent ke = new KeyEvent(this.this$0._currentComponent, 516, 0, 0, 0, '\u0000', -1);
                ke.init(this.this$0._currentComponent, 516, 0, 0, 0, '\u0000', true);
                this.this$0._inputMethod.dispatchEvent(ke);
                this.this$0._state = 6;

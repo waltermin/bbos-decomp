@@ -22,7 +22,7 @@ final class TestRFAntenna$MyPhoneListener implements PhoneListener {
       }
 
       this.this$0.taskScreen.insertReport("Call Connected @ ");
-      this.this$0.timer = (Timer)(new Object());
+      this.this$0.timer = new Timer();
       this.this$0.timeoutAction = new TimeoutAction(this.this$0.taskScreen);
       this.this$0.timer.schedule(this.this$0.timeoutAction, 0, 5000);
    }
@@ -83,7 +83,7 @@ final class TestRFAntenna$MyPhoneListener implements PhoneListener {
             cause = "";
       }
 
-      this.this$0.taskScreen.insertReport(((StringBuffer)(new Object())).append(cause).append(" Call Failed @ ").toString());
+      this.this$0.taskScreen.insertReport(cause + " Call Failed @ ");
    }
 
    @Override

@@ -35,8 +35,8 @@ public final class FailedValidationsHandler extends XMLToObjectHandler implement
          return new int[0];
       }
 
-      Vector list = (Vector)(new Object());
-      if (failed instanceof Object) {
+      Vector list = new Vector();
+      if (failed instanceof String) {
          list.addElement(failed);
       } else {
          list = (Vector)failed;

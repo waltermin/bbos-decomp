@@ -40,7 +40,7 @@ final class SoftwareDHCryptoToken$DHCryptoSystemData implements CryptoTokenCrypt
             throw new InvalidCryptoSystemException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

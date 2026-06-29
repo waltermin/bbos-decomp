@@ -9,7 +9,7 @@ public class SLVariants implements PersistentContentListener {
    protected SLVariants$SLTextWithSourceDataContainer _variants = new SLVariants$SLTextWithSourceDataContainer();
    protected SLVariants$SLTextWithSourceDataContainer _additionalVariants = new SLVariants$SLTextWithSourceDataContainer();
    protected int _currentVariantIndex = -1;
-   protected StringBuffer _original = (StringBuffer)(new Object());
+   protected StringBuffer _original = new StringBuffer();
    private ISLVariantsObserver _observer;
    protected int _caretPosition;
    protected boolean _isVariantsSeparated;
@@ -598,7 +598,7 @@ public class SLVariants implements PersistentContentListener {
 
    @Override
    public String toString() {
-      StringBuffer result = (StringBuffer)(new Object());
+      StringBuffer result = new StringBuffer();
       result.append("\nOrig=");
       result.append(this._original);
       result.append('\n');

@@ -9,7 +9,7 @@ import net.rim.device.api.ui.container.VerticalFieldManager;
 class EmailViewerScreen$RightJustifiedHorizontalFieldManager extends HorizontalFieldManager {
    private VerticalFieldManager _contentField = new EmailViewerScreen$RightJustifiedHorizontalFieldManager$1(this);
    private Field _rightJustifiedField;
-   private Manager _footerManager = (Manager)(new Object());
+   private Manager _footerManager = new VerticalFieldManager();
    private Field _verticalAlignmentField;
 
    public EmailViewerScreen$RightJustifiedHorizontalFieldManager() {

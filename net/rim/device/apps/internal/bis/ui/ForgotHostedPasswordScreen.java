@@ -2,8 +2,8 @@ package net.rim.device.apps.internal.bis.ui;
 
 import java.util.Hashtable;
 import java.util.Vector;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.BasicEditField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.apps.internal.bis.ApplicationResources;
 import net.rim.device.apps.internal.bis.api.ui.BoldLabelField;
 import net.rim.device.apps.internal.bis.api.ui.Button;
@@ -27,7 +27,7 @@ public final class ForgotHostedPasswordScreen extends UserSettingsScreen {
    public final void refresh(Hashtable screenParams) {
       this._pendingParams = screenParams;
       this.setTitle(ApplicationResources.getString(8));
-      this.addContentField((Field)(new Object(ApplicationResources.getString(245))));
+      this.addContentField(new LabelField(ApplicationResources.getString(245)));
       this.addContentLineBreak();
       Mailbox mailbox = null;
       if (screenParams.containsKey("mailboxesToValidate")) {
@@ -44,17 +44,17 @@ public final class ForgotHostedPasswordScreen extends UserSettingsScreen {
          SecretQuestion[] questions = ClientSessionState.getInstance().getSecretQuestions();
 
          for (int i = 0; i < questions.length; i++) {
-            if (new Object(questions[i].getId()).equals(mailbox.getSecretQuestionId())) {
+            if (new Integer(questions[i].getId()).equals(mailbox.getSecretQuestionId())) {
                secretQuestion = questions[i].getText();
                break;
             }
          }
       }
 
-      this.addContentField((Field)(new Object(secretQuestion)));
+      this.addContentField(new LabelField(secretQuestion));
       this.addContentLineBreak();
       this.addContentField(new BoldLabelField(ApplicationResources.getString(246)));
-      this._answerEdit = (BasicEditField)(new Object(null, null));
+      this._answerEdit = new BasicEditField(null, null);
       this.addContentField(this._answerEdit, true);
       Button cancelButton = new Button(ApplicationResources.getString(28));
       Button okButton = new Button(ApplicationResources.getString(39));

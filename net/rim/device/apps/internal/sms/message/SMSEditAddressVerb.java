@@ -27,7 +27,7 @@ class SMSEditAddressVerb extends Verb {
       super(0, SMSResources.getResourceBundle(), 0);
       switch (type) {
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          default:
             super._ordering = 16859648;
@@ -37,14 +37,14 @@ class SMSEditAddressVerb extends Verb {
             super._ordering = 16859728;
             super._rbKey = 750;
             if (selectedAddress == null) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
             break;
          case 2:
             super._ordering = 16879616;
             super._rbKey = 416;
             if (selectedAddress == null) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
       }
 
@@ -88,7 +88,7 @@ class SMSEditAddressVerb extends Verb {
       }
 
       if (this._editScreen != null) {
-         ContextObject result = (ContextObject)(new Object(39));
+         ContextObject result = new ContextObject(39);
          this._editScreen._runAgain = true;
          this._editScreen.setDirty(true);
          return result;

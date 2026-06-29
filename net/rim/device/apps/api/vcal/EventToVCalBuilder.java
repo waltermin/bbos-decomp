@@ -6,6 +6,7 @@ import java.io.DataOutput;
 import net.rim.device.apps.api.calendar.modelcontrollerinterface.Event;
 import net.rim.device.apps.api.calendar.modelcontrollerinterface.EventInstance;
 import net.rim.device.apps.api.utility.serialization.Converter;
+import net.rim.device.apps.api.utility.serialization.SerializationException;
 import net.rim.device.apps.internal.api.serialformats.ICalendarWriter;
 
 final class EventToVCalBuilder implements Converter {
@@ -20,18 +21,18 @@ final class EventToVCalBuilder implements Converter {
    }
 
    @Override
-   public final Object convert(byte[] inputBytes, Object contextObject) {
-      throw new Object(_notImplemented);
+   public final Object convert(byte[] inputBytes, Object contextObject) throws SerializationException {
+      throw new SerializationException(_notImplemented);
    }
 
    @Override
-   public final Object convert(DataInput aDataInput, Object contextObject) {
-      throw new Object(_notImplemented);
+   public final Object convert(DataInput aDataInput, Object contextObject) throws SerializationException {
+      throw new SerializationException(_notImplemented);
    }
 
    @Override
-   public final void convert(Object inputObject, DataOutput aDataOutput, Object contextObject) {
-      throw new Object(_notImplemented);
+   public final void convert(Object inputObject, DataOutput aDataOutput, Object contextObject) throws SerializationException {
+      throw new SerializationException(_notImplemented);
    }
 
    @Override
@@ -41,8 +42,8 @@ final class EventToVCalBuilder implements Converter {
          Event event = ee.getEventInstance();
          synchronized (this._builder) {
             this._builder.setEvent(event);
-            ByteArrayOutputStream outputStream = (ByteArrayOutputStream)(new Object());
-            ICalendarWriter iCalwriter = (ICalendarWriter)(new Object(this._builder, outputStream, "utf-8"));
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            ICalendarWriter iCalwriter = new ICalendarWriter(this._builder, outputStream, "utf-8");
             iCalwriter.encodeICalendar();
             return outputStream.toByteArray();
          }

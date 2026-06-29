@@ -1,5 +1,6 @@
 package net.rim.device.internal.synchronization.ota.util;
 
+import java.io.IOException;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.vm.Array;
 
@@ -85,7 +86,7 @@ public final class TypeLengthEncoding {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   public static final void writeTLESerializableObject(DataBuffer dout, int tag, TLESerializableObject aTLEObject) {
+   public static final void writeTLESerializableObject(DataBuffer dout, int tag, TLESerializableObject aTLEObject) throws IOException {
       int xOriginalPosition = dout.getPosition();
 
       try {
@@ -99,7 +100,7 @@ public final class TypeLengthEncoding {
          dout.setPosition(xTLEObjectEndPosition);
       } catch (Throwable var7) {
          dout.setPosition(xOriginalPosition);
-         throw new Object(e.getMessage());
+         throw new IOException(e.getMessage());
       }
    }
 
@@ -111,10 +112,10 @@ public final class TypeLengthEncoding {
       return readShort(din) & 65535;
    }
 
-   public static final int readInt(DataBuffer din) {
+   public static final int readInt(DataBuffer din) throws IOException {
       int xLength = LengthEncoding.read(din);
       if (xLength == 0) {
-         throw new Object();
+         throw new IOException();
       }
 
       int xValue = 0;
@@ -127,11 +128,11 @@ public final class TypeLengthEncoding {
    }
 
    public static final String readRimUTF(DataBuffer din, String encoding) {
-      return (String)(new Object(readBytes(din), encoding));
+      return new String(readBytes(din), encoding);
    }
 
    public static final String readString(DataBuffer din) {
-      return (String)(new Object(readBytes(din)));
+      return new String(readBytes(din));
    }
 
    public static final void readBytes(DataBuffer din, byte[] aValue) {
@@ -153,9 +154,9 @@ public final class TypeLengthEncoding {
       return readUnsignedByte(din) != 0;
    }
 
-   public static final int readUnsignedByte(DataBuffer din) {
+   public static final int readUnsignedByte(DataBuffer din) throws IOException {
       if (LengthEncoding.read(din) == 0) {
-         throw new Object();
+         throw new IOException();
       } else {
          return din.readUnsignedByte();
       }

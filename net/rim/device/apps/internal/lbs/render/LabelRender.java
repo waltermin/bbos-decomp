@@ -408,7 +408,7 @@ public final class LabelRender {
    static final int DRAW_CITY_DOTS = 1;
    static final int DRAW_CITY_LABELS = 2;
    static final int DRAW_CITY_DOTS_LABELS = 3;
-   static BorderBitmap _hiwayBorder = (BorderBitmap)(new Object(3, 8, 5, 6, Bitmap.getBitmapResource("hiway.png")));
+   static BorderBitmap _hiwayBorder = new BorderBitmap(3, 8, 5, 6, Bitmap.getBitmapResource("hiway.png"));
    static Font _hiwayFont = FontRegistry.get("BBMillbankTall").getFont(1, 12, 0);
    static LayerDictionary _layerDictionary = LayerDictionary.getInstance();
    static LabelPath _labelPath = new LabelPath();
@@ -488,7 +488,7 @@ public final class LabelRender {
 
                   if (europeanHwyV2) {
                      markerStart = sDicIdx;
-                     markerInfo = ((StringBuffer)(new Object())).append(start).append(markerMiddle).append(end).toString().trim();
+                     markerInfo = (start + markerMiddle + end).trim();
                      europeanHwyV1 = false;
 
                      while (labelEntry[labelPos++] != 0) {
@@ -499,7 +499,7 @@ public final class LabelRender {
 
             if (newHwyInfo == 0 || !europeanHwyV1 && !europeanHwyV2) {
                String ending = markerEnd >= 0 && markerEnd < MarkerDictionary.MARKER_END_ARRAY.length ? MarkerDictionary.MARKER_END_ARRAY[markerEnd] : "";
-               markerInfo = ((StringBuffer)(new Object())).append(markerMiddle).append(ending).toString().trim();
+               markerInfo = (markerMiddle + ending).trim();
                europeanHwyV2 = false;
                europeanHwyV1 = false;
 
@@ -631,7 +631,7 @@ public final class LabelRender {
       int length = label.length();
       label = label.toLowerCase();
       String letter = label.substring(0, 1);
-      label = ((StringBuffer)(new Object())).append(letter.toUpperCase()).append(label.substring(1, length)).toString();
+      label = letter.toUpperCase() + label.substring(1, length);
       int nextSpace = nextDelimiter(label, " ", 0);
       int nextDash = nextDelimiter(label, "-", 0);
       int nextApostrophe = nextDelimiter(label, "'", 0);
@@ -674,11 +674,7 @@ public final class LabelRender {
 
          String word = label.substring(start + 1, Math.min(end, length));
          if (capitalizeWord(word, delimiter)) {
-            label = ((StringBuffer)(new Object()))
-               .append(label.substring(0, start + 1))
-               .append(letter.toUpperCase())
-               .append(label.substring(start + 2, length))
-               .toString();
+            label = label.substring(0, start + 1) + letter.toUpperCase() + label.substring(start + 2, length);
          }
 
          if (end == length) {
@@ -690,24 +686,20 @@ public final class LabelRender {
 
       if (type == 0 && label.substring(Math.max(0, length - 2), length - 1).equals(" ")) {
          letter = label.substring(length - 1, length);
-         label = ((StringBuffer)(new Object())).append(label.substring(0, length - 1)).append(letter.toUpperCase()).toString();
+         label = label.substring(0, length - 1) + letter.toUpperCase();
       }
 
       if (type == 2) {
          if (label.endsWith("Usa")) {
-            label = ((StringBuffer)(new Object())).append(label.substring(0, label.length() - 3)).append("USA").toString();
+            label = label.substring(0, label.length() - 3) + "USA";
          } else if (label.endsWith("Uk")) {
-            label = ((StringBuffer)(new Object())).append(label.substring(0, label.length() - 2)).append("UK").toString();
+            label = label.substring(0, label.length() - 2) + "UK";
          }
 
          if (label.endsWith("USA") || label.endsWith("Canada")) {
             int endOffset = label.lastIndexOf(44);
             int startOffset = label.lastIndexOf(44, endOffset - 1);
-            label = ((StringBuffer)(new Object()))
-               .append(label.substring(0, startOffset))
-               .append(label.substring(startOffset, endOffset).toUpperCase())
-               .append(label.substring(endOffset, label.length()))
-               .toString();
+            label = label.substring(0, startOffset) + label.substring(startOffset, endOffset).toUpperCase() + label.substring(endOffset, label.length());
          }
       }
 
@@ -948,7 +940,7 @@ public final class LabelRender {
 
                                     text = "";
                                  } else {
-                                    text = (String)(new Object(labelEntry, start, pos - start - 1));
+                                    text = new String(labelEntry, start, pos - start - 1);
                                  }
 
                                  int x = mx * matrix[0] + my * matrix[1] + matrix[2] >> 16;

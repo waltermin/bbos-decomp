@@ -16,8 +16,8 @@ import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.internal.i18n.CommonResource;
 
 public class BaseDurationField extends Field {
-   private Vector _rowsOfText = (Vector)(new Object());
-   private StringBuffer _durationText = (StringBuffer)(new Object());
+   private Vector _rowsOfText = new Vector();
+   private StringBuffer _durationText = new StringBuffer();
    private long _duration;
    private int _currentUnit;
    private int _smallestUnitsDisplayed;
@@ -340,7 +340,7 @@ public class BaseDurationField extends Field {
       long milliSeconds = this._duration;
       String unitText = "";
       ResourceBundle rb = ResourceBundle.getBundle(2545338480386147321L, "net.rim.device.apps.internal.resource.Ui");
-      StringBuffer textRow = (StringBuffer)(new Object());
+      StringBuffer textRow = new StringBuffer();
       Font font = this.getFont();
       this._cursorHeight = font.getHeight();
       this._durationWidth = 0;
@@ -352,19 +352,19 @@ public class BaseDurationField extends Field {
          unitText = rb.getString(DISPLAY_NAMES[i][unitValue == 1 ? 0 : 1]);
          milliSeconds -= unitValue * UNITS[i];
          if (textRow.length() > 0) {
-            this.appendSpaceOrStartNewRow(textRow, ((StringBuffer)(new Object(""))).append(unitValue).toString(), width, font);
+            this.appendSpaceOrStartNewRow(textRow, "" + unitValue, width, font);
          }
 
          if (this._currentUnit == i) {
             this._cursorXOffset = font.getBounds(textRow);
             this._cursorYOffset = this._rowsOfText.size() * this._cursorHeight;
-            this._cursorWidth = font.getBounds(((StringBuffer)(new Object(""))).append(unitValue).toString());
+            this._cursorWidth = font.getBounds("" + unitValue);
          }
 
          textRow.append(unitValue);
          this.appendSpaceOrStartNewRow(textRow, unitText, width, font);
          textRow.append(unitText);
-         this._durationText.append(((StringBuffer)(new Object())).append(unitValue).append(" ").append(unitText).toString());
+         this._durationText.append(unitValue + " " + unitText);
          if (i > this._smallestUnitsDisplayed) {
             this._durationText.append(" ");
          }
@@ -377,7 +377,7 @@ public class BaseDurationField extends Field {
 
    private void appendSpaceOrStartNewRow(StringBuffer textRow, String textToBeAdded, int maxWidth, Font font) {
       int textWidth = font.getBounds(textRow);
-      if (textWidth + font.getBounds(((StringBuffer)(new Object(" "))).append(textToBeAdded).toString()) <= maxWidth) {
+      if (textWidth + font.getBounds(" " + textToBeAdded) <= maxWidth) {
          textRow.append(" ");
       } else {
          this._durationWidth = Math.max(textWidth, this._durationWidth);

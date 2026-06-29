@@ -13,10 +13,10 @@ import net.rim.device.api.util.Persistable;
 import net.rim.vm.Array;
 
 public final class CertificateServers implements Persistable {
-   private Vector _ldapServers = (Vector)(new Object());
-   private Vector _ocspServers = (Vector)(new Object());
-   private Vector _crlServers = (Vector)(new Object());
-   private Vector _deletedServers = (Vector)(new Object());
+   private Vector _ldapServers = new Vector();
+   private Vector _ocspServers = new Vector();
+   private Vector _crlServers = new Vector();
+   private Vector _deletedServers = new Vector();
    public static final int LDAP_SERVER = 1;
    public static final int OCSP_SERVER = 2;
    public static final int CRL_SERVER = 3;
@@ -43,7 +43,7 @@ public final class CertificateServers implements Persistable {
 
    public final CertificateServerInfo addServer(CertificateServerInfo server) {
       if (server == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this.getServerVector(server.getType()).addElement(server);
@@ -70,7 +70,7 @@ public final class CertificateServers implements Persistable {
 
    public final boolean contains(CertificateServerInfo server) {
       if (server == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return this.getServerVector(server.getType()).contains(server);
       }
@@ -93,13 +93,13 @@ public final class CertificateServers implements Persistable {
          _persist.commit();
          return removed;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    final boolean internalRemoveServer(CertificateServerInfo server) {
       if (server == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       boolean removed = this.removeServerFromVector(server);
@@ -113,7 +113,7 @@ public final class CertificateServers implements Persistable {
    }
 
    public final SyncObject[] getSyncObjects() {
-      SyncObject[] array = new Object[0];
+      SyncObject[] array = new SyncObject[0];
       int arraySize = 0;
       Enumeration enumeration = null;
 
@@ -164,7 +164,7 @@ public final class CertificateServers implements Persistable {
    private final Vector getServerVector(int type) {
       switch (type) {
          case 0:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 1:
          default:
             return this._ldapServers;

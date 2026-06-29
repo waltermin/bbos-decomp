@@ -181,7 +181,7 @@ final class SendHotlist {
             var11 = false;
          } finally {
             if (var11) {
-               throw new Object();
+               throw new RuntimeException();
             }
          }
 

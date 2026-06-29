@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.calendar.viewer;
 import net.rim.device.api.util.IntHashtable;
 import net.rim.device.apps.api.calendar.caldb.CalendarProxy;
 import net.rim.device.apps.api.framework.hotkeys.HotKeys;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.VerbProvider;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.utility.framework.VerbToMenu;
@@ -21,8 +22,8 @@ class CalendarViewVerbManager {
    private GotoViewVerb _viewAgendaVerb;
    private Verb _chooseCalendarServiceVerb;
    private ViewCalendarDatabaseVerbManager _viewDatabaseVerbManager = new ViewCalendarDatabaseVerbManager();
-   private Verb[] _verbArray = new Object[0];
-   private IntHashtable _hk = (IntHashtable)(new Object());
+   private Verb[] _verbArray = new Verb[0];
+   private IntHashtable _hk = new IntHashtable();
    private CalendarActions _calActions;
    private Verb _defaultVerb;
    protected static final byte VIEW_DAY_VERB = 1;
@@ -157,9 +158,9 @@ class CalendarViewVerbManager {
    }
 
    protected boolean addObjectVerbs(VerbToMenu verbs, Object objectForExtraVerbs) {
-      if (objectForExtraVerbs instanceof Object) {
+      if (objectForExtraVerbs instanceof VerbProvider) {
          VerbProvider calVerbProvider = (VerbProvider)objectForExtraVerbs;
-         Verb defaultVerb = calVerbProvider.getVerbs(new Object(86), this._verbArray);
+         Verb defaultVerb = calVerbProvider.getVerbs(new ContextObject(86), this._verbArray);
          verbs.addVerbs(this._verbArray);
          Array.resize(this._verbArray, 0);
          if (defaultVerb != null) {

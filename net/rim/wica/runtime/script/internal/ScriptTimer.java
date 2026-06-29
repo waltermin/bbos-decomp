@@ -11,7 +11,7 @@ public final class ScriptTimer {
 
    ScriptTimer(ScriptEngineImpl engine) {
       this._engine = engine;
-      this._queue = (Vector)(new Object(2));
+      this._queue = new Vector(2);
    }
 
    public final int setTimeout(Object action, long timeout, long[] args, boolean repeat) {

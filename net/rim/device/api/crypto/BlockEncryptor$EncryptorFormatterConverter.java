@@ -6,7 +6,7 @@ class BlockEncryptor$EncryptorFormatterConverter implements BlockFormatterEngine
 
    public BlockEncryptor$EncryptorFormatterConverter(BlockEncryptorEngine encryptorEngine) {
       if (encryptorEngine == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._encryptorEngine = encryptorEngine;

@@ -25,7 +25,7 @@ public final class WicletMessageProcessor implements MessageHandler {
    private PersistenceService _persistence;
    private ManagementService _management;
    private Provider _provider;
-   private LongHashtable _wicletTable = (LongHashtable)(new Object());
+   private LongHashtable _wicletTable = new LongHashtable();
    private LongLongHashtable _aliasTable;
    private LongIntHashtable _flowControlTable;
    static Class class$net$rim$wica$runtime$lifecycle$LifecycleService;
@@ -89,7 +89,7 @@ public final class WicletMessageProcessor implements MessageHandler {
             new WicletMessageProcessor$MiscellaneousEventListener(this, null)
          );
       } else {
-         throw new Object();
+         throw new RuntimeException();
       }
    }
 
@@ -118,7 +118,7 @@ public final class WicletMessageProcessor implements MessageHandler {
 
    final synchronized void setFlowControlState(WicletQueueManager wm) {
       if (this._flowControlTable == null) {
-         this._flowControlTable = (LongIntHashtable)(new Object());
+         this._flowControlTable = new LongIntHashtable();
       }
 
       this._flowControlTable.put(wm.getWicletId(), wm.getFlowControlState());
@@ -152,7 +152,7 @@ public final class WicletMessageProcessor implements MessageHandler {
 
    public final InboundQueueConnection getInboundQueueConnection(long wicletID) {
       if (wicletID == 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return (WicletQueueManager)this._wicletTable.get(wicletID);
       }
@@ -184,7 +184,7 @@ public final class WicletMessageProcessor implements MessageHandler {
       }
 
       if (message.getAGID() == 0) {
-         throw new MessagingException(((StringBuffer)(new Object("Application "))).append(wicletId).append(" not found").toString());
+         throw new MessagingException("Application " + wicletId + " not found");
       }
 
       this._management.sendREStatusMessage(message.getAGID());
@@ -266,7 +266,7 @@ public final class WicletMessageProcessor implements MessageHandler {
 
    private final WicletQueueManager installWiclet(Wiclet w) {
       if (w.getAgId() == 0) {
-         throw new Object(((StringBuffer)(new Object("Invalid MDS Services ID 0 for application "))).append(w.getId()).toString());
+         throw new RuntimeException("Invalid MDS Services ID 0 for application " + w.getId());
       }
 
       WicletQueueManager wm = new WicletQueueManager(this, w.getId(), 0, w.getAgId(), w.getMessageDelivery(), w.getInboundQueueSizeLimit(), 0, false);
@@ -310,7 +310,7 @@ public final class WicletMessageProcessor implements MessageHandler {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

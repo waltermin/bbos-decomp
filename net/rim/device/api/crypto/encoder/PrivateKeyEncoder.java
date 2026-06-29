@@ -16,7 +16,7 @@ public class PrivateKeyEncoder {
 
    public static EncodedKey encode(PrivateKey key, String encodingAlgorithm) {
       if (key == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       PrivateKeyEncoder encoder = getEncoder(encodingAlgorithm, key.getAlgorithm());
@@ -35,7 +35,7 @@ public class PrivateKeyEncoder {
       if (encodingAlgorithm != null && keyAlgorithm != null) {
          return (PrivateKeyEncoder)Utility.getCoder(_encoderHashtable, encodingAlgorithm, keyAlgorithm);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

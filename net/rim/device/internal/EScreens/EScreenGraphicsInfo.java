@@ -47,7 +47,7 @@ public final class EScreenGraphicsInfo extends MainScreen implements ListFieldCa
    public EScreenGraphicsInfo(Font font) {
       this.setFont(font);
       this._cacheStats = new int[9];
-      this._list = (ListField)(new Object());
+      this._list = new ListField();
       this._list.setSize(14);
       this._list.setCallback(this);
       this.add(this._list);
@@ -105,7 +105,7 @@ public final class EScreenGraphicsInfo extends MainScreen implements ListFieldCa
 
    @Override
    public final void drawListRow(ListField listField, Graphics graphics, int index, int y, int width) {
-      StringBuffer buffer = (StringBuffer)(new Object(32));
+      StringBuffer buffer = new StringBuffer(32);
       buffer.append(NAMES[index]);
       switch (index) {
          case -1:

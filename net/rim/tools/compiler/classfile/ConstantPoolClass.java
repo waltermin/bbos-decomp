@@ -1,5 +1,6 @@
 package net.rim.tools.compiler.classfile;
 
+import java.io.IOException;
 import net.rim.tools.compiler.io.StructuredInputStream;
 import net.rim.tools.compiler.types.Type;
 
@@ -20,7 +21,7 @@ public final class ConstantPoolClass extends ConstantPoolIndex {
    }
 
    @Override
-   public final void verify() {
+   public final void verify() throws IOException {
       String className = this._name.getString();
       int len = className.length();
       int offset = 0;
@@ -33,13 +34,13 @@ public final class ConstantPoolClass extends ConstantPoolIndex {
                   break;
                }
 
-               throw new Object(((StringBuffer)(new Object("bad class name: "))).append(className).toString());
+               throw new IOException("bad class name: " + className);
             case 'ႀ':
             case 'Ḁ':
             case '\u3040':
             case '㐀':
             case 'ﬀ':
-               throw new Object(((StringBuffer)(new Object("bad class name: "))).append(className).toString());
+               throw new IOException("bad class name: " + className);
          }
       }
    }

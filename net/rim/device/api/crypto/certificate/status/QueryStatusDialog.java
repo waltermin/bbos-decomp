@@ -8,17 +8,19 @@ import net.rim.device.api.system.RadioStatusListener;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Font;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.internal.proxy.Proxy;
 import net.rim.device.internal.resource.crypto.CryptoIcons;
 import net.rim.device.internal.ui.Image;
+import net.rim.device.internal.ui.component.HorizontalSpacerField;
 import net.rim.device.internal.ui.component.ImageField;
 import net.rim.device.internal.ui.component.PopupDialog;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 
 public class QueryStatusDialog extends PopupDialog implements FieldChangeListener, QueryProgressListener, RadioStatusListener, LDAPListener {
    private Object _query;
@@ -38,17 +40,17 @@ public class QueryStatusDialog extends PopupDialog implements FieldChangeListene
 
    public void setTitle(String title) {
       if (title == null || title.length() <= 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (this._titleField == null) {
-         this._titleField = (LabelField)(new Object(title, 36028797018964032L));
+         this._titleField = new LabelField(title, 36028797018964032L);
          Font boldFont = Font.getDefault();
          boldFont = boldFont.derive(boldFont.getStyle() | 1);
          this._titleField.setFont(boldFont);
          VerticalFieldManager vfm = (VerticalFieldManager)this.getDelegate();
          vfm.add(this._titleField);
-         vfm.add((Field)(new Object()));
+         vfm.add(new SeparatorField());
       } else {
          synchronized (this._app.getAppEventLock()) {
             this._titleField.setText(title);
@@ -57,13 +59,13 @@ public class QueryStatusDialog extends PopupDialog implements FieldChangeListene
    }
 
    public void setQuery(LDAPQuery query) {
-      if (query != null && this._query instanceof Object) {
+      if (query != null && this._query instanceof LDAPQuery) {
          ((LDAPQuery)this._query).removeListener(this);
          this._query = query;
          query.addListener(this);
          this.setRequestState(0);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -132,7 +134,7 @@ public class QueryStatusDialog extends PopupDialog implements FieldChangeListene
 
             this._isClosed = true;
          } else if (field == this._cancelButton && this._state > 1 && this._state < 5) {
-            if (!(this._query instanceof Object)) {
+            if (!(this._query instanceof LDAPQuery)) {
                if (this._query instanceof CertificateStatusQuery) {
                   ((CertificateStatusQuery)this._query).terminateQuery();
                }
@@ -166,9 +168,9 @@ public class QueryStatusDialog extends PopupDialog implements FieldChangeListene
    }
 
    public QueryStatusDialog(CertificateStatusQuery query, boolean allowHide, long style) {
-      super((Manager)(new Object()), style);
+      super(new VerticalFieldManager(), style);
       if (query == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._query = query;
@@ -176,7 +178,7 @@ public class QueryStatusDialog extends PopupDialog implements FieldChangeListene
       this._app = Application.getApplication();
       VerticalFieldManager vfm = (VerticalFieldManager)this.getDelegate();
       this.setTitle(query.getCertChain()[0].getSubjectFriendlyName());
-      this._vfm = (VerticalFieldManager)(new Object(299067162755072L));
+      this._vfm = new VerticalFieldManager(299067162755072L);
       this.setIcon();
       this.addButtons();
       vfm.add(this._vfm);
@@ -205,17 +207,17 @@ public class QueryStatusDialog extends PopupDialog implements FieldChangeListene
    }
 
    private void addButtons() {
-      HorizontalFieldManager buttonManager = (HorizontalFieldManager)(new Object(8589934592L));
+      HorizontalFieldManager buttonManager = new HorizontalFieldManager(8589934592L);
       if (this._allowHide) {
-         this._hideButton = (ButtonField)(new Object(_rb.getString(59)));
+         this._hideButton = new ButtonField(_rb.getString(59));
          this._hideButton.setChangeListener(this);
          buttonManager.add(this._hideButton);
       }
 
-      this._cancelButton = (ButtonField)(new Object(_rb.getString(60)));
+      this._cancelButton = new ButtonField(_rb.getString(60));
       this._cancelButton.setChangeListener(this);
       buttonManager.add(this._cancelButton);
-      this._vfm.add((Field)(new Object(4)));
+      this._vfm.add(new VerticalSpacerField(4));
       this._vfm.add(buttonManager);
    }
 
@@ -224,7 +226,7 @@ public class QueryStatusDialog extends PopupDialog implements FieldChangeListene
       super.onDisplay();
       Proxy.getInstance().addRadioListener(this);
       if (!(this._query instanceof CertificateStatusQuery)) {
-         if (this._query instanceof Object) {
+         if (this._query instanceof LDAPQuery) {
             try {
                ((LDAPQuery)this._query).start();
                return;
@@ -302,11 +304,11 @@ public class QueryStatusDialog extends PopupDialog implements FieldChangeListene
          }
 
          if (this._iconField == null) {
-            HorizontalFieldManager manager = (HorizontalFieldManager)(new Object());
+            HorizontalFieldManager manager = new HorizontalFieldManager();
             this._iconField = CryptoIcons.getLargeImageField(icon, 51539607552L);
             manager.add(this._iconField);
-            manager.add((Field)(new Object(4)));
-            this._textMessage = (RichTextField)(new Object(36028848558571520L));
+            manager.add(new HorizontalSpacerField(4));
+            this._textMessage = new RichTextField(36028848558571520L);
             manager.add(this._textMessage);
             this._vfm.add(manager);
          } else {
@@ -316,16 +318,16 @@ public class QueryStatusDialog extends PopupDialog implements FieldChangeListene
    }
 
    public QueryStatusDialog(LDAPQuery query, String title, long style) {
-      super((Manager)(new Object()), style);
+      super(new VerticalFieldManager(), style);
       this.setModal(true);
       if (query == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       query.addListener(this);
       VerticalFieldManager vfm = (VerticalFieldManager)this.getDelegate();
       this.setTitle(title);
-      this._vfm = (VerticalFieldManager)(new Object(299067162755072L));
+      this._vfm = new VerticalFieldManager(299067162755072L);
       this.setIcon();
       this.addButtons();
       vfm.add(this._vfm);

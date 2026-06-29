@@ -34,11 +34,11 @@ final class SpeedDialItemFactory extends RIMModelFactory implements QuickContact
       // Bytecode:
       // 000: aload 1
       // 001: dup
-      // 002: instanceof java/lang/Object
+      // 002: instanceof net/rim/device/apps/api/quickcontact/QuickContactData
       // 005: ifne 00c
       // 008: pop
       // 009: goto 086
-      // 00c: checkcast java/lang/Object
+      // 00c: checkcast net/rim/device/apps/api/quickcontact/QuickContactData
       // 00f: astore 2
       // 010: aload 2
       // 011: invokevirtual net/rim/device/apps/api/quickcontact/QuickContactData.getKey ()C
@@ -48,11 +48,11 @@ final class SpeedDialItemFactory extends RIMModelFactory implements QuickContact
       // 019: astore 4
       // 01b: aload 4
       // 01d: dup
-      // 01e: instanceof java/lang/Object
+      // 01e: instanceof net/rim/device/apps/api/framework/model/ContextObject
       // 021: ifne 028
       // 024: pop
       // 025: goto 06d
-      // 028: checkcast java/lang/Object
+      // 028: checkcast net/rim/device/apps/api/framework/model/ContextObject
       // 02b: astore 5
       // 02d: aload 5
       // 02f: sipush 247
@@ -60,7 +60,7 @@ final class SpeedDialItemFactory extends RIMModelFactory implements QuickContact
       // 033: invokevirtual net/rim/device/api/util/LongHashtable.get (J)Ljava/lang/Object;
       // 036: astore 6
       // 038: aload 6
-      // 03a: instanceof java/lang/Object
+      // 03a: instanceof net/rim/device/apps/internal/phone/model/PhoneNumberModel
       // 03d: ifeq 06b
       // 040: aload 5
       // 042: sipush 252
@@ -70,9 +70,9 @@ final class SpeedDialItemFactory extends RIMModelFactory implements QuickContact
       // 04b: new net/rim/device/apps/internal/phone/data/CallerIDInfo
       // 04e: dup
       // 04f: aload 6
-      // 051: checkcast java/lang/Object
+      // 051: checkcast net/rim/device/apps/api/framework/model/PersistableRIMModel
       // 054: aload 7
-      // 056: checkcast java/lang/Object
+      // 056: checkcast net/rim/device/apps/api/framework/model/PersistableRIMModel
       // 059: bipush 0
       // 05a: bipush 1
       // 05b: invokespecial net/rim/device/apps/internal/phone/data/CallerIDInfo.<init> (Lnet/rim/device/apps/api/framework/model/PersistableRIMModel;Lnet/rim/device/apps/api/framework/model/PersistableRIMModel;ZZ)V
@@ -110,7 +110,7 @@ final class SpeedDialItemFactory extends RIMModelFactory implements QuickContact
       // 09f: sipush 255
       // 0a2: i2l
       // 0a3: invokestatic net/rim/device/apps/api/framework/model/ContextObject.get (Ljava/lang/Object;J)Ljava/lang/Object;
-      // 0a6: checkcast java/lang/Object
+      // 0a6: checkcast net/rim/device/apps/api/framework/model/SyncBuffer
       // 0a9: astore 2
       // 0aa: aload 2
       // 0ab: ifnonnull 0b0

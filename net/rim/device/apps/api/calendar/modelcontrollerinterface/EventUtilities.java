@@ -45,7 +45,7 @@ public class EventUtilities {
    private static final long EXTERNAL_ACTION_VERBS = -8609276785593847844L;
    private static AttendeeUtilities$EmailAddressComparator _emailAddressComparator = new AttendeeUtilities$EmailAddressComparator();
    private static OTACalendarSyncDataManager _otaSyncDataManager = OTACalendarSyncDataManager.getInstance();
-   private static DataBuffer _scratchBuffer = (DataBuffer)(new Object(true));
+   private static DataBuffer _scratchBuffer = new DataBuffer(true);
    protected static TimeZone _gmtTimeZone = TimeZone.getTimeZone(DateTimeUtilities.GMT);
    private static Calendar _calendar = Calendar.getInstance();
    private static Calendar _gmtCalendar = Calendar.getInstance(_gmtTimeZone);
@@ -73,21 +73,21 @@ public class EventUtilities {
       if (hours > 0) {
          minutes %= 60;
          if (hours > 1) {
-            hourString = ((StringBuffer)(new Object(" "))).append(hours).append(rb.getString(609)).toString();
+            hourString = " " + hours + rb.getString(609);
          } else {
-            hourString = ((StringBuffer)(new Object(" "))).append(hours).append(rb.getString(644)).toString();
+            hourString = " " + hours + rb.getString(644);
          }
       }
 
       if (minutes > 0) {
          if (minutes > 1) {
-            minuteString = ((StringBuffer)(new Object())).append(minutes).append(rb.getString(610)).toString();
+            minuteString = minutes + rb.getString(610);
          } else {
-            minuteString = ((StringBuffer)(new Object())).append(minutes).append(rb.getString(611)).toString();
+            minuteString = minutes + rb.getString(611);
          }
       }
 
-      return MessageFormat.format(messageFormatString, new Object[]{hourString, minuteString});
+      return MessageFormat.format(messageFormatString, new String[]{hourString, minuteString});
    }
 
    public static boolean doesEventHaveIntTimeOverflow(Event event) {
@@ -140,13 +140,13 @@ public class EventUtilities {
             var35 = true;
             DataBuffer tempBuffer = recordHash;
             if (tempBuffer == null) {
-               tempBuffer = new Object(true);
+               tempBuffer = new DataBuffer(true);
             }
 
-            DataBuffer hashBuffer = (DataBuffer)(new Object(true));
+            DataBuffer hashBuffer = new DataBuffer(true);
             long startDate = convertEventStartTime(event);
             long endDate = convertEventEndTime(event);
-            ((DataBuffer)tempBuffer).setPosition(0);
+            tempBuffer.setPosition(0);
             synchronized (_scratchBuffer) {
                _scratchBuffer.reset();
                _scratchBuffer.writeInt((int)(startDate / 1000));
@@ -172,33 +172,33 @@ public class EventUtilities {
             }
 
             hashBuffer.writeShort((short)var40);
-            ((DataBuffer)tempBuffer).reset();
+            tempBuffer.reset();
             String tempString = event.getLocation();
             if (tempString != null && tempString.length() > 0) {
                byte[] bytes = getStringBytes(encoding, tempString);
                if (bytes.length > 70) {
-                  ((DataBuffer)tempBuffer).write(bytes, 0, 70);
+                  tempBuffer.write(bytes, 0, 70);
                } else {
-                  ((DataBuffer)tempBuffer).write(bytes);
+                  tempBuffer.write(bytes);
                }
             } else {
-               ((DataBuffer)tempBuffer).writeByte(0);
+               tempBuffer.writeByte(0);
             }
 
             tempString = event.getNotes();
             if (tempString != null && tempString.length() > 0) {
                byte[] bytes = getStringBytes(encoding, tempString);
                if (bytes.length > 1024) {
-                  ((DataBuffer)tempBuffer).write(bytes, 0, 1024);
+                  tempBuffer.write(bytes, 0, 1024);
                } else {
-                  ((DataBuffer)tempBuffer).write(bytes);
+                  tempBuffer.write(bytes);
                }
             } else {
-               ((DataBuffer)tempBuffer).writeByte(0);
+               tempBuffer.writeByte(0);
             }
 
-            ((DataBuffer)tempBuffer).writeByte(event.getAllDayFlag() ? 1 : 0);
-            ((DataBuffer)tempBuffer).writeByte(event.getFreeBusy());
+            tempBuffer.writeByte(event.getAllDayFlag() ? 1 : 0);
+            tempBuffer.writeByte(event.getFreeBusy());
             long reminder = -1;
             ReminderModel reminderObject = event.getReminderData();
             if (reminderObject != null) {
@@ -206,19 +206,19 @@ public class EventUtilities {
             }
 
             if (reminder != -1) {
-               ((DataBuffer)tempBuffer).writeInt((int)(reminder / 60000));
+               tempBuffer.writeInt((int)(reminder / 60000));
             } else {
-               ((DataBuffer)tempBuffer).writeByte(0);
+               tempBuffer.writeByte(0);
             }
 
-            ((DataBuffer)tempBuffer).writeByte(event.getSensitivity());
+            tempBuffer.writeByte(event.getSensitivity());
             String timeZoneID = event.getTimeZoneID();
             TimeZone tz = TimeZone.getTimeZone(timeZoneID);
             Recur recurInfo = event.getRecurrenceCopy();
             byte recurType = recurInfo.getRecurType();
             if (recurInfo.getRecurType() != 0) {
-               ((DataBuffer)tempBuffer).writeByte(recurInfo.getRecurType());
-               ((DataBuffer)tempBuffer).writeShort((short)recurInfo.getRecurPeriod());
+               tempBuffer.writeByte(recurInfo.getRecurType());
+               tempBuffer.writeShort((short)recurInfo.getRecurPeriod());
                if (recurInfo.isFinite()) {
                   long recurUntil = recurInfo.getEndDate();
                   if (event.getAllDayFlag()) {
@@ -227,9 +227,9 @@ public class EventUtilities {
                      recurUntil = DateTimeUtilities.copyCalendar(_gmtCalendar, _calendar);
                   }
 
-                  ((DataBuffer)tempBuffer).writeInt((int)(recurUntil / 1000));
+                  tempBuffer.writeInt((int)(recurUntil / 1000));
                } else {
-                  ((DataBuffer)tempBuffer).writeInt(0);
+                  tempBuffer.writeInt(0);
                }
 
                RecurUtilities.populateRecurrenceModifiers(startDate, recurInfo, timeZoneID, _recurModifiers);
@@ -246,11 +246,11 @@ public class EventUtilities {
                   }
                }
 
-               ((DataBuffer)tempBuffer).writeByte(dayofmonth != -1 ? dayofmonth : 0);
-               ((DataBuffer)tempBuffer).writeByte(days != -1 ? days : 0);
-               ((DataBuffer)tempBuffer).writeByte(months != -1 ? months : 0);
-               ((DataBuffer)tempBuffer).writeShort(byPosition != -1 ? byPosition : 0);
-               ((DataBuffer)tempBuffer).writeShort((short)TimeService.getTimeService().getSerialSyncID(event.getTimeZoneID()));
+               tempBuffer.writeByte(dayofmonth != -1 ? dayofmonth : 0);
+               tempBuffer.writeByte(days != -1 ? days : 0);
+               tempBuffer.writeByte(months != -1 ? months : 0);
+               tempBuffer.writeShort(byPosition != -1 ? byPosition : 0);
+               tempBuffer.writeShort((short)TimeService.getTimeService().getSerialSyncID(event.getTimeZoneID()));
                long[] deletedDates = RecurUtilities.getDeleteDates(calDB, event);
                long[] inclusionDates = recurInfo.getInclusions(null);
                if (event.getAllDayFlag()) {
@@ -267,15 +267,15 @@ public class EventUtilities {
                   }
                }
 
-               writeLongDates((DataBuffer)tempBuffer, deletedDates);
-               writeLongDates((DataBuffer)tempBuffer, inclusionDates);
+               writeLongDates(tempBuffer, deletedDates);
+               writeLongDates(tempBuffer, inclusionDates);
             }
 
             if (event.isMeeting()) {
                int count = 0;
                MeetingInfo meetingInfo = event.getMeetingInfo();
                Enumeration enumeration = meetingInfo.getAttendees();
-               String[] emailAddresses = new Object[meetingInfo.getAttendeeCount()];
+               String[] emailAddresses = new String[meetingInfo.getAttendeeCount()];
 
                while (enumeration.hasMoreElements()) {
                   Attendee attendee = (Attendee)enumeration.nextElement();
@@ -292,7 +292,7 @@ public class EventUtilities {
                   if (StringUtilities.compareToIgnoreCase(emailAddresses[i], "[Truncated]") != 0) {
                      Attendee attendee = meetingInfo.getAttendee(emailAddresses[i]);
                      if (attendee != null) {
-                        writeStringToBuffer(encoding, (DataBuffer)tempBuffer, emailAddresses[i]);
+                        writeStringToBuffer(encoding, tempBuffer, emailAddresses[i]);
                         int attendeeType = 0;
                         byte var60;
                         switch (attendee.getType()) {
@@ -314,14 +314,14 @@ public class EventUtilities {
                               var60 = 9;
                         }
 
-                        ((DataBuffer)tempBuffer).writeByte(var60);
+                        tempBuffer.writeByte(var60);
                      }
                   }
                }
             }
 
-            ((DataBuffer)tempBuffer).trim();
-            byte[] tempArray = ((DataBuffer)tempBuffer).toArray();
+            tempBuffer.trim();
+            byte[] tempArray = tempBuffer.toArray();
             var40 = CRC32.update(0, tempArray);
             hashBuffer.writeInt(var40);
             hashBuffer.trim();
@@ -483,7 +483,7 @@ public class EventUtilities {
 
    public static Event createEventInstanceFromRecurrence(Event originalEvent, long instanceTime) {
       Event eventToReturn = null;
-      if (originalEvent instanceof Object) {
+      if (originalEvent instanceof Copyable) {
          if (ObjectGroup.isInGroup(originalEvent)) {
             eventToReturn = (Event)((Copyable)ObjectGroup.expandGroup(originalEvent)).copy();
          } else {
@@ -627,7 +627,7 @@ public class EventUtilities {
       synchronized (ar) {
          Object o = ar.get(-8609276785593847844L);
          if (o == null) {
-            _externalActionVerbs = (LongHashtable)(new Object());
+            _externalActionVerbs = new LongHashtable();
             ar.put(-8609276785593847844L, _externalActionVerbs);
          } else {
             _externalActionVerbs = (LongHashtable)o;

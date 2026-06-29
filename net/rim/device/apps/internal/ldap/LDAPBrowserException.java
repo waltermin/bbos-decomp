@@ -20,12 +20,12 @@ public class LDAPBrowserException extends Exception {
 
    @Override
    public String getMessage() {
-      return this._e != null ? ((StringBuffer)(new Object())).append(super.getMessage()).append(this._e.getMessage()).toString() : super.getMessage();
+      return this._e != null ? super.getMessage() + this._e.getMessage() : super.getMessage();
    }
 
    @Override
    public String toString() {
-      return this._e != null ? ((StringBuffer)(new Object())).append(super.toString()).append(this._e.toString()).toString() : super.toString();
+      return this._e != null ? super.toString() + this._e.toString() : super.toString();
    }
 
    public Exception getException() {

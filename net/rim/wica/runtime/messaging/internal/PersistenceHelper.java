@@ -52,7 +52,7 @@ public class PersistenceHelper implements PersistentContentListener {
 
    public synchronized void storeIncomingRequests(ConcurrentQueue queue) {
       if (!queue.isEmpty()) {
-         BigVector v = (BigVector)(new Object(queue.size()));
+         BigVector v = new BigVector(queue.size());
          queue.lock();
          ConcurrentQueue$Iterator i = queue.iterator();
 
@@ -134,7 +134,7 @@ public class PersistenceHelper implements PersistentContentListener {
    }
 
    private BigVector serializeMessages(LinkedQueue queue) {
-      BigVector v = (BigVector)(new Object(queue.size()));
+      BigVector v = new BigVector(queue.size());
       LinkedQueue$Iterator i = queue.iterator();
 
       while (i.hasNext()) {
@@ -147,7 +147,7 @@ public class PersistenceHelper implements PersistentContentListener {
 
    private BigVector serializeMessages(ConcurrentQueue queue) {
       queue.lock();
-      BigVector v = (BigVector)(new Object(queue.size()));
+      BigVector v = new BigVector(queue.size());
       ConcurrentQueue$Iterator i = queue.iterator();
 
       while (i.hasNext()) {
@@ -225,7 +225,7 @@ public class PersistenceHelper implements PersistentContentListener {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

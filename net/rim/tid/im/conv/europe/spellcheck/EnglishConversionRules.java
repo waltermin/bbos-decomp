@@ -8,8 +8,8 @@ import net.rim.vm.Array;
 
 public class EnglishConversionRules implements LocaleConversionRules {
    private EnglishConversionRules$Conversion _conversion;
-   private Vector _conversions = (Vector)(new Object());
-   private Word _convertedWord = (Word)(new Object());
+   private Vector _conversions = new Vector();
+   private Word _convertedWord = new Word();
    private boolean _inRules;
    private SpellCheckVariantsCreator _creator;
    private char[] _tmpBuff = new char[50];

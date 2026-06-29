@@ -4,13 +4,14 @@ import com.fourthpass.wapstack.wsp.WSPHeaderDecoder;
 import java.io.InputStream;
 import java.util.Stack;
 import java.util.Vector;
-import javax.microedition.io.ContentConnection;
 import javax.microedition.io.HttpConnection;
 import javax.microedition.io.InputConnection;
 import net.rim.device.api.browser.field.BrowserContent;
 import net.rim.device.api.browser.field.ContentReadEvent;
-import net.rim.device.api.browser.field.Event;
+import net.rim.device.api.browser.field.HistoryEvent;
+import net.rim.device.api.browser.field.RedirectEvent;
 import net.rim.device.api.browser.field.RenderingApplication;
+import net.rim.device.api.browser.field.RenderingException;
 import net.rim.device.api.browser.field.RenderingSession;
 import net.rim.device.api.browser.field.SetHeaderEvent;
 import net.rim.device.api.system.Application;
@@ -26,13 +27,17 @@ import net.rim.device.api.ui.FontFamily;
 import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Trackball;
+import net.rim.device.api.ui.component.AutoTextEditField;
 import net.rim.device.api.ui.component.BasicEditField;
-import net.rim.device.api.ui.component.TextField;
+import net.rim.device.api.ui.component.EmailAddressEditField;
+import net.rim.device.api.ui.component.PasswordEditField;
 import net.rim.device.api.util.IntStack;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.api.framework.model.ContextObject;
+import net.rim.device.apps.api.framework.verb.RunnableVerbWrapper;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.idlescreen.IdleScreenManager;
+import net.rim.device.apps.api.utility.serialization.SerializationException;
 import net.rim.device.apps.internal.browser.api.DeviceDataConversionEvent;
 import net.rim.device.apps.internal.browser.page.PageTimer;
 import net.rim.device.apps.internal.browser.page.Renderer;
@@ -201,9 +206,9 @@ final class WMLRenderer extends Renderer {
 
       this._url = baseURL;
       long dataLength = 0;
-      if (super._inputConnection instanceof Object) {
+      if (super._inputConnection instanceof HttpConnection) {
          this._cardToShow = ((HttpConnection)super._inputConnection).getRef();
-         dataLength = ((ContentConnection)super._inputConnection).getLength();
+         dataLength = ((HttpConnection)super._inputConnection).getLength();
       }
 
       if (this._cardToShow == null || this._cardToShow.length() == 0) {
@@ -211,7 +216,7 @@ final class WMLRenderer extends Renderer {
       }
 
       this._in = new WAPInputStream(in);
-      this._contentReadEvent = (ContentReadEvent)(new Object(super._inputConnection));
+      this._contentReadEvent = new ContentReadEvent(super._inputConnection);
       if (dataLength <= 0) {
          Pipe pipe = this._in.getPipe();
          if (pipe != null && pipe.isClosed()) {
@@ -248,9 +253,9 @@ final class WMLRenderer extends Renderer {
    }
 
    @Override
-   public final BrowserContent processData() {
+   public final BrowserContent processData() throws RenderingException, SerializationException {
       if (this._in == null) {
-         throw new Object(BrowserResources.getString(214));
+         throw new SerializationException(BrowserResources.getString(214));
       }
 
       if (!this._showFirstCard) {
@@ -258,8 +263,8 @@ final class WMLRenderer extends Renderer {
       }
 
       this._numCards = 0;
-      this._tagStack = (IntStack)(new Object());
-      this._currentManagerStack = (Stack)(new Object());
+      this._tagStack = new IntStack();
+      this._currentManagerStack = new Stack();
       this._in.read();
       int publicIdentifierId = this._in.readMBInt();
       if (publicIdentifierId == 0) {
@@ -272,7 +277,7 @@ final class WMLRenderer extends Renderer {
       }
 
       this.setEncoding(WSPHeaderDecoder.getCharsetName(charSet), this._convEvent == null);
-      if (super._inputConnection instanceof Object) {
+      if (super._inputConnection instanceof HttpConnection) {
          this.setPostEncoding(
             this._convEvent != null ? this._convEvent.getEncoding() : ((HttpConnection)super._inputConnection).getHeaderField("x-rim-proxy-encoding")
          );
@@ -285,7 +290,7 @@ final class WMLRenderer extends Renderer {
 
       int stringTableSize = this._in.readMBInt();
       if (stringTableSize < 0) {
-         throw new Object(BrowserResources.getString(235));
+         throw new SerializationException(BrowserResources.getString(235));
       }
 
       byte[] stringTable = new byte[stringTableSize];
@@ -304,7 +309,7 @@ final class WMLRenderer extends Renderer {
                return this.processData();
             }
 
-            throw new Object(BrowserResources.getString(548));
+            throw new RenderingException(BrowserResources.getString(548));
          }
 
          if (super._renderingApplication != null) {
@@ -324,7 +329,7 @@ final class WMLRenderer extends Renderer {
          switch ((short)_id) {
             case 0:
                if (this._in.read() != 0) {
-                  throw new Object(WMLConstants.STRING_ONLY_PAGE_ZERO_SUPPORTED);
+                  throw new SerializationException(WMLConstants.STRING_ONLY_PAGE_ZERO_SUPPORTED);
                }
                break;
             case 1:
@@ -356,24 +361,24 @@ final class WMLRenderer extends Renderer {
 
                   if (verb != null) {
                      if (((OnEventVerb)verb).getTask() instanceof Refresh) {
-                        ContextObject contextObject = (ContextObject)(new Object(64));
-                        Application.getApplication().invokeLater((Runnable)(new Object(null, verb, contextObject, false)));
+                        ContextObject contextObject = new ContextObject(64);
+                        Application.getApplication().invokeLater(new RunnableVerbWrapper(null, verb, contextObject, false));
                         return this._browserContent;
                      }
 
                      if (super._renderingApplication != null) {
-                        super._renderingApplication.eventOccurred((Event)(new Object(super._inputConnection, this._url, 1)));
+                        super._renderingApplication.eventOccurred(new HistoryEvent(super._inputConnection, this._url, 1));
                      }
 
-                     ContextObject contextObject = (ContextObject)(new Object(64));
-                     Application.getApplication().invokeLater((Runnable)(new Object(null, verb, contextObject, false)));
+                     ContextObject contextObject = new ContextObject(64);
+                     Application.getApplication().invokeLater(new RunnableVerbWrapper(null, verb, contextObject, false));
                      return null;
                   }
 
                   return this._browserContent;
                }
 
-               throw new Object(BrowserResources.getString(548));
+               throw new SerializationException(BrowserResources.getString(548));
             case 2:
                char c = (char)this._in.readMBInt();
                if (this._textSegment != null) {
@@ -483,7 +488,7 @@ final class WMLRenderer extends Renderer {
             case 192:
             case 193:
             case 194:
-               throw new Object(WMLConstants.STRING_RESERVED_EXT_BYTE);
+               throw new SerializationException(WMLConstants.STRING_RESERVED_EXT_BYTE);
             case 195:
                int len = this._in.readMBInt();
                int i = 0;
@@ -903,7 +908,7 @@ final class WMLRenderer extends Renderer {
       }
    }
 
-   private final void processElementAccess(int attr, int content, boolean isStartTag) {
+   private final void processElementAccess(int attr, int content, boolean isStartTag) throws RenderingException {
       if (isStartTag) {
          if (attr == 0) {
             return;
@@ -962,7 +967,7 @@ final class WMLRenderer extends Renderer {
                pathMatches = true;
             } else {
                if (path.charAt(0) != '/') {
-                  path = ((StringBuffer)(new Object())).append(this.getPathFromUrl(this._url)).append('/').append(path).toString();
+                  path = this.getPathFromUrl(this._url) + '/' + path;
                }
 
                referringPath = this.getPathFromUrl(referringPath);
@@ -973,7 +978,7 @@ final class WMLRenderer extends Renderer {
          }
 
          if (!domainMatches || !pathMatches) {
-            StringBuffer denialBuff = (StringBuffer)(new Object(BrowserResources.getString(555)));
+            StringBuffer denialBuff = new StringBuffer(BrowserResources.getString(555));
             if (!pathMatches) {
                denialBuff.append(BrowserResources.getString(556));
                denialBuff.append(referringPath);
@@ -984,7 +989,7 @@ final class WMLRenderer extends Renderer {
                denialBuff.append(referringDomain);
             }
 
-            throw new Object(denialBuff.toString());
+            throw new RenderingException(denialBuff.toString());
          }
       }
    }
@@ -1103,7 +1108,7 @@ final class WMLRenderer extends Renderer {
          this._currentScreen = new WMLBrowserField(this._browserContent, this._wmlContextManager, this._url, this);
          this._browserContent.setContent(this._currentScreen);
          if (this._currentVerbs == null) {
-            this._currentVerbs = (Vector)(new Object());
+            this._currentVerbs = new Vector();
          }
 
          if (this._templateOnEnterForwardVerb != null) {
@@ -1124,7 +1129,7 @@ final class WMLRenderer extends Renderer {
             this._browserContent.setOnTimer(newVerb);
          }
 
-         this._textVariables = (Vector)(new Object());
+         this._textVariables = new Vector();
          int next = -1;
          String cardId = null;
          WMLVariable title = null;
@@ -1245,7 +1250,7 @@ final class WMLRenderer extends Renderer {
                   if (tmpStr.length() == 0) {
                      doVerb.setType(WMLConstants.STRING_ACCEPT);
                   } else {
-                     doVerb.setType(((StringBuffer)(new Object())).append(WMLConstants.STRING_ACCEPT).append(tmpStr).toString());
+                     doVerb.setType(WMLConstants.STRING_ACCEPT + tmpStr);
                   }
                   break;
                case 57:
@@ -1253,7 +1258,7 @@ final class WMLRenderer extends Renderer {
                   if (tmpStr.length() == 0) {
                      doVerb.setType(WMLConstants.STRING_DELETE);
                   } else {
-                     doVerb.setType(((StringBuffer)(new Object())).append(WMLConstants.STRING_DELETE).append(tmpStr).toString());
+                     doVerb.setType(WMLConstants.STRING_DELETE + tmpStr);
                   }
                   break;
                case 58:
@@ -1261,7 +1266,7 @@ final class WMLRenderer extends Renderer {
                   if (tmpStr.length() == 0) {
                      doVerb.setType(WMLConstants.STRING_HELP);
                   } else {
-                     doVerb.setType(((StringBuffer)(new Object())).append(WMLConstants.STRING_HELP).append(tmpStr).toString());
+                     doVerb.setType(WMLConstants.STRING_HELP + tmpStr);
                   }
                   break;
                case 69:
@@ -1269,7 +1274,7 @@ final class WMLRenderer extends Renderer {
                   if (tmpStr.length() == 0) {
                      doVerb.setType(WMLConstants.STRING_OPTIONS);
                   } else {
-                     doVerb.setType(((StringBuffer)(new Object())).append(WMLConstants.STRING_OPTIONS).append(tmpStr).toString());
+                     doVerb.setType(WMLConstants.STRING_OPTIONS + tmpStr);
                   }
                   break;
                case 70:
@@ -1277,7 +1282,7 @@ final class WMLRenderer extends Renderer {
                   if (tmpStr.length() == 0) {
                      doVerb.setType(WMLConstants.STRING_PREV);
                   } else {
-                     doVerb.setType(((StringBuffer)(new Object())).append(WMLConstants.STRING_PREV).append(tmpStr).toString());
+                     doVerb.setType(WMLConstants.STRING_PREV + tmpStr);
                   }
                   break;
                case 71:
@@ -1285,7 +1290,7 @@ final class WMLRenderer extends Renderer {
                   if (tmpStr.length() == 0) {
                      doVerb.setType(WMLConstants.STRING_RESET);
                   } else {
-                     doVerb.setType(((StringBuffer)(new Object())).append(WMLConstants.STRING_RESET).append(tmpStr).toString());
+                     doVerb.setType(WMLConstants.STRING_RESET + tmpStr);
                   }
                   break;
                case 84:
@@ -1316,7 +1321,7 @@ final class WMLRenderer extends Renderer {
       }
    }
 
-   private final void processElementGo(int attr, int content, boolean isStartTag) {
+   private final void processElementGo(int attr, int content, boolean isStartTag) throws SerializationException {
       if (isStartTag) {
          Go go = new Go(this._browserContent, super._renderingApplication, this._wmlContextManager, super._inputConnection);
          int next = -1;
@@ -1389,7 +1394,7 @@ final class WMLRenderer extends Renderer {
          }
 
          if (this._currentTaskContainer == null) {
-            throw new Object(BrowserResources.getString(558));
+            throw new SerializationException(BrowserResources.getString(558));
          }
 
          this._currentTaskContainer.setTask(go);
@@ -1490,10 +1495,10 @@ final class WMLRenderer extends Renderer {
                   this.readAttributeValue();
                   break;
                case 88:
-                  src = ((StringBuffer)(new Object())).append(WMLConstants.STRING_HTTP).append(this.readAttributeValue()).toString();
+                  src = WMLConstants.STRING_HTTP + this.readAttributeValue();
                   break;
                case 89:
-                  src = ((StringBuffer)(new Object())).append(WMLConstants.STRING_HTTPS).append(this.readAttributeValue()).toString();
+                  src = WMLConstants.STRING_HTTPS + this.readAttributeValue();
             }
          }
 
@@ -1644,19 +1649,19 @@ final class WMLRenderer extends Renderer {
             if ((flags & 1) != 0) {
                edit = new BrowserPasswordEditField(maxLength < 0 ? 1000000 : maxLength, style, format);
             } else if (format != null && format.equals("XXX_RIM_EMAIL_INPUT")) {
-               edit = (BasicEditField)(new Object(null, null, maxLength < 0 ? 1000000 : maxLength));
+               edit = new EmailAddressEditField(null, null, maxLength < 0 ? 1000000 : maxLength);
             } else {
                edit = new BrowserEditField(maxLength < 0 ? 1000000 : maxLength, style | 2147483648L | 1073741824, format);
             }
          } else if ((flags & 1) != 0) {
-            edit = (BasicEditField)(new Object(null, "", maxLength < 0 ? 1000000 : maxLength, style));
-            ((TextField)edit).setAllowUnicodeInput(true);
+            edit = new PasswordEditField(null, "", maxLength < 0 ? 1000000 : maxLength, style);
+            ((PasswordEditField)edit).setAllowUnicodeInput(true);
          } else {
             if (format.equals("*m")) {
                style |= 524288;
             }
 
-            edit = (BasicEditField)(new Object(null, "", maxLength < 0 ? 1000000 : maxLength, style | 8388608));
+            edit = new AutoTextEditField(null, "", maxLength < 0 ? 1000000 : maxLength, style | 8388608);
             wrap = true;
          }
 
@@ -1721,10 +1726,10 @@ final class WMLRenderer extends Renderer {
 
          if (value != null && name != null && super._renderingApplication != null) {
             if (StringUtilities.strEqualIgnoreCase(name, HeaderParser.CACHE_CONTROL, 1701707776)) {
-               SetHeaderEvent event = (SetHeaderEvent)(new Object(super._inputConnection, HeaderParser.CACHE_CONTROL, value));
+               SetHeaderEvent event = new SetHeaderEvent(super._inputConnection, HeaderParser.CACHE_CONTROL, value);
                super._renderingApplication.eventOccurred(event);
             } else if (StringUtilities.strEqualIgnoreCase(name, HeaderParser.EXPIRES, 1701707776)) {
-               SetHeaderEvent event = (SetHeaderEvent)(new Object(super._inputConnection, HeaderParser.EXPIRES, value));
+               SetHeaderEvent event = new SetHeaderEvent(super._inputConnection, HeaderParser.EXPIRES, value);
                super._renderingApplication.eventOccurred(event);
             } else if (StringUtilities.strEqualIgnoreCase(name, "x-rim-auto-match", 1701707776)
                && StringUtilities.strEqualIgnoreCase(value, "none", 1701707776)) {
@@ -1746,7 +1751,7 @@ final class WMLRenderer extends Renderer {
          }
 
          this._ignoreTimer = true;
-         this._browserContent.setOnTimer(new EventVerb((Event)(new Object(this._browserContent, url, null, 3, delay * 1000)), super._renderingApplication));
+         this._browserContent.setOnTimer(new EventVerb(new RedirectEvent(this._browserContent, url, null, 3, delay * 1000), super._renderingApplication));
          PageTimer timer = new PageTimer(delay, this._browserContent);
          this._browserContent.addTimer(timer);
       }
@@ -1913,10 +1918,10 @@ final class WMLRenderer extends Renderer {
       }
    }
 
-   private final void processElementPrev(int attr, int content, boolean isStartTag) {
+   private final void processElementPrev(int attr, int content, boolean isStartTag) throws SerializationException {
       if (isStartTag) {
          if (this._currentTaskContainer == null) {
-            throw new Object(BrowserResources.getString(558));
+            throw new SerializationException(BrowserResources.getString(558));
          }
 
          Prev prev = new Prev(this._browserContent, this._wmlContextManager);
@@ -2047,10 +2052,10 @@ final class WMLRenderer extends Renderer {
       }
    }
 
-   private final void processElementRefresh(int attr, int content, boolean isStartTag) {
+   private final void processElementRefresh(int attr, int content, boolean isStartTag) throws SerializationException {
       if (isStartTag) {
          if (this._currentTaskContainer == null) {
-            throw new Object(BrowserResources.getString(558));
+            throw new SerializationException(BrowserResources.getString(558));
          }
 
          Refresh refresh = new Refresh(this._browserContent, this._wmlContextManager);
@@ -2305,7 +2310,7 @@ final class WMLRenderer extends Renderer {
          this._deckLevel = false;
       } else {
          this._deckLevel = true;
-         this._currentVerbs = (Vector)(new Object());
+         this._currentVerbs = new Vector();
          int next = -1;
 
          while (next != 1 && attr != 0) {
@@ -2474,7 +2479,7 @@ final class WMLRenderer extends Renderer {
       }
    }
 
-   private final void skipElement(int endElement) {
+   private final void skipElement(int endElement) throws SerializationException {
       while (true) {
          int _id = this._in.read();
          if (_id == -1) {
@@ -2487,7 +2492,7 @@ final class WMLRenderer extends Renderer {
                   break;
                }
 
-               throw new Object(WMLConstants.STRING_ONLY_PAGE_ZERO_SUPPORTED);
+               throw new SerializationException(WMLConstants.STRING_ONLY_PAGE_ZERO_SUPPORTED);
             case 1:
                if (this._tagStack.isEmpty()) {
                   break;
@@ -2556,7 +2561,7 @@ final class WMLRenderer extends Renderer {
             case 192:
             case 193:
             case 194:
-               throw new Object(WMLConstants.STRING_RESERVED_EXT_BYTE);
+               throw new SerializationException(WMLConstants.STRING_RESERVED_EXT_BYTE);
             case 195:
                int len = this._in.readMBInt();
                this._in.skip(len);

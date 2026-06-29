@@ -18,7 +18,7 @@ public class TransportMessageFactory {
 
    public TransportMessageFactory(int minVersion, int maxVersion, VersionProvider versionProvider) {
       if (versionProvider == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (minVersion >= MIN_VERSION && maxVersion <= MAX_VERSION) {
@@ -26,7 +26,7 @@ public class TransportMessageFactory {
          this._maxVersion = maxVersion;
          this._versionProvider = versionProvider;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -36,7 +36,7 @@ public class TransportMessageFactory {
 
    public void handleMessage(long receiverId, int capacity, TransportMessageHandler handler) throws UnsupportedVersionException {
       if (handler == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int version = this._versionProvider.getTransportMessageVersion(receiverId);
@@ -46,7 +46,7 @@ public class TransportMessageFactory {
 
       switch (version) {
          case 0:
-            throw new Object();
+            throw new RuntimeException();
          case 1:
          default:
             handler.handleMessage(new TransportMessageV1_0(capacity));
@@ -65,7 +65,7 @@ public class TransportMessageFactory {
 
          switch (version) {
             case 0:
-               throw new Object();
+               throw new RuntimeException();
             case 1:
             default:
                handler.handleMessage(new TransportMessageV1_0(buffer));
@@ -74,7 +74,7 @@ public class TransportMessageFactory {
                handler.handleMessage(new TransportMessageV2_0(buffer));
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

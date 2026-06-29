@@ -6,6 +6,7 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.apps.api.framework.model.VerbProvider;
 import net.rim.device.apps.api.framework.profiles.TuneManager;
@@ -28,14 +29,14 @@ final class ProfilesScreen extends AppsMainScreen {
       this._shouldDoSystemExit = shouldDoSystemExit;
       this._profiles = Profiles.getInstance();
       ResourceBundleFamily resources = ResourceBundle.getBundle(2384708948246157241L, "net.rim.device.apps.internal.resource.Profiles");
-      LabelField titleField = (LabelField)(new Object((Object)null, (long)268435456));
+      LabelField titleField = new LabelField((Object)null, (long)268435456);
       titleField.setText(resources, 0);
       this.setTitle(titleField);
       this._listField = new ProfilesScreen$ProfileListField(this);
       this.add(this._listField);
-      this._overrideSeparatorField = (SeparatorField)(new Object());
+      this._overrideSeparatorField = new SeparatorField();
       this.add(this._overrideSeparatorField);
-      this._overrideTitleField = (LabelField)(new Object(resources, 240));
+      this._overrideTitleField = new LabelField(resources, 240);
       this.add(this._overrideTitleField);
       this._overrideListField = new OverrideListField(this);
       this.add(this._overrideListField);
@@ -84,15 +85,15 @@ final class ProfilesScreen extends AppsMainScreen {
       Field field = this.getLeafFieldWithFocus();
       if (field instanceof OverrideListField) {
          menu.add(new EditProfileVerb(null));
-         if (this._overrideListField instanceof Object) {
+         if (this._overrideListField instanceof VerbProvider) {
             VerbProvider verbProvider = this._overrideListField;
             menu.add(verbProvider, 0);
             return;
          }
-      } else if (field instanceof Object) {
+      } else if (field instanceof ListField) {
          menu.add(new EditOverrideVerb(null));
          Profile profile = (Profile)this._listField.getSelectedElement();
-         if (profile instanceof Object) {
+         if (profile instanceof VerbProvider) {
             VerbProvider verbProvider = profile;
             menu.add(verbProvider, 0);
          }

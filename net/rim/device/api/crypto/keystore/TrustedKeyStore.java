@@ -3,8 +3,10 @@ package net.rim.device.api.crypto.keystore;
 import java.util.Enumeration;
 import java.util.Vector;
 import net.rim.device.api.crypto.Digest;
+import net.rim.device.api.crypto.MD5Digest;
 import net.rim.device.api.crypto.PrivateKey;
 import net.rim.device.api.crypto.PublicKey;
+import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.crypto.SymmetricKey;
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.CertificateStatus;
@@ -33,7 +35,7 @@ public final class TrustedKeyStore extends SyncableRIMKeyStore {
                _trustedKeyStore = new TrustedKeyStore();
                ar.put(-3805845534753462595L, _trustedKeyStore);
             } catch (KeyStoreRegisterException e) {
-               throw new Object();
+               throw new RuntimeException();
             }
          }
       }
@@ -169,13 +171,13 @@ public final class TrustedKeyStore extends SyncableRIMKeyStore {
    private final void checkITPolicy(byte[] encoding, byte[][] thumbprints) {
       if (encoding != null && thumbprints != null) {
          if (thumbprints.length == 0) {
-            throw new Object();
+            throw new SecurityException();
          }
 
-         Digest digest = (Digest)(new Object());
+         Digest digest = new SHA1Digest();
          digest.update(encoding);
          byte[] shaThumb = digest.getDigest();
-         digest = (Digest)(new Object());
+         digest = new MD5Digest();
          digest.update(encoding);
          byte[] md5Thumb = digest.getDigest();
          int thumbsLength = thumbprints.length;
@@ -186,12 +188,12 @@ public final class TrustedKeyStore extends SyncableRIMKeyStore {
             }
          }
 
-         throw new Object();
+         throw new SecurityException();
       }
    }
 
    private final byte[][] getThumbprints(String thumbprints) {
-      StringTokenizer tokenizer = (StringTokenizer)(new Object(thumbprints, ';'));
+      StringTokenizer tokenizer = new StringTokenizer(thumbprints, ';');
       int numTokens = tokenizer.countTokens();
       byte[][] validThumbprints = new byte[numTokens][];
       int numValidThumbprints = 0;
@@ -215,7 +217,7 @@ public final class TrustedKeyStore extends SyncableRIMKeyStore {
       String thumbprints = ITPolicy.getString(24, 24);
       if (thumbprints != null) {
          byte[][] thumbs = this.getThumbprints(thumbprints);
-         Vector toBeRemoved = (Vector)(new Object());
+         Vector toBeRemoved = new Vector();
          Enumeration enumeration = this.elements();
 
          while (enumeration.hasMoreElements()) {
@@ -247,7 +249,7 @@ public final class TrustedKeyStore extends SyncableRIMKeyStore {
 
    private final byte[] stripSpaces(byte[] data) {
       if (data == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int length = 0;
@@ -265,7 +267,7 @@ public final class TrustedKeyStore extends SyncableRIMKeyStore {
 
    private final byte[] convertToByteArray(byte[] hexString) {
       if (hexString == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       int length = hexString.length;
@@ -281,7 +283,7 @@ public final class TrustedKeyStore extends SyncableRIMKeyStore {
                c = (byte)(c - 55);
             } else {
                if (c < 97 || c > 102) {
-                  throw new Object();
+                  throw new IllegalArgumentException();
                }
 
                c = (byte)(c - 87);
@@ -293,7 +295,7 @@ public final class TrustedKeyStore extends SyncableRIMKeyStore {
 
          return value;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

@@ -5,7 +5,7 @@ import net.rim.device.api.util.Persistable;
 public final class ECKeyPair extends KeyPair implements Persistable {
    public ECKeyPair(ECCryptoSystem cryptoSystem) {
       if (cryptoSystem == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       KeyPair keypair = cryptoSystem.createECKeyPair();

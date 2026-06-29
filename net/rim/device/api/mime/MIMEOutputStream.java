@@ -1,5 +1,6 @@
 package net.rim.device.api.mime;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import net.rim.device.api.io.NoCopyByteArrayOutputStream;
 import net.rim.device.api.io.SharedOutputStream;
@@ -45,23 +46,23 @@ public class MIMEOutputStream extends OutputStream {
 
       this._mimeHeader = new MIMEHeader(encoding);
       if (this._isMultiPart) {
-         this._sharedOutputStream = (SharedOutputStream)(new Object(out));
+         this._sharedOutputStream = new SharedOutputStream(out);
          this._out = this._sharedOutputStream.getOutputStream();
          long now = System.currentTimeMillis();
-         String b = ((StringBuffer)(new Object("\"----RIM_"))).append(this._counter).append('_').append(now).append("_1978_08_20\"").toString();
+         String b = "\"----RIM_" + this._counter + '_' + now + "_1978_08_20\"";
          this._mimeHeader.setContentType("multipart/mixed");
          this._mimeHeader.addContentTypeParameter("boundary", b);
          this._boundary = b.substring(1, b.length() - 1);
       } else {
          this._out = out;
          this._mimeHeader.setContentType("text/plain");
-         this._bufferOut = (NoCopyByteArrayOutputStream)(new Object());
+         this._bufferOut = new NoCopyByteArrayOutputStream();
       }
    }
 
    public void setContentType(String contentType) {
       if (this._isMultiPart && !StringUtilities.startsWithIgnoreCase(contentType, "multipart", 1701707776)) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       if (contentType != null) {
@@ -87,11 +88,11 @@ public class MIMEOutputStream extends OutputStream {
 
    public MIMEOutputStream getPartOutputStream(boolean isMultiPart, String encoding) {
       if (this._closed) {
-         throw new Object();
+         throw new IllegalStateException();
       } else if (this._isMultiPart) {
          return new MIMEOutputStream(this._sharedOutputStream.getOutputStream(), isMultiPart, encoding, false, this._counter + 1, this._boundary);
       } else {
-         throw new Object();
+         throw new IllegalStateException();
       }
    }
 
@@ -126,13 +127,13 @@ public class MIMEOutputStream extends OutputStream {
    }
 
    @Override
-   public void write(byte[] buffer, int offset, int length) {
+   public void write(byte[] buffer, int offset, int length) throws IOException {
       if (this._closed) {
-         throw new Object();
+         throw new IOException();
       }
 
       if (this._isMultiPart) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       if (offset >= 0 && length >= 0 && buffer.length - length >= offset) {
@@ -163,23 +164,23 @@ public class MIMEOutputStream extends OutputStream {
             this._bufferOut.write(buffer, start, offset + length - start);
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
-   public void flush() {
+   public void flush() throws IOException {
       if (this._closed) {
-         throw new Object();
+         throw new IOException();
       }
 
       this._out.flush();
    }
 
    @Override
-   public void close() {
+   public void close() throws IOException {
       if (this._closed) {
-         throw new Object();
+         throw new IOException();
       }
 
       this._closed = true;

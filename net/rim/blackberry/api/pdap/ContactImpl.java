@@ -19,10 +19,10 @@ import net.rim.device.apps.api.addressbook.CompanyInfoModel;
 import net.rim.device.apps.api.addressbook.DisplayPictureModel;
 import net.rim.device.apps.api.addressbook.EmailAddressModel;
 import net.rim.device.apps.api.addressbook.EventModel;
-import net.rim.device.apps.api.addressbook.FriendlyNameAddressModel;
 import net.rim.device.apps.api.addressbook.MailingAddressModel;
 import net.rim.device.apps.api.addressbook.PINAddressModel;
 import net.rim.device.apps.api.addressbook.PersonNameModel;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.EditableProvider;
 import net.rim.device.apps.internal.addressbook.addresscard.WebPageAddressModel;
 import net.rim.device.apps.internal.addressbook.userfields.UserFieldsModel;
@@ -111,7 +111,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
          return "";
       }
 
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
       boolean found = false;
       String value = this._personNameModel.getSalutation();
       if (value != null) {
@@ -159,52 +159,53 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
    }
 
    public ContactImpl(Object input, ContactListImpl contactList) {
-      if (input instanceof Object) {
+      if (input instanceof AddressCardModel) {
          this._contactList = contactList;
          this._isModified = false;
          this._committed = true;
          this._addressCardModel = (AddressCardModel)input;
          this.loadModels();
       } else {
-         throw new Object();
+         throw new IllegalStateException();
       }
    }
 
    private final void loadModels() {
-      this._emailAddressModels = (Vector)(new Object(3));
-      this._mailingAddressModels = (Vector)(new Object(2));
-      this._telAttr = (IntVector)(new Object(8));
+      this._emailAddressModels = new Vector(3);
+      this._mailingAddressModels = new Vector(2);
+      this._telAttr = new IntVector(8);
       this._personNameModel = this._addressCardModel.getName();
       this._companyInfoModel = this._addressCardModel.getCompanyInfo();
-      this._displayPictureModel = this._addressCardModel.getContactPicture(new Object(11));
+      this._displayPictureModel = this._addressCardModel.getContactPicture(new ContextObject(11));
       int size = this._addressCardModel.size();
       int emailCount = 0;
 
       for (int i = 0; i < size; i++) {
          Object model = this._addressCardModel.getAt(i);
-         if (!(model instanceof Object) && !(model instanceof Object) && !(model instanceof Object)) {
-            if (model instanceof Object) {
+         if (!(model instanceof PersonNameModel) && !(model instanceof CompanyInfoModel) && !(model instanceof DisplayPictureModel)) {
+            if (model instanceof EmailAddressModel) {
                if (emailCount < 3) {
                   this._emailAddressModels.addElement(model);
                   emailCount++;
                }
-            } else if (!(model instanceof Object)) {
-               if (model instanceof Object) {
+            } else if (!(model instanceof PhoneNumberModel)) {
+               if (model instanceof BodyModel) {
                   this._bodyModel = (BodyModel)model;
-               } else if (model instanceof Object) {
+               } else if (model instanceof UserFieldsModel) {
                   this._userFieldsModel = (UserFieldsModel)model;
-               } else if (model instanceof Object) {
+               } else if (model instanceof MailingAddressModel) {
                   this._mailingAddressModels.addElement(model);
-               } else if (model instanceof Object) {
+               } else if (model instanceof PINAddressModel) {
                   this._pinAddressModel = (PINAddressModel)model;
-               } else if (model instanceof Object) {
+               } else if (model instanceof TitleModel) {
                   this._titleModel = (TitleModel)model;
-               } else if (model instanceof Object) {
+               } else if (model instanceof WebPageAddressModel) {
                   this._webPageAddressModel = (WebPageAddressModel)model;
-               } else if (model instanceof Object) {
+               } else if (model instanceof CategoriesModel) {
                   super._categoriesModel = (CategoriesModel)model;
-               } else if (!(model instanceof Object)) {
-                  if (model instanceof Object && model.getClass().getName().equals("net.rim.device.apps.internal.phone.direct.DirectConnectNumberModel")) {
+               } else if (!(model instanceof EventModel)) {
+                  if (model instanceof AbstractPhoneNumberModel
+                     && model.getClass().getName().equals("net.rim.device.apps.internal.phone.direct.DirectConnectNumberModel")) {
                      this._directConnectModel = (AbstractPhoneNumberModel)model;
                   }
                } else {
@@ -268,7 +269,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
       }
 
       if (this._contactList._mode == 1) {
-         throw new Object();
+         throw new SecurityException();
       }
 
       if (this._isModified) {
@@ -335,7 +336,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
                   }
                } else {
                   if (datatype != 2) {
-                     throw new Object();
+                     throw new IllegalStateException();
                   }
 
                   long value = contact.getDate(field, j);
@@ -386,23 +387,23 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
                   try {
                      return Base64OutputStream.encode(decodedValue, 0, decodedValue.length, false, false);
                   } finally {
-                     throw new Object();
+                     throw new IndexOutOfBoundsException();
                   }
                }
             }
 
-            throw new Object();
+            throw new IndexOutOfBoundsException();
          case 112:
             throw new UnsupportedFieldException("", field);
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
    @Override
    public final void addBinary(int field, int attributes, byte[] value, int offset, int length) {
       if (value == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       switch (field) {
@@ -421,11 +422,11 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
                return;
             }
 
-            throw new Object();
+            throw new IllegalArgumentException();
          case 112:
             throw new UnsupportedFieldException("", field);
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -440,7 +441,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
          case 20000933:
             return this._anniversaryModel.getEventDate();
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -474,7 +475,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
             this._anniversaryModel.setEventDate(value);
             return;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -483,7 +484,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
       if (field == 102) {
          throw new UnsupportedFieldException("", field);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -500,7 +501,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
    @Override
    public final String getString(int field, int index) {
       if (index != 0 && field != 115 && field != 103) {
-         throw new Object();
+         throw new IndexOutOfBoundsException();
       }
 
       String value = null;
@@ -514,7 +515,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
             throw new UnsupportedFieldException("", field);
          case 103:
             if (index >= 0 && index < this._emailAddressModels.size()) {
-               value = ((FriendlyNameAddressModel)this._emailAddressModels.elementAt(index)).getAddress();
+               value = ((EmailAddressModel)this._emailAddressModels.elementAt(index)).getAddress();
             }
             break;
          case 108:
@@ -556,7 +557,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
                   phoneModel = this._work2PhoneModel;
                   break;
                default:
-                  throw new Object();
+                  throw new IllegalStateException();
             }
 
             if (phoneModel != null) {
@@ -603,11 +604,11 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
             }
             break;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       if (value == null) {
-         throw new Object();
+         throw new IndexOutOfBoundsException();
       } else {
          return value;
       }
@@ -620,10 +621,10 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
             if (index >= 0 && this._mailingAddressModels != null && index < this._mailingAddressModels.size()) {
                MailingAddressModel addressModel = (MailingAddressModel)this._mailingAddressModels.elementAt(index);
                if (addressModel == null) {
-                  throw new Object();
+                  throw new IndexOutOfBoundsException();
                }
 
-               String[] var5 = new Object[]{
+               String[] var5 = new String[]{
                   null, null, addressModel.getAddressLine1(), addressModel.getCity(), addressModel.getArea(), null, addressModel.getCountry()
                };
                var5[5] = addressModel.getZipOrPostalCode();
@@ -631,26 +632,24 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
                return var5;
             }
 
-            throw new Object();
+            throw new IndexOutOfBoundsException();
          case 106:
             if (index == 0 && this._personNameModel != null) {
-               String[] value = new Object[5];
-               value[0] = this._personNameModel.getLastName();
-               value[1] = this._personNameModel.getFirstName();
-               value[3] = this._personNameModel.getSalutation();
-               return value;
+               return new String[]{
+                  this._personNameModel.getLastName(), this._personNameModel.getFirstName(), null, this._personNameModel.getSalutation(), null
+               };
             }
 
-            throw new Object();
+            throw new IndexOutOfBoundsException();
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
    @Override
    public final void addString(int field, int attributes, String value) {
       if (value == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       this.ensureReadWrite();
@@ -713,7 +712,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
             }
 
             if (availablePhone == -1) {
-               throw new Object();
+               throw new IllegalStateException();
             }
 
             this.addPhone(availablePhone, value);
@@ -796,7 +795,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
             this._directConnectModel.setValue(value);
             break;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       this._isModified = true;
@@ -805,13 +804,13 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
    @Override
    public final void addStringArray(int field, int attributes, String[] value) {
       if (value == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       switch (field) {
          case 100:
             if (value.length != 7) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             if (this._mailingAddressModels.size() >= 2) {
@@ -831,7 +830,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
                && addressPostalcode == null
                && addressCountry == null
                && value[0] == null) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this.ensureReadWrite();
@@ -854,14 +853,14 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
             break;
          case 106:
             if (value.length != 5) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             String nameFamily = value[0];
             String nameGiven = value[1];
             String namePrefix = value[3];
             if (nameFamily == null && nameGiven == null && namePrefix == null) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             if (this._personNameModel != null) {
@@ -876,7 +875,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
             this._personNameModel.setSalutation(namePrefix);
             break;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       this._isModified = true;
@@ -901,7 +900,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
          case 33554432:
             return _work2phoneFactory;
          default:
-            throw new Object();
+            throw new IllegalStateException();
       }
    }
 
@@ -924,7 +923,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
          case 33554432:
             return this._work2PhoneModel;
          default:
-            throw new Object();
+            throw new IllegalStateException();
       }
    }
 
@@ -957,7 +956,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
             this._work2PhoneModel = newPhoneModel;
             break;
          default:
-            throw new Object();
+            throw new IllegalStateException();
       }
 
       this._addressCardModel.add(newPhoneModel);
@@ -966,7 +965,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
 
    private final void removePhoneModel(PhoneNumberModel phoneModel) {
       if (phoneModel == null) {
-         throw new Object();
+         throw new IndexOutOfBoundsException();
       }
 
       this._addressCardModel.remove(phoneModel);
@@ -1018,7 +1017,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
          case 100:
             MailingAddressModel address = (MailingAddressModel)this._mailingAddressModels.elementAt(index);
             if (address == null) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             this._addressCardModel.remove(address);
@@ -1026,7 +1025,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
             break;
          case 101:
             if (this._birthdayModel == null || this._birthdayModel.getEventDate() == -1) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             this._addressCardModel.remove(this._birthdayModel);
@@ -1038,7 +1037,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
             break;
          case 106:
             if (this._personNameModel == null) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             this._addressCardModel.remove(this._personNameModel);
@@ -1046,7 +1045,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
             break;
          case 108:
             if (this._bodyModel == null || this._bodyModel.getText() == null) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             this._addressCardModel.remove(this._bodyModel);
@@ -1054,7 +1053,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
             break;
          case 109:
             if (this._companyInfoModel == null || this._companyInfoModel.getCompanyName() == null) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             this._addressCardModel.remove(this._companyInfoModel);
@@ -1062,7 +1061,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
             break;
          case 110:
             if (this._displayPictureModel == null || this._displayPictureModel.getDisplayPicture() == null) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             this._addressCardModel.remove(this._displayPictureModel);
@@ -1093,7 +1092,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
                this._work2PhoneModel = null;
             } else {
                if ((attributes & 32) == 0) {
-                  throw new Object();
+                  throw new IllegalStateException();
                }
 
                this.removePhoneModel(this._otherPhoneModel);
@@ -1104,7 +1103,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
             break;
          case 116:
             if (this._titleModel == null || this._titleModel.getTitle() == null) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             this._addressCardModel.remove(this._titleModel);
@@ -1112,18 +1111,18 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
             break;
          case 117:
             if (this._committed) {
-               throw new Object("UID for a committed Contact is a read-only field.");
+               throw new IllegalArgumentException("UID for a committed Contact is a read-only field.");
             }
 
             if (this._uncommittedUID == null) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             this._uncommittedUID = null;
             break;
          case 118:
             if (this._webPageAddressModel == null || this._webPageAddressModel.getAddress() == null) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             this._addressCardModel.remove(this._webPageAddressModel);
@@ -1131,7 +1130,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
             break;
          case 20000927:
             if (this._pinAddressModel == null || this._pinAddressModel.getAddress() == null) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             this._addressCardModel.remove(this._pinAddressModel);
@@ -1143,7 +1142,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
          case 20000931:
             int userFieldIndex = field - 20000928;
             if (this._userFieldsModel == null || this._userFieldsModel.getUserDefinedField(userFieldIndex) == null) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             this._userFieldsModel.setUserDefinedField(userFieldIndex, null);
@@ -1161,7 +1160,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
             }
 
             if (this._directConnectModel == null || this._directConnectModel.getValue() == null) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             this._addressCardModel.remove(this._directConnectModel);
@@ -1169,14 +1168,14 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
             break;
          case 20000933:
             if (this._anniversaryModel == null || this._anniversaryModel.getEventDate() == -1) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             this._addressCardModel.remove(this._anniversaryModel);
             this._anniversaryModel = null;
             break;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       this._isModified = true;
@@ -1188,7 +1187,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
          if (index >= 0 && index < this._telAttr.size()) {
             return this._telAttr.elementAt(index);
          } else {
-            throw new Object();
+            throw new IndexOutOfBoundsException();
          }
       } else {
          this.checkIndex(field, index);
@@ -1217,7 +1216,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
    @Override
    public final void setBinary(int field, int index, int attributes, byte[] value, int offset, int length) {
       if (value == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       switch (field) {
@@ -1229,14 +1228,14 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
                   return;
                }
 
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
-            throw new Object();
+            throw new IllegalArgumentException();
          case 112:
             throw new UnsupportedFieldException("", field);
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -1256,7 +1255,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
       byte[] valueWithOffset = new byte[length];
       System.arraycopy(decodedValue, offset, valueWithOffset, 0, length);
       if (!EncodedImage.isImageValid(valueWithOffset, offset, length)) {
-         throw new Object("Image type is not supported");
+         throw new IllegalArgumentException("Image type is not supported");
       } else {
          return valueWithOffset;
       }
@@ -1267,30 +1266,30 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
       switch (field) {
          case 101:
             if (index != 0) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             } else {
                if (this._birthdayModel != null && this._birthdayModel.getEventDate() != -1) {
                   this._birthdayModel.setEventDate(value);
                   return;
                }
 
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
          case 114:
             throw new UnsupportedFieldException("", field);
          case 20000933:
             if (index != 0) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             } else {
                if (this._anniversaryModel != null && this._anniversaryModel.getEventDate() != -1) {
                   this._anniversaryModel.setEventDate(value);
                   return;
                }
 
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -1302,7 +1301,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
    @Override
    public final void setString(int field, int index, int attributes, String value) {
       if (value == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       this.ensureReadWrite();
@@ -1316,7 +1315,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
             throw new UnsupportedFieldException("", field);
          case 103:
             if (index < 0 || index >= 3 || index >= this._emailAddressModels.size()) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             EmailAddressModel em = (EmailAddressModel)this._emailAddressModels.elementAt(index);
@@ -1324,77 +1323,77 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
             break;
          case 108:
             if (index != 0) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             if (this._bodyModel == null || this._bodyModel.getText() == null) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             this._bodyModel.setText(value);
             break;
          case 109:
             if (index != 0) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             if (this._companyInfoModel == null || this._companyInfoModel.getCompanyName() == null) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             this._companyInfoModel.setCompanyName(value);
             break;
          case 115:
             if (index < 0 || index >= 8 || index >= this._telAttr.size()) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             this.getPhoneModel(this._telAttr.elementAt(index)).setValue(value);
             break;
          case 116:
             if (index != 0) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             if (this._titleModel == null || this._titleModel.getTitle() == null) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             this._titleModel.setTitle(value);
             break;
          case 117:
             if (index != 0) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             if (this._committed) {
-               throw new Object("UID on a committed Contact is a read-only field.");
+               throw new IllegalArgumentException("UID on a committed Contact is a read-only field.");
             }
 
             if (this._uncommittedUID == null) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             this._uncommittedUID = value;
             break;
          case 118:
             if (index != 0) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             if (this._webPageAddressModel == null || this._webPageAddressModel.getAddress() == null) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             this._webPageAddressModel.setAddress(value);
             break;
          case 20000927:
             if (index != 0) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             if (this._pinAddressModel == null || this._pinAddressModel.getAddress() == null) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             this._pinAddressModel.setAddress(StringUtilities.toUpperCase(value, 1701707776));
@@ -1404,12 +1403,12 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
          case 20000930:
          case 20000931:
             if (index != 0) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             int uidindex = field - 20000928;
             if (this._userFieldsModel == null || this._userFieldsModel.getUserDefinedField(uidindex) == null) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             this._userFieldsModel.setUserDefinedField(uidindex, value);
@@ -1420,17 +1419,17 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
             }
 
             if (index != 0) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             if (this._directConnectModel == null || this._directConnectModel.getValue() == null) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             this._directConnectModel.setValue(value);
             break;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       this._isModified = true;
@@ -1439,13 +1438,13 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
    @Override
    public final void setStringArray(int field, int index, int attributes, String[] value) {
       if (value == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       switch (field) {
          case 100:
             if (value.length != 7) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this.checkIndex(field, index);
@@ -1462,7 +1461,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
                && addressPostalcode == null
                && addressCountry == null
                && value[0] == null) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this.ensureReadWrite();
@@ -1482,18 +1481,18 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
             break;
          case 106:
             if (value.length != 5) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             if (index != 0 || this._personNameModel == null) {
-               throw new Object();
+               throw new IndexOutOfBoundsException();
             }
 
             String nameFamily = value[0];
             String nameGiven = value[1];
             String namePrefix = value[3];
             if (nameFamily == null && nameGiven == null && namePrefix == null) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this.ensureReadWrite();
@@ -1502,7 +1501,7 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
             this._personNameModel.setSalutation(namePrefix);
             break;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
 
       this._isModified = true;
@@ -1512,9 +1511,9 @@ public final class ContactImpl extends PIMItemImpl implements BlackBerryContact 
       this._addressCardModel = (AddressCardModel)_addressCardModelFactory.createInstance(null);
       this._isModified = true;
       this._committed = false;
-      this._emailAddressModels = (Vector)(new Object(3));
-      this._mailingAddressModels = (Vector)(new Object(2));
-      this._telAttr = (IntVector)(new Object(8));
+      this._emailAddressModels = new Vector(3);
+      this._mailingAddressModels = new Vector(2);
+      this._telAttr = new IntVector(8);
    }
 
    @Override

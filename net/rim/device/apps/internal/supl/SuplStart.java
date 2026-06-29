@@ -40,7 +40,7 @@ final class SuplStart extends UlpMessage {
    @Override
    final void print() {
       System.out.println("SUPL START:");
-      System.out.println(((StringBuffer)(new Object("Optionals: "))).append(this.optionals).toString());
+      System.out.println("Optionals: " + this.optionals);
       this.setCapabilities.print();
       this.locationId.print();
       if ((this.optionals & 1) == 1) {

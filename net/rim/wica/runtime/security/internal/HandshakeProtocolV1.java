@@ -1,5 +1,6 @@
 package net.rim.wica.runtime.security.internal;
 
+import java.io.IOException;
 import net.rim.wica.runtime.comm.CommunicationService;
 import net.rim.wica.runtime.comm.OutgoingRequest;
 import net.rim.wica.runtime.comm.Response;
@@ -95,10 +96,7 @@ final class HandshakeProtocolV1 implements HandshakeProtocol, ResponseListener {
             return;
          }
       } else {
-         this._handshakeHandler
-            .registrationFailed(
-               new HandshakeException((Throwable)(new Object(((StringBuffer)(new Object("HTTP Error"))).append(responseCode).toString())), this._handshakeInfo)
-            );
+         this._handshakeHandler.registrationFailed(new HandshakeException(new IOException("HTTP Error" + responseCode), this._handshakeInfo));
       }
    }
 
@@ -108,7 +106,7 @@ final class HandshakeProtocolV1 implements HandshakeProtocol, ResponseListener {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

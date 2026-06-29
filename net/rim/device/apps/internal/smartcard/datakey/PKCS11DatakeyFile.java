@@ -1,6 +1,8 @@
 package net.rim.device.apps.internal.smartcard.datakey;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import net.rim.device.api.compress.ZLibInputStream;
 import net.rim.device.api.util.IntHashtable;
 import net.rim.vm.Array;
 
@@ -11,8 +13,8 @@ class PKCS11DatakeyFile extends DatakeyFile {
    public PKCS11DatakeyFile(DatakeyFileHeader fileHeader, byte[] fileContents) {
       super(fileHeader);
       if (fileContents[0] == -2 && fileContents[1] == -19 && fileContents[2] == -64 && fileContents[3] == -34) {
-         InputStream inputStream = (InputStream)(new Object(fileContents, 6, fileContents.length - 6));
-         inputStream = (InputStream)(new Object(inputStream));
+         InputStream inputStream = new ByteArrayInputStream(fileContents, 6, fileContents.length - 6);
+         inputStream = new ZLibInputStream(inputStream);
 
          label27:
          try {

@@ -19,19 +19,19 @@ public class TLSRecordProtocol extends SSLRecordProtocol {
 
       label26:
       try {
-         super._connectionURL = (URL)(new Object(super._connectionName));
+         super._connectionURL = new URL(super._connectionName);
       } finally {
          break label26;
       }
 
-      super._readStream = (TLSByteArrayInputStream)(new Object());
-      super._writeStream = (TLSNoCopyByteArrayOutputStream)(new Object());
+      super._readStream = new TLSByteArrayInputStream();
+      super._writeStream = new TLSNoCopyByteArrayOutputStream();
       super._currentRead = new SSLConnectionState(super._readStream);
       super._currentWrite = new SSLConnectionState(super._writeStream);
       super._pendingRead = new SSLConnectionState(super._readStream);
       super._pendingWrite = new SSLConnectionState(super._writeStream);
       super._alertProtocol = new TLSAlertProtocol(this);
-      super._changeCipherSpecProtocol = (ChangeCipherSpecProtocol)(new Object(this));
+      super._changeCipherSpecProtocol = new ChangeCipherSpecProtocol(this);
       if (client) {
          super._handshakeProtocol = this.createNewHandshakeProtocol(this);
       } else {
@@ -43,7 +43,7 @@ public class TLSRecordProtocol extends SSLRecordProtocol {
    @Override
    public void macHeader(MAC mac, byte[] data, int offset, int length) {
       if (mac == null || data == null || offset < 0 || length < 0 || data.length - length < offset) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (super._remoteVersion != this.getLocalVersion()) {

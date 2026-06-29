@@ -26,7 +26,7 @@ public class AddressModelField extends AddressBookAwareField {
 
       if (qualifiedField != null) {
          if (friendlyField != null) {
-            ToggleableField toggleableField = (ToggleableField)(new Object(friendlyField, qualifiedField));
+            ToggleableField toggleableField = new ToggleableField(friendlyField, qualifiedField);
             toggleableField.setCookie(viewedModel);
             this.add(toggleableField);
          } else {
@@ -40,7 +40,7 @@ public class AddressModelField extends AddressBookAwareField {
 
    protected Field getFriendlyField(RIMModel addressModel, Object addressCard, Object context) {
       Field friendlyField = null;
-      if (addressCard instanceof Object) {
+      if (addressCard instanceof FieldProvider) {
          FieldProvider fieldProvider = (FieldProvider)addressCard;
          boolean oldNoLabel = ContextObject.getFlag(this._context, 1);
          boolean oldEllipsis = ContextObject.getFlag(this._context, 17);

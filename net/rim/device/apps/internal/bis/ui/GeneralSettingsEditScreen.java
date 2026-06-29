@@ -47,7 +47,7 @@ public final class GeneralSettingsEditScreen extends UserSettingsScreen {
    public final void refresh(Hashtable screenParams) {
       Mailbox mailboxToEdit = ClientSessionState.getInstance().getMailboxToModify();
       UserInfo userInfo = ClientSessionState.getInstance().getUserInfo();
-      String title = MessageFormat.format(ApplicationResources.getString(150), new Object[]{mailboxToEdit.getDescription()});
+      String title = MessageFormat.format(ApplicationResources.getString(150), new String[]{mailboxToEdit.getDescription()});
       this.setTitle(title);
       this.addContentField(new HeadingField(ApplicationResources.getString(170)));
       this.addContentLineBreak();
@@ -60,48 +60,48 @@ public final class GeneralSettingsEditScreen extends UserSettingsScreen {
       }
 
       this.addContentField(new BoldLabelField(accountNameLabelText));
-      this._accountNameEdit = (EmailAddressEditField)(new Object(null, mailboxToEdit.getDescription()));
+      this._accountNameEdit = new EmailAddressEditField(null, mailboxToEdit.getDescription());
       this.addContentField(this._accountNameEdit, true);
       this.addContentLineBreak();
       this.addContentField(new BoldLabelField(ApplicationResources.getString(136)));
-      this.addContentField((Field)(new Object(mailboxToEdit.getEmail())));
+      this.addContentField(new LabelField(mailboxToEdit.getEmail()));
       if (userInfo.isChangeReplyToEnabled() && !isOwa) {
          this.addContentLineBreak();
          this.addContentField(new BoldLabelField(ApplicationResources.getString(139)));
-         this._emailAddressEdit = (EmailAddressEditField)(new Object(null, mailboxToEdit.getReplyTo()));
+         this._emailAddressEdit = new EmailAddressEditField(null, mailboxToEdit.getReplyTo());
          this.addContentField(this._emailAddressEdit, true);
       }
 
       this.addContentLineBreak();
       this.addContentField(new BoldLabelField(ApplicationResources.getString(145)));
-      this._yourNameEdit = (BasicEditField)(new Object(null, mailboxToEdit.getFriendlyName()));
+      this._yourNameEdit = new BasicEditField(null, mailboxToEdit.getFriendlyName());
       this.addContentField(this._yourNameEdit, true);
       this.addContentLineBreak();
       BoldLabelField userNameLabel = new BoldLabelField(ApplicationResources.getString(13));
-      LabelField accountUserNameLabel = (LabelField)(new Object(mailboxToEdit.getUserName()));
-      this.addContentFieldRow(new Object[]{userNameLabel, accountUserNameLabel});
+      LabelField accountUserNameLabel = new LabelField(mailboxToEdit.getUserName());
+      this.addContentFieldRow(new Field[]{userNameLabel, accountUserNameLabel});
       this.addContentLineBreak();
       this.addContentField(new BoldLabelField(ApplicationResources.getString(14)));
       if (!userInfo.isAutoAuth()) {
-         this._passwordEdit = (PasswordEditField)(new Object(null, mailboxToEdit.getPassword()));
+         this._passwordEdit = new PasswordEditField(null, mailboxToEdit.getPassword());
       } else {
-         this._passwordEdit = (PasswordEditField)(new Object(null, ""));
+         this._passwordEdit = new PasswordEditField(null, "");
       }
 
       this.addContentField(this._passwordEdit, true);
       this.addContentLineBreak();
       this.addContentField(new BoldLabelField(ApplicationResources.getString(143)));
-      this._signatureEdit = (BasicEditField)(new Object(null, mailboxToEdit.getSignature()));
+      this._signatureEdit = new BasicEditField(null, mailboxToEdit.getSignature());
       this.addContentField(this._signatureEdit, true);
       if (userInfo.isAutoBCCEnabled()) {
          this.addContentLineBreak();
          this.addContentField(new BoldLabelField(ApplicationResources.getString(132)));
-         this._autoBCCEdit = (EmailAddressEditField)(new Object(null, mailboxToEdit.getAutoBCC()));
+         this._autoBCCEdit = new EmailAddressEditField(null, mailboxToEdit.getAutoBCC());
          this.addContentField(this._autoBCCEdit, true);
       }
 
       this.addContentLineBreak();
-      this._synchronizeDeletesCheckbox = (CheckboxField)(new Object(null, mailboxToEdit.isDeleteSyncEnabled()));
+      this._synchronizeDeletesCheckbox = new CheckboxField(null, mailboxToEdit.isDeleteSyncEnabled());
       if (DeviceUtils.isDeleteSyncEnabled(mailboxToEdit.getDescription())) {
          this._synchronizeDeletesCheckbox.setLabel(ApplicationResources.getString(127));
       } else {

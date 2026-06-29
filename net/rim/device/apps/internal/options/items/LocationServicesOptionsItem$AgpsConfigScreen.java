@@ -33,9 +33,9 @@ final class LocationServicesOptionsItem$AgpsConfigScreen extends MainScreen {
          this.suplServerUri = PersistentContent.decodeString(this._agpsConfig[0]);
       }
 
-      this._title = (LabelField)(new Object("AGPS Configuration Screen", 1152921504606846976L));
+      this._title = new LabelField("AGPS Configuration Screen", 1152921504606846976L);
       this.setTitle(this._title);
-      this._suplSvr = (EditField)(new Object("SUPL Server URI : ", this.suplServerUri));
+      this._suplSvr = new EditField("SUPL Server URI : ", this.suplServerUri);
       this.add(this._suplSvr);
    }
 

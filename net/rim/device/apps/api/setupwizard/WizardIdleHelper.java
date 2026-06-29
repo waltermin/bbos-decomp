@@ -43,7 +43,7 @@ public class WizardIdleHelper implements RealtimeClockListener, PhoneEventListen
       try {
          ApplicationManager.getApplicationManager().runApplication(this._descriptor);
       } catch (Throwable var4) {
-         String err = ((StringBuffer)(new Object("SILF: "))).append(e.getMessage()).toString();
+         String err = "SILF: " + e.getMessage();
          EventLogger.logEvent(4002776916212129330L, err.getBytes(), 3);
          return;
       }

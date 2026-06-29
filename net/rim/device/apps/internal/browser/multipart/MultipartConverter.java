@@ -10,6 +10,7 @@ import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.api.utility.general.URI;
 import net.rim.device.apps.api.utility.serialization.BaseConverter;
 import net.rim.device.apps.api.utility.serialization.Converter;
+import net.rim.device.apps.api.utility.serialization.SerializationException;
 import net.rim.device.apps.api.utility.serialization.SerializationManager;
 import net.rim.device.apps.internal.browser.common.BrowserConverterDescriptor;
 import net.rim.device.apps.internal.browser.core.BrowserDaemonRegistry;
@@ -24,6 +25,7 @@ import net.rim.device.apps.internal.browser.stack.ModelResult;
 import net.rim.device.apps.internal.browser.stack.RawDataCache;
 import net.rim.device.apps.internal.browser.stack.WAPInputStream;
 import net.rim.device.apps.internal.browser.util.RendererControl;
+import net.rim.device.cldc.io.devicehttp.LengthControlledInputStream;
 import net.rim.device.internal.browser.util.PipeContext;
 import net.rim.device.internal.browser.util.PipeInput;
 import net.rim.vm.Array;
@@ -59,7 +61,7 @@ public final class MultipartConverter extends BaseConverter {
       FetchRequest fr = (FetchRequest)contextObject;
       HttpHeaders headers = fr.getModelResult().getCacheResult().getResponseHeaders();
       String rootUrl = fr.getModelResult().getURL();
-      return convert((InputStream)(new Object(inputBytes)), headers.getPropertyValue("Content-Type"), rootUrl, false, fr, null, this._context);
+      return convert(new WAPInputStream(inputBytes), headers.getPropertyValue("Content-Type"), rootUrl, false, fr, null, this._context);
    }
 
    @Override
@@ -69,7 +71,7 @@ public final class MultipartConverter extends BaseConverter {
       FetchRequest fr = null;
       String rootUrl = null;
       if (!(contextObject instanceof PageConverterWrapper)) {
-         if (contextObject instanceof Object && aDataInput instanceof Object) {
+         if (contextObject instanceof HttpHeaders && aDataInput instanceof InputStream) {
             in = (InputStream)aDataInput;
             headers = (HttpHeaders)contextObject;
          }
@@ -204,7 +206,7 @@ public final class MultipartConverter extends BaseConverter {
       WAPInputStream wapIn = null;
       MimeMultipartParser mimeMultipartParser = null;
       if (isWapEncoded) {
-         wapIn = (WAPInputStream)(new Object(in));
+         wapIn = new WAPInputStream(in);
          wapIn.readMBInt();
       } else {
          mimeMultipartParser = new MimeMultipartParser(in, mainContentType);
@@ -219,9 +221,7 @@ public final class MultipartConverter extends BaseConverter {
                isWapEncoded, returnAction, mimeMultipartParser, isWapEncoded ? wapIn : in, rootUrl, fetchRequest, parentCacheResult
             );
             if (entityResult == null) {
-               throw new Object(
-                  ((StringBuffer)(new Object())).append(BrowserResources.getString(265)).append(firstContentType).toString() != null ? firstContentType : ""
-               );
+               throw new SerializationException(BrowserResources.getString(265) + firstContentType != null ? firstContentType : "");
             }
 
             if (returnAction == 3) {
@@ -259,7 +259,7 @@ public final class MultipartConverter extends BaseConverter {
                      obj = converter.convert(conn.openDataInputStream(), conn.getCacheResult().getResponseHeaders());
                   } else {
                      PageConverterWrapper wrapper = new PageConverterWrapper(fetchRequest, conn.openInputStream(), conn);
-                     obj = converter.convert((DataInput)((Object)null), wrapper);
+                     obj = converter.convert((DataInput)null, wrapper);
                   }
 
                   if (obj instanceof Page) {
@@ -311,8 +311,8 @@ public final class MultipartConverter extends BaseConverter {
          if (headersLen > 0) {
             byte[] headers = new byte[headersLen];
             wapIn.read(headers);
-            headerTable = (HttpHeaders)(new Object());
-            WSPHeaderDecoder oldHeaderDecoder = (WSPHeaderDecoder)(new Object(headerTable));
+            headerTable = new HttpHeaders();
+            WSPHeaderDecoder oldHeaderDecoder = new WSPHeaderDecoder(headerTable);
             boolean decodeContentType = true;
             if (headers[0] == -111) {
                decodeContentType = false;
@@ -320,7 +320,7 @@ public final class MultipartConverter extends BaseConverter {
 
             oldHeaderDecoder.decode(headers, decodeContentType);
          } else {
-            headerTable = (HttpHeaders)(new Object());
+            headerTable = new HttpHeaders();
          }
       } else {
          headerTable = mimeMultipartParser.getPartHeaders();
@@ -342,17 +342,17 @@ public final class MultipartConverter extends BaseConverter {
       CacheResult cr = null;
       InputStream resultIn;
       if (returnAction == 1) {
-         AccumulatorInputStream accumIn = (AccumulatorInputStream)(new Object(
-            null, (InputStream)(mimeMultipartParser != null ? mimeMultipartParser.getPartContent() : new Object(in, dataLen, false, false)), null, false
-         ));
+         AccumulatorInputStream accumIn = new AccumulatorInputStream(
+            null, mimeMultipartParser != null ? mimeMultipartParser.getPartContent() : new LengthControlledInputStream(in, dataLen, false, false), null, false
+         );
          cr = new CacheResult(url, null, headerTable, 200);
          cr.setData(accumIn.getPipe());
          resultIn = new MultipartInputStream(isWapEncoded, in, cr.getData(), rootUrl, dataLen, mimeMultipartParser, fetchRequest);
       } else {
          if (parentCacheResult != null && dataLen >= 0) {
             PipeContext ptr = null;
-            if (!(in instanceof Object)) {
-               if (in instanceof Object) {
+            if (!(in instanceof WAPInputStream)) {
+               if (in instanceof PipeInput) {
                   ptr = ((PipeInput)in).getPosition();
                }
             } else {
@@ -366,9 +366,12 @@ public final class MultipartConverter extends BaseConverter {
          }
 
          if (cr == null) {
-            AccumulatorInputStream accumIn = (AccumulatorInputStream)(new Object(
-               null, (InputStream)(mimeMultipartParser != null ? mimeMultipartParser.getPartContent() : new Object(in, dataLen, false, false)), null, false
-            ));
+            AccumulatorInputStream accumIn = new AccumulatorInputStream(
+               null,
+               mimeMultipartParser != null ? mimeMultipartParser.getPartContent() : new LengthControlledInputStream(in, dataLen, false, false),
+               null,
+               false
+            );
             cr = new CacheResult(url, null, headerTable, 200);
             cr.setData(accumIn.getPipe());
          }

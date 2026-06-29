@@ -25,7 +25,7 @@ class EScreenVMProcesses$MyMenu extends MenuItem {
          case 2:
             ApplicationProcess p = this.this$0._processes[this.this$0._list.getSelectedIndex()].getApplicationProcess();
             if (p != null) {
-               p.destroy((Throwable)(new Object("Killed by process manager")));
+               p.destroy(new Exception("Killed by process manager"));
 
                label30:
                try {

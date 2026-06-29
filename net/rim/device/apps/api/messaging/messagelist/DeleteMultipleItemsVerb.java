@@ -134,7 +134,7 @@ public final class DeleteMultipleItemsVerb extends Verb {
 
    private final boolean rangeContainsSavedItems() {
       synchronized (FolderHierarchies.getLockObject()) {
-         if (this._target instanceof Object) {
+         if (this._target instanceof ReadableList) {
             ReadableList list = (ReadableList)this._target;
             Object context = this._context;
             if (this._type == 1) {
@@ -145,7 +145,7 @@ public final class DeleteMultipleItemsVerb extends Verb {
                while (--i >= start) {
                   try {
                      RIMModel model = (RIMModel)list.getAt(i);
-                     if (model instanceof Object) {
+                     if (model instanceof ActionProvider) {
                         ActionProvider actionProvider = (ActionProvider)model;
                         if (actionProvider.perform(3103370408204507200L, context)) {
                            return true;
@@ -163,7 +163,7 @@ public final class DeleteMultipleItemsVerb extends Verb {
                for (int i = 0; i < numberOfIndices; i++) {
                   try {
                      RIMModel model = this._selectedItems[i];
-                     if (model instanceof Object) {
+                     if (model instanceof ActionProvider) {
                         ActionProvider actionProvider = (ActionProvider)model;
                         if (actionProvider.perform(3103370408204507200L, context)) {
                            return true;
@@ -185,7 +185,7 @@ public final class DeleteMultipleItemsVerb extends Verb {
    private final void performDeleteOnAppropriateItems(Object context) {
       if (this._type == 1) {
          synchronized (FolderHierarchies.getLockObject()) {
-            if (this._target instanceof Object) {
+            if (this._target instanceof IntRangedActionTarget) {
                IntRangedActionTarget target = (IntRangedActionTarget)this._target;
                target.apply(this._startIndex, this._endIndex, -3967872215949752466L, context);
             }
@@ -208,7 +208,7 @@ public final class DeleteMultipleItemsVerb extends Verb {
       synchronized (FolderHierarchies.getLockObject()) {
          ContextObject contextObject = this.getContextObjectForDeleteMultiSelect(context);
          NotificationSuspension ns = null;
-         if (this._target instanceof Object) {
+         if (this._target instanceof NotificationSuspension) {
             ns = (NotificationSuspension)this._target;
             ns.suspendNotification(contextObject);
          }

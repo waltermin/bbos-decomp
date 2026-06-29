@@ -233,7 +233,7 @@ class DocViewDisplayField extends VerticalFieldManager implements BaseMenuModel,
    protected boolean doRunDefaultVerb(boolean defaultToSpace, int time) {
       boolean retValue = false;
       if (!DeviceInfo.isInHolster()) {
-         Menu menu = (Menu)(new Object(65536));
+         Menu menu = new Menu(65536);
          menu.setInstance(0);
          Manager mgr = this._fullDocState ? this : this._docViewTocManager;
          Field field = mgr.getLeafFieldWithFocus();
@@ -245,7 +245,7 @@ class DocViewDisplayField extends VerticalFieldManager implements BaseMenuModel,
          this.makeMenu(menu, 0);
          MenuItem menuVerb = menu.getDefault();
          ContextMenu.getInstance().setTarget(null);
-         menu = null;
+         Menu var8 = null;
          if (menuVerb != null) {
             if (!ObjectUtilities.objEqual(menuVerb, this._findVerb)) {
                menuVerb.run();
@@ -502,9 +502,7 @@ class DocViewDisplayField extends VerticalFieldManager implements BaseMenuModel,
          short docInfoTag = this.getDocInfoStatus();
          if (docInfoTag != -1
             && docInfoTag != 0
-            && !SimpleChoiceDialog.askYesNoQuestion(
-               ((StringBuffer)(new Object())).append(AttachmentViewerFactory.getErrorString(docInfoTag)).append(' ').append(_resources.getString(5)).toString()
-            )) {
+            && !SimpleChoiceDialog.askYesNoQuestion(AttachmentViewerFactory.getErrorString(docInfoTag) + ' ' + _resources.getString(5))) {
             return;
          }
 
@@ -519,25 +517,20 @@ class DocViewDisplayField extends VerticalFieldManager implements BaseMenuModel,
       IntHashtable docInfoHash = parsingData.getDocInfoHash();
       if (docInfoHash != null) {
          IntEnumeration e = docInfoHash.keys();
-         StringBuffer info = (StringBuffer)(new Object());
+         StringBuffer info = new StringBuffer();
 
          while (e.hasMoreElements()) {
             int elemID = e.nextElement();
-            info.append(
-               ((StringBuffer)(new Object()))
-                  .append(AttachmentViewerFactory.getDocInfoDescription(_resources, elemID))
-                  .append((String)docInfoHash.get(elemID))
-                  .toString()
-            );
+            info.append(AttachmentViewerFactory.getDocInfoDescription(_resources, elemID) + (String)docInfoHash.get(elemID));
             if (e.hasMoreElements()) {
                info.append('\n');
             }
          }
 
          ModalDisplayDlg docInfoDlg = new ModalDisplayDlg(
-            (Manager)(new Object(281474976710656L)), this.getFileName(), info.toString(), icon, null, null, null, null, null, -1, (byte)17
+            new VerticalFieldManager(281474976710656L), this.getFileName(), info.toString(), icon, null, null, null, null, null, -1, (byte)17
          );
-         info = null;
+         StringBuffer var7 = null;
          docInfoDlg.setModal(true);
          docInfoDlg.show();
          Object var9 = null;
@@ -749,18 +742,18 @@ class DocViewDisplayField extends VerticalFieldManager implements BaseMenuModel,
    protected void addCustomMenuVerbs(Menu menu, int instance) {
       if ((this._menuFlags & 2) != 0) {
          if (instance == 0 && (this.hasTOC() || this.hasMultipleItems())) {
-            menu.add((MenuItem)(new Object(new DocViewGuiVerb(2, 65552, _resources, this._fullDocState ? 35 : 33, this), 0)));
+            menu.add(new VerbMenuItem(new DocViewGuiVerb(2, 65552, _resources, this._fullDocState ? 35 : 33, this), 0));
          }
 
          if (this.hasMultipleItems() && this._fullDocState) {
             DocViewDisplayField$ItemInfo tempItem = this.getPrevNextItem(this._currentItemDomID, false);
             if (tempItem != null && tempItem._available != 2) {
-               menu.add((MenuItem)(new Object(new DocViewGuiVerb(4, 65552, _resources, this.getCustomStringID(4), this), 0)));
+               menu.add(new VerbMenuItem(new DocViewGuiVerb(4, 65552, _resources, this.getCustomStringID(4), this), 0));
             }
 
             tempItem = this.getPrevNextItem(this._currentItemDomID, true);
             if (tempItem != null && tempItem._available != 2) {
-               menu.add((MenuItem)(new Object(new DocViewGuiVerb(3, 65552, _resources, this.getCustomStringID(3), this), 0)));
+               menu.add(new VerbMenuItem(new DocViewGuiVerb(3, 65552, _resources, this.getCustomStringID(3), this), 0));
             }
          }
       }
@@ -778,7 +771,7 @@ class DocViewDisplayField extends VerticalFieldManager implements BaseMenuModel,
       }
 
       if (instance == 0 && this.allowDocInfo()) {
-         menu.add((MenuItem)(new Object(new DocViewGuiVerb(33, 65552, _resources, this.hasDocInfoData() ? 60 : 59, this), 0)));
+         menu.add(new VerbMenuItem(new DocViewGuiVerb(33, 65552, _resources, this.hasDocInfoData() ? 60 : 59, this), 0));
       }
    }
 
@@ -938,9 +931,9 @@ class DocViewDisplayField extends VerticalFieldManager implements BaseMenuModel,
             this.executeMore(this._descriptor, false, true);
             return;
          case 23:
-            if (cookie instanceof Object) {
+            if (cookie instanceof Integer) {
                this._descriptor.reset();
-               this._descriptor._targetBlockIndex = cookie - 1;
+               this._descriptor._targetBlockIndex = (Integer)cookie - 1;
                this.executeMore(this._descriptor, false, true);
                return;
             }
@@ -956,7 +949,7 @@ class DocViewDisplayField extends VerticalFieldManager implements BaseMenuModel,
             break;
          case 24:
          case 25:
-            if (cookie instanceof Object) {
+            if (cookie instanceof String) {
                this._descriptor.reset();
                if (menuCode == 24) {
                   this._descriptor._chunkSize = 64000;
@@ -1036,11 +1029,11 @@ class DocViewDisplayField extends VerticalFieldManager implements BaseMenuModel,
 
    private void createFindMenuItems() {
       if (this._findVerb == null) {
-         this._findVerb = (VerbMenuItem)(new Object(new DocViewGuiVerb(0, this), 0));
+         this._findVerb = new VerbMenuItem(new DocViewGuiVerb(0, this), 0);
       }
 
       if (this._findNextVerb == null) {
-         this._findNextVerb = (VerbMenuItem)(new Object(new DocViewGuiVerb(1, this), 0));
+         this._findNextVerb = new VerbMenuItem(new DocViewGuiVerb(1, this), 0);
       }
 
       if (this._changeLanguageItem == null) {

@@ -19,7 +19,7 @@ final class Sender implements Runnable {
    }
 
    public final String getData() {
-      return (String)(new Object(this.data));
+      return new String(this.data);
    }
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
@@ -30,9 +30,7 @@ final class Sender implements Runnable {
       boolean tryagain = false;
 
       try {
-         this.conn = (HttpConnection)Connector.open(
-            ((StringBuffer)(new Object())).append(this.url).append(";connectionType=mds-public;deviceside=false").toString()
-         );
+         this.conn = (HttpConnection)Connector.open(this.url + ";connectionType=mds-public;deviceside=false");
          this.conn.setRequestProperty("profile", UAProf.getDefaultUAProfURI());
          this.conn.setRequestProperty("user-agent", UserAgent.getDefaultUserAgent());
          s = this.conn.openInputStream();
@@ -61,7 +59,7 @@ final class Sender implements Runnable {
          label169:
          try {
             var12 = true;
-            this.conn = (HttpConnection)Connector.open(((StringBuffer)(new Object())).append(this.url).append(";deviceside=true").toString());
+            this.conn = (HttpConnection)Connector.open(this.url + ";deviceside=true");
             this.conn.setRequestProperty("profile", UAProf.getDefaultUAProfURI());
             this.conn.setRequestProperty("user-agent", UserAgent.getDefaultUserAgent());
             s = this.conn.openInputStream();
@@ -93,7 +91,7 @@ final class Sender implements Runnable {
       }
 
       if (this.data != null && this.listener != null) {
-         this.listener.serverReply((String)(new Object(this.data, 0, this.len)));
+         this.listener.serverReply(new String(this.data, 0, this.len));
       }
    }
 

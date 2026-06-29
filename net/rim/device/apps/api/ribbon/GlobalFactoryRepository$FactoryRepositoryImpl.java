@@ -5,11 +5,11 @@ import net.rim.device.api.util.Factory;
 import net.rim.device.apps.api.ribbon.indicators.TestPoint;
 
 final class GlobalFactoryRepository$FactoryRepositoryImpl implements FactoryRepository, TestPoint {
-   private Hashtable _factories = (Hashtable)(new Object(20));
+   private Hashtable _factories = new Hashtable(20);
 
    @Override
    public final void test(Object id, Object value) {
-      if (id instanceof Object) {
+      if (id instanceof String) {
          Factory factory = this.getFactory((String)id);
          if (factory instanceof TestPoint) {
             TestPoint tp = (TestPoint)factory;
@@ -23,13 +23,13 @@ final class GlobalFactoryRepository$FactoryRepositoryImpl implements FactoryRepo
       if (factory != null && key != null && key.length() > 0) {
          synchronized (this._factories) {
             if (this._factories.containsKey(key)) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
             this._factories.put(key, factory);
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -38,7 +38,7 @@ final class GlobalFactoryRepository$FactoryRepositoryImpl implements FactoryRepo
       if (key != null && key.length() > 0) {
          this._factories.remove(key);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -47,7 +47,7 @@ final class GlobalFactoryRepository$FactoryRepositoryImpl implements FactoryRepo
       if (key != null && key.length() > 0) {
          return (Factory)this._factories.get(key);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

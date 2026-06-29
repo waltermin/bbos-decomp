@@ -2,14 +2,15 @@ package net.rim.device.apps.internal.qm.peer;
 
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.component.AutoTextEditField;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.PopupScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.ui.CommonResources;
 import net.rim.device.apps.internal.qm.peer.common.FixedHeightManager;
 import net.rim.device.apps.internal.qm.resource.QmResources;
@@ -22,7 +23,7 @@ final class PasscodeQuestionDialog extends PopupScreen implements FieldChangeLis
    boolean _result;
 
    PasscodeQuestionDialog(String question) {
-      super((Manager)(new Object(562949953421312L)));
+      super(new VerticalFieldManager(562949953421312L));
       this._passcodeQuestion = question;
       this.createDialog();
    }
@@ -35,23 +36,23 @@ final class PasscodeQuestionDialog extends PopupScreen implements FieldChangeLis
          fhm = new FixedHeightManager(4);
       }
 
-      HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(12884901888L));
-      this._okButton = (ButtonField)(new Object(QmResources.getString(51), 12884901888L));
+      HorizontalFieldManager hfm = new HorizontalFieldManager(12884901888L);
+      this._okButton = new ButtonField(QmResources.getString(51), 12884901888L);
       this._okButton.setChangeListener(this);
-      this._cancelButton = (ButtonField)(new Object(CommonResources.getString(9042), 12884901888L));
+      this._cancelButton = new ButtonField(CommonResources.getString(9042), 12884901888L);
       this._cancelButton.setChangeListener(this);
       hfm.add(this._okButton);
       hfm.add(this._cancelButton);
       if (this._passcodeQuestion != null) {
-         RichTextField rtf = (RichTextField)(new Object(this._passcodeQuestion));
+         RichTextField rtf = new RichTextField(this._passcodeQuestion);
          fhm.addField(rtf);
       }
 
-      this._answer = (AutoTextEditField)(new Object(PeerResources.getString(901), "", 1000000, 2147483648L));
+      this._answer = new AutoTextEditField(PeerResources.getString(901), "", 1000000, 2147483648L);
       fhm.addField(this._answer);
-      LabelField lf = (LabelField)(new Object(PeerResources.getString(904)));
+      LabelField lf = new LabelField(PeerResources.getString(904));
       this.add(lf);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.add(fhm);
       this.add(hfm);
       this._answer.setFocus();

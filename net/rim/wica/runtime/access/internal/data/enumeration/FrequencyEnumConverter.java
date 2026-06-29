@@ -3,8 +3,8 @@ package net.rim.wica.runtime.access.internal.data.enumeration;
 import net.rim.device.api.util.IntIntHashtable;
 
 public class FrequencyEnumConverter {
-   protected static IntIntHashtable _commonToDevice = (IntIntHashtable)(new Object(7));
-   protected static IntIntHashtable _deviceToCommon = (IntIntHashtable)(new Object(7));
+   protected static IntIntHashtable _commonToDevice = new IntIntHashtable(7);
+   protected static IntIntHashtable _deviceToCommon = new IntIntHashtable(7);
 
    public static int deviceToCommon(int value) {
       return _deviceToCommon.get(value);

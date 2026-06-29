@@ -7,17 +7,18 @@ import net.rim.device.api.system.Application;
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.component.BitmapField;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.GaugeField;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.DialogFieldManager;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.PopupScreen;
 import net.rim.device.apps.internal.secureemail.server.SecureEmailServerOperationListener;
+import net.rim.device.internal.ui.component.HorizontalSpacerField;
 import net.rim.device.internal.ui.component.VerticalSpacerField;
 
 public class CertificateHarvesterCompletionDialog extends PopupScreen implements SecureEmailServerOperationListener, FieldChangeListener {
@@ -225,7 +226,7 @@ public class CertificateHarvesterCompletionDialog extends PopupScreen implements
                this._buttonFieldManager.add(this._abortButtonField);
             }
 
-            this._abortButtonSpacer = (VerticalSpacerField)(new Object(this._buttonFieldManager.getHeight()));
+            this._abortButtonSpacer = new VerticalSpacerField(this._buttonFieldManager.getHeight());
             this._buttonFieldManager.add(this._abortButtonSpacer);
             if (!abortButtonAdded) {
                this._buttonFieldManager.delete(this._abortButtonField);
@@ -239,27 +240,27 @@ public class CertificateHarvesterCompletionDialog extends PopupScreen implements
    }
 
    public CertificateHarvesterCompletionDialog() {
-      super((Manager)(new Object()));
+      super(new DialogFieldManager());
       this._applicationEventLock = Application.getEventLock();
       DialogFieldManager dfm = (DialogFieldManager)this.getDelegate();
-      dfm.setIcon((BitmapField)(new Object(Bitmap.getPredefinedBitmap(3))));
-      this._messageField = (RichTextField)(new Object(SecureEmailResources.getString(15), 36028797018963968L));
+      dfm.setIcon(new BitmapField(Bitmap.getPredefinedBitmap(3)));
+      this._messageField = new RichTextField(SecureEmailResources.getString(15), 36028797018963968L);
       dfm.setMessage(this._messageField);
-      dfm.addCustomField((Field)(new Object()));
-      dfm.addCustomField((Field)(new Object(6)));
+      dfm.addCustomField(new SeparatorField());
+      dfm.addCustomField(new VerticalSpacerField(6));
       this._currentMaxGaugeValue = 0;
-      this._recipientGauge = (GaugeField)(new Object());
+      this._recipientGauge = new GaugeField();
       dfm.addCustomField(this._recipientGauge);
-      this._recipientName = (LabelField)(new Object("", 64));
+      this._recipientName = new LabelField("", 64);
       dfm.addCustomField(this._recipientName);
-      this._recipientAction = (LabelField)(new Object("", 64));
-      HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(1152921504606846976L));
-      hfm.add((Field)(new Object(12)));
+      this._recipientAction = new LabelField("", 64);
+      HorizontalFieldManager hfm = new HorizontalFieldManager(1152921504606846976L);
+      hfm.add(new HorizontalSpacerField(12));
       hfm.add(this._recipientAction);
       dfm.addCustomField(hfm);
-      this._buttonFieldManager = (HorizontalFieldManager)(new Object(12884901888L));
+      this._buttonFieldManager = new HorizontalFieldManager(12884901888L);
       dfm.addCustomField(this._buttonFieldManager);
-      this._abortButtonField = (ButtonField)(new Object(SecureEmailResources.getString(165), 12884901888L));
+      this._abortButtonField = new ButtonField(SecureEmailResources.getString(165), 12884901888L);
       this._abortButtonField.setChangeListener(this);
    }
 }

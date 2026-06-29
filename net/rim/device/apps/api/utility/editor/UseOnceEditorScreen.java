@@ -39,7 +39,7 @@ public class UseOnceEditorScreen extends AppsMainScreen {
       this._context = context;
       modelField.setFocus();
       Field field = this.getLeafFieldWithFocus();
-      if (field instanceof Object) {
+      if (field instanceof EditField) {
          EditField editField = (EditField)field;
          editField.setCursorPosition(editField.getText().length());
       }

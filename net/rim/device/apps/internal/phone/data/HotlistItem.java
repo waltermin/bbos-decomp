@@ -43,7 +43,7 @@ public final class HotlistItem
    protected char _speedDialKey;
    private static final long DEFAULT_ATBC = 86400000L;
    private static final byte[] phoneCallRecordId = new byte[]{104};
-   private static ContextObjectWR _hotlistSyncContextWR = (ContextObjectWR)(new Object(20, 19));
+   private static ContextObjectWR _hotlistSyncContextWR = new ContextObjectWR(20, 19);
 
    public final boolean addressBookUpdated(int updateType, Object o) {
       return !(this._address instanceof AddressBookDependentObject) ? false : ((AddressBookDependentObject)this._address).addressBookUpdated(updateType, o);
@@ -59,7 +59,7 @@ public final class HotlistItem
       ContextObject.setFlag(context, 34);
       PhoneUtilities.setPrivateFlag(context, 9);
       PhoneUtilities.setPrivateFlag(context, 38);
-      if (this._address instanceof Object) {
+      if (this._address instanceof VerbProvider) {
          VerbProvider verbProvider = (VerbProvider)this._address;
          defaultVerb = verbProvider.getVerbs(context, verbs);
       }
@@ -139,11 +139,11 @@ public final class HotlistItem
 
    public final void setAddress(Object address) {
       this._address = (PersistableRIMModel)address;
-      if (this._address instanceof Object) {
+      if (this._address instanceof EncryptableProvider) {
          EncryptableProvider encryptable = (EncryptableProvider)this._address;
          if (!encryptable.checkCrypt(true, true)) {
             Object newObject = encryptable.reCrypt(true, true);
-            if (newObject instanceof Object) {
+            if (newObject instanceof PersistableRIMModel) {
                this._address = (PersistableRIMModel)newObject;
             }
          }
@@ -174,7 +174,7 @@ public final class HotlistItem
 
    @Override
    public final int getKeys(Object context, Object[] keyArray, int index, long keyRequested) {
-      if (!(this._address instanceof Object)) {
+      if (!(this._address instanceof KeyProvider)) {
          return 0;
       }
 
@@ -184,7 +184,7 @@ public final class HotlistItem
 
    @Override
    public final int getKeys(Object context, int[] keyArray, int index, long keyRequested) {
-      if (!(this._address instanceof Object)) {
+      if (!(this._address instanceof KeyProvider)) {
          return 0;
       }
 
@@ -194,7 +194,7 @@ public final class HotlistItem
 
    @Override
    public final int getKeys(Object context, long[] keyArray, int index, long keyRequested) {
-      if (!(this._address instanceof Object)) {
+      if (!(this._address instanceof KeyProvider)) {
          return 0;
       }
 
@@ -205,7 +205,7 @@ public final class HotlistItem
    @Override
    public final Object getDefault(Object current, Object context) {
       RIMModel address = this.getAddress();
-      if (!(address instanceof Object)) {
+      if (!(address instanceof DefaultProvider)) {
          return null;
       }
 
@@ -227,7 +227,7 @@ public final class HotlistItem
    @Override
    public final int paint(Graphics g, int x, int y, int width, int height, Object context, PhoneListView phoneListView, int index) {
       width -= QuickContactUtil.paintHotkey(this.getSpeedDialKey(), g, x, y, width, height, 5, context);
-      if (this._address instanceof Object) {
+      if (this._address instanceof PaintProvider) {
          Font font = g.getFont();
          if (height > font.getHeight()) {
             y += height - font.getHeight() >> 1;
@@ -248,7 +248,7 @@ public final class HotlistItem
    @Override
    public final boolean canSpeedDial() {
       Object num = this.getNumber();
-      return !(num instanceof Object) ? false : ((AbstractPhoneNumberModel)num).canSpeedDial();
+      return !(num instanceof AbstractPhoneNumberModel) ? false : ((AbstractPhoneNumberModel)num).canSpeedDial();
    }
 
    @Override
@@ -293,12 +293,12 @@ public final class HotlistItem
 
    @Override
    public final boolean checkCrypt(boolean compress, boolean encrypt) {
-      return !(this._address instanceof Object) ? true : ((EncryptableProvider)this._address).checkCrypt(compress, encrypt);
+      return !(this._address instanceof EncryptableProvider) ? true : ((EncryptableProvider)this._address).checkCrypt(compress, encrypt);
    }
 
    @Override
    public final Object reCrypt(boolean compress, boolean encrypt) {
-      if (this._address instanceof Object) {
+      if (this._address instanceof EncryptableProvider) {
          ((EncryptableProvider)this._address).reCrypt(compress, encrypt);
       }
 

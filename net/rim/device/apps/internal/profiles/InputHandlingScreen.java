@@ -12,12 +12,13 @@ import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.AppsMainScreen;
 import net.rim.device.apps.api.ui.Confirmation;
+import net.rim.device.apps.api.ui.ExitVerb;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
 import net.rim.device.internal.i18n.CommonResource;
 
 class InputHandlingScreen extends AppsMainScreen implements Confirmation {
    private Verb _saveVerb;
-   protected Verb _closeVerb = (Verb)(new Object(0, this));
+   protected Verb _closeVerb = new ExitVerb(0, this);
    protected ContextObject _context;
    protected Object _originalSource;
    private Field _title;
@@ -37,7 +38,7 @@ class InputHandlingScreen extends AppsMainScreen implements Confirmation {
       }
 
       Field field = null;
-      if (model instanceof Object) {
+      if (model instanceof FieldProvider) {
          field = ((FieldProvider)model).getField(context);
       }
 
@@ -123,6 +124,6 @@ class InputHandlingScreen extends AppsMainScreen implements Confirmation {
       }
 
       Object cookie = field.getCookie();
-      return !(cookie instanceof Object) ? true : ((FieldProvider)cookie).grabDataFromField(field, this._context);
+      return !(cookie instanceof FieldProvider) ? true : ((FieldProvider)cookie).grabDataFromField(field, this._context);
    }
 }

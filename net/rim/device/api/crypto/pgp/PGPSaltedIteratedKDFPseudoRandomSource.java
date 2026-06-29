@@ -3,6 +3,7 @@ package net.rim.device.api.crypto.pgp;
 import net.rim.device.api.crypto.AbstractPseudoRandomSource;
 import net.rim.device.api.crypto.Digest;
 import net.rim.device.api.crypto.RandomSource;
+import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.util.Arrays;
 
 public final class PGPSaltedIteratedKDFPseudoRandomSource extends AbstractPseudoRandomSource implements PGPPseudoRandomSource {
@@ -49,7 +50,7 @@ public final class PGPSaltedIteratedKDFPseudoRandomSource extends AbstractPseudo
    }
 
    public PGPSaltedIteratedKDFPseudoRandomSource(byte codedCount, byte[] passphrase, byte[] salt) {
-      this(codedCount, passphrase, salt, (Digest)(new Object()));
+      this(codedCount, passphrase, salt, new SHA1Digest());
    }
 
    public PGPSaltedIteratedKDFPseudoRandomSource(byte codedCount, byte[] passphrase) {
@@ -94,7 +95,7 @@ public final class PGPSaltedIteratedKDFPseudoRandomSource extends AbstractPseudo
             buffer[i] ^= finalOutput[i];
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -112,7 +113,7 @@ public final class PGPSaltedIteratedKDFPseudoRandomSource extends AbstractPseudo
          int decidedCountShift = (codedCount >> 4 & 15) + 6;
          this._decodedCount = decodedCountBase << decidedCountShift;
          if (this._decodedCount < 0) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          this._codedCount = codedCount;
@@ -126,10 +127,10 @@ public final class PGPSaltedIteratedKDFPseudoRandomSource extends AbstractPseudo
 
          this._salt = new byte[saltLength];
          System.arraycopy(salt, saltOffset, this._salt, 0, saltLength);
-         this._digest = (Digest)(digest == null ? new Object() : digest);
+         this._digest = digest == null ? new SHA1Digest() : digest;
          this._digestLength = this._digest.getDigestLength();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

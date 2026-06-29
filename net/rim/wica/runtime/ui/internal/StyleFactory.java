@@ -11,7 +11,7 @@ import net.rim.wica.runtime.metadata.component.ui.StyleCollection;
 import net.rim.wica.runtime.persistence.Resource;
 
 public final class StyleFactory {
-   private IntHashtable _styleCache = (IntHashtable)(new Object(10));
+   private IntHashtable _styleCache = new IntHashtable(10);
    private StyleCollection _styles;
    private ResourceProvider _resourceProvider;
 

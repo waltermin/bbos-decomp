@@ -6,18 +6,18 @@ import net.rim.device.api.i18n.DateFormat;
 import net.rim.device.api.i18n.MessageFormat;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.system.Display;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
-import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.component.TreeField;
 import net.rim.device.api.ui.component.TreeFieldCallback;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.api.framework.model.ContextObject;
+import net.rim.device.apps.api.ui.VerbMenuItem;
 import net.rim.device.apps.internal.browser.common.BrowserLockScreen;
 import net.rim.device.apps.internal.browser.core.BrowserDaemonRegistry;
 import net.rim.device.apps.internal.browser.core.BrowserImpl;
@@ -51,8 +51,8 @@ public class LongTermHistoryScreen extends MainScreen implements BrowserLockScre
 
    public LongTermHistoryScreen(Screen screen) {
       this._screenToRemove = screen;
-      this.setTitle((Field)(new Object(BrowserResources.getString(368))));
-      this._treeField = (TreeField)(new Object(this, 0));
+      this.setTitle(new LabelField(BrowserResources.getString(368)));
+      this._treeField = new TreeField(this, 0);
       this._treeField.setDefaultExpanded(false);
       this._longTermHistory = LongTermHistory.getInstance();
       this._longTermHistory.cleanup(0);
@@ -63,7 +63,7 @@ public class LongTermHistoryScreen extends MainScreen implements BrowserLockScre
 
    private void calculateTodaysDate() {
       Calendar calendar = Calendar.getInstance();
-      calendar.setTime((Date)(new Object(System.currentTimeMillis())));
+      calendar.setTime(new Date(System.currentTimeMillis()));
       calendar.set(11, 0);
       calendar.set(12, 0);
       calendar.set(13, 0);
@@ -81,7 +81,7 @@ public class LongTermHistoryScreen extends MainScreen implements BrowserLockScre
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(this._today);
             int dayOfWeek = calendar.get(7);
-            String[] dateFolderLabels = new Object[8];
+            String[] dateFolderLabels = new String[8];
             dateFolderLabels[0] = BrowserResources.getString(791);
             dateFolderLabels[7] = BrowserResources.getString(795);
             dayOfWeek--;
@@ -238,7 +238,7 @@ public class LongTermHistoryScreen extends MainScreen implements BrowserLockScre
             altTitle = ((LongTermHistoryNode)node).getUrl();
          }
 
-         String[] name = new Object[]{title != null && title.length() != 0 ? title : altTitle};
+         String[] name = new String[]{title != null && title.length() != 0 ? title : altTitle};
          String message = MessageFormat.format(BrowserResources.getString(282), name);
          if (Dialog.ask(2, message) != 3) {
             return;
@@ -428,11 +428,11 @@ public class LongTermHistoryScreen extends MainScreen implements BrowserLockScre
             BrowserVerb verb = verbRepository.getVerb(0, browserImpl.getVerbMask());
             if (verb != null) {
                LongTermHistoryNode node = (LongTermHistoryNode)item;
-               ContextObject object = (ContextObject)(new Object());
+               ContextObject object = new ContextObject();
                object.put(253, node.getUrl());
                object.put(-7261227923983886841L, node.getTitle());
                object.put(867508017068302662L, node.getConfigUID());
-               menu.add((MenuItem)(new Object(null, 100, 1, verb, object)));
+               menu.add(new VerbMenuItem(null, 100, 1, verb, object));
             }
          }
 

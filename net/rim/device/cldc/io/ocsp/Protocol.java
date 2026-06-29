@@ -15,14 +15,14 @@ public final class Protocol implements ConnectionBaseInterface {
    public final Connection openPrim(String name, int mode, boolean timeouts) {
       String nameLowerCase = StringUtilities.toLowerCase(name, 1701707776);
       if (nameLowerCase.indexOf("deviceside") >= 0) {
-         throw new Object("Must not include deviceside");
+         throw new IllegalArgumentException("Must not include deviceside");
       }
 
       if (nameLowerCase.indexOf("connectionhandler") >= 0) {
-         throw new Object("Must not include connectionhandler");
+         throw new IllegalArgumentException("Must not include connectionhandler");
       }
 
-      StringBuffer socketURLStringBuffer = (StringBuffer)(new Object("socket://mds;connectionhandler=ocsp;deviceside=false"));
+      StringBuffer socketURLStringBuffer = new StringBuffer("socket://mds;connectionhandler=ocsp;deviceside=false");
       socketURLStringBuffer.append(name);
       if (nameLowerCase.indexOf("connectiontimeout") < 0) {
          socketURLStringBuffer.append(";connectiontimeout=180000");

@@ -1,11 +1,12 @@
 package net.rim.device.api.crypto.encoder;
 
 import java.io.InputStream;
+import net.rim.device.api.crypto.InvalidSignatureEncodingException;
 import net.rim.device.api.crypto.asn1.ASN1InputByteArray;
 
 public class CMS_SignatureDecoder extends SignatureDecoder {
    @Override
-   protected DecodedSignature decodeSignature(InputStream param1, String param2, String param3) {
+   protected DecodedSignature decodeSignature(InputStream param1, String param2, String param3) throws InvalidSignatureEncodingException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -15,16 +16,16 @@ public class CMS_SignatureDecoder extends SignatureDecoder {
       // Bytecode:
       // 00: aload 1
       // 01: ifnonnull 0c
-      // 04: new java/lang/Object
+      // 04: new java/lang/IllegalArgumentException
       // 07: dup
       // 08: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 0b: athrow
-      // 0c: new java/lang/Object
+      // 0c: new net/rim/device/api/crypto/asn1/ASN1InputStream
       // 0f: dup
       // 10: aload 1
       // 11: invokespecial net/rim/device/api/crypto/asn1/ASN1InputStream.<init> (Ljava/io/InputStream;)V
       // 14: astore 4
-      // 16: new java/lang/Object
+      // 16: new net/rim/device/api/crypto/asn1/ASN1InputByteArray
       // 19: dup
       // 1a: aload 4
       // 1c: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputStream.readFieldAsByteArray ()[B
@@ -48,7 +49,7 @@ public class CMS_SignatureDecoder extends SignatureDecoder {
       // 47: astore 8
       // 49: aload 8
       // 4b: ifnonnull 56
-      // 4e: new java/lang/Object
+      // 4e: new net/rim/device/api/crypto/InvalidSignatureEncodingException
       // 51: dup
       // 52: invokespecial net/rim/device/api/crypto/InvalidSignatureEncodingException.<init> ()V
       // 55: athrow
@@ -75,12 +76,12 @@ public class CMS_SignatureDecoder extends SignatureDecoder {
       // 83: invokevirtual net/rim/device/api/crypto/encoder/CMS_SignatureDecoder.decodeSignature (Lnet/rim/device/api/crypto/asn1/ASN1InputByteArray;[BLjava/lang/String;Ljava/lang/String;)Lnet/rim/device/api/crypto/encoder/DecodedSignature;
       // 86: areturn
       // 87: astore 4
-      // 89: new java/lang/Object
+      // 89: new net/rim/device/api/crypto/InvalidSignatureEncodingException
       // 8c: dup
       // 8d: invokespecial net/rim/device/api/crypto/InvalidSignatureEncodingException.<init> ()V
       // 90: athrow
       // 91: astore 4
-      // 93: new java/lang/Object
+      // 93: new net/rim/device/api/crypto/InvalidSignatureEncodingException
       // 96: dup
       // 97: invokespecial net/rim/device/api/crypto/InvalidSignatureEncodingException.<init> ()V
       // 9a: athrow
@@ -89,7 +90,7 @@ public class CMS_SignatureDecoder extends SignatureDecoder {
    }
 
    protected DecodedSignature decodeSignature(ASN1InputByteArray parameters, byte[] encodedSignature, String algorithm, String digestString) {
-      throw new Object();
+      throw new RuntimeException();
    }
 
    @Override

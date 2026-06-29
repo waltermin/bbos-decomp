@@ -22,9 +22,11 @@ import net.rim.device.apps.api.calendar.modelcontrollerinterface.Event;
 import net.rim.device.apps.api.calendar.modelcontrollerinterface.EventUtilities;
 import net.rim.device.apps.api.calendar.modelcontrollerinterface.MeetingInfo;
 import net.rim.device.apps.api.calendar.ota.OTACalendarSyncDataManager;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.ConversionProvider;
 import net.rim.device.apps.api.framework.model.Recur;
 import net.rim.device.apps.api.reminders.ReminderModel;
+import net.rim.device.apps.api.sync.OTABitmask;
 import net.rim.device.apps.api.sync.OTASyncData;
 import net.rim.device.apps.api.sync.Reconcilable;
 import net.rim.device.apps.api.utility.framework.RecurUtil;
@@ -69,7 +71,7 @@ public class CalendarSyncConverter implements SyncConverter {
    private static CalendarSyncConverter _instance;
    private static Calendar _calendar = Calendar.getInstance();
    private static final int RECURRENCE_DATA_SIZE = 18;
-   private static Object _conversionContext = new Object(10);
+   private static Object _conversionContext = new ContextObject(10);
 
    private CalendarSyncConverter() {
       this.init();
@@ -103,7 +105,7 @@ public class CalendarSyncConverter implements SyncConverter {
 
    @Override
    public boolean convert(SyncObject object, DataBuffer buffer, int version) {
-      if (!(object instanceof Object)) {
+      if (!(object instanceof Event)) {
          return false;
       }
 
@@ -207,9 +209,9 @@ public class CalendarSyncConverter implements SyncConverter {
             }
 
             Object address = attendee.getAddress();
-            if (address instanceof Object) {
+            if (address instanceof ConversionProvider) {
                ConversionProvider converter = (ConversionProvider)address;
-               String[] names = new Object[]{null, null};
+               String[] names = new String[]{null, null};
                if (converter.convert(_conversionContext, names) && names[0] != null) {
                   if (names[1] == null) {
                      names[1] = "";
@@ -219,7 +221,7 @@ public class CalendarSyncConverter implements SyncConverter {
                   int friendlyLength = names[1].length();
                   if (addressLength > 0 || friendlyLength > 0) {
                      if (sb == null) {
-                        sb = (StringBuffer)(new Object(addressLength + friendlyLength + 1));
+                        sb = new StringBuffer(addressLength + friendlyLength + 1);
                      }
 
                      if (addressLength > 0) {
@@ -397,7 +399,7 @@ public class CalendarSyncConverter implements SyncConverter {
                      int deviceSequence = data.readInt();
                      int hostSequence = data.readInt();
                      data.skipBytes(4);
-                     syncData = (OTASyncData)(new Object(hostSequence, deviceSequence));
+                     syncData = new OTASyncData(hostSequence, deviceSequence);
                   } else {
                      data.skipBytes(var65 + 1);
                   }
@@ -412,7 +414,7 @@ public class CalendarSyncConverter implements SyncConverter {
                   if (var62 == 2) {
                      data.readByte();
                      var62 = data.readShort();
-                     event.put(-2053159172728646859L, new Object(var62));
+                     event.put(-2053159172728646859L, new OTABitmask(var62));
                   } else {
                      data.skipBytes(var62 + 1);
                   }
@@ -426,7 +428,7 @@ public class CalendarSyncConverter implements SyncConverter {
                      event.setTimeZoneID(var48);
                   } else {
                      event.setTimeZoneID(TimeZone.getDefault().getID());
-                     String errorString = ((StringBuffer)(new Object("TZNR - "))).append(var60).toString();
+                     String errorString = "TZNR - " + var60;
                      EventLogger.logEvent(-256469206327664059L, errorString.getBytes(), 2);
                   }
                   break;
@@ -495,7 +497,7 @@ public class CalendarSyncConverter implements SyncConverter {
                folderID = serviceID;
             }
 
-            CalendarKey calendarKey = (CalendarKey)(new Object(serviceID, folderID));
+            CalendarKey calendarKey = new CalendarKey(serviceID, folderID);
             event.setCalendarKey(calendarKey);
             long duration = endDate - startDate;
             if (duration < 0) {
@@ -571,7 +573,7 @@ public class CalendarSyncConverter implements SyncConverter {
             }
 
             if (syncData == null) {
-               syncData = (OTASyncData)(new Object(0, 1));
+               syncData = new OTASyncData(0, 1);
             }
 
             synchronized (calDB.getLockObject()) {

@@ -10,7 +10,7 @@ final class RuntimeLoader {
             framework.loadApplication(args[0]);
          }
       } else {
-         ((RuntimeFramework)(new Object())).dispatchEvents();
+         new RuntimeFramework().dispatchEvents();
       }
    }
 }

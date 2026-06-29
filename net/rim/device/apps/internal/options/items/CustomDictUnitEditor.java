@@ -18,13 +18,13 @@ public final class CustomDictUnitEditor {
 
    public final Object open(String initialString) {
       this._model = null;
-      this._context = (ContextObject)(new Object(0, 2, 6));
+      this._context = new ContextObject(0, 2, 6);
       return this.open(CommonResource.getString(13), initialString);
    }
 
    public final Object open(CustomDictUnitModel model) {
       this._model = model;
-      this._context = (ContextObject)(new Object(0, 2));
+      this._context = new ContextObject(0, 2);
       String entry = "";
       if (this._model != null) {
          entry = (String)this._model.getEntry();
@@ -34,7 +34,7 @@ public final class CustomDictUnitEditor {
    }
 
    private final Object open(String appendToTitle, String initialString) {
-      StringBuffer titleBuffer = (StringBuffer)(new Object(OptionsResources.getString(1491)));
+      StringBuffer titleBuffer = new StringBuffer(OptionsResources.getString(1491));
       titleBuffer.append(':');
       titleBuffer.append(' ');
       titleBuffer.append(appendToTitle);

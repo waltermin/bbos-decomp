@@ -5,19 +5,21 @@ import net.rim.device.api.collection.Collection;
 import net.rim.device.api.collection.CollectionListener;
 import net.rim.device.api.crypto.PrivateKey;
 import net.rim.device.api.crypto.certificate.Certificate;
+import net.rim.device.api.crypto.certificate.CertificateKeyStoreIndex;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
-import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.api.i18n.MessageFormat;
 import net.rim.device.api.system.Application;
-import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
-import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.VerbMenuItem;
 import net.rim.device.apps.internal.api.crypto.CryptoCommonResources;
 import net.rim.device.apps.internal.api.crypto.verb.DisplayCertificateVerb;
+import net.rim.device.apps.internal.api.crypto.verb.ImportCertificatesVerb;
 import net.rim.device.internal.resource.crypto.CryptoIcons;
+import net.rim.device.internal.ui.component.HorizontalSpacerField;
 import net.rim.vm.Array;
+import net.rim.vm.WeakReference;
 
 public class IncludedCertificatesField extends CursorProviderHorizontalFieldManager implements CollectionListener {
    protected Certificate[] _certificates;
@@ -40,13 +42,13 @@ public class IncludedCertificatesField extends CursorProviderHorizontalFieldMana
       this._secureEmailFactory = secureEmailFactory;
       this._displayApp = Application.getApplication();
       KeyStore keyStore = this._secureEmailFactory.getPreferredKeyStore();
-      keyStore.addCollectionListener(new Object(this));
-      keyStore.addIndex((KeyStoreIndex)(new Object()));
+      keyStore.addCollectionListener(new WeakReference(this));
+      keyStore.addIndex(new CertificateKeyStoreIndex());
       int numCertificates = this._certificates.length;
       int numFilteredCertificates = 0;
       this._numFilteredCertificatesOnDevice = 0;
       this._filteredIndices = new int[numCertificates];
-      this._certificateNames = new Object[numCertificates];
+      this._certificateNames = new String[numCertificates];
       this._certificatesOnDevice = new boolean[numCertificates];
 
       for (int i = 0; i < numCertificates; i++) {
@@ -66,23 +68,23 @@ public class IncludedCertificatesField extends CursorProviderHorizontalFieldMana
          Array.resize(this._filteredIndices, numFilteredCertificates);
       }
 
-      this._importCertificateMenuItems = new Object[numCertificates];
-      String[] containerStringUpperPluralArray = new Object[]{this._secureEmailFactory.getPublicKeyContainerString(true, true)};
+      this._importCertificateMenuItems = new VerbMenuItem[numCertificates];
+      String[] containerStringUpperPluralArray = new String[]{this._secureEmailFactory.getPublicKeyContainerString(true, true)};
       String importAllCertificatesVerbDescription = MessageFormat.format(SecureEmailResources.getString(46), containerStringUpperPluralArray);
-      this._importAllCertificatesMenuItem = (VerbMenuItem)(new Object(
-         (Verb)(new Object(importAllCertificatesVerbDescription, this._certificates, this._privateKeys, keyStore)), Integer.MAX_VALUE
-      ));
-      String[] containerStringUpperSingularArray = new Object[]{this._secureEmailFactory.getPublicKeyContainerString(true, false)};
+      this._importAllCertificatesMenuItem = new VerbMenuItem(
+         new ImportCertificatesVerb(importAllCertificatesVerbDescription, this._certificates, this._privateKeys, keyStore), Integer.MAX_VALUE
+      );
+      String[] containerStringUpperSingularArray = new String[]{this._secureEmailFactory.getPublicKeyContainerString(true, false)};
       String displayCertificateVerbDescription = MessageFormat.format(CryptoCommonResources.getString(20), containerStringUpperSingularArray);
-      this._displayCertificateMenuItem = (VerbMenuItem)(new Object((Verb)(new Object(displayCertificateVerbDescription)), 10));
+      this._displayCertificateMenuItem = new VerbMenuItem(new DisplayCertificateVerb(displayCertificateVerbDescription), 10);
       this._certificateList = new IncludedCertificatesField$IncludedCertificateListField(this, numFilteredCertificates);
       this.add(CryptoIcons.getLargeImageField(1));
-      this.add((Field)(new Object(3)));
+      this.add(new HorizontalSpacerField(3));
       String includedCertificatesString = MessageFormat.format(
          SecureEmailResources.getString(47), numFilteredCertificates > 1 ? containerStringUpperPluralArray : containerStringUpperSingularArray
       );
-      VerticalFieldManager vfm = (VerticalFieldManager)(new Object());
-      vfm.add((Field)(new Object(includedCertificatesString)));
+      VerticalFieldManager vfm = new VerticalFieldManager();
+      vfm.add(new LabelField(includedCertificatesString));
       vfm.add(this._certificateList);
       this.add(vfm);
    }
@@ -94,7 +96,7 @@ public class IncludedCertificatesField extends CursorProviderHorizontalFieldMana
       boolean onDevice = false;
       boolean privateKeyIncluded = this._privateKeys[index] != null;
       KeyStoreData keyStoreData = null;
-      keyStore.addIndex((KeyStoreIndex)(new Object()));
+      keyStore.addIndex(new CertificateKeyStoreIndex());
       Enumeration keyStoreElements = keyStore.elements(-2038609988711824737L, certificate);
 
       while (keyStoreElements.hasMoreElements()) {

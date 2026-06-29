@@ -32,7 +32,7 @@ final class ConvAcceptBlob extends PeerDataBlob {
 
    @Override
    public final void pickle(DataBuffer db) {
-      DataBuffer db2 = (DataBuffer)(new Object());
+      DataBuffer db2 = new DataBuffer();
       this.addStringToDataBuffer(db2, 1, this._convId);
       this.addStringToDataBuffer(db2, 2, this._contactName);
       ConverterUtilities.writeEmptyField(db2, 0);

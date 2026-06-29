@@ -65,7 +65,7 @@ public final class PhoneOptions extends OptionsBase implements PersistentContent
    public static final int RINGTONE_LIGHT_STATUS = 2;
    public static final int RINGTONE_LIGHT_BOTH = 3;
    private static PhoneOptions _options;
-   private static final String[] EMPTY_FORWARDING_NUMBERS_STRING = new Object[0];
+   private static final String[] EMPTY_FORWARDING_NUMBERS_STRING = new String[0];
 
    private PhoneOptions() {
       PersistentContent.addListener(this);
@@ -288,7 +288,7 @@ public final class PhoneOptions extends OptionsBase implements PersistentContent
 
    private final boolean writeTo3GSIM(String voiceMailNumber, int lineId) {
       PhoneOptions$SIMRead3G r3g = new PhoneOptions$SIMRead3G(lineId);
-      ((SIMCardEfHandler)(new Object())).startTask(r3g, true);
+      new SIMCardEfHandler().startTask(r3g, true);
       byte[] buffer = r3g.getBuffer();
       if (buffer != null && buffer.length > 0) {
          int record = buffer[0];
@@ -418,7 +418,7 @@ public final class PhoneOptions extends OptionsBase implements PersistentContent
    }
 
    private final String[] getSavedFwdingNumbers() {
-      String[] decodedNumbers = new Object[this._persistedPhoneOptions._savedFwdingNumbers.length];
+      String[] decodedNumbers = new String[this._persistedPhoneOptions._savedFwdingNumbers.length];
 
       for (int i = 0; i < decodedNumbers.length; i++) {
          decodedNumbers[i] = PersistentContent.decodeString(this._persistedPhoneOptions._savedFwdingNumbers[i]);
@@ -478,25 +478,11 @@ public final class PhoneOptions extends OptionsBase implements PersistentContent
    }
 
    public final void logPhoneError(String errType, int error, String message) {
-      message = ((StringBuffer)(new Object()))
-         .append(errType)
-         .append('-')
-         .append(error & 65535)
-         .append('-')
-         .append(error >>> 16)
-         .append(' ')
-         .append(message)
-         .toString();
-      StringBuffer datetime = (StringBuffer)(new Object());
+      message = errType + '-' + (error & 65535) + '-' + (error >>> 16) + ' ' + message;
+      StringBuffer datetime = new StringBuffer();
       DateFormat df = DateFormat.getInstance(63);
       df.formatLocal(datetime, System.currentTimeMillis());
-      String errorLog = ((StringBuffer)(new Object()))
-         .append(datetime.toString())
-         .append(' ')
-         .append(message)
-         .append('\n')
-         .append(this.getPhoneErrorLog())
-         .toString();
+      String errorLog = datetime.toString() + ' ' + message + '\n' + this.getPhoneErrorLog();
       if (errorLog.length() > 256) {
          int len = errorLog.indexOf(10);
 

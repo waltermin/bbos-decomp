@@ -3,11 +3,10 @@ package net.rim.device.apps.internal.docview.gui;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import net.rim.device.api.system.Clipboard;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
-import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.Ui;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.ui.container.PopupScreen;
@@ -21,8 +20,8 @@ import net.rim.device.apps.api.ui.VerbMenuItem;
 import net.rim.device.apps.internal.blackberryemail.resources.EmailResources;
 
 final class DocViewSheetDisplayField extends DocViewDisplayField {
-   private Hashtable _listFieldHash = (Hashtable)(new Object(1));
-   private StringBuffer _selectedCellDisplayValue = (StringBuffer)(new Object());
+   private Hashtable _listFieldHash = new Hashtable(1);
+   private StringBuffer _selectedCellDisplayValue = new StringBuffer();
    private final StringPatternContainer _patterns = StringPatternRepository$Internal.getStringPatterns();
    private StringPattern$Match _match;
    private ContextObject _invokeContext;
@@ -227,27 +226,27 @@ final class DocViewSheetDisplayField extends DocViewDisplayField {
          DocViewSheetDisplayField$ArznScreenField grid = this.getCurrentDisplayField(false);
          if (grid != null) {
             if (this.isMoreAvailable() && (!grid._sheetData.isSpreadsheetComplete() || this.getPrevNextItem(super._currentItemDomID, true) == null)) {
-               menu.add((MenuItem)(new Object(new DocViewGuiVerb(9, 344064, EmailResources.getResourceBundle(), 80, this), 0)));
+               menu.add(new VerbMenuItem(new DocViewGuiVerb(9, 344064, EmailResources.getResourceBundle(), 80, this), 0));
             }
 
             if (grid.getRowCount() > 0 && grid.getColCount() > 0) {
-               menu.add((MenuItem)(new Object(new DocViewGuiVerb(6, 131088, DocViewDisplayField._resources, 29, this), 0)));
+               menu.add(new VerbMenuItem(new DocViewGuiVerb(6, 131088, DocViewDisplayField._resources, 29, this), 0));
             } else {
                this.removeFindRelatedMenuItems(menu);
             }
 
             if (grid.selectedCellHasData(false)) {
-               VerbMenuItem viewCellVerb = (VerbMenuItem)(new Object(new DocViewGuiVerb(5, 131088, DocViewDisplayField._resources, 27, this), 0));
+               VerbMenuItem viewCellVerb = new VerbMenuItem(new DocViewGuiVerb(5, 131088, DocViewDisplayField._resources, 27, this), 0);
                menu.add(viewCellVerb);
                menu.setDefault(viewCellVerb);
             }
 
             if (grid.selectedCellHasData(true)) {
-               menu.add((MenuItem)(new Object(new DocViewGuiVerb(7, 131088, DocViewDisplayField._resources, 28, this), 0)));
+               menu.add(new VerbMenuItem(new DocViewGuiVerb(7, 131088, DocViewDisplayField._resources, 28, this), 0));
             }
 
             if (grid.sheetHasAnyHiddenRowCol()) {
-               menu.add((MenuItem)(new Object(new DocViewGuiVerb(8, 131088, DocViewDisplayField._resources, grid.isShowHiddenRowCol() ? 54 : 53, this), 0)));
+               menu.add(new VerbMenuItem(new DocViewGuiVerb(8, 131088, DocViewDisplayField._resources, grid.isShowHiddenRowCol() ? 54 : 53, this), 0));
             }
          }
       }
@@ -581,13 +580,13 @@ final class DocViewSheetDisplayField extends DocViewDisplayField {
                if (fld != null && fld.init()) {
                   fld.setDataProvider(null);
                   fld.setGUIProvider(null);
-                  VerticalFieldManager vfm = (VerticalFieldManager)(new Object(281474976710656L));
-                  vfm.add((Field)(new Object(title, 64)));
+                  VerticalFieldManager vfm = new VerticalFieldManager(281474976710656L);
+                  vfm.add(new LabelField(title, 64));
                   vfm.add(fld);
-                  PopupScreen cellInfoDlg = (PopupScreen)(new Object(vfm, 196608));
+                  PopupScreen cellInfoDlg = new PopupScreen(vfm, 196608);
                   super._application.pushModalScreen(cellInfoDlg);
-                  cellInfoDlg = null;
-                  vfm = null;
+                  PopupScreen var19 = null;
+                  VerticalFieldManager var18 = null;
                   return true;
                }
             }
@@ -684,7 +683,7 @@ final class DocViewSheetDisplayField extends DocViewDisplayField {
       }
 
       if (!bSucceed) {
-         throw new Object();
+         throw new NumberFormatException();
       }
    }
 

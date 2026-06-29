@@ -2,12 +2,14 @@ package net.rim.device.cldc.io.btspp;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.microedition.io.SocketConnection;
 import net.rim.device.api.bluetooth.BluetoothSerialPort;
 import net.rim.device.api.bluetooth.BluetoothSerialPortInfo;
 import net.rim.device.api.bluetooth.BluetoothSerialPortListener;
+import net.rim.device.api.io.IOCancelledException;
 import net.rim.device.apps.internal.bluetooth.BluetoothDevice;
 import net.rim.device.apps.internal.bluetooth.BluetoothDeviceManagerImpl;
 import net.rim.device.internal.bluetooth.BluetoothDeviceManager;
@@ -96,7 +98,7 @@ public class BluetoothSerialConnection implements SocketConnection, BluetoothSer
 
    @Override
    public DataInputStream openDataInputStream() {
-      return (DataInputStream)(new Object(this.openInputStream()));
+      return new DataInputStream(this.openInputStream());
    }
 
    @Override
@@ -112,7 +114,7 @@ public class BluetoothSerialConnection implements SocketConnection, BluetoothSer
 
    @Override
    public DataOutputStream openDataOutputStream() {
-      return (DataOutputStream)(new Object(this.openOutputStream()));
+      return new DataOutputStream(this.openOutputStream());
    }
 
    @Override
@@ -157,11 +159,11 @@ public class BluetoothSerialConnection implements SocketConnection, BluetoothSer
          this._bytesAvailable = 0;
          this._connected = true;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
-   public BluetoothSerialConnection(byte[] address, int channel, int maxPacketSize, boolean allowReadTimeouts) {
+   public BluetoothSerialConnection(byte[] address, int channel, int maxPacketSize, boolean allowReadTimeouts) throws IOException {
       int pageScanInfo = 0;
       BluetoothDeviceManagerImpl btManager = (BluetoothDeviceManagerImpl)BluetoothDeviceManager.getInstance();
       BluetoothDevice device = btManager.getInRangeDevice(address);
@@ -169,14 +171,14 @@ public class BluetoothSerialConnection implements SocketConnection, BluetoothSer
          pageScanInfo = device.getPageScanInfo();
       }
 
-      this._info = (BluetoothSerialPortInfo)(new Object(address, pageScanInfo, null, channel, null));
+      this._info = new BluetoothSerialPortInfo(address, pageScanInfo, null, channel, null);
       this._isServer = false;
       this._bytesAvailable = 0;
       if (allowReadTimeouts) {
          this._readTimeout = 60000;
       }
 
-      this._port = (BluetoothSerialPort)(new Object(this._info, 3, 3, 0, maxPacketSize, maxPacketSize, this));
+      this._port = new BluetoothSerialPort(this._info, 3, 3, 0, maxPacketSize, maxPacketSize, this);
       synchronized (this._semaphore) {
          label43:
          try {
@@ -188,13 +190,13 @@ public class BluetoothSerialConnection implements SocketConnection, BluetoothSer
 
       if (!this._connected) {
          this._port.close();
-         throw new Object("Unable to connect.");
+         throw new IOException("Unable to connect.");
       }
    }
 
-   private void checkClosed() {
+   private void checkClosed() throws IOCancelledException {
       if (this._closed) {
-         throw new Object();
+         throw new IOCancelledException();
       }
    }
 
@@ -209,7 +211,7 @@ public class BluetoothSerialConnection implements SocketConnection, BluetoothSer
             }
 
             if (!this._connected) {
-               throw new Object("Unable to connect.");
+               throw new IOException("Unable to connect.");
             }
          }
       }
@@ -217,7 +219,7 @@ public class BluetoothSerialConnection implements SocketConnection, BluetoothSer
 
    public BluetoothSerialConnection(BluetoothSerialPort port) {
       if (port == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._isServer = true;

@@ -42,7 +42,7 @@ class DocViewObjectData {
 
    void setID(int chunkIndex) {
       if (chunkIndex < 0) {
-         throw new Object("Chunk indeces should be positive numbers!");
+         throw new IllegalArgumentException("Chunk indeces should be positive numbers!");
       }
 
       this._id = chunkIndex;
@@ -59,7 +59,7 @@ class DocViewObjectData {
       if (this._id != -1) {
          if (this._contents != null && this._contents.length > 0) {
             if (this._contentsHash == null) {
-               this._contentsHash = (IntHashtable)(new Object(1));
+               this._contentsHash = new IntHashtable(1);
             }
 
             if (this._contentsHash.containsKey(this._id)) {

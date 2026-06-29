@@ -16,8 +16,8 @@ final class ConfirmLeavePageRunnable implements Runnable {
    public final void run() {
       if (GeneralProperty.getCurrentPropertyAsBoolean(24)) {
          String message = BrowserResources.getString(708);
-         BrowserCheckboxField dontAskAgain = (BrowserCheckboxField)(new Object(BrowserResources.getString(640), false));
-         Dialog dialog = (Dialog)(new Object(3, message, 0, null, 0));
+         BrowserCheckboxField dontAskAgain = new BrowserCheckboxField(BrowserResources.getString(640), false);
+         Dialog dialog = new Dialog(3, message, 0, null, 0);
          dialog.add(dontAskAgain);
          int result = dialog.doModal();
          if (dontAskAgain.getChecked()) {

@@ -36,7 +36,7 @@ final class OTASyncProgressHandler implements SyncAgentListener, ActivationEvent
    private ApplicationEntryPoint _baseEntryPoint;
    private ApplicationEntryPoint _progressEntryPoint;
    private long _currentService = -1;
-   private BigLongVector _queuedServices = (BigLongVector)(new Object());
+   private BigLongVector _queuedServices = new BigLongVector();
    private Object _serviceLock = new Object();
    private final IconCollection _progressIcons = IconCollection.get("net_rim_Activation_Progress", 4);
    private int _progressIconIndex;
@@ -45,7 +45,7 @@ final class OTASyncProgressHandler implements SyncAgentListener, ActivationEvent
    private long[] _activationEventQueue = new long[0];
    private int[] _activationEventValueQueue = new int[0];
    private Object[] _activationEventDataObjectQueue = new Object[0];
-   private String[] _titleFormattingString = new Object[1];
+   private String[] _titleFormattingString = new String[1];
    private static final long ID = 4874767306658954404L;
 
    final void setSyncStatus(long serviceId, int state) {
@@ -76,12 +76,12 @@ final class OTASyncProgressHandler implements SyncAgentListener, ActivationEvent
       boolean autoDisplayProgress = true;
       long sid = -1;
       ServiceRecord pimRecord = null;
-      if (object instanceof Object) {
+      if (object instanceof SyncAgentStatistics) {
          object = ((SyncAgentStatistics)object).getSyncAgentUrl();
       }
 
-      if (!(object instanceof Object)) {
-         if (object instanceof Object) {
+      if (!(object instanceof ServiceIdentifier)) {
+         if (object instanceof SyncAgentUrl) {
             SyncAgentUrl url = (SyncAgentUrl)object;
             sid = url.getSid();
             pimRecord = ServiceBook.getSB().getRecordByCidAndSid("sync", sid);
@@ -111,7 +111,7 @@ final class OTASyncProgressHandler implements SyncAgentListener, ActivationEvent
       ActivationApp activationApp = ActivationApp.getInstance();
       this.clearActivationEventQueue();
       if (serviceProgress == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       synchronized (this._serviceLock) {
@@ -199,10 +199,7 @@ final class OTASyncProgressHandler implements SyncAgentListener, ActivationEvent
                if (serviceProgress.getPercentComplete() != percentComplete) {
                   if (sid == this._currentService) {
                      this._titleFormattingString[0] = Integer.toString(percentComplete);
-                     newTitle = ((StringBuffer)(new Object()))
-                        .append(MessageFormat.format(ActivationApp._resources.getString(159), this._titleFormattingString))
-                        .append('%')
-                        .toString();
+                     newTitle = MessageFormat.format(ActivationApp._resources.getString(159), this._titleFormattingString) + '%';
                   }
 
                   serviceProgress.setPercentComplete(percentComplete);
@@ -271,7 +268,7 @@ final class OTASyncProgressHandler implements SyncAgentListener, ActivationEvent
                this._lastTitle = newTitle;
                this._currentEntryPoint.set(3, newTitle);
                if (activationApp != null) {
-                  this.addActivationEvent(-4731267519193158412L, 3848, new Object[]{newTitle, new Object(sid)});
+                  this.addActivationEvent(-4731267519193158412L, 3848, new Object[]{newTitle, new Long(sid)});
                }
             }
 
@@ -306,7 +303,7 @@ final class OTASyncProgressHandler implements SyncAgentListener, ActivationEvent
                            this.addActivationEvent(-4731267519193158412L, 3842, null);
                         }
                      } else if (activationApp != null) {
-                        this.addActivationEvent(-4731267519193158412L, 3851, new Object(sid));
+                        this.addActivationEvent(-4731267519193158412L, 3851, new Long(sid));
                      }
                   }
 
@@ -318,7 +315,7 @@ final class OTASyncProgressHandler implements SyncAgentListener, ActivationEvent
                case 16:
                case 18:
                   if (activationApp != null) {
-                     this.addActivationEvent(ActivationApp.ACTIVATION_APP_SYNC_STATUS_CHANGED, 0, new Object(sid));
+                     this.addActivationEvent(ActivationApp.ACTIVATION_APP_SYNC_STATUS_CHANGED, 0, new Long(sid));
                   }
             }
          }
@@ -344,7 +341,7 @@ final class OTASyncProgressHandler implements SyncAgentListener, ActivationEvent
             if (saStats[i].getTotalNumberOfFailedOperations() != 0) {
                index++;
                if (databases == null) {
-                  databases = new Object[1];
+                  databases = new String[1];
                } else {
                   Array.resize(databases, index);
                }
@@ -356,7 +353,7 @@ final class OTASyncProgressHandler implements SyncAgentListener, ActivationEvent
 
          if (serviceProgress.hasOtherFailedDatabases()) {
             if (databases == null) {
-               databases = new Object[0];
+               databases = new String[0];
             }
 
             Arrays.append(databases, serviceProgress.getOtherFailedDatabases());
@@ -385,7 +382,7 @@ final class OTASyncProgressHandler implements SyncAgentListener, ActivationEvent
    public final void onSyncAgentEvent(int eventID, Object object) {
       OTASyncServiceProgress serviceProgress = null;
       long serviceId = -1;
-      if (object instanceof Object) {
+      if (object instanceof ServiceIdentifier) {
          ServiceIdentifier identifier = (ServiceIdentifier)object;
          serviceId = identifier.getSid();
          serviceProgress = this.getServiceProgress(serviceId);
@@ -395,7 +392,7 @@ final class OTASyncProgressHandler implements SyncAgentListener, ActivationEvent
          case 19:
             boolean isCalendarStat = false;
             int syncState = 4;
-            if (object instanceof Object) {
+            if (object instanceof SyncAgentUrl) {
                SyncAgentUrl url = (SyncAgentUrl)object;
                isCalendarStat = StringUtilities.compareObjectToStringIgnoreCase(url.getDatabaseName(), "Calendar", 1701707776) == 0;
                serviceProgress = this.getServiceProgress(url.getSid());
@@ -421,7 +418,7 @@ final class OTASyncProgressHandler implements SyncAgentListener, ActivationEvent
                serviceProgress.setPimConfigRequestRecieved(false);
             }
          case 18:
-            if (object instanceof Object) {
+            if (object instanceof SyncAgentStatistics) {
                SyncAgentStatistics stats = (SyncAgentStatistics)object;
                if (stats.removedDueToFailure()) {
                   this.getServiceProgress(stats.getSyncAgentUrl().getSid()).addOtherFailedDatabase(stats.getSyncAgentUrl().getDatabaseName());
@@ -514,13 +511,11 @@ final class OTASyncProgressHandler implements SyncAgentListener, ActivationEvent
    OTASyncProgressHandler() {
       this._serviceProgress = OTASyncServiceProgress.loadServicesProgressFromPersistence();
       ApplicationDescriptor base = ApplicationDescriptor.currentApplicationDescriptor();
-      ApplicationDescriptor newDescriptor = (ApplicationDescriptor)(new Object(
-         base, base.getName(), null, base.getIcon(), base.getPosition(), null, 0, base.getFlags()
-      ));
-      this._baseEntryPoint = (ApplicationEntryPoint)(new Object(newDescriptor));
+      ApplicationDescriptor newDescriptor = new ApplicationDescriptor(base, base.getName(), null, base.getIcon(), base.getPosition(), null, 0, base.getFlags());
+      this._baseEntryPoint = new ApplicationEntryPoint(newDescriptor);
       this._baseEntryPoint.set(9, "net_rim_bb_activation.ActivationApp");
       this._baseEntryPoint.set(1, "net_rim_bb_activation.ActivationApp");
-      this._progressEntryPoint = (ApplicationEntryPoint)(new Object(newDescriptor));
+      this._progressEntryPoint = new ApplicationEntryPoint(newDescriptor);
       this._progressEntryPoint.set(9, "net_rim_bb_activation.ActivationApp");
       this._progressEntryPoint.set(1, "net_rim_bb_activation.ActivationApp");
       this._currentEntryPoint = this._baseEntryPoint;
@@ -565,7 +560,7 @@ final class OTASyncProgressHandler implements SyncAgentListener, ActivationEvent
    }
 
    private final void updateStatusListeners(Object object) {
-      if (object instanceof Object) {
+      if (object instanceof SyncAgentStatistics) {
          SyncAgentStatistics saStats = (SyncAgentStatistics)object;
          int current = saStats.getTotalNumberOfExecutedOperations();
          int total = saStats.getTotalNumberOfOperations();
@@ -625,7 +620,7 @@ final class OTASyncProgressHandler implements SyncAgentListener, ActivationEvent
    }
 
    private final ServiceRecord getServiceRecordFromObject(Object object) {
-      return (ServiceRecord)(!(object instanceof Object) ? null : object);
+      return !(object instanceof ServiceRecord) ? null : (ServiceRecord)object;
    }
 
    private final void reMapServiceIds(long oldSid, long newSid) {

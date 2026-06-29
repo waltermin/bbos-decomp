@@ -18,11 +18,11 @@ public final class PGPUserIDPacket extends PGPPacket implements Persistable {
       label128:
       try {
          var18 = true;
-         this._userID = (String)(new Object(encoding, "utf-8"));
+         this._userID = new String(encoding, "utf-8");
          var18 = false;
       } finally {
          if (var18) {
-            this._userID = (String)(new Object(encoding));
+            this._userID = new String(encoding);
             break label128;
          }
       }
@@ -35,13 +35,13 @@ public final class PGPUserIDPacket extends PGPPacket implements Persistable {
          label120:
          try {
             var14 = true;
-            this._name = ((String)(new Object(encoding, 0, startOffset, "utf-8"))).trim();
-            this._emailAddress = (String)(new Object(encoding, startOffset + 1, endOffset - startOffset - 1, "utf-8"));
+            this._name = new String(encoding, 0, startOffset, "utf-8").trim();
+            this._emailAddress = new String(encoding, startOffset + 1, endOffset - startOffset - 1, "utf-8");
             var14 = false;
          } finally {
             if (var14) {
-               this._name = ((String)(new Object(encoding, 0, startOffset))).trim();
-               this._emailAddress = (String)(new Object(encoding, startOffset + 1, endOffset - startOffset - 1));
+               this._name = new String(encoding, 0, startOffset).trim();
+               this._emailAddress = new String(encoding, startOffset + 1, endOffset - startOffset - 1);
                break label120;
             }
          }
@@ -61,11 +61,11 @@ public final class PGPUserIDPacket extends PGPPacket implements Persistable {
          label109:
          try {
             var10 = true;
-            this._blankName = ((String)(new Object(encoding, startOffset, endOffset, "utf-8"))).trim();
+            this._blankName = new String(encoding, startOffset, endOffset, "utf-8").trim();
             var10 = false;
          } finally {
             if (var10) {
-               this._blankName = ((String)(new Object(encoding, startOffset, endOffset))).trim();
+               this._blankName = new String(encoding, startOffset, endOffset).trim();
                break label109;
             }
          }

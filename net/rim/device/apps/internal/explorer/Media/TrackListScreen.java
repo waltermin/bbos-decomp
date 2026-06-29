@@ -21,6 +21,7 @@ import net.rim.device.api.ui.component.KeywordFilterCollectionListField;
 import net.rim.device.api.ui.component.KeywordFilteredListFinder;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.ThemeManager;
@@ -170,7 +171,7 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
          }
       } else {
          if (actionId == 5933455911148432190L) {
-            MediaInfo[] media = new Object[]{this.getSelectedMedia()};
+            MediaInfo[] media = new MediaInfo[]{(MediaInfo)this.getSelectedMedia()};
             this.addToPlaylist(media, context);
             return true;
          }
@@ -178,7 +179,7 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
          if (actionId == 6640987057326686423L || actionId == 7051267296949023454L) {
             int size = this._keywordList.size();
             if (size > 0) {
-               MediaInfo[] media = new Object[size];
+               MediaInfo[] media = new MediaInfo[size];
 
                for (int i = 0; i < size; i++) {
                   media[i] = (MediaInfo)this._keywordList.getAt(i);
@@ -230,7 +231,7 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
    @Override
    public final Object get(ListField listField, int index) {
       Object item = null;
-      if (!(listField instanceof Object)) {
+      if (!(listField instanceof CollectionListField)) {
          return this._collection.getAt(index);
       }
 
@@ -246,7 +247,7 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
          index = this.translateIndex(index);
       }
 
-      if (!(listField instanceof Object)) {
+      if (!(listField instanceof CollectionListField)) {
          item = this._collection.getAt(index);
       } else {
          clf = (CollectionListField)listField;
@@ -264,7 +265,7 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
          graphics.setGlobalAlpha(graphicsAlpha);
       }
 
-      if (!(item instanceof Object)) {
+      if (!(item instanceof PaintProvider)) {
          if (clf != null && index == clf.getExtraRowCount()) {
             graphics.drawText(this.getEmptyString(), 0, y + (this._padding >> 1), 4, width);
          }
@@ -308,7 +309,7 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
       this.buildSubset();
       Field banner = null;
       banner = ThemeUtilities.getTitleField(this.getTitle());
-      VerticalFieldManager listManager = (VerticalFieldManager)(new Object(281474976710656L));
+      VerticalFieldManager listManager = new VerticalFieldManager(281474976710656L);
       if (this._keywordList == null) {
          if (this.isExternal()) {
             this._keywordList = this._collection.getKeywordFilterListInstance(null);
@@ -322,14 +323,14 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
       listManager.add(this._list);
       this._scrollManager = new ListScrollbarManager(listManager);
       String search = ExplorerResources.getString(145);
-      this._finder = (KeywordFilteredListFinder)(new Object(search, search, true));
+      this._finder = new KeywordFilteredListFinder(search, search, true);
       this._finder.setTag(ThemeUtilities.FIND_TAG);
       this._finder.linkToField(this._list);
       Manager titleManager = this.drawAlbumArt();
       this.add(banner);
       if (titleManager != null) {
          this.add(titleManager);
-         this.add((Field)(new Object()));
+         this.add(new SeparatorField());
       }
 
       if (this.isVoicenote() || this.isVideo()) {
@@ -338,7 +339,7 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
          if (count > 0) {
             shortcuts.setTag(ThemeUtilities.LIST_TAG);
             this.add(shortcuts);
-            this.add((Field)(new Object()));
+            this.add(new SeparatorField());
             this._haveRecordButton = true;
          }
       }
@@ -364,8 +365,7 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
          return false;
       }
 
-      if (!this.isVideo()
-         || this._videoCameraAlias != null && this._videoCameraAlias.isActiveInDirectory(this.getDefaultPath(), (FileSelectionFilter)(new Object()))) {
+      if (!this.isVideo() || this._videoCameraAlias != null && this._videoCameraAlias.isActiveInDirectory(this.getDefaultPath(), new FileSelectionFilter())) {
          if (!this._haveRecordButton) {
             return false;
          }
@@ -391,9 +391,9 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
 
    @Override
    protected final void makeMenu(SystemEnabledMenu menu, int instance) {
-      Verb[] verbs = new Object[0];
+      Verb[] verbs = new Verb[0];
       MediaInfo selection = (MediaInfo)this.getSelectedMedia();
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       MediaVerb play = null;
       boolean isSelecting = this.getSelectionListener() != null;
       String text = this._finder.getText();
@@ -456,7 +456,7 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
          menu.add(new MediaVerb(3121618378580614779L, this, 569353, null, 178));
       }
 
-      if (selection instanceof Object && !isSelecting) {
+      if (selection instanceof VerbProvider && !isSelecting) {
          VerbProvider verbProvider = (VerbProvider)selection;
          verbProvider.getVerbs(context, verbs);
 
@@ -593,18 +593,18 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private final void delete() {
       Field field = this.getLeafFieldWithFocus();
-      if (field instanceof Object) {
+      if (field instanceof ListField) {
          MediaInfo media = (MediaInfo)this.getSelectedMedia();
          if (media != null) {
             boolean deleteFile = false;
             if (this._playlist != null) {
                Playlistable item = null;
-               if (media instanceof Object) {
+               if (media instanceof Playlistable) {
                   item = (Playlistable)media;
                }
 
                if (item != null) {
-                  Dialog dialog = (Dialog)(new Object(4, ExplorerResources.getString(194), -1, null, 0));
+                  Dialog dialog = new Dialog(4, ExplorerResources.getString(194), -1, null, 0);
                   deleteFile = dialog.doModal() == 0;
                   if (deleteFile) {
                      this._playlist.removeMedia(item, false);
@@ -628,7 +628,7 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
                   return;
                } catch (Throwable var8) {
                   String errorString = null;
-                  if (ioe instanceof Object) {
+                  if (ioe instanceof FileIOException) {
                      errorString = ((FileIOException)ioe).getMessage();
                   }
 
@@ -658,12 +658,12 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
          }
       }
 
-      if (field instanceof Object) {
+      if (field instanceof ListField) {
          int index = this.getSelectedIndex();
          if (index >= 0) {
             Object selectedObject = this.getSelectedMedia();
             String location = null;
-            if (selectedObject instanceof Object) {
+            if (selectedObject instanceof MediaInfo) {
                location = ((MediaInfo)selectedObject).getLocation();
                SelectionListener listener = this.getSelectionListener();
                if (listener != null) {
@@ -706,9 +706,9 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
                }
             }
 
-            ContextObject context = (ContextObject)(new Object());
+            ContextObject context = new ContextObject();
             ContextObject.put(context, -1477447097671931650L, this);
-            Integer trackIndex = (Integer)(new Object(index));
+            Integer trackIndex = new Integer(index);
             ContextObject.put(context, -4054673099568009991L, trackIndex);
             if (location != null && (this.isRingtone() || this.isVideo() || this.isVoicenote())) {
                context.setFlag(39);
@@ -717,34 +717,34 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
                }
             }
 
-            if (selectedObject instanceof Object) {
-               ContextObject.put(context, -4656037551219504382L, new Object(((Video)selectedObject).getBookmark()));
+            if (selectedObject instanceof Video) {
+               ContextObject.put(context, -4656037551219504382L, new Long(((Video)selectedObject).getBookmark()));
             }
 
             boolean var15 = false /* VF: Semaphore variable */;
 
             try {
                var15 = true;
-               M3UPlaylist e = new Object();
+               M3UPlaylist e = new M3UPlaylist();
                if (this._tracks != null) {
                   for (int i = 0; i < this._tracks.length; i++) {
-                     ((M3UPlaylist)e).addUrl(this._tracks[i].getLocation(), this._tracks[i].getName(), -1);
+                     e.addUrl(this._tracks[i].getLocation(), this._tracks[i].getName(), -1);
                   }
                } else if (results) {
                   int size = this._keywordList.size();
 
                   for (int i = 0; i < size; i++) {
                      MediaInfo media = (MediaInfo)this._keywordList.getAt(i);
-                     ((M3UPlaylist)e).addUrl(media.getLocation(), media.getName(), -1);
+                     e.addUrl(media.getLocation(), media.getName(), -1);
                   }
                } else {
                   for (int i = 0; i < this._collection.size(); i++) {
                      MediaInfo media = (MediaInfo)this._collection.getAt(i);
-                     ((M3UPlaylist)e).addUrl(media.getLocation(), media.getName(), -1);
+                     e.addUrl(media.getLocation(), media.getName(), -1);
                   }
                }
 
-               InputConnection connection = ((M3UPlaylist)e).openConnection("/");
+               InputConnection connection = e.openConnection("/");
                MediaLauncher.launch(connection, context);
                synchronized (this) {
                   this.wait(1500);
@@ -792,13 +792,13 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
       // 02c: getfield net/rim/device/apps/internal/explorer/Media/TrackListScreen._keywordList Lnet/rim/device/api/collection/util/KeywordFilterList;
       // 02f: bipush 0
       // 030: invokeinterface net/rim/device/api/collection/ReadableList.getAt (I)Ljava/lang/Object; 2
-      // 035: checkcast java/lang/Object
+      // 035: checkcast net/rim/device/apps/internal/explorer/MediaLibrary/MediaInfo
       // 038: invokeinterface net/rim/device/apps/internal/explorer/MediaLibrary/MediaInfo.getLocation ()Ljava/lang/String; 1
       // 03d: astore 2
       // 03e: aload 2
       // 03f: invokestatic net/rim/device/internal/io/file/FileUtilities.getPathURL (Ljava/lang/String;)Ljava/lang/String;
       // 042: astore 3
-      // 043: new java/lang/Object
+      // 043: new java/lang/StringBuffer
       // 046: dup
       // 047: invokespecial java/lang/StringBuffer.<init> ()V
       // 04a: aload 3
@@ -813,7 +813,7 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
       // 05d: astore 6
       // 05f: aload 4
       // 061: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 064: checkcast java/lang/Object
+      // 064: checkcast javax/microedition/io/file/FileConnection
       // 067: astore 5
       // 069: aload 5
       // 06b: invokeinterface javax/microedition/io/file/FileConnection.openInputStream ()Ljava/io/InputStream; 1
@@ -898,7 +898,7 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
       // 127: getfield net/rim/device/apps/internal/explorer/Media/TrackListScreen._keywordList Lnet/rim/device/api/collection/util/KeywordFilterList;
       // 12a: iload 2
       // 12b: invokeinterface net/rim/device/api/collection/ReadableList.getAt (I)Ljava/lang/Object; 2
-      // 130: checkcast java/lang/Object
+      // 130: checkcast net/rim/device/apps/internal/explorer/MediaLibrary/MediaInfo
       // 133: invokeinterface net/rim/device/apps/internal/explorer/MediaLibrary/MediaInfo.getLocation ()Ljava/lang/String; 1
       // 138: astore 3
       // 139: aconst_null
@@ -915,7 +915,7 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
       // 151: aload 4
       // 153: ldc_w "net.rim.device.api.media.control.BinaryMetaDataControl"
       // 156: invokeinterface javax/microedition/media/Controllable.getControl (Ljava/lang/String;)Ljavax/microedition/media/Control; 2
-      // 15b: checkcast java/lang/Object
+      // 15b: checkcast net/rim/device/api/media/control/BinaryMetaDataControl
       // 15e: astore 5
       // 160: aload 4
       // 162: ifnull 1a2
@@ -1068,7 +1068,7 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
          Album album = (Album)this._contextInfo.getData(4);
          Genre genre = (Genre)this._contextInfo.getData(8);
          PlaylistItem playlist = (PlaylistItem)this._contextInfo.getData(16);
-         String[] keywords = new Object[0];
+         String[] keywords = new String[0];
          boolean shouldReturn = false;
          boolean buildTransient = false;
          switch (type) {
@@ -1184,9 +1184,9 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
          if (!shouldReturn) {
             MediaInfoCollection transientCollection = null;
             if (buildTransient) {
-               transientCollection = (MediaInfoCollection)(new Object(TrackNumberComparator.getInstance()));
+               transientCollection = new MediaInfoCollection(TrackNumberComparator.getInstance());
             } else {
-               this._tracks = new Object[0];
+               this._tracks = new MediaInfo[0];
             }
 
             for (int i = 0; i < this._keywordList.size(); i++) {
@@ -1226,7 +1226,7 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
          return ExplorerResources.getString(174);
       } else if (this.isPlaylist()) {
          String playlistName = this._playlist.getName();
-         return ((StringBuffer)(new Object())).append(ExplorerResources.getString(198)).append(playlistName).toString();
+         return ExplorerResources.getString(198) + playlistName;
       } else {
          return ExplorerResources.getString(0);
       }
@@ -1240,9 +1240,9 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
       }
 
       if ((this._contextInfo.getType() & 4) != 0) {
-         bitmap = (BitmapField)(new Object(null, 36028809903865856L));
+         bitmap = new BitmapField(null, 36028809903865856L);
          bitmap.setReplacementForCorruptImage(NO_ART);
-         titleManager = (HorizontalFieldManager)(new Object(1152921504606846976L));
+         titleManager = new HorizontalFieldManager(1152921504606846976L);
          bitmap.setPadding(3, 7, 3, 3);
          titleManager.add(bitmap);
          titleManager.setTag(ThemeUtilities.ALBUM_TITLE_TAG);
@@ -1261,7 +1261,7 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
 
          if (albumTitle != null) {
             AlbumTitleManager atm = new AlbumTitleManager(albumTitle, 90);
-            VerticalFieldManager vfm = (VerticalFieldManager)(new Object(51539607552L));
+            VerticalFieldManager vfm = new VerticalFieldManager(51539607552L);
             vfm.add(atm);
             titleManager.add(vfm);
          }
@@ -1307,14 +1307,14 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
       ExplorerRegistry registry = ExplorerRegistry.getInstance();
       int sortProperty = 0;
       Comparator comparator = FileItemComparator.getInstance(sortProperty);
-      SortedReadableList shortcutList = (SortedReadableList)(new Object(comparator));
+      SortedReadableList shortcutList = new SortedReadableList(comparator);
       AliasFileEntry[] globalEntries = registry.getGlobalAlias(0);
       String path = this.getDefaultPath();
       if (globalEntries != null) {
          int i = globalEntries.length;
 
          while (--i >= 0) {
-            if (globalEntries[i].isActiveInDirectory(path, (FileSelectionFilter)(new Object()))) {
+            if (globalEntries[i].isActiveInDirectory(path, new FileSelectionFilter())) {
                shortcutList.elementAdded(null, new AliasFileItemField(globalEntries[i]));
                if (this.isVideo()) {
                   this._videoCameraAlias = globalEntries[i];
@@ -1348,7 +1348,7 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
 
    private final Object getSelectedMedia() {
       Field field = this.getLeafFieldWithFocus();
-      if (!(field instanceof Object)) {
+      if (!(field instanceof KeywordFilterCollectionListField)) {
          return null;
       }
 
@@ -1379,7 +1379,7 @@ public final class TrackListScreen extends AppsMainScreen implements ListFieldCa
          int i = globalEntries.length;
 
          while (--i >= 0) {
-            if (globalEntries[i].isActiveInDirectory(path, (FileSelectionFilter)(new Object()))) {
+            if (globalEntries[i].isActiveInDirectory(path, new FileSelectionFilter())) {
                globalEntries[i].getVerb().invoke(null);
                return;
             }

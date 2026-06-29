@@ -50,7 +50,7 @@ public final class CustomWordsSyncCollection extends WordSyncCollection {
             OTASyncableCustomWordsProvider reader = this.getReader(cw.getKey());
             if (reader == null) {
                if (super._debugOutputEnabled) {
-                  System.err.println(((StringBuffer)(new Object("no reader found, remove object: "))).append(cw.toString()).toString());
+                  System.err.println("no reader found, remove object: " + cw.toString());
                }
 
                super._listeners.fireElementRemoved(this, cw);
@@ -63,7 +63,7 @@ public final class CustomWordsSyncCollection extends WordSyncCollection {
                }
 
                if (super._debugOutputEnabled) {
-                  System.err.println(((StringBuffer)(new Object("addSyncObject: "))).append(cw.toString()).toString());
+                  System.err.println("addSyncObject: " + cw.toString());
                }
 
                String word = cw.getWord();
@@ -78,9 +78,7 @@ public final class CustomWordsSyncCollection extends WordSyncCollection {
                if (res != 0) {
                   Proxy.getInstance().invokeLater(new WordSyncCollection$RecordRemover(this, this, cw));
                   long LOGWORTHY_REPORT_REQUEST = 2888237357036234703L;
-                  RIMGlobalMessagePoster.postGlobalEvent(
-                     LOGWORTHY_REPORT_REQUEST, 0, 0, ((StringBuffer)(new Object("TID-OTA:"))).append(cw.getRecord()).append("-").append(res).toString(), null
-                  );
+                  RIMGlobalMessagePoster.postGlobalEvent(LOGWORTHY_REPORT_REQUEST, 0, 0, "TID-OTA:" + cw.getRecord() + "-" + res, null);
                   return true;
                }
             }
@@ -149,7 +147,7 @@ public final class CustomWordsSyncCollection extends WordSyncCollection {
             if (res == null) {
                label48:
                try {
-                  StringBuffer tmp = (StringBuffer)(new Object(super._otaPrefix));
+                  StringBuffer tmp = new StringBuffer(super._otaPrefix);
                   tmp.append(name);
                   res = (OTASyncableCustomWordsProvider)Class.forName(tmp.toString()).newInstance();
                } finally {
@@ -179,7 +177,7 @@ public final class CustomWordsSyncCollection extends WordSyncCollection {
       PersistentObject persistentObject = RIMPersistentStore.getPersistentObject(-8522499434933243818L);
       synchronized (persistentObject) {
          if (persistentObject.getContents() == null) {
-            persistentObject.setContents(new Object(), 51);
+            persistentObject.setContents(new IntHashtable(), 51);
             persistentObject.commit();
          }
       }

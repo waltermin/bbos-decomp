@@ -36,7 +36,7 @@ class UnreadCountListenerHelper extends WeakReferenceCollectionUpdater implement
    public UnreadCountListenerHelper() {
       FactoryRepository repos = GlobalFactoryRepository.getFactoryRepository(-4018062520840731194L);
       Factory ucFactory = repos.getFactory("UnreadCount");
-      Hashtable params = (Hashtable)(new Object());
+      Hashtable params = new Hashtable();
       params.put("type", TYPE_NAME_MESSAGE);
       this._normalMsgsUnread = (UnreadCountComponent)ucFactory.createInstance(null);
       this._normalMsgsUnread.initialize(params, null);

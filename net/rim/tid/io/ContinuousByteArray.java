@@ -68,7 +68,7 @@ public class ContinuousByteArray {
 
    public byte[] getSingleBlock() {
       if (this.iBuffer.length != 1) {
-         throw new Object("Array consists of multiple blocks");
+         throw new IllegalArgumentException("Array consists of multiple blocks");
       } else {
          return this.iBuffer[0];
       }
@@ -185,7 +185,7 @@ public class ContinuousByteArray {
 
    @Override
    public String toString() {
-      StringBuffer buf = (StringBuffer)(new Object());
+      StringBuffer buf = new StringBuffer();
       int len = this.iLength;
       int index = this.iStart;
 
@@ -199,7 +199,7 @@ public class ContinuousByteArray {
             }
 
             for (int k = index; k < till; k++) {
-               buf.append(((StringBuffer)(new Object(","))).append(this.iBuffer[i][k]).toString());
+               buf.append("," + this.iBuffer[i][k]);
             }
 
             if (till < l) {

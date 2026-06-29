@@ -37,7 +37,7 @@ public final class RawDataCache implements BrowserStateListener, PersistentConte
    private ShortTermCache _shortTermCache;
    private PersistentObject _shortTermPersistentObject;
    private RawDataCache$ShortTermCommitThread _commitThread;
-   private WeakReference[] _cacheListeners = new Object[0];
+   private WeakReference[] _cacheListeners = new WeakReference[0];
    private static String IF_NONE_MATCH = "If-None-Match";
    private static String RIM_IF_NONE_MATCH = "x-rim-if-none-match";
    private static String IF_MODIFIED_SINCE = "If-Modified-Since";
@@ -510,7 +510,7 @@ public final class RawDataCache implements BrowserStateListener, PersistentConte
          }
 
          Array.resize(this._cacheListeners, this._cacheListeners.length + 1);
-         this._cacheListeners[this._cacheListeners.length - 1] = (WeakReference)(new Object(listener));
+         this._cacheListeners[this._cacheListeners.length - 1] = new WeakReference(listener);
       }
    }
 
@@ -520,7 +520,7 @@ public final class RawDataCache implements BrowserStateListener, PersistentConte
 
    public final synchronized void remove(String uriString, boolean absolute, boolean keepOfflineContent) {
       try {
-         URI uri = (URI)(new Object(URIDecoder.decode(this.removeFragmentIdentifier(uriString), "iso-8859-1")));
+         URI uri = new URI(URIDecoder.decode(this.removeFragmentIdentifier(uriString), "iso-8859-1"));
          long thisKey = this.getKey(uriString);
          LongEnumeration longKeys = this._longTermCache.keys();
 
@@ -543,7 +543,7 @@ public final class RawDataCache implements BrowserStateListener, PersistentConte
 
          while (keys.hasMoreElements()) {
             String key = (String)keys.nextElement();
-            URI tempURI = (URI)(new Object(URIDecoder.decode(key, "iso-8859-1")));
+            URI tempURI = new URI(URIDecoder.decode(key, "iso-8859-1"));
             if (this.uriMatches(uri, tempURI, absolute)) {
                CacheNode oldNode = (CacheNode)this._shortTermCache.remove(key);
                this.removeChildNodes(oldNode, false);
@@ -839,7 +839,7 @@ public final class RawDataCache implements BrowserStateListener, PersistentConte
    private final synchronized void removeChildNodes(CacheNode node, boolean longTerm) {
       if (node != null) {
          CacheNode[] children = node.getChildReferences();
-         Vector nodes = (Vector)(new Object());
+         Vector nodes = new Vector();
          if (children != null) {
             for (int i = children.length - 1; i >= 0; i--) {
                CacheNode oldNode = children[i];
@@ -884,8 +884,8 @@ public final class RawDataCache implements BrowserStateListener, PersistentConte
    }
 
    private final long getKey(String uriString) {
-      StringBuffer buffer = (StringBuffer)(new Object());
-      URI uri = (URI)(new Object(URIDecoder.decode(this.removeFragmentIdentifier(uriString), "iso-8859-1")));
+      StringBuffer buffer = new StringBuffer();
+      URI uri = new URI(URIDecoder.decode(this.removeFragmentIdentifier(uriString), "iso-8859-1"));
       String scheme = uri.getScheme();
       if (scheme != null) {
          buffer.append(StringUtilities.toLowerCase(scheme, 1701707776));
@@ -962,7 +962,7 @@ public final class RawDataCache implements BrowserStateListener, PersistentConte
       Vector etags = headers.getPropertyValues(tag);
       if (etags != null && etags.size() > 0) {
          int size = etags.size();
-         StringBuffer buff = (StringBuffer)(new Object((String)etags.elementAt(0)));
+         StringBuffer buff = new StringBuffer((String)etags.elementAt(0));
 
          for (int i = 1; i < size; i++) {
             buff.append(',');

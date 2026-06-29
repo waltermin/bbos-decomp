@@ -1,5 +1,6 @@
 package net.rim.device.internal.browser.wap;
 
+import java.io.IOException;
 import net.rim.device.api.servicebook.ServiceBook;
 import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.api.synchronization.ConverterUtilities;
@@ -77,7 +78,7 @@ public final class WAPServiceRecord {
          return newRecord;
       }
 
-      DataBuffer tmpDataBuffer = (DataBuffer)(new Object(data, 0, data.length, true));
+      DataBuffer tmpDataBuffer = new DataBuffer(data, 0, data.length, true);
       newRecord._containsWtlsValues = false;
 
       try {
@@ -212,8 +213,8 @@ public final class WAPServiceRecord {
       String mmsMessageUrlPrefix,
       String mmsAuthenticationHeader,
       int mmscVersion
-   ) {
-      DataBuffer tmpDataBuffer = (DataBuffer)(new Object());
+   ) throws IOException {
+      DataBuffer tmpDataBuffer = new DataBuffer();
       tmpDataBuffer.writeByte(1);
       addInt(tmpDataBuffer, 1, secureAccess, 1);
       if (authUsername != null && authPassword != null) {
@@ -253,9 +254,7 @@ public final class WAPServiceRecord {
 
       byte[] encodedData = tmpDataBuffer.toArray();
       if (encodedData.length > 1023) {
-         throw new Object(
-            ((StringBuffer)(new Object("Encoded Browser ServiceBook data ("))).append(encodedData.length).append(" bytes) exceeds 1023 bytes").toString()
-         );
+         throw new IOException("Encoded Browser ServiceBook data (" + encodedData.length + " bytes) exceeds 1023 bytes");
       } else {
          return encodedData;
       }

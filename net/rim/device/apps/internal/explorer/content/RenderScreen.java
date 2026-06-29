@@ -7,6 +7,7 @@ import net.rim.device.api.browser.field.RenderingSession;
 import net.rim.device.api.io.MIMETypeAssociations;
 import net.rim.device.api.system.Display;
 import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.api.util.CharacterUtilities;
 import net.rim.device.apps.api.ribbon.RibbonBanner;
@@ -47,7 +48,7 @@ public final class RenderScreen extends AppsMainScreen {
                this._field = this.createRenderErrorField();
             }
 
-            if (this._field instanceof Object) {
+            if (this._field instanceof MediaPlayerStateProvider) {
                this._mediaPlayerState = ((MediaPlayerStateProvider)this._field).getMediaPlayerState();
             }
 
@@ -120,7 +121,7 @@ public final class RenderScreen extends AppsMainScreen {
    }
 
    private final Field createRenderErrorField() {
-      return (Field)(new Object("Unable to play content.", 36028797018963968L));
+      return new RichTextField("Unable to play content.", 36028797018963968L);
    }
 
    public final void finishLoadingFile() {

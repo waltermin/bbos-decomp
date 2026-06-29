@@ -14,12 +14,12 @@ public final class MessageThread extends SortedCollection implements CollectionC
    MessageThread(long addressHash) {
       this.initialize(-6498019436237624557L, addressHash, Storage.getLongKeyProviderAdaptor(), null);
       this._inclusionFilter = new ThreadInclusionFilter(addressHash);
-      this._sources = (Vector)(new Object());
+      this._sources = new Vector();
    }
 
    @Override
    public final void addSource(Object collection) {
-      if (collection instanceof Object) {
+      if (collection instanceof ReadableList) {
          this.processCollectionForAddition((ReadableList)collection);
          this._sources.addElement(collection);
       }
@@ -44,7 +44,7 @@ public final class MessageThread extends SortedCollection implements CollectionC
 
    @Override
    public final void reset(Collection collection) {
-      if (collection instanceof Object) {
+      if (collection instanceof ReadableList) {
          this.removeAll();
          int numberOfSources = this._sources.size();
 

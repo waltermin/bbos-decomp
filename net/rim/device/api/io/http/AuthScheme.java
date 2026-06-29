@@ -20,7 +20,7 @@ public class AuthScheme {
          return null;
       }
 
-      Hashtable parms = (Hashtable)(new Object());
+      Hashtable parms = new Hashtable();
       String lChallenge = StringUtilities.toLowerCase(challenge, 1701707776);
       int currentIndex;
       int type;

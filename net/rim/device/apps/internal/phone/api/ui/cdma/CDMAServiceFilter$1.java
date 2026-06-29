@@ -14,7 +14,7 @@ final class CDMAServiceFilter$1 implements Runnable {
    @Override
    public final void run() {
       ResourceBundle srb = ResourceBundle.getBundle(-1488627819050031640L, "net.rim.device.apps.internal.resource.Security");
-      Dialog dlg = (Dialog)(new Object(srb.getString(704), null, null, 0, Bitmap.getPredefinedBitmap(2)));
+      Dialog dlg = new Dialog(srb.getString(704), null, null, 0, Bitmap.getPredefinedBitmap(2));
       dlg.setEscapeEnabled(false);
       dlg.show();
    }

@@ -1,8 +1,8 @@
 package net.rim.device.apps.internal.mms.ui;
 
 import net.rim.device.api.system.RadioInfo;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.NumericChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.internal.mms.api.MMSPresentationModel;
 import net.rim.device.apps.internal.mms.resources.MMSResources;
@@ -30,11 +30,11 @@ final class SlideBreakPresentationElementField extends VerticalFieldManager impl
          String label = MMSResources.getString(98);
          this.DURATION_MINIMUM = Math.min(this.DURATION_MINIMUM, duration);
          this.DURATION_MAXIMUM = Math.max(this.DURATION_MAXIMUM, duration);
-         this._choiceField = (NumericChoiceField)(new Object(label, this.DURATION_MINIMUM, this.DURATION_MAXIMUM, 1, duration - this.DURATION_MINIMUM));
+         this._choiceField = new NumericChoiceField(label, this.DURATION_MINIMUM, this.DURATION_MAXIMUM, 1, duration - this.DURATION_MINIMUM);
          this.add(this._choiceField);
       }
 
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
    }
 
    @Override
@@ -54,6 +54,6 @@ final class SlideBreakPresentationElementField extends VerticalFieldManager impl
 
    @Override
    public final void move(boolean mode) {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 }

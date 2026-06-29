@@ -42,7 +42,7 @@ public class MessageBulkMarkOldManager implements RealtimeClockListener {
       if (!this._worker.isRunning() && !this._messages.isEmpty()) {
          Object[] messagesToProcess = this.getMessagesToProcess();
          if (messagesToProcess.length > 0 && this._worker.init(messagesToProcess)) {
-            ((Thread)(new Object(this._worker))).start();
+            new Thread(this._worker).start();
          }
       }
    }
@@ -53,7 +53,7 @@ public class MessageBulkMarkOldManager implements RealtimeClockListener {
    }
 
    public MessageBulkMarkOldManager() {
-      this._messages = (ToLongHashtable)(new Object());
+      this._messages = new ToLongHashtable();
       this._batchMaxSize = 12;
    }
 
@@ -78,7 +78,7 @@ public class MessageBulkMarkOldManager implements RealtimeClockListener {
    }
 
    private static boolean isNew(Object message) {
-      if (!(message instanceof Object)) {
+      if (!(message instanceof ActionProvider)) {
          return false;
       }
 

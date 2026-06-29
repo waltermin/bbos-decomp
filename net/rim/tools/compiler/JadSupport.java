@@ -22,7 +22,7 @@ import net.rim.tools.jar.Manifest;
 
 public class JadSupport extends CompilerProperties implements Constants {
    private boolean _interesting;
-   private Vector _applets = (Vector)(new Object());
+   private Vector _applets = new Vector();
    private ResourceFile _manifest;
    private Vector _resourceBinaries;
    private GenerateResources _generateResources;
@@ -114,14 +114,14 @@ public class JadSupport extends CompilerProperties implements Constants {
          applet.setIconName(iconName, 0);
       }
 
-      String tag = ((StringBuffer)(new Object())).append(ResourceIds.iconTag).append("Count-").append(index + 1).toString();
+      String tag = ResourceIds.iconTag + "Count-" + (index + 1);
       String value = this.getProperty(tag);
       if (value != null) {
          try {
             int count = Integer.parseInt(value);
 
             for (int i = 0; i < count; i++) {
-               tag = ((StringBuffer)(new Object())).append(ResourceIds.iconTag).append(index + 1).append("-").append(i + 1).toString();
+               tag = ResourceIds.iconTag + (index + 1) + "-" + (i + 1);
                iconName = this.getProperty(tag);
                if (iconName != null) {
                   applet.setIconName(iconName, i + 1);
@@ -138,7 +138,7 @@ public class JadSupport extends CompilerProperties implements Constants {
          String value = properties.getProperty(tag);
          if (value == null) {
             if (required) {
-               throw new CompileException(907, null, ((StringBuffer)(new Object("Descriptor missing required attribute: "))).append(tag).toString());
+               throw new CompileException(907, null, "Descriptor missing required attribute: " + tag);
             }
          } else {
             properties.remove(tag);
@@ -150,16 +150,7 @@ public class JadSupport extends CompilerProperties implements Constants {
                   this.setProperty(tag, value);
                } else if (!oldValue.equals(value)) {
                   throw new CompileException(
-                     905,
-                     null,
-                     ((StringBuffer)(new Object("Descriptor duplicate attribute mismatch: '")))
-                        .append(tag)
-                        .append("' old value: '")
-                        .append(oldValue)
-                        .append("' new value: '")
-                        .append(value)
-                        .append("'")
-                        .toString()
+                     905, null, "Descriptor duplicate attribute mismatch: '" + tag + "' old value: '" + oldValue + "' new value: '" + value + "'"
                   );
                }
             }
@@ -172,7 +163,7 @@ public class JadSupport extends CompilerProperties implements Constants {
       int num = tags.length;
 
       for (int i = 0; i < num; i++) {
-         String tag = ((StringBuffer)(new Object())).append(tags[i]).append(ordinal + 1).toString();
+         String tag = tags[i] + (ordinal + 1);
          String value = properties.getProperty(tag);
          if (value != null) {
             properties.remove(tag);
@@ -184,7 +175,7 @@ public class JadSupport extends CompilerProperties implements Constants {
                   int count = Integer.parseInt(value);
 
                   for (int j = 0; j < count; j++) {
-                     tag = ((StringBuffer)(new Object())).append(ResourceIds.iconTag).append(ordinal + 1).append("-").append(j + 1).toString();
+                     tag = ResourceIds.iconTag + (ordinal + 1) + "-" + (j + 1);
                      value = properties.getProperty(tag);
                      if (value != null) {
                         properties.remove(tag);
@@ -222,7 +213,7 @@ public class JadSupport extends CompilerProperties implements Constants {
          manifestBytes = manifest.getBytes();
          properties.load(manifest.getString());
       } catch (Throwable var9) {
-         compiler.generateWarning(false, jarName, ((StringBuffer)(new Object("Found malformed manifest in jar file: "))).append(ioe.toString()).toString());
+         compiler.generateWarning(false, jarName, "Found malformed manifest in jar file: " + ioe.toString());
          break label45;
       }
 
@@ -253,7 +244,7 @@ public class JadSupport extends CompilerProperties implements Constants {
 
    private void securityProblemDoNotInstall(int resultCode, String msg, String parm) throws CompileException {
       if (parm != null) {
-         msg = ((StringBuffer)(new Object())).append(msg).append(parm).toString();
+         msg = msg + parm;
       }
 
       throw new CompileException(resultCode, null, msg);
@@ -296,7 +287,7 @@ public class JadSupport extends CompilerProperties implements Constants {
             String jadValue = jadProperties.getProperty(key);
             String manifestValue = this.getProperty(key);
             if (!this.equalsManifestValue(jadValue, manifestValue, true)) {
-               this.securityProblemDoNotInstall(905, ((StringBuffer)(new Object())).append(key).append(" in JAD does not match manifest").toString(), null);
+               this.securityProblemDoNotInstall(905, key + " in JAD does not match manifest", null);
             }
          }
 
@@ -317,17 +308,11 @@ public class JadSupport extends CompilerProperties implements Constants {
          }
 
          int index = 1;
-         String jadPushAttributeValue = jadProperties.getProperty(
-            ((StringBuffer)(new Object())).append(PushRegistryHelper.MIDLET_PUSH_PROPERTY_NAME_PREFIX).append(index).toString()
-         );
+         String jadPushAttributeValue = jadProperties.getProperty(PushRegistryHelper.MIDLET_PUSH_PROPERTY_NAME_PREFIX + index);
 
-         for (String manifestPushAttributeValue = this.getProperty(
-               ((StringBuffer)(new Object())).append(PushRegistryHelper.MIDLET_PUSH_PROPERTY_NAME_PREFIX).append(index).toString()
-            );
+         for (String manifestPushAttributeValue = this.getProperty(PushRegistryHelper.MIDLET_PUSH_PROPERTY_NAME_PREFIX + index);
             manifestPushAttributeValue != null || jadPushAttributeValue != null;
-            manifestPushAttributeValue = this.getProperty(
-               ((StringBuffer)(new Object())).append(PushRegistryHelper.MIDLET_PUSH_PROPERTY_NAME_PREFIX).append(index).toString()
-            )
+            manifestPushAttributeValue = this.getProperty(PushRegistryHelper.MIDLET_PUSH_PROPERTY_NAME_PREFIX + index)
          ) {
             if (jadPushAttributeValue == null) {
                jadPushAttributeValue = manifestPushAttributeValue;
@@ -342,9 +327,7 @@ public class JadSupport extends CompilerProperties implements Constants {
                this.securityProblemDoNotInstall(910, "Push connection not permitted", null);
             }
 
-            jadPushAttributeValue = jadProperties.getProperty(
-               ((StringBuffer)(new Object())).append(PushRegistryHelper.MIDLET_PUSH_PROPERTY_NAME_PREFIX).append(++index).toString()
-            );
+            jadPushAttributeValue = jadProperties.getProperty(PushRegistryHelper.MIDLET_PUSH_PROPERTY_NAME_PREFIX + ++index);
          }
 
          String jadContentHandlerAttributeValue = jadProperties.getProperty("MicroEdition-Handler-1");
@@ -399,7 +382,7 @@ public class JadSupport extends CompilerProperties implements Constants {
 
          label50:
          while (true) {
-            Vector v = (Vector)(new Object());
+            Vector v = new Vector();
             int m = 1;
 
             while (true) {
@@ -411,7 +394,7 @@ public class JadSupport extends CompilerProperties implements Constants {
                      break label50;
                   }
 
-                  String[] certs = new Object[m];
+                  String[] certs = new String[m];
                   v.copyInto(certs);
                   byte[] domainCopy = new byte[0];
                   int status = MIDletSecurity.checkMIDletSignature(digest, sig, certs, domainCopy, signerCertEncoding);
@@ -484,9 +467,7 @@ public class JadSupport extends CompilerProperties implements Constants {
          }
 
          if (name.length() == 0) {
-            throw new CompileException(
-               907, null, ((StringBuffer)(new Object("Descriptor missing required attribute: "))).append(ResourceIds.ordinalPrefix[0]).toString()
-            );
+            throw new CompileException(907, null, "Descriptor missing required attribute: " + ResourceIds.ordinalPrefix[0]);
          }
 
          this.processMidletAttribute(index, name);
@@ -548,7 +529,7 @@ public class JadSupport extends CompilerProperties implements Constants {
             } else {
                ClassType classType = compiler.findClassType(className);
                if (!classType.is(128)) {
-                  throw new CompileException(907, null, ((StringBuffer)(new Object("MIDlet class is not public: "))).append(className).toString());
+                  throw new CompileException(907, null, "MIDlet class is not public: " + className);
                }
             }
          }
@@ -611,14 +592,12 @@ public class JadSupport extends CompilerProperties implements Constants {
          String tag = tags[i];
          String value = this.getProperty(tag);
          if (value == null) {
-            throw new CompileException(907, null, ((StringBuffer)(new Object("Application missing required attribute: "))).append(tag).toString());
+            throw new CompileException(907, null, "Application missing required attribute: " + tag);
          }
 
          if (allowed != null) {
             if (value.indexOf(45) == -1) {
-               throw new CompileException(
-                  907, null, ((StringBuffer)(new Object("Application has malformed attribute: "))).append(tag).append(": ").append(value).toString()
-               );
+               throw new CompileException(907, null, "Application has malformed attribute: " + tag + ": " + value);
             }
 
             String[] values = allowed[i];
@@ -643,9 +622,7 @@ public class JadSupport extends CompilerProperties implements Constants {
                }
 
                if (!ok) {
-                  throw new CompileException(
-                     908, null, ((StringBuffer)(new Object("Application has malformed attribute: "))).append(tag).append(": ").append(value).toString()
-                  );
+                  throw new CompileException(908, null, "Application has malformed attribute: " + tag + ": " + value);
                }
 
                if (offset == -1) {
@@ -658,13 +635,13 @@ public class JadSupport extends CompilerProperties implements Constants {
 
    public void generateManifest(boolean makingMIDlet) {
       if ((this._interesting || makingMIDlet) && this._manifest == null) {
-         ByteArrayOutputStream bout = (ByteArrayOutputStream)(new Object());
+         ByteArrayOutputStream bout = new ByteArrayOutputStream();
          if (makingMIDlet) {
-            this.checkAttributes(ResourceIds.required, (Object[][])null);
+            this.checkAttributes(ResourceIds.required, (String[][])null);
             this.checkAttributes(ResourceIds.manifestRequired, ResourceIds.manifestRequiredAllowed);
          }
 
-         PrintStream out = (PrintStream)(new Object(bout));
+         PrintStream out = new PrintStream(bout);
          this.generateAttributes(out);
          out.close();
          byte[] data = bout.toByteArray();
@@ -682,7 +659,7 @@ public class JadSupport extends CompilerProperties implements Constants {
          return null;
       }
 
-      Vector exts = (Vector)(new Object());
+      Vector exts = new Vector();
       int num = this._resourceBinaries.size();
 
       for (int i = num - 1; i >= 0; i--) {
@@ -693,7 +670,7 @@ public class JadSupport extends CompilerProperties implements Constants {
          }
       }
 
-      StringBuffer ebuf = (StringBuffer)(new Object());
+      StringBuffer ebuf = new StringBuffer();
       num = exts.size();
 
       for (int var6 = 0; var6 < num; var6++) {
@@ -701,8 +678,8 @@ public class JadSupport extends CompilerProperties implements Constants {
          ebuf.append('\n');
       }
 
-      exts = null;
-      StringBuffer lbuf = (StringBuffer)(new Object());
+      Vector var8 = null;
+      StringBuffer lbuf = new StringBuffer();
       return this._generateResources.generateResourceClass(ebuf.toString(), lbuf.toString());
    }
 }

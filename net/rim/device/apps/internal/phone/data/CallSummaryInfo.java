@@ -27,7 +27,7 @@ final class CallSummaryInfo {
       this._cidi = (CallerIDInfo)callLog.getCallerIDInfo(true);
       Object address = this._cidi.getAddress();
       Object number = this._cidi.getNumber();
-      if (address instanceof Object) {
+      if (address instanceof AddressCardModel) {
          this._personNameInfo = ((AddressCardModel)address).getName();
       }
 
@@ -36,11 +36,11 @@ final class CallSummaryInfo {
       this._displayCompanyName = this._cidi.displayCompanyInfo();
       if (this._haveAddress) {
          this.getPhoneNumbers(address);
-      } else if (number instanceof Object) {
+      } else if (number instanceof PhoneNumberModel) {
          this.addNumber((PhoneNumberModel)number);
       }
 
-      if (address instanceof Object) {
+      if (address instanceof AddressCardModel) {
          this._companyInfo = ((AddressCardModel)address).getCompanyInfo();
       }
    }
@@ -98,12 +98,12 @@ final class CallSummaryInfo {
    }
 
    private final void getPhoneNumbers(Object addressCard) {
-      if (addressCard instanceof Object) {
+      if (addressCard instanceof ReadableList) {
          ReadableList list = (ReadableList)addressCard;
 
          for (int i = list.size() - 1; i >= 0; i--) {
             Object o = list.getAt(i);
-            if (o instanceof Object) {
+            if (o instanceof PhoneNumberModel) {
                PhoneNumberModel pnm = (PhoneNumberModel)o;
                this.addNumber(pnm);
             }
@@ -114,8 +114,8 @@ final class CallSummaryInfo {
    private final void addNumber(PhoneNumberModel number) {
       if (this._numberStrings == null) {
          this._numberTypes = new int[0];
-         this._numberStrings = new Object[0];
-         this._numberTypeStrings = new Object[0];
+         this._numberStrings = new String[0];
+         this._numberTypeStrings = new String[0];
          this._speedDialKeys = new char[0];
       }
 
@@ -130,9 +130,7 @@ final class CallSummaryInfo {
 
       int type = number.getType();
       this._numberTypes[this._numberTypes.length - 1] = type;
-      String typeString = type != 0
-         ? ((StringBuffer)(new Object())).append(number.toString()).append(" ").append(number.getTypeString()).toString()
-         : number.toString();
+      String typeString = type != 0 ? number.toString() + " " + number.getTypeString() : number.toString();
       this._numberStrings[this._numberStrings.length - 1] = typeString;
       if (type != 0) {
          int flags = 6;

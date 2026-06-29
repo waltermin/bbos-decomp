@@ -22,8 +22,8 @@ public final class OwnerOptionsItem extends SaveableMainScreenOptionsListItem im
 
    @Override
    protected final void populateMainScreen(MainScreen mainScreen) {
-      this._ownerNameField = (AutoTextEditField)(new Object(OptionsResources.getString(1001), "", 39, 4503601774854144L));
-      this._ownerInfoField = (AutoTextEditField)(new Object(OptionsResources.getString(1002), "", 127, 4503599627370496L));
+      this._ownerNameField = new AutoTextEditField(OptionsResources.getString(1001), "", 39, 4503601774854144L);
+      this._ownerInfoField = new AutoTextEditField(OptionsResources.getString(1002), "", 127, 4503599627370496L);
       this.updateFields();
       mainScreen.add(this._ownerNameField);
       mainScreen.add(this._ownerInfoField);

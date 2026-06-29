@@ -31,7 +31,7 @@ final class MailApiPersistentProxyModelStore extends PersistentProxyModelStore i
 
             IntHashtable h = (IntHashtable)ar.getOrWaitFor(-7104206253406502952L);
             if (null == h) {
-               h = (IntHashtable)(new Object());
+               h = new IntHashtable();
                ar.put(-7104206253406502952L, h);
             }
          }
@@ -48,7 +48,7 @@ final class MailApiPersistentProxyModelStore extends PersistentProxyModelStore i
    public final synchronized int add(Object o) {
       IntHashtable transientRefs = ApplicationRegistry.getApplicationRegistry().getIntHashtable(-7104206253406502952L);
       if (transientRefs == null) {
-         throw new Object("MailApi: TransientRefs table does not exist");
+         throw new IllegalStateException("MailApi: TransientRefs table does not exist");
       }
 
       if (transientRefs.contains(o)) {
@@ -61,7 +61,7 @@ final class MailApiPersistentProxyModelStore extends PersistentProxyModelStore i
             }
          }
 
-         throw new Object("AbstractProxyModelStore: add() - illegal state!");
+         throw new IllegalStateException("AbstractProxyModelStore: add() - illegal state!");
       } else if (super._data.contains(o)) {
          IntEnumeration e = super._data.keys();
 
@@ -72,9 +72,9 @@ final class MailApiPersistentProxyModelStore extends PersistentProxyModelStore i
             }
          }
 
-         throw new Object("AbstractProxyModelStore: add() - illegal state!");
+         throw new IllegalStateException("AbstractProxyModelStore: add() - illegal state!");
       } else {
-         transientRefs.put(++super._index, new Object(o));
+         transientRefs.put(++super._index, new WeakReference(o));
          PersistentObject.commit(this);
          return super._index;
       }
@@ -84,7 +84,7 @@ final class MailApiPersistentProxyModelStore extends PersistentProxyModelStore i
    public final Object get(int objectHandle) {
       IntHashtable transientRefs = ApplicationRegistry.getApplicationRegistry().getIntHashtable(-7104206253406502952L);
       Object o = transientRefs.get(objectHandle);
-      if (o instanceof Object) {
+      if (o instanceof WeakReference) {
          WeakReference wr = (WeakReference)o;
          o = wr.get();
       }
@@ -114,17 +114,17 @@ final class MailApiPersistentProxyModelStore extends PersistentProxyModelStore i
          try {
             synchronized (this) {
                int index = -1;
-               IntVector handles = (IntVector)(new Object());
+               IntVector handles = new IntVector();
                ReadableList rl = (ReadableList)c;
 
                for (int i = rl.size() - 1; i >= 0; i--) {
                   Object item = rl.getAt(i);
-                  if (item instanceof Object) {
+                  if (item instanceof EmailMessageModelImpl) {
                      EmailMessageModelImpl m = (EmailMessageModelImpl)item;
                      if (m.getAttachmentCount() != 0) {
                         for (int j = m.size() - 1; j >= 0; j--) {
                            Object o = m.getAt(j);
-                           if (o instanceof Object) {
+                           if (o instanceof ProxyModel) {
                               ProxyModel pm = (ProxyModel)o;
                               if (pm.getRootId() == super._rootId) {
                                  int handle = pm.getObjectHandle();
@@ -159,13 +159,13 @@ final class MailApiPersistentProxyModelStore extends PersistentProxyModelStore i
    @Override
    protected final synchronized void collectionEvent(Collection collection, Object element, int delta) {
       IntHashtable transientRefs = ApplicationRegistry.getApplicationRegistry().getIntHashtable(-7104206253406502952L);
-      if (element instanceof Object) {
+      if (element instanceof ReadableList) {
          ReadableList l = (ReadableList)element;
          int size = l.size();
 
          for (int i = 0; i < size; i++) {
             Object o = l.getAt(i);
-            if (o instanceof Object) {
+            if (o instanceof ProxyModel) {
                ProxyModel pm = (ProxyModel)o;
                if (pm.getRootId() == super._rootId) {
                   int handle = pm.getObjectHandle();
@@ -182,7 +182,7 @@ final class MailApiPersistentProxyModelStore extends PersistentProxyModelStore i
       while (keys.hasMoreElements()) {
          int key = keys.nextElement();
          Object o = transientRefs.get(key);
-         if (o instanceof Object) {
+         if (o instanceof WeakReference) {
             WeakReference wr = (WeakReference)o;
             if (wr.get() == null) {
                transientRefs.remove(key);
@@ -199,7 +199,7 @@ final class MailApiPersistentProxyModelStore extends PersistentProxyModelStore i
       boolean retVal = false;
       IntHashtable transientRefs = ApplicationRegistry.getApplicationRegistry().getIntHashtable(-7104206253406502952L);
       Object oo = transientRefs.get(handle);
-      if (delta > 0 && oo instanceof Object) {
+      if (delta > 0 && oo instanceof WeakReference) {
          WeakReference wr = (WeakReference)oo;
          Object hardref = wr.get();
          transientRefs.remove(handle);

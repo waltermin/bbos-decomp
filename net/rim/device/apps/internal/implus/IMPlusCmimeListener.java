@@ -24,6 +24,7 @@ import net.rim.device.apps.internal.blackberryemail.email.EmailPayloadModel;
 import net.rim.device.apps.internal.blackberryemail.email.api.EmailModifier;
 import net.rim.device.apps.internal.blackberryemail.header.EmailHeaderModel;
 import net.rim.device.apps.internal.blackberryemail.unknown.UnknownMimePartModel;
+import net.rim.device.apps.internal.phone.model.PhoneNumberModel;
 import net.rim.vm.Array;
 
 final class IMPlusCmimeListener implements IMPlusServiceModel, GlobalEventListener {
@@ -138,7 +139,7 @@ final class IMPlusCmimeListener implements IMPlusServiceModel, GlobalEventListen
    @Override
    public final byte getAckRequestHeaderByte(RIMModel emailMessage) {
       byte dsnRequestByte = 0;
-      if (!(emailMessage instanceof Object)) {
+      if (!(emailMessage instanceof EmailMessageModel)) {
          return dsnRequestByte;
       }
 
@@ -194,16 +195,16 @@ final class IMPlusCmimeListener implements IMPlusServiceModel, GlobalEventListen
       //
       // Bytecode:
       // 000: aload 1
-      // 001: instanceof java/lang/Object
+      // 001: instanceof net/rim/device/apps/internal/blackberryemail/email/EmailMessageModel
       // 004: ifne 008
       // 007: return
       // 008: aload 1
-      // 009: checkcast java/lang/Object
+      // 009: checkcast net/rim/device/apps/internal/blackberryemail/email/EmailMessageModel
       // 00c: astore 3
       // 00d: aload 3
       // 00e: invokeinterface net/rim/device/apps/internal/blackberryemail/email/EmailMessageModel.getCMIMEReferenceIdentifier ()I 1
       // 013: istore 4
-      // 015: new java/lang/Object
+      // 015: new net/rim/device/apps/api/transmission/rim/RIMMessagingOutgoingReceipt
       // 018: dup
       // 019: invokespecial net/rim/device/apps/api/transmission/rim/RIMMessagingOutgoingReceipt.<init> ()V
       // 01c: astore 5
@@ -235,9 +236,9 @@ final class IMPlusCmimeListener implements IMPlusServiceModel, GlobalEventListen
       // 056: invokestatic net/rim/device/api/system/ApplicationRegistry.getApplicationRegistry ()Lnet/rim/device/api/system/ApplicationRegistry;
       // 059: ldc2_w 2620647646956286337
       // 05c: invokevirtual net/rim/device/api/system/ApplicationRegistry.get (J)Ljava/lang/Object;
-      // 05f: checkcast java/lang/Object
+      // 05f: checkcast net/rim/device/api/util/Factory
       // 062: astore 9
-      // 064: new java/lang/Object
+      // 064: new net/rim/device/apps/api/framework/model/ContextObject
       // 067: dup
       // 068: bipush 73
       // 06a: invokespecial net/rim/device/apps/api/framework/model/ContextObject.<init> (I)V
@@ -353,15 +354,15 @@ final class IMPlusCmimeListener implements IMPlusServiceModel, GlobalEventListen
       // 16a: aload 3
       // 16b: iload 13
       // 16d: invokeinterface net/rim/device/api/collection/ReadableList.getAt (I)Ljava/lang/Object; 2
-      // 172: checkcast java/lang/Object
+      // 172: checkcast net/rim/device/apps/api/framework/model/RIMModel
       // 175: astore 14
       // 177: aload 14
       // 179: dup
-      // 17a: instanceof java/lang/Object
+      // 17a: instanceof net/rim/device/apps/internal/blackberryemail/header/EmailHeaderModel
       // 17d: ifne 184
       // 180: pop
       // 181: goto 1ca
-      // 184: checkcast java/lang/Object
+      // 184: checkcast net/rim/device/apps/internal/blackberryemail/header/EmailHeaderModel
       // 187: astore 15
       // 189: aload 15
       // 18b: invokevirtual net/rim/device/apps/internal/blackberryemail/header/EmailHeaderModel.getHeaderType ()I
@@ -424,15 +425,15 @@ final class IMPlusCmimeListener implements IMPlusServiceModel, GlobalEventListen
       // 20b: aload 3
       // 20c: iload 12
       // 20e: invokeinterface net/rim/device/api/collection/ReadableList.getAt (I)Ljava/lang/Object; 2
-      // 213: checkcast java/lang/Object
+      // 213: checkcast net/rim/device/apps/api/framework/model/RIMModel
       // 216: astore 13
       // 218: aload 13
       // 21a: dup
-      // 21b: instanceof java/lang/Object
+      // 21b: instanceof net/rim/device/apps/internal/blackberryemail/header/EmailHeaderModel
       // 21e: ifne 225
       // 221: pop
       // 222: goto 247
-      // 225: checkcast java/lang/Object
+      // 225: checkcast net/rim/device/apps/internal/blackberryemail/header/EmailHeaderModel
       // 228: invokevirtual net/rim/device/apps/internal/blackberryemail/header/EmailHeaderModel.getHeaderType ()I
       // 22b: istore 14
       // 22d: iload 14
@@ -444,7 +445,7 @@ final class IMPlusCmimeListener implements IMPlusServiceModel, GlobalEventListen
       // 23b: aload 11
       // 23d: ifnonnull 247
       // 240: aload 13
-      // 242: checkcast java/lang/Object
+      // 242: checkcast net/rim/device/apps/internal/blackberryemail/header/EmailHeaderModel
       // 245: astore 11
       // 247: iinc 12 -1
       // 24a: goto 206
@@ -484,7 +485,7 @@ final class IMPlusCmimeListener implements IMPlusServiceModel, GlobalEventListen
       // 297: astore 14
       // 299: aload 14
       // 29b: ifnull 2b4
-      // 29e: new java/lang/Object
+      // 29e: new java/lang/StringBuffer
       // 2a1: dup
       // 2a2: invokespecial java/lang/StringBuffer.<init> ()V
       // 2a5: aload 13
@@ -514,7 +515,7 @@ final class IMPlusCmimeListener implements IMPlusServiceModel, GlobalEventListen
       // 2df: aconst_null
       // 2e0: ldc_w "text/plain"
       // 2e3: invokevirtual net/rim/device/apps/api/transmission/rim/RIMMessagingMessage.setText (Ljava/lang/Object;Lnet/rim/device/apps/api/transmission/Parameters;Ljava/lang/String;)V
-      // 2e6: new java/lang/Object
+      // 2e6: new net/rim/device/api/util/DataBuffer
       // 2e9: dup
       // 2ea: invokespecial net/rim/device/api/util/DataBuffer.<init> ()V
       // 2ed: astore 13
@@ -529,7 +530,7 @@ final class IMPlusCmimeListener implements IMPlusServiceModel, GlobalEventListen
       // 301: ldc2_w 4530015158237739359
       // 304: iload 4
       // 306: invokestatic net/rim/device/apps/api/messaging/MessageLookups.get (JI)Ljava/lang/Object;
-      // 309: checkcast java/lang/Object
+      // 309: checkcast java/lang/Integer
       // 30c: astore 15
       // 30e: aload 15
       // 310: ifnull 327
@@ -605,7 +606,7 @@ final class IMPlusCmimeListener implements IMPlusServiceModel, GlobalEventListen
       // 3af: aload 5
       // 3b1: invokestatic net/rim/device/apps/api/transmission/rim/CMIMEUtilities.newDeviceSideIdentifier ()I
       // 3b4: invokevirtual net/rim/device/apps/api/transmission/rim/RIMMessagingMessage.setReferenceIdentifier (I)V
-      // 3b7: new java/lang/Object
+      // 3b7: new net/rim/device/apps/api/framework/model/ContextObject
       // 3ba: dup
       // 3bb: invokespecial net/rim/device/apps/api/framework/model/ContextObject.<init> ()V
       // 3be: astore 16
@@ -614,11 +615,11 @@ final class IMPlusCmimeListener implements IMPlusServiceModel, GlobalEventListen
       // 3c5: aload 16
       // 3c7: bipush 94
       // 3c9: invokevirtual net/rim/device/apps/api/framework/model/ContextObject.setFlag (I)V
-      // 3cc: new java/lang/Object
+      // 3cc: new net/rim/device/cldc/io/gme/GMEAddress
       // 3cf: dup
       // 3d0: invokespecial net/rim/device/cldc/io/gme/GMEAddress.<init> ()V
       // 3d3: astore 17
-      // 3d5: new java/lang/Object
+      // 3d5: new java/lang/StringBuffer
       // 3d8: dup
       // 3d9: ldc_w "CMIME:"
       // 3dc: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -677,11 +678,11 @@ final class IMPlusCmimeListener implements IMPlusServiceModel, GlobalEventListen
 
    @Override
    public final void receiveReceipt(Object deliveryStatusNotice) {
-      if (deliveryStatusNotice instanceof Object) {
+      if (deliveryStatusNotice instanceof UnknownMimePartModel) {
          UnknownMimePartModel deliveryStatusPart = (UnknownMimePartModel)deliveryStatusNotice;
          byte[] data = deliveryStatusPart.getData();
          if (data.length > 0) {
-            DataBuffer dnsBuffer = (DataBuffer)(new Object(data, 0, data.length, true));
+            DataBuffer dnsBuffer = new DataBuffer(data, 0, data.length, true);
             dnsBuffer.rewind();
 
             try {
@@ -708,7 +709,7 @@ final class IMPlusCmimeListener implements IMPlusServiceModel, GlobalEventListen
                               Array.resize(rawAddress, rawAddress.length - 1);
                            }
 
-                           confirmingAddress = (String)(new Object(rawAddress));
+                           confirmingAddress = new String(rawAddress);
                            break;
                         case -6:
                            actionCode = dnsBuffer.readByte();
@@ -732,7 +733,7 @@ final class IMPlusCmimeListener implements IMPlusServiceModel, GlobalEventListen
 
                   EmailMessageModel message = (EmailMessageModel)MessageLookups.get(2623838111545834320L, originalMessageReferenceId);
                   if (message != null) {
-                     ContextObject contextObject = (ContextObject)(new Object());
+                     ContextObject contextObject = new ContextObject();
                      EmailPayloadModel oldPayload = EmailModifier.beginChanges(message, contextObject);
                      int numEmailHeaderModels = 0;
                      int numReadReceiptsReceived = 0;
@@ -741,11 +742,11 @@ final class IMPlusCmimeListener implements IMPlusServiceModel, GlobalEventListen
 
                      for (int i = 0; i < messageSize; i++) {
                         RIMModel model = (RIMModel)message.getAt(i);
-                        if (model instanceof Object) {
+                        if (model instanceof EmailHeaderModel) {
                            EmailHeaderModel headerModel = (EmailHeaderModel)model;
                            int headerType = headerModel.getHeaderType();
                            if (headerType == 0 || headerType == 1 || headerType == 2 || headerType == 5) {
-                              String[] nameStrings = new Object[2];
+                              String[] nameStrings = new String[2];
                               headerModel.extractNames(nameStrings);
                               numEmailHeaderModels++;
                               if (StringUtilities.compareToIgnoreCase(confirmingAddress, nameStrings[0], 1701707776) == 0) {
@@ -805,8 +806,8 @@ final class IMPlusCmimeListener implements IMPlusServiceModel, GlobalEventListen
             strippedAddress = address.substring(4);
          }
 
-         if (addressModel instanceof Object) {
-            StringBuffer phoneNumBuffer = (StringBuffer)(new Object());
+         if (addressModel instanceof PhoneNumberModel) {
+            StringBuffer phoneNumBuffer = new StringBuffer();
 
             for (int i = 0; i < strippedAddress.length(); i++) {
                char numChar = strippedAddress.charAt(i);
@@ -824,7 +825,7 @@ final class IMPlusCmimeListener implements IMPlusServiceModel, GlobalEventListen
 
    @Override
    public final String appendIMPlusPrefix(RIMModel model, String address) {
-      StringBuffer addressBuffer = (StringBuffer)(new Object());
+      StringBuffer addressBuffer = new StringBuffer();
       if (this._interactiveHHFactory.recognize(model)) {
          addressBuffer.append("IAP:");
       } else if (this._oneWayPageFactory.recognize(model)) {
@@ -841,7 +842,7 @@ final class IMPlusCmimeListener implements IMPlusServiceModel, GlobalEventListen
 
    @Override
    public final IMPlusComposeModel[] getComposeModels() {
-      IMPlusComposeModel[] composeModels = new Object[0];
+      IMPlusComposeModel[] composeModels = new IMPlusComposeModel[0];
       IMPlusCmimeListener$ReceiptCapableService receiptCapableService = this.getIMPlusReceiptCapableService();
       if (receiptCapableService != null) {
          if (receiptCapableService._twoWayPageEnabled) {
@@ -896,7 +897,7 @@ final class IMPlusCmimeListener implements IMPlusServiceModel, GlobalEventListen
    public final boolean isIMPlusCompose(Object context) {
       boolean isIMPlusMessageCompose = ContextObject.getPrivateFlag(context, -3859986508589425865L, 1);
       Object parentModel = ContextObject.get(context, 246);
-      if (parentModel instanceof Object) {
+      if (parentModel instanceof EmailMessageModel) {
          isIMPlusMessageCompose |= ((EmailMessageModel)parentModel).flagsSet(8388608);
       }
 
@@ -1037,10 +1038,10 @@ final class IMPlusCmimeListener implements IMPlusServiceModel, GlobalEventListen
       if (applicationDataByteArray != null && applicationDataByteArray.length > 0) {
          try {
             IMPlusCmimeListener$ReceiptCapableService receiptCapableService = null;
-            DataBuffer buffer = (DataBuffer)(new Object());
+            DataBuffer buffer = new DataBuffer();
             buffer.setData(applicationDataByteArray, 0, applicationDataByteArray.length);
             buffer.readUnsignedByte();
-            Parameters parameters = (Parameters)(new Object(12, 4));
+            Parameters parameters = new Parameters(12, 4);
             parameters.read(buffer, (byte)0);
             byte[] recTypes = parameters.getFirst((byte)48);
             if (recTypes != null) {

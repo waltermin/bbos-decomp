@@ -35,7 +35,7 @@ class Task {
 
    void invoke(Object context) {
       boolean programmatic = false;
-      if (context instanceof Object) {
+      if (context instanceof ContextObject) {
          ContextObject contextObject = (ContextObject)context;
          programmatic = contextObject.getFlag(64);
       }

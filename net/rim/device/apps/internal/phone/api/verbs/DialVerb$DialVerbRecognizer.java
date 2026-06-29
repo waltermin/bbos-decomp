@@ -9,7 +9,7 @@ final class DialVerb$DialVerbRecognizer implements Recognizer {
       if (o instanceof DialVerb) {
          return true;
       } else {
-         return !(o instanceof Object) ? false : ((WrapperVerb)o).getInnerVerb() instanceof DialVerb;
+         return !(o instanceof WrapperVerb) ? false : ((WrapperVerb)o).getInnerVerb() instanceof DialVerb;
       }
    }
 }

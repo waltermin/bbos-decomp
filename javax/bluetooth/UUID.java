@@ -11,19 +11,19 @@ public class UUID {
          String value = Integer.toHexString((int)uuidValue);
          this._data = this.pad(value, value.length() > 4 ? 8 : 4);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    public UUID(String uuidValue, boolean shortUUID) {
       int length = uuidValue.length();
       if (length == 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       for (int i = 0; i < length; i++) {
          if (Character.digit(uuidValue.charAt(i), 16) == -1) {
-            throw new Object();
+            throw new NumberFormatException();
          }
       }
 
@@ -35,14 +35,14 @@ public class UUID {
       }
 
       if (length > maxLength) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._data = this.pad(uuidValue, maxLength);
    }
 
    private String pad(String value, int length) {
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
       int padding = length - value.length();
 
       for (int i = 0; i < padding; i++) {

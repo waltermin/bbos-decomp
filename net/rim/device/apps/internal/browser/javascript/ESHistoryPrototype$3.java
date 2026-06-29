@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.browser.javascript;
 
 import net.rim.device.api.browser.field.BrowserContent;
-import net.rim.device.api.browser.field.Event;
+import net.rim.device.api.browser.field.HistoryEvent;
 import net.rim.device.api.browser.field.RenderingApplication;
 import net.rim.ecmascript.runtime.Convert;
 import net.rim.ecmascript.runtime.Value;
@@ -21,7 +21,7 @@ class ESHistoryPrototype$3 extends JavaScriptHostFunction {
       if (renderingApplication != null) {
          try {
             int index = Convert.toInt32(this.getParm(0, Value.makeIntegerValue(0)));
-            renderingApplication.eventOccurred((Event)(new Object(content, index, true, 0)));
+            renderingApplication.eventOccurred(new HistoryEvent(content, index, true, 0));
          } finally {
             return Value.NULL;
          }

@@ -34,7 +34,7 @@ public class SecureEmailMessageEncoderProvider extends SecureEmailAwareSendMetho
       if (certificateHarvester != null && CertificateHarvesterManager.addCertificateHarvester(certificateHarvester, context) && serviceRecord != null) {
          String alwaysBCCEmailAddress = this._secureEmailUtilities.getAlwaysBCCEmailAddress(serviceRecord.getUid());
          if (alwaysBCCEmailAddress != null && alwaysBCCEmailAddress.length() > 0) {
-            RecipientData recipientData = new RecipientData(null, 1, new Object[]{alwaysBCCEmailAddress}, null);
+            RecipientData recipientData = new RecipientData(null, 1, new String[]{alwaysBCCEmailAddress}, null);
             certificateHarvester.recipientAdded(recipientData);
          }
       }
@@ -104,7 +104,7 @@ public class SecureEmailMessageEncoderProvider extends SecureEmailAwareSendMetho
       int encodingActionIndex;
       switch (this.getEncodingAction()) {
          case 0:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 1:
          default:
             encodingActionIndex = 0;
@@ -119,7 +119,7 @@ public class SecureEmailMessageEncoderProvider extends SecureEmailAwareSendMetho
       String[] encodingActions = SecureEmailResources.getStringArray(4);
       String encodingAction = encodingActions[encodingActionIndex];
       return (this.getFlags() & 4) != 0
-         ? MessageFormat.format(SecureEmailResources.getString(109), new Object[]{this._secureEmailFactory.getEncodingString(), encodingAction})
+         ? MessageFormat.format(SecureEmailResources.getString(109), new String[]{this._secureEmailFactory.getEncodingString(), encodingAction})
          : encodingAction;
    }
 

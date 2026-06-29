@@ -6,6 +6,7 @@ import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.api.system.EventLogger;
 import net.rim.device.apps.api.utility.general.URI;
 import net.rim.device.apps.api.utility.serialization.BaseConverter;
+import net.rim.device.apps.api.utility.serialization.SerializationException;
 import net.rim.device.apps.internal.browser.stack.AccumulatorInputStream;
 import net.rim.device.apps.internal.browser.stack.CacheResult;
 import net.rim.device.internal.browser.util.Pipe;
@@ -19,19 +20,19 @@ final class BrowserContentConverter extends BaseConverter {
    }
 
    @Override
-   public final Object convert(DataInput inputStreamObj, Object headersObj) {
-      if (headersObj instanceof Object && inputStreamObj instanceof Object) {
+   public final Object convert(DataInput inputStreamObj, Object headersObj) throws SerializationException {
+      if (headersObj instanceof HttpHeaders && inputStreamObj instanceof InputStream) {
          InputStream inputStream = (InputStream)inputStreamObj;
          HttpHeaders headers = (HttpHeaders)headersObj;
          EventLogger.logEvent(1907089860548946979L, 1347448931, 5);
          String url = headers.getPropertyValue("Content-Location");
          if (url == null) {
             EventLogger.logEvent(1907089860548946979L, 1347450229, 3);
-            throw new Object();
+            throw new SerializationException();
          }
 
          CacheResult cacheResult = null;
-         AccumulatorInputStream in = (AccumulatorInputStream)(new Object(null, inputStream, null, false));
+         AccumulatorInputStream in = new AccumulatorInputStream(null, inputStream, null, false);
          Pipe pipe = in.getPipe();
          if (pipe != null && pipe.getLength() > 0) {
             url = URI.getAbsoluteURL(url, null);
@@ -40,12 +41,12 @@ final class BrowserContentConverter extends BaseConverter {
          }
 
          if (cacheResult == null) {
-            throw new Object();
+            throw new SerializationException();
          } else {
             return new BrowserContentModel(cacheResult);
          }
       } else {
-         throw new Object();
+         throw new SerializationException();
       }
    }
 }

@@ -11,7 +11,7 @@ public final class PageLayoutManager extends Manager {
    private Field _content;
    private Field _footer;
    private Scrollbar _scrollbar;
-   private XYRect _paintingRect = (XYRect)(new Object());
+   private XYRect _paintingRect = new XYRect();
    private boolean _isRightToLeft;
 
    public PageLayoutManager() {
@@ -21,9 +21,9 @@ public final class PageLayoutManager extends Manager {
    public final void setScrollbarEnabled(boolean val) {
       if (val) {
          if (this._scrollbar == null) {
-            this._scrollbar = (Scrollbar)(new Object(true));
+            this._scrollbar = new Scrollbar(true);
             this.add(this._scrollbar);
-            if (this._content instanceof Object) {
+            if (this._content instanceof Manager) {
                this._scrollbar.setClient((Manager)this._content);
                return;
             }
@@ -45,7 +45,7 @@ public final class PageLayoutManager extends Manager {
       this._content = content;
       if (this._content != null) {
          this.add(this._content);
-         if (this._scrollbar != null && this._content instanceof Object) {
+         if (this._scrollbar != null && this._content instanceof Manager) {
             this._scrollbar.setClient((Manager)this._content);
          }
       }

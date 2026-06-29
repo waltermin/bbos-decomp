@@ -6,7 +6,7 @@ final class RecurCache$CacheEntry {
    String _tzid;
    boolean _moreAvailableEarlier;
    boolean _moreAvailableLater;
-   RIMModel[] _occurrences = new Object[14];
+   RIMModel[] _occurrences = new RIMModel[14];
    long[] _startTimes = new long[14];
    long[] _endTimes = new long[14];
    int _numOccurrences;

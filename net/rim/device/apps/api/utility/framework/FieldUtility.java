@@ -20,7 +20,7 @@ public class FieldUtility {
       RIMModel[] sortedModels = new RIMModel[size];
       int[] orderValues = new int[size];
       size = orders(modelArray, sortedModels, orderValues, context);
-      Vector orderedFields = (Vector)(new Object(size));
+      Vector orderedFields = new Vector(size);
 
       for (int i = 0; i < size; i++) {
          RIMModel currModel = sortedModels[i];

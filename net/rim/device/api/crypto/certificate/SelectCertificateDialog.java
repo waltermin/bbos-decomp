@@ -5,7 +5,6 @@ import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Keypad;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.CheckboxField;
 import net.rim.device.api.ui.component.RadioButtonField;
@@ -49,7 +48,7 @@ final class SelectCertificateDialog extends PopupDialog {
       boolean allowMultiSelect,
       long style
    ) {
-      super((Manager)(new Object(281474976710656L)), style);
+      super(new DialogFieldManager(281474976710656L), style);
       if (names != null && certificates != null && names.length == certificates.length) {
          this._dfm = (DialogFieldManager)this.getDelegate();
          this._certificates = certificates;
@@ -58,37 +57,37 @@ final class SelectCertificateDialog extends PopupDialog {
          this._cryptoSystemProperties = cryptoSystemProperties;
          this._allowMultiSelect = allowMultiSelect;
          this._dfm.setMessage(descriptionField);
-         HorizontalFieldManager buttonHfm = (HorizontalFieldManager)(new Object(12884901888L));
-         this._okButton = (ButtonField)(new Object(CommonResource.getString(10068)));
+         HorizontalFieldManager buttonHfm = new HorizontalFieldManager(12884901888L);
+         this._okButton = new ButtonField(CommonResource.getString(10068));
          buttonHfm.add(this._okButton);
-         this._cancelButton = (ButtonField)(new Object(CommonResource.getString(10044)));
+         this._cancelButton = new ButtonField(CommonResource.getString(10044));
          buttonHfm.add(this._cancelButton);
          this._dfm.addCustomField(buttonHfm);
          this._radioGroup = null;
          if (!allowMultiSelect) {
-            this._radioGroup = (RadioButtonGroup)(new Object());
+            this._radioGroup = new RadioButtonGroup();
          }
 
          int numNames = names.length;
-         this._fields = new Object[numNames];
-         this._iconImageFields = new Object[numNames];
+         this._fields = new Field[numNames];
+         this._iconImageFields = new ImageField[numNames];
          this._imagesLoaded = new boolean[numNames];
 
          for (int i = 0; i < numNames; i++) {
             if (this._certificates[i] == null) {
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
-            HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(1152921504606846976L));
+            HorizontalFieldManager hfm = new HorizontalFieldManager(1152921504606846976L);
             ImageField imageField = CryptoIndicatorImages.getImageField(0);
             CheckboxField checkBoxField = null;
             RadioButtonField radioButtonField = null;
             Field field;
             if (allowMultiSelect) {
-               checkBoxField = (CheckboxField)(new Object(names[i], false));
+               checkBoxField = new CheckboxField(names[i], false);
                field = checkBoxField;
             } else {
-               radioButtonField = (RadioButtonField)(new Object(names[i], this._radioGroup, i == 0));
+               radioButtonField = new RadioButtonField(names[i], this._radioGroup, i == 0);
                field = radioButtonField;
             }
 
@@ -117,7 +116,7 @@ final class SelectCertificateDialog extends PopupDialog {
          this._certificateStatusUpdateThread = new SelectCertificateDialog$CertificateStatusUpdateThread(this, null);
          this._certificateStatusUpdateThread.start();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -200,7 +199,7 @@ final class SelectCertificateDialog extends PopupDialog {
             for (int i = start; i < this._fields.length; i++) {
                Field var10000 = this._fields[i];
                String label;
-               if (!(this._fields[i] instanceof Object)) {
+               if (!(this._fields[i] instanceof CheckboxField)) {
                   label = ((RadioButtonField)this._fields[i]).getLabel();
                } else {
                   label = ((CheckboxField)var10000).getLabel();
@@ -220,7 +219,7 @@ final class SelectCertificateDialog extends PopupDialog {
    private final int fieldWithFocusToIndex() {
       synchronized (Application.getEventLock()) {
          Field f = this.getLeafFieldWithFocus();
-         return !(f instanceof Object) && !(f instanceof Object) ? -1 : f.getManager().getIndex() - 1;
+         return !(f instanceof CheckboxField) && !(f instanceof RadioButtonField) ? -1 : f.getManager().getIndex() - 1;
       }
    }
 
@@ -255,8 +254,8 @@ final class SelectCertificateDialog extends PopupDialog {
          return true;
       }
 
-      if (!(f instanceof Object)) {
-         if (!(f instanceof Object)) {
+      if (!(f instanceof CheckboxField)) {
+         if (!(f instanceof RadioButtonField)) {
             return false;
          }
 

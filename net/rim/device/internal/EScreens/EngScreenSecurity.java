@@ -3,6 +3,7 @@ package net.rim.device.internal.EScreens;
 import net.rim.device.api.crypto.Digest;
 import net.rim.device.api.crypto.HMAC;
 import net.rim.device.api.crypto.HMACKey;
+import net.rim.device.api.crypto.SHA1Digest;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.system.ApplicationDescriptor;
 import net.rim.device.api.system.Branding;
@@ -13,14 +14,15 @@ import net.rim.device.api.system.IDENInfo;
 import net.rim.device.api.system.Memory;
 import net.rim.device.api.system.RadioInfo;
 import net.rim.device.api.system.WLAN;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Keypad;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.CharacterUtilities;
@@ -79,11 +81,11 @@ final class EngScreenSecurity extends MainScreen implements ListFieldCallback {
       this.setupHeaders();
       this.setupInfoStrings();
       this.generateHash();
-      this.setTitle((Field)(new Object(this._rb.getString(2))));
-      this._help = (RichTextField)(new Object(this._helpString, 36028797018963968L));
+      this.setTitle(new LabelField(this._rb.getString(2)));
+      this._help = new RichTextField(this._helpString, 36028797018963968L);
       this.add(this._help);
-      this.add((Field)(new Object()));
-      this._list = (ListField)(new Object(this._elements.size(), 18014398509481984L));
+      this.add(new SeparatorField());
+      this._list = new ListField(this._elements.size(), 18014398509481984L);
       this._list.setCallback(this);
       this.add(this._list);
    }
@@ -149,7 +151,7 @@ final class EngScreenSecurity extends MainScreen implements ListFieldCallback {
    private final String getInfoString(int i) {
       switch (i) {
          case -1:
-            throw new Object();
+            throw new RuntimeException();
          case 0:
          default:
             return Integer.toString(Branding.getVendorId());
@@ -166,7 +168,7 @@ final class EngScreenSecurity extends MainScreen implements ListFieldCallback {
                str = "0.9";
             }
 
-            return ((StringBuffer)(new Object())).append(str).append(" (199)").toString();
+            return str + " (199)";
          case 3: {
             int value = DeviceInfo.getDeviceId();
             return Integer.toHexString(value);
@@ -186,7 +188,7 @@ final class EngScreenSecurity extends MainScreen implements ListFieldCallback {
                   return this._rb.getString(204);
                }
 
-               return ((StringBuffer)(new Object())).append(String.valueOf(signalLevel)).append(this._rb.getString(201)).toString();
+               return signalLevel + this._rb.getString(201);
             }
          case 7: {
             int value = DeviceInfo.getBatteryLevel();
@@ -197,19 +199,19 @@ final class EngScreenSecurity extends MainScreen implements ListFieldCallback {
                value = 0;
             }
 
-            return ((StringBuffer)(new Object())).append(String.valueOf(value)).append(this._rb.getString(202)).toString();
+            return value + this._rb.getString(202);
          }
          case 8:
-            return ((StringBuffer)(new Object())).append(Memory.getFlashFree()).append(this._rb.getString(203)).toString();
+            return Memory.getFlashFree() + this._rb.getString(203);
          case 9:
-            return ((StringBuffer)(new Object())).append(Memory.getFlashTotal()).append(this._rb.getString(203)).toString();
+            return Memory.getFlashTotal() + this._rb.getString(203);
          case 10:
             return Integer.toHexString(CDMAInfo.getESN());
          case 11:
             try {
                byte[] mac = WLAN.getMACAddress();
                if (mac != null) {
-                  StringBuffer sb = (StringBuffer)(new Object(mac.length * 3));
+                  StringBuffer sb = new StringBuffer(mac.length * 3);
 
                   for (int j = 0; j < mac.length; j++) {
                      if (sb.length() > 1) {
@@ -226,13 +228,13 @@ final class EngScreenSecurity extends MainScreen implements ListFieldCallback {
             }
          case 5:
             this._uptimeString = Long.toString(InternalServices.getUptime() / 1000);
-            return ((StringBuffer)(new Object())).append(this._uptimeString).append(this._rb.getString(200)).toString();
+            return this._uptimeString + this._rb.getString(200);
       }
    }
 
    private final void generateHash() {
       try {
-         HMAC hmac = (HMAC)(new Object((HMACKey)(new Object("Up the time stream without a TARDIS".getBytes())), (Digest)(new Object())));
+         HMAC hmac = new HMAC(new HMACKey("Up the time stream without a TARDIS".getBytes()), new SHA1Digest());
 
          for (int i = 0; i < 5; i++) {
             hmac.reset();
@@ -257,7 +259,7 @@ final class EngScreenSecurity extends MainScreen implements ListFieldCallback {
             }
 
             int[] accessKey = this.createAccessKey(hmac.getMAC());
-            Digest digest = (Digest)(new Object());
+            Digest digest = new SHA1Digest();
             digest.update(93 ^ this.get(3));
             digest.update(32 ^ this.get(7));
             digest.update(192 ^ this.get(13));
@@ -270,7 +272,7 @@ final class EngScreenSecurity extends MainScreen implements ListFieldCallback {
             this._accessKeys[i] = digest.getDigest();
          }
       } finally {
-         throw new Object();
+         throw new RuntimeException();
       }
    }
 
@@ -295,12 +297,12 @@ final class EngScreenSecurity extends MainScreen implements ListFieldCallback {
       } else if (nibble >= 10 && nibble <= 15) {
          return (char)(nibble - 10 + 97);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    private final void setupElements() {
-      this._elements = (IntVector)(new Object());
+      this._elements = new IntVector();
       this._elements.addElement(0);
       this._elements.addElement(1);
       this._elements.addElement(2);
@@ -337,7 +339,7 @@ final class EngScreenSecurity extends MainScreen implements ListFieldCallback {
       if (data != null) {
          label19:
          try {
-            this._helpString = (String)(new Object(data, "UTF8"));
+            this._helpString = new String(data, "UTF8");
             return;
          } finally {
             break label19;
@@ -348,7 +350,7 @@ final class EngScreenSecurity extends MainScreen implements ListFieldCallback {
    }
 
    private final void setupInfoStrings() {
-      this._info = new Object[this._elements.size()];
+      this._info = new String[this._elements.size()];
 
       for (int i = 0; i < this._info.length; i++) {
          this._info[i] = this.getInfoString(this._elements.elementAt(i));
@@ -390,7 +392,7 @@ final class EngScreenSecurity extends MainScreen implements ListFieldCallback {
 
    @Override
    public final Object get(ListField listField, int index) {
-      StringBuffer strBuf = (StringBuffer)(new Object(32));
+      StringBuffer strBuf = new StringBuffer(32);
       if (this._headers != null) {
          strBuf.append(this._headers[this._elements.elementAt(index)]);
       }
@@ -427,7 +429,7 @@ final class EngScreenSecurity extends MainScreen implements ListFieldCallback {
       key = Keypad.map(Keypad.key(keycode), Keypad.status(keycode) & -2);
       this._last4Keys <<= 8;
       this._last4Keys |= key;
-      Digest digest = (Digest)(new Object());
+      Digest digest = new SHA1Digest();
       digest.update(93 ^ this.get(3));
       digest.update(32 ^ this.get(7));
       digest.update(192 ^ this.get(13));

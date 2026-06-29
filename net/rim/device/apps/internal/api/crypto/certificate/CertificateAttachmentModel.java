@@ -35,13 +35,13 @@ public class CertificateAttachmentModel extends UnknownMimePartModel implements 
       super(initialData);
       ContextObject contextObject = ContextObject.castOrCreate(initialData);
       Object certificateDataObject = contextObject.get(316628257119802273L);
-      if (certificateDataObject instanceof Object) {
+      if (certificateDataObject instanceof Certificate) {
          Certificate certificate = (Certificate)certificateDataObject;
-         this._certificates = new Object[]{certificate};
+         this._certificates = new Certificate[]{certificate};
       }
 
       Object friendlyNameObject = contextObject.get(-4886909117188079897L);
-      if (friendlyNameObject instanceof Object) {
+      if (friendlyNameObject instanceof String) {
          String friendlyName = (String)friendlyNameObject;
          this.setOutgoingDisplayName(friendlyName);
       }
@@ -95,25 +95,25 @@ public class CertificateAttachmentModel extends UnknownMimePartModel implements 
 
    @Override
    public boolean convert(Object context, Object target) {
-      if (!(target instanceof Object)) {
-         if (target instanceof Object && ContextObject.getFlag(context, 54) && ContextObject.getFlag(context, 43)) {
+      if (!(target instanceof RIMMessagingOutgoingMessage)) {
+         if (target instanceof MIMEOutputStream && ContextObject.getFlag(context, 54) && ContextObject.getFlag(context, 43)) {
             MIMEOutputStream outputStream = (MIMEOutputStream)target;
             MIMEOutputStream mime = outputStream.getPartOutputStream(false, this.getOutgoingMIMEEncoding());
             mime.setContentType(this.getOutgoingMIMEContentType());
-            String name = (String)(new Object(this.getNameBytes()));
+            String name = new String(this.getNameBytes());
             mime.addContentTypeParameter("name", name);
-            mime.addHeaderField(((StringBuffer)(new Object("Content-Disposition: attachment;\r\n\tfilename="))).append(name).toString());
+            mime.addHeaderField("Content-Disposition: attachment;\r\n\tfilename=" + name);
             return this.writeToOutputStream(mime);
          } else {
             return false;
          }
       } else {
          RIMMessagingOutgoingMessage message = (RIMMessagingOutgoingMessage)target;
-         ByteArrayOutputStream byteArrayOutputStream = (ByteArrayOutputStream)(new Object());
+         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
          this.writeToOutputStream(byteArrayOutputStream);
          ContextObject contextObject = (ContextObject)context;
          ContentPartIDGenerator contentPartIDGenerator = (ContentPartIDGenerator)contextObject.get(-1943436819741481055L);
-         CMIMEParameters parameters = (CMIMEParameters)(new Object((DataBuffer)(new Object()), 2, 1));
+         CMIMEParameters parameters = new CMIMEParameters(new DataBuffer(), 2, 1);
          parameters.add((byte)-14, this.getNameBytes());
          parameters.addCMIMEInteger((byte)-15, contentPartIDGenerator.generateContentPartID());
          message.addAttachment(byteArrayOutputStream.toByteArray(), parameters, "application/octet-stream");
@@ -136,7 +136,7 @@ public class CertificateAttachmentModel extends UnknownMimePartModel implements 
 
    protected void setOutgoingDisplayName(String outgoingDisplayName) {
       this._outgoingDisplayName = outgoingDisplayName;
-      this.setNameBytes(((StringBuffer)(new Object())).append(outgoingDisplayName).append(this.getDefaultFileExtension()).toString().getBytes());
+      this.setNameBytes((outgoingDisplayName + this.getDefaultFileExtension()).getBytes());
    }
 
    public Image getImage() {
@@ -196,7 +196,7 @@ public class CertificateAttachmentModel extends UnknownMimePartModel implements 
       if (this._outgoingDisplayName != null) {
          return this._outgoingDisplayName;
       } else if (this.isMoreAvailable()) {
-         return (String)(new Object(this.getNameBytes()));
+         return new String(this.getNameBytes());
       } else {
          return this._certificates != null && this._certificates[index] != null
             ? this._certificates[index].getSubjectFriendlyName()

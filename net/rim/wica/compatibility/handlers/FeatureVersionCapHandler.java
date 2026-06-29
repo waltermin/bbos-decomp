@@ -27,7 +27,7 @@ public class FeatureVersionCapHandler implements CapabilityHandler {
 
    private boolean areVersionsCompatible(VersionContext versionContext) {
       if (versionContext == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       boolean result = true;

@@ -49,7 +49,7 @@ final class WMLScriptBrowser implements IBrowser {
       }
 
       if (cardUrl.indexOf(35) == -1 && withCardId) {
-         cardUrl = ((StringBuffer)(new Object())).append(cardUrl).append('#').append(this._browserContent.getWMLBrowserField().getCurrentCardId()).toString();
+         cardUrl = cardUrl + '#' + this._browserContent.getWMLBrowserField().getCurrentCardId();
       }
 
       return cardUrl;
@@ -114,9 +114,9 @@ final class WMLScriptBrowser implements IBrowser {
          return null;
       }
 
-      HttpHeaders requestHeaders = (HttpHeaders)(new Object());
+      HttpHeaders requestHeaders = new HttpHeaders();
       RenderingUtilities.setReferrer(requestHeaders, this._url);
-      RequestedResource resource = (RequestedResource)(new Object(url, requestHeaders, 0));
+      RequestedResource resource = new RequestedResource(url, requestHeaders, 0);
       HttpConnection conn = this._renderingApplication.getResource(resource, null);
       if (conn == null) {
          return null;
@@ -135,9 +135,9 @@ final class WMLScriptBrowser implements IBrowser {
             }
 
             byte[] data = RendererControl.readBytesFromInputStream(conn.openInputStream());
-            return (String)(data != null ? new Object(data) : null);
+            return data != null ? new String(data) : null;
          } else {
-            return ((StringBuffer)(new Object("0xafe0c74c3e6cf312L "))).append(status).toString();
+            return "0xafe0c74c3e6cf312L " + status;
          }
       } finally {
          ;

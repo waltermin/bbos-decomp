@@ -14,18 +14,18 @@ public final class CustomDictUnitEditor {
 
    public final Object open(Object initialObject) {
       this._model = null;
-      this._context = (ContextObject)(new Object(0, 2, 6));
+      this._context = new ContextObject(0, 2, 6);
       return this.open(CommonResource.getString(13), initialObject);
    }
 
    public final Object open(CustomDictUnitModel model) {
       this._model = model;
-      this._context = (ContextObject)(new Object(0, 2));
+      this._context = new ContextObject(0, 2);
       return this.open(CommonResource.getString(16), model);
    }
 
    private final Object open(String appendToTitle, Object initialObject) {
-      StringBuffer titleBuffer = (StringBuffer)(new Object(OptionsResources.getString(1491)));
+      StringBuffer titleBuffer = new StringBuffer(OptionsResources.getString(1491));
       titleBuffer.append(':');
       titleBuffer.append(' ');
       titleBuffer.append(appendToTitle);
@@ -34,11 +34,11 @@ public final class CustomDictUnitEditor {
          entry = "";
       } else if (initialObject == null) {
          entry = "";
-      } else if (!(initialObject instanceof Object)) {
+      } else if (!(initialObject instanceof String)) {
          if (initialObject instanceof CustomDictUnitModel) {
             Object obj = ((CustomDictUnitModel)initialObject).getEntry();
-            if (!(obj instanceof Object)) {
-               if (obj instanceof Object) {
+            if (!(obj instanceof String)) {
+               if (obj instanceof JapaneseCustomWord) {
                   this._mainScreen = this.createMainScreen("", "");
                   if (this._mainScreen instanceof CustomDictUnitEditor$JapaneseCustomDictEditorScreen) {
                      ((CustomDictUnitEditor$JapaneseCustomDictEditorScreen)this._mainScreen).init((JapaneseCustomWord)obj);

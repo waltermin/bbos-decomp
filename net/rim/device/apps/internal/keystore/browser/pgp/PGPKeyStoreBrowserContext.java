@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.keystore.browser.pgp;
 import net.rim.device.api.crypto.CryptoSystemProperties;
 import net.rim.device.api.crypto.certificate.Certificate;
 import net.rim.device.api.crypto.certificate.CertificateStatusProviderFacade;
+import net.rim.device.api.crypto.certificate.pgp.PGPCertificate;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.PGPKeyStore;
 import net.rim.device.apps.api.utility.framework.VerbToMenu;
@@ -14,7 +15,7 @@ import net.rim.device.apps.internal.keystore.browser.KeyStoreBrowserResources;
 import net.rim.device.apps.internal.keystore.browser.KeyStoreBrowserVerb;
 
 public final class PGPKeyStoreBrowserContext implements KeyStoreBrowserContext {
-   private KeyStoreBrowserVerb _fetchCertUpdateVerb = (KeyStoreBrowserVerb)(new Object(6, 1200242));
+   private KeyStoreBrowserVerb _fetchCertUpdateVerb = new KeyStoreBrowserVerb(6, 1200242);
    private CryptoSystemProperties _pgpCryptoSystemProperties;
    private static final int[] REVOCATION_REASONS = new int[]{
       0,
@@ -69,7 +70,7 @@ public final class PGPKeyStoreBrowserContext implements KeyStoreBrowserContext {
 
    @Override
    public final boolean isCertificateTypeSupported(Certificate certificate) {
-      return certificate instanceof Object;
+      return certificate instanceof PGPCertificate;
    }
 
    @Override

@@ -9,9 +9,9 @@ public class Result implements CollectionEventSource {
    private int _fields;
    int _transactionId;
    int _action;
-   SortedReadableList _matches = (SortedReadableList)(new Object(
+   SortedReadableList _matches = new SortedReadableList(
       AddressBookServices.getAddressBook().getComparator(null, AddressBookServices.getAddressBook().getAddressBookOptions().getSortOrder())
-   ));
+   );
    int _availableMatches;
    int _errorCode;
    String _errorString;
@@ -39,7 +39,7 @@ public class Result implements CollectionEventSource {
    }
 
    void setErrorString(byte[] str) {
-      this._errorString = (String)(new Object(str));
+      this._errorString = new String(str);
       this._fields |= 2;
    }
 
@@ -78,7 +78,7 @@ public class Result implements CollectionEventSource {
    }
 
    RIMModel getAddress(int index) {
-      return (RIMModel)(index < this._matches.size() ? this._matches.getAt(index) : null);
+      return index < this._matches.size() ? (RIMModel)this._matches.getAt(index) : null;
    }
 
    boolean hasError() {

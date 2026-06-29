@@ -2,6 +2,7 @@ package net.rim.device.api.crypto.encoder;
 
 import java.io.InputStream;
 import net.rim.device.api.crypto.CryptoSystem;
+import net.rim.device.api.crypto.InvalidKeyEncodingException;
 import net.rim.device.api.crypto.PublicKey;
 import net.rim.device.api.crypto.asn1.ASN1EncodingException;
 import net.rim.device.api.crypto.asn1.ASN1InputByteArray;
@@ -13,9 +14,9 @@ public class X509_PublicKeyDecoder extends PublicKeyDecoder {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   protected PublicKey decodeKey(InputStream encodedKey, CryptoSystem cryptoSystem, String keyAlgorithm) {
+   protected PublicKey decodeKey(InputStream encodedKey, CryptoSystem cryptoSystem, String keyAlgorithm) throws InvalidKeyEncodingException {
       if (encodedKey == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       boolean var14 = false /* VF: Semaphore variable */;
@@ -39,7 +40,7 @@ public class X509_PublicKeyDecoder extends PublicKeyDecoder {
          }
 
          if (_keyAlgorithm == null) {
-            throw new Object();
+            throw new InvalidKeyEncodingException();
          }
 
          X509_PublicKeyDecoder keyDecoder = (X509_PublicKeyDecoder)PublicKeyDecoder.getDecoder("X509", _keyAlgorithm);
@@ -48,15 +49,15 @@ public class X509_PublicKeyDecoder extends PublicKeyDecoder {
          var14 = false;
       } finally {
          if (var14) {
-            throw new Object();
+            throw new InvalidKeyEncodingException();
          }
       }
 
-      throw new Object();
+      throw new InvalidKeyEncodingException();
    }
 
    protected PublicKey decodeKey(ASN1InputByteArray parameters, String algorithm, byte[] subjectPublicKey, CryptoSystem cryptoSystem) {
-      throw new Object();
+      throw new RuntimeException();
    }
 
    @Override

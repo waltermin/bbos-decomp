@@ -36,7 +36,7 @@ class AbstractViewVerb extends Verb implements SetParameter, Copyable, MemoryCle
       super._ordering = 1131008;
       this._address = (PersistableRIMModel)this._context.get(250);
       this._addressCard = (PersistableRIMModel)this._context.get(252);
-      if (this._address instanceof Object) {
+      if (this._address instanceof MailingAddressModelImpl) {
          MailingAddressModelImpl model = (MailingAddressModelImpl)this._address;
          if (model.getType() == 1) {
             super._ordering++;

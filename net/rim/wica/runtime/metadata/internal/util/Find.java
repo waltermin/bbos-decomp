@@ -40,7 +40,7 @@ public final class Find {
 
             int endIndex = expression.indexOf(32, index);
             if (endIndex != -1 && expression.substring(index, endIndex).equalsIgnoreCase("orderby")) {
-               IntVector orderByFields = (IntVector)(new Object());
+               IntVector orderByFields = new IntVector();
                int var28 = endIndex + 1;
                endIndex = expression.indexOf(32, var28);
                if (endIndex == -1) {
@@ -62,7 +62,7 @@ public final class Find {
 
                this.sort(results, dataCollection, handles, orderByFields.getArray(), asc);
             } else {
-               IntVector dataFields = (IntVector)(new Object());
+               IntVector dataFields = new IntVector();
                int var22 = expression.indexOf(60);
                int operator;
                if (var22 != -1) {
@@ -84,7 +84,7 @@ public final class Find {
                   } else {
                      var22 = expression.indexOf(61);
                      if (var22 == -1) {
-                        throw new MetadataException(((StringBuffer)(new Object("Not recognized operation in "))).append(expression).toString());
+                        throw new MetadataException("Not recognized operation in " + expression);
                      }
 
                      if (expression.charAt(var22 - 1) == '!') {
@@ -132,9 +132,7 @@ public final class Find {
                      }
                      break;
                   default:
-                     throw new MetadataException(
-                        ((StringBuffer)(new Object("Error in value to compare: not specified properly in "))).append(expression).toString()
-                     );
+                     throw new MetadataException("Error in value to compare: not specified properly in " + expression);
                }
 
                int var25 = endIndex;
@@ -149,7 +147,7 @@ public final class Find {
                   return;
                }
 
-               IntVector orderByFields = (IntVector)(new Object());
+               IntVector orderByFields = new IntVector();
                int var26 = expression.indexOf(32, var25) + 1;
                endIndex = expression.indexOf(32, var26);
                if (endIndex == -1) {
@@ -177,7 +175,7 @@ public final class Find {
             e = var19;
          }
       } catch (Throwable var20) {
-         throw new MetadataException(((StringBuffer)(new Object("Error during findWhere: "))).append(e.getMessage()).toString());
+         throw new MetadataException("Error during findWhere: " + e.getMessage());
       }
 
       throw e;
@@ -219,7 +217,7 @@ public final class Find {
 
                dc = this._wiclet.getDataCollection((int)(handle >> 32));
                if (var18 == data.length - 1) {
-                  boolean equals = dc.equals(handle, value);
+                  boolean equals = dc.equals(handle, (Long)value);
                   if (equals && operator == 1 || !equals && operator == 0) {
                      if (orderByField != null) {
                         this.addFoundElement(results, dataCollection, all[index], orderByField, asc);
@@ -299,7 +297,7 @@ public final class Find {
    }
 
    private final long parseFields(ComponentDef def, String data, IntVector dataFields) {
-      StringTokenizer dataTokenizer = (StringTokenizer)(new Object(data, '.'));
+      StringTokenizer dataTokenizer = new StringTokenizer(data, '.');
 
       while (true) {
          int field = def.getFieldHandle(dataTokenizer.nextToken());

@@ -1,15 +1,19 @@
 package net.rim.device.cldc.io.data;
 
 import com.sun.cldc.io.ConnectionBaseInterface;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.microedition.io.Connection;
 import javax.microedition.io.HttpConnection;
+import net.rim.device.api.io.Base64InputStream;
 import net.rim.device.api.util.NumberUtilities;
 import net.rim.device.api.util.StringUtilities;
+import net.rim.device.cldc.io.utility.MalformedURLException;
 
 public final class Protocol implements ConnectionBaseInterface, HttpConnection {
    private String _name;
@@ -23,10 +27,10 @@ public final class Protocol implements ConnectionBaseInterface, HttpConnection {
    }
 
    @Override
-   public final Connection openPrim(String name, int mode, boolean timeouts) {
+   public final Connection openPrim(String name, int mode, boolean timeouts) throws MalformedURLException {
       int endOfType = name.indexOf(44);
       if (endOfType == -1) {
-         throw new Object("Missing required comma");
+         throw new MalformedURLException("Missing required comma");
       }
 
       int semicolon = name.indexOf(59, endOfType + 1);
@@ -53,7 +57,7 @@ public final class Protocol implements ConnectionBaseInterface, HttpConnection {
       }
 
       if (this._type.charAt(0) == ';') {
-         this._type = ((StringBuffer)(new Object("text/plain"))).append(this._type).toString();
+         this._type = "text/plain" + this._type;
       }
 
       return this;
@@ -76,23 +80,23 @@ public final class Protocol implements ConnectionBaseInterface, HttpConnection {
 
    @Override
    public final InputStream openInputStream() {
-      InputStream is = (InputStream)(new Object(this._data));
-      return (InputStream)(this._base64Encoded ? new Object(is) : is);
+      InputStream is = new ByteArrayInputStream(this._data);
+      return this._base64Encoded ? new Base64InputStream(is) : is;
    }
 
    @Override
    public final DataInputStream openDataInputStream() {
-      return (DataInputStream)(new Object(this.openInputStream()));
+      return new DataInputStream(this.openInputStream());
    }
 
    @Override
-   public final OutputStream openOutputStream() {
-      throw new Object("Read only");
+   public final OutputStream openOutputStream() throws IOException {
+      throw new IOException("Read only");
    }
 
    @Override
-   public final DataOutputStream openDataOutputStream() {
-      throw new Object("Read only");
+   public final DataOutputStream openDataOutputStream() throws IOException {
+      throw new IOException("Read only");
    }
 
    @Override
@@ -102,7 +106,7 @@ public final class Protocol implements ConnectionBaseInterface, HttpConnection {
 
    @Override
    public final String getURL() {
-      return ((StringBuffer)(new Object("data:"))).append(this._name).toString();
+      return "data:" + this._name;
    }
 
    @Override
@@ -212,7 +216,7 @@ public final class Protocol implements ConnectionBaseInterface, HttpConnection {
       }
 
       int length = str.length();
-      StringBuffer buffer = (StringBuffer)(new Object(length));
+      StringBuffer buffer = new StringBuffer(length);
 
       for (int i = 0; i < length; i++) {
          char ch = str.charAt(i);
@@ -247,7 +251,7 @@ public final class Protocol implements ConnectionBaseInterface, HttpConnection {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private static final byte[] uriDecodeToBytes(String str) {
       int length = str.length();
-      ByteArrayOutputStream baos = (ByteArrayOutputStream)(new Object(length));
+      ByteArrayOutputStream baos = new ByteArrayOutputStream(length);
 
       for (int i = 0; i < length; i++) {
          char ch = str.charAt(i);

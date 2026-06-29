@@ -21,7 +21,7 @@ public final class SMIMECertificateMatchProvider implements MatchProvider {
 
    @Override
    public final int match(Object searchCriteria) {
-      if (searchCriteria instanceof Object) {
+      if (searchCriteria instanceof X509Certificate) {
          X509Certificate cert = (X509Certificate)searchCriteria;
          if (this._ids != null) {
             return this.matchByCMSEntityIdentifier(cert);
@@ -58,7 +58,7 @@ public final class SMIMECertificateMatchProvider implements MatchProvider {
    }
 
    private final int matchByCertificateHash(X509Certificate cert) {
-      SHA1Digest digest = (SHA1Digest)(new Object());
+      SHA1Digest digest = new SHA1Digest();
       digest.update(cert.getEncoding());
       return Arrays.equals(digest.getDigest(), this._certificateHash) ? 1 : 0;
    }

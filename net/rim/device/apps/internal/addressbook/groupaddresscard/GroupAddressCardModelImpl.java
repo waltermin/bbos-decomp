@@ -11,13 +11,13 @@ import net.rim.device.api.system.PersistentObject;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.api.util.StringMatch;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
-import net.rim.device.apps.api.addressbook.AddressCardElement;
 import net.rim.device.apps.api.addressbook.GroupAddressCardModel;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.ConversionProvider;
@@ -102,7 +102,7 @@ public final class GroupAddressCardModelImpl
                }
             }
 
-            Verb[] composeVerbs = new Object[0];
+            Verb[] composeVerbs = new Verb[0];
             Verb[] tmpVerbs = null;
             if (email) {
                tmpVerbs = VerbRepository.getVerbRepository(-7881764549058890736L).getVerbs(-2985347935260258684L);
@@ -189,8 +189,8 @@ public final class GroupAddressCardModelImpl
 
    @Override
    public final int match(Object searchCriteria) {
-      if (!(searchCriteria instanceof Object)) {
-         return Match.match(this, this, (Object[])searchCriteria, _hints);
+      if (!(searchCriteria instanceof SearchCriterion)) {
+         return Match.match(this, this, (SearchCriterion[])searchCriteria, _hints);
       }
 
       SearchCriterion crit = (SearchCriterion)searchCriteria;
@@ -222,7 +222,7 @@ public final class GroupAddressCardModelImpl
          }
       }
 
-      StringMatch matcher = (StringMatch)(new Object((Object[])values[2], false, false));
+      StringMatch matcher = new StringMatch((String[])values[2], false, false);
       String name = this.getName();
       return name != null && name.length() > 0 && matcher.indexOf(name) >= 0 ? 1 : 0;
    }
@@ -248,7 +248,7 @@ public final class GroupAddressCardModelImpl
          syncBuffer.addField(32, this.getName());
 
          for (int i = 0; i < this.size(); i++) {
-            DataBuffer infoBuff = (DataBuffer)(new Object(false));
+            DataBuffer infoBuff = new DataBuffer(false);
             infoBuff.writeInt(this._members[i].getUID());
             infoBuff.writeByte(this._members[i].getEmailIndex() + 1);
             infoBuff.writeInt(this._members[i].getAddressCardSyncFieldId());
@@ -257,19 +257,19 @@ public final class GroupAddressCardModelImpl
 
          syncBuffer.addInt(46, this.size(), 4);
          return true;
-      } else if (ContextObject.getFlag(context, 10) && target instanceof Object[]) {
+      } else if (ContextObject.getFlag(context, 10) && target instanceof String[]) {
          GroupAddressCardModelImpl gacm = (GroupAddressCardModelImpl)AddressBookServices.getAddressCard(this._uid);
          if (gacm == null) {
-            Status.show(((StringBuffer)(new Object())).append(AddressBookResources.getString(1716)).append(this.getName()).toString());
+            Status.show(AddressBookResources.getString(1716) + this.getName());
          }
 
-         String[] results = (Object[])target;
+         String[] results = (String[])target;
          Array.resize(results, this.size() * 2);
 
          for (int i = 0; i < this.size(); i++) {
-            String[] nameAndAddressStrings = new Object[2];
+            String[] nameAndAddressStrings = new String[2];
             RIMModel rm = this._members[i].getAddressModel();
-            if (rm instanceof Object) {
+            if (rm instanceof ConversionProvider) {
                ConversionProvider converter = (ConversionProvider)rm;
                converter.convert(context, nameAndAddressStrings);
                results[i * 2] = nameAndAddressStrings[0];
@@ -476,16 +476,14 @@ public final class GroupAddressCardModelImpl
    public final Field getField(Object context) {
       long flags = 18014398509481984L;
       if (ContextObject.getFlag(context, 16)) {
-         return (Field)(new Object("", this.getName()));
+         return new EditField("", this.getName());
       }
 
       if (ContextObject.getFlag(context, 17)) {
          flags |= 64;
       }
 
-      LabelField field = (LabelField)(new Object(
-         ((StringBuffer)(new Object())).append(this.getName()).append(" (").append(AddressBookResources.getString(1006)).append(')').toString(), flags
-      ));
+      LabelField field = new LabelField(this.getName() + " (" + AddressBookResources.getString(1006) + ')', flags);
       field.setCookie(this);
       return field;
    }
@@ -521,7 +519,7 @@ public final class GroupAddressCardModelImpl
 
    @Override
    public final void warnUserSomeAddressesCannotReceive(String messageTypeString) {
-      String[] messageType = new Object[]{messageTypeString};
+      String[] messageType = new String[]{messageTypeString};
       String text = MessageFormat.format(AddressBookResources.getString(1739), messageType);
       Dialog.alert(text);
    }
@@ -627,7 +625,7 @@ public final class GroupAddressCardModelImpl
          if (initialData != null) {
             ContextObject contextObject = ContextObject.verifyNonNull(initialData);
             Object test = contextObject.get(253);
-            this.setName((String)(test != null ? test : ""));
+            this.setName(test != null ? (String)test : "");
             this._uid = contextObject.getIntegerData(UIDGenerator.getUID());
             return;
          }
@@ -640,7 +638,7 @@ public final class GroupAddressCardModelImpl
 
          for (int i = 0; i < other._members.length; i++) {
             Object element = other._members[i];
-            if (element instanceof Object) {
+            if (element instanceof Copyable) {
                this.add(((Copyable)element).copy());
             }
          }
@@ -657,6 +655,6 @@ public final class GroupAddressCardModelImpl
 
    @Override
    public final boolean equals(Object o) {
-      return this == o ? true : o instanceof Object && ((AddressCardElement)o).getUID() == this._uid;
+      return this == o ? true : o instanceof GroupAddressCardModel && ((GroupAddressCardModel)o).getUID() == this._uid;
    }
 }

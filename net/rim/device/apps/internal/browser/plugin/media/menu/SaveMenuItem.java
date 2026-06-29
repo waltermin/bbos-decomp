@@ -1,7 +1,7 @@
 package net.rim.device.apps.internal.browser.plugin.media.menu;
 
 import net.rim.device.api.browser.field.BrowserContent;
-import net.rim.device.api.browser.field.Event;
+import net.rim.device.api.browser.field.UrlRequestedEvent;
 import net.rim.device.api.io.MIMETypeAssociations;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.Dialog;
@@ -40,7 +40,7 @@ public final class SaveMenuItem extends MenuItem {
          );
       } else {
          BrowserContent browserContent = this._field.getBrowserContent();
-         browserContent.getRenderingApplication().eventOccurred((Event)(new Object(browserContent, this._contentUrl, null, null, false, 0)));
+         browserContent.getRenderingApplication().eventOccurred(new UrlRequestedEvent(browserContent, this._contentUrl, null, null, false, 0));
       }
    }
 }

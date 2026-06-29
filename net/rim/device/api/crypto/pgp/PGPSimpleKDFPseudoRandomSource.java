@@ -2,6 +2,7 @@ package net.rim.device.api.crypto.pgp;
 
 import net.rim.device.api.crypto.AbstractPseudoRandomSource;
 import net.rim.device.api.crypto.Digest;
+import net.rim.device.api.crypto.SHA1Digest;
 
 public final class PGPSimpleKDFPseudoRandomSource extends AbstractPseudoRandomSource implements PGPPseudoRandomSource {
    byte[] _passPhrase;
@@ -20,10 +21,10 @@ public final class PGPSimpleKDFPseudoRandomSource extends AbstractPseudoRandomSo
       if (passPhrase != null && offset >= 0 && length >= 0 && passPhrase.length - length >= offset) {
          this._passPhrase = new byte[length];
          System.arraycopy(passPhrase, offset, this._passPhrase, 0, length);
-         this._digest = (Digest)(digest == null ? new Object() : digest);
+         this._digest = digest == null ? new SHA1Digest() : digest;
          this._digestLength = this._digest.getDigestLength();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -74,7 +75,7 @@ public final class PGPSimpleKDFPseudoRandomSource extends AbstractPseudoRandomSo
             buffer[offset + i] = (byte)(buffer[offset + i] ^ passPhraseHash[i]);
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

@@ -34,7 +34,7 @@ public final class RIPEMD128Digest extends AbstractDigest implements Digest {
             length -= updated;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -61,7 +61,7 @@ public final class RIPEMD128Digest extends AbstractDigest implements Digest {
       digest.update(SelfTestData.PLAIN_TEXT_DIGEST, 0, SelfTestData.PLAIN_TEXT_DIGEST.length);
       digest.getDigest(target, 0);
       if (!Arrays.equals(target, 0, DIGEST_TEXT, 0, 16)) {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
    }
 

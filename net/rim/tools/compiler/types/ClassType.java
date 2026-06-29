@@ -40,7 +40,7 @@ public final class ClassType extends ReferenceType {
    private boolean _defined;
    private boolean _extended;
    private Object _classInfo;
-   private static StringBuffer _stringBuffer = (StringBuffer)(new Object());
+   private static StringBuffer _stringBuffer = new StringBuffer();
    private static final int NUM_RESERVED_STATICS = 2;
 
    public ClassType(String name, String packageName) {
@@ -66,7 +66,7 @@ public final class ClassType extends ReferenceType {
    public final String getFullName() {
       if (this._fullName == null) {
          if (this._packageName != null && this._packageName.length() != 0) {
-            this._fullName = ((StringBuffer)(new Object())).append(this._packageName).append('.').append(super._typeName).toString();
+            this._fullName = this._packageName + '.' + super._typeName;
          } else {
             this._fullName = super._typeName;
          }
@@ -126,7 +126,7 @@ public final class ClassType extends ReferenceType {
 
    private final void addInterface(ClassType ifaceClassType) {
       if (this._interfaces == null) {
-         this._interfaces = (Vector)(new Object());
+         this._interfaces = new Vector();
       }
 
       if (!this.implementsInterface(ifaceClassType)) {
@@ -191,7 +191,7 @@ public final class ClassType extends ReferenceType {
 
    public final Field addData(Compiler compiler, String memberName, Type type, int modifiers, Constant value) throws CompileException, DuplicateException {
       if (!StringHelper.validateIdentifier(memberName)) {
-         throw new CompileException(this.getFullName(), ((StringBuffer)(new Object("Invalid member name: "))).append(memberName).toString());
+         throw new CompileException(this.getFullName(), "Invalid member name: " + memberName);
       }
 
       if (this.findField(compiler, memberName, type, false, false) != null) {
@@ -320,13 +320,9 @@ public final class ClassType extends ReferenceType {
       Method otherMethod = this.findDuplicate(method);
       if (otherMethod != null) {
          if (method.getType() == otherMethod.getType()) {
-            compiler.generateWarning(
-               false, this.getFullName(), ((StringBuffer)(new Object("Duplicate definition found for method: "))).append(method.getName()).toString()
-            );
+            compiler.generateWarning(false, this.getFullName(), "Duplicate definition found for method: " + method.getName());
          } else {
-            compiler.generateWarning(
-               true, this.getFullName(), ((StringBuffer)(new Object("Duplicate method only differs by return type: "))).append(method.getName()).toString()
-            );
+            compiler.generateWarning(true, this.getFullName(), "Duplicate method only differs by return type: " + method.getName());
          }
 
          method.addModifiers(134217728);
@@ -524,7 +520,7 @@ public final class ClassType extends ReferenceType {
             compiler.generateWarning(false, this.getFullName(), "No definition found");
          } else {
             if (!StringHelper.validateIdentifier(super._typeName)) {
-               throw new CompileException(this.getFullName(), ((StringBuffer)(new Object("Invalid class name: "))).append(super._typeName).toString());
+               throw new CompileException(this.getFullName(), "Invalid class name: " + super._typeName);
             }
 
             if (this._baseClassType == null && this == compiler.getObjectClass() && this.is(131072)) {
@@ -536,7 +532,7 @@ public final class ClassType extends ReferenceType {
 
                this._baseSize = 0;
                Vector vt = compiler.getObjectClassVTable();
-               this._vtable = (Vector)(new Object(vt.size()));
+               this._vtable = new Vector(vt.size());
                this._vtable.setSize(vt.size());
                this._isOverride = new boolean[vt.size()];
 
@@ -572,10 +568,10 @@ public final class ClassType extends ReferenceType {
                      compiler.addPotentialMIDlet(this);
                   }
                } else {
-                  this._vtable = (Vector)(new Object());
+                  this._vtable = new Vector();
                }
             } else {
-               this._vtable = (Vector)(new Object());
+               this._vtable = new Vector();
             }
 
             if (this._baseClassType == null) {
@@ -595,11 +591,7 @@ public final class ClassType extends ReferenceType {
                   this.addInterface(ifaceClassType);
                   if (!ifaceClassType.isDefined()) {
                      this.addModifiers(134217728);
-                     compiler.generateWarning(
-                        true,
-                        this.getFullName(),
-                        ((StringBuffer)(new Object("Implements undefined interface: "))).append(ifaceClassType.getFullName()).toString()
-                     );
+                     compiler.generateWarning(true, this.getFullName(), "Implements undefined interface: " + ifaceClassType.getFullName());
                      this._baseInterfaces[i] = null;
                      removeCount++;
                   }
@@ -744,7 +736,7 @@ public final class ClassType extends ReferenceType {
 
                if (this == compiler.getStringClass()) {
                   Type intType = compiler.getIntType();
-                  Vector types = (Vector)(new Object(1));
+                  Vector types = new Vector(1);
                   Method method = this.lookupMethod("length", intType, types);
                   if (method != null) {
                      method.setSpecial(1);
@@ -761,7 +753,7 @@ public final class ClassType extends ReferenceType {
                }
 
                if (this == compiler.getStringBufferClass()) {
-                  Vector types = (Vector)(new Object(1));
+                  Vector types = new Vector(1);
                   Method method = this.lookupMethod("<init>", null, types);
                   if (method != null) {
                      method.setSpecial(3);
@@ -793,7 +785,7 @@ public final class ClassType extends ReferenceType {
          i = vtable.size();
       }
 
-      Vector clone = (Vector)(new Object(i));
+      Vector clone = new Vector(i);
       clone.setSize(i);
 
       while (--i >= 0) {
@@ -848,7 +840,7 @@ public final class ClassType extends ReferenceType {
                   this._baseSize = this._baseClassType._baseSize + this._baseClassType._numInstance;
                   vtable = this.cloneVTable(this._baseClassType._vtable);
                } else {
-                  vtable = (Vector)(new Object());
+                  vtable = new Vector();
                }
 
                if (!this._extended && !this.is(96) && !this.is(524288)) {

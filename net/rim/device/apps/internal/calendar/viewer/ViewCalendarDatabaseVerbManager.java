@@ -24,7 +24,7 @@ final class ViewCalendarDatabaseVerbManager {
 
    protected final void createFolderKeys() {
       ServiceIdentifier[] calendarServices = CalendarServiceManager.getInstance().getCalendarServices(false, true);
-      Vector folders = (Vector)(new Object());
+      Vector folders = new Vector();
 
       for (int i = 0; i < calendarServices.length; i++) {
          CalendarService calendarService = (CalendarService)calendarServices[i];
@@ -32,12 +32,12 @@ final class ViewCalendarDatabaseVerbManager {
          LongEnumeration folderIDs = calendarFolders.keys();
 
          while (folderIDs.hasMoreElements()) {
-            CalendarKey calendarKey = (CalendarKey)(new Object(calendarService.getUniqueServiceID(), folderIDs.nextElement()));
+            CalendarKey calendarKey = new CalendarKey(calendarService.getUniqueServiceID(), folderIDs.nextElement());
             folders.addElement(calendarKey);
          }
       }
 
-      this._folders = new Object[folders.size()];
+      this._folders = new CalendarKey[folders.size()];
       folders.copyInto(this._folders);
    }
 }

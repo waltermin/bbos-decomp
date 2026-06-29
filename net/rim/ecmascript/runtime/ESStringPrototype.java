@@ -14,7 +14,7 @@ class ESStringPrototype extends ESString {
    }
 
    private static String replaceDollar(String s, RegExp$MatchResult m) {
-      StringBuffer b = (StringBuffer)(new Object());
+      StringBuffer b = new StringBuffer();
       int len = s.length();
       int i = 0;
 
@@ -109,7 +109,7 @@ class ESStringPrototype extends ESString {
       }
 
       int startIndex = s.indexOf(regExpString, q);
-      return (RegExp$MatchResult)(startIndex != q ? null : new Object(s, startIndex, startIndex + regExpString.length(), new Object[1]));
+      return startIndex != q ? null : new RegExp$MatchResult(s, startIndex, startIndex + regExpString.length(), new String[1]);
    }
 
    void populate() {

@@ -18,7 +18,7 @@ public class AddressCollection extends AccessInnerDataCollection {
    }
 
    private void initFieldHandlers() {
-      super._objectFieldHandlers = (IntHashtable)(new Object(9));
+      super._objectFieldHandlers = new IntHashtable(9);
       super._objectFieldHandlers.put(0, new AddressCollection$CountryHandler(null));
       super._objectFieldHandlers.put(1, new AddressCollection$ExtraHandler(null));
       super._objectFieldHandlers.put(2, new AddressCollection$LocalityHandler(null));
@@ -65,14 +65,14 @@ public class AddressCollection extends AccessInnerDataCollection {
             DataCollection ownerDC = super._wiclet.getDataCollection((int)(owner._dataHandle >> 32));
             if (ownerDC instanceof ContactCollection) {
                Object ownerInstance = ((ContactCollection)ownerDC).getDBItemFromHandle(owner._dataHandle);
-               if (ownerInstance instanceof Object) {
+               if (ownerInstance instanceof AddressCardModel) {
                   int addressType = ((ContactCollection)ownerDC).getMailingAddressType(owner._fieldID);
                   AddressCardModel model = (AddressCardModel)ownerInstance;
                   int size = model.size();
 
                   for (int i = 0; i < size; i++) {
                      Object subModel = model.getAt(i);
-                     if (subModel instanceof Object && ((MailingAddressModel)subModel).getType() == addressType) {
+                     if (subModel instanceof MailingAddressModel && ((MailingAddressModel)subModel).getType() == addressType) {
                         return subModel;
                      }
                   }

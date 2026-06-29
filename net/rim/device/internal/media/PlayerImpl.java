@@ -3,6 +3,7 @@ package net.rim.device.internal.media;
 import java.io.InputStream;
 import javax.microedition.media.Control;
 import javax.microedition.media.Manager;
+import javax.microedition.media.MediaException;
 import javax.microedition.media.Player;
 import javax.microedition.media.PlayerListener;
 import javax.microedition.media.TimeBase;
@@ -117,7 +118,7 @@ class PlayerImpl implements Player, AlertPlayer, StreamDataControl, ActiveMediaO
 
    protected String getFullyQualifiedControlType(String controlType) {
       if (controlType.indexOf(46) == -1) {
-         controlType = ((StringBuffer)(new Object("javax.microedition.media.control."))).append(controlType).toString();
+         controlType = "javax.microedition.media.control." + controlType;
       }
 
       return controlType;
@@ -209,7 +210,7 @@ class PlayerImpl implements Player, AlertPlayer, StreamDataControl, ActiveMediaO
 
    void chkClosed(boolean unrealized) {
       if (this._state == 0 || unrealized && this._state == 100) {
-         throw new Object(((StringBuffer)(new Object("The Player is "))).append(this._state == 0 ? "closed" : "unrealized").toString());
+         throw new IllegalStateException("The Player is " + (this._state == 0 ? "closed" : "unrealized"));
       }
    }
 
@@ -250,18 +251,18 @@ class PlayerImpl implements Player, AlertPlayer, StreamDataControl, ActiveMediaO
          try {
             var5 = true;
             if (!this._notUnloadable && (this._phoneAudioActive || this._audioRouter.isSourceAdded(0))) {
-               throw new Object("Media cannot start while phone is active.");
+               throw new MediaException("Media cannot start while phone is active.");
             }
 
             if (this._audioRouter.isSourceAdded(1)) {
-               throw new Object("Media cannot start while voice dailing is active.");
+               throw new MediaException("Media cannot start while voice dailing is active.");
             }
 
             ActiveMedia activeMedia = ActiveMediaObservable.getActiveMedia();
-            ActiveMedia myActiveMedia = (ActiveMedia)(this._activeMedia == null ? null : this._activeMedia.get());
+            ActiveMedia myActiveMedia = this._activeMedia == null ? null : (ActiveMedia)this._activeMedia.get();
             if (activeMedia != null && !activeMedia.isAlert() && activeMedia != myActiveMedia) {
                MediaLogger.logActiveMediaPlayFailed(activeMedia);
-               throw new Object("Media cannot start while another media is active.");
+               throw new MediaException("Media cannot start while another media is active.");
             }
 
             this.waitForStarting();
@@ -306,7 +307,7 @@ class PlayerImpl implements Player, AlertPlayer, StreamDataControl, ActiveMediaO
       try {
          this.start();
       } catch (Throwable var5) {
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       }
    }
 
@@ -317,7 +318,7 @@ class PlayerImpl implements Player, AlertPlayer, StreamDataControl, ActiveMediaO
       if (this._state >= 400) {
          this.doStop();
          this._state = 300;
-         this.notifyListeners("stopped", new Object(this.getMediaTime()));
+         this.notifyListeners("stopped", new Long(this.getMediaTime()));
       }
    }
 
@@ -328,7 +329,7 @@ class PlayerImpl implements Player, AlertPlayer, StreamDataControl, ActiveMediaO
       try {
          this.stop();
       } catch (Throwable var3) {
-         throw new Object(e.toString());
+         throw new RuntimeException(e.toString());
       }
    }
 
@@ -360,7 +361,7 @@ class PlayerImpl implements Player, AlertPlayer, StreamDataControl, ActiveMediaO
       if (this._state != 0 && this._state != 100 && this._state != 400) {
          this._timeBase = master;
       } else {
-         throw new Object(" This method cannot be called  if the Player is in the UNREALIZED or CLOSED state");
+         throw new IllegalStateException(" This method cannot be called  if the Player is in the UNREALIZED or CLOSED state");
       }
    }
 
@@ -402,13 +403,13 @@ class PlayerImpl implements Player, AlertPlayer, StreamDataControl, ActiveMediaO
       this.chkClosed(false);
       this.waitForStarting();
       if (this._state == 400) {
-         throw new Object("setLoopCount");
+         throw new IllegalStateException("setLoopCount");
       }
 
       if (count != 0 && count >= -1) {
          this._loopCount = count;
       } else {
-         throw new Object("setLoopCount");
+         throw new IllegalArgumentException("setLoopCount");
       }
    }
 
@@ -418,13 +419,13 @@ class PlayerImpl implements Player, AlertPlayer, StreamDataControl, ActiveMediaO
          this.setContentType((String)value);
       } else if (!"locator".equals(key)) {
          if ("sourcestreams".equals(key)) {
-            this.read((InputStream)(new Object((SourceStream)((Object[])value)[0])));
+            this.read(new DataSourceInputStream(((SourceStream[])value)[0]));
          } else if ("datasource".equals(key)) {
             SourceStream[] sources = ((DataSource)value).getStreams();
-            this.read((InputStream)(new Object(sources[0])));
+            this.read(new DataSourceInputStream(sources[0]));
          } else if (!"flag_not_unloadable".equals(key)) {
             if ("active_media_source".equals(key)) {
-               this._activeMedia = (WeakReference)(new Object(value));
+               this._activeMedia = new WeakReference(value);
             }
          } else {
             this._notUnloadable = Boolean.TRUE.equals(value) && ControlledAccess.verifyRRISignatures(true);
@@ -465,7 +466,7 @@ class PlayerImpl implements Player, AlertPlayer, StreamDataControl, ActiveMediaO
    @Override
    public final TimeBase getTimeBase() {
       if (this._state == 0 || this._state == 100) {
-         throw new Object(" This method cannot be called  if the Player is in the UNREALIZED or CLOSED state");
+         throw new IllegalStateException(" This method cannot be called  if the Player is in the UNREALIZED or CLOSED state");
       } else {
          return this._timeBase != null ? this._timeBase : Manager.getSystemTimeBase();
       }

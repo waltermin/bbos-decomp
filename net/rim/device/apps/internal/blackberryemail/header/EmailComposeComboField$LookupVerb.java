@@ -27,7 +27,7 @@ class EmailComposeComboField$LookupVerb extends Verb {
    @Override
    public String toString() {
       String lookupCommand = AddressBookResources.getString(1717);
-      return ((StringBuffer)(new Object())).append(lookupCommand).append(" ").append(this.this$0.convertToKeywordString(this.this$0.getText())).toString();
+      return lookupCommand + " " + this.this$0.convertToKeywordString(this.this$0.getText());
    }
 
    @Override

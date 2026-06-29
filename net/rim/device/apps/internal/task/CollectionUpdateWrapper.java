@@ -23,7 +23,7 @@ final class CollectionUpdateWrapper extends Verb {
 
    @Override
    public final Object invoke(Object p) {
-      if (p instanceof Object) {
+      if (p instanceof ReminderElement) {
          ReminderElement re = (ReminderElement)p;
          ReminderProvider rp = re.getReminderProvider();
          this._record = rp.getReminder(re.getReminderID());
@@ -45,7 +45,7 @@ final class CollectionUpdateWrapper extends Verb {
          Task.getInstance().getUICollection().remove(this._record);
       }
 
-      if (p instanceof Object) {
+      if (p instanceof ContextObject) {
          ((ContextObject)p).setPrivateFlag(-3866311304884942232L, 1);
       }
 

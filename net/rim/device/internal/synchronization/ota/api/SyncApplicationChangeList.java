@@ -10,8 +10,8 @@ import net.rim.vm.Persistence;
 
 public class SyncApplicationChangeList implements Persistable {
    private byte _flags;
-   protected IntHashtable _changes = (IntHashtable)(new Object());
-   protected IntIntHashtable _refIdToHashCodeMap = (IntIntHashtable)(new Object());
+   protected IntHashtable _changes = new IntHashtable();
+   protected IntIntHashtable _refIdToHashCodeMap = new IntIntHashtable();
    private static final int LOCKED = 1;
    private static final int FILL_IN = 2;
 
@@ -59,7 +59,7 @@ public class SyncApplicationChangeList implements Persistable {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public IntHashtable getChanges(SyncAgentConnection aSyncAgentConenction) {
-      IntHashtable xIntHashtable = (IntHashtable)(new Object());
+      IntHashtable xIntHashtable = new IntHashtable();
       SyncAgentConnectionListener xSyncAgentConnectionListener = aSyncAgentConenction.getSyncAgentConnectionListener();
       int[] xKeysList = new int[this._changes.size()];
       this._changes.keysToArray(xKeysList);
@@ -105,7 +105,7 @@ public class SyncApplicationChangeList implements Persistable {
          int xGroup = xChange.getGroup();
          Vector xVector = (Vector)xIntHashtable.get(xGroup);
          if (xVector == null) {
-            xVector = (Vector)(new Object());
+            xVector = new Vector();
             xIntHashtable.put(xGroup, xVector);
          }
 

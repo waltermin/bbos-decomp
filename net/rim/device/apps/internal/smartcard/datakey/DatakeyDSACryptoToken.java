@@ -62,7 +62,7 @@ final class DatakeyDSACryptoToken extends DSACryptoToken implements Persistable 
       //
       // Bytecode:
       // 000: aload 10
-      // 002: checkcast java/lang/Object
+      // 002: checkcast net/rim/device/api/smartcard/SmartCardSession
       // 005: astore 11
       // 007: aconst_null
       // 008: astore 12
@@ -94,7 +94,7 @@ final class DatakeyDSACryptoToken extends DSACryptoToken implements Persistable 
       // 040: invokevirtual net/rim/device/api/smartcard/SmartCardSession.getSmartCardID ()Lnet/rim/device/api/smartcard/SmartCardID;
       // 043: invokevirtual net/rim/device/api/smartcard/SmartCardID.equals (Ljava/lang/Object;)Z
       // 046: ifne 054
-      // 049: new java/lang/Object
+      // 049: new net/rim/device/api/crypto/CryptoTokenCancelException
       // 04c: dup
       // 04d: ldc_w "Wrong card inserted"
       // 050: invokespecial net/rim/device/api/crypto/CryptoTokenCancelException.<init> (Ljava/lang/String;)V
@@ -142,7 +142,7 @@ final class DatakeyDSACryptoToken extends DSACryptoToken implements Persistable 
       // 0af: aload 13
       // 0b1: athrow
       // 0b2: return
-      // 0b3: new java/lang/Object
+      // 0b3: new java/lang/RuntimeException
       // 0b6: dup
       // 0b7: invokespecial java/lang/RuntimeException.<init> ()V
       // 0ba: athrow
@@ -155,7 +155,7 @@ final class DatakeyDSACryptoToken extends DSACryptoToken implements Persistable 
       // 0ca: bipush 14
       // 0cc: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 0cf: astore 12
-      // 0d1: new java/lang/Object
+      // 0d1: new net/rim/device/api/crypto/CryptoTokenCancelException
       // 0d4: dup
       // 0d5: aload 15
       // 0d7: invokevirtual net/rim/device/api/smartcard/SmartCardLockedException.toString ()Ljava/lang/String;
@@ -175,21 +175,21 @@ final class DatakeyDSACryptoToken extends DSACryptoToken implements Persistable 
       // 0fb: aload 13
       // 0fd: athrow
       // 0fe: astore 15
-      // 100: new java/lang/Object
+      // 100: new net/rim/device/api/crypto/CryptoTokenCancelException
       // 103: dup
       // 104: aload 15
       // 106: invokevirtual net/rim/device/api/smartcard/SmartCardSessionClosedException.toString ()Ljava/lang/String;
       // 109: invokespecial net/rim/device/api/crypto/CryptoTokenCancelException.<init> (Ljava/lang/String;)V
       // 10c: athrow
       // 10d: astore 15
-      // 10f: new java/lang/Object
+      // 10f: new net/rim/device/api/crypto/CryptoTokenCancelException
       // 112: dup
       // 113: aload 15
       // 115: invokevirtual net/rim/device/api/smartcard/SmartCardCancelException.toString ()Ljava/lang/String;
       // 118: invokespecial net/rim/device/api/crypto/CryptoTokenCancelException.<init> (Ljava/lang/String;)V
       // 11b: athrow
       // 11c: astore 15
-      // 11e: new java/lang/Object
+      // 11e: new net/rim/device/api/crypto/CryptoTokenCancelException
       // 121: dup
       // 122: aload 15
       // 124: invokevirtual net/rim/device/api/smartcard/SmartCardRemovedException.toString ()Ljava/lang/String;
@@ -204,7 +204,7 @@ final class DatakeyDSACryptoToken extends DSACryptoToken implements Persistable 
       // 13a: bipush 21
       // 13c: invokevirtual net/rim/device/api/i18n/ResourceBundle.getString (I)Ljava/lang/String;
       // 13f: astore 12
-      // 141: new java/lang/Object
+      // 141: new net/rim/device/api/crypto/CryptoTokenCancelException
       // 144: dup
       // 145: aload 15
       // 147: invokevirtual net/rim/device/api/smartcard/SmartCardException.toString ()Ljava/lang/String;

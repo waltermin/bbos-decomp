@@ -1,5 +1,6 @@
 package net.rim.device.internal.io.store;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import net.rim.device.api.io.ReservableSize;
 import net.rim.device.internal.io.file.FileSystem;
@@ -45,9 +46,9 @@ class FileImpl$FileImplOutputStream extends OutputStream implements ReservableSi
       this.flush(false);
    }
 
-   private synchronized void flush(boolean onClose) {
+   private synchronized void flush(boolean onClose) throws IOException {
       if (this._baos == null) {
-         throw new Object();
+         throw new IOException();
       }
 
       int size = this._baos.size();
@@ -84,9 +85,9 @@ class FileImpl$FileImplOutputStream extends OutputStream implements ReservableSi
    }
 
    @Override
-   public synchronized void write(int b) {
+   public synchronized void write(int b) throws IOException {
       if (this._baos == null) {
-         throw new Object();
+         throw new IOException();
       }
 
       FileImpl.verifyLength(this._offset + this._baos.size() + 1);
@@ -98,9 +99,9 @@ class FileImpl$FileImplOutputStream extends OutputStream implements ReservableSi
    }
 
    @Override
-   public synchronized void write(byte[] b, int off, int len) {
+   public synchronized void write(byte[] b, int off, int len) throws IOException {
       if (this._baos == null) {
-         throw new Object();
+         throw new IOException();
       }
 
       FileImpl.verifyLength(this._offset + this._baos.size() + len);

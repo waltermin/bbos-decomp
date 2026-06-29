@@ -8,23 +8,23 @@ public final class MapletFile {
    private static int[] _mapletSize = new int[]{5000, 50000, 500000, 5000000, -804651000, -24, -3, -3, 18, 18, -3, -3, -24, 712179968, 712179968, 16806977};
 
    private static final String format3(int i) {
-      String s = ((StringBuffer)(new Object("000"))).append(Integer.toString(i)).toString();
+      String s = "000" + Integer.toString(i);
       return s.substring(s.length() - 3);
    }
 
    private static final String genLatDir(int y) {
-      return ((StringBuffer)(new Object("Y"))).append(format3(y / 10 * 10)).toString();
+      return "Y" + format3(y / 10 * 10);
    }
 
    private static final String genLonDir(int x) {
-      return ((StringBuffer)(new Object("X"))).append(format3(x / 10 * 10)).toString();
+      return "X" + format3(x / 10 * 10);
    }
 
    private static final String genMBLFileName(int x, int y, int level) {
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
       sb.append((char)(65 + level));
       sb.append('A');
-      sb.append(((StringBuffer)(new Object())).append(format3(x)).append(format3(y)).toString());
+      sb.append(format3(x) + format3(y));
       return sb.toString();
    }
 
@@ -52,14 +52,7 @@ public final class MapletFile {
       int my = y + 9000000;
       int rx = roundForLevel(mx, level);
       int ry = roundForLevel(my, level);
-      String filename = ((StringBuffer)(new Object("file:///SDCard/")))
-         .append(genLatDir(ry))
-         .append("/")
-         .append(genLonDir(rx))
-         .append("/")
-         .append(genMBLFileName(rx, ry, level))
-         .append(".mbl")
-         .toString();
+      String filename = "file:///SDCard/" + genLatDir(ry) + "/" + genLonDir(rx) + "/" + genMBLFileName(rx, ry, level) + ".mbl";
 
       try {
          FileConnection fileConnection = (FileConnection)Connector.open(filename);

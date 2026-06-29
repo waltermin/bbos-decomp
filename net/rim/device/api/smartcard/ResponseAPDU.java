@@ -54,7 +54,7 @@ public class ResponseAPDU {
    @Override
    public String toString() {
       byte[] apdu = this.getAPDU();
-      StringBuffer data = (StringBuffer)(new Object());
+      StringBuffer data = new StringBuffer();
       if (apdu != null) {
          int length = apdu.length;
 

@@ -12,23 +12,13 @@ public final class PacketLoggerUi {
          new DebugViewerScreen(PacketLogger.getInstance().getText(2, 3), "Packet Log", null, true, true);
       } finally {
          new DebugViewerScreen(
-            ((StringBuffer)(new Object()))
-               .append(getAddressText(PacketLogger.getInstance().savePackets()))
-               .append(PacketLogger.getInstance().getText(2, 1))
-               .toString(),
-            "Packet Log",
-            null,
-            true,
-            false
+            getAddressText(PacketLogger.getInstance().savePackets()) + PacketLogger.getInstance().getText(2, 1), "Packet Log", null, true, false
          );
          return;
       }
    }
 
    private static final String getAddressText(int address) {
-      return ((StringBuffer)(new Object("Packet log saved to filesystem at address ")))
-         .append(Integer.toHexString(address))
-         .append(". Use cfp savefs to get a file system dump.\n")
-         .toString();
+      return "Packet log saved to filesystem at address " + Integer.toHexString(address) + ". Use cfp savefs to get a file system dump.\n";
    }
 }

@@ -7,7 +7,7 @@ import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.StringUtilities;
 
 public class DominoAddressUtilities {
-   private static final OID[] DOMINO_ADDRESS_OIDS = new Object[]{OIDs.getOID(-1253056853), OIDs.getOID(-1252532565), OIDs.getOID(-1252598101)};
+   private static final OID[] DOMINO_ADDRESS_OIDS = new OID[]{OIDs.getOID(-1253056853), OIDs.getOID(-1252532565), OIDs.getOID(-1252598101)};
    private static final String COMMON_NAME_PREFIX = "cn=";
 
    private DominoAddressUtilities() {
@@ -21,7 +21,7 @@ public class DominoAddressUtilities {
 
       if (StringUtilities.startsWithIgnoreCase(dominoAddress, "cn=", 1701707776) && dominoAddress.indexOf(47) >= 0) {
          try {
-            return (X509DistinguishedName)(new Object(dominoAddress, '/'));
+            return new X509DistinguishedName(dominoAddress, '/');
          } finally {
             return null;
          }

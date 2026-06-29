@@ -10,6 +10,7 @@ import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.Arrays;
+import net.rim.device.api.util.ObjectEnumerator;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
 import net.rim.device.apps.api.addressbook.AddressMatch;
@@ -60,13 +61,13 @@ class MeetingInfoModel
       int n = this.getAttendeeCount();
       int resolvedCount = 0;
       int unresolvedCount = 0;
-      Attendee[] unresolved = new Object[n];
+      Attendee[] unresolved = new Attendee[n];
 
       for (int i = 0; i < n; i++) {
          Attendee attendee = this._attendees[i];
          Object address = this._attendees[i].getAddress();
          resolvedCount++;
-         if (address instanceof Object) {
+         if (address instanceof ResolvedStatusProvider) {
             ResolvedStatusProvider rsp = (ResolvedStatusProvider)address;
             if (!rsp.isResolved()) {
                resolvedCount--;
@@ -113,7 +114,7 @@ class MeetingInfoModel
          event = (Event)ContextObject.get(context, 424670468422402792L);
          CICALConfiguration cicalConfiguration = CalendarServiceManager.getInstance().getCICALConfiguration(event);
          if (event.isMeeting() && this.meetingCanBeModified() && cicalConfiguration.isMeetingSyncEnabled()) {
-            Verb[] defaultVerbs = (Object[])ContextObject.get(context, 248);
+            Verb[] defaultVerbs = (Verb[])ContextObject.get(context, 248);
             Verb deleteVerb = defaultVerbs[1];
             if (deleteVerb instanceof DeleteEventVerb) {
                DeleteEventVerb verb = (DeleteEventVerb)deleteVerb;
@@ -128,7 +129,7 @@ class MeetingInfoModel
          event = (Event)ContextObject.get(context, 424670468422402792L);
          Verb defaultVerb = null;
          Array.resize(verbs, 0);
-         if (event instanceof Object) {
+         if (event instanceof Event) {
             MeetingInfo meetingInfo = event.getMeetingInfo();
             Field field = (Field)ContextObject.get(context, 9045827404276417370L);
             if (field != null) {
@@ -225,7 +226,7 @@ class MeetingInfoModel
    @Override
    public void addAttendee(Attendee attendee) {
       if (this._attendees == null) {
-         this._attendees = new Object[0];
+         this._attendees = new Attendee[0];
       } else {
          synchronized (this._attendees) {
             if (Arrays.getIndex(this._attendees, attendee) != -1) {
@@ -256,7 +257,7 @@ class MeetingInfoModel
 
    @Override
    public Enumeration getAttendees() {
-      return (Enumeration)(this._attendees != null ? new Object(this._attendees) : null);
+      return this._attendees != null ? new ObjectEnumerator(this._attendees) : null;
    }
 
    @Override
@@ -329,7 +330,7 @@ class MeetingInfoModel
       if (attendees != null) {
          while (attendees.hasMoreElements()) {
             Attendee attendee = (Attendee)attendees.nextElement();
-            if (attendee instanceof Object) {
+            if (attendee instanceof Copyable) {
                theCopy.addAttendee((Attendee)((Copyable)attendee).copy());
             }
          }
@@ -349,7 +350,7 @@ class MeetingInfoModel
       Attendee[] attendees = this._attendees;
       int count = attendees != null ? attendees.length : 0;
       int[] ordering = new int[count];
-      Field[] fields = new Object[count];
+      Field[] fields = new Field[count];
       int fieldCount = 0;
 
       for (int i = 0; i < count; i++) {
@@ -381,7 +382,7 @@ class MeetingInfoModel
 
    @Override
    public boolean grabDataFromField(Field field, Object context) {
-      if (field instanceof Object && this.meetingCanBeModified()) {
+      if (field instanceof Manager && this.meetingCanBeModified()) {
          Manager manager = (Manager)field;
          int fieldCount = manager.getFieldCount();
          this.removeAttendees();
@@ -389,7 +390,7 @@ class MeetingInfoModel
          for (int i = 0; i < fieldCount; i++) {
             Field attendeeField = manager.getField(i);
             Object cookie = attendeeField.getCookie();
-            if (cookie instanceof Object) {
+            if (cookie instanceof Attendee) {
                Attendee attendee = (Attendee)cookie;
                if (attendee.getType() != 0) {
                   attendee.setType(1);
@@ -461,7 +462,7 @@ class MeetingInfoModel
 
       for (int i = 0; i < numAttendees; i++) {
          Attendee attendee = this._attendees[i];
-         if (attendee instanceof Object) {
+         if (attendee instanceof EncryptableProvider) {
             EncryptableProvider encryptable = (EncryptableProvider)attendee;
             if (!encryptable.checkCrypt(compress, encrypt)) {
                return false;
@@ -482,7 +483,7 @@ class MeetingInfoModel
 
       for (int i = 0; i < numAttendees; i++) {
          Attendee attendee = this._attendees[i];
-         if (attendee instanceof Object) {
+         if (attendee instanceof EncryptableProvider) {
             EncryptableProvider encryptable = (EncryptableProvider)attendee;
             Object newObject = encryptable.reCrypt(compress, encrypt);
             if (newObject != null) {
@@ -502,7 +503,7 @@ class MeetingInfoModel
    private static Field locateAttendeeField(Field field) {
       while (field != null) {
          Manager manager = field.getManager();
-         if ((manager == null || !(manager.getCookie() instanceof Object)) && field.getCookie() instanceof Object) {
+         if ((manager == null || !(manager.getCookie() instanceof Attendee)) && field.getCookie() instanceof Attendee) {
             return field;
          }
 
@@ -513,11 +514,11 @@ class MeetingInfoModel
    }
 
    private static VerticalFieldManager locateMeetingInfoFields(Field field) {
-      if (field instanceof Object && field.getCookie() instanceof MeetingInfoModel) {
+      if (field instanceof VerticalFieldManager && field.getCookie() instanceof MeetingInfoModel) {
          return (VerticalFieldManager)field;
       }
 
-      if (field instanceof Object) {
+      if (field instanceof Manager) {
          Manager manager = (Manager)field;
          int fieldCount = manager.getFieldCount();
 

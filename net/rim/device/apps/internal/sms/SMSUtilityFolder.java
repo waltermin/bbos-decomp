@@ -17,7 +17,7 @@ public class SMSUtilityFolder extends SortedCollection implements Folder, Collec
 
    private SMSUtilityFolder() {
       super.initialize(-6498019436237624557L, -8262673811206753019L, Storage.getLongKeyProviderAdaptor(), null);
-      this._messageEntries = (LongHashtable)(new Object());
+      this._messageEntries = new LongHashtable();
    }
 
    public static SMSUtilityFolder getUtilityFolder() {
@@ -35,7 +35,7 @@ public class SMSUtilityFolder extends SortedCollection implements Folder, Collec
 
    void addSource(Folder source) {
       Collection collection = source.getContainedItems();
-      if (collection instanceof Object) {
+      if (collection instanceof SortedCollection) {
          SortedCollection sourceCollection = (SortedCollection)collection;
          int num = sourceCollection.size();
 

@@ -39,7 +39,7 @@ public class ESRegExp extends HostFunction {
       this._pattern = pattern;
 
       try {
-         this._expr = (RegExp)(new Object(pattern, ignoreCase, multiLine));
+         this._expr = new RegExp(pattern, ignoreCase, multiLine);
       } catch (Throwable var7) {
          throw ThrownValue.syntaxError(se.getMessage());
       }

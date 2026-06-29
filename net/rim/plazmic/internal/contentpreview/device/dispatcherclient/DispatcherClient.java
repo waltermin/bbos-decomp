@@ -25,7 +25,7 @@ public final class DispatcherClient extends AbstractDispatcher {
 
    public DispatcherClient() {
       ServiceInfo info = ServiceInfo.getDispatcherServiceInfo();
-      String url = ((StringBuffer)(new Object("socket://"))).append(info.getHost()).append(":").append(info.getPort()).append(";deviceside=true").toString();
+      String url = "socket://" + info.getHost() + ":" + info.getPort() + ";deviceside=true";
       this._connection = (StreamConnection)Connector.open(url);
       this._out = this._connection.openOutputStream();
       this._in = this._connection.openInputStream();

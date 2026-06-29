@@ -67,11 +67,11 @@ public final class RSAPublicKey implements PublicKey, RSAKey, Persistable {
          RSACryptoToken cryptoToken = (RSACryptoToken)cryptoSystem.getAsymmetricCryptoToken();
          this.initialize(cryptoSystem, cryptoToken, cryptoTokenData);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
-   public RSAPublicKey(RSACryptoSystem cryptoSystem, byte[] e, byte[] n) {
+   public RSAPublicKey(RSACryptoSystem cryptoSystem, byte[] e, byte[] n) throws InvalidKeyException {
       if (cryptoSystem != null && e != null && n != null) {
          int modulusLength = cryptoSystem.getModulusLength();
          e = CryptoByteArrayArithmetic.trim(e);
@@ -80,10 +80,10 @@ public final class RSAPublicKey implements PublicKey, RSAKey, Persistable {
             RSACryptoToken cryptoToken = (RSACryptoToken)cryptoSystem.getAsymmetricCryptoToken();
             this.initialize(cryptoSystem, cryptoToken, cryptoToken.injectRSAPublicKey(cryptoSystem, e, n));
          } else {
-            throw new Object();
+            throw new InvalidKeyException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

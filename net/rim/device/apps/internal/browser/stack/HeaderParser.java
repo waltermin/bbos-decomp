@@ -46,7 +46,7 @@ public final class HeaderParser implements RIMHeaderConstants {
          if (cacheControlValue == null) {
             cacheControlValue = directive;
          } else {
-            cacheControlValue = ((StringBuffer)(new Object())).append(cacheControlValue).append(',').append(directive).toString();
+            cacheControlValue = cacheControlValue + ',' + directive;
          }
 
          responseHeaders.setProperty(CACHE_CONTROL, cacheControlValue);

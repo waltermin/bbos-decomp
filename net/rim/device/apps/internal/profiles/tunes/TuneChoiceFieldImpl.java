@@ -38,7 +38,7 @@ public final class TuneChoiceFieldImpl extends TuneChoiceField implements FieldC
       this._addMute = addMute;
       this.setLabel(label);
       if (!TuneManager.isTuneManagerAvailable()) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       this._alertEngine = AlertEngine.getInstance();
@@ -55,7 +55,7 @@ public final class TuneChoiceFieldImpl extends TuneChoiceField implements FieldC
          numTunes++;
       }
 
-      this._sortedTuneNames = new Object[numTunes];
+      this._sortedTuneNames = new String[numTunes];
       this._sortedTuneNames[SELECT_TUNE_INDEX] = _selectTuneDisplayName;
       if (this._addMute) {
          this._sortedTuneNames[1] = _muteTuneDisplayName;
@@ -109,7 +109,7 @@ public final class TuneChoiceFieldImpl extends TuneChoiceField implements FieldC
    @Override
    protected final void setSelectedIndex(int index, int context) {
       if (index == SELECT_TUNE_INDEX && context != Integer.MAX_VALUE) {
-         FileSelector fileSelector = (FileSelector)(new Object(null, 2));
+         FileSelector fileSelector = new FileSelector(null, 2);
          String selectedTune = fileSelector.selectFile(null);
          if (selectedTune != null) {
             index = TuneManager.getTuneManager().getIndex(this._sortedTuneNames, selectedTune);
@@ -142,7 +142,7 @@ public final class TuneChoiceFieldImpl extends TuneChoiceField implements FieldC
       if (this._addMute && index == 1) {
          return TuneChoiceField.MUTE_TUNE_NAME;
       } else {
-         return (String)(index == SELECT_TUNE_INDEX ? _selectedTune : super.getChoice(index));
+         return index == SELECT_TUNE_INDEX ? _selectedTune : (String)super.getChoice(index);
       }
    }
 

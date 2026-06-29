@@ -16,7 +16,7 @@ public final class DeleteChannelVerb extends Verb {
    @Override
    public final Object invoke(Object context) {
       String title = this._channel.getTitle();
-      String[] name = new Object[]{title != null && title.length() != 0 ? title : this._channel.getURL()};
+      String[] name = new String[]{title != null && title.length() != 0 ? title : this._channel.getURL()};
       String deleteUrl = this._channel.getDeleteURL();
       String message;
       if (deleteUrl != null && deleteUrl.length() > 0) {

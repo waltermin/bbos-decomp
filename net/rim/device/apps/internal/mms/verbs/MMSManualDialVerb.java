@@ -38,7 +38,7 @@ final class MMSManualDialVerb extends Verb implements Copyable, SetParameter {
    @Override
    public final String toString() {
       String formatString = MMSResources.getString(11);
-      return MessageFormat.format(formatString, new Object[]{this._phoneNumber});
+      return MessageFormat.format(formatString, new String[]{this._phoneNumber});
    }
 
    @Override

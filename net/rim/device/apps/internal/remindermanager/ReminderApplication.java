@@ -51,7 +51,7 @@ final class ReminderApplication extends UiApplication {
       ReminderManager reminderManager = ReminderManager.getInstance();
       synchronized (timeAndRunnable) {
          long[] times = (long[])timeAndRunnable[0];
-         Runnable[] runnables = (Object[])timeAndRunnable[1];
+         Runnable[] runnables = (Runnable[])timeAndRunnable[1];
          int max = runnables.length;
          long minimumTime = Long.MAX_VALUE;
          int indexScheduled = -1;
@@ -91,6 +91,6 @@ final class ReminderApplication extends UiApplication {
 
    private static final ApplicationDescriptor getDeepTimerApp() {
       ApplicationDescriptor descriptor = ApplicationDescriptor.currentApplicationDescriptor();
-      return (ApplicationDescriptor)(descriptor == null ? null : new Object(descriptor, null));
+      return descriptor == null ? null : new ApplicationDescriptor(descriptor, null);
    }
 }

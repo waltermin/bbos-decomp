@@ -6,11 +6,11 @@ final class RIMPhone$PhoneSource {
    private String _lineNumber = "";
 
    public final void setLineNumber(String lineNumber) {
-      this._lineNumber = ((StringBuffer)(new Object(" "))).append(lineNumber).toString();
+      this._lineNumber = " " + lineNumber;
    }
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object())).append(PhoneResources.getString(118)).append(this._lineNumber).toString();
+      return PhoneResources.getString(118) + this._lineNumber;
    }
 }

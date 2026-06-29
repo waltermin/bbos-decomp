@@ -1,12 +1,16 @@
 package net.rim.device.api.xml.jaxp;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.NoSuchElementException;
 import java.util.Vector;
 import net.rim.device.api.util.IntHashtable;
 import net.rim.device.api.xml.WBXMLConstants;
 import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class WBXMLParser implements WBXMLConstants, Locator {
@@ -140,16 +144,14 @@ public class WBXMLParser implements WBXMLConstants, Locator {
       if (this._publicid == 0) {
          return this._publicidStr;
       } else {
-         return this._publicid >= 2 && this._publicid <= 13
-            ? ((StringBuffer)(new Object("-//WAPFORUM//DTD "))).append(PUBLIC_ID[this._publicid - 2]).toString()
-            : null;
+         return this._publicid >= 2 && this._publicid <= 13 ? "-//WAPFORUM//DTD " + PUBLIC_ID[this._publicid - 2] : null;
       }
    }
 
-   private byte[] parseOpaque() {
+   private byte[] parseOpaque() throws SAXException {
       int readahead = this.read();
       if (readahead != 195) {
-         throw new Object("Error parsing opaque data");
+         throw new SAXException("Error parsing opaque data");
       }
 
       int length = this.read_mb_u_int32();
@@ -159,7 +161,7 @@ public class WBXMLParser implements WBXMLConstants, Locator {
       while (lenToRead > 0) {
          int bytesRead = this._is.read(opaqueData, length - lenToRead, lenToRead);
          if (bytesRead == -1) {
-            throw new Object("Error receiving opaque data");
+            throw new SAXException("Error receiving opaque data");
          }
 
          lenToRead -= bytesRead;
@@ -168,7 +170,7 @@ public class WBXMLParser implements WBXMLConstants, Locator {
       return opaqueData;
    }
 
-   private void parseContent() {
+   private void parseContent() throws SAXException {
       int readahead = this.read();
       if (readahead == 0) {
          this._currentTagPage = this.read();
@@ -212,7 +214,7 @@ public class WBXMLParser implements WBXMLConstants, Locator {
                   this._defaultHandler.characters(this._strBuffer, 0, 1);
                   return;
                default:
-                  throw new Object("Error parsing extension");
+                  throw new SAXException("Error parsing extension");
             }
          case 2:
             this._strBuffer[0] = (char)this.read_mb_u_int32();
@@ -247,11 +249,11 @@ public class WBXMLParser implements WBXMLConstants, Locator {
       }
    }
 
-   private void parseAttribute(SAXAttributesImpl ai) {
+   private void parseAttribute(SAXAttributesImpl ai) throws SAXException {
       this._strBufferLen = 0;
       int attrStart = this.read();
       if (attrStart >= 128) {
-         throw new Object("Error parsing attrStart");
+         throw new SAXException("Error parsing attrStart");
       }
 
       if (attrStart == 0) {
@@ -339,7 +341,7 @@ public class WBXMLParser implements WBXMLConstants, Locator {
          split = this.read();
       }
 
-      String val = (String)(new Object(this._strBuffer, 0, this._strBufferLen));
+      String val = new String(this._strBuffer, 0, this._strBufferLen);
       boolean isNamespace = false;
       if (name.startsWith("xmlns")) {
          isNamespace = true;
@@ -351,7 +353,7 @@ public class WBXMLParser implements WBXMLConstants, Locator {
 
          this._defaultHandler.startPrefixMapping(prefix, val);
          if (this._currentNamespaceMapping == null) {
-            this._currentNamespaceMapping = (Hashtable)(new Object());
+            this._currentNamespaceMapping = new Hashtable();
             this._namespaceMap.addElement(this._currentNamespaceMapping);
          }
 
@@ -380,7 +382,7 @@ public class WBXMLParser implements WBXMLConstants, Locator {
       this.unread(split);
    }
 
-   private String IdToString(IntHashtable table, int id, int currentPage) {
+   private String IdToString(IntHashtable table, int id, int currentPage) throws SAXException {
       if ((id & 127) == 4) {
          return this.read_STR_T();
       }
@@ -389,12 +391,12 @@ public class WBXMLParser implements WBXMLConstants, Locator {
       if (id >= 4 && table != null && (a = (IntHashtable)table.get(currentPage)) != null) {
          String s = (String)a.get(id);
          if (s == null) {
-            throw new Object("Element does not exist in tag table");
+            throw new SAXException("Element does not exist in tag table");
          } else {
             return s;
          }
       } else {
-         throw new Object("Page fault accessing tag table");
+         throw new SAXException("Page fault accessing tag table");
       }
    }
 
@@ -481,15 +483,15 @@ public class WBXMLParser implements WBXMLConstants, Locator {
       }
    }
 
-   WBXMLParser(InputStream is, int firstChar) {
+   WBXMLParser(InputStream is, int firstChar) throws SAXException {
       this._strBuffer = new char[0];
       this._strBufferSectionSize = ArrayResize.getSectionSize(this._strBuffer);
       this._strBuffer = ArrayResize.charArrayResize(this._strBuffer, this._strBufferSectionSize);
       this._strBufferLen = 0;
-      this._strtblTable = (IntHashtable)(new Object());
-      this._tagTable = (IntHashtable)(new Object());
-      this._attrStartTable = (IntHashtable)(new Object());
-      this._attrValueTable = (IntHashtable)(new Object());
+      this._strtblTable = new IntHashtable();
+      this._tagTable = new IntHashtable();
+      this._attrStartTable = new IntHashtable();
+      this._attrValueTable = new IntHashtable();
       this._is = is;
       if (firstChar == -1) {
          this._version = this.read();
@@ -523,14 +525,14 @@ public class WBXMLParser implements WBXMLConstants, Locator {
             this._publicidStr = this.read_STR_T(idIndex);
          }
 
-         this._namespaceMap = (Vector)(new Object());
+         this._namespaceMap = new Vector();
          this._currentNamespaceMapping = null;
       } else {
-         throw new Object("Unknown wbxml version");
+         throw new SAXException("Unknown wbxml version");
       }
    }
 
-   private void parse_body() {
+   private void parse_body() throws IOException, SAXException {
       int b;
       for (b = this.read(); b == 67; b = this.read()) {
          this.unread(b);
@@ -538,7 +540,7 @@ public class WBXMLParser implements WBXMLConstants, Locator {
       }
 
       if (b == -1) {
-         throw new Object("Unexpected end of stream");
+         throw new IOException("Unexpected end of stream");
       }
 
       this.unread(b);
@@ -550,14 +552,14 @@ public class WBXMLParser implements WBXMLConstants, Locator {
       }
 
       if (b != -1) {
-         throw new Object("Unexpected token at parse_body");
+         throw new SAXException("Unexpected token at parse_body");
       }
    }
 
-   private void parse_pi() {
+   private void parse_pi() throws SAXException {
       int readahead = this.read();
       if (readahead != 67) {
-         throw new Object("Not PI element..");
+         throw new SAXException("Not PI element..");
       }
 
       SAXAttributesImpl ai = new SAXAttributesImpl();
@@ -569,7 +571,7 @@ public class WBXMLParser implements WBXMLConstants, Locator {
       }
 
       if (ai.getLength() != 1) {
-         throw new Object("Error parsing PI element");
+         throw new SAXException("Error parsing PI element");
       }
 
       this._defaultHandler.processingInstruction(ai.getQName(0), ai.getValue(0));
@@ -581,11 +583,11 @@ public class WBXMLParser implements WBXMLConstants, Locator {
 
    private static IntHashtable tokenArrayToIntHashtable(String[] table, int startToken) {
       if (table == null) {
-         return (IntHashtable)(new Object(1));
+         return new IntHashtable(1);
       }
 
       int len = table.length;
-      IntHashtable tbl = (IntHashtable)(new Object(len + (len >> 1)));
+      IntHashtable tbl = new IntHashtable(len + (len >> 1));
 
       for (int i = 0; i < len; i++) {
          tbl.put(i + startToken, table[i]);
@@ -608,14 +610,14 @@ public class WBXMLParser implements WBXMLConstants, Locator {
       return out;
    }
 
-   private void append_STR_I() {
+   private void append_STR_I() throws SAXParseException {
       int i;
       while ((i = this.readNextCharFromUTF8()) > 0) {
          this.append_CHAR((char)i);
       }
 
       if (i != 0) {
-         throw new Object("Unexpected end of stream", null);
+         throw new SAXParseException("Unexpected end of stream", null);
       }
    }
 
@@ -662,7 +664,7 @@ public class WBXMLParser implements WBXMLConstants, Locator {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private String read_STR_T(int offset) {
+   private String read_STR_T(int offset) throws SAXParseException {
       String s = (String)this._strtblTable.get(offset);
       if (s != null) {
          return s;
@@ -683,17 +685,17 @@ public class WBXMLParser implements WBXMLConstants, Locator {
             len++;
          } finally {
             if (var9) {
-               throw new Object("Error parsing STR_T element", null);
+               throw new SAXParseException("Error parsing STR_T element", null);
             }
          }
       }
 
       try {
-         s = (String)(new Object(this._strtbl, offset, len, this._enc));
+         s = new String(this._strtbl, offset, len, this._enc);
          this._strtblTable.put(offset, s);
          return s;
       } finally {
-         throw new Object("Error encoding string", null);
+         throw new SAXParseException("Error encoding string", null);
       }
    }
 
@@ -707,7 +709,7 @@ public class WBXMLParser implements WBXMLConstants, Locator {
          }
       }
 
-      throw new Object();
+      throw new NoSuchElementException();
    }
 
    private int read() {
@@ -719,9 +721,9 @@ public class WBXMLParser implements WBXMLConstants, Locator {
       }
    }
 
-   private void unread(int b) {
+   private void unread(int b) throws IOException {
       if (this._pushBackBufferValid) {
-         throw new Object("Error unread");
+         throw new IOException("Error unread");
       }
 
       this._pushBackBuffer = b;
@@ -751,7 +753,7 @@ public class WBXMLParser implements WBXMLConstants, Locator {
       this._strBufferLen += len;
    }
 
-   private int readNextCharFromUTF8() {
+   private int readNextCharFromUTF8() throws SAXParseException {
       if (this._havePeek) {
          this._havePeek = false;
          return this._peek;
@@ -800,6 +802,6 @@ public class WBXMLParser implements WBXMLConstants, Locator {
          }
       }
 
-      throw new Object("UTF-8 Error", null);
+      throw new SAXParseException("UTF-8 Error", null);
    }
 }

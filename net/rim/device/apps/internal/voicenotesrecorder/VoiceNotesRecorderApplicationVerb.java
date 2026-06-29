@@ -13,13 +13,13 @@ public final class VoiceNotesRecorderApplicationVerb extends Verb {
    @Override
    public final Object invoke(Object parameter) {
       ContextObject context;
-      if (!(parameter instanceof Object)) {
-         context = (ContextObject)(new Object());
+      if (!(parameter instanceof ContextObject)) {
+         context = new ContextObject();
       } else {
          context = (ContextObject)parameter;
       }
 
-      ContextObject.put(context, 4086083307293257364L, new Object(true));
+      ContextObject.put(context, 4086083307293257364L, new Boolean(true));
       ShowVoiceNotesRecorderApp.setVoiceNoteRecorderContext(context);
       ShowVoiceNotesRecorderApp.ShowVoiceNotesRecorderApp();
       return null;

@@ -63,7 +63,7 @@ public final class EnterpriseConfigImpl
 
    private final synchronized void initialize() {
       if (this._data == null) {
-         this._data = (SimplePersistentSyncCollection$SimpleData)(new Object(16));
+         this._data = new SimplePersistentSyncCollection$SimpleData(16);
          super._persistentObject.setContents(this._data, 51);
          this.commit();
       }
@@ -78,7 +78,7 @@ public final class EnterpriseConfigImpl
 
    @Override
    public final EnterpriseConfigRecord[] getRecordsByTableId(byte tableId) {
-      EnterpriseConfigRecord[] result = new Object[0];
+      EnterpriseConfigRecord[] result = new EnterpriseConfigRecord[0];
 
       for (int i = 0; i < super._elements.size(); i++) {
          EnterpriseConfigRecord record = (EnterpriseConfigRecord)super._elements.elementAt(i);
@@ -154,11 +154,11 @@ public final class EnterpriseConfigImpl
       // Bytecode:
       // 00: aload 1
       // 01: dup
-      // 02: instanceof java/lang/Object
+      // 02: instanceof net/rim/device/api/enterpriseconfig/EnterpriseConfigRecord
       // 05: ifne 0c
       // 08: pop
       // 09: goto 5d
-      // 0c: checkcast java/lang/Object
+      // 0c: checkcast net/rim/device/api/enterpriseconfig/EnterpriseConfigRecord
       // 0f: astore 4
       // 11: aload 4
       // 13: invokeinterface net/rim/device/api/enterpriseconfig/EnterpriseConfigRecord.getData ()Lnet/rim/device/api/util/DataBuffer; 1

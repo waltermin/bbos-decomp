@@ -4,7 +4,7 @@ import java.util.Vector;
 import net.rim.device.api.util.StringUtilities;
 
 final class SrpConnectionManager$SrpConnectionMapper {
-   private Vector _services = (Vector)(new Object(3));
+   private Vector _services = new Vector(3);
 
    private SrpConnectionManager$SrpConnectionMapper() {
    }

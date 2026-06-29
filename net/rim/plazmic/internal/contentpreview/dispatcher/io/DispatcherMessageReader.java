@@ -1,6 +1,7 @@
 package net.rim.plazmic.internal.contentpreview.dispatcher.io;
 
 import java.io.DataInput;
+import java.io.DataInputStream;
 import java.io.InputStream;
 import net.rim.plazmic.internal.contentpreview.dispatcher.DispatcherEventHandler;
 import net.rim.plazmic.internal.contentpreview.message.AbstractMessageReader;
@@ -17,7 +18,7 @@ public final class DispatcherMessageReader extends AbstractMessageReader {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public static final void parse(InputStream is, DispatcherEventHandler handler, int minFormatVersion) throws MessageFormatException, MessageNotFoundException {
-      DataInput di = (DataInput)(new Object(is));
+      DataInput di = new DataInputStream(is);
       int version = 1;
       boolean var7 = false /* VF: Semaphore variable */;
 

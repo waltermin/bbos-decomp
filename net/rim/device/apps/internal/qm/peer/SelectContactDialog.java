@@ -80,7 +80,7 @@ final class SelectContactDialog extends OkCancelDialog implements ListFieldCallb
       Arrays.sort(this._contacts, new StringComparator());
       this.addTitle(QmResources.getString(12));
       int count = this._contacts.length;
-      this._listField = (ListField)(new Object(count));
+      this._listField = new ListField(count);
       this._listField.setCallback(this);
       this._listField.setSelectedIndex(0);
       FixedHeightManager fhm = new FixedHeightManager(this._listField, 4);

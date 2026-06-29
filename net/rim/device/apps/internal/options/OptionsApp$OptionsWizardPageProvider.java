@@ -11,7 +11,7 @@ import net.rim.device.apps.internal.options.items.OwnerSetupWizard;
 final class OptionsApp$OptionsWizardPageProvider implements WizardPageProvider {
    @Override
    public final Vector getWizardPages() {
-      Vector pages = (Vector)(new Object());
+      Vector pages = new Vector();
       pages.addElement(new LocalizationSetupWizard());
       pages.addElement(new DateTimeSetupWizard());
       pages.addElement(new OwnerSetupWizard());

@@ -6,6 +6,7 @@ import net.rim.device.apps.api.addressbook.AddressBookServices;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.internal.phone.api.PhoneUtilities;
+import net.rim.device.apps.internal.phone.model.PhoneNumberModel;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
 
 public final class InitiateCallVerb extends Verb implements PhoneVerb {
@@ -28,7 +29,7 @@ public final class InitiateCallVerb extends Verb implements PhoneVerb {
 
    @Override
    public final Object invoke(Object parameter) {
-      if (parameter instanceof Object) {
+      if (parameter instanceof PhoneNumberModel) {
          Object connectionParams = PhoneUtilities.getCallConnectionParameters(parameter, null, null, null);
          OutgoingCallConnector.startCall(connectionParams);
          return null;

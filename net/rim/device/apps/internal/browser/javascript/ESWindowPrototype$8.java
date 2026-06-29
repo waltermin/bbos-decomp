@@ -21,9 +21,9 @@ class ESWindowPrototype$8 extends JavaScriptHostFunction {
       if (count == 1) {
          try {
             String message = Convert.toString(this.getParm(0));
-            SimpleChoiceDialog dialog = (SimpleChoiceDialog)(new Object(
-               message, new Object[]{CommonResource.getString(100), CommonResource.getString(10005)}, 0, Bitmap.getPredefinedBitmap(0), 134217728
-            ));
+            SimpleChoiceDialog dialog = new SimpleChoiceDialog(
+               message, new String[]{CommonResource.getString(100), CommonResource.getString(10005)}, 0, Bitmap.getPredefinedBitmap(0), 134217728
+            );
             BackgroundDialog.show(dialog);
             return dialog.getCloseReason() == -1 ? Value.makeBooleanValue(false) : Value.makeBooleanValue(dialog.getSelectedIndex() == 0);
          } finally {

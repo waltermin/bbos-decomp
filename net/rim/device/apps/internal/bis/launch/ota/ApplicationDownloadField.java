@@ -4,12 +4,12 @@ import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.system.Application;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.GaugeField;
 import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.PopupScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.ui.CommonResources;
 import net.rim.device.apps.internal.bis.launch.http.HttpListener;
 import net.rim.vm.Memory;
@@ -34,21 +34,21 @@ public final class ApplicationDownloadField extends PopupScreen implements Appli
    private static final int LMM_ADDITIONAL_MEMORY_CONSTANT_FACTOR = 131072;
 
    public ApplicationDownloadField(String[] codUrls, byte[][] digests, int size) {
-      super((Manager)(new Object()), 0);
+      super(new VerticalFieldManager(), 0);
       if (codUrls != null && digests != null && codUrls.length == digests.length) {
          this._codUrls = codUrls;
          this._digests = digests;
          this._downloadSize = size;
          ResourceBundle bundle = ResourceBundle.getBundle(1322930605485095732L, "net.rim.device.apps.internal.bis.launch.resource.BISLaunch");
-         this._statusText = (RichTextField)(new Object(bundle.getString(0), 36028797018963968L));
-         this._statusGauge = (GaugeField)(new Object(null, 0, this._downloadSize, 0, 2));
-         this._cancelButton = (ButtonField)(new Object(CommonResources.getString(9042), 12884967424L));
+         this._statusText = new RichTextField(bundle.getString(0), 36028797018963968L);
+         this._statusGauge = new GaugeField(null, 0, this._downloadSize, 0, 2);
+         this._cancelButton = new ButtonField(CommonResources.getString(9042), 12884967424L);
          this._cancelButton.setChangeListener(this);
          this.add(this._statusText);
          this.add(this._statusGauge);
          this.add(this._cancelButton);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -65,7 +65,7 @@ public final class ApplicationDownloadField extends PopupScreen implements Appli
       super.onDisplay();
       this._isDownloading = true;
       this._downloadManager = new ApplicationDownloadManager(this._codUrls, this._digests, this, this);
-      this._downloadThread = (Thread)(new Object(this._downloadManager));
+      this._downloadThread = new Thread(this._downloadManager);
       this._downloadThread.start();
       this._cancelButton.setFocus();
    }

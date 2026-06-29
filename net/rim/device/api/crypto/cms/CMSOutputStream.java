@@ -13,7 +13,7 @@ public class CMSOutputStream extends OutputStream {
 
    protected CMSOutputStream(OutputStream out, int contentType, boolean dataOut, boolean outer) {
       if (out == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._out = out;
@@ -32,7 +32,7 @@ public class CMSOutputStream extends OutputStream {
       } else if (contentType == 15) {
          this._contentType = OIDs.getOID(-477712249);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

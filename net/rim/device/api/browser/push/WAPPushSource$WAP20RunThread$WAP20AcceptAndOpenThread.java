@@ -20,7 +20,7 @@ final class WAPPushSource$WAP20RunThread$WAP20AcceptAndOpenThread extends Thread
             return;
          }
 
-         EventLogger.logEvent(-1133226195824034738L, ((StringBuffer)(new Object("PTex\n"))).append(t.toString()).toString().getBytes(), 0);
+         EventLogger.logEvent(-1133226195824034738L, ("PTex\n" + t.toString()).getBytes(), 0);
          return;
       }
    }

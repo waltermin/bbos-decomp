@@ -17,13 +17,13 @@ public final class AttendeeTypeEnumDef extends EnumDefinition {
    public static final String ATTENDEE_TYPE_ENUM_NAME = "ATTENDEE_TYPE";
 
    public AttendeeTypeEnumDef() {
-      super._enumNames = new Object[5];
+      super._enumNames = new String[5];
       super._enumNames[0] = "ORGANIZER";
       super._enumNames[1] = "INVITED";
       super._enumNames[2] = "ACCEPTED";
       super._enumNames[3] = "DECLINED";
       super._enumNames[4] = "TENTATIVE";
-      super._enumValues = (ToIntHashtable)(new Object(7));
+      super._enumValues = new ToIntHashtable(7);
       super._enumValues.put("ORGANIZER", 0);
       super._enumValues.put("INVITED", 1);
       super._enumValues.put("ACCEPTED", 2);

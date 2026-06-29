@@ -155,17 +155,17 @@ class ChoiceField extends VerticalFieldManager implements View, PagedListModifie
          DateFormat df = DateFormat.getInstance(54);
          LongVector v = (LongVector)values;
          int size = v.size();
-         vector = (Vector)(new Object(size));
+         vector = new Vector(size);
 
          for (int i = 0; i < size; i++) {
             vector.addElement(df.formatLocal(v.elementAt(i)));
          }
       } else {
-         if (values instanceof Object) {
+         if (values instanceof Vector) {
             return (Vector)values;
          }
 
-         vector = (Vector)(new Object());
+         vector = new Vector();
       }
 
       return vector;

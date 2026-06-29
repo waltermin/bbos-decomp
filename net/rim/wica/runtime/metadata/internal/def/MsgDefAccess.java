@@ -34,7 +34,7 @@ public class MsgDefAccess implements ComponentDefAccess {
    public String getMsgName(int defId) {
       int msgIndex = this._idToDefIndex.get(defId);
       int msgNameIndex = this._msgDefs._defs[msgIndex + 4];
-      return (String)(msgNameIndex == -1 ? null : this._msgDefs._objectData[msgNameIndex]);
+      return msgNameIndex == -1 ? null : (String)this._msgDefs._objectData[msgNameIndex];
    }
 
    public int getScript(int defId) {
@@ -44,7 +44,7 @@ public class MsgDefAccess implements ComponentDefAccess {
 
    public int[] getFieldMapping(int defId, int fieldId) {
       if (this._fieldMapping == null) {
-         this._fieldMapping = (LongHashtable)(new Object());
+         this._fieldMapping = new LongHashtable();
       }
 
       long key = (long)defId << 32 | 4294967295L & fieldId;
@@ -208,12 +208,12 @@ public class MsgDefAccess implements ComponentDefAccess {
    MsgDefAccess(Definitions defs, ComponentDefStruct msgDefs) {
       this._definitions = defs;
       this._msgDefs = msgDefs;
-      this._fieldHandles = (LongIntHashtable)(new Object());
+      this._fieldHandles = new LongIntHashtable();
       int size = this._msgDefs._defs.length;
       int msgCount = size / 7;
       msgCount += msgCount >> 1;
-      this._idToDefIndex = (IntIntHashtable)(new Object(msgCount));
-      this._codeToDefIndex = (IntIntHashtable)(new Object(msgCount));
+      this._idToDefIndex = new IntIntHashtable(msgCount);
+      this._codeToDefIndex = new IntIntHashtable(msgCount);
 
       for (int i = 0; i < size; i += 7) {
          int defId = this._msgDefs._defs[i + 1];

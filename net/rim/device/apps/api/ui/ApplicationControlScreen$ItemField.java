@@ -44,7 +44,7 @@ final class ApplicationControlScreen$ItemField extends BoldObjectChoiceField {
    @Override
    public final void setChoices(Object[] choices, boolean[] boldChoices) {
       super.setChoices(choices, boldChoices);
-      this._choices = choices;
+      this._choices = (String[])choices;
    }
 
    public final void setChangeListener(ApplicationControlScreen$ItemGroup ig) {

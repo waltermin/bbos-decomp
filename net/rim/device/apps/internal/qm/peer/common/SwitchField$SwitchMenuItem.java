@@ -19,8 +19,8 @@ final class SwitchField$SwitchMenuItem extends MenuItem {
       Screen scr = this.this$0.getScreen();
       if (scr != null) {
          Object scrCookie = scr.getCookie();
-         if (scrCookie instanceof Object) {
-            ContextObject obj = (ContextObject)(new Object());
+         if (scrCookie instanceof ActionProvider) {
+            ContextObject obj = new ContextObject();
             ContextObject.put(obj, 254, this.this$0.getCookie());
             ((ActionProvider)scrCookie).perform(NotificationMessageField.SWITCH, obj);
          }

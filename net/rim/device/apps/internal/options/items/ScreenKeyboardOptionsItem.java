@@ -19,6 +19,7 @@ import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.NumericChoiceField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -242,7 +243,7 @@ public final class ScreenKeyboardOptionsItem extends SaveableMainScreenOptionsLi
       this._idleScreenOptions = IdleScreenOptionsProvider.getInstance();
       if (this._idleScreenOptions != null) {
          this._idleScreenOptions.populateMainScreen(mainScreen);
-         mainScreen.add((Field)(new Object()));
+         mainScreen.add(new SeparatorField());
       }
 
       this._isJapanese = (Locale.getDefaultForSystem().getCode() & -65536) == 1784741888
@@ -253,11 +254,11 @@ public final class ScreenKeyboardOptionsItem extends SaveableMainScreenOptionsLi
       }
 
       this._filterSize = font.getHeight(4194307);
-      this._fontFamilyField = (ChoiceField)(new Object(OptionsResources.getString(1102), this._fontFamilies, font.getFontFamily()));
-      this._fontSizeField = (ObjectChoiceField)(new Object(OptionsResources.getString(1103), null, 0, 134217728));
+      this._fontFamilyField = new ObjectChoiceField(OptionsResources.getString(1102), this._fontFamilies, font.getFontFamily());
+      this._fontSizeField = new ObjectChoiceField(OptionsResources.getString(1103), null, 0, 134217728);
       this._isScalable = false;
       this.populateFontSizes();
-      this._fontStyleField = (ChoiceField)(new Object(OptionsResources.getString(1424), OptionsResources.getStringArray(1425)));
+      this._fontStyleField = new ObjectChoiceField(OptionsResources.getString(1424), OptionsResources.getStringArray(1425));
       int index = 0;
       switch (font.getStyle() & 0xFF) {
          case 1:
@@ -295,28 +296,28 @@ public final class ScreenKeyboardOptionsItem extends SaveableMainScreenOptionsLi
             currAntialias = 1;
       }
 
-      this._fontAntialiasField = (ChoiceField)(new Object(OptionsResources.getString(1458), tAA, 0, 134217728));
+      this._fontAntialiasField = new ObjectChoiceField(OptionsResources.getString(1458), tAA, 0, 134217728);
       this._fontAntialiasField.setSelectedIndex(currAntialias);
-      this._fontSampleField = (RichTextField)(new Object(36028797018963968L));
+      this._fontSampleField = new RichTextField(36028797018963968L);
       this._fontSampleField.setText(OptionsResources.getString(1465));
       this._viewCopyrightVerb = new ScreenKeyboardOptionsItem$ViewCopyrightVerb(this._fontSampleField.getFont());
       mainScreen.add(this._fontFamilyField);
       mainScreen.add(this._fontSizeField);
-      tmpA = (Object[])(new Object());
-      tmpA.add(this._fontStyleField);
-      tmpA.add(this._fontAntialiasField);
-      mainScreen.add(tmpA);
-      this._fontSettings = tmpA;
+      VerticalFieldManager fontSettings = new VerticalFieldManager();
+      fontSettings.add(this._fontStyleField);
+      fontSettings.add(this._fontAntialiasField);
+      mainScreen.add(fontSettings);
+      this._fontSettings = fontSettings;
       mainScreen.add(this._fontSampleField);
       this.updateChoiceOptions();
       this._fontFamilyField.setChangeListener(this);
       this._fontSizeField.setChangeListener(this);
       this._fontStyleField.setChangeListener(this);
       this._fontAntialiasField.setChangeListener(this);
-      mainScreen.add((Field)(new Object()));
+      mainScreen.add(new SeparatorField());
       if (Display.isContrastConfigurable()) {
          this._initialContrast = UiSettings.getDisplayContrast();
-         this._contrastField = (NumericChoiceField)(new Object(OptionsResources.getString(1101), 0, 100, Display.getContrastIncrement()));
+         this._contrastField = new NumericChoiceField(OptionsResources.getString(1101), 0, 100, Display.getContrastIncrement());
          this._contrastField.setSelectedValue(this._initialContrast);
          mainScreen.add(this._contrastField);
          this._contrastField.setChangeListener(this);
@@ -325,34 +326,34 @@ public final class ScreenKeyboardOptionsItem extends SaveableMainScreenOptionsLi
       if (Backlight.isBrightnessConfigurable()) {
          this._initialBacklightBrightness = UiSettings.getBacklightBrightness();
          int increment = Backlight.getBrightnessIncrement();
-         this._backlightBrightnessField = (NumericChoiceField)(new Object(OptionsResources.getString(1467), increment, 100, increment));
+         this._backlightBrightnessField = new NumericChoiceField(OptionsResources.getString(1467), increment, 100, increment);
          this._backlightBrightnessField.setSelectedValue(this._initialBacklightBrightness);
          mainScreen.add(this._backlightBrightnessField);
          this._backlightBrightnessField.setChangeListener(this);
       }
 
-      this._backlightTimeoutField = (TimeChoiceField)(new Object(
+      this._backlightTimeoutField = new TimeChoiceField(
          OptionsResources.getString(1846), BACKLIGHT_TIMEOUT_VALUES, UiSettings.getBacklightTimeout() * 1000, false
-      ));
+      );
       mainScreen.add(this._backlightTimeoutField);
       if (InternalServices.isDeviceCapable(16) && this.allowToggleAutomaticBacklight()) {
-         this._automaticBacklightField = (BooleanChoiceField)(new Object(OptionsResources.getString(1967), 1, UiSettings.getAutomaticBacklightEnabled()));
+         this._automaticBacklightField = new BooleanChoiceField(OptionsResources.getString(1967), 1, UiSettings.getAutomaticBacklightEnabled());
          mainScreen.add(this._automaticBacklightField);
       }
 
       if (LED.isPolychromatic()) {
-         this._ledIndicatorField = (BooleanChoiceField)(new Object(OptionsResources.getString(1911), 1, UiSettings.getLEDCoverageIndicatorStatus()));
+         this._ledIndicatorField = new BooleanChoiceField(OptionsResources.getString(1911), 1, UiSettings.getLEDCoverageIndicatorStatus());
          mainScreen.add(this._ledIndicatorField);
       }
 
-      mainScreen.add((Field)(new Object()));
+      mainScreen.add(new SeparatorField());
       if (Keypad.isKeyToneSupported()) {
-         this._keyToneField = (BooleanChoiceField)(new Object(OptionsResources.getString(1104), 1, UiSettings.getKeypadToneEnabled()));
+         this._keyToneField = new BooleanChoiceField(OptionsResources.getString(1104), 1, UiSettings.getKeypadToneEnabled());
          mainScreen.add(this._keyToneField);
       }
 
       if (Ui.getMode() == 2) {
-         this._keyDelayField = (ChoiceField)(new Object(OptionsResources.getString(1449), _keyRepeatDelays, 0, 134217728));
+         this._keyDelayField = new ObjectChoiceField(OptionsResources.getString(1449), _keyRepeatDelays, 0, 134217728);
          int keyRepeatDelay = UiSettings.getKeypadRepeatDelay();
 
          for (int lv = 0; lv < _keyRepeatRates.length; lv++) {
@@ -365,7 +366,7 @@ public final class ScreenKeyboardOptionsItem extends SaveableMainScreenOptionsLi
          mainScreen.add(this._keyDelayField);
       }
 
-      this._keyRateField = (ChoiceField)(new Object(OptionsResources.getString(1105), _keyRepeatRates, 0, 134217728));
+      this._keyRateField = new ObjectChoiceField(OptionsResources.getString(1105), _keyRepeatRates, 0, 134217728);
       int keyRepeatRate = UiSettings.getKeypadRepeatRate();
 
       for (int lv = 0; lv < _keyRepeatRates.length; lv++) {
@@ -381,11 +382,11 @@ public final class ScreenKeyboardOptionsItem extends SaveableMainScreenOptionsLi
          ResourceBundle bundle = ResourceBundle.getBundle(-4248492586227566823L, "net.rim.device.internal.resource.Keypad");
          _currencyChoices = bundle.getString(104);
          if (ch == 0) {
-            _currencyChoices = ((StringBuffer)(new Object())).append('\u0000').append(_currencyChoices).toString();
+            _currencyChoices = '\u0000' + _currencyChoices;
          }
 
          int choiceCount = _currencyChoices.length();
-         String[] variants = new Object[choiceCount];
+         String[] variants = new String[choiceCount];
 
          for (int i = 0; i < choiceCount; i++) {
             if (i == 0 && _currencyChoices.charAt(i) == 0) {
@@ -396,7 +397,7 @@ public final class ScreenKeyboardOptionsItem extends SaveableMainScreenOptionsLi
          }
 
          index = _currencyChoices.indexOf(ch);
-         this._currencyKeyField = (ChoiceField)(new Object(OptionsResources.getString(1961), variants));
+         this._currencyKeyField = new ObjectChoiceField(OptionsResources.getString(1961), variants);
          this._currencyKeyField.setSelectedIndex(index);
          mainScreen.add(this._currencyKeyField);
       }
@@ -407,27 +408,27 @@ public final class ScreenKeyboardOptionsItem extends SaveableMainScreenOptionsLi
       }
 
       if (Trackball.isSupported()) {
-         mainScreen.add((Field)(new Object()));
-         this._trackballLabel = (LabelField)(new Object(OptionsResources.getString(2003)));
+         mainScreen.add(new SeparatorField());
+         this._trackballLabel = new LabelField(OptionsResources.getString(2003));
          mainScreen.add(this._trackballLabel);
          int increment = Trackball.getSensitivityIncrement();
-         this._trackballSensitivityXField = (NumericChoiceField)(new Object(OptionsResources.getString(2021), 20, 100, increment));
+         this._trackballSensitivityXField = new NumericChoiceField(OptionsResources.getString(2021), 20, 100, increment);
          this._trackballSensitivityXField.setSelectedValue(Trackball.getSensitivityXForSystem());
          this._trackballSensitivityXField.setPadding(0, 0, 0, indent);
          mainScreen.add(this._trackballSensitivityXField);
-         this._trackballSensitivityYField = (NumericChoiceField)(new Object(OptionsResources.getString(2022), 20, 100, increment));
+         this._trackballSensitivityYField = new NumericChoiceField(OptionsResources.getString(2022), 20, 100, increment);
          this._trackballSensitivityYField.setSelectedValue(Trackball.getSensitivityYForSystem());
          this._trackballSensitivityYField.setPadding(0, 0, 0, indent);
          mainScreen.add(this._trackballSensitivityYField);
          String[] audibilityStyles = OptionsResources.getStringArray(2024);
-         this._trackballAudibilityField = (ChoiceField)(new Object(OptionsResources.getString(2023), audibilityStyles, 0, 134217728));
+         this._trackballAudibilityField = new ObjectChoiceField(OptionsResources.getString(2023), audibilityStyles, 0, 134217728);
          this._trackballAudibilityField.setSelectedIndex(Trackball.isFeedbackAudibleForSystem() ? 1 : 0);
          this._trackballAudibilityField.setPadding(0, 0, 0, indent);
          mainScreen.add(this._trackballAudibilityField);
       }
 
-      mainScreen.add((Field)(new Object()));
-      this._menuLabel = (LabelField)(new Object(OptionsResources.getString(2079)));
+      mainScreen.add(new SeparatorField());
+      this._menuLabel = new LabelField(OptionsResources.getString(2079));
       mainScreen.add(this._menuLabel);
       String[] menuStyles = OptionsResources.getStringArray(2080);
       int var15 = 1;
@@ -437,12 +438,12 @@ public final class ScreenKeyboardOptionsItem extends SaveableMainScreenOptionsLi
             var15 = 0;
       }
 
-      this._menuStyleField = (ChoiceField)(new Object(OptionsResources.getString(2081), menuStyles, var15, 134217728));
+      this._menuStyleField = new ObjectChoiceField(OptionsResources.getString(2081), menuStyles, var15, 134217728);
       this._menuStyleField.setPadding(0, 0, 0, indent);
       mainScreen.add(this._menuStyleField);
       if (Ui.getTrackballClickAction() == 0 || Ui.getMode() == 2) {
          String[] clickActions = new String[]{"Menu", "Action"};
-         this._trackballClickActionField = (ChoiceField)(new Object("  Click Style (EXPERIMENTAL)", clickActions));
+         this._trackballClickActionField = new ObjectChoiceField("  Click Style (EXPERIMENTAL)", clickActions);
          this._trackballClickActionField.setSelectedIndex(Ui.getTrackballClickAction());
          this._trackballClickActionField.setPadding(0, 0, 0, indent);
          mainScreen.add(this._trackballClickActionField);
@@ -450,7 +451,7 @@ public final class ScreenKeyboardOptionsItem extends SaveableMainScreenOptionsLi
 
       if (Ui.getTrackwheelClickAction() == 1 || Ui.getMode() == 2) {
          String[] clickActions = new String[]{"Menu", "Action"};
-         this._trackwheelClickActionField = (ChoiceField)(new Object("  TW Click Style (EXPERIMENTAL)", clickActions));
+         this._trackwheelClickActionField = new ObjectChoiceField("  TW Click Style (EXPERIMENTAL)", clickActions);
          this._trackwheelClickActionField.setSelectedIndex(Ui.getTrackwheelClickAction());
          this._trackwheelClickActionField.setPadding(0, 0, 0, indent);
          mainScreen.add(this._trackwheelClickActionField);
@@ -458,7 +459,7 @@ public final class ScreenKeyboardOptionsItem extends SaveableMainScreenOptionsLi
 
       if (Ui.getMode() == 2) {
          String[] scrollStyles = new String[]{"Select", "View"};
-         this._scrollViewField = (ChoiceField)(new Object("  Scroll Style (EXPERIMENTAL)", scrollStyles));
+         this._scrollViewField = new ObjectChoiceField("  Scroll Style (EXPERIMENTAL)", scrollStyles);
          this._scrollViewField.setSelectedIndex(UiOptionsRegistry.getInstance().getBoolean(9099188860628284837L) ? 1 : 0);
          this._scrollViewField.setPadding(0, 0, 0, indent);
          mainScreen.add(this._scrollViewField);
@@ -508,7 +509,7 @@ public final class ScreenKeyboardOptionsItem extends SaveableMainScreenOptionsLi
          int size = 0;
          int index = this._fontSizeField.getSelectedIndex();
          if (index >= 0) {
-            size = this._fontSizeField.getChoice(index);
+            size = (Integer)this._fontSizeField.getChoice(index);
          }
 
          if (size < 8) {
@@ -549,14 +550,9 @@ public final class ScreenKeyboardOptionsItem extends SaveableMainScreenOptionsLi
          wrongAntialiasingChosen = this._fontAntialiasField.getSelectedIndex() != antialiasMode;
          wrongStyleChosen = this._fontStyleField.getSelectedIndex() != style;
          if (wrongSizeChosen) {
-            dialogString = ((StringBuffer)(new Object()))
-               .append(dialogString)
-               .append(OptionsResources.getString(2067))
-               .append(recommendedSize)
-               .append(OptionsResources.getString(2068))
-               .toString();
+            dialogString = dialogString + OptionsResources.getString(2067) + recommendedSize + OptionsResources.getString(2068);
          } else {
-            dialogString = ((StringBuffer)(new Object())).append(dialogString).append(OptionsResources.getString(2069)).toString();
+            dialogString = dialogString + OptionsResources.getString(2069);
          }
 
          if ((wrongSizeChosen || wrongAntialiasingChosen || wrongStyleChosen) && Dialog.ask(3, dialogString) == 4) {
@@ -721,20 +717,20 @@ public final class ScreenKeyboardOptionsItem extends SaveableMainScreenOptionsLi
          if (this._isScalable) {
             int[] fontSizes = FONT_SIZES;
             numFontSizes = fontSizes.length;
-            ptFontSizes = new Object[numFontSizes];
+            ptFontSizes = new Integer[numFontSizes];
             this._cptFontSizes = new int[numFontSizes];
 
             for (int i = 0; i < numFontSizes; i++) {
                int ptSize = fontSizes[i];
                if (!this._isJapanese || ptSize == currentSize || ptSize == 8 || 10 <= ptSize && ptSize <= 13) {
-                  ptFontSizes[out] = (Integer)(new Object(ptSize));
+                  ptFontSizes[out] = new Integer(ptSize);
                   this._cptFontSizes[out++] = Ui.convertSize(ptSize, 3, 4194307);
                }
             }
          } else {
             int[] fontSizes = fontFamily.getHeights();
             numFontSizes = fontSizes.length;
-            ptFontSizes = new Object[numFontSizes];
+            ptFontSizes = new Integer[numFontSizes];
             this._cptFontSizes = new int[numFontSizes];
             out = 0;
 
@@ -750,14 +746,14 @@ public final class ScreenKeyboardOptionsItem extends SaveableMainScreenOptionsLi
                      out--;
                   }
 
-                  ptFontSizes[out] = (Integer)(new Object(ptSize));
+                  ptFontSizes[out] = new Integer(ptSize);
                   this._cptFontSizes[out++] = cptSize;
                }
             }
          }
 
          if (out == 0) {
-            ptFontSizes[out] = (Integer)(new Object(10));
+            ptFontSizes[out] = new Integer(10);
             this._cptFontSizes[out++] = 1000;
          }
 
@@ -902,7 +898,7 @@ public final class ScreenKeyboardOptionsItem extends SaveableMainScreenOptionsLi
    private final void updateFont(byte reason, Field field) {
       Font current = this._fontSampleField.getFont();
       Font newFont = null;
-      ChoiceField choiceField = (ChoiceField)(!(field instanceof Object) ? null : field);
+      ChoiceField choiceField = !(field instanceof ChoiceField) ? null : (ChoiceField)field;
       if (choiceField != null) {
          switch (reason) {
             case -1:
@@ -985,9 +981,9 @@ public final class ScreenKeyboardOptionsItem extends SaveableMainScreenOptionsLi
             return false;
          case 1195461965:
          default:
-            super._mainScreen.add((Field)(new Object()));
+            super._mainScreen.add(new SeparatorField());
             String[] gammaTypeChoices = new String[]{"Linear", "Exponential", "Sigmoid"};
-            this._gammaTypeField = (ObjectChoiceField)(new Object("Gamma function type", gammaTypeChoices));
+            this._gammaTypeField = new ObjectChoiceField("Gamma function type", gammaTypeChoices);
             this._gammaTypeField.setSelectedIndex(_gammaTypeIndex);
             super._mainScreen.add(this._gammaTypeField);
             String[] gammaExponentChoices = new String[]{
@@ -1018,13 +1014,13 @@ public final class ScreenKeyboardOptionsItem extends SaveableMainScreenOptionsLi
                "2.9",
                "3.0"
             };
-            this._gammaExponentField = (ObjectChoiceField)(new Object("Gamma exponent", gammaExponentChoices));
+            this._gammaExponentField = new ObjectChoiceField("Gamma exponent", gammaExponentChoices);
             this._gammaExponentField.setSelectedIndex(_gammaExponentIndex);
             super._mainScreen.add(this._gammaExponentField);
-            this._gammaStartField = (NumericChoiceField)(new Object("Gamma start", 0, 256, 8, 0));
+            this._gammaStartField = new NumericChoiceField("Gamma start", 0, 256, 8, 0);
             this._gammaStartField.setSelectedIndex(_gammaStartIndex);
             super._mainScreen.add(this._gammaStartField);
-            this._gammaEndField = (NumericChoiceField)(new Object("Gamma end", 0, 256, 8, 32));
+            this._gammaEndField = new NumericChoiceField("Gamma end", 0, 256, 8, 32);
             this._gammaEndField.setSelectedIndex(_gammaEndIndex);
             super._mainScreen.add(this._gammaEndField);
             return true;

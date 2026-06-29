@@ -29,8 +29,8 @@ public final class HTMLImageInputField extends BrowserLinkBitmapField implements
       String url = form.getURL();
       FormData postData = form.getPostData();
       this._selected = false;
-      ContextObject context = (ContextObject)(new Object());
-      Vector formSubmission = (Vector)(new Object(4));
+      ContextObject context = new ContextObject();
+      Vector formSubmission = new Vector(4);
       formSubmission.addElement(url);
       formSubmission.addElement(postData);
       formSubmission.addElement(form);

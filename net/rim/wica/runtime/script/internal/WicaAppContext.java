@@ -58,8 +58,8 @@ public final class WicaAppContext {
       this._engine = engine;
       this._converter = new TypeConverter(this);
       FieldHandlerFactory.setWicaAppContext(this);
-      this._dataInstances = (LongHashtable)(new Object(32));
-      this._enumInstances = (IntHashtable)(new Object(10));
+      this._dataInstances = new LongHashtable(32);
+      this._enumInstances = new IntHashtable(10);
    }
 
    public final ScriptEngineInternal getEngine() {
@@ -171,7 +171,7 @@ public final class WicaAppContext {
    }
 
    public final long createEnumValue(int value, int type) {
-      return this.createEnumeration(((StringBuffer)(new Object("Unknown"))).append(type).toString(), type).getESEnum(value);
+      return this.createEnumeration("Unknown" + type, type).getESEnum(value);
    }
 
    public final EnumCollection getEnumCollection() {

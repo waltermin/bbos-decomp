@@ -11,7 +11,7 @@ public class Attributes2Impl extends AttributesImpl implements Attributes2 {
       if (index >= 0 && index < this.getLength()) {
          this.specified[index] = value;
       } else {
-         throw new Object(((StringBuffer)(new Object("No attribute at index: "))).append(index).toString());
+         throw new ArrayIndexOutOfBoundsException("No attribute at index: " + index);
       }
    }
 
@@ -19,7 +19,7 @@ public class Attributes2Impl extends AttributesImpl implements Attributes2 {
       if (index >= 0 && index < this.getLength()) {
          this.declared[index] = value;
       } else {
-         throw new Object(((StringBuffer)(new Object("No attribute at index: "))).append(index).toString());
+         throw new ArrayIndexOutOfBoundsException("No attribute at index: " + index);
       }
    }
 
@@ -27,7 +27,7 @@ public class Attributes2Impl extends AttributesImpl implements Attributes2 {
    public boolean isDeclared(String qName) {
       int index = this.getIndex(qName);
       if (index < 0) {
-         throw new Object(((StringBuffer)(new Object("No such attribute: "))).append(qName).toString());
+         throw new IllegalArgumentException("No such attribute: " + qName);
       } else {
          return this.declared[index];
       }
@@ -38,7 +38,7 @@ public class Attributes2Impl extends AttributesImpl implements Attributes2 {
       if (index >= 0 && index < this.getLength()) {
          return this.specified[index];
       } else {
-         throw new Object(((StringBuffer)(new Object("No attribute at index: "))).append(index).toString());
+         throw new ArrayIndexOutOfBoundsException("No attribute at index: " + index);
       }
    }
 
@@ -46,7 +46,7 @@ public class Attributes2Impl extends AttributesImpl implements Attributes2 {
    public boolean isSpecified(String uri, String localName) {
       int index = this.getIndex(uri, localName);
       if (index < 0) {
-         throw new Object(((StringBuffer)(new Object("No such attribute: local="))).append(localName).append(", namespace=").append(uri).toString());
+         throw new IllegalArgumentException("No such attribute: local=" + localName + ", namespace=" + uri);
       } else {
          return this.specified[index];
       }
@@ -56,7 +56,7 @@ public class Attributes2Impl extends AttributesImpl implements Attributes2 {
    public boolean isSpecified(String qName) {
       int index = this.getIndex(qName);
       if (index < 0) {
-         throw new Object(((StringBuffer)(new Object("No such attribute: "))).append(qName).toString());
+         throw new IllegalArgumentException("No such attribute: " + qName);
       } else {
          return this.specified[index];
       }
@@ -66,7 +66,7 @@ public class Attributes2Impl extends AttributesImpl implements Attributes2 {
    public boolean isDeclared(String uri, String localName) {
       int index = this.getIndex(uri, localName);
       if (index < 0) {
-         throw new Object(((StringBuffer)(new Object("No such attribute: local="))).append(localName).append(", namespace=").append(uri).toString());
+         throw new IllegalArgumentException("No such attribute: local=" + localName + ", namespace=" + uri);
       } else {
          return this.declared[index];
       }
@@ -77,7 +77,7 @@ public class Attributes2Impl extends AttributesImpl implements Attributes2 {
       if (index >= 0 && index < this.getLength()) {
          return this.declared[index];
       } else {
-         throw new Object(((StringBuffer)(new Object("No attribute at index: "))).append(index).toString());
+         throw new ArrayIndexOutOfBoundsException("No attribute at index: " + index);
       }
    }
 

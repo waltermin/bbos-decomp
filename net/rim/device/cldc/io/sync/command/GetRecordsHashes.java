@@ -10,7 +10,7 @@ public final class GetRecordsHashes extends SyncCommand {
 
    public GetRecordsHashes() {
       this.setTag(16);
-      this._groupIds = (IntVector)(new Object(0));
+      this._groupIds = new IntVector(0);
    }
 
    @Override

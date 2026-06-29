@@ -1,9 +1,8 @@
 package net.rim.device.apps.internal.bluetooth;
 
 import net.rim.device.api.i18n.MessageFormat;
-import net.rim.device.api.ui.Field;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Ui;
+import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.GaugeField;
 import net.rim.device.api.ui.component.RichTextField;
@@ -13,6 +12,7 @@ import net.rim.device.api.ui.container.PopupScreen;
 import net.rim.device.apps.api.ui.CommonResources;
 import net.rim.device.internal.bluetooth.BluetoothME;
 import net.rim.device.internal.ui.component.ImageField;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 
 final class BluetoothMainScreen$AddDeviceDialog extends PopupScreen implements Runnable {
    private GaugeField _gaugeField;
@@ -118,14 +118,14 @@ final class BluetoothMainScreen$AddDeviceDialog extends PopupScreen implements R
    }
 
    BluetoothMainScreen$AddDeviceDialog(BluetoothMainScreen _1, boolean inquiry) {
-      super((Manager)(new Object()));
+      super(new DialogFieldManager());
       this.this$0 = _1;
       this._inquiry = inquiry;
       DialogFieldManager dfm = (DialogFieldManager)this.getDelegate();
-      dfm.setMessage((RichTextField)(new Object(BluetoothMainScreen.getString(inquiry ? 5 : 96), 36028797018963968L)));
+      dfm.setMessage(new RichTextField(BluetoothMainScreen.getString(inquiry ? 5 : 96), 36028797018963968L));
       int fontHeight = dfm.getFont().getHeight();
       if (Ui.convertSize(fontHeight, 0, 2) < 12) {
-         ImageField imageField = (ImageField)(new Object());
+         ImageField imageField = new ImageField();
          imageField.setImage(_1._btManager.getDialogImage());
          dfm.setIcon(imageField);
       }
@@ -138,9 +138,9 @@ final class BluetoothMainScreen$AddDeviceDialog extends PopupScreen implements R
          this._gaugeInterval = 1000;
       }
 
-      this._gaugeField = (GaugeField)(new Object("", 0, this._gaugeLength, 0, inquiry ? 65536 : 2));
+      this._gaugeField = new GaugeField("", 0, this._gaugeLength, 0, inquiry ? 65536 : 2);
       dfm.addCustomField(this._gaugeField);
-      dfm.addCustomField((Field)(new Object(5)));
-      dfm.addCustomField((Field)(new Object(CommonResources.getString(inquiry ? 9132 : 9042), 12884901888L)));
+      dfm.addCustomField(new VerticalSpacerField(5));
+      dfm.addCustomField(new ButtonField(CommonResources.getString(inquiry ? 9132 : 9042), 12884901888L));
    }
 }

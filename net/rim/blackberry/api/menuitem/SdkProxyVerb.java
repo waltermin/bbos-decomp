@@ -3,7 +3,10 @@ package net.rim.blackberry.api.menuitem;
 import javax.microedition.pim.PIM;
 import javax.microedition.pim.ToDoList;
 import net.rim.blackberry.api.mail.PackageProxy;
+import net.rim.blackberry.api.maps.MapView;
+import net.rim.blackberry.api.pdap.ContactImpl;
 import net.rim.blackberry.api.pdap.ContactListImpl;
+import net.rim.blackberry.api.pdap.EventImpl;
 import net.rim.blackberry.api.pdap.EventListImpl;
 import net.rim.blackberry.api.pdap.InternalBlackBerryMemoList;
 import net.rim.blackberry.api.pdap.MemoListFactory;
@@ -11,6 +14,7 @@ import net.rim.blackberry.api.pdap.ToDoFactory;
 import net.rim.blackberry.api.phone.phonelogs.PhoneLogs;
 import net.rim.device.api.system.ApplicationDescriptor;
 import net.rim.device.api.system.ApplicationManager;
+import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.calendar.modelcontrollerinterface.Event;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.RIMModel;
@@ -18,6 +22,7 @@ import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.utility.framework.ModelUser;
 import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
 import net.rim.device.apps.internal.mms.api.MMSMessageModel;
+import net.rim.device.apps.internal.phone.api.PhoneCallModel;
 import net.rim.device.apps.internal.sms.SMSModel;
 import net.rim.device.cldc.io.mms.Protocol;
 import net.rim.device.cldc.io.sms.TextMessageImpl;
@@ -50,7 +55,7 @@ class SdkProxyVerb extends Verb {
             .get(this._menuItemId);
          if (asp != null) {
             Object sel = asp.lookForAppropriateObject(this._menuItemId, context);
-            if (sel instanceof Object) {
+            if (sel instanceof MapView) {
                externalContext = sel;
             } else {
                selected = (RIMModel)sel;
@@ -70,8 +75,8 @@ class SdkProxyVerb extends Verb {
                externalContext = this.createPublicObject(selected);
                if (selected == null || externalContext == null) {
                   Object o = ContextObject.get(context, 3696141428889703675L);
-                  if (!(o instanceof Object)) {
-                     if (o instanceof Object) {
+                  if (!(o instanceof RIMModel)) {
+                     if (o instanceof String) {
                         return this._ami.run(o);
                      }
                   } else {
@@ -84,7 +89,7 @@ class SdkProxyVerb extends Verb {
                      externalContext = this.createPublicObject(selected);
                   }
 
-                  if ((selected == null || externalContext == null) && context instanceof Object) {
+                  if ((selected == null || externalContext == null) && context instanceof String) {
                      externalContext = context;
                   }
                }
@@ -106,18 +111,18 @@ class SdkProxyVerb extends Verb {
 
    private Object createPublicObject(RIMModel selected) {
       Object o = null;
-      if (selected instanceof Object && this._ami._flags.isSet(0)) {
+      if (selected instanceof EmailMessageModel && this._ami._flags.isSet(0)) {
          EmailMessageModel emm = (EmailMessageModel)selected;
          return PackageProxy.createMessageFromInternalModel(emm);
       }
 
-      if (selected instanceof Object && this._ami._flags.isSet(1)) {
-         return new Object(selected, _contactList);
+      if (selected instanceof AddressCardModel && this._ami._flags.isSet(1)) {
+         return new ContactImpl(selected, _contactList);
       }
 
-      if (selected instanceof Object) {
+      if (selected instanceof Event) {
          Event e = (Event)selected;
-         return new Object(3, e, _eventList);
+         return new EventImpl(3, e, _eventList);
       }
 
       if (ToDoFactory.isInternalToDoModel(selected) && this._ami._flags.isSet(1)) {
@@ -128,15 +133,15 @@ class SdkProxyVerb extends Verb {
          return _memoList.createMemo(selected);
       }
 
-      if (selected instanceof Object) {
+      if (selected instanceof PhoneCallModel) {
          return PhoneLogs.createCallLogFromInternalModel(selected);
       }
 
-      if (selected instanceof Object) {
+      if (selected instanceof SMSModel) {
          SMSModel smsModel = (SMSModel)selected;
          TextMessageImpl msg = null;
          if (smsModel.inbound()) {
-            msg = (TextMessageImpl)(new Object(smsModel.getSender()));
+            msg = new TextMessageImpl(smsModel.getSender());
          } else {
             String[] recipients = smsModel.getRecipients();
             String receiver = null;
@@ -144,12 +149,12 @@ class SdkProxyVerb extends Verb {
                receiver = recipients[0];
             }
 
-            msg = (TextMessageImpl)(new Object(receiver));
+            msg = new TextMessageImpl(receiver);
          }
 
          msg.setPayloadText(smsModel.getBody());
          return msg;
-      } else if (selected instanceof Object) {
+      } else if (selected instanceof MMSMessageModel) {
          try {
             MMSMessageModel mmsMessage = (MMSMessageModel)selected;
             return Protocol.createWMAMessage(mmsMessage, mmsMessage.getPayload().getAttribute("content-type"));
@@ -183,7 +188,7 @@ class SdkProxyVerb extends Verb {
          }
       }
 
-      Message invokeLaterMessage = (Message)(new Object(0, 2, new SdkProxyVerb$1(this, externalContext), null));
+      Message invokeLaterMessage = new Message(0, 2, new SdkProxyVerb$1(this, externalContext), null);
       ((ApplicationManagerInternal)appManager).postMessage(pid, invokeLaterMessage);
    }
 
@@ -197,7 +202,7 @@ class SdkProxyVerb extends Verb {
          _contactList = (ContactListImpl)p.openPIMList(1, 3);
          _eventList = (EventListImpl)p.openPIMList(2, 3);
       } catch (Throwable var13) {
-         new Object(e.toString());
+         new Throwable(e.toString());
          break label59;
       }
 
@@ -205,14 +210,14 @@ class SdkProxyVerb extends Verb {
       try {
          _todoList = (ToDoList)p.openPIMList(3, 3);
       } catch (Throwable var12) {
-         new Object(e.toString());
+         new Throwable(e.toString());
          break label56;
       }
 
       try {
          _memoList = (InternalBlackBerryMemoList)p.openPIMList(5, 3);
       } catch (Throwable var11) {
-         new Object(e.toString());
+         new Throwable(e.toString());
          return;
       }
    }

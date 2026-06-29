@@ -104,7 +104,7 @@ public final class DataDecoder {
                this.readDataArray(in, def.getFieldReferenceType(i), (LongVector)cmp.getObjectFieldValue(i), def.isPersistable());
                break;
             default:
-               throw new Object("Unrecognized field type");
+               throw new RuntimeException("Unrecognized field type");
          }
       }
    }
@@ -148,7 +148,7 @@ public final class DataDecoder {
                int value = this.readInt(in, defaults, i);
                dc.setIntFieldValue(handle, i, value);
                if (def.isBuiltinComponent() && def.hasKey() && def.getKeyFields()[0] == i) {
-                  pkeyFromMessage = new Object(value);
+                  pkeyFromMessage = new Integer(value);
                }
                break;
             case 2:
@@ -185,7 +185,7 @@ public final class DataDecoder {
                this.readDataArray(in, def.getFieldReferenceType(i), (LongVector)dc.getObjectFieldValue(handle, i), persistableParent);
                break;
             default:
-               throw new Object("Unrecognized field type");
+               throw new RuntimeException("Unrecognized field type");
          }
       }
 
@@ -193,7 +193,7 @@ public final class DataDecoder {
          KeyDataCollection kdc = (KeyDataCollection)dc;
          Object key = def.isBuiltinComponent() ? pkeyFromMessage : kdc.getPKey(handle);
          if (key == null) {
-            throw new Object("Primary key of keyed component is null");
+            throw new RuntimeException("Primary key of keyed component is null");
          }
 
          long update = kdc.find(key);
@@ -301,7 +301,7 @@ public final class DataDecoder {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

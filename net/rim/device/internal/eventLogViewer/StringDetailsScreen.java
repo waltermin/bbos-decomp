@@ -9,7 +9,7 @@ final class StringDetailsScreen extends BaseDetailsScreen {
 
    @Override
    public final String getEventSummary(int eventHandle) {
-      return (String)(new Object(EventLog.getData(eventHandle)));
+      return new String(EventLog.getData(eventHandle));
    }
 
    @Override
@@ -20,6 +20,6 @@ final class StringDetailsScreen extends BaseDetailsScreen {
 
    @Override
    protected final String getDataFieldString(int eventHandle) {
-      return (String)(new Object(EventLog.getData(eventHandle)));
+      return new String(EventLog.getData(eventHandle));
    }
 }

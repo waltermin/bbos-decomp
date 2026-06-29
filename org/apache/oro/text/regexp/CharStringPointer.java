@@ -82,7 +82,7 @@ final class CharStringPointer {
    }
 
    final String _toString(int offset) {
-      return (String)(new Object(this._array, offset, this._array.length - offset));
+      return new String(this._array, offset, this._array.length - offset);
    }
 
    @Override

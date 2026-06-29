@@ -3,6 +3,7 @@ package net.rim.device.cldc.io.proxyhttp;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.microedition.io.StreamConnection;
@@ -18,6 +19,8 @@ import net.rim.device.cldc.io.ippp.SocketOutputStream;
 import net.rim.device.cldc.io.proxyhttp.compression.HttpCompressionManager;
 import net.rim.device.cldc.io.proxyhttp.compression.MessageEncoder;
 import net.rim.device.cldc.io.utility.URL;
+import net.rim.device.internal.compress.YKInputStream;
+import net.rim.device.internal.compress.YKMixedInputStream;
 
 public final class ClientProtocol extends HttpProtocolBase implements HttpProtocolConstants {
    private InputStream _inputStream;
@@ -45,7 +48,7 @@ public final class ClientProtocol extends HttpProtocolBase implements HttpProtoc
       this._statusLine = new StatusLine();
       this._requestLine.setVersion("HTTP/1.1");
       this._requestLine.setMethod("GET");
-      StringBuffer temp = (StringBuffer)(new Object());
+      StringBuffer temp = new StringBuffer();
       String tempStr = super._url.getPath();
       if (tempStr != null) {
          temp.append(tempStr);
@@ -67,7 +70,7 @@ public final class ClientProtocol extends HttpProtocolBase implements HttpProtoc
          int port = super._url.getPort();
          String scheme = super._url.getScheme();
          if ((port != 80 || !"http".equals(scheme)) && (port != 443 || !"https".equals(scheme))) {
-            tempStr = ((StringBuffer)(new Object())).append(tempStr).append(':').append(port).toString();
+            tempStr = tempStr + ':' + port;
          }
       } else {
          tempStr = "";
@@ -88,7 +91,7 @@ public final class ClientProtocol extends HttpProtocolBase implements HttpProtoc
    @Override
    protected final OutputStream getOutputStream() {
       if (this._outputStream == null) {
-         this._outputStream = (ByteArrayOutputStream)(new Object());
+         this._outputStream = new ByteArrayOutputStream();
       }
 
       return this._outputStream;
@@ -113,9 +116,9 @@ public final class ClientProtocol extends HttpProtocolBase implements HttpProtoc
          if (this._usePipe && this._inputStream instanceof SocketInputStream) {
             this._inputStream = ((SocketInputStream)this._inputStream).getPipeInputStream(this._ykEncoded, this._ykMixedEncoded);
          } else if (this._ykMixedEncoded) {
-            this._inputStream = (InputStream)(new Object(this._inputStream));
+            this._inputStream = new YKMixedInputStream(this._inputStream);
          } else if (this._ykEncoded) {
-            this._inputStream = (InputStream)(new Object(this._inputStream));
+            this._inputStream = new YKInputStream(this._inputStream);
          }
       }
 
@@ -171,15 +174,15 @@ public final class ClientProtocol extends HttpProtocolBase implements HttpProtoc
    }
 
    @Override
-   protected final void readResponse() throws SocketBaseIOException {
+   protected final void readResponse() throws IOException, SocketBaseIOException {
       synchronized (this._syncObject) {
          this._inputStream = this._streamConnection.openInputStream();
       }
 
       do {
          if (!this._compress) {
-            this._statusLine.readFromStream((InputStream)(new Object(this._inputStream)));
-            super._responseHeaders.readFromStream((DataInputStream)(new Object(this._inputStream)));
+            this._statusLine.readFromStream(new DataInputStream(this._inputStream));
+            super._responseHeaders.readFromStream(new DataInputStream(this._inputStream));
          } else {
             HttpCompressionManager comprMngr = HttpCompressionManager.getInstance();
 
@@ -192,16 +195,16 @@ public final class ClientProtocol extends HttpProtocolBase implements HttpProtoc
             }
 
             if (compressionVersion == -1) {
-               throw new Object("");
+               throw new IOException("");
             }
 
             MessageEncoder messageEncoder = comprMngr.setCompressionVersionFor(this._uid, compressionVersion);
             if (messageEncoder == null) {
-               throw new Object("Unsupported compression version");
+               throw new IOException("Unsupported compression version");
             }
 
             this._statusLine.parseFromString(messageEncoder.decodeResponseLine(this._inputStream));
-            String[] nameValuePair = new Object[2];
+            String[] nameValuePair = new String[2];
 
             while (true) {
                messageEncoder.decodeHeader(this._inputStream, nameValuePair);

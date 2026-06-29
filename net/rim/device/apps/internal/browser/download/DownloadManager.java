@@ -110,7 +110,7 @@ public class DownloadManager implements Runnable {
       // 00d: aload 0
       // 00e: getfield net/rim/device/apps/internal/browser/download/DownloadManager._renderingApp Lnet/rim/device/api/browser/field/RenderingApplication;
       // 011: ifnull 066
-      // 014: new java/lang/Object
+      // 014: new net/rim/device/api/browser/field/RequestedResource
       // 017: dup
       // 018: aload 1
       // 019: aload 2
@@ -127,12 +127,12 @@ public class DownloadManager implements Runnable {
       // 030: putfield net/rim/device/apps/internal/browser/download/DownloadManager._currentResourceRequest Ljava/lang/Object;
       // 033: aload 0
       // 034: getfield net/rim/device/apps/internal/browser/download/DownloadManager._renderingApp Lnet/rim/device/api/browser/field/RenderingApplication;
-      // 037: instanceof java/lang/Object
+      // 037: instanceof net/rim/device/api/browser/field/ResourceProvider
       // 03a: ifeq 053
       // 03d: aload 0
       // 03e: aload 0
       // 03f: getfield net/rim/device/apps/internal/browser/download/DownloadManager._renderingApp Lnet/rim/device/api/browser/field/RenderingApplication;
-      // 042: checkcast java/lang/Object
+      // 042: checkcast net/rim/device/api/browser/field/ResourceProvider
       // 045: aload 5
       // 047: aconst_null
       // 048: invokeinterface net/rim/device/api/browser/field/ResourceProvider.getInputConnection (Lnet/rim/device/api/browser/field/RequestedResource;Lnet/rim/device/api/browser/field/BrowserContent;)Ljavax/microedition/io/InputConnection; 3
@@ -176,7 +176,7 @@ public class DownloadManager implements Runnable {
       // 09e: aload 6
       // 0a0: aload 8
       // 0a2: invokevirtual net/rim/device/apps/internal/browser/stack/RawDataCache.get (Lnet/rim/device/apps/internal/browser/stack/FetchRequest;)Ljavax/microedition/io/InputConnection;
-      // 0a5: checkcast java/lang/Object
+      // 0a5: checkcast javax/microedition/io/HttpConnection
       // 0a8: putfield net/rim/device/apps/internal/browser/download/DownloadManager._currentInputConnection Ljavax/microedition/io/InputConnection;
       // 0ab: aload 0
       // 0ac: getfield net/rim/device/apps/internal/browser/download/DownloadManager._currentInputConnection Ljavax/microedition/io/InputConnection;
@@ -187,11 +187,11 @@ public class DownloadManager implements Runnable {
       // 0b8: aload 0
       // 0b9: getfield net/rim/device/apps/internal/browser/download/DownloadManager._currentInputConnection Ljavax/microedition/io/InputConnection;
       // 0bc: dup
-      // 0bd: instanceof java/lang/Object
+      // 0bd: instanceof javax/microedition/io/HttpConnection
       // 0c0: ifne 0c7
       // 0c3: pop
       // 0c4: goto 1b9
-      // 0c7: checkcast java/lang/Object
+      // 0c7: checkcast javax/microedition/io/HttpConnection
       // 0ca: astore 6
       // 0cc: aload 6
       // 0ce: invokeinterface javax/microedition/io/HttpConnection.getResponseCode ()I 1
@@ -560,7 +560,7 @@ public class DownloadManager implements Runnable {
    }
 
    public static String formatHttpStatusMessage(int status) {
-      StringBuffer message = (StringBuffer)(new Object(BrowserResources.getString(264)));
+      StringBuffer message = new StringBuffer(BrowserResources.getString(264));
       message.append(status);
       message.append(':');
       message.append(' ');

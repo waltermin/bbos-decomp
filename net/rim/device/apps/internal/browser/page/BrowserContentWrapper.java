@@ -13,13 +13,13 @@ public final class BrowserContentWrapper extends BrowserContentImpl {
       super(
          null,
          browserContent.getURL(),
-         (Manager)(browserContent.getDisplayableContent() instanceof Object ? browserContent.getDisplayableContent() : null),
+         browserContent.getDisplayableContent() instanceof Manager ? (Manager)browserContent.getDisplayableContent() : null,
          browserContent.getRenderingApplication(),
          browserContent.getRenderingOptions(),
          browserContent.getRenderingFlags()
       );
       this._browserContent = browserContent;
-      if (!(browserContent.getDisplayableContent() instanceof Object)) {
+      if (!(browserContent.getDisplayableContent() instanceof Manager)) {
          this.getContentManager().add(browserContent.getDisplayableContent());
       }
    }

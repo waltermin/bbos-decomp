@@ -10,6 +10,7 @@ import net.rim.device.api.system.RadioInfo;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.ScreenUiEngineAttachedListener;
 import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.IntVector;
@@ -21,6 +22,7 @@ import net.rim.device.internal.ui.component.BackgroundDialog;
 import net.rim.device.internal.ui.component.PleaseWaitDialog;
 import net.rim.device.internal.ui.component.SimpleChoiceDialog;
 import net.rim.device.internal.ui.container.VerticalIndentFieldManager;
+import net.rim.device.internal.ui.security.component.LockIconField;
 
 public class ApplicationControlScreen extends AppsMainScreen {
    private ApplicationRegistry _ar;
@@ -68,24 +70,24 @@ public class ApplicationControlScreen extends AppsMainScreen {
    private static final String PROMPT = _rb.getString(720);
    private static final String CUSTOM = _rb.getString(721);
    private static final String DEFAULT = _rb.getString(722);
-   protected static final String[] ALLOW_DENY_A = new Object[]{ALLOW, DENY, ALLOW};
-   protected static final String[] ALLOW_DENY_D = new Object[]{ALLOW, DENY, DENY};
-   protected static final String[] ALLOW_PROMPT_DENY_A = new Object[]{ALLOW, PROMPT, DENY, ALLOW};
-   protected static final String[] ALLOW_PROMPT_DENY_P = new Object[]{ALLOW, PROMPT, DENY, PROMPT};
-   protected static final String[] ALLOW_PROMPT_DENY_D = new Object[]{ALLOW, PROMPT, DENY, DENY};
-   private static final String[] ALLOW_CUSTOM_DENY = new Object[]{ALLOW, CUSTOM, DENY};
-   protected static final String[] PROMPT_DENY_P = new Object[]{PROMPT, DENY, PROMPT};
-   protected static final String[] PROMPT_DENY_D = new Object[]{PROMPT, DENY, DENY};
-   private static final String[] DENY_ONLY = new Object[]{DENY};
-   private static final String[] ALLOW_DEFAULT_DENY = new Object[]{ALLOW, DEFAULT, DENY};
-   private static final String[] ALLOW_CUSTOM_DEFAULT_DENY = new Object[]{ALLOW, CUSTOM, DEFAULT, DENY};
-   private static final String[] ALLOW_DENY = new Object[]{ALLOW, DENY};
-   private static final String[] ALLOW_PROMPT_DENY = new Object[]{ALLOW, PROMPT, DENY};
-   private static final String[] PROMPT_DENY = new Object[]{PROMPT, DENY};
-   private static final String[] DENY_ALLOW = new Object[]{DENY, ALLOW};
-   private static final String[] PROMPT_DENY_ALLOW = new Object[]{PROMPT, DENY, ALLOW};
-   private static final String[] ALLOW_DENY_PROMPT = new Object[]{ALLOW, DENY, PROMPT};
-   private static final String[] DENY_PROMPT = new Object[]{DENY, PROMPT};
+   protected static final String[] ALLOW_DENY_A = new String[]{ALLOW, DENY, ALLOW};
+   protected static final String[] ALLOW_DENY_D = new String[]{ALLOW, DENY, DENY};
+   protected static final String[] ALLOW_PROMPT_DENY_A = new String[]{ALLOW, PROMPT, DENY, ALLOW};
+   protected static final String[] ALLOW_PROMPT_DENY_P = new String[]{ALLOW, PROMPT, DENY, PROMPT};
+   protected static final String[] ALLOW_PROMPT_DENY_D = new String[]{ALLOW, PROMPT, DENY, DENY};
+   private static final String[] ALLOW_CUSTOM_DENY = new String[]{ALLOW, CUSTOM, DENY};
+   protected static final String[] PROMPT_DENY_P = new String[]{PROMPT, DENY, PROMPT};
+   protected static final String[] PROMPT_DENY_D = new String[]{PROMPT, DENY, DENY};
+   private static final String[] DENY_ONLY = new String[]{DENY};
+   private static final String[] ALLOW_DEFAULT_DENY = new String[]{ALLOW, DEFAULT, DENY};
+   private static final String[] ALLOW_CUSTOM_DEFAULT_DENY = new String[]{ALLOW, CUSTOM, DEFAULT, DENY};
+   private static final String[] ALLOW_DENY = new String[]{ALLOW, DENY};
+   private static final String[] ALLOW_PROMPT_DENY = new String[]{ALLOW, PROMPT, DENY};
+   private static final String[] PROMPT_DENY = new String[]{PROMPT, DENY};
+   private static final String[] DENY_ALLOW = new String[]{DENY, ALLOW};
+   private static final String[] PROMPT_DENY_ALLOW = new String[]{PROMPT, DENY, ALLOW};
+   private static final String[] ALLOW_DENY_PROMPT = new String[]{ALLOW, DENY, PROMPT};
+   private static final String[] DENY_PROMPT = new String[]{DENY, PROMPT};
    private static final boolean[] ONE_PLUS_ONE = new boolean[]{true, false};
    protected static final boolean[] TWO_PLUS_ONE = new boolean[]{true, true, false};
    protected static final boolean[] THREE_PLUS_ONE = new boolean[]{true, true, true, false};
@@ -95,7 +97,7 @@ public class ApplicationControlScreen extends AppsMainScreen {
    private static final boolean[] ALLOW_CUSTOM_DENY_BN = new boolean[]{false, false, false};
    private static final boolean[] ALLOW_DEFAULT_DENY_BA = new boolean[]{true, false, true};
    private static final boolean[] ALLOW_CUSTOM_DEFAULT_DENY_BA = new boolean[]{true, true, false, true};
-   private static final String[] DEFAULT_MENU_ITEMS = new Object[]{
+   private static final String[] DEFAULT_MENU_ITEMS = new String[]{
       CommonResource.getString(18),
       _rb.getString(714),
       _rb.getString(715),
@@ -170,13 +172,13 @@ public class ApplicationControlScreen extends AppsMainScreen {
    @Override
    public void setTitle(String name) {
       this._title = name;
-      HorizontalFieldManager titleField = (HorizontalFieldManager)(new Object(36028797018963968L));
-      LabelField title = (LabelField)(new Object(((StringBuffer)(new Object())).append(_rb.getString(759)).append(": ").append(name).toString()));
+      HorizontalFieldManager titleField = new HorizontalFieldManager(36028797018963968L);
+      LabelField title = new LabelField(_rb.getString(759) + ": " + name);
       titleField.add(title);
       if (this._policySettingPresent) {
          int x = 0;
          int y = title.getContentHeight() + this.getFont().getBaseline() - 5;
-         titleField.add((Field)(new Object(x, y)));
+         titleField.add(new LockIconField(x, y));
       }
 
       super.setTitle(titleField);
@@ -206,9 +208,9 @@ public class ApplicationControlScreen extends AppsMainScreen {
    }
 
    protected void addModules() {
-      VerticalIndentFieldManager vifm = (VerticalIndentFieldManager)(new Object());
-      IntVector apps = (IntVector)(new Object());
-      IntVector libs = (IntVector)(new Object());
+      VerticalIndentFieldManager vifm = new VerticalIndentFieldManager();
+      IntVector apps = new IntVector();
+      IntVector libs = new IntVector();
 
       for (int i = 0; i < this._moduleHandles.length; i++) {
          int handle = this._moduleHandles[i];
@@ -220,7 +222,7 @@ public class ApplicationControlScreen extends AppsMainScreen {
       }
 
       if (!apps.isEmpty()) {
-         vifm.add((Field)(new Object(_rb.getString(741))));
+         vifm.add(new LabelField(_rb.getString(741)));
 
          for (int i = 0; i < apps.size(); i++) {
             int handle = apps.elementAt(i);
@@ -229,7 +231,7 @@ public class ApplicationControlScreen extends AppsMainScreen {
       }
 
       if (!libs.isEmpty()) {
-         vifm.add((Field)(new Object(_rb.getString(742))));
+         vifm.add(new LabelField(_rb.getString(742)));
 
          for (int i = 0; i < libs.size(); i++) {
             int handle = libs.elementAt(i);
@@ -238,7 +240,7 @@ public class ApplicationControlScreen extends AppsMainScreen {
       }
 
       if (!apps.isEmpty() || !libs.isEmpty()) {
-         this.add((Field)(new Object()));
+         this.add(new SeparatorField());
          this.add(vifm);
       }
    }
@@ -532,7 +534,7 @@ public class ApplicationControlScreen extends AppsMainScreen {
    private void promptUserCannotApplySupplied() {
       String message = _rb.getString(751);
       String[] options = CommonResource.getStringArray(10004);
-      SimpleChoiceDialog scd = (SimpleChoiceDialog)(new Object(message, options, 0, Bitmap.getPredefinedBitmap(2), 134217728));
+      SimpleChoiceDialog scd = new SimpleChoiceDialog(message, options, 0, Bitmap.getPredefinedBitmap(2), 134217728);
       scd.setCancelAllowed(true);
       BackgroundDialog.show(scd);
    }
@@ -714,7 +716,7 @@ public class ApplicationControlScreen extends AppsMainScreen {
 
    @Override
    public void save() {
-      PleaseWaitDialog pwd = (PleaseWaitDialog)(new Object(new ApplicationControlScreen$SavingThread(this, null)));
+      PleaseWaitDialog pwd = new PleaseWaitDialog(new ApplicationControlScreen$SavingThread(this, null));
       pwd.display();
       this._permissionsSavedEqualOrMorePermissive = true;
       if (this._werePermissionsSupplied) {

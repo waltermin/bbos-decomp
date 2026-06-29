@@ -9,10 +9,10 @@ class AutoCloseOutputStream$Helper {
 
    AutoCloseOutputStream$Helper(AutoCloseOutputStream autoClosing, OutputStream underlying) {
       if (autoClosing != null && underlying != null) {
-         this._autoClosing = (WeakReference)(new Object(autoClosing));
+         this._autoClosing = new WeakReference(autoClosing);
          this._underlying = underlying;
       } else {
-         throw new Object();
+         throw new NullPointerException();
       }
    }
 

@@ -137,7 +137,7 @@ public final class OTAFMOptionsScreen extends SaveableMainScreenOptionsListItem 
             OTAFMConfiguration configuration = this._otafmConfigManager.getConfiguration(sr).clone();
             if (configuration.grabDataFromField(info._otafmFields, sr)) {
                if (!configuration.validate(sr)) {
-                  Dialog.alert(((StringBuffer)(new Object())).append(sr.getName()).append(MessageResources.getString(176)).toString());
+                  Dialog.alert(sr.getName() + MessageResources.getString(176));
                   return false;
                }
 
@@ -147,7 +147,7 @@ public final class OTAFMOptionsScreen extends SaveableMainScreenOptionsListItem 
                   && !userChoseToContinue) {
                   switch (Dialog.ask(
                      EmailResources.getString(1011),
-                     new Object[]{CommonResources.getString(800), CommonResources.getString(9042)},
+                     new String[]{CommonResources.getString(800), CommonResources.getString(9042)},
                      new int[]{0, -1, 51, 1866989824, 727916, -1569758719, 1661010020, 529165580},
                      0
                   )) {

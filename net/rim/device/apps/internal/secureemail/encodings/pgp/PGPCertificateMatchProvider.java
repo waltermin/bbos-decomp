@@ -12,7 +12,7 @@ public final class PGPCertificateMatchProvider implements MatchProvider {
 
    @Override
    public final int match(Object searchCriteria) {
-      if (searchCriteria instanceof Object) {
+      if (searchCriteria instanceof PGPCertificate) {
          PGPCertificate cert = (PGPCertificate)searchCriteria;
          if (this._keyIDs != null) {
             int numKeyIDs = this._keyIDs.length;

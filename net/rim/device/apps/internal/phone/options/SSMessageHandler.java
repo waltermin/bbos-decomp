@@ -33,7 +33,7 @@ class SSMessageHandler implements PhoneEventListener, SIMCardEFListener {
          this._suppressDialogs--;
       }
 
-      Out.p(((StringBuffer)(new Object("SSMessageSuppression: "))).append(this._suppressDialogs).toString());
+      Out.p("SSMessageSuppression: " + this._suppressDialogs);
    }
 
    public boolean isCallForwardUnconditionalActive(int line) {
@@ -251,7 +251,7 @@ class SSMessageHandler implements PhoneEventListener, SIMCardEFListener {
             rc = 6055;
       }
 
-      String[] params = new Object[]{PhoneResources.getString(rc)};
+      String[] params = new String[]{PhoneResources.getString(rc)};
       String msg = MessageFormat.format(PhoneResources.getString(6139), params);
       this.alert(msg);
    }
@@ -347,7 +347,7 @@ class SSMessageHandler implements PhoneEventListener, SIMCardEFListener {
             idx = 10;
             break;
          default:
-            System.out.println(((StringBuffer)(new Object("Unknown Service: "))).append(Integer.toString(ss)).toString());
+            System.out.println("Unknown Service: " + Integer.toString(ss));
             return null;
       }
 
@@ -363,7 +363,7 @@ class SSMessageHandler implements PhoneEventListener, SIMCardEFListener {
                return null;
             }
 
-            return ((StringBuffer)(new Object("Action"))).append(Integer.toString(action)).toString();
+            return "Action" + Integer.toString(action);
          case 1:
          default:
             idx = 0;
@@ -445,7 +445,7 @@ class SSMessageHandler implements PhoneEventListener, SIMCardEFListener {
                   if (txt == null) {
                      txt = flagTxt;
                   } else {
-                     txt = ((StringBuffer)(new Object())).append(txt).append(", ").append(flagTxt).toString();
+                     txt = txt + ", " + flagTxt;
                   }
                }
             }
@@ -540,9 +540,9 @@ class SSMessageHandler implements PhoneEventListener, SIMCardEFListener {
          if (fwdnumber != null && fwdnumber.length() > 0 && strSs != null) {
             String[] params;
             if (strBearer != null) {
-               params = new Object[]{((StringBuffer)(new Object())).append(strSs).append(" : ").append(strBearer).toString(), fwdnumber};
+               params = new String[]{strSs + " : " + strBearer, fwdnumber};
             } else {
-               params = new Object[]{strSs, fwdnumber};
+               params = new String[]{strSs, fwdnumber};
             }
 
             String fmtString = PhoneResources.getString(6065);
@@ -551,9 +551,9 @@ class SSMessageHandler implements PhoneEventListener, SIMCardEFListener {
          } else if (strSs != null && strAction != null) {
             String[] params;
             if (strBearer != null) {
-               params = new Object[]{strAction, ((StringBuffer)(new Object())).append(strSs).append(" : ").append(strBearer).toString(), strResult};
+               params = new String[]{strAction, strSs + " : " + strBearer, strResult};
             } else {
-               params = new Object[]{strAction, strSs, strResult};
+               params = new String[]{strAction, strSs, strResult};
             }
 
             String fmtString = PhoneResources.getString(6061);
@@ -563,11 +563,11 @@ class SSMessageHandler implements PhoneEventListener, SIMCardEFListener {
             if (strSs == null && strAction != null) {
                String msg;
                if (strBearer != null) {
-                  String[] params = new Object[]{strAction, strBearer, strResult};
+                  String[] params = new String[]{strAction, strBearer, strResult};
                   String fmtString = PhoneResources.getString(6061);
                   msg = MessageFormat.format(fmtString, params);
                } else {
-                  String[] params = new Object[]{strAction, strResult};
+                  String[] params = new String[]{strAction, strResult};
                   String fmtString = PhoneResources.getString(6277);
                   msg = MessageFormat.format(fmtString, params);
                }

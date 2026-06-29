@@ -23,7 +23,7 @@ class NonPersistedUtilityFolder implements Folder {
 
    @Override
    public String getFriendlyName() {
-      return ((StringBuffer)(new Object("tilityUay olderFay"))).append(Long.toString(this._luid)).toString();
+      return "tilityUay olderFay" + Long.toString(this._luid);
    }
 
    @Override

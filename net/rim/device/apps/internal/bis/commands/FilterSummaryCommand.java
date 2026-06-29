@@ -22,7 +22,7 @@ public final class FilterSummaryCommand implements DomainCommand {
       BISClientConfigRecord configRecord = (BISClientConfigRecord)ObjectRegistry.getInstance().find("configRecord");
       Mailbox mailbox = userInfo.getMailbox(description);
       if (mailbox == null) {
-         throw new Object(((StringBuffer)(new Object("Unknown mailbox specified: "))).append(description).toString());
+         throw new IllegalArgumentException("Unknown mailbox specified: " + description);
       }
 
       if (mailbox.getFilters() != null) {
@@ -35,9 +35,7 @@ public final class FilterSummaryCommand implements DomainCommand {
       try {
          RestClient$GetFiltersCallResult callResult = restClient.getFilters(configRecord.getBrandName(), userInfo.getUsername(), mailbox.getSrcMboxID());
          if (callResult.getRESTStatusCode() != 200) {
-            BISEventLogger.logEvent(
-               ((StringBuffer)(new Object("Filters Summary: Unhandled REST response code: "))).append(callResult.getRESTStatusCode()).toString(), 0
-            );
+            BISEventLogger.logEvent("Filters Summary: Unhandled REST response code: " + callResult.getRESTStatusCode(), 0);
             return new DomainCommandResult("error", null, null);
          }
 

@@ -7,15 +7,13 @@ public class AbstractOutputByteStreamAdapter implements IOutputByteStreamAdapter
    private DataOutputStream _dataOutputStream;
 
    protected void init(OutputStream outStream) {
-      this._dataOutputStream = (DataOutputStream)(new Object(outStream));
+      this._dataOutputStream = new DataOutputStream(outStream);
    }
 
    @Override
    public final void writeBuffer(int numBytes, byte[] buffer) {
       if (numBytes > buffer.length) {
-         throw new Object(
-            ((StringBuffer)(new Object("Trying to write "))).append(numBytes).append(" bytes from buffer of size ").append(buffer.length).toString()
-         );
+         throw new ArrayIndexOutOfBoundsException("Trying to write " + numBytes + " bytes from buffer of size " + buffer.length);
       }
 
       this._dataOutputStream.write(buffer, 0, numBytes);

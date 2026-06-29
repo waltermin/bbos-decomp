@@ -9,12 +9,14 @@ import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.api.system.ObjectGroup;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.util.Comparator;
+import net.rim.device.api.util.ObjectEnumerator;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.api.addressbook.AddressBook;
 import net.rim.device.apps.api.addressbook.AddressBookOptions;
 import net.rim.device.apps.api.addressbook.AddressCardElement;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.AddressReverseLookupResolver;
+import net.rim.device.apps.api.addressbook.DuplicateAddressBookEntryException;
 import net.rim.device.apps.api.framework.model.EditableProvider;
 import net.rim.device.apps.api.framework.model.KeyProvider;
 import net.rim.device.apps.api.framework.model.Recognizer;
@@ -82,7 +84,7 @@ public final class BlackBerryAddressBook implements AddressBook {
             this._addressBookCollection.getAt(0, len, elements, 0);
          }
 
-         return (Enumeration)(new Object(elements));
+         return new ObjectEnumerator(elements);
       }
    }
 
@@ -104,10 +106,10 @@ public final class BlackBerryAddressBook implements AddressBook {
 
    @Override
    public final Object[] lookup(Object name, int flags) {
-      if (name != null && (!(name instanceof Object) || ((String)name).length() != 0)) {
+      if (name != null && (!(name instanceof String) || ((String)name).length() != 0)) {
          return this.doLookup(name, flags);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -121,15 +123,15 @@ public final class BlackBerryAddressBook implements AddressBook {
       if (!this._addressBookOptions.getDuplicateNamesAllowed()) {
          Object[] matches = this.doLookup(addressCard, 1);
          if (matches != null && matches.length > 0) {
-            throw new Object(matches);
+            throw new DuplicateAddressBookEntryException(matches);
          }
       }
 
       if (!this.isValid(addressCard)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
-      if (this._uidGeneratorCallback != null && addressCard instanceof Object) {
+      if (this._uidGeneratorCallback != null && addressCard instanceof AddressCardElement) {
          AddressCardElement model = (AddressCardElement)addressCard;
          int newUID = this._uidGeneratorCallback.generateUID(model);
          if (newUID == -1) {
@@ -138,7 +140,7 @@ public final class BlackBerryAddressBook implements AddressBook {
 
          if (model.getUID() != newUID) {
             boolean makeReadOnly = false;
-            if (model instanceof Object) {
+            if (model instanceof EditableProvider) {
                EditableProvider editProvider = (EditableProvider)model;
                if (editProvider.isReadOnly()) {
                   model = (AddressCardElement)editProvider.makeReadWrite();
@@ -155,7 +157,7 @@ public final class BlackBerryAddressBook implements AddressBook {
          }
       }
 
-      if (addressCard instanceof Object) {
+      if (addressCard instanceof AddressCardModel) {
          AddressCardUtilities.createGroup((AddressCardModel)addressCard);
       }
 
@@ -178,15 +180,15 @@ public final class BlackBerryAddressBook implements AddressBook {
          newCard = ObjectGroup.expandGroup(newCard);
       }
 
-      ((AddressCardElement)newCard).setUID(((AddressCardElement)oldCard).getUID());
+      ((AddressCardModel)newCard).setUID(((AddressCardModel)oldCard).getUID());
       this.updateAddressCard(oldCard, newCard, false);
    }
 
    @Override
    public final Object mergeUpdateAddressCard(Object oldCard, Object newCard) {
       if (!this.isValid(newCard)) {
-         throw new Object();
-      } else if (oldCard instanceof Object && newCard instanceof Object) {
+         throw new IllegalArgumentException();
+      } else if (oldCard instanceof AddressCardModel && newCard instanceof AddressCardModel) {
          AddressCardModel mergedCard = AddressCardUtilities.mergeAddressCard((AddressCardModel)oldCard, (AddressCardModel)newCard);
          newCard = ((EditableProvider)mergedCard).makeReadOnly();
          this.updateAddressCard(oldCard, newCard, false);
@@ -229,7 +231,7 @@ public final class BlackBerryAddressBook implements AddressBook {
    @Override
    public final Comparator getComparator(Object context, long sortOrder) {
       if (sortOrder != 1232448844688687736L && sortOrder != -227891759293611117L && sortOrder != -4388042602796535003L) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return new AddressBookOrderHelper(context, sortOrder);
       }
@@ -302,19 +304,19 @@ public final class BlackBerryAddressBook implements AddressBook {
       if (checkForDuplicates && !this._addressBookOptions.getDuplicateNamesAllowed()) {
          Object[] matches = this.doLookup(newCard, 1);
          if (matches != null && (matches.length > 1 || matches[0] != oldCard)) {
-            throw new Object(matches);
+            throw new DuplicateAddressBookEntryException(matches);
          }
       }
 
       if (!this.isValid(newCard)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
-      if (newCard instanceof Object) {
+      if (newCard instanceof AddressCardModel) {
          AddressCardUtilities.createGroup((AddressCardModel)newCard);
       }
 
-      if (oldCard instanceof Object) {
+      if (oldCard instanceof AddressCardModel) {
          AddressCardUtilities.removeFromCache((AddressCardModel)oldCard);
       }
 
@@ -322,7 +324,7 @@ public final class BlackBerryAddressBook implements AddressBook {
    }
 
    private final boolean isValid(Object object) {
-      if (!(object instanceof Object)) {
+      if (!(object instanceof ValidationProvider)) {
          return object != null;
       }
 
@@ -340,9 +342,9 @@ public final class BlackBerryAddressBook implements AddressBook {
          helper = this._lastNameHelper;
       }
 
-      if (!(name instanceof Object)) {
-         if (!(name instanceof Object)) {
-            throw new Object();
+      if (!(name instanceof KeyProvider)) {
+         if (!(name instanceof String)) {
+            throw new IllegalArgumentException();
          }
 
          keys[0] = name;
@@ -355,7 +357,7 @@ public final class BlackBerryAddressBook implements AddressBook {
       Object[] matches = null;
       AddressBookKeywordFilterList activeView = this.createView(this._addressBookOptions.getSortOrder());
       if (keyCount > 0) {
-         String[] words = new Object[10];
+         String[] words = new String[10];
          int wordCount = 0;
 
          for (int i = 0; i < keyCount; i++) {

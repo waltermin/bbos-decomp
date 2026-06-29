@@ -4,6 +4,7 @@ import java.io.DataInput;
 import java.io.DataInputStream;
 import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.apps.api.utility.serialization.BaseConverter;
+import net.rim.device.apps.api.utility.serialization.SerializationException;
 
 final class SLCConverter extends BaseConverter {
    @Override
@@ -12,11 +13,11 @@ final class SLCConverter extends BaseConverter {
    }
 
    @Override
-   public final Object convert(DataInput aDataInput, Object contextObject) {
-      if (contextObject instanceof Object && aDataInput instanceof Object) {
+   public final Object convert(DataInput aDataInput, Object contextObject) throws SerializationException {
+      if (contextObject instanceof HttpHeaders && aDataInput instanceof DataInputStream) {
          return SLCModelFactory.createSLCModel((DataInputStream)aDataInput, (HttpHeaders)contextObject);
       } else {
-         throw new Object();
+         throw new SerializationException();
       }
    }
 }

@@ -1,5 +1,8 @@
 package net.rim.wica.runtime.messaging.internal.util;
 
+import java.util.NoSuchElementException;
+import net.rim.device.api.system.UnsupportedOperationException;
+
 public class ConcurrentQueue$Iterator {
    protected ConcurrentQueue$LinkedNode _current;
    protected ConcurrentQueue$LinkedNode _previous;
@@ -18,7 +21,7 @@ public class ConcurrentQueue$Iterator {
 
    public Object next() {
       if (!this.hasNext()) {
-         throw new Object();
+         throw new NoSuchElementException();
       }
 
       this._previous = this._current;
@@ -29,7 +32,7 @@ public class ConcurrentQueue$Iterator {
 
    public Object peekNext() {
       if (!this.hasNext()) {
-         throw new Object();
+         throw new NoSuchElementException();
       } else {
          return this._current.next.value;
       }
@@ -37,7 +40,7 @@ public class ConcurrentQueue$Iterator {
 
    public void replace(Object x) {
       if (!this._goodState) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       this._current.value = x;
@@ -45,11 +48,11 @@ public class ConcurrentQueue$Iterator {
 
    public void remove() {
       if (Thread.currentThread() != this.this$0._owner) {
-         throw new Object();
+         throw new UnsupportedOperationException();
       }
 
       if (!this._goodState) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       this.this$0._takeSidePutPermits++;
@@ -64,11 +67,11 @@ public class ConcurrentQueue$Iterator {
 
    public void removeNext() {
       if (Thread.currentThread() != this.this$0._owner) {
-         throw new Object();
+         throw new UnsupportedOperationException();
       }
 
       if (!this.hasNext()) {
-         throw new Object();
+         throw new NoSuchElementException();
       }
 
       this.this$0._takeSidePutPermits++;

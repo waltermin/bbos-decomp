@@ -13,7 +13,7 @@ public class VerbFactoryRepository {
 
    public static void addFactory(long id, VerbFactory verbFactory) {
       if (verbFactory == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       VerbFactory[] factories = (VerbFactory[])_verbFactories.get(id);

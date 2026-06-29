@@ -14,16 +14,7 @@ class DownloadPage$DownloadItem$2 implements Runnable {
       if (this.this$1._gauge != null) {
          this.this$1.delete(this.this$1._gauge);
          this.this$1._gauge = null;
-         this.this$1
-            ._speed
-            .setText(
-               ((StringBuffer)(new Object()))
-                  .append(BrowserResources.getString(885))
-                  .append(" (")
-                  .append(this.this$1.getTransferRate(this.this$1._dm.getTransferRate()))
-                  .append(')')
-                  .toString()
-            );
+         this.this$1._speed.setText(BrowserResources.getString(885) + " (" + this.this$1.getTransferRate(this.this$1._dm.getTransferRate()) + ')');
       }
    }
 }

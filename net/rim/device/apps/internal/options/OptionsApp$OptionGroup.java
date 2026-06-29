@@ -26,7 +26,7 @@ final class OptionsApp$OptionGroup implements ListFieldCallback {
       this._base = base;
       this._titleId = titleId;
       this._selectedIndexID = PersistentInteger.getId(-7960768038040625127L ^ groupId, 0);
-      this._listItems = (SimpleSortingVector)(new Object());
+      this._listItems = new SimpleSortingVector();
    }
 
    public final void addItem(Object item) {
@@ -64,7 +64,7 @@ final class OptionsApp$OptionGroup implements ListFieldCallback {
    }
 
    public final void createMainScreen() {
-      ListField listField = (ListField)(new Object(this._listItems.size()));
+      ListField listField = new ListField(this._listItems.size());
       listField.setCallback(this);
       listField.setCookie(this._listItems);
       MainScreen mainScreen = new OptionsApp$OptionsListScreen(this, this._titleId);
@@ -93,7 +93,7 @@ final class OptionsApp$OptionGroup implements ListFieldCallback {
    @Override
    public final void drawListRow(ListField listField, Graphics graphics, int index, int y, int width) {
       Object item = this._listItems.elementAt(index);
-      if (item instanceof Object) {
+      if (item instanceof PaintProvider) {
          PaintProvider paintProvider = (PaintProvider)item;
          VariableRowHeightProxy.addHeightAdjusterToContext(OptionsApp._context, listField);
          paintProvider.paint(graphics, 0, y, width, listField.getRowHeight(index), OptionsApp._context);
@@ -116,7 +116,7 @@ final class OptionsApp$OptionGroup implements ListFieldCallback {
 
       for (int i = start; i < size; i++) {
          Object item = this._listItems.elementAt(i);
-         if (item instanceof Object) {
+         if (item instanceof MatchProvider) {
             MatchProvider matchProvider = (MatchProvider)item;
             if (matchProvider.match(prefix) == 1) {
                return i;

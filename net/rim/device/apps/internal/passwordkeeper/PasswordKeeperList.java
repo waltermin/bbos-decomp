@@ -128,17 +128,17 @@ public final class PasswordKeeperList implements List, ListFieldCallback, Keywor
 
    @Override
    public final Object get(ListField listField, int index) {
-      throw new Object();
+      throw new RuntimeException();
    }
 
    @Override
    public final int getPreferredWidth(ListField listField) {
-      throw new Object();
+      throw new RuntimeException();
    }
 
    @Override
    public final int indexOfList(ListField listField, String prefix, int start) {
-      throw new Object();
+      throw new RuntimeException();
    }
 
    @Override

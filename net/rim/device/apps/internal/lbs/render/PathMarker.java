@@ -25,11 +25,11 @@ final class PathMarker implements Comparator {
    int[] _x;
    int[] _y;
    static Field _mapField;
-   static BorderBitmap _hiwayBorder = (BorderBitmap)(new Object(3, 5, 3, 5, Bitmap.getBitmapResource("hiway.png")));
+   static BorderBitmap _hiwayBorder = new BorderBitmap(3, 5, 3, 5, Bitmap.getBitmapResource("hiway.png"));
    static Bitmap _hwyBorder = Bitmap.getBitmapResource("hiway_can.png");
    static Bitmap _transCanBorder = Bitmap.getBitmapResource("hiway_tc.png");
    static Bitmap _interstate = Bitmap.getBitmapResource("interstate.png");
-   static BorderBitmap _hwyEurope = (BorderBitmap)(new Object(3, 5, 3, 5, Bitmap.getBitmapResource("hiway_eu.png")));
+   static BorderBitmap _hwyEurope = new BorderBitmap(3, 5, 3, 5, Bitmap.getBitmapResource("hiway_eu.png"));
    static Font _hiwayFont = FontRegistry.get("BBMillbankTall").getFont(1, 10, 0, 2, 0);
 
    protected final void render(Graphics g) {
@@ -139,7 +139,7 @@ final class PathMarker implements Comparator {
    final void setMarker(boolean isNewVer, int type, String value, Maplet maplet, MapRect rect, int zoom, int rotation) {
       this._value = value;
       this._type = type;
-      this._rect = (XYRect)(new Object());
+      this._rect = new XYRect();
       this._isNewVer = isNewVer;
       this._isDrawn = false;
       if (!this._isNewVer) {

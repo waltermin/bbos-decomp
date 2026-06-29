@@ -1,7 +1,10 @@
 package net.rim.device.apps.internal.docview.gui;
 
+import java.io.ByteArrayInputStream;
 import java.io.DataInput;
+import java.io.EOFException;
 import java.io.InputStream;
+import java.io.UTFDataFormatException;
 import net.rim.device.apps.internal.docview.core.DocViewInputStream;
 
 public final class DocViewInputStreamImpl extends DocViewInputStream {
@@ -9,7 +12,7 @@ public final class DocViewInputStreamImpl extends DocViewInputStream {
 
    public DocViewInputStreamImpl(InputStream input) {
       if (input == null) {
-         throw new Object("Null input stream.");
+         throw new IllegalArgumentException("Null input stream.");
       }
 
       this.in = input;
@@ -36,9 +39,9 @@ public final class DocViewInputStreamImpl extends DocViewInputStream {
    }
 
    @Override
-   public final void readFully(byte[] b, int off, int len) {
+   public final void readFully(byte[] b, int off, int len) throws EOFException {
       if (len < 0) {
-         throw new Object();
+         throw new IndexOutOfBoundsException();
       }
 
       int n = 0;
@@ -46,7 +49,7 @@ public final class DocViewInputStreamImpl extends DocViewInputStream {
       while (n < len) {
          int count = this.read(b, off + n, len - n);
          if (count < 0) {
-            throw new Object();
+            throw new EOFException();
          }
 
          n += count;
@@ -66,30 +69,30 @@ public final class DocViewInputStreamImpl extends DocViewInputStream {
    }
 
    @Override
-   public final boolean readBoolean() {
+   public final boolean readBoolean() throws EOFException {
       int ch = this.read();
       if (ch < 0) {
-         throw new Object();
+         throw new EOFException();
       } else {
          return ch != 0;
       }
    }
 
    @Override
-   public final byte readByte() {
+   public final byte readByte() throws EOFException {
       int ch = this.read();
       if (ch < 0) {
-         throw new Object();
+         throw new EOFException();
       } else {
          return (byte)ch;
       }
    }
 
    @Override
-   public final int readUnsignedByte() {
+   public final int readUnsignedByte() throws EOFException {
       int ch = this.read();
       if (ch < 0) {
-         throw new Object();
+         throw new EOFException();
       } else {
          return ch;
       }
@@ -106,7 +109,7 @@ public final class DocViewInputStreamImpl extends DocViewInputStream {
          int b1 = this.read();
          int b2 = this.read();
          if ((b1 | b2) < 0) {
-            throw new Object();
+            throw new EOFException();
          } else {
             return b2 << 8 | b1;
          }
@@ -126,7 +129,7 @@ public final class DocViewInputStreamImpl extends DocViewInputStream {
          int b3 = this.read();
          int b4 = this.read();
          if ((b1 | b2 | b3 | b4) < 0) {
-            throw new Object();
+            throw new EOFException();
          } else {
             return b4 << 24 | b3 << 16 | b2 << 8 | b1;
          }
@@ -145,7 +148,7 @@ public final class DocViewInputStreamImpl extends DocViewInputStream {
          long b2 = this.read();
          long b1 = this.read();
          if ((b1 | b2 | b3 | b4 | b5 | b6 | b7 | b8) < 0) {
-            throw new Object();
+            throw new EOFException();
          } else {
             return b1 << 56 | b2 << 48 | b3 << 40 | b4 << 32 | b5 << 24 | b6 << 16 | b7 << 8 | b8;
          }
@@ -167,11 +170,11 @@ public final class DocViewInputStreamImpl extends DocViewInputStream {
       return readUTF(this);
    }
 
-   public static final String readUTF(DataInput in) {
+   public static final String readUTF(DataInput in) throws UTFDataFormatException {
       int ch1 = in.readUnsignedByte();
       int ch2 = in.readUnsignedByte();
       int utflen = (ch1 << 8) + (ch2 << 0);
-      StringBuffer str = (StringBuffer)(new Object(utflen));
+      StringBuffer str = new StringBuffer(utflen);
       byte[] bytearr = new byte[utflen];
       int count = 0;
       in.readFully(bytearr, 0, utflen);
@@ -184,7 +187,7 @@ public final class DocViewInputStreamImpl extends DocViewInputStream {
             case 9:
             case 10:
             case 11:
-               throw new Object();
+               throw new UTFDataFormatException();
             case 0:
             case 1:
             case 2:
@@ -201,12 +204,12 @@ public final class DocViewInputStreamImpl extends DocViewInputStream {
             case 13:
                count += 2;
                if (count > utflen) {
-                  throw new Object();
+                  throw new UTFDataFormatException();
                }
 
                int char2 = bytearr[count - 1];
                if ((char2 & 192) != 128) {
-                  throw new Object();
+                  throw new UTFDataFormatException();
                }
 
                str.append((char)((c & 31) << 6 | char2 & 63));
@@ -214,20 +217,20 @@ public final class DocViewInputStreamImpl extends DocViewInputStream {
             case 14:
                count += 3;
                if (count > utflen) {
-                  throw new Object();
+                  throw new UTFDataFormatException();
                }
 
                int char2 = bytearr[count - 2];
                int char3 = bytearr[count - 1];
                if ((char2 & 192) != 128 || (char3 & 192) != 128) {
-                  throw new Object();
+                  throw new UTFDataFormatException();
                }
 
                str.append((char)((c & 15) << 12 | (char2 & 63) << 6 | (char3 & 63) << 0));
          }
       }
 
-      return (String)(new Object(str));
+      return new String(str);
    }
 
    @Override
@@ -262,7 +265,7 @@ public final class DocViewInputStreamImpl extends DocViewInputStream {
 
    @Override
    public final boolean supportsTotalByteCount() {
-      return this.in instanceof Object;
+      return this.in instanceof ByteArrayInputStream;
    }
 
    @Override

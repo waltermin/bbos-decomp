@@ -8,7 +8,6 @@ import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.Tag;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
-import net.rim.device.apps.api.addressbook.AddressCardElement;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.ContextObjectWR;
@@ -21,6 +20,8 @@ import net.rim.device.apps.api.ui.SystemEnabledMenu;
 import net.rim.device.apps.api.utility.editor.EditorUsingRIMModelFactory;
 import net.rim.device.apps.internal.addressbook.BlackBerryAddressBook;
 import net.rim.device.apps.internal.addressbook.resources.AddressBookResources;
+import net.rim.device.apps.internal.commonmodels.categories.CategoriesModel;
+import net.rim.device.apps.internal.commonmodels.categories.DisplayCategoriesForFieldVerb;
 import net.rim.device.apps.internal.profiles.Overrides;
 
 final class EditAddressCardScreen extends EditorUsingRIMModelFactory {
@@ -30,7 +31,7 @@ final class EditAddressCardScreen extends EditorUsingRIMModelFactory {
    private Field _categoriesField;
    private TuneChoiceField _customTuneField;
    private boolean _hasTune;
-   private static ContextObjectWR _editContextWR = (ContextObjectWR)(new Object(11, 0));
+   private static ContextObjectWR _editContextWR = new ContextObjectWR(11, 0);
 
    EditAddressCardScreen(Verb storeAction, String titleString) {
       super(_editContextWR.getContextObject(), titleString, -5785746452676094833L, -1);
@@ -53,7 +54,7 @@ final class EditAddressCardScreen extends EditorUsingRIMModelFactory {
       super.setModel(addressCard);
       this.getContext().put(3696141428889703675L, addressCard);
       this._categoriesField = this.findField(new EditAddressCardScreen$CategoriesModelRecognizer(null));
-      int uid = ((AddressCardElement)addressCard).getUID();
+      int uid = ((AddressCardModel)addressCard).getUID();
       String customTuneName = Overrides.getInstance().getCustomTune(uid);
       if (customTuneName != null) {
          this._hasTune = true;
@@ -85,22 +86,22 @@ final class EditAddressCardScreen extends EditorUsingRIMModelFactory {
       Manager manager = null;
       if (ContextObject.getFlag(super._context, 128)) {
          if (order >= 1100 && order < 2300) {
-            manager = (Manager)(new Object());
+            manager = new VerticalFieldManager();
             manager.setTag(Tag.create("addressbook-block-name-edit"));
          }
 
          if (order >= 2400 && order < 3200) {
-            manager = (Manager)(new Object());
+            manager = new VerticalFieldManager();
             manager.setTag(Tag.create("addressbook-communication-edit"));
          }
 
          if (order >= 3500 && order < 3600) {
-            manager = (Manager)(new Object());
+            manager = new VerticalFieldManager();
             manager.setTag(Tag.create("addressbook-communication-edit"));
          }
 
          if (order >= 4300) {
-            manager = (Manager)(new Object());
+            manager = new VerticalFieldManager();
             manager.setTag(Tag.create("addressbook-other-edit"));
          }
       }
@@ -135,8 +136,8 @@ final class EditAddressCardScreen extends EditorUsingRIMModelFactory {
    protected final void makeMenu(SystemEnabledMenu menu, int instance) {
       if (instance != 65537) {
          super.makeMenu(menu, instance);
-         if (instance == 0 && this._categoriesField != null && !(this.getModelFieldWithFocus().getCookie() instanceof Object)) {
-            menu.add((Verb)(new Object(this._categoriesField)));
+         if (instance == 0 && this._categoriesField != null && !(this.getModelFieldWithFocus().getCookie() instanceof CategoriesModel)) {
+            menu.add(new DisplayCategoriesForFieldVerb(this._categoriesField));
          }
 
          menu.add(this._saveVerb);
@@ -153,7 +154,7 @@ final class EditAddressCardScreen extends EditorUsingRIMModelFactory {
 
          if (this._customTuneField == null) {
             menu.add(new EditAddressCardScreen$1(this, 16864384));
-         } else if (this.getLeafFieldWithFocus() instanceof Object) {
+         } else if (this.getLeafFieldWithFocus() instanceof TuneChoiceField) {
             menu.add(new EditAddressCardScreen$2(this, 16879616));
          }
 

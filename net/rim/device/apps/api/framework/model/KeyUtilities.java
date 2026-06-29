@@ -4,7 +4,7 @@ import net.rim.device.api.collection.LongKeyProviderAdaptor;
 import net.rim.device.api.collection.ReadableList;
 
 public final class KeyUtilities {
-   private static String[] _keyArray = new Object[1];
+   private static String[] _keyArray = new String[1];
 
    public static final String getStringKey(KeyProvider kp) {
       synchronized (_keyArray) {

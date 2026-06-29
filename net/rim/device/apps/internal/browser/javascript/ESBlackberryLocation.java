@@ -127,8 +127,8 @@ final class ESBlackberryLocation extends RedirectedObject implements LocationLis
 
    public ESBlackberryLocation(JavaScriptEngine engine) {
       this._scriptEngine = engine;
-      this.setCriteria((Criteria)(new Object()));
-      this._gpsListeners = new Object[0];
+      this.setCriteria(new Criteria());
+      this._gpsListeners = new String[0];
       this.addHostFunction(new ESBlackberryLocation$1(this, Names.Location, "refreshLocation", 0));
       this.addHostFunction(new ESBlackberryLocation$2(this, Names.Location, "onLocationUpdate", 0));
       this.addHostFunction(new ESBlackberryLocation$3(this, Names.Location, "setAidMode", 0));

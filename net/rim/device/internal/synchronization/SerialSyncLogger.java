@@ -19,7 +19,7 @@ public final class SerialSyncLogger {
             }
 
             EventLogger.logEvent(4907703648615910489L, xMessageString.getBytes(), logLevel);
-            if (EventLogger.getMinimumLevel() >= 5 && message instanceof Object) {
+            if (EventLogger.getMinimumLevel() >= 5 && message instanceof Throwable) {
                Throwable t = (Throwable)message;
                t.printStackTrace();
                return;

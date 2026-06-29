@@ -2,16 +2,18 @@ package net.rim.device.apps.internal.phone.options;
 
 import net.rim.device.api.i18n.MessageFormat;
 import net.rim.device.api.system.RadioInfo;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.component.ChoiceField;
 import net.rim.device.api.ui.component.NumericChoiceField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.RichTextField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.BooleanChoiceField;
 import net.rim.device.apps.api.utility.framework.VerbToMenu;
 import net.rim.device.apps.internal.phone.api.PhoneUtilities;
+import net.rim.device.apps.internal.phone.model.SmartPhoneNumberEditField;
 import net.rim.device.apps.internal.phone.pattern.SmartDialingOptions;
 import net.rim.device.apps.internal.phone.pattern.WorldPhoneInfo;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
@@ -52,18 +54,18 @@ final class SmartDialingOption extends VoiceOptionsListItem {
       this._origAreaCode = smartDialingOptions.getAreaCode();
       this._areaCodeField = new SmartDialingOption$RestrictedPhoneNumberEditField(PhoneResources.getString(194), this._origAreaCode);
       this._origDefaultPhoneNumber = smartDialingOptions.getCorporatePhoneNumber();
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       PhoneUtilities.setPrivateFlag(context, 80);
-      this._defaultPhoneNumberField = (PhoneNumberEditField)(new Object(PhoneResources.getString(307), this._origDefaultPhoneNumber, context));
+      this._defaultPhoneNumberField = new SmartPhoneNumberEditField(PhoneResources.getString(307), this._origDefaultPhoneNumber, context);
       this._origNationalNumberLength = Math.max(0, Math.min(32, smartDialingOptions.getNationalPhoneNumberLength()));
-      this._nationalNumberLengthField = (NumericChoiceField)(new Object(PhoneResources.getString(149), 0, 32, 1, this._origNationalNumberLength));
+      this._nationalNumberLengthField = new NumericChoiceField(PhoneResources.getString(149), 0, 32, 1, this._origNationalNumberLength);
       this._autoAppendNddField = null;
       if (!PhoneUtilities.canDialPlus()) {
          char[] ndd = WorldPhoneInfo.getNationalDialingDigits(this._origCountryCode);
          if (ndd != null && ndd.length > 0) {
-            this._autoAppendNddField = (BooleanChoiceField)(new Object(
-               MessageFormat.format(PhoneResources.getString(2), new Object[]{new Object(ndd)}), 0, smartDialingOptions.autoAppendNDDForDialing()
-            ));
+            this._autoAppendNddField = new BooleanChoiceField(
+               MessageFormat.format(PhoneResources.getString(2), new Object[]{new String(ndd)}), 0, smartDialingOptions.autoAppendNDDForDialing()
+            );
          }
       }
 
@@ -79,13 +81,13 @@ final class SmartDialingOption extends VoiceOptionsListItem {
          screen.add(this._autoAppendNddField);
       }
 
-      screen.add((Field)(new Object()));
-      screen.add((Field)(new Object(PhoneResources.getString(6047), null, null, null, 36028797018963968L)));
+      screen.add(new SeparatorField());
+      screen.add(new RichTextField(PhoneResources.getString(6047), null, null, null, 36028797018963968L));
       screen.add(this._defaultPhoneNumberField);
       screen.add(this._tonesChoiceField);
       screen.add(this._extLengthField);
-      screen.add((Field)(new Object()));
-      screen.add((Field)(new Object(PhoneResources.getString(6031), null, null, null, 36028797018963968L)));
+      screen.add(new SeparatorField());
+      screen.add(new RichTextField(PhoneResources.getString(6031), null, null, null, 36028797018963968L));
       screen.add(this._stdTonesChoiceField);
    }
 
@@ -181,23 +183,23 @@ final class SmartDialingOption extends VoiceOptionsListItem {
    }
 
    private static final ObjectChoiceField getTonesChoiceField(int choice, boolean allowDirectDial) {
-      String[] additionalTonesLabels = new Object[ADDITIONAL_TONES.length];
+      String[] additionalTonesLabels = new String[ADDITIONAL_TONES.length];
       String fmtString = PhoneResources.getString(309);
       Object[] fmtParams = new Object[1];
       int idx = 0;
       additionalTonesLabels[idx++] = PhoneResources.getString(308);
-      fmtParams[0] = new Object(3);
+      fmtParams[0] = new Integer(3);
       additionalTonesLabels[idx++] = MessageFormat.format(fmtString, fmtParams);
-      fmtParams[0] = new Object(5);
+      fmtParams[0] = new Integer(5);
       additionalTonesLabels[idx++] = MessageFormat.format(fmtString, fmtParams);
-      fmtParams[0] = new Object(7);
+      fmtParams[0] = new Integer(7);
       additionalTonesLabels[idx++] = MessageFormat.format(fmtString, fmtParams);
       if (allowDirectDial) {
          additionalTonesLabels[idx++] = PhoneResources.getString(6128);
       }
 
       Array.resize(additionalTonesLabels, idx);
-      return (ObjectChoiceField)(new Object(PhoneResources.getString(311), additionalTonesLabels, choice));
+      return new ObjectChoiceField(PhoneResources.getString(311), additionalTonesLabels, choice);
    }
 
    private static final ObjectChoiceField getExtensionLengthChoiceField(int length) {
@@ -208,7 +210,7 @@ final class SmartDialingOption extends VoiceOptionsListItem {
          choice = Math.max(2, Math.min(6, length)) - 2 + 1;
       }
 
-      String[] lengthsLabels = new Object[6];
+      String[] lengthsLabels = new String[6];
       lengthsLabels[0] = PhoneResources.getString(6048);
       String fmtString = PhoneResources.getString(6049);
       Object[] fmtParams = new Object[1];
@@ -218,7 +220,7 @@ final class SmartDialingOption extends VoiceOptionsListItem {
          lengthsLabels[len - 2 + 1] = MessageFormat.format(fmtString, fmtParams);
       }
 
-      return (ObjectChoiceField)(new Object(PhoneResources.getString(6050), lengthsLabels, choice));
+      return new ObjectChoiceField(PhoneResources.getString(6050), lengthsLabels, choice);
    }
 
    private final boolean valueChanged(String originalNumber, String newNumber) {

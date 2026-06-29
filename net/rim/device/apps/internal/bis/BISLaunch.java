@@ -38,12 +38,8 @@ public final class BISLaunch extends UiApplication {
    static final String BIS_CLIENT_MODULE_NAME = "net_rim_bis_client";
    static String _version;
    public static BISClientConfigRecord _configRecord;
-   private static ApplicationDescriptor _wizardDescriptor = (ApplicationDescriptor)(new Object(
-      BISLaunch._baseDescriptor, "net_rim_bis_launch", new String[]{"WIZARD"}
-   ));
-   private static ApplicationDescriptor _ribbonDescriptor = (ApplicationDescriptor)(new Object(
-      BISLaunch._baseDescriptor, "net_rim_bis_launch", new String[]{"RIBBON"}
-   ));
+   private static ApplicationDescriptor _wizardDescriptor = new ApplicationDescriptor(BISLaunch._baseDescriptor, "net_rim_bis_launch", new String[]{"WIZARD"});
+   private static ApplicationDescriptor _ribbonDescriptor = new ApplicationDescriptor(BISLaunch._baseDescriptor, "net_rim_bis_launch", new String[]{"RIBBON"});
    private static ApplicationDescriptor _baseDescriptor = CodeModuleManager.getApplicationDescriptors(CodeModuleManager.getModuleHandle("net_rim_bis_client"))[0];
 
    protected static final ApplicationDescriptor getApplicationDescriptor(boolean isSetupWizard) {
@@ -88,7 +84,7 @@ public final class BISLaunch extends UiApplication {
    private final void initialize() {
       _configRecord = BISClientConfigRecord.getBISClientConfigRecord();
       if (_configRecord == null) {
-         throw new Object("No service record");
+         throw new IllegalStateException("No service record");
       }
 
       Controller.initialize();
@@ -137,7 +133,7 @@ public final class BISLaunch extends UiApplication {
    static final void addRibbonIcon() {
       if (RibbonLauncher.getInstance().getRegisteredAction("net_rim_bis_launch") == null) {
          ApplicationDescriptor appDescriptor = BISClientInvoke.getRibbonInvokeDescriptor();
-         ApplicationEntryPoint entryPoint = (ApplicationEntryPoint)(new Object(appDescriptor));
+         ApplicationEntryPoint entryPoint = new ApplicationEntryPoint(appDescriptor);
          entryPoint.set(3, getDescription());
          entryPoint.set(4, getRibbonIcon());
          RibbonLauncher.getInstance().registerAction("net_rim_bis_launch", entryPoint);

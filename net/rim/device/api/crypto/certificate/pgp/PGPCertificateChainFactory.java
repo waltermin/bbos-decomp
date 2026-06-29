@@ -25,7 +25,7 @@ public final class PGPCertificateChainFactory extends CertificateChainFactory {
       Certificate certificate, Certificate[] certificatePool, KeyStore keyStore, String emailAddress
    ) {
       if (certificate == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (keyStore != null && !keyStore.existsIndex(-2737350786039236692L)) {
@@ -33,11 +33,11 @@ public final class PGPCertificateChainFactory extends CertificateChainFactory {
       }
 
       int poolSize = certificatePool == null ? 0 : certificatePool.length;
-      Vector completeThreads = (Vector)(new Object(10));
-      Vector threadQueue = (Vector)(new Object(10));
+      Vector completeThreads = new Vector(10);
+      Vector threadQueue = new Vector(10);
       threadQueue.addElement(new PGPCertificate[]{(PGPCertificate)certificate});
-      Hashtable threadPublicKeys = (Hashtable)(new Object(4));
-      Vector signerCertificates = (Vector)(new Object(4));
+      Hashtable threadPublicKeys = new Hashtable(4);
+      Vector signerCertificates = new Vector(4);
 
       while (!threadQueue.isEmpty()) {
          PGPCertificate[] thread = (PGPCertificate[])threadQueue.firstElement();
@@ -114,7 +114,7 @@ public final class PGPCertificateChainFactory extends CertificateChainFactory {
 
       int numThreads = completeThreads.size();
       if (completeThreads.size() == 0) {
-         return (Object[][])null;
+         return (Certificate[][])null;
       }
 
       PGPCertificate[][] result = new PGPCertificate[numThreads][];
@@ -165,7 +165,7 @@ public final class PGPCertificateChainFactory extends CertificateChainFactory {
       // 004: aload 0
       // 005: arraylength
       // 006: ifne 011
-      // 009: new java/lang/Object
+      // 009: new java/lang/IllegalArgumentException
       // 00c: dup
       // 00d: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 010: athrow

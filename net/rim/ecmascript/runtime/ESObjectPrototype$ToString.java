@@ -11,12 +11,12 @@ class ESObjectPrototype$ToString extends HostFunction {
    public long run() {
       ESObject thiz = this.getThis();
       if (this.getVersion() != 120) {
-         return Value.makeStringValue(((StringBuffer)(new Object("[object "))).append(thiz.getObjectClass()).append("]").toString());
+         return Value.makeStringValue("[object " + thiz.getObjectClass() + "]");
       }
 
-      StringBuffer b = (StringBuffer)(new Object());
+      StringBuffer b = new StringBuffer();
       b.append("{");
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       thiz.enumerate(v, false);
       int fields = v.size();
       if (fields != 0) {

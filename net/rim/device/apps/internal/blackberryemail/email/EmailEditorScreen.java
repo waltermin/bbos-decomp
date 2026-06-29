@@ -17,6 +17,7 @@ import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.component.TextField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
+import net.rim.device.api.ui.menu.MenuScreen;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.FactoryUtil;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
@@ -37,14 +38,19 @@ import net.rim.device.apps.api.messaging.resources.MessageResources;
 import net.rim.device.apps.api.messaging.util.DraftSaveable;
 import net.rim.device.apps.api.transmission.rim.CMIMEUtilities;
 import net.rim.device.apps.api.transmission.rim.sendmethods.SendMethod;
+import net.rim.device.apps.api.ui.AppsMainScreen;
+import net.rim.device.apps.api.ui.FastInsertVerticalFieldManager;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
 import net.rim.device.apps.api.utility.editor.EditorUsingRIMModelFactory;
 import net.rim.device.apps.api.utility.editor.EditorUsingRIMModelFactory$AddWrapperVerb;
+import net.rim.device.apps.api.utility.framework.ModelScreen$NotificationRunnable;
 import net.rim.device.apps.api.utility.framework.SubmemberUtilities;
 import net.rim.device.apps.internal.addressbook.lookup.ALPConfiguration;
 import net.rim.device.apps.internal.addressbook.lookup.Request;
 import net.rim.device.apps.internal.addressbook.lookup.RequestModel;
+import net.rim.device.apps.internal.addressbook.lookup.RequestVerb;
 import net.rim.device.apps.internal.addressbook.lookup.Result;
+import net.rim.device.apps.internal.addressbook.lookup.SearchViewScreen;
 import net.rim.device.apps.internal.blackberryemail.email.api.EmailMessageUtilities;
 import net.rim.device.apps.internal.blackberryemail.email.api.EmailSendUtility;
 import net.rim.device.apps.internal.blackberryemail.header.EmailHeaderAddVerb;
@@ -52,8 +58,10 @@ import net.rim.device.apps.internal.blackberryemail.header.EmailHeaderModel;
 import net.rim.device.apps.internal.blackberryemail.header.EmailHeaderModelFactory;
 import net.rim.device.apps.internal.blackberryemail.properties.TransitoryMessagePropertiesModel;
 import net.rim.device.apps.internal.commonmodels.body.BodyModel;
+import net.rim.device.apps.internal.commonmodels.body.BodyModelImpl;
 import net.rim.device.apps.internal.messaging.MessageHotkeys;
 import net.rim.device.internal.system.ITPolicyInternal;
+import net.rim.vm.Persistable;
 
 public final class EmailEditorScreen
    extends EditorUsingRIMModelFactory
@@ -85,7 +93,7 @@ public final class EmailEditorScreen
 
    public final AddressCardModel[] getAddresCardAttachedModels() {
       Object[] attachedModels = this.getAttachedModels(new AddressCardAttachmentRecognizer());
-      AddressCardModel[] models = new Object[attachedModels == null ? 0 : attachedModels.length];
+      AddressCardModel[] models = new AddressCardModel[attachedModels == null ? 0 : attachedModels.length];
       if (models.length > 0) {
          System.arraycopy(attachedModels, 0, models, 0, models.length);
       }
@@ -109,7 +117,7 @@ public final class EmailEditorScreen
    }
 
    public final void updateLookupFields() {
-      Field[] fields = new Object[0];
+      Field[] fields = new Field[0];
       this.collectLookupFields(this.getMainManager(), fields);
       boolean aFieldHasResolved = false;
       int fieldCount = fields.length;
@@ -118,22 +126,22 @@ public final class EmailEditorScreen
          Field field = fields[i];
          EmailHeaderModel emailHeaderModel = (EmailHeaderModel)fields[i].getCookie();
          RIMModel address = emailHeaderModel.getInsideModel();
-         if (address instanceof Object) {
+         if (address instanceof ResolvedStatusProvider) {
             ResolvedStatusProvider resolvedStatus = (ResolvedStatusProvider)address;
             EmailHeaderModel newModel = emailHeaderModel;
             boolean hadFocus = this.getModelFieldWithFocus() == field;
             boolean isResolved = resolvedStatus.isResolved();
             if (isResolved) {
                Object newResolvedModel = resolvedStatus.getResolvedSubItem();
-               ContextObject contextObject = (ContextObject)(new Object());
+               ContextObject contextObject = new ContextObject();
                contextObject.put(254, newResolvedModel);
                newModel = EmailHeaderModelFactory.createInstance(emailHeaderModel.getHeaderType(), contextObject);
                aFieldHasResolved = true;
             }
 
-            if (newModel instanceof Object) {
+            if (newModel instanceof FieldProvider) {
                FieldProvider newModelFieldProvider = newModel;
-               ContextObject context = (ContextObject)(new Object());
+               ContextObject context = new ContextObject();
                context.put(9120441889802231811L, this);
                context.setFlag(0);
                if (isResolved) {
@@ -164,7 +172,7 @@ public final class EmailEditorScreen
                }
 
                this.replaceModel(emailHeaderModel, newModel, true);
-               if (field.getInputContext().getActiveInputMethodID() == 512 && hadFocus && !isResolved && address instanceof Object) {
+               if (field.getInputContext().getActiveInputMethodID() == 512 && hadFocus && !isResolved && address instanceof RequestModel) {
                   Request r = ((RequestModel)address).fetchRequest();
                   if (r != null) {
                      Result result = r.getResult();
@@ -174,7 +182,7 @@ public final class EmailEditorScreen
                   }
                }
 
-               if (hadFocus && !isResolved && !aFieldHasResolved && address instanceof Object && !this.searchViewScreenIsOpen()) {
+               if (hadFocus && !isResolved && !aFieldHasResolved && address instanceof RequestModel && !this.searchViewScreenIsOpen()) {
                   this.autoOpen((RequestModel)address);
                }
 
@@ -186,7 +194,7 @@ public final class EmailEditorScreen
       }
 
       Screen activeScreen = this.getActiveMainScreen();
-      if (activeScreen instanceof Object) {
+      if (activeScreen instanceof SearchViewScreen) {
          activeScreen.setFocus();
       }
    }
@@ -214,7 +222,7 @@ public final class EmailEditorScreen
          return false;
       }
 
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       context.put(254, EmailHeaderModel.createBlankFreeFormAddress(super._context));
       context.putIntegerData(headerType);
       EmailHeaderModel header = (EmailHeaderModel)FactoryUtil.createInstance(-8034039608019345282L, context);
@@ -282,7 +290,7 @@ public final class EmailEditorScreen
 
    protected final void setFocusToEditableBody(boolean top) {
       Field editableBodyField = this.findEditableBodyField(this.getMainManager());
-      if (editableBodyField instanceof Object) {
+      if (editableBodyField instanceof TextField) {
          TextField textField = (TextField)editableBodyField;
          textField.setCursorPosition(top ? 0 : textField.getTextLength());
          textField.setFocus();
@@ -382,7 +390,7 @@ public final class EmailEditorScreen
 
    private final VerticalFieldManager getVerticalFieldManager() {
       Manager mainManager = this.getMainManager();
-      return (VerticalFieldManager)(!(mainManager instanceof Object) ? null : mainManager);
+      return !(mainManager instanceof VerticalFieldManager) ? null : (VerticalFieldManager)mainManager;
    }
 
    @Override
@@ -455,7 +463,7 @@ public final class EmailEditorScreen
    private final Screen getActiveMainScreen() {
       Screen activeScreen = this._app.getActiveScreen();
 
-      while (activeScreen != null && !(activeScreen instanceof Object)) {
+      while (activeScreen != null && !(activeScreen instanceof AppsMainScreen)) {
          activeScreen = activeScreen.getScreenBelow();
       }
 
@@ -494,7 +502,7 @@ public final class EmailEditorScreen
                if (cookie instanceof EmailHeaderModel) {
                   EmailHeaderModel ehm = (EmailHeaderModel)cookie;
                   if (ehm.isBlank()) {
-                     ContextObject.put(super._context, -3076179409848094191L, new Object(ehm.getHeaderType()));
+                     ContextObject.put(super._context, -3076179409848094191L, new Integer(ehm.getHeaderType()));
                   }
                }
             }
@@ -549,7 +557,7 @@ public final class EmailEditorScreen
 
                EmailMessageModel message = (EmailMessageModelImpl)this._transitoryEmailMessageModel.getModel();
                if (EmailSendUtility.determineWhetherMessageAlreadyFiled(message, super._context)) {
-                  DeleteSingleItemVerb deleteVerb = (DeleteSingleItemVerb)(new Object(611472, 1000));
+                  DeleteSingleItemVerb deleteVerb = new DeleteSingleItemVerb(611472, 1000);
                   deleteVerb.setParameters(message, super._context);
                   menu.add(deleteVerb);
                }
@@ -575,11 +583,11 @@ public final class EmailEditorScreen
                   EmailHeaderModel emailHeaderModel = (EmailHeaderModel)cookie;
                   int headerType = emailHeaderModel.getHeaderType();
                   Verb[] verbs = menu.getVerbs();
-                  boolean focusIsOnLookup = emailHeaderModel.getInsideModel() instanceof Object;
+                  boolean focusIsOnLookup = emailHeaderModel.getInsideModel() instanceof RequestModel;
                   boolean pickedADefault = false;
                   if (focusIsOnLookup) {
                      for (int i = 0; i < verbs.length; i++) {
-                        if (verbs[i] instanceof Object) {
+                        if (verbs[i] instanceof RequestVerb) {
                            menu.setDefault(verbs[i]);
                            pickedADefault = true;
                            break;
@@ -590,7 +598,7 @@ public final class EmailEditorScreen
                   if (!pickedADefault) {
                      for (int i = 0; i < verbs.length; i++) {
                         Verb var10000 = verbs[i];
-                        if (verbs[i] instanceof Object) {
+                        if (verbs[i] instanceof EditorUsingRIMModelFactory$AddWrapperVerb) {
                            EditorUsingRIMModelFactory$AddWrapperVerb addWrapperVerb = (EditorUsingRIMModelFactory$AddWrapperVerb)var10000;
                            if (addWrapperVerb.getWrappedVerb() instanceof EmailHeaderAddVerb) {
                               EmailHeaderAddVerb emailHeaderAddVerb = (EmailHeaderAddVerb)addWrapperVerb.getWrappedVerb();
@@ -617,10 +625,10 @@ public final class EmailEditorScreen
 
          boolean serviceSupportsLargeAttachments = serviceRecord != null && CMIMEUtilities.isLargeAttachmentUploadAllowed(serviceRecord);
          if (serviceSupportsLargeAttachments) {
-            menu.add((Verb)(new Object(this, new NativeAttachmentVerb(this, serviceRecord))));
+            menu.add(new EditorUsingRIMModelFactory$AddWrapperVerb(this, new NativeAttachmentVerb(this, serviceRecord)));
          } else if (!this.hasSmallAttachments() && !this.hasLargeAttachments()) {
             if (!this.hasAddressCardAttachments()) {
-               menu.add((Verb)(new Object(this, new NativeAttachmentVerb(this, sr, true))));
+               menu.add(new EditorUsingRIMModelFactory$AddWrapperVerb(this, new NativeAttachmentVerb(this, sr, true)));
             }
          } else {
             this.removeAttachAddressVerb(menu);
@@ -634,7 +642,7 @@ public final class EmailEditorScreen
 
          for (int i = 0; i < verbs.length; i++) {
             Verb verb = verbs[i];
-            if (verb instanceof Object) {
+            if (verb instanceof EditorUsingRIMModelFactory$AddWrapperVerb) {
                verb = ((EditorUsingRIMModelFactory$AddWrapperVerb)verb).getWrappedVerb();
             }
 
@@ -704,7 +712,7 @@ public final class EmailEditorScreen
 
    private final synchronized void closeEditor() {
       Screen activeScreen = UiApplication.getUiApplication().getActiveScreen();
-      if (activeScreen instanceof Object) {
+      if (activeScreen instanceof MenuScreen) {
          UiApplication.getUiApplication().popScreen(activeScreen);
          activeScreen = UiApplication.getUiApplication().getActiveScreen();
       }
@@ -719,26 +727,26 @@ public final class EmailEditorScreen
    protected final Manager createManagerForField(Field f, int order) {
       Manager manager = null;
       if (order < 2600) {
-         manager = (Manager)(new Object());
+         manager = new FastInsertVerticalFieldManager();
          manager.setTag(ThemeUtilities.EMAIL_COMPOSE_HEADER_AREA_TAG);
          this._headerManager = manager;
          return manager;
       }
 
       if (order == 2600) {
-         manager = new EmailEditorScreen$HeaderVerticalFieldManager();
-         manager.setTag(ThemeUtilities.EMAIL_COMPOSE_SUBJECT_AREA_TAG);
-         return manager;
+         Manager var5 = new EmailEditorScreen$HeaderVerticalFieldManager();
+         var5.setTag(ThemeUtilities.EMAIL_COMPOSE_SUBJECT_AREA_TAG);
+         return var5;
       }
 
       if (order >= 5300 && order < 6500) {
-         manager = (Manager)(new Object());
+         manager = new FastInsertVerticalFieldManager();
          manager.setTag(ThemeUtilities.EMAIL_COMPOSE_BODY_AREA_TAG);
          return manager;
       }
 
       if (order >= 6500) {
-         manager = (Manager)(new Object());
+         manager = new VerticalFieldManager();
          manager.setTag(ThemeUtilities.EMAIL_COMPOSE_ATTACHMENT_AREA_TAG);
       }
 
@@ -761,7 +769,7 @@ public final class EmailEditorScreen
          && this._transitoryEmailMessageModel.getModel() == oldModel
          && newModel instanceof EmailMessageModelImpl) {
          if (super._application != Application.getApplication() || !Application.isEventDispatchThread()) {
-            super._application.invokeLater((Runnable)(new Object(this, oldModel, newModel, moreContext)));
+            super._application.invokeLater(new ModelScreen$NotificationRunnable(this, oldModel, newModel, moreContext));
             return;
          }
 
@@ -784,10 +792,10 @@ public final class EmailEditorScreen
          Field field = manager.getField(i);
          Object cookie = field.getCookie();
          if (cookie == null) {
-            if (field instanceof Object) {
+            if (field instanceof Manager) {
                startIndex = this.getModelsInScreenOrder(payload, (Manager)field, models, startIndex);
             }
-         } else if (cookie instanceof Object && cookie instanceof Object && payload.contains(cookie)) {
+         } else if (cookie instanceof FieldProvider && cookie instanceof Persistable && payload.contains(cookie)) {
             for (int j = payload.size() - 1; j >= 0; j--) {
                if (cookie == payload.getAt(j)) {
                   payload.removeAt(j);
@@ -813,7 +821,7 @@ public final class EmailEditorScreen
 
             for (int i = payload.size() - 1; i >= 0; i--) {
                Object model = payload.getAt(i);
-               if (model instanceof Object) {
+               if (model instanceof Persistable) {
                   payload.removeAt(i);
                   orderedModels[index++] = model;
                }
@@ -828,10 +836,10 @@ public final class EmailEditorScreen
 
    private final void saveCurrentCursorPosition(Field f) {
       EmailMessageModelImpl model = (EmailMessageModelImpl)this._transitoryEmailMessageModel.getModel();
-      if (f instanceof Object) {
+      if (f instanceof VerticalFieldManager) {
          VerticalFieldManager vfm = (VerticalFieldManager)f;
          Field saveField = vfm.getFieldWithFocus();
-         if (saveField instanceof Object && saveField.getCookie() instanceof Object) {
+         if (saveField instanceof RichTextField && saveField.getCookie() instanceof BodyModel) {
             RichTextField rtf = (RichTextField)saveField;
             model.setCursorPosition(rtf.getCursorPosition());
             return;
@@ -844,19 +852,19 @@ public final class EmailEditorScreen
    private final void restoreSavedCursorPosition(Field f) {
       EmailMessageModelImpl model = (EmailMessageModelImpl)this._transitoryEmailMessageModel.getModel();
       int fieldCursor = model.getCursorPosition();
-      if (f instanceof Object) {
+      if (f instanceof VerticalFieldManager) {
          VerticalFieldManager vfm = (VerticalFieldManager)f;
          int origMsgIndex = -1;
          int fieldCount = vfm.getFieldCount();
 
          for (int i = 0; i < fieldCount; i++) {
-            if (vfm.getField(i).getCookie() instanceof Object) {
+            if (vfm.getField(i).getCookie() instanceof BodyModel) {
                origMsgIndex = i;
             }
          }
 
          Field saveField = vfm.getField(origMsgIndex);
-         if (saveField instanceof Object && fieldCursor > -1) {
+         if (saveField instanceof RichTextField && fieldCursor > -1) {
             RichTextField rtf = (RichTextField)saveField;
             rtf.setCursorPosition(fieldCursor);
             rtf.setFocus();
@@ -873,12 +881,12 @@ public final class EmailEditorScreen
       for (int i = 0; i < numFields; i++) {
          Field field = manager.getField(i);
          if (field != null) {
-            if (field instanceof Object) {
+            if (field instanceof Manager) {
                field = this.findEditableBodyField((Manager)field);
                if (field != null) {
                   return field;
                }
-            } else if (field.getCookie() instanceof Object && field.isEditable()) {
+            } else if (field.getCookie() instanceof BodyModelImpl && field.isEditable()) {
                return field;
             }
          }
@@ -893,7 +901,7 @@ public final class EmailEditorScreen
       } else if (requestModel.numberAvailableForResolution() <= 1) {
          return false;
       } else {
-         Verb[] verbs = new Object[0];
+         Verb[] verbs = new Verb[0];
          Verb defaultVerb = requestModel.getVerbs(super._context, verbs);
          if (defaultVerb != null) {
             defaultVerb.invoke(super._context);
@@ -905,11 +913,11 @@ public final class EmailEditorScreen
    }
 
    private final void setFocusToOriginalMessageBottom(Field f) {
-      if (f instanceof Object) {
+      if (f instanceof VerticalFieldManager) {
          VerticalFieldManager vfm = (VerticalFieldManager)f;
          int vfmFieldCount = vfm.getFieldCount();
          Field lastField = vfm.getField(vfmFieldCount - 1);
-         if (lastField instanceof Object) {
+         if (lastField instanceof RichTextField) {
             RichTextField rtf = (RichTextField)lastField;
             int rtfLength = rtf.getTextLength();
             rtf.setCursorPosition(rtfLength > 0 ? rtfLength - 1 : 0);
@@ -937,7 +945,7 @@ public final class EmailEditorScreen
       Object cookie = this.getModelFieldWithFocus().getCookie();
       if (cookie instanceof EmailHeaderModel) {
          EmailHeaderModel emailHeaderModel = (EmailHeaderModel)cookie;
-         if (emailHeaderModel.getInsideModel() instanceof Object && this.autoOpen((RequestModel)emailHeaderModel.getInsideModel())) {
+         if (emailHeaderModel.getInsideModel() instanceof RequestModel && this.autoOpen((RequestModel)emailHeaderModel.getInsideModel())) {
             return true;
          }
       }
@@ -998,7 +1006,7 @@ public final class EmailEditorScreen
          EmailMessageModel message = (EmailMessageModel)this._transitoryEmailMessageModel.getModel();
          if (message != null) {
             EmailPayloadModel payload = message.getPayload();
-            if (payload instanceof Object) {
+            if (payload instanceof CloneProvider) {
                CloneProvider cloneable = (CloneProvider)payload;
                this._originalPayload = (EmailPayloadModel)cloneable.clone(super._context);
                if (this._originalPayload instanceof EmailPayloadModelImpl) {
@@ -1023,7 +1031,7 @@ public final class EmailEditorScreen
 
    @Override
    protected final int getOrderForManagerForField(Field field, int order) {
-      if (order == 2030 && field instanceof Object && ((Manager)field).getFieldCount() > 0) {
+      if (order == 2030 && field instanceof Manager && ((Manager)field).getFieldCount() > 0) {
          field.setTag(ThemeUtilities.EMAIL_COMPOSE_HEADER_MAILBOX_TAG);
       }
 
@@ -1053,7 +1061,7 @@ public final class EmailEditorScreen
    }
 
    private final boolean searchViewScreenIsOpen() {
-      return this.getActiveMainScreen() instanceof Object;
+      return this.getActiveMainScreen() instanceof SearchViewScreen;
    }
 
    private final void collectLookupFields(Manager manager, Field[] fields) {
@@ -1061,7 +1069,7 @@ public final class EmailEditorScreen
          Field field = manager.getField(i);
          if (field != null && field.getCookie() instanceof EmailHeaderModel) {
             Arrays.add(fields, field);
-         } else if (field instanceof Object) {
+         } else if (field instanceof Manager) {
             this.collectLookupFields((Manager)field, fields);
          }
       }
@@ -1087,7 +1095,7 @@ public final class EmailEditorScreen
             return field;
          }
 
-         if (field instanceof Object && !(cookie instanceof EmailPayloadModel)) {
+         if (field instanceof Manager && !(cookie instanceof EmailPayloadModel)) {
             field = this.findField((Manager)field, recognizer);
             if (field != null) {
                return field;
@@ -1184,7 +1192,7 @@ public final class EmailEditorScreen
       if (this._headerManager != null) {
          for (int i = this._headerManager.getFieldCount() - 1; i >= 0; i--) {
             Field f = this._headerManager.getField(i);
-            if (f instanceof Object) {
+            if (f instanceof AddressVerifierAwareField) {
                ((AddressVerifierAwareField)f).verifyAddress(null);
             }
          }

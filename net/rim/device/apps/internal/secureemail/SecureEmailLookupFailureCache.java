@@ -7,7 +7,7 @@ public class SecureEmailLookupFailureCache {
    private ContentProtectedLookup _cache;
 
    public SecureEmailLookupFailureCache(long timeout) {
-      this((ContentProtectedLookup)(new Object()), timeout);
+      this(new ContentProtectedLookup(), timeout);
    }
 
    public SecureEmailLookupFailureCache(ContentProtectedLookup cache, long timeout) {
@@ -36,7 +36,7 @@ public class SecureEmailLookupFailureCache {
    }
 
    public void recordFetchFailure(Object key) {
-      this._cache.put(key, new Object(System.currentTimeMillis() + this._timeout));
+      this._cache.put(key, new Long(System.currentTimeMillis() + this._timeout));
    }
 
    public boolean isEmpty() {

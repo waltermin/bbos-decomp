@@ -2,10 +2,10 @@ package com.fourthpass.wmls;
 
 final class L5 extends Lib {
    @Override
-   public final Value invoke(int func, Interpreter$Engine engine) {
+   public final Value invoke(int func, Interpreter$Engine engine) throws Exception {
       switch (func) {
          case -1:
-            throw new Object("Invalid Function Id");
+            throw new Exception("Invalid Function Id");
          case 0:
          default:
             return prompt(engine.popStack(), engine.popStack(), engine.getDialog());

@@ -11,6 +11,6 @@ final class PackageManager$RelatedProfileName {
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object())).append(EmailResources.getString(800)).append("[").append(this._emailAddress).append("]").toString();
+      return EmailResources.getString(800) + "[" + this._emailAddress + "]";
    }
 }

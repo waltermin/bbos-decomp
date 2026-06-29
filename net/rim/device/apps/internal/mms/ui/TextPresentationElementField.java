@@ -14,10 +14,7 @@ final class TextPresentationElementField extends ActiveAutoTextEditField impleme
    private boolean _moveMode;
 
    public TextPresentationElementField(String str, boolean isEditable) {
-      this(
-         new MMSAttachmentImpl(((StringBuffer)(new Object(""))).append(System.currentTimeMillis()).append(".txt").toString(), 3, str.getBytes(), "utf-8"),
-         isEditable
-      );
+      this(new MMSAttachmentImpl("" + System.currentTimeMillis() + ".txt", 3, str.getBytes(), "utf-8"), isEditable);
    }
 
    public TextPresentationElementField(MMSAttachment attachment, boolean isEditable) {

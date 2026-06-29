@@ -12,6 +12,7 @@ import net.rim.device.api.crypto.certificate.status.CertificateStatusQuery;
 import net.rim.device.api.crypto.certificate.status.CertificateStatusRequest;
 import net.rim.device.api.crypto.keystore.CertificateStatusManagerTicket;
 import net.rim.device.api.crypto.keystore.KeyStore;
+import net.rim.device.api.crypto.keystore.KeyStoreCancelException;
 import net.rim.device.api.crypto.keystore.KeyStoreOptions;
 import net.rim.device.api.crypto.keystore.KeyStoreTicket;
 import net.rim.device.api.crypto.keystore.TrustedKeyStore;
@@ -200,7 +201,7 @@ public class KeyStoreLDAPCertificateHarvester extends CertificateHarvester {
    private CertificateStatusManagerTicket autoFetchStatus(
       RecipientData$CertificateDetails certificateDetails, CertificateStatusManagerTicket certificateStatusManagerTicket, boolean updateGauge
    ) {
-      String[] containerStringLowerSingularArray = new Object[]{this._secureEmailFactory.getPublicKeyContainerString(false, false)};
+      String[] containerStringLowerSingularArray = new String[]{this._secureEmailFactory.getPublicKeyContainerString(false, false)};
       String fetchingCertificateStatusMessage = MessageFormat.format(SecureEmailResources.getString(138), containerStringLowerSingularArray);
       boolean var19 = false /* VF: Semaphore variable */;
 
@@ -209,17 +210,17 @@ public class KeyStoreLDAPCertificateHarvester extends CertificateHarvester {
          var19 = true;
          Certificate[] certificateChain = certificateDetails.getCertificateChain();
          boolean extendedCheckingAvailable = CertificateStatusProvider.queryStatusAvailability(certificateChain, true);
-         CertificateStatusRequest request = new Object(certificateChain, extendedCheckingAvailable, this._preferredKeyStore, null, null);
+         CertificateStatusRequest request = new CertificateStatusRequest(certificateChain, extendedCheckingAvailable, this._preferredKeyStore, null, null);
          KeyStoreLDAPCertificateHarvester$FetchStatusBlocker fetchStatusBlocker = new KeyStoreLDAPCertificateHarvester$FetchStatusBlocker(null);
-         CertificateStatusQuery query = new Object((CertificateStatusRequest)request, KeyStoreOptions.getCertificateServiceUID(), null);
-         ((CertificateStatusQuery)query).setProgressListener(fetchStatusBlocker);
+         CertificateStatusQuery query = new CertificateStatusQuery(request, KeyStoreOptions.getCertificateServiceUID(), null);
+         query.setProgressListener(fetchStatusBlocker);
          if (updateGauge) {
             super._completionDialog.setRecipientAction(fetchingCertificateStatusMessage);
-            super._completionDialog.setCertificateStatusQuery((CertificateStatusQuery)query);
+            super._completionDialog.setCertificateStatusQuery(query);
          }
 
          synchronized (fetchStatusBlocker) {
-            int errorCode = ((CertificateStatusQuery)query).beginQuery();
+            int errorCode = query.beginQuery();
             if (errorCode == 0) {
                label99:
                try {
@@ -229,11 +230,11 @@ public class KeyStoreLDAPCertificateHarvester extends CertificateHarvester {
                }
 
                if (fetchStatusBlocker._queryAborted) {
-                  throw new Object();
+                  throw new KeyStoreCancelException();
                }
             }
 
-            SecureEmailCache.getInstance().recordAutoFetchStatusResult((CertificateStatusRequest)request);
+            SecureEmailCache.getInstance().recordAutoFetchStatusResult(request);
             var13 = certificateStatusManagerTicket;
             var19 = false;
          }
@@ -332,7 +333,7 @@ public class KeyStoreLDAPCertificateHarvester extends CertificateHarvester {
       Certificate[] fetchedCertificates = null;
       LDAPCertificateFetch ldapCertificateFetch = this._secureEmailUtilities.getLDAPCertificateFetch();
       if (updateGauge) {
-         String[] containerStringLowerSingularArray = new Object[]{this._secureEmailFactory.getPublicKeyContainerString(false, false)};
+         String[] containerStringLowerSingularArray = new String[]{this._secureEmailFactory.getPublicKeyContainerString(false, false)};
          String fetchingCertificateMessage = MessageFormat.format(SecureEmailResources.getString(137), containerStringLowerSingularArray);
          super._completionDialog.setRecipientAction(fetchingCertificateMessage);
          super._completionDialog.setLDAPCertificateFetch(ldapCertificateFetch);
@@ -343,11 +344,11 @@ public class KeyStoreLDAPCertificateHarvester extends CertificateHarvester {
       try {
          var11 = true;
          SecureEmailCache var13 = SecureEmailCache.getInstance();
-         String[] var14 = new Object[]{emailAddress};
+         String[] var14 = new String[]{emailAddress};
          CertificateUtilities.canonicalizeEmailAddresses(var14);
          CertificateServerInfo[] certificateServerInfo = CertificateServers.selectBestServers(var14);
          if (certificateServerInfo == null) {
-            certificateServerInfo = new Object[]{null};
+            certificateServerInfo = new CertificateServerInfo[]{null};
          }
 
          int i = 0;
@@ -358,10 +359,10 @@ public class KeyStoreLDAPCertificateHarvester extends CertificateHarvester {
                break;
             }
 
-            if (var13.shouldAttemptAutoFetchCertificate((CertificateServerInfo)certificateServerInfo[i], emailAddress)) {
+            if (var13.shouldAttemptAutoFetchCertificate(certificateServerInfo[i], emailAddress)) {
                fetchedCertificates = ldapCertificateFetch.fetchCertificates(emailAddress, certificateServerInfo);
                if (ldapCertificateFetch.fetchAborted()) {
-                  throw new Object();
+                  throw new KeyStoreCancelException();
                }
 
                var13.recordAutoFetchCertificateResult(emailAddress, ldapCertificateFetch.getLDAPErrorCode(), fetchedCertificates.length, certificateServerInfo);
@@ -393,7 +394,7 @@ public class KeyStoreLDAPCertificateHarvester extends CertificateHarvester {
       Certificate[] fetchedCertificates = null;
       LDAPCertificateFetch ldapCertificateFetch = this._secureEmailUtilities.getLDAPCertificateFetch();
       if (updateGauge) {
-         String[] containerStringLowerSingularArray = new Object[]{this._secureEmailFactory.getPublicKeyContainerString(false, false)};
+         String[] containerStringLowerSingularArray = new String[]{this._secureEmailFactory.getPublicKeyContainerString(false, false)};
          String fetchingCertificateMessage = MessageFormat.format(SecureEmailResources.getString(137), containerStringLowerSingularArray);
          super._completionDialog.setRecipientAction(fetchingCertificateMessage);
          super._completionDialog.setLDAPCertificateFetch(ldapCertificateFetch);
@@ -416,7 +417,7 @@ public class KeyStoreLDAPCertificateHarvester extends CertificateHarvester {
             if (var12.shouldAttemptAutoFetchCertificate(var13[i], certificateID)) {
                fetchedCertificates = ldapCertificateFetch.fetchCertificates(certificateID, var13);
                if (ldapCertificateFetch.fetchAborted()) {
-                  throw new Object();
+                  throw new KeyStoreCancelException();
                }
 
                var12.recordAutoFetchCertificateResult(certificateID, ldapCertificateFetch.getLDAPErrorCode(), fetchedCertificates.length, var13);

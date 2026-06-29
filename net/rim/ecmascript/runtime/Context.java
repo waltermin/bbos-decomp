@@ -852,7 +852,7 @@ class Context implements OpcodeConstants, DebugContext {
                         ObjectEnumerator oe = (ObjectEnumerator)Value.checkIfObjectValue(stack[sp - 1]);
                         Object o = oe.nextElement();
                         long tmp;
-                        if (!(o instanceof Object)) {
+                        if (!(o instanceof String)) {
                            if (!(o instanceof ESObject)) {
                               tmp = Value.makeObjectValue(JavaObject.createInstance(o));
                            } else {

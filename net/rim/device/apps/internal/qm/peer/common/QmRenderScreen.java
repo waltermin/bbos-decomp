@@ -10,6 +10,7 @@ import net.rim.device.api.browser.field.ResourceProvider;
 import net.rim.device.api.system.Display;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.apps.internal.qm.resource.QmResources;
 
@@ -67,7 +68,7 @@ public final class QmRenderScreen extends MainScreen implements RenderingApplica
       // 32: aload 0
       // 33: aload 2
       // 34: aload 1
-      // 35: checkcast java/lang/Object
+      // 35: checkcast javax/microedition/io/HttpConnection
       // 38: aload 0
       // 39: bipush 0
       // 3a: invokevirtual net/rim/device/api/browser/field/RenderingSession.getBrowserContent (Ljavax/microedition/io/HttpConnection;Lnet/rim/device/api/browser/field/RenderingApplication;I)Lnet/rim/device/api/browser/field/BrowserContent;
@@ -98,7 +99,7 @@ public final class QmRenderScreen extends MainScreen implements RenderingApplica
    }
 
    private final Field createRenderErrorField() {
-      return (Field)(new Object(QmResources.getString(121), 36028797018963968L));
+      return new RichTextField(QmResources.getString(121), 36028797018963968L);
    }
 
    public final int getContentWindowWidth() {

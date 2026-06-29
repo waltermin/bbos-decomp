@@ -626,7 +626,7 @@ final class MultiElementRow extends Field {
       // 465: iload 7
       // 467: aload 20
       // 469: getfield net/rim/device/apps/internal/docview/gui/ColumnInfo._columnInfo Ljava/lang/Object;
-      // 46c: checkcast java/lang/Object
+      // 46c: checkcast java/lang/String
       // 46f: bipush 68
       // 471: iload 8
       // 473: iload 2
@@ -648,7 +648,7 @@ final class MultiElementRow extends Field {
       // 490: iload 7
       // 492: aload 20
       // 494: getfield net/rim/device/apps/internal/docview/gui/ColumnInfo._columnInfo Ljava/lang/Object;
-      // 497: checkcast java/lang/Object
+      // 497: checkcast java/lang/String
       // 49a: bipush 68
       // 49c: iload 8
       // 49e: bipush 1
@@ -670,7 +670,7 @@ final class MultiElementRow extends Field {
       // 4b8: iload 7
       // 4ba: aload 20
       // 4bc: getfield net/rim/device/apps/internal/docview/gui/ColumnInfo._columnInfo Ljava/lang/Object;
-      // 4bf: checkcast java/lang/Object
+      // 4bf: checkcast java/lang/String
       // 4c2: bipush 68
       // 4c4: iload 8
       // 4c6: iload 2
@@ -1333,7 +1333,7 @@ final class MultiElementRow extends Field {
       } else {
          String description = this.getEmbeddedObjectDescription(embType);
          if (description != null) {
-            description = ((StringBuffer)(new Object())).append('[').append(description).append(']').toString();
+            description = '[' + description + ']';
             graphics.setColor(cellBgColor != -1 && cellBgColor != 16777215 ? ~cellBgColor : 0);
             graphics.drawText(description, x, y, 70, width);
             graphics.setColor(crtForeColor);

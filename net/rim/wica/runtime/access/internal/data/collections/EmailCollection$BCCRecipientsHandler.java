@@ -9,7 +9,7 @@ final class EmailCollection$BCCRecipientsHandler implements ObjectFieldHandler {
 
    @Override
    public final Object getValue(Object item) {
-      return !(item instanceof Object) ? null : EmailCollection.getStringFieldValueFromModel((EmailMessageModel)item, 2, false);
+      return !(item instanceof EmailMessageModel) ? null : EmailCollection.getStringFieldValueFromModel((EmailMessageModel)item, 2, false);
    }
 
    EmailCollection$BCCRecipientsHandler(EmailCollection$1 x0) {

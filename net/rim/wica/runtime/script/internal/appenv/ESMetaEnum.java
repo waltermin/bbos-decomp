@@ -20,7 +20,7 @@ public final class ESMetaEnum extends RedirectedObject {
       super("Enumeration", GlobalObject.getInstance().getObjectPrototype());
       this._id = id;
       this._type = type;
-      this._values = (IntLongHashtable)(new Object(4));
+      this._values = new IntLongHashtable(4);
       this._context = context;
    }
 
@@ -50,7 +50,7 @@ public final class ESMetaEnum extends RedirectedObject {
       if (objId == -1) {
          objId = Value.makeObjectValue(new ESEnum(name, this._type, value, this._context));
          this._values.put(value, objId);
-         this.addField(GlobalObject.stringIntern((String)(ObjectGroup.isInGroup(name) ? new Object(name) : name)), 5, objId);
+         this.addField(GlobalObject.stringIntern(ObjectGroup.isInGroup(name) ? new String(name) : name), 5, objId);
       }
 
       return objId;

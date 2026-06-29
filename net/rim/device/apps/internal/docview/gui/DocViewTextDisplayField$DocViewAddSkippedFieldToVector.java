@@ -11,14 +11,14 @@ class DocViewTextDisplayField$DocViewAddSkippedFieldToVector implements Runnable
          this._vector = vector;
          this._field = skippedField;
       } else {
-         throw new Object("Invalid vector insert parameters");
+         throw new IllegalArgumentException("Invalid vector insert parameters");
       }
    }
 
    @Override
    public void run() {
       if (this._field.getIndex() == -1) {
-         throw new Object("The field should have been added to manager prior to this action");
+         throw new IllegalArgumentException("The field should have been added to manager prior to this action");
       }
 
       this._vector.addElement(this._field);

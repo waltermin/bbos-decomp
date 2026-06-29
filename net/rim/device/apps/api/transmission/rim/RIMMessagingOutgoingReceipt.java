@@ -1,11 +1,12 @@
 package net.rim.device.apps.api.transmission.rim;
 
+import java.io.IOException;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.apps.api.transmission.Parameters;
 import net.rim.device.apps.api.utility.serialization.Converter;
 
 public final class RIMMessagingOutgoingReceipt extends RIMMessagingMessage {
-   private DataBuffer _buffer = (DataBuffer)(new Object());
+   private DataBuffer _buffer = new DataBuffer();
 
    public RIMMessagingOutgoingReceipt() {
       this._buffer.writeByte(2);
@@ -14,21 +15,21 @@ public final class RIMMessagingOutgoingReceipt extends RIMMessagingMessage {
    }
 
    @Override
-   public final DataBuffer write() {
+   public final DataBuffer write() throws IOException {
       this._buffer.writeByte(0);
       int attachmentCount = this.getAttachmentCount();
       if (attachmentCount <= 0) {
-         throw new Object();
+         throw new IOException();
       }
 
-      DataBuffer attachmentBuffer = (DataBuffer)(new Object());
+      DataBuffer attachmentBuffer = new DataBuffer();
       this.writeDSNAttachment(attachmentBuffer);
       this._buffer.writeByte(1);
       this._buffer.writeByte(2);
       this._buffer.writeByte(1);
       this._buffer.writeByte(2);
       this._buffer.writeByte(0);
-      DataBuffer textBuffer = (DataBuffer)(new Object());
+      DataBuffer textBuffer = new DataBuffer();
       if (this.getText() != null) {
          this.writeMessageText(textBuffer);
       }

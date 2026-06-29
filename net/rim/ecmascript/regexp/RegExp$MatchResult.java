@@ -16,11 +16,11 @@ public class RegExp$MatchResult {
    }
 
    public void dump(PrintStream out) {
-      System.out.print(((StringBuffer)(new Object("("))).append(this.startIndex).append(",").append(this.endIndex).append(") [").toString());
+      System.out.print("(" + this.startIndex + "," + this.endIndex + ") [");
       int i = 0;
 
       while (true) {
-         System.out.print(((StringBuffer)(new Object("\""))).append(this.captures[i]).append("\"").toString());
+         System.out.print("\"" + this.captures[i] + "\"");
          if (++i == this.captures.length) {
             System.out.println("]");
             return;

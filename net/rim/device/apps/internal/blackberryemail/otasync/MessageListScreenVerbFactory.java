@@ -11,7 +11,7 @@ final class MessageListScreenVerbFactory implements VerbFactory {
 
    MessageListScreenVerbFactory(OTAFMConfigurationManagerImpl configManager) {
       this._configManager = configManager;
-      this._verbs = new Object[1];
+      this._verbs = new Verb[1];
       this._verbs[0] = new SyncNowVerb();
    }
 

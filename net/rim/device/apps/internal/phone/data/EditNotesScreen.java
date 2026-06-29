@@ -2,8 +2,8 @@ package net.rim.device.apps.internal.phone.data;
 
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.MenuItem;
-import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.EditField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.AppsMainScreen;
@@ -17,13 +17,13 @@ final class EditNotesScreen extends AppsMainScreen {
 
    EditNotesScreen(EditNotesVerb$CallNotesListener listener, PhoneCallModelImpl callLog, String notes) {
       super(2306142076376449024L);
-      this.setTitle((Field)(new Object(PhoneResources.getString(425))));
+      this.setTitle(new LabelField(PhoneResources.getString(425)));
       this._listener = listener;
       this._callLog = callLog;
-      ContextObject context = (ContextObject)(new Object(35, 0));
+      ContextObject context = new ContextObject(35, 0);
       this._notesField = this._callLog.getField(context);
       this.add(this._notesField);
-      if (this._notesField instanceof Object) {
+      if (this._notesField instanceof EditField) {
          EditField ef = (EditField)this._notesField;
          int length = ef.getText().length();
          if (length > 0) {
@@ -51,8 +51,8 @@ final class EditNotesScreen extends AppsMainScreen {
 
    @Override
    protected final boolean onSave() {
-      if (this._notesField instanceof Object) {
-         String text = ((BasicEditField)this._notesField).getText();
+      if (this._notesField instanceof EditField) {
+         String text = ((EditField)this._notesField).getText();
          PhoneFolders.replaceCallLogNotes(this._callLog, text);
          this._listener.onNotesSaved(text);
       }

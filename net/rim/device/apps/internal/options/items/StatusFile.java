@@ -13,9 +13,6 @@ public final class StatusFile extends StatusListItem {
 
    @Override
    public final String getDisplayValue() {
-      return ((StringBuffer)(new Object()))
-         .append(String.valueOf(this._total ? Memory.getFlashTotal() : Memory.getFlashFree()))
-         .append(OptionsResources.getString(406))
-         .toString();
+      return (this._total ? Memory.getFlashTotal() : Memory.getFlashFree()) + OptionsResources.getString(406);
    }
 }

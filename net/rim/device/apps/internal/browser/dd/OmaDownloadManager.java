@@ -4,7 +4,9 @@ import net.rim.device.api.i18n.MessageFormat;
 import net.rim.device.api.io.file.FileIOException;
 import net.rim.device.api.system.EncodedImage;
 import net.rim.device.api.util.StringUtilities;
+import net.rim.device.apps.internal.browser.download.ContentTypeException;
 import net.rim.device.apps.internal.browser.download.DownloadManager;
+import net.rim.device.apps.internal.browser.download.SizeTooLargeException;
 import net.rim.device.apps.internal.browser.resources.BrowserResources;
 import net.rim.device.apps.internal.browser.util.RendererControl;
 
@@ -79,7 +81,7 @@ final class OmaDownloadManager extends DownloadManager {
       // 02c: aload 5
       // 02e: invokevirtual net/rim/device/apps/internal/browser/dd/CodeliveredMediaObject.getData ()[B
       // 031: astore 4
-      // 033: new java/lang/Object
+      // 033: new java/io/ByteArrayInputStream
       // 036: dup
       // 037: aload 4
       // 039: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
@@ -108,13 +110,13 @@ final class OmaDownloadManager extends DownloadManager {
       // 06a: aload 6
       // 06c: invokevirtual net/rim/device/apps/internal/browser/dd/OmaDownloadManager.setError (Ljava/lang/Throwable;)V
       // 06f: goto 0ce
-      // 072: new java/lang/Object
+      // 072: new net/rim/device/api/io/http/HttpHeaders
       // 075: dup
       // 076: invokespecial net/rim/device/api/io/http/HttpHeaders.<init> ()V
       // 079: astore 6
       // 07b: aload 6
       // 07d: ldc_w "Accept"
-      // 080: new java/lang/Object
+      // 080: new java/lang/StringBuffer
       // 083: dup
       // 084: invokespecial java/lang/StringBuffer.<init> ()V
       // 087: aload 0
@@ -158,7 +160,7 @@ final class OmaDownloadManager extends DownloadManager {
       // 0e2: goto 31e
       // 0e5: aload 4
       // 0e7: ifnonnull 0f2
-      // 0ea: new java/lang/Object
+      // 0ea: new java/lang/NullPointerException
       // 0ed: dup
       // 0ee: invokespecial java/lang/NullPointerException.<init> ()V
       // 0f1: athrow
@@ -345,7 +347,7 @@ final class OmaDownloadManager extends DownloadManager {
       // 261: aload 0
       // 262: getfield net/rim/device/apps/internal/browser/dd/OmaDownloadManager._filename Ljava/lang/String;
       // 265: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 268: checkcast java/lang/Object
+      // 268: checkcast javax/microedition/io/file/FileConnection
       // 26b: astore 1
       // 26c: aload 1
       // 26d: invokeinterface javax/microedition/io/file/FileConnection.exists ()Z 1
@@ -367,11 +369,11 @@ final class OmaDownloadManager extends DownloadManager {
       // 28f: iload 7
       // 291: sipush 1024
       // 294: if_icmple 29f
-      // 297: new java/lang/Object
+      // 297: new java/io/IOException
       // 29a: dup
       // 29b: invokespecial java/io/IOException.<init> ()V
       // 29e: athrow
-      // 29f: new java/lang/Object
+      // 29f: new java/lang/StringBuffer
       // 2a2: dup
       // 2a3: invokespecial java/lang/StringBuffer.<init> ()V
       // 2a6: aload 0
@@ -385,7 +387,7 @@ final class OmaDownloadManager extends DownloadManager {
       // 2ba: astore 6
       // 2bc: aload 6
       // 2be: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 2c1: checkcast java/lang/Object
+      // 2c1: checkcast javax/microedition/io/file/FileConnection
       // 2c4: astore 1
       // 2c5: aload 1
       // 2c6: invokeinterface javax/microedition/io/file/FileConnection.exists ()Z 1
@@ -402,11 +404,11 @@ final class OmaDownloadManager extends DownloadManager {
       // 2e3: ifeq 30b
       // 2e6: aload 1
       // 2e7: dup
-      // 2e8: instanceof java/lang/Object
+      // 2e8: instanceof net/rim/device/api/io/file/ExtendedFileConnection
       // 2eb: ifne 2f2
       // 2ee: pop
       // 2ef: goto 30b
-      // 2f2: checkcast java/lang/Object
+      // 2f2: checkcast net/rim/device/api/io/file/ExtendedFileConnection
       // 2f5: astore 6
       // 2f7: aload 6
       // 2f9: bipush 51
@@ -716,13 +718,13 @@ final class OmaDownloadManager extends DownloadManager {
 
    @Override
    protected final void setError(Throwable t) {
-      if (t instanceof Object) {
+      if (t instanceof OutOfMemoryError) {
          this._otaStatus = 901;
          this._otaError = BrowserResources.getString(588);
-      } else if (t instanceof Object || t instanceof Object) {
+      } else if (t instanceof ContentTypeException || t instanceof SizeTooLargeException) {
          this._otaStatus = 905;
          this._otaError = t.getMessage();
-      } else if (!(t instanceof Object)) {
+      } else if (!(t instanceof FileIOException)) {
          this.setError(t.getMessage());
       } else {
          int errorCode = ((FileIOException)t).getErrorCode();
@@ -738,21 +740,21 @@ final class OmaDownloadManager extends DownloadManager {
    }
 
    @Override
-   protected final void checkContentType(String contentType) {
+   protected final void checkContentType(String contentType) throws ContentTypeException {
       this._contentType = contentType;
       this._numTypes++;
       contentType = RendererControl.stripContentTypeParameters(contentType);
       if (contentType == null
          || !contentType.equalsIgnoreCase(this._expectedContentType)
             && (this._numTypes != 1 || !contentType.equalsIgnoreCase("application/vnd.oma.drm.message"))) {
-         throw new Object(MessageFormat.format(BrowserResources.getString(785), new Object[]{contentType, this._expectedContentType}));
+         throw new ContentTypeException(MessageFormat.format(BrowserResources.getString(785), new Object[]{contentType, this._expectedContentType}));
       }
    }
 
    @Override
-   protected final void checkDownloadLength(long downloadLength) {
+   protected final void checkDownloadLength(long downloadLength) throws SizeTooLargeException {
       if (downloadLength > 0 && downloadLength > this._maxDownloadSize) {
-         throw new Object(MessageFormat.format(BrowserResources.getString(786), new Object[]{Long.toString(downloadLength)}));
+         throw new SizeTooLargeException(MessageFormat.format(BrowserResources.getString(786), new Object[]{Long.toString(downloadLength)}));
       }
    }
 

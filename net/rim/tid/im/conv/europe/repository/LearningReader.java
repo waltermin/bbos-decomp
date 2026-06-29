@@ -35,7 +35,7 @@ public class LearningReader implements ReaderConstants, PersistentContentListene
    protected byte _type;
    protected char[] _tempBuffer = new char[50];
    protected char[] _wordBuffer = new char[50];
-   protected SLCurrentVariant iTempVariant = (SLCurrentVariant)(new Object());
+   protected SLCurrentVariant iTempVariant = new SLCurrentVariant();
    private char[] _caseCorrectionBuffer = new char[50];
    protected int _splitSize = 50;
    protected char _defaultFrequency = '耀';
@@ -97,7 +97,7 @@ public class LearningReader implements ReaderConstants, PersistentContentListene
          try {
             this.reloadData();
          } finally {
-            throw new Object("");
+            throw new IllegalStateException("");
          }
       }
    }
@@ -133,7 +133,7 @@ public class LearningReader implements ReaderConstants, PersistentContentListene
          if (aData != null) {
             LearningData data = LearningDataManager.getLearningData(this._currentLearnName);
             if (data == null) {
-               data = (LearningData)(new Object());
+               data = new LearningData();
             }
 
             data.setData(aData);
@@ -170,8 +170,8 @@ public class LearningReader implements ReaderConstants, PersistentContentListene
 
    protected byte[] clearLearningWordlist() {
       byte[] block = this._data != null && this._data.length == this._sizeLimit ? this._data : new byte[this._sizeLimit];
-      NoCopyByteArrayOutputStream os = (NoCopyByteArrayOutputStream)(new Object(block, 0));
-      DataOutputStream dos = (DataOutputStream)(new Object(os));
+      NoCopyByteArrayOutputStream os = new NoCopyByteArrayOutputStream(block, 0);
+      DataOutputStream dos = new DataOutputStream(os);
       this._alphabet.init();
       this._header.reset(this._alphabet);
       this._header.write(dos, this._alphabet);
@@ -183,8 +183,8 @@ public class LearningReader implements ReaderConstants, PersistentContentListene
 
    protected void loadLearningWordlist(byte[] aData) {
       if (this._header.getHeaderSize() == -1) {
-         ByteArrayInputStream bais = (ByteArrayInputStream)(new Object(aData));
-         DataInputStream dis = (DataInputStream)(new Object(bais));
+         ByteArrayInputStream bais = new ByteArrayInputStream(aData);
+         DataInputStream dis = new DataInputStream(bais);
          this._header.read(dis);
          this._alphabet.read(dis);
       }
@@ -532,7 +532,7 @@ public class LearningReader implements ReaderConstants, PersistentContentListene
       }
 
       this.reloadIfChanged();
-      StringBuffer sb = (StringBuffer)(new Object(this._data.length * 2));
+      StringBuffer sb = new StringBuffer(this._data.length * 2);
 
       for (int i = 0; i < this._data.length; i++) {
          String hex = Integer.toHexString(this._data[i] & 255);
@@ -583,7 +583,7 @@ public class LearningReader implements ReaderConstants, PersistentContentListene
       }
 
       if (this._reIterator == null) {
-         this._reIterator = (ReIterator)(new Object(this._header.getMaxNestingLevel() + 1));
+         this._reIterator = new ReIterator(this._header.getMaxNestingLevel() + 1);
       } else {
          this._reIterator.setMaxStackSize(this._header.getMaxNestingLevel() + 1);
       }

@@ -8,7 +8,6 @@ import net.rim.device.api.system.EncodedImage;
 import net.rim.device.api.ui.ContextMenu;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Graphics;
-import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.util.Arrays;
@@ -281,11 +280,11 @@ public class BrowserBitmapField extends MIMEContentAnimatedBitmapField {
       } else if (this._imageUrl != null && this._browserContent != null) {
          RenderingOptions renderingOptions = this._browserContent.getRenderingOptions();
          if (renderingOptions.getPropertyWithBooleanValue(4550690918222697397L, 30, false)) {
-            contextMenu.addItem((MenuItem)(new Object(new ShowUrlVerb(null, this._imageUrl, this._browserContent, 2), Integer.MAX_VALUE)));
+            contextMenu.addItem(new VerbMenuItem(new ShowUrlVerb(null, this._imageUrl, this._browserContent, 2), Integer.MAX_VALUE));
          }
 
          if (this._transcoded && renderingOptions.getPropertyWithBooleanValue(4550690918222697397L, 38, false)) {
-            VerbMenuItem menuItem = (VerbMenuItem)(new Object(new FullImageVerb(this._imageUrl, this._browserContent), 15));
+            VerbMenuItem menuItem = new VerbMenuItem(new FullImageVerb(this._imageUrl, this._browserContent), 15);
             contextMenu.addItem(menuItem);
             contextMenu.setDefaultItem(menuItem);
          }
@@ -293,12 +292,12 @@ public class BrowserBitmapField extends MIMEContentAnimatedBitmapField {
          if (Graphics.isColor() && (renderingOptions.getPropertyWithBooleanValue(4550690918222697397L, 26, true) || this.isProtected())) {
             EncodedImage img = this.getImage();
             if (img != null && img.getData() != null) {
-               contextMenu.addItem((MenuItem)(new Object(new SaveImageVerb(this._imageUrl, img, this.isProtected()), Integer.MAX_VALUE)));
+               contextMenu.addItem(new VerbMenuItem(new SaveImageVerb(this._imageUrl, img, this.isProtected()), Integer.MAX_VALUE));
             }
          }
 
          if (this._browserContent instanceof BrowserContentImpl && this.getImage() == null && this.getBitmap() == null) {
-            VerbMenuItem menuItem = (VerbMenuItem)(new Object(new LoadImageVerb((BrowserContentImpl)this._browserContent, this._imageUrl), 15));
+            VerbMenuItem menuItem = new VerbMenuItem(new LoadImageVerb((BrowserContentImpl)this._browserContent, this._imageUrl), 15);
             contextMenu.addItem(menuItem);
             contextMenu.setDefaultItem(menuItem);
          }
@@ -329,7 +328,7 @@ public class BrowserBitmapField extends MIMEContentAnimatedBitmapField {
          } else if (this._altText != null) {
             int offsetX = 4 + _loadingImage.getWidth() + 1;
             if (offsetX < this._preferredWidth) {
-               Font[] fonts = new Object[]{this.getFont()};
+               Font[] fonts = new Font[]{this.getFont()};
                int[] indicies = new int[]{0, this._altText.length()};
                byte[] attribs = new byte[]{0, 0};
                Edit$Helper textHelper = RichText.calculateLengths(this._preferredWidth - offsetX, this._altText, indicies, attribs, fonts);

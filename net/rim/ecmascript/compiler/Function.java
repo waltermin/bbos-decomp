@@ -46,9 +46,9 @@ class Function {
       this._localTable = new IndexHash();
       this._constTable = new IndexHash();
       this._parms = new IntVector();
-      this._functionDeclarations = (Vector)(new Object());
-      this._functionExpressions = (Vector)(new Object());
-      this._blocks = (Vector)(new Object());
+      this._functionDeclarations = new Vector();
+      this._functionExpressions = new Vector();
+      this._blocks = new Vector();
       this._currLabel = new Label(this._c);
       this._currCode = new ByteCode(c);
       this._lineNumbers = new IntVector();
@@ -485,7 +485,7 @@ class Function {
       this._c.print(" stack=");
       this._c.print(Integer.toString(this._maxStackDepth));
       indent += 4;
-      this._c.println(((StringBuffer)(new Object(", size="))).append(this._code == null ? "???" : Integer.toString(this._code.length)).toString(), indent);
+      this._c.println(", size=" + (this._code == null ? "???" : Integer.toString(this._code.length)), indent);
       int size = this._parms.size();
       if (size != 0) {
          int i = 0;

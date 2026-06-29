@@ -27,7 +27,7 @@ public final class BookmarksFolderList extends FolderList implements FolderEvent
    private Verb _createVerb;
    private Verb _renameVerb;
    private static final int PROVISIONED_BOOKMARKS_FOLDER_ID_SCOPE = -1578139142;
-   static final Folder[] BOOKMARKS_HIERARCHIES = new Object[]{
+   static final Folder[] BOOKMARKS_HIERARCHIES = new Folder[]{
       FolderHierarchies.getFolder(BrowserFolders.RIM_BROWSER_BOOKMARKS_HIERARCHY_ID, BrowserFolders.BROWSER_BOOKMARKS_FOLDER_ID)
    };
 
@@ -225,7 +225,7 @@ public final class BookmarksFolderList extends FolderList implements FolderEvent
    }
 
    static final void setFolderName(long folderID, Folder folder, BrowserConfigRecord config) {
-      if (folder instanceof Object) {
+      if (folder instanceof SimpleFolder) {
          String customFolderName = null;
          if (config != null) {
             customFolderName = config.getLocalizedString(42);
@@ -234,9 +234,10 @@ public final class BookmarksFolderList extends FolderList implements FolderEvent
             }
          }
 
-         ((SimpleFolder)folder).setFriendlyName(
-            customFolderName != null ? customFolderName : BrowserResources.getString(folderID == BrowserFolders.BROWSER_WAP_BOOKMARKS_FOLDER_ID ? 570 : 568)
-         );
+         ((SimpleFolder)folder)
+            .setFriendlyName(
+               customFolderName != null ? customFolderName : BrowserResources.getString(folderID == BrowserFolders.BROWSER_WAP_BOOKMARKS_FOLDER_ID ? 570 : 568)
+            );
       }
    }
 

@@ -19,11 +19,12 @@ import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.SystemEnabledMenu;
 import net.rim.device.apps.api.utility.framework.ModelScreen;
 import net.rim.device.apps.api.utility.framework.SubmemberUtilities;
+import net.rim.vm.Persistable;
 
 public class EditorUsingRIMModelFactory extends ModelScreen {
    private ReadableList _modelWithSubmembers;
-   private Vector _insertedModels = (Vector)(new Object());
-   private Vector _deletedModels = (Vector)(new Object());
+   private Vector _insertedModels = new Vector();
+   private Vector _deletedModels = new Vector();
    private boolean _modelInsertedViaMenu;
    private boolean _isActive;
    private RIMModelFactory[] _mf;
@@ -57,7 +58,7 @@ public class EditorUsingRIMModelFactory extends ModelScreen {
 
    @Override
    public void setModel(Object model) {
-      if (model instanceof Object && model instanceof Object) {
+      if (model instanceof ReadableList && model instanceof WritableSet) {
          if (this._redisplaying) {
             this.deleteAll();
             this._insertedModels.removeAllElements();
@@ -71,7 +72,7 @@ public class EditorUsingRIMModelFactory extends ModelScreen {
          this.produceFields();
          this.setFocus();
          Field field = this.getLeafFieldWithFocus();
-         if (field instanceof Object) {
+         if (field instanceof EditField) {
             EditField editField = (EditField)field;
             editField.setCursorPosition(editField.getTextLength());
          }
@@ -79,7 +80,7 @@ public class EditorUsingRIMModelFactory extends ModelScreen {
          this._isActive = true;
          this._redisplaying = true;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -387,7 +388,7 @@ public class EditorUsingRIMModelFactory extends ModelScreen {
          Field field = manager.getField(i);
          Object cookie = field.getCookie();
          if (!(cookie instanceof FieldProvider)) {
-            if (field instanceof Object) {
+            if (field instanceof Manager) {
                this.grabDataFromEdit((Manager)field, removeEmpty);
             }
          } else {
@@ -410,10 +411,10 @@ public class EditorUsingRIMModelFactory extends ModelScreen {
          Field field = manager.getField(i);
          Object cookie = field.getCookie();
          if (cookie == null) {
-            if (field instanceof Object) {
+            if (field instanceof Manager) {
                startIndex = this.getModelsInScreenOrder(submodelSet, (Manager)field, models, startIndex);
             }
-         } else if (cookie instanceof FieldProvider && cookie instanceof Object && submodelSet.contains(cookie)) {
+         } else if (cookie instanceof FieldProvider && cookie instanceof Persistable && submodelSet.contains(cookie)) {
             submodelSet.remove(cookie);
             models[startIndex++] = cookie;
          }
@@ -429,7 +430,7 @@ public class EditorUsingRIMModelFactory extends ModelScreen {
 
       for (int i = this._modelWithSubmembers.size() - 1; i >= 0; i--) {
          Object model = this._modelWithSubmembers.getAt(i);
-         if (model instanceof Object) {
+         if (model instanceof Persistable) {
             submodelSet.remove(model);
             orderedModels[index++] = model;
          }
@@ -451,7 +452,7 @@ public class EditorUsingRIMModelFactory extends ModelScreen {
          Field field = manager.getField(i);
          Object cookie = field.getCookie();
          if (!(cookie instanceof FieldProvider)) {
-            if (field instanceof Object) {
+            if (field instanceof Manager) {
                int invalidFieldIndex = this.validateFields((Manager)field, currentFieldProviderIndex);
                if (invalidFieldIndex >= 0) {
                   return invalidFieldIndex;
@@ -491,7 +492,7 @@ public class EditorUsingRIMModelFactory extends ModelScreen {
             return true;
          }
 
-         if (field instanceof Object && this.setFocus((Manager)field, recognizer)) {
+         if (field instanceof Manager && this.setFocus((Manager)field, recognizer)) {
             return true;
          }
       }
@@ -516,7 +517,7 @@ public class EditorUsingRIMModelFactory extends ModelScreen {
             return field;
          }
 
-         if (field instanceof Object) {
+         if (field instanceof Manager) {
             field = this.findField((Manager)field, cookie);
             if (field != null) {
                return field;

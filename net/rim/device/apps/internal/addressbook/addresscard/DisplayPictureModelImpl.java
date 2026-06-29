@@ -8,6 +8,7 @@ import net.rim.device.api.system.EncodedImage;
 import net.rim.device.api.system.JPEGEncodedImage;
 import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.ui.Field;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.addressbook.DisplayPictureModel;
 import net.rim.device.apps.api.framework.model.ContextObject;
@@ -63,11 +64,11 @@ public final class DisplayPictureModelImpl implements DisplayPictureModel, Field
 
    @Override
    public final Field getField(Object context) {
-      VerticalFieldManager vField = (VerticalFieldManager)(new Object());
+      VerticalFieldManager vField = new VerticalFieldManager();
       long flags = ContextObject.getFlag(context, 0) ? 4503599627370496L : 9007199254740992L;
       int scale = Fixed32.toFP(1);
       if (flags == 4503599627370496L) {
-         Field field = (Field)(new Object(AddressBookResources.getString(107), 9007199254740992L));
+         Field field = new LabelField(AddressBookResources.getString(107), 9007199254740992L);
          vField.add(field);
          scale = Fixed32.toFP(2);
       }
@@ -97,12 +98,15 @@ public final class DisplayPictureModelImpl implements DisplayPictureModel, Field
          }
 
          return true;
-      } else if (ContextObject.getFlag(context, 11) && ContextObject.getFlag(context, 43) && ContextObject.getFlag(context, 54) && target instanceof Object) {
+      } else if (ContextObject.getFlag(context, 11)
+         && ContextObject.getFlag(context, 43)
+         && ContextObject.getFlag(context, 54)
+         && target instanceof StringBuffer) {
          try {
             StringBuffer output = (StringBuffer)target;
             output.append("\rPhoto:");
-            ByteArrayOutputStream byteOut = (ByteArrayOutputStream)(new Object());
-            Base64OutputStream base64Out = (Base64OutputStream)(new Object(byteOut));
+            ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+            Base64OutputStream base64Out = new Base64OutputStream(byteOut);
             base64Out.write(displayPicture);
             base64Out.flush();
             byte[] data = byteOut.toByteArray();
@@ -122,7 +126,7 @@ public final class DisplayPictureModelImpl implements DisplayPictureModel, Field
 
    @Override
    public final boolean grabDataFromField(Field field, Object context) {
-      if (field instanceof Object) {
+      if (field instanceof VerticalFieldManager) {
          VerticalFieldManager vfm = (VerticalFieldManager)field;
          AddressBitmapField abf = (AddressBitmapField)vfm.getField(1);
          EncodedImage image = abf.getImage();
@@ -169,7 +173,7 @@ public final class DisplayPictureModelImpl implements DisplayPictureModel, Field
    public DisplayPictureModelImpl(Object initialData) {
       byte[] imageData = null;
       if (!(initialData instanceof byte[])) {
-         if (initialData instanceof Object) {
+         if (initialData instanceof ContextObject) {
             imageData = (byte[])ContextObject.get(initialData, 8849067667159082262L);
          }
       } else {
@@ -211,7 +215,7 @@ public final class DisplayPictureModelImpl implements DisplayPictureModel, Field
          } while (image.getLength() > 32768 && qualityFactor >= 0);
 
          if (qualityFactor < 0) {
-            throw new Object("Image size could not be reduced to less than 32768 bytes.");
+            throw new IllegalArgumentException("Image size could not be reduced to less than 32768 bytes.");
          }
 
          modified = true;

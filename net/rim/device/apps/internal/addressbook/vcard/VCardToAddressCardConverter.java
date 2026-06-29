@@ -1,6 +1,6 @@
 package net.rim.device.apps.internal.addressbook.vcard;
 
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 import net.rim.device.api.util.Factory;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.internal.api.serialformats.VCardReader;
@@ -17,7 +17,7 @@ final class VCardToAddressCardConverter implements Factory {
 
          Boolean bool = (Boolean)ContextObject.get(context, 4086083307293257364L);
          VCardToAddressCardModelBuilder builder = new VCardToAddressCardModelBuilder();
-         VCardReader reader = (VCardReader)(new Object(builder, (InputStream)(new Object(data)), encoding));
+         VCardReader reader = new VCardReader(builder, new ByteArrayInputStream(data), encoding);
          if (bool != null) {
             reader.setNonConformanceMode(bool);
          }

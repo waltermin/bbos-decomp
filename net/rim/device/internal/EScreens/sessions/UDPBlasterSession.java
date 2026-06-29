@@ -21,9 +21,9 @@ public final class UDPBlasterSession extends EScreenSession implements UDPPacket
    private int _windowSize;
    private int _payloadSize;
    private int _port;
-   private EditField _portField = (EditField)(new Object("Destination Port: ", "56026", Integer.MAX_VALUE, 16777216));
-   private NumericChoiceField _windowSizeField = (NumericChoiceField)(new Object("Window Size: ", 1, 5, 1, 4));
-   private EditField _packetSizeField = (EditField)(new Object("Packet size: ", "256", Integer.MAX_VALUE, 16777216));
+   private EditField _portField = new EditField("Destination Port: ", "56026", Integer.MAX_VALUE, 16777216);
+   private NumericChoiceField _windowSizeField = new NumericChoiceField("Window Size: ", 1, 5, 1, 4);
+   private EditField _packetSizeField = new EditField("Packet size: ", "256", Integer.MAX_VALUE, 16777216);
    private static final int COUNTER_SENT = 0;
    private static final int COUNTER_SENT_OK = 1;
    private static final int COUNTER_SENT_FAIL = 2;
@@ -157,7 +157,7 @@ public final class UDPBlasterSession extends EScreenSession implements UDPPacket
          } catch (Throwable var10) {
             String msg = e.getMessage();
             if (!msg.equals("Radio error") && !msg.equals("No free buffers")) {
-               this.setResult(0, ((StringBuffer)(new Object("Ex: "))).append(msg).toString(), -1);
+               this.setResult(0, "Ex: " + msg, -1);
                this.stop();
                return;
             }

@@ -17,6 +17,6 @@ class StreamingMediaPlayer$3 implements Runnable {
    @Override
    public void run() {
       this.this$0._timeEventRunnableID = -1;
-      this.val$pl.playerUpdate(this.val$player, "com.rim.timeUpdate", new Object(this.this$0._mediaTime));
+      this.val$pl.playerUpdate(this.val$player, "com.rim.timeUpdate", new Long(this.this$0._mediaTime));
    }
 }

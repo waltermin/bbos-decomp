@@ -10,8 +10,8 @@ import net.rim.tid.im.conv.europe.repository.LearningPrefixTable;
 import net.rim.tid.im.conv.europe.repository.LearningReader;
 
 public class PairLearningReader extends LearningReader {
-   private SLCurrentVariant _tempVariant = (SLCurrentVariant)(new Object());
-   private StringBuffer _tempStrBuf = (StringBuffer)(new Object());
+   private SLCurrentVariant _tempVariant = new SLCurrentVariant();
+   private StringBuffer _tempStrBuf = new StringBuffer();
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
@@ -39,8 +39,8 @@ public class PairLearningReader extends LearningReader {
       }
 
       super._sizeLimit *= 1024;
-      super._header = (LearningHeader)(new Object());
-      super._alphabet = (LearningGlobalAlphabet)(new Object(false));
+      super._header = new LearningHeader();
+      super._alphabet = new LearningGlobalAlphabet(false);
       super._simplePrefixTable = new PairLearningSimplePrefixTable(0, this, (byte)6);
    }
 
@@ -57,7 +57,7 @@ public class PairLearningReader extends LearningReader {
    public int addPair(String word, byte freq) {
       int len = word.indexOf("++");
       if (len >= 50) {
-         System.out.println(((StringBuffer)(new Object("Word( "))).append(word).append(") is too long!").toString());
+         System.out.println("Word( " + word + ") is too long!");
          return 1;
       } else {
          word.getChars(0, len, super._tempBuffer, 0);
@@ -66,7 +66,7 @@ public class PairLearningReader extends LearningReader {
          int replacementIndex = len + 2;
          len = word.length() - replacementIndex;
          if (len >= 50) {
-            System.out.println(((StringBuffer)(new Object("Word( "))).append(word).append(") is too long!").toString());
+            System.out.println("Word( " + word + ") is too long!");
             return 1;
          } else {
             word.getChars(replacementIndex, replacementIndex + len, super._tempBuffer, 0);
@@ -118,7 +118,7 @@ public class PairLearningReader extends LearningReader {
          this.modifyLearningData(false);
          return 0;
       } catch (Throwable var11) {
-         System.out.println(((StringBuffer)(new Object("Failed on word:"))).append(aMisspelledWord).toString());
+         System.out.println("Failed on word:" + aMisspelledWord);
          e.printStackTrace();
          return 1;
       }

@@ -20,7 +20,7 @@ class ReminderModelImpl implements ReminderModel, LongProp, Copyable, Reconcilab
    int _state = 1;
    private static final int ORDER = 1000;
    private static final IconCollection STATUS_ICONS = IconCollection.get("net_rim_Reminder_Status", 1);
-   private static ContextObject _checksumContext = (ContextObject)(new Object(60));
+   private static ContextObject _checksumContext = new ContextObject(60);
 
    @Override
    public boolean hasReminder() {
@@ -79,18 +79,18 @@ class ReminderModelImpl implements ReminderModel, LongProp, Copyable, Reconcilab
 
    @Override
    public void reconcile(Object objectToReconcile, Object context) {
-      if (objectToReconcile instanceof Object) {
+      if (objectToReconcile instanceof ReminderModel) {
          if (context != null) {
             ReminderModel reminderModelToReconcile = (ReminderModel)objectToReconcile;
             Object p1 = ContextObject.get(context, -442904859142728844L);
             Object p2 = ContextObject.get(context, 4930575420328309875L);
             Checksumable c1 = null;
             Checksumable c2 = null;
-            if (p1 instanceof Object) {
+            if (p1 instanceof Checksumable) {
                c1 = (Checksumable)p1;
             }
 
-            if (p2 instanceof Object) {
+            if (p2 instanceof Checksumable) {
                c2 = (Checksumable)p2;
             }
 

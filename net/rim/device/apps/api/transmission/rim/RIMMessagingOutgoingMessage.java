@@ -22,8 +22,8 @@ public final class RIMMessagingOutgoingMessage extends RIMMessagingMessage imple
 
    public final void addSuffixText(Object textObject, String textTypeString) {
       if (this._textSuffixObjects == null) {
-         this._textSuffixObjects = (Vector)(new Object());
-         this._textSuffixTypes = (Vector)(new Object());
+         this._textSuffixObjects = new Vector();
+         this._textSuffixTypes = new Vector();
       }
 
       this._textSuffixObjects.addElement(textObject);
@@ -64,10 +64,10 @@ public final class RIMMessagingOutgoingMessage extends RIMMessagingMessage imple
          this._buffer.writeByte(0);
       }
 
-      DataBuffer textBuffer = (DataBuffer)(new Object());
+      DataBuffer textBuffer = new DataBuffer();
       this.writeMessageText(textBuffer);
       if (attachmentCount > 0) {
-         DataBuffer attachmentBuffer = (DataBuffer)(new Object());
+         DataBuffer attachmentBuffer = new DataBuffer();
          this.writeMessageAttachments(attachmentBuffer);
          int length = textBuffer.getPosition() + attachmentBuffer.getPosition();
          this._buffer.writeCompressedInt(length);
@@ -141,7 +141,7 @@ public final class RIMMessagingOutgoingMessage extends RIMMessagingMessage imple
                forcedEncoding = CMIMEUtilities.parseEncoding(suffixContentType);
                if (forcedEncoding != -1) {
                   Object data = this._textSuffixObjects.elementAt(index);
-                  if (data != null && data instanceof Object) {
+                  if (data != null && data instanceof String) {
                      if (!ConverterUtilities.isIntellisyncCompatible((String)data)) {
                         messageContentType = suffixContentType;
                         toBeEncoded = true;
@@ -158,7 +158,7 @@ public final class RIMMessagingOutgoingMessage extends RIMMessagingMessage imple
          boolean isEncodingHinted;
          boolean isAsciiTextMessage;
          isEncodingHinted = super._isEncoded && (super._encodingCode & 112) != 0;
-         isAsciiTextMessage = text == null || text instanceof Object && StringUtilities.getCharacterSize((String)text) == 1;
+         isAsciiTextMessage = text == null || text instanceof String && StringUtilities.getCharacterSize((String)text) == 1;
          label146:
          if (isAsciiTextMessage && isEncodingHinted) {
             if (forcedEncoding == -1) {
@@ -168,7 +168,7 @@ public final class RIMMessagingOutgoingMessage extends RIMMessagingMessage imple
             }
 
             if (text != null) {
-               if (!(text instanceof Object)) {
+               if (!(text instanceof String)) {
                   break label146;
                }
 
@@ -182,8 +182,8 @@ public final class RIMMessagingOutgoingMessage extends RIMMessagingMessage imple
 
          if (isAsciiTextMessage && !isEncodingHinted) {
             type = messageContentType;
-         } else if (type != null && text instanceof Object && StringUtilities.startsWithIgnoreCase(type, "text/plain", 1701707776)) {
-            localDataBuffer = (DataBuffer)(new Object());
+         } else if (type != null && text instanceof String && StringUtilities.startsWithIgnoreCase(type, "text/plain", 1701707776)) {
+            localDataBuffer = new DataBuffer();
             toBeEncoded = CMIMEUtilities.addTextEncoded(localDataBuffer, (String)text, super._encodingCode, false, forcedEncoding);
             if (!toBeEncoded) {
                type = messageContentType;
@@ -216,7 +216,7 @@ public final class RIMMessagingOutgoingMessage extends RIMMessagingMessage imple
       dataBuffer.writeByte(0);
       if (this._textSuffixObjects != null && this._textSuffixObjects.size() > 0) {
          if (localDataBuffer == null) {
-            localDataBuffer = (DataBuffer)(new Object());
+            localDataBuffer = new DataBuffer();
             if (text != null) {
                this._textSuffixObjects.insertElementAt(text, 0);
                this._textSuffixTypes.insertElementAt(type, 0);
@@ -329,7 +329,7 @@ public final class RIMMessagingOutgoingMessage extends RIMMessagingMessage imple
    }
 
    public RIMMessagingOutgoingMessage() {
-      this._buffer = (DataBuffer)(new Object());
+      this._buffer = new DataBuffer();
       this._buffer.writeByte(2);
       this._buffer.writeByte(16);
       super._headerParameters.setDataBuffer(this._buffer);

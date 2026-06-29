@@ -23,6 +23,6 @@ public final class StatusBatteryLevel extends StatusListItem {
          level = 0;
       }
 
-      return ((StringBuffer)(new Object())).append(String.valueOf(level)).append(OptionsResources.getString(413)).toString();
+      return level + OptionsResources.getString(413);
    }
 }

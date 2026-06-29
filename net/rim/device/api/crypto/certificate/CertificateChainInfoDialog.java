@@ -5,10 +5,12 @@ import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Graphics;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.ButtonField;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.component.TreeField;
 import net.rim.device.api.ui.component.TreeFieldCallback;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.internal.i18n.CommonResource;
 import net.rim.device.internal.ui.component.PopupDialog;
 import net.rim.vm.Array;
@@ -19,16 +21,16 @@ final class CertificateChainInfoDialog extends PopupDialog implements TreeFieldC
    KeyStore _keyStore;
 
    public CertificateChainInfoDialog(String title, Object[][] certChains, KeyStore keyStore, long style) {
-      super((Manager)(new Object(299067162755072L)), style);
+      super(new VerticalFieldManager(299067162755072L), style);
       this._keyStore = keyStore;
-      this.add((Field)(new Object(title)));
-      this.add((Field)(new Object()));
-      this._treeField = (TreeField)(new Object(this, 0));
+      this.add(new LabelField(title));
+      this.add(new SeparatorField());
+      this._treeField = new TreeField(this, 0);
       this._treeField.setIndentWidth(10);
       this.add(this._treeField);
       this.setCancelAllowed(true);
       this.processChain(certChains, 0, 0);
-      this._button = (ButtonField)(new Object(CommonResource.getString(9), 18014411394383872L));
+      this._button = new ButtonField(CommonResource.getString(9), 18014411394383872L);
       this._button.setChangeListener(this);
       this.add(this._button);
    }
@@ -56,7 +58,7 @@ final class CertificateChainInfoDialog extends PopupDialog implements TreeFieldC
 
    private final Vector groupChains(Object[][] certChains, int index) {
       int numChains = certChains.length;
-      Vector groups = (Vector)(new Object(numChains));
+      Vector groups = new Vector(numChains);
 
       for (int i = 0; i < numChains; i++) {
          Object[] currentChain = certChains[i];
@@ -97,7 +99,7 @@ final class CertificateChainInfoDialog extends PopupDialog implements TreeFieldC
       Object cookie = treeField.getCookie(node);
       String label = null;
       if (!(cookie instanceof Certificate)) {
-         if (cookie instanceof Object) {
+         if (cookie instanceof String) {
             label = (String)cookie;
          }
       } else {

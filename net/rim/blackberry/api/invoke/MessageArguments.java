@@ -29,18 +29,18 @@ public final class MessageArguments extends ApplicationArguments {
             && !arg.equals("newpin")
             && !arg.equals("newsms")
             && !arg.equals("newmms")) {
-         throw new Object("Invalid argument specified");
+         throw new IllegalArgumentException("Invalid argument specified");
       }
 
-      super._args = new Object[]{arg};
+      super._args = new String[]{arg};
    }
 
    public MessageArguments(String arg, String to, String subject, String body) {
       if (arg == null || !arg.equals("new") && !arg.equals("newpin")) {
-         throw new Object("Invalid argument specified.");
+         throw new IllegalArgumentException("Invalid argument specified.");
       }
 
-      super._args = new Object[]{arg, to, subject, body};
+      super._args = new String[]{arg, to, subject, body};
    }
 
    public MessageArguments(Message message) {

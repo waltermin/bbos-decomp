@@ -41,7 +41,7 @@ public final class HTMLBrowserField extends BrowserTextFlowManager implements Pr
 
       for (int i = this.getFieldCount() - 1; i >= 0; i--) {
          Field f = this.getField(i);
-         if (f instanceof Object) {
+         if (f instanceof Destroyable) {
             ((Destroyable)f).destroy();
          }
       }
@@ -55,7 +55,7 @@ public final class HTMLBrowserField extends BrowserTextFlowManager implements Pr
 
       for (int i = this.getFieldCount() - 1; i >= 0; i--) {
          Field f = this.getField(i);
-         if (f instanceof Object) {
+         if (f instanceof Destroyable) {
             ((Destroyable)f).setDestroyMethod(method);
          }
       }
@@ -117,7 +117,7 @@ public final class HTMLBrowserField extends BrowserTextFlowManager implements Pr
    HTMLBrowserField(HTMLBrowserContent browserContent, Renderer renderer, HTMLContext context, long style) {
       super(style);
       if (browserContent == null) {
-         throw new Object("Browser Content cannot be null");
+         throw new RuntimeException("Browser Content cannot be null");
       }
 
       this._htmlContext = context;

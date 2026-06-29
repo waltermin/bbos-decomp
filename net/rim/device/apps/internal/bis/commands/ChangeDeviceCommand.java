@@ -39,8 +39,8 @@ public final class ChangeDeviceCommand implements DomainCommand {
                commandResultID = "success";
             } else {
                commandResultID = "autoAuthSuccess";
-               pendingParams = (Hashtable)(new Object());
-               Vector mailboxes = (Vector)(new Object());
+               pendingParams = new Hashtable();
+               Vector mailboxes = new Vector();
                Mailbox[] arrMailboxes = sessionState.getUserInfo().getMailboxes();
 
                for (int i = 0; i < arrMailboxes.length; i++) {
@@ -57,9 +57,7 @@ public final class ChangeDeviceCommand implements DomainCommand {
                return DomainCommand.SESSION_TIMEOUT_RESULT;
             }
 
-            BISEventLogger.logEvent(
-               ((StringBuffer)(new Object("Change Device: Uhandled REST response code: "))).append(callResult.getRESTStatusCode()).toString(), 0
-            );
+            BISEventLogger.logEvent("Change Device: Uhandled REST response code: " + callResult.getRESTStatusCode(), 0);
             commandResultErrorMsg = ApplicationResources.getString(114);
             commandResultID = "failed";
          }

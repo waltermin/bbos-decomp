@@ -2,7 +2,7 @@ package net.rim.device.apps.internal.browser.stack;
 
 import javax.microedition.io.InputConnection;
 import net.rim.device.api.browser.field.BrowserContent;
-import net.rim.device.api.browser.field.Event;
+import net.rim.device.api.browser.field.CancelRequestResource;
 import net.rim.device.api.browser.field.RenderingApplication;
 import net.rim.device.api.browser.field.RequestedResource;
 import net.rim.device.api.browser.field.ResourceProvider;
@@ -31,7 +31,7 @@ public final class ImageFetchJob implements Job {
 
       RenderingApplication app = this._referrer.getRenderingApplication();
       InputConnection conn = null;
-      if (!(app instanceof Object)) {
+      if (!(app instanceof ResourceProvider)) {
          conn = app.getResource(this._resourceInfo, null);
       } else {
          conn = ((ResourceProvider)app).getInputConnection(this._resourceInfo, null);
@@ -56,7 +56,7 @@ public final class ImageFetchJob implements Job {
       synchronized (this) {
          if (this._requestState == 1) {
             RenderingApplication app = this._referrer.getRenderingApplication();
-            app.eventOccurred((Event)(new Object(this, this._resourceInfo)));
+            app.eventOccurred(new CancelRequestResource(this, this._resourceInfo));
          }
       }
    }

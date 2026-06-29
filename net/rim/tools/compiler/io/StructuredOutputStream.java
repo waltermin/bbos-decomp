@@ -1,5 +1,6 @@
 package net.rim.tools.compiler.io;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import net.rim.tools.compiler.vm.Constants;
@@ -40,9 +41,9 @@ public class StructuredOutputStream implements Constants {
       return this._offset;
    }
 
-   public void resetOffset() {
+   public void resetOffset() throws IOException {
       if ((this._offset & 3) != 0) {
-         throw new Object("output stream offset may only be reset on 4 byte aligned boundary");
+         throw new IOException("output stream offset may only be reset on 4 byte aligned boundary");
       }
 
       this._offset = 0;

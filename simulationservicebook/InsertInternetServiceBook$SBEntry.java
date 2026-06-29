@@ -6,7 +6,7 @@ import net.rim.device.api.servicebook.ServiceRecord;
 
 class InsertInternetServiceBook$SBEntry {
    private ServiceBook _sb;
-   private ServiceRecord _rec = (ServiceRecord)(new Object());
+   private ServiceRecord _rec = new ServiceRecord();
 
    public InsertInternetServiceBook$SBEntry(
       String uid,

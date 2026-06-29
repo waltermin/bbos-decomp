@@ -6,7 +6,7 @@ public class ContextInfo {
    private int _type = 0;
    private boolean _external;
    private boolean _selectAll;
-   private IntHashtable _table = (IntHashtable)(new Object(5));
+   private IntHashtable _table = new IntHashtable(5);
    private Object _object;
    public static final int UNKNOWN = 0;
    public static final int TRACK = 1;

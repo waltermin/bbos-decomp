@@ -2,6 +2,7 @@ package net.rim.device.api.crypto.encoder;
 
 import java.io.DataInputStream;
 import net.rim.device.api.crypto.CAST128Key;
+import net.rim.device.api.crypto.InvalidKeyEncodingException;
 import net.rim.device.api.crypto.RC2Key;
 import net.rim.device.api.crypto.SkipjackKey;
 import net.rim.device.api.crypto.SymmetricKey;
@@ -10,7 +11,7 @@ final class KeyStore_RIM_SymmetricKeyDecoder3 extends KeyStore_SymmetricKeyDecod
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final SymmetricKey decodeKey(DataInputStream input, String algorithm) {
+   public final SymmetricKey decodeKey(DataInputStream input, String algorithm) throws InvalidKeyEncodingException {
       boolean var6 = false /* VF: Semaphore variable */;
 
       try {
@@ -31,11 +32,11 @@ final class KeyStore_RIM_SymmetricKeyDecoder3 extends KeyStore_SymmetricKeyDecod
          }
       } finally {
          if (var6) {
-            throw new Object();
+            throw new InvalidKeyEncodingException();
          }
       }
 
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override

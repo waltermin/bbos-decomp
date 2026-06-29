@@ -16,27 +16,27 @@ public class Element extends Type {
    public Element(QName qname, Type type, int minOccurs, int maxOccurs, boolean nillable) {
       super(9);
       if (qname == null) {
-         throw new Object("the qualified name for this Element must be specified");
+         throw new IllegalArgumentException("the qualified name for this Element must be specified");
       }
 
       if (type == null) {
-         throw new Object("the content type of this Element must be specified");
+         throw new IllegalArgumentException("the content type of this Element must be specified");
       }
 
       if (type instanceof Element) {
-         throw new Object("the content type of this Element must be either a simple type or a complex type");
+         throw new IllegalArgumentException("the content type of this Element must be either a simple type or a complex type");
       }
 
       if (minOccurs < 0) {
-         throw new Object("the minimum number of occurrences must be non-negative");
+         throw new IllegalArgumentException("the minimum number of occurrences must be non-negative");
       }
 
       if (maxOccurs <= 0 && maxOccurs != -1) {
-         throw new Object("the maximum number of occurrences must be non-negative");
+         throw new IllegalArgumentException("the maximum number of occurrences must be non-negative");
       }
 
       if (minOccurs > maxOccurs && maxOccurs != -1) {
-         throw new Object("the minimum number of occurrences must not be greater than the maximum number of occurrences");
+         throw new IllegalArgumentException("the minimum number of occurrences must not be greater than the maximum number of occurrences");
       }
 
       this.contentType = type;

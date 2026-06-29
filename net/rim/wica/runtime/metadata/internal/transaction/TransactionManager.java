@@ -240,7 +240,7 @@ public final class TransactionManager implements Serviceable {
    }
 
    public TransactionManager() {
-      this._transactions = (Stack)(new Object());
+      this._transactions = new Stack();
    }
 
    // $VF: Could not inline inconsistent finally blocks
@@ -249,7 +249,7 @@ public final class TransactionManager implements Serviceable {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

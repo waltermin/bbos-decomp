@@ -11,11 +11,11 @@ public final class XDecryptorEngine implements BlockDecryptorEngine {
    private byte[] _buffer;
 
    public final InitializationVector getPostWhitening() {
-      return (InitializationVector)(new Object(this._postWhitening));
+      return new InitializationVector(this._postWhitening);
    }
 
    public final InitializationVector getPreWhitening() {
-      return (InitializationVector)(new Object(this._preWhitening));
+      return new InitializationVector(this._preWhitening);
    }
 
    public final void setWhiteningVectors(InitializationVector preWhitening, InitializationVector postWhitening) {
@@ -23,7 +23,7 @@ public final class XDecryptorEngine implements BlockDecryptorEngine {
          this._preWhitening = preWhitening.getData();
          this._postWhitening = postWhitening.getData();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -34,7 +34,7 @@ public final class XDecryptorEngine implements BlockDecryptorEngine {
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object())).append(this._engine.getAlgorithm()).append("/X").toString();
+      return this._engine.getAlgorithm() + "/X";
    }
 
    @Override
@@ -55,7 +55,7 @@ public final class XDecryptorEngine implements BlockDecryptorEngine {
             plaintext[plaintextOffset + i] = (byte)(plaintext[plaintextOffset + i] ^ this._preWhitening[i]);
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -68,10 +68,10 @@ public final class XDecryptorEngine implements BlockDecryptorEngine {
             this._postWhitening = postWhitening.getData();
             this._buffer = new byte[this._blockLength];
          } else {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -83,18 +83,18 @@ public final class XDecryptorEngine implements BlockDecryptorEngine {
       byte[] target = new byte[blockLength];
 
       try {
-         InitializationVector preIv = (InitializationVector)(new Object(PRE_IV));
-         InitializationVector postIv = (InitializationVector)(new Object(POST_IV));
-         XDecryptorEngine decryptorEngine = new XDecryptorEngine((BlockDecryptorEngine)(new Object()), preIv, postIv);
+         InitializationVector preIv = new InitializationVector(PRE_IV);
+         InitializationVector postIv = new InitializationVector(POST_IV);
+         XDecryptorEngine decryptorEngine = new XDecryptorEngine(new TestEngine(), preIv, postIv);
          decryptorEngine.decrypt(CIPHER_TEXT, 0, target, 0);
          if (Arrays.equals(target, 0, SelfTestData_PK1.ENCRYPTION_PLAIN_TEXT, 0, blockLength)) {
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

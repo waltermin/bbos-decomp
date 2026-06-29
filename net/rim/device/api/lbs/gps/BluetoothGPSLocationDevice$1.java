@@ -15,14 +15,7 @@ class BluetoothGPSLocationDevice$1 implements Runnable {
          this.this$1.this$0._status = 10;
          GPSProvider.getInstance().fireLocationDeviceEvent(this.this$1.this$0, this.this$1.this$0.getString(6));
          EventLogger.logEvent(
-            4560142210062134028L,
-            ((StringBuffer)(new Object()))
-               .append(this.this$1.this$0._name)
-               .append(" not GPS device. Force disconnect. Status: ")
-               .append(this.this$1.this$0._status)
-               .toString()
-               .getBytes(),
-            5
+            4560142210062134028L, (this.this$1.this$0._name + " not GPS device. Force disconnect. Status: " + this.this$1.this$0._status).getBytes(), 5
          );
          this.this$1.this$0.stopReporting();
       }

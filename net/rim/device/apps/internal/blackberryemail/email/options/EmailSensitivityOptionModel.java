@@ -1,7 +1,6 @@
 package net.rim.device.apps.internal.blackberryemail.email.options;
 
 import net.rim.device.api.ui.Field;
-import net.rim.device.api.ui.component.ChoiceField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.FieldProvider;
@@ -36,10 +35,10 @@ final class EmailSensitivityOptionModel implements RIMModel, FieldProvider {
             initialSensitivity = 3;
       }
 
-      String[] sensitivityChoices = new Object[]{
+      String[] sensitivityChoices = new String[]{
          EmailResources.getString(109), EmailResources.getString(169), EmailResources.getString(170), EmailResources.getString(171)
       };
-      ObjectChoiceField sensitivityChoiceField = (ObjectChoiceField)(new Object(EmailResources.getString(177), sensitivityChoices, initialSensitivity));
+      ObjectChoiceField sensitivityChoiceField = new ObjectChoiceField(EmailResources.getString(177), sensitivityChoices, initialSensitivity);
       sensitivityChoiceField.setCookie(this);
       return sensitivityChoiceField;
    }
@@ -47,7 +46,7 @@ final class EmailSensitivityOptionModel implements RIMModel, FieldProvider {
    @Override
    public final boolean grabDataFromField(Field field, Object context) {
       byte sensitivity;
-      switch (((ChoiceField)field).getSelectedIndex()) {
+      switch (((ObjectChoiceField)field).getSelectedIndex()) {
          case 0:
             sensitivity = 1;
             break;

@@ -10,6 +10,7 @@ import net.rim.device.apps.internal.browser.model.AddressBookModelFactory;
 import net.rim.device.apps.internal.browser.model.AddressBookStringPattern;
 import net.rim.device.apps.internal.browser.model.DTMFModelFactory;
 import net.rim.device.apps.internal.browser.model.DTMFStringPattern;
+import net.rim.device.apps.internal.browser.model.HTTPAddressModelFactory;
 import net.rim.device.apps.internal.browser.model.HTTPAddressStringPattern;
 import net.rim.device.apps.internal.browser.options.BrowserOptionsSync;
 import net.rim.device.apps.internal.browser.page.BrowserPageModel;
@@ -38,7 +39,7 @@ final class PackageManager {
       ar.put(8419621845400492256L, new BrowserPageModelFactory());
       ar.put(3333520401445387752L, new ChannelModelFactory());
       ar.put(1043003344163629438L, new CacheModelFactory());
-      ar.put(5019899335844518230L, new Object());
+      ar.put(5019899335844518230L, new HTTPAddressModelFactory());
       ar.put(-4153783271009930225L, new WAPPushModelFactory());
       ar.put(6979592587978139791L, new DTMFModelFactory());
       ar.put(4085495887538053543L, new AddressBookModelFactory());

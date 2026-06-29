@@ -15,8 +15,8 @@ public final class InputValidationUtils {
       boolean result = false;
       if (emailAddress != null && emailAddress.length() > 0) {
          AbstractStringWrapper wrappedEmailAddress = AbstractStringWrapper.createInstance(emailAddress);
-         StringPattern$Match matchResult = (StringPattern$Match)(new Object());
-         EmailAddressStringPattern emailPattern = (EmailAddressStringPattern)(new Object());
+         StringPattern$Match matchResult = new StringPattern$Match();
+         EmailAddressStringPattern emailPattern = new EmailAddressStringPattern();
          if (emailPattern.findMatch(wrappedEmailAddress, 0, wrappedEmailAddress.length(), matchResult) && matchResult.id == -2985347935260258684L) {
             result = true;
          }

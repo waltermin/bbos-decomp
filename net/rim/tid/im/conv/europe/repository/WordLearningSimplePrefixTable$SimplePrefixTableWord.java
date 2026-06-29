@@ -23,7 +23,7 @@ class WordLearningSimplePrefixTable$SimplePrefixTableWord {
    @Override
    public String toString() {
       LearningGlobalAlphabet alphabet = this.this$0._reader.getAlphabet();
-      StringBuffer buf = (StringBuffer)(new Object());
+      StringBuffer buf = new StringBuffer();
 
       for (int i = 0; i < this.length(); i++) {
          int coded = this.codedCharAt(i);

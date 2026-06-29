@@ -3,8 +3,8 @@ package net.rim.wica.runtime.access.internal.data.enumeration;
 import net.rim.device.api.util.IntIntHashtable;
 
 public class EmailFolderEnumConverter {
-   protected static IntIntHashtable _commonToDevice = (IntIntHashtable)(new Object(3));
-   protected static IntIntHashtable _deviceToCommon = (IntIntHashtable)(new Object(3));
+   protected static IntIntHashtable _commonToDevice = new IntIntHashtable(3);
+   protected static IntIntHashtable _deviceToCommon = new IntIntHashtable(3);
 
    public static int deviceToCommon(int value) {
       return _deviceToCommon.get(value);

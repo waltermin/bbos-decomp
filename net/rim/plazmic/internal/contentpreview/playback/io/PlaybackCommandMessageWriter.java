@@ -34,7 +34,7 @@ public final class PlaybackCommandMessageWriter extends AbstractMessageWriter im
 
    @Override
    public final void seekFast(long requestTime, long targetTime) {
-      this.writeMessage((byte)39, new Object(requestTime), new Object(targetTime));
+      this.writeMessage((byte)39, new Long(requestTime), new Long(targetTime));
    }
 
    @Override

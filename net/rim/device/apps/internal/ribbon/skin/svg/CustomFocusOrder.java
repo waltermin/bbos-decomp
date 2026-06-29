@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.ribbon.skin.svg;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Stack;
 import net.rim.device.api.util.Arrays;
@@ -19,7 +20,7 @@ public class CustomFocusOrder extends DefaultHandler {
    FocusGroup _focusGroup;
    FocusVector _vector = new FocusVector();
    int _currentFocus = -1;
-   Stack _stack = (Stack)(new Object());
+   Stack _stack = new Stack();
 
    CustomFocusOrder(ModelInteractorImpl modelInteractor) {
       this._modelInteractor = modelInteractor;
@@ -83,7 +84,7 @@ public class CustomFocusOrder extends DefaultHandler {
 
          for (int i = 0; i < group._items.length; i++) {
             var10000 = group._items[i];
-            if (group._items[i] instanceof Object) {
+            if (group._items[i] instanceof Integer) {
                Integer value = (Integer)var10000;
                Arrays.add(result, value.intValue());
             }
@@ -143,16 +144,16 @@ public class CustomFocusOrder extends DefaultHandler {
    void parseXml(Object content) {
       if (content instanceof byte[]) {
          byte[] data = (byte[])content;
-         this.parseXml((InputStream)(new Object(data)));
+         this.parseXml(new ByteArrayInputStream(data));
       }
 
-      if (content instanceof Object) {
+      if (content instanceof InputStream) {
          InputStream stream = (InputStream)content;
          this.parseXml(stream);
       }
 
-      if (content instanceof Object) {
-         InputStream stream = (InputStream)(new Object(((String)content).getBytes()));
+      if (content instanceof String) {
+         InputStream stream = new ByteArrayInputStream(((String)content).getBytes());
          this.parseXml(stream);
       }
    }

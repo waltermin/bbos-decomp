@@ -88,7 +88,7 @@ public class FileSystemContentTypeRegistry implements FileSystemListener {
       // 010: astore 8
       // 012: aconst_null
       // 013: astore 9
-      // 015: new java/lang/Object
+      // 015: new java/lang/StringBuffer
       // 018: dup
       // 019: ldc_w "file:///SDCard/blackberry/certificates/metaData_"
       // 01c: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -96,12 +96,12 @@ public class FileSystemContentTypeRegistry implements FileSystemListener {
       // 022: invokevirtual java/lang/StringBuffer.append (I)Ljava/lang/StringBuffer;
       // 025: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 028: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 02b: checkcast java/lang/Object
+      // 02b: checkcast javax/microedition/io/file/FileConnection
       // 02e: astore 8
       // 030: aload 0
       // 031: ldc_w "file:///SDCard/blackberry/certificates/"
       // 034: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 037: checkcast java/lang/Object
+      // 037: checkcast javax/microedition/io/file/FileConnection
       // 03a: putfield net/rim/device/apps/internal/keystore/browser/FileSystemContentTypeRegistry._fc Ljavax/microedition/io/file/FileConnection;
       // 03d: aload 8
       // 03f: invokeinterface javax/microedition/io/file/FileConnection.exists ()Z 1
@@ -123,7 +123,7 @@ public class FileSystemContentTypeRegistry implements FileSystemListener {
       // 062: iload 4
       // 064: ifne 06a
       // 067: goto 1ed
-      // 06a: new java/lang/Object
+      // 06a: new java/lang/StringBuffer
       // 06d: dup
       // 06e: ldc_w "file:///SDCard/blackberry/certificates/metaData_"
       // 071: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -131,7 +131,7 @@ public class FileSystemContentTypeRegistry implements FileSystemListener {
       // 077: invokevirtual java/lang/StringBuffer.append (I)Ljava/lang/StringBuffer;
       // 07a: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 07d: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 080: checkcast java/lang/Object
+      // 080: checkcast javax/microedition/io/file/FileConnection
       // 083: astore 8
       // 085: iload 3
       // 086: ifeq 098
@@ -140,7 +140,7 @@ public class FileSystemContentTypeRegistry implements FileSystemListener {
       // 090: aload 8
       // 092: bipush 1
       // 093: invokeinterface javax/microedition/io/file/FileConnection.setHidden (Z)V 2
-      // 098: new java/lang/Object
+      // 098: new net/rim/device/api/util/DataBuffer
       // 09b: dup
       // 09c: invokespecial net/rim/device/api/util/DataBuffer.<init> ()V
       // 09f: astore 10
@@ -175,7 +175,7 @@ public class FileSystemContentTypeRegistry implements FileSystemListener {
       // 0e4: goto 1d6
       // 0e7: aload 14
       // 0e9: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 0ee: checkcast java/lang/Object
+      // 0ee: checkcast java/lang/String
       // 0f1: astore 6
       // 0f3: getstatic java/lang/System.out Ljava/io/PrintStream;
       // 0f6: aload 6
@@ -249,7 +249,7 @@ public class FileSystemContentTypeRegistry implements FileSystemListener {
       // 197: getfield net/rim/device/apps/internal/keystore/browser/FileSystemContentTypeRegistry.FILE_NAME I
       // 19a: aload 6
       // 19c: invokestatic net/rim/device/api/synchronization/ConverterUtilities.writeString (Lnet/rim/device/api/util/DataBuffer;ILjava/lang/String;)V
-      // 19f: new java/lang/Object
+      // 19f: new java/lang/StringBuffer
       // 1a2: dup
       // 1a3: ldc_w "file:///SDCard/blackberry/certificates/"
       // 1a6: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -257,7 +257,7 @@ public class FileSystemContentTypeRegistry implements FileSystemListener {
       // 1ab: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 1ae: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 1b1: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 1b4: checkcast java/lang/Object
+      // 1b4: checkcast javax/microedition/io/file/FileConnection
       // 1b7: astore 9
       // 1b9: aload 10
       // 1bb: aload 0
@@ -511,7 +511,7 @@ public class FileSystemContentTypeRegistry implements FileSystemListener {
       // 1d: iload 3
       // 1e: aaload
       // 1f: invokestatic net/rim/device/api/synchronization/ConverterUtilities.writeString (Lnet/rim/device/api/util/DataBuffer;ILjava/lang/String;)V
-      // 22: new java/lang/Object
+      // 22: new java/lang/StringBuffer
       // 25: dup
       // 26: ldc_w "file:///SDCard/blackberry/certificates/"
       // 29: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -522,7 +522,7 @@ public class FileSystemContentTypeRegistry implements FileSystemListener {
       // 32: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 35: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 38: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 3b: checkcast java/lang/Object
+      // 3b: checkcast javax/microedition/io/file/FileConnection
       // 3e: astore 2
       // 3f: aload 1
       // 40: aload 0
@@ -607,7 +607,7 @@ public class FileSystemContentTypeRegistry implements FileSystemListener {
       // 25: aload 1
       // 26: invokevirtual java/lang/String.equals (Ljava/lang/Object;)Z
       // 29: ifeq ab
-      // 2c: new java/lang/Object
+      // 2c: new java/lang/StringBuffer
       // 2f: dup
       // 30: ldc_w "file:///SDCard/blackberry/certificates/"
       // 33: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -615,7 +615,7 @@ public class FileSystemContentTypeRegistry implements FileSystemListener {
       // 37: invokevirtual java/lang/StringBuffer.append (Ljava/lang/String;)Ljava/lang/StringBuffer;
       // 3a: invokevirtual java/lang/StringBuffer.toString ()Ljava/lang/String;
       // 3d: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 40: checkcast java/lang/Object
+      // 40: checkcast javax/microedition/io/file/FileConnection
       // 43: astore 4
       // 45: aload 0
       // 46: getfield net/rim/device/apps/internal/keystore/browser/FileSystemContentTypeRegistry._ignoreFileListLastModified [J
@@ -677,7 +677,7 @@ public class FileSystemContentTypeRegistry implements FileSystemListener {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private boolean readMetaData(FileConnection metaData) {
-      this._ignoreFileList = new Object[0];
+      this._ignoreFileList = new String[0];
       this._ignoreFileListLastModified = new long[0];
       String tempName = null;
       long tempTime = 0;
@@ -699,20 +699,20 @@ public class FileSystemContentTypeRegistry implements FileSystemListener {
                data[0] = (byte)e;
                inStream.read(data, 1, size);
                inStream.close();
-               DataBuffer buffer = new Object(data, 0, data.length, true);
-               int type = ConverterUtilities.getType((DataBuffer)buffer);
+               DataBuffer buffer = new DataBuffer(data, 0, data.length, true);
+               int type = ConverterUtilities.getType(buffer);
                if (type == this.FOLDER_LAST_MODIFIED) {
-                  this._baseDirLastModified = ConverterUtilities.readLong((DataBuffer)buffer);
+                  this._baseDirLastModified = ConverterUtilities.readLong(buffer);
                }
 
-               for (type = ConverterUtilities.getType((DataBuffer)buffer); type != this.END_METADATA; type = ConverterUtilities.getType((DataBuffer)buffer)) {
+               for (type = ConverterUtilities.getType(buffer); type != this.END_METADATA; type = ConverterUtilities.getType(buffer)) {
                   if (type == this.FILE_NAME) {
-                     tempName = ConverterUtilities.readString((DataBuffer)buffer);
+                     tempName = ConverterUtilities.readString(buffer);
                   }
 
-                  type = ConverterUtilities.getType((DataBuffer)buffer);
+                  type = ConverterUtilities.getType(buffer);
                   if (type == this.FILE_LAST_MODIFIED) {
-                     tempTime = ConverterUtilities.readLong((DataBuffer)buffer);
+                     tempTime = ConverterUtilities.readLong(buffer);
                   }
 
                   if (tempName != null && tempTime != 0) {

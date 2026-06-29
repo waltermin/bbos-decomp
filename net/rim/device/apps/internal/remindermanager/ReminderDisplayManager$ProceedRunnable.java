@@ -37,7 +37,7 @@ final class ReminderDisplayManager$ProceedRunnable implements Runnable {
             if (reminder != null) {
                long reminderTime = reminder.getReminderTime(TimeZone.getDefault());
                reminderProvider.updateReminderState(this._element.getReminderID(), 7, reminderTime);
-               System.out.println(((StringBuffer)(new Object("Reminder was snoozed: "))).append(this._element.getReminderID()).toString());
+               System.out.println("Reminder was snoozed: " + this._element.getReminderID());
             }
          }
 

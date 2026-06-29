@@ -14,7 +14,7 @@ public final class IntArray {
       int length = db.readCompressedInt();
       this._count = db.readShort();
       db.setPosition(db.getPosition() - 2);
-      this._db = (DataBuffer)(new Object());
+      this._db = new DataBuffer();
       byte[] data = new byte[length];
       int start = db.getPosition();
       System.arraycopy(db.getArray(), start, data, 0, length);
@@ -24,7 +24,7 @@ public final class IntArray {
    }
 
    IntArray(String csv) {
-      StringTokenizer tokenizer = (StringTokenizer)(new Object(csv, ','));
+      StringTokenizer tokenizer = new StringTokenizer(csv, ',');
       this.start();
 
       while (tokenizer.hasMoreTokens()) {
@@ -35,7 +35,7 @@ public final class IntArray {
    }
 
    public final void start() {
-      this._db = (DataBuffer)(new Object());
+      this._db = new DataBuffer();
       this._db.writeShort(0);
    }
 

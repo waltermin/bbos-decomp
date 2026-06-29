@@ -22,7 +22,7 @@ class ESStringBundlePrototype$2 extends HostFunction {
       }
 
       int length = this.getNumParms();
-      String[] args = new Object[length - 1];
+      String[] args = new String[length - 1];
 
       for (int i = 1; i < length; i++) {
          args[i - 1] = Convert.toString(this.getParm(i));

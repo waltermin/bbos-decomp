@@ -42,11 +42,11 @@ public class WizardButtonBar$WizardButtonField extends ButtonField {
             label = SetupWizardAPIResources.getString(4);
             break;
          case 1:
-            label = ((StringBuffer)(new Object("< "))).append(SetupWizardAPIResources.getString(2)).toString();
+            label = "< " + SetupWizardAPIResources.getString(2);
             break;
          case 2:
          default:
-            label = ((StringBuffer)(new Object())).append(SetupWizardAPIResources.getString(3)).append(" >").toString();
+            label = SetupWizardAPIResources.getString(3) + " >";
             break;
          case 3:
             label = SetupWizardAPIResources.getString(8);

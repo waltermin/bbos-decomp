@@ -43,12 +43,12 @@ public final class DirectionsRequest extends Request {
       Request$Listener listener, SearchAddressModel model, String fromAddress, String toAddress, int fromLat, int fromLong, int toLat, int toLong
    ) {
       System.out.println("DirectionsRequest() constructor");
-      System.out.println(((StringBuffer)(new Object("fromAddress="))).append(fromAddress).toString());
-      System.out.println(((StringBuffer)(new Object("toAddress="))).append(toAddress).toString());
-      System.out.println(((StringBuffer)(new Object("fromLat="))).append(fromLat).toString());
-      System.out.println(((StringBuffer)(new Object("fromLong="))).append(fromLong).toString());
-      System.out.println(((StringBuffer)(new Object("toLat="))).append(toLat).toString());
-      System.out.println(((StringBuffer)(new Object("toLong="))).append(toLong).toString());
+      System.out.println("fromAddress=" + fromAddress);
+      System.out.println("toAddress=" + toAddress);
+      System.out.println("fromLat=" + fromLat);
+      System.out.println("fromLong=" + fromLong);
+      System.out.println("toLat=" + toLat);
+      System.out.println("toLong=" + toLong);
       super._listener = listener;
       this._fromAddress = fromAddress;
       this._toAddress = toAddress;
@@ -84,20 +84,20 @@ public final class DirectionsRequest extends Request {
 
          try {
             var9 = true;
-            this._routeXMLstring = (String)(new Object(this._rawXMLData));
+            this._routeXMLstring = new String(this._rawXMLData);
             int e = this._routeXMLstring.indexOf("encoding=");
             if (e != -1) {
                e += 9;
                encoding = this._routeXMLstring.substring(e + 1, this._routeXMLstring.indexOf(39, e + 1));
             }
 
-            this._routeXMLstring = (String)(new Object(this._rawXMLData, encoding));
+            this._routeXMLstring = new String(this._rawXMLData, encoding);
             this._rawXMLData = this._routeXMLstring.getBytes(encoding);
             var9 = false;
          } finally {
             if (var9) {
-               EventLogger.logEvent(LBSApplication.UID, ((StringBuffer)(new Object("UnsupportedEncoding: "))).append(encoding).toString().getBytes(), 2);
-               this._routeXMLstring = (String)(new Object(this._rawXMLData, encoding));
+               EventLogger.logEvent(LBSApplication.UID, ("UnsupportedEncoding: " + encoding).getBytes(), 2);
+               this._routeXMLstring = new String(this._rawXMLData, encoding);
                this._rawXMLData = this._routeXMLstring.getBytes();
                return;
             }

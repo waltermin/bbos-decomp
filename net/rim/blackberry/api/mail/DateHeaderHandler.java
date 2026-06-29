@@ -10,7 +10,7 @@ final class DateHeaderHandler implements HeaderHandler {
    public final void addHeader(String header, String value, Message m) {
       if (header.toLowerCase().equals(Header.DATE.toLowerCase())) {
          long l = Long.parseLong(value);
-         Date d = (Date)(new Object(l));
+         Date d = new Date(l);
          m.setSentDate(d);
       }
    }
@@ -32,14 +32,14 @@ final class DateHeaderHandler implements HeaderHandler {
    public final String[] getHeader(String header, Message m) {
       Date dr = m.getReceivedDate();
       Date ds = m.getSentDate();
-      return new Object[]{this.formatDateAsString(dr), this.formatDateAsString(ds)};
+      return new String[]{this.formatDateAsString(dr), this.formatDateAsString(ds)};
    }
 
    private final String formatDateAsString(Date d) {
       if (d != null && d.getTime() != 0) {
          Calendar c = Calendar.getInstance();
          c.setTime(d);
-         StringBuffer sb = (StringBuffer)(new Object());
+         StringBuffer sb = new StringBuffer();
          DateFormat df = DateFormat.getInstance(36);
          df.format(c, sb, null);
          return sb.toString();

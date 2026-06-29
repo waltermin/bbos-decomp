@@ -1,12 +1,12 @@
 package net.rim.device.apps.internal.explorer.Media.dialogs;
 
-import net.rim.device.api.ui.Field;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.AutoTextEditField;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.PopupScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.internal.explorer.Media.SmartlistScreen;
 import net.rim.device.apps.internal.explorer.MediaLibrary.ContextInfo;
@@ -14,6 +14,7 @@ import net.rim.device.apps.internal.explorer.MediaLibrary.MediaInfo;
 import net.rim.device.apps.internal.explorer.MediaLibrary.MediaLibrary;
 import net.rim.device.apps.internal.explorer.MediaLibrary.PlayListCollection;
 import net.rim.device.apps.internal.explorer.MediaLibrary.PlaylistItem;
+import net.rim.device.apps.internal.explorer.MediaLibrary.SmartlistItem;
 import net.rim.device.apps.internal.explorer.file.resource.ExplorerResources;
 import net.rim.device.internal.io.file.FileUtilities;
 
@@ -26,7 +27,7 @@ public final class NewPlaylistPopup extends PopupScreen {
    public static final int TYPE_SMARTLIST = 1;
 
    public NewPlaylistPopup(int type) {
-      super((Manager)(new Object()));
+      super(new VerticalFieldManager());
       this._type = type;
       this.initialize();
    }
@@ -39,10 +40,10 @@ public final class NewPlaylistPopup extends PopupScreen {
          title = ExplorerResources.getString(186);
       }
 
-      LabelField label = (LabelField)(new Object(title));
-      this._name = (AutoTextEditField)(new Object(ExplorerResources.getString(187), "", Integer.MAX_VALUE, 2147483648L));
+      LabelField label = new LabelField(title);
+      this._name = new AutoTextEditField(ExplorerResources.getString(187), "", Integer.MAX_VALUE, 2147483648L);
       this.add(label);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.add(this._name);
    }
 
@@ -80,15 +81,15 @@ public final class NewPlaylistPopup extends PopupScreen {
    private final void comit() {
       String location = FileUtilities.getDefaultPath(7);
       if (!location.startsWith("file://")) {
-         location = ((StringBuffer)(new Object("file://"))).append(location).toString();
+         location = "file://" + location;
       }
 
       String name = this._name.getText().trim();
       if (name != null && name.length() > 0) {
          if (this._type == 0) {
-            location = ((StringBuffer)(new Object())).append(location).append(name).append(".m3u").toString();
+            location = location + name + ".m3u";
          } else if (this._type == 1) {
-            location = ((StringBuffer)(new Object())).append(location).append(name).append(".rsp").toString();
+            location = location + name + ".rsp";
          }
 
          int id = StringUtilities.hashCodeIgnoreCase(location);
@@ -96,9 +97,9 @@ public final class NewPlaylistPopup extends PopupScreen {
          Object playlist = collection.find(id);
          if (playlist == null) {
             if (this._type == 1) {
-               playlist = new Object(id, name, location);
-               ContextInfo context = (ContextInfo)(new Object(16));
-               context.setData(16, playlist);
+               playlist = new SmartlistItem(id, name, location);
+               ContextInfo context = new ContextInfo(16);
+               context.setData(16, (SmartlistItem)playlist);
                UiApplication.getUiApplication().pushScreen(new SmartlistScreen(context, true));
                this.close();
                return;
@@ -106,12 +107,12 @@ public final class NewPlaylistPopup extends PopupScreen {
 
             if (this._type == 0) {
                try {
-                  playlist = new Object(id, location);
-                  ((PlaylistItem)playlist).setName(name);
+                  Object var9 = new PlaylistItem(id, location);
+                  var9.setName(name);
                   if (this._isModal) {
-                     this._result = (MediaInfo)playlist;
+                     this._result = var9;
                   } else {
-                     ((PlaylistItem)playlist).save();
+                     var9.save();
                   }
 
                   this.close();

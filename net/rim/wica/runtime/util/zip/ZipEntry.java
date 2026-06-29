@@ -1,6 +1,9 @@
 package net.rim.wica.runtime.util.zip;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import net.rim.device.api.compress.ZLibInputStream;
 
 public class ZipEntry {
    private byte[] _bytes;
@@ -13,18 +16,18 @@ public class ZipEntry {
    public static final int STORED = 0;
    public static final int DEFLATE = 8;
 
-   ZipEntry(byte[] bytes, int offset) {
+   ZipEntry(byte[] bytes, int offset) throws IOException {
       this._bytes = bytes;
       int start = offset;
       int signature = ZipFile.extractInt(this._bytes, offset);
       if (signature != 33639248) {
-         throw new Object(((StringBuffer)(new Object("Missing central directory header signature: "))).append(this._name).toString());
+         throw new IOException("Missing central directory header signature: " + this._name);
       }
 
       offset = offset + 4 + 2 + 2;
       int flags = ZipFile.extractShort(this._bytes, offset);
       if ((flags & 1) != 0) {
-         throw new Object("Encrypted input not supported.");
+         throw new IOException("Encrypted input not supported.");
       }
 
       offset += 2;
@@ -49,7 +52,7 @@ public class ZipEntry {
       offset = relativeOffset;
       signature = ZipFile.extractInt(this._bytes, offset);
       if (signature != 67324752) {
-         throw new Object("Bad local file header signature.");
+         throw new IOException("Bad local file header signature.");
       }
 
       offset = offset + 4 + 2 + 2 + 2 + 2 + 2 + 4 + 4 + 4;
@@ -86,17 +89,17 @@ public class ZipEntry {
    }
 
    InputStream getInputStream() {
-      InputStream in = (InputStream)(new Object(this._bytes, this._offset, this._compressedSize));
+      InputStream in = new ByteArrayInputStream(this._bytes, this._offset, this._compressedSize);
       if (this._method == 8) {
-         in = (InputStream)(new Object(in, true));
+         in = new ZLibInputStream(in, true);
       }
 
       return in;
    }
 
-   private final void checkMethod(int method) {
+   private final void checkMethod(int method) throws IOException {
       if (method != 0 && method != 8) {
-         throw new Object(((StringBuffer)(new Object("Bad file header compression method: "))).append(method).toString());
+         throw new IOException("Bad file header compression method: " + method);
       }
    }
 }

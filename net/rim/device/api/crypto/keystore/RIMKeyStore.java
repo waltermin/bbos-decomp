@@ -16,6 +16,7 @@ import net.rim.device.api.crypto.certificate.CertificateStatus;
 import net.rim.device.api.system.CodeSigningKey;
 import net.rim.device.api.system.EventLogger;
 import net.rim.device.api.util.Arrays;
+import net.rim.device.api.util.EmptyEnumeration;
 import net.rim.device.api.util.IntMultiMap;
 import net.rim.device.api.util.LongHashtable;
 
@@ -25,7 +26,7 @@ public class RIMKeyStore implements KeyStore, Collection, CollectionEventSource 
    private Vector _vector;
    private KeyStore _keyStore;
    private String _name;
-   private CollectionListenerManager _listeners = (CollectionListenerManager)(new Object());
+   private CollectionListenerManager _listeners = new CollectionListenerManager();
 
    void ungroupData(RIMKeyStoreData data) {
       data.ungroupData();
@@ -43,7 +44,7 @@ public class RIMKeyStore implements KeyStore, Collection, CollectionEventSource 
             ticket = this.getTicket();
          }
 
-         EventLogger.logStackTrace(3915475930975345450L, ((StringBuffer)(new Object("Removing all certs from keystore: "))).append(this.getName()).toString());
+         EventLogger.logStackTrace(3915475930975345450L, "Removing all certs from keystore: " + this.getName());
          this._hashtable.clear();
 
          for (int i = this._vector.size() - 1; i >= 0; i--) {
@@ -74,7 +75,7 @@ public class RIMKeyStore implements KeyStore, Collection, CollectionEventSource 
 
          while (maps.hasMoreElements()) {
             Object obj = maps.nextElement();
-            if (obj instanceof Object) {
+            if (obj instanceof IntMultiMap) {
                IntMultiMap map = (IntMultiMap)obj;
                map.removeValue(data);
             }
@@ -94,7 +95,7 @@ public class RIMKeyStore implements KeyStore, Collection, CollectionEventSource 
 
       while (maps.hasMoreElements()) {
          Object obj = maps.nextElement();
-         if (obj instanceof Object) {
+         if (obj instanceof IntMultiMap) {
             IntMultiMap map = (IntMultiMap)obj;
             map.removeValue(data);
          }
@@ -129,7 +130,7 @@ public class RIMKeyStore implements KeyStore, Collection, CollectionEventSource 
 
    protected synchronized void set(AssociatedData[] associatedData, KeyStoreData data) {
       if (this._vector == null) {
-         this._vector = (Vector)(new Object());
+         this._vector = new Vector();
       }
 
       this._vector.addElement(data);
@@ -167,7 +168,7 @@ public class RIMKeyStore implements KeyStore, Collection, CollectionEventSource 
       KeyStoreIndex indexInstance = (KeyStoreIndex)this._indexHashtable.get(index);
       if (backingKeyStore && this._keyStore != null) {
          if (map != null && indexInstance != null) {
-            Enumeration[] enumeration = new Object[2];
+            Enumeration[] enumeration = new Enumeration[2];
             int hashValue = indexInstance.getHash(target);
             Enumeration returnValue = map.elements(hashValue);
             enumeration[0] = new RIMKeyStore$FilteredKeyEnumeration(returnValue, indexInstance, target);
@@ -182,7 +183,7 @@ public class RIMKeyStore implements KeyStore, Collection, CollectionEventSource 
          RIMKeyStore$FilteredKeyEnumeration enumeration = new RIMKeyStore$FilteredKeyEnumeration(returnValue, indexInstance, target);
          return !enumeration.hasMoreElements() && this._keyStore != null ? this._keyStore.elements(index, target) : enumeration;
       } else {
-         return (Enumeration)(this._keyStore == null ? new Object() : this._keyStore.elements(index, target));
+         return this._keyStore == null ? new EmptyEnumeration() : this._keyStore.elements(index, target);
       }
    }
 
@@ -199,7 +200,7 @@ public class RIMKeyStore implements KeyStore, Collection, CollectionEventSource 
             AssociatedDataKeyStoreIndex index = new AssociatedDataKeyStoreIndex(3198502480206239397L);
             this.addIndex(index);
             Enumeration historicalKeys = this.elements(index.getID(), historicalId[0]);
-            Vector keysToRemove = (Vector)(new Object());
+            Vector keysToRemove = new Vector();
 
             while (historicalKeys.hasMoreElements()) {
                keysToRemove.addElement(historicalKeys.nextElement());
@@ -241,17 +242,15 @@ public class RIMKeyStore implements KeyStore, Collection, CollectionEventSource 
       if (backingKeyStore && this._keyStore != null) {
          Enumeration[] enumeration;
          if (this._vector != null) {
-            enumeration = new Object[2];
-            enumeration[0] = this._vector.elements();
-            enumeration[1] = this._keyStore.elements(backingKeyStore);
+            enumeration = new Enumeration[]{this._vector.elements(), this._keyStore.elements(backingKeyStore)};
          } else {
-            enumeration = new Object[1];
+            enumeration = new Enumeration[1];
             enumeration[0] = this._keyStore.elements(backingKeyStore);
          }
 
          return new MultipleKeyStoreEnumeration(enumeration);
       } else {
-         return (Enumeration)(this._vector != null ? this._vector.elements() : new Object());
+         return this._vector != null ? this._vector.elements() : new EmptyEnumeration();
       }
    }
 
@@ -268,12 +267,10 @@ public class RIMKeyStore implements KeyStore, Collection, CollectionEventSource 
             return this._keyStore.elements(index, backingKeyStore);
          }
 
-         Enumeration[] enumeration = new Object[2];
-         enumeration[0] = map.elements();
-         enumeration[1] = this._keyStore.elements(index, backingKeyStore);
+         Enumeration[] enumeration = new Enumeration[]{map.elements(), this._keyStore.elements(index, backingKeyStore)};
          return new MultipleKeyStoreEnumeration(enumeration);
       } else {
-         return (Enumeration)(map == null ? new Object() : map.elements());
+         return map == null ? new EmptyEnumeration() : map.elements();
       }
    }
 
@@ -291,14 +288,14 @@ public class RIMKeyStore implements KeyStore, Collection, CollectionEventSource 
 
       synchronized (this) {
          if (this._indexHashtable == null) {
-            this._indexHashtable = (LongHashtable)(new Object());
+            this._indexHashtable = new LongHashtable();
          }
 
          if (this._indexHashtable.containsKey(index.getID())) {
             return false;
          }
 
-         IntMultiMap map = (IntMultiMap)(new Object());
+         IntMultiMap map = new IntMultiMap();
          KeyStoreDataMap dataMap = new KeyStoreDataMap(map);
          long id = index.getID();
          if (this._vector != null) {
@@ -330,7 +327,7 @@ public class RIMKeyStore implements KeyStore, Collection, CollectionEventSource 
    @Override
    public synchronized void addIndices(KeyStoreIndex[] indices) {
       if (this._indexHashtable == null) {
-         this._indexHashtable = (LongHashtable)(new Object());
+         this._indexHashtable = new LongHashtable();
       }
 
       KeyStoreIndex[] realIndices = new KeyStoreIndex[indices.length];
@@ -344,11 +341,11 @@ public class RIMKeyStore implements KeyStore, Collection, CollectionEventSource 
          }
       }
 
-      IntMultiMap[] maps = new Object[count];
+      IntMultiMap[] maps = new IntMultiMap[count];
       KeyStoreDataMap[] dataMap = new KeyStoreDataMap[count];
 
       for (int i = 0; i < count; i++) {
-         maps[i] = (IntMultiMap)(new Object());
+         maps[i] = new IntMultiMap();
          this._hashtable.put(realIndices[i].getID(), maps[i]);
          dataMap[i] = new KeyStoreDataMap(maps[i]);
       }
@@ -406,7 +403,7 @@ public class RIMKeyStore implements KeyStore, Collection, CollectionEventSource 
    public void changePassword() {
       PrivateKeysKeyStoreIndex index = new PrivateKeysKeyStoreIndex();
       this.addIndex(index);
-      Hashtable dataToBeDeleted = (Hashtable)(new Object());
+      Hashtable dataToBeDeleted = new Hashtable();
       RIMKeyStoreData data = null;
       Enumeration enumeration = this.elements(index.getID());
 
@@ -500,16 +497,16 @@ public class RIMKeyStore implements KeyStore, Collection, CollectionEventSource 
                }
             }
          } else {
-            if (!(key instanceof PrivateKey) && !(key instanceof Object)) {
+            if (!(key instanceof PrivateKey) && !(key instanceof SymmetricKey)) {
                return false;
             }
 
             boolean privateKey = true;
-            if (key instanceof Object) {
+            if (key instanceof SymmetricKey) {
                privateKey = false;
             }
 
-            Hashtable hashtable = (Hashtable)(new Object());
+            Hashtable hashtable = new Hashtable();
             Enumeration enumeration = this._vector.elements();
 
             while (enumeration.hasMoreElements()) {
@@ -626,7 +623,7 @@ public class RIMKeyStore implements KeyStore, Collection, CollectionEventSource 
             KeyStoreIndex index = (KeyStoreIndex)keys.nextElement();
             IntMultiMap map = (IntMultiMap)this._hashtable.get(index.getID());
             if (map == null) {
-               map = (IntMultiMap)(new Object());
+               map = new IntMultiMap();
             }
 
             KeyStoreDataMap dataMap = new KeyStoreDataMap(map);
@@ -689,7 +686,7 @@ public class RIMKeyStore implements KeyStore, Collection, CollectionEventSource 
       int length = keyStoreData._payload._indices.length;
       int position = Arrays.binarySearch(keyStoreData._payload._indices, id, 0, length);
       if (keyStoreData._payload._indices[position] != id) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       while (position < length && keyStoreData._payload._indices[position] == id) {
@@ -700,8 +697,8 @@ public class RIMKeyStore implements KeyStore, Collection, CollectionEventSource 
    }
 
    protected RIMKeyStore(String name, String className, long id, CodeSigningKey key, KeyStore keyStore, Vector vector) {
-      this._hashtable = (LongHashtable)(new Object());
-      this._indexHashtable = (LongHashtable)(new Object());
+      this._hashtable = new LongHashtable();
+      this._indexHashtable = new LongHashtable();
       this._name = name;
       this._keyStore = keyStore;
       this._vector = vector;

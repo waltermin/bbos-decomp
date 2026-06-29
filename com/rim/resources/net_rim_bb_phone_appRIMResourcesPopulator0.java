@@ -4,7 +4,7 @@ import java.util.Hashtable;
 
 final class net_rim_bb_phone_appRIMResourcesPopulator0 {
    static final void populate(Hashtable localZero) {
-      Object var1 = new byte[]{
+      byte[] var1 = new byte[]{
          71,
          73,
          70,
@@ -1921,7 +1921,7 @@ final class net_rim_bb_phone_appRIMResourcesPopulator0 {
       };
       localZero.put("PhoneReceiverMuted.gif", var1);
       localZero.put("images/PhoneReceiverMuted.gif", var1);
-      var1 = new Object(0);
-      localZero.put("Phone28.gif", var1);
+      Integer var3 = new Integer(0);
+      localZero.put("Phone28.gif", var3);
    }
 }

@@ -29,7 +29,7 @@ public final class Crypto3SelfTestModule implements SelfTestModule {
       testIndex += numTestsToSkip;
       switch (testIndex) {
          case -1:
-            throw new Object();
+            throw new CryptoSelfTestError();
          case 0:
          default:
             SoftwareSkipjackCryptoToken.selfTest();
@@ -133,7 +133,7 @@ public final class Crypto3SelfTestModule implements SelfTestModule {
       if (!startupTests && (index <= 0 || !ecSupported)) {
          if (!ecSupported) {
             int firstSet = 7 - index;
-            String[] temp = new Object[numTests];
+            String[] temp = new String[numTests];
             System.arraycopy(tests, index, temp, 0, firstSet);
             System.arraycopy(tests, 8, temp, firstSet, 4);
             return temp;
@@ -141,7 +141,7 @@ public final class Crypto3SelfTestModule implements SelfTestModule {
             return tests;
          }
       } else {
-         String[] temp = new Object[numTests];
+         String[] temp = new String[numTests];
          System.arraycopy(tests, index, temp, 0, temp.length);
          return temp;
       }

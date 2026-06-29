@@ -13,7 +13,7 @@ import net.rim.vm.WeakReference;
 final class RadioOffWarningManagerImpl extends RadioOffWarningManager implements Runnable {
    private int _waitTimeout;
    Application _application;
-   WeakReference[] _listeners = new Object[0];
+   WeakReference[] _listeners = new WeakReference[0];
    int _pendingInvoke = -1;
    private static final int WAIT_TIMEOUT_WLAN = 2500;
    private static final int WAIT_TIMEOUT_OTHER = 500;
@@ -32,7 +32,7 @@ final class RadioOffWarningManagerImpl extends RadioOffWarningManager implements
    @Override
    public final void addListener(RadioOffWarningManager$Listener listener) {
       synchronized (this._listeners) {
-         Arrays.add(this._listeners, new Object(listener));
+         Arrays.add(this._listeners, new WeakReference(listener));
       }
    }
 
@@ -40,7 +40,7 @@ final class RadioOffWarningManagerImpl extends RadioOffWarningManager implements
    public final void removeListener(RadioOffWarningManager$Listener listener) {
       synchronized (this._listeners) {
          for (int i = this._listeners.length - 1; i >= 0; i--) {
-            if (this._listeners[i].get() == listener) {
+            if ((RadioOffWarningManager$Listener)this._listeners[i].get() == listener) {
                Arrays.removeAt(this._listeners, i);
             }
          }

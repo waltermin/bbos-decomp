@@ -3,7 +3,7 @@ package net.rim.device.apps.internal.ldap;
 import java.util.Hashtable;
 import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.apps.api.framework.registration.VerbRepository;
-import net.rim.device.apps.api.ribbon.EntryPointDescriptor;
+import net.rim.device.apps.api.ribbon.ApplicationEntryPoint;
 import net.rim.device.apps.api.ribbon.RibbonLauncher;
 
 public final class LDAPBrowserContextFactory {
@@ -13,7 +13,7 @@ public final class LDAPBrowserContextFactory {
 
    public static final void register(String name, LDAPBrowserContext context) {
       if (name == null || name.length() == 0 || context == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (!_registeredContexts.containsKey(name)) {
@@ -27,10 +27,7 @@ public final class LDAPBrowserContextFactory {
          VerbRepository.getVerbRepository(-3067780115376710723L).register(new LDAPFetchCertificatesVerb(name), context.getObjectTypesConstant());
          RibbonLauncher ribbonLauncher = RibbonLauncher.getInstance();
          if (ribbonLauncher != null) {
-            ribbonLauncher.registerAction(
-               ((StringBuffer)(new Object("net.rim.blackberry.ldapbrowser."))).append(name).toString(),
-               (EntryPointDescriptor)(new Object(context.getRibbonApplicationDescriptor()))
-            );
+            ribbonLauncher.registerAction("net.rim.blackberry.ldapbrowser." + name, new ApplicationEntryPoint(context.getRibbonApplicationDescriptor()));
          }
       }
    }
@@ -41,7 +38,7 @@ public final class LDAPBrowserContextFactory {
          VerbRepository.getVerbRepository(-3067780115376710723L).deregister(new LDAPFetchCertificatesVerb(name), context.getObjectTypesConstant());
          RibbonLauncher ribbonLauncher = RibbonLauncher.getInstance();
          if (ribbonLauncher != null) {
-            ribbonLauncher.unregisterAction(((StringBuffer)(new Object("net.rim.blackberry.ldapbrowser."))).append(name).toString());
+            ribbonLauncher.unregisterAction("net.rim.blackberry.ldapbrowser." + name);
          }
       }
    }
@@ -50,13 +47,13 @@ public final class LDAPBrowserContextFactory {
       if (name != null && name.length() != 0) {
          return (LDAPBrowserContext)_registeredContexts.get(name);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    public final boolean isAvailable(String name) {
       if (name == null || name.length() == 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return _registeredContexts.get(name) != null;
       }

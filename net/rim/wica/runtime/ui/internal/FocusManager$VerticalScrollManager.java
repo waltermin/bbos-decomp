@@ -75,7 +75,7 @@ final class FocusManager$VerticalScrollManager extends VerticalFieldManager impl
             remaining = ((Focusable)currentFocus).moveFocus(remaining, status, time);
             if (remaining != amount) {
                this._lastFocus = currentFocus = this.getLeafFieldWithFocus();
-               XYRect focusArea = (XYRect)(new Object());
+               XYRect focusArea = new XYRect();
                this._lastFocus.getFocusRect(focusArea);
                this.transformToAppScreen(this._lastFocus, focusArea);
                super.makeFocusVisible(true, focusArea, true, false);
@@ -86,7 +86,7 @@ final class FocusManager$VerticalScrollManager extends VerticalFieldManager impl
          if (remaining != 0) {
             if (currentFocus == null) {
                if (this._lastFocus != null) {
-                  XYRect focus = (XYRect)(new Object());
+                  XYRect focus = new XYRect();
                   this._lastFocus.getFocusRect(focus);
                   focus.translate(this._lastFocus.getContentRect().x, this._lastFocus.getContentRect().y);
                   this.transformToAppScreen(this._lastFocus, focus);
@@ -119,8 +119,8 @@ final class FocusManager$VerticalScrollManager extends VerticalFieldManager impl
             } else if (!this.isVisibleOnScreen(nextFocus, 0, false) && !this.isVisibleOnScreen(nextFocus, 20 * sign, false)) {
                this.scrollScreen(sign);
                remaining -= sign;
-               XYRect last = (XYRect)(new Object(this._lastFocus.getContentRect()));
-               XYRect next = (XYRect)(new Object(nextFocus.getContentRect()));
+               XYRect last = new XYRect(this._lastFocus.getContentRect());
+               XYRect next = new XYRect(nextFocus.getContentRect());
                this.transformToAppScreen(this._lastFocus, last);
                this.transformToAppScreen(nextFocus, next);
                if ((sign <= 0 || last.y + last.height <= next.y + next.height) && (sign >= 0 || last.y >= next.y)) {
@@ -136,7 +136,7 @@ final class FocusManager$VerticalScrollManager extends VerticalFieldManager impl
                } else {
                   super.moveFocus(sign, status, time);
                   if (remaining != 0) {
-                     XYRect focusArea = (XYRect)(new Object());
+                     XYRect focusArea = new XYRect();
                      nextFocus.getFocusRect(focusArea);
                      this.transformToAppScreen(nextFocus, focusArea);
                      this.makeFocusVisible(false, focusArea, true, false);
@@ -149,10 +149,10 @@ final class FocusManager$VerticalScrollManager extends VerticalFieldManager impl
                }
 
                remaining -= sign;
-               XYRect last = (XYRect)(new Object());
+               XYRect last = new XYRect();
                this._lastFocus.getFocusRect(last);
                last.translate(this._lastFocus.getContentLeft(), this._lastFocus.getContentTop());
-               XYRect next = (XYRect)(new Object());
+               XYRect next = new XYRect();
                nextFocus.getFocusRect(next);
                next.translate(nextFocus.getContentLeft(), nextFocus.getContentTop());
                this.transformToAppScreen(this._lastFocus, last);
@@ -181,26 +181,27 @@ final class FocusManager$VerticalScrollManager extends VerticalFieldManager impl
          return false;
       }
 
-      XYRect fieldContent = (XYRect)(new Object(field.getContentRect()));
+      XYRect fieldContent = new XYRect(field.getContentRect());
       XYRect topManagerVisibleArea = null;
       this.transformToAppScreen(field, fieldContent);
       int headerHeight = 0;
-      Object var8;
       if (this.getScreen() instanceof ApplicationDialog) {
          Field header = ((ApplicationDialog)this.getScreen()).getHeader();
          headerHeight = header != null ? header.getHeight() : 0;
-         var8 = new Object(this.getLeft(), this.getVerticalScroll() + amount, Integer.MAX_VALUE, this.getScreen().getHeight() - headerHeight);
+         topManagerVisibleArea = new XYRect(this.getLeft(), this.getVerticalScroll() + amount, Integer.MAX_VALUE, this.getScreen().getHeight() - headerHeight);
       } else {
          headerHeight = this.getScreen().getDelegate().getField(0).getHeight();
-         var8 = new Object(this.getLeft(), this.getVerticalScroll() + amount, Integer.MAX_VALUE, FocusManager.DEVICE_SCREEN_HEIGHT - headerHeight);
+         topManagerVisibleArea = new XYRect(
+            this.getLeft(), this.getVerticalScroll() + amount, Integer.MAX_VALUE, FocusManager.DEVICE_SCREEN_HEIGHT - headerHeight
+         );
       }
 
       if (!containsEntirely) {
-         return ((XYRect)var8).intersects(fieldContent);
+         return topManagerVisibleArea.intersects(fieldContent);
       }
 
       fieldContent.width = fieldContent.width == 0 ? 1 : fieldContent.width;
-      return ((XYRect)var8).contains(fieldContent);
+      return topManagerVisibleArea.contains(fieldContent);
    }
 
    private final boolean isFocusVisibleOnScreen(Field field, boolean entirely) {
@@ -208,28 +209,27 @@ final class FocusManager$VerticalScrollManager extends VerticalFieldManager impl
          return false;
       }
 
-      XYRect focus = (XYRect)(new Object());
+      XYRect focus = new XYRect();
       field.getFocusRect(focus);
       focus.translate(field.getContentRect().x, field.getContentRect().y);
       XYRect topManagerVisibleArea = null;
       this.transformToAppScreen(field, focus);
       int headerHeight = 0;
-      Object var7;
       if (this.getScreen() instanceof ApplicationDialog) {
          Field header = ((ApplicationDialog)this.getScreen()).getHeader();
          headerHeight = header != null ? header.getHeight() : 0;
-         var7 = new Object(this.getLeft(), this.getVerticalScroll(), Integer.MAX_VALUE, this.getScreen().getHeight() - headerHeight);
+         topManagerVisibleArea = new XYRect(this.getLeft(), this.getVerticalScroll(), Integer.MAX_VALUE, this.getScreen().getHeight() - headerHeight);
       } else {
          headerHeight = this.getScreen().getDelegate().getField(0).getHeight();
-         var7 = new Object(this.getLeft(), this.getVerticalScroll(), Integer.MAX_VALUE, FocusManager.DEVICE_SCREEN_HEIGHT - headerHeight);
+         topManagerVisibleArea = new XYRect(this.getLeft(), this.getVerticalScroll(), Integer.MAX_VALUE, FocusManager.DEVICE_SCREEN_HEIGHT - headerHeight);
       }
 
       if (!entirely) {
-         return ((XYRect)var7).intersects(focus);
+         return topManagerVisibleArea.intersects(focus);
       }
 
       focus.width = focus.width == 0 ? 1 : focus.width;
-      return ((XYRect)var7).contains(focus);
+      return topManagerVisibleArea.contains(focus);
    }
 
    @Override
@@ -280,14 +280,14 @@ final class FocusManager$VerticalScrollManager extends VerticalFieldManager impl
                int indexNext = f.getIndex() - 1;
                if (indexNext != -1) {
                   for (; indexNext > -1; indexNext--) {
-                     Field nextField = ((Manager)m).getField(indexNext);
+                     Field nextField = m.getField(indexNext);
                      if (nextField.isFocusable()) {
-                        if (!(nextField instanceof Object)) {
+                        if (!(nextField instanceof Manager)) {
                            return nextField;
                         }
 
-                        m = nextField;
-                        indexNext = ((Manager)m).getFieldCount();
+                        m = (Manager)nextField;
+                        indexNext = m.getFieldCount();
                      }
                   }
                }
@@ -298,7 +298,7 @@ final class FocusManager$VerticalScrollManager extends VerticalFieldManager impl
             break;
          case 1:
             while (m != this) {
-               int fieldCount = ((Manager)m).getFieldCount();
+               int fieldCount = m.getFieldCount();
                int indexNext = f.getIndex() + 1;
                if (indexNext == fieldCount) {
                   indexNext = -1;
@@ -306,14 +306,14 @@ final class FocusManager$VerticalScrollManager extends VerticalFieldManager impl
 
                if (indexNext != -1) {
                   for (; indexNext < fieldCount; indexNext++) {
-                     Field nextField = ((Manager)m).getField(indexNext);
+                     Field nextField = m.getField(indexNext);
                      if (nextField.isFocusable()) {
-                        if (!(nextField instanceof Object)) {
+                        if (!(nextField instanceof Manager)) {
                            return nextField;
                         }
 
-                        m = nextField;
-                        fieldCount = ((Manager)m).getFieldCount();
+                        m = (Manager)nextField;
+                        fieldCount = m.getFieldCount();
                         indexNext = -1;
                      }
                   }
@@ -335,7 +335,7 @@ final class FocusManager$VerticalScrollManager extends VerticalFieldManager impl
 
       Field f = this.getField(indexFocus);
 
-      while (f instanceof Object) {
+      while (f instanceof Manager) {
          Manager m = (Manager)f;
 
          for (int i = 0; i < m.getFieldCount(); i++) {

@@ -1,5 +1,6 @@
 package net.rim.device.api.ui.theme;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -14,7 +15,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public class ParameterizedThemeManager {
-   private Vector _discoveredThemes = (Vector)(new Object());
+   private Vector _discoveredThemes = new Vector();
    private static final int MAX_ALTERNATE_BASE_SEARCH_SLEEP = 6000;
    private static Hashtable _stockThemes;
 
@@ -38,7 +39,7 @@ public class ParameterizedThemeManager {
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private static Theme$Factory newInstance(ThemeModuleDescriptor d, ThemeEventLogger logger) {
+   private static Theme$Factory newInstance(ThemeModuleDescriptor d, ThemeEventLogger logger) throws IOException {
       DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
       factory.setAllowUndefinedNamespaces(true);
 
@@ -46,14 +47,14 @@ public class ParameterizedThemeManager {
       try {
          builder = factory.newDocumentBuilder();
       } catch (Throwable var22) {
-         throw new Object(pce.getMessage());
+         throw new IOException(pce.getMessage());
       }
 
       Document document;
       try {
          document = builder.parse(d.getDescription());
       } catch (Throwable var21) {
-         throw new Object(se.getMessage());
+         throw new IOException(se.getMessage());
       }
 
       Element root = document.getDocumentElement();
@@ -183,7 +184,7 @@ public class ParameterizedThemeManager {
 
       int width = Math.max(parentWidth, compatibleWidth);
       int height = Math.max(parentHeight, compatibleHeight);
-      return (XYDimension)(new Object(width, height));
+      return new XYDimension(width, height);
    }
 
    private static void registerTheme(Theme$Factory factory) {
@@ -196,7 +197,7 @@ public class ParameterizedThemeManager {
 
    public static synchronized Theme getTheme(String name) {
       if (_stockThemes == null) {
-         _stockThemes = (Hashtable)(new Object());
+         _stockThemes = new Hashtable();
       }
 
       Theme result;

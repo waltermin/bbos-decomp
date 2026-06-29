@@ -64,6 +64,6 @@ public class FolderEvent extends MailEvent {
 
    @Override
    public String toString() {
-      return ((StringBuffer)(new Object("FolderEvent: "))).append(this._type).toString();
+      return "FolderEvent: " + this._type;
    }
 }

@@ -5,6 +5,7 @@ import net.rim.device.api.collection.WritableSet;
 import net.rim.device.api.system.ObjectGroup;
 import net.rim.device.api.system.PersistentObject;
 import net.rim.device.api.ui.accessibility.AccessibleContext;
+import net.rim.device.api.ui.accessibility.AccessibleContextFactory;
 import net.rim.device.api.ui.accessibility.AccessibleContextProxy;
 import net.rim.device.api.util.StringMatch;
 import net.rim.device.apps.api.framework.model.ActionProvider;
@@ -74,9 +75,9 @@ final class AnonymousMessagesImpl$AnonymousMessageModel
 
    @Override
    public final int match(Object criteria) {
-      if (!(criteria instanceof Object)) {
-         if (criteria instanceof Object[]) {
-            SearchCriterion[] criteriaArray = (Object[])criteria;
+      if (!(criteria instanceof SearchCriterion)) {
+         if (criteria instanceof SearchCriterion[]) {
+            SearchCriterion[] criteriaArray = (SearchCriterion[])criteria;
             boolean notApplicable = true;
 
             for (int i = 0; i < criteriaArray.length; i++) {
@@ -125,7 +126,7 @@ final class AnonymousMessagesImpl$AnonymousMessageModel
                }
 
                Object[] values = (Object[])value;
-               String[] testWords = (Object[])values[2];
+               String[] testWords = (String[])values[2];
                matched = Match.nameStringMatch(this._payload._sender, testWords) == 1;
             case 6:
             case 7:
@@ -367,7 +368,7 @@ final class AnonymousMessagesImpl$AnonymousMessageModel
       }
 
       if (sender != null) {
-         if (painter instanceof Object) {
+         if (painter instanceof MessageListColumnPainter) {
             MessageListColumnPainter listPainter = (MessageListColumnPainter)painter;
             if (listPainter.getLinesPerEntry() > 1) {
                painter.setEmphasis(false);
@@ -385,7 +386,7 @@ final class AnonymousMessagesImpl$AnonymousMessageModel
 
    @Override
    public final AccessibleContext getAccessibleContext() {
-      return (AccessibleContext)(new Object(this._payload._subject, 0, 4));
+      return new AccessibleContextFactory(this._payload._subject, 0, 4);
    }
 
    private AnonymousMessagesImpl$AnonymousMessageModel(String sender, String subject, String body) {

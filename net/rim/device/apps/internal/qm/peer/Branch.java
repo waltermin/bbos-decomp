@@ -11,7 +11,7 @@ class Branch extends VerticalFieldManager implements TreeItem {
    protected boolean _empty = true;
    private EmptyBranchPlaceholder _placeholder = new EmptyBranchPlaceholder();
    private static Tag TAG = Tag.create("bbmessenger-branch");
-   protected static StringBuffer _sBuffer = (StringBuffer)(new Object());
+   protected static StringBuffer _sBuffer = new StringBuffer();
 
    void clear() {
       this.deleteRange(1, this.getFieldCount() - 1);

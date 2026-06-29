@@ -17,7 +17,7 @@ public final class Options$SendingScorePopup extends Dialog implements HighScore
       super(Options._resources.getString(67), null, null, 0, null);
       this._options = opt;
       this.setEscapeEnabled(false);
-      this._button = (ButtonField)(new Object(CommonResources.getString(9042)));
+      this._button = new ButtonField(CommonResources.getString(9042));
       this._button.setChangeListener(this);
       this.add(this._button);
       this._success = false;
@@ -59,7 +59,7 @@ public final class Options$SendingScorePopup extends Dialog implements HighScore
    @Override
    public final void serverReply(String result) {
       if (result != null) {
-         StringTokenizer st = (StringTokenizer)(new Object(result, ';'));
+         StringTokenizer st = new StringTokenizer(result, ';');
          boolean var9 = false /* VF: Semaphore variable */;
 
          String newText;
@@ -95,12 +95,7 @@ public final class Options$SendingScorePopup extends Dialog implements HighScore
                   break;
                case 4:
                   if (rank > 0) {
-                     newText = ((StringBuffer)(new Object()))
-                        .append(Options._resources.getString(57))
-                        .append("\n")
-                        .append(Options._resources.getString(63))
-                        .append(rank)
-                        .toString();
+                     newText = Options._resources.getString(57) + "\n" + Options._resources.getString(63) + rank;
                   } else {
                      this.getLabel().setText(Options._resources.getString(57));
                   }

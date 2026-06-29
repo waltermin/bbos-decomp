@@ -1,9 +1,11 @@
 package net.rim.wica.runtime.security.internal;
 
+import java.io.IOException;
 import net.rim.device.api.crypto.RandomSource;
 import net.rim.device.api.crypto.certificate.CertificateVerificationException;
 import net.rim.device.api.crypto.certificate.x509.X509Certificate;
 import net.rim.device.api.crypto.oid.OIDs;
+import net.rim.device.api.system.UnsupportedOperationException;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.cldc.io.utility.URL;
 import net.rim.wica.runtime.comm.CommunicationService;
@@ -119,9 +121,7 @@ final class HandshakeProtocolV2 implements HandshakeProtocol, ResponseListener, 
 
                   String hint = this._state != 1 || responseCode != 500 && responseCode != 400 ? null : "Hello";
                   this._state = 0;
-                  throw new HandshakeException(
-                     hint, (Throwable)(new Object(((StringBuffer)(new Object("HTTP Error"))).append(responseCode).toString())), this._handshakeInfo
-                  );
+                  throw new HandshakeException(hint, new IOException("HTTP Error" + responseCode), this._handshakeInfo);
                }
 
                this._state = 0;
@@ -236,27 +236,27 @@ final class HandshakeProtocolV2 implements HandshakeProtocol, ResponseListener, 
 
    @Override
    public final void handleMessage(RegisterV1 m) {
-      throw new Object("RegisterV1 should not be recieved by client");
+      throw new UnsupportedOperationException("RegisterV1 should not be recieved by client");
    }
 
    @Override
    public final void handleMessage(ClientHelloV1 m) {
-      throw new Object("ClientHelloV1 should not be recieved by client");
+      throw new UnsupportedOperationException("ClientHelloV1 should not be recieved by client");
    }
 
    @Override
    public final void handleMessage(ClientHello m) {
-      throw new Object("ClientHello should not be recieved by client");
+      throw new UnsupportedOperationException("ClientHello should not be recieved by client");
    }
 
    @Override
    public final void handleMessage(UnregisterV1 m) {
-      throw new Object("UnregisterV1 should not be recieved by client");
+      throw new UnsupportedOperationException("UnregisterV1 should not be recieved by client");
    }
 
    @Override
    public final void handleMessage(ServerHello m) {
-      throw new Object("ServerHello should not be recieved by client");
+      throw new UnsupportedOperationException("ServerHello should not be recieved by client");
    }
 
    // $VF: Could not inline inconsistent finally blocks
@@ -275,8 +275,8 @@ final class HandshakeProtocolV2 implements HandshakeProtocol, ResponseListener, 
       }
    }
 
-   private final void verifyDomain(X509Certificate certificate) {
-      URL agURL = (URL)(new Object(this._handshakeInfo.getAGURL()));
+   private final void verifyDomain(X509Certificate certificate) throws CertificateVerificationException {
+      URL agURL = new URL(this._handshakeInfo.getAGURL());
       String domain = agURL.getHost();
       String commonName = certificate.getSubject().getString(OIDs.getOID(-1253056853));
       boolean found = false;
@@ -297,7 +297,7 @@ final class HandshakeProtocolV2 implements HandshakeProtocol, ResponseListener, 
       }
 
       if (!found) {
-         throw new Object();
+         throw new CertificateVerificationException();
       }
    }
 
@@ -315,7 +315,7 @@ final class HandshakeProtocolV2 implements HandshakeProtocol, ResponseListener, 
       // 05: aaload
       // 06: invokevirtual net/rim/wica/transport/handshake/EncodedCertificate.getCertificate ()[B
       // 09: invokestatic net/rim/device/api/crypto/certificate/CertificateFactory.getInstance (Ljava/lang/String;[B)Lnet/rim/device/api/crypto/certificate/Certificate;
-      // 0c: checkcast java/lang/Object
+      // 0c: checkcast net/rim/device/api/crypto/certificate/x509/X509Certificate
       // 0f: astore 2
       // 10: bipush 44
       // 12: bipush 3
@@ -332,7 +332,7 @@ final class HandshakeProtocolV2 implements HandshakeProtocol, ResponseListener, 
       // 26: iload 3
       // 27: bipush 1
       // 28: isub
-      // 29: anewarray 1657
+      // 29: anewarray 1660
       // 2c: astore 4
       // 2e: bipush 1
       // 2f: istore 5
@@ -377,7 +377,7 @@ final class HandshakeProtocolV2 implements HandshakeProtocol, ResponseListener, 
       // 7f: i2l
       // 80: lcmp
       // 81: ifeq 8f
-      // 84: new java/lang/Object
+      // 84: new net/rim/device/api/crypto/certificate/CertificateVerificationException
       // 87: dup
       // 88: ldc_w "Certificate revoked"
       // 8b: invokespecial net/rim/device/api/crypto/certificate/CertificateVerificationException.<init> (Ljava/lang/String;)V
@@ -390,7 +390,7 @@ final class HandshakeProtocolV2 implements HandshakeProtocol, ResponseListener, 
       // 97: i2l
       // 98: lcmp
       // 99: ifeq a7
-      // 9c: new java/lang/Object
+      // 9c: new net/rim/device/api/crypto/certificate/CertificateVerificationException
       // 9f: dup
       // a0: ldc_w "Bad certificate"
       // a3: invokespecial net/rim/device/api/crypto/certificate/CertificateVerificationException.<init> (Ljava/lang/String;)V
@@ -403,7 +403,7 @@ final class HandshakeProtocolV2 implements HandshakeProtocol, ResponseListener, 
       // ae: i2l
       // af: lcmp
       // b0: ifeq be
-      // b3: new java/lang/Object
+      // b3: new net/rim/device/api/crypto/certificate/CertificateVerificationException
       // b6: dup
       // b7: ldc_w "Certificate unknown"
       // ba: invokespecial net/rim/device/api/crypto/certificate/CertificateVerificationException.<init> (Ljava/lang/String;)V
@@ -419,7 +419,7 @@ final class HandshakeProtocolV2 implements HandshakeProtocol, ResponseListener, 
       // ce: aload 2
       // cf: athrow
       // d0: astore 2
-      // d1: new java/lang/Object
+      // d1: new net/rim/device/api/crypto/certificate/CertificateVerificationException
       // d4: dup
       // d5: aload 2
       // d6: invokevirtual java/lang/Throwable.getMessage ()Ljava/lang/String;
@@ -521,7 +521,7 @@ final class HandshakeProtocolV2 implements HandshakeProtocol, ResponseListener, 
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

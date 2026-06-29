@@ -1,14 +1,14 @@
 package net.rim.wica.runtime.ui.internal.component.table;
 
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.BasicEditField;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.internal.ui.component.PopupDialog;
 
 class TableField$ViewCellDialog extends PopupDialog {
-   private BasicEditField _edit = (BasicEditField)(new Object(9007199254740992L));
+   private BasicEditField _edit = new BasicEditField(9007199254740992L);
 
    public TableField$ViewCellDialog() {
-      super((Manager)(new Object(299067162755072L)));
+      super(new VerticalFieldManager(299067162755072L));
       this.add(this._edit);
    }
 

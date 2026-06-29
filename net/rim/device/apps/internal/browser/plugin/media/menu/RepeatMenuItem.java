@@ -8,7 +8,7 @@ public final class RepeatMenuItem extends MenuItem {
    private MediaBrowserField _field;
 
    public RepeatMenuItem(MediaBrowserField field, boolean repeat) {
-      super(((StringBuffer)(new Object())).append(repeat ? "✓ " : "").append(BrowserResources.getString(842)).toString(), 590853, Integer.MAX_VALUE);
+      super((repeat ? "✓ " : "") + BrowserResources.getString(842), 590853, Integer.MAX_VALUE);
       this._field = field;
    }
 

@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.mms.service;
 import com.fourthpass.wapstack.wsp.WSPHeaderDecoder;
 import java.io.DataInput;
 import java.io.EOFException;
+import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
@@ -17,8 +18,8 @@ import net.rim.device.cldc.io.utility.URIDecoder;
 import net.rim.vm.Array;
 
 public final class MMSProtocolDataUnit implements AttachmentDataProvider {
-   private StringBuffer _buf = (StringBuffer)(new Object());
-   private Hashtable _headers = (Hashtable)(new Object());
+   private StringBuffer _buf = new StringBuffer();
+   private Hashtable _headers = new Hashtable();
    private Vector _recipients;
    private Vector _ccRecipients;
    private Vector _bccRecipients;
@@ -29,7 +30,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
    private static final String CONTENT_LOCATION_HEADER_NAME_STRING = "content-location";
    private static final String CONTENT_ID_HEADER_NAME_STRING = "content-id";
    private static final String X_WAP_CONTENT_URI_HEADER_NAME_STRING = "x-wap-content-uri";
-   private static String[] WSP_PARAMETER_NAMES = new Object[]{
+   private static String[] WSP_PARAMETER_NAMES = new String[]{
       "wsp-q",
       "wsp-charset",
       "wsp-level",
@@ -64,7 +65,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
 
    final void dumpFields() {
       this.dumpAttributes("=====PDU attributes", this._headers);
-      System.out.println(((StringBuffer)(new Object("encrypted="))).append(this._forwardLocked).toString());
+      System.out.println("encrypted=" + this._forwardLocked);
       this.dumpRecipients("To:", this._recipients);
       this.dumpRecipients("Cc:", this._ccRecipients);
       this.dumpRecipients("Bcc:", this._bccRecipients);
@@ -72,7 +73,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
          int attachmentCount = this._contentHeader.length;
 
          for (int idx = 0; idx < attachmentCount; idx++) {
-            this.dumpAttributes(((StringBuffer)(new Object("===Attachment#"))).append(idx).toString(), this._contentHeader[idx]);
+            this.dumpAttributes("===Attachment#" + idx, this._contentHeader[idx]);
          }
       }
    }
@@ -188,7 +189,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
 
          for (int idx = 0; idx < count; idx++) {
             String name = (String)recipients.elementAt(idx);
-            System.out.println(((StringBuffer)(new Object())).append(label).append(name).toString());
+            System.out.println(label + name);
          }
       }
    }
@@ -200,7 +201,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
             this._forwardLocked = true;
          }
 
-         this.readAllFields((DataInput)(new Object(data, offset, length, false)));
+         this.readAllFields(new DataBuffer(data, offset, length, false));
       }
    }
 
@@ -217,7 +218,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
 
       while (names.hasMoreElements()) {
          String name = (String)names.nextElement();
-         System.out.println(((StringBuffer)(new Object())).append(name).append('=').append(this.getAttribute(name)).toString());
+         System.out.println(name + '=' + this.getAttribute(name));
       }
    }
 
@@ -372,7 +373,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
 
    private final void readField(DataInput input, byte id) {
       if ((id & 128) == 0) {
-         String name = ((StringBuffer)(new Object())).append((char)id).append(this.readTextString(input)).toString();
+         String name = (char)id + this.readTextString(input);
          this._headers.put(name, this.readTextString(input));
       } else {
          switch (id & 127) {
@@ -391,14 +392,14 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
             case 1:
             default:
                if (this._bccRecipients == null) {
-                  this._bccRecipients = (Vector)(new Object());
+                  this._bccRecipients = new Vector();
                }
 
                this._bccRecipients.addElement(this.readEncodedString(input));
                return;
             case 2:
                if (this._ccRecipients == null) {
-                  this._ccRecipients = (Vector)(new Object());
+                  this._ccRecipients = new Vector();
                }
 
                this._ccRecipients.addElement(this.readEncodedString(input));
@@ -497,7 +498,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
                return;
             case 23:
                if (this._recipients == null) {
-                  this._recipients = (Vector)(new Object());
+                  this._recipients = new Vector();
                }
 
                this._recipients.addElement(this.readEncodedString(input));
@@ -636,33 +637,19 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
          char ch = (char)input.readUnsignedByte();
          if (ch == 0) {
             if (encoding == null) {
-               System.out
-                  .println(
-                     ((StringBuffer)(new Object("MMS Parse Error in readEncodedString - charset was null (mibenum was ")))
-                        .append(mibenum)
-                        .append(")")
-                        .toString()
-                  );
-               return (String)(new Object(bytes));
+               System.out.println("MMS Parse Error in readEncodedString - charset was null (mibenum was " + mibenum + ")");
+               return new String(bytes);
             }
 
             try {
-               return (String)(new Object(bytes, encoding));
+               return new String(bytes, encoding);
             } finally {
-               System.out
-                  .println(
-                     ((StringBuffer)(new Object("MMS - Unsupported Encoding: ")))
-                        .append(encoding)
-                        .append(" (mibenum was ")
-                        .append(mibenum)
-                        .append(")")
-                        .toString()
-                  );
-               return (String)(new Object(bytes));
+               System.out.println("MMS - Unsupported Encoding: " + encoding + " (mibenum was " + mibenum + ")");
+               return new String(bytes);
             }
          } else {
             System.out.println("MMS Parse Error in readEncodedString - invalid state");
-            return (String)(encoding == null ? new Object(bytes) : new Object(bytes, encoding));
+            return encoding == null ? new String(bytes) : new String(bytes, encoding);
          }
       } finally {
          ;
@@ -708,7 +695,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
 
    private final String readMessageClass(DataInput input) {
       int val = input.readUnsignedByte();
-      return (val & 128) == 0 ? ((StringBuffer)(new Object())).append((char)val).append(this.readTextString(input)).toString() : Integer.toString(val);
+      return (val & 128) == 0 ? (char)val + this.readTextString(input) : Integer.toString(val);
    }
 
    private final Hashtable readContentType(DataInput input) {
@@ -728,7 +715,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
             contentType = Integer.toString(b & 127);
             length--;
          } else {
-            contentType = ((StringBuffer)(new Object())).append((char)b).append(this.readTextString(input)).toString();
+            contentType = (char)b + this.readTextString(input);
             length -= contentType.length() + 1;
          }
 
@@ -736,7 +723,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
       }
 
       if (headers == null) {
-         headers = (Hashtable)(new Object());
+         headers = new Hashtable();
       }
 
       headers.put("content-type", contentType);
@@ -754,7 +741,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
 
       byte[] data = readRemaining(input);
       if (type != 72) {
-         Hashtable header = (Hashtable)(new Object());
+         Hashtable header = new Hashtable();
          header.put("wsp-name", name);
          header.put("content-type", Integer.toString(type));
          this.addAttachment(header, data);
@@ -765,7 +752,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
             System.out.println("PDU unwrap error.");
          } else {
             byte[] innerData = attachment.getData();
-            DataBuffer innerBuffer = (DataBuffer)(new Object(innerData, 0, innerData.length, false));
+            DataBuffer innerBuffer = new DataBuffer(innerData, 0, innerData.length, false);
             copyParameters(this._headers, this.readContentType(innerBuffer));
             int contentType = MMSUtilities.getMIMEType((String)this._headers.get("content-type"));
             if (MMSUtilities.isMultipartType(contentType)) {
@@ -778,7 +765,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
       }
    }
 
-   private final void readMultipartContent(DataInput param1) throws EOFException {
+   private final void readMultipartContent(DataInput param1) throws EOFException, IOException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -809,7 +796,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
       // 24: aload 6
       // 26: ldc_w "content-type"
       // 29: invokevirtual java/util/Hashtable.get (Ljava/lang/Object;)Ljava/lang/Object;
-      // 2c: checkcast java/lang/Object
+      // 2c: checkcast java/lang/String
       // 2f: invokestatic net/rim/device/apps/internal/mms/MMSUtilities.getMIMEType (Ljava/lang/String;)I
       // 32: istore 7
       // 34: iload 7
@@ -846,7 +833,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
       // 7b: aload 0
       // 7c: bipush 1
       // 7d: putfield net/rim/device/apps/internal/mms/service/MMSProtocolDataUnit._truncated Z
-      // 80: new java/lang/Object
+      // 80: new java/io/IOException
       // 83: dup
       // 84: ldc_w "MMSParseException"
       // 87: invokespecial java/io/IOException.<init> (Ljava/lang/String;)V
@@ -862,7 +849,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
       int idx;
       if (this._contentHeader == null) {
          idx = 0;
-         this._contentHeader = new Object[1];
+         this._contentHeader = new Hashtable[1];
          this._content = new byte[1][];
       } else {
          idx = this._contentHeader.length;
@@ -909,7 +896,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
       int idx = 0;
 
       while (true) {
-         name = ((StringBuffer)(new Object())).append(prefix).append(idx).append(suffix).toString();
+         name = prefix + idx + suffix;
          if (this.findAttachment(name) < 0) {
             return name;
          }
@@ -919,7 +906,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
    }
 
    private final Hashtable readContentHeader(DataInput input, int headerLength) {
-      Hashtable header = (Hashtable)(new Object());
+      Hashtable header = new Hashtable();
       byte b = input.readByte();
       headerLength--;
       String contentType;
@@ -954,7 +941,7 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
             contentType = Integer.toString(b & 127);
             header.put("content-type", contentType);
          } else {
-            contentType = ((StringBuffer)(new Object())).append((char)b).append(this.readTextString(input)).toString();
+            contentType = (char)b + this.readTextString(input);
             header.put("content-type", contentType);
             int byteCount = contentType.length();
             headerLength -= byteCount;
@@ -982,17 +969,17 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
 
       byte[] header = new byte[len];
       input.readFully(header);
-      HttpHeaders hdrs = (HttpHeaders)(new Object());
-      WSPHeaderDecoder decoder = (WSPHeaderDecoder)(new Object(hdrs));
+      HttpHeaders hdrs = new HttpHeaders();
+      WSPHeaderDecoder decoder = new WSPHeaderDecoder(hdrs);
       decoder.decode(header, false);
       return hdrs.toHashtable();
    }
 
    private static final Hashtable decodeWSPParameters(DataInput input, int len) {
-      Hashtable params = (Hashtable)(new Object());
+      Hashtable params = new Hashtable();
       byte[] buf = new byte[len];
       input.readFully(buf);
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
       int index = 0;
 
       label64:
@@ -1100,8 +1087,8 @@ public final class MMSProtocolDataUnit implements AttachmentDataProvider {
          while (keys.hasMoreElements()) {
             String key = (String)keys.nextElement();
             String value = (String)source.get(key);
-            String var5 = URIDecoder.decode(value, "utf-8");
-            target.put(key, var5);
+            value = URIDecoder.decode(value, "utf-8");
+            target.put(key, value);
          }
       }
    }

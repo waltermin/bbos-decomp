@@ -63,19 +63,19 @@ public final class BrowserError extends Dialog implements Runnable, FieldChangeL
 
    public BrowserError(String message, boolean detailsAvailable, boolean saveAvailable) {
       super(message, null, null, 0, null);
-      HorizontalFieldManager mgr = (HorizontalFieldManager)(new Object(12884901888L));
+      HorizontalFieldManager mgr = new HorizontalFieldManager(12884901888L);
       this.add(mgr);
-      this._ok = (ButtonField)(new Object(CommonResources.getString(117), 12884901888L));
+      this._ok = new ButtonField(CommonResources.getString(117), 12884901888L);
       this._ok.setChangeListener(this);
       mgr.add(this._ok);
       if (detailsAvailable) {
-         this._details = (ButtonField)(new Object(CommonResources.getString(9046), 12884901888L));
+         this._details = new ButtonField(CommonResources.getString(9046), 12884901888L);
          this._details.setChangeListener(this);
          mgr.add(this._details);
       }
 
       if (saveAvailable) {
-         this._save = (ButtonField)(new Object(BrowserResources.getString(112), 12884901888L));
+         this._save = new ButtonField(BrowserResources.getString(112), 12884901888L);
          this._save.setChangeListener(this);
          mgr.add(this._save);
       }

@@ -24,10 +24,10 @@ class ImageStringLayout extends HorizontalLayout {
    private int _fontStyle;
    private String _fontFamily;
    private static final int ELLIPSIS_LENGTH = 1;
-   private static TextGraphics _textGraphics = (TextGraphics)(new Object("BBMillbank", 10));
-   private static DrawTextParam _textParams = (DrawTextParam)(new Object());
-   private static TextMetrics _textMetrics = (TextMetrics)(new Object());
-   private static StringBuffer _textBuffer = (StringBuffer)(new Object());
+   private static TextGraphics _textGraphics = new TextGraphics("BBMillbank", 10);
+   private static DrawTextParam _textParams = new DrawTextParam();
+   private static TextMetrics _textMetrics = new TextMetrics();
+   private static StringBuffer _textBuffer = new StringBuffer();
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)

@@ -22,7 +22,7 @@ final class DocViewAttachmentViewerModel$CustomVerticalFieldManager extends Vert
                if (!DeviceInfo.isInHolster() && AttachmentViewerFactory.isAttachmentViewingEnabled() && this.getFieldWithFocus() instanceof CustomBitmapField) {
                   try {
                      MenuItem menuVerb = Ui.getUiEngine().getActiveScreen().getDefaultMenuItem(65536);
-                     if (menuVerb instanceof Object) {
+                     if (menuVerb instanceof VerbMenuItem) {
                         Verb vb = ((VerbMenuItem)menuVerb).getVerb();
                         if (vb instanceof OpenAttachmentVerb) {
                            menuVerb.run();

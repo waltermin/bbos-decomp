@@ -8,11 +8,9 @@ import net.rim.device.api.util.IntHashtable;
 import net.rim.device.api.util.IntVector;
 import net.rim.device.apps.api.addressbook.AddressBook;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
-import net.rim.device.apps.api.addressbook.AddressCardElement;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.CompanyInfoModel;
 import net.rim.device.apps.api.addressbook.EmailAddressModel;
-import net.rim.device.apps.api.addressbook.FriendlyNameAddressModel;
 import net.rim.device.apps.api.addressbook.PINAddressModel;
 import net.rim.device.apps.api.addressbook.PersonNameModel;
 import net.rim.device.apps.internal.addressbook.addresscard.WebPageAddressModel;
@@ -108,7 +106,7 @@ public class ContactCollection extends StdCmpCollectionImpl {
       // 27: astore 3
       // 28: aload 0
       // 29: invokevirtual net/rim/wica/runtime/access/internal/data/collections/ContactCollection.toString ()Ljava/lang/String;
-      // 2c: new java/lang/Object
+      // 2c: new java/lang/StringBuffer
       // 2f: dup
       // 30: ldc_w "Attempt to add duplicate contact: "
       // 33: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -122,7 +120,7 @@ public class ContactCollection extends StdCmpCollectionImpl {
       // 4a: astore 3
       // 4b: aload 0
       // 4c: invokevirtual net/rim/wica/runtime/access/internal/data/collections/ContactCollection.toString ()Ljava/lang/String;
-      // 4f: new java/lang/Object
+      // 4f: new java/lang/StringBuffer
       // 52: dup
       // 53: ldc_w "Error adding contact: "
       // 56: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -181,7 +179,7 @@ public class ContactCollection extends StdCmpCollectionImpl {
          model.add(_dcModel);
       }
 
-      WebPageAddressModel webModel = (WebPageAddressModel)_webpageFactory.createInstance(this.getObjectFieldValue(dataHandle, 20));
+      WebPageAddressModel webModel = (WebPageAddressModel)_webpageFactory.createInstance((String)this.getObjectFieldValue(dataHandle, 20));
       model.add(webModel);
    }
 
@@ -258,7 +256,7 @@ public class ContactCollection extends StdCmpCollectionImpl {
 
    @Override
    public void initFieldHandlers() {
-      super._objectFieldHandlers = (IntHashtable)(new Object(36));
+      super._objectFieldHandlers = new IntHashtable(36);
       super._objectFieldHandlers.put(0, new ContactCollection$TitleHandler(null));
       super._objectFieldHandlers.put(1, new ContactCollection$GivenNameHandler(null));
       super._objectFieldHandlers.put(2, new ContactCollection$FamilyNameHandler(null));
@@ -283,7 +281,7 @@ public class ContactCollection extends StdCmpCollectionImpl {
       super._objectFieldHandlers.put(24, new ContactCollection$UserFieldHandler(3));
       super._objectFieldHandlers.put(25, new ContactCollection$PINAddressHandler(null));
       super._objectFieldHandlers.put(26, new ContactCollection$DCIDHandler(null));
-      super._intFieldHandlers = (IntHashtable)(new Object(1));
+      super._intFieldHandlers = new IntHashtable(1);
       super._intFieldHandlers.put(19, new ContactCollection$UIDHandler(null));
    }
 
@@ -294,13 +292,13 @@ public class ContactCollection extends StdCmpCollectionImpl {
          return null;
       }
 
-      IntVector uidsInDB = (IntVector)(new Object(numItems));
+      IntVector uidsInDB = new IntVector(numItems);
       Enumeration e = aBook.getAddressCards();
 
       while (e.hasMoreElements()) {
          Object address = e.nextElement();
-         if (address instanceof Object) {
-            uidsInDB.addElement(((AddressCardElement)address).getUID());
+         if (address instanceof AddressCardModel) {
+            uidsInDB.addElement(((AddressCardModel)address).getUID());
          }
       }
 
@@ -315,7 +313,7 @@ public class ContactCollection extends StdCmpCollectionImpl {
 
          while (e.hasMoreElements()) {
             Object address = e.nextElement();
-            if (address instanceof Object && uid == ((AddressCardElement)address).getUID()) {
+            if (address instanceof AddressCardModel && uid == ((AddressCardModel)address).getUID()) {
                return address;
             }
          }
@@ -326,7 +324,7 @@ public class ContactCollection extends StdCmpCollectionImpl {
 
    @Override
    public void loadItem(long dataHandle, Object item) {
-      if (item instanceof Object) {
+      if (item instanceof AddressCardModel) {
          AddressCardModel model = (AddressCardModel)item;
          this.setIntFieldValue(dataHandle, 19, model.getUID());
          this.loadName(dataHandle, model);
@@ -336,22 +334,22 @@ public class ContactCollection extends StdCmpCollectionImpl {
 
          for (int i = 0; i < size; i++) {
             Object subModel = model.getAt(i);
-            if (subModel instanceof Object) {
+            if (subModel instanceof EmailAddressModel) {
                this.setEmailAddress(dataHandle, (EmailAddressModel)subModel, emailCount);
                emailCount++;
-            } else if (subModel instanceof Object) {
+            } else if (subModel instanceof PhoneNumberModel) {
                this.setPhoneNumber(dataHandle, (PhoneNumberModel)subModel);
-            } else if (subModel instanceof Object) {
+            } else if (subModel instanceof BodyModel) {
                this.setObjectFieldValue(dataHandle, 18, ((BodyModel)subModel).getText());
-            } else if (subModel instanceof Object) {
+            } else if (subModel instanceof UserFieldsModel) {
                this.setUserFields(dataHandle, (UserFieldsModel)subModel);
-            } else if (subModel instanceof Object) {
-               this.setObjectFieldValue(dataHandle, 25, ((FriendlyNameAddressModel)subModel).getAddress());
-            } else if (subModel instanceof Object) {
+            } else if (subModel instanceof PINAddressModel) {
+               this.setObjectFieldValue(dataHandle, 25, ((PINAddressModel)subModel).getAddress());
+            } else if (subModel instanceof TitleModel) {
                this.setObjectFieldValue(dataHandle, 9, ((TitleModel)subModel).getTitle());
             } else if (subModel.getClass().getName().equals("net.rim.device.apps.internal.phone.direct.DirectConnectNumberModel")) {
                this.setObjectFieldValue(dataHandle, 26, ((AbstractPhoneNumberModel)subModel).getValue());
-            } else if (subModel instanceof Object) {
+            } else if (subModel instanceof WebPageAddressModel) {
                this.setObjectFieldValue(dataHandle, 20, ((WebPageAddressModel)subModel).getAddress());
             }
          }

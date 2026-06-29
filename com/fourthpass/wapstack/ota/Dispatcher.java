@@ -4,6 +4,7 @@ import com.fourthpass.wapstack.wsp.WSPHeaderDecoder;
 import com.fourthpass.wapstack.wsp.pdu.WSP_PushPDU;
 import com.fourthpass.wapstack.wtp.WTPLayer;
 import com.fourthpass.wapstack.wtp.pdu.WTP_PDU;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import net.rim.device.api.browser.push.PushEventLogger;
 import net.rim.device.api.io.IOUtilities;
@@ -22,13 +23,13 @@ public final class Dispatcher implements PushEventLogger {
 
    private static final Object[] decode(boolean isConnectionless, byte[] rawData, int bearer, String source, WTPLayer wtpLayer, WTP_PDU wtpPDU) {
       try {
-         WSP_PushPDU pushPDU = new WSP_PushPDU(isConnectionless, (InputStream)(new Object(rawData)));
+         WSP_PushPDU pushPDU = new WSP_PushPDU(isConnectionless, new ByteArrayInputStream(rawData));
          if (pushPDU != null) {
             InputStream pushData = pushPDU.getData();
             byte[] header = pushPDU.getHeader();
-            Object[] result = new Object[]{new Object(), null};
+            Object[] result = new Object[]{new HttpHeaders(), null};
             if (header != null) {
-               WSPHeaderDecoder decoder = (WSPHeaderDecoder)(new Object((HttpHeaders)result[0]));
+               WSPHeaderDecoder decoder = new WSPHeaderDecoder((HttpHeaders)result[0]);
                decoder.decode(header, true);
             }
 

@@ -21,7 +21,7 @@ class DialogAddBookmark$2 extends MenuItem {
       Folder newFolder = folderList.getSelectedFolder();
       if (newFolder != null) {
          this.this$0._selectedFolder = newFolder;
-         this.this$0._folderNameField.setChoices(new Object[]{this.this$0._selectedFolder.getFriendlyName()});
+         this.this$0._folderNameField.setChoices(new String[]{this.this$0._selectedFolder.getFriendlyName()});
       } else {
          Folder parent = this.this$0._selectedFolder.getParentFolder();
          boolean isChild = false;
@@ -37,7 +37,7 @@ class DialogAddBookmark$2 extends MenuItem {
 
          if (!isChild) {
             this.this$0._selectedFolder = BookmarksFolderList.getDefaultFolder();
-            this.this$0._folderNameField.setChoices(new Object[]{this.this$0._selectedFolder.getFriendlyName()});
+            this.this$0._folderNameField.setChoices(new String[]{this.this$0._selectedFolder.getFriendlyName()});
          }
       }
    }

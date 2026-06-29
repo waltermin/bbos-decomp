@@ -17,6 +17,7 @@ import net.rim.device.api.ldap.LDAPEntry;
 import net.rim.device.api.ldap.LDAPListener;
 import net.rim.device.api.ldap.LDAPQuery;
 import net.rim.device.api.system.Application;
+import net.rim.device.api.system.UnsupportedOperationException;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Font;
@@ -26,6 +27,7 @@ import net.rim.device.api.ui.UiEngine;
 import net.rim.device.api.ui.component.AutoTextEditField;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.EmailAddressEditField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ObjectChoiceField;
 import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.component.SeparatorField;
@@ -93,7 +95,7 @@ public final class LDAPBrowser implements FieldChangeListener, LDAPListener, Com
       this._contextString = contextString;
       this._context = LDAPBrowserContextFactory.getContext(contextString);
       if (this._context == null) {
-         throw new Object();
+         throw new UnsupportedOperationException();
       }
 
       this._mp = mp;
@@ -103,9 +105,9 @@ public final class LDAPBrowser implements FieldChangeListener, LDAPListener, Com
    }
 
    private final void addFields(String firstName, String lastName, String email) {
-      this._editFirstName = (AutoTextEditField)(new Object(getString(30), firstName, 1024, 4503601774854144L));
-      this._editLastName = (AutoTextEditField)(new Object(getString(31), lastName, 1024, 4503601774854144L));
-      this._editEmail = (EmailAddressEditField)(new Object(getString(32), email, 1024));
+      this._editFirstName = new AutoTextEditField(getString(30), firstName, 1024, 4503601774854144L);
+      this._editLastName = new AutoTextEditField(getString(31), lastName, 1024, 4503601774854144L);
+      this._editEmail = new EmailAddressEditField(getString(32), email, 1024);
       this._editFirstName.setDirty(true);
       this._editLastName.setDirty(true);
       this._editEmail.setDirty(true);
@@ -115,12 +117,12 @@ public final class LDAPBrowser implements FieldChangeListener, LDAPListener, Com
       this._certOptions.addCollectionListener(this);
       this.updateServers();
       this._screen = new LDAPBrowser$LDAPBrowserScreen(this);
-      this._screen.setTitle((Field)(new Object(this._context.getScreenTitle())));
+      this._screen.setTitle(new LabelField(this._context.getScreenTitle()));
       this._screen.add(this._serverChoice);
       this._screen.add(this._editFirstName);
       this._screen.add(this._editLastName);
       this._screen.add(this._editEmail);
-      this._screen.add((Field)(new Object()));
+      this._screen.add(new SeparatorField());
       this._screen.add(this._list);
    }
 
@@ -133,8 +135,8 @@ public final class LDAPBrowser implements FieldChangeListener, LDAPListener, Com
       }
 
       int size = this._certOptions.getServerSize(1);
-      this._servers = new Object[size + 1];
-      this._serverList = new Object[size + 1];
+      this._servers = new CertificateServerInfo[size + 1];
+      this._serverList = new String[size + 1];
       this._serverList[0] = getString(34);
 
       for (int i = 1; i <= size; i++) {
@@ -153,9 +155,7 @@ public final class LDAPBrowser implements FieldChangeListener, LDAPListener, Com
       }
 
       if (this._serverChoice == null) {
-         this._serverChoice = (ObjectChoiceField)(new Object(
-            ((StringBuffer)(new Object())).append(getString(33)).append(": ").toString(), this._serverList, initialIndex
-         ));
+         this._serverChoice = new ObjectChoiceField(getString(33) + ": ", this._serverList, initialIndex);
          this._serverChoice.setChangeListener(this);
       } else {
          this._serverChoice.setChoices(this._serverList);
@@ -256,7 +256,7 @@ public final class LDAPBrowser implements FieldChangeListener, LDAPListener, Com
             this._list.setSize(0);
          }
 
-         this._dialog = (QueryStatusDialog)(new Object(this._query, getString(71)));
+         this._dialog = new QueryStatusDialog(this._query, getString(71));
          return true;
       } finally {
          this.cancelQuery();
@@ -265,8 +265,8 @@ public final class LDAPBrowser implements FieldChangeListener, LDAPListener, Com
    }
 
    private final String[] extractStrings(String fullString) {
-      String[] extractedStrings = new Object[0];
-      StringTokenizer tokenizer = (StringTokenizer)(new Object(fullString, ';'));
+      String[] extractedStrings = new String[0];
+      StringTokenizer tokenizer = new StringTokenizer(fullString, ';');
 
       while (tokenizer.hasMoreTokens()) {
          Arrays.add(extractedStrings, tokenizer.nextToken());
@@ -303,8 +303,8 @@ public final class LDAPBrowser implements FieldChangeListener, LDAPListener, Com
       if (indices != null) {
          this.fetchCertificate(indices, true);
          int indicesLength = indices.length;
-         LDAPEntry[] entries = new Object[indicesLength];
-         Certificate[] certs = new Object[indicesLength];
+         LDAPEntry[] entries = new LDAPEntry[indicesLength];
+         Certificate[] certs = new Certificate[indicesLength];
          int position = 0;
 
          try {
@@ -345,9 +345,9 @@ public final class LDAPBrowser implements FieldChangeListener, LDAPListener, Com
             LDAPBrowserContainer container = (LDAPBrowserContainer)this._containers.elementAt(indices[i]);
             Certificate certificate = container.getCertificate();
             if (certificate != null) {
-               CertificateStatusRequest request = (CertificateStatusRequest)(new Object(
-                  new Object[]{certificate}, false, this._context.getKeyStore(), null, certificate
-               ));
+               CertificateStatusRequest request = new CertificateStatusRequest(
+                  new Certificate[]{certificate}, false, this._context.getKeyStore(), null, certificate
+               );
                CertificateStatusProvider.requestCertificateStatus(request, null, true, false);
             }
          }
@@ -376,7 +376,7 @@ public final class LDAPBrowser implements FieldChangeListener, LDAPListener, Com
             this._editEmail.setText("");
          }
 
-         this._dialog = (QueryStatusDialog)(new Object(this._query, getString(76)));
+         this._dialog = new QueryStatusDialog(this._query, getString(76));
          this._dialog.show();
       } finally {
          this.cancelQuery();
@@ -385,14 +385,14 @@ public final class LDAPBrowser implements FieldChangeListener, LDAPListener, Com
    }
 
    private final void doNewServer() {
-      CertificateServersOptionsScreen screen = (CertificateServersOptionsScreen)(new Object(null, 1));
+      CertificateServersOptionsScreen screen = new CertificateServersOptionsScreen(null, 1);
       this._app.pushScreen(screen);
    }
 
    private final void doViewServer() {
       int serverChoice = this._serverChoice.getSelectedIndex();
       if (serverChoice > 0) {
-         CertificateServersOptionsScreen screen = (CertificateServersOptionsScreen)(new Object(this._servers[serverChoice], 1));
+         CertificateServersOptionsScreen screen = new CertificateServersOptionsScreen(this._servers[serverChoice], 1);
          this._app.pushScreen(screen);
       }
    }
@@ -408,7 +408,7 @@ public final class LDAPBrowser implements FieldChangeListener, LDAPListener, Com
       int[] indices = this.getIndices();
       if (indices != null) {
          int indicesLength = indices.length;
-         LDAPEntry[] entries = new Object[indicesLength];
+         LDAPEntry[] entries = new LDAPEntry[indicesLength];
          int position = 0;
 
          try {
@@ -434,8 +434,8 @@ public final class LDAPBrowser implements FieldChangeListener, LDAPListener, Com
    }
 
    private final void resetResults() {
-      this._query = (LDAPQuery)(new Object(null, KeyStoreOptions.getCertificateServiceUID(), this));
-      this._containers = (SimpleSortingVector)(new Object());
+      this._query = new LDAPQuery(null, KeyStoreOptions.getCertificateServiceUID(), this);
+      this._containers = new SimpleSortingVector();
       this._containers.setSortComparator(this);
       this._resultSize = 0;
       this._state = 1;
@@ -467,7 +467,7 @@ public final class LDAPBrowser implements FieldChangeListener, LDAPListener, Com
    private final void fetchCertificate(int[] indices, boolean showDialog) {
       if (indices != null && indices.length >= 0) {
          int indicesLength = indices.length;
-         LDAPEntry[] entries = new Object[indicesLength];
+         LDAPEntry[] entries = new LDAPEntry[indicesLength];
          int position = 0;
 
          for (int i = 0; i < indicesLength; i++) {
@@ -482,7 +482,7 @@ public final class LDAPBrowser implements FieldChangeListener, LDAPListener, Com
 
             try {
                this._state = 2;
-               this._query = (LDAPQuery)(new Object(null, KeyStoreOptions.getCertificateServiceUID(), this));
+               this._query = new LDAPQuery(null, KeyStoreOptions.getCertificateServiceUID(), this);
                this.setHostandAuthandConnType();
 
                try {
@@ -495,7 +495,7 @@ public final class LDAPBrowser implements FieldChangeListener, LDAPListener, Com
 
                this._query.setScope(2);
                if (showDialog) {
-                  this._dialog = (QueryStatusDialog)(new Object(this._query, this._context.getFetchingString()));
+                  this._dialog = new QueryStatusDialog(this._query, this._context.getFetchingString());
                   this._dialog.show();
                } else {
                   this._dialog.setTitle(this._context.getFetchingString());
@@ -705,7 +705,7 @@ public final class LDAPBrowser implements FieldChangeListener, LDAPListener, Com
          }
 
          try {
-            Certificate[] certificates = new Object[0];
+            Certificate[] certificates = new Certificate[0];
             byte[][] certificateIDs = new byte[0][];
             this._context.getCertificates(entry, certificates, certificateIDs);
             int numCertificates = certificates.length;
@@ -761,8 +761,8 @@ public final class LDAPBrowser implements FieldChangeListener, LDAPListener, Com
          }
 
          if (resultsTruncated) {
-            this._separatorField = (SeparatorField)(new Object());
-            this._throttledField = (RichTextField)(new Object(getString(63), 36028797019226112L));
+            this._separatorField = new SeparatorField();
+            this._throttledField = new RichTextField(getString(63), 36028797019226112L);
             synchronized (Application.getEventLock()) {
                this._screen.add(this._separatorField);
                this._screen.add(this._throttledField);
@@ -770,7 +770,7 @@ public final class LDAPBrowser implements FieldChangeListener, LDAPListener, Com
          }
       } else {
          if (this._state != 2) {
-            throw new Object();
+            throw new RuntimeException();
          }
 
          this._containers.reSort();

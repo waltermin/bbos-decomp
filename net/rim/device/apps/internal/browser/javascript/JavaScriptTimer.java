@@ -11,7 +11,7 @@ final class JavaScriptTimer {
 
    public JavaScriptTimer(JavaScriptEngine engine) {
       this._scriptEngine = engine;
-      this._waitQueue = (Vector)(new Object());
+      this._waitQueue = new Vector();
    }
 
    public final void shutdown() {

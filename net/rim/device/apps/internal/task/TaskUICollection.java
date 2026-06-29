@@ -39,7 +39,7 @@ final class TaskUICollection extends BigSortedReadableList implements TaskCollec
             count = 64;
          }
 
-         super._elements = (BigVector)(new Object(count));
+         super._elements = new BigVector(count);
 
          for (int i = 0; i < list.size(); i++) {
             TaskModel tm = (TaskModel)list.getAt(i);

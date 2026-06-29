@@ -26,9 +26,9 @@ import net.rim.vm.Monitor;
 
 public final class RIMPlatformImpl implements PlayerListener, Platform {
    private MediaListener _debugListener;
-   private Hashtable _playerListeners = (Hashtable)(new Object());
+   private Hashtable _playerListeners = new Hashtable();
    private Application _app;
-   private static Integer NO_FONT = (Integer)(new Object(-1));
+   private static Integer NO_FONT = new Integer(-1);
    public static final long ME_EVENTLOGGER_APPLICATION_REGISTRY_KEY = -6921419827463678505L;
    public static final long ME_LAUNCHER_APPLICATION_REGISTRY_KEY = -9101880657807833196L;
    private static final int LOW_VOLUME = 33;
@@ -55,9 +55,9 @@ public final class RIMPlatformImpl implements PlayerListener, Platform {
 
       int ret = FontRegistry.loadFont(fontData, fontFamily, false);
       if (ret > 0) {
-         return (Integer)(new Object(ret));
+         return new Integer(ret);
       } else {
-         return (Integer)((ret & -65536) == -131072 ? new Object(ret) : NO_FONT);
+         return (ret & -65536) == -131072 ? new Integer(ret) : NO_FONT;
       }
    }
 
@@ -74,21 +74,21 @@ public final class RIMPlatformImpl implements PlayerListener, Platform {
 
    @Override
    public final Object createImage(int w, int h) {
-      return w * h > 57600 ? null : new Object(w, h);
+      return w * h > 57600 ? null : new Bitmap(w, h);
    }
 
    @Override
    public final MEGraphics2d createGraphics(Object nativeObject) {
       MEGraphics2dImpl gObject = new MEGraphics2dImpl();
-      if (!(nativeObject instanceof Object)) {
-         if (nativeObject instanceof Object) {
+      if (!(nativeObject instanceof Bitmap)) {
+         if (nativeObject instanceof Graphics) {
             gObject.setGraphics(nativeObject);
          }
 
          return gObject;
       } else {
          Bitmap cast = (Bitmap)nativeObject;
-         Graphics ret = (Graphics)(new Object(cast));
+         Graphics ret = new Graphics(cast);
          ret.pushContext(0, 0, cast.getWidth(), cast.getHeight(), 0, 0);
          gObject.setGraphics(ret);
          return gObject;
@@ -98,7 +98,7 @@ public final class RIMPlatformImpl implements PlayerListener, Platform {
    @Override
    public final int getImageWidth(Object image) {
       if (!(image instanceof ForeignObject)) {
-         return !(image instanceof Object) ? ((Bitmap)image).getWidth() : ((EncodedImage)image).getScaledWidth();
+         return !(image instanceof EncodedImage) ? ((Bitmap)image).getWidth() : ((EncodedImage)image).getScaledWidth();
       }
 
       ForeignObject fo = (ForeignObject)image;
@@ -108,7 +108,7 @@ public final class RIMPlatformImpl implements PlayerListener, Platform {
    @Override
    public final int getImageHeight(Object image) {
       if (!(image instanceof ForeignObject)) {
-         return !(image instanceof Object) ? ((Bitmap)image).getHeight() : ((EncodedImage)image).getScaledHeight();
+         return !(image instanceof EncodedImage) ? ((Bitmap)image).getHeight() : ((EncodedImage)image).getScaledHeight();
       }
 
       ForeignObject fo = (ForeignObject)image;
@@ -405,7 +405,7 @@ public final class RIMPlatformImpl implements PlayerListener, Platform {
 
    @Override
    public final void disposeMedia(Object media) {
-      if (media instanceof Object) {
+      if (media instanceof Player) {
          Player p = (Player)media;
          if (p.getState() == 400) {
             this.stopPlayer(media, null);
@@ -514,7 +514,7 @@ public final class RIMPlatformImpl implements PlayerListener, Platform {
       // 01a: baload
       // 01b: bipush -1
       // 01d: if_icmpne 038
-      // 020: new java/lang/Object
+      // 020: new java/lang/String
       // 023: dup
       // 024: aload 1
       // 025: iload 2
@@ -539,7 +539,7 @@ public final class RIMPlatformImpl implements PlayerListener, Platform {
       // 044: baload
       // 045: bipush -2
       // 047: if_icmpne 062
-      // 04a: new java/lang/Object
+      // 04a: new java/lang/String
       // 04d: dup
       // 04e: aload 1
       // 04f: iload 2
@@ -552,7 +552,7 @@ public final class RIMPlatformImpl implements PlayerListener, Platform {
       // 05a: invokespecial java/lang/String.<init> ([BIILjava/lang/String;)V
       // 05d: astore 5
       // 05f: goto 131
-      // 062: new java/lang/Object
+      // 062: new java/lang/String
       // 065: dup
       // 066: aload 1
       // 067: iload 2
@@ -577,7 +577,7 @@ public final class RIMPlatformImpl implements PlayerListener, Platform {
       // 08b: baload
       // 08c: bipush -2
       // 08e: if_icmpne 0a9
-      // 091: new java/lang/Object
+      // 091: new java/lang/String
       // 094: dup
       // 095: aload 1
       // 096: iload 2
@@ -590,7 +590,7 @@ public final class RIMPlatformImpl implements PlayerListener, Platform {
       // 0a1: invokespecial java/lang/String.<init> ([BIILjava/lang/String;)V
       // 0a4: astore 5
       // 0a6: goto 131
-      // 0a9: new java/lang/Object
+      // 0a9: new java/lang/String
       // 0ac: dup
       // 0ad: aload 1
       // 0ae: iload 2
@@ -615,7 +615,7 @@ public final class RIMPlatformImpl implements PlayerListener, Platform {
       // 0d2: baload
       // 0d3: bipush -1
       // 0d5: if_icmpne 0f0
-      // 0d8: new java/lang/Object
+      // 0d8: new java/lang/String
       // 0db: dup
       // 0dc: aload 1
       // 0dd: iload 2
@@ -628,7 +628,7 @@ public final class RIMPlatformImpl implements PlayerListener, Platform {
       // 0e8: invokespecial java/lang/String.<init> ([BIILjava/lang/String;)V
       // 0eb: astore 5
       // 0ed: goto 131
-      // 0f0: new java/lang/Object
+      // 0f0: new java/lang/String
       // 0f3: dup
       // 0f4: aload 1
       // 0f5: iload 2
@@ -637,7 +637,7 @@ public final class RIMPlatformImpl implements PlayerListener, Platform {
       // 0fa: invokespecial java/lang/String.<init> ([BIILjava/lang/String;)V
       // 0fd: astore 5
       // 0ff: goto 131
-      // 102: new java/lang/Object
+      // 102: new java/lang/String
       // 105: dup
       // 106: aload 1
       // 107: iload 2
@@ -647,7 +647,7 @@ public final class RIMPlatformImpl implements PlayerListener, Platform {
       // 10e: astore 5
       // 110: goto 131
       // 113: astore 6
-      // 115: new java/lang/Object
+      // 115: new java/lang/String
       // 118: dup
       // 119: aload 1
       // 11a: iload 2
@@ -820,7 +820,7 @@ public final class RIMPlatformImpl implements PlayerListener, Platform {
    public final int convertToPixels(int fontSize, int meUnits) {
       switch (meUnits) {
          case -1:
-            throw new Object("Invalid units value");
+            throw new IllegalArgumentException("Invalid units value");
          case 0:
             return fontSize;
          case 1:

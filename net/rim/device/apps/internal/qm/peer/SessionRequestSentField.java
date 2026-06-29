@@ -7,11 +7,6 @@ final class SessionRequestSentField extends SessionInfoField {
 
    @Override
    protected final void setText() {
-      super._text = ((StringBuffer)(new Object("You have invited ")))
-         .append(super._contact.getDisplayName())
-         .append(" to start the application called \"")
-         .append(super._application)
-         .append(".\"")
-         .toString();
+      super._text = "You have invited " + super._contact.getDisplayName() + " to start the application called \"" + super._application + ".\"";
    }
 }

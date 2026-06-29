@@ -1,7 +1,8 @@
 package net.rim.device.apps.internal.browser.dd;
 
-import net.rim.device.api.browser.field.Event;
+import net.rim.device.api.browser.field.HistoryEvent;
 import net.rim.device.api.browser.field.RenderingApplication;
+import net.rim.device.api.browser.field.UrlRequestedEvent;
 import net.rim.device.api.i18n.MessageFormat;
 import net.rim.device.api.io.http.HttpHeaders;
 import net.rim.device.api.system.Application;
@@ -14,6 +15,8 @@ import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.GaugeField;
 import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
+import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.PopupScreen;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.ThemeManager;
@@ -101,26 +104,26 @@ final class DownloadDescriptorField extends DescriptorField implements FieldChan
          this.addDescriptionField(description);
       }
 
-      this.add((Field)(new Object()));
-      this._buttonContainer = (Manager)(new Object(12884901888L));
+      this.add(new SeparatorField());
+      this._buttonContainer = new HorizontalFieldManager(12884901888L);
       if (this._statusCode != 900) {
-         LabelField errorLabel = (LabelField)(new Object(getErrorHeading(this._statusCode)));
+         LabelField errorLabel = new LabelField(getErrorHeading(this._statusCode));
          errorLabel.setFont(errorLabel.getFont().derive(1));
          this.add(errorLabel);
          if (errors != null) {
             for (int i = 0; i < errors.length; i++) {
-               this.add((Field)(new Object(errors[i], 18014398509481984L)));
+               this.add(new LabelField(errors[i], 18014398509481984L));
             }
          }
 
-         this._nextButton = (ButtonField)(new Object(BrowserResources.getString(776), 65536));
+         this._nextButton = new ButtonField(BrowserResources.getString(776), 65536);
          this._nextButton.setChangeListener(this);
          this._buttonContainer.add(this._nextButton);
       } else {
          this._mediaTypes = mediaTypes;
-         this._downloadButton = (ButtonField)(new Object(BrowserResources.getString(273), 65536));
+         this._downloadButton = new ButtonField(BrowserResources.getString(273), 65536);
          this._downloadButton.setChangeListener(this);
-         this._cancelButton = (ButtonField)(new Object(CommonResources.getString(9042), 65536));
+         this._cancelButton = new ButtonField(CommonResources.getString(9042), 65536);
          this._cancelButton.setChangeListener(this);
          this._buttonContainer.add(this._downloadButton);
          this._buttonContainer.add(this._cancelButton);
@@ -135,7 +138,7 @@ final class DownloadDescriptorField extends DescriptorField implements FieldChan
 
    private static final String getFriendlyMediaTypes(String[] mediaTypes) {
       if (mediaTypes.length > 0) {
-         StringBuffer typesBuffer = (StringBuffer)(new Object());
+         StringBuffer typesBuffer = new StringBuffer();
 
          for (int i = 0; i < mediaTypes.length; i++) {
             if (i > 0) {
@@ -286,19 +289,17 @@ final class DownloadDescriptorField extends DescriptorField implements FieldChan
    private final void doDownload() {
       if (!this._downloadStarted) {
          this.setMainType();
-         SaveFileDialog saveDialog = (SaveFileDialog)(new Object(this.getDefaultFilename(), this._mainMediaType, this._mainType, this._size));
+         SaveFileDialog saveDialog = new SaveFileDialog(this.getDefaultFilename(), this._mainMediaType, this._mainType, this._size);
          int saveResult = saveDialog.doModal();
          if (saveResult == 1 || saveResult == 0) {
             this.delete(this._buttonContainer);
             this._downloadStarted = true;
             this._desiredContentStoreName = saveDialog.getURL();
-            this._statusGauge = (GaugeField)(new Object(null, 0, this.getProgressMaxAmount(), 0, 65536));
-            VerticalFieldManager vfm = (VerticalFieldManager)(new Object());
-            vfm.add(
-               (Field)(new Object(MessageFormat.format(BrowserResources.getString(682), new Object[]{FileUtilities.getName(this._desiredContentStoreName)})))
-            );
+            this._statusGauge = new GaugeField(null, 0, this.getProgressMaxAmount(), 0, 65536);
+            VerticalFieldManager vfm = new VerticalFieldManager();
+            vfm.add(new LabelField(MessageFormat.format(BrowserResources.getString(682), new String[]{FileUtilities.getName(this._desiredContentStoreName)})));
             vfm.add(this._statusGauge);
-            this._statusButton = (ButtonField)(new Object(CommonResources.getString(9042), 12884967424L));
+            this._statusButton = new ButtonField(CommonResources.getString(9042), 12884967424L);
             this._statusButton.setChangeListener(this);
             vfm.add(this._statusButton);
             this._downloadThread = new OmaDownloadManager(
@@ -365,7 +366,7 @@ final class DownloadDescriptorField extends DescriptorField implements FieldChan
          this._statusReportResponseHandled = true;
       }
 
-      EventLogger.logEvent(1907089860548946979L, ((StringBuffer)(new Object("DD sc "))).append(this._statusCode).toString().getBytes());
+      EventLogger.logEvent(1907089860548946979L, ("DD sc " + this._statusCode).getBytes());
       boolean successful = statusReportHttpResponseCode >= 200 && statusReportHttpResponseCode < 300;
       if (this._savedFilename != null) {
          if (successful && this._statusCode == 900) {
@@ -413,15 +414,9 @@ final class DownloadDescriptorField extends DescriptorField implements FieldChan
             if (this._statusCode != 902 && statusReportHttpResponseCode != 902) {
                message = BrowserResources.getString(685);
                if (this._errorDetail != null) {
-                  message = ((StringBuffer)(new Object())).append(message).append(' ').append(this._errorDetail).toString();
+                  message = message + ' ' + this._errorDetail;
                } else if (!successful && this._statusCode == 900) {
-                  message = ((StringBuffer)(new Object()))
-                     .append(message)
-                     .append(' ')
-                     .append(BrowserResources.getString(782))
-                     .append(' ')
-                     .append(DownloadManager.formatHttpStatusMessage(statusReportHttpResponseCode))
-                     .toString();
+                  message = message + ' ' + BrowserResources.getString(782) + ' ' + DownloadManager.formatHttpStatusMessage(statusReportHttpResponseCode);
                }
             } else {
                message = BrowserResources.getString(684);
@@ -431,7 +426,7 @@ final class DownloadDescriptorField extends DescriptorField implements FieldChan
          }
 
          choices[choices.length - 1] = BrowserResources.getString(776);
-         Dialog nextStepDialog = (Dialog)(new Object(message, choices, null, 0, null));
+         Dialog nextStepDialog = new Dialog(message, choices, null, 0, null);
          nextStepDialog.setIcon(ThemeManager.getThemeAwareImage(this._savedFilename != null ? "dialog_information" : "dialog_exclamation"));
          Application.getApplication().invokeLater(new DownloadDescriptorField$3(this, nextStepDialog));
       }
@@ -462,7 +457,7 @@ final class DownloadDescriptorField extends DescriptorField implements FieldChan
          nextURL = this._nextURL;
          if (nextURL != null) {
             if (requestHeaders == null) {
-               requestHeaders = (HttpHeaders)(new Object());
+               requestHeaders = new HttpHeaders();
             }
 
             RenderingUtilities.setReferrer(requestHeaders, this._descriptorURL);
@@ -471,9 +466,9 @@ final class DownloadDescriptorField extends DescriptorField implements FieldChan
 
       if (nextURL != null) {
          RenderingApplication renderingApplication = this._browserContent.getRenderingApplication();
-         renderingApplication.eventOccurred((Event)(new Object(this._browserContent, this._descriptorURL, 2)));
+         renderingApplication.eventOccurred(new HistoryEvent(this._browserContent, this._descriptorURL, 2));
          renderingApplication.eventOccurred(
-            (Event)(new Object(this._browserContent, nextURL, null, requestHeaders, false, this._browserContent.getSharedFlags() | 1))
+            new UrlRequestedEvent(this._browserContent, nextURL, null, requestHeaders, false, this._browserContent.getSharedFlags() | 1)
          );
       } else {
          this.goBack(false);

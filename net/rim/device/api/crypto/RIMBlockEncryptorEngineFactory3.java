@@ -29,11 +29,11 @@ final class RIMBlockEncryptorEngineFactory3 extends EncryptorFactory {
 
       if (algorithm.equals("ElGamal")) {
          if (stream == null) {
-            throw new Object();
+            throw new IllegalArgumentException();
          }
 
          DHPublicKey publicKey = (DHPublicKey)key;
-         DHKeyPair keyPair = (DHKeyPair)(new Object(publicKey.getDHCryptoSystem()));
+         DHKeyPair keyPair = new DHKeyPair(publicKey.getDHCryptoSystem());
          byte[] keyData = keyPair.getDHPublicKey().getPublicKeyData();
          int bitLength = CryptoByteArrayArithmetic.getNumBits(keyData);
          stream.write(bitLength >> 8);
@@ -42,7 +42,7 @@ final class RIMBlockEncryptorEngineFactory3 extends EncryptorFactory {
          stream.write(keyData, keyData.length - byteLength, byteLength);
          return new ElGamalEncryptorEngine(publicKey, keyPair);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 }

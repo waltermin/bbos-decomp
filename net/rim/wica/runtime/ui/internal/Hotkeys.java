@@ -7,7 +7,7 @@ import net.rim.device.api.util.IntIntHashtable;
 import net.rim.wica.runtime.resources.RuntimeResources;
 
 final class Hotkeys {
-   private static IntIntHashtable _map = (IntIntHashtable)(new Object());
+   private static IntIntHashtable _map = new IntIntHashtable();
    private static Locale _locale;
 
    static final int map(char key) {

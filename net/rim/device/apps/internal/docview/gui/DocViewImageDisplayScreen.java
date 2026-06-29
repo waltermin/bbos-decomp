@@ -13,7 +13,7 @@ final class DocViewImageDisplayScreen extends DocViewDisplayScreen {
 
       label45:
       try {
-         flipImage = paramsHash.get(10);
+         flipImage = (Integer)paramsHash.get(10);
       } finally {
          break label45;
       }
@@ -22,7 +22,7 @@ final class DocViewImageDisplayScreen extends DocViewDisplayScreen {
 
       label41:
       try {
-         presentationValue = paramsHash.get(13);
+         presentationValue = (Byte)paramsHash.get(13);
       } finally {
          break label41;
       }
@@ -71,7 +71,7 @@ final class DocViewImageDisplayScreen extends DocViewDisplayScreen {
 
       if (performHide) {
          if (super._titleField.getIndex() != -1) {
-            this.setTitle((Field)((Object)null));
+            this.setTitle((Field)null);
          } else {
             this.setTitle(super._titleField);
             this.displayRetrievedPercentage();
@@ -165,26 +165,19 @@ final class DocViewImageDisplayScreen extends DocViewDisplayScreen {
             domIDPrefix = "EnlargeAllDomID";
             queryDomID = super._clientRequest._arbDOMID;
          } else {
-            domIDPrefix = ((StringBuffer)(new Object()))
-               .append(super._isEmbScreen ? ((StringBuffer)(new Object())).append(super._domID).append("/").toString() : "")
-               .append("EnlargeAllDomID")
-               .toString();
+            domIDPrefix = (super._isEmbScreen ? super._domID + "/" : "") + "EnlargeAllDomID";
          }
 
          String stringRect = CommandHandler.getStringRect(query._cropRect);
-         int blockCount = this.getBlockCount(
-            ((StringBuffer)(new Object())).append(domIDPrefix).append("/").append(queryDomID).append("/").append(stringRect).toString()
-         );
+         int blockCount = this.getBlockCount(domIDPrefix + "/" + queryDomID + "/" + stringRect);
          if (blockCount <= 0 && query._firstImage) {
-            blockCount = this.getBlockCount(((StringBuffer)(new Object())).append(domIDPrefix).append("/").append(stringRect).toString());
+            blockCount = this.getBlockCount(domIDPrefix + "/" + stringRect);
          }
 
          for (int j = 0; j < blockCount; j++) {
-            byte[] data = this.getSavedUCSData(
-               ((StringBuffer)(new Object())).append(domIDPrefix).append("/").append(queryDomID).append("/").append(stringRect).toString(), j
-            );
+            byte[] data = this.getSavedUCSData(domIDPrefix + "/" + queryDomID + "/" + stringRect, j);
             if (data == null && query._firstImage) {
-               data = this.getSavedUCSData(((StringBuffer)(new Object())).append(domIDPrefix).append("/").append(stringRect).toString(), j);
+               data = this.getSavedUCSData(domIDPrefix + "/" + stringRect, j);
             }
 
             if (data != null) {

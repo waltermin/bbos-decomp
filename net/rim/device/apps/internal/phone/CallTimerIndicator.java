@@ -18,7 +18,7 @@ import net.rim.device.apps.internal.phone.resource.PhoneResources;
 public final class CallTimerIndicator implements Indicator, PhoneEventListener, CallTimerListener, CallManager$Listener, TestPoint {
    private IndicatorManager _indicatorManager;
    private int _callTimerCount;
-   private StringBuffer _strBuffer = (StringBuffer)(new Object());
+   private StringBuffer _strBuffer = new StringBuffer();
    private static final int STARTING_CALL_TIMER_VALUE = 0;
    private static final int INVALID_CALL_TIMER_VALUE = -1;
    private static final long GUID = -2142843617924625277L;
@@ -116,7 +116,7 @@ public final class CallTimerIndicator implements Indicator, PhoneEventListener, 
 
    @Override
    public final void test(Object id, Object testvalue) {
-      if (testvalue instanceof Object) {
+      if (testvalue instanceof Integer) {
          Integer integer = (Integer)testvalue;
          this.setTimerCount(integer);
       }

@@ -87,7 +87,7 @@ public final class MIMEContentVerbRepository {
    private static final MenuItem[] combineMenuItems(Verb[] verbs, ContextObject context) {
       MenuItem[] menuItems = null;
       if (verbs != null && verbs.length > 0) {
-         Vector vector = (Vector)(new Object());
+         Vector vector = new Vector();
 
          for (int idx = verbs.length - 1; idx >= 0; idx--) {
             Verb verb = verbs[idx];
@@ -102,7 +102,7 @@ public final class MIMEContentVerbRepository {
          }
 
          if (vector.size() > 0) {
-            menuItems = new Object[vector.size()];
+            menuItems = new MenuItem[vector.size()];
             vector.copyInto(menuItems);
          }
       }

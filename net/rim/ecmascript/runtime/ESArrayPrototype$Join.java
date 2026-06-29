@@ -23,7 +23,7 @@ class ESArrayPrototype$Join extends HostFunction {
          separator = Convert.toString(parm);
       }
 
-      StringBuffer result = (StringBuffer)(new Object(Misc.separatedArraySize(length, separator.length())));
+      StringBuffer result = new StringBuffer(Misc.separatedArraySize(length, separator.length()));
       if (length != 0) {
          result.append(Convert.toJoinString(this.getThis().getIndex(0), locale));
 

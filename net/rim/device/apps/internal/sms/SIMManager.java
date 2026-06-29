@@ -20,7 +20,7 @@ import net.rim.device.apps.internal.sms.resources.SMSResources;
 import net.rim.device.internal.proxy.Proxy;
 
 public final class SIMManager implements SIMCardStatusListener, SIMCardSecurityListener, DialogClosedListener {
-   private Vector _smsRequestQueue = (Vector)(new Object());
+   private Vector _smsRequestQueue = new Vector();
    private Dialog _simFullDialog;
    private Dialog _simFaultDialog;
    private static final long SIM_MANAGER = 172149956913108052L;
@@ -125,8 +125,8 @@ public final class SIMManager implements SIMCardStatusListener, SIMCardSecurityL
             id = 0;
          }
 
-         String message = MessageFormat.format(SMSResources.getString(400), new Object[]{messages[id]});
-         this._simFaultDialog = (Dialog)(new Object(0, message, 0, Bitmap.getPredefinedBitmap(2), 33554432));
+         String message = MessageFormat.format(SMSResources.getString(400), new String[]{messages[id]});
+         this._simFaultDialog = new Dialog(0, message, 0, Bitmap.getPredefinedBitmap(2), 33554432);
          this._simFaultDialog.setDialogClosedListener(this);
          this._simFaultDialog.show();
       }
@@ -135,7 +135,7 @@ public final class SIMManager implements SIMCardStatusListener, SIMCardSecurityL
    @Override
    public final synchronized void smsEFFull() {
       if (this._simFullDialog == null) {
-         this._simFullDialog = (Dialog)(new Object(0, SMSResources.getString(740), 0, Bitmap.getPredefinedBitmap(2), 33554432));
+         this._simFullDialog = new Dialog(0, SMSResources.getString(740), 0, Bitmap.getPredefinedBitmap(2), 33554432);
          this._simFullDialog.setDialogClosedListener(this);
          this._simFullDialog.show();
       }
@@ -252,7 +252,7 @@ public final class SIMManager implements SIMCardStatusListener, SIMCardSecurityL
          pin = "2";
       }
 
-      String message = MessageFormat.format(SMSResources.getString(resourceID), new Object[]{pin, pin});
+      String message = MessageFormat.format(SMSResources.getString(resourceID), new String[]{pin, pin});
       Status.show(message, Bitmap.getPredefinedBitmap(0), 3000, 33554432, true, false, -2147483645);
    }
 

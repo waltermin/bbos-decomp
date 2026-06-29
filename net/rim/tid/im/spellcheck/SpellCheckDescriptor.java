@@ -19,14 +19,14 @@ import net.rim.vm.WeakReference;
 
 public class SpellCheckDescriptor implements InputMethodDescriptor, InvokableActionProducer, SpellCheckConstants, LingDataRegistryListener {
    Locale[] _locales;
-   IntHashtable _possiblySupportedLocalesMap = (IntHashtable)(new Object());
-   IntHashtable _currentlySupportedLocalesMap = (IntHashtable)(new Object());
+   IntHashtable _possiblySupportedLocalesMap = new IntHashtable();
+   IntHashtable _currentlySupportedLocalesMap = new IntHashtable();
    String[] _supportedLocaleNames = new String[]{"en", "", "en", "US", "en", "GB", "en", "NL", "de", "", "es", "", "fr", "", "it", "", "pt", "", "pt", "BR"};
-   private WeakReference _spellCheckIM = (WeakReference)(new Object(null));
+   private WeakReference _spellCheckIM = new WeakReference(null);
    private InvokableAction[] _invokableActionCache;
    private InvokableAction[] _runningInvokableActionCache;
    private AddressBookDataRepository _addrBookRepository;
-   static final Locale[] EMPTY_LOCALES = new Object[0];
+   static final Locale[] EMPTY_LOCALES = new Locale[0];
 
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
@@ -35,7 +35,7 @@ public class SpellCheckDescriptor implements InputMethodDescriptor, InvokableAct
       ic.setInvokableActionProducer(this);
       LingDataRegistry reg = ic.getLingDataRegistry();
       if (reg != null) {
-         Vector lingDataSupportedLocales = (Vector)(new Object());
+         Vector lingDataSupportedLocales = new Vector();
 
          for (int i = 0; i < this._supportedLocaleNames.length; i += 2) {
             Locale locale = Locale.get(this._supportedLocaleNames[i], this._supportedLocaleNames[i + 1]);
@@ -53,7 +53,7 @@ public class SpellCheckDescriptor implements InputMethodDescriptor, InvokableAct
       }
 
       try {
-         this._addrBookRepository = (AddressBookDataRepository)(new Object());
+         this._addrBookRepository = new AddressBookDataRepository();
       } catch (Throwable var7) {
          Utils.reportException(e);
          return;
@@ -106,7 +106,7 @@ public class SpellCheckDescriptor implements InputMethodDescriptor, InvokableAct
 
    @Override
    public void disposeCache() {
-      this._addrBookRepository = (AddressBookDataRepository)(new Object());
+      this._addrBookRepository = new AddressBookDataRepository();
    }
 
    @Override
@@ -126,7 +126,7 @@ public class SpellCheckDescriptor implements InputMethodDescriptor, InvokableAct
 
    @Override
    public InvokableAction[] getIMActions(Object comp) {
-      if (!(comp instanceof Object)) {
+      if (!(comp instanceof Field)) {
          return null;
       }
 
@@ -147,7 +147,7 @@ public class SpellCheckDescriptor implements InputMethodDescriptor, InvokableAct
       if (!SpellCheckUtilities.isSpellCheckVariant(currLocale)) {
          if (SpellCheckUtilities.isSpellCheckAvailable(currLocale)) {
             if (this._invokableActionCache == null) {
-               this._invokableActionCache = new Object[]{new SpellCheckAction(6, false)};
+               this._invokableActionCache = new InvokableAction[]{new SpellCheckAction(6, false)};
             }
 
             return this._invokableActionCache;
@@ -156,7 +156,7 @@ public class SpellCheckDescriptor implements InputMethodDescriptor, InvokableAct
          }
       } else {
          if (this._runningInvokableActionCache == null) {
-            this._runningInvokableActionCache = new Object[]{new SpellCheckAction(7, true), new SpellCheckAction(8, false)};
+            this._runningInvokableActionCache = new InvokableAction[]{new SpellCheckAction(7, true), new SpellCheckAction(8, false)};
          }
 
          return this._runningInvokableActionCache;
@@ -166,7 +166,7 @@ public class SpellCheckDescriptor implements InputMethodDescriptor, InvokableAct
    private void generateAvailableLocales() {
       synchronized (this._currentlySupportedLocalesMap) {
          int size = this._currentlySupportedLocalesMap.size();
-         this._locales = new Object[size];
+         this._locales = new Locale[size];
          IntEnumeration enumer = this._currentlySupportedLocalesMap.keys();
 
          for (int i = 0; i < size && enumer.hasMoreElements(); i++) {

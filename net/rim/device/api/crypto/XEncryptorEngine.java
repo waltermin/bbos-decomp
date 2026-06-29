@@ -11,11 +11,11 @@ public final class XEncryptorEngine implements BlockEncryptorEngine {
    private byte[] _buffer;
 
    public final InitializationVector getPostWhitening() {
-      return (InitializationVector)(new Object(this._postWhitening));
+      return new InitializationVector(this._postWhitening);
    }
 
    public final InitializationVector getPreWhitening() {
-      return (InitializationVector)(new Object(this._preWhitening));
+      return new InitializationVector(this._preWhitening);
    }
 
    public final void setWhiteningVectors(InitializationVector preWhitening, InitializationVector postWhitening) {
@@ -23,7 +23,7 @@ public final class XEncryptorEngine implements BlockEncryptorEngine {
          this._preWhitening = preWhitening.getData();
          this._postWhitening = postWhitening.getData();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -34,7 +34,7 @@ public final class XEncryptorEngine implements BlockEncryptorEngine {
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object())).append(this._engine.getAlgorithm()).append("/X").toString();
+      return this._engine.getAlgorithm() + "/X";
    }
 
    @Override
@@ -55,7 +55,7 @@ public final class XEncryptorEngine implements BlockEncryptorEngine {
             ciphertext[ciphertextOffset + i] = (byte)(ciphertext[ciphertextOffset + i] ^ this._postWhitening[i]);
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -65,22 +65,22 @@ public final class XEncryptorEngine implements BlockEncryptorEngine {
 
    public XEncryptorEngine(BlockEncryptorEngine engine, InitializationVector preWhitening, InitializationVector postWhitening) {
       if (engine == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._engine = engine;
       this._blockLength = engine.getBlockLength();
       if (preWhitening == null) {
-         preWhitening = (InitializationVector)(new Object(this._blockLength));
+         preWhitening = new InitializationVector(this._blockLength);
       } else if (preWhitening.getLength() != this._blockLength) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._preWhitening = preWhitening.getData();
       if (postWhitening == null) {
-         postWhitening = (InitializationVector)(new Object(this._blockLength));
+         postWhitening = new InitializationVector(this._blockLength);
       } else if (postWhitening.getLength() != this._blockLength) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._postWhitening = postWhitening.getData();
@@ -95,18 +95,18 @@ public final class XEncryptorEngine implements BlockEncryptorEngine {
       byte[] target = new byte[blockLength];
 
       try {
-         InitializationVector preIv = (InitializationVector)(new Object(PRE_IV));
-         InitializationVector postIv = (InitializationVector)(new Object(POST_IV));
-         XEncryptorEngine encryptorEngine = new XEncryptorEngine((BlockEncryptorEngine)(new Object()), preIv, postIv);
+         InitializationVector preIv = new InitializationVector(PRE_IV);
+         InitializationVector postIv = new InitializationVector(POST_IV);
+         XEncryptorEngine encryptorEngine = new XEncryptorEngine(new TestEngine(), preIv, postIv);
          encryptorEngine.encrypt(SelfTestData_PK1.ENCRYPTION_PLAIN_TEXT, 0, target, 0);
          if (Arrays.equals(target, 0, CIPHER_TEXT, 0, blockLength)) {
             return;
          }
       } finally {
-         throw new Object();
+         throw new CryptoSelfTestError();
       }
 
-      throw new Object();
+      throw new CryptoSelfTestError();
    }
 
    static {

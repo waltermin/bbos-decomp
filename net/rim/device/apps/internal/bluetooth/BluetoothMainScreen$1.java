@@ -6,7 +6,7 @@ import net.rim.device.apps.api.options.OptionsProviderRegistration$OptionsProvid
 class BluetoothMainScreen$1 implements OptionsProviderRegistration$OptionsProvider {
    @Override
    public Vector getOptionsItems() {
-      Vector v = (Vector)(new Object(1));
+      Vector v = new Vector(1);
       v.addElement(new BluetoothMainScreen());
       return v;
    }

@@ -1,6 +1,7 @@
 package net.rim.device.cldc.io.wtls;
 
 import com.sun.cldc.io.ConnectionBaseInterface;
+import java.io.IOException;
 import javax.microedition.io.Connection;
 import javax.microedition.io.Connector;
 import javax.microedition.io.DatagramConnection;
@@ -14,14 +15,14 @@ public final class Protocol implements ConnectionBaseInterface {
    }
 
    @Override
-   public final Connection openPrim(String name, int mode, boolean timeouts) {
+   public final Connection openPrim(String name, int mode, boolean timeouts) throws IOException {
       try {
-         String url = ((StringBuffer)(new Object("udp:"))).append(name).toString();
+         String url = "udp:" + name;
          DatagramConnection stream = (DatagramConnection)Connector.open(url);
-         UdpAddress address = (UdpAddress)(new Object(name));
+         UdpAddress address = new UdpAddress(name);
          return new WTLS20Connection(stream, address.getApn(), url);
       } finally {
-         throw new Object("Unable to open TLS connection.");
+         throw new IOException("Unable to open TLS connection.");
       }
    }
 }

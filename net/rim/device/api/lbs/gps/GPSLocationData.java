@@ -102,19 +102,18 @@ public final class GPSLocationData {
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object("GPSLocationData {latitude: ")))
-         .append(this.getLatitude())
-         .append(", longitude: ")
-         .append(this.getLongitude())
-         .append(", speed: ")
-         .append(this._speed)
-         .append(", bearing: ")
-         .append(this._bearing)
-         .append(", satellites: ")
-         .append(this._satelliteCount)
-         .append(" is valid: ")
-         .append(this._isValid)
-         .append("}")
-         .toString();
+      return "GPSLocationData {latitude: "
+         + this.getLatitude()
+         + ", longitude: "
+         + this.getLongitude()
+         + ", speed: "
+         + this._speed
+         + ", bearing: "
+         + this._bearing
+         + ", satellites: "
+         + this._satelliteCount
+         + " is valid: "
+         + this._isValid
+         + "}";
    }
 }

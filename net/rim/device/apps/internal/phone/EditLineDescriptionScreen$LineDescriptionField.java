@@ -5,7 +5,7 @@ import net.rim.device.apps.internal.phone.resource.PhoneResources;
 
 final class EditLineDescriptionScreen$LineDescriptionField extends EditField {
    EditLineDescriptionScreen$LineDescriptionField(String description) {
-      super(((StringBuffer)(new Object())).append(PhoneResources.getString(6323)).append(": ").toString(), description, 20, 2201170739200L);
+      super(PhoneResources.getString(6323) + ": ", description, 20, 2201170739200L);
    }
 
    @Override

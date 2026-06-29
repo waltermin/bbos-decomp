@@ -8,13 +8,14 @@ import net.rim.device.api.ui.XYPoint;
 import net.rim.device.api.ui.XYRect;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 
 class AddressReferenceViewField$TooltipFieldManager extends HorizontalFieldManager {
    private LabelField _nameField;
    private LabelField _addressField;
    private Manager _labelManager;
    private Field _photoField;
-   private XYPoint _preferredPosition = (XYPoint)(new Object());
+   private XYPoint _preferredPosition = new XYPoint();
    private Field _parentField;
    private int _maxWidth;
    private boolean _rightJustified;
@@ -27,7 +28,7 @@ class AddressReferenceViewField$TooltipFieldManager extends HorizontalFieldManag
       this._parentField = parentField;
       this._rightJustified = (flags & 1) != 0;
       this._focusRectAlignment = (flags & 2) != 0;
-      this._labelManager = (Manager)(new Object());
+      this._labelManager = new VerticalFieldManager();
       this.add(this._labelManager);
       this.setTag(AddressReferenceViewField.EMAIL_ADDRESS_TOOLTIP_TAG);
    }

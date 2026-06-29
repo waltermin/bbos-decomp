@@ -18,7 +18,7 @@ public final class MissedCallIndicator implements Indicator, TestPoint {
    private MissedCallPopup _missedCallPopup;
    private int _newMissedCallsCount;
    private Action _action;
-   private StringBuffer _workBuffer = (StringBuffer)(new Object());
+   private StringBuffer _workBuffer = new StringBuffer();
    private static MissedCallIndicator _instance;
    private static final long NEW_MISSED_CALLS_ID = -66177064401403627L;
    public static final long GUID = 4293092249614032519L;
@@ -110,7 +110,7 @@ public final class MissedCallIndicator implements Indicator, TestPoint {
 
    private final void disable(boolean updateIndicators) {
       if (this._action != null) {
-         this._action.set(2, (String)((Object)null));
+         this._action.set(2, (String)null);
       }
 
       if (updateIndicators) {
@@ -213,7 +213,7 @@ public final class MissedCallIndicator implements Indicator, TestPoint {
 
    @Override
    public final void test(Object id, Object value) {
-      if (value instanceof Object) {
+      if (value instanceof Boolean) {
          Boolean b = (Boolean)value;
          if (b) {
             this.enable();

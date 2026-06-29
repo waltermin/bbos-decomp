@@ -2,9 +2,11 @@ package net.rim.device.cldc.io.file;
 
 import java.io.DataInputStream;
 import java.io.OutputStream;
+import net.rim.device.api.io.file.FileIOException;
 import net.rim.device.api.system.ApplicationProcess;
 import net.rim.device.api.system.CodeSigningKey;
 import net.rim.device.api.system.ControlledAccess;
+import net.rim.device.api.system.ControlledAccessException;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.internal.io.file.EncryptedFile;
 import net.rim.device.internal.io.file.FileHandleProvider;
@@ -25,7 +27,7 @@ final class PosixFileOutputStream extends OutputStream implements FileHandleProv
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public PosixFileOutputStream(
       int callerModule, int fs, String fileName, PosixFileConnection connection, long startPos, boolean autoResolveEncryptedFiles, boolean createFile
-   ) {
+   ) throws FileIOException {
       this._rootId = fs;
       this._buffer = new byte[FileSystem.getMaxWriteSize(this._rootId)];
       this._offset = 0;
@@ -45,7 +47,7 @@ final class PosixFileOutputStream extends OutputStream implements FileHandleProv
       this._cleanupRunnable = new PosixFileOutputStream$FileOutputStreamCleanupRunnable(this);
       ((ApplicationProcess)Process.currentProcess()).addCleanupRunnable(this._cleanupRunnable);
       if (autoResolveEncryptedFiles && StringUtilities.endsWithIgnoreCase(fileName, PosixFileConnection.ENCRYPTED_MEDIA_EXTENSION, 1701707776)) {
-         DataInputStream in = (DataInputStream)(new Object(new PosixFileInputStream(fs, this._handle)));
+         DataInputStream in = new DataInputStream(new PosixFileInputStream(fs, this._handle));
          boolean var30 = false /* VF: Semaphore variable */;
 
          try {
@@ -55,7 +57,7 @@ final class PosixFileOutputStream extends OutputStream implements FileHandleProv
             if (callerModule != -1) {
                if (key != null) {
                   if (!ControlledAccess.verifyCodeModuleSignature(callerModule, key)) {
-                     throw new Object(key);
+                     throw new ControlledAccessException(key);
                   }
 
                   var30 = false;
@@ -98,7 +100,7 @@ final class PosixFileOutputStream extends OutputStream implements FileHandleProv
                byte[] block = new byte[16];
                long filePos = FileSystem.tell(this._handle);
                if (filePos == -1) {
-                  throw new Object(6);
+                  throw new FileIOException(6);
                }
 
                long status = this._encryptedFile.readBlocks(block);
@@ -119,9 +121,9 @@ final class PosixFileOutputStream extends OutputStream implements FileHandleProv
    }
 
    @Override
-   public final synchronized void write(int b) {
+   public final synchronized void write(int b) throws FileIOException {
       if (this._handle == -1) {
-         throw new Object(1000);
+         throw new FileIOException(1000);
       }
 
       if (this._available == 0) {
@@ -133,10 +135,10 @@ final class PosixFileOutputStream extends OutputStream implements FileHandleProv
    }
 
    @Override
-   public final synchronized void write(byte[] b, int off, int len) {
+   public final synchronized void write(byte[] b, int off, int len) throws FileIOException {
       if (off >= 0 && len >= 0 && b.length - len >= off) {
          if (this._handle == -1) {
-            throw new Object(1000);
+            throw new FileIOException(1000);
          }
 
          int bytesCopied = 0;
@@ -153,7 +155,7 @@ final class PosixFileOutputStream extends OutputStream implements FileHandleProv
             this._offset += bytesToCopy;
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -162,9 +164,9 @@ final class PosixFileOutputStream extends OutputStream implements FileHandleProv
       this.flush(true);
    }
 
-   private final void flush(boolean commit) {
+   private final void flush(boolean commit) throws FileIOException {
       if (this._handle == -1) {
-         throw new Object(1000);
+         throw new FileIOException(1000);
       }
 
       int bytesToWrite = this._buffer.length - this._available;
@@ -192,7 +194,7 @@ final class PosixFileOutputStream extends OutputStream implements FileHandleProv
             byte[] block = new byte[16];
             long filePos = FileSystem.tell(this._handle);
             if (filePos == -1) {
-               throw new Object(6);
+               throw new FileIOException(6);
             }
 
             long status = this._encryptedFile.readBlocks(block);

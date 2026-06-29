@@ -40,7 +40,7 @@ final class RecordNPlay extends Thread implements PlayerListener {
       // 02e: getfield net/rim/device/apps/internal/deviceselftest/TestMicrophone.p Ljavax/microedition/media/Player;
       // 031: ldc_w "net.rim.device.api.media.control.AudioPathControl"
       // 034: invokeinterface javax/microedition/media/Controllable.getControl (Ljava/lang/String;)Ljavax/microedition/media/Control; 2
-      // 039: checkcast java/lang/Object
+      // 039: checkcast net/rim/device/api/media/control/AudioPathControl
       // 03c: putfield net/rim/device/apps/internal/deviceselftest/TestMicrophone.apc Lnet/rim/device/api/media/control/AudioPathControl;
       // 03f: aload 0
       // 040: getfield net/rim/device/apps/internal/deviceselftest/RecordNPlay.handler Lnet/rim/device/apps/internal/deviceselftest/TestMicrophone;
@@ -133,12 +133,12 @@ final class RecordNPlay extends Thread implements PlayerListener {
       // 114: getfield net/rim/device/apps/internal/deviceselftest/TestMicrophone.p Ljavax/microedition/media/Player;
       // 117: ldc_w "RecordControl"
       // 11a: invokeinterface javax/microedition/media/Controllable.getControl (Ljava/lang/String;)Ljavax/microedition/media/Control; 2
-      // 11f: checkcast java/lang/Object
+      // 11f: checkcast javax/microedition/media/control/RecordControl
       // 122: astore 1
       // 123: aload 1
       // 124: ifnonnull 12a
       // 127: goto 20b
-      // 12a: new java/lang/Object
+      // 12a: new java/io/ByteArrayOutputStream
       // 12d: dup
       // 12e: invokespecial java/io/ByteArrayOutputStream.<init> ()V
       // 131: astore 2
@@ -176,7 +176,7 @@ final class RecordNPlay extends Thread implements PlayerListener {
       // 181: aload 2
       // 182: invokevirtual java/io/ByteArrayOutputStream.toByteArray ()[B
       // 185: astore 3
-      // 186: new java/lang/Object
+      // 186: new java/io/ByteArrayInputStream
       // 189: dup
       // 18a: aload 3
       // 18b: bipush 0
@@ -213,7 +213,7 @@ final class RecordNPlay extends Thread implements PlayerListener {
       // 1d3: getfield net/rim/device/apps/internal/deviceselftest/TestMicrophone.p Ljavax/microedition/media/Player;
       // 1d6: ldc_w "net.rim.device.api.media.control.AudioPathControl"
       // 1d9: invokeinterface javax/microedition/media/Controllable.getControl (Ljava/lang/String;)Ljavax/microedition/media/Control; 2
-      // 1de: checkcast java/lang/Object
+      // 1de: checkcast net/rim/device/api/media/control/AudioPathControl
       // 1e1: putfield net/rim/device/apps/internal/deviceselftest/TestMicrophone.apc Lnet/rim/device/api/media/control/AudioPathControl;
       // 1e4: aload 0
       // 1e5: getfield net/rim/device/apps/internal/deviceselftest/RecordNPlay.handler Lnet/rim/device/apps/internal/deviceselftest/TestMicrophone;

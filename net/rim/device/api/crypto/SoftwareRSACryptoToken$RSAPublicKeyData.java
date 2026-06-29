@@ -9,7 +9,7 @@ final class SoftwareRSACryptoToken$RSAPublicKeyData implements CryptoTokenPublic
    private byte[] _n;
    private int _hashCode;
 
-   public SoftwareRSACryptoToken$RSAPublicKeyData(RSACryptoSystem cryptoSystem, byte[] e, byte[] n) {
+   public SoftwareRSACryptoToken$RSAPublicKeyData(RSACryptoSystem cryptoSystem, byte[] e, byte[] n) throws InvalidKeyException {
       if (cryptoSystem != null && e != null && n != null) {
          int modulusLength = cryptoSystem.getModulusLength();
          if (e.length != 0 && e.length <= modulusLength && n.length == modulusLength && (e.length != 1 || e[0] != 1)) {
@@ -18,10 +18,10 @@ final class SoftwareRSACryptoToken$RSAPublicKeyData implements CryptoTokenPublic
             this._n = Arrays.copy(n);
             this.setHashCode();
          } else {
-            throw new Object();
+            throw new InvalidKeyException();
          }
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

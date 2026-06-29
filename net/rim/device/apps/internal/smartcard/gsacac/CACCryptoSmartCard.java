@@ -2,6 +2,7 @@ package net.rim.device.apps.internal.smartcard.gsacac;
 
 import net.rim.device.api.crypto.CryptoSmartCard;
 import net.rim.device.api.crypto.CryptoToken;
+import net.rim.device.api.crypto.NoSuchAlgorithmException;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.smartcard.AnswerToReset;
 import net.rim.device.api.smartcard.SmartCardCapabilities;
@@ -22,14 +23,14 @@ public class CACCryptoSmartCard extends CryptoSmartCard implements Persistable {
       59, -37, -106, 0, -128, 31, 3, 0, 49, -64, 100, 119, -29, 3, 0, -126, -112, 0, -63
    };
    private static final byte[] GEMALTO_ACCESS_64K_V2 = new byte[]{59, -107, -107, 64, -1, -82, 1, 3, 0, 0};
-   private static final AnswerToReset _galacticATR = (AnswerToReset)(new Object(GALACTIC));
-   private static final AnswerToReset _schlumbergerATR = (AnswerToReset)(new Object(SCHLUMBERGER));
-   private static final AnswerToReset _oberthurATR = (AnswerToReset)(new Object(OBERTHUR));
-   private static final AnswerToReset _safeNetATR = (AnswerToReset)(new Object(SAFENET));
-   private static final AnswerToReset _gemplusGemxpresso64KATR = (AnswerToReset)(new Object(GEMPLUS_GEMXPRESSO_64K));
-   private static final AnswerToReset _axaltoAccess64KATR = (AnswerToReset)(new Object(AXALTO_ACCESS_64K));
-   private static final AnswerToReset _oberthur72KATR = (AnswerToReset)(new Object(OBERTHUR_72K_DUAL_INTERFACE_CONTACT_LESS));
-   private static final AnswerToReset _gemaltoAccess64KV2 = (AnswerToReset)(new Object(GEMALTO_ACCESS_64K_V2));
+   private static final AnswerToReset _galacticATR = new AnswerToReset(GALACTIC);
+   private static final AnswerToReset _schlumbergerATR = new AnswerToReset(SCHLUMBERGER);
+   private static final AnswerToReset _oberthurATR = new AnswerToReset(OBERTHUR);
+   private static final AnswerToReset _safeNetATR = new AnswerToReset(SAFENET);
+   private static final AnswerToReset _gemplusGemxpresso64KATR = new AnswerToReset(GEMPLUS_GEMXPRESSO_64K);
+   private static final AnswerToReset _axaltoAccess64KATR = new AnswerToReset(AXALTO_ACCESS_64K);
+   private static final AnswerToReset _oberthur72KATR = new AnswerToReset(OBERTHUR_72K_DUAL_INTERFACE_CONTACT_LESS);
+   private static final AnswerToReset _gemaltoAccess64KV2 = new AnswerToReset(GEMALTO_ACCESS_64K_V2);
 
    public static void libMain(String[] args) {
       CACCryptoSmartCard smartCard = new CACCryptoSmartCard();
@@ -70,15 +71,15 @@ public class CACCryptoSmartCard extends CryptoSmartCard implements Persistable {
 
    @Override
    protected SmartCardCapabilities getCapabilitiesImpl() {
-      return (SmartCardCapabilities)(new Object(3));
+      return new SmartCardCapabilities(3);
    }
 
    @Override
-   public CryptoToken getCryptoToken(String algorithm) {
+   public CryptoToken getCryptoToken(String algorithm) throws NoSuchAlgorithmException {
       if (algorithm.equals("RSA")) {
          return new CACRSACryptoToken();
       } else {
-         throw new Object();
+         throw new NoSuchAlgorithmException();
       }
    }
 }

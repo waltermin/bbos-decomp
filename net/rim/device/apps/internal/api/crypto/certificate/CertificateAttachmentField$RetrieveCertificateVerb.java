@@ -17,7 +17,7 @@ class CertificateAttachmentField$RetrieveCertificateVerb extends Verb {
    @Override
    public Object invoke(Object context) {
       if (this._unknownMimePartModel.isMoreAvailable()) {
-         ((EmailMoreVerb)(new Object(this._unknownMimePartModel, (byte)2))).invoke(context);
+         new EmailMoreVerb(this._unknownMimePartModel, (byte)2).invoke(context);
       }
 
       return null;

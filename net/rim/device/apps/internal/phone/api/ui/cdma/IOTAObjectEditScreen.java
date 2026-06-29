@@ -17,9 +17,9 @@ final class IOTAObjectEditScreen extends MainScreen {
       this.setTitle("Object Editor");
       this._oldObject = oldObject;
       this._oldValue = oldValue;
-      this._newObject = (EditField)(new Object("Object: ", this._oldObject));
+      this._newObject = new EditField("Object: ", this._oldObject);
       this._newObject.setDirty(false);
-      this._newValue = (EditField)(new Object("Value: ", this._oldValue));
+      this._newValue = new EditField("Value: ", this._oldValue);
       this._newValue.setDirty(false);
       this.add(this._newObject);
       this.add(this._newValue);

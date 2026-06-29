@@ -12,10 +12,11 @@ import net.rim.device.apps.api.calendar.ota.CICALEventLogger;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.service.ServiceIdentifier;
 import net.rim.device.apps.api.transmission.TransmissionServiceManager;
+import net.rim.device.apps.api.utility.serialization.SerializationException;
 import net.rim.device.internal.proxy.Proxy;
 
 public class CICALConfigConverter extends CICALBaseConverter implements GlobalEventListener {
-   ContextObject _otaConfigContext = (ContextObject)(new Object());
+   ContextObject _otaConfigContext = new ContextObject();
    private static final long SINGLETON_ID = -3049572849057432930L;
    private static final byte[] CONFIG_COMPONENT_HEADER = new byte[]{16, 1, 1, 4};
 
@@ -56,7 +57,7 @@ public class CICALConfigConverter extends CICALBaseConverter implements GlobalEv
       }
 
       CICALConfigConverter$OTAConfigEvent configEvent = (CICALConfigConverter$OTAConfigEvent)inputObject;
-      DataBuffer dataBuffer = (DataBuffer)(new Object());
+      DataBuffer dataBuffer = new DataBuffer();
       int command = configEvent.getCommand();
       dataBuffer.writeByte(command);
       dataBuffer.write(CONFIG_COMPONENT_HEADER);
@@ -85,7 +86,7 @@ public class CICALConfigConverter extends CICALBaseConverter implements GlobalEv
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
    public Object convert(byte[] inputBytes, Object contextObject) {
-      DataBuffer data = (DataBuffer)(new Object(inputBytes, 0, inputBytes.length, true));
+      DataBuffer data = new DataBuffer(inputBytes, 0, inputBytes.length, true);
       byte result = 0;
       CalendarService calendarService = (CalendarService)ContextObject.get(contextObject, 6741741218837016896L);
       CICALConfigConverter$OTAConfigEvent configEvent = null;
@@ -94,7 +95,7 @@ public class CICALConfigConverter extends CICALBaseConverter implements GlobalEv
       try {
          byte command = data.readByte();
          if (data.readByte() != 16) {
-            throw new Object("Wrong version number");
+            throw new SerializationException("Wrong version number");
          }
 
          byte componentId = data.readByte();
@@ -103,16 +104,16 @@ public class CICALConfigConverter extends CICALBaseConverter implements GlobalEv
          }
 
          if (componentId != 1) {
-            throw new Object("Expecting component ID");
+            throw new SerializationException("Expecting component ID");
          }
 
          int intData = data.readCompressedInt();
          if (intData != 1) {
-            throw new Object("Expecting length of 1");
+            throw new SerializationException("Expecting length of 1");
          }
 
          if (data.readByte() != 4) {
-            throw new Object("Wrong component type: Configuration");
+            throw new SerializationException("Wrong component type: Configuration");
          }
 
          configEvent = new CICALConfigConverter$OTAConfigEvent(command, calendarService);
@@ -159,8 +160,8 @@ public class CICALConfigConverter extends CICALBaseConverter implements GlobalEv
          }
       } catch (Throwable var17) {
          result = 1;
-         if (e instanceof Object) {
-            throw (Object)e;
+         if (e instanceof SerializationException) {
+            throw (SerializationException)e;
          }
          break label155;
       }
@@ -256,7 +257,7 @@ public class CICALConfigConverter extends CICALBaseConverter implements GlobalEv
                   calendarService = (CalendarService)services[i];
                   slowSyncConverter.startCalendarSlowSync(-8535280995918704471L, calendarService, Long.MIN_VALUE, Long.MAX_VALUE, (byte)82, data0 == 1, false);
                }
-            } else if (object0 instanceof Object) {
+            } else if (object0 instanceof CalendarService) {
                calendarService = (CalendarService)object0;
                slowSyncConverter.startCalendarSlowSync(-8535280995918704471L, calendarService);
                return;
@@ -277,9 +278,9 @@ public class CICALConfigConverter extends CICALBaseConverter implements GlobalEv
             this.sendDeviceConfiguration(calendarService);
          }
       } else if (guid == 1103480146496078488L && object0 != null) {
-         CalendarKey[] calendarKeys = (Object[])object0;
+         CalendarKey[] calendarKeys = (CalendarKey[])object0;
          CICALEventLogger.logEvent(1328152576 | (byte)data0, 0);
-         CalendarService[] services = new Object[0];
+         CalendarService[] services = new CalendarService[0];
 
          for (int i = 0; i < calendarKeys.length; i++) {
             CalendarKey key = calendarKeys[i];
@@ -303,7 +304,7 @@ public class CICALConfigConverter extends CICALBaseConverter implements GlobalEv
                }
             }
          }
-      } else if (guid == 158775118060600435L && object0 != null && object1 != null && object0 instanceof Object) {
+      } else if (guid == 158775118060600435L && object0 != null && object1 != null && object0 instanceof String) {
          String cid = (String)object0;
          if (cid.equals("CICAL")) {
             CalendarService service = (CalendarService)object1;

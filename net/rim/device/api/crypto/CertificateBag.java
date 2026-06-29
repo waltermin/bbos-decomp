@@ -22,7 +22,7 @@ public class CertificateBag extends SafeBag {
       // 01: getfield net/rim/device/api/crypto/SafeBag._parsed Z
       // 04: ifeq 08
       // 07: return
-      // 08: new java/lang/Object
+      // 08: new net/rim/device/api/crypto/asn1/ASN1InputByteArray
       // 0b: dup
       // 0c: aload 0
       // 0d: getfield net/rim/device/api/crypto/SafeBag._bagData [B
@@ -46,7 +46,7 @@ public class CertificateBag extends SafeBag {
       // 2f: invokevirtual net/rim/device/api/crypto/asn1/ASN1InputByteArray.readOctetString (II)[B
       // 32: astore 3
       // 33: aload 0
-      // 34: new java/lang/Object
+      // 34: new net/rim/device/api/crypto/certificate/x509/X509Certificate
       // 37: dup
       // 38: aload 3
       // 39: invokespecial net/rim/device/api/crypto/certificate/x509/X509Certificate.<init> ([B)V
@@ -54,7 +54,7 @@ public class CertificateBag extends SafeBag {
       // 3f: aload 0
       // 40: getfield net/rim/device/api/crypto/SafeBag._bagAttributes [B
       // 43: ifnull 9a
-      // 46: new java/lang/Object
+      // 46: new net/rim/device/api/crypto/asn1/ASN1InputByteArray
       // 49: dup
       // 4a: aload 0
       // 4b: getfield net/rim/device/api/crypto/SafeBag._bagAttributes [B

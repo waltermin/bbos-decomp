@@ -8,7 +8,7 @@ public final class PGPKeyEncoder {
 
    public static final byte[] getEncoding(PGPCertificate certificate) {
       if (certificate == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return getEncoding(certificate.getEncoding());
       }
@@ -24,7 +24,7 @@ public final class PGPKeyEncoder {
       // Bytecode:
       // 00: aload 0
       // 01: ifnonnull 0c
-      // 04: new java/lang/Object
+      // 04: new java/lang/IllegalArgumentException
       // 07: dup
       // 08: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 0b: athrow
@@ -46,7 +46,7 @@ public final class PGPKeyEncoder {
       // 25: bipush 0
       // 26: aaload
       // 27: ifnonnull 32
-      // 2a: new java/lang/Object
+      // 2a: new java/lang/IllegalArgumentException
       // 2d: dup
       // 2e: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 31: athrow
@@ -54,7 +54,7 @@ public final class PGPKeyEncoder {
       // 33: bipush 0
       // 34: aaload
       // 35: astore 3
-      // 36: new java/lang/Object
+      // 36: new java/io/ByteArrayOutputStream
       // 39: dup
       // 3a: invokespecial java/io/ByteArrayOutputStream.<init> ()V
       // 3d: astore 4
@@ -105,7 +105,7 @@ public final class PGPKeyEncoder {
       // 95: astore 1
       // 96: goto 9a
       // 99: astore 1
-      // 9a: new java/lang/Object
+      // 9a: new java/lang/IllegalArgumentException
       // 9d: dup
       // 9e: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // a1: athrow

@@ -6,6 +6,7 @@ import net.rim.device.api.system.SMSPacketHeader;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.VerbProvider;
 import net.rim.device.apps.api.framework.registration.VerbRepository;
+import net.rim.device.apps.api.framework.verb.PopupVerbWrapper;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.internal.sms.SMSService;
 import net.rim.device.apps.internal.sms.SMSUiRegistry;
@@ -43,7 +44,7 @@ public class SMSVerbFactory implements GlobalEventListener {
 
       if (!SMSPacketHeader.isSendSupported()) {
          this._registerSMS = false;
-         applicationRegistry.replace(8570221746716860371L, new Object(this._registerSMS));
+         applicationRegistry.replace(8570221746716860371L, new Boolean(this._registerSMS));
          VerbRepository.getVerbRepository(-7881764549058890736L).deregister(this._smsComposeVerb, 3797587162219887872L);
          VerbRepository.getVerbRepository(-7881764549058890736L).deregister(this._smsComposeVerb, -2985347935260258684L);
          VerbRepository.getVerbRepository(-6761056765378641298L).deregister(this._smsComposeVerb, 3797587162219887872L);
@@ -61,9 +62,9 @@ public class SMSVerbFactory implements GlobalEventListener {
          SMSUiRegistry uiRegistry = SMSUiRegistry.getRegistry();
          Object delegate = uiRegistry.getCurrentUi();
          boolean composeRegistered = false;
-         if (delegate != null && delegate instanceof Object) {
-            ContextObject context = (ContextObject)(new Object(44));
-            Verb delegateCompose = ((VerbProvider)delegate).getVerbs(context, new Object[0]);
+         if (delegate != null && delegate instanceof VerbProvider) {
+            ContextObject context = new ContextObject(44);
+            Verb delegateCompose = ((VerbProvider)delegate).getVerbs(context, new Verb[0]);
             if (this._smsComposeVerb != delegateCompose) {
                this.updateRegisteredVerbs(delegateCompose, applicationRegistry);
                composeRegistered = true;
@@ -75,7 +76,7 @@ public class SMSVerbFactory implements GlobalEventListener {
 
          if (!this._registerSMS) {
             this._registerSMS = true;
-            applicationRegistry.replace(8570221746716860371L, new Object(this._registerSMS));
+            applicationRegistry.replace(8570221746716860371L, new Boolean(this._registerSMS));
             if (!composeRegistered) {
                VerbRepository.getVerbRepository(-7881764549058890736L).register(this._smsComposeVerb, 3797587162219887872L);
                if (SMSService.isEmailAddressAsSMSAddressSupported()) {
@@ -97,15 +98,15 @@ public class SMSVerbFactory implements GlobalEventListener {
 
    private Verb createUseOnceVerb() {
       if (SMSService.isEmailAddressAsSMSAddressSupported()) {
-         Verb[] wrappedVerbs = new Object[]{new UseOnceSMSAddressVerb(this._smsComposeVerb, 0), new UseOnceSMSAddressVerb(this._smsComposeVerb, 1)};
-         return (Verb)(new Object(
+         Verb[] wrappedVerbs = new Verb[]{new UseOnceSMSAddressVerb(this._smsComposeVerb, 0), new UseOnceSMSAddressVerb(this._smsComposeVerb, 1)};
+         return new PopupVerbWrapper(
             SMSResources.getString(190),
             SMSResources.getString(415),
             wrappedVerbs[0].getOrdering(),
             wrappedVerbs,
-            new Object[]{SMSResources.getString(418), SMSResources.getString(414)},
+            new String[]{SMSResources.getString(418), SMSResources.getString(414)},
             wrappedVerbs[0]
-         ));
+         );
       } else {
          return new UseOnceSMSAddressVerb(this._smsComposeVerb);
       }

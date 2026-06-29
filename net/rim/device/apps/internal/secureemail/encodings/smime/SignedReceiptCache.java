@@ -26,7 +26,7 @@ public final class SignedReceiptCache {
    }
 
    public static final CMSReceiptData[] getReceipts() {
-      CMSReceiptData[] result = new Object[_receipts.size()];
+      CMSReceiptData[] result = new CMSReceiptData[_receipts.size()];
       _receipts.copyInto(result);
       return result;
    }
@@ -34,7 +34,7 @@ public final class SignedReceiptCache {
    static {
       synchronized (_persistentObject) {
          if (_persistentObject.getContents() == null) {
-            _persistentObject.setContents(new Object(), 4801362);
+            _persistentObject.setContents(new Vector(), 4801362);
             _persistentObject.commit();
          }
       }

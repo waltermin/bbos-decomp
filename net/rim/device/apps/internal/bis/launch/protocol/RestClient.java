@@ -1,6 +1,6 @@
 package net.rim.device.apps.internal.bis.launch.protocol;
 
-import java.io.InputStream;
+import java.io.ByteArrayInputStream;
 import net.rim.device.api.i18n.MessageFormat;
 import net.rim.device.api.system.CodeModuleManager;
 import net.rim.device.api.system.DeviceInfo;
@@ -18,7 +18,7 @@ public final class RestClient {
 
    public static final String createAppStatusPayload() {
       String deviceName = DeviceInfo.getDeviceName();
-      String deviceId = ((StringBuffer)(new Object(""))).append(DeviceInfo.getDeviceId()).toString();
+      String deviceId = "" + DeviceInfo.getDeviceId();
       String manufacturerName = DeviceInfo.getManufacturerName();
       String osVersion = DeviceInfo.getPlatformVersion();
       String platformVersion = "0.9";
@@ -28,7 +28,7 @@ public final class RestClient {
       }
 
       String isSimulator = DeviceInfo.isSimulator() ? "true" : "false";
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
       beginTag(sb, "status");
       sb.append("\r\n");
       addTag(sb, "deviceName", deviceName);
@@ -102,7 +102,7 @@ public final class RestClient {
       }
 
       try {
-         return updateStatusHandler.loadFromXML((InputStream)(new Object(response.getResponsePayload())));
+         return updateStatusHandler.loadFromXML(new ByteArrayInputStream(response.getResponsePayload()));
       } finally {
          ;
       }

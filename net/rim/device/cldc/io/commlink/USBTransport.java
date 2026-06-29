@@ -222,7 +222,7 @@ final class USBTransport extends CommLinkTransport implements USBPortListener {
          this._failure = false;
          this._receiveLock = new Object();
          this._pendingReadLength = -1;
-         this._port = (USBPortInternal)(new Object(this._channel));
+         this._port = new USBPortInternal(this._channel);
       } finally {
          return;
       }

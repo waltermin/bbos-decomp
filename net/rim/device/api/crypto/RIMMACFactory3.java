@@ -7,9 +7,9 @@ final class RIMMACFactory3 extends MACFactory {
    }
 
    @Override
-   protected final MAC create(String algorithm, String parameters, SymmetricKey key) {
+   protected final MAC create(String algorithm, String parameters, SymmetricKey key) throws NoSuchAlgorithmException {
       if (key == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (algorithm.equals("CBCMAC")) {
@@ -20,7 +20,7 @@ final class RIMMACFactory3 extends MACFactory {
          BlockEncryptorEngine engine = EncryptorFactory.getBlockEncryptorEngine(key, parameters);
          return new SkipjackCryptoToken(engine);
       } else {
-         throw new Object(algorithm);
+         throw new NoSuchAlgorithmException(algorithm);
       }
    }
 }

@@ -1,5 +1,6 @@
 package net.rim.tools.compiler.classfile;
 
+import java.io.IOException;
 import net.rim.tools.compiler.io.StructuredInputStream;
 import net.rim.tools.compiler.vm.Constants;
 
@@ -17,18 +18,18 @@ public class Attribute implements Constants {
       this._length = in.readInt();
    }
 
-   public Attribute(StructuredInputStream in, ConstantPool constantPool, int iName, String name) {
+   public Attribute(StructuredInputStream in, ConstantPool constantPool, int iName, String name) throws IOException {
       this(in, iName, name);
       this._constantPool = constantPool;
       this._start = in.getOffset();
       this._bytes = in.getBytes();
       in.skipBytes(this._length);
       if (this._start + this._length != in.getOffset()) {
-         throw new Object("incorrect attribute length");
+         throw new IOException("incorrect attribute length");
       }
    }
 
-   public static Attribute read(StructuredInputStream in, ConstantPool constantPool, int list, boolean shallow) {
+   public static Attribute read(StructuredInputStream in, ConstantPool constantPool, int list, boolean shallow) throws IOException {
       Attribute att = null;
       int iName = in.readUnsignedShort();
       String name = constantPool.getString(iName);
@@ -36,25 +37,25 @@ public class Attribute implements Constants {
          att = new Attribute(in, constantPool, iName, name);
       } else if (name.equals(AttributeList.NAME_CODE)) {
          if (list != 3) {
-            throw new Object("Code attribute found outside of method");
+            throw new IOException("Code attribute found outside of method");
          }
 
          att = new AttributeCode(in, constantPool, iName, name);
       } else if (name.equals(AttributeList.NAME_LINENUMBERTABLE)) {
          if (list != 4) {
-            throw new Object("LineNumberTable attribute found outside of Code attribute");
+            throw new IOException("LineNumberTable attribute found outside of Code attribute");
          }
 
          att = new AttributeLineNumberTable(in, iName, name);
       } else if (name.equals(AttributeList.NAME_STACKMAP)) {
          if (list != 4) {
-            throw new Object("StackMap attribute found outside of Code attribute");
+            throw new IOException("StackMap attribute found outside of Code attribute");
          }
 
          att = new AttributeStackMapTable(in, constantPool, iName, name);
       } else if (name.equals(AttributeList.NAME_LOCALVARIABLETABLE)) {
          if (list != 4) {
-            throw new Object("LocalVariableTable attribute found outside of Code attribute");
+            throw new IOException("LocalVariableTable attribute found outside of Code attribute");
          }
 
          att = new AttributeLocalVariableTable(in, constantPool, iName, name);
@@ -62,10 +63,10 @@ public class Attribute implements Constants {
          att = new Attribute(in, constantPool, iName, name);
          if (!name.equals(AttributeList.NAME_DEPRECATED) && !name.equals(AttributeList.NAME_SYNTHETIC)) {
             if (name.regionMatches(true, 0, AttributeList.NAME_STACKMAP, 0, name.length()) && list == 4) {
-               throw new Object("StackMap attribute found with incorrect case");
+               throw new IOException("StackMap attribute found with incorrect case");
             }
          } else if (att._length != 0) {
-            throw new Object(((StringBuffer)(new Object("incorrect attribute length for: "))).append(name).toString());
+            throw new IOException("incorrect attribute length for: " + name);
          }
       }
 

@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.qm.peer;
 
+import net.rim.blackberry.api.blackberrymessenger.Service;
 import net.rim.device.api.util.Comparator;
 
 final class SelectServiceDialog$1 implements Comparator {
@@ -11,7 +12,7 @@ final class SelectServiceDialog$1 implements Comparator {
 
    @Override
    public final int compare(Object o1, Object o2) {
-      return o1 instanceof Object && o2 instanceof Object ? ((ServiceRunnable)o1).getName().compareTo(((ServiceRunnable)o2).getName()) : 0;
+      return o1 instanceof Service && o2 instanceof Service ? ((ServiceRunnable)o1).getName().compareTo(((ServiceRunnable)o2).getName()) : 0;
    }
 
    @Override

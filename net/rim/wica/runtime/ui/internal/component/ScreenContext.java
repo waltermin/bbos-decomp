@@ -19,7 +19,7 @@ public final class ScreenContext implements ScreenView {
    private UiServiceImpl _uiService;
    private ScreenModel _model;
    private View _layout;
-   private Menu _menu = (Menu)(new Object(65536));
+   private Menu _menu = new Menu(65536);
    private Field _savedFocus;
    private boolean _suspendLayout;
 

@@ -24,7 +24,7 @@ final class MMSPushConverter extends BaseConverter {
          return new ConverterRunnable(pdu);
       }
 
-      if (aDataInput instanceof Object) {
+      if (aDataInput instanceof PushInputStream) {
          try {
             System.out.println("MMS Notification refused - USERDCR.");
             PushInputStream pushStream = (PushInputStream)aDataInput;

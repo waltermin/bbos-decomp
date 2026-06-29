@@ -30,6 +30,7 @@ import net.rim.device.api.system.PersistentContent;
 import net.rim.device.api.system.PersistentObject;
 import net.rim.device.api.system.RIMPersistentStore;
 import net.rim.device.api.util.Arrays;
+import net.rim.device.api.util.ContentProtectedHashtable;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.api.xml.XMLHashtable;
 import net.rim.device.apps.api.framework.model.VerbProvider;
@@ -41,6 +42,7 @@ import net.rim.device.apps.internal.blackberryemail.email.EmailMessageModel;
 import net.rim.device.apps.internal.blackberryemail.header.EmailHeaderModel;
 import net.rim.device.apps.internal.blackberryemail.header.SubjectModel;
 import net.rim.device.apps.internal.blackberryemail.sendmethods.SendMethodSelector;
+import net.rim.device.apps.internal.secureemail.AbortSendSecureEmailException;
 import net.rim.device.apps.internal.secureemail.RecipientData;
 import net.rim.device.apps.internal.secureemail.RecipientData$CertificateDetails;
 import net.rim.device.apps.internal.secureemail.SecureEmailLookupFailureCache;
@@ -49,8 +51,10 @@ import net.rim.device.apps.internal.secureemail.encodings.pgp.PGPResources;
 import net.rim.device.apps.internal.secureemail.encodings.pgp.sendmethods.PGPSecureEmailServerDefaultSendMethodFactory;
 import net.rim.device.apps.internal.secureemail.encodings.pgp.server.policy.GranularPolicy;
 import net.rim.device.apps.internal.secureemail.encodings.pgp.server.policy.GranularPolicyAction;
+import net.rim.device.apps.internal.secureemail.sendmethods.DoNotEncryptException;
 import net.rim.device.apps.internal.secureemail.server.SecureEmailCertificateServer;
 import net.rim.device.apps.internal.secureemail.server.SecureEmailPolicyServer;
+import net.rim.device.apps.internal.secureemail.server.SecureEmailServerEnrollmentException;
 import net.rim.device.apps.internal.secureemail.server.SecureEmailServerManager;
 import net.rim.device.apps.internal.secureemail.server.SecureEmailServerOperationListener;
 import net.rim.device.internal.crypto.pgp.PGPPrivateKeyPacket;
@@ -59,6 +63,7 @@ import net.rim.device.internal.proxy.Proxy;
 import net.rim.device.internal.ui.component.BackgroundDialog;
 import net.rim.device.internal.ui.component.SimpleOKCancelInputDialog;
 import net.rim.device.internal.ui.component.UsernamePasswordDialog;
+import net.rim.device.internal.util.ByteArray;
 import net.rim.ecmascript.regexp.RegExp;
 import net.rim.ecmascript.regexp.RegExp$MatchResult;
 import net.rim.vm.Array;
@@ -302,12 +307,12 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
                newEncodingActions = encodingActions & -3;
             }
 
-            throw new Object(newEncodingActions);
+            throw new DoNotEncryptException(newEncodingActions);
          } else {
             String keyBlock = getKeyByEmailResponse.getString("/GetKeyByEmailResponse/keyblock");
             if (keyBlock != null && keyBlock.length() != 0) {
-               ByteArrayInputStream keyBlockInputStream = (ByteArrayInputStream)(new Object(keyBlock.getBytes()));
-               PGPArmorDecoder pgpArmorDecoder = (PGPArmorDecoder)(new Object(keyBlockInputStream));
+               ByteArrayInputStream keyBlockInputStream = new ByteArrayInputStream(keyBlock.getBytes());
+               PGPArmorDecoder pgpArmorDecoder = new PGPArmorDecoder(keyBlockInputStream);
                int numCertificates = pgpArmorDecoder.numCertificates();
                if (numCertificates <= 0) {
                   this._failedFetchesByEmail.recordFetchFailure(emailAddress);
@@ -370,8 +375,8 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
 
          String keyBlock = getKeyByIDResponse.getString("/GetKeyByKeyIDResponse/keyblock");
          if (keyBlock != null && keyBlock.length() != 0) {
-            ByteArrayInputStream keyBlockInputStream = (ByteArrayInputStream)(new Object(keyBlock.getBytes()));
-            PGPArmorDecoder pgpArmorDecoder = (PGPArmorDecoder)(new Object(keyBlockInputStream));
+            ByteArrayInputStream keyBlockInputStream = new ByteArrayInputStream(keyBlock.getBytes());
+            PGPArmorDecoder pgpArmorDecoder = new PGPArmorDecoder(keyBlockInputStream);
             int numCertificates = pgpArmorDecoder.numCertificates();
             if (numCertificates <= 0) {
                this._failedFetchesByID.recordFetchFailure(keyIDString);
@@ -421,9 +426,9 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
             certificateProperties |= 8;
          }
 
-         return (Long)(new Object(certificateProperties));
+         return new Long(certificateProperties);
       } else {
-         if (!(certificate instanceof Object)) {
+         if (!(certificate instanceof X509Certificate)) {
             return null;
          }
 
@@ -431,20 +436,20 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
 
          try {
             label79: {
-               ByteArrayOutputStream encodedCertificateStream = (ByteArrayOutputStream)(new Object());
-               Base64OutputStream base64OutputStream = (Base64OutputStream)(new Object(encodedCertificateStream, true, true));
+               ByteArrayOutputStream encodedCertificateStream = new ByteArrayOutputStream();
+               Base64OutputStream base64OutputStream = new Base64OutputStream(encodedCertificateStream, true, true);
                base64OutputStream.write(x509Certificate.getEncoding());
                base64OutputStream.close();
-               StringBuffer encodedCertificateStringBuffer = (StringBuffer)(new Object());
+               StringBuffer encodedCertificateStringBuffer = new StringBuffer();
                encodedCertificateStringBuffer.append("-----BEGIN CERTIFICATE-----\r\n");
-               encodedCertificateStringBuffer.append((String)(new Object(encodedCertificateStream.toByteArray())));
+               encodedCertificateStringBuffer.append(new String(encodedCertificateStream.toByteArray()));
                encodedCertificateStringBuffer.append("-----END CERTIFICATE-----\r\n");
                XMLHashtable getCertificateChainResponse = this._soapHandler.getCertificateChain(encodedCertificateStringBuffer.toString(), null);
                String keyBlock = getCertificateChainResponse.getString("/GetCertificateChainResponse/keyblock");
                if (keyBlock != null && keyBlock.length() != 0) {
                   cachedKeyProperties = 0;
-                  ByteArrayInputStream keyBlockInputStream = (ByteArrayInputStream)(new Object(keyBlock.getBytes()));
-                  PGPArmorDecoder pgpArmorDecoder = (PGPArmorDecoder)(new Object(keyBlockInputStream));
+                  ByteArrayInputStream keyBlockInputStream = new ByteArrayInputStream(keyBlock.getBytes());
+                  PGPArmorDecoder pgpArmorDecoder = new PGPArmorDecoder(keyBlockInputStream);
                   int numCertificates = pgpArmorDecoder.numCertificates();
                   if (numCertificates <= 1) {
                      cachedKeyProperties |= 1;
@@ -552,7 +557,7 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
                               case 1:
                               case 9:
                                  BackgroundDialog.showMessage("Your secure email policy prevents you from sending this message.");
-                                 throw new Object();
+                                 throw new AbortSendSecureEmailException();
                            }
                         }
                   }
@@ -577,7 +582,7 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
 
          return new int[]{defaultActions, alternateActions};
       } else {
-         throw new Object();
+         throw new IllegalStateException();
       }
    }
 
@@ -653,16 +658,16 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
 
          return preferredEncodingUID;
       } else {
-         throw new Object();
+         throw new IllegalStateException();
       }
    }
 
-   private boolean internalInitialize(SecureEmailServerOperationListener listener) {
+   private boolean internalInitialize(SecureEmailServerOperationListener listener) throws SecureEmailServerEnrollmentException {
       if (!this.initialize(listener, false)) {
          if (this._authenticationState != 0 && this._authenticationState != 1) {
             return false;
          } else {
-            throw new Object("Must enroll with the universal server");
+            throw new SecureEmailServerEnrollmentException("Must enroll with the universal server");
          }
       } else {
          return true;
@@ -895,10 +900,10 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
       this._serviceUIDs = serviceUIDs;
       this._soapHandler = new PGPUniversalServerSOAPHandler(url, serviceUIDs);
       this._pgpUniversalKeyCache = PGPUniversalKeyCache.createInstance();
-      this._failedFetchesByEmail = (SecureEmailLookupFailureCache)(new Object(3600000));
-      this._failedFetchesByID = (SecureEmailLookupFailureCache)(new Object(3600000));
+      this._failedFetchesByEmail = new SecureEmailLookupFailureCache(3600000);
+      this._failedFetchesByID = new SecureEmailLookupFailureCache(3600000);
       this._initializeLock = new Object();
-      this._enrollmentPendingDialogs = (Vector)(new Object());
+      this._enrollmentPendingDialogs = new Vector();
       String authenticationCookie = this.getAuthenticationCookie();
       if (authenticationCookie != null) {
          this._authenticationState = 2;
@@ -979,14 +984,14 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
    }
 
    private String[] extractRecipientAddresses(EmailMessageModel emailMessageModel) {
-      String[] recipientAddresses = new Object[0];
+      String[] recipientAddresses = new String[0];
       Object[] messageRecipients = SubmemberUtilities.getSubmembers(emailMessageModel, new PGPUniversalServer$RecipientRecognizer());
       int numMessageRecipients = messageRecipients.length;
 
       for (int i = 0; i < numMessageRecipients; i++) {
          EmailHeaderModel emailHeaderModel = (EmailHeaderModel)messageRecipients[i];
          if (!emailHeaderModel.isBlank()) {
-            String[] addressAndName = new Object[2];
+            String[] addressAndName = new String[2];
             if (emailHeaderModel.convert(null, addressAndName)) {
                int lastAddressIndex = addressAndName.length - 2;
 
@@ -1005,7 +1010,7 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
 
       for (int i = 0; i < numSubModels; i++) {
          Object currentSubModel = emailMessageModel.getAt(i);
-         if (currentSubModel instanceof Object) {
+         if (currentSubModel instanceof SubjectModel) {
             return ((SubjectModel)currentSubModel).getSubject();
          }
       }
@@ -1051,7 +1056,7 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
          }
 
          try {
-            RegExp subjectRegExp = (RegExp)(new Object(overrideSubject, true));
+            RegExp subjectRegExp = new RegExp(overrideSubject, true);
             RegExp$MatchResult subjectRegExpMatchResult = subjectRegExp.match(emailMessageSubject, 0);
             return subjectRegExpMatchResult != null;
          } catch (Throwable var8) {
@@ -1075,7 +1080,7 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
          synchronized (_persistentObjectLock) {
             _cookieHashtable = (Hashtable)_persistedCookieHashtable.getContents(CodeSigningKey.getBuiltInKey(4801362));
             if (_cookieHashtable == null) {
-               _cookieHashtable = (Hashtable)(new Object());
+               _cookieHashtable = new ContentProtectedHashtable();
                _persistedCookieHashtable.setContents(_cookieHashtable, 4801362);
                _persistedCookieHashtable.commit();
             }
@@ -1147,7 +1152,7 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
       // 48: istore 4
       // 4a: goto 4f
       // 4d: astore 5
-      // 4f: new java/lang/Object
+      // 4f: new net/rim/device/internal/ui/component/SimpleChoiceDialog
       // 52: dup
       // 53: iload 4
       // 55: invokestatic net/rim/device/apps/internal/secureemail/encodings/pgp/PGPResources.getString (I)Ljava/lang/String;
@@ -1199,7 +1204,7 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
    }
 
    private int enrollUsernamePassword(SecureEmailServerOperationListener listener) {
-      UsernamePasswordDialog usernamePasswordPrompt = (UsernamePasswordDialog)(new Object(PGPResources.getString(8104), null, null, null, 1, 134217728));
+      UsernamePasswordDialog usernamePasswordPrompt = new UsernamePasswordDialog(PGPResources.getString(8104), null, null, null, 1, 134217728);
       BackgroundDialog.show(usernamePasswordPrompt);
       if (usernamePasswordPrompt.getCloseReason() == -1) {
          return 0;
@@ -1248,7 +1253,7 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
          }
       }
 
-      SimpleOKCancelInputDialog emailAddressPrompt = (SimpleOKCancelInputDialog)(new Object(8, PGPResources.getString(8079), 0, 1000000, 134217728));
+      SimpleOKCancelInputDialog emailAddressPrompt = new SimpleOKCancelInputDialog(8, PGPResources.getString(8079), 0, 1000000, 134217728);
       if (defaultEmailAddress != null) {
          emailAddressPrompt.setText(defaultEmailAddress);
       }
@@ -1268,10 +1273,10 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
       long currentTime = System.currentTimeMillis();
 
       try {
-         RSAKeyPair ephemeralKeyPair = (RSAKeyPair)(new Object((RSACryptoSystem)(new Object(1024))));
+         RSAKeyPair ephemeralKeyPair = new RSAKeyPair(new RSACryptoSystem(1024));
          RSAPublicKey ephemeralPublicKey = ephemeralKeyPair.getRSAPublicKey();
          RSAPrivateKey ephemeralPrivateKey = ephemeralKeyPair.getRSAPrivateKey();
-         ByteArrayOutputStream publicKeyStream = (ByteArrayOutputStream)(new Object());
+         ByteArrayOutputStream publicKeyStream = new ByteArrayOutputStream();
          publicKeyStream.write(4);
          publicKeyStream.write((byte)(currentTime >> 24));
          publicKeyStream.write((byte)(currentTime >> 16));
@@ -1281,31 +1286,31 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
          PGPUtilities.writeMPI(publicKeyStream, ephemeralPublicKey.getN());
          PGPUtilities.writeMPI(publicKeyStream, ephemeralPublicKey.getE());
          byte[] publicKeyArray = publicKeyStream.toByteArray();
-         ByteArrayOutputStream userIDStream = (ByteArrayOutputStream)(new Object());
-         StringBuffer fullUserID = (StringBuffer)(new Object());
+         ByteArrayOutputStream userIDStream = new ByteArrayOutputStream();
+         StringBuffer fullUserID = new StringBuffer();
          fullUserID.append(emailAddress).append(' ').append('<').append(emailAddress).append('>');
          userIDStream.write(fullUserID.toString().getBytes());
          byte[] userIDArray = userIDStream.toByteArray();
-         ByteArrayOutputStream certificateStream = (ByteArrayOutputStream)(new Object());
+         ByteArrayOutputStream certificateStream = new ByteArrayOutputStream();
          PGPUtilities.writeTagAndLength(certificateStream, 6, publicKeyArray.length, 4);
          certificateStream.write(publicKeyArray);
          PGPUtilities.writeTagAndLength(certificateStream, 13, userIDArray.length, 4);
          certificateStream.write(userIDArray);
-         PGPCertificate pgpEphemeralCertificate = (PGPCertificate)(new Object(certificateStream.toByteArray()));
-         ByteArrayOutputStream publicKeyBlockStream = (ByteArrayOutputStream)(new Object());
-         PGPArmorEncoder pgpArmorEncoder = (PGPArmorEncoder)(new Object(publicKeyBlockStream));
+         PGPCertificate pgpEphemeralCertificate = new PGPCertificate(certificateStream.toByteArray());
+         ByteArrayOutputStream publicKeyBlockStream = new ByteArrayOutputStream();
+         PGPArmorEncoder pgpArmorEncoder = new PGPArmorEncoder(publicKeyBlockStream);
          pgpArmorEncoder.write(PGPKeyEncoder.getEncoding(pgpEphemeralCertificate));
          pgpArmorEncoder.close();
-         String ephemeralPublicKeyBlock = (String)(new Object(publicKeyBlockStream.toByteArray()));
-         ByteArrayOutputStream privateKeyStream = (ByteArrayOutputStream)(new Object());
+         String ephemeralPublicKeyBlock = new String(publicKeyBlockStream.toByteArray());
+         ByteArrayOutputStream privateKeyStream = new ByteArrayOutputStream();
          privateKeyStream.write(publicKeyArray);
          privateKeyStream.write(0);
          PGPUtilities.writeMPI(privateKeyStream, ephemeralPrivateKey.getD());
          PGPUtilities.writeMPI(privateKeyStream, ephemeralPrivateKey.getP());
          PGPUtilities.writeMPI(privateKeyStream, ephemeralPrivateKey.getQ());
          byte[] privateKeyArray = privateKeyStream.toByteArray();
-         PGPPrivateKeyPacket privateKeyPacket = (PGPPrivateKeyPacket)(new Object(5, privateKeyArray));
-         PGPPrivateKey pgpEphemeralPrivateKey = (PGPPrivateKey)(new Object(new Object[]{privateKeyPacket}));
+         PGPPrivateKeyPacket privateKeyPacket = new PGPPrivateKeyPacket(5, privateKeyArray);
+         PGPPrivateKey pgpEphemeralPrivateKey = new PGPPrivateKey(new PGPPrivateKeyPacket[]{privateKeyPacket});
          PGPUniversalEnrollmentKeyStore.getInstance()
             .set(null, PGPResources.getString(8088), pgpEphemeralPrivateKey, null, 1, pgpEphemeralCertificate, null, null);
          EventLogger.logEvent(234044482576569793L, 1430604611);
@@ -1316,7 +1321,7 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
          }
 
          Hashtable pgpUniversalServerEnrollmentData = ApplicationRegistry.getApplicationRegistry().getHashtable(3676539340381219095L);
-         pgpUniversalServerEnrollmentData.put(new Object(pgpEphemeralCertificate.getKeyID()), userValue);
+         pgpUniversalServerEnrollmentData.put(new ByteArray(pgpEphemeralCertificate.getKeyID()), userValue);
          this._authenticationState = 1;
          this._lastEnrollmentRequestTimeStamp = System.currentTimeMillis();
          return 2;
@@ -1379,7 +1384,7 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
       // 36: getfield net/rim/device/apps/internal/secureemail/encodings/pgp/server/PGPUniversalServer._enrollmentPendingDialogs Ljava/util/Vector;
       // 39: iload 7
       // 3b: invokevirtual java/util/Vector.elementAt (I)Ljava/lang/Object;
-      // 3e: checkcast java/lang/Object
+      // 3e: checkcast net/rim/device/api/ui/Screen
       // 41: astore 8
       // 43: aload 8
       // 45: invokevirtual net/rim/device/api/ui/Screen.getApplication ()Lnet/rim/device/api/system/Application;
@@ -1458,8 +1463,8 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private void detectPolicyType(XMLHashtable serverResponse, String rootKey) {
-      String majorKey = ((StringBuffer)(new Object())).append(rootKey).append("/server-version/major").toString();
-      String minorKey = ((StringBuffer)(new Object())).append(rootKey).append("/server-version/minor").toString();
+      String majorKey = rootKey + "/server-version/major";
+      String minorKey = rootKey + "/server-version/minor";
       boolean var8 = false /* VF: Semaphore variable */;
 
       try {
@@ -1515,7 +1520,7 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
       // 008: invokestatic net/rim/device/api/crypto/keystore/PGPKeyStore.getInstance ()Lnet/rim/device/api/crypto/keystore/PGPKeyStore;
       // 00b: astore 2
       // 00c: aload 2
-      // 00d: new java/lang/Object
+      // 00d: new net/rim/device/api/crypto/certificate/pgp/PGPKeyIDKeyStoreIndex
       // 010: dup
       // 011: invokespecial net/rim/device/api/crypto/certificate/pgp/PGPKeyIDKeyStoreIndex.<init> ()V
       // 014: invokeinterface net/rim/device/api/crypto/keystore/KeyStore.addIndex (Lnet/rim/device/api/crypto/keystore/KeyStoreIndex;)Z 2
@@ -1533,13 +1538,13 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
       // 02e: ifnonnull 033
       // 031: bipush 0
       // 032: ireturn
-      // 033: new java/lang/Object
+      // 033: new java/io/ByteArrayInputStream
       // 036: dup
       // 037: aload 4
       // 039: invokevirtual java/lang/String.getBytes ()[B
       // 03c: invokespecial java/io/ByteArrayInputStream.<init> ([B)V
       // 03f: astore 5
-      // 041: new java/lang/Object
+      // 041: new net/rim/device/api/crypto/pgp/PGPArmorDecoder
       // 044: dup
       // 045: aload 5
       // 047: invokespecial net/rim/device/api/crypto/pgp/PGPArmorDecoder.<init> (Ljava/io/InputStream;)V
@@ -1552,15 +1557,15 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
       // 058: bipush 0
       // 059: ireturn
       // 05a: bipush 0
-      // 05b: anewarray 4444
+      // 05b: anewarray 4447
       // 05e: astore 8
       // 060: bipush 0
-      // 061: anewarray 4446
+      // 061: anewarray 4449
       // 064: astore 9
       // 066: bipush 0
-      // 067: anewarray 4448
+      // 067: anewarray 4451
       // 06a: astore 10
-      // 06c: new java/lang/Object
+      // 06c: new java/util/Vector
       // 06f: dup
       // 070: invokespecial java/util/Vector.<init> ()V
       // 073: astore 11
@@ -1598,7 +1603,7 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
       // 0bc: ifeq 0f4
       // 0bf: aload 17
       // 0c1: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 0c6: checkcast java/lang/Object
+      // 0c6: checkcast net/rim/device/api/crypto/keystore/KeyStoreData
       // 0c9: astore 18
       // 0cb: aload 18
       // 0cd: invokeinterface net/rim/device/api/crypto/keystore/KeyStoreData.isPrivateKeySet ()Z 1
@@ -1650,7 +1655,7 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
       // 140: aload 11
       // 142: iload 15
       // 144: invokevirtual java/util/Vector.elementAt (I)Ljava/lang/Object;
-      // 147: checkcast java/lang/Object
+      // 147: checkcast net/rim/device/api/crypto/keystore/KeyStoreData
       // 14a: aload 13
       // 14c: invokeinterface net/rim/device/api/crypto/keystore/KeyStore.removeKey (Lnet/rim/device/api/crypto/keystore/KeyStoreData;Lnet/rim/device/api/crypto/keystore/KeyStoreTicket;)V 3
       // 151: iinc 15 1
@@ -1683,7 +1688,7 @@ public class PGPUniversalServer implements SecureEmailPolicyServer, SecureEmailC
       // 191: ifeq 1ce
       // 194: aload 15
       // 196: invokeinterface java/util/Enumeration.nextElement ()Ljava/lang/Object; 1
-      // 19b: checkcast java/lang/Object
+      // 19b: checkcast net/rim/device/api/crypto/keystore/KeyStoreData
       // 19e: astore 16
       // 1a0: aload 16
       // 1a2: invokeinterface net/rim/device/api/crypto/keystore/KeyStoreData.isPrivateKeySet ()Z 1

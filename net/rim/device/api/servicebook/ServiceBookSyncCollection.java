@@ -247,7 +247,7 @@ public final class ServiceBookSyncCollection
                      return null;
                   }
 
-                  String[] hosts = new Object[0];
+                  String[] hosts = new String[0];
                   int[] ports = new int[0];
 
                   while (!ConverterUtilities.isType(buffer, 0)) {
@@ -272,7 +272,7 @@ public final class ServiceBookSyncCollection
                   break;
                case 22:
                   byte[] hrtData = ConverterUtilities.readByteArray(buffer);
-                  DataBuffer hrtBuff = (DataBuffer)(new Object(hrtData, 0, hrtData.length, false));
+                  DataBuffer hrtBuff = new DataBuffer(hrtData, 0, hrtData.length, false);
                   HostRoutingInfo hri = this.parseHostRoutingInformation(hrtBuff);
                   if (hri != null) {
                      HostRoutingTable hrt = sri.getAttachedHrt();
@@ -428,7 +428,7 @@ public final class ServiceBookSyncCollection
                      }
 
                      byte[] qosBuf = ConverterUtilities.readByteArray(buffer);
-                     GPRSQOSInfo qos = (GPRSQOSInfo)(new Object(qosBuf[0] & 255, qosBuf[1] & 255, qosBuf[2] & 255, qosBuf[3] & 255, qosBuf[4] & 255));
+                     GPRSQOSInfo qos = new GPRSQOSInfo(qosBuf[0] & 255, qosBuf[1] & 255, qosBuf[2] & 255, qosBuf[3] & 255, qosBuf[4] & 255);
                      ((GprsHRI)hri).setQos(qos);
                      break;
                   case 33:
@@ -529,7 +529,7 @@ public final class ServiceBookSyncCollection
                         return null;
                      }
 
-                     String[] hosts = new Object[0];
+                     String[] hosts = new String[0];
                      int[] ports = new int[0];
 
                      while (!ConverterUtilities.isType(buffer, 0)) {
@@ -653,7 +653,7 @@ public final class ServiceBookSyncCollection
       String[] hosts = sr.getBBRHosts();
       int[] ports = sr.getBBRPorts();
       if (hosts != null && ports != null && hosts.length == ports.length) {
-         DataBuffer buf = (DataBuffer)(new Object(64, false));
+         DataBuffer buf = new DataBuffer(64, false);
          int numHosts = hosts.length;
 
          for (int i = 0; i < numHosts; i++) {
@@ -670,7 +670,7 @@ public final class ServiceBookSyncCollection
       if (num != 0) {
          for (int i = 0; i < num; i++) {
             HostRoutingInfo hri = attachedHRTs[i];
-            DataBuffer HRTBuffer = (DataBuffer)(new Object(false));
+            DataBuffer HRTBuffer = new DataBuffer(false);
             ConverterUtilities.convertInt(HRTBuffer, 10, hri.getWirelessNetType(), 1);
             this.convertString(HRTBuffer, 9, hri.getName());
             this.convertInt(HRTBuffer, 8, ((DAC)hri.getDac()).getLoadSharingCode(), 1);
@@ -745,8 +745,8 @@ public final class ServiceBookSyncCollection
 
    @Override
    public final void beginTransaction() {
-      this._serviceRecords = (IntHashtable)(new Object());
-      this._hriRecords = (IntHashtable)(new Object());
+      this._serviceRecords = new IntHashtable();
+      this._hriRecords = new IntHashtable();
       this._sb.setBrInProgress(true);
    }
 
@@ -853,7 +853,7 @@ public final class ServiceBookSyncCollection
       synchronized (records) {
          int count = records.length;
          int actual = 0;
-         SyncObject[] array = new Object[this.getSyncObjectCount()];
+         SyncObject[] array = new SyncObject[this.getSyncObjectCount()];
 
          for (int i = 0; i < count; i++) {
             ServiceRecord sr = records[i];
@@ -1064,7 +1064,7 @@ public final class ServiceBookSyncCollection
    private final Vector getHRIRecords(int serviceUID) {
       Vector result = (Vector)this._hriRecords.get(serviceUID);
       if (result == null) {
-         result = (Vector)(new Object());
+         result = new Vector();
          this._hriRecords.put(serviceUID, result);
       }
 
@@ -1073,12 +1073,12 @@ public final class ServiceBookSyncCollection
 
    public ServiceBookSyncCollection(ServiceBook sb) {
       this._sb = sb;
-      this._schema = (SyncCollectionSchema)(new Object());
+      this._schema = new SyncCollectionSchema();
       this._schema.setDefaultRecordType(1);
       this._schema.setRecordTypeTag(1);
       this._schema.setKeyFieldIds(1, KEY_FIELD_IDS_FOR_SERVICE_RECORD);
-      this._collectionListenerManager = (CollectionListenerManager)(new Object());
-      this._blockedCIDTable = (Hashtable)(new Object());
+      this._collectionListenerManager = new CollectionListenerManager();
+      this._blockedCIDTable = new Hashtable();
       Proxy.getInstance().addGlobalEventListener(this);
    }
 
@@ -1212,7 +1212,7 @@ public final class ServiceBookSyncCollection
                   }
 
                   byte[] qosBuf = ConverterUtilities.readByteArray(buffer);
-                  GPRSQOSInfo qos = (GPRSQOSInfo)(new Object(qosBuf[0] & 255, qosBuf[1] & 255, qosBuf[2] & 255, qosBuf[3] & 255, qosBuf[4] & 255));
+                  GPRSQOSInfo qos = new GPRSQOSInfo(qosBuf[0] & 255, qosBuf[1] & 255, qosBuf[2] & 255, qosBuf[3] & 255, qosBuf[4] & 255);
                   ((GprsHRI)hri).setQos(qos);
             }
          }

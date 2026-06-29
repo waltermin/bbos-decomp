@@ -25,7 +25,7 @@ public class CommonHeaderV1_Base {
 
    public void setVersion(int version) {
       if (version < 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._version = version;

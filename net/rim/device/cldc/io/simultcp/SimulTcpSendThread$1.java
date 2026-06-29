@@ -11,6 +11,6 @@ class SimulTcpSendThread$1 implements Runnable {
 
    @Override
    public void run() {
-      this.this$0.closeTimer = (Timer)(new Object());
+      this.this$0.closeTimer = new Timer();
    }
 }

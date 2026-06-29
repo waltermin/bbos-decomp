@@ -43,7 +43,7 @@ final class LocationsListScreen$HTTPLink extends LabelField implements FocusChan
    }
 
    private final void launchURL() {
-      System.out.println(((StringBuffer)(new Object("POI loading URL: "))).append(this._url).toString());
+      System.out.println("POI loading URL: " + this._url);
       BrowserServices.loadUrl(this._url);
    }
 

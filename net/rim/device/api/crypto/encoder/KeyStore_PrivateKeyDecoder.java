@@ -10,10 +10,10 @@ public class KeyStore_PrivateKeyDecoder extends PrivateKeyDecoder {
    @Override
    protected PrivateKey decodeKey(InputStream encodedKey, CryptoSystem cryptoSystem, String keyAlgorithm) throws InvalidKeyEncodingException {
       if (encodedKey == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
-      DataInputStream input = (DataInputStream)(new Object(encodedKey));
+      DataInputStream input = new DataInputStream(encodedKey);
       if (input.readInt() != 0) {
          throw new InvalidKeyEncodingException();
       }
@@ -28,7 +28,7 @@ public class KeyStore_PrivateKeyDecoder extends PrivateKeyDecoder {
    }
 
    protected PrivateKey decodeKey(DataInputStream input, CryptoSystem cryptoSystem, String algorithm) {
-      throw new Object();
+      throw new RuntimeException();
    }
 
    @Override

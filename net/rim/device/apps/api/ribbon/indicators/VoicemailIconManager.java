@@ -90,7 +90,7 @@ public final class VoicemailIconManager {
             }
          } else {
             if (this._lineCountHashtable == null) {
-               this._lineCountHashtable = (IntIntHashtable)(new Object());
+               this._lineCountHashtable = new IntIntHashtable();
             }
 
             this._lineCountHashtable.put(line, count);
@@ -212,7 +212,7 @@ public final class VoicemailIconManager {
 
          this._indicatorCounts[indicationType] = (byte)count;
          if (this._mwisEnabled) {
-            ((SIMCardEfHandler)(new Object())).startTask(new VoicemailIconManager$UpdateMwisTask(this, profileID, indicationType, (byte)count), true);
+            new SIMCardEfHandler().startTask(new VoicemailIconManager$UpdateMwisTask(this, profileID, indicationType, (byte)count), true);
          }
 
          SMSOptions.setVoicemailIndicators(this._indicatorCounts, _isCDMA ? 0 : SIMCard.getIMSICRC());
@@ -223,7 +223,7 @@ public final class VoicemailIconManager {
    }
 
    public final void initializeMWIS() {
-      ((SIMCardEfHandler)(new Object())).startTask(new VoicemailIconManager$ReadMwisTask(this, null), true);
+      new SIMCardEfHandler().startTask(new VoicemailIconManager$ReadMwisTask(this, null), true);
    }
 
    public static final boolean isMwisEnabled() {

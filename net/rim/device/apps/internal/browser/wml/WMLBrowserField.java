@@ -92,7 +92,7 @@ final class WMLBrowserField extends VerticalIndentFieldManager implements Destro
 
    final void addInputField(WMLInputField input) {
       if (this._inputFields == null) {
-         this._inputFields = (Vector)(new Object());
+         this._inputFields = new Vector();
       }
 
       this._inputFields.addElement(input);
@@ -159,7 +159,7 @@ final class WMLBrowserField extends VerticalIndentFieldManager implements Destro
          }
 
          if (this._browserContent.getRenderingApplication() != null) {
-            BrowserContentChangedEvent event = (BrowserContentChangedEvent)(new Object(this));
+            BrowserContentChangedEvent event = new BrowserContentChangedEvent(this);
             this._browserContent.getRenderingApplication().eventOccurred(event);
          }
       }
@@ -201,7 +201,7 @@ final class WMLBrowserField extends VerticalIndentFieldManager implements Destro
    WMLBrowserField(WMLBrowserContent browserContent, WMLContextManager contextManager, String url, WMLRenderer renderer) {
       super(1154328879490400256L);
       if (browserContent == null) {
-         throw new Object("Browser Content cannot be null");
+         throw new RuntimeException("Browser Content cannot be null");
       }
 
       this._contextManager = contextManager;

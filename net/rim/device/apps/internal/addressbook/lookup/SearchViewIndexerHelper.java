@@ -8,7 +8,7 @@ public class SearchViewIndexerHelper implements KeywordIndexerHelper {
    private Object _context;
    private long _keyToRequest;
    private Object[] _keys1 = new Object[10];
-   private String[] _words = new Object[10];
+   private String[] _words = new String[10];
 
    SearchViewIndexerHelper(Object context, long keyToRequest) {
       this._context = context;
@@ -25,12 +25,12 @@ public class SearchViewIndexerHelper implements KeywordIndexerHelper {
 
    @Override
    public int getKeywords(Object element, String[] keywords) {
-      return !(element instanceof Object) ? 0 : ((KeyProvider)element).getKeys(this._context, keywords, 0, this._keyToRequest);
+      return !(element instanceof KeyProvider) ? 0 : ((KeyProvider)element).getKeys(this._context, keywords, 0, this._keyToRequest);
    }
 
    @Override
    public synchronized boolean checkForMatch(Object element, String[] words) {
-      if (!(element instanceof Object)) {
+      if (!(element instanceof KeyProvider)) {
          return false;
       }
 

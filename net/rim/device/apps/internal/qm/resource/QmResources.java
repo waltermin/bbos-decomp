@@ -29,7 +29,7 @@ public final class QmResources extends QmResourceFetcher {
          format = "{0}";
       }
 
-      return MessageFormat.format(format, new Object[]{arg1});
+      return MessageFormat.format(format, new String[]{arg1});
    }
 
    public static final String format(int id, String arg1, String arg2) {
@@ -38,6 +38,6 @@ public final class QmResources extends QmResourceFetcher {
          format = "{0} {1}";
       }
 
-      return MessageFormat.format(format, new Object[]{arg1, arg2});
+      return MessageFormat.format(format, new String[]{arg1, arg2});
    }
 }

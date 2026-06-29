@@ -5,8 +5,10 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.MenuItem;
 import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.CheckboxField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.component.PasswordEditField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.component.TextField;
 import net.rim.device.apps.internal.bis.ApplicationResources;
 import net.rim.device.apps.internal.bis.ClientPersistentState;
@@ -55,10 +57,10 @@ public final class LoginScreen extends BasicScreen implements ShutdownListener {
       this.setTitle(ApplicationResources.getString(10));
       String storedUserName = ClientPersistentState.getInstance().getUserName();
       String storedPassword = ClientPersistentState.getInstance().getPassword();
-      this._userNameEdit = (BasicEditField)(new Object(null, storedUserName, 32, 0));
-      this._passwordEdit = (PasswordEditField)(new Object(null, storedPassword, 16, 0));
+      this._userNameEdit = new BasicEditField(null, storedUserName, 32, 0);
+      this._passwordEdit = new PasswordEditField(null, storedPassword, 16, 0);
       this._passwordEdit.setFilter(new PasswordTextFilter());
-      this._rememberCredentialsCheckbox = (CheckboxField)(new Object(ApplicationResources.getString(80), true));
+      this._rememberCredentialsCheckbox = new CheckboxField(ApplicationResources.getString(80), true);
       if (ClientSessionState.getInstance().getBrandingInfo().isSelfCreateEnabled()) {
          this.addContentField(new HeadingField(ApplicationResources.getString(81)));
          this.addContentField(new FormattedTextField(ApplicationResources.getString(84)));
@@ -66,16 +68,16 @@ public final class LoginScreen extends BasicScreen implements ShutdownListener {
          this.addContentField(promptAccountSetupButton);
          this._createAccountEvent = new LinkEvent(82, 8);
          this.attachEventToField(promptAccountSetupButton, this._createAccountEvent);
-         this.addContentField((Field)(new Object()));
+         this.addContentField(new SeparatorField());
       }
 
       this.addContentField(new HeadingField(ApplicationResources.getString(83)));
-      this.addContentField((Field)(new Object(ApplicationResources.getString(85))));
+      this.addContentField(new LabelField(ApplicationResources.getString(85)));
       this.addContentField(new BoldLabelField(ApplicationResources.getString(13)));
       this.addContentField(this._userNameEdit, true);
-      BoldLabelField passwordLabel = new BoldLabelField(((StringBuffer)(new Object())).append(ApplicationResources.getString(14)).append(" ").toString());
+      BoldLabelField passwordLabel = new BoldLabelField(ApplicationResources.getString(14) + " ");
       LinkField forgotPasswordLinkField = new LinkField(ApplicationResources.getString(79));
-      this.addContentFieldRow(new Object[]{passwordLabel, forgotPasswordLinkField});
+      this.addContentFieldRow(new Field[]{passwordLabel, forgotPasswordLinkField});
       this.attachEventToField(forgotPasswordLinkField, new LinkEvent(8, 2));
       this.addContentField(this._passwordEdit, true);
       this.addContentField(this._rememberCredentialsCheckbox);

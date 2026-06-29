@@ -60,7 +60,7 @@ final class Notification {
 
    final void print() {
       System.out.println("Notification: ");
-      System.out.println(((StringBuffer)(new Object("Optionals: "))).append(this.optionals).toString());
+      System.out.println("Optionals: " + this.optionals);
       this.notificationType.print();
       if ((this.optionals & 16) == 16) {
          this.encodingType.print();
@@ -70,7 +70,7 @@ final class Notification {
          System.out.println("Requestor Id: ");
 
          for (int i = 0; i < 50; i++) {
-            System.out.print(((StringBuffer)(new Object())).append(Integer.toHexString(255 & this.requestorId[i])).append(" ").toString());
+            System.out.print(Integer.toHexString(255 & this.requestorId[i]) + " ");
          }
 
          System.out.print("\n");
@@ -85,7 +85,7 @@ final class Notification {
          System.out.println("Client Name: ");
 
          for (int i = 0; i < 50; i++) {
-            System.out.print(((StringBuffer)(new Object())).append(Integer.toHexString(255 & this.clientName[i])).append(" ").toString());
+            System.out.print(Integer.toHexString(255 & this.clientName[i]) + " ");
          }
 
          System.out.print("\n");

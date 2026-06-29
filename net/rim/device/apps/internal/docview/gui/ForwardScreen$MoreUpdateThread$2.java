@@ -1,6 +1,6 @@
 package net.rim.device.apps.internal.docview.gui;
 
-import net.rim.device.api.ui.Manager;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 
 class ForwardScreen$MoreUpdateThread$2 implements Runnable {
    private final int val$node;
@@ -15,7 +15,7 @@ class ForwardScreen$MoreUpdateThread$2 implements Runnable {
    public void run() {
       if (this.this$1.this$0._pendingParts == 0 && this.this$1.this$0.isFwdScreenTop()) {
          ModalDisplayDlg errorDlg = new ModalDisplayDlg(
-            (Manager)(new Object(281474976710656L)),
+            new VerticalFieldManager(281474976710656L),
             this.this$1.this$0._attachmentsTree.getCookie(this.val$node).toString(),
             AttachmentViewerFactory.getErrorString(this.this$1._response._errorCode),
             null,

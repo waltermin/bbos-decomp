@@ -24,7 +24,7 @@ class SimpleRibbonComponentContentInteractor implements RibbonComponent$RibbonCo
          this._component.setChangeListener(this);
       }
 
-      this._workerBuffer = (StringBuffer)(new Object());
+      this._workerBuffer = new StringBuffer();
    }
 
    @Override

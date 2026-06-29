@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.diagnostic;
 
+import java.util.Date;
 import net.rim.device.api.i18n.SimpleDateFormat;
 import net.rim.device.api.servicebook.ServiceBook;
 import net.rim.device.api.servicebook.ServiceRecord;
@@ -28,7 +29,7 @@ public final class RunningScreen$TestSuites extends Thread {
       this.this$0.report.setMsisdn(PhoneUtilities.getDevicePhoneNumber());
       ServiceRecord[] sr = ServiceBook.getSB().getRecords();
       if (sr.length != 0) {
-         StringBuffer buf = (StringBuffer)(new Object());
+         StringBuffer buf = new StringBuffer();
 
          for (int i = 0; i < sr.length; i++) {
             buf.append(sr[i].getCid());
@@ -213,7 +214,7 @@ public final class RunningScreen$TestSuites extends Thread {
       this.screen.report.setNetwork(RadioInfo.getNetworkName(RadioInfo.getCurrentNetworkIndex()));
       this.screen.report.signalLevel = RadioInfo.getSignalLevel();
       byte[] ipAddress = RadioInfo.getIPAddress(this.this$0._apnId);
-      StringBuffer buf = (StringBuffer)(new Object());
+      StringBuffer buf = new StringBuffer();
       buf.append(ipAddress[0] & 255);
       buf.append('.');
       buf.append(ipAddress[1] & 255);
@@ -226,32 +227,22 @@ public final class RunningScreen$TestSuites extends Thread {
 
    private final String getApplicationVersion() {
       int handle = CodeModuleManager.getModuleHandle("net_rim_os");
-      return handle == 0 ? "" : ((StringBuffer)(new Object("v"))).append(CodeModuleManager.getModuleVersion(handle)).toString();
+      return handle == 0 ? "" : "v" + CodeModuleManager.getModuleVersion(handle);
    }
 
    final void updateScreen(String title) {
       synchronized (Application.getEventLock()) {
          this.this$0._title.setText(title);
-         SimpleDateFormat formatter = (SimpleDateFormat)(new Object("MMMMM dd, yyyy hh:mm aaa"));
-         this.this$0._startTime.setText(formatter.format(new Object(this.this$0.report.startTimeStamp)));
+         SimpleDateFormat formatter = new SimpleDateFormat("MMMMM dd, yyyy hh:mm aaa");
+         this.this$0._startTime.setText(formatter.format(new Date(this.this$0.report.startTimeStamp)));
          this.this$0._pin.setText(this.this$0.report.getPin());
          this.this$0._msisdn.setText(this.this$0.report.getMsisdn());
-         this.this$0._deviceType.setText(((StringBuffer)(new Object("BlackBerry "))).append(this.this$0.report.getDeviceType()).toString());
+         this.this$0._deviceType.setText("BlackBerry " + this.this$0.report.getDeviceType());
          this.this$0._appVersion.setText(this.this$0.report.getAppVersion());
          this.this$0._platform.setText(this.this$0.report.getPlatform());
          this.this$0._serviceBook.setText(this.this$0.report.getServiceBook());
-         this.this$0
-            ._freeSpace
-            .setText(
-               this.this$0.report.freeSpace < 0 ? "unknown" : ((StringBuffer)(new Object())).append(this.this$0.report.freeSpace).append(" bytes").toString()
-            );
-         this.this$0
-            ._signalLevel
-            .setText(
-               this.this$0.report.signalLevel == -99999
-                  ? "Unknown"
-                  : ((StringBuffer)(new Object())).append(this.this$0.report.signalLevel).append(" dBm").toString()
-            );
+         this.this$0._freeSpace.setText(this.this$0.report.freeSpace < 0 ? "unknown" : this.this$0.report.freeSpace + " bytes");
+         this.this$0._signalLevel.setText(this.this$0.report.signalLevel == -99999 ? "Unknown" : this.this$0.report.signalLevel + " dBm");
          this.this$0._networkType.setText(this.this$0.report.getNetworkType());
          this.this$0._network.setText(this.this$0.report.getNetwork());
          this.this$0._ip.setText(this.this$0.report.getIp());
@@ -359,7 +350,7 @@ public final class RunningScreen$TestSuites extends Thread {
             }
 
             if (this.this$0.report.endTimeStamp > 0) {
-               this.this$0._endTime.setText(formatter.format(new Object(this.this$0.report.endTimeStamp)));
+               this.this$0._endTime.setText(formatter.format(new Date(this.this$0.report.endTimeStamp)));
             } else {
                this.this$0._endTime.setText("Incomplete");
             }

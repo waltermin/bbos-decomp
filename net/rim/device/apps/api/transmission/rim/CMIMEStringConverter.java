@@ -4,6 +4,7 @@ import com.sun.cldc.i18n.Helper;
 import net.rim.device.api.util.DataBuffer;
 import net.rim.device.apps.api.transmission.Parameters;
 import net.rim.device.apps.api.utility.serialization.BaseConverter;
+import net.rim.device.apps.api.utility.serialization.SerializationException;
 
 public final class CMIMEStringConverter extends BaseConverter {
    private static CMIMEStringConverter _instance;
@@ -25,7 +26,7 @@ public final class CMIMEStringConverter extends BaseConverter {
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final Object convert(byte[] inputBytes, Object contextObject) {
+   public final Object convert(byte[] inputBytes, Object contextObject) throws SerializationException {
       if (inputBytes != null && inputBytes.length != 0) {
          Parameters params = (Parameters)contextObject;
          String enc = null;
@@ -46,17 +47,17 @@ public final class CMIMEStringConverter extends BaseConverter {
                try {
                   var15 = true;
                   encodingByte = (byte)(encodingByte & -129);
-                  DataBuffer ex = new Object();
-                  ((DataBuffer)ex).setData(inputBytes, dataStart, dataLength - 1);
-                  CMIMEParameters futureDataParams = new CMIMEParameters((DataBuffer)ex, 2, 2);
+                  DataBuffer ex = new DataBuffer();
+                  ex.setData(inputBytes, dataStart, dataLength - 1);
+                  CMIMEParameters futureDataParams = new CMIMEParameters(ex, 2, 2);
                   dataStart = futureDataParams.read((byte)0);
-                  if (((DataBuffer)ex).getArrayPosition() > dataStart) {
-                     dataStart += ((DataBuffer)ex).getArrayStart();
+                  if (ex.getArrayPosition() > dataStart) {
+                     dataStart += ex.getArrayStart();
                   }
 
                   dataLength -= dataStart;
                   if (dataLength < 0) {
-                     throw new Object();
+                     throw new SerializationException();
                   }
 
                   var15 = false;
@@ -86,13 +87,13 @@ public final class CMIMEStringConverter extends BaseConverter {
                input = Helper.byteToCharArray(inputBytes, dataStart, dataLength, enc);
             }
          } catch (Throwable var16) {
-            throw new Object(ex.toString());
+            throw new SerializationException(ex.toString());
          }
 
          if (input == null) {
             return "";
          } else {
-            return input instanceof byte[] ? new Object((byte[])input, 0, ((byte[])input).length) : new Object((char[])input, 0, ((char[])input).length);
+            return input instanceof byte[] ? new String((byte[])input, 0, ((byte[])input).length) : new String((char[])input, 0, ((char[])input).length);
          }
       } else {
          return "";
@@ -102,7 +103,7 @@ public final class CMIMEStringConverter extends BaseConverter {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    @Override
-   public final byte[] convert(Object inputObject, Object contextObject) {
+   public final byte[] convert(Object inputObject, Object contextObject) throws SerializationException {
       if (inputObject == null) {
          return null;
       }
@@ -115,7 +116,7 @@ public final class CMIMEStringConverter extends BaseConverter {
       try {
          return Helper.charToByteArray(output, 0, output.length, enc);
       } catch (Throwable var10) {
-         throw new Object(ex.toString());
+         throw new SerializationException(ex.toString());
       }
    }
 

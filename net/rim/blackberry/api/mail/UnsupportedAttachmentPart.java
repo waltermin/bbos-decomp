@@ -41,6 +41,6 @@ public final class UnsupportedAttachmentPart extends BodyPart {
    }
 
    public final String getName() {
-      return (String)(new Object(this._data.getNameBytes()));
+      return new String(this._data.getNameBytes());
    }
 }

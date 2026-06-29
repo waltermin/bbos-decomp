@@ -17,7 +17,7 @@ final class VADEngineManager$1 implements Runnable {
    @Override
    public final void run() {
       this.this$0._isDialling = true;
-      ((DialVerb)(new Object(this.val$number, null, this.val$context))).invoke(this.val$context);
+      new DialVerb(this.val$number, null, this.val$context).invoke(this.val$context);
       this.this$0._isDialling = false;
    }
 }

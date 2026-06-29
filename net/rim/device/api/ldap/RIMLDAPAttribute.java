@@ -1,6 +1,7 @@
 package net.rim.device.api.ldap;
 
 import java.util.Enumeration;
+import net.rim.device.api.util.ObjectEnumerator;
 import net.rim.vm.Array;
 
 class RIMLDAPAttribute implements LDAPAttribute {
@@ -13,13 +14,13 @@ class RIMLDAPAttribute implements LDAPAttribute {
          this._valueName = valueName;
          this._valueList = new Object[0];
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    public void addValue(Object newValue) {
       if (newValue == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._size++;
@@ -44,7 +45,7 @@ class RIMLDAPAttribute implements LDAPAttribute {
 
    @Override
    public Enumeration getValues() {
-      return (Enumeration)(new Object(this._valueList));
+      return new ObjectEnumerator(this._valueList);
    }
 
    @Override

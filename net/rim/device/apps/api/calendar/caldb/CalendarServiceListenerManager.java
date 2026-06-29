@@ -28,7 +28,7 @@ public class CalendarServiceListenerManager {
 
    public void addCalendarServiceListener(Object listener) {
       if (!(listener instanceof CalendarServiceListener)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       synchronized (this) {
@@ -38,7 +38,7 @@ public class CalendarServiceListenerManager {
 
    public void removeCalendarServiceListener(Object listener) {
       if (!(listener instanceof CalendarServiceListener)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       synchronized (this) {

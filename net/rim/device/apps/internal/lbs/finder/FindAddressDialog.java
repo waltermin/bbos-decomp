@@ -2,10 +2,11 @@ package net.rim.device.apps.internal.lbs.finder;
 
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.ButtonField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.PopupScreen;
 import net.rim.device.api.ui.container.VerticalFieldManager;
@@ -18,21 +19,21 @@ import net.rim.device.apps.internal.lbs.model.SearchAddressModel;
 import net.rim.device.apps.internal.lbs.resources.LBSResources;
 
 final class FindAddressDialog extends PopupScreen implements FieldChangeListener {
-   private Object _context = new Object();
+   private Object _context = new ContextObject();
    private MailingAddressModel _model;
    private VerticalFieldManager _vfm;
    private ButtonField _searchButton;
    private ButtonField _cancelButton;
 
    FindAddressDialog(String title, boolean directions) {
-      super((Manager)(new Object(1153220571769602048L)), 196608);
-      this.add((Field)(new Object(title)));
-      this.add((Field)(new Object()));
-      HorizontalFieldManager hfm = (HorizontalFieldManager)(new Object(12884901888L));
+      super(new VerticalFieldManager(1153220571769602048L), 196608);
+      this.add(new LabelField(title));
+      this.add(new SeparatorField());
+      HorizontalFieldManager hfm = new HorizontalFieldManager(12884901888L);
       this.add(hfm);
-      hfm.add(this._searchButton = (ButtonField)(new Object(LBSResources.getString(95))));
+      hfm.add(this._searchButton = new ButtonField(LBSResources.getString(95)));
       this._searchButton.setChangeListener(this);
-      hfm.add(this._cancelButton = (ButtonField)(new Object(CommonResources.getString(9042))));
+      hfm.add(this._cancelButton = new ButtonField(CommonResources.getString(9042)));
       this._cancelButton.setChangeListener(this);
       this._model = new SearchAddressModel(null);
       this.setModel(this._model);
@@ -90,7 +91,7 @@ final class FindAddressDialog extends PopupScreen implements FieldChangeListener
 
    private final boolean grabDataFromField() {
       if (!(this._model instanceof SearchAddressModel)) {
-         return !(this._model instanceof Object) ? false : ((MailingAddressModelImpl)this._model).grabDataFromField(this._vfm, this._context);
+         return !(this._model instanceof MailingAddressModelImpl) ? false : ((MailingAddressModelImpl)this._model).grabDataFromField(this._vfm, this._context);
       } else {
          return ((SearchAddressModel)this._model).grabDataFromField(this._vfm, this._context);
       }

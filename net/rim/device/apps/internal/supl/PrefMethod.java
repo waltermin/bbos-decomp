@@ -12,6 +12,6 @@ final class PrefMethod {
    }
 
    final void print() {
-      System.out.println(((StringBuffer)(new Object("Pref Method: "))).append(this.method).toString());
+      System.out.println("Pref Method: " + this.method);
    }
 }

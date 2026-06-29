@@ -33,11 +33,11 @@ public final class DSAPublicKey implements DSAKey, PublicKey, Persistable {
             byte[] p = cs.getP();
             byte[] y = this.getPublicKeyData();
             if (CryptoByteArrayArithmetic.isZero(y)) {
-               throw new Object();
+               throw new InvalidKeyException();
             }
 
             if (CryptoByteArrayArithmetic.isOne(y) || CryptoByteArrayArithmetic.compare(y, p) >= 0) {
-               throw new Object();
+               throw new InvalidKeyException();
             }
          } finally {
             break label66;
@@ -78,21 +78,21 @@ public final class DSAPublicKey implements DSAKey, PublicKey, Persistable {
          DSACryptoToken cryptoToken = (DSACryptoToken)cryptoSystem.getAsymmetricCryptoToken();
          this.initialize(cryptoSystem, cryptoToken, cryptoTokenData);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
-   public DSAPublicKey(DSACryptoSystem cryptoSystem, byte[] data) {
+   public DSAPublicKey(DSACryptoSystem cryptoSystem, byte[] data) throws InvalidKeyException {
       if (cryptoSystem != null && data != null) {
          data = CryptoByteArrayArithmetic.trim(data);
          if (data.length > cryptoSystem.getPublicKeyLength()) {
-            throw new Object();
+            throw new InvalidKeyException();
          }
 
          DSACryptoToken cryptoToken = (DSACryptoToken)cryptoSystem.getAsymmetricCryptoToken();
          this.initialize(cryptoSystem, cryptoToken, cryptoToken.injectDSAPublicKey(cryptoSystem.getCryptoTokenData(), data));
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

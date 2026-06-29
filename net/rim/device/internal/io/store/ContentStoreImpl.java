@@ -1,6 +1,8 @@
 package net.rim.device.internal.io.store;
 
+import java.io.IOException;
 import java.io.InputStream;
+import net.rim.device.api.io.file.FileIOException;
 import net.rim.device.api.lowmemory.LowMemoryListener;
 import net.rim.device.api.lowmemory.LowMemoryManager;
 import net.rim.device.api.system.ApplicationRegistry;
@@ -59,7 +61,7 @@ final class ContentStoreImpl implements LowMemoryListener {
          if (folder != null && folder.getId() != 0) {
             FileImpl prev = folder.getFile(filename);
             if (prev != null && prev.isAlive()) {
-               throw new Object(7);
+               throw new FileIOException(7);
             }
 
             FileImpl file = new FileImpl(0);
@@ -71,7 +73,7 @@ final class ContentStoreImpl implements LowMemoryListener {
             FileSystem.addFileJournalEntry(file.getJSRPath(), 0);
             this._syncCollection.fileAdded(file);
          } else {
-            throw new Object("Folder cannot be null or root.");
+            throw new IOException("Folder cannot be null or root.");
          }
       }
    }
@@ -107,7 +109,7 @@ final class ContentStoreImpl implements LowMemoryListener {
 
       int slash = pathAndFilename.lastIndexOf(47) + 1;
       if (slash == 0) {
-         throw new Object("path must contain a slash");
+         throw new IllegalArgumentException("path must contain a slash");
       }
 
       FolderImpl folder = this._database.getFolderTable().getFolder(pathAndFilename.substring(0, slash));
@@ -307,7 +309,7 @@ final class ContentStoreImpl implements LowMemoryListener {
    private final String getPath(String pathAndFilename) {
       int slash = pathAndFilename.lastIndexOf(47);
       if (slash == -1) {
-         throw new Object("Path must be absolute.");
+         throw new IllegalArgumentException("Path must be absolute.");
       } else {
          return pathAndFilename.substring(0, slash + 1);
       }
@@ -316,13 +318,13 @@ final class ContentStoreImpl implements LowMemoryListener {
    private final String getFilename(String pathAndFilename) {
       int slash = pathAndFilename.lastIndexOf(47);
       if (slash == -1) {
-         throw new Object("Path must be absolute.");
+         throw new IllegalArgumentException("Path must be absolute.");
       } else {
          String filename = pathAndFilename.substring(slash + 1);
          if (filename != null && filename.length() != 0) {
             return filename;
          } else {
-            throw new Object("Bad path");
+            throw new IllegalArgumentException("Bad path");
          }
       }
    }
@@ -378,7 +380,7 @@ final class ContentStoreImpl implements LowMemoryListener {
    }
 
    private ContentStoreImpl() {
-      this._crcTable = (IntHashtable)(new Object(40));
+      this._crcTable = new IntHashtable(40);
       this._crcTable.put(-47428882, "DesertDunes.jpg");
       this._crcTable.put(946818243, "MountainLake.jpg");
       this._crcTable.put(1609918764, "Waterfall.jpg");
@@ -437,7 +439,7 @@ final class ContentStoreImpl implements LowMemoryListener {
    private final boolean addFolderInternal(String pathAndFilename, int attributes, boolean verify) {
       synchronized (this._database) {
          if (this._database.getFolderTable().add(pathAndFilename, attributes, verify)) {
-            FileSystem.addFileJournalEntry(FileUtilities.encodeString(((StringBuffer)(new Object("/store"))).append(pathAndFilename).toString()), 0);
+            FileSystem.addFileJournalEntry(FileUtilities.encodeString("/store" + pathAndFilename), 0);
             this._syncCollection.fileAdded(this._database.getFolderTable().getFolder(pathAndFilename));
             return true;
          } else {

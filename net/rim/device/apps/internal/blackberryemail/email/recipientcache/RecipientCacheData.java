@@ -95,7 +95,7 @@ public final class RecipientCacheData implements Persistable, SyncObject, Encryp
          return true;
       }
 
-      if (!(obj instanceof Object)) {
+      if (!(obj instanceof String)) {
          if (!(obj instanceof RecipientCacheData)) {
             return false;
          }
@@ -115,7 +115,7 @@ public final class RecipientCacheData implements Persistable, SyncObject, Encryp
 
    public RecipientCacheData(String recipient, int serviceUserID, int serviceUIDHash, int messageClassification, long encodingUID, int flags, int uid) {
       if (recipient == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this.setRecipient(recipient);

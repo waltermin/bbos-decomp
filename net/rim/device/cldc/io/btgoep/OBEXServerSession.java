@@ -26,7 +26,7 @@ public class OBEXServerSession extends OBEXSession implements Runnable {
             this.handleNextRequest(null);
          }
       } catch (Throwable var3) {
-         System.out.println(((StringBuffer)(new Object("IOException caught: "))).append(e.getMessage()).toString());
+         System.out.println("IOException caught: " + e.getMessage());
          return;
       }
    }
@@ -122,7 +122,7 @@ public class OBEXServerSession extends OBEXSession implements Runnable {
             HeaderSetImpl requestHeaders = this.readHeaders(length, false);
             byte[] target = (byte[])requestHeaders.getHeader(70);
             if (target != null) {
-               replyHeaders.setHeader(203, new Object(1));
+               replyHeaders.setHeader(203, new Long(1));
                replyHeaders.setHeader(74, target);
             }
 

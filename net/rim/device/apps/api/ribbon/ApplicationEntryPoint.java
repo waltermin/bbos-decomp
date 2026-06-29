@@ -120,7 +120,7 @@ public final class ApplicationEntryPoint implements EntryPointDescriptor, Boolea
 
    @Override
    public final Boolean get(long propID, Boolean defaultReturned) {
-      return (Boolean)(propID == 7 ? new Object(this._canHide) : defaultReturned);
+      return propID == 7 ? new Boolean(this._canHide) : defaultReturned;
    }
 
    @Override
@@ -137,7 +137,7 @@ public final class ApplicationEntryPoint implements EntryPointDescriptor, Boolea
       try {
          ApplicationManager.getApplicationManager().runApplication(this._applicationDescriptor);
       } catch (Throwable var3) {
-         throw new Object(e.getMessage());
+         throw new RuntimeException(e.getMessage());
       }
    }
 
@@ -166,13 +166,13 @@ public final class ApplicationEntryPoint implements EntryPointDescriptor, Boolea
       this._applicationDescriptor = ad;
       String moduleName = ad.getModuleName();
       String name = ad.getName();
-      StringBuffer buff = (StringBuffer)(new Object(moduleName.length() + name.length() + 1));
+      StringBuffer buff = new StringBuffer(moduleName.length() + name.length() + 1);
       buff.append(moduleName).append('.').append(name);
       this._uniqueName = buff.toString();
       this._defaultDescription = name;
       int order = ad.getPosition();
       if (order != 0) {
-         this._order = (Integer)(new Object(order));
+         this._order = new Integer(order);
       }
 
       ApplicationRegistry reg = ApplicationRegistry.getApplicationRegistry();
@@ -242,7 +242,7 @@ public final class ApplicationEntryPoint implements EntryPointDescriptor, Boolea
       // 3b: goto 8b
       // 3e: astore 3
       // 3f: getstatic java/lang/System.err Ljava/io/PrintStream;
-      // 42: new java/lang/Object
+      // 42: new java/lang/StringBuffer
       // 45: dup
       // 46: ldc_w "WARNING: i18n "
       // 49: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -258,7 +258,7 @@ public final class ApplicationEntryPoint implements EntryPointDescriptor, Boolea
       // 63: goto 8b
       // 66: astore 3
       // 67: getstatic java/lang/System.err Ljava/io/PrintStream;
-      // 6a: new java/lang/Object
+      // 6a: new java/lang/StringBuffer
       // 6d: dup
       // 6e: ldc_w "WARNING: i18n "
       // 71: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V

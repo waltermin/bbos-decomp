@@ -6,8 +6,8 @@ import net.rim.vm.Array;
 import net.rim.vm.WeakReference;
 
 final class PhoneNumberHashCodeGenerator {
-   private StringBuffer _number = (StringBuffer)(new Object());
-   private StringBuffer _dtmf = (StringBuffer)(new Object());
+   private StringBuffer _number = new StringBuffer();
+   private StringBuffer _dtmf = new StringBuffer();
    private byte[] _bytes = new byte[0];
    private static final long GENERATOR_KEY = -7650560901485287741L;
    private static WeakReference _generatorWR;
@@ -51,7 +51,7 @@ final class PhoneNumberHashCodeGenerator {
       ApplicationRegistry reg = ApplicationRegistry.getApplicationRegistry();
       _generatorWR = (WeakReference)reg.get(-7650560901485287741L);
       if (_generatorWR == null) {
-         _generatorWR = (WeakReference)(new Object(null));
+         _generatorWR = new WeakReference(null);
 
          label21:
          try {

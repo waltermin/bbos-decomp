@@ -17,9 +17,7 @@ final class AttachAddressVerb extends Verb implements EmailEditorScreen$AttachSm
 
    @Override
    public final Object invoke(Object parameter) {
-      AddressSelectionContext selectionContext = (AddressSelectionContext)(new Object(
-         AddressBookResources.getString(1601), null, null, new RIMModelRecognizer(), null
-      ));
+      AddressSelectionContext selectionContext = new AddressSelectionContext(AddressBookResources.getString(1601), null, null, new RIMModelRecognizer(), null);
       return new AddressSelectionVerb().invoke(selectionContext);
    }
 }

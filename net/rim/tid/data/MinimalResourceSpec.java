@@ -41,7 +41,7 @@ class MinimalResourceSpec implements IResourceSpec {
       }
 
       String libName = path.replace('\\', '_').replace('/', '_');
-      byte[] data = this.loadRimRes(libName, ((StringBuffer)(new Object())).append(fileName).append('.').append(extention).toString());
+      byte[] data = this.loadRimRes(libName, fileName + '.' + extention);
       return data != null ? new ContinuousInputStream(data) : null;
    }
 

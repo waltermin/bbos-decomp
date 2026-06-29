@@ -7,7 +7,7 @@ import net.rim.device.api.ui.Manager;
 
 class LookupImpl2$LookupField extends Manager {
    LookupImpl2 _outer;
-   private DrawTextParam _drawTextParam = (DrawTextParam)(new Object());
+   private DrawTextParam _drawTextParam = new DrawTextParam();
 
    LookupImpl2$LookupField() {
       super(0);
@@ -135,15 +135,7 @@ class LookupImpl2$LookupField extends Manager {
                   break;
                case 1:
                   this._outer._infoString.setLength(0);
-                  this._outer
-                     ._infoString
-                     .append(
-                        ((StringBuffer)(new Object()))
-                           .append(this._outer._currentIndex + 1)
-                           .append("/")
-                           .append(this._outer._currentVariant.getVariantsCount())
-                           .toString()
-                     );
+                  this._outer._infoString.append(this._outer._currentIndex + 1 + "/" + this._outer._currentVariant.getVariantsCount());
                   graphics.drawText(this._outer._infoString, 0, this._outer._infoString.length(), x, y, 0, -1);
             }
 

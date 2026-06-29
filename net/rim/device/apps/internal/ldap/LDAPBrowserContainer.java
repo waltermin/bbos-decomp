@@ -20,7 +20,7 @@ public final class LDAPBrowserContainer {
          this._context = context;
          this._label = this.determineLabel();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -38,7 +38,7 @@ public final class LDAPBrowserContainer {
 
    public final void setEntry(LDAPEntry entry) {
       if (entry == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._entry = entry;
@@ -54,7 +54,7 @@ public final class LDAPBrowserContainer {
    }
 
    private final String determineLabel() {
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       String friendlyName = null;
 
       try {

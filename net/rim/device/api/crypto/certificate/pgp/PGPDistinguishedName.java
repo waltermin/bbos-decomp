@@ -3,6 +3,7 @@ package net.rim.device.api.crypto.certificate.pgp;
 import java.util.Enumeration;
 import net.rim.device.api.crypto.certificate.DistinguishedName;
 import net.rim.device.api.crypto.oid.OID;
+import net.rim.device.api.util.EmptyEnumeration;
 import net.rim.device.api.util.ObjectUtilities;
 import net.rim.device.internal.crypto.pgp.PGPUserIDPacket;
 
@@ -35,7 +36,7 @@ public class PGPDistinguishedName implements DistinguishedName {
 
    @Override
    public Enumeration getOIDs() {
-      return (Enumeration)(new Object());
+      return new EmptyEnumeration();
    }
 
    @Override

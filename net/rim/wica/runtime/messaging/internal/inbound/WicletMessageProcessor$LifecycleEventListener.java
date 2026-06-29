@@ -40,7 +40,7 @@ final class WicletMessageProcessor$LifecycleEventListener implements EventListen
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object())).append(this.this$0.toString()).append("#LifecycleEventListener").toString();
+      return this.this$0.toString() + "#LifecycleEventListener";
    }
 
    WicletMessageProcessor$LifecycleEventListener(WicletMessageProcessor x0, WicletMessageProcessor$1 x1) {

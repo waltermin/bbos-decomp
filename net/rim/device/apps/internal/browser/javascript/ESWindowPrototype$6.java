@@ -17,7 +17,7 @@ class ESWindowPrototype$6 extends JavaScriptHostFunction {
    public long run() {
       ESObject thiz = this.getThis();
       ESObject windowObj = thiz;
-      if (thiz instanceof Object) {
+      if (thiz instanceof GlobalObject) {
          windowObj = ((GlobalObject)thiz).getRedirectionObject();
       }
 

@@ -1,5 +1,6 @@
 package net.rim.device.internal.synchronization;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import net.rim.device.api.collection.CollectionLock;
@@ -317,12 +318,12 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       return progress;
    }
 
-   private static final int checkAvailable(int prevAvailable, DataBuffer buff) {
+   private static final int checkAvailable(int prevAvailable, DataBuffer buff) throws IOException {
       int currAvailable = buff.available();
       if (currAvailable <= 0) {
          return currAvailable;
       } else if (currAvailable >= prevAvailable) {
-         throw new Object();
+         throw new IOException();
       } else {
          return currAvailable;
       }
@@ -343,18 +344,18 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:185)
       //
       // Bytecode:
-      // 00: new java/lang/Object
+      // 00: new net/rim/device/api/util/LongIntHashtable
       // 03: dup
       // 04: invokespecial net/rim/device/api/util/LongIntHashtable.<init> ()V
       // 07: astore 2
       // 08: bipush 1
       // 09: istore 3
-      // 0a: new java/lang/Object
+      // 0a: new net/rim/vm/FlashInputStream
       // 0d: dup
       // 0e: ldc2_w -3904873326663712912
       // 11: invokespecial net/rim/vm/FlashInputStream.<init> (J)V
       // 14: astore 4
-      // 16: new java/lang/Object
+      // 16: new net/rim/device/api/util/DataBuffer
       // 19: dup
       // 1a: bipush 0
       // 1b: invokespecial net/rim/device/api/util/DataBuffer.<init> (Z)V
@@ -476,15 +477,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
    private final void checkBackupProgress(SyncCollection sc, int curr) {
       if (curr != this._progressCurrent) {
          String syncName = OTAUpgradeControl$SCSafe.getSyncName(sc);
-         logInfo(
-            ((StringBuffer)(new Object("backup; '")))
-               .append(syncName)
-               .append("' progress mismatch ")
-               .append(this._progressCurrent)
-               .append(" should be ")
-               .append(curr)
-               .toString()
-         );
+         logInfo("backup; '" + syncName + "' progress mismatch " + this._progressCurrent + " should be " + curr);
       }
 
       while (this._progressCurrent < curr) {
@@ -510,12 +503,12 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 00: bipush 0
       // 01: i2l
       // 02: lstore 4
-      // 04: new java/lang/Object
+      // 04: new net/rim/vm/FlashInputStream
       // 07: dup
       // 08: lload 1
       // 09: invokespecial net/rim/vm/FlashInputStream.<init> (J)V
       // 0c: astore 6
-      // 0e: new java/lang/Object
+      // 0e: new net/rim/device/api/util/DataBuffer
       // 11: dup
       // 12: bipush 0
       // 13: invokespecial net/rim/device/api/util/DataBuffer.<init> (Z)V
@@ -587,12 +580,12 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // Bytecode:
       // 00: bipush 0
       // 01: istore 4
-      // 03: new java/lang/Object
+      // 03: new net/rim/vm/FlashInputStream
       // 06: dup
       // 07: lload 1
       // 08: invokespecial net/rim/vm/FlashInputStream.<init> (J)V
       // 0b: astore 5
-      // 0d: new java/lang/Object
+      // 0d: new net/rim/device/api/util/DataBuffer
       // 10: dup
       // 11: bipush 0
       // 12: invokespecial net/rim/device/api/util/DataBuffer.<init> (Z)V
@@ -662,13 +655,13 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:185)
       //
       // Bytecode:
-      // 00: new java/lang/Object
+      // 00: new net/rim/vm/FlashOutputStream
       // 03: dup
       // 04: lload 1
       // 05: bipush 1
       // 06: invokespecial net/rim/vm/FlashOutputStream.<init> (JZ)V
       // 09: astore 5
-      // 0b: new java/lang/Object
+      // 0b: new net/rim/device/api/util/DataBuffer
       // 0e: dup
       // 0f: bipush 0
       // 10: invokespecial net/rim/device/api/util/DataBuffer.<init> (Z)V
@@ -718,13 +711,13 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:185)
       //
       // Bytecode:
-      // 00: new java/lang/Object
+      // 00: new net/rim/vm/FlashOutputStream
       // 03: dup
       // 04: lload 1
       // 05: bipush 1
       // 06: invokespecial net/rim/vm/FlashOutputStream.<init> (JZ)V
       // 09: astore 6
-      // 0b: new java/lang/Object
+      // 0b: new net/rim/device/api/util/DataBuffer
       // 0e: dup
       // 0f: bipush 0
       // 10: invokespecial net/rim/device/api/util/DataBuffer.<init> (Z)V
@@ -813,7 +806,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
    }
 
    private static final byte[] tryZLIBCompress(byte[] input, int inputOff, int inputLen) {
-      Deflater state = (Deflater)(new Object(1, 0, 15));
+      Deflater state = new Deflater(1, 0, 15);
       return state.compress(input, inputOff, inputLen, 4);
    }
 
@@ -900,7 +893,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       try {
          var10 = true;
          if ((control & 1) != 0) {
-            Inflater state = (Inflater)(new Object(15));
+            Inflater state = new Inflater(15);
             byte[] result = state.decompress(input, 0, input.length);
             decompressedSize = result.length;
             Array.resize(output, decompressedSize);
@@ -930,7 +923,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private final boolean outputToFlash(FlashOutputStream fos, DataBuffer buff, boolean flush, int resetCode) {
+   private final boolean outputToFlash(FlashOutputStream fos, DataBuffer buff, boolean flush, int resetCode) throws IOException {
       int amountWritten = buff.getArrayPosition();
       if (flush) {
          if (amountWritten <= 0) {
@@ -955,7 +948,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       flags = this.prepareBufferForWrite(flags, raw, 0, amountWritten, compressed, headerLen);
       int compressedSize = compressed.length - headerLen;
       if (compressedSize <= 0) {
-         throw new Object();
+         throw new IOException();
       }
 
       setUShort(compressed, 0, headerLen);
@@ -985,7 +978,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
 
    // $VF: Could not verify finally blocks. A semaphore variable has been added to preserve control flow.
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
-   private final boolean inputFromFlash(FlashInputStream fis, DataBuffer buff) {
+   private final boolean inputFromFlash(FlashInputStream fis, DataBuffer buff) throws IOException {
       if (buff.available() != 0) {
          return false;
       }
@@ -1003,18 +996,18 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
 
       int headerLen = c0 & 0xFF | (c1 & 0xFF) << 8;
       if (headerLen < 8) {
-         throw new Object();
+         throw new IOException();
       }
 
       byte[] header = new byte[headerLen - 2];
       int headerAmtRead = fis.read(header, 0, header.length);
       if (headerAmtRead != header.length) {
-         throw new Object();
+         throw new IOException();
       }
 
       int flags = header[0] & 255 | (header[1] & 255) << 8;
       if ((flags & -4) != 0) {
-         throw new Object();
+         throw new IOException();
       }
 
       int size = 0;
@@ -1030,7 +1023,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
          var14 = true;
          int decompressed = fis.read(compressed, 0, size);
          if (decompressed != size) {
-            throw new Object();
+            throw new IOException();
          }
 
          var14 = false;
@@ -1076,7 +1069,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
             return guid;
          }
 
-         str = ((StringBuffer)(new Object())).append(str).append(Integer.toString(str.hashCode())).toString();
+         str = str + Integer.toString(str.hashCode());
       }
    }
 
@@ -1095,12 +1088,12 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:185)
       //
       // Bytecode:
-      // 00: new java/lang/Object
+      // 00: new net/rim/vm/FlashInputStream
       // 03: dup
       // 04: lload 1
       // 05: invokespecial net/rim/vm/FlashInputStream.<init> (J)V
       // 08: astore 4
-      // 0a: new java/lang/Object
+      // 0a: new net/rim/device/api/util/DataBuffer
       // 0d: dup
       // 0e: bipush 0
       // 0f: invokespecial net/rim/device/api/util/DataBuffer.<init> (Z)V
@@ -1201,7 +1194,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       if (FlashInputStream.exists(-7484766735474520310L)) {
          int streamVersion = this.readIntFromStream(-7484766735474520310L, 1);
          if (streamVersion > 65537) {
-            logInfo(((StringBuffer)(new Object("backup; restore stream format is of unknown format (version:"))).append(streamVersion).append(')').toString());
+            logInfo("backup; restore stream format is of unknown format (version:" + streamVersion + ')');
             return true;
          }
       }
@@ -1225,13 +1218,13 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:185)
       //
       // Bytecode:
-      // 00: new java/lang/Object
+      // 00: new net/rim/vm/FlashOutputStream
       // 03: dup
       // 04: lload 1
       // 05: bipush 1
       // 06: invokespecial net/rim/vm/FlashOutputStream.<init> (JZ)V
       // 09: astore 3
-      // 0a: new java/lang/Object
+      // 0a: new net/rim/device/api/util/DataBuffer
       // 0d: dup
       // 0e: bipush 0
       // 0f: invokespecial net/rim/device/api/util/DataBuffer.<init> (Z)V
@@ -1292,12 +1285,12 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:185)
       //
       // Bytecode:
-      // 00: new java/lang/Object
+      // 00: new net/rim/vm/FlashInputStream
       // 03: dup
       // 04: lload 1
       // 05: invokespecial net/rim/vm/FlashInputStream.<init> (J)V
       // 08: astore 5
-      // 0a: new java/lang/Object
+      // 0a: new net/rim/device/api/util/DataBuffer
       // 0d: dup
       // 0e: bipush 0
       // 0f: invokespecial net/rim/device/api/util/DataBuffer.<init> (Z)V
@@ -1378,12 +1371,12 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:185)
       //
       // Bytecode:
-      // 00: new java/lang/Object
+      // 00: new net/rim/vm/FlashInputStream
       // 03: dup
       // 04: lload 1
       // 05: invokespecial net/rim/vm/FlashInputStream.<init> (J)V
       // 08: astore 3
-      // 09: new java/lang/Object
+      // 09: new net/rim/device/api/util/DataBuffer
       // 0c: dup
       // 0d: bipush 0
       // 0e: invokespecial net/rim/device/api/util/DataBuffer.<init> (Z)V
@@ -1459,12 +1452,12 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:185)
       //
       // Bytecode:
-      // 00: new java/lang/Object
+      // 00: new net/rim/vm/FlashOutputStream
       // 03: dup
       // 04: lload 1
       // 05: invokespecial net/rim/vm/FlashOutputStream.<init> (J)V
       // 08: astore 4
-      // 0a: new java/lang/Object
+      // 0a: new net/rim/device/api/util/DataBuffer
       // 0d: dup
       // 0e: bipush 0
       // 0f: invokespecial net/rim/device/api/util/DataBuffer.<init> (Z)V
@@ -1525,13 +1518,13 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:185)
       //
       // Bytecode:
-      // 00: new java/lang/Object
+      // 00: new net/rim/vm/FlashOutputStream
       // 03: dup
       // 04: lload 1
       // 05: bipush 1
       // 06: invokespecial net/rim/vm/FlashOutputStream.<init> (JZ)V
       // 09: astore 8
-      // 0b: new java/lang/Object
+      // 0b: new net/rim/device/api/util/DataBuffer
       // 0e: dup
       // 0f: bipush 0
       // 10: invokespecial net/rim/device/api/util/DataBuffer.<init> (Z)V
@@ -1603,17 +1596,17 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:185)
       //
       // Bytecode:
-      // 00: new java/lang/Object
+      // 00: new net/rim/device/api/util/IntHashtable
       // 03: dup
       // 04: sipush 1031
       // 07: invokespecial net/rim/device/api/util/IntHashtable.<init> (I)V
       // 0a: astore 3
-      // 0b: new java/lang/Object
+      // 0b: new net/rim/vm/FlashInputStream
       // 0e: dup
       // 0f: lload 1
       // 10: invokespecial net/rim/vm/FlashInputStream.<init> (J)V
       // 13: astore 4
-      // 15: new java/lang/Object
+      // 15: new net/rim/device/api/util/DataBuffer
       // 18: dup
       // 19: bipush 0
       // 1a: invokespecial net/rim/device/api/util/DataBuffer.<init> (Z)V
@@ -1702,7 +1695,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
                            if (check.get(uid) != null) {
                               if (!OTAUpgradeControl$SCSafe.removeSyncObject(sc, so)) {
                                  String syncName = OTAUpgradeControl$SCSafe.getSyncName(sc);
-                                 logInfo(((StringBuffer)(new Object("backup; could not remove "))).append(uid).append(" from ").append(syncName).toString());
+                                 logInfo("backup; could not remove " + uid + " from " + syncName);
                               }
 
                               syncObjs[i] = null;
@@ -1811,7 +1804,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 015: istore 8
       // 017: bipush 0
       // 018: istore 9
-      // 01a: new java/lang/Object
+      // 01a: new java/util/Vector
       // 01d: dup
       // 01e: invokespecial java/util/Vector.<init> ()V
       // 021: astore 10
@@ -1823,21 +1816,21 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 02e: istore 11
       // 030: aload 2
       // 031: dup
-      // 032: instanceof java/lang/Object
+      // 032: instanceof net/rim/device/api/synchronization/SyncCollectionStatusProvider
       // 035: ifne 03c
       // 038: pop
       // 039: goto 048
-      // 03c: checkcast java/lang/Object
+      // 03c: checkcast net/rim/device/api/synchronization/SyncCollectionStatusProvider
       // 03f: astore 12
       // 041: aload 12
       // 043: invokestatic net/rim/device/internal/synchronization/OTAUpgradeControl$SCSPSafe.getOTASLControlMask (Lnet/rim/device/api/synchronization/SyncCollectionStatusProvider;)I
       // 046: istore 11
-      // 048: new java/lang/Object
+      // 048: new net/rim/device/api/util/DataBuffer
       // 04b: dup
       // 04c: bipush 0
       // 04d: invokespecial net/rim/device/api/util/DataBuffer.<init> (Z)V
       // 050: astore 12
-      // 052: new java/lang/Object
+      // 052: new net/rim/device/api/util/DataBuffer
       // 055: dup
       // 056: bipush 0
       // 057: invokespecial net/rim/device/api/util/DataBuffer.<init> (Z)V
@@ -1900,7 +1893,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 0cf: invokestatic net/rim/device/internal/synchronization/OTAUpgradeControl$SCSafe.removeAllSyncObjects (Lnet/rim/device/api/synchronization/SyncCollection;)Z
       // 0d2: ifeq 0d8
       // 0d5: goto 163
-      // 0d8: new java/lang/Object
+      // 0d8: new java/lang/StringBuffer
       // 0db: dup
       // 0dc: ldc_w "backup; could not removeall from "
       // 0df: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -1918,13 +1911,13 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 0fb: aload 10
       // 0fd: iload 26
       // 0ff: invokevirtual java/util/Vector.elementAt (I)Ljava/lang/Object;
-      // 102: checkcast java/lang/Object
+      // 102: checkcast net/rim/device/api/synchronization/SyncObject
       // 105: astore 27
       // 107: aload 2
       // 108: aload 27
       // 10a: invokestatic net/rim/device/internal/synchronization/OTAUpgradeControl$SCSafe.removeSyncObject (Lnet/rim/device/api/synchronization/SyncCollection;Lnet/rim/device/api/synchronization/SyncObject;)Z
       // 10d: ifne 133
-      // 110: new java/lang/Object
+      // 110: new java/lang/StringBuffer
       // 113: dup
       // 114: ldc_w "backup; could not remove "
       // 117: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -1941,7 +1934,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 136: goto 0f6
       // 139: iload 8
       // 13b: ifeq 163
-      // 13e: new java/lang/Object
+      // 13e: new java/lang/StringBuffer
       // 141: dup
       // 142: ldc_w "backup failed; "
       // 145: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -2075,7 +2068,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 252: invokestatic net/rim/device/internal/synchronization/OTAUpgradeControl$SCSafe.removeAllSyncObjects (Lnet/rim/device/api/synchronization/SyncCollection;)Z
       // 255: ifeq 25b
       // 258: goto 2e6
-      // 25b: new java/lang/Object
+      // 25b: new java/lang/StringBuffer
       // 25e: dup
       // 25f: ldc_w "backup; could not removeall from "
       // 262: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -2093,13 +2086,13 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 27e: aload 10
       // 280: iload 26
       // 282: invokevirtual java/util/Vector.elementAt (I)Ljava/lang/Object;
-      // 285: checkcast java/lang/Object
+      // 285: checkcast net/rim/device/api/synchronization/SyncObject
       // 288: astore 27
       // 28a: aload 2
       // 28b: aload 27
       // 28d: invokestatic net/rim/device/internal/synchronization/OTAUpgradeControl$SCSafe.removeSyncObject (Lnet/rim/device/api/synchronization/SyncCollection;Lnet/rim/device/api/synchronization/SyncObject;)Z
       // 290: ifne 2b6
-      // 293: new java/lang/Object
+      // 293: new java/lang/StringBuffer
       // 296: dup
       // 297: ldc_w "backup; could not remove "
       // 29a: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -2116,7 +2109,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 2b9: goto 279
       // 2bc: iload 8
       // 2be: ifeq 2e6
-      // 2c1: new java/lang/Object
+      // 2c1: new java/lang/StringBuffer
       // 2c4: dup
       // 2c5: ldc_w "backup failed; "
       // 2c8: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -2173,7 +2166,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 337: invokestatic net/rim/device/internal/synchronization/OTAUpgradeControl$SCSafe.removeAllSyncObjects (Lnet/rim/device/api/synchronization/SyncCollection;)Z
       // 33a: ifeq 340
       // 33d: goto 3cb
-      // 340: new java/lang/Object
+      // 340: new java/lang/StringBuffer
       // 343: dup
       // 344: ldc_w "backup; could not removeall from "
       // 347: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -2191,13 +2184,13 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 363: aload 10
       // 365: iload 26
       // 367: invokevirtual java/util/Vector.elementAt (I)Ljava/lang/Object;
-      // 36a: checkcast java/lang/Object
+      // 36a: checkcast net/rim/device/api/synchronization/SyncObject
       // 36d: astore 27
       // 36f: aload 2
       // 370: aload 27
       // 372: invokestatic net/rim/device/internal/synchronization/OTAUpgradeControl$SCSafe.removeSyncObject (Lnet/rim/device/api/synchronization/SyncCollection;Lnet/rim/device/api/synchronization/SyncObject;)Z
       // 375: ifne 39b
-      // 378: new java/lang/Object
+      // 378: new java/lang/StringBuffer
       // 37b: dup
       // 37c: ldc_w "backup; could not remove "
       // 37f: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -2214,7 +2207,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 39e: goto 35e
       // 3a1: iload 8
       // 3a3: ifeq 3cb
-      // 3a6: new java/lang/Object
+      // 3a6: new java/lang/StringBuffer
       // 3a9: dup
       // 3aa: ldc_w "backup failed; "
       // 3ad: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -2271,7 +2264,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 41c: invokestatic net/rim/device/internal/synchronization/OTAUpgradeControl$SCSafe.removeAllSyncObjects (Lnet/rim/device/api/synchronization/SyncCollection;)Z
       // 41f: ifeq 425
       // 422: goto 4b0
-      // 425: new java/lang/Object
+      // 425: new java/lang/StringBuffer
       // 428: dup
       // 429: ldc_w "backup; could not removeall from "
       // 42c: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -2289,13 +2282,13 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 448: aload 10
       // 44a: iload 26
       // 44c: invokevirtual java/util/Vector.elementAt (I)Ljava/lang/Object;
-      // 44f: checkcast java/lang/Object
+      // 44f: checkcast net/rim/device/api/synchronization/SyncObject
       // 452: astore 27
       // 454: aload 2
       // 455: aload 27
       // 457: invokestatic net/rim/device/internal/synchronization/OTAUpgradeControl$SCSafe.removeSyncObject (Lnet/rim/device/api/synchronization/SyncCollection;Lnet/rim/device/api/synchronization/SyncObject;)Z
       // 45a: ifne 480
-      // 45d: new java/lang/Object
+      // 45d: new java/lang/StringBuffer
       // 460: dup
       // 461: ldc_w "backup; could not remove "
       // 464: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -2312,7 +2305,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 483: goto 443
       // 486: iload 8
       // 488: ifeq 4b0
-      // 48b: new java/lang/Object
+      // 48b: new java/lang/StringBuffer
       // 48e: dup
       // 48f: ldc_w "backup failed; "
       // 492: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -2409,21 +2402,21 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 022: istore 9
       // 024: bipush 0
       // 025: istore 10
-      // 027: new java/lang/Object
+      // 027: new net/rim/vm/FlashInputStream
       // 02a: dup
       // 02b: lload 6
       // 02d: invokespecial net/rim/vm/FlashInputStream.<init> (J)V
       // 030: astore 11
-      // 032: new java/lang/Object
+      // 032: new net/rim/device/api/util/IntVector
       // 035: dup
       // 036: invokespecial net/rim/device/api/util/IntVector.<init> ()V
       // 039: astore 12
-      // 03b: new java/lang/Object
+      // 03b: new net/rim/device/api/util/DataBuffer
       // 03e: dup
       // 03f: bipush 0
       // 040: invokespecial net/rim/device/api/util/DataBuffer.<init> (Z)V
       // 043: astore 13
-      // 045: new java/lang/Object
+      // 045: new net/rim/device/api/util/DataBuffer
       // 048: dup
       // 049: bipush 0
       // 04a: invokespecial net/rim/device/api/util/DataBuffer.<init> (Z)V
@@ -2539,7 +2532,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 15c: ifeq 18b
       // 15f: aload 3
       // 160: ifnonnull 16d
-      // 163: new java/lang/Object
+      // 163: new net/rim/device/api/util/IntHashtable
       // 166: dup
       // 167: iload 23
       // 169: invokespecial net/rim/device/api/util/IntHashtable.<init> (I)V
@@ -2581,7 +2574,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 1b7: ifeq 1e6
       // 1ba: aload 3
       // 1bb: ifnonnull 1c8
-      // 1be: new java/lang/Object
+      // 1be: new net/rim/device/api/util/IntHashtable
       // 1c1: dup
       // 1c2: iload 23
       // 1c4: invokespecial net/rim/device/api/util/IntHashtable.<init> (I)V
@@ -2622,7 +2615,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 20f: ifeq 23e
       // 212: aload 3
       // 213: ifnonnull 220
-      // 216: new java/lang/Object
+      // 216: new net/rim/device/api/util/IntHashtable
       // 219: dup
       // 21a: iload 23
       // 21c: invokespecial net/rim/device/api/util/IntHashtable.<init> (I)V
@@ -2681,7 +2674,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 05: aload 1
       // 06: invokestatic net/rim/device/internal/synchronization/OTAUpgradeControl$SCSafe.getSyncName (Lnet/rim/device/api/synchronization/SyncCollection;)Ljava/lang/String;
       // 09: astore 4
-      // 0b: new java/lang/Object
+      // 0b: new java/lang/StringBuffer
       // 0e: dup
       // 0f: ldc_w "backup+ "
       // 12: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -2712,7 +2705,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 49: lload 5
       // 4b: invokespecial net/rim/device/internal/synchronization/OTAUpgradeControl.establishBackedUpUIDs (J)Lnet/rim/device/api/util/IntHashtable;
       // 4e: astore 8
-      // 50: new java/lang/Object
+      // 50: new net/rim/vm/FlashOutputStream
       // 53: dup
       // 54: lload 5
       // 56: bipush 1
@@ -2778,7 +2771,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // d6: aload 3
       // d7: bipush 100
       // d9: invokeinterface net/rim/device/internal/synchronization/OTAUpgradeControlCallback.updateDatabaseProgress (Ljava/lang/String;I)V 3
-      // de: new java/lang/Object
+      // de: new java/lang/StringBuffer
       // e1: dup
       // e2: ldc_w "backup- "
       // e5: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -2829,7 +2822,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       if (FlashInputStream.exists(-3904873326663712912L)) {
          int streamVersion = this.readIntFromStream(-3904873326663712912L, 1);
          if (streamVersion > 65537) {
-            logInfo(((StringBuffer)(new Object("restore; backup stream format is of unknown format (version: "))).append(streamVersion).append(')').toString());
+            logInfo("restore; backup stream format is of unknown format (version: " + streamVersion + ')');
             return false;
          } else {
             return this.isTagPresent(-3904873326663712912L, 2);
@@ -2854,12 +2847,12 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:185)
       //
       // Bytecode:
-      // 00: new java/lang/Object
+      // 00: new net/rim/vm/FlashInputStream
       // 03: dup
       // 04: lload 1
       // 05: invokespecial net/rim/vm/FlashInputStream.<init> (J)V
       // 08: astore 5
-      // 0a: new java/lang/Object
+      // 0a: new net/rim/device/api/util/DataBuffer
       // 0d: dup
       // 0e: bipush 0
       // 0f: invokespecial net/rim/device/api/util/DataBuffer.<init> (Z)V
@@ -2963,7 +2956,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       SyncObject[] syncObjs = OTAUpgradeControl$SCSafe.getSyncObjects(sc);
       int len = syncObjs.length;
       if (uidCheck == null) {
-         uidCheck = (IntHashtable)(new Object((len | 1) * 6 / 5));
+         uidCheck = new IntHashtable((len | 1) * 6 / 5);
       } else {
          uidCheck.clear();
       }
@@ -3015,7 +3008,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 015: iload 12
       // 017: iload 6
       // 019: if_icmple 04e
-      // 01c: new java/lang/Object
+      // 01c: new java/lang/StringBuffer
       // 01f: dup
       // 020: ldc_w "restore undo stream saved for "
       // 023: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -3047,7 +3040,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 05c: istore 14
       // 05e: bipush 0
       // 05f: istore 15
-      // 061: new java/lang/Object
+      // 061: new net/rim/device/api/util/DataBuffer
       // 064: dup
       // 065: bipush 0
       // 066: invokespecial net/rim/device/api/util/DataBuffer.<init> (Z)V
@@ -3064,12 +3057,12 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 07a: invokestatic net/rim/device/internal/synchronization/OTAUpgradeControl$SCSafe.beginTransaction (Lnet/rim/device/api/synchronization/SyncCollection;)Z
       // 07d: ifne 083
       // 080: goto 340
-      // 083: new java/lang/Object
+      // 083: new net/rim/device/api/util/DataBuffer
       // 086: dup
       // 087: bipush 0
       // 088: invokespecial net/rim/device/api/util/DataBuffer.<init> (Z)V
       // 08b: astore 19
-      // 08d: new java/lang/Object
+      // 08d: new net/rim/device/api/util/DataBuffer
       // 090: dup
       // 091: bipush 0
       // 092: invokespecial net/rim/device/api/util/DataBuffer.<init> (Z)V
@@ -3141,7 +3134,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 151: aload 3
       // 152: invokestatic net/rim/device/internal/synchronization/OTAUpgradeControl$SCSafe.removeAllSyncObjects (Lnet/rim/device/api/synchronization/SyncCollection;)Z
       // 155: ifne 170
-      // 158: new java/lang/Object
+      // 158: new java/lang/StringBuffer
       // 15b: dup
       // 15c: ldc_w "restore; could not removeall from "
       // 15f: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -3204,11 +3197,11 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 1d9: astore 30
       // 1db: aload 30
       // 1dd: dup
-      // 1de: instanceof java/lang/Object
+      // 1de: instanceof net/rim/device/api/synchronization/SyncObject
       // 1e1: ifne 1e8
       // 1e4: pop
       // 1e5: goto 1ed
-      // 1e8: checkcast java/lang/Object
+      // 1e8: checkcast net/rim/device/api/synchronization/SyncObject
       // 1eb: astore 29
       // 1ed: aconst_null
       // 1ee: astore 30
@@ -3231,7 +3224,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 212: goto 2a1
       // 215: aload 29
       // 217: ifnull 27c
-      // 21a: new java/lang/Object
+      // 21a: new java/lang/StringBuffer
       // 21d: dup
       // 21e: ldc_w "updating item "
       // 221: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -3255,7 +3248,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 24d: aload 29
       // 24f: invokestatic net/rim/device/internal/synchronization/OTAUpgradeControl$SCSafe.removeSyncObject (Lnet/rim/device/api/synchronization/SyncCollection;Lnet/rim/device/api/synchronization/SyncObject;)Z
       // 252: ifne 27c
-      // 255: new java/lang/Object
+      // 255: new java/lang/StringBuffer
       // 258: dup
       // 259: ldc_w "restore; could not update/remove "
       // 25c: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -3293,7 +3286,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 2a7: ifnull 2af
       // 2aa: iload 8
       // 2ac: ifeq 318
-      // 2af: new java/lang/Object
+      // 2af: new java/lang/StringBuffer
       // 2b2: dup
       // 2b3: ldc_w "saving undo information for item "
       // 2b6: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -3442,12 +3435,12 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       //   at org.jetbrains.java.decompiler.main.rels.MethodProcessor.codeToJava(MethodProcessor.java:185)
       //
       // Bytecode:
-      // 00: new java/lang/Object
+      // 00: new net/rim/vm/FlashInputStream
       // 03: dup
       // 04: ldc2_w -3904873326663712912
       // 07: invokespecial net/rim/vm/FlashInputStream.<init> (J)V
       // 0a: astore 4
-      // 0c: new java/lang/Object
+      // 0c: new net/rim/device/api/util/DataBuffer
       // 0f: dup
       // 10: bipush 0
       // 11: invokespecial net/rim/device/api/util/DataBuffer.<init> (Z)V
@@ -3542,7 +3535,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
    }
 
    private static final String makeUndoName(String name) {
-      return ((StringBuffer)(new Object())).append(name).append("_undo").toString();
+      return name + "_undo";
    }
 
    private final void finishCollectionRestore(SyncCollection param1, boolean param2, LongIntHashtable param3) {
@@ -3566,7 +3559,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 006: aload 1
       // 007: invokestatic net/rim/device/internal/synchronization/OTAUpgradeControl$SCSafe.getSyncName (Lnet/rim/device/api/synchronization/SyncCollection;)Ljava/lang/String;
       // 00a: astore 5
-      // 00c: new java/lang/Object
+      // 00c: new java/lang/StringBuffer
       // 00f: dup
       // 010: ldc_w "restore+ "
       // 013: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -3585,7 +3578,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 034: lload 6
       // 036: invokestatic net/rim/vm/FlashInputStream.exists (J)Z
       // 039: ifne 058
-      // 03c: new java/lang/Object
+      // 03c: new java/lang/StringBuffer
       // 03f: dup
       // 040: ldc_w "restore- "
       // 043: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -3636,7 +3629,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 09d: iload 8
       // 09f: iastore
       // 0a0: astore 15
-      // 0a2: new java/lang/Object
+      // 0a2: new net/rim/vm/FlashInputStream
       // 0a5: dup
       // 0a6: lload 6
       // 0a8: invokespecial net/rim/vm/FlashInputStream.<init> (J)V
@@ -3657,7 +3650,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 0c8: iload 14
       // 0ca: iload 8
       // 0cc: invokespecial net/rim/device/internal/synchronization/OTAUpgradeControl.doRegisterCollectionInfo (JJLjava/lang/String;II)V
-      // 0cf: new java/lang/Object
+      // 0cf: new net/rim/vm/FlashOutputStream
       // 0d2: dup
       // 0d3: lload 10
       // 0d5: bipush 1
@@ -3753,7 +3746,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       // 19f: aload 4
       // 1a1: bipush 100
       // 1a3: invokeinterface net/rim/device/internal/synchronization/OTAUpgradeControlCallback.updateDatabaseProgress (Ljava/lang/String;I)V 3
-      // 1a8: new java/lang/Object
+      // 1a8: new java/lang/StringBuffer
       // 1ab: dup
       // 1ac: ldc_w "restore- "
       // 1af: invokespecial java/lang/StringBuffer.<init> (Ljava/lang/String;)V
@@ -3777,7 +3770,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       try {
          return ActivationService.getInstance().getCollections();
       } finally {
-         return new Object[0];
+         return new SyncCollection[0];
       }
    }
 
@@ -3786,7 +3779,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
          SyncManagerImpl syncManager = (SyncManagerImpl)SyncManager.getInstance();
          return syncManager.getSyncCollections();
       } finally {
-         return new Object[0];
+         return new SyncCollection[0];
       }
    }
 
@@ -3798,7 +3791,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
       SyncCollection[] extra2 = getActivationServiceCollections();
       int extra2Len = extra2.length;
       int collectionsLen = mainLen + extra1Len + extra2Len;
-      SyncCollection[] syncCollections = new Object[collectionsLen];
+      SyncCollection[] syncCollections = new SyncCollection[collectionsLen];
       int offset = 0;
       System.arraycopy(extra1, 0, syncCollections, offset, extra1Len);
       offset += extra1Len;
@@ -3811,7 +3804,7 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
          SyncCollection sc = syncCollections[i];
          boolean remove = false;
          String syncName = OTAUpgradeControl$SCSafe.getSyncName(sc);
-         if (!(sc instanceof Object)) {
+         if (!(sc instanceof SyncCollectionStatusProvider)) {
             if (syncName.equals(deviceOptions) && OTAUpgradeControl$SCSafe.getSyncObjectCount(sc) == 0) {
                remove = true;
             }
@@ -3850,45 +3843,24 @@ public final class OTAUpgradeControl implements LowMemoryFailedListener {
 
       n *= 100;
       n /= d;
-      return ((StringBuffer)(new Object(" ("))).append(n).append("%)").toString();
+      return " (" + n + "%)";
    }
 
    private final void printSummary(String what) {
-      System.out.println(((StringBuffer)(new Object())).append(what).append(" finished").toString());
-      System.out.println(((StringBuffer)(new Object("BWT: "))).append(this._compressBWT).toString());
-      System.out.println(((StringBuffer)(new Object("test resets: "))).append(this._testResets).toString());
-      System.out.println(((StringBuffer)(new Object("LMM failed: "))).append(this._lmmFailed).toString());
+      System.out.println(what + " finished");
+      System.out.println("BWT: " + this._compressBWT);
+      System.out.println("test resets: " + this._testResets);
+      System.out.println("LMM failed: " + this._lmmFailed);
       if (this._totalTime != 0) {
-         System.out.println(((StringBuffer)(new Object("flash free before: "))).append(this._flashFree).toString());
-         System.out.println(((StringBuffer)(new Object("flash free after: "))).append(Memory.getFlashFree()).toString());
-         System.out.println(((StringBuffer)(new Object("uncompressed size: "))).append(this._uncompressedSize).toString());
-         System.out
-            .println(
-               ((StringBuffer)(new Object("compressed size: ")))
-                  .append(this._compressedSize)
-                  .append(this.percentage(this._compressedSize, this._uncompressedSize))
-                  .toString()
-            );
-         System.out
-            .println(
-               ((StringBuffer)(new Object("compression time: ")))
-                  .append(this._compressionTime)
-                  .append(this.percentage(this._compressionTime, this._totalTime))
-                  .toString()
-            );
-         System.out
-            .println(
-               ((StringBuffer)(new Object("encryption time: ")))
-                  .append(this._encryptionTime)
-                  .append(this.percentage(this._encryptionTime, this._totalTime))
-                  .toString()
-            );
-         System.out
-            .println(
-               ((StringBuffer)(new Object("stream time: "))).append(this._streamTime).append(this.percentage(this._streamTime, this._totalTime)).toString()
-            );
-         System.out.println(((StringBuffer)(new Object("gc time: "))).append(this._gcTime).append(this.percentage(this._gcTime, this._totalTime)).toString());
-         System.out.println(((StringBuffer)(new Object("total time: "))).append(this._totalTime).toString());
+         System.out.println("flash free before: " + this._flashFree);
+         System.out.println("flash free after: " + Memory.getFlashFree());
+         System.out.println("uncompressed size: " + this._uncompressedSize);
+         System.out.println("compressed size: " + this._compressedSize + this.percentage(this._compressedSize, this._uncompressedSize));
+         System.out.println("compression time: " + this._compressionTime + this.percentage(this._compressionTime, this._totalTime));
+         System.out.println("encryption time: " + this._encryptionTime + this.percentage(this._encryptionTime, this._totalTime));
+         System.out.println("stream time: " + this._streamTime + this.percentage(this._streamTime, this._totalTime));
+         System.out.println("gc time: " + this._gcTime + this.percentage(this._gcTime, this._totalTime));
+         System.out.println("total time: " + this._totalTime);
       }
    }
 

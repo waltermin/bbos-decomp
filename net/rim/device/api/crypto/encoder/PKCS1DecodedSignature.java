@@ -15,7 +15,7 @@ final class PKCS1DecodedSignature extends DecodedSignature {
          this._data = data;
          this._digest = digest;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -24,7 +24,7 @@ final class PKCS1DecodedSignature extends DecodedSignature {
       if (digest != null && digest.getClass() == this._digest.getClass()) {
          this._digest = digest;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -33,12 +33,12 @@ final class PKCS1DecodedSignature extends DecodedSignature {
       if (key instanceof RSAPublicKey) {
          return new PKCS1SignatureVerifier((RSAPublicKey)key, this._digest, this._data, 0);
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object("RSA_PKCS1/"))).append(this._digest.getAlgorithm()).toString();
+      return "RSA_PKCS1/" + this._digest.getAlgorithm();
    }
 }

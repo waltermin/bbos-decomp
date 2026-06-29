@@ -146,8 +146,8 @@ class TokenWriter {
    }
 
    protected void addDataInBase64Format(byte[] data) {
-      ByteArrayOutputStream byteOut = (ByteArrayOutputStream)(new Object());
-      Base64OutputStream base64Out = (Base64OutputStream)(new Object(byteOut));
+      ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+      Base64OutputStream base64Out = new Base64OutputStream(byteOut);
       base64Out.write(data);
       base64Out.flush();
       this.addByteArray(byteOut.toByteArray());

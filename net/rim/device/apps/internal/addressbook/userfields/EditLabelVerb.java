@@ -20,7 +20,7 @@ final class EditLabelVerb extends Verb {
    public final Object invoke(Object parameter) {
       AddressBookOptions options = AddressBookServices.getAddressBookOptions();
       if (options.editUserDefinedFieldLabel(this._fieldId)) {
-         this._editField.setLabel(((StringBuffer)(new Object())).append(options.getUserDefinedFieldLabel(this._fieldId)).append(": ").toString());
+         this._editField.setLabel(options.getUserDefinedFieldLabel(this._fieldId) + ": ");
       }
 
       return null;

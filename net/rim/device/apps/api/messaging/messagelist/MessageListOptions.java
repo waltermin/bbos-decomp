@@ -82,7 +82,7 @@ public final class MessageListOptions extends OptionsBase implements UnreadCount
    public static final short LIST_SEPARATOR_LINES = 2;
    private static MessageListOptions _options;
    private static ServiceKey _serviceKey = new ServiceKey();
-   private static WeakReference _sbWR = (WeakReference)(new Object(null));
+   private static WeakReference _sbWR = new WeakReference(null);
    public static boolean _addFromAddressBookEnabled = false;
    private static final long DISABLE_MESSAGE_LIST_ELLIPSES = 1678474675069446608L;
 
@@ -393,7 +393,7 @@ public final class MessageListOptions extends OptionsBase implements UnreadCount
    public final void setListSeparatorAppearance(short mode) {
       switch (mode) {
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          case 1:
          case 2:
@@ -409,7 +409,7 @@ public final class MessageListOptions extends OptionsBase implements UnreadCount
    public final void setSMSEmailInbox(short mode) {
       switch (mode) {
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          case 1:
          case 2:
@@ -505,7 +505,7 @@ public final class MessageListOptions extends OptionsBase implements UnreadCount
    public final void setMessageListLineMode(int mode) {
       switch (mode) {
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          case 1:
          case 2:
@@ -559,7 +559,7 @@ public final class MessageListOptions extends OptionsBase implements UnreadCount
    }
 
    private final void logDeleteOnSetForNewService(String name, String uid, int deleteOnLocation) {
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
       sb.append("Delete on being set for a new service (");
       sb.append("name:").append(name).append(",");
       sb.append("uid:").append(uid).append(",");
@@ -570,7 +570,7 @@ public final class MessageListOptions extends OptionsBase implements UnreadCount
    private final void logDeleteOnChanged(
       String name, String uid, int deleteOnLocation, ServiceKey serviceKey, MessageListOptions$CMIMEServiceSetting oldSetting
    ) {
-      StringBuffer sb = (StringBuffer)(new Object());
+      StringBuffer sb = new StringBuffer();
       sb.append("Delete on being set for an existing service (");
       sb.append("newName:").append(name).append(", oldName:").append(serviceKey.getName()).append(": ");
       sb.append("newUID:").append(uid).append(", oldUID:").append(serviceKey.getUid()).append("; ");
@@ -654,8 +654,8 @@ public final class MessageListOptions extends OptionsBase implements UnreadCount
 
    private final void displayNewMessageIcon(MessageEntryPoint entry) {
       Object count = entry.get(12, (Object)null);
-      if (count != null && count instanceof Object) {
-         entry.set(2, (String)(((UnreadCount)count).hasNewStatus() ? "new" : (Object)null));
+      if (count != null && count instanceof UnreadCount) {
+         entry.set(2, ((UnreadCount)count).hasNewStatus() ? "new" : (String)null);
       }
    }
 

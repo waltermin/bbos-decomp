@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.bis;
 
+import java.util.Hashtable;
 import net.rim.device.api.i18n.Locale;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.i18n.ResourceBundleFamily;
@@ -15,7 +16,7 @@ public final class ApplicationResources {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public static final String getString(int id) {
       if (_resources == null) {
-         throw new Object("No resource strings present on device");
+         throw new IllegalStateException("No resource strings present on device");
       }
 
       Locale locale = ClientPersistentState.getInstance().getLocale();
@@ -36,14 +37,7 @@ public final class ApplicationResources {
                var18 = false;
             } finally {
                if (var18) {
-                  BISEventLogger.logEvent(
-                     ((StringBuffer)(new Object("ApplicationResources: unable to find string with key ")))
-                        .append(id)
-                        .append(" in locale ")
-                        .append(locale.toString())
-                        .toString(),
-                     0
-                  );
+                  BISEventLogger.logEvent("ApplicationResources: unable to find string with key " + id + " in locale " + locale.toString(), 0);
                   if (ClientSessionState.getInstance().getBrandingInfo() != null) {
                      Locale defaultLocale = Common.getLocale(ClientSessionState.getInstance().getBrandingInfo().getDefaultLanguage());
                      ResourceBundle defaultBundle = _resources.getBundle(defaultLocale);
@@ -58,12 +52,7 @@ public final class ApplicationResources {
                         } finally {
                            if (var14) {
                               BISEventLogger.logEvent(
-                                 ((StringBuffer)(new Object("ApplicationResources: unable to find string with key ")))
-                                    .append(id)
-                                    .append(" in default locale ")
-                                    .append(locale.toString())
-                                    .toString(),
-                                 0
+                                 "ApplicationResources: unable to find string with key " + id + " in default locale " + locale.toString(), 0
                               );
                               break label93;
                            }
@@ -99,9 +88,9 @@ public final class ApplicationResources {
    }
 
    public static final Locale[] getSupportedLocales(String localeQueryList) {
-      Locale[] result = new Object[0];
-      new Object();
-      StringTokenizer localeQueryListTokenizer = (StringTokenizer)(new Object(localeQueryList, ';'));
+      Locale[] result = new Locale[0];
+      new Hashtable();
+      StringTokenizer localeQueryListTokenizer = new StringTokenizer(localeQueryList, ';');
 
       while (localeQueryListTokenizer.hasMoreTokens()) {
          String languageAndCountry = localeQueryListTokenizer.nextToken();

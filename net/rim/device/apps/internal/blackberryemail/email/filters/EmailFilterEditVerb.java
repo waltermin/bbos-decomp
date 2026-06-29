@@ -39,7 +39,7 @@ final class EmailFilterEditVerb extends Verb {
       filterEditScreen.setModel(clone);
       filterEditScreen.go();
       this._listField.setAlerted(true);
-      ContextObject invokeContextObject = (ContextObject)(new Object(39));
+      ContextObject invokeContextObject = new ContextObject(39);
       invokeContextObject.setFlag(40);
       return invokeContextObject;
    }

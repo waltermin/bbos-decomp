@@ -18,7 +18,7 @@ public final class TTYRibbonIndicator implements Indicator, AudioTTYListener, Te
    private IndicatorManager _indicatorManager;
    private boolean _indicatorOn;
    private int _TTYUses = 0;
-   private StringBuffer _strBuffer = (StringBuffer)(new Object(PhoneResources.getString(6025)));
+   private StringBuffer _strBuffer = new StringBuffer(PhoneResources.getString(6025));
    static TTYRibbonIndicator _instance;
    private static final int MAX_TTY_USES = 5;
    public static final long TTY_RIBBON_INDICATOR = -9082444837343367946L;
@@ -72,7 +72,7 @@ public final class TTYRibbonIndicator implements Indicator, AudioTTYListener, Te
             this._TTYUses = 0;
          } else {
             this._TTYUses++;
-            System.out.println(((StringBuffer)(new Object("Status update: used - "))).append(used).append(" uses: ").append(this._TTYUses).toString());
+            System.out.println("Status update: used - " + used + " uses: " + this._TTYUses);
             if (this._TTYUses >= 5 && !Phone.getInstance().isActive()) {
                if (Dialog.ask(3, PhoneResources.getString(6289), -1) == 4) {
                   TTY.requestModeChange(3);
@@ -158,8 +158,8 @@ public final class TTYRibbonIndicator implements Indicator, AudioTTYListener, Te
 
    @Override
    public final void test(Object id, Object value) {
-      if (value instanceof Object) {
-         this.updateIndicator(value);
+      if (value instanceof Boolean) {
+         this.updateIndicator((Boolean)value);
       }
    }
 }

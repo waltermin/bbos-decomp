@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.qm.peer.common;
 import net.rim.device.api.system.ApplicationRegistry;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.registration.VerbCombinerRepository;
+import net.rim.device.apps.api.framework.verb.PopupVerbWrapper;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.framework.verb.VerbCombiner;
 import net.rim.device.apps.internal.qm.resource.QmResources;
@@ -27,13 +28,13 @@ public final class QmComposeVerbCombiner implements VerbCombiner {
 
    @Override
    public final boolean recognize(Object object) {
-      return !(object instanceof Object) ? false : ((Verb)object).getVerbGroupId() == -1937319827;
+      return !(object instanceof Verb) ? false : ((Verb)object).getVerbGroupId() == -1937319827;
    }
 
    @Override
    public final Verb createWrapperVerb(Verb[] verbs, Verb defaultVerb) {
-      String[] descriptions = new Object[verbs.length];
-      ContextObject contextObject = (ContextObject)(new Object(34));
+      String[] descriptions = new String[verbs.length];
+      ContextObject contextObject = new ContextObject(34);
       contextObject.setFlag(63);
 
       for (int i = verbs.length - 1; i >= 0; i--) {
@@ -41,6 +42,6 @@ public final class QmComposeVerbCombiner implements VerbCombiner {
       }
 
       String verbDescription = QmResources.getString(85);
-      return (Verb)(new Object(verbDescription, QmResources.getString(84), verbs[0].getOrdering(), verbs, descriptions, defaultVerb));
+      return new PopupVerbWrapper(verbDescription, QmResources.getString(84), verbs[0].getOrdering(), verbs, descriptions, defaultVerb);
    }
 }

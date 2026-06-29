@@ -1,5 +1,6 @@
 package net.rim.device.internal.io.store;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -38,11 +39,9 @@ final class ContentStoreSyncCollection$ContentStoreSyncConverter implements Sync
          FolderTable folderTable = ContentStoreImpl.getInstance().getDatabase().getFolderTable();
          if (object instanceof FileImpl) {
             FileImpl entry = (FileImpl)object;
-            ConverterUtilities.writeStringSmart(
-               buffer, 1, ((StringBuffer)(new Object())).append(((FolderImpl)entry.getFolder()).getPath()).append(entry.getName()).toString()
-            );
-            ByteArrayOutputStream osAttrib = (ByteArrayOutputStream)(new Object());
-            entry.writeHeader((DataOutputStream)(new Object(osAttrib)));
+            ConverterUtilities.writeStringSmart(buffer, 1, ((FolderImpl)entry.getFolder()).getPath() + entry.getName());
+            ByteArrayOutputStream osAttrib = new ByteArrayOutputStream();
+            entry.writeHeader(new DataOutputStream(osAttrib));
             byte[] abAttrib = osAttrib.toByteArray();
             ConverterUtilities.writeByteArray(buffer, 6, abAttrib);
             if (object instanceof SymbolicLinkImpl) {
@@ -125,7 +124,7 @@ final class ContentStoreSyncCollection$ContentStoreSyncConverter implements Sync
             FolderTable folderTable = this._database.getFolderTable();
             if ("folder".equals(contentType)) {
                if (filename.length() == 0) {
-                  this.this$0._folderMap = (IntIntHashtable)(new Object());
+                  this.this$0._folderMap = new IntIntHashtable();
                   this.this$0._folderMap.put(folderId, folderTable.getFolder("/").getId());
                }
 
@@ -145,7 +144,7 @@ final class ContentStoreSyncCollection$ContentStoreSyncConverter implements Sync
 
                   filename = filename.substring(filename.lastIndexOf(47, filename.length() - 2) + 1, filename.length() - 1);
                } else if (this.this$0._folderMap == null) {
-                  throw new Object();
+                  throw new IllegalStateException();
                }
 
                return new FolderImpl(uid, folderId, attrib, filename, uid);
@@ -161,7 +160,7 @@ final class ContentStoreSyncCollection$ContentStoreSyncConverter implements Sync
                   filename = filename.substring(filename.lastIndexOf(47) + 1, filename.length());
                } else {
                   if (this.this$0._folderMap == null) {
-                     throw new Object();
+                     throw new IllegalStateException();
                   }
 
                   folderId = this.this$0._folderMap.get(folderId);
@@ -176,7 +175,7 @@ final class ContentStoreSyncCollection$ContentStoreSyncConverter implements Sync
                      FileImpl file = samplePicturesFolder.getFile(filename);
                      if (file != null) {
                         if (hasContent) {
-                           ByteArrayOutputStream content = (ByteArrayOutputStream)(new Object());
+                           ByteArrayOutputStream content = new ByteArrayOutputStream();
                            ConverterUtilities.readByteStream(dataBuffer, true, content);
                            bytes = content.toByteArray();
                         }
@@ -202,19 +201,19 @@ final class ContentStoreSyncCollection$ContentStoreSyncConverter implements Sync
                   if (contentType != null) {
                      String ext = MIMETypeAssociations.getExtensionFromMIMEType(contentType);
                      if (ext != null) {
-                        filename = ((StringBuffer)(new Object())).append(filename).append(ext).toString();
+                        filename = filename + ext;
                      }
                   } else if (folderPath.equals(ContentStoreSyncCollection.USER_PICTURES)) {
-                     filename = ((StringBuffer)(new Object())).append(filename).append(".jpg").toString();
+                     filename = filename + ".jpg";
                   } else if (folderPath.equals(ContentStoreSyncCollection.USER_RINGTONES)) {
-                     filename = ((StringBuffer)(new Object())).append(filename).append(".mid").toString();
+                     filename = filename + ".mid";
                   }
                }
 
                file.setFolder(folder, false, true);
                file.setName(FileUtilities.makeValidFilename(filename), false);
                if (attributes != null) {
-                  file.readHeader((DataInputStream)(new Object((InputStream)(new Object(attributes)))));
+                  file.readHeader(new DataInputStream(new ByteArrayInputStream(attributes)));
                }
 
                if (isSymLink) {

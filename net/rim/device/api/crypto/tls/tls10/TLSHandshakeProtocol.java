@@ -38,7 +38,7 @@ public class TLSHandshakeProtocol extends SSLHandshakeProtocol {
             switch (keyExchangeAlgorithm) {
                case 1:
                case 2:
-                  DataBuffer buffer = (DataBuffer)(new Object());
+                  DataBuffer buffer = new DataBuffer();
                   buffer.write(16);
                   TLSUtilities.writeIntegerThreeBytes(buffer, 0);
                   byte[] premasterSecret = this.generatePremasterSecret();
@@ -52,7 +52,7 @@ public class TLSHandshakeProtocol extends SSLHandshakeProtocol {
                case 13:
                case 16:
                case 17:
-                  throw new Object();
+                  throw new RuntimeException();
                default:
                   super.clientKeyExchange();
             }
@@ -82,7 +82,7 @@ public class TLSHandshakeProtocol extends SSLHandshakeProtocol {
       // 00b: aload 0
       // 00c: invokespecial net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol.clientCertificateVerify ()V
       // 00f: return
-      // 010: new java/lang/Object
+      // 010: new net/rim/device/api/util/DataBuffer
       // 013: dup
       // 014: invokespecial net/rim/device/api/util/DataBuffer.<init> ()V
       // 017: astore 1
@@ -94,7 +94,7 @@ public class TLSHandshakeProtocol extends SSLHandshakeProtocol {
       // 020: invokestatic net/rim/device/api/crypto/tls/TLSUtilities.writeIntegerThreeBytes (Lnet/rim/device/api/util/DataBuffer;I)V
       // 023: aload 0
       // 024: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._privateKey Lnet/rim/device/api/crypto/PrivateKey;
-      // 027: instanceof java/lang/Object
+      // 027: instanceof net/rim/device/api/crypto/RSAPrivateKey
       // 02a: ifeq 070
       // 02d: new net/rim/device/api/crypto/tls/ssl30/SSLDigest
       // 030: dup
@@ -104,11 +104,11 @@ public class TLSHandshakeProtocol extends SSLHandshakeProtocol {
       // 036: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._verifySHAHash Lnet/rim/device/api/crypto/SHA1Digest;
       // 039: invokespecial net/rim/device/api/crypto/tls/ssl30/SSLDigest.<init> (Lnet/rim/device/api/crypto/MD5Digest;Lnet/rim/device/api/crypto/SHA1Digest;)V
       // 03c: astore 2
-      // 03d: new java/lang/Object
+      // 03d: new net/rim/device/api/crypto/PKCS1SignatureSigner
       // 040: dup
       // 041: aload 0
       // 042: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._privateKey Lnet/rim/device/api/crypto/PrivateKey;
-      // 045: checkcast java/lang/Object
+      // 045: checkcast net/rim/device/api/crypto/RSAPrivateKey
       // 048: aload 2
       // 049: bipush 0
       // 04a: invokespecial net/rim/device/api/crypto/PKCS1SignatureSigner.<init> (Lnet/rim/device/api/crypto/RSAPrivateKey;Lnet/rim/device/api/crypto/Digest;Z)V
@@ -132,13 +132,13 @@ public class TLSHandshakeProtocol extends SSLHandshakeProtocol {
       // 06d: goto 0fc
       // 070: aload 0
       // 071: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._privateKey Lnet/rim/device/api/crypto/PrivateKey;
-      // 074: instanceof java/lang/Object
+      // 074: instanceof net/rim/device/api/crypto/DSAPrivateKey
       // 077: ifeq 0eb
-      // 07a: new java/lang/Object
+      // 07a: new net/rim/device/api/crypto/DSASignatureSigner
       // 07d: dup
       // 07e: aload 0
       // 07f: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._privateKey Lnet/rim/device/api/crypto/PrivateKey;
-      // 082: checkcast java/lang/Object
+      // 082: checkcast net/rim/device/api/crypto/DSAPrivateKey
       // 085: aload 0
       // 086: getfield net/rim/device/api/crypto/tls/ssl30/SSLHandshakeProtocol._verifySHAHash Lnet/rim/device/api/crypto/SHA1Digest;
       // 089: invokespecial net/rim/device/api/crypto/DSASignatureSigner.<init> (Lnet/rim/device/api/crypto/DSAPrivateKey;Lnet/rim/device/api/crypto/Digest;)V
@@ -285,7 +285,7 @@ public class TLSHandshakeProtocol extends SSLHandshakeProtocol {
       // 066: astore 4
       // 068: aload 1
       // 069: ifnonnull 0c6
-      // 06c: new java/lang/Object
+      // 06c: new net/rim/device/api/util/DataBuffer
       // 06f: dup
       // 070: invokespecial net/rim/device/api/util/DataBuffer.<init> ()V
       // 073: astore 1
@@ -373,7 +373,7 @@ public class TLSHandshakeProtocol extends SSLHandshakeProtocol {
       // 11d: bipush 3
       // 11f: bipush 51
       // 121: invokevirtual net/rim/device/api/crypto/tls/tls10/TLSAlertProtocol.sendAlertMessage (BB)V
-      // 124: new java/lang/Object
+      // 124: new net/rim/device/api/crypto/tls/TLSAlertException
       // 127: dup
       // 128: bipush 3
       // 12a: bipush 51
@@ -416,20 +416,20 @@ public class TLSHandshakeProtocol extends SSLHandshakeProtocol {
          System.arraycopy(serverRandom, 0, random, 0, serverRandom.length);
          System.arraycopy(clientRandom, 0, random, serverRandom.length, clientRandom.length);
          TLSPRF prf = new TLSPRF(masterSecret, "key expansion".getBytes(), random);
-         HMACKey clientHMACKey = (HMACKey)(new Object(prf.getBytes(write.getHashSize())));
-         HMACKey serverHMACKey = (HMACKey)(new Object(prf.getBytes(read.getHashSize())));
+         HMACKey clientHMACKey = new HMACKey(prf.getBytes(write.getHashSize()));
+         HMACKey serverHMACKey = new HMACKey(prf.getBytes(read.getHashSize()));
          byte[] clientWriteKeyData = new byte[write.getKeySize()];
          SymmetricKey clientWriteKey = TLSUtilities.getKey(write, prf, clientWriteKeyData, true);
          byte[] serverWriteKeyData = new byte[read.getKeySize()];
          SymmetricKey serverWriteKey = TLSUtilities.getKey(read, prf, serverWriteKeyData, true);
          InitializationVector clientWriteIV = null;
          if (!write.getIsExportable() && write.getCipherType() == 2) {
-            clientWriteIV = (InitializationVector)(new Object(prf.getBytes(write.getIVSize())));
+            clientWriteIV = new InitializationVector(prf.getBytes(write.getIVSize()));
          }
 
          InitializationVector serverWriteIV = null;
          if (!read.getIsExportable() && read.getCipherType() == 2) {
-            serverWriteIV = (InitializationVector)(new Object(prf.getBytes(read.getIVSize())));
+            serverWriteIV = new InitializationVector(prf.getBytes(read.getIVSize()));
          }
 
          TLSPRF exportIV = null;
@@ -444,7 +444,7 @@ public class TLSHandshakeProtocol extends SSLHandshakeProtocol {
             clientWriteKey = TLSUtilities.getKey(write, writeExportPRF, clientWriteKeyData, false);
             if (write.getCipherType() == 2) {
                exportIV = new TLSPRF(new byte[0], "IV block".getBytes(), exportRandom);
-               clientWriteIV = (InitializationVector)(new Object(exportIV.getBytes(write.getIVSize())));
+               clientWriteIV = new InitializationVector(exportIV.getBytes(write.getIVSize()));
             }
          }
 
@@ -464,11 +464,11 @@ public class TLSHandshakeProtocol extends SSLHandshakeProtocol {
                   exportIV = new TLSPRF(new byte[0], "IV block".getBytes(), exportRandom);
                }
 
-               serverWriteIV = (InitializationVector)(new Object(exportIV.getBytes(read.getIVSize())));
+               serverWriteIV = new InitializationVector(exportIV.getBytes(read.getIVSize()));
             }
          }
 
-         return (KeyMaterial)(new Object(clientWriteKey, serverWriteKey, clientHMACKey, serverHMACKey, clientWriteIV, serverWriteIV));
+         return new KeyMaterial(clientWriteKey, serverWriteKey, clientHMACKey, serverHMACKey, clientWriteIV, serverWriteIV);
       } finally {
          TLSUtilities.sendAlertAndThrowException(this._alertProtocol, (byte)51);
          return null;

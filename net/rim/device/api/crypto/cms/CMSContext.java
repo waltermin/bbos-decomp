@@ -11,7 +11,7 @@ public final class CMSContext {
    private CMSInputStream stream;
 
    CMSContext(InputStream inputStream) {
-      ASN1InputStream asn1Stream = (ASN1InputStream)(new Object(inputStream));
+      ASN1InputStream asn1Stream = new ASN1InputStream(inputStream);
       ASN1InputStream cmsSequence = asn1Stream.readSequence();
       OID contentType = cmsSequence.readOID();
       if (contentType.equals(OIDs.getOID(541859388))) {

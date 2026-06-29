@@ -1,6 +1,5 @@
 package net.rim.device.internal.media;
 
-import java.io.InputStream;
 import javax.microedition.media.Control;
 import javax.microedition.media.control.VolumeControl;
 import javax.microedition.media.protocol.DataSource;
@@ -127,7 +126,7 @@ class TunePlayer extends PlayerImpl implements AlertListener2, RIMTuneControl, V
          this._updateTimeEventId = this.getApplication().invokeLater(new TunePlayer$MediaTimeEvent(this), 1000, true);
       }
 
-      this.notifyListeners("started", new Object(this.getMediaTime()));
+      this.notifyListeners("started", new Long(this.getMediaTime()));
    }
 
    @Override
@@ -154,7 +153,7 @@ class TunePlayer extends PlayerImpl implements AlertListener2, RIMTuneControl, V
    private void resumeTune() {
       if (Alert.resumeMIDI() == 0) {
          this._updateTimeEventId = this.getApplication().invokeLater(new TunePlayer$MediaTimeEvent(this), 1000, true);
-         this.notifyListeners("started", new Object(this.getMediaTime()));
+         this.notifyListeners("started", new Long(this.getMediaTime()));
       } else {
          this.doStop(false);
       }
@@ -239,7 +238,7 @@ class TunePlayer extends PlayerImpl implements AlertListener2, RIMTuneControl, V
       if (reason != 3 && this._alertStarted && reason != 1) {
          if (reason == 2 && super._state == 400) {
             super._mediaTime = this.getDuration();
-            this.notifyListeners("endOfMedia", new Object(super._mediaTime));
+            this.notifyListeners("endOfMedia", new Long(super._mediaTime));
             boolean playAgain = false;
             if (super._state == 400) {
                playAgain = super._loopCount == -1;
@@ -252,7 +251,7 @@ class TunePlayer extends PlayerImpl implements AlertListener2, RIMTuneControl, V
             if (playAgain) {
                this.doStart();
                super._mediaTime = 0;
-               this.notifyListeners("started", new Object(super._mediaTime));
+               this.notifyListeners("started", new Long(super._mediaTime));
                return;
             }
 
@@ -263,7 +262,7 @@ class TunePlayer extends PlayerImpl implements AlertListener2, RIMTuneControl, V
          this._alertPaused = false;
          super._currentLoopIteration = 0;
          super._state = 300;
-         this.notifyListeners("stopped", new Object(super._mediaTime));
+         this.notifyListeners("stopped", new Long(super._mediaTime));
          this._alertStopped = true;
          this.notifyAll();
       }
@@ -272,21 +271,21 @@ class TunePlayer extends PlayerImpl implements AlertListener2, RIMTuneControl, V
    @Override
    public void setKeyValue(String key, Object value) {
       if ("interrupt_on_user_input".equals(key)) {
-         if (value instanceof Object) {
-            this.setInterruptable(value);
+         if (value instanceof Integer) {
+            this.setInterruptable((Integer)value);
             return;
          }
       } else {
          if ("datasource".equals(key)) {
             this._dataSource = (DataSource)value;
             SourceStream[] sources = this._dataSource.getStreams();
-            this.read((InputStream)(new Object(sources[0])));
+            this.read(new DataSourceInputStream(sources[0]));
             return;
          }
 
          if ("audiosource".equals(key)) {
             if (!this._audioRouterAdded) {
-               super._audioSourceId = value;
+               super._audioSourceId = (Integer)value;
                return;
             }
          } else {
@@ -321,7 +320,7 @@ class TunePlayer extends PlayerImpl implements AlertListener2, RIMTuneControl, V
    public Control[] getControls() {
       Control[] controls = super.getControls();
       if (controls == null) {
-         return new Object[]{this};
+         return new Control[]{this};
       }
 
       int tail = controls.length;

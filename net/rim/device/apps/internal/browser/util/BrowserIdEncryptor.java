@@ -20,16 +20,10 @@ public final class BrowserIdEncryptor {
       } else if ((wafs & 8) != 0) {
          imeiESN = GPRSInfo.imeiToString(IDENInfo.getIMEI());
       } else {
-         imeiESN = ((StringBuffer)(new Object("UNKNOWN_NETWORK_TYPE_"))).append(wafs).toString();
+         imeiESN = "UNKNOWN_NETWORK_TYPE_" + wafs;
       }
 
-      String str = ((StringBuffer)(new Object("0x")))
-         .append(Integer.toString(DeviceInfo.getDeviceId(), 16))
-         .append(' ')
-         .append(imeiESN)
-         .append(' ')
-         .append(System.currentTimeMillis())
-         .toString();
+      String str = "0x" + Integer.toString(DeviceInfo.getDeviceId(), 16) + ' ' + imeiESN + ' ' + System.currentTimeMillis();
       return IdEncryptor.encrypt(str, 0);
    }
 }

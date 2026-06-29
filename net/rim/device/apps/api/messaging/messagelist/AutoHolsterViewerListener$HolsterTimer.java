@@ -14,8 +14,8 @@ final class AutoHolsterViewerListener$HolsterTimer {
    }
 
    public final void startTimer(long timelimit) {
-      this._timer = (Timer)(new Object());
-      this._timer.schedule(this.getNewTimerTaskInstance(), (Date)(new Object(timelimit - 1000)));
+      this._timer = new Timer();
+      this._timer.schedule(this.getNewTimerTaskInstance(), new Date(timelimit - 1000));
    }
 
    public final void resetTimer(long timelimit) {

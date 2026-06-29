@@ -10,7 +10,7 @@ final class EmailCollection$PriorityHandler implements IntFieldHandler {
 
    @Override
    public final int getValue(Object item) {
-      return !(item instanceof Object) ? -1 : EmailPriorityEnumConverter.deviceToCommon(((EmailMessageModel)item).getPriority());
+      return !(item instanceof EmailMessageModel) ? -1 : EmailPriorityEnumConverter.deviceToCommon(((EmailMessageModel)item).getPriority());
    }
 
    EmailCollection$PriorityHandler(EmailCollection$1 x0) {

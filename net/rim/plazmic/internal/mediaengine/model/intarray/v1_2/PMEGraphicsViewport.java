@@ -71,10 +71,10 @@ public class PMEGraphicsViewport implements MediaViewport, Pannable, Zoomable {
       this.resetZoomPan();
       this._platform.setIdentity(this._alignmentMatrix, 0);
       this._platform.setIdentity(this._rootSVGMatrix, 0);
-      this._pmeGraphics = (PMEGraphics)(new Object());
-      this._dirtyRect = (XYRect)(new Object());
-      this._paintClip = (XYRect)(new Object());
-      this._baseClip = (XYRect)(new Object());
+      this._pmeGraphics = new PMEGraphics();
+      this._dirtyRect = new XYRect();
+      this._paintClip = new XYRect();
+      this._baseClip = new XYRect();
    }
 
    public PMEGraphicsViewport(Object m) {
@@ -176,20 +176,20 @@ public class PMEGraphicsViewport implements MediaViewport, Pannable, Zoomable {
       this._fpWidth = width > maxInt ? Fixed32.toFP(maxInt) : Fixed32.toFP(width);
       this._fpHeight = height > maxInt ? Fixed32.toFP(maxInt) : Fixed32.toFP(height);
       if (this._dirtyRect == null) {
-         this._dirtyRect = (XYRect)(new Object(0, 0, width, height));
+         this._dirtyRect = new XYRect(0, 0, width, height);
       } else {
          this._dirtyRect.set(0, 0, width, height);
       }
 
       if (this._paintClip == null) {
-         this._paintClip = (XYRect)(new Object(0, 0, width, height));
+         this._paintClip = new XYRect(0, 0, width, height);
       } else {
          this._paintClip.set(0, 0, this._fpWidth, this._fpHeight);
       }
 
       this.calculateVirtualExtent();
       if (this._baseClip == null) {
-         this._baseClip = (XYRect)(new Object(0, 0, Fixed32.toInt(this._virtualWidth), Fixed32.toInt(this._virtualHeight)));
+         this._baseClip = new XYRect(0, 0, Fixed32.toInt(this._virtualWidth), Fixed32.toInt(this._virtualHeight));
       } else {
          this._baseClip.set(0, 0, Fixed32.toInt(this._virtualWidth), Fixed32.toInt(this._virtualHeight));
       }
@@ -270,11 +270,7 @@ public class PMEGraphicsViewport implements MediaViewport, Pannable, Zoomable {
                      if (this._pmeGraphics.getLastReturn() == this._renderLogState && this._pmeGraphics.getLastNode() == this._renderLogNode) {
                         var14 = false;
                      } else {
-                        String msg = ((StringBuffer)(new Object("PMEGraphics render fail: ")))
-                           .append(this._pmeGraphics.getLastReturn())
-                           .append(" on node: ")
-                           .append(this._pmeGraphics.getLastNode())
-                           .toString();
+                        String msg = "PMEGraphics render fail: " + this._pmeGraphics.getLastReturn() + " on node: " + this._pmeGraphics.getLastNode();
                         EventLogger.logEvent(-7509200465648525729L, msg.getBytes(), 3);
                         var14 = false;
                      }
@@ -335,9 +331,9 @@ public class PMEGraphicsViewport implements MediaViewport, Pannable, Zoomable {
       }
 
       if (fo != null) {
-         XYRect viewport = (XYRect)(new Object(
+         XYRect viewport = new XYRect(
             this._model._nodes[nodeIdx + 17], this._model._nodes[nodeIdx + 17 + 1], this._model._nodes[nodeIdx + 17 + 2], this._model._nodes[nodeIdx + 17 + 3]
-         ));
+         );
          if (viewport != null && viewport.width > 0 && viewport.height > 0) {
             fo.setPosition(viewport.x, viewport.y);
             fo.setExtent(viewport.width, viewport.height);
@@ -369,7 +365,7 @@ public class PMEGraphicsViewport implements MediaViewport, Pannable, Zoomable {
 
       int imageIdx = this._model._nodes[nodeIdx + 29];
       Object image = this._model._images[imageIdx];
-      return image != null && image instanceof Object;
+      return image != null && image instanceof ForeignObject;
    }
 
    private final void calculateAlignmentMatrix() {
@@ -408,7 +404,7 @@ public class PMEGraphicsViewport implements MediaViewport, Pannable, Zoomable {
 
             for (int i = 0; i < len; i++) {
                Object image = this._model._images[i];
-               if (image instanceof Object) {
+               if (image instanceof LayoutManager) {
                   ((LayoutManager)image).layout();
                }
             }
@@ -425,11 +421,7 @@ public class PMEGraphicsViewport implements MediaViewport, Pannable, Zoomable {
          } finally {
             if (var5) {
                if (this._pmeGraphics.getLastReturn() != this._updateLogState || this._pmeGraphics.getLastNode() != this._updateLogNode) {
-                  String msg = ((StringBuffer)(new Object("PMEGraphics update fail: ")))
-                     .append(this._pmeGraphics.getLastReturn())
-                     .append(" on  node: ")
-                     .append(this._pmeGraphics.getLastNode())
-                     .toString();
+                  String msg = "PMEGraphics update fail: " + this._pmeGraphics.getLastReturn() + " on  node: " + this._pmeGraphics.getLastNode();
                   EventLogger.logEvent(-7509200465648525729L, msg.getBytes(), 3);
                }
                break label78;

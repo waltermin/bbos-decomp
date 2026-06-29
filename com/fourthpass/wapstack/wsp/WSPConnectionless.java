@@ -9,6 +9,7 @@ import com.fourthpass.wapstack.wsp.pdu.WSP_PDU;
 import com.fourthpass.wapstack.wsp.pdu.WSP_PostPDU;
 import com.fourthpass.wapstack.wsp.pdu.WSP_PushPDU;
 import com.fourthpass.wapstack.wsp.pdu.WSP_ReplyPDU;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 public final class WSPConnectionless {
@@ -60,7 +61,7 @@ public final class WSPConnectionless {
             if (recv > 0) {
                byte[] data = new byte[this._recvPacket.getDataLength()];
                System.arraycopy(this._recvPacket.getPacketData(), 0, data, 0, this._recvPacket.getDataLength());
-               this._replyPDU = new WSP_ReplyPDU(true, (InputStream)(new Object(data)));
+               this._replyPDU = new WSP_ReplyPDU(true, new ByteArrayInputStream(data));
                this._statusCode = this._replyPDU.getStatusCode();
                if (this._replyPDU.getTID() == pdu.getTID()) {
                   if (!Utils.isCompleteStatus(this._statusCode)) {

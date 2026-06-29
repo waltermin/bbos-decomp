@@ -52,7 +52,9 @@ final class DocViewImageField extends ZoomBitmapField {
       super.trackballSensitivityChanged();
       if (this.isFocus() && !this.isZooming()) {
          Screen scr = this.getScreen();
-         if (scr instanceof Object && this.getTransformedHeight() <= this.getHeight() && this.getTransformedWidth() <= this.getWidth()) {
+         if (scr instanceof DocViewTextDisplayField$DocViewPlayScreen
+            && this.getTransformedHeight() <= this.getHeight()
+            && this.getTransformedWidth() <= this.getWidth()) {
             scr.setTrackballSensitivityYOffset(38 - Trackball.getSensitivityYForSystem());
             scr.setTrackballFilter(-1);
          }
@@ -61,7 +63,7 @@ final class DocViewImageField extends ZoomBitmapField {
 
    private final Manager getDesiredManager() {
       Manager mgr = this.getManager();
-      if (mgr instanceof Object) {
+      if (mgr instanceof DocViewDisplayField) {
          mgr = mgr.getManager();
       }
 
@@ -225,6 +227,6 @@ final class DocViewImageField extends ZoomBitmapField {
 
       xPos += this._originalCropRect.x;
       yPos += this._originalCropRect.y;
-      return (XYRect)(new Object(Math.max(0, xPos), Math.max(0, yPos), width, height));
+      return new XYRect(Math.max(0, xPos), Math.max(0, yPos), width, height);
    }
 }

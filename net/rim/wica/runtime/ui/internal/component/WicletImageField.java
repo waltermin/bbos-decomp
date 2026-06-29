@@ -35,7 +35,7 @@ final class WicletImageField extends BitmapField implements View, ResourceListen
 
       Object value = this._model.getValue();
       String uri = null;
-      if (!(value instanceof Object)) {
+      if (!(value instanceof Vector)) {
          uri = (String)value;
       } else {
          uri = (String)((Vector)value).elementAt(this._row);

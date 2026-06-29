@@ -64,7 +64,7 @@ public class CallConnector implements PhoneEventListener, Runnable {
    }
 
    protected void waitForEvent(int eventId) {
-      System.out.println(((StringBuffer)(new Object("Call connect waiting for "))).append(eventId).toString());
+      System.out.println("Call connect waiting for " + eventId);
       this._eventToWaitFor = eventId;
       this.startTimer();
    }

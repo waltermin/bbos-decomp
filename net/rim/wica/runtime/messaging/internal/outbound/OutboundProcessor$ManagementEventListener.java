@@ -22,8 +22,8 @@ final class OutboundProcessor$ManagementEventListener implements EventListener {
             }
             break;
          case 104:
-            if (data instanceof Object) {
-               this.this$0._deviceId = data;
+            if (data instanceof Long) {
+               this.this$0._deviceId = (Long)data;
                return;
             }
 
@@ -61,7 +61,7 @@ final class OutboundProcessor$ManagementEventListener implements EventListener {
 
    @Override
    public final String toString() {
-      return ((StringBuffer)(new Object())).append(this.this$0.toString()).append("#ManagementEventListener").toString();
+      return this.this$0.toString() + "#ManagementEventListener";
    }
 
    OutboundProcessor$ManagementEventListener(OutboundProcessor x0, OutboundProcessor$1 x1) {

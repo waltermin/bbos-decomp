@@ -50,9 +50,7 @@ public final class AcceptPinChangeCommand extends LoginCommand {
             sessionState.isAutoAuth()
          );
          if (loginCallResult.getRESTStatusCode() != 200) {
-            BISEventLogger.logEvent(
-               ((StringBuffer)(new Object("Accept Pin Change: Unhandled REST response code: "))).append(loginCallResult.getRESTStatusCode()).toString(), 0
-            );
+            BISEventLogger.logEvent("Accept Pin Change: Unhandled REST response code: " + loginCallResult.getRESTStatusCode(), 0);
             return new DomainCommandResult("failed", failedMessage, null);
          }
 
@@ -71,8 +69,8 @@ public final class AcceptPinChangeCommand extends LoginCommand {
          }
 
          if (sessionState.isAutoAuth() && this._acceptPinChange.equals("yes")) {
-            Hashtable pendingParams = (Hashtable)(new Object());
-            Vector mailboxes = (Vector)(new Object());
+            Hashtable pendingParams = new Hashtable();
+            Vector mailboxes = new Vector();
             Mailbox[] arrMailboxes = sessionState.getUserInfo().getMailboxes();
 
             for (int i = 0; i < arrMailboxes.length; i++) {

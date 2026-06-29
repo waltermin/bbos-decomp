@@ -42,7 +42,7 @@ public class XMLFilterImpl implements XMLFilter, EntityResolver, DTDHandler, Con
       if (this.parent != null) {
          this.parent.setFeature(name, value);
       } else {
-         throw new SAXNotRecognizedException(((StringBuffer)(new Object("Feature: "))).append(name).toString());
+         throw new SAXNotRecognizedException("Feature: " + name);
       }
    }
 
@@ -51,7 +51,7 @@ public class XMLFilterImpl implements XMLFilter, EntityResolver, DTDHandler, Con
       if (this.parent != null) {
          return this.parent.getFeature(name);
       } else {
-         throw new SAXNotRecognizedException(((StringBuffer)(new Object("Feature: "))).append(name).toString());
+         throw new SAXNotRecognizedException("Feature: " + name);
       }
    }
 
@@ -60,7 +60,7 @@ public class XMLFilterImpl implements XMLFilter, EntityResolver, DTDHandler, Con
       if (this.parent != null) {
          this.parent.setProperty(name, value);
       } else {
-         throw new SAXNotRecognizedException(((StringBuffer)(new Object("Property: "))).append(name).toString());
+         throw new SAXNotRecognizedException("Property: " + name);
       }
    }
 
@@ -69,7 +69,7 @@ public class XMLFilterImpl implements XMLFilter, EntityResolver, DTDHandler, Con
       if (this.parent != null) {
          return this.parent.getProperty(name);
       } else {
-         throw new SAXNotRecognizedException(((StringBuffer)(new Object("Property: "))).append(name).toString());
+         throw new SAXNotRecognizedException("Property: " + name);
       }
    }
 
@@ -244,7 +244,7 @@ public class XMLFilterImpl implements XMLFilter, EntityResolver, DTDHandler, Con
 
    private void setupParse() {
       if (this.parent == null) {
-         throw new Object("No parent for filter");
+         throw new NullPointerException("No parent for filter");
       }
 
       this.parent.setEntityResolver(this);

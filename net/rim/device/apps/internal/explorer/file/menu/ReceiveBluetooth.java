@@ -14,7 +14,7 @@ public final class ReceiveBluetooth extends MenuItem {
    @Override
    public final void run() {
       if (BluetoothDeviceManager.getInstance().isRadioOnPromptIfOff(true)) {
-         ((Thread)(new Object(new ServiceConnection()))).start();
+         new Thread(new ServiceConnection()).start();
       } else {
          Dialog.alert(ExplorerResources.getString(134));
       }

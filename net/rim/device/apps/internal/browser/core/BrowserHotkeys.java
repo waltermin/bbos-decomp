@@ -9,7 +9,7 @@ import net.rim.device.apps.internal.browser.verbs.BrowserVerb;
 import net.rim.device.internal.system.InternalServices;
 
 public final class BrowserHotkeys {
-   private static IntIntHashtable _map = (IntIntHashtable)(new Object());
+   private static IntIntHashtable _map = new IntIntHashtable();
    private static Locale _locale;
 
    private static final void add(int id) {

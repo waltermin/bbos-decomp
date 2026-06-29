@@ -5,7 +5,7 @@ import net.rim.device.apps.internal.ldap.LDAPBrowser;
 import net.rim.device.apps.internal.ldap.LDAPBrowserContextFactory;
 
 public final class PGPKeyBrowserImpl extends UiApplication implements Runnable {
-   private LDAPBrowser _app = (LDAPBrowser)(new Object("PGP"));
+   private LDAPBrowser _app = new LDAPBrowser("PGP");
    private static final String CONTEXT_NAME = "PGP";
 
    public static final void main(String[] args) {

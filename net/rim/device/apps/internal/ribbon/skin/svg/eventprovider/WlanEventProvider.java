@@ -289,7 +289,7 @@ public class WlanEventProvider implements WLANListenerInternal, ServiceRoutingLi
    }
 
    static void initialize() {
-      _events = (ToIntHashtable)(new Object(15));
+      _events = new ToIntHashtable(15);
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
       if (WLAN.isSupported()) {
          Application app = Application.getApplication();

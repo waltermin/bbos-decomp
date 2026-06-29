@@ -8,7 +8,7 @@ public class FrenchConversionRules implements LocaleConversionRules {
    private SpellCheckVariantsCreator _creator;
    private int[] _bounds = new int[2];
    private char[] _tmpBuff = new char[50];
-   private Word _convertedWord = (Word)(new Object());
+   private Word _convertedWord = new Word();
    private boolean _inRules;
    private static final char APOSTROPHE = '\'';
    private static final String CONTRACTION_FOLLOWS = "aeiouh";

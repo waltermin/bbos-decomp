@@ -1,8 +1,8 @@
 package net.rim.device.apps.internal.secureemail.encodings.pgp.server;
 
 import java.util.Enumeration;
+import net.rim.device.api.crypto.certificate.pgp.PGPKeyIDKeyStoreIndex;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
-import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.api.xml.XMLHashtable;
 
 class PGPUniversalServer$CompleteEnrollmentEmailThread extends Thread {
@@ -19,7 +19,7 @@ class PGPUniversalServer$CompleteEnrollmentEmailThread extends Thread {
    @Override
    public void run() {
       PGPUniversalEnrollmentKeyStore enrollmentKeyStore = PGPUniversalEnrollmentKeyStore.getInstance();
-      enrollmentKeyStore.addIndex((KeyStoreIndex)(new Object()));
+      enrollmentKeyStore.addIndex(new PGPKeyIDKeyStoreIndex());
       Enumeration enumeration = enrollmentKeyStore.elements(-2737350786039236692L, this._ephemeralKeyID);
 
       while (enumeration.hasMoreElements()) {

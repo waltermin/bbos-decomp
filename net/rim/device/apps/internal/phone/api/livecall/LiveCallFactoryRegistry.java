@@ -72,7 +72,7 @@ public class LiveCallFactoryRegistry {
    public synchronized void addFactory(LiveCallFactory f) {
       if (f != null) {
          if (this._factories == null) {
-            this._factories = (Vector)(new Object());
+            this._factories = new Vector();
          }
 
          this._factories.addElement(f);

@@ -11,7 +11,7 @@ public final class ReusableObjectPool {
    }
 
    public ReusableObjectPool(int size) {
-      this._pool = (CyclicQueue)(new Object(size));
+      this._pool = new CyclicQueue(size);
    }
 
    public static final ReusableObjectPool getSingletonInstance(long aGuid) {
@@ -40,7 +40,7 @@ public final class ReusableObjectPool {
 
    public final void free() {
       synchronized (this._pool) {
-         this._pool = (CyclicQueue)(new Object(0));
+         this._pool = new CyclicQueue(0);
       }
    }
 }

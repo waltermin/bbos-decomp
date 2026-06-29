@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 public class DeviceVersions {
-   private Vector _devFeatureVers = (Vector)(new Object(4));
+   private Vector _devFeatureVers = new Vector(4);
 
    private DeviceVersions() {
    }
@@ -15,7 +15,7 @@ public class DeviceVersions {
    }
 
    public byte[] serialize() {
-      StringBuffer strBuf = (StringBuffer)(new Object());
+      StringBuffer strBuf = new StringBuffer();
       if (this._devFeatureVers != null) {
          Enumeration enumeration = this._devFeatureVers.elements();
 
@@ -35,7 +35,7 @@ public class DeviceVersions {
    }
 
    public static DeviceVersions createByDeserializing(byte[] in) {
-      Hashtable tbl = (Hashtable)(new Object());
+      Hashtable tbl = new Hashtable();
       DeviceVersions devVers = new DeviceVersions();
       Vector vect = CommonFeatureVersion.tokenize(in);
       Enumeration enumeration = vect.elements();

@@ -55,7 +55,7 @@ public class FiveSkinManager extends SkinManager {
             int idx = Arrays.getIndex(FIVE_HOTSPOTS, id);
             if (idx != -1) {
                EntryPointDescriptor entry = RibbonLauncher.getInstance().getRegisteredAction(FIVE_ENTRIES[idx]);
-               if (entry instanceof Object) {
+               if (entry instanceof KeyListener) {
                   KeyListener listener = (KeyListener)entry;
                   return listener.keyDown(keycode, time);
                }
@@ -82,7 +82,7 @@ public class FiveSkinManager extends SkinManager {
          String id = NodeImpl.getId(focus, this._modelInteractor);
          if (id != null && id.startsWith("five_")) {
             carouselMove = true;
-            int handle = this._modelInteractor.getHandle(((StringBuffer)(new Object())).append(id).append("_focusout").toString());
+            int handle = this._modelInteractor.getHandle(id + "_focusout");
             this._modelInteractor.trigger(107, handle, null);
          }
       }
@@ -91,7 +91,7 @@ public class FiveSkinManager extends SkinManager {
       if (carouselMove) {
          int focus = this._focusInteractor.getItemInFocus();
          String id = NodeImpl.getId(focus, this._modelInteractor);
-         int handle = this._modelInteractor.getHandle(((StringBuffer)(new Object())).append(id).append("_focusin").toString());
+         int handle = this._modelInteractor.getHandle(id + "_focusin");
          if (handle != -1) {
             this._modelInteractor.trigger(107, handle, null);
          }

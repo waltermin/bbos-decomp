@@ -6,8 +6,8 @@ class ThemeDescriptor {
    private String _name;
    private int _appIconWidth;
    private int _appIconHeight;
-   private Hashtable _compatibleThemes = (Hashtable)(new Object());
-   private static Hashtable _valuesByName = (Hashtable)(new Object());
+   private Hashtable _compatibleThemes = new Hashtable();
+   private static Hashtable _valuesByName = new Hashtable();
    public static final ThemeDescriptor BLACKBERRY = new ThemeDescriptor("BlackBerry", OSVersion.OS_VERSION_4_1, 36, 36);
    public static final ThemeDescriptor BLACKBERRY_240X260 = new ThemeDescriptor("Blackberry_240x260", OSVersion.OS_VERSION_4_1, 51, 51);
    public static final ThemeDescriptor BLACKBERRY_ICON_240X260 = new ThemeDescriptor("Blackberry_icon_240x260", OSVersion.OS_VERSION_4_1, 60, 56);

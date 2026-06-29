@@ -6,7 +6,7 @@ class PKCS11Attribute {
 
    PKCS11Attribute(byte[] value) {
       if (value == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._value = value;
@@ -26,6 +26,6 @@ class PKCS11Attribute {
    }
 
    public String getStringValue() {
-      return (String)(new Object(this._value));
+      return new String(this._value);
    }
 }

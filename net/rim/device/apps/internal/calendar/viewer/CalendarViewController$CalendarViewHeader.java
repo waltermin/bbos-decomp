@@ -51,8 +51,8 @@ final class CalendarViewController$CalendarViewHeader extends Manager {
       this.TAG = Tag.create("title");
       this._statusAreaPadding = Graphics.isColor() ? 0 : 7;
       this._currentTimeFormat = DateFormat.getInstance(7);
-      this._currentTimeBuf = (StringBuffer)(new Object());
-      this._currentTime = (LabelField)(new Object(null, 1152921504606847044L));
+      this._currentTimeBuf = new StringBuffer();
+      this._currentTime = new LabelField(null, 1152921504606847044L);
       this._currentWeekNumber = null;
       this._weekNum = -1;
       this._updateDateRunnable = new CalendarViewController$CalendarViewHeader$UpdateDateHeader(this, this);
@@ -60,7 +60,7 @@ final class CalendarViewController$CalendarViewHeader extends Manager {
       this._showWeekNumber = showWeekNumber;
       this._selectedDateFormat = DateFormat.getInstance(48);
       this._selectedDate = new CalendarViewController$NavDateField(_1, this._selectedDateFormat);
-      this._currentWeekNumber = (LabelField)(new Object(null, 4294967300L));
+      this._currentWeekNumber = new LabelField(null, 4294967300L);
       boolean var7 = false /* VF: Semaphore variable */;
 
       label53:
@@ -129,7 +129,7 @@ final class CalendarViewController$CalendarViewHeader extends Manager {
       if (this._showWeekNumber) {
          int weeknum = 100;
          String oldValue = this._currentWeekNumber.getText();
-         String value = MessageFormat.format(CalendarApp._rb.getString(626), new Object[]{Integer.toString(weeknum)});
+         String value = MessageFormat.format(CalendarApp._rb.getString(626), new String[]{Integer.toString(weeknum)});
          this._currentWeekNumber.setText(value);
          result = this._currentWeekNumber.getPreferredWidth();
          this._currentWeekNumber.setText(oldValue);
@@ -163,7 +163,7 @@ final class CalendarViewController$CalendarViewHeader extends Manager {
             }
          }
 
-         StringBuffer timeStringBuffer = (StringBuffer)(new Object());
+         StringBuffer timeStringBuffer = new StringBuffer();
          timeStringBuffer.setLength(0);
          timeStringBuffer.append(widestNumber);
          timeStringBuffer.append(widestNumber);
@@ -193,7 +193,7 @@ final class CalendarViewController$CalendarViewHeader extends Manager {
             }
          }
 
-         StringBuffer dateBuffer = (StringBuffer)(new Object());
+         StringBuffer dateBuffer = new StringBuffer();
          dateBuffer.setLength(0);
          dateBuffer.append("WWW ");
          dateBuffer.append(widestNumber);

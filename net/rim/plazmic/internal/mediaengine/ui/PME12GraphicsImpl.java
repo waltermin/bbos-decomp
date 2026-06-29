@@ -67,14 +67,14 @@ public class PME12GraphicsImpl implements PME12Graphics {
    private int[] _tempOrigin = new int[2];
    private int[] _inverse = new int[4];
    private int fontSize;
-   private TextGraphics _textGraphics = (TextGraphics)(new Object("BBMillbank", 10));
-   private FontMetrics _fontMetrics = (FontMetrics)(new Object());
-   private TextMetrics _textMetrics = (TextMetrics)(new Object());
-   private StringBuffer _textBuffer = (StringBuffer)(new Object());
-   private XYRect _clip = (XYRect)(new Object());
+   private TextGraphics _textGraphics = new TextGraphics("BBMillbank", 10);
+   private FontMetrics _fontMetrics = new FontMetrics();
+   private TextMetrics _textMetrics = new TextMetrics();
+   private StringBuffer _textBuffer = new StringBuffer();
+   private XYRect _clip = new XYRect();
    private int _offsetX;
    private int _offsetY;
-   private static DrawTextParam _textParams = (DrawTextParam)(new Object());
+   private static DrawTextParam _textParams = new DrawTextParam();
 
    public void drawImage(Object image, int x, int y, int width, int height) {
       Bitmap bitmap = this.getBitmap(image);
@@ -143,7 +143,7 @@ public class PME12GraphicsImpl implements PME12Graphics {
       if (bitmap != null) {
          this.drawImage(bitmap, x, y, bitmap.getWidth(), bitmap.getHeight());
       } else {
-         if (image instanceof Object) {
+         if (image instanceof ForeignObject) {
             ForeignObject fo = (ForeignObject)image;
             this.drawForeignObject(fo);
          }
@@ -160,20 +160,20 @@ public class PME12GraphicsImpl implements PME12Graphics {
       if (width > 0 && height > 0) {
          try {
             if (this._numBuffers == this._gBuffers.length) {
-               Graphics[] newGraphics = new Object[this._numBuffers + 1];
-               Bitmap[] newBitmaps = new Object[this._numBuffers + 1];
+               Graphics[] newGraphics = new Graphics[this._numBuffers + 1];
+               Bitmap[] newBitmaps = new Bitmap[this._numBuffers + 1];
                System.arraycopy(this._gBuffers, 0, newGraphics, 0, this._numBuffers);
                System.arraycopy(this._bitmapBuffers, 0, newBitmaps, 0, this._numBuffers);
                this._gBuffers = newGraphics;
                this._bitmapBuffers = newBitmaps;
             }
 
-            this._bitmapBuffers[this._numBuffers] = (Bitmap)(new Object(width, height));
+            this._bitmapBuffers[this._numBuffers] = new Bitmap(width, height);
             if (isTransparent) {
                this._bitmapBuffers[this._numBuffers].createAlpha(2);
             }
 
-            this._gBuffers[this._numBuffers] = (Graphics)(new Object(this._bitmapBuffers[this._numBuffers]));
+            this._gBuffers[this._numBuffers] = new Graphics(this._bitmapBuffers[this._numBuffers]);
          } finally {
             ;
          }
@@ -216,7 +216,7 @@ public class PME12GraphicsImpl implements PME12Graphics {
 
    @Override
    public void applyBuffer(int bufferId, XYRect clipRect, int x, int y) {
-      this.drawDirectImage(this._bitmapBuffers[bufferId], 255, (XYRect)(new Object(clipRect)), VecMath.IDENTITY_3X3, x, y);
+      this.drawDirectImage(this._bitmapBuffers[bufferId], 255, new XYRect(clipRect), VecMath.IDENTITY_3X3, x, y);
    }
 
    @Override
@@ -308,7 +308,7 @@ public class PME12GraphicsImpl implements PME12Graphics {
             return;
          }
 
-         if (image instanceof Object) {
+         if (image instanceof ForeignObject) {
             ForeignObject fo = (ForeignObject)image;
             rectBounds.set(0, 0, fo.getWidth(), fo.getHeight());
             return;
@@ -641,7 +641,7 @@ public class PME12GraphicsImpl implements PME12Graphics {
             this._textBuffer.append(text);
             switch (ctx.getTextAnchor()) {
                case 0:
-                  throw new Object("Invalid text anchor");
+                  throw new IllegalArgumentException("Invalid text anchor");
                case 1:
                default:
                   _textParams.iAlignment = 6;
@@ -756,7 +756,7 @@ public class PME12GraphicsImpl implements PME12Graphics {
             int width = this._textMetrics.iBoundsBrX - this._textMetrics.iBoundsTlX;
             switch (ctx.getTextAnchor()) {
                case 0:
-                  throw new Object("Invalid text anchor");
+                  throw new IllegalArgumentException("Invalid text anchor");
                case 1:
                   break;
                case 2:
@@ -832,10 +832,10 @@ public class PME12GraphicsImpl implements PME12Graphics {
 
    public PME12GraphicsImpl() {
       this._contextStack = new SimpleStack();
-      this._gBuffers = new Object[2];
-      this._bitmapBuffers = new Object[2];
+      this._gBuffers = new Graphics[2];
+      this._bitmapBuffers = new Bitmap[2];
       this._numBuffers = 0;
-      this._fullScreenRect = (XYRect)(new Object(0, 0, Fixed32.toFP(Display.getWidth()), Fixed32.toFP(Display.getHeight())));
+      this._fullScreenRect = new XYRect(0, 0, Fixed32.toFP(Display.getWidth()), Fixed32.toFP(Display.getHeight()));
    }
 
    private void drawPathTexture(int[] xPts, int[] yPts, byte[] pointTypes, int[] offsets, MEGraphics2dContext context, MEGraphics2dContext fillPaintContext) {
@@ -871,7 +871,7 @@ public class PME12GraphicsImpl implements PME12Graphics {
       int result = 0;
       switch (meStyle) {
          case 0:
-            throw new Object("Invalid font style");
+            throw new IllegalArgumentException("Invalid font style");
          case 1:
             return 0;
          case 2:
@@ -886,7 +886,7 @@ public class PME12GraphicsImpl implements PME12Graphics {
       int result = 0;
       switch (meTextDecoration) {
          case 0:
-            throw new Object("Invalid text decoration");
+            throw new IllegalArgumentException("Invalid text decoration");
          case 1:
          default:
             return 0;
@@ -916,7 +916,7 @@ public class PME12GraphicsImpl implements PME12Graphics {
          case 900:
             return 1;
          default:
-            throw new Object("Invalid font weight");
+            throw new IllegalArgumentException("Invalid font weight");
       }
    }
 
@@ -925,7 +925,7 @@ public class PME12GraphicsImpl implements PME12Graphics {
       int prefAntiAliasMode = 1;
       switch (meTextRenderingHints) {
          case -1:
-            throw new Object("Invalid text rendering hints.");
+            throw new IllegalArgumentException("Invalid text rendering hints.");
          case 0:
          case 1:
          case 3:
@@ -960,11 +960,11 @@ public class PME12GraphicsImpl implements PME12Graphics {
 
    private Bitmap getBitmap(Object obj) {
       Bitmap bitmap = null;
-      if (obj instanceof Object) {
+      if (obj instanceof Bitmap) {
          return (Bitmap)obj;
       }
 
-      if (obj instanceof Object) {
+      if (obj instanceof EncodedImage) {
          EncodedImage cast = (EncodedImage)obj;
          if (cast != null) {
             int oldDecodeMode = cast.getDecodeMode();

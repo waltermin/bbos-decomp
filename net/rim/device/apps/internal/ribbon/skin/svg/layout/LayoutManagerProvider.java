@@ -12,7 +12,7 @@ public class LayoutManagerProvider implements ResourceProvider {
    @Override
    public Object createResource(String type, Object data, ResourceContext context, Object referrer) {
       Object resource = null;
-      if (data instanceof Object) {
+      if (data instanceof String) {
          resource = this.createLayoutManager((String)data, context);
       }
 
@@ -32,7 +32,7 @@ public class LayoutManagerProvider implements ResourceProvider {
 
    private Object createLayoutManager(String uri, ResourceContext context) {
       ModelInteractorImpl model = (ModelInteractorImpl)context.get("Media");
-      Hashtable parameters = (Hashtable)(new Object());
+      Hashtable parameters = new Hashtable();
       Util.fillParameters(uri, parameters);
       return LayoutManagerFactory.createInstance(model, parameters);
    }

@@ -1,5 +1,6 @@
 package net.rim.tools.compiler.classfile;
 
+import java.io.IOException;
 import net.rim.tools.compiler.io.StructuredInputStream;
 import net.rim.tools.compiler.vm.Constants;
 
@@ -61,7 +62,7 @@ public class ConstantPoolEntry implements Constants {
    public void verify() {
    }
 
-   public static void invalid() {
-      throw new Object("Invalid constant pool entry.");
+   public static void invalid() throws IOException {
+      throw new IOException("Invalid constant pool entry.");
    }
 }

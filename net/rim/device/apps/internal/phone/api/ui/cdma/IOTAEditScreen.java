@@ -6,11 +6,11 @@ import net.rim.device.api.system.Application;
 import net.rim.device.api.system.Branding;
 import net.rim.device.api.system.PersistentObject;
 import net.rim.device.api.system.PersistentStore;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.component.ObjectListField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.MainScreen;
 
 final class IOTAEditScreen extends MainScreen {
@@ -32,11 +32,11 @@ final class IOTAEditScreen extends MainScreen {
       this._persist = PersistentStore.getPersistentObject(-7688435971308426807L);
       this._storage = (Hashtable)this._persist.getContents();
       if (this._storage == null || this._storage.size() == 0) {
-         this._storage = (Hashtable)(new Object());
-         this._storage.put("phone:boot.url", new Object(Branding.getData(20992)));
-         this._storage.put("phone:boot.naiurl", new Object(Branding.getData(20993)));
-         this._storage.put("browser:domain.trusted", new Object(Branding.getData(20994)));
-         this._storage.put("phone:proxy..0.address..0.wdp", new Object(Branding.getData(20995)));
+         this._storage = new Hashtable();
+         this._storage.put("phone:boot.url", new String(Branding.getData(20992)));
+         this._storage.put("phone:boot.naiurl", new String(Branding.getData(20993)));
+         this._storage.put("browser:domain.trusted", new String(Branding.getData(20994)));
+         this._storage.put("phone:proxy..0.address..0.wdp", new String(Branding.getData(20995)));
          this._storage.put("phone:cdma.prl", new byte[0]);
          this._persist.setContents(this._storage, 51);
          this._persist.commit();
@@ -47,11 +47,11 @@ final class IOTAEditScreen extends MainScreen {
 
    public final void initFields() {
       this.deleteAll();
-      this._propField = (EditField)(new Object("Current Value: ", ""));
+      this._propField = new EditField("Current Value: ", "");
       this._propField.setEditable(false);
-      this._listField = (ObjectListField)(new Object(9007199254740992L));
+      this._listField = new ObjectListField(9007199254740992L);
       this.add(this._listField);
-      this.add((Field)(new Object()));
+      this.add(new SeparatorField());
       this.add(this._propField);
       this._numOfItems = 0;
       Enumeration e = this._storage.keys();

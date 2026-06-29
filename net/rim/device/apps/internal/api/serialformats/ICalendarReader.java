@@ -19,7 +19,7 @@ public final class ICalendarReader implements ICalendarDefine {
    public ICalendarReader(ICalendarProvider iCalendarProvider, InputStream in, String encoding) {
       this._tokenParser = new TokenParser(in, encoding);
       this._propertyParser = new PropertyParser();
-      this._componentStack = (Stack)(new Object());
+      this._componentStack = new Stack();
       this._iCalendarCurrent = iCalendarProvider;
    }
 
@@ -573,11 +573,11 @@ public final class ICalendarReader implements ICalendarDefine {
 
          String tempString = null;
          if (encodingType == -151191742) {
-            tempString = (String)(new Object(this._tokenParser.getQuotedPrintableContent(0)));
+            tempString = new String(this._tokenParser.getQuotedPrintableContent(0));
          } else if (encodingType != 1952093519 && encodingType != 66) {
             tempString = this._tokenParser.getCommonOneLine(0);
          } else {
-            tempString = (String)(new Object(this._tokenParser.getBase64Content(0)));
+            tempString = new String(this._tokenParser.getBase64Content(0));
          }
 
          if (this._iCalendarCurrent.getAlarmNestedBeginTag() == -1770502245) {
@@ -619,11 +619,11 @@ public final class ICalendarReader implements ICalendarDefine {
 
          String tempString = null;
          if (encodingType == -151191742) {
-            tempString = (String)(new Object(this._tokenParser.getQuotedPrintableContent(0)));
+            tempString = new String(this._tokenParser.getQuotedPrintableContent(0));
          } else if (encodingType != 1952093519 && encodingType != 66) {
             tempString = this._tokenParser.getCommonOneLine(0);
          } else {
-            tempString = (String)(new Object(this._tokenParser.getBase64Content(0)));
+            tempString = new String(this._tokenParser.getBase64Content(0));
          }
 
          this._iCalendarCurrent.setSummary(intTempName, value, tempString);
@@ -661,11 +661,11 @@ public final class ICalendarReader implements ICalendarDefine {
 
          String tempString = null;
          if (encodingType == -151191742) {
-            tempString = (String)(new Object(this._tokenParser.getQuotedPrintableContent(0)));
+            tempString = new String(this._tokenParser.getQuotedPrintableContent(0));
          } else if (encodingType != 1952093519 && encodingType != 66) {
             tempString = this._tokenParser.getCommonOneLine(0);
          } else {
-            tempString = (String)(new Object(this._tokenParser.getBase64Content(0)));
+            tempString = new String(this._tokenParser.getBase64Content(0));
          }
 
          this._iCalendarCurrent.setLocation(intTempName, value, tempString);
@@ -1251,7 +1251,7 @@ public final class ICalendarReader implements ICalendarDefine {
          }
 
          Calendar cal = Calendar.getInstance();
-         cal.setTime((Date)(new Object(0)));
+         cal.setTime(new Date(0));
          cal.set(1, year);
          cal.set(2, month - 1);
          cal.set(5, day);
@@ -1431,6 +1431,6 @@ public final class ICalendarReader implements ICalendarDefine {
 
       int offset = tz.getOffset(1, year, month, day, dayOfWeek, millis);
       time += offset;
-      return (Date)(new Object(time));
+      return new Date(time);
    }
 }

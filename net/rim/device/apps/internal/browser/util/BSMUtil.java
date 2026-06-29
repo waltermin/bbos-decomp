@@ -15,7 +15,7 @@ import net.rim.device.apps.internal.browser.stack.CacheResult;
 import net.rim.device.apps.internal.browser.stack.RawDataCache;
 
 public final class BSMUtil implements BSMConstants {
-   private static SHA1Digest _digest = (SHA1Digest)(new Object());
+   private static SHA1Digest _digest = new SHA1Digest();
 
    private static final byte[] getHash(String string) {
       synchronized (_digest) {
@@ -30,7 +30,7 @@ public final class BSMUtil implements BSMConstants {
          return null;
       }
 
-      DataBuffer[] data = new Object[2];
+      DataBuffer[] data = new DataBuffer[2];
       BrowserImpl browser = BrowserDaemonRegistry.getInstance();
       RawDataCache rawDataCache = browser.getRawDataCache();
       DataBuffer buffer = getNewBuffer(browserSession, true);
@@ -52,7 +52,7 @@ public final class BSMUtil implements BSMConstants {
          writeTagMemFree(buffer, maxSize - shortTermCacheSize);
          buffer.write(1);
          data[0] = buffer;
-         buffer = (DataBuffer)(new Object());
+         buffer = new DataBuffer();
          buffer.write(70);
          writeTagCacheSize(buffer, shortTermCacheSize);
 
@@ -182,7 +182,7 @@ public final class BSMUtil implements BSMConstants {
          return null;
       }
 
-      DataBuffer buffer = (DataBuffer)(new Object());
+      DataBuffer buffer = new DataBuffer();
       buffer.write(3);
       buffer.write(1);
       buffer.write(3);

@@ -6,7 +6,9 @@ import net.rim.device.api.i18n.Locale;
 import net.rim.device.api.util.Comparator;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.api.util.WeakReferenceUtilities;
+import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.framework.model.KeyProvider;
+import net.rim.device.apps.api.framework.model.RIMModel;
 import net.rim.device.apps.internal.addressbook.addresscard.AddressCardComparator;
 import net.rim.device.internal.i18n.CollatorImpl;
 import net.rim.vm.WeakReference;
@@ -14,11 +16,11 @@ import net.rim.vm.WeakReference;
 final class AddressBookOrderHelper implements KeywordIndexerHelper, Comparator {
    private Object _context;
    private long _keyToRequest;
-   private WeakReference _keys1WR = (WeakReference)(new Object(null));
-   private WeakReference _keys2WR = (WeakReference)(new Object(null));
-   private WeakReference _wordsWR = (WeakReference)(new Object(null));
+   private WeakReference _keys1WR = new WeakReference(null);
+   private WeakReference _keys2WR = new WeakReference(null);
+   private WeakReference _wordsWR = new WeakReference(null);
    private boolean _fastCardCompare;
-   private static CollatorImpl _collator = (CollatorImpl)(new Object());
+   private static CollatorImpl _collator = new CollatorImpl();
 
    final long getSortOrder() {
       return this._keyToRequest;
@@ -39,7 +41,7 @@ final class AddressBookOrderHelper implements KeywordIndexerHelper, Comparator {
    }
 
    final synchronized int compare(Object o1, Object o2, long keyToRequest) {
-      if (this._fastCardCompare && o1 instanceof Object && o2 instanceof Object) {
+      if (this._fastCardCompare && o1 instanceof AddressCardModel && o2 instanceof AddressCardModel) {
          return AddressCardComparator.compare(o1, o2, keyToRequest);
       }
 
@@ -47,10 +49,10 @@ final class AddressBookOrderHelper implements KeywordIndexerHelper, Comparator {
       Object[] keys1 = WeakReferenceUtilities.getObjectArray(this._keys1WR, 10);
       Object[] keys2 = WeakReferenceUtilities.getObjectArray(this._keys2WR, 10);
       String[] wordsBuffer = WeakReferenceUtilities.getStringArray(this._wordsWR, 10);
-      if (o1 instanceof Object) {
+      if (o1 instanceof RIMModel) {
          KeyProvider keyProvider1 = (KeyProvider)o1;
          keyCount1 = keyProvider1.getKeys(this._context, keys1, 0, keyToRequest);
-      } else if (o1 instanceof Object) {
+      } else if (o1 instanceof String) {
          keyCount1 = StringUtilities.stringToKeywords((String)o1, wordsBuffer, 0);
          System.arraycopy(wordsBuffer, 0, keys1, 0, keyCount1);
       }
@@ -75,7 +77,7 @@ final class AddressBookOrderHelper implements KeywordIndexerHelper, Comparator {
 
    @Override
    public final synchronized boolean checkForMatch(Object element, String[] words) {
-      if (!(element instanceof Object)) {
+      if (!(element instanceof KeyProvider)) {
          return false;
       }
 
@@ -110,7 +112,7 @@ final class AddressBookOrderHelper implements KeywordIndexerHelper, Comparator {
    @Override
    public final int getKeywords(Object element, String[] keywords) {
       int keyCount = 0;
-      if (element instanceof Object) {
+      if (element instanceof KeyProvider) {
          KeyProvider keyProvider = (KeyProvider)element;
          keyCount = keyProvider.getKeys(this._context, keywords, 0, this._keyToRequest);
       }

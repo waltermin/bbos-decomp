@@ -43,7 +43,7 @@ class MessageUnreadCountComponentInteractor extends UnreadCountComponentInteract
    static {
       FactoryRepository repos = GlobalFactoryRepository.getFactoryRepository(-4018062520840731194L);
       Factory ucFactory = repos.getFactory("UnreadCount");
-      Hashtable params = (Hashtable)(new Object());
+      Hashtable params = new Hashtable();
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
       UnreadCountComponent normalMsgsUnread = (UnreadCountComponent)ar.getOrWaitFor(-3230658477323968044L);
       if (normalMsgsUnread == null) {

@@ -33,7 +33,7 @@ final class WMLAnchorModel implements RIMModel, VerbProvider, URLProvider, Activ
    public final Verb getVerbs(Object context, Verb[] verbs) {
       if (this._anchorVerb.getTask() instanceof Go) {
          Go go = (Go)this._anchorVerb.getTask();
-         Verb[] tempVerbs = new Object[0];
+         Verb[] tempVerbs = new Verb[0];
          Verb defaultVerb = go.getVerbs(context, tempVerbs);
          if (defaultVerb != null) {
             int size = tempVerbs.length;

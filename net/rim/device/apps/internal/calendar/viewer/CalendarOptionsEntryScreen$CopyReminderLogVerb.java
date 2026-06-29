@@ -15,7 +15,7 @@ final class CalendarOptionsEntryScreen$CopyReminderLogVerb extends Verb {
       if (rm != null) {
          String[] reminderLog = rm.getReminderLog();
          if (reminderLog != null) {
-            StringBuffer sb = (StringBuffer)(new Object());
+            StringBuffer sb = new StringBuffer();
 
             for (int i = 0; i < reminderLog.length; i++) {
                sb.append(reminderLog[i]);

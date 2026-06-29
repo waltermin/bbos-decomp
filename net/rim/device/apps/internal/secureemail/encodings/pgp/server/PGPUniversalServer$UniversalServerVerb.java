@@ -24,9 +24,9 @@ final class PGPUniversalServer$UniversalServerVerb extends Verb {
 
    @Override
    public final Object invoke(Object context) {
-      AbortablePleaseWaitDialog abortablePleaseWaitDialog = (AbortablePleaseWaitDialog)(new Object(
+      AbortablePleaseWaitDialog abortablePleaseWaitDialog = new AbortablePleaseWaitDialog(
          new PGPUniversalServer$UniversalServerVerb$UniversalVerbWorkerThread(this, null)
-      ));
+      );
       abortablePleaseWaitDialog.display();
       return null;
    }

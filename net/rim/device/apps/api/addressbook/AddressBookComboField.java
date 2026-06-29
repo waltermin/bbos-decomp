@@ -29,7 +29,7 @@ public class AddressBookComboField extends ComboField implements FilterStatusLis
          this._filteredList = addrBook.getView(this._sortOrder);
       }
 
-      this.setList((ListField)(new Object()));
+      this.setList(new ListField());
       this.setEditable(new AddressBookComboField$AddressBookEditable(this, label, maxNumChars));
       this.setController(new AddressBookComboField$AddressBookController(this));
       this.getList().setCallback(new AddressBookComboField$AddressBookCallback(this));

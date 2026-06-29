@@ -37,7 +37,7 @@ public class Coordinates {
 
    public Coordinates(double latitude, double longitude, float altitude) {
       if (latitude < -4587338432941916160L || latitude > 4636033603912859648L || Double.isNaN(latitude)) {
-         throw new Object("Illegal latitude");
+         throw new IllegalArgumentException("Illegal latitude");
       }
 
       if (!(longitude < -4582834833314545664L) && !(longitude >= 4640537203540230144L) && !Double.isNaN(longitude)) {
@@ -45,7 +45,7 @@ public class Coordinates {
          this._longitude = longitude;
          this._altitude = altitude;
       } else {
-         throw new Object("Illegal longitude");
+         throw new IllegalArgumentException("Illegal longitude");
       }
    }
 
@@ -69,7 +69,7 @@ public class Coordinates {
       if (!(latitude < -4587338432941916160L) && !(latitude > 4636033603912859648L) && !Double.isNaN(latitude)) {
          this._latitude = latitude;
       } else {
-         throw new Object("Illegal latitude");
+         throw new IllegalArgumentException("Illegal latitude");
       }
    }
 
@@ -77,7 +77,7 @@ public class Coordinates {
       if (!(longitude < -4582834833314545664L) && !(longitude >= 4640537203540230144L) && !Double.isNaN(longitude)) {
          this._longitude = longitude;
       } else {
-         throw new Object("Illegal longitude");
+         throw new IllegalArgumentException("Illegal longitude");
       }
    }
 
@@ -105,7 +105,7 @@ public class Coordinates {
          }
 
          if (nfe < 1 || nfe > 2) {
-            throw new Object("Illegal coordinate syntax");
+            throw new IllegalArgumentException("Illegal coordinate syntax");
          }
 
          index = temp.indexOf(58);
@@ -116,23 +116,23 @@ public class Coordinates {
          }
 
          if (degreeString.length() == 2 && degreeString.charAt(0) == '0') {
-            throw new Object("Illegal coordinate");
+            throw new IllegalArgumentException("Illegal coordinate");
          }
 
          if (degreeString.length() == 3 && degreeString.charAt(0) != '1') {
-            throw new Object("Illegal coordinate");
+            throw new IllegalArgumentException("Illegal coordinate");
          }
 
          temp = temp.substring(index + 1);
          if (degrees > 179 || degrees < -180) {
-            throw new Object("Illegal coordinate");
+            throw new IllegalArgumentException("Illegal coordinate");
          }
 
          if (nfe == 2) {
             index = temp.indexOf(58);
             String minuteString = temp.substring(0, index);
             if (minuteString.length() != 2) {
-               throw new Object("Illegal coordinate");
+               throw new IllegalArgumentException("Illegal coordinate");
             }
 
             minutes = Integer.parseInt(minuteString);
@@ -143,13 +143,13 @@ public class Coordinates {
             } else {
                String secondString = temp.substring(0, index);
                if (secondString.length() != 2) {
-                  throw new Object("Illegal coordinate");
+                  throw new IllegalArgumentException("Illegal coordinate");
                }
 
                seconds = Integer.parseInt(secondString);
                String decimalfracString = temp.substring(index);
                if (decimalfracString.length() > 4) {
-                  throw new Object("Illegal coordinate");
+                  throw new IllegalArgumentException("Illegal coordinate");
                }
 
                decimalfrac = Double.parseDouble(decimalfracString);
@@ -158,7 +158,7 @@ public class Coordinates {
             if (degrees != -180 || minutes == 0 && seconds == 0 && decimalfrac == 0L) {
                if (minutes <= 59 && minutes >= 0) {
                   if (seconds > 59 || seconds < 0) {
-                     throw new Object("Illegal coordinate");
+                     throw new IllegalArgumentException("Illegal coordinate");
                   }
 
                   if (negative) {
@@ -172,10 +172,10 @@ public class Coordinates {
                   return var36;
                }
 
-               throw new Object("Illegal coordinate");
+               throw new IllegalArgumentException("Illegal coordinate");
             }
 
-            throw new Object("Illegal coordinate");
+            throw new IllegalArgumentException("Illegal coordinate");
          }
 
          if (nfe == 1) {
@@ -185,13 +185,13 @@ public class Coordinates {
             } else {
                String minuteString = temp.substring(0, index);
                if (minuteString.length() != 2) {
-                  throw new Object("Illegal coordinate");
+                  throw new IllegalArgumentException("Illegal coordinate");
                }
 
                minutes = Integer.parseInt(minuteString);
                String decimalfracString = temp.substring(index);
                if (decimalfracString.length() > 6) {
-                  throw new Object("Illegal coordinate");
+                  throw new IllegalArgumentException("Illegal coordinate");
                }
 
                decimalfrac = Double.parseDouble(decimalfracString);
@@ -210,16 +210,16 @@ public class Coordinates {
                   return var10000;
                }
 
-               throw new Object();
+               throw new IllegalArgumentException();
             }
 
-            throw new Object("Illegal coordinate");
+            throw new IllegalArgumentException("Illegal coordinate");
          }
 
          var16 = false;
       } finally {
          if (var16) {
-            throw new Object("Illegal coordinate");
+            throw new IllegalArgumentException("Illegal coordinate");
          }
       }
 
@@ -228,7 +228,7 @@ public class Coordinates {
 
    public static String convert(double coordinate, int outputType) {
       if (outputType != 1 && outputType != 2) {
-         throw new Object("Illegal outputType identifier");
+         throw new IllegalArgumentException("Illegal outputType identifier");
       }
 
       if (!(coordinate < -4582834833314545664L) && !(coordinate >= 4640537203540230144L) && !Double.isNaN(coordinate)) {
@@ -244,7 +244,7 @@ public class Coordinates {
          int minutes = (int)decimal;
          String minuteString = Integer.toString(minutes);
          if (minuteString.length() == 1) {
-            minuteString = ((StringBuffer)(new Object("0"))).append(minuteString).toString();
+            minuteString = "0" + minuteString;
          }
 
          decimal -= minutes;
@@ -254,7 +254,7 @@ public class Coordinates {
             if (frac == 4607182418800017408L) {
                minuteString = Integer.toString(++minutes);
                if (minuteString.length() == 1) {
-                  minuteString = ((StringBuffer)(new Object("0"))).append(minuteString).toString();
+                  minuteString = "0" + minuteString;
                }
 
                decimalString = "0";
@@ -268,9 +268,7 @@ public class Coordinates {
                decimalString = decimalString.substring(2);
             }
 
-            return negative
-               ? ((StringBuffer)(new Object("-"))).append(degrees).append(':').append(minuteString).append('.').append(decimalString).toString()
-               : ((StringBuffer)(new Object(""))).append(degrees).append(':').append(minuteString).append('.').append(decimalString).toString();
+            return negative ? "-" + degrees + ':' + minuteString + '.' + decimalString : "" + degrees + ':' + minuteString + '.' + decimalString;
          } else {
             if (outputType != 1) {
                return "";
@@ -292,7 +290,7 @@ public class Coordinates {
 
             String secondString = Integer.toString(seconds);
             if (secondString.length() == 1) {
-               secondString = ((StringBuffer)(new Object("0"))).append(secondString).toString();
+               secondString = "0" + secondString;
             }
 
             if (decimalString.startsWith("0.")) {
@@ -300,27 +298,11 @@ public class Coordinates {
             }
 
             return negative
-               ? ((StringBuffer)(new Object("-")))
-                  .append(degrees)
-                  .append(':')
-                  .append(minuteString)
-                  .append(':')
-                  .append(secondString)
-                  .append('.')
-                  .append(decimalString)
-                  .toString()
-               : ((StringBuffer)(new Object("")))
-                  .append(degrees)
-                  .append(':')
-                  .append(minuteString)
-                  .append(':')
-                  .append(secondString)
-                  .append('.')
-                  .append(decimalString)
-                  .toString();
+               ? "-" + degrees + ':' + minuteString + ':' + secondString + '.' + decimalString
+               : "" + degrees + ':' + minuteString + ':' + secondString + '.' + decimalString;
          }
       } else {
-         throw new Object("Illegal coordinates value");
+         throw new IllegalArgumentException("Illegal coordinates value");
       }
    }
 
@@ -339,7 +321,7 @@ public class Coordinates {
 
    public float azimuthTo(Coordinates to) {
       if (to == null) {
-         throw new Object("Coordinate cannot be null");
+         throw new NullPointerException("Coordinate cannot be null");
       }
 
       if (this._latitude == 4636033603912859648L && to.getLatitude() != 4636033603912859648L) {

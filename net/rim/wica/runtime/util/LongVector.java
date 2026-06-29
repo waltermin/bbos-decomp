@@ -1,5 +1,6 @@
 package net.rim.wica.runtime.util;
 
+import java.util.NoSuchElementException;
 import net.rim.device.api.util.Persistable;
 import net.rim.vm.Array;
 
@@ -10,7 +11,7 @@ public class LongVector implements Persistable {
 
    public LongVector(int initialCapacity, int capacityIncrement) {
       if (initialCapacity < 0) {
-         throw new Object(((StringBuffer)(new Object("Illegal Capacity: "))).append(initialCapacity).toString());
+         throw new IllegalArgumentException("Illegal Capacity: " + initialCapacity);
       }
 
       this._elementData = new long[initialCapacity];
@@ -105,7 +106,7 @@ public class LongVector implements Persistable {
 
    public int lastIndexOf(long elem, int index) {
       if (index >= this._elementCount) {
-         throw new Object(((StringBuffer)(new Object())).append(index).append(" >= ").append(this._elementCount).toString());
+         throw new ArrayIndexOutOfBoundsException(index + " >= " + this._elementCount);
       }
 
       for (int i = index; i >= 0; i--) {
@@ -119,19 +120,19 @@ public class LongVector implements Persistable {
 
    public long elementAt(int index) {
       if (index >= this._elementCount) {
-         throw new Object(((StringBuffer)(new Object())).append(index).append(" >= ").append(this._elementCount).toString());
+         throw new ArrayIndexOutOfBoundsException(index + " >= " + this._elementCount);
       }
 
       try {
          return this._elementData[index];
       } finally {
-         throw new Object(((StringBuffer)(new Object())).append(index).append(" < 0").toString());
+         throw new ArrayIndexOutOfBoundsException(index + " < 0");
       }
    }
 
    public long firstElement() {
       if (this._elementCount == 0) {
-         throw new Object();
+         throw new NoSuchElementException();
       } else {
          return this._elementData[0];
       }
@@ -139,7 +140,7 @@ public class LongVector implements Persistable {
 
    public long lastElement() {
       if (this._elementCount == 0) {
-         throw new Object();
+         throw new NoSuchElementException();
       } else {
          return this._elementData[this._elementCount - 1];
       }
@@ -147,7 +148,7 @@ public class LongVector implements Persistable {
 
    public void setElementAt(long obj, int index) {
       if (index >= this._elementCount) {
-         throw new Object(((StringBuffer)(new Object())).append(index).append(" >= ").append(this._elementCount).toString());
+         throw new ArrayIndexOutOfBoundsException(index + " >= " + this._elementCount);
       }
 
       this._elementData[index] = obj;
@@ -155,11 +156,11 @@ public class LongVector implements Persistable {
 
    public void removeElementAt(int index) {
       if (index >= this._elementCount) {
-         throw new Object(((StringBuffer)(new Object())).append(index).append(" >= ").append(this._elementCount).toString());
+         throw new ArrayIndexOutOfBoundsException(index + " >= " + this._elementCount);
       }
 
       if (index < 0) {
-         throw new Object(index);
+         throw new ArrayIndexOutOfBoundsException(index);
       }
 
       int j = this._elementCount - index - 1;
@@ -173,7 +174,7 @@ public class LongVector implements Persistable {
    public void insertElementAt(long obj, int index) {
       int newcount = this._elementCount + 1;
       if (index >= newcount) {
-         throw new Object(((StringBuffer)(new Object())).append(index).append(" > ").append(this._elementCount).toString());
+         throw new ArrayIndexOutOfBoundsException(index + " > " + this._elementCount);
       }
 
       if (newcount > this._elementData.length) {
@@ -211,15 +212,15 @@ public class LongVector implements Persistable {
    public void removeElements(int startIndex, int count) {
       int endIndex = startIndex + count;
       if (startIndex < 0) {
-         throw new Object(((StringBuffer)(new Object("startIndex "))).append(startIndex).append(" < 0").toString());
+         throw new ArrayIndexOutOfBoundsException("startIndex " + startIndex + " < 0");
       }
 
       if (startIndex > endIndex) {
-         throw new Object(((StringBuffer)(new Object())).append(startIndex).append(" < ").append(endIndex).toString());
+         throw new ArrayIndexOutOfBoundsException(startIndex + " < " + endIndex);
       }
 
       if (endIndex > this._elementCount) {
-         throw new Object(((StringBuffer)(new Object("endIndex "))).append(endIndex).append(" >= ").append(this._elementCount).toString());
+         throw new ArrayIndexOutOfBoundsException("endIndex " + endIndex + " >= " + this._elementCount);
       }
 
       if (endIndex < this._elementCount) {

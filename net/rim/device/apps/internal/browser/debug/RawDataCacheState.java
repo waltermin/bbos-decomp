@@ -63,10 +63,10 @@ final class RawDataCacheState extends CacheState {
       // 026: ifnonnull 02e
       // 029: ldc_w ""
       // 02c: astore 4
-      // 02e: new java/lang/Object
+      // 02e: new net/rim/device/apps/api/framework/file/FileDialog
       // 031: dup
       // 032: ldc_w "/SDCard/"
-      // 035: new java/lang/Object
+      // 035: new java/lang/StringBuffer
       // 038: dup
       // 039: invokespecial java/lang/StringBuffer.<init> ()V
       // 03c: aload 3
@@ -94,7 +94,7 @@ final class RawDataCacheState extends CacheState {
       // 06d: aload 5
       // 06f: invokevirtual net/rim/device/apps/api/framework/file/FileDialog.getURL ()Ljava/lang/String;
       // 072: invokestatic javax/microedition/io/Connector.open (Ljava/lang/String;)Ljavax/microedition/io/Connection;
-      // 075: checkcast java/lang/Object
+      // 075: checkcast javax/microedition/io/file/FileConnection
       // 078: astore 6
       // 07a: aload 6
       // 07c: invokeinterface javax/microedition/io/file/FileConnection.exists ()Z 1

@@ -1,5 +1,6 @@
 package net.rim.device.internal.deviceoptions.synchronization;
 
+import java.io.EOFException;
 import net.rim.device.api.i18n.Locale;
 import net.rim.device.api.synchronization.SyncCollectionStatusProvider;
 import net.rim.device.api.synchronization.SyncEventListener;
@@ -178,7 +179,7 @@ final class DeviceOptionsSyncItem extends SyncItem implements SyncCollectionStat
 
    @Override
    public final SyncObject[] getSyncObjects() {
-      return new Object[0];
+      return new SyncObject[0];
    }
 
    @Override
@@ -223,9 +224,9 @@ final class DeviceOptionsSyncItem extends SyncItem implements SyncCollectionStat
       }
    }
 
-   private final String readString(DataBuffer buffer, int maxLength) {
+   private final String readString(DataBuffer buffer, int maxLength) throws EOFException {
       if (maxLength > buffer.available()) {
-         throw new Object();
+         throw new EOFException();
       }
 
       byte[] data = buffer.getArray();
@@ -237,7 +238,7 @@ final class DeviceOptionsSyncItem extends SyncItem implements SyncCollectionStat
       }
 
       buffer.skipBytes(maxLength);
-      return (String)(new Object(data, start, len));
+      return new String(data, start, len);
    }
 
    @Override
@@ -252,7 +253,7 @@ final class DeviceOptionsSyncItem extends SyncItem implements SyncCollectionStat
    }
 
    private static final String stripCR(String str) {
-      StringBuffer buffer = (StringBuffer)(new Object());
+      StringBuffer buffer = new StringBuffer();
       int end = str.length();
 
       for (int lv = 0; lv < end; lv++) {

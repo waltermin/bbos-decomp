@@ -27,7 +27,7 @@ final class ByteArraySerializer extends AbstractBigVectorSerializer {
 
    @Override
    public final Object deserialize(DataBuffer buffer) {
-      return new Object(ConverterUtilities.readByteArray(buffer));
+      return new ByteArray(ConverterUtilities.readByteArray(buffer));
    }
 
    private ByteArraySerializer() {

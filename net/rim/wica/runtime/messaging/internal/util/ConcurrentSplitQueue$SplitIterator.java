@@ -1,5 +1,8 @@
 package net.rim.wica.runtime.messaging.internal.util;
 
+import java.util.NoSuchElementException;
+import net.rim.device.api.system.UnsupportedOperationException;
+
 public class ConcurrentSplitQueue$SplitIterator extends ConcurrentQueue$Iterator {
    private final ConcurrentSplitQueue this$0;
 
@@ -13,11 +16,11 @@ public class ConcurrentSplitQueue$SplitIterator extends ConcurrentQueue$Iterator
    @Override
    public void remove() {
       if (Thread.currentThread() != this.this$0._owner) {
-         throw new Object();
+         throw new UnsupportedOperationException();
       }
 
       if (!super._goodState) {
-         throw new Object();
+         throw new IllegalStateException();
       }
 
       this.this$0._takeSidePutPermits++;
@@ -37,11 +40,11 @@ public class ConcurrentSplitQueue$SplitIterator extends ConcurrentQueue$Iterator
    @Override
    public void removeNext() {
       if (Thread.currentThread() != this.this$0._owner) {
-         throw new Object();
+         throw new UnsupportedOperationException();
       }
 
       if (!this.hasNext()) {
-         throw new Object();
+         throw new NoSuchElementException();
       }
 
       this.this$0._takeSidePutPermits++;
@@ -58,7 +61,7 @@ public class ConcurrentSplitQueue$SplitIterator extends ConcurrentQueue$Iterator
 
    public void markSplit() {
       if (Thread.currentThread() != this.this$0._owner) {
-         throw new Object();
+         throw new UnsupportedOperationException();
       }
 
       this.this$0._split = super._current;

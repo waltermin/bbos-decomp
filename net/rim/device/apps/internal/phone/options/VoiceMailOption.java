@@ -36,7 +36,7 @@ final class VoiceMailOption extends VoiceOptionsListItem {
    @Override
    public final String getDisplayName() {
       if (this._isDefaultVoicemailOption) {
-         StringBuffer buf = (StringBuffer)(new Object(PhoneResources.getString(190)));
+         StringBuffer buf = new StringBuffer(PhoneResources.getString(190));
          String operator = DeviceInfo.isSimulator() ? "Rogers ATT" : RibbonNetworkInfo.getInstance().getOperatorName();
          if (operator != null && operator.length() > 0) {
             buf.append(" (");
@@ -84,7 +84,7 @@ final class VoiceMailOption extends VoiceOptionsListItem {
 
    private static final String stripInvalidCharacters(String number, TextFilter filter) {
       if (filter != null && number != null) {
-         StringBuffer buf = (StringBuffer)(new Object());
+         StringBuffer buf = new StringBuffer();
          int count = number.length();
 
          for (int idx = 0; idx < count; idx++) {
@@ -128,7 +128,7 @@ final class VoiceMailOption extends VoiceOptionsListItem {
    @Override
    protected final boolean save() {
       boolean commitRequired = false;
-      if (this._voicemailNumberField.isDirty() && this._voicemailNumberField instanceof Object) {
+      if (this._voicemailNumberField.isDirty() && this._voicemailNumberField instanceof EditField) {
          EditField editField = (EditField)this._voicemailNumberField;
          String number = editField.getText();
          editField = (EditField)this._additionalTonesField;
@@ -139,7 +139,7 @@ final class VoiceMailOption extends VoiceOptionsListItem {
          }
       }
 
-      if (this._additionalTonesField.isDirty() && this._additionalTonesField instanceof Object) {
+      if (this._additionalTonesField.isDirty() && this._additionalTonesField instanceof EditField) {
          EditField editField = (EditField)this._additionalTonesField;
          super._phoneOptions.setVoiceMailAdditionalTones(editField.getText());
          commitRequired = true;
@@ -157,11 +157,11 @@ final class VoiceMailOption extends VoiceOptionsListItem {
          number = "";
       }
 
-      ContextObject context = (ContextObject)(new Object(32));
+      ContextObject context = new ContextObject(32);
       context.put(253, number);
       RIMModel numberModel = (RIMModel)FactoryUtil.createInstance(3797587162219887872L, context);
       Field field = null;
-      if (numberModel instanceof Object) {
+      if (numberModel instanceof FieldProvider) {
          FieldProvider fieldProvider = (FieldProvider)numberModel;
          context.setFlag(0);
          context.put(3986845832244503196L, fieldLabel);
@@ -169,7 +169,7 @@ final class VoiceMailOption extends VoiceOptionsListItem {
       }
 
       if (field != null) {
-         if (field instanceof Object) {
+         if (field instanceof BasicEditField) {
             BasicEditField edit = (BasicEditField)field;
             edit.setMaxSize(20);
             if (filter != null) {

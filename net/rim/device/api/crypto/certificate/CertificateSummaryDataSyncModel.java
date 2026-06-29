@@ -24,7 +24,7 @@ public class CertificateSummaryDataSyncModel implements PersistableRIMModel, Con
 
    public CertificateSummaryDataSyncModel(Certificate certificate, boolean isPrivateKeySet) {
       byte[] certificateEncoding = certificate.getEncoding();
-      SHA1Digest sha1Digest = (SHA1Digest)(new Object());
+      SHA1Digest sha1Digest = new SHA1Digest();
       sha1Digest.update(certificateEncoding);
       this._certificateHash = sha1Digest.getDigest();
       this._hashCode = 0;

@@ -3,9 +3,9 @@ package net.rim.device.apps.internal.calendar.viewer;
 import net.rim.device.api.i18n.DateFormat;
 import net.rim.device.api.system.KeyListener;
 import net.rim.device.api.system.TrackwheelListener;
-import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.DateField;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.container.PopupScreen;
 
 final class SelectDate implements TrackwheelListener, KeyListener {
@@ -21,9 +21,9 @@ final class SelectDate implements TrackwheelListener, KeyListener {
    }
 
    final boolean doSelection() {
-      DateField df = (DateField)(new Object(null, this._date, DateFormat.getInstance(40), 192));
+      DateField df = new DateField(null, this._date, DateFormat.getInstance(40), 192);
       PopupScreen pickDate = new SelectDate$SelectScreen(this);
-      pickDate.add((Field)(new Object(CalendarApp._rb.getString(320))));
+      pickDate.add(new LabelField(CalendarApp._rb.getString(320)));
       pickDate.add(df);
       pickDate.addTrackwheelListener(this);
       UiApplication.getUiApplication().pushModalScreen(pickDate);

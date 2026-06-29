@@ -32,7 +32,7 @@ public final class KeyStoreSyncFields {
    public static final synchronized boolean register(int syncConstant, long associatedDataConstant, boolean up, boolean down) {
       IntHashtable hashtable = ApplicationRegistry.getApplicationRegistry().getIntHashtable(-6244618566307895102L);
       if (syncConstant < 100 && _notMe) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else if (!hashtable.containsKey(syncConstant) && (up || down)) {
          hashtable.put(syncConstant, new Registration(syncConstant, associatedDataConstant, up, down));
          return true;

@@ -24,14 +24,14 @@ final class VADOptionsScreen extends SaveableMainScreenOptionsListItem {
 
    private VADOptionsScreen() {
       super(_rb.getString(0));
-      ContextObject.put(super._context, 244, new Object(32872));
+      ContextObject.put(super._context, 244, new Integer(32872));
    }
 
    @Override
    protected final void populateMainScreen(MainScreen mainScreen) {
       VADEngineManager manager = VADEngineManager.getInstance();
       VADParameters data = manager.getParameters();
-      this._choiceLists = (ObjectChoiceField)(new Object(_rb.getString(14), _rb.getStringArray(15), data._confirmation));
+      this._choiceLists = new ObjectChoiceField(_rb.getString(14), _rb.getStringArray(15), data._confirmation);
       mainScreen.add(this._choiceLists);
       int index;
       switch (data._sensitivity) {
@@ -57,13 +57,13 @@ final class VADOptionsScreen extends SaveableMainScreenOptionsListItem {
             index = 3;
       }
 
-      this._sensitivity = (ObjectChoiceField)(new Object(_rb.getString(17), _rb.getStringArray(23), index, 134217728));
+      this._sensitivity = new ObjectChoiceField(_rb.getString(17), _rb.getStringArray(23), index, 134217728);
       mainScreen.add(this._sensitivity);
-      this._audioPrompts = (BooleanChoiceField)(new Object(_rb.getString(18), 2, data._playPrompts));
+      this._audioPrompts = new BooleanChoiceField(_rb.getString(18), 2, data._playPrompts);
       mainScreen.add(this._audioPrompts);
-      this._digitPlayback = (BooleanChoiceField)(new Object(_rb.getString(19), 2, data._playDigits));
+      this._digitPlayback = new BooleanChoiceField(_rb.getString(19), 2, data._playDigits);
       mainScreen.add(this._digitPlayback);
-      this._namePlayback = (BooleanChoiceField)(new Object(_rb.getString(20), 2, data._playNames));
+      this._namePlayback = new BooleanChoiceField(_rb.getString(20), 2, data._playNames);
       mainScreen.add(this._namePlayback);
       byte var5;
       switch (data._ttsSpeed) {
@@ -89,7 +89,7 @@ final class VADOptionsScreen extends SaveableMainScreenOptionsListItem {
             var5 = 3;
       }
 
-      this._namePlaybackSpeed = (ObjectChoiceField)(new Object(_rb.getString(22), _rb.getStringArray(24), var5, 134217728));
+      this._namePlaybackSpeed = new ObjectChoiceField(_rb.getString(22), _rb.getStringArray(24), var5, 134217728);
       mainScreen.add(this._namePlaybackSpeed);
       switch (data._ttsVolume) {
          case -10:
@@ -114,7 +114,7 @@ final class VADOptionsScreen extends SaveableMainScreenOptionsListItem {
             var5 = 3;
       }
 
-      this._namePlaybackVolume = (ObjectChoiceField)(new Object(_rb.getString(25), _rb.getStringArray(26), var5, 134217728));
+      this._namePlaybackVolume = new ObjectChoiceField(_rb.getString(25), _rb.getStringArray(26), var5, 134217728);
       mainScreen.add(this._namePlaybackVolume);
    }
 

@@ -69,7 +69,7 @@ public class ProfileQuickToggle {
          }
 
          ResourceBundle rb = ResourceBundle.getBundle(2384708948246157241L, "net.rim.device.apps.internal.resource.Profiles");
-         String[] args = new Object[]{profileToSwitchTo.getName()};
+         String[] args = new String[]{profileToSwitchTo.getName()};
          Status.show(MessageFormat.format(rb.getString(251), args), Bitmap.getPredefinedBitmap(0), 2000, 33554432, true, true, 50);
       }
    }

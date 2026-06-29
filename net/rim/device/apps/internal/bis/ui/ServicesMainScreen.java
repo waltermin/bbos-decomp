@@ -3,6 +3,7 @@ package net.rim.device.apps.internal.bis.ui;
 import java.util.Hashtable;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.MenuItem;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.apps.internal.bis.ApplicationResources;
 import net.rim.device.apps.internal.bis.api.ui.LinkField;
@@ -27,12 +28,12 @@ public final class ServicesMainScreen extends UserSettingsScreen {
       UserInfo userInfo = ClientSessionState.getInstance().getUserInfo();
       Mailbox[] userMailboxes = userInfo.getMailboxes();
       if (userMailboxes != null && userMailboxes.length > 0) {
-         this.addContentField((Field)(new Object(ApplicationResources.getString(56))));
+         this.addContentField(new LabelField(ApplicationResources.getString(56)));
          MailboxList mailboxList = new MailboxList(ApplicationResources.getString(205), userMailboxes);
          this.addContentField(mailboxList);
          mailboxList.setMenuListener(this);
       } else {
-         this.addContentField((Field)(new Object(ApplicationResources.getString(271))));
+         this.addContentField(new LabelField(ApplicationResources.getString(271)));
          this.addContentLineBreak();
       }
 

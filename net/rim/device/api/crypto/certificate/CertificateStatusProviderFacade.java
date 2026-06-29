@@ -64,14 +64,14 @@ public class CertificateStatusProviderFacade {
       // 10: astore 0
       // 11: return
       // 12: astore 0
-      // 13: new java/lang/Object
+      // 13: new java/lang/RuntimeException
       // 16: dup
       // 17: aload 0
       // 18: invokevirtual java/lang/InstantiationException.toString ()Ljava/lang/String;
       // 1b: invokespecial java/lang/RuntimeException.<init> (Ljava/lang/String;)V
       // 1e: athrow
       // 1f: astore 0
-      // 20: new java/lang/Object
+      // 20: new java/lang/RuntimeException
       // 23: dup
       // 24: aload 0
       // 25: invokevirtual java/lang/IllegalAccessException.toString ()Ljava/lang/String;

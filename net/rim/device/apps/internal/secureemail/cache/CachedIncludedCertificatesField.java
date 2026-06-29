@@ -31,8 +31,8 @@ public class CachedIncludedCertificatesField extends CachedField {
    public void addCertificate(Certificate certificate, PrivateKey privateKey) {
       int numCerts = 0;
       if (this._certificates == null) {
-         this._certificates = new Object[1];
-         this._privateKeys = new Object[1];
+         this._certificates = new Certificate[1];
+         this._privateKeys = new PrivateKey[1];
       } else {
          numCerts = this._certificates.length;
          Array.resize(this._certificates, numCerts + 1);

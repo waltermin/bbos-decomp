@@ -21,9 +21,9 @@ public final class PMELoaderApp {
       );
 
       for (int i = PMEFormControlHandler.EXTENSION_IDS.length - 1; i >= 0; i--) {
-         registry.setValue(new Object[]{"CONTENT", PMEFormControlHandler.EXTENSION_IDS[i]}, "1");
+         registry.setValue(new String[]{"CONTENT", PMEFormControlHandler.EXTENSION_IDS[i]}, "1");
          registry.setValue(
-            new Object[]{"CONTENT", PMEFormControlHandler.EXTENSION_IDS[i], "RESOURCE_PROVIDER"},
+            new String[]{"CONTENT", PMEFormControlHandler.EXTENSION_IDS[i], "RESOURCE_PROVIDER"},
             (class$net$rim$device$apps$internal$browser$pme$form$PMEFormControlHandler == null
                   ? (
                      class$net$rim$device$apps$internal$browser$pme$form$PMEFormControlHandler = class$(
@@ -47,7 +47,7 @@ public final class PMELoaderApp {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

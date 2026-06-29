@@ -1,18 +1,19 @@
 package net.rim.device.apps.internal.phone.api.verbs;
 
-import net.rim.device.api.ui.Field;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.RadioButtonField;
 import net.rim.device.api.ui.component.RadioButtonGroup;
+import net.rim.device.api.ui.component.RichTextField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.apps.api.phone.PhoneEventListener;
 import net.rim.device.apps.api.phone.VoiceServices;
 import net.rim.device.apps.internal.phone.api.EnhanceCallAudioServices;
 import net.rim.device.apps.internal.phone.resource.PhoneResources;
+import net.rim.device.internal.ui.component.HorizontalSpacerField;
 import net.rim.device.internal.ui.component.ImageField;
 import net.rim.device.internal.ui.component.PopupDialog;
+import net.rim.device.internal.ui.component.VerticalSpacerField;
 
 class EnhanceCallAudioVerb$EnhanceCallAudioDialog extends PopupDialog implements PhoneEventListener {
    static RadioButtonGroup _radioButtons;
@@ -20,17 +21,17 @@ class EnhanceCallAudioVerb$EnhanceCallAudioDialog extends PopupDialog implements
    static int _optionNum;
 
    public EnhanceCallAudioVerb$EnhanceCallAudioDialog() {
-      super((Manager)(new Object(1153202979583557632L)));
+      super(new VerticalFieldManager(1153202979583557632L));
       this.setModal(true);
-      _radioButtons = (RadioButtonGroup)(new Object());
+      _radioButtons = new RadioButtonGroup();
       _optionNum = 0;
       _rbfFocus = null;
-      this.add((Field)(new Object(PhoneResources.getString(6324), 36028797018963968L)));
-      this.add((Field)(new Object(4)));
+      this.add(new RichTextField(PhoneResources.getString(6324), 36028797018963968L));
+      this.add(new VerticalSpacerField(4));
       this.add(this.buildOption(3, 6327, _radioButtons));
       this.add(this.buildOption(1, 6325, _radioButtons));
       this.add(this.buildOption(2, 6326, _radioButtons));
-      this.add((Field)(new Object(4)));
+      this.add(new VerticalSpacerField(4));
       VoiceServices.addPhoneEventListener(this);
       if (_rbfFocus != null) {
          _rbfFocus.setFocus();
@@ -91,26 +92,26 @@ class EnhanceCallAudioVerb$EnhanceCallAudioDialog extends PopupDialog implements
    }
 
    private HorizontalFieldManager buildOption(int state, int text, RadioButtonGroup rbg) {
-      HorizontalFieldManager optionLine = (HorizontalFieldManager)(new Object(1152921504606846976L));
+      HorizontalFieldManager optionLine = new HorizontalFieldManager(1152921504606846976L);
       boolean selected = false;
       if (_optionNum++ == EnhanceCallAudioServices.getInstance().getState()) {
          selected = true;
       }
 
-      RadioButtonField rbf = (RadioButtonField)(new Object(" ", rbg, selected, 2147483648L));
+      RadioButtonField rbf = new RadioButtonField(" ", rbg, selected, 2147483648L);
       if (selected) {
          _rbfFocus = rbf;
          rbf.select(true);
       }
 
-      ImageField imageField = (ImageField)(new Object());
+      ImageField imageField = new ImageField();
       imageField.setImage(EnhanceCallAudioServices.getInstance().getIconForState(state));
-      VerticalFieldManager centeredImage = (VerticalFieldManager)(new Object(51539607552L));
+      VerticalFieldManager centeredImage = new VerticalFieldManager(51539607552L);
       centeredImage.add(imageField);
-      LabelField labelField = (LabelField)(new Object(PhoneResources.getString(text)));
+      LabelField labelField = new LabelField(PhoneResources.getString(text));
       optionLine.add(rbf);
       optionLine.add(centeredImage);
-      optionLine.add((Field)(new Object(4)));
+      optionLine.add(new HorizontalSpacerField(4));
       optionLine.add(labelField);
       return optionLine;
    }

@@ -106,7 +106,7 @@ public class RepetitionControlImpl extends UIControlImpl implements RepetitionCo
       } else {
          if (this._selectedIndex < 0) {
             Object dataMappedValue = this.getDataMappedValue();
-            long mappedHandle = dataMappedValue == null ? -1 : dataMappedValue;
+            long mappedHandle = dataMappedValue == null ? -1 : (Long)dataMappedValue;
             if (mappedHandle != -1) {
                DataCollection dc = this.getScreen().getWiclet().getDataCollection((int)(mappedHandle >> 32));
                if (dc.getDef().hasKey()) {
@@ -137,7 +137,7 @@ public class RepetitionControlImpl extends UIControlImpl implements RepetitionCo
 
    @Override
    protected void updateMappedValue() {
-      super._mappedValue = this._selectedIndex == -1 ? null : new Object(((LongVector)super._value).elementAt(this._selectedIndex));
+      super._mappedValue = this._selectedIndex == -1 ? null : new Long(((LongVector)super._value).elementAt(this._selectedIndex));
    }
 
    @Override

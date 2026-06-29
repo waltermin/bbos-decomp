@@ -6,6 +6,8 @@ import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.container.FlowFieldManager;
+import net.rim.device.api.ui.container.HorizontalFieldManager;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.ui.theme.Theme;
 
 public class ButtonContainer extends FlowFieldManager {
@@ -36,13 +38,13 @@ public class ButtonContainer extends FlowFieldManager {
             break;
          case 0:
          default:
-            this._buttonManager = (Manager)(new Object(299080047656960L));
+            this._buttonManager = new HorizontalFieldManager(299080047656960L);
             break;
          case 1:
-            this._buttonManager = (Manager)(new Object(299080047656960L));
+            this._buttonManager = new VerticalFieldManager(299080047656960L);
             break;
          case 2:
-            this._buttonManager = (Manager)(new Object(299080047656960L));
+            this._buttonManager = new FlowFieldManager(299080047656960L);
       }
 
       this.add(this._buttonManager);
@@ -64,7 +66,7 @@ public class ButtonContainer extends FlowFieldManager {
 
    public Field getButtonAt(int index) {
       if (index > this.getButtonCount()) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return this._buttonManager.getField(index);
       }
@@ -72,11 +74,11 @@ public class ButtonContainer extends FlowFieldManager {
 
    public void insertButtonAt(ButtonField button, int index) {
       if (button == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (index > this.getButtonCount()) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (this._buttonFont != null) {
@@ -88,7 +90,7 @@ public class ButtonContainer extends FlowFieldManager {
 
    public void addButton(ButtonField button) {
       if (button == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (this._buttonFont != null) {

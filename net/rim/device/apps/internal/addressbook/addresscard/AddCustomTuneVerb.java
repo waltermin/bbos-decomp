@@ -22,13 +22,13 @@ public final class AddCustomTuneVerb extends Verb implements VerbFactory {
    @Override
    public final Verb[] getVerbs(Object context) {
       Object selectedElement = ContextObject.get(context, 252);
-      return selectedElement instanceof Object ? new Object[]{this} : null;
+      return selectedElement instanceof AddressCardModel ? new Verb[]{this} : null;
    }
 
    @Override
    public final Object invoke(Object context) {
       AddressCardModel addressCard = (AddressCardModel)ContextObject.get(context, 3696141428889703675L);
-      FileSelector fileSelector = (FileSelector)(new Object(null, 2));
+      FileSelector fileSelector = new FileSelector(null, 2);
       String selectedTune = fileSelector.selectFile(null);
       if (selectedTune != null) {
          int result = 4;

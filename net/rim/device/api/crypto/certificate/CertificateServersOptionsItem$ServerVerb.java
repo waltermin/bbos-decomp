@@ -22,7 +22,7 @@ class CertificateServersOptionsItem$ServerVerb extends OptionsItemVerb {
    public Object invoke(Object parameter) {
       switch (this._type) {
          case -1:
-            throw new Object();
+            throw new IllegalArgumentException();
          case 0:
          default:
             UiApplication.getUiApplication().pushScreen(new CertificateServersOptionsScreen(null, this.this$0.getServerTypeOfFieldWithFocus()));

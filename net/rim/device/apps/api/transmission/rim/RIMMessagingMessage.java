@@ -27,9 +27,9 @@ public class RIMMessagingMessage extends RIMMessagingTransmission {
    }
 
    private void initializeAttachments() {
-      this._attachmentObjects = (Vector)(new Object());
-      this._attachmentParameters = (Vector)(new Object());
-      this._attachmentTypes = (Vector)(new Object());
+      this._attachmentObjects = new Vector();
+      this._attachmentParameters = new Vector();
+      this._attachmentTypes = new Vector();
    }
 
    public void insertAttachment(int indexInt, Object attachmentObject, Parameters attachmentParameters, String attachmentTypeString) {
@@ -69,7 +69,7 @@ public class RIMMessagingMessage extends RIMMessagingTransmission {
    }
 
    public String getAttachmentType(int indexInt) {
-      return (String)(this._attachmentTypes != null ? this._attachmentTypes.elementAt(indexInt) : null);
+      return this._attachmentTypes != null ? (String)this._attachmentTypes.elementAt(indexInt) : null;
    }
 
    public int getAttachmentCount() {
@@ -108,7 +108,7 @@ public class RIMMessagingMessage extends RIMMessagingTransmission {
                this._textType = CMIMEUtilities.getTextContentType();
             }
 
-            StringBuffer s = (StringBuffer)(new Object(CMIMEContentType.getBaseType(this._textType)));
+            StringBuffer s = new StringBuffer(CMIMEContentType.getBaseType(this._textType));
             s.append(';');
             s.append(charset);
             s.append('=');
@@ -258,7 +258,7 @@ public class RIMMessagingMessage extends RIMMessagingTransmission {
                return;
             }
          } else {
-            boolean toBeEncoded = !(anObject instanceof Object) || !ConverterUtilities.isIntellisyncCompatible((String)anObject);
+            boolean toBeEncoded = !(anObject instanceof String) || !ConverterUtilities.isIntellisyncCompatible((String)anObject);
             byte[] text = CMIMEUtilities.getTextByteArray(anObject, toBeEncoded ? tempType : CMIMEUtilities.getTextContentType());
             if (text != null && text.length > 0) {
                if (toBeEncoded) {
@@ -311,7 +311,7 @@ public class RIMMessagingMessage extends RIMMessagingTransmission {
       if (aCharacter == '\uf3f1') {
          this._headerParameters.add((byte)-11, (byte)21);
       } else {
-         throw new Object("UI");
+         throw new IllegalArgumentException("UI");
       }
    }
 
@@ -438,7 +438,7 @@ public class RIMMessagingMessage extends RIMMessagingTransmission {
             String[][] encoded = CMIMEUtilities.decodeAddresses(rawDataEnc, true);
             int unencodedLength = unencoded != null ? unencoded.length : 0;
             int encodedLength = encoded != null ? encoded.length : 0;
-            String[][] all = new Object[unencodedLength + encodedLength][];
+            String[][] all = new String[unencodedLength + encodedLength][];
 
             int i;
             for (i = 0; i < unencodedLength; i++) {

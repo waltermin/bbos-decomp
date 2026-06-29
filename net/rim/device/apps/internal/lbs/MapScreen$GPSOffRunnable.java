@@ -14,7 +14,7 @@ final class MapScreen$GPSOffRunnable implements Runnable {
 
    @Override
    public final void run() {
-      EventLogger.logEvent(LBSApplication.UID, ((StringBuffer)(new Object("Pausing GPS NOW: "))).append(this._device).toString().getBytes(), 0);
+      EventLogger.logEvent(LBSApplication.UID, ("Pausing GPS NOW: " + this._device).getBytes(), 0);
       if (this._device.isInternalGPS()) {
          GPSProvider.getInstance().stopReporting(this._device);
       } else {

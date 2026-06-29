@@ -20,7 +20,7 @@ final class EnterCertificateLabelDialog extends SimpleOKCancelInputDialog {
       this._keyStore = keyStore;
       this.setText(defaultLabel);
       if (certificate != null) {
-         this._viewButton = (ButtonField)(new Object(CommonResource.getString(10015), 65536));
+         this._viewButton = new ButtonField(CommonResource.getString(10015), 65536);
          this._viewButton.setChangeListener(this);
          Manager buttonFieldManager = this.getButtonFieldManager();
          buttonFieldManager.add(this._viewButton);

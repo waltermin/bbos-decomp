@@ -63,7 +63,7 @@ final class WMLVariable {
       try {
          return this._prefix == null
             ? this._reader.read(new WAPInputStream(this._data), wmlContextManager)
-            : ((StringBuffer)(new Object())).append(this._prefix).append(this._reader.read(new WAPInputStream(this._data), wmlContextManager)).toString();
+            : this._prefix + this._reader.read(new WAPInputStream(this._data), wmlContextManager);
       } finally {
          ;
       }

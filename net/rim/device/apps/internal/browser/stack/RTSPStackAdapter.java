@@ -37,16 +37,16 @@ public final class RTSPStackAdapter implements NetworkPageFetcher {
       }
 
       if (WLAN.isWLANAllowed() && WLAN.isAssociated() != null) {
-         urlToOpen = ((StringBuffer)(new Object())).append(urlToOpen).append(";interface=wifi").toString();
+         urlToOpen = urlToOpen + ";interface=wifi";
       } else {
          String transportCid = browserConfig.getPropertyAsString(3);
          if (transportCid.equals(WPTCPServiceRecord.SERVICE_CID)) {
-            urlToOpen = ((StringBuffer)(new Object())).append(urlToOpen).append(";connectionuid=").append(browserConfig.getPropertyAsString(4)).toString();
+            urlToOpen = urlToOpen + ";connectionuid=" + browserConfig.getPropertyAsString(4);
          }
       }
 
-      RTSPConnection conn = (RTSPConnection)(new Object(urlToOpen, userAgent));
-      HttpHeaders resultHeaders = (HttpHeaders)(new Object());
+      RTSPConnection conn = new RTSPConnection(urlToOpen, userAgent);
+      HttpHeaders resultHeaders = new HttpHeaders();
       cacheResult.setResponseHeaders(resultHeaders);
       cacheResult.setResponseMessage("OK");
       cacheResult.setStatus(200);

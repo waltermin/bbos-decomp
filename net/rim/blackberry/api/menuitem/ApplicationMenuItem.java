@@ -16,7 +16,7 @@ public class ApplicationMenuItem {
 
    public ApplicationMenuItem(int order) {
       this._order = order;
-      this._flags = (BitSet)(new Object());
+      this._flags = new BitSet();
       this._flags.set(0);
       this._flags.set(1);
       if (!ApplicationControl.isEmailAllowed(true)) {

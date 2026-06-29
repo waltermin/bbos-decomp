@@ -18,7 +18,7 @@ final class PhoneEntryApp {
             return;
          }
 
-         VoiceServices.broadcastEvent(2015, 0, new Object(' '));
+         VoiceServices.broadcastEvent(2015, 0, new Character(' '));
       }
    }
 

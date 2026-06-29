@@ -7,9 +7,9 @@ public class PIM {
    static String VCARD_VERSION_2_1 = "VCARD/2.1";
    static String VCARD_VERSION_3_0 = "VCARD/3.0";
    static String DEFAULT_VCARD_VERSION = VCARD_VERSION_3_0;
-   static String[] VCARD_VERSIONS = new Object[]{VCARD_VERSION_2_1, VCARD_VERSION_3_0};
+   static String[] VCARD_VERSIONS = new String[]{VCARD_VERSION_2_1, VCARD_VERSION_3_0};
    static String DEFAULT_VCAL_VERSION = "VCALENDAR/1.0";
-   static String[] VCAL_VERSIONS = new Object[]{DEFAULT_VCAL_VERSION, "VCALENDAR/2.0"};
+   static String[] VCAL_VERSIONS = new String[]{DEFAULT_VCAL_VERSION, "VCALENDAR/2.0"};
    public static final int READ_ONLY = 1;
    public static final int WRITE_ONLY = 2;
    public static final int READ_WRITE = 3;

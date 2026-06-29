@@ -1,5 +1,6 @@
 package net.rim.device.apps.internal.ldap;
 
+import net.rim.device.api.system.UnsupportedOperationException;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.apps.api.framework.model.MatchProvider;
 import net.rim.device.apps.api.framework.verb.Verb;
@@ -21,7 +22,7 @@ public final class LDAPFetchCertificatesVerb extends Verb {
       this._ldapBrowserContextString = ldapBrowserContextString;
       this._ldapBrowserContext = LDAPBrowserContextFactory.getContext(this._ldapBrowserContextString);
       if (this._ldapBrowserContext == null) {
-         throw new Object();
+         throw new UnsupportedOperationException();
       }
 
       this._description = description;

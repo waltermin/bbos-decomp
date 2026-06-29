@@ -7,11 +7,11 @@ public class QualifiedCoordinates extends Coordinates {
    public QualifiedCoordinates(double latitude, double longitude, float altitude, float horizontalAccuracy, float verticalAccuracy) {
       super(latitude, longitude, altitude);
       if (horizontalAccuracy < 0L && !Float.isNaN(horizontalAccuracy)) {
-         throw new Object("Invalid value for horizontal accuracy");
+         throw new IllegalArgumentException("Invalid value for horizontal accuracy");
       }
 
       if (verticalAccuracy < 0L && !Float.isNaN(verticalAccuracy)) {
-         throw new Object("Invalid value for vertical accuracy");
+         throw new IllegalArgumentException("Invalid value for vertical accuracy");
       }
 
       this._horizontalAccuracy = horizontalAccuracy;
@@ -28,7 +28,7 @@ public class QualifiedCoordinates extends Coordinates {
 
    public void setHorizontalAccuracy(float horizontalAccuracy) {
       if (horizontalAccuracy < 0 && !Float.isNaN(horizontalAccuracy)) {
-         throw new Object("Invalid value for horizontal accuracy");
+         throw new IllegalArgumentException("Invalid value for horizontal accuracy");
       }
 
       this._horizontalAccuracy = horizontalAccuracy;
@@ -36,7 +36,7 @@ public class QualifiedCoordinates extends Coordinates {
 
    public void setVerticalAccuracy(float verticalAccuracy) {
       if (verticalAccuracy < 0 && !Float.isNaN(verticalAccuracy)) {
-         throw new Object("Invalid value for vertical accuracy");
+         throw new IllegalArgumentException("Invalid value for vertical accuracy");
       }
 
       this._verticalAccuracy = verticalAccuracy;

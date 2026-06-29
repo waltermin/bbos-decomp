@@ -9,7 +9,7 @@ final class AttendeeCollection$AddressHandler implements ObjectFieldHandler {
 
    @Override
    public final Object getValue(Object item) {
-      return !(item instanceof Object) ? null : ((Attendee)item).getAddress();
+      return !(item instanceof Attendee) ? null : ((Attendee)item).getAddress();
    }
 
    AttendeeCollection$AddressHandler(AttendeeCollection$1 x0) {

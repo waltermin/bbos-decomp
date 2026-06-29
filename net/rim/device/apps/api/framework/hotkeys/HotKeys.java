@@ -28,7 +28,7 @@ public class HotKeys {
    private static boolean registerEntry(int hotKeyListGUID, HotKeyEntry entry) {
       IntHashtable table;
       if (!_listTable.containsKey(hotKeyListGUID)) {
-         table = (IntHashtable)(new Object());
+         table = new IntHashtable();
          _listTable.put(hotKeyListGUID, table);
       } else {
          table = (IntHashtable)_listTable.get(hotKeyListGUID);
@@ -98,7 +98,7 @@ public class HotKeys {
             if (table != null) {
                int[] keys = new int[table.size()];
                table.keysToArray(keys);
-               Vector entryList = (Vector)(new Object());
+               Vector entryList = new Vector();
 
                for (int i = 0; i < keys.length; i++) {
                   HotKeyEntry entry = (HotKeyEntry)table.get(keys[i]);
@@ -158,7 +158,7 @@ public class HotKeys {
       ApplicationRegistry appReg = ApplicationRegistry.getApplicationRegistry();
       _listTable = (IntHashtable)appReg.getOrWaitFor(6579610397692695143L);
       if (_listTable == null) {
-         _listTable = (IntHashtable)(new Object());
+         _listTable = new IntHashtable();
          appReg.put(6579610397692695143L, _listTable);
          PersistentContent.addListener(new HotKeysPersistentContentListener(_listTable));
       }

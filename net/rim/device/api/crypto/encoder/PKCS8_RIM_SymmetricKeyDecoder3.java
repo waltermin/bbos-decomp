@@ -1,11 +1,12 @@
 package net.rim.device.api.crypto.encoder;
 
+import net.rim.device.api.crypto.InvalidKeyEncodingException;
 import net.rim.device.api.crypto.SymmetricKey;
 import net.rim.device.api.crypto.asn1.ASN1InputStream;
 
 final class PKCS8_RIM_SymmetricKeyDecoder3 extends PKCS8_SymmetricKeyDecoder {
    @Override
-   public final SymmetricKey decodeKey(ASN1InputStream param1, ASN1InputStream param2, String param3) {
+   public final SymmetricKey decodeKey(ASN1InputStream param1, ASN1InputStream param2, String param3) throws InvalidKeyEncodingException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.RuntimeException: parsing failure!
@@ -56,16 +57,16 @@ final class PKCS8_RIM_SymmetricKeyDecoder3 extends PKCS8_SymmetricKeyDecoder {
       // 54: invokespecial net/rim/device/api/crypto/CAST128Key.<init> ([BI)V
       // 57: areturn
       // 58: astore 4
-      // 5a: new java/lang/Object
+      // 5a: new net/rim/device/api/crypto/InvalidKeyEncodingException
       // 5d: dup
       // 5e: invokespecial net/rim/device/api/crypto/InvalidKeyEncodingException.<init> ()V
       // 61: athrow
       // 62: astore 4
-      // 64: new java/lang/Object
+      // 64: new net/rim/device/api/crypto/InvalidKeyEncodingException
       // 67: dup
       // 68: invokespecial net/rim/device/api/crypto/InvalidKeyEncodingException.<init> ()V
       // 6b: athrow
-      // 6c: new java/lang/Object
+      // 6c: new java/lang/IllegalArgumentException
       // 6f: dup
       // 70: invokespecial java/lang/IllegalArgumentException.<init> ()V
       // 73: athrow

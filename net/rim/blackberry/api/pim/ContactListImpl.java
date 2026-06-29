@@ -6,10 +6,11 @@ import net.rim.device.api.collection.CollectionEventSource;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.system.DirectConnect;
 import net.rim.device.api.util.Arrays;
+import net.rim.device.api.util.EmptyEnumeration;
 import net.rim.device.api.util.FactoryUtil;
+import net.rim.device.api.util.ObjectEnumerator;
 import net.rim.device.apps.api.addressbook.AddressBook;
 import net.rim.device.apps.api.addressbook.AddressBookServices;
-import net.rim.device.apps.api.addressbook.AddressCardElement;
 import net.rim.device.apps.api.addressbook.AddressCardModel;
 import net.rim.device.apps.api.addressbook.CompanyInfoModel;
 import net.rim.device.apps.api.addressbook.PersonNameModel;
@@ -50,7 +51,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
    @Override
    public final Contact importContact(Contact contact) {
       if (contact == null) {
-         throw new Object();
+         throw new NullPointerException();
       } else {
          return new ContactImpl(contact, this);
       }
@@ -68,11 +69,11 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
       }
 
       if (super._mode == 1) {
-         throw new Object();
+         throw new SecurityException();
       }
 
       if (element == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (!(element instanceof ContactImpl)) {
@@ -80,7 +81,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
       }
 
       Object internalModel = ((ContactImpl)element).getInternalModel();
-      long id = ((AddressCardElement)internalModel).getUID();
+      long id = ((AddressCardModel)internalModel).getUID();
       Object foundAddress = _addressBook.getAddressCard(id);
       if (foundAddress != null) {
          _addressBook.removeAddressCard(foundAddress);
@@ -92,7 +93,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
    @Override
    public final void lookup(String matching, RemoteLookupListener listener) {
       if (listener == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (matching != null && matching.length() > 0) {
@@ -108,18 +109,18 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
    @Override
    public final void lookup(Contact matching, RemoteLookupListener listener) {
       if (listener == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (matching != null && matching.countValues(106) > 0) {
          String[] name = matching.getStringArray(106, 0);
-         this.lookup(((StringBuffer)(new Object())).append(name[1]).append(' ').append(name[0]).toString(), listener);
+         this.lookup(name[1] + ' ' + name[0], listener);
       }
    }
 
    @Override
    public final Contact choose(Contact previous, int type, boolean allowCrossService) {
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       ContactImpl impl = (ContactImpl)previous;
       context.setFlag(5);
       if (null != previous) {
@@ -185,7 +186,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
    public ContactListImpl(int mode) {
       super._mode = mode;
       if (_addressBook == null) {
-         throw new Object("Unable to obtain AddressBook.");
+         throw new IllegalStateException("Unable to obtain AddressBook.");
       }
    }
 
@@ -229,7 +230,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
          case 20000931:
             return AddressBookServices.getAddressBookOptions().getUserDefinedFieldLabel(field - 20000928);
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -238,7 +239,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
       if (super._closed) {
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       } else if (super._mode == 2) {
-         throw new Object(WRITEONLY_MESSAGE);
+         throw new SecurityException(WRITEONLY_MESSAGE);
       } else {
          return new ContactListEnumeration(_addressBook.getAddressCards(), this);
       }
@@ -251,11 +252,11 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
       }
 
       if (super._mode == 2) {
-         throw new Object(WRITEONLY_MESSAGE);
+         throw new SecurityException(WRITEONLY_MESSAGE);
       }
 
       if (!(matching instanceof Contact)) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       Contact contact = (Contact)matching;
@@ -267,10 +268,10 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
          if (internalModel != null && (((AddressCardModel)internalModel).getName() != null || contact.countValues(109) > 0)) {
             Object[] match = _addressBook.lookup(internalModel, 5);
             if (match == null) {
-               return (Enumeration)(new Object());
+               return new EmptyEnumeration();
             }
 
-            addressCards = (Enumeration)(new Object(match));
+            addressCards = new ObjectEnumerator(match);
          } else {
             addressCards = _addressBook.getAddressCards();
          }
@@ -285,8 +286,8 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
          throw new PIMException(LIST_CLOSED_MESSAGE, 2);
       }
 
-      if (!(matching instanceof Object)) {
-         throw new Object();
+      if (!(matching instanceof String)) {
+         throw new IllegalArgumentException();
       }
 
       Enumeration addressCards = _addressBook.getAddressCards();
@@ -329,7 +330,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
          case 20000932:
             return DirectConnect.isSupported();
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -514,7 +515,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
          case 106:
             return 5;
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 
@@ -563,7 +564,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
          }
       }
 
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
@@ -575,7 +576,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
          case 2:
          case 32:
          case 256:
-            throw new UnsupportedFieldException(((StringBuffer)(new Object("Attribute "))).append(attribute).append(" not supported.").toString(), attribute);
+            throw new UnsupportedFieldException("Attribute " + attribute + " not supported.", attribute);
          case 4:
             return _resources.getString(38);
          case 8:
@@ -587,7 +588,7 @@ public final class ContactListImpl extends PIMListImpl implements ContactList, B
          case 512:
             return _resources.getString(33);
          default:
-            throw new Object();
+            throw new IllegalArgumentException();
       }
    }
 

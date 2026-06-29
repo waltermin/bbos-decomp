@@ -165,7 +165,7 @@ public final class SimCardEfHandler implements SIMCardEFListener {
       }
 
       try {
-         this._infos = new Object[this._numRecords];
+         this._infos = new NetworkInfo[this._numRecords];
 
          int i;
          for (i = 0; i < this._infos.length; i++) {
@@ -176,7 +176,7 @@ public final class SimCardEfHandler implements SIMCardEFListener {
                   break;
                }
 
-               this._infos[i] = (NetworkInfo)(new Object(netId, category));
+               this._infos[i] = new NetworkInfo(netId, category);
             } else {
                int accessTech = db.readUnsignedShort();
                if (netId == 268374015 || netId == 16715775) {
@@ -199,7 +199,7 @@ public final class SimCardEfHandler implements SIMCardEFListener {
                      category |= 3;
                }
 
-               this._infos[i] = (NetworkInfo)(new Object(netId, category, accessTech));
+               this._infos[i] = new NetworkInfo(netId, category, accessTech);
             }
          }
 
@@ -214,7 +214,7 @@ public final class SimCardEfHandler implements SIMCardEFListener {
    }
 
    private final byte[] preparePlmnwActData() {
-      DataBuffer db = (DataBuffer)(new Object(this._actualSize, true));
+      DataBuffer db = new DataBuffer(this._actualSize, true);
 
       for (int i = 0; i < this._infos.length; i++) {
          this.writeNetworkId(db, this._infos[i].getNetworkId());
@@ -255,7 +255,7 @@ public final class SimCardEfHandler implements SIMCardEFListener {
 
    private final int parsePlmnSelData(DataBuffer db) {
       try {
-         this._infos = new Object[db.available() / 3];
+         this._infos = new NetworkInfo[db.available() / 3];
 
          int i;
          for (i = 0; i < this._infos.length; i++) {
@@ -264,7 +264,7 @@ public final class SimCardEfHandler implements SIMCardEFListener {
                break;
             }
 
-            this._infos[i] = (NetworkInfo)(new Object());
+            this._infos[i] = new NetworkInfo();
             this._infos[i].setNetworkId(netId);
          }
 
@@ -326,7 +326,7 @@ public final class SimCardEfHandler implements SIMCardEFListener {
    }
 
    private final byte[] preparePlmnSelData() {
-      DataBuffer db = (DataBuffer)(new Object(this._actualSize, true));
+      DataBuffer db = new DataBuffer(this._actualSize, true);
 
       for (int i = 0; i < this._infos.length; i++) {
          this.writeNetworkId(db, this._infos[i].getNetworkId());
@@ -416,7 +416,7 @@ public final class SimCardEfHandler implements SIMCardEFListener {
                break;
             case 5:
                this._state = 5;
-               DataBuffer db = (DataBuffer)(new Object(this._data, 0, this._actualSize, true));
+               DataBuffer db = new DataBuffer(this._data, 0, this._actualSize, true);
                if (this._efId == 68) {
                   nextState = this.parsePlmnwActData(db);
                } else {

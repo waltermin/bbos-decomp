@@ -63,13 +63,11 @@ public final class AdvancedEditCommand implements DomainCommand {
                }
 
                if (callResult.getRESTStatusCode() == 10202) {
-                  String errorMsg = MessageFormat.format(ApplicationResources.getString(228), new Object[]{mailboxToEdit.getDescription()});
+                  String errorMsg = MessageFormat.format(ApplicationResources.getString(228), new String[]{mailboxToEdit.getDescription()});
                   return new DomainCommandResult("validationFailed", errorMsg, null);
                }
 
-               BISEventLogger.logEvent(
-                  ((StringBuffer)(new Object("Advanced Edit: Unhandled REST response code: "))).append(callResult.getRESTStatusCode()).toString(), 0
-               );
+               BISEventLogger.logEvent("Advanced Edit: Unhandled REST response code: " + callResult.getRESTStatusCode(), 0);
                String failureForward = "failed";
                if (mailboxToEdit.getMailboxType() == 5) {
                   failureForward = "failedOWA";

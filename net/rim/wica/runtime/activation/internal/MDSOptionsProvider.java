@@ -20,7 +20,7 @@ final class MDSOptionsProvider extends OptionsListItem implements OptionsProvide
 
    @Override
    public final Vector getOptionsItems() {
-      Vector items = (Vector)(new Object(1));
+      Vector items = new Vector(1);
       items.addElement(this);
       return items;
    }

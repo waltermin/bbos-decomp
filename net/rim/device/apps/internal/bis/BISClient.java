@@ -19,7 +19,7 @@ import net.rim.vm.Process;
 public final class BISClient extends UiApplication {
    private Screen _startupScreen;
    private int _uiMode;
-   private Vector _shutdownListeners = (Vector)(new Object());
+   private Vector _shutdownListeners = new Vector();
    public static final int RIBBON_UI_MODE = 0;
    public static final int WIZARD_UI_MODE = 1;
    private static final String WAP_CID = "WAP";
@@ -48,7 +48,7 @@ public final class BISClient extends UiApplication {
       BISEventLogger.register();
       BISClientConfigRecord configRecord = BISClientConfigRecord.getBISClientConfigRecord();
       if (configRecord == null) {
-         throw new Object("No service record");
+         throw new IllegalStateException("No service record");
       }
 
       int pid = this.getProcessId();
@@ -103,8 +103,7 @@ public final class BISClient extends UiApplication {
             client.initializeDisplay();
             client.enterEventDispatcher();
          } catch (Throwable var5) {
-            System.err
-               .println(((StringBuffer)(new Object("Shutting down due to "))).append(e.getClass().getName()).append(" : ").append(e.getMessage()).toString());
+            System.err.println("Shutting down due to " + e.getClass().getName() + " : " + e.getMessage());
             System.exit(0);
             return;
          }

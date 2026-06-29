@@ -163,9 +163,7 @@ public class SecureMessageV1_1 implements SecureMessageV1 {
       }
 
       if (expectedVersion != this.getVersion()) {
-         throw new SecureMessageException(
-            104, ((StringBuffer)(new Object("Expected version "))).append(expectedVersion).append(", received version ").append(this.getVersion()).toString()
-         );
+         throw new SecureMessageException(104, "Expected version " + expectedVersion + ", received version " + this.getVersion());
       }
    }
 

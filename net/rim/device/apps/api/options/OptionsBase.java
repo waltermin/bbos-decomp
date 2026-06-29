@@ -33,11 +33,11 @@ public class OptionsBase {
       this._persistentObject = this.getPersistentObject();
       this._syncItem = this.getSyncItem();
       if (this._persistentObject == null) {
-         throw new Object("getPersistentObject() may not return null!");
+         throw new IllegalArgumentException("getPersistentObject() may not return null!");
       }
 
       if (this._syncItem == null && !nullSyncItemPermitted) {
-         throw new Object("getSyncItem() may not return null!");
+         throw new IllegalArgumentException("getSyncItem() may not return null!");
       }
    }
 
@@ -51,7 +51,7 @@ public class OptionsBase {
 
    public void commit() {
       this._persistentObject.commit();
-      if (this._syncItem instanceof Object) {
+      if (this._syncItem instanceof OTASyncCapableSyncItem) {
          ((OTASyncCapableSyncItem)this._syncItem).fireSyncItemUpdated();
       }
    }

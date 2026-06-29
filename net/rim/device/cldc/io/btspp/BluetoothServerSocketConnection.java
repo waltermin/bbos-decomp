@@ -1,5 +1,7 @@
 package net.rim.device.cldc.io.btspp;
 
+import java.io.IOException;
+import java.io.InterruptedIOException;
 import javax.bluetooth.ServiceRegistrationException;
 import javax.microedition.io.ServerSocketConnection;
 import javax.microedition.io.StreamConnection;
@@ -10,7 +12,7 @@ import net.rim.device.internal.bluetooth.BluetoothME;
 
 public class BluetoothServerSocketConnection implements BluetoothServerConnection, ServerSocketConnection, BluetoothSerialPortListener {
    private Object _semaphore = new Object();
-   private BluetoothSerialPort _port = (BluetoothSerialPort)(new Object(3, 3, 0, 2048, 2048, this));
+   private BluetoothSerialPort _port = new BluetoothSerialPort(3, 3, 0, 2048, 2048, this);
    private LocalServiceRecord _serviceRecord;
    private boolean _serviceRecordAdded;
    private BluetoothStreamConnection _connection;
@@ -40,7 +42,7 @@ public class BluetoothServerSocketConnection implements BluetoothServerConnectio
    public StreamConnection acceptAndOpen() {
       synchronized (this._semaphore) {
          if (this._port == null) {
-            throw new Object("Port not open");
+            throw new IOException("Port not open");
          }
 
          if (!this._serviceRecordAdded) {
@@ -73,19 +75,19 @@ public class BluetoothServerSocketConnection implements BluetoothServerConnectio
             }
          }
 
-         throw new Object();
+         throw new InterruptedIOException();
       }
    }
 
    @Override
    public int getPSM() {
-      throw new Object();
+      throw new IllegalArgumentException();
    }
 
    @Override
    public int getRFCOMMChannel() {
       if (this._port == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return this._port.getRFCOMMChannel();
       }
@@ -145,7 +147,7 @@ public class BluetoothServerSocketConnection implements BluetoothServerConnectio
    @Override
    public int getServiceRecordHandle() {
       if (this._port == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return this._port.getSDPRecordHandle();
       }
@@ -154,7 +156,7 @@ public class BluetoothServerSocketConnection implements BluetoothServerConnectio
    @Override
    public LocalServiceRecord getServiceRecord() {
       if (this._port == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       } else {
          return this._serviceRecord;
       }

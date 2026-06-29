@@ -31,7 +31,7 @@ final class PreListenerScreen extends AppsMainScreen {
    @Override
    protected final boolean trackwheelRoll(int amount, int status, int time) {
       boolean result = false;
-      if (this._tl1 instanceof Object) {
+      if (this._tl1 instanceof TrackwheelListener) {
          TrackwheelListener twl = this._tl1;
          result = twl.trackwheelRoll(amount, status, time);
       }
@@ -50,7 +50,7 @@ final class PreListenerScreen extends AppsMainScreen {
 
    @Override
    protected final ContextObject getMenuContextObject() {
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       context.put(244, "calendar");
       return context;
    }

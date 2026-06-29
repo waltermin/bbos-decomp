@@ -14,6 +14,7 @@ import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.menu.MenuScreen;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.api.util.IntHashtable;
 import net.rim.device.api.util.IntIntHashtable;
@@ -73,11 +74,11 @@ class DocViewDisplayScreen
    protected Verb _optionsVerb;
    protected ClientRequest _clientRequest;
    private boolean _pendingServerSearch;
-   protected IntIntHashtable _retrievedChunks = (IntIntHashtable)(new Object());
+   protected IntIntHashtable _retrievedChunks = new IntIntHashtable();
    private boolean _displayingData;
    private Object _parseSyncObject = new Object();
    private boolean _idleSyncInProgress;
-   protected Hashtable _embeddedObjHash = (Hashtable)(new Object());
+   protected Hashtable _embeddedObjHash = new Hashtable();
    private int _idleRunnableID = -1;
    protected short _lastErrorCode = 0;
    private boolean _stopAutoLoad;
@@ -218,9 +219,9 @@ class DocViewDisplayScreen
                }
 
                if (percent < 100) {
-                  String percentString = ((StringBuffer)(new Object(" ["))).append(String.valueOf(percent)).append("%]").toString();
+                  String percentString = " [" + String.valueOf(percent) + "%]";
                   if (this._percentLabel == null) {
-                     this._percentLabel = (LabelField)(new Object(percentString));
+                     this._percentLabel = new LabelField(percentString);
                   } else {
                      this._percentLabel.setText(percentString);
                   }
@@ -270,13 +271,13 @@ class DocViewDisplayScreen
       String renderDomID = AttachmentViewerFactory.constructCustomDomIDStringEx(this._isEmbScreen ? this._domID : null, domID, "RenderDomID");
       int blockCount = this.getBlockCount(renderDomID);
       if (blockCount <= 0) {
-         String[] atoms = new Object[0];
+         String[] atoms = new String[0];
          if (this._isEmbScreen) {
-            Arrays.add(atoms, ((StringBuffer)(new Object())).append(this._domID).append("/").toString());
+            Arrays.add(atoms, this._domID + "/");
          }
 
          Arrays.add(atoms, "/RenderDomID");
-         Arrays.add(atoms, ((StringBuffer)(new Object())).append(domID).append(',').toString());
+         Arrays.add(atoms, domID + ',');
          String[] matchDomIDs = this.getMatchingAvailableEmbeddedDomIDs(atoms);
          if (matchDomIDs != null) {
             for (int i = 0; i < matchDomIDs.length; i++) {
@@ -309,10 +310,7 @@ class DocViewDisplayScreen
    public Object parseCustomData(byte dataID, Object param) {
       switch (dataID) {
          case 1:
-            String previewDomID = ((StringBuffer)(new Object()))
-               .append(this._isEmbScreen ? ((StringBuffer)(new Object())).append(this._domID).append("/").toString() : "")
-               .append("PreviewlDomID")
-               .toString();
+            String previewDomID = (this._isEmbScreen ? this._domID + "/" : "") + "PreviewlDomID";
             DocViewDisplayField$ItemInfo[] items = null;
             byte[] previewData = this.getSavedUCSData(previewDomID, 0);
             if (previewData != null) {
@@ -477,7 +475,7 @@ class DocViewDisplayScreen
 
                while (e.hasMoreElements()) {
                   Object key = e.nextElement();
-                  if (key instanceof Object && ((String)key).indexOf("RenderDomID") != -1) {
+                  if (key instanceof String && ((String)key).indexOf("RenderDomID") != -1) {
                      DocViewDisplayScreen$EmbeddedObjectInfo embeddedObject = (DocViewDisplayScreen$EmbeddedObjectInfo)this._embeddedObjHash.get(key);
                      if (embeddedObject._displayScreen != null && !embeddedObject._displayScreen.isDisplayed()) {
                         embeddedObject._displayScreen.releaseRefs();
@@ -806,7 +804,7 @@ class DocViewDisplayScreen
 
    @Override
    public final String getListOfNotRetrievedChunks() {
-      StringBuffer retValue = (StringBuffer)(new Object());
+      StringBuffer retValue = new StringBuffer();
       if (this._currentMaxBlockIndex < this._maxAllowedBlockIndex) {
          int startRegionBlock = this._currentMaxBlockIndex + 1;
 
@@ -1484,7 +1482,7 @@ class DocViewDisplayScreen
 
    private boolean readPwd(Object context) {
       ClientRequest request = (ClientRequest)ContextObject.get(context, -7432523643332070209L);
-      SimpleInputDialog pwdDlg = (SimpleInputDialog)(new Object(5, CommonResources.getString(2012)));
+      SimpleInputDialog pwdDlg = new SimpleInputDialog(5, CommonResources.getString(2012));
       super._application.invokeAndWait(new DocViewDisplayScreen$1(this, pwdDlg));
       if (pwdDlg.getCloseReason() == 0) {
          String pwd = pwdDlg.getText();
@@ -1569,7 +1567,7 @@ class DocViewDisplayScreen
                if (sheetName == null) {
                   sheetName = _resources.getString(45);
                   if (embHint._index != -1) {
-                     sheetName = ((StringBuffer)(new Object())).append(sheetName).append(':').append(String.valueOf(embHint._index + 1)).toString();
+                     sheetName = sheetName + ':' + (embHint._index + 1);
                   }
 
                   embeddedCoreData.getParsingData().getSpreadsheets()[0].setSheetName(sheetName);
@@ -1594,7 +1592,7 @@ class DocViewDisplayScreen
             } else if (embHint._type == 3) {
                String name = _resources.getString(87);
                if (embHint._index != -1) {
-                  name = ((StringBuffer)(new Object())).append(name).append(':').append(String.valueOf(embHint._index + 1)).toString();
+                  name = name + ':' + (embHint._index + 1);
                }
 
                embInfo._displayScreen = AttachmentViewerFactory.getDisplayScreen(
@@ -1616,12 +1614,7 @@ class DocViewDisplayScreen
             } else if (embHint._type == 1) {
                embInfo._displayScreen = AttachmentViewerFactory.getDisplayScreen(
                   embeddedCoreData,
-                  ((StringBuffer)(new Object()))
-                     .append(_resources.getString(37))
-                     .append(':')
-                     .append(' ')
-                     .append(this._docData.getParsingData().getEmbeddedObjectName(domID))
-                     .toString(),
+                  _resources.getString(37) + ':' + ' ' + this._docData.getParsingData().getEmbeddedObjectName(domID),
                   cloneContext,
                   0,
                   embInfo._totalBlockCount,
@@ -1655,7 +1648,7 @@ class DocViewDisplayScreen
             } else if (embHint._type == 4) {
                String name = _resources.getString(96);
                if (embHint._index != -1) {
-                  name = ((StringBuffer)(new Object())).append(name).append(':').append(String.valueOf(embHint._index + 1)).toString();
+                  name = name + ':' + (embHint._index + 1);
                }
 
                embInfo._displayScreen = AttachmentViewerFactory.getDisplayScreen(
@@ -1710,7 +1703,7 @@ class DocViewDisplayScreen
          DocViewParser docData = new DocViewParser(displayTrackChanges);
          if (data instanceof byte[]) {
             docData.parseDocument((byte[])data, true, 0, false, totalBlockCount == 1);
-         } else if (data instanceof Object) {
+         } else if (data instanceof Vector) {
             boolean continueParse = true;
             Vector ucsDataVector = (Vector)data;
             int size = ucsDataVector.size();
@@ -1838,7 +1831,7 @@ class DocViewDisplayScreen
       // 080: aload 1
       // 081: arraylength
       // 082: istore 2
-      // 083: new java/lang/Object
+      // 083: new java/lang/StringBuffer
       // 086: dup
       // 087: invokespecial java/lang/StringBuffer.<init> ()V
       // 08a: aload 1
@@ -1852,7 +1845,7 @@ class DocViewDisplayScreen
       // 09a: iload 2
       // 09b: bipush 1
       // 09c: if_icmple 0c8
-      // 09f: new java/lang/Object
+      // 09f: new java/lang/StringBuffer
       // 0a2: dup
       // 0a3: invokespecial java/lang/StringBuffer.<init> ()V
       // 0a6: bipush 32
@@ -1876,7 +1869,7 @@ class DocViewDisplayScreen
       // 0d3: getfield net/rim/device/apps/internal/docview/gui/DocViewDisplayScreen._pageInfoLabel Lnet/rim/device/api/ui/component/LabelField;
       // 0d6: ifnonnull 0e8
       // 0d9: aload 0
-      // 0da: new java/lang/Object
+      // 0da: new net/rim/device/api/ui/component/LabelField
       // 0dd: dup
       // 0de: aload 3
       // 0df: invokespecial net/rim/device/api/ui/component/LabelField.<init> (Ljava/lang/Object;)V
@@ -1979,7 +1972,7 @@ class DocViewDisplayScreen
 
    private synchronized void closeAttachment() {
       Screen activeScreen = UiApplication.getUiApplication().getActiveScreen();
-      if (activeScreen instanceof Object || activeScreen instanceof InPlaceContextMenu) {
+      if (activeScreen instanceof MenuScreen || activeScreen instanceof InPlaceContextMenu) {
          UiApplication.getUiApplication().popScreen(activeScreen);
          activeScreen = UiApplication.getUiApplication().getActiveScreen();
       }
@@ -1991,20 +1984,20 @@ class DocViewDisplayScreen
    }
 
    DocViewDisplayScreen(IntHashtable paramsHash) {
-      super(paramsHash.get(1), (String)paramsHash.get(2), paramsHash.get(4));
+      super((Long)paramsHash.get(1), (String)paramsHash.get(2), paramsHash.get(4));
       this.setDefaultClose(false);
       this._docData = (DocViewParser)paramsHash.get(3);
 
       label633:
       try {
-         this._themeScreenBgColor = paramsHash.get(9);
+         this._themeScreenBgColor = (Integer)paramsHash.get(9);
       } finally {
          break label633;
       }
 
       label630:
       try {
-         this._themeScreenForeColor = paramsHash.get(11);
+         this._themeScreenForeColor = (Integer)paramsHash.get(11);
       } finally {
          break label630;
       }
@@ -2015,35 +2008,35 @@ class DocViewDisplayScreen
 
       label626:
       try {
-         this._currentMaxBlockIndex = this._startBlockIndex = this._currentAutoLoadTargetBlockIndex = paramsHash.get(5);
+         this._currentMaxBlockIndex = this._startBlockIndex = this._currentAutoLoadTargetBlockIndex = (Integer)paramsHash.get(5);
       } finally {
          break label626;
       }
 
       label623:
       try {
-         this._totalBlocks = paramsHash.get(6);
+         this._totalBlocks = (Integer)paramsHash.get(6);
       } finally {
          break label623;
       }
 
       label620:
       try {
-         this._isEmbScreen = paramsHash.get(0);
+         this._isEmbScreen = (Boolean)paramsHash.get(0);
       } finally {
          break label620;
       }
 
       label617:
       try {
-         this._morePartID = paramsHash.get(7);
+         this._morePartID = (Integer)paramsHash.get(7);
       } finally {
          break label617;
       }
 
       label614:
       try {
-         this._applicationID = paramsHash.get(12);
+         this._applicationID = (Integer)paramsHash.get(12);
       } finally {
          break label614;
       }
@@ -2128,7 +2121,7 @@ class DocViewDisplayScreen
             }
 
             if (this._icon != null) {
-               ImageField iconField = (ImageField)(new Object(65536));
+               ImageField iconField = new ImageField(65536);
                iconField.setImage(this._icon);
                this._titleField.add(iconField);
                this._titleField.add(new DocViewHorizontalSpacerField(this.getFont().getHeight() >> 2));

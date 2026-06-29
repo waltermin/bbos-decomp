@@ -29,7 +29,7 @@ public final class EmailModifier {
          contextObject = ContextObject.castOrCreate(context);
       }
 
-      if (message instanceof Object) {
+      if (message instanceof ReadableList) {
          ReadableList list = message;
 
          for (int i = list.size() - 1; i >= 0; i--) {

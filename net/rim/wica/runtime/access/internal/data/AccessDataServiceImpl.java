@@ -28,9 +28,9 @@ public class AccessDataServiceImpl implements AccessDataService, Startable {
 
    @Override
    public void start() {
-      this._definitionHandles = (ToIntHashtable)(new Object(21));
+      this._definitionHandles = new ToIntHashtable(21);
       getAllStdCompDefs(this._definitionHandles);
-      this._collections = (IntHashtable)(new Object(12));
+      this._collections = new IntHashtable(12);
    }
 
    public static int getNumStdCompDefs() {

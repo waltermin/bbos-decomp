@@ -11,9 +11,9 @@ public class SMILModel {
    private boolean _hasAudio;
    private boolean _hasAnimation;
    private boolean _hasVideo;
-   private Hashtable _metaData = (Hashtable)(new Object());
-   private IntHashtable _regions = (IntHashtable)(new Object());
-   private IntHashtable _timingObjects = (IntHashtable)(new Object());
+   private Hashtable _metaData = new Hashtable();
+   private IntHashtable _regions = new IntHashtable();
+   private IntHashtable _timingObjects = new IntHashtable();
    private Event _startEvent;
    private Region _rootLayout;
    private EventLogic _logic;

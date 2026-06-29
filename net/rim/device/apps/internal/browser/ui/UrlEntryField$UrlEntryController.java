@@ -14,17 +14,17 @@ public class UrlEntryField$UrlEntryController extends ComboFieldController {
    @Override
    protected void textChanged(String newText, int context) {
       if ((context & -2147483648) == 0) {
-         String[] variants = new Object[]{newText};
+         String[] variants = new String[]{newText};
          if (this.this$0.getInputContext().isSureType()) {
             SLControlObject controlObject = (SLControlObject)this.this$0.getInputContext().getInputMethodControlObject();
-            String[][] vars = new Object[1][];
+            String[][] vars = new String[1][];
             controlObject.actionPerformed(107, vars);
             if (vars[0] != null && vars[0].length > 0) {
                String base = newText.substring(0, newText.length() - vars[0][0].length());
-               variants = new Object[vars[0].length];
+               variants = new String[vars[0].length];
 
                for (int i = 0; i < variants.length; i++) {
-                  variants[i] = ((StringBuffer)(new Object())).append(base).append(vars[0][i]).toString();
+                  variants[i] = base + vars[0][i];
                }
             }
          }
@@ -58,7 +58,7 @@ public class UrlEntryField$UrlEntryController extends ComboFieldController {
 
    @Override
    protected void select(Object selection, int type) {
-      if (selection instanceof Object) {
+      if (selection instanceof String) {
          this.this$0.setText((String)selection);
          super._comboField.hideDropList();
          UrlEntryField.access$300(this.this$0, 132388);

@@ -83,8 +83,6 @@ class TimeIntervalColumn {
          hourString = "12";
       }
 
-      return am
-         ? ((StringBuffer)(new Object())).append(hourString).append(" AM").toString()
-         : ((StringBuffer)(new Object())).append(hourString).append(" PM").toString();
+      return am ? hourString + " AM" : hourString + " PM";
    }
 }

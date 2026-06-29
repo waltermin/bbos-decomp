@@ -3,11 +3,10 @@ package net.rim.device.apps.internal.secureemail.encodings.smime;
 import java.util.Enumeration;
 import net.rim.device.api.collection.Collection;
 import net.rim.device.api.crypto.certificate.Certificate;
-import net.rim.device.api.crypto.certificate.DistinguishedName;
 import net.rim.device.api.crypto.certificate.SerialNumberIssuerKeyStoreIndex;
+import net.rim.device.api.crypto.certificate.x509.X509DistinguishedName;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
-import net.rim.device.api.crypto.keystore.KeyStoreIndex;
 import net.rim.device.api.servicebook.ServiceRecord;
 import net.rim.device.api.synchronization.OTASyncCapableSyncItem;
 import net.rim.device.api.util.Arrays;
@@ -186,11 +185,11 @@ public final class SMIMEOptions extends SecureEmailOptions implements Persistabl
    private final KeyStoreData findMatchingKeyStoreData(KeyStore keyStore, byte[] serialNumber, byte[] issuer) {
       if (keyStore != null && serialNumber != null && issuer != null) {
          if (!keyStore.existsIndex(-6470299966859493514L)) {
-            keyStore.addIndex((KeyStoreIndex)(new Object()));
+            keyStore.addIndex(new SerialNumberIssuerKeyStoreIndex());
          }
 
          try {
-            Object alias = SerialNumberIssuerKeyStoreIndex.getAlias(serialNumber, (DistinguishedName)(new Object(issuer)));
+            Object alias = SerialNumberIssuerKeyStoreIndex.getAlias(serialNumber, new X509DistinguishedName(issuer));
             Enumeration enumeration = keyStore.elements(-6470299966859493514L, alias);
 
             while (enumeration.hasMoreElements()) {

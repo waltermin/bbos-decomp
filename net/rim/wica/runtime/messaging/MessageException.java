@@ -24,7 +24,7 @@ public class MessageException extends Exception {
 
    @Override
    public String toString() {
-      StringBuffer s = (StringBuffer)(new Object(super.toString()));
+      StringBuffer s = new StringBuffer(super.toString());
       if (this._cause != null) {
          s.append(" Cause: ").append(this._cause.toString());
       }

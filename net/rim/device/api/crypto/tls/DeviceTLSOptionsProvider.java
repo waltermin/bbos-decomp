@@ -9,7 +9,7 @@ import net.rim.device.api.crypto.certificate.CertificateChoiceField;
 import net.rim.device.api.crypto.keystore.DeviceKeyStore;
 import net.rim.device.api.crypto.keystore.KeyStore;
 import net.rim.device.api.crypto.keystore.KeyStoreData;
-import net.rim.device.api.crypto.keystore.KeyStoreIndex;
+import net.rim.device.api.crypto.keystore.PrivateKeysKeyStoreIndex;
 import net.rim.device.api.crypto.keystore.TrustedKeyStore;
 import net.rim.device.api.i18n.ResourceBundle;
 import net.rim.device.api.itpolicy.ITPolicy;
@@ -22,6 +22,7 @@ import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.api.ui.component.ObjectChoiceField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.apps.api.framework.model.FieldProvider;
@@ -31,6 +32,7 @@ import net.rim.device.apps.api.ui.BooleanChoiceField;
 import net.rim.device.cldc.io.ssl.TLSOptionStore;
 import net.rim.device.internal.system.FIPSPolicy;
 import net.rim.vm.Array;
+import net.rim.vm.WeakReference;
 
 final class DeviceTLSOptionsProvider implements FieldProvider, ListFieldCallback, VerbProvider, KeyListener, CollectionListener {
    private ObjectChoiceField _protocolChoiceField;
@@ -54,10 +56,10 @@ final class DeviceTLSOptionsProvider implements FieldProvider, ListFieldCallback
 
    @Override
    public final Field getField(Object context) {
-      this._vfm = (VerticalFieldManager)(new Object());
+      this._vfm = new VerticalFieldManager();
       Font boldFont = Font.getDefault();
       boldFont = boldFont.derive(boldFont.getStyle() | 1);
-      LabelField generalOptionsLabel = (LabelField)(new Object(_rb.getString(44)));
+      LabelField generalOptionsLabel = new LabelField(_rb.getString(44));
       generalOptionsLabel.setFont(boldFont);
       this._vfm.add(generalOptionsLabel);
       int choice = 0;
@@ -69,33 +71,31 @@ final class DeviceTLSOptionsProvider implements FieldProvider, ListFieldCallback
          choice = 2;
       }
 
-      this._protocolChoiceField = (ObjectChoiceField)(new Object(_rb.getString(53), _rb.getStringArray(54), choice));
+      this._protocolChoiceField = new ObjectChoiceField(_rb.getString(53), _rb.getStringArray(54), choice);
       this._vfm.add(this._protocolChoiceField);
-      this._encryptionStrengthField = (BooleanChoiceField)(new Object(
-         _rb.getString(28), _rb.getStringArray(48), this._optionStore.allowExportCipherSuites(), 268435456
-      ));
+      this._encryptionStrengthField = new BooleanChoiceField(_rb.getString(28), _rb.getStringArray(48), this._optionStore.allowExportCipherSuites(), 268435456);
       this._encryptionStrengthField.setEditable(ITPolicy.getInteger(28, 1, 2) == 2);
       this._vfm.add(this._encryptionStrengthField);
-      this._fipsAlgorithmsOnlyField = (BooleanChoiceField)(new Object(_rb.getString(52), 0, this._optionStore.restrictFIPSCipherSuites(), 268435456));
+      this._fipsAlgorithmsOnlyField = new BooleanChoiceField(_rb.getString(52), 0, this._optionStore.restrictFIPSCipherSuites(), 268435456);
       this._fipsAlgorithmsOnlyField.setEditable(!FIPSPolicy.getBoolean(28, 7, false, true));
       this._vfm.add(this._fipsAlgorithmsOnlyField);
-      this._vfm.add((Field)(new Object()));
-      LabelField serverAuthenticationLabel = (LabelField)(new Object(_rb.getString(42)));
+      this._vfm.add(new SeparatorField());
+      LabelField serverAuthenticationLabel = new LabelField(_rb.getString(42));
       serverAuthenticationLabel.setFont(boldFont);
       this._vfm.add(serverAuthenticationLabel);
-      this._promptForServerTrustField = (BooleanChoiceField)(new Object(_rb.getString(31), 0, this._optionStore.getPromptForCertificateTrust()));
+      this._promptForServerTrustField = new BooleanChoiceField(_rb.getString(31), 0, this._optionStore.getPromptForCertificateTrust());
       this._vfm.add(this._promptForServerTrustField);
-      this._promptForDomainNameField = (BooleanChoiceField)(new Object(_rb.getString(30), 0, this._optionStore.getPromptForDomainName()));
+      this._promptForDomainNameField = new BooleanChoiceField(_rb.getString(30), 0, this._optionStore.getPromptForDomainName());
       this._vfm.add(this._promptForDomainNameField);
-      this._vfm.add((Field)(new Object()));
-      LabelField clientAuthenticationLabel = (LabelField)(new Object(_rb.getString(43)));
+      this._vfm.add(new SeparatorField());
+      LabelField clientAuthenticationLabel = new LabelField(_rb.getString(43));
       clientAuthenticationLabel.setFont(boldFont);
       this._vfm.add(clientAuthenticationLabel);
-      this._promptForCertificateField = (BooleanChoiceField)(new Object(_rb.getString(29), 0, this._optionStore.getPromptForCertificate()));
+      this._promptForCertificateField = new BooleanChoiceField(_rb.getString(29), 0, this._optionStore.getPromptForCertificate());
       this._vfm.add(this._promptForCertificateField);
-      this._promptForNoClientCertField = (BooleanChoiceField)(new Object(_rb.getString(55), 0, this._optionStore.getPromptForNoClientCertificate()));
+      this._promptForNoClientCertField = new BooleanChoiceField(_rb.getString(55), 0, this._optionStore.getPromptForNoClientCertificate());
       this._vfm.add(this._promptForNoClientCertField);
-      this._dataArray = new Object[0];
+      this._dataArray = new KeyStoreData[0];
       KeyStore keyStore = DeviceKeyStore.getInstance();
       Enumeration enumeration = keyStore.elements(-8376547269562148933L);
 
@@ -107,16 +107,16 @@ final class DeviceTLSOptionsProvider implements FieldProvider, ListFieldCallback
          }
       }
 
-      this._hostsToAddNames = new Object[0];
+      this._hostsToAddNames = new String[0];
       this._hostsToAddIndexes = new int[0];
-      this._hostsToRemoveNames = new Object[0];
-      this._defaultClientCertField = (CertificateChoiceField)(new Object(_rb.getString(45), DeviceKeyStore.getInstance(), TrustedKeyStore.getInstance()));
+      this._hostsToRemoveNames = new String[0];
+      this._defaultClientCertField = new CertificateChoiceField(_rb.getString(45), DeviceKeyStore.getInstance(), TrustedKeyStore.getInstance());
       this._defaultClientCertField.setEmptyString(_rb.getFamily(), 25);
       this.updateDefaultClientCertField();
       this._vfm.add(this._defaultClientCertField);
-      this._vfm.add((Field)(new Object(_rb.getString(46))));
+      this._vfm.add(new LabelField(_rb.getString(46)));
       Enumeration hostNamesEnum = this._deviceOptionsStore.getCurrentHostnames();
-      this._currentHosts = (Vector)(new Object());
+      this._currentHosts = new Vector();
 
       while (hostNamesEnum.hasMoreElements()) {
          String hostName = (String)hostNamesEnum.nextElement();
@@ -124,7 +124,7 @@ final class DeviceTLSOptionsProvider implements FieldProvider, ListFieldCallback
          this._currentHosts.addElement(new DeviceTLSOptionsProvider$Host(hostName, data == null ? null : data.getLabel()));
       }
 
-      this._hostDefaultsListField = (ListField)(new Object(this._deviceOptionsStore.getCurrentSize()));
+      this._hostDefaultsListField = new ListField(this._deviceOptionsStore.getCurrentSize());
       this._hostDefaultsListField.setCallback(this);
       this._vfm.add(this._hostDefaultsListField);
       return this._vfm;
@@ -214,7 +214,7 @@ final class DeviceTLSOptionsProvider implements FieldProvider, ListFieldCallback
    public final void drawListRow(ListField listField, Graphics graphics, int index, int y, int width) {
       DeviceTLSOptionsProvider$Host host = (DeviceTLSOptionsProvider$Host)this.get(listField, index);
       if (host != null) {
-         graphics.drawText(((StringBuffer)(new Object("    "))).append(host._hostName).append(" / ").append(host._hostCertificate).toString(), 0, y, 0, width);
+         graphics.drawText("    " + host._hostName + " / " + host._hostCertificate, 0, y, 0, width);
       }
    }
 
@@ -265,7 +265,7 @@ final class DeviceTLSOptionsProvider implements FieldProvider, ListFieldCallback
 
    @Override
    public final void elementAdded(Collection collection, Object element) {
-      if (element instanceof Object) {
+      if (element instanceof KeyStoreData) {
          KeyStoreData data = (KeyStoreData)element;
          if (data.isPrivateKeySet() && data.getCertificate() != null) {
             Arrays.add(this._dataArray, data);
@@ -280,7 +280,7 @@ final class DeviceTLSOptionsProvider implements FieldProvider, ListFieldCallback
 
    @Override
    public final void elementRemoved(Collection collection, Object element) {
-      if (element instanceof Object) {
+      if (element instanceof KeyStoreData) {
          KeyStoreData data = (KeyStoreData)element;
          Arrays.remove(this._dataArray, data);
          this.updateDefaultClientCertField();
@@ -297,7 +297,7 @@ final class DeviceTLSOptionsProvider implements FieldProvider, ListFieldCallback
 
    private final Certificate[] getCertificatesFromDataArray() {
       int dataLength = this._dataArray.length;
-      Certificate[] certificates = new Object[dataLength];
+      Certificate[] certificates = new Certificate[dataLength];
 
       for (int i = 0; i < dataLength; i++) {
          certificates[i] = this._dataArray[i].getCertificate();
@@ -313,8 +313,8 @@ final class DeviceTLSOptionsProvider implements FieldProvider, ListFieldCallback
 
    public DeviceTLSOptionsProvider() {
       KeyStore keyStore = DeviceKeyStore.getInstance();
-      keyStore.addCollectionListener(new Object(this));
-      keyStore.addIndex((KeyStoreIndex)(new Object()));
+      keyStore.addCollectionListener(new WeakReference(this));
+      keyStore.addIndex(new PrivateKeysKeyStoreIndex());
    }
 
    private final void flagHostForAddition(String host, int index) {
@@ -350,7 +350,7 @@ final class DeviceTLSOptionsProvider implements FieldProvider, ListFieldCallback
 
    private final String[] getLabelsFromDataArray() {
       int dataLength = this._dataArray.length;
-      String[] labels = new Object[dataLength];
+      String[] labels = new String[dataLength];
 
       for (int i = 0; i < dataLength; i++) {
          labels[i] = this._dataArray[i].getLabel();

@@ -54,8 +54,7 @@ final class ApplicationMessageHandler implements MessageConsumer {
             ? (class$net$rim$wica$runtime$messaging$MessagingService = class$("net.rim.wica.runtime.messaging.MessagingService"))
             : class$net$rim$wica$runtime$messaging$MessagingService
       );
-      this._messagingService
-         .registerServiceMessageConsumer(((StringBuffer)(new Object("local://"))).append(this._lifecycleService.toString()).toString(), this);
+      this._messagingService.registerServiceMessageConsumer("local://" + this._lifecycleService.toString(), this);
       this._managementListeners = new LongVector(5);
       this._lifecycleListeners = new LongVector(5);
    }
@@ -121,9 +120,7 @@ final class ApplicationMessageHandler implements MessageConsumer {
       stream.writeBoolean(application.hasPendingAlerts());
       stream.writeString(application.getVendor());
       stream.writeString(application.getDescription());
-      String iconUri = application.getIconUri() == null
-         ? "default"
-         : ((StringBuffer)(new Object("local://"))).append(application.getUri()).append("/").append(application.getIconUri()).toString();
+      String iconUri = application.getIconUri() == null ? "default" : "local://" + application.getUri() + "/" + application.getIconUri();
       stream.writeString(iconUri);
       stream.writeBoolean(application.isRunning());
       stream.writeBoolean(application.hasUpgrade());
@@ -330,7 +327,7 @@ final class ApplicationMessageHandler implements MessageConsumer {
       try {
          return Class.forName(x0);
       } catch (Throwable var3) {
-         throw new Object(x1.getMessage());
+         throw new NoClassDefFoundError(x1.getMessage());
       }
    }
 }

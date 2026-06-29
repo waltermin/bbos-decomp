@@ -16,7 +16,7 @@ public final class ARC4Key implements SymmetricKey, Persistable {
 
    public ARC4Key(int length) {
       if (length <= 0) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       this._data = RandomSource.getBytes(length);
@@ -33,7 +33,7 @@ public final class ARC4Key implements SymmetricKey, Persistable {
          PersistentContent.markAsPlaintext(data);
          this.setHashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
@@ -46,7 +46,7 @@ public final class ARC4Key implements SymmetricKey, Persistable {
          PersistentContent.markAsPlaintext(data);
          this.setHashCode();
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 

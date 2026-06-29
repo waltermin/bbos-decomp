@@ -23,7 +23,7 @@ public final class EMSAcceptRequestInputStream extends CMSInputStream {
       // 000: aload 0
       // 001: aload 1
       // 002: invokespecial net/rim/device/api/crypto/cms/CMSInputStream.<init> (Ljava/io/InputStream;)V
-      // 005: new java/lang/Object
+      // 005: new net/rim/device/api/crypto/asn1/ASN1InputStream
       // 008: dup
       // 009: aload 0
       // 00a: getfield net/rim/device/api/crypto/cms/CMSInputStream._input Ljava/io/InputStream;
@@ -114,7 +114,7 @@ public final class EMSAcceptRequestInputStream extends CMSInputStream {
       // 0c2: arraylength
       // 0c3: bipush 1
       // 0c4: isub
-      // 0c5: new java/lang/Object
+      // 0c5: new net/rim/device/api/crypto/certificate/x509/X509Certificate
       // 0c8: dup
       // 0c9: aload 4
       // 0cb: invokespecial net/rim/device/api/crypto/certificate/x509/X509Certificate.<init> (Lnet/rim/device/api/crypto/asn1/ASN1InputStream;)V

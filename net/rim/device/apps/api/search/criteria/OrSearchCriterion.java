@@ -29,7 +29,7 @@ public final class OrSearchCriterion implements SearchCriterion, EncryptableProv
    @Override
    public final boolean checkCrypt(boolean compress, boolean encrypt) {
       for (int i = this._criteria.length - 1; i >= 0; i--) {
-         if (this._criteria[i] instanceof Object && !((EncryptableProvider)this._criteria[i]).checkCrypt(true, true)) {
+         if (this._criteria[i] instanceof EncryptableProvider && !((EncryptableProvider)this._criteria[i]).checkCrypt(true, true)) {
             return false;
          }
       }
@@ -41,7 +41,7 @@ public final class OrSearchCriterion implements SearchCriterion, EncryptableProv
    public final Object reCrypt(boolean compress, boolean encrypt) {
       for (int i = this._criteria.length - 1; i >= 0; i--) {
          Object var10000 = this._criteria[i];
-         if (this._criteria[i] instanceof Object) {
+         if (this._criteria[i] instanceof EncryptableProvider) {
             ((EncryptableProvider)var10000).reCrypt(true, true);
          }
       }

@@ -18,5 +18,5 @@ final class PersistedApplicationModel implements Persistable {
    ComponentDefStruct _uiDefs;
    byte[] _applicationPackage;
    boolean _safeData = true;
-   Hashtable _resourceCache = (Hashtable)(new Object(10));
+   Hashtable _resourceCache = new Hashtable(10);
 }

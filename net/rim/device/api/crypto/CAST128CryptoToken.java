@@ -16,35 +16,35 @@ public class CAST128CryptoToken implements SymmetricCryptoToken, Persistable {
       return false;
    }
 
-   public CryptoTokenCipherContext initializeEncrypt(CryptoTokenSymmetricKeyData data) {
-      throw new Object();
+   public CryptoTokenCipherContext initializeEncrypt(CryptoTokenSymmetricKeyData data) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public void encrypt(CryptoTokenCipherContext context, byte[] plaintext, int plaintextOffset, byte[] ciphertext, int ciphertextOffset) {
-      throw new Object();
+   public void encrypt(CryptoTokenCipherContext context, byte[] plaintext, int plaintextOffset, byte[] ciphertext, int ciphertextOffset) throws CryptoTokenException {
+      throw new CryptoTokenException();
    }
 
-   public CryptoTokenCipherContext initializeDecrypt(CryptoTokenSymmetricKeyData data) {
-      throw new Object();
+   public CryptoTokenCipherContext initializeDecrypt(CryptoTokenSymmetricKeyData data) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public void decrypt(CryptoTokenCipherContext context, byte[] ciphertext, int ciphertextOffset, byte[] plaintext, int plaintextOffset) {
-      throw new Object();
+   public void decrypt(CryptoTokenCipherContext context, byte[] ciphertext, int ciphertextOffset, byte[] plaintext, int plaintextOffset) throws CryptoTokenException {
+      throw new CryptoTokenException();
    }
 
-   public byte[] extractKeyData(CryptoTokenSymmetricKeyData data) {
-      throw new Object();
+   public byte[] extractKeyData(CryptoTokenSymmetricKeyData data) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public CryptoTokenSymmetricKeyData createKey() {
-      throw new Object();
+   public CryptoTokenSymmetricKeyData createKey() throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public CryptoTokenSymmetricKeyData injectKey(byte[] key, int offset) {
-      throw new Object();
+   public CryptoTokenSymmetricKeyData injectKey(byte[] key, int offset) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 
-   public void deleteKey(CryptoTokenSymmetricKeyData data) {
-      throw new Object();
+   public void deleteKey(CryptoTokenSymmetricKeyData data) throws CryptoUnsupportedOperationException {
+      throw new CryptoUnsupportedOperationException();
    }
 }

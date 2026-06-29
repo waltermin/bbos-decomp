@@ -2,6 +2,7 @@ package net.rim.device.cldc.io.http;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.microedition.io.HttpConnection;
@@ -12,6 +13,7 @@ import net.rim.device.api.io.http.HttpProtocolConstants;
 import net.rim.device.api.util.StringUtilities;
 import net.rim.device.cldc.io.utility.URL;
 import net.rim.device.internal.browser.util.PipeInput;
+import net.rim.device.internal.browser.util.PipeInputDataInputStream;
 import net.rim.device.internal.system.MIDletSecurity;
 
 public class HttpProtocolBase implements HttpConnection, HttpProtocolConstants {
@@ -50,10 +52,10 @@ public class HttpProtocolBase implements HttpConnection, HttpProtocolConstants {
       throw null;
    }
 
-   protected synchronized void transitionToState(int newState) {
+   protected synchronized void transitionToState(int newState) throws IOException {
       if (newState == 1) {
          if (this._state == 2) {
-            throw new Object("Stream closed");
+            throw new IOException("Stream closed");
          }
 
          if (this._state == 0) {
@@ -66,7 +68,7 @@ public class HttpProtocolBase implements HttpConnection, HttpProtocolConstants {
       } else if (newState == 2) {
          this._state = 2;
       } else {
-         throw new Object();
+         throw new IOException();
       }
    }
 
@@ -182,9 +184,9 @@ public class HttpProtocolBase implements HttpConnection, HttpProtocolConstants {
    }
 
    @Override
-   public void setRequestMethod(String method) {
+   public void setRequestMethod(String method) throws IOException {
       if (this._state != 0) {
-         throw new Object();
+         throw new IOException();
       }
 
       if (!this._outputStreamOpened) {
@@ -193,25 +195,25 @@ public class HttpProtocolBase implements HttpConnection, HttpProtocolConstants {
    }
 
    @Override
-   public final void setRequestProperty(String key, String value) {
+   public final void setRequestProperty(String key, String value) throws IOException {
       if (this._state != 0) {
-         throw new Object();
+         throw new IOException();
       }
 
       if (key == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (value == null) {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
 
       if (!this._outputStreamOpened) {
          if (this._untrustedMIDlet && StringUtilities.strEqualIgnoreCase("User-Agent", key, 1701707776)) {
             if (value.length() > 0 && value.charAt(value.length() - 1) != ' ') {
-               value = ((StringBuffer)(new Object())).append(value).append(' ').append("UNTRUSTED/1.0").toString();
+               value = value + ' ' + "UNTRUSTED/1.0";
             } else {
-               value = ((StringBuffer)(new Object())).append(value).append("UNTRUSTED/1.0").toString();
+               value = value + "UNTRUSTED/1.0";
             }
          }
 
@@ -247,46 +249,46 @@ public class HttpProtocolBase implements HttpConnection, HttpProtocolConstants {
    }
 
    @Override
-   public final InputStream openInputStream() {
+   public final InputStream openInputStream() throws IOException {
       this.transitionToState(1);
       if (!this._inputStreamOpened) {
          InputStream in = this.getInputStream();
          if (in == null) {
-            throw new Object();
+            throw new IOException();
          }
 
          this._inputStreamOpened = true;
          return in;
       } else {
-         throw new Object("Stream already open");
+         throw new IOException("Stream already open");
       }
    }
 
    @Override
    public final DataInputStream openDataInputStream() {
       InputStream in = this.openInputStream();
-      if (!(in instanceof Object)) {
-         return (DataInputStream)(in instanceof Object ? new Object((PipeInput)in) : new Object(in));
+      if (!(in instanceof DataInputStream)) {
+         return in instanceof PipeInput ? new PipeInputDataInputStream((PipeInput)in) : new DataInputStream(in);
       } else {
          return (DataInputStream)in;
       }
    }
 
    @Override
-   public final OutputStream openOutputStream() {
+   public final OutputStream openOutputStream() throws IOException {
       if (this._state == 2) {
-         throw new Object("Stream closed");
+         throw new IOException("Stream closed");
       } else if (!this._outputStreamOpened) {
          this._outputStreamOpened = true;
          return new HttpOutputStream(this, this.getOutputStream());
       } else {
-         throw new Object("Stream already open");
+         throw new IOException("Stream already open");
       }
    }
 
    @Override
    public final DataOutputStream openDataOutputStream() {
-      return (DataOutputStream)(new Object(this.openOutputStream()));
+      return new DataOutputStream(this.openOutputStream());
    }
 
    @Override

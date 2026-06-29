@@ -51,7 +51,7 @@ final class SystemStatusComponentFactory implements Factory, CollectionListener,
 
    @Override
    public final void test(Object id, Object value) {
-      if (value instanceof Object) {
+      if (value instanceof String) {
          this._testValue = (String)value;
       } else {
          this._testValue = null;

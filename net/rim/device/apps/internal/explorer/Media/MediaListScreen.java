@@ -96,7 +96,7 @@ class MediaListScreen extends AppsMainScreen implements ListFieldCallback, Actio
    protected int getSelectedIndex() {
       Field field = this.getLeafFieldWithFocus();
       int index = -1;
-      if (field instanceof Object) {
+      if (field instanceof KeywordFilterCollectionListField) {
          KeywordFilterCollectionListField kList = (KeywordFilterCollectionListField)field;
          index = kList.getSelectedIndex();
       }
@@ -106,7 +106,7 @@ class MediaListScreen extends AppsMainScreen implements ListFieldCallback, Actio
 
    protected Object getSelectedObject() {
       Field field = this.getLeafFieldWithFocus();
-      if (!(field instanceof Object)) {
+      if (!(field instanceof KeywordFilterCollectionListField)) {
          return null;
       }
 
@@ -144,7 +144,7 @@ class MediaListScreen extends AppsMainScreen implements ListFieldCallback, Actio
    @Override
    public Object get(ListField listField, int index) {
       Object item = null;
-      if (!(listField instanceof Object)) {
+      if (!(listField instanceof CollectionListField)) {
          return this._collection.getAt(index);
       }
 
@@ -171,14 +171,14 @@ class MediaListScreen extends AppsMainScreen implements ListFieldCallback, Actio
       } else {
          CollectionListField clf = null;
          Object item = null;
-         if (!(listField instanceof Object)) {
+         if (!(listField instanceof CollectionListField)) {
             item = this._collection.getAt(index);
          } else {
             clf = (CollectionListField)listField;
             item = clf.getElementAt(index);
          }
 
-         if (!(item instanceof Object)) {
+         if (!(item instanceof PaintProvider)) {
             if (clf != null && index == clf.getExtraRowCount()) {
                graphics.drawText(this.getEmptyString(), 0, y + (this._padding >> 1), 4, width);
             }
@@ -296,7 +296,7 @@ class MediaListScreen extends AppsMainScreen implements ListFieldCallback, Actio
    private void initialize() {
       this.buildSubset();
       Field banner = ThemeUtilities.getTitleField(this.getTitle());
-      VerticalFieldManager listManager = (VerticalFieldManager)(new Object(281474976710656L));
+      VerticalFieldManager listManager = new VerticalFieldManager(281474976710656L);
       if (this._keywordList == null) {
          if (this.isExternal()) {
             this._keywordList = this._collection.getKeywordFilterListInstance(null);
@@ -305,7 +305,7 @@ class MediaListScreen extends AppsMainScreen implements ListFieldCallback, Actio
          }
       }
 
-      this._list = (KeywordFilterCollectionListField)(new Object(this._keywordList, this));
+      this._list = new KeywordFilterCollectionListField(this._keywordList, this);
       this._list.setTag(ThemeUtilities.LIST_TAG);
       this.checkToAddAll(this._list);
       this.checkToAddNew(this._list);
@@ -316,7 +316,7 @@ class MediaListScreen extends AppsMainScreen implements ListFieldCallback, Actio
       listManager.add(this._list);
       ListScrollbarManager scrollManager = new ListScrollbarManager(listManager);
       String search = ExplorerResources.getString(145);
-      this._finder = (KeywordFilteredListFinder)(new Object(search, search, true));
+      this._finder = new KeywordFilteredListFinder(search, search, true);
       this._finder.setTag(ThemeUtilities.FIND_TAG);
       this._finder.linkToField(this._list);
       this.add(banner);
@@ -326,7 +326,7 @@ class MediaListScreen extends AppsMainScreen implements ListFieldCallback, Actio
 
    private Object getSelectedMedia() {
       Field field = this.getLeafFieldWithFocus();
-      if (!(field instanceof Object)) {
+      if (!(field instanceof KeywordFilterCollectionListField)) {
          return null;
       }
 

@@ -44,7 +44,7 @@ class OpenMeetingEmailAttachmentVerb extends Verb implements GlobalEventListener
       int eventCount = this._attachment.getEventCount();
       Event event = (Event)this._attachment.getResolvedEvents(this._message)[eventCount > 0 ? eventCount - 1 : 0];
       ContextObject context = ContextObject.castOrCreate(parameter);
-      if (event instanceof Object) {
+      if (event instanceof CalendarEventViewerProvider) {
          CalendarEventViewerProvider viewerProvider = (CalendarEventViewerProvider)event;
          CalendarService calendarService = CalendarServiceManager.getInstance().findCalendarService(event);
          int deleteVerbIndex = -1;
@@ -61,7 +61,7 @@ class OpenMeetingEmailAttachmentVerb extends Verb implements GlobalEventListener
             }
 
             int verbCount = 2;
-            Verb[] verbs = new Object[verbCount];
+            Verb[] verbs = new Verb[verbCount];
             int defaultVerbIndex = -1;
             ResourceBundle resources = ResourceBundle.getBundle(8008824311162635875L, "net.rim.device.apps.internal.resource.CalendarOTA");
             int resourceId = 0;
@@ -110,9 +110,9 @@ class OpenMeetingEmailAttachmentVerb extends Verb implements GlobalEventListener
 
             String title = resources.getString(resourceId);
             if (this._verbFactory != null) {
-               if (this._message instanceof Object) {
+               if (this._message instanceof VerbProvider) {
                   VerbProvider vp = (VerbProvider)this._message;
-                  Verb[] emailVerbs = new Object[0];
+                  Verb[] emailVerbs = new Verb[0];
                   ContextObject.setFlag(context, 12);
                   ContextObject.setFlag(context, 13);
                   ContextObject.setFlag(context, 87);
@@ -134,7 +134,7 @@ class OpenMeetingEmailAttachmentVerb extends Verb implements GlobalEventListener
                   Array.resize(verbs, verbCount + additionalVerbs.length);
 
                   for (int i = additionalVerbs.length - 1; i >= 0; i--) {
-                     if (deleteVerbIndex < 0 && additionalVerbs[i] instanceof Object) {
+                     if (deleteVerbIndex < 0 && additionalVerbs[i] instanceof DeleteSingleItemVerb) {
                         deleteVerbIndex = verbCount;
                         if (defaultVerbIndex < 0) {
                            DeleteSingleItemVerb deleteVerb = (DeleteSingleItemVerb)additionalVerbs[i];

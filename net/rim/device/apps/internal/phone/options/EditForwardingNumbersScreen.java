@@ -6,6 +6,7 @@ import net.rim.device.api.system.GlobalEventListener;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.Keypad;
+import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.ListFieldCallback;
 import net.rim.device.apps.api.ui.AppsMainScreen;
@@ -79,10 +80,10 @@ final class EditForwardingNumbersScreen extends AppsMainScreen implements ListFi
    EditForwardingNumbersScreen(EditForwardingNumbersScreen$Callback callback, String[] activeForwardNumbers) {
       super(0);
       this._activeForwardNumbers = activeForwardNumbers;
-      this.setTitle((Field)(new Object(PhoneResources.getString(6242), 64)));
+      this.setTitle(new LabelField(PhoneResources.getString(6242), 64));
       this._callback = callback;
       this._fwdingNumbers = PhoneOptions.getOptions().getSavedForwardingNumbers(this._activeForwardNumbers);
-      this._listField = (ListField)(new Object(this._fwdingNumbers.length, 0));
+      this._listField = new ListField(this._fwdingNumbers.length, 0);
       this._listField.setCallback(this);
       this.add(this._listField);
    }

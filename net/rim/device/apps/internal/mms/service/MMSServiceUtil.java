@@ -70,7 +70,7 @@ public final class MMSServiceUtil {
          if (newDomain != null) {
             String myProtocol = getProtocolFromUrl(myMMSCUrl);
             if (myProtocol != null) {
-               return ((StringBuffer)(new Object())).append(myProtocol).append(newDomain).append(getPathFromUrl(myMMSCUrl)).toString();
+               return myProtocol + newDomain + getPathFromUrl(myMMSCUrl);
             }
          }
       }
@@ -121,26 +121,26 @@ public final class MMSServiceUtil {
          case 131:
          case 133:
          case 135:
-            System.out.println(((StringBuffer)(new Object("Process PDU unrecognized type "))).append(pdu.getType()).toString());
+            System.out.println("Process PDU unrecognized type " + pdu.getType());
             break;
          case 129:
-            System.out.println(((StringBuffer)(new Object("MMS Send Confirmation msgid="))).append(pdu.getAttribute("message-id")).toString());
+            System.out.println("MMS Send Confirmation msgid=" + pdu.getAttribute("message-id"));
             handleSendConfirmation(pdu, transactionID);
             break;
          case 130:
          default:
-            System.out.println(((StringBuffer)(new Object("MMS Notification url="))).append(pdu.getAttribute("x-mms-content-location")).toString());
+            System.out.println("MMS Notification url=" + pdu.getAttribute("x-mms-content-location"));
             handleNewMessageNotification(pdu);
             break;
          case 132:
-            System.out.println(((StringBuffer)(new Object("MMS Retrieve msgid="))).append(pdu.getAttribute("message-id")).toString());
+            System.out.println("MMS Retrieve msgid=" + pdu.getAttribute("message-id"));
             break;
          case 134:
-            System.out.println(((StringBuffer)(new Object("MMS Delivery Confirmation msgid="))).append(pdu.getAttribute("message-id")).toString());
+            System.out.println("MMS Delivery Confirmation msgid=" + pdu.getAttribute("message-id"));
             handleDeliveryConfirmation(pdu);
             break;
          case 136:
-            System.out.println(((StringBuffer)(new Object("MMS Read Confirmation msgid="))).append(pdu.getAttribute("message-id")).toString());
+            System.out.println("MMS Read Confirmation msgid=" + pdu.getAttribute("message-id"));
             handleReadConfirmation(pdu);
       }
 
@@ -283,7 +283,7 @@ public final class MMSServiceUtil {
 
    private static final boolean containsGroups(Vector v) {
       for (int idx = 0; idx < v.size(); idx++) {
-         if (v.elementAt(idx) instanceof Object) {
+         if (v.elementAt(idx) instanceof GroupAddressCardModel) {
             return true;
          }
       }
@@ -300,12 +300,12 @@ public final class MMSServiceUtil {
          return v;
       }
 
-      Vector expanded = (Vector)(new Object());
+      Vector expanded = new Vector();
 
       for (int idx = 0; idx < v.size(); idx++) {
          Object o = v.elementAt(idx);
          if (o != null) {
-            if (!(o instanceof Object)) {
+            if (!(o instanceof GroupAddressCardModel)) {
                expanded.addElement(o);
             } else {
                GroupAddressCardModel gacm = (GroupAddressCardModel)o;
@@ -330,7 +330,7 @@ public final class MMSServiceUtil {
    // $VF: Could not inline inconsistent finally blocks
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    public static final byte[] buildSendRequestPdu(MMSPayloadModel payload, AttachmentDataProvider attachmentProvider, ContextObject context) {
-      DataBuffer dataBuffer = (DataBuffer)(new Object());
+      DataBuffer dataBuffer = new DataBuffer();
 
       label183:
       try {
@@ -422,7 +422,7 @@ public final class MMSServiceUtil {
             writeContent(writer, payload, attachmentProvider);
          }
       } catch (Throwable var17) {
-         System.out.println(((StringBuffer)(new Object("buildPDU "))).append(e.toString()).toString());
+         System.out.println("buildPDU " + e.toString());
          break label183;
       }
 
@@ -485,7 +485,7 @@ public final class MMSServiceUtil {
    }
 
    private static final Vector getAttachmentsForSend(AttachmentDataProvider attachmentProvider) {
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       Enumeration names = attachmentProvider.attachmentNames();
       if (names != null) {
          while (names.hasMoreElements()) {

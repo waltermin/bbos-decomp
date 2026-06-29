@@ -32,7 +32,7 @@ public class SendCertificatesVerb extends Verb {
    public Object invoke(Object parameter) {
       EmailMessageModel message = (EmailMessageModel)FactoryUtil.createInstance(-6822293833372928884L, null);
       message.setType((byte)32);
-      ContextObject addrContext = (ContextObject)(new Object());
+      ContextObject addrContext = new ContextObject();
       ContextObject.setFlag(addrContext, 5);
       if (this._usePIN) {
          ContextObject.setFlag(addrContext, 94);
@@ -50,7 +50,7 @@ public class SendCertificatesVerb extends Verb {
          message.setFlags(8192);
       }
 
-      StringBuffer bodyText = (StringBuffer)(new Object());
+      StringBuffer bodyText = new StringBuffer();
 
       for (int i = 0; i < this._keyStoreDatas.length; i++) {
          Certificate certificate = this._keyStoreDatas[i].getCertificate();
@@ -60,10 +60,10 @@ public class SendCertificatesVerb extends Verb {
 
          bodyText.append((String)certificate.getInformation(-5753772986264564736L, null, ""));
          byte[] encoding = certificate.getEncoding();
-         CMIMEParameters parameters = (CMIMEParameters)(new Object((DataBuffer)(new Object()), 2, 1));
+         CMIMEParameters parameters = new CMIMEParameters(new DataBuffer(), 2, 1);
          parameters.addCMIMEInteger((byte)-13, encoding.length);
          parameters.addCMIMEInteger((byte)-16, encoding.length);
-         ContextObject certificateContext = (ContextObject)(new Object());
+         ContextObject certificateContext = new ContextObject();
          certificateContext.put(-4886909117188079897L, this._keyStoreDatas[i].getLabel());
          certificateContext.put(316628257119802273L, certificate);
          certificateContext.put(8849067667159082262L, encoding);
@@ -73,14 +73,14 @@ public class SendCertificatesVerb extends Verb {
       }
 
       bodyModel.setText(bodyText.toString());
-      ContextObject editorContext = (ContextObject)(new Object());
+      ContextObject editorContext = new ContextObject();
       editorContext.setFlag(0);
       editorContext.setFlag(121);
       if (this._usePIN) {
          editorContext.setFlag(94);
       }
 
-      EmailEditorScreen editor = (EmailEditorScreen)(new Object(editorContext));
+      EmailEditorScreen editor = new EmailEditorScreen(editorContext);
       editor.setModel(message);
       editor.go();
       return null;

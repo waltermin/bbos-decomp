@@ -10,7 +10,7 @@ final class DocViewTextDisplayScreen extends DocViewDisplayScreen {
 
       label63:
       try {
-         isPresentation = paramsHash.get(13) == 1;
+         isPresentation = (Byte)paramsHash.get(13) == 1;
       } finally {
          break label63;
       }
@@ -19,7 +19,7 @@ final class DocViewTextDisplayScreen extends DocViewDisplayScreen {
 
       label59:
       try {
-         isSpecificBgDisplay = paramsHash.get(14);
+         isSpecificBgDisplay = (Boolean)paramsHash.get(14);
       } finally {
          break label59;
       }
@@ -117,7 +117,7 @@ final class DocViewTextDisplayScreen extends DocViewDisplayScreen {
                return new DocViewTextDisplayField$CacheTextOffsetInfo(blockIdx, txtOffset);
             }
          }
-      } else if (!(param instanceof Object)) {
+      } else if (!(param instanceof String)) {
          if (param instanceof byte[]) {
             DocViewParser parser = new DocViewParser(false);
             parser.parseDocument((byte[])param, true, 0, false, true);
@@ -133,13 +133,13 @@ final class DocViewTextDisplayScreen extends DocViewDisplayScreen {
          String renderDomID = AttachmentViewerFactory.constructCustomDomIDStringEx(super._isEmbScreen ? super._domID : null, (String)param, "RenderDomID");
          int blockCount = this.getBlockCount(renderDomID);
          if (blockCount <= 0) {
-            String[] atoms = new Object[0];
+            String[] atoms = new String[0];
             if (super._isEmbScreen) {
-               Arrays.add(atoms, ((StringBuffer)(new Object())).append(super._domID).append("/").toString());
+               Arrays.add(atoms, super._domID + "/");
             }
 
             Arrays.add(atoms, "/RenderDomID");
-            Arrays.add(atoms, ((StringBuffer)(new Object())).append((String)param).append(',').toString());
+            Arrays.add(atoms, (String)param + ',');
             String[] matchDomIDs = this.getMatchingAvailableEmbeddedDomIDs(atoms);
             if (matchDomIDs != null) {
                for (int i = 0; i < matchDomIDs.length; i++) {

@@ -250,7 +250,7 @@ public final class VSTStrings {
       try {
          int totalStrings = readInt(data, 28) - 1;
          int numStrings = all ? totalStrings : 48;
-         String[] vstStrings = new Object[numStrings];
+         String[] vstStrings = new String[numStrings];
          int[] offsets = new int[numStrings];
 
          for (int i = 0; i < numStrings; i++) {
@@ -270,10 +270,10 @@ public final class VSTStrings {
             }
 
             if (length == 0) {
-               System.out.println(((StringBuffer)(new Object("Bad string for "))).append(i).toString());
+               System.out.println("Bad string for " + i);
             }
 
-            vstStrings[i] = (String)(new Object(stringData, 0, length, encoding));
+            vstStrings[i] = new String(stringData, 0, length, encoding);
          }
 
          return vstStrings;

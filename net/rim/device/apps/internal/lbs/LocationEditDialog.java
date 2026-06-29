@@ -4,15 +4,16 @@ import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.Font;
 import net.rim.device.api.ui.FontRegistry;
-import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.component.AutoTextEditField;
 import net.rim.device.api.ui.component.ButtonField;
 import net.rim.device.api.ui.component.Dialog;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.container.FlowFieldManager;
 import net.rim.device.api.ui.container.PopupScreen;
+import net.rim.device.api.ui.container.VerticalFieldManager;
 import net.rim.device.api.util.Arrays;
 import net.rim.device.apps.api.messaging.util.SimpleFolder;
 import net.rim.device.apps.api.ui.CommonResources;
@@ -22,7 +23,7 @@ final class LocationEditDialog extends PopupScreen implements FieldChangeListene
    private SimpleFolder _folder;
    private ButtonField _okField;
    private ButtonField _cancelField;
-   private FlowFieldManager _hfm = (FlowFieldManager)(new Object(12884901888L));
+   private FlowFieldManager _hfm = new FlowFieldManager(12884901888L);
    private AutoTextEditField _labelField;
    private LabelField _folderField;
    Location _location;
@@ -31,7 +32,7 @@ final class LocationEditDialog extends PopupScreen implements FieldChangeListene
    static LocationDocumentCollection _locationDocumentCollection = LocationDocumentCollection.getInstance();
 
    LocationEditDialog(Location location) {
-      super((Manager)(new Object(1153220571769602048L)), 196608);
+      super(new VerticalFieldManager(1153220571769602048L), 196608);
       this.applyTheme();
       this.addTitle(LBSResources.getString(110));
       this._location = location;
@@ -41,7 +42,7 @@ final class LocationEditDialog extends PopupScreen implements FieldChangeListene
       }
 
       label = this.clipLength(label, 2048);
-      this._labelField = (AutoTextEditField)(new Object(LBSResources.getString(98), label, 2048, 2147483648L));
+      this._labelField = new AutoTextEditField(LBSResources.getString(98), label, 2048, 2147483648L);
       if (this._labelField.getTextLength() > 0) {
          this._labelField.setCursorPosition(this._labelField.getTextLength() - 1);
       } else {
@@ -50,9 +51,7 @@ final class LocationEditDialog extends PopupScreen implements FieldChangeListene
 
       this.add(this._labelField);
       this._folder = FavouritesManager.getRootFolder();
-      this._folderField = (LabelField)(new Object(
-         ((StringBuffer)(new Object())).append(LBSResources.getString(315)).append(' ').append(this._folder.getFriendlyName()).toString()
-      ));
+      this._folderField = new LabelField(LBSResources.getString(315) + ' ' + this._folder.getFriendlyName());
       this.add(this._folderField);
       this.addButtons();
       this._okField.setFocus();
@@ -61,10 +60,10 @@ final class LocationEditDialog extends PopupScreen implements FieldChangeListene
 
    private final void addTitle(String title) {
       if (title != null && title.length() > 0) {
-         LabelField labelField = (LabelField)(new Object(title));
+         LabelField labelField = new LabelField(title);
          labelField.setFont(Font.getDefault().derive(1));
          this.add(labelField);
-         this.add((Field)(new Object()));
+         this.add(new SeparatorField());
       }
    }
 
@@ -80,10 +79,10 @@ final class LocationEditDialog extends PopupScreen implements FieldChangeListene
    }
 
    private final void addButtons() {
-      this._okField = (ButtonField)(new Object(CommonResources.getString(117), 65536));
+      this._okField = new ButtonField(CommonResources.getString(117), 65536);
       this._okField.setChangeListener(this);
       this._hfm.add(this._okField);
-      this._cancelField = (ButtonField)(new Object(CommonResources.getString(9042), 65536));
+      this._cancelField = new ButtonField(CommonResources.getString(9042), 65536);
       this._cancelField.setChangeListener(this);
       this._hfm.add(this._cancelField);
       this.add(this._hfm);

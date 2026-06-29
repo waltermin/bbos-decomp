@@ -9,7 +9,7 @@ final class Refresh extends Task {
 
    @Override
    public final String getURL() {
-      return ((StringBuffer)(new Object())).append(super._browserContent.getURL()).append(" (").append(BrowserResources.getString(563)).append(')').toString();
+      return super._browserContent.getURL() + " (" + BrowserResources.getString(563) + ')';
    }
 
    @Override

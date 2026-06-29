@@ -82,26 +82,26 @@ public class LeftRightFieldManager extends Manager {
 
    @Override
    public void add(Field field) {
-      throw new Object();
+      throw new RuntimeException();
    }
 
    @Override
    public void insert(Field field, int index) {
-      throw new Object();
+      throw new RuntimeException();
    }
 
    @Override
    public void delete(Field field) {
-      throw new Object();
+      throw new RuntimeException();
    }
 
    @Override
    public void deleteRange(int start, int count) {
-      throw new Object();
+      throw new RuntimeException();
    }
 
    @Override
    public void deleteAll() {
-      throw new Object();
+      throw new RuntimeException();
    }
 }

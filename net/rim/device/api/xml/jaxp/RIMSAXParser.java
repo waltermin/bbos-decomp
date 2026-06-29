@@ -11,7 +11,7 @@ public class RIMSAXParser extends SAXParser {
    private boolean _allowUndefinedNamespaces;
    private boolean _isNamespaceAware;
    private XMLReader _reader;
-   private SAXParserImpl _saxParserImpl = (SAXParserImpl)(new Object());
+   private SAXParserImpl _saxParserImpl = new SAXParserImpl();
    static String CB_MIME_TYPE = "application/vnd.rim.wbxml-cb";
    static String WBXML_MIME_TYPE = "application/vnd.wap.wbxml, application/vnd.wap.wmlc";
    static String CB_CACHE_DIR = "file:///store/appdata/rim/.xmlcb/";
@@ -20,7 +20,7 @@ public class RIMSAXParser extends SAXParser {
 
    private XMLParser newXMLParser() {
       XMLParser parser = null;
-      parser = (XMLParser)(new Object());
+      parser = new XMLParser();
       parser.setAllowUndefinedNamespaces(this._allowUndefinedNamespaces);
       parser.setNamespaceAware(this._isNamespaceAware);
       this._reader = parser;

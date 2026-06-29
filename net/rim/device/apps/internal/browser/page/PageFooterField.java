@@ -304,16 +304,16 @@ public final class PageFooterField extends Field {
 
          this._focusIndex = -1;
       } else {
-         this._verbs = new Object[2];
-         this._verbRects = new Object[2];
-         this._verbLabels = new Object[2];
+         this._verbs = new Verb[2];
+         this._verbRects = new XYRect[2];
+         this._verbLabels = new String[2];
       }
 
       int size = 0;
       if (verbs != null && (size = verbs.size()) != 0) {
          if (size == 1) {
             this._verbs[0] = (Verb)verbs.elementAt(0);
-            this._verbRects[0] = (XYRect)(new Object());
+            this._verbRects[0] = new XYRect();
             this._verbLabels[0] = this._verbs[0].toString();
             this._focusIndex = 0;
          } else {
@@ -339,8 +339,8 @@ public final class PageFooterField extends Field {
                }
             }
 
-            this._verbRects[0] = (XYRect)(new Object());
-            this._verbRects[1] = (XYRect)(new Object());
+            this._verbRects[0] = new XYRect();
+            this._verbRects[1] = new XYRect();
             this._verbLabels[0] = this._verbs[0].toString();
             this._verbLabels[1] = this._verbs[1].toString();
             this._focusIndex = 0;

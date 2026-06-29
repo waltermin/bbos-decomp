@@ -13,6 +13,7 @@ import net.rim.device.api.browser.field.Event;
 import net.rim.device.api.browser.field.RedirectEvent;
 import net.rim.device.api.browser.field.RenderingOptions;
 import net.rim.device.api.browser.field.RenderingSession;
+import net.rim.device.api.browser.field.UrlRequestedEvent;
 import net.rim.device.api.browser.util.UAProf;
 import net.rim.device.api.browser.util.UserAgent;
 import net.rim.device.api.collection.ReadableList;
@@ -51,11 +52,14 @@ import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.Trackball;
 import net.rim.device.api.ui.Ui;
 import net.rim.device.api.ui.UiApplication;
+import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.component.Status;
 import net.rim.device.api.util.BitSet;
 import net.rim.device.api.util.StringUtilities;
+import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.EncryptableProvider;
+import net.rim.device.apps.api.framework.verb.RunnableVerbWrapper;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.messaging.Folder;
 import net.rim.device.apps.api.messaging.FolderHierarchies;
@@ -74,6 +78,7 @@ import net.rim.device.apps.internal.browser.common.AcceptValueProvider;
 import net.rim.device.apps.internal.browser.common.BrowserConverterDescriptor;
 import net.rim.device.apps.internal.browser.common.BrowserLockScreen;
 import net.rim.device.apps.internal.browser.common.RenderingUtilities;
+import net.rim.device.apps.internal.browser.common.UserAbortException;
 import net.rim.device.apps.internal.browser.cookie.CookieCache;
 import net.rim.device.apps.internal.browser.debug.BrowserDebugScreen;
 import net.rim.device.apps.internal.browser.download.DownloadPage;
@@ -127,6 +132,7 @@ import net.rim.device.apps.internal.browser.util.RendererControl;
 import net.rim.device.apps.internal.browser.util.ReregistrationListener;
 import net.rim.device.apps.internal.browser.util.UAProfDiff;
 import net.rim.device.apps.internal.browser.util.URLCache;
+import net.rim.device.apps.internal.browser.verbs.EventVerb;
 import net.rim.device.apps.internal.browser.wappush.WAPPushModel;
 import net.rim.device.cldc.io.fastdormancy.FastDormancyManager;
 import net.rim.device.internal.browser.util.Pipe;
@@ -154,7 +160,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
    private boolean _foldersModified;
    private RibbonManagerThread _ribbonManager;
    private int _lastCoverage;
-   private Mutex _browserLock = (Mutex)(new Object());
+   private Mutex _browserLock = new Mutex();
    private BrowserImpl$NavigationThread _navigationThread;
    private MenuDelayThread _menuDelayThread;
    private WorkerThread _workerThread;
@@ -169,7 +175,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
    private int _state = 0;
    private RenderThread _currentRenderThread;
    private FetchRequest _currentFetchRequest;
-   private WeakReference _resourceValidator = (WeakReference)(new Object(null));
+   private WeakReference _resourceValidator = new WeakReference(null);
    private long _lastExpiryCheck;
    private ProgressManager _progressManager;
    private RawDataCache _rawDataCache;
@@ -184,7 +190,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
    private PushThread _pushThread;
    private boolean _requestingNewPage;
    private boolean _escapeCharPressed;
-   private StringBuffer _lastUrlLoaded = (StringBuffer)(new Object());
+   private StringBuffer _lastUrlLoaded = new StringBuffer();
    private Object _activationObject = new Object();
    protected BrowserVerbRepository _verbRepository;
    private RenderingSession _renderingSession;
@@ -709,7 +715,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
       if (this._activateDueToFetchRequest) {
          Verb verb = this._verbRepository.getVerb(3, this.getVerbMask());
          if (verb != null) {
-            verb.invoke(new Object(!this._viewingMode));
+            verb.invoke(new Boolean(!this._viewingMode));
             return;
          }
       } else {
@@ -976,7 +982,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
          Verb defaultVerb = this._currentPage.getDefaultVerbUnderCursor();
          if (defaultVerb != null) {
             this._browserLock.releaseLock();
-            this.invokeLater((Runnable)(new Object(null, defaultVerb, new Object(61), false)));
+            this.invokeLater(new RunnableVerbWrapper(null, defaultVerb, new ContextObject(61), false));
             return;
          }
       }
@@ -1046,7 +1052,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
    }
 
    public final void performEscape(boolean programmatic) {
-      this._navigationThread.requestTask(8, new Object(programmatic));
+      this._navigationThread.requestTask(8, new Boolean(programmatic));
    }
 
    public final void getBrowserLock() {
@@ -1061,7 +1067,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
       if (this._currentPage != null) {
          Verb defaultVerb = this._currentPage.getDefaultVerbUnderCursor();
          if (defaultVerb != null) {
-            this.invokeLater((Runnable)(new Object(null, defaultVerb, new Object(61), false)));
+            this.invokeLater(new RunnableVerbWrapper(null, defaultVerb, new ContextObject(61), false));
          }
       }
    }
@@ -1194,12 +1200,12 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
                            return;
                         }
                      } else if (guid == -2269441167196113981L) {
-                        if (object0 instanceof Object) {
+                        if (object0 instanceof Throwable) {
                            QuincyUtil.sendQuincy((Throwable)object0, true);
                            return;
                         }
                      } else if (guid == 2610733293414932871L) {
-                        if (object0 instanceof Object && object1 instanceof Object) {
+                        if (object0 instanceof String && object1 instanceof String) {
                            QuincyUtil.sendLogworthyQuincy((String)object0, (String)object1);
                            return;
                         }
@@ -1285,7 +1291,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
       QuincyUtil.sendQuincy(e, true);
       int errorToDisplay = 0;
       short var3;
-      if (e instanceof Object) {
+      if (e instanceof OutOfMemoryError) {
          var3 = 588;
       } else {
          var3 = 235;
@@ -1323,7 +1329,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
 
    public final void updateBrowserExecutionState(int status, FetchRequest testRequest) {
       if (testRequest == null || this._currentFetchRequest == testRequest) {
-         this._navigationThread.requestTask(10, new Object(status));
+         this._navigationThread.requestTask(10, new Integer(status));
       }
    }
 
@@ -1412,7 +1418,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
                   && status != 305
                   && (status != 307 || modelResult.getPostData() == null)
                   && done
-                  && conn instanceof Object) {
+                  && conn instanceof HttpConnection) {
                   label888:
                   try {
                      conn.close();
@@ -1487,7 +1493,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
          modelResult.setCacheResult(null);
          modelResult.setURL(redirectURL);
          modelResult.setPostData(null);
-         HttpHeaders httpHeaders = (HttpHeaders)(new Object());
+         HttpHeaders httpHeaders = new HttpHeaders();
          HttpHeaders oldHttpHeaders = modelResult.getRequestHeaders();
          if (oldHttpHeaders != null) {
             String referer = oldHttpHeaders.getPropertyValue(HeaderParser.REFERER);
@@ -1499,7 +1505,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
          this.addStandardRequestHeaders(httpHeaders);
          modelResult.setRequestHeaders(httpHeaders);
          updateHeaders = false;
-         if (savedPageModel instanceof Object) {
+         if (savedPageModel instanceof EncryptableProvider) {
             EncryptableProvider ep = (EncryptableProvider)savedPageModel;
             if (!ep.checkCrypt(true, true)) {
                ep.reCrypt(true, true);
@@ -1589,7 +1595,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
    }
 
    public final HttpHeaders getStandardRequestHeaders() {
-      HttpHeaders tmpRequestHeaders = (HttpHeaders)(new Object());
+      HttpHeaders tmpRequestHeaders = new HttpHeaders();
       this.addStandardRequestHeaders(tmpRequestHeaders);
       return tmpRequestHeaders;
    }
@@ -1648,14 +1654,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
       String acceptLanguage = locale.getLanguage();
       String country = locale.getCountry();
       if (country.length() > 0) {
-         acceptLanguage = ((StringBuffer)(new Object()))
-            .append(acceptLanguage)
-            .append('-')
-            .append(country)
-            .append(',')
-            .append(acceptLanguage)
-            .append(";q=0.5")
-            .toString();
+         acceptLanguage = acceptLanguage + '-' + country + ',' + acceptLanguage + ";q=0.5";
       }
 
       requestHeaders.setProperty("Accept-Language", acceptLanguage);
@@ -1683,7 +1682,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
 
          requestHeaders.setProperty(HeaderParser.X_WAP_PROFILE, UAProfDiff.getXWapProfile(currentUAProf));
       } else {
-         requestHeaders.setProperty(HeaderParser.X_WAP_PROFILE, ((StringBuffer)(new Object())).append('"').append(currentUAProf).append('"').toString());
+         requestHeaders.setProperty(HeaderParser.X_WAP_PROFILE, '"' + currentUAProf + '"');
       }
 
       if (isAccelerated) {
@@ -1701,7 +1700,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
 
          requestHeaders.setProperty("x-rim-gw-properties", Page._richTextMarkup ? "16.2" : "16.10");
          requestHeaders.setProperty("x-rim-image-threshold", Integer.toString(imageCount));
-         StringBuffer imageSetting = (StringBuffer)(new Object());
+         StringBuffer imageSetting = new StringBuffer();
          if (imageDitherValue != 1) {
             imageSetting.append("q=");
             imageSetting.append(Integer.toString(imageDitherValue));
@@ -1737,10 +1736,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
          }
 
          if (YKDecode.isSupported()) {
-            requestHeaders.setProperty(
-               "x-rim-accept-encoding",
-               ((StringBuffer)(new Object("yk;v="))).append(YKDecode.yk_get_codec_version()).append(";m=").append(this._ykMemLimitHint).toString()
-            );
+            requestHeaders.setProperty("x-rim-accept-encoding", "yk;v=" + YKDecode.yk_get_codec_version() + ";m=" + this._ykMemLimitHint);
          }
       }
    }
@@ -1929,7 +1925,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
                Manager contentManager = this._currentPage.getBrowserContent().getContentManager();
                if (contentManager != null) {
                   Field field = contentManager.getLeafFieldWithFocus();
-                  if (field instanceof Object) {
+                  if (field instanceof BasicEditField) {
                      return false;
                   }
                }
@@ -1993,9 +1989,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
          case 1380073800:
             this._useReducedAcceptHeader = !this._useReducedAcceptHeader;
             this.refreshAcceptValues();
-            Status.show(
-               ((StringBuffer)(new Object("Reduced HTTP Accept header is now "))).append(this._useReducedAcceptHeader ? "enabled" : "disabled").toString()
-            );
+            Status.show("Reduced HTTP Accept header is now " + (this._useReducedAcceptHeader ? "enabled" : "disabled"));
             return true;
          case 1380074562:
             this._navigationThread.requestTask(7, null);
@@ -2003,7 +1997,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
          case 1380076100:
             JavaScriptRegistry._debugMode = !JavaScriptRegistry._debugMode;
             this.refreshAcceptValues();
-            Status.show(((StringBuffer)(new Object("Javascript debug mode is now "))).append(JavaScriptRegistry._debugMode ? "on" : "off").toString());
+            Status.show("Javascript debug mode is now " + (JavaScriptRegistry._debugMode ? "on" : "off"));
             return true;
          default:
             return false;
@@ -2443,7 +2437,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
          BrowserContent sourceFrame = getSource(event);
          if (sourceFrame != null) {
             Manager manager = sourceFrame.getDisplayableContent().getManager();
-            if (manager instanceof Object) {
+            if (manager instanceof FrameManager) {
                return ((FrameManager)manager).getFrame();
             }
          }
@@ -2458,7 +2452,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
          Event event = getOriginalEvent(fetchRequest.getEvent());
          Frame originatingFrame = frame = this.getOriginatingFrame(event);
          Event fetchRequestEvent = fetchRequest.getEvent();
-         if (fetchRequestEvent instanceof Object) {
+         if (fetchRequestEvent instanceof UrlRequestedInternalEvent) {
             UrlRequestedInternalEvent e = (UrlRequestedInternalEvent)fetchRequestEvent;
             String target = e.getTarget();
             Frame targetFrame = this.findFrame(target);
@@ -2469,7 +2463,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
 
          boolean useFullWindow = false;
          String target = null;
-         if (event instanceof Object) {
+         if (event instanceof UrlRequestedInternalEvent) {
             target = ((UrlRequestedInternalEvent)event).getTarget();
          }
 
@@ -2536,7 +2530,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
             fetchRequest.setTarget(frame);
          }
       } else {
-         fetchRequest.setTarget((Frame)(new Object(null, null, fetchRequest.getModelResult().getURL())));
+         fetchRequest.setTarget(new Frame(null, null, fetchRequest.getModelResult().getURL()));
       }
    }
 
@@ -2558,19 +2552,19 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
             case 'M':
             case 'm':
                if (StringUtilities.startsWithIgnoreCase(absUrl, "mobile.", 1701707776)) {
-                  absUrl = ((StringBuffer)(new Object("http://"))).append(absUrl).toString();
+                  absUrl = "http://" + absUrl;
                }
                break;
             case 'W':
             case 'w':
                if (StringUtilities.startsWithIgnoreCase(absUrl, "www.", 1701707776) || StringUtilities.startsWithIgnoreCase(absUrl, "wap.", 1701707776)) {
-                  return ((StringBuffer)(new Object("http://"))).append(absUrl).toString();
+                  return "http://" + absUrl;
                }
          }
 
          return absUrl;
       } else {
-         fetchRequest.setError(((StringBuffer)(new Object())).append(BrowserResources.getString(296)).append(url).toString());
+         fetchRequest.setError(BrowserResources.getString(296) + url);
          return absUrl;
       }
    }
@@ -2579,7 +2573,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
       if ((modelResult.getRenderingFlags() & 8192) != 0 && this._renderingSession != null) {
          RenderingOptions renderingOptions = this._renderingSession.getRenderingOptions();
          if (renderingOptions != null) {
-            boolean isLink = getOriginalEvent(fetchRequest.getEvent()) instanceof Object;
+            boolean isLink = getOriginalEvent(fetchRequest.getEvent()) instanceof UrlRequestedEvent;
             int navigation = modelResult.getNavigation();
             boolean isRefresh = navigation == 3 || navigation == 4;
             if (renderingOptions.getPropertyWithBooleanValue(4550690918222697397L, 42, false) && !isLink) {
@@ -2785,7 +2779,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
             if (currentUrl != null) {
                label64:
                try {
-                  String host = DomainUtilities.parseAuthority((URI)(new Object(currentUrl)));
+                  String host = DomainUtilities.parseAuthority(new URI(currentUrl));
                   isBlackberryDotCom = DomainUtilities.isHostInDomain(host, "blackberry.com") || DomainUtilities.isHostInDomain(host, "blackberry.net");
                } finally {
                   break label64;
@@ -2876,8 +2870,8 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
       }
 
       String errorMessage = null;
-      if (!(error instanceof Object)) {
-         if (!(error instanceof Object)) {
+      if (!(error instanceof String)) {
+         if (!(error instanceof Throwable)) {
             errorMessage = error.toString();
          } else {
             errorMessage = ((Throwable)error).getMessage();
@@ -2958,9 +2952,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
             renderingOptions.setProperty(
                4550690918222697397L, 24, GeneralProperty.getEmulationModeString(browserConfigRecord.getPropertyAsIntWithOverride((byte)17) - 1)
             );
-            renderingOptions.setProperty(
-               4550690918222697397L, 23, ((StringBuffer)(new Object())).append(UserAgent.getBrowserVersion()).append(" (BlackBerry; I)").toString()
-            );
+            renderingOptions.setProperty(4550690918222697397L, 23, UserAgent.getBrowserVersion() + " (BlackBerry; I)");
             boolean wapMode = StringUtilities.strEqualIgnoreCase(WAPServiceRecord.SERVICE_CID, transportCid, 1701707776);
             renderingOptions.setProperty(4550690918222697397L, 25, wapMode);
             int configType = browserConfigRecord.getPropertyAsInt(12);
@@ -3046,8 +3038,8 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
 
          BrowserContentImpl browserContent = page.getBrowserContent();
          if (browserContent != null) {
-            browserContent.setOnTimer((Verb)(new Object((Event)(new Object(browserContent, refreshUrl, null, 3, delay * 1000)), page)));
-            browserContent.addTimer((PageTimer)(new Object(delay, browserContent)));
+            browserContent.setOnTimer(new EventVerb(new RedirectEvent(browserContent, refreshUrl, null, 3, delay * 1000), page));
+            browserContent.addTimer(new PageTimer(delay, browserContent));
          }
       }
    }
@@ -3078,7 +3070,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
    }
 
    private final String getAcceptValues(RenderingSession renderingSession) {
-      StringBuffer acceptValues = (StringBuffer)(new Object());
+      StringBuffer acceptValues = new StringBuffer();
       if (this._useReducedAcceptHeader && renderingSession != null) {
          RenderingOptions renderingOptions = renderingSession.getRenderingOptions();
          if (renderingOptions != null
@@ -3142,7 +3134,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
          appendSeparator = true;
       }
 
-      Hashtable currentStore = (Hashtable)(new Object());
+      Hashtable currentStore = new Hashtable();
       int size = this._acceptValueProviders.size();
 
       for (int i = 0; i < size; i++) {
@@ -3298,7 +3290,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
       if (this._browserLock.tryLock()) {
          this.showMenuSynchronously(false, menuInstance);
       } else {
-         this._navigationThread.requestTask(1, new Object(menuInstance));
+         this._navigationThread.requestTask(1, new Integer(menuInstance));
       }
    }
 
@@ -3324,7 +3316,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
       return length;
    }
 
-   private final Page getPageFromFetchRequest(FetchRequest param1, RenderThread param2) {
+   private final Page getPageFromFetchRequest(FetchRequest param1, RenderThread param2) throws UserAbortException {
       // $VF: Couldn't be decompiled
       // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
       // java.lang.IndexOutOfBoundsException: Index 2 out of bounds for length 1
@@ -3415,7 +3407,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
       // 0a0: goto 242
       // 0a3: bipush 0
       // 0a4: istore 10
-      // 0a6: new java/lang/Object
+      // 0a6: new net/rim/device/apps/api/utility/general/URI
       // 0a9: dup
       // 0aa: aload 1
       // 0ab: invokevirtual net/rim/device/apps/internal/browser/stack/FetchRequest.getModelResult ()Lnet/rim/device/apps/internal/browser/stack/ModelResult;
@@ -3580,7 +3572,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
       // 22b: getfield net/rim/device/apps/internal/browser/core/BrowserImpl._currentSession Lnet/rim/device/apps/internal/browser/core/BrowserSession;
       // 22e: invokevirtual net/rim/device/apps/internal/browser/core/BrowserSession.getHistory ()Lnet/rim/device/apps/internal/browser/history/History;
       // 231: invokevirtual net/rim/device/apps/internal/browser/history/History.resetToLastViewedNode ()V
-      // 234: new java/lang/Object
+      // 234: new net/rim/device/apps/internal/browser/common/UserAbortException
       // 237: dup
       // 238: invokespecial net/rim/device/apps/internal/browser/common/UserAbortException.<init> ()V
       // 23b: athrow
@@ -3808,11 +3800,11 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
       // 416: astore 17
       // 418: aload 10
       // 41a: dup
-      // 41b: instanceof java/lang/Object
+      // 41b: instanceof javax/microedition/io/HttpConnection
       // 41e: ifne 425
       // 421: pop
       // 422: goto 527
-      // 425: checkcast java/lang/Object
+      // 425: checkcast javax/microedition/io/HttpConnection
       // 428: astore 17
       // 42a: sipush 200
       // 42d: istore 18
@@ -3860,13 +3852,13 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
       // 499: istore 13
       // 49b: aload 1
       // 49c: invokevirtual net/rim/device/apps/internal/browser/stack/FetchRequest.getEvent ()Lnet/rim/device/api/browser/field/Event;
-      // 49f: instanceof java/lang/Object
+      // 49f: instanceof net/rim/device/apps/internal/browser/api/SDPRedirectEvent
       // 4a2: ifeq 4a8
       // 4a5: bipush 0
       // 4a6: istore 13
       // 4a8: iload 13
       // 4aa: ifeq 527
-      // 4ad: new java/lang/Object
+      // 4ad: new net/rim/device/api/ui/component/Dialog
       // 4b0: dup
       // 4b1: sipush 881
       // 4b4: invokestatic net/rim/device/apps/internal/browser/resources/BrowserResources.getString (I)Ljava/lang/String;
@@ -3882,7 +3874,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
       // 4ca: invokestatic net/rim/device/api/ui/theme/ThemeManager.getThemeAwareImage (Ljava/lang/String;)Lnet/rim/device/internal/ui/Image;
       // 4cd: invokevirtual net/rim/device/api/ui/component/Dialog.setIcon (Lnet/rim/device/internal/ui/Image;)V
       // 4d0: aload 0
-      // 4d1: new java/lang/Object
+      // 4d1: new net/rim/device/apps/api/ui/RunnableDialog
       // 4d4: dup
       // 4d5: aload 20
       // 4d7: invokespecial net/rim/device/apps/api/ui/RunnableDialog.<init> (Lnet/rim/device/api/ui/component/Dialog;)V
@@ -3897,11 +3889,11 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
       // 50d: astore 12
       // 50f: aload 12
       // 511: ifnonnull 527
-      // 514: new java/lang/Object
+      // 514: new net/rim/device/apps/internal/browser/common/UserAbortException
       // 517: dup
       // 518: invokespecial net/rim/device/apps/internal/browser/common/UserAbortException.<init> ()V
       // 51b: athrow
-      // 51c: new java/lang/Object
+      // 51c: new net/rim/device/apps/internal/browser/common/UserAbortException
       // 51f: dup
       // 520: invokespecial net/rim/device/apps/internal/browser/common/UserAbortException.<init> ()V
       // 523: athrow
@@ -3928,15 +3920,15 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
       // 54e: ifnonnull 5ad
       // 551: aload 17
       // 553: dup
-      // 554: instanceof java/lang/Object
+      // 554: instanceof net/rim/device/apps/internal/browser/common/ResourcedRenderingException
       // 557: ifne 55e
       // 55a: pop
       // 55b: goto 5ad
-      // 55e: checkcast java/lang/Object
+      // 55e: checkcast net/rim/device/apps/internal/browser/common/ResourcedRenderingException
       // 561: invokevirtual net/rim/device/apps/internal/browser/common/ResourcedRenderingException.getResourceId ()I
       // 564: sipush 265
       // 567: if_icmpne 5ad
-      // 56a: new java/lang/Object
+      // 56a: new net/rim/device/api/ui/component/Dialog
       // 56d: dup
       // 56e: bipush 3
       // 570: sipush 882
@@ -3952,7 +3944,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
       // 585: invokestatic net/rim/device/api/ui/theme/ThemeManager.getThemeAwareImage (Ljava/lang/String;)Lnet/rim/device/internal/ui/Image;
       // 588: invokevirtual net/rim/device/api/ui/component/Dialog.setIcon (Lnet/rim/device/internal/ui/Image;)V
       // 58b: aload 0
-      // 58c: new java/lang/Object
+      // 58c: new net/rim/device/apps/api/ui/RunnableDialog
       // 58f: dup
       // 590: aload 18
       // 592: invokespecial net/rim/device/apps/api/ui/RunnableDialog.<init> (Lnet/rim/device/api/ui/component/Dialog;)V
@@ -4100,7 +4092,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
    }
 
    public static final Event getOriginalEvent(Event event) {
-      while (event instanceof Object) {
+      while (event instanceof RedirectEvent) {
          event = ((RedirectEvent)event).getOriginalEvent();
       }
 
@@ -4137,7 +4129,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
                   if (field != null) {
                      manager = field.getManager();
 
-                     while (!(manager instanceof Object) && manager != null) {
+                     while (!(manager instanceof FrameManager) && manager != null) {
                         manager = manager.getManager();
                      }
                   } else {
@@ -4146,14 +4138,14 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
 
                   if (manager == null && contentManager.getFieldCount() > 0) {
                      field = contentManager.getField(contentManager.getFieldCount() - 1);
-                     if (field instanceof Object) {
-                        manager = (Manager)field;
+                     if (field instanceof FrameManager) {
+                        manager = (FrameManager)field;
                      }
                   }
                }
             }
 
-            if (manager instanceof Object) {
+            if (manager instanceof FrameManager) {
                FrameManager frameManager = (FrameManager)manager;
                Frame targetFrame = fetchRequest.getTarget();
                if (targetFrame != null) {
@@ -4393,7 +4385,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
          if (field != null) {
             manager = field.getManager();
 
-            while (!(manager instanceof Object) && manager != null) {
+            while (!(manager instanceof FrameManager) && manager != null) {
                manager = manager.getManager();
             }
          } else {
@@ -4402,16 +4394,16 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
 
          if (manager == null && contentManager.getFieldCount() > 0) {
             field = contentManager.getField(contentManager.getFieldCount() - 1);
-            if (field instanceof Object) {
-               manager = (Manager)field;
+            if (field instanceof FrameManager) {
+               manager = (FrameManager)field;
             }
          }
       }
 
-      if (manager instanceof Object) {
+      if (manager instanceof FrameManager) {
          FrameManager frameManager = (FrameManager)manager;
          frameManager = FrameManager.find(name, frameManager.getTopFrameManager().getManager());
-         if (frameManager instanceof Object) {
+         if (frameManager instanceof FrameManager) {
             return frameManager.getFrame();
          }
       }
@@ -4460,7 +4452,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
       String contentType = RendererControl.getContentType(conn);
       PageConverterWrapper wrapper = new PageConverterWrapper(fetchRequest, in, conn);
       Converter converter = BrowserConverterDescriptor.getConverter(contentType);
-      return (Page)converter.convert((DataInput)((Object)null), wrapper);
+      return (Page)converter.convert((DataInput)null, wrapper);
    }
 
    // $VF: Could not inline inconsistent finally blocks
@@ -4469,12 +4461,12 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
       Page newPage = null;
       ModelResult modelResult = fetchRequest.getModelResult();
       if (modelResult.getCacheResult() == null) {
-         fetchRequest.setError(((StringBuffer)(new Object())).append(BrowserResources.getString(141)).append(":\n\n").append(modelResult.getURL()).toString());
+         fetchRequest.setError(BrowserResources.getString(141) + ":\n\n" + modelResult.getURL());
          return null;
       }
 
       try {
-         if (fetchRequest.getEvent() instanceof Object) {
+         if (fetchRequest.getEvent() instanceof RedirectEvent) {
             Frame targetFrame = fetchRequest.getTarget();
             if (targetFrame != null) {
                targetFrame.setUrl(fetchRequest.getModelResult().getURL());
@@ -4522,7 +4514,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
       ApplicationRegistry ar = ApplicationRegistry.getApplicationRegistry();
       this._acceptValueProviders = (Vector)ar.getOrWaitFor(-728596185634430319L);
       if (this._acceptValueProviders == null) {
-         this._acceptValueProviders = (Vector)(new Object());
+         this._acceptValueProviders = new Vector();
          ar.put(-728596185634430319L, this._acceptValueProviders);
       }
 
@@ -4540,9 +4532,9 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
       this._workerThread = new WorkerThread();
       this._offlineQueue = new OfflineQueue();
       this._verbRepository = new BrowserVerbRepository();
-      this._activeDownloads = (Vector)(new Object());
+      this._activeDownloads = new Vector();
       if (systemStart) {
-         ((Thread)(new Object(new Channels()))).start();
+         new Thread(new Channels()).start();
       }
 
       this.initialize();
@@ -4558,7 +4550,7 @@ public final class BrowserImpl extends UiApplication implements KeyListener, Bac
       this.injectDefaultBrowserServiceRecords(true);
       this._ribbonManager.autoStartIfRequired(false);
       this._offlineQueue.start();
-      this._backdoor = (BackdoorKeyProcessor)(new Object(true, this));
+      this._backdoor = new BackdoorKeyProcessor(true, this);
       MemoryStats memStats = Memory.getRAMStats();
       this._ykMemLimitHint = (memStats.getAllocated() + memStats.getFree()) / 1048576;
       if ((this._ykMemLimitHint & 7) != 0) {

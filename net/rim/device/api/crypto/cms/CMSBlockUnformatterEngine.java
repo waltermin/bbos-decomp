@@ -14,7 +14,7 @@ final class CMSBlockUnformatterEngine implements BlockUnformatterEngine {
 
    @Override
    public final String getAlgorithm() {
-      return ((StringBuffer)(new Object())).append(this._decryptorEngine.getAlgorithm()).append("_CMS").toString();
+      return this._decryptorEngine.getAlgorithm() + "_CMS";
    }
 
    @Override

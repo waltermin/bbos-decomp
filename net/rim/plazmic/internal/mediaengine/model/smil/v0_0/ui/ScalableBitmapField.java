@@ -59,7 +59,7 @@ public class ScalableBitmapField extends MIMEContentAnimatedBitmapField {
             this._fillStyle = style;
             return;
          default:
-            throw new Object(((StringBuffer)(new Object("Style: "))).append(style).append(" is not supported").toString());
+            throw new IllegalArgumentException("Style: " + style + " is not supported");
       }
    }
 
@@ -82,7 +82,7 @@ public class ScalableBitmapField extends MIMEContentAnimatedBitmapField {
    // Please report this to the Vineflower issue tracker, at https://github.com/Vineflower/vineflower/issues with a copy of the class file (if you have the rights to distribute it!)
    private void initFrameCache(EncodedImage image) {
       int numFrames = image.getFrameCount();
-      this._frameCache = new Object[numFrames];
+      this._frameCache = new Bitmap[numFrames];
       int imageWidth = image.getWidth();
       int imageHeight = image.getHeight();
       int scaleFactorEncoded = Math.max(imageWidth / this.MAX_WIDTH, imageHeight / this.MAX_HEIGHT);
@@ -100,8 +100,8 @@ public class ScalableBitmapField extends MIMEContentAnimatedBitmapField {
          label44:
          try {
             var9 = true;
-            this._bitmapBuffer = (Bitmap)(new Object(this.getBitmapWidth(), this.getBitmapHeight()));
-            this._gBuffer = (Graphics)(new Object(this._bitmapBuffer));
+            this._bitmapBuffer = new Bitmap(this.getBitmapWidth(), this.getBitmapHeight());
+            this._gBuffer = new Graphics(this._bitmapBuffer);
             var9 = false;
          } finally {
             if (var9) {
@@ -227,10 +227,10 @@ public class ScalableBitmapField extends MIMEContentAnimatedBitmapField {
    @Override
    public void makeContextMenu(ContextMenu menu) {
       super.makeContextMenu(menu);
-      SaveImageVerb saveImageVerb = (SaveImageVerb)(new Object(
+      SaveImageVerb saveImageVerb = new SaveImageVerb(
          (String)this._provider.getService("Uri"), (EncodedImage)this._provider.getService("Model"), this.isProtected()
-      ));
-      VerbMenuItem verbMenuItem = (VerbMenuItem)(new Object(null, saveImageVerb.getOrdering(), 500, saveImageVerb, null));
+      );
+      VerbMenuItem verbMenuItem = new VerbMenuItem(null, saveImageVerb.getOrdering(), 500, saveImageVerb, null);
       menu.addItem(verbMenuItem);
       menu.setDefaultItem(verbMenuItem);
    }

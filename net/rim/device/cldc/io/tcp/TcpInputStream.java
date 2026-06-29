@@ -2,6 +2,7 @@ package net.rim.device.cldc.io.tcp;
 
 import java.io.IOException;
 import java.io.InputStream;
+import net.rim.device.api.io.ConnectionClosedException;
 import net.rim.device.cldc.io.utility.PacketLogger;
 import net.rim.device.internal.io.streamdatagram.StreamDatagramConnectionBase;
 
@@ -20,9 +21,9 @@ final class TcpInputStream extends InputStream {
    }
 
    @Override
-   public final synchronized int read() {
+   public final synchronized int read() throws ConnectionClosedException {
       if (this._isClosed) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       if (this._bufferOffset >= this._bufferEndOffset) {
@@ -36,17 +37,17 @@ final class TcpInputStream extends InputStream {
    }
 
    @Override
-   public final synchronized int read(byte[] b, int off, int len) throws IOException {
+   public final synchronized int read(byte[] b, int off, int len) throws IOException, ConnectionClosedException {
       if (this._isClosed) {
-         throw new Object();
+         throw new ConnectionClosedException();
       }
 
       if (b == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       if (off < 0 || len < 0 || off + len > b.length) {
-         throw new Object();
+         throw new IndexOutOfBoundsException();
       }
 
       if (len == 0) {
@@ -87,9 +88,9 @@ final class TcpInputStream extends InputStream {
    }
 
    @Override
-   public final int available() {
+   public final int available() throws IOException {
       if (this._isClosed) {
-         throw new Object(STR_INSTREAM_CLOSED);
+         throw new IOException(STR_INSTREAM_CLOSED);
       } else {
          return this._connection.getInStreamDataAvailable() + (this._bufferEndOffset - this._bufferOffset);
       }
@@ -107,13 +108,7 @@ final class TcpInputStream extends InputStream {
                   node._data,
                   node._offset,
                   node._length,
-                  ((StringBuffer)(new Object("TCP:")))
-                     .append(this._connection.getAddress())
-                     .append(':')
-                     .append(this._connection.getLocalPort())
-                     .append(':')
-                     .append(this._connection.getPort())
-                     .toString(),
+                  "TCP:" + this._connection.getAddress() + ':' + this._connection.getLocalPort() + ':' + this._connection.getPort(),
                   false
                );
             return;

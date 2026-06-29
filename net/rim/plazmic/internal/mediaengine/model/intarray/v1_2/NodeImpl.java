@@ -119,7 +119,7 @@ public class NodeImpl implements Node {
             model._nodes[nextSibling + 15]++;
          }
       } else {
-         throw new Object("The node to be inserted already exists in the scene graph or only one of the nodes is a TSpan.");
+         throw new IllegalArgumentException("The node to be inserted already exists in the scene graph or only one of the nodes is a TSpan.");
       }
    }
 
@@ -150,7 +150,7 @@ public class NodeImpl implements Node {
             model._nodes[previousSibling + 15]++;
          }
       } else {
-         throw new Object("The node to be inserted already exists in the scene graph or only one of the nodes is a TSpan.");
+         throw new IllegalArgumentException("The node to be inserted already exists in the scene graph or only one of the nodes is a TSpan.");
       }
    }
 
@@ -170,7 +170,7 @@ public class NodeImpl implements Node {
 
    public static int removeNodeHandle(boolean leaveChildren, int handle, ModelInteractorImpl model) {
       if (!isInSceneGraph(handle, model)) {
-         throw new Object("The node to be removed does not exist in the scene graph.");
+         throw new IllegalArgumentException("The node to be removed does not exist in the scene graph.");
       }
 
       int parent = getParent(handle, model);
@@ -232,7 +232,7 @@ public class NodeImpl implements Node {
 
    @Override
    public Node deleteNode(boolean keepChildren) {
-      if (this instanceof Object && !keepChildren) {
+      if (this instanceof ContainerNode && !keepChildren) {
          ((ContainerNode)this).deleteAllChildren();
       }
 

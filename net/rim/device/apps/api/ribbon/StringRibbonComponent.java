@@ -43,7 +43,7 @@ public class StringRibbonComponent extends TextRibbonComponent implements TextPr
       }
 
       String text;
-      if (!(context instanceof Object)) {
+      if (!(context instanceof String)) {
          text = this.getText();
       } else {
          text = (String)context;

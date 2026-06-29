@@ -56,13 +56,13 @@ final class SrpAddress extends DatagramAddressBase {
             if (addressFQDN > 2) {
                ipAddress = DatagramAddressBase.parseIpAddressInt(super._address, 2);
                if (ipAddress == -1) {
-                  throw new Object("Invalid IP_ADDRESS");
+                  throw new IllegalArgumentException("Invalid IP_ADDRESS");
                }
 
                this._hostAddress = ipAddress;
                this._resolved = true;
             } else if (super._address.charAt(addressFQDN) == ':') {
-               throw new Object("Illegal SERVER_ADDRESS");
+               throw new IllegalArgumentException("Illegal SERVER_ADDRESS");
             }
          } else {
             this._resolved = false;
@@ -75,12 +75,12 @@ final class SrpAddress extends DatagramAddressBase {
          int scan = delim + 1;
          delim = DatagramAddressBase.indexOfNextDelim(super._address, scan);
          if (delim <= scan) {
-            throw new Object("Bad DEST_PORT");
+            throw new IllegalArgumentException("Bad DEST_PORT");
          }
 
          int ret = DatagramAddressBase.parseInt(super._address, scan, delim, 10);
          if (ret < 0 || ret > 65535) {
-            throw new Object("Invalid DEST_PORT");
+            throw new IllegalArgumentException("Invalid DEST_PORT");
          }
 
          this._hostPort = ret;
@@ -94,7 +94,7 @@ final class SrpAddress extends DatagramAddressBase {
             try {
                int ret = DatagramAddressBase.parseInt(super._address, scan, delim, 10);
                if (ret < 0 || ret > 65535) {
-                  throw new Object("Invalid SRC_PORT");
+                  throw new IllegalArgumentException("Invalid SRC_PORT");
                }
 
                this._localPort = ret;
@@ -121,10 +121,7 @@ final class SrpAddress extends DatagramAddressBase {
          if (var18 >= 0) {
             int nextIndex = super._address.indexOf(59, var18 + 1);
             if (nextIndex >= var18) {
-               super._address = ((StringBuffer)(new Object()))
-                  .append(super._address.substring(0, var18))
-                  .append(super._address.substring(nextIndex))
-                  .toString();
+               super._address = super._address.substring(0, var18) + super._address.substring(nextIndex);
             } else {
                super._address = super._address.substring(0, var18);
             }
@@ -139,10 +136,7 @@ final class SrpAddress extends DatagramAddressBase {
          if (var18 >= 0) {
             int nextIndex = super._address.indexOf(59, var18 + 1);
             if (nextIndex >= var18) {
-               super._address = ((StringBuffer)(new Object()))
-                  .append(super._address.substring(0, var18))
-                  .append(super._address.substring(nextIndex))
-                  .toString();
+               super._address = super._address.substring(0, var18) + super._address.substring(nextIndex);
                return;
             }
 

@@ -64,7 +64,7 @@ final class MMSMessageModelImpl
 
    final void addDeliveryReport(MMSStatusReport report) {
       if (this._deliveryReports == null) {
-         this._deliveryReports = (Vector)(new Object());
+         this._deliveryReports = new Vector();
       }
 
       this._deliveryReports.addElement(report);
@@ -77,9 +77,9 @@ final class MMSMessageModelImpl
 
    @Override
    public final int match(Object searchCriteria) {
-      if (!(searchCriteria instanceof Object)) {
+      if (!(searchCriteria instanceof SearchCriterion)) {
          MMSPayloadModelImpl var6 = this._payload;
-         SearchCriterion[] crit = (Object[])searchCriteria;
+         SearchCriterion[] crit = (SearchCriterion[])searchCriteria;
 
          for (int var8 = crit.length - 1; var8 >= 0; var8--) {
             SearchCriterion c = crit[var8];
@@ -150,7 +150,7 @@ final class MMSMessageModelImpl
 
                return 0;
             case 24:
-               if (criterion.getValue() == this.getUID()) {
+               if ((Integer)criterion.getValue() == this.getUID()) {
                   return 1;
                }
 
@@ -173,7 +173,7 @@ final class MMSMessageModelImpl
 
    final void addReadReport(MMSProtocolDataUnit pdu) {
       if (pdu == null) {
-         throw new Object();
+         throw new NullPointerException();
       }
 
       long date = MMSUtilities.parseLong(pdu.getAttribute("date"), 0) * 1000;
@@ -183,7 +183,7 @@ final class MMSMessageModelImpl
 
       String address = pdu.getAttribute("from");
       int status = MMSUtilities.parseInt(pdu.getAttribute("x-mms-read-status"), 128);
-      System.out.println(((StringBuffer)(new Object("MMS ReadReport "))).append(address).append(" ,").append(status).append(", ").append(date).toString());
+      System.out.println("MMS ReadReport " + address + " ," + status + ", " + date);
       this.updateStatusFromReadReport(address, date, status);
    }
 
@@ -215,7 +215,7 @@ final class MMSMessageModelImpl
       }
 
       int status = MMSUtilities.parseInt(pdu.getAttribute("x-mms-status"), 132);
-      System.out.println(((StringBuffer)(new Object("MMS DeliveryReport "))).append(address).append(" ,").append(status).append(", ").append(date).toString());
+      System.out.println("MMS DeliveryReport " + address + " ," + status + ", " + date);
       this.updateStatusFromDeliveryReport(address, date, status);
    }
 
@@ -229,7 +229,7 @@ final class MMSMessageModelImpl
 
    final void addReadReport(MMSStatusReport report) {
       if (this._readReports == null) {
-         this._readReports = (Vector)(new Object());
+         this._readReports = new Vector();
       }
 
       this._readReports.addElement(report);
@@ -370,7 +370,7 @@ final class MMSMessageModelImpl
    @Override
    public final boolean isSuccessfullySent() {
       if (this.isInbound()) {
-         throw new Object("Valid for outbound calls only");
+         throw new IllegalStateException("Valid for outbound calls only");
       }
 
       switch (this.getStatus()) {
@@ -525,7 +525,7 @@ final class MMSMessageModelImpl
 
    @Override
    public final String[] getRecipients() {
-      return new Object[]{this.getPayload().getAttribute("to"), this.getPayload().getAttribute("cc"), this.getPayload().getAttribute("bcc")};
+      return new String[]{this.getPayload().getAttribute("to"), this.getPayload().getAttribute("cc"), this.getPayload().getAttribute("bcc")};
    }
 
    @Override
@@ -550,21 +550,21 @@ final class MMSMessageModelImpl
 
    @Override
    public final String getBody() {
-      StringBuffer buf = (StringBuffer)(new Object());
+      StringBuffer buf = new StringBuffer();
       MMSUtilities.getMessageBodyText(buf, this.getAttachmentDataProvider());
       return buf.toString();
    }
 
    @Override
    public final MessageAttachment[] getAttachments() {
-      Vector v = (Vector)(new Object());
+      Vector v = new Vector();
       this.getNonTextAttachments(v, this.getAttachmentDataProvider());
       if (v.size() == 0) {
          return null;
       }
 
       int count = v.size();
-      MessageAttachment[] attachments = new Object[count];
+      MessageAttachment[] attachments = new MessageAttachment[count];
 
       for (int idx = 0; idx < count; idx++) {
          attachments[idx] = new MMSMessageAttachmentAdaptor((MMSAttachment)v.elementAt(idx));
@@ -676,7 +676,7 @@ final class MMSMessageModelImpl
       }
 
       recipients = this.getPayload().getCcRecipients();
-      return (RIMModel)(recipients != null && recipients.size() > 0 ? recipients.elementAt(0) : null);
+      return recipients != null && recipients.size() > 0 ? (RIMModel)recipients.elementAt(0) : null;
    }
 
    private final void updateStatusFromDeliveryReport(String address, long date, int reportStatus) {

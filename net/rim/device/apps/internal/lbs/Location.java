@@ -210,7 +210,7 @@ public class Location implements ActiveFieldCookie, VerbProvider {
          if (number != -1) {
             int oldColour = graphics.getColor();
             int oldAlpha = graphics.getGlobalAlpha();
-            String strNumber = ((StringBuffer)(new Object(""))).append(number).toString();
+            String strNumber = "" + number;
             Font font = null;
 
             label155:
@@ -299,9 +299,7 @@ public class Location implements ActiveFieldCookie, VerbProvider {
       if (this._label != null && !this._label.equals("")) {
          return this._label;
       } else {
-         return this._description != null && !this._description.equals("")
-            ? this._description
-            : ((StringBuffer)(new Object("lat="))).append(this._latitude).append(", lon=").append(this._longitude).toString();
+         return this._description != null && !this._description.equals("") ? this._description : "lat=" + this._latitude + ", lon=" + this._longitude;
       }
    }
 

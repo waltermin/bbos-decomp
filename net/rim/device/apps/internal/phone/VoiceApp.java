@@ -24,8 +24,9 @@ import net.rim.device.api.ui.Manager;
 import net.rim.device.api.ui.Screen;
 import net.rim.device.api.ui.UiApplication;
 import net.rim.device.api.ui.component.Dialog;
+import net.rim.device.api.ui.component.LabelField;
+import net.rim.device.api.ui.component.SeparatorField;
 import net.rim.device.api.ui.component.Status;
-import net.rim.device.api.util.LongHashtable;
 import net.rim.device.apps.api.framework.model.ActionProvider;
 import net.rim.device.apps.api.framework.model.ContextObject;
 import net.rim.device.apps.api.framework.model.EncryptableProvider;
@@ -47,6 +48,7 @@ import net.rim.device.apps.api.ui.CommonResources;
 import net.rim.device.apps.api.ui.Confirmation;
 import net.rim.device.apps.internal.phone.api.Out;
 import net.rim.device.apps.internal.phone.api.PTTKeyHandler;
+import net.rim.device.apps.internal.phone.api.PhoneCallModel;
 import net.rim.device.apps.internal.phone.api.PhoneLogger;
 import net.rim.device.apps.internal.phone.api.PhoneUtilities;
 import net.rim.device.apps.internal.phone.api.livecall.LiveCall;
@@ -55,9 +57,12 @@ import net.rim.device.apps.internal.phone.api.ui.gprs.GSM230Filter;
 import net.rim.device.apps.internal.phone.api.verbs.DialVerb;
 import net.rim.device.apps.internal.phone.api.verbs.InitiateCallVerb;
 import net.rim.device.apps.internal.phone.api.verbs.OutgoingCallConnector;
+import net.rim.device.apps.internal.phone.api.verbs.PhoneVerb;
+import net.rim.device.apps.internal.phone.api.verbs.UseOncePhoneNumberVerb;
 import net.rim.device.apps.internal.phone.api.verbs.VoiceMailVerb;
 import net.rim.device.apps.internal.phone.data.CallLogCollectionCleaner;
 import net.rim.device.apps.internal.phone.data.CallerIDInfo;
+import net.rim.device.apps.internal.phone.data.Hotlist;
 import net.rim.device.apps.internal.phone.data.MissedCallIndicator;
 import net.rim.device.apps.internal.phone.data.PhoneCallModelImpl;
 import net.rim.device.apps.internal.phone.data.PhoneFolders;
@@ -119,7 +124,7 @@ public final class VoiceApp
    public static final int DEFAULT_AUDIO_VOLUME = 50;
    private static final int CS_FIRST_ALPHA_ID = 0;
    private static final int CS_SECOND_ALPHA_ID = 1;
-   private static final Integer USSD_INPUT_DIALOG_COOKIE = (Integer)(new Object(0));
+   private static final Integer USSD_INPUT_DIALOG_COOKIE = new Integer(0);
    private static Field[] RIBBON_COMPONENTS;
    private static final int[] COMPONENT_MAP = new int[]{4, 5, 6, 9, -804650997, 17, 18, 33, 41, 42, 43, 146, 147, 148, 153, 154};
 
@@ -205,7 +210,7 @@ public final class VoiceApp
                this._callSessionTimer = 0;
             }
 
-            PhoneLogger.log(((StringBuffer)(new Object("callsmpt; switchbg="))).append(this._switchBackgroundOnIdle).toString());
+            PhoneLogger.log("callsmpt; switchbg=" + this._switchBackgroundOnIdle);
             this._gotCallsEmpty = true;
             this._active = false;
             this._activeScreen.callsEmpty();
@@ -348,9 +353,9 @@ public final class VoiceApp
             this.handleUssdDisplay(param, context);
             return;
          case 10100:
-            if (context instanceof Object) {
-               int newCallID = context;
-               Out.p(((StringBuffer)(new Object("PHONE-CC("))).append(param).append(',').append(newCallID).append(')').toString());
+            if (context instanceof Integer) {
+               int newCallID = (Integer)context;
+               Out.p("PHONE-CC(" + param + ',' + newCallID + ')');
                int resourceId = this.getCallControlEventStringId(param);
                if (resourceId != -1 && newCallID <= 0) {
                   String msg = CommonResources.getString(resourceId);
@@ -397,9 +402,9 @@ public final class VoiceApp
             this.updateCFUIndicator();
             return;
          case 160000:
-            if (context instanceof Object) {
+            if (context instanceof String) {
                String number = (String)context;
-               String errorString = MessageFormat.format(PhoneResources.getString(146), new Object[]{number});
+               String errorString = MessageFormat.format(PhoneResources.getString(146), new String[]{number});
                Dialog.alert(errorString);
                return;
             }
@@ -482,7 +487,7 @@ public final class VoiceApp
 
          for (int i = num - 1; i >= 0; i--) {
             LiveCall call = (LiveCall)calls.elementAt(i);
-            if (call instanceof Object) {
+            if (call instanceof LiveCall) {
                call.endByUser(context);
             }
          }
@@ -501,7 +506,7 @@ public final class VoiceApp
    @Override
    public final Object getSpeedDialInfo(char key, boolean suppressPrompt) {
       QuickContactItem qci = QuickContactList.getInstance().getQuickContactItem(key);
-      if (qci instanceof Object) {
+      if (qci instanceof SpeedDialItem) {
          SpeedDialItem sdi = (SpeedDialItem)qci;
          CallerIDInfo cidi = sdi.getCallerIDInfo();
          Object number = null;
@@ -515,7 +520,7 @@ public final class VoiceApp
 
          if (number != null) {
             String numberString = number.toString();
-            ContextObject tmpContext = (ContextObject)(new Object());
+            ContextObject tmpContext = new ContextObject();
             if (voicemail) {
                PhoneUtilities.setPrivateFlag(tmpContext, 7);
             }
@@ -525,8 +530,8 @@ public final class VoiceApp
             }
 
             Object connectionParameters = PhoneUtilities.getCallConnectionParameters(number, address, cidi, tmpContext);
-            if (connectionParameters instanceof Object) {
-               ((LongHashtable)connectionParameters).put(247, numberString);
+            if (connectionParameters instanceof ContextObject) {
+               ((ContextObject)connectionParameters).put(247, numberString);
             }
 
             return connectionParameters;
@@ -544,7 +549,7 @@ public final class VoiceApp
 
       PersistentObject store = RIMPersistentStore.getPersistentObject(-5114641656481802126L);
       Object contents = store.getContents();
-      if (contents instanceof Object) {
+      if (contents instanceof CallerIDInfo) {
          CallerIDInfo cidi = (CallerIDInfo)contents;
          Object number = null;
          if (cidi.isVoicemailCallerIDInfo()) {
@@ -556,7 +561,7 @@ public final class VoiceApp
          if (number != null) {
             String numberAsString = number.toString();
             if (numberAsString.length() > 0) {
-               ContextObject result = (ContextObject)(new Object());
+               ContextObject result = new ContextObject();
                result.put(247, numberAsString);
                result.put(5898398779440734986L, cidi);
                return result;
@@ -572,7 +577,7 @@ public final class VoiceApp
       PersistentObject store = RIMPersistentStore.getPersistentObject(-5114641656481802126L);
       synchronized (store) {
          Object contents = store.getContents();
-         if (contents instanceof Object) {
+         if (contents instanceof CallerIDInfo) {
             CallerIDInfo cidi = (CallerIDInfo)store.getContents();
             if (!cidi.checkCrypt(true, true)) {
                Object newObject = cidi.reCrypt(true, true);
@@ -660,7 +665,7 @@ public final class VoiceApp
    public final void requestForeground(Runnable runnable, Object context) {
       if (this.isForeground()) {
          if (runnable != null) {
-            if (Application.getApplication() instanceof Object) {
+            if (Application.getApplication() instanceof VoiceApplication) {
                runnable.run();
                return;
             }
@@ -695,7 +700,7 @@ public final class VoiceApp
    @Override
    public final void startEmergencyCall(String number, boolean backgroundOnCompletion) {
       PhoneLogger.log("startEmergCall");
-      ContextObject context = (ContextObject)(new Object());
+      ContextObject context = new ContextObject();
       if (backgroundOnCompletion) {
          context.setFlag(96);
       }
@@ -778,8 +783,8 @@ public final class VoiceApp
 
    @Override
    public final Field getField(Object context) {
-      if (context instanceof Object) {
-         int id = context;
+      if (context instanceof Integer) {
+         int id = (Integer)context;
          switch (id) {
             case -1:
                break;
@@ -874,11 +879,11 @@ public final class VoiceApp
       if (!PhoneUtilities.emergencyCall(lastCallInfo)) {
          String phoneNumber = null;
          CallerIDInfo cidi = null;
-         if (!(lastCallInfo instanceof Object)) {
-            if (lastCallInfo instanceof Object) {
+         if (!(lastCallInfo instanceof String)) {
+            if (lastCallInfo instanceof ContextObject) {
                phoneNumber = (String)ContextObject.get(lastCallInfo, 6486659828352467672L);
                cidi = (CallerIDInfo)ContextObject.get(lastCallInfo, 5898398779440734986L);
-               cidi = (CallerIDInfo)(new Object(cidi, false));
+               cidi = new CallerIDInfo(cidi, false);
             }
          } else {
             phoneNumber = (String)lastCallInfo;
@@ -888,7 +893,7 @@ public final class VoiceApp
          if (!PhoneUtilities.isCDMAServiceCall(phoneNumber)) {
             if (cidi != null) {
                PersistentObject store = RIMPersistentStore.getPersistentObject(-5114641656481802126L);
-               if (cidi instanceof Object) {
+               if (cidi instanceof EncryptableProvider) {
                   EncryptableProvider encryptableProvider = cidi;
                   if (!encryptableProvider.checkCrypt(true, true)) {
                      encryptableProvider.reCrypt(true, true);
@@ -922,8 +927,8 @@ public final class VoiceApp
             int length = -1;
             if (items != null && (length = items.size()) >= 1) {
                for (int i = length - 1; i >= 0; i--) {
-                  Object model = items.getAt(i);
-                  if (model instanceof Object) {
+                  Object model = (PhoneCallModel)items.getAt(i);
+                  if (model instanceof ActionProvider) {
                      ((ActionProvider)model).perform(5213547777258110094L, null);
                   }
                }
@@ -940,7 +945,7 @@ public final class VoiceApp
 
       for (int i = 0; i < verbs.length; i++) {
          Verb verb = verbs[i];
-         if (verb instanceof Object) {
+         if (verb instanceof PhoneVerb) {
             vr.deregister(verb, type);
          }
       }
@@ -957,15 +962,15 @@ public final class VoiceApp
    }
 
    private final void registerVerbs() {
-      DialVerb dialVerb = (DialVerb)(new Object());
-      VoiceMailVerb voicemailVerb = (VoiceMailVerb)(new Object());
+      DialVerb dialVerb = new DialVerb();
+      VoiceMailVerb voicemailVerb = new VoiceMailVerb();
       Verb newCallVerb = InitiateCallVerb.getSingleton();
-      VerbRepository.getVerbRepository(8016149483483360697L).register((Verb)(new Object(newCallVerb)), 3797587162219887872L);
+      VerbRepository.getVerbRepository(8016149483483360697L).register(new UseOncePhoneNumberVerb(newCallVerb), 3797587162219887872L);
       VerbRepository.getVerbRepository(-7881764549058890736L).register(newCallVerb, 3797587162219887872L);
       VerbRepository.getVerbRepository(733292209077921914L).register(dialVerb, 3797587162219887872L);
       VerbRepository.getVerbRepository(-6761056765378641298L).register(dialVerb, 3797587162219887872L);
       VerbRepository.getVerbRepository(-1180661228443544094L).register(voicemailVerb, 3797587162219887872L);
-      VerbRepository.getVerbRepository(3391562901592837683L).register((Verb)(new Object()), 3797587162219887872L);
+      VerbRepository.getVerbRepository(3391562901592837683L).register(new UseOncePhoneNumberVerb(), 3797587162219887872L);
    }
 
    private static final void initializeComponents(VoiceApp voiceApp) {
@@ -974,8 +979,8 @@ public final class VoiceApp
          appRegistry.put(8424795840406028030L, "net.rim.device.apps.internal.phone.VoiceApp");
       }
 
-      appRegistry.replace(8059360440319940910L, new Object());
-      ContextObject context = (ContextObject)(new Object());
+      appRegistry.replace(8059360440319940910L, new Hotlist());
+      ContextObject context = new ContextObject();
       context.put(-5475650791114535957L, voiceApp);
       CallManager.initialize(context);
       CallManager.getInstance().addListener(voiceApp);
@@ -1050,7 +1055,7 @@ public final class VoiceApp
          this.registerVerbs();
       }
 
-      VerbRepository.getVerbRepository(-5389783330697330291L).register((Verb)(new Object()), 3797587162219887872L);
+      VerbRepository.getVerbRepository(-5389783330697330291L).register(new DialVerb(), 3797587162219887872L);
    }
 
    private static final void audioSourcePhoneOn() {
@@ -1075,7 +1080,7 @@ public final class VoiceApp
 
    public static final void main(String[] args) {
       if (!Phone.isSupported()) {
-         throw new Object("Phone is not supported on this network.");
+         throw new RuntimeException("Phone is not supported on this network.");
       }
 
       startVoiceServices();
@@ -1094,7 +1099,7 @@ public final class VoiceApp
       }
 
       if (GSM230Filter.isSupported()) {
-         voiceAppInstance._gsm230Filter = (GSM230Filter)(new Object());
+         voiceAppInstance._gsm230Filter = new GSM230Filter();
          voiceAppInstance._gsm230Filter.register();
       }
 
@@ -1133,7 +1138,7 @@ public final class VoiceApp
          try {
             var5 = true;
             responseBytes = input.getBytes("SMS");
-            String e = new Object(responseBytes, "SMS");
+            String e = new String(responseBytes, "SMS");
             if (!input.equals(e)) {
                return input.getBytes("UTF-16BE");
             }
@@ -1207,7 +1212,7 @@ public final class VoiceApp
             }
 
             activeScreen = this.getActiveScreen();
-            if (activeScreen instanceof Object) {
+            if (activeScreen instanceof PhoneAwareScreen) {
                ((PhoneAwareScreen)activeScreen).onAppActivated(this._appActivationContext, inputKey);
             }
 
@@ -1256,7 +1261,7 @@ public final class VoiceApp
                      number = "";
                   }
 
-                  callSetupContext = (ContextObject)(new Object());
+                  callSetupContext = new ContextObject();
                   PhoneUtilities.setPrivateFlag(callSetupContext, 62);
                   if (msg != null && msg.length() > 0) {
                      callSetupContext.put(-6776810758251164441L, msg);
@@ -1267,7 +1272,7 @@ public final class VoiceApp
                      if (!simulator) {
                         cidInfo = PhoneUtilities.createCallerIDInfo((RIMModel)numberModel, 24, setupCallId, null);
                      } else {
-                        cidInfo = new Object((PersistableRIMModel)numberModel, null, false, false);
+                        cidInfo = new CallerIDInfo((PersistableRIMModel)numberModel, null, false, false);
                      }
 
                      if (cidInfo != null) {
@@ -1291,11 +1296,11 @@ public final class VoiceApp
 
    private final void handleCallSetupMessage(int action, boolean promptUser, Object context) {
       byte[][] messages = (byte[][])context;
-      String[] callSetupMessages = new Object[2];
+      String[] callSetupMessages = new String[2];
       if (messages instanceof byte[][]) {
          for (int i = 0; i < messages.length; i++) {
             callSetupMessages[i] = SIMCard.decodeAlphaId(messages[i]);
-            Out.p(((StringBuffer)(new Object("PHONE-CS-msg="))).append(callSetupMessages[i]).toString());
+            Out.p("PHONE-CS-msg=" + callSetupMessages[i]);
          }
       }
 
@@ -1328,7 +1333,7 @@ public final class VoiceApp
    }
 
    private static final void initRibbonBarComponents() {
-      RIBBON_COMPONENTS = new Object[COMPONENT_MAP.length];
+      RIBBON_COMPONENTS = new Field[COMPONENT_MAP.length];
       RibbonBanner ribbon = RibbonBanner.getInstance();
       if (ribbon != null) {
          for (int i = 0; i < COMPONENT_MAP.length; i++) {
@@ -1362,14 +1367,14 @@ public final class VoiceApp
 
          return field;
       } else {
-         throw new Object();
+         throw new IllegalArgumentException();
       }
    }
 
    private final void handleUssdDisplay(int collectInput, Object context) {
       String msg = (String)context;
-      Out.p(((StringBuffer)(new Object("PHONE-USSD "))).append(msg).toString());
-      Out.p(((StringBuffer)(new Object("PHONE-USSD-input="))).append(collectInput).toString());
+      Out.p("PHONE-USSD " + msg);
+      Out.p("PHONE-USSD-input=" + collectInput);
       if (!DeviceInfo.isInHolster()) {
          Backlight.enable(true);
       }
@@ -1387,12 +1392,12 @@ public final class VoiceApp
          SimpleInputDialog dlg = new UssdInputDialog(msg);
          dlg.setCookie(USSD_INPUT_DIALOG_COOKIE);
          dlg.setPopupDialogClosedListener(this);
-         dlg.insert((Field)(new Object(PhoneResources.getString(6057))), 0);
-         dlg.insert((Field)(new Object()), 1);
+         dlg.insert(new LabelField(PhoneResources.getString(6057)), 0);
+         dlg.insert(new SeparatorField(), 1);
          dlg.show();
       } else {
-         Out.p(((StringBuffer)(new Object("PHONE-USSD-showmsg:"))).append(msg).toString());
-         new NetworkOrStkMsgDlg(msg, null, 1, new Object[]{CommonResources.getString(117)}, null, true).show();
+         Out.p("PHONE-USSD-showmsg:" + msg);
+         new NetworkOrStkMsgDlg(msg, null, 1, new String[]{CommonResources.getString(117)}, null, true).show();
       }
    }
 

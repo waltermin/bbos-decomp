@@ -1,6 +1,6 @@
 package net.rim.device.apps.api.utility.editor;
 
-import net.rim.device.api.ui.component.BasicEditField;
+import net.rim.device.api.ui.component.EditField;
 import net.rim.device.apps.api.framework.verb.Verb;
 import net.rim.device.apps.api.ui.CommonResources;
 
@@ -19,8 +19,8 @@ class UseOnceEditorScreen$ClearFieldVerb extends Verb {
 
    @Override
    public Object invoke(Object parameter) {
-      if (this.this$0._modelField instanceof Object) {
-         ((BasicEditField)this.this$0._modelField).setText("");
+      if (this.this$0._modelField instanceof EditField) {
+         ((EditField)this.this$0._modelField).setText("");
       }
 
       return null;
